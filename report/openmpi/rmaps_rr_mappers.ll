@@ -202,7 +202,7 @@ bb.be:                                            ; preds = %bb.bc, %bb.bd, %bb.
 
 ._crit_edge:                                      ; preds = %bb.be, %bb.n
   %.1152.lcssa = phi i32 [ %.0151, %bb.n ], [ %.6, %bb.be ] ; 2 uses
-  %.1148.lcssa = phi i32 [ %.0147, %bb.n ], [ %.4, %bb.be ] ; 3 uses
+  %.1148.lcssa = phi i32 [ %.0147, %bb.n ], [ %.4, %bb.be ] ; 2 uses
   %.1.lcssa = phi i32 [ %.0140, %bb.n ], [ %.2, %bb.be ]
   br i1 %.0139, label %.loopexit203, label %bb.bh
 
@@ -252,8 +252,8 @@ bb.bj:                                            ; preds = %bb.bi
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.bh
-  %i.gb = load i32, ptr %i.l, align 8, !tbaa !38  ; 2 uses
-  %i.gc = sub nsw i32 %i.gb, %.1148.lcssa
+  %i.gb = load i32, ptr %i.l, align 8, !tbaa !38
+  %i.gc = sub nsw i32 %i.gb, %.1148.lcssa         ; 2 uses
   %i.gd = sitofp i32 %i.gc to float
   %i.ge = load volatile i64, ptr %i.at, align 8, !tbaa !75
   %i.gf = uitofp i64 %i.ge to float
@@ -267,8 +267,7 @@ bb.bl:                                            ; preds = %bb.bk
   %i.gk = load volatile i64, ptr %i.at, align 8, !tbaa !75
   %i.gl = trunc i64 %i.gk to i32
   %i.gm = mul i32 %i.gl, %i.gh
-  %6 = add i32 %.1148.lcssa, %i.gm
-  %i.gn = sub i32 %i.gb, %6
+  %i.gn = sub i32 %i.gc, %i.gm
   %i.go = add nsw i32 %i.gh, 1
   br label %.backedge
 
@@ -671,7 +670,7 @@ bb.bq:                                            ; preds = %bb.bp, %bb.ah
 
 ._crit_edge:                                      ; preds = %bb.bq, %bb.n
   %.1172.lcssa = phi i32 [ %.0171, %bb.n ], [ %.4175, %bb.bq ] ; 2 uses
-  %.1168.lcssa = phi i32 [ %.0167, %bb.n ], [ %.4, %bb.bq ] ; 3 uses
+  %.1168.lcssa = phi i32 [ %.0167, %bb.n ], [ %.4, %bb.bq ] ; 2 uses
   %.1.lcssa = phi i32 [ %.0159, %bb.n ], [ %.2, %bb.bq ]
   %i.fw = load i8, ptr %i.ax, align 1, !tbaa !39, !range !40, !noundef !41
   %i.fx = trunc nuw i8 %i.fw to i1
@@ -679,8 +678,8 @@ bb.bq:                                            ; preds = %bb.bp, %bb.ah
   br i1 %or.cond9.not, label %bb.br, label %.loopexit
 
 bb.br:                                            ; preds = %._crit_edge
-  %i.fy = load i32, ptr %i.n, align 8, !tbaa !38  ; 2 uses
-  %i.fz = sub nsw i32 %i.fy, %.1168.lcssa
+  %i.fy = load i32, ptr %i.n, align 8, !tbaa !38
+  %i.fz = sub nsw i32 %i.fy, %.1168.lcssa         ; 2 uses
   %i.ga = sitofp i32 %i.fz to float
   %i.gb = load volatile i64, ptr %i.bc, align 8, !tbaa !75
   %i.gc = uitofp i64 %i.gb to float
@@ -694,8 +693,7 @@ bb.bs:                                            ; preds = %bb.br
   %i.gh = load volatile i64, ptr %i.bc, align 8, !tbaa !75
   %i.gi = trunc i64 %i.gh to i32
   %i.gj = mul i32 %i.gi, %i.ge
-  %6 = add i32 %.1168.lcssa, %i.gj
-  %i.gk = sub i32 %i.fy, %6
+  %i.gk = sub i32 %i.fz, %i.gj
   %i.gl = add nsw i32 %i.ge, 1
   br label %bb.bt
 

@@ -205,7 +205,7 @@ _ZNSt6vectorIN8WasmEdge4LLVM5ValueESaIS2_EEC2EmRKS3_.exit: ; preds = %_ZNSt6vect
   %i.ah = ptrtoint ptr %i.af to i64
   %i.ai = ptrtoint ptr %i.ag to i64
   %i.aj = sub i64 %i.ah, %i.ai                    ; 5 uses
-  %i.ak = ashr exact i64 %i.aj, 3                 ; 22 uses
+  %i.ak = ashr exact i64 %i.aj, 3                 ; 18 uses
   %.not60 = icmp eq ptr %i.af, %i.ag
   br i1 %.not60, label %bb.c, label %.lr.ph
 
@@ -301,13 +301,13 @@ middle.block111:                                  ; preds = %vector.body102
 
 .critedge.thread.i.us:                            ; preds = %.critedge.thread.i.us, %.critedge.thread.i.us.preheader.new
   %i.bo = phi ptr [ %.unr165, %.critedge.thread.i.us.preheader.new ], [ %i.cg, %.critedge.thread.i.us ] ; 5 uses
-  %.053.us = phi i64 [ %.053.us.unr, %.critedge.thread.i.us.preheader.new ], [ %i.cj, %.critedge.thread.i.us ] ; 5 uses
+  %.053.us = phi i64 [ %.053.us.unr, %.critedge.thread.i.us.preheader.new ], [ %i.cj, %.critedge.thread.i.us ] ; 3 uses
   %i.bp = icmp ne ptr %i.aq, %i.bo
   tail call void @llvm.assume(i1 %i.bp)
   %i.bq = getelementptr inbounds i8, ptr %i.bo, i64 -8 ; 2 uses
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !100, !noalias !4593
   %i.bs = inttoptr i64 %i.br to ptr
-  %i.bt = sub nuw i64 %i.ak, %.053.us
+  %i.bt = sub nuw i64 %i.ak, %.053.us             ; 3 uses
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.048.0, i64 %i.bt
   store ptr %i.bs, ptr %i.bu, align 8, !tbaa !100
   %.neg166 = xor i64 %.053.us, -1
@@ -318,24 +318,22 @@ middle.block111:                                  ; preds = %vector.body102
   %i.by = inttoptr i64 %i.bx to ptr
   %i.bz = getelementptr [8 x i8], ptr %i.bn, i64 %.neg166
   store ptr %i.by, ptr %i.bz, align 8, !tbaa !100
-  %4 = add nuw i64 %.053.us, 2
   %i.ca = icmp ne ptr %i.aq, %i.bw
   tail call void @llvm.assume(i1 %i.ca)
   %i.cb = getelementptr inbounds i8, ptr %i.bo, i64 -24 ; 2 uses
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !100, !noalias !4593
   %i.cd = inttoptr i64 %i.cc to ptr
-  %5 = sub nuw i64 %i.ak, %4
-  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.048.0, i64 %5
-  store ptr %i.cd, ptr %i.ce, align 8, !tbaa !100
-  %6 = add nuw i64 %.053.us, 3
+  %i.ce = getelementptr [8 x i8], ptr %.sroa.048.0, i64 %i.bt
+  %4 = getelementptr i8, ptr %i.ce, i64 -16
+  store ptr %i.cd, ptr %4, align 8, !tbaa !100
   %i.cf = icmp ne ptr %i.aq, %i.cb
   tail call void @llvm.assume(i1 %i.cf)
   %i.cg = getelementptr inbounds i8, ptr %i.bo, i64 -32 ; 3 uses
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !100, !noalias !4593
   %i.ci = inttoptr i64 %i.ch to ptr
-  %7 = sub nuw i64 %i.ak, %6
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.048.0, i64 %7
-  store ptr %i.ci, ptr %8, align 8, !tbaa !100
+  %5 = getelementptr [8 x i8], ptr %.sroa.048.0, i64 %i.bt
+  %6 = getelementptr i8, ptr %5, i64 -24
+  store ptr %i.ci, ptr %6, align 8, !tbaa !100
   %i.cj = add nuw i64 %.053.us, 4                 ; 2 uses
   %exitcond66.not.3 = icmp eq i64 %i.cj, %i.ak
   br i1 %exitcond66.not.3, label %._crit_edge, label %.critedge.thread.i.us, !llvm.loop !4568
@@ -446,11 +444,11 @@ bb.c:                                             ; preds = %._crit_edge, %_ZNSt
 
 .critedge.i:                                      ; preds = %.critedge.i, %.critedge.i.preheader.new
   %i.dy = phi ptr [ %.unr, %.critedge.i.preheader.new ], [ %i.em, %.critedge.i ] ; 4 uses
-  %.053 = phi i64 [ %.053.unr, %.critedge.i.preheader.new ], [ %i.ep, %.critedge.i ] ; 5 uses
+  %.053 = phi i64 [ %.053.unr, %.critedge.i.preheader.new ], [ %i.ep, %.critedge.i ] ; 3 uses
   %i.dz = getelementptr inbounds i8, ptr %i.dy, i64 -8
   %i.ea = load i64, ptr %i.dz, align 8, !tbaa !100, !noalias !4593
   %i.eb = inttoptr i64 %i.ea to ptr
-  %i.ec = sub nuw i64 %i.ak, %.053
+  %i.ec = sub nuw i64 %i.ak, %.053                ; 3 uses
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr %.sroa.048.0, i64 %i.ec
   store ptr %i.eb, ptr %i.ed, align 8, !tbaa !100
   %.neg = xor i64 %.053, -1
@@ -459,20 +457,18 @@ bb.c:                                             ; preds = %._crit_edge, %_ZNSt
   %i.eg = inttoptr i64 %i.ef to ptr
   %i.eh = getelementptr [8 x i8], ptr %i.dg, i64 %.neg
   store ptr %i.eg, ptr %i.eh, align 8, !tbaa !100
-  %9 = add nuw i64 %.053, 2
   %i.ei = getelementptr inbounds i8, ptr %i.dy, i64 -24
   %i.ej = load i64, ptr %i.ei, align 8, !tbaa !100, !noalias !4593
   %i.ek = inttoptr i64 %i.ej to ptr
-  %10 = sub nuw i64 %i.ak, %9
-  %i.el = getelementptr inbounds nuw [8 x i8], ptr %.sroa.048.0, i64 %10
-  store ptr %i.ek, ptr %i.el, align 8, !tbaa !100
-  %11 = add nuw i64 %.053, 3
+  %i.el = getelementptr [8 x i8], ptr %.sroa.048.0, i64 %i.ec
+  %7 = getelementptr i8, ptr %i.el, i64 -16
+  store ptr %i.ek, ptr %7, align 8, !tbaa !100
   %i.em = getelementptr inbounds i8, ptr %i.dy, i64 -32 ; 3 uses
   %i.en = load i64, ptr %i.em, align 8, !tbaa !100, !noalias !4593
   %i.eo = inttoptr i64 %i.en to ptr
-  %12 = sub nuw i64 %i.ak, %11
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.048.0, i64 %12
-  store ptr %i.eo, ptr %13, align 8, !tbaa !100
+  %8 = getelementptr [8 x i8], ptr %.sroa.048.0, i64 %i.ec
+  %9 = getelementptr i8, ptr %8, i64 -24
+  store ptr %i.eo, ptr %9, align 8, !tbaa !100
   %i.ep = add nuw i64 %.053, 4                    ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.ep, %i.ak
   br i1 %exitcond.not.3, label %._crit_edge, label %.critedge.i, !llvm.loop !4575
@@ -861,7 +857,7 @@ _ZN12_GLOBAL__N_116FunctionCompiler8stackPopEv.exit:
   %i.ak = ptrtoint ptr %i.ai to i64
   %i.al = ptrtoint ptr %i.aj to i64
   %i.am = sub i64 %i.ak, %i.al                    ; 6 uses
-  %i.an = ashr exact i64 %i.am, 3                 ; 25 uses
+  %i.an = ashr exact i64 %i.am, 3                 ; 21 uses
   %i.ao = tail call i32 @LLVMGetTypeKind(ptr noundef %i.ag) #17
   %i.ap = icmp eq i32 %i.ao, 0
   br i1 %i.ap, label %bb.b, label %bb.a
@@ -1001,8 +997,8 @@ middle.block259:                                  ; preds = %vector.body250
 
 .critedge.thread.i50.us:                          ; preds = %.critedge.thread.i50.us, %.critedge.thread.i50.us.preheader.new
   %i.ci = phi ptr [ %.unr316, %.critedge.thread.i50.us.preheader.new ], [ %i.da, %.critedge.thread.i50.us ] ; 5 uses
-  %.040193.us = phi i64 [ %.040193.us.unr, %.critedge.thread.i50.us.preheader.new ], [ %i.de, %.critedge.thread.i50.us ] ; 5 uses
-  %i.cj = sub nuw i64 %i.an, %.040193.us
+  %.040193.us = phi i64 [ %.040193.us.unr, %.critedge.thread.i50.us.preheader.new ], [ %i.de, %.critedge.thread.i50.us ] ; 3 uses
+  %i.cj = sub nuw i64 %i.an, %.040193.us          ; 3 uses
   %i.ck = icmp ne ptr %i.bk, %i.ci
   tail call void @llvm.assume(i1 %i.ck)
   %i.cl = getelementptr inbounds i8, ptr %i.ci, i64 -8 ; 2 uses
@@ -1018,24 +1014,22 @@ middle.block259:                                  ; preds = %vector.body250
   %i.cs = inttoptr i64 %i.cr to ptr
   %i.ct = getelementptr [8 x i8], ptr %i.ch, i64 %.neg317
   store ptr %i.cs, ptr %i.ct, align 8, !tbaa !100
-  %30 = add nuw i64 %.040193.us, 2
-  %31 = sub nuw i64 %i.an, %30
   %i.cu = icmp ne ptr %i.bk, %i.cq
   tail call void @llvm.assume(i1 %i.cu)
   %i.cv = getelementptr inbounds i8, ptr %i.ci, i64 -24 ; 2 uses
   %i.cw = load i64, ptr %i.cv, align 8, !tbaa !100, !noalias !4713
   %i.cx = inttoptr i64 %i.cw to ptr
-  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0164.0, i64 %31
-  store ptr %i.cx, ptr %i.cy, align 8, !tbaa !100
-  %32 = add nuw i64 %.040193.us, 3
-  %33 = sub nuw i64 %i.an, %32
+  %i.cy = getelementptr [8 x i8], ptr %.sroa.0164.0, i64 %i.cj
+  %30 = getelementptr i8, ptr %i.cy, i64 -16
+  store ptr %i.cx, ptr %30, align 8, !tbaa !100
   %i.cz = icmp ne ptr %i.bk, %i.cv
   tail call void @llvm.assume(i1 %i.cz)
   %i.da = getelementptr inbounds i8, ptr %i.ci, i64 -32 ; 3 uses
   %i.db = load i64, ptr %i.da, align 8, !tbaa !100, !noalias !4713
   %i.dc = inttoptr i64 %i.db to ptr
-  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0164.0, i64 %33
-  store ptr %i.dc, ptr %i.dd, align 8, !tbaa !100
+  %i.dd = getelementptr [8 x i8], ptr %.sroa.0164.0, i64 %i.cj
+  %31 = getelementptr i8, ptr %i.dd, i64 -24
+  store ptr %i.dc, ptr %31, align 8, !tbaa !100
   %i.de = add nuw i64 %.040193.us, 4              ; 2 uses
   %exitcond216.not.3 = icmp eq i64 %i.de, %i.an
   br i1 %exitcond216.not.3, label %._crit_edge, label %.critedge.thread.i50.us, !llvm.loop !4620
@@ -1243,8 +1237,8 @@ _ZNSt6vectorIN8WasmEdge4LLVM5ValueESaIS2_EE7reserveEm.exit: ; preds = %bb.f, %_Z
 
 .critedge.i48:                                    ; preds = %.critedge.i48, %.critedge.i48.preheader.new
   %i.gt = phi ptr [ %.unr, %.critedge.i48.preheader.new ], [ %i.hh, %.critedge.i48 ] ; 4 uses
-  %.040193 = phi i64 [ %.040193.unr, %.critedge.i48.preheader.new ], [ %i.hl, %.critedge.i48 ] ; 5 uses
-  %i.gu = sub nuw i64 %i.an, %.040193
+  %.040193 = phi i64 [ %.040193.unr, %.critedge.i48.preheader.new ], [ %i.hl, %.critedge.i48 ] ; 3 uses
+  %i.gu = sub nuw i64 %i.an, %.040193             ; 3 uses
   %i.gv = getelementptr inbounds i8, ptr %i.gt, i64 -8
   %i.gw = load i64, ptr %i.gv, align 8, !tbaa !100, !noalias !4713
   %i.gx = inttoptr i64 %i.gw to ptr
@@ -1256,20 +1250,18 @@ _ZNSt6vectorIN8WasmEdge4LLVM5ValueESaIS2_EE7reserveEm.exit: ; preds = %bb.f, %_Z
   %i.hb = inttoptr i64 %i.ha to ptr
   %i.hc = getelementptr [8 x i8], ptr %i.eb, i64 %.neg
   store ptr %i.hb, ptr %i.hc, align 8, !tbaa !100
-  %34 = add nuw i64 %.040193, 2
-  %35 = sub nuw i64 %i.an, %34
   %i.hd = getelementptr inbounds i8, ptr %i.gt, i64 -24
   %i.he = load i64, ptr %i.hd, align 8, !tbaa !100, !noalias !4713
   %i.hf = inttoptr i64 %i.he to ptr
-  %i.hg = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0164.0, i64 %35
-  store ptr %i.hf, ptr %i.hg, align 8, !tbaa !100
-  %36 = add nuw i64 %.040193, 3
-  %37 = sub nuw i64 %i.an, %36
+  %i.hg = getelementptr [8 x i8], ptr %.sroa.0164.0, i64 %i.gu
+  %32 = getelementptr i8, ptr %i.hg, i64 -16
+  store ptr %i.hf, ptr %32, align 8, !tbaa !100
   %i.hh = getelementptr inbounds i8, ptr %i.gt, i64 -32 ; 3 uses
   %i.hi = load i64, ptr %i.hh, align 8, !tbaa !100, !noalias !4713
   %i.hj = inttoptr i64 %i.hi to ptr
-  %i.hk = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0164.0, i64 %37
-  store ptr %i.hj, ptr %i.hk, align 8, !tbaa !100
+  %i.hk = getelementptr [8 x i8], ptr %.sroa.0164.0, i64 %i.gu
+  %33 = getelementptr i8, ptr %i.hk, i64 -24
+  store ptr %i.hj, ptr %33, align 8, !tbaa !100
   %i.hl = add nuw i64 %.040193, 4                 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.hl, %i.an
   br i1 %exitcond.not.3, label %._crit_edge, label %.critedge.i48, !llvm.loop !4653
@@ -1672,7 +1664,7 @@ _ZNSt6vectorIN8WasmEdge4LLVM5ValueESaIS2_EEC2EmRKS3_.exit: ; preds = %_ZNSt6vect
   %i.ah = ptrtoint ptr %i.af to i64
   %i.ai = ptrtoint ptr %i.ag to i64
   %i.aj = sub i64 %i.ah, %i.ai                    ; 5 uses
-  %i.ak = ashr exact i64 %i.aj, 3                 ; 22 uses
+  %i.ak = ashr exact i64 %i.aj, 3                 ; 18 uses
   %.not = icmp eq ptr %i.af, %i.ag
   br i1 %.not, label %bb.c, label %.lr.ph
 
@@ -1768,13 +1760,13 @@ middle.block57:                                   ; preds = %vector.body48
 
 .critedge.thread.i.us:                            ; preds = %.critedge.thread.i.us, %.critedge.thread.i.us.preheader.new
   %i.bo = phi ptr [ %.unr67, %.critedge.thread.i.us.preheader.new ], [ %i.cg, %.critedge.thread.i.us ] ; 5 uses
-  %.026.us = phi i64 [ %.026.us.unr, %.critedge.thread.i.us.preheader.new ], [ %i.cj, %.critedge.thread.i.us ] ; 5 uses
+  %.026.us = phi i64 [ %.026.us.unr, %.critedge.thread.i.us.preheader.new ], [ %i.cj, %.critedge.thread.i.us ] ; 3 uses
   %i.bp = icmp ne ptr %i.aq, %i.bo
   tail call void @llvm.assume(i1 %i.bp)
   %i.bq = getelementptr inbounds i8, ptr %i.bo, i64 -8 ; 2 uses
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !100, !noalias !4778
   %i.bs = inttoptr i64 %i.br to ptr
-  %i.bt = sub nuw i64 %i.ak, %.026.us
+  %i.bt = sub nuw i64 %i.ak, %.026.us             ; 3 uses
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.022.0, i64 %i.bt
   store ptr %i.bs, ptr %i.bu, align 8, !tbaa !100
   %.neg68 = xor i64 %.026.us, -1
@@ -1785,24 +1777,22 @@ middle.block57:                                   ; preds = %vector.body48
   %i.by = inttoptr i64 %i.bx to ptr
   %i.bz = getelementptr [8 x i8], ptr %i.bn, i64 %.neg68
   store ptr %i.by, ptr %i.bz, align 8, !tbaa !100
-  %2 = add nuw i64 %.026.us, 2
   %i.ca = icmp ne ptr %i.aq, %i.bw
   tail call void @llvm.assume(i1 %i.ca)
   %i.cb = getelementptr inbounds i8, ptr %i.bo, i64 -24 ; 2 uses
   %i.cc = load i64, ptr %i.cb, align 8, !tbaa !100, !noalias !4778
   %i.cd = inttoptr i64 %i.cc to ptr
-  %3 = sub nuw i64 %i.ak, %2
-  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %.sroa.022.0, i64 %3
-  store ptr %i.cd, ptr %i.ce, align 8, !tbaa !100
-  %4 = add nuw i64 %.026.us, 3
+  %i.ce = getelementptr [8 x i8], ptr %.sroa.022.0, i64 %i.bt
+  %2 = getelementptr i8, ptr %i.ce, i64 -16
+  store ptr %i.cd, ptr %2, align 8, !tbaa !100
   %i.cf = icmp ne ptr %i.aq, %i.cb
   tail call void @llvm.assume(i1 %i.cf)
   %i.cg = getelementptr inbounds i8, ptr %i.bo, i64 -32 ; 3 uses
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !100, !noalias !4778
   %i.ci = inttoptr i64 %i.ch to ptr
-  %5 = sub nuw i64 %i.ak, %4
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.022.0, i64 %5
-  store ptr %i.ci, ptr %6, align 8, !tbaa !100
+  %3 = getelementptr [8 x i8], ptr %.sroa.022.0, i64 %i.bt
+  %4 = getelementptr i8, ptr %3, i64 -24
+  store ptr %i.ci, ptr %4, align 8, !tbaa !100
   %i.cj = add nuw i64 %.026.us, 4                 ; 2 uses
   %exitcond30.not.3 = icmp eq i64 %i.cj, %i.ak
   br i1 %exitcond30.not.3, label %._crit_edge, label %.critedge.thread.i.us, !llvm.loop !4765
@@ -1914,11 +1904,11 @@ bb.c:                                             ; preds = %._crit_edge, %_ZNSt
 
 .critedge.i:                                      ; preds = %.critedge.i, %.critedge.i.preheader.new
   %i.dz = phi ptr [ %.unr, %.critedge.i.preheader.new ], [ %i.en, %.critedge.i ] ; 4 uses
-  %.026 = phi i64 [ %.026.unr, %.critedge.i.preheader.new ], [ %i.eq, %.critedge.i ] ; 5 uses
+  %.026 = phi i64 [ %.026.unr, %.critedge.i.preheader.new ], [ %i.eq, %.critedge.i ] ; 3 uses
   %i.ea = getelementptr inbounds i8, ptr %i.dz, i64 -8
   %i.eb = load i64, ptr %i.ea, align 8, !tbaa !100, !noalias !4778
   %i.ec = inttoptr i64 %i.eb to ptr
-  %i.ed = sub nuw i64 %i.ak, %.026
+  %i.ed = sub nuw i64 %i.ak, %.026                ; 3 uses
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %.sroa.022.0, i64 %i.ed
   store ptr %i.ec, ptr %i.ee, align 8, !tbaa !100
   %.neg = xor i64 %.026, -1
@@ -1927,20 +1917,18 @@ bb.c:                                             ; preds = %._crit_edge, %_ZNSt
   %i.eh = inttoptr i64 %i.eg to ptr
   %i.ei = getelementptr [8 x i8], ptr %i.dg, i64 %.neg
   store ptr %i.eh, ptr %i.ei, align 8, !tbaa !100
-  %7 = add nuw i64 %.026, 2
   %i.ej = getelementptr inbounds i8, ptr %i.dz, i64 -24
   %i.ek = load i64, ptr %i.ej, align 8, !tbaa !100, !noalias !4778
   %i.el = inttoptr i64 %i.ek to ptr
-  %8 = sub nuw i64 %i.ak, %7
-  %i.em = getelementptr inbounds nuw [8 x i8], ptr %.sroa.022.0, i64 %8
-  store ptr %i.el, ptr %i.em, align 8, !tbaa !100
-  %9 = add nuw i64 %.026, 3
+  %i.em = getelementptr [8 x i8], ptr %.sroa.022.0, i64 %i.ed
+  %5 = getelementptr i8, ptr %i.em, i64 -16
+  store ptr %i.el, ptr %5, align 8, !tbaa !100
   %i.en = getelementptr inbounds i8, ptr %i.dz, i64 -32 ; 3 uses
   %i.eo = load i64, ptr %i.en, align 8, !tbaa !100, !noalias !4778
   %i.ep = inttoptr i64 %i.eo to ptr
-  %10 = sub nuw i64 %i.ak, %9
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.022.0, i64 %10
-  store ptr %i.ep, ptr %11, align 8, !tbaa !100
+  %6 = getelementptr [8 x i8], ptr %.sroa.022.0, i64 %i.ed
+  %7 = getelementptr i8, ptr %6, i64 -24
+  store ptr %i.ep, ptr %7, align 8, !tbaa !100
   %i.eq = add nuw i64 %.026, 4                    ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.eq, %i.ak
   br i1 %exitcond.not.3, label %._crit_edge, label %.critedge.i, !llvm.loop !4772
@@ -2023,7 +2011,7 @@ _ZN12_GLOBAL__N_116FunctionCompiler8stackPopEv.exit:
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = ptrtoint ptr %i.af to i64
   %i.ai = sub i64 %i.ag, %i.ah                    ; 6 uses
-  %i.aj = ashr exact i64 %i.ai, 3                 ; 25 uses
+  %i.aj = ashr exact i64 %i.ai, 3                 ; 21 uses
   %i.ak = tail call i32 @LLVMGetTypeKind(ptr noundef %i.ac) #17
   %i.al = icmp eq i32 %i.ak, 0
   br i1 %i.al, label %bb.b, label %bb.a
@@ -2163,8 +2151,8 @@ middle.block137:                                  ; preds = %vector.body128
 
 .critedge.thread.i36.us:                          ; preds = %.critedge.thread.i36.us, %.critedge.thread.i36.us.preheader.new
   %i.ce = phi ptr [ %.unr147, %.critedge.thread.i36.us.preheader.new ], [ %i.cw, %.critedge.thread.i36.us ] ; 5 uses
-  %.0102.us = phi i64 [ %.0102.us.unr, %.critedge.thread.i36.us.preheader.new ], [ %i.da, %.critedge.thread.i36.us ] ; 5 uses
-  %i.cf = sub nuw i64 %i.aj, %.0102.us
+  %.0102.us = phi i64 [ %.0102.us.unr, %.critedge.thread.i36.us.preheader.new ], [ %i.da, %.critedge.thread.i36.us ] ; 3 uses
+  %i.cf = sub nuw i64 %i.aj, %.0102.us            ; 3 uses
   %i.cg = icmp ne ptr %i.bg, %i.ce
   tail call void @llvm.assume(i1 %i.cg)
   %i.ch = getelementptr inbounds i8, ptr %i.ce, i64 -8 ; 2 uses
@@ -2180,24 +2168,22 @@ middle.block137:                                  ; preds = %vector.body128
   %i.co = inttoptr i64 %i.cn to ptr
   %i.cp = getelementptr [8 x i8], ptr %i.cd, i64 %.neg148
   store ptr %i.co, ptr %i.cp, align 8, !tbaa !100
-  %24 = add nuw i64 %.0102.us, 2
-  %25 = sub nuw i64 %i.aj, %24
   %i.cq = icmp ne ptr %i.bg, %i.cm
   tail call void @llvm.assume(i1 %i.cq)
   %i.cr = getelementptr inbounds i8, ptr %i.ce, i64 -24 ; 2 uses
   %i.cs = load i64, ptr %i.cr, align 8, !tbaa !100, !noalias !4874
   %i.ct = inttoptr i64 %i.cs to ptr
-  %i.cu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.086.0, i64 %25
-  store ptr %i.ct, ptr %i.cu, align 8, !tbaa !100
-  %26 = add nuw i64 %.0102.us, 3
-  %27 = sub nuw i64 %i.aj, %26
+  %i.cu = getelementptr [8 x i8], ptr %.sroa.086.0, i64 %i.cf
+  %24 = getelementptr i8, ptr %i.cu, i64 -16
+  store ptr %i.ct, ptr %24, align 8, !tbaa !100
   %i.cv = icmp ne ptr %i.bg, %i.cr
   tail call void @llvm.assume(i1 %i.cv)
   %i.cw = getelementptr inbounds i8, ptr %i.ce, i64 -32 ; 3 uses
   %i.cx = load i64, ptr %i.cw, align 8, !tbaa !100, !noalias !4874
   %i.cy = inttoptr i64 %i.cx to ptr
-  %i.cz = getelementptr inbounds nuw [8 x i8], ptr %.sroa.086.0, i64 %27
-  store ptr %i.cy, ptr %i.cz, align 8, !tbaa !100
+  %i.cz = getelementptr [8 x i8], ptr %.sroa.086.0, i64 %i.cf
+  %25 = getelementptr i8, ptr %i.cz, i64 -24
+  store ptr %i.cy, ptr %25, align 8, !tbaa !100
   %i.da = add nuw i64 %.0102.us, 4                ; 2 uses
   %exitcond108.not.3 = icmp eq i64 %i.da, %i.aj
   br i1 %exitcond108.not.3, label %._crit_edge, label %.critedge.thread.i36.us, !llvm.loop !4797
@@ -2385,8 +2371,8 @@ bb.d:                                             ; preds = %._crit_edge, %_ZNSt
 
 .critedge.i34:                                    ; preds = %.critedge.i34, %.critedge.i34.preheader.new
   %i.gl = phi ptr [ %.unr, %.critedge.i34.preheader.new ], [ %i.gz, %.critedge.i34 ] ; 4 uses
-  %.0102 = phi i64 [ %.0102.unr, %.critedge.i34.preheader.new ], [ %i.hd, %.critedge.i34 ] ; 5 uses
-  %i.gm = sub nuw i64 %i.aj, %.0102
+  %.0102 = phi i64 [ %.0102.unr, %.critedge.i34.preheader.new ], [ %i.hd, %.critedge.i34 ] ; 3 uses
+  %i.gm = sub nuw i64 %i.aj, %.0102               ; 3 uses
   %i.gn = getelementptr inbounds i8, ptr %i.gl, i64 -8
   %i.go = load i64, ptr %i.gn, align 8, !tbaa !100, !noalias !4874
   %i.gp = inttoptr i64 %i.go to ptr
@@ -2398,20 +2384,18 @@ bb.d:                                             ; preds = %._crit_edge, %_ZNSt
   %i.gt = inttoptr i64 %i.gs to ptr
   %i.gu = getelementptr [8 x i8], ptr %i.dx, i64 %.neg
   store ptr %i.gt, ptr %i.gu, align 8, !tbaa !100
-  %28 = add nuw i64 %.0102, 2
-  %29 = sub nuw i64 %i.aj, %28
   %i.gv = getelementptr inbounds i8, ptr %i.gl, i64 -24
   %i.gw = load i64, ptr %i.gv, align 8, !tbaa !100, !noalias !4874
   %i.gx = inttoptr i64 %i.gw to ptr
-  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %.sroa.086.0, i64 %29
-  store ptr %i.gx, ptr %i.gy, align 8, !tbaa !100
-  %30 = add nuw i64 %.0102, 3
-  %31 = sub nuw i64 %i.aj, %30
+  %i.gy = getelementptr [8 x i8], ptr %.sroa.086.0, i64 %i.gm
+  %26 = getelementptr i8, ptr %i.gy, i64 -16
+  store ptr %i.gx, ptr %26, align 8, !tbaa !100
   %i.gz = getelementptr inbounds i8, ptr %i.gl, i64 -32 ; 3 uses
   %i.ha = load i64, ptr %i.gz, align 8, !tbaa !100, !noalias !4874
   %i.hb = inttoptr i64 %i.ha to ptr
-  %i.hc = getelementptr inbounds nuw [8 x i8], ptr %.sroa.086.0, i64 %31
-  store ptr %i.hb, ptr %i.hc, align 8, !tbaa !100
+  %i.hc = getelementptr [8 x i8], ptr %.sroa.086.0, i64 %i.gm
+  %27 = getelementptr i8, ptr %i.hc, i64 -24
+  store ptr %i.hb, ptr %27, align 8, !tbaa !100
   %i.hd = add nuw i64 %.0102, 4                   ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.hd, %i.aj
   br i1 %exitcond.not.3, label %._crit_edge, label %.critedge.i34, !llvm.loop !4830
@@ -2800,7 +2784,7 @@ _ZN12_GLOBAL__N_116FunctionCompiler9getTrapBBEN8WasmEdge7ErrCode5ValueE.exit: ; 
   %i.df = ptrtoint ptr %i.dd to i64
   %i.dg = ptrtoint ptr %i.de to i64
   %i.dh = sub i64 %i.df, %i.dg                    ; 6 uses
-  %i.di = ashr exact i64 %i.dh, 3                 ; 25 uses
+  %i.di = ashr exact i64 %i.dh, 3                 ; 21 uses
   %i.dj = call i32 @LLVMGetTypeKind(ptr noundef %i.db) #17
   %i.dk = icmp eq i32 %i.dj, 0
   br i1 %i.dk, label %bb.i, label %bb.h
@@ -2940,8 +2924,8 @@ middle.block300:                                  ; preds = %vector.body291
 
 .critedge.thread.i46.us:                          ; preds = %.critedge.thread.i46.us, %.critedge.thread.i46.us.preheader.new
   %i.fd = phi ptr [ %.unr363, %.critedge.thread.i46.us.preheader.new ], [ %i.fv, %.critedge.thread.i46.us ] ; 5 uses
-  %.036213.us = phi i64 [ %.036213.us.unr, %.critedge.thread.i46.us.preheader.new ], [ %i.fz, %.critedge.thread.i46.us ] ; 5 uses
-  %i.fe = sub nuw i64 %i.di, %.036213.us
+  %.036213.us = phi i64 [ %.036213.us.unr, %.critedge.thread.i46.us.preheader.new ], [ %i.fz, %.critedge.thread.i46.us ] ; 3 uses
+  %i.fe = sub nuw i64 %i.di, %.036213.us          ; 3 uses
   %i.ff = icmp ne ptr %i.ef, %i.fd
   call void @llvm.assume(i1 %i.ff)
   %i.fg = getelementptr inbounds i8, ptr %i.fd, i64 -8 ; 2 uses
@@ -2957,24 +2941,22 @@ middle.block300:                                  ; preds = %vector.body291
   %i.fn = inttoptr i64 %i.fm to ptr
   %i.fo = getelementptr [8 x i8], ptr %i.fc, i64 %.neg364
   store ptr %i.fn, ptr %i.fo, align 8, !tbaa !100
-  %34 = add nuw i64 %.036213.us, 2
-  %35 = sub nuw i64 %i.di, %34
   %i.fp = icmp ne ptr %i.ef, %i.fl
   call void @llvm.assume(i1 %i.fp)
   %i.fq = getelementptr inbounds i8, ptr %i.fd, i64 -24 ; 2 uses
   %i.fr = load i64, ptr %i.fq, align 8, !tbaa !100, !noalias !5045
   %i.fs = inttoptr i64 %i.fr to ptr
-  %i.ft = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0163.0, i64 %35
-  store ptr %i.fs, ptr %i.ft, align 8, !tbaa !100
-  %36 = add nuw i64 %.036213.us, 3
-  %37 = sub nuw i64 %i.di, %36
+  %i.ft = getelementptr [8 x i8], ptr %.sroa.0163.0, i64 %i.fe
+  %34 = getelementptr i8, ptr %i.ft, i64 -16
+  store ptr %i.fs, ptr %34, align 8, !tbaa !100
   %i.fu = icmp ne ptr %i.ef, %i.fq
   call void @llvm.assume(i1 %i.fu)
   %i.fv = getelementptr inbounds i8, ptr %i.fd, i64 -32 ; 3 uses
   %i.fw = load i64, ptr %i.fv, align 8, !tbaa !100, !noalias !5045
   %i.fx = inttoptr i64 %i.fw to ptr
-  %i.fy = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0163.0, i64 %37
-  store ptr %i.fx, ptr %i.fy, align 8, !tbaa !100
+  %i.fy = getelementptr [8 x i8], ptr %.sroa.0163.0, i64 %i.fe
+  %35 = getelementptr i8, ptr %i.fy, i64 -24
+  store ptr %i.fx, ptr %35, align 8, !tbaa !100
   %i.fz = add nuw i64 %.036213.us, 4              ; 2 uses
   %exitcond242.not.3 = icmp eq i64 %i.fz, %i.di
   br i1 %exitcond242.not.3, label %._crit_edge, label %.critedge.thread.i46.us, !llvm.loop !4961
@@ -3162,8 +3144,8 @@ _ZNSt6vectorIN8WasmEdge4LLVM5ValueESaIS2_EE7reserveEm.exit: ; preds = %bb.m, %_Z
 
 .critedge.i44:                                    ; preds = %.critedge.i44, %.critedge.i44.preheader.new
   %i.jc = phi ptr [ %.unr, %.critedge.i44.preheader.new ], [ %i.jq, %.critedge.i44 ] ; 4 uses
-  %.036213 = phi i64 [ %.036213.unr, %.critedge.i44.preheader.new ], [ %i.ju, %.critedge.i44 ] ; 5 uses
-  %i.jd = sub nuw i64 %i.di, %.036213
+  %.036213 = phi i64 [ %.036213.unr, %.critedge.i44.preheader.new ], [ %i.ju, %.critedge.i44 ] ; 3 uses
+  %i.jd = sub nuw i64 %i.di, %.036213             ; 3 uses
   %i.je = getelementptr inbounds i8, ptr %i.jc, i64 -8
   %i.jf = load i64, ptr %i.je, align 8, !tbaa !100, !noalias !5045
   %i.jg = inttoptr i64 %i.jf to ptr
@@ -3175,20 +3157,18 @@ _ZNSt6vectorIN8WasmEdge4LLVM5ValueESaIS2_EE7reserveEm.exit: ; preds = %bb.m, %_Z
   %i.jk = inttoptr i64 %i.jj to ptr
   %i.jl = getelementptr [8 x i8], ptr %i.gw, i64 %.neg
   store ptr %i.jk, ptr %i.jl, align 8, !tbaa !100
-  %38 = add nuw i64 %.036213, 2
-  %39 = sub nuw i64 %i.di, %38
   %i.jm = getelementptr inbounds i8, ptr %i.jc, i64 -24
   %i.jn = load i64, ptr %i.jm, align 8, !tbaa !100, !noalias !5045
   %i.jo = inttoptr i64 %i.jn to ptr
-  %i.jp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0163.0, i64 %39
-  store ptr %i.jo, ptr %i.jp, align 8, !tbaa !100
-  %40 = add nuw i64 %.036213, 3
-  %41 = sub nuw i64 %i.di, %40
+  %i.jp = getelementptr [8 x i8], ptr %.sroa.0163.0, i64 %i.jd
+  %36 = getelementptr i8, ptr %i.jp, i64 -16
+  store ptr %i.jo, ptr %36, align 8, !tbaa !100
   %i.jq = getelementptr inbounds i8, ptr %i.jc, i64 -32 ; 3 uses
   %i.jr = load i64, ptr %i.jq, align 8, !tbaa !100, !noalias !5045
   %i.js = inttoptr i64 %i.jr to ptr
-  %i.jt = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0163.0, i64 %41
-  store ptr %i.js, ptr %i.jt, align 8, !tbaa !100
+  %i.jt = getelementptr [8 x i8], ptr %.sroa.0163.0, i64 %i.jd
+  %37 = getelementptr i8, ptr %i.jt, i64 -24
+  store ptr %i.js, ptr %37, align 8, !tbaa !100
   %i.ju = add nuw i64 %.036213, 4                 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.ju, %i.di
   br i1 %exitcond.not.3, label %._crit_edge, label %.critedge.i44, !llvm.loop !4982
@@ -3591,7 +3571,7 @@ _ZN12_GLOBAL__N_116FunctionCompiler9getTrapBBEN8WasmEdge7ErrCode5ValueE.exit: ; 
   %i.db = ptrtoint ptr %i.cz to i64
   %i.dc = ptrtoint ptr %i.da to i64
   %i.dd = sub i64 %i.db, %i.dc                    ; 6 uses
-  %i.de = ashr exact i64 %i.dd, 3                 ; 25 uses
+  %i.de = ashr exact i64 %i.dd, 3                 ; 21 uses
   %i.df = call i32 @LLVMGetTypeKind(ptr noundef %i.cx) #17
   %i.dg = icmp eq i32 %i.df, 0
   br i1 %i.dg, label %bb.i, label %bb.h
@@ -3731,8 +3711,8 @@ middle.block175:                                  ; preds = %vector.body166
 
 .critedge.thread.i32.us:                          ; preds = %.critedge.thread.i32.us, %.critedge.thread.i32.us.preheader.new
   %i.ez = phi ptr [ %.unr191, %.critedge.thread.i32.us.preheader.new ], [ %i.fr, %.critedge.thread.i32.us ] ; 5 uses
-  %.0120.us = phi i64 [ %.0120.us.unr, %.critedge.thread.i32.us.preheader.new ], [ %i.fv, %.critedge.thread.i32.us ] ; 5 uses
-  %i.fa = sub nuw i64 %i.de, %.0120.us
+  %.0120.us = phi i64 [ %.0120.us.unr, %.critedge.thread.i32.us.preheader.new ], [ %i.fv, %.critedge.thread.i32.us ] ; 3 uses
+  %i.fa = sub nuw i64 %i.de, %.0120.us            ; 3 uses
   %i.fb = icmp ne ptr %i.eb, %i.ez
   call void @llvm.assume(i1 %i.fb)
   %i.fc = getelementptr inbounds i8, ptr %i.ez, i64 -8 ; 2 uses
@@ -3748,24 +3728,22 @@ middle.block175:                                  ; preds = %vector.body166
   %i.fj = inttoptr i64 %i.fi to ptr
   %i.fk = getelementptr [8 x i8], ptr %i.ey, i64 %.neg192
   store ptr %i.fj, ptr %i.fk, align 8, !tbaa !100
-  %28 = add nuw i64 %.0120.us, 2
-  %29 = sub nuw i64 %i.de, %28
   %i.fl = icmp ne ptr %i.eb, %i.fh
   call void @llvm.assume(i1 %i.fl)
   %i.fm = getelementptr inbounds i8, ptr %i.ez, i64 -24 ; 2 uses
   %i.fn = load i64, ptr %i.fm, align 8, !tbaa !100, !noalias !5189
   %i.fo = inttoptr i64 %i.fn to ptr
-  %i.fp = getelementptr inbounds nuw [8 x i8], ptr %.sroa.083.0, i64 %29
-  store ptr %i.fo, ptr %i.fp, align 8, !tbaa !100
-  %30 = add nuw i64 %.0120.us, 3
-  %31 = sub nuw i64 %i.de, %30
+  %i.fp = getelementptr [8 x i8], ptr %.sroa.083.0, i64 %i.fa
+  %28 = getelementptr i8, ptr %i.fp, i64 -16
+  store ptr %i.fo, ptr %28, align 8, !tbaa !100
   %i.fq = icmp ne ptr %i.eb, %i.fm
   call void @llvm.assume(i1 %i.fq)
   %i.fr = getelementptr inbounds i8, ptr %i.ez, i64 -32 ; 3 uses
   %i.fs = load i64, ptr %i.fr, align 8, !tbaa !100, !noalias !5189
   %i.ft = inttoptr i64 %i.fs to ptr
-  %i.fu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.083.0, i64 %31
-  store ptr %i.ft, ptr %i.fu, align 8, !tbaa !100
+  %i.fu = getelementptr [8 x i8], ptr %.sroa.083.0, i64 %i.fa
+  %29 = getelementptr i8, ptr %i.fu, i64 -24
+  store ptr %i.ft, ptr %29, align 8, !tbaa !100
   %i.fv = add nuw i64 %.0120.us, 4                ; 2 uses
   %exitcond132.not.3 = icmp eq i64 %i.fv, %i.de
   br i1 %exitcond132.not.3, label %._crit_edge, label %.critedge.thread.i32.us, !llvm.loop !5121
@@ -3933,8 +3911,8 @@ bb.k:                                             ; preds = %._crit_edge, %_ZNSt
 
 .critedge.i30:                                    ; preds = %.critedge.i30, %.critedge.i30.preheader.new
   %i.iu = phi ptr [ %.unr, %.critedge.i30.preheader.new ], [ %i.ji, %.critedge.i30 ] ; 4 uses
-  %.0120 = phi i64 [ %.0120.unr, %.critedge.i30.preheader.new ], [ %i.jm, %.critedge.i30 ] ; 5 uses
-  %i.iv = sub nuw i64 %i.de, %.0120
+  %.0120 = phi i64 [ %.0120.unr, %.critedge.i30.preheader.new ], [ %i.jm, %.critedge.i30 ] ; 3 uses
+  %i.iv = sub nuw i64 %i.de, %.0120               ; 3 uses
   %i.iw = getelementptr inbounds i8, ptr %i.iu, i64 -8
   %i.ix = load i64, ptr %i.iw, align 8, !tbaa !100, !noalias !5189
   %i.iy = inttoptr i64 %i.ix to ptr
@@ -3946,20 +3924,18 @@ bb.k:                                             ; preds = %._crit_edge, %_ZNSt
   %i.jc = inttoptr i64 %i.jb to ptr
   %i.jd = getelementptr [8 x i8], ptr %i.gs, i64 %.neg
   store ptr %i.jc, ptr %i.jd, align 8, !tbaa !100
-  %32 = add nuw i64 %.0120, 2
-  %33 = sub nuw i64 %i.de, %32
   %i.je = getelementptr inbounds i8, ptr %i.iu, i64 -24
   %i.jf = load i64, ptr %i.je, align 8, !tbaa !100, !noalias !5189
   %i.jg = inttoptr i64 %i.jf to ptr
-  %i.jh = getelementptr inbounds nuw [8 x i8], ptr %.sroa.083.0, i64 %33
-  store ptr %i.jg, ptr %i.jh, align 8, !tbaa !100
-  %34 = add nuw i64 %.0120, 3
-  %35 = sub nuw i64 %i.de, %34
+  %i.jh = getelementptr [8 x i8], ptr %.sroa.083.0, i64 %i.iv
+  %30 = getelementptr i8, ptr %i.jh, i64 -16
+  store ptr %i.jg, ptr %30, align 8, !tbaa !100
   %i.ji = getelementptr inbounds i8, ptr %i.iu, i64 -32 ; 3 uses
   %i.jj = load i64, ptr %i.ji, align 8, !tbaa !100, !noalias !5189
   %i.jk = inttoptr i64 %i.jj to ptr
-  %i.jl = getelementptr inbounds nuw [8 x i8], ptr %.sroa.083.0, i64 %35
-  store ptr %i.jk, ptr %i.jl, align 8, !tbaa !100
+  %i.jl = getelementptr [8 x i8], ptr %.sroa.083.0, i64 %i.iv
+  %31 = getelementptr i8, ptr %i.jl, i64 -24
+  store ptr %i.jk, ptr %31, align 8, !tbaa !100
   %i.jm = add nuw i64 %.0120, 4                   ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.jm, %i.de
   br i1 %exitcond.not.3, label %._crit_edge, label %.critedge.i30, !llvm.loop !5142

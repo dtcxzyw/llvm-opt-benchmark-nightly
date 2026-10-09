@@ -204,7 +204,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) @SHIFT, i8 %i.c, i64 256, i1 false), !tbaa !21
   %i.d = mul i32 %i.b, %i.a                       ; 0 uses
   %.recomposed = srem i32 %1, %i.a                ; 2 uses
-  %i.e = add nsw i32 %1, -1                       ; 10 uses
+  %i.e = add nsw i32 %1, -1                       ; 9 uses
   %.not80.not = icmp sgt i32 %1, %.recomposed
   br i1 %.not80.not, label %.lr.ph.preheader, label %._crit_edge
 
@@ -438,8 +438,8 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge1
 
 .lr.ph111.us:                                     ; preds = %.lr.ph111.us.preheader, %._crit_edge112.us
   %.4116.us = phi i32 [ %i.de, %._crit_edge112.us ], [ 0, %.lr.ph111.us.preheader ] ; 3 uses
-  %i.ci = mul i32 %i.b, %.4116.us                 ; 3 uses
-  %i.cj = sub i32 %i.e, %i.ci
+  %i.ci = mul i32 %i.b, %.4116.us                 ; 2 uses
+  %i.cj = sub i32 %i.e, %i.ci                     ; 2 uses
   %i.ck = sext i32 %i.cj to i64
   %i.cl = getelementptr inbounds i8, ptr %0, i64 %i.ck
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !21
@@ -459,9 +459,8 @@ bb.m:                                             ; preds = %.lr.ph111.us
 
 bb.n:                                             ; preds = %bb.m
   %i.cv = shl nuw nsw i32 %i.cu, 2
-  %i.cw = add i32 %i.ci, 2
-  %3 = sub i32 %i.e, %i.cw
-  %i.cx = sext i32 %3 to i64
+  %i.cw = add i32 %i.cj, -2
+  %i.cx = sext i32 %i.cw to i64
   %i.cy = getelementptr inbounds i8, ptr %0, i64 %i.cx
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !21
   %i.da = zext i8 %i.cz to i32

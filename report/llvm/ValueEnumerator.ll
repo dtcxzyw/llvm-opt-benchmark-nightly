@@ -204,12 +204,12 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !261  ; 2 uses
   %i.i = zext i32 %1 to i64
-  %.idx53 = shl nuw nsw i64 %i.i, 4               ; 5 uses
+  %.idx53 = shl nuw nsw i64 %i.i, 4               ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx53 ; 8 uses
   %i.k = zext i32 %2 to i64
-  %.idx = shl nuw nsw i64 %i.k, 4                 ; 5 uses
+  %.idx = shl nuw nsw i64 %i.k, 4                 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx ; 4 uses
-  %gepdiff = sub nsw i64 %.idx, %.idx53           ; 4 uses
+  %gepdiff = sub nsw i64 %.idx, %.idx53           ; 5 uses
   %i.m = ashr exact i64 %gepdiff, 4               ; 2 uses
   %i.n = add nsw i64 %i.m, 1
   %i.o = sdiv i64 %i.n, 2                         ; 4 uses
@@ -301,8 +301,7 @@ bb.d:                                             ; preds = %_ZNSt17_Temporary_b
   %i.ak = getelementptr inbounds i8, ptr %i.j, i64 %.idx54 ; 3 uses
   tail call fastcc void @"_ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKN4llvm5ValueEjESt6vectorIS7_SaIS7_EEEES8_NS0_5__ops15_Iter_comp_iterIZNS3_15ValueEnumerator17OptimizeConstantsEjjE3$_0EEEvT_SI_T0_T1_"(ptr %i.j, ptr %i.ak, ptr noundef %.sroa.10.0.i.i, ptr nonnull %0)
   tail call fastcc void @"_ZSt24__merge_sort_with_bufferIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKN4llvm5ValueEjESt6vectorIS7_SaIS7_EEEES8_NS0_5__ops15_Iter_comp_iterIZNS3_15ValueEnumerator17OptimizeConstantsEjjE3$_0EEEvT_SI_T0_T1_"(ptr %i.ak, ptr %i.l, ptr noundef %.sroa.10.0.i.i, ptr nonnull %0)
-  %3 = add nsw i64 %.idx53, %.idx54
-  %gepdiff55 = sub nsw i64 %.idx, %3
+  %gepdiff55 = sub nsw i64 %gepdiff, %.idx54
   %i.al = ashr exact i64 %gepdiff55, 4
   %i.am = ptrtoint ptr %0 to i64
   tail call fastcc void @"_ZSt16__merge_adaptiveIN9__gnu_cxx17__normal_iteratorIPSt4pairIPKN4llvm5ValueEjESt6vectorIS7_SaIS7_EEEElS8_NS0_5__ops15_Iter_comp_iterIZNS3_15ValueEnumerator17OptimizeConstantsEjjE3$_0EEEvT_SI_SI_T0_SJ_T1_T2_"(ptr %i.j, ptr %i.ak, ptr %i.l, i64 noundef %i.o, i64 noundef %i.al, ptr noundef %.sroa.10.0.i.i, i64 %i.am)

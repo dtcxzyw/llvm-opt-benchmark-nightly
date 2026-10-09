@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.backedge, %bb.f
   %.sroa.047.0 = phi ptr [ %.sroa.0.0.copyload.i.i, %bb.f ], [ %.sroa.047.0.be, %.backedge ] ; 20 uses
-  %.087 = phi i64 [ %i.j, %bb.f ], [ %.087.be, %.backedge ] ; 18 uses
-  %.086 = phi i64 [ %i.h, %bb.f ], [ %.086.be, %.backedge ] ; 12 uses
-  %i.v = sub nsw i64 %.086, %.087                 ; 10 uses
+  %.087 = phi i64 [ %i.j, %bb.f ], [ %.087.be, %.backedge ] ; 17 uses
+  %.086 = phi i64 [ %i.h, %bb.f ], [ %.086.be, %.backedge ] ; 11 uses
+  %i.v = sub nsw i64 %.086, %.087                 ; 11 uses
   %i.w = icmp slt i64 %.087, %i.v
   br i1 %i.w, label %bb.h, label %bb.l
 
@@ -292,8 +292,7 @@ middle.block:                                     ; preds = %vector.body
   %.0999.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph101.preheader ], [ %n.vec, %middle.block ] ; 3 uses
   %.sroa.047.198.ph = phi ptr [ %.sroa.047.0, %vector.memcheck ], [ %.sroa.047.0, %.lr.ph101.preheader ], [ %i.al, %middle.block ] ; 2 uses
   %.sroa.040.097.ph = phi ptr [ %i.ag, %vector.memcheck ], [ %i.ag, %.lr.ph101.preheader ], [ %i.am, %middle.block ] ; 2 uses
-  %4 = sub i64 %.086, %.087
-  %xtraiter174 = and i64 %4, 3                    ; 2 uses
+  %xtraiter174 = and i64 %i.v, 3                  ; 2 uses
   %lcmp.mod175.not = icmp eq i64 %xtraiter174, 0
   br i1 %lcmp.mod175.not, label %.lr.ph101.prol.loopexit, label %.lr.ph101.prol
 

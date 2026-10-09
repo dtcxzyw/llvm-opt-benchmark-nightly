@@ -204,10 +204,10 @@ bb.a:
   call void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E3newCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull align 1 dereferenceable(12) %i.b, ptr noundef nonnull %i.g, ptr noundef nonnull readonly dereferenceable(12) %2, ptr noundef nonnull readonly %i.h), !noalias !697
   call void @llvm.experimental.noalias.scope.decl(metadata !700)
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %.val.i.i = load i64, ptr %i.i, align 8, !alias.scope !700, !noalias !699, !noundef !7 ; 11 uses
+  %.val.i.i = load i64, ptr %i.i, align 8, !alias.scope !700, !noalias !699, !noundef !7 ; 10 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %.val6.i.i = load i64, ptr %i.j, align 8, !alias.scope !700, !noalias !699, !noundef !7 ; 6 uses
-  %i.k = sub i64 %.val6.i.i, %.val.i.i            ; 8 uses
+  %.val6.i.i = load i64, ptr %i.j, align 8, !alias.scope !700, !noalias !699, !noundef !7 ; 5 uses
+  %i.k = sub i64 %.val6.i.i, %.val.i.i            ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvMs6_NtNtCs7ZUl82OSlxp_6rustls6crypto6cipherNtB5_5Nonce12new_from_seq.exit, label %iter.check
 
@@ -288,10 +288,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.08.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec8, %vec.epilog.middle.block ] ; 4 uses
-  %4 = sub i64 %.val6.i.i, %.val.i.i
   %i.ae = xor i64 %.sroa.0.08.i.i.ph, -1
   %i.af = add i64 %.val6.i.i, %i.ae
-  %xtraiter = and i64 %4, 1
+  %xtraiter = and i64 %i.k, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -694,10 +693,10 @@ bb.c:                                             ; preds = %bb.a
 .noexc:                                           ; preds = %bb.c
   call void @llvm.experimental.noalias.scope.decl(metadata !1191)
   %i.w = getelementptr inbounds nuw i8, ptr %i.e, i64 32
-  %.val.i.i = load i64, ptr %i.w, align 8, !alias.scope !1191, !noalias !1190, !noundef !7 ; 11 uses
+  %.val.i.i = load i64, ptr %i.w, align 8, !alias.scope !1191, !noalias !1190, !noundef !7 ; 10 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.e, i64 40
-  %.val6.i.i = load i64, ptr %i.x, align 8, !alias.scope !1191, !noalias !1190, !noundef !7 ; 6 uses
-  %i.y = sub i64 %.val6.i.i, %.val.i.i            ; 8 uses
+  %.val6.i.i = load i64, ptr %i.x, align 8, !alias.scope !1191, !noalias !1190, !noundef !7 ; 5 uses
+  %i.y = sub i64 %.val6.i.i, %.val.i.i            ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %.loopexit, label %iter.check
 
@@ -778,10 +777,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.08.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec54, %vec.epilog.middle.block ] ; 4 uses
-  %4 = sub i64 %.val6.i.i, %.val.i.i
   %i.as = xor i64 %.sroa.0.08.i.i.ph, -1
   %i.at = add i64 %.val6.i.i, %i.as
-  %xtraiter = and i64 %4, 1
+  %xtraiter = and i64 %i.y, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -1184,10 +1182,10 @@ bb.b:                                             ; preds = %bb.a
   call void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E3newCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, ptr noundef nonnull align 1 dereferenceable(12) %i.d, ptr noundef nonnull %i.l, ptr noundef nonnull readonly dereferenceable(12) %i.j, ptr noundef nonnull readonly %i.m), !noalias !1244
   call void @llvm.experimental.noalias.scope.decl(metadata !1245)
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %.val.i.i = load i64, ptr %i.n, align 8, !alias.scope !1245, !noalias !1243, !noundef !7 ; 11 uses
+  %.val.i.i = load i64, ptr %i.n, align 8, !alias.scope !1245, !noalias !1243, !noundef !7 ; 10 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %.val6.i.i = load i64, ptr %i.o, align 8, !alias.scope !1245, !noalias !1243, !noundef !7 ; 6 uses
-  %i.p = sub i64 %.val6.i.i, %.val.i.i            ; 8 uses
+  %.val6.i.i = load i64, ptr %i.o, align 8, !alias.scope !1245, !noalias !1243, !noundef !7 ; 5 uses
+  %i.p = sub i64 %.val6.i.i, %.val.i.i            ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvMs6_NtNtCs7ZUl82OSlxp_6rustls6crypto6cipherNtB5_5Nonce12new_from_seq.exit, label %iter.check
 
@@ -1268,10 +1266,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.08.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec70, %vec.epilog.middle.block ] ; 4 uses
-  %4 = sub i64 %.val6.i.i, %.val.i.i
   %i.aj = xor i64 %.sroa.0.08.i.i.ph, -1
   %i.ak = add i64 %.val6.i.i, %i.aj
-  %xtraiter = and i64 %4, 1
+  %xtraiter = and i64 %i.p, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -1419,10 +1416,10 @@ bb.c:                                             ; preds = %bb.a
 .noexc:                                           ; preds = %bb.c
   call void @llvm.experimental.noalias.scope.decl(metadata !1275)
   %i.w = getelementptr inbounds nuw i8, ptr %i.e, i64 32
-  %.val.i.i = load i64, ptr %i.w, align 8, !alias.scope !1275, !noalias !1274, !noundef !7 ; 11 uses
+  %.val.i.i = load i64, ptr %i.w, align 8, !alias.scope !1275, !noalias !1274, !noundef !7 ; 10 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.e, i64 40
-  %.val6.i.i = load i64, ptr %i.x, align 8, !alias.scope !1275, !noalias !1274, !noundef !7 ; 6 uses
-  %i.y = sub i64 %.val6.i.i, %.val.i.i            ; 8 uses
+  %.val6.i.i = load i64, ptr %i.x, align 8, !alias.scope !1275, !noalias !1274, !noundef !7 ; 5 uses
+  %i.y = sub i64 %.val6.i.i, %.val.i.i            ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %.loopexit, label %iter.check
 
@@ -1503,10 +1500,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.08.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec54, %vec.epilog.middle.block ] ; 4 uses
-  %4 = sub i64 %.val6.i.i, %.val.i.i
   %i.as = xor i64 %.sroa.0.08.i.i.ph, -1
   %i.at = add i64 %.val6.i.i, %i.as
-  %xtraiter = and i64 %4, 1
+  %xtraiter = and i64 %i.y, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -1909,10 +1905,10 @@ bb.b:                                             ; preds = %bb.a
   call void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E3newCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, ptr noundef nonnull align 1 dereferenceable(12) %i.d, ptr noundef nonnull %i.l, ptr noundef nonnull readonly dereferenceable(12) %i.j, ptr noundef nonnull readonly %i.m), !noalias !1372
   call void @llvm.experimental.noalias.scope.decl(metadata !1373)
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %.val.i.i = load i64, ptr %i.n, align 8, !alias.scope !1373, !noalias !1371, !noundef !7 ; 11 uses
+  %.val.i.i = load i64, ptr %i.n, align 8, !alias.scope !1373, !noalias !1371, !noundef !7 ; 10 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 40
-  %.val6.i.i = load i64, ptr %i.o, align 8, !alias.scope !1373, !noalias !1371, !noundef !7 ; 6 uses
-  %i.p = sub i64 %.val6.i.i, %.val.i.i            ; 8 uses
+  %.val6.i.i = load i64, ptr %i.o, align 8, !alias.scope !1373, !noalias !1371, !noundef !7 ; 5 uses
+  %i.p = sub i64 %.val6.i.i, %.val.i.i            ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvMs6_NtNtCs7ZUl82OSlxp_6rustls6crypto6cipherNtB5_5Nonce12new_from_seq.exit, label %iter.check
 
@@ -1993,10 +1989,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.08.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec70, %vec.epilog.middle.block ] ; 4 uses
-  %4 = sub i64 %.val6.i.i, %.val.i.i
   %i.aj = xor i64 %.sroa.0.08.i.i.ph, -1
   %i.ak = add i64 %.val6.i.i, %i.aj
-  %xtraiter = and i64 %4, 1
+  %xtraiter = and i64 %i.p, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 

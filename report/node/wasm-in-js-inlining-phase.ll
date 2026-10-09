@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 -72
-  %i.d = load i32, ptr %i.c, align 8              ; 2 uses
+  %i.d = load i32, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 13 uses
   %i.g = load ptr, ptr %i.f, align 8
@@ -214,8 +214,8 @@ bb.a:
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = lshr exact i64 %i.k, 3
-  %i.m = trunc i64 %i.l to i32                    ; 2 uses
-  %i.n = sub i32 %i.m, %i.d                       ; 5 uses
+  %i.m = trunc i64 %i.l to i32
+  %i.n = sub i32 %i.m, %i.d                       ; 6 uses
   %i.o = sub nsw i32 %1, %i.n                     ; 8 uses
   %i.p = add nsw i32 %i.o, 1                      ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 240
@@ -239,9 +239,8 @@ _ZN2v88internal4wasm14FastZoneVectorINS0_8compiler10turboshaft25WasmInJsInlining
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal4wasm14FastZoneVectorINS0_8compiler10turboshaft25WasmInJsInliningInterfaceINS4_9AssemblerINS_4base3tmp5list1IJNS4_12GraphVisitorENS4_23WasmInJSInliningReducerENS4_19WasmLoweringReducerENS4_13TSReducerBaseEEEEEEE5ValueEE18EnsureMoreCapacityEiPNS0_4ZoneE.exit
   %.pre = load ptr, ptr %i.f, align 8             ; 2 uses
-  %2 = add i32 %i.d, %1
   %xtraiter = and i32 %i.o, 3                     ; 3 uses
-  %i.z = sub i32 %i.m, %2
+  %i.z = sub i32 %i.n, %1
   %i.aa = icmp ugt i32 %i.z, -4
   br i1 %i.aa, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 

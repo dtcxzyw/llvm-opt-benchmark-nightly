@@ -205,7 +205,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !252    ; 4 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %i.d = sub i64 %i.b, %i.c                       ; 5 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 9 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !299  ; 3 uses
   %i.g = zext i32 %i.f to i64                     ; 5 uses
@@ -213,11 +213,11 @@ bb.a:
   %i.i = icmp eq ptr %1, %i.h
   %i.j = ptrtoint ptr %3 to i64                   ; 2 uses
   %i.k = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.l = sub i64 %i.j, %i.k                       ; 10 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 9 uses
+  %4 = ashr exact i64 %i.l, 3                     ; 9 uses
   br i1 %i.i, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %4 = ashr exact i64 %i.l, 3                     ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.n = load i32, ptr %i.m, align 4, !tbaa !300
   %i.o = zext i32 %i.n to i64
@@ -257,9 +257,7 @@ _ZN4llvh15SmallVectorImplIPN6hermes2vm6GCCellEE6appendIPS4_vEEvT_S8_.exit: ; pre
   br label %_ZSt4copyIPPN6hermes2vm6GCCellES4_ET0_T_S6_S5_.exit
 
 bb.f:                                             ; preds = %bb.a
-  %.idx49 = sub i64 0, %i.l
-  %5 = ashr exact i64 %i.l, 3                     ; 6 uses
-  %i.aa = add nsw i64 %5, %i.g                    ; 2 uses
+  %i.aa = add nsw i64 %4, %i.g                    ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !300
   %i.ad = zext i32 %i.ac to i64
@@ -280,23 +278,24 @@ _ZN4llvh15SmallVectorImplIPN6hermes2vm6GCCellEE7reserveEm.exit: ; preds = %bb.f,
   %i.ah = phi ptr [ %i.a, %bb.f ], [ %.pre, %bb.g ] ; 5 uses
   %i.ai = ptrtoaddr ptr %i.ah to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.d ; 14 uses
-  %.idx = shl nuw nsw i64 %.pre-phi, 3            ; 4 uses
+  %.idx = shl nuw nsw i64 %.pre-phi, 3            ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.idx ; 4 uses
-  %gepdiff = sub nsw i64 %.idx, %i.d              ; 2 uses
+  %gepdiff = sub nsw i64 %.idx, %i.d              ; 3 uses
   %i.al = ashr exact i64 %gepdiff, 3              ; 8 uses
-  %.not = icmp ult i64 %i.al, %5
+  %.not = icmp ult i64 %i.al, %4
   br i1 %.not, label %bb.t, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvh15SmallVectorImplIPN6hermes2vm6GCCellEE7reserveEm.exit
+  %.idx49 = sub i64 0, %i.l
   %i.am = getelementptr inbounds i8, ptr %i.ak, i64 %.idx49 ; 2 uses
   %i.an = load i32, ptr %i.ab, align 4, !tbaa !300
   %i.ao = zext i32 %i.an to i64
   %i.ap = sub nsw i64 %i.ao, %.pre-phi
-  %i.aq = icmp ugt i64 %5, %i.ap
+  %i.aq = icmp ugt i64 %4, %i.ap
   br i1 %i.aq, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.ar = add nsw i64 %5, %.pre-phi
+  %i.ar = add nsw i64 %4, %.pre-phi
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.as, i64 noundef %i.ar, i64 noundef 8) #35
   %.pre.i44 = load i32, ptr %i.e, align 8, !tbaa !299 ; 2 uses
@@ -328,11 +327,10 @@ bb.m:                                             ; preds = %bb.l
 
 _ZN4llvh15SmallVectorImplIPN6hermes2vm6GCCellEE6appendISt13move_iteratorIPS4_EvEEvT_SA_.exit: ; preds = %bb.k, %bb.l, %bb.m
   %i.az = phi i32 [ %.pre10.i, %bb.k ], [ %i.au, %bb.l ], [ %i.au, %bb.m ]
-  %i.ba = trunc i64 %5 to i32
+  %i.ba = trunc i64 %4 to i32
   %i.bb = add i32 %i.az, %i.ba
   store i32 %i.bb, ptr %i.e, align 8, !tbaa !299
-  %6 = add i64 %i.d, %i.l
-  %gepdiff50 = sub i64 %.idx, %6                  ; 3 uses
+  %gepdiff50 = sub i64 %gepdiff, %i.l             ; 3 uses
   %i.bc = ashr exact i64 %gepdiff50, 3            ; 2 uses
   %i.bd = icmp sgt i64 %i.bc, 1
   br i1 %i.bd, label %bb.n, label %bb.o, !prof !131
@@ -370,7 +368,7 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZSt4copyIPPN6hermes2vm6GCCellES4_ET0_T_S6_S5_.exit
 
 bb.t:                                             ; preds = %_ZN4llvh15SmallVectorImplIPN6hermes2vm6GCCellEE7reserveEm.exit
-  %i.bl = trunc i64 %5 to i32
+  %i.bl = trunc i64 %4 to i32
   %i.bm = add i32 %i.ag, %i.bl                    ; 2 uses
   store i32 %i.bm, ptr %i.e, align 8, !tbaa !299
   %.not.i.i45 = icmp eq i64 %i.d, %.idx

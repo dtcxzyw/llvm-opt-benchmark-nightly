@@ -205,9 +205,9 @@ bb.t:                                             ; preds = %bb.s
 
 .noexc70:                                         ; preds = %bb.t
   call void @llvm.experimental.noalias.scope.decl(metadata !4218)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4218, !noalias !4219, !noundef !5 ; 21 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4218, !noalias !4219, !noundef !5 ; 6 uses
-  %i.lk = sub i64 %.val6.i.i63, %.val.i.i62       ; 24 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4218, !noalias !4219, !noundef !5 ; 19 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4218, !noalias !4219, !noundef !5 ; 4 uses
+  %i.lk = sub i64 %.val6.i.i63, %.val.i.i62       ; 26 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT15bf16_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTNtNtCsdsILkMb8ZHY_4half6bfloat4bf16RSB21_QB2B_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -281,8 +281,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTRNtNtCsdsILkMb8ZHY_4half6bfloat4bf16QB1h_ENCNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB23_9BinaryOpT15bf16_scalar_vec0E0Cs1dZk1kIfPhr_19candle_transformers.exit.us.i.i.preheader: ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.010.us.i.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec423, %vec.epilog.iter.check ], [ %n.vec431, %vec.epilog.middle.block ] ; 3 uses
-  %7 = sub i64 %.val6.i.i63, %.val.i.i62
-  %xtraiter548 = and i64 %7, 3                    ; 2 uses
+  %xtraiter548 = and i64 %i.lk, 3                 ; 2 uses
   %lcmp.mod549.not = icmp eq i64 %xtraiter548, 0
   br i1 %lcmp.mod549.not, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTRNtNtCsdsILkMb8ZHY_4half6bfloat4bf16QB1h_ENCNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB23_9BinaryOpT15bf16_scalar_vec0E0Cs1dZk1kIfPhr_19candle_transformers.exit.us.i.i.prol.loopexit, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTRNtNtCsdsILkMb8ZHY_4half6bfloat4bf16QB1h_ENCNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB23_9BinaryOpT15bf16_scalar_vec0E0Cs1dZk1kIfPhr_19candle_transformers.exit.us.i.i.prol
 
@@ -423,10 +422,9 @@ vec.epilog.middle.block501:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.split.i.i.preheader:                 ; preds = %iter.check489, %vec.epilog.iter.check491, %vec.epilog.middle.block501
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check489 ], [ %n.vec478, %vec.epilog.iter.check491 ], [ %n.vec494, %vec.epilog.middle.block501 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.nt = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.nu = add i64 %.val6.i.i63, %i.nt
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lk, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.split.split.i.i.prol.loopexit, label %.lr.ph.split.split.i.i.prol
 
@@ -829,9 +827,9 @@ bb.u:                                             ; preds = %bb.t
 
 .noexc70:                                         ; preds = %bb.u
   call void @llvm.experimental.noalias.scope.decl(metadata !4289)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4289, !noalias !4290, !noundef !5 ; 21 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4289, !noalias !4290, !noundef !5 ; 6 uses
-  %i.lo = sub i64 %.val6.i.i63, %.val.i.i62       ; 24 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4289, !noalias !4290, !noundef !5 ; 19 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4289, !noalias !4290, !noundef !5 ; 4 uses
+  %i.lo = sub i64 %.val6.i.i63, %.val.i.i62       ; 26 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT15bf16_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTNtNtCsdsILkMb8ZHY_4half6bfloat4bf16RSB21_QB2B_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -905,8 +903,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.us.i.i.preheader:                    ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.010.us.i.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec419, %vec.epilog.iter.check ], [ %n.vec427, %vec.epilog.middle.block ] ; 3 uses
-  %7 = sub i64 %.val6.i.i63, %.val.i.i62
-  %xtraiter545 = and i64 %7, 3                    ; 2 uses
+  %xtraiter545 = and i64 %i.lo, 3                 ; 2 uses
   %lcmp.mod546.not = icmp eq i64 %xtraiter545, 0
   br i1 %lcmp.mod546.not, label %.lr.ph.split.us.i.i.prol.loopexit, label %.lr.ph.split.us.i.i.prol
 
@@ -1047,10 +1044,9 @@ vec.epilog.middle.block501:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.split.i.i.preheader:                 ; preds = %iter.check489, %vec.epilog.iter.check491, %vec.epilog.middle.block501
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check489 ], [ %n.vec478, %vec.epilog.iter.check491 ], [ %n.vec494, %vec.epilog.middle.block501 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.nx = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ny = add i64 %.val6.i.i63, %i.nx
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lo, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.split.split.i.i.prol.loopexit, label %.lr.ph.split.split.i.i.prol
 
@@ -1453,9 +1449,9 @@ bb.t:                                             ; preds = %bb.s
 
 .noexc70:                                         ; preds = %bb.t
   call void @llvm.experimental.noalias.scope.decl(metadata !4360)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4360, !noalias !4361, !noundef !5 ; 21 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4360, !noalias !4361, !noundef !5 ; 6 uses
-  %i.lk = sub i64 %.val6.i.i63, %.val.i.i62       ; 24 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4360, !noalias !4361, !noundef !5 ; 19 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4360, !noalias !4361, !noundef !5 ; 4 uses
+  %i.lk = sub i64 %.val6.i.i63, %.val.i.i62       ; 26 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT14f16_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTNtNtCsdsILkMb8ZHY_4half8binary163f16RSB20_QB2B_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -1529,8 +1525,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTRNtNtCsdsILkMb8ZHY_4half8binary163f16QB1h_ENCNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB24_9BinaryOpT14f16_scalar_vec0E0Cs1dZk1kIfPhr_19candle_transformers.exit.us.i.i.preheader: ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.010.us.i.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec423, %vec.epilog.iter.check ], [ %n.vec431, %vec.epilog.middle.block ] ; 3 uses
-  %7 = sub i64 %.val6.i.i63, %.val.i.i62
-  %xtraiter548 = and i64 %7, 3                    ; 2 uses
+  %xtraiter548 = and i64 %i.lk, 3                 ; 2 uses
   %lcmp.mod549.not = icmp eq i64 %xtraiter548, 0
   br i1 %lcmp.mod549.not, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTRNtNtCsdsILkMb8ZHY_4half8binary163f16QB1h_ENCNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB24_9BinaryOpT14f16_scalar_vec0E0Cs1dZk1kIfPhr_19candle_transformers.exit.us.i.i.prol.loopexit, label %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8for_each4callTRNtNtCsdsILkMb8ZHY_4half8binary163f16QB1h_ENCNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB24_9BinaryOpT14f16_scalar_vec0E0Cs1dZk1kIfPhr_19candle_transformers.exit.us.i.i.prol
 
@@ -1671,10 +1666,9 @@ vec.epilog.middle.block501:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.split.i.i.preheader:                 ; preds = %iter.check489, %vec.epilog.iter.check491, %vec.epilog.middle.block501
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check489 ], [ %n.vec478, %vec.epilog.iter.check491 ], [ %n.vec494, %vec.epilog.middle.block501 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.nt = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.nu = add i64 %.val6.i.i63, %i.nt
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lk, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.split.split.i.i.prol.loopexit, label %.lr.ph.split.split.i.i.prol
 
@@ -2077,9 +2071,9 @@ bb.u:                                             ; preds = %bb.t
 
 .noexc70:                                         ; preds = %bb.u
   call void @llvm.experimental.noalias.scope.decl(metadata !4431)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4431, !noalias !4432, !noundef !5 ; 21 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4431, !noalias !4432, !noundef !5 ; 6 uses
-  %i.lo = sub i64 %.val6.i.i63, %.val.i.i62       ; 24 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4431, !noalias !4432, !noundef !5 ; 19 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4431, !noalias !4432, !noundef !5 ; 4 uses
+  %i.lo = sub i64 %.val6.i.i63, %.val.i.i62       ; 26 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT14f16_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTNtNtCsdsILkMb8ZHY_4half8binary163f16RSB20_QB2B_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -2153,8 +2147,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.us.i.i.preheader:                    ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.010.us.i.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec419, %vec.epilog.iter.check ], [ %n.vec427, %vec.epilog.middle.block ] ; 3 uses
-  %7 = sub i64 %.val6.i.i63, %.val.i.i62
-  %xtraiter545 = and i64 %7, 3                    ; 2 uses
+  %xtraiter545 = and i64 %i.lo, 3                 ; 2 uses
   %lcmp.mod546.not = icmp eq i64 %xtraiter545, 0
   br i1 %lcmp.mod546.not, label %.lr.ph.split.us.i.i.prol.loopexit, label %.lr.ph.split.us.i.i.prol
 
@@ -2295,10 +2288,9 @@ vec.epilog.middle.block501:                       ; preds = %vec.epilog.vector.b
 
 .lr.ph.split.split.i.i.preheader:                 ; preds = %iter.check489, %vec.epilog.iter.check491, %vec.epilog.middle.block501
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check489 ], [ %n.vec478, %vec.epilog.iter.check491 ], [ %n.vec494, %vec.epilog.middle.block501 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.nx = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ny = add i64 %.val6.i.i63, %i.nx
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lo, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.split.split.i.i.prol.loopexit, label %.lr.ph.split.split.i.i.prol
 
@@ -2701,9 +2693,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc60:                                         ; preds = %.noexc59
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4486
   call void @llvm.experimental.noalias.scope.decl(metadata !4487)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4487, !noalias !4488, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4487, !noalias !4488, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4487, !noalias !4488, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4487, !noalias !4488, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT7f64_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSdB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -2763,10 +2755,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jn = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jo = add i64 %.val6.i.i, %i.jn
-  %xtraiter426 = and i64 %7, 1
+  %xtraiter426 = and i64 %i.it, 1
   %lcmp.mod427.not = icmp eq i64 %xtraiter426, 0
   br i1 %lcmp.mod427.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -2867,9 +2858,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc68:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !4494)
-  %.val.i.i61 = load i64, ptr %i.ak, align 8, !alias.scope !4494, !noalias !4495, !noundef !5 ; 8 uses
-  %.val6.i.i62 = load i64, ptr %i.al, align 8, !alias.scope !4494, !noalias !4495, !noundef !5 ; 4 uses
-  %i.lf = sub i64 %.val6.i.i62, %.val.i.i61       ; 4 uses
+  %.val.i.i61 = load i64, ptr %i.ak, align 8, !alias.scope !4494, !noalias !4495, !noundef !5 ; 7 uses
+  %.val6.i.i62 = load i64, ptr %i.al, align 8, !alias.scope !4494, !noalias !4495, !noundef !5 ; 3 uses
+  %i.lf = sub i64 %.val6.i.i62, %.val.i.i61       ; 5 uses
   %.not.i.i63 = icmp eq i64 %.val6.i.i62, %.val.i.i61
   br i1 %.not.i.i63, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT14f64_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTdRSdQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i64
 
@@ -2915,10 +2906,9 @@ middle.block389:                                  ; preds = %vector.body384
 
 scalar.ph380.preheader:                           ; preds = %.lr.ph.i.i64, %middle.block389
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i64 ], [ %n.vec383, %middle.block389 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i62, %.val.i.i61
   %i.lr = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ls = add i64 %.val6.i.i62, %i.lr
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lf, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph380.prol.loopexit, label %scalar.ph380.prol
 
@@ -3321,9 +3311,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc60:                                         ; preds = %.noexc59
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4549
   call void @llvm.experimental.noalias.scope.decl(metadata !4550)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4550, !noalias !4551, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4550, !noalias !4551, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4550, !noalias !4551, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4550, !noalias !4551, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT7f64_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSdB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -3383,10 +3373,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jn = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jo = add i64 %.val6.i.i, %i.jn
-  %xtraiter426 = and i64 %7, 1
+  %xtraiter426 = and i64 %i.it, 1
   %lcmp.mod427.not = icmp eq i64 %xtraiter426, 0
   br i1 %lcmp.mod427.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -3487,9 +3476,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc68:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !4557)
-  %.val.i.i61 = load i64, ptr %i.ak, align 8, !alias.scope !4557, !noalias !4558, !noundef !5 ; 8 uses
-  %.val6.i.i62 = load i64, ptr %i.al, align 8, !alias.scope !4557, !noalias !4558, !noundef !5 ; 4 uses
-  %i.lf = sub i64 %.val6.i.i62, %.val.i.i61       ; 4 uses
+  %.val.i.i61 = load i64, ptr %i.ak, align 8, !alias.scope !4557, !noalias !4558, !noundef !5 ; 7 uses
+  %.val6.i.i62 = load i64, ptr %i.al, align 8, !alias.scope !4557, !noalias !4558, !noundef !5 ; 3 uses
+  %i.lf = sub i64 %.val6.i.i62, %.val.i.i61       ; 5 uses
   %.not.i.i63 = icmp eq i64 %.val6.i.i62, %.val.i.i61
   br i1 %.not.i.i63, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT14f64_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTdRSdQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i64
 
@@ -3535,10 +3524,9 @@ middle.block389:                                  ; preds = %vector.body384
 
 scalar.ph380.preheader:                           ; preds = %.lr.ph.i.i64, %middle.block389
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i64 ], [ %n.vec383, %middle.block389 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i62, %.val.i.i61
   %i.lr = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ls = add i64 %.val6.i.i62, %i.lr
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lf, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph380.prol.loopexit, label %scalar.ph380.prol
 
@@ -3941,9 +3929,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4612
   call void @llvm.experimental.noalias.scope.decl(metadata !4613)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4613, !noalias !4614, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4613, !noalias !4614, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4613, !noalias !4614, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4613, !noalias !4614, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT7f32_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSfB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -4003,10 +3991,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jn = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jo = add i64 %.val6.i.i, %i.jn
-  %xtraiter427 = and i64 %7, 1
+  %xtraiter427 = and i64 %i.it, 1
   %lcmp.mod428.not = icmp eq i64 %xtraiter427, 0
   br i1 %lcmp.mod428.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -4107,9 +4094,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !4620)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4620, !noalias !4621, !noundef !5 ; 8 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4620, !noalias !4621, !noundef !5 ; 4 uses
-  %i.lf = sub i64 %.val6.i.i63, %.val.i.i62       ; 4 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4620, !noalias !4621, !noundef !5 ; 7 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4620, !noalias !4621, !noundef !5 ; 3 uses
+  %i.lf = sub i64 %.val6.i.i63, %.val.i.i62       ; 5 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT14f32_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTfRSfQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -4155,10 +4142,9 @@ middle.block390:                                  ; preds = %vector.body385
 
 scalar.ph381.preheader:                           ; preds = %.lr.ph.i.i65, %middle.block390
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i65 ], [ %n.vec384, %middle.block390 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.lr = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ls = add i64 %.val6.i.i63, %i.lr
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lf, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph381.prol.loopexit, label %scalar.ph381.prol
 
@@ -4561,9 +4547,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4675
   call void @llvm.experimental.noalias.scope.decl(metadata !4676)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4676, !noalias !4677, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4676, !noalias !4677, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4676, !noalias !4677, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4676, !noalias !4677, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT7f32_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSfB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -4623,10 +4609,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jn = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jo = add i64 %.val6.i.i, %i.jn
-  %xtraiter427 = and i64 %7, 1
+  %xtraiter427 = and i64 %i.it, 1
   %lcmp.mod428.not = icmp eq i64 %xtraiter427, 0
   br i1 %lcmp.mod428.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -4727,9 +4712,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !4683)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4683, !noalias !4684, !noundef !5 ; 8 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4683, !noalias !4684, !noundef !5 ; 4 uses
-  %i.lf = sub i64 %.val6.i.i63, %.val.i.i62       ; 4 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4683, !noalias !4684, !noundef !5 ; 7 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4683, !noalias !4684, !noundef !5 ; 3 uses
+  %i.lf = sub i64 %.val6.i.i63, %.val.i.i62       ; 5 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT14f32_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTfRSfQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -4775,10 +4760,9 @@ middle.block390:                                  ; preds = %vector.body385
 
 scalar.ph381.preheader:                           ; preds = %.lr.ph.i.i65, %middle.block390
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i65 ], [ %n.vec384, %middle.block390 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.lr = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ls = add i64 %.val6.i.i63, %i.lr
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lf, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph381.prol.loopexit, label %scalar.ph381.prol
 
@@ -5181,9 +5165,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4740
   call void @llvm.experimental.noalias.scope.decl(metadata !4741)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4741, !noalias !4742, !noundef !5 ; 9 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4741, !noalias !4742, !noundef !5 ; 4 uses
-  %i.is = sub i64 %.val6.i.i, %.val.i.i           ; 8 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4741, !noalias !4742, !noundef !5 ; 8 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4741, !noalias !4742, !noundef !5 ; 3 uses
+  %i.is = sub i64 %.val6.i.i, %.val.i.i           ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT6u8_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRShB1R_QB1S_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %iter.check
 
@@ -5273,10 +5257,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec378, %vec.epilog.middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jr = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.js = add i64 %.val6.i.i, %i.jr
-  %xtraiter448 = and i64 %7, 1
+  %xtraiter448 = and i64 %i.is, 1
   %lcmp.mod449.not = icmp eq i64 %xtraiter448, 0
   br i1 %lcmp.mod449.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -5374,9 +5357,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !4748)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4748, !noalias !4749, !noundef !5 ; 9 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4748, !noalias !4749, !noundef !5 ; 4 uses
-  %i.lg = sub i64 %.val6.i.i63, %.val.i.i62       ; 8 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4748, !noalias !4749, !noundef !5 ; 8 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4748, !noalias !4749, !noundef !5 ; 3 uses
+  %i.lg = sub i64 %.val6.i.i63, %.val.i.i62       ; 9 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT13u8_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutThRShQB21_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %iter.check401
 
@@ -5452,10 +5435,9 @@ vec.epilog.middle.block413:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph402.preheader:                ; preds = %iter.check401, %vec.epilog.iter.check403, %vec.epilog.middle.block413
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check401 ], [ %n.vec392, %vec.epilog.iter.check403 ], [ %n.vec406, %vec.epilog.middle.block413 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.lw = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.lx = add i64 %.val6.i.i63, %i.lw
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lg, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph402.prol.loopexit, label %vec.epilog.scalar.ph402.prol
 
@@ -5858,9 +5840,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4805
   call void @llvm.experimental.noalias.scope.decl(metadata !4806)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4806, !noalias !4807, !noundef !5 ; 9 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4806, !noalias !4807, !noundef !5 ; 4 uses
-  %i.is = sub i64 %.val6.i.i, %.val.i.i           ; 8 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4806, !noalias !4807, !noundef !5 ; 8 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4806, !noalias !4807, !noundef !5 ; 3 uses
+  %i.is = sub i64 %.val6.i.i, %.val.i.i           ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT6u8_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRShB1R_QB1S_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %iter.check
 
@@ -5950,10 +5932,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec378, %vec.epilog.middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jr = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.js = add i64 %.val6.i.i, %i.jr
-  %xtraiter448 = and i64 %7, 1
+  %xtraiter448 = and i64 %i.is, 1
   %lcmp.mod449.not = icmp eq i64 %xtraiter448, 0
   br i1 %lcmp.mod449.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -6051,9 +6032,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !4813)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4813, !noalias !4814, !noundef !5 ; 9 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4813, !noalias !4814, !noundef !5 ; 4 uses
-  %i.lg = sub i64 %.val6.i.i63, %.val.i.i62       ; 8 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4813, !noalias !4814, !noundef !5 ; 8 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4813, !noalias !4814, !noundef !5 ; 3 uses
+  %i.lg = sub i64 %.val6.i.i63, %.val.i.i62       ; 9 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT13u8_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutThRShQB21_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %iter.check401
 
@@ -6129,10 +6110,9 @@ vec.epilog.middle.block413:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph402.preheader:                ; preds = %iter.check401, %vec.epilog.iter.check403, %vec.epilog.middle.block413
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check401 ], [ %n.vec392, %vec.epilog.iter.check403 ], [ %n.vec406, %vec.epilog.middle.block413 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.lw = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.lx = add i64 %.val6.i.i63, %i.lw
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.lg, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph402.prol.loopexit, label %vec.epilog.scalar.ph402.prol
 
@@ -6535,9 +6515,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4868
   call void @llvm.experimental.noalias.scope.decl(metadata !4869)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4869, !noalias !4870, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4869, !noalias !4870, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4869, !noalias !4870, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4869, !noalias !4870, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT7i32_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSlB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -6595,10 +6575,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jl = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jm = add i64 %.val6.i.i, %i.jl
-  %xtraiter427 = and i64 %7, 1
+  %xtraiter427 = and i64 %i.it, 1
   %lcmp.mod428.not = icmp eq i64 %xtraiter427, 0
   br i1 %lcmp.mod428.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -6696,9 +6675,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !4876)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4876, !noalias !4877, !noundef !5 ; 8 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4876, !noalias !4877, !noundef !5 ; 4 uses
-  %i.la = sub i64 %.val6.i.i63, %.val.i.i62       ; 4 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4876, !noalias !4877, !noundef !5 ; 7 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4876, !noalias !4877, !noundef !5 ; 3 uses
+  %i.la = sub i64 %.val6.i.i63, %.val.i.i62       ; 5 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT14i32_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTlRSlQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -6742,10 +6721,9 @@ middle.block390:                                  ; preds = %vector.body385
 
 scalar.ph381.preheader:                           ; preds = %.lr.ph.i.i65, %middle.block390
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i65 ], [ %n.vec384, %middle.block390 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.lk = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ll = add i64 %.val6.i.i63, %i.lk
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.la, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph381.prol.loopexit, label %scalar.ph381.prol
 
@@ -7148,9 +7126,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4931
   call void @llvm.experimental.noalias.scope.decl(metadata !4932)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4932, !noalias !4933, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4932, !noalias !4933, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4932, !noalias !4933, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4932, !noalias !4933, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT7i32_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSlB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -7208,10 +7186,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jl = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jm = add i64 %.val6.i.i, %i.jl
-  %xtraiter427 = and i64 %7, 1
+  %xtraiter427 = and i64 %i.it, 1
   %lcmp.mod428.not = icmp eq i64 %xtraiter427, 0
   br i1 %lcmp.mod428.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -7309,9 +7286,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !4939)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4939, !noalias !4940, !noundef !5 ; 8 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4939, !noalias !4940, !noundef !5 ; 4 uses
-  %i.la = sub i64 %.val6.i.i63, %.val.i.i62       ; 4 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !4939, !noalias !4940, !noundef !5 ; 7 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !4939, !noalias !4940, !noundef !5 ; 3 uses
+  %i.la = sub i64 %.val6.i.i63, %.val.i.i62       ; 5 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT14i32_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTlRSlQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -7355,10 +7332,9 @@ middle.block390:                                  ; preds = %vector.body385
 
 scalar.ph381.preheader:                           ; preds = %.lr.ph.i.i65, %middle.block390
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i65 ], [ %n.vec384, %middle.block390 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.lk = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ll = add i64 %.val6.i.i63, %i.lk
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.la, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph381.prol.loopexit, label %scalar.ph381.prol
 
@@ -7761,9 +7737,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !4994
   call void @llvm.experimental.noalias.scope.decl(metadata !4995)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4995, !noalias !4996, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4995, !noalias !4996, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !4995, !noalias !4996, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !4995, !noalias !4996, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT7u32_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSmB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -7821,10 +7797,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jl = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jm = add i64 %.val6.i.i, %i.jl
-  %xtraiter427 = and i64 %7, 1
+  %xtraiter427 = and i64 %i.it, 1
   %lcmp.mod428.not = icmp eq i64 %xtraiter427, 0
   br i1 %lcmp.mod428.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -7922,9 +7897,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !5002)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !5002, !noalias !5003, !noundef !5 ; 8 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !5002, !noalias !5003, !noundef !5 ; 4 uses
-  %i.la = sub i64 %.val6.i.i63, %.val.i.i62       ; 4 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !5002, !noalias !5003, !noundef !5 ; 7 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !5002, !noalias !5003, !noundef !5 ; 3 uses
+  %i.la = sub i64 %.val6.i.i63, %.val.i.i62       ; 5 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT14u32_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTmRSmQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -7968,10 +7943,9 @@ middle.block390:                                  ; preds = %vector.body385
 
 scalar.ph381.preheader:                           ; preds = %.lr.ph.i.i65, %middle.block390
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i65 ], [ %n.vec384, %middle.block390 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.lk = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ll = add i64 %.val6.i.i63, %i.lk
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.la, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph381.prol.loopexit, label %scalar.ph381.prol
 
@@ -8374,9 +8348,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5057
   call void @llvm.experimental.noalias.scope.decl(metadata !5058)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5058, !noalias !5059, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5058, !noalias !5059, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5058, !noalias !5059, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5058, !noalias !5059, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT7u32_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSmB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -8434,10 +8408,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jl = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jm = add i64 %.val6.i.i, %i.jl
-  %xtraiter427 = and i64 %7, 1
+  %xtraiter427 = and i64 %i.it, 1
   %lcmp.mod428.not = icmp eq i64 %xtraiter427, 0
   br i1 %lcmp.mod428.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -8535,9 +8508,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !5065)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !5065, !noalias !5066, !noundef !5 ; 8 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !5065, !noalias !5066, !noundef !5 ; 4 uses
-  %i.la = sub i64 %.val6.i.i63, %.val.i.i62       ; 4 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !5065, !noalias !5066, !noundef !5 ; 7 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !5065, !noalias !5066, !noundef !5 ; 3 uses
+  %i.la = sub i64 %.val6.i.i63, %.val.i.i62       ; 5 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT14u32_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTmRSmQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i65
 
@@ -8581,10 +8554,9 @@ middle.block390:                                  ; preds = %vector.body385
 
 scalar.ph381.preheader:                           ; preds = %.lr.ph.i.i65, %middle.block390
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i65 ], [ %n.vec384, %middle.block390 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.lk = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ll = add i64 %.val6.i.i63, %i.lk
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.la, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph381.prol.loopexit, label %scalar.ph381.prol
 
@@ -8987,9 +8959,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5122
   call void @llvm.experimental.noalias.scope.decl(metadata !5123)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5123, !noalias !5124, !noundef !5 ; 9 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5123, !noalias !5124, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 8 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5123, !noalias !5124, !noundef !5 ; 8 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5123, !noalias !5124, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT7i16_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSsB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %iter.check
 
@@ -9080,10 +9052,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec378, %vec.epilog.middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jt = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.ju = add i64 %.val6.i.i, %i.jt
-  %xtraiter448 = and i64 %7, 1
+  %xtraiter448 = and i64 %i.it, 1
   %lcmp.mod449.not = icmp eq i64 %xtraiter448, 0
   br i1 %lcmp.mod449.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -9181,9 +9152,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !5130)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !5130, !noalias !5131, !noundef !5 ; 9 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !5130, !noalias !5131, !noundef !5 ; 4 uses
-  %i.li = sub i64 %.val6.i.i63, %.val.i.i62       ; 8 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !5130, !noalias !5131, !noundef !5 ; 8 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !5130, !noalias !5131, !noundef !5 ; 3 uses
+  %i.li = sub i64 %.val6.i.i63, %.val.i.i62       ; 9 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT14i16_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTsRSsQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %iter.check401
 
@@ -9259,10 +9230,9 @@ vec.epilog.middle.block413:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph402.preheader:                ; preds = %iter.check401, %vec.epilog.iter.check403, %vec.epilog.middle.block413
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check401 ], [ %n.vec392, %vec.epilog.iter.check403 ], [ %n.vec406, %vec.epilog.middle.block413 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.ly = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.lz = add i64 %.val6.i.i63, %i.ly
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.li, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph402.prol.loopexit, label %vec.epilog.scalar.ph402.prol
 
@@ -9665,9 +9635,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc61:                                         ; preds = %.noexc60
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5187
   call void @llvm.experimental.noalias.scope.decl(metadata !5188)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5188, !noalias !5189, !noundef !5 ; 9 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5188, !noalias !5189, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 8 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5188, !noalias !5189, !noundef !5 ; 8 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5188, !noalias !5189, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 9 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT7i16_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSsB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %iter.check
 
@@ -9758,10 +9728,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec378, %vec.epilog.middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jt = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.ju = add i64 %.val6.i.i, %i.jt
-  %xtraiter448 = and i64 %7, 1
+  %xtraiter448 = and i64 %i.it, 1
   %lcmp.mod449.not = icmp eq i64 %xtraiter448, 0
   br i1 %lcmp.mod449.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -9859,9 +9828,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc69:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !5195)
-  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !5195, !noalias !5196, !noundef !5 ; 9 uses
-  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !5195, !noalias !5196, !noundef !5 ; 4 uses
-  %i.li = sub i64 %.val6.i.i63, %.val.i.i62       ; 8 uses
+  %.val.i.i62 = load i64, ptr %i.ak, align 8, !alias.scope !5195, !noalias !5196, !noundef !5 ; 8 uses
+  %.val6.i.i63 = load i64, ptr %i.al, align 8, !alias.scope !5195, !noalias !5196, !noundef !5 ; 3 uses
+  %i.li = sub i64 %.val6.i.i63, %.val.i.i62       ; 9 uses
   %.not.i.i64 = icmp eq i64 %.val6.i.i63, %.val.i.i62
   br i1 %.not.i.i64, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT14i16_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTsRSsQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %iter.check401
 
@@ -9937,10 +9906,9 @@ vec.epilog.middle.block413:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph402.preheader:                ; preds = %iter.check401, %vec.epilog.iter.check403, %vec.epilog.middle.block413
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check401 ], [ %n.vec392, %vec.epilog.iter.check403 ], [ %n.vec406, %vec.epilog.middle.block413 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i63, %.val.i.i62
   %i.ly = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.lz = add i64 %.val6.i.i63, %i.ly
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.li, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph402.prol.loopexit, label %vec.epilog.scalar.ph402.prol
 
@@ -10343,9 +10311,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc60:                                         ; preds = %.noexc59
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5250
   call void @llvm.experimental.noalias.scope.decl(metadata !5251)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5251, !noalias !5252, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5251, !noalias !5252, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5251, !noalias !5252, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5251, !noalias !5252, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT7i64_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSxB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -10403,10 +10371,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jl = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jm = add i64 %.val6.i.i, %i.jl
-  %xtraiter426 = and i64 %7, 1
+  %xtraiter426 = and i64 %i.it, 1
   %lcmp.mod427.not = icmp eq i64 %xtraiter426, 0
   br i1 %lcmp.mod427.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -10504,9 +10471,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc68:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !5258)
-  %.val.i.i61 = load i64, ptr %i.ak, align 8, !alias.scope !5258, !noalias !5259, !noundef !5 ; 8 uses
-  %.val6.i.i62 = load i64, ptr %i.al, align 8, !alias.scope !5258, !noalias !5259, !noundef !5 ; 4 uses
-  %i.la = sub i64 %.val6.i.i62, %.val.i.i61       ; 4 uses
+  %.val.i.i61 = load i64, ptr %i.ak, align 8, !alias.scope !5258, !noalias !5259, !noundef !5 ; 7 uses
+  %.val6.i.i62 = load i64, ptr %i.al, align 8, !alias.scope !5258, !noalias !5259, !noundef !5 ; 3 uses
+  %i.la = sub i64 %.val6.i.i62, %.val.i.i61       ; 5 uses
   %.not.i.i63 = icmp eq i64 %.val6.i.i62, %.val.i.i61
   br i1 %.not.i.i63, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MaximumNtB7_9BinaryOpT14i64_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTxRSxQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i64
 
@@ -10550,10 +10517,9 @@ middle.block389:                                  ; preds = %vector.body384
 
 scalar.ph380.preheader:                           ; preds = %.lr.ph.i.i64, %middle.block389
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i64 ], [ %n.vec383, %middle.block389 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i62, %.val.i.i61
   %i.lk = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ll = add i64 %.val6.i.i62, %i.lk
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.la, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph380.prol.loopexit, label %scalar.ph380.prol
 
@@ -10956,9 +10922,9 @@ bb.n:                                             ; preds = %bb.m
 .noexc60:                                         ; preds = %.noexc59
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !5313
   call void @llvm.experimental.noalias.scope.decl(metadata !5314)
-  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5314, !noalias !5315, !noundef !5 ; 8 uses
-  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5314, !noalias !5315, !noundef !5 ; 4 uses
-  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 4 uses
+  %.val.i.i = load i64, ptr %i.an, align 8, !alias.scope !5314, !noalias !5315, !noundef !5 ; 7 uses
+  %.val6.i.i = load i64, ptr %i.ao, align 8, !alias.scope !5314, !noalias !5315, !noundef !5 ; 3 uses
+  %i.it = sub i64 %.val6.i.i, %.val.i.i           ; 5 uses
   %.not.i.i = icmp eq i64 %.val6.i.i, %.val.i.i
   br i1 %.not.i.i, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT7i64_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTRSxB1S_QB1T_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i
 
@@ -11016,10 +10982,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.sroa.0.012.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %7 = sub i64 %.val6.i.i, %.val.i.i
   %i.jl = xor i64 %.sroa.0.012.i.i.ph, -1
   %i.jm = add i64 %.val6.i.i, %i.jl
-  %xtraiter426 = and i64 %7, 1
+  %xtraiter426 = and i64 %i.it, 1
   %lcmp.mod427.not = icmp eq i64 %xtraiter426, 0
   br i1 %lcmp.mod427.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -11117,9 +11082,9 @@ bb.q:                                             ; preds = %bb.p
 
 .noexc68:                                         ; preds = %bb.q
   call void @llvm.experimental.noalias.scope.decl(metadata !5321)
-  %.val.i.i61 = load i64, ptr %i.ak, align 8, !alias.scope !5321, !noalias !5322, !noundef !5 ; 8 uses
-  %.val6.i.i62 = load i64, ptr %i.al, align 8, !alias.scope !5321, !noalias !5322, !noundef !5 ; 4 uses
-  %i.la = sub i64 %.val6.i.i62, %.val.i.i61       ; 4 uses
+  %.val.i.i61 = load i64, ptr %i.ak, align 8, !alias.scope !5321, !noalias !5322, !noundef !5 ; 7 uses
+  %.val6.i.i62 = load i64, ptr %i.al, align 8, !alias.scope !5321, !noalias !5322, !noundef !5 ; 3 uses
+  %i.la = sub i64 %.val6.i.i62, %.val.i.i61       ; 5 uses
   %.not.i.i63 = icmp eq i64 %.val6.i.i62, %.val.i.i61
   br i1 %.not.i.i63, label %_RNvYNvYNtNtCsltEA4u8Pgfu_11candle_core2op7MinimumNtB7_9BinaryOpT14i64_scalar_vecINtNtNtCsf3Ta7LF998c_4core3ops8function5FnMutTxRSxQB22_EE8call_mutCs1dZk1kIfPhr_19candle_transformers.exit, label %.lr.ph.i.i64
 
@@ -11163,10 +11128,9 @@ middle.block389:                                  ; preds = %vector.body384
 
 scalar.ph380.preheader:                           ; preds = %.lr.ph.i.i64, %middle.block389
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %.lr.ph.i.i64 ], [ %n.vec383, %middle.block389 ] ; 4 uses
-  %8 = sub i64 %.val6.i.i62, %.val.i.i61
   %i.lk = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.ll = add i64 %.val6.i.i62, %i.lk
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.la, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph380.prol.loopexit, label %scalar.ph380.prol
 

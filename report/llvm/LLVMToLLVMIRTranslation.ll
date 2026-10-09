@@ -205,7 +205,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !29     ; 4 uses
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %i.a to i64
-  %i.d = sub i64 %i.b, %i.c                       ; 5 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 9 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !31   ; 3 uses
   %i.g = zext i32 %i.f to i64                     ; 4 uses
@@ -331,9 +331,9 @@ _ZN4llvm15SmallVectorImplIjE7reserveEm.exit:      ; preds = %bb.d, %bb.e
   %i.az = phi i32 [ %i.f, %bb.d ], [ %.pre61.a, %bb.e ]
   %i.ba = phi ptr [ %i.a, %bb.d ], [ %.pre, %bb.e ] ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.d ; 19 uses
-  %.idx = shl nuw nsw i64 %.pre-phi, 2            ; 4 uses
+  %.idx = shl nuw nsw i64 %.pre-phi, 2            ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 %.idx ; 6 uses
-  %gepdiff = sub nsw i64 %.idx, %i.d              ; 2 uses
+  %gepdiff = sub nsw i64 %.idx, %i.d              ; 3 uses
   %i.bd = ashr exact i64 %gepdiff, 2              ; 7 uses
   %.not = icmp ult i64 %i.bd, %i.m
   br i1 %.not, label %bb.n, label %bb.f
@@ -381,8 +381,7 @@ _ZN4llvm15SmallVectorImplIjE6appendISt13move_iteratorIPjEvEEvT_S6_.exit: ; preds
   %i.br = trunc i64 %i.m to i32
   %i.bs = add i32 %i.bq, %i.br
   store i32 %i.bs, ptr %i.e, align 8, !tbaa !31
-  %4 = add i64 %i.d, %i.be
-  %gepdiff53 = sub i64 %.idx, %4                  ; 3 uses
+  %gepdiff53 = sub i64 %gepdiff, %i.be            ; 3 uses
   %i.bt = ashr exact i64 %gepdiff53, 2            ; 2 uses
   %i.bu = icmp sgt i64 %i.bt, 1
   br i1 %i.bu, label %bb.k, label %bb.l, !prof !52

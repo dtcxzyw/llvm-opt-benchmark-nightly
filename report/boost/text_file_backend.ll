@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.s = phi ptr [ %.sroa.465.1, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i ], [ %i.j, %bb.b ] ; 3 uses
   %.019.i = phi ptr [ %i.aa, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i ], [ %i.g, %bb.b ]
   %.01618.i = phi i64 [ %i.at, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i ], [ %i.q, %bb.b ] ; 2 uses
-  %i.t = ptrtoint ptr %.sroa.064.0 to i64         ; 2 uses
-  %i.u = ptrtoint ptr %i.s to i64                 ; 2 uses
-  %i.v = sub i64 %i.t, %i.u
+  %i.t = ptrtoint ptr %.sroa.064.0 to i64
+  %i.u = ptrtoint ptr %i.s to i64
+  %i.v = sub i64 %i.t, %i.u                       ; 2 uses
   %.not.i = icmp eq ptr %.sroa.064.0, %i.s
   br i1 %.not.i, label %bb.c, label %bb.d
 
@@ -241,8 +241,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZSt23__copy_move_backward_a1ILb1EPcS0_ET1_T0_S2_S1_.exit.i
 
 _ZSt23__copy_move_backward_a1ILb1EPcS0_ET1_T0_S2_S1_.exit.i: ; preds = %bb.g, %bb.f, %bb.e
-  %4 = add i64 %.sroa.speculated.i, %i.u
-  %i.ag = sub i64 %i.t, %4                        ; 5 uses
+  %i.ag = sub i64 %i.v, %.sroa.speculated.i       ; 5 uses
   %i.ah = icmp sgt i64 %i.ag, -1
   br i1 %i.ah, label %bb.h, label %bb.k
 
@@ -317,9 +316,9 @@ _ZSt23__copy_move_backward_a1ILb1EPccEN9__gnu_cxx11__enable_ifIXsr23__is_random_
   %i.bk = phi ptr [ %.sroa.453.1, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i17 ], [ %i.bb, %._crit_edge ] ; 3 uses
   %.019.i10 = phi ptr [ %i.bs, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i17 ], [ %i.bf, %._crit_edge ]
   %.01618.i11 = phi i64 [ %i.cl, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i17 ], [ %i.bi, %._crit_edge ] ; 2 uses
-  %i.bl = ptrtoint ptr %.sroa.052.0 to i64        ; 2 uses
-  %i.bm = ptrtoint ptr %i.bk to i64               ; 2 uses
-  %i.bn = sub i64 %i.bl, %i.bm
+  %i.bl = ptrtoint ptr %.sroa.052.0 to i64
+  %i.bm = ptrtoint ptr %i.bk to i64
+  %i.bn = sub i64 %i.bl, %i.bm                    ; 2 uses
   %.not.i12 = icmp eq ptr %.sroa.052.0, %i.bk
   br i1 %.not.i12, label %bb.m, label %bb.n
 
@@ -354,8 +353,7 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZSt23__copy_move_backward_a1ILb1EPcS0_ET1_T0_S2_S1_.exit.i16
 
 _ZSt23__copy_move_backward_a1ILb1EPcS0_ET1_T0_S2_S1_.exit.i16: ; preds = %bb.q, %bb.p, %bb.o
-  %5 = add i64 %.sroa.speculated.i15, %i.bm
-  %i.by = sub i64 %i.bl, %5                       ; 5 uses
+  %i.by = sub i64 %i.bn, %.sroa.speculated.i15    ; 5 uses
   %i.bz = icmp sgt i64 %i.by, -1
   br i1 %i.bz, label %bb.r, label %bb.u
 
@@ -411,9 +409,9 @@ bb.w:                                             ; preds = %_ZNSt15_Deque_itera
   %i.ct = phi ptr [ %i.cp, %.lr.ph ], [ %.sroa.459.1, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i32 ] ; 3 uses
   %.019.i25 = phi ptr [ %i.cs, %.lr.ph ], [ %i.db, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i32 ]
   %.01618.i26 = phi i64 [ 512, %.lr.ph ], [ %i.du, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i32 ] ; 2 uses
-  %i.cu = ptrtoint ptr %.sroa.058.0 to i64        ; 2 uses
-  %i.cv = ptrtoint ptr %i.ct to i64               ; 2 uses
-  %i.cw = sub i64 %i.cu, %i.cv
+  %i.cu = ptrtoint ptr %.sroa.058.0 to i64
+  %i.cv = ptrtoint ptr %i.ct to i64
+  %i.cw = sub i64 %i.cu, %i.cv                    ; 2 uses
   %.not.i27 = icmp eq ptr %.sroa.058.0, %i.ct
   br i1 %.not.i27, label %bb.x, label %bb.y
 
@@ -448,8 +446,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZSt23__copy_move_backward_a1ILb1EPcS0_ET1_T0_S2_S1_.exit.i31
 
 _ZSt23__copy_move_backward_a1ILb1EPcS0_ET1_T0_S2_S1_.exit.i31: ; preds = %bb.ab, %bb.aa, %bb.z
-  %6 = add i64 %.sroa.speculated.i30, %i.cv
-  %i.dh = sub i64 %i.cu, %6                       ; 5 uses
+  %i.dh = sub i64 %i.cw, %.sroa.speculated.i30    ; 5 uses
   %i.di = icmp sgt i64 %i.dh, -1
   br i1 %i.di, label %bb.ac, label %bb.af
 
@@ -521,9 +518,9 @@ bb.ah:                                            ; preds = %bb.a
   %i.ek = phi ptr [ %.sroa.4.1, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i47 ], [ %i.eb, %bb.ah ] ; 3 uses
   %.019.i40 = phi ptr [ %i.es, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i47 ], [ %i.dy, %bb.ah ]
   %.01618.i41 = phi i64 [ %i.fl, %_ZNSt15_Deque_iteratorIcRcPcEmIEl.exit.i47 ], [ %i.ei, %bb.ah ] ; 2 uses
-  %i.el = ptrtoint ptr %.sroa.0.0 to i64          ; 2 uses
-  %i.em = ptrtoint ptr %i.ek to i64               ; 2 uses
-  %i.en = sub i64 %i.el, %i.em
+  %i.el = ptrtoint ptr %.sroa.0.0 to i64
+  %i.em = ptrtoint ptr %i.ek to i64
+  %i.en = sub i64 %i.el, %i.em                    ; 2 uses
   %.not.i42 = icmp eq ptr %.sroa.0.0, %i.ek
   br i1 %.not.i42, label %bb.ai, label %bb.aj
 
@@ -558,8 +555,7 @@ bb.am:                                            ; preds = %bb.al
   br label %_ZSt23__copy_move_backward_a1ILb1EPcS0_ET1_T0_S2_S1_.exit.i46
 
 _ZSt23__copy_move_backward_a1ILb1EPcS0_ET1_T0_S2_S1_.exit.i46: ; preds = %bb.am, %bb.al, %bb.ak
-  %7 = add i64 %.sroa.speculated.i45, %i.em
-  %i.ey = sub i64 %i.el, %7                       ; 5 uses
+  %i.ey = sub i64 %i.en, %.sroa.speculated.i45    ; 5 uses
   %i.ez = icmp sgt i64 %i.ey, -1
   br i1 %i.ez, label %bb.an, label %bb.aq
 

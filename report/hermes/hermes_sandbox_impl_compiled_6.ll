@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %bb.ag
   br label %bb.bf
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.eh = trunc i64 %.0 to i32                    ; 11 uses
+  %i.eh = trunc i64 %.0 to i32                    ; 10 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.val831, i64 %i.dq
   %.0.copyload.i917 = load i32, ptr %i.ei, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i917) #8, !srcloc !14
@@ -349,14 +349,14 @@ bb.ao:                                            ; preds = %bb.an
   ]
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.gr = trunc i64 %.1 to i32                    ; 3 uses
+  %i.gr = trunc i64 %.1 to i32                    ; 2 uses
   %i.gs = add i32 %i.gq, %i.eh                    ; 4 uses
-  %i.gt = sub i32 %i.gr, %i.eh                    ; 3 uses
+  %i.gt = sub i32 %i.gr, %i.eh                    ; 4 uses
   %i.gu = icmp slt i32 %i.gt, 1
   br i1 %i.gu, label %.loopexit, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.gv = and i32 %i.gt, 7                        ; 3 uses
+  %i.gv = and i32 %i.gt, 7                        ; 2 uses
   %.not798 = icmp eq i32 %i.gv, 0
   br i1 %.not798, label %.loopexit946, label %.preheader945
 
@@ -381,13 +381,12 @@ bb.ar:                                            ; preds = %.preheader945, %bb.
   br i1 %.not799, label %.loopexit946.loopexit, label %bb.ar
 
 .loopexit946.loopexit:                            ; preds = %bb.ar
-  %5 = add i32 %i.gv, %i.eh
-  %6 = sub i32 %i.gr, %5
+  %5 = and i32 %i.gt, 2147483640
   br label %.loopexit946
 
 .loopexit946:                                     ; preds = %.loopexit946.loopexit, %bb.aq
   %.1764 = phi i32 [ %i.gs, %bb.aq ], [ %i.ha, %.loopexit946.loopexit ]
-  %.2 = phi i32 [ %i.gt, %bb.aq ], [ %6, %.loopexit946.loopexit ]
+  %.2 = phi i32 [ %i.gt, %bb.aq ], [ %5, %.loopexit946.loopexit ]
   %i.hc = sub i32 %i.eh, %i.gr
   %i.hd = icmp ugt i32 %i.hc, -8
   br i1 %i.hd, label %.loopexit, label %.preheader

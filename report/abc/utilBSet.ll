@@ -205,24 +205,14 @@ declare i32 @llvm.ctpop.i32(i32) #15
 
 ; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
 define range(i32 1, 101) i32 @Abc_SharedEvalBest(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 %5, i32 noundef %6, i32 %7, ptr nofree noundef writeonly captures(none) %8, ptr nofree noundef writeonly captures(none) %9, ptr nofree noundef captures(address_is_null) %10) local_unnamed_addr #3 {
-  %12 = sub nsw i32 %2, %4                        ; 3 uses
-  %13 = icmp slt i32 %12, 7                       ; 2 uses
-  %14 = add nsw i32 %12, -6                       ; 2 uses
-  %15 = shl nuw i32 1, %14
-  %16 = select i1 %13, i32 1, i32 %15             ; 2 uses
+bb.a:
+  %11 = sub nsw i32 %2, %4                        ; 4 uses
   %.not = icmp eq i32 %3, 0
-  br i1 %.not, label %bb.a, label %17
-
-17:                                               ; preds = %11
-  %18 = sub nsw i32 32, %3
-  %19 = lshr i32 -1, %18
-  %20 = add i32 %3, %4
-  %21 = sub i32 %2, %20
-  %22 = shl i32 %19, %21
-  br label %bb.a
-
-bb.a:                                             ; preds = %11, %17
-  %23 = phi i32 [ %22, %17 ], [ 0, %11 ]
+  %12 = sub nsw i32 32, %3
+  %13 = lshr i32 -1, %12
+  %14 = sub i32 %11, %3
+  %15 = shl i32 %13, %14
+  %16 = select i1 %.not, i32 0, i32 %15
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4624
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !53
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4632
@@ -232,21 +222,25 @@ bb.a:                                             ; preds = %11, %17
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4640
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !55
   %i.i = tail call i32 @Abc_TtGetCMInt(ptr noundef %1, i32 noundef %2, i32 noundef %4, ptr noundef %i.b, ptr noundef %i.d, ptr noundef %i.f, ptr noundef %i.h, ptr noundef %10) ; 4 uses
-  %i.j = sub nsw i32 %12, %6                      ; 2 uses
+  %i.j = sub nsw i32 %11, %6                      ; 2 uses
   %i.k = icmp sgt i32 %i.j, 1
   br i1 %i.k, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a
+  %17 = icmp slt i32 %11, 7                       ; 2 uses
+  %18 = add nsw i32 %11, -6                       ; 2 uses
+  %19 = shl nuw i32 1, %18
+  %20 = select i1 %17, i32 1, i32 %19             ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4656
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 4848
   %i.o = shl nuw i32 1, %6                        ; 2 uses
   %i.p = icmp sgt i32 %i.i, 0
-  %wide.trip.count.i.i.i = zext i32 %16 to i64    ; 3 uses
+  %wide.trip.count.i.i.i = zext i32 %20 to i64    ; 3 uses
   %wide.trip.count.i.i = zext i32 %i.i to i64     ; 2 uses
-  %i.q = icmp sgt i32 %16, 0
+  %i.q = icmp sgt i32 %20, 0
   %or.cond.i = and i1 %i.q, %i.p
-  %i.r = select i1 %13, i32 0, i32 %14
+  %i.r = select i1 %17, i32 0, i32 %18
   %i.s = zext nneg i32 %i.r to i64                ; 4 uses
   %or.cond.i.fr = freeze i1 %or.cond.i
   br i1 %or.cond.i.fr, label %.lr.ph.split.us.preheader, label %.critedge
@@ -290,7 +284,7 @@ bb.a:                                             ; preds = %11, %17
   %.180.us82.us = phi i32 [ %.2.us87.us, %Abc_BSEvalCountUniqueMax.exit.thread.us86.us ], [ %.094.us, %.critedge2.lr.ph.us ] ; 5 uses
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %.val69.us, i64 %indvars.iv ; 2 uses
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !29 ; 2 uses
-  %i.ai = and i32 %i.ah, %23
+  %i.ai = and i32 %i.ah, %16
   %.not66.us84.us = icmp eq i32 %i.ai, 0
   br i1 %.not66.us84.us, label %.lr.ph.i.us.us, label %Abc_BSEvalCountUniqueMax.exit.thread.us86.us
 
@@ -693,7 +687,7 @@ define noalias noundef ptr @Abc_TtFindBVarsSVars2(ptr nofree noundef captures(no
 bb.a:
   %i.a = alloca [32 x i32], align 16              ; 16 uses
   %i.b = alloca [32 x i32], align 16              ; 14 uses
-  %i.c = sub i32 %2, %5                           ; 13 uses
+  %i.c = sub i32 %2, %5                           ; 11 uses
   %i.d = sub nsw i32 %2, %3                       ; 12 uses
   %i.e = load i32, ptr %0, align 8, !tbaa !65
   %.not = icmp eq i32 %i.e, %i.d
@@ -896,21 +890,21 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge
   %i.ci = icmp sgt i32 %i.c, 0
   %i.cj = icmp sgt i32 %4, 0
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 5040
-  %11 = icmp slt i32 %5, 7                        ; 2 uses
-  %12 = add nsw i32 %5, -6                        ; 2 uses
-  %13 = shl nuw i32 1, %12
-  %14 = select i1 %11, i32 1, i32 %13             ; 2 uses
   %.not.i390 = icmp eq i32 %3, 0
-  %15 = sub nsw i32 32, %3
-  %16 = lshr i32 -1, %15
-  %i.cl = add i32 %3, %i.c
-  %17 = sub i32 %2, %i.cl
-  %18 = shl i32 %16, %17
+  %11 = sub nsw i32 32, %3
+  %12 = lshr i32 -1, %11
+  %13 = sub i32 %5, %3
+  %14 = shl i32 %12, %13
+  %15 = select i1 %.not.i390, i32 0, i32 %14
+  %16 = icmp slt i32 %5, 7                        ; 2 uses
+  %i.cl = add nsw i32 %5, -6                      ; 2 uses
+  %17 = shl nuw i32 1, %i.cl
+  %18 = select i1 %16, i32 1, i32 %17             ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 4656
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 4848
-  %wide.trip.count.i.i.i.i393 = zext i32 %14 to i64 ; 3 uses
-  %i.co = icmp sgt i32 %14, 0
-  %i.cp = select i1 %11, i32 0, i32 %12
+  %wide.trip.count.i.i.i.i393 = zext i32 %18 to i64 ; 3 uses
+  %i.co = icmp sgt i32 %18, 0
+  %i.cp = select i1 %16, i32 0, i32 %i.cl
   %i.cq = zext nneg i32 %i.cp to i64              ; 4 uses
   %i.cr = icmp sgt i32 %5, 0
   %i.cs = sext i32 %i.c to i64                    ; 5 uses
@@ -920,7 +914,6 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge
   %i.cu = zext i32 %i.c to i64
   %i.cv = sext i32 %5 to i64
   %i.cw = sext i32 %4 to i64
-  %spec.select618 = select i1 %.not.i390, i32 0, i32 %18
   %min.iters.check740 = icmp ult i32 %5, 4
   %n.vec742 = and i64 %wide.trip.count.i452, 2147483644 ; 3 uses
   %cmp.n749 = icmp eq i64 %n.vec742, %wide.trip.count.i452
@@ -949,25 +942,25 @@ bb.o:                                             ; preds = %bb.n
   %i.de = icmp sgt i32 %i.c, 0
   %i.df = icmp sgt i32 %4, 0
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 5040
-  %19 = icmp slt i32 %5, 7                        ; 2 uses
-  %20 = add nsw i32 %5, -6                        ; 2 uses
-  %21 = shl nuw i32 1, %20
-  %22 = select i1 %19, i32 1, i32 %21             ; 2 uses
   %.not.i = icmp eq i32 %3, 0
   %i.dh = sub nsw i32 32, %3
   %i.di = lshr i32 -1, %i.dh
-  %23 = add i32 %3, %i.c
-  %24 = sub i32 %2, %23
-  %25 = shl i32 %i.di, %24
+  %19 = sub i32 %5, %3
+  %20 = shl i32 %i.di, %19
+  %21 = select i1 %.not.i, i32 0, i32 %20
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 4624
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 4632
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 4648
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 4640
+  %22 = icmp slt i32 %5, 7                        ; 2 uses
+  %23 = add nsw i32 %5, -6                        ; 2 uses
+  %24 = shl nuw i32 1, %23
+  %25 = select i1 %22, i32 1, i32 %24             ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 4656
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 4848
-  %wide.trip.count.i.i.i.i = zext i32 %22 to i64  ; 3 uses
-  %i.dp = icmp sgt i32 %22, 0
-  %i.dq = select i1 %19, i32 0, i32 %20
+  %wide.trip.count.i.i.i.i = zext i32 %25 to i64  ; 3 uses
+  %i.dp = icmp sgt i32 %25, 0
+  %i.dq = select i1 %22, i32 0, i32 %23
   %i.dr = zext nneg i32 %i.dq to i64              ; 4 uses
   %i.ds = icmp sgt i32 %5, 0
   %i.dt = sext i32 %i.c to i64                    ; 6 uses
@@ -978,7 +971,6 @@ bb.o:                                             ; preds = %bb.n
   %i.dw = sext i32 %5 to i64
   %i.dx = sext i32 %4 to i64
   %wide.trip.count656 = zext nneg i32 %10 to i64
-  %spec.select617 = select i1 %.not.i, i32 0, i32 %25
   %min.iters.check752 = icmp ult i32 %5, 4
   %n.vec754 = and i64 %wide.trip.count.i382, 2147483644 ; 3 uses
   %cmp.n764 = icmp eq i64 %n.vec754, %wide.trip.count.i382
@@ -1204,7 +1196,7 @@ bb.v:                                             ; preds = %bb.u
   %.180.us82.us.i = phi i32 [ %i.iv, %Abc_BSEvalCountUniqueMax.exit.thread.us86.us.i ], [ %.094.us.i, %.critedge2.us81.us.i.preheader ] ; 5 uses
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %.val69.us.i, i64 %indvars.iv.i379 ; 2 uses
   %i.hd = load i32, ptr %i.hc, align 4, !tbaa !29 ; 2 uses
-  %i.he = and i32 %i.hd, %spec.select617
+  %i.he = and i32 %i.hd, %21
   %.not66.us84.us.i = icmp eq i32 %i.he, 0
   br i1 %.not66.us84.us.i, label %.lr.ph.i.us.us.i, label %Abc_BSEvalCountUniqueMax.exit.thread.us86.us.i
 
@@ -1607,7 +1599,7 @@ bb.bh:                                            ; preds = %bb.bg
   %.180.us82.us.i415 = phi i32 [ %i.qw, %Abc_BSEvalCountUniqueMax.exit.thread.us86.us.i417 ], [ %.094.us.i400, %.critedge2.us81.us.i412.preheader ] ; 5 uses
   %i.pd = getelementptr inbounds nuw [4 x i8], ptr %.val69.us.i409, i64 %indvars.iv.i414 ; 2 uses
   %i.pe = load i32, ptr %i.pd, align 4, !tbaa !29 ; 2 uses
-  %i.pf = and i32 %i.pe, %spec.select618
+  %i.pf = and i32 %i.pe, %15
   %.not66.us84.us.i416 = icmp eq i32 %i.pf, 0
   br i1 %.not66.us84.us.i416, label %.lr.ph.i.us.us.i421, label %Abc_BSEvalCountUniqueMax.exit.thread.us86.us.i417
 

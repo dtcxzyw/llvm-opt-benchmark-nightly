@@ -205,10 +205,10 @@ middle.block521:                                  ; preds = %vector.body514
   %i.kv = getelementptr i8, ptr %.11, i64 4       ; 5 uses
   store i32 %i.ku, ptr %.11, align 4, !tbaa !112
   %i.kw = load ptr, ptr %0, align 8, !tbaa !653   ; 2 uses
-  %i.kx = zext nneg i32 %i.e to i64               ; 4 uses
+  %i.kx = zext nneg i32 %i.e to i64               ; 3 uses
   %i.ky = getelementptr i8, ptr %i.kw, i64 %i.kx  ; 5 uses
-  %i.kz = sext i32 %i.b to i64                    ; 3 uses
-  %gepdiff = sub nsw i64 %i.kz, %i.kx             ; 4 uses
+  %i.kz = sext i32 %i.b to i64                    ; 2 uses
+  %gepdiff = sub nsw i64 %i.kz, %i.kx             ; 5 uses
   %i.la = icmp ne i64 %gepdiff, 0
   %i.lb = zext i1 %i.la to i64                    ; 2 uses
   %i.lc = add nsw i64 %i.kz, 1
@@ -218,8 +218,7 @@ middle.block521:                                  ; preds = %vector.body514
   br i1 %min.iters.check470, label %.lr.ph.i.i.i.i.i.i189.preheader569, label %vector.memcheck471
 
 vector.memcheck471:                               ; preds = %.lr.ph.i.i.i.i.i.i189.preheader
-  %2 = add nuw nsw i64 %i.lb, %i.kx
-  %i.lf = sub nsw i64 %i.kz, %2
+  %i.lf = sub nsw i64 %gepdiff, %i.lb
   %i.lg = shl nsw i64 %i.lf, 2
   %i.lh = getelementptr i8, ptr %.11, i64 %i.lg
   %i.li = getelementptr i8, ptr %i.lh, i64 8

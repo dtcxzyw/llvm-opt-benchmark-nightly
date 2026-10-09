@@ -204,10 +204,10 @@ bb.ah:                                            ; preds = %bb.ag
   %i.da = add i64 %i.cy, %i.cz, !dbg !6715        ; 5 uses
     #dbg_value(i64 %i.da, !6185, !DIExpression(), !6521)
   %i.db = getelementptr inbounds nuw i8, ptr %i.cw, i64 40, !dbg !6717 ; 2 uses
-  %i.dc = load i64, ptr %i.db, align 8, !dbg !6717, !noundef !1030 ; 4 uses
+  %i.dc = load i64, ptr %i.db, align 8, !dbg !6717, !noundef !1030 ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cw, i64 16, !dbg !6718 ; 2 uses
-  %i.de = load i64, ptr %i.dd, align 8, !dbg !6718, !noundef !1030 ; 3 uses
-  %i.df = sub i64 %i.dc, %i.de, !dbg !6719
+  %i.de = load i64, ptr %i.dd, align 8, !dbg !6718, !noundef !1030
+  %i.df = sub i64 %i.dc, %i.de, !dbg !6719        ; 3 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cw, i64 24, !dbg !6720 ; 2 uses
   %i.dh = load i64, ptr %i.dg, align 8, !dbg !6720, !noundef !1030 ; 3 uses
   %i.di = add i64 %i.df, %i.dh, !dbg !6719        ; 4 uses
@@ -270,53 +270,52 @@ bb.an:                                            ; preds = %bb.ak
   br i1 %i.dr, label %bb.ao, label %.thread91, !dbg !6738
 
 .thread91:                                        ; preds = %bb.aj, %bb.an, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65
-  %.pre-phi116 = phi i64 [ %i.di, %bb.aj ], [ %i.di, %bb.an ], [ %.pre115, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6739 ; 2 uses
-  %i.ds = phi i64 [ %i.dh, %bb.aj ], [ %i.dh, %bb.an ], [ %.pre106, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6740
-  %i.dt = phi i64 [ %i.de, %bb.aj ], [ %i.de, %bb.an ], [ %.pre105, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6741
-  %i.du = phi i64 [ %i.dc, %bb.aj ], [ %i.dc, %bb.an ], [ %.pre104, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6742
-  %i.dv = icmp ult i64 %i.da, %.pre-phi116, !dbg !6743
-  br i1 %i.dv, label %bb.ar, label %.backedge136, !dbg !6743
+  %i.ds = phi i64 [ %i.di, %bb.aj ], [ %i.di, %bb.an ], [ %.pre115, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6739 ; 2 uses
+  %i.dt = phi i64 [ %i.df, %bb.aj ], [ %i.df, %bb.an ], [ %.pre113, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6739
+  %i.du = phi i64 [ %i.dh, %bb.aj ], [ %i.dh, %bb.an ], [ %.pre106, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65 ], !dbg !6740
+  %i.dv = icmp ult i64 %i.da, %i.ds, !dbg !6741
+  br i1 %i.dv, label %bb.ar, label %.backedge136, !dbg !6741
 
 bb.ao:                                            ; preds = %bb.an
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !6744
-  %i.dw = sub nuw i64 %i.dn, %i.da, !dbg !6745
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !6742
+  %i.dw = sub nuw i64 %i.dn, %i.da, !dbg !6743
   invoke void @_RNvMNtCs3f36owOmepS_6quiche9range_bufNtB2_8RangeBuf9split_offB4_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.h, i64 noundef %i.dw)
-          to label %bb.ap unwind label %.thread88.loopexit, !dbg !6746
+          to label %bb.ap unwind label %.thread88.loopexit, !dbg !6744
 
 bb.ap:                                            ; preds = %bb.ao
-  call void @llvm.experimental.noalias.scope.decl(metadata !6541), !dbg !6747
+  call void @llvm.experimental.noalias.scope.decl(metadata !6541), !dbg !6745
     #dbg_value(ptr %i.h, !6347, !DIExpression(), !6059)
-  call void @llvm.experimental.noalias.scope.decl(metadata !6542), !dbg !6748
+  call void @llvm.experimental.noalias.scope.decl(metadata !6542), !dbg !6746
     #dbg_value(ptr %i.h, !6353, !DIExpression(), !6063)
-  call void @llvm.experimental.noalias.scope.decl(metadata !6543), !dbg !6749
+  call void @llvm.experimental.noalias.scope.decl(metadata !6543), !dbg !6747
     #dbg_value(ptr %i.h, !6360, !DIExpression(), !6067)
-  call void @llvm.experimental.noalias.scope.decl(metadata !6544), !dbg !6750
+  call void @llvm.experimental.noalias.scope.decl(metadata !6544), !dbg !6748
     #dbg_value(ptr %i.h, !6365, !DIExpression(), !6071)
     #dbg_value(ptr %i.h, !6367, !DIExpression(), !6073)
     #dbg_value(i64 1, !6376, !DIExpression(), !6075)
     #dbg_value(i8 1, !6378, !DIExpression(), !6075)
     #dbg_value(i64 1, !6380, !DIExpression(), !6077)
     #dbg_value(i8 1, !6382, !DIExpression(), !6077)
-  %i.dx = load ptr, ptr %i.h, align 8, !dbg !6751, !alias.scope !6545, !nonnull !1030, !noundef !1030
+  %i.dx = load ptr, ptr %i.h, align 8, !dbg !6749, !alias.scope !6545, !nonnull !1030, !noundef !1030
     #dbg_value(ptr %i.dx, !6377, !DIExpression(), !6079)
     #dbg_value(ptr %i.dx, !6381, !DIExpression(), !6077)
-  %i.dy = atomicrmw sub ptr %i.dx, i64 1 release, align 8, !dbg !6752, !noalias !6545
-  %i.dz = icmp eq i64 %i.dy, 1, !dbg !6753
-  br i1 %i.dz, label %bb.aq, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65, !dbg !6753
+  %i.dy = atomicrmw sub ptr %i.dx, i64 1 release, align 8, !dbg !6750, !noalias !6545
+  %i.dz = icmp eq i64 %i.dy, 1, !dbg !6751
+  br i1 %i.dz, label %bb.aq, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65, !dbg !6751
 
 bb.aq:                                            ; preds = %bb.ap
     #dbg_value(i8 2, !2135, !DIExpression(), !6081)
-  fence acquire, !dbg !6754
-  call void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcShE9drop_slowCs3f36owOmepS_6quiche(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(56) %i.h) #30, !dbg !6755
-  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65, !dbg !6755
+  fence acquire, !dbg !6752
+  call void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcShE9drop_slowCs3f36owOmepS_6quiche(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(56) %i.h) #30, !dbg !6753
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65, !dbg !6753
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufEBF_.exit65: ; preds = %bb.aq, %bb.ap
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.h, ptr noundef nonnull align 8 dereferenceable(56) %i.d, i64 56, i1 false), !dbg !6747
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !6756
-  %.pre104 = load i64, ptr %i.db, align 8, !dbg !6742 ; 2 uses
-  %.pre105 = load i64, ptr %i.dd, align 8, !dbg !6741 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.h, ptr noundef nonnull align 8 dereferenceable(56) %i.d, i64 56, i1 false), !dbg !6745
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !6754
+  %.pre104 = load i64, ptr %i.db, align 8, !dbg !6755
+  %.pre105 = load i64, ptr %i.dd, align 8, !dbg !6756
   %.pre106 = load i64, ptr %i.dg, align 8, !dbg !6740 ; 2 uses
-  %.pre113 = sub i64 %.pre104, %.pre105, !dbg !6739
+  %.pre113 = sub i64 %.pre104, %.pre105, !dbg !6739 ; 2 uses
   %.pre115 = add i64 %.pre113, %.pre106, !dbg !6739
   br label %.thread91, !dbg !6757
 
@@ -327,7 +326,7 @@ bb.ar:                                            ; preds = %.thread91
   %i.ea = load i64, ptr %i.bl, align 8, !dbg !6758, !noundef !1030
   %i.eb = load i64, ptr %i.bo, align 8, !dbg !6759, !noundef !1030
   %i.ec = add i64 %i.eb, %i.ea, !dbg !6760
-  %i.ed = icmp ugt i64 %i.ec, %.pre-phi116, !dbg !6761
+  %i.ed = icmp ugt i64 %i.ec, %i.ds, !dbg !6761
   br i1 %i.ed, label %bb.as, label %.backedge136, !dbg !6761
 
 .backedge136:                                     ; preds = %bb.ar, %.thread91, %bb.au
@@ -336,9 +335,8 @@ bb.ar:                                            ; preds = %.thread91
 bb.as:                                            ; preds = %bb.ar
     #dbg_value(ptr %i.k, !6251, !DIExpression(), !6553)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !6762
-  %2 = add i64 %i.da, %i.dt, !dbg !6763
-  %i.ee = sub i64 %i.du, %2, !dbg !6763
-  %i.ef = add i64 %i.ee, %i.ds, !dbg !6763
+  %i.ee = sub i64 %i.dt, %i.da, !dbg !6763
+  %i.ef = add i64 %i.ee, %i.du, !dbg !6763
   invoke void @_RNvMNtCs3f36owOmepS_6quiche9range_bufNtB2_8RangeBuf9split_offB4_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.h, i64 noundef %i.ef)
           to label %bb.at unwind label %.thread88.loopexit, !dbg !6764
 
@@ -741,22 +739,22 @@ begin_hunk_1_@llvm.umax.i64
 !6738 = !DILocation(line: 176, column: 42, scope: !5831)
 !6739 = !DILocation(line: 106, column: 9, scope: !5865, inlinedAt: !6513)
 !6740 = !DILocation(line: 106, column: 42, scope: !5865, inlinedAt: !6513)
-!6741 = !DILocation(line: 106, column: 21, scope: !5865, inlinedAt: !6513)
-!6742 = !DILocation(line: 106, column: 10, scope: !5865, inlinedAt: !6513)
-!6743 = !DILocation(line: 181, column: 24, scope: !5831)
-!6744 = !DILocation(line: 177, column: 31, scope: !5831)
-!6745 = !DILocation(line: 177, column: 45, scope: !5831)
-!6746 = !DILocation(line: 177, column: 35, scope: !5831)
-!6747 = !DILocation(line: 177, column: 25, scope: !5831)
-!6748 = !DILocation(line: 848, column: 1, scope: !5871, inlinedAt: !6058)
-!6749 = !DILocation(line: 848, column: 1, scope: !5876, inlinedAt: !6062)
-!6750 = !DILocation(line: 848, column: 1, scope: !5881, inlinedAt: !6066)
-!6751 = !DILocation(line: 454, column: 20, scope: !5899, inlinedAt: !6078)
-!6752 = !DILocation(line: 4056, column: 24, scope: !5896, inlinedAt: !6076)
-!6753 = !DILocation(line: 2927, column: 12, scope: !5886, inlinedAt: !6070)
-!6754 = !DILocation(line: 4500, column: 24, scope: !290, inlinedAt: !6080)
-!6755 = !DILocation(line: 2970, column: 18, scope: !5886, inlinedAt: !6070)
-!6756 = !DILocation(line: 177, column: 73, scope: !5831)
+!6741 = !DILocation(line: 181, column: 24, scope: !5831)
+!6742 = !DILocation(line: 177, column: 31, scope: !5831)
+!6743 = !DILocation(line: 177, column: 45, scope: !5831)
+!6744 = !DILocation(line: 177, column: 35, scope: !5831)
+!6745 = !DILocation(line: 177, column: 25, scope: !5831)
+!6746 = !DILocation(line: 848, column: 1, scope: !5871, inlinedAt: !6058)
+!6747 = !DILocation(line: 848, column: 1, scope: !5876, inlinedAt: !6062)
+!6748 = !DILocation(line: 848, column: 1, scope: !5881, inlinedAt: !6066)
+!6749 = !DILocation(line: 454, column: 20, scope: !5899, inlinedAt: !6078)
+!6750 = !DILocation(line: 4056, column: 24, scope: !5896, inlinedAt: !6076)
+!6751 = !DILocation(line: 2927, column: 12, scope: !5886, inlinedAt: !6070)
+!6752 = !DILocation(line: 4500, column: 24, scope: !290, inlinedAt: !6080)
+!6753 = !DILocation(line: 2970, column: 18, scope: !5886, inlinedAt: !6070)
+!6754 = !DILocation(line: 177, column: 73, scope: !5831)
+!6755 = !DILocation(line: 106, column: 10, scope: !5865, inlinedAt: !6513)
+!6756 = !DILocation(line: 106, column: 21, scope: !5865, inlinedAt: !6513)
 !6757 = !DILocation(line: 176, column: 21, scope: !5831)
 !6758 = !DILocation(line: 106, column: 10, scope: !5865, inlinedAt: !6549)
 !6759 = !DILocation(line: 116, column: 9, scope: !5866, inlinedAt: !6551)

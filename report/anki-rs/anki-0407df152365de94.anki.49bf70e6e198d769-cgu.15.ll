@@ -205,9 +205,9 @@ vector.ph:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !16164
   call void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h171d05e6e204092bE"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(64) %i.az, ptr noundef nonnull readonly %i.ba, ptr noundef nonnull %i.t, ptr noundef nonnull %i.bb), !noalias !16165
   call void @llvm.experimental.noalias.scope.decl(metadata !16166), !noalias !16167
-  %.val.i.i.i.i.i = load i64, ptr %i.bc, align 8, !alias.scope !16166, !noalias !16168, !noundef !6 ; 10 uses
-  %.val8.i.i.i.i.i = load i64, ptr %i.bd, align 8, !alias.scope !16166, !noalias !16168, !noundef !6 ; 6 uses
-  %i.ct = sub i64 %.val8.i.i.i.i.i, %.val.i.i.i.i.i ; 4 uses
+  %.val.i.i.i.i.i = load i64, ptr %i.bc, align 8, !alias.scope !16166, !noalias !16168, !noundef !6 ; 9 uses
+  %.val8.i.i.i.i.i = load i64, ptr %i.bd, align 8, !alias.scope !16166, !noalias !16168, !noundef !6 ; 5 uses
+  %i.ct = sub i64 %.val8.i.i.i.i.i, %.val.i.i.i.i.i ; 5 uses
   %.not.i.i.i.i.i = icmp eq i64 %.val8.i.i.i.i.i, %.val.i.i.i.i.i
   br i1 %.not.i.i.i.i.i, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4fold17h51e7d02d52076d2fE.exitthread-pre-split.i.i.i.i", label %.lr.ph.i.i.i.i.i
 
@@ -273,10 +273,9 @@ middle.block187:                                  ; preds = %vector.body180
 scalar.ph176.preheader:                           ; preds = %vector.memcheck159, %.lr.ph.i.i.i.i.i, %middle.block187
   %.ph192 = phi i64 [ %.promoted.i.i.i.i.i, %vector.memcheck159 ], [ %.promoted.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.dd, %middle.block187 ] ; 2 uses
   %.sroa.0.011.i.i.i.i.i.ph = phi i64 [ 0, %vector.memcheck159 ], [ 0, %.lr.ph.i.i.i.i.i ], [ %n.vec179, %middle.block187 ] ; 4 uses
-  %7 = sub i64 %.val8.i.i.i.i.i, %.val.i.i.i.i.i
   %i.de = xor i64 %.sroa.0.011.i.i.i.i.i.ph, -1
   %i.df = add i64 %.val8.i.i.i.i.i, %i.de
-  %xtraiter = and i64 %7, 1
+  %xtraiter = and i64 %i.ct, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph176.prol.loopexit, label %scalar.ph176.prol
 
@@ -463,9 +462,9 @@ bb.g:                                             ; preds = %"_ZN82_$LT$digest..
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !16159
   call void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h92fc9665f0656228E"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.ab, ptr noundef nonnull align 1 %.sroa.061.094.i, ptr noundef nonnull %i.cq, ptr noundef nonnull %i.ad, ptr noundef nonnull %i.bk)
   call void @llvm.experimental.noalias.scope.decl(metadata !16235)
-  %.val.i.i = load i64, ptr %i.bl, align 8, !alias.scope !16235, !noalias !16145, !noundef !6 ; 11 uses
-  %.val8.i.i = load i64, ptr %i.bm, align 8, !alias.scope !16235, !noalias !16145, !noundef !6 ; 6 uses
-  %i.fc = sub i64 %.val8.i.i, %.val.i.i           ; 8 uses
+  %.val.i.i = load i64, ptr %i.bl, align 8, !alias.scope !16235, !noalias !16145, !noundef !6 ; 10 uses
+  %.val8.i.i = load i64, ptr %i.bm, align 8, !alias.scope !16235, !noalias !16145, !noundef !6 ; 5 uses
+  %i.fc = sub i64 %.val8.i.i, %.val.i.i           ; 9 uses
   %.not.i14.i = icmp eq i64 %.val8.i.i, %.val.i.i
   br i1 %.not.i14.i, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4fold17h3b62df96dca232a5E.exit.i", label %iter.check145
 
@@ -545,10 +544,9 @@ vec.epilog.middle.block156:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph146.preheader:                ; preds = %iter.check145, %vector.memcheck121, %vec.epilog.iter.check147, %vec.epilog.middle.block156
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check145 ], [ 0, %vector.memcheck121 ], [ %n.vec134, %vec.epilog.iter.check147 ], [ %n.vec150, %vec.epilog.middle.block156 ] ; 4 uses
-  %8 = sub i64 %.val8.i.i, %.val.i.i
   %i.fr = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.fs = add i64 %.val8.i.i, %i.fr
-  %xtraiter209 = and i64 %8, 1
+  %xtraiter209 = and i64 %i.fc, 1
   %lcmp.mod210.not = icmp eq i64 %xtraiter209, 0
   br i1 %lcmp.mod210.not, label %vec.epilog.scalar.ph146.prol.loopexit, label %vec.epilog.scalar.ph146.prol
 
@@ -611,9 +609,9 @@ vec.epilog.scalar.ph146:                          ; preds = %vec.epilog.scalar.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !16244
   call void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h171d05e6e204092bE"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.m, ptr noundef nonnull readonly align 1 dereferenceable(64) %i.az, ptr noundef nonnull readonly %i.ba, ptr noundef nonnull %i.n, ptr noundef nonnull %i.bp), !noalias !16245
   call void @llvm.experimental.noalias.scope.decl(metadata !16246)
-  %.val.i.i.i.i15.i = load i64, ptr %i.bq, align 8, !alias.scope !16246, !noalias !16247, !noundef !6 ; 10 uses
-  %.val8.i.i.i.i16.i = load i64, ptr %i.br, align 8, !alias.scope !16246, !noalias !16247, !noundef !6 ; 6 uses
-  %i.gk = sub i64 %.val8.i.i.i.i16.i, %.val.i.i.i.i15.i ; 4 uses
+  %.val.i.i.i.i15.i = load i64, ptr %i.bq, align 8, !alias.scope !16246, !noalias !16247, !noundef !6 ; 9 uses
+  %.val8.i.i.i.i16.i = load i64, ptr %i.br, align 8, !alias.scope !16246, !noalias !16247, !noundef !6 ; 5 uses
+  %i.gk = sub i64 %.val8.i.i.i.i16.i, %.val.i.i.i.i15.i ; 5 uses
   %.not.i.i.i.i17.i = icmp eq i64 %.val8.i.i.i.i16.i, %.val.i.i.i.i15.i
   br i1 %.not.i.i.i.i17.i, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4fold17h51e7d02d52076d2fE.exitthread-pre-split.i.i.i27.i", label %.lr.ph.i.i.i.i18.i
 
@@ -679,10 +677,9 @@ middle.block118:                                  ; preds = %vector.body112
 scalar.ph.preheader:                              ; preds = %vector.memcheck93, %.lr.ph.i.i.i.i18.i, %middle.block118
   %.ph = phi i64 [ %.promoted.i.i.i.i21.i, %vector.memcheck93 ], [ %.promoted.i.i.i.i21.i, %.lr.ph.i.i.i.i18.i ], [ %i.gu, %middle.block118 ] ; 2 uses
   %.sroa.0.011.i.i.i.i22.i.ph = phi i64 [ 0, %vector.memcheck93 ], [ 0, %.lr.ph.i.i.i.i18.i ], [ %n.vec111, %middle.block118 ] ; 4 uses
-  %9 = sub i64 %.val8.i.i.i.i16.i, %.val.i.i.i.i15.i
   %i.gv = xor i64 %.sroa.0.011.i.i.i.i22.i.ph, -1
   %i.gw = add i64 %.val8.i.i.i.i16.i, %i.gv
-  %xtraiter211 = and i64 %9, 1
+  %xtraiter211 = and i64 %i.gk, 1
   %lcmp.mod212.not = icmp eq i64 %xtraiter211, 0
   br i1 %lcmp.mod212.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -973,9 +970,9 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !16159
   call void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h92fc9665f0656228E"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.aa, ptr noundef nonnull align 1 %.sroa.061.094.i, ptr noundef nonnull %i.cq, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.ck)
   call void @llvm.experimental.noalias.scope.decl(metadata !16359)
-  %.val.i36.i = load i64, ptr %i.cl, align 8, !alias.scope !16359, !noalias !16145, !noundef !6 ; 11 uses
-  %.val8.i37.i = load i64, ptr %i.cm, align 8, !alias.scope !16359, !noalias !16145, !noundef !6 ; 6 uses
-  %i.jw = sub i64 %.val8.i37.i, %.val.i36.i       ; 8 uses
+  %.val.i36.i = load i64, ptr %i.cl, align 8, !alias.scope !16359, !noalias !16145, !noundef !6 ; 10 uses
+  %.val8.i37.i = load i64, ptr %i.cm, align 8, !alias.scope !16359, !noalias !16145, !noundef !6 ; 5 uses
+  %i.jw = sub i64 %.val8.i37.i, %.val.i36.i       ; 9 uses
   %.not.i38.i = icmp eq i64 %.val8.i37.i, %.val.i36.i
   br i1 %.not.i38.i, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4fold17h3b62df96dca232a5E.exit45.i", label %iter.check
 
@@ -1055,10 +1052,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.010.i42.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec87, %vec.epilog.middle.block ] ; 4 uses
-  %10 = sub i64 %.val8.i37.i, %.val.i36.i
   %i.kl = xor i64 %.sroa.0.010.i42.i.ph, -1
   %i.km = add i64 %.val8.i37.i, %i.kl
-  %xtraiter214 = and i64 %10, 1
+  %xtraiter214 = and i64 %i.jw, 1
   %lcmp.mod215.not = icmp eq i64 %xtraiter214, 0
   br i1 %lcmp.mod215.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -1329,9 +1325,9 @@ vector.ph:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !16698
   call void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h171d05e6e204092bE"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(128) %i.bp, ptr noundef nonnull readonly %i.bq, ptr noundef nonnull %i.t, ptr noundef nonnull %i.br), !noalias !16699
   call void @llvm.experimental.noalias.scope.decl(metadata !16700), !noalias !16701
-  %.val.i.i.i.i.i = load i64, ptr %i.bs, align 8, !alias.scope !16700, !noalias !16702, !noundef !6 ; 10 uses
-  %.val8.i.i.i.i.i = load i64, ptr %i.bt, align 8, !alias.scope !16700, !noalias !16702, !noundef !6 ; 6 uses
-  %i.dj = sub i64 %.val8.i.i.i.i.i, %.val.i.i.i.i.i ; 4 uses
+  %.val.i.i.i.i.i = load i64, ptr %i.bs, align 8, !alias.scope !16700, !noalias !16702, !noundef !6 ; 9 uses
+  %.val8.i.i.i.i.i = load i64, ptr %i.bt, align 8, !alias.scope !16700, !noalias !16702, !noundef !6 ; 5 uses
+  %i.dj = sub i64 %.val8.i.i.i.i.i, %.val.i.i.i.i.i ; 5 uses
   %.not.i.i.i.i.i = icmp eq i64 %.val8.i.i.i.i.i, %.val.i.i.i.i.i
   br i1 %.not.i.i.i.i.i, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4fold17h9f3bfc8df32b674cE.exitthread-pre-split.i.i.i.i", label %.lr.ph.i.i.i.i.i
 
@@ -1397,10 +1393,9 @@ middle.block185:                                  ; preds = %vector.body178
 scalar.ph174.preheader:                           ; preds = %vector.memcheck157, %.lr.ph.i.i.i.i.i, %middle.block185
   %.ph190 = phi i64 [ %.promoted.i.i.i.i.i, %vector.memcheck157 ], [ %.promoted.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %i.dt, %middle.block185 ] ; 2 uses
   %.sroa.0.011.i.i.i.i.i.ph = phi i64 [ 0, %vector.memcheck157 ], [ 0, %.lr.ph.i.i.i.i.i ], [ %n.vec177, %middle.block185 ] ; 4 uses
-  %7 = sub i64 %.val8.i.i.i.i.i, %.val.i.i.i.i.i
   %i.du = xor i64 %.sroa.0.011.i.i.i.i.i.ph, -1
   %i.dv = add i64 %.val8.i.i.i.i.i, %i.du
-  %xtraiter = and i64 %7, 1
+  %xtraiter = and i64 %i.dj, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph174.prol.loopexit, label %scalar.ph174.prol
 
@@ -1590,9 +1585,9 @@ bb.g:                                             ; preds = %"_ZN82_$LT$digest..
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !16693
   call void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h92fc9665f0656228E"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.ab, ptr noundef nonnull align 1 %.sroa.061.094.i, ptr noundef nonnull %i.dg, ptr noundef nonnull %i.ad, ptr noundef nonnull %i.ca)
   call void @llvm.experimental.noalias.scope.decl(metadata !16769)
-  %.val.i.i = load i64, ptr %i.cb, align 8, !alias.scope !16769, !noalias !16679, !noundef !6 ; 11 uses
-  %.val8.i.i = load i64, ptr %i.cc, align 8, !alias.scope !16769, !noalias !16679, !noundef !6 ; 6 uses
-  %i.fv = sub i64 %.val8.i.i, %.val.i.i           ; 8 uses
+  %.val.i.i = load i64, ptr %i.cb, align 8, !alias.scope !16769, !noalias !16679, !noundef !6 ; 10 uses
+  %.val8.i.i = load i64, ptr %i.cc, align 8, !alias.scope !16769, !noalias !16679, !noundef !6 ; 5 uses
+  %i.fv = sub i64 %.val8.i.i, %.val.i.i           ; 9 uses
   %.not.i14.i = icmp eq i64 %.val8.i.i, %.val.i.i
   br i1 %.not.i14.i, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4fold17h3b62df96dca232a5E.exit.i", label %iter.check143
 
@@ -1672,10 +1667,9 @@ vec.epilog.middle.block154:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph144.preheader:                ; preds = %iter.check143, %vector.memcheck119, %vec.epilog.iter.check145, %vec.epilog.middle.block154
   %.sroa.0.010.i.i.ph = phi i64 [ 0, %iter.check143 ], [ 0, %vector.memcheck119 ], [ %n.vec132, %vec.epilog.iter.check145 ], [ %n.vec148, %vec.epilog.middle.block154 ] ; 4 uses
-  %8 = sub i64 %.val8.i.i, %.val.i.i
   %i.gk = xor i64 %.sroa.0.010.i.i.ph, -1
   %i.gl = add i64 %.val8.i.i, %i.gk
-  %xtraiter207 = and i64 %8, 1
+  %xtraiter207 = and i64 %i.fv, 1
   %lcmp.mod208.not = icmp eq i64 %xtraiter207, 0
   br i1 %lcmp.mod208.not, label %vec.epilog.scalar.ph144.prol.loopexit, label %vec.epilog.scalar.ph144.prol
 
@@ -1738,9 +1732,9 @@ vec.epilog.scalar.ph144:                          ; preds = %vec.epilog.scalar.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !16778
   call void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h171d05e6e204092bE"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.m, ptr noundef nonnull readonly align 1 dereferenceable(128) %i.bp, ptr noundef nonnull readonly %i.bq, ptr noundef nonnull %i.n, ptr noundef nonnull %i.cf), !noalias !16779
   call void @llvm.experimental.noalias.scope.decl(metadata !16780)
-  %.val.i.i.i.i15.i = load i64, ptr %i.cg, align 8, !alias.scope !16780, !noalias !16781, !noundef !6 ; 10 uses
-  %.val8.i.i.i.i16.i = load i64, ptr %i.ch, align 8, !alias.scope !16780, !noalias !16781, !noundef !6 ; 6 uses
-  %i.hd = sub i64 %.val8.i.i.i.i16.i, %.val.i.i.i.i15.i ; 4 uses
+  %.val.i.i.i.i15.i = load i64, ptr %i.cg, align 8, !alias.scope !16780, !noalias !16781, !noundef !6 ; 9 uses
+  %.val8.i.i.i.i16.i = load i64, ptr %i.ch, align 8, !alias.scope !16780, !noalias !16781, !noundef !6 ; 5 uses
+  %i.hd = sub i64 %.val8.i.i.i.i16.i, %.val.i.i.i.i15.i ; 5 uses
   %.not.i.i.i.i17.i = icmp eq i64 %.val8.i.i.i.i16.i, %.val.i.i.i.i15.i
   br i1 %.not.i.i.i.i17.i, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4fold17h9f3bfc8df32b674cE.exitthread-pre-split.i.i.i27.i", label %.lr.ph.i.i.i.i18.i
 
@@ -1806,10 +1800,9 @@ middle.block116:                                  ; preds = %vector.body110
 scalar.ph.preheader:                              ; preds = %vector.memcheck91, %.lr.ph.i.i.i.i18.i, %middle.block116
   %.ph = phi i64 [ %.promoted.i.i.i.i21.i, %vector.memcheck91 ], [ %.promoted.i.i.i.i21.i, %.lr.ph.i.i.i.i18.i ], [ %i.hn, %middle.block116 ] ; 2 uses
   %.sroa.0.011.i.i.i.i22.i.ph = phi i64 [ 0, %vector.memcheck91 ], [ 0, %.lr.ph.i.i.i.i18.i ], [ %n.vec109, %middle.block116 ] ; 4 uses
-  %9 = sub i64 %.val8.i.i.i.i16.i, %.val.i.i.i.i15.i
   %i.ho = xor i64 %.sroa.0.011.i.i.i.i22.i.ph, -1
   %i.hp = add i64 %.val8.i.i.i.i16.i, %i.ho
-  %xtraiter209 = and i64 %9, 1
+  %xtraiter209 = and i64 %i.hd, 1
   %lcmp.mod210.not = icmp eq i64 %xtraiter209, 0
   br i1 %lcmp.mod210.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -2101,9 +2094,9 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !16693
   call void @"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3new17h92fc9665f0656228E"(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.aa, ptr noundef nonnull align 1 %.sroa.061.094.i, ptr noundef nonnull %i.dg, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.da)
   call void @llvm.experimental.noalias.scope.decl(metadata !16893)
-  %.val.i36.i = load i64, ptr %i.db, align 8, !alias.scope !16893, !noalias !16679, !noundef !6 ; 11 uses
-  %.val8.i37.i = load i64, ptr %i.dc, align 8, !alias.scope !16893, !noalias !16679, !noundef !6 ; 6 uses
-  %i.kq = sub i64 %.val8.i37.i, %.val.i36.i       ; 8 uses
+  %.val.i36.i = load i64, ptr %i.db, align 8, !alias.scope !16893, !noalias !16679, !noundef !6 ; 10 uses
+  %.val8.i37.i = load i64, ptr %i.dc, align 8, !alias.scope !16893, !noalias !16679, !noundef !6 ; 5 uses
+  %i.kq = sub i64 %.val8.i37.i, %.val.i36.i       ; 9 uses
   %.not.i38.i = icmp eq i64 %.val8.i37.i, %.val.i36.i
   br i1 %.not.i38.i, label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$4fold17h3b62df96dca232a5E.exit45.i", label %iter.check
 
@@ -2183,10 +2176,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.0.010.i42.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec85, %vec.epilog.middle.block ] ; 4 uses
-  %10 = sub i64 %.val8.i37.i, %.val.i36.i
   %i.lf = xor i64 %.sroa.0.010.i42.i.ph, -1
   %i.lg = add i64 %.val8.i37.i, %i.lf
-  %xtraiter212 = and i64 %10, 1
+  %xtraiter212 = and i64 %i.kq, 1
   %lcmp.mod213.not = icmp eq i64 %xtraiter212, 0
   br i1 %lcmp.mod213.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 

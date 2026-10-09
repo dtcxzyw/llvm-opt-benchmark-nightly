@@ -205,9 +205,9 @@ scalar.ph113:                                     ; preds = %scalar.ph113.prehea
   br i1 %exitcond94.not, label %.loopexit, label %scalar.ph113, !llvm.loop !806
 
 .lr.ph:                                           ; preds = %bb.a, %bb.g
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ %i.k, %bb.a ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ %i.k, %bb.a ] ; 2 uses
   %.071 = phi i64 [ %.3, %bb.g ], [ 0, %bb.a ]    ; 10 uses
-  %.04270 = phi i64 [ %.244, %bb.g ], [ 0, %bb.a ] ; 14 uses
+  %.04270 = phi i64 [ %.244, %bb.g ], [ 0, %bb.a ] ; 13 uses
   %.04569 = phi i64 [ %.247, %bb.g ], [ 0, %bb.a ] ; 5 uses
   %i.al = icmp eq i64 %.04569, %.pre
   br i1 %i.al, label %.preheader63, label %bb.b
@@ -218,7 +218,7 @@ scalar.ph113:                                     ; preds = %scalar.ph113.prehea
 
 .lr.ph75:                                         ; preds = %.preheader63
   %i.an = load ptr, ptr %1, align 8, !tbaa !104   ; 7 uses
-  %i.ao = sub i64 %indvars.iv, %.04270            ; 4 uses
+  %i.ao = sub i64 %indvars.iv, %.04270            ; 5 uses
   %i.ap = sub nuw i64 %i.k, %.04270               ; 3 uses
   %min.iters.check = icmp ult i64 %i.ap, 16
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -262,8 +262,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph75, %middle.block
   %.274.ph = phi i64 [ %.071, %vector.memcheck ], [ %.071, %.lr.ph75 ], [ %i.aw, %middle.block ] ; 4 uses
   %.14373.ph = phi i64 [ %.04270, %vector.memcheck ], [ %.04270, %.lr.ph75 ], [ %i.ax, %middle.block ] ; 2 uses
-  %4 = add i64 %.274.ph, %.04270
-  %i.bf = sub i64 %indvars.iv, %4
+  %i.bf = sub i64 %i.ao, %.274.ph
   %i.bg = add i64 %i.k, -1
   %i.bh = add i64 %.071, %i.bg
   %i.bi = add i64 %.274.ph, %.04270
@@ -666,9 +665,9 @@ scalar.ph1755:                                    ; preds = %scalar.ph1755.prehe
   br i1 %exitcond94.not.i, label %.loopexit.i, label %scalar.ph1755, !llvm.loop !1200
 
 .lr.ph.i188:                                      ; preds = %.noexc191, %bb.ct
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.ct ], [ %i.nh, %.noexc191 ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.ct ], [ %i.nh, %.noexc191 ] ; 2 uses
   %.071.i = phi i64 [ %.3.i, %bb.ct ], [ 0, %.noexc191 ] ; 10 uses
-  %.04270.i = phi i64 [ %.244.i, %bb.ct ], [ 0, %.noexc191 ] ; 14 uses
+  %.04270.i = phi i64 [ %.244.i, %bb.ct ], [ 0, %.noexc191 ] ; 13 uses
   %.04569.i = phi i64 [ %.247.i, %bb.ct ], [ 0, %.noexc191 ] ; 5 uses
   %i.oh = icmp eq i64 %.04569.i, %.pre.i
   br i1 %i.oh, label %.preheader63.i, label %bb.co
@@ -679,7 +678,7 @@ scalar.ph1755:                                    ; preds = %scalar.ph1755.prehe
 
 .lr.ph75.i:                                       ; preds = %.preheader63.i
   %i.oj = load ptr, ptr %i.ml, align 8, !tbaa !104 ; 7 uses
-  %i.ok = sub i64 %indvars.iv.i, %.04270.i        ; 4 uses
+  %i.ok = sub i64 %indvars.iv.i, %.04270.i        ; 5 uses
   %i.ol = sub nuw i64 %i.nh, %.04270.i            ; 3 uses
   %min.iters.check1771 = icmp ult i64 %i.ol, 8
   br i1 %min.iters.check1771, label %scalar.ph1770.preheader, label %vector.memcheck1768
@@ -723,8 +722,7 @@ middle.block1779:                                 ; preds = %vector.body1774
 scalar.ph1770.preheader:                          ; preds = %vector.memcheck1768, %.lr.ph75.i, %middle.block1779
   %.274.i.ph = phi i64 [ %.071.i, %vector.memcheck1768 ], [ %.071.i, %.lr.ph75.i ], [ %i.os, %middle.block1779 ] ; 4 uses
   %.14373.i.ph = phi i64 [ %.04270.i, %vector.memcheck1768 ], [ %.04270.i, %.lr.ph75.i ], [ %i.ot, %middle.block1779 ] ; 2 uses
-  %43 = add i64 %.274.i.ph, %.04270.i
-  %i.pb = sub i64 %indvars.iv.i, %43
+  %i.pb = sub i64 %i.ok, %.274.i.ph
   %i.pc = add i64 %i.nh, -1
   %i.pd = add i64 %.071.i, %i.pc
   %i.pe = add i64 %.274.i.ph, %.04270.i
@@ -1127,9 +1125,9 @@ scalar.ph1721:                                    ; preds = %scalar.ph1721.prehe
   br i1 %exitcond94.not.i273, label %.loopexit.i263, label %scalar.ph1721, !llvm.loop !1211
 
 .lr.ph.i251:                                      ; preds = %.noexc279, %bb.fb
-  %indvars.iv.i252 = phi i64 [ %indvars.iv.next.i259, %bb.fb ], [ %i.xq, %.noexc279 ] ; 3 uses
+  %indvars.iv.i252 = phi i64 [ %indvars.iv.next.i259, %bb.fb ], [ %i.xq, %.noexc279 ] ; 2 uses
   %.071.i253 = phi i64 [ %.3.i258, %bb.fb ], [ 0, %.noexc279 ] ; 10 uses
-  %.04270.i254 = phi i64 [ %.244.i257, %bb.fb ], [ 0, %.noexc279 ] ; 14 uses
+  %.04270.i254 = phi i64 [ %.244.i257, %bb.fb ], [ 0, %.noexc279 ] ; 13 uses
   %.04569.i255 = phi i64 [ %.247.i256, %bb.fb ], [ 0, %.noexc279 ] ; 5 uses
   %i.yq = icmp eq i64 %.04569.i255, %.pre.i250
   br i1 %i.yq, label %.preheader63.i274, label %bb.ew
@@ -1140,7 +1138,7 @@ scalar.ph1721:                                    ; preds = %scalar.ph1721.prehe
 
 .lr.ph75.i275:                                    ; preds = %.preheader63.i274
   %i.ys = load ptr, ptr %i.wu, align 8, !tbaa !104 ; 7 uses
-  %i.yt = sub i64 %indvars.iv.i252, %.04270.i254  ; 4 uses
+  %i.yt = sub i64 %indvars.iv.i252, %.04270.i254  ; 5 uses
   %i.yu = sub nuw i64 %i.xq, %.04270.i254         ; 3 uses
   %min.iters.check1737 = icmp ult i64 %i.yu, 8
   br i1 %min.iters.check1737, label %scalar.ph1736.preheader, label %vector.memcheck1734
@@ -1184,8 +1182,7 @@ middle.block1745:                                 ; preds = %vector.body1740
 scalar.ph1736.preheader:                          ; preds = %vector.memcheck1734, %.lr.ph75.i275, %middle.block1745
   %.274.i276.ph = phi i64 [ %.071.i253, %vector.memcheck1734 ], [ %.071.i253, %.lr.ph75.i275 ], [ %i.zb, %middle.block1745 ] ; 4 uses
   %.14373.i277.ph = phi i64 [ %.04270.i254, %vector.memcheck1734 ], [ %.04270.i254, %.lr.ph75.i275 ], [ %i.zc, %middle.block1745 ] ; 2 uses
-  %44 = add i64 %.274.i276.ph, %.04270.i254
-  %i.zk = sub i64 %indvars.iv.i252, %44
+  %i.zk = sub i64 %i.yt, %.274.i276.ph
   %i.zl = add i64 %i.xq, -1
   %i.zm = add i64 %.071.i253, %i.zl
   %i.zn = add i64 %.274.i276.ph, %.04270.i254

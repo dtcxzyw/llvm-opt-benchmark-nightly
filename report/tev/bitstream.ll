@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f                       ; 3 uses
-  %i.h = sext i32 %1 to i64                       ; 5 uses
+  %i.h = sext i32 %1 to i64                       ; 4 uses
   %i.i = add i64 %i.g, %i.h                       ; 3 uses
   %i.j = icmp ult i64 %i.g, %i.i
   br i1 %i.j, label %bb.c, label %bb.d
@@ -233,16 +233,15 @@ _ZNSt3__16vectorIhNS_9allocatorIhEEE6resizeEm.exit: ; preds = %bb.c, %bb.d, %bb.
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.p = load i64, ptr %i.o, align 8, !tbaa !61   ; 3 uses
   %i.q = ptrtoint ptr %i.n to i64
-  %2 = sub i64 %i.q, %.pre-phi                    ; 2 uses
-  %i.r = sub i64 %2, %i.h
+  %2 = add i64 %.pre-phi, %i.h
+  %i.r = sub i64 %i.q, %2                         ; 2 uses
   %i.s = icmp ult i64 %i.p, %i.r
   br i1 %i.s, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEE6resizeEm.exit
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.p ; 2 uses
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 %i.h
-  %3 = add i64 %i.p, %i.h
-  %i.v = sub i64 %2, %3
+  %i.v = sub nuw i64 %i.r, %i.p
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.u, ptr align 1 %i.t, i64 %i.v, i1 false)
   br label %bb.g
 

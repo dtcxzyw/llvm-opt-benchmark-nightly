@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %.outer, %.thread
   %.0110311 = phi i32 [ %.0110.ph, %.outer ], [ %i.aq, %.thread ] ; 2 uses
   %.0111310 = phi i64 [ %.0111.ph, %.outer ], [ %i.bx, %.thread ] ; 2 uses
-  %.0118309 = phi i64 [ %.0118.ph, %.outer ], [ %i.as, %.thread ] ; 3 uses
+  %.0118309 = phi i64 [ %.0118.ph, %.outer ], [ %i.as, %.thread ] ; 2 uses
   %i.j = load ptr, ptr %i.e, align 8, !tbaa !83
   %i.k = call ptr %i.j(ptr noundef %i.d, i64 noundef %.0111310, i64 noundef 2048) #12, !inline_history !76 ; 7 uses
   %.not = icmp eq ptr %i.k, null
@@ -243,7 +243,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ab = add i64 %i.aa, 1                        ; 2 uses
   %i.ac = add i64 %i.ab, %i.x                     ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ab
-  %i.ae = call i64 @__isoc23_strtol(ptr noundef nonnull %i.z, ptr noundef nonnull %i.b, i32 noundef 10) #12 ; 12 uses
+  %i.ae = call i64 @__isoc23_strtol(ptr noundef nonnull %i.z, ptr noundef nonnull %i.b, i32 noundef 10) #12 ; 11 uses
   %or.cond = icmp ugt i64 %i.ae, 9223372036854775806
   br i1 %or.cond, label %.thread180, label %bb.g
 
@@ -261,14 +261,14 @@ bb.h:                                             ; preds = %bb.g
   %i.al = load i8, ptr %i.ah, align 1, !tbaa !28
   %.not135 = icmp eq i8 %i.al, 0
   %.not136 = icmp ult i64 %i.ae, %.0118309
-  %or.cond149 = select i1 %.not135, i1 %.not136, i1 false
+  %or.cond149 = and i1 %.not136, %.not135
   br i1 %or.cond149, label %bb.i, label %.thread180
 
 bb.i:                                             ; preds = %bb.h
   %i.am = ptrtoint ptr %i.ad to i64
   %i.an = ptrtoint ptr %i.k to i64                ; 2 uses
   %i.ao = sub i64 %i.am, %i.an                    ; 3 uses
-  %i.ap = sub nuw i64 %.0118309, %i.ae
+  %i.ap = sub nuw i64 %.0118309, %i.ae            ; 2 uses
   %.not137 = icmp ult i64 %i.ao, %i.ap
   br i1 %.not137, label %bb.j, label %.thread180
 
@@ -280,8 +280,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not138, label %bb.k, label %.thread193
 
 bb.k:                                             ; preds = %bb.j
-  %3 = add i64 %i.ae, %i.ao
-  %i.as = sub i64 %.0118309, %3                   ; 2 uses
+  %i.as = sub nuw i64 %i.ap, %i.ao                ; 2 uses
   %i.at = call i32 @strncasecmp(ptr noundef nonnull %i.k, ptr noundef nonnull @.str.16, i64 noundef 4) #13
   %.not139 = icmp eq i32 %i.at, 0
   br i1 %.not139, label %bb.l, label %.thread

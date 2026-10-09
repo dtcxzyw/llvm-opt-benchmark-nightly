@@ -205,20 +205,20 @@ bb.w:                                             ; preds = %masks_get_delta.exi
   %i.px = load i32, ptr %i.l, align 4
   %i.py = getelementptr inbounds nuw i8, ptr %i.ba, i64 12
   %i.pz = extractelement <2 x i32> %i.pl, i64 0
-  %i.qa = sext i32 %i.pz to i64                   ; 2 uses
+  %i.qa = sext i32 %i.pz to i64
   %i.qb = sext i32 %.0222324 to i64
   %i.qc = add i32 %i.mu, -1
   %i.qd = add i32 %i.qc, %i.ms
   %i.qe = sext i32 %.0223327 to i64
   %i.qf = sext i32 %i.pt to i64                   ; 2 uses
-  %i.qg = extractelement <2 x i32> %i.pl, i64 1   ; 2 uses
+  %i.qg = extractelement <2 x i32> %i.pl, i64 1
   %i.qh = sext i32 %i.qg to i64
   %i.qi = add i32 %i.mq, -1
   %i.qj = add i32 %i.qi, %i.mo
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph330, %.loopexit303
-  %indvars.iv363 = phi i64 [ %i.qe, %.lr.ph330 ], [ %indvars.iv.next364, %.loopexit303 ] ; 7 uses
+  %indvars.iv363 = phi i64 [ %i.qe, %.lr.ph330 ], [ %indvars.iv.next364, %.loopexit303 ] ; 6 uses
   %i.qk = icmp slt i64 %indvars.iv363, %i.qf
   br i1 %i.qk, label %.loopexit303, label %bb.y
 
@@ -230,7 +230,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not251, label %bb.z, label %.loopexit303
 
 bb.z:                                             ; preds = %bb.y
-  %i.qo = sub nsw i64 %indvars.iv363, %i.qh       ; 2 uses
+  %i.qo = sub nsw i64 %indvars.iv363, %i.qh       ; 3 uses
   %i.qp = load i32, ptr %i.am, align 4, !tbaa !93 ; 3 uses
   %i.qq = sext i32 %i.qp to i64
   %i.qr = icmp slt i64 %i.qo, %i.qq
@@ -251,14 +251,13 @@ bb.aa:                                            ; preds = %bb.z
   %i.qy = sitofp reassoc nsz arcp contract afn i32 %i.qx to float
   %i.qz = sub nsw i64 %indvars.iv363, %i.qf
   %i.ra = sext i32 %i.qv to i64                   ; 2 uses
-  %7 = add i32 %i.qg, %i.qp
-  %i.rb = trunc nsw i64 %indvars.iv363 to i32
-  %i.rc = sub i32 %i.rb, %7
+  %i.rb = trunc nsw i64 %i.qo to i32
+  %i.rc = sub i32 %i.rb, %i.qp
   %i.rd = sext i32 %i.rc to i64
   br i1 %i.ap, label %.lr.ph326.split.us, label %.loopexit303
 
 .lr.ph326.split.us:                               ; preds = %.lr.ph326, %..loopexit_crit_edge.us
-  %indvars.iv358 = phi i64 [ %indvars.iv.next359, %..loopexit_crit_edge.us ], [ %i.qb, %.lr.ph326 ] ; 7 uses
+  %indvars.iv358 = phi i64 [ %indvars.iv.next359, %..loopexit_crit_edge.us ], [ %i.qb, %.lr.ph326 ] ; 6 uses
   %i.re = icmp slt i64 %indvars.iv358, %i.ra
   br i1 %i.re, label %..loopexit_crit_edge.us, label %bb.ab
 
@@ -270,7 +269,7 @@ bb.ab:                                            ; preds = %.lr.ph326.split.us
   br i1 %.not253.us, label %bb.ac, label %..loopexit_crit_edge.us
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.ri = sub nsw i64 %indvars.iv358, %i.qa       ; 2 uses
+  %i.ri = sub nsw i64 %indvars.iv358, %i.qa       ; 3 uses
   %i.rj = load i32, ptr %4, align 4, !tbaa !95    ; 2 uses
   %i.rk = sext i32 %i.rj to i64                   ; 2 uses
   %i.rl = icmp slt i64 %i.ri, %i.rk
@@ -307,8 +306,7 @@ iter.check:                                       ; preds = %bb.ad
   %i.sj = getelementptr [4 x i8], ptr %3, i64 %i.si ; 8 uses
   %i.sk = sext i32 %i.rm to i64
   %i.sl = mul nsw i64 %i.sk, %i.rd
-  %8 = add nsw i64 %i.qa, %i.rk
-  %i.sm = sub nsw i64 %indvars.iv358, %8
+  %i.sm = sub nsw i64 %i.ri, %i.rk
   %i.sn = add nsw i64 %i.sm, %i.sl                ; 2 uses
   %i.so = mul i64 %i.sn, %i.r
   %i.sp = getelementptr [4 x i8], ptr %2, i64 %i.so ; 8 uses

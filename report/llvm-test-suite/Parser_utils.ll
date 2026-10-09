@@ -202,15 +202,14 @@ bb.ay:                                            ; preds = %bb.ax
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ay, %bb.ax
-  %.0128 = phi i32 [ %i.mx, %bb.ay ], [ %i.mq, %bb.ax ] ; 2 uses
+  %.0128 = phi i32 [ %i.mx, %bb.ay ], [ %i.mq, %bb.ax ]
   %i.my = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0276.0, i64 %indvars.iv423
-  %i.mz = load i32, ptr %i.my, align 4, !tbaa !8  ; 2 uses
+  %i.mz = load i32, ptr %i.my, align 4, !tbaa !8
   %i.na = sub nsw i32 %i.mz, %.0128
-  %.fr385 = freeze i32 %i.na                      ; 2 uses
+  %.fr385 = freeze i32 %i.na                      ; 3 uses
   %i.nb = icmp sgt i32 %.fr385, 0                 ; 2 uses
   %i.nc = lshr i32 %.fr385, 1                     ; 3 uses
-  %11 = add i32 %.0128, %i.nc
-  %i.nd = sub i32 %i.mz, %11                      ; 2 uses
+  %i.nd = sub i32 %.fr385, %i.nc                  ; 2 uses
   %i.ne = getelementptr inbounds nuw [4 x i8], ptr %i.dg, i64 %indvars.iv423 ; 2 uses
   %i.nf = load i32, ptr %i.ne, align 4, !tbaa !8
   %i.ng = icmp sgt i32 %i.nf, 0
@@ -301,8 +300,8 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit238: ; preds = %.invoke495, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit
   %i.or = icmp sgt i32 %i.nd, 0
-  %12 = select i1 %i.nb, i1 %i.or, i1 false
-  br i1 %12, label %.lr.ph373.split, label %._crit_edge374
+  %11 = and i1 %i.nb, %i.or
+  br i1 %11, label %.lr.ph373.split, label %._crit_edge374
 
 ._crit_edge374:                                   ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit242, %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit238
   %indvars.iv.next424 = add nuw nsw i64 %indvars.iv423, 1 ; 2 uses

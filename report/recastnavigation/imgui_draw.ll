@@ -205,7 +205,6 @@ bb.j:                                             ; preds = %_ZNK11ImFontAtlas13
   %.sroa.7.0 = phi i16 [ 0, %thread-pre-split ], [ %.sroa.7.2, %bb.j ], [ %.sroa.7.2, %_ZNK11ImFontAtlas13GetCustomRectEiP15ImFontAtlasRect.exit148 ]
   %.sroa.11.0 = phi i16 [ 0, %thread-pre-split ], [ %.sroa.11.2, %bb.j ], [ %.sroa.11.2, %_ZNK11ImFontAtlas13GetCustomRectEiP15ImFontAtlasRect.exit148 ] ; 2 uses
   store i32 %i.y, ptr %i.g, align 8, !tbaa !439
-  %1 = zext i16 %.sroa.11.0 to i32                ; 2 uses
   %i.cb = zext i16 %.sroa.0.0 to i32              ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -214,6 +213,7 @@ bb.j:                                             ; preds = %_ZNK11ImFontAtlas13
   %i.cg = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.d, i64 28 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.d, i64 36 ; 2 uses
+  %1 = zext i16 %.sroa.11.0 to i32
   %i.cj = zext i16 %.sroa.11.0 to i64
   %i.ck = zext i16 %.sroa.7.0 to i64
   br label %.split
@@ -311,14 +311,12 @@ vector.body:                                      ; preds = %vector.body, %.spli
 
 .split:                                           ; preds = %.split.preheader, %.critedge
   %indvars.iv115 = phi i32 [ %1, %.split.preheader ], [ %indvars.iv.next116, %.critedge ] ; 2 uses
-  %indvar = phi i64 [ 0, %.split.preheader ], [ %indvar.next, %.critedge ] ; 11 uses
+  %indvar = phi i64 [ 0, %.split.preheader ], [ %indvar.next, %.critedge ] ; 10 uses
   %i.ew = shl nuw nsw i64 %indvar, 2
   %i.ex = sub nsw i64 %i.cj, %indvar              ; 3 uses
-  %i.ey = trunc nsw i64 %i.ex to i32
+  %i.ey = trunc nsw i64 %i.ex to i32              ; 2 uses
   %i.ez = sdiv i32 %i.ey, 2                       ; 10 uses
-  %2 = trunc nuw nsw i64 %indvar to i32
-  %3 = add i32 %i.ez, %2
-  %i.fa = sub i32 %1, %3                          ; 3 uses
+  %i.fa = sub i32 %i.ey, %i.ez                    ; 3 uses
   %i.fb = load i32, ptr %i.cf, align 8, !tbaa !255
   %.pre = add nuw nsw i64 %indvar, %i.ck          ; 3 uses
   switch i32 %i.fb, label %.split..critedge_crit_edge [

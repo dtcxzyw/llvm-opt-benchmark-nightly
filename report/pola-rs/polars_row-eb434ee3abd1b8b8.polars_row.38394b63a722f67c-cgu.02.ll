@@ -81,10 +81,10 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !683, !noalias !623
   call void @llvm.experimental.noalias.scope.decl(metadata !625), !dbg !684
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 40, !dbg !685
-  %.val.i = load i64, ptr %i.w, align 8, !dbg !685, !alias.scope !625, !noalias !628, !noundef !273 ; 13 uses
+  %.val.i = load i64, ptr %i.w, align 8, !dbg !685, !alias.scope !625, !noalias !628, !noundef !273 ; 12 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 48, !dbg !685
-  %.val8.i = load i64, ptr %i.x, align 8, !dbg !685, !alias.scope !625, !noalias !628, !noundef !273 ; 6 uses
-  %i.y = sub i64 %.val8.i, %.val.i, !dbg !686     ; 4 uses
+  %.val8.i = load i64, ptr %i.x, align 8, !dbg !685, !alias.scope !625, !noalias !628, !noundef !273 ; 5 uses
+  %i.y = sub i64 %.val8.i, %.val.i, !dbg !686     ; 5 uses
   %.not.i = icmp eq i64 %.val8.i, %.val.i, !dbg !687
   br i1 %.not.i, label %_RINvXs2_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipINtNtB8_3map3MapIBY_INtNtNtBc_5slice4iter4IterNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewENCNvNtCs4PheDXcg4wa_10polars_row6encode11get_encoders3_0ENCINvB2K_24biniter_num_column_bytesB1d_E0EINtB1k_7IterMutjEEINtB6_7ZipImplBX_B4h_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTjQjENCINvMs_NtB2M_6widthsNtB67_9RowWidths9push_iterBX_Es0_0E0EB2M_.exit, label %.lr.ph.i, !dbg !688
 
@@ -171,8 +171,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.011.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 5 uses
   %.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %i.bu, %middle.block ] ; 2 uses
-  %2 = add i64 %.sroa.0.011.i.ph, %.val.i, !dbg !688
-  %i.bv = sub i64 %.val8.i, %2, !dbg !688
+  %i.bv = sub i64 %i.y, %.sroa.0.011.i.ph, !dbg !688
   %i.bw = xor i64 %.sroa.0.011.i.ph, -1, !dbg !688
   %i.bx = add i64 %.val8.i, %i.bw, !dbg !688
   %xtraiter = and i64 %i.bv, 1, !dbg !688
@@ -489,10 +488,10 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !994, !noalias !934
   call void @llvm.experimental.noalias.scope.decl(metadata !936), !dbg !995
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 40, !dbg !996
-  %.val.i = load i64, ptr %i.w, align 8, !dbg !996, !alias.scope !936, !noalias !939, !noundef !273 ; 13 uses
+  %.val.i = load i64, ptr %i.w, align 8, !dbg !996, !alias.scope !936, !noalias !939, !noundef !273 ; 12 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 48, !dbg !996
-  %.val8.i = load i64, ptr %i.x, align 8, !dbg !996, !alias.scope !936, !noalias !939, !noundef !273 ; 6 uses
-  %i.y = sub i64 %.val8.i, %.val.i, !dbg !997     ; 4 uses
+  %.val8.i = load i64, ptr %i.x, align 8, !dbg !996, !alias.scope !936, !noalias !939, !noundef !273 ; 5 uses
+  %i.y = sub i64 %.val8.i, %.val.i, !dbg !997     ; 5 uses
   %.not.i = icmp eq i64 %.val8.i, %.val.i, !dbg !998
   br i1 %.not.i, label %_RINvXs2_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipINtNtB8_3map3MapIBY_INtNtNtBc_5slice4iter4IterNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewENCNvNtCs4PheDXcg4wa_10polars_row6encode11get_encoders3_0ENCINvB2K_24biniter_num_column_bytesB1d_Es0_0EINtB1k_7IterMutjEEINtB6_7ZipImplBX_B4k_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTjQjENCINvMs_NtB2M_6widthsNtB6a_9RowWidths9push_iterBX_Es0_0E0EB2M_.exit, label %.lr.ph.i, !dbg !999
 
@@ -581,8 +580,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.011.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 5 uses
   %.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %i.bw, %middle.block ] ; 2 uses
-  %2 = add i64 %.sroa.0.011.i.ph, %.val.i, !dbg !999
-  %i.bx = sub i64 %.val8.i, %2, !dbg !999
+  %i.bx = sub i64 %i.y, %.sroa.0.011.i.ph, !dbg !999
   %i.by = xor i64 %.sroa.0.011.i.ph, -1, !dbg !999
   %i.bz = add i64 %.val8.i, %i.by, !dbg !999
   %xtraiter = and i64 %i.bx, 1, !dbg !999
@@ -903,10 +901,10 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !1301, !noalias !1241
   call void @llvm.experimental.noalias.scope.decl(metadata !1243), !dbg !1302
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 40, !dbg !1303
-  %.val.i = load i64, ptr %i.w, align 8, !dbg !1303, !alias.scope !1243, !noalias !1246, !noundef !273 ; 13 uses
+  %.val.i = load i64, ptr %i.w, align 8, !dbg !1303, !alias.scope !1243, !noalias !1246, !noundef !273 ; 12 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 48, !dbg !1303
-  %.val8.i = load i64, ptr %i.x, align 8, !dbg !1303, !alias.scope !1243, !noalias !1246, !noundef !273 ; 6 uses
-  %i.y = sub i64 %.val8.i, %.val.i, !dbg !1304    ; 4 uses
+  %.val8.i = load i64, ptr %i.x, align 8, !dbg !1303, !alias.scope !1243, !noalias !1246, !noundef !273 ; 5 uses
+  %i.y = sub i64 %.val8.i, %.val.i, !dbg !1304    ; 5 uses
   %.not.i = icmp eq i64 %.val8.i, %.val.i, !dbg !1305
   br i1 %.not.i, label %_RINvXs2_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipINtNtB8_3map3MapIBY_INtNtNtBc_5slice4iter4IterNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewENCNvNtCs4PheDXcg4wa_10polars_row6encode11get_encoders4_0ENCINvB2K_24striter_num_column_bytesB1d_E0EINtB1k_7IterMutjEEINtB6_7ZipImplBX_B4h_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTjQjENCINvMs_NtB2M_6widthsNtB67_9RowWidths9push_iterBX_Es0_0E0EB2M_.exit, label %.lr.ph.i, !dbg !1306
 
@@ -993,8 +991,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.011.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 5 uses
   %.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %i.bu, %middle.block ] ; 2 uses
-  %2 = add i64 %.sroa.0.011.i.ph, %.val.i, !dbg !1306
-  %i.bv = sub i64 %.val8.i, %2, !dbg !1306
+  %i.bv = sub i64 %i.y, %.sroa.0.011.i.ph, !dbg !1306
   %i.bw = xor i64 %.sroa.0.011.i.ph, -1, !dbg !1306
   %i.bx = add i64 %.val8.i, %i.bw, !dbg !1306
   %xtraiter = and i64 %i.bv, 1, !dbg !1306
@@ -1311,10 +1308,10 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !1604, !noalias !1544
   call void @llvm.experimental.noalias.scope.decl(metadata !1546), !dbg !1605
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 40, !dbg !1606
-  %.val.i = load i64, ptr %i.w, align 8, !dbg !1606, !alias.scope !1546, !noalias !1549, !noundef !273 ; 13 uses
+  %.val.i = load i64, ptr %i.w, align 8, !dbg !1606, !alias.scope !1546, !noalias !1549, !noundef !273 ; 12 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 48, !dbg !1606
-  %.val8.i = load i64, ptr %i.x, align 8, !dbg !1606, !alias.scope !1546, !noalias !1549, !noundef !273 ; 6 uses
-  %i.y = sub i64 %.val8.i, %.val.i, !dbg !1607    ; 4 uses
+  %.val8.i = load i64, ptr %i.x, align 8, !dbg !1606, !alias.scope !1546, !noalias !1549, !noundef !273 ; 5 uses
+  %i.y = sub i64 %.val8.i, %.val.i, !dbg !1607    ; 5 uses
   %.not.i = icmp eq i64 %.val8.i, %.val.i, !dbg !1608
   br i1 %.not.i, label %_RINvXs2_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipINtNtB8_3map3MapIBY_INtNtNtBc_5slice4iter4IterNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewENCNvNtCs4PheDXcg4wa_10polars_row6encode11get_encoders4_0ENCINvB2K_24striter_num_column_bytesB1d_Es0_0EINtB1k_7IterMutjEEINtB6_7ZipImplBX_B4k_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTjQjENCINvMs_NtB2M_6widthsNtB6a_9RowWidths9push_iterBX_Es0_0E0EB2M_.exit, label %.lr.ph.i, !dbg !1609
 
@@ -1397,8 +1394,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.011.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 5 uses
   %.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %i.bq, %middle.block ] ; 2 uses
-  %2 = add i64 %.sroa.0.011.i.ph, %.val.i, !dbg !1609
-  %i.br = sub i64 %.val8.i, %2, !dbg !1609
+  %i.br = sub i64 %i.y, %.sroa.0.011.i.ph, !dbg !1609
   %i.bs = xor i64 %.sroa.0.011.i.ph, -1, !dbg !1609
   %i.bt = add i64 %.val8.i, %i.bs, !dbg !1609
   %xtraiter = and i64 %i.br, 1, !dbg !1609
@@ -1801,10 +1797,10 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc7raw_vec6R
 _RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7IterMutjENtNtNtNtBa_4iter6traits8iterator8Iterator3zipINtB6_4IterjEECs4PheDXcg4wa_10polars_row.exit: ; preds = %bb.l
   tail call void @llvm.experimental.noalias.scope.decl(metadata !14617), !dbg !14682
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 32, !dbg !14683
-  %.val.i = load i64, ptr %i.be, align 8, !dbg !14683, !alias.scope !14617, !noundef !273 ; 9 uses
+  %.val.i = load i64, ptr %i.be, align 8, !dbg !14683, !alias.scope !14617, !noundef !273 ; 8 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.a, i64 40, !dbg !14683
-  %.val8.i = load i64, ptr %i.bf, align 8, !dbg !14683, !alias.scope !14617, !noundef !273 ; 5 uses
-  %i.bg = sub i64 %.val8.i, %.val.i, !dbg !14684  ; 4 uses
+  %.val8.i = load i64, ptr %i.bf, align 8, !dbg !14683, !alias.scope !14617, !noundef !273 ; 4 uses
+  %i.bg = sub i64 %.val8.i, %.val.i, !dbg !14684  ; 5 uses
   %.not.i40 = icmp eq i64 %.val8.i, %.val.i, !dbg !14685
   br i1 %.not.i40, label %_RINvXs2_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutjEINtB10_4IterjEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQjRjENCNvMs_NtCs4PheDXcg4wa_10polars_row6widthsNtB3f_9RowWidths4pushs_0E0EB3h_.exit, label %.lr.ph.i, !dbg !14686
 
@@ -1856,10 +1852,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.010.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %2 = sub i64 %.val8.i, %.val.i, !dbg !14686
   %i.bw = xor i64 %.sroa.0.010.i.ph, -1, !dbg !14686
   %i.bx = add i64 %.val8.i, %i.bw, !dbg !14686
-  %xtraiter = and i64 %2, 1, !dbg !14686
+  %xtraiter = and i64 %i.bg, 1, !dbg !14686
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !14686
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !dbg !14686
 

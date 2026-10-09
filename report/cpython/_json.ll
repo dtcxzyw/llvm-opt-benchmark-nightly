@@ -205,9 +205,9 @@ bb.hv:                                            ; preds = %bb.hu
   br label %.thread224.i
 
 .thread216.i:                                     ; preds = %bb.ht, %.critedge159.i, %.thread.i
-  %.8208223.i = phi i64 [ %.8208.i, %bb.ht ], [ %.4.i, %.critedge159.i ], [ %.8210.i, %.thread.i ] ; 13 uses
+  %.8208223.i = phi i64 [ %.8208.i, %bb.ht ], [ %.4.i, %.critedge159.i ], [ %.8210.i, %.thread.i ] ; 10 uses
   %.not153212221.i = phi i1 [ %.not153212.i, %bb.ht ], [ true, %.critedge159.i ], [ false, %.thread.i ]
-  %i.ts = sub i64 %.8208223.i, %3                 ; 22 uses
+  %i.ts = sub i64 %.8208223.i, %3                 ; 25 uses
   %i.tt = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.ts) #6 ; 8 uses
   %i.tu = ptrtoaddr ptr %i.tt to i64
   %.not157.i = icmp eq ptr %i.tt, null
@@ -295,8 +295,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 PyUnicode_READ.exit204.us240.i.preheader:         ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.0236.us239.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec269, %vec.epilog.middle.block ] ; 3 uses
-  %5 = sub i64 %.8208223.i, %3
-  %xtraiter = and i64 %5, 3                       ; 2 uses
+  %xtraiter = and i64 %i.ts, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %PyUnicode_READ.exit204.us240.i.prol.loopexit, label %PyUnicode_READ.exit204.us240.i.prol
 
@@ -383,8 +382,7 @@ vec.epilog.middle.block299:                       ; preds = %vec.epilog.vector.b
 
 PyUnicode_READ.exit204.us.i.preheader:            ; preds = %iter.check289, %vector.memcheck274, %vec.epilog.iter.check291, %vec.epilog.middle.block299
   %.0236.us.i.ph = phi i64 [ 0, %iter.check289 ], [ 0, %vector.memcheck274 ], [ %n.vec280, %vec.epilog.iter.check291 ], [ %n.vec294, %vec.epilog.middle.block299 ] ; 3 uses
-  %6 = sub i64 %.8208223.i, %3
-  %xtraiter326 = and i64 %6, 3                    ; 2 uses
+  %xtraiter326 = and i64 %i.ts, 3                 ; 2 uses
   %lcmp.mod327.not = icmp eq i64 %xtraiter326, 0
   br i1 %lcmp.mod327.not, label %PyUnicode_READ.exit204.us.i.prol.loopexit, label %PyUnicode_READ.exit204.us.i.prol
 
@@ -449,8 +447,7 @@ middle.block319:                                  ; preds = %vector.body314
 
 PyUnicode_READ.exit204.i.preheader:               ; preds = %vector.memcheck308, %PyUnicode_READ.exit204.preheader.i, %middle.block319
   %.0236.i.ph = phi i64 [ 0, %vector.memcheck308 ], [ 0, %PyUnicode_READ.exit204.preheader.i ], [ %n.vec313, %middle.block319 ] ; 3 uses
-  %7 = sub i64 %.8208223.i, %3
-  %xtraiter329 = and i64 %7, 3                    ; 2 uses
+  %xtraiter329 = and i64 %i.ts, 3                 ; 2 uses
   %lcmp.mod330.not = icmp eq i64 %xtraiter329, 0
   br i1 %lcmp.mod330.not, label %PyUnicode_READ.exit204.i.prol.loopexit, label %PyUnicode_READ.exit204.i.prol
 

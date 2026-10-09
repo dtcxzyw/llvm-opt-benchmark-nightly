@@ -205,15 +205,15 @@ bb.a:
   %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.41.0.copyload = load ptr, ptr %.sroa.41.0..sroa_idx, align 8 ; 7 uses
   %.sroa.52.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.52.0.copyload = load i64, ptr %.sroa.52.0..sroa_idx, align 8 ; 11 uses
+  %.sroa.52.0.copyload = load i64, ptr %.sroa.52.0..sroa_idx, align 8 ; 10 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 7 uses
+  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 6 uses
   %.sroa.03.0.copyload = load ptr, ptr %1, align 8 ; 2 uses
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.44.0.copyload = load i64, ptr %.sroa.44.0..sroa_idx, align 8 ; 7 uses
   %.sroa.65.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.65.0.copyload = load ptr, ptr %.sroa.65.0..sroa_idx, align 8 ; 6 uses
-  %i.a = sub i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload ; 4 uses
+  %i.a = sub i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload ; 5 uses
   %.not.i.i = icmp eq i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload
   br i1 %.not.i.i, label %_RINvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEIBX_jEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldTRfRjEfuNCNvMs4_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models8qwen3_vl6visionNtB2M_18Qwen3VLVisionModel26fast_pos_embed_interpolates2_0NCINvNvB1v_8for_each4callfNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB5j_3VecfE14extend_trustedINtB2e_3MapBM_B2E_EE0E0E0EB2S_.exit, label %.lr.ph.i.i
 
@@ -275,10 +275,9 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.ph = phi i64 [ %.sroa.44.0.copyload, %vector.memcheck ], [ %.sroa.44.0.copyload, %.lr.ph.i.i ], [ %i.p, %middle.block ] ; 3 uses
   %.sroa.0.015.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %2 = sub i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload
   %i.y = xor i64 %.sroa.0.015.i.i.ph, -1
   %i.z = add i64 %.sroa.6.0.copyload, %i.y
-  %xtraiter = and i64 %2, 1
+  %xtraiter = and i64 %i.a, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -348,15 +347,15 @@ bb.a:
   %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.41.0.copyload = load ptr, ptr %.sroa.41.0..sroa_idx, align 8 ; 7 uses
   %.sroa.52.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.52.0.copyload = load i64, ptr %.sroa.52.0..sroa_idx, align 8 ; 11 uses
+  %.sroa.52.0.copyload = load i64, ptr %.sroa.52.0..sroa_idx, align 8 ; 10 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 7 uses
+  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 6 uses
   %.sroa.03.0.copyload = load ptr, ptr %1, align 8 ; 2 uses
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.44.0.copyload = load i64, ptr %.sroa.44.0..sroa_idx, align 8 ; 7 uses
   %.sroa.65.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.65.0.copyload = load ptr, ptr %.sroa.65.0..sroa_idx, align 8 ; 6 uses
-  %i.a = sub i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload ; 4 uses
+  %i.a = sub i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload ; 5 uses
   %.not.i.i = icmp eq i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload
   br i1 %.not.i.i, label %_RINvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEIBX_jEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNtB7_3map8map_foldTRfRjEfuNCNvMs4_NtNtNtCs1dZk1kIfPhr_19candle_transformers6models8qwen3_vl6visionNtB2M_18Qwen3VLVisionModel26fast_pos_embed_interpolates3_0NCINvNvB1v_8for_each4callfNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB5j_3VecfE14extend_trustedINtB2e_3MapBM_B2E_EE0E0E0EB2S_.exit, label %.lr.ph.i.i
 
@@ -418,10 +417,9 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.ph = phi i64 [ %.sroa.44.0.copyload, %vector.memcheck ], [ %.sroa.44.0.copyload, %.lr.ph.i.i ], [ %i.p, %middle.block ] ; 3 uses
   %.sroa.0.015.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %2 = sub i64 %.sroa.6.0.copyload, %.sroa.52.0.copyload
   %i.y = xor i64 %.sroa.0.015.i.i.ph, -1
   %i.z = add i64 %.sroa.6.0.copyload, %i.y
-  %xtraiter = and i64 %2, 1
+  %xtraiter = and i64 %i.a, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 

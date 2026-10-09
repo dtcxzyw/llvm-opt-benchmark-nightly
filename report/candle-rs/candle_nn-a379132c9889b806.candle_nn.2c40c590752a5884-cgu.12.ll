@@ -204,9 +204,9 @@ bb.i:                                             ; preds = %bb.g
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.bx
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.cw, ptr noundef nonnull readonly align 4 %i.u, ptr noundef nonnull readonly %i.bl)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !197)
-  %.val.i = load i64, ptr %i.bm, align 8, !alias.scope !197, !noundef !5 ; 9 uses
-  %.val6.i = load i64, ptr %i.bn, align 8, !alias.scope !197, !noundef !5 ; 5 uses
-  %i.cx = sub i64 %.val6.i, %.val.i               ; 4 uses
+  %.val.i = load i64, ptr %i.bm, align 8, !alias.scope !197, !noundef !5 ; 8 uses
+  %.val6.i = load i64, ptr %i.bn, align 8, !alias.scope !197, !noundef !5 ; 4 uses
+  %i.cx = sub i64 %.val6.i, %.val.i               ; 5 uses
   %.not.i = icmp eq i64 %.val6.i, %.val.i
   br i1 %.not.i, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit, label %.lr.ph.i
 
@@ -261,10 +261,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.010.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %2 = sub i64 %.val6.i, %.val.i
   %i.dk = xor i64 %.sroa.0.010.i.ph, -1
   %i.dl = add i64 %.val6.i, %i.dk
-  %xtraiter443 = and i64 %2, 1
+  %xtraiter443 = and i64 %i.cx, 1
   %lcmp.mod444.not = icmp eq i64 %xtraiter443, 0
   br i1 %lcmp.mod444.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -667,9 +666,9 @@ bb.m:                                             ; preds = %bb.k
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %i.ck, i64 %i.ci
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %i.ck, ptr noundef nonnull %i.dv, ptr noundef nonnull readonly align 4 %i.u, ptr noundef nonnull readonly %i.bw)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !242)
-  %.val.i = load i64, ptr %i.bx, align 8, !alias.scope !242, !noundef !5 ; 9 uses
-  %.val6.i = load i64, ptr %i.by, align 8, !alias.scope !242, !noundef !5 ; 5 uses
-  %i.dw = sub i64 %.val6.i, %.val.i               ; 4 uses
+  %.val.i = load i64, ptr %i.bx, align 8, !alias.scope !242, !noundef !5 ; 8 uses
+  %.val6.i = load i64, ptr %i.by, align 8, !alias.scope !242, !noundef !5 ; 4 uses
+  %i.dw = sub i64 %.val6.i, %.val.i               ; 5 uses
   %.not.i = icmp eq i64 %.val6.i, %.val.i
   br i1 %.not.i, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit, label %.lr.ph.i
 
@@ -724,10 +723,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.010.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %2 = sub i64 %.val6.i, %.val.i
   %i.ej = xor i64 %.sroa.0.010.i.ph, -1
   %i.ek = add i64 %.val6.i, %i.ej
-  %xtraiter441 = and i64 %2, 1
+  %xtraiter441 = and i64 %i.dw, 1
   %lcmp.mod442.not = icmp eq i64 %xtraiter441, 0
   br i1 %lcmp.mod442.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -1130,9 +1128,9 @@ bb.i:                                             ; preds = %bb.g
   %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %i.bp
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %i.br, ptr noundef nonnull %i.ch, ptr noundef nonnull readonly align 4 %i.u, ptr noundef nonnull readonly %i.bd)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !287)
-  %.val.i = load i64, ptr %i.be, align 8, !alias.scope !287, !noundef !5 ; 9 uses
-  %.val6.i = load i64, ptr %i.bf, align 8, !alias.scope !287, !noundef !5 ; 5 uses
-  %i.ci = sub i64 %.val6.i, %.val.i               ; 4 uses
+  %.val.i = load i64, ptr %i.be, align 8, !alias.scope !287, !noundef !5 ; 8 uses
+  %.val6.i = load i64, ptr %i.bf, align 8, !alias.scope !287, !noundef !5 ; 4 uses
+  %i.ci = sub i64 %.val6.i, %.val.i               ; 5 uses
   %.not.i = icmp eq i64 %.val6.i, %.val.i
   br i1 %.not.i, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit, label %.lr.ph.i
 
@@ -1187,10 +1185,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.010.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %2 = sub i64 %.val6.i, %.val.i
   %i.cv = xor i64 %.sroa.0.010.i.ph, -1
   %i.cw = add i64 %.val6.i, %i.cv
-  %xtraiter445 = and i64 %2, 1
+  %xtraiter445 = and i64 %i.ci, 1
   %lcmp.mod446.not = icmp eq i64 %xtraiter445, 0
   br i1 %lcmp.mod446.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -1593,9 +1590,9 @@ bb.k:                                             ; preds = %bb.i
   %i.de = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %i.ca
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %i.cc, ptr noundef nonnull %i.de, ptr noundef nonnull readonly align 4 %i.u, ptr noundef nonnull readonly %i.bo)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !332)
-  %.val.i = load i64, ptr %i.bp, align 8, !alias.scope !332, !noundef !5 ; 9 uses
-  %.val6.i = load i64, ptr %i.bq, align 8, !alias.scope !332, !noundef !5 ; 5 uses
-  %i.df = sub i64 %.val6.i, %.val.i               ; 4 uses
+  %.val.i = load i64, ptr %i.bp, align 8, !alias.scope !332, !noundef !5 ; 8 uses
+  %.val6.i = load i64, ptr %i.bq, align 8, !alias.scope !332, !noundef !5 ; 4 uses
+  %i.df = sub i64 %.val6.i, %.val.i               ; 5 uses
   %.not.i = icmp eq i64 %.val6.i, %.val.i
   br i1 %.not.i, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit, label %.lr.ph.i
 
@@ -1650,10 +1647,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.010.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %2 = sub i64 %.val6.i, %.val.i
   %i.ds = xor i64 %.sroa.0.010.i.ph, -1
   %i.dt = add i64 %.val6.i, %i.ds
-  %xtraiter437 = and i64 %2, 1
+  %xtraiter437 = and i64 %i.df, 1
   %lcmp.mod438.not = icmp eq i64 %xtraiter437, 0
   br i1 %lcmp.mod438.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -2056,9 +2052,9 @@ bb.g:                                             ; preds = %bb.e
   %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.bh
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %i.bj, ptr noundef nonnull %i.bw, ptr noundef nonnull readonly align 4 %i.u, ptr noundef nonnull readonly %i.av)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !377)
-  %.val.i = load i64, ptr %i.aw, align 8, !alias.scope !377, !noundef !5 ; 9 uses
-  %.val6.i = load i64, ptr %i.ax, align 8, !alias.scope !377, !noundef !5 ; 5 uses
-  %i.bx = sub i64 %.val6.i, %.val.i               ; 4 uses
+  %.val.i = load i64, ptr %i.aw, align 8, !alias.scope !377, !noundef !5 ; 8 uses
+  %.val6.i = load i64, ptr %i.ax, align 8, !alias.scope !377, !noundef !5 ; 4 uses
+  %i.bx = sub i64 %.val6.i, %.val.i               ; 5 uses
   %.not.i = icmp eq i64 %.val6.i, %.val.i
   br i1 %.not.i, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit, label %.lr.ph.i
 
@@ -2113,10 +2109,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.sroa.0.010.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 4 uses
-  %2 = sub i64 %.val6.i, %.val.i
   %i.ck = xor i64 %.sroa.0.010.i.ph, -1
   %i.cl = add i64 %.val6.i, %i.ck
-  %xtraiter371 = and i64 %2, 1
+  %xtraiter371 = and i64 %i.bx, 1
   %lcmp.mod372.not = icmp eq i64 %xtraiter371, 0
   br i1 %lcmp.mod372.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -2519,9 +2514,9 @@ bb.i:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.b, ptr noundef nonnull %i.cn, ptr noundef nonnull %i.co, ptr noundef nonnull readonly align 4 %i.aa, ptr noundef nonnull readonly %i.ab)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !479)
-  %.val.i = load i64, ptr %i.br, align 8, !alias.scope !479, !noundef !5 ; 9 uses
-  %.val6.i = load i64, ptr %i.bs, align 8, !alias.scope !479, !noundef !5 ; 5 uses
-  %i.dj = sub i64 %.val6.i, %.val.i               ; 4 uses
+  %.val.i = load i64, ptr %i.br, align 8, !alias.scope !479, !noundef !5 ; 8 uses
+  %.val6.i = load i64, ptr %i.bs, align 8, !alias.scope !479, !noundef !5 ; 4 uses
+  %i.dj = sub i64 %.val6.i, %.val.i               ; 5 uses
   %.not.i = icmp eq i64 %.val6.i, %.val.i
   br i1 %.not.i, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit, label %.lr.ph.i
 
@@ -2576,10 +2571,9 @@ middle.block306:                                  ; preds = %vector.body299
 
 scalar.ph293.preheader:                           ; preds = %vector.memcheck285, %.lr.ph.i, %middle.block306
   %.sroa.0.010.i.ph = phi i64 [ 0, %vector.memcheck285 ], [ 0, %.lr.ph.i ], [ %n.vec296, %middle.block306 ] ; 4 uses
-  %2 = sub i64 %.val6.i, %.val.i
   %i.dw = xor i64 %.sroa.0.010.i.ph, -1
   %i.dx = add i64 %.val6.i, %i.dw
-  %xtraiter479 = and i64 %2, 1
+  %xtraiter479 = and i64 %i.dj, 1
   %lcmp.mod480.not = icmp eq i64 %xtraiter479, 0
   br i1 %lcmp.mod480.not, label %scalar.ph293.prol.loopexit, label %scalar.ph293.prol
 
@@ -2632,9 +2626,9 @@ _RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4i
   %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %i.cl
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %i.co, ptr noundef nonnull %i.es, ptr noundef nonnull readonly align 4 %i.ab, ptr noundef nonnull readonly %i.bi)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !485)
-  %.val.i62 = load i64, ptr %i.bu, align 8, !alias.scope !485, !noundef !5 ; 9 uses
-  %.val6.i63 = load i64, ptr %i.bv, align 8, !alias.scope !485, !noundef !5 ; 5 uses
-  %i.et = sub i64 %.val6.i63, %.val.i62           ; 4 uses
+  %.val.i62 = load i64, ptr %i.bu, align 8, !alias.scope !485, !noundef !5 ; 8 uses
+  %.val6.i63 = load i64, ptr %i.bv, align 8, !alias.scope !485, !noundef !5 ; 4 uses
+  %i.et = sub i64 %.val6.i63, %.val.i62           ; 5 uses
   %.not.i64 = icmp eq i64 %.val6.i63, %.val.i62
   br i1 %.not.i64, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit71, label %.lr.ph.i65
 
@@ -2689,10 +2683,9 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i65, %middle.block
   %.sroa.0.010.i68.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i65 ], [ %n.vec, %middle.block ] ; 4 uses
-  %3 = sub i64 %.val6.i63, %.val.i62
   %i.fg = xor i64 %.sroa.0.010.i68.ph, -1
   %i.fh = add i64 %.val6.i63, %i.fg
-  %xtraiter481 = and i64 %3, 1
+  %xtraiter481 = and i64 %i.et, 1
   %lcmp.mod482.not = icmp eq i64 %xtraiter481, 0
   br i1 %lcmp.mod482.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -2946,9 +2939,9 @@ bb.s:                                             ; preds = %._crit_edge
   %i.jt = getelementptr inbounds nuw [4 x i8], ptr %i.gp, i64 %i.gh
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.e, ptr noundef nonnull %i.aa, ptr noundef nonnull %i.ab, ptr noundef nonnull readonly align 4 %i.gp, ptr noundef nonnull readonly %i.jt)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !491)
-  %.val.i72 = load i64, ptr %i.bb, align 8, !alias.scope !491, !noundef !5 ; 9 uses
-  %.val6.i73 = load i64, ptr %i.bc, align 8, !alias.scope !491, !noundef !5 ; 5 uses
-  %i.ju = sub i64 %.val6.i73, %.val.i72           ; 4 uses
+  %.val.i72 = load i64, ptr %i.bb, align 8, !alias.scope !491, !noundef !5 ; 8 uses
+  %.val6.i73 = load i64, ptr %i.bc, align 8, !alias.scope !491, !noundef !5 ; 4 uses
+  %i.ju = sub i64 %.val6.i73, %.val.i72           ; 5 uses
   %.not.i74 = icmp eq i64 %.val6.i73, %.val.i72
   br i1 %.not.i74, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit81, label %.lr.ph.i75
 
@@ -3003,10 +2996,9 @@ middle.block427:                                  ; preds = %vector.body420
 
 scalar.ph414.preheader:                           ; preds = %vector.memcheck406, %.lr.ph.i75, %middle.block427
   %.sroa.0.010.i78.ph = phi i64 [ 0, %vector.memcheck406 ], [ 0, %.lr.ph.i75 ], [ %n.vec417, %middle.block427 ] ; 4 uses
-  %4 = sub i64 %.val6.i73, %.val.i72
   %i.kh = xor i64 %.sroa.0.010.i78.ph, -1
   %i.ki = add i64 %.val6.i73, %i.kh
-  %xtraiter471 = and i64 %4, 1
+  %xtraiter471 = and i64 %i.ju, 1
   %lcmp.mod472.not = icmp eq i64 %xtraiter471, 0
   br i1 %lcmp.mod472.not, label %scalar.ph414.prol.loopexit, label %scalar.ph414.prol
 
@@ -3108,9 +3100,9 @@ _RINvXs2Q_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_7IterMutfENtNtNtNtBb_4iter6tra
   %i.lq = getelementptr inbounds nuw [4 x i8], ptr %i.gp, i64 %i.gh
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.f, ptr noundef nonnull %i.aa, ptr noundef nonnull %i.ab, ptr noundef nonnull readonly align 4 %i.gp, ptr noundef nonnull readonly %i.lq)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !498)
-  %.val.i83 = load i64, ptr %i.bf, align 8, !alias.scope !498, !noundef !5 ; 9 uses
-  %.val6.i84 = load i64, ptr %i.bg, align 8, !alias.scope !498, !noundef !5 ; 5 uses
-  %i.lr = sub i64 %.val6.i84, %.val.i83           ; 4 uses
+  %.val.i83 = load i64, ptr %i.bf, align 8, !alias.scope !498, !noundef !5 ; 8 uses
+  %.val6.i84 = load i64, ptr %i.bg, align 8, !alias.scope !498, !noundef !5 ; 4 uses
+  %i.lr = sub i64 %.val6.i84, %.val.i83           ; 5 uses
   %.not.i85 = icmp eq i64 %.val6.i84, %.val.i83
   br i1 %.not.i85, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal7vec_add0E0EB3i_.exit, label %.lr.ph.i86
 
@@ -3161,10 +3153,9 @@ middle.block388:                                  ; preds = %vector.body381
 
 scalar.ph377.preheader:                           ; preds = %vector.memcheck369, %.lr.ph.i86, %middle.block388
   %.sroa.0.08.i.ph = phi i64 [ 0, %vector.memcheck369 ], [ 0, %.lr.ph.i86 ], [ %n.vec380, %middle.block388 ] ; 4 uses
-  %5 = sub i64 %.val6.i84, %.val.i83
   %i.mc = xor i64 %.sroa.0.08.i.ph, -1
   %i.md = add i64 %.val6.i84, %i.mc
-  %xtraiter473 = and i64 %5, 1
+  %xtraiter473 = and i64 %i.lr, 1
   %lcmp.mod474.not = icmp eq i64 %xtraiter473, 0
   br i1 %lcmp.mod474.not, label %scalar.ph377.prol.loopexit, label %scalar.ph377.prol
 
@@ -3226,9 +3217,9 @@ bb.v:                                             ; preds = %bb.u
   %i.mz = getelementptr inbounds nuw [4 x i8], ptr %i.gp, i64 %i.gh
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, ptr noundef nonnull %i.ab, ptr noundef nonnull %i.bi, ptr noundef nonnull readonly align 4 %i.gp, ptr noundef nonnull readonly %i.mz)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !504)
-  %.val.i90 = load i64, ptr %i.bj, align 8, !alias.scope !504, !noundef !5 ; 9 uses
-  %.val6.i91 = load i64, ptr %i.bk, align 8, !alias.scope !504, !noundef !5 ; 5 uses
-  %i.na = sub i64 %.val6.i91, %.val.i90           ; 4 uses
+  %.val.i90 = load i64, ptr %i.bj, align 8, !alias.scope !504, !noundef !5 ; 8 uses
+  %.val6.i91 = load i64, ptr %i.bk, align 8, !alias.scope !504, !noundef !5 ; 4 uses
+  %i.na = sub i64 %.val6.i91, %.val.i90           ; 5 uses
   %.not.i92 = icmp eq i64 %.val6.i91, %.val.i90
   br i1 %.not.i92, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal16vec_fmadd_scalar0E0EB3i_.exit99, label %.lr.ph.i93
 
@@ -3283,10 +3274,9 @@ middle.block366:                                  ; preds = %vector.body359
 
 scalar.ph353.preheader:                           ; preds = %vector.memcheck345, %.lr.ph.i93, %middle.block366
   %.sroa.0.010.i96.ph = phi i64 [ 0, %vector.memcheck345 ], [ 0, %.lr.ph.i93 ], [ %n.vec356, %middle.block366 ] ; 4 uses
-  %6 = sub i64 %.val6.i91, %.val.i90
   %i.nn = xor i64 %.sroa.0.010.i96.ph, -1
   %i.no = add i64 %.val6.i91, %i.nn
-  %xtraiter475 = and i64 %6, 1
+  %xtraiter475 = and i64 %i.na, 1
   %lcmp.mod476.not = icmp eq i64 %xtraiter475, 0
   br i1 %lcmp.mod476.not, label %scalar.ph353.prol.loopexit, label %scalar.ph353.prol
 
@@ -3388,9 +3378,9 @@ _RINvXs2Q_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_7IterMutfENtNtNtNtBb_4iter6tra
   %i.ow = getelementptr inbounds nuw [4 x i8], ptr %i.gp, i64 %i.gh
   call void @_RNvXs3_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMutfEINtBZ_4IterfEEINtB5_7ZipImplBW_B1r_E3newCs3NyA1pFSltE_9candle_nn(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.d, ptr noundef nonnull %i.ab, ptr noundef nonnull %i.bm, ptr noundef nonnull readonly align 4 %i.gp, ptr noundef nonnull readonly %i.ow)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !511)
-  %.val.i103 = load i64, ptr %i.bo, align 8, !alias.scope !511, !noundef !5 ; 9 uses
-  %.val6.i104 = load i64, ptr %i.bp, align 8, !alias.scope !511, !noundef !5 ; 5 uses
-  %i.ox = sub i64 %.val6.i104, %.val.i103         ; 4 uses
+  %.val.i103 = load i64, ptr %i.bo, align 8, !alias.scope !511, !noundef !5 ; 8 uses
+  %.val6.i104 = load i64, ptr %i.bp, align 8, !alias.scope !511, !noundef !5 ; 4 uses
+  %i.ox = sub i64 %.val6.i104, %.val.i103         ; 5 uses
   %.not.i105 = icmp eq i64 %.val6.i104, %.val.i103
   br i1 %.not.i105, label %_RINvXs2_NtNtNtCsf3Ta7LF998c_4core4iter8adapters3zipINtB6_3ZipINtNtNtBc_5slice4iter7IterMutfEINtB10_4IterfEEINtB6_7ZipImplBX_B1s_E4folduNCINvNvNtNtNtBa_6traits8iterator8Iterator8for_each4callTQfRfENCNvNtNtNtCs3NyA1pFSltE_9candle_nn9attention9cpu_flash6causal7vec_add0E0EB3i_.exit112, label %.lr.ph.i106
 
@@ -3441,10 +3431,9 @@ middle.block328:                                  ; preds = %vector.body321
 
 scalar.ph317.preheader:                           ; preds = %vector.memcheck309, %.lr.ph.i106, %middle.block328
   %.sroa.0.08.i109.ph = phi i64 [ 0, %vector.memcheck309 ], [ 0, %.lr.ph.i106 ], [ %n.vec320, %middle.block328 ] ; 4 uses
-  %7 = sub i64 %.val6.i104, %.val.i103
   %i.pi = xor i64 %.sroa.0.08.i109.ph, -1
   %i.pj = add i64 %.val6.i104, %i.pi
-  %xtraiter477 = and i64 %7, 1
+  %xtraiter477 = and i64 %i.ox, 1
   %lcmp.mod478.not = icmp eq i64 %xtraiter477, 0
   br i1 %lcmp.mod478.not, label %scalar.ph317.prol.loopexit, label %scalar.ph317.prol
 

@@ -60,18 +60,20 @@ bb.h:                                             ; preds = %bb.c
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(8196) %i.a, i8 0, i64 8196, i1 false)
   store i32 184549387, ptr %i.a, align 16
   %i.l = ptrtoint ptr %i.e to i64                 ; 2 uses
-  %gepdiff148 = add i64 %3, -5                    ; 3 uses
-  %i.m = call i64 @ZS_HUF_readDTableX1(ptr noundef nonnull %i.a, ptr noundef nonnull %i.i, i64 noundef %gepdiff148) #6 ; 7 uses
+  %gepdiff148 = add i64 %3, -5                    ; 2 uses
+  %i.m = call i64 @ZS_HUF_readDTableX1(ptr noundef nonnull %i.a, ptr noundef nonnull %i.i, i64 noundef %gepdiff148) #6 ; 6 uses
   %i.n = call i32 @ZS_HUF_isError(i64 noundef %i.m) #6
-  %.not.i = icmp eq i32 %i.n, 0
-  %.not149163.a = icmp ne i64 %i.m, 0
-  %.not149.not356 = and i1 %.not149163.a, %.not.i
-  %gepdiff150 = sub i64 %gepdiff148, %i.m
-  %4 = icmp ugt i64 %gepdiff150, 3
-  %or.cond198 = and i1 %.not149.not356, %4
-  br i1 %or.cond198, label %bb.i, label %bb.r
+  %.not149163.a = icmp ne i32 %i.n, 0
+  %.not149163 = icmp eq i64 %i.m, 0
+  %.not149 = or i1 %.not149163, %.not149163.a
+  br i1 %.not149, label %bb.r, label %4
 
-bb.i:                                             ; preds = %bb.h
+4:                                                ; preds = %bb.h
+  %gepdiff150 = sub i64 %gepdiff148, %i.m         ; 2 uses
+  %5 = icmp ugt i64 %gepdiff150, 3
+  br i1 %5, label %bb.i, label %bb.r
+
+bb.i:                                             ; preds = %4
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.m ; 3 uses
   %.0.copyload = load i32, ptr %i.o, align 1      ; 2 uses
   %.neg166 = add i64 %3, -9
@@ -84,8 +86,7 @@ bb.j:                                             ; preds = %bb.i
   %.add = add nuw nsw i64 %i.p, 4                 ; 3 uses
   %.ptr154 = getelementptr inbounds nuw i8, ptr %i.o, i64 %.add ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  %5 = add i64 %i.m, %i.p
-  %reass.sub = sub i64 %gepdiff148, %5
+  %reass.sub = sub i64 %gepdiff150, %i.p
   %i.q = add i64 %reass.sub, -132
   %i.r = icmp ult i64 %i.q, -128
   br i1 %i.r, label %bb.k, label %bb.q
@@ -308,8 +309,8 @@ bb.q:                                             ; preds = %bb.j, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %bb.i, %bb.h
-  %.9 = phi i64 [ 0, %bb.h ], [ %.7, %bb.q ], [ 0, %bb.i ]
+bb.r:                                             ; preds = %bb.q, %4, %bb.i, %bb.h
+  %.9 = phi i64 [ 0, %bb.h ], [ %.7, %bb.q ], [ 0, %4 ], [ 0, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %.thread
 

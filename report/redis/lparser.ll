@@ -205,7 +205,7 @@ adjust_assign.exit.i:                             ; preds = %bb.bl, %bb.bk, %bb.
   %i.aah = load ptr, ptr %i.aag, align 8, !tbaa !76 ; 5 uses
   %i.aai = getelementptr inbounds nuw i8, ptr %.val.i, i64 196 ; 5 uses
   %i.aaj = zext nneg i32 %i.zi to i64             ; 3 uses
-  %i.aak = zext i8 %i.aac to i64                  ; 5 uses
+  %i.aak = zext i8 %i.aac to i64                  ; 2 uses
   %xtraiter = and i64 %i.aaj, 3                   ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
@@ -231,33 +231,30 @@ adjust_assign.exit.i:                             ; preds = %bb.bl, %bb.bk, %bb.
   br i1 %i.aar, label %localstat.exit, label %adjust_assign.exit.i.new
 
 adjust_assign.exit.i.new:                         ; preds = %.prol.loopexit, %adjust_assign.exit.i.new
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i.3, %adjust_assign.exit.i.new ], [ %indvars.iv.i.i.unr, %.prol.loopexit ] ; 5 uses
-  %i.aas = sub nsw i64 %i.aak, %indvars.iv.i.i
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i.3, %adjust_assign.exit.i.new ], [ %indvars.iv.i.i.unr, %.prol.loopexit ] ; 2 uses
+  %i.aas = sub nsw i64 %i.aak, %indvars.iv.i.i    ; 4 uses
   %i.aat = getelementptr inbounds [2 x i8], ptr %i.aai, i64 %i.aas
   %i.aau = load i16, ptr %i.aat, align 2, !tbaa !77
   %i.aav = zext i16 %i.aau to i64
   %i.aaw = getelementptr inbounds nuw [16 x i8], ptr %i.aah, i64 %i.aav
   %i.aax = getelementptr inbounds nuw i8, ptr %i.aaw, i64 8
   store i32 %i.aae, ptr %i.aax, align 8, !tbaa !84
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1
-  %23 = sub nsw i64 %i.aak, %indvars.iv.next.i.i
-  %24 = getelementptr inbounds [2 x i8], ptr %i.aai, i64 %23
+  %23 = getelementptr [2 x i8], ptr %i.aai, i64 %i.aas
+  %24 = getelementptr i8, ptr %23, i64 2
   %i.aay = load i16, ptr %24, align 2, !tbaa !77
   %i.aaz = zext i16 %i.aay to i64
   %i.aba = getelementptr inbounds nuw [16 x i8], ptr %i.aah, i64 %i.aaz
   %i.abb = getelementptr inbounds nuw i8, ptr %i.aba, i64 8
   store i32 %i.aae, ptr %i.abb, align 8, !tbaa !84
-  %indvars.iv.next.i.i.1 = add nsw i64 %indvars.iv.i.i, -2
-  %25 = sub nsw i64 %i.aak, %indvars.iv.next.i.i.1
-  %26 = getelementptr inbounds [2 x i8], ptr %i.aai, i64 %25
+  %25 = getelementptr [2 x i8], ptr %i.aai, i64 %i.aas
+  %26 = getelementptr i8, ptr %25, i64 4
   %i.abc = load i16, ptr %26, align 2, !tbaa !77
   %i.abd = zext i16 %i.abc to i64
   %i.abe = getelementptr inbounds nuw [16 x i8], ptr %i.aah, i64 %i.abd
   %i.abf = getelementptr inbounds nuw i8, ptr %i.abe, i64 8
   store i32 %i.aae, ptr %i.abf, align 8, !tbaa !84
-  %indvars.iv.next.i.i.2 = add nsw i64 %indvars.iv.i.i, -3
-  %27 = sub nsw i64 %i.aak, %indvars.iv.next.i.i.2
-  %28 = getelementptr inbounds [2 x i8], ptr %i.aai, i64 %27
+  %27 = getelementptr [2 x i8], ptr %i.aai, i64 %i.aas
+  %28 = getelementptr i8, ptr %27, i64 6
   %i.abg = load i16, ptr %28, align 2, !tbaa !77
   %i.abh = zext i16 %i.abg to i64
   %i.abi = getelementptr inbounds nuw [16 x i8], ptr %i.aah, i64 %i.abh
@@ -660,7 +657,7 @@ bb.e:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !76   ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.val, i64 196 ; 5 uses
   %i.z = sext i32 %.2 to i64                      ; 3 uses
-  %i.aa = zext i8 %i.s to i64                     ; 5 uses
+  %i.aa = zext i8 %i.s to i64                     ; 2 uses
   %xtraiter = and i64 %i.z, 3
   %i.ab = and i32 %.2, 3
   %lcmp.mod.not = icmp eq i32 %i.ab, 0
@@ -687,33 +684,30 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ai, label %adjustlocalvars.exit, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.prol.loopexit, %.lr.ph.i.new
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %.lr.ph.i.new ], [ %indvars.iv.i.unr, %.prol.loopexit ] ; 5 uses
-  %i.aj = sub nsw i64 %i.aa, %indvars.iv.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.3, %.lr.ph.i.new ], [ %indvars.iv.i.unr, %.prol.loopexit ] ; 2 uses
+  %i.aj = sub nsw i64 %i.aa, %indvars.iv.i        ; 4 uses
   %i.ak = getelementptr inbounds [2 x i8], ptr %i.y, i64 %i.aj
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !77
   %i.am = zext i16 %i.al to i64
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %i.am
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   store i32 %i.u, ptr %i.ao, align 8, !tbaa !84
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
-  %1 = sub nsw i64 %i.aa, %indvars.iv.next.i
-  %2 = getelementptr inbounds [2 x i8], ptr %i.y, i64 %1
+  %1 = getelementptr [2 x i8], ptr %i.y, i64 %i.aj
+  %2 = getelementptr i8, ptr %1, i64 2
   %i.ap = load i16, ptr %2, align 2, !tbaa !77
   %i.aq = zext i16 %i.ap to i64
   %i.ar = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %i.aq
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   store i32 %i.u, ptr %i.as, align 8, !tbaa !84
-  %indvars.iv.next.i.1 = add nsw i64 %indvars.iv.i, -2
-  %3 = sub nsw i64 %i.aa, %indvars.iv.next.i.1
-  %4 = getelementptr inbounds [2 x i8], ptr %i.y, i64 %3
+  %3 = getelementptr [2 x i8], ptr %i.y, i64 %i.aj
+  %4 = getelementptr i8, ptr %3, i64 4
   %i.at = load i16, ptr %4, align 2, !tbaa !77
   %i.au = zext i16 %i.at to i64
   %i.av = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %i.au
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   store i32 %i.u, ptr %i.aw, align 8, !tbaa !84
-  %indvars.iv.next.i.2 = add nsw i64 %indvars.iv.i, -3
-  %5 = sub nsw i64 %i.aa, %indvars.iv.next.i.2
-  %6 = getelementptr inbounds [2 x i8], ptr %i.y, i64 %5
+  %5 = getelementptr [2 x i8], ptr %i.y, i64 %i.aj
+  %6 = getelementptr i8, ptr %5, i64 6
   %i.ax = load i16, ptr %6, align 2, !tbaa !77
   %i.ay = zext i16 %i.ax to i64
   %i.az = getelementptr inbounds nuw [16 x i8], ptr %i.x, i64 %i.ay
@@ -1116,7 +1110,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !76 ; 5 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.val, i64 196 ; 5 uses
   %i.be = sext i32 %3 to i64                      ; 3 uses
-  %i.bf = zext i8 %i.ax to i64                    ; 5 uses
+  %i.bf = zext i8 %i.ax to i64                    ; 2 uses
   %xtraiter = and i64 %i.be, 3
   %i.bg = and i32 %3, 3
   %lcmp.mod.not = icmp eq i32 %i.bg, 0
@@ -1143,33 +1137,30 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.bn, label %adjustlocalvars.exit32, label %.lr.ph.i.new
 
 .lr.ph.i.new:                                     ; preds = %.prol.loopexit, %.lr.ph.i.new
-  %indvars.iv.i29 = phi i64 [ %indvars.iv.next.i30.3, %.lr.ph.i.new ], [ %indvars.iv.i29.unr, %.prol.loopexit ] ; 5 uses
-  %i.bo = sub nsw i64 %i.bf, %indvars.iv.i29
+  %indvars.iv.i29 = phi i64 [ %indvars.iv.next.i30.3, %.lr.ph.i.new ], [ %indvars.iv.i29.unr, %.prol.loopexit ] ; 2 uses
+  %i.bo = sub nsw i64 %i.bf, %indvars.iv.i29      ; 4 uses
   %i.bp = getelementptr inbounds [2 x i8], ptr %i.bd, i64 %i.bo
   %i.bq = load i16, ptr %i.bp, align 2, !tbaa !77
   %i.br = zext i16 %i.bq to i64
   %i.bs = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %i.br
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
   store i32 %i.az, ptr %i.bt, align 8, !tbaa !84
-  %indvars.iv.next.i30 = add nsw i64 %indvars.iv.i29, -1
-  %7 = sub nsw i64 %i.bf, %indvars.iv.next.i30
-  %8 = getelementptr inbounds [2 x i8], ptr %i.bd, i64 %7
+  %7 = getelementptr [2 x i8], ptr %i.bd, i64 %i.bo
+  %8 = getelementptr i8, ptr %7, i64 2
   %i.bu = load i16, ptr %8, align 2, !tbaa !77
   %i.bv = zext i16 %i.bu to i64
   %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %i.bv
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
   store i32 %i.az, ptr %i.bx, align 8, !tbaa !84
-  %indvars.iv.next.i30.1 = add nsw i64 %indvars.iv.i29, -2
-  %9 = sub nsw i64 %i.bf, %indvars.iv.next.i30.1
-  %10 = getelementptr inbounds [2 x i8], ptr %i.bd, i64 %9
+  %9 = getelementptr [2 x i8], ptr %i.bd, i64 %i.bo
+  %10 = getelementptr i8, ptr %9, i64 4
   %i.by = load i16, ptr %10, align 2, !tbaa !77
   %i.bz = zext i16 %i.by to i64
   %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %i.bz
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i32 %i.az, ptr %i.cb, align 8, !tbaa !84
-  %indvars.iv.next.i30.2 = add nsw i64 %indvars.iv.i29, -3
-  %11 = sub nsw i64 %i.bf, %indvars.iv.next.i30.2
-  %12 = getelementptr inbounds [2 x i8], ptr %i.bd, i64 %11
+  %11 = getelementptr [2 x i8], ptr %i.bd, i64 %i.bo
+  %12 = getelementptr i8, ptr %11, i64 6
   %i.cc = load i16, ptr %12, align 2, !tbaa !77
   %i.cd = zext i16 %i.cc to i64
   %i.ce = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %i.cd

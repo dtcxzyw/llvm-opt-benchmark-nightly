@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.p = ptrtoint ptr %spec.select to i64         ; 4 uses
-  %i.q = ptrtoint ptr %0 to i64                   ; 5 uses
-  %i.r = sub i64 %i.p, %i.q                       ; 10 uses
+  %i.p = ptrtoint ptr %spec.select to i64         ; 3 uses
+  %i.q = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.r = sub i64 %i.p, %i.q                       ; 11 uses
   %i.s = load i32, ptr %2, align 4, !tbaa !317
   %i.t = and i32 %i.s, -229377
   %i.u = trunc i64 %i.r to i32
@@ -283,8 +283,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.013.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec70, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub i64 %i.p, %i.q
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.r, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 

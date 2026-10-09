@@ -202,7 +202,7 @@ convert_raw_to_der_single_int.exit:               ; preds = %bb.k
   br i1 %i.ag, label %bb.x, label %bb.l
 
 bb.l:                                             ; preds = %convert_raw_to_der_single_int.exit
-  %i.ah = zext nneg i32 %i.af to i64              ; 4 uses
+  %i.ah = zext nneg i32 %i.af to i64              ; 3 uses
   %i.ai = sub nsw i64 0, %i.ah
   %i.aj = getelementptr inbounds i8, ptr %i.h, i64 %i.ai ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -223,7 +223,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.ap = trunc i64 %.025.i47 to i32              ; 2 uses
-  %i.aq = sub nsw i64 %4, %i.ah
+  %i.aq = sub nsw i64 %4, %i.ah                   ; 2 uses
   %sext.i49 = shl i64 %.025.i47, 32
   %i.ar = ashr exact i64 %sext.i49, 32            ; 4 uses
   %i.as = icmp slt i64 %i.aq, %i.ar
@@ -239,8 +239,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not.i50, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %6 = add nsw i64 %i.ar, %i.ah
-  %i.aw = sub i64 %4, %6
+  %i.aw = sub i64 %i.aq, %i.ar
   %i.ax = icmp slt i64 %i.aw, 1
   br i1 %i.ax, label %convert_raw_to_der_single_int.exit53.thread, label %bb.r
 

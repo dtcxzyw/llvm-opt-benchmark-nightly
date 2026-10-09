@@ -205,44 +205,44 @@ begin_hunk_0_@qtmd_init:bb.a
   %wide.trip.count.i = zext nneg i32 %i.dx to i64 ; 2 uses
   %n.vec = and i64 %wide.trip.count.i, 24         ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.du, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 6 uses
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 3 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.h, i64 1312
-  %5 = trunc nuw nsw <4 x i32> %broadcast.splat to <4 x i16>
-  %6 = add nsw <4 x i16> %5, <i16 0, i16 -1, i16 -2, i16 -3>
-  %i.dz = trunc nuw nsw <4 x i32> %broadcast.splat to <4 x i16>
-  %7 = add nsw <4 x i16> %i.dz, <i16 -4, i16 -5, i16 -6, i16 -7>
-  %interleaved.vec162 = shufflevector <4 x i16> <i16 0, i16 1, i16 2, i16 3>, <4 x i16> %6, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %5 = add nsw <4 x i32> %broadcast.splat, <i32 0, i32 -1, i32 -2, i32 -3> ; 2 uses
+  %i.dz = trunc nuw nsw <4 x i32> %5 to <4 x i16>
+  %6 = trunc nsw <4 x i32> %5 to <4 x i16>
+  %interleaved.vec162 = shufflevector <4 x i16> <i16 0, i16 1, i16 2, i16 3>, <4 x i16> %i.dz, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i16> %interleaved.vec162, ptr %i.dt, align 8, !tbaa !39
-  %interleaved.vec163.a = shufflevector <4 x i16> <i16 4, i16 5, i16 6, i16 7>, <4 x i16> %7, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i16> %interleaved.vec163.a, ptr %i.dy, align 8, !tbaa !39
+  %interleaved.vec163.a = shufflevector <4 x i16> <i16 0, i16 1, i16 2, i16 3>, <4 x i16> %6, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec163 = add nsw <8 x i16> %interleaved.vec163.a, <i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4>
+  store <8 x i16> %interleaved.vec163, ptr %i.dy, align 8, !tbaa !39
   %i.ea = icmp eq i64 %n.vec, 8
   br i1 %i.ea, label %scalar.ph154.preheader, label %vector.body156.1
 
 vector.body156.1:                                 ; preds = %vector.ph
   %i.eb = getelementptr inbounds nuw i8, ptr %i.h, i64 1328
   %i.ec = getelementptr inbounds nuw i8, ptr %i.h, i64 1344
-  %8 = trunc nuw nsw <4 x i32> %broadcast.splat to <4 x i16>
-  %9 = add nsw <4 x i16> %8, <i16 -8, i16 -9, i16 -10, i16 -11>
-  %i.ed = trunc nuw nsw <4 x i32> %broadcast.splat to <4 x i16>
-  %10 = add nsw <4 x i16> %i.ed, <i16 -12, i16 -13, i16 -14, i16 -15>
-  %interleaved.vec162.1 = shufflevector <4 x i16> <i16 8, i16 9, i16 10, i16 11>, <4 x i16> %9, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %7 = add nsw <4 x i32> %broadcast.splat, <i32 -8, i32 -9, i32 -10, i32 -11> ; 2 uses
+  %i.ed = trunc nuw nsw <4 x i32> %7 to <4 x i16>
+  %8 = trunc nsw <4 x i32> %7 to <4 x i16>
+  %interleaved.vec162.1 = shufflevector <4 x i16> <i16 8, i16 9, i16 10, i16 11>, <4 x i16> %i.ed, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i16> %interleaved.vec162.1, ptr %i.eb, align 8, !tbaa !39
-  %interleaved.vec163.1.a = shufflevector <4 x i16> <i16 12, i16 13, i16 14, i16 15>, <4 x i16> %10, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i16> %interleaved.vec163.1.a, ptr %i.ec, align 8, !tbaa !39
+  %interleaved.vec163.1.a = shufflevector <4 x i16> <i16 8, i16 9, i16 10, i16 11>, <4 x i16> %8, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec163.1 = add nsw <8 x i16> %interleaved.vec163.1.a, <i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4>
+  store <8 x i16> %interleaved.vec163.1, ptr %i.ec, align 8, !tbaa !39
   %i.ee = icmp eq i64 %n.vec, 16
   br i1 %i.ee, label %scalar.ph154.preheader, label %vector.body156.2
 
 vector.body156.2:                                 ; preds = %vector.body156.1
   %i.ef = getelementptr inbounds nuw i8, ptr %i.h, i64 1360
   %i.eg = getelementptr inbounds nuw i8, ptr %i.h, i64 1376
-  %11 = trunc nuw nsw <4 x i32> %broadcast.splat to <4 x i16>
-  %12 = add nsw <4 x i16> %11, <i16 -16, i16 -17, i16 -18, i16 -19>
-  %i.eh = trunc nuw nsw <4 x i32> %broadcast.splat to <4 x i16>
-  %13 = add nsw <4 x i16> %i.eh, <i16 -20, i16 -21, i16 -22, i16 -23>
-  %interleaved.vec162.2 = shufflevector <4 x i16> <i16 16, i16 17, i16 18, i16 19>, <4 x i16> %12, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %9 = add nsw <4 x i32> %broadcast.splat, <i32 -16, i32 -17, i32 -18, i32 -19> ; 2 uses
+  %i.eh = trunc nuw nsw <4 x i32> %9 to <4 x i16>
+  %10 = trunc nsw <4 x i32> %9 to <4 x i16>
+  %interleaved.vec162.2 = shufflevector <4 x i16> <i16 16, i16 17, i16 18, i16 19>, <4 x i16> %i.eh, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i16> %interleaved.vec162.2, ptr %i.ef, align 8, !tbaa !39
-  %interleaved.vec163.2.a = shufflevector <4 x i16> <i16 20, i16 21, i16 22, i16 23>, <4 x i16> %13, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i16> %interleaved.vec163.2.a, ptr %i.eg, align 8, !tbaa !39
+  %interleaved.vec163.2.a = shufflevector <4 x i16> <i16 16, i16 17, i16 18, i16 19>, <4 x i16> %10, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec163.2 = add nsw <8 x i16> %interleaved.vec163.2.a, <i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4>
+  store <8 x i16> %interleaved.vec163.2, ptr %i.eg, align 8, !tbaa !39
   br label %scalar.ph154.preheader
 
 scalar.ph154.preheader:                           ; preds = %vector.body156.2, %vector.body156.1, %vector.ph
@@ -279,26 +279,24 @@ qtmd_init_model.exit97:                           ; preds = %scalar.ph154
 vector.ph169:                                     ; preds = %qtmd_init_model.exit97
   %n.vec170 = and i64 %wide.trip.count.i98, 56    ; 2 uses
   %broadcast.splatinsert171 = insertelement <4 x i32> poison, i32 %i.eq, i64 0
-  %broadcast.splat172 = shufflevector <4 x i32> %broadcast.splatinsert171, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat172 = shufflevector <4 x i32> %broadcast.splatinsert171, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body173
 
 vector.body173:                                   ; preds = %vector.body173, %vector.ph169
   %index174 = phi i64 [ 0, %vector.ph169 ], [ %index.next181, %vector.body173 ] ; 3 uses
-  %vec.ind175 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph169 ], [ %vec.ind.next182, %vector.body173 ] ; 3 uses
+  %vec.ind175 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph169 ], [ %vec.ind.next182, %vector.body173 ] ; 2 uses
   %vec.ind176 = phi <4 x i16> [ <i16 0, i16 1, i16 2, i16 3>, %vector.ph169 ], [ %vec.ind.next183, %vector.body173 ] ; 3 uses
-  %step.add177 = add <4 x i32> %vec.ind175, splat (i32 4)
-  %step.add178 = add <4 x i16> %vec.ind176, splat (i16 4)
   %i.eu = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %index174
   %i.ev = getelementptr inbounds nuw [4 x i8], ptr %i.ep, i64 %index174
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 16
-  %14 = sub <4 x i32> %broadcast.splat172, %vec.ind175
-  %i.ex = sub <4 x i32> %broadcast.splat172, %step.add177
-  %i.ey = trunc nuw nsw <4 x i32> %14 to <4 x i16>
-  %i.ez = trunc nuw nsw <4 x i32> %i.ex to <4 x i16>
+  %i.ex = sub <4 x i32> %broadcast.splat172, %vec.ind175 ; 2 uses
+  %i.ey = trunc nuw nsw <4 x i32> %i.ex to <4 x i16>
+  %i.ez = trunc <4 x i32> %i.ex to <4 x i16>
   %interleaved.vec179 = shufflevector <4 x i16> %vec.ind176, <4 x i16> %i.ey, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i16> %interleaved.vec179, ptr %i.eu, align 2, !tbaa !39
-  %interleaved.vec180.a = shufflevector <4 x i16> %step.add178, <4 x i16> %i.ez, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i16> %interleaved.vec180.a, ptr %i.ew, align 2, !tbaa !39
+  %interleaved.vec180.a = shufflevector <4 x i16> %vec.ind176, <4 x i16> %i.ez, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec180 = add <8 x i16> %interleaved.vec180.a, <i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4>
+  store <8 x i16> %interleaved.vec180, ptr %i.ew, align 2, !tbaa !39
   %index.next181 = add nuw i64 %index174, 8       ; 2 uses
   %vec.ind.next182 = add <4 x i32> %vec.ind175, splat (i32 8)
   %vec.ind.next183 = add <4 x i16> %vec.ind176, splat (i16 8)
@@ -339,26 +337,24 @@ qtmd_init_model.exit102:                          ; preds = %scalar.ph168
 vector.ph188:                                     ; preds = %qtmd_init_model.exit102
   %n.vec189 = and i64 %wide.trip.count.i103, 56   ; 2 uses
   %broadcast.splatinsert190 = insertelement <4 x i32> poison, i32 %i.dr, i64 0
-  %broadcast.splat191 = shufflevector <4 x i32> %broadcast.splatinsert190, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat191 = shufflevector <4 x i32> %broadcast.splatinsert190, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body192
 
 vector.body192:                                   ; preds = %vector.body192, %vector.ph188
   %index193 = phi i64 [ 0, %vector.ph188 ], [ %index.next200, %vector.body192 ] ; 3 uses
-  %vec.ind194 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph188 ], [ %vec.ind.next201, %vector.body192 ] ; 3 uses
+  %vec.ind194 = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph188 ], [ %vec.ind.next201, %vector.body192 ] ; 2 uses
   %vec.ind195 = phi <4 x i16> [ <i16 0, i16 1, i16 2, i16 3>, %vector.ph188 ], [ %vec.ind.next202, %vector.body192 ] ; 3 uses
-  %step.add196 = add <4 x i32> %vec.ind194, splat (i32 4)
-  %step.add197 = add <4 x i16> %vec.ind195, splat (i16 4)
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %index193
   %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %index193
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 16
-  %15 = sub <4 x i32> %broadcast.splat191, %vec.ind194
-  %i.fp = sub <4 x i32> %broadcast.splat191, %step.add196
-  %i.fq = trunc nuw nsw <4 x i32> %15 to <4 x i16>
-  %i.fr = trunc nuw nsw <4 x i32> %i.fp to <4 x i16>
+  %i.fp = sub <4 x i32> %broadcast.splat191, %vec.ind194 ; 2 uses
+  %i.fq = trunc nuw nsw <4 x i32> %i.fp to <4 x i16>
+  %i.fr = trunc <4 x i32> %i.fp to <4 x i16>
   %interleaved.vec198 = shufflevector <4 x i16> %vec.ind195, <4 x i16> %i.fq, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   store <8 x i16> %interleaved.vec198, ptr %i.fm, align 2, !tbaa !39
-  %interleaved.vec199.a = shufflevector <4 x i16> %step.add197, <4 x i16> %i.fr, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x i16> %interleaved.vec199.a, ptr %i.fo, align 2, !tbaa !39
+  %interleaved.vec199.a = shufflevector <4 x i16> %vec.ind195, <4 x i16> %i.fr, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec199 = add <8 x i16> %interleaved.vec199.a, <i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4, i16 4, i16 -4>
+  store <8 x i16> %interleaved.vec199, ptr %i.fo, align 2, !tbaa !39
   %index.next200 = add nuw i64 %index193, 8       ; 2 uses
   %vec.ind.next201 = add <4 x i32> %vec.ind194, splat (i32 8)
   %vec.ind.next202 = add <4 x i16> %vec.ind195, splat (i16 8)

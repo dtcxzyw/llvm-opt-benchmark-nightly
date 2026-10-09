@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied6CopiedINtNtNtBc_5slice4iter4IterhEENtNtNtBa_6traits8iterator8Iterator8for_eachNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB2g_3VechE14extend_trustedB3_E0ECsmA23ifqKc8_6flate2.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.q = ptrtoint ptr %i.o to i64                 ; 3 uses
-  %i.r = ptrtoint ptr %i.n to i64                 ; 4 uses
-  %i.s = sub nuw i64 %i.q, %i.r                   ; 8 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 2 uses
+  %i.r = ptrtoint ptr %i.n to i64                 ; 3 uses
+  %i.s = sub nuw i64 %i.q, %i.r                   ; 9 uses
   %min.iters.check = icmp ult i64 %i.s, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -273,8 +273,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.3.0.i.i.ph = phi i64 [ %i.m, %iter.check ], [ %i.m, %vector.memcheck ], [ %i.w, %vec.epilog.iter.check ], [ %i.ad, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.01.0.i.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec8, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub i64 %i.q, %i.r
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.s, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -677,9 +676,9 @@ bb.a:
   br i1 %i.a, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters6copied9copy_foldhuNCINvNvBS_8for_each4callhNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB2P_3VechE14extend_trustedINtB1I_6CopiedBF_EE0E0E0ECsmA23ifqKc8_6flate2.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.c = ptrtoint ptr %0 to i64                   ; 4 uses
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 8 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 3 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 9 uses
   %min.iters.check = icmp ult i64 %i.d, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -746,8 +745,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.3.0.ph = phi i64 [ %.sroa.3.0.copyload, %iter.check ], [ %.sroa.3.0.copyload, %vector.memcheck ], [ %i.h, %vec.epilog.iter.check ], [ %i.o, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.01.0.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec5, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub i64 %i.b, %i.c
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.d, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -915,9 +913,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %_RNvXs_NtNtCscdodAO9FK5_5alloc3vec11spec_extendINtB6_3VechEINtB4_10SpecExtendhINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied6CopiedINtNtNtB1m_5slice4iter4IterhEEE11spec_extendCsmA23ifqKc8_6flate2.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.q = ptrtoint ptr %i.o to i64                 ; 3 uses
-  %i.r = ptrtoint ptr %i.n to i64                 ; 4 uses
-  %i.s = sub nuw i64 %i.q, %i.r                   ; 8 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 2 uses
+  %i.r = ptrtoint ptr %i.n to i64                 ; 3 uses
+  %i.s = sub nuw i64 %i.q, %i.r                   ; 9 uses
   %min.iters.check = icmp ult i64 %i.s, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -984,8 +982,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.3.0.i.i.i.i.ph = phi i64 [ %i.m, %iter.check ], [ %i.m, %vector.memcheck ], [ %i.w, %vec.epilog.iter.check ], [ %i.ad, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.01.0.i.i.i.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec4, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub i64 %i.q, %i.r
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.s, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -1103,9 +1100,9 @@ bb.a:
   br i1 %i.a, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterhEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNvB1v_8for_each4callhNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB2I_3VechE14extend_trustedBP_E0E0ECsmA23ifqKc8_6flate2.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.c = ptrtoint ptr %0 to i64                   ; 4 uses
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 8 uses
+  %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 3 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 9 uses
   %min.iters.check = icmp ult i64 %i.d, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -1172,8 +1169,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.3.0.i.ph = phi i64 [ %.sroa.2.0.copyload, %iter.check ], [ %.sroa.2.0.copyload, %vector.memcheck ], [ %i.h, %vec.epilog.iter.check ], [ %i.o, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.01.0.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec5, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub i64 %i.b, %i.c
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.d, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -1576,9 +1572,9 @@ bb.s:                                             ; preds = %.noexc29
   br i1 %i.bw, label %.loopexit91, label %iter.check
 
 iter.check:                                       ; preds = %.noexc30
-  %i.bx = ptrtoint ptr %i.bv to i64               ; 3 uses
-  %i.by = ptrtoint ptr %i.bu to i64               ; 4 uses
-  %i.bz = sub nuw i64 %i.bx, %i.by                ; 8 uses
+  %i.bx = ptrtoint ptr %i.bv to i64               ; 2 uses
+  %i.by = ptrtoint ptr %i.bu to i64               ; 3 uses
+  %i.bz = sub nuw i64 %i.bx, %i.by                ; 9 uses
   %min.iters.check = icmp ult i64 %i.bz, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -1645,8 +1641,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.3.0.i.i.i.i.i.ph = phi i64 [ %i.bt, %iter.check ], [ %i.bt, %vector.memcheck ], [ %i.cd, %vec.epilog.iter.check ], [ %i.ck, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.01.0.i.i.i.i.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec119, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub i64 %i.bx, %i.by
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.bz, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -1789,9 +1784,9 @@ bb.ab:                                            ; preds = %.noexc40
   br i1 %i.ep, label %.loopexit, label %iter.check141
 
 iter.check141:                                    ; preds = %.noexc41
-  %i.eq = ptrtoint ptr %i.eo to i64               ; 3 uses
-  %i.er = ptrtoint ptr %i.en to i64               ; 4 uses
-  %i.es = sub nuw i64 %i.eq, %i.er                ; 8 uses
+  %i.eq = ptrtoint ptr %i.eo to i64               ; 2 uses
+  %i.er = ptrtoint ptr %i.en to i64               ; 3 uses
+  %i.es = sub nuw i64 %i.eq, %i.er                ; 9 uses
   %min.iters.check128 = icmp ult i64 %i.es, 4
   br i1 %min.iters.check128, label %vec.epilog.scalar.ph142.preheader, label %vector.memcheck126
 
@@ -1858,8 +1853,7 @@ vec.epilog.middle.block151:                       ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph142.preheader:                ; preds = %iter.check141, %vector.memcheck126, %vec.epilog.iter.check143, %vec.epilog.middle.block151
   %.sroa.3.0.i.i.i.i.i37.ph = phi i64 [ %i.em, %iter.check141 ], [ %i.em, %vector.memcheck126 ], [ %i.ew, %vec.epilog.iter.check143 ], [ %i.fd, %vec.epilog.middle.block151 ] ; 2 uses
   %.sroa.01.0.i.i.i.i.i.i38.ph = phi i64 [ 0, %iter.check141 ], [ 0, %vector.memcheck126 ], [ %n.vec132, %vec.epilog.iter.check143 ], [ %n.vec146, %vec.epilog.middle.block151 ] ; 3 uses
-  %4 = sub i64 %i.eq, %i.er
-  %xtraiter156 = and i64 %4, 3                    ; 2 uses
+  %xtraiter156 = and i64 %i.es, 3                 ; 2 uses
   %lcmp.mod157.not = icmp eq i64 %xtraiter156, 0
   br i1 %lcmp.mod157.not, label %vec.epilog.scalar.ph142.prol.loopexit, label %vec.epilog.scalar.ph142.prol
 
@@ -2262,9 +2256,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.p, label %_RINvMsj_NtCscdodAO9FK5_5alloc3vecINtB6_3VechE14extend_trustedINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copied6CopiedINtNtNtB16_5slice4iter4IterhEEECsmA23ifqKc8_6flate2.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.q = ptrtoint ptr %i.o to i64                 ; 3 uses
-  %i.r = ptrtoint ptr %i.n to i64                 ; 4 uses
-  %i.s = sub nuw i64 %i.q, %i.r                   ; 8 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 2 uses
+  %i.r = ptrtoint ptr %i.n to i64                 ; 3 uses
+  %i.s = sub nuw i64 %i.q, %i.r                   ; 9 uses
   %min.iters.check = icmp ult i64 %i.s, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
@@ -2331,8 +2325,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.3.0.i.i.i.ph = phi i64 [ %i.m, %iter.check ], [ %i.m, %vector.memcheck ], [ %i.w, %vec.epilog.iter.check ], [ %i.ad, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.01.0.i.i.i.i.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec4, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub i64 %i.q, %i.r
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.s, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 

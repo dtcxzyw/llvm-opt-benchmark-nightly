@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(90) %i.c, i8 0, i64 90, i1 false)
   %i.d = zext nneg i16 %3 to i32                  ; 2 uses
   %i.e = sext i16 %4 to i32                       ; 4 uses
-  %i.f = sub nsw i32 %i.d, %i.e                   ; 5 uses
+  %i.f = sub nsw i32 %i.d, %i.e                   ; 6 uses
   %i.g = add nsw i32 %i.f, 1                      ; 2 uses
   %i.h = icmp eq i16 %4, 40
   %i.i = add nsw i32 %i.f, 21
@@ -403,18 +403,18 @@ create_augmented_vector.exit:                     ; preds = %.lr.ph.i38.i, %vec.
 bb.e:                                             ; preds = %bb.c
   %i.da = sub nsw i32 %i.j, %i.s                  ; 2 uses
   %.not62 = icmp sgt i32 %i.da, %i.f
+  %5 = zext nneg i16 %3 to i64
+  %6 = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %5 ; 2 uses
   br i1 %.not62, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %5 = trunc i32 %i.da to i16
-  %6 = add i16 %4, %5
-  %7 = sub i16 %3, %6
+  %7 = sub nsw i32 %i.f, %i.da
   %i.db = getelementptr inbounds i8, ptr %1, i64 -8
   store i64 0, ptr %i.db, align 2
-  %8 = zext nneg i16 %3 to i64
-  %9 = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %8
-  store i64 0, ptr %9, align 2
-  %i.dc = sext i16 %7 to i64                      ; 2 uses
+  store i64 0, ptr %6, align 2
+  %8 = shl i32 %7, 16
+  %9 = ashr exact i32 %8, 16
+  %i.dc = sext i32 %9 to i64                      ; 2 uses
   %i.dd = getelementptr [2 x i8], ptr %1, i64 %i.dc
   %i.de = getelementptr i8, ptr %i.dd, i64 8      ; 2 uses
   %i.df = icmp sgt i16 %4, 0
@@ -526,9 +526,7 @@ bb.g:                                             ; preds = %bb.e
   %i.fl = shl nsw i32 %i.e, 1                     ; 2 uses
   %i.fm = sext i32 %i.fl to i64
   tail call void @llvm.memset.p0.i64(ptr nonnull align 2 %0, i8 0, i64 %i.fm, i1 false)
-  %10 = zext nneg i16 %3 to i64
-  %11 = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %10
-  store i64 0, ptr %11, align 2
+  store i64 0, ptr %6, align 2
   %i.fn = shl nsw i32 %i.f, 16
   %sext63 = add nsw i32 %i.fn, -524288
   %i.fo = ashr exact i32 %sext63, 16

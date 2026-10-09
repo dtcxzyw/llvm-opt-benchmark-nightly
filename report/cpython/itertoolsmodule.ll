@@ -204,15 +204,14 @@ middle.block:                                     ; preds = %vector.body
 vector.ph48:                                      ; preds = %.lr.ph84.i.preheader
   %n.vec49 = and i64 %.052.i, 1152921504606846972 ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %.val67.i, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
   br label %vector.body50
 
 vector.body50:                                    ; preds = %vector.body50, %vector.ph48
   %index51 = phi i64 [ 0, %vector.ph48 ], [ %index.next54, %vector.body50 ] ; 2 uses
-  %vec.ind52 = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph48 ], [ %vec.ind.next55, %vector.body50 ] ; 3 uses
-  %step.add53 = add nuw <2 x i64> %vec.ind52, splat (i64 2)
-  %i.aq = sub <2 x i64> %broadcast.splat, %vec.ind52
-  %3 = sub <2 x i64> %broadcast.splat, %step.add53
+  %vec.ind52 = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph48 ], [ %vec.ind.next55, %vector.body50 ] ; 2 uses
+  %i.aq = sub <2 x i64> %broadcast.splat, %vec.ind52 ; 2 uses
+  %3 = add <2 x i64> %i.aq, splat (i64 -2)
   %i.ar = getelementptr [8 x i8], ptr %i.aj, i64 %index51 ; 2 uses
   %i.as = getelementptr i8, ptr %i.ar, i64 16
   store <2 x i64> %i.aq, ptr %i.ar, align 8, !tbaa !89

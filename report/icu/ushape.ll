@@ -204,7 +204,7 @@ bb.bg:                                            ; preds = %bb.bc, %bb.bf
 
 bb.bh:                                            ; preds = %bb.bg
   %i.dx = and i32 %4, 256
-  %i.dy = icmp eq i32 %i.dx, 0                    ; 2 uses
+  %i.dy = icmp eq i32 %i.dx, 0
   %.367 = select i1 %i.dy, i16 1632, i16 1776     ; 3 uses
   %i.dz = lshr exact i32 %i.q, 5
   switch i32 %i.dz, label %.loopexit [
@@ -220,7 +220,6 @@ bb.bh:                                            ; preds = %bb.bg
 
 .lr.ph396:                                        ; preds = %.preheader
   %i.eb = zext nneg i16 %.367 to i32              ; 2 uses
-  %.neg = select i1 %i.dy, i16 -1584, i16 -1728   ; 9 uses
   %wide.trip.count = zext nneg i32 %.2302 to i64  ; 3 uses
   %min.iters.check = icmp ult i32 %.2302, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -234,17 +233,18 @@ vector.ph:                                        ; preds = %.lr.ph396
 vector.body:                                      ; preds = %pred.store.continue449, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %pred.store.continue449 ] ; 9 uses
   %i.ec = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index ; 2 uses
-  %wide.load = load <8 x i16>, ptr %i.ec, align 2, !tbaa !14 ; 9 uses
+  %wide.load = load <8 x i16>, ptr %i.ec, align 2, !tbaa !14
   %i.ed = zext <8 x i16> %wide.load to <8 x i32>
-  %i.ee = sub nsw <8 x i32> %i.ed, %broadcast.splat
+  %i.ee = sub nsw <8 x i32> %i.ed, %broadcast.splat ; 9 uses
   %i.ef = icmp ult <8 x i32> %i.ee, splat (i32 10) ; 8 uses
   %i.eg = extractelement <8 x i1> %i.ef, i64 0
   br i1 %i.eg, label %pred.store.if, label %pred.store.continue
 
 pred.store.if:                                    ; preds = %vector.body
-  %i.eh = extractelement <8 x i16> %wide.load, i64 0
-  %10 = add i16 %.neg, %i.eh
-  store i16 %10, ptr %i.ec, align 2, !tbaa !14
+  %10 = bitcast <8 x i32> %i.ee to <16 x i16>
+  %i.eh = extractelement <16 x i16> %10, i64 0
+  %11 = or disjoint i16 %i.eh, 48
+  store i16 %11, ptr %i.ec, align 2, !tbaa !14
   br label %pred.store.continue
 
 pred.store.continue:                              ; preds = %pred.store.if, %vector.body
@@ -252,11 +252,12 @@ pred.store.continue:                              ; preds = %pred.store.if, %vec
   br i1 %i.ei, label %pred.store.if436, label %pred.store.continue437
 
 pred.store.if436:                                 ; preds = %pred.store.continue
+  %12 = bitcast <8 x i32> %i.ee to <16 x i16>
+  %13 = extractelement <16 x i16> %12, i64 2
   %i.ej = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 2
-  %11 = extractelement <8 x i16> %wide.load, i64 1
-  %12 = add i16 %.neg, %11
-  store i16 %12, ptr %i.ek, align 2, !tbaa !14
+  %14 = or disjoint i16 %13, 48
+  store i16 %14, ptr %i.ek, align 2, !tbaa !14
   br label %pred.store.continue437
 
 pred.store.continue437:                           ; preds = %pred.store.if436, %pred.store.continue
@@ -264,11 +265,12 @@ pred.store.continue437:                           ; preds = %pred.store.if436, %
   br i1 %i.el, label %pred.store.if438, label %pred.store.continue439
 
 pred.store.if438:                                 ; preds = %pred.store.continue437
+  %15 = bitcast <8 x i32> %i.ee to <16 x i16>
+  %16 = extractelement <16 x i16> %15, i64 4
   %i.em = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 4
-  %13 = extractelement <8 x i16> %wide.load, i64 2
-  %14 = add i16 %.neg, %13
-  store i16 %14, ptr %i.en, align 2, !tbaa !14
+  %17 = or disjoint i16 %16, 48
+  store i16 %17, ptr %i.en, align 2, !tbaa !14
   br label %pred.store.continue439
 
 pred.store.continue439:                           ; preds = %pred.store.if438, %pred.store.continue437
@@ -276,11 +278,12 @@ pred.store.continue439:                           ; preds = %pred.store.if438, %
   br i1 %i.eo, label %pred.store.if440, label %pred.store.continue441
 
 pred.store.if440:                                 ; preds = %pred.store.continue439
+  %18 = bitcast <8 x i32> %i.ee to <16 x i16>
+  %19 = extractelement <16 x i16> %18, i64 6
   %i.ep = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 6
-  %15 = extractelement <8 x i16> %wide.load, i64 3
-  %16 = add i16 %.neg, %15
-  store i16 %16, ptr %i.eq, align 2, !tbaa !14
+  %20 = or disjoint i16 %19, 48
+  store i16 %20, ptr %i.eq, align 2, !tbaa !14
   br label %pred.store.continue441
 
 pred.store.continue441:                           ; preds = %pred.store.if440, %pred.store.continue439
@@ -288,11 +291,12 @@ pred.store.continue441:                           ; preds = %pred.store.if440, %
   br i1 %i.er, label %pred.store.if442, label %pred.store.continue443
 
 pred.store.if442:                                 ; preds = %pred.store.continue441
+  %21 = bitcast <8 x i32> %i.ee to <16 x i16>
+  %22 = extractelement <16 x i16> %21, i64 8
   %i.es = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 8
-  %17 = extractelement <8 x i16> %wide.load, i64 4
-  %18 = add i16 %.neg, %17
-  store i16 %18, ptr %i.et, align 2, !tbaa !14
+  %23 = or disjoint i16 %22, 48
+  store i16 %23, ptr %i.et, align 2, !tbaa !14
   br label %pred.store.continue443
 
 pred.store.continue443:                           ; preds = %pred.store.if442, %pred.store.continue441
@@ -300,11 +304,12 @@ pred.store.continue443:                           ; preds = %pred.store.if442, %
   br i1 %i.eu, label %pred.store.if444, label %pred.store.continue445
 
 pred.store.if444:                                 ; preds = %pred.store.continue443
+  %24 = bitcast <8 x i32> %i.ee to <16 x i16>
+  %25 = extractelement <16 x i16> %24, i64 10
   %i.ev = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 10
-  %19 = extractelement <8 x i16> %wide.load, i64 5
-  %20 = add i16 %.neg, %19
-  store i16 %20, ptr %i.ew, align 2, !tbaa !14
+  %26 = or disjoint i16 %25, 48
+  store i16 %26, ptr %i.ew, align 2, !tbaa !14
   br label %pred.store.continue445
 
 pred.store.continue445:                           ; preds = %pred.store.if444, %pred.store.continue443
@@ -312,11 +317,12 @@ pred.store.continue445:                           ; preds = %pred.store.if444, %
   br i1 %i.ex, label %pred.store.if446, label %pred.store.continue447
 
 pred.store.if446:                                 ; preds = %pred.store.continue445
+  %27 = bitcast <8 x i32> %i.ee to <16 x i16>
+  %28 = extractelement <16 x i16> %27, i64 12
   %i.ey = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 12
-  %21 = extractelement <8 x i16> %wide.load, i64 6
-  %22 = add i16 %.neg, %21
-  store i16 %22, ptr %i.ez, align 2, !tbaa !14
+  %29 = or disjoint i16 %28, 48
+  store i16 %29, ptr %i.ez, align 2, !tbaa !14
   br label %pred.store.continue447
 
 pred.store.continue447:                           ; preds = %pred.store.if446, %pred.store.continue445
@@ -324,11 +330,12 @@ pred.store.continue447:                           ; preds = %pred.store.if446, %
   br i1 %i.fa, label %pred.store.if448, label %pred.store.continue449
 
 pred.store.if448:                                 ; preds = %pred.store.continue447
+  %30 = bitcast <8 x i32> %i.ee to <16 x i16>
+  %31 = extractelement <16 x i16> %30, i64 14
   %i.fb = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %index
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fb, i64 14
-  %23 = extractelement <8 x i16> %wide.load, i64 7
-  %24 = add i16 %.neg, %23
-  store i16 %24, ptr %i.fc, align 2, !tbaa !14
+  %32 = or disjoint i16 %31, 48
+  store i16 %32, ptr %i.fc, align 2, !tbaa !14
   br label %pred.store.continue449
 
 pred.store.continue449:                           ; preds = %pred.store.if448, %pred.store.continue447
@@ -665,15 +672,16 @@ bb.bk:                                            ; preds = %.lr.ph399, %bb.bj
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %bb.bm
   %indvars.iv412 = phi i64 [ %indvars.iv.next413, %bb.bm ], [ %indvars.iv412.ph, %scalar.ph.preheader ] ; 2 uses
   %i.jp = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %indvars.iv412 ; 2 uses
-  %i.jq = load i16, ptr %i.jp, align 2, !tbaa !14 ; 2 uses
+  %i.jq = load i16, ptr %i.jp, align 2, !tbaa !14
   %i.jr = zext i16 %i.jq to i32
-  %i.js = sub nsw i32 %i.jr, %i.eb
+  %i.js = sub nsw i32 %i.jr, %i.eb                ; 2 uses
   %i.jt = icmp ult i32 %i.js, 10
   br i1 %i.jt, label %bb.bl, label %bb.bm
 
 bb.bl:                                            ; preds = %scalar.ph
-  %25 = add i16 %.neg, %i.jq
-  store i16 %25, ptr %i.jp, align 2, !tbaa !14
+  %33 = trunc nuw nsw i32 %i.js to i16
+  %34 = or disjoint i16 %33, 48
+  store i16 %34, ptr %i.jp, align 2, !tbaa !14
   br label %bb.bm
 
 bb.bm:                                            ; preds = %scalar.ph, %bb.bl

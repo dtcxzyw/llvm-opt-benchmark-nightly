@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 bytestream2_init.exit.i:                          ; preds = %bb.m
-  %i.bj = zext nneg i32 %i.bf to i64              ; 4 uses
+  %i.bj = zext nneg i32 %i.bf to i64              ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bj ; 7 uses
   %i.bl = ptrtoint ptr %i.bk to i64               ; 23 uses
   %i.bm = load i16, ptr %i.be, align 1, !tbaa !25
@@ -236,9 +236,9 @@ bytestream2_get_be16.exit120.i:                   ; preds = %bb.p, %bb.o
   %.0.i119.i = phi i64 [ 0, %bb.o ], [ %i.bw, %bb.p ]
   %i.by = sub i64 %i.bl, %.pre-phi.i
   %..i131.i = call i64 @llvm.smin.i64(i64 %i.by, i64 %.0.i119.i)
-  %i.bz = add nsw i64 %..i131.i, %i.bx            ; 3 uses
+  %i.bz = add nsw i64 %..i131.i, %i.bx            ; 2 uses
   %i.ca = getelementptr inbounds i8, ptr %i.be, i64 %i.bz ; 3 uses
-  %gepdiff.i = sub nsw i64 %i.bj, %i.bz
+  %gepdiff.i = sub nsw i64 %i.bj, %i.bz           ; 2 uses
   %i.cb = icmp slt i64 %gepdiff.i, 2
   br i1 %i.cb, label %jpegxs_parse_frame.exit, label %bytestream2_get_be16.exit118.i
 
@@ -249,9 +249,7 @@ bytestream2_get_be16.exit118.i:                   ; preds = %bytestream2_get_be1
   br i1 %.not100.i, label %bb.q, label %jpegxs_parse_frame.exit
 
 bb.q:                                             ; preds = %bytestream2_get_be16.exit118.i
-  %.neg17 = add nsw i64 %i.bj, -2
-  %gepdiff138.i = sub i64 %.neg17, %i.bz
-  %6 = icmp slt i64 %gepdiff138.i, 2
+  %6 = icmp samesign ult i64 %gepdiff.i, 4
   br i1 %6, label %bytestream2_get_be16.exit116.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q

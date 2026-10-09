@@ -203,8 +203,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not56.i, label %bb.u, label %.thread.i
 
 bb.r:                                             ; preds = %bb.p
-  %i.cd = load i64, ptr @cardBotNotPref, align 8, !tbaa !14 ; 2 uses
-  %i.ce = sub i64 %i.bx, %i.cd
+  %i.cd = load i64, ptr @cardBotNotPref, align 8, !tbaa !14
+  %i.ce = sub i64 %i.bx, %i.cd                    ; 2 uses
   %i.cf = icmp ugt i64 %.168.i, %i.ce
   br i1 %i.cf, label %bb.s, label %.thread.i
 
@@ -214,9 +214,8 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not55.i, label %.thread.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %.neg60.i = shl i64 %i.bx, 1
-  %i.ch = add i64 %i.cd, %i.cg
-  %i.ci = sub i64 %.neg60.i, %i.ch
+  %i.ch = add i64 %i.ce, %i.bx
+  %i.ci = sub i64 %i.ch, %i.cg
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.q
@@ -619,8 +618,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not56.i, label %bb.u, label %.thread.i
 
 bb.r:                                             ; preds = %bb.p
-  %i.ce = load i64, ptr @cardBotNotPref, align 8, !tbaa !14 ; 2 uses
-  %i.cf = sub i64 %i.by, %i.ce
+  %i.ce = load i64, ptr @cardBotNotPref, align 8, !tbaa !14
+  %i.cf = sub i64 %i.by, %i.ce                    ; 2 uses
   %i.cg = icmp ugt i64 %.168.i, %i.cf
   br i1 %i.cg, label %bb.s, label %.thread.i
 
@@ -630,9 +629,8 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not55.i, label %.thread.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %.neg60.i = shl i64 %i.by, 1
-  %i.ci = add i64 %i.ce, %i.ch
-  %i.cj = sub i64 %.neg60.i, %i.ci
+  %i.ci = add i64 %i.cf, %i.by
+  %i.cj = sub i64 %i.ci, %i.ch
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.q
@@ -1035,8 +1033,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not56, label %bb.j, label %.thread
 
 bb.g:                                             ; preds = %bb.e
-  %i.am = load i64, ptr @cardBotNotPref, align 8, !tbaa !14 ; 2 uses
-  %i.an = sub i64 %i.ag, %i.am
+  %i.am = load i64, ptr @cardBotNotPref, align 8, !tbaa !14
+  %i.an = sub i64 %i.ag, %i.am                    ; 2 uses
   %i.ao = icmp ugt i64 %.168, %i.an
   br i1 %i.ao, label %bb.h, label %.thread
 
@@ -1046,9 +1044,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not55, label %.thread, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %.neg60 = shl i64 %i.ag, 1
-  %i.aq = add i64 %i.am, %i.ap
-  %i.ar = sub i64 %.neg60, %i.aq
+  %i.aq = add i64 %i.an, %i.ag
+  %i.ar = sub i64 %i.aq, %i.ap
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.f, %bb.i

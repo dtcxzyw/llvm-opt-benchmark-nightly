@@ -202,13 +202,13 @@ LZ4F_compressFrameBound.exit:                     ; preds = %bb.g, %LZ4F_getBloc
   br i1 %i.aq, label %LZ4F_compressEnd.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %LZ4F_compressFrameBound.exit
-  %i.ar = call fastcc i64 @LZ4F_compressBegin_internal(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef null, i64 noundef 0, ptr noundef %5, ptr noundef nonnull readonly %7) ; 5 uses
+  %i.ar = call fastcc i64 @LZ4F_compressBegin_internal(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef null, i64 noundef 0, ptr noundef %5, ptr noundef nonnull readonly %7) ; 4 uses
   %i.as = icmp ult i64 %i.ar, -23
   br i1 %i.as, label %bb.i, label %LZ4F_compressEnd.exit.thread
 
 bb.i:                                             ; preds = %bb.h
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 %i.ar ; 2 uses
-  %gepdiff = sub nsw i64 %2, %i.ar
+  %gepdiff = sub nsw i64 %2, %i.ar                ; 2 uses
   %i.au = call fastcc i64 @LZ4F_compressUpdateImpl(ptr noundef %0, ptr noundef %i.at, i64 noundef %gepdiff, ptr noundef %3, i64 noundef %4, ptr noundef nonnull readonly %8, i32 noundef 0) ; 4 uses
   %i.av = icmp ult i64 %i.au, -23
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.au ; 3 uses
@@ -216,8 +216,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ax = ptrtoint ptr %i.aw to i64
-  %9 = add i64 %i.ar, %i.au
-  %gepdiff62 = sub i64 %2, %9                     ; 2 uses
+  %gepdiff62 = sub i64 %gepdiff, %i.au            ; 2 uses
   %i.ay = call i64 @LZ4F_flush(ptr noundef %0, ptr noundef %i.aw, i64 noundef %gepdiff62, ptr nonnull readnone poison) ; 4 uses
   %i.az = icmp ult i64 %i.ay, -23
   br i1 %i.az, label %bb.k, label %LZ4F_compressEnd.exit.thread

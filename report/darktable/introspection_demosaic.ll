@@ -205,7 +205,7 @@ bb.oa:                                            ; preds = %bb.nz
   %i.jff = ptrtoaddr ptr %i.jfe to i64
   call void @llvm.assume(i1 true) [ "align"(ptr %i.jfe, i64 64) ]
   %i.jfg = tail call ptr @dt_alloc_aligned(i64 noundef 50176) #27, !noalias !499 ; 38 uses
-  %i.jfh = ptrtoaddr ptr %i.jfg to i64            ; 3 uses
+  %i.jfh = ptrtoaddr ptr %i.jfg to i64            ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.jfg, i64 64) ]
   %i.jfi = tail call ptr @dt_alloc_aligned(i64 noundef 25088) #27, !noalias !499 ; 13 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.jfi, i64 64) ]
@@ -216,7 +216,7 @@ bb.oa:                                            ; preds = %bb.nz
   %i.jfn = ptrtoaddr <4 x ptr> %i.jfm to <4 x i64>
   call void @llvm.assume(i1 true) [ "align"(ptr %i.jfj, i64 64) ]
   %i.jfo = tail call ptr @dt_alloc_aligned(i64 noundef 150528) #27, !noalias !499 ; 61 uses
-  %i.jfp = ptrtoaddr ptr %i.jfo to i64            ; 4 uses
+  %i.jfp = ptrtoaddr ptr %i.jfo to i64            ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.jfo, i64 64) ]
   %i.jfq = getelementptr inbounds nuw i8, ptr %i.jfo, i64 50176 ; 24 uses
   %i.jfr = getelementptr inbounds nuw i8, ptr %i.jfo, i64 100352 ; 12 uses
@@ -290,8 +290,7 @@ bb.oa:                                            ; preds = %bb.nz
   %scevgep3514 = getelementptr i8, ptr %i.jfd, i64 16
   %scevgep3565 = getelementptr i8, ptr %i.jfg, i64 -1328
   %scevgep3567 = getelementptr i8, ptr %i.jfg, i64 1344
-  %invariant.op4855 = sub i64 %i.jfp, %i.jfh
-  %invariant.op4857 = sub i64 %i.jfp, %i.jfh
+  %invariant.op4857 = sub i64 %i.jfh, %i.jfp      ; 2 uses
   br label %.preheader833.i
 
 .preheader833.i:                                  ; preds = %._crit_edge939.i, %.preheader833.preheader.i
@@ -474,15 +473,15 @@ vector.memcheck3626:                              ; preds = %iter.check3662
   %i.jjm = add i64 %i.jjl, %.13630                ; 3 uses
   %i.jjn = mul nuw nsw i64 %i.jje, 50176          ; 2 uses
   %i.jjo = mul nuw nsw i64 %i.jjc, 50176          ; 2 uses
-  %.reass4856 = add i64 %i.jjo, %invariant.op4855
-  %diff.check3628 = icmp ugt i64 %.reass4856, -128
+  %6 = sub i64 %i.jjo, %invariant.op4857
+  %diff.check3628 = icmp ugt i64 %6, -128
   %i.jjp = add i64 %i.jjo, %i.jfp
   %i.jjq = add i64 %i.jjp, %i.jjh
   %i.jjr = sub i64 %i.jjm, %i.jjq
   %diff.check3631 = icmp ugt i64 %i.jjr, -128
   %conflict.rdx3632 = or i1 %diff.check3628, %diff.check3631
-  %.reass4858 = add i64 %i.jjn, %invariant.op4857
-  %diff.check3633 = icmp ugt i64 %.reass4858, -128
+  %7 = sub i64 %i.jjn, %invariant.op4857
+  %diff.check3633 = icmp ugt i64 %7, -128
   %conflict.rdx3634 = or i1 %conflict.rdx3632, %diff.check3633
   %i.jjs = add i64 %i.jjn, %i.jfp
   %i.jjt = add i64 %i.jjs, %i.jjh

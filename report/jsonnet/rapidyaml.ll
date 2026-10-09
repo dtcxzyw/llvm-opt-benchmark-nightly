@@ -205,9 +205,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !85   ; 3 uses
-  %i.d = add i64 %i.c, %1
+  %i.d = add i64 %i.c, %1                         ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !82   ; 3 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !82   ; 2 uses
   %i.g = icmp ugt i64 %i.d, %i.f
   br i1 %i.g, label %bb.c, label %bb.d
 
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.h = sub i64 %i.f, %i.c                       ; 3 uses
+  %i.h = sub i64 %i.f, %i.c                       ; 2 uses
   %i.i = icmp ult i64 %i.h, %1
   br i1 %i.i, label %_ZSt5alignmmRPvRm.exit.thread, label %bb.e
 
@@ -238,9 +238,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.u = inttoptr i64 %i.q to ptr
-  %4 = add i64 %i.f, %1
-  %5 = sub i64 %4, %i.h
-  %i.v = add i64 %5, %i.r
+  %i.v = add i64 %i.d, %i.r
   store i64 %i.v, ptr %i.b, align 8, !tbaa !85
   br label %bb.g
 

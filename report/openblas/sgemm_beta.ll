@@ -202,23 +202,21 @@ vector.body.preheader:                            ; preds = %.preheader120.split
   %i.ea = shl i64 %i.dz, 2
   %i.eb = and i64 %i.ea, -128                     ; 2 uses
   %i.ec = add i64 %i.eb, 128                      ; 2 uses
-  %i.ed = and i64 %i.dz, -32                      ; 4 uses
+  %i.ed = and i64 %i.dz, -32                      ; 3 uses
   %i.ee = sub nsw i64 %0, %i.ed
   %scevgep164 = getelementptr i8, ptr %8, i64 %i.ec
   %i.ef = shl i64 %9, 2                           ; 2 uses
   %i.eg = add nsw i64 %0, -32
   %i.eh = sub nsw i64 %i.eg, %i.ed
-  %i.ei = add nsw i64 %0, -40                     ; 2 uses
-  %i.ej = sub nsw i64 %i.ei, %i.ed                ; 2 uses
+  %i.ei = add nuw i64 %0, 4611686018427387864
+  %i.ej = sub i64 %i.ei, %i.ed
   %i.ek = shl i64 %i.ej, 2
   %i.el = and i64 %i.ek, -32                      ; 2 uses
   %i.em = add i64 %i.el, 32
   %i.en = getelementptr i8, ptr %8, i64 %i.eb
   %i.eo = getelementptr i8, ptr %i.en, i64 %i.el
   %scevgep167 = getelementptr i8, ptr %i.eo, i64 160
-  %i.ep = and i64 %i.ej, -8
-  %10 = add i64 %i.ep, %i.ed
-  %11 = sub i64 %i.ei, %10
+  %i.ep = and i64 %0, 7
   %i.eq = icmp sgt i64 %i.ee, 39
   br label %.lr.ph.us
 
@@ -233,7 +231,7 @@ vector.body.preheader:                            ; preds = %.preheader120.split
 
 .preheader.us:                                    ; preds = %.lr.ph127.us.preheader, %.lr.ph.us
   %.1101.lcssa.us = phi ptr [ %indvars.iv165, %.lr.ph.us ], [ %indvars.iv168, %.lr.ph127.us.preheader ]
-  %.1.lcssa.us = phi i64 [ %i.eh, %.lr.ph.us ], [ %11, %.lr.ph127.us.preheader ] ; 2 uses
+  %.1.lcssa.us = phi i64 [ %i.eh, %.lr.ph.us ], [ %i.ep, %.lr.ph127.us.preheader ] ; 2 uses
   %i.es = icmp sgt i64 %.1.lcssa.us, 0
   br i1 %i.es, label %.lr.ph132.us.preheader, label %._crit_edge.us
 

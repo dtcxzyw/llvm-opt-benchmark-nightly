@@ -204,7 +204,6 @@ bb.t:                                             ; preds = %_ZN3gmx14LogEntryWr
   br label %bb.u
 
 bb.u:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %.lr.ph.i
-  %.025.neg181.i = phi i32 [ 0, %.lr.ph.i ], [ %.025.neg.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ] ; 2 uses
   %.025180.i = phi i32 [ 0, %.lr.ph.i ], [ %i.gb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ] ; 12 uses
   %.sroa.049.0179.i = phi ptr [ %i.fg, %.lr.ph.i ], [ %i.xp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ] ; 3 uses
   %i.fs = load i32, ptr %.sroa.049.0179.i, align 8, !tbaa !120 ; 2 uses
@@ -216,7 +215,7 @@ bb.u:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fv, i64 8 ; 2 uses
   %i.fz = load i32, ptr %i.fy, align 8, !tbaa !139
   %i.ga = mul nsw i32 %i.fz, %i.fx                ; 2 uses
-  %i.gb = add nsw i32 %i.ga, %.025180.i           ; 6 uses
+  %i.gb = add nsw i32 %i.ga, %.025180.i           ; 5 uses
   %.not.i.i = icmp slt i32 %i.ga, 0
   br i1 %.not.i.i, label %bb.v, label %_ZN3gmx5RangeIiEC2Eii.exit.i
 
@@ -230,7 +229,7 @@ _ZN3gmx5RangeIiEC2Eii.exit.i:                     ; preds = %bb.u
   %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !141
   %i.ge = load ptr, ptr %i.fd, align 8, !tbaa !111
   %i.gf = call noundef nonnull align 8 dereferenceable(52) ptr @_ZNK17gmx_reverse_top_t30interactionListForMoleculeTypeEi(ptr noundef nonnull align 8 dereferenceable(8) %i.ge, i32 noundef %i.fs) ; 7 uses
-  %i.gg = load i32, ptr %i.fy, align 8, !tbaa !139 ; 10 uses
+  %i.gg = load i32, ptr %i.fy, align 8, !tbaa !139 ; 12 uses
   %i.gh = load i32, ptr %i.fw, align 4, !tbaa !124 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !142)
   %i.gi = sext i32 %i.gg to i64                   ; 2 uses
@@ -633,19 +632,18 @@ bb.ao:                                            ; preds = %._crit_edge10.split
   %i.qc = load i32, ptr %i.qb, align 4, !tbaa !108, !noalias !142
   %i.qd = sext i32 %i.qc to i64
   %i.qe = getelementptr inbounds [4 x i8], ptr %i.hh, i64 %i.qd
-  %i.qf = load i32, ptr %i.qe, align 4, !tbaa !108, !noalias !142 ; 4 uses
+  %i.qf = load i32, ptr %i.qe, align 4, !tbaa !108, !noalias !142 ; 3 uses
   %.not.i.us20.i.i.i = icmp sle i32 %.025180.i, %i.qf
   %i.qg = icmp slt i32 %i.qf, %i.gb
   %i.qh = select i1 %.not.i.us20.i.i.i, i1 %i.qg, i1 false
   br i1 %i.qh, label %bb.ap, label %bb.at
 
 bb.ap:                                            ; preds = %.lr.ph.split.split.us.i.i.i
-  %i.qi = sub nsw i32 %i.qf, %.025180.i
+  %i.qi = sub nsw i32 %i.qf, %.025180.i           ; 2 uses
   %i.qj = sdiv i32 %i.qi, %i.gg                   ; 2 uses
-  %i.qk = mul i32 %i.gg, %i.qj
-  %.neg54.i = add i32 %i.qf, %.025.neg181.i
-  %22 = sub i32 %.neg54.i, %i.qk
-  %i.ql = sext i32 %22 to i64                     ; 2 uses
+  %i.qk = mul nsw i32 %i.qj, %i.gg                ; 0 uses
+  %.recomposed = srem i32 %i.qi, %i.gg
+  %i.ql = sext i32 %.recomposed to i64            ; 2 uses
   %i.qm = getelementptr [4 x i8], ptr %i.pz, i64 %i.ql ; 2 uses
   %i.qn = load i32, ptr %i.qm, align 4, !tbaa !108, !noalias !142 ; 2 uses
   %i.qo = getelementptr i8, ptr %i.qm, i64 4
@@ -726,19 +724,18 @@ bb.at:                                            ; preds = %._crit_edge10.split
   %i.ry = load i32, ptr %i.rx, align 4, !tbaa !108, !noalias !142
   %i.rz = sext i32 %i.ry to i64
   %i.sa = getelementptr inbounds [4 x i8], ptr %i.hh, i64 %i.rz
-  %i.sb = load i32, ptr %i.sa, align 4, !tbaa !108, !noalias !142 ; 4 uses
+  %i.sb = load i32, ptr %i.sa, align 4, !tbaa !108, !noalias !142 ; 3 uses
   %.not.i.i.i.i = icmp sle i32 %.025180.i, %i.sb
   %i.sc = icmp slt i32 %i.sb, %i.gb
   %i.sd = select i1 %.not.i.i.i.i, i1 %i.sc, i1 false
   br i1 %i.sd, label %bb.au, label %bb.be
 
 bb.au:                                            ; preds = %.lr.ph.split.split.i.i.i
-  %i.se = sub nsw i32 %i.sb, %.025180.i
+  %i.se = sub nsw i32 %i.sb, %.025180.i           ; 2 uses
   %i.sf = sdiv i32 %i.se, %i.gg                   ; 2 uses
-  %i.sg = mul i32 %i.gg, %i.sf
-  %.neg52.i = add i32 %i.sb, %.025.neg181.i
-  %23 = sub i32 %.neg52.i, %i.sg
-  %i.sh = sext i32 %23 to i64                     ; 2 uses
+  %i.sg = mul nsw i32 %i.sf, %i.gg                ; 0 uses
+  %.recomposed570 = srem i32 %i.se, %i.gg
+  %i.sh = sext i32 %.recomposed570 to i64         ; 2 uses
   %i.si = getelementptr [4 x i8], ptr %i.rv, i64 %i.sh ; 2 uses
   %i.sj = load i32, ptr %i.si, align 4, !tbaa !108, !noalias !142 ; 2 uses
   %i.sk = getelementptr i8, ptr %i.si, i64 4
@@ -1141,7 +1138,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.ci, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #18
   %i.xp = getelementptr inbounds nuw i8, ptr %.sroa.049.0179.i, i64 56 ; 2 uses
-  %.025.neg.i = sub nsw i32 0, %i.gb
   %.not.i = icmp eq ptr %i.xp, %i.fi
   br i1 %.not.i, label %_ZN3gmxL29printMissingInteractionsAtomsERKNS_8MDLoggerERKNS_7MpiCommERK12gmx_domdec_tRK10gmx_mtop_tRK22InteractionDefinitions.exit, label %bb.u
 

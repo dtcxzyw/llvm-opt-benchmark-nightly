@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %_RNvMNtCshzWfHUSfYa
 
 .lr.ph255:                                        ; preds = %.lr.ph, %bb.b
   %.sroa.025.086254 = phi i32 [ %i.e, %bb.b ], [ %.sroa.025.0.ph92, %.lr.ph ]
-  %.sroa.16.087253 = phi i64 [ %.sroa.30.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph93, %.lr.ph ] ; 25 uses
+  %.sroa.16.087253 = phi i64 [ %.sroa.30.2.lcssa.i, %bb.b ], [ %.sroa.16.0.ph93, %.lr.ph ] ; 23 uses
   %i.e = add i32 %.sroa.025.086254, -1            ; 4 uses
   %i.f = call i64 @_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared5pivot12choose_pivotRNtCs1K5DUQUZc67_11proc_macro25IdentNvYB15_NtNtBa_3cmp10PartialOrd2ltECslQQFbX7tBjK_14thiserror_impl(ptr align 8 %.sroa.0.0.ph94, i64 %.sroa.16.087253, ptr %6) #26 ; 5 uses
   %i.g = icmp ult i64 %i.f, %.sroa.16.087253
@@ -301,7 +301,7 @@ _RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionSta
   br i1 %i.as, label %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit20.i, label %._crit_edge70.i
 
 ._crit_edge70.i:                                  ; preds = %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit20.i, %._crit_edge.i
-  %.sroa.30.2.lcssa.i = phi i64 [ %.sroa.30.1.lcssa.i, %._crit_edge.i ], [ %i.az, %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit20.i ] ; 16 uses
+  %.sroa.30.2.lcssa.i = phi i64 [ %.sroa.30.1.lcssa.i, %._crit_edge.i ], [ %i.az, %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit20.i ] ; 15 uses
   %.sroa.6.2.lcssa.i = phi ptr [ %.sroa.6.1.lcssa.i, %._crit_edge.i ], [ %i.ba, %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit20.i ] ; 2 uses
   %.sroa.52.2.lcssa.i = phi ptr [ %.sroa.52.1.lcssa.i, %._crit_edge.i ], [ %i.av, %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit20.i ]
   %i.at = icmp eq i64 %.sroa.0.0.i, %.sroa.16.087253
@@ -334,7 +334,7 @@ bb.k:                                             ; preds = %._crit_edge70.i
 bb.l:                                             ; preds = %._crit_edge70.i
   %i.bg = shl nuw nsw i64 %.sroa.30.2.lcssa.i, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %.sroa.0.0.ph94, ptr align 8 %2, i64 %i.bg, i1 false)
-  %i.bh = sub i64 %.sroa.16.087253, %.sroa.30.2.lcssa.i ; 5 uses
+  %i.bh = sub i64 %.sroa.16.087253, %.sroa.30.2.lcssa.i ; 6 uses
   %.not77.i = icmp eq i64 %.sroa.16.087253, %.sroa.30.2.lcssa.i
   br i1 %.not77.i, label %.loopexit, label %.lr.ph.i
 
@@ -381,8 +381,7 @@ middle.block279:                                  ; preds = %vector.body272
 
 scalar.ph268.preheader:                           ; preds = %vector.memcheck262, %.lr.ph.i, %middle.block279
   %.sroa.07.074.i.ph = phi i64 [ 0, %vector.memcheck262 ], [ 0, %.lr.ph.i ], [ %n.vec271, %middle.block279 ] ; 3 uses
-  %7 = sub i64 %.sroa.16.087253, %.sroa.30.2.lcssa.i
-  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %xtraiter = and i64 %i.bh, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph268.prol.loopexit, label %scalar.ph268.prol
 
@@ -531,7 +530,7 @@ _RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionSta
   br i1 %i.ej, label %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit24.i, label %._crit_edge50.i
 
 ._crit_edge50.i:                                  ; preds = %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit24.i, %._crit_edge.i41
-  %.sroa.31.2.lcssa.i = phi i64 [ %.sroa.31.1.lcssa.i, %._crit_edge.i41 ], [ %i.er, %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit24.i ] ; 12 uses
+  %.sroa.31.2.lcssa.i = phi i64 [ %.sroa.31.1.lcssa.i, %._crit_edge.i41 ], [ %i.er, %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit24.i ] ; 11 uses
   %.sroa.7.2.lcssa.i = phi ptr [ %.sroa.7.1.lcssa.i, %._crit_edge.i41 ], [ %i.es, %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit24.i ] ; 2 uses
   %.sroa.53.2.lcssa.i = phi ptr [ %.sroa.53.1.lcssa.i, %._crit_edge.i41 ], [ %i.en, %_RNvMNtNtNtNtCshzWfHUSfYae_4core5slice4sort6stable9quicksortINtB2_14PartitionStateRNtCs1K5DUQUZc67_11proc_macro25IdentE13partition_oneCslQQFbX7tBjK_14thiserror_impl.exit24.i ]
   %i.ek = icmp eq i64 %.sroa.0.0.i40, %.sroa.16.087253
@@ -566,7 +565,7 @@ bb.r:                                             ; preds = %._crit_edge50.i
 bb.s:                                             ; preds = %._crit_edge50.i
   %i.ez = shl nuw nsw i64 %.sroa.31.2.lcssa.i, 3
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %.sroa.0.0.ph94, ptr align 8 %2, i64 %i.ez, i1 false)
-  %i.fa = sub i64 %.sroa.16.087253, %.sroa.31.2.lcssa.i ; 7 uses
+  %i.fa = sub i64 %.sroa.16.087253, %.sroa.31.2.lcssa.i ; 8 uses
   %.not57.i = icmp eq i64 %.sroa.16.087253, %.sroa.31.2.lcssa.i
   %i.fb = getelementptr [8 x i8], ptr %.sroa.0.0.ph94, i64 %.sroa.31.2.lcssa.i ; 8 uses
   br i1 %.not57.i, label %.outer._crit_edge, label %.lr.ph.i42
@@ -613,8 +612,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i42, %middle.block
   %.sroa.07.054.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i42 ], [ %n.vec, %middle.block ] ; 3 uses
-  %8 = sub i64 %.sroa.16.087253, %.sroa.31.2.lcssa.i
-  %xtraiter347 = and i64 %8, 3                    ; 2 uses
+  %xtraiter347 = and i64 %i.fa, 3                 ; 2 uses
   %lcmp.mod348.not = icmp eq i64 %xtraiter347, 0
   br i1 %lcmp.mod348.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 

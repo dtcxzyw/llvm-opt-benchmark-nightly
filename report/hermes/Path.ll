@@ -205,7 +205,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !28     ; 4 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %i.d = sub i64 %i.b, %i.c                       ; 5 uses
+  %i.d = sub i64 %i.b, %i.c                       ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 9 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !29   ; 3 uses
   %i.g = zext i32 %i.f to i64                     ; 5 uses
@@ -256,7 +256,6 @@ _ZN4llvh15SmallVectorImplIcE6appendIPcvEEvT_S4_.exit: ; preds = %bb.d, %bb.e
   br label %_ZSt4copyIPcS0_ET0_T_S2_S1_.exit
 
 bb.f:                                             ; preds = %bb.a
-  %4 = sub i64 0, %i.l
   %i.aa = add i64 %i.l, %i.g                      ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !30
@@ -273,17 +272,18 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN4llvh15SmallVectorImplIcE7reserveEm.exit
 
 _ZN4llvh15SmallVectorImplIcE7reserveEm.exit:      ; preds = %bb.f, %bb.g
-  %.pre-phi = phi i64 [ %i.g, %bb.f ], [ %.pre59, %bb.g ] ; 7 uses
+  %.pre-phi = phi i64 [ %i.g, %bb.f ], [ %.pre59, %bb.g ] ; 6 uses
   %i.ag = phi i32 [ %i.f, %bb.f ], [ %.pre54.a, %bb.g ]
   %i.ah = phi ptr [ %i.a, %bb.f ], [ %.pre, %bb.g ] ; 5 uses
   %i.ai = ptrtoaddr ptr %i.ah to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.d ; 16 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.pre-phi ; 4 uses
-  %gepdiff = sub nsw i64 %.pre-phi, %i.d          ; 14 uses
+  %gepdiff = sub nsw i64 %.pre-phi, %i.d          ; 15 uses
   %.not = icmp ult i64 %gepdiff, %i.l
   br i1 %.not, label %bb.t, label %bb.h
 
 bb.h:                                             ; preds = %_ZN4llvh15SmallVectorImplIcE7reserveEm.exit
+  %4 = sub i64 0, %i.l
   %i.al = getelementptr inbounds i8, ptr %i.ak, i64 %4 ; 2 uses
   %i.am = load i32, ptr %i.ab, align 4, !tbaa !30
   %i.an = zext i32 %i.am to i64
@@ -325,8 +325,7 @@ _ZN4llvh15SmallVectorImplIcE6appendISt13move_iteratorIPcEvEEvT_S6_.exit: ; preds
   %i.ay = trunc i64 %i.l to i32
   %i.az = add i32 %i.ax, %i.ay
   store i32 %i.az, ptr %i.e, align 8, !tbaa !29
-  %5 = add i64 %i.d, %i.l
-  %gepdiff48 = sub i64 %.pre-phi, %5              ; 4 uses
+  %gepdiff48 = sub nuw i64 %gepdiff, %i.l         ; 4 uses
   %i.ba = icmp sgt i64 %gepdiff48, 1
   br i1 %i.ba, label %bb.n, label %bb.o, !prof !39
 

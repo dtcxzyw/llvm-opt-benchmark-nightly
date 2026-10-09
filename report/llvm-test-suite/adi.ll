@@ -179,21 +179,20 @@ polybench_alloc_data.exit21:                      ; preds = %polybench_alloc_dat
   %i.y = getelementptr inbounds nuw [8000 x i8], ptr %i.f, i64 %indvars.iv17.i ; 2 uses
   %i.z = add nuw nsw i64 %indvars.iv17.i, 1000
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.z, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %.preheader.i
   %index = phi i64 [ 0, %.preheader.i ], [ %index.next.1, %vector.body ] ; 3 uses
-  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %.preheader.i ], [ %vec.ind.next.1, %vector.body ] ; 3 uses
-  %i.aa = sub nuw nsw <2 x i64> %broadcast.splat, %vec.ind
+  %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %.preheader.i ], [ %vec.ind.next.1, %vector.body ] ; 2 uses
+  %i.aa = sub nuw nsw <2 x i64> %broadcast.splat, %vec.ind ; 2 uses
   %i.ab = trunc nuw nsw <2 x i64> %i.aa to <2 x i32>
   %i.ac = uitofp nneg <2 x i32> %i.ab to <2 x double>
   %i.ad = fdiv <2 x double> %i.ac, splat (double 1.000000e+03)
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %index
   store <2 x double> %i.ad, ptr %i.ae, align 8, !tbaa !9
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
-  %2 = sub nuw nsw <2 x i64> %broadcast.splat, %vec.ind.next
-  %3 = trunc nuw nsw <2 x i64> %2 to <2 x i32>
+  %2 = trunc <2 x i64> %i.aa to <2 x i32>
+  %3 = add <2 x i32> %2, splat (i32 -2)
   %i.af = uitofp nneg <2 x i32> %3 to <2 x double>
   %i.ag = fdiv <2 x double> %i.af, splat (double 1.000000e+03)
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %index

@@ -143,7 +143,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.b
 
 define_patches.exit:                              ; preds = %._crit_edge.i, %bb.a
-  %i.cj = load i32, ptr %i.k, align 8, !tbaa !40  ; 17 uses
+  %i.cj = load i32, ptr %i.k, align 8, !tbaa !40  ; 18 uses
   %i.ck = shl nsw i32 %i.cj, 1
   %i.cl = add nsw i32 %i.ck, 121
   %i.cm = sext i32 %i.cl to i64
@@ -455,7 +455,7 @@ bb.r:                                             ; preds = %.lr.ph521, %.loopex
   %. = tail call i32 @llvm.smin.i32(i32 %i.ha, i32 %i.hk) ; 6 uses
   %indvars.iv.next546.a = add nuw nsw i64 %indvars.iv545.a, %.0.i ; 3 uses
   %i.ic = trunc i64 %indvars.iv.next546.a to i32
-  %i.id = tail call i32 @llvm.smin.i32(i32 %i.ic, i32 %i.hl) ; 8 uses
+  %i.id = tail call i32 @llvm.smin.i32(i32 %i.ic, i32 %i.hl) ; 9 uses
   %i.ie = icmp sgt i32 %., %indvars586            ; 3 uses
   br i1 %i.ie, label %.lr.ph, label %.preheader474
 
@@ -501,6 +501,7 @@ bb.r:                                             ; preds = %.lr.ph521, %.loopex
   %i.iu = phi i32 [ %.pre599, %.preheader474.loopexit ], [ %i.hl, %bb.r ] ; 7 uses
   %i.iv = phi i32 [ %.pre, %.preheader474.loopexit ], [ %i.hk, %bb.r ] ; 5 uses
   %i.iw = load ptr, ptr %i.fv, align 8, !tbaa !55 ; 9 uses
+  %5 = sub i32 %i.iu, %i.id                       ; 3 uses
   %i.ix = add i32 %indvars585, %i.fw              ; 2 uses
   %i.iy = add i32 %i.id, %i.cj                    ; 3 uses
   %i.iz = sext i32 %i.ix to i64
@@ -510,7 +511,6 @@ bb.r:                                             ; preds = %.lr.ph521, %.loopex
   %i.jc = getelementptr inbounds nuw i8, ptr %i.iw, i64 4 ; 4 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %i.iw, i64 8 ; 5 uses
   %i.je = xor i32 %indvars585, -1
-  %5 = add i32 %i.id, %i.je
   %i.jf = sext i32 %i.iu to i64
   %i.jg = shl nsw i64 %i.jf, 2
   %smin547 = tail call i32 @llvm.smin.i32(i32 %i.cj, i32 %indvars585)
@@ -638,22 +638,20 @@ bb.t:                                             ; preds = %.preheader474, %._c
   %i.ly = add i32 %i.iv, %i.lx
   %spec.select452 = tail call i32 @llvm.smin.i32(i32 %spec.select450, i32 %i.ly) ; 2 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.lj, i64 2
-  %i.ma = load i16, ptr %i.lz, align 2, !tbaa !50 ; 2 uses
-  %i.mb = sext i16 %i.ma to i32                   ; 3 uses
+  %i.ma = load i16, ptr %i.lz, align 2, !tbaa !50
+  %i.mb = sext i16 %i.ma to i32                   ; 4 uses
   %i.mc = sub nsw i32 0, %i.mb
   %i.md = tail call i32 @llvm.smax.i32(i32 %indvars585, i32 %i.mc) ; 5 uses
-  %i.me = sub i32 %i.iu, %i.mb                    ; 2 uses
+  %i.me = sub i32 %i.iu, %i.mb                    ; 3 uses
   %.437 = tail call i32 @llvm.smin.i32(i32 %i.id, i32 %i.me) ; 3 uses
   %i.mf = add nsw i32 %indvars585, %i.mb          ; 2 uses
   %i.mg = tail call i32 @llvm.smin.i32(i32 %indvars585, i32 %i.mf)
   %..i = tail call i32 @llvm.smin.i32(i32 %i.cj, i32 %i.mg) ; 2 uses
-  %i.mh = sub nsw i32 %indvars585, %..i           ; 5 uses
-  %6 = tail call i16 @llvm.smax.i16(i16 %i.ma, i16 0)
-  %7 = zext nneg i16 %6 to i32
-  %8 = add i32 %i.id, %7
-  %9 = sub i32 %i.iu, %8
-  %i.mi = tail call i32 @llvm.smin.i32(i32 %i.cj, i32 %9) ; 2 uses
-  %i.mj = add i32 %i.mi, %i.id                    ; 5 uses
+  %i.mh = sub nsw i32 %indvars585, %..i           ; 6 uses
+  %6 = sub i32 %5, %i.mb
+  %7 = tail call i32 @llvm.smin.i32(i32 %5, i32 %6)
+  %i.mi = tail call i32 @llvm.smin.i32(i32 %i.cj, i32 %7)
+  %i.mj = add i32 %i.mi, %i.id                    ; 6 uses
   %i.mk = add i32 %i.lp, %i.lm                    ; 2 uses
   %i.ml = tail call i32 @llvm.smin.i32(i32 %i.lp, i32 %i.mk)
   %i.mm = tail call i32 @llvm.smin.i32(i32 %i.cj, i32 %i.ml) ; 2 uses
@@ -676,7 +674,7 @@ bb.t:                                             ; preds = %.preheader474, %._c
   br label %.preheader140.i
 
 .preheader140.i:                                  ; preds = %.lr.ph.preheader.i, %bb.t
-  %i.my = icmp slt i32 %i.mh, %i.mj               ; 4 uses
+  %i.my = icmp slt i32 %i.mh, %i.mj
   br i1 %i.my, label %.preheader.lr.ph.i444, label %._crit_edge148.i
 
 .preheader.lr.ph.i444:                            ; preds = %.preheader140.i
@@ -687,8 +685,8 @@ bb.t:                                             ; preds = %.preheader474, %._c
   %i.mz = sext i32 %i.mh to i64
   %i.na = shl nuw nsw i64 %i.mz, 2
   %scevgep158.i = getelementptr i8, ptr %i.ib, i64 %i.na
-  %i.nb = add i32 %5, %..i
-  %i.nc = add i32 %i.nb, %i.mi
+  %i.nb = add i32 %..i, %i.je
+  %i.nc = add i32 %i.nb, %i.mj
   %i.nd = zext i32 %i.nc to i64
   %i.ne = shl nuw nsw i64 %i.nd, 2
   %i.nf = add nuw nsw i64 %i.ne, 4
@@ -943,7 +941,12 @@ init_column_sums.exit:                            ; preds = %._crit_edge148.i, %
   %i.rb = load i32, ptr %i.ra, align 4, !tbaa !51
   %i.rc = icmp slt i32 %i.md, %.437               ; 2 uses
   %i.rd = sext i32 %i.rb to i64                   ; 8 uses
+  %8 = sub i32 %i.me, %i.id
+  %9 = tail call i32 @llvm.smin.i32(i32 %5, i32 %8)
+  %10 = tail call i32 @llvm.smin.i32(i32 %i.cj, i32 %9)
+  %11 = add nsw i32 %10, %i.id                    ; 2 uses
   %i.re = tail call i32 @llvm.smin.i32(i32 %i.lv, i32 %spec.select452)
+  %12 = icmp slt i32 %i.mh, %11                   ; 3 uses
   %i.rf = sub i32 %i.md, %i.cj
   %i.rg = sext i32 %i.rf to i64                   ; 6 uses
   %i.rh = sext i32 %i.qy to i64
@@ -953,7 +956,7 @@ init_column_sums.exit:                            ; preds = %._crit_edge148.i, %
   %i.rk = sub i32 0, %smin548
   %i.rl = sext i32 %i.rk to i64                   ; 4 uses
   %i.rm = add i64 %indvars.iv545.a, %i.rl         ; 7 uses
-  %i.rn = sext i32 %i.mj to i64                   ; 4 uses
+  %i.rn = sext i32 %11 to i64                     ; 3 uses
   %i.ro = sext i32 %i.lo to i64
   %smax564 = tail call i64 @llvm.smax.i64(i64 %indvars.iv562, i64 %i.ro) ; 3 uses
   %i.rp = sext i32 %spec.select450 to i64         ; 3 uses
@@ -1006,7 +1009,8 @@ init_column_sums.exit:                            ; preds = %._crit_edge148.i, %
   %invariant.gep900 = getelementptr [4 x i8], ptr %i.ib, i64 %i.rg
   %cmp.n775 = icmp eq i64 %i.sn, %n.vec770
   %i.sr = add i64 %i.hp, %i.rl
-  %i.ss = tail call i64 @llvm.smax.i64(i64 %i.sr, i64 %i.rn)
+  %13 = sext i32 %i.mj to i64
+  %i.ss = tail call i64 @llvm.smax.i64(i64 %i.sr, i64 %13)
   %i.st = add i64 %indvars.iv545.a, %i.rl
   %i.su = sub i64 %i.ss, %i.st                    ; 3 uses
   %min.iters.check725 = icmp ult i64 %i.su, 9
@@ -1246,7 +1250,7 @@ bb.w:                                             ; preds = %.loopexit467.a
   %i.xg = sext i32 %i.xf to i64
   %i.xh = mul nsw i64 %i.xg, %i.s
   %i.xi = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.xh
-  br i1 %i.my, label %.lr.ph500, label %.loopexit
+  br i1 %12, label %.lr.ph500, label %.loopexit
 
 .lr.ph500:                                        ; preds = %bb.w, %.lr.ph500
   %indvars.iv559 = phi i64 [ %indvars.iv.next560, %.lr.ph500 ], [ %i.rm, %bb.w ] ; 3 uses
@@ -1298,7 +1302,7 @@ bb.y:                                             ; preds = %bb.x
   %i.yr = sext i32 %i.yq to i64
   %i.ys = mul nsw i64 %i.yr, %i.s
   %i.yt = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.ys
-  br i1 %i.my, label %.lr.ph497, label %.loopexit
+  br i1 %12, label %.lr.ph497, label %.loopexit
 
 .lr.ph497:                                        ; preds = %bb.y, %.lr.ph497
   %indvars.iv554 = phi i64 [ %indvars.iv.next555, %.lr.ph497 ], [ %i.rm, %bb.y ] ; 3 uses
@@ -1361,7 +1365,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.aam = sub nsw i64 %indvars.iv565, %i.fs
   %i.aan = mul nsw i64 %i.aam, %i.s
   %i.aao = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.aan ; 2 uses
-  br i1 %i.my, label %.lr.ph494.preheader, label %.loopexit
+  br i1 %12, label %.lr.ph494.preheader, label %.loopexit
 
 .lr.ph494.preheader:                              ; preds = %bb.aa
   %brmerge = select i1 %min.iters.check725, i1 true, i1 %conflict.rdx723
@@ -1674,10 +1678,10 @@ declare i32 @llvm.smin.i32(i32, i32) #4
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.smax.i16(i16, i16) #4
+declare i64 @llvm.smax.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #4
+declare i16 @llvm.smax.i16(i16, i16) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.smin.i16(i16, i16) #4

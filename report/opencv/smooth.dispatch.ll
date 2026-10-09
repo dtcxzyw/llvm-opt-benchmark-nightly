@@ -204,15 +204,15 @@ bb.c:                                             ; preds = %.lr.ph278.us, %bb.c
   %i.kp = add i32 %i.a, %5
   %i.kq = sub i32 %i.kp, %i.kj
   %i.kr = zext i32 %1 to i64                      ; 23 uses
-  %i.ks = sext i32 %i.km to i64                   ; 5 uses
-  %i.kt = sext i32 %5 to i64                      ; 4 uses
+  %i.ks = sext i32 %i.km to i64                   ; 4 uses
+  %i.kt = sext i32 %5 to i64                      ; 3 uses
   %i.ku = sext i32 %i.kl to i64                   ; 2 uses
   %invariant.op = add nsw i64 %i.kt, -1
   %i.kv = shl nuw nsw i64 %i.kr, 1                ; 2 uses
   %i.kw = shl nsw i64 %i.ko, 1
   %scevgep570 = getelementptr i8, ptr %2, i64 2   ; 2 uses
   %i.kx = shl nsw i64 %i.ko, 1
-  %i.ky = sub nsw i64 %i.kt, %i.ks
+  %i.ky = sub nsw i64 %i.kt, %i.ks                ; 2 uses
   %i.kz = mul i64 %i.ky, %i.kr
   %i.la = sub nsw i64 %i.ko, %i.kr
   %i.lb = add nsw i64 %i.ks, 1
@@ -267,8 +267,7 @@ bb.c:                                             ; preds = %.lr.ph278.us, %bb.c
   %.2176307 = phi ptr [ %.1175.lcssa, %.preheader237.lr.ph ], [ %i.rg, %.loopexit ] ; 17 uses
   %i.lp = mul i64 %i.kx, %indvar566
   %scevgep596 = getelementptr i8, ptr %i.lj, i64 %i.lp ; 2 uses
-  %8 = add i64 %indvar566, %i.ks
-  %i.lq = sub i64 %i.kt, %8
+  %i.lq = sub i64 %i.ky, %indvar566
   %i.lr = shl i64 %i.lq, 1
   %scevgep597 = getelementptr i8, ptr %2, i64 %i.lr
   %i.ls = mul i64 %indvar566, %i.ko
@@ -671,15 +670,15 @@ middle.block546:                                  ; preds = %vector.body541
   %i.kq = add i32 %i.a, %5
   %i.kr = sub i32 %i.kq, %i.kk
   %i.ks = zext i32 %1 to i64                      ; 23 uses
-  %i.kt = sext i32 %i.kn to i64                   ; 5 uses
-  %i.ku = sext i32 %5 to i64                      ; 4 uses
+  %i.kt = sext i32 %i.kn to i64                   ; 4 uses
+  %i.ku = sext i32 %5 to i64                      ; 3 uses
   %i.kv = sext i32 %i.km to i64                   ; 2 uses
   %invariant.op = add nsw i64 %i.ku, -1
   %i.kw = shl nuw nsw i64 %i.ks, 1                ; 2 uses
   %i.kx = shl nsw i64 %i.kp, 1
   %scevgep556 = getelementptr i8, ptr %2, i64 2   ; 2 uses
   %i.ky = shl nsw i64 %i.kp, 1
-  %i.kz = sub nsw i64 %i.ku, %i.kt
+  %i.kz = sub nsw i64 %i.ku, %i.kt                ; 2 uses
   %i.la = mul i64 %i.kz, %i.ks
   %i.lb = sub nsw i64 %i.kp, %i.ks
   %i.lc = add nsw i64 %i.kt, 1
@@ -734,8 +733,7 @@ middle.block546:                                  ; preds = %vector.body541
   %.2170294 = phi ptr [ %.1169.lcssa, %.preheader224.lr.ph ], [ %i.rh, %.loopexit ] ; 17 uses
   %i.lq = mul i64 %i.ky, %indvar552
   %scevgep582 = getelementptr i8, ptr %i.lk, i64 %i.lq ; 2 uses
-  %8 = add i64 %indvar552, %i.kt
-  %i.lr = sub i64 %i.ku, %8
+  %i.lr = sub i64 %i.kz, %indvar552
   %i.ls = shl i64 %i.lr, 1
   %scevgep583 = getelementptr i8, ptr %2, i64 %i.ls
   %i.lt = mul i64 %indvar552, %i.kp
@@ -1138,7 +1136,7 @@ bb.a:
   br i1 %6, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %._crit_edge73
-  %i.cb = sub nsw i32 %4, %5                      ; 3 uses
+  %i.cb = sub nsw i32 %4, %5                      ; 4 uses
   %i.cc = icmp slt i32 %.053.lcssa, %i.cb
   br i1 %i.cc, label %.lr.ph78, label %.loopexit
 
@@ -1148,8 +1146,7 @@ bb.a:
   br i1 %i.cd, label %.lr.ph.us79.preheader, label %.lr.ph78.split.preheader
 
 .lr.ph78.split.preheader:                         ; preds = %.lr.ph78
-  %7 = add i32 %.053.lcssa, %5
-  %i.cf = sub i32 %4, %7
+  %i.cf = sub i32 %i.cb, %.053.lcssa
   %i.cg = xor i32 %.053.lcssa, -1
   %i.ch = add i32 %4, %i.cg
   %xtraiter156 = and i32 %i.cf, 1

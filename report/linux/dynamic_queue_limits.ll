@@ -175,7 +175,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %.not.i, label %dql_check_stall.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bl = load volatile i64, ptr @jiffies, align 64 ; 6 uses
+  %i.bl = load volatile i64, ptr @jiffies, align 64 ; 5 uses
   %i.bm = getelementptr i8, ptr %0, i64 112       ; 4 uses
   %i.bn = load i64, ptr %i.bm, align 16
   %i.bo = zext i16 %i.c to i64
@@ -187,25 +187,23 @@ bb.p:                                             ; preds = %bb.o
 .preheader.i:                                     ; preds = %bb.p
   %i.bs = getelementptr i8, ptr %0, i64 16        ; 2 uses
   %i.bt = lshr i16 %i.c, 1
-  %i.bu = zext nneg i16 %i.bt to i64              ; 2 uses
-  %i.bv = sub i64 %i.bl, %i.bu
+  %i.bu = zext nneg i16 %i.bt to i64
+  %i.bv = sub i64 %i.bl, %i.bu                    ; 2 uses
   %i.bw = getelementptr i8, ptr %0, i64 24        ; 2 uses
-  %invariant.op = add i64 %i.bl, -63
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.s, %.preheader.i
   %i.bx = load volatile i64, ptr %i.bs, align 16  ; 3 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #8, !srcloc !15
-  %i.by = shl i64 %i.bx, 6                        ; 3 uses
+  %i.by = shl i64 %i.bx, 6                        ; 2 uses
   %i.bz = add i64 %i.by, -192                     ; 2 uses
   %i.ca = load i64, ptr %i.bm, align 16
   %i.cb = add i64 %i.ca, 1                        ; 2 uses
   %i.cc = sub i64 %i.bz, %i.cb
   %i.cd = icmp slt i64 %i.cc, 0
   %spec.select.i = select i1 %i.cd, i64 %i.cb, i64 %i.bz ; 2 uses
-  %i.ce = or disjoint i64 %i.by, 63
-  %2 = add i64 %i.by, %i.bu
-  %i.cf = sub i64 %invariant.op, %2
+  %i.ce = or disjoint i64 %i.by, 63               ; 2 uses
+  %i.cf = sub i64 %i.bv, %i.ce
   %i.cg = icmp slt i64 %i.cf, 0
   %.058.i = select i1 %i.cg, i64 %i.bv, i64 %i.ce ; 2 uses
   %i.ch = sub i64 %.058.i, %spec.select.i

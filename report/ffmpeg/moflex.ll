@@ -33,7 +33,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bytestream2_init.exit:                            ; preds = %bb.a
-  %i.g = zext nneg i32 %i.d to i64                ; 4 uses
+  %i.g = zext nneg i32 %i.d to i64                ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.g ; 3 uses
   %i.i = ptrtoint ptr %i.h to i64                 ; 4 uses
   %i.j = icmp samesign ult i32 %i.d, 2
@@ -45,8 +45,8 @@ bytestream2_get_be16.exit31:                      ; preds = %bytestream2_init.ex
   br i1 %.not, label %bb.c, label %bytestream2_get_be16.exit31.thread
 
 bb.c:                                             ; preds = %bytestream2_get_be16.exit31
-  %i.l = tail call i64 @llvm.umin.i64(i64 %i.g, i64 12) ; 3 uses
-  %gepdiff = sub nuw nsw i64 %i.g, %i.l
+  %i.l = tail call i64 @llvm.umin.i64(i64 %i.g, i64 12) ; 2 uses
+  %gepdiff = sub nuw nsw i64 %i.g, %i.l           ; 3 uses
   %i.m = icmp samesign ult i64 %gepdiff, 2
   br i1 %i.m, label %bytestream2_get_be16.exit31.thread, label %bytestream2_get_be16.exit
 
@@ -57,12 +57,11 @@ bytestream2_get_be16.exit:                        ; preds = %bb.c
   br i1 %i.p, label %bytestream2_get_be16.exit31.thread, label %.preheader
 
 .preheader:                                       ; preds = %bytestream2_get_be16.exit
-  %1 = add nuw nsw i64 %i.l, 2
-  %gepdiff65 = sub nsw i64 %i.g, %1               ; 2 uses
-  %2 = icmp sgt i64 %gepdiff65, 0
-  br i1 %2, label %.lr.ph.preheader, label %.loopexit
+  %.not69 = icmp eq i64 %gepdiff, 2
+  br i1 %.not69, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
+  %gepdiff65 = add nsw i64 %gepdiff, -2
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 2
   br label %.lr.ph
 

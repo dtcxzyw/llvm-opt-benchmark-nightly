@@ -205,7 +205,7 @@ bb.gw:                                            ; preds = %bb.gv
   %i.wm = add nsw i64 %i.wi, -1                   ; 3 uses
   store i64 %i.wm, ptr %i.v, align 8, !tbaa !234
   %i.wn = getelementptr [8 x i8], ptr %i.wl, i64 %i.wm ; 2 uses
-  %i.wo = load i64, ptr %i.wn, align 8, !tbaa !65 ; 10 uses
+  %i.wo = load i64, ptr %i.wn, align 8, !tbaa !65 ; 9 uses
   %i.wp = icmp ne i64 %i.wm, 0                    ; 2 uses
   %i.wq = zext i1 %i.wp to i32
   %i.wr = load ptr, ptr %i.w, align 8, !tbaa !134 ; 4 uses
@@ -227,8 +227,8 @@ marker.exit.i318:                                 ; preds = %bb.gx, %bb.gw
 
 bb.gy:                                            ; preds = %marker.exit.i318
   %i.wy = getelementptr i8, ptr %i.wr, i64 16     ; 2 uses
-  %.val.i.i319 = load i64, ptr %i.wy, align 8, !tbaa !44 ; 3 uses
-  %i.wz = sub i64 %.val.i.i319, %i.wo             ; 6 uses
+  %.val.i.i319 = load i64, ptr %i.wy, align 8, !tbaa !44 ; 2 uses
+  %i.wz = sub i64 %.val.i.i319, %i.wo             ; 7 uses
   %i.xa = call ptr @PyList_New(i64 noundef %i.wz) #14 ; 3 uses
   %i.xb = icmp eq ptr %i.xa, null
   br i1 %i.xb, label %load_binint.exit.thread, label %.preheader.i.i
@@ -281,8 +281,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.021.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 3 uses
   %.01620.i.i.ph = phi i64 [ %i.wo, %vector.memcheck ], [ %i.wo, %.lr.ph.i.i ], [ %i.xk, %middle.block ] ; 2 uses
-  %2 = sub i64 %.val.i.i319, %i.wo
-  %xtraiter2245 = and i64 %2, 3                   ; 2 uses
+  %xtraiter2245 = and i64 %i.wz, 3                ; 2 uses
   %lcmp.mod2246.not = icmp eq i64 %xtraiter2245, 0
   br i1 %lcmp.mod2246.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -685,7 +684,7 @@ bb.il:                                            ; preds = %bb.ik
   %i.aec = add nsw i64 %i.ady, -1                 ; 3 uses
   store i64 %i.aec, ptr %i.v, align 8, !tbaa !234
   %i.aed = getelementptr [8 x i8], ptr %i.aeb, i64 %i.aec ; 2 uses
-  %i.aee = load i64, ptr %i.aed, align 8, !tbaa !65 ; 18 uses
+  %i.aee = load i64, ptr %i.aed, align 8, !tbaa !65 ; 17 uses
   %i.aef = icmp ne i64 %i.aec, 0                  ; 3 uses
   %i.aeg = zext i1 %i.aef to i32
   %i.aeh = load ptr, ptr %i.w, align 8, !tbaa !134 ; 5 uses
@@ -757,10 +756,10 @@ bb.is:                                            ; preds = %bb.ir
   br label %load_binint.exit.thread
 
 .thread.i:                                        ; preds = %..thread.i_crit_edge, %bb.ip
-  %.val.i.i355 = phi i64 [ %.val.i.i355.pre, %..thread.i_crit_edge ], [ %.val66.i, %bb.ip ] ; 3 uses
+  %.val.i.i355 = phi i64 [ %.val.i.i355.pre, %..thread.i_crit_edge ], [ %.val66.i, %bb.ip ] ; 2 uses
   %i.afb = phi ptr [ %.pre85.i, %..thread.i_crit_edge ], [ %i.aeh, %bb.ip ] ; 2 uses
   %i.afc = getelementptr i8, ptr %i.afb, i64 16
-  %i.afd = sub i64 %.val.i.i355, %i.aee           ; 6 uses
+  %i.afd = sub i64 %.val.i.i355, %i.aee           ; 7 uses
   %i.afe = call ptr @PyTuple_New(i64 noundef %i.afd) #14 ; 7 uses
   %i.aff = ptrtoaddr ptr %i.afe to i64
   %i.afg = icmp eq ptr %i.afe, null
@@ -812,8 +811,7 @@ middle.block1990:                                 ; preds = %vector.body1985
 scalar.ph1981.preheader:                          ; preds = %vector.memcheck1979, %.lr.ph.i.i358, %middle.block1990
   %.027.i.i.ph = phi i64 [ 0, %vector.memcheck1979 ], [ 0, %.lr.ph.i.i358 ], [ %n.vec1984, %middle.block1990 ] ; 3 uses
   %.02026.i.i.ph = phi i64 [ %i.aee, %vector.memcheck1979 ], [ %i.aee, %.lr.ph.i.i358 ], [ %i.afp, %middle.block1990 ] ; 2 uses
-  %3 = sub i64 %.val.i.i355, %i.aee
-  %xtraiter2242 = and i64 %3, 3                   ; 2 uses
+  %xtraiter2242 = and i64 %i.afd, 3               ; 2 uses
   %lcmp.mod2243.not = icmp eq i64 %xtraiter2242, 0
   br i1 %lcmp.mod2243.not, label %scalar.ph1981.prol.loopexit, label %scalar.ph1981.prol
 
@@ -1046,7 +1044,7 @@ bb.jl:                                            ; preds = %bb.jk
   %i.aiu = add nsw i64 %i.aiq, -1                 ; 3 uses
   store i64 %i.aiu, ptr %i.v, align 8, !tbaa !234
   %i.aiv = getelementptr [8 x i8], ptr %i.ait, i64 %i.aiu ; 2 uses
-  %i.aiw = load i64, ptr %i.aiv, align 8, !tbaa !65 ; 11 uses
+  %i.aiw = load i64, ptr %i.aiv, align 8, !tbaa !65 ; 10 uses
   %i.aix = icmp ne i64 %i.aiu, 0                  ; 3 uses
   %i.aiy = zext i1 %i.aix to i32
   %i.aiz = load ptr, ptr %i.w, align 8, !tbaa !134 ; 4 uses
@@ -1078,8 +1076,8 @@ bb.jo:                                            ; preds = %bb.jn
 
 bb.jp:                                            ; preds = %bb.jn
   %i.aji = getelementptr i8, ptr %i.aiz, i64 16   ; 2 uses
-  %.val.i.i372 = load i64, ptr %i.aji, align 8, !tbaa !44 ; 3 uses
-  %i.ajj = sub i64 %.val.i.i372, %i.aiw           ; 6 uses
+  %.val.i.i372 = load i64, ptr %i.aji, align 8, !tbaa !44 ; 2 uses
+  %i.ajj = sub i64 %.val.i.i372, %i.aiw           ; 7 uses
   %i.ajk = call ptr @PyTuple_New(i64 noundef %i.ajj) #14 ; 7 uses
   %i.ajl = ptrtoaddr ptr %i.ajk to i64
   %i.ajm = icmp eq ptr %i.ajk, null
@@ -1131,8 +1129,7 @@ middle.block2005:                                 ; preds = %vector.body2000
 scalar.ph1996.preheader:                          ; preds = %vector.memcheck1994, %.lr.ph.i.i383, %middle.block2005
   %.027.i.i384.ph = phi i64 [ 0, %vector.memcheck1994 ], [ 0, %.lr.ph.i.i383 ], [ %n.vec1999, %middle.block2005 ] ; 3 uses
   %.02026.i.i385.ph = phi i64 [ %i.aiw, %vector.memcheck1994 ], [ %i.aiw, %.lr.ph.i.i383 ], [ %i.ajv, %middle.block2005 ] ; 2 uses
-  %4 = sub i64 %.val.i.i372, %i.aiw
-  %xtraiter2239 = and i64 %4, 3                   ; 2 uses
+  %xtraiter2239 = and i64 %i.ajj, 3               ; 2 uses
   %lcmp.mod2240.not = icmp eq i64 %xtraiter2239, 0
   br i1 %lcmp.mod2240.not, label %scalar.ph1996.prol.loopexit, label %scalar.ph1996.prol
 
@@ -1535,7 +1532,7 @@ bb.kv:                                            ; preds = %bb.ku
   %i.apx = add nsw i64 %i.apt, -1                 ; 3 uses
   store i64 %i.apx, ptr %i.v, align 8, !tbaa !234
   %i.apy = getelementptr [8 x i8], ptr %i.apw, i64 %i.apx ; 2 uses
-  %i.apz = load i64, ptr %i.apy, align 8, !tbaa !65 ; 11 uses
+  %i.apz = load i64, ptr %i.apy, align 8, !tbaa !65 ; 10 uses
   %i.aqa = icmp ne i64 %i.apx, 0                  ; 2 uses
   %i.aqb = zext i1 %i.aqa to i32
   %i.aqc = load ptr, ptr %i.w, align 8, !tbaa !134 ; 2 uses
@@ -1666,8 +1663,8 @@ bb.ln:                                            ; preds = %bb.lm
 
 bb.lo:                                            ; preds = %bb.lm
   %i.arn = getelementptr i8, ptr %i.arh, i64 16   ; 2 uses
-  %.val.i.i410 = load i64, ptr %i.arn, align 8, !tbaa !44 ; 3 uses
-  %i.aro = sub i64 %.val.i.i410, %i.apz           ; 6 uses
+  %.val.i.i410 = load i64, ptr %i.arn, align 8, !tbaa !44 ; 2 uses
+  %i.aro = sub i64 %.val.i.i410, %i.apz           ; 7 uses
   %i.arp = call ptr @PyTuple_New(i64 noundef %i.aro) #14 ; 8 uses
   %i.arq = ptrtoaddr ptr %i.arp to i64
   %i.arr = icmp eq ptr %i.arp, null
@@ -1719,8 +1716,7 @@ middle.block2035:                                 ; preds = %vector.body2030
 scalar.ph2026.preheader:                          ; preds = %vector.memcheck2024, %.lr.ph.i.i427, %middle.block2035
   %.027.i.i428.ph = phi i64 [ 0, %vector.memcheck2024 ], [ 0, %.lr.ph.i.i427 ], [ %n.vec2029, %middle.block2035 ] ; 3 uses
   %.02026.i.i429.ph = phi i64 [ %i.apz, %vector.memcheck2024 ], [ %i.apz, %.lr.ph.i.i427 ], [ %i.asa, %middle.block2035 ] ; 2 uses
-  %5 = sub i64 %.val.i.i410, %i.apz
-  %xtraiter = and i64 %5, 3                       ; 2 uses
+  %xtraiter = and i64 %i.aro, 3                   ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph2026.prol.loopexit, label %scalar.ph2026.prol
 
@@ -2123,7 +2119,7 @@ bb.a:
   %i.b = getelementptr i8, ptr %1, i64 16         ; 6 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !134  ; 4 uses
   %i.d = getelementptr i8, ptr %i.c, i64 16       ; 2 uses
-  %.val82 = load i64, ptr %i.d, align 8, !tbaa !44 ; 6 uses
+  %.val82 = load i64, ptr %i.d, align 8, !tbaa !44 ; 5 uses
   %i.e = icmp sgt i64 %2, %.val82
   br i1 %i.e, label %bb.c, label %bb.b
 
@@ -2155,7 +2151,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not99, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = sub i64 %.val82, %2                      ; 6 uses
+  %i.q = sub i64 %.val82, %2                      ; 7 uses
   %i.r = tail call ptr @PyList_New(i64 noundef %i.q) #14 ; 6 uses
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %Py_DECREF.exit75, label %.preheader.i
@@ -2207,8 +2203,7 @@ middle.block139:                                  ; preds = %vector.body134
 scalar.ph130.preheader:                           ; preds = %vector.memcheck127, %.lr.ph.i, %middle.block139
   %.021.i.ph = phi i64 [ 0, %vector.memcheck127 ], [ 0, %.lr.ph.i ], [ %n.vec133, %middle.block139 ] ; 3 uses
   %.01620.i.ph = phi i64 [ %2, %vector.memcheck127 ], [ %2, %.lr.ph.i ], [ %i.aa, %middle.block139 ] ; 2 uses
-  %3 = sub i64 %.val82, %2
-  %xtraiter144 = and i64 %3, 3                    ; 2 uses
+  %xtraiter144 = and i64 %i.q, 3                  ; 2 uses
   %lcmp.mod145.not = icmp eq i64 %xtraiter144, 0
   br i1 %lcmp.mod145.not, label %scalar.ph130.prol.loopexit, label %scalar.ph130.prol
 
@@ -2297,8 +2292,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.br = load ptr, ptr %i.b, align 8, !tbaa !134 ; 2 uses
   %i.bs = getelementptr i8, ptr %i.br, i64 16     ; 2 uses
-  %.val.i87 = load i64, ptr %i.bs, align 8, !tbaa !44 ; 3 uses
-  %i.bt = sub i64 %.val.i87, %2                   ; 6 uses
+  %.val.i87 = load i64, ptr %i.bs, align 8, !tbaa !44 ; 2 uses
+  %i.bt = sub i64 %.val.i87, %2                   ; 7 uses
   %i.bu = call ptr @PyList_New(i64 noundef %i.bt) #14 ; 6 uses
   %i.bv = icmp eq ptr %i.bu, null
   br i1 %i.bv, label %bb.k, label %.preheader.i88
@@ -2351,8 +2346,7 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i90, %middle.block
   %.021.i92.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i90 ], [ %n.vec, %middle.block ] ; 3 uses
   %.01620.i93.ph = phi i64 [ %2, %vector.memcheck ], [ %2, %.lr.ph.i90 ], [ %i.ce, %middle.block ] ; 2 uses
-  %4 = sub i64 %.val.i87, %2
-  %xtraiter = and i64 %4, 3                       ; 2 uses
+  %xtraiter = and i64 %i.bt, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 

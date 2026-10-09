@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.s, label %_ZNSt6vectorIiSaIiEE5clearEv.exit.thread.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.t = tail call noundef i64 @_ZNK16common_ngram_mod5get_nEv(ptr noundef nonnull align 8 dereferenceable(40) %i.q) ; 20 uses
+  %i.t = tail call noundef i64 @_ZNK16common_ngram_mod5get_nEv(ptr noundef nonnull align 8 dereferenceable(40) %i.q) ; 19 uses
   %i.u = sub i64 0, %i.t
   %i.v = load i64, ptr %i.d, align 8, !tbaa !489  ; 3 uses
   %i.w = add i64 %i.v, 32
@@ -384,9 +384,9 @@ _ZNSt6vectorIiSaIiEE5clearEv.exit.thread:         ; preds = %bb.o, %._crit_edge9
   %i.cp = ptrtoint ptr %i.co to i64
   %i.cq = ptrtoint ptr %i.cn to i64               ; 4 uses
   %i.cr = sub i64 %i.cp, %i.cq
-  %i.cs = ashr exact i64 %i.cr, 2                 ; 5 uses
+  %i.cs = ashr exact i64 %i.cr, 2                 ; 4 uses
   %i.ct = icmp ult i64 %i.t, %i.cs
-  %i.cu = sub i64 %i.cs, %i.t                     ; 5 uses
+  %i.cu = sub i64 %i.cs, %i.t                     ; 6 uses
   br i1 %i.ct, label %.lr.ph102.preheader, label %._crit_edge103
 
 .lr.ph102.preheader:                              ; preds = %_ZNSt6vectorIiSaIiEE5clearEv.exit.thread
@@ -420,8 +420,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph102.preheader155:                           ; preds = %.lr.ph102.preheader, %middle.block
   %.0101.ph = phi i64 [ 0, %.lr.ph102.preheader ], [ %n.vec, %middle.block ] ; 3 uses
-  %3 = sub i64 %i.cs, %i.t
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.cu, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph102.prol.loopexit, label %.lr.ph102.prol
 

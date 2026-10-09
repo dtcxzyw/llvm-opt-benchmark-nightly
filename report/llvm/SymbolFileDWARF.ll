@@ -205,16 +205,15 @@ _ZN12lldb_private6plugin5dwarf9DWARFUnit16GetLoclistOffsetEj.exit.i: ; preds = %
   %i.ey = getelementptr inbounds nuw i8, ptr %18, i64 16
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !315, !noalias !1686
   %i.fa = load ptr, ptr %i.dc, align 8, !tbaa !316, !noalias !1686
-  %i.fb = ptrtoint ptr %i.ez to i64               ; 2 uses
-  %i.fc = ptrtoint ptr %i.fa to i64               ; 2 uses
-  %i.fd = sub i64 %i.fb, %i.fc
+  %i.fb = ptrtoint ptr %i.ez to i64
+  %i.fc = ptrtoint ptr %i.fa to i64
+  %i.fd = sub i64 %i.fb, %i.fc                    ; 2 uses
   %i.fe = icmp ult i64 %.0.i, %i.fd
   br i1 %i.fe, label %bb.ai, label %_ZL25GetExprListFromAtLocationN12lldb_private6plugin5dwarf14DWARFFormValueESt10shared_ptrINS_6ModuleEERKNS1_8DWARFDIEEm.exit
 
 bb.ai:                                            ; preds = %_ZN12lldb_private6plugin5dwarf9DWARFUnit16GetLoclistOffsetEj.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #27, !noalias !1686
-  %25 = add i64 %.0.i, %i.fc
-  %i.ff = sub i64 %i.fb, %25
+  %i.ff = sub nuw i64 %i.fd, %.0.i
   call void @_ZN12lldb_private13DataExtractorC1ERKS0_mm(ptr noundef nonnull align 8 dereferenceable(48) %20, ptr noundef nonnull align 8 dereferenceable(48) %18, i64 noundef %.0.i, i64 noundef %i.ff) #27
   %i.fg = getelementptr inbounds nuw i8, ptr %20, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dc, ptr noundef nonnull align 8 dereferenceable(24) %i.fg, i64 24, i1 false), !noalias !1686

@@ -29,7 +29,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #3
   %i.e = getelementptr inbounds i8, ptr %5, i64 -8
-  %i.f = load i32, ptr %4, align 4, !tbaa !9      ; 12 uses
+  %i.f = load i32, ptr %4, align 4, !tbaa !9      ; 13 uses
   %narrow = xor i32 %i.f, -1
   %i.g = sext i32 %narrow to i64
   %i.h = getelementptr inbounds [8 x i8], ptr %3, i64 %i.g ; 22 uses
@@ -61,13 +61,14 @@ bb.b:                                             ; preds = %bb.a
   %i.t = sext i32 %i.f to i64                     ; 3 uses
   %i.u = sext i32 %i.l to i64
   %i.v = sext i32 %i.i to i64
+  %10 = add i32 %i.f, 1
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.e
   %i.w = phi i32 [ %i.q, %.lr.ph ], [ %i.ds, %bb.e ]
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 11 uses
   %.0280 = phi double [ undef, %.lr.ph ], [ %i.ei, %bb.e ]
-  %indvars281 = trunc i64 %indvars.iv to i32      ; 8 uses
+  %indvars281 = trunc i64 %indvars.iv to i32      ; 9 uses
   %i.x = icmp samesign ugt i64 %indvars.iv, 1
   %.pre282.a = load i32, ptr %0, align 4, !tbaa !9 ; 2 uses
   %.pre283.a = load i32, ptr %1, align 4, !tbaa !9 ; 4 uses
@@ -202,7 +203,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %._crit_edge286, %bb.d
   %.pre-phi293 = phi i32 [ 0, %._crit_edge286 ], [ %i.aa, %bb.d ] ; 4 uses
-  %.pre-phi289 = phi i64 [ %.pre288, %._crit_edge286 ], [ %i.aj, %bb.d ] ; 4 uses
+  %.pre-phi289 = phi i64 [ %.pre288, %._crit_edge286 ], [ %i.aj, %bb.d ] ; 3 uses
   %i.ds = phi i32 [ %i.w, %._crit_edge286 ], [ %.pre284.a, %bb.d ] ; 2 uses
   %i.dt = phi i32 [ %.pre283.a, %._crit_edge286 ], [ %i.dk, %bb.d ]
   %i.du = phi i32 [ %.pre282.a, %._crit_edge286 ], [ %.pre, %bb.d ] ; 3 uses
@@ -223,16 +224,16 @@ bb.e:                                             ; preds = %._crit_edge286, %bb
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv ; 4 uses
   call void @dlarfg_(ptr noundef nonnull %i.b, ptr noundef %i.eb, ptr noundef %i.ee, ptr noundef nonnull @c__1, ptr noundef nonnull %i.ef) #3
   %i.eg = load i32, ptr %1, align 4, !tbaa !9     ; 3 uses
-  %10 = add nsw i32 %i.eg, %indvars281            ; 2 uses
-  %11 = sext i32 %10 to i64
-  %12 = getelementptr [8 x i8], ptr %i.h, i64 %.pre-phi289
-  %i.eh = getelementptr [8 x i8], ptr %12, i64 %11 ; 3 uses
+  %11 = mul i32 %10, %indvars281
+  %12 = add i32 %11, %i.eg
+  %13 = sext i32 %12 to i64
+  %i.eh = getelementptr inbounds [8 x i8], ptr %i.h, i64 %13 ; 3 uses
   %i.ei = load double, ptr %i.eh, align 8, !tbaa !11 ; 2 uses
   store double 1.000000e+00, ptr %i.eh, align 8, !tbaa !11
-  %i.ej = load i32, ptr %0, align 4, !tbaa !9     ; 2 uses
-  %i.ek = sub nsw i32 %i.ej, %i.eg
+  %i.ej = load i32, ptr %0, align 4, !tbaa !9
+  %i.ek = sub nsw i32 %i.ej, %i.eg                ; 2 uses
   store i32 %i.ek, ptr %i.b, align 4, !tbaa !9
-  %reass.sub = sub i32 %i.ej, %10
+  %reass.sub = sub i32 %i.ek, %indvars281
   %i.el = add i32 %reass.sub, 1
   store i32 %i.el, ptr %i.c, align 4, !tbaa !9
   %i.em = add nsw i32 %i.eg, 1

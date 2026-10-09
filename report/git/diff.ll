@@ -205,7 +205,7 @@ bb.jz:                                            ; preds = %.thread168.i.i, %.l
   %.0149253.i.i = phi i32 [ 0, %.lr.ph.i34.i ], [ %.4153.i.i, %.thread168.i.i ] ; 5 uses
   %.0154252.i.i = phi ptr [ null, %.lr.ph.i34.i ], [ %.3157.i.i, %.thread168.i.i ] ; 9 uses
   %i.aqq = load ptr, ptr %i.aqp, align 8, !tbaa !65 ; 7 uses
-  %i.aqr = sext i32 %.063255.i.i to i64           ; 13 uses
+  %i.aqr = sext i32 %.063255.i.i to i64           ; 9 uses
   %i.aqs = getelementptr inbounds [32 x i8], ptr %i.aqq, i64 %i.aqr ; 9 uses
   %i.aqt = getelementptr inbounds nuw i8, ptr %i.aqs, i64 28 ; 2 uses
   %i.aqu = load i32, ptr %i.aqt, align 4, !tbaa !59 ; 2 uses
@@ -313,9 +313,9 @@ bb.kh:                                            ; preds = %bb.kg, %.lr.ph.i.i3
   br label %.preheader.i.i44.i
 
 .preheader.i.i44.i:                               ; preds = %.preheader.i.i44.i, %.preheader.i.i44.i.preheader.new
-  %indvars.iv51.i.i.i = phi i64 [ 1, %.preheader.i.i44.i.preheader.new ], [ %indvars.iv.next52.i.i.i.3, %.preheader.i.i44.i ] ; 5 uses
+  %indvars.iv51.i.i.i = phi i64 [ 1, %.preheader.i.i44.i.preheader.new ], [ %indvars.iv.next52.i.i.i.3, %.preheader.i.i44.i ] ; 3 uses
   %niter = phi i64 [ 0, %.preheader.i.i44.i.preheader.new ], [ %niter.next.3, %.preheader.i.i44.i ]
-  %i.arw = sub nsw i64 %i.aqr, %indvars.iv51.i.i.i
+  %i.arw = sub nsw i64 %i.aqr, %indvars.iv51.i.i.i ; 3 uses
   %i.arx = getelementptr inbounds [32 x i8], ptr %i.aqq, i64 %i.arw
   %i.ary = getelementptr inbounds nuw i8, ptr %i.arx, i64 12 ; 2 uses
   %i.arz = load i32, ptr %i.ary, align 4, !tbaa !55
@@ -327,17 +327,13 @@ bb.kh:                                            ; preds = %bb.kg, %.lr.ph.i.i3
   %i.asc = load i32, ptr %i.asb, align 4, !tbaa !55
   %i.asd = and i32 %i.asc, -3145729
   store i32 %i.asd, ptr %i.asb, align 4, !tbaa !55
-  %indvars.iv.next52.i.i.i.1 = add nuw nsw i64 %indvars.iv51.i.i.i, 2
-  %25 = sub nsw i64 %i.aqr, %indvars.iv.next52.i.i.i.1
-  %i.ase = getelementptr inbounds [32 x i8], ptr %i.aqq, i64 %25
-  %i.asf = getelementptr inbounds nuw i8, ptr %i.ase, i64 12 ; 2 uses
+  %i.ase = getelementptr [32 x i8], ptr %i.aqq, i64 %i.arw
+  %i.asf = getelementptr i8, ptr %i.ase, i64 -52  ; 2 uses
   %i.asg = load i32, ptr %i.asf, align 4, !tbaa !55
   %i.ash = and i32 %i.asg, -3145729
   store i32 %i.ash, ptr %i.asf, align 4, !tbaa !55
-  %indvars.iv.next52.i.i.i.2 = add nuw nsw i64 %indvars.iv51.i.i.i, 3
-  %26 = sub nsw i64 %i.aqr, %indvars.iv.next52.i.i.i.2
-  %i.asi = getelementptr inbounds [32 x i8], ptr %i.aqq, i64 %26
-  %i.asj = getelementptr inbounds nuw i8, ptr %i.asi, i64 12 ; 2 uses
+  %i.asi = getelementptr [32 x i8], ptr %i.aqq, i64 %i.arw
+  %i.asj = getelementptr i8, ptr %i.asi, i64 -84  ; 2 uses
   %i.ask = load i32, ptr %i.asj, align 4, !tbaa !55
   %i.asl = and i32 %i.ask, -3145729
   store i32 %i.asl, ptr %i.asj, align 4, !tbaa !55
@@ -564,9 +560,9 @@ bb.ku:                                            ; preds = %bb.kt, %.lr.ph.i89.
   br label %.preheader.i99.i.i
 
 .preheader.i99.i.i:                               ; preds = %.preheader.i99.i.i, %.preheader.i99.i.i.preheader.new
-  %indvars.iv51.i101.i.i = phi i64 [ 1, %.preheader.i99.i.i.preheader.new ], [ %indvars.iv.next52.i102.i.i.3, %.preheader.i99.i.i ] ; 5 uses
+  %indvars.iv51.i101.i.i = phi i64 [ 1, %.preheader.i99.i.i.preheader.new ], [ %indvars.iv.next52.i102.i.i.3, %.preheader.i99.i.i ] ; 3 uses
   %niter482 = phi i64 [ 0, %.preheader.i99.i.i.preheader.new ], [ %niter482.next.3, %.preheader.i99.i.i ]
-  %i.aut = sub nsw i64 %i.aqr, %indvars.iv51.i101.i.i
+  %i.aut = sub nsw i64 %i.aqr, %indvars.iv51.i101.i.i ; 3 uses
   %i.auu = getelementptr inbounds [32 x i8], ptr %i.auc, i64 %i.aut
   %i.auv = getelementptr inbounds nuw i8, ptr %i.auu, i64 12 ; 2 uses
   %i.auw = load i32, ptr %i.auv, align 4, !tbaa !55
@@ -578,17 +574,13 @@ bb.ku:                                            ; preds = %bb.kt, %.lr.ph.i89.
   %i.auz = load i32, ptr %i.auy, align 4, !tbaa !55
   %i.ava = and i32 %i.auz, -3145729
   store i32 %i.ava, ptr %i.auy, align 4, !tbaa !55
-  %indvars.iv.next52.i102.i.i.1 = add nuw nsw i64 %indvars.iv51.i101.i.i, 2
-  %27 = sub nsw i64 %i.aqr, %indvars.iv.next52.i102.i.i.1
-  %i.avb = getelementptr inbounds [32 x i8], ptr %i.auc, i64 %27
-  %i.avc = getelementptr inbounds nuw i8, ptr %i.avb, i64 12 ; 2 uses
+  %i.avb = getelementptr [32 x i8], ptr %i.auc, i64 %i.aut
+  %i.avc = getelementptr i8, ptr %i.avb, i64 -52  ; 2 uses
   %i.avd = load i32, ptr %i.avc, align 4, !tbaa !55
   %i.ave = and i32 %i.avd, -3145729
   store i32 %i.ave, ptr %i.avc, align 4, !tbaa !55
-  %indvars.iv.next52.i102.i.i.2 = add nuw nsw i64 %indvars.iv51.i101.i.i, 3
-  %28 = sub nsw i64 %i.aqr, %indvars.iv.next52.i102.i.i.2
-  %i.avf = getelementptr inbounds [32 x i8], ptr %i.auc, i64 %28
-  %i.avg = getelementptr inbounds nuw i8, ptr %i.avf, i64 12 ; 2 uses
+  %i.avf = getelementptr [32 x i8], ptr %i.auc, i64 %i.aut
+  %i.avg = getelementptr i8, ptr %i.avf, i64 -84  ; 2 uses
   %i.avh = load i32, ptr %i.avg, align 4, !tbaa !55
   %i.avi = and i32 %i.avh, -3145729
   store i32 %i.avi, ptr %i.avg, align 4, !tbaa !55
@@ -753,7 +745,7 @@ bb.lc:                                            ; preds = %bb.lb
   br i1 %i.axb, label %bb.jz, label %._crit_edge.i51.i, !llvm.loop !423
 
 ._crit_edge.i51.i:                                ; preds = %.thread168.i.i
-  %i.axc = sext i32 %i.awx to i64                 ; 6 uses
+  %i.axc = sext i32 %i.awx to i64                 ; 4 uses
   %i.axd = load i32, ptr %i.ail, align 8, !tbaa !144
   %i.axe = icmp eq i32 %i.axd, 1
   %.not42.i113.i.i = icmp slt i32 %.4.i49.i, 1
@@ -818,9 +810,9 @@ bb.lf:                                            ; preds = %bb.le, %.lr.ph.i119
   br label %.preheader.i129.i.i
 
 .preheader.i129.i.i:                              ; preds = %.preheader.i129.i.i, %.preheader.i129.i.i.preheader.new
-  %indvars.iv51.i131.i.i = phi i64 [ 1, %.preheader.i129.i.i.preheader.new ], [ %indvars.iv.next52.i132.i.i.3, %.preheader.i129.i.i ] ; 5 uses
+  %indvars.iv51.i131.i.i = phi i64 [ 1, %.preheader.i129.i.i.preheader.new ], [ %indvars.iv.next52.i132.i.i.3, %.preheader.i129.i.i ] ; 3 uses
   %niter488 = phi i64 [ 0, %.preheader.i129.i.i.preheader.new ], [ %niter488.next.3, %.preheader.i129.i.i ]
-  %i.axx = sub nsw i64 %i.axc, %indvars.iv51.i131.i.i
+  %i.axx = sub nsw i64 %i.axc, %indvars.iv51.i131.i.i ; 3 uses
   %i.axy = getelementptr inbounds [32 x i8], ptr %i.axf, i64 %i.axx
   %i.axz = getelementptr inbounds nuw i8, ptr %i.axy, i64 12 ; 2 uses
   %i.aya = load i32, ptr %i.axz, align 4, !tbaa !55
@@ -832,17 +824,13 @@ bb.lf:                                            ; preds = %bb.le, %.lr.ph.i119
   %i.ayd = load i32, ptr %i.ayc, align 4, !tbaa !55
   %i.aye = and i32 %i.ayd, -3145729
   store i32 %i.aye, ptr %i.ayc, align 4, !tbaa !55
-  %indvars.iv.next52.i132.i.i.1 = add nuw nsw i64 %indvars.iv51.i131.i.i, 2
-  %29 = sub nsw i64 %i.axc, %indvars.iv.next52.i132.i.i.1
-  %i.ayf = getelementptr inbounds [32 x i8], ptr %i.axf, i64 %29
-  %i.ayg = getelementptr inbounds nuw i8, ptr %i.ayf, i64 12 ; 2 uses
+  %i.ayf = getelementptr [32 x i8], ptr %i.axf, i64 %i.axx
+  %i.ayg = getelementptr i8, ptr %i.ayf, i64 -52  ; 2 uses
   %i.ayh = load i32, ptr %i.ayg, align 4, !tbaa !55
   %i.ayi = and i32 %i.ayh, -3145729
   store i32 %i.ayi, ptr %i.ayg, align 4, !tbaa !55
-  %indvars.iv.next52.i132.i.i.2 = add nuw nsw i64 %indvars.iv51.i131.i.i, 3
-  %30 = sub nsw i64 %i.axc, %indvars.iv.next52.i132.i.i.2
-  %i.ayj = getelementptr inbounds [32 x i8], ptr %i.axf, i64 %30
-  %i.ayk = getelementptr inbounds nuw i8, ptr %i.ayj, i64 12 ; 2 uses
+  %i.ayj = getelementptr [32 x i8], ptr %i.axf, i64 %i.axx
+  %i.ayk = getelementptr i8, ptr %i.ayj, i64 -84  ; 2 uses
   %i.ayl = load i32, ptr %i.ayk, align 4, !tbaa !55
   %i.aym = and i32 %i.ayl, -3145729
   store i32 %i.aym, ptr %i.ayk, align 4, !tbaa !55

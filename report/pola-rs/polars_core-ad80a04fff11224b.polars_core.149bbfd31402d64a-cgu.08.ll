@@ -205,10 +205,10 @@ bb.a:
   %i.a = tail call { i16, i16 } @_RNvMNtNtCslFlrwjHoTci_14polars_compute7rolling3sumINtB2_9SumWindowNtNtCs2mZqlW55729_12polars_utils7float164pf16dE7get_sumCs1LHh8CLbVkQ_11polars_core(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %0), !dbg !293886 ; 2 uses
   %i.b = extractvalue { i16, i16 } %i.a, 1, !dbg !293886
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88, !dbg !293887
-  %i.d = load i64, ptr %i.c, align 8, !dbg !293887, !noundef !5304 ; 2 uses
+  %i.d = load i64, ptr %i.c, align 8, !dbg !293887, !noundef !5304
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !293888
-  %i.f = load i64, ptr %i.e, align 8, !dbg !293888, !noundef !5304 ; 2 uses
-  %i.g = sub i64 %i.d, %i.f, !dbg !293887
+  %i.f = load i64, ptr %i.e, align 8, !dbg !293888, !noundef !5304
+  %i.g = sub i64 %i.d, %i.f, !dbg !293887         ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72, !dbg !293889
   %i.i = load i64, ptr %i.h, align 8, !dbg !293889, !noundef !5304 ; 2 uses
   %i.j = icmp ne i64 %i.i, %i.g, !dbg !293889
@@ -218,8 +218,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.m, !dbg !293889
 
 bb.b:                                             ; preds = %bb.a
-  %2 = add i64 %i.f, %i.i, !dbg !293890
-  %i.m = sub i64 %i.d, %2, !dbg !293890
+  %i.m = sub i64 %i.g, %i.i, !dbg !293890
   %i.n = uitofp i64 %i.m to float, !dbg !293891   ; 2 uses
   %i.o = load atomic i64, ptr @_RNvNtNtCsiOQ0QR31gI5_10std_detect6detect5cache5CACHE monotonic, align 8, !dbg !293892, !noalias !293885 ; 2 uses
   %i.p = icmp eq i64 %i.o, 0, !dbg !293893
@@ -341,10 +340,10 @@ define hidden { i64, double } @_RNvXs_NtNtCslFlrwjHoTci_14polars_compute7rolling
 bb.a:
   %i.a = tail call { i64, double } @_RNvMNtNtCslFlrwjHoTci_14polars_compute7rolling3sumINtB2_9SumWindowddE7get_sumCs1LHh8CLbVkQ_11polars_core(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %0), !dbg !293943 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88, !dbg !293944
-  %i.c = load i64, ptr %i.b, align 8, !dbg !293944, !noundef !5304 ; 2 uses
+  %i.c = load i64, ptr %i.b, align 8, !dbg !293944, !noundef !5304
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !293945
-  %i.e = load i64, ptr %i.d, align 8, !dbg !293945, !noundef !5304 ; 2 uses
-  %i.f = sub i64 %i.c, %i.e, !dbg !293944
+  %i.e = load i64, ptr %i.d, align 8, !dbg !293945, !noundef !5304
+  %i.f = sub i64 %i.c, %i.e, !dbg !293944         ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72, !dbg !293946
   %i.h = load i64, ptr %i.g, align 8, !dbg !293946, !noundef !5304 ; 2 uses
   %i.i = icmp ne i64 %i.h, %i.f, !dbg !293946
@@ -352,8 +351,7 @@ bb.a:
   %i.k = trunc nuw i64 %i.j to i1
   %or.cond = select i1 %i.i, i1 %i.k, i1 false, !dbg !293946 ; 2 uses
   %i.l = extractvalue { i64, double } %i.a, 1, !dbg !293946
-  %2 = add i64 %i.e, %i.h, !dbg !293946
-  %i.m = sub i64 %i.c, %2, !dbg !293946
+  %i.m = sub i64 %i.f, %i.h, !dbg !293946
   %i.n = uitofp i64 %i.m to double, !dbg !293946
   %i.o = fdiv double %i.l, %i.n, !dbg !293946
   %.sroa.4.0 = select i1 %or.cond, double %i.o, double undef, !dbg !293946
@@ -382,10 +380,10 @@ define hidden { i32, float } @_RNvXs_NtNtCslFlrwjHoTci_14polars_compute7rolling4
 bb.a:
   %i.a = tail call { i32, float } @_RNvMNtNtCslFlrwjHoTci_14polars_compute7rolling3sumINtB2_9SumWindowfdE7get_sumCs1LHh8CLbVkQ_11polars_core(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %0), !dbg !293959 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88, !dbg !293960
-  %i.c = load i64, ptr %i.b, align 8, !dbg !293960, !noundef !5304 ; 2 uses
+  %i.c = load i64, ptr %i.b, align 8, !dbg !293960, !noundef !5304
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80, !dbg !293961
-  %i.e = load i64, ptr %i.d, align 8, !dbg !293961, !noundef !5304 ; 2 uses
-  %i.f = sub i64 %i.c, %i.e, !dbg !293960
+  %i.e = load i64, ptr %i.d, align 8, !dbg !293961, !noundef !5304
+  %i.f = sub i64 %i.c, %i.e, !dbg !293960         ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72, !dbg !293962
   %i.h = load i64, ptr %i.g, align 8, !dbg !293962, !noundef !5304 ; 2 uses
   %i.i = icmp ne i64 %i.h, %i.f, !dbg !293962
@@ -393,8 +391,7 @@ bb.a:
   %i.k = trunc i32 %i.j to i1
   %or.cond = select i1 %i.i, i1 %i.k, i1 false, !dbg !293962 ; 2 uses
   %i.l = extractvalue { i32, float } %i.a, 1, !dbg !293962
-  %2 = add i64 %i.e, %i.h, !dbg !293962
-  %i.m = sub i64 %i.c, %2, !dbg !293962
+  %i.m = sub i64 %i.f, %i.h, !dbg !293962
   %i.n = uitofp i64 %i.m to float, !dbg !293962
   %i.o = fdiv float %i.l, %i.n, !dbg !293962
   %.sroa.4.0 = select i1 %or.cond, float %i.o, float undef, !dbg !293962

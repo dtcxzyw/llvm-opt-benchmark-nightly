@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1072
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !26   ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 168 ; 4 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !51   ; 6 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !51   ; 5 uses
   %.not = icmp eq i64 %i.d, 0
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -213,16 +213,15 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !58   ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.h = load i16, ptr %i.g, align 8, !tbaa !44
-  %i.i = zext i16 %i.h to i64                     ; 4 uses
-  %i.j = sub nsw i64 %i.i, %i.d                   ; 8 uses
+  %i.i = zext i16 %i.h to i64                     ; 3 uses
+  %i.j = sub nsw i64 %i.i, %i.d                   ; 9 uses
   %.not278 = icmp sgt i64 %i.j, %2
   br i1 %.not278, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.k = add nsw i64 %i.d, %2
   store i64 %i.k, ptr %i.c, align 8, !tbaa !51
-  %4 = add i64 %i.d, %2
-  %i.l = sub i64 %i.i, %4
+  %i.l = sub i64 %i.j, %2
   %xtraiter1145 = and i64 %i.l, 7                 ; 2 uses
   %lcmp.mod1146.not = icmp eq i64 %xtraiter1145, 0
   br i1 %lcmp.mod1146.not, label %.prol.loopexit1143, label %.prol.preheader1142
