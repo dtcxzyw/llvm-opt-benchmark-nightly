@@ -103,8 +103,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
-define internal void @x86_cpu_synchronize_from_tb(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1) #3 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable
+define internal void @x86_cpu_synchronize_from_tb(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.b = load atomic i32, ptr %i.a monotonic, align 4
@@ -138,9 +138,9 @@ bb.d:                                             ; preds = %.sink.split, %bb.a
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @x86_restore_state_to_opc(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) #4 {
+define internal void @x86_restore_state_to_opc(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) #3 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #5 ; 3 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load i64, ptr %i.b, align 8
   %i.d = trunc i64 %i.c to i32                    ; 2 uses
@@ -197,9 +197,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @x86_cpu_exec_enter(ptr noundef %0) #4 {
+define internal void @x86_cpu_exec_enter(ptr noundef %0) #3 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #5 ; 4 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #4 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16760 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8              ; 3 uses
   %i.d = and i64 %i.c, 2261
@@ -219,9 +219,9 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @x86_cpu_exec_exit(ptr noundef %0) #4 {
+define internal void @x86_cpu_exec_exit(ptr noundef %0) #3 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #5 ; 3 uses
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16760 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8
   %i.d = trunc i64 %i.c to i32                    ; 2 uses
@@ -231,7 +231,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16496
-  %i.h = tail call i32 @cpu_cc_compute_all(ptr noundef nonnull %i.g) #5
+  %i.h = tail call i32 @cpu_cc_compute_all(ptr noundef nonnull %i.g) #4
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16796
   %i.j = load i32, ptr %i.i, align 4
   %i.k = and i32 %i.j, 1024
@@ -284,18 +284,18 @@ declare void @x86_cpu_record_sigsegv(ptr noundef, i64 noundef, i32 noundef, i1 n
 declare void @x86_cpu_record_sigbus(ptr noundef, i64 noundef, i32 noundef, i64 noundef) #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @do_qemu_init_x86_tcg_cpu_accel_register_types() #4 {
+define internal void @do_qemu_init_x86_tcg_cpu_accel_register_types() #3 {
 bb.a:
-  tail call void @register_module_init(ptr noundef nonnull @x86_tcg_cpu_accel_register_types, i32 noundef 4) #5
+  tail call void @register_module_init(ptr noundef nonnull @x86_tcg_cpu_accel_register_types, i32 noundef 4) #4
   ret void
 }
 
 declare void @register_module_init(ptr noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @x86_tcg_cpu_accel_register_types() #4 {
+define internal void @x86_tcg_cpu_accel_register_types() #3 {
 bb.a:
-  %i.a = tail call ptr @type_register_static(ptr noundef nonnull @x86_tcg_cpu_accel_type_info) #5 ; 0 uses
+  %i.a = tail call ptr @type_register_static(ptr noundef nonnull @x86_tcg_cpu_accel_type_info) #4 ; 0 uses
   ret void
 }
 
@@ -306,27 +306,27 @@ declare i32 @cpu_cc_compute_all(ptr noundef) local_unnamed_addr #1
 declare ptr @type_register_static(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @x86_tcg_cpu_accel_class_init(ptr noundef %0, ptr nofree readnone captures(none) %1) #4 {
+define internal void @x86_tcg_cpu_accel_class_init(ptr noundef %0, ptr nofree readnone captures(none) %1) #3 {
 bb.a:
-  %i.a = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.5, i32 noundef 29, ptr noundef nonnull @__func__.ACCEL_CPU_CLASS) #5
+  %i.a = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.5, i32 noundef 29, ptr noundef nonnull @__func__.ACCEL_CPU_CLASS) #4
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   store ptr @x86_tcg_cpu_instance_init, ptr %i.b, align 8
   ret void
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal void @x86_tcg_cpu_instance_init(ptr noundef %0) #4 {
+define internal void @x86_tcg_cpu_instance_init(ptr noundef %0) #3 {
 bb.a:
-  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #5 ; 2 uses
-  %i.b = tail call ptr @object_get_class(ptr noundef %i.a) #5
-  %i.c = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.b, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU_GET_CLASS) #5
+  %i.a = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #4 ; 2 uses
+  %i.b = tail call ptr @object_get_class(ptr noundef %i.a) #4
+  %i.c = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.b, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU_GET_CLASS) #4
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 360
   %i.e = load ptr, ptr %i.d, align 8
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @x86_cpu_apply_props(ptr noundef %i.a, ptr noundef nonnull @x86_tcg_default_props) #5
+  tail call void @x86_cpu_apply_props(ptr noundef %i.a, ptr noundef nonnull @x86_tcg_default_props) #4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -351,9 +351,8 @@ declare ptr @object_get_class(ptr noundef) local_unnamed_addr #1
 attributes #0 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #3 = { mustprogress norecurse nounwind sspstrong willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #4 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #5 = { nounwind }
+attributes #3 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

@@ -78,17 +78,21 @@ switch.lookup:
   ret ptr %switch.load
 }
 
-; Function Attrs: mustprogress norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal4wasm20WellKnownImportsList6UpdateENS_4base6VectorINS1_15WellKnownImportEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr nofree readonly captures(none) %1, i64 %2) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = icmp eq i64 %2, 0
-  br i1 %i.a, label %.loopexit, label %.lr.ph
+  br i1 %i.a, label %.loopexit, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.a, %bb.d
-  %.01726 = phi i64 [ %i.v, %bb.d ], [ 0, %bb.a ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %.pre30 = load ptr, ptr %0, align 8
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %3 = phi ptr [ %4, %bb.d ], [ %.pre30, %.lr.ph.preheader ] ; 2 uses
+  %.01726 = phi i64 [ %i.v, %bb.d ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %.01726
   %i.c = load i8, ptr %i.b, align 1               ; 2 uses
-  %3 = load ptr, ptr %0, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 %.01726 ; 2 uses
   %i.e = load atomic i8, ptr %i.d monotonic, align 1 ; 3 uses
   %i.f = icmp eq i8 %i.e, 1
@@ -111,6 +115,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   store atomic i8 %i.c, ptr %i.d monotonic, align 1
+  %.pre = load ptr, ptr %0, align 8
   br label %bb.d
 
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
@@ -137,6 +142,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.preheader, !llvm.loop !7
 
 bb.d:                                             ; preds = %.lr.ph, %bb.c
+  %4 = phi ptr [ %3, %.lr.ph ], [ %.pre, %bb.c ]
   %i.v = add nuw i64 %.01726, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.v, %2
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !8
@@ -167,7 +173,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
   ret i1 %i.z
 }
 
-; Function Attrs: mustprogress norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_ZN2v88internal4wasm20WellKnownImportsList10InitializeENS_4base6VectorIKNS1_15WellKnownImportEEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, ptr nofree readonly captures(none) %1, i64 %2) local_unnamed_addr #1 align 2 {
 bb.a:
   %.not = icmp eq i64 %2, 0
@@ -244,7 +250,7 @@ bb.a:
 declare void @llvm.assume(i1 noundef) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { mustprogress norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}

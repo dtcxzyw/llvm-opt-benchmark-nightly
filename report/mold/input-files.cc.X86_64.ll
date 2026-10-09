@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 116
   br label %bb.e
 
-thread-pre-split:                                 ; preds = %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
+thread-pre-split:                                 ; preds = %bb.k
   %.promoted.i.pre = load i8, ptr %i.h, align 2, !tbaa !1368
   %.pre = load i8, ptr %i.d, align 4, !tbaa !719
   br label %bb.e
@@ -388,19 +388,13 @@ bb.k:                                             ; preds = %thread-pre-split11
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 15
   %i.dc = load atomic i8, ptr %i.db monotonic, align 1
   %i.dd = icmp eq i8 %i.dc, -1
-  br i1 %i.dd, label %6, label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
+  %6 = getelementptr inbounds nuw i8, ptr %i.da, i64 16
+  %7 = load ptr, ptr %6, align 8
+  %.0.i.i = select i1 %i.dd, ptr %7, ptr %i.da
+  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i) #14
+  br i1 %8, label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EED2Ev.exit, label %thread-pre-split, !llvm.loop !1365
 
-6:                                                ; preds = %bb.k
-  %7 = getelementptr inbounds nuw i8, ptr %i.da, i64 16
-  %8 = load ptr, ptr %7, align 8, !tbaa !77
-  br label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
-
-_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit: ; preds = %bb.k, %6
-  %.0.i.i = phi ptr [ %8, %6 ], [ %i.da, %bb.k ]
-  %9 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i) #14
-  br i1 %9, label %_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EED2Ev.exit, label %thread-pre-split, !llvm.loop !1365
-
-_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EED2Ev.exit: ; preds = %thread-pre-split11, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
+_ZN3tbb6detail2d112range_vectorINS1_16quick_sort_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEZZNS6_10SharedFileIS8_E14get_symbols_atESA_ENKUlvE_clEvEUlSA_SA_E_EELh8EED2Ev.exit: ; preds = %thread-pre-split11, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   br label %bb.l
 
@@ -803,7 +797,7 @@ bb.d:                                             ; preds = %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 124
   br label %bb.e
 
-thread-pre-split:                                 ; preds = %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
+thread-pre-split:                                 ; preds = %bb.k
   %.promoted.i10.pre = load i8, ptr %i.o, align 2, !tbaa !1384
   %.pre = load i8, ptr %i.k, align 4, !tbaa !719
   br label %bb.e
@@ -1007,19 +1001,13 @@ bb.k:                                             ; preds = %thread-pre-split12
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 15
   %i.dw = load atomic i8, ptr %i.dv monotonic, align 1
   %i.dx = icmp eq i8 %i.dw, -1
-  br i1 %i.dx, label %6, label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
+  %6 = getelementptr inbounds nuw i8, ptr %i.du, i64 16
+  %7 = load ptr, ptr %6, align 8
+  %.0.i.i = select i1 %i.dx, ptr %7, ptr %i.du
+  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i) #14
+  br i1 %8, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EED2Ev.exit, label %thread-pre-split, !llvm.loop !1380
 
-6:                                                ; preds = %bb.k
-  %7 = getelementptr inbounds nuw i8, ptr %i.du, i64 16
-  %8 = load ptr, ptr %7, align 8, !tbaa !77
-  br label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
-
-_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit: ; preds = %bb.k, %6
-  %.0.i.i = phi ptr [ %8, %6 ], [ %i.du, %bb.k ]
-  %9 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i) #14
-  br i1 %9, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EED2Ev.exit, label %thread-pre-split, !llvm.loop !1380
-
-_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EED2Ev.exit: ; preds = %thread-pre-split12, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
+_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS6_6X86_64EEESt6vectorISA_SaISA_EEEEEELh8EED2Ev.exit: ; preds = %thread-pre-split12, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   br label %bb.l
 
@@ -1052,19 +1040,13 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 15
   %i.h = load atomic i8, ptr %i.g monotonic, align 1
   %i.i = icmp eq i8 %i.h, -1
-  br i1 %i.i, label %2, label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %3 = load ptr, ptr %2, align 8
+  %.0.i.i = select i1 %i.i, ptr %3, ptr %i.f
+  %4 = tail call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i) #14
+  br i1 %4, label %.loopexit, label %bb.d
 
-2:                                                ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %4 = load ptr, ptr %3, align 8, !tbaa !77
-  br label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
-
-_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit: ; preds = %bb.c, %2
-  %.0.i.i = phi ptr [ %4, %2 ], [ %i.f, %bb.c ]
-  %5 = tail call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i) #14
-  br i1 %5, label %.loopexit, label %bb.d
-
-bb.d:                                             ; preds = %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit, %bb.b
+bb.d:                                             ; preds = %bb.c, %bb.b
   %i.j = load ptr, ptr %.sroa.07.012, align 8, !tbaa !91 ; 3 uses
   %i.k = getelementptr inbounds i8, ptr %.sroa.07.012, i64 -8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !91   ; 3 uses
@@ -1126,16 +1108,10 @@ bb.g:                                             ; preds = %_ZZZN4mold10SharedF
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 15
   %i.ay = load atomic i8, ptr %i.ax monotonic, align 1
   %i.az = icmp eq i8 %i.ay, -1
-  br i1 %i.az, label %6, label %_ZN3tbb6detail2d118task_group_context22cancel_group_executionEv.exit
-
-6:                                                ; preds = %bb.g
-  %7 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
-  %8 = load ptr, ptr %7, align 8, !tbaa !77
-  br label %_ZN3tbb6detail2d118task_group_context22cancel_group_executionEv.exit
-
-_ZN3tbb6detail2d118task_group_context22cancel_group_executionEv.exit: ; preds = %bb.g, %6
-  %.0.i.i6 = phi ptr [ %8, %6 ], [ %i.aw, %bb.g ]
-  %9 = tail call noundef zeroext i1 @_ZN3tbb6detail2r122cancel_group_executionERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i6) #14 ; 0 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i6 = select i1 %i.az, ptr %6, ptr %i.aw
+  %7 = tail call noundef zeroext i1 @_ZN3tbb6detail2r122cancel_group_executionERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i6) #14 ; 0 uses
   br label %.loopexit
 
 bb.h:                                             ; preds = %_ZZZN4mold10SharedFileINS_6X86_64EE14get_symbols_atEPNS_6SymbolIS1_EEENKUlvE_clEvENKUlS5_S5_E_clES5_S5_.exit
@@ -1144,7 +1120,7 @@ bb.h:                                             ; preds = %_ZZZN4mold10SharedF
   %i.bc = icmp eq ptr %i.ba, %.sroa.0.0.copyload.i
   br i1 %i.bc, label %.loopexit, label %bb.b, !llvm.loop !1387
 
-.loopexit:                                        ; preds = %bb.h, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit, %bb.a, %_ZN3tbb6detail2d118task_group_context22cancel_group_executionEv.exit
+.loopexit:                                        ; preds = %bb.h, %bb.c, %bb.a, %bb.g
   ret void
 }
 

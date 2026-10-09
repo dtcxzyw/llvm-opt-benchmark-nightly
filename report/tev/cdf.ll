@@ -204,7 +204,7 @@ define dso_local range(i32 -12, 1) i32 @dav1d_cdf_thread_alloc(ptr nofree nounde
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 52496
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !59
-  %i.c = tail call ptr @dav1d_ref_create_using_pool(ptr noundef %i.b, i64 noundef 13476) #8 ; 3 uses
+  %i.c = tail call ptr @dav1d_ref_create_using_pool(ptr noundef %i.b, i64 noundef 13476) #7 ; 3 uses
   store ptr %i.c, ptr %1, align 8, !tbaa !13
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.d, label %bb.b
@@ -230,8 +230,8 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 
 declare ptr @dav1d_ref_create_using_pool(ptr noundef, i64 noundef) local_unnamed_addr #5
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local void @dav1d_cdf_thread_ref(ptr nofree noundef writeonly captures(none) initializes((0, 24)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #6 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local void @dav1d_cdf_thread_ref(ptr nofree noundef writeonly captures(none) initializes((0, 24)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #3 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !65
   %i.a = load ptr, ptr %1, align 8, !tbaa !13     ; 2 uses
@@ -252,12 +252,12 @@ define dso_local void @dav1d_cdf_thread_unref(ptr noundef initializes((8, 24)) %
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  tail call void @dav1d_ref_dec(ptr noundef %0) #8
+  tail call void @dav1d_ref_dec(ptr noundef %0) #7
   ret void
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
 declare void @dav1d_ref_dec(ptr noundef) local_unnamed_addr #5
 
@@ -267,9 +267,8 @@ attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { nounwind }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

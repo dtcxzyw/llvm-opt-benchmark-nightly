@@ -205,30 +205,29 @@ bb.m:                                             ; preds = %bb.l
   %i.em = extractelement <2 x i32> %.decomposed, i64 0
   %i.en = add i32 %i.el, %i.em
   %i.eo = getelementptr inbounds nuw i8, ptr %i.eh, i64 24
-  %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !102 ; 3 uses
+  %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !102 ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.eh, i64 128
   %i.er = load i64, ptr %i.eq, align 8, !tbaa !57
   %i.es = sext i32 %i.en to i64
   %i.et = mul i64 %i.er, %i.es                    ; 2 uses
-  %i.eu = getelementptr inbounds nuw i8, ptr %i.ep, i64 %i.et
+  %i.eu = getelementptr i8, ptr %i.ep, i64 %i.et
   %i.ev = extractelement <2 x i32> %i.ei, i64 1
   %i.ew = mul i32 %i.ev, %i.cu
   %i.ex = extractelement <2 x i32> %i.ei, i64 0
   %i.ey = add i32 %i.ew, %i.ex
   %i.ez = sext i32 %i.ey to i64                   ; 2 uses
-  %i.fa = getelementptr inbounds i8, ptr %i.eu, i64 %i.ez ; 7 uses
+  %i.fa = getelementptr i8, ptr %i.eu, i64 %i.ez  ; 8 uses
   br i1 %.not5057.i, label %.loopexit.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.m
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %17 = add i64 %i.et, %i.ez                      ; 2 uses
-  %scevgep826 = getelementptr i8, ptr %i.ep, i64 %17
-  %scevgep827.a = getelementptr i8, ptr %i.ep, i64 %wide.trip.count.i
-  %scevgep828 = getelementptr i8, ptr %scevgep827.a, i64 %17
+  %scevgep826 = getelementptr i8, ptr %i.ep, i64 %wide.trip.count.i
+  %scevgep827.a = getelementptr i8, ptr %scevgep826, i64 %i.et
+  %scevgep828 = getelementptr i8, ptr %scevgep827.a, i64 %i.ez
   %bound0 = icmp ult ptr %i.di, %scevgep828
-  %bound1 = icmp ult ptr %scevgep826, %scevgep
+  %bound1 = icmp ult ptr %i.fa, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 

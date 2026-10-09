@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.a, %_ZNSt10uniqu
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_ZN2v88internal14MarkingBarrier5WriteENS0_6TaggedINS0_13JSArrayBufferEEEPNS0_20ArrayBufferExtensionE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(260) %0, i64 %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256
@@ -256,19 +256,17 @@ bb.d:                                             ; preds = %bb.b
   %i.m = trunc nuw i8 %i.l to i1
   %i.n = and i64 %1, -262144
   %i.o = inttoptr i64 %i.n to ptr                 ; 2 uses
-  br i1 %i.m, label %3, label %._crit_edge, !prof !11
+  br i1 %i.m, label %bb.e, label %._crit_edge, !prof !11
 
-3:                                                ; preds = %bb.d
-  %4 = load i64, ptr %i.o, align 262144
-  %5 = and i64 %4, 1
-  %.not = icmp eq i64 %5, 0
-  br i1 %.not, label %._crit_edge, label %bb.e
-
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.d
+  %3 = load i64, ptr %i.o, align 262144
+  %4 = and i64 %3, 1
+  %5 = icmp eq i64 %4, 0
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 252
-  %i.q = load i8, ptr %i.p, align 4, !range !8, !noundef !9
+  %i.q = load i8, ptr %i.p, align 4, !range !8
   %i.r = trunc nuw i8 %i.q to i1
-  br i1 %i.r, label %._crit_edge, label %bb.f
+  %or.cond = select i1 %5, i1 true, i1 %i.r
+  br i1 %or.cond, label %._crit_edge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.s = load ptr, ptr %0, align 8
@@ -291,7 +289,7 @@ _ZNK2v88internal7Isolate20shared_space_isolateEv.exit: ; preds = %bb.f
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 40
   br label %bb.h
 
-._crit_edge:                                      ; preds = %bb.d, %bb.e, %3
+._crit_edge:                                      ; preds = %bb.d, %bb.e
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.af = load ptr, ptr %i.ae, align 8
@@ -694,7 +692,7 @@ attributes #2 = { mustprogress noreturn nounwind uwtable "frame-pointer"="all" "
 attributes #3 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { inlinehint mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress norecurse nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #8 = { nobuiltin allocsize(0) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }

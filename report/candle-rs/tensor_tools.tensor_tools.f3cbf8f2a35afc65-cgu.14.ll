@@ -202,7 +202,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerIBD_INtNtB7_10while_some17WhileSomeConsumerINtNtNtB7_7collect8consumer15CollectConsumerTNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEEENCINvNvXs2_NtB9_6resultINtNtCsf3Ta7LF998c_4core6result6ResultppEINtB7_20FromParallelIteratorIB4b_ppEE13from_par_iter2okB2k_NtNtB31_5error5ErrorE0ENCNvCskVIURZGHVHJ_12tensor_tools24run_quantize_safetensors0EINtNtB7_8plumbing8ConsumerTB2l_NtNtB31_6tensor6TensorEE4fullB6d_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %0) unnamed_addr #2 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !625)
@@ -277,7 +277,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerIBD_INtNtB7_10while_some17WhileSomeConsumerINtNtNtB7_7collect8consumer15CollectConsumerTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorEEENCINvNvXs2_NtB9_6resultINtNtCsf3Ta7LF998c_4core6result6ResultppEINtB7_20FromParallelIteratorIB4c_ppEE13from_par_iter2okB2k_NtNtB32_5error5ErrorE0ENCNvCskVIURZGHVHJ_12tensor_tools12run_quantize0EINtNtB7_8plumbing8ConsumerTB2l_RNtNtB30_9gguf_file10TensorInfoEE4fullB6e_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(40) %0) unnamed_addr #2 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !654)
@@ -352,7 +352,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerIBD_INtNtB7_10while_some17WhileSomeConsumerNtNtB7_6extend15ListVecConsumerENCINvNvXs2_NtB9_6resultINtNtCsf3Ta7LF998c_4core6result6ResultppEINtB7_20FromParallelIteratorIB2w_ppEE13from_par_iter2okTNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorENtNtB4K_5error5ErrorE0ENCNvCskVIURZGHVHJ_12tensor_tools24run_quantize_safetensors0EINtNtB7_8plumbing8ConsumerTB44_NtNtB4K_6tensor6TensorEE4fullB5V_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0) unnamed_addr #2 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !675)
@@ -403,7 +403,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerIBD_INtNtB7_10while_some17WhileSomeConsumerNtNtB7_6extend15ListVecConsumerENCINvNvXs2_NtB9_6resultINtNtCsf3Ta7LF998c_4core6result6ResultppEINtB7_20FromParallelIteratorIB2w_ppEE13from_par_iter2okTRNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtCsltEA4u8Pgfu_11candle_core9quantized7QTensorENtNtB4L_5error5ErrorE0ENCNvCskVIURZGHVHJ_12tensor_tools12run_quantize0EINtNtB7_8plumbing8ConsumerTB44_RNtNtB4J_9gguf_file10TensorInfoEE4fullB5W_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0) unnamed_addr #2 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !682)
@@ -806,7 +806,7 @@ declare i64 @llvm.umax.i64(i64, i64) #13
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #2 = { mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #2 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #5 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

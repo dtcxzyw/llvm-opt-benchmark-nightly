@@ -204,7 +204,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1NtCshigRrDowciq_6float86F8E4M3Es_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4072)
@@ -247,7 +247,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1NtNtCsdsILkMb8ZHY_4half6bfloat4bf16Es_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4075)
@@ -290,7 +290,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1NtNtCsdsILkMb8ZHY_4half8binary163f16Es_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4078)
@@ -333,7 +333,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1dEs_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4081)
@@ -376,7 +376,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1fEs_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4084)
@@ -419,7 +419,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1hEs_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4087)
@@ -462,7 +462,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1lEs_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4090)
@@ -505,7 +505,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1mEs_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4093)
@@ -548,7 +548,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1sEs_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4096)
@@ -591,7 +591,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d10conv2d_1x1xEs_0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4099)
@@ -634,7 +634,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledNtCshigRrDowciq_6float86F8E4M3E0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4102)
@@ -677,7 +677,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledNtNtCsdsILkMb8ZHY_4half6bfloat4bf16E0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4105)
@@ -720,7 +720,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledNtNtCsdsILkMb8ZHY_4half8binary163f16E0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4108)
@@ -763,7 +763,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tileddE0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4111)
@@ -806,7 +806,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledfE0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4114)
@@ -849,7 +849,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledhE0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4117)
@@ -892,7 +892,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledlE0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4120)
@@ -935,7 +935,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledmE0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4123)
@@ -978,7 +978,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledsE0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4126)
@@ -1021,7 +1021,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledxE0EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4129)
@@ -1064,7 +1064,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledNtCshigRrDowciq_6float86F8E4M3E00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4132)
@@ -1107,7 +1107,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledNtNtCsdsILkMb8ZHY_4half6bfloat4bf16E00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4135)
@@ -1150,7 +1150,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledNtNtCsdsILkMb8ZHY_4half8binary163f16E00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4138)
@@ -1193,7 +1193,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tileddE00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4141)
@@ -1236,7 +1236,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledfE00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4144)
@@ -1279,7 +1279,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledhE00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4147)
@@ -1322,7 +1322,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledlE00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4150)
@@ -1365,7 +1365,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledmE00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4153)
@@ -1408,7 +1408,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledsE00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4156)
@@ -1451,7 +1451,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtCs7fP0opQOXdx_5rayon4iter3mapINtB5_11MapConsumerINtNtB7_10try_reduce17TryReduceConsumerINvNvNtB7_16ParallelIterator12try_for_each2okINtNtCsf3Ta7LF998c_4core6result6ResultuNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEENvYuNtNtB2m_7default7Default7defaultENCNCINvNtNtB2Y_11cpu_backend6conv2d12conv2d_tiledxE00EINtNtB7_8plumbing8ConsumerjE4fullB2Y_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #12 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4159)
@@ -1854,7 +1854,7 @@ attributes #8 = { mustprogress norecurse nounwind nonlazybind willreturn uwtable
 attributes #9 = { cold nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #10 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #11 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #12 = { mustprogress norecurse nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #12 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #13 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #15 = { cold minsize nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

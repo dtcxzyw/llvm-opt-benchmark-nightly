@@ -204,20 +204,15 @@ bb.a:
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7rocksdb29PartitionedFilterBlockBuilder24UpdateFilterSizeEstimateEm(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(713) %0, i64 noundef %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %4 = load atomic i64, ptr %3 monotonic, align 8 ; 2 uses
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %6, label %bb.a
-
-6:                                                ; preds = %2
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %8 = load i32, ptr %7, align 8, !tbaa !85
-  %9 = zext i32 %8 to i64
-  %10 = shl nuw nsw i64 %9, 2
-  br label %bb.a
-
-bb.a:                                             ; preds = %6, %2
-  %.014 = phi i64 [ %10, %6 ], [ %4, %2 ]
+bb.a:
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 152
+  %3 = load atomic i64, ptr %2 monotonic, align 8 ; 2 uses
+  %4 = icmp eq i64 %3, 0
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 160
+  %6 = load i32, ptr %5, align 8
+  %7 = zext i32 %6 to i64
+  %8 = shl nuw nsw i64 %7, 2
+  %.sroa.speculated = select i1 %4, i64 %8, i64 %3
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !76   ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !24
@@ -280,7 +275,7 @@ _ZNK7rocksdb12BlockBuilder19CurrentSizeEstimateEv.exit10: ; preds = %bb.d, %bb.e
 
 bb.f:                                             ; preds = %_ZNK7rocksdb12BlockBuilder19CurrentSizeEstimateEv.exit10, %_ZNK7rocksdb12BlockBuilder19CurrentSizeEstimateEv.exit
   %.pn = phi i64 [ %i.w, %_ZNK7rocksdb12BlockBuilder19CurrentSizeEstimateEv.exit ], [ %i.an, %_ZNK7rocksdb12BlockBuilder19CurrentSizeEstimateEv.exit10 ]
-  %.0 = add i64 %.pn, %.014                       ; 3 uses
+  %.0 = add i64 %.pn, %.sroa.speculated           ; 3 uses
   %.not = icmp eq i64 %1, 0
   br i1 %.not, label %bb.h, label %bb.g
 

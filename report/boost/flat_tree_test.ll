@@ -204,7 +204,7 @@ _ZN5boost7movelib13adaptive_xbufINS_9container4test24movable_and_copyable_intEPS
 define linkonce_odr hidden noundef zeroext i1 @_ZN5boost7movelib15detail_adaptive32adaptive_sort_combine_all_blocksIPNS_9container4test24movable_and_copyable_intENS3_3dtl23flat_tree_value_compareISt4lessIS5_ES5_NS_11move_detail8identityIS5_EEEENS0_13adaptive_xbufIS5_S6_mEEEEbT_RNS0_9iter_sizeISH_E4typeESH_SK_SK_SL_RT1_T0_(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(24) %6) local_unnamed_addr #2 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [256 x i8], align 16              ; 3 uses
-  %i.b = load i64, ptr %5, align 8, !tbaa !340    ; 17 uses
+  %i.b = load i64, ptr %5, align 8, !tbaa !340    ; 16 uses
   %i.c = getelementptr [4 x i8], ptr %2, i64 %i.b ; 8 uses
   %i.d = sub i64 %3, %i.b                         ; 8 uses
   %i.e = load i64, ptr %1, align 8, !tbaa !340
@@ -459,7 +459,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.t
   %.0130205 = phi i64 [ 0, %.lr.ph ], [ %i.hk, %bb.t ] ; 3 uses
   %.0131204 = phi i1 [ true, %.lr.ph ], [ %.1, %bb.t ]
   %.0132203 = phi i64 [ 0, %.lr.ph ], [ %.1.i, %bb.t ]
-  %.0133202 = phi i64 [ %4, %.lr.ph ], [ %spec.select15.i, %bb.t ] ; 13 uses
+  %.0133202 = phi i64 [ %4, %.lr.ph ], [ %spec.select15.i, %bb.t ] ; 12 uses
   %.0134201 = phi i1 [ true, %.lr.ph ], [ %i.ck, %bb.t ]
   %i.cb = load i64, ptr %5, align 8, !tbaa !340   ; 2 uses
   %i.cc = load i64, ptr %1, align 8, !tbaa !340   ; 4 uses
@@ -484,7 +484,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN5boost7movelib15detail_adaptive18lblock_for_combineImEET_S3_S3_S3_Rb.exit: ; preds = %bb.e, %bb.g, %.critedge.i
   %.1 = phi i1 [ true, %bb.g ], [ false, %.critedge.i ], [ true, %bb.e ] ; 10 uses
-  %.1.i = phi i64 [ %i.ce, %bb.g ], [ %i.ci, %.critedge.i ], [ %i.cb, %bb.e ] ; 12 uses
+  %.1.i = phi i64 [ %i.ce, %bb.g ], [ %i.ci, %.critedge.i ], [ %i.cb, %bb.e ] ; 11 uses
   %i.cj = and i64 %.0130205, 1
   %i.ck = icmp eq i64 %i.cj, 0                    ; 9 uses
   %i.cl = urem i64 %i.d, %i.cd                    ; 2 uses
@@ -649,8 +649,8 @@ bb.m:                                             ; preds = %bb.l
   %i.eo = sub nuw i64 %.0133202, %spec.select15.i ; 2 uses
   %i.ep = sub i64 0, %i.eo
   %i.eq = getelementptr [4 x i8], ptr %i.em, i64 %i.ep ; 4 uses
-  %.idx13.i160 = shl nuw nsw i64 %i.eo, 2
-  %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 %.idx13.i160 ; 5 uses
+  %.idx13.i160 = shl i64 %i.eo, 2
+  %i.er = getelementptr i8, ptr %i.eq, i64 %.idx13.i160 ; 6 uses
   br i1 %or.cond188, label %.lr.ph.i.i161.preheader, label %.lr.ph.i10.i155
 
 .lr.ph.i.i161.preheader:                          ; preds = %bb.m
@@ -660,17 +660,13 @@ bb.m:                                             ; preds = %bb.l
   %.reass = add i64 %i.eu, %invariant.op          ; 2 uses
   %i.ev = lshr exact i64 %.reass, 2
   %i.ew = add nuw nsw i64 %i.ev, 1                ; 2 uses
-  %min.iters.check282 = icmp ult i64 %.reass, 44
+  %min.iters.check282 = icmp ult i64 %.reass, 28
   br i1 %min.iters.check282, label %.lr.ph.i.i161.preheader388, label %vector.memcheck275
 
 vector.memcheck275:                               ; preds = %.lr.ph.i.i161.preheader
   %i.ex = mul i64 %i.cm, -4
-  %scevgep276 = getelementptr i8, ptr %scevgep, i64 %i.ex
-  %7 = add i64 %i.b, %.0133202
-  %8 = sub i64 %7, %.1.i
-  %9 = shl i64 %8, 2
-  %scevgep277 = getelementptr i8, ptr %2, i64 %9
-  %bound0278 = icmp ult ptr %scevgep276, %scevgep277
+  %scevgep277 = getelementptr i8, ptr %scevgep, i64 %i.ex
+  %bound0278 = icmp ult ptr %scevgep277, %i.er
   %bound1279 = icmp ult ptr %i.eq, %i.ek
   %found.conflict280 = and i1 %bound0278, %bound1279
   br i1 %found.conflict280, label %.lr.ph.i.i161.preheader388, label %vector.ph283

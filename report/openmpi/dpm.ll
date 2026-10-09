@@ -204,25 +204,27 @@ bb.gc:                                            ; preds = %opal_obj_run_destru
   br i1 %.not366813, label %._crit_edge818, label %.lr.ph817
 
 .lr.ph817:                                        ; preds = %bb.gc
-  %i.anu = getelementptr inbounds nuw i8, ptr %i.amc, i64 32
+  %i.anu = getelementptr inbounds nuw i8, ptr %i.amc, i64 32 ; 2 uses
   %i.anv = load i8, ptr @opal_uses_threads, align 1, !tbaa !60, !range !61, !noundef !62
   %i.anw = trunc nuw i8 %i.anv to i1
+  %.pre859 = load ptr, ptr %i.anu, align 8, !tbaa !56
   br label %bb.gd
 
 bb.gd:                                            ; preds = %.lr.ph817, %opal_thread_add_fetch_32.exit650
+  %18 = phi ptr [ %.pre859, %.lr.ph817 ], [ %19, %opal_thread_add_fetch_32.exit650 ] ; 2 uses
   %indvars.iv842 = phi i64 [ 0, %.lr.ph817 ], [ %indvars.iv.next843, %opal_thread_add_fetch_32.exit650 ] ; 2 uses
   %.1274815 = phi ptr [ %i.ant, %.lr.ph817 ], [ %i.aog, %opal_thread_add_fetch_32.exit650 ] ; 2 uses
   %i.anx = getelementptr inbounds nuw i8, ptr %.1274815, i64 40
-  %18 = load ptr, ptr %i.anx, align 8, !tbaa !123 ; 2 uses
-  %i.any = load ptr, ptr %i.anu, align 8, !tbaa !56
+  %i.any = load ptr, ptr %i.anx, align 8, !tbaa !123 ; 2 uses
   %indvars.iv.next843 = add nuw nsw i64 %indvars.iv842, 1
-  %i.anz = getelementptr inbounds nuw [8 x i8], ptr %i.any, i64 %indvars.iv842
-  store ptr %18, ptr %i.anz, align 8, !tbaa !58
-  %i.aoa = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 4 uses
+  %i.anz = getelementptr inbounds nuw [8 x i8], ptr %18, i64 %indvars.iv842
+  store ptr %i.any, ptr %i.anz, align 8, !tbaa !58
+  %i.aoa = getelementptr inbounds nuw i8, ptr %i.any, i64 8 ; 4 uses
   br i1 %i.anw, label %bb.ge, label %bb.gf, !prof !59
 
 bb.ge:                                            ; preds = %bb.gd
   %i.aob = atomicrmw volatile add ptr %i.aoa, i32 1 monotonic, align 4 ; 0 uses
+  %.pre858 = load ptr, ptr %i.anu, align 8, !tbaa !56
   br label %opal_thread_add_fetch_32.exit650
 
 bb.gf:                                            ; preds = %bb.gd
@@ -233,6 +235,7 @@ bb.gf:                                            ; preds = %bb.gd
   br label %opal_thread_add_fetch_32.exit650
 
 opal_thread_add_fetch_32.exit650:                 ; preds = %bb.ge, %bb.gf
+  %19 = phi ptr [ %.pre858, %bb.ge ], [ %18, %bb.gf ]
   %i.aof = getelementptr inbounds nuw i8, ptr %.1274815, i64 16
   %i.aog = load volatile ptr, ptr %i.aof, align 8, !tbaa !75 ; 2 uses
   %.not366 = icmp eq ptr %i.aog, %i.anr

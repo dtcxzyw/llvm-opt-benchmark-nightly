@@ -204,7 +204,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrIiSaIvEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESJ_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -236,7 +236,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrIdSaIvEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESJ_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -268,7 +268,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrINS4_12SmallObject3ESaIvEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESK_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -342,7 +342,7 @@ declare noundef nonnull ptr @_ZNSt3pmr20get_default_resourceEv() local_unnamed_a
 
 declare void @_ZNSt3pmr28unsynchronized_pool_resourceC2ERKNS_12pool_optionsEPNS_15memory_resourceE(ptr noundef nonnull align 8 dereferenceable(72), ptr noundef nonnull align 8 dereferenceable(16), ptr noundef) unnamed_addr #0
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrIiNSt3pmr21polymorphic_allocatorISt4byteEEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESM_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -386,7 +386,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrIdNSt3pmr21polymorphic_allocatorISt4byteEEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESM_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -430,7 +430,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrINS4_12SmallObject3ENSt3pmr21polymorphic_allocatorISt4byteEEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESN_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -833,7 +833,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrISt5arrayIcLm100EESaIvEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESL_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -865,7 +865,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrISt5arrayINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELm3EESaIvEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESR_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -936,7 +936,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrINS4_12LargeObject3ESaIvEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESK_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -978,7 +978,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrISt5arrayIcLm100EENSt3pmr21polymorphic_allocatorISt4byteEEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESO_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1022,7 +1022,7 @@ _ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_16d
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrISt5arrayINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELm3EENSt3pmr21polymorphic_allocatorISt4byteEEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESU_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1112,7 +1112,7 @@ _ZN3pro2v46detail10deallocateINSt3pmr21polymorphic_allocatorISt4byteEENS1_26shar
   ret void
 }
 
-; Function Attrs: inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN12_GLOBAL__N_113DefaultFacadeEEENS1_13copy_dispatchEKFvRS6_EEC1INS1_18shared_compact_ptrINS4_12LargeObject3ENSt3pmr21polymorphic_allocatorISt4byteEEEEEESt15in_place_type_tIT_EENUlRKS6_S8_E_8__invokeESN_S8_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %1) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1515,7 +1515,7 @@ attributes #13 = { inlinehint mustprogress noreturn uwtable "min-legal-vector-wi
 attributes #14 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { cold noreturn }
 attributes #16 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { inlinehint mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #17 = { inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #18 = { nofree nounwind }
 attributes #19 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #20 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

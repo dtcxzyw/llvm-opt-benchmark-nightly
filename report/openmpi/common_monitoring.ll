@@ -132,25 +132,25 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %bb.d, label %opal_gethostname.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = tail call i32 @opal_init_gethostname() #20 ; 0 uses
+  %i.g = tail call i32 @opal_init_gethostname() #19 ; 0 uses
   %.pre.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_process_info, i64 272), align 8, !tbaa !59
   br label %opal_gethostname.exit
 
 opal_gethostname.exit:                            ; preds = %bb.c, %bb.d
   %i.h = phi ptr [ %.pre.i, %bb.d ], [ %i.e, %bb.c ]
-  %i.i = tail call i32 @getpid() #20
-  %i.j = tail call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @mca_common_monitoring_output_stream_obj, i64 32), ptr noundef nonnull @.str, ptr noundef %i.h, i32 noundef %i.i) #20 ; 0 uses
-  %i.k = tail call i32 @opal_output_open(ptr noundef nonnull @mca_common_monitoring_output_stream_obj) #20
+  %i.i = tail call i32 @getpid() #19
+  %i.j = tail call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @mca_common_monitoring_output_stream_obj, i64 32), ptr noundef nonnull @.str, ptr noundef %i.h, i32 noundef %i.i) #19 ; 0 uses
+  %i.k = tail call i32 @opal_output_open(ptr noundef nonnull @mca_common_monitoring_output_stream_obj) #19
   store i32 %i.k, ptr @mca_common_monitoring_output_stream_id, align 4, !tbaa !8
   %i.l = load i64, ptr getelementptr inbounds nuw (i8, ptr @opal_hash_table_t_class, i64 56), align 8, !tbaa !60
-  %i.m = tail call noalias ptr @malloc(i64 noundef %i.l) #21 ; 6 uses
+  %i.m = tail call noalias ptr @malloc(i64 noundef %i.l) #20 ; 6 uses
   %i.n = load i32, ptr @opal_class_init_epoch, align 4, !tbaa !8
   %i.o = load i32, ptr getelementptr inbounds nuw (i8, ptr @opal_hash_table_t_class, i64 32), align 8, !tbaa !61
   %.not.i = icmp eq i32 %i.n, %i.o
   br i1 %.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %opal_gethostname.exit
-  tail call void @opal_class_initialize(ptr noundef nonnull @opal_hash_table_t_class) #20
+  tail call void @opal_class_initialize(ptr noundef nonnull @opal_hash_table_t_class) #19
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %opal_gethostname.exit
@@ -169,7 +169,7 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
   %i.s = phi ptr [ %i.u, %.lr.ph.i.i ], [ %i.r, %bb.g ]
   %.07.i.i = phi ptr [ %i.t, %.lr.ph.i.i ], [ %i.q, %bb.g ]
-  tail call void %i.s(ptr noundef nonnull %i.m) #20, !inline_history !55
+  tail call void %i.s(ptr noundef nonnull %i.m) #19, !inline_history !55
   %i.t = getelementptr inbounds nuw i8, ptr %.07.i.i, i64 8 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !22   ; 2 uses
   %.not.i.i = icmp eq ptr %i.u, null
@@ -177,7 +177,7 @@ bb.g:                                             ; preds = %bb.f
 
 opal_obj_new.exit:                                ; preds = %.lr.ph.i.i, %bb.f, %bb.g
   store ptr %i.m, ptr @ompi_common_monitoring_translation_ht, align 8, !tbaa !25
-  %i.v = tail call i32 @opal_hash_table_init(ptr noundef %i.m, i64 noundef 2048) #20 ; 0 uses
+  %i.v = tail call i32 @opal_hash_table_init(ptr noundef %i.m, i64 noundef 2048) #19 ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.b, %bb.a, %opal_obj_new.exit
@@ -222,13 +222,13 @@ bb.c:                                             ; preds = %bb.b
   %i.g = tail call fastcc i32 @mca_common_monitoring_flush(i32 noundef %i.e, ptr noundef %i.f) ; 0 uses
   store i32 0, ptr @mca_common_monitoring_enabled, align 4, !tbaa !8
   %i.h = load i32, ptr @mca_common_monitoring_output_stream_id, align 4, !tbaa !8
-  tail call void @opal_output_close(i32 noundef %i.h) #20
+  tail call void @opal_output_close(i32 noundef %i.h) #19
   %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @mca_common_monitoring_output_stream_obj, i64 32), align 8, !tbaa !67
-  tail call void @free(ptr noundef %i.i) #20
+  tail call void @free(ptr noundef %i.i) #19
   %i.j = load ptr, ptr @pml_data, align 8, !tbaa !28
-  tail call void @free(ptr noundef %i.j) #20
+  tail call void @free(ptr noundef %i.j) #19
   %i.k = load ptr, ptr @ompi_common_monitoring_translation_ht, align 8, !tbaa !25
-  %i.l = tail call i32 @opal_hash_table_remove_all(ptr noundef %i.k) #20 ; 0 uses
+  %i.l = tail call i32 @opal_hash_table_remove_all(ptr noundef %i.k) #19 ; 0 uses
   %i.m = load ptr, ptr @ompi_common_monitoring_translation_ht, align 8, !tbaa !25 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 4 uses
   %i.o = load i8, ptr @opal_uses_threads, align 1, !tbaa !68, !range !69, !noundef !70
@@ -263,7 +263,7 @@ bb.f:                                             ; preds = %opal_thread_add_fet
 .lr.ph.i:                                         ; preds = %bb.f, %.lr.ph.i
   %i.aa = phi ptr [ %i.ac, %.lr.ph.i ], [ %i.z, %bb.f ]
   %.07.i = phi ptr [ %i.ab, %.lr.ph.i ], [ %i.y, %bb.f ]
-  tail call void %i.aa(ptr noundef nonnull %i.m) #20, !inline_history !64
+  tail call void %i.aa(ptr noundef nonnull %i.m) #19, !inline_history !64
   %i.ab = getelementptr inbounds nuw i8, ptr %.07.i, i64 8 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !22 ; 2 uses
   %.not.i = icmp eq ptr %i.ac, null
@@ -275,18 +275,18 @@ opal_obj_run_destructors.exit.loopexit:           ; preds = %.lr.ph.i
 
 opal_obj_run_destructors.exit:                    ; preds = %opal_obj_run_destructors.exit.loopexit, %bb.f
   %i.ad = phi ptr [ %.pre, %opal_obj_run_destructors.exit.loopexit ], [ %i.m, %bb.f ]
-  tail call void @free(ptr noundef %i.ad) #20
+  tail call void @free(ptr noundef %i.ad) #19
   store ptr null, ptr @ompi_common_monitoring_translation_ht, align 8, !tbaa !25
   br label %bb.g
 
 bb.g:                                             ; preds = %opal_thread_add_fetch_32.exit, %opal_obj_run_destructors.exit
-  tail call void @mca_common_monitoring_coll_finalize() #20
+  tail call void @mca_common_monitoring_coll_finalize() #19
   %i.ae = load ptr, ptr @mca_common_monitoring_current_filename, align 8, !tbaa !26 ; 2 uses
   %.not1 = icmp eq ptr %i.ae, null
   br i1 %.not1, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @free(ptr noundef nonnull %i.ae) #20
+  tail call void @free(ptr noundef nonnull %i.ae) #19
   store ptr null, ptr @mca_common_monitoring_current_filename, align 8, !tbaa !26
   br label %bb.i
 
@@ -325,23 +325,23 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   store ptr null, ptr %i.a, align 8, !tbaa !26
   %i.k = icmp eq ptr %1, null
   br i1 %i.k, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.l = load i32, ptr @rank_world, align 4, !tbaa !8
-  %i.m = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.42, ptr noundef nonnull %1, i32 noundef %i.l) #20 ; 0 uses
+  %i.m = call i32 (ptr, ptr, ...) @opal_asprintf(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.42, ptr noundef nonnull %1, i32 noundef %i.l) #19 ; 0 uses
   %i.n = load ptr, ptr %i.a, align 8, !tbaa !26
   %i.o = call noalias ptr @fopen(ptr noundef %i.n, ptr noundef nonnull @.str.43) ; 3 uses
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !26
-  call void @free(ptr noundef %i.p) #20
+  call void @free(ptr noundef %i.p) #19
   %i.q = icmp eq ptr %i.o, null
   br i1 %i.q, label %.thread, label %bb.g
 
 .thread:                                          ; preds = %bb.e, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.f
@@ -349,7 +349,7 @@ bb.g:                                             ; preds = %bb.f
   %i.s = load i32, ptr @nprocs_world, align 4, !tbaa !8
   call fastcc void @mca_common_monitoring_output(ptr noundef nonnull %i.o, i32 noundef %i.r, i32 noundef %i.s)
   %i.t = call i32 @fclose(ptr noundef nonnull %i.o) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.d, %bb.c
@@ -359,7 +359,7 @@ bb.h:                                             ; preds = %bb.g, %bb.d, %bb.c
   %i.x = sext i32 %i.v to i64
   %i.y = shl nsw i64 %i.x, 3
   call void @llvm.memset.p0.i64(ptr align 1 %i.w, i8 0, i64 %i.y, i1 false)
-  call void @mca_common_monitoring_coll_reset() #20
+  call void @mca_common_monitoring_coll_reset() #19
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread, %bb.a, %bb.h
@@ -379,36 +379,36 @@ declare void @mca_common_monitoring_coll_finalize() local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define noundef i32 @mca_common_monitoring_register() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @mca_base_var_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5, i32 noundef 0, ptr noundef null, i32 noundef 0, i32 noundef 64, i32 noundef 3, i32 noundef 1, ptr noundef nonnull @mca_common_monitoring_enabled) #20 ; 0 uses
+  %i.a = tail call i32 @mca_base_var_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5, i32 noundef 0, ptr noundef null, i32 noundef 0, i32 noundef 64, i32 noundef 3, i32 noundef 1, ptr noundef nonnull @mca_common_monitoring_enabled) #19 ; 0 uses
   %i.b = load i32, ptr @mca_common_monitoring_enabled, align 4, !tbaa !8
   store i32 %i.b, ptr @mca_common_monitoring_current_state, align 4, !tbaa !8
-  %i.c = tail call i32 @mca_base_var_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.7, i32 noundef 0, ptr noundef null, i32 noundef 0, i32 noundef 64, i32 noundef 8, i32 noundef 1, ptr noundef nonnull @mca_common_monitoring_output_enabled) #20 ; 0 uses
-  %i.d = tail call i32 @mca_base_var_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, i32 noundef 5, ptr noundef null, i32 noundef 0, i32 noundef 64, i32 noundef 8, i32 noundef 1, ptr noundef nonnull @mca_common_monitoring_initial_filename) #20 ; 0 uses
+  %i.c = tail call i32 @mca_base_var_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.6, ptr noundef nonnull @.str.7, i32 noundef 0, ptr noundef null, i32 noundef 0, i32 noundef 64, i32 noundef 8, i32 noundef 1, ptr noundef nonnull @mca_common_monitoring_output_enabled) #19 ; 0 uses
+  %i.d = tail call i32 @mca_base_var_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.8, ptr noundef nonnull @.str.9, i32 noundef 5, ptr noundef null, i32 noundef 0, i32 noundef 64, i32 noundef 8, i32 noundef 1, ptr noundef nonnull @mca_common_monitoring_initial_filename) #19 ; 0 uses
   %i.e = load ptr, ptr @mca_common_monitoring_initial_filename, align 8, !tbaa !26 ; 2 uses
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = tail call noalias ptr @strdup(ptr noundef nonnull %i.e) #20
+  %i.f = tail call noalias ptr @strdup(ptr noundef nonnull %i.e) #19
   store ptr %i.f, ptr @mca_common_monitoring_current_filename, align 8, !tbaa !26
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.g = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.10, ptr noundef nonnull @.str.11, i32 noundef 0, i32 noundef 9, i32 noundef 5, ptr noundef null, i32 noundef 0, i32 noundef 64, ptr noundef nonnull @mca_common_monitoring_get_flush, ptr noundef nonnull @mca_common_monitoring_set_flush, ptr noundef nonnull @mca_common_monitoring_notify_flush, ptr noundef null) #20 ; 0 uses
-  %i.h = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.13, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_pml_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #20 ; 0 uses
-  %i.i = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_pml_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #20 ; 0 uses
-  %i.j = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.18, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_osc_sent_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #20 ; 0 uses
-  %i.k = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.19, ptr noundef nonnull @.str.20, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_osc_sent_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #20 ; 0 uses
-  %i.l = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.21, ptr noundef nonnull @.str.22, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_osc_recv_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #20 ; 0 uses
-  %i.m = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.23, ptr noundef nonnull @.str.24, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_osc_recv_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #20 ; 0 uses
-  %i.n = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.26, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_coll_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #20 ; 0 uses
-  %i.o = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.27, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_coll_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #20 ; 0 uses
-  %i.p = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.28, ptr noundef nonnull @.str.29, i32 noundef 3, i32 noundef 6, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_o2a_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #20 ; 0 uses
-  %i.q = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 3, i32 noundef 7, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_o2a_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #20 ; 0 uses
-  %i.r = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.33, i32 noundef 3, i32 noundef 6, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_a2o_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #20 ; 0 uses
-  %i.s = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.35, i32 noundef 3, i32 noundef 7, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_a2o_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #20 ; 0 uses
-  %i.t = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.36, ptr noundef nonnull @.str.37, i32 noundef 3, i32 noundef 6, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_a2a_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #20 ; 0 uses
-  %i.u = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.38, ptr noundef nonnull @.str.39, i32 noundef 3, i32 noundef 7, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_a2a_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #20 ; 0 uses
+  %i.g = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.10, ptr noundef nonnull @.str.11, i32 noundef 0, i32 noundef 9, i32 noundef 5, ptr noundef null, i32 noundef 0, i32 noundef 64, ptr noundef nonnull @mca_common_monitoring_get_flush, ptr noundef nonnull @mca_common_monitoring_set_flush, ptr noundef nonnull @mca_common_monitoring_notify_flush, ptr noundef null) #19 ; 0 uses
+  %i.h = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.13, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_pml_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #19 ; 0 uses
+  %i.i = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.15, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_pml_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #19 ; 0 uses
+  %i.j = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.18, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_osc_sent_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #19 ; 0 uses
+  %i.k = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.19, ptr noundef nonnull @.str.20, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_osc_sent_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #19 ; 0 uses
+  %i.l = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.21, ptr noundef nonnull @.str.22, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_osc_recv_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #19 ; 0 uses
+  %i.m = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.23, ptr noundef nonnull @.str.24, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_osc_recv_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #19 ; 0 uses
+  %i.n = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.26, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_coll_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #19 ; 0 uses
+  %i.o = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.14, ptr noundef nonnull @.str.27, i32 noundef 3, i32 noundef 2, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_get_coll_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_comm_size_notify, ptr noundef null) #19 ; 0 uses
+  %i.p = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.28, ptr noundef nonnull @.str.29, i32 noundef 3, i32 noundef 6, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_o2a_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #19 ; 0 uses
+  %i.q = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 3, i32 noundef 7, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_o2a_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #19 ; 0 uses
+  %i.r = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.33, i32 noundef 3, i32 noundef 6, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_a2o_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #19 ; 0 uses
+  %i.s = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.35, i32 noundef 3, i32 noundef 7, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_a2o_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #19 ; 0 uses
+  %i.t = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.36, ptr noundef nonnull @.str.37, i32 noundef 3, i32 noundef 6, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_a2a_count, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #19 ; 0 uses
+  %i.u = tail call i32 @mca_base_pvar_register(ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.38, ptr noundef nonnull @.str.39, i32 noundef 3, i32 noundef 7, i32 noundef 3, ptr noundef null, i32 noundef 1, i32 noundef 192, ptr noundef nonnull @mca_common_monitoring_coll_get_a2a_size, ptr noundef null, ptr noundef nonnull @mca_common_monitoring_coll_messages_notify, ptr noundef null) #19 ; 0 uses
   ret i32 0
 }
 
@@ -433,7 +433,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @free(ptr noundef nonnull %i.a) #20
+  tail call void @free(ptr noundef nonnull %i.a) #19
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -448,7 +448,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.f = tail call noalias ptr @strdup(ptr noundef nonnull %1) #20 ; 2 uses
+  %i.f = tail call noalias ptr @strdup(ptr noundef nonnull %1) #19 ; 2 uses
   store ptr %i.f, ptr @mca_common_monitoring_current_filename, align 8, !tbaa !26
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.g, label %bb.f
@@ -478,13 +478,13 @@ bb.b:                                             ; preds = %bb.a
   %i.d = sext i32 %i.b to i64
   %i.e = shl nsw i64 %i.d, 3
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.c, i8 0, i64 %i.e, i1 false)
-  tail call void @mca_common_monitoring_coll_reset() #20
+  tail call void @mca_common_monitoring_coll_reset() #19
   %i.f = load ptr, ptr @mca_common_monitoring_current_filename, align 8, !tbaa !26 ; 2 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.f) #22
+  %i.h = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.f) #21
   %i.i = trunc i64 %i.h to i32
   br label %bb.d
 
@@ -887,7 +887,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 bb.f:                                             ; preds = %bb.e
   %i.i = mul nsw i32 %i.f, 76
   %i.j = sext i32 %i.i to i64
-  %i.k = tail call noalias ptr @calloc(i64 noundef %i.j, i64 noundef 8) #23 ; 2 uses
+  %i.k = tail call noalias ptr @calloc(i64 noundef %i.j, i64 noundef 8) #22 ; 2 uses
   store ptr %i.k, ptr @pml_data, align 8, !tbaa !28
   %i.l = sext i32 %i.f to i64                     ; 10 uses
   %i.m = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.l ; 2 uses
@@ -985,14 +985,14 @@ bb.m:                                             ; preds = %bb.k
 ompi_group_get_proc_name.exit:                    ; preds = %bb.l, %bb.m
   %.sroa.0.0.i = phi i64 [ %.sroa.0.0.insert.insert.i.i, %bb.l ], [ %.sroa.0.0.copyload.i, %bb.m ]
   %i.au = load ptr, ptr @opal_compare_proc, align 8, !tbaa !22
-  %i.av = tail call i32 %i.au(i64 %.sroa.013.0.insert.insert, i64 %.sroa.0.0.i) #20
+  %i.av = tail call i32 %i.au(i64 %.sroa.013.0.insert.insert, i64 %.sroa.0.0.i) #19
   %.not31 = icmp eq i32 %i.av, 0
   br i1 %.not31, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %ompi_group_get_proc_name.exit
   %i.aw = load ptr, ptr @ompi_common_monitoring_translation_ht, align 8, !tbaa !25
   %i.ax = inttoptr i64 %indvars.iv to ptr
-  %i.ay = tail call i32 @opal_hash_table_set_value_uint64(ptr noundef %i.aw, i64 noundef %.sroa.013.0.insert.insert, ptr noundef %i.ax) #20
+  %i.ay = tail call i32 @opal_hash_table_set_value_uint64(ptr noundef %i.aw, i64 noundef %.sroa.013.0.insert.insert, ptr noundef %i.ax) #19
   %.not32 = icmp eq i32 %i.ay, 0
   br i1 %.not32, label %.loopexit, label %._crit_edge
 
@@ -1018,8 +1018,8 @@ declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr
 
 declare i32 @opal_hash_table_set_value_uint64(ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #3
 
-; Function Attrs: norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define void @mca_common_monitoring_record_pml(i32 noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #12 {
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
+define void @mca_common_monitoring_record_pml(i32 noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #9 {
 bb.a:
   %i.a = load i32, ptr @mca_common_monitoring_current_state, align 4, !tbaa !8 ; 2 uses
   %i.b = icmp eq i32 %i.a, 0
@@ -1038,7 +1038,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.h = uitofp i64 %1 to double
-  %i.i = tail call double @log10(double noundef %i.h) #20
+  %i.i = tail call double @log10(double noundef %i.h) #19
   %i.j = load double, ptr @log10_2, align 8, !tbaa !10
   %i.k = fdiv double %i.i, %i.j
   %i.l = fptosi double %i.k to i32
@@ -1074,8 +1074,8 @@ bb.e:                                             ; preds = %.sink.split, %bb.a
   ret void
 }
 
-; Function Attrs: norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define void @mca_common_monitoring_record_osc(i32 noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #12 {
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
+define void @mca_common_monitoring_record_osc(i32 noundef %0, i64 noundef %1, i32 noundef %2) local_unnamed_addr #9 {
 bb.a:
   %i.a = load i32, ptr @mca_common_monitoring_current_state, align 4, !tbaa !8
   %i.b = icmp eq i32 %i.a, 0
@@ -1100,8 +1100,8 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
   ret void
 }
 
-; Function Attrs: norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define void @mca_common_monitoring_record_coll(i32 noundef %0, i64 noundef %1) local_unnamed_addr #12 {
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
+define void @mca_common_monitoring_record_coll(i32 noundef %0, i64 noundef %1) local_unnamed_addr #9 {
 bb.a:
   %i.a = load i32, ptr @mca_common_monitoring_current_state, align 4, !tbaa !8
   %i.b = icmp eq i32 %i.a, 0
@@ -1124,15 +1124,15 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 declare i32 @opal_init_gethostname() local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write)
-declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #13
+declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #12
 
 declare void @opal_class_initialize(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #14
+declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #15
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #14
 
 declare void @mca_common_monitoring_coll_reset() local_unnamed_addr #3
 
@@ -1176,7 +1176,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.i = load volatile i64, ptr %i.h, align 8, !tbaa !53
   %i.j = load volatile i64, ptr %i.e, align 8, !tbaa !53
   %i.k = trunc nuw nsw i64 %indvars.iv91 to i32
-  %i.l = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.45, i32 noundef %1, i32 noundef %i.k, i64 noundef %i.i, i64 noundef %i.j) #20 ; 0 uses
+  %i.l = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.45, i32 noundef %1, i32 noundef %i.k, i64 noundef %i.i, i64 noundef %i.j) #19 ; 0 uses
   %i.m = mul nuw nsw i64 %indvars.iv91, 66        ; 2 uses
   br label %bb.c
 
@@ -1186,7 +1186,7 @@ bb.c:                                             ; preds = %bb.b, %bb.c
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.m
   %i.q = load volatile i64, ptr %i.p, align 8, !tbaa !53
-  %i.r = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.46, i64 noundef %i.q, ptr noundef nonnull @.str.47) #20 ; 0 uses
+  %i.r = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.46, i64 noundef %i.q, ptr noundef nonnull @.str.47) #19 ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 65
   br i1 %exitcond.not, label %.loopexit76.loopexit.peel.begin, label %bb.c, !llvm.loop !104
@@ -1196,7 +1196,7 @@ bb.c:                                             ; preds = %bb.b, %bb.c
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.m
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 520
   %i.v = load volatile i64, ptr %i.u, align 8, !tbaa !53
-  %i.w = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.46, i64 noundef %i.v, ptr noundef nonnull @.str.48) #20 ; 0 uses
+  %i.w = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.46, i64 noundef %i.v, ptr noundef nonnull @.str.48) #19 ; 0 uses
   %.pre = load ptr, ptr @pml_count, align 8, !tbaa !28
   br label %.loopexit76
 
@@ -1225,7 +1225,7 @@ bb.d:                                             ; preds = %.lr.ph81
   %i.ai = icmp eq i64 %i.ah, 0
   %i.aj = select i1 %i.ai, ptr @.str.50, ptr @.str.48
   %i.ak = trunc nuw nsw i64 %indvars.iv100 to i32
-  %i.al = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.49, i32 noundef %1, i32 noundef %i.ak, i64 noundef %i.ad, i64 noundef %i.ae, ptr noundef nonnull %i.aj) #20 ; 0 uses
+  %i.al = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.49, i32 noundef %1, i32 noundef %i.ak, i64 noundef %i.ad, i64 noundef %i.ae, ptr noundef nonnull %i.aj) #19 ; 0 uses
   %i.am = load ptr, ptr @pml_count, align 8, !tbaa !28
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv100
   %i.ao = load volatile i64, ptr %i.an, align 8, !tbaa !53
@@ -1242,7 +1242,7 @@ bb.e:                                             ; preds = %.preheader, %bb.e
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %indvars.iv95
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.aq
   %i.au = load volatile i64, ptr %i.at, align 8, !tbaa !53
-  %i.av = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.46, i64 noundef %i.au, ptr noundef nonnull @.str.47) #20 ; 0 uses
+  %i.av = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.46, i64 noundef %i.au, ptr noundef nonnull @.str.47) #19 ; 0 uses
   %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1 ; 2 uses
   %exitcond98.not = icmp eq i64 %indvars.iv.next96, 65
   br i1 %exitcond98.not, label %.loopexit.loopexit.peel.begin, label %bb.e, !llvm.loop !106
@@ -1252,7 +1252,7 @@ bb.e:                                             ; preds = %.preheader, %bb.e
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.aq
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 520
   %i.az = load volatile i64, ptr %i.ay, align 8, !tbaa !53
-  %i.ba = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.46, i64 noundef %i.az, ptr noundef nonnull @.str.48) #20 ; 0 uses
+  %i.ba = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.46, i64 noundef %i.az, ptr noundef nonnull @.str.48) #19 ; 0 uses
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit.peel.begin, %.lr.ph81, %bb.d
@@ -1285,7 +1285,7 @@ bb.f:                                             ; preds = %.lr.ph84
   %i.bg = load volatile i64, ptr %i.bf, align 8, !tbaa !53
   %i.bh = load volatile i64, ptr %i.bc, align 8, !tbaa !53
   %i.bi = trunc nuw nsw i64 %indvars.iv105 to i32
-  %i.bj = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.52, i32 noundef %1, i32 noundef %i.bi, i64 noundef %i.bg, i64 noundef %i.bh) #20 ; 0 uses
+  %i.bj = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.52, i32 noundef %1, i32 noundef %i.bi, i64 noundef %i.bg, i64 noundef %i.bh) #19 ; 0 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph84
@@ -1301,7 +1301,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bp = load volatile i64, ptr %i.bo, align 8, !tbaa !53
   %i.bq = load volatile i64, ptr %i.bl, align 8, !tbaa !53
   %i.br = trunc nuw nsw i64 %indvars.iv105 to i32
-  %i.bs = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.53, i32 noundef %1, i32 noundef %i.br, i64 noundef %i.bp, i64 noundef %i.bq) #20 ; 0 uses
+  %i.bs = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.53, i32 noundef %1, i32 noundef %i.br, i64 noundef %i.bp, i64 noundef %i.bq) #19 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
@@ -1310,7 +1310,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   br i1 %exitcond109.not, label %._crit_edge85, label %.lr.ph84, !llvm.loop !108
 
 ._crit_edge89:                                    ; preds = %bb.k, %.loopexit75.thread
-  tail call void @mca_common_monitoring_coll_flush_all(ptr noundef %0) #20
+  tail call void @mca_common_monitoring_coll_flush_all(ptr noundef %0) #19
   ret void
 
 .lr.ph88:                                         ; preds = %._crit_edge85, %bb.k
@@ -1327,7 +1327,7 @@ bb.j:                                             ; preds = %.lr.ph88
   %i.by = load volatile i64, ptr %i.bx, align 8, !tbaa !53
   %i.bz = load volatile i64, ptr %i.bu, align 8, !tbaa !53
   %i.ca = trunc nuw nsw i64 %indvars.iv110 to i32
-  %i.cb = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.55, i32 noundef %1, i32 noundef %i.ca, i64 noundef %i.by, i64 noundef %i.bz) #20 ; 0 uses
+  %i.cb = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.55, i32 noundef %1, i32 noundef %i.ca, i64 noundef %i.by, i64 noundef %i.bz) #19 ; 0 uses
   %.pre116 = load ptr, ptr @coll_count, align 8, !tbaa !28
   br label %bb.k
 
@@ -1339,24 +1339,24 @@ bb.k:                                             ; preds = %.lr.ph88, %bb.j
 }
 
 ; Function Attrs: nofree nounwind
-declare noalias noundef ptr @fopen(ptr noundef readonly captures(none), ptr noundef readonly captures(none)) local_unnamed_addr #16
+declare noalias noundef ptr @fopen(ptr noundef readonly captures(none), ptr noundef readonly captures(none)) local_unnamed_addr #15
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @fclose(ptr noundef captures(none)) local_unnamed_addr #16
+declare noundef i32 @fclose(ptr noundef captures(none)) local_unnamed_addr #15
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @fprintf(ptr noundef captures(none), ptr noundef readonly captures(none), ...) local_unnamed_addr #16
+declare noundef i32 @fprintf(ptr noundef captures(none), ptr noundef readonly captures(none), ...) local_unnamed_addr #15
 
 declare void @mca_common_monitoring_coll_flush_all(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #17
+declare i32 @llvm.smin.i32(i32, i32) #16
 
 ; Function Attrs: nofree nounwind
-declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #18
+declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #19
+declare void @llvm.assume(i1 noundef) #18
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1370,18 +1370,17 @@ attributes #8 = { mustprogress nounwind willreturn memory(readwrite, target_mem:
 attributes #9 = { nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { norecurse nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #14 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #15 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #16 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #18 = { nofree nounwind }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #20 = { nounwind }
-attributes #21 = { nounwind allocsize(0) }
-attributes #22 = { nounwind willreturn memory(read) }
-attributes #23 = { nounwind allocsize(0,1) }
+attributes #12 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #15 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #17 = { nofree nounwind }
+attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #19 = { nounwind }
+attributes #20 = { nounwind allocsize(0) }
+attributes #21 = { nounwind willreturn memory(read) }
+attributes #22 = { nounwind allocsize(0,1) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

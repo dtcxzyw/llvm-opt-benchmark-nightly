@@ -205,7 +205,11 @@ _ZNSt10lock_guardIN3tbb6detail2r124concurrent_monitor_mutexEEC2ERS3_.exit: ; pre
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !50 ; 2 uses
   %.not20 = icmp eq ptr %i.ah, %i.f
-  br i1 %.not20, label %._crit_edge, label %.lr.ph
+  br i1 %.not20, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %_ZNSt10lock_guardIN3tbb6detail2r124concurrent_monitor_mutexEEC2ERS3_.exit
+  %.pre26 = load i64, ptr %1, align 8, !tbaa !43
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.g, %_ZNSt10lock_guardIN3tbb6detail2r124concurrent_monitor_mutexEEC2ERS3_.exit
   %i.ai = atomicrmw xchg ptr %0, i32 0 seq_cst, align 4 ; 0 uses
@@ -223,14 +227,14 @@ _ZNSt10lock_guardIN3tbb6detail2r124concurrent_monitor_mutexEED2Ev.exit: ; preds 
   %.not1722 = icmp eq ptr %i.am, %i.d
   br i1 %.not1722, label %._crit_edge25, label %.lr.ph24
 
-.lr.ph:                                           ; preds = %_ZNSt10lock_guardIN3tbb6detail2r124concurrent_monitor_mutexEEC2ERS3_.exit, %bb.g
-  %.01621 = phi ptr [ %i.ao, %bb.g ], [ %i.ah, %_ZNSt10lock_guardIN3tbb6detail2r124concurrent_monitor_mutexEEC2ERS3_.exit ] ; 7 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
+  %3 = phi i64 [ %4, %bb.g ], [ %.pre26, %.lr.ph.preheader ] ; 2 uses
+  %.01621 = phi ptr [ %i.ao, %bb.g ], [ %i.ah, %.lr.ph.preheader ] ; 7 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.01621, i64 8 ; 3 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !20 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.01621, i64 16
-  %3 = load i64, ptr %i.ap, align 8, !tbaa !28
-  %i.aq = load i64, ptr %1, align 8, !tbaa !43
-  %.not19 = icmp ugt i64 %3, %i.aq
+  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !28
+  %.not19 = icmp ugt i64 %i.aq, %3
   br i1 %.not19, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
@@ -252,9 +256,11 @@ bb.f:                                             ; preds = %.lr.ph
   store ptr %i.d, ptr %.01621, align 8, !tbaa !19
   store ptr %.01621, ptr %i.az, align 8, !tbaa !19
   store ptr %.01621, ptr %i.e, align 8, !tbaa !50
+  %.pre = load i64, ptr %1, align 8, !tbaa !43
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph
+  %4 = phi i64 [ %.pre, %bb.f ], [ %3, %.lr.ph ]
   %.not = icmp eq ptr %i.ao, %i.f
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !70
 

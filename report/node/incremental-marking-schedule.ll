@@ -26,7 +26,7 @@ $_ZN4heap4base26IncrementalMarkingSchedule38kEphemeronPairsFlushingRatioIncremen
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4heap4base26IncrementalMarkingSchedule6CreateEb(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, i1 noundef zeroext %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #9 ; 8 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #8 ; 8 uses
   %i.b = zext i1 %1 to i8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.a, i8 0, i64 32, i1 false)
@@ -58,7 +58,7 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #1
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4heap4base26IncrementalMarkingSchedule38CreateWithMarkedBytesPerStepForTestingEmb(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0, i64 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #9 ; 9 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #8 ; 9 uses
   %i.b = zext i1 %2 to i8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.a, i8 0, i64 32, i1 false)
@@ -123,7 +123,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #10
+  %i.c = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #9
   store i64 %i.c, ptr %0, align 8
   br label %bb.c
 
@@ -151,7 +151,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #10
+  %i.d = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #9
   store i64 %i.d, ptr %i.a, align 8
   br label %bb.c
 
@@ -169,16 +169,16 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_ZN4heap4base26IncrementalMarkingSchedule26AddConcurrentlyMarkedBytesEm(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) %0, i64 noundef %1) local_unnamed_addr #6 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define hidden void @_ZN4heap4base26IncrementalMarkingSchedule26AddConcurrentlyMarkedBytesEm(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) %0, i64 noundef %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = atomicrmw add ptr %i.a, i64 %1 monotonic, align 8 ; 0 uses
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden noundef i64 @_ZNK4heap4base26IncrementalMarkingSchedule21GetOverallMarkedBytesEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #6 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define hidden noundef i64 @_ZNK4heap4base26IncrementalMarkingSchedule21GetOverallMarkedBytesEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8
@@ -188,8 +188,8 @@ bb.a:
   ret i64 %i.e
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden noundef i64 @_ZNK4heap4base26IncrementalMarkingSchedule26GetConcurrentlyMarkedBytesEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #6 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define hidden noundef i64 @_ZNK4heap4base26IncrementalMarkingSchedule26GetConcurrentlyMarkedBytesEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load atomic i64, ptr %i.a monotonic, align 8
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
-  %i.h = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #10
+  %i.h = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #9
   %.sroa.0.0.copyload = load i64, ptr %0, align 8
   %i.i = sub nsw i64 %i.h, %.sroa.0.0.copyload
   br label %bb.e
@@ -245,7 +245,7 @@ bb.a:
   %2 = alloca %"class.v8::base::TimeDelta", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %1, ptr %i.a, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !range !5, !noundef !6
@@ -268,7 +268,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN4heap4base26IncrementalMarkingSchedule31GetElapsedTimeSinceMarkingStartEv.exit
 
 bb.d:                                             ; preds = %bb.a
-  %i.i = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #10
+  %i.i = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #9
   %.sroa.0.0.copyload.i = load i64, ptr %0, align 8
   %i.j = sub nsw i64 %i.i, %.sroa.0.0.copyload.i
   br label %_ZN4heap4base26IncrementalMarkingSchedule31GetElapsedTimeSinceMarkingStartEv.exit
@@ -287,9 +287,9 @@ _ZN4heap4base26IncrementalMarkingSchedule31GetElapsedTimeSinceMarkingStartEv.exi
   %i.s = load atomic i64, ptr %i.r monotonic, align 8
   %i.t = add i64 %i.s, %i.q                       ; 4 uses
   %i.u = uitofp i64 %1 to double
-  %i.v = call noundef double @_ZNK2v84base9TimeDelta15InMillisecondsFEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #10
+  %i.v = call noundef double @_ZNK2v84base9TimeDelta15InMillisecondsFEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #9
   %i.w = fmul double %i.v, %i.u
-  %i.x = call noundef double @_ZNK2v84base9TimeDelta15InMillisecondsFEv(ptr noundef nonnull align 8 dereferenceable(8) @_ZN4heap4base26IncrementalMarkingSchedule21kEstimatedMarkingTimeE) #10
+  %i.x = call noundef double @_ZNK2v84base9TimeDelta15InMillisecondsFEv(ptr noundef nonnull align 8 dereferenceable(8) @_ZN4heap4base26IncrementalMarkingSchedule21kEstimatedMarkingTimeE) #9
   %i.y = fdiv double %i.w, %i.x
   %i.z = call double @llvm.ceil.f64(double %i.y)
   %i.aa = fptoui double %i.z to i64               ; 3 uses
@@ -333,17 +333,17 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e
   %.0 = phi i64 [ %i.ah, %bb.e ], [ %i.ak, %bb.g ], [ %.sroa.speculated, %bb.h ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
   ret i64 %.0
 }
 
 declare noundef double @_ZNK2v84base9TimeDelta15InMillisecondsFEv(ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.ceil.f64(double) #7
+declare double @llvm.ceil.f64(double) #6
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden noundef zeroext i1 @_ZN4heap4base26IncrementalMarkingSchedule25ShouldFlushEphemeronPairsEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #6 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define hidden noundef zeroext i1 @_ZN4heap4base26IncrementalMarkingSchedule25ShouldFlushEphemeronPairsEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8
@@ -381,7 +381,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i64 %i.b, ptr %i.c, align 8
-  %i.f = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #10
+  %i.f = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 120
   store i64 %i.f, ptr %i.g, align 8
   br label %bb.e
@@ -393,7 +393,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #10
+  %i.k = tail call i64 @_ZN2v84base9TimeTicks3NowEv() #9
   %.sroa.0.0.copyload = load i64, ptr %i.h, align 8
   %i.l = sub nsw i64 %i.k, %.sroa.0.0.copyload
   br label %bb.e
@@ -414,10 +414,10 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #7
+declare i64 @llvm.umax.i64(i64, i64) #6
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -425,11 +425,10 @@ attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #9 = { builtin nounwind allocsize(0) }
-attributes #10 = { nounwind }
+attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #8 = { builtin nounwind allocsize(0) }
+attributes #9 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

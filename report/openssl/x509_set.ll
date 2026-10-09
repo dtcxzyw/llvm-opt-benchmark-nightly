@@ -16,7 +16,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %0, align 8, !tbaa !36
-  %i.c = tail call i64 @ASN1_INTEGER_get(ptr noundef %i.b) #8
+  %i.c = tail call i64 @ASN1_INTEGER_get(ptr noundef %i.b) #7
   %i.d = icmp eq i64 %1, %i.c
   br i1 %i.d, label %bb.h, label %bb.c
 
@@ -26,7 +26,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @ASN1_INTEGER_free(ptr noundef %i.f) #8
+  tail call void @ASN1_INTEGER_free(ptr noundef %i.f) #7
   store ptr null, ptr %0, align 8, !tbaa !36
   br label %.sink.split
 
@@ -35,14 +35,14 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.g, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.h = tail call ptr @ASN1_INTEGER_new() #8     ; 3 uses
+  %i.h = tail call ptr @ASN1_INTEGER_new() #7     ; 3 uses
   store ptr %i.h, ptr %0, align 8, !tbaa !36
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.j = phi ptr [ %i.h, %bb.f ], [ %i.f, %bb.e ]
-  %i.k = tail call i32 @ASN1_INTEGER_set(ptr noundef nonnull %i.j, i64 noundef %1) #8
+  %i.k = tail call i32 @ASN1_INTEGER_set(ptr noundef nonnull %i.j, i64 noundef %1) #7
   %.not = icmp eq i32 %i.k, 0
   br i1 %.not, label %bb.h, label %.sink.split
 
@@ -60,7 +60,7 @@ bb.h:                                             ; preds = %.sink.split, %bb.g,
 define i64 @X509_get_version(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !36
-  %i.b = tail call i64 @ASN1_INTEGER_get(ptr noundef %i.a) #8
+  %i.b = tail call i64 @ASN1_INTEGER_get(ptr noundef %i.a) #7
   ret i64 %i.b
 }
 
@@ -82,7 +82,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call i32 @ASN1_STRING_copy(ptr noundef nonnull %i.b, ptr noundef %1) #8
+  %i.c = tail call i32 @ASN1_STRING_copy(ptr noundef nonnull %i.b, ptr noundef %1) #7
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
@@ -111,7 +111,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.c = tail call i32 @X509_NAME_set(ptr noundef nonnull %i.b, ptr noundef %1) #8
+  %i.c = tail call i32 @X509_NAME_set(ptr noundef nonnull %i.b, ptr noundef %1) #7
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -135,7 +135,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.c = tail call i32 @X509_NAME_set(ptr noundef nonnull %i.b, ptr noundef %1) #8
+  %i.c = tail call i32 @X509_NAME_set(ptr noundef nonnull %i.b, ptr noundef %1) #7
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -157,7 +157,7 @@ bb.a:
   br i1 %i.b, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call ptr @ASN1_STRING_dup(ptr noundef %2) #8 ; 2 uses
+  %i.c = tail call ptr @ASN1_STRING_dup(ptr noundef %2) #7 ; 2 uses
   %i.d = icmp ne ptr %2, null
   %i.e = icmp eq ptr %i.c, null
   %or.cond = select i1 %i.d, i1 %i.e, i1 false
@@ -165,7 +165,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %1, align 8, !tbaa !38
-  tail call void @ASN1_TIME_free(ptr noundef %i.f) #8
+  tail call void @ASN1_TIME_free(ptr noundef %i.f) #7
   store ptr %i.c, ptr %1, align 8, !tbaa !38
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.e, label %bb.d
@@ -199,13 +199,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %ossl_x509_set1_time.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call ptr @ASN1_STRING_dup(ptr noundef nonnull %1) #8 ; 2 uses
+  %i.g = tail call ptr @ASN1_STRING_dup(ptr noundef nonnull %1) #7 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %ossl_x509_set1_time.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !38
-  tail call void @ASN1_TIME_free(ptr noundef %i.i) #8
+  tail call void @ASN1_TIME_free(ptr noundef %i.i) #7
   store ptr %i.g, ptr %i.d, align 8, !tbaa !38
   store i32 1, ptr %i.c, align 8, !tbaa !39
   br label %ossl_x509_set1_time.exit
@@ -231,13 +231,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %ossl_x509_set1_time.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call ptr @ASN1_STRING_dup(ptr noundef nonnull %1) #8 ; 2 uses
+  %i.g = tail call ptr @ASN1_STRING_dup(ptr noundef nonnull %1) #7 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %ossl_x509_set1_time.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !38
-  tail call void @ASN1_TIME_free(ptr noundef %i.i) #8
+  tail call void @ASN1_TIME_free(ptr noundef %i.i) #7
   store ptr %i.g, ptr %i.d, align 8, !tbaa !38
   store i32 1, ptr %i.c, align 8, !tbaa !39
   br label %ossl_x509_set1_time.exit
@@ -255,7 +255,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.c = tail call i32 @X509_PUBKEY_set(ptr noundef nonnull %i.b, ptr noundef %1) #8
+  %i.c = tail call i32 @X509_PUBKEY_set(ptr noundef nonnull %i.b, ptr noundef %1) #7
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -271,7 +271,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 
 declare i32 @X509_PUBKEY_set(ptr noundef, ptr noundef) local_unnamed_addr #1
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define range(i32 0, 2) i32 @X509_up_ref(ptr nofree noundef captures(none) %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -320,8 +320,8 @@ define i32 @X509_get_signature_type(ptr nofree noundef readonly captures(none) %
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !47
-  %i.c = tail call i32 @OBJ_obj2nid(ptr noundef %i.b) #8
-  %i.d = tail call i32 @EVP_PKEY_type(i32 noundef %i.c) #8
+  %i.c = tail call i32 @OBJ_obj2nid(ptr noundef %i.b) #7
+  %i.d = tail call i32 @EVP_PKEY_type(i32 noundef %i.c) #7
   ret i32 %i.d
 }
 
@@ -346,7 +346,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @X509_get0_uids(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2) local_unnamed_addr #5 {
+define void @X509_get0_uids(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2) local_unnamed_addr #3 {
 bb.a:
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -372,14 +372,14 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define nonnull ptr @X509_get0_tbs_sigalg(ptr nofree noundef readnone captures(ret: address, provenance) %0) local_unnamed_addr #6 {
+define nonnull ptr @X509_get0_tbs_sigalg(ptr nofree noundef readnone captures(ret: address, provenance) %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   ret ptr %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define range(i32 0, 2) i32 @X509_SIG_INFO_get(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #5 {
+define range(i32 0, 2) i32 @X509_SIG_INFO_get(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #3 {
 bb.a:
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -425,7 +425,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @X509_SIG_INFO_set(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #7 {
+define void @X509_SIG_INFO_set(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #6 {
 bb.a:
   store i32 %1, ptr %0, align 4, !tbaa !43
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -440,7 +440,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @X509_get_signature_info(ptr noundef %0, ptr nofree noundef writeonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @X509_check_purpose(ptr noundef %0, i32 noundef -1, i32 noundef -1) #8 ; 0 uses
+  %i.a = tail call i32 @X509_check_purpose(ptr noundef %0, i32 noundef -1, i32 noundef -1) #7 ; 0 uses
   %.not.i = icmp eq ptr %1, null
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -496,15 +496,15 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !42
-  %i.g = tail call ptr @X509_PUBKEY_get0(ptr noundef %i.f) #8 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  %i.g = tail call ptr @X509_PUBKEY_get0(ptr noundef %i.f) #7 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
   store <4 x i32> <i32 0, i32 0, i32 -1, i32 0>, ptr %1, align 4, !tbaa !39
   %i.j = load ptr, ptr %i.c, align 8, !tbaa !52
-  %i.k = tail call i32 @OBJ_obj2nid(ptr noundef %i.j) #8
-  %i.l = call i32 @OBJ_find_sigid_algs(i32 noundef %i.k, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #8
+  %i.k = tail call i32 @OBJ_obj2nid(ptr noundef %i.j) #7
+  %i.l = call i32 @OBJ_find_sigid_algs(i32 noundef %i.k, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #7
   %i.m = icmp eq i32 %i.l, 0
   %i.n = load i32, ptr %i.a, align 4              ; 3 uses
   %i.o = icmp eq i32 %i.n, 0
@@ -512,9 +512,9 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  call void @ERR_new() #8
-  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 226, ptr noundef nonnull @__func__.x509_sig_info_init) #8
-  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 144, ptr noundef null) #8
+  call void @ERR_new() #7
+  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 226, ptr noundef nonnull @__func__.x509_sig_info_init) #7
+  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 144, ptr noundef null) #7
   br label %x509_sig_info_init.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -530,7 +530,7 @@ bb.c:                                             ; preds = %bb.a
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = call ptr @evp_pkey_asn1_find(i32 noundef %i.n) #8 ; 2 uses
+  %i.r = call ptr @evp_pkey_asn1_find(i32 noundef %i.n) #7 ; 2 uses
   %.not.i = icmp eq ptr %i.r, null
   br i1 %.not.i, label %bb.g, label %bb.e
 
@@ -541,7 +541,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not36.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = call i32 %i.t(ptr noundef nonnull %1, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #8, !inline_history !51
+  %i.u = call i32 %i.t(ptr noundef nonnull %1, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #7, !inline_history !51
   %.not37.i = icmp eq i32 %i.u, 0
   br i1 %.not37.i, label %bb.g, label %bb.o
 
@@ -550,14 +550,14 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   br i1 %.not38.i, label %.thread.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.v = call i32 @EVP_PKEY_get_security_bits(ptr noundef nonnull %i.g) #8 ; 2 uses
+  %i.v = call i32 @EVP_PKEY_get_security_bits(ptr noundef nonnull %i.g) #7 ; 2 uses
   %.not39.i = icmp eq i32 %i.v, 0
   br i1 %.not39.i, label %.thread.i, label %.sink.split.i
 
 .thread.i:                                        ; preds = %bb.h, %bb.g
-  call void @ERR_new() #8
-  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 248, ptr noundef nonnull @__func__.x509_sig_info_init) #8
-  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 142, ptr noundef null) #8
+  call void @ERR_new() #7
+  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 248, ptr noundef nonnull @__func__.x509_sig_info_init) #7
+  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 142, ptr noundef null) #7
   br label %x509_sig_info_init.exit
 
 .thread42.i:                                      ; preds = %bb.c
@@ -573,19 +573,19 @@ bb.j:                                             ; preds = %bb.c
   br label %.thread41.i
 
 bb.k:                                             ; preds = %bb.c
-  %i.w = call ptr @OBJ_nid2sn(i32 noundef %i.q) #8
-  %i.x = call ptr @EVP_get_digestbyname(ptr noundef %i.w) #8 ; 2 uses
+  %i.w = call ptr @OBJ_nid2sn(i32 noundef %i.q) #7
+  %i.x = call ptr @EVP_get_digestbyname(ptr noundef %i.w) #7 ; 2 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  call void @ERR_new() #8
-  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 280, ptr noundef nonnull @__func__.x509_sig_info_init) #8
-  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 141, ptr noundef null) #8
+  call void @ERR_new() #7
+  call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 280, ptr noundef nonnull @__func__.x509_sig_info_init) #7
+  call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 11, i32 noundef 141, ptr noundef null) #7
   br label %x509_sig_info_init.exit
 
 bb.m:                                             ; preds = %bb.k
-  %i.z = call i32 @EVP_MD_get_size(ptr noundef nonnull %i.x) #8 ; 2 uses
+  %i.z = call i32 @EVP_MD_get_size(ptr noundef nonnull %i.x) #7 ; 2 uses
   %i.aa = icmp slt i32 %i.z, 1
   br i1 %i.aa, label %x509_sig_info_init.exit, label %bb.n
 
@@ -621,8 +621,8 @@ bb.p:                                             ; preds = %bb.o, %bb.o, %bb.o,
 
 x509_sig_info_init.exit:                          ; preds = %bb.b, %.thread.i, %bb.l, %bb.m, %.thread41.i
   %.029.i = phi i32 [ 0, %bb.b ], [ 0, %bb.l ], [ 0, %.thread.i ], [ 1, %.thread41.i ], [ 0, %bb.m ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.029.i
 }
 
@@ -649,12 +649,11 @@ declare i32 @EVP_MD_get_size(ptr noundef) local_unnamed_addr #1
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #3 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nounwind }
+attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

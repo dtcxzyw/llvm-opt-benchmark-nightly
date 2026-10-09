@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.as = load <2 x i32>, ptr %i.aa, align 4, !tbaa !55
   %i.at = insertelement <2 x i32> poison, i32 %i.ap, i64 0
   %i.au = insertelement <2 x i32> %i.at, i32 %i.ar, i64 1
-  %i.av = sub nsw <2 x i32> %i.as, %i.au
+  %i.av = sub <2 x i32> %i.as, %i.au
   %i.aw = call <2 x i32> @llvm.abs.v2i32(<2 x i32> %i.av, i1 true)
   store <2 x i32> %i.aw, ptr %i.aq, align 8, !tbaa !55
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
