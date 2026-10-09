@@ -202,10 +202,8 @@ bb.m:                                             ; preds = %._crit_edge52, %bb.
   %i.bo = tail call i32 @ff_filter_frame(ptr noundef %i.bm, ptr noundef %i.bn) #5
   %i.bp = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.bq = load i32, ptr %i.bp, align 8, !tbaa !53
-  %2 = and i32 %i.bq, 1
-  %.not51 = icmp eq i32 %2, 0
   %i.br = xor i32 %1, 1
-  %spec.select = select i1 %.not51, i32 0, i32 %i.br
+  %spec.select = and i32 %i.bq, %i.br
   %i.bs = getelementptr inbounds nuw i8, ptr %i.b, i64 20
   store i32 %spec.select, ptr %i.bs, align 4, !tbaa !33
   br label %bb.n

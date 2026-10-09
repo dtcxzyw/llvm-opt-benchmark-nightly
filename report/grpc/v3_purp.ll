@@ -103,7 +103,7 @@ X509_PURPOSE_get0.exit.fold.split:                ; preds = %bb.b
   br label %X509_PURPOSE_get0.exit
 
 X509_PURPOSE_get0.exit:                           ; preds = %bb.f, %bb.b, %X509_PURPOSE_get0.exit.fold.split, %bb.e, %.thread, %bb.a
-  %.1 = phi i32 [ 0, %bb.a ], [ 1, %bb.b ], [ 0, %X509_PURPOSE_get0.exit.fold.split ], [ %i.m, %.thread ], [ 0, %bb.f ], [ 0, %bb.e ]
+  %.1 = phi i32 [ 0, %bb.a ], [ 1, %bb.b ], [ 0, %bb.f ], [ %i.m, %.thread ], [ 0, %bb.e ], [ 0, %X509_PURPOSE_get0.exit.fold.split ]
   ret i32 %.1
 }
 
@@ -506,7 +506,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !23   ; 4 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !23   ; 3 uses
   %i.d = and i32 %i.c, 2
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.d, label %bb.c
@@ -524,15 +524,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.i, label %_ZL8check_caPK7x509_st.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = and i32 %i.c, 1
-  %.not6.i = icmp eq i32 %i.j, 0
-  %1 = lshr i32 %i.c, 4
-  %.lobit.i = and i32 %1, 1
-  %2 = select i1 %.not6.i, i32 0, i32 %.lobit.i
+  %i.j = and i32 %i.c, 17
+  %.not6.i = icmp eq i32 %i.j, 17
+  %1 = zext i1 %.not6.i to i32
   br label %_ZL8check_caPK7x509_st.exit
 
 _ZL8check_caPK7x509_st.exit:                      ; preds = %bb.e, %bb.d, %bb.c, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %2, %bb.e ], [ 1, %bb.d ]
+  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %1, %bb.e ], [ 1, %bb.d ]
   ret i32 %.0
 }
 

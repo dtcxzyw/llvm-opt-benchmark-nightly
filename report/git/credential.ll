@@ -204,16 +204,14 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = load i8, ptr %0, align 4                 ; 2 uses
-  %i.d = and i8 %i.c, 1
-  %.not = icmp eq i8 %i.d, 0
-  %2 = lshr i8 %i.c, 1
-  %.lobit = and i8 %2, 1
-  %narrow = select i1 %.not, i8 0, i8 %.lobit
+  %i.c = load i8, ptr %0, align 4
+  %i.d = and i8 %i.c, 3
+  %.not = icmp eq i8 %i.d, 3
+  %2 = zext i1 %.not to i8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
-  %.0.shrunk = phi i8 [ %narrow, %bb.c ], [ %i.b, %bb.b ], [ 0, %bb.a ]
+  %.0.shrunk = phi i8 [ %2, %bb.c ], [ %i.b, %bb.b ], [ 0, %bb.a ]
   %.0 = zext nneg i8 %.0.shrunk to i32
   ret i32 %.0
 }
@@ -556,89 +554,77 @@ define dso_local void @credential_write(ptr nofree noundef readonly captures(non
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 116 ; 4 uses
   switch i32 %2, label %credential_has_capability.exit.thread [
-    i32 2, label %3
+    i32 2, label %credential_has_capability.exit
     i32 3, label %bb.b
   ]
 
-3:                                                ; preds = %bb.a
-  %4 = load i8, ptr %i.a, align 4
-  br label %credential_has_capability.exit
-
 bb.b:                                             ; preds = %bb.a
-  %i.b = load i8, ptr %i.a, align 4               ; 2 uses
-  %i.c = and i8 %i.b, 1
-  %.not.i = icmp eq i8 %i.c, 0
-  %5 = lshr i8 %i.b, 1
-  br i1 %.not.i, label %credential_has_capability.exit.thread.thread.a, label %credential_has_capability.exit
+  %i.b = load i8, ptr %i.a, align 4
+  %i.c = and i8 %i.b, 3
+  %.not.i = icmp eq i8 %i.c, 3
+  br i1 %.not.i, label %credential_write_item.exit, label %credential_has_capability.exit.thread.thread.a
 
 credential_has_capability.exit.thread.thread.a:   ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 120
   br label %bb.c
 
-credential_has_capability.exit:                   ; preds = %bb.b, %3
-  %.0.shrunk.i.in = phi i8 [ %5, %bb.b ], [ %4, %3 ]
-  %.0.shrunk.i = and i8 %.0.shrunk.i.in, 1
+credential_has_capability.exit:                   ; preds = %bb.a
+  %3 = load i8, ptr %i.a, align 4
+  %.0.shrunk.i = and i8 %3, 1
   %.not.a = icmp eq i8 %.0.shrunk.i, 0
-  br i1 %.not.a, label %credential_has_capability.exit.thread, label %credential_write_item.exit
+  br i1 %.not.a, label %credential_has_capability.exit.thread.thread, label %credential_write_item.exit
 
-credential_write_item.exit:                       ; preds = %credential_has_capability.exit
+credential_has_capability.exit.thread.thread:     ; preds = %credential_has_capability.exit
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 120
+  br label %credential_has_capability.exit74
+
+credential_write_item.exit:                       ; preds = %bb.b, %credential_has_capability.exit
   %i.e = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.1) #18 ; 0 uses
   br label %credential_has_capability.exit.thread
 
-credential_has_capability.exit.thread:            ; preds = %bb.a, %credential_write_item.exit, %credential_has_capability.exit
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 4 uses
+credential_has_capability.exit.thread:            ; preds = %bb.a, %credential_write_item.exit
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
   switch i32 %2, label %credential_has_capability.exit84.thread [
-    i32 2, label %6
+    i32 2, label %credential_has_capability.exit74
     i32 3, label %bb.c
   ]
 
-6:                                                ; preds = %credential_has_capability.exit.thread
-  %7 = load i8, ptr %i.f, align 4
-  br label %credential_has_capability.exit74
-
 bb.c:                                             ; preds = %credential_has_capability.exit.thread.thread.a, %credential_has_capability.exit.thread
   %i.g = phi ptr [ %i.d, %credential_has_capability.exit.thread.thread.a ], [ %i.f, %credential_has_capability.exit.thread ] ; 3 uses
-  %i.h = load i8, ptr %i.g, align 4               ; 2 uses
-  %i.i = and i8 %i.h, 1
-  %.not.i69 = icmp eq i8 %i.i, 0
-  %8 = lshr i8 %i.h, 1
-  br i1 %.not.i69, label %credential_has_capability.exit74.thread.thread, label %credential_has_capability.exit74
+  %i.h = load i8, ptr %i.g, align 4
+  %i.i = and i8 %i.h, 3
+  %.not.i69 = icmp eq i8 %i.i, 3
+  br i1 %.not.i69, label %bb.d, label %credential_has_capability.exit74.thread.thread
 
-credential_has_capability.exit74:                 ; preds = %bb.c, %6
-  %i.j = phi ptr [ %i.g, %bb.c ], [ %i.f, %6 ]    ; 2 uses
-  %.0.shrunk.i72.in = phi i8 [ %8, %bb.c ], [ %7, %6 ]
-  %.0.shrunk.i72 = and i8 %.0.shrunk.i72.in, 1
+credential_has_capability.exit74:                 ; preds = %credential_has_capability.exit.thread, %credential_has_capability.exit.thread.thread
+  %i.j = phi ptr [ %4, %credential_has_capability.exit.thread.thread ], [ %i.f, %credential_has_capability.exit.thread ] ; 3 uses
+  %5 = load i8, ptr %i.j, align 4
+  %.0.shrunk.i72 = and i8 %5, 1
   %.not63 = icmp eq i8 %.0.shrunk.i72, 0
-  br i1 %.not63, label %credential_has_capability.exit74.thread, label %credential_write_item.exit78
+  br i1 %.not63, label %credential_has_capability.exit84, label %credential_write_item.exit78
 
 credential_write_item.exit78:                     ; preds = %credential_has_capability.exit74
   %i.k = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.2) #18 ; 0 uses
-  br label %credential_has_capability.exit74.thread
-
-credential_has_capability.exit74.thread:          ; preds = %credential_write_item.exit78, %credential_has_capability.exit74
-  %9 = icmp eq i32 %2, 2
-  br i1 %9, label %bb.d, label %credential_has_capability.exit74.thread.thread
-
-bb.d:                                             ; preds = %credential_has_capability.exit74.thread
-  %10 = load i8, ptr %i.a, align 4
   br label %credential_has_capability.exit84
 
-credential_has_capability.exit74.thread.thread:   ; preds = %credential_has_capability.exit74.thread, %bb.c
-  %11 = phi ptr [ %i.j, %credential_has_capability.exit74.thread ], [ %i.g, %bb.c ] ; 2 uses
-  %i.l = load i8, ptr %i.a, align 4               ; 2 uses
-  %i.m = and i8 %i.l, 1
-  %.not.i79 = icmp eq i8 %i.m, 0
-  %12 = lshr i8 %i.l, 1
-  br i1 %.not.i79, label %credential_has_capability.exit84.thread, label %credential_has_capability.exit84
+bb.d:                                             ; preds = %bb.c
+  %6 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %1, ptr noundef nonnull @.str.32, ptr noundef nonnull @.str.13, ptr noundef nonnull @.str.2) #18 ; 0 uses
+  br label %credential_has_capability.exit74.thread.thread
 
-credential_has_capability.exit84:                 ; preds = %credential_has_capability.exit74.thread.thread, %bb.d
-  %13 = phi ptr [ %11, %credential_has_capability.exit74.thread.thread ], [ %i.j, %bb.d ] ; 3 uses
-  %.0.shrunk.i82.in = phi i8 [ %12, %credential_has_capability.exit74.thread.thread ], [ %10, %bb.d ]
-  %.0.shrunk.i82 = and i8 %.0.shrunk.i82.in, 1
+credential_has_capability.exit74.thread.thread:   ; preds = %bb.c, %bb.d
+  %i.l = load i8, ptr %i.a, align 4
+  %i.m = and i8 %i.l, 3
+  %.not.i79 = icmp eq i8 %i.m, 3
+  br i1 %.not.i79, label %bb.e, label %credential_has_capability.exit84.thread
+
+credential_has_capability.exit84:                 ; preds = %credential_has_capability.exit74, %credential_write_item.exit78
+  %7 = load i8, ptr %i.a, align 4
+  %.0.shrunk.i82 = and i8 %7, 1
   %.not64 = icmp eq i8 %.0.shrunk.i82, 0
   br i1 %.not64, label %credential_has_capability.exit84.thread, label %bb.e
 
-bb.e:                                             ; preds = %credential_has_capability.exit84
+bb.e:                                             ; preds = %credential_has_capability.exit74.thread.thread, %credential_has_capability.exit84
+  %8 = phi ptr [ %i.g, %credential_has_capability.exit74.thread.thread ], [ %i.j, %credential_has_capability.exit84 ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !29   ; 4 uses
   %i.p = icmp eq ptr %i.o, null
@@ -720,7 +706,7 @@ credential_write_item.exit96:                     ; preds = %credential_write_it
   br label %credential_has_capability.exit84.thread
 
 credential_has_capability.exit84.thread:          ; preds = %credential_has_capability.exit74.thread.thread, %credential_has_capability.exit.thread, %credential_write_item.exit92, %credential_write_item.exit96, %credential_has_capability.exit84
-  %i.aj = phi ptr [ %i.f, %credential_has_capability.exit.thread ], [ %11, %credential_has_capability.exit74.thread.thread ], [ %13, %credential_write_item.exit92 ], [ %13, %credential_write_item.exit96 ], [ %13, %credential_has_capability.exit84 ] ; 2 uses
+  %i.aj = phi ptr [ %i.f, %credential_has_capability.exit.thread ], [ %i.j, %credential_has_capability.exit84 ], [ %8, %credential_write_item.exit92 ], [ %8, %credential_write_item.exit96 ], [ %i.g, %credential_has_capability.exit74.thread.thread ] ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !24
   tail call fastcc void @credential_write_item(ptr noundef %0, ptr noundef %1, ptr noundef nonnull @.str.7, ptr noundef %i.al, i32 noundef 1)
@@ -924,24 +910,19 @@ bb.aw:                                            ; preds = %credential_write_it
 
 ._crit_edge:                                      ; preds = %credential_write_item.exit126, %bb.aw
   switch i32 %2, label %credential_has_capability.exit122.thread [
-    i32 2, label %14
+    i32 2, label %credential_has_capability.exit122
     i32 3, label %bb.ax
   ]
 
-14:                                               ; preds = %._crit_edge
-  %15 = load i8, ptr %i.aj, align 4
-  br label %credential_has_capability.exit122
-
 bb.ax:                                            ; preds = %._crit_edge
-  %i.cm = load i8, ptr %i.aj, align 4             ; 2 uses
-  %i.cn = and i8 %i.cm, 1
-  %.not.i117 = icmp eq i8 %i.cn, 0
-  %16 = lshr i8 %i.cm, 1
-  br i1 %.not.i117, label %credential_has_capability.exit122.thread, label %credential_has_capability.exit122
+  %i.cm = load i8, ptr %i.aj, align 4
+  %i.cn = and i8 %i.cm, 3
+  %.not.i117 = icmp eq i8 %i.cn, 3
+  br i1 %.not.i117, label %bb.bf, label %credential_has_capability.exit122.thread
 
-credential_has_capability.exit122:                ; preds = %bb.ax, %14
-  %.0.shrunk.i120.in = phi i8 [ %16, %bb.ax ], [ %15, %14 ]
-  %.0.shrunk.i120 = and i8 %.0.shrunk.i120.in, 1
+credential_has_capability.exit122:                ; preds = %._crit_edge
+  %9 = load i8, ptr %i.aj, align 4
+  %.0.shrunk.i120 = and i8 %9, 1
   %.not67 = icmp eq i8 %.0.shrunk.i120, 0
   br i1 %.not67, label %credential_has_capability.exit122.thread, label %bb.bf
 
@@ -991,7 +972,7 @@ credential_write_item.exit126:                    ; preds = %bb.ay, %bb.be
   %i.db = icmp ult i64 %i.da, %i.cy
   br i1 %i.db, label %bb.ay, label %._crit_edge, !llvm.loop !44
 
-bb.bf:                                            ; preds = %credential_has_capability.exit122
+bb.bf:                                            ; preds = %bb.ax, %credential_has_capability.exit122
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.dd = load i16, ptr %i.dc, align 8
   %i.de = and i16 %i.dd, 16
