@@ -1,0 +1,1167 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index b7b442f64fda06..cee6e4a92ef067 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -205,6 +205,17 @@ static cl::opt<unsigned> MaxJumpThreadingLiveBlocks(
+     cl::desc("Limit number of blocks a define in a threaded block is allowed "
+              "to be live in"));
+ 
++static cl::opt<unsigned> MaxConstTableSwitchElts(
++    "max-const-table-switch-elts", cl::Hidden, cl::init(32),
++    cl::desc(
++        "Limit number of const table elements to consider before folding the "
++        "table into a switch"));
++
++static cl::opt<unsigned> MaxLookupTablesPerConstTableSwitch(
++    "max-lookup-tables-per-const-table-switch", cl::Hidden, cl::init(3),
++    cl::desc("Limit number of lookup tables introduced per const table lookup "
++             "switch"));
++
+ extern cl::opt<bool> ProfcheckDisableMetadataFixes;
+ 
+ } // end namespace llvm
+@@ -218,6 +229,8 @@ STATISTIC(
+     NumLookupTablesHoles,
+     "Number of switch instructions turned into lookup tables (holes checked)");
+ STATISTIC(NumTableCmpReuses, "Number of reused switch table lookup compares");
++STATISTIC(NumSwitchOnConstTableLoad,
++          "Number of switches on a constant table load folded into the table");
+ STATISTIC(NumFoldValueComparisonIntoPredecessors,
+           "Number of value comparisons folded into predecessor basic blocks");
+ STATISTIC(NumFoldBranchToCommonDest,
+@@ -7056,6 +7069,8 @@ class SwitchReplacement {
+   /// Return true if a suitable switch replacement was found.
+   bool isValid() const { return Kind != InvalidKind; }
+ 
++  const Constant *getLookupTableInitializer() { return Initializer; }
++
+ private:
+   // Depending on the switch, there are different alternatives.
+   enum {
+@@ -7579,6 +7594,202 @@ static void reuseTableCompare(
+   }
+ }
+ 
++static bool isOnlyUsedByLoad(const GlobalVariable *GV, const LoadInst *LI) {
++  SmallVector<const User *, 8> Worklist(GV->users());
++  while (!Worklist.empty()) {
++    const User *U = Worklist.pop_back_val();
++    if (U == LI)
++      continue;
++    if (isa<GEPOperator>(U)) {
++      append_range(Worklist, U->users());
++      continue;
++    }
++    return false;
++  }
++  return true;
++}
++
++/// If the switch is on a load from a const global and the switch branches only
++/// update PHIs in a common destination block with constants, transform the
++/// original const global to globals with the constants passed to the PHIs, and
++/// convert the PHIs to reads from the globals.
++/// See `SimpifyCFG/switch-to-table-N.ll` tests for examples.
++static bool foldSwitchOnConstTableLoad(SwitchInst *SI, IRBuilder<> &Builder,
++                                       DomTreeUpdater *DTU,
++                                       const DataLayout &DL,
++                                       const TargetTransformInfo &TTI,
++                                       bool ConvertSwitchToLookupTable) {
++  auto *LI = dyn_cast<LoadInst>(SI->getCondition());
++  if (!LI || LI->isVolatile())
++    return false;
++
++  // Check the underlying object before decomposing the pointer:
++  // `decomposeLinearExpression` doesn't terminate on cyclic GEPs, which can
++  // appear in blocks that become unreachable during SimplifyCFG.
++  auto *GV =
++      dyn_cast<GlobalVariable>(getUnderlyingObject(LI->getPointerOperand()));
++  if (!GV || !GV->isConstant() || !GV->hasDefinitiveInitializer())
++    return false;
++
++  // Load offset = LIOperand.Offset + (LIOperand.Index * LIOperand.Scale)
++  LinearExpression LIOperand =
++      decomposeLinearExpression(DL, LI->getPointerOperand());
++
++  if (!LIOperand.Flags.isInBounds()) {
++    // We could still do this if
++    // - Scales of the original table and the new tables are the same.
++    // - Offset is 0.
++    // We'd also need to generate `inbounds` only if the original GEP has one.
++    // (currently `replaceSwitch` generates `inbounds` always)
++    return false;
++  }
++
++  if (LIOperand.BasePtr != GV || !LIOperand.Index)
++    return false;
++
++  // Because we map indices of the old global to indices of the new global
++  // directly, we can't handle the cases where the offset skips an element or
++  // more.
++  // Single ult below as shorthand for `0 <= offset && offset < scale`.
++  if (!LIOperand.Offset.ult(LIOperand.Scale))
++    return false;
++
++  Type *LoadEltTy = LI->getType();
++  const TypeSize GVSize = DL.getTypeAllocSize(GV->getValueType());
++  const TypeSize LoadSize = DL.getTypeStoreSize(LoadEltTy);
++
++  // Check that we can make at least one load.
++  if (LIOperand.Offset.getZExtValue() + LoadSize > GVSize)
++    return false;
++
++  Constant *Init = GV->getInitializer();
++  BasicBlock *CommonDest = nullptr;
++
++  // Maps loaded elements to the values of PHIs at the destination block
++  // (`CommonDest`) of the `switch`.
++  using ResultsTy = SmallVector<std::pair<PHINode *, Constant *>, 4>;
++  SmallVector<ResultsTy, 64> EltResults;
++
++  const uint64_t Scale = LIOperand.Scale.getZExtValue();
++
++  // `Offset + LoadSize <= GVSize` checked above.
++  const uint64_t NumElts =
++      ((GVSize.getFixedValue() - LIOperand.Offset.getZExtValue() - LoadSize) /
++       Scale) +
++      1;
++
++  if (NumElts > MaxConstTableSwitchElts)
++    return false;
++
++  // NB. We check above that offset < scale, so we don't have to consider
++  // negative indices here and we can start at offset.
++  for (uint64_t I = 0; I < NumElts; I += 1) {
++    APInt Offset = LIOperand.Offset + (I * Scale);
++
++    auto *Elt = dyn_cast_or_null<ConstantInt>(
++        ConstantFoldLoadFromConst(Init, LoadEltTy, Offset, DL));
++
++    if (!Elt)
++      return false;
++
++    auto Case = SI->findCaseValue(Elt);
++
++    ResultsTy Results;
++    if (!getCaseResults(SI, Elt, Case->getCaseSuccessor(), &CommonDest, Results,
++                        DL))
++      return false;
++    EltResults.push_back(std::move(Results));
++  }
++
++  // PHIs at the destination that'll be reading a lookup table.
++  // NB. We rely on EltResults having the the PHIs in the same order each of the
++  // results vector here and below.
++  SmallVector<PHINode *, 4> PHIs;
++  for (const auto &[PHI, _] : EltResults.front())
++    PHIs.push_back(PHI);
++
++  // Create replacements for the PHIs at the destination.
++  Function *Fn = SI->getFunction();
++  Module &M = *Fn->getParent();
++  Type *IndexTy = LIOperand.Index->getType();
++  SmallVector<SwitchReplacement, 4> Replacements;
++  for (auto [PhiIdx, PHI] : enumerate(PHIs)) {
++    SmallVector<std::pair<ConstantInt *, Constant *>, 64> Values;
++    for (auto [I, Results] : enumerate(EltResults))
++      Values.emplace_back(cast<ConstantInt>(ConstantInt::get(IndexTy, I)),
++                          Results[PhiIdx].second);
++    Constant *Poison = PoisonValue::get(PHI->getType());
++    SwitchReplacement Replacement(
++        M, NumElts, cast<ConstantInt>(ConstantInt::get(IndexTy, 0)), Values,
++        Poison, DL, TTI, Fn->getName());
++    if (!Replacement.isValid())
++      return false;
++    Replacements.emplace_back(Replacement);
++  }
++
++  // When optimizing for size make sure we don't introduce more global data than
++  // we remove.
++  if (Fn->hasOptSize()) {
++    uint64_t AddedBytes = 0;
++    for (auto &R : Replacements) {
++      if (R.isLookupTable()) {
++        AddedBytes +=
++            DL.getTypeAllocSize(R.getLookupTableInitializer()->getType())
++                .getFixedValue();
++      }
++    }
++    uint64_t RemovedBytes =
++        GV->hasLocalLinkage() && isOnlyUsedByLoad(GV, LI) && LI->hasOneUser()
++            ? GVSize.getFixedValue()
++            : 0;
++    if (AddedBytes > RemovedBytes)
++      return false;
++  }
++
++  // In all optimization levels: limit number of lookup tables introduced per
++  // switch.
++  unsigned NumLookupTables = 0;
++  for (auto &Replacement : Replacements) {
++    if (Replacement.isLookupTable()) {
++      NumLookupTables += 1;
++    }
++  }
++  if (NumLookupTables > MaxLookupTablesPerConstTableSwitch)
++    return false;
++
++  // Branch to a new block that reads the results from the new globals and jumps
++  // to `CommonDest`.
++  BasicBlock *BB = SI->getParent();
++  BasicBlock *LookupBB =
++      BasicBlock::Create(M.getContext(), "switch.lookup", Fn, CommonDest);
++  Builder.SetInsertPoint(SI);
++  Builder.CreateBr(LookupBB);
++  Builder.SetInsertPoint(LookupBB);
++  for (auto [PHI, Replacement] : zip(PHIs, Replacements))
++    PHI->addIncoming(
++        Replacement.replaceSwitch(LIOperand.Index, Builder, DL, Fn), LookupBB);
++  Builder.CreateBr(CommonDest);
++
++  // Remove the switch.
++  std::vector<DominatorTree::UpdateType> Updates;
++  SmallPtrSet<BasicBlock *, 8> RemovedSuccessors;
++  for (BasicBlock *Succ : successors(SI)) {
++    Succ->removePredecessor(BB, /*KeepOneInputPHIs=*/true);
++    if (RemovedSuccessors.insert(Succ).second)
++      Updates.push_back({DominatorTree::Delete, BB, Succ});
++  }
++  SI->eraseFromParent();
++
++  if (DTU) {
++    Updates.push_back({DominatorTree::Insert, BB, LookupBB});
++    Updates.push_back({DominatorTree::Insert, LookupBB, CommonDest});
++    DTU->applyUpdates(Updates);
++  }
++
++  ++NumSwitchOnConstTableLoad;
++  return true;
++}
++
+ /// If the switch is only used to initialize one or more phi nodes in a common
+ /// successor block with different constant values, replace the switch with
+ /// lookup tables.
+@@ -8647,6 +8858,10 @@ bool SimplifyCFGOpt::simplifySwitch(SwitchInst *SI, IRBuilder<> &Builder) {
+   if (Options.ForwardSwitchCondToPhi && forwardSwitchConditionToPHI(SI))
+     return requestResimplify();
+ 
++  if (foldSwitchOnConstTableLoad(SI, Builder, DTU, DL, TTI,
++                                 Options.ConvertSwitchToLookupTable))
++    return requestResimplify();
++
+   // The conversion of switches to arithmetic or lookup table is disabled in
+   // the early optimization pipeline, as it may lose information or make the
+   // resulting code harder to analyze.
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-1.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-1.ll
+new file mode 100644
+index 00000000000000..e19e654de68b59
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-1.ll
+@@ -0,0 +1,48 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; elems   = [  0,  5,  6,  1,  7,  8,  2,  9, 10,  3, 11, 12,  4,  4,  4,  4, 13, 14, 15, 16, 17, 18 ]
++; indices = [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
++@table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++
++;.
++; CHECK: @table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++; CHECK: @switch.table.test1 = private unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\03\03\03\03\03\03\0D\0E\0F\10\09\0A", align 1
++;.
++define i8 @test1(i64 %idx) {
++; CHECK-LABEL: define i8 @test1(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr @table1, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.test1, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i8, ptr [[SWITCH_GEP]], align 1
++; CHECK-NEXT:    ret i8 [[SWITCH_LOAD]]
++;
++entry:
++  %gep = getelementptr inbounds i8, ptr @table1, i64 %idx
++  %v = load i8, ptr %gep, align 1
++  switch i8 %v, label %sw.default [
++  i8 4, label %exit
++  i8 12, label %exit
++  i8 11, label %exit
++  i8 18, label %sw.bb1
++  i8 17, label %sw.bb2
++  ]
++
++sw.bb1:
++  br label %exit
++
++sw.bb2:
++  br label %exit
++
++sw.default:
++  br label %exit
++
++exit:
++  %r = phi i8 [ %v, %sw.default ], [ 9, %sw.bb2 ], [ 10, %sw.bb1 ], [ 3, %entry ], [ 3, %entry ], [ 3, %entry ]
++  ret i8 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-10.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-10.ll
+new file mode 100644
+index 00000000000000..cfa6105b7f4dcc
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-10.ll
+@@ -0,0 +1,64 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; Similar to switch-to-table-9.ll, but the extra argument to the PHI is not constant.
++
++; elems   = [  0,  5,  6,  1,  7,  8,  2,  9, 10,  3, 11, 12,  4,  4,  4,  4, 13, 14, 15, 16, 17, 18 ]
++; indices = [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
++@table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++
++;.
++; CHECK: @table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++; CHECK: @switch.table.test_exra_phi_argument_variable = private unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\03\03\03\03\03\03\0D\0E\0F\10\09\0A", align 1
++;.
++define i8 @test_exra_phi_argument_variable(i1 %c, i64 %i, ptr %p, ptr %q) {
++; CHECK-LABEL: define i8 @test_exra_phi_argument_variable(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[I:%.*]], ptr [[P:%.*]], ptr [[Q:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[GEP0:%.*]] = getelementptr inbounds nuw i8, ptr @table1, i64 [[I]]
++; CHECK-NEXT:    [[V0:%.*]] = load i8, ptr [[GEP0]], align 1
++; CHECK-NEXT:    [[I1:%.*]] = add i64 [[I]], 1
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOKUP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOKUP]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr @table1, i64 [[I1]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.test_exra_phi_argument_variable, i64 0, i64 [[I1]]
++; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i8, ptr [[SWITCH_GEP]], align 1
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i8 [ [[V0]], %[[ENTRY]] ], [ [[SWITCH_LOAD]], %[[LOOKUP]] ]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  %gep0 = getelementptr inbounds nuw i8, ptr @table1, i64 %i
++  %v0 = load i8, ptr %gep0
++  %i1 = add i64 %i, 1
++  br i1 %c, label %lookup, label %exit
++
++lookup:
++  %gep = getelementptr inbounds nuw i8, ptr @table1, i64 %i1
++  %v = load i8, ptr %gep
++  switch i8 %v, label %default [
++  i8 4, label %exit
++  i8 12, label %exit
++  i8 11, label %exit
++  i8 18, label %bb1
++  i8 17, label %bb2
++  ]
++
++bb1:
++  br label %exit
++
++bb2:
++  br label %exit
++
++default:
++  br label %exit
++
++exit:
++  %r = phi i8 [ %v0, %entry ], [ 3, %lookup ], [ 3, %lookup ], [ 3, %lookup ], [ 10, %bb1 ], [ 9, %bb2 ], [ %v, %default ]
++  ret i8 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-11.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-11.ll
+new file mode 100644
+index 00000000000000..a009213d40bf41
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-11.ll
+@@ -0,0 +1,92 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; This could potentially be implemented in a different pass: `%p.phi` takes the
++; same value in the paths from the `switch`, so the table can be kept as-is and
++; the PHI can be turned into a two-argument one:
++;     %p.phi = phi ptr [ %q  %entry ], [ %p, %lookup ]
++; Note that even a full `default<O3>` doesn't do this optimization.
++
++; elems   = [  0,  5,  6,  1,  7,  8,  2,  9, 10,  3, 11, 12,  4,  4,  4,  4, 13, 14, 15, 16, 17, 18 ]
++; indices = [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
++@table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++
++;.
++; CHECK: @table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++;.
++define i8 @test_missed_optimization(i1 %c, i64 %i, ptr %p, ptr %q) {
++; CHECK-LABEL: define i8 @test_missed_optimization(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[I:%.*]], ptr [[P:%.*]], ptr [[Q:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOKUP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOKUP]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr @table1, i64 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    switch i8 [[V]], label %[[DEFAULT:.*]] [
++; CHECK-NEXT:      i8 4, label %[[EXIT]]
++; CHECK-NEXT:      i8 12, label %[[EXIT]]
++; CHECK-NEXT:      i8 11, label %[[EXIT]]
++; CHECK-NEXT:      i8 18, label %[[SW_BB1:.*]]
++; CHECK-NEXT:      i8 17, label %[[SW_BB2:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[SW_BB1]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[SW_BB2]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[DEFAULT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i8 [ 0, %[[ENTRY]] ], [ 3, %[[LOOKUP]] ], [ 3, %[[LOOKUP]] ], [ 3, %[[LOOKUP]] ], [ 10, %[[SW_BB1]] ], [ 9, %[[SW_BB2]] ], [ [[V]], %[[DEFAULT]] ]
++; CHECK-NEXT:    [[P_PHI:%.*]] = phi ptr [ [[Q]], %[[ENTRY]] ], [ [[P]], %[[LOOKUP]] ], [ [[P]], %[[LOOKUP]] ], [ [[P]], %[[LOOKUP]] ], [ [[P]], %[[SW_BB1]] ], [ [[P]], %[[SW_BB2]] ], [ [[P]], %[[DEFAULT]] ]
++; CHECK-NEXT:    store i8 [[R]], ptr [[P_PHI]], align 1
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  br i1 %c, label %lookup, label %exit
++
++lookup:
++  %gep = getelementptr inbounds nuw i8, ptr @table1, i64 %i
++  %v = load i8, ptr %gep
++  switch i8 %v, label %default [
++  i8 4, label %exit
++  i8 12, label %exit
++  i8 11, label %exit
++  i8 18, label %sw.bb1
++  i8 17, label %sw.bb2
++  ]
++
++sw.bb1:
++  br label %exit
++
++sw.bb2:
++  br label %exit
++
++default:
++  br label %exit
++
++exit:
++  %r = phi i8
++  [ 0, %entry ],
++  [ 3, %lookup ],
++  [ 3, %lookup ],
++  [ 3, %lookup ],
++  [ 10, %sw.bb1 ],
++  [ 9, %sw.bb2 ],
++  [ %v, %default ]
++
++  %p.phi = phi ptr
++  [ %q, %entry ],
++  [ %p, %lookup ],
++  [ %p, %lookup ],
++  [ %p, %lookup ],
++  [ %p, %sw.bb1 ],
++  [ %p, %sw.bb2 ],
++  [ %p, %default ]
++
++  store i8 %r, ptr %p.phi
++
++  ret i8 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-12.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-12.ll
+new file mode 100644
+index 00000000000000..f0631480f32b25
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-12.ll
+@@ -0,0 +1,117 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; Test the default limit on the number of lookup tables introduced per switch
++; (`-max-lookup-tables-per-const-table-switch`, 3 by default): three PHIs at
++; the destination are folded into three tables, four PHIs are not folded.
++
++; elems   = [  0,  5,  6,  1,  7,  8,  2,  9, 10,  3, 11, 12,  4,  4,  4,  4, 13, 14, 15, 16, 17, 18 ]
++; indices = [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
++@table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++
++;.
++; CHECK: @table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++; CHECK: @switch.table.three_phis = private unnamed_addr constant [22 x i8] c"aaaaaaaaaaa\14\0A\0A\0A\0Aaaaa\1Ea", align 4
++; CHECK: @switch.table.three_phis.1 = private unnamed_addr constant [22 x i8] c"AAAAAAAAAAA\03\07\07\07\07AAAA\09A", align 4
++; CHECK: @switch.table.three_phis.2 = private unnamed_addr constant [22 x i8] c"22222222222\08\01\01\01\012222\022", align 4
++;.
++define i32 @three_phis(i64 %idx) {
++; CHECK-LABEL: define i32 @three_phis(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr @table1, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.three_phis, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i8, ptr [[SWITCH_GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_EXT:%.*]] = zext i8 [[SWITCH_LOAD]] to i32
++; CHECK-NEXT:    [[SWITCH_GEP1:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.three_phis.1, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD2:%.*]] = load i8, ptr [[SWITCH_GEP1]], align 1
++; CHECK-NEXT:    [[SWITCH_EXT3:%.*]] = zext i8 [[SWITCH_LOAD2]] to i32
++; CHECK-NEXT:    [[SWITCH_GEP4:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.three_phis.2, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD5:%.*]] = load i8, ptr [[SWITCH_GEP4]], align 1
++; CHECK-NEXT:    [[SWITCH_EXT6:%.*]] = zext i8 [[SWITCH_LOAD5]] to i32
++; CHECK-NEXT:    [[AB:%.*]] = add i32 [[SWITCH_EXT]], [[SWITCH_EXT3]]
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[AB]], [[SWITCH_EXT6]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++entry:
++  %gep = getelementptr inbounds i8, ptr @table1, i64 %idx
++  %v = load i8, ptr %gep, align 1
++  switch i8 %v, label %def [
++  i8 4, label %c0
++  i8 12, label %c1
++  i8 17, label %c2
++  ]
++c0:
++  br label %end
++c1:
++  br label %end
++c2:
++  br label %end
++def:
++  br label %end
++end:
++  %a = phi i32 [ 10, %c0 ], [ 20, %c1 ], [ 30, %c2 ], [ 97, %def ]
++  %b = phi i32 [ 7, %c0 ], [ 3, %c1 ], [ 9, %c2 ], [ 65, %def ]
++  %c = phi i32 [ 1, %c0 ], [ 8, %c1 ], [ 2, %c2 ], [ 50, %def ]
++  %ab = add i32 %a, %b
++  %r = add i32 %ab, %c
++  ret i32 %r
++}
++
++define i32 @four_phis(i64 %idx) {
++; CHECK-LABEL: define i32 @four_phis(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr @table1, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    switch i8 [[V]], label %[[DEF:.*]] [
++; CHECK-NEXT:      i8 4, label %[[END:.*]]
++; CHECK-NEXT:      i8 12, label %[[C1:.*]]
++; CHECK-NEXT:      i8 17, label %[[C2:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[C1]]:
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[C2]]:
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[DEF]]:
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    [[A:%.*]] = phi i32 [ 97, %[[DEF]] ], [ 20, %[[C1]] ], [ 30, %[[C2]] ], [ 10, %[[ENTRY]] ]
++; CHECK-NEXT:    [[B:%.*]] = phi i32 [ 65, %[[DEF]] ], [ 3, %[[C1]] ], [ 9, %[[C2]] ], [ 7, %[[ENTRY]] ]
++; CHECK-NEXT:    [[C:%.*]] = phi i32 [ 50, %[[DEF]] ], [ 8, %[[C1]] ], [ 2, %[[C2]] ], [ 1, %[[ENTRY]] ]
++; CHECK-NEXT:    [[D:%.*]] = phi i32 [ 33, %[[DEF]] ], [ 11, %[[C1]] ], [ 6, %[[C2]] ], [ 40, %[[ENTRY]] ]
++; CHECK-NEXT:    [[AB:%.*]] = add i32 [[A]], [[B]]
++; CHECK-NEXT:    [[CD:%.*]] = add i32 [[C]], [[D]]
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[AB]], [[CD]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++entry:
++  %gep = getelementptr inbounds i8, ptr @table1, i64 %idx
++  %v = load i8, ptr %gep, align 1
++  switch i8 %v, label %def [
++  i8 4, label %c0
++  i8 12, label %c1
++  i8 17, label %c2
++  ]
++c0:
++  br label %end
++c1:
++  br label %end
++c2:
++  br label %end
++def:
++  br label %end
++end:
++  %a = phi i32 [ 10, %c0 ], [ 20, %c1 ], [ 30, %c2 ], [ 97, %def ]
++  %b = phi i32 [ 7, %c0 ], [ 3, %c1 ], [ 9, %c2 ], [ 65, %def ]
++  %c = phi i32 [ 1, %c0 ], [ 8, %c1 ], [ 2, %c2 ], [ 50, %def ]
++  %d = phi i32 [ 40, %c0 ], [ 11, %c1 ], [ 6, %c2 ], [ 33, %def ]
++  %ab = add i32 %a, %b
++  %cd = add i32 %c, %d
++  %r = add i32 %ab, %cd
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-2.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-2.ll
+new file mode 100644
+index 00000000000000..d69d97bbe6fcd3
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-2.ll
+@@ -0,0 +1,56 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; Similar to switch-to-table-1.ll, but update multiple PHIs at the destination.
++
++; elems   = [  0,  5,  6,  1,  7,  8,  2,  9, 10,  3, 11, 12,  4,  4,  4,  4, 13, 14, 15, 16, 17, 18 ]
++; indices = [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
++@table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++
++;.
++; CHECK: @table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++; CHECK: @switch.table.test2 = private unnamed_addr constant [22 x i8] c"aaaaaaaaaaa\14\0A\0A\0A\0Aaaaa\1Ea", align 4
++; CHECK: @switch.table.test2.1 = private unnamed_addr constant [22 x i8] c"AAAAAAAAAAA\03\07\07\07\07AAAA\09A", align 2
++;.
++define i32 @test2(i64 %idx, ptr %out) {
++; CHECK-LABEL: define i32 @test2(
++; CHECK-SAME: i64 [[IDX:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr @table1, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.test2, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i8, ptr [[SWITCH_GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_EXT:%.*]] = zext i8 [[SWITCH_LOAD]] to i32
++; CHECK-NEXT:    [[SWITCH_GEP1:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.test2.1, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD2:%.*]] = load i8, ptr [[SWITCH_GEP1]], align 1
++; CHECK-NEXT:    [[SWITCH_EXT3:%.*]] = zext i8 [[SWITCH_LOAD2]] to i16
++; CHECK-NEXT:    [[BZ:%.*]] = zext i16 [[SWITCH_EXT3]] to i32
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[SWITCH_EXT]], [[BZ]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++entry:
++  %gep = getelementptr inbounds i8, ptr @table1, i64 %idx
++  %v = load i8, ptr %gep, align 1
++  switch i8 %v, label %def [
++  i8 4, label %c0
++  i8 12, label %c1
++  i8 17, label %c2
++  ]
++c0:
++  br label %end
++c1:
++  br label %end
++c2:
++  br label %end
++def:
++  br label %end
++end:
++  %a = phi i32 [ 10, %c0 ], [ 20, %c1 ], [ 30, %c2 ], [ 97, %def ]
++  %b = phi i16 [ 7, %c0 ], [ 3, %c1 ], [ 9, %c2 ], [ 65, %def ]
++  %bz = zext i16 %b to i32
++  %r = add i32 %a, %bz
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-3.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-3.ll
+new file mode 100644
+index 00000000000000..656ee2045c7f31
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-3.ll
+@@ -0,0 +1,47 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; Same as switch-to-table-1.ll, but with a `switch` with a value that's not in the original table.
++
++; elems   = [  0,  5,  6,  1,  7,  8,  2,  9, 10,  3, 11, 12,  4,  4,  4,  4, 13, 14, 15, 16, 17, 18 ]
++; indices = [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
++@table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++
++;.
++; CHECK: @table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++; CHECK: @switch.table.test3 = private unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\0A\0A\0A\0A\0D\0E\0F\10\11\12", align 1
++;.
++define i8 @test3(i64 %idx) {
++; CHECK-LABEL: define i8 @test3(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr @table1, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.test3, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i8, ptr [[SWITCH_GEP]], align 1
++; CHECK-NEXT:    ret i8 [[SWITCH_LOAD]]
++;
++entry:
++  %gep = getelementptr inbounds i8, ptr @table1, i64 %idx
++  %v = load i8, ptr %gep, align 1
++  switch i8 %v, label %sw.default [
++  i8 4, label %sw.bb1
++  i8 99, label %sw.bb2 ; not in the global
++  ]
++
++sw.bb1:
++  br label %exit
++
++sw.bb2:
++  br label %exit
++
++sw.default:
++  br label %exit
++
++exit:
++  %r = phi i8 [ %v, %sw.default ], [ 10, %sw.bb1 ], [ 123, %sw.bb2 ]
++  ret i8 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-4.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-4.ll
+new file mode 100644
+index 00000000000000..b061496c5e9ee5
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-4.ll
+@@ -0,0 +1,48 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; Read a larger value than the global's element size.
++
++; elems   = [  0,  5,  6,  1,  7,  8,  2,  9, 10,  3, 11, 12,  4,  4,  4,  4, 13, 14, 15, 16, 17, 18 ]
++; indices = [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
++@table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++
++;.
++; CHECK: @table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++; CHECK: @switch.table.test4 = private unnamed_addr constant [5 x i32] [i32 17171712, i32 151128071, i32 202048266, i32 67372036, i32 269422093], align 4
++;.
++define i32 @test4(i64 %idx) {
++; CHECK-LABEL: define i32 @test4(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr @table1, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [5 x i32], ptr @switch.table.test4, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i32, ptr [[SWITCH_GEP]], align 4
++; CHECK-NEXT:    ret i32 [[SWITCH_LOAD]]
++;
++entry:
++  %gep = getelementptr inbounds i32, ptr @table1, i64 %idx
++  %v = load i32, ptr %gep, align 1
++  switch i32 %v, label %sw.default [
++  i32 0, label %sw.bb1
++  i32 5, label %sw.bb2
++  i32 10000000, label %sw.bb2
++  ]
++
++sw.bb1:
++  br label %exit
++
++sw.bb2:
++  br label %exit
++
++sw.default:
++  br label %exit
++
++exit:
++  %r = phi i32 [ %v, %sw.default ], [ 10, %sw.bb1 ], [ 123, %sw.bb2 ]
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-5.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-5.ll
+new file mode 100644
+index 00000000000000..d21908b481e2e9
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-5.ll
+@@ -0,0 +1,92 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; When offset is negative or larger than the same we currently don't transform.
++
++@table2 = internal unnamed_addr constant [4 x i8] c"\00\01\02\03"
++
++;.
++; CHECK: @table2 = internal unnamed_addr constant [4 x i8] c"\00\01\02\03"
++;.
++define i8 @pos_off(i64 %idx) {
++; CHECK-LABEL: define i8 @pos_off(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds i8, ptr @table2, i64 [[IDX]]
++; CHECK-NEXT:    [[P:%.*]] = getelementptr inbounds i8, ptr [[G]], i64 1
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    switch i8 [[V]], label %[[D:.*]] [
++; CHECK-NEXT:      i8 1, label %[[E:.*]]
++; CHECK-NEXT:      i8 2, label %[[B:.*]]
++; CHECK-NEXT:      i8 3, label %[[C:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[B]]:
++; CHECK-NEXT:    br label %[[E]]
++; CHECK:       [[C]]:
++; CHECK-NEXT:    br label %[[E]]
++; CHECK:       [[D]]:
++; CHECK-NEXT:    br label %[[E]]
++; CHECK:       [[E]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i8 [ 0, %[[D]] ], [ 20, %[[B]] ], [ 30, %[[C]] ], [ 10, %[[ENTRY]] ]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  %g = getelementptr inbounds i8, ptr @table2, i64 %idx
++  %p = getelementptr inbounds i8, ptr %g, i64 1
++  %v = load i8, ptr %p
++  switch i8 %v, label %d [
++  i8 1, label %a
++  i8 2, label %b
++  i8 3, label %c
++  ]
++a: br label %e
++b: br label %e
++c: br label %e
++d: br label %e
++e:
++  %r = phi i8 [10, %a], [20, %b], [30, %c], [0, %d]
++  ret i8 %r
++}
++
++define i8 @neg_off(i64 %idx) {
++; CHECK-LABEL: define i8 @neg_off(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds i8, ptr @table2, i64 [[IDX]]
++; CHECK-NEXT:    [[P:%.*]] = getelementptr inbounds i8, ptr [[G]], i64 -1
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    switch i8 [[V]], label %[[D:.*]] [
++; CHECK-NEXT:      i8 1, label %[[E:.*]]
++; CHECK-NEXT:      i8 2, label %[[B:.*]]
++; CHECK-NEXT:      i8 3, label %[[C:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[B]]:
++; CHECK-NEXT:    br label %[[E]]
++; CHECK:       [[C]]:
++; CHECK-NEXT:    br label %[[E]]
++; CHECK:       [[D]]:
++; CHECK-NEXT:    br label %[[E]]
++; CHECK:       [[E]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i8 [ 0, %[[D]] ], [ 20, %[[B]] ], [ 30, %[[C]] ], [ 10, %[[ENTRY]] ]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  %g = getelementptr inbounds i8, ptr @table2, i64 %idx
++  %p = getelementptr inbounds i8, ptr %g, i64 -1
++  %v = load i8, ptr %p
++  switch i8 %v, label %d [
++  i8 1, label %a
++  i8 2, label %b
++  i8 3, label %c
++  ]
++a: br label %e
++b: br label %e
++c: br label %e
++d: br label %e
++e:
++  %r = phi i8 [10, %a], [20, %b], [30, %c], [0, %d]
++  ret i8 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-6.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-6.ll
+new file mode 100644
+index 00000000000000..7d475d6574549e
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-6.ll
+@@ -0,0 +1,41 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; Byte 1 of each element is 1, 2, 3, 4; byte 0 is 0x10, 0x20, 0x30, 0x40.
++@table_i32 = internal unnamed_addr constant [4 x i32] [i32 u0x0110, i32 u0x0220, i32 u0x0330, i32 u0x0440]
++
++;.
++; CHECK: @table_i32 = internal unnamed_addr constant [4 x i32] [i32 272, i32 544, i32 816, i32 1088]
++; CHECK: @switch.table.off_within_stride = private unnamed_addr constant [4 x i8] c"\0A\14\1E\00", align 1
++;.
++define i8 @off_within_stride(i64 %idx) {
++; CHECK-LABEL: define i8 @off_within_stride(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[G:%.*]] = getelementptr inbounds i32, ptr @table_i32, i64 [[IDX]]
++; CHECK-NEXT:    [[P:%.*]] = getelementptr inbounds i8, ptr [[G]], i64 1
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [4 x i8], ptr @switch.table.off_within_stride, i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i8, ptr [[SWITCH_GEP]], align 1
++; CHECK-NEXT:    ret i8 [[SWITCH_LOAD]]
++;
++entry:
++  %g = getelementptr inbounds i32, ptr @table_i32, i64 %idx
++  %p = getelementptr inbounds i8, ptr %g, i64 1
++  %v = load i8, ptr %p
++  switch i8 %v, label %d [
++  i8 1, label %a
++  i8 2, label %b
++  i8 3, label %c
++  ]
++a: br label %e
++b: br label %e
++c: br label %e
++d: br label %e
++e:
++  %r = phi i8 [10, %a], [20, %b], [30, %c], [0, %d]
++  ret i8 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-7.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-7.ll
+new file mode 100644
+index 00000000000000..04cd45364d7f50
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-7.ll
+@@ -0,0 +1,62 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; A regression test: load is out of bounds and the program is UB. This used to
++; cause a crash.
++
++@table_test_load_size_bug = constant [1 x i32] [i32 0]
++
++;.
++; CHECK: @table_test_load_size_bug = constant [1 x i32] zeroinitializer
++;.
++define i32 @test_load_size_bug(i64 %idx) {
++; CHECK-LABEL: define i32 @test_load_size_bug(
++; CHECK-SAME: i64 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i32, ptr @table_test_load_size_bug, i64 [[IDX]]
++; CHECK-NEXT:    [[P:%.*]] = getelementptr inbounds i8, ptr [[GEP]], i64 2
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    switch i32 [[V]], label %[[DEFAULT:.*]] [
++; CHECK-NEXT:      i32 0, label %[[EXIT:.*]]
++; CHECK-NEXT:      i32 1, label %[[CASE1:.*]]
++; CHECK-NEXT:      i32 2, label %[[CASE2:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CASE1]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[CASE2]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[DEFAULT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i32 [ 30, %[[DEFAULT]] ], [ 20, %[[CASE1]] ], [ 40, %[[CASE2]] ], [ 10, %[[ENTRY]] ]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++entry:
++  %gep = getelementptr inbounds i32, ptr @table_test_load_size_bug, i64 %idx
++  %p = getelementptr inbounds i8, ptr %gep, i64 2
++  %v = load i32, ptr %p
++  switch i32 %v, label %default [
++  i32 0, label %case0
++  i32 1, label %case1
++  i32 2, label %case2
++  ]
++
++case0:
++  br label %exit
++
++case1:
++  br label %exit
++
++case2:
++  br label %exit
++
++default:
++  br label %exit
++
++exit:
++  %r = phi i32 [ 10, %case0 ], [ 20, %case1 ], [ 40, %case2 ], [ 30, %default ]
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-8.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-8.ll
+new file mode 100644
+index 00000000000000..a39ae7a0bc82d5
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-8.ll
+@@ -0,0 +1,66 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; `load` instruction have another use other than the `switch`, so under
++; `optsize` we don't create a new global as the old one would stay too,
++; increasing binary size.
++
++@table_optsize_extra_use = internal constant [8 x i8] c"\00\01\02\03\00\01\02\03"
++
++;.
++; CHECK: @table_optsize_extra_use = internal constant [8 x i8] c"\00\01\02\03\00\01\02\03"
++;.
++define i8 @optsize_load_extra_use(i64 %idx, ptr %out) optsize {
++; CHECK-LABEL: define i8 @optsize_load_extra_use(
++; CHECK-SAME: i64 [[IDX:%.*]], ptr [[OUT:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr @table_optsize_extra_use, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    store i8 [[V]], ptr [[OUT]], align 1
++; CHECK-NEXT:    switch i8 [[V]], label %[[DEFAULT:.*]] [
++; CHECK-NEXT:      i8 0, label %[[EXIT:.*]]
++; CHECK-NEXT:      i8 1, label %[[CASE1:.*]]
++; CHECK-NEXT:      i8 2, label %[[CASE2:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CASE1]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[CASE2]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[DEFAULT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i8 [ 7, %[[DEFAULT]] ], [ 30, %[[CASE1]] ], [ 20, %[[CASE2]] ], [ 10, %[[ENTRY]] ]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  %gep = getelementptr inbounds i8, ptr @table_optsize_extra_use, i64 %idx
++  %v = load i8, ptr %gep
++  store i8 %v, ptr %out
++  switch i8 %v, label %default [
++  i8 0, label %case0
++  i8 1, label %case1
++  i8 2, label %case2
++  ]
++
++case0:
++  br label %exit
++
++case1:
++  br label %exit
++
++case2:
++  br label %exit
++
++default:
++  br label %exit
++
++exit:
++  %r = phi i8 [ 10, %case0 ], [ 30, %case1 ], [ 20, %case2 ], [ 7, %default ]
++  ret i8 %r
++}
++;.
++; CHECK: attributes #[[ATTR0]] = { optsize }
++;.
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-9.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-9.ll
+new file mode 100644
+index 00000000000000..9c1a54d08b99c2
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-9.ll
+@@ -0,0 +1,59 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 5
++; RUN: opt -S -passes='simplifycfg<switch-to-lookup>' < %s | FileCheck %s
++
++; Test converting `switch` instructions that index a global and update the read
++; value into single loads from an updated table.
++
++; Test extra PHI arguments at the destination block.
++
++; elems   = [  0,  5,  6,  1,  7,  8,  2,  9, 10,  3, 11, 12,  4,  4,  4,  4, 13, 14, 15, 16, 17, 18 ]
++; indices = [  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 ]
++@table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++
++
++;.
++; CHECK: @table1 = internal unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\0B\0C\04\04\04\04\0D\0E\0F\10\11\12", align 1
++; CHECK: @switch.table.test_exra_phi_argument = private unnamed_addr constant [22 x i8] c"\00\05\06\01\07\08\02\09\0A\03\03\03\03\03\03\03\0D\0E\0F\10\09\0A", align 1
++;.
++define i8 @test_exra_phi_argument(i1 %c, i64 %i, i8 %x, ptr %p, ptr %q) {
++; CHECK-LABEL: define i8 @test_exra_phi_argument(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[I:%.*]], i8 [[X:%.*]], ptr [[P:%.*]], ptr [[Q:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[LOOKUP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOKUP]]:
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr @table1, i64 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[GEP]], align 1
++; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [22 x i8], ptr @switch.table.test_exra_phi_argument, i64 0, i64 [[I]]
++; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i8, ptr [[SWITCH_GEP]], align 1
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i8 [ [[X]], %[[ENTRY]] ], [ [[SWITCH_LOAD]], %[[LOOKUP]] ]
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  br i1 %c, label %lookup, label %exit
++
++lookup:
++  %gep = getelementptr inbounds nuw i8, ptr @table1, i64 %i
++  %v = load i8, ptr %gep
++  switch i8 %v, label %default [
++  i8 4, label %exit
++  i8 12, label %exit
++  i8 11, label %exit
++  i8 18, label %bb1
++  i8 17, label %bb2
++  ]
++
++bb1:
++  br label %exit
++
++bb2:
++  br label %exit
++
++default:
++  br label %exit
++
++exit:
++  %r = phi i8 [ %x, %entry ], [ 3, %lookup ], [ 3, %lookup ], [ 3, %lookup ], [ 10, %bb1 ], [ 9, %bb2 ], [ %v, %default ]
++  ret i8 %r
++}
+diff --git a/llvm/test/Transforms/SimplifyCFG/switch-to-table-hang.ll b/llvm/test/Transforms/SimplifyCFG/switch-to-table-hang.ll
+new file mode 100644
+index 00000000000000..2a34db94bc327e
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/switch-to-table-hang.ll
+@@ -0,0 +1,43 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -S -passes=simplifycfg < %s | FileCheck %s
++
++; Reduced test case from an actual program: `ConstantFoldTerminator` creates
++; the following cyclic GEP in an unreachable block:
++;
++;   %p.next = getelementptr i8, ptr %p.next, i64 1
++;
++; Which causes `decomposeLinearExpression` to loop.
++
++declare void @g()
++
++define void @f(ptr %base) {
++; CHECK-LABEL: @f(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %m
++
++m:
++  %c = phi i1 [ true, %entry ]
++  br i1 %c, label %exit, label %loop
++
++loop:
++  %p = phi ptr [ %base, %m ], [ %p.next, %latch ]
++  %v = load i8, ptr %p
++  switch i8 %v, label %side [
++  i8 0, label %latch
++  i8 1, label %latch
++  ]
++
++side:
++  call void @g()
++  br label %latch
++
++latch:
++  %p.next = getelementptr i8, ptr %p, i64 1
++  br label %loop
++
++exit:
++  ret void
++}
