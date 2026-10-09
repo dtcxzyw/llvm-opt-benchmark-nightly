@@ -205,10 +205,10 @@ bb.p:                                             ; preds = %bb.n
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 88
   br label %bb.q
 
-bb.q:                                             ; preds = %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i, %bb.p
-  %i.cf = phi i8 [ %i.nc, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i ], [ 0, %bb.p ] ; 3 uses
-  %i.cg = phi i8 [ %i.nd, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i ], [ 1, %bb.p ] ; 13 uses
-  %i.ch = phi i8 [ %i.ne, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i ], [ 0, %bb.p ] ; 9 uses
+bb.q:                                             ; preds = %bb.aj, %bb.p
+  %i.cf = phi i8 [ %i.nc, %bb.aj ], [ 0, %bb.p ]  ; 3 uses
+  %i.cg = phi i8 [ %i.nd, %bb.aj ], [ 1, %bb.p ]  ; 13 uses
+  %i.ch = phi i8 [ %i.ne, %bb.aj ], [ 0, %bb.p ]  ; 9 uses
   %i.ci = load i8, ptr %i.bz, align 4, !tbaa !98  ; 10 uses
   %i.cj = icmp ult i8 %i.cg, 8
   br i1 %i.cj, label %.lr.ph.i.i.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeImEELh8EE13split_to_fillEh.exit.i.i
@@ -611,19 +611,13 @@ bb.aj:                                            ; preds = %thread-pre-split15.
   %i.ng = getelementptr inbounds nuw i8, ptr %i.nf, i64 15
   %i.nh = load atomic i8, ptr %i.ng monotonic, align 1
   %i.ni = icmp eq i8 %i.nh, -1
-  br i1 %i.ni, label %5, label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.nf, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i.i.i = select i1 %i.ni, ptr %6, ptr %i.nf
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i.i.i) #9, !inline_history !570
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeImEELh8EED2Ev.exit.i.i, label %bb.q, !llvm.loop !574
 
-5:                                                ; preds = %bb.aj
-  %6 = getelementptr inbounds nuw i8, ptr %i.nf, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !63
-  br label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i
-
-_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i: ; preds = %5, %bb.aj
-  %.0.i.i.i.i = phi ptr [ %7, %5 ], [ %i.nf, %bb.aj ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i.i.i) #9, !inline_history !570
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeImEELh8EED2Ev.exit.i.i, label %bb.q, !llvm.loop !574
-
-_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeImEELh8EED2Ev.exit.i.i: ; preds = %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i, %thread-pre-split15.i.i
+_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeImEELh8EED2Ev.exit.i.i: ; preds = %bb.aj, %thread-pre-split15.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   br label %_ZN3tbb6detail2d119partition_type_baseINS1_19auto_partition_typeEE7executeINS1_9start_forINS1_13blocked_rangeImEENS0_2d225parallel_for_body_wrapperIN9__gnu_cxx17__normal_iteratorIPPN4mold10ObjectFileINSD_6X86_64EEESt6vectorISH_SaISH_EEEEZNSD_L26r_claim_unresolved_symbolsISF_EEvRNSD_7ContextIT_EEEUlSH_E_SH_EEKNS1_16auto_partitionerEEES8_EEvRSP_RT0_RNS1_14execution_dataE.exit
 
@@ -1026,10 +1020,10 @@ bb.p:                                             ; preds = %bb.n
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 88
   br label %bb.q
 
-bb.q:                                             ; preds = %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i, %bb.p
-  %i.cf = phi i8 [ %i.ga, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i ], [ 0, %bb.p ] ; 3 uses
-  %i.cg = phi i8 [ %i.gb, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i ], [ 1, %bb.p ] ; 4 uses
-  %i.ch = phi i8 [ %i.gc, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i ], [ 0, %bb.p ] ; 4 uses
+bb.q:                                             ; preds = %bb.v, %bb.p
+  %i.cf = phi i8 [ %i.ga, %bb.v ], [ 0, %bb.p ]   ; 3 uses
+  %i.cg = phi i8 [ %i.gb, %bb.v ], [ 1, %bb.p ]   ; 4 uses
+  %i.ch = phi i8 [ %i.gc, %bb.v ], [ 0, %bb.p ]   ; 4 uses
   %i.ci = load i8, ptr %i.bz, align 4, !tbaa !98  ; 4 uses
   %i.cj = icmp ult i8 %i.cg, 8
   br i1 %i.cj, label %.lr.ph.i.i.i, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIlEELh8EE13split_to_fillEh.exit.i.i
@@ -1217,19 +1211,13 @@ bb.v:                                             ; preds = %thread-pre-split15.
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 15
   %i.gf = load atomic i8, ptr %i.ge monotonic, align 1
   %i.gg = icmp eq i8 %i.gf, -1
-  br i1 %i.gg, label %5, label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.gd, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i.i.i = select i1 %i.gg, ptr %6, ptr %i.gd
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i.i.i) #9, !inline_history !600
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIlEELh8EED2Ev.exit.i.i, label %bb.q, !llvm.loop !604
 
-5:                                                ; preds = %bb.v
-  %6 = getelementptr inbounds nuw i8, ptr %i.gd, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !63
-  br label %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i
-
-_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i: ; preds = %5, %bb.v
-  %.0.i.i.i.i = phi ptr [ %7, %5 ], [ %i.gd, %bb.v ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i.i.i) #9, !inline_history !600
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIlEELh8EED2Ev.exit.i.i, label %bb.q, !llvm.loop !604
-
-_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIlEELh8EED2Ev.exit.i.i: ; preds = %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit.i.i, %thread-pre-split15.i.i
+_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIlEELh8EED2Ev.exit.i.i: ; preds = %bb.v, %thread-pre-split15.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   br label %_ZN3tbb6detail2d119partition_type_baseINS1_19auto_partition_typeEE7executeINS1_9start_forINS1_13blocked_rangeIlEENS1_25parallel_for_body_wrapperIZN4moldL28create_comdat_group_sectionsINSA_6X86_64EEEvRNSA_7ContextIT_EEEUllE_lEEKNS1_16auto_partitionerEEES8_EEvRSE_RT0_RNS1_14execution_dataE.exit
 

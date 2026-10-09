@@ -204,7 +204,7 @@ begin_hunk_0
 @_ZN9grpc_core16Http2GlobalStatsC1Ev = unnamed_addr alias void (ptr), ptr @_ZN9grpc_core16Http2GlobalStatsC2Ev
 @_ZN9grpc_core10Http2StatsC1Ev = unnamed_addr alias void (ptr), ptr @_ZN9grpc_core10Http2StatsC2Ev
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK9grpc_core27HistogramCollector_80_10_647CollectEPNS_18Histogram_80_10_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(80) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i64, ptr %0 monotonic, align 8
@@ -275,7 +275,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN9grpc_coremiERKNS_18Histogram_80_10_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_80_10_64") align 8 captures(none) initializes((0, 80)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %2) local_unnamed_addr #2 {
+define void @_ZN9grpc_coremiERKNS_18Histogram_80_10_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_80_10_64") align 8 captures(none) initializes((0, 80)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load <2 x i64>, ptr %1, align 8, !tbaa !10
   %i.b = load <2 x i64>, ptr %2, align 8, !tbaa !10
@@ -312,7 +312,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK9grpc_core28HistogramCollector_100_20_647CollectEPNS_19Histogram_100_20_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(160) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i64, ptr %0 monotonic, align 8
@@ -437,7 +437,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN9grpc_coremiERKNS_19Histogram_100_20_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_100_20_64") align 8 captures(none) initializes((0, 160)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %2) local_unnamed_addr #2 {
+define void @_ZN9grpc_coremiERKNS_19Histogram_100_20_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_100_20_64") align 8 captures(none) initializes((0, 160)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load <2 x i64>, ptr %1, align 8, !tbaa !10
   %i.b = load <2 x i64>, ptr %2, align 8, !tbaa !10
@@ -509,7 +509,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK9grpc_core30HistogramCollector_10000_20_647CollectEPNS_21Histogram_10000_20_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(160) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i64, ptr %0 monotonic, align 8
@@ -634,7 +634,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN9grpc_coremiERKNS_21Histogram_10000_20_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_10000_20_64") align 8 captures(none) initializes((0, 160)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %2) local_unnamed_addr #2 {
+define void @_ZN9grpc_coremiERKNS_21Histogram_10000_20_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_10000_20_64") align 8 captures(none) initializes((0, 160)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load <2 x i64>, ptr %1, align 8, !tbaa !10
   %i.b = load <2 x i64>, ptr %2, align 8, !tbaa !10
@@ -706,7 +706,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK9grpc_core30HistogramCollector_65536_26_647CollectEPNS_21Histogram_65536_26_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(208) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i64, ptr %0 monotonic, align 8
@@ -867,7 +867,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN9grpc_coremiERKNS_21Histogram_65536_26_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_65536_26_64") align 8 captures(none) initializes((0, 208)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(208) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(208) %2) local_unnamed_addr #2 {
+define void @_ZN9grpc_coremiERKNS_21Histogram_65536_26_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_65536_26_64") align 8 captures(none) initializes((0, 208)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(208) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(208) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load <2 x i64>, ptr %1, align 8, !tbaa !10
   %i.b = load <2 x i64>, ptr %2, align 8, !tbaa !10
@@ -960,7 +960,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK9grpc_core31HistogramCollector_100000_20_647CollectEPNS_22Histogram_100000_20_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(160) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i64, ptr %0 monotonic, align 8
@@ -1085,7 +1085,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN9grpc_coremiERKNS_22Histogram_100000_20_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_100000_20_64") align 8 captures(none) initializes((0, 160)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %2) local_unnamed_addr #2 {
+define void @_ZN9grpc_coremiERKNS_22Histogram_100000_20_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_100000_20_64") align 8 captures(none) initializes((0, 160)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load <2 x i64>, ptr %1, align 8, !tbaa !10
   %i.b = load <2 x i64>, ptr %2, align 8, !tbaa !10
@@ -1157,7 +1157,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK9grpc_core32HistogramCollector_1800000_40_647CollectEPNS_23Histogram_1800000_40_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(320) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i64, ptr %0 monotonic, align 8
@@ -1402,7 +1402,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN9grpc_coremiERKNS_23Histogram_1800000_40_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_1800000_40_64") align 8 captures(none) initializes((0, 320)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(320) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(320) %2) local_unnamed_addr #2 {
+define void @_ZN9grpc_coremiERKNS_23Histogram_1800000_40_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_1800000_40_64") align 8 captures(none) initializes((0, 320)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(320) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(320) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load <2 x i64>, ptr %1, align 8, !tbaa !10
   %i.b = load <2 x i64>, ptr %2, align 8, !tbaa !10
@@ -1544,7 +1544,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK9grpc_core33HistogramCollector_16777216_20_647CollectEPNS_24Histogram_16777216_20_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(160) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i64, ptr %0 monotonic, align 8
@@ -1669,7 +1669,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN9grpc_coremiERKNS_24Histogram_16777216_20_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_16777216_20_64") align 8 captures(none) initializes((0, 160)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %2) local_unnamed_addr #2 {
+define void @_ZN9grpc_coremiERKNS_24Histogram_16777216_20_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_16777216_20_64") align 8 captures(none) initializes((0, 160)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(160) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = load <2 x i64>, ptr %1, align 8, !tbaa !10
   %i.b = load <2 x i64>, ptr %2, align 8, !tbaa !10
@@ -1741,8 +1741,8 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite) uwtable
-define void @_ZNK9grpc_core33HistogramCollector_16777216_50_647CollectEPNS_24Histogram_16777216_50_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(400) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
+define void @_ZNK9grpc_core33HistogramCollector_16777216_50_647CollectEPNS_24Histogram_16777216_50_64E(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(400) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   br label %bb.c
 
@@ -1770,7 +1770,7 @@ bb.c:                                             ; preds = %bb.c, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @_ZN9grpc_coremiERKNS_24Histogram_16777216_50_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_16777216_50_64") align 8 captures(none) initializes((0, 400)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(400) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(400) %2) local_unnamed_addr #4 {
+define void @_ZN9grpc_coremiERKNS_24Histogram_16777216_50_64ES2_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.grpc_core::Histogram_16777216_50_64") align 8 captures(none) initializes((0, 400)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(400) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(400) %2) local_unnamed_addr #2 {
 vector.ph:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(400) %0, i8 0, i64 400, i1 false), !tbaa !10
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -1956,7 +1956,7 @@ vector.ph:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core18Histogram_80_10_649BucketForEi(i32 noundef %0) #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core18Histogram_80_10_649BucketForEi(i32 noundef %0) #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 3
   br i1 %i.a, label %bb.b, label %bb.c
@@ -1996,7 +1996,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core19Histogram_100_20_649BucketForEi(i32 noundef %0) #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core19Histogram_100_20_649BucketForEi(i32 noundef %0) #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 6
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2036,7 +2036,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core21Histogram_10000_20_649BucketForEi(i32 noundef %0) #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core21Histogram_10000_20_649BucketForEi(i32 noundef %0) #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 3
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2076,7 +2076,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core21Histogram_65536_26_649BucketForEi(i32 noundef %0) #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core21Histogram_65536_26_649BucketForEi(i32 noundef %0) #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 3
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2111,7 +2111,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core22Histogram_100000_20_649BucketForEi(i32 noundef %0) #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core22Histogram_100000_20_649BucketForEi(i32 noundef %0) #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 3
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2146,7 +2146,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core23Histogram_1800000_40_649BucketForEi(i32 noundef %0) #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core23Histogram_1800000_40_649BucketForEi(i32 noundef %0) #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 4
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2186,7 +2186,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core22Histogram_16777216_8_89BucketForEi(i32 noundef %0) local_unnamed_addr #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core22Histogram_16777216_8_89BucketForEi(i32 noundef %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 2
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2221,7 +2221,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core24Histogram_16777216_20_649BucketForEi(i32 noundef %0) #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core24Histogram_16777216_20_649BucketForEi(i32 noundef %0) #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 2
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2256,7 +2256,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 -1, 256) i32 @_ZN9grpc_core24Histogram_16777216_50_649BucketForEi(i32 noundef %0) #5 align 2 {
+define noundef range(i32 -1, 256) i32 @_ZN9grpc_core24Histogram_16777216_50_649BucketForEi(i32 noundef %0) #3 align 2 {
 bb.a:
   %i.a = icmp slt i32 %0, 4
   br i1 %i.a, label %bb.b, label %bb.c
@@ -2291,20 +2291,20 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN9grpc_core11GlobalStatsC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(4264) initializes((0, 4264)) %0) unnamed_addr #6 align 2 {
+define void @_ZN9grpc_core11GlobalStatsC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(4264) initializes((0, 4264)) %0) unnamed_addr #4 align 2 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(4264) %0, i8 0, i64 4264, i1 false)
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK9grpc_core11GlobalStats9histogramENS0_9HistogramE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.grpc_core::HistogramView") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(4264) %1, i32 noundef %2) local_unnamed_addr #7 align 2 {
+define void @_ZNK9grpc_core11GlobalStats9histogramENS0_9HistogramE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.grpc_core::HistogramView") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(4264) %1, i32 noundef %2) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = icmp ult i32 %2, 26
   br i1 %i.a, label %switch.lookup, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @gpr_unreachable_code(ptr noundef nonnull @.str.106, ptr noundef nonnull @.str.107, i32 noundef 540) #16
+  tail call void @gpr_unreachable_code(ptr noundef nonnull @.str.106, ptr noundef nonnull @.str.107, i32 noundef 540) #14
   unreachable
 
 switch.lookup:                                    ; preds = %bb.a
@@ -2334,20 +2334,20 @@ switch.lookup:                                    ; preds = %bb.a
 }
 
 ; Function Attrs: noreturn
-declare void @gpr_unreachable_code(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #8
+declare void @gpr_unreachable_code(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK9grpc_core20GlobalStatsCollector7CollectEv(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK9grpc_core20GlobalStatsCollector7CollectEv(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
-  %i.a = tail call noalias noundef nonnull dereferenceable(4264) ptr @_Znwm(i64 noundef 4264) #17, !noalias !50 ; 3 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(4264) ptr @_Znwm(i64 noundef 4264) #15, !noalias !50 ; 3 uses
   invoke void @_ZN9grpc_core11GlobalStatsC1Ev(ptr noundef nonnull align 8 dereferenceable(4264) %i.a)
           to label %_ZSt11make_uniqueIN9grpc_core11GlobalStatsEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit unwind label %bb.b, !noalias !50
 
 bb.b:                                             ; preds = %bb.a
   %i.b = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 4264) #18, !noalias !50
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 4264) #16, !noalias !50
   resume { ptr, i32 } %i.b
 
 _ZSt11make_uniqueIN9grpc_core11GlobalStatsEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.a
@@ -2750,17 +2750,17 @@ begin_hunk_1_@_ZNK9grpc_core20GlobalStatsCollector7CollectEv:bb.a
 declare i32 @__gxx_personality_v0(...)
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK9grpc_core11GlobalStats4DiffERKS0_(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 dereferenceable(4264) %1, ptr nofree noundef nonnull readonly align 8 dereferenceable(4264) %2) local_unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK9grpc_core11GlobalStats4DiffERKS0_(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 dereferenceable(4264) %1, ptr nofree noundef nonnull readonly align 8 dereferenceable(4264) %2) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !105)
-  %i.a = tail call noalias noundef nonnull dereferenceable(4264) ptr @_Znwm(i64 noundef 4264) #17, !noalias !105 ; 55 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(4264) ptr @_Znwm(i64 noundef 4264) #15, !noalias !105 ; 55 uses
   invoke void @_ZN9grpc_core11GlobalStatsC1Ev(ptr noundef nonnull align 8 dereferenceable(4264) %i.a)
           to label %_ZSt11make_uniqueIN9grpc_core11GlobalStatsEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit unwind label %bb.b, !noalias !105
 
 bb.b:                                             ; preds = %bb.a
   %i.b = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 4264) #18, !noalias !105
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 4264) #16, !noalias !105
   resume { ptr, i32 } %i.b
 
 _ZSt11make_uniqueIN9grpc_core11GlobalStatsEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.a
@@ -3163,20 +3163,20 @@ begin_hunk_2_@_ZNK9grpc_core11GlobalStats4DiffERKS0_:bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN9grpc_core16Http2GlobalStatsC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(4024) initializes((0, 4024)) %0) unnamed_addr #6 align 2 {
+define void @_ZN9grpc_core16Http2GlobalStatsC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(4024) initializes((0, 4024)) %0) unnamed_addr #4 align 2 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(4024) %0, i8 0, i64 4024, i1 false)
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK9grpc_core16Http2GlobalStats9histogramENS0_9HistogramE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.grpc_core::HistogramView") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(4024) %1, i32 noundef %2) local_unnamed_addr #7 align 2 {
+define void @_ZNK9grpc_core16Http2GlobalStats9histogramENS0_9HistogramE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.grpc_core::HistogramView") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(4024) %1, i32 noundef %2) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = icmp ult i32 %2, 16
   br i1 %i.a, label %switch.lookup, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @gpr_unreachable_code(ptr noundef nonnull @.str.106, ptr noundef nonnull @.str.107, i32 noundef 888) #16
+  tail call void @gpr_unreachable_code(ptr noundef nonnull @.str.106, ptr noundef nonnull @.str.107, i32 noundef 888) #14
   unreachable
 
 switch.lookup:                                    ; preds = %bb.a
@@ -3206,17 +3206,17 @@ switch.lookup:                                    ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK9grpc_core25Http2GlobalStatsCollector7CollectEv(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr.12") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK9grpc_core25Http2GlobalStatsCollector7CollectEv(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr.12") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !134)
-  %i.a = tail call noalias noundef nonnull dereferenceable(4024) ptr @_Znwm(i64 noundef 4024) #17, !noalias !134 ; 4 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(4024) ptr @_Znwm(i64 noundef 4024) #15, !noalias !134 ; 4 uses
   invoke void @_ZN9grpc_core16Http2GlobalStatsC1Ev(ptr noundef nonnull align 8 dereferenceable(4024) %i.a)
           to label %_ZSt11make_uniqueIN9grpc_core16Http2GlobalStatsEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit unwind label %bb.b, !noalias !134
 
 bb.b:                                             ; preds = %bb.a
   %i.b = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 4024) #18, !noalias !134
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 4024) #16, !noalias !134
   resume { ptr, i32 } %i.b
 
 _ZSt11make_uniqueIN9grpc_core16Http2GlobalStatsEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.a
@@ -3619,17 +3619,17 @@ _ZNK9grpc_core33HistogramCollector_16777216_50_647CollectEPNS_24Histogram_167772
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK9grpc_core16Http2GlobalStats4DiffERKS0_(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr.12") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 dereferenceable(4024) %1, ptr nofree noundef nonnull readonly align 8 dereferenceable(4024) %2) local_unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK9grpc_core16Http2GlobalStats4DiffERKS0_(ptr dead_on_unwind noalias nofree writable sret(%"class.std::unique_ptr.12") align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 dereferenceable(4024) %1, ptr nofree noundef nonnull readonly align 8 dereferenceable(4024) %2) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !167)
-  %i.a = tail call noalias noundef nonnull dereferenceable(4024) ptr @_Znwm(i64 noundef 4024) #17, !noalias !167 ; 77 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(4024) ptr @_Znwm(i64 noundef 4024) #15, !noalias !167 ; 77 uses
   invoke void @_ZN9grpc_core16Http2GlobalStatsC1Ev(ptr noundef nonnull align 8 dereferenceable(4024) %i.a)
           to label %_ZSt11make_uniqueIN9grpc_core16Http2GlobalStatsEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit unwind label %bb.b, !noalias !167
 
 bb.b:                                             ; preds = %bb.a
   %i.b = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 4024) #18, !noalias !167
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 4024) #16, !noalias !167
   resume { ptr, i32 } %i.b
 
 _ZSt11make_uniqueIN9grpc_core16Http2GlobalStatsEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit: ; preds = %bb.a
@@ -4032,14 +4032,14 @@ begin_hunk_4_@_ZNK9grpc_core16Http2GlobalStats4DiffERKS0_:bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN9grpc_core10Http2StatsC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0) unnamed_addr #6 align 2 {
+define void @_ZN9grpc_core10Http2StatsC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0) unnamed_addr #4 align 2 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   ret void
 }
 
 ; Function Attrs: uwtable
-define internal void @__cxx_global_var_init() #9 section ".text.startup" comdat($_ZN9grpc_core19NoDestructSingletonINS_20GlobalStatsCollectorEE6value_E) personality ptr @__gxx_personality_v0 {
+define internal void @__cxx_global_var_init() #7 section ".text.startup" comdat($_ZN9grpc_core19NoDestructSingletonINS_20GlobalStatsCollectorEE6value_E) personality ptr @__gxx_personality_v0 {
 bb.a:
   %0 = alloca %"class.grpc_core::PerCpuOptions", align 8 ; 5 uses
   %i.a = load i8, ptr @_ZGVN9grpc_core19NoDestructSingletonINS_20GlobalStatsCollectorEE6value_E, align 8
@@ -4059,7 +4059,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = extractvalue { i64, i1 } %i.e, 1
   %i.g = extractvalue { i64, i1 } %i.e, 0         ; 3 uses
   %i.h = select i1 %i.f, i64 -1, i64 %i.g
-  %i.i = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #17 ; 2 uses
+  %i.i = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #15 ; 2 uses
   %i.j = icmp eq i64 %i.d, 0
   br i1 %i.j, label %_ZN9grpc_core10NoDestructINS_20GlobalStatsCollectorEEC2IJEEEDpOT_.exit, label %.loopexit.loopexit.i.i.i
 
@@ -4080,7 +4080,7 @@ bb.c:                                             ; preds = %_ZN9grpc_core10NoDe
 }
 
 ; Function Attrs: uwtable
-define internal void @__cxx_global_var_init.154() #9 section ".text.startup" comdat($_ZN9grpc_core19NoDestructSingletonINS_25Http2GlobalStatsCollectorEE6value_E) personality ptr @__gxx_personality_v0 {
+define internal void @__cxx_global_var_init.154() #7 section ".text.startup" comdat($_ZN9grpc_core19NoDestructSingletonINS_25Http2GlobalStatsCollectorEE6value_E) personality ptr @__gxx_personality_v0 {
 bb.a:
   %0 = alloca %"class.grpc_core::PerCpuOptions", align 8 ; 5 uses
   %i.a = load i8, ptr @_ZGVN9grpc_core19NoDestructSingletonINS_25Http2GlobalStatsCollectorEE6value_E, align 8
@@ -4100,7 +4100,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = extractvalue { i64, i1 } %i.e, 1
   %i.g = extractvalue { i64, i1 } %i.e, 0         ; 3 uses
   %i.h = select i1 %i.f, i64 -1, i64 %i.g
-  %i.i = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #17 ; 2 uses
+  %i.i = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #15 ; 2 uses
   %i.j = icmp eq i64 %i.d, 0
   br i1 %i.j, label %_ZN9grpc_core10NoDestructINS_25Http2GlobalStatsCollectorEEC2IJEEEDpOT_.exit, label %.loopexit.loopexit.i.i.i
 
@@ -4121,47 +4121,45 @@ bb.c:                                             ; preds = %_ZN9grpc_core10NoDe
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
 
-declare noundef i64 @_ZN9grpc_core13PerCpuOptions6ShardsEv(ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #11
+declare noundef i64 @_ZN9grpc_core13PerCpuOptions6ShardsEv(ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #12
+declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #10
 
 ; Function Attrs: nobuiltin allocsize(0)
-declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #13
+declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #11
 
 ; Function Attrs: nobuiltin allocsize(0)
-declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #13
+declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #11
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #14
+declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #12
+declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #15
+declare void @llvm.experimental.noalias.scope.decl(metadata) #13
 
-attributes #0 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress norecurse nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #11 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #14 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #15 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #16 = { noreturn }
-attributes #17 = { builtin allocsize(0) }
-attributes #18 = { builtin nounwind }
+attributes #2 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #9 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #14 = { noreturn }
+attributes #15 = { builtin allocsize(0) }
+attributes #16 = { builtin nounwind }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}

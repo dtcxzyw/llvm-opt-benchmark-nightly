@@ -204,19 +204,17 @@ bb.l:                                             ; preds = %_RNvXse_NtCsfYVtenZ
   store ptr %i.bu, ptr %i.q, align 8, !noalias !16303
   %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 5 uses
   %i.by = load ptr, ptr %i.bx, align 8, !alias.scope !16301, !noalias !16305, !noundef !31 ; 5 uses
-  %.not.i.a = icmp eq ptr %i.by, null
-  br i1 %.not.i.a, label %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i, label %5
+  %.not.i = icmp eq ptr %i.by, null
+  %5 = load i64, ptr %4, align 8, !range !33, !alias.scope !16301, !noalias !16305
+  %.not.i.a = icmp eq i64 %5, -9223372036854775808
+  %or.cond.i = select i1 %.not.i, i1 true, i1 %.not.i.a
+  br i1 %or.cond.i, label %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i, label %bb.n
 
 bb.m:                                             ; preds = %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
   tail call void @llvm.trap()
   unreachable
 
-5:                                                ; preds = %bb.l
-  %6 = load i64, ptr %4, align 8, !range !33, !alias.scope !16301, !noalias !16305, !noundef !31
-  %.not41.i = icmp eq i64 %6, -9223372036854775808
-  br i1 %.not41.i, label %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i, label %bb.n
-
-_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i: ; preds = %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i, %.noexc.i, %bb.o, %5, %bb.l
+_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i: ; preds = %_RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i, %.noexc.i, %bb.o, %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !16303
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !16303
@@ -225,7 +223,7 @@ _RNvXse_NtCsfYVtenZkBsn_12arrow_schema6schemaNtB5_6SchemaNtNtCsbvkFyIu7lgC_4core
   %i.cb = icmp slt i64 %i.ca, 0
   br i1 %i.cb, label %bb.u, label %bb.t
 
-bb.n:                                             ; preds = %5
+bb.n:                                             ; preds = %bb.l
   %i.cc = icmp eq ptr %i.by, %i.bu
   br i1 %i.cc, label %.thread80.i, label %bb.o
 

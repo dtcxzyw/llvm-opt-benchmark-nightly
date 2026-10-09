@@ -83,14 +83,13 @@ bb.d:                                             ; preds = %bb.c
   %invariant.gep.us.i.1 = getelementptr [8 x i8], ptr %i.r, i64 %7 ; 12 uses
   %i.ai = shl i64 %.0298, 3
   %i.aj = mul i64 %i.ai, %.0169297
-  %9 = add i64 %i.aj, -8
   %i.ak = mul i64 %i.k, %i.o
-  %10 = add i64 %9, %i.ak                         ; 2 uses
   %i.al = shl nuw nsw i64 %.0169297, 3
-  %i.am = sub nuw nsw i64 -8, %i.al               ; 2 uses
+  %i.am = sub nuw nsw i64 -8, %i.al
   %i.an = add nsw i64 %.0169297, -2
-  %i.ao = getelementptr i8, ptr %4, i64 %10
-  %i.ap = getelementptr i8, ptr %4, i64 %10
+  %9 = getelementptr i8, ptr %4, i64 %i.aj
+  %i.ao = getelementptr i8, ptr %9, i64 -8
+  %i.ap = getelementptr i8, ptr %i.ao, i64 %i.ak
   br label %iter.check406
 
 .split.i.preheader:                               ; preds = %._crit_edge.us.i.1, %.lr.ph.i
@@ -109,14 +108,14 @@ bb.d:                                             ; preds = %bb.c
   br label %solve.exit
 
 iter.check406:                                    ; preds = %.lr.ph.us.i.preheader.preheader, %._crit_edge.us.i.1
-  %indvar = phi i64 [ 0, %.lr.ph.us.i.preheader.preheader ], [ %indvar.next, %._crit_edge.us.i.1 ] ; 4 uses
+  %indvar = phi i64 [ 0, %.lr.ph.us.i.preheader.preheader ], [ %indvar.next, %._crit_edge.us.i.1 ] ; 3 uses
   %i.aw = phi double [ %i.ah, %.lr.ph.us.i.preheader.preheader ], [ %i.fv, %._crit_edge.us.i.1 ] ; 2 uses
   %.04452.i294 = phi ptr [ %i.ad, %.lr.ph.us.i.preheader.preheader ], [ %i.ft, %._crit_edge.us.i.1 ] ; 3 uses
   %.04353.i293 = phi ptr [ %i.af, %.lr.ph.us.i.preheader.preheader ], [ %i.fs, %._crit_edge.us.i.1 ] ; 25 uses
   %indvars.iv65.i292 = phi i64 [ %i.z, %.lr.ph.us.i.preheader.preheader ], [ %indvars.iv.next66.i, %._crit_edge.us.i.1 ] ; 20 uses
   %i.ax = sub i64 %i.an, %indvar                  ; 2 uses
   %i.ay = mul i64 %i.am, %indvar
-  %scevgep = getelementptr i8, ptr %i.ao, i64 %i.ay
+  %scevgep = getelementptr i8, ptr %i.ap, i64 %i.ay ; 2 uses
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv65.i292 ; 4 uses
   %i.ba = load double, ptr %i.az, align 8, !tbaa !30
   %i.bb = fmul double %i.aw, %i.ba                ; 3 uses
@@ -127,9 +126,7 @@ iter.check406:                                    ; preds = %.lr.ph.us.i.prehead
   br i1 %min.iters.check385, label %vec.epilog.scalar.ph407.preheader, label %vector.memcheck380
 
 vector.memcheck380:                               ; preds = %iter.check406
-  %11 = mul i64 %i.am, %indvar
-  %scevgep381 = getelementptr i8, ptr %i.ap, i64 %11
-  %bound0382 = icmp ult ptr %i.r, %scevgep381
+  %bound0382 = icmp ult ptr %i.r, %scevgep
   %bound1383 = icmp ult ptr %.04353.i293, %i.az
   %found.conflict384 = and i1 %bound0382, %bound1383
   br i1 %found.conflict384, label %vec.epilog.scalar.ph407.preheader, label %vector.main.loop.iter.check386

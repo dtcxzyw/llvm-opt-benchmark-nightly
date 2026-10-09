@@ -204,11 +204,11 @@ begin_hunk_0_@_ZN4ncnn15LSTM_x86_avx51215create_pipelineERKNS_6OptionE.omp_outli
   %.reass416 = mul i64 %factor.op.mul415, %indvars.iv448
   %i.lv = getelementptr i8, ptr %i.af, i64 %.reass416 ; 17 uses
   %.reass418 = mul i64 %factor.op.mul417, %indvars.iv448
-  %i.lw = getelementptr i8, ptr %i.an, i64 %.reass418 ; 5 uses
+  %i.lw = getelementptr i8, ptr %i.an, i64 %.reass418 ; 4 uses
   %.reass420 = mul i64 %factor.op.mul419, %indvars.iv448
   %i.lx = getelementptr inbounds nuw i8, ptr %i.at, i64 %.reass420 ; 2 uses
   %.reass422 = mul i64 %factor.op.mul421, %indvars.iv448
-  %i.ly = getelementptr i8, ptr %i.bb, i64 %.reass422 ; 5 uses
+  %i.ly = getelementptr i8, ptr %i.bb, i64 %.reass422 ; 4 uses
   %i.lz = getelementptr inbounds nuw i8, ptr %i.lu, i64 %i.bg ; 3 uses
   %i.ma = getelementptr inbounds nuw i8, ptr %i.lu, i64 %i.bh ; 3 uses
   %i.mb = getelementptr inbounds nuw i8, ptr %i.lu, i64 %i.bi ; 3 uses
@@ -611,8 +611,7 @@ bb.d:                                             ; preds = %.lr.ph409, %._crit_
   %i.xx = and i32 %i.xw, 1
   %i.xy = add nuw i32 %i.xv, %i.xx
   %i.xz = zext i32 %i.xy to i64
-  %i.ya = mul i64 %i.gs, %i.xz                    ; 2 uses
-  %scevgep505 = getelementptr i8, ptr %i.lw, i64 %i.ya
+  %i.ya = mul i64 %i.gs, %i.xz
   %scevgep507 = getelementptr i8, ptr %scevgep506.a, i64 %i.ya
   %i.yb = add i32 %.0181.lcssa, %indvar
   %i.yc = lshr i32 %i.yb, 1
@@ -620,8 +619,7 @@ bb.d:                                             ; preds = %.lr.ph409, %._crit_
   %i.ye = and i32 %i.yd, 1
   %i.yf = add nuw i32 %i.yc, %i.ye
   %i.yg = zext i32 %i.yf to i64
-  %i.yh = mul i64 %i.dd, %i.yg                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.ly, i64 %i.yh
+  %i.yh = mul i64 %i.dd, %i.yg
   %scevgep459 = getelementptr i8, ptr %scevgep458.a, i64 %i.yh
   %i.yi = getelementptr inbounds nuw [4 x i8], ptr %i.lu, i64 %indvars.iv443
   %i.yj = load float, ptr %i.yi, align 4, !tbaa !63
@@ -658,22 +656,22 @@ bb.d:                                             ; preds = %.lr.ph409, %._crit_
   %i.zk = getelementptr inbounds nuw i8, ptr %i.lv, i64 %i.zj ; 5 uses
   %i.zl = mul i64 %i.db, %i.zc
   %i.zm = getelementptr inbounds nuw i8, ptr %i.lv, i64 %i.zl ; 5 uses
-  %i.zn = trunc nuw nsw i64 %indvars.iv443 to i32 ; 2 uses
+  %i.zn = trunc i64 %indvars.iv443 to i32         ; 2 uses
   %i.zo = lshr i32 %i.zn, 1
   %i.zp = and i32 %i.zn, 1
-  %i.zq = add nuw nsw i32 %i.zo, %i.zp
-  %i.zr = zext nneg i32 %i.zq to i64              ; 2 uses
+  %i.zq = add nuw i32 %i.zo, %i.zp
+  %i.zr = zext i32 %i.zq to i64                   ; 2 uses
   %i.zs = mul i64 %i.dc, %i.zr
-  %i.zt = getelementptr inbounds nuw i8, ptr %i.ly, i64 %i.zs ; 6 uses
+  %i.zt = getelementptr i8, ptr %i.ly, i64 %i.zs  ; 7 uses
   br i1 %i.ox, label %iter.check556, label %.preheader
 
 iter.check556:                                    ; preds = %bb.d
   %i.zu = mul i64 %i.gr, %i.zr
-  %i.zv = getelementptr inbounds nuw i8, ptr %i.lw, i64 %i.zu ; 6 uses
+  %i.zv = getelementptr i8, ptr %i.lw, i64 %i.zu  ; 7 uses
   br i1 %min.iters.check539.a, label %.lr.ph402.preheader, label %vector.memcheck504
 
 vector.memcheck504:                               ; preds = %iter.check556
-  %i.zw = insertelement <4 x ptr> poison, ptr %scevgep505, i64 0
+  %i.zw = insertelement <4 x ptr> poison, ptr %i.zv, i64 0
   %i.zx = shufflevector <4 x ptr> %i.zw, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.zy = icmp ult <4 x ptr> %i.zx, %i.qe
   %i.zz = insertelement <4 x ptr> poison, ptr %scevgep507, i64 0
@@ -784,7 +782,7 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.lr.ph405.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.abk = insertelement <4 x ptr> poison, ptr %scevgep, i64 0
+  %i.abk = insertelement <4 x ptr> poison, ptr %i.zt, i64 0
   %i.abl = shufflevector <4 x ptr> %i.abk, <4 x ptr> poison, <4 x i32> zeroinitializer
   %i.abm = icmp ult <4 x ptr> %i.abl, %i.pw
   %i.abn = insertelement <4 x ptr> poison, ptr %scevgep459, i64 0

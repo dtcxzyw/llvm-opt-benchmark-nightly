@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !357
@@ -286,19 +286,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !587
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !587
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 
@@ -701,7 +695,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !388
@@ -782,19 +776,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !602
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !602
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 
@@ -1197,7 +1185,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !391
@@ -1278,19 +1266,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !614
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !614
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 
@@ -1693,7 +1675,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !414
@@ -1774,19 +1756,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !675
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !675
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 
@@ -2189,7 +2165,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !422
@@ -2270,19 +2246,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !690
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !690
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 
@@ -2685,7 +2655,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !425
@@ -2766,19 +2736,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !702
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !702
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 
@@ -3181,7 +3145,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !448
@@ -3262,19 +3226,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !757
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !757
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 
@@ -3677,7 +3635,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !456
@@ -3758,19 +3716,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !772
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !772
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 
@@ -4173,7 +4125,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 352
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i, %bb.d
+bb.e:                                             ; preds = %bb.i, %bb.d
   %i.av = load i8, ptr %i.g, align 4, !tbaa !359
   call void @_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EE13split_to_fillEh(ptr noundef nonnull align 8 dereferenceable(2320) %4, i8 noundef zeroext %i.av)
   %i.aw = load ptr, ptr %i.at, align 8, !tbaa !459
@@ -4254,19 +4206,13 @@ bb.i:                                             ; preds = %thread-pre-split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 15
   %i.cj = load atomic i8, ptr %i.ci monotonic, align 1
   %i.ck = icmp eq i8 %i.cj, -1
-  br i1 %i.ck, label %5, label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %6 = load ptr, ptr %5, align 8
+  %.0.i.i = select i1 %i.ck, ptr %6, ptr %i.ch
+  %7 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
+  br i1 %7, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !784
 
-5:                                                ; preds = %bb.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %7 = load ptr, ptr %6, align 8, !tbaa !241
-  br label %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
-
-_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i: ; preds = %5, %bb.i
-  %.0.i.i = phi ptr [ %7, %5 ], [ %i.ch, %bb.i ]
-  %8 = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %8, label %_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15, label %bb.e, !llvm.loop !784
-
-_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %_ZN3tbb6detail2d118task_group_context14actual_contextEv.exit.i
+_ZN3tbb6detail2d112range_vectorIN7openvdb5v13_04tree13IteratorRangeINS5_21TreeValueIteratorBaseINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSA_INS5_8LeafNodeINS4_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSI_9ValueIterISI_St17_Rb_tree_iteratorISt4pairIKNSC_5CoordENSI_10NodeStructEEENSI_12ValueAllPredESE_EEEEEELh8EED2Ev.exit15: ; preds = %thread-pre-split, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   br label %bb.j
 

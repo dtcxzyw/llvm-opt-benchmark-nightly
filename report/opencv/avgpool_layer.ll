@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.r = tail call noundef nonnull align 4 dereferenceable(4) ptr @_ZNK2cv8MatShape4backEv(ptr noundef nonnull align 4 dereferenceable(52) %i.q)
   %i.s = load i32, ptr %i.r, align 4, !tbaa !84
-  %.fr35.i = freeze i32 %i.s                      ; 17 uses
+  %.fr35.i = freeze i32 %i.s                      ; 16 uses
   %i.t = icmp eq i32 %i.d, 3                      ; 2 uses
   br i1 %i.t, label %bb.h, label %bb.l
 
@@ -607,7 +607,7 @@ bb.af:                                            ; preds = %.loopexit.us.us.i.u
   %i.iu = mul i64 %indvars.iv93.i.us.us.us.us.i.i, %i.fn
   %i.iv = trunc i64 %indvars.iv93.i.us.us.us.us.i.i to i32
   %i.iw = mul i32 %i.di, %i.iv
-  %i.ix = sub i32 %i.iw, %i.do                    ; 2 uses
+  %i.ix = sub i32 %i.iw, %i.do
   %invariant.gep164.i.us.us.us.us.i.i = getelementptr [4 x i8], ptr %.216738.us.us.i.us.us.us.i.i, i64 %i.iu ; 9 uses
   br label %bb.ag
 
@@ -622,8 +622,8 @@ bb.ag:                                            ; preds = %bb.ai, %.lr.ph12.us
   %i.jc = load i32, ptr %i.jb, align 4, !tbaa !84
   %i.jd = add i32 %i.jc, %i.ij                    ; 2 uses
   %i.je = getelementptr inbounds nuw i8, ptr %i.iy, i64 8
-  %i.jf = load i32, ptr %i.je, align 4, !tbaa !84 ; 2 uses
-  %i.jg = add nsw i32 %i.jf, %i.ix                ; 2 uses
+  %i.jf = load i32, ptr %i.je, align 4, !tbaa !84
+  %i.jg = add i32 %i.jf, %i.ix                    ; 2 uses
   %.not183.us.us.us.i.us.us.us.us.i.i = icmp ult i32 %i.ja, %i.cm
   %.not184.us.us.us.i.us.us.us.us.i.i = icmp ult i32 %i.jd, %i.cl
   %or.cond188.us.us.us.i.us.us.us.us.i.i = select i1 %.not183.us.us.us.i.us.us.us.us.i.i, i1 %.not184.us.us.us.i.us.us.us.us.i.i, i1 false
@@ -634,10 +634,10 @@ bb.ag:                                            ; preds = %bb.ai, %.lr.ph12.us
 bb.ah:                                            ; preds = %bb.ag
   %i.jh = mul i32 %i.ja, %i.cl
   %i.ji = add i32 %i.jh, %i.jd
-  %i.jj = mul i32 %i.ji, %i.co                    ; 2 uses
-  %i.jk = add nsw i32 %i.jj, %i.jg
-  %i.jl = mul nsw i32 %i.jk, %.fr35.i
-  %i.jm = sext i32 %i.jl to i64
+  %i.jj = mul i32 %i.ji, %i.co
+  %i.jk = add i32 %i.jj, %i.jg
+  %i.jl = mul i32 %i.jk, %.fr35.i
+  %i.jm = sext i32 %i.jl to i64                   ; 2 uses
   %i.jn = getelementptr inbounds [4 x i8], ptr %.016859.us.i.us.i.i, i64 %i.jm ; 6 uses
   br i1 %i.fi, label %._crit_edge.us.us.us.i.us.us.us.us.i.i, label %.lr.ph.us.us.us.i.us.us.us.us.i.i.preheader
 
@@ -645,11 +645,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %min.iters.check131, label %.lr.ph.us.us.us.i.us.us.us.us.i.i.preheader144, label %vector.memcheck120
 
 vector.memcheck120:                               ; preds = %.lr.ph.us.us.us.i.us.us.us.us.i.i.preheader
-  %16 = add i32 %i.ix, %i.jf
-  %17 = add i32 %16, %i.jj
-  %18 = mul i32 %.fr35.i, %17
-  %19 = sext i32 %18 to i64
-  %i.jo = shl nsw i64 %19, 2                      ; 2 uses
+  %i.jo = shl nsw i64 %i.jm, 2                    ; 2 uses
   %scevgep124 = getelementptr i8, ptr %.016859.us.i.us.i.i, i64 %i.jo
   %scevgep126 = getelementptr i8, ptr %scevgep125, i64 %i.jo
   %bound0127 = icmp ult ptr %invariant.gep164.i.us.us.us.us.i.i, %scevgep126

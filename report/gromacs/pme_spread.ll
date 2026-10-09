@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !105
   %reass.sub23 = sub i32 %i.br, %i.ar
   %i.bu = add i32 %reass.sub23, 1
-  %i.bv = add i32 %i.bu, %i.bt                    ; 2 uses
+  %i.bv = add i32 %i.bu, %i.bt
   %.sroa.speculated239.2.i = call i32 @llvm.smin.i32(i32 %i.ai, i32 %i.bv) ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !105 ; 2 uses
@@ -245,12 +245,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ct = sext i32 %i.ak to i64                   ; 5 uses
   %i.cu = sext i32 %i.au to i64                   ; 6 uses
   %i.cv = sext i32 %i.aj to i64                   ; 3 uses
-  %i.cw = sext i32 %i.ai to i64                   ; 13 uses
+  %i.cw = sext i32 %i.ai to i64                   ; 9 uses
   %i.cx = shl nsw i64 %i.cr, 2                    ; 4 uses
   %i.cy = shl nsw i64 %i.cw, 2
   %i.cz = shl nsw i64 %i.cw, 2
   %i.da = shl nsw i64 %i.cw, 2
-  %4 = sext i32 %i.bv to i64                      ; 4 uses
   %i.db = shl nsw i64 %i.cw, 2
   %i.dc = shl nsw i64 %i.cw, 2
   %i.dd = shl nsw i64 %i.cw, 2
@@ -265,14 +264,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.dm = shl nsw i64 %i.ct, 2
   %i.dn = xor i64 %i.cs, -1
   %i.do = mul i64 %i.dg, %i.ct
-  %smin117 = call i64 @llvm.smin.i64(i64 %i.cw, i64 %4)
   %i.dp = getelementptr i8, ptr %i.ac, i64 %i.di
   %i.dq = getelementptr i8, ptr %i.dp, i64 %i.dj
   %stride.check116 = icmp slt i32 %i.ak, 0
-  %smin58 = call i64 @llvm.smin.i64(i64 %i.cw, i64 %4)
-  %smin68 = call i64 @llvm.smin.i64(i64 %i.cw, i64 %4)
   %stride.check = icmp slt i32 %i.ai, 0
-  %smin = call i64 @llvm.smin.i64(i64 %i.cw, i64 %4)
   br label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge297.split.i, %.lr.ph311.split.split.i
@@ -382,7 +377,7 @@ bb.k:                                             ; preds = %bb.j
   %i.fq = sub i32 %i.fo, %i.fp                    ; 5 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fm, i64 20
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !105
-  %i.ft = add i32 %i.fq, %i.fs                    ; 4 uses
+  %i.ft = add i32 %i.fq, %i.fs
   %.sroa.speculated.us.i = call i32 @llvm.smin.i32(i32 %.sroa.speculated239.2.i, i32 %i.ft) ; 3 uses
   %i.fu = or i32 %.0206275.us.i, %i.ew
   %or.cond3.us.i = icmp eq i32 %i.fu, 0
@@ -443,15 +438,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
 
 .preheader252.us285.preheader.i:                  ; preds = %.preheader252.lr.ph.split.split.us284.i
   %i.gu = sext i32 %.0216.us.i to i64             ; 3 uses
-  %wide.trip.count344.i = sext i32 %.sroa.speculated.us.i to i64
+  %wide.trip.count344.i = sext i32 %.sroa.speculated.us.i to i64 ; 6 uses
   %i.gv = mul nsw i64 %i.cu, %i.gu
   %i.gw = add i64 %i.gv, %i.cs                    ; 2 uses
   %i.gx = mul i64 %i.db, %i.gw
   %i.gy = mul i64 %i.dc, %i.gu
-  %5 = sext i32 %i.ft to i64
-  %smin59 = call i64 @llvm.smin.i64(i64 %smin58, i64 %5) ; 2 uses
   %i.gz = mul i64 %i.gw, %i.cw
-  %i.ha = add i64 %smin59, %i.gz
+  %i.ha = add i64 %i.gz, %wide.trip.count344.i
   %i.hb = shl i64 %i.ha, 2
   %scevgep61 = getelementptr i8, ptr %i.ga, i64 %i.cx
   %i.hc = sext i32 %i.fq to i64
@@ -462,9 +455,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   %i.hg = mul i32 %i.gf, %i.hf
   %i.hh = mul i32 %i.gd, %i.gf
   %scevgep66 = getelementptr i8, ptr %i.ga, i64 %i.hd
-  %6 = sext i32 %i.ft to i64
-  %smin69 = call i64 @llvm.smin.i64(i64 %smin68, i64 %6) ; 3 uses
-  %i.hi = sub i64 %smin69, %i.cr                  ; 7 uses
+  %i.hi = sub nsw i64 %wide.trip.count344.i, %i.cr ; 7 uses
   %i.hj = getelementptr i8, ptr %.0.us.i, i64 %i.cx
   %i.hk = getelementptr i8, ptr %i.hj, i64 %i.gx
   %i.hl = getelementptr i8, ptr %.0.us.i, i64 %i.fd
@@ -473,11 +464,11 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   %min.iters.check72 = icmp ult i64 %i.hi, 32
   %i.hn = and i64 %i.hi, 24
   %n.vec74 = and i64 %i.hi, -32                   ; 4 uses
-  %i.ho = add i64 %n.vec74, %i.cr
+  %i.ho = add nsw i64 %n.vec74, %i.cr
   %cmp.n87 = icmp eq i64 %i.hi, %n.vec74
   %min.epilog.iters.check92 = icmp eq i64 %i.hn, 0
   %n.vec94 = and i64 %i.hi, -8                    ; 3 uses
-  %i.hp = add i64 %n.vec94, %i.cr
+  %i.hp = add nsw i64 %n.vec94, %i.cr
   %cmp.n101 = icmp eq i64 %i.hi, %n.vec94
   br label %.preheader252.us285.i
 
@@ -515,7 +506,7 @@ vector.memcheck55:                                ; preds = %iter.check89
   %i.ig = mul i32 %i.gf, %indvar63
   %i.ih = add i32 %i.ht, %i.ig
   %i.ii = sext i32 %i.ih to i64                   ; 2 uses
-  %i.ij = add i64 %smin59, %i.ii
+  %i.ij = add nsw i64 %wide.trip.count344.i, %i.ii
   %i.ik = shl nsw i64 %i.ij, 2
   %scevgep67 = getelementptr i8, ptr %scevgep66, i64 %i.ik
   %i.il = shl nsw i64 %i.ii, 2
@@ -588,7 +579,7 @@ vec.epilog.middle.block100:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph90.preheader:                 ; preds = %iter.check89, %vector.memcheck55, %vec.epilog.iter.check91, %vec.epilog.middle.block100
   %indvars.iv341.i.ph = phi i64 [ %i.cr, %iter.check89 ], [ %i.cr, %vector.memcheck55 ], [ %i.ho, %vec.epilog.iter.check91 ], [ %i.hp, %vec.epilog.middle.block100 ] ; 4 uses
-  %i.jg = sub i64 %smin69, %indvars.iv341.i.ph
+  %i.jg = sub nsw i64 %wide.trip.count344.i, %indvars.iv341.i.ph
   %xtraiter154 = and i64 %i.jg, 7                 ; 2 uses
   %lcmp.mod155.not = icmp eq i64 %xtraiter154, 0
   br i1 %lcmp.mod155.not, label %vec.epilog.scalar.ph90.prol.loopexit, label %vec.epilog.scalar.ph90.prol
@@ -609,7 +600,7 @@ vec.epilog.scalar.ph90.prol:                      ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph90.prol.loopexit:             ; preds = %vec.epilog.scalar.ph90.prol, %vec.epilog.scalar.ph90.preheader
   %indvars.iv341.i.unr = phi i64 [ %indvars.iv341.i.ph, %vec.epilog.scalar.ph90.preheader ], [ %indvars.iv.next342.i.prol, %vec.epilog.scalar.ph90.prol ]
-  %i.jk = sub i64 %indvars.iv341.i.ph, %smin69
+  %i.jk = sub nsw i64 %indvars.iv341.i.ph, %wide.trip.count344.i
   %i.jl = icmp ugt i64 %i.jk, -8
   br i1 %i.jl, label %..loopexit251_crit_edge.us.i, label %vec.epilog.scalar.ph90
 
@@ -691,7 +682,7 @@ vec.epilog.scalar.ph90:                           ; preds = %vec.epilog.scalar.p
 
 .preheader252.us.us.preheader.i:                  ; preds = %.preheader252.lr.ph.split.split.us.us.i
   %i.kk = sext i32 %.0216.us.i to i64             ; 3 uses
-  %wide.trip.count362.i = sext i32 %.sroa.speculated.us.i to i64
+  %wide.trip.count362.i = sext i32 %.sroa.speculated.us.i to i64 ; 4 uses
   %i.kl = add i64 %i.cx, %.0.us.i41
   %i.km = mul nsw i64 %i.cu, %i.kk
   %i.kn = add i64 %i.km, %i.cs
@@ -708,19 +699,17 @@ vec.epilog.scalar.ph90:                           ; preds = %vec.epilog.scalar.p
   %i.ky = mul i32 %i.gd, %i.gf
   %i.kz = zext i32 %i.ky to i64
   %i.la = zext i32 %i.gf to i64
-  %7 = sext i32 %i.ft to i64
-  %smin44 = call i64 @llvm.smin.i64(i64 %smin, i64 %7) ; 3 uses
-  %i.lb = sub i64 %smin44, %i.cr                  ; 7 uses
+  %i.lb = sub nsw i64 %wide.trip.count362.i, %i.cr ; 7 uses
   %min.iters.check = icmp ult i64 %i.lb, 8
   %invariant.op160 = add i64 %i.kp, %i.kt
   %min.iters.check45 = icmp ult i64 %i.lb, 32
   %i.lc = and i64 %i.lb, 24
   %n.vec = and i64 %i.lb, -32                     ; 4 uses
-  %i.ld = add i64 %n.vec, %i.cr
+  %i.ld = add nsw i64 %n.vec, %i.cr
   %cmp.n = icmp eq i64 %i.lb, %n.vec
   %min.epilog.iters.check = icmp eq i64 %i.lc, 0
   %n.vec49 = and i64 %i.lb, -8                    ; 3 uses
-  %i.le = add i64 %n.vec49, %i.cr
+  %i.le = add nsw i64 %n.vec49, %i.cr
   %cmp.n53 = icmp eq i64 %i.lb, %n.vec49
   br label %.preheader252.us.us.i
 
@@ -816,7 +805,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %indvars.iv359.i.ph = phi i64 [ %i.cr, %iter.check ], [ %i.cr, %vector.memcheck ], [ %i.ld, %vec.epilog.iter.check ], [ %i.le, %vec.epilog.middle.block ] ; 4 uses
-  %i.mp = sub i64 %smin44, %indvars.iv359.i.ph
+  %i.mp = sub nsw i64 %wide.trip.count362.i, %indvars.iv359.i.ph
   %xtraiter157 = and i64 %i.mp, 7                 ; 2 uses
   %lcmp.mod158.not = icmp eq i64 %xtraiter157, 0
   br i1 %lcmp.mod158.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
@@ -835,7 +824,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
   %indvars.iv359.i.unr = phi i64 [ %indvars.iv359.i.ph, %vec.epilog.scalar.ph.preheader ], [ %indvars.iv.next360.i.prol, %vec.epilog.scalar.ph.prol ]
-  %i.mr = sub i64 %indvars.iv359.i.ph, %smin44
+  %i.mr = sub nsw i64 %indvars.iv359.i.ph, %wide.trip.count362.i
   %i.ms = icmp ugt i64 %i.mr, -8
   br i1 %i.ms, label %..loopexit_crit_edge.us.us.us.i, label %vec.epilog.scalar.ph
 
@@ -918,7 +907,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.nk = sub i32 %i.ni, %i.nj                    ; 2 uses
   %i.nl = getelementptr inbounds nuw i8, ptr %i.ng, i64 20
   %i.nm = load i32, ptr %i.nl, align 4, !tbaa !105
-  %i.nn = add i32 %i.nk, %i.nm                    ; 2 uses
+  %i.nn = add i32 %i.nk, %i.nm
   %.sroa.speculated.i = call i32 @llvm.smin.i32(i32 %.sroa.speculated239.2.i, i32 %i.nn) ; 2 uses
   %i.no = or i32 %.0206275.i, %i.ew
   %or.cond3.i = icmp eq i32 %i.no, 0
@@ -940,7 +929,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %or.cond.i, label %.loopexit256.i, label %.preheader253.preheader.i
 
 .preheader253.preheader.i:                        ; preds = %.preheader255.i
-  %wide.trip.count.i = sext i32 %.sroa.speculated.i to i64 ; 3 uses
+  %wide.trip.count.i = sext i32 %.sroa.speculated.i to i64 ; 6 uses
   %i.oa = add i64 %i.do, %wide.trip.count.i
   %i.ob = shl i64 %i.oa, 2
   %scevgep108 = getelementptr i8, ptr %i.nu, i64 %i.dj
@@ -950,19 +939,17 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.of = add i32 %i.nj, %i.oe
   %i.og = sub i32 %i.of, %i.ni
   %i.oh = mul i32 %i.nw, %i.ny
-  %8 = sext i32 %i.nn to i64
-  %smin118 = call i64 @llvm.smin.i64(i64 %smin117, i64 %8) ; 3 uses
-  %i.oi = sub i64 %smin118, %i.cr                 ; 7 uses
+  %i.oi = sub nsw i64 %wide.trip.count.i, %i.cr   ; 7 uses
   %i.oj = getelementptr i8, ptr %i.fh, i64 %i.ob
   %min.iters.check119 = icmp ult i64 %i.oi, 8
   %min.iters.check121 = icmp ult i64 %i.oi, 32
   %i.ok = and i64 %i.oi, 24
   %n.vec123 = and i64 %i.oi, -32                  ; 4 uses
-  %i.ol = add i64 %n.vec123, %i.cr
+  %i.ol = add nsw i64 %n.vec123, %i.cr
   %cmp.n136 = icmp eq i64 %i.oi, %n.vec123
   %min.epilog.iters.check141 = icmp eq i64 %i.ok, 0
   %n.vec143 = and i64 %i.oi, -8                   ; 3 uses
-  %i.om = add i64 %n.vec143, %i.cr
+  %i.om = add nsw i64 %n.vec143, %i.cr
   %cmp.n150 = icmp eq i64 %i.oi, %n.vec143
   br label %.preheader253.i
 
@@ -1073,7 +1060,7 @@ vec.epilog.middle.block149:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph139.preheader:                ; preds = %iter.check138, %vector.memcheck103, %vec.epilog.iter.check140, %vec.epilog.middle.block149
   %indvars.iv.i.ph = phi i64 [ %i.cr, %iter.check138 ], [ %i.cr, %vector.memcheck103 ], [ %i.ol, %vec.epilog.iter.check140 ], [ %i.om, %vec.epilog.middle.block149 ] ; 4 uses
-  %i.qd = sub i64 %smin118, %indvars.iv.i.ph
+  %i.qd = sub nsw i64 %wide.trip.count.i, %indvars.iv.i.ph
   %xtraiter = and i64 %i.qd, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph139.prol.loopexit, label %vec.epilog.scalar.ph139.prol
@@ -1094,7 +1081,7 @@ vec.epilog.scalar.ph139.prol:                     ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph139.prol.loopexit:            ; preds = %vec.epilog.scalar.ph139.prol, %vec.epilog.scalar.ph139.preheader
   %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %vec.epilog.scalar.ph139.preheader ], [ %indvars.iv.next.i.prol, %vec.epilog.scalar.ph139.prol ]
-  %i.qh = sub i64 %indvars.iv.i.ph, %smin118
+  %i.qh = sub nsw i64 %indvars.iv.i.ph, %wide.trip.count.i
   %i.qi = icmp ugt i64 %i.qh, -8
   br i1 %i.qi, label %._crit_edge.i, label %vec.epilog.scalar.ph139
 
@@ -1475,9 +1462,6 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smin.v2i32(<2 x i32>, <2 x i32>) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #9
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

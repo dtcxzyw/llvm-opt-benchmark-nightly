@@ -204,11 +204,11 @@ bb.e:                                             ; preds = %._crit_edge208.spli
   %i.fq = mul i64 %i.ey, %indvar
   %i.fr = call i32 @llvm.smin.i32(i32 %i.do, i32 %indvars.iv258.i.i.i)
   %smax242.i.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv227.i.i.i, i32 0)
-  %i.fs = zext nneg i32 %smax242.i.i.i to i64     ; 5 uses
+  %i.fs = zext nneg i32 %smax242.i.i.i to i64     ; 7 uses
   %i.ft = mul nsw i64 %indvars.iv263.i.i.i, %i.ei ; 4 uses
   %i.fu = trunc i64 %i.ft to i32                  ; 2 uses
   %i.fv = sub i32 %i.bj, %i.fu
-  %.sroa.speculated140.i.i.i = call i32 @llvm.smax.i32(i32 %i.fv, i32 0) ; 2 uses
+  %.sroa.speculated140.i.i.i = call i32 @llvm.smax.i32(i32 %i.fv, i32 0)
   %i.fw = sub i32 %i.bk, %i.fu
   %.sroa.speculated132.i.i.i = call i32 @llvm.smin.i32(i32 %i.fw, i32 %i.do) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -235,10 +235,9 @@ bb.e:                                             ; preds = %._crit_edge208.spli
   %i.gh = load ptr, ptr %i.ax, align 8, !tbaa !232, !nonnull !62, !align !63
   %i.gi = load ptr, ptr %i.gh, align 8, !tbaa !26 ; 3 uses
   %i.gj = zext nneg i32 %.sroa.speculated132.i.i.i to i64 ; 3 uses
-  %3 = zext nneg i32 %.sroa.speculated140.i.i.i to i64 ; 2 uses
-  %i.gk = add nuw nsw i64 %3, 1
+  %i.gk = add nuw nsw i64 %i.fs, 1
   %i.gl = call i64 @llvm.umax.i64(i64 %i.gk, i64 %i.gj)
-  %i.gm = sub nsw i64 %i.gl, %3                   ; 3 uses
+  %i.gm = sub nsw i64 %i.gl, %i.fs                ; 3 uses
   %min.iters.check47 = icmp ult i64 %i.gm, 8
   br i1 %min.iters.check47, label %scalar.ph46.preheader, label %vector.memcheck38
 

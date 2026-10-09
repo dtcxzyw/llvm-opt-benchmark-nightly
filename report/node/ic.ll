@@ -202,18 +202,16 @@ bb.a:
   %i.c = inttoptr i64 %i.b to ptr                 ; 4 uses
   %i.d = load atomic volatile i16, ptr %i.c monotonic, align 2
   %i.e = icmp ugt i16 %i.d, 302
-  br i1 %i.e, label %bb.i, label %4
+  br i1 %i.e, label %bb.i, label %bb.b
 
-4:                                                ; preds = %bb.a
-  %5 = load atomic volatile i16, ptr %i.c monotonic, align 2
-  %6 = icmp eq i16 %5, 302
-  br i1 %6, label %bb.b, label %bb.e
-
-bb.b:                                             ; preds = %4
+bb.b:                                             ; preds = %bb.a
+  %4 = load atomic volatile i16, ptr %i.c monotonic, align 2
+  %5 = icmp ne i16 %4, 302
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.g = load i8, ptr %i.f, align 4
   %i.h = icmp eq i8 %i.g, 13
-  br i1 %i.h, label %bb.e, label %bb.c
+  %or.cond = select i1 %5, i1 true, i1 %i.h
+  br i1 %or.cond, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -238,7 +236,7 @@ _ZN2v88internal12StoreHandler10StoreProxyEPNS0_7IsolateE.exit: ; preds = %bb.c, 
   store i64 42949672960, ptr %.0.i.i, align 8
   br label %_ZN2v88internal11DataHandler15set_smi_handlerENS0_6TaggedINS0_4CodeEEENS0_16WriteBarrierModeE.exit
 
-bb.e:                                             ; preds = %bb.b, %4
+bb.e:                                             ; preds = %bb.b
   %i.t = load atomic volatile i16, ptr %i.c monotonic, align 2
   %i.u = and i16 %i.t, -2
   %i.v = icmp eq i16 %i.u, 300
@@ -641,7 +639,7 @@ bb.b:                                             ; preds = %_ZN2v88internal7JSA
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN2v88internal12_GLOBAL__N_133MayHaveTypedArrayInPrototypeChainEPNS0_7IsolateENS0_12DirectHandleINS0_8JSObjectEEE(ptr nofree noundef readonly captures(none) %0, ptr nofree readonly captures(none) %1) unnamed_addr #8 {
 bb.a:
   %i.a = load i64, ptr %1, align 8
@@ -1044,7 +1042,7 @@ attributes #4 = { inlinehint mustprogress nounwind uwtable "frame-pointer"="all"
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { cold "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nobuiltin allocsize(0) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

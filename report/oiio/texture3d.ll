@@ -205,17 +205,17 @@ bb.r:                                             ; preds = %bb.q
   %i.fp = extractelement <2 x i32> %i.ds, i64 0
   %i.fq = sext i32 %i.fp to i64
   %i.fr = add i64 %i.fo, %i.fq
-  %i.fs = load i32, ptr %5, align 8, !tbaa !183   ; 2 uses
-  %i.ft = load i16, ptr %i.dz, align 4, !tbaa !227 ; 2 uses
+  %i.fs = load i32, ptr %5, align 8, !tbaa !183
+  %i.ft = load i16, ptr %i.dz, align 4, !tbaa !227
   %i.fu = sext i16 %i.ft to i32
-  %i.fv = sub nsw i32 %i.fs, %i.fu
+  %i.fv = sub i32 %i.fs, %i.fu
   %i.fw = load i32, ptr %i.cu, align 4, !tbaa !220
   %i.fx = sext i32 %i.fw to i64
-  %i.fy = mul i64 %i.fr, %i.fx                    ; 2 uses
+  %i.fy = mul i64 %i.fr, %i.fx
   %i.fz = sext i32 %i.fv to i64
-  %i.ga = add i64 %i.fy, %i.fz                    ; 4 uses
+  %i.ga = add i64 %i.fy, %i.fz                    ; 5 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.ff, i64 48
-  %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !131 ; 6 uses
+  %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !131 ; 5 uses
   %i.gd = icmp sgt i32 %7, 0                      ; 4 uses
   switch i8 %i.r, label %bb.aa [
     i8 2, label %bb.s
@@ -432,27 +432,22 @@ _ZNK9Imath_3_14halfcvfEv.exit:                    ; preds = %bb.w, %bb.x, %bb.y,
   br i1 %exitcond.not, label %.loopexit184, label %.lr.ph, !llvm.loop !441
 
 bb.aa:                                            ; preds = %bb.r
-  %i.jk = getelementptr inbounds nuw [4 x i8], ptr %i.gc, i64 %i.ga ; 4 uses
+  %i.jk = getelementptr [4 x i8], ptr %i.gc, i64 %i.ga ; 5 uses
   br i1 %i.gd, label %.lr.ph194.preheader, label %.loopexit184
 
 .lr.ph194.preheader:                              ; preds = %bb.aa
-  %wide.trip.count216 = zext nneg i32 %7 to i64   ; 6 uses
-  %min.iters.check275 = icmp ult i32 %7, 12
+  %wide.trip.count216 = zext nneg i32 %7 to i64   ; 7 uses
+  %min.iters.check275 = icmp ult i32 %7, 8
   br i1 %min.iters.check275, label %.lr.ph194.preheader305, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph194.preheader
-  %i.jl = shl nuw nsw i64 %wide.trip.count216, 2  ; 2 uses
+  %i.jl = shl nuw nsw i64 %wide.trip.count216, 2
   %i.jm = getelementptr i8, ptr %9, i64 %i.jl
-  %15 = sext i32 %i.fs to i64
-  %16 = sext i16 %i.ft to i64
-  %i.jn = add i64 %i.fy, %15
-  %17 = sub i64 %i.jn, %16
-  %i.jo = shl i64 %17, 2                          ; 2 uses
-  %18 = getelementptr i8, ptr %i.gc, i64 %i.jo
-  %19 = getelementptr i8, ptr %i.gc, i64 %i.jo
-  %i.jp = getelementptr i8, ptr %19, i64 %i.jl
+  %i.jn = add i64 %i.ga, %wide.trip.count216
+  %i.jo = shl i64 %i.jn, 2
+  %i.jp = getelementptr i8, ptr %i.gc, i64 %i.jo
   %bound0 = icmp ult ptr %9, %i.jp
-  %bound1 = icmp ult ptr %18, %i.jm
+  %bound1 = icmp ult ptr %i.jk, %i.jm
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph194.preheader305, label %vector.ph276
 

@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 44
   %i.s = load i32, ptr %i.r, align 4, !tbaa !57, !noalias !126 ; 5 uses
   %i.t = load ptr, ptr %4, align 8, !tbaa !20, !noalias !126 ; 2 uses
-  %i.u = sext i32 %i.s to i64                     ; 2 uses
+  %i.u = sext i32 %i.s to i64
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.w = load i64, ptr %i.v, align 8, !tbaa !50, !noalias !126 ; 2 uses
+  %i.w = load i64, ptr %i.v, align 8, !tbaa !50, !noalias !126
   %i.x = mul i64 %i.w, %i.u
-  %i.y = load ptr, ptr %5, align 8, !tbaa !20     ; 3 uses
+  %i.y = load ptr, ptr %5, align 8, !tbaa !20     ; 2 uses
   %i.z = load i32, ptr %6, align 4, !tbaa !52     ; 5 uses
   %i.aa = load i32, ptr %7, align 4, !tbaa !52    ; 4 uses
   %i.ab = mul i32 %i.aa, %i.z                     ; 2 uses
@@ -230,7 +230,6 @@ bb.b:                                             ; preds = %bb.a
   %wide.trip.count = zext i32 %i.z to i64         ; 7 uses
   %wide.trip.count132 = zext nneg i32 %i.al to i64
   %i.an = shl nuw nsw i64 %wide.trip.count, 2
-  %17 = mul i64 %i.w, %i.u
   %i.ao = add nuw nsw i64 %wide.trip.count122, 4611686018427387903
   %i.ap = mul i64 %i.ao, %i.ak
   %i.aq = add i64 %i.ap, %wide.trip.count
@@ -260,12 +259,12 @@ bb.c:                                             ; preds = %.lr.ph113, %_ZN4ncn
   %i.ba = trunc i64 %.recomposed to i32           ; 2 uses
   %i.bb = mul i32 %i.q, %i.ay
   %i.bc = add i32 %i.bb, %i.ba
-  %i.bd = sext i32 %i.bc to i64                   ; 3 uses
-  %i.be = mul i64 %i.x, %i.bd
+  %i.bd = sext i32 %i.bc to i64                   ; 2 uses
+  %i.be = mul i64 %i.x, %i.bd                     ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.be ; 5 uses
   %.reass116 = mul i32 %factor.op.mul115, %i.ay
   %i.bg = sext i32 %.reass116 to i64              ; 2 uses
-  %i.bh = getelementptr inbounds [4 x i8], ptr %i.y, i64 %i.bg
+  %i.bh = getelementptr [4 x i8], ptr %i.y, i64 %i.bg
   br i1 %.not74, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -313,7 +312,7 @@ _ZN4ncnn3Mat4fillEf.exit.preheader:               ; preds = %.lr.ph, %middle.blo
   %i.bq = load i32, ptr %11, align 4, !tbaa !52
   %i.br = mul i32 %i.ab, %i.ba
   %i.bs = sext i32 %i.br to i64                   ; 2 uses
-  %i.bt = getelementptr inbounds [4 x i8], ptr %i.bh, i64 %i.bs
+  %i.bt = getelementptr [4 x i8], ptr %i.bh, i64 %i.bs ; 2 uses
   %i.bu = mul nsw i32 %i.aa, %i.ay
   br i1 %i.ag, label %.lr.ph106.split, label %.preheader
 
@@ -330,13 +329,11 @@ _ZN4ncnn3Mat4fillEf.exit.preheader:               ; preds = %.lr.ph, %middle.blo
   %i.ca = sext i32 %i.bz to i64                   ; 3 uses
   %i.cb = sext i32 %i.bu to i64
   %i.cc = sext i32 %i.bq to i64                   ; 2 uses
-  %18 = mul i64 %17, %i.bd
   %i.cd = shl nsw i64 %i.cc, 2
   %i.ce = add nsw i64 %i.bg, %i.bs
-  %i.cf = shl nsw i64 %i.ce, 2                    ; 2 uses
-  %scevgep146 = getelementptr i8, ptr %i.y, i64 %i.cf
+  %i.cf = shl nsw i64 %i.ce, 2
   %scevgep148 = getelementptr i8, ptr %scevgep147.a, i64 %i.cf
-  %i.cg = getelementptr i8, ptr %i.av, i64 %18
+  %i.cg = getelementptr i8, ptr %i.av, i64 %i.be
   %ident.check.not = icmp eq i32 %i.bz, 1
   %or.cond165 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   br label %.lr.ph103
@@ -365,7 +362,7 @@ _ZN4ncnn3Mat4fillEf.exit.preheader:               ; preds = %.lr.ph, %middle.blo
   %i.cm = getelementptr inbounds [4 x i8], ptr %i.bf, i64 %i.cl ; 5 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.bv, i64 %indvars.iv124
   %bound0 = icmp ult ptr %i.cm, %scevgep148
-  %bound1 = icmp ult ptr %scevgep146, %scevgep
+  %bound1 = icmp ult ptr %i.bt, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br label %.lr.ph99
 

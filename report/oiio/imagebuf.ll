@@ -205,7 +205,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 7 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 8 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -220,12 +220,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -628,7 +627,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 7 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 8 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -643,12 +642,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -1051,7 +1049,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.bz = mul i64 %3, %i.by                       ; 2 uses
   %i.ca = getelementptr i8, ptr %2, i64 %i.br
   %i.cb = getelementptr i8, ptr %i.ca, i64 %i.bv
-  %i.cc = getelementptr i8, ptr %i.cb, i64 %i.bz  ; 5 uses
+  %i.cc = getelementptr i8, ptr %i.cb, i64 %i.bz  ; 6 uses
   %i.cd = load ptr, ptr %6, align 8, !tbaa !324
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !229
@@ -1066,12 +1064,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ci, i64 %i.az
-  %7 = add i64 %i.br, %i.bv
-  %8 = add i64 %7, %i.bz                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.br
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bv
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.bz
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cc, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -1474,7 +1471,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 3 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 4 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -1489,12 +1486,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -1897,7 +1893,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 3 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 4 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -1912,12 +1908,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -2320,7 +2315,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 3 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 4 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -2335,12 +2330,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -2743,7 +2737,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.bz = mul i64 %3, %i.by                       ; 2 uses
   %i.ca = getelementptr i8, ptr %2, i64 %i.br
   %i.cb = getelementptr i8, ptr %i.ca, i64 %i.bv
-  %i.cc = getelementptr i8, ptr %i.cb, i64 %i.bz  ; 5 uses
+  %i.cc = getelementptr i8, ptr %i.cb, i64 %i.bz  ; 6 uses
   %i.cd = load ptr, ptr %6, align 8, !tbaa !324
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !229
@@ -2758,12 +2752,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ci, i64 %i.az
-  %7 = add i64 %i.br, %i.bv
-  %8 = add i64 %7, %i.bz                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.br
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bv
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.bz
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cc, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -3166,7 +3159,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 3 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 4 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -3181,12 +3174,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -3589,7 +3581,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 3 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 4 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -3604,12 +3596,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -4012,7 +4003,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 3 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 4 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -4027,12 +4018,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -4435,7 +4425,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 7 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 8 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -4450,12 +4440,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -4858,7 +4847,7 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
   %i.by = mul i64 %3, %i.bx                       ; 2 uses
   %i.bz = getelementptr i8, ptr %2, i64 %i.bq
   %i.ca = getelementptr i8, ptr %i.bz, i64 %i.bu
-  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 7 uses
+  %i.cb = getelementptr i8, ptr %i.ca, i64 %i.by  ; 8 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !324
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !229
@@ -4873,12 +4862,11 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us: ; preds = %
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.us
   %scevgep = getelementptr i8, ptr %i.ch, i64 %i.az
-  %7 = add i64 %i.bq, %i.bu
-  %8 = add i64 %7, %i.by                          ; 2 uses
-  %scevgep3 = getelementptr i8, ptr %2, i64 %8
-  %scevgep5 = getelementptr i8, ptr %scevgep4.a, i64 %8
+  %7 = getelementptr i8, ptr %scevgep4.a, i64 %i.bq
+  %scevgep3 = getelementptr i8, ptr %7, i64 %i.bu
+  %scevgep5 = getelementptr i8, ptr %scevgep3, i64 %i.by
   %bound0 = icmp ult ptr %invariant.gep, %scevgep5
-  %bound1 = icmp ult ptr %scevgep3, %scevgep
+  %bound1 = icmp ult ptr %i.cb, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
 
@@ -5281,7 +5269,7 @@ bb.a:
   %.sroa.828.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 28
   %.sroa.828.0.copyload.i.i = load i32, ptr %.sroa.828.0..sroa_idx.i.i, align 4, !tbaa !83
   %i.c = getelementptr inbounds nuw i8, ptr %.val, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !3242 ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !3242 ; 2 uses
   %i.e = sub nsw i32 %.sroa.828.0.copyload.i.i, %.sroa.727.0.copyload.i.i
   %.fr17.i.i.i = freeze i32 %i.e                  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #41
@@ -5438,18 +5426,17 @@ _ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i: ; pre
   %i.cq = mul i64 %i.cp, %i.co                    ; 2 uses
   %i.cr = getelementptr i8, ptr %i.d, i64 %i.cg
   %i.cs = getelementptr i8, ptr %i.cr, i64 %i.cl
-  %i.ct = getelementptr i8, ptr %i.cs, i64 %i.cq  ; 2 uses
+  %i.ct = getelementptr i8, ptr %i.cs, i64 %i.cq  ; 3 uses
   %.pre22.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !326 ; 2 uses
   %invariant.gep.i.i.i = getelementptr [2 x i8], ptr %.pre22.i.i.i, i64 %i.be ; 3 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZNK11OpenImageIO4v3_18ImageBuf12IteratorBase4doneEv.exit.thread.us.i.i.i
-  %3 = add i64 %i.cq, %i.cl
-  %4 = add i64 %3, %i.cg                          ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.d, i64 %4
-  %scevgep13.a = getelementptr i8, ptr %scevgep12.a, i64 %4
+  %3 = getelementptr i8, ptr %scevgep12.a, i64 %i.cq
+  %scevgep = getelementptr i8, ptr %3, i64 %i.cl
+  %scevgep13.a = getelementptr i8, ptr %scevgep, i64 %i.cg
   %scevgep14 = getelementptr i8, ptr %.pre22.i.i.i, i64 %i.bp
-  %bound0 = icmp ult ptr %scevgep, %scevgep14
+  %bound0 = icmp ult ptr %i.ct, %scevgep14
   %bound1 = icmp ult ptr %invariant.gep.i.i.i, %scevgep13.a
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.body
