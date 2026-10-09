@@ -205,12 +205,12 @@ bb.m:                                             ; preds = %.lr.ph400, %.loopex
   %.0272398 = phi ptr [ %1, %.lr.ph400 ], [ %i.qj, %.loopexit ] ; 2 uses
   %i.db = trunc i64 %indvars.iv457 to i32         ; 2 uses
   %i.dc = trunc i64 %indvars.iv457 to i1
-  %i.dd = select i1 %i.dc, i64 %i.bk, i64 0       ; 7 uses
+  %i.dd = select i1 %i.dc, i64 %i.bk, i64 0       ; 6 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.dd ; 75 uses
   %i.df = and i32 %i.db, 1
   %i.dg = xor i32 %i.df, 1
   %i.dh = mul nuw nsw i32 %i.dg, %i.ah
-  %i.di = zext nneg i32 %i.dh to i64              ; 7 uses
+  %i.di = zext nneg i32 %i.dh to i64              ; 6 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.di ; 30 uses
   %i.dk = load ptr, ptr %i.u, align 8
   %i.dl = mul i32 %i.e, %i.db
@@ -613,11 +613,10 @@ iter.check648:                                    ; preds = %.preheader354
   br i1 %min.iters.check632, label %.lr.ph362.preheader, label %vector.memcheck625
 
 vector.memcheck625:                               ; preds = %iter.check648
-  %i.ln = sub nsw i64 %i.di, %i.dd
+  %i.ln = sub nsw i64 %i.di, %i.dd                ; 2 uses
   %diff.check627 = icmp ugt i64 %i.ln, -16
   %conflict.rdx628 = or i1 %diff.check626, %diff.check627
-  %8 = add nsw i64 %i.dd, %i.aw
-  %i.lo = sub nsw i64 %i.di, %8
+  %i.lo = sub nsw i64 %i.ln, %i.aw
   %diff.check629 = icmp ugt i64 %i.lo, -16
   %conflict.rdx630 = or i1 %conflict.rdx628, %diff.check629
   br i1 %conflict.rdx630, label %.lr.ph362.preheader, label %vector.main.loop.iter.check633

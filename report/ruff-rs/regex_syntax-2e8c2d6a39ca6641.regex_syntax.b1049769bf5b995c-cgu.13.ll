@@ -204,7 +204,7 @@ _RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionSta
   br i1 %i.at, label %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21, label %._crit_edge74
 
 ._crit_edge74:                                    ; preds = %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21, %._crit_edge
-  %.sroa.31.2.lcssa = phi i64 [ %.sroa.31.1.lcssa, %._crit_edge ], [ %i.bc, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21 ] ; 10 uses
+  %.sroa.31.2.lcssa = phi i64 [ %.sroa.31.1.lcssa, %._crit_edge ], [ %i.bc, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21 ] ; 9 uses
   %.sroa.7.2.lcssa = phi ptr [ %.sroa.7.1.lcssa, %._crit_edge ], [ %i.bd, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21 ] ; 2 uses
   %.sroa.53.2.lcssa = phi ptr [ %.sroa.53.1.lcssa, %._crit_edge ], [ %i.ay, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21 ]
   %i.au = icmp eq i64 %.sroa.0.0, %1
@@ -245,7 +245,7 @@ bb.e:                                             ; preds = %._crit_edge74
 bb.f:                                             ; preds = %bb.g, %bb.e
   %i.bl = shl i64 %.sroa.31.2.lcssa, 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr align 1 %2, i64 %i.bl, i1 false)
-  %i.bm = sub i64 %1, %.sroa.31.2.lcssa           ; 8 uses
+  %i.bm = sub i64 %1, %.sroa.31.2.lcssa           ; 9 uses
   %.not81 = icmp eq i64 %1, %.sroa.31.2.lcssa
   br i1 %.not81, label %._crit_edge80, label %iter.check
 
@@ -323,8 +323,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.07.078.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec106, %vec.epilog.middle.block ] ; 3 uses
-  %7 = sub i64 %1, %.sroa.31.2.lcssa
-  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %xtraiter = and i64 %i.bm, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -467,7 +466,7 @@ _RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionSta
   br i1 %i.al, label %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21, label %._crit_edge74
 
 ._crit_edge74:                                    ; preds = %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21, %._crit_edge
-  %.sroa.31.2.lcssa = phi i64 [ %.sroa.31.1.lcssa, %._crit_edge ], [ %i.as, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21 ] ; 10 uses
+  %.sroa.31.2.lcssa = phi i64 [ %.sroa.31.1.lcssa, %._crit_edge ], [ %i.as, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21 ] ; 9 uses
   %.sroa.7.2.lcssa = phi ptr [ %.sroa.7.1.lcssa, %._crit_edge ], [ %i.at, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21 ] ; 2 uses
   %.sroa.53.2.lcssa = phi ptr [ %.sroa.53.1.lcssa, %._crit_edge ], [ %i.ao, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir15ClassBytesRangeE13partition_oneB1l_.exit21 ]
   %i.am = icmp eq i64 %.sroa.0.0, %1
@@ -506,7 +505,7 @@ bb.e:                                             ; preds = %._crit_edge74
 bb.f:                                             ; preds = %bb.g, %bb.e
   %i.bb = shl i64 %.sroa.31.2.lcssa, 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr align 1 %2, i64 %i.bb, i1 false)
-  %i.bc = sub i64 %1, %.sroa.31.2.lcssa           ; 8 uses
+  %i.bc = sub i64 %1, %.sroa.31.2.lcssa           ; 9 uses
   %.not81 = icmp eq i64 %1, %.sroa.31.2.lcssa
   br i1 %.not81, label %._crit_edge80, label %iter.check
 
@@ -584,8 +583,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.sroa.07.078.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec106, %vec.epilog.middle.block ] ; 3 uses
-  %7 = sub i64 %1, %.sroa.31.2.lcssa
-  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %xtraiter = and i64 %i.bc, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -736,7 +734,7 @@ _RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionSta
   br i1 %i.at, label %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21, label %._crit_edge74
 
 ._crit_edge74:                                    ; preds = %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21, %._crit_edge
-  %.sroa.31.2.lcssa = phi i64 [ %.sroa.31.1.lcssa, %._crit_edge ], [ %i.bc, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21 ] ; 10 uses
+  %.sroa.31.2.lcssa = phi i64 [ %.sroa.31.1.lcssa, %._crit_edge ], [ %i.bc, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21 ] ; 9 uses
   %.sroa.7.2.lcssa = phi ptr [ %.sroa.7.1.lcssa, %._crit_edge ], [ %i.bd, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21 ] ; 2 uses
   %.sroa.53.2.lcssa = phi ptr [ %.sroa.53.1.lcssa, %._crit_edge ], [ %i.ay, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21 ]
   %i.au = icmp eq i64 %.sroa.0.0, %1
@@ -777,7 +775,7 @@ bb.e:                                             ; preds = %._crit_edge74
 bb.f:                                             ; preds = %bb.g, %bb.e
   %i.bl = shl i64 %.sroa.31.2.lcssa, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %0, ptr align 4 %2, i64 %i.bl, i1 false)
-  %i.bm = sub i64 %1, %.sroa.31.2.lcssa           ; 4 uses
+  %i.bm = sub i64 %1, %.sroa.31.2.lcssa           ; 5 uses
   %.not81 = icmp eq i64 %1, %.sroa.31.2.lcssa
   br i1 %.not81, label %._crit_edge80, label %.lr.ph
 
@@ -824,8 +822,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
   %.sroa.07.078.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
-  %7 = sub i64 %1, %.sroa.31.2.lcssa
-  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %xtraiter = and i64 %i.bm, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -968,7 +965,7 @@ _RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionSta
   br i1 %i.al, label %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21, label %._crit_edge74
 
 ._crit_edge74:                                    ; preds = %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21, %._crit_edge
-  %.sroa.31.2.lcssa = phi i64 [ %.sroa.31.1.lcssa, %._crit_edge ], [ %i.as, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21 ] ; 10 uses
+  %.sroa.31.2.lcssa = phi i64 [ %.sroa.31.1.lcssa, %._crit_edge ], [ %i.as, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21 ] ; 9 uses
   %.sroa.7.2.lcssa = phi ptr [ %.sroa.7.1.lcssa, %._crit_edge ], [ %i.at, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21 ] ; 2 uses
   %.sroa.53.2.lcssa = phi ptr [ %.sroa.53.1.lcssa, %._crit_edge ], [ %i.ao, %_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateNtNtCsfcggljOhZkm_12regex_syntax3hir17ClassUnicodeRangeE13partition_oneB1l_.exit21 ]
   %i.am = icmp eq i64 %.sroa.0.0, %1
@@ -1007,7 +1004,7 @@ bb.e:                                             ; preds = %._crit_edge74
 bb.f:                                             ; preds = %bb.g, %bb.e
   %i.bb = shl i64 %.sroa.31.2.lcssa, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %0, ptr align 4 %2, i64 %i.bb, i1 false)
-  %i.bc = sub i64 %1, %.sroa.31.2.lcssa           ; 4 uses
+  %i.bc = sub i64 %1, %.sroa.31.2.lcssa           ; 5 uses
   %.not81 = icmp eq i64 %1, %.sroa.31.2.lcssa
   br i1 %.not81, label %._crit_edge80, label %.lr.ph
 
@@ -1054,8 +1051,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
   %.sroa.07.078.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
-  %7 = sub i64 %1, %.sroa.31.2.lcssa
-  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %xtraiter = and i64 %i.bc, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 

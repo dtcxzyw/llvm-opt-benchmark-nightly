@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %_RNvXsK_NtNtCs3oUPo
   unreachable
 
 bb.l:                                             ; preds = %bb.u, %bb.j
-  %.sroa.01.0 = phi i64 [ %i.af, %bb.j ], [ %i.be, %bb.u ] ; 4 uses
+  %.sroa.01.0 = phi i64 [ %i.af, %bb.j ], [ %i.be, %bb.u ] ; 3 uses
   %i.aj = load i64, ptr %i.c, align 8, !noundef !8 ; 2 uses
   %i.ak = add i64 %i.aj, %.sroa.01.0              ; 2 uses
   %i.al = icmp ult i64 %i.ak, %i.aj
@@ -226,7 +226,7 @@ _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecjE8push_mutCs8frGy5WneL6_4fish.exit:
   store i64 %i.ak, ptr %i.aq, align 8
   %i.ar = add i64 %i.am, 1
   store i64 %i.ar, ptr %i.ag, align 8, !alias.scope !1033
-  %i.as = add i64 %.sroa.01.0, 1                  ; 5 uses
+  %i.as = add i64 %.sroa.01.0, 1                  ; 6 uses
   %i.at = icmp eq i64 %.sroa.01.0, -1
   br i1 %i.at, label %bb.q, label %bb.p
 
@@ -244,8 +244,7 @@ bb.q:                                             ; preds = %_RNvMsG_NtCs1xwejQu
 
 bb.r:                                             ; preds = %bb.p
   %.idx32 = shl nuw nsw i64 %i.as, 2              ; 2 uses
-  %.neg33 = xor i64 %.sroa.01.0, -1
-  %2 = add i64 %i.h, %.neg33
+  %2 = sub nuw i64 %i.h, %i.as
   %i.av = add nuw nsw i64 %.idx32, %.idx31
   %i.aw = icmp samesign eq i64 %i.av, %.idx
   br i1 %i.aw, label %_RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.exit.thread, label %.lr.ph.i20.preheader

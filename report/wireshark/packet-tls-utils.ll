@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %.0 = phi i32 [ 3, %bb.f ], [ 4, %bb.e ], [ %., %bb.g ] ; 4 uses
-  %i.j = sub nuw i32 %5, %4                       ; 2 uses
+  %i.j = sub nuw i32 %5, %4                       ; 3 uses
   %i.k = icmp ult i32 %i.j, %.0
   br i1 %i.k, label %bb.i, label %bb.j
 
@@ -235,8 +235,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m, %bb.k
-  %10 = add i32 %4, %.0
-  %i.v = sub i32 %5, %10                          ; 3 uses
+  %i.v = sub nuw i32 %i.j, %.0                    ; 3 uses
   %i.w = load i32, ptr %i.a, align 4              ; 3 uses
   %i.x = icmp ult i32 %i.v, %i.w
   br i1 %i.x, label %bb.o, label %bb.p

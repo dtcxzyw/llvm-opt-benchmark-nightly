@@ -205,13 +205,13 @@ _ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge: ; pred
   br label %.noexc289
 
 .noexc289:                                        ; preds = %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge, %bb.co
-  %.pre-phi571 = phi i64 [ %.pre570, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ %i.ib, %bb.co ] ; 5 uses
-  %.pre-phi = phi i64 [ %.pre569, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ %i.ia, %bb.co ] ; 5 uses
+  %.pre-phi571 = phi i64 [ %.pre570, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ %i.ib, %bb.co ] ; 3 uses
+  %.pre-phi = phi i64 [ %.pre569, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ %i.ia, %bb.co ] ; 3 uses
   %.not = phi i1 [ %i.if, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ true, %bb.co ] ; 2 uses
   %i.ig = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ %i.hz, %bb.co ] ; 2 uses
   %i.ih = phi ptr [ %i.ie, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ null, %bb.co ] ; 22 uses
   %i.ii = ptrtoaddr ptr %i.ih to i64              ; 2 uses
-  %i.ij = sub i64 %.pre-phi, %.pre-phi571         ; 20 uses
+  %i.ij = sub i64 %.pre-phi, %.pre-phi571         ; 22 uses
   %i.ik = icmp sgt i64 %i.ij, 1
   br i1 %i.ik, label %bb.cq, label %bb.cr, !prof !61
 
@@ -614,8 +614,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.030561.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec738, %vec.epilog.middle.block ] ; 3 uses
-  %53 = sub i64 %.pre-phi, %.pre-phi571
-  %xtraiter = and i64 %53, 3                      ; 2 uses
+  %xtraiter = and i64 %i.ij, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -1018,8 +1017,7 @@ vec.epilog.middle.block768:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph759.preheader:                ; preds = %iter.check758, %vec.epilog.iter.check760, %vec.epilog.middle.block768
   %.0562.ph = phi i64 [ 0, %iter.check758 ], [ %n.vec749, %vec.epilog.iter.check760 ], [ %n.vec763, %vec.epilog.middle.block768 ] ; 3 uses
-  %54 = sub i64 %.pre-phi, %.pre-phi571
-  %xtraiter774 = and i64 %54, 3                   ; 2 uses
+  %xtraiter774 = and i64 %i.ij, 3                 ; 2 uses
   %lcmp.mod775.not = icmp eq i64 %xtraiter774, 0
   br i1 %lcmp.mod775.not, label %vec.epilog.scalar.ph759.prol.loopexit, label %vec.epilog.scalar.ph759.prol
 
@@ -1422,13 +1420,13 @@ _ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge: ; pred
   br label %.noexc301
 
 .noexc301:                                        ; preds = %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge, %bb.cy
-  %.pre-phi589 = phi i64 [ %.pre588, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ %i.kg, %bb.cy ] ; 5 uses
-  %.pre-phi = phi i64 [ %.pre587, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ %i.kf, %bb.cy ] ; 5 uses
+  %.pre-phi589 = phi i64 [ %.pre588, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ %i.kg, %bb.cy ] ; 3 uses
+  %.pre-phi = phi i64 [ %.pre587, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ %i.kf, %bb.cy ] ; 3 uses
   %.not = phi i1 [ %i.kk, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ true, %bb.cy ] ; 2 uses
   %i.kl = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ %i.ke, %bb.cy ] ; 2 uses
   %i.km = phi ptr [ %i.kj, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ null, %bb.cy ] ; 22 uses
   %i.kn = ptrtoaddr ptr %i.km to i64              ; 2 uses
-  %i.ko = sub i64 %.pre-phi, %.pre-phi589         ; 20 uses
+  %i.ko = sub i64 %.pre-phi, %.pre-phi589         ; 22 uses
   %i.kp = icmp sgt i64 %i.ko, 1
   br i1 %i.kp, label %bb.da, label %bb.db, !prof !61
 
@@ -1831,8 +1829,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.030579.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec750, %vec.epilog.middle.block ] ; 3 uses
-  %58 = sub i64 %.pre-phi, %.pre-phi589
-  %xtraiter = and i64 %58, 3                      ; 2 uses
+  %xtraiter = and i64 %i.ko, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
 
@@ -2235,8 +2232,7 @@ vec.epilog.middle.block780:                       ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph771.preheader:                ; preds = %iter.check770, %vec.epilog.iter.check772, %vec.epilog.middle.block780
   %.0580.ph = phi i64 [ 0, %iter.check770 ], [ %n.vec761, %vec.epilog.iter.check772 ], [ %n.vec775, %vec.epilog.middle.block780 ] ; 3 uses
-  %59 = sub i64 %.pre-phi, %.pre-phi589
-  %xtraiter790 = and i64 %59, 3                   ; 2 uses
+  %xtraiter790 = and i64 %i.ko, 3                 ; 2 uses
   %lcmp.mod791.not = icmp eq i64 %xtraiter790, 0
   br i1 %lcmp.mod791.not, label %vec.epilog.scalar.ph771.prol.loopexit, label %vec.epilog.scalar.ph771.prol
 

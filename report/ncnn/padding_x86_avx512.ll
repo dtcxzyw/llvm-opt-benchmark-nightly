@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.j
   br i1 %i.sg, label %.preheader9.us.preheader.i, label %.preheader9.lr.ph.split.i
 
 .preheader9.us.preheader.i:                       ; preds = %.preheader9.lr.ph.i
-  %i.sl = zext nneg i32 %i.rz to i64              ; 16 uses
+  %i.sl = zext nneg i32 %i.rz to i64              ; 14 uses
   %wide.trip.count151.i = zext i32 %i.sa to i64   ; 10 uses
   %i.sm = shl nuw nsw i64 %wide.trip.count151.i, 3
   %i.sn = mul nsw i64 %wide.trip.count151.i, -8
@@ -377,9 +377,9 @@ vec.epilog.scalar.ph1103.prol.loopexit:           ; preds = %vec.epilog.scalar.p
   br i1 %i.uo, label %..preheader8_crit_edge.us.i, label %vec.epilog.scalar.ph1103
 
 vec.epilog.scalar.ph1103:                         ; preds = %vec.epilog.scalar.ph1103.prol.loopexit, %vec.epilog.scalar.ph1103
-  %indvars.iv142.i = phi i64 [ %indvars.iv.next143.i.3, %vec.epilog.scalar.ph1103 ], [ %indvars.iv142.i.unr, %vec.epilog.scalar.ph1103.prol.loopexit ] ; 5 uses
+  %indvars.iv142.i = phi i64 [ %indvars.iv.next143.i.3, %vec.epilog.scalar.ph1103 ], [ %indvars.iv142.i.unr, %vec.epilog.scalar.ph1103.prol.loopexit ] ; 3 uses
   %.110.us.i = phi ptr [ %i.vc, %vec.epilog.scalar.ph1103 ], [ %.110.us.i.unr, %vec.epilog.scalar.ph1103.prol.loopexit ] ; 5 uses
-  %i.up = sub nuw nsw i64 %i.sl, %indvars.iv142.i
+  %i.up = sub nuw nsw i64 %i.sl, %indvars.iv142.i ; 3 uses
   %.idx193.i = shl nuw nsw i64 %i.up, 3
   %i.uq = getelementptr inbounds nuw i8, ptr %.010122.us.i, i64 %.idx193.i
   %i.ur = load i64, ptr %i.uq, align 8, !tbaa !113
@@ -392,17 +392,15 @@ vec.epilog.scalar.ph1103:                         ; preds = %vec.epilog.scalar.p
   %i.uv = load i64, ptr %i.uu, align 8, !tbaa !113
   store i64 %i.uv, ptr %i.us, align 8, !tbaa !113
   %i.uw = getelementptr inbounds nuw i8, ptr %.110.us.i, i64 16
-  %indvars.iv.next143.i.1 = add nuw nsw i64 %indvars.iv142.i, 2
-  %12 = sub nuw nsw i64 %i.sl, %indvars.iv.next143.i.1
-  %.idx193.i.2 = shl nuw nsw i64 %12, 3
-  %i.ux = getelementptr inbounds nuw i8, ptr %.010122.us.i, i64 %.idx193.i.2
+  %12 = shl nuw nsw i64 %i.up, 3
+  %13 = getelementptr i8, ptr %.010122.us.i, i64 %12
+  %i.ux = getelementptr i8, ptr %13, i64 -16
   %i.uy = load i64, ptr %i.ux, align 8, !tbaa !113
   store i64 %i.uy, ptr %i.uw, align 8, !tbaa !113
   %i.uz = getelementptr inbounds nuw i8, ptr %.110.us.i, i64 24
-  %indvars.iv.next143.i.2 = add nuw nsw i64 %indvars.iv142.i, 3
-  %13 = sub nuw nsw i64 %i.sl, %indvars.iv.next143.i.2
-  %.idx193.i.3 = shl nuw nsw i64 %13, 3
-  %i.va = getelementptr inbounds nuw i8, ptr %.010122.us.i, i64 %.idx193.i.3
+  %14 = shl nuw nsw i64 %i.up, 3
+  %15 = getelementptr i8, ptr %.010122.us.i, i64 %14
+  %i.va = getelementptr i8, ptr %15, i64 -24
   %i.vb = load i64, ptr %i.va, align 8, !tbaa !113
   store i64 %i.vb, ptr %i.uz, align 8, !tbaa !113
   %i.vc = getelementptr inbounds nuw i8, ptr %.110.us.i, i64 32 ; 2 uses
@@ -805,7 +803,7 @@ vec.epilog.scalar.ph1276:                         ; preds = %vec.epilog.scalar.p
   %i.ahm = icmp sgt i32 %i.rz, 0
   %i.ahn = icmp sgt i32 %i.co, 0
   %i.aho = icmp sgt i32 %i.sa, 0
-  %i.ahp = zext i32 %i.rz to i64                  ; 16 uses
+  %i.ahp = zext i32 %i.rz to i64                  ; 14 uses
   %wide.trip.count163.i = zext i32 %i.sa to i64   ; 10 uses
   %i.ahq = shl nuw nsw i64 %wide.trip.count163.i, 3
   %i.ahr = mul nsw i64 %wide.trip.count163.i, -8
@@ -979,7 +977,7 @@ vec.epilog.middle.block982:                       ; preds = %vec.epilog.vector.b
   %i.ajm = icmp sgt i32 %i.sa, 0
   %i.ajn = sext i32 %i.sb to i64                  ; 2 uses
   %i.ajo = sub nsw i64 0, %i.ajn
-  %i.ajp = zext i32 %i.rz to i64                  ; 16 uses
+  %i.ajp = zext i32 %i.rz to i64                  ; 14 uses
   %wide.trip.count175.i = zext i32 %i.sa to i64   ; 10 uses
   %i.ajq = shl nuw nsw i64 %wide.trip.count175.i, 3
   %i.ajr = mul nsw i64 %wide.trip.count175.i, -8
@@ -1139,9 +1137,9 @@ vec.epilog.middle.block937:                       ; preds = %vec.epilog.vector.b
   br i1 %i.alk, label %.preheader3.i59, label %.lr.ph75.i
 
 .lr.ph.i63:                                       ; preds = %.lr.ph.i63.prol.loopexit, %.lr.ph.i63
-  %indvars.iv154.i = phi i64 [ %indvars.iv.next155.i.3, %.lr.ph.i63 ], [ %indvars.iv154.i.unr, %.lr.ph.i63.prol.loopexit ] ; 5 uses
+  %indvars.iv154.i = phi i64 [ %indvars.iv.next155.i.3, %.lr.ph.i63 ], [ %indvars.iv154.i.unr, %.lr.ph.i63.prol.loopexit ] ; 3 uses
   %.570.i = phi ptr [ %i.aly, %.lr.ph.i63 ], [ %.570.i.unr, %.lr.ph.i63.prol.loopexit ] ; 5 uses
-  %i.all = sub nuw nsw i64 %i.ahp, %indvars.iv154.i
+  %i.all = sub nuw nsw i64 %i.ahp, %indvars.iv154.i ; 3 uses
   %.idx195.i = shl nuw nsw i64 %i.all, 3
   %i.alm = getelementptr inbounds nuw i8, ptr %.110282.i, i64 %.idx195.i
   %i.aln = load i64, ptr %i.alm, align 8, !tbaa !113
@@ -1154,17 +1152,15 @@ vec.epilog.middle.block937:                       ; preds = %vec.epilog.vector.b
   %i.alr = load i64, ptr %i.alq, align 8, !tbaa !113
   store i64 %i.alr, ptr %i.alo, align 8, !tbaa !113
   %i.als = getelementptr inbounds nuw i8, ptr %.570.i, i64 16
-  %indvars.iv.next155.i.1 = add nuw nsw i64 %indvars.iv154.i, 2
-  %14 = sub nuw nsw i64 %i.ahp, %indvars.iv.next155.i.1
-  %.idx195.i.2 = shl nuw nsw i64 %14, 3
-  %i.alt = getelementptr inbounds nuw i8, ptr %.110282.i, i64 %.idx195.i.2
+  %16 = shl nuw nsw i64 %i.all, 3
+  %17 = getelementptr i8, ptr %.110282.i, i64 %16
+  %i.alt = getelementptr i8, ptr %17, i64 -16
   %i.alu = load i64, ptr %i.alt, align 8, !tbaa !113
   store i64 %i.alu, ptr %i.als, align 8, !tbaa !113
   %i.alv = getelementptr inbounds nuw i8, ptr %.570.i, i64 24
-  %indvars.iv.next155.i.2 = add nuw nsw i64 %indvars.iv154.i, 3
-  %15 = sub nuw nsw i64 %i.ahp, %indvars.iv.next155.i.2
-  %.idx195.i.3 = shl nuw nsw i64 %15, 3
-  %i.alw = getelementptr inbounds nuw i8, ptr %.110282.i, i64 %.idx195.i.3
+  %18 = shl nuw nsw i64 %i.all, 3
+  %19 = getelementptr i8, ptr %.110282.i, i64 %18
+  %i.alw = getelementptr i8, ptr %19, i64 -24
   %i.alx = load i64, ptr %i.alw, align 8, !tbaa !113
   store i64 %i.alx, ptr %i.alv, align 8, !tbaa !113
   %i.aly = getelementptr inbounds nuw i8, ptr %.570.i, i64 32 ; 2 uses
@@ -1567,9 +1563,9 @@ vec.epilog.middle.block807:                       ; preds = %vec.epilog.vector.b
   br i1 %i.aqk, label %.preheader.i54, label %.lr.ph95.i
 
 .lr.ph90.i:                                       ; preds = %.lr.ph90.i.prol.loopexit, %.lr.ph90.i
-  %indvars.iv166.i = phi i64 [ %indvars.iv.next167.i.3, %.lr.ph90.i ], [ %indvars.iv166.i.unr, %.lr.ph90.i.prol.loopexit ] ; 5 uses
+  %indvars.iv166.i = phi i64 [ %indvars.iv.next167.i.3, %.lr.ph90.i ], [ %indvars.iv166.i.unr, %.lr.ph90.i.prol.loopexit ] ; 3 uses
   %.988.i = phi ptr [ %i.aqy, %.lr.ph90.i ], [ %.988.i.unr, %.lr.ph90.i.prol.loopexit ] ; 5 uses
-  %i.aql = sub nuw nsw i64 %i.ajp, %indvars.iv166.i
+  %i.aql = sub nuw nsw i64 %i.ajp, %indvars.iv166.i ; 3 uses
   %.idx197.i = shl nuw nsw i64 %i.aql, 3
   %i.aqm = getelementptr inbounds nuw i8, ptr %.3104103.i, i64 %.idx197.i
   %i.aqn = load i64, ptr %i.aqm, align 8, !tbaa !113
@@ -1582,17 +1578,15 @@ vec.epilog.middle.block807:                       ; preds = %vec.epilog.vector.b
   %i.aqr = load i64, ptr %i.aqq, align 8, !tbaa !113
   store i64 %i.aqr, ptr %i.aqo, align 8, !tbaa !113
   %i.aqs = getelementptr inbounds nuw i8, ptr %.988.i, i64 16
-  %indvars.iv.next167.i.1 = add nuw nsw i64 %indvars.iv166.i, 2
-  %16 = sub nuw nsw i64 %i.ajp, %indvars.iv.next167.i.1
-  %.idx197.i.2 = shl nuw nsw i64 %16, 3
-  %i.aqt = getelementptr inbounds nuw i8, ptr %.3104103.i, i64 %.idx197.i.2
+  %20 = shl nuw nsw i64 %i.aql, 3
+  %21 = getelementptr i8, ptr %.3104103.i, i64 %20
+  %i.aqt = getelementptr i8, ptr %21, i64 -16
   %i.aqu = load i64, ptr %i.aqt, align 8, !tbaa !113
   store i64 %i.aqu, ptr %i.aqs, align 8, !tbaa !113
   %i.aqv = getelementptr inbounds nuw i8, ptr %.988.i, i64 24
-  %indvars.iv.next167.i.2 = add nuw nsw i64 %indvars.iv166.i, 3
-  %17 = sub nuw nsw i64 %i.ajp, %indvars.iv.next167.i.2
-  %.idx197.i.3 = shl nuw nsw i64 %17, 3
-  %i.aqw = getelementptr inbounds nuw i8, ptr %.3104103.i, i64 %.idx197.i.3
+  %22 = shl nuw nsw i64 %i.aql, 3
+  %23 = getelementptr i8, ptr %.3104103.i, i64 %22
+  %i.aqw = getelementptr i8, ptr %23, i64 -24
   %i.aqx = load i64, ptr %i.aqw, align 8, !tbaa !113
   store i64 %i.aqx, ptr %i.aqv, align 8, !tbaa !113
   %i.aqy = getelementptr inbounds nuw i8, ptr %.988.i, i64 32 ; 2 uses
@@ -1995,7 +1989,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.va, label %.preheader9.us.preheader.i, label %.preheader9.lr.ph.split.i66
 
 .preheader9.us.preheader.i:                       ; preds = %.preheader9.lr.ph.i65
-  %i.vc = zext i32 %i.us to i64                   ; 16 uses
+  %i.vc = zext i32 %i.us to i64                   ; 14 uses
   %wide.trip.count150.i = zext nneg i32 %i.ut to i64 ; 10 uses
   %i.vd = shl nuw nsw i64 %wide.trip.count150.i, 3
   %i.ve = mul nsw i64 %wide.trip.count150.i, -8
@@ -2171,9 +2165,9 @@ vec.epilog.middle.block1140:                      ; preds = %vec.epilog.vector.b
   br label %.lr.ph.us.i
 
 .lr.ph.us.i:                                      ; preds = %.lr.ph.us.i, %.lr.ph.us.i.preheader.new
-  %indvars.iv141.i = phi i64 [ %indvars.iv141.i.unr, %.lr.ph.us.i.preheader.new ], [ %indvars.iv.next142.i.3, %.lr.ph.us.i ] ; 5 uses
+  %indvars.iv141.i = phi i64 [ %indvars.iv141.i.unr, %.lr.ph.us.i.preheader.new ], [ %indvars.iv.next142.i.3, %.lr.ph.us.i ] ; 3 uses
   %.110.us.i78 = phi ptr [ %.110.us.i78.unr, %.lr.ph.us.i.preheader.new ], [ %i.xm, %.lr.ph.us.i ] ; 5 uses
-  %i.xd = sub nuw nsw i64 %i.vc, %indvars.iv141.i
+  %i.xd = sub nuw nsw i64 %i.vc, %indvars.iv141.i ; 3 uses
   %i.xe = getelementptr inbounds nuw [8 x i8], ptr %.08922.us.i, i64 %i.xd
   %i.xf = load i64, ptr %i.xe, align 8, !tbaa !113
   %i.xg = getelementptr inbounds nuw i8, ptr %.110.us.i78, i64 8
@@ -2183,15 +2177,13 @@ vec.epilog.middle.block1140:                      ; preds = %vec.epilog.vector.b
   %i.xh = load i64, ptr %gep1507, align 8, !tbaa !113
   %i.xi = getelementptr inbounds nuw i8, ptr %.110.us.i78, i64 16
   store i64 %i.xh, ptr %i.xg, align 8, !tbaa !113
-  %indvars.iv.next142.i.1 = add nuw nsw i64 %indvars.iv141.i, 2
-  %10 = sub nuw nsw i64 %i.vc, %indvars.iv.next142.i.1
-  %11 = getelementptr inbounds nuw [8 x i8], ptr %.08922.us.i, i64 %10
+  %10 = getelementptr [8 x i8], ptr %.08922.us.i, i64 %i.xd
+  %11 = getelementptr i8, ptr %10, i64 -16
   %i.xj = load i64, ptr %11, align 8, !tbaa !113
   %i.xk = getelementptr inbounds nuw i8, ptr %.110.us.i78, i64 24
   store i64 %i.xj, ptr %i.xi, align 8, !tbaa !113
-  %indvars.iv.next142.i.2 = add nuw nsw i64 %indvars.iv141.i, 3
-  %12 = sub nuw nsw i64 %i.vc, %indvars.iv.next142.i.2
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %.08922.us.i, i64 %12
+  %12 = getelementptr [8 x i8], ptr %.08922.us.i, i64 %i.xd
+  %13 = getelementptr i8, ptr %12, i64 -24
   %i.xl = load i64, ptr %13, align 8, !tbaa !113
   %i.xm = getelementptr inbounds nuw i8, ptr %.110.us.i78, i64 32 ; 2 uses
   store i64 %i.xl, ptr %i.xk, align 8, !tbaa !113
@@ -2487,7 +2479,7 @@ vec.epilog.middle.block1093:                      ; preds = %vec.epilog.vector.b
   br i1 %i.uy, label %.preheader9.lr.ph.split.split.us.i70, label %.preheader9.lr.ph.split.split.i67
 
 .preheader9.lr.ph.split.split.us.i70:             ; preds = %.preheader9.lr.ph.split.i66
-  %i.aaz = zext nneg i32 %i.us to i64             ; 23 uses
+  %i.aaz = zext nneg i32 %i.us to i64             ; 21 uses
   br i1 %i.uz, label %.preheader9.us28.us.i.preheader, label %.preheader9.us28.i.preheader
 
 .preheader9.us28.i.preheader:                     ; preds = %.preheader9.lr.ph.split.split.us.i70
@@ -2869,9 +2861,9 @@ vec.epilog.scalar.ph1262.preheader.new:           ; preds = %vec.epilog.scalar.p
   br label %vec.epilog.scalar.ph1262
 
 vec.epilog.scalar.ph1262:                         ; preds = %vec.epilog.scalar.ph1262, %vec.epilog.scalar.ph1262.preheader.new
-  %indvars.iv.i = phi i64 [ %indvars.iv.i.unr, %vec.epilog.scalar.ph1262.preheader.new ], [ %indvars.iv.next.i.3, %vec.epilog.scalar.ph1262 ] ; 5 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.i.unr, %vec.epilog.scalar.ph1262.preheader.new ], [ %indvars.iv.next.i.3, %vec.epilog.scalar.ph1262 ] ; 3 uses
   %.110.us34.i = phi ptr [ %.110.us34.i.unr, %vec.epilog.scalar.ph1262.preheader.new ], [ %i.afu, %vec.epilog.scalar.ph1262 ] ; 5 uses
-  %i.afl = sub nuw nsw i64 %i.aaz, %indvars.iv.i
+  %i.afl = sub nuw nsw i64 %i.aaz, %indvars.iv.i  ; 3 uses
   %i.afm = getelementptr inbounds nuw [8 x i8], ptr %.08922.us31.i, i64 %i.afl
   %i.afn = load i64, ptr %i.afm, align 8, !tbaa !113
   %i.afo = getelementptr inbounds nuw i8, ptr %.110.us34.i, i64 8
@@ -2881,15 +2873,13 @@ vec.epilog.scalar.ph1262:                         ; preds = %vec.epilog.scalar.p
   %i.afp = load i64, ptr %gep, align 8, !tbaa !113
   %i.afq = getelementptr inbounds nuw i8, ptr %.110.us34.i, i64 16
   store i64 %i.afp, ptr %i.afo, align 8, !tbaa !113
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2
-  %14 = sub nuw nsw i64 %i.aaz, %indvars.iv.next.i.1
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %.08922.us31.i, i64 %14
+  %14 = getelementptr [8 x i8], ptr %.08922.us31.i, i64 %i.afl
+  %15 = getelementptr i8, ptr %14, i64 -16
   %i.afr = load i64, ptr %15, align 8, !tbaa !113
   %i.afs = getelementptr inbounds nuw i8, ptr %.110.us34.i, i64 24
   store i64 %i.afr, ptr %i.afq, align 8, !tbaa !113
-  %indvars.iv.next.i.2 = add nuw nsw i64 %indvars.iv.i, 3
-  %16 = sub nuw nsw i64 %i.aaz, %indvars.iv.next.i.2
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %.08922.us31.i, i64 %16
+  %16 = getelementptr [8 x i8], ptr %.08922.us31.i, i64 %i.afl
+  %17 = getelementptr i8, ptr %16, i64 -24
   %i.aft = load i64, ptr %17, align 8, !tbaa !113
   %i.afu = getelementptr inbounds nuw i8, ptr %.110.us34.i, i64 32 ; 2 uses
   store i64 %i.aft, ptr %i.afs, align 8, !tbaa !113
@@ -3101,7 +3091,7 @@ vec.epilog.scalar.ph1303:                         ; preds = %vec.epilog.scalar.p
   %i.ain = icmp sgt i32 %i.us, 0
   %i.aio = icmp sgt i32 %i.cs, 0
   %i.aip = icmp sgt i32 %i.ut, 0
-  %i.aiq = zext i32 %i.us to i64                  ; 16 uses
+  %i.aiq = zext i32 %i.us to i64                  ; 14 uses
   %wide.trip.count162.i = zext i32 %i.ut to i64   ; 10 uses
   %i.air = shl nuw nsw i64 %wide.trip.count162.i, 3
   %i.ais = mul nsw i64 %wide.trip.count162.i, -8
@@ -3275,7 +3265,7 @@ vec.epilog.middle.block1008:                      ; preds = %vec.epilog.vector.b
   %i.akk = icmp sgt i32 %i.cs, 0
   %i.akl = icmp sgt i32 %i.ut, 0
   %i.akm = sub nsw i64 0, %i.df
-  %i.akn = zext i32 %i.us to i64                  ; 16 uses
+  %i.akn = zext i32 %i.us to i64                  ; 14 uses
   %wide.trip.count174.i = zext i32 %i.ut to i64   ; 10 uses
   %i.ako = shl nuw nsw i64 %wide.trip.count174.i, 3
   %i.akp = mul nsw i64 %wide.trip.count174.i, -8
@@ -3435,9 +3425,9 @@ vec.epilog.middle.block963:                       ; preds = %vec.epilog.vector.b
   br i1 %i.ami, label %.preheader3.i60, label %.lr.ph74.i
 
 .lr.ph.i64:                                       ; preds = %.lr.ph.i64, %.lr.ph.i64.preheader.new
-  %indvars.iv153.i = phi i64 [ %indvars.iv153.i.unr, %.lr.ph.i64.preheader.new ], [ %indvars.iv.next154.i.3, %.lr.ph.i64 ] ; 5 uses
+  %indvars.iv153.i = phi i64 [ %indvars.iv153.i.unr, %.lr.ph.i64.preheader.new ], [ %indvars.iv.next154.i.3, %.lr.ph.i64 ] ; 3 uses
   %.569.i = phi ptr [ %.569.i.unr, %.lr.ph.i64.preheader.new ], [ %i.ams, %.lr.ph.i64 ] ; 5 uses
-  %i.amj = sub nuw nsw i64 %i.aiq, %indvars.iv153.i
+  %i.amj = sub nuw nsw i64 %i.aiq, %indvars.iv153.i ; 3 uses
   %i.amk = getelementptr inbounds nuw [8 x i8], ptr %.19081.i, i64 %i.amj
   %i.aml = load i64, ptr %i.amk, align 8, !tbaa !113
   %i.amm = getelementptr inbounds nuw i8, ptr %.569.i, i64 8
@@ -3447,15 +3437,13 @@ vec.epilog.middle.block963:                       ; preds = %vec.epilog.vector.b
   %i.amn = load i64, ptr %gep1509, align 8, !tbaa !113
   %i.amo = getelementptr inbounds nuw i8, ptr %.569.i, i64 16
   store i64 %i.amn, ptr %i.amm, align 8, !tbaa !113
-  %indvars.iv.next154.i.1 = add nuw nsw i64 %indvars.iv153.i, 2
-  %18 = sub nuw nsw i64 %i.aiq, %indvars.iv.next154.i.1
-  %19 = getelementptr inbounds nuw [8 x i8], ptr %.19081.i, i64 %18
+  %18 = getelementptr [8 x i8], ptr %.19081.i, i64 %i.amj
+  %19 = getelementptr i8, ptr %18, i64 -16
   %i.amp = load i64, ptr %19, align 8, !tbaa !113
   %i.amq = getelementptr inbounds nuw i8, ptr %.569.i, i64 24
   store i64 %i.amp, ptr %i.amo, align 8, !tbaa !113
-  %indvars.iv.next154.i.2 = add nuw nsw i64 %indvars.iv153.i, 3
-  %20 = sub nuw nsw i64 %i.aiq, %indvars.iv.next154.i.2
-  %21 = getelementptr inbounds nuw [8 x i8], ptr %.19081.i, i64 %20
+  %20 = getelementptr [8 x i8], ptr %.19081.i, i64 %i.amj
+  %21 = getelementptr i8, ptr %20, i64 -24
   %i.amr = load i64, ptr %21, align 8, !tbaa !113
   %i.ams = getelementptr inbounds nuw i8, ptr %.569.i, i64 32 ; 2 uses
   store i64 %i.amr, ptr %i.amq, align 8, !tbaa !113
@@ -3858,9 +3846,9 @@ vec.epilog.middle.block833:                       ; preds = %vec.epilog.vector.b
   br i1 %i.are, label %.preheader.i53, label %.lr.ph94.i
 
 .lr.ph89.i:                                       ; preds = %.lr.ph89.i, %.lr.ph89.i.preheader.new
-  %indvars.iv165.i = phi i64 [ %indvars.iv165.i.unr, %.lr.ph89.i.preheader.new ], [ %indvars.iv.next166.i.3, %.lr.ph89.i ] ; 5 uses
+  %indvars.iv165.i = phi i64 [ %indvars.iv165.i.unr, %.lr.ph89.i.preheader.new ], [ %indvars.iv.next166.i.3, %.lr.ph89.i ] ; 3 uses
   %.987.i = phi ptr [ %.987.i.unr, %.lr.ph89.i.preheader.new ], [ %i.aro, %.lr.ph89.i ] ; 5 uses
-  %i.arf = sub nuw nsw i64 %i.akn, %indvars.iv165.i
+  %i.arf = sub nuw nsw i64 %i.akn, %indvars.iv165.i ; 3 uses
   %i.arg = getelementptr inbounds nuw [8 x i8], ptr %.392102.i, i64 %i.arf
   %i.arh = load i64, ptr %i.arg, align 8, !tbaa !113
   %i.ari = getelementptr inbounds nuw i8, ptr %.987.i, i64 8
@@ -3870,15 +3858,13 @@ vec.epilog.middle.block833:                       ; preds = %vec.epilog.vector.b
   %i.arj = load i64, ptr %gep1511, align 8, !tbaa !113
   %i.ark = getelementptr inbounds nuw i8, ptr %.987.i, i64 16
   store i64 %i.arj, ptr %i.ari, align 8, !tbaa !113
-  %indvars.iv.next166.i.1 = add nuw nsw i64 %indvars.iv165.i, 2
-  %22 = sub nuw nsw i64 %i.akn, %indvars.iv.next166.i.1
-  %23 = getelementptr inbounds nuw [8 x i8], ptr %.392102.i, i64 %22
+  %22 = getelementptr [8 x i8], ptr %.392102.i, i64 %i.arf
+  %23 = getelementptr i8, ptr %22, i64 -16
   %i.arl = load i64, ptr %23, align 8, !tbaa !113
   %i.arm = getelementptr inbounds nuw i8, ptr %.987.i, i64 24
   store i64 %i.arl, ptr %i.ark, align 8, !tbaa !113
-  %indvars.iv.next166.i.2 = add nuw nsw i64 %indvars.iv165.i, 3
-  %24 = sub nuw nsw i64 %i.akn, %indvars.iv.next166.i.2
-  %25 = getelementptr inbounds nuw [8 x i8], ptr %.392102.i, i64 %24
+  %24 = getelementptr [8 x i8], ptr %.392102.i, i64 %i.arf
+  %25 = getelementptr i8, ptr %24, i64 -24
   %i.arn = load i64, ptr %25, align 8, !tbaa !113
   %i.aro = getelementptr inbounds nuw i8, ptr %.987.i, i64 32 ; 2 uses
   store i64 %i.arn, ptr %i.arm, align 8, !tbaa !113

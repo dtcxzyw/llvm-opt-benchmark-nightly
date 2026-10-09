@@ -205,9 +205,9 @@ _ZSt21__move_merge_adaptiveIPN9Stockfish6SquareES2_S2_N9__gnu_cxx5__ops15_Iter_c
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZSt22__chunk_insertion_sortIPN9Stockfish6SquareElN9__gnu_cxx5__ops15_Iter_comp_iterIPFbS1_S1_EEEEvT_S9_T0_T1_(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr %3) local_unnamed_addr #4 comdat {
 bb.a:
-  %i.a = ptrtoint ptr %1 to i64                   ; 5 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 6 uses
-  %i.c = sub i64 %i.a, %i.b
+  %i.a = ptrtoint ptr %1 to i64                   ; 4 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 5 uses
+  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
   %.not27 = icmp slt i64 %i.c, %2
   br i1 %.not27, label %._crit_edge, label %.lr.ph
 
@@ -221,8 +221,7 @@ iter.check:                                       ; preds = %.lr.ph
   %i.d = xor i64 %i.b, -1
   %i.e = add i64 %i.d, %i.a
   %smin = tail call i64 @llvm.smin.i64(i64 %i.e, i64 0)
-  %4 = add i64 %smin, %i.b
-  %i.f = sub i64 %i.a, %4                         ; 7 uses
+  %i.f = sub i64 %i.c, %smin                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.f, 16
   br i1 %min.iters.check, label %.preheader.i.us.preheader, label %vector.main.loop.iter.check
 
@@ -625,10 +624,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.backedge, %bb.d
-  %.086 = phi i64 [ %i.e, %bb.d ], [ %.086.be, %.backedge ] ; 11 uses
-  %.082 = phi i64 [ %i.g, %bb.d ], [ %.082.be, %.backedge ] ; 20 uses
+  %.086 = phi i64 [ %i.e, %bb.d ], [ %.086.be, %.backedge ] ; 10 uses
+  %.082 = phi i64 [ %i.g, %bb.d ], [ %.082.be, %.backedge ] ; 19 uses
   %.058 = phi ptr [ %0, %bb.d ], [ %.058.be, %.backedge ] ; 26 uses
-  %i.bh = sub nsw i64 %.086, %.082                ; 16 uses
+  %i.bh = sub nsw i64 %.086, %.082                ; 17 uses
   %i.bi = icmp slt i64 %.082, %i.bh
   br i1 %i.bi, label %bb.f, label %bb.i
 
@@ -727,8 +726,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.054107.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec142, %vec.epilog.middle.block ] ; 3 uses
   %.055106.ph = phi ptr [ %i.bp, %iter.check ], [ %i.bp, %vector.memcheck ], [ %i.br, %vec.epilog.iter.check ], [ %i.bw, %vec.epilog.middle.block ] ; 2 uses
   %.159105.ph = phi ptr [ %.058, %iter.check ], [ %.058, %vector.memcheck ], [ %i.bs, %vec.epilog.iter.check ], [ %i.bx, %vec.epilog.middle.block ] ; 2 uses
-  %3 = sub i64 %.086, %.082
-  %xtraiter245 = and i64 %3, 7                    ; 2 uses
+  %xtraiter245 = and i64 %i.bh, 7                 ; 2 uses
   %lcmp.mod246.not = icmp eq i64 %xtraiter245, 0
   br i1 %lcmp.mod246.not, label %.lr.ph109.prol.loopexit, label %.lr.ph109.prol
 

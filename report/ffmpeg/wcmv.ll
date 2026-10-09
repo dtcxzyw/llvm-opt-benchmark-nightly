@@ -96,7 +96,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 bytestream2_init.exit:                            ; preds = %bb.c
-  %i.m = zext nneg i32 %i.j to i64                ; 3 uses
+  %i.m = zext nneg i32 %i.j to i64                ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.m ; 17 uses
   %i.o = ptrtoint ptr %i.n to i64                 ; 27 uses
   %i.p = ptrtoint ptr %i.h to i64                 ; 3 uses
@@ -323,13 +323,12 @@ bb.ad:                                            ; preds = %bb.f
 
 bb.ae:                                            ; preds = %bb.ad
   %i.dh = tail call i32 @llvm.umin.i32(i32 %i.j, i32 2)
-  %i.di = zext nneg i32 %i.dh to i64              ; 3 uses
+  %i.di = zext nneg i32 %i.dh to i64              ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.di ; 2 uses
   %i.dk = sext i32 %i.e to i64                    ; 5 uses
-  %gepdiff = sub nsw i64 %i.m, %i.di
+  %gepdiff = sub nsw i64 %i.m, %i.di              ; 2 uses
   %..i233 = tail call i64 @llvm.smin.i64(i64 %gepdiff, i64 4) ; 2 uses
-  %4 = add nsw i64 %..i233, %i.di
-  %gepdiff420 = sub nsw i64 %i.m, %4
+  %gepdiff420 = sub i64 %gepdiff, %..i233
   %i.dl = icmp slt i64 %gepdiff420, 2
   br i1 %i.dl, label %bytestream2_get_le16.exit220, label %bb.af
 

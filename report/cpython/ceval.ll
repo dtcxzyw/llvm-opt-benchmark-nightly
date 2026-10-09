@@ -204,7 +204,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bi, %bb.
 
 PyStackRef_CLOSE.exit337.thread365.i:             ; preds = %bb.bn, %bb.o, %.loopexit392.i
   %i.lr = load i32, ptr %i.ap, align 4, !tbaa !189 ; 2 uses
-  %i.ls = sext i32 %i.lr to i64                   ; 9 uses
+  %i.ls = sext i32 %i.lr to i64                   ; 8 uses
   %i.lt = icmp sgt i64 %4, %i.ls
   br i1 %i.lt, label %bb.bo, label %bb.ci
 
@@ -384,14 +384,13 @@ bb.ck:                                            ; preds = %bb.cj
   br label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck, %bb.cj
-  %i.ob = phi i64 [ %.val328.i, %bb.ck ], [ 0, %bb.cj ] ; 6 uses
-  %i.oc = sub i64 %i.ls, %i.ob                    ; 5 uses
+  %i.ob = phi i64 [ %.val328.i, %bb.ck ], [ 0, %bb.cj ] ; 5 uses
+  %i.oc = sub i64 %i.ls, %i.ob                    ; 6 uses
   %i.od = icmp slt i64 %4, %i.oc
   br i1 %i.od, label %.lr.ph465.i.preheader, label %._crit_edge466.thread.i
 
 .lr.ph465.i.preheader:                            ; preds = %bb.cl
-  %7 = add i64 %i.ob, %4
-  %i.oe = sub i64 %i.ls, %7                       ; 3 uses
+  %i.oe = sub i64 %i.oc, %4                       ; 3 uses
   %min.iters.check272 = icmp ult i64 %i.oe, 4
   br i1 %min.iters.check272, label %.lr.ph465.i.preheader284, label %vector.ph273
 
@@ -794,7 +793,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ca = or i64 %i.bz, %i.by
   store i64 %i.ca, ptr %i.bu, align 8, !tbaa !124
   %i.cb = getelementptr i8, ptr %i.bs, i64 16     ; 2 uses
-  %.val161 = load i64, ptr %i.cb, align 8, !tbaa !123 ; 6 uses
+  %.val161 = load i64, ptr %i.cb, align 8, !tbaa !123 ; 5 uses
   %i.cc = sext i32 %3 to i64                      ; 2 uses
   %i.cd = icmp slt i64 %.val161, %i.cc
   br i1 %i.cd, label %bb.ad, label %.preheader
@@ -842,11 +841,11 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ai
 
 .lr.ph177.new:                                    ; preds = %.prol.loopexit, %.lr.ph177.new
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph177.new ], [ %indvars.iv.unr, %.prol.loopexit ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph177.new ], [ %indvars.iv.unr, %.prol.loopexit ] ; 3 uses
   %.1176 = phi ptr [ %i.dk, %.lr.ph177.new ], [ %.1176.unr, %.prol.loopexit ] ; 2 uses
   %i.cz = getelementptr i8, ptr %.1176, i64 -8
   %i.da = load ptr, ptr %i.cf, align 8, !tbaa !183
-  %i.db = sub nsw i64 %.val161, %indvars.iv
+  %i.db = sub nsw i64 %.val161, %indvars.iv       ; 2 uses
   %i.dc = getelementptr [8 x i8], ptr %i.da, i64 %i.db
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !120 ; 2 uses
   %i.de = getelementptr i8, ptr %i.dd, i64 6
@@ -856,11 +855,10 @@ bb.ad:                                            ; preds = %bb.ac
   %i.di = zext nneg i16 %i.dg to i64
   %i.dj = or i64 %i.di, %i.dh
   store i64 %i.dj, ptr %i.cz, align 8, !tbaa !124
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.dk = getelementptr i8, ptr %.1176, i64 -16   ; 2 uses
   %i.dl = load ptr, ptr %i.cf, align 8, !tbaa !183
-  %5 = sub nsw i64 %.val161, %indvars.iv.next
-  %6 = getelementptr [8 x i8], ptr %i.dl, i64 %5
+  %5 = getelementptr [8 x i8], ptr %i.dl, i64 %i.db
+  %6 = getelementptr i8, ptr %5, i64 8
   %i.dm = load ptr, ptr %6, align 8, !tbaa !120   ; 2 uses
   %i.dn = getelementptr i8, ptr %i.dm, i64 6
   %i.do = load i16, ptr %i.dn, align 2, !tbaa !124

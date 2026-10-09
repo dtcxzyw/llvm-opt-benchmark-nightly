@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.i
   %indvars.iv = phi i64 [ %i.l, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 3 uses
   %.065 = phi i32 [ 0, %.lr.ph ], [ %.3, %bb.i ]  ; 2 uses
   %i.m = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !15   ; 7 uses
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !15   ; 6 uses
   %i.o = icmp sgt i32 %i.n, -1
   br i1 %i.o, label %bb.c, label %bb.i
 
@@ -246,19 +246,18 @@ _ZL30atomInMolblockFromGlobalAtomnrN3gmx8ArrayRefIK15MolblockIndicesEEi.exit: ; 
   %i.ae = sub i64 %.pre-phi.i, %i.t
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.013.0.lcssa.i.i, i64 12
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !92 ; 2 uses
-  %i.ah = load i32, ptr %.sroa.013.0.lcssa.i.i, align 4, !tbaa !93 ; 2 uses
-  %i.ai = sub nsw i32 %i.n, %i.ah
+  %i.ah = load i32, ptr %.sroa.013.0.lcssa.i.i, align 4, !tbaa !93
+  %i.ai = sub nsw i32 %i.n, %i.ah                 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.013.0.lcssa.i.i, i64 8
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !94 ; 2 uses
+  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !94 ; 3 uses
   %i.al = sdiv i32 %i.ai, %i.ak                   ; 2 uses
-  %i.am = mul nsw i32 %i.al, %i.ak
-  %18 = add i32 %i.ah, %i.am
-  %19 = sub i32 %i.n, %18
+  %i.am = mul nsw i32 %i.al, %i.ak                ; 0 uses
+  %.recomposed = srem i32 %i.ai, %i.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #5
   %i.an = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   store i32 %i.an, ptr %16, align 4, !tbaa !96
   store i32 %i.n, ptr %i.g, align 4, !tbaa !97
-  store i32 %19, ptr %i.h, align 4, !tbaa !98
+  store i32 %.recomposed, ptr %i.h, align 4, !tbaa !98
   %i.ao = tail call noundef nonnull align 8 dereferenceable(52) ptr @_ZNK17gmx_reverse_top_t30interactionListForMoleculeTypeEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %i.ag) ; 2 uses
   %i.ap = call fastcc noundef i32 @_ZL25assignInteractionsForAtomILb1EEiRK12AtomIndexSetRK15reverse_ilist_tRK11gmx_ga2la_tRKN3gmx11DomdecZonesEbPKibfPK5t_pbcNS9_8ArrayRefIKNS9_11BasicVectorIfEEEEP22InteractionDefinitionsiNS9_16DDBondedCheckingE(ptr noundef nonnull align 4 dereferenceable(12) %16, ptr noundef nonnull align 8 dereferenceable(52) %i.ao, ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef %13, i32 noundef %14, i1 noundef zeroext %i.c)
   %i.aq = add nsw i32 %i.ap, %.065                ; 3 uses
@@ -341,7 +340,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.i
   %indvars.iv = phi i64 [ %i.m, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 3 uses
   %.069 = phi i32 [ 0, %.lr.ph ], [ %.3, %bb.i ]  ; 2 uses
   %i.n = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !15   ; 7 uses
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !15   ; 6 uses
   %i.p = icmp sgt i32 %i.o, -1
   br i1 %i.p, label %bb.c, label %bb.i
 
@@ -382,19 +381,18 @@ _ZL30atomInMolblockFromGlobalAtomnrN3gmx8ArrayRefIK15MolblockIndicesEEi.exit: ; 
   %i.af = sub i64 %.pre-phi.i, %i.u
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.013.0.lcssa.i.i, i64 12
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !92 ; 2 uses
-  %i.ai = load i32, ptr %.sroa.013.0.lcssa.i.i, align 4, !tbaa !93 ; 2 uses
-  %i.aj = sub nsw i32 %i.o, %i.ai
+  %i.ai = load i32, ptr %.sroa.013.0.lcssa.i.i, align 4, !tbaa !93
+  %i.aj = sub nsw i32 %i.o, %i.ai                 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.013.0.lcssa.i.i, i64 8
-  %i.al = load i32, ptr %i.ak, align 4, !tbaa !94 ; 2 uses
+  %i.al = load i32, ptr %i.ak, align 4, !tbaa !94 ; 3 uses
   %i.am = sdiv i32 %i.aj, %i.al                   ; 2 uses
-  %i.an = mul nsw i32 %i.am, %i.al
-  %18 = add i32 %i.ai, %i.an
-  %19 = sub i32 %i.o, %18
+  %i.an = mul nsw i32 %i.am, %i.al                ; 0 uses
+  %.recomposed = srem i32 %i.aj, %i.al
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #5
   %i.ao = trunc nsw i64 %indvars.iv to i32        ; 2 uses
   store i32 %i.ao, ptr %16, align 4, !tbaa !96
   store i32 %i.o, ptr %i.g, align 4, !tbaa !97
-  store i32 %19, ptr %i.h, align 4, !tbaa !98
+  store i32 %.recomposed, ptr %i.h, align 4, !tbaa !98
   %i.ap = tail call noundef nonnull align 8 dereferenceable(52) ptr @_ZNK17gmx_reverse_top_t30interactionListForMoleculeTypeEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %i.ah) ; 2 uses
   %i.aq = call fastcc noundef i32 @_ZL25assignInteractionsForAtomILb0EEiRK12AtomIndexSetRK15reverse_ilist_tRK11gmx_ga2la_tRKN3gmx11DomdecZonesEbPKibfPK5t_pbcNS9_8ArrayRefIKNS9_11BasicVectorIfEEEEP22InteractionDefinitionsiNS9_16DDBondedCheckingE(ptr noundef nonnull align 4 dereferenceable(12) %16, ptr noundef nonnull align 8 dereferenceable(52) %i.ap, ptr noundef nonnull align 8 dereferenceable(48) %3, ptr noundef nonnull align 4 dereferenceable(592) %4, i1 noundef zeroext %6, i1 noundef zeroext %8, float noundef %9, ptr noundef %10, ptr %i.i, ptr noundef %13, i32 noundef %14, i1 noundef zeroext %i.c)
   %i.ar = add nsw i32 %i.aq, %.069                ; 3 uses

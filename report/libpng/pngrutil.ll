@@ -205,10 +205,10 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 1, !tbaa !53    ; 3 uses
   %i.c = zext i8 %i.b to i64
   %i.d = add nuw nsw i64 %i.c, 7                  ; 2 uses
-  %i.e = lshr i64 %i.d, 3                         ; 16 uses
+  %i.e = lshr i64 %i.d, 3                         ; 15 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !54   ; 5 uses
-  %i.h = sub i64 %i.g, %i.e                       ; 10 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !54   ; 4 uses
+  %i.h = sub i64 %i.g, %i.e                       ; 11 uses
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.preheader, label %iter.check
 
@@ -430,10 +430,9 @@ vec.epilog.scalar.ph94.preheader:                 ; preds = %iter.check93, %vect
   %.133.ph = phi ptr [ %.0.lcssa, %iter.check93 ], [ %.0.lcssa, %vector.memcheck67 ], [ %i.an, %vec.epilog.iter.check95 ], [ %i.bg, %vec.epilog.middle.block107 ] ; 3 uses
   %.12132.ph = phi ptr [ %.020.lcssa, %iter.check93 ], [ %.020.lcssa, %vector.memcheck67 ], [ %i.ao, %vec.epilog.iter.check95 ], [ %i.bh, %vec.epilog.middle.block107 ] ; 5 uses
   %.12331.ph = phi i64 [ 0, %iter.check93 ], [ 0, %vector.memcheck67 ], [ %n.vec77, %vec.epilog.iter.check95 ], [ %n.vec98, %vec.epilog.middle.block107 ] ; 3 uses
-  %3 = sub i64 %i.g, %i.e
   %i.bq = xor i64 %.12331.ph, -1
   %i.br = add i64 %i.g, %i.bq
-  %xtraiter113 = and i64 %3, 1
+  %xtraiter113 = and i64 %i.h, 1
   %lcmp.mod114.not = icmp eq i64 %xtraiter113, 0
   br i1 %lcmp.mod114.not, label %vec.epilog.scalar.ph94.prol.loopexit, label %vec.epilog.scalar.ph94.prol
 

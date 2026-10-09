@@ -202,19 +202,17 @@ bb.al:                                            ; preds = %bb.ak
 bb.am:                                            ; preds = %bb.al
   store i32 %i.ih, ptr %i.a, align 4, !tbaa !46
   call void @dlacpy_(ptr noundef nonnull @.str.5, ptr noundef nonnull %7, ptr noundef nonnull %i.a, ptr noundef %11, ptr noundef nonnull %12, ptr noundef %24, ptr noundef nonnull %25) #5
-  %i.ij = load i32, ptr %6, align 4, !tbaa !46    ; 3 uses
-  %i.ik = load i32, ptr %7, align 4, !tbaa !46    ; 3 uses
+  %i.ij = load i32, ptr %6, align 4, !tbaa !46    ; 2 uses
+  %i.ik = load i32, ptr %7, align 4, !tbaa !46    ; 2 uses
   %i.il = sub nsw i32 %i.ij, %i.ik                ; 2 uses
-  %i.im = load i32, ptr %8, align 4, !tbaa !46    ; 5 uses
+  %i.im = load i32, ptr %8, align 4, !tbaa !46    ; 4 uses
   %i.in = icmp sgt i32 %i.il, %i.im
   br i1 %i.in, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.io = sub nsw i32 %i.il, %i.im
+  %i.io = sub i32 %i.il, %i.im                    ; 2 uses
   store i32 %i.io, ptr %i.a, align 4, !tbaa !46
-  %30 = add i32 %i.ik, %i.im
-  %31 = sub i32 %i.ij, %30
-  store i32 %31, ptr %i.b, align 4, !tbaa !46
+  store i32 %i.io, ptr %i.b, align 4, !tbaa !46
   %i.ip = add nsw i32 %i.im, 1
   %i.iq = add nsw i32 %i.ik, 1                    ; 2 uses
   %i.ir = mul nsw i32 %i.iq, %i.o

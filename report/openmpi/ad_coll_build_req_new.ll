@@ -204,12 +204,12 @@ bb.u:                                             ; preds = %._crit_edge.us
   br label %view_state_add_region.exit.us
 
 view_state_add_region.exit.us:                    ; preds = %bb.u, %.loopexit.i.us
-  %.0.i.us = phi i64 [ %i.bq, %.loopexit.i.us ], [ %spec.select190.us, %bb.u ] ; 6 uses
+  %.0.i.us = phi i64 [ %i.bq, %.loopexit.i.us ], [ %spec.select190.us, %bb.u ] ; 5 uses
   %i.da = getelementptr inbounds [152 x i8], ptr %2, i64 %i.ax ; 7 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.ae ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.da, i64 %i.ae ; 2 uses
-  %i.dd = load i64, ptr %i.db, align 8, !tbaa !26 ; 2 uses
-  %i.de = sub nsw i64 %i.dd, %.0.i.us
+  %i.dd = load i64, ptr %i.db, align 8, !tbaa !26
+  %i.de = sub nsw i64 %i.dd, %.0.i.us             ; 2 uses
   %i.df = load i64, ptr %i.dc, align 8, !tbaa !26 ; 2 uses
   %.not273.us = icmp eq i64 %i.de, %i.df
   br i1 %.not273.us, label %.preheader244.us, label %.lr.ph274.us
@@ -219,9 +219,8 @@ bb.v:                                             ; preds = %.lr.ph274.us, %view
   %i.dh = phi i64 [ %.pre388, %.lr.ph274.us ], [ %i.ew, %view_state_add_region.exit201.us ] ; 6 uses
   %i.di = phi i64 [ %.pre, %.lr.ph274.us ], [ %i.ex, %view_state_add_region.exit201.us ] ; 3 uses
   %i.dj = phi i64 [ %i.df, %.lr.ph274.us ], [ %i.fa, %view_state_add_region.exit201.us ]
-  %i.dk = phi i64 [ %i.dd, %.lr.ph274.us ], [ %i.ey, %view_state_add_region.exit201.us ]
-  %6 = add i64 %.0.i.us, %i.dj
-  %i.dl = sub i64 %i.dk, %6                       ; 4 uses
+  %i.dk = phi i64 [ %i.de, %.lr.ph274.us ], [ %i.ez, %view_state_add_region.exit201.us ]
+  %i.dl = sub i64 %i.dk, %i.dj                    ; 4 uses
   %i.dm = getelementptr inbounds [8 x i8], ptr %i.if, i64 %i.dh ; 2 uses
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !17
   %i.do = sub nsw i64 %i.dn, %i.dg                ; 4 uses
@@ -301,8 +300,8 @@ view_state_add_region.exit201.us:                 ; preds = %bb.ad, %.loopexit.i
   %i.ev = phi i64 [ %i.er, %bb.ad ], [ 0, %.loopexit.i198.us ]
   %i.ew = phi i64 [ %i.dh, %bb.ad ], [ %i.ep, %.loopexit.i198.us ]
   %i.ex = phi i64 [ %i.es, %bb.ad ], [ %i.eq, %.loopexit.i198.us ]
-  %i.ey = load i64, ptr %i.db, align 8, !tbaa !26 ; 2 uses
-  %i.ez = sub nsw i64 %i.ey, %.0.i.us
+  %i.ey = load i64, ptr %i.db, align 8, !tbaa !26
+  %i.ez = sub nsw i64 %i.ey, %.0.i.us             ; 2 uses
   %i.fa = load i64, ptr %i.dc, align 8, !tbaa !26 ; 2 uses
   %.not.us = icmp eq i64 %i.ez, %i.fa
   br i1 %.not.us, label %.preheader244.us, label %bb.v, !llvm.loop !81
@@ -705,9 +704,9 @@ bb.af:                                            ; preds = %bb.x
   br label %view_state_add_region.exit
 
 view_state_add_region.exit:                       ; preds = %.loopexit.i95, %bb.af
-  %.0.i = phi i64 [ %i.eu, %.loopexit.i95 ], [ %spec.store.select, %bb.af ] ; 8 uses
+  %.0.i = phi i64 [ %i.eu, %.loopexit.i95 ], [ %spec.store.select, %bb.af ] ; 7 uses
   %i.gb = load i64, ptr %i.ea, align 8, !tbaa !26 ; 2 uses
-  %i.gc = sub nsw i64 %i.gb, %.0.i                ; 2 uses
+  %i.gc = sub nsw i64 %i.gb, %.0.i                ; 3 uses
   %i.gd = load i64, ptr %i.eb, align 8, !tbaa !26 ; 2 uses
   %.not89230 = icmp eq i64 %i.gc, %i.gd
   br i1 %.not89230, label %view_state_add_region.exit104.thread, label %.lr.ph
@@ -724,13 +723,13 @@ view_state_add_region.exit:                       ; preds = %.loopexit.i95, %bb.
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.lr.ph, %view_state_add_region.exit104
+  %7 = phi i64 [ %i.gb, %.lr.ph ], [ %i.ip, %view_state_add_region.exit104 ] ; 2 uses
   %i.gm = phi i64 [ %i.gd, %.lr.ph ], [ %i.ir, %view_state_add_region.exit104 ] ; 4 uses
-  %i.gn = phi i64 [ %i.gb, %.lr.ph ], [ %i.ip, %view_state_add_region.exit104 ] ; 3 uses
+  %i.gn = phi i64 [ %i.gc, %.lr.ph ], [ %i.iq, %view_state_add_region.exit104 ]
   br i1 %i.gh, label %bb.ah, label %bb.aj
 
 bb.ah:                                            ; preds = %bb.ag
-  %7 = add i64 %.0.i, %i.gm
-  %i.go = sub i64 %i.gn, %7
+  %i.go = sub i64 %i.gn, %i.gm
   %i.gp = load i64, ptr %i.v, align 8, !tbaa !57  ; 2 uses
   %i.gq = sdiv i64 %i.go, %i.gp                   ; 2 uses
   %i.gr = trunc i64 %i.gq to i32
@@ -754,7 +753,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ai, %bb.ag
   %i.hd = phi i64 [ %i.gm, %bb.ah ], [ %i.gv, %bb.ai ], [ %i.gm, %bb.ag ]
-  %i.he = phi i64 [ %i.gn, %bb.ah ], [ %i.hb, %bb.ai ], [ %i.gn, %bb.ag ]
+  %i.he = phi i64 [ %7, %bb.ah ], [ %i.hb, %bb.ai ], [ %7, %bb.ag ]
   %i.hf = add i64 %.0.i, %i.hd
   %i.hg = sub i64 %i.he, %i.hf                    ; 4 uses
   %i.hh = load i64, ptr %i.ec, align 8, !tbaa !18 ; 3 uses
@@ -833,7 +832,7 @@ bb.ar:                                            ; preds = %bb.aj
 
 view_state_add_region.exit104:                    ; preds = %bb.ar, %.loopexit.i101
   %i.ip = load i64, ptr %i.ea, align 8, !tbaa !26 ; 2 uses
-  %i.iq = sub nsw i64 %i.ip, %.0.i                ; 2 uses
+  %i.iq = sub nsw i64 %i.ip, %.0.i                ; 3 uses
   %i.ir = load i64, ptr %i.eb, align 8, !tbaa !26 ; 2 uses
   %.not89 = icmp eq i64 %i.iq, %i.ir
   br i1 %.not89, label %view_state_add_region.exit104.thread, label %bb.ag

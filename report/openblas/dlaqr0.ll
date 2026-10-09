@@ -202,20 +202,16 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.n, %bb.m, %bb.o
-  %i.ef = phi i32 [ %i.dz, %bb.n ], [ %i.ee, %bb.o ], [ %i.dz, %bb.m ] ; 5 uses
+  %i.ef = phi i32 [ %i.dz, %bb.n ], [ %i.ee, %bb.o ], [ %i.dz, %bb.m ] ; 4 uses
   %.1493 = phi i32 [ %.0492555, %bb.n ], [ %spec.store.select, %bb.o ], [ -1, %bb.m ]
-  %i.eg = load i32, ptr %2, align 4, !tbaa !14    ; 2 uses
+  %i.eg = load i32, ptr %2, align 4, !tbaa !14
   %i.eh = sub nsw i32 %i.eg, %i.ef                ; 2 uses
   %i.ei = add nsw i32 %i.eh, 1                    ; 2 uses
   %i.ej = add nsw i32 %i.ef, 1
   %i.ek = xor i32 %i.ef, -1
-  %i.el = add i32 %i.eh, %i.ek
+  %i.el = add i32 %i.eh, %i.ek                    ; 2 uses
   store i32 %i.el, ptr %i.r, align 4, !tbaa !14
-  %.neg535 = add i32 %i.eg, 1
-  %16 = shl i32 %i.ef, 1
-  %reass.sub = sub i32 %.neg535, %16
-  %17 = add i32 %reass.sub, -2
-  store i32 %17, ptr %i.s, align 4, !tbaa !14
+  store i32 %i.el, ptr %i.s, align 4, !tbaa !14
   %i.em = add nsw i32 %i.ei, %i.t
   %i.en = sext i32 %i.em to i64
   %i.eo = getelementptr inbounds [8 x i8], ptr %i.v, i64 %i.en
@@ -618,23 +614,19 @@ bb.ao:                                            ; preds = %bb.ak, %bb.an, %bb.
   %i.nk = add nsw i32 %i.mq, 1
   %i.nl = call i32 @llvm.smin.i32(i32 %i.nj, i32 %i.nk) ; 2 uses
   %i.nm = srem i32 %i.nl, 2
-  %i.nn = sub nsw i32 %i.nl, %i.nm                ; 4 uses
+  %i.nn = sub nsw i32 %i.nl, %i.nm                ; 3 uses
   store i32 %i.nn, ptr %i.n, align 4, !tbaa !14
   %i.no = add i32 %i.mp, 1
   %i.np = sub i32 %i.no, %i.nn
   %i.nq = shl i32 %i.nn, 1                        ; 4 uses
-  %i.nr = load i32, ptr %2, align 4, !tbaa !14    ; 2 uses
+  %i.nr = load i32, ptr %2, align 4, !tbaa !14
   %i.ns = sub nsw i32 %i.nr, %i.nq                ; 2 uses
   %i.nt = add nsw i32 %i.ns, 1                    ; 2 uses
   %i.nu = or disjoint i32 %i.nq, 1
   %i.nv = sub i32 %i.ns, %i.nq
-  %i.nw = add i32 %i.nv, -3
+  %i.nw = add i32 %i.nv, -3                       ; 2 uses
   store i32 %i.nw, ptr %i.r, align 4, !tbaa !14
-  %.neg541 = add i32 %i.nr, 1
-  %18 = shl i32 %i.nn, 2
-  %reass.sub562 = sub i32 %.neg541, %18
-  %19 = add i32 %reass.sub562, -4
-  store i32 %19, ptr %i.s, align 4, !tbaa !14
+  store i32 %i.nw, ptr %i.s, align 4, !tbaa !14
   %i.nx = sext i32 %i.np to i64                   ; 2 uses
   %i.ny = getelementptr inbounds [8 x i8], ptr %i.w, i64 %i.nx
   %i.nz = getelementptr inbounds [8 x i8], ptr %i.x, i64 %i.nx

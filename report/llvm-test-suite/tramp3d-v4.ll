@@ -205,12 +205,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ah = sub nsw i32 %.063.i.i, %.059.i.i
   %i.ai = srem i32 %i.ah, %.165.i.i
   %i.aj = sub nsw i32 %.063.i.i, %i.ai
-  %spec.select76.i.i = tail call i32 @llvm.smin.i32(i32 %i.h, i32 %i.ad) ; 5 uses
+  %spec.select76.i.i = tail call i32 @llvm.smin.i32(i32 %i.h, i32 %i.ad) ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader.preheader.i.i, %bb.g
   %.055.i.i = phi i32 [ %i.aj, %bb.g ], [ %i.as, %.preheader.preheader.i.i ] ; 6 uses
-  %.052.i.i = phi i32 [ %.063.i.i, %bb.g ], [ %i.aw, %.preheader.preheader.i.i ] ; 10 uses
+  %.052.i.i = phi i32 [ %.063.i.i, %bb.g ], [ %i.aw, %.preheader.preheader.i.i ] ; 9 uses
   %.051.i.i = phi i32 [ 0, %bb.g ], [ %spec.select77.i.i, %.preheader.preheader.i.i ] ; 2 uses
   %i.ak = icmp sle i32 %.055.i.i, %spec.select76.i.i
   %i.al = icmp sle i32 %.052.i.i, %spec.select76.i.i
@@ -268,12 +268,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i36.i, label %.loopexit, label %.preheader.i.i, !llvm.loop !8
 
 .loopexit:                                        ; preds = %.preheader.i.i, %bb.j
-  %.120.lcssa.i.i = phi i32 [ %spec.select.i32.i, %bb.j ], [ %i.bc, %.preheader.i.i ] ; 3 uses
+  %.120.lcssa.i.i = phi i32 [ %spec.select.i32.i, %bb.j ], [ %i.bc, %.preheader.i.i ] ; 2 uses
   %i.bf = sub nsw i32 %spec.select76.i.i, %.052.i.i
-  %3 = srem i32 %i.bf, %.120.lcssa.i.i
-  %4 = add i32 %.052.i.i, %3
-  %5 = sub i32 %spec.select76.i.i, %4
-  %i.bg = sdiv i32 %5, %.120.lcssa.i.i
+  %i.bg = sdiv i32 %i.bf, %.120.lcssa.i.i
   br label %_ZN21IntersectDomainSingleI8IntervalILi1EE5RangeILi1EES2_ILi3EELi3ELb0EE9intersectERKS1_RKS3_RS4_.exit.sink.split
 
 _ZN21IntersectDomainSingleI8IntervalILi1EE5RangeILi1EES2_ILi3EELi3ELb0EE9intersectERKS1_RKS3_RS4_.exit.sink.split: ; preds = %bb.c, %.loopexit
@@ -359,12 +356,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ah = sub nsw i32 %.063.i.i, %.059.i.i
   %i.ai = srem i32 %i.ah, %.165.i.i
   %i.aj = sub nsw i32 %.063.i.i, %i.ai
-  %spec.select76.i.i = tail call i32 @llvm.smin.i32(i32 %i.h, i32 %i.ad) ; 5 uses
+  %spec.select76.i.i = tail call i32 @llvm.smin.i32(i32 %i.h, i32 %i.ad) ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader.preheader.i.i, %bb.g
   %.055.i.i = phi i32 [ %i.aj, %bb.g ], [ %i.as, %.preheader.preheader.i.i ] ; 6 uses
-  %.052.i.i = phi i32 [ %.063.i.i, %bb.g ], [ %i.aw, %.preheader.preheader.i.i ] ; 10 uses
+  %.052.i.i = phi i32 [ %.063.i.i, %bb.g ], [ %i.aw, %.preheader.preheader.i.i ] ; 9 uses
   %.051.i.i = phi i32 [ 0, %bb.g ], [ %spec.select77.i.i, %.preheader.preheader.i.i ] ; 2 uses
   %i.ak = icmp sle i32 %.055.i.i, %spec.select76.i.i
   %i.al = icmp sle i32 %.052.i.i, %spec.select76.i.i
@@ -422,12 +419,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i36.i, label %.loopexit, label %.preheader.i.i, !llvm.loop !8
 
 .loopexit:                                        ; preds = %.preheader.i.i, %bb.j
-  %.120.lcssa.i.i = phi i32 [ %spec.select.i32.i, %bb.j ], [ %i.bc, %.preheader.i.i ] ; 3 uses
+  %.120.lcssa.i.i = phi i32 [ %spec.select.i32.i, %bb.j ], [ %i.bc, %.preheader.i.i ] ; 2 uses
   %i.bf = sub nsw i32 %spec.select76.i.i, %.052.i.i
-  %3 = srem i32 %i.bf, %.120.lcssa.i.i
-  %4 = add i32 %.052.i.i, %3
-  %5 = sub i32 %spec.select76.i.i, %4
-  %i.bg = sdiv i32 %5, %.120.lcssa.i.i
+  %i.bg = sdiv i32 %i.bf, %.120.lcssa.i.i
   br label %_ZN21IntersectDomainSingleI8IntervalILi1EE5RangeILi1EES2_ILi3EELi2ELb0EE9intersectERKS1_RKS3_RS4_.exit.sink.split
 
 _ZN21IntersectDomainSingleI8IntervalILi1EE5RangeILi1EES2_ILi3EELi2ELb0EE9intersectERKS1_RKS3_RS4_.exit.sink.split: ; preds = %bb.c, %.loopexit
@@ -513,12 +507,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ah = sub nsw i32 %.063.i.i, %.059.i.i
   %i.ai = srem i32 %i.ah, %.165.i.i
   %i.aj = sub nsw i32 %.063.i.i, %i.ai
-  %spec.select76.i.i = tail call i32 @llvm.smin.i32(i32 %i.h, i32 %i.ad) ; 5 uses
+  %spec.select76.i.i = tail call i32 @llvm.smin.i32(i32 %i.h, i32 %i.ad) ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader.preheader.i.i, %bb.g
   %.055.i.i = phi i32 [ %i.aj, %bb.g ], [ %i.as, %.preheader.preheader.i.i ] ; 6 uses
-  %.052.i.i = phi i32 [ %.063.i.i, %bb.g ], [ %i.aw, %.preheader.preheader.i.i ] ; 10 uses
+  %.052.i.i = phi i32 [ %.063.i.i, %bb.g ], [ %i.aw, %.preheader.preheader.i.i ] ; 9 uses
   %.051.i.i = phi i32 [ 0, %bb.g ], [ %spec.select77.i.i, %.preheader.preheader.i.i ] ; 2 uses
   %i.ak = icmp sle i32 %.055.i.i, %spec.select76.i.i
   %i.al = icmp sle i32 %.052.i.i, %spec.select76.i.i
@@ -576,12 +570,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i36.i, label %.loopexit, label %.preheader.i.i, !llvm.loop !8
 
 .loopexit:                                        ; preds = %.preheader.i.i, %bb.j
-  %.120.lcssa.i.i = phi i32 [ %spec.select.i32.i, %bb.j ], [ %i.bc, %.preheader.i.i ] ; 3 uses
+  %.120.lcssa.i.i = phi i32 [ %spec.select.i32.i, %bb.j ], [ %i.bc, %.preheader.i.i ] ; 2 uses
   %i.bf = sub nsw i32 %spec.select76.i.i, %.052.i.i
-  %3 = srem i32 %i.bf, %.120.lcssa.i.i
-  %4 = add i32 %.052.i.i, %3
-  %5 = sub i32 %spec.select76.i.i, %4
-  %i.bg = sdiv i32 %5, %.120.lcssa.i.i
+  %i.bg = sdiv i32 %i.bf, %.120.lcssa.i.i
   br label %_ZN21IntersectDomainSingleI8IntervalILi1EE5RangeILi1EES2_ILi3EELi1ELb0EE9intersectERKS1_RKS3_RS4_.exit.sink.split
 
 _ZN21IntersectDomainSingleI8IntervalILi1EE5RangeILi1EES2_ILi3EELi1ELb0EE9intersectERKS1_RKS3_RS4_.exit.sink.split: ; preds = %bb.c, %.loopexit

@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.o, label %nk_str_append_text_char.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.p = trunc i64 %i.f to i32                    ; 4 uses
-  %i.q = sub i32 %i.p, %1                         ; 6 uses
+  %i.p = trunc i64 %i.f to i32                    ; 3 uses
+  %i.q = sub i32 %i.p, %1                         ; 7 uses
   %.not50 = icmp eq i32 %1, %i.p
   %i.r = tail call fastcc ptr @nk_buffer_alloc(ptr noundef nonnull %0, i32 noundef 0, i64 noundef %i.h, i64 noundef 0) ; 2 uses
   %.not.i = icmp eq ptr %i.r, null                ; 2 uses
@@ -317,8 +317,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.054.ph = phi ptr [ %i.ag, %iter.check ], [ %i.al, %vec.epilog.iter.check ], [ %i.av, %vec.epilog.middle.block ] ; 2 uses
   %.04153.ph = phi ptr [ %i.ab, %iter.check ], [ %i.am, %vec.epilog.iter.check ], [ %i.aw, %vec.epilog.middle.block ] ; 2 uses
   %.04252.ph = phi i32 [ 0, %iter.check ], [ %i.an, %vec.epilog.iter.check ], [ %i.ax, %vec.epilog.middle.block ] ; 4 uses
-  %4 = add i32 %.04252.ph, %1
-  %i.bc = sub i32 %i.p, %4
+  %i.bc = sub i32 %i.q, %.04252.ph
   %xtraiter = and i32 %i.bc, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol

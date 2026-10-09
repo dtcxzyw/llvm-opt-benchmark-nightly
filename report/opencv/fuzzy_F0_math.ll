@@ -204,16 +204,15 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc246
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %1, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %index ; 2 uses
-  %i.az = sub <4 x i32> %broadcast.splat, %vec.ind
-  %14 = sub <4 x i32> %broadcast.splat, %step.add
+  %i.az = sub <4 x i32> %broadcast.splat, %vec.ind ; 2 uses
+  %14 = add <4 x i32> %i.az, splat (i32 -4)
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   store <4 x i32> %i.az, ptr %i.ay, align 4, !tbaa !30
   store <4 x i32> %14, ptr %i.ba, align 4, !tbaa !30
@@ -616,16 +615,15 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc248
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %wide.trip.count, 4294967288   ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %1, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %index ; 2 uses
-  %i.ba = sub <4 x i32> %broadcast.splat, %vec.ind
-  %14 = sub <4 x i32> %broadcast.splat, %step.add
+  %i.ba = sub <4 x i32> %broadcast.splat, %vec.ind ; 2 uses
+  %14 = add <4 x i32> %i.ba, splat (i32 -4)
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   store <4 x i32> %i.ba, ptr %i.az, align 4, !tbaa !30
   store <4 x i32> %14, ptr %i.bb, align 4, !tbaa !30

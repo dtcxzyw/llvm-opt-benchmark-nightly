@@ -205,8 +205,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #26
   store i32 1, ptr %i.d, align 4, !tbaa !64
   %i.o = ptrtoint ptr %i.l to i64                 ; 2 uses
-  %gepdiff = add i64 %3, -8                       ; 3 uses
-  %i.p = call i64 @HUF_readCTable(ptr noundef %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.m, i64 noundef %gepdiff, ptr noundef nonnull %i.d) #26 ; 4 uses
+  %gepdiff = add i64 %3, -8                       ; 2 uses
+  %i.p = call i64 @HUF_readCTable(ptr noundef %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.m, i64 noundef %gepdiff, ptr noundef nonnull %i.d) #26 ; 3 uses
   %i.q = load i32, ptr %i.d, align 4, !tbaa !64
   %i.r = icmp eq i32 %i.q, 0
   %i.s = load i32, ptr %i.c, align 4
@@ -227,7 +227,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
-  %gepdiff125 = sub i64 %gepdiff, %i.p
+  %gepdiff125 = sub i64 %gepdiff, %i.p            ; 2 uses
   %i.w = call i64 @FSE_readNCount(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, ptr noundef nonnull %i.v, i64 noundef %gepdiff125) #26 ; 3 uses
   %i.x = icmp ult i64 %i.w, -119
   br i1 %i.x, label %bb.e, label %.critedge
@@ -250,8 +250,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #26
   store i32 52, ptr %i.g, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #26
-  %4 = add i64 %i.p, %i.w
-  %gepdiff126 = sub i64 %gepdiff, %4
+  %gepdiff126 = sub i64 %gepdiff125, %i.w
   %i.ae = call i64 @FSE_readNCount(ptr noundef nonnull %i.f, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef nonnull %i.ad, i64 noundef %gepdiff126) #26 ; 2 uses
   %i.af = icmp ult i64 %i.ae, -119
   br i1 %i.af, label %bb.h, label %.critedge102

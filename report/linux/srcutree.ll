@@ -205,26 +205,23 @@ bb.d:                                             ; preds = %check_init_srcu_str
   br i1 %i.ac, label %srcu_should_expedite.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ad = tail call i64 @ktime_get_mono_fast_ns() #16 ; 2 uses
+  %i.ad = tail call i64 @ktime_get_mono_fast_ns() #16
   %i.ae = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.af = getelementptr i8, ptr %i.ae, i64 128
-  %i.ag = load volatile i64, ptr %i.af, align 8   ; 2 uses
+  %i.ag = load volatile i64, ptr %i.af, align 8
   %i.ah = load i64, ptr @exp_holdoff, align 8     ; 2 uses
   %i.ai = icmp eq i64 %i.ah, 0
-  br i1 %i.ai, label %srcu_should_expedite.exit.thread, label %1
+  br i1 %i.ai, label %srcu_should_expedite.exit.thread, label %bb.f
 
-1:                                                ; preds = %bb.e
-  %2 = sub i64 %i.ad, %i.ag
-  %3 = icmp sgt i64 %2, -1
-  br i1 %3, label %bb.f, label %bb.g
-
-bb.f:                                             ; preds = %1
-  %4 = add i64 %i.ag, %i.ah
-  %i.aj = sub i64 %i.ad, %4
+bb.f:                                             ; preds = %bb.e
+  %1 = sub i64 %i.ad, %i.ag                       ; 2 uses
+  %2 = icmp sgt i64 %1, -1
+  %i.aj = sub i64 %1, %i.ah
   %i.ak = icmp slt i64 %i.aj, 0
-  br i1 %i.ak, label %srcu_should_expedite.exit.thread, label %bb.g
+  %or.cond.i = and i1 %2, %i.ak
+  br i1 %or.cond.i, label %srcu_should_expedite.exit.thread, label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %1
+bb.g:                                             ; preds = %bb.f
   %i.al = getelementptr i8, ptr %i.ae, i64 96
   %i.am = load volatile i64, ptr %i.al, align 8   ; 2 uses
   tail call void asm sideeffect "lock addl $$0,-4(%rsp)", "~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !98

@@ -205,7 +205,6 @@ bb.f:                                             ; preds = %bb.a
   %i.m = add nsw i32 %8, -1
   %i.n = getelementptr i8, ptr %9, i64 4          ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %13 = add nsw i32 %i.i, -1                      ; 2 uses
   %bound0134 = icmp ult ptr %11, %i.n
   %bound1135 = icmp ult ptr %9, %i.k
   %found.conflict136 = and i1 %bound0134, %bound1135
@@ -215,9 +214,10 @@ bb.f:                                             ; preds = %bb.a
   br label %.preheader90
 
 .preheader90:                                     ; preds = %._crit_edge106, %.preheader90.lr.ph
-  %indvar = phi i32 [ %indvar.next, %._crit_edge106 ], [ 0, %.preheader90.lr.ph ] ; 4 uses
+  %indvar = phi i32 [ %indvar.next, %._crit_edge106 ], [ 0, %.preheader90.lr.ph ] ; 3 uses
   %.084107 = phi i32 [ %i.dw, %._crit_edge106 ], [ %i.i, %.preheader90.lr.ph ] ; 15 uses
-  %14 = sub i32 %13, %indvar
+  %13 = xor i32 %indvar, -1
+  %14 = add i32 %i.i, %13                         ; 2 uses
   %.not118 = icmp eq i32 %.084107, 0              ; 2 uses
   br i1 %.not118, label %._crit_edge, label %iter.check158
 
@@ -295,8 +295,7 @@ vec.epilog.middle.block170:                       ; preds = %vec.epilog.vector.b
   %.ph174 = phi i32 [ %.pre, %iter.check158 ], [ %i.ac, %vec.epilog.middle.block170 ], [ %i.x, %vec.epilog.iter.check160 ] ; 2 uses
   %.08391.ph = phi i32 [ 0, %iter.check158 ], [ %n.vec163, %vec.epilog.middle.block170 ], [ %n.vec141, %vec.epilog.iter.check160 ] ; 4 uses
   %i.ad = sub i32 %.084107, %.08391.ph
-  %15 = add i32 %indvar, %.08391.ph
-  %i.ae = sub i32 %13, %15
+  %i.ae = sub i32 %14, %.08391.ph
   %xtraiter = and i32 %i.ad, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol

@@ -205,11 +205,11 @@ _RNvMs1_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11pycodestyle5rules13logical_lin
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !noalias !5166, !nonnull !6, !noundef !6 ; 2 uses
   %i.n = sub nuw nsw i64 %i.h, %i.e               ; 6 uses
-  %.idx14 = mul nuw nsw i64 %i.e, 12              ; 4 uses
+  %.idx14 = mul nuw nsw i64 %i.e, 12              ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx14 ; 2 uses
-  %.idx = mul nuw nsw i64 %i.h, 12                ; 4 uses
+  %.idx = mul nuw nsw i64 %i.h, 12                ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx ; 2 uses
-  %gepdiff = sub nuw nsw i64 %.idx, %.idx14
+  %gepdiff = sub nuw nsw i64 %.idx, %.idx14       ; 2 uses
   %i.q = udiv exact i64 %gepdiff, 12
   %i.r = icmp eq i32 %i.d, %i.g
   br i1 %i.r, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11pycodestyle5rules13logical_lines16LogicalLineTokenENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCNvMs1_BS_NtBS_11LogicalLine14tokens_trimmed0EB10_.exit.thread, label %.lr.ph.i
@@ -240,8 +240,7 @@ _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtNtNtCsEhZmuQNqkz_11
   %i.aa = sub nuw nsw i64 %i.n, %.sroa.0.0.i29    ; 2 uses
   %.idx15 = mul nuw nsw i64 %.sroa.0.0.i29, 12    ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.o, i64 %.idx15 ; 2 uses
-  %1 = add nuw nsw i64 %.idx14, %.idx15
-  %gepdiff16 = sub nsw i64 %.idx, %1
+  %gepdiff16 = sub nuw nsw i64 %gepdiff, %.idx15
   %i.ac = udiv exact i64 %gepdiff16, 12           ; 2 uses
   %i.ad = add nuw nsw i64 %.idx14, %.idx15
   %.not1737 = icmp samesign eq i64 %i.ad, %.idx

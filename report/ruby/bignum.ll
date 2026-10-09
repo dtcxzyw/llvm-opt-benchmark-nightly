@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0197 = phi i64 [ %3, %bb.a ], [ %spec.select, %bb.b ] ; 20 uses
+  %.0197 = phi i64 [ %3, %bb.a ], [ %spec.select, %bb.b ] ; 19 uses
   %.0196 = phi i64 [ %5, %bb.a ], [ %i.ag, %bb.b ] ; 20 uses
   %.not215 = phi i1 [ true, %bb.a ], [ %not., %bb.b ]
-  %i.aj = lshr i64 %.0196, 1                      ; 72 uses
+  %i.aj = lshr i64 %.0196, 1                      ; 71 uses
   %i.ak = icmp ult i64 %7, %i.aj
   %i.al = and i64 %.0196, -2                      ; 17 uses
   br i1 %i.ak, label %bb.d, label %._crit_edge
@@ -244,7 +244,7 @@ rb_alloc_tmp_buffer2.exit:                        ; preds = %bb.f
   %i.av = getelementptr [4 x i8], ptr %0, i64 %i.al ; 38 uses
   %i.aw = mul i64 %i.aj, 3                        ; 3 uses
   %i.ax = getelementptr [4 x i8], ptr %0, i64 %i.aw ; 14 uses
-  %i.ay = sub i64 %.0197, %i.aj                   ; 7 uses
+  %i.ay = sub i64 %.0197, %i.aj                   ; 8 uses
   %i.az = call i64 @llvm.umin.i64(i64 %i.aj, i64 %i.ay) ; 11 uses
   %.not97.i.i = icmp eq i64 %i.az, 0
   br i1 %.not97.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
@@ -321,8 +321,7 @@ rb_alloc_tmp_buffer2.exit:                        ; preds = %bb.f
   br i1 %.not.i.i, label %.lr.ph87.i.i.preheader, label %.preheader72.i.i
 
 .lr.ph87.i.i.preheader:                           ; preds = %._crit_edge.i.i
-  %8 = add nuw i64 %i.az, %i.aj
-  %i.ck = sub i64 %.0197, %8
+  %i.ck = sub i64 %i.ay, %i.az
   %xtraiter801 = and i64 %i.ck, 3                 ; 2 uses
   %lcmp.mod802.not = icmp eq i64 %xtraiter801, 0
   br i1 %lcmp.mod802.not, label %.lr.ph87.i.i.prol.loopexit, label %.lr.ph87.i.i.prol
@@ -725,7 +724,7 @@ bb.a:
   %i.g = udiv i64 %i.f, 3                         ; 116 uses
   %i.h = add nuw nsw i64 %i.g, 1                  ; 46 uses
   %i.i = mul i64 %i.h, 6
-  %i.j = shl nuw i64 %i.g, 1                      ; 94 uses
+  %i.j = shl nuw i64 %i.g, 1                      ; 93 uses
   %i.k = add nuw i64 %i.j, 2                      ; 8 uses
   %i.l = or disjoint i64 %i.j, 1                  ; 30 uses
   %reass.add2022 = add i64 %i.k, %i.j
@@ -785,7 +784,7 @@ bb.f:                                             ; preds = %bb.c, %rb_alloc_tmp
   %i.ao = sub i64 %.0559, %i.o                    ; 5 uses
   %i.ap = mul i64 %i.g, 6
   %i.aq = or disjoint i64 %i.ap, 1                ; 4 uses
-  %i.ar = sub i64 %3, %i.j                        ; 20 uses
+  %i.ar = sub i64 %3, %i.j                        ; 21 uses
   %i.as = getelementptr [4 x i8], ptr %2, i64 %i.g ; 7 uses
   %i.at = getelementptr [4 x i8], ptr %2, i64 %i.j ; 13 uses
   br i1 %i.e, label %bb.h, label %bb.g
@@ -1188,8 +1187,7 @@ bb.t:                                             ; preds = %.lr.ph82.i.i706
   br i1 %i.pg, label %.lr.ph93.i.i703.preheader, label %.preheader.i.i699
 
 .lr.ph93.i.i703.preheader:                        ; preds = %.preheader67.i.i698
-  %8 = add i64 %.5.i.i696, %i.j
-  %i.ph = sub i64 %3, %8                          ; 3 uses
+  %i.ph = sub nuw i64 %i.ar, %.5.i.i696           ; 3 uses
   %min.iters.check2868 = icmp ult i64 %i.ph, 12
   br i1 %min.iters.check2868, label %.lr.ph93.i.i703.preheader3297, label %vector.memcheck2865
 
@@ -1592,7 +1590,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
 
 bb.m:                                             ; preds = %.preheader202, %bary_add.exit
   %indvar = phi i64 [ 0, %.preheader202 ], [ %indvar.next, %bary_add.exit ] ; 5 uses
-  %.2217 = phi i64 [ 0, %.preheader202 ], [ %i.iv, %bary_add.exit ] ; 11 uses
+  %.2217 = phi i64 [ 0, %.preheader202 ], [ %i.iv, %bary_add.exit ] ; 10 uses
   %i.bh = mul i64 %i.bg, %indvar
   %i.bi = add i64 %4, %i.bh
   %umin318 = call i64 @llvm.umin.i64(i64 %.0120220, i64 %i.bi)
@@ -1604,7 +1602,7 @@ bb.m:                                             ; preds = %.preheader202, %bar
   %umin = call i64 @llvm.umin.i64(i64 %.0120220, i64 %i.bm)
   %i.bn = mul i64 %i.bd, %indvar
   %i.bo = add i64 %i.bn, %.0118222284
-  %i.bp = sub nuw i64 %4, %.2217                  ; 10 uses
+  %i.bp = sub nuw i64 %4, %.2217                  ; 11 uses
   %.not136 = icmp ugt i64 %i.ay, %i.bp
   br i1 %.not136, label %bb.t, label %bb.n
 
@@ -1853,8 +1851,7 @@ BIGNUM_LEN.exit149:                               ; preds = %bb.v, %bb.w
   %.0.i148 = phi i64 [ %i.fg, %bb.w ], [ %i.fe, %bb.v ]
   %i.fh = getelementptr [4 x i8], ptr %.0119221, i64 %.2217 ; 2 uses
   %i.fi = getelementptr [4 x i8], ptr %i.fh, i64 %.0120220
-  %7 = add i64 %.0120220, %.2217
-  %i.fj = sub i64 %4, %7
+  %i.fj = sub nuw i64 %i.bp, %.0120220
   call fastcc void @bary_mul(ptr noundef %i.fa, i64 noundef %i.bp, ptr noundef %.0.i145198, i64 noundef %.0.i148, ptr noundef %i.fi, i64 noundef %i.fj)
   %i.fk = icmp ugt i64 %i.bp, %.0120220
   br i1 %i.fk, label %bb.x, label %bb.y
@@ -2257,7 +2254,7 @@ bb.x:                                             ; preds = %bb.v
 BIGNUM_DIGITS.exit73:                             ; preds = %bb.w, %bb.x
   %.0.i72 = phi ptr [ %i.cz, %bb.w ], [ %i.db, %bb.x ] ; 2 uses
   %.0.i72120 = ptrtoaddr ptr %.0.i72 to i64
-  %i.dc = load i64, ptr %i.b, align 8, !tbaa !46  ; 4 uses
+  %i.dc = load i64, ptr %i.b, align 8, !tbaa !46  ; 3 uses
   %.not50 = icmp sgt i64 %i.dc, %2
   br i1 %.not50, label %bb.z, label %bb.y
 
@@ -2267,7 +2264,7 @@ bb.y:                                             ; preds = %BIGNUM_DIGITS.exit7
   br label %bary_zero_p.exit
 
 bb.z:                                             ; preds = %BIGNUM_DIGITS.exit73
-  %i.de = sub nuw nsw i64 %i.dc, %2               ; 9 uses
+  %i.de = sub nuw nsw i64 %i.dc, %2               ; 10 uses
   %i.df = load i64, ptr @rb_cInteger, align 8, !tbaa !46
   %i.dg = tail call fastcc i64 @bignew_1(i64 noundef %i.df, i64 noundef %i.de, i32 noundef 0) ; 7 uses
   %i.dh = inttoptr i64 %i.dg to ptr               ; 12 uses
@@ -2340,10 +2337,9 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %BIGNUM_DIGITS.exit76, %middle.block
   %.017.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %BIGNUM_DIGITS.exit76 ], [ %n.vec, %middle.block ] ; 4 uses
   %.014.in16.i.ph = phi i64 [ %i.do, %vector.memcheck ], [ %i.do, %BIGNUM_DIGITS.exit76 ], [ %vector.recur.extract, %middle.block ] ; 2 uses
-  %4 = sub i64 %i.dc, %2
   %i.eg = xor i64 %.017.i.ph, -1
   %i.eh = add i64 %i.dc, %i.eg
-  %xtraiter142 = and i64 %4, 1
+  %xtraiter142 = and i64 %i.de, 1
   %lcmp.mod143.not = icmp eq i64 %xtraiter142, 0
   br i1 %lcmp.mod143.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -2746,7 +2742,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr [4 x i8], ptr %0, i64 %3   ; 7 uses
   %i.f = getelementptr [4 x i8], ptr %0, i64 %.0  ; 9 uses
-  %i.g = sub i64 %1, %3                           ; 14 uses
+  %i.g = sub i64 %1, %3                           ; 15 uses
   %i.h = getelementptr [4 x i8], ptr %0, i64 %1
   %i.i = getelementptr i8, ptr %i.h, i64 -4
   %i.j = load i32, ptr %i.i, align 4, !tbaa !44   ; 3 uses
@@ -2814,10 +2810,9 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
   %.017.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 4 uses
   %.014.in16.i.i.ph = phi i64 [ %i.r, %vector.memcheck ], [ %i.r, %.lr.ph.i.i ], [ %vector.recur.extract, %middle.block ] ; 2 uses
-  %5 = sub i64 %1, %3
   %i.aj = xor i64 %.017.i.i.ph, -1
   %i.ak = add i64 %1, %i.aj
-  %xtraiter46 = and i64 %5, 1
+  %xtraiter46 = and i64 %i.g, 1
   %lcmp.mod47.not = icmp eq i64 %xtraiter46, 0
   br i1 %lcmp.mod47.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 

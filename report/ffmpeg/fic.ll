@@ -204,16 +204,16 @@ bb.i:                                             ; preds = %get_se_golomb.exit.
   %i.gw = sub i32 %i.gm, %i.gh                    ; 2 uses
   %i.gx = mul nsw i32 %i.fy, 17734
   %.neg94.i32.i.i = mul nsw i32 %i.fx, -42813
-  %i.gy = add nsw i32 %i.gx, %.neg94.i32.i.i      ; 3 uses
+  %i.gy = add nsw i32 %i.gx, %.neg94.i32.i.i      ; 2 uses
   %i.gz = mul nsw i32 %i.fx, 17734
   %i.ha = mul nsw i32 %i.fy, 42814
-  %i.hb = add nsw i32 %i.ha, %i.gz                ; 3 uses
+  %i.hb = add nsw i32 %i.ha, %i.gz                ; 2 uses
   %i.hc = sub nsw i32 %i.fw, %i.fv
   %i.hd = shl nsw i32 %i.hc, 15
-  %i.he = add nsw i32 %i.hd, 135168               ; 3 uses
+  %i.he = add nsw i32 %i.hd, 135168               ; 2 uses
   %i.hf = add nsw i32 %i.fw, %i.fv
   %i.hg = shl nsw i32 %i.hf, 15
-  %i.hh = add nsw i32 %i.hg, 135168               ; 3 uses
+  %i.hh = add nsw i32 %i.hg, 135168               ; 2 uses
   %i.hi = add i32 %i.hb, %i.hh                    ; 2 uses
   %i.hj = add i32 %i.hi, %i.gq
   %i.hk = lshr i32 %i.hj, 13
@@ -226,23 +226,21 @@ bb.i:                                             ; preds = %get_se_golomb.exit.
   %i.hq = trunc i32 %i.hp to i16
   store i16 %i.hq, ptr %.phi.trans.insert61.i, align 16, !tbaa !76
   %i.hr = sub i32 %i.gv, %i.gw                    ; 2 uses
-  %i.hs = sub i32 %i.he, %i.gy
+  %i.hs = sub i32 %i.he, %i.gy                    ; 2 uses
   %i.ht = add i32 %i.hs, %i.hr
   %i.hu = lshr i32 %i.ht, 13
   %i.hv = trunc i32 %i.hu to i16
   store i16 %i.hv, ptr %.phi.trans.insert63.i, align 16, !tbaa !76
-  %i.hw = sub i32 %i.hh, %i.hb
+  %i.hw = sub i32 %i.hh, %i.hb                    ; 2 uses
   %i.hx = add i32 %i.hw, %i.gu
   %i.hy = lshr i32 %i.hx, 13
   %i.hz = trunc i32 %i.hy to i16
   store i16 %i.hz, ptr %.phi.trans.insert.i, align 16, !tbaa !76
-  %2 = add i32 %i.hb, %i.gu
-  %i.ia = sub i32 %i.hh, %2
+  %i.ia = sub i32 %i.hw, %i.gu
   %i.ib = lshr i32 %i.ia, 13
   %i.ic = trunc i32 %i.ib to i16
   store i16 %i.ic, ptr %.phi.trans.insert68.i, align 16, !tbaa !76
-  %3 = add i32 %i.gy, %i.hr
-  %i.id = sub i32 %i.he, %3
+  %i.id = sub i32 %i.hs, %i.hr
   %i.ie = lshr i32 %i.id, 13
   %i.if = trunc i32 %i.ie to i16
   store i16 %i.if, ptr %.phi.trans.insert57.i, align 16, !tbaa !76

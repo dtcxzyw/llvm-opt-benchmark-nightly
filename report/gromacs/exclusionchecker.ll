@@ -202,20 +202,19 @@ bb.n:                                             ; preds = %bb.m
   %i.fq = getelementptr [4 x i8], ptr %i.fp, i64 %i.ev ; 2 uses
   %i.fr = load i32, ptr %i.fq, align 4, !tbaa !87
   %i.fs = sext i32 %i.fr to i64
-  %.idx121.i = shl nsw i64 %i.fs, 2               ; 3 uses
+  %.idx121.i = shl nsw i64 %i.fs, 2               ; 2 uses
   %i.ft = getelementptr inbounds i8, ptr %i.fo, i64 %.idx121.i ; 3 uses
   %i.fu = getelementptr i8, ptr %i.fq, i64 4
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !87
   %i.fw = sext i32 %i.fv to i64
-  %.idx.i = shl nsw i64 %i.fw, 2                  ; 3 uses
+  %.idx.i = shl nsw i64 %i.fw, 2                  ; 2 uses
   %i.fx = getelementptr inbounds i8, ptr %i.fo, i64 %.idx.i ; 2 uses
-  %gepdiff.i = sub nsw i64 %.idx.i, %.idx121.i    ; 3 uses
+  %gepdiff.i = sub nsw i64 %.idx.i, %.idx121.i    ; 4 uses
   %i.fy = ashr i64 %gepdiff.i, 4                  ; 2 uses
   %i.fz = icmp sgt i64 %i.fy, 0
-  %i.ga = and i64 %gepdiff.i, -16                 ; 2 uses
+  %i.ga = and i64 %gepdiff.i, -16
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.ft, i64 %i.ga
-  %3 = add nsw i64 %.idx121.i, %i.ga
-  %gepdiff122.i = sub nsw i64 %.idx.i, %3
+  %gepdiff122.i = and i64 %gepdiff.i, 12
   br label %bb.o
 
 ._crit_edge160.i:                                 ; preds = %bb.ab

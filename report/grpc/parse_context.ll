@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
 
 bb.g:                                             ; preds = %.lr.ph, %bb.u
   %i.aw = phi ptr [ %i.ao, %.lr.ph ], [ %i.dj, %bb.u ] ; 3 uses
-  %.035121 = phi i32 [ %.035118, %.lr.ph ], [ %.035, %bb.u ] ; 2 uses
-  %.031120 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.de, %bb.u ] ; 2 uses
+  %.035121 = phi i32 [ %.035118, %.lr.ph ], [ %.035, %bb.u ]
+  %.031120 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.de, %bb.u ]
   %.078119 = phi ptr [ %storemerge.i.ph, %.lr.ph ], [ %i.dt, %bb.u ] ; 3 uses
   %i.ax = icmp ult ptr %.078119, %i.aw
   br i1 %i.ax, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIiLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread86
@@ -284,7 +284,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12V
   %i.bv = ptrtoint ptr %.2.i88 to i64
   %i.bw = ptrtoint ptr %i.bu to i64
   %i.bx = sub i64 %i.bv, %i.bw                    ; 3 uses
-  %i.by = sub nsw i32 %.031120, %.035121          ; 2 uses
+  %i.by = sub nsw i32 %.031120, %.035121          ; 3 uses
   %i.bz = icmp slt i32 %i.by, 17
   br i1 %i.bz, label %bb.l, label %bb.s
 
@@ -381,8 +381,7 @@ bb.r:                                             ; preds = %_ZN6google8protobuf
 
 bb.s:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIiLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread86
   %i.dd = trunc i64 %i.bx to i32
-  %4 = add i32 %.035121, %i.dd
-  %i.de = sub i32 %.031120, %4                    ; 3 uses
+  %i.de = sub i32 %i.by, %i.dd                    ; 3 uses
   %i.df = load i32, ptr %i.av, align 4, !tbaa !19
   %i.dg = icmp slt i32 %i.df, 17
   br i1 %i.dg, label %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit, label %bb.t
@@ -785,8 +784,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
 
 bb.g:                                             ; preds = %.lr.ph, %bb.u
   %i.aw = phi ptr [ %i.ao, %.lr.ph ], [ %i.dj, %bb.u ] ; 3 uses
-  %.035121 = phi i32 [ %.035118, %.lr.ph ], [ %.035, %bb.u ] ; 2 uses
-  %.031120 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.de, %bb.u ] ; 2 uses
+  %.035121 = phi i32 [ %.035118, %.lr.ph ], [ %.035, %bb.u ]
+  %.031120 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.de, %bb.u ]
   %.078119 = phi ptr [ %storemerge.i.ph, %.lr.ph ], [ %i.dt, %bb.u ] ; 3 uses
   %i.ax = icmp ult ptr %.078119, %i.aw
   br i1 %i.ax, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIjLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread86
@@ -865,7 +864,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12V
   %i.bv = ptrtoint ptr %.2.i88 to i64
   %i.bw = ptrtoint ptr %i.bu to i64
   %i.bx = sub i64 %i.bv, %i.bw                    ; 3 uses
-  %i.by = sub nsw i32 %.031120, %.035121          ; 2 uses
+  %i.by = sub nsw i32 %.031120, %.035121          ; 3 uses
   %i.bz = icmp slt i32 %i.by, 17
   br i1 %i.bz, label %bb.l, label %bb.s
 
@@ -962,8 +961,7 @@ bb.r:                                             ; preds = %_ZN6google8protobuf
 
 bb.s:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIjLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread86
   %i.dd = trunc i64 %i.bx to i32
-  %4 = add i32 %.035121, %i.dd
-  %i.de = sub i32 %.031120, %4                    ; 3 uses
+  %i.de = sub i32 %i.by, %i.dd                    ; 3 uses
   %i.df = load i32, ptr %i.av, align 4, !tbaa !19
   %i.dg = icmp slt i32 %i.df, 17
   br i1 %i.dg, label %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit, label %bb.t
@@ -1366,8 +1364,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
 
 bb.g:                                             ; preds = %.lr.ph, %bb.q
   %i.aw = phi ptr [ %i.ao, %.lr.ph ], [ %i.db, %bb.q ] ; 3 uses
-  %.035133 = phi i32 [ %.035130, %.lr.ph ], [ %.035, %bb.q ] ; 2 uses
-  %.031132 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.cw, %bb.q ] ; 2 uses
+  %.035133 = phi i32 [ %.035130, %.lr.ph ], [ %.035, %bb.q ]
+  %.031132 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.cw, %bb.q ]
   %.090131 = phi ptr [ %storemerge.i.ph, %.lr.ph ], [ %i.dl, %bb.q ] ; 3 uses
   %i.ax = icmp ult ptr %.090131, %i.aw
   br i1 %i.ax, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIlLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread98
@@ -1439,7 +1437,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12V
   %i.br = ptrtoint ptr %.2.i100 to i64
   %i.bs = ptrtoint ptr %i.bq to i64
   %i.bt = sub i64 %i.br, %i.bs                    ; 3 uses
-  %i.bu = sub nsw i32 %.031132, %.035133          ; 2 uses
+  %i.bu = sub nsw i32 %.031132, %.035133          ; 3 uses
   %i.bv = icmp slt i32 %i.bu, 17
   br i1 %i.bv, label %bb.j, label %bb.o
 
@@ -1529,8 +1527,7 @@ bb.n:                                             ; preds = %_ZN6google8protobuf
 
 bb.o:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIlLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread98
   %i.cv = trunc i64 %i.bt to i32
-  %4 = add i32 %.035133, %i.cv
-  %i.cw = sub i32 %.031132, %4                    ; 3 uses
+  %i.cw = sub i32 %i.bu, %i.cv                    ; 3 uses
   %i.cx = load i32, ptr %i.av, align 4, !tbaa !19
   %i.cy = icmp slt i32 %i.cx, 17
   br i1 %i.cy, label %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit, label %bb.p
@@ -1933,8 +1930,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
 
 bb.g:                                             ; preds = %.lr.ph, %bb.q
   %i.aw = phi ptr [ %i.ao, %.lr.ph ], [ %i.db, %bb.q ] ; 3 uses
-  %.035133 = phi i32 [ %.035130, %.lr.ph ], [ %.035, %bb.q ] ; 2 uses
-  %.031132 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.cw, %bb.q ] ; 2 uses
+  %.035133 = phi i32 [ %.035130, %.lr.ph ], [ %.035, %bb.q ]
+  %.031132 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.cw, %bb.q ]
   %.090131 = phi ptr [ %storemerge.i.ph, %.lr.ph ], [ %i.dl, %bb.q ] ; 3 uses
   %i.ax = icmp ult ptr %.090131, %i.aw
   br i1 %i.ax, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserImLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread98
@@ -2006,7 +2003,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12V
   %i.br = ptrtoint ptr %.2.i100 to i64
   %i.bs = ptrtoint ptr %i.bq to i64
   %i.bt = sub i64 %i.br, %i.bs                    ; 3 uses
-  %i.bu = sub nsw i32 %.031132, %.035133          ; 2 uses
+  %i.bu = sub nsw i32 %.031132, %.035133          ; 3 uses
   %i.bv = icmp slt i32 %i.bu, 17
   br i1 %i.bv, label %bb.j, label %bb.o
 
@@ -2096,8 +2093,7 @@ bb.n:                                             ; preds = %_ZN6google8protobuf
 
 bb.o:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserImLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread98
   %i.cv = trunc i64 %i.bt to i32
-  %4 = add i32 %.035133, %i.cv
-  %i.cw = sub i32 %.031132, %4                    ; 3 uses
+  %i.cw = sub i32 %i.bu, %i.cv                    ; 3 uses
   %i.cx = load i32, ptr %i.av, align 4, !tbaa !19
   %i.cy = icmp slt i32 %i.cx, 17
   br i1 %i.cy, label %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit, label %bb.p
@@ -2500,8 +2496,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
 
 bb.g:                                             ; preds = %.lr.ph, %bb.u
   %i.aw = phi ptr [ %i.ao, %.lr.ph ], [ %i.dr, %bb.u ] ; 3 uses
-  %.035121 = phi i32 [ %.035118, %.lr.ph ], [ %.035, %bb.u ] ; 2 uses
-  %.031120 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.dm, %bb.u ] ; 2 uses
+  %.035121 = phi i32 [ %.035118, %.lr.ph ], [ %.035, %bb.u ]
+  %.031120 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.dm, %bb.u ]
   %.078119 = phi ptr [ %storemerge.i.ph, %.lr.ph ], [ %i.eb, %bb.u ] ; 3 uses
   %i.ax = icmp ult ptr %.078119, %i.aw
   br i1 %i.ax, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIiLb1EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread86
@@ -2584,7 +2580,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12V
   %i.bz = ptrtoint ptr %.2.i88 to i64
   %i.ca = ptrtoint ptr %i.by to i64
   %i.cb = sub i64 %i.bz, %i.ca                    ; 3 uses
-  %i.cc = sub nsw i32 %.031120, %.035121          ; 2 uses
+  %i.cc = sub nsw i32 %.031120, %.035121          ; 3 uses
   %i.cd = icmp slt i32 %i.cc, 17
   br i1 %i.cd, label %bb.l, label %bb.s
 
@@ -2685,8 +2681,7 @@ bb.r:                                             ; preds = %_ZN6google8protobuf
 
 bb.s:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIiLb1EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread86
   %i.dl = trunc i64 %i.cb to i32
-  %4 = add i32 %.035121, %i.dl
-  %i.dm = sub i32 %.031120, %4                    ; 3 uses
+  %i.dm = sub i32 %i.cc, %i.dl                    ; 3 uses
   %i.dn = load i32, ptr %i.av, align 4, !tbaa !19
   %i.do = icmp slt i32 %i.dn, 17
   br i1 %i.do, label %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit, label %bb.t
@@ -2900,8 +2895,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
 
 bb.g:                                             ; preds = %.lr.ph, %bb.q
   %i.aw = phi ptr [ %i.ao, %.lr.ph ], [ %i.dj, %bb.q ] ; 3 uses
-  %.035133 = phi i32 [ %.035130, %.lr.ph ], [ %.035, %bb.q ] ; 2 uses
-  %.031132 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.de, %bb.q ] ; 2 uses
+  %.035133 = phi i32 [ %.035130, %.lr.ph ], [ %.035, %bb.q ]
+  %.031132 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.de, %bb.q ]
   %.090131 = phi ptr [ %storemerge.i.ph, %.lr.ph ], [ %i.dt, %bb.q ] ; 3 uses
   %i.ax = icmp ult ptr %.090131, %i.aw
   br i1 %i.ax, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIlLb1EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread98
@@ -2977,7 +2972,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12V
   %i.bv = ptrtoint ptr %.2.i100 to i64
   %i.bw = ptrtoint ptr %i.bu to i64
   %i.bx = sub i64 %i.bv, %i.bw                    ; 3 uses
-  %i.by = sub nsw i32 %.031132, %.035133          ; 2 uses
+  %i.by = sub nsw i32 %.031132, %.035133          ; 3 uses
   %i.bz = icmp slt i32 %i.by, 17
   br i1 %i.bz, label %bb.j, label %bb.o
 
@@ -3071,8 +3066,7 @@ bb.n:                                             ; preds = %_ZN6google8protobuf
 
 bb.o:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIlLb1EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread98
   %i.dd = trunc i64 %i.bx to i32
-  %4 = add i32 %.035133, %i.dd
-  %i.de = sub i32 %.031132, %4                    ; 3 uses
+  %i.de = sub i32 %i.by, %i.dd                    ; 3 uses
   %i.df = load i32, ptr %i.av, align 4, !tbaa !19
   %i.dg = icmp slt i32 %i.df, 17
   br i1 %i.dg, label %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit, label %bb.p
@@ -3279,8 +3273,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.a
 
 bb.g:                                             ; preds = %.lr.ph, %bb.q
   %i.aw = phi ptr [ %i.ao, %.lr.ph ], [ %i.df, %bb.q ] ; 3 uses
-  %.035133 = phi i32 [ %.035130, %.lr.ph ], [ %.035, %bb.q ] ; 2 uses
-  %.031132 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.da, %bb.q ] ; 2 uses
+  %.035133 = phi i32 [ %.035130, %.lr.ph ], [ %.035, %bb.q ]
+  %.031132 = phi i32 [ %.0.i.ph, %.lr.ph ], [ %i.da, %bb.q ]
   %.090131 = phi ptr [ %storemerge.i.ph, %.lr.ph ], [ %i.dp, %bb.q ] ; 3 uses
   %i.ax = icmp ult ptr %.090131, %i.aw
   br i1 %i.ax, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIbLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread98
@@ -3354,7 +3348,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12V
   %i.bt = ptrtoint ptr %.2.i100 to i64
   %i.bu = ptrtoint ptr %i.bs to i64
   %i.bv = sub i64 %i.bt, %i.bu                    ; 3 uses
-  %i.bw = sub nsw i32 %.031132, %.035133          ; 2 uses
+  %i.bw = sub nsw i32 %.031132, %.035133          ; 3 uses
   %i.bx = icmp slt i32 %i.bw, 17
   br i1 %i.bx, label %bb.j, label %bb.o
 
@@ -3446,8 +3440,7 @@ bb.n:                                             ; preds = %_ZN6google8protobuf
 
 bb.o:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_12VarintParserIbLb0EEEPKcPvPNS0_5ArenaES6_PNS1_12ParseContextEEUlmE_EES6_S6_S6_T_.exit.thread98
   %i.cz = trunc i64 %i.bv to i32
-  %4 = add i32 %.035133, %i.cz
-  %i.da = sub i32 %.031132, %4                    ; 3 uses
+  %i.da = sub i32 %i.bw, %i.cz                    ; 3 uses
   %i.db = load i32, ptr %i.av, align 4, !tbaa !19
   %i.dc = icmp slt i32 %i.db, 17
   br i1 %i.dc, label %_ZN6google8protobuf8internal8ReadSizeEPPKc.exit, label %bb.p

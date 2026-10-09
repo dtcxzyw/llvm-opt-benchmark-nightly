@@ -204,35 +204,28 @@ bb.j:                                             ; preds = %bb.i
   store i64 %i.z, ptr %i.e, align 8, !tbaa !401
   %i.aa = call noundef i64 @_ZNSt24uniform_int_distributionImEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEmRT_RKNS0_10param_typeE(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(5000) %2, ptr noundef nonnull align 8 dereferenceable(16) %6) ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.aa ; 2 uses
   %i.ab = load i8, ptr %10, align 1, !tbaa !393   ; 2 uses
   %i.ac = zext i8 %i.ab to i64                    ; 3 uses
   %i.ad = icmp ugt i64 %i.aa, %i.ac
-  br i1 %i.ad, label %bb.k, label %_ZNK5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE13capped_lengthEmm.exit.i
+  br i1 %i.ad, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   call void @_ZN5boost14static_strings6detail15throw_exceptionISt12out_of_rangeEEvPKc(ptr noundef nonnull @.str.416) #33
   unreachable
 
-_ZNK5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE13capped_lengthEmm.exit.i: ; preds = %bb.j
+bb.l:                                             ; preds = %bb.j
+  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.aa ; 2 uses
   %13 = icmp ne i64 %i.aa, %i.ac                  ; 3 uses
-  %.sroa.speculated.i.i = zext i1 %13 to i64
-  %14 = add nuw nsw i64 %i.ac, 1                  ; 2 uses
-  %15 = add nuw nsw i64 %i.aa, %.sroa.speculated.i.i ; 2 uses
-  %16 = icmp eq i64 %14, %15
-  br i1 %16, label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE5eraseEmm.exit, label %bb.l
-
-bb.l:                                             ; preds = %_ZNK5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE13capped_lengthEmm.exit.i
-  %i.ae = sub nsw i64 %14, %15
+  %.sroa.speculated.i.i.neg41 = sext i1 %13 to i64
+  %i.ae = sub nuw nsw i64 %i.ac, %i.aa
+  %gepdiff.i = add nuw nsw i64 %i.ae, 1
+  %14 = add nsw i64 %gepdiff.i, %.sroa.speculated.i.i.neg41
   %.sroa.speculated.i.i.sroa.sel.idx.sroa.sel.idx = zext i1 %13 to i64
   %.sroa.speculated.i.i.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %12, i64 %.sroa.speculated.i.i.sroa.sel.idx.sroa.sel.idx
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %12, ptr nonnull align 1 %.sroa.speculated.i.i.sroa.sel.idx.sroa.sel, i64 %i.ae, i1 false)
-  br label %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE5eraseEmm.exit
-
-_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE5eraseEmm.exit: ; preds = %_ZNK5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE13capped_lengthEmm.exit.i, %bb.l
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %12, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.speculated.i.i.sroa.sel.idx.sroa.sel, i64 %14, i1 false)
   %.neg = sext i1 %13 to i8
-  %17 = add i8 %i.ab, %.neg
-  store i8 %17, ptr %10, align 1, !tbaa !393
+  %15 = add i8 %i.ab, %.neg
+  store i8 %15, ptr %10, align 1, !tbaa !393
   br label %bb.v
 
 bb.m:                                             ; preds = %bb.c
@@ -312,7 +305,7 @@ bb.u:                                             ; preds = %bb.s
   store i8 %i.bi, ptr %10, align 1, !tbaa !393
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.u, %bb.n, %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE5eraseEmm.exit, %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmmc.exit, %bb.c
+bb.v:                                             ; preds = %bb.u, %bb.n, %bb.l, %_ZN5boost14static_strings19basic_static_stringILm100EcSt11char_traitsIcEE6insertEmmc.exit, %bb.c
   %i.bj = load i8, ptr %10, align 1, !tbaa !393
   %i.bk = zext i8 %i.bj to i64
   call void @_ZZZN5boost5beast4http17basic_parser_test8testFuzzEvENKUlNS_4core17basic_string_viewIcEEE_clES5_ENKUlS5_E_clES5_(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr nonnull %i.c, i64 %i.bk)

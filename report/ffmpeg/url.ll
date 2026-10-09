@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = sext i32 %1 to i64                       ; 2 uses
-  %i.c = add nsw i64 %i.b, -1                     ; 5 uses
+  %i.c = add nsw i64 %i.b, -1                     ; 4 uses
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c ; 3 uses
   %.not123 = icmp eq ptr %2, null
   %spec.store.select = select i1 %.not123, ptr @.str.15, ptr %2 ; 9 uses
@@ -357,7 +357,7 @@ bb.m:                                             ; preds = %bb.l
   %.497 = select i1 %i.bt, ptr %i.br, ptr %.396   ; 2 uses
   %i.bu = ptrtoint ptr %.497 to i64
   %i.bv = ptrtoint ptr %i.aj to i64
-  %i.bw = sub i64 %i.bu, %i.bv                    ; 6 uses
+  %i.bw = sub i64 %i.bu, %i.bv                    ; 5 uses
   %i.bx = ptrtoint ptr %i.d to i64                ; 2 uses
   %i.by = icmp ugt i64 %i.bw, %i.c
   br i1 %i.by, label %.thread192.thread, label %bb.n
@@ -367,7 +367,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bz = ptrtoint ptr %i.at to i64               ; 2 uses
   %i.ca = ptrtoint ptr %i.am to i64
   %i.cb = sub i64 %i.bz, %i.ca                    ; 5 uses
-  %gepdiff = sub nuw nsw i64 %i.c, %i.bw
+  %gepdiff = sub nuw nsw i64 %i.c, %i.bw          ; 2 uses
   %i.cc = icmp ugt i64 %i.cb, %gepdiff
   br i1 %i.cc, label %.thread192.thread, label %bb.o
 
@@ -450,8 +450,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dg = ptrtoint ptr %.192 to i64
   %i.dh = ptrtoint ptr %i.aw to i64
   %i.di = sub i64 %i.dg, %i.dh                    ; 3 uses
-  %7 = add nuw nsw i64 %i.bw, %i.cb
-  %gepdiff218 = sub nsw i64 %i.c, %7
+  %gepdiff218 = sub i64 %gepdiff, %i.cb
   %i.dj = icmp ugt i64 %i.di, %gepdiff218
   br i1 %i.dj, label %.thread192.thread, label %.thread181
 

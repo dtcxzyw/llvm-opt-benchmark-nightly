@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !31   ; 5 uses
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !31   ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !13   ; 2 uses
   %i.k = icmp eq i32 %i.j, 0
@@ -236,21 +236,18 @@ FT_Bitmap_Done.exit:                              ; preds = %bb.e, %bb.f
   br i1 %.not217, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %FT_Bitmap_Done.exit
-  %i.v = srem i32 %i.h, %3                        ; 3 uses
+  %i.v = srem i32 %i.h, %3                        ; 2 uses
   %.not218 = icmp eq i32 %i.v, 0
   br i1 %.not218, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %4 = icmp sgt i32 %3, 0
-  %5 = add i32 %i.h, %3
-  %6 = sub i32 %5, %i.v
-  %i.w = add i32 %3, %i.v
-  %i.x = sub i32 %i.h, %i.w
-  %7 = select i1 %4, i32 %6, i32 %i.x
+  %.p = tail call i32 @llvm.abs.i32(i32 %3, i1 false)
+  %i.w = add i32 %i.h, %.p
+  %i.x = sub i32 %i.w, %i.v
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %FT_Bitmap_Done.exit
-  %.1200 = phi i32 [ %i.h, %FT_Bitmap_Done.exit ], [ %7, %bb.h ], [ %i.h, %bb.g ] ; 3 uses
+  %.1200 = phi i32 [ %i.h, %FT_Bitmap_Done.exit ], [ %i.x, %bb.h ], [ %i.h, %bb.g ] ; 3 uses
   %i.y = sext i32 %.1200 to i64
   %i.z = zext i32 %i.u to i64
   %i.aa = call ptr @ft_mem_qrealloc(ptr noundef %i.d, i64 noundef %i.y, i64 noundef 0, i64 noundef %i.z, ptr noundef null, ptr noundef nonnull %i.a) #7 ; 2 uses

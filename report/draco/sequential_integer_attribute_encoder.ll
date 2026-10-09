@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x, %bb.r
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN5draco56MeshPredictionSchemeConstrainedMultiParallelogramEncoderIiNS_37PredictionSchemeWrapEncodingTransformIiiEENS_24MeshPredictionSchemeDataINS_24MeshAttributeCornerTableEEEE23ComputeCorrectionValuesEPKiPiiiPKNS_9IndexTypeIjNS_20PointIndex_tag_type_EEE(ptr noundef nonnull align 8 dereferenceable(336) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, ptr noundef %5) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 8 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 7 uses
   %6 = alloca %"struct.draco::ShannonEntropyTracker::EntropyData", align 8 ; 5 uses
   %7 = alloca %"struct.draco::ShannonEntropyTracker::EntropyData", align 8 ; 5 uses
   %8 = alloca [4 x %"class.std::vector"], align 16 ; 33 uses
@@ -608,7 +608,7 @@ bb.ae:                                            ; preds = %.lr.ph, %_ZNK5draco
   %i.hk = sext i32 %.0146406 to i64
   %i.hl = getelementptr inbounds [24 x i8], ptr %8, i64 %i.hk
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !101 ; 5 uses
-  %i.hn = ptrtoaddr ptr %i.hm to i64              ; 2 uses
+  %i.hn = ptrtoaddr ptr %i.hm to i64
   %i.ho = lshr i32 %.sroa.0332.0405, 6
   %.zext.i.i.i = zext nneg i32 %i.ho to i64
   %i.hp = getelementptr inbounds nuw [8 x i8], ptr %i.ha, i64 %.zext.i.i.i
@@ -688,7 +688,7 @@ bb.af:                                            ; preds = %_ZN5draco23GetParal
   br i1 %min.iters.check731, label %.lr.ph.i190.preheader, label %vector.memcheck724
 
 vector.memcheck724:                               ; preds = %.lr.ph.preheader.i188
-  %i.jp = sub i64 %i.hn, %i.a                     ; 2 uses
+  %i.jp = sub i64 %i.hn, %i.a                     ; 3 uses
   %i.jq = shl nsw i64 %i.jo, 2
   %i.jr = sub i64 %i.jq, %i.jp
   %diff.check725 = icmp ugt i64 %i.jr, -32
@@ -697,8 +697,7 @@ vector.memcheck724:                               ; preds = %.lr.ph.preheader.i1
   %diff.check726 = icmp ugt i64 %i.jt, -32
   %conflict.rdx727 = or i1 %diff.check725, %diff.check726
   %i.ju = shl nsw i64 %i.jm, 2
-  %11 = add i64 %i.ju, %i.a
-  %i.jv = sub i64 %11, %i.hn
+  %i.jv = sub i64 %i.ju, %i.jp
   %diff.check728 = icmp ugt i64 %i.jv, -32
   %conflict.rdx729 = or i1 %conflict.rdx727, %diff.check728
   br i1 %conflict.rdx729, label %.lr.ph.i190.preheader, label %vector.body734
@@ -1101,17 +1100,17 @@ _ZNK5draco46MeshPredictionSchemeTexCoordsPortablePredictorIiNS_24MeshPredictionS
   %i.cx = call noundef zeroext i1 @_ZNK5draco17GeometryAttribute12ConvertValueIlEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEaPT_(ptr noundef nonnull align 8 dereferenceable(64) %i.cn, ptr nofreeobj noundef nonnull align 4 dead_on_return dereferenceable(4) %4, i8 noundef signext %i.cw, ptr noundef nonnull align 8 %9) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4), !noalias !498
   %i.cy = load i64, ptr %9, align 8, !tbaa !128, !noalias !500
-  %i.cz = load i64, ptr %8, align 8, !tbaa !128, !noalias !500 ; 3 uses
+  %i.cz = load i64, ptr %8, align 8, !tbaa !128, !noalias !500 ; 2 uses
   %i.da = sub nsw i64 %i.cy, %i.cz                ; 5 uses
   %i.db = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !128, !noalias !500
   %i.dd = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.de = load i64, ptr %i.dd, align 8, !tbaa !128, !noalias !500 ; 3 uses
+  %i.de = load i64, ptr %i.dd, align 8, !tbaa !128, !noalias !500 ; 2 uses
   %i.df = sub nsw i64 %i.dc, %i.de                ; 5 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.dh = load i64, ptr %i.dg, align 8, !tbaa !128, !noalias !500
   %i.di = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.dj = load i64, ptr %i.di, align 8, !tbaa !128, !noalias !500 ; 3 uses
+  %i.dj = load i64, ptr %i.di, align 8, !tbaa !128, !noalias !500 ; 2 uses
   %i.dk = sub nsw i64 %i.dh, %i.dj                ; 5 uses
   %i.dl = mul nsw i64 %i.da, %i.da
   %i.dm = mul nsw i64 %i.df, %i.df
@@ -1122,14 +1121,14 @@ _ZNK5draco46MeshPredictionSchemeTexCoordsPortablePredictorIiNS_24MeshPredictionS
   br i1 %.not, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %_ZNK5draco46MeshPredictionSchemeTexCoordsPortablePredictorIiNS_24MeshPredictionSchemeDataINS_24MeshAttributeCornerTableEEEE21GetPositionForEntryIdEi.exit70
-  %i.dq = load i64, ptr %7, align 8, !tbaa !128, !noalias !501 ; 2 uses
-  %i.dr = sub nsw i64 %i.dq, %i.cz
+  %i.dq = load i64, ptr %7, align 8, !tbaa !128, !noalias !501
+  %i.dr = sub nsw i64 %i.dq, %i.cz                ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.dt = load i64, ptr %i.ds, align 8, !tbaa !128, !noalias !501 ; 2 uses
-  %i.du = sub nsw i64 %i.dt, %i.de
+  %i.dt = load i64, ptr %i.ds, align 8, !tbaa !128, !noalias !501
+  %i.du = sub nsw i64 %i.dt, %i.de                ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !128, !noalias !501 ; 2 uses
-  %i.dx = sub nsw i64 %i.dw, %i.dj
+  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !128, !noalias !501
+  %i.dx = sub nsw i64 %i.dw, %i.dj                ; 2 uses
   %i.dy = mul nsw i64 %i.dr, %i.da
   %i.dz = mul nsw i64 %i.du, %i.df
   %i.ea = add nsw i64 %i.dz, %i.dy
@@ -1176,12 +1175,9 @@ bb.l:                                             ; preds = %bb.k
   %i.fb = sdiv i64 %i.ey, %i.dp
   %i.fc = sdiv i64 %i.ez, %i.dp
   %i.fd = sdiv i64 %i.fa, %i.dp
-  %10 = add i64 %i.cz, %i.fb
-  %i.fe = sub i64 %i.dq, %10                      ; 2 uses
-  %11 = add i64 %i.de, %i.fc
-  %i.ff = sub i64 %i.dt, %11                      ; 2 uses
-  %12 = add i64 %i.dj, %i.fd
-  %i.fg = sub i64 %i.dw, %12                      ; 2 uses
+  %i.fe = sub i64 %i.dr, %i.fb                    ; 2 uses
+  %i.ff = sub i64 %i.du, %i.fc                    ; 2 uses
+  %i.fg = sub i64 %i.dx, %i.fd                    ; 2 uses
   %i.fh = mul nsw i64 %i.fe, %i.fe
   %i.fi = mul nsw i64 %i.ff, %i.ff
   %i.fj = add nuw nsw i64 %i.fi, %i.fh
@@ -1584,7 +1580,7 @@ bb.y:                                             ; preds = %bb.x, %bb.r
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef zeroext i1 @_ZN5draco56MeshPredictionSchemeConstrainedMultiParallelogramEncoderIiNS_37PredictionSchemeWrapEncodingTransformIiiEENS_24MeshPredictionSchemeDataINS_11CornerTableEEEE23ComputeCorrectionValuesEPKiPiiiPKNS_9IndexTypeIjNS_20PointIndex_tag_type_EEE(ptr noundef nonnull align 8 dereferenceable(336) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, ptr noundef %5) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 8 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 7 uses
   %6 = alloca %"struct.draco::ShannonEntropyTracker::EntropyData", align 8 ; 5 uses
   %7 = alloca %"struct.draco::ShannonEntropyTracker::EntropyData", align 8 ; 5 uses
   %8 = alloca [4 x %"class.std::vector"], align 16 ; 33 uses
@@ -1987,7 +1983,7 @@ _ZNK5draco11CornerTable8OppositeENS_9IndexTypeIjNS_21CornerIndex_tag_type_EEE.ex
   %i.hf = sext i32 %.0146400 to i64
   %i.hg = getelementptr inbounds [24 x i8], ptr %8, i64 %i.hf
   %i.hh = load ptr, ptr %i.hg, align 8, !tbaa !101 ; 5 uses
-  %i.hi = ptrtoaddr ptr %i.hh to i64              ; 2 uses
+  %i.hi = ptrtoaddr ptr %i.hh to i64
   %i.hj = zext i32 %.sroa.0325.0399 to i64
   %i.hk = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %i.hj
   %i.hl = load i32, ptr %i.hk, align 4, !tbaa !212, !noalias !666 ; 7 uses
@@ -2073,7 +2069,7 @@ bb.ah:                                            ; preds = %_ZN5draco23GetParal
   br i1 %min.iters.check726, label %.lr.ph.i188.preheader, label %vector.memcheck719
 
 vector.memcheck719:                               ; preds = %.lr.ph.preheader.i186
-  %i.jb = sub i64 %i.hi, %i.a                     ; 2 uses
+  %i.jb = sub i64 %i.hi, %i.a                     ; 3 uses
   %i.jc = shl nsw i64 %i.ja, 2
   %i.jd = sub i64 %i.jc, %i.jb
   %diff.check720 = icmp ugt i64 %i.jd, -32
@@ -2082,8 +2078,7 @@ vector.memcheck719:                               ; preds = %.lr.ph.preheader.i1
   %diff.check721 = icmp ugt i64 %i.jf, -32
   %conflict.rdx722 = or i1 %diff.check720, %diff.check721
   %i.jg = shl nsw i64 %i.iy, 2
-  %11 = add i64 %i.jg, %i.a
-  %i.jh = sub i64 %11, %i.hi
+  %i.jh = sub i64 %i.jg, %i.jb
   %diff.check723 = icmp ugt i64 %i.jh, -32
   %conflict.rdx724 = or i1 %conflict.rdx722, %diff.check723
   br i1 %conflict.rdx724, label %.lr.ph.i188.preheader, label %vector.body729
@@ -2486,17 +2481,17 @@ _ZNK5draco46MeshPredictionSchemeTexCoordsPortablePredictorIiNS_24MeshPredictionS
   %i.cx = call noundef zeroext i1 @_ZNK5draco17GeometryAttribute12ConvertValueIlEEbNS_9IndexTypeIjNS_29AttributeValueIndex_tag_type_EEEaPT_(ptr noundef nonnull align 8 dereferenceable(64) %i.cn, ptr nofreeobj noundef nonnull align 4 dead_on_return dereferenceable(4) %4, i8 noundef signext %i.cw, ptr noundef nonnull align 8 %9) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4), !noalias !722
   %i.cy = load i64, ptr %9, align 8, !tbaa !128, !noalias !724
-  %i.cz = load i64, ptr %8, align 8, !tbaa !128, !noalias !724 ; 3 uses
+  %i.cz = load i64, ptr %8, align 8, !tbaa !128, !noalias !724 ; 2 uses
   %i.da = sub nsw i64 %i.cy, %i.cz                ; 5 uses
   %i.db = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !128, !noalias !724
   %i.dd = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.de = load i64, ptr %i.dd, align 8, !tbaa !128, !noalias !724 ; 3 uses
+  %i.de = load i64, ptr %i.dd, align 8, !tbaa !128, !noalias !724 ; 2 uses
   %i.df = sub nsw i64 %i.dc, %i.de                ; 5 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.dh = load i64, ptr %i.dg, align 8, !tbaa !128, !noalias !724
   %i.di = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.dj = load i64, ptr %i.di, align 8, !tbaa !128, !noalias !724 ; 3 uses
+  %i.dj = load i64, ptr %i.di, align 8, !tbaa !128, !noalias !724 ; 2 uses
   %i.dk = sub nsw i64 %i.dh, %i.dj                ; 5 uses
   %i.dl = mul nsw i64 %i.da, %i.da
   %i.dm = mul nsw i64 %i.df, %i.df
@@ -2507,14 +2502,14 @@ _ZNK5draco46MeshPredictionSchemeTexCoordsPortablePredictorIiNS_24MeshPredictionS
   br i1 %.not, label %bb.l, label %bb.h
 
 bb.h:                                             ; preds = %_ZNK5draco46MeshPredictionSchemeTexCoordsPortablePredictorIiNS_24MeshPredictionSchemeDataINS_11CornerTableEEEE21GetPositionForEntryIdEi.exit72
-  %i.dq = load i64, ptr %7, align 8, !tbaa !128, !noalias !725 ; 2 uses
-  %i.dr = sub nsw i64 %i.dq, %i.cz
+  %i.dq = load i64, ptr %7, align 8, !tbaa !128, !noalias !725
+  %i.dr = sub nsw i64 %i.dq, %i.cz                ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.dt = load i64, ptr %i.ds, align 8, !tbaa !128, !noalias !725 ; 2 uses
-  %i.du = sub nsw i64 %i.dt, %i.de
+  %i.dt = load i64, ptr %i.ds, align 8, !tbaa !128, !noalias !725
+  %i.du = sub nsw i64 %i.dt, %i.de                ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !128, !noalias !725 ; 2 uses
-  %i.dx = sub nsw i64 %i.dw, %i.dj
+  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !128, !noalias !725
+  %i.dx = sub nsw i64 %i.dw, %i.dj                ; 2 uses
   %i.dy = mul nsw i64 %i.dr, %i.da
   %i.dz = mul nsw i64 %i.du, %i.df
   %i.ea = add nsw i64 %i.dz, %i.dy
@@ -2561,12 +2556,9 @@ bb.k:                                             ; preds = %bb.j
   %i.fb = sdiv i64 %i.ey, %i.dp
   %i.fc = sdiv i64 %i.ez, %i.dp
   %i.fd = sdiv i64 %i.fa, %i.dp
-  %10 = add i64 %i.cz, %i.fb
-  %i.fe = sub i64 %i.dq, %10                      ; 2 uses
-  %11 = add i64 %i.de, %i.fc
-  %i.ff = sub i64 %i.dt, %11                      ; 2 uses
-  %12 = add i64 %i.dj, %i.fd
-  %i.fg = sub i64 %i.dw, %12                      ; 2 uses
+  %i.fe = sub i64 %i.dr, %i.fb                    ; 2 uses
+  %i.ff = sub i64 %i.du, %i.fc                    ; 2 uses
+  %i.fg = sub i64 %i.dx, %i.fd                    ; 2 uses
   %i.fh = mul nsw i64 %i.fe, %i.fe
   %i.fi = mul nsw i64 %i.ff, %i.ff
   %i.fj = add nuw nsw i64 %i.fi, %i.fh

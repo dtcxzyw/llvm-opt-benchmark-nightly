@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   call void @_ZNK4llvm12SelectionDAG16computeKnownBitsENS_7SDValueEj(ptr dead_on_unwind nonnull writable sret(%"struct.llvm::KnownBits") align 8 %42, ptr noundef nonnull align 8 dereferenceable(920) %3, ptr %.sroa.0301.0.copyload, i32 %.sroa.49.0.copyload, i32 noundef 0) #39
   %i.m = getelementptr inbounds nuw i8, ptr %42, i64 16 ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %42, i64 8 ; 2 uses
-  %i.o = load i32, ptr %i.n, align 8, !tbaa !643  ; 5 uses
+  %i.o = load i32, ptr %i.n, align 8, !tbaa !643  ; 4 uses
   %i.p = icmp ult i32 %i.o, 65
   br i1 %i.p, label %.split, label %_ZNK4llvm9KnownBits10isConstantEv.exit
 
@@ -271,11 +271,10 @@ bb.i:                                             ; preds = %_ZNK4llvm9KnownBits
   br label %_ZNK4llvm9KnownBits21countMinTrailingZerosEv.exit
 
 _ZNK4llvm9KnownBits21countMinTrailingZerosEv.exit: ; preds = %bb.h, %bb.i
-  %.0.i.i436545 = phi i32 [ %.0.i.i436.ph, %bb.h ], [ %i.ao, %bb.i ] ; 2 uses
+  %.0.i.i436545 = phi i32 [ %.0.i.i436.ph, %bb.h ], [ %i.ao, %bb.i ]
   %.0.i.i437 = phi i32 [ %i.an, %bb.h ], [ %i.ap, %bb.i ] ; 5 uses
-  %i.aq = sub i32 %i.o, %.0.i.i436545             ; 4 uses
-  %77 = add i32 %.0.i.i436545, %.0.i.i437
-  %i.ar = sub i32 %i.o, %77                       ; 4 uses
+  %i.aq = sub i32 %i.o, %.0.i.i436545             ; 5 uses
+  %i.ar = sub i32 %i.aq, %.0.i.i437               ; 4 uses
   %i.as = icmp ult i32 %i.ar, 3
   br i1 %i.as, label %bb.j, label %bb.m
 

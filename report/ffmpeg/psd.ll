@@ -52,7 +52,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   store i32 50397186, ptr %i.a, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !46   ; 22 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !46   ; 21 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 16 uses
   store ptr %0, ptr %i.d, align 8, !tbaa !52
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 56 ; 7 uses
@@ -140,7 +140,7 @@ bytestream2_get_be32.exit138.i:                   ; preds = %bytestream2_get_be1
   store ptr %i.aj, ptr %i.k, align 8, !tbaa !61
   %i.ak = load i32, ptr %i.ad, align 1, !tbaa !62
   %i.al = tail call i32 @llvm.bswap.i32(i32 %i.ak) ; 3 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 92
+  %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 92 ; 13 uses
   store i32 %i.al, ptr %i.am, align 4, !tbaa !64
   %i.an = icmp sgt i32 %i.al, 30000
   br i1 %i.an, label %bb.g, label %bytestream2_get_be32.exit136.i
@@ -543,8 +543,7 @@ bb.cb:                                            ; preds = %decode_header.exit
 bb.cc:                                            ; preds = %bb.bu, %bb.bz, %bb.bj, %bb.bn, %bb.az, %bb.bd, %bb.au, %bb.ar
   %i.jv = phi i16 [ %i.jm, %bb.bu ], [ %i.jm, %bb.bz ], [ %i.jb, %bb.bj ], [ %i.jb, %bb.bn ], [ %i.iq, %bb.az ], [ %i.iq, %bb.bd ], [ %.pre, %bb.au ], [ %.pre438, %bb.ar ]
   %i.jw = load i64, ptr %i.i, align 8, !tbaa !53
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 92 ; 12 uses
-  %i.jx = load i32, ptr %4, align 4, !tbaa !64
+  %i.jx = load i32, ptr %i.am, align 4, !tbaa !64
   %i.jy = sext i32 %i.jx to i64
   %i.jz = mul i64 %i.jw, %i.jy
   %i.ka = zext i16 %i.jv to i64
@@ -563,7 +562,7 @@ bb.cd:                                            ; preds = %bb.cc
   br i1 %.not310, label %decode_header.exit.thread, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.kh = load i32, ptr %4, align 4, !tbaa !64
+  %i.kh = load i32, ptr %i.am, align 4, !tbaa !64
   %i.ki = load i16, ptr %i.e, align 8, !tbaa !63
   %i.kj = zext i16 %i.ki to i32
   %i.kk = mul nsw i32 %i.kh, %i.kj                ; 3 uses
@@ -821,7 +820,7 @@ bb.cs:                                            ; preds = %decode_rle.exit.thr
 bb.ct:                                            ; preds = %bb.cs, %bb.cs
   %i.oe = load ptr, ptr %1, align 8, !tbaa !61    ; 2 uses
   %i.of = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
-  %i.og = load i32, ptr %4, align 4, !tbaa !64    ; 2 uses
+  %i.og = load i32, ptr %i.am, align 4, !tbaa !64 ; 2 uses
   %i.oh = icmp sgt i32 %i.og, 0
   br i1 %i.oh, label %.preheader332.lr.ph, label %.loopexit
 
@@ -891,7 +890,7 @@ bb.cu:                                            ; preds = %.lr.ph, %bb.cu
   br i1 %i.ph, label %.lr.ph342.split, label %._crit_edge343.loopexit403, !llvm.loop !17
 
 ._crit_edge343.loopexit403:                       ; preds = %._crit_edge
-  %.pre425.a = load i32, ptr %4, align 4, !tbaa !64
+  %.pre425.a = load i32, ptr %i.am, align 4, !tbaa !64
   br label %._crit_edge343
 
 ._crit_edge343:                                   ; preds = %.lr.ph342, %._crit_edge343.loopexit403, %.preheader332
@@ -974,7 +973,7 @@ bb.cv:                                            ; preds = %bb.cv, %.lr.ph.1
   br i1 %i.qm, label %.lr.ph342.split.1, label %._crit_edge343.loopexit403.1, !llvm.loop !17
 
 ._crit_edge343.loopexit403.1:                     ; preds = %._crit_edge.1
-  %.pre427.a = load i32, ptr %4, align 4, !tbaa !64
+  %.pre427.a = load i32, ptr %i.am, align 4, !tbaa !64
   br label %._crit_edge343.1
 
 ._crit_edge343.1:                                 ; preds = %.lr.ph342.1, %._crit_edge343.loopexit403.1, %.preheader332.1
@@ -1000,7 +999,7 @@ bb.cx:                                            ; preds = %bb.cw
   %i.qz = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ra = load ptr, ptr %i.qz, align 8, !tbaa !61 ; 2 uses
   %i.rb = load i64, ptr %i.i, align 8, !tbaa !53  ; 3 uses
-  %i.rc = load i32, ptr %4, align 4, !tbaa !64    ; 4 uses
+  %i.rc = load i32, ptr %i.am, align 4, !tbaa !64 ; 4 uses
   %i.rd = sext i32 %i.rc to i64
   %i.re = mul i64 %i.rb, %i.rd                    ; 4 uses
   %i.rf = getelementptr inbounds nuw i8, ptr %.0282, i64 %i.re ; 3 uses
@@ -1085,7 +1084,7 @@ bb.cx:                                            ; preds = %bb.cw
 
 ._crit_edge383.loopexit:                          ; preds = %.lr.ph382
   %.pre435.a = load i64, ptr %i.i, align 8, !tbaa !53
-  %.pre436.a = load i32, ptr %4, align 4, !tbaa !64
+  %.pre436.a = load i32, ptr %i.am, align 4, !tbaa !64
   br label %._crit_edge383
 
 ._crit_edge383:                                   ; preds = %._crit_edge383.loopexit, %.preheader325
@@ -1132,7 +1131,7 @@ bb.cy:                                            ; preds = %.lr.ph396, %bb.cy
   %i.tx = sext i32 %i.tw to i64
   %i.ty = getelementptr inbounds i8, ptr %.sroa.23.0393, i64 %i.tx
   %i.tz = add nuw nsw i32 %.2287395, 1            ; 2 uses
-  %i.ua = load i32, ptr %4, align 4, !tbaa !64
+  %i.ua = load i32, ptr %i.am, align 4, !tbaa !64
   %i.ub = icmp slt i32 %i.tz, %i.ua
   br i1 %i.ub, label %bb.cy, label %.loopexit, !llvm.loop !21
 
@@ -1197,7 +1196,7 @@ bb.cy:                                            ; preds = %.lr.ph396, %bb.cy
 
 ._crit_edge367.loopexit:                          ; preds = %.lr.ph366
   %.pre431.a = load i64, ptr %i.i, align 8, !tbaa !53
-  %.pre432.a = load i32, ptr %4, align 4, !tbaa !64
+  %.pre432.a = load i32, ptr %i.am, align 4, !tbaa !64
   br label %._crit_edge367
 
 ._crit_edge367:                                   ; preds = %._crit_edge367.loopexit, %.preheader329
@@ -1244,7 +1243,7 @@ bb.cz:                                            ; preds = %.lr.ph380, %bb.cz
   %i.wp = sext i32 %i.wo to i64
   %i.wq = getelementptr inbounds i8, ptr %.sroa.23.1377, i64 %i.wp
   %i.wr = add nuw nsw i32 %.4289379, 1            ; 2 uses
-  %i.ws = load i32, ptr %4, align 4, !tbaa !64
+  %i.ws = load i32, ptr %i.am, align 4, !tbaa !64
   %i.wt = icmp slt i32 %i.wr, %i.ws
   br i1 %i.wt, label %bb.cz, label %.loopexit, !llvm.loop !24
 
@@ -1261,7 +1260,7 @@ bb.da:                                            ; preds = %bb.cw
 
 .lr.ph364:                                        ; preds = %bb.da, %.thread
   %i.wv = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.ww = load i32, ptr %4, align 4, !tbaa !64    ; 2 uses
+  %i.ww = load i32, ptr %i.am, align 4, !tbaa !64 ; 2 uses
   %i.wx = icmp sgt i32 %i.ww, 0
   br i1 %i.wx, label %.lr.ph364.split, label %.loopexit
 
@@ -1295,7 +1294,7 @@ bb.db:                                            ; preds = %.lr.ph358, %bb.db
   %i.xl = load i64, ptr %i.i, align 8, !tbaa !53  ; 2 uses
   %i.xm = getelementptr inbounds nuw i8, ptr %.6355, i64 %i.xl ; 2 uses
   %i.xn = add nuw nsw i32 %.5290354, 1            ; 2 uses
-  %i.xo = load i32, ptr %4, align 4, !tbaa !64    ; 2 uses
+  %i.xo = load i32, ptr %i.am, align 4, !tbaa !64 ; 2 uses
   %i.xp = icmp slt i32 %i.xn, %i.xo
   br i1 %i.xp, label %bb.db, label %._crit_edge359.loopexit, !llvm.loop !25
 

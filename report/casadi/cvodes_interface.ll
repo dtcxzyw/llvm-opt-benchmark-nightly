@@ -205,9 +205,9 @@ bb.k:                                             ; preds = %_ZN6casadi12casadi_
   br i1 %.not54, label %bb.l, label %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit82
 
 bb.l:                                             ; preds = %bb.k
-  %i.dz = load i64, ptr %i.h, align 8, !tbaa !126 ; 4 uses
-  %i.ea = load i64, ptr %i.bq, align 8, !tbaa !208 ; 9 uses
-  %i.eb = sub nsw i64 %i.dz, %i.ea                ; 5 uses
+  %i.dz = load i64, ptr %i.h, align 8, !tbaa !126 ; 3 uses
+  %i.ea = load i64, ptr %i.bq, align 8, !tbaa !208 ; 8 uses
+  %i.eb = sub nsw i64 %i.dz, %i.ea                ; 6 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.a, i64 752
   %i.ed = load double, ptr %i.ec, align 8, !tbaa !199 ; 6 uses
   %i.ee = load ptr, ptr %i.dw, align 8, !tbaa !211 ; 3 uses
@@ -270,8 +270,7 @@ middle.block133:                                  ; preds = %vector.body124
   %.014.i.ph = phi i64 [ 0, %vector.memcheck121 ], [ 0, %.lr.ph.i70.preheader ], [ %n.vec123, %middle.block133 ] ; 3 uses
   %.0813.i.ph = phi ptr [ %i.ej, %vector.memcheck121 ], [ %i.ej, %.lr.ph.i70.preheader ], [ %i.ep, %middle.block133 ] ; 2 uses
   %.0912.i.ph = phi ptr [ %i.ek, %vector.memcheck121 ], [ %i.ek, %.lr.ph.i70.preheader ], [ %i.eq, %middle.block133 ] ; 2 uses
-  %10 = sub i64 %i.dz, %i.ea
-  %xtraiter165 = and i64 %10, 3                   ; 2 uses
+  %xtraiter165 = and i64 %i.eb, 3                 ; 2 uses
   %lcmp.mod166.not = icmp eq i64 %xtraiter165, 0
   br i1 %lcmp.mod166.not, label %.lr.ph.i70.prol.loopexit, label %.lr.ph.i70.prol
 
@@ -349,10 +348,10 @@ bb.m:                                             ; preds = %_ZN6casadi11casadi_
 bb.n:                                             ; preds = %bb.m
   %i.gi = load ptr, ptr %i.j, align 8, !tbaa !207 ; 3 uses
   %i.gj = ptrtoaddr ptr %i.gi to i64
-  %i.gk = load i64, ptr %i.bq, align 8, !tbaa !208 ; 5 uses
+  %i.gk = load i64, ptr %i.bq, align 8, !tbaa !208 ; 4 uses
   %i.gl = getelementptr inbounds [8 x i8], ptr %i.gi, i64 %i.gk ; 3 uses
-  %i.gm = load i64, ptr %i.h, align 8, !tbaa !126 ; 3 uses
-  %i.gn = sub i64 %i.gm, %i.gk                    ; 6 uses
+  %i.gm = load i64, ptr %i.h, align 8, !tbaa !126 ; 2 uses
+  %i.gn = sub i64 %i.gm, %i.gk                    ; 7 uses
   %i.go = getelementptr inbounds [8 x i8], ptr %i.bm, i64 %i.gk ; 4 uses
   br i1 %.not.i57, label %bb.o, label %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit82
 
@@ -401,8 +400,7 @@ middle.block151:                                  ; preds = %vector.body144
   %.020.i76.ph = phi i64 [ 0, %.lr.ph.i75.preheader ], [ %n.vec143, %middle.block151 ] ; 4 uses
   %.01019.i77.ph = phi ptr [ %i.go, %.lr.ph.i75.preheader ], [ %i.gs, %middle.block151 ] ; 2 uses
   %.01218.i78.ph = phi ptr [ %i.gl, %.lr.ph.i75.preheader ], [ %i.gt, %middle.block151 ] ; 2 uses
-  %11 = add i64 %.020.i76.ph, %i.gk
-  %i.gy = sub i64 %i.gm, %11
+  %i.gy = sub nsw i64 %i.gn, %.020.i76.ph
   %xtraiter168 = and i64 %i.gy, 7                 ; 2 uses
   %lcmp.mod169.not = icmp eq i64 %xtraiter168, 0
   br i1 %lcmp.mod169.not, label %.lr.ph.i75.prol.loopexit, label %.lr.ph.i75.prol
@@ -805,11 +803,11 @@ bb.m:                                             ; preds = %_ZN6casadi11casadi_
 bb.n:                                             ; preds = %bb.m
   %i.fu = load ptr, ptr %i.j, align 8, !tbaa !207 ; 3 uses
   %i.fv = ptrtoaddr ptr %i.fu to i64
-  %i.fw = load i64, ptr %i.fn, align 8, !tbaa !208 ; 5 uses
+  %i.fw = load i64, ptr %i.fn, align 8, !tbaa !208 ; 4 uses
   %i.fx = getelementptr inbounds [8 x i8], ptr %i.fu, i64 %i.fw ; 3 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.c, i64 1616
-  %i.fz = load i64, ptr %i.fy, align 8, !tbaa !126 ; 3 uses
-  %i.ga = sub i64 %i.fz, %i.fw                    ; 6 uses
+  %i.fz = load i64, ptr %i.fy, align 8, !tbaa !126 ; 2 uses
+  %i.ga = sub i64 %i.fz, %i.fw                    ; 7 uses
   %i.gb = getelementptr inbounds [8 x i8], ptr %i.bo, i64 %i.fw ; 4 uses
   br i1 %.not.i65, label %bb.o, label %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit90
 
@@ -858,8 +856,7 @@ middle.block159:                                  ; preds = %vector.body152
   %.020.i84.ph = phi i64 [ 0, %.lr.ph.i83.preheader ], [ %n.vec151, %middle.block159 ] ; 4 uses
   %.01019.i85.ph = phi ptr [ %i.gb, %.lr.ph.i83.preheader ], [ %i.gf, %middle.block159 ] ; 2 uses
   %.01218.i86.ph = phi ptr [ %i.fx, %.lr.ph.i83.preheader ], [ %i.gg, %middle.block159 ] ; 2 uses
-  %11 = add i64 %.020.i84.ph, %i.fw
-  %i.gl = sub i64 %i.fz, %11
+  %i.gl = sub nsw i64 %i.ga, %.020.i84.ph
   %xtraiter173 = and i64 %i.gl, 7                 ; 2 uses
   %lcmp.mod174.not = icmp eq i64 %xtraiter173, 0
   br i1 %lcmp.mod174.not, label %.lr.ph.i83.prol.loopexit, label %.lr.ph.i83.prol

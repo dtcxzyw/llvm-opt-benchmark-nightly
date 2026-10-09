@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   %i.br = sub i64 %i.bp, %i.bq
   %i.bs = load i64, ptr %i.aj, align 8, !tbaa !31
   %i.bt = add i64 %i.br, %i.bs
-  %i.bu = shl i64 %i.bt, 3                        ; 2 uses
-  %i.bv = load i64, ptr %i.an, align 8, !tbaa !32 ; 2 uses
-  %i.bw = sub i64 %i.bu, %i.bv                    ; 2 uses
+  %i.bu = shl i64 %i.bt, 3
+  %i.bv = load i64, ptr %i.an, align 8, !tbaa !32
+  %i.bw = sub i64 %i.bu, %i.bv                    ; 3 uses
   store i64 %i.bw, ptr %i.ay, align 8, !tbaa !33
   %i.bx = load ptr, ptr %i.az, align 8, !tbaa !34
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
@@ -294,8 +294,7 @@ bb.o:                                             ; preds = %bb.m
 
 "_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit19": ; preds = %bb.l, %bb.n, %bb.o
   %i.dh = load i64, ptr %i.ap, align 8, !tbaa !57
-  %3 = add i64 %i.dh, %i.bv
-  %i.di = sub i64 %i.bu, %3                       ; 2 uses
+  %i.di = sub i64 %i.bw, %i.dh                    ; 2 uses
   store i64 %i.di, ptr %i.at, align 8, !tbaa !58
   %i.dj = and i64 %i.bk, 65024
   %i.dk = icmp eq i64 %i.dj, 0
@@ -372,15 +371,15 @@ bb.r:                                             ; preds = %bb.q
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit"
-  %.pre-phi96 = phi i64 [ %.pre95, %._crit_edge.loopexit ], [ %i.am, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ] ; 2 uses
+  %.pre-phi96 = phi i64 [ %.pre95, %._crit_edge.loopexit ], [ %i.am, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ]
   %.pre-phi90 = phi i64 [ %.pre89.a, %._crit_edge.loopexit ], [ %i.ah, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ]
   %i.ew = phi i32 [ %i.dv, %._crit_edge.loopexit ], [ %i.l, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ]
   %i.ex = phi i32 [ %i.dw, %._crit_edge.loopexit ], [ %i.i, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ]
   %i.ey = phi i32 [ %i.dx, %._crit_edge.loopexit ], [ %i.f, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ] ; 2 uses
   %i.ez = phi i32 [ %i.dy, %._crit_edge.loopexit ], [ %i.d, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ]
-  %i.fa = phi i64 [ %.pre87.a, %._crit_edge.loopexit ], [ %i.ao, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ] ; 2 uses
+  %i.fa = phi i64 [ %.pre87.a, %._crit_edge.loopexit ], [ %i.ao, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ]
   %.0.lcssa = phi i64 [ %.1, %._crit_edge.loopexit ], [ %i.au, %"_ZZN3jxl9ICCReader7ProcessEPNS_9BitReaderEPNS_11PaddedBytesEENK3$_0clEv.exit" ]
-  %i.fb = sub i64 %.pre-phi96, %i.fa              ; 2 uses
+  %i.fb = sub i64 %.pre-phi96, %i.fa              ; 3 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 56
   store i64 %i.fb, ptr %i.fc, align 8, !tbaa !33
   %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -433,8 +432,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.s
 
 bb.x:                                             ; preds = %._crit_edge
   %i.fy = load i64, ptr %i.ap, align 8, !tbaa !57
-  %4 = add i64 %i.fy, %i.fa
-  %i.fz = sub i64 %.pre-phi96, %4
+  %i.fz = sub i64 %i.fb, %i.fy
   store i64 %i.fz, ptr %i.at, align 8, !tbaa !58
   %i.ga = load i32, ptr %i.c, align 4, !tbaa !65
   %i.gb = icmp eq i32 %i.ga, 1245184

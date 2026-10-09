@@ -21,7 +21,7 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, ptr noundef nonnull align 16 dereferenceable(16) @__const.dtrtri_LU_parallel.beta, i64 16, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.d = load i64, ptr %i.c, align 8, !tbaa !13
-  %i.e = load ptr, ptr %0, align 8, !tbaa !14     ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !14
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.g = load i64, ptr %i.f, align 8, !tbaa !15   ; 3 uses
   %.not = icmp eq ptr %2, null
@@ -35,7 +35,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.092 = phi i64 [ %i.k, %bb.b ], [ %i.d, %bb.a ] ; 6 uses
+  %.092 = phi i64 [ %i.k, %bb.b ], [ %i.d, %bb.a ] ; 5 uses
   %i.l = icmp slt i64 %.092, 33
   br i1 %i.l, label %bb.d, label %bb.e
 
@@ -78,21 +78,20 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.g
-  %.09097 = phi i64 [ %.09096, %.lr.ph ], [ %.090, %bb.g ] ; 7 uses
-  %i.ag = sub nsw i64 %.092, %.09097
-  %spec.select = call i64 @llvm.smin.i64(i64 %i.ag, i64 %.089) ; 6 uses
+  %.09097 = phi i64 [ %.09096, %.lr.ph ], [ %.090, %bb.g ] ; 6 uses
+  %i.ag = sub nsw i64 %.092, %.09097              ; 2 uses
+  %spec.select = call i64 @llvm.smin.i64(i64 %i.ag, i64 %.089) ; 7 uses
   store <2 x i64> %i.af, ptr %i.t, align 8, !tbaa !16
   store i64 %i.g, ptr %i.u, align 8, !tbaa !18
   store ptr %i.a, ptr %i.v, align 8, !tbaa !19
-  %7 = add i64 %spec.select, %.09097              ; 2 uses
-  %i.ah = sub i64 %.092, %7                       ; 2 uses
+  %i.ah = sub i64 %i.ag, %spec.select             ; 2 uses
   store i64 %i.ah, ptr %i.w, align 8, !tbaa !20
   store i64 %spec.select, ptr %i.x, align 8, !tbaa !13
   %i.ai = mul nsw i64 %.09097, %i.g               ; 2 uses
-  %i.aj = getelementptr [8 x i8], ptr %i.e, i64 %.09097 ; 3 uses
+  %i.aj = getelementptr [8 x i8], ptr %i.e, i64 %.09097 ; 4 uses
   %i.ak = getelementptr [8 x i8], ptr %i.aj, i64 %i.ai ; 3 uses
   store ptr %i.ak, ptr %6, align 8, !tbaa !14
-  %i.al = getelementptr [8 x i8], ptr %i.e, i64 %7 ; 2 uses
+  %i.al = getelementptr [8 x i8], ptr %i.aj, i64 %spec.select ; 2 uses
   %i.am = getelementptr [8 x i8], ptr %i.al, i64 %i.ai ; 2 uses
   store ptr %i.am, ptr %i.y, align 8, !tbaa !21
   store ptr %i.b, ptr %i.z, align 8, !tbaa !22

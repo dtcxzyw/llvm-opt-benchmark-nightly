@@ -205,16 +205,15 @@ bb.a:
   %i.f = getelementptr i8, ptr %.val133, i64 4
   %.val133.val = load i32, ptr %i.f, align 4, !tbaa !19 ; 2 uses
   %i.g = getelementptr i8, ptr %1, i64 136        ; 4 uses
-  %.val158 = load i32, ptr %i.g, align 8, !tbaa !39 ; 2 uses
+  %.val158 = load i32, ptr %i.g, align 8, !tbaa !39
   %i.h = getelementptr i8, ptr %1, i64 104        ; 4 uses
-  %.val150 = load i32, ptr %i.h, align 8, !tbaa !68 ; 2 uses
-  %i.i = sub nsw i32 %.val158, %.val150
+  %.val150 = load i32, ptr %i.h, align 8, !tbaa !68
+  %i.i = sub nsw i32 %.val158, %.val150           ; 2 uses
   %i.j = icmp slt i32 %.val133.val, %i.i
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = add i32 %.val133.val, %.val150
-  %i.k = sub i32 %.val158, %2                     ; 2 uses
+  %i.k = sub i32 %i.i, %.val133.val               ; 2 uses
   %i.l = icmp sgt i32 %i.k, 0
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 

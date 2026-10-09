@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %_ZN6duckdb3Bit14Set
 _ZN6duckdb3Bit9BitLengthENS_8string_tE.exit:      ; preds = %bb.b
   %i.w = shl i64 %.sroa.03.0.copyload, 3
   %i.x = and i64 %i.w, 120
-  %i.y = add nsw i64 %i.x, -8                     ; 2 uses
-  %i.z = and i64 %.sroa.3.0.extract.shift.i, 255  ; 2 uses
-  %i.aa = sub nsw i64 %i.y, %i.z
+  %i.y = add nsw i64 %i.x, -8
+  %i.z = and i64 %.sroa.3.0.extract.shift.i, 255
+  %i.aa = sub nsw i64 %i.y, %i.z                  ; 2 uses
   %i.ab = icmp ult i64 %.0, %i.aa
   br i1 %i.ab, label %_ZN6duckdb3Bit9BitLengthENS_8string_tE.exit30, label %bb.c
 
@@ -215,9 +215,9 @@ _ZN6duckdb3Bit9BitLengthENS_8string_tE.exit.thread: ; preds = %bb.b
   %.else.val.i = load i8, ptr %.sroa.24.0.copyload, align 1, !tbaa !273
   %i.ac = shl i64 %.sroa.03.0.copyload, 3
   %i.ad = and i64 %i.ac, 34359738360
-  %i.ae = add nsw i64 %i.ad, -8                   ; 2 uses
-  %i.af = zext i8 %.else.val.i to i64             ; 3 uses
-  %i.ag = sub nsw i64 %i.ae, %i.af
+  %i.ae = add nsw i64 %i.ad, -8
+  %i.af = zext i8 %.else.val.i to i64             ; 2 uses
+  %i.ag = sub nsw i64 %i.ae, %i.af                ; 2 uses
   %i.ah = icmp ult i64 %.0, %i.ag
   br i1 %i.ah, label %_ZN6duckdb3Bit9BitLengthENS_8string_tE.exit30.thread, label %bb.c
 
@@ -323,8 +323,7 @@ _ZN6duckdb3Bit8FinalizeERNS_8string_tE.exit:      ; preds = %bb.d, %bb.e
   ret void
 
 _ZN6duckdb3Bit9BitLengthENS_8string_tE.exit30:    ; preds = %_ZN6duckdb3Bit9BitLengthENS_8string_tE.exit
-  %4 = add i64 %i.z, %1
-  %i.ch = sub i64 %i.y, %4
+  %i.ch = sub i64 %i.aa, %1
   %i.ci = icmp ult i64 %.0, %i.ch
   br i1 %i.ci, label %_ZN6duckdb3Bit9BitLengthENS_8string_tE.exit30._ZN6duckdb3Bit6GetBitENS_8string_tEm.exit_crit_edge, label %bb.h
 
@@ -333,8 +332,7 @@ _ZN6duckdb3Bit9BitLengthENS_8string_tE.exit30._ZN6duckdb3Bit6GetBitENS_8string_t
   br label %_ZN6duckdb3Bit6GetBitENS_8string_tEm.exit
 
 _ZN6duckdb3Bit9BitLengthENS_8string_tE.exit30.thread: ; preds = %_ZN6duckdb3Bit9BitLengthENS_8string_tE.exit.thread
-  %5 = add i64 %1, %i.af
-  %i.cj = sub i64 %i.ae, %5
+  %i.cj = sub i64 %i.ag, %1
   %i.ck = icmp ult i64 %.0, %i.cj
   br i1 %i.ck, label %_ZN6duckdb3Bit6GetBitENS_8string_tEm.exit, label %bb.h
 

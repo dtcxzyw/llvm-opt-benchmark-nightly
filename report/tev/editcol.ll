@@ -203,7 +203,7 @@ bb.a:
   br i1 %or.cond, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = sub nsw i64 %1, %3                       ; 11 uses
+  %i.e = sub nsw i64 %1, %3                       ; 13 uses
   %i.f = icmp slt i64 %i.e, 10001
   %i.g = icmp sgt i64 %2, 1                       ; 2 uses
   br i1 %i.f, label %bb.c, label %bb.f
@@ -232,8 +232,7 @@ bb.d:                                             ; preds = %.lr.ph146, %bb.d
   br i1 %exitcond154.not, label %._crit_edge147, label %bb.d, !llvm.loop !100
 
 ._crit_edge147:                                   ; preds = %bb.d, %bb.c
-  %6 = add i64 %3, %4
-  %i.r = sub i64 %1, %6                           ; 3 uses
+  %i.r = sub i64 %i.e, %4                         ; 3 uses
   %i.s = icmp sgt i64 %i.r, 0
   br i1 %i.s, label %bb.e, label %.loopexit
 
@@ -301,8 +300,7 @@ bb.g:                                             ; preds = %.peel.next, %bb.g
   br i1 %exitcond149.not, label %._crit_edge137.split, label %.peel.next, !llvm.loop !102
 
 ._crit_edge137.split:                             ; preds = %._crit_edge, %bb.f
-  %7 = add i64 %3, %4
-  %i.ay = sub i64 %1, %7                          ; 4 uses
+  %i.ay = sub i64 %i.e, %4                        ; 4 uses
   %i.az = icmp sgt i64 %i.ay, 0
   br i1 %i.az, label %.lr.ph143, label %.loopexit
 

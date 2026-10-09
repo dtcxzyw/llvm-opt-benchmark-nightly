@@ -205,7 +205,7 @@ bb.ah:                                            ; preds = %bb.ag
 _ZN6duckdb15SelectionVectorC2Em.exit:             ; preds = %bb.ag
   %i.dn = load ptr, ptr %4, align 8, !tbaa !415   ; 2 uses
   %.not185 = icmp eq ptr %i.dn, null
-  %i.do = load i64, ptr %5, align 8, !tbaa !116   ; 6 uses
+  %i.do = load i64, ptr %5, align 8, !tbaa !116   ; 5 uses
   %.not223 = icmp eq i64 %i.do, 0                 ; 2 uses
   br i1 %.not185, label %bb.ai, label %.preheader187
 
@@ -233,15 +233,15 @@ bb.ai:                                            ; preds = %_ZN6duckdb15Selecti
   br label %bb.aj
 
 bb.aj:                                            ; preds = %.lr.ph214, %.loopexit
-  %i.dy = phi i64 [ %.pre244, %.lr.ph214 ], [ 0, %.loopexit ] ; 5 uses
+  %i.dy = phi i64 [ %.pre244, %.lr.ph214 ], [ 0, %.loopexit ] ; 4 uses
   %i.dz = phi i64 [ %.pre243, %.lr.ph214 ], [ %i.ht, %.loopexit ] ; 4 uses
-  %.0111211 = phi i64 [ 0, %.lr.ph214 ], [ %i.hs, %.loopexit ] ; 17 uses
+  %.0111211 = phi i64 [ 0, %.lr.ph214 ], [ %i.hs, %.loopexit ] ; 16 uses
   %.0113210 = phi i64 [ 0, %.lr.ph214 ], [ %.4, %.loopexit ] ; 12 uses
   %i.ea = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.dz
   %i.eb = load i16, ptr %i.ea, align 2, !tbaa !479
-  %i.ec = zext i16 %i.eb to i64                   ; 4 uses
-  %i.ed = sub i64 %i.ec, %i.dy                    ; 6 uses
-  %i.ee = sub nuw i64 %i.do, %.0111211            ; 6 uses
+  %i.ec = zext i16 %i.eb to i64                   ; 3 uses
+  %i.ed = sub i64 %i.ec, %i.dy                    ; 7 uses
+  %i.ee = sub nuw i64 %i.do, %.0111211            ; 7 uses
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.dz
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !101 ; 8 uses
   %i.eh = icmp ugt i64 %i.ed, %i.ee
@@ -310,10 +310,9 @@ middle.block312:                                  ; preds = %vector.body309
 scalar.ph303.preheader:                           ; preds = %vector.memcheck301, %.lr.ph218, %middle.block312
   %.0110217.ph = phi i64 [ 0, %vector.memcheck301 ], [ 0, %.lr.ph218 ], [ %n.vec306, %middle.block312 ] ; 4 uses
   %.1114216.ph = phi i64 [ %.0113210, %vector.memcheck301 ], [ %.0113210, %.lr.ph218 ], [ %i.et, %middle.block312 ] ; 3 uses
-  %15 = sub i64 %i.do, %.0111211
   %i.fj = xor i64 %.0110217.ph, -1
   %i.fk = add i64 %i.do, %i.fj
-  %xtraiter338 = and i64 %15, 1
+  %xtraiter338 = and i64 %i.ee, 1
   %lcmp.mod339.not = icmp eq i64 %xtraiter338, 0
   br i1 %lcmp.mod339.not, label %scalar.ph303.prol.loopexit, label %scalar.ph303.prol
 
@@ -424,10 +423,9 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph208.preheader316:                           ; preds = %vector.memcheck, %.lr.ph208.preheader, %middle.block
   %.0109207.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph208.preheader ], [ %n.vec, %middle.block ] ; 4 uses
   %.3206.ph = phi i64 [ %.0113210, %vector.memcheck ], [ %.0113210, %.lr.ph208.preheader ], [ %i.gj, %middle.block ] ; 3 uses
-  %16 = sub i64 %i.ec, %i.dy
   %i.gz = xor i64 %.0109207.ph, -1
   %i.ha = add i64 %i.gz, %i.ec
-  %xtraiter334 = and i64 %16, 1
+  %xtraiter334 = and i64 %i.ed, 1
   %lcmp.mod335.not = icmp eq i64 %xtraiter334, 0
   br i1 %lcmp.mod335.not, label %.lr.ph208.prol.loopexit, label %.lr.ph208.prol
 
@@ -830,7 +828,7 @@ bb.ah:                                            ; preds = %bb.ag
 _ZN6duckdb15SelectionVectorC2Em.exit:             ; preds = %bb.ag
   %i.dn = load ptr, ptr %4, align 8, !tbaa !415   ; 2 uses
   %.not185 = icmp eq ptr %i.dn, null
-  %i.do = load i64, ptr %5, align 8, !tbaa !116   ; 6 uses
+  %i.do = load i64, ptr %5, align 8, !tbaa !116   ; 5 uses
   %.not223 = icmp eq i64 %i.do, 0                 ; 2 uses
   br i1 %.not185, label %bb.ai, label %.preheader187
 
@@ -858,15 +856,15 @@ bb.ai:                                            ; preds = %_ZN6duckdb15Selecti
   br label %bb.aj
 
 bb.aj:                                            ; preds = %.lr.ph214, %.loopexit
-  %i.dy = phi i64 [ %.pre244, %.lr.ph214 ], [ 0, %.loopexit ] ; 5 uses
+  %i.dy = phi i64 [ %.pre244, %.lr.ph214 ], [ 0, %.loopexit ] ; 4 uses
   %i.dz = phi i64 [ %.pre243, %.lr.ph214 ], [ %i.ht, %.loopexit ] ; 4 uses
-  %.0111211 = phi i64 [ 0, %.lr.ph214 ], [ %i.hs, %.loopexit ] ; 17 uses
+  %.0111211 = phi i64 [ 0, %.lr.ph214 ], [ %i.hs, %.loopexit ] ; 16 uses
   %.0113210 = phi i64 [ 0, %.lr.ph214 ], [ %.4, %.loopexit ] ; 12 uses
   %i.ea = getelementptr inbounds nuw [2 x i8], ptr %i.n, i64 %i.dz
   %i.eb = load i16, ptr %i.ea, align 2, !tbaa !479
-  %i.ec = zext i16 %i.eb to i64                   ; 4 uses
-  %i.ed = sub i64 %i.ec, %i.dy                    ; 6 uses
-  %i.ee = sub nuw i64 %i.do, %.0111211            ; 6 uses
+  %i.ec = zext i16 %i.eb to i64                   ; 3 uses
+  %i.ed = sub i64 %i.ec, %i.dy                    ; 7 uses
+  %i.ee = sub nuw i64 %i.do, %.0111211            ; 7 uses
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.dz
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !101 ; 8 uses
   %i.eh = icmp ugt i64 %i.ed, %i.ee
@@ -935,10 +933,9 @@ middle.block312:                                  ; preds = %vector.body309
 scalar.ph303.preheader:                           ; preds = %vector.memcheck301, %.lr.ph218, %middle.block312
   %.0110217.ph = phi i64 [ 0, %vector.memcheck301 ], [ 0, %.lr.ph218 ], [ %n.vec306, %middle.block312 ] ; 4 uses
   %.1114216.ph = phi i64 [ %.0113210, %vector.memcheck301 ], [ %.0113210, %.lr.ph218 ], [ %i.et, %middle.block312 ] ; 3 uses
-  %15 = sub i64 %i.do, %.0111211
   %i.fj = xor i64 %.0110217.ph, -1
   %i.fk = add i64 %i.do, %i.fj
-  %xtraiter338 = and i64 %15, 1
+  %xtraiter338 = and i64 %i.ee, 1
   %lcmp.mod339.not = icmp eq i64 %xtraiter338, 0
   br i1 %lcmp.mod339.not, label %scalar.ph303.prol.loopexit, label %scalar.ph303.prol
 
@@ -1049,10 +1046,9 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph208.preheader316:                           ; preds = %vector.memcheck, %.lr.ph208.preheader, %middle.block
   %.0109207.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph208.preheader ], [ %n.vec, %middle.block ] ; 4 uses
   %.3206.ph = phi i64 [ %.0113210, %vector.memcheck ], [ %.0113210, %.lr.ph208.preheader ], [ %i.gj, %middle.block ] ; 3 uses
-  %16 = sub i64 %i.ec, %i.dy
   %i.gz = xor i64 %.0109207.ph, -1
   %i.ha = add i64 %i.gz, %i.ec
-  %xtraiter334 = and i64 %16, 1
+  %xtraiter334 = and i64 %i.ed, 1
   %lcmp.mod335.not = icmp eq i64 %xtraiter334, 0
   br i1 %lcmp.mod335.not, label %.lr.ph208.prol.loopexit, label %.lr.ph208.prol
 

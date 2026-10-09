@@ -202,10 +202,10 @@ bb.a:
   br i1 %.not.i, label %.thread.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = load volatile i64, ptr @jiffies, align 64 ; 2 uses
+  %i.h = load volatile i64, ptr @jiffies, align 64
   %i.i = getelementptr i8, ptr %i.d, i64 128
-  %i.j = load i64, ptr %i.i, align 8              ; 2 uses
-  %i.k = sub i64 %i.h, %i.j
+  %i.j = load i64, ptr %i.i, align 8
+  %i.k = sub i64 %i.h, %i.j                       ; 2 uses
   %i.l = icmp sgt i64 %i.k, -1
   br i1 %i.l, label %bb.c, label %.thread.i
 
@@ -213,10 +213,8 @@ bb.c:                                             ; preds = %bb.b
   %i.m = load i32, ptr @gss_expired_cred_retry_delay, align 4
   %i.n = mul i32 %i.m, 1000
   %i.o = zext i32 %i.n to i64
-  %2 = add i64 %i.j, %i.o
-  %3 = sub i64 %i.h, %2
-  %4 = icmp slt i64 %3, 0
-  br i1 %4, label %gss_cred_is_negative_entry.exit, label %.thread.i
+  %2 = icmp samesign ult i64 %i.k, %i.o
+  br i1 %2, label %gss_cred_is_negative_entry.exit, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.a, %bb.c, %bb.b
   %i.p = load volatile i64, ptr %i.e, align 8

@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %_RNvMNtCsdEEMmLUVy6
   %i.dd = shl nuw i64 1, %i.dc
   %i.de = lshr i64 %i.dd, 1
   %i.df = add i64 %i.de, %i.ao
-  %i.dg = lshr i64 %i.df, %i.dc                   ; 6 uses
+  %i.dg = lshr i64 %i.df, %i.dc                   ; 5 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cr, i64 80
   %i.di = load i64, ptr %i.dh, align 8, !noundef !4 ; 3 uses
   %.not189 = icmp eq i64 %i.di, 0
@@ -245,26 +245,24 @@ bb.o:                                             ; preds = %..loopexit81_crit_e
   %.fr = freeze i64 %i.ef                         ; 6 uses
   %i.eg = sub i64 %i.dg, %.fr
   %..i.us = call noundef i64 @llvm.umin.i64(i64 %i.eg, i64 %i.dj)
-  %i.eh = sub i64 0, %.fr
-  %i.ei = sub i64 %i.dg, %.fr
+  %i.eh = sub i64 %i.dg, %.fr
+  %i.ei = sub i64 0, %.fr
   %i.ej = icmp slt i64 %.fr, 0
   %.sroa.020.0.i.us = call i64 @llvm.smax.i64(i64 range(i64 0, -71) %.fr, i64 0)
-  %spec.select = select i1 %i.ej, i64 %i.eh, i64 0
+  %spec.select = select i1 %i.ej, i64 %i.ei, i64 0
   br label %.lr.ph149.us.thread
 
 .lr.ph149.us.thread:                              ; preds = %.lr.ph149.us, %bb.o
   %.sroa.020.0.i.us291 = phi i64 [ 0, %bb.o ], [ %.sroa.020.0.i.us, %.lr.ph149.us ]
-  %i.ek = phi i64 [ %i.dg, %bb.o ], [ %i.ei, %.lr.ph149.us ]
-  %.sroa.04.0.us290 = phi i64 [ 0, %bb.o ], [ %.fr, %.lr.ph149.us ] ; 12 uses
+  %i.ek = phi i64 [ %i.dg, %bb.o ], [ %i.eh, %.lr.ph149.us ] ; 2 uses
+  %.sroa.04.0.us290 = phi i64 [ 0, %bb.o ], [ %.fr, %.lr.ph149.us ] ; 11 uses
   %.sroa.010.0.us289 = phi i64 [ %i.dk, %bb.o ], [ %..i.us, %.lr.ph149.us ] ; 5 uses
-  %i.el = phi i64 [ 0, %bb.o ], [ %spec.select, %.lr.ph149.us ] ; 6 uses
+  %i.el = phi i64 [ 0, %bb.o ], [ %spec.select, %.lr.ph149.us ] ; 5 uses
   %i.em = add nuw i64 %.sroa.04.0.us290, %.sroa.010.0.us289 ; 4 uses
   %i.en = icmp sgt i64 %i.em, %i.dg
-  %4 = add i64 %.sroa.04.0.us290, %i.el
-  %5 = sub i64 %i.dg, %4
-  %i.eo = sub i64 %.sroa.010.0.us289, %i.el
-  %.sroa.021.0.i.us = select i1 %i.en, i64 %5, i64 %i.eo ; 2 uses
-  %..i.i.us = call i64 @llvm.smax.i64(i64 %.sroa.021.0.i.us, i64 0) ; 2 uses
+  %.sroa.021.0.i.v.us = select i1 %i.en, i64 %i.ek, i64 %.sroa.010.0.us289
+  %i.eo = sub i64 %.sroa.021.0.i.v.us, %i.el      ; 2 uses
+  %..i.i.us = call i64 @llvm.smax.i64(i64 %i.eo, i64 0) ; 2 uses
   %i.ep = add i64 %.sroa.04.0.us290, -3           ; 2 uses
   %i.eq = add nuw i64 %i.em, 4                    ; 2 uses
   %i.er = icmp slt i64 %i.ep, %i.eq
@@ -273,7 +271,7 @@ bb.o:                                             ; preds = %..loopexit81_crit_e
   %i.eu = add i64 %..i.i.us, %i.el                ; 2 uses
   %i.ev = icmp ult i64 %i.el, %i.eu
   %i.ew = add nuw i64 %i.el, 1
-  %i.ex = icmp slt i64 %.sroa.021.0.i.us, 1
+  %i.ex = icmp slt i64 %i.eo, 1
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph149.us.thread, %.backedge.us
@@ -676,7 +674,7 @@ bb.n:                                             ; preds = %_RNvMNtCsdEEMmLUVy6
   %i.dg = shl nuw i64 1, %i.df
   %i.dh = lshr i64 %i.dg, 1
   %i.di = add i64 %i.dh, %i.ao
-  %i.dj = lshr i64 %i.di, %i.df                   ; 6 uses
+  %i.dj = lshr i64 %i.di, %i.df                   ; 5 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cu, i64 80
   %i.dl = load i64, ptr %i.dk, align 8, !noundef !4 ; 3 uses
   %.not189 = icmp eq i64 %i.dl, 0
@@ -716,26 +714,24 @@ bb.o:                                             ; preds = %..loopexit81_crit_e
   %.fr = freeze i64 %i.ei                         ; 6 uses
   %i.ej = sub i64 %i.dj, %.fr
   %..i.us = call noundef i64 @llvm.umin.i64(i64 %i.ej, i64 %i.dm)
-  %i.ek = sub i64 0, %.fr
-  %i.el = sub i64 %i.dj, %.fr
+  %i.ek = sub i64 %i.dj, %.fr
+  %i.el = sub i64 0, %.fr
   %i.em = icmp slt i64 %.fr, 0
   %.sroa.020.0.i.us = call i64 @llvm.smax.i64(i64 range(i64 0, -71) %.fr, i64 0)
-  %spec.select = select i1 %i.em, i64 %i.ek, i64 0
+  %spec.select = select i1 %i.em, i64 %i.el, i64 0
   br label %.lr.ph149.us.thread
 
 .lr.ph149.us.thread:                              ; preds = %.lr.ph149.us, %bb.o
   %.sroa.020.0.i.us291 = phi i64 [ 0, %bb.o ], [ %.sroa.020.0.i.us, %.lr.ph149.us ]
-  %i.en = phi i64 [ %i.dj, %bb.o ], [ %i.el, %.lr.ph149.us ]
-  %.sroa.04.0.us290 = phi i64 [ 0, %bb.o ], [ %.fr, %.lr.ph149.us ] ; 12 uses
+  %i.en = phi i64 [ %i.dj, %bb.o ], [ %i.ek, %.lr.ph149.us ] ; 2 uses
+  %.sroa.04.0.us290 = phi i64 [ 0, %bb.o ], [ %.fr, %.lr.ph149.us ] ; 11 uses
   %.sroa.010.0.us289 = phi i64 [ %i.dn, %bb.o ], [ %..i.us, %.lr.ph149.us ] ; 5 uses
-  %i.eo = phi i64 [ 0, %bb.o ], [ %spec.select, %.lr.ph149.us ] ; 6 uses
+  %i.eo = phi i64 [ 0, %bb.o ], [ %spec.select, %.lr.ph149.us ] ; 5 uses
   %i.ep = add nuw i64 %.sroa.04.0.us290, %.sroa.010.0.us289 ; 4 uses
   %i.eq = icmp sgt i64 %i.ep, %i.dj
-  %4 = add i64 %.sroa.04.0.us290, %i.eo
-  %5 = sub i64 %i.dj, %4
-  %i.er = sub i64 %.sroa.010.0.us289, %i.eo
-  %.sroa.021.0.i.us = select i1 %i.eq, i64 %5, i64 %i.er ; 2 uses
-  %..i.i.us = call i64 @llvm.smax.i64(i64 %.sroa.021.0.i.us, i64 0) ; 2 uses
+  %.sroa.021.0.i.v.us = select i1 %i.eq, i64 %i.en, i64 %.sroa.010.0.us289
+  %i.er = sub i64 %.sroa.021.0.i.v.us, %i.eo      ; 2 uses
+  %..i.i.us = call i64 @llvm.smax.i64(i64 %i.er, i64 0) ; 2 uses
   %i.es = add i64 %.sroa.04.0.us290, -3           ; 2 uses
   %i.et = add nuw i64 %i.ep, 4                    ; 2 uses
   %i.eu = icmp slt i64 %i.es, %i.et
@@ -744,7 +740,7 @@ bb.o:                                             ; preds = %..loopexit81_crit_e
   %i.ex = add i64 %..i.i.us, %i.eo                ; 2 uses
   %i.ey = icmp ult i64 %i.eo, %i.ex
   %i.ez = add nuw i64 %i.eo, 1
-  %i.fa = icmp slt i64 %.sroa.021.0.i.us, 1
+  %i.fa = icmp slt i64 %i.er, 1
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph149.us.thread, %.backedge.us
@@ -1147,9 +1143,9 @@ switch.lookup:
   %.sroa.0.sroa.3.0.copyload = load ptr, ptr %.sroa.0.sroa.3.0..sroa_idx, align 8 ; 7 uses
   %.sroa.0.sroa.3.0.copyload19 = ptrtoaddr ptr %.sroa.0.sroa.3.0.copyload to i64
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %.sroa.0.sroa.5.0.copyload = load i64, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.0.sroa.5.0.copyload = load i64, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8 ; 9 uses
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 5 uses
+  %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.o = icmp ult i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
   br i1 %i.o, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitlEEINtNtB6_3map3MapINtB1q_4IterlENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizelE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.lr.ph, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitlEEINtNtB6_3map3MapINtB1q_4IterlENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizelE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.thread
@@ -1157,7 +1153,7 @@ switch.lookup:
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitlEEINtNtB6_3map3MapINtB1q_4IterlENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizelE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.lr.ph: ; preds = %switch.lookup
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.3.0.copyload) ]
-  %i.p = sub nuw i64 %.sroa.0.sroa.6.0.copyload, %.sroa.0.sroa.5.0.copyload ; 2 uses
+  %i.p = sub nuw i64 %.sroa.0.sroa.6.0.copyload, %.sroa.0.sroa.5.0.copyload ; 3 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.sroa.0.0.copyload, i64 %.sroa.0.sroa.5.0.copyload
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.sroa.3.0.copyload, i64 %.sroa.0.sroa.5.0.copyload
   %.val1.i.i.i.i.peel = load i32, ptr %i.r, align 4, !noalias !1207, !noundef !4 ; 2 uses
@@ -1228,8 +1224,7 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   %.sroa.8.015.ph = phi i64 [ 1, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitlEEINtNtB6_3map3MapINtB1q_4IterlENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizelE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.peel.next ], [ %i.aa, %middle.block ] ; 3 uses
   %i.aq = xor i64 %.sroa.8.015.ph, -1
   %i.ar = add i64 %.sroa.0.sroa.6.0.copyload, %i.aq
-  %10 = sub i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
-  %i.as = and i64 %10, 1
+  %i.as = and i64 %i.p, 1
   %lcmp.mod.not.not = icmp eq i64 %i.as, 0
   br i1 %lcmp.mod.not.not, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitlEEINtNtB6_3map3MapINtB1q_4IterlENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizelE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.prol, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitlEEINtNtB6_3map3MapINtB1q_4IterlENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizelE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.prol.loopexit
 
@@ -1316,9 +1311,9 @@ switch.lookup:
   %.sroa.0.sroa.3.0.copyload = load ptr, ptr %.sroa.0.sroa.3.0..sroa_idx, align 8 ; 7 uses
   %.sroa.0.sroa.3.0.copyload19 = ptrtoaddr ptr %.sroa.0.sroa.3.0.copyload to i64
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %.sroa.0.sroa.5.0.copyload = load i64, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8 ; 10 uses
+  %.sroa.0.sroa.5.0.copyload = load i64, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8 ; 9 uses
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 5 uses
+  %.sroa.0.sroa.6.0.copyload = load i64, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.o = icmp ult i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
   br i1 %i.o, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitsEEINtNtB6_3map3MapINtB1q_4ItersENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizesE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.lr.ph, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitsEEINtNtB6_3map3MapINtB1q_4ItersENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizesE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.thread
@@ -1326,7 +1321,7 @@ switch.lookup:
 _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitsEEINtNtB6_3map3MapINtB1q_4ItersENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizesE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.lr.ph: ; preds = %switch.lookup
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.0.0.copyload) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.sroa.3.0.copyload) ]
-  %i.p = sub nuw i64 %.sroa.0.sroa.6.0.copyload, %.sroa.0.sroa.5.0.copyload ; 2 uses
+  %i.p = sub nuw i64 %.sroa.0.sroa.6.0.copyload, %.sroa.0.sroa.5.0.copyload ; 3 uses
   %i.q = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.sroa.0.0.copyload, i64 %.sroa.0.sroa.5.0.copyload
   %i.r = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0.sroa.3.0.copyload, i64 %.sroa.0.sroa.5.0.copyload
   %.val1.i.i.i.i.peel = load i16, ptr %i.r, align 2, !noalias !1217, !noundef !4 ; 2 uses
@@ -1392,8 +1387,7 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   %.sroa.8.015.ph = phi i64 [ 1, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitsEEINtNtB6_3map3MapINtB1q_4ItersENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizesE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.peel.next ], [ %i.ac, %middle.block ] ; 3 uses
   %i.an = xor i64 %.sroa.8.015.ph, -1
   %i.ao = add i64 %.sroa.0.sroa.6.0.copyload, %i.an
-  %10 = sub i64 %.sroa.0.sroa.5.0.copyload, %.sroa.0.sroa.6.0.copyload
-  %i.ap = and i64 %10, 1
+  %i.ap = and i64 %i.p, 1
   %lcmp.mod.not.not = icmp eq i64 %i.ap, 0
   br i1 %lcmp.mod.not.not, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitsEEINtNtB6_3map3MapINtB1q_4ItersENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizesE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.prol, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtNtBa_5slice4iter7IterMutINtNtNtBa_3mem12maybe_uninit11MaybeUninitsEEINtNtB6_3map3MapINtB1q_4ItersENCINvNtNtCsdEEMmLUVy6d_5rav1e8quantize4rust10dequantizesE0EEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.prol.loopexit
 

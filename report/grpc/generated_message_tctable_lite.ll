@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
   %i.p = phi ptr [ %i.h, %.lr.ph ], [ %i.ci, %bb.l ] ; 3 uses
-  %.035130 = phi i32 [ %.035127, %.lr.ph ], [ %.035, %bb.l ] ; 2 uses
-  %.031129 = phi i32 [ %.0.i102, %.lr.ph ], [ %i.cb, %bb.l ] ; 2 uses
+  %.035130 = phi i32 [ %.035127, %.lr.ph ], [ %.035, %bb.l ]
+  %.031129 = phi i32 [ %.0.i102, %.lr.ph ], [ %i.cb, %bb.l ]
   %.096128 = phi ptr [ %storemerge.i101, %.lr.ph ], [ %i.ch, %bb.l ] ; 3 uses
   %i.q = icmp ult ptr %.096128, %i.p
   br i1 %i.q, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EmLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread104
@@ -285,7 +285,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.aq = ptrtoint ptr %.2.i106 to i64
   %i.ar = ptrtoint ptr %i.ap to i64
   %i.as = sub i64 %i.aq, %i.ar                    ; 3 uses
-  %i.at = sub nsw i32 %.031129, %.035130          ; 2 uses
+  %i.at = sub nsw i32 %.031129, %.035130          ; 3 uses
   %i.au = icmp slt i32 %i.at, 17
   br i1 %i.au, label %bb.f, label %bb.j
 
@@ -383,8 +383,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.j:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EmLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread104
   %i.ca = trunc i64 %i.as to i32
-  %4 = add i32 %.035130, %i.ca
-  %i.cb = sub i32 %.031129, %4                    ; 3 uses
+  %i.cb = sub i32 %i.at, %i.ca                    ; 3 uses
   %i.cc = load i32, ptr %i.o, align 4, !tbaa !98
   %i.cd = icmp slt i32 %i.cc, 17
   br i1 %i.cd, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EmLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread, label %bb.k
@@ -539,8 +538,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
   %i.p = phi ptr [ %i.h, %.lr.ph ], [ %i.cq, %bb.l ] ; 3 uses
-  %.035130 = phi i32 [ %.035127, %.lr.ph ], [ %.035, %bb.l ] ; 2 uses
-  %.031129 = phi i32 [ %.0.i102, %.lr.ph ], [ %i.cj, %bb.l ] ; 2 uses
+  %.035130 = phi i32 [ %.035127, %.lr.ph ], [ %.035, %bb.l ]
+  %.031129 = phi i32 [ %.0.i102, %.lr.ph ], [ %i.cj, %bb.l ]
   %.096128 = phi ptr [ %storemerge.i101, %.lr.ph ], [ %i.cp, %bb.l ] ; 3 uses
   %i.q = icmp ult ptr %.096128, %i.p
   br i1 %i.q, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EmLt512EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread104
@@ -624,7 +623,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.au = ptrtoint ptr %.2.i106 to i64
   %i.av = ptrtoint ptr %i.at to i64
   %i.aw = sub i64 %i.au, %i.av                    ; 3 uses
-  %i.ax = sub nsw i32 %.031129, %.035130          ; 2 uses
+  %i.ax = sub nsw i32 %.031129, %.035130          ; 3 uses
   %i.ay = icmp slt i32 %i.ax, 17
   br i1 %i.ay, label %bb.f, label %bb.j
 
@@ -726,8 +725,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.j:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EmLt512EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread104
   %i.ci = trunc i64 %i.aw to i32
-  %4 = add i32 %.035130, %i.ci
-  %i.cj = sub i32 %.031129, %4                    ; 3 uses
+  %i.cj = sub i32 %i.ax, %i.ci                    ; 3 uses
   %i.ck = load i32, ptr %i.o, align 4, !tbaa !98
   %i.cl = icmp slt i32 %i.ck, 17
   br i1 %i.cl, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EmLt512EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread, label %bb.k
@@ -882,8 +880,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.p
   %i.p = phi ptr [ %i.h, %.lr.ph ], [ %i.cq, %bb.p ] ; 3 uses
-  %.035118 = phi i32 [ %.035115, %.lr.ph ], [ %.035, %bb.p ] ; 2 uses
-  %.031117 = phi i32 [ %.0.i90, %.lr.ph ], [ %i.cj, %bb.p ] ; 2 uses
+  %.035118 = phi i32 [ %.035115, %.lr.ph ], [ %.035, %bb.p ]
+  %.031117 = phi i32 [ %.0.i90, %.lr.ph ], [ %i.cj, %bb.p ]
   %.084116 = phi ptr [ %storemerge.i89, %.lr.ph ], [ %i.cp, %bb.p ] ; 3 uses
   %i.q = icmp ult ptr %.084116, %i.p
   br i1 %i.q, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread92
@@ -970,7 +968,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.au = ptrtoint ptr %.2.i94 to i64
   %i.av = ptrtoint ptr %i.at to i64
   %i.aw = sub i64 %i.au, %i.av                    ; 3 uses
-  %i.ax = sub nsw i32 %.031117, %.035118          ; 2 uses
+  %i.ax = sub nsw i32 %.031117, %.035118          ; 3 uses
   %i.ay = icmp slt i32 %i.ax, 17
   br i1 %i.ay, label %bb.h, label %bb.n
 
@@ -1075,8 +1073,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.n:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread92
   %i.ci = trunc i64 %i.aw to i32
-  %4 = add i32 %.035118, %i.ci
-  %i.cj = sub i32 %.031117, %4                    ; 3 uses
+  %i.cj = sub i32 %i.ax, %i.ci                    ; 3 uses
   %i.ck = load i32, ptr %i.o, align 4, !tbaa !98
   %i.cl = icmp slt i32 %i.ck, 17
   br i1 %i.cl, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread, label %bb.o
@@ -1234,8 +1231,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.p
   %i.p = phi ptr [ %i.h, %.lr.ph ], [ %i.cy, %bb.p ] ; 3 uses
-  %.035118 = phi i32 [ %.035115, %.lr.ph ], [ %.035, %bb.p ] ; 2 uses
-  %.031117 = phi i32 [ %.0.i90, %.lr.ph ], [ %i.cr, %bb.p ] ; 2 uses
+  %.035118 = phi i32 [ %.035115, %.lr.ph ], [ %.035, %bb.p ]
+  %.031117 = phi i32 [ %.0.i90, %.lr.ph ], [ %i.cr, %bb.p ]
   %.084116 = phi ptr [ %storemerge.i89, %.lr.ph ], [ %i.cx, %bb.p ] ; 3 uses
   %i.q = icmp ult ptr %.084116, %i.p
   br i1 %i.q, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt512EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread92
@@ -1326,7 +1323,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.ay = ptrtoint ptr %.2.i94 to i64
   %i.az = ptrtoint ptr %i.ax to i64
   %i.ba = sub i64 %i.ay, %i.az                    ; 3 uses
-  %i.bb = sub nsw i32 %.031117, %.035118          ; 2 uses
+  %i.bb = sub nsw i32 %.031117, %.035118          ; 3 uses
   %i.bc = icmp slt i32 %i.bb, 17
   br i1 %i.bc, label %bb.h, label %bb.n
 
@@ -1435,8 +1432,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.n:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt512EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread92
   %i.cq = trunc i64 %i.ba to i32
-  %4 = add i32 %.035118, %i.cq
-  %i.cr = sub i32 %.031117, %4                    ; 3 uses
+  %i.cr = sub i32 %i.bb, %i.cq                    ; 3 uses
   %i.cs = load i32, ptr %i.o, align 4, !tbaa !98
   %i.ct = icmp slt i32 %i.cs, 17
   br i1 %i.ct, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt512EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread, label %bb.o
@@ -1601,8 +1597,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.x
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.fm, %bb.x ] ; 3 uses
-  %.030175 = phi i32 [ %.030172, %.lr.ph ], [ %.030, %bb.x ] ; 2 uses
-  %.026174 = phi i32 [ %.0.i134, %.lr.ph ], [ %i.ff, %bb.x ] ; 2 uses
+  %.030175 = phi i32 [ %.030172, %.lr.ph ], [ %.030, %bb.x ]
+  %.026174 = phi i32 [ %.0.i134, %.lr.ph ], [ %i.ff, %bb.x ]
   %.0128173 = phi ptr [ %storemerge.i133, %.lr.ph ], [ %i.fl, %bb.x ] ; 3 uses
   %.sroa.0100.0.copyload = load ptr, ptr %2, align 8, !tbaa !55 ; 4 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !56
@@ -1766,7 +1762,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.ce = ptrtoint ptr %.2.i138 to i64
   %i.cf = ptrtoint ptr %i.cd to i64
   %i.cg = sub i64 %i.ce, %i.cf                    ; 3 uses
-  %i.ch = sub nsw i32 %.026174, %.030175          ; 2 uses
+  %i.ch = sub nsw i32 %.026174, %.030175          ; 3 uses
   %i.ci = icmp slt i32 %i.ch, 17
   br i1 %i.ci, label %bb.l, label %bb.v
 
@@ -1948,8 +1944,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.v:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt1024EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread136
   %i.fe = trunc i64 %i.cg to i32
-  %3 = add i32 %.030175, %i.fe
-  %i.ff = sub i32 %.026174, %3                    ; 3 uses
+  %i.ff = sub i32 %i.ch, %i.fe                    ; 3 uses
   %i.fg = load i32, ptr %i.m, align 4, !tbaa !98
   %i.fh = icmp slt i32 %i.fg, 17
   br i1 %i.fh, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt1024EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread, label %bb.w
@@ -2187,8 +2182,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.t
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.dc, %bb.t ] ; 3 uses
-  %.030164 = phi i32 [ %.030161, %.lr.ph ], [ %.030, %bb.t ] ; 2 uses
-  %.026163 = phi i32 [ %.0.i126, %.lr.ph ], [ %i.cv, %bb.t ] ; 2 uses
+  %.030164 = phi i32 [ %.030161, %.lr.ph ], [ %.030, %bb.t ]
+  %.026163 = phi i32 [ %.0.i126, %.lr.ph ], [ %i.cv, %bb.t ]
   %.0120162 = phi ptr [ %storemerge.i125, %.lr.ph ], [ %i.db, %bb.t ] ; 3 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !56
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !57
@@ -2304,7 +2299,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.az = ptrtoint ptr %.2.i130 to i64
   %i.ba = ptrtoint ptr %i.ay to i64
   %i.bb = sub i64 %i.az, %i.ba                    ; 3 uses
-  %i.bc = sub nsw i32 %.026163, %.030164          ; 2 uses
+  %i.bc = sub nsw i32 %.026163, %.030164          ; 3 uses
   %i.bd = icmp slt i32 %i.bc, 17
   br i1 %i.bd, label %bb.j, label %bb.r
 
@@ -2438,8 +2433,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.r:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt1536EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread128
   %i.cu = trunc i64 %i.bb to i32
-  %3 = add i32 %.030164, %i.cu
-  %i.cv = sub i32 %.026163, %3                    ; 3 uses
+  %i.cv = sub i32 %i.bc, %i.cu                    ; 3 uses
   %i.cw = load i32, ptr %i.m, align 4, !tbaa !98
   %i.cx = icmp slt i32 %i.cw, 17
   br i1 %i.cx, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EjLt1536EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread, label %bb.s
@@ -2626,8 +2620,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
   %i.p = phi ptr [ %i.h, %.lr.ph ], [ %i.cm, %bb.l ] ; 3 uses
-  %.035130 = phi i32 [ %.035127, %.lr.ph ], [ %.035, %bb.l ] ; 2 uses
-  %.031129 = phi i32 [ %.0.i102, %.lr.ph ], [ %i.cf, %bb.l ] ; 2 uses
+  %.035130 = phi i32 [ %.035127, %.lr.ph ], [ %.035, %bb.l ]
+  %.031129 = phi i32 [ %.0.i102, %.lr.ph ], [ %i.cf, %bb.l ]
   %.096128 = phi ptr [ %storemerge.i101, %.lr.ph ], [ %i.cl, %bb.l ] ; 3 uses
   %i.q = icmp ult ptr %.096128, %i.p
   br i1 %i.q, label %.lr.ph.i, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EbLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread104
@@ -2709,7 +2703,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.as = ptrtoint ptr %.2.i106 to i64
   %i.at = ptrtoint ptr %i.ar to i64
   %i.au = sub i64 %i.as, %i.at                    ; 3 uses
-  %i.av = sub nsw i32 %.031129, %.035130          ; 2 uses
+  %i.av = sub nsw i32 %.031129, %.035130          ; 3 uses
   %i.aw = icmp slt i32 %i.av, 17
   br i1 %i.aw, label %bb.f, label %bb.j
 
@@ -2809,8 +2803,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.j:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EbLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread104
   %i.ce = trunc i64 %i.au to i32
-  %4 = add i32 %.035130, %i.ce
-  %i.cf = sub i32 %.031129, %4                    ; 3 uses
+  %i.cf = sub i32 %i.av, %i.ce                    ; 3 uses
   %i.cg = load i32, ptr %i.o, align 4, !tbaa !98
   %i.ch = icmp slt i32 %i.cg, 17
   br i1 %i.ch, label %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb0EbLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread, label %bb.k
@@ -3213,8 +3206,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.j
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.am, %bb.j ]
-  %.03067 = phi i32 [ %.03064, %.lr.ph ], [ %.030, %bb.j ] ; 2 uses
-  %.02666 = phi i32 [ %.0.i51, %.lr.ph ], [ %i.af, %bb.j ] ; 2 uses
+  %.03067 = phi i32 [ %.03064, %.lr.ph ], [ %.030, %bb.j ]
+  %.02666 = phi i32 [ %.0.i51, %.lr.ph ], [ %i.af, %bb.j ]
   %.04565 = phi ptr [ %storemerge.i50, %.lr.ph ], [ %i.al, %bb.j ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb1EmLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_(ptr noundef %.04565, ptr noundef %i.n, ptr noundef nonnull byval(%class.anon.119) align 8 %2) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -3225,7 +3218,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02666, %.03067             ; 2 uses
+  %i.u = sub nsw i32 %.02666, %.03067             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.h
 
@@ -3255,8 +3248,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 
 bb.h:                                             ; preds = %bb.d
   %i.ae = trunc i64 %i.t to i32
-  %3 = add i32 %.03067, %i.ae
-  %i.af = sub i32 %.02666, %3                     ; 3 uses
+  %i.af = sub i32 %i.u, %i.ae                     ; 3 uses
   %i.ag = load i32, ptr %i.m, align 4, !tbaa !98
   %i.ah = icmp slt i32 %i.ag, 17
   br i1 %i.ah, label %.thread, label %bb.i
@@ -3456,8 +3448,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.l
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.cw, %bb.l ] ; 3 uses
-  %.030148 = phi i32 [ %.030145, %.lr.ph ], [ %.030, %bb.l ] ; 2 uses
-  %.026147 = phi i32 [ %.0.i116, %.lr.ph ], [ %i.cp, %bb.l ] ; 2 uses
+  %.030148 = phi i32 [ %.030145, %.lr.ph ], [ %.030, %bb.l ]
+  %.026147 = phi i32 [ %.0.i116, %.lr.ph ], [ %i.cp, %bb.l ]
   %.0110146 = phi ptr [ %storemerge.i115, %.lr.ph ], [ %i.cv, %bb.l ] ; 3 uses
   %.sroa.092.0.copyload = load ptr, ptr %2, align 8, !tbaa !75 ; 5 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !226
@@ -3551,7 +3543,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.aw = ptrtoint ptr %.2.i120 to i64
   %i.ax = ptrtoint ptr %i.av to i64
   %i.ay = sub i64 %i.aw, %i.ax                    ; 3 uses
-  %i.az = sub nsw i32 %.026147, %.030148          ; 2 uses
+  %i.az = sub nsw i32 %.026147, %.030148          ; 3 uses
   %i.ba = icmp slt i32 %i.az, 17
   br i1 %i.ba, label %bb.f, label %bb.j
 
@@ -3663,8 +3655,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.j:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb1EmLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread118
   %i.co = trunc i64 %i.ay to i32
-  %3 = add i32 %.030148, %i.co
-  %i.cp = sub i32 %.026147, %3                    ; 3 uses
+  %i.cp = sub i32 %i.az, %i.co                    ; 3 uses
   %i.cq = load i32, ptr %i.m, align 4, !tbaa !98
   %i.cr = icmp slt i32 %i.cq, 17
   br i1 %i.cr, label %.thread, label %bb.k
@@ -3830,8 +3821,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.p
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.dg, %bb.p ] ; 3 uses
-  %.030197 = phi i32 [ %.030194, %.lr.ph ], [ %.030, %bb.p ] ; 2 uses
-  %.026196 = phi i32 [ %.0.i157, %.lr.ph ], [ %i.cz, %bb.p ] ; 2 uses
+  %.030197 = phi i32 [ %.030194, %.lr.ph ], [ %.030, %bb.p ]
+  %.026196 = phi i32 [ %.0.i157, %.lr.ph ], [ %i.cz, %bb.p ]
   %.0151195 = phi ptr [ %storemerge.i156, %.lr.ph ], [ %i.df, %bb.p ] ; 3 uses
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !55 ; 2 uses
   %.sroa.4114.0.copyload = load ptr, ptr %.sroa.4114.0..sroa_idx, align 8, !tbaa !56
@@ -3956,7 +3947,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.bb = ptrtoint ptr %.2.i161 to i64
   %i.bc = ptrtoint ptr %i.ba to i64
   %i.bd = sub i64 %i.bb, %i.bc                    ; 3 uses
-  %i.be = sub nsw i32 %.026196, %.030197          ; 2 uses
+  %i.be = sub nsw i32 %.026196, %.030197          ; 3 uses
   %i.bf = icmp slt i32 %i.be, 17
   br i1 %i.bf, label %bb.h, label %bb.n
 
@@ -4099,8 +4090,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.n:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb1EjLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread159
   %i.cy = trunc i64 %i.bd to i32
-  %3 = add i32 %.030197, %i.cy
-  %i.cz = sub i32 %.026196, %3                    ; 3 uses
+  %i.cz = sub i32 %i.be, %i.cy                    ; 3 uses
   %i.da = load i32, ptr %i.m, align 4, !tbaa !98
   %i.db = icmp slt i32 %i.da, 17
   br i1 %i.db, label %.thread, label %bb.o
@@ -4297,8 +4287,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.t
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.eg, %bb.t ] ; 3 uses
-  %.030136 = phi i32 [ %.030133, %.lr.ph ], [ %.030, %bb.t ] ; 2 uses
-  %.026135 = phi i32 [ %.0.i104, %.lr.ph ], [ %i.dz, %bb.t ] ; 2 uses
+  %.030136 = phi i32 [ %.030133, %.lr.ph ], [ %.030, %bb.t ]
+  %.026135 = phi i32 [ %.0.i104, %.lr.ph ], [ %i.dz, %bb.t ]
   %.098134 = phi ptr [ %storemerge.i103, %.lr.ph ], [ %i.ef, %bb.t ] ; 4 uses
   %.sroa.080.0.copyload = load ptr, ptr %2, align 8, !tbaa !73 ; 10 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !226 ; 2 uses
@@ -4467,7 +4457,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.cb = ptrtoint ptr %.2.i108 to i64
   %i.cc = ptrtoint ptr %i.ca to i64
   %i.cd = sub i64 %i.cb, %i.cc                    ; 3 uses
-  %i.ce = sub nsw i32 %.026135, %.030136          ; 2 uses
+  %i.ce = sub nsw i32 %.026135, %.030136          ; 3 uses
   %i.cf = icmp slt i32 %i.ce, 17
   br i1 %i.cf, label %bb.l, label %bb.r
 
@@ -4587,8 +4577,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.r:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb1EjLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread106
   %i.dy = trunc i64 %i.cd to i32
-  %3 = add i32 %.030136, %i.dy
-  %i.dz = sub i32 %.026135, %3                    ; 3 uses
+  %i.dz = sub i32 %i.ce, %i.dy                    ; 3 uses
   %i.ea = load i32, ptr %i.m, align 4, !tbaa !98
   %i.eb = icmp slt i32 %i.ea, 17
   br i1 %i.eb, label %.thread, label %bb.s
@@ -4827,8 +4816,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.j
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.am, %bb.j ]
-  %.03067 = phi i32 [ %.03064, %.lr.ph ], [ %.030, %bb.j ] ; 2 uses
-  %.02666 = phi i32 [ %.0.i51, %.lr.ph ], [ %i.af, %bb.j ] ; 2 uses
+  %.03067 = phi i32 [ %.03064, %.lr.ph ], [ %.030, %bb.j ]
+  %.02666 = phi i32 [ %.0.i51, %.lr.ph ], [ %i.af, %bb.j ]
   %.04565 = phi ptr [ %storemerge.i50, %.lr.ph ], [ %i.al, %bb.j ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb1EbLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_(ptr noundef %.04565, ptr noundef %i.n, ptr noundef nonnull byval(%class.anon.133) align 8 %2) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -4839,7 +4828,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02666, %.03067             ; 2 uses
+  %i.u = sub nsw i32 %.02666, %.03067             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.h
 
@@ -4869,8 +4858,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 
 bb.h:                                             ; preds = %bb.d
   %i.ae = trunc i64 %i.t to i32
-  %3 = add i32 %.03067, %i.ae
-  %i.af = sub i32 %.02666, %3                     ; 3 uses
+  %i.af = sub i32 %i.u, %i.ae                     ; 3 uses
   %i.ag = load i32, ptr %i.m, align 4, !tbaa !98
   %i.ah = icmp slt i32 %i.ag, 17
   br i1 %i.ah, label %.thread, label %bb.i
@@ -5070,8 +5058,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.p
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.de, %bb.p ] ; 3 uses
-  %.030148 = phi i32 [ %.030145, %.lr.ph ], [ %.030, %bb.p ] ; 2 uses
-  %.026147 = phi i32 [ %.0.i116, %.lr.ph ], [ %i.cx, %bb.p ] ; 2 uses
+  %.030148 = phi i32 [ %.030145, %.lr.ph ], [ %.030, %bb.p ]
+  %.026147 = phi i32 [ %.0.i116, %.lr.ph ], [ %i.cx, %bb.p ]
   %.0110146 = phi ptr [ %storemerge.i115, %.lr.ph ], [ %i.dd, %bb.p ] ; 3 uses
   %.sroa.092.0.copyload = load ptr, ptr %2, align 8, !tbaa !522 ; 5 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !226
@@ -5175,7 +5163,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.ba = ptrtoint ptr %.2.i120 to i64
   %i.bb = ptrtoint ptr %i.az to i64
   %i.bc = sub i64 %i.ba, %i.bb                    ; 3 uses
-  %i.bd = sub nsw i32 %.026147, %.030148          ; 2 uses
+  %i.bd = sub nsw i32 %.026147, %.030148          ; 3 uses
   %i.be = icmp slt i32 %i.bd, 17
   br i1 %i.be, label %bb.h, label %bb.n
 
@@ -5297,8 +5285,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.n:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser15MpPackedVarintTILb1EbLt0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_EES7_S7_S7_T_.exit.thread118
   %i.cw = trunc i64 %i.bc to i32
-  %3 = add i32 %.030148, %i.cw
-  %i.cx = sub i32 %.026147, %3                    ; 3 uses
+  %i.cx = sub i32 %i.bd, %i.cw                    ; 3 uses
   %i.cy = load i32, ptr %i.m, align 4, !tbaa !98
   %i.cz = icmp slt i32 %i.cy, 17
   br i1 %i.cz, label %.thread, label %bb.o
@@ -5701,8 +5688,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bo, %bb.k ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bh, %bb.k ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bh, %bb.k ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bn, %bb.k ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbhLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -5713,7 +5700,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.i
 
@@ -5819,8 +5806,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.i:                                             ; preds = %bb.d
   %i.bg = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.bg
-  %i.bh = sub i32 %.02874, %4                     ; 3 uses
+  %i.bh = sub i32 %i.u, %i.bg                     ; 3 uses
   %i.bi = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bj = icmp slt i32 %i.bi, 17
   br i1 %i.bj, label %.thread, label %bb.j
@@ -6223,8 +6209,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bo, %bb.k ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bh, %bb.k ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bh, %bb.k ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bn, %bb.k ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIbtLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_bEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -6235,7 +6221,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.i
 
@@ -6341,8 +6327,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.i:                                             ; preds = %bb.d
   %i.bg = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.bg
-  %i.bh = sub i32 %.02874, %4                     ; 3 uses
+  %i.bh = sub i32 %i.u, %i.bg                     ; 3 uses
   %i.bi = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bj = icmp slt i32 %i.bi, 17
   br i1 %i.bj, label %.thread, label %bb.j
@@ -6745,8 +6730,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.m
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bq, %bb.m ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.m ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bj, %bb.m ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.m ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bj, %bb.m ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bp, %bb.m ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjhLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -6757,7 +6742,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.k
 
@@ -6868,8 +6853,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.k:                                             ; preds = %bb.d
   %i.bi = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.bi
-  %i.bj = sub i32 %.02874, %4                     ; 3 uses
+  %i.bj = sub i32 %i.u, %i.bi                     ; 3 uses
   %i.bk = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bl = icmp slt i32 %i.bk, 17
   br i1 %i.bl, label %.thread, label %bb.l
@@ -7272,8 +7256,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.m
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bq, %bb.m ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.m ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bj, %bb.m ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.m ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bj, %bb.m ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bp, %bb.m ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIjtLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_jEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -7284,7 +7268,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.k
 
@@ -7395,8 +7379,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.k:                                             ; preds = %bb.d
   %i.bi = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.bi
-  %i.bj = sub i32 %.02874, %4                     ; 3 uses
+  %i.bj = sub i32 %i.u, %i.bi                     ; 3 uses
   %i.bk = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bl = icmp slt i32 %i.bk, 17
   br i1 %i.bl, label %.thread, label %bb.l
@@ -7799,8 +7782,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bm, %bb.k ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bf, %bb.k ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bf, %bb.k ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bl, %bb.k ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImhLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -7811,7 +7794,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.i
 
@@ -7915,8 +7898,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.i:                                             ; preds = %bb.d
   %i.be = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.be
-  %i.bf = sub i32 %.02874, %4                     ; 3 uses
+  %i.bf = sub i32 %i.u, %i.be                     ; 3 uses
   %i.bg = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bh = icmp slt i32 %i.bg, 17
   br i1 %i.bh, label %.thread, label %bb.j
@@ -8307,8 +8289,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bm, %bb.k ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bf, %bb.k ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bf, %bb.k ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bl, %bb.k ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintImtLb0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_mEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -8319,7 +8301,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.i
 
@@ -8423,8 +8405,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.i:                                             ; preds = %bb.d
   %i.be = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.be
-  %i.bf = sub i32 %.02874, %4                     ; 3 uses
+  %i.bf = sub i32 %i.u, %i.be                     ; 3 uses
   %i.bg = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bh = icmp slt i32 %i.bg, 17
   br i1 %i.bh, label %.thread, label %bb.j
@@ -8815,8 +8796,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.m
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bu, %bb.m ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.m ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bn, %bb.m ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.m ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bn, %bb.m ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bt, %bb.m ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIihLb1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -8827,7 +8808,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.k
 
@@ -8942,8 +8923,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.k:                                             ; preds = %bb.d
   %i.bm = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.bm
-  %i.bn = sub i32 %.02874, %4                     ; 3 uses
+  %i.bn = sub i32 %i.u, %i.bm                     ; 3 uses
   %i.bo = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bp = icmp slt i32 %i.bo, 17
   br i1 %i.bp, label %.thread, label %bb.l
@@ -9346,8 +9326,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.m
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bu, %bb.m ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.m ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bn, %bb.m ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.m ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bn, %bb.m ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bt, %bb.m ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIitLb1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_iEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -9358,7 +9338,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.k
 
@@ -9473,8 +9453,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.k:                                             ; preds = %bb.d
   %i.bm = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.bm
-  %i.bn = sub i32 %.02874, %4                     ; 3 uses
+  %i.bn = sub i32 %i.u, %i.bm                     ; 3 uses
   %i.bo = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bp = icmp slt i32 %i.bo, 17
   br i1 %i.bp, label %.thread, label %bb.l
@@ -9877,8 +9856,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bq, %bb.k ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bj, %bb.k ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bj, %bb.k ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bp, %bb.k ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIlhLb1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -9889,7 +9868,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.i
 
@@ -9997,8 +9976,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.i:                                             ; preds = %bb.d
   %i.bi = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.bi
-  %i.bj = sub i32 %.02874, %4                     ; 3 uses
+  %i.bj = sub i32 %i.u, %i.bi                     ; 3 uses
   %i.bk = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bl = icmp slt i32 %i.bk, 17
   br i1 %i.bl, label %.thread, label %bb.j
@@ -10401,8 +10379,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.k
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.bq, %bb.k ]
-  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ] ; 2 uses
-  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bj, %bb.k ] ; 2 uses
+  %.03275 = phi i32 [ %.03272, %.lr.ph ], [ %.032, %bb.k ]
+  %.02874 = phi i32 [ %.0.i57, %.lr.ph ], [ %i.bj, %bb.k ]
   %.04973 = phi ptr [ %storemerge.i56, %.lr.ph ], [ %i.bp, %bb.k ]
   %i.o = tail call noundef ptr @_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarintArrayWithFieldIZNS1_8TcParser12PackedVarintIltLb1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUlmE_lEES7_S7_S7_PNS0_5ArenaET_RNS0_13RepeatedFieldIT0_EE(ptr noundef %.04973, ptr noundef %i.n, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3) ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -10413,7 +10391,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = ptrtoint ptr %i.o to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 3 uses
-  %i.u = sub nsw i32 %.02874, %.03275             ; 2 uses
+  %i.u = sub nsw i32 %.02874, %.03275             ; 3 uses
   %i.v = icmp slt i32 %i.u, 17
   br i1 %i.v, label %bb.e, label %bb.i
 
@@ -10521,8 +10499,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS2_25R
 
 bb.i:                                             ; preds = %bb.d
   %i.bi = trunc i64 %i.t to i32
-  %4 = add i32 %.03275, %i.bi
-  %i.bj = sub i32 %.02874, %4                     ; 3 uses
+  %i.bj = sub i32 %i.u, %i.bi                     ; 3 uses
   %i.bk = load i32, ptr %i.m, align 4, !tbaa !98
   %i.bl = icmp slt i32 %i.bk, 17
   br i1 %i.bl, label %.thread, label %bb.j
@@ -10925,8 +10902,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.t
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.dc, %bb.t ] ; 3 uses
-  %.030170 = phi i32 [ %.030167, %.lr.ph ], [ %.030, %bb.t ] ; 2 uses
-  %.026169 = phi i32 [ %.0.i132, %.lr.ph ], [ %i.cv, %bb.t ] ; 2 uses
+  %.030170 = phi i32 [ %.030167, %.lr.ph ], [ %.030, %bb.t ]
+  %.026169 = phi i32 [ %.0.i132, %.lr.ph ], [ %i.cv, %bb.t ]
   %.0126168 = phi ptr [ %storemerge.i131, %.lr.ph ], [ %i.db, %bb.t ] ; 3 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !56
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !57
@@ -11042,7 +11019,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.az = ptrtoint ptr %.2.i136 to i64
   %i.ba = ptrtoint ptr %i.ay to i64
   %i.bb = sub i64 %i.az, %i.ba                    ; 3 uses
-  %i.bc = sub nsw i32 %.026169, %.030170          ; 2 uses
+  %i.bc = sub nsw i32 %.026169, %.030170          ; 3 uses
   %i.bd = icmp slt i32 %i.bc, 17
   br i1 %i.bd, label %bb.j, label %bb.r
 
@@ -11176,8 +11153,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.r:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser10PackedEnumIhLt1536EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread134
   %i.cu = trunc i64 %i.bb to i32
-  %3 = add i32 %.030170, %i.cu
-  %i.cv = sub i32 %.026169, %3                    ; 3 uses
+  %i.cv = sub i32 %i.bc, %i.cu                    ; 3 uses
   %i.cw = load i32, ptr %i.m, align 4, !tbaa !98
   %i.cx = icmp slt i32 %i.cw, 17
   br i1 %i.cx, label %.thread, label %bb.s
@@ -11367,8 +11343,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.t
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.di, %bb.t ] ; 3 uses
-  %.030172 = phi i32 [ %.030169, %.lr.ph ], [ %.030, %bb.t ] ; 2 uses
-  %.026171 = phi i32 [ %.0.i134, %.lr.ph ], [ %i.db, %bb.t ] ; 2 uses
+  %.030172 = phi i32 [ %.030169, %.lr.ph ], [ %.030, %bb.t ]
+  %.026171 = phi i32 [ %.0.i134, %.lr.ph ], [ %i.db, %bb.t ]
   %.0128170 = phi ptr [ %storemerge.i133, %.lr.ph ], [ %i.dh, %bb.t ] ; 3 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !56
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !57
@@ -11488,7 +11464,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.bc = ptrtoint ptr %.2.i138 to i64
   %i.bd = ptrtoint ptr %i.bb to i64
   %i.be = sub i64 %i.bc, %i.bd                    ; 3 uses
-  %i.bf = sub nsw i32 %.026171, %.030172          ; 2 uses
+  %i.bf = sub nsw i32 %.026171, %.030172          ; 3 uses
   %i.bg = icmp slt i32 %i.bf, 17
   br i1 %i.bg, label %bb.j, label %bb.r
 
@@ -11626,8 +11602,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.r:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser10PackedEnumItLt1536EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread136
   %i.da = trunc i64 %i.be to i32
-  %3 = add i32 %.030172, %i.da
-  %i.db = sub i32 %.026171, %3                    ; 3 uses
+  %i.db = sub i32 %i.bf, %i.da                    ; 3 uses
   %i.dc = load i32, ptr %i.m, align 4, !tbaa !98
   %i.dd = icmp slt i32 %i.dc, 17
   br i1 %i.dd, label %.thread, label %bb.s
@@ -11821,8 +11796,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.x
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.fm, %bb.x ] ; 3 uses
-  %.030181 = phi i32 [ %.030178, %.lr.ph ], [ %.030, %bb.x ] ; 2 uses
-  %.026180 = phi i32 [ %.0.i140, %.lr.ph ], [ %i.ff, %bb.x ] ; 2 uses
+  %.030181 = phi i32 [ %.030178, %.lr.ph ], [ %.030, %bb.x ]
+  %.026180 = phi i32 [ %.0.i140, %.lr.ph ], [ %i.ff, %bb.x ]
   %.0134179 = phi ptr [ %storemerge.i139, %.lr.ph ], [ %i.fl, %bb.x ] ; 3 uses
   %.sroa.0101.0.copyload = load ptr, ptr %2, align 8, !tbaa !55 ; 4 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !56
@@ -11986,7 +11961,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.ce = ptrtoint ptr %.2.i144 to i64
   %i.cf = ptrtoint ptr %i.cd to i64
   %i.cg = sub i64 %i.ce, %i.cf                    ; 3 uses
-  %i.ch = sub nsw i32 %.026180, %.030181          ; 2 uses
+  %i.ch = sub nsw i32 %.026180, %.030181          ; 3 uses
   %i.ci = icmp slt i32 %i.ch, 17
   br i1 %i.ci, label %bb.l, label %bb.v
 
@@ -12168,8 +12143,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.v:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser10PackedEnumIhLt1024EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread142
   %i.fe = trunc i64 %i.cg to i32
-  %3 = add i32 %.030181, %i.fe
-  %i.ff = sub i32 %.026180, %3                    ; 3 uses
+  %i.ff = sub i32 %i.ch, %i.fe                    ; 3 uses
   %i.fg = load i32, ptr %i.m, align 4, !tbaa !98
   %i.fh = icmp slt i32 %i.fg, 17
   br i1 %i.fh, label %.thread, label %bb.w
@@ -12407,8 +12381,8 @@ bb.b:                                             ; preds = %_ZN6google8protobuf
 
 bb.c:                                             ; preds = %.lr.ph, %bb.x
   %i.n = phi ptr [ %i.h, %.lr.ph ], [ %i.fs, %bb.x ] ; 3 uses
-  %.030183 = phi i32 [ %.030180, %.lr.ph ], [ %.030, %bb.x ] ; 2 uses
-  %.026182 = phi i32 [ %.0.i142, %.lr.ph ], [ %i.fl, %bb.x ] ; 2 uses
+  %.030183 = phi i32 [ %.030180, %.lr.ph ], [ %.030, %bb.x ]
+  %.026182 = phi i32 [ %.0.i142, %.lr.ph ], [ %i.fl, %bb.x ]
   %.0136181 = phi ptr [ %storemerge.i141, %.lr.ph ], [ %i.fr, %bb.x ] ; 3 uses
   %.sroa.0103.0.copyload = load ptr, ptr %2, align 8, !tbaa !55 ; 4 uses
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !56
@@ -12576,7 +12550,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.ch = ptrtoint ptr %.2.i146 to i64
   %i.ci = ptrtoint ptr %i.cg to i64
   %i.cj = sub i64 %i.ch, %i.ci                    ; 3 uses
-  %i.ck = sub nsw i32 %.026182, %.030183          ; 2 uses
+  %i.ck = sub nsw i32 %.026182, %.030183          ; 3 uses
   %i.cl = icmp slt i32 %i.ck, 17
   br i1 %i.cl, label %bb.l, label %bb.v
 
@@ -12762,8 +12736,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.v:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser10PackedEnumItLt1024EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread144
   %i.fk = trunc i64 %i.cj to i32
-  %3 = add i32 %.030183, %i.fk
-  %i.fl = sub i32 %.026182, %3                    ; 3 uses
+  %i.fl = sub i32 %i.ck, %i.fk                    ; 3 uses
   %i.fm = load i32, ptr %i.m, align 4, !tbaa !98
   %i.fn = icmp slt i32 %i.fm, 17
   br i1 %i.fn, label %.thread, label %bb.w
@@ -13051,8 +13024,8 @@ bb.f:                                             ; preds = %_ZZN6google8protobu
 
 bb.g:                                             ; preds = %.lr.ph, %bb.x
   %i.ap = phi ptr [ %i.aj, %.lr.ph ], [ %i.ee, %bb.x ] ; 3 uses
-  %.030163 = phi i32 [ %.030160, %.lr.ph ], [ %.030, %bb.x ] ; 2 uses
-  %.026162 = phi i32 [ %.0.i, %.lr.ph ], [ %i.dx, %bb.x ] ; 2 uses
+  %.030163 = phi i32 [ %.030160, %.lr.ph ], [ %.030, %bb.x ]
+  %.026162 = phi i32 [ %.0.i, %.lr.ph ], [ %i.dx, %bb.x ]
   %.0124161 = phi ptr [ %storemerge.i, %.lr.ph ], [ %i.ed, %bb.x ] ; 3 uses
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !56
   %.sroa.487.0.copyload = load ptr, ptr %.sroa.487.0..sroa_idx, align 8, !tbaa !57
@@ -13165,7 +13138,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.cb = ptrtoint ptr %.2.i129 to i64
   %i.cc = ptrtoint ptr %i.ca to i64
   %i.cd = sub i64 %i.cb, %i.cc                    ; 3 uses
-  %i.ce = sub nsw i32 %.026162, %.030163          ; 2 uses
+  %i.ce = sub nsw i32 %.026162, %.030163          ; 3 uses
   %i.cf = icmp slt i32 %i.ce, 17
   br i1 %i.cf, label %bb.n, label %bb.v
 
@@ -13296,8 +13269,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.v:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser20PackedEnumSmallRangeIhLh0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread127
   %i.dw = trunc i64 %i.cd to i32
-  %4 = add i32 %.030163, %i.dw
-  %i.dx = sub i32 %.026162, %4                    ; 3 uses
+  %i.dx = sub i32 %i.ce, %i.dw                    ; 3 uses
   %i.dy = load i32, ptr %i.ao, align 4, !tbaa !98
   %i.dz = icmp slt i32 %i.dy, 17
   br i1 %i.dz, label %.thread, label %bb.w
@@ -13530,8 +13502,8 @@ bb.f:                                             ; preds = %_ZZN6google8protobu
 
 bb.g:                                             ; preds = %.lr.ph, %bb.x
   %i.ap = phi ptr [ %i.aj, %.lr.ph ], [ %i.ek, %bb.x ] ; 3 uses
-  %.030165 = phi i32 [ %.030162, %.lr.ph ], [ %.030, %bb.x ] ; 2 uses
-  %.026164 = phi i32 [ %.0.i, %.lr.ph ], [ %i.ed, %bb.x ] ; 2 uses
+  %.030165 = phi i32 [ %.030162, %.lr.ph ], [ %.030, %bb.x ]
+  %.026164 = phi i32 [ %.0.i, %.lr.ph ], [ %i.ed, %bb.x ]
   %.0126163 = phi ptr [ %storemerge.i, %.lr.ph ], [ %i.ej, %bb.x ] ; 3 uses
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !56
   %.sroa.489.0.copyload = load ptr, ptr %.sroa.489.0..sroa_idx, align 8, !tbaa !57
@@ -13648,7 +13620,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.ce = ptrtoint ptr %.2.i131 to i64
   %i.cf = ptrtoint ptr %i.cd to i64
   %i.cg = sub i64 %i.ce, %i.cf                    ; 3 uses
-  %i.ch = sub nsw i32 %.026164, %.030165          ; 2 uses
+  %i.ch = sub nsw i32 %.026164, %.030165          ; 3 uses
   %i.ci = icmp slt i32 %i.ch, 17
   br i1 %i.ci, label %bb.n, label %bb.v
 
@@ -13783,8 +13755,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.v:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser20PackedEnumSmallRangeItLh0EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread129
   %i.ec = trunc i64 %i.cg to i32
-  %4 = add i32 %.030165, %i.ec
-  %i.ed = sub i32 %.026164, %4                    ; 3 uses
+  %i.ed = sub i32 %i.ch, %i.ec                    ; 3 uses
   %i.ee = load i32, ptr %i.ao, align 4, !tbaa !98
   %i.ef = icmp slt i32 %i.ee, 17
   br i1 %i.ef, label %.thread, label %bb.w
@@ -14021,8 +13992,8 @@ bb.f:                                             ; preds = %_ZZN6google8protobu
 
 bb.g:                                             ; preds = %.lr.ph, %bb.x
   %i.ap = phi ptr [ %i.aj, %.lr.ph ], [ %i.ee, %bb.x ] ; 3 uses
-  %.030163 = phi i32 [ %.030160, %.lr.ph ], [ %.030, %bb.x ] ; 2 uses
-  %.026162 = phi i32 [ %.0.i, %.lr.ph ], [ %i.dx, %bb.x ] ; 2 uses
+  %.030163 = phi i32 [ %.030160, %.lr.ph ], [ %.030, %bb.x ]
+  %.026162 = phi i32 [ %.0.i, %.lr.ph ], [ %i.dx, %bb.x ]
   %.0124161 = phi ptr [ %storemerge.i, %.lr.ph ], [ %i.ed, %bb.x ] ; 3 uses
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !56
   %.sroa.487.0.copyload = load ptr, ptr %.sroa.487.0..sroa_idx, align 8, !tbaa !57
@@ -14135,7 +14106,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.cb = ptrtoint ptr %.2.i129 to i64
   %i.cc = ptrtoint ptr %i.ca to i64
   %i.cd = sub i64 %i.cb, %i.cc                    ; 3 uses
-  %i.ce = sub nsw i32 %.026162, %.030163          ; 2 uses
+  %i.ce = sub nsw i32 %.026162, %.030163          ; 3 uses
   %i.cf = icmp slt i32 %i.ce, 17
   br i1 %i.cf, label %bb.n, label %bb.v
 
@@ -14266,8 +14237,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.v:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser20PackedEnumSmallRangeIhLh1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread127
   %i.dw = trunc i64 %i.cd to i32
-  %4 = add i32 %.030163, %i.dw
-  %i.dx = sub i32 %.026162, %4                    ; 3 uses
+  %i.dx = sub i32 %i.ce, %i.dw                    ; 3 uses
   %i.dy = load i32, ptr %i.ao, align 4, !tbaa !98
   %i.dz = icmp slt i32 %i.dy, 17
   br i1 %i.dz, label %.thread, label %bb.w
@@ -14500,8 +14470,8 @@ bb.f:                                             ; preds = %_ZZN6google8protobu
 
 bb.g:                                             ; preds = %.lr.ph, %bb.x
   %i.ap = phi ptr [ %i.aj, %.lr.ph ], [ %i.ek, %bb.x ] ; 3 uses
-  %.030165 = phi i32 [ %.030162, %.lr.ph ], [ %.030, %bb.x ] ; 2 uses
-  %.026164 = phi i32 [ %.0.i, %.lr.ph ], [ %i.ed, %bb.x ] ; 2 uses
+  %.030165 = phi i32 [ %.030162, %.lr.ph ], [ %.030, %bb.x ]
+  %.026164 = phi i32 [ %.0.i, %.lr.ph ], [ %i.ed, %bb.x ]
   %.0126163 = phi ptr [ %storemerge.i, %.lr.ph ], [ %i.ej, %bb.x ] ; 3 uses
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !56
   %.sroa.489.0.copyload = load ptr, ptr %.sroa.489.0..sroa_idx, align 8, !tbaa !57
@@ -14618,7 +14588,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
   %i.ce = ptrtoint ptr %.2.i131 to i64
   %i.cf = ptrtoint ptr %i.cd to i64
   %i.cg = sub i64 %i.ce, %i.cf                    ; 3 uses
-  %i.ch = sub nsw i32 %.026164, %.030165          ; 2 uses
+  %i.ch = sub nsw i32 %.026164, %.030165          ; 3 uses
   %i.ci = icmp slt i32 %i.ch, 17
   br i1 %i.ci, label %bb.n, label %bb.v
 
@@ -14753,8 +14723,7 @@ _ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8Tc
 
 bb.v:                                             ; preds = %_ZN6google8protobuf8internal18EpsCopyInputStream21ReadPackedVarintArrayIZNS1_8TcParser20PackedEnumSmallRangeItLh1EEEPKcPNS0_11MessageLiteES7_PNS1_12ParseContextENS1_11TcFieldDataEPKNS1_16TcParseTableBaseEmEUliE_EES7_S7_S7_T_.exit.thread129
   %i.ec = trunc i64 %i.cg to i32
-  %4 = add i32 %.030165, %i.ec
-  %i.ed = sub i32 %.026164, %4                    ; 3 uses
+  %i.ed = sub i32 %i.ch, %i.ec                    ; 3 uses
   %i.ee = load i32, ptr %i.ao, align 4, !tbaa !98
   %i.ef = icmp slt i32 %i.ee, 17
   br i1 %i.ef, label %.thread, label %bb.w

@@ -131,7 +131,7 @@ bb.e:                                             ; preds = %bb.d
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !110  ; 2 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !42
   %i.m = zext i8 %i.l to i32
-  %i.n = shl nuw nsw i32 %i.m, 3                  ; 2 uses
+  %i.n = shl nuw nsw i32 %i.m, 3
   %i.o = add nuw nsw i32 %i.n, 9                  ; 4 uses
   %i.p = icmp samesign ult i32 %i.d, %i.o
   br i1 %i.p, label %read_frame_header.exit, label %bb.f
@@ -534,11 +534,10 @@ bb.ac:                                            ; preds = %bb.ab
 .lr.ph:                                           ; preds = %bb.ac
   %.val = load i32, ptr %i.y, align 8, !tbaa !50
   %i.kj = sdiv i32 %.val, 8
-  %i.kk = load i32, ptr %i.c, align 8, !tbaa !109 ; 2 uses
-  %i.kl = sub nsw i32 %i.kk, %i.o
+  %i.kk = load i32, ptr %i.c, align 8, !tbaa !109
+  %i.kl = sub nsw i32 %i.kk, %i.o                 ; 2 uses
   %i.km = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %wide.trip.count = zext nneg i32 %i.ki to i64
-  %5 = add i32 %i.kk, -9
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph, %bb.af
@@ -558,8 +557,7 @@ bb.ae:                                            ; preds = %bb.ad
   store ptr %i.kq, ptr %i.kt, align 8, !tbaa !59
   %i.ku = getelementptr inbounds nuw i8, ptr %i.ks, i64 4
   %i.kv = load i32, ptr %i.ku, align 4, !tbaa !60 ; 3 uses
-  %6 = add i32 %i.n, %.0128183
-  %.reass = sub i32 %5, %6
+  %.reass = sub i32 %i.kl, %.0128183
   %. = tail call i32 @llvm.smin.i32(i32 %i.kv, i32 %.reass)
   %i.kw = getelementptr inbounds nuw i8, ptr %i.ks, i64 16
   store i32 %., ptr %i.kw, align 8, !tbaa !61

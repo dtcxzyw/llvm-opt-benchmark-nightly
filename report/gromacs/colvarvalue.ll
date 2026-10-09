@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit21: ; preds = %bb.
   br label %common.resume
 
 bb.f:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.b
-  %i.aa = sub i64 %3, %2                          ; 5 uses
+  %i.aa = sub i64 %3, %2                          ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.not.i = icmp eq i64 %3, %2                    ; 2 uses
@@ -290,8 +290,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
   %.022.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
-  %5 = sub i64 %3, %2
-  %xtraiter = and i64 %5, 3                       ; 2 uses
+  %xtraiter = and i64 %i.aa, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -694,8 +693,8 @@ bb.a:
   br i1 %.not, label %.noexc.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = sext i32 %1 to i64                       ; 5 uses
-  %i.h = sext i32 %2 to i64                       ; 4 uses
+  %i.g = sext i32 %1 to i64                       ; 4 uses
+  %i.h = sext i32 %2 to i64                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   call void @_ZNK11colvarvalue9as_vectorEv(ptr dead_on_unwind nonnull writable sret(%"class.colvarmodule::vector1d") align 8 %5, ptr noundef nonnull align 8 dereferenceable(168) %3)
   %i.i = icmp ult i32 %2, %1
@@ -766,7 +765,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit19.i: ; preds = %b
   br label %.body
 
 bb.f:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %bb.c
-  %i.ae = sub nsw i64 %i.h, %i.g                  ; 4 uses
+  %i.ae = sub nsw i64 %i.h, %i.g                  ; 5 uses
   %.not21.i = icmp eq i32 %2, %1
   %.pre = load ptr, ptr %5, align 8, !tbaa !33    ; 12 uses
   %.pre27 = ptrtoaddr ptr %.pre to i64
@@ -810,8 +809,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i, %middle.block
   %.020.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ] ; 3 uses
-  %7 = sub nsw i64 %i.h, %i.g
-  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %xtraiter = and i64 %i.ae, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 

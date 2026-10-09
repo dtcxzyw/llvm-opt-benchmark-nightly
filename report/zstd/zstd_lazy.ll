@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph82:                                         ; preds = %bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 %i.aa
-  %i.ae = ptrtoint ptr %i.e to i64                ; 3 uses
+  %i.ae = ptrtoint ptr %i.e to i64                ; 2 uses
   %i.af = getelementptr i8, ptr %0, i64 40        ; 2 uses
   %i.ag = shl nuw i32 1, %i.r                     ; 4 uses
   %i.ah = getelementptr inbounds i8, ptr %i.b, i64 -32 ; 6 uses
@@ -225,8 +225,8 @@ bb.b:                                             ; preds = %.lr.ph82, %.thread
   %.0337.i79 = phi i32 [ %i.x, %.lr.ph82 ], [ %.5342.i, %.thread ] ; 3 uses
   %.0343.i78 = phi i32 [ %i.v, %.lr.ph82 ], [ %.5348.i, %.thread ] ; 6 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.i81, i64 1 ; 2 uses
-  %i.ar = ptrtoint ptr %.0.i81 to i64             ; 3 uses
-  %i.as = sub i64 %i.ar, %i.ae
+  %i.ar = ptrtoint ptr %.0.i81 to i64             ; 2 uses
+  %i.as = sub i64 %i.ar, %i.ae                    ; 2 uses
   %i.at = trunc i64 %i.as to i32
   %i.au = add i32 %i.at, 1                        ; 4 uses
   %.val15 = load i32, ptr %i.m, align 4, !tbaa !78 ; 2 uses
@@ -306,8 +306,7 @@ bb.j:                                             ; preds = %ZSTD_searchMax.exit
   br i1 %i.ca, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
-  %5 = add i64 %i.br, %i.ae
-  %reass.sub = sub i64 %i.ar, %5
+  %reass.sub = sub i64 %i.as, %i.br
   %i.cb = add i64 %reass.sub, 3                   ; 2 uses
   %i.cc = trunc i64 %i.cb to i32
   %i.cd = icmp ugt i32 %i.g, %i.cc                ; 2 uses
@@ -710,7 +709,7 @@ ZSTD_row_fillHashCache.exit6:                     ; preds = %ZSTD_hashPtrSalted.
   br i1 %i.go, label %.lr.ph112, label %ZSTD_compressBlock_lazy_extDict_generic.exit
 
 .lr.ph112:                                        ; preds = %ZSTD_row_fillHashCache.exit6
-  %i.gp = ptrtoint ptr %i.e to i64                ; 3 uses
+  %i.gp = ptrtoint ptr %i.e to i64                ; 2 uses
   %i.gq = getelementptr i8, ptr %0, i64 40        ; 2 uses
   %i.gr = shl nuw i32 1, %i.r                     ; 4 uses
   %i.gs = getelementptr inbounds i8, ptr %i.b, i64 -32 ; 6 uses
@@ -735,8 +734,8 @@ bb.h:                                             ; preds = %.lr.ph112, %.thread
   %.0337.i109 = phi i32 [ %i.ab, %.lr.ph112 ], [ %.5342.i, %.thread57 ] ; 3 uses
   %.0343.i108 = phi i32 [ %i.z, %.lr.ph112 ], [ %.5348.i, %.thread57 ] ; 6 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %.0.i111, i64 1 ; 2 uses
-  %i.hg = ptrtoint ptr %.0.i111 to i64            ; 3 uses
-  %i.hh = sub i64 %i.hg, %i.gp
+  %i.hg = ptrtoint ptr %.0.i111 to i64            ; 2 uses
+  %i.hh = sub i64 %i.hg, %i.gp                    ; 2 uses
   %i.hi = trunc i64 %i.hh to i32
   %i.hj = add i32 %i.hi, 1                        ; 4 uses
   %.val28 = load i32, ptr %i.m, align 4, !tbaa !78 ; 2 uses
@@ -858,8 +857,7 @@ bb.y:                                             ; preds = %ZSTD_searchMax.exit
   br i1 %i.iv, label %bb.z, label %bb.ab
 
 bb.z:                                             ; preds = %bb.y
-  %5 = add i64 %i.im, %i.gp
-  %reass.sub = sub i64 %i.hg, %5
+  %reass.sub = sub i64 %i.hh, %i.im
   %i.iw = add i64 %reass.sub, 3                   ; 2 uses
   %i.ix = trunc i64 %i.iw to i32
   %i.iy = icmp ugt i32 %i.g, %i.ix                ; 2 uses

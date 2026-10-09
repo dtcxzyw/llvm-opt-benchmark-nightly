@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.o
   %i.bi = phi i64 [ %i.be, %._crit_edge.i.i.i ], [ %i.au, %.thread ], [ %i.af, %.thread144 ] ; 4 uses
   %i.bj = phi i64 [ %spec.select, %._crit_edge.i.i.i ], [ undef, %.thread ], [ undef, %.thread144 ] ; 8 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.bl = load i64, ptr %i.bk, align 8, !alias.scope !26154, !noalias !26155 ; 15 uses
+  %i.bl = load i64, ptr %i.bk, align 8, !alias.scope !26154, !noalias !26155 ; 12 uses
   %.not166.i.i.i = icmp ugt i64 %i.bj, %i.bl      ; 3 uses
   %or.cond.i.i.i = select i1 %narrow.i.not.i.i.i10, i1 true, i1 %.not166.i.i.i
   %or.cond.not.i.i.i = xor i1 %or.cond.i.i.i, true
@@ -231,18 +231,17 @@ _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthT
 bb.t:                                             ; preds = %._crit_edge.i.i.i.thread
   %or.cond.i.not.i.i.i.i = icmp eq i32 %5, -2147483648
   %i.bs = sub nsw i32 0, %5
-  %i.bt = zext nneg i32 %i.bs to i64              ; 2 uses
+  %i.bt = zext nneg i32 %i.bs to i64              ; 3 uses
   br i1 %or.cond.i.not.i.i.i.i, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.thread.i.i.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %.sink9.i.i.i.i.i = select i1 %.not.i.i.i.i202216, i64 %i.bi, i64 0 ; 3 uses
-  %i.bu = sub i64 %.sink9.i.i.i.i.i, %i.bl
+  %.sink9.i.i.i.i.i = select i1 %.not.i.i.i.i202216, i64 %i.bi, i64 0
+  %i.bu = sub i64 %.sink9.i.i.i.i.i, %i.bl        ; 3 uses
   %.not.i.i.i.i12 = icmp ult i64 %i.bu, %i.bt
   br i1 %.not.i.i.i.i12, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.thread.i.i.i, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.i.i.i
 
 _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.i.i.i: ; preds = %bb.u
-  %7 = add i64 %i.bl, %i.bt                       ; 2 uses
-  %i.bv = sub i64 %.sink9.i.i.i.i.i, %7           ; 2 uses
+  %i.bv = sub nuw i64 %i.bu, %i.bt                ; 2 uses
   %i.bw = icmp ult i64 %i.bv, 2147483648
   br i1 %i.bw, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18fixed_prefix_slice.exit.i.i.i, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit.thread.i.i.i
 
@@ -255,7 +254,7 @@ _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthT
   %i.cb = and i1 %i.bz, %i.by
   %.sroa.4331.0.i.i.i = select i1 %i.cb, i32 %i.ca, i32 undef
   %.sink.i.i.i.i.i = select i1 %i.by, i32 %.sroa.05.0.i.i.i.i.i.i, i32 2
-  %.not395.i.i.i = icmp eq i64 %.sink9.i.i.i.i.i, %7 ; 2 uses
+  %.not395.i.i.i = icmp eq i64 %i.bu, %i.bt       ; 2 uses
   %.sroa.6338.0.i.i.i = select i1 %.not395.i.i.i, i32 undef, i32 %i.bx
   %.sink.i.i184.i.i.i = select i1 %.not395.i.i.i, i32 2, i32 0
   br label %bb.an
@@ -295,14 +294,13 @@ bb.y:                                             ; preds = %bb.w
   br i1 %or.cond.i.not.i197.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %.sink9.i.i199.i.i.i = select i1 %.not.i.i.i.i202216, i64 %i.bi, i64 0 ; 2 uses
-  %i.cm = sub i64 %.sink9.i.i199.i.i.i, %i.bl
+  %.sink9.i.i199.i.i.i = select i1 %.not.i.i.i.i202216, i64 %i.bi, i64 0
+  %i.cm = sub i64 %.sink9.i.i199.i.i.i, %i.bl     ; 2 uses
   %.not.i200.i.i.i = icmp ult i64 %i.cm, %i.cl
   br i1 %.not.i200.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit203.i.i.i
 
 _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit203.i.i.i: ; preds = %bb.z
-  %8 = add nuw nsw i64 %i.bl, %i.cl
-  %i.cn = sub i64 %.sink9.i.i199.i.i.i, %8        ; 4 uses
+  %i.cn = sub nuw i64 %i.cm, %i.cl                ; 4 uses
   %i.co = icmp ult i64 %i.cn, 2147483648
   br i1 %i.co, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE27mixed_forward_approximation.exit223.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread
 
@@ -324,14 +322,13 @@ _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthT
   br i1 %or.cond.i.not.i227.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread, label %bb.aa
 
 bb.aa:                                            ; preds = %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit203.thread.i.i.i
-  %.sink9.i.i229.i.i.i = select i1 %.not.i.i.i.i202216, i64 %i.bi, i64 0 ; 2 uses
-  %i.cv = sub i64 %.sink9.i.i229.i.i.i, %i.bl     ; 2 uses
+  %.sink9.i.i229.i.i.i = select i1 %.not.i.i.i.i202216, i64 %i.bi, i64 0
+  %i.cv = sub i64 %.sink9.i.i229.i.i.i, %i.bl     ; 3 uses
   %.not.i230.i.i.i = icmp ult i64 %i.cv, %i.cu
   br i1 %.not.i230.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit233.i.i.i
 
 _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit233.i.i.i: ; preds = %bb.aa
-  %9 = add i64 %i.bl, %i.cu
-  %i.cw = sub i64 %.sink9.i.i229.i.i.i, %9        ; 3 uses
+  %i.cw = sub nuw i64 %i.cv, %i.cu                ; 3 uses
   %i.cx = icmp ult i64 %i.cw, 2147483648
   %i.cy = icmp ult i64 %i.bl, %i.e
   %i.cz = and i1 %i.cx, %or.cond.i.i
@@ -411,16 +408,15 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %or.cond.i.not.i288.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %.sink9.i.i290.i.i.i = select i1 %.not.i.i.i.i198, i64 %i.ap, i64 0 ; 2 uses
+  %.sink9.i.i290.i.i.i = select i1 %.not.i.i.i.i198, i64 %i.ap, i64 0
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.dv = load i64, ptr %i.du, align 8, !alias.scope !26156, !noalias !26155, !noundef !24 ; 3 uses
-  %i.dw = sub i64 %.sink9.i.i290.i.i.i, %i.dv
+  %i.dv = load i64, ptr %i.du, align 8, !alias.scope !26156, !noalias !26155, !noundef !24 ; 2 uses
+  %i.dw = sub i64 %.sink9.i.i290.i.i.i, %i.dv     ; 2 uses
   %.not.i291.i.i.i = icmp ult i64 %i.dw, %i.dt
   br i1 %.not.i291.i.i.i, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread, label %_RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit294.i.i.i
 
 _RNvMse_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleINtB5_19VariableLengthTupleNtB7_4TypeNtB5_15VariableSegmentE18suffix_slice_index.exit294.i.i.i: ; preds = %bb.aj
-  %10 = add i64 %i.dv, %i.dt
-  %i.dx = sub i64 %.sink9.i.i290.i.i.i, %10       ; 3 uses
+  %i.dx = sub nuw i64 %i.dw, %i.dt                ; 3 uses
   %i.dy = icmp ult i64 %i.dx, 2147483648
   br i1 %i.dy, label %bb.ak, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5tuple22VariableTupleSlicePlanE7or_elseNCNvMse_BK_INtBK_19VariableLengthTupleNtBM_4TypeNtBK_15VariableSegmentE18forward_slice_plans0_0EBO_.exit.thread
 

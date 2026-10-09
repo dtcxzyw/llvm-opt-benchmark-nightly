@@ -205,9 +205,9 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !44
   %i.d = getelementptr [8 x i8], ptr %i.c, i64 %1 ; 2 uses
   %i.e = getelementptr i8, ptr %i.d, i64 8
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !50   ; 4 uses
-  %i.g = load i64, ptr %i.d, align 8, !tbaa !50   ; 5 uses
-  %i.h = sub i64 %i.f, %i.g                       ; 9 uses
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !50   ; 3 uses
+  %i.g = load i64, ptr %i.d, align 8, !tbaa !50   ; 4 uses
+  %i.h = sub i64 %i.f, %i.g                       ; 10 uses
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %.loopexit, label %bb.b
 
@@ -284,8 +284,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph.preheader:                                 ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.016.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.memcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec20, %vec.epilog.middle.block ] ; 3 uses
-  %3 = sub i64 %i.f, %i.g
-  %xtraiter = and i64 %3, 3                       ; 2 uses
+  %xtraiter = and i64 %i.h, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 

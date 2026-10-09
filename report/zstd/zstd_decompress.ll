@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 10264
   %i.n = ptrtoint ptr %i.j to i64                 ; 2 uses
-  %gepdiff = add i64 %2, -8                       ; 3 uses
-  %i.o = tail call i64 @HUF_readDTableX2_wksp(ptr noundef nonnull %i.m, ptr noundef nonnull %i.l, i64 noundef %gepdiff, ptr noundef %0, i64 noundef 10264, i32 noundef 0) #15 ; 4 uses
+  %gepdiff = add i64 %2, -8                       ; 2 uses
+  %i.o = tail call i64 @HUF_readDTableX2_wksp(ptr noundef nonnull %i.m, ptr noundef nonnull %i.l, i64 noundef %gepdiff, ptr noundef %0, i64 noundef 10264, i32 noundef 0) #15 ; 3 uses
   %i.p = icmp ult i64 %i.o, -119
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.o ; 2 uses
   br i1 %i.p, label %bb.c, label %.loopexit
@@ -215,7 +215,7 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   store i32 31, ptr %i.b, align 4, !tbaa !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
-  %gepdiff98 = sub i64 %gepdiff, %i.o
+  %gepdiff98 = sub i64 %gepdiff, %i.o             ; 2 uses
   %i.r = call i64 @FSE_readNCount(ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.q, i64 noundef %gepdiff98) #15 ; 3 uses
   %i.s = icmp ult i64 %i.r, -119
   br i1 %i.s, label %bb.d, label %.critedge
@@ -242,8 +242,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
   store i32 52, ptr %i.e, align 4, !tbaa !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #15
-  %3 = add i64 %i.o, %i.r
-  %gepdiff99 = sub i64 %gepdiff, %3
+  %gepdiff99 = sub i64 %gepdiff98, %i.r
   %i.aa = call i64 @FSE_readNCount(ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %i.z, i64 noundef %gepdiff99) #15 ; 2 uses
   %i.ab = icmp ult i64 %i.aa, -119
   br i1 %i.ab, label %bb.g, label %.critedge90

@@ -205,27 +205,29 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.cw, label %check_cpu_stall.exit.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.cx = load volatile i64, ptr @jiffies, align 64 ; 2 uses
-  %i.cy = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3264), align 64 ; 3 uses
+  %i.cx = load volatile i64, ptr @jiffies, align 64
+  %i.cy = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3264), align 64 ; 4 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #30, !srcloc !140
-  %i.cz = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3592), align 8 ; 5 uses
+  %i.cz = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3592), align 8 ; 4 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #30, !srcloc !141
   %i.da = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3560), align 8 ; 3 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #30, !srcloc !142
-  %i.db = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3264), align 64 ; 2 uses
-  %.not42.i.i = icmp ne i64 %i.cy, %i.db
-  %1 = sub i64 %i.cx, %i.cz
-  %2 = icmp slt i64 %1, 0
-  %or.cond.i.i = select i1 %.not42.i.i, i1 true, i1 %2
-  %3 = sub i64 %i.da, %i.cz
-  %4 = icmp sgt i64 %3, -1
-  %or.cond52.i.i = select i1 %or.cond.i.i, i1 true, i1 %4
-  %5 = and i64 %i.db, 3
-  %.not43.i.i.a = icmp eq i64 %5, 0
-  %or.cond54.i.i = or i1 %.not43.i.i.a, %or.cond52.i.i
-  br i1 %or.cond54.i.i, label %check_cpu_stall.exit.i, label %bb.al
+  %i.db = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3264), align 64
+  %.not43.i.i.a = icmp eq i64 %i.cy, %i.db
+  br i1 %.not43.i.i.a, label %1, label %check_cpu_stall.exit.i
 
-bb.al:                                            ; preds = %bb.ak
+1:                                                ; preds = %bb.ak
+  %2 = sub i64 %i.cx, %i.cz                       ; 2 uses
+  %3 = icmp slt i64 %2, 0
+  %4 = sub i64 %i.da, %i.cz
+  %5 = icmp sgt i64 %4, -1
+  %or.cond.i.i = select i1 %3, i1 true, i1 %5
+  %6 = and i64 %i.cy, 3
+  %.not43.i.i = icmp eq i64 %6, 0
+  %or.cond53.i.i = or i1 %.not43.i.i, %or.cond.i.i
+  br i1 %or.cond53.i.i, label %check_cpu_stall.exit.i, label %bb.al
+
+bb.al:                                            ; preds = %1
   %i.dc = load ptr, ptr %i.ci, align 8
   %i.dd = load volatile i64, ptr @jiffies, align 64
   %i.de = add i64 %i.dd, 9223372036854775807      ; 2 uses
@@ -234,22 +236,16 @@ bb.al:                                            ; preds = %bb.ak
   %i.dh = getelementptr i8, ptr %i.ch, i64 40
   %i.di = load i64, ptr %i.dh, align 8
   %i.dj = and i64 %i.di, %i.dg
-  %.not44.i.i = icmp eq i64 %i.dj, 0              ; 2 uses
+  %.not44.i.i = icmp ne i64 %i.dj, 0              ; 2 uses
   %i.dk = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3264), align 64
   %i.dl = and i64 %i.dk, 3
-  %.not45.i.i = icmp eq i64 %i.dl, 0
-  br i1 %.not45.i.i, label %check_cpu_stall.exit.i, label %6
+  %.not45.i.i = icmp ne i64 %i.dl, 0
+  %7 = icmp samesign ugt i64 %2, 1
+  %or.cond51.i.i = or i1 %7, %.not44.i.i
+  %or.cond54.i.i = select i1 %.not45.i.i, i1 %or.cond51.i.i, i1 false
+  br i1 %or.cond54.i.i, label %bb.am, label %check_cpu_stall.exit.i
 
-6:                                                ; preds = %bb.al
-  br i1 %.not44.i.i, label %7, label %bb.am
-
-7:                                                ; preds = %6
-  %.neg55.i.i = add i64 %i.cx, -2
-  %8 = sub i64 %.neg55.i.i, %i.cz
-  %9 = icmp sgt i64 %8, -1
-  br i1 %9, label %bb.am, label %check_cpu_stall.exit.i
-
-bb.am:                                            ; preds = %7, %6
+bb.am:                                            ; preds = %bb.al
   %i.dm = tail call i64 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgq $2, $1", "={ax},=*m,r,0,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i64) getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3592), i64 %i.de, i64 %i.cz, ptr nonnull elementtype(i64) getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3592)) #30, !srcloc !143
   %i.dn = icmp eq i64 %i.dm, %i.cz
   br i1 %i.dn, label %bb.an, label %check_cpu_stall.exit.i
@@ -263,7 +259,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.dq = add i32 %i.dp, 1
   store i32 %i.dq, ptr @rcu_stall_count, align 4
   %i.dr = load volatile i8, ptr @csd_lock_suppress_rcu_stall, align 1, !range !40, !noundef !41 ; 0 uses
-  br i1 %.not44.i.i, label %bb.aq, label %bb.ap
+  br i1 %.not44.i.i, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
   tail call fastcc void @print_cpu_stall(i64 noundef %i.cy, i64 noundef %i.da) #33, !srcloc !144
@@ -337,7 +333,7 @@ rcu_jiffies_till_stall_check.exit.i.i:            ; preds = %.sink.split.i.i.i, 
   store volatile i64 %i.eh, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3592), align 8
   br label %check_cpu_stall.exit.i
 
-check_cpu_stall.exit.i:                           ; preds = %rcu_jiffies_till_stall_check.exit.i.i, %bb.ay, %bb.an, %bb.am, %7, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah
+check_cpu_stall.exit.i:                           ; preds = %rcu_jiffies_till_stall_check.exit.i.i, %bb.ay, %bb.an, %bb.am, %bb.al, %1, %bb.ak, %bb.aj, %bb.ai, %bb.ah
   %i.ei = load volatile i64, ptr getelementptr inbounds nuw (i8, ptr @rcu_state, i64 3264), align 64
   %i.ej = and i64 %i.ei, 3
   %i.ek = icmp ne i64 %i.ej, 0                    ; 4 uses

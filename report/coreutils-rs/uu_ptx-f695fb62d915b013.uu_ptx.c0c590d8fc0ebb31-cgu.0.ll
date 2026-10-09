@@ -205,9 +205,9 @@ bb.y:                                             ; preds = %bb.w
   br label %_RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesReECsgy7pbN39oAf_6uu_ptx.exit
 
 _RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesReECsgy7pbN39oAf_6uu_ptx.exit: ; preds = %bb.w, %bb.y
-  %.sroa.0.0.i45 = phi i64 [ %i.bc, %bb.y ], [ %.64.val, %bb.w ] ; 3 uses
+  %.sroa.0.0.i45 = phi i64 [ %i.bc, %bb.y ], [ %.64.val, %bb.w ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !2099
-  %i.bd = sub nuw i64 %.64.val, %.sroa.0.0.i45    ; 2 uses
+  %i.bd = sub nuw i64 %.64.val, %.sroa.0.0.i45    ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.0.0.i45 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !2098
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2101)
@@ -336,8 +336,7 @@ _RNvXs8_NtNtCs6JMX4GRUq9U_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_
 _RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsgy7pbN39oAf_6uu_ptx.exit: ; preds = %bb.ab, %bb.ac, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCsgy7pbN39oAf_6uu_ptx.exit.i.i.i.i, %_RNvXs8_NtNtCs6JMX4GRUq9U_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCsgy7pbN39oAf_6uu_ptx.exit.i.i.i, %_RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesReECsgy7pbN39oAf_6uu_ptx.exit
   %.sroa.0.0.i46 = phi i64 [ 0, %_RINvMNtCs6JMX4GRUq9U_4core3stre18trim_start_matchesReECsgy7pbN39oAf_6uu_ptx.exit ], [ %i.bg, %bb.ac ], [ %i.bg, %bb.ab ], [ %i.bg, %_RNvXs3_NtNtCs6JMX4GRUq9U_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCsgy7pbN39oAf_6uu_ptx.exit.i.i.i.i ], [ %i.bd, %_RNvXs8_NtNtCs6JMX4GRUq9U_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCsgy7pbN39oAf_6uu_ptx.exit.i.i.i ] ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.be, i64 %.sroa.0.0.i46 ; 2 uses
-  %8 = add i64 %.sroa.0.0.i45, %.sroa.0.0.i46
-  %gepdiff37 = sub i64 %.64.val, %8               ; 3 uses
+  %gepdiff37 = sub i64 %i.bd, %.sroa.0.0.i46      ; 3 uses
   %i.do = icmp ult i64 %gepdiff37, 32
   br i1 %i.do, label %bb.ai, label %bb.ah
 

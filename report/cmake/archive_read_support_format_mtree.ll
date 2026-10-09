@@ -205,7 +205,7 @@ next_line.exit:                                   ; preds = %.lr.ph.i63.i, %bb.p
 
 next_line.exit.thread357:                         ; preds = %bb.i, %.loopexit.i.i, %next_line.exit
   %.251.i368 = phi i64 [ %i.aw, %next_line.exit ], [ %i.o, %bb.i ], [ %i.p, %.loopexit.i.i ] ; 5 uses
-  %.3114366 = phi i64 [ %.sink, %next_line.exit ], [ 2, %bb.i ], [ 1, %.loopexit.i.i ] ; 7 uses
+  %.3114366 = phi i64 [ %.sink, %next_line.exit ], [ 2, %bb.i ], [ 1, %.loopexit.i.i ] ; 6 uses
   %.2117365 = phi i64 [ %i.af, %next_line.exit ], [ %.0115, %bb.i ], [ %.0115, %.loopexit.i.i ] ; 3 uses
   %.3121364 = phi ptr [ %i.au, %next_line.exit ], [ %.0118, %bb.i ], [ %.0118, %.loopexit.i.i ] ; 4 uses
   %.promoted363 = phi i64 [ %i.ag, %next_line.exit ], [ %i.f, %bb.i ], [ %i.f, %.loopexit.i.i ] ; 2 uses
@@ -240,7 +240,7 @@ next_line.exit.thread357:                         ; preds = %bb.i, %.loopexit.i.
 .critedge:                                        ; preds = %.lr.ph259, %.critedgethread-pre-split
   %i.be = phi i64 [ %i.bb, %.critedgethread-pre-split ], [ %i.ay, %.lr.ph259 ] ; 2 uses
   %.1119189 = phi ptr [ %scevgep, %.critedgethread-pre-split ], [ %.1119257, %.lr.ph259 ] ; 12 uses
-  %.059181 = phi i64 [ 0, %.critedgethread-pre-split ], [ %.059258, %.lr.ph259 ] ; 25 uses
+  %.059181 = phi i64 [ 0, %.critedgethread-pre-split ], [ %.059258, %.lr.ph259 ] ; 24 uses
   %i.bf = phi i8 [ %.pr, %.critedgethread-pre-split ], [ %i.az, %.lr.ph259 ] ; 3 uses
   switch i8 %i.bf, label %bb.x [
     i8 35, label %bb.r
@@ -285,7 +285,6 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %bb.t
   br label %.outer
 
 bb.x:                                             ; preds = %.critedge
-  %2 = sub nsw i64 0, %.3114366
   %i.bs = getelementptr i8, ptr %.1119189, i64 %.059181 ; 5 uses
   %.not103.i = icmp eq i64 %.059181, 0
   br i1 %.not103.i, label %.thread.i83, label %.lr.ph.preheader.i80
@@ -340,9 +339,10 @@ bb.z:                                             ; preds = %.lr.ph.i81
   br i1 %.not.peel.i, label %.thread.i83, label %bid_entry.exit
 
 .thread.i83:                                      ; preds = %.loopexit.i, %.loopexit110.i, %bb.x
+  %2 = sub nsw i64 0, %.3114366
   %i.cj = getelementptr inbounds i8, ptr %i.bs, i64 %2 ; 4 uses
   %i.ck = getelementptr inbounds i8, ptr %i.cj, i64 -2
-  %i.cl = sub i64 %.059181, %.3114366
+  %i.cl = sub i64 %.059181, %.3114366             ; 2 uses
   %.not67.i = icmp slt i64 %i.cl, 2
   br i1 %.not67.i, label %bb.ac, label %bb.aa
 
@@ -416,8 +416,7 @@ bb.ag:                                            ; preds = %.critedge.i
 
 bb.ah:                                            ; preds = %bb.ag
   %i.dg = zext nneg i32 %.047.lcssa.ph.i to i64
-  %3 = add nuw nsw i64 %.3114366, %i.dg
-  %i.dh = sub i64 %.059181, %3
+  %i.dh = sub i64 %i.cl, %i.dg
   br label %bid_entry.exit
 
 bid_entry.exit:                                   ; preds = %.loopexit.thread.i, %.loopexit.i, %bb.ah

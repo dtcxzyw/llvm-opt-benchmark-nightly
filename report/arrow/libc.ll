@@ -205,9 +205,9 @@ mi_outs.exit:                                     ; preds = %.lr.ph.i, %.epil.pr
   %.6 = phi i64 [ %.2, %.epil.preheader ], [ %.2, %bb.cw ], [ %.5, %.epil.preheader486 ], [ %.2, %mi_outc.exit312 ], [ %.2, %mi_outc.exit281 ], [ %.2, %bb.ag ], [ %.2, %bb.ah ], [ %.5, %bb.bn ], [ %.5, %mi_outc.exit.i ], [ %.5, %mi_outc.exit53.i ], [ %.2, %bb.cr ], [ %.2, %mi_outc.exit.i308 ], [ %.2, %mi_outc.exit53.i294 ], [ %.2, %bb.cx ], [ %.5, %mi_outs.exit.loopexit.unr-lcssa ], [ %.2, %mi_outs.exit.loopexit475.unr-lcssa ], [ %.2, %.lr.ph.i ] ; 7 uses
   %.1209 = phi ptr [ %.0337377, %.epil.preheader ], [ %.0337377, %bb.cw ], [ %.1338, %.epil.preheader486 ], [ %.0337377, %mi_outc.exit312 ], [ %.0337377, %mi_outc.exit281 ], [ %.0337377, %bb.ag ], [ %.0337377, %bb.ah ], [ %.1338, %bb.bn ], [ %.1338, %mi_outc.exit.i ], [ %.1338, %mi_outc.exit53.i ], [ %.0337377, %bb.cr ], [ %.0337377, %mi_outc.exit.i308 ], [ %.0337377, %mi_outc.exit53.i294 ], [ %.0337377, %bb.cx ], [ %.1338, %mi_outs.exit.loopexit.unr-lcssa ], [ %.0337377, %mi_outs.exit.loopexit475.unr-lcssa ], [ %.0337377, %.lr.ph.i ] ; 10 uses
   %.fr.i = freeze ptr %.2339                      ; 7 uses
-  %i.jo = ptrtoint ptr %.fr.i to i64              ; 3 uses
-  %i.jp = ptrtoint ptr %.1209 to i64              ; 2 uses
-  %i.jq = sub i64 %i.jo, %i.jp                    ; 13 uses
+  %i.jo = ptrtoint ptr %.fr.i to i64              ; 2 uses
+  %i.jp = ptrtoint ptr %.1209 to i64
+  %i.jq = sub i64 %i.jo, %i.jp                    ; 14 uses
   %i.jr = icmp ult i64 %i.jq, %.6
   br i1 %i.jr, label %bb.cy, label %mi_out_alignright.exit
 
@@ -237,17 +237,14 @@ bb.cz:                                            ; preds = %mi_out_fill.exit
   %i.jz = getelementptr inbounds nuw i8, ptr %.1209, i64 %.6
   %.not.i316 = icmp ult ptr %i.jz, %i.e
   %or.cond27.i = select i1 %i.jy, i1 %.not.i316, i1 false
-  br i1 %or.cond27.i, label %iter.check, label %mi_out_alignright.exit
+  br i1 %or.cond27.i, label %vector.memcheck, label %mi_out_alignright.exit
 
-iter.check:                                       ; preds = %bb.cz
+vector.memcheck:                                  ; preds = %bb.cz
   %min.iters.check = icmp ult i64 %i.jq, 8
-  br i1 %min.iters.check, label %.preheader31.i.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %iter.check
-  %4 = add i64 %.6, %i.jp
-  %i.ka = sub i64 %4, %i.jo
+  %i.ka = sub i64 %.6, %i.jq
   %diff.check = icmp ugt i64 %i.ka, -32
-  br i1 %diff.check, label %.preheader31.i.preheader, label %vector.main.loop.iter.check
+  %or.cond475 = or i1 %min.iters.check, %diff.check
+  br i1 %or.cond475, label %.preheader31.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   %min.iters.check467 = icmp ult i64 %i.jq, 32
@@ -311,8 +308,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n473 = icmp eq i64 %i.jq, %n.vec469
   br i1 %cmp.n473, label %.preheader.preheader.i, label %.preheader31.i.preheader
 
-.preheader31.i.preheader:                         ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.02232.i.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.memcheck ], [ %i.kc, %vec.epilog.iter.check ], [ %i.kn, %vec.epilog.middle.block ]
+.preheader31.i.preheader:                         ; preds = %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.02232.i.ph = phi i64 [ 1, %vector.memcheck ], [ %i.kc, %vec.epilog.iter.check ], [ %i.kn, %vec.epilog.middle.block ]
   br label %.preheader31.i
 
 .preheader31.i:                                   ; preds = %.preheader31.i.preheader, %.preheader31.i

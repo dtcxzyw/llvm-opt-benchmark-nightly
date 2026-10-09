@@ -205,7 +205,7 @@ bb.a:
   store i32 %i.r, ptr @reccycle, align 4, !tbaa !7
   %i.s = sub i32 %7, %6                           ; 22 uses
   %i.t = add i32 %i.s, 1                          ; 8 uses
-  %i.u = sub nsw i32 %9, %8                       ; 22 uses
+  %i.u = sub nsw i32 %9, %8                       ; 23 uses
   %i.v = add nuw nsw i32 %i.u, 1                  ; 11 uses
   %i.w = icmp slt i32 %i.u, 0
   br i1 %i.w, label %.preheader1, label %bb.d
@@ -608,9 +608,8 @@ scalar.ph141:                                     ; preds = %scalar.ph141.prol.l
   %i.adw = getelementptr [4 x i8], ptr %i.o, i64 %i.xy
   %i.adx = getelementptr i8, ptr %i.adw, i64 -4   ; 3 uses
   %i.ady = tail call i32 @llvm.smin.i32(i32 %i.u, i32 1)
-  %14 = add i32 %8, %i.ady
-  %i.adz = sub i32 %9, %14                        ; 2 uses
-  %i.aea = zext i32 %i.adz to i64                 ; 2 uses
+  %i.adz = sub nsw i32 %i.u, %i.ady               ; 2 uses
+  %i.aea = zext nneg i32 %i.adz to i64            ; 2 uses
   %i.aeb = add nuw nsw i64 %i.aea, 1              ; 2 uses
   %min.iters.check212 = icmp ult i32 %i.adz, 19
   br i1 %min.iters.check212, label %scalar.ph211.preheader, label %vector.memcheck213
@@ -636,7 +635,7 @@ vector.memcheck213:                               ; preds = %.lr.ph62
   br i1 %conflict.rdx220, label %scalar.ph211.preheader, label %vector.ph221
 
 vector.ph221:                                     ; preds = %vector.memcheck213
-  %n.vec222 = and i64 %i.aeb, 8589934588          ; 3 uses
+  %n.vec222 = and i64 %i.aeb, 4294967292          ; 3 uses
   %broadcast.splatinsert223 = insertelement <4 x i32> poison, i32 %i.s, i64 0
   %broadcast.splat224 = shufflevector <4 x i32> %broadcast.splatinsert223, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.aem = sub nsw i64 %i.xy, %n.vec222

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.thread
-  %i.bd = phi i64 [ 3, %bb.e ], [ %.pre57, %.thread ] ; 6 uses
+  %i.bd = phi i64 [ 3, %bb.e ], [ %.pre57, %.thread ] ; 5 uses
   %i.be = phi ptr [ %i.r, %bb.e ], [ %.pre, %.thread ] ; 6 uses
   %i.bf = ptrtoint ptr %i.be to i64               ; 2 uses
   %i.bg = and i64 %i.bf, 7
@@ -219,8 +219,8 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i: ; preds = %bb.g, %bb.f
-  %.0.i.i.i.i.i.i.i = phi i64 [ %i.bj, %bb.g ], [ %i.bd, %bb.f ] ; 9 uses
-  %i.bk = sub nsw i64 %i.bd, %.0.i.i.i.i.i.i.i    ; 2 uses
+  %.0.i.i.i.i.i.i.i = phi i64 [ %i.bj, %bb.g ], [ %i.bd, %bb.f ] ; 8 uses
+  %i.bk = sub nsw i64 %i.bd, %.0.i.i.i.i.i.i.i    ; 4 uses
   %i.bl = sdiv i64 %i.bk, 2
   %i.bm = shl nsw i64 %i.bl, 1                    ; 2 uses
   %i.bn = add nsw i64 %i.bm, %.0.i.i.i.i.i.i.i    ; 5 uses
@@ -279,14 +279,14 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.bz, label %.lr.ph.i17.i.i.i.i.i.i.preheader, label %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELin1ELi1ELb0EEEEdVERKd.exit
 
 .lr.ph.i17.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %6 = add i64 %.0.i.i.i.i.i.i.i, %i.bm
-  %i.ca = sub i64 %i.bd, %6                       ; 3 uses
+  %i.ca = sub i64 %i.bk, %i.bm                    ; 2 uses
   %min.iters.check = icmp ult i64 %i.ca, 2
   br i1 %min.iters.check, label %.lr.ph.i17.i.i.i.i.i.i.preheader78, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i17.i.i.i.i.i.i.preheader
-  %n.vec.a = and i64 %i.ca, -2                    ; 3 uses
-  %i.cb = add i64 %i.bn, %n.vec.a
+  %n.vec.a = and i64 %i.bk, 1                     ; 2 uses
+  %n.vec = sub nuw i64 %i.ca, %n.vec.a            ; 2 uses
+  %i.cb = add i64 %i.bn, %n.vec
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.bc, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cc = getelementptr [8 x i8], ptr %i.be, i64 %i.bn
@@ -299,11 +299,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ce = fdiv <2 x double> %wide.load, %broadcast.splat
   store <2 x double> %i.ce, ptr %i.cd, align 8, !tbaa !14
   %index.next = add nuw i64 %index, 2             ; 2 uses
-  %i.cf = icmp eq i64 %index.next, %n.vec.a
+  %i.cf = icmp eq i64 %index.next, %n.vec
   br i1 %i.cf, label %middle.block, label %vector.body, !llvm.loop !139
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.ca, %n.vec.a
+  %cmp.n = icmp eq i64 %n.vec.a, 0
   br i1 %cmp.n, label %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELin1ELi1ELb0EEEEdVERKd.exit, label %.lr.ph.i17.i.i.i.i.i.i.preheader78
 
 .lr.ph.i17.i.i.i.i.i.i.preheader78:               ; preds = %.lr.ph.i17.i.i.i.i.i.i.preheader, %middle.block
@@ -351,7 +351,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !177, !nonnull !178, !align !179 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !54   ; 10 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !54   ; 9 uses
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !53
   %i.f = ptrtoint ptr %i.e to i64                 ; 2 uses
   %i.g = and i64 %i.f, 7
@@ -365,8 +365,8 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit: ; preds = %bb.a, %bb.b
-  %.0.i = phi i64 [ %i.j, %bb.b ], [ %i.d, %bb.a ] ; 14 uses
-  %i.k = sub nsw i64 %i.d, %.0.i                  ; 2 uses
+  %.0.i = phi i64 [ %i.j, %bb.b ], [ %i.d, %bb.a ] ; 13 uses
+  %i.k = sub nsw i64 %i.d, %.0.i                  ; 3 uses
   %i.l = sdiv i64 %i.k, 2                         ; 2 uses
   %i.m = shl nsw i64 %i.l, 1                      ; 2 uses
   %i.n = add nsw i64 %i.m, %.0.i                  ; 7 uses
@@ -619,8 +619,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br label %.lr.ph.i.i.i.i.i.preheader.us.i22
 
 _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELin1ELi1ELb0EEEEENS2_INS_7ProductINS3_IS5_Lin1ELin1ELb0EEENS_9TransposeIKNS3_IS5_Li1ELin1ELb0EEEEELi1EEEEENS0_13sub_assign_opIddEELi0EE11assignCoeffEl.exit.i19.preheader: ; preds = %.lr.ph.split.i18
-  %1 = add i64 %.0.i, %i.m
-  %i.dy = sub i64 %i.d, %1                        ; 3 uses
+  %i.dy = sub i64 %i.k, %i.m                      ; 3 uses
   %min.iters.check80 = icmp ult i64 %i.dy, 14
   br i1 %min.iters.check80, label %_ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_5BlockINS_6MatrixIdLi4ELi4ELi0ELi4ELi4EEELin1ELi1ELb0EEEEENS2_INS_7ProductINS3_IS5_Lin1ELin1ELb0EEENS_9TransposeIKNS3_IS5_Li1ELin1ELb0EEEEELi1EEEEENS0_13sub_assign_opIddEELi0EE11assignCoeffEl.exit.i19.preheader103, label %vector.memcheck81
 

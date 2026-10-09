@@ -204,9 +204,9 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %i.qh, label %uriContainsUglyPercentEncodingA.exit279.thread354, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
-  %i.qi = ptrtoint ptr %i.qg to i64               ; 2 uses
-  %i.qj = ptrtoint ptr %i.qc to i64               ; 3 uses
-  %i.qk = sub i64 %i.qi, %i.qj                    ; 4 uses
+  %i.qi = ptrtoint ptr %i.qg to i64
+  %i.qj = ptrtoint ptr %i.qc to i64               ; 2 uses
+  %i.qk = sub i64 %i.qi, %i.qj                    ; 5 uses
   %i.ql = icmp ugt i64 %i.qk, 2
   br i1 %i.ql, label %.lr.ph.i.i281, label %.preheader.i.i
 
@@ -218,8 +218,7 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %i.qm, label %iter.check665, label %uriFixPercentEncodingEngineA.exit.i
 
 iter.check665:                                    ; preds = %.preheader.i.i
-  %4 = add i64 %.0.lcssa.i.i280, %i.qj
-  %i.qn = sub i64 %i.qi, %4                       ; 7 uses
+  %i.qn = sub nuw i64 %i.qk, %.0.lcssa.i.i280     ; 7 uses
   %min.iters.check650 = icmp ult i64 %i.qn, 8
   br i1 %min.iters.check650, label %.lr.ph49.i.i.preheader, label %vector.memcheck
 
@@ -622,9 +621,9 @@ bb.cz:                                            ; preds = %bb.cy
   br i1 %i.xo, label %uriFixPercentEncodingInplaceA.exit324, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
-  %i.xp = ptrtoint ptr %i.xn to i64               ; 2 uses
-  %i.xq = ptrtoint ptr %i.xj to i64               ; 3 uses
-  %i.xr = sub i64 %i.xp, %i.xq                    ; 4 uses
+  %i.xp = ptrtoint ptr %i.xn to i64
+  %i.xq = ptrtoint ptr %i.xj to i64               ; 2 uses
+  %i.xr = sub i64 %i.xp, %i.xq                    ; 5 uses
   %i.xs = icmp ugt i64 %i.xr, 2
   br i1 %i.xs, label %.lr.ph.i.i317, label %.preheader.i.i309
 
@@ -636,8 +635,7 @@ bb.da:                                            ; preds = %bb.cz
   br i1 %i.xt, label %iter.check698, label %uriFixPercentEncodingEngineA.exit.i312
 
 iter.check698:                                    ; preds = %.preheader.i.i309
-  %5 = add i64 %.0.lcssa.i.i311, %i.xq
-  %i.xu = sub i64 %i.xp, %5                       ; 7 uses
+  %i.xu = sub nuw i64 %i.xr, %.0.lcssa.i.i311     ; 7 uses
   %min.iters.check683 = icmp ult i64 %i.xu, 8
   br i1 %min.iters.check683, label %.lr.ph49.i.i314.preheader, label %vector.memcheck680
 
@@ -816,9 +814,9 @@ bb.dl:                                            ; preds = %bb.dk
   br i1 %i.zx, label %uriFixPercentEncodingInplaceA.exit340, label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dl
-  %i.zy = ptrtoint ptr %i.zw to i64               ; 2 uses
-  %i.zz = ptrtoint ptr %i.zs to i64               ; 3 uses
-  %i.aaa = sub i64 %i.zy, %i.zz                   ; 4 uses
+  %i.zy = ptrtoint ptr %i.zw to i64
+  %i.zz = ptrtoint ptr %i.zs to i64               ; 2 uses
+  %i.aaa = sub i64 %i.zy, %i.zz                   ; 5 uses
   %i.aab = icmp ugt i64 %i.aaa, 2
   br i1 %i.aab, label %.lr.ph.i.i333, label %.preheader.i.i325
 
@@ -830,8 +828,7 @@ bb.dm:                                            ; preds = %bb.dl
   br i1 %i.aac, label %iter.check731, label %uriFixPercentEncodingEngineA.exit.i328
 
 iter.check731:                                    ; preds = %.preheader.i.i325
-  %6 = add i64 %.0.lcssa.i.i327, %i.zz
-  %i.aad = sub i64 %i.zy, %6                      ; 7 uses
+  %i.aad = sub nuw i64 %i.aaa, %.0.lcssa.i.i327   ; 7 uses
   %min.iters.check716 = icmp ult i64 %i.aad, 8
   br i1 %min.iters.check716, label %.lr.ph49.i.i330.preheader, label %vector.memcheck713
 
@@ -1234,9 +1231,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.e = ptrtoint ptr %0 to i64                   ; 3 uses
-  %i.f = sub i64 %i.d, %i.e                       ; 4 uses
+  %i.d = ptrtoint ptr %i.b to i64
+  %i.e = ptrtoint ptr %0 to i64                   ; 2 uses
+  %i.f = sub i64 %i.d, %i.e                       ; 5 uses
   %i.g = icmp ugt i64 %i.f, 2
   br i1 %i.g, label %.lr.ph.i, label %.preheader.i
 
@@ -1248,8 +1245,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %iter.check, label %uriFixPercentEncodingEngineA.exit
 
 iter.check:                                       ; preds = %.preheader.i
-  %2 = add i64 %.0.lcssa.i, %i.e
-  %i.i = sub i64 %i.d, %2                         ; 7 uses
+  %i.i = sub nuw i64 %i.f, %.0.lcssa.i            ; 7 uses
   %min.iters.check = icmp ult i64 %i.i, 8
   br i1 %min.iters.check, label %.lr.ph49.i.preheader, label %vector.memcheck
 
@@ -1421,9 +1417,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.l = load ptr, ptr %0, align 8, !tbaa !43     ; 6 uses
   %i.m = load ptr, ptr %1, align 8, !tbaa !43
-  %i.n = ptrtoint ptr %i.m to i64                 ; 2 uses
-  %i.o = ptrtoint ptr %i.l to i64                 ; 3 uses
-  %i.p = sub i64 %i.n, %i.o                       ; 4 uses
+  %i.n = ptrtoint ptr %i.m to i64
+  %i.o = ptrtoint ptr %i.l to i64                 ; 2 uses
+  %i.p = sub i64 %i.n, %i.o                       ; 5 uses
   %i.q = icmp ugt i64 %i.p, 2
   br i1 %i.q, label %.lr.ph.i, label %.preheader.i
 
@@ -1435,8 +1431,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.r, label %iter.check, label %uriFixPercentEncodingEngineA.exit
 
 iter.check:                                       ; preds = %.preheader.i
-  %3 = add i64 %.0.lcssa.i, %i.o
-  %i.s = sub i64 %i.n, %3                         ; 7 uses
+  %i.s = sub nuw i64 %i.p, %.0.lcssa.i            ; 7 uses
   %min.iters.check = icmp ult i64 %i.s, 8
   br i1 %min.iters.check, label %.lr.ph49.i.preheader, label %vector.memcheck
 
