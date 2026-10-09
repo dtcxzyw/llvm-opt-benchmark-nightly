@@ -204,125 +204,56 @@ bb.an:                                            ; preds = %bb.a, %bb.b, %_ZNSt
 declare i64 @__isoc23_strtoll(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6google8protobuf4util8TimeUtil21NanosecondsToDurationEl(ptr dead_on_unwind noalias writable sret(%"class.google::protobuf::Duration") align 8 %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
-  %3 = sdiv i64 %1, 1000000000                    ; 3 uses
-  %4 = srem i64 %1, 1000000000                    ; 3 uses
-  %5 = trunc nsw i64 %4 to i32                    ; 3 uses
-  %6 = icmp slt i64 %1, -999999999
-  %7 = icmp sgt i64 %4, 0
-  %or.cond3.i = and i1 %6, %7
-  br i1 %or.cond3.i, label %8, label %11
-
-8:                                                ; preds = %2
-  %9 = add nsw i32 %5, -1000000000
-  %10 = add nsw i64 %3, 1
-  br label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-11:                                               ; preds = %2
-  %12 = icmp sgt i64 %1, 999999999
-  %13 = icmp slt i64 %4, 0
-  %or.cond5.i = and i1 %12, %13
-  br i1 %or.cond5.i, label %14, label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-14:                                               ; preds = %11
-  %15 = add nsw i64 %3, -1
-  %16 = add nsw i32 %5, 1000000000
-  br label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit: ; preds = %8, %11, %14
-  %.123.i = phi i32 [ %9, %8 ], [ %16, %14 ], [ %5, %11 ]
-  %.1.i = phi i64 [ %10, %8 ], [ %15, %14 ], [ %3, %11 ]
+define void @_ZN6google8protobuf4util8TimeUtil21NanosecondsToDurationEl(ptr dead_on_unwind noalias nonnull writable sret(%"class.google::protobuf::Duration") align 8 %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit:
+  %2 = sdiv i64 %1, 1000000000
+  %3 = srem i64 %1, 1000000000
+  %4 = trunc nsw i64 %3 to i32
   tail call void @_ZN6google8protobuf8DurationC2EPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef null)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.1.i, ptr %i.a, align 8, !tbaa !8, !alias.scope !75
+  store i64 %2, ptr %i.a, align 8, !tbaa !8, !alias.scope !75
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !18, !alias.scope !75
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %.123.i, ptr %i.d, align 8, !tbaa !8, !alias.scope !75
+  store i32 %4, ptr %i.d, align 8, !tbaa !8, !alias.scope !75
   %i.e = or i32 %i.c, 3
   store i32 %i.e, ptr %i.b, align 8, !tbaa !18, !alias.scope !75
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6google8protobuf4util8TimeUtil22MicrosecondsToDurationEl(ptr dead_on_unwind noalias writable sret(%"class.google::protobuf::Duration") align 8 %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
-  %3 = sdiv i64 %1, 1000000                       ; 3 uses
-  %4 = srem i64 %1, 1000000                       ; 3 uses
-  %5 = trunc nsw i64 %4 to i32
-  %6 = mul nsw i32 %5, 1000                       ; 3 uses
-  %7 = icmp slt i64 %1, -999999
-  %8 = icmp sgt i64 %4, 0
-  %or.cond3.i = and i1 %7, %8
-  br i1 %or.cond3.i, label %9, label %12
-
-9:                                                ; preds = %2
-  %10 = add nsw i64 %3, 1
-  %11 = add nuw nsw i32 %6, -1000000000
-  br label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-12:                                               ; preds = %2
-  %13 = icmp sgt i64 %1, 999999
-  %14 = icmp slt i64 %4, 0
-  %or.cond5.i = and i1 %13, %14
-  br i1 %or.cond5.i, label %15, label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-15:                                               ; preds = %12
-  %16 = add nsw i64 %3, -1
-  %17 = add nsw i32 %6, 1000000000
-  br label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit: ; preds = %9, %12, %15
-  %.123.i = phi i32 [ %11, %9 ], [ %17, %15 ], [ %6, %12 ]
-  %.1.i = phi i64 [ %10, %9 ], [ %16, %15 ], [ %3, %12 ]
+define void @_ZN6google8protobuf4util8TimeUtil22MicrosecondsToDurationEl(ptr dead_on_unwind noalias nonnull writable sret(%"class.google::protobuf::Duration") align 8 %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit:
+  %2 = sdiv i64 %1, 1000000
+  %3 = srem i64 %1, 1000000
+  %4 = trunc nsw i64 %3 to i32
+  %5 = mul nsw i32 %4, 1000
   tail call void @_ZN6google8protobuf8DurationC2EPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef null)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.1.i, ptr %i.a, align 8, !tbaa !8, !alias.scope !78
+  store i64 %2, ptr %i.a, align 8, !tbaa !8, !alias.scope !78
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !18, !alias.scope !78
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %.123.i, ptr %i.d, align 8, !tbaa !8, !alias.scope !78
+  store i32 %5, ptr %i.d, align 8, !tbaa !8, !alias.scope !78
   %i.e = or i32 %i.c, 3
   store i32 %i.e, ptr %i.b, align 8, !tbaa !18, !alias.scope !78
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6google8protobuf4util8TimeUtil22MillisecondsToDurationEl(ptr dead_on_unwind noalias writable sret(%"class.google::protobuf::Duration") align 8 %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
-  %3 = sdiv i64 %1, 1000                          ; 3 uses
-  %4 = srem i64 %1, 1000                          ; 3 uses
-  %5 = trunc nsw i64 %4 to i32
-  %6 = mul nsw i32 %5, 1000000                    ; 3 uses
-  %7 = icmp slt i64 %1, -999
-  %8 = icmp sgt i64 %4, 0
-  %or.cond3.i = and i1 %7, %8
-  br i1 %or.cond3.i, label %9, label %12
-
-9:                                                ; preds = %2
-  %10 = add nsw i64 %3, 1
-  %11 = add nuw nsw i32 %6, -1000000000
-  br label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-12:                                               ; preds = %2
-  %13 = icmp sgt i64 %1, 999
-  %14 = icmp slt i64 %4, 0
-  %or.cond5.i = and i1 %13, %14
-  br i1 %or.cond5.i, label %15, label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-15:                                               ; preds = %12
-  %16 = add nsw i64 %3, -1
-  %17 = add nsw i32 %6, 1000000000
-  br label %_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit
-
-_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit: ; preds = %9, %12, %15
-  %.123.i = phi i32 [ %11, %9 ], [ %17, %15 ], [ %6, %12 ]
-  %.1.i = phi i64 [ %10, %9 ], [ %16, %15 ], [ %3, %12 ]
+define void @_ZN6google8protobuf4util8TimeUtil22MillisecondsToDurationEl(ptr dead_on_unwind noalias nonnull writable sret(%"class.google::protobuf::Duration") align 8 %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+_ZN6google8protobuf4util12_GLOBAL__N_124CreateNormalizedDurationEli.exit:
+  %2 = sdiv i64 %1, 1000
+  %3 = srem i64 %1, 1000
+  %4 = trunc nsw i64 %3 to i32
+  %5 = mul nsw i32 %4, 1000000
   tail call void @_ZN6google8protobuf8DurationC2EPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef null)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.1.i, ptr %i.a, align 8, !tbaa !8, !alias.scope !81
+  store i64 %2, ptr %i.a, align 8, !tbaa !8, !alias.scope !81
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !18, !alias.scope !81
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %.123.i, ptr %i.d, align 8, !tbaa !8, !alias.scope !81
+  store i32 %5, ptr %i.d, align 8, !tbaa !8, !alias.scope !81
   %i.e = or i32 %i.c, 3
   store i32 %i.e, ptr %i.b, align 8, !tbaa !18, !alias.scope !81
   ret void
@@ -395,16 +326,10 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8
   %i.c = mul nsw i64 %i.b, 1000000
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !8    ; 3 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !8
   %i.f = sdiv i32 %i.e, 1000
   %.sext = sext i32 %i.f to i64
-  %1 = srem i32 %i.e, 1000
-  %2 = icmp slt i32 %i.e, -999
-  %3 = icmp sgt i32 %1, 0
-  %or.cond.i = and i1 %2, %3
-  %4 = zext i1 %or.cond.i to i64
-  %.0.i = add i64 %i.c, %.sext
-  %i.g = add i64 %.0.i, %4
+  %i.g = add nsw i64 %i.c, %.sext
   ret i64 %i.g
 }
 
@@ -423,16 +348,10 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8
   %i.c = mul nsw i64 %i.b, 1000
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !8    ; 3 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !8
   %i.f = sdiv i32 %i.e, 1000000
   %.sext = sext i32 %i.f to i64
-  %1 = srem i32 %i.e, 1000000
-  %2 = icmp slt i32 %i.e, -999999
-  %3 = icmp sgt i32 %1, 0
-  %or.cond.i = and i1 %2, %3
-  %4 = zext i1 %or.cond.i to i64
-  %.0.i = add i64 %i.c, %.sext
-  %i.g = add i64 %.0.i, %4
+  %i.g = add nsw i64 %i.c, %.sext
   ret i64 %i.g
 }
 
@@ -440,30 +359,18 @@ bb.a:
 define noundef range(i64 -153722867280912930, 153722867280912931) i64 @_ZN6google8protobuf4util8TimeUtil17DurationToMinutesERKNS0_8DurationE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !8    ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !8
   %i.c = sdiv i64 %i.b, 60
-  %1 = srem i64 %i.b, 60
-  %2 = icmp slt i64 %i.b, -59
-  %3 = icmp sgt i64 %1, 0
-  %or.cond.i = and i1 %2, %3
-  %4 = zext i1 %or.cond.i to i64
-  %.0.i = add nsw i64 %i.c, %4
-  ret i64 %.0.i
+  ret i64 %i.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef range(i64 -2562047788015215, 2562047788015217) i64 @_ZN6google8protobuf4util8TimeUtil15DurationToHoursERKNS0_8DurationE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #4 align 2 {
+define noundef range(i64 -2562047788015215, 2562047788015216) i64 @_ZN6google8protobuf4util8TimeUtil15DurationToHoursERKNS0_8DurationE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !8    ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !8
   %i.c = sdiv i64 %i.b, 3600
-  %1 = srem i64 %i.b, 3600
-  %2 = icmp slt i64 %i.b, -3599
-  %3 = icmp sgt i64 %1, 0
-  %or.cond.i = and i1 %2, %3
-  %4 = zext i1 %or.cond.i to i64
-  %.0.i = add nsw i64 %i.c, %4
-  ret i64 %.0.i
+  ret i64 %i.c
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -574,16 +481,10 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8
   %i.c = mul nsw i64 %i.b, 1000000
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !8    ; 3 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !8
   %i.f = sdiv i32 %i.e, 1000
   %.sext = sext i32 %i.f to i64
-  %1 = srem i32 %i.e, 1000
-  %2 = icmp slt i32 %i.e, -999
-  %3 = icmp sgt i32 %1, 0
-  %or.cond.i = and i1 %2, %3
-  %4 = zext i1 %or.cond.i to i64
-  %.0.i = add i64 %i.c, %.sext
-  %i.g = add i64 %.0.i, %4
+  %i.g = add nsw i64 %i.c, %.sext
   ret i64 %i.g
 }
 
@@ -594,16 +495,10 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8
   %i.c = mul nsw i64 %i.b, 1000
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !8    ; 3 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !8
   %i.f = sdiv i32 %i.e, 1000000
   %.sext = sext i32 %i.f to i64
-  %1 = srem i32 %i.e, 1000000
-  %2 = icmp slt i32 %i.e, -999999
-  %3 = icmp sgt i32 %1, 0
-  %or.cond.i = and i1 %2, %3
-  %4 = zext i1 %or.cond.i to i64
-  %.0.i = add i64 %i.c, %.sext
-  %i.g = add i64 %.0.i, %4
+  %i.g = add nsw i64 %i.c, %.sext
   ret i64 %i.g
 }
 
@@ -684,17 +579,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !8    ; 3 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !8
   %i.e = sdiv i32 %i.d, 1000
   %.sext = sext i32 %i.e to i64
-  %1 = srem i32 %i.d, 1000
-  %2 = icmp slt i32 %i.d, -999
-  %3 = icmp sgt i32 %1, 0
-  %or.cond.i = and i1 %2, %3
-  %4 = zext i1 %or.cond.i to i64
-  %.0.i = add nsw i64 %4, %.sext
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %i.b, 0
-  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.0.i, 1
+  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.sext, 1
   ret { i64, i64 } %.fca.1.insert
 }
 
@@ -762,20 +651,14 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !8    ; 3 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !8    ; 2 uses
   %i.e = sdiv i32 %i.d, 1000
-  %.sext = sext i32 %i.e to i64
-  %1 = srem i32 %i.d, 1000
-  %2 = icmp slt i32 %i.d, -999
-  %3 = icmp sgt i32 %1, 0
-  %or.cond.i = and i1 %2, %3
-  %4 = zext i1 %or.cond.i to i64
-  %.0.i = add nsw i64 %4, %.sext                  ; 4 uses
-  %i.f = icmp slt i64 %.0.i, 0
-  %i.g = add nsw i64 %.0.i, 1000000
-  %.0.i.lobit = ashr i64 %.0.i, 63
-  %.sroa.0.0 = add nsw i64 %.0.i.lobit, %i.b
-  %.sroa.4.0 = select i1 %i.f, i64 %i.g, i64 %.0.i
+  %.sext = sext i32 %i.e to i64                   ; 2 uses
+  %i.f = icmp slt i32 %i.d, -999                  ; 2 uses
+  %i.g = add nsw i64 %.sext, 1000000
+  %1 = sext i1 %i.f to i64
+  %.sroa.0.0 = add nsw i64 %i.b, %1
+  %.sroa.4.0 = select i1 %i.f, i64 %i.g, i64 %.sext
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.sroa.4.0, 1
   ret { i64, i64 } %.fca.1.insert

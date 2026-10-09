@@ -204,8 +204,8 @@ bb.r:                                             ; preds = %.lr.ph.i275
   br i1 %exitcond.not.i279, label %_add.exit, label %.lr.ph.i275, !llvm.loop !0
 
 bb.s:                                             ; preds = %.preheader
-  %i.cb = load i32, ptr %i.z, align 4             ; 4 uses
-  %i.cc = srem i32 %i.cb, 100                     ; 2 uses
+  %i.cb = load i32, ptr %i.z, align 4             ; 3 uses
+  %i.cc = srem i32 %i.cb, 100
   %i.cd = sdiv i32 %i.cb, 100                     ; 2 uses
   %i.ce = icmp slt i32 %i.cc, 0                   ; 2 uses
   %i.cf = icmp sgt i32 %i.cb, -1900
@@ -217,14 +217,9 @@ bb.s:                                             ; preds = %.preheader
   br label %bb.v
 
 bb.t:                                             ; preds = %bb.s
-  %5 = icmp slt i32 %i.cb, -1999
-  %6 = icmp sgt i32 %i.cc, 0
-  %or.cond3.i = and i1 %5, %6                     ; 2 uses
-  %.033.i.v = select i1 %or.cond3.i, i32 20, i32 19
-  %.033.i = add nsw i32 %.033.i.v, %i.cd          ; 2 uses
+  %.033.i = add nsw i32 %i.cd, 19                 ; 2 uses
   %i.ch = icmp eq i32 %.033.i, 0
-  %7 = or i1 %i.ce, %or.cond3.i
-  %or.cond5.i = and i1 %7, %i.ch
+  %or.cond5.i = and i1 %i.ce, %i.ch
   br i1 %or.cond5.i, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
@@ -627,34 +622,20 @@ bb.ck:                                            ; preds = %bb.cj, %bb.ci
 
 bb.cl:                                            ; preds = %.preheader
   store i32 3, ptr %4, align 4
-  %i.ll = load i32, ptr %i.z, align 4             ; 3 uses
-  %i.lm = srem i32 %i.ll, 100                     ; 5 uses
+  %i.ll = load i32, ptr %i.z, align 4             ; 2 uses
+  %i.lm = srem i32 %i.ll, 100                     ; 3 uses
   %i.ln = icmp slt i32 %i.lm, 0
   %i.lo = icmp sgt i32 %i.ll, -1900
   %or.cond.i447 = and i1 %i.lo, %i.ln
-  br i1 %or.cond.i447, label %8, label %10
-
-8:                                                ; preds = %bb.cl
-  %9 = add nsw i32 %i.lm, 100
-  br label %14
-
-10:                                               ; preds = %bb.cl
-  %11 = icmp slt i32 %i.ll, -1999
-  %12 = icmp sgt i32 %i.lm, 0
-  %or.cond3.i448 = and i1 %11, %12
-  %13 = add nuw nsw i32 %i.lm, -100
-  %spec.select517 = select i1 %or.cond3.i448, i32 %13, i32 %i.lm
-  br label %14
-
-14:                                               ; preds = %10, %8
-  %.0.i450 = phi i32 [ %9, %8 ], [ %spec.select517, %10 ]
-  %15 = call i32 @llvm.abs.i32(i32 %.0.i450, i1 true)
+  %5 = add nsw i32 %i.lm, 100
+  %.0.i450 = select i1 %or.cond.i447, i32 %5, i32 %i.lm
+  %6 = call i32 @llvm.abs.i32(i32 %.0.i450, i1 true)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  %16 = call i32 (ptr, ptr, ...) @pg_sprintf(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.2, i32 noundef %15) #6 ; 0 uses
-  %17 = icmp ult ptr %.0215, %3
-  br i1 %17, label %.lr.ph.preheader.i.i40.i453, label %_yconv.exit460
+  %7 = call i32 (ptr, ptr, ...) @pg_sprintf(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.2, i32 noundef %6) #6 ; 0 uses
+  %8 = icmp ult ptr %.0215, %3
+  br i1 %8, label %.lr.ph.preheader.i.i40.i453, label %_yconv.exit460
 
-.lr.ph.preheader.i.i40.i453:                      ; preds = %14
+.lr.ph.preheader.i.i40.i453:                      ; preds = %bb.cl
   %i.lp = ptrtoaddr ptr %.0215 to i64
   %i.lq = sub i64 %i.y, %i.lp
   %scevgep.i.i41.i454 = getelementptr i8, ptr %.0215, i64 %i.lq
@@ -674,8 +655,8 @@ bb.cm:                                            ; preds = %.lr.ph.i.i42.i455
   %exitcond.not.i.i46.i459 = icmp eq ptr %i.lt, %3
   br i1 %exitcond.not.i.i46.i459, label %_yconv.exit460, label %.lr.ph.i.i42.i455, !llvm.loop !0
 
-_yconv.exit460:                                   ; preds = %.lr.ph.i.i42.i455, %bb.cm, %14
-  %.06.lcssa.i.i39.i452 = phi ptr [ %.0215, %14 ], [ %.067.i.i44.i457, %.lr.ph.i.i42.i455 ], [ %scevgep.i.i41.i454, %bb.cm ]
+_yconv.exit460:                                   ; preds = %.lr.ph.i.i42.i455, %bb.cm, %bb.cl
+  %.06.lcssa.i.i39.i452 = phi ptr [ %.0215, %bb.cl ], [ %.067.i.i44.i457, %.lr.ph.i.i42.i455 ], [ %scevgep.i.i41.i454, %bb.cm ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   br label %_add.exit
 
