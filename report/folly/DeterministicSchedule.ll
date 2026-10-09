@@ -205,18 +205,18 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i.i
   %i.s = add i64 %i.p, 7
   %spec.select.i.i.i = select i1 %i.r, i64 %i.s, i64 %i.q
   %i.t = getelementptr inbounds [8 x i8], ptr %1, i64 %spec.select.i.i.i
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !52   ; 3 uses
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !52   ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.p ; 2 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !52
   %i.x = load i64, ptr %i.k, align 8, !tbaa !210
   %i.y = add i64 %i.x, %i.w                       ; 2 uses
   %.not.i.i.i = icmp ult i64 %i.u, %i.y           ; 2 uses
-  %reass.sub.i.i.i.a = add i64 %i.u, 281474976710656
+  %reass.sub.i.i.i = sub i64 %i.u, %i.y           ; 2 uses
+  %reass.sub.i.i.i.a = add i64 %reass.sub.i.i.i, 281474976710656
   %storemerge.i.i.i = zext i1 %.not.i.i.i to i64
-  %.0.v.i.i.i = select i1 %.not.i.i.i, i64 %reass.sub.i.i.i.a, i64 %i.u
-  %.0.i.i.i = sub i64 %.0.v.i.i.i, %i.y
+  %.0.v.i.i.i = select i1 %.not.i.i.i, i64 %reass.sub.i.i.i.a, i64 %reass.sub.i.i.i
   store i64 %storemerge.i.i.i, ptr %i.k, align 8, !tbaa !210
-  store i64 %.0.i.i.i, ptr %i.v, align 8, !tbaa !52
+  store i64 %.0.v.i.i.i, ptr %i.v, align 8, !tbaa !52
   %i.z = load i64, ptr %i.j, align 8, !tbaa !7589
   %i.aa = add i64 %i.z, 1                         ; 2 uses
   %i.ab = icmp ugt i64 %i.aa, 11
@@ -235,28 +235,28 @@ _ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389
   %i.ah = add i64 %i.ad, 7
   %spec.select.i.i = select i1 %i.ag, i64 %i.ah, i64 %i.af
   %i.ai = getelementptr inbounds [8 x i8], ptr %1, i64 %spec.select.i.i
-  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !52 ; 3 uses
+  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !52 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ad ; 2 uses
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !52
   %i.am = load i64, ptr %i.k, align 8, !tbaa !210
   %i.an = add i64 %i.am, %i.al                    ; 2 uses
   %.not.i1.i = icmp ult i64 %i.aj, %i.an          ; 2 uses
-  %reass.sub.i.i.a = add i64 %i.aj, 281474976710656
+  %reass.sub.i.i = sub i64 %i.aj, %i.an           ; 2 uses
+  %reass.sub.i.i.a = add i64 %reass.sub.i.i, 281474976710656
   %storemerge.i.i = zext i1 %.not.i1.i to i64
-  %.0.v.i.i = select i1 %.not.i1.i, i64 %reass.sub.i.i.a, i64 %i.aj
-  %.0.i.i = sub i64 %.0.v.i.i, %i.an              ; 3 uses
+  %.0.v.i.i = select i1 %.not.i1.i, i64 %reass.sub.i.i.a, i64 %reass.sub.i.i ; 3 uses
   store i64 %storemerge.i.i, ptr %i.k, align 8, !tbaa !210
-  store i64 %.0.i.i, ptr %i.ak, align 8, !tbaa !52
+  store i64 %.0.v.i.i, ptr %i.ak, align 8, !tbaa !52
   %i.ao = load i64, ptr %i.j, align 8, !tbaa !7589
   %i.ap = add i64 %i.ao, 1                        ; 2 uses
   %i.aq = icmp ugt i64 %i.ap, 11
   %spec.select12.i.i = select i1 %i.aq, i64 0, i64 %i.ap
   store i64 %spec.select12.i.i, ptr %i.j, align 8, !tbaa !7589
-  %.not27 = icmp ult i64 %.0.i.i, %i.h
+  %.not27 = icmp ult i64 %.0.v.i.i, %i.h
   br i1 %.not27, label %bb.f, label %bb.c, !llvm.loop !7585
 
 bb.f:                                             ; preds = %_ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389ELm11EEclEv.exit
-  %i.ar = udiv i64 %.0.i.i, %i.g
+  %i.ar = udiv i64 %.0.v.i.i, %i.g
   br label %.loopexit
 
 bb.g:                                             ; preds = %bb.a
@@ -304,18 +304,18 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.i.i36
   %i.bg = add i64 %i.bd, 7
   %spec.select.i.i.i39 = select i1 %i.bf, i64 %i.bg, i64 %i.be
   %i.bh = getelementptr inbounds [8 x i8], ptr %1, i64 %spec.select.i.i.i39
-  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !52 ; 3 uses
+  %i.bi = load i64, ptr %i.bh, align 8, !tbaa !52 ; 2 uses
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bd ; 2 uses
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !52
   %i.bl = load i64, ptr %i.aw, align 8, !tbaa !210
   %i.bm = add i64 %i.bl, %i.bk                    ; 2 uses
   %.not.i.i.i40 = icmp ult i64 %i.bi, %i.bm       ; 2 uses
-  %reass.sub.i.i.i41 = add i64 %i.bi, 281474976710656
+  %reass.sub.i.i.i40 = sub i64 %i.bi, %i.bm       ; 2 uses
+  %reass.sub.i.i.i41 = add i64 %reass.sub.i.i.i40, 281474976710656
   %storemerge.i.i.i42 = zext i1 %.not.i.i.i40 to i64
-  %.0.v.i.i.i43 = select i1 %.not.i.i.i40, i64 %reass.sub.i.i.i41, i64 %i.bi
-  %.0.i.i.i44 = sub i64 %.0.v.i.i.i43, %i.bm
+  %.0.v.i.i.i43 = select i1 %.not.i.i.i40, i64 %reass.sub.i.i.i41, i64 %reass.sub.i.i.i40
   store i64 %storemerge.i.i.i42, ptr %i.aw, align 8, !tbaa !210
-  store i64 %.0.i.i.i44, ptr %i.bj, align 8, !tbaa !52
+  store i64 %.0.v.i.i.i43, ptr %i.bj, align 8, !tbaa !52
   %i.bn = load i64, ptr %i.av, align 8, !tbaa !7589
   %i.bo = add i64 %i.bn, 1                        ; 2 uses
   %i.bp = icmp ugt i64 %i.bo, 11
@@ -334,24 +334,24 @@ _ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389
   %i.bv = add i64 %i.br, 7
   %spec.select.i.i28 = select i1 %i.bu, i64 %i.bv, i64 %i.bt
   %i.bw = getelementptr inbounds [8 x i8], ptr %1, i64 %spec.select.i.i28
-  %i.bx = load i64, ptr %i.bw, align 8, !tbaa !52 ; 3 uses
+  %i.bx = load i64, ptr %i.bw, align 8, !tbaa !52 ; 2 uses
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.br ; 2 uses
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !52
   %i.ca = load i64, ptr %i.aw, align 8, !tbaa !210
   %i.cb = add i64 %i.ca, %i.bz                    ; 2 uses
   %.not.i1.i29 = icmp ult i64 %i.bx, %i.cb        ; 2 uses
-  %reass.sub.i.i30.a = add i64 %i.bx, 281474976710656
+  %reass.sub.i.i30 = sub i64 %i.bx, %i.cb         ; 2 uses
+  %reass.sub.i.i30.a = add i64 %reass.sub.i.i30, 281474976710656
   %storemerge.i.i31 = zext i1 %.not.i1.i29 to i64
-  %.0.v.i.i32 = select i1 %.not.i1.i29, i64 %reass.sub.i.i30.a, i64 %i.bx
-  %.0.i.i33 = sub i64 %.0.v.i.i32, %i.cb          ; 2 uses
+  %.0.v.i.i32 = select i1 %.not.i1.i29, i64 %reass.sub.i.i30.a, i64 %reass.sub.i.i30 ; 2 uses
   store i64 %storemerge.i.i31, ptr %i.aw, align 8, !tbaa !210
-  store i64 %.0.i.i33, ptr %i.by, align 8, !tbaa !52
+  store i64 %.0.v.i.i32, ptr %i.by, align 8, !tbaa !52
   %i.cc = load i64, ptr %i.av, align 8, !tbaa !7589
   %i.cd = add i64 %i.cc, 1                        ; 2 uses
   %i.ce = icmp ugt i64 %i.cd, 11
   %spec.select12.i.i34 = select i1 %i.ce, i64 0, i64 %i.cd
   store i64 %spec.select12.i.i34, ptr %i.av, align 8, !tbaa !7589
-  %i.cf = add i64 %.0.i.i33, %i.ay                ; 3 uses
+  %i.cf = add i64 %.0.v.i.i32, %i.ay              ; 3 uses
   %i.cg = icmp ugt i64 %i.cf, %i.d
   %i.ch = icmp ult i64 %i.cf, %i.ay
   %i.ci = or i1 %i.cg, %i.ch
@@ -382,18 +382,18 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph.i.i56
   %i.cs = add i64 %i.cp, 7
   %spec.select.i.i.i59 = select i1 %i.cr, i64 %i.cs, i64 %i.cq
   %i.ct = getelementptr inbounds [8 x i8], ptr %1, i64 %spec.select.i.i.i59
-  %i.cu = load i64, ptr %i.ct, align 8, !tbaa !52 ; 3 uses
+  %i.cu = load i64, ptr %i.ct, align 8, !tbaa !52 ; 2 uses
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.cp ; 2 uses
   %i.cw = load i64, ptr %i.cv, align 8, !tbaa !52
   %i.cx = load i64, ptr %i.co, align 8, !tbaa !210
   %i.cy = add i64 %i.cx, %i.cw                    ; 2 uses
   %.not.i.i.i60 = icmp ult i64 %i.cu, %i.cy       ; 2 uses
-  %reass.sub.i.i.i61 = add i64 %i.cu, 281474976710656
+  %reass.sub.i.i.i58 = sub i64 %i.cu, %i.cy       ; 2 uses
+  %reass.sub.i.i.i61 = add i64 %reass.sub.i.i.i58, 281474976710656
   %storemerge.i.i.i62 = zext i1 %.not.i.i.i60 to i64
-  %.0.v.i.i.i63 = select i1 %.not.i.i.i60, i64 %reass.sub.i.i.i61, i64 %i.cu
-  %.0.i.i.i64 = sub i64 %.0.v.i.i.i63, %i.cy
+  %.0.v.i.i.i63 = select i1 %.not.i.i.i60, i64 %reass.sub.i.i.i61, i64 %reass.sub.i.i.i58
   store i64 %storemerge.i.i.i62, ptr %i.co, align 8, !tbaa !210
-  store i64 %.0.i.i.i64, ptr %i.cv, align 8, !tbaa !52
+  store i64 %.0.v.i.i.i63, ptr %i.cv, align 8, !tbaa !52
   %i.cz = load i64, ptr %i.cn, align 8, !tbaa !7589
   %i.da = add i64 %i.cz, 1                        ; 2 uses
   %i.db = icmp ugt i64 %i.da, 11
@@ -414,19 +414,19 @@ _ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389
   %i.dj = add i64 %i.dg, 7
   %spec.select.i.i48 = select i1 %i.di, i64 %i.dj, i64 %i.dh
   %i.dk = getelementptr inbounds [8 x i8], ptr %1, i64 %spec.select.i.i48
-  %i.dl = load i64, ptr %i.dk, align 8, !tbaa !52 ; 3 uses
+  %i.dl = load i64, ptr %i.dk, align 8, !tbaa !52 ; 2 uses
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.dg ; 2 uses
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !52
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.dp = load i64, ptr %i.do, align 8, !tbaa !210
   %i.dq = add i64 %i.dp, %i.dn                    ; 2 uses
   %.not.i1.i49 = icmp ult i64 %i.dl, %i.dq        ; 2 uses
-  %reass.sub.i.i50 = add i64 %i.dl, 281474976710656
+  %reass.sub.i.i48 = sub i64 %i.dl, %i.dq         ; 2 uses
+  %reass.sub.i.i50 = add i64 %reass.sub.i.i48, 281474976710656
   %storemerge.i.i51 = zext i1 %.not.i1.i49 to i64
-  %.0.v.i.i52 = select i1 %.not.i1.i49, i64 %reass.sub.i.i50, i64 %i.dl
-  %.0.i.i53 = sub i64 %.0.v.i.i52, %i.dq          ; 2 uses
+  %.0.v.i.i52 = select i1 %.not.i1.i49, i64 %reass.sub.i.i50, i64 %reass.sub.i.i48 ; 2 uses
   store i64 %storemerge.i.i51, ptr %i.do, align 8, !tbaa !210
-  store i64 %.0.i.i53, ptr %i.dm, align 8, !tbaa !52
+  store i64 %.0.v.i.i52, ptr %i.dm, align 8, !tbaa !52
   %i.dr = load i64, ptr %i.df, align 8, !tbaa !7589
   %i.ds = add i64 %i.dr, 1                        ; 2 uses
   %i.dt = icmp ugt i64 %i.ds, 11
@@ -435,7 +435,7 @@ _ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389ELm11EEclEv.exit47, %_ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389ELm11EEclEv.exit67, %bb.f
-  %.0 = phi i64 [ %i.ar, %bb.f ], [ %.0.i.i53, %_ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389ELm11EEclEv.exit67 ], [ %i.cf, %_ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389ELm11EEclEv.exit47 ]
+  %.0 = phi i64 [ %i.ar, %bb.f ], [ %.0.v.i.i52, %_ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389ELm11EEclEv.exit67 ], [ %i.cf, %_ZNSt20discard_block_engineISt26subtract_with_carry_engineImLm48ELm5ELm12EELm389ELm11EEclEv.exit47 ]
   %i.du = load i64, ptr %2, align 8, !tbaa !274
   %i.dv = add i64 %i.du, %.0
   ret i64 %i.dv

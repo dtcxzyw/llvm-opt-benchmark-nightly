@@ -204,7 +204,11 @@ bb.h:                                             ; preds = %bb.g
   %i.aj = sub nuw i64 %.sroa.014.096.i, %.sroa.01.0.i
   %i.ak = cmpxchg ptr %i.ac, i64 %.sroa.014.096.i, i64 %i.aj acq_rel acquire, align 8 ; 2 uses
   %.sroa.18.0.in.i32.i = extractvalue { i64, i1 } %i.ak, 1
-  br i1 %.sroa.18.0.in.i32.i, label %2, label %bb.i
+  br i1 %.sroa.18.0.in.i32.i, label %.thread43.i, label %bb.i
+
+.thread43.i:                                      ; preds = %.thread27.i
+  %2 = and i64 %.sroa.01.0.in.i, 9223372036854775807 ; 3 uses
+  br i1 %i.x, label %bb.j, label %.thread52.i
 
 bb.i:                                             ; preds = %.thread27.i, %.noexc
   %.pn.i = phi { i64, i1 } [ %i.ak, %.thread27.i ], [ %i.ai, %.noexc ]
@@ -214,11 +218,7 @@ bb.i:                                             ; preds = %.thread27.i, %.noex
   %.not.i = icmp eq i64 %i.al, 0
   br i1 %.not.i, label %.lr.ph.i, label %.thread52.i
 
-2:                                                ; preds = %.thread27.i
-  %3 = and i64 %.sroa.01.0.in.i, 9223372036854775807 ; 3 uses
-  br i1 %i.x, label %bb.j, label %.thread52.i
-
-bb.j:                                             ; preds = %2
+bb.j:                                             ; preds = %.thread43.i
   %.not29.i = icmp eq ptr %.sroa.0.295.i, null
   br i1 %.not29.i, label %bb.k, label %.thread.i
 
@@ -241,7 +241,7 @@ bb.l:                                             ; preds = %bb.k
   br label %.thread.i
 
 .thread.i:                                        ; preds = %.thread.loopexit.i, %bb.l, %bb.k, %bb.j
-  %.sroa.09.0243749.i = phi i64 [ %3, %bb.k ], [ %3, %bb.l ], [ %3, %bb.j ], [ %i.aq, %.thread.loopexit.i ] ; 3 uses
+  %.sroa.09.0243749.i = phi i64 [ %2, %bb.k ], [ %2, %bb.l ], [ %2, %bb.j ], [ %i.aq, %.thread.loopexit.i ] ; 3 uses
   %.sroa.0.340.i = phi ptr [ null, %bb.k ], [ null, %bb.l ], [ %.sroa.0.295.i, %bb.j ], [ %.sroa.0.3.i, %.thread.loopexit.i ] ; 10 uses
   %storemerge.i = phi ptr [ %i.c, %bb.k ], [ %i.c, %bb.l ], [ %.sroa.0.295.i, %bb.j ], [ %.sroa.0.3.i, %.thread.loopexit.i ] ; 12 uses
   %.sroa.020.5.i = phi i8 [ 1, %bb.k ], [ 1, %bb.l ], [ 0, %bb.j ], [ 0, %.thread.loopexit.i ] ; 8 uses
@@ -420,9 +420,9 @@ bb.ae:                                            ; preds = %bb.ad
   invoke void @_RNvMs1_NtCsfC2LXmwPSoN_11parking_lot9raw_mutexNtB5_8RawMutex11unlock_slow(ptr noundef nonnull %storemerge.i, i1 noundef zeroext false)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit55.i unwind label %bb.ac
 
-.thread52.i:                                      ; preds = %bb.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit.i, %2
-  %.sroa.0.058.i = phi i8 [ %.sroa.0.0.i18, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit.i ], [ 0, %2 ], [ 1, %bb.i ] ; 3 uses
-  %.sroa.0.456.i = phi ptr [ %.sroa.0.340.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit.i ], [ %.sroa.0.295.i, %2 ], [ %.sroa.0.338.i, %bb.i ] ; 3 uses
+.thread52.i:                                      ; preds = %bb.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit.i, %.thread43.i
+  %.sroa.0.058.i = phi i8 [ %.sroa.0.0.i18, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit.i ], [ 0, %.thread43.i ], [ 1, %bb.i ] ; 3 uses
+  %.sroa.0.456.i = phi ptr [ %.sroa.0.340.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCslghKHtsL3a4_5tokio4loom3std11parking_lot10MutexGuardNtNtNtBK_4sync15batch_semaphore8WaitlistEEBK_.exit.i ], [ %.sroa.0.295.i, %.thread43.i ], [ %.sroa.0.338.i, %bb.i ] ; 3 uses
   %i.cf = icmp eq ptr %.sroa.0.456.i, null
   br i1 %i.cf, label %_RNvMNtNtCslghKHtsL3a4_5tokio4sync15batch_semaphoreNtB2_9Semaphore12poll_acquire.exit.thread, label %bb.af
 

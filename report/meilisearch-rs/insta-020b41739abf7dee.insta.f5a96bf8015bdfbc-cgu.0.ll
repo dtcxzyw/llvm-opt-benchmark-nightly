@@ -205,7 +205,7 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %i.pp, label %._crit_edge.i, label %bb.bs
 
 .thread427.i:                                     ; preds = %.thread192.i, %bb.cf, %.split.i125.i
-  %i.ql = sub i64 %i.pr, %.sroa.0.0.i             ; 3 uses
+  %i.ql = sub nuw i64 %i.pr, %.sroa.0.0.i         ; 3 uses
   %i.qm = getelementptr inbounds nuw i8, ptr %i.pq, i64 %.sroa.0.0.i ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !17784
   store i32 11439074, ptr %i.k, align 4, !noalias !17784

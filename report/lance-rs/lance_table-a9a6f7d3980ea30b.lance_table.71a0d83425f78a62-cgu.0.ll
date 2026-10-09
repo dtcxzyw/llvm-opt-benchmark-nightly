@@ -205,35 +205,35 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %i.g ; 2 uses
-  %gepdiff = sub nuw nsw i64 %1, %i.g
+  %gepdiff = sub nuw nsw i64 %1, %i.g             ; 2 uses
   %i.i = load i8, ptr %i.h, align 1, !noalias !49311, !noundef !68
   %i.j = zext i8 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr @1362, i64 %i.j
   %i.l = load i8, ptr %i.k, align 1, !noalias !49311, !noundef !68
-  %i.m = zext i8 %i.l to i64                      ; 3 uses
+  %i.m = zext i8 %i.l to i64                      ; 4 uses
   %.not29.1.i = icmp uge i64 %gepdiff, %i.m
   tail call void @llvm.assume(i1 %.not29.1.i)
-  %i.n = add nuw nsw i64 %i.m, %i.g               ; 3 uses
+  %i.n = add nuw nsw i64 %i.m, %i.g               ; 2 uses
   %.not27.2.i = icmp samesign eq i64 %1, %i.n
   br i1 %.not27.2.i, label %_RNvXNtNtCscI6d9CVNmLh_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator10advance_by.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.m ; 2 uses
-  %gepdiff12 = sub i64 %1, %i.n
+  %gepdiff12 = sub nuw i64 %gepdiff, %i.m         ; 2 uses
   %i.p = load i8, ptr %i.o, align 1, !noalias !49311, !noundef !68
   %i.q = zext i8 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr @1362, i64 %i.q
   %i.s = load i8, ptr %i.r, align 1, !noalias !49311, !noundef !68
-  %i.t = zext i8 %i.s to i64                      ; 3 uses
+  %i.t = zext i8 %i.s to i64                      ; 4 uses
   %.not29.2.i = icmp uge i64 %gepdiff12, %i.t
   tail call void @llvm.assume(i1 %.not29.2.i)
-  %i.u = add nuw nsw i64 %i.n, %i.t               ; 2 uses
+  %i.u = add nuw nsw i64 %i.n, %i.t
   %.not27.3.i = icmp samesign eq i64 %1, %i.u
   br i1 %.not27.3.i, label %_RNvXNtNtCscI6d9CVNmLh_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator10advance_by.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.t ; 2 uses
-  %gepdiff13 = sub i64 %1, %i.u
+  %gepdiff13 = sub i64 %gepdiff12, %i.t
   %i.w = load i8, ptr %i.v, align 1, !noalias !49311, !noundef !68
   %i.x = zext i8 %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr @1362, i64 %i.x
