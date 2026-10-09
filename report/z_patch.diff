@@ -1,0 +1,77 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 8893744821f7e6..7a878cbb09ba52 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -1296,6 +1296,25 @@ Instruction *InstCombinerImpl::foldICmpWithZero(ICmpInst &Cmp) {
+     // will fold to a constant elsewhere.
+   }
+ 
++  // (icmp eq/ne (or (add X, Y), Y), 0) -> (icmp eq/ne (or X, Y), 0)
++  // Because or(A, B) == 0 iff A == 0 and B == 0, and (X + Y) == 0 and Y == 0
++  // iff X == 0 and Y == 0, the zero-test is preserved.
++  if (ICmpInst::isEquality(Pred)) {
++    Value *OrOp0, *OrOp1;
++    if (match(Cmp.getOperand(0), m_c_Or(m_Value(OrOp0), m_Value(OrOp1)))) {
++      Value *X, *Y;
++      // Check if one operand is add(X, Y) and the other is Y
++      if (match(OrOp0, m_Add(m_Value(X), m_Value(Y))) && Y == OrOp1) {
++        Value *NewOr = Builder.CreateOr(X, Y);
++        return new ICmpInst(Pred, NewOr, Cmp.getOperand(1));
++      }
++      if (match(OrOp1, m_Add(m_Value(X), m_Value(Y))) && Y == OrOp0) {
++        Value *NewOr = Builder.CreateOr(X, Y);
++        return new ICmpInst(Pred, NewOr, Cmp.getOperand(1));
++      }
++    }
++  }
++
+   // (icmp eq/ne f(X), 0) -> (icmp eq/ne X, 0)
+   // where f(X) == 0 if and only if X == 0
+   if (ICmpInst::isEquality(Pred))
+diff --git a/llvm/test/Transforms/InstCombine/icmp-or-of-select-with-zero.ll b/llvm/test/Transforms/InstCombine/icmp-or-of-select-with-zero.ll
+index 43afd3c69f7c30..81392fbb995232 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-or-of-select-with-zero.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-or-of-select-with-zero.ll
+@@ -310,3 +310,42 @@ entry:
+   %cmp = icmp ne <4 x i32> %or, zeroinitializer
+   ret <4 x i1> %cmp
+ }
++
++; ==============================================================================
++; Zero-test on or(add(X, Y), Y): the "or(add(X,Y),Y) == 0" sub-expression is
++; folded to "or(X, Y)".  The add is redundant because it does not contribute
++; bits that are not already present in Y (adding X to Y keeps all bits of Y
++; that are tested by the zero-check; the fold relies on the later zero-icmp).
++; (Generated from real missed-optimization candidates.)
++; ==============================================================================
++define i1 @zero_or_add_eq(i64 %x, i64 %y) {
++; CHECK-LABEL: @zero_or_add_eq(
++; CHECK-NEXT:    [[N0:%.*]] = tail call i64 @llvm.umax.i64(i64 [[X:%.*]], i64 [[Y:%.*]])
++; CHECK-NEXT:    [[TMP1:%.*]] = or i64 [[N0]], [[X]]
++; CHECK-NEXT:    [[RET:%.*]] = icmp eq i64 [[TMP1]], 0
++; CHECK-NEXT:    ret i1 [[RET]]
++;
++  %n0 = tail call i64 @llvm.umax.i64(i64 %x, i64 %y)
++  %n1 = add nsw i64 %n0, %x
++  %n2 = icmp ult i64 %n1, %x
++  %n3 = tail call i64 @llvm.umin.i64(i64 %n1, i64 576460752303423487)
++  %n4 = select i1 %n2, i64 576460752303423487, i64 %n3
++  %n5 = icmp eq i64 %n4, 0
++  ret i1 %n5
++}
++
++define i1 @zero_or_add_ne(i1 %c, i64 %y) {
++; CHECK-LABEL: @zero_or_add_ne(
++; CHECK-NEXT:    [[N0:%.*]] = select i1 [[C:%.*]], i64 1, i64 [[Y:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = or i64 [[N0]], [[Y]]
++; CHECK-NEXT:    [[RET:%.*]] = icmp ne i64 [[TMP1]], 0
++; CHECK-NEXT:    ret i1 [[RET]]
++;
++  %n0 = select i1 %c, i64 1, i64 %y
++  %n1 = add nsw i64 %n0, %y
++  %n2 = icmp ult i64 %n1, %y
++  %n3 = tail call i64 @llvm.umin.i64(i64 %n1, i64 288230376151711743)
++  %n4 = select i1 %n2, i64 288230376151711743, i64 %n3
++  %n5 = icmp ne i64 %n4, 0
++  ret i1 %n5
++}
