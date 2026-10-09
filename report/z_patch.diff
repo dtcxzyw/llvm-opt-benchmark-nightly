@@ -1,0 +1,73 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 3ebcbe44c4c3d9..df04634980c995 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -2561,6 +2561,30 @@ Instruction *InstCombinerImpl::visitSub(BinaryOperator &I) {
+     return Sub;
+   }
+ 
++  // A - (B + C) --> (A - C) - B  or  (A - B) - C
++  // If A - B or A - C already exists as an instruction, reuse it.
++  {
++    Value *B, *C;
++    if (match(Op1, m_OneUse(m_Add(m_Value(B), m_Value(C)))) &&
++        !isa<Constant>(Op0)) {
++      for (User *U : Op0->users()) {
++        if (U == &I) continue;
++        auto *SubUser = dyn_cast<Instruction>(U);
++        if (!SubUser || SubUser->getOpcode() != Instruction::Sub) continue;
++        if (SubUser->getOperand(0) != Op0) continue;
++        Value *SubRHS = SubUser->getOperand(1);
++        if (SubRHS == B) {
++          // (A - B) exists, rewrite A - (B + C) as (A - B) - C
++          return BinaryOperator::CreateSub(SubUser, C);
++        }
++        if (SubRHS == C) {
++          // (A - C) exists, rewrite A - (B + C) as (A - C) - B
++          return BinaryOperator::CreateSub(SubUser, B);
++        }
++      }
++    }
++  }
++
+   // (X + C0) - (Y + C1) --> (X - Y) + (C0 - C1)
+   {
+     Constant *CX, *CY;
+diff --git a/llvm/test/Transforms/InstCombine/sub.ll b/llvm/test/Transforms/InstCombine/sub.ll
+index 1e7fa477c362ca..779a18a72ea0f4 100644
+--- a/llvm/test/Transforms/InstCombine/sub.ll
++++ b/llvm/test/Transforms/InstCombine/sub.ll
+@@ -2948,3 +2948,33 @@ define i32 @sub_const_or_no_disjoint(i32 %x) {
+   %r = sub i32 100, %a
+   ret i32 %r
+ }
++
++; A - (B + C) --> (A - B) - C when (A - B) already exists, then
++; (X - (X & M)) -> (X & ~M) folds further.
++define i64 @sub_reuse_existing_sub(i64 %a, i64 %b) {
++; CHECK-LABEL: @sub_reuse_existing_sub(
++; CHECK-NEXT:    [[D:%.*]] = sub i64 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = and i64 [[D]], 3
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  %d = sub i64 %a, %b
++  %m = and i64 %d, -4
++  %s = add i64 %b, %m
++  %r = sub i64 %a, %s
++  ret i64 %r
++}
++
++; Same fold with sdiv/shl form, further reduced by X - D*(X/D) -> X % D.
++define i64 @sub_reuse_existing_sdiv(i64 %a, i64 %b) {
++; CHECK-LABEL: @sub_reuse_existing_sdiv(
++; CHECK-NEXT:    [[D:%.*]] = sub nsw i64 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[R:%.*]] = srem i64 [[D]], 4
++; CHECK-NEXT:    ret i64 [[R]]
++;
++  %d = sub nsw i64 %a, %b
++  %q = sdiv i64 %d, 4
++  %p = shl nsw i64 %q, 2
++  %s = add i64 %b, %p
++  %r = sub i64 %a, %s
++  ret i64 %r
++}
