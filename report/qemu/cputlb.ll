@@ -205,9 +205,11 @@ bb.b:                                             ; preds = %qemu_spin_lock.exit
   br i1 %.not, label %.preheader, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 688
-  %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 8
+  %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 688 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %wide.trip.count = zext i32 %i.p to i64
+  %.pre41 = load ptr, ptr %i.q, align 8
+  %.pre43 = load ptr, ptr %i.r, align 8
   br label %bb.c
 
 .preheader:                                       ; preds = %tlb_reset_dirty_range_locked.exit, %bb.b
@@ -222,12 +224,12 @@ bb.b:                                             ; preds = %qemu_spin_lock.exit
   br i1 %i.y, label %bb.f, label %tlb_reset_dirty_range_locked.exit28
 
 bb.c:                                             ; preds = %.lr.ph, %tlb_reset_dirty_range_locked.exit
+  %3 = phi ptr [ %.pre43, %.lr.ph ], [ %6, %tlb_reset_dirty_range_locked.exit ] ; 3 uses
+  %4 = phi ptr [ %.pre41, %.lr.ph ], [ %7, %tlb_reset_dirty_range_locked.exit ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %tlb_reset_dirty_range_locked.exit ] ; 3 uses
-  %3 = load ptr, ptr %i.q, align 8
-  %4 = getelementptr inbounds nuw [48 x i8], ptr %3, i64 %indvars.iv
-  %5 = load ptr, ptr %i.r, align 8
-  %i.z = getelementptr inbounds nuw [32 x i8], ptr %5, i64 %indvars.iv ; 2 uses
-  %i.aa = getelementptr i8, ptr %4, i64 36
+  %5 = getelementptr inbounds nuw [48 x i8], ptr %4, i64 %indvars.iv
+  %i.z = getelementptr inbounds nuw [32 x i8], ptr %3, i64 %indvars.iv ; 2 uses
+  %i.aa = getelementptr i8, ptr %5, i64 36
   %.val27 = load i8, ptr %i.aa, align 1
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8            ; 3 uses
@@ -249,9 +251,13 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.an = or i64 %i.ac, 128
   store atomic i64 %i.an, ptr %i.ab monotonic, align 8
+  %.pre = load ptr, ptr %i.q, align 8
+  %.pre42 = load ptr, ptr %i.r, align 8
   br label %tlb_reset_dirty_range_locked.exit
 
 tlb_reset_dirty_range_locked.exit:                ; preds = %bb.c, %bb.d, %bb.e
+  %6 = phi ptr [ %3, %bb.c ], [ %3, %bb.d ], [ %.pre42, %bb.e ]
+  %7 = phi ptr [ %4, %bb.c ], [ %4, %bb.d ], [ %.pre, %bb.e ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader, label %bb.c, !llvm.loop !177
@@ -654,7 +660,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d, %bb.c
 
 declare i64 @qemu_ram_addr_from_host_nofail(ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress norecurse nounwind sspstrong willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @tlb_plugin_lookup(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i32 noundef %2, i1 noundef zeroext %3, ptr nofree noundef writeonly captures(none) %4) local_unnamed_addr #8 {
 bb.a:
   %i.a = sext i32 %2 to i64                       ; 2 uses
@@ -1057,7 +1063,7 @@ declare void @abort() local_unnamed_addr #20
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.ctlz.i64(i64, i1 immarg) #16
 
-; Function Attrs: norecurse nounwind sspstrong memory(argmem: readwrite) uwtable
+; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define internal fastcc void @tlb_flush_vtlb_page_mask_locked(ptr noundef %0, i32 noundef %1, i64 noundef %2, i64 noundef %3) unnamed_addr #21 {
 bb.a:
   %i.a = sext i32 %1 to i64
@@ -1460,7 +1466,7 @@ store_parts_leN.exit:                             ; preds = %store_parts_leN.exi
   ret i64 %.0
 }
 
-; Function Attrs: norecurse nounwind sspstrong memory(argmem: readwrite, inaccessiblemem: write) uwtable
+; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite, inaccessiblemem: write) uwtable
 define internal fastcc range(i64 -4611686018427387904, 4611686018427387904) i64 @store_whole_le16(ptr noundef %0, i32 noundef %1, i128 noundef %2) unnamed_addr #23 {
 bb.a:
   %i.a = shl i32 %1, 3                            ; 4 uses
@@ -1863,7 +1869,7 @@ attributes #4 = { allocsize(0) "no-trapping-math"="true" "stack-protector-buffer
 attributes #5 = { allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #6 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #7 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #8 = { mustprogress norecurse nounwind sspstrong willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #9 = { nounwind sspstrong uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #10 = { noinline nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #11 = { nocallback nofree nosync nounwind willreturn memory(none) }
@@ -1876,9 +1882,9 @@ attributes #17 = { allocsize(0,1) "no-trapping-math"="true" "stack-protector-buf
 attributes #18 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #19 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #20 = { cold nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #21 = { norecurse nounwind sspstrong memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #21 = { nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #22 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #23 = { norecurse nounwind sspstrong memory(argmem: readwrite, inaccessiblemem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #23 = { nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite, inaccessiblemem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #24 = { inlinehint nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #25 = { nounwind }
 attributes #26 = { nounwind allocsize(0) }

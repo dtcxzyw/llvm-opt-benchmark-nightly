@@ -205,7 +205,7 @@ bb.a:
   %i.j = lshr i64 %i.i, 33
   %i.k = xor i64 %i.j, %i.i                       ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
-  %i.m = load atomic ptr, ptr %i.l acquire, align 8 ; 6 uses
+  %i.m = load atomic ptr, ptr %i.l acquire, align 8 ; 7 uses
   %.not155 = icmp eq ptr %i.m, null
   br i1 %.not155, label %.thread135, label %.preheader147
 
@@ -233,15 +233,17 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader146:                                    ; preds = %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %.pre163 = load i64, ptr %i.m, align 8, !tbaa !229
+  %.pre165 = load ptr, ptr %i.x, align 8, !tbaa !230
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader146, %bb.e
-  %.187.a = phi i64 [ %i.af, %bb.e ], [ %i.k, %.preheader146 ]
-  %1 = load i64, ptr %i.m, align 8, !tbaa !229
-  %i.y = add i64 %1, -1
-  %i.z = and i64 %i.y, %.187.a                    ; 3 uses
-  %2 = load ptr, ptr %i.x, align 8, !tbaa !230
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.z ; 2 uses
+  %1 = phi ptr [ %2, %bb.e ], [ %.pre165, %.preheader146 ] ; 2 uses
+  %.187.a = phi i64 [ %3, %bb.e ], [ %.pre163, %.preheader146 ] ; 2 uses
+  %.187 = phi i64 [ %i.af, %bb.e ], [ %i.k, %.preheader146 ]
+  %i.y = add i64 %.187.a, -1
+  %i.z = and i64 %i.y, %.187                      ; 3 uses
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %i.z ; 2 uses
   %i.ab = load atomic i64, ptr %i.aa monotonic, align 8
   %i.ac = icmp eq i64 %i.ab, 0
   br i1 %i.ac, label %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit116, label %bb.e
@@ -249,9 +251,13 @@ bb.d:                                             ; preds = %.preheader146, %bb.
 _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit116: ; preds = %bb.d
   %i.ad = cmpxchg ptr %i.aa, i64 0, i64 %i.c monotonic monotonic, align 8
   %i.ae = extractvalue { i64, i1 } %i.ad, 1
+  %.pre = load i64, ptr %i.m, align 8, !tbaa !229
+  %.pre164 = load ptr, ptr %i.x, align 8, !tbaa !230 ; 2 uses
   br i1 %i.ae, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit116
+  %2 = phi ptr [ %1, %bb.d ], [ %.pre164, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit116 ]
+  %3 = phi i64 [ %.187.a, %bb.d ], [ %.pre, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit116 ]
   %i.af = add i64 %i.z, 1
   br label %bb.d
 
@@ -267,8 +273,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not, label %.thread135, label %.preheader147, !llvm.loop !512
 
 bb.h:                                             ; preds = %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit116
-  %3 = load ptr, ptr %i.x, align 8, !tbaa !230
-  %i.ak = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.z
+  %i.ak = getelementptr inbounds nuw [16 x i8], ptr %.pre164, i64 %i.z
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   store ptr %i.w, ptr %i.al, align 8, !tbaa !225
   br label %.thread138
@@ -405,7 +410,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %.sink.split, %bb.j, %bb.i
-  %.296 = phi ptr [ %.094, %bb.j ], [ %.094, %bb.i ], [ %.296.ph, %.sink.split ] ; 3 uses
+  %.296 = phi ptr [ %.094, %bb.j ], [ %.094, %bb.i ], [ %.296.ph, %.sink.split ] ; 4 uses
   %i.cd = load i64, ptr %.296, align 8, !tbaa !229 ; 2 uses
   %i.ce = lshr i64 %i.cd, 1
   %i.cf = lshr i64 %i.cd, 2
@@ -434,15 +439,17 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %i.co = getelementptr inbounds nuw i8, ptr %.296, i64 8 ; 2 uses
+  %.pre167 = load i64, ptr %.296, align 8, !tbaa !229
+  %.pre169 = load ptr, ptr %i.co, align 8, !tbaa !230
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.u, %bb.s
-  %.0.a = phi i64 [ %i.k, %bb.s ], [ %i.cy, %bb.u ]
-  %4 = load i64, ptr %.296, align 8, !tbaa !229
-  %i.cp = add i64 %4, -1
-  %i.cq = and i64 %i.cp, %.0.a                    ; 3 uses
-  %5 = load ptr, ptr %i.co, align 8, !tbaa !230
-  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %i.cq ; 2 uses
+  %4 = phi ptr [ %.pre169, %bb.s ], [ %5, %bb.u ] ; 2 uses
+  %.0.a = phi i64 [ %.pre167, %bb.s ], [ %6, %bb.u ] ; 2 uses
+  %.0 = phi i64 [ %i.k, %bb.s ], [ %i.cy, %bb.u ]
+  %i.cp = add i64 %.0.a, -1
+  %i.cq = and i64 %i.cp, %.0                      ; 3 uses
+  %i.cr = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.cq ; 2 uses
   %i.cs = load atomic i64, ptr %i.cr monotonic, align 8
   %i.ct = icmp eq i64 %i.cs, 0
   br i1 %i.ct, label %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, label %bb.u
@@ -450,16 +457,19 @@ bb.t:                                             ; preds = %bb.u, %bb.s
 _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit: ; preds = %bb.t
   %i.cu = cmpxchg ptr %i.cr, i64 0, i64 %i.c monotonic monotonic, align 8
   %i.cv = extractvalue { i64, i1 } %i.cu, 1
+  %.pre166 = load i64, ptr %.296, align 8, !tbaa !229
+  %.pre168 = load ptr, ptr %i.co, align 8, !tbaa !230 ; 2 uses
   br i1 %i.cv, label %.thread143, label %bb.u
 
 .thread143:                                       ; preds = %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit
-  %6 = load ptr, ptr %i.co, align 8, !tbaa !230
-  %i.cw = getelementptr inbounds nuw [16 x i8], ptr %6, i64 %i.cq
+  %i.cw = getelementptr inbounds nuw [16 x i8], ptr %.pre168, i64 %i.cq
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 8
   store ptr %i.ci, ptr %i.cx, align 8, !tbaa !225
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.t, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit
+  %5 = phi ptr [ %4, %bb.t ], [ %.pre168, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit ]
+  %6 = phi i64 [ %.0.a, %bb.t ], [ %.pre166, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit ]
   %i.cy = add i64 %i.cq, 1
   br label %bb.t
 

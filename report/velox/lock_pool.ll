@@ -56,7 +56,7 @@ define noundef nonnull ptr @_ZN5boost7atomics6detail9lock_pool10short_lockEm(i64
 bb.a:
   %i.a = and i64 %0, 255
   %i.b = getelementptr inbounds nuw [64 x i8], ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_111g_lock_poolE, i64 %i.a ; 2 uses
-  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #14
+  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #15
   ret ptr %i.b
 }
 
@@ -65,7 +65,7 @@ define noundef nonnull ptr @_ZN5boost7atomics6detail9lock_pool9long_lockEm(i64 n
 bb.a:
   %i.a = and i64 %0, 255
   %i.b = getelementptr inbounds nuw [64 x i8], ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_111g_lock_poolE, i64 %i.a ; 2 uses
-  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #14
+  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #15
   ret ptr %i.b
 }
 
@@ -84,7 +84,7 @@ bb.a:                                             ; preds = %_ZN5boost7atomics6d
   br i1 %i.f, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge
 
 .critedge:                                        ; preds = %bb.a, %_ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.g = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.h = and i32 %i.g, 1
   %i.i = icmp eq i32 %i.h, 0
@@ -97,7 +97,7 @@ bb.b:                                             ; preds = %.critedge
   br i1 %i.l, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.1
 
 .critedge.1:                                      ; preds = %bb.b, %.critedge
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.m = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.n = and i32 %i.m, 1
   %i.o = icmp eq i32 %i.n, 0
@@ -110,7 +110,7 @@ bb.c:                                             ; preds = %.critedge.1
   br i1 %i.r, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.2
 
 .critedge.2:                                      ; preds = %bb.c, %.critedge.1
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.s = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.t = and i32 %i.s, 1
   %i.u = icmp eq i32 %i.t, 0
@@ -123,7 +123,7 @@ bb.d:                                             ; preds = %.critedge.2
   br i1 %i.x, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.3
 
 .critedge.3:                                      ; preds = %bb.d, %.critedge.2
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.y = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.z = and i32 %i.y, 1
   %i.aa = icmp eq i32 %i.z, 0
@@ -136,7 +136,7 @@ bb.e:                                             ; preds = %.critedge.3
   br i1 %i.ad, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.4
 
 .critedge.4:                                      ; preds = %bb.e, %.critedge.3
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.ae = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.af = and i32 %i.ae, 1
   %i.ag = icmp eq i32 %i.af, 0
@@ -149,7 +149,7 @@ bb.f:                                             ; preds = %.critedge.4
   br i1 %i.aj, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.5
 
 .critedge.5:                                      ; preds = %bb.f, %.critedge.4
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.ak = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.al = and i32 %i.ak, 1
   %i.am = icmp eq i32 %i.al, 0
@@ -162,7 +162,7 @@ bb.g:                                             ; preds = %.critedge.5
   br i1 %i.ap, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.6
 
 .critedge.6:                                      ; preds = %bb.g, %.critedge.5
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.aq = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.ar = and i32 %i.aq, 1
   %i.as = icmp eq i32 %i.ar, 0
@@ -175,7 +175,7 @@ bb.h:                                             ; preds = %.critedge.6
   br i1 %i.av, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.7
 
 .critedge.7:                                      ; preds = %bb.h, %.critedge.6
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.aw = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.ax = and i32 %i.aw, 1
   %i.ay = icmp eq i32 %i.ax, 0
@@ -188,7 +188,7 @@ bb.i:                                             ; preds = %.critedge.7
   br i1 %i.bb, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.8
 
 .critedge.8:                                      ; preds = %bb.i, %.critedge.7
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.bc = load atomic volatile i32, ptr %0 monotonic, align 8 ; 3 uses
   %i.bd = and i32 %i.bc, 1
   %i.be = icmp eq i32 %i.bd, 0
@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %.critedge.8
   br i1 %i.bh, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state14lock_slow_pathEv.exit, label %.critedge.9
 
 .critedge.9:                                      ; preds = %bb.j, %.critedge.8
-  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "pause;", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !35
   %i.bi = load atomic volatile i32, ptr %0 monotonic, align 8
   br label %bb.k
 
@@ -232,7 +232,7 @@ _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE21compare_exch
   br label %.backedge
 
 _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE4loadERVKjNS_12memory_orderE.exit.i: ; preds = %bb.m
-  %i.bt = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 128, i32 noundef %i.bp, ptr noundef null, ptr noundef null, i32 noundef 0) #14 ; 0 uses
+  %i.bt = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 128, i32 noundef %i.bp, ptr noundef null, ptr noundef null, i32 noundef 0) #15 ; 0 uses
   %i.bu = load atomic volatile i32, ptr %0 monotonic, align 8
   br label %.backedge
 
@@ -271,7 +271,7 @@ _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE21compare_exch
   br i1 %.not.i, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge.i
-  %i.m = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 129, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef 0) #14
+  %i.m = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 129, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef 0) #15
   %i.n = and i64 %i.m, 4294967295
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %bb.c, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit
@@ -312,7 +312,7 @@ _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE21compare_exch
   br i1 %.not, label %_ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE23compare_exchange_strongERVjRjjNS_12memory_orderES7_.exit, label %bb.a
 
 bb.a:                                             ; preds = %._crit_edge
-  %i.m = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %0, i32 noundef 129, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef 0) #14
+  %i.m = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %0, i32 noundef 129, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef 0) #15
   %i.n = and i64 %i.m, 4294967295
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %bb.b, label %_ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE23compare_exchange_strongERVjRjjNS_12memory_orderES7_.exit
@@ -335,7 +335,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c, !prof !17
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call fastcc noundef ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list15allocate_bufferEmPNS4_6headerE(i64 noundef 2, ptr noundef null) #14 ; 3 uses
+  %i.d = tail call fastcc noundef ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list15allocate_bufferEmPNS4_6headerE(i64 noundef 2, ptr noundef null) #15 ; 3 uses
   store ptr %i.d, ptr %i.a, align 8, !tbaa !16
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list14find_or_createEPVKv.exit.thread, label %.critedge.thread.i, !prof !17
@@ -362,7 +362,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = landingpad { ptr, i32 }
           catch ptr null
   %i.m = extractvalue { ptr, i32 } %i.l, 0
-  tail call void @__clang_call_terminate(ptr %i.m) #15
+  tail call void @__clang_call_terminate(ptr %i.m) #16
   unreachable
 
 _ZNK5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list4findEPVKv.exit.i: ; preds = %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_112find_addressEPVKvPKS5_m.exit.i.i
@@ -383,13 +383,13 @@ _ZNK5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list4findEPVKv.exi
 
 bb.e:                                             ; preds = %_ZNK5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list4findEPVKv.exit.thread.i
   %i.w = shl i64 %i.t, 1
-  %i.x = tail call fastcc noundef ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list15allocate_bufferEmPNS4_6headerE(i64 noundef %i.w, ptr noundef nonnull %.pre.i) #14 ; 3 uses
+  %i.x = tail call fastcc noundef ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list15allocate_bufferEmPNS4_6headerE(i64 noundef %i.w, ptr noundef nonnull %.pre.i) #15 ; 3 uses
   %.not26.i = icmp eq ptr %i.x, null
   br i1 %.not26.i, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list14find_or_createEPVKv.exit.thread, label %bb.f, !prof !17
 
 bb.f:                                             ; preds = %bb.e
   %i.y = load ptr, ptr %i.a, align 8, !tbaa !16
-  tail call void @free(ptr noundef %i.y) #14
+  tail call void @free(ptr noundef %i.y) #15
   store ptr %i.x, ptr %i.a, align 8, !tbaa !16
   br label %.critedge.thread.i
 
@@ -406,7 +406,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ah, label %bb.g, label %bb.i, !prof !17
 
 bb.g:                                             ; preds = %.critedge.thread.i
-  %i.ai = tail call noalias noundef dereferenceable_or_null(24) ptr @_ZnwmRKSt9nothrow_t(i64 noundef 24, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #16 ; 7 uses
+  %i.ai = tail call noalias noundef dereferenceable_or_null(24) ptr @_ZnwmRKSt9nothrow_t(i64 noundef 24, ptr noundef nonnull align 1 dereferenceable(1) @_ZSt7nothrow) #17 ; 7 uses
   %i.aj = icmp eq ptr %i.ai, null
   br i1 %i.aj, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list14find_or_createEPVKv.exit.thread, label %bb.h
 
@@ -505,7 +505,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.z, label %bb.g, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list5eraseEPNS3_10wait_stateE.exit, !prof !17
 
 bb.g:                                             ; preds = %bb.f
-  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list10free_spareEv(ptr noundef nonnull align 8 dereferenceable(16) %i.d) #14
+  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list10free_spareEv(ptr noundef nonnull align 8 dereferenceable(16) %i.d) #15
   br label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list5eraseEPNS3_10wait_stateE.exit
 
 _ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list5eraseEPNS3_10wait_stateE.exit: ; preds = %bb.g, %bb.f, %bb.b, %bb.a
@@ -550,7 +550,7 @@ _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE21compare_exch
   br i1 %.not.i.i, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i.preheader, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  %i.r = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 129, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef 0) #14
+  %i.r = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 129, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef 0) #15
   %i.s = and i64 %i.r, 4294967295
   %i.t = icmp eq i64 %i.s, 0
   br i1 %i.t, label %bb.d, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i.preheader
@@ -564,21 +564,21 @@ _ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i.pre
   br label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i
 
 _ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i: ; preds = %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i.preheader, %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i
-  %i.w = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %i.a, i32 noundef 128, i32 noundef %i.b, ptr noundef null, ptr noundef null, i32 noundef 0) #14
+  %i.w = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %i.a, i32 noundef 128, i32 noundef %i.b, ptr noundef null, ptr noundef null, i32 noundef 0) #15
   %i.x = and i64 %i.w, 4294967295
   %.not.i = icmp eq i64 %i.x, 4
   br i1 %.not.i, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state4waitERNS3_10lock_stateE.exit
 
 _ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state4waitERNS3_10lock_stateE.exit: ; preds = %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit.i
-  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %0) #14
+  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %0) #15
   %i.y = load i32, ptr %i.c, align 4, !tbaa !30
   %i.z = add i32 %i.y, -1
   store i32 %i.z, ptr %i.c, align 4, !tbaa !30
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.a
-  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv(ptr noundef nonnull align 8 dereferenceable(24) %0) #14
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
+  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv(ptr noundef nonnull align 8 dereferenceable(24) %0) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 0, ptr %2, align 8
   store i64 1000, ptr %i.aa, align 8, !tbaa !40
@@ -589,12 +589,12 @@ bb.f:                                             ; preds = %bb.e
   %i.ac = landingpad { ptr, i32 }
           catch ptr null
   %i.ad = extractvalue { ptr, i32 } %i.ac, 0
-  call void @__clang_call_terminate(ptr %i.ad) #15
+  call void @__clang_call_terminate(ptr %i.ad) #16
   unreachable
 
 _ZN5boost7atomics6detail9wait_someEv.exit:        ; preds = %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
-  call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %0) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
+  call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %0) #15
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN5boost7atomics6detail9wait_someEv.exit, %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state4waitERNS3_10lock_stateE.exit
@@ -625,7 +625,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = landingpad { ptr, i32 }
           catch ptr null
   %i.j = extractvalue { ptr, i32 } %i.i, 0
-  tail call void @__clang_call_terminate(ptr %i.j) #15
+  tail call void @__clang_call_terminate(ptr %i.j) #16
   unreachable
 
 _ZNK5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list4findEPVKv.exit: ; preds = %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_112find_addressEPVKvPKS5_m.exit.i
@@ -650,8 +650,8 @@ bb.d:                                             ; preds = %_ZNK5boost7atomics6
   br i1 %.not.i6, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state10notify_oneERNS3_10lock_stateE.exit, label %bb.e, !prof !17
 
 bb.e:                                             ; preds = %bb.d
-  %i.v = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %i.q, i32 noundef 131, i32 noundef 0, i64 noundef 1, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 0) #14 ; 0 uses
-  tail call void asm sideeffect "lock; orl $1, $0\0A\09", "=*m,ir,*m,~{cc},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) align 8 dereferenceable(24) %0, i32 2, ptr nonnull elementtype(i32) align 8 dereferenceable(24) %0) #14, !srcloc !31
+  %i.v = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %i.q, i32 noundef 131, i32 noundef 0, i64 noundef 1, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 0) #15 ; 0 uses
+  tail call void asm sideeffect "lock; orl $1, $0\0A\09", "=*m,ir,*m,~{cc},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) align 8 dereferenceable(24) %0, i32 2, ptr nonnull elementtype(i32) align 8 dereferenceable(24) %0) #15, !srcloc !31
   br label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state10notify_oneERNS3_10lock_stateE.exit
 
 _ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state10notify_oneERNS3_10lock_stateE.exit: ; preds = %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_112find_addressEPVKvPKS5_m.exit.i, %bb.a, %bb.e, %bb.d, %_ZNK5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list4findEPVKv.exit
@@ -682,7 +682,7 @@ bb.c:                                             ; preds = %bb.b
   %i.i = landingpad { ptr, i32 }
           catch ptr null
   %i.j = extractvalue { ptr, i32 } %i.i, 0
-  tail call void @__clang_call_terminate(ptr %i.j) #15
+  tail call void @__clang_call_terminate(ptr %i.j) #16
   unreachable
 
 _ZNK5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list4findEPVKv.exit: ; preds = %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_112find_addressEPVKvPKS5_m.exit.i
@@ -707,8 +707,8 @@ bb.d:                                             ; preds = %_ZNK5boost7atomics6
   br i1 %.not.i6, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state10notify_allERNS3_10lock_stateE.exit, label %bb.e, !prof !17
 
 bb.e:                                             ; preds = %bb.d
-  %i.v = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %i.q, i32 noundef 131, i32 noundef 0, i64 noundef 2147483647, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 0) #14 ; 0 uses
-  tail call void asm sideeffect "lock; orl $1, $0\0A\09", "=*m,ir,*m,~{cc},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) align 8 dereferenceable(24) %0, i32 2, ptr nonnull elementtype(i32) align 8 dereferenceable(24) %0) #14, !srcloc !31
+  %i.v = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull %i.q, i32 noundef 131, i32 noundef 0, i64 noundef 2147483647, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef 0) #15 ; 0 uses
+  tail call void asm sideeffect "lock; orl $1, $0\0A\09", "=*m,ir,*m,~{cc},~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) align 8 dereferenceable(24) %0, i32 2, ptr nonnull elementtype(i32) align 8 dereferenceable(24) %0) #15, !srcloc !31
   br label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state10notify_allERNS3_10lock_stateE.exit
 
 _ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state10notify_allERNS3_10lock_stateE.exit: ; preds = %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_112find_addressEPVKvPKS5_m.exit.i, %bb.a, %bb.e, %bb.d, %_ZNK5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list4findEPVKv.exit
@@ -719,10 +719,10 @@ _ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110wait_state10notify_allERNS3_10
 define void @_ZN5boost7atomics6detail9lock_pool12thread_fenceEv() local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   store i8 0, ptr %i.a, align 1, !tbaa !41
-  call void asm sideeffect "lock; notb $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.a, ptr nonnull elementtype(i8) %i.a) #14, !srcloc !42
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
+  call void asm sideeffect "lock; notb $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i8) %i.a, ptr nonnull elementtype(i8) %i.a) #15, !srcloc !42
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   ret void
 }
 
@@ -736,8 +736,8 @@ _ZN5boost7atomics6detail27fence_operations_gcc_atomic12signal_fenceENS_12memory_
 ; Function Attrs: nounwind
 declare i64 @syscall(i64 noundef, ...) local_unnamed_addr #4
 
-; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc noundef ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list15allocate_bufferEmPNS4_6headerE(i64 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) unnamed_addr #2 align 2 {
+; Function Attrs: mustprogress nofree nounwind uwtable
+define internal fastcc noundef ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list15allocate_bufferEmPNS4_6headerE(i64 noundef %0, ptr nofree noundef readonly captures(address_is_null) %1) unnamed_addr #5 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = load atomic volatile i8, ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_125g_pool_cleanup_registeredE monotonic, align 1
@@ -750,17 +750,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call i32 @atexit(ptr noundef nonnull @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_117cleanup_lock_poolEv) #14 ; 0 uses
+  %i.f = tail call i32 @atexit(ptr noundef nonnull @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_117cleanup_lock_poolEv) #15 ; 0 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %i.g = shl i64 %0, 4
   %i.h = add i64 %i.g, 16                         ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  %i.i = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 16, i64 noundef %i.h) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
+  %i.i = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 16, i64 noundef %i.h) #15
   %.not.i = icmp ne i32 %i.i, 0
   %.pre.i = load ptr, ptr %i.a, align 8           ; 6 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   %i.j = icmp eq ptr %.pre.i, null
   %i.k = select i1 %.not.i, i1 true, i1 %i.j
   br i1 %i.k, label %bb.i, label %bb.e, !prof !17
@@ -811,10 +811,10 @@ bb.i:                                             ; preds = %bb.d, %bb.h
 }
 
 ; Function Attrs: nobuiltin nounwind allocsize(0)
-declare noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef, ptr noundef nonnull align 1 dereferenceable(1)) local_unnamed_addr #5
+declare noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef, ptr noundef nonnull align 1 dereferenceable(1)) local_unnamed_addr #6
 
 ; Function Attrs: nofree nounwind
-declare i32 @atexit(ptr noundef) local_unnamed_addr #6
+declare i32 @atexit(ptr noundef) local_unnamed_addr #7
 
 ; Function Attrs: mustprogress nounwind uwtable
 define internal void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_117cleanup_lock_poolEv() #2 {
@@ -827,7 +827,7 @@ bb.b:                                             ; preds = %_ZN5boost7atomics6d
 bb.c:                                             ; preds = %bb.a, %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit
   %.08 = phi i64 [ 0, %bb.a ], [ %i.ah, %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit ] ; 2 uses
   %i.a = getelementptr inbounds nuw [64 x i8], ptr @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_111g_lock_poolE, i64 %.08 ; 8 uses
-  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #14
+  tail call fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state9long_lockEv(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #15
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i8 1, ptr %i.c, align 16, !tbaa !45
@@ -852,7 +852,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not12.not.i, label %.critedge.loopexit.i, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef 24) #17
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef 24) #18
   store ptr null, ptr %i.k, align 8, !tbaa !23
   %i.m = add i64 %.01013.i, 1                     ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.m, %i.g
@@ -870,7 +870,7 @@ bb.e:                                             ; preds = %.lr.ph.i
   br i1 %i.p, label %bb.f, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list10free_spareEv.exit
 
 bb.f:                                             ; preds = %.critedge.i
-  tail call void @free(ptr noundef nonnull %i.o) #14
+  tail call void @free(ptr noundef nonnull %i.o) #15
   store ptr null, ptr %i.b, align 8, !tbaa !16
   br label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list10free_spareEv.exit
 
@@ -899,7 +899,7 @@ _ZN5boost7atomics6detail26core_operations_gcc_atomicILm4ELb0ELb0EE21compare_exch
   br i1 %.not.i6, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge.i
-  %i.ac = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i32 noundef 129, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef 0) #14
+  %i.ac = tail call i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i32 noundef 129, i32 noundef 1, ptr noundef null, ptr noundef null, i32 noundef 0) #15
   %i.ad = and i64 %i.ac, 4294967295
   %i.ae = icmp eq i64 %i.ad, 0
   br i1 %i.ae, label %bb.h, label %_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit
@@ -919,7 +919,7 @@ _ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_110lock_state6unlockEv.exit: ; pr
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN5boost7atomics6detail9lock_pool12_GLOBAL__N_115wait_state_list10free_spareEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(16) %0) unnamed_addr #2 align 2 {
@@ -945,7 +945,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not12.not, label %.critedge.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 24) #17
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 24) #18
   store ptr null, ptr %i.h, align 8, !tbaa !23
   %i.j = add i64 %.01013, 1                       ; 2 uses
   %exitcond.not = icmp eq i64 %i.j, %i.d
@@ -963,7 +963,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %i.m, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.critedge
-  tail call void @free(ptr noundef nonnull %i.l) #14
+  tail call void @free(ptr noundef nonnull %i.l) #15
   store ptr null, ptr %0, align 8, !tbaa !16
   br label %bb.e
 
@@ -972,51 +972,52 @@ bb.e:                                             ; preds = %.critedge, %bb.d, %
 }
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #8
+declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
-declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #9
+declare noundef i32 @posix_memalign(ptr noundef writeonly captures(none), i64 noundef, i64 noundef) local_unnamed_addr #10
 
 ; Function Attrs: mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite)
-declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #10
+declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #11
 
-declare i32 @nanosleep(ptr noundef, ptr noundef) local_unnamed_addr #11
+declare i32 @nanosleep(ptr noundef, ptr noundef) local_unnamed_addr #12
 
 declare i32 @__gxx_personality_v0(...)
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #12 comdat {
+define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #13 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #14 ; 0 uses
-  tail call void @_ZSt9terminatev() #15
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #15 ; 0 uses
+  tail call void @_ZSt9terminatev() #16
   unreachable
 }
 
 declare ptr @__cxa_begin_catch(ptr) local_unnamed_addr
 
 ; Function Attrs: cold nofree noreturn
-declare void @_ZSt9terminatev() local_unnamed_addr #13
+declare void @_ZSt9terminatev() local_unnamed_addr #14
 
-declare noundef i64 @_ZN5boost7atomics6detail18find_address_sse41EPVKvPKS3_m(ptr noundef, ptr noundef, i64 noundef) #11
+declare noundef i64 @_ZN5boost7atomics6detail18find_address_sse41EPVKvPKS3_m(ptr noundef, ptr noundef, i64 noundef) #12
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #4 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #5 = { nobuiltin nounwind allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #6 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #10 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #11 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #12 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #13 = { cold nofree noreturn }
-attributes #14 = { nounwind }
-attributes #15 = { noreturn nounwind }
-attributes #16 = { builtin nounwind allocsize(0) }
-attributes #17 = { builtin nounwind }
+attributes #5 = { mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #6 = { nobuiltin nounwind allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #7 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #9 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nofree nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #11 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #12 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #13 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #14 = { cold nofree noreturn }
+attributes #15 = { nounwind }
+attributes #16 = { noreturn nounwind }
+attributes #17 = { builtin nounwind allocsize(0) }
+attributes #18 = { builtin nounwind }
 
 !llvm.module.flags = !{!2, !3}
 !llvm.ident = !{!4}

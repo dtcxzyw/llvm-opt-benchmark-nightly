@@ -28,7 +28,7 @@ target triple = "x86_64-pc-linux-gnu"
 @opal_uses_threads = external local_unnamed_addr global i8, align 1
 @ompi_datatype_basicDatatypes = external local_unnamed_addr global [53 x ptr], align 16
 
-; Function Attrs: nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: nofree nounwind memory(readwrite, target_mem: none) uwtable
 define noundef i32 @ompi_datatype_set_args(ptr nofree noundef captures(address) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, ptr nofree noundef readonly captures(none) %6, i32 noundef %7) local_unnamed_addr #0 {
 bb.a:
   %i.a = zext i32 %1 to i64
@@ -92,7 +92,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.y = sext i32 %i.x to i64
   %i.z = shl nsw i64 %i.y, 2
   %i.aa = add nsw i64 %i.f, %i.z
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 6 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 7 uses
   store i64 %i.aa, ptr %i.ab, align 8, !tbaa !25
   switch i32 %7, label %bb.u [
     i32 1, label %bb.h
@@ -367,50 +367,54 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %.fr173 = freeze i8 %i.gj
   %i.gk = trunc i8 %.fr173 to i1
   %wide.trip.count179 = zext nneg i32 %5 to i64   ; 2 uses
-  br i1 %i.gk, label %.lr.ph.split.us, label %.lr.ph.split.preheader, !prof !29
-
-.lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %.pre = load ptr, ptr %i.r, align 8, !tbaa !22
-  br label %.lr.ph.split
+  %.pre182 = load ptr, ptr %i.r, align 8, !tbaa !22 ; 2 uses
+  br i1 %i.gk, label %.lr.ph.split.us, label %.lr.ph.split, !prof !29
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.x
+  %8 = phi ptr [ %15, %bb.x ], [ %.pre182, %.lr.ph ] ; 2 uses
   %indvars.iv176 = phi i64 [ %indvars.iv.next177, %bb.x ], [ 0, %.lr.ph ] ; 3 uses
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv176 ; 2 uses
-  %9 = load ptr, ptr %8, align 8, !tbaa !31       ; 3 uses
-  %i.gl = load ptr, ptr %i.r, align 8, !tbaa !22
-  %i.gm = getelementptr inbounds nuw [8 x i8], ptr %i.gl, i64 %indvars.iv176
-  store ptr %9, ptr %i.gm, align 8, !tbaa !31
-  %i.gn = getelementptr i8, ptr %9, i64 16
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv176 ; 2 uses
+  %i.gl = load ptr, ptr %9, align 8, !tbaa !31    ; 3 uses
+  %i.gm = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %indvars.iv176
+  store ptr %i.gl, ptr %i.gm, align 8, !tbaa !31
+  %i.gn = getelementptr i8, ptr %i.gl, i64 16
   %.val.us = load i16, ptr %i.gn, align 8, !tbaa !40
   %i.go = and i16 %.val.us, 512
   %.not171.us = icmp eq i16 %i.go, 0
-  br i1 %.not171.us, label %opal_thread_add_fetch_32.exit.us, label %bb.x
+  br i1 %.not171.us, label %opal_thread_add_fetch_32.exit.us, label %10
+
+10:                                               ; preds = %.lr.ph.split.us
+  %11 = load i64, ptr %i.ab, align 8, !tbaa !25
+  %12 = add i64 %11, 4
+  br label %bb.x
 
 opal_thread_add_fetch_32.exit.us:                 ; preds = %.lr.ph.split.us
-  %i.gp = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.gp = getelementptr inbounds nuw i8, ptr %i.gl, i64 8
   %i.gq = atomicrmw volatile add ptr %i.gp, i32 1 monotonic, align 4 ; 0 uses
-  %i.gr = load ptr, ptr %8, align 8, !tbaa !31
+  %i.gr = load ptr, ptr %9, align 8, !tbaa !31
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 216
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !41
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 8
-  %i.gv = load i64, ptr %i.gu, align 8, !tbaa !25
+  %13 = load i64, ptr %i.gu, align 8, !tbaa !25
+  %i.gv = load i64, ptr %i.ab, align 8, !tbaa !25
+  %14 = add i64 %i.gv, %13
+  %.pre181 = load ptr, ptr %i.r, align 8, !tbaa !22
   br label %bb.x
 
-bb.x:                                             ; preds = %.lr.ph.split.us, %opal_thread_add_fetch_32.exit.us
-  %.sink184 = phi i64 [ %i.gv, %opal_thread_add_fetch_32.exit.us ], [ 4, %.lr.ph.split.us ]
-  %10 = load i64, ptr %i.ab, align 8, !tbaa !25
-  %11 = add i64 %10, %.sink184
-  %i.gw = add i64 %11, 4
+bb.x:                                             ; preds = %opal_thread_add_fetch_32.exit.us, %10
+  %15 = phi ptr [ %.pre181, %opal_thread_add_fetch_32.exit.us ], [ %8, %10 ]
+  %storemerge.us = phi i64 [ %14, %opal_thread_add_fetch_32.exit.us ], [ %12, %10 ]
+  %i.gw = add i64 %storemerge.us, 4
   store i64 %i.gw, ptr %i.ab, align 8, !tbaa !25
   %indvars.iv.next177 = add nuw nsw i64 %indvars.iv176, 1 ; 2 uses
   %exitcond180.not = icmp eq i64 %indvars.iv.next177, %wide.trip.count179
   br i1 %exitcond180.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !54
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.y
-  %indvars.iv = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next, %bb.y ] ; 3 uses
+.lr.ph.split:                                     ; preds = %.lr.ph, %bb.y
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.y ], [ 0, %.lr.ph ] ; 3 uses
   %i.gx = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv
   %i.gy = load ptr, ptr %i.gx, align 8, !tbaa !31 ; 4 uses
-  %i.gz = getelementptr inbounds nuw [8 x i8], ptr %.pre, i64 %indvars.iv
+  %i.gz = getelementptr inbounds nuw [8 x i8], ptr %.pre182, i64 %indvars.iv
   store ptr %i.gy, ptr %i.gz, align 8, !tbaa !31
   %i.ha = getelementptr i8, ptr %i.gy, i64 16
   %.val = load i16, ptr %i.ha, align 8, !tbaa !40
@@ -779,7 +783,7 @@ bb.r:                                             ; preds = %bb.e, %bb.q, %bb.p,
   ret i32 %.0
 }
 
-; Function Attrs: norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
 define noundef i32 @ompi_datatype_copy_args(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 216
@@ -845,11 +849,12 @@ opal_thread_add_fetch_32.exit:                    ; preds = %bb.b, %bb.c
 
 .lr.ph:                                           ; preds = %.preheader
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 4 uses
+  %.pre21 = load ptr, ptr %i.n, align 8, !tbaa !22
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.i
+  %1 = phi ptr [ %.pre21, %.lr.ph ], [ %3, %bb.i ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 5 uses
-  %1 = load ptr, ptr %i.n, align 8, !tbaa !22
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !31   ; 2 uses
   %i.q = getelementptr i8, ptr %i.p, i64 16
@@ -867,6 +872,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.v = atomicrmw volatile add ptr %i.s, i32 -1 monotonic, align 4
   %i.w = add i32 %i.v, -1
+  %.pre = load ptr, ptr %i.n, align 8, !tbaa !22
   br label %opal_thread_add_fetch_32.exit18
 
 bb.g:                                             ; preds = %bb.e
@@ -877,12 +883,12 @@ bb.g:                                             ; preds = %bb.e
   br label %opal_thread_add_fetch_32.exit18
 
 opal_thread_add_fetch_32.exit18:                  ; preds = %bb.f, %bb.g
+  %2 = phi ptr [ %.pre, %bb.f ], [ %1, %bb.g ]    ; 2 uses
   %.0.i17 = phi i32 [ %i.w, %bb.f ], [ %i.z, %bb.g ]
   %i.aa = icmp eq i32 %.0.i17, 0
   br i1 %i.aa, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %opal_thread_add_fetch_32.exit18
-  %2 = load ptr, ptr %i.n, align 8, !tbaa !22
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !31 ; 3 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !48
@@ -910,12 +916,13 @@ opal_obj_run_destructors.exit.loopexit:           ; preds = %.lr.ph.i
 opal_obj_run_destructors.exit:                    ; preds = %opal_obj_run_destructors.exit.loopexit, %bb.h
   %i.ak = phi ptr [ %.pre21.a, %opal_obj_run_destructors.exit.loopexit ], [ %i.ac, %bb.h ]
   tail call void @free(ptr noundef %i.ak) #14
-  %i.al = load ptr, ptr %i.n, align 8, !tbaa !22
+  %i.al = load ptr, ptr %i.n, align 8, !tbaa !22  ; 2 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv
   store ptr null, ptr %i.am, align 8, !tbaa !31
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.d, %opal_obj_run_destructors.exit, %opal_thread_add_fetch_32.exit18
+  %3 = phi ptr [ %1, %bb.d ], [ %i.al, %opal_obj_run_destructors.exit ], [ %2, %opal_thread_add_fetch_32.exit18 ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.an = load i32, ptr %i.k, align 8, !tbaa !21
   %i.ao = sext i32 %i.an to i64
@@ -1318,13 +1325,13 @@ declare i32 @opal_datatype_commit(ptr noundef) local_unnamed_addr #10
 ; Function Attrs: nofree nounwind
 declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #12
 
-attributes #0 = { nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { nofree nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { norecurse nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { inlinehint nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

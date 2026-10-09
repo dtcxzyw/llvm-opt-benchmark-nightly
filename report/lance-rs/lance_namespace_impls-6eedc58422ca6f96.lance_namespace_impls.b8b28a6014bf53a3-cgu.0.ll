@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %.body
 define internal fastcc void @_RNvMs4_NtNtCskTBvlRM5ILY_4moka6future10base_cacheINtB5_9BaseCacheNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB13_16CachedReaderDataE20do_post_insert_stepsCsfR8GmIBoxTX_21lance_namespace_impls(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(48) %0, ptr captures(address, read_provenance) %.64.val, i64 noundef %1, ptr captures(address, read_provenance) %.0.val, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(40) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
-  %i.b = alloca [16 x i8], align 8                ; 8 uses
+  %i.b = alloca [16 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.64.val) ]
   %i.c = getelementptr inbounds nuw i8, ptr %.64.val, i64 104
@@ -215,22 +215,22 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %.64.val, i64 112
-  %i.f = load ptr, ptr %i.e, align 8, !nonnull !416, !align !417, !noundef !416 ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8, !nonnull !416, !align !417, !noundef !416
   %i.g = atomicrmw add ptr %i.d, i64 1 monotonic, align 8
   %i.h = icmp slt i64 %i.g, 0
   br i1 %i.h, label %3, label %bb.c
-
-3:                                                ; preds = %bb.b
-  tail call void @llvm.trap()
-  unreachable
 
 bb.c:                                             ; preds = %bb.b
   store ptr %i.d, ptr %i.b, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.f, ptr %i.i, align 8
-  %i.j = load i16, ptr %2, align 8, !range !475, !noundef !416
+  %i.j = load i16, ptr %2, align 8, !range !475
   %i.k = trunc nuw i16 %i.j to i1
   br i1 %i.k, label %.thread3, label %bb.e
+
+3:                                                ; preds = %bb.b
+  tail call void @llvm.trap()
+  unreachable
 
 .loopexit:                                        ; preds = %.split.us.i.i, %.split.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -255,6 +255,8 @@ bb.e:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.q = load ptr, ptr %i.p, align 8, !nonnull !416, !noundef !416 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.64.val, i64 88
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %.val5 = load ptr, ptr %4, align 8              ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !213071)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %1, ptr %i.a, align 8, !noalias !213072
@@ -266,13 +268,14 @@ bb.e:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %.0.val, i64 16
   %i.v = extractvalue { i64, i32 } %i.s, 0
   %i.w = extractvalue { i64, i32 } %i.s, 1
-  %i.x = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
+  %i.x = getelementptr inbounds nuw i8, ptr %.val5, i64 16
   %i.y = load i64, ptr %i.x, align 8, !range !420, !invariant.load !416, !noalias !213072
   %i.z = add nsw i64 %i.y, -1
   %i.aa = and i64 %i.z, -16
   %i.ab = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %i.ad = getelementptr inbounds nuw i8, ptr %.val5, i64 24
   %i.ae = load ptr, ptr %i.ad, align 8, !invariant.load !416, !noalias !213072, !nonnull !416
   %i.af = invoke { i64, i32 } %i.ae(ptr noundef nonnull %i.ac, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.u, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.t, i64 noundef %i.v, i32 noundef %i.w)
           to label %.noexc6 unwind label %bb.f, !inline_history !345 ; 2 uses

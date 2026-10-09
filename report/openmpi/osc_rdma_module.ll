@@ -202,8 +202,8 @@ bb.aa:                                            ; preds = %bb.z
   br label %_ompi_osc_rdma_deregister.exit159
 
 _ompi_osc_rdma_deregister.exit159:                ; preds = %bb.aa, %bb.z, %opal_obj_run_destructors.exit157
-  %i.fo = getelementptr inbounds nuw i8, ptr %i.e, i64 1000 ; 6 uses
-  %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !39
+  %i.fo = getelementptr inbounds nuw i8, ptr %i.e, i64 1000 ; 5 uses
+  %i.fp = load ptr, ptr %i.fo, align 8, !tbaa !39 ; 2 uses
   %i.fq = icmp eq ptr %i.fp, null
   br i1 %i.fq, label %bb.ab, label %bb.ag
 
@@ -301,8 +301,8 @@ bb.ag:                                            ; preds = %_ompi_osc_rdma_dere
   br i1 %i.gz, label %.lr.ph201, label %opal_obj_run_destructors.exit171
 
 .lr.ph201:                                        ; preds = %.preheader188, %bb.al
+  %1 = phi ptr [ %3, %bb.al ], [ %i.fp, %.preheader188 ] ; 3 uses
   %indvars.iv211 = phi i64 [ %indvars.iv.next212, %bb.al ], [ 0, %.preheader188 ] ; 5 uses
-  %1 = load ptr, ptr %i.fo, align 8, !tbaa !39
   %i.ha = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv211
   %i.hb = load ptr, ptr %i.ha, align 8, !tbaa !40 ; 2 uses
   %.not108 = icmp eq ptr %i.hb, null
@@ -317,6 +317,7 @@ bb.ah:                                            ; preds = %.lr.ph201
 bb.ai:                                            ; preds = %bb.ah
   %i.hf = atomicrmw volatile add ptr %i.hc, i32 -1 monotonic, align 4
   %i.hg = add i32 %i.hf, -1
+  %.pre217 = load ptr, ptr %i.fo, align 8, !tbaa !39
   br label %opal_thread_add_fetch_32.exit173
 
 bb.aj:                                            ; preds = %bb.ah
@@ -327,12 +328,12 @@ bb.aj:                                            ; preds = %bb.ah
   br label %opal_thread_add_fetch_32.exit173
 
 opal_thread_add_fetch_32.exit173:                 ; preds = %bb.ai, %bb.aj
+  %2 = phi ptr [ %.pre217, %bb.ai ], [ %1, %bb.aj ] ; 2 uses
   %.0.i172 = phi i32 [ %i.hg, %bb.ai ], [ %i.hj, %bb.aj ]
   %i.hk = icmp eq i32 %.0.i172, 0
   br i1 %i.hk, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %opal_thread_add_fetch_32.exit173
-  %2 = load ptr, ptr %i.fo, align 8, !tbaa !39
   %i.hl = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv211
   %i.hm = load ptr, ptr %i.hl, align 8, !tbaa !40 ; 3 uses
   %i.hn = load ptr, ptr %i.hm, align 8, !tbaa !106
@@ -360,12 +361,13 @@ opal_obj_run_destructors.exit178.loopexit:        ; preds = %.lr.ph.i175
 opal_obj_run_destructors.exit178:                 ; preds = %opal_obj_run_destructors.exit178.loopexit, %bb.ak
   %i.hu = phi ptr [ %.pre218, %opal_obj_run_destructors.exit178.loopexit ], [ %i.hm, %bb.ak ]
   tail call void @free(ptr noundef %i.hu) #5
-  %i.hv = load ptr, ptr %i.fo, align 8, !tbaa !39
+  %i.hv = load ptr, ptr %i.fo, align 8, !tbaa !39 ; 2 uses
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %indvars.iv211
   store ptr null, ptr %i.hw, align 8, !tbaa !40
   br label %bb.al
 
 bb.al:                                            ; preds = %.lr.ph201, %opal_obj_run_destructors.exit178, %opal_thread_add_fetch_32.exit173
+  %3 = phi ptr [ %1, %.lr.ph201 ], [ %i.hv, %opal_obj_run_destructors.exit178 ], [ %2, %opal_thread_add_fetch_32.exit173 ]
   %indvars.iv.next212 = add nuw nsw i64 %indvars.iv211, 1 ; 2 uses
   %i.hx = load ptr, ptr %i.k, align 8, !tbaa !63
   %i.hy = getelementptr i8, ptr %i.hx, i64 264
