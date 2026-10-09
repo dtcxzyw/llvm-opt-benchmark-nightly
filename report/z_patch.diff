@@ -1,0 +1,13 @@
+diff --git a/llvm/lib/Analysis/LoopAccessAnalysis.cpp b/llvm/lib/Analysis/LoopAccessAnalysis.cpp
+index 88ca331713aad..f7db5932eb6b8 100644
+--- a/llvm/lib/Analysis/LoopAccessAnalysis.cpp
++++ b/llvm/lib/Analysis/LoopAccessAnalysis.cpp
+@@ -99,7 +99,7 @@ static cl::opt<unsigned, true> VectorizeMemoryCheckThreshold(
+     "vectorize-memory-check-threshold", cl::Hidden,
+     cl::desc("The maximum allowed number of runtime memory checks"),
+     cl::location(VectorizerParams::VectorizeMemoryCheckThreshold),
+-    cl::init(128));
++    cl::init(330));
+ unsigned VectorizerParams::VectorizeMemoryCheckThreshold;
+ 
+ /// The maximum iterations used to merge memory checks
