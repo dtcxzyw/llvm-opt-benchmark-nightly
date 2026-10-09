@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.g
   ]
 
 bb.ab:                                            ; preds = %.thread166, %bb.aa, %bb.aa, %bb.aa, %bb.aa
-  %.1134172 = phi i32 [ %i.cc, %.thread166 ], [ %i.cl, %bb.aa ], [ %i.cl, %bb.aa ], [ %i.cl, %bb.aa ], [ %i.cl, %bb.aa ] ; 10 uses
+  %.1134172 = phi i32 [ %i.cc, %.thread166 ], [ %i.cl, %bb.aa ], [ %i.cl, %bb.aa ], [ %i.cl, %bb.aa ], [ %i.cl, %bb.aa ] ; 9 uses
   %.1136171 = phi i32 [ 1836213872, %.thread166 ], [ %i.u, %bb.aa ], [ %i.u, %bb.aa ], [ %i.u, %bb.aa ], [ %i.u, %bb.aa ]
   %.1140170 = phi ptr [ %i.cd, %.thread166 ], [ %i.ck, %bb.aa ], [ %i.ck, %bb.aa ], [ %i.ck, %bb.aa ], [ %i.ck, %bb.aa ] ; 10 uses
   %i.cm = tail call i32 @ff_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #9 ; 2 uses
@@ -290,29 +290,31 @@ bb.ak:                                            ; preds = %bb.ah
 
 bb.al:                                            ; preds = %bb.ak, %bb.aj
   %.090.i = phi i32 [ %i.dn, %bb.aj ], [ %i.du, %bb.ak ] ; 10 uses
-  %.089.i = phi i32 [ %i.dr, %bb.aj ], [ %i.dz, %bb.ak ] ; 3 uses
+  %.089.i = phi i32 [ %i.dr, %bb.aj ], [ %i.dz, %bb.ak ] ; 4 uses
   %.088.i = phi i32 [ %i.dp, %bb.aj ], [ %i.dx, %bb.ak ] ; 5 uses
   %.0.i = phi i32 [ 20, %bb.aj ], [ 0, %bb.ak ]   ; 3 uses
   %i.ea = icmp ugt i32 %.090.i, %.1134172
   %i.eb = icmp ugt i32 %.090.i, 268435454
   %or.cond.i = or i1 %i.ea, %i.eb
-  %4 = sub nuw i32 %.1134172, %.090.i
-  %5 = icmp ugt i32 %.089.i, %4
-  %or.cond104.i = select i1 %or.cond.i, i1 true, i1 %5
-  %.pre.i = add i32 %.089.i, %.090.i              ; 2 uses
-  br i1 %or.cond104.i, label %._crit_edge.i, label %bb.am
+  br i1 %or.cond.i, label %._crit_edge.i, label %4
 
-bb.am:                                            ; preds = %bb.al
-  %i.ec = sub i32 %.1134172, %.pre.i              ; 2 uses
+4:                                                ; preds = %bb.al
+  %5 = sub nuw i32 %.1134172, %.090.i             ; 2 uses
+  %6 = icmp ugt i32 %.089.i, %5
+  br i1 %6, label %._crit_edge.i, label %bb.am
+
+bb.am:                                            ; preds = %4
+  %i.ec = sub nuw i32 %5, %.089.i                 ; 2 uses
   %i.ed = icmp ugt i32 %.088.i, %i.ec
   %i.ee = sub nuw i32 %i.ec, %.088.i
   %i.ef = icmp ugt i32 %.0.i, %i.ee
   %or.cond106.i = select i1 %i.ed, i1 true, i1 %i.ef
   br i1 %or.cond106.i, label %._crit_edge.i, label %bb.an
 
-._crit_edge.i:                                    ; preds = %bb.am, %bb.al
-  %i.eg = sub i32 %.pre.i, %.1134172
-  %i.eh = add i32 %i.eg, %.088.i
+._crit_edge.i:                                    ; preds = %bb.am, %4, %bb.al
+  %i.eg = sub i32 %.090.i, %.1134172
+  %7 = add i32 %i.eg, %.089.i
+  %i.eh = add i32 %7, %.088.i
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %i.cz, i32 noundef 16, ptr noundef nonnull @.str.40, i32 noundef %.090.i, i32 noundef %.089.i, i32 noundef %.088.i, i32 noundef %i.eh) #9
   br label %.loopexit
 
@@ -349,7 +351,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.ey = getelementptr inbounds nuw i8, ptr %i.f, i64 104
   store i32 0, ptr %i.ey, align 8, !tbaa !51
   %i.ez = add nuw nsw i32 %.0.i, %.090.i          ; 3 uses
-  %i.fa = sub i32 %.1134172, %i.ez                ; 2 uses
+  %i.fa = sub nuw i32 %.1134172, %i.ez            ; 2 uses
   %i.fb = icmp sgt i32 %i.fa, -1
   br i1 %i.fb, label %bytestream2_init.exit108.i, label %bb.ap
 

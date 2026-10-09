@@ -202,21 +202,22 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl
   %i.oa = sub i32 %i.nw, %i.nz
   store i32 %i.oa, ptr %i.a, align 4, !tbaa !19
   call void @dlaset_(ptr noundef nonnull @.str.5, ptr noundef nonnull %12, ptr noundef nonnull %i.a, ptr noundef nonnull @c_b14, ptr noundef nonnull @c_b14, ptr noundef %6, ptr noundef nonnull %7) #6
-  %i.ob = load i32, ptr %5, align 4, !tbaa !19    ; 8 uses
-  %i.oc = load i32, ptr %13, align 4, !tbaa !19   ; 6 uses
-  %i.od = sub nsw i32 %i.ob, %i.oc
-  %i.oe = load i32, ptr %12, align 4, !tbaa !19   ; 14 uses
-  %25 = add i32 %i.oc, %i.oe                      ; 3 uses
-  %i.of = sub i32 %i.ob, %25                      ; 3 uses
+  %i.ob = load i32, ptr %5, align 4, !tbaa !19    ; 7 uses
+  %i.oc = load i32, ptr %13, align 4, !tbaa !19   ; 7 uses
+  %i.od = sub nsw i32 %i.ob, %i.oc                ; 2 uses
+  %i.oe = load i32, ptr %12, align 4, !tbaa !19   ; 16 uses
+  %i.of = sub i32 %i.od, %i.oe                    ; 3 uses
   %.not558.not652 = icmp slt i32 %i.of, %i.od
   br i1 %.not558.not652, label %.lr.ph655, label %.loopexit598
 
 .lr.ph655:                                        ; preds = %bb.bn
+  %invariant.op = add i32 %i.oc, %i.oe
   store i32 %i.oe, ptr %i.b, align 4, !tbaa !19
-  %i.og = sub i32 %25, %i.ob                      ; 3 uses
+  %i.og = sub i32 %invariant.op, %i.ob            ; 3 uses
   %i.oh = shl nsw i64 %i.e, 3
   %scevgep707 = getelementptr i8, ptr %6, i64 %i.oh ; 3 uses
   %i.oi = add i32 %i.ob, 1
+  %25 = add i32 %i.oc, %i.oe
   %i.oj = sub i32 %i.oi, %25
   %i.ok = mul i32 %i.d, %i.oj
   %i.ol = add i32 %i.ok, 2                        ; 3 uses

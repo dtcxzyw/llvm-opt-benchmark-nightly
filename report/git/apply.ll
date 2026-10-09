@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.d = tail call ptr @strchrnul(ptr noundef nonnull %1, i32 noundef 10) #22
   %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.g = sub i64 %i.e, %i.f                       ; 10 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 9 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 %i.g ; 12 uses
   %i.i = getelementptr inbounds i8, ptr %i.h, i64 -1
   %i.j = load i8, ptr %i.i, align 1, !tbaa !63
@@ -319,7 +319,7 @@ bb.p:                                             ; preds = %bb.o
 
 sane_tz_len.exit.i:                               ; preds = %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.i, %bb.d
   %.0.i = phi i64 [ 6, %bb.i ], [ 0, %bb.n ], [ 0, %bb.o ], [ 0, %bb.l ], [ 0, %bb.k ], [ 0, %bb.m ], [ 0, %bb.d ], [ %spec.select.i, %bb.p ] ; 13 uses
-  %i.bi = sub nsw i64 %i.g, %.0.i                 ; 12 uses
+  %i.bi = sub nsw i64 %i.g, %.0.i                 ; 13 uses
   %i.bj = icmp ult i64 %i.bi, 9
   br i1 %i.bj, label %bb.z, label %bb.q
 
@@ -407,7 +407,7 @@ bb.z:                                             ; preds = %sane_tz_len.exit.i
   br i1 %.not.i64.i, label %short_time_len.exit.i, label %.thread82.i
 
 .thread82.i:                                      ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.j
-  %i.db = phi i64 [ %i.bi, %bb.y ], [ %i.bi, %bb.t ], [ %i.bi, %bb.u ], [ %i.bi, %bb.v ], [ %i.bi, %bb.w ], [ %i.bi, %bb.s ], [ %i.bi, %bb.x ], [ %i.bi, %bb.q ], [ %i.bi, %bb.r ], [ %i.bi, %bb.z ], [ 6, %bb.j ]
+  %i.db = phi i64 [ %i.bi, %bb.y ], [ %i.bi, %bb.t ], [ %i.bi, %bb.u ], [ %i.bi, %bb.v ], [ %i.bi, %bb.w ], [ %i.bi, %bb.s ], [ %i.bi, %bb.x ], [ %i.bi, %bb.q ], [ %i.bi, %bb.r ], [ %i.bi, %bb.z ], [ 6, %bb.j ] ; 14 uses
   %.097.i = phi i64 [ %.0.i, %bb.y ], [ %.0.i, %bb.t ], [ %.0.i, %bb.u ], [ %.0.i, %bb.v ], [ %.0.i, %bb.w ], [ %.0.i, %bb.s ], [ %.0.i, %bb.x ], [ %.0.i, %bb.q ], [ %.0.i, %bb.r ], [ %.0.i, %bb.z ], [ 0, %bb.j ] ; 13 uses
   %i.dc = getelementptr i8, ptr %1, i64 %i.db     ; 3 uses
   %i.dd = getelementptr i8, ptr %i.dc, i64 -1
@@ -542,10 +542,10 @@ short_time_len.exit.i.i:                          ; preds = %bb.aj
   br label %short_time_len.exit.i
 
 short_time_len.exit.i:                            ; preds = %short_time_len.exit.i.i, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %.critedge.i.i, %.thread82.i, %bb.z, %bb.y
-  %.096.i.a = phi i64 [ %.0.i, %bb.y ], [ %i.g, %bb.z ], [ %.097.i, %short_time_len.exit.i.i ], [ %.097.i, %.critedge.i.i ], [ %.097.i, %.thread82.i ], [ %.097.i, %bb.ac ], [ %.097.i, %bb.aa ], [ %.097.i, %bb.ab ], [ %.097.i, %bb.ai ], [ %.097.i, %bb.ad ], [ %.097.i, %bb.ah ], [ %.097.i, %bb.ag ], [ %.097.i, %bb.af ], [ %.097.i, %bb.ae ], [ %.097.i, %bb.aj ]
-  %.1.i.a = phi i64 [ 9, %bb.y ], [ 0, %bb.z ], [ %i.fl, %short_time_len.exit.i.i ], [ 0, %.critedge.i.i ], [ 0, %.thread82.i ], [ 0, %bb.ac ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ 0, %bb.ai ], [ 0, %bb.ad ], [ 0, %bb.ah ], [ 0, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.ae ], [ 0, %bb.aj ]
-  %4 = add i64 %.1.i.a, %.096.i.a                 ; 2 uses
-  %i.fm = sub i64 %i.g, %4                        ; 3 uses
+  %.096.i.a = phi i64 [ %i.bi, %bb.y ], [ 0, %bb.z ], [ %i.db, %short_time_len.exit.i.i ], [ %i.db, %.critedge.i.i ], [ %i.db, %.thread82.i ], [ %i.db, %bb.ac ], [ %i.db, %bb.aa ], [ %i.db, %bb.ab ], [ %i.db, %bb.ai ], [ %i.db, %bb.ad ], [ %i.db, %bb.ah ], [ %i.db, %bb.ag ], [ %i.db, %bb.af ], [ %i.db, %bb.ae ], [ %i.db, %bb.aj ]
+  %.1.i.a = phi i64 [ %.0.i, %bb.y ], [ %i.g, %bb.z ], [ %.097.i, %short_time_len.exit.i.i ], [ %.097.i, %.critedge.i.i ], [ %.097.i, %.thread82.i ], [ %.097.i, %bb.ac ], [ %.097.i, %bb.aa ], [ %.097.i, %bb.ab ], [ %.097.i, %bb.ai ], [ %.097.i, %bb.ad ], [ %.097.i, %bb.ah ], [ %.097.i, %bb.ag ], [ %.097.i, %bb.af ], [ %.097.i, %bb.ae ], [ %.097.i, %bb.aj ]
+  %.1.i = phi i64 [ 9, %bb.y ], [ 0, %bb.z ], [ %i.fl, %short_time_len.exit.i.i ], [ 0, %.critedge.i.i ], [ 0, %.thread82.i ], [ 0, %bb.ac ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ 0, %bb.ai ], [ 0, %bb.ad ], [ 0, %bb.ah ], [ 0, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.ae ], [ 0, %bb.aj ] ; 2 uses
+  %i.fm = sub i64 %.096.i.a, %.1.i                ; 3 uses
   %i.fn = icmp ult i64 %i.fm, 8
   br i1 %i.fn, label %diff_timestamp_len.exit.thread, label %bb.ak
 
@@ -652,7 +652,8 @@ date_len.exit.i:                                  ; preds = %bb.au, %bb.at, %bb.
   %i.hq = ptrtoint ptr %.0.i74.i to i64
   %i.hr = ptrtoint ptr %i.fo to i64
   %i.hs = sub i64 %i.hr, %i.hq
-  %i.ht = add i64 %i.hs, %4                       ; 5 uses
+  %4 = add i64 %.1.i, %.1.i.a
+  %i.ht = add i64 %4, %i.hs                       ; 5 uses
   %i.hu = icmp eq i64 %i.g, %i.ht
   br i1 %i.hu, label %diff_timestamp_len.exit.thread, label %bb.av
 

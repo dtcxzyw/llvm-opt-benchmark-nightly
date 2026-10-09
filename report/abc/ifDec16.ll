@@ -205,12 +205,9 @@ bb.f:                                             ; preds = %bb.a, %bb.e
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @If_CluCofactors(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef writeonly captures(none) %4) local_unnamed_addr #10 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %3 to i64
-  %5 = insertelement <2 x ptr> poison, ptr %3, i64 0 ; 2 uses
-  %6 = insertelement <2 x ptr> %5, ptr %4, i64 1
-  %7 = ptrtoaddr <2 x ptr> %6 to <2 x i64>
-  %i.c = ptrtoaddr ptr %4 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %3 to i64                  ; 4 uses
+  %i.c = ptrtoaddr ptr %4 to i64                  ; 3 uses
   %i.d = icmp slt i32 %1, 7
   %i.e = add nsw i32 %1, -6
   %i.f = shl nuw i32 1, %i.e
@@ -340,37 +337,36 @@ bb.c:                                             ; preds = %bb.a
   %smax = tail call i32 @llvm.smax.i32(i32 %i.bb, i32 1) ; 2 uses
   %wide.trip.count = zext nneg i32 %smax to i64   ; 3 uses
   %i.bg = sub i64 %i.c, %i.b                      ; 2 uses
-  %i.bh = shl nsw i64 %i.bf, 3                    ; 4 uses
-  %8 = insertelement <2 x i64> poison, i64 %i.bh, i64 0
-  %9 = shufflevector <2 x i64> %8, <2 x i64> poison, <2 x i32> zeroinitializer
-  %10 = add <2 x i64> %9, %7
-  %i.bi = add i64 %i.bh, %i.a
-  %11 = sub i64 %i.c, %i.a                        ; 2 uses
-  %12 = shufflevector <2 x i64> %10, <2 x i64> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %13 = shufflevector <2 x ptr> %5, <2 x ptr> poison, <8 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %14 = ptrtoaddr <8 x ptr> %13 to <8 x i64>
+  %i.bh = shl nsw i64 %i.bf, 3                    ; 5 uses
+  %5 = add i64 %i.bh, %i.c                        ; 2 uses
+  %6 = sub i64 %i.c, %i.a                         ; 2 uses
   %min.iters.check = icmp slt i32 %i.bb, 18
-  %i.bj = sub i64 %i.bh, %i.bg
+  %i.bi = add i64 %i.bg, -1
+  %diff.check80 = icmp ult i64 %i.bi, 31
+  %7 = sub i64 %i.bh, %i.bg
+  %diff.check81 = icmp ugt i64 %7, -32
+  %conflict.rdx82 = or i1 %diff.check80, %diff.check81
+  %i.bj = sub i64 %i.b, %i.a                      ; 2 uses
   %diff.check81.a = icmp ugt i64 %i.bj, -32
-  %15 = add i64 %11, -1
-  %diff.check93 = icmp ult i64 %15, 31
-  %16 = insertelement <8 x i64> %14, i64 %i.a, i64 1 ; 2 uses
-  %17 = insertelement <8 x i64> %16, i64 %i.bh, i64 2
-  %18 = insertelement <8 x i64> %17, i64 %i.bg, i64 3
-  %19 = shufflevector <8 x i64> %18, <8 x i64> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 0, i32 1, i32 1, i32 2, i32 3>
-  %20 = shufflevector <8 x i64> %16, <8 x i64> <i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 1>, <8 x i32> <i32 1, i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 poison, i32 15>
-  %21 = shufflevector <8 x i64> %20, <8 x i64> %12, <8 x i32> <i32 0, i32 8, i32 9, i32 poison, i32 4, i32 poison, i32 poison, i32 7>
-  %22 = insertelement <8 x i64> %21, i64 %i.bi, i64 3
-  %23 = insertelement <8 x i64> %22, i64 %11, i64 6
-  %24 = shufflevector <8 x i64> %23, <8 x i64> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 2, i32 6, i32 7>
-  %25 = sub <8 x i64> %19, %24                    ; 2 uses
-  %26 = icmp ugt <8 x i64> %25, <i64 -32, i64 -32, i64 -32, i64 -32, i64 -32, i64 -32, i64 -32, i64 31>
-  %27 = icmp ult <8 x i64> %25, <i64 -32, i64 -32, i64 -32, i64 -32, i64 -32, i64 -32, i64 -32, i64 31>
-  %28 = shufflevector <8 x i1> %26, <8 x i1> %27, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 15>
-  %29 = bitcast <8 x i1> %28 to i8
-  %30 = icmp ne i8 %29, 0
-  %op.rdx = or i1 %30, %diff.check81.a
-  %op.rdx138 = or i1 %op.rdx, %diff.check93
+  %conflict.rdx84 = or i1 %conflict.rdx82, %diff.check81.a
+  %8 = sub i64 %i.b, %5
+  %diff.check87 = icmp ugt i64 %8, -32
+  %invariant.op = or i1 %conflict.rdx84, %diff.check87
+  %9 = sub i64 %i.bj, %i.bh
+  %diff.check89 = icmp ugt i64 %9, -32
+  %invariant.op147 = or i1 %invariant.op, %diff.check89
+  %10 = sub i64 %i.a, %i.b                        ; 2 uses
+  %diff.check91 = icmp ugt i64 %10, -32
+  %invariant.op148 = or i1 %invariant.op147, %diff.check91
+  %11 = add i64 %6, -1
+  %diff.check93 = icmp ult i64 %11, 31
+  %invariant.op149 = or i1 %invariant.op148, %diff.check93
+  %12 = sub i64 %i.a, %5
+  %diff.check95 = icmp ugt i64 %12, -32
+  %invariant.op150 = or i1 %invariant.op149, %diff.check95
+  %13 = sub i64 %i.bh, %6
+  %diff.check97 = icmp ugt i64 %13, -32
+  %op.rdx138 = or i1 %invariant.op150, %diff.check97
   %n.vec = and i64 %wide.trip.count, 2147483644
   %xtraiter = and i64 %wide.trip.count, 1
   %i.bk = icmp slt i32 %i.bb, 2
@@ -384,14 +380,19 @@ bb.c:                                             ; preds = %bb.a
   %.05464 = phi ptr [ %i.dc, %._crit_edge ], [ %4, %.preheader.preheader ] ; 9 uses
   %.05563 = phi ptr [ %i.db, %._crit_edge ], [ %3, %.preheader.preheader ] ; 9 uses
   %.05662 = phi ptr [ %i.da, %._crit_edge ], [ %0, %.preheader.preheader ] ; 9 uses
-  %brmerge = select i1 %min.iters.check, i1 true, i1 %op.rdx138
-  br i1 %brmerge, label %scalar.ph.preheader.a, label %vector.body
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %scalar.ph.preheader.a
 
-scalar.ph.preheader.a:                            ; preds = %.preheader
+scalar.ph.preheader:                              ; preds = %scalar.ph.preheader.a, %.preheader
   br i1 %i.bk, label %scalar.ph.epil.preheader, label %scalar.ph
 
-vector.body:                                      ; preds = %.preheader, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader ] ; 5 uses
+scalar.ph.preheader.a:                            ; preds = %.preheader
+  %14 = sub i64 %10, %i.bh
+  %diff.check85 = icmp ugt i64 %14, -32
+  %conflict.rdx98.reass = or i1 %diff.check85, %op.rdx138
+  br i1 %conflict.rdx98.reass, label %scalar.ph.preheader, label %vector.body
+
+vector.body:                                      ; preds = %scalar.ph.preheader.a, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %scalar.ph.preheader.a ] ; 5 uses
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %.05662, i64 %index ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 16
   %wide.load = load <2 x i64>, ptr %i.bl, align 8, !tbaa !44 ; 2 uses
@@ -421,9 +422,9 @@ vector.body:                                      ; preds = %.preheader, %vector
   %i.by = icmp eq i64 %index.next, %n.vec
   br i1 %i.by, label %._crit_edge, label %vector.body, !llvm.loop !250
 
-scalar.ph:                                        ; preds = %scalar.ph.preheader.a, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %scalar.ph ], [ 0, %scalar.ph.preheader.a ] ; 6 uses
-  %niter = phi i64 [ %niter.next.1, %scalar.ph ], [ 0, %scalar.ph.preheader.a ]
+scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %scalar.ph ], [ 0, %scalar.ph.preheader ] ; 6 uses
+  %niter = phi i64 [ %niter.next.1, %scalar.ph ], [ 0, %scalar.ph.preheader ]
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %.05662, i64 %indvars.iv
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !44 ; 2 uses
   %i.cb = add nuw nsw i64 %indvars.iv, %i.bf      ; 3 uses
@@ -459,8 +460,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %scalar.ph
   br i1 %lcmp.mod.not, label %._crit_edge, label %scalar.ph.epil.preheader
 
-scalar.ph.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %scalar.ph.preheader.a
-  %indvars.iv.epil.init = phi i64 [ 0, %scalar.ph.preheader.a ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 4 uses
+scalar.ph.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %scalar.ph.preheader
+  %indvars.iv.epil.init = phi i64 [ 0, %scalar.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 4 uses
   tail call void @llvm.assume(i1 %lcmp.mod142)
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %.05662, i64 %indvars.iv.epil.init
   %i.cs = load i64, ptr %i.cr, align 8, !tbaa !44 ; 2 uses
