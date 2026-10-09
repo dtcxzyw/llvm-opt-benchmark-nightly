@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.loopexit.split-lp,
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %.0144621.epil
   %i.ap = load <2 x float>, ptr %i.ao, align 4, !tbaa !20
   %i.aq = fadd <2 x float> %i.an, %i.ap           ; 2 uses
-  %i.ar = add nuw i64 %.0144621.epil, 1
+  %i.ar = add nuw nsw i64 %.0144621.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, 4
   br i1 %epil.iter.cmp.not, label %.lr.ph626.preheader, label %.lr.ph622.epil, !llvm.loop !26
@@ -266,7 +266,7 @@ vector.body:                                      ; preds = %vector.body, %.lr.p
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 56
   %i.cf = load <2 x float>, ptr %i.ce, align 4, !tbaa !20
   %i.cg = fadd <2 x float> %i.cc, %i.cf           ; 3 uses
-  %i.ch = add nuw i64 %.0144621, 8                ; 2 uses
+  %i.ch = add nuw nsw i64 %.0144621, 8            ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.lr.ph626.preheader.unr-lcssa, label %.lr.ph622, !llvm.loop !28
@@ -365,7 +365,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit265.thread:          ; preds = %_ZNKSt6vectorIN2cv7
   %.sroa.553.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
   %i.ek = extractelement <4 x float> %i.ef, i64 3
   store float %i.ek, ptr %.sroa.553.0..sroa_idx, align 4, !tbaa !20
-  %i.el = add nuw i64 %.0146628, 1                ; 2 uses
+  %i.el = add nuw nsw i64 %.0146628, 1            ; 2 uses
   %exitcond667.not = icmp eq i64 %i.el, %i.k
   br i1 %exitcond667.not, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i, label %.lr.ph629, !llvm.loop !29
 
@@ -445,7 +445,7 @@ middle.block777:                                  ; preds = %vector.body767
   %.lcssa750 = phi i32 [ %i.fl, %middle.block777 ], [ %i.fx, %.lr.ph633 ]
   %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.cl, i64 %.0143636
   store i32 %.lcssa750, ptr %i.fm, align 4, !tbaa !45
-  %i.fn = add nuw i64 %.0143636, 1                ; 2 uses
+  %i.fn = add nuw nsw i64 %.0143636, 1            ; 2 uses
   %exitcond671.not = icmp eq i64 %i.fn, %i.l
   br i1 %exitcond671.not, label %_ZNKSt6vectorIN2cv7Point3_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i283, label %.lr.ph633.preheader, !llvm.loop !31
 
@@ -462,7 +462,7 @@ middle.block777:                                  ; preds = %vector.body767
   %i.fv = fcmp ole float %i.fu, 0.000000e+00
   %i.fw = zext i1 %i.fv to i32
   %i.fx = add nuw nsw i32 %.0142630, %i.fw        ; 2 uses
-  %i.fy = add nuw i64 %.0141631, 1                ; 2 uses
+  %i.fy = add nuw nsw i64 %.0141631, 1            ; 2 uses
   %exitcond669.not = icmp eq i64 %i.fy, %i.k
   br i1 %exitcond669.not, label %._crit_edge634, label %.lr.ph633, !llvm.loop !32
 
@@ -643,7 +643,7 @@ _ZNKSt6vectorIN2cv7Point3_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i317: ; preds = %
   %i.if = getelementptr inbounds nuw [12 x i8], ptr %i.cj, i64 %i.ie
   %i.ig = getelementptr inbounds nuw [12 x i8], ptr %i.em, i64 %i.ib
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ig, ptr noundef nonnull align 4 dereferenceable(12) %i.if, i64 12, i1 false), !tbaa.struct !53
-  %i.ih = add nuw i64 %.0140639, 2                ; 2 uses
+  %i.ih = add nuw nsw i64 %.0140639, 2            ; 2 uses
   %exitcond674.not.1 = icmp eq i64 %i.ih, %i.l
   br i1 %exitcond674.not.1, label %_ZNKSt6vectorIN2cv7Point3_IfEESaIS2_EE12_M_check_lenEmPKc.exit.i317, label %.lr.ph640, !llvm.loop !38
 

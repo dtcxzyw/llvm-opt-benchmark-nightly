@@ -204,7 +204,7 @@ begin_hunk_0_@"_ZNSt17_Function_handlerIFvRKN2cv5RangeEEZNS0_3dnnL10avgPool32fEP
   %indvar85 = phi i64 [ 0, %.preheader7.us.i.us.i.i.preheader ], [ %indvar.next86, %._crit_edge47.split.us.us.i.split.us.us.i.i ] ; 3 uses
   %.016462.us.i.us.i.i = phi i32 [ %.val2, %.preheader7.us.i.us.i.i.preheader ], [ %i.nq, %._crit_edge47.split.us.us.i.split.us.us.i.i ]
   %.016561.us.i.us.i.i = phi ptr [ %i.fa, %.preheader7.us.i.us.i.i.preheader ], [ %i.no, %._crit_edge47.split.us.us.i.split.us.us.i.i ]
-  %.016859.us.i.us.i.i = phi ptr [ %i.er, %.preheader7.us.i.us.i.i.preheader ], [ %i.nr, %._crit_edge47.split.us.us.i.split.us.us.i.i ] ; 4 uses
+  %.016859.us.i.us.i.i = phi ptr [ %i.er, %.preheader7.us.i.us.i.i.preheader ], [ %i.nr, %._crit_edge47.split.us.us.i.split.us.us.i.i ] ; 3 uses
   %i.hr = mul i64 %i.go, %indvar85
   %scevgep125.a = getelementptr i8, ptr %i.gp, i64 %i.hr
   %i.hs = mul i64 %i.fv, %indvar85
@@ -303,18 +303,17 @@ bb.ah:                                            ; preds = %bb.ag
   %i.jk = add i32 %i.jj, %i.jg
   %i.jl = mul i32 %i.jk, %.fr35.i
   %i.jm = sext i32 %i.jl to i64                   ; 2 uses
-  %i.jn = getelementptr inbounds [4 x i8], ptr %.016859.us.i.us.i.i, i64 %i.jm ; 6 uses
+  %i.jn = getelementptr [4 x i8], ptr %.016859.us.i.us.i.i, i64 %i.jm ; 7 uses
   br i1 %i.fi, label %._crit_edge.us.us.us.i.us.us.us.us.i.i, label %.lr.ph.us.us.us.i.us.us.us.us.i.i.preheader
 
 .lr.ph.us.us.us.i.us.us.us.us.i.i.preheader:      ; preds = %bb.ah
   br i1 %min.iters.check131, label %.lr.ph.us.us.us.i.us.us.us.us.i.i.preheader144, label %vector.memcheck120
 
 vector.memcheck120:                               ; preds = %.lr.ph.us.us.us.i.us.us.us.us.i.i.preheader
-  %i.jo = shl nsw i64 %i.jm, 2                    ; 2 uses
-  %scevgep124 = getelementptr i8, ptr %.016859.us.i.us.i.i, i64 %i.jo
+  %i.jo = shl nsw i64 %i.jm, 2
   %scevgep126 = getelementptr i8, ptr %scevgep125.a, i64 %i.jo
   %bound0127 = icmp ult ptr %invariant.gep164.i.us.us.us.us.i.i, %scevgep126
-  %bound1128 = icmp ult ptr %scevgep124, %scevgep123
+  %bound1128 = icmp ult ptr %i.jn, %scevgep123
   %found.conflict129 = and i1 %bound0127, %bound1128
   br i1 %found.conflict129, label %.lr.ph.us.us.us.i.us.us.us.us.i.i.preheader144, label %vector.body134
 

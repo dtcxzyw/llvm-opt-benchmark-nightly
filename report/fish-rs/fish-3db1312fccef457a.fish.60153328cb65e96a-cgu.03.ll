@@ -205,38 +205,32 @@ bb.k:                                             ; preds = %bb.x, %bb.t
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %bb.u
   %.sroa.4.029 = phi i64 [ %.sroa.03.0, %.lr.ph.i.lr.ph ], [ %i.ap, %bb.u ]
-  %.val.i.i.i.i = load ptr, ptr %i.ai, align 8, !noalias !842, !noundef !5 ; 3 uses
+  %.val.i.i.i.i = load ptr, ptr %i.ai, align 8, !noalias !842, !noundef !5 ; 2 uses
   %.val1.i.i.i.i = load i32, ptr %i.ae, align 8, !noalias !842, !noundef !5
   %i.an = zext i32 %.val1.i.i.i.i to i64
-  %4 = shl nuw nsw i64 %i.an, 1                   ; 2 uses
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.o, %.lr.ph.i
-  %i.ao = phi i64 [ %.sroa.4.029, %.lr.ph.i ], [ %i.ap, %bb.o ] ; 2 uses
+  %i.ao = phi i64 [ %.sroa.4.029, %.lr.ph.i ], [ %i.ap, %bb.o ] ; 3 uses
   %i.ap = add i64 %i.ao, 1                        ; 4 uses
-  %5 = shl nuw i64 %i.ao, 1                       ; 3 uses
-  %i.aq = icmp ult i64 %5, %4
+  %i.aq = icmp samesign ult i64 %i.ao, %i.an
   br i1 %i.aq, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i.i.i, i64 %5
+  %.idx.i.i.i.i.i = shl nuw nsw i64 %i.ao, 4
+  %4 = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.idx.i.i.i.i.i ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
-  %i.ar = load i64, ptr %6, align 8, !noalias !843, !noundef !5 ; 7 uses
+  %i.ar = load i64, ptr %4, align 8, !noalias !843, !noundef !5 ; 7 uses
   %i.as = icmp eq i64 %i.ar, -1
-  br i1 %i.as, label %bb.o, label %7
+  br i1 %i.as, label %bb.o, label %bb.n
 
-7:                                                ; preds = %bb.m
-  %8 = or disjoint i64 %5, 1                      ; 2 uses
-  %9 = icmp samesign ult i64 %8, %4
-  br i1 %9, label %bb.n, label %bb.o
-
-bb.n:                                             ; preds = %7
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i.i.i, i64 %8
-  %i.at = load i64, ptr %10, align 8, !noalias !843, !noundef !5 ; 6 uses
+bb.n:                                             ; preds = %bb.m
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.at = load i64, ptr %5, align 8, !noalias !843, !noundef !5 ; 6 uses
   %i.au = icmp eq i64 %i.at, -1
   br i1 %i.au, label %bb.o, label %bb.p
 
-bb.o:                                             ; preds = %bb.n, %7, %bb.m, %bb.l
+bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   %exitcond.not.i = icmp eq i64 %i.ap, %i.ag
   br i1 %exitcond.not.i, label %.loopexit8, label %bb.l
 
@@ -625,10 +619,9 @@ _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCslLGyqsphxMB_10widestring9utfst
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 48
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
-  %.val.i.i = load ptr, ptr %i.af, align 8        ; 3 uses
+  %.val.i.i = load ptr, ptr %i.af, align 8        ; 2 uses
   %.val3.i.i = load i32, ptr %i.ae, align 8
   %i.am = zext i32 %.val3.i.i to i64
-  %2 = shl nuw nsw i64 %i.am, 1                   ; 2 uses
   %i.an = load i64, ptr %i.ad, align 8
   %i.ao = load ptr, ptr %i.ac, align 8, !nonnull !5, !align !21
   br label %bb.c
@@ -709,13 +702,12 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
 
 _RINvMs1_NtCskt5MLIAl8nl_9hashbrown3mapINtB6_7HashMapNtNtCs1xwejQucwHj_5alloc6string6StringjNtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE3geteECs8frGy5WneL6_4fish.exit.i.i: ; preds = %.noexc1.i
   %i.bu = getelementptr inbounds i8, ptr %i.bk, i64 -8
-  %i.bv = load i64, ptr %i.bu, align 8, !noalias !887, !noundef !5 ; 2 uses
-  %3 = shl nuw i64 %i.bv, 1                       ; 3 uses
+  %i.bv = load i64, ptr %i.bu, align 8, !noalias !887, !noundef !5 ; 3 uses
   %i.bw = icmp slt i64 %i.bv, 0
   br i1 %i.bw, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %_RINvMs1_NtCskt5MLIAl8nl_9hashbrown3mapINtB6_7HashMapNtNtCs1xwejQucwHj_5alloc6string6StringjNtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE3geteECs8frGy5WneL6_4fish.exit.i.i
-  %i.bx = icmp ult i64 %3, %2
+  %i.bx = icmp samesign ult i64 %i.bv, %i.am
   br i1 %i.bx, label %bb.j, label %_RNvMs9_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_8CapturesNtNtB7_3ffi15CodeUnitWidth32E4nameCs8frGy5WneL6_4fish.exit.i
 
 bb.i:                                             ; preds = %_RINvMs1_NtCskt5MLIAl8nl_9hashbrown3mapINtB6_7HashMapNtNtCs1xwejQucwHj_5alloc6string6StringjNtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE3geteECs8frGy5WneL6_4fish.exit.i.i
@@ -726,20 +718,16 @@ bb.i:                                             ; preds = %_RINvMs1_NtCskt5MLI
   unreachable
 
 bb.j:                                             ; preds = %bb.h
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i, i64 %3
+  %.idx.i.i.i = shl nuw nsw i64 %i.bv, 4
+  %2 = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.idx.i.i.i ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
-  %i.by = load i64, ptr %4, align 8, !noalias !888, !noundef !5 ; 2 uses
+  %i.by = load i64, ptr %2, align 8, !noalias !888, !noundef !5 ; 2 uses
   %i.bz = icmp eq i64 %i.by, -1
-  br i1 %i.bz, label %_RNvMs9_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_8CapturesNtNtB7_3ffi15CodeUnitWidth32E4nameCs8frGy5WneL6_4fish.exit.i, label %5
+  br i1 %i.bz, label %_RNvMs9_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_8CapturesNtNtB7_3ffi15CodeUnitWidth32E4nameCs8frGy5WneL6_4fish.exit.i, label %bb.k
 
-5:                                                ; preds = %bb.j
-  %6 = or disjoint i64 %3, 1                      ; 2 uses
-  %7 = icmp samesign ult i64 %6, %2
-  br i1 %7, label %bb.k, label %_RNvMs9_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_8CapturesNtNtB7_3ffi15CodeUnitWidth32E4nameCs8frGy5WneL6_4fish.exit.i
-
-bb.k:                                             ; preds = %5
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i, i64 %6
-  %i.ca = load i64, ptr %8, align 8, !noalias !888, !noundef !5 ; 2 uses
+bb.k:                                             ; preds = %bb.j
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.ca = load i64, ptr %3, align 8, !noalias !888, !noundef !5 ; 2 uses
   %i.cb = icmp eq i64 %i.ca, -1
   br i1 %i.cb, label %_RNvMs9_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_8CapturesNtNtB7_3ffi15CodeUnitWidth32E4nameCs8frGy5WneL6_4fish.exit.i, label %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i
 
@@ -766,11 +754,11 @@ _RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15C
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(24) %i.a) #35
           to label %common.resume unwind label %bb.n, !noalias !879
 
-_RNvMs9_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_8CapturesNtNtB7_3ffi15CodeUnitWidth32E4nameCs8frGy5WneL6_4fish.exit.i: ; preds = %._crit_edge.i.i.i.i, %bb.h, %bb.j, %5, %bb.k, %bb.c, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i
-  %.sroa.9.0 = phi i64 [ %i.by, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i ], [ undef, %bb.c ], [ undef, %bb.h ], [ undef, %bb.k ], [ undef, %5 ], [ undef, %bb.j ], [ undef, %._crit_edge.i.i.i.i ] ; 5 uses
-  %.sroa.7.0 = phi i64 [ %i.an, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i ], [ undef, %bb.c ], [ undef, %bb.h ], [ undef, %bb.k ], [ undef, %5 ], [ undef, %bb.j ], [ undef, %._crit_edge.i.i.i.i ] ; 2 uses
-  %.sroa.01.0 = phi ptr [ %i.ao, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i ], [ null, %bb.c ], [ null, %bb.h ], [ null, %bb.k ], [ null, %5 ], [ null, %bb.j ], [ null, %._crit_edge.i.i.i.i ] ; 2 uses
-  %.sroa.11.0 = phi i64 [ %i.ca, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i ], [ undef, %bb.c ], [ undef, %bb.h ], [ undef, %bb.k ], [ undef, %5 ], [ undef, %bb.j ], [ undef, %._crit_edge.i.i.i.i ] ; 5 uses
+_RNvMs9_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_8CapturesNtNtB7_3ffi15CodeUnitWidth32E4nameCs8frGy5WneL6_4fish.exit.i: ; preds = %._crit_edge.i.i.i.i, %bb.h, %bb.j, %bb.k, %bb.c, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i
+  %.sroa.9.0 = phi i64 [ %i.by, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i ], [ undef, %bb.c ], [ undef, %bb.h ], [ undef, %bb.k ], [ undef, %bb.j ], [ undef, %._crit_edge.i.i.i.i ] ; 5 uses
+  %.sroa.7.0 = phi i64 [ %i.an, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i ], [ undef, %bb.c ], [ undef, %bb.h ], [ undef, %bb.k ], [ undef, %bb.j ], [ undef, %._crit_edge.i.i.i.i ] ; 2 uses
+  %.sroa.01.0 = phi ptr [ %i.ao, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i ], [ null, %bb.c ], [ null, %bb.h ], [ null, %bb.k ], [ null, %bb.j ], [ null, %._crit_edge.i.i.i.i ] ; 2 uses
+  %.sroa.11.0 = phi i64 [ %i.ca, %_RNvMs8_NtCs8n0tpEuULLm_5pcre210regex_implINtB5_16CaptureLocationsNtNtB7_3ffi15CodeUnitWidth32E3getCs8frGy5WneL6_4fish.exit.i.i ], [ undef, %bb.c ], [ undef, %bb.h ], [ undef, %bb.k ], [ undef, %bb.j ], [ undef, %._crit_edge.i.i.i.i ] ; 5 uses
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %_RNCNvMs0_NtNtNtCs8frGy5WneL6_4fish8builtins6string5matchNtB7_12RegexMatcher28populate_captures_from_match0Bd_.exit unwind label %bb.l, !noalias !879
 
