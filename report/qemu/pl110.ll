@@ -204,15 +204,15 @@ bb.y:                                             ; preds = %bb.l
   br i1 %.not, label %bb.z, label %bb.x
 
 bb.z:                                             ; preds = %bb.y, %bb.w
-  %i.dv = trunc i64 %2 to i32                     ; 2 uses
+  %i.dv = trunc i64 %2 to i32                     ; 3 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 1188
   store i32 %i.dv, ptr %i.dw, align 4
   %i.dx = lshr i32 %i.dv, 1
   %i.dy = and i32 %i.dx, 7
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 1216
   store i32 %i.dy, ptr %i.dz, align 16
-  %4 = and i64 %2, 2049
-  %.not51.not = icmp eq i64 %4, 2049
+  %4 = and i32 %i.dv, 2049
+  %.not51.not = icmp eq i32 %4, 2049
   br i1 %.not51.not, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
