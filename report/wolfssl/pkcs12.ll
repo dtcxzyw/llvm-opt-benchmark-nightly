@@ -204,7 +204,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
   %indvars.iv.next69.lcssa = phi i64 [ %i.ap, %vec.epilog.middle.block ], [ %i.i, %middle.block ], [ %indvars.iv.next69, %.lr.ph ]
-  %i.ay = trunc nuw i64 %indvars.iv.next69.lcssa to i32
+  %i.ay = trunc nuw nsw i64 %indvars.iv.next69.lcssa to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader

@@ -205,7 +205,7 @@ _ZN6ImPlotL10IsLeapYearEi.exit.thread39.us:       ; preds = %bb.e, %_ZN6ImPlot7G
   %i.w = load i64, ptr %3, align 8, !tbaa !288
   %i.x = add nsw i64 %i.w, %i.v
   store i64 %i.x, ptr %3, align 8, !tbaa !288
-  %i.y = add nuw i32 %.056.us, 1                  ; 2 uses
+  %i.y = add nuw nsw i32 %.056.us, 1              ; 2 uses
   %exitcond69.not = icmp eq i32 %i.y, %i.c
   br i1 %exitcond69.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !524
 
@@ -278,7 +278,7 @@ _ZN6ImPlotL14GetDaysInMonthEii.exit.us:           ; preds = %bb.j, %bb.i, %_ZN6I
   %i.bc = load i64, ptr %3, align 8, !tbaa !288
   %i.bd = add nsw i64 %i.bc, %i.bb
   store i64 %i.bd, ptr %3, align 8, !tbaa !288
-  %i.be = add nuw i32 %.02457.us, 1               ; 2 uses
+  %i.be = add nuw nsw i32 %.02457.us, 1           ; 2 uses
   %exitcond72.not = icmp eq i32 %i.be, %i.z
   br i1 %exitcond72.not, label %.loopexit, label %.lr.ph58.split.us, !llvm.loop !525
 
@@ -681,10 +681,10 @@ declare i32 @llvm.usub.sat.i32(i32, i32) #7
 declare i64 @llvm.smax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #7
+declare i32 @llvm.umin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #7
+declare i32 @llvm.umax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #2

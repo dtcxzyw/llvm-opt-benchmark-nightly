@@ -140,7 +140,16 @@ bb.a:
   %i.b = add i64 %1, -1                           ; 3 uses
   %.not31 = icmp eq i64 %i.b, 0
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %i.b ; 4 uses
-  br i1 %.not31, label %.lr.ph29.split, label %.lr.ph.us
+  br i1 %.not31, label %.lr.ph29.split.preheader, label %.lr.ph.us
+
+.lr.ph29.split.preheader:                         ; preds = %.lr.ph29
+  %3 = tail call { i64, i64, i64 } asm sideeffect "mov $1, $0                                 \0A\09xor $2, $0                                 \0A\09sub $2, $1                                 \0A\09and $0, $2                                 \0A\09not $0                                       \0A\09and $0, $1                                 \0A\09or $2, $1                                  \0A\09sar $$63, $1                                  \0A\09", "=&{ax},=&{di},=&{si},1,2,~{dirflag},~{fpsr},~{flags}"(i64 0, i64 %i.a) #4, !srcloc !11
+  %4 = extractvalue { i64, i64, i64 } %3, 1
+  %5 = load volatile i8, ptr %i.c, align 1, !tbaa !9
+  %6 = trunc i64 %4 to i8
+  %7 = and i8 %5, %6
+  store volatile i8 %7, ptr %i.c, align 1, !tbaa !9
+  br label %._crit_edge30
 
 .lr.ph.us:                                        ; preds = %.lr.ph29, %._crit_edge.us
   %.027.us = phi i64 [ %i.s, %._crit_edge.us ], [ 0, %.lr.ph29 ] ; 2 uses
@@ -173,17 +182,8 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %exitcond33.not = icmp eq i64 %i.s, %1
   br i1 %exitcond33.not, label %._crit_edge30, label %.lr.ph.us, !llvm.loop !20
 
-._crit_edge30:                                    ; preds = %._crit_edge.us, %.lr.ph29.split, %bb.a
+._crit_edge30:                                    ; preds = %._crit_edge.us, %.lr.ph29.split.preheader, %bb.a
   ret void
-
-.lr.ph29.split:                                   ; preds = %.lr.ph29
-  %3 = tail call { i64, i64, i64 } asm sideeffect "mov $1, $0                                 \0A\09xor $2, $0                                 \0A\09sub $2, $1                                 \0A\09and $0, $2                                 \0A\09not $0                                       \0A\09and $0, $1                                 \0A\09or $2, $1                                  \0A\09sar $$63, $1                                  \0A\09", "=&{ax},=&{di},=&{si},1,2,~{dirflag},~{fpsr},~{flags}"(i64 0, i64 %i.a) #4, !srcloc !11
-  %4 = extractvalue { i64, i64, i64 } %3, 1
-  %5 = load volatile i8, ptr %i.c, align 1, !tbaa !9
-  %6 = trunc i64 %4 to i8
-  %7 = and i8 %5, %6
-  store volatile i8 %7, ptr %i.c, align 1, !tbaa !9
-  br label %._crit_edge30
 }
 
 ; Function Attrs: nounwind uwtable
