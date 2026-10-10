@@ -205,7 +205,7 @@ middle.block183:                                  ; preds = %vector.body178
 .lr.ph94.us.new:                                  ; preds = %.lr.ph94.us, %.lr.ph94.us.new
   %indvars.iv122 = phi i64 [ %indvars.iv.next123.1, %.lr.ph94.us.new ], [ 0, %.lr.ph94.us ] ; 3 uses
   %niter208 = phi i64 [ %niter208.next.1, %.lr.ph94.us.new ], [ 0, %.lr.ph94.us ]
-  %i.ar = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %indvars.iv122 ; 6 uses
+  %i.ar = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %indvars.iv122 ; 5 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 20
   %i.at = load float, ptr %i.as, align 4, !tbaa !103
   %i.au = fadd float %i.ao, %i.at
@@ -221,17 +221,17 @@ middle.block183:                                  ; preds = %vector.body178
   %i.be = load float, ptr %i.bd, align 8, !tbaa !106
   %i.bf = fadd float %i.be, %i.bc                 ; 3 uses
   %i.bg = load i32, ptr %i.ak, align 4, !tbaa !28
-  %i.bh = sitofp i32 %i.bg to float               ; 2 uses
+  %i.bh = sitofp i32 %i.bg to float
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ar, i64 24 ; 2 uses
-  %7 = load float, ptr %i.bi, align 8, !tbaa !101
-  %8 = tail call float @llvm.fmuladd.f32(float %i.bh, float %i.bf, float %7)
-  store float %8, ptr %i.bi, align 8, !tbaa !101
-  %9 = fmul float %i.bf, %i.bf
-  %10 = getelementptr inbounds nuw i8, ptr %i.ar, i64 28 ; 2 uses
-  %11 = load float, ptr %10, align 4, !tbaa !102
-  %12 = tail call float @llvm.fmuladd.f32(float %i.bh, float %9, float %11)
-  store float %12, ptr %10, align 4, !tbaa !102
-  %i.bj = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %indvars.iv122 ; 6 uses
+  %7 = fmul float %i.bf, %i.bf
+  %8 = load <2 x float>, ptr %i.bi, align 8, !tbaa !26
+  %9 = insertelement <2 x float> poison, float %i.bh, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = insertelement <2 x float> poison, float %i.bf, i64 0
+  %12 = insertelement <2 x float> %11, float %7, i64 1
+  %13 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %12, <2 x float> %8)
+  store <2 x float> %13, ptr %i.bi, align 8, !tbaa !26
+  %i.bj = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %indvars.iv122 ; 5 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 52
   %i.bl = load float, ptr %i.bk, align 4, !tbaa !103
   %i.bm = fadd float %i.ao, %i.bl
@@ -247,16 +247,16 @@ middle.block183:                                  ; preds = %vector.body178
   %i.bw = load float, ptr %i.bv, align 8, !tbaa !106
   %i.bx = fadd float %i.bw, %i.bu                 ; 3 uses
   %i.by = load i32, ptr %i.ak, align 4, !tbaa !28
-  %i.bz = sitofp i32 %i.by to float               ; 2 uses
+  %i.bz = sitofp i32 %i.by to float
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bj, i64 56 ; 2 uses
-  %13 = load float, ptr %i.ca, align 8, !tbaa !101
-  %14 = tail call float @llvm.fmuladd.f32(float %i.bz, float %i.bx, float %13)
-  store float %14, ptr %i.ca, align 8, !tbaa !101
-  %15 = fmul float %i.bx, %i.bx
-  %16 = getelementptr inbounds nuw i8, ptr %i.bj, i64 60 ; 2 uses
-  %17 = load float, ptr %16, align 4, !tbaa !102
-  %18 = tail call float @llvm.fmuladd.f32(float %i.bz, float %15, float %17)
-  store float %18, ptr %16, align 4, !tbaa !102
+  %14 = fmul float %i.bx, %i.bx
+  %15 = load <2 x float>, ptr %i.ca, align 8, !tbaa !26
+  %16 = insertelement <2 x float> poison, float %i.bz, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = insertelement <2 x float> poison, float %i.bx, i64 0
+  %19 = insertelement <2 x float> %18, float %14, i64 1
+  %20 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %17, <2 x float> %19, <2 x float> %15)
+  store <2 x float> %20, ptr %i.ca, align 8, !tbaa !26
   %indvars.iv.next123.1 = add nuw nsw i64 %indvars.iv122, 2 ; 2 uses
   %niter208.next.1 = add i64 %niter208, 2         ; 2 uses
   %niter208.ncmp.1 = icmp eq i64 %niter208.next.1, %unroll_iter207
@@ -268,7 +268,7 @@ middle.block183:                                  ; preds = %vector.body178
 .epil.preheader:                                  ; preds = %._crit_edge95.us.unr-lcssa, %.lr.ph94.us
   %indvars.iv122.epil.init = phi i64 [ 0, %.lr.ph94.us ], [ %indvars.iv.next123.1, %._crit_edge95.us.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod206)
-  %i.cb = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %indvars.iv122.epil.init ; 6 uses
+  %i.cb = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %indvars.iv122.epil.init ; 5 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 20
   %i.cd = load float, ptr %i.cc, align 4, !tbaa !103
   %i.ce = fadd float %i.ao, %i.cd
@@ -284,16 +284,16 @@ middle.block183:                                  ; preds = %vector.body178
   %i.co = load float, ptr %i.cn, align 8, !tbaa !106
   %i.cp = fadd float %i.co, %i.cm                 ; 3 uses
   %i.cq = load i32, ptr %i.ak, align 4, !tbaa !28
-  %i.cr = sitofp i32 %i.cq to float               ; 2 uses
+  %i.cr = sitofp i32 %i.cq to float
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cb, i64 24 ; 2 uses
-  %19 = load float, ptr %i.cs, align 8, !tbaa !101
-  %20 = tail call float @llvm.fmuladd.f32(float %i.cr, float %i.cp, float %19)
-  store float %20, ptr %i.cs, align 8, !tbaa !101
   %21 = fmul float %i.cp, %i.cp
-  %22 = getelementptr inbounds nuw i8, ptr %i.cb, i64 28 ; 2 uses
-  %23 = load float, ptr %22, align 4, !tbaa !102
-  %24 = tail call float @llvm.fmuladd.f32(float %i.cr, float %21, float %23)
-  store float %24, ptr %22, align 4, !tbaa !102
+  %22 = load <2 x float>, ptr %i.cs, align 8, !tbaa !26
+  %23 = insertelement <2 x float> poison, float %i.cr, i64 0
+  %24 = shufflevector <2 x float> %23, <2 x float> poison, <2 x i32> zeroinitializer
+  %25 = insertelement <2 x float> poison, float %i.cp, i64 0
+  %26 = insertelement <2 x float> %25, float %21, i64 1
+  %27 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %24, <2 x float> %26, <2 x float> %22)
+  store <2 x float> %27, ptr %i.cs, align 8, !tbaa !26
   br label %._crit_edge95.us
 
 ._crit_edge95.us:                                 ; preds = %._crit_edge95.us.unr-lcssa, %.epil.preheader
@@ -695,6 +695,9 @@ declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.masked.store.v8f32.p0(<8 x float>, ptr captures(none), <8 x i1>) #20

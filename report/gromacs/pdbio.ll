@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h, %bb.f, %bb.e
   %i.az = getelementptr inbounds nuw i8, ptr %i.ab, i64 55
   %i.ba = getelementptr inbounds nuw i8, ptr %i.f, i64 11
   %i.bb = getelementptr inbounds nuw i8, ptr %7, i64 4
-  %i.bc = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.bd = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.be = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.bf = getelementptr inbounds nuw i8, ptr %7, i64 28
@@ -605,7 +605,7 @@ bb.av:                                            ; preds = %bb.au
   %i.im = call double @strtod(ptr noundef nonnull captures(none) %i.c, ptr noundef null) #25
   %i.in = fmul double %i.im, 1.000000e-01         ; 2 uses
   %i.io = call double @strtod(ptr noundef nonnull captures(none) %i.d, ptr noundef null) #25
-  %i.ip = fmul double %i.io, 1.000000e-01         ; 3 uses
+  %i.ip = fmul double %i.io, 1.000000e-01         ; 2 uses
   %i.iq = call double @strtod(ptr noundef nonnull captures(none) %i.e, ptr noundef null) #25
   %i.ir = fmul double %i.iq, 1.000000e-01         ; 5 uses
   %i.is = icmp eq i32 %.1.i, 3
@@ -647,19 +647,21 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
 
 bb.bb:                                            ; preds = %bb.ba
   %i.jf = fmul double %i.iz, f0x3F91DF46A2529D39  ; 2 uses
-  %i.jg = call double @cos(double noundef %i.jf) #25
-  %i.jh = call double @sin(double noundef %i.jf) #25
+  %i.jg = call double @cos(double noundef %i.jf) #25 ; 2 uses
+  %i.jh = call double @sin(double noundef %i.jf) #25 ; 2 uses
+  %15 = insertelement <2 x double> poison, double %i.jg, i64 0
+  %16 = insertelement <2 x double> %15, double %i.jh, i64 1
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %.054.i = phi double [ %i.jg, %bb.bb ], [ 0.000000e+00, %bb.ba ] ; 2 uses
-  %.053.i = phi double [ %i.jh, %bb.bb ], [ 1.000000e+00, %bb.ba ] ; 2 uses
-  %15 = fmul double %i.ip, %.054.i
-  %16 = fptrunc double %15 to float
-  store float %16, ptr %i.bd, align 4, !tbaa !14
-  %17 = fmul double %i.ip, %.053.i
-  %18 = fptrunc double %17 to float
-  store float %18, ptr %i.bc, align 4, !tbaa !14
+  %.054.i = phi double [ %i.jg, %bb.bb ], [ 0.000000e+00, %bb.ba ]
+  %.053.i = phi double [ %i.jh, %bb.bb ], [ 1.000000e+00, %bb.ba ]
+  %17 = phi <2 x double> [ %16, %bb.bb ], [ <double 0.000000e+00, double 1.000000e+00>, %bb.ba ]
+  %18 = insertelement <2 x double> poison, double %i.ip, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = fmul <2 x double> %19, %17
+  %21 = fptrunc <2 x double> %20 to <2 x float>
+  store <2 x float> %21, ptr %i.bd, align 4, !tbaa !14
   %i.ji = fmul double %i.ir, %.055.i
   %i.jj = fptrunc double %i.ji to float           ; 3 uses
   store float %i.jj, ptr %i.be, align 4, !tbaa !14

@@ -202,14 +202,14 @@ bb.m:                                             ; preds = %bb.l
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 80
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = invoke noundef nonnull align 4 dereferenceable(64) ptr %i.bj(ptr noundef nonnull align 8 dereferenceable(218) %i.bg)
-          to label %bb.n unwind label %bb.s       ; 8 uses
+          to label %bb.n unwind label %bb.s       ; 7 uses
 
 bb.n:                                             ; preds = %bb.m
-  %9 = load float, ptr %i.bk, align 4, !tbaa !134 ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.bk, i64 4
-  %11 = load float, ptr %10, align 4, !tbaa !134  ; 3 uses
-  %12 = fmul nsz float %11, %11
-  %i.bl = call nsz float @llvm.fmuladd.f32(float %9, float %9, float %12)
+  %9 = load <2 x float>, ptr %i.bk, align 4, !tbaa !134 ; 4 uses
+  %foldExtExtBinop = fmul nsz <2 x float> %9, %9
+  %10 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %11 = extractelement <2 x float> %9, i64 0      ; 2 uses
+  %i.bl = call nsz float @llvm.fmuladd.f32(float %11, float %11, float %10)
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !134 ; 3 uses
   %i.bo = call nsz float @llvm.fmuladd.f32(float %i.bn, float %i.bn, float %i.bl)
@@ -220,7 +220,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bt = fcmp nsz ole float %i.bs, f0x358637BD
   %i.bu = fpext nsz float %i.bp to double
   %i.bv = fdiv nsz double 1.000000e+00, %i.bu
-  %i.bw = select i1 %i.bt, double f0x37F0000010000010, double %i.bv ; 3 uses
+  %i.bw = select i1 %i.bt, double f0x37F0000010000010, double %i.bv ; 2 uses
   %i.bx = fpext nsz float %i.bn to double
   %i.by = fmul nsz double %i.bw, %i.bx            ; 2 uses
   %i.bz = fcmp nsz olt double %i.by, -1.000000e+00
@@ -258,11 +258,13 @@ bb.o:                                             ; preds = %bb.n
   %i.dc = extractelement <2 x double> %i.db, i64 0
   %i.dd = extractelement <2 x double> %i.db, i64 1
   %i.de = call nsz double @llvm.atan2.f64(double %i.dc, double %i.dd)
-  %13 = fpext nsz float %9 to double
-  %14 = fmul nsz double %i.bw, %13
-  %15 = fpext nsz float %11 to double
-  %16 = fmul nsz double %i.bw, %15
-  %i.df = call nsz double @llvm.atan2.f64(double %16, double %14)
+  %12 = fpext <2 x float> %9 to <2 x double>
+  %13 = insertelement <2 x double> poison, double %i.bw, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = fmul nsz <2 x double> %14, %12            ; 2 uses
+  %16 = extractelement <2 x double> %15, i64 0
+  %17 = extractelement <2 x double> %15, i64 1
+  %i.df = call nsz double @llvm.atan2.f64(double %17, double %16)
   %i.dg = fptrunc nsz double %i.de to float
   br label %bb.q
 

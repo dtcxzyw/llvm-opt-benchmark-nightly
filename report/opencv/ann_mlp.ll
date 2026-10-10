@@ -204,7 +204,7 @@ bb.a:
   %13 = alloca %"class.std::allocator", align 1   ; 3 uses
   %14 = alloca %"class.std::vector.11", align 8   ; 22 uses
   %15 = alloca %"class.cv::_InputArray", align 8  ; 7 uses
-  %16 = alloca %"class.cv::Scalar_", align 8      ; 5 uses
+  %16 = alloca %"class.cv::Scalar_", align 16     ; 6 uses
   %17 = alloca %"class.cv::MatExpr", align 8      ; 10 uses
   %18 = alloca %"class.cv::MatExpr", align 8      ; 10 uses
   %19 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -325,6 +325,7 @@ _ZNSt6vectorIN2cv3MatESaIS1_EEC2EmRKS2_.exit171:  ; preds = %_ZNSt6vectorIN2cv3M
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN2cv3MatESaIS1_EEC2EmRKS2_.exit171
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 160
+  %27 = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.ap = getelementptr inbounds nuw i8, ptr %15, i64 16
   %i.aq = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.ar = getelementptr inbounds nuw i8, ptr %17, i64 432
@@ -419,9 +420,10 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #19
   %i.cc = load double, ptr %i.ao, align 8, !tbaa !95
-  %27 = insertelement <4 x double> poison, double %i.cc, i64 0
-  %28 = shufflevector <4 x double> %27, <4 x double> poison, <4 x i32> zeroinitializer
-  store <4 x double> %28, ptr %16, align 8, !tbaa !91, !alias.scope !290
+  %28 = insertelement <2 x double> poison, double %i.cc, i64 0
+  %29 = shufflevector <2 x double> %28, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  store <2 x double> %29, ptr %16, align 16, !tbaa !91, !alias.scope !290
+  store <2 x double> %29, ptr %27, align 16, !tbaa !91, !alias.scope !290
   store i32 -1056833530, ptr %15, align 8, !tbaa !62
   store ptr %16, ptr %i.aq, align 8, !tbaa !63
   store i64 17179869185, ptr %i.ap, align 8, !tbaa !80

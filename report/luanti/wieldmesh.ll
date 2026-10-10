@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.az = extractelement <2 x float> %i.ax, i64 0 ; 3 uses
-  %i.ba = fpext nsz float %i.az to double         ; 2 uses
+  %i.ba = fpext nsz float %i.az to double
   %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.bc = getelementptr inbounds nuw i8, ptr %3, i64 20
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -260,6 +260,8 @@ bb.b:                                             ; preds = %bb.a
   %i.db = getelementptr inbounds nuw i8, ptr %3, i64 308
   %i.dc = getelementptr inbounds nuw i8, ptr %3, i64 312
   %i.dd = getelementptr inbounds nuw i8, ptr %3, i64 316
+  %5 = insertelement <2 x double> poison, double %i.ba, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.d
 
 .preheader:                                       ; preds = %bb.d, %bb.b
@@ -268,7 +270,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph124:                                        ; preds = %.preheader
   %i.df = extractelement <2 x float> %i.ax, i64 1 ; 3 uses
-  %i.dg = fpext nsz float %i.df to double         ; 2 uses
+  %i.dg = fpext nsz float %i.df to double
   %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.di = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.dj = getelementptr inbounds nuw i8, ptr %4, i64 24
@@ -324,6 +326,8 @@ bb.b:                                             ; preds = %bb.a
   %i.fh = getelementptr inbounds nuw i8, ptr %4, i64 308
   %i.fi = getelementptr inbounds nuw i8, ptr %4, i64 312
   %i.fj = getelementptr inbounds nuw i8, ptr %4, i64 316
+  %7 = insertelement <2 x double> poison, double %i.dg, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
@@ -338,19 +342,21 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.fm = fmul nsz float %i.az, %i.fl
   %i.fn = fadd nsz float %i.fm, -5.000000e-01     ; 5 uses
   %i.fo = fadd nsz float %i.az, %i.fn             ; 4 uses
-  %i.fp = uitofp nsz nneg i32 %.094122 to double  ; 2 uses
-  %5 = fadd nnan nsz double %i.fp, 1.000000e-01
-  %6 = fmul nsz double %5, %i.ba
-  %7 = fptrunc nsz double %6 to float             ; 4 uses
-  %8 = fadd nnan nsz double %i.fp, 9.000000e-01
-  %9 = fmul nsz double %8, %i.ba
-  %i.fq = fptrunc nsz double %9 to float          ; 4 uses
+  %i.fp = uitofp nsz nneg i32 %.094122 to double
+  %9 = insertelement <2 x double> poison, double %i.fp, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fadd nnan nsz <2 x double> %10, <double 1.000000e-01, double 9.000000e-01>
+  %12 = fmul nsz <2 x double> %11, %6             ; 2 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %14 = fptrunc nsz double %13 to float           ; 4 uses
+  %15 = extractelement <2 x double> %12, i64 1
+  %i.fq = fptrunc nsz double %15 to float         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   store float %i.fn, ptr %3, align 16, !tbaa !194
   store <4 x float> <float -5.000000e-01, float -5.000000e-01, float -1.000000e+00, float 0.000000e+00>, ptr %i.bb, align 4, !tbaa !88
   store float 0.000000e+00, ptr %i.bc, align 4, !tbaa !159
   store i32 -1, ptr %i.bd, align 8, !tbaa !18
-  store float %7, ptr %i.be, align 4, !tbaa !618
+  store float %14, ptr %i.be, align 4, !tbaa !618
   store float 1.000000e+00, ptr %i.bf, align 16, !tbaa !619
   store i16 0, ptr %i.bg, align 4, !tbaa !617
   store float %i.fn, ptr %i.bh, align 8, !tbaa !194
@@ -371,21 +377,21 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   store <4 x float> <float 5.000000e-01, float -5.000000e-01, float -1.000000e+00, float 0.000000e+00>, ptr %i.bw, align 4, !tbaa !88
   store float 0.000000e+00, ptr %i.bx, align 4, !tbaa !159
   store i32 -1, ptr %i.by, align 16, !tbaa !18
-  store float %7, ptr %i.bz, align 4, !tbaa !618
+  store float %14, ptr %i.bz, align 4, !tbaa !618
   store float 0.000000e+00, ptr %i.ca, align 8, !tbaa !619
   store i16 0, ptr %i.cb, align 4, !tbaa !617
   store float %i.fo, ptr %i.cc, align 16, !tbaa !194
   store <4 x float> <float -5.000000e-01, float -5.000000e-01, float 1.000000e+00, float 0.000000e+00>, ptr %i.cd, align 4, !tbaa !88
   store float 0.000000e+00, ptr %i.ce, align 4, !tbaa !159
   store i32 -1, ptr %i.cf, align 8, !tbaa !18
-  store float %7, ptr %i.cg, align 4, !tbaa !618
+  store float %14, ptr %i.cg, align 4, !tbaa !618
   store float 1.000000e+00, ptr %i.ch, align 16, !tbaa !619
   store i16 0, ptr %i.ci, align 4, !tbaa !617
   store float %i.fo, ptr %i.cj, align 8, !tbaa !194
   store <4 x float> <float 5.000000e-01, float -5.000000e-01, float 1.000000e+00, float 0.000000e+00>, ptr %i.ck, align 4, !tbaa !88
   store float 0.000000e+00, ptr %i.cl, align 4, !tbaa !159
   store i32 -1, ptr %i.cm, align 16, !tbaa !18
-  store float %7, ptr %i.cn, align 4, !tbaa !618
+  store float %14, ptr %i.cn, align 4, !tbaa !618
   store float 0.000000e+00, ptr %i.co, align 8, !tbaa !619
   store i16 0, ptr %i.cp, align 4, !tbaa !617
   store float %i.fo, ptr %i.cq, align 16, !tbaa !194
@@ -420,27 +426,29 @@ bb.e:                                             ; preds = %.lr.ph124, %bb.e
   %i.fw = fmul nsz float %i.df, %i.fv
   %i.fx = fsub nsz float 5.000000e-01, %i.fw      ; 5 uses
   %i.fy = fsub nsz float %i.fx, %i.df             ; 4 uses
-  %i.fz = uitofp nsz nneg i32 %.095123 to double  ; 2 uses
-  %10 = fadd nnan nsz double %i.fz, 1.000000e-01
-  %11 = fmul nsz double %10, %i.dg
-  %12 = fptrunc nsz double %11 to float           ; 4 uses
-  %13 = fadd nnan nsz double %i.fz, 9.000000e-01
-  %14 = fmul nsz double %13, %i.dg
-  %i.ga = fptrunc nsz double %14 to float         ; 4 uses
+  %i.fz = uitofp nsz nneg i32 %.095123 to double
+  %16 = insertelement <2 x double> poison, double %i.fz, i64 0
+  %17 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer
+  %18 = fadd nnan nsz <2 x double> %17, <double 1.000000e-01, double 9.000000e-01>
+  %19 = fmul nsz <2 x double> %18, %8             ; 2 uses
+  %20 = extractelement <2 x double> %19, i64 0
+  %21 = fptrunc nsz double %20 to float           ; 4 uses
+  %22 = extractelement <2 x double> %19, i64 1
+  %i.ga = fptrunc nsz double %22 to float         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
   store float -5.000000e-01, ptr %4, align 16, !tbaa !194
   store float %i.fy, ptr %i.dh, align 4, !tbaa !195
   store <4 x float> <float -5.000000e-01, float 0.000000e+00, float -1.000000e+00, float 0.000000e+00>, ptr %i.di, align 8, !tbaa !88
   store i32 -1, ptr %i.dj, align 8, !tbaa !18
   store float 0.000000e+00, ptr %i.dk, align 4, !tbaa !618
-  store float %12, ptr %i.dl, align 16, !tbaa !619
+  store float %21, ptr %i.dl, align 16, !tbaa !619
   store i16 0, ptr %i.dm, align 4, !tbaa !617
   store float 5.000000e-01, ptr %i.dn, align 8, !tbaa !194
   store float %i.fy, ptr %i.do, align 4, !tbaa !195
   store <4 x float> <float -5.000000e-01, float 0.000000e+00, float -1.000000e+00, float 0.000000e+00>, ptr %i.dp, align 16, !tbaa !88
   store i32 -1, ptr %i.dq, align 16, !tbaa !18
   store float 1.000000e+00, ptr %i.dr, align 4, !tbaa !618
-  store float %12, ptr %i.ds, align 8, !tbaa !619
+  store float %21, ptr %i.ds, align 8, !tbaa !619
   store i16 0, ptr %i.dt, align 4, !tbaa !617
   store float 5.000000e-01, ptr %i.du, align 16, !tbaa !194
   store float %i.fy, ptr %i.dv, align 4, !tbaa !195
@@ -461,7 +469,7 @@ bb.e:                                             ; preds = %.lr.ph124, %bb.e
   store <4 x float> <float -5.000000e-01, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %i.ek, align 8, !tbaa !88
   store i32 -1, ptr %i.el, align 8, !tbaa !18
   store float 0.000000e+00, ptr %i.em, align 4, !tbaa !618
-  store float %12, ptr %i.en, align 16, !tbaa !619
+  store float %21, ptr %i.en, align 16, !tbaa !619
   store i16 0, ptr %i.eo, align 4, !tbaa !617
   store float -5.000000e-01, ptr %i.ep, align 8, !tbaa !194
   store float %i.fx, ptr %i.eq, align 4, !tbaa !195
@@ -482,7 +490,7 @@ bb.e:                                             ; preds = %.lr.ph124, %bb.e
   store <4 x float> <float -5.000000e-01, float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %i.ff, align 16, !tbaa !88
   store i32 -1, ptr %i.fg, align 16, !tbaa !18
   store float 1.000000e+00, ptr %i.fh, align 4, !tbaa !618
-  store float %12, ptr %i.fi, align 8, !tbaa !619
+  store float %21, ptr %i.fi, align 8, !tbaa !619
   store i16 0, ptr %i.fj, align 4, !tbaa !617
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #27
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.c, ptr noundef nonnull align 16 dereferenceable(24) @__const._ZL19createExtrusionMeshii.indices.13, i64 24, i1 false)

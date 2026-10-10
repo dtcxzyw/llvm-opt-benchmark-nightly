@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %dt_ioppr_lab_to_rgb_matrix.exit.i, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %dt_ioppr_lab_to_rgb_matrix.exit.i ] ; 2 uses
-  %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv.i ; 14 uses
+  %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv.i ; 15 uses
   br i1 %.not.i, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
@@ -217,7 +217,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ah
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fi, i64 4 ; 2 uses
-  %i.fm = getelementptr inbounds nuw i8, ptr %i.fi, i64 8 ; 2 uses
+  %i.fm = getelementptr inbounds nuw i8, ptr %i.fi, i64 8
   %i.fn = load float, ptr %i.fm, align 8, !tbaa !12 ; 4 uses
   %i.fo = fmul reassoc nsz arcp contract afn float %i.fn, f0x3E1283AB
   %i.fp = fmul reassoc nsz arcp contract afn float %i.fn, 6.061690e-02
@@ -267,7 +267,7 @@ bb.ao:                                            ; preds = %bb.am
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
-  %i.gs = phi reassoc nsz arcp contract afn float [ %i.gr, %bb.ao ], [ %i.gq, %bb.an ] ; 3 uses
+  %i.gs = phi reassoc nsz arcp contract afn float [ %i.gr, %bb.ao ], [ %i.gq, %bb.an ] ; 2 uses
   %i.gt = fmul reassoc nsz arcp contract afn float %i.gf, f0x3F9B2B9B ; 2 uses
   %i.gu = fcmp reassoc nsz arcp contract afn ogt float %i.gt, f0x3C111AA7
   br i1 %i.gu, label %bb.ar, label %bb.aq
@@ -299,14 +299,16 @@ dt_XYZ_to_Lab.exit.i:                             ; preds = %bb.au, %bb.at
   %i.hd = phi reassoc nsz arcp contract afn float [ %i.hc, %bb.au ], [ %i.hb, %bb.at ]
   %i.he = fmul reassoc nsz arcp contract afn float %i.gs, 1.160000e+02
   %i.hf = fadd reassoc nsz arcp contract afn float %i.he, -1.600000e+01
-  %7 = fsub reassoc nsz arcp contract afn float %i.gn, %i.gs
-  %8 = fmul reassoc nsz arcp contract afn float %7, 5.000000e+02
-  store float %8, ptr %i.fl, align 4, !tbaa !12
-  %9 = fsub reassoc nsz arcp contract afn float %i.gy, %i.gs
-  %10 = insertelement <2 x float> poison, float %9, i64 0
-  %11 = insertelement <2 x float> %10, float %i.hd, i64 1
-  %12 = fmul reassoc nsz arcp contract afn <2 x float> %11, <float -2.000000e+02, float 0.000000e+00>
-  store <2 x float> %12, ptr %i.fm, align 8, !tbaa !12
+  %7 = insertelement <2 x float> poison, float %i.gn, i64 0
+  %8 = insertelement <2 x float> %7, float %i.gy, i64 1
+  %9 = insertelement <2 x float> poison, float %i.gs, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = fsub reassoc nsz arcp contract afn <2 x float> %8, %10
+  %12 = fmul reassoc nsz arcp contract afn <2 x float> %11, <float 5.000000e+02, float -2.000000e+02>
+  store <2 x float> %12, ptr %i.fl, align 4, !tbaa !12
+  %13 = fmul reassoc nsz arcp contract afn float %i.hd, 0.000000e+00
+  %14 = getelementptr inbounds nuw i8, ptr %i.fi, i64 12
+  store float %13, ptr %14, align 4, !tbaa !12
   br label %bb.av
 
 bb.av:                                            ; preds = %dt_XYZ_to_Lab.exit.i, %bb.ai

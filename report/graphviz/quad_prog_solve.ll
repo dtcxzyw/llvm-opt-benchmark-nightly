@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %.preheader449.us, %
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !55
   %i.cr = sext i32 %i.cq to i64                   ; 2 uses
   %i.cs = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.cr
-  %i.ct = load float, ptr %i.cs, align 4, !tbaa !15 ; 20 uses
+  %i.ct = load float, ptr %i.cs, align 4, !tbaa !15 ; 19 uses
   %i.cu = getelementptr inbounds [4 x i8], ptr %i.ce, i64 %i.cr
   store float 0.000000e+00, ptr %i.cu, align 4, !tbaa !15
   %.0382456.us = add nsw i32 %.0383546.us, 1      ; 2 uses
@@ -591,6 +591,8 @@ bb.ak:                                            ; preds = %bb.aj, %._crit_edge
 
 .lr.ph527.us.peel.next:                           ; preds = %.thread.us.peel
   %.1366.us.peel = select i1 %i.ji, double 0.000000e+00, double %i.jh
+  %7 = insertelement <2 x float> poison, float %i.ct, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.al
 
 bb.al:                                            ; preds = %.thread.us, %.lr.ph527.us.peel.next
@@ -626,16 +628,17 @@ bb.ap:                                            ; preds = %bb.am
   %i.jr = sub nuw i64 %.val436.us, %.0348525.us
   %i.js = uitofp i64 %i.jr to float
   %i.jt = fpext float %i.js to double
-  %7 = fsub float %.0361.us, %i.ct
-  %8 = call float @llvm.fabs.f32(float %7)
-  %9 = fpext float %8 to double
+  %9 = insertelement <2 x float> poison, float %.0361.us, i64 0
+  %10 = insertelement <2 x float> %9, float %.1364.us, i64 1
+  %11 = fsub <2 x float> %10, %8
   %i.ju = uitofp i64 %.0348525.us to float
   %i.jv = fpext nnan ninf float %i.ju to double
-  %10 = fsub float %.1364.us, %i.ct
-  %11 = call float @llvm.fabs.f32(float %10)
-  %12 = fpext float %11 to double
-  %i.jw = fmul double %i.jv, %12
-  %i.jx = call double @llvm.fmuladd.f64(double %i.jt, double %9, double %i.jw) ; 2 uses
+  %12 = call <2 x float> @llvm.fabs.v2f32(<2 x float> %11)
+  %13 = fpext <2 x float> %12 to <2 x double>     ; 2 uses
+  %14 = extractelement <2 x double> %13, i64 1
+  %i.jw = fmul double %14, %i.jv
+  %15 = extractelement <2 x double> %13, i64 0
+  %i.jx = call double @llvm.fmuladd.f64(double %i.jt, double %15, double %i.jw) ; 2 uses
   %i.jy = fcmp ogt double %i.jx, %.0365523.us     ; 2 uses
   %.1366.us = select i1 %i.jy, double %i.jx, double %.0365523.us
   %.1.us = select i1 %i.jy, i64 %.0348525.us, i64 %.0349524.us ; 2 uses
@@ -1037,6 +1040,9 @@ declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #4
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

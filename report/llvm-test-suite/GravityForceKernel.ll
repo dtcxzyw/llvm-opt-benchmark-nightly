@@ -26,27 +26,30 @@ bb.a:
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
   %wide.trip.count.i = zext nneg i32 %0 to i64
+  %13 = insertelement <2 x float> poison, float %6, i64 0
+  %14 = insertelement <2 x float> %13, float %7, i64 1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 5 uses
-  %.05060.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.1.i, %bb.c ] ; 2 uses
   %.05159.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.152.i, %bb.c ] ; 2 uses
-  %.05358.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.154.i, %bb.c ] ; 2 uses
+  %15 = phi <2 x float> [ zeroinitializer, %.lr.ph.preheader.i ], [ %28, %bb.c ] ; 2 uses
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.i
   %i.c = load float, ptr %i.b, align 4, !tbaa !9, !alias.scope !20, !noalias !27
   %i.d = fsub fast float %i.c, %5                 ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.i
   %i.f = load float, ptr %i.e, align 4, !tbaa !9, !alias.scope !21, !noalias !28
-  %13 = fsub fast float %i.f, %6                  ; 3 uses
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i
-  %15 = load float, ptr %14, align 4, !tbaa !9, !alias.scope !22, !noalias !29
-  %16 = fsub fast float %15, %7                   ; 3 uses
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i
+  %17 = load float, ptr %16, align 4, !tbaa !9, !alias.scope !22, !noalias !29
+  %18 = insertelement <2 x float> poison, float %i.f, i64 0
+  %19 = insertelement <2 x float> %18, float %17, i64 1
+  %20 = fsub fast <2 x float> %19, %14            ; 3 uses
   %i.g = fmul fast float %i.d, %i.d
-  %17 = fmul fast float %13, %13
-  %i.h = fadd fast float %17, %i.g
-  %18 = fmul fast float %16, %16
-  %i.i = fadd fast float %i.h, %18                ; 7 uses
+  %21 = fmul fast <2 x float> %20, %20            ; 2 uses
+  %22 = extractelement <2 x float> %21, i64 0
+  %i.h = fadd fast float %22, %i.g
+  %23 = extractelement <2 x float> %21, i64 1
+  %i.i = fadd fast float %i.h, %23                ; 7 uses
   %i.j = fcmp fast oge float %i.i, %8
   %i.k = fcmp fast oeq float %i.i, 0.000000e+00
   %or.cond.i = select i1 %i.j, i1 true, i1 %i.k
@@ -68,36 +71,37 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.w = fsub fast float %.neg12, %i.v
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.i
   %i.y = load float, ptr %i.x, align 4, !tbaa !9, !alias.scope !23, !noalias !30
-  %i.z = fmul fast float %i.y, %i.w               ; 3 uses
+  %i.z = fmul fast float %i.y, %i.w               ; 2 uses
   %i.aa = fmul fast float %i.z, %i.d
-  %i.ab = fadd fast float %i.aa, %.05358.i
-  %19 = fmul fast float %i.z, %13
-  %20 = fadd fast float %19, %.05159.i
-  %21 = fmul fast float %i.z, %16
-  %22 = fadd fast float %21, %.05060.i
+  %i.ab = fadd fast float %i.aa, %.05159.i
+  %24 = insertelement <2 x float> poison, float %i.z, i64 0
+  %25 = shufflevector <2 x float> %24, <2 x float> poison, <2 x i32> zeroinitializer
+  %26 = fmul fast <2 x float> %25, %20
+  %27 = fadd fast <2 x float> %26, %15
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.i
-  %.154.i = phi nsz float [ %i.ab, %bb.b ], [ %.05358.i, %.lr.ph.i ] ; 2 uses
-  %.152.i = phi nsz float [ %20, %bb.b ], [ %.05159.i, %.lr.ph.i ] ; 2 uses
-  %.1.i = phi nsz float [ %22, %bb.b ], [ %.05060.i, %.lr.ph.i ] ; 2 uses
+  %.152.i = phi nsz float [ %i.ab, %bb.b ], [ %.05159.i, %.lr.ph.i ] ; 2 uses
+  %28 = phi <2 x float> [ %27, %bb.b ], [ %15, %.lr.ph.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZL18GravityForceKernelILi4ETnRAplT_Li1E_KfL_Z17PolyCoefficients4EEviPfS3_S3_S3_fffffRfS4_S4_.exit, label %.lr.ph.i, !llvm.loop !19
 
 _ZL18GravityForceKernelILi4ETnRAplT_Li1E_KfL_Z17PolyCoefficients4EEviPfS3_S3_S3_fffffRfS4_S4_.exit: ; preds = %bb.c, %bb.a
-  %.053.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.154.i, %bb.c ]
   %.051.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.152.i, %bb.c ]
-  %.050.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.1.i, %bb.c ]
+  %29 = phi <2 x float> [ zeroinitializer, %bb.a ], [ %28, %bb.c ]
   %i.ac = load float, ptr %10, align 4, !tbaa !9, !alias.scope !24, !noalias !31
-  %i.ad = fadd fast float %i.ac, %.053.lcssa.i
+  %i.ad = fadd fast float %i.ac, %.051.lcssa.i
   store float %i.ad, ptr %10, align 4, !tbaa !9, !alias.scope !24, !noalias !31
   %i.ae = load float, ptr %11, align 4, !tbaa !9, !alias.scope !25, !noalias !32
-  %23 = fadd fast float %i.ae, %.051.lcssa.i
-  store float %23, ptr %11, align 4, !tbaa !9, !alias.scope !25, !noalias !32
-  %24 = load float, ptr %12, align 4, !tbaa !9, !alias.scope !26, !noalias !33
-  %25 = fadd fast float %24, %.050.lcssa.i
-  store float %25, ptr %12, align 4, !tbaa !9, !alias.scope !26, !noalias !33
+  %30 = load float, ptr %12, align 4, !tbaa !9, !alias.scope !26, !noalias !33
+  %31 = insertelement <2 x float> poison, float %i.ae, i64 0
+  %32 = insertelement <2 x float> %31, float %30, i64 1
+  %33 = fadd fast <2 x float> %32, %29            ; 2 uses
+  %34 = extractelement <2 x float> %33, i64 0
+  store float %34, ptr %11, align 4, !tbaa !9, !alias.scope !25, !noalias !32
+  %35 = extractelement <2 x float> %33, i64 1
+  store float %35, ptr %12, align 4, !tbaa !9, !alias.scope !26, !noalias !33
   ret void
 }
 
@@ -116,27 +120,30 @@ bb.a:
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
   %wide.trip.count.i = zext nneg i32 %0 to i64
+  %13 = insertelement <2 x float> poison, float %6, i64 0
+  %14 = insertelement <2 x float> %13, float %7, i64 1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 5 uses
-  %.05060.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.1.i, %bb.c ] ; 2 uses
   %.05159.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.152.i, %bb.c ] ; 2 uses
-  %.05358.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.154.i, %bb.c ] ; 2 uses
+  %15 = phi <2 x float> [ zeroinitializer, %.lr.ph.preheader.i ], [ %28, %bb.c ] ; 2 uses
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.i
   %i.c = load float, ptr %i.b, align 4, !tbaa !9, !alias.scope !43, !noalias !50
   %i.d = fsub fast float %i.c, %5                 ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.i
   %i.f = load float, ptr %i.e, align 4, !tbaa !9, !alias.scope !44, !noalias !51
-  %13 = fsub fast float %i.f, %6                  ; 3 uses
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i
-  %15 = load float, ptr %14, align 4, !tbaa !9, !alias.scope !45, !noalias !52
-  %16 = fsub fast float %15, %7                   ; 3 uses
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i
+  %17 = load float, ptr %16, align 4, !tbaa !9, !alias.scope !45, !noalias !52
+  %18 = insertelement <2 x float> poison, float %i.f, i64 0
+  %19 = insertelement <2 x float> %18, float %17, i64 1
+  %20 = fsub fast <2 x float> %19, %14            ; 3 uses
   %i.g = fmul fast float %i.d, %i.d
-  %17 = fmul fast float %13, %13
-  %i.h = fadd fast float %17, %i.g
-  %18 = fmul fast float %16, %16
-  %i.i = fadd fast float %i.h, %18                ; 8 uses
+  %21 = fmul fast <2 x float> %20, %20            ; 2 uses
+  %22 = extractelement <2 x float> %21, i64 0
+  %i.h = fadd fast float %22, %i.g
+  %23 = extractelement <2 x float> %21, i64 1
+  %i.i = fadd fast float %i.h, %23                ; 8 uses
   %i.j = fcmp fast oge float %i.i, %8
   %i.k = fcmp fast oeq float %i.i, 0.000000e+00
   %or.cond.i = select i1 %i.j, i1 true, i1 %i.k
@@ -160,36 +167,37 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.y = fsub fast float %.neg12, %i.x
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.i
   %i.aa = load float, ptr %i.z, align 4, !tbaa !9, !alias.scope !46, !noalias !53
-  %i.ab = fmul fast float %i.aa, %i.y             ; 3 uses
+  %i.ab = fmul fast float %i.aa, %i.y             ; 2 uses
   %i.ac = fmul fast float %i.ab, %i.d
-  %i.ad = fadd fast float %i.ac, %.05358.i
-  %19 = fmul fast float %i.ab, %13
-  %20 = fadd fast float %19, %.05159.i
-  %21 = fmul fast float %i.ab, %16
-  %22 = fadd fast float %21, %.05060.i
+  %i.ad = fadd fast float %i.ac, %.05159.i
+  %24 = insertelement <2 x float> poison, float %i.ab, i64 0
+  %25 = shufflevector <2 x float> %24, <2 x float> poison, <2 x i32> zeroinitializer
+  %26 = fmul fast <2 x float> %25, %20
+  %27 = fadd fast <2 x float> %26, %15
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.i
-  %.154.i = phi nsz float [ %i.ad, %bb.b ], [ %.05358.i, %.lr.ph.i ] ; 2 uses
-  %.152.i = phi nsz float [ %20, %bb.b ], [ %.05159.i, %.lr.ph.i ] ; 2 uses
-  %.1.i = phi nsz float [ %22, %bb.b ], [ %.05060.i, %.lr.ph.i ] ; 2 uses
+  %.152.i = phi nsz float [ %i.ad, %bb.b ], [ %.05159.i, %.lr.ph.i ] ; 2 uses
+  %28 = phi <2 x float> [ %27, %bb.b ], [ %15, %.lr.ph.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZL18GravityForceKernelILi5ETnRAplT_Li1E_KfL_Z17PolyCoefficients5EEviPfS3_S3_S3_fffffRfS4_S4_.exit, label %.lr.ph.i, !llvm.loop !42
 
 _ZL18GravityForceKernelILi5ETnRAplT_Li1E_KfL_Z17PolyCoefficients5EEviPfS3_S3_S3_fffffRfS4_S4_.exit: ; preds = %bb.c, %bb.a
-  %.053.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.154.i, %bb.c ]
   %.051.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.152.i, %bb.c ]
-  %.050.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.1.i, %bb.c ]
+  %29 = phi <2 x float> [ zeroinitializer, %bb.a ], [ %28, %bb.c ]
   %i.ae = load float, ptr %10, align 4, !tbaa !9, !alias.scope !47, !noalias !54
-  %i.af = fadd fast float %i.ae, %.053.lcssa.i
+  %i.af = fadd fast float %i.ae, %.051.lcssa.i
   store float %i.af, ptr %10, align 4, !tbaa !9, !alias.scope !47, !noalias !54
   %i.ag = load float, ptr %11, align 4, !tbaa !9, !alias.scope !48, !noalias !55
-  %23 = fadd fast float %i.ag, %.051.lcssa.i
-  store float %23, ptr %11, align 4, !tbaa !9, !alias.scope !48, !noalias !55
-  %24 = load float, ptr %12, align 4, !tbaa !9, !alias.scope !49, !noalias !56
-  %25 = fadd fast float %24, %.050.lcssa.i
-  store float %25, ptr %12, align 4, !tbaa !9, !alias.scope !49, !noalias !56
+  %30 = load float, ptr %12, align 4, !tbaa !9, !alias.scope !49, !noalias !56
+  %31 = insertelement <2 x float> poison, float %i.ag, i64 0
+  %32 = insertelement <2 x float> %31, float %30, i64 1
+  %33 = fadd fast <2 x float> %32, %29            ; 2 uses
+  %34 = extractelement <2 x float> %33, i64 0
+  store float %34, ptr %11, align 4, !tbaa !9, !alias.scope !48, !noalias !55
+  %35 = extractelement <2 x float> %33, i64 1
+  store float %35, ptr %12, align 4, !tbaa !9, !alias.scope !49, !noalias !56
   ret void
 }
 
@@ -208,27 +216,30 @@ bb.a:
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
   %wide.trip.count.i = zext nneg i32 %0 to i64
+  %13 = insertelement <2 x float> poison, float %6, i64 0
+  %14 = insertelement <2 x float> %13, float %7, i64 1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 5 uses
-  %.05060.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.1.i, %bb.c ] ; 2 uses
   %.05159.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.152.i, %bb.c ] ; 2 uses
-  %.05358.i = phi float [ 0.000000e+00, %.lr.ph.preheader.i ], [ %.154.i, %bb.c ] ; 2 uses
+  %15 = phi <2 x float> [ zeroinitializer, %.lr.ph.preheader.i ], [ %28, %bb.c ] ; 2 uses
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.i
   %i.c = load float, ptr %i.b, align 4, !tbaa !9, !alias.scope !66, !noalias !73
   %i.d = fsub fast float %i.c, %5                 ; 3 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.i
   %i.f = load float, ptr %i.e, align 4, !tbaa !9, !alias.scope !67, !noalias !74
-  %13 = fsub fast float %i.f, %6                  ; 3 uses
-  %14 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i
-  %15 = load float, ptr %14, align 4, !tbaa !9, !alias.scope !68, !noalias !75
-  %16 = fsub fast float %15, %7                   ; 3 uses
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i
+  %17 = load float, ptr %16, align 4, !tbaa !9, !alias.scope !68, !noalias !75
+  %18 = insertelement <2 x float> poison, float %i.f, i64 0
+  %19 = insertelement <2 x float> %18, float %17, i64 1
+  %20 = fsub fast <2 x float> %19, %14            ; 3 uses
   %i.g = fmul fast float %i.d, %i.d
-  %17 = fmul fast float %13, %13
-  %i.h = fadd fast float %17, %i.g
-  %18 = fmul fast float %16, %16
-  %i.i = fadd fast float %i.h, %18                ; 9 uses
+  %21 = fmul fast <2 x float> %20, %20            ; 2 uses
+  %22 = extractelement <2 x float> %21, i64 0
+  %i.h = fadd fast float %22, %i.g
+  %23 = extractelement <2 x float> %21, i64 1
+  %i.i = fadd fast float %i.h, %23                ; 9 uses
   %i.j = fcmp fast oge float %i.i, %8
   %i.k = fcmp fast oeq float %i.i, 0.000000e+00
   %or.cond.i = select i1 %i.j, i1 true, i1 %i.k
@@ -254,36 +265,37 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.aa = fsub fast float %.neg12, %i.z
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.i
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !9, !alias.scope !69, !noalias !76
-  %i.ad = fmul fast float %i.ac, %i.aa            ; 3 uses
+  %i.ad = fmul fast float %i.ac, %i.aa            ; 2 uses
   %i.ae = fmul fast float %i.ad, %i.d
-  %i.af = fadd fast float %i.ae, %.05358.i
-  %19 = fmul fast float %i.ad, %13
-  %20 = fadd fast float %19, %.05159.i
-  %21 = fmul fast float %i.ad, %16
-  %22 = fadd fast float %21, %.05060.i
+  %i.af = fadd fast float %i.ae, %.05159.i
+  %24 = insertelement <2 x float> poison, float %i.ad, i64 0
+  %25 = shufflevector <2 x float> %24, <2 x float> poison, <2 x i32> zeroinitializer
+  %26 = fmul fast <2 x float> %25, %20
+  %27 = fadd fast <2 x float> %26, %15
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.i
-  %.154.i = phi nsz float [ %i.af, %bb.b ], [ %.05358.i, %.lr.ph.i ] ; 2 uses
-  %.152.i = phi nsz float [ %20, %bb.b ], [ %.05159.i, %.lr.ph.i ] ; 2 uses
-  %.1.i = phi nsz float [ %22, %bb.b ], [ %.05060.i, %.lr.ph.i ] ; 2 uses
+  %.152.i = phi nsz float [ %i.af, %bb.b ], [ %.05159.i, %.lr.ph.i ] ; 2 uses
+  %28 = phi <2 x float> [ %27, %bb.b ], [ %15, %.lr.ph.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %_ZL18GravityForceKernelILi6ETnRAplT_Li1E_KfL_Z17PolyCoefficients6EEviPfS3_S3_S3_fffffRfS4_S4_.exit, label %.lr.ph.i, !llvm.loop !65
 
 _ZL18GravityForceKernelILi6ETnRAplT_Li1E_KfL_Z17PolyCoefficients6EEviPfS3_S3_S3_fffffRfS4_S4_.exit: ; preds = %bb.c, %bb.a
-  %.053.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.154.i, %bb.c ]
   %.051.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.152.i, %bb.c ]
-  %.050.lcssa.i = phi float [ 0.000000e+00, %bb.a ], [ %.1.i, %bb.c ]
+  %29 = phi <2 x float> [ zeroinitializer, %bb.a ], [ %28, %bb.c ]
   %i.ag = load float, ptr %10, align 4, !tbaa !9, !alias.scope !70, !noalias !77
-  %i.ah = fadd fast float %i.ag, %.053.lcssa.i
+  %i.ah = fadd fast float %i.ag, %.051.lcssa.i
   store float %i.ah, ptr %10, align 4, !tbaa !9, !alias.scope !70, !noalias !77
   %i.ai = load float, ptr %11, align 4, !tbaa !9, !alias.scope !71, !noalias !78
-  %23 = fadd fast float %i.ai, %.051.lcssa.i
-  store float %23, ptr %11, align 4, !tbaa !9, !alias.scope !71, !noalias !78
-  %24 = load float, ptr %12, align 4, !tbaa !9, !alias.scope !72, !noalias !79
-  %25 = fadd fast float %24, %.050.lcssa.i
-  store float %25, ptr %12, align 4, !tbaa !9, !alias.scope !72, !noalias !79
+  %30 = load float, ptr %12, align 4, !tbaa !9, !alias.scope !72, !noalias !79
+  %31 = insertelement <2 x float> poison, float %i.ai, i64 0
+  %32 = insertelement <2 x float> %31, float %30, i64 1
+  %33 = fadd fast <2 x float> %32, %29            ; 2 uses
+  %34 = extractelement <2 x float> %33, i64 0
+  store float %34, ptr %11, align 4, !tbaa !9, !alias.scope !71, !noalias !78
+  %35 = extractelement <2 x float> %33, i64 1
+  store float %35, ptr %12, align 4, !tbaa !9, !alias.scope !72, !noalias !79
   ret void
 }
 

@@ -204,55 +204,63 @@ _RINvYINtNtNtNtCshzWfHUSfYae_4core4iter8adapters6copied6CopiedINtNtNtBc_5slice4i
   %i.hb = load double, ptr %i.ha, align 8, !noalias !102, !noundef !4
   %i.hc = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i, i64 %i.gu
   %i.hd = load double, ptr %i.hc, align 8, !noalias !102, !noundef !4
-  %1 = fsub double %i.hb, %i.fk                   ; 3 uses
-  %2 = fsub double %i.hd, %i.gr
-  %3 = fmul double %1, %2
-  %4 = fadd double %3, 0.000000e+00               ; 2 uses
-  %5 = fmul double %1, %1                         ; 2 uses
+  %1 = insertelement <2 x double> poison, double %i.hd, i64 0
+  %2 = insertelement <2 x double> %1, double %i.hb, i64 1
+  %3 = insertelement <2 x double> poison, double %i.gr, i64 0
+  %4 = insertelement <2 x double> %3, double %i.fk, i64 1
+  %5 = fsub <2 x double> %2, %4                   ; 2 uses
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %7 = fmul <2 x double> %6, %5
+  %8 = fadd <2 x double> %7, zeroinitializer      ; 2 uses
   br label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
-  %.lcssa66.unr = phi double [ poison, %.lr.ph.i.preheader ], [ %4, %.lr.ph.i.prol ]
-  %.lcssa65.unr = phi double [ poison, %.lr.ph.i.preheader ], [ %5, %.lr.ph.i.prol ]
-  %.sroa.0.0136.i.unr = phi double [ 0.000000e+00, %.lr.ph.i.preheader ], [ %4, %.lr.ph.i.prol ]
-  %.sroa.03.0135.i.unr = phi double [ 0.000000e+00, %.lr.ph.i.preheader ], [ %5, %.lr.ph.i.prol ]
+  %.lcssa65.unr = phi <2 x double> [ poison, %.lr.ph.i.preheader ], [ %8, %.lr.ph.i.prol ]
   %.sroa.8.0134.i.unr = phi i64 [ %i.gu, %.lr.ph.i.preheader ], [ %i.gz, %.lr.ph.i.prol ]
+  %.unr = phi <2 x double> [ zeroinitializer, %.lr.ph.i.preheader ], [ %8, %.lr.ph.i.prol ]
   %i.he = icmp eq i64 %i.gw, %.neg
-  br i1 %i.he, label %_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterdEEBW_EINtB5_7ZipImplBW_BW_E4nextCsbXLDOPgjE5X_10test_utils.exit.loopexit.i, label %.lr.ph.i
+  br i1 %i.he, label %_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterdEEBW_EINtB5_7ZipImplBW_BW_E4nextCsbXLDOPgjE5X_10test_utils.exit.loopexit.i, label %.lr.ph.i.preheader.new
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %.sroa.0.0136.i = phi double [ %15, %.lr.ph.i ], [ %.sroa.0.0136.i.unr, %.lr.ph.i.prol.loopexit ]
-  %.sroa.03.0135.i = phi double [ %17, %.lr.ph.i ], [ %.sroa.03.0135.i.unr, %.lr.ph.i.prol.loopexit ]
-  %.sroa.8.0134.i = phi i64 [ %i.hk, %.lr.ph.i ], [ %.sroa.8.0134.i.unr, %.lr.ph.i.prol.loopexit ] ; 4 uses
+.lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.prol.loopexit
+  %9 = insertelement <2 x double> poison, double %i.gr, i64 0
+  %10 = insertelement <2 x double> %9, double %i.fk, i64 1
+  %11 = insertelement <2 x double> poison, double %i.gr, i64 0
+  %12 = insertelement <2 x double> %11, double %i.fk, i64 1
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
+  %.sroa.8.0134.i = phi i64 [ %.sroa.8.0134.i.unr, %.lr.ph.i.preheader.new ], [ %i.hk, %.lr.ph.i ] ; 4 uses
+  %13 = phi <2 x double> [ %.unr, %.lr.ph.i.preheader.new ], [ %25, %.lr.ph.i ]
   %i.hf = add nuw i64 %.sroa.8.0134.i, 1          ; 2 uses
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %.val2.i.i, i64 %.sroa.8.0134.i
   %i.hh = load double, ptr %i.hg, align 8, !noalias !102, !noundef !4
   %i.hi = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i, i64 %.sroa.8.0134.i
   %i.hj = load double, ptr %i.hi, align 8, !noalias !102, !noundef !4
-  %6 = fsub double %i.hh, %i.fk                   ; 3 uses
-  %7 = fsub double %i.hj, %i.gr
-  %8 = fmul double %6, %7
-  %9 = fadd double %.sroa.0.0136.i, %8
-  %10 = fmul double %6, %6
-  %11 = fadd double %.sroa.03.0135.i, %10
+  %14 = insertelement <2 x double> poison, double %i.hj, i64 0
+  %15 = insertelement <2 x double> %14, double %i.hh, i64 1
+  %16 = fsub <2 x double> %15, %10                ; 2 uses
+  %17 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %18 = fmul <2 x double> %17, %16
+  %19 = fadd <2 x double> %13, %18
   %i.hk = add nuw i64 %.sroa.8.0134.i, 2          ; 2 uses
   %i.hl = getelementptr inbounds nuw [8 x i8], ptr %.val2.i.i, i64 %i.hf
   %i.hm = load double, ptr %i.hl, align 8, !noalias !102, !noundef !4
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i, i64 %i.hf
   %i.ho = load double, ptr %i.hn, align 8, !noalias !102, !noundef !4
-  %12 = fsub double %i.hm, %i.fk                  ; 3 uses
-  %13 = fsub double %i.ho, %i.gr
-  %14 = fmul double %12, %13
-  %15 = fadd double %9, %14                       ; 2 uses
-  %16 = fmul double %12, %12
-  %17 = fadd double %11, %16                      ; 2 uses
+  %20 = insertelement <2 x double> poison, double %i.ho, i64 0
+  %21 = insertelement <2 x double> %20, double %i.hm, i64 1
+  %22 = fsub <2 x double> %21, %12                ; 2 uses
+  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %24 = fmul <2 x double> %23, %22
+  %25 = fadd <2 x double> %19, %24                ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.hk, %i.gw
   br i1 %exitcond.not.i.1, label %_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterdEEBW_EINtB5_7ZipImplBW_BW_E4nextCsbXLDOPgjE5X_10test_utils.exit.loopexit.i, label %.lr.ph.i
 
 _RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterdEEBW_EINtB5_7ZipImplBW_BW_E4nextCsbXLDOPgjE5X_10test_utils.exit.loopexit.i: ; preds = %.lr.ph.i, %.lr.ph.i.prol.loopexit
-  %.lcssa66 = phi double [ %.lcssa66.unr, %.lr.ph.i.prol.loopexit ], [ %15, %.lr.ph.i ]
-  %.lcssa65 = phi double [ %.lcssa65.unr, %.lr.ph.i.prol.loopexit ], [ %17, %.lr.ph.i ]
-  %i.hp = fdiv double %.lcssa66, %.lcssa65
+  %.lcssa65 = phi <2 x double> [ %.lcssa65.unr, %.lr.ph.i.prol.loopexit ], [ %25, %.lr.ph.i ] ; 2 uses
+  %26 = extractelement <2 x double> %.lcssa65, i64 0
+  %27 = extractelement <2 x double> %.lcssa65, i64 1
+  %i.hp = fdiv double %26, %27
   br label %_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterdEEBW_EINtB5_7ZipImplBW_BW_E4nextCsbXLDOPgjE5X_10test_utils.exit.i
 
 _RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterdEEBW_EINtB5_7ZipImplBW_BW_E4nextCsbXLDOPgjE5X_10test_utils.exit.i: ; preds = %_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtB7_6copied6CopiedINtNtNtBb_5slice4iter4IterdEEBW_EINtB5_7ZipImplBW_BW_E4nextCsbXLDOPgjE5X_10test_utils.exit.loopexit.i, %.loopexit128.i

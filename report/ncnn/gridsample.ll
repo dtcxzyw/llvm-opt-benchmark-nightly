@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %.1176883.us = phi ptr [ %.0175896, %.preheader.lr.ph.split.us ], [ %i.sh, %._crit_edge.us890 ]
   %.1179882.us = phi ptr [ %.0178895, %.preheader.lr.ph.split.us ], [ %i.sg, %._crit_edge.us890 ]
   %.1182881.us = phi ptr [ %.0181894, %.preheader.lr.ph.split.us ], [ %i.sf, %._crit_edge.us890 ]
-  %i.pv = load i32, ptr %i.b, align 4             ; 6 uses
+  %i.pv = load i32, ptr %i.b, align 4             ; 5 uses
   %i.pw = add nsw i32 %i.pv, -1
   %i.px = sitofp fast i32 %i.pw to float
   %i.py = sitofp fast i32 %i.pv to float
@@ -212,10 +212,11 @@ bb.aa:                                            ; preds = %_ZNK4ncnn3Mat5empty
   %i.qa = sitofp fast i32 %i.pz to float          ; 2 uses
   %i.qb = sitofp fast i32 %i.pv to float          ; 2 uses
   %i.qc = fadd fast float %i.qb, -5.000000e-01
-  %6 = add nsw i32 %i.pv, -1
-  %7 = sitofp fast i32 %6 to float
-  %8 = add nsw i32 %i.pv, -1
-  %9 = sitofp fast i32 %8 to float
+  %6 = insertelement <2 x i32> poison, i32 %i.pv, i64 0
+  %7 = add nsw <2 x i32> %6, <i32 -1, i32 poison>
+  %8 = sitofp <2 x i32> %7 to <2 x float>         ; 2 uses
+  %9 = extractelement <2 x float> %8, i64 0
+  %10 = extractelement <2 x float> %8, i64 0
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.preheader.us, %_ZN4ncnnL13compute_coordEfiii.exit466.us
@@ -319,12 +320,12 @@ _ZN4ncnnL13compute_coordEfiii.exit457.thread.us:  ; preds = %bb.ai
   %i.rm = call fast noundef nofpclass(nan inf) float @llvm.fabs.f32(float nofpclass(nan inf) %i.rl)
   %i.rn = fsub fast float %i.qc, %i.rm
   %.sroa.speculated4.i12.i453.us = call nnan ninf nsz float @llvm.maxnum.f32(float %i.rn, float 0.000000e+00)
-  %.sroa.speculated.i13.i454.us = call nnan ninf nsz float @llvm.minnum.f32(float %.sroa.speculated4.i12.i453.us, float %7)
+  %.sroa.speculated.i13.i454.us = call nnan ninf nsz float @llvm.minnum.f32(float %.sroa.speculated4.i12.i453.us, float %9)
   br label %bb.al
 
 bb.aj:                                            ; preds = %_ZN4ncnnL22grid_sample_unormalizeEifi.exit450.us
   %.sroa.speculated4.i.i455.us = call nnan ninf nsz float @llvm.maxnum.f32(float nofpclass(nan inf) %i.re, float 0.000000e+00)
-  %.sroa.speculated.i.i456.us = call nnan ninf nsz float @llvm.minnum.f32(float %.sroa.speculated4.i.i455.us, float %9)
+  %.sroa.speculated.i.i456.us = call nnan ninf nsz float @llvm.minnum.f32(float %.sroa.speculated4.i.i455.us, float %10)
   br label %_ZN4ncnnL13compute_coordEfiii.exit457.us
 
 _ZN4ncnnL13compute_coordEfiii.exit457.us:         ; preds = %bb.aj, %_ZN4ncnnL22grid_sample_unormalizeEifi.exit450.us
@@ -468,7 +469,7 @@ _ZN4ncnnL13compute_coordEfiii.exit466.us:         ; preds = %bb.ap, %bb.ao, %bb.
   %.1162846.us = phi ptr [ %.0161865, %.preheader784.lr.ph.split.us ], [ %i.vz, %._crit_edge.us ]
   %.1165845.us = phi ptr [ %.0164864, %.preheader784.lr.ph.split.us ], [ %i.vy, %._crit_edge.us ]
   %.1168844.us = phi ptr [ %.0167863, %.preheader784.lr.ph.split.us ], [ %i.vx, %._crit_edge.us ]
-  %i.tq = load i32, ptr %i.b, align 4             ; 6 uses
+  %i.tq = load i32, ptr %i.b, align 4             ; 5 uses
   %i.tr = add nsw i32 %i.tq, -1
   %i.ts = sitofp fast i32 %i.tr to float
   %i.tt = sitofp fast i32 %i.tq to float
@@ -476,10 +477,11 @@ _ZN4ncnnL13compute_coordEfiii.exit466.us:         ; preds = %bb.ap, %bb.ao, %bb.
   %i.tv = sitofp fast i32 %i.tu to float          ; 2 uses
   %i.tw = sitofp fast i32 %i.tq to float          ; 2 uses
   %i.tx = fadd fast float %i.tw, -5.000000e-01
-  %10 = add nsw i32 %i.tq, -1
-  %11 = sitofp fast i32 %10 to float
-  %12 = add nsw i32 %i.tq, -1
-  %13 = sitofp fast i32 %12 to float
+  %11 = insertelement <2 x i32> poison, i32 %i.tq, i64 0
+  %12 = add nsw <2 x i32> %11, <i32 -1, i32 poison>
+  %13 = sitofp <2 x i32> %12 to <2 x float>       ; 2 uses
+  %14 = extractelement <2 x float> %13, i64 0
+  %15 = extractelement <2 x float> %13, i64 0
   br label %bb.aq
 
 bb.aq:                                            ; preds = %.preheader784.us, %_ZN4ncnnL13compute_coordEfiii.exit493.us
@@ -583,12 +585,12 @@ _ZN4ncnnL13compute_coordEfiii.exit484.thread.us:  ; preds = %bb.ax
   %i.vf = call fast noundef nofpclass(nan inf) float @llvm.fabs.f32(float nofpclass(nan inf) %i.ve)
   %i.vg = fsub fast float %i.tx, %i.vf
   %.sroa.speculated4.i12.i480.us = call nnan ninf nsz float @llvm.maxnum.f32(float %i.vg, float 0.000000e+00)
-  %.sroa.speculated.i13.i481.us = call nnan ninf nsz float @llvm.minnum.f32(float %.sroa.speculated4.i12.i480.us, float %11)
+  %.sroa.speculated.i13.i481.us = call nnan ninf nsz float @llvm.minnum.f32(float %.sroa.speculated4.i12.i480.us, float %14)
   br label %bb.ba
 
 bb.ay:                                            ; preds = %_ZN4ncnnL22grid_sample_unormalizeEifi.exit477.us
   %.sroa.speculated4.i.i482.us = call nnan ninf nsz float @llvm.maxnum.f32(float nofpclass(nan inf) %i.ux, float 0.000000e+00)
-  %.sroa.speculated.i.i483.us = call nnan ninf nsz float @llvm.minnum.f32(float %.sroa.speculated4.i.i482.us, float %13)
+  %.sroa.speculated.i.i483.us = call nnan ninf nsz float @llvm.minnum.f32(float %.sroa.speculated4.i.i482.us, float %15)
   br label %_ZN4ncnnL13compute_coordEfiii.exit484.us
 
 _ZN4ncnnL13compute_coordEfiii.exit484.us:         ; preds = %bb.ay, %_ZN4ncnnL22grid_sample_unormalizeEifi.exit477.us
@@ -991,7 +993,8 @@ bb.bo:                                            ; preds = %_ZN4ncnnL13compute_
 
 _ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit384: ; preds = %bb.bo, %_ZN4ncnnL13compute_coordEfiii.exit16.i369
   %i.aat = phi fast float [ %i.aas, %bb.bo ], [ 0.000000e+00, %_ZN4ncnnL13compute_coordEfiii.exit16.i369 ]
-  %i.aau = fsub fast float %i.ay, %i.da           ; 5 uses
+  %9 = sitofp fast i32 %i.bd to float
+  %i.aau = fsub fast float %i.az, %9              ; 5 uses
   %i.aav = fadd fast float %i.aau, 1.000000e+00   ; 3 uses
   %i.aaw = fsub fast float 1.000000e+00, %i.aau   ; 3 uses
   %i.aax = fmul fast float %i.aav, %i.aav
@@ -1002,78 +1005,78 @@ _ZN4ncnnL17get_value_boundedERKNS_3MatEiiii.exit384: ; preds = %bb.bo, %_ZN4ncnn
   %i.abc = extractelement <2 x float> %i.abb, i64 0
   %reass.mul.i = fmul fast float %i.aax, %i.abc
   %i.abd = extractelement <2 x float> %i.abb, i64 1
-  %i.abe = fadd fast float %reass.mul.i, %i.abd   ; 5 uses
+  %i.abe = fadd fast float %reass.mul.i, %i.abd   ; 2 uses
   %i.abf = fmul fast float %i.aau, %i.aau
   %i.abg = fmul fast float %i.aau, 1.250000e+00
   %i.abh = fadd fast float %i.abg, -2.250000e+00
   %i.abi = fmul fast float %i.abf, %i.abh
-  %i.abj = fadd fast float %i.abi, 1.000000e+00   ; 5 uses
+  %i.abj = fadd fast float %i.abi, 1.000000e+00   ; 2 uses
   %i.abk = fmul fast float %i.aaw, %i.aaw
   %i.abl = fmul fast float %i.aaw, 1.250000e+00
   %i.abm = fadd fast float %i.abl, -2.250000e+00
   %i.abn = fmul fast float %i.abk, %i.abm         ; 2 uses
-  %i.abo = fadd fast float %i.abn, 1.000000e+00   ; 4 uses
+  %i.abo = fadd fast float %i.abn, 1.000000e+00
   %i.abp = fadd fast float %i.abn, %i.abj
-  %i.abq = fadd fast float %i.abp, %i.abe         ; 4 uses
-  %9 = sitofp fast i32 %i.bd to float
-  %i.abr = fsub fast float %i.az, %9              ; 5 uses
-  %10 = fadd fast float %i.abr, 1.000000e+00      ; 3 uses
-  %11 = fsub fast float 1.000000e+00, %i.abr      ; 3 uses
-  %12 = fmul fast float %10, %10
-  %13 = insertelement <2 x float> poison, float %10, i64 0
-  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.abq = fadd fast float %i.abp, %i.abe
+  %i.abr = fsub fast float %i.ay, %i.da           ; 3 uses
+  %10 = insertelement <2 x float> poison, float %i.abr, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = fadd fast <2 x float> %11, <float -0.000000e+00, float 1.000000e+00> ; 3 uses
+  %13 = fsub fast float 1.000000e+00, %i.abr      ; 3 uses
+  %14 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.abs = fmul fast <2 x float> %14, <float 7.500000e-01, float 6.000000e+00>
   %i.abt = fsub fast <2 x float> <float 3.750000e+00, float 3.000000e+00>, %i.abs ; 2 uses
-  %15 = extractelement <2 x float> %i.abt, i64 0
-  %reass.mul.i385 = fmul fast float %12, %15
-  %16 = extractelement <2 x float> %i.abt, i64 1
-  %i.abu = fadd fast float %reass.mul.i385, %16   ; 2 uses
-  %17 = fmul fast float %i.abr, %i.abr
-  %18 = fmul fast float %i.abr, 1.250000e+00
-  %19 = fadd fast float %18, -2.250000e+00
-  %20 = fmul fast float %17, %19
-  %21 = fadd fast float %20, 1.000000e+00         ; 2 uses
-  %i.abv = fmul fast float %11, %11
-  %i.abw = fmul fast float %11, 1.250000e+00
+  %15 = fmul fast <2 x float> %12, %12
+  %reass.mul.i385 = fmul fast float %i.abr, 1.250000e+00
+  %i.abu = fadd fast float %reass.mul.i385, -2.250000e+00
+  %16 = shufflevector <2 x float> %i.abt, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %17 = insertelement <2 x float> %16, float %i.abu, i64 0
+  %18 = fmul fast <2 x float> %15, %17
+  %19 = insertelement <2 x float> %i.abt, float 1.000000e+00, i64 0
+  %20 = fadd fast <2 x float> %18, %19            ; 4 uses
+  %i.abv = fmul fast float %13, %13
+  %i.abw = fmul fast float %13, 1.250000e+00
   %i.abx = fadd fast float %i.abw, -2.250000e+00
   %i.aby = fmul fast float %i.abv, %i.abx         ; 2 uses
-  %i.abz = fadd fast float %i.aby, 1.000000e+00
+  %i.abz = fadd fast float %i.aby, 1.000000e+00   ; 4 uses
+  %21 = extractelement <2 x float> %20, i64 0     ; 3 uses
   %i.aca = fadd fast float %i.aby, %21
-  %i.acb = fadd fast float %i.aca, %i.abu
-  %22 = fmul fast float %i.cz, %i.abe
-  %23 = fmul fast float %i.ep, %i.abj
-  %24 = fadd fast float %23, %22
-  %i.acc = fmul fast float %i.gf, %i.abo
-  %25 = fadd fast float %24, %i.acc
-  %i.acd = fmul fast float %i.abq, %i.hv
-  %i.ace = fsub fast float %25, %i.acd
-  %26 = fmul fast float %i.jk, %i.abe
-  %27 = fmul fast float %i.kz, %i.abj
-  %28 = fadd fast float %27, %26
-  %i.acf = fmul fast float %i.mo, %i.abo
-  %29 = fadd fast float %28, %i.acf
-  %i.acg = fmul fast float %i.abq, %i.od
-  %i.ach = fsub fast float %29, %i.acg
-  %i.aci = fmul fast float %i.ps, %i.abe
-  %i.acj = fmul fast float %i.rh, %i.abj
+  %22 = extractelement <2 x float> %20, i64 1     ; 3 uses
+  %i.acb = fadd fast float %i.aca, %22            ; 4 uses
+  %23 = insertelement <2 x float> poison, float %i.ep, i64 0
+  %24 = insertelement <2 x float> %23, float %i.cz, i64 1
+  %25 = fmul fast <2 x float> %24, %20
+  %i.acc = fmul fast float %i.gf, %i.abz
+  %26 = call fast float @llvm.vector.reduce.fadd.v2f32(float %i.acc, <2 x float> %25)
+  %i.acd = fmul fast float %i.acb, %i.hv
+  %i.ace = fsub fast float %26, %i.acd
+  %27 = insertelement <2 x float> poison, float %i.kz, i64 0
+  %28 = insertelement <2 x float> %27, float %i.jk, i64 1
+  %29 = fmul fast <2 x float> %28, %20
+  %i.acf = fmul fast float %i.mo, %i.abz
+  %30 = call fast float @llvm.vector.reduce.fadd.v2f32(float %i.acf, <2 x float> %29)
+  %i.acg = fmul fast float %i.acb, %i.od
+  %i.ach = fsub fast float %30, %i.acg
+  %i.aci = fmul fast float %i.ps, %22
+  %i.acj = fmul fast float %i.rh, %21
   %i.ack = fadd fast float %i.acj, %i.aci
-  %i.acl = fmul fast float %i.sw, %i.abo
+  %i.acl = fmul fast float %i.sw, %i.abz
   %i.acm = fadd fast float %i.ack, %i.acl
-  %i.acn = fmul fast float %i.abq, %i.ul
+  %i.acn = fmul fast float %i.acb, %i.ul
   %i.aco = fsub fast float %i.acm, %i.acn
-  %i.acp = fmul fast float %i.wa, %i.abe
-  %i.acq = fmul fast float %i.xp, %i.abj
+  %i.acp = fmul fast float %i.wa, %22
+  %i.acq = fmul fast float %i.xp, %21
   %i.acr = fadd fast float %i.acq, %i.acp
-  %i.acs = fmul fast float %i.ze, %i.abo
+  %i.acs = fmul fast float %i.ze, %i.abz
   %i.act = fadd fast float %i.acr, %i.acs
-  %i.acu = fmul fast float %i.abq, %i.aat
+  %i.acu = fmul fast float %i.acb, %i.aat
   %i.acv = fsub fast float %i.act, %i.acu
-  %i.acw = fmul fast float %i.ace, %i.abu
-  %i.acx = fmul fast float %i.ach, %21
+  %i.acw = fmul fast float %i.ace, %i.abe
+  %i.acx = fmul fast float %i.ach, %i.abj
   %i.acy = fadd fast float %i.acx, %i.acw
-  %i.acz = fmul fast float %i.aco, %i.abz
+  %i.acz = fmul fast float %i.aco, %i.abo
   %i.ada = fadd fast float %i.acy, %i.acz
-  %i.adb = fmul fast float %i.acb, %i.acv
+  %i.adb = fmul fast float %i.abq, %i.acv
   %i.adc = fsub fast float %i.ada, %i.adb
   store float %i.adc, ptr %.1101581, align 4, !tbaa !43
   %i.add = getelementptr inbounds nuw i8, ptr %.1101581, i64 4 ; 2 uses
@@ -1475,6 +1478,9 @@ declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.floor.v2f32(<2 x float>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #10
 
 attributes #0 = { nounwind "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

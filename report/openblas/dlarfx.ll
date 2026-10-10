@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.c
   br i1 %exitcond1545.not, label %.loopexit, label %.lr.ph1466, !llvm.loop !19
 
 bb.m:                                             ; preds = %bb.c
-  %i.abz = load double, ptr %4, align 8, !tbaa !109 ; 3 uses
+  %i.abz = load double, ptr %4, align 8, !tbaa !109 ; 2 uses
   %i.aca = load <4 x double>, ptr %3, align 8, !tbaa !109 ; 5 uses
   %i.acb = insertelement <4 x double> poison, double %i.abz, i64 0
   %i.acc = shufflevector <4 x double> %i.acb, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -211,11 +211,10 @@ bb.m:                                             ; preds = %bb.c
   %i.acf = load <4 x double>, ptr %i.ace, align 8, !tbaa !109 ; 5 uses
   %i.acg = fmul <4 x double> %i.acc, %i.acf
   %i.ach = getelementptr inbounds nuw i8, ptr %3, i64 64
-  %8 = load double, ptr %i.ach, align 8, !tbaa !109 ; 2 uses
-  %9 = fmul double %i.abz, %8
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 72
-  %11 = load double, ptr %10, align 8, !tbaa !109 ; 2 uses
-  %12 = fmul double %i.abz, %11
+  %8 = load <2 x double>, ptr %i.ach, align 8, !tbaa !109 ; 3 uses
+  %9 = insertelement <2 x double> poison, double %i.abz, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fmul <2 x double> %10, %8
   %i.aci = load i32, ptr %2, align 4, !tbaa !107  ; 2 uses
   %.not14331462 = icmp slt i32 %i.aci, 1
   br i1 %.not14331462, label %.loopexit, label %.lr.ph.preheader
@@ -231,19 +230,18 @@ bb.m:                                             ; preds = %bb.c
   %i.acp = extractelement <4 x double> %i.acf, i64 1
   %i.acq = extractelement <4 x double> %i.acf, i64 2
   %i.acr = extractelement <4 x double> %i.acf, i64 3
+  %12 = extractelement <2 x double> %8, i64 0
+  %13 = extractelement <2 x double> %8, i64 1
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.acs = mul nsw i64 %indvars.iv, %i.acj
-  %i.act = getelementptr [8 x i8], ptr %i.c, i64 %i.acs ; 4 uses
-  %13 = getelementptr i8, ptr %i.act, i64 8       ; 2 uses
-  %i.acu = getelementptr i8, ptr %i.act, i64 40   ; 2 uses
-  %i.acv = getelementptr i8, ptr %i.act, i64 72   ; 2 uses
-  %14 = load double, ptr %i.acv, align 8, !tbaa !109 ; 2 uses
-  %i.acw = getelementptr i8, ptr %i.act, i64 80   ; 2 uses
-  %15 = load double, ptr %i.acw, align 8, !tbaa !109 ; 2 uses
-  %i.acx = load <4 x double>, ptr %13, align 8, !tbaa !109 ; 5 uses
+  %i.act = getelementptr [8 x i8], ptr %i.c, i64 %i.acs ; 3 uses
+  %i.acu = getelementptr i8, ptr %i.act, i64 8    ; 2 uses
+  %i.acv = getelementptr i8, ptr %i.act, i64 40   ; 2 uses
+  %i.acw = getelementptr i8, ptr %i.act, i64 72   ; 2 uses
+  %i.acx = load <4 x double>, ptr %i.acu, align 8, !tbaa !109 ; 5 uses
   %foldExtExtBinop3710 = fmul <4 x double> %i.aca, %i.acx
   %i.acy = extractelement <4 x double> %foldExtExtBinop3710, i64 1
   %i.acz = extractelement <4 x double> %i.acx, i64 0
@@ -252,7 +250,7 @@ bb.m:                                             ; preds = %bb.c
   %i.adc = tail call double @llvm.fmuladd.f64(double %i.acm, double %i.adb, double %i.ada)
   %i.add = extractelement <4 x double> %i.acx, i64 3
   %i.ade = tail call double @llvm.fmuladd.f64(double %i.acn, double %i.add, double %i.adc)
-  %i.adf = load <4 x double>, ptr %i.acu, align 8, !tbaa !109 ; 5 uses
+  %i.adf = load <4 x double>, ptr %i.acv, align 8, !tbaa !109 ; 5 uses
   %i.adg = extractelement <4 x double> %i.adf, i64 0
   %i.adh = tail call double @llvm.fmuladd.f64(double %i.aco, double %i.adg, double %i.ade)
   %i.adi = extractelement <4 x double> %i.adf, i64 1
@@ -261,19 +259,22 @@ bb.m:                                             ; preds = %bb.c
   %i.adl = tail call double @llvm.fmuladd.f64(double %i.acq, double %i.adk, double %i.adj)
   %i.adm = extractelement <4 x double> %i.adf, i64 3
   %i.adn = tail call double @llvm.fmuladd.f64(double %i.acr, double %i.adm, double %i.adl)
-  %i.ado = tail call double @llvm.fmuladd.f64(double %8, double %14, double %i.adn)
-  %i.adp = tail call double @llvm.fmuladd.f64(double %11, double %15, double %i.ado)
-  %i.adq = fneg double %i.adp                     ; 3 uses
+  %14 = load <2 x double>, ptr %i.acw, align 8, !tbaa !109 ; 3 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  %i.ado = tail call double @llvm.fmuladd.f64(double %12, double %15, double %i.adn)
+  %16 = extractelement <2 x double> %14, i64 1
+  %i.adp = tail call double @llvm.fmuladd.f64(double %13, double %16, double %i.ado)
+  %i.adq = fneg double %i.adp                     ; 2 uses
   %i.adr = insertelement <4 x double> poison, double %i.adq, i64 0
   %i.ads = shufflevector <4 x double> %i.adr, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.adt = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ads, <4 x double> %i.acd, <4 x double> %i.acx)
-  store <4 x double> %i.adt, ptr %13, align 8, !tbaa !109
+  store <4 x double> %i.adt, ptr %i.acu, align 8, !tbaa !109
   %i.adu = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ads, <4 x double> %i.acg, <4 x double> %i.adf)
-  store <4 x double> %i.adu, ptr %i.acu, align 8, !tbaa !109
-  %16 = tail call double @llvm.fmuladd.f64(double %i.adq, double %9, double %14)
-  store double %16, ptr %i.acv, align 8, !tbaa !109
-  %17 = tail call double @llvm.fmuladd.f64(double %i.adq, double %12, double %15)
-  store double %17, ptr %i.acw, align 8, !tbaa !109
+  store <4 x double> %i.adu, ptr %i.acv, align 8, !tbaa !109
+  %17 = insertelement <2 x double> poison, double %i.adq, i64 0
+  %18 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
+  %19 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %18, <2 x double> %11, <2 x double> %14)
+  store <2 x double> %19, ptr %i.acw, align 8, !tbaa !109
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !20
@@ -675,6 +676,9 @@ declare double @llvm.fmuladd.f64(double, double, double) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #3

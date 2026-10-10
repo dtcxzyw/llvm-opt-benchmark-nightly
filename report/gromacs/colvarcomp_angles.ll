@@ -202,7 +202,7 @@ bb.a:
   %i.f = load double, ptr %i.e, align 8, !tbaa !91 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1680
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1696 ; 6 uses
-  %.sroa.466.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1704 ; 2 uses
+  %.sroa.466.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1704
   %i.i = load <2 x double>, ptr %i.a, align 8, !tbaa !89 ; 5 uses
   %i.j = load <2 x double>, ptr %i.b, align 8, !tbaa !89 ; 5 uses
   %i.k = extractelement <2 x double> %i.j, i64 1
@@ -251,7 +251,7 @@ bb.a:
   %i.az = fadd <2 x double> %i.as, %i.ay
   %i.ba = fmul <2 x double> %i.an, %i.az
   store <2 x double> %i.ba, ptr %.sroa.567.0..sroa_idx, align 8, !tbaa !89
-  %.sroa.452.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1728 ; 4 uses
+  %.sroa.452.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1728 ; 3 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1736 ; 4 uses
   %i.bb = insertelement <2 x double> poison, double %i.d, i64 0
   %i.bc = insertelement <2 x double> %i.bb, double %i.aw, i64 1
@@ -491,17 +491,19 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.fc = getelementptr inbounds nuw [8 x i8], ptr %i.bx, i64 %.02769
   %i.fd = load double, ptr %i.fc, align 8, !tbaa !89
   %i.fe = fneg double %i.fd
-  %i.ff = tail call double @llvm.fmuladd.f64(double %i.fe, double %i.br, double %i.fb) ; 3 uses
-  %1 = load double, ptr %i.h, align 8, !tbaa !105, !noalias !230
-  %2 = fmul double %i.ff, %1
-  %3 = load double, ptr %.sroa.466.0..sroa_idx, align 8, !tbaa !106, !noalias !230
-  %4 = fmul double %i.ff, %3
+  %i.ff = tail call double @llvm.fmuladd.f64(double %i.fe, double %i.br, double %i.fb) ; 2 uses
+  %1 = load <2 x double>, ptr %i.h, align 8, !tbaa !89, !noalias !230
+  %2 = insertelement <2 x double> poison, double %i.ff, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = fmul <2 x double> %3, %1                   ; 2 uses
   %i.fg = load double, ptr %.sroa.567.0..sroa_idx, align 8, !tbaa !91, !noalias !230
   %i.fh = fmul double %i.ff, %i.fg
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.bz, i64 %.02769 ; 3 uses
-  store double %2, ptr %i.fi, align 8, !tbaa !89
+  %5 = extractelement <2 x double> %4, i64 0
+  store double %5, ptr %i.fi, align 8, !tbaa !89
   %i.fj = getelementptr [8 x i8], ptr %i.fi, i64 %i.bt
-  store double %4, ptr %i.fj, align 8, !tbaa !89
+  %6 = extractelement <2 x double> %4, i64 1
+  store double %6, ptr %i.fj, align 8, !tbaa !89
   %i.fk = getelementptr i8, ptr %i.fi, i64 %.idx.i
   store double %i.fh, ptr %i.fk, align 8, !tbaa !89
   %i.fl = add nuw i64 %.02769, 1                  ; 2 uses
@@ -639,17 +641,19 @@ scalar.ph206:                                     ; preds = %scalar.ph206.prehea
 scalar.ph294:                                     ; preds = %scalar.ph294.preheader, %scalar.ph294
   %.072 = phi i64 [ %i.hq, %scalar.ph294 ], [ %.072.ph, %scalar.ph294.preheader ] ; 3 uses
   %i.hj = getelementptr inbounds nuw [8 x i8], ptr %i.fr, i64 %.072
-  %i.hk = load double, ptr %i.hj, align 8, !tbaa !89 ; 3 uses
-  %5 = load double, ptr %i.n, align 8, !tbaa !105, !noalias !232
-  %6 = fmul double %i.hk, %5
-  %7 = load double, ptr %.sroa.452.0..sroa_idx, align 8, !tbaa !106, !noalias !232
-  %8 = fmul double %i.hk, %7
+  %i.hk = load double, ptr %i.hj, align 8, !tbaa !89 ; 2 uses
+  %7 = load <2 x double>, ptr %i.n, align 8, !tbaa !89, !noalias !232
+  %8 = insertelement <2 x double> poison, double %i.hk, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = fmul <2 x double> %9, %7                  ; 2 uses
   %i.hl = load double, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !91, !noalias !232
   %i.hm = fmul double %i.hk, %i.hl
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.ft, i64 %.072 ; 3 uses
-  store double %6, ptr %i.hn, align 8, !tbaa !89
+  %11 = extractelement <2 x double> %10, i64 0
+  store double %11, ptr %i.hn, align 8, !tbaa !89
   %i.ho = getelementptr [8 x i8], ptr %i.hn, i64 %i.fp
-  store double %8, ptr %i.ho, align 8, !tbaa !89
+  %12 = extractelement <2 x double> %10, i64 1
+  store double %12, ptr %i.ho, align 8, !tbaa !89
   %i.hp = getelementptr i8, ptr %i.hn, i64 %.idx.i29
   store double %i.hm, ptr %i.hp, align 8, !tbaa !89
   %i.hq = add nuw i64 %.072, 1                    ; 2 uses

@@ -204,15 +204,17 @@ bb.q:                                             ; preds = %bb.q, %bb.p
   %i.db = fmul nnan double %i.da, f0x3F60000000000000
   %i.dc = tail call double @sin(double noundef %i.db) #13
   %i.dd = fadd double %i.dc, 1.000000e+00
-  %i.de = fmul double %i.dd, 5.000000e-01         ; 2 uses
-  %2 = fmul double %i.de, f0x4045555555555555
-  %3 = fptosi double %2 to i32
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.cw, i64 %indvars.iv98.i.i ; 2 uses
-  store i32 %3, ptr %4, align 4
-  %5 = fmul double %i.de, f0x4069999999999999
-  %6 = fptosi double %5 to i32
-  %i.df = getelementptr inbounds nuw i8, ptr %4, i64 2048
-  store i32 %6, ptr %i.df, align 4
+  %i.de = fmul double %i.dd, 5.000000e-01
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.cw, i64 %indvars.iv98.i.i ; 2 uses
+  %3 = insertelement <2 x double> poison, double %i.de, i64 0
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = fmul <2 x double> %4, <double f0x4045555555555555, double f0x4069999999999999>
+  %6 = fptosi <2 x double> %5 to <2 x i32>        ; 2 uses
+  %7 = extractelement <2 x i32> %6, i64 0
+  store i32 %7, ptr %2, align 4
+  %i.df = getelementptr inbounds nuw i8, ptr %2, i64 2048
+  %8 = extractelement <2 x i32> %6, i64 1
+  store i32 %8, ptr %i.df, align 4
   %indvars.iv.next99.i.i = add nuw nsw i64 %indvars.iv98.i.i, 1 ; 2 uses
   %exitcond101.not.i.i = icmp eq i64 %indvars.iv.next99.i.i, 512
   br i1 %exitcond101.not.i.i, label %.preheader.i.i, label %bb.q, !llvm.loop !14

@@ -205,12 +205,14 @@ bb.fe:                                            ; preds = %KINLinSolDrv.exit18
   br label %bb.ff
 
 bb.ff:                                            ; preds = %bb.fe, %KINLinSolDrv.exit188
-  %.0310.i = phi double [ %i.vz, %bb.fe ], [ %i.vu, %KINLinSolDrv.exit188 ] ; 3 uses
-  %.0307.i = phi double [ %i.vw, %bb.fe ], [ 1.000000e+00, %KINLinSolDrv.exit188 ] ; 3 uses
+  %.0310.i = phi double [ %i.vz, %bb.fe ], [ %i.vu, %KINLinSolDrv.exit188 ]
+  %.0307.i = phi double [ %i.vw, %bb.fe ], [ 1.000000e+00, %KINLinSolDrv.exit188 ]
   %.0300.i = phi double [ 1.000000e+00, %bb.fe ], [ %i.vw, %KINLinSolDrv.exit188 ] ; 2 uses
   store double 1.000000e+00, ptr %i.hi, align 8, !tbaa !56
   %i.wa = load i32, ptr %i.hj, align 8, !tbaa !98
   %.not.i189 = icmp eq i32 %i.wa, 0
+  %5 = insertelement <2 x double> poison, double %.0310.i, i64 0
+  %6 = insertelement <2 x double> %5, double %.0307.i, i64 1 ; 3 uses
   br i1 %.not.i189, label %bb.fj, label %bb.fg
 
 bb.fg:                                            ; preds = %bb.ff
@@ -222,12 +224,14 @@ bb.fh:                                            ; preds = %bb.fg
   %i.wd = load double, ptr %i.hi, align 8, !tbaa !56
   %i.we = load ptr, ptr %i.hd, align 8, !tbaa !43 ; 2 uses
   tail call void @N_VScale(double noundef %i.wd, ptr noundef %i.we, ptr noundef %i.we) #13
-  %i.wf = load double, ptr %i.hi, align 8, !tbaa !56 ; 2 uses
-  %5 = fmul double %.0307.i, %i.wf
-  %6 = fmul double %.0310.i, %i.wf                ; 3 uses
-  store double %6, ptr %i.hh, align 8, !tbaa !134
+  %i.wf = load double, ptr %i.hi, align 8, !tbaa !56
+  %7 = insertelement <2 x double> poison, double %i.wf, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = fmul <2 x double> %6, %8                   ; 2 uses
+  %10 = extractelement <2 x double> %9, i64 0     ; 2 uses
+  store double %10, ptr %i.hh, align 8, !tbaa !134
   %i.wg = load double, ptr %i.hk, align 8, !tbaa !135
-  %i.wh = fcmp ugt double %6, %i.wg
+  %i.wh = fcmp ugt double %10, %i.wg
   br i1 %i.wh, label %bb.fj, label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh
@@ -238,9 +242,8 @@ bb.fi:                                            ; preds = %bb.fh
   br label %bb.gk
 
 bb.fj:                                            ; preds = %bb.fh, %bb.fg, %bb.ff
-  %.1311.i = phi double [ %6, %bb.fh ], [ %.0310.i, %bb.fg ], [ %.0310.i, %bb.ff ] ; 2 uses
-  %.1308.i = phi double [ %5, %bb.fh ], [ %.0307.i, %bb.fg ], [ %.0307.i, %bb.ff ] ; 2 uses
-  %.1301.i = phi double [ 1.000000e+00, %bb.fh ], [ %.0300.i, %bb.fg ], [ %.0300.i, %bb.ff ]
+  %.1308.i = phi double [ 1.000000e+00, %bb.fh ], [ %.0300.i, %bb.fg ], [ %.0300.i, %bb.ff ]
+  %11 = phi <2 x double> [ %9, %bb.fh ], [ %6, %bb.fg ], [ %6, %bb.ff ] ; 2 uses
   %i.wl = load ptr, ptr %i.e, align 8, !tbaa !48
   %i.wm = load ptr, ptr %i.hd, align 8, !tbaa !43
   %i.wn = load ptr, ptr %i.hc, align 8, !tbaa !41
@@ -263,9 +266,9 @@ bb.fk:                                            ; preds = %bb.fj
 bb.fl:                                            ; preds = %bb.fk
   %i.wx = load ptr, ptr %i.hd, align 8, !tbaa !43 ; 2 uses
   tail call void @N_VScale(double noundef 5.000000e-01, ptr noundef %i.wx, ptr noundef %i.wx) #13
-  %7 = fmul double %.1308.i, 5.000000e-01         ; 2 uses
-  %8 = fmul double %.1311.i, 5.000000e-01         ; 3 uses
-  store double %8, ptr %i.hh, align 8, !tbaa !134
+  %12 = fmul <2 x double> %11, splat (double 5.000000e-01) ; 3 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  store double %13, ptr %i.hh, align 8, !tbaa !134
   %i.wy = load ptr, ptr %i.e, align 8, !tbaa !48
   %i.wz = load ptr, ptr %i.hd, align 8, !tbaa !43
   %i.xa = load ptr, ptr %i.hc, align 8, !tbaa !41
@@ -288,9 +291,9 @@ bb.fm:                                            ; preds = %bb.fl
 bb.fn:                                            ; preds = %bb.fm
   %i.xk = load ptr, ptr %i.hd, align 8, !tbaa !43 ; 2 uses
   tail call void @N_VScale(double noundef 5.000000e-01, ptr noundef %i.xk, ptr noundef %i.xk) #13
-  %9 = fmul double %7, 5.000000e-01               ; 2 uses
-  %10 = fmul double %8, 5.000000e-01              ; 3 uses
-  store double %10, ptr %i.hh, align 8, !tbaa !134
+  %14 = fmul <2 x double> %12, splat (double 5.000000e-01) ; 3 uses
+  %15 = extractelement <2 x double> %14, i64 0
+  store double %15, ptr %i.hh, align 8, !tbaa !134
   %i.xl = load ptr, ptr %i.e, align 8, !tbaa !48
   %i.xm = load ptr, ptr %i.hd, align 8, !tbaa !43
   %i.xn = load ptr, ptr %i.hc, align 8, !tbaa !41
@@ -313,9 +316,9 @@ bb.fo:                                            ; preds = %bb.fn
 bb.fp:                                            ; preds = %bb.fo
   %i.xx = load ptr, ptr %i.hd, align 8, !tbaa !43 ; 2 uses
   tail call void @N_VScale(double noundef 5.000000e-01, ptr noundef %i.xx, ptr noundef %i.xx) #13
-  %11 = fmul double %9, 5.000000e-01              ; 2 uses
-  %12 = fmul double %10, 5.000000e-01             ; 3 uses
-  store double %12, ptr %i.hh, align 8, !tbaa !134
+  %16 = fmul <2 x double> %14, splat (double 5.000000e-01) ; 3 uses
+  %17 = extractelement <2 x double> %16, i64 0
+  store double %17, ptr %i.hh, align 8, !tbaa !134
   %i.xy = load ptr, ptr %i.e, align 8, !tbaa !48
   %i.xz = load ptr, ptr %i.hd, align 8, !tbaa !43
   %i.ya = load ptr, ptr %i.hc, align 8, !tbaa !41
@@ -338,9 +341,9 @@ bb.fq:                                            ; preds = %bb.fp
 bb.fr:                                            ; preds = %bb.fq
   %i.yk = load ptr, ptr %i.hd, align 8, !tbaa !43 ; 2 uses
   tail call void @N_VScale(double noundef 5.000000e-01, ptr noundef %i.yk, ptr noundef %i.yk) #13
-  %13 = fmul double %11, 5.000000e-01
-  %14 = fmul double %12, 5.000000e-01             ; 3 uses
-  store double %14, ptr %i.hh, align 8, !tbaa !134
+  %18 = fmul <2 x double> %16, splat (double 5.000000e-01) ; 2 uses
+  %19 = extractelement <2 x double> %18, i64 0    ; 2 uses
+  store double %19, ptr %i.hh, align 8, !tbaa !134
   %i.yl = load ptr, ptr %i.e, align 8, !tbaa !48
   %i.ym = load ptr, ptr %i.hd, align 8, !tbaa !43
   %i.yn = load ptr, ptr %i.hc, align 8, !tbaa !41
@@ -361,16 +364,16 @@ bb.fs:                                            ; preds = %bb.fr
   br i1 %i.yw, label %KINLinSolDrv.exit.thread.thread, label %KINLinSolDrv.exit.thread.thread271
 
 .peel.begin.i190:                                 ; preds = %bb.fr, %bb.fp, %bb.fn, %bb.fl, %bb.fj
-  %.2302390.lcssa.i = phi double [ %.1301.i, %bb.fj ], [ 1.000000e+00, %bb.fl ], [ 1.000000e+00, %bb.fn ], [ 1.000000e+00, %bb.fp ], [ 1.000000e+00, %bb.fr ] ; 3 uses
-  %.2309389.lcssa.i = phi double [ %.1308.i, %bb.fj ], [ %7, %bb.fl ], [ %9, %bb.fn ], [ %11, %bb.fp ], [ %13, %bb.fr ] ; 2 uses
-  %.2312388.lcssa.i = phi double [ %.1311.i, %bb.fj ], [ %8, %bb.fl ], [ %10, %bb.fn ], [ %12, %bb.fp ], [ %14, %bb.fr ] ; 2 uses
+  %.2309389.lcssa.i = phi double [ %.1308.i, %bb.fj ], [ 1.000000e+00, %bb.fl ], [ 1.000000e+00, %bb.fn ], [ 1.000000e+00, %bb.fp ], [ 1.000000e+00, %bb.fr ] ; 3 uses
+  %20 = phi <2 x double> [ %11, %bb.fj ], [ %12, %bb.fl ], [ %14, %bb.fn ], [ %16, %bb.fp ], [ %18, %bb.fr ] ; 4 uses
   %i.yx = load ptr, ptr %i.fc, align 8, !tbaa !42
   %i.yy = load ptr, ptr %i.g, align 8, !tbaa !96
   %i.yz = tail call double @N_VWL2Norm(ptr noundef %i.yx, ptr noundef %i.yy) #13 ; 4 uses
   %i.za = fmul double %i.yz, 5.000000e-01
   %i.zb = fmul double %i.yz, %i.za                ; 6 uses
   %i.zc = load double, ptr %i.hg, align 8, !tbaa !130
-  %i.zd = fmul double %.2309389.lcssa.i, %i.zc    ; 6 uses
+  %21 = extractelement <2 x double> %20, i64 1
+  %i.zd = fmul double %21, %i.zc                  ; 6 uses
   %i.ze = load ptr, ptr %i.hd, align 8, !tbaa !43
   %i.zf = load ptr, ptr %i.e, align 8, !tbaa !48
   %i.zg = load ptr, ptr %i.f, align 8, !tbaa !95
@@ -575,7 +578,8 @@ bb.gb:                                            ; preds = %.loopexit.i195
   %.0287.lcssa452462.i = phi i32 [ %.0287.i.lcssa, %bb.gb ], [ 0, %.loopexit.thread.i ] ; 2 uses
   %i.adu = phi double [ %i.adn, %bb.gb ], [ %i.adq, %.loopexit.thread.i ] ; 2 uses
   %i.adv = load double, ptr %i.ek, align 8, !tbaa !110
-  %i.adw = fcmp olt double %.2312388.lcssa.i, %i.adv
+  %22 = extractelement <2 x double> %20, i64 0
+  %i.adw = fcmp olt double %22, %i.adv
   br i1 %i.adw, label %.preheader.i.preheader, label %.thread475.i
 
 .preheader.i.preheader:                           ; preds = %.thread.i191
@@ -587,8 +591,8 @@ bb.gb:                                            ; preds = %.loopexit.i195
   %.1304.i = phi double [ %i.adz, %bb.gc ], [ 1.000000e+00, %.preheader.i.preheader ] ; 2 uses
   %.1288.i = phi i32 [ %i.aem, %bb.gc ], [ %.0287.lcssa452462.i, %.preheader.i.preheader ]
   %i.adz = fmul double %.1304.i, 2.000000e+00     ; 3 uses
-  %i.aea = fcmp uge double %i.adz, %.2302390.lcssa.i ; 2 uses
-  %i.aeb = select i1 %i.aea, double %.2302390.lcssa.i, double %i.adz ; 3 uses
+  %i.aea = fcmp uge double %i.adz, %.2309389.lcssa.i ; 2 uses
+  %i.aeb = select i1 %i.aea, double %.2309389.lcssa.i, double %i.adz ; 3 uses
   %i.aec = load ptr, ptr %i.e, align 8, !tbaa !48
   %i.aed = load ptr, ptr %i.hd, align 8, !tbaa !43
   %i.aee = load ptr, ptr %i.hc, align 8, !tbaa !41
@@ -626,7 +630,7 @@ bb.gc:                                            ; preds = %.preheader.i
   br i1 %brmerge, label %.critedge.i.loopexit, label %.preheader.i
 
 .critedge.i.loopexit:                             ; preds = %bb.gc
-  %.mux = select i1 %or.cond.i192.not728, double %i.aeb, double %.2302390.lcssa.i
+  %.mux = select i1 %or.cond.i192.not728, double %i.aeb, double %.2309389.lcssa.i
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.i.loopexit, %bb.gb
@@ -744,11 +748,11 @@ bb.gj:                                            ; preds = %bb.gi
   %i.ahf = insertelement <2 x double> poison, double %.3306.i, i64 0
   %i.ahg = shufflevector <2 x double> %i.ahf, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ahh = fmul <2 x double> %i.ahg, %i.ahe
-  %15 = insertelement <2 x double> poison, double %.2309389.lcssa.i, i64 0
-  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
-  %17 = fmul <2 x double> %16, %i.ahh
-  store <2 x double> %17, ptr %i.hg, align 8, !tbaa !27
-  %i.ahi = fmul double %.2312388.lcssa.i, %.3306.i
+  %23 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %24 = fmul <2 x double> %23, %i.ahh
+  store <2 x double> %24, ptr %i.hg, align 8, !tbaa !27
+  %25 = extractelement <2 x double> %20, i64 0
+  %i.ahi = fmul double %25, %.3306.i
   %i.ahj = load double, ptr %i.ek, align 8, !tbaa !110
   %i.ahk = fmul double %i.ahj, f0x3FEFAE147AE147AE
   %i.ahl = fcmp ogt double %i.ahi, %i.ahk
@@ -1104,7 +1108,7 @@ KINLinSolDrv.exit.thread.thread:                  ; preds = %bb.fq, %bb.gi, %bb.
   br label %KINPicardAA.exit
 
 KINLinSolDrv.exit.thread.thread271:               ; preds = %bb.fs, %bb.er
-  %.lcssa621.sink = phi double [ %i.to, %bb.er ], [ %14, %bb.fs ]
+  %.lcssa621.sink = phi double [ %i.to, %bb.er ], [ %19, %bb.fs ]
   %i.aly = load ptr, ptr %i.hd, align 8, !tbaa !43 ; 2 uses
   tail call void @N_VScale(double noundef 5.000000e-01, ptr noundef %i.aly, ptr noundef %i.aly) #13
   %i.alz = fmul double %.lcssa621.sink, 5.000000e-01

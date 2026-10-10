@@ -205,6 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %i.m = load float, ptr %i.l, align 4
   %i.n = fpext float %i.m to double
   %i.o = zext nneg i32 %1 to i64                  ; 2 uses
+  %3 = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.n, i64 1
   br label %.preheader51.us
 
 .preheader51.us:                                  ; preds = %bb.b, %.preheader52.split.us
@@ -220,26 +221,29 @@ bb.b:                                             ; preds = %._crit_edge63.split
   %indvars.iv75 = phi i64 [ %indvars.iv.next76, %._crit_edge.us.us ], [ 0, %.preheader51.us ] ; 2 uses
   %.161.us.us = phi double [ %i.x, %._crit_edge.us.us ], [ 0.000000e+00, %.preheader51.us ]
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv75 ; 2 uses
-  %i.s = load double, ptr %i.r, align 8           ; 3 uses
+  %i.s = load double, ptr %i.r, align 8           ; 2 uses
+  %4 = insertelement <2 x double> poison, double %i.s, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph58.us.us
   %indvars.iv72 = phi i64 [ %indvars.iv.next73, %bb.c ], [ %i.o, %.lr.ph58.us.us ] ; 2 uses
-  %.057.us.us = phi double [ %9, %bb.c ], [ %i.n, %.lr.ph58.us.us ] ; 2 uses
-  %.04356.us.us = phi double [ %4, %bb.c ], [ 0.000000e+00, %.lr.ph58.us.us ]
+  %6 = phi <2 x double> [ %13, %bb.c ], [ %3, %.lr.ph58.us.us ] ; 2 uses
   %indvars.iv.next73 = add nsw i64 %indvars.iv72, -1 ; 2 uses
-  %3 = fmul double %i.s, %.04356.us.us
-  %4 = fadd double %3, %.057.us.us                ; 2 uses
-  %5 = fmul double %i.s, %.057.us.us
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next73
-  %7 = load float, ptr %6, align 4
-  %8 = fpext float %7 to double
-  %9 = fadd double %5, %8                         ; 2 uses
+  %7 = fmul <2 x double> %5, %6
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next73
+  %9 = load float, ptr %8, align 4
+  %10 = fpext float %9 to double
+  %11 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %12 = insertelement <2 x double> %11, double %10, i64 1
+  %13 = fadd <2 x double> %7, %12                 ; 3 uses
   %i.t = icmp sgt i64 %indvars.iv72, 1
   br i1 %i.t, label %bb.c, label %._crit_edge.us.us, !llvm.loop !681
 
 ._crit_edge.us.us:                                ; preds = %bb.c
-  %i.u = fdiv double %9, %4                       ; 3 uses
+  %14 = extractelement <2 x double> %13, i64 0
+  %15 = extractelement <2 x double> %13, i64 1
+  %i.u = fdiv double %15, %14                     ; 3 uses
   %i.v = fsub double %i.s, %i.u
   store double %i.v, ptr %i.r, align 8
   %i.w = fmul double %i.u, %i.u

@@ -205,7 +205,7 @@ bb.ko:                                            ; preds = %bb.kn
   br i1 %i.cgw, label %bb.kp, label %.critedge4
 
 bb.kp:                                            ; preds = %bb.ko
-  %i.cgx = extractelement <3 x float> %i.cgi, i64 2 ; 2 uses
+  %i.cgx = extractelement <3 x float> %i.cgi, i64 2
   %i.cgy = fptosi float %i.cgx to i32
   %i.cgz = shufflevector <3 x float> %i.cgi, <3 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.cha = fptosi <2 x float> %i.cgz to <2 x i32>
@@ -243,13 +243,16 @@ bb.kq:                                            ; preds = %bb.kp
   %i.chv = load ptr, ptr %i.dn, align 8, !tbaa !142, !nonnull !143, !align !144
   %i.chw = load ptr, ptr %i.chv, align 8, !tbaa !147
   %i.chx = getelementptr inbounds nuw i8, ptr %i.chw, i64 8
-  %i.chy = load float, ptr %i.chx, align 8, !tbaa !252 ; 3 uses
+  %i.chy = load float, ptr %i.chx, align 8, !tbaa !252 ; 2 uses
   %i.chz = extractelement <3 x float> %i.cgi, i64 0
   %i.cia = fmul float %i.chz, %i.chy
-  %68 = extractelement <3 x float> %i.cgi, i64 1
-  %69 = fmul float %68, %i.chy
-  %70 = fmul float %i.cgx, %i.chy
+  %68 = shufflevector <3 x float> %i.cgi, <3 x float> poison, <2 x i32> <i32 1, i32 2>
+  %69 = insertelement <2 x float> poison, float %i.chy, i64 0
+  %70 = shufflevector <2 x float> %69, <2 x float> poison, <2 x i32> zeroinitializer
+  %71 = fmul <2 x float> %68, %70                 ; 2 uses
   %wide.trip.count = zext nneg i32 %i.chs to i64
+  %72 = extractelement <2 x float> %71, i64 0
+  %73 = extractelement <2 x float> %71, i64 1
   br label %bb.ks
 
 ._crit_edge2073:                                  ; preds = %bb.ks
@@ -300,10 +303,10 @@ bb.ks:                                            ; preds = %.lr.ph2072, %bb.ks
   %i.cjb = fsub float %i.cja, %i.cia              ; 2 uses
   %i.cjc = getelementptr inbounds nuw i8, ptr %i.ciz, i64 4
   %i.cjd = load float, ptr %i.cjc, align 4, !tbaa !253
-  %i.cje = fsub float %i.cjd, %69                 ; 2 uses
+  %i.cje = fsub float %i.cjd, %72                 ; 2 uses
   %i.cjf = getelementptr inbounds nuw i8, ptr %i.ciz, i64 8
   %i.cjg = load float, ptr %i.cjf, align 4, !tbaa !223
-  %i.cjh = fsub float %i.cjg, %70                 ; 2 uses
+  %i.cjh = fsub float %i.cjg, %73                 ; 2 uses
   %i.cji = fmul float %i.cje, %i.cje
   %i.cjj = call float @llvm.fmuladd.f32(float %i.cjb, float %i.cjb, float %i.cji)
   %i.cjk = call float @llvm.fmuladd.f32(float %i.cjh, float %i.cjh, float %i.cjj)

@@ -59,20 +59,26 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !20 ; 3 uses
   %i.ad = getelementptr inbounds [8 x i8], ptr %i.c, i64 %i.aa
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !20 ; 5 uses
-  %14 = fsub double %i.ac, %i.ae                  ; 9 uses
-  %15 = fadd double %i.ac, %i.ae                  ; 10 uses
-  %16 = fsub double %15, %i.ac
-  %17 = fcmp oge double %14, 0.000000e+00
-  %18 = fneg double %14
-  %19 = select i1 %17, double %14, double %18     ; 2 uses
-  %20 = fcmp oge double %15, 0.000000e+00
-  %21 = fneg double %15
-  %22 = select i1 %20, double %15, double %21     ; 2 uses
-  %i.af = fcmp oge double %19, %22
-  %i.ag = select i1 %i.af, double %19, double %22
+  %14 = insertelement <2 x double> poison, double %i.ac, i64 0
+  %15 = insertelement <2 x double> poison, double %i.ac, i64 0
+  %16 = insertelement <2 x double> poison, double %i.ae, i64 0
+  %17 = insertelement <2 x double> poison, double %i.ae, i64 0
+  %18 = fsub <2 x double> %15, %17                ; 2 uses
+  %19 = fadd <2 x double> %14, %16                ; 2 uses
+  %20 = shufflevector <2 x double> %18, <2 x double> %19, <2 x i32> <i32 0, i32 2> ; 3 uses
+  %21 = extractelement <2 x double> %19, i64 0    ; 7 uses
+  %22 = extractelement <2 x double> %18, i64 0    ; 6 uses
+  %23 = fsub double %21, %i.ac
+  %24 = fcmp oge <2 x double> %20, zeroinitializer
+  %25 = fneg <2 x double> %20
+  %26 = select <2 x i1> %24, <2 x double> %20, <2 x double> %25 ; 2 uses
+  %27 = extractelement <2 x double> %26, i64 0    ; 2 uses
+  %28 = extractelement <2 x double> %26, i64 1    ; 2 uses
+  %i.af = fcmp oge double %27, %28
+  %i.ag = select i1 %i.af, double %27, double %28
   %i.ah = load double, ptr %5, align 8, !tbaa !20
   %i.ai = fmul double %i.ah, %i.ag
-  %i.aj = fcmp olt double %16, %i.ai
+  %i.aj = fcmp olt double %23, %i.ai
   br i1 %i.aj, label %bb.c, label %.preheader276
 
 .preheader276:                                    ; preds = %.lr.ph317
@@ -95,14 +101,14 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .preheader276.split.us:                           ; preds = %.preheader276
-  %i.ar = fcmp olt double %i.ak, %14
+  %i.ar = fcmp olt double %i.ak, %22
   %i.as = zext i1 %i.ar to i64
   %.not265.us285 = icmp sgt i64 %indvars.iv356, %i.as
   br i1 %.not265.us285, label %.preheader275.split300.us, label %.lr.ph288
 
 .lr.ph288:                                        ; preds = %.preheader276.split.us, %.lr.ph288
   %.0222.us287 = phi double [ %i.au, %.lr.ph288 ], [ 1.000000e+00, %.preheader276.split.us ] ; 2 uses
-  %.0254.us286 = phi double [ %i.at, %.lr.ph288 ], [ %14, %.preheader276.split.us ]
+  %.0254.us286 = phi double [ %i.at, %.lr.ph288 ], [ %22, %.preheader276.split.us ]
   %i.at = tail call double @llvm.fmuladd.f64(double %i.am, double %.0222.us287, double %.0254.us286) ; 3 uses
   %i.au = fmul double %.0222.us287, 2.000000e+00
   %i.av = fcmp olt double %i.ak, %i.at
@@ -133,7 +139,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.i
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %.0254 = phi double [ %i.ds, %bb.f ], [ %14, %.lr.ph.preheader ] ; 8 uses
+  %.0254 = phi double [ %i.ds, %bb.f ], [ %22, %.lr.ph.preheader ] ; 8 uses
   %.0222 = phi double [ %i.dt, %bb.f ], [ 1.000000e+00, %.lr.ph.preheader ] ; 2 uses
   %i.bi = fsub double %i.ak, %.0254               ; 3 uses
   %i.bj = fcmp olt double %i.bi, 0.000000e+00
@@ -242,8 +248,8 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   br label %.lr.ph297
 
 .preheader275.split300.us:                        ; preds = %.lr.ph288, %.preheader276.split.us
-  %.us-phi381 = phi double [ %14, %.preheader276.split.us ], [ %i.at, %.lr.ph288 ] ; 2 uses
-  %i.dk = fcmp olt double %i.ak, %15              ; 2 uses
+  %.us-phi381 = phi double [ %22, %.preheader276.split.us ], [ %i.at, %.lr.ph288 ] ; 2 uses
+  %i.dk = fcmp olt double %i.ak, %21              ; 2 uses
   %spec.select269.us303 = zext i1 %i.dk to i32
   %i.dl = zext i1 %i.dk to i64
   %i.dm = icmp samesign ugt i64 %indvars.iv356, %i.dl
@@ -251,7 +257,7 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
 
 .lr.ph306:                                        ; preds = %.preheader275.split300.us, %.lr.ph306
   %.1223.us305 = phi double [ %i.do, %.lr.ph306 ], [ 1.000000e+00, %.preheader275.split300.us ] ; 2 uses
-  %.0234.us304 = phi double [ %i.dn, %.lr.ph306 ], [ %15, %.preheader275.split300.us ]
+  %.0234.us304 = phi double [ %i.dn, %.lr.ph306 ], [ %21, %.preheader275.split300.us ]
   %i.dn = tail call double @llvm.fmuladd.f64(double %i.ae, double %.1223.us305, double %.0234.us304) ; 3 uses
   %i.do = fmul double %.1223.us305, 2.000000e+00
   %i.dp = fcmp olt double %i.ak, %i.dn            ; 2 uses
@@ -265,7 +271,7 @@ bb.f:                                             ; preds = %._crit_edge
   br label %.lr.ph
 
 .lr.ph297:                                        ; preds = %.lr.ph297.preheader, %bb.h
-  %.0234 = phi double [ %i.fw, %bb.h ], [ %15, %.lr.ph297.preheader ] ; 8 uses
+  %.0234 = phi double [ %i.fw, %bb.h ], [ %21, %.lr.ph297.preheader ] ; 8 uses
   %.1223 = phi double [ %i.fx, %bb.h ], [ 1.000000e+00, %.lr.ph297.preheader ] ; 2 uses
   %i.du = fsub double %i.ak, %.0234               ; 3 uses
   %i.dv = fcmp olt double %i.du, 0.000000e+00
@@ -376,7 +382,7 @@ bb.h:                                             ; preds = %._crit_edge298
 
 .split.us:                                        ; preds = %._crit_edge298, %.split.us.loopexit, %.preheader275.split300.us
   %.us-phi380 = phi double [ %.us-phi381, %.split.us.loopexit ], [ %.us-phi381, %.preheader275.split300.us ], [ %.0254, %._crit_edge298 ]
-  %.us-phi301 = phi double [ %i.dn, %.split.us.loopexit ], [ %15, %.preheader275.split300.us ], [ %.0234, %._crit_edge298 ]
+  %.us-phi301 = phi double [ %i.dn, %.split.us.loopexit ], [ %21, %.preheader275.split300.us ], [ %.0234, %._crit_edge298 ]
   %.us-phi302 = phi i32 [ %spec.select269.us, %.split.us.loopexit ], [ %spec.select269.us303, %.preheader275.split300.us ], [ %spec.select270.lcssa, %._crit_edge298 ]
   %i.fy = add nsw i32 %.0248310, 1
   %i.fz = add nuw nsw i64 %indvars.iv356, 1       ; 2 uses
@@ -392,10 +398,10 @@ bb.i:                                             ; preds = %bb.c, %bb.d, %.spli
   %lftr.wideiv.pre-phi = phi i32 [ %i.bd, %bb.c ], [ %i.bd, %bb.d ], [ %i.gd, %.split.us ]
   %indvars.iv.next357.pre-phi = phi i64 [ %i.bc, %bb.c ], [ %i.bc, %bb.d ], [ %i.fz, %.split.us ]
   %.pre-phi = phi i64 [ %i.ax, %bb.c ], [ %i.ax, %bb.d ], [ %i.ga, %.split.us ]
-  %.1255 = phi double [ %14, %bb.c ], [ %14, %bb.d ], [ %.us-phi380, %.split.us ]
+  %.1255 = phi double [ %22, %bb.c ], [ %22, %bb.d ], [ %.us-phi380, %.split.us ]
   %.1249 = phi i32 [ %.0248310, %bb.c ], [ %.0248310, %bb.d ], [ %i.fy, %.split.us ] ; 2 uses
   %.1245 = phi i32 [ %.0244311, %bb.c ], [ %.0244311, %bb.d ], [ %i.w, %.split.us ]
-  %.1235 = phi double [ %15, %bb.c ], [ %15, %bb.d ], [ %.us-phi301, %.split.us ]
+  %.1235 = phi double [ %21, %bb.c ], [ %21, %bb.d ], [ %.us-phi301, %.split.us ]
   %.2226 = phi i32 [ %.1225, %bb.c ], [ %.1225, %bb.d ], [ %.0224315, %.split.us ] ; 2 uses
   %i.ge = getelementptr [8 x i8], ptr %i.b, i64 %.pre-phi ; 2 uses
   %i.gf = getelementptr i8, ptr %i.ge, i64 -8

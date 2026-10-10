@@ -204,19 +204,18 @@ bb.b:                                             ; preds = %bb.a
 
 .noexc.lr.ph.split.split:                         ; preds = %.noexc.lr.ph.split
   %i.ad = load i32, ptr %10, align 4, !tbaa !16
-  %13 = load i32, ptr %11, align 4, !tbaa !16
-  %14 = insertelement <2 x i32> poison, i32 %13, i64 0
-  %15 = insertelement <2 x i32> %14, i32 %i.ad, i64 1
-  %16 = sitofp <2 x i32> %15 to <2 x float>       ; 2 uses
+  %13 = sitofp fast i32 %i.ad to float
+  %14 = load i32, ptr %11, align 4, !tbaa !16
+  %15 = sitofp fast i32 %14 to float
   %i.ae = load i32, ptr %i.y, align 4, !tbaa !37  ; 2 uses
-  %i.af = icmp sgt i32 %i.ae, 0
-  %i.ag = uitofp nneg i32 %i.ae to float
+  %i.af = icmp sgt i32 %i.ae, 0                   ; 2 uses
+  %i.ag = uitofp nneg i32 %i.ae to float          ; 2 uses
   %i.ah = sext i32 %i.k to i64
   %i.ai = add nsw i32 %i.j, 1
   %wide.trip.count = zext nneg i32 %i.aa to i64
-  %17 = insertelement <2 x i1> poison, i1 %i.af, i64 0
-  %18 = shufflevector <2 x i1> %17, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.aj = insertelement <2 x float> poison, float %i.ag, i64 0
+  %16 = insertelement <2 x float> poison, float %15, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.aj = insertelement <2 x float> poison, float %13, i64 0
   %i.ak = shufflevector <2 x float> %i.aj, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.noexc
 
@@ -229,12 +228,13 @@ bb.b:                                             ; preds = %bb.a
   br label %.preheader147
 
 .preheader147:                                    ; preds = %.noexc, %._crit_edge
-  %.064164 = phi i32 [ 0, %.noexc ], [ %20, %._crit_edge ] ; 2 uses
+  %.064164 = phi i32 [ 0, %.noexc ], [ %18, %._crit_edge ] ; 2 uses
   %.065163 = phi i32 [ 0, %.noexc ], [ %.2.lcssa, %._crit_edge ]
   %.067162 = phi ptr [ %i.am, %.noexc ], [ %i.an, %._crit_edge ] ; 2 uses
-  %19 = uitofp ninf nsz nneg i32 %.064164 to float
-  %20 = add nuw nsw i32 %.064164, 1               ; 3 uses
-  %21 = uitofp ninf nsz nneg i32 %20 to float
+  %18 = add nuw nsw i32 %.064164, 1               ; 3 uses
+  %19 = insertelement <2 x i32> poison, i32 %18, i64 0
+  %20 = insertelement <2 x i32> %19, i32 %.064164, i64 1
+  %21 = uitofp nneg <2 x i32> %20 to <2 x float>
   br label %bb.c
 
 ._crit_edge165:                                   ; preds = %._crit_edge
@@ -245,61 +245,65 @@ bb.b:                                             ; preds = %bb.a
 
 ._crit_edge:                                      ; preds = %._crit_edge155
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %.067162, i64 %i.ac
-  %exitcond180.not = icmp eq i32 %20, %i.w
+  %exitcond180.not = icmp eq i32 %18, %i.w
   br i1 %exitcond180.not, label %._crit_edge165, label %.preheader147, !llvm.loop !76
 
 bb.c:                                             ; preds = %.preheader147, %._crit_edge155
   %indvars.iv176 = phi i64 [ 0, %.preheader147 ], [ %indvars.iv.next177, %._crit_edge155 ] ; 3 uses
   %.166159 = phi i32 [ %.065163, %.preheader147 ], [ %.2.lcssa, %._crit_edge155 ] ; 3 uses
-  %i.ao = load float, ptr %6, align 4, !tbaa !36  ; 2 uses
-  %i.ap = load float, ptr %7, align 4, !tbaa !36  ; 2 uses
-  %i.aq = load float, ptr %8, align 4, !tbaa !36  ; 2 uses
-  %22 = trunc nuw nsw i64 %indvars.iv176 to i32
-  %23 = uitofp ninf nsz nneg i32 %22 to float
-  %24 = load float, ptr %9, align 4, !tbaa !36    ; 2 uses
+  %i.ao = load float, ptr %6, align 4, !tbaa !36
+  %i.ap = load float, ptr %7, align 4, !tbaa !36
+  %i.aq = load float, ptr %8, align 4, !tbaa !36
+  %22 = load float, ptr %9, align 4, !tbaa !36
   %indvars.iv.next177 = add nuw nsw i64 %indvars.iv176, 1 ; 3 uses
-  %25 = trunc nuw nsw i64 %indvars.iv.next177 to i32
-  %26 = uitofp ninf nsz nneg i32 %25 to float
-  %27 = fmul fast float %i.ap, %19
-  %28 = fadd fast float %27, %i.ao
-  %29 = fmul fast float %24, %23
-  %30 = fadd fast float %29, %i.aq
-  %31 = fmul fast float %i.ap, %21
-  %32 = fadd fast float %31, %i.ao
-  %33 = fmul fast float %24, %26
-  %34 = fadd fast float %33, %i.aq
-  %35 = insertelement <2 x float> poison, float %30, i64 0
-  %i.ar = insertelement <2 x float> %35, float %28, i64 1
-  %36 = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.ar, <2 x float> zeroinitializer)
-  %37 = call nnan ninf nsz <2 x float> @llvm.minnum.v2f32(<2 x float> %36, <2 x float> %16) ; 3 uses
-  %i.as = insertelement <2 x float> poison, float %34, i64 0
-  %38 = insertelement <2 x float> %i.as, float %32, i64 1
-  %i.at = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %38, <2 x float> zeroinitializer)
-  %i.au = call nnan ninf nsz <2 x float> @llvm.minnum.v2f32(<2 x float> %i.at, <2 x float> %16) ; 3 uses
-  %39 = fsub fast <2 x float> %i.au, %37
-  %40 = call fast <2 x float> @llvm.ceil.v2f32(<2 x float> %39)
-  %41 = select <2 x i1> %18, <2 x float> %i.ak, <2 x float> %40
-  %42 = fptosi <2 x float> %41 to <2 x i32>       ; 3 uses
-  %43 = fcmp ole <2 x float> %i.au, %37
-  %44 = extractelement <2 x i1> %43, i64 1
-  %45 = fcmp ole <2 x float> %i.au, %37
-  %46 = extractelement <2 x i1> %45, i64 0
-  %47 = select i1 %44, i1 true, i1 %46
-  %48 = extractelement <2 x i32> %42, i64 0       ; 5 uses
-  %49 = extractelement <2 x i32> %42, i64 1       ; 2 uses
-  %50 = mul i32 %48, %49                          ; 2 uses
-  %51 = icmp sgt <2 x i32> %42, zeroinitializer   ; 2 uses
-  %52 = extractelement <2 x i1> %51, i64 0
-  %53 = extractelement <2 x i1> %51, i64 1
-  %or.cond = select i1 %53, i1 %52, i1 false
+  %23 = insertelement <2 x float> poison, float %i.ap, i64 0
+  %24 = shufflevector <2 x float> %23, <2 x float> poison, <2 x i32> zeroinitializer
+  %25 = fmul fast <2 x float> %24, %21
+  %26 = insertelement <2 x float> poison, float %i.ao, i64 0
+  %27 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> zeroinitializer
+  %28 = fadd fast <2 x float> %25, %27
+  %29 = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %28, <2 x float> zeroinitializer)
+  %30 = call nnan ninf nsz <2 x float> @llvm.minnum.v2f32(<2 x float> %29, <2 x float> %i.ak) ; 2 uses
+  %31 = trunc i64 %indvars.iv.next177 to i32
+  %32 = insertelement <2 x i32> poison, i32 %31, i64 0
+  %33 = trunc i64 %indvars.iv176 to i32
+  %34 = insertelement <2 x i32> %32, i32 %33, i64 1
+  %35 = uitofp <2 x i32> %34 to <2 x float>
+  %i.ar = insertelement <2 x float> poison, float %22, i64 0
+  %36 = shufflevector <2 x float> %i.ar, <2 x float> poison, <2 x i32> zeroinitializer
+  %37 = fmul fast <2 x float> %36, %35
+  %i.as = insertelement <2 x float> poison, float %i.aq, i64 0
+  %38 = shufflevector <2 x float> %i.as, <2 x float> poison, <2 x i32> zeroinitializer
+  %39 = fadd fast <2 x float> %37, %38
+  %i.at = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %39, <2 x float> zeroinitializer)
+  %i.au = call nnan ninf nsz <2 x float> @llvm.minnum.v2f32(<2 x float> %i.at, <2 x float> %17) ; 2 uses
+  %40 = extractelement <2 x float> %30, i64 0     ; 2 uses
+  %41 = extractelement <2 x float> %30, i64 1     ; 2 uses
+  %42 = fsub fast float %40, %41
+  %43 = call fast nofpclass(nan inf) float @llvm.ceil.f32(float nofpclass(nan inf) %42)
+  %44 = extractelement <2 x float> %i.au, i64 0   ; 2 uses
+  %45 = extractelement <2 x float> %i.au, i64 1   ; 2 uses
+  %46 = fsub fast float %44, %45
+  %47 = call fast nofpclass(nan inf) float @llvm.ceil.f32(float nofpclass(nan inf) %46)
+  %.in = select i1 %i.af, float %i.ag, float %43
+  %48 = select fast i1 %i.af, float %i.ag, float %47
+  %49 = fptosi float %.in to i32                  ; 3 uses
+  %50 = fptosi float %48 to i32                   ; 6 uses
+  %51 = fcmp fast ole float %40, %41
+  %52 = fcmp fast ole float %44, %45
+  %53 = select i1 %51, i1 true, i1 %52
+  %54 = mul i32 %50, %49                          ; 2 uses
+  %55 = icmp sgt i32 %49, 0
+  %56 = icmp sgt i32 %50, 0
+  %or.cond = select i1 %55, i1 %56, i1 false
   br i1 %or.cond, label %.preheader.lr.ph.split.us, label %._crit_edge155
 
 .preheader.lr.ph.split.us:                        ; preds = %bb.c
   %i.av = load ptr, ptr %12, align 8, !tbaa !40   ; 4 uses
-  %i.aw = zext nneg i32 %48 to i64                ; 6 uses
+  %i.aw = zext nneg i32 %50 to i64                ; 6 uses
   %i.ax = sext i32 %.166159 to i64
-  %min.iters.check = icmp ult i32 %48, 4
-  %min.iters.check193 = icmp ult i32 %48, 16
+  %min.iters.check = icmp ult i32 %50, 4
+  %min.iters.check193 = icmp ult i32 %50, 16
   %i.ay = and i64 %i.aw, 12
   %n.vec = and i64 %i.aw, 2147483632              ; 5 uses
   %i.az = trunc nuw nsw i64 %n.vec to i32
@@ -484,7 +488,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ee = fmul fast <4 x float> %i.ed, %i.dz
   %op.rdx = call fast float @llvm.vector.reduce.fadd.v4f32(float %.1149.us, <4 x float> %i.ee) ; 2 uses
   %i.ef = add nuw nsw i32 %.060150.us, 1          ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ef, %48
+  %exitcond.not = icmp eq i32 %i.ef, %50
   br i1 %exitcond.not, label %._crit_edge.us, label %vec.epilog.scalar.ph, !llvm.loop !79
 
 ._crit_edge.us:                                   ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
@@ -495,15 +499,15 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond175.not, label %._crit_edge155.loopexit, label %iter.check, !llvm.loop !80
 
 ._crit_edge155.loopexit:                          ; preds = %._crit_edge.us
-  %i.ei = add i32 %.166159, %50
+  %i.ei = add i32 %.166159, %54
   br label %._crit_edge155
 
 ._crit_edge155:                                   ; preds = %._crit_edge155.loopexit, %bb.c
   %.2.lcssa = phi i32 [ %.166159, %bb.c ], [ %i.ei, %._crit_edge155.loopexit ] ; 2 uses
   %.062.lcssa = phi float [ 0.000000e+00, %bb.c ], [ %.lcssa, %._crit_edge155.loopexit ]
-  %i.ej = sitofp fast i32 %50 to float
+  %i.ej = sitofp fast i32 %54 to float
   %i.ek = fdiv fast float %.062.lcssa, %i.ej
-  %i.el = select fast i1 %47, float 0.000000e+00, float %i.ek
+  %i.el = select fast i1 %53, float 0.000000e+00, float %i.ek
   %i.em = getelementptr inbounds nuw [4 x i8], ptr %.067162, i64 %indvars.iv176
   store float %i.el, ptr %i.em, align 4, !tbaa !36
   %exitcond179.not = icmp eq i64 %indvars.iv.next177, %wide.trip.count

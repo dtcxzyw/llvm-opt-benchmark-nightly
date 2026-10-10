@@ -204,21 +204,23 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %.018, i64 12
   %i.d = load float, ptr %i.c, align 4, !tbaa !35
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.01516, ptr noundef nonnull align 4 dereferenceable(16) %.018, i64 16, i1 false)
-  %i.e = load float, ptr %i.b, align 8, !tbaa !29 ; 3 uses
+  %i.e = load float, ptr %i.b, align 8, !tbaa !29 ; 2 uses
   %i.f = load float, ptr %.01516, align 4, !tbaa !35
   %i.g = fmul float %i.e, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %.01516, i64 4 ; 2 uses
-  %4 = load float, ptr %i.h, align 4, !tbaa !35
-  %5 = fmul float %i.e, %4
-  %6 = getelementptr inbounds nuw i8, ptr %.01516, i64 8 ; 2 uses
-  %7 = load float, ptr %6, align 4, !tbaa !35
-  %8 = fmul float %i.e, %7
+  %4 = getelementptr inbounds nuw i8, ptr %.01516, i64 8
+  %5 = load <2 x float>, ptr %i.h, align 4, !tbaa !35
+  %6 = insertelement <2 x float> poison, float %i.e, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fmul <2 x float> %7, %5                    ; 2 uses
   %i.i = tail call noundef float @exp2f(float noundef %i.g) #22
   store float %i.i, ptr %.01516, align 4, !tbaa !35
-  %i.j = tail call noundef float @exp2f(float noundef %5) #22
+  %9 = extractelement <2 x float> %8, i64 0
+  %i.j = tail call noundef float @exp2f(float noundef %9) #22
   store float %i.j, ptr %i.h, align 4, !tbaa !35
-  %i.k = tail call noundef float @exp2f(float noundef %8) #22
-  store float %i.k, ptr %6, align 4, !tbaa !35
+  %10 = extractelement <2 x float> %8, i64 1
+  %i.k = tail call noundef float @exp2f(float noundef %10) #22
+  store float %i.k, ptr %4, align 4, !tbaa !35
   %i.l = getelementptr inbounds nuw i8, ptr %.01516, i64 12
   store float %i.d, ptr %i.l, align 4, !tbaa !35
   %i.m = getelementptr inbounds nuw i8, ptr %.018, i64 16

@@ -205,17 +205,18 @@ bb.be:                                            ; preds = %bb.bb
 
 bb.bf:                                            ; preds = %bb.bd, %bb.bc
   %.016.i.i.i.i438 = phi float [ f0x3F7FFFFF, %bb.bd ], [ %i.gw, %bb.bc ]
-  %i.hz = fadd float %.016.i.i.i.i438, 0.000000e+00 ; 3 uses
+  %i.hz = fadd float %.016.i.i.i.i438, 0.000000e+00 ; 2 uses
   %i.ia = load ptr, ptr %3, align 8, !tbaa !43
-  %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 %i.gm ; 3 uses
-  %26 = load float, ptr %i.ib, align 4, !tbaa !75, !alias.scope !768, !noalias !769
-  %27 = fmul float %i.hz, %26
-  %28 = getelementptr inbounds nuw i8, ptr %i.ib, i64 4
-  %29 = load float, ptr %28, align 4, !tbaa !75, !alias.scope !768, !noalias !769
-  %30 = fmul float %i.hz, %29
-  %31 = getelementptr inbounds nuw i8, ptr %i.ib, i64 8
-  call void @_ZN5faiss10cppcontrib18Index2LevelDecoderILl256ELl256ELl16ELl8ELl8EE5accumEPKfS4_PKhfPf(ptr noundef %.1797, ptr noundef %.1, ptr noundef nonnull %31, float noundef %27, ptr noundef %.sroa.0704.0)
-  %i.ic = fadd float %30, 0.000000e+00
+  %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 %i.gm ; 2 uses
+  %26 = load <2 x float>, ptr %i.ib, align 4, !tbaa !75, !alias.scope !768, !noalias !769
+  %27 = insertelement <2 x float> poison, float %i.hz, i64 0
+  %28 = shufflevector <2 x float> %27, <2 x float> poison, <2 x i32> zeroinitializer
+  %29 = fmul <2 x float> %28, %26                 ; 2 uses
+  %30 = getelementptr inbounds nuw i8, ptr %i.ib, i64 8
+  %31 = extractelement <2 x float> %29, i64 0
+  call void @_ZN5faiss10cppcontrib18Index2LevelDecoderILl256ELl256ELl16ELl8ELl8EE5accumEPKfS4_PKhfPf(ptr noundef %.1797, ptr noundef %.1, ptr noundef nonnull %30, float noundef %31, ptr noundef %.sroa.0704.0)
+  %32 = extractelement <2 x float> %29, i64 1
+  %i.ic = fadd float %32, 0.000000e+00
   br i1 %.not.i.i.i.i379, label %.critedge348, label %.lr.ph1136
 
 .lr.ph1136:                                       ; preds = %bb.bf, %bb.bt
@@ -618,17 +619,18 @@ bb.aw:                                            ; preds = %bb.at
 
 bb.ax:                                            ; preds = %bb.av, %bb.au
   %.016.i.i.i.i448 = phi float [ f0x3F7FFFFF, %bb.av ], [ %i.ge, %bb.au ]
-  %i.hh = fadd float %.016.i.i.i.i448, 0.000000e+00 ; 3 uses
+  %i.hh = fadd float %.016.i.i.i.i448, 0.000000e+00 ; 2 uses
   %i.hi = load ptr, ptr %3, align 8, !tbaa !43
-  %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 %i.fu ; 3 uses
-  %26 = load float, ptr %i.hj, align 4, !tbaa !75, !alias.scope !877, !noalias !878
-  %27 = fmul float %i.hh, %26
-  %28 = getelementptr inbounds nuw i8, ptr %i.hj, i64 4
-  %29 = load float, ptr %28, align 4, !tbaa !75, !alias.scope !877, !noalias !878
-  %30 = fmul float %i.hh, %29
-  %31 = getelementptr inbounds nuw i8, ptr %i.hj, i64 8
-  call void @_ZN5faiss10cppcontrib14IndexPQDecoderILl256ELl16ELl8EE5accumEPKfPKhfPf(ptr noundef %i.ay, ptr noundef nonnull %31, float noundef %27, ptr noundef %.sroa.0714.0)
-  %i.hk = fadd float %30, 0.000000e+00
+  %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 %i.fu ; 2 uses
+  %26 = load <2 x float>, ptr %i.hj, align 4, !tbaa !75, !alias.scope !877, !noalias !878
+  %27 = insertelement <2 x float> poison, float %i.hh, i64 0
+  %28 = shufflevector <2 x float> %27, <2 x float> poison, <2 x i32> zeroinitializer
+  %29 = fmul <2 x float> %28, %26                 ; 2 uses
+  %30 = getelementptr inbounds nuw i8, ptr %i.hj, i64 8
+  %31 = extractelement <2 x float> %29, i64 0
+  call void @_ZN5faiss10cppcontrib14IndexPQDecoderILl256ELl16ELl8EE5accumEPKfPKhfPf(ptr noundef %i.ay, ptr noundef nonnull %30, float noundef %31, ptr noundef %.sroa.0714.0)
+  %32 = extractelement <2 x float> %29, i64 1
+  %i.hk = fadd float %32, 0.000000e+00
   br i1 %.not.i.i.i.i389, label %.critedge361, label %.lr.ph1111
 
 .lr.ph1111:                                       ; preds = %bb.ax, %bb.bl

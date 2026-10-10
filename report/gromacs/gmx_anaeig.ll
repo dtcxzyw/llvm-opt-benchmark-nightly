@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.loopexit
   br label %bb.o
 
 bb.o:                                             ; preds = %.loopexit, %bb.n
-  %.6 = phi float [ %i.jf, %bb.n ], [ 0.000000e+00, %.loopexit ] ; 6 uses
+  %.6 = phi float [ %i.jf, %bb.n ], [ 0.000000e+00, %.loopexit ] ; 5 uses
   %i.jg = fpext float %.5 to double
   %i.jh = fsub float %.5, %.6
   %i.ji = fpext float %i.jh to double
@@ -338,20 +338,24 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.mf = fpext float %i.me to double
   %i.mg = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.173, double noundef %i.mf) #23 ; 0 uses
   %fwrite185 = call i64 @fwrite(ptr nonnull @.str.174, i64 34, i64 1, ptr %i.b) ; 0 uses
-  %16 = fdiv float %.6, %.07.i
-  %17 = call noundef float @llvm.ceil.f32(float %16)
-  %18 = fmul float %.07.i, %17
-  %i.mh = fpext float %18 to double
-  %19 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.175, double noundef %i.mh) #23 ; 0 uses
-  %i.mi = fpext float %.07.i190 to double
-  %20 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.176, double noundef %i.mi) #23 ; 0 uses
-  %i.mj = fmul float %.07.i190, 5.000000e-01
+  %16 = insertelement <2 x float> poison, float %.6, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = insertelement <2 x float> poison, float %.07.i, i64 0
+  %19 = insertelement <2 x float> %18, float %.07.i190, i64 1
+  %20 = fdiv <2 x float> %17, %19
+  %i.mh = fpext float %.07.i190 to double
+  %21 = fmul float %.07.i190, 5.000000e-01
+  %i.mi = fpext float %21 to double
+  %22 = call <2 x float> @llvm.ceil.v2f32(<2 x float> %20) ; 2 uses
+  %23 = extractelement <2 x float> %22, i64 0
+  %i.mj = fmul float %.07.i, %23
   %i.mk = fpext float %i.mj to double
-  %i.ml = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.177, double noundef %i.mk) #23 ; 0 uses
+  %24 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.175, double noundef %i.mk) #23 ; 0 uses
+  %i.ml = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.176, double noundef %i.mh) #23 ; 0 uses
+  %25 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.177, double noundef %i.mi) #23 ; 0 uses
   %fwrite186 = call i64 @fwrite(ptr nonnull @.str.178, i64 34, i64 1, ptr %i.b) ; 0 uses
-  %21 = fdiv float %.6, %.07.i190
-  %22 = call noundef float @llvm.ceil.f32(float %21)
-  %i.mm = fmul float %.07.i190, %22
+  %26 = extractelement <2 x float> %22, i64 1
+  %i.mm = fmul float %.07.i190, %26
   %i.mn = fpext float %i.mm to double
   %i.mo = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.b, ptr noundef nonnull @.str.179, double noundef %i.mn) #23 ; 0 uses
   %i.mp = fcmp olt float %.6, 0.000000e+00
@@ -719,6 +723,9 @@ declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.sqrt.v8f32(<8 x float>) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #15
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

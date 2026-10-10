@@ -204,7 +204,7 @@ define dso_local void @_ZN16btRaycastVehicle14updateFrictionEf(ptr nofree nounde
 bb.a:
   %2 = alloca %class.btMatrix3x3, align 4         ; 6 uses
   %3 = alloca %struct.btWheelContactPoint, align 8 ; 12 uses
-  %4 = alloca %class.btVector3, align 8           ; 9 uses
+  %4 = alloca %class.btVector3, align 8           ; 8 uses
   %5 = alloca %class.btVector3, align 8           ; 5 uses
   %6 = alloca %class.btVector3, align 8           ; 5 uses
   %7 = alloca %class.btVector3, align 8           ; 6 uses
@@ -607,7 +607,6 @@ bb.ab:                                            ; preds = %bb.y, %bb.aa, %bb.z
   %i.rr = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.rs = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.rt = getelementptr inbounds nuw i8, ptr %0, i64 180
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %i.ru = getelementptr inbounds nuw i8, ptr %8, i64 8
   br label %bb.ac
 
@@ -705,24 +704,26 @@ bb.af:                                            ; preds = %bb.ae
   %i.uf = load float, ptr %i.ua, align 4, !tbaa !51 ; 2 uses
   %i.ug = load float, ptr %i.uc, align 4, !tbaa !51 ; 2 uses
   %i.uh = load float, ptr %i.ue, align 4, !tbaa !51 ; 2 uses
-  %i.ui = load float, ptr %4, align 8, !tbaa !51  ; 2 uses
-  %i.uj = load float, ptr %9, align 4, !tbaa !51  ; 2 uses
-  %10 = fmul float %i.ug, %i.uj
-  %11 = call float @llvm.fmuladd.f32(float %i.uf, float %i.ui, float %10)
-  %12 = load float, ptr %i.rl, align 8, !tbaa !51 ; 2 uses
-  %13 = call noundef float @llvm.fmuladd.f32(float %i.uh, float %12, float %11)
-  %14 = getelementptr inbounds nuw i8, ptr %i.rw, i64 248
-  %15 = load float, ptr %14, align 8, !tbaa !134
-  %16 = fsub float 1.000000e+00, %15
-  %i.uk = fmul float %13, %16                     ; 3 uses
-  %17 = fmul float %i.uf, %i.uk
-  %18 = fmul float %i.ug, %i.uk
-  %19 = fmul float %i.uh, %i.uk
-  %20 = fsub float %i.ui, %17
-  store float %20, ptr %4, align 8, !tbaa !51
-  %21 = fsub float %i.uj, %18
-  store float %21, ptr %9, align 4, !tbaa !51
-  %i.ul = fsub float %12, %19
+  %i.ui = load float, ptr %i.rl, align 8, !tbaa !51 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.rw, i64 248
+  %i.uj = load float, ptr %9, align 8, !tbaa !134
+  %10 = fsub float 1.000000e+00, %i.uj
+  %11 = load <2 x float>, ptr %4, align 8, !tbaa !51 ; 3 uses
+  %12 = extractelement <2 x float> %11, i64 1
+  %13 = fmul float %i.ug, %12
+  %14 = extractelement <2 x float> %11, i64 0
+  %15 = call float @llvm.fmuladd.f32(float %i.uf, float %14, float %13)
+  %16 = call noundef float @llvm.fmuladd.f32(float %i.uh, float %i.ui, float %15)
+  %i.uk = fmul float %16, %10                     ; 2 uses
+  %17 = insertelement <2 x float> poison, float %i.uf, i64 0
+  %18 = insertelement <2 x float> %17, float %i.ug, i64 1
+  %19 = insertelement <2 x float> poison, float %i.uk, i64 0
+  %20 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> zeroinitializer
+  %21 = fmul <2 x float> %18, %20
+  %22 = fmul float %i.uh, %i.uk
+  %23 = fsub <2 x float> %11, %21
+  store <2 x float> %23, ptr %4, align 8, !tbaa !51
+  %i.ul = fsub float %i.ui, %22
   store float %i.ul, ptr %i.rl, align 8, !tbaa !51
   call void @_ZN11btRigidBody12applyImpulseERK9btVector3S2_(ptr noundef nonnull align 8 dereferenceable(744) %i.tw, ptr noundef nonnull align 4 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(16) %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20

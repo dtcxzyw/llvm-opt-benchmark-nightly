@@ -204,28 +204,27 @@ begin_hunk_0_@_ZN13TestCollision24testAxisAlignedCollisionEv:bb.a
   %i.fz = sitofp nsz i32 %i.fy to float           ; 5 uses
   %i.ga = add nsw i32 %indvars.iv684, -1
   %i.gb = sitofp nsz i32 %i.ga to float           ; 3 uses
-  %i.gc = sitofp i16 %i.fu to double              ; 3 uses
+  %i.gc = sitofp i16 %i.fu to double              ; 5 uses
   %i.gd = fadd nsz float %i.fv, -1.500000e+00     ; 2 uses
   %i.ge = add nsw i32 %indvars.iv684, 2
   %i.gf = sitofp nsz i32 %i.ge to float           ; 11 uses
   %i.gg = add nsw i32 %indvars.iv684, 3
   %i.gh = sitofp nsz i32 %i.gg to float           ; 3 uses
   %i.gi = fadd nsz float %i.fv, 2.500000e+00      ; 2 uses
-  %89 = insertelement <4 x double> poison, double %i.gc, i64 0
-  %90 = shufflevector <4 x double> %89, <4 x double> poison, <4 x i32> zeroinitializer
-  %91 = fadd nsz <4 x double> %90, <double 2.300000e+00, double 4.200000e+00, double 2.290000e+00, double -4.200000e+00> ; 4 uses
-  %92 = extractelement <4 x double> %91, i64 0
-  %i.gj = fptrunc nsz double %92 to float
-  %93 = extractelement <4 x double> %91, i64 1
-  %i.gk = fptrunc nsz double %93 to float         ; 3 uses
-  %94 = extractelement <4 x double> %91, i64 2
-  %95 = fptrunc nsz double %94 to float           ; 2 uses
-  %96 = extractelement <4 x double> %91, i64 3
-  %97 = fptrunc nsz double %96 to float           ; 3 uses
-  %i.gl = fadd nsz double %i.gc, -2.300000e+00
-  %i.gm = fptrunc nsz double %i.gl to float
-  %98 = fadd nsz double %i.gc, -2.290000e+00
-  %99 = fptrunc nsz double %98 to float           ; 2 uses
+  %89 = fadd nsz double %i.gc, 4.200000e+00
+  %90 = fptrunc nsz double %89 to float           ; 3 uses
+  %91 = fadd nsz double %i.gc, 2.290000e+00
+  %i.gj = fptrunc nsz double %91 to float         ; 2 uses
+  %92 = fadd nsz double %i.gc, -4.200000e+00
+  %i.gk = fptrunc nsz double %92 to float         ; 3 uses
+  %93 = insertelement <2 x double> poison, double %i.gc, i64 0
+  %94 = shufflevector <2 x double> %93, <2 x double> poison, <2 x i32> zeroinitializer
+  %95 = fadd nsz <2 x double> %94, <double 2.300000e+00, double -2.300000e+00>
+  %96 = fptrunc <2 x double> %95 to <2 x float>   ; 2 uses
+  %i.gl = fadd nsz double %i.gc, -2.290000e+00
+  %i.gm = fptrunc nsz double %i.gl to float       ; 2 uses
+  %97 = extractelement <2 x float> %96, i64 0
+  %98 = extractelement <2 x float> %96, i64 1
   br label %.preheader
 
 bb.b:                                             ; preds = %bb.c
@@ -237,7 +236,7 @@ bb.b:                                             ; preds = %bb.c
   %i.go = sitofp i16 %i.gn to float               ; 26 uses
   %i.gp = add nsw i32 %indvars.iv680, 1           ; 3 uses
   %i.gq = sitofp nsz i32 %i.gp to float           ; 15 uses
-  %i.gr = sitofp i16 %i.gn to double              ; 6 uses
+  %i.gr = sitofp i16 %i.gn to double              ; 5 uses
   %i.gs = fadd nsz float %i.go, 1.500000e+00
   %i.gt = fadd nsz float %i.go, 2.500000e+00
   %i.gu = fadd nsz float %i.go, -1.500000e+00     ; 4 uses
@@ -249,14 +248,16 @@ bb.b:                                             ; preds = %bb.c
   %i.ha = fptrunc nsz double %i.gz to float       ; 2 uses
   %i.hb = fadd nsz double %i.gr, 4.200000e+00
   %i.hc = fptrunc nsz double %i.hb to float       ; 3 uses
-  %i.hd = fadd nsz double %i.gr, 2.300000e+00
-  %i.he = fptrunc nsz double %i.hd to float
-  %i.hf = fadd nsz double %i.gr, -4.200000e+00
-  %i.hg = fptrunc nsz double %i.hf to float       ; 3 uses
-  %100 = fadd nsz double %i.gr, -2.290000e+00
-  %101 = fptrunc nsz double %100 to float         ; 2 uses
-  %102 = fadd nsz double %i.gr, -2.300000e+00
-  %103 = fptrunc nsz double %102 to float
+  %i.hd = fadd nsz double %i.gr, -4.200000e+00
+  %i.he = fptrunc nsz double %i.hd to float       ; 3 uses
+  %i.hf = fadd nsz double %i.gr, -2.290000e+00
+  %i.hg = fptrunc nsz double %i.hf to float       ; 2 uses
+  %99 = insertelement <2 x double> poison, double %i.gr, i64 0
+  %100 = shufflevector <2 x double> %99, <2 x double> poison, <2 x i32> zeroinitializer
+  %101 = fadd nsz <2 x double> %100, <double 2.300000e+00, double -2.300000e+00>
+  %102 = fptrunc <2 x double> %101 to <2 x float> ; 2 uses
+  %103 = extractelement <2 x float> %102, i64 0
+  %104 = extractelement <2 x float> %102, i64 1
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.d
@@ -659,10 +660,10 @@ bb.ct:                                            ; preds = %bb.co
   %i.on = fptrunc nsz double %i.om to float       ; 2 uses
   %i.oo = fadd nsz double %i.md, 4.200000e+00
   %i.op = fptrunc nsz double %i.oo to float       ; 3 uses
-  store float %i.gj, ptr %54, align 4, !tbaa !62
+  store float %97, ptr %54, align 4, !tbaa !62
   store float %i.ha, ptr %i.dr, align 4, !tbaa !63
   store float %i.on, ptr %i.ds, align 4, !tbaa !64
-  store float %i.gk, ptr %i.dt, align 4, !tbaa !62
+  store float %90, ptr %i.dt, align 4, !tbaa !62
   store float %i.hc, ptr %i.du, align 4, !tbaa !63
   store float %i.op, ptr %i.dv, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #23
@@ -784,10 +785,10 @@ bb.de:                                            ; preds = %bb.cz
   store float %i.gy, ptr %i.dz, align 4, !tbaa !63
   store float %i.ol, ptr %i.ea, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %60) #23
-  store float %95, ptr %60, align 4, !tbaa !62
-  store float %i.he, ptr %i.eb, align 4, !tbaa !63
+  store float %i.gj, ptr %60, align 4, !tbaa !62
+  store float %103, ptr %i.eb, align 4, !tbaa !63
   store float %i.on, ptr %i.ec, align 4, !tbaa !64
-  store float %i.gk, ptr %i.ed, align 4, !tbaa !62
+  store float %90, ptr %i.ed, align 4, !tbaa !62
   store float %i.hc, ptr %i.ee, align 4, !tbaa !63
   store float %i.op, ptr %i.ef, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #23
@@ -911,10 +912,10 @@ bb.dp:                                            ; preds = %bb.dk
   call void @llvm.lifetime.start.p0(ptr nonnull %66) #23
   %i.qk = fadd nsz double %i.md, 2.300000e+00
   %i.ql = fptrunc nsz double %i.qk to float
-  store float %95, ptr %66, align 4, !tbaa !62
+  store float %i.gj, ptr %66, align 4, !tbaa !62
   store float %i.ha, ptr %i.el, align 4, !tbaa !63
   store float %i.ql, ptr %i.em, align 4, !tbaa !64
-  store float %i.gk, ptr %i.en, align 4, !tbaa !62
+  store float %90, ptr %i.en, align 4, !tbaa !62
   store float %i.hc, ptr %i.eo, align 4, !tbaa !63
   store float %i.op, ptr %i.ep, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #23
@@ -1040,11 +1041,11 @@ bb.ea:                                            ; preds = %bb.dv
   %i.rk = fptrunc nsz double %i.rj to float       ; 3 uses
   %i.rl = fadd nsz double %i.md, -2.290000e+00
   %i.rm = fptrunc nsz double %i.rl to float       ; 2 uses
-  store float %97, ptr %72, align 4, !tbaa !62
-  store float %i.hg, ptr %i.ev, align 4, !tbaa !63
+  store float %i.gk, ptr %72, align 4, !tbaa !62
+  store float %i.he, ptr %i.ev, align 4, !tbaa !63
   store float %i.rk, ptr %i.ew, align 4, !tbaa !64
-  store float %i.gm, ptr %i.ex, align 4, !tbaa !62
-  store float %101, ptr %i.ey, align 4, !tbaa !63
+  store float %98, ptr %i.ex, align 4, !tbaa !62
+  store float %i.hg, ptr %i.ey, align 4, !tbaa !63
   store float %i.rm, ptr %i.ez, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #23
   store float 1.710000e+01, ptr %i.n, align 4, !tbaa !28
@@ -1165,11 +1166,11 @@ bb.el:                                            ; preds = %bb.eg
   store float %i.gy, ptr %i.fd, align 4, !tbaa !63
   store float %i.ol, ptr %i.fe, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %78) #23
-  store float %97, ptr %78, align 4, !tbaa !62
-  store float %i.hg, ptr %i.ff, align 4, !tbaa !63
+  store float %i.gk, ptr %78, align 4, !tbaa !62
+  store float %i.he, ptr %i.ff, align 4, !tbaa !63
   store float %i.rk, ptr %i.fg, align 4, !tbaa !64
-  store float %99, ptr %i.fh, align 4, !tbaa !62
-  store float %103, ptr %i.fi, align 4, !tbaa !63
+  store float %i.gm, ptr %i.fh, align 4, !tbaa !62
+  store float %104, ptr %i.fi, align 4, !tbaa !63
   store float %i.rm, ptr %i.fj, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #23
   store float 1.700000e+01, ptr %i.o, align 4, !tbaa !28
@@ -1292,11 +1293,11 @@ bb.ew:                                            ; preds = %bb.er
   call void @llvm.lifetime.start.p0(ptr nonnull %84) #23
   %i.th = fadd nsz double %i.md, -2.300000e+00
   %i.ti = fptrunc nsz double %i.th to float
-  store float %97, ptr %84, align 4, !tbaa !62
-  store float %i.hg, ptr %i.fp, align 4, !tbaa !63
+  store float %i.gk, ptr %84, align 4, !tbaa !62
+  store float %i.he, ptr %i.fp, align 4, !tbaa !63
   store float %i.rk, ptr %i.fq, align 4, !tbaa !64
-  store float %99, ptr %i.fr, align 4, !tbaa !62
-  store float %101, ptr %i.fs, align 4, !tbaa !63
+  store float %i.gm, ptr %i.fr, align 4, !tbaa !62
+  store float %i.hg, ptr %i.fs, align 4, !tbaa !63
   store float %i.ti, ptr %i.ft, align 4, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #23
   store float 1.700000e+01, ptr %i.p, align 4, !tbaa !28

@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.h, %._crit_edge,
 ; Function Attrs: nounwind uwtable
 define range(i32 -9999, 3) i32 @CVode(ptr noundef %0, double noundef %1, ptr noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x double], align 16            ; 8 uses
+  %i.a = alloca [4 x double], align 16            ; 7 uses
   %i.b = alloca [4 x double], align 16            ; 8 uses
   %i.c = alloca [4 x double], align 16            ; 8 uses
   %i.d = alloca [4 x double], align 16            ; 7 uses
@@ -608,7 +608,6 @@ bb.fb:                                            ; preds = %bb.ew, %bb.ez, %bb.
   %gep364.1.2.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 88
   %gep364.2.2.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 120
   %i.wx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.wy = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.wz = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.xa = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -1011,19 +1010,22 @@ bb.nh:                                            ; preds = %bb.ng
   br i1 %i.cdu, label %cvSLdet.exit.thread.i.i, label %bb.ni
 
 bb.ni:                                            ; preds = %bb.nh
-  %i.cdv = load double, ptr %i.wx, align 8, !tbaa !29 ; 2 uses
-  %6 = load double, ptr %5, align 16, !tbaa !29   ; 2 uses
-  %7 = fadd double %i.cdv, %6
-  %8 = load double, ptr %i.wy, align 8, !tbaa !29 ; 2 uses
-  %i.cdw = fadd double %7, %8
-  %i.cdx = fdiv double %i.cdw, 3.000000e+00       ; 4 uses
-  %9 = fsub double %i.cdv, %i.cdx
-  %10 = call double @llvm.fabs.f64(double %9)     ; 2 uses
-  %11 = fsub double %6, %i.cdx
-  %12 = call double @llvm.fabs.f64(double %11)    ; 2 uses
-  %i.cdy = fcmp ogt double %10, %12
-  %i.cdz = select i1 %i.cdy, double %10, double %12 ; 2 uses
-  %i.cea = fsub double %8, %i.cdx
+  %i.cdv = load double, ptr %i.wy, align 8, !tbaa !29 ; 2 uses
+  %5 = load <2 x double>, ptr %i.wx, align 8, !tbaa !29 ; 3 uses
+  %shift = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %5, %shift
+  %6 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.cdw = fadd double %6, %i.cdv
+  %i.cdx = fdiv double %i.cdw, 3.000000e+00       ; 3 uses
+  %7 = insertelement <2 x double> poison, double %i.cdx, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = fsub <2 x double> %5, %8
+  %10 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %9) ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0    ; 2 uses
+  %12 = extractelement <2 x double> %10, i64 1    ; 2 uses
+  %i.cdy = fcmp ogt double %11, %12
+  %i.cdz = select i1 %i.cdy, double %11, double %12 ; 2 uses
+  %i.cea = fsub double %i.cdv, %i.cdx
   %i.ceb = call double @llvm.fabs.f64(double %i.cea) ; 2 uses
   %i.cec = fcmp ogt double %i.cdz, %i.ceb
   %i.ced = select i1 %i.cec, double %i.cdz, double %i.ceb

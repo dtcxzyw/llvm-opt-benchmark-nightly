@@ -204,11 +204,12 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %.lr.ph145, %bb.r
   %indvars.iv = phi i64 [ 0, %.lr.ph145 ], [ %indvars.iv.next, %bb.r ] ; 2 uses
-  %.2143 = phi double [ %i.bu, %.lr.ph145 ], [ %.3, %bb.r ] ; 2 uses
-  %.260142 = phi double [ 0.000000e+00, %.lr.ph145 ], [ %9, %bb.r ] ; 2 uses
+  %.2143 = phi double [ %i.bu, %.lr.ph145 ], [ %.361, %bb.r ] ; 2 uses
+  %.260142 = phi double [ 0.000000e+00, %.lr.ph145 ], [ %19, %bb.r ]
   %.264141 = phi double [ 0.000000e+00, %.lr.ph145 ], [ %.365, %bb.r ] ; 2 uses
   %.269140 = phi double [ 0.000000e+00, %.lr.ph145 ], [ %.370, %bb.r ] ; 3 uses
-  %.274139 = phi double [ 0.000000e+00, %.lr.ph145 ], [ %14, %bb.r ] ; 3 uses
+  %.274139 = phi double [ 0.000000e+00, %.lr.ph145 ], [ %18, %bb.r ] ; 2 uses
+  %7 = phi <2 x double> [ zeroinitializer, %.lr.ph145 ], [ %17, %bb.r ]
   %i.cw = getelementptr inbounds nuw [4 x i8], ptr %.sroa.096.0.lcssa, i64 %indvars.iv
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !117
   %i.cy = sext i32 %i.cx to i64                   ; 3 uses
@@ -217,7 +218,7 @@ bb.p:                                             ; preds = %.lr.ph145, %bb.r
   %i.db = getelementptr inbounds [8 x i8], ptr %2, i64 %i.cy
   %i.dc = load double, ptr %i.db, align 8, !tbaa !88 ; 2 uses
   %i.dd = getelementptr inbounds [4 x i8], ptr %i.bw, i64 %i.cy
-  %i.de = load float, ptr %i.dd, align 4, !tbaa !108 ; 2 uses
+  %i.de = load float, ptr %i.dd, align 4, !tbaa !108
   %i.df = fcmp une double %i.dc, %.2143
   br i1 %i.df, label %bb.q, label %bb.r
 
@@ -228,30 +229,32 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %.375 = phi double [ 0.000000e+00, %bb.q ], [ %.274139, %bb.p ]
   %.370 = phi double [ %i.di, %bb.q ], [ %.269140, %bb.p ] ; 2 uses
   %.365 = phi double [ %i.dh, %bb.q ], [ %.264141, %bb.p ] ; 2 uses
-  %.361 = phi double [ 0.000000e+00, %bb.q ], [ %.260142, %bb.p ]
-  %.3 = phi double [ %i.dc, %bb.q ], [ %.2143, %bb.p ]
+  %.361 = phi double [ %i.dc, %bb.q ], [ %.2143, %bb.p ]
+  %8 = phi <2 x double> [ zeroinitializer, %bb.q ], [ %7, %bb.p ]
   %i.dj = fcmp ole float %i.da, 0.000000e+00
-  %i.dk = uitofp i1 %i.dj to float
-  %7 = fmul float %i.de, %i.dk
-  %8 = fpext float %7 to double
-  %9 = fadd double %.361, %8                      ; 2 uses
-  %10 = fcmp ogt float %i.da, 0.000000e+00
-  %11 = uitofp i1 %10 to float
-  %12 = fmul float %i.de, %11
-  %13 = fpext float %12 to double
-  %14 = fadd double %.375, %13                    ; 2 uses
+  %9 = fcmp ogt float %i.da, 0.000000e+00
+  %10 = uitofp i1 %i.dj to float
+  %i.dk = uitofp i1 %9 to float
+  %11 = insertelement <2 x float> poison, float %i.de, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = insertelement <2 x float> poison, float %10, i64 0
+  %14 = insertelement <2 x float> %13, float %i.dk, i64 1
+  %15 = fmul <2 x float> %12, %14
+  %16 = fpext <2 x float> %15 to <2 x double>
+  %17 = fadd <2 x double> %8, %16                 ; 3 uses
+  %18 = extractelement <2 x double> %17, i64 1    ; 2 uses
+  %19 = extractelement <2 x double> %17, i64 0    ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.p, !llvm.loop !331
 
 .loopexit:                                        ; preds = %bb.r, %bb.o, %.preheader116, %.preheader
-  %.476 = phi double [ %i.cv, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader116 ], [ %14, %bb.r ] ; 2 uses
+  %.476 = phi double [ %i.cv, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader116 ], [ %18, %bb.r ] ; 2 uses
   %.471 = phi double [ %.168, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader116 ], [ %.370, %bb.r ] ; 2 uses
   %.466 = phi double [ %.163, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader116 ], [ %.365, %bb.r ]
-  %.4 = phi double [ %i.cs, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader116 ], [ %9, %bb.r ]
+  %.4 = phi double [ %i.cs, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader116 ], [ %19, %bb.r ]
   %i.dl = call double @llvm.fmuladd.f64(double %.476, double 5.000000e-01, double %.471)
   %i.dm = call double @llvm.fmuladd.f64(double %.4, double %i.dl, double %.466)
   %i.dn = fadd double %.476, %.471                ; 4 uses
@@ -654,12 +657,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %.lr.ph161, %bb.r
   %indvars.iv = phi i64 [ 0, %.lr.ph161 ], [ %indvars.iv.next, %bb.r ] ; 2 uses
-  %.2159 = phi double [ %i.bu, %.lr.ph161 ], [ %.3, %bb.r ] ; 2 uses
-  %.271158 = phi double [ 0.000000e+00, %.lr.ph161 ], [ %9, %bb.r ] ; 2 uses
+  %.2159 = phi double [ %i.bu, %.lr.ph161 ], [ %.372, %bb.r ] ; 2 uses
+  %.271158 = phi double [ 0.000000e+00, %.lr.ph161 ], [ %19, %bb.r ]
   %.275157 = phi double [ 0.000000e+00, %.lr.ph161 ], [ %.376, %bb.r ] ; 2 uses
   %.280156 = phi double [ 0.000000e+00, %.lr.ph161 ], [ %.381, %bb.r ] ; 2 uses
   %.285155 = phi double [ 0.000000e+00, %.lr.ph161 ], [ %.386, %bb.r ] ; 2 uses
-  %.290154 = phi double [ 0.000000e+00, %.lr.ph161 ], [ %14, %bb.r ] ; 4 uses
+  %.290154 = phi double [ 0.000000e+00, %.lr.ph161 ], [ %18, %bb.r ] ; 3 uses
+  %7 = phi <2 x double> [ zeroinitializer, %.lr.ph161 ], [ %17, %bb.r ]
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0111.0.lcssa, i64 %indvars.iv
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !117
   %i.da = sext i32 %i.cz to i64                   ; 3 uses
@@ -668,7 +672,7 @@ bb.p:                                             ; preds = %.lr.ph161, %bb.r
   %i.dd = getelementptr inbounds [8 x i8], ptr %2, i64 %i.da
   %i.de = load double, ptr %i.dd, align 8, !tbaa !88 ; 2 uses
   %i.df = getelementptr inbounds [4 x i8], ptr %i.bw, i64 %i.da
-  %i.dg = load float, ptr %i.df, align 4, !tbaa !108 ; 2 uses
+  %i.dg = load float, ptr %i.df, align 4, !tbaa !108
   %i.dh = fcmp une double %i.de, %.2159
   br i1 %i.dh, label %bb.q, label %bb.r
 
@@ -681,32 +685,34 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %.391 = phi double [ 0.000000e+00, %bb.q ], [ %.290154, %bb.p ]
   %.386 = phi double [ %i.di, %bb.q ], [ %.285155, %bb.p ] ; 2 uses
   %.381 = phi double [ %i.dk, %bb.q ], [ %.280156, %bb.p ] ; 2 uses
   %.376 = phi double [ %i.dm, %bb.q ], [ %.275157, %bb.p ] ; 2 uses
-  %.372 = phi double [ 0.000000e+00, %bb.q ], [ %.271158, %bb.p ]
-  %.3 = phi double [ %i.de, %bb.q ], [ %.2159, %bb.p ]
+  %.372 = phi double [ %i.de, %bb.q ], [ %.2159, %bb.p ]
+  %8 = phi <2 x double> [ zeroinitializer, %bb.q ], [ %7, %bb.p ]
   %i.dn = fcmp ole float %i.dc, 0.000000e+00
-  %i.do = uitofp i1 %i.dn to float
-  %7 = fmul float %i.dg, %i.do
-  %8 = fpext float %7 to double
-  %9 = fadd double %.372, %8                      ; 2 uses
-  %10 = fcmp ogt float %i.dc, 0.000000e+00
-  %11 = uitofp i1 %10 to float
-  %12 = fmul float %i.dg, %11
-  %13 = fpext float %12 to double
-  %14 = fadd double %.391, %13                    ; 2 uses
+  %9 = fcmp ogt float %i.dc, 0.000000e+00
+  %10 = uitofp i1 %i.dn to float
+  %i.do = uitofp i1 %9 to float
+  %11 = insertelement <2 x float> poison, float %i.dg, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = insertelement <2 x float> poison, float %10, i64 0
+  %14 = insertelement <2 x float> %13, float %i.do, i64 1
+  %15 = fmul <2 x float> %12, %14
+  %16 = fpext <2 x float> %15 to <2 x double>
+  %17 = fadd <2 x double> %8, %16                 ; 3 uses
+  %18 = extractelement <2 x double> %17, i64 1    ; 2 uses
+  %19 = extractelement <2 x double> %17, i64 0    ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.p, !llvm.loop !360
 
 .loopexit:                                        ; preds = %bb.r, %bb.o, %.preheader131, %.preheader
-  %.492 = phi double [ %i.cx, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader131 ], [ %14, %bb.r ] ; 3 uses
+  %.492 = phi double [ %i.cx, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader131 ], [ %18, %bb.r ] ; 3 uses
   %.487 = phi double [ %.184, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader131 ], [ %.386, %bb.r ]
   %.482 = phi double [ %.179, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader131 ], [ %.381, %bb.r ]
   %.477 = phi double [ %.174, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader131 ], [ %.376, %bb.r ]
-  %.4 = phi double [ %i.cu, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader131 ], [ %9, %bb.r ]
+  %.4 = phi double [ %i.cu, %bb.o ], [ 0.000000e+00, %.preheader ], [ 0.000000e+00, %.preheader131 ], [ %19, %bb.r ]
   %i.dp = fadd double %.492, %.487                ; 4 uses
   %i.dq = fadd double %.492, %.4
   %i.dr = fadd double %.482, %i.dq

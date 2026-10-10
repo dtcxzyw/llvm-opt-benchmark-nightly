@@ -205,7 +205,7 @@ _ZN2cv7barcode12_GLOBAL__N_18NMSBoxesERKSt6vectorINS_11RotatedRectESaIS3_EERKS2_
 .lr.ph:                                           ; preds = %_ZN2cv7barcode12_GLOBAL__N_18NMSBoxesERKSt6vectorINS_11RotatedRectESaIS3_EERKS2_IfSaIfEEffRS2_IiSaIiEEfi.exit
   %i.in = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.io = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
-  %i.ip = getelementptr inbounds nuw i8, ptr %8, i64 12 ; 3 uses
+  %i.ip = getelementptr inbounds nuw i8, ptr %8, i64 12 ; 2 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.ir = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 3 uses
   %i.is = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -260,16 +260,18 @@ bb.ax:                                            ; preds = %bb.av
   %i.ju = fmul <2 x double> %i.jt, %i.jr
   %i.jv = fptrunc <2 x double> %i.ju to <2 x float>
   store <2 x float> %i.jv, ptr %8, align 8, !tbaa !71
-  %i.jw = fptrunc double %i.jp to float           ; 2 uses
-  %11 = load float, ptr %i.ip, align 4, !tbaa !184
-  %12 = fmul float %11, %i.jw
-  store float %12, ptr %i.ip, align 4, !tbaa !184
-  %13 = load float, ptr %i.io, align 8, !tbaa !185
-  %14 = fmul float %13, %i.jw
+  %i.jw = fptrunc double %i.jp to float
+  %11 = load <2 x float>, ptr %i.io, align 8, !tbaa !71
+  %12 = insertelement <2 x float> poison, float %i.jw, i64 0
+  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
+  %14 = fmul <2 x float> %11, %13                 ; 2 uses
+  %15 = extractelement <2 x float> %14, i64 1
+  store float %15, ptr %i.ip, align 4, !tbaa !184
+  %16 = extractelement <2 x float> %14, i64 0
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.aw, %bb.ax
-  %.sink = phi float [ %14, %bb.ax ], [ %i.jo, %bb.aw ]
+  %.sink = phi float [ %16, %bb.ax ], [ %i.jo, %bb.aw ]
   store float %.sink, ptr %i.io, align 8, !tbaa !185
   br label %bb.ay
 

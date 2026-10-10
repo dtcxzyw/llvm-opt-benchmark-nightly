@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN3jxl6N_
   %.022 = phi i64 [ %i.b, %.lr.ph ], [ %i.go, %_ZN3jxl6N_SSE212_GLOBAL__N_111DrawSegmentERKNS_13SplineSegmentEbmmmPrPf.exit ] ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.022
   %i.h = load i64, ptr %i.g, align 8, !tbaa !29
-  %i.i = getelementptr inbounds nuw [32 x i8], ptr %7, i64 %i.h ; 12 uses
+  %i.i = getelementptr inbounds nuw [32 x i8], ptr %7, i64 %i.h ; 11 uses
   %i.j = load float, ptr %i.i, align 4, !tbaa !120
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
   %i.l = load float, ptr %i.k, align 4, !tbaa !121
@@ -271,7 +271,6 @@ bb.c:                                             ; preds = %bb.b
   %i.ax = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %i.i, i64 20
   %i.az = getelementptr inbounds nuw i8, ptr %i.i, i64 24 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.i, i64 28 ; 2 uses
   %i.ba = load float, ptr %i.aw, align 4, !tbaa !122 ; 2 uses
   %i.bb = load float, ptr %i.ax, align 4, !tbaa !123
   %i.bc = load <4 x float>, ptr %i.i, align 4     ; 2 uses
@@ -414,7 +413,7 @@ bb.d:                                             ; preds = %_ZN3jxl6N_SSE212_GL
   %i.fw = fsub <4 x float> %i.fq, %i.fv           ; 2 uses
   %foldExtExtBinop43 = fmul <4 x float> %i.fw, %i.fw
   %i.fx = extractelement <4 x float> %foldExtExtBinop43, i64 0
-  %i.fy = fmul float %i.bb, %i.fx                 ; 5 uses
+  %i.fy = fmul float %i.bb, %i.fx                 ; 3 uses
   %i.fz = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.147.i ; 3 uses
   %i.ga = load float, ptr %i.fz, align 1, !tbaa !50, !alias.scope !472 ; 2 uses
   %i.gb = fmul float %i.bk, %i.fy                 ; 2 uses
@@ -425,29 +424,33 @@ bb.d:                                             ; preds = %_ZN3jxl6N_SSE212_GL
 .split.preheader.i34.i:                           ; preds = %bb.d
   %i.ge = fsub float %i.ga, %i.gb
   store float %i.ge, ptr %i.fz, align 1, !tbaa !50, !alias.scope !473
-  %i.gf = load float, ptr %i.az, align 4, !tbaa !27
-  %i.gg = load float, ptr %i.gc, align 1, !tbaa !50, !alias.scope !472
-  %11 = fmul float %i.fy, %i.gf
-  %12 = fsub float %i.gg, %11
-  store float %12, ptr %i.gc, align 1, !tbaa !50, !alias.scope !473
-  %13 = load float, ptr %10, align 4, !tbaa !27
-  %14 = load float, ptr %i.gd, align 1, !tbaa !50, !alias.scope !472
-  %15 = fmul float %i.fy, %13
-  %i.gh = fsub float %14, %15
+  %i.gf = load float, ptr %i.gc, align 1, !tbaa !50, !alias.scope !472
+  %i.gg = load float, ptr %i.gd, align 1, !tbaa !50, !alias.scope !472
+  %10 = load <2 x float>, ptr %i.az, align 4, !tbaa !27
+  %11 = insertelement <2 x float> poison, float %i.fy, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = fmul <2 x float> %12, %10                 ; 2 uses
+  %14 = extractelement <2 x float> %13, i64 0
+  %15 = fsub float %i.gf, %14
+  store float %15, ptr %i.gc, align 1, !tbaa !50, !alias.scope !473
+  %16 = extractelement <2 x float> %13, i64 1
+  %i.gh = fsub float %i.gg, %16
   br label %_ZN3jxl6N_SSE212_GLOBAL__N_111DrawSegmentIN3hwy6N_SSE24SimdIfLm1ELi0EEEEEvT_RKNS_13SplineSegmentEbmmmPrPf.exit.i
 
 .split.us.preheader.i35.i:                        ; preds = %bb.d
   %i.gi = fadd float %i.ga, %i.gb
   store float %i.gi, ptr %i.fz, align 1, !tbaa !50, !alias.scope !473
-  %i.gj = load float, ptr %i.az, align 4, !tbaa !27
-  %i.gk = load float, ptr %i.gc, align 1, !tbaa !50, !alias.scope !472
-  %16 = fmul float %i.fy, %i.gj
-  %17 = fadd float %16, %i.gk
-  store float %17, ptr %i.gc, align 1, !tbaa !50, !alias.scope !473
-  %18 = load float, ptr %10, align 4, !tbaa !27
-  %19 = load float, ptr %i.gd, align 1, !tbaa !50, !alias.scope !472
-  %20 = fmul float %i.fy, %18
-  %i.gl = fadd float %20, %19
+  %i.gj = load float, ptr %i.gc, align 1, !tbaa !50, !alias.scope !472
+  %i.gk = load float, ptr %i.gd, align 1, !tbaa !50, !alias.scope !472
+  %17 = load <2 x float>, ptr %i.az, align 4, !tbaa !27
+  %18 = insertelement <2 x float> poison, float %i.fy, i64 0
+  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
+  %20 = fmul <2 x float> %19, %17                 ; 2 uses
+  %21 = extractelement <2 x float> %20, i64 0
+  %22 = fadd float %21, %i.gj
+  store float %22, ptr %i.gc, align 1, !tbaa !50, !alias.scope !473
+  %23 = extractelement <2 x float> %20, i64 1
+  %i.gl = fadd float %23, %i.gk
   br label %_ZN3jxl6N_SSE212_GLOBAL__N_111DrawSegmentIN3hwy6N_SSE24SimdIfLm1ELi0EEEEEvT_RKNS_13SplineSegmentEbmmmPrPf.exit.i
 
 _ZN3jxl6N_SSE212_GLOBAL__N_111DrawSegmentIN3hwy6N_SSE24SimdIfLm1ELi0EEEEEvT_RKNS_13SplineSegmentEbmmmPrPf.exit.i: ; preds = %.split.us.preheader.i35.i, %.split.preheader.i34.i

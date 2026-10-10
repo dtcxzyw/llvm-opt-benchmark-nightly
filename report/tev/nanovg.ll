@@ -205,19 +205,21 @@ bb.aw:                                            ; preds = %.lr.ph525
   %i.nr = shufflevector <2 x float> %i.nf, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.ns = shufflevector <4 x float> %i.no, <4 x float> %i.nr, <4 x i32> <i32 0, i32 1, i32 5, i32 4>
   %i.nt = select <4 x i1> %i.np, <4 x float> %i.nq, <4 x float> %i.ns ; 2 uses
-  %10 = insertelement <4 x float> poison, float %.0432524, i64 0
-  %11 = shufflevector <4 x float> %10, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %12 = fsub <4 x float> %i.nt, %11               ; 2 uses
-  %13 = fadd <4 x float> %i.nt, %11               ; 2 uses
-  %i.nu = extractelement <4 x float> %12, i64 3
+  %10 = shufflevector <4 x float> %i.nt, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  %11 = insertelement <2 x float> poison, float %.0432524, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %13 = fsub <2 x float> %10, %12                 ; 2 uses
+  %i.nu = extractelement <2 x float> %13, i64 1
   %i.nv = fcmp ogt float %i.es, %i.nu
-  %i.nw = extractelement <4 x float> %13, i64 1
-  %14 = fcmp olt float %i.es, %i.nw
-  %or.cond481 = select i1 %i.nv, i1 %14, i1 false
-  %i.nx = extractelement <4 x float> %12, i64 2
-  %15 = fcmp ogt float %i.ei, %i.nx
-  %or.cond483 = select i1 %or.cond481, i1 %15, i1 false
-  %i.ny = extractelement <4 x float> %13, i64 0
+  %i.nw = extractelement <2 x float> %13, i64 0
+  %14 = fcmp ogt float %i.ei, %i.nw
+  %15 = shufflevector <4 x float> %i.nt, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %16 = fadd <2 x float> %12, %15                 ; 2 uses
+  %i.nx = extractelement <2 x float> %16, i64 1
+  %17 = fcmp olt float %i.es, %i.nx
+  %or.cond481 = select i1 %i.nv, i1 %17, i1 false
+  %or.cond483 = select i1 %or.cond481, i1 %14, i1 false
+  %i.ny = extractelement <2 x float> %16, i64 0
   %i.nz = fcmp olt float %i.ei, %i.ny
   %or.cond485 = select i1 %or.cond483, i1 %i.nz, i1 false
   br i1 %or.cond485, label %bb.ax, label %.thread
@@ -620,54 +622,55 @@ bb.b:                                             ; preds = %.lr.ph7, %._crit_ed
   %i.t = getelementptr [32 x i8], ptr %i.r, i64 %i.s ; 3 uses
   %i.u = getelementptr i8, ptr %i.t, i64 -32
   %.phi.trans.insert = getelementptr i8, ptr %i.t, i64 -20
-  %.pre = load float, ptr %.phi.trans.insert, align 4, !tbaa !280
   %.phi.trans.insert11 = getelementptr i8, ptr %i.t, i64 -24
+  %.pre = load float, ptr %.phi.trans.insert, align 4, !tbaa !280
   %.pre12 = load float, ptr %.phi.trans.insert11, align 4, !tbaa !279
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
   %i.v = phi i32 [ %i.bk, %bb.k ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %i.w = phi float [ %i.aa, %bb.k ], [ %.pre12, %.lr.ph.preheader ] ; 2 uses
-  %i.x = phi float [ %3, %bb.k ], [ %.pre, %.lr.ph.preheader ] ; 2 uses
+  %i.w = phi float [ %4, %bb.k ], [ %.pre12, %.lr.ph.preheader ] ; 2 uses
+  %i.x = phi float [ %i.aa, %bb.k ], [ %.pre, %.lr.ph.preheader ] ; 2 uses
   %.04 = phi i32 [ %.1, %bb.k ], [ 0, %.lr.ph.preheader ]
-  %.0693 = phi ptr [ %i.bl, %bb.k ], [ %i.r, %.lr.ph.preheader ] ; 8 uses
+  %.0693 = phi ptr [ %i.bl, %bb.k ], [ %i.r, %.lr.ph.preheader ] ; 7 uses
   %.0702 = phi ptr [ %.0693, %bb.k ], [ %i.u, %.lr.ph.preheader ]
   %.0721 = phi i32 [ %i.bm, %bb.k ], [ 0, %.lr.ph.preheader ]
   %i.y = getelementptr inbounds nuw i8, ptr %.0693, i64 12
-  %3 = load float, ptr %i.y, align 4, !tbaa !280  ; 3 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %.0693, i64 8
-  %i.aa = load float, ptr %i.z, align 4, !tbaa !279 ; 3 uses
-  %4 = fneg float %i.aa
-  %5 = fadd float %i.x, %3
-  %6 = fmul float %5, 5.000000e-01                ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.0693, i64 20 ; 2 uses
-  store float %6, ptr %7, align 4, !tbaa !535
-  %8 = fsub float %4, %i.w
-  %9 = fmul float %8, 5.000000e-01                ; 4 uses
-  %10 = getelementptr inbounds nuw i8, ptr %.0693, i64 24 ; 2 uses
-  store float %9, ptr %10, align 4, !tbaa !536
-  %11 = fmul float %9, %9
-  %i.ab = tail call float @llvm.fmuladd.f32(float %6, float %6, float %11) ; 4 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.0693, i64 8
+  %i.z = getelementptr inbounds nuw i8, ptr %.0693, i64 20
+  %i.aa = load float, ptr %i.y, align 4, !tbaa !280 ; 3 uses
+  %4 = load float, ptr %3, align 4, !tbaa !279    ; 3 uses
+  %5 = fneg float %4
+  %6 = fadd float %i.x, %i.aa
+  %7 = fsub float %5, %i.w
+  %8 = insertelement <2 x float> poison, float %6, i64 0
+  %9 = insertelement <2 x float> %8, float %7, i64 1
+  %10 = fmul <2 x float> %9, splat (float 5.000000e-01) ; 5 uses
+  %11 = extractelement <2 x float> %10, i64 0     ; 2 uses
+  %foldExtExtBinop = fmul <2 x float> %10, %10
+  %12 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %i.ab = tail call float @llvm.fmuladd.f32(float %11, float %11, float %12) ; 4 uses
   %i.ac = fcmp ogt float %i.ab, f0x358637BD
   br i1 %i.ac, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
   %i.ad = fdiv float 1.000000e+00, %i.ab          ; 2 uses
   %i.ae = fcmp ogt float %i.ad, 6.000000e+02
-  %spec.store.select = select i1 %i.ae, float 6.000000e+02, float %i.ad ; 2 uses
-  %12 = fmul float %6, %spec.store.select
-  store float %12, ptr %7, align 4, !tbaa !535
-  %13 = fmul float %9, %spec.store.select
-  store float %13, ptr %10, align 4, !tbaa !536
+  %spec.store.select = select i1 %i.ae, float 6.000000e+02, float %i.ad
+  %13 = insertelement <2 x float> poison, float %spec.store.select, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %15 = fmul <2 x float> %10, %14
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph
+  %storemerge17 = phi <2 x float> [ %15, %bb.c ], [ %10, %.lr.ph ]
+  store <2 x float> %storemerge17, ptr %i.z, align 4, !tbaa !81
   %i.af = getelementptr inbounds nuw i8, ptr %.0693, i64 28 ; 4 uses
   %i.ag = load i8, ptr %i.af, align 4, !tbaa !276
   %i.ah = and i8 %i.ag, 1                         ; 2 uses
-  %i.ai = fneg float %3
+  %i.ai = fneg float %i.aa
   %i.aj = fmul float %i.w, %i.ai
-  %i.ak = tail call float @llvm.fmuladd.f32(float %i.aa, float %i.x, float %i.aj)
+  %i.ak = tail call float @llvm.fmuladd.f32(float %4, float %i.x, float %i.aj)
   %i.al = fcmp ogt float %i.ak, 0.000000e+00      ; 2 uses
   %i.am = or disjoint i8 %i.ah, 2
   %storemerge = select i1 %i.al, i8 %i.am, i8 %i.ah ; 3 uses
@@ -1070,6 +1073,4 @@ begin_hunk_2_@llvm.sqrt.v2f64
 !532 = distinct !{!532, !39}
 !533 = distinct !{!533, !39}
 !534 = distinct !{!534, !39}
-!535 = !{!268, !48, i64 20}
-!536 = !{!268, !48, i64 24}
 end_hunk_2

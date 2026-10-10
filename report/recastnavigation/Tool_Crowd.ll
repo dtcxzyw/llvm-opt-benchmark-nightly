@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN14CrowdToolState13setMoveTargetEPKfb(ptr noundef nonnull align 8 dereferenceable(98989) %0, ptr noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [3 x float], align 4              ; 10 uses
+  %i.a = alloca [3 x float], align 8              ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !39   ; 3 uses
   %.not = icmp eq ptr %i.c, null
@@ -228,7 +228,6 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %.lr.ph52, label %.loopexit
 
 .lr.ph52:                                         ; preds = %.preheader
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %bb.g
@@ -266,11 +265,11 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = fmul float %i.ae, 0.000000e+00
   %i.ah = fmul float %i.z, %i.ae
   %i.ai = fmul float %i.q, %i.af
-  store float %i.ai, ptr %i.a, align 4, !tbaa !71
+  store float %i.ai, ptr %i.a, align 8, !tbaa !71
   %i.aj = fmul float %i.q, %i.ag
   store float %i.aj, ptr %i.u, align 4, !tbaa !71
   %i.ak = fmul float %i.q, %i.ah
-  store float %i.ak, ptr %i.aa, align 4, !tbaa !71
+  store float %i.ak, ptr %i.aa, align 8, !tbaa !71
   %i.al = load i32, ptr %i.f, align 8, !tbaa !37
   %i.am = call noundef zeroext i1 @_ZN7dtCrowd19requestMoveVelocityEiPKf(ptr noundef nonnull align 8 dereferenceable(5072) %i.e, i32 noundef %i.al, ptr noundef nonnull %i.a) #15 ; 0 uses
   br label %.loopexit
@@ -285,7 +284,7 @@ bb.g:                                             ; preds = %.lr.ph52, %bb.i
 bb.h:                                             ; preds = %bb.g
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 416
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 492
-  %i.as = load float, ptr %i.ar, align 4, !tbaa !93 ; 3 uses
+  %i.as = load float, ptr %i.ar, align 4, !tbaa !93 ; 2 uses
   %i.at = load float, ptr %1, align 4, !tbaa !71
   %i.au = load float, ptr %i.aq, align 8, !tbaa !71
   %i.av = fsub float %i.at, %i.au                 ; 3 uses
@@ -297,16 +296,18 @@ bb.h:                                             ; preds = %bb.g
   %i.bb = fmul float %i.az, %i.az
   %i.bc = fadd float %i.ba, %i.bb
   %sqrt.i.i47 = call float @llvm.sqrt.f32(float %i.bc)
-  %i.bd = fdiv float 1.000000e+00, %sqrt.i.i47    ; 3 uses
-  %i.be = fmul float %i.av, %i.bd
-  %4 = fmul float %i.bd, 0.000000e+00
-  %5 = fmul float %i.az, %i.bd
-  %6 = fmul float %i.as, %i.be
-  store float %6, ptr %i.a, align 4, !tbaa !71
-  %7 = fmul float %i.as, %4
-  store float %7, ptr %3, align 4, !tbaa !71
-  %i.bf = fmul float %i.as, %5
-  store float %i.bf, ptr %i.k, align 4, !tbaa !71
+  %i.bd = fdiv float 1.000000e+00, %sqrt.i.i47    ; 2 uses
+  %i.be = fmul float %i.az, %i.bd
+  %3 = insertelement <2 x float> poison, float %i.bd, i64 0
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.av, i64 0
+  %6 = fmul <2 x float> %4, %5
+  %7 = insertelement <2 x float> poison, float %i.as, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = fmul <2 x float> %8, %6
+  store <2 x float> %9, ptr %i.a, align 8, !tbaa !71
+  %i.bf = fmul float %i.as, %i.be
+  store float %i.bf, ptr %i.k, align 8, !tbaa !71
   %i.bg = call noundef zeroext i1 @_ZN7dtCrowd19requestMoveVelocityEiPKf(ptr noundef nonnull align 8 dereferenceable(5072) %i.e, i32 noundef %.03751, ptr noundef nonnull %i.a) #15 ; 0 uses
   br label %bb.i
 

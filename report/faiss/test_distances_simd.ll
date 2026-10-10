@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit147.thread
 
 _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit106:            ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i, %.noexc105
-  %.065.lcssa641 = phi float [ %i.ae, %.noexc105 ], [ 0.000000e+00, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 14 uses
+  %.065.lcssa641 = phi float [ %i.ae, %.noexc105 ], [ 0.000000e+00, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 13 uses
   %.sroa.16191.0592640 = phi ptr [ %i.j, %.noexc105 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %.sroa.0182.0610639 = phi ptr [ %i.i, %.noexc105 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 60 uses
   %i.ah = phi i64 [ %i.o, %.noexc105 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
@@ -213,7 +213,7 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit106:            ; preds = %_ZNSt6vectorIfSaIfE
   %.sroa.16.0 = phi i64 [ %i.aa, %.noexc105 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %.0.i.i.i.i.i102 = phi i64 [ %i.z, %.noexc105 ], [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
   %i.ai = invoke noalias noundef nonnull dereferenceable(44) ptr @_Znwm(i64 noundef 44) #19
-          to label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader unwind label %bb.e ; 30 uses
+          to label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader unwind label %bb.e ; 29 uses
 
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKS0_.exit106
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %i.ai, i8 0, i64 44, i1 false), !tbaa !20
@@ -235,11 +235,12 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.9.thread: ; preds = %.lr.ph.i.i.i.i.i.i
   %i.ao = shufflevector <8 x float> %i.an, <8 x float> poison, <8 x i32> zeroinitializer
   %i.ap = fadd <8 x float> %i.ao, %i.am
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
-  %6 = load float, ptr %i.aq, align 4, !tbaa !20
-  %7 = fadd float %.065.lcssa641, %6
-  %8 = getelementptr inbounds nuw i8, ptr %i.ai, i64 36
-  %9 = load float, ptr %8, align 4, !tbaa !20
-  %10 = fadd float %.065.lcssa641, %9
+  %6 = load <2 x float>, ptr %i.aq, align 4, !tbaa !20
+  %7 = insertelement <2 x float> poison, float %.065.lcssa641, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = fadd <2 x float> %8, %6                    ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  %11 = extractelement <2 x float> %9, i64 1
   br label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10
 
 bb.d:                                             ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i98
@@ -642,8 +643,8 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10.loopexit.unr-lcssa: ; preds = %.lr.p
   br i1 %epil.iter1265.cmp.not, label %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10, label %.lr.ph316.10.epil, !llvm.loop !123
 
 _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10:      ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10.loopexit.unr-lcssa, %.lr.ph316.10.epil, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.9.thread
-  %i.rq = phi float [ %10, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.9.thread ], [ %i.qc, %.lr.ph316.10.epil ], [ %i.qc, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10.loopexit.unr-lcssa ] ; 2 uses
-  %i.rr = phi float [ %7, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.9.thread ], [ %i.ot, %.lr.ph316.10.epil ], [ %i.ot, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10.loopexit.unr-lcssa ] ; 2 uses
+  %i.rq = phi float [ %11, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.9.thread ], [ %i.qc, %.lr.ph316.10.epil ], [ %i.qc, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10.loopexit.unr-lcssa ] ; 2 uses
+  %i.rr = phi float [ %10, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.9.thread ], [ %i.ot, %.lr.ph316.10.epil ], [ %i.ot, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10.loopexit.unr-lcssa ] ; 2 uses
   %.060.lcssa.10 = phi float [ 0.000000e+00, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.9.thread ], [ %i.rj, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10.loopexit.unr-lcssa ], [ %i.rp, %.lr.ph316.10.epil ]
   %i.rs = phi <8 x float> [ %i.ap, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.9.thread ], [ %i.qk, %.lr.ph316.10.epil ], [ %i.qk, %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit115.10.loopexit.unr-lcssa ] ; 8 uses
   %i.rt = getelementptr inbounds nuw i8, ptr %i.ai, i64 40

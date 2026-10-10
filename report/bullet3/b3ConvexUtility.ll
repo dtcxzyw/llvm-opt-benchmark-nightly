@@ -205,31 +205,32 @@ bb.ad:                                            ; preds = %bb.ac
   store <2 x float> %.sroa.3.12.vec.insert.i.i263, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !45
   %i.jf = load ptr, ptr %i.o, align 8, !tbaa !19  ; 3 uses
   %i.jg = getelementptr inbounds nuw [16 x i8], ptr %i.jf, i64 %indvars.iv635 ; 4 uses
-  %16 = load float, ptr %i.jg, align 16, !tbaa !45 ; 3 uses
-  %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 4 ; 3 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.jg, i64 8
-  %i.ji = load <2 x float>, ptr %i.jh, align 4, !tbaa !45 ; 4 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.jg, i64 4
+  %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 8 ; 3 uses
+  %17 = load float, ptr %i.jh, align 8, !tbaa !45 ; 3 uses
+  %i.ji = load <2 x float>, ptr %i.jg, align 16, !tbaa !45 ; 4 uses
   %foldExtExtBinop992 = fmul <2 x float> %i.ji, %i.ji
-  %i.jj = extractelement <2 x float> %foldExtExtBinop992, i64 0
-  %18 = call float @llvm.fmuladd.f32(float %16, float %16, float %i.jj)
-  %19 = extractelement <2 x float> %i.ji, i64 1   ; 2 uses
-  %i.jk = call noundef float @llvm.fmuladd.f32(float %19, float %19, float %18)
+  %i.jj = extractelement <2 x float> %foldExtExtBinop992, i64 1
+  %18 = extractelement <2 x float> %i.ji, i64 0   ; 2 uses
+  %19 = call float @llvm.fmuladd.f32(float %18, float %18, float %i.jj)
+  %i.jk = call noundef float @llvm.fmuladd.f32(float %17, float %17, float %19)
   %sqrt.i.i266 = call noundef float @llvm.sqrt.f32(float %i.jk)
   %i.jl = fdiv float 1.000000e+00, %sqrt.i.i266   ; 2 uses
-  %20 = fmul float %16, %i.jl                     ; 2 uses
-  store float %20, ptr %i.jg, align 16, !tbaa !45
-  %21 = insertelement <2 x float> poison, float %i.jl, i64 0
-  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> zeroinitializer
-  %23 = fmul <2 x float> %i.ji, %22
-  store <2 x float> %23, ptr %i.jh, align 4, !tbaa !45
+  %20 = insertelement <2 x float> poison, float %i.jl, i64 0
+  %21 = shufflevector <2 x float> %20, <2 x float> poison, <2 x i32> zeroinitializer
+  %22 = fmul <2 x float> %i.ji, %21               ; 2 uses
+  store <2 x float> %22, ptr %i.jg, align 16, !tbaa !45
+  %23 = fmul float %17, %i.jl
+  store float %23, ptr %i.jh, align 8, !tbaa !45
   %i.jm = load ptr, ptr %i.aq, align 8, !tbaa !25 ; 2 uses
   %i.jn = getelementptr inbounds nuw [48 x i8], ptr %i.jm, i64 %indvars.iv635 ; 3 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 32
-  store float %20, ptr %i.jo, align 8, !tbaa !51
-  %i.jp = load float, ptr %i.jh, align 4, !tbaa !51
+  %24 = extractelement <2 x float> %22, i64 0
+  store float %24, ptr %i.jo, align 8, !tbaa !51
+  %i.jp = load float, ptr %16, align 4, !tbaa !51
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jn, i64 36
   store float %i.jp, ptr %i.jq, align 4, !tbaa !51
-  %i.jr = load float, ptr %17, align 8, !tbaa !51
+  %i.jr = load float, ptr %i.jh, align 8, !tbaa !51
   %i.js = getelementptr inbounds nuw i8, ptr %i.jn, i64 40
   %i.jt = insertelement <2 x float> <float poison, float 1.000000e+30>, float %i.jr, i64 0
   store <2 x float> %i.jt, ptr %i.js, align 8, !tbaa !51
