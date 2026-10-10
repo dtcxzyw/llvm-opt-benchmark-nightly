@@ -205,19 +205,17 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.gs, label %bb.k, label %b2Normalize.exit114.i
 
 bb.k:                                             ; preds = %bb.j
-  %5 = extractelement <2 x float> %i.gp, i64 0
-  %6 = fneg float %5
-  %sqrt.i111.i = tail call float @llvm.sqrt.f32(float %i.gr)
-  %i.gt = fdiv float 1.000000e+00, %sqrt.i111.i   ; 2 uses
-  %7 = extractelement <2 x float> %i.gp, i64 1
-  %8 = fmul float %7, %i.gt
-  %.sroa.012.0.vec.insert.i112.i = insertelement <2 x float> poison, float %8, i64 0
-  %9 = fmul float %i.gt, %6
-  %.sroa.012.4.vec.insert.i113.i = insertelement <2 x float> %.sroa.012.0.vec.insert.i112.i, float %9, i64 1
+  %sqrt.i111.i = tail call nnan float @llvm.sqrt.f32(float %i.gr)
+  %i.gt = fdiv nnan float 1.000000e+00, %sqrt.i111.i
+  %5 = fneg <2 x float> %i.gp
+  %6 = shufflevector <2 x float> %i.gp, <2 x float> %5, <2 x i32> <i32 1, i32 2>
+  %.sroa.012.0.vec.insert.i112.i = insertelement <2 x float> poison, float %i.gt, i64 0
+  %7 = shufflevector <2 x float> %.sroa.012.0.vec.insert.i112.i, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fmul <2 x float> %6, %7
   br label %b2Normalize.exit114.i
 
 b2Normalize.exit114.i:                            ; preds = %bb.k, %bb.j
-  %.sroa.012.0.i110.i = phi <2 x float> [ %.sroa.012.4.vec.insert.i113.i, %bb.k ], [ zeroinitializer, %bb.j ] ; 4 uses
+  %.sroa.012.0.i110.i = phi <2 x float> [ %8, %bb.k ], [ zeroinitializer, %bb.j ] ; 4 uses
   %i.gu = fadd <2 x float> %.sroa.028.0.copyload.i, %.sroa.026.0.copyload.i
   %i.gv = fmul <2 x float> %i.gu, splat (float 5.000000e-01) ; 4 uses
   %i.gw = and i64 %.sroa.266.0.extract.shift.i, 255
@@ -272,19 +270,17 @@ bb.m:                                             ; preds = %bb.i
   br i1 %i.ij, label %bb.n, label %b2Normalize.exit161.i
 
 bb.n:                                             ; preds = %bb.m
-  %10 = extractelement <2 x float> %i.ig, i64 0
-  %11 = fneg float %10
-  %sqrt.i158.i = tail call float @llvm.sqrt.f32(float %i.ii)
-  %i.ik = fdiv float 1.000000e+00, %sqrt.i158.i   ; 2 uses
-  %12 = extractelement <2 x float> %i.ig, i64 1
-  %13 = fmul float %12, %i.ik
-  %.sroa.012.0.vec.insert.i159.i = insertelement <2 x float> poison, float %13, i64 0
-  %14 = fmul float %i.ik, %11
-  %.sroa.012.4.vec.insert.i160.i = insertelement <2 x float> %.sroa.012.0.vec.insert.i159.i, float %14, i64 1
+  %sqrt.i158.i = tail call nnan float @llvm.sqrt.f32(float %i.ii)
+  %i.ik = fdiv nnan float 1.000000e+00, %sqrt.i158.i
+  %9 = fneg <2 x float> %i.ig
+  %10 = shufflevector <2 x float> %i.ig, <2 x float> %9, <2 x i32> <i32 1, i32 2>
+  %.sroa.012.0.vec.insert.i159.i = insertelement <2 x float> poison, float %i.ik, i64 0
+  %11 = shufflevector <2 x float> %.sroa.012.0.vec.insert.i159.i, <2 x float> poison, <2 x i32> zeroinitializer
+  %12 = fmul <2 x float> %10, %11
   br label %b2Normalize.exit161.i
 
 b2Normalize.exit161.i:                            ; preds = %bb.n, %bb.m
-  %.sroa.012.0.i157.i = phi <2 x float> [ %.sroa.012.4.vec.insert.i160.i, %bb.n ], [ zeroinitializer, %bb.m ] ; 4 uses
+  %.sroa.012.0.i157.i = phi <2 x float> [ %12, %bb.n ], [ zeroinitializer, %bb.m ] ; 4 uses
   %i.il = fadd <2 x float> %.sroa.012.0.copyload.i, %.sroa.010.0.copyload.i
   %i.im = fmul <2 x float> %i.il, splat (float 5.000000e-01) ; 4 uses
   %i.in = and i64 %.sroa.872.0.extract.shift.i, 255

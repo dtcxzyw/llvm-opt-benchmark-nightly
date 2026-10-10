@@ -205,10 +205,10 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %.sroa.5112.0249.i = phi i64 [ %i.oi, %scalar.ph ], [ %.sroa.5112.0249.i.ph, %scalar.ph.preheader ] ; 3 uses
-  %i.og = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0108.0.copyload.i, i64 %.sroa.5112.0249.i ; 3 uses
+  %i.og = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0108.0.copyload.i, i64 %.sroa.5112.0249.i ; 2 uses
   %i.oh = getelementptr inbounds nuw [4 x i8], ptr %.sroa.4110.0.copyload.i, i64 %.sroa.5112.0249.i
   %i.oi = add nuw i64 %.sroa.5112.0249.i, 1       ; 2 uses
-  %.sroa.011.0.copyload.i = load i32, ptr %i.oh, align 1, !noalias !1561 ; 5 uses
+  %.sroa.011.0.copyload.i = load i32, ptr %i.oh, align 1, !noalias !1561 ; 4 uses
   %.sroa.6.0.extract.shift.i.i = lshr i32 %.sroa.011.0.copyload.i, 24 ; 2 uses
   %i.oj = icmp ugt i32 %.sroa.011.0.copyload.i, 33554431
   %i.ok = shl nuw nsw i32 %.sroa.6.0.extract.shift.i.i, 23
@@ -216,24 +216,21 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.om = and i32 %i.ol, 2139095040
   %i.on = shl nuw nsw i32 %.sroa.6.0.extract.shift.i.i, 22
   %.sroa.03.0.i.i = select i1 %i.oj, i32 %i.om, i32 %i.on
-  %.sroa.5.0.extract.shift.i.i = lshr i32 %.sroa.011.0.copyload.i, 16
-  %.sroa.5.0.extract.trunc.i.i = trunc i32 %.sroa.5.0.extract.shift.i.i to i8
-  %.sroa.42.0.extract.shift.i.i = lshr i32 %.sroa.011.0.copyload.i, 8
-  %.sroa.42.0.extract.trunc.i.i = trunc i32 %.sroa.42.0.extract.shift.i.i to i8
-  %.sroa.01.0.extract.trunc.i.i = trunc i32 %.sroa.011.0.copyload.i to i8
+  %.sroa.42.0.extract.shift.i.i = lshr i32 %.sroa.011.0.copyload.i, 16
+  %.sroa.01.0.extract.trunc.i.i = trunc i32 %.sroa.42.0.extract.shift.i.i to i8
   %i.oo = bitcast i32 %.sroa.03.0.i.i to float
-  %i.op = fmul float %i.oo, 3.906250e-03          ; 3 uses
+  %i.op = fmul float %i.oo, 3.906250e-03          ; 2 uses
   %i.oq = uitofp i8 %.sroa.01.0.extract.trunc.i.i to float
   %i.or = fmul float %i.op, %i.oq
-  %4 = uitofp i8 %.sroa.42.0.extract.trunc.i.i to float
-  %5 = fmul float %i.op, %4
-  %6 = uitofp i8 %.sroa.5.0.extract.trunc.i.i to float
-  %7 = fmul float %i.op, %6
-  store float %i.or, ptr %i.og, align 1, !alias.scope !1691, !noalias !1692
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.og, i64 4
-  store float %5, ptr %.sroa.4.0..sroa_idx.i, align 1, !alias.scope !1691, !noalias !1692
+  %4 = bitcast i32 %.sroa.011.0.copyload.i to <4 x i8>
+  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <2 x i32> <i32 0, i32 1>
+  %6 = uitofp <2 x i8> %5 to <2 x float>
+  %7 = insertelement <2 x float> poison, float %i.op, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = fmul <2 x float> %8, %6
+  store <2 x float> %9, ptr %i.og, align 1, !alias.scope !1691, !noalias !1692
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.og, i64 8
-  store float %7, ptr %.sroa.5.0..sroa_idx.i, align 1, !alias.scope !1691, !noalias !1692
+  store float %i.or, ptr %.sroa.5.0..sroa_idx.i, align 1, !alias.scope !1691, !noalias !1692
   %exitcond.not.i = icmp eq i64 %i.oi, %.sroa.7113.0.copyload.i
   br i1 %exitcond.not.i, label %.thread151.loopexit.i, label %scalar.ph, !llvm.loop !1555
 

@@ -205,8 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.c, %bb.a
   tail call void @_RNvMs_NtNtCsdaEETE4DqmE_13typst_library9visualize5curveNtB4_5Curve5cubic(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, double noundef %1, double noundef %2, double noundef %3, double noundef %4, double noundef %5, double noundef %6)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %7 = load <2 x double>, ptr %i.f, align 8       ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store <2 x double> %7, ptr %i.b, align 16, !alias.scope !20570
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store double %1, ptr %i.g, align 16, !alias.scope !20570
@@ -220,10 +220,9 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   store double %5, ptr %i.k, align 16, !alias.scope !20570
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   store double %6, ptr %i.l, align 8, !alias.scope !20570
-  %8 = extractelement <2 x double> %7, i64 0      ; 2 uses
-  %9 = tail call nsz double @llvm.maximumnum.f64(double %8, double %5) ; 3 uses
-  %10 = extractelement <2 x double> %7, i64 1     ; 2 uses
-  %11 = tail call nsz double @llvm.maximumnum.f64(double %10, double %6) ; 3 uses
+  %8 = insertelement <2 x double> poison, double %5, i64 0 ; 2 uses
+  %9 = insertelement <2 x double> %8, double %6, i64 1 ; 3 uses
+  %10 = tail call nsz <2 x double> @llvm.maximumnum.v2f64(<2 x double> %7, <2 x double> %9) ; 4 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !20571
   call void @_RNvXs7_NtCsdqxqgV7ixUt_5kurbo8cubicbezNtB5_8CubicBezNtNtB7_11param_curve17ParamCurveExtrema7extrema(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %.sroa.4.0..sroa_idx.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.b), !noalias !20572
@@ -249,14 +248,11 @@ vector.ph:                                        ; preds = %.lr.ph.i
   %broadcast.splat29 = shufflevector <2 x double> %broadcast.splatinsert28, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert30 = insertelement <2 x double> poison, double %4, i64 0
   %broadcast.splat31 = shufflevector <2 x double> %broadcast.splatinsert30, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splatinsert32 = insertelement <2 x double> poison, double %5, i64 0
-  %broadcast.splat33 = shufflevector <2 x double> %broadcast.splatinsert32, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat33 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert34 = insertelement <2 x double> poison, double %6, i64 0
   %broadcast.splat35 = shufflevector <2 x double> %broadcast.splatinsert34, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splatinsert36 = insertelement <2 x double> poison, double %9, i64 0
-  %broadcast.splat37 = shufflevector <2 x double> %broadcast.splatinsert36, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splatinsert38 = insertelement <2 x double> poison, double %11, i64 0
-  %broadcast.splat39 = shufflevector <2 x double> %broadcast.splatinsert38, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat37 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %broadcast.splat39 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -295,71 +291,70 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aq, label %middle.block, label %vector.body, !llvm.loop !20566
 
 middle.block:                                     ; preds = %vector.body
-  %i.ar = call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %i.ao) ; 2 uses
-  %i.as = call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %i.ap) ; 2 uses
+  %i.ar = call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %i.ao)
+  %i.as = call nsz double @llvm.vector.reduce.fmax.v2f64(<2 x double> %i.ap)
   %cmp.n = icmp eq i64 %n.vec, %i.n
+  %11 = insertelement <2 x double> poison, double %i.ar, i64 0
+  %12 = insertelement <2 x double> %11, double %i.as, i64 1 ; 2 uses
   br i1 %cmp.n, label %_RNvYNtNtCsdqxqgV7ixUt_5kurbo8cubicbez8CubicBezNtNtB6_11param_curve17ParamCurveExtrema12bounding_boxCs7tN9tvpkfrg_12typst_layout.exit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i, %middle.block
   %.ph = phi i64 [ 0, %.lr.ph.i ], [ %n.vec, %middle.block ]
-  %.sroa.8.017.i.ph = phi double [ %9, %.lr.ph.i ], [ %i.ar, %middle.block ]
-  %.sroa.10.016.i.ph = phi double [ %11, %.lr.ph.i ], [ %i.as, %middle.block ]
+  %.ph42 = phi <2 x double> [ %10, %.lr.ph.i ], [ %12, %middle.block ]
+  %13 = insertelement <2 x double> poison, double %1, i64 0
+  %14 = insertelement <2 x double> %13, double %2, i64 1
+  %15 = insertelement <2 x double> poison, double %3, i64 0
+  %16 = insertelement <2 x double> %15, double %4, i64 1
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %i.at = phi i64 [ %i.au, %scalar.ph ], [ %.ph, %scalar.ph.preheader ] ; 2 uses
-  %.sroa.8.017.i = phi double [ %30, %scalar.ph ], [ %.sroa.8.017.i.ph, %scalar.ph.preheader ]
-  %.sroa.10.016.i = phi double [ %31, %scalar.ph ], [ %.sroa.10.016.i.ph, %scalar.ph.preheader ]
+  %17 = phi <2 x double> [ %35, %scalar.ph ], [ %.ph42, %scalar.ph.preheader ]
   %i.au = add nuw nsw i64 %i.at, 1                ; 2 uses
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.at
-  %i.aw = load double, ptr %i.av, align 8, !noalias !20571, !noundef !41 ; 7 uses
+  %i.aw = load double, ptr %i.av, align 8, !noalias !20571, !noundef !41 ; 2 uses
   %i.ax = fsub double 1.000000e+00, %i.aw         ; 4 uses
-  %12 = fmul double %i.ax, %i.ax                  ; 2 uses
-  %13 = fmul double %i.ax, %12                    ; 2 uses
-  %i.ay = fmul double %8, %13
-  %i.az = fmul double %10, %13
-  %14 = fmul double %12, 3.000000e+00             ; 2 uses
-  %15 = fmul double %1, %14
-  %16 = fmul double %2, %14
-  %i.ba = fmul double %i.ax, 3.000000e+00         ; 2 uses
-  %17 = fmul double %3, %i.ba
-  %18 = fmul double %4, %i.ba
-  %19 = fmul double %5, %i.aw
-  %i.bb = fmul double %6, %i.aw
-  %20 = fadd double %19, %17
-  %21 = fadd double %i.bb, %18
-  %22 = fmul double %i.aw, %20
-  %23 = fmul double %i.aw, %21
-  %24 = fadd double %15, %22
-  %25 = fadd double %16, %23
-  %26 = fmul double %i.aw, %24
-  %27 = fmul double %i.aw, %25
-  %28 = fadd double %i.ay, %26
-  %29 = fadd double %i.az, %27
-  %30 = call nsz double @llvm.maximumnum.f64(double %.sroa.8.017.i, double %28) ; 2 uses
-  %31 = call nsz double @llvm.maximumnum.f64(double %.sroa.10.016.i, double %29) ; 2 uses
+  %i.ay = fmul double %i.ax, %i.ax                ; 2 uses
+  %i.az = fmul double %i.ax, %i.ay
+  %18 = insertelement <2 x double> poison, double %i.az, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = fmul <2 x double> %7, %19
+  %i.ba = fmul double %i.ay, 3.000000e+00
+  %21 = insertelement <2 x double> poison, double %i.ba, i64 0
+  %22 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
+  %23 = fmul <2 x double> %14, %22
+  %i.bb = fmul double %i.ax, 3.000000e+00
+  %24 = insertelement <2 x double> poison, double %i.bb, i64 0
+  %25 = shufflevector <2 x double> %24, <2 x double> poison, <2 x i32> zeroinitializer
+  %26 = fmul <2 x double> %16, %25
+  %27 = insertelement <2 x double> poison, double %i.aw, i64 0
+  %28 = shufflevector <2 x double> %27, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %29 = fmul <2 x double> %9, %28
+  %30 = fadd <2 x double> %29, %26
+  %31 = fmul <2 x double> %28, %30
+  %32 = fadd <2 x double> %23, %31
+  %33 = fmul <2 x double> %28, %32
+  %34 = fadd <2 x double> %20, %33
+  %35 = call nsz <2 x double> @llvm.maximumnum.v2f64(<2 x double> %17, <2 x double> %34) ; 2 uses
   %i.bc = icmp eq i64 %i.au, %i.n
   br i1 %i.bc, label %_RNvYNtNtCsdqxqgV7ixUt_5kurbo8cubicbez8CubicBezNtNtB6_11param_curve17ParamCurveExtrema12bounding_boxCs7tN9tvpkfrg_12typst_layout.exit, label %scalar.ph, !llvm.loop !20567
 
 _RNvYNtNtCsdqxqgV7ixUt_5kurbo8cubicbez8CubicBezNtNtB6_11param_curve17ParamCurveExtrema12bounding_boxCs7tN9tvpkfrg_12typst_layout.exit: ; preds = %scalar.ph, %middle.block, %bb.b
-  %.sroa.10.0.lcssa.i = phi double [ %11, %bb.b ], [ %i.as, %middle.block ], [ %31, %scalar.ph ] ; 2 uses
-  %.sroa.8.0.lcssa.i = phi double [ %9, %bb.b ], [ %i.ar, %middle.block ], [ %30, %scalar.ph ] ; 2 uses
+  %36 = phi <2 x double> [ %10, %bb.b ], [ %12, %middle.block ], [ %35, %scalar.ph ] ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 128
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !20571
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %.inv = fcmp ord double %.sroa.8.0.lcssa.i, 0.000000e+00
-  %spec.store.select = select i1 %.inv, double %.sroa.8.0.lcssa.i, double 0.000000e+00
-  call void @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout3absNtB2_3Abs7set_max(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.be, double noundef %spec.store.select)
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.inv7 = fcmp ord double %.sroa.10.0.lcssa.i, 0.000000e+00
-  %spec.store.select1 = select i1 %.inv7, double %.sroa.10.0.lcssa.i, double 0.000000e+00
-  call void @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout3absNtB2_3Abs7set_max(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %32, double noundef %spec.store.select1)
+  %37 = fcmp ord <2 x double> %36, zeroinitializer
+  %38 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %39 = select <2 x i1> %37, <2 x double> %36, <2 x double> zeroinitializer ; 2 uses
+  %40 = extractelement <2 x double> %39, i64 0
+  call void @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout3absNtB2_3Abs7set_max(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.be, double noundef %40)
+  %41 = extractelement <2 x double> %39, i64 1
+  call void @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout3absNtB2_3Abs7set_max(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %38, double noundef %41)
   store double %5, ptr %i.f, align 8
   store double %6, ptr %i.bd, align 8
-  %33 = insertelement <2 x double> poison, double %5, i64 0
-  %34 = insertelement <2 x double> %33, double %6, i64 1
-  %i.bf = fmul <2 x double> %34, splat (double 2.000000e+00) ; 2 uses
+  %i.bf = fmul <2 x double> %9, splat (double 2.000000e+00) ; 2 uses
   %i.bg = insertelement <2 x double> poison, double %3, i64 0
   %i.bh = insertelement <2 x double> %i.bg, double %4, i64 1 ; 2 uses
   %i.bi = fneg <2 x double> %i.bh

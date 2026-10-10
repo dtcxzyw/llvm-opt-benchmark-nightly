@@ -118,7 +118,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK6vectorISt4pairIjN3sat7literalEELb0EjE4sizeEv.exit19: ; preds = %bb.a, %bb.b
   %.0.i18 = phi i32 [ %i.d, %bb.b ], [ 0, %bb.a ] ; 4 uses
-  %i.e = zext i32 %.0.i18 to i64                  ; 7 uses
+  %i.e = zext i32 %.0.i18 to i64                  ; 6 uses
   %i.f = shl nuw nsw i64 %i.e, 3
   %i.g = add nuw nsw i64 %i.f, 88
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -161,9 +161,8 @@ _ZNK6vectorISt4pairIjN3sat7literalEELb0EjE4sizeEv.exit19: ; preds = %bb.a, %bb.b
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 scalar.ph.preheader:                              ; preds = %pred.store.continue30, %vector.memcheck, %.lr.ph
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %pred.store.continue30 ] ; 6 uses
-  %5 = sub nsw i64 %i.e, %indvars.iv.ph
-  %xtraiter = and i64 %5, 1
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %pred.store.continue30 ] ; 5 uses
+  %xtraiter = and i64 %i.e, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
@@ -185,7 +184,7 @@ bb.c:                                             ; preds = %scalar.ph.prol
   br label %scalar.ph.prol.loopexit.unr-lcssa
 
 scalar.ph.prol.loopexit.unr-lcssa:                ; preds = %bb.c, %scalar.ph.prol
-  %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.ph, 1
+  %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1
   br label %scalar.ph.prol.loopexit
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol.loopexit.unr-lcssa, %scalar.ph.preheader
@@ -205,8 +204,8 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %i.e, -2
-  %n.vec = add nsw i64 %.neg, %i.e                ; 2 uses
+  %5 = add nsw i64 %i.e, -1
+  %n.vec = and i64 %5, -2                         ; 2 uses
   %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %4, i64 0
   %broadcast.splat = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %vector.body

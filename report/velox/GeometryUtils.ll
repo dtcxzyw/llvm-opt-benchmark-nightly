@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bi = load ptr, ptr %i.f, align 8, !tbaa !271, !nonnull !65, !align !269 ; 12 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 48 ; 3 uses
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !77 ; 5 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 64 ; 3 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 64 ; 2 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !272
   %i.bn = getelementptr inbounds i8, ptr %i.bm, i64 -24
   %.not.i.i.i.i = icmp eq ptr %i.bk, %i.bn
@@ -231,7 +231,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ce = sub i64 %i.cc, %i.cd
   %i.cf = sdiv exact i64 %i.ce, 24
   %i.cg = add nsw i64 %i.ca, %i.cf
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.bi, i64 32 ; 2 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.bi, i64 32
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !76
   %i.cj = load ptr, ptr %i.bp, align 8, !tbaa !86
   %i.ck = ptrtoint ptr %i.ci to i64
@@ -386,18 +386,16 @@ _ZSt4copyIPPN8facebook5velox9functions10geospatial12_GLOBAL__N_111TilingEntryES7
 _ZNSt5dequeIN8facebook5velox9functions10geospatial12_GLOBAL__N_111TilingEntryESaIS5_EE17_M_reallocate_mapEmb.exit.i.i.i.i.i.i: ; preds = %_ZSt4copyIPPN8facebook5velox9functions10geospatial12_GLOBAL__N_111TilingEntryES7_ET0_T_S9_S8_.exit26.i.i.i.i.i.i.i, %bb.u, %bb.t, %bb.s, %bb.q, %bb.p, %bb.o
   %.0.i.i.i.i.i.i.i = phi ptr [ %i.ec, %_ZSt4copyIPPN8facebook5velox9functions10geospatial12_GLOBAL__N_111TilingEntryES7_ET0_T_S9_S8_.exit26.i.i.i.i.i.i.i ], [ %i.de, %bb.q ], [ %i.de, %bb.o ], [ %i.de, %bb.p ], [ %i.de, %bb.s ], [ %i.de, %bb.t ], [ %i.de, %bb.u ] ; 3 uses
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.bs, align 8, !tbaa !74
-  %5 = load ptr, ptr %.0.i.i.i.i.i.i.i, align 8, !tbaa !73 ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.bi, i64 24
-  store ptr %5, ptr %i.eo, align 8, !tbaa !75
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 504
-  store ptr %6, ptr %i.ch, align 8, !tbaa !76
+  %5 = load ptr, ptr %.0.i.i.i.i.i.i.i, align 8, !tbaa !73
+  %6 = getelementptr inbounds nuw i8, ptr %5, <2 x i64> <i64 0, i64 504>
+  store <2 x ptr> %6, ptr %i.eo, align 8, !tbaa !73
   %i.ep = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i.i.i.i.i.i, i64 %i.cy
   %i.eq = getelementptr inbounds i8, ptr %i.ep, i64 -8 ; 2 uses
   store ptr %i.eq, ptr %i.bq, align 8, !tbaa !74
-  %i.er = load ptr, ptr %i.eq, align 8, !tbaa !73 ; 2 uses
-  store ptr %i.er, ptr %i.bo, align 8, !tbaa !75
-  %7 = getelementptr inbounds nuw i8, ptr %i.er, i64 504
-  store ptr %7, ptr %i.bl, align 8, !tbaa !76
+  %i.er = load ptr, ptr %i.eq, align 8, !tbaa !73
+  %7 = getelementptr inbounds nuw i8, ptr %i.er, <2 x i64> <i64 0, i64 504>
+  store <2 x ptr> %7, ptr %i.bo, align 8, !tbaa !73
   br label %.thread.i.i.i.i
 
 .thread.i.i.i.i:                                  ; preds = %_ZNSt5dequeIN8facebook5velox9functions10geospatial12_GLOBAL__N_111TilingEntryESaIS5_EE17_M_reallocate_mapEmb.exit.i.i.i.i.i.i, %bb.k

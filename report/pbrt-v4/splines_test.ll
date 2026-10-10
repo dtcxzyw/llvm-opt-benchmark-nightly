@@ -167,7 +167,7 @@ bb.a:
   br label %bb.b
 
 .preheader235:                                    ; preds = %_ZN7testing15AssertionResultD2Ev.exit
-  %i.l = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %10, i64 12 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %10, i64 20 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %10, i64 16
@@ -558,7 +558,7 @@ _ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit.2.3:       ; preds = %.preheader235, %bb.
   %i.fd = fcmp olt <2 x float> %i.fc, splat (float f0x3F7FFFFF)
   %i.fe = select <2 x i1> %i.fd, <2 x float> %i.fc, <2 x float> splat (float f0x3F7FFFFF)
   %i.ff = fmul nnan <2 x float> %i.fe, splat (float 1.000000e+01)
-  %i.fg = fadd <2 x float> %i.ff, splat (float -5.000000e+00) ; 6 uses
+  %i.fg = fadd <2 x float> %i.ff, splat (float -5.000000e+00) ; 7 uses
   %i.fh = mul i64 %i.er, 6364136223846793005
   %i.fi = add i64 %i.fh, -2720673578348880933     ; 2 uses
   %i.fj = mul i64 %i.fi, 6364136223846793005
@@ -579,7 +579,7 @@ _ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit.2.3:       ; preds = %.preheader235, %bb.
   %i.fy = fcmp olt <2 x float> %i.fx, splat (float f0x3F7FFFFF)
   %i.fz = select <2 x i1> %i.fy, <2 x float> %i.fx, <2 x float> splat (float f0x3F7FFFFF)
   %i.ga = fmul nnan <2 x float> %i.fz, splat (float 1.000000e+01)
-  %i.gb = fadd <2 x float> %i.ga, splat (float -5.000000e+00) ; 6 uses
+  %i.gb = fadd <2 x float> %i.ga, splat (float -5.000000e+00) ; 7 uses
   %i.gc = mul i64 %i.fm, 6364136223846793005
   %i.gd = insertelement <2 x i64> poison, i64 %i.el, i64 0
   %i.ge = insertelement <2 x i64> %i.gd, i64 %i.fm, i64 1 ; 3 uses
@@ -633,10 +633,6 @@ _ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit.2.3:       ; preds = %.preheader235, %bb.
   %i.ia = select <2 x i1> %i.hz, <2 x float> %i.hy, <2 x float> splat (float f0x3F7FFFFF)
   %i.ib = fmul nnan <2 x float> %i.ia, splat (float 1.000000e+01)
   %i.ic = fadd <2 x float> %i.ib, splat (float -5.000000e+00) ; 6 uses
-  %.sroa.0.0.vec.extract.i.i15.i.i110 = extractelement <2 x float> %i.hl, i64 0
-  %.sroa.010.0.vec.extract.i.i16.i.i111 = extractelement <2 x float> %i.gb, i64 0 ; 2 uses
-  %.sroa.0.4.vec.extract.i.i17.i.i112 = extractelement <2 x float> %i.hl, i64 1
-  %.sroa.010.4.vec.extract.i.i18.i.i113 = extractelement <2 x float> %i.gb, i64 1 ; 2 uses
   %i.id = fcmp olt <2 x float> %i.ic, %i.gr
   %i.ie = select <2 x i1> %i.id, <2 x float> %i.ic, <2 x float> %i.gr ; 2 uses
   %i.if = fcmp olt <2 x float> %i.gr, %i.ic
@@ -683,14 +679,13 @@ _ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit.2.3:       ; preds = %.preheader235, %bb.
   store float %i.jl, ptr %i.l, align 8
   store <2 x float> %i.jm, ptr %i.m, align 4
   store float %i.jn, ptr %i.n, align 4
-  %.sroa.0.0.vec.extract.i.i.i.i146 = extractelement <2 x float> %i.ek, i64 0
-  %.sroa.0.4.vec.extract.i.i.i.i147 = extractelement <2 x float> %i.ek, i64 1
-  %.sroa.0.0.vec.extract.i34.i.i.i148 = extractelement <2 x float> %i.fg, i64 0 ; 2 uses
-  %.sroa.0.4.vec.extract.i35.i.i.i149 = extractelement <2 x float> %i.fg, i64 1 ; 2 uses
-  %15 = extractelement <2 x float> %i.gr, i64 0
-  %16 = extractelement <2 x float> %i.gr, i64 1   ; 2 uses
-  %17 = extractelement <2 x float> %i.ic, i64 0   ; 2 uses
-  %18 = extractelement <2 x float> %i.ic, i64 1
+  %15 = shufflevector <2 x float> %i.ek, <2 x float> %i.fg, <2 x i32> <i32 0, i32 2>
+  %16 = shufflevector <2 x float> %i.fg, <2 x float> %i.gb, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %17 = shufflevector <2 x float> %i.gb, <2 x float> %i.hl, <2 x i32> <i32 0, i32 2>
+  %18 = shufflevector <2 x float> %i.ek, <2 x float> %i.gr, <2 x i32> <i32 1, i32 2>
+  %19 = shufflevector <2 x float> %i.gb, <2 x float> %i.gr, <2 x i32> <i32 1, i32 3> ; 2 uses
+  %20 = shufflevector <2 x float> %i.fg, <2 x float> %i.ic, <2 x i32> <i32 1, i32 2> ; 2 uses
+  %21 = shufflevector <2 x float> %i.hl, <2 x float> %i.ic, <2 x i32> <i32 1, i32 3>
   br label %bb.ad
 
 bb.ac:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit214
@@ -700,79 +695,62 @@ bb.ac:                                            ; preds = %_ZN7testing15Assert
   br i1 %exitcond.not, label %bb.ab, label %_ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit.2.3, !llvm.loop !52
 
 bb.ad:                                            ; preds = %_ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit.2.3, %_ZN7testing15AssertionResultD2Ev.exit214
-  %storemerge57284 = phi float [ 0.000000e+00, %_ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit.2.3 ], [ %i.mw, %_ZN7testing15AssertionResultD2Ev.exit214 ] ; 21 uses
-  %i.jp = fsub float 1.000000e+00, %storemerge57284 ; 18 uses
-  %19 = fmul float %i.jp, %.sroa.0.0.vec.extract.i.i.i.i146
-  %20 = fmul float %i.jp, %.sroa.0.4.vec.extract.i.i.i.i147
-  %21 = fmul float %i.jp, %15
-  %22 = fmul float %storemerge57284, %.sroa.0.0.vec.extract.i34.i.i.i148
-  %23 = fmul float %storemerge57284, %.sroa.0.4.vec.extract.i35.i.i.i149
-  %24 = fmul float %storemerge57284, %17
-  %25 = fadd float %19, %22
-  %26 = fadd float %20, %23
-  %27 = fadd float %21, %24
-  %28 = fmul float %i.jp, %.sroa.0.0.vec.extract.i34.i.i.i148
-  %29 = fmul float %i.jp, %.sroa.0.4.vec.extract.i35.i.i.i149
-  %30 = fmul float %i.jp, %17
-  %31 = fmul float %storemerge57284, %.sroa.010.0.vec.extract.i.i16.i.i111
-  %32 = fmul float %storemerge57284, %.sroa.010.4.vec.extract.i.i18.i.i113
-  %33 = fmul float %storemerge57284, %16
-  %34 = fadd float %28, %31                       ; 2 uses
-  %35 = fadd float %29, %32                       ; 2 uses
-  %36 = fadd float %30, %33                       ; 2 uses
-  %37 = fmul float %i.jp, %.sroa.010.0.vec.extract.i.i16.i.i111
-  %38 = fmul float %i.jp, %.sroa.010.4.vec.extract.i.i18.i.i113
-  %39 = fmul float %i.jp, %16
-  %40 = fmul float %storemerge57284, %.sroa.0.0.vec.extract.i.i15.i.i110
-  %41 = fmul float %storemerge57284, %.sroa.0.4.vec.extract.i.i17.i.i112
-  %42 = fmul float %storemerge57284, %18
-  %43 = fadd float %37, %40
-  %44 = fadd float %38, %41
-  %45 = fadd float %39, %42
-  %46 = fmul float %i.jp, %25
-  %47 = fmul float %i.jp, %26
-  %48 = fmul float %i.jp, %27
-  %49 = fmul float %storemerge57284, %34
-  %50 = fmul float %storemerge57284, %35
-  %51 = fmul float %storemerge57284, %36
-  %52 = fadd float %46, %49
-  %53 = fadd float %47, %50
-  %54 = fadd float %48, %51
-  %55 = fmul float %i.jp, %34
-  %56 = fmul float %i.jp, %35
-  %57 = fmul float %i.jp, %36
-  %58 = fmul float %storemerge57284, %43
-  %59 = fmul float %storemerge57284, %44
-  %60 = fmul float %storemerge57284, %45
-  %61 = fadd float %55, %58
-  %62 = fadd float %56, %59
-  %63 = fadd float %57, %60
-  %64 = fmul float %i.jp, %52
-  %65 = fmul float %i.jp, %53
-  %66 = fmul float %i.jp, %54
-  %67 = fmul float %storemerge57284, %61
-  %68 = fmul float %storemerge57284, %62
-  %69 = fmul float %storemerge57284, %63
-  %70 = fadd float %64, %67                       ; 3 uses
-  %71 = fadd float %65, %68                       ; 3 uses
-  %72 = fadd float %66, %69                       ; 3 uses
+  %storemerge57284 = phi float [ 0.000000e+00, %_ZN4pbrt6Tuple3INS_6Point3EfEixEi.exit.2.3 ], [ %i.mw, %_ZN7testing15AssertionResultD2Ev.exit214 ] ; 5 uses
+  %i.jp = fsub float 1.000000e+00, %storemerge57284
+  %22 = insertelement <2 x float> poison, float %storemerge57284, i64 0
+  %23 = shufflevector <2 x float> %22, <2 x float> poison, <2 x i32> zeroinitializer ; 9 uses
+  %24 = fmul <2 x float> %23, %16
+  %25 = fmul <2 x float> %23, %20
+  %26 = fmul <2 x float> %23, %17
+  %27 = fmul <2 x float> %23, %19
+  %28 = fmul <2 x float> %23, %21
+  %29 = insertelement <2 x float> poison, float %i.jp, i64 0 ; 2 uses
+  %30 = shufflevector <2 x float> %29, <2 x float> poison, <2 x i32> zeroinitializer ; 9 uses
+  %31 = fmul <2 x float> %30, %15
+  %32 = fmul <2 x float> %30, %16
+  %33 = fadd <2 x float> %31, %24
+  %34 = fadd <2 x float> %32, %26
+  %35 = fmul <2 x float> %30, %33
+  %36 = fmul <2 x float> %23, %34
+  %37 = fadd <2 x float> %35, %36
+  %38 = insertelement <2 x float> %29, float %storemerge57284, i64 1
+  %39 = fmul <2 x float> %38, %37                 ; 2 uses
+  %40 = fmul <2 x float> %30, %18
+  %41 = fadd <2 x float> %40, %25
+  %42 = fmul <2 x float> %30, %20
+  %43 = fadd <2 x float> %42, %27                 ; 2 uses
+  %44 = fmul <2 x float> %30, %19
+  %45 = fadd <2 x float> %44, %28
+  %46 = fmul <2 x float> %30, %41
+  %47 = fmul <2 x float> %23, %43
+  %48 = fadd <2 x float> %46, %47
+  %49 = fmul <2 x float> %30, %43
+  %50 = fmul <2 x float> %23, %45
+  %51 = fadd <2 x float> %49, %50
+  %52 = fmul <2 x float> %30, %48
+  %53 = fmul <2 x float> %23, %51
+  %shift395 = shufflevector <2 x float> %39, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop396 = fadd <2 x float> %39, %shift395
+  %54 = extractelement <2 x float> %foldExtExtBinop396, i64 0 ; 3 uses
+  %55 = fadd <2 x float> %52, %53                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #20
   %i.jq = load float, ptr %10, align 8, !tbaa !11
-  %i.jr = fcmp ult float %70, %i.jq
+  %i.jr = fcmp ult float %54, %i.jq
   %i.js = load float, ptr %i.m, align 4
-  %i.jt = fcmp ugt float %70, %i.js
+  %i.jt = fcmp ugt float %54, %i.js
   %or.cond.i165 = select i1 %i.jr, i1 true, i1 %i.jt
   br i1 %or.cond.i165, label %_ZN4pbrt6InsideIfEEbNS_6Point3IT_EERKNS_7Bounds3IS2_EE.exit169.thread, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.ju = load float, ptr %i.p, align 4, !tbaa !12
-  %73 = fcmp ult float %71, %i.ju
-  %74 = load float, ptr %i.o, align 8
-  %75 = fcmp ugt float %71, %74
-  %or.cond16.i167 = select i1 %73, i1 true, i1 %75
-  %76 = load float, ptr %i.l, align 8
-  %77 = fcmp ult float %72, %76
-  %or.cond19.i168 = select i1 %or.cond16.i167, i1 true, i1 %77
+  %i.ju = load float, ptr %i.o, align 8
+  %56 = extractelement <2 x float> %55, i64 0
+  %57 = fcmp ugt float %56, %i.ju
+  %58 = load <2 x float>, ptr %i.p, align 4
+  %59 = fcmp ult <2 x float> %55, %58             ; 2 uses
+  %60 = extractelement <2 x i1> %59, i64 0
+  %or.cond16.i167 = select i1 %60, i1 true, i1 %57
+  %61 = extractelement <2 x i1> %59, i64 1
+  %or.cond19.i168 = select i1 %or.cond16.i167, i1 true, i1 %61
   br i1 %or.cond19.i168, label %_ZN4pbrt6InsideIfEEbNS_6Point3IT_EERKNS_7Bounds3IS2_EE.exit169.thread, label %_ZN4pbrt6InsideIfEEbNS_6Point3IT_EERKNS_7Bounds3IS2_EE.exit169
 
 _ZN4pbrt6InsideIfEEbNS_6Point3IT_EERKNS_7Bounds3IS2_EE.exit169.thread: ; preds = %bb.ad, %bb.ae
@@ -782,7 +760,8 @@ _ZN4pbrt6InsideIfEEbNS_6Point3IT_EERKNS_7Bounds3IS2_EE.exit169.thread: ; preds =
 
 _ZN4pbrt6InsideIfEEbNS_6Point3IT_EERKNS_7Bounds3IS2_EE.exit169: ; preds = %bb.ae
   %i.jv = load float, ptr %i.n, align 4, !tbaa !17
-  %i.jw = fcmp ole float %72, %i.jv               ; 2 uses
+  %62 = extractelement <2 x float> %55, i64 1
+  %i.jw = fcmp ole float %62, %i.jv               ; 2 uses
   %i.jx = zext i1 %i.jw to i8
   store i8 %i.jx, ptr %11, align 8, !tbaa !60
   store ptr null, ptr %i.q, align 8, !tbaa !16
@@ -796,7 +775,9 @@ bb.af:                                            ; preds = %_ZN4pbrt6InsideIfEE
 bb.ag:                                            ; preds = %bb.af
   %i.jy = load ptr, ptr %12, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
-  invoke void @_ZN4pbrt8internal9ToString3IfEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_S8_S8_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, float noundef %70, float noundef %71, float noundef %72)
+  %63 = extractelement <2 x float> %55, i64 0
+  %64 = extractelement <2 x float> %55, i64 1
+  invoke void @_ZN4pbrt8internal9ToString3IfEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEET_S8_S8_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %2, float noundef %54, float noundef %63, float noundef %64)
           to label %.noexc176 unwind label %bb.as
 
 .noexc176:                                        ; preds = %bb.ag

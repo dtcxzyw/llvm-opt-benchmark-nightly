@@ -204,18 +204,17 @@ bb.t:                                             ; preds = %bb.s
   %i.hr = bitcast <4 x i32> %i.hq to <4 x float>
   fence acq_rel
   %i.hs = extractelement <4 x float> %i.hr, i64 0
-  %i.ht = fadd float %i.hs, -1.000000e+00         ; 4 uses
-  %6 = fmul float %i.ht, f0x3F3E11C7
-  %.scalar.i.i.i = fadd float %6, f0x3FB6E02B
-  %7 = fmul float %i.ht, f0x3E32458C
+  %i.ht = fadd float %i.hs, -1.000000e+00
   fence acq_rel
-  %8 = fmul float %i.ht, %.scalar.i.i.i
-  %9 = fadd float %7, f0x3F813CED
-  %10 = fmul float %i.ht, %9
-  fence acq_rel
-  %11 = fadd float %10, f0x3F7D8625
-  %12 = fadd float %8, f0xB5F85AB0
-  %i.hu = fdiv float %12, %11
+  %6 = insertelement <2 x float> poison, float %i.ht, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %8 = fmul <2 x float> %7, <float f0x3F3E11C7, float f0x3E32458C>
+  %9 = fadd <2 x float> %8, <float f0x3FB6E02B, float f0x3F813CED>
+  %10 = fmul <2 x float> %7, %9
+  %11 = fadd <2 x float> %10, <float f0xB5F85AB0, float f0x3F7D8625> ; 2 uses
+  %12 = extractelement <2 x float> %11, i64 0
+  %13 = extractelement <2 x float> %11, i64 1
+  %i.hu = fdiv float %12, %13
   %i.hv = extractelement <4 x i32> %i.ho, i64 0
   %i.hw = ashr i32 %i.hv, 23
   %i.hx = sitofp i32 %i.hw to float

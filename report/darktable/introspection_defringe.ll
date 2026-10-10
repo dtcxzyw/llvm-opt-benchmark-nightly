@@ -204,7 +204,7 @@ vec.epilog.middle.block722:                       ; preds = %vec.epilog.vector.b
 ._crit_edge401:                                   ; preds = %bb.n, %._crit_edge336
   %.4 = phi nsz float [ %i.od, %._crit_edge336 ], [ %.3352, %bb.n ] ; 5 uses
   %.0270 = phi nsz float [ %i.ok, %._crit_edge336 ], [ %.0273, %bb.n ] ; 9 uses
-  %i.pb = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.kl ; 4 uses
+  %i.pb = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.kl ; 3 uses
   %i.pc = fcmp reassoc nsz arcp contract afn ogt float %i.ko, %.0270
   br i1 %i.pc, label %bb.w, label %bb.o
 
@@ -391,9 +391,11 @@ middle.block580:                                  ; preds = %vector.body550
   %bin.rdx581 = fadd reassoc nsz arcp contract afn <8 x float> %i.sx, %i.sw
   %i.sz = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %bin.rdx581) ; 3 uses
   %bin.rdx582 = fadd reassoc nsz arcp contract afn <8 x float> %i.sv, %i.su
-  %i.ta = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %bin.rdx582) ; 3 uses
+  %i.ta = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %bin.rdx582) ; 2 uses
   %bin.rdx583 = fadd reassoc nsz arcp contract afn <8 x float> %i.sr, %i.sq
-  %i.tb = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %bin.rdx583) ; 3 uses
+  %i.tb = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %bin.rdx583) ; 2 uses
+  %6 = insertelement <2 x float> poison, float %i.tb, i64 0
+  %7 = insertelement <2 x float> %6, float %i.ta, i64 1 ; 2 uses
   br i1 %cmp.n584, label %._crit_edge345, label %vec.epilog.iter.check591
 
 vec.epilog.iter.check591:                         ; preds = %middle.block580
@@ -457,39 +459,37 @@ vec.epilog.vector.body611:                        ; preds = %vec.epilog.vector.b
 
 vec.epilog.middle.block628:                       ; preds = %vec.epilog.vector.body611
   %i.uc = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %i.ua) ; 2 uses
-  %i.ud = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %i.tz) ; 2 uses
-  %i.ue = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %i.tx) ; 2 uses
+  %i.ud = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %i.tz)
+  %i.ue = call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %i.tx)
+  %8 = insertelement <2 x float> poison, float %i.ue, i64 0
+  %9 = insertelement <2 x float> %8, float %i.ud, i64 1 ; 2 uses
   br i1 %cmp.n629, label %._crit_edge345, label %.lr.ph344.preheader
 
 .lr.ph344.preheader:                              ; preds = %iter.check589, %vec.epilog.iter.check591, %vec.epilog.middle.block628
   %indvars.iv386.ph = phi i64 [ 0, %iter.check589 ], [ %n.vec533, %vec.epilog.iter.check591 ], [ %n.vec594, %vec.epilog.middle.block628 ]
   %.0265341.ph = phi float [ 0.000000e+00, %iter.check589 ], [ %i.sz, %vec.epilog.iter.check591 ], [ %i.uc, %vec.epilog.middle.block628 ]
-  %.0266340.ph = phi float [ 0.000000e+00, %iter.check589 ], [ %i.ta, %vec.epilog.iter.check591 ], [ %i.ud, %vec.epilog.middle.block628 ]
-  %.0267339.ph = phi float [ 0.000000e+00, %iter.check589 ], [ %i.tb, %vec.epilog.iter.check591 ], [ %i.ue, %vec.epilog.middle.block628 ]
+  %.ph = phi <2 x float> [ zeroinitializer, %iter.check589 ], [ %7, %vec.epilog.iter.check591 ], [ %9, %vec.epilog.middle.block628 ]
   %i.uf = insertelement <2 x i32> %i.kj, i32 %i.re, i64 0
   br label %.lr.ph344
 
 ._crit_edge345:                                   ; preds = %.lr.ph344, %middle.block580, %vec.epilog.middle.block628, %bb.w
-  %.0267.lcssa = phi float [ 0.000000e+00, %bb.w ], [ %i.ue, %vec.epilog.middle.block628 ], [ %i.tb, %middle.block580 ], [ %11, %.lr.ph344 ]
-  %.0266.lcssa = phi float [ 0.000000e+00, %bb.w ], [ %i.ud, %vec.epilog.middle.block628 ], [ %i.ta, %middle.block580 ], [ %15, %.lr.ph344 ]
-  %.0265.lcssa = phi float [ 0.000000e+00, %bb.w ], [ %i.uc, %vec.epilog.middle.block628 ], [ %i.sz, %middle.block580 ], [ %i.vd, %.lr.ph344 ] ; 2 uses
-  %6 = fdiv reassoc nsz arcp contract afn float %.0267.lcssa, %.0265.lcssa
-  %7 = fdiv reassoc nsz arcp contract afn float %.0266.lcssa, %.0265.lcssa
+  %.0267.lcssa = phi float [ 0.000000e+00, %bb.w ], [ %i.uc, %vec.epilog.middle.block628 ], [ %i.sz, %middle.block580 ], [ %i.vd, %.lr.ph344 ]
+  %10 = phi <2 x float> [ zeroinitializer, %bb.w ], [ %9, %vec.epilog.middle.block628 ], [ %7, %middle.block580 ], [ %19, %.lr.ph344 ]
+  %11 = insertelement <2 x float> poison, float %.0267.lcssa, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = fdiv reassoc nsz arcp contract afn <2 x float> %10, %12
   %i.ug = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.kl
   %i.uh = load float, ptr %i.ug, align 4, !tbaa !78
   store float %i.uh, ptr %i.pb, align 4, !tbaa !78
   %i.ui = getelementptr inbounds nuw i8, ptr %i.pb, i64 4
-  store float %6, ptr %i.ui, align 4, !tbaa !78
-  %8 = getelementptr inbounds nuw i8, ptr %i.pb, i64 8
-  store float %7, ptr %8, align 4, !tbaa !78
+  store <2 x float> %13, ptr %i.ui, align 4, !tbaa !78
   %.pre403 = add nuw nsw i64 %indvars.iv391, 1
   br label %.loopexit
 
 .lr.ph344:                                        ; preds = %.lr.ph344.preheader, %.lr.ph344
   %indvars.iv386 = phi i64 [ %indvars.iv.next387, %.lr.ph344 ], [ %indvars.iv386.ph, %.lr.ph344.preheader ] ; 2 uses
-  %.0265341 = phi float [ %i.vd, %.lr.ph344 ], [ %.0265341.ph, %.lr.ph344.preheader ]
-  %.0266340 = phi float [ %15, %.lr.ph344 ], [ %.0266340.ph, %.lr.ph344.preheader ]
-  %.0267339 = phi float [ %11, %.lr.ph344 ], [ %.0267339.ph, %.lr.ph344.preheader ]
+  %.0266340 = phi float [ %i.vd, %.lr.ph344 ], [ %.0265341.ph, %.lr.ph344.preheader ]
+  %14 = phi <2 x float> [ %19, %.lr.ph344 ], [ %.ph, %.lr.ph344.preheader ]
   %.idx420 = shl nuw nsw i64 %indvars.iv386, 3
   %i.uj = getelementptr inbounds nuw i8, ptr %i.bd, i64 %.idx420
   %i.uk = load <2 x i32>, ptr %i.uj, align 4, !tbaa !77
@@ -508,17 +508,15 @@ vec.epilog.middle.block628:                       ; preds = %vec.epilog.vector.b
   %i.ux = getelementptr inbounds nuw i8, ptr %i.uw, i64 12
   %i.uy = load float, ptr %i.ux, align 4, !tbaa !78
   %i.uz = fadd reassoc nsz arcp contract afn float %i.uy, %.4
-  %i.va = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.uz ; 3 uses
-  %i.vb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.uv ; 2 uses
+  %i.va = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.uz ; 2 uses
+  %i.vb = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.uv
   %i.vc = getelementptr inbounds nuw i8, ptr %i.vb, i64 4
-  %9 = load float, ptr %i.vc, align 4, !tbaa !78
-  %10 = fmul reassoc nsz arcp contract afn float %i.va, %9
-  %11 = fadd reassoc nsz arcp contract afn float %10, %.0267339 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.vb, i64 8
-  %13 = load float, ptr %12, align 4, !tbaa !78
-  %14 = fmul reassoc nsz arcp contract afn float %i.va, %13
-  %15 = fadd reassoc nsz arcp contract afn float %14, %.0266340 ; 2 uses
-  %i.vd = fadd reassoc nsz arcp contract afn float %i.va, %.0265341 ; 2 uses
+  %15 = load <2 x float>, ptr %i.vc, align 4, !tbaa !78
+  %16 = insertelement <2 x float> poison, float %i.va, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = fmul reassoc nsz arcp contract afn <2 x float> %17, %15
+  %19 = fadd reassoc nsz arcp contract afn <2 x float> %18, %14 ; 2 uses
+  %i.vd = fadd reassoc nsz arcp contract afn float %i.va, %.0266340 ; 2 uses
   %indvars.iv.next387 = add nuw nsw i64 %indvars.iv386, 1 ; 2 uses
   %exitcond390.not = icmp eq i64 %indvars.iv.next387, %wide.trip.count389
   br i1 %exitcond390.not, label %._crit_edge345, label %.lr.ph344, !llvm.loop !74

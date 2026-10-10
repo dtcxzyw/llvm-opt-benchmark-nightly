@@ -189,7 +189,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 9 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %3 = alloca %struct.attr_state_t, align 8       ; 45 uses
-  %4 = alloca [4 x %struct.pointf_s], align 16    ; 9 uses
+  %4 = alloca [4 x %struct.pointf_s], align 16    ; 8 uses
   %5 = alloca %struct.pathend_t, align 8          ; 9 uses
   %6 = alloca %struct.pathend_t, align 8          ; 9 uses
   %7 = alloca [7 x %struct.pointf_s], align 16    ; 12 uses
@@ -592,49 +592,48 @@ place_vnlabel.exit:                               ; preds = %bb.bc, %bb.az, %.lr
   %.sroa.248.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 4 uses
   %i.ph = icmp eq i16 %i.n, 6
   %i.pi = zext i1 %i.ph to i32                    ; 3 uses
-  %36 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.pj = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.pk = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.pl = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.pm = getelementptr inbounds nuw i8, ptr %3, i64 40
-  %i.pn = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.po = getelementptr inbounds nuw i8, ptr %3, i64 56
-  %i.pp = getelementptr inbounds nuw i8, ptr %3, i64 64
-  %i.pq = getelementptr inbounds nuw i8, ptr %3, i64 72
-  %i.pr = getelementptr inbounds nuw i8, ptr %3, i64 80
-  %i.ps = getelementptr inbounds nuw i8, ptr %3, i64 88
-  %i.pt = getelementptr inbounds nuw i8, ptr %3, i64 96
-  %i.pu = getelementptr inbounds nuw i8, ptr %3, i64 104
-  %i.pv = getelementptr inbounds nuw i8, ptr %3, i64 112
-  %i.pw = getelementptr inbounds nuw i8, ptr %3, i64 120
-  %i.px = getelementptr inbounds nuw i8, ptr %3, i64 128
-  %i.py = getelementptr inbounds nuw i8, ptr %3, i64 136
-  %i.pz = getelementptr inbounds nuw i8, ptr %3, i64 144
-  %i.qa = getelementptr inbounds nuw i8, ptr %3, i64 152
-  %i.qb = getelementptr inbounds nuw i8, ptr %3, i64 160
-  %i.qc = getelementptr inbounds nuw i8, ptr %3, i64 168
-  %i.qd = getelementptr inbounds nuw i8, ptr %3, i64 176
-  %i.qe = getelementptr inbounds nuw i8, ptr %3, i64 184
-  %i.qf = getelementptr inbounds nuw i8, ptr %3, i64 192
-  %i.qg = getelementptr inbounds nuw i8, ptr %3, i64 200
-  %i.qh = getelementptr inbounds nuw i8, ptr %3, i64 208
-  %i.qi = getelementptr inbounds nuw i8, ptr %3, i64 216
-  %i.qj = getelementptr inbounds nuw i8, ptr %3, i64 224
-  %i.qk = getelementptr inbounds nuw i8, ptr %3, i64 232
-  %i.ql = getelementptr inbounds nuw i8, ptr %3, i64 240
-  %i.qm = getelementptr inbounds nuw i8, ptr %3, i64 248
-  %i.qn = getelementptr inbounds nuw i8, ptr %3, i64 256
-  %i.qo = getelementptr inbounds nuw i8, ptr %3, i64 264
-  %i.qp = getelementptr inbounds nuw i8, ptr %3, i64 272
-  %i.qq = getelementptr inbounds nuw i8, ptr %3, i64 280
-  %i.qr = getelementptr inbounds nuw i8, ptr %3, i64 288
-  %i.qs = getelementptr inbounds nuw i8, ptr %3, i64 296
-  %i.qt = getelementptr inbounds nuw i8, ptr %3, i64 312
-  %i.qu = getelementptr inbounds nuw i8, ptr %3, i64 304
-  %i.qv = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.qw = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.qx = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %.sroa.43.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 56
+  %i.pj = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.pk = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.pl = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.pm = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.pn = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %i.po = getelementptr inbounds nuw i8, ptr %3, i64 48
+  %i.pp = getelementptr inbounds nuw i8, ptr %3, i64 56
+  %i.pq = getelementptr inbounds nuw i8, ptr %3, i64 64
+  %i.pr = getelementptr inbounds nuw i8, ptr %3, i64 72
+  %i.ps = getelementptr inbounds nuw i8, ptr %3, i64 80
+  %i.pt = getelementptr inbounds nuw i8, ptr %3, i64 88
+  %i.pu = getelementptr inbounds nuw i8, ptr %3, i64 96
+  %i.pv = getelementptr inbounds nuw i8, ptr %3, i64 104
+  %i.pw = getelementptr inbounds nuw i8, ptr %3, i64 112
+  %i.px = getelementptr inbounds nuw i8, ptr %3, i64 120
+  %i.py = getelementptr inbounds nuw i8, ptr %3, i64 128
+  %i.pz = getelementptr inbounds nuw i8, ptr %3, i64 136
+  %i.qa = getelementptr inbounds nuw i8, ptr %3, i64 144
+  %i.qb = getelementptr inbounds nuw i8, ptr %3, i64 152
+  %i.qc = getelementptr inbounds nuw i8, ptr %3, i64 160
+  %i.qd = getelementptr inbounds nuw i8, ptr %3, i64 168
+  %i.qe = getelementptr inbounds nuw i8, ptr %3, i64 176
+  %i.qf = getelementptr inbounds nuw i8, ptr %3, i64 184
+  %i.qg = getelementptr inbounds nuw i8, ptr %3, i64 192
+  %i.qh = getelementptr inbounds nuw i8, ptr %3, i64 200
+  %i.qi = getelementptr inbounds nuw i8, ptr %3, i64 208
+  %i.qj = getelementptr inbounds nuw i8, ptr %3, i64 216
+  %i.qk = getelementptr inbounds nuw i8, ptr %3, i64 224
+  %i.ql = getelementptr inbounds nuw i8, ptr %3, i64 232
+  %i.qm = getelementptr inbounds nuw i8, ptr %3, i64 240
+  %i.qn = getelementptr inbounds nuw i8, ptr %3, i64 248
+  %i.qo = getelementptr inbounds nuw i8, ptr %3, i64 256
+  %i.qp = getelementptr inbounds nuw i8, ptr %3, i64 264
+  %i.qq = getelementptr inbounds nuw i8, ptr %3, i64 272
+  %i.qr = getelementptr inbounds nuw i8, ptr %3, i64 280
+  %i.qs = getelementptr inbounds nuw i8, ptr %3, i64 288
+  %i.qt = getelementptr inbounds nuw i8, ptr %3, i64 296
+  %i.qu = getelementptr inbounds nuw i8, ptr %3, i64 312
+  %i.qv = getelementptr inbounds nuw i8, ptr %3, i64 304
+  %i.qw = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.qx = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %.sroa.43.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 48
   %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.qy = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.qz = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 3 uses
@@ -1037,83 +1036,83 @@ bb.dy:                                            ; preds = %bb.dx, %bb.dw
   %i.apr = load ptr, ptr @E_constr, align 8, !tbaa !110
   store ptr %i.apr, ptr %3, align 8, !tbaa !112
   %i.aps = load ptr, ptr @E_dir, align 8, !tbaa !110
-  store ptr %i.aps, ptr %36, align 8, !tbaa !113
+  store ptr %i.aps, ptr %i.pj, align 8, !tbaa !113
   %i.apt = load ptr, ptr @E_samehead, align 8, !tbaa !110
-  store ptr %i.apt, ptr %i.pj, align 8, !tbaa !114
+  store ptr %i.apt, ptr %i.pk, align 8, !tbaa !114
   %i.apu = load ptr, ptr @E_sametail, align 8, !tbaa !110
-  store ptr %i.apu, ptr %i.pk, align 8, !tbaa !115
+  store ptr %i.apu, ptr %i.pl, align 8, !tbaa !115
   %i.apv = load ptr, ptr @E_weight, align 8, !tbaa !110
-  store ptr %i.apv, ptr %i.pl, align 8, !tbaa !116
+  store ptr %i.apv, ptr %i.pm, align 8, !tbaa !116
   %i.apw = load ptr, ptr @E_minlen, align 8, !tbaa !110
-  store ptr %i.apw, ptr %i.pm, align 8, !tbaa !117
+  store ptr %i.apw, ptr %i.pn, align 8, !tbaa !117
   %i.apx = load ptr, ptr @E_fontcolor, align 8, !tbaa !110
-  store ptr %i.apx, ptr %i.pn, align 8, !tbaa !118
+  store ptr %i.apx, ptr %i.po, align 8, !tbaa !118
   %i.apy = load ptr, ptr @E_fontname, align 8, !tbaa !110
-  store ptr %i.apy, ptr %i.po, align 8, !tbaa !119
+  store ptr %i.apy, ptr %i.pp, align 8, !tbaa !119
   %i.apz = load ptr, ptr @E_fontsize, align 8, !tbaa !110
-  store ptr %i.apz, ptr %i.pp, align 8, !tbaa !120
+  store ptr %i.apz, ptr %i.pq, align 8, !tbaa !120
   %i.aqa = load ptr, ptr @E_headclip, align 8, !tbaa !110
-  store ptr %i.aqa, ptr %i.pq, align 8, !tbaa !121
+  store ptr %i.aqa, ptr %i.pr, align 8, !tbaa !121
   %i.aqb = load ptr, ptr @E_headlabel, align 8, !tbaa !110
-  store ptr %i.aqb, ptr %i.pr, align 8, !tbaa !122
+  store ptr %i.aqb, ptr %i.ps, align 8, !tbaa !122
   %i.aqc = load ptr, ptr @E_label, align 8, !tbaa !110
-  store ptr %i.aqc, ptr %i.ps, align 8, !tbaa !123
+  store ptr %i.aqc, ptr %i.pt, align 8, !tbaa !123
   %i.aqd = load ptr, ptr @E_label_float, align 8, !tbaa !110
-  store ptr %i.aqd, ptr %i.pt, align 8, !tbaa !124
+  store ptr %i.aqd, ptr %i.pu, align 8, !tbaa !124
   %i.aqe = load ptr, ptr @E_labelfontcolor, align 8, !tbaa !110
-  store ptr %i.aqe, ptr %i.pu, align 8, !tbaa !125
+  store ptr %i.aqe, ptr %i.pv, align 8, !tbaa !125
   %i.aqf = load ptr, ptr @E_labelfontname, align 8, !tbaa !110
-  store ptr %i.aqf, ptr %i.pv, align 8, !tbaa !126
+  store ptr %i.aqf, ptr %i.pw, align 8, !tbaa !126
   %i.aqg = load ptr, ptr @E_labelfontsize, align 8, !tbaa !110
-  store ptr %i.aqg, ptr %i.pw, align 8, !tbaa !127
+  store ptr %i.aqg, ptr %i.px, align 8, !tbaa !127
   %i.aqh = load ptr, ptr @E_tailclip, align 8, !tbaa !110
-  store ptr %i.aqh, ptr %i.px, align 8, !tbaa !128
+  store ptr %i.aqh, ptr %i.py, align 8, !tbaa !128
   %i.aqi = load ptr, ptr @E_taillabel, align 8, !tbaa !110
-  store ptr %i.aqi, ptr %i.py, align 8, !tbaa !129
+  store ptr %i.aqi, ptr %i.pz, align 8, !tbaa !129
   %i.aqj = load ptr, ptr @E_xlabel, align 8, !tbaa !110
-  store ptr %i.aqj, ptr %i.pz, align 8, !tbaa !130
+  store ptr %i.aqj, ptr %i.qa, align 8, !tbaa !130
   %i.aqk = load ptr, ptr @N_height, align 8, !tbaa !110
-  store ptr %i.aqk, ptr %i.qa, align 8, !tbaa !131
+  store ptr %i.aqk, ptr %i.qb, align 8, !tbaa !131
   %i.aql = load ptr, ptr @N_width, align 8, !tbaa !110
-  store ptr %i.aql, ptr %i.qb, align 8, !tbaa !132
+  store ptr %i.aql, ptr %i.qc, align 8, !tbaa !132
   %i.aqm = load ptr, ptr @N_shape, align 8, !tbaa !110
-  store ptr %i.aqm, ptr %i.qc, align 8, !tbaa !133
+  store ptr %i.aqm, ptr %i.qd, align 8, !tbaa !133
   %i.aqn = load ptr, ptr @N_style, align 8, !tbaa !110
-  store ptr %i.aqn, ptr %i.qd, align 8, !tbaa !134
+  store ptr %i.aqn, ptr %i.qe, align 8, !tbaa !134
   %i.aqo = load ptr, ptr @N_fontsize, align 8, !tbaa !110
-  store ptr %i.aqo, ptr %i.qe, align 8, !tbaa !135
+  store ptr %i.aqo, ptr %i.qf, align 8, !tbaa !135
   %i.aqp = load ptr, ptr @N_fontname, align 8, !tbaa !110
-  store ptr %i.aqp, ptr %i.qf, align 8, !tbaa !136
+  store ptr %i.aqp, ptr %i.qg, align 8, !tbaa !136
   %i.aqq = load ptr, ptr @N_fontcolor, align 8, !tbaa !110
-  store ptr %i.aqq, ptr %i.qg, align 8, !tbaa !137
+  store ptr %i.aqq, ptr %i.qh, align 8, !tbaa !137
   %i.aqr = load ptr, ptr @N_label, align 8, !tbaa !110
-  store ptr %i.aqr, ptr %i.qh, align 8, !tbaa !138
+  store ptr %i.aqr, ptr %i.qi, align 8, !tbaa !138
   %i.aqs = load ptr, ptr @N_xlabel, align 8, !tbaa !110
-  store ptr %i.aqs, ptr %i.qi, align 8, !tbaa !139
+  store ptr %i.aqs, ptr %i.qj, align 8, !tbaa !139
   %i.aqt = load ptr, ptr @N_showboxes, align 8, !tbaa !110
-  store ptr %i.aqt, ptr %i.qj, align 8, !tbaa !140
+  store ptr %i.aqt, ptr %i.qk, align 8, !tbaa !140
   %i.aqu = load ptr, ptr @N_ordering, align 8, !tbaa !110
-  store ptr %i.aqu, ptr %i.qk, align 8, !tbaa !141
+  store ptr %i.aqu, ptr %i.ql, align 8, !tbaa !141
   %i.aqv = load ptr, ptr @N_sides, align 8, !tbaa !110
-  store ptr %i.aqv, ptr %i.ql, align 8, !tbaa !142
+  store ptr %i.aqv, ptr %i.qm, align 8, !tbaa !142
   %i.aqw = load ptr, ptr @N_peripheries, align 8, !tbaa !110
-  store ptr %i.aqw, ptr %i.qm, align 8, !tbaa !143
+  store ptr %i.aqw, ptr %i.qn, align 8, !tbaa !143
   %i.aqx = load ptr, ptr @N_skew, align 8, !tbaa !110
-  store ptr %i.aqx, ptr %i.qn, align 8, !tbaa !144
+  store ptr %i.aqx, ptr %i.qo, align 8, !tbaa !144
   %i.aqy = load ptr, ptr @N_orientation, align 8, !tbaa !110
-  store ptr %i.aqy, ptr %i.qo, align 8, !tbaa !145
+  store ptr %i.aqy, ptr %i.qp, align 8, !tbaa !145
   %i.aqz = load ptr, ptr @N_distortion, align 8, !tbaa !110
-  store ptr %i.aqz, ptr %i.qp, align 8, !tbaa !146
+  store ptr %i.aqz, ptr %i.qq, align 8, !tbaa !146
   %i.ara = load ptr, ptr @N_fixed, align 8, !tbaa !110
-  store ptr %i.ara, ptr %i.qq, align 8, !tbaa !147
+  store ptr %i.ara, ptr %i.qr, align 8, !tbaa !147
   %i.arb = load ptr, ptr @N_nojustify, align 8, !tbaa !110
-  store ptr %i.arb, ptr %i.qr, align 8, !tbaa !148
+  store ptr %i.arb, ptr %i.qs, align 8, !tbaa !148
   %i.arc = load ptr, ptr @N_group, align 8, !tbaa !110
-  store ptr %i.arc, ptr %i.qs, align 8, !tbaa !149
+  store ptr %i.arc, ptr %i.qt, align 8, !tbaa !149
   %i.ard = load i32, ptr @State, align 4, !tbaa !103
-  store i32 %i.ard, ptr %i.qt, align 8, !tbaa !150
+  store i32 %i.ard, ptr %i.qu, align 8, !tbaa !150
   %i.are = load ptr, ptr @G_ordering, align 8, !tbaa !110
-  store ptr %i.are, ptr %i.qu, align 8, !tbaa !151
+  store ptr %i.are, ptr %i.qv, align 8, !tbaa !151
   store ptr null, ptr @E_constr, align 8, !tbaa !110
   %i.arf = call ptr @agattr_text(ptr noundef %i.ano, i32 noundef 2, ptr noundef nonnull @.str.17, ptr noundef null) #24, !inline_history !186
   store ptr %i.arf, ptr @E_dir, align 8, !tbaa !110
@@ -1427,10 +1426,12 @@ bb.et:                                            ; preds = %bb.er
 
 .lr.ph751.preheader:                              ; preds = %bb.et, %bb.es
   %.pn.in = phi ptr [ %i.awm, %bb.es ], [ %i.awl, %bb.et ]
-  %.sroa.11.0.i = phi double [ %i.awq, %bb.es ], [ %i.awv, %bb.et ] ; 7 uses
+  %.sroa.11.0.i = phi double [ %i.awq, %bb.es ], [ %i.awv, %bb.et ] ; 4 uses
   %.pn = load double, ptr %.pn.in, align 8, !tbaa !61
-  %.sroa.072.0.i = fsub double %i.awj, %.pn       ; 7 uses
+  %.sroa.072.0.i = fsub double %i.awj, %.pn       ; 4 uses
   %wide.trip.count865 = zext i32 %.0262.lcssa1037 to i64
+  %36 = insertelement <2 x double> poison, double %.sroa.072.0.i, i64 0
+  %37 = insertelement <2 x double> %36, double %.sroa.11.0.i, i64 1 ; 4 uses
   br label %.lr.ph751
 
 .lr.ph751:                                        ; preds = %.lr.ph751.preheader, %bb.ez
@@ -1516,25 +1517,22 @@ bb.ew:                                            ; preds = %bb.ev
   %.0225.i746 = phi i64 [ %i.azl, %bb.ex ], [ 0, %bb.ew ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   %i.ays = load ptr, ptr %i.axq, align 8, !tbaa !291
-  %i.ayt = getelementptr inbounds nuw [16 x i8], ptr %i.ays, i64 %.0225.i746 ; 3 uses
+  %i.ayt = getelementptr inbounds nuw [16 x i8], ptr %i.ays, i64 %.0225.i746 ; 2 uses
   %i.ayu = load ptr, ptr %i.axn, align 8, !tbaa !291
-  %i.ayv = getelementptr inbounds nuw [16 x i8], ptr %i.ayu, i64 %.0225.i746 ; 2 uses
+  %i.ayv = getelementptr inbounds nuw [16 x i8], ptr %i.ayu, i64 %.0225.i746
   %i.ayw = load ptr, ptr %i.j, align 8, !tbaa !22 ; 2 uses
   %i.ayx = getelementptr inbounds nuw i8, ptr %i.ayw, i64 132
   %i.ayy = load i32, ptr %i.ayx, align 4, !tbaa !259
   %i.ayz = and i32 %i.ayy, 1
-  %37 = load double, ptr %i.ayv, align 8          ; 2 uses
-  %38 = getelementptr inbounds nuw i8, ptr %i.ayv, i64 8
-  %39 = load double, ptr %38, align 8             ; 2 uses
-  %.not.i271.i = icmp eq i32 %i.ayz, 0            ; 8 uses
-  %40 = fneg double %37
-  %.sroa.01.0.i272.i = select i1 %.not.i271.i, double %37, double %39
-  %.sroa.4.0.i273.i = select i1 %.not.i271.i, double %39, double %40
-  %41 = fadd double %.sroa.072.0.i, %.sroa.01.0.i272.i
-  %42 = fadd double %.sroa.11.0.i, %.sroa.4.0.i273.i
-  store double %41, ptr %i.ayt, align 8, !tbaa !61
-  %.sroa.49.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ayt, i64 8
-  store double %42, ptr %.sroa.49.0..sroa_idx.i, align 8, !tbaa !61
+  %.not.i271.i = icmp eq i32 %i.ayz, 0
+  %38 = load <2 x double>, ptr %i.ayv, align 8    ; 3 uses
+  %39 = insertelement <2 x i1> poison, i1 %.not.i271.i, i64 0
+  %40 = shufflevector <2 x i1> %39, <2 x i1> poison, <2 x i32> zeroinitializer ; 4 uses
+  %41 = fneg <2 x double> %38
+  %42 = shufflevector <2 x double> %38, <2 x double> %41, <2 x i32> <i32 1, i32 2>
+  %43 = select <2 x i1> %40, <2 x double> %38, <2 x double> %42
+  %44 = fadd <2 x double> %37, %43
+  store <2 x double> %44, ptr %i.ayt, align 8, !tbaa !61
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %i.ayt, i64 16, i1 false), !tbaa.struct !258
   %i.aza = add nuw i64 %.0225.i746, 1             ; 3 uses
   %i.azb = load i64, ptr %i.axo, align 8, !tbaa !288
@@ -1547,51 +1545,37 @@ bb.ew:                                            ; preds = %bb.ev
 
 bb.ex:                                            ; preds = %.lr.ph748
   %i.azc = load ptr, ptr %i.axq, align 8, !tbaa !291
-  %i.azd = getelementptr inbounds nuw [16 x i8], ptr %i.azc, i64 %i.aza ; 3 uses
+  %i.azd = getelementptr inbounds nuw [16 x i8], ptr %i.azc, i64 %i.aza ; 2 uses
   %i.aze = load ptr, ptr %i.axn, align 8, !tbaa !291
-  %i.azf = getelementptr inbounds nuw [16 x i8], ptr %i.aze, i64 %i.aza ; 2 uses
-  %43 = load double, ptr %i.azf, align 8          ; 2 uses
-  %44 = getelementptr inbounds nuw i8, ptr %i.azf, i64 8
-  %45 = load double, ptr %44, align 8             ; 2 uses
-  %46 = fneg double %43
-  %.sroa.01.0.i277.i = select i1 %.not.i271.i, double %43, double %45
-  %.sroa.4.0.i278.i = select i1 %.not.i271.i, double %45, double %46
-  %47 = fadd double %.sroa.072.0.i, %.sroa.01.0.i277.i
-  %48 = fadd double %.sroa.11.0.i, %.sroa.4.0.i278.i
-  store double %47, ptr %i.azd, align 8, !tbaa !61
-  %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.azd, i64 8
-  store double %48, ptr %.sroa.47.0..sroa_idx.i, align 8, !tbaa !61
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.qv, ptr noundef nonnull align 8 dereferenceable(16) %i.azd, i64 16, i1 false), !tbaa.struct !258
+  %i.azf = getelementptr inbounds nuw [16 x i8], ptr %i.aze, i64 %i.aza
+  %45 = load <2 x double>, ptr %i.azf, align 8    ; 3 uses
+  %46 = fneg <2 x double> %45
+  %47 = shufflevector <2 x double> %45, <2 x double> %46, <2 x i32> <i32 1, i32 2>
+  %48 = select <2 x i1> %40, <2 x double> %45, <2 x double> %47
+  %49 = fadd <2 x double> %37, %48
+  store <2 x double> %49, ptr %i.azd, align 8, !tbaa !61
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.qw, ptr noundef nonnull align 8 dereferenceable(16) %i.azd, i64 16, i1 false), !tbaa.struct !258
   %i.azg = add nuw i64 %.0225.i746, 2             ; 2 uses
   %i.azh = load ptr, ptr %i.axq, align 8, !tbaa !291
-  %i.azi = getelementptr inbounds nuw [16 x i8], ptr %i.azh, i64 %i.azg ; 3 uses
+  %i.azi = getelementptr inbounds nuw [16 x i8], ptr %i.azh, i64 %i.azg ; 2 uses
   %i.azj = load ptr, ptr %i.axn, align 8, !tbaa !291
-  %i.azk = getelementptr inbounds nuw [16 x i8], ptr %i.azj, i64 %i.azg ; 2 uses
-  %49 = load double, ptr %i.azk, align 8          ; 2 uses
-  %50 = getelementptr inbounds nuw i8, ptr %i.azk, i64 8
-  %51 = load double, ptr %50, align 8             ; 2 uses
-  %52 = fneg double %49
-  %.sroa.01.0.i282.i = select i1 %.not.i271.i, double %49, double %51
-  %.sroa.4.0.i283.i = select i1 %.not.i271.i, double %51, double %52
-  %53 = fadd double %.sroa.072.0.i, %.sroa.01.0.i282.i
-  %54 = fadd double %.sroa.11.0.i, %.sroa.4.0.i283.i
-  store double %53, ptr %i.azi, align 8, !tbaa !61
-  %.sroa.45.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.azi, i64 8
-  store double %54, ptr %.sroa.45.0..sroa_idx.i, align 8, !tbaa !61
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.qw, ptr noundef nonnull align 8 dereferenceable(16) %i.azi, i64 16, i1 false), !tbaa.struct !258
+  %i.azk = getelementptr inbounds nuw [16 x i8], ptr %i.azj, i64 %i.azg
+  %50 = load <2 x double>, ptr %i.azk, align 8    ; 3 uses
+  %51 = fneg <2 x double> %50
+  %52 = shufflevector <2 x double> %50, <2 x double> %51, <2 x i32> <i32 1, i32 2>
+  %53 = select <2 x i1> %40, <2 x double> %50, <2 x double> %52
+  %54 = fadd <2 x double> %37, %53
+  store <2 x double> %54, ptr %i.azi, align 8, !tbaa !61
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.qx, ptr noundef nonnull align 8 dereferenceable(16) %i.azi, i64 16, i1 false), !tbaa.struct !258
   %i.azl = add i64 %.0225.i746, 3                 ; 3 uses
   %i.azm = load ptr, ptr %i.axn, align 8, !tbaa !291
-  %i.azn = getelementptr inbounds nuw [16 x i8], ptr %i.azm, i64 %i.azl ; 2 uses
-  %55 = load double, ptr %i.azn, align 8          ; 2 uses
-  %56 = getelementptr inbounds nuw i8, ptr %i.azn, i64 8
-  %57 = load double, ptr %56, align 8             ; 2 uses
-  %58 = fneg double %55
-  %.sroa.01.0.i287.i = select i1 %.not.i271.i, double %55, double %57
-  %.sroa.4.0.i288.i = select i1 %.not.i271.i, double %57, double %58
-  %59 = fadd double %.sroa.072.0.i, %.sroa.01.0.i287.i
-  %60 = fadd double %.sroa.11.0.i, %.sroa.4.0.i288.i
-  store double %59, ptr %i.qx, align 16, !tbaa !61
-  store double %60, ptr %.sroa.43.0..sroa_idx.i, align 8, !tbaa !61
+  %i.azn = getelementptr inbounds nuw [16 x i8], ptr %i.azm, i64 %i.azl
+  %55 = load <2 x double>, ptr %i.azn, align 8    ; 3 uses
+  %56 = fneg <2 x double> %55
+  %57 = shufflevector <2 x double> %55, <2 x double> %56, <2 x i32> <i32 1, i32 2>
+  %58 = select <2 x i1> %40, <2 x double> %55, <2 x double> %57
+  %59 = fadd <2 x double> %37, %58
+  store <2 x double> %59, ptr %.sroa.43.0..sroa_idx.i, align 16, !tbaa !61
   %i.azo = getelementptr inbounds nuw i8, ptr %i.ayw, i64 32
   call void @update_bb_bz(ptr noundef nonnull %i.azo, ptr noundef nonnull %4) #24, !inline_history !186
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24

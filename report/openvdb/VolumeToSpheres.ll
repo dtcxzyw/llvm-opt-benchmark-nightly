@@ -205,7 +205,7 @@ bb.ga:                                            ; preds = %bb.fz
 
 bb.gb:                                            ; preds = %bb.ga, %bb.fz
   %.sroa.13708.3 = phi double [ %i.asg, %bb.ga ], [ %.sroa.13708.2, %bb.fz ] ; 2 uses
-  %.sroa.22709.5 = phi double [ %i.asm, %bb.ga ], [ %.sroa.22709.4, %bb.fz ] ; 2 uses
+  %.sroa.22709.5 = phi double [ %i.asm, %bb.ga ], [ %.sroa.22709.4, %bb.fz ]
   %.7.i412 = phi i32 [ %i.asn, %bb.ga ], [ %.6.i411, %bb.fz ] ; 2 uses
   %i.aso = load i8, ptr %i.alr, align 1, !tbaa !548, !noalias !9758
   %i.asp = icmp eq i8 %i.aso, %.lcssa.i
@@ -241,10 +241,12 @@ bb.ge:                                            ; preds = %bb.gd
 
 bb.gf:                                            ; preds = %bb.ge, %bb.gd
   %.sroa.0707.6 = phi double [ %i.asz, %bb.ge ], [ %.sroa.0707.5, %bb.gd ] ; 2 uses
-  %.sroa.13708.5 = phi double [ %i.atf, %bb.ge ], [ %.sroa.13708.4, %bb.gd ] ; 2 uses
+  %.sroa.13708.5 = phi double [ %i.atf, %bb.ge ], [ %.sroa.13708.4, %bb.gd ]
   %.9.i414 = phi i32 [ %i.atg, %bb.ge ], [ %.8.i413, %bb.gd ] ; 2 uses
   %i.ath = load i8, ptr %i.alv, align 1, !tbaa !548, !noalias !9758
   %i.ati = icmp eq i8 %i.ath, %.lcssa.i
+  %24 = insertelement <2 x double> poison, double %.sroa.13708.5, i64 0
+  %25 = insertelement <2 x double> %24, double %.sroa.22709.5, i64 1 ; 2 uses
   br i1 %i.ati, label %bb.gg, label %bb.gh
 
 bb.gg:                                            ; preds = %bb.gf
@@ -254,16 +256,15 @@ bb.gg:                                            ; preds = %bb.gf
   %i.atm = fsub double %i.ak, %i.atk
   %i.atn = fsub double %i.atl, %i.atk
   %i.ato = fdiv double %i.atm, %i.atn
-  %24 = fadd double %.sroa.13708.5, %i.ato
-  %25 = fadd double %.sroa.22709.5, 1.000000e+00
+  %26 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.ato, i64 0
+  %27 = fadd <2 x double> %25, %26
   %i.atp = add nuw nsw i32 %.9.i414, 1
   br label %bb.gh
 
 bb.gh:                                            ; preds = %bb.gg, %bb.gf
   %.sroa.0707.7 = phi double [ %i.atj, %bb.gg ], [ %.sroa.0707.6, %bb.gf ] ; 2 uses
-  %.sroa.13708.6 = phi double [ %24, %bb.gg ], [ %.sroa.13708.5, %bb.gf ] ; 2 uses
-  %.sroa.22709.6 = phi double [ %25, %bb.gg ], [ %.sroa.22709.5, %bb.gf ] ; 2 uses
   %.10.i415 = phi i32 [ %i.atp, %bb.gg ], [ %.9.i414, %bb.gf ] ; 2 uses
+  %28 = phi <2 x double> [ %27, %bb.gg ], [ %25, %bb.gf ] ; 2 uses
   %i.atq = load i8, ptr %i.alx, align 1, !tbaa !548, !noalias !9758
   %i.atr = icmp eq i8 %i.atq, %.lcssa.i
   br i1 %i.atr, label %bb.gi, label %bb.gj
@@ -274,36 +275,33 @@ bb.gi:                                            ; preds = %bb.gh
   %i.atu = fsub double %i.ak, %i.ats
   %i.atv = fsub double %i.att, %i.ats
   %i.atw = fdiv double %i.atu, %i.atv
-  %26 = fadd double %.sroa.13708.6, %i.atw
-  %27 = fadd double %.sroa.22709.6, 1.000000e+00
+  %29 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.atw, i64 0
+  %30 = fadd <2 x double> %28, %29
   %i.atx = add nuw nsw i32 %.10.i415, 1
   br label %bb.gj
 
 bb.gj:                                            ; preds = %bb.gi, %bb.gh
-  %.sroa.13708.7 = phi double [ %26, %bb.gi ], [ %.sroa.13708.6, %bb.gh ] ; 2 uses
-  %.sroa.22709.7 = phi double [ %27, %bb.gi ], [ %.sroa.22709.6, %bb.gh ] ; 2 uses
   %.11.i416 = phi i32 [ %i.atx, %bb.gi ], [ %.10.i415, %bb.gh ] ; 2 uses
+  %31 = phi <2 x double> [ %30, %bb.gi ], [ %28, %bb.gh ] ; 2 uses
   %i.aty = icmp samesign ugt i32 %.11.i416, 1
   br i1 %i.aty, label %bb.gk, label %.noexc290
 
 bb.gk:                                            ; preds = %bb.gj
   %i.atz = uitofp nneg i32 %.11.i416 to double
-  %i.aua = fdiv double 1.000000e+00, %i.atz       ; 3 uses
+  %i.aua = fdiv double 1.000000e+00, %i.atz       ; 2 uses
   %i.aub = fmul double %.sroa.0707.7, %i.aua
-  %28 = fmul double %.sroa.13708.7, %i.aua
-  %29 = fmul double %.sroa.22709.7, %i.aua
+  %32 = insertelement <2 x double> poison, double %i.aua, i64 0
+  %33 = shufflevector <2 x double> %32, <2 x double> poison, <2 x i32> zeroinitializer
+  %34 = fmul <2 x double> %31, %33
   br label %.noexc290
 
 .noexc290:                                        ; preds = %bb.gk, %bb.gj
   %.sroa.0707.8 = phi double [ %i.aub, %bb.gk ], [ %.sroa.0707.7, %bb.gj ]
-  %.sroa.13708.8 = phi double [ %28, %bb.gk ], [ %.sroa.13708.7, %bb.gj ]
-  %.sroa.22709.8 = phi double [ %29, %bb.gk ], [ %.sroa.22709.7, %bb.gj ]
-  %i.auc = getelementptr inbounds nuw [24 x i8], ptr %13, i64 %.04046.i ; 3 uses
+  %35 = phi <2 x double> [ %34, %bb.gk ], [ %31, %bb.gj ]
+  %i.auc = getelementptr inbounds nuw [24 x i8], ptr %13, i64 %.04046.i ; 2 uses
   store double %.sroa.0707.8, ptr %i.auc, align 8
-  %.sroa.13708.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.auc, i64 8
-  store double %.sroa.13708.8, ptr %.sroa.13708.0..sroa_idx, align 8
-  %.sroa.22709.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.auc, i64 16
-  store double %.sroa.22709.8, ptr %.sroa.22709.0..sroa_idx, align 8
+  %.sroa.22709.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.auc, i64 8
+  store <2 x double> %35, ptr %.sroa.22709.0..sroa_idx, align 8
   %i.aud = getelementptr inbounds nuw i8, ptr %14, i64 %.04046.i
   store i8 0, ptr %i.aud, align 1, !tbaa !670
   br label %bb.gm
@@ -706,7 +704,7 @@ bb.ga:                                            ; preds = %bb.fz
 
 bb.gb:                                            ; preds = %bb.ga, %bb.fz
   %.sroa.13708.3 = phi double [ %i.ate, %bb.ga ], [ %.sroa.13708.2, %bb.fz ] ; 2 uses
-  %.sroa.22709.5 = phi double [ %i.atk, %bb.ga ], [ %.sroa.22709.4, %bb.fz ] ; 2 uses
+  %.sroa.22709.5 = phi double [ %i.atk, %bb.ga ], [ %.sroa.22709.4, %bb.fz ]
   %.7.i412 = phi i32 [ %i.atl, %bb.ga ], [ %.6.i411, %bb.fz ] ; 2 uses
   %i.atm = load i8, ptr %i.amp, align 1, !tbaa !548, !noalias !11402
   %i.atn = icmp eq i8 %i.atm, %.lcssa.i
@@ -742,10 +740,12 @@ bb.ge:                                            ; preds = %bb.gd
 
 bb.gf:                                            ; preds = %bb.ge, %bb.gd
   %.sroa.0707.6 = phi double [ %i.atx, %bb.ge ], [ %.sroa.0707.5, %bb.gd ] ; 2 uses
-  %.sroa.13708.5 = phi double [ %i.aud, %bb.ge ], [ %.sroa.13708.4, %bb.gd ] ; 2 uses
+  %.sroa.13708.5 = phi double [ %i.aud, %bb.ge ], [ %.sroa.13708.4, %bb.gd ]
   %.9.i414 = phi i32 [ %i.aue, %bb.ge ], [ %.8.i413, %bb.gd ] ; 2 uses
   %i.auf = load i8, ptr %i.amt, align 1, !tbaa !548, !noalias !11402
   %i.aug = icmp eq i8 %i.auf, %.lcssa.i
+  %24 = insertelement <2 x double> poison, double %.sroa.13708.5, i64 0
+  %25 = insertelement <2 x double> %24, double %.sroa.22709.5, i64 1 ; 2 uses
   br i1 %i.aug, label %bb.gg, label %bb.gh
 
 bb.gg:                                            ; preds = %bb.gf
@@ -755,16 +755,15 @@ bb.gg:                                            ; preds = %bb.gf
   %i.auk = fsub double %i.ak, %i.aui
   %i.aul = fsub double %i.auj, %i.aui
   %i.aum = fdiv double %i.auk, %i.aul
-  %24 = fadd double %.sroa.13708.5, %i.aum
-  %25 = fadd double %.sroa.22709.5, 1.000000e+00
+  %26 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.aum, i64 0
+  %27 = fadd <2 x double> %25, %26
   %i.aun = add nuw nsw i32 %.9.i414, 1
   br label %bb.gh
 
 bb.gh:                                            ; preds = %bb.gg, %bb.gf
   %.sroa.0707.7 = phi double [ %i.auh, %bb.gg ], [ %.sroa.0707.6, %bb.gf ] ; 2 uses
-  %.sroa.13708.6 = phi double [ %24, %bb.gg ], [ %.sroa.13708.5, %bb.gf ] ; 2 uses
-  %.sroa.22709.6 = phi double [ %25, %bb.gg ], [ %.sroa.22709.5, %bb.gf ] ; 2 uses
   %.10.i415 = phi i32 [ %i.aun, %bb.gg ], [ %.9.i414, %bb.gf ] ; 2 uses
+  %28 = phi <2 x double> [ %27, %bb.gg ], [ %25, %bb.gf ] ; 2 uses
   %i.auo = load i8, ptr %i.amv, align 1, !tbaa !548, !noalias !11402
   %i.aup = icmp eq i8 %i.auo, %.lcssa.i
   br i1 %i.aup, label %bb.gi, label %bb.gj
@@ -775,36 +774,33 @@ bb.gi:                                            ; preds = %bb.gh
   %i.aus = fsub double %i.ak, %i.auq
   %i.aut = fsub double %i.aur, %i.auq
   %i.auu = fdiv double %i.aus, %i.aut
-  %26 = fadd double %.sroa.13708.6, %i.auu
-  %27 = fadd double %.sroa.22709.6, 1.000000e+00
+  %29 = insertelement <2 x double> <double poison, double 1.000000e+00>, double %i.auu, i64 0
+  %30 = fadd <2 x double> %28, %29
   %i.auv = add nuw nsw i32 %.10.i415, 1
   br label %bb.gj
 
 bb.gj:                                            ; preds = %bb.gi, %bb.gh
-  %.sroa.13708.7 = phi double [ %26, %bb.gi ], [ %.sroa.13708.6, %bb.gh ] ; 2 uses
-  %.sroa.22709.7 = phi double [ %27, %bb.gi ], [ %.sroa.22709.6, %bb.gh ] ; 2 uses
   %.11.i416 = phi i32 [ %i.auv, %bb.gi ], [ %.10.i415, %bb.gh ] ; 2 uses
+  %31 = phi <2 x double> [ %30, %bb.gi ], [ %28, %bb.gh ] ; 2 uses
   %i.auw = icmp samesign ugt i32 %.11.i416, 1
   br i1 %i.auw, label %bb.gk, label %.noexc290
 
 bb.gk:                                            ; preds = %bb.gj
   %i.aux = uitofp nneg i32 %.11.i416 to double
-  %i.auy = fdiv double 1.000000e+00, %i.aux       ; 3 uses
+  %i.auy = fdiv double 1.000000e+00, %i.aux       ; 2 uses
   %i.auz = fmul double %.sroa.0707.7, %i.auy
-  %28 = fmul double %.sroa.13708.7, %i.auy
-  %29 = fmul double %.sroa.22709.7, %i.auy
+  %32 = insertelement <2 x double> poison, double %i.auy, i64 0
+  %33 = shufflevector <2 x double> %32, <2 x double> poison, <2 x i32> zeroinitializer
+  %34 = fmul <2 x double> %31, %33
   br label %.noexc290
 
 .noexc290:                                        ; preds = %bb.gk, %bb.gj
   %.sroa.0707.8 = phi double [ %i.auz, %bb.gk ], [ %.sroa.0707.7, %bb.gj ]
-  %.sroa.13708.8 = phi double [ %28, %bb.gk ], [ %.sroa.13708.7, %bb.gj ]
-  %.sroa.22709.8 = phi double [ %29, %bb.gk ], [ %.sroa.22709.7, %bb.gj ]
-  %i.ava = getelementptr inbounds nuw [24 x i8], ptr %13, i64 %.04046.i ; 3 uses
+  %35 = phi <2 x double> [ %34, %bb.gk ], [ %31, %bb.gj ]
+  %i.ava = getelementptr inbounds nuw [24 x i8], ptr %13, i64 %.04046.i ; 2 uses
   store double %.sroa.0707.8, ptr %i.ava, align 8
-  %.sroa.13708.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ava, i64 8
-  store double %.sroa.13708.8, ptr %.sroa.13708.0..sroa_idx, align 8
-  %.sroa.22709.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ava, i64 16
-  store double %.sroa.22709.8, ptr %.sroa.22709.0..sroa_idx, align 8
+  %.sroa.22709.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ava, i64 8
+  store <2 x double> %35, ptr %.sroa.22709.0..sroa_idx, align 8
   %i.avb = getelementptr inbounds nuw i8, ptr %14, i64 %.04046.i
   store i8 0, ptr %i.avb, align 1, !tbaa !670
   br label %bb.gm

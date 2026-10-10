@@ -205,9 +205,9 @@ bb.a:
   %81 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %82 = alloca %"struct.pbrt::ImageChannelDesc", align 8 ; 11 uses
   %83 = alloca [3 x %"class.std::__cxx11::basic_string"], align 8 ; 28 uses
-  %84 = alloca %"class.pbrt::SquareMatrix", align 4 ; 13 uses
+  %84 = alloca %"class.pbrt::SquareMatrix", align 16 ; 9 uses
   %85 = alloca %"struct.pbrt::ImageChannelValues", align 8 ; 12 uses
-  %i.aj = alloca [3 x float], align 4             ; 7 uses
+  %i.aj = alloca [3 x float], align 8             ; 6 uses
   %86 = alloca %"class.pbrt::Image", align 8      ; 8 uses
   %87 = alloca %"class.std::vector.162", align 8  ; 14 uses
   %88 = alloca %"struct.pbrt::ImageChannelValues", align 8 ; 16 uses
@@ -610,19 +610,14 @@ bb.ij:                                            ; preds = %bb.ii
 
 .preheader3255.lr.ph:                             ; preds = %.preheader3256
   %i.arp = icmp sgt i32 %.sroa.0196.1, 0
-  %98 = getelementptr inbounds nuw i8, ptr %85, i64 8 ; 2 uses
-  %99 = getelementptr inbounds nuw i8, ptr %85, i64 16
-  %100 = getelementptr inbounds nuw i8, ptr %84, i64 4
-  %.sroa.gep = getelementptr inbounds nuw i8, ptr %85, i64 20
-  %101 = getelementptr inbounds nuw i8, ptr %84, i64 8
-  %.sroa.gep2486.a = getelementptr inbounds nuw i8, ptr %85, i64 24
-  %i.arq = getelementptr inbounds nuw i8, ptr %84, i64 12
-  %i.arr = getelementptr inbounds nuw i8, ptr %84, i64 16
-  %i.ars = getelementptr inbounds nuw i8, ptr %84, i64 20
-  %i.art = getelementptr inbounds nuw i8, ptr %84, i64 24
-  %i.aru = getelementptr inbounds nuw i8, ptr %84, i64 28
-  %i.arv = getelementptr inbounds nuw i8, ptr %84, i64 32
-  %i.arw = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
+  %.sroa.gep2486.a = getelementptr inbounds nuw i8, ptr %85, i64 8 ; 2 uses
+  %i.arq = getelementptr inbounds nuw i8, ptr %85, i64 16
+  %i.arr = getelementptr inbounds nuw i8, ptr %85, i64 20
+  %i.ars = getelementptr inbounds nuw i8, ptr %85, i64 24
+  %i.art = getelementptr inbounds nuw i8, ptr %84, i64 16
+  %i.aru = getelementptr inbounds nuw i8, ptr %84, i64 24
+  %i.arv = getelementptr inbounds nuw i8, ptr %84, i64 28
+  %i.arw = getelementptr inbounds nuw i8, ptr %84, i64 32
   %i.arx = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.ary = getelementptr inbounds nuw i8, ptr %85, i64 40
   %i.arz = getelementptr inbounds nuw i8, ptr %85, i64 32
@@ -660,54 +655,52 @@ bb.im:                                            ; preds = %.preheader3255, %_Z
           to label %bb.in unwind label %bb.ir
 
 bb.in:                                            ; preds = %bb.im
-  %i.asc = load ptr, ptr %98, align 8, !tbaa !192 ; 4 uses
+  %i.asc = load ptr, ptr %.sroa.gep2486.a, align 8, !tbaa !192 ; 4 uses
   %.not.i.i.i1248 = icmp eq ptr %i.asc, null      ; 3 uses
-  %i.asd = select i1 %.not.i.i.i1248, ptr %99, ptr %i.asc
-  %102 = load float, ptr %84, align 4, !tbaa !66
-  %i.ase = load float, ptr %i.asd, align 4, !tbaa !66 ; 3 uses
-  %103 = fmul float %102, %i.ase
-  %104 = fadd float %103, 0.000000e+00
-  %i.asf = load float, ptr %100, align 4, !tbaa !66
-  %.sroa.gep2485.a = getelementptr inbounds nuw i8, ptr %i.asc, i64 4
-  %.sroa.sel.a = select i1 %.not.i.i.i1248, ptr %.sroa.gep, ptr %.sroa.gep2485.a
-  %i.asg = load float, ptr %.sroa.sel.a, align 4, !tbaa !66 ; 3 uses
-  %105 = fmul float %i.asf, %i.asg
-  %106 = fadd float %104, %105
-  %i.ash = load float, ptr %101, align 4, !tbaa !66
-  %.sroa.gep2487 = getelementptr inbounds nuw i8, ptr %i.asc, i64 8
-  %.sroa.sel2488 = select i1 %.not.i.i.i1248, ptr %.sroa.gep2486.a, ptr %.sroa.gep2487
-  %i.asi = load float, ptr %.sroa.sel2488, align 4, !tbaa !66 ; 3 uses
-  %i.asj = fmul float %i.ash, %i.asi
-  %i.ask = fadd float %106, %i.asj
-  %i.asl = load float, ptr %i.arq, align 4, !tbaa !66
-  %i.asm = fmul float %i.ase, %i.asl
-  %i.asn = fadd float %i.asm, 0.000000e+00
-  %107 = load float, ptr %i.arr, align 4, !tbaa !66
-  %108 = fmul float %i.asg, %107
-  %109 = fadd float %108, %i.asn
-  %110 = load float, ptr %i.ars, align 4, !tbaa !66
-  %111 = fmul float %i.asi, %110
-  %112 = fadd float %111, %109
-  %113 = load float, ptr %i.art, align 4, !tbaa !66
-  %114 = fmul float %i.ase, %113
-  %115 = fadd float %114, 0.000000e+00
-  %116 = load float, ptr %i.aru, align 4, !tbaa !66
-  %117 = fmul float %i.asg, %116
-  %118 = fadd float %117, %115
-  %119 = load float, ptr %i.arv, align 4, !tbaa !66
-  %120 = fmul float %i.asi, %119
-  %121 = fadd float %120, %118
+  %i.asd = select i1 %.not.i.i.i1248, ptr %i.arq, ptr %i.asc
+  %i.ase = load float, ptr %i.asd, align 4, !tbaa !66 ; 2 uses
+  %.sroa.gep2485 = getelementptr inbounds nuw i8, ptr %i.asc, i64 4
+  %.sroa.sel = select i1 %.not.i.i.i1248, ptr %i.arr, ptr %.sroa.gep2485
+  %i.asf = load float, ptr %.sroa.sel, align 4, !tbaa !66 ; 2 uses
+  %.sroa.gep2485.a = getelementptr inbounds nuw i8, ptr %i.asc, i64 8
+  %.sroa.sel.a = select i1 %.not.i.i.i1248, ptr %i.ars, ptr %.sroa.gep2485.a
+  %i.asg = load float, ptr %.sroa.sel.a, align 4, !tbaa !66 ; 2 uses
+  %i.ash = load float, ptr %i.aru, align 8, !tbaa !66
+  %98 = fmul float %i.ase, %i.ash
+  %99 = fadd float %98, 0.000000e+00
+  %i.asi = load float, ptr %i.arv, align 4, !tbaa !66
+  %i.asj = fmul float %i.asf, %i.asi
+  %i.ask = fadd float %i.asj, %99
+  %i.asl = load float, ptr %i.arw, align 16, !tbaa !66
+  %i.asm = fmul float %i.asg, %i.asl
+  %i.asn = fadd float %i.asm, %i.ask
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj) #37
-  store float %i.ask, ptr %i.aj, align 4, !tbaa !66
-  store float %112, ptr %i.arw, align 4, !tbaa !66
-  store float %121, ptr %i.arx, align 4, !tbaa !66
+  %100 = load <4 x float>, ptr %84, align 16, !tbaa !66 ; 3 uses
+  %101 = insertelement <2 x float> poison, float %i.ase, i64 0
+  %102 = shufflevector <2 x float> %101, <2 x float> poison, <2 x i32> zeroinitializer
+  %103 = shufflevector <4 x float> %100, <4 x float> poison, <2 x i32> <i32 0, i32 3>
+  %104 = fmul <2 x float> %102, %103
+  %105 = fadd <2 x float> %104, zeroinitializer
+  %106 = load <4 x float>, ptr %i.art, align 16   ; 2 uses
+  %107 = insertelement <2 x float> poison, float %i.asf, i64 0
+  %108 = shufflevector <2 x float> %107, <2 x float> poison, <2 x i32> zeroinitializer
+  %109 = shufflevector <4 x float> %100, <4 x float> %106, <2 x i32> <i32 1, i32 4>
+  %110 = fmul <2 x float> %108, %109
+  %111 = fadd <2 x float> %105, %110
+  %112 = insertelement <2 x float> poison, float %i.asg, i64 0
+  %113 = shufflevector <2 x float> %112, <2 x float> poison, <2 x i32> zeroinitializer
+  %114 = shufflevector <4 x float> %100, <4 x float> %106, <2 x i32> <i32 2, i32 5>
+  %115 = fmul <2 x float> %113, %114
+  %116 = fadd <2 x float> %111, %115
+  store <2 x float> %116, ptr %i.aj, align 8, !tbaa !66
+  store float %i.asn, ptr %i.arx, align 8, !tbaa !66
   invoke void @_ZN4pbrt5Image11SetChannelsENS_6Point2IiEERKNS_16ImageChannelDescEN4pstd4spanIKfEE(ptr noundef nonnull align 8 dereferenceable(152) %67, i64 %.sroa.02483.0.insert.insert, ptr noundef nonnull align 8 dereferenceable(48) %82, ptr nonnull %i.aj, i64 3)
           to label %bb.io unwind label %bb.is
 
 bb.io:                                            ; preds = %bb.in
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj) #37
   store i64 0, ptr %i.ary, align 8, !tbaa !193
-  %i.aso = load ptr, ptr %98, align 8, !tbaa !192 ; 2 uses
+  %i.aso = load ptr, ptr %.sroa.gep2486.a, align 8, !tbaa !192 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.aso, null
   br i1 %.not.i.i.i.i, label %_ZN4pbrt13InlinedVectorIfLi4EN4pstd3pmr21polymorphic_allocatorIfEEED2Ev.exit, label %bb.ip
 

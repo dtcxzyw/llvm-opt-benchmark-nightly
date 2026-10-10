@@ -204,7 +204,7 @@ declare void @_ZNSt18condition_variable10notify_oneEv(ptr noundef nonnull align 
 ; Function Attrs: mustprogress uwtable
 define noundef i32 @_ZN7rocksdb14ThreadPoolImpl4Impl10UnScheduleEPv(ptr noundef nonnull align 8 dereferenceable(240) %0, ptr nofree noundef readnone captures(address) %1) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.std::_Deque_iterator", align 8 ; 7 uses
+  %2 = alloca %"struct.std::_Deque_iterator", align 8 ; 6 uses
   %3 = alloca %"class.std::vector.7", align 8     ; 13 uses
   %4 = alloca %"struct.std::_Deque_iterator", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
@@ -235,10 +235,9 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
   br i1 %i.j, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 24
   %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 24
@@ -262,8 +261,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i16.not, label %_ZNSt6vectorISt8functionIFvvEESaIS2_EE9push_backEOS2_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.u = load ptr, ptr %5, align 8, !tbaa !89     ; 6 uses
-  %i.v = load ptr, ptr %i.k, align 8, !tbaa !90
+  %i.u = load ptr, ptr %i.k, align 8, !tbaa !89   ; 6 uses
+  %i.v = load ptr, ptr %i.l, align 8, !tbaa !90
   %.not.i.i17 = icmp eq ptr %i.u, %i.v
   br i1 %.not.i.i17, label %bb.h, label %bb.f
 
@@ -286,9 +285,9 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZSt12construct_atISt8functionIFvvEEJS2_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS4_DpOS5_.exit.i.i
 
 _ZSt12construct_atISt8functionIFvvEEJS2_EEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS4_DpOS5_.exit.i.i: ; preds = %bb.g, %bb.f
-  %i.ac = load ptr, ptr %5, align 8, !tbaa !89
+  %i.ac = load ptr, ptr %i.k, align 8, !tbaa !89
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
-  store ptr %i.ad, ptr %5, align 8, !tbaa !89
+  store ptr %i.ad, ptr %i.k, align 8, !tbaa !89
   br label %_ZNSt6vectorISt8functionIFvvEESaIS2_EE9push_backEOS2_.exit
 
 bb.h:                                             ; preds = %bb.e
@@ -310,10 +309,9 @@ _ZNSt6vectorISt8functionIFvvEESaIS2_EE9push_backEOS2_.exit: ; preds = %_ZSt12con
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.experimental.noalias.scope.decl(metadata !176)
   store ptr %.sroa.029.043, ptr %2, align 8, !tbaa !57, !alias.scope !176, !noalias !177
-  %i.ag = load ptr, ptr %.sroa.20.045, align 8, !tbaa !70, !noalias !178 ; 2 uses
-  store ptr %i.ag, ptr %i.l, align 8, !tbaa !64, !alias.scope !176, !noalias !177
-  %6 = getelementptr inbounds nuw i8, ptr %i.ag, i64 504
-  store ptr %6, ptr %i.m, align 8, !tbaa !65, !alias.scope !176, !noalias !177
+  %i.ag = load ptr, ptr %.sroa.20.045, align 8, !tbaa !70, !noalias !178
+  %5 = getelementptr inbounds nuw i8, ptr %i.ag, <2 x i64> <i64 0, i64 504>
+  store <2 x ptr> %5, ptr %i.m, align 8, !tbaa !70, !alias.scope !176, !noalias !177
   store ptr %.sroa.20.045, ptr %i.n, align 8, !tbaa !63, !alias.scope !176, !noalias !177
   invoke void @_ZNSt5dequeIN7rocksdb14ThreadPoolImpl4Impl6BGItemESaIS3_EE8_M_eraseESt15_Deque_iteratorIS3_RS3_PS3_E(ptr dead_on_unwind nonnull writable sret(%"struct.std::_Deque_iterator") align 8 %4, ptr noundef nonnull align 8 dereferenceable(80) %i.c, ptr noundef nonnull align 8 dead_on_return %2)
           to label %bb.k unwind label %bb.l
