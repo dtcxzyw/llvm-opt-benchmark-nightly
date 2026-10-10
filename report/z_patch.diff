@@ -1,0 +1,30 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 7bbb2eb8e8313..8abbb6c70cea1 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -893,6 +893,11 @@ static bool isKnownNonZeroFromAssume(const Value *V, const SimplifyQuery &Q) {
+     Value *RHS;
+     CmpPredicate Pred;
+     auto m_V = m_CombineOr(m_Specific(V), m_PtrToInt(m_Specific(V)));
++
++    if (match(I->getArgOperand(0), m_Trunc(m_V)) &&
++        isValidAssumeForContext(I, Q))
++      return true;
++
+     if (!match(I->getArgOperand(0), m_c_ICmp(Pred, m_V, m_Value(RHS))))
+       continue;
+ 
+diff --git a/llvm/test/Transforms/InstSimplify/assume-non-zero.ll b/llvm/test/Transforms/InstSimplify/assume-non-zero.ll
+index 22bdf374487da..331c9504f2da6 100644
+--- a/llvm/test/Transforms/InstSimplify/assume-non-zero.ll
++++ b/llvm/test/Transforms/InstSimplify/assume-non-zero.ll
+@@ -236,8 +236,7 @@ define i1 @nonnull_trunc_true(i8 %x) {
+ ; CHECK-LABEL: @nonnull_trunc_true(
+ ; CHECK-NEXT:    [[A:%.*]] = trunc i8 [[X:%.*]] to i1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[A]])
+-; CHECK-NEXT:    [[Q:%.*]] = icmp ne i8 [[X]], 0
+-; CHECK-NEXT:    ret i1 [[Q]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %a = trunc i8 %x to i1
+   call void @llvm.assume(i1 %a)

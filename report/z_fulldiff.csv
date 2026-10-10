@@ -1,0 +1,5 @@
+Delta,Added Lines,Removed Lines,Download URL
+0,5,5,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/convolution_x86_avx512.bc?download=true
+0,5,5,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/convolution_x86_avx512bf16.bc?download=true
+0,5,5,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/convolution1d_x86_avx512.bc?download=true
+0,5,5,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/convolution1d_x86_avx512bf16.bc?download=true
