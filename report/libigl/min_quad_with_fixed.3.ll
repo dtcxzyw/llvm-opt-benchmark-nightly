@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i, label %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4rankEv.exit, label %.lr.ph.i, !llvm.loop !790
 
 _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4rankEv.exit: ; preds = %.lr.ph.i, %middle.block
-  %.lcssa = phi i64 [ %i.at, %middle.block ], [ %i.ba, %.lr.ph.i ] ; 9 uses
+  %.lcssa = phi i64 [ %i.at, %middle.block ], [ %i.ba, %.lr.ph.i ] ; 10 uses
   %i.bc = icmp samesign ult i64 %.lcssa, 3
   br i1 %i.bc, label %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4rankEv.exit.thread, label %.loopexit
 
@@ -219,7 +219,7 @@ _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4rankEv.exit.
 .lr.ph:                                           ; preds = %_ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4rankEv.exit.thread
   %.idx.i.i.i.i30 = mul i64 %i.bf, 24             ; 4 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %.idx.i.i.i.i30 ; 15 uses
-  %i.bh = xor i64 %.lcssa, 3                      ; 6 uses
+  %i.bh = xor i64 %.lcssa, 3                      ; 4 uses
   %i.bi = sub nuw nsw i64 4, %.lcssa
   %i.bj = icmp eq i64 %.lcssa, 1
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -242,8 +242,8 @@ _ZNK5Eigen19ColPivHouseholderQRINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE4rankEv.exit.
   %scevgep178 = getelementptr i8, ptr %0, i64 %.idx.i.i.i.i30
   %scevgep208 = getelementptr i8, ptr %0, i64 %.idx.i.i.i.i30
   %min.iters.check195 = icmp ult i64 %i.bh, 3
-  %.neg = or i64 %i.bh, -2
-  %n.vec197 = add nsw i64 %.neg, %i.bh            ; 2 uses
+  %3 = sub nsw i64 2, %.lcssa
+  %n.vec197 = and i64 %3, -2                      ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit49

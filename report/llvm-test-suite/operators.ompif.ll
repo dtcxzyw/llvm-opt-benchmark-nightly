@@ -203,7 +203,7 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   br i1 %brmerge, label %._crit_edge107.split, label %.preheader102.preheader
 
 .preheader102.preheader:                          ; preds = %.preheader102.lr.ph
-  %wide.trip.count = zext nneg i32 %i.u to i64    ; 6 uses
+  %wide.trip.count = zext nneg i32 %i.u to i64    ; 5 uses
   %i.bb = add nsw i64 %wide.trip.count, -1        ; 3 uses
   %i.bc = shl i32 %i.ae, 1
   %i.bd = shl i32 %i.af, 1
@@ -256,8 +256,8 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %mul.result = shl i32 %i.bv, 1                  ; 5 uses
   %i.bx = insertelement <4 x i32> poison, i32 %mul.result, i64 0
   %i.by = shufflevector <4 x i32> %i.bx, <4 x i32> poison, <4 x i32> zeroinitializer
-  %.neg = or i64 %wide.trip.count, -2
-  %n.vec = add nsw i64 %.neg, %wide.trip.count    ; 2 uses
+  %4 = add nsw i64 %wide.trip.count, -1
+  %n.vec = and i64 %4, -2                         ; 2 uses
   br label %.preheader102
 
 .preheader102:                                    ; preds = %.preheader102.preheader, %._crit_edge105
@@ -660,7 +660,7 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   br i1 %brmerge, label %.preheader199.lr.ph, label %.preheader200.preheader
 
 .preheader200.preheader:                          ; preds = %.preheader200.lr.ph
-  %wide.trip.count = zext nneg i32 %i.t to i64    ; 6 uses
+  %wide.trip.count = zext nneg i32 %i.t to i64    ; 5 uses
   %i.bg = add nsw i64 %wide.trip.count, -1        ; 3 uses
   %i.bh = shl i32 %i.ae, 1
   %i.bi = shl i32 %i.ac, 1
@@ -701,8 +701,8 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %i.cc = trunc nsw i64 %i.bg to i32
   %mul.result369 = shl i32 %i.cc, 1               ; 4 uses
   %i.cd = icmp ugt i64 %i.bg, 4294967295
-  %.neg = or i64 %wide.trip.count, -2
-  %n.vec414 = add nsw i64 %.neg, %wide.trip.count ; 2 uses
+  %3 = add nsw i64 %wide.trip.count, -1
+  %n.vec414 = and i64 %3, -2                      ; 2 uses
   br label %.preheader200
 
 .preheader200:                                    ; preds = %.preheader200.preheader, %._crit_edge203
@@ -916,7 +916,7 @@ scalar.ph411:                                     ; preds = %scalar.ph411.prehea
   br i1 %brmerge227, label %.preheader198.lr.ph, label %.preheader199.preheader
 
 .preheader199.preheader:                          ; preds = %.preheader199.lr.ph
-  %wide.trip.count237 = zext nneg i32 %i.t to i64 ; 6 uses
+  %wide.trip.count237 = zext nneg i32 %i.t to i64 ; 5 uses
   %i.hf = add nsw i64 %wide.trip.count237, -1     ; 3 uses
   %i.hg = shl i32 %i.ae, 1
   %i.hh = shl i32 %i.ac, 1
@@ -957,8 +957,8 @@ scalar.ph411:                                     ; preds = %scalar.ph411.prehea
   %i.ib = trunc nsw i64 %i.hf to i32
   %mul.result316 = shl i32 %i.ib, 1               ; 4 uses
   %i.ic = icmp ugt i64 %i.hf, 4294967295
-  %.neg420 = or i64 %wide.trip.count237, -2
-  %n.vec361 = add nsw i64 %.neg420, %wide.trip.count237 ; 2 uses
+  %4 = add nsw i64 %wide.trip.count237, -1
+  %n.vec361 = and i64 %4, -2                      ; 2 uses
   br label %.preheader199
 
 .preheader199:                                    ; preds = %.preheader199.preheader, %._crit_edge210
@@ -1172,7 +1172,7 @@ scalar.ph358:                                     ; preds = %scalar.ph358.prehea
   br i1 %brmerge230, label %._crit_edge219.split, label %.preheader198.preheader
 
 .preheader198.preheader:                          ; preds = %.preheader198.lr.ph
-  %wide.trip.count244 = zext nneg i32 %i.t to i64 ; 6 uses
+  %wide.trip.count244 = zext nneg i32 %i.t to i64 ; 5 uses
   %i.ne = add nsw i64 %wide.trip.count244, -1     ; 3 uses
   %i.nf = shl i32 %i.ae, 1
   %i.ng = shl i32 %i.ac, 1
@@ -1213,8 +1213,8 @@ scalar.ph358:                                     ; preds = %scalar.ph358.prehea
   %i.oa = trunc nsw i64 %i.ne to i32
   %mul.result = shl i32 %i.oa, 1                  ; 4 uses
   %i.ob = icmp ugt i64 %i.ne, 4294967295
-  %.neg421 = or i64 %wide.trip.count244, -2
-  %n.vec = add nsw i64 %.neg421, %wide.trip.count244 ; 2 uses
+  %5 = add nsw i64 %wide.trip.count244, -1
+  %n.vec = and i64 %5, -2                         ; 2 uses
   br label %.preheader198
 
 .preheader198:                                    ; preds = %.preheader198.preheader, %._crit_edge217

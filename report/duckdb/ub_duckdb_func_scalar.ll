@@ -205,9 +205,9 @@ bb.bt:                                            ; preds = %bb.a
   %i.aue = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.auf = load i8, ptr %i.aue, align 8, !tbaa !84
   %i.aug = icmp eq i8 %i.auf, 25
-  %.sroa.0828.0.copyload = load i64, ptr %1, align 8, !tbaa !31 ; 32 uses
+  %.sroa.0828.0.copyload = load i64, ptr %1, align 8, !tbaa !31 ; 33 uses
   %.sroa.2829.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.2829.0.copyload = load i64, ptr %.sroa.2829.0..sroa_idx, align 8, !tbaa !31 ; 27 uses
+  %.sroa.2829.0.copyload = load i64, ptr %.sroa.2829.0..sroa_idx, align 8, !tbaa !31 ; 26 uses
   %.sroa.3830.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.3830.0.copyload = load i64, ptr %.sroa.3830.0..sroa_idx, align 8, !tbaa !31 ; 8 uses
   %.sroa.4831.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -241,7 +241,7 @@ bb.bu:                                            ; preds = %bb.bt
   br i1 %i.aun, label %.lr.ph.split.us.split.us.split.us.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i645.preheader
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i645.preheader: ; preds = %.lr.ph.split.us.split.us.i644
-  %i.aus = sub i64 %.sroa.2829.0.copyload, %.sroa.0828.0.copyload ; 3 uses
+  %i.aus = sub i64 %.sroa.2829.0.copyload, %.sroa.0828.0.copyload ; 2 uses
   %min.iters.check1481 = icmp ult i64 %i.aus, 9
   br i1 %min.iters.check1481, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i645.preheader1966, label %vector.memcheck
 
@@ -288,9 +288,9 @@ vector.memcheck:                                  ; preds = %_ZNK6duckdb15Select
   br i1 %found.conflict, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit.us.us.i645.preheader1966, label %vector.ph1482
 
 vector.ph1482:                                    ; preds = %vector.memcheck
-  %.neg = or i64 %i.aus, -2                       ; 2 uses
-  %n.vec1483 = add i64 %.neg, %i.aus
-  %i.avm = add i64 %.neg, %.sroa.2829.0.copyload
+  %9 = add i64 %i.aus, -1
+  %n.vec1483 = and i64 %9, -2                     ; 2 uses
+  %i.avm = add i64 %.sroa.0828.0.copyload, %n.vec1483
   br label %vector.body1484
 
 vector.body1484:                                  ; preds = %vector.body1484, %vector.ph1482

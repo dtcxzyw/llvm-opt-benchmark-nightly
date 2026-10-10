@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.r = tail call float @logf(float noundef %i.q) #40 ; 2 uses
   %i.s = fneg float %i.r
   tail call fastcc void @_ZL26llama_sampler_softmax_implP22llama_token_data_arrayb(ptr noundef nonnull %1, i1 noundef zeroext true)
-  %i.t = load i64, ptr %i.m, align 8, !tbaa !93   ; 16 uses
+  %i.t = load i64, ptr %i.m, align 8, !tbaa !93   ; 15 uses
   %.not = icmp eq i64 %i.t, 0
   %.pre.pre = load ptr, ptr %1, align 8, !tbaa !92 ; 20 uses
   br i1 %.not, label %.preheader.thread.critedge, label %.lr.ph.preheader
@@ -458,8 +458,8 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.1
   br label %.lr.ph79
 
 vector.ph117:                                     ; preds = %.lr.ph79.preheader
-  %.neg = or i64 %i.t, -2
-  %n.vec118 = add i64 %.neg, %i.t                 ; 2 uses
+  %2 = add i64 %i.t, -1
+  %n.vec118 = and i64 %2, -2                      ; 2 uses
   %broadcast.splatinsert119 = insertelement <2 x double> poison, double %i.eb, i64 0
   %broadcast.splat120 = shufflevector <2 x double> %broadcast.splatinsert119, <2 x double> poison, <2 x i32> zeroinitializer
   br label %vector.body121

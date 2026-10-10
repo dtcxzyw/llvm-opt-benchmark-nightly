@@ -205,13 +205,13 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !85   ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.g to i64    ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.g to i64    ; 2 uses
   %min.iters.check = icmp samesign ult i32 %i.g, 3
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %.neg = or i64 %wide.trip.count, -2
-  %n.vec = add nsw i64 %.neg, %wide.trip.count    ; 2 uses
+  %2 = add nsw i64 %wide.trip.count, -1
+  %n.vec = and i64 %2, -2                         ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -614,13 +614,13 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.i:                                         ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !85   ; 3 uses
-  %wide.trip.count.i = zext nneg i32 %i.r to i64  ; 3 uses
+  %wide.trip.count.i = zext nneg i32 %i.r to i64  ; 2 uses
   %min.iters.check = icmp samesign ult i32 %i.r, 3
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %.neg = or i64 %wide.trip.count.i, -2
-  %n.vec = add nsw i64 %.neg, %wide.trip.count.i  ; 2 uses
+  %2 = add nsw i64 %wide.trip.count.i, -1
+  %n.vec = and i64 %2, -2                         ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
