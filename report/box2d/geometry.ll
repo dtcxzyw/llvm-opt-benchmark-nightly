@@ -171,19 +171,17 @@ bb.d:                                             ; preds = %.lr.ph, %b2Normaliz
   br i1 %i.av, label %bb.e, label %b2Normalize.exit
 
 bb.e:                                             ; preds = %bb.d
-  %3 = extractelement <2 x float> %i.as, i64 0
-  %4 = fneg float %3
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.au)
-  %i.aw = fdiv float 1.000000e+00, %sqrt.i        ; 2 uses
-  %5 = extractelement <2 x float> %i.as, i64 1
-  %6 = fmul float %5, %i.aw
-  %.sroa.012.0.vec.insert.i = insertelement <2 x float> poison, float %6, i64 0
-  %7 = fmul float %i.aw, %4
-  %.sroa.012.4.vec.insert.i = insertelement <2 x float> %.sroa.012.0.vec.insert.i, float %7, i64 1
+  %sqrt.i = tail call nnan float @llvm.sqrt.f32(float %i.au)
+  %i.aw = fdiv nnan float 1.000000e+00, %sqrt.i
+  %3 = fneg <2 x float> %i.as
+  %4 = shufflevector <2 x float> %i.as, <2 x float> %3, <2 x i32> <i32 1, i32 2>
+  %.sroa.012.0.vec.insert.i = insertelement <2 x float> poison, float %i.aw, i64 0
+  %5 = shufflevector <2 x float> %.sroa.012.0.vec.insert.i, <2 x float> poison, <2 x i32> zeroinitializer
+  %6 = fmul <2 x float> %4, %5
   br label %b2Normalize.exit
 
 b2Normalize.exit:                                 ; preds = %bb.d, %bb.e
-  %.sroa.012.0.i = phi <2 x float> [ %.sroa.012.4.vec.insert.i, %bb.e ], [ zeroinitializer, %bb.d ]
+  %.sroa.012.0.i = phi <2 x float> [ %6, %bb.e ], [ zeroinitializer, %bb.d ]
   store <2 x float> %.sroa.012.0.i, ptr %i.ar, align 4, !tbaa !20
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.k
   br i1 %exitcond.not, label %.lr.ph.i, label %bb.d, !llvm.loop !57
@@ -392,19 +390,17 @@ bb.e:                                             ; preds = %b2Normalize.exit.i,
   br i1 %i.cc, label %bb.f, label %b2Normalize.exit.i
 
 bb.f:                                             ; preds = %bb.e
-  %4 = extractelement <2 x float> %i.bz, i64 0
-  %5 = fneg float %4
-  %sqrt.i.i = tail call float @llvm.sqrt.f32(float %i.cb)
-  %i.cd = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
-  %6 = extractelement <2 x float> %i.bz, i64 1
-  %7 = fmul float %6, %i.cd
-  %.sroa.012.0.vec.insert.i.i = insertelement <2 x float> poison, float %7, i64 0
-  %8 = fmul float %i.cd, %5
-  %.sroa.012.4.vec.insert.i.i = insertelement <2 x float> %.sroa.012.0.vec.insert.i.i, float %8, i64 1
+  %sqrt.i.i = tail call nnan float @llvm.sqrt.f32(float %i.cb)
+  %i.cd = fdiv nnan float 1.000000e+00, %sqrt.i.i
+  %4 = fneg <2 x float> %i.bz
+  %5 = shufflevector <2 x float> %i.bz, <2 x float> %4, <2 x i32> <i32 1, i32 2>
+  %.sroa.012.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.cd, i64 0
+  %6 = shufflevector <2 x float> %.sroa.012.0.vec.insert.i.i, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fmul <2 x float> %5, %6
   br label %b2Normalize.exit.i
 
 b2Normalize.exit.i:                               ; preds = %bb.f, %bb.e
-  %.sroa.012.0.i.i = phi <2 x float> [ %.sroa.012.4.vec.insert.i.i, %bb.f ], [ zeroinitializer, %bb.e ]
+  %.sroa.012.0.i.i = phi <2 x float> [ %7, %bb.f ], [ zeroinitializer, %bb.e ]
   store <2 x float> %.sroa.012.0.i.i, ptr %i.by, align 4, !tbaa !20, !alias.scope !68
   %exitcond41.not.i = icmp eq i64 %indvars.iv.next38.i, %wide.trip.count.i
   br i1 %exitcond41.not.i, label %.lr.ph.i.i, label %bb.e, !llvm.loop !2
@@ -573,19 +569,17 @@ bb.e:                                             ; preds = %.lr.ph, %b2Normaliz
   br i1 %i.cd, label %bb.f, label %b2Normalize.exit
 
 bb.f:                                             ; preds = %bb.e
-  %5 = extractelement <2 x float> %i.ca, i64 0
-  %6 = fneg float %5
-  %sqrt.i = tail call float @llvm.sqrt.f32(float %i.cc)
-  %i.ce = fdiv float 1.000000e+00, %sqrt.i        ; 2 uses
-  %7 = extractelement <2 x float> %i.ca, i64 1
-  %8 = fmul float %7, %i.ce
-  %.sroa.012.0.vec.insert.i = insertelement <2 x float> poison, float %8, i64 0
-  %9 = fmul float %i.ce, %6
-  %.sroa.012.4.vec.insert.i = insertelement <2 x float> %.sroa.012.0.vec.insert.i, float %9, i64 1
+  %sqrt.i = tail call nnan float @llvm.sqrt.f32(float %i.cc)
+  %i.ce = fdiv nnan float 1.000000e+00, %sqrt.i
+  %5 = fneg <2 x float> %i.ca
+  %6 = shufflevector <2 x float> %i.ca, <2 x float> %5, <2 x i32> <i32 1, i32 2>
+  %.sroa.012.0.vec.insert.i = insertelement <2 x float> poison, float %i.ce, i64 0
+  %7 = shufflevector <2 x float> %.sroa.012.0.vec.insert.i, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fmul <2 x float> %6, %7
   br label %b2Normalize.exit
 
 b2Normalize.exit:                                 ; preds = %bb.e, %bb.f
-  %.sroa.012.0.i = phi <2 x float> [ %.sroa.012.4.vec.insert.i, %bb.f ], [ zeroinitializer, %bb.e ]
+  %.sroa.012.0.i = phi <2 x float> [ %8, %bb.f ], [ zeroinitializer, %bb.e ]
   store <2 x float> %.sroa.012.0.i, ptr %i.bz, align 4, !tbaa !20
   %exitcond41.not = icmp eq i64 %indvars.iv.next38, %wide.trip.count
   br i1 %exitcond41.not, label %.lr.ph.i, label %bb.e, !llvm.loop !2

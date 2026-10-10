@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph.i:                                         ; preds = %bb.g
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ar, i64 24 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.h
 
 .preheader.i:                                     ; preds = %bb.j
@@ -263,22 +263,24 @@ bb.k:                                             ; preds = %bb.m, %.lr.ph34.i
 bb.l:                                             ; preds = %bb.k
   call void @_ZNK11dtTileCache19calcTightTileBoundsEPK22dtTileCacheLayerHeaderPfS3_(ptr noundef nonnull align 8 dereferenceable(912) %i.ar, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #12
   %i.ca = load float, ptr %i.be, align 4, !tbaa !213
-  %i.cb = fmul float %i.ca, 1.000000e-01          ; 6 uses
+  %i.cb = fmul float %i.ca, 1.000000e-01          ; 3 uses
   %i.cc = load float, ptr %i.d, align 4, !tbaa !41
   %i.cd = fsub float %i.cc, %i.cb
-  %1 = load float, ptr %i.az, align 4, !tbaa !41
-  %2 = fsub float %1, %i.cb
-  %3 = load float, ptr %i.ba, align 4, !tbaa !41
-  %4 = fsub float %3, %i.cb
+  %1 = load <2 x float>, ptr %i.az, align 4, !tbaa !41
+  %2 = insertelement <2 x float> poison, float %i.cb, i64 0
+  %3 = shufflevector <2 x float> %2, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %4 = fsub <2 x float> %1, %3                    ; 2 uses
   %i.ce = load float, ptr %i.e, align 4, !tbaa !41
   %i.cf = fadd float %i.cb, %i.ce
-  %5 = load float, ptr %i.bb, align 4, !tbaa !41
-  %6 = fadd float %i.cb, %5
-  %7 = load float, ptr %i.bc, align 4, !tbaa !41
-  %8 = fadd float %i.cb, %7
-  %9 = trunc nuw nsw i64 %indvars.iv36.i to i32
-  %10 = call noundef i32 @_Z10duIntToColii(i32 noundef %9, i32 noundef 255) #12
-  call void @_Z18duDebugDrawBoxWireP11duDebugDrawffffffjf(ptr noundef nonnull %i.au, float noundef %i.cd, float noundef %2, float noundef %4, float noundef %i.cf, float noundef %6, float noundef %8, i32 noundef %10, float noundef 2.000000e+00) #12
+  %5 = load <2 x float>, ptr %i.bb, align 4, !tbaa !41
+  %6 = fadd <2 x float> %3, %5                    ; 2 uses
+  %7 = trunc nuw nsw i64 %indvars.iv36.i to i32
+  %8 = call noundef i32 @_Z10duIntToColii(i32 noundef %7, i32 noundef 255) #12
+  %9 = extractelement <2 x float> %4, i64 0
+  %10 = extractelement <2 x float> %4, i64 1
+  %11 = extractelement <2 x float> %6, i64 0
+  %12 = extractelement <2 x float> %6, i64 1
+  call void @_Z18duDebugDrawBoxWireP11duDebugDrawffffffjf(ptr noundef nonnull %i.au, float noundef %i.cd, float noundef %9, float noundef %10, float noundef %i.cf, float noundef %11, float noundef %12, i32 noundef %8, float noundef 2.000000e+00) #12
   %.pre39.i = load i32, ptr %i.av, align 4, !tbaa !150
   br label %bb.m
 

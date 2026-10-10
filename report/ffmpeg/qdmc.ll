@@ -204,44 +204,49 @@ lin_calc.exit.i.i:                                ; preds = %scalar.ph323, %midd
   %.pre.i172.i = load float, ptr %.phi.trans.insert.i.i, align 4, !tbaa !29
   %.phi.trans.insert71.i.i = getelementptr inbounds nuw i8, ptr %i.vi, i64 8
   %.pre72.i.i = load float, ptr %.phi.trans.insert71.i.i, align 4, !tbaa !29
+  %5 = insertelement <2 x float> poison, float %.pre72.i.i, i64 0
+  %6 = insertelement <2 x float> %5, float %.pre.i172.i, i64 1
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.ba, %.lr.ph62.i.i
-  %5 = phi float [ %.pre72.i.i, %.lr.ph62.i.i ], [ %29, %bb.ba ]
-  %6 = phi float [ %.pre.i172.i, %.lr.ph62.i.i ], [ %26, %bb.ba ]
   %indvars.iv66.i.i = phi i64 [ 2, %.lr.ph62.i.i ], [ %indvars.iv.next67.i.i, %bb.ba ] ; 4 uses
   %7 = phi i32 [ %.promoted.i.i, %.lr.ph62.i.i ], [ %i.ads, %bb.ba ]
-  %8 = mul i32 %7, 214013
-  %9 = add i32 %8, 2531011                        ; 2 uses
-  %10 = and i32 %9, 32767
-  %11 = add nsw i32 %10, -16384
-  %12 = sitofp i32 %11 to float
-  %13 = fmul nnan nsz float %12, f0x38000000
-  %i.adp = getelementptr inbounds nuw [4 x i8], ptr %i.uc, i64 %indvars.iv66.i.i
-  %i.adq = load float, ptr %i.adp, align 4, !tbaa !29 ; 2 uses
-  %14 = fmul nsz float %i.adq, %13                ; 2 uses
-  %i.adr = mul i32 %9, 214013
-  %i.ads = add i32 %i.adr, 2531011                ; 3 uses
-  %15 = and i32 %i.ads, 32767
-  %16 = add nsw i32 %15, -16384
-  %17 = sitofp i32 %16 to float
-  %18 = fmul nnan nsz float %17, f0x38000000
-  %19 = fmul nsz float %i.adq, %18                ; 2 uses
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %i.vg, i64 %indvars.iv66.i.i
-  %21 = fadd nsz float %6, %14
-  store float %21, ptr %20, align 4, !tbaa !29
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.vi, i64 %indvars.iv66.i.i
-  %23 = fadd nsz float %5, %19
-  store float %23, ptr %22, align 4, !tbaa !29
+  %8 = phi <2 x float> [ %6, %.lr.ph62.i.i ], [ %30, %bb.ba ] ; 2 uses
+  %9 = mul i32 %7, 214013
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.uc, i64 %indvars.iv66.i.i
+  %11 = load float, ptr %10, align 4, !tbaa !29
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.vg, i64 %indvars.iv66.i.i
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.vi, i64 %indvars.iv66.i.i
   %indvars.iv.next67.i.i = add nuw nsw i64 %indvars.iv66.i.i, 1 ; 4 uses
-  %24 = getelementptr inbounds nuw [4 x i8], ptr %i.vg, i64 %indvars.iv.next67.i.i ; 2 uses
-  %25 = load float, ptr %24, align 4, !tbaa !29
-  %26 = fsub nsz float %25, %14                   ; 2 uses
-  store float %26, ptr %24, align 4, !tbaa !29
-  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.vi, i64 %indvars.iv.next67.i.i ; 2 uses
-  %28 = load float, ptr %27, align 4, !tbaa !29
-  %29 = fsub nsz float %28, %19                   ; 2 uses
-  store float %29, ptr %27, align 4, !tbaa !29
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.vg, i64 %indvars.iv.next67.i.i ; 2 uses
+  %15 = load float, ptr %14, align 4, !tbaa !29
+  %i.adp = getelementptr inbounds nuw [4 x i8], ptr %i.vi, i64 %indvars.iv.next67.i.i ; 2 uses
+  %i.adq = load float, ptr %i.adp, align 4, !tbaa !29
+  %16 = add i32 %9, 2531011                       ; 2 uses
+  %i.adr = mul i32 %16, 214013
+  %i.ads = add i32 %i.adr, 2531011                ; 3 uses
+  %17 = insertelement <2 x i32> poison, i32 %i.ads, i64 0
+  %18 = insertelement <2 x i32> %17, i32 %16, i64 1
+  %19 = and <2 x i32> %18, splat (i32 32767)
+  %20 = add nsw <2 x i32> %19, splat (i32 -16384)
+  %21 = sitofp <2 x i32> %20 to <2 x float>
+  %22 = fmul nnan nsz <2 x float> %21, splat (float f0x38000000)
+  %23 = insertelement <2 x float> poison, float %11, i64 0
+  %24 = shufflevector <2 x float> %23, <2 x float> poison, <2 x i32> zeroinitializer
+  %25 = fmul nsz <2 x float> %24, %22             ; 3 uses
+  %foldExtExtBinop = fadd nsz <2 x float> %8, %25
+  %26 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  store float %26, ptr %12, align 4, !tbaa !29
+  %foldExtExtBinop484 = fadd nsz <2 x float> %8, %25
+  %27 = extractelement <2 x float> %foldExtExtBinop484, i64 0
+  store float %27, ptr %13, align 4, !tbaa !29
+  %28 = insertelement <2 x float> poison, float %i.adq, i64 0
+  %29 = insertelement <2 x float> %28, float %15, i64 1
+  %30 = fsub nsz <2 x float> %29, %25             ; 3 uses
+  %31 = extractelement <2 x float> %30, i64 1
+  store float %31, ptr %14, align 4, !tbaa !29
+  %32 = extractelement <2 x float> %30, i64 0
+  store float %32, ptr %i.adp, align 4, !tbaa !29
   %exitcond70.not.i.i = icmp eq i64 %indvars.iv.next67.i.i, %wide.trip.count69.i.i
   br i1 %exitcond70.not.i.i, label %._crit_edge63.i.i, label %bb.ba, !llvm.loop !89
 

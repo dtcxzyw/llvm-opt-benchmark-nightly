@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not29, label %.loopexit, label %.lr.ph28.preheader
 
 .lr.ph28.preheader:                               ; preds = %.preheader
-  %wide.trip.count35 = zext i32 %i.l to i64       ; 7 uses
+  %wide.trip.count35 = zext i32 %i.l to i64       ; 6 uses
   %min.iters.check = icmp ult i32 %i.l, 31
   br i1 %min.iters.check, label %.lr.ph28.preheader74, label %vector.memcheck
 
@@ -241,8 +241,8 @@ vector.memcheck:                                  ; preds = %.lr.ph28.preheader
   br i1 %conflict.rdx73, label %.lr.ph28.preheader74, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %wide.trip.count35, -2
-  %n.vec = add nsw i64 %.neg, %wide.trip.count35  ; 2 uses
+  %3 = add nsw i64 %wide.trip.count35, -1
+  %n.vec = and i64 %3, -2                         ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -268,9 +268,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ak, label %.lr.ph28.preheader74, label %vector.body, !llvm.loop !229
 
 .lr.ph28.preheader74:                             ; preds = %vector.body, %vector.memcheck, %.lr.ph28.preheader
-  %indvars.iv32.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph28.preheader ], [ %n.vec, %vector.body ] ; 8 uses
-  %3 = sub nsw i64 %wide.trip.count35, %indvars.iv32.ph
-  %xtraiter77 = and i64 %3, 1
+  %indvars.iv32.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph28.preheader ], [ %n.vec, %vector.body ] ; 7 uses
+  %xtraiter77 = and i64 %wide.trip.count35, 1
   %lcmp.mod78.not = icmp eq i64 %xtraiter77, 0
   br i1 %lcmp.mod78.not, label %.lr.ph28.prol.loopexit, label %.lr.ph28.prol
 
@@ -286,7 +285,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.as = add i64 %i.ar, %i.aq
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv32.ph
   store i64 %i.as, ptr %i.at, align 8, !tbaa !18
-  %indvars.iv.next33.prol = add nuw nsw i64 %indvars.iv32.ph, 1
+  %indvars.iv.next33.prol = or disjoint i64 %indvars.iv32.ph, 1
   br label %.lr.ph28.prol.loopexit
 
 .lr.ph28.prol.loopexit:                           ; preds = %.lr.ph28.prol, %.lr.ph28.preheader74

@@ -204,53 +204,53 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN16OpenColorIO_v2_59ConverterILNS_8BitDepthE1EE9CastValueEf.exit47
-  %.064 = phi ptr [ %1, %.lr.ph ], [ %i.cr, %_ZN16OpenColorIO_v2_59ConverterILNS_8BitDepthE1EE9CastValueEf.exit47 ] ; 5 uses
+  %.064 = phi ptr [ %1, %.lr.ph ], [ %i.cr, %_ZN16OpenColorIO_v2_59ConverterILNS_8BitDepthE1EE9CastValueEf.exit47 ] ; 4 uses
   %.03663 = phi ptr [ %2, %.lr.ph ], [ %i.cs, %_ZN16OpenColorIO_v2_59ConverterILNS_8BitDepthE1EE9CastValueEf.exit47 ] ; 5 uses
   %.03762 = phi i64 [ 0, %.lr.ph ], [ %i.ct, %_ZN16OpenColorIO_v2_59ConverterILNS_8BitDepthE1EE9CastValueEf.exit47 ]
-  %4 = load float, ptr %i.o, align 8, !tbaa !1108 ; 3 uses
   %i.r = load float, ptr %.064, align 4, !tbaa !72
-  %5 = fmul float %4, %i.r                        ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.064, i64 4
-  %i.t = load float, ptr %i.s, align 4, !tbaa !72
-  %i.u = fmul float %4, %i.t                      ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.064, i64 8
-  %7 = load float, ptr %6, align 4, !tbaa !72
-  %8 = fmul float %4, %7                          ; 2 uses
-  %i.v = fcmp ogt float %5, 0.000000e+00
-  %i.w = load float, ptr %i.p, align 4, !tbaa !72 ; 6 uses
-  %i.x = select i1 %i.v, float %5, float 0.000000e+00 ; 2 uses
+  %i.t = load float, ptr %i.o, align 8, !tbaa !1108 ; 2 uses
+  %i.u = fmul float %i.t, %i.r                    ; 2 uses
+  %4 = load <2 x float>, ptr %i.s, align 4, !tbaa !72
+  %5 = insertelement <2 x float> poison, float %i.t, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fmul <2 x float> %6, %4                    ; 2 uses
+  %i.v = fcmp ogt float %i.u, 0.000000e+00
+  %i.w = load float, ptr %i.p, align 4, !tbaa !72 ; 3 uses
+  %i.x = select i1 %i.v, float %i.u, float 0.000000e+00 ; 2 uses
   %i.y = fcmp olt float %i.w, %i.x
   %i.z = select i1 %i.y, float %i.w, float %i.x   ; 3 uses
-  %9 = fcmp ogt float %i.u, 0.000000e+00
-  %10 = select i1 %9, float %i.u, float 0.000000e+00 ; 2 uses
-  %11 = fcmp olt float %i.w, %10
-  %12 = select i1 %11, float %i.w, float %10      ; 3 uses
-  %13 = fcmp ogt float %8, 0.000000e+00
-  %14 = select i1 %13, float %8, float 0.000000e+00 ; 2 uses
-  %15 = fcmp olt float %i.w, %14
-  %16 = select i1 %15, float %i.w, float %14      ; 3 uses
-  %i.aa = tail call noundef float @llvm.floor.f32(float %i.z)
+  %8 = fcmp ogt <2 x float> %7, zeroinitializer
+  %9 = select <2 x i1> %8, <2 x float> %7, <2 x float> zeroinitializer ; 2 uses
+  %10 = insertelement <2 x float> poison, float %i.w, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %12 = fcmp olt <2 x float> %11, %9
+  %13 = select <2 x i1> %12, <2 x float> %11, <2 x float> %9 ; 3 uses
+  %14 = tail call noundef float @llvm.floor.f32(float %i.z)
+  %15 = fptoui float %14 to i32
+  %16 = extractelement <2 x float> %13, i64 0     ; 2 uses
+  %i.aa = tail call noundef float @llvm.floor.f32(float %16)
   %i.ab = fptoui float %i.aa to i32
-  %i.ac = tail call noundef float @llvm.floor.f32(float %12)
+  %17 = extractelement <2 x float> %13, i64 1     ; 2 uses
+  %i.ac = tail call noundef float @llvm.floor.f32(float %17)
   %i.ad = fptoui float %i.ac to i32
-  %i.ae = tail call noundef float @llvm.floor.f32(float %16)
-  %i.af = fptoui float %i.ae to i32
-  %17 = tail call noundef float @llvm.ceil.f32(float %i.z)
-  %18 = fptoui float %17 to i32                   ; 2 uses
-  %19 = tail call noundef float @llvm.ceil.f32(float %12)
+  %i.ae = tail call noundef float @llvm.ceil.f32(float %i.z)
+  %i.af = fptoui float %i.ae to i32               ; 2 uses
+  %18 = tail call <2 x float> @llvm.ceil.v2f32(<2 x float> %13) ; 2 uses
+  %19 = extractelement <2 x float> %18, i64 0
   %i.ag = fptoui float %19 to i32                 ; 2 uses
-  %20 = tail call noundef float @llvm.ceil.f32(float %16)
+  %20 = extractelement <2 x float> %18, i64 1
   %i.ah = fptoui float %20 to i32                 ; 2 uses
-  %i.ai = uitofp i32 %18 to float
+  %i.ai = uitofp i32 %i.af to float
   %i.aj = fsub float %i.ai, %i.z
   %i.ak = uitofp i32 %i.ag to float
-  %i.al = fsub float %i.ak, %12
+  %i.al = fsub float %i.ak, %16
   %i.am = uitofp i32 %i.ah to float
-  %i.an = fsub float %i.am, %16
-  %i.ao = zext i32 %18 to i64
+  %i.an = fsub float %i.am, %17
+  %i.ao = zext i32 %i.af to i64
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.ao
   %i.aq = load float, ptr %i.ap, align 4, !tbaa !72 ; 2 uses
-  %i.ar = zext i32 %i.ab to i64
+  %i.ar = zext i32 %15 to i64
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.ar
   %i.at = load float, ptr %i.as, align 4, !tbaa !72
   %i.au = fsub float %i.at, %i.aq
@@ -271,7 +271,7 @@ _ZN16OpenColorIO_v2_59ConverterILNS_8BitDepthE1EE9CastValueEf.exit: ; preds = %b
   %i.bc = zext i32 %i.ag to i64
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.bc
   %i.be = load float, ptr %i.bd, align 4, !tbaa !72 ; 2 uses
-  %i.bf = zext i32 %i.ad to i64
+  %i.bf = zext i32 %i.ab to i64
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.bf
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !72
   %i.bi = fsub float %i.bh, %i.be
@@ -293,7 +293,7 @@ _ZN16OpenColorIO_v2_59ConverterILNS_8BitDepthE1EE9CastValueEf.exit45: ; preds = 
   %i.br = zext i32 %i.ah to i64
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.br
   %i.bt = load float, ptr %i.bs, align 4, !tbaa !72 ; 2 uses
-  %i.bu = zext i32 %i.af to i64
+  %i.bu = zext i32 %i.ad to i64
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.bu
   %i.bw = load float, ptr %i.bv, align 4, !tbaa !72
   %i.bx = fsub float %i.bw, %i.bt
@@ -695,6 +695,9 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.ceil.v2f32(<2 x float>) #14
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

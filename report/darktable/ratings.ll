@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.a
   %i.ak = insertelement <2 x double> poison, double %i.j, i64 0
   %i.al = shufflevector <2 x double> %i.ak, <2 x double> poison, <4 x i32> zeroinitializer
   %i.am = fmul reassoc nnan nsz arcp contract afn <4 x double> %i.al, <double 5.000000e-01, double 2.000000e-01, double 5.000000e-01, double 2.000000e-01> ; 2 uses
-  %i.an = fptrunc <4 x double> %i.am to <4 x float> ; 5 uses
-  %i.ao = extractelement <4 x float> %i.an, i64 1 ; 8 uses
-  %i.ap = extractelement <4 x float> %i.an, i64 0 ; 12 uses
+  %i.an = fptrunc <4 x double> %i.am to <4 x float> ; 6 uses
+  %i.ao = extractelement <4 x float> %i.an, i64 1 ; 6 uses
+  %i.ap = extractelement <4 x float> %i.an, i64 0 ; 10 uses
   %foldExtExtBinop = fsub reassoc nsz arcp contract afn <4 x float> %i.an, %i.an
   %i.aq = extractelement <4 x float> %foldExtExtBinop, i64 0
   %i.ar = fpext reassoc nsz arcp contract afn float %i.aq to double
@@ -213,7 +213,6 @@ bb.b:                                             ; preds = %bb.a
   %i.av = fmul reassoc nnan nsz arcp contract afn float %i.ap, f0x3F30E444
   %i.aw = fpext reassoc nsz arcp contract afn float %i.av to double
   %i.ax = fmul reassoc nsz arcp contract afn <4 x float> %i.an, <float 0.000000e+00, float f0x3F167918, float f0x3F737871, float f0x3F737870>
-  %5 = fmul reassoc nnan nsz arcp contract afn float %i.ao, f0x3F737870
   %i.ay = fmul reassoc nnan nsz arcp contract afn float %i.ao, f0x3E9E377B
   %i.az = fadd reassoc nsz arcp contract afn float %i.ay, %i.ap
   %i.ba = fpext reassoc nsz arcp contract afn float %i.az to double
@@ -223,16 +222,16 @@ bb.b:                                             ; preds = %bb.a
   %i.be = fmul reassoc nnan nsz arcp contract afn float %i.ao, f0x33BBBD2E
   %i.bf = fadd reassoc nsz arcp contract afn float %i.ap, %i.ao
   %i.bg = fpext reassoc nsz arcp contract afn float %i.bf to double
-  %6 = fmul reassoc nnan nsz arcp contract afn float %i.ap, f0x3F16791A
+  %5 = shufflevector <4 x float> %i.an, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 2 uses
+  %6 = fmul reassoc nnan nsz arcp contract afn <2 x float> %5, <float f0x3F16791A, float f0x3F737870>
   %i.bh = fmul reassoc nnan nsz arcp contract afn float %i.ap, f0x3FE78DDE
   %i.bi = fpext reassoc nsz arcp contract afn float %i.bh to double
   %i.bj = fmul reassoc nnan nsz arcp contract afn float %i.ao, f0x3E9E377D
   %i.bk = fadd reassoc nsz arcp contract afn float %i.bj, %i.ap
   %i.bl = fpext reassoc nsz arcp contract afn float %i.bk to double
-  %7 = fmul reassoc nnan nsz arcp contract afn float %i.ap, f0x3F737870
   %i.bm = fmul reassoc nnan nsz arcp contract afn float %i.ap, f0x3F30E441
   %i.bn = fpext reassoc nsz arcp contract afn float %i.bm to double
-  %8 = fmul reassoc nnan nsz arcp contract afn float %i.ao, f0x3F167913
+  %7 = fmul reassoc nnan nsz arcp contract afn <2 x float> %5, <float f0x3F737870, float f0x3F167913>
   %i.bo = fmul reassoc nnan nsz arcp contract afn float %i.ao, f0x3F4F1BC1
   %i.bp = fsub reassoc nsz arcp contract afn float %i.ap, %i.bo
   %i.bq = fpext reassoc nsz arcp contract afn float %i.bp to double
@@ -258,7 +257,7 @@ bb.d:                                             ; preds = %bb.b, %bb.h
   %.03943 = phi i32 [ 0, %bb.b ], [ %i.cz, %bb.h ] ; 3 uses
   %i.bx = sitofp reassoc nsz arcp contract afn i32 %.03943 to double
   %i.by = fadd reassoc nsz arcp contract afn double %i.bw, %i.bx
-  %i.bz = fptrunc reassoc nsz arcp contract afn double %i.by to float ; 7 uses
+  %i.bz = fptrunc reassoc nsz arcp contract afn double %i.by to float ; 4 uses
   %i.ca = insertelement <4 x float> poison, float %i.bz, i64 0
   %i.cb = shufflevector <4 x float> %i.ca, <4 x float> poison, <4 x i32> zeroinitializer
   %i.cc = fadd reassoc nsz arcp contract afn <4 x float> %i.ax, %i.cb
@@ -277,18 +276,20 @@ bb.d:                                             ; preds = %bb.b, %bb.h
   %i.ck = fsub reassoc nsz arcp contract afn float %i.bz, %i.be
   %i.cl = fpext reassoc nsz arcp contract afn float %i.ck to double
   call void @cairo_line_to(ptr noundef %i.aa, double noundef %i.cl, double noundef %i.bg) #6
-  %9 = fsub reassoc nsz arcp contract afn float %i.bz, %6
-  %10 = fpext reassoc nsz arcp contract afn float %9 to double
-  call void @cairo_line_to(ptr noundef %i.aa, double noundef %10, double noundef %i.bi) #6
-  %11 = fsub reassoc nsz arcp contract afn float %i.bz, %5
-  %12 = fpext reassoc nsz arcp contract afn float %11 to double
-  call void @cairo_line_to(ptr noundef %i.aa, double noundef %12, double noundef %i.bl) #6
-  %13 = fsub reassoc nsz arcp contract afn float %i.bz, %7
-  %14 = fpext reassoc nsz arcp contract afn float %13 to double
-  call void @cairo_line_to(ptr noundef %i.aa, double noundef %14, double noundef %i.bn) #6
-  %15 = fsub reassoc nsz arcp contract afn float %i.bz, %8
-  %16 = fpext reassoc nsz arcp contract afn float %15 to double
-  call void @cairo_line_to(ptr noundef %i.aa, double noundef %16, double noundef %i.bq) #6
+  %8 = insertelement <2 x float> poison, float %i.bz, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %10 = fsub reassoc nsz arcp contract afn <2 x float> %9, %6
+  %11 = fpext <2 x float> %10 to <2 x double>     ; 2 uses
+  %12 = extractelement <2 x double> %11, i64 0
+  call void @cairo_line_to(ptr noundef %i.aa, double noundef %12, double noundef %i.bi) #6
+  %13 = extractelement <2 x double> %11, i64 1
+  call void @cairo_line_to(ptr noundef %i.aa, double noundef %13, double noundef %i.bl) #6
+  %14 = fsub reassoc nsz arcp contract afn <2 x float> %9, %7
+  %15 = fpext <2 x float> %14 to <2 x double>     ; 2 uses
+  %16 = extractelement <2 x double> %15, i64 0
+  call void @cairo_line_to(ptr noundef %i.aa, double noundef %16, double noundef %i.bn) #6
+  %17 = extractelement <2 x double> %15, i64 1
+  call void @cairo_line_to(ptr noundef %i.aa, double noundef %17, double noundef %i.bq) #6
   call void @cairo_close_path(ptr noundef %i.aa) #6
   %i.cm = load i32, ptr %i.br, align 4, !tbaa !67
   %i.cn = icmp slt i32 %.03943, %i.cm

@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.j = fpext float %2 to double                 ; 9 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 33 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 32 uses
   %i.l = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 17 uses
   %i.m = getelementptr inbounds nuw i8, ptr %9, i64 12 ; 16 uses
   %i.n = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 6 uses
@@ -607,17 +607,18 @@ bb.bq:                                            ; preds = %.thread506.i.i, %.t
 bb.br:                                            ; preds = %.thread506.i.i
   %i.nn = getelementptr inbounds nuw i8, ptr %.sroa.04.022, i64 28
   %i.no = load float, ptr %i.nn, align 4, !tbaa !105
-  %i.np = fpext float %i.no to double             ; 2 uses
+  %i.np = fpext float %i.no to double
   %i.nq = fpext float %i.ai to double
   %i.nr = fmul double %i.nq, f0x3F91DF46A2529D39  ; 2 uses
-  %i.ns = tail call double @cos(double noundef %i.nr) #17
-  %10 = fmul double %i.ns, %i.np
-  %11 = fptrunc double %10 to float
-  store float %11, ptr %9, align 16, !tbaa !28
-  %12 = tail call double @sin(double noundef %i.nr) #17
-  %13 = fmul double %12, %i.np
-  %14 = fptrunc double %13 to float
-  store float %14, ptr %i.k, align 4, !tbaa !28
+  %10 = tail call double @cos(double noundef %i.nr) #17
+  %i.ns = tail call double @sin(double noundef %i.nr) #17
+  %11 = insertelement <2 x double> poison, double %10, i64 0
+  %12 = insertelement <2 x double> %11, double %i.ns, i64 1
+  %13 = insertelement <2 x double> poison, double %i.np, i64 0
+  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = fmul <2 x double> %12, %14
+  %16 = fptrunc <2 x double> %15 to <2 x float>
+  store <2 x float> %16, ptr %9, align 16, !tbaa !28
   %i.nt = getelementptr inbounds nuw i8, ptr %.sroa.04.022, i64 32
   %i.nu = load <4 x float>, ptr %i.nt, align 4, !tbaa !105
   store <4 x float> %i.nu, ptr %i.l, align 8, !tbaa !28

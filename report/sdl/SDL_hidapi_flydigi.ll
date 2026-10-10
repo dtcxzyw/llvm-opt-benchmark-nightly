@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal zeroext i1 @HIDAPI_DriverFlydigi_UpdateDevice(ptr noundef %0) #0 {
 bb.a:
-  %i.a = alloca [3 x float], align 4              ; 8 uses
+  %i.a = alloca [3 x float], align 8              ; 8 uses
   %i.b = alloca [64 x i8], align 16               ; 4 uses
   %i.c = alloca [4 x i8], align 4                 ; 4 uses
   %i.d = alloca [3 x float], align 4              ; 8 uses
@@ -351,7 +351,7 @@ bb.j:                                             ; preds = %.thread, %bb.c, %SD
   %i.bp = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 4 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.k, i64 44
-  %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.k, i64 64 ; 2 uses
@@ -754,7 +754,7 @@ bb.bx:                                            ; preds = %bb.bw
   %i.oe = sitofp i16 %i.od to float
   %i.of = fneg float %i.oc                        ; 3 uses
   %i.og = call float @HIDAPI_RemapVal(float noundef %i.oe, float noundef -3.276800e+04, float noundef 3.276700e+04, float noundef %i.of, float noundef %i.oc) #7
-  store float %i.og, ptr %i.a, align 4
+  store float %i.og, ptr %i.a, align 8
   %.val199 = load i16, ptr %i.ch, align 2
   %.val200 = load i16, ptr %i.cg, align 1
   %i.oh = select i1 %.not.i43, i16 %.val199, i16 %.val200
@@ -767,21 +767,22 @@ bb.bx:                                            ; preds = %bb.bw
   %i.ol = sitofp i16 %i.ok to float
   %i.om = fneg float %i.ol
   %i.on = call float @HIDAPI_RemapVal(float noundef %i.om, float noundef -3.276800e+04, float noundef 3.276700e+04, float noundef %i.of, float noundef %i.oc) #7
-  store float %i.on, ptr %i.bt, align 4
+  store float %i.on, ptr %i.bt, align 8
   call void @SDL_SendJoystickSensor(i64 noundef %i.ki, ptr noundef nonnull %.0121, i32 noundef 2, i64 noundef %i.nz, ptr noundef nonnull %i.a, i32 noundef 3) #7
-  %i.oo = load float, ptr %i.bu, align 8          ; 3 uses
+  %i.oo = load float, ptr %i.bu, align 8          ; 2 uses
   %.val203 = load i16, ptr %i.cj, align 8
   %.val204 = load i16, ptr %i.ci, align 1
   %i.op = select i1 %.not.i43, i16 %.val203, i16 %.val204
-  %1 = sitofp i16 %i.op to float
-  %2 = fmul float %i.oo, %1
-  store float %2, ptr %i.a, align 4
   %.026.idx.i.sroa.sel.sroa.sel52.v.sroa.sel.v.sroa.sel.v = select i1 %.not.i43, i64 28, i64 27
   %.026.idx.i.sroa.sel.sroa.sel52.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %i.i, i64 %.026.idx.i.sroa.sel.sroa.sel52.v.sroa.sel.v.sroa.sel.v
-  %3 = load i16, ptr %.026.idx.i.sroa.sel.sroa.sel52.v.sroa.sel.v.sroa.sel, align 1
-  %4 = sitofp i16 %3 to float
-  %5 = fmul float %i.oo, %4
-  store float %5, ptr %i.bs, align 4
+  %1 = load i16, ptr %.026.idx.i.sroa.sel.sroa.sel52.v.sroa.sel.v.sroa.sel, align 1
+  %2 = insertelement <2 x i16> poison, i16 %i.op, i64 0
+  %3 = insertelement <2 x i16> %2, i16 %1, i64 1
+  %4 = sitofp <2 x i16> %3 to <2 x float>
+  %5 = insertelement <2 x float> poison, float %i.oo, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = fmul <2 x float> %6, %4
+  store <2 x float> %7, ptr %i.a, align 8
   %.val205 = load i16, ptr %i.ck, align 2
   %.sroa.gep160.val = load i16, ptr %.sroa.gep160, align 1
   %i.oq = select i1 %.not.i43, i16 %.val205, i16 %.sroa.gep160.val
@@ -789,7 +790,7 @@ bb.bx:                                            ; preds = %bb.bw
   %i.os = sub nsw i32 0, %i.or
   %i.ot = sitofp i32 %i.os to float
   %i.ou = fmul float %i.oo, %i.ot
-  store float %i.ou, ptr %i.bt, align 4
+  store float %i.ou, ptr %i.bt, align 8
   call void @SDL_SendJoystickSensor(i64 noundef %i.ki, ptr noundef nonnull %.0121, i32 noundef 1, i64 noundef %i.nz, ptr noundef nonnull %i.a, i32 noundef 3) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %HIDAPI_DriverFlydigi_HandleStatePacketV2.exit

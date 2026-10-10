@@ -203,8 +203,13 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.ax
   %i.zg = getelementptr inbounds [8 x i8], ptr %i.ai, i64 %i.za ; 4 uses
   %i.zh = load double, ptr %i.zg, align 8, !tbaa !35 ; 2 uses
-  %25 = fsub double %i.zc, %i.zh                  ; 7 uses
-  %26 = fadd double %i.zc, %i.zh                  ; 7 uses
+  %25 = insertelement <2 x double> poison, double %i.zc, i64 0
+  %26 = insertelement <2 x double> poison, double %i.zc, i64 0
+  %27 = insertelement <2 x double> poison, double %i.zh, i64 0
+  %28 = insertelement <2 x double> poison, double %i.zh, i64 0
+  %29 = fsub <2 x double> %26, %28                ; 2 uses
+  %30 = fadd <2 x double> %25, %27                ; 2 uses
+  %31 = shufflevector <2 x double> %29, <2 x double> %30, <2 x i32> <i32 0, i32 2> ; 6 uses
   %i.zi = getelementptr inbounds [4 x i8], ptr %i.al, i64 %i.za
   %i.zj = load i32, ptr %i.zi, align 4, !tbaa !33
   store i32 %i.zj, ptr %i.r, align 4, !tbaa !33
@@ -212,15 +217,14 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %i.zk, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %bb.ay
-  %27 = fcmp oge double %25, 0.000000e+00
-  %28 = fneg double %25
-  %29 = select i1 %27, double %25, double %28     ; 3 uses
-  store double %29, ptr %i.e, align 8, !tbaa !35
-  %30 = fcmp oge double %26, 0.000000e+00
-  %31 = fneg double %26
-  %32 = select i1 %30, double %26, double %31     ; 2 uses
-  %i.zl = fcmp oge double %29, %32
-  %i.zm = select i1 %i.zl, double %29, double %32
+  %32 = fcmp oge <2 x double> %31, zeroinitializer
+  %33 = fneg <2 x double> %31
+  %34 = select <2 x i1> %32, <2 x double> %31, <2 x double> %33 ; 2 uses
+  %35 = extractelement <2 x double> %34, i64 0    ; 3 uses
+  store double %35, ptr %i.e, align 8, !tbaa !35
+  %36 = extractelement <2 x double> %34, i64 1    ; 2 uses
+  %i.zl = fcmp oge double %35, %36
+  %i.zm = select i1 %i.zl, double %35, double %36
   %i.zn = fmul double %i.bs, %i.zm
   br label %bb.bb
 
@@ -238,15 +242,14 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   br i1 %i.zs, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
-  %33 = fcmp oge double %25, 0.000000e+00
-  %34 = fneg double %25
-  %35 = select i1 %33, double %25, double %34     ; 3 uses
-  store double %35, ptr %i.e, align 8, !tbaa !35
-  %36 = fcmp oge double %26, 0.000000e+00
-  %37 = fneg double %26
-  %38 = select i1 %36, double %26, double %37     ; 2 uses
-  %i.zt = fcmp oge double %35, %38
-  %i.zu = select i1 %i.zt, double %35, double %38
+  %37 = fcmp oge <2 x double> %31, zeroinitializer
+  %38 = fneg <2 x double> %31
+  %39 = select <2 x i1> %37, <2 x double> %31, <2 x double> %38 ; 2 uses
+  %40 = extractelement <2 x double> %39, i64 0    ; 3 uses
+  store double %40, ptr %i.e, align 8, !tbaa !35
+  %41 = extractelement <2 x double> %39, i64 1    ; 2 uses
+  %i.zt = fcmp oge double %40, %41
+  %i.zu = select i1 %i.zt, double %40, double %41
   %i.zv = fmul double %i.bs, %i.zu
   %.phi.trans.insert = getelementptr inbounds [8 x i8], ptr %i.aj, i64 %i.za
   %.pre1104 = load double, ptr %.phi.trans.insert, align 8, !tbaa !35
@@ -279,13 +282,15 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   %i.aak = getelementptr [4 x i8], ptr %i.aq, i64 %i.aaj ; 4 uses
   %i.aal = getelementptr i8, ptr %i.aak, i64 -4   ; 5 uses
   %i.aam = fmul double %i.yu, %i.aaa
+  %42 = extractelement <2 x double> %29, i64 0
+  %43 = extractelement <2 x double> %30, i64 0
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.be
-  %.0757 = phi double [ %25, %bb.be ], [ %.2759, %.backedge.backedge ] ; 4 uses
+  %.0757 = phi double [ %42, %bb.be ], [ %.2759, %.backedge.backedge ] ; 4 uses
   %.0755 = phi i32 [ 0, %bb.be ], [ %.0755.be, %.backedge.backedge ] ; 3 uses
   %.4749 = phi double [ %.3748974, %bb.be ], [ %.5750, %.backedge.backedge ]
-  %.0722 = phi double [ %26, %bb.be ], [ %.2724, %.backedge.backedge ] ; 4 uses
+  %.0722 = phi double [ %43, %bb.be ], [ %.2724, %.backedge.backedge ] ; 4 uses
   %.0708 = phi i32 [ 0, %bb.be ], [ %.0708.be, %.backedge.backedge ] ; 2 uses
   %.0693 = phi i32 [ 0, %bb.be ], [ %.0693.be, %.backedge.backedge ]
   %.0690 = phi i32 [ 0, %bb.be ], [ %.1691, %.backedge.backedge ] ; 3 uses

@@ -205,7 +205,7 @@ _ZNSt3__16vectorIZN3jxl6N_AVX213FindBestSplitERNS1_11TreeSamplesEfRKNS0_INS1_21M
   %i.bf = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %13, i64 28
   %i.bh = getelementptr inbounds nuw i8, ptr %13, i64 32 ; 2 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %13, i64 36 ; 2 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %13, i64 36
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 4 uses
@@ -608,9 +608,10 @@ bb.m:                                             ; preds = %bb.l
   %i.kq = load ptr, ptr %6, align 8, !tbaa !32
   %i.kr = getelementptr inbounds nuw [40 x i8], ptr %i.kq, i64 %i.ca
   %i.ks = getelementptr inbounds nuw i8, ptr %i.kr, i64 16
-  %i.kt = load i32, ptr %i.ks, align 8, !tbaa !41 ; 2 uses
-  store i32 %i.kt, ptr %i.bi, align 4, !tbaa !365
-  store i32 %i.kt, ptr %i.bh, align 8, !tbaa !364
+  %i.kt = load i32, ptr %i.ks, align 8, !tbaa !41
+  %18 = insertelement <2 x i32> poison, i32 %i.kt, i64 0
+  %19 = shufflevector <2 x i32> %18, <2 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %19, ptr %i.bh, align 8, !tbaa !46
   %i.ku = load i64, ptr %i.bl, align 8, !tbaa !106 ; 2 uses
   %i.kv = icmp ult i64 %.2796.ph, %i.ku
   %i.kw = icmp ult i64 %i.cc, %i.ce               ; 2 uses

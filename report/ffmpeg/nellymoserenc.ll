@@ -205,27 +205,28 @@ vector.body.1:                                    ; preds = %vector.body
   br label %bb.y
 
 .preheader5.i.i:                                  ; preds = %.preheader6.i.i, %._crit_edge.i.i.2
-  %.pre.i.i = phi float [ %i.ef, %._crit_edge.i.i.2 ], [ %i.dk, %.preheader6.i.i ] ; 6 uses
+  %.pre.i.i = phi float [ %i.ef, %._crit_edge.i.i.2 ], [ %i.dk, %.preheader6.i.i ] ; 4 uses
   %indvars.iv33.i.i = phi i64 [ %indvars.iv.next34.i.i, %._crit_edge.i.i.2 ], [ 1, %.preheader6.i.i ] ; 4 uses
   %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv33.i.i
-  %i.ef = load float, ptr %i.ee, align 4, !tbaa !29 ; 7 uses
+  %i.ef = load float, ptr %i.ee, align 4, !tbaa !29 ; 5 uses
   %i.eg = getelementptr [143072 x i8], ptr %.val.i, i64 %indvars.iv33.i.i ; 4 uses
   %i.eh = getelementptr i8, ptr %i.eg, i64 -143072 ; 3 uses
   %i.ei = getelementptr inbounds nuw [35768 x i8], ptr %.val85.i, i64 %indvars.iv33.i.i ; 3 uses
-  %i.ej = fadd nsz float %i.ef, -1.000000e+03     ; 2 uses
-  %.inv.i.i = fcmp nsz ole float %i.ej, 0.000000e+00
-  %spec.select1.i.i = select i1 %.inv.i.i, float 0.000000e+00, float %i.ej
+  %4 = insertelement <2 x float> poison, float %i.ef, i64 0
+  %5 = insertelement <2 x float> %4, float %.pre.i.i, i64 1 ; 3 uses
+  %i.ej = fadd nsz float %.pre.i.i, 1.000000e+03  ; 2 uses
+  %6 = fcmp nsz olt float %i.ej, 3.576800e+04
+  %spec.select1.i.i = select i1 %6, float %i.ej, float 3.576800e+04 ; 3 uses
   %spec.select.i88.i.a = fptosi float %spec.select1.i.i to i32
-  %4 = fadd nsz float %.pre.i.i, 1.000000e+03     ; 2 uses
-  %5 = fcmp nsz olt float %4, 3.576800e+04
-  %6 = select i1 %5, float %4, float 3.576800e+04 ; 3 uses
-  %7 = fptosi float %6 to i32
-  %8 = fadd nsz float %.pre.i.i, -1.000000e+03    ; 2 uses
-  %.inv2.i.i = fcmp nsz ole float %8, 0.000000e+00
-  %9 = select i1 %.inv2.i.i, float 0.000000e+00, float %8
-  %i.ek = fptosi float %9 to i32                  ; 2 uses
+  %7 = fadd nsz <2 x float> %5, splat (float -1.000000e+03) ; 2 uses
+  %8 = fcmp nsz ole <2 x float> %7, zeroinitializer
+  %9 = select <2 x i1> %8, <2 x float> zeroinitializer, <2 x float> %7 ; 2 uses
+  %10 = extractelement <2 x float> %9, i64 0
+  %spec.select.i88.i = fptosi float %10 to i32
+  %11 = extractelement <2 x float> %9, i64 1
+  %i.ek = fptosi float %11 to i32                 ; 2 uses
   %i.el = uitofp nsz nneg i32 %i.ek to float
-  %i.em = fcmp nsz ogt float %6, %i.el
+  %i.em = fcmp nsz ogt float %spec.select1.i.i, %i.el
   br i1 %i.em, label %.lr.ph.preheader.i.i, label %.critedge
 
 .lr.ph.preheader.i.i:                             ; preds = %.preheader5.i.i
@@ -252,11 +253,11 @@ vector.body.1:                                    ; preds = %vector.body
   %i.eu = load i16, ptr %i.et, align 2, !tbaa !79
   %i.ev = sext i16 %i.eu to i32
   %i.ew = add nsw i32 %i.ev, %i.es                ; 4 uses
-  %i.ex = icmp sgt i32 %i.ew, %7
+  %i.ex = icmp sgt i32 %i.ew, %spec.select.i88.i.a
   br i1 %i.ex, label %.loopexit.i.i, label %bb.m
 
 bb.m:                                             ; preds = %.preheader4.i.i
-  %.not120.i.i = icmp slt i32 %i.ew, %spec.select.i88.i.a
+  %.not120.i.i = icmp slt i32 %i.ew, %spec.select.i88.i
   br i1 %.not120.i.i, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -289,7 +290,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   %indvars.iv.next31.i.i = add nuw nsw i64 %indvars.iv30.i.i, 1 ; 2 uses
   %i.fj = trunc nuw i64 %indvars.iv.next31.i.i to i32
   %i.fk = uitofp nsz nneg i32 %i.fj to float
-  %i.fl = fcmp nsz ogt float %6, %i.fk
+  %i.fl = fcmp nsz ogt float %spec.select1.i.i, %i.fk
   br i1 %i.fl, label %.lr.ph.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !53
 
 ._crit_edge.loopexit.i.i:                         ; preds = %.loopexit.i.i
@@ -297,20 +298,19 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   br i1 %i.fm, label %.critedge, label %._crit_edge.i.i.2
 
 .critedge:                                        ; preds = %.preheader5.i.i, %._crit_edge.loopexit.i.i
-  %i.fn = fadd nsz float %i.ef, -4.000000e+03     ; 2 uses
-  %.inv.i.i.1 = fcmp nsz ole float %i.fn, 0.000000e+00
-  %spec.select1.i.i.1 = select i1 %.inv.i.i.1, float 0.000000e+00, float %i.fn
+  %i.fn = fadd nsz float %.pre.i.i, 4.000000e+03  ; 2 uses
+  %12 = fcmp nsz olt float %i.fn, 3.576800e+04
+  %spec.select1.i.i.1 = select i1 %12, float %i.fn, float 3.576800e+04 ; 3 uses
   %spec.select.i88.i.1.a = fptosi float %spec.select1.i.i.1 to i32
-  %10 = fadd nsz float %.pre.i.i, 4.000000e+03    ; 2 uses
-  %11 = fcmp nsz olt float %10, 3.576800e+04
-  %12 = select i1 %11, float %10, float 3.576800e+04 ; 3 uses
-  %13 = fptosi float %12 to i32
-  %14 = fadd nsz float %.pre.i.i, -4.000000e+03   ; 2 uses
-  %.inv2.i.i.1 = fcmp nsz ole float %14, 0.000000e+00
-  %15 = select i1 %.inv2.i.i.1, float 0.000000e+00, float %14
-  %i.fo = fptosi float %15 to i32                 ; 2 uses
+  %13 = fadd nsz <2 x float> %5, splat (float -4.000000e+03) ; 2 uses
+  %14 = fcmp nsz ole <2 x float> %13, zeroinitializer
+  %15 = select <2 x i1> %14, <2 x float> zeroinitializer, <2 x float> %13 ; 2 uses
+  %16 = extractelement <2 x float> %15, i64 0
+  %spec.select.i88.i.1 = fptosi float %16 to i32
+  %17 = extractelement <2 x float> %15, i64 1
+  %i.fo = fptosi float %17 to i32                 ; 2 uses
   %i.fp = uitofp nsz nneg i32 %i.fo to float
-  %i.fq = fcmp nsz ogt float %12, %i.fp
+  %i.fq = fcmp nsz ogt float %spec.select1.i.i.1, %i.fp
   br i1 %i.fq, label %.lr.ph.preheader.i.i.1, label %.critedge66
 
 .lr.ph.preheader.i.i.1:                           ; preds = %.critedge
@@ -337,11 +337,11 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   %i.fy = load i16, ptr %i.fx, align 2, !tbaa !79
   %i.fz = sext i16 %i.fy to i32
   %i.ga = add nsw i32 %i.fz, %i.fw                ; 4 uses
-  %i.gb = icmp sgt i32 %i.ga, %13
+  %i.gb = icmp sgt i32 %i.ga, %spec.select.i88.i.1.a
   br i1 %i.gb, label %.loopexit.i.i.1, label %bb.q
 
 bb.q:                                             ; preds = %.preheader4.i.i.1
-  %.not120.i.i.1 = icmp slt i32 %i.ga, %spec.select.i88.i.1.a
+  %.not120.i.i.1 = icmp slt i32 %i.ga, %spec.select.i88.i.1
   br i1 %.not120.i.i.1, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -374,7 +374,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   %indvars.iv.next31.i.i.1 = add nuw nsw i64 %indvars.iv30.i.i.1, 1 ; 2 uses
   %i.gn = trunc nuw i64 %indvars.iv.next31.i.i.1 to i32
   %i.go = uitofp nsz nneg i32 %i.gn to float
-  %i.gp = fcmp nsz ogt float %12, %i.go
+  %i.gp = fcmp nsz ogt float %spec.select1.i.i.1, %i.go
   br i1 %i.gp, label %.lr.ph.i.i.1, label %._crit_edge.loopexit.i.i.1, !llvm.loop !53
 
 ._crit_edge.loopexit.i.i.1:                       ; preds = %.loopexit.i.i.1
@@ -382,20 +382,19 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   br i1 %i.gq, label %.critedge66, label %._crit_edge.i.i.2
 
 .critedge66:                                      ; preds = %.critedge, %._crit_edge.loopexit.i.i.1
-  %i.gr = fadd nsz float %i.ef, -1.600000e+04     ; 2 uses
-  %.inv.i.i.2 = fcmp nsz ole float %i.gr, 0.000000e+00
-  %spec.select1.i.i.2 = select i1 %.inv.i.i.2, float 0.000000e+00, float %i.gr
+  %i.gr = fadd nsz float %.pre.i.i, 1.600000e+04  ; 2 uses
+  %18 = fcmp nsz olt float %i.gr, 3.576800e+04
+  %spec.select1.i.i.2 = select i1 %18, float %i.gr, float 3.576800e+04 ; 3 uses
   %spec.select.i88.i.2.a = fptosi float %spec.select1.i.i.2 to i32
-  %16 = fadd nsz float %.pre.i.i, 1.600000e+04    ; 2 uses
-  %17 = fcmp nsz olt float %16, 3.576800e+04
-  %18 = select i1 %17, float %16, float 3.576800e+04 ; 3 uses
-  %19 = fptosi float %18 to i32
-  %20 = fadd nsz float %.pre.i.i, -1.600000e+04   ; 2 uses
-  %.inv2.i.i.2 = fcmp nsz ole float %20, 0.000000e+00
-  %21 = select i1 %.inv2.i.i.2, float 0.000000e+00, float %20
-  %i.gs = fptosi float %21 to i32                 ; 2 uses
+  %19 = fadd nsz <2 x float> %5, splat (float -1.600000e+04) ; 2 uses
+  %20 = fcmp nsz ole <2 x float> %19, zeroinitializer
+  %21 = select <2 x i1> %20, <2 x float> zeroinitializer, <2 x float> %19 ; 2 uses
+  %22 = extractelement <2 x float> %21, i64 0
+  %spec.select.i88.i.2 = fptosi float %22 to i32
+  %23 = extractelement <2 x float> %21, i64 1
+  %i.gs = fptosi float %23 to i32                 ; 2 uses
   %i.gt = uitofp nsz nneg i32 %i.gs to float
-  %i.gu = fcmp nsz ogt float %18, %i.gt
+  %i.gu = fcmp nsz ogt float %spec.select1.i.i.2, %i.gt
   br i1 %i.gu, label %.lr.ph.preheader.i.i.2, label %._crit_edge.i.i.2
 
 .lr.ph.preheader.i.i.2:                           ; preds = %.critedge66
@@ -420,11 +419,11 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   %i.hc = load i16, ptr %i.hb, align 2, !tbaa !79
   %i.hd = sext i16 %i.hc to i32
   %i.he = add nsw i32 %i.hd, %i.ha                ; 4 uses
-  %i.hf = icmp sgt i32 %i.he, %19
+  %i.hf = icmp sgt i32 %i.he, %spec.select.i88.i.2.a
   br i1 %i.hf, label %.loopexit.i.i.2, label %bb.u
 
 bb.u:                                             ; preds = %.preheader4.i.i.2
-  %.not120.i.i.2 = icmp slt i32 %i.he, %spec.select.i88.i.2.a
+  %.not120.i.i.2 = icmp slt i32 %i.he, %spec.select.i88.i.2
   br i1 %.not120.i.i.2, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -455,7 +454,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   %indvars.iv.next31.i.i.2 = add nuw nsw i64 %indvars.iv30.i.i.2, 1 ; 2 uses
   %i.hr = trunc nuw i64 %indvars.iv.next31.i.i.2 to i32
   %i.hs = uitofp nsz nneg i32 %i.hr to float
-  %i.ht = fcmp nsz ogt float %18, %i.hs
+  %i.ht = fcmp nsz ogt float %spec.select1.i.i.2, %i.hs
   br i1 %i.ht, label %.lr.ph.i.i.2, label %._crit_edge.i.i.2, !llvm.loop !53
 
 ._crit_edge.i.i.2:                                ; preds = %.critedge66, %.loopexit.i.i.2, %._crit_edge.loopexit.i.i.1, %._crit_edge.loopexit.i.i

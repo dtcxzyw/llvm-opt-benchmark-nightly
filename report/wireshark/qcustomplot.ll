@@ -204,15 +204,16 @@ bb.i:                                             ; preds = %bb.g
   %i.bd = fptosi double %i.bc to i32
   %i.be = sitofp i32 %i.bd to double
   %i.bf = tail call noundef double @_ZNK7QCPAxis12pixelToCoordEd(ptr noundef nonnull align 8 dereferenceable_or_null(472) %i.aa, double noundef %i.be)
-  %i.bg = fdiv double %i.ax, %i.bf                ; 2 uses
+  %i.bg = fdiv double %i.ax, %i.bf
   %i.bh = load ptr, ptr %i.q, align 8
-  %i.bi = getelementptr [16 x i8], ptr %i.bh, i64 %i.r ; 2 uses
-  %3 = load double, ptr %i.bi, align 8
-  %4 = fmul double %i.bg, %3
-  %5 = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
-  %6 = load double, ptr %5, align 8
-  %7 = fmul double %i.bg, %6
-  tail call void @_ZN7QCPAxis8setRangeEdd(ptr noundef nonnull align 8 dereferenceable_or_null(472) %i.aa, double noundef %4, double noundef %7)
+  %i.bi = getelementptr [16 x i8], ptr %i.bh, i64 %i.r
+  %3 = load <2 x double>, ptr %i.bi, align 8
+  %4 = insertelement <2 x double> poison, double %i.bg, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %6 = fmul <2 x double> %5, %3                   ; 2 uses
+  %7 = extractelement <2 x double> %6, i64 0
+  %8 = extractelement <2 x double> %6, i64 1
+  tail call void @_ZN7QCPAxis8setRangeEdd(ptr noundef nonnull align 8 dereferenceable_or_null(472) %i.aa, double noundef %7, double noundef %8)
   br label %_ZNK8QPointerI7QCPAxisE4dataEv.exit.thread
 
 _ZNK8QPointerI7QCPAxisE4dataEv.exit.thread:       ; preds = %bb.d, %bb.e, %_ZNK8QPointerI7QCPAxisE4dataEv.exit, %bb.g, %bb.i, %bb.h
@@ -313,15 +314,16 @@ bb.o:                                             ; preds = %bb.m
   %i.dj = fptosi double %i.di to i32
   %i.dk = sitofp i32 %i.dj to double
   %i.dl = tail call noundef double @_ZNK7QCPAxis12pixelToCoordEd(ptr noundef nonnull align 8 dereferenceable_or_null(472) %i.cg, double noundef %i.dk)
-  %i.dm = fdiv double %i.dd, %i.dl                ; 2 uses
+  %i.dm = fdiv double %i.dd, %i.dl
   %i.dn = load ptr, ptr %i.bw, align 8
-  %i.do = getelementptr [16 x i8], ptr %i.dn, i64 %i.bx ; 2 uses
-  %8 = load double, ptr %i.do, align 8
-  %9 = fmul double %i.dm, %8
-  %10 = getelementptr inbounds nuw i8, ptr %i.do, i64 8
-  %11 = load double, ptr %10, align 8
-  %12 = fmul double %i.dm, %11
-  tail call void @_ZN7QCPAxis8setRangeEdd(ptr noundef nonnull align 8 dereferenceable_or_null(472) %i.cg, double noundef %9, double noundef %12)
+  %i.do = getelementptr [16 x i8], ptr %i.dn, i64 %i.bx
+  %9 = load <2 x double>, ptr %i.do, align 8
+  %10 = insertelement <2 x double> poison, double %i.dm, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %12 = fmul <2 x double> %11, %9                 ; 2 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %14 = extractelement <2 x double> %12, i64 1
+  tail call void @_ZN7QCPAxis8setRangeEdd(ptr noundef nonnull align 8 dereferenceable_or_null(472) %i.cg, double noundef %13, double noundef %14)
   br label %_ZNK8QPointerI7QCPAxisE4dataEv.exit68.thread
 
 _ZNK8QPointerI7QCPAxisE4dataEv.exit68.thread:     ; preds = %bb.j, %bb.k, %_ZNK8QPointerI7QCPAxisE4dataEv.exit68, %bb.m, %bb.o, %bb.n
@@ -724,15 +726,16 @@ _ZNK18QCPPolarAxisRadial12pixelToCoordE7QPointFRdS1_.exit37: ; preds = %bb.o, %b
   br i1 %i.fc, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %_ZNK18QCPPolarAxisRadial12pixelToCoordE7QPointFRdS1_.exit37
-  %i.fd = fsub double %.0.i.i, %.0.i.i36          ; 2 uses
+  %i.fd = fsub double %.0.i.i, %.0.i.i36
   %i.fe = load ptr, ptr %i.ar, align 8
-  %i.ff = getelementptr [16 x i8], ptr %i.fe, i64 %i.as ; 2 uses
-  %7 = load double, ptr %i.ff, align 8
-  %8 = fadd double %i.fd, %7
-  %9 = getelementptr inbounds nuw i8, ptr %i.ff, i64 8
-  %10 = load double, ptr %9, align 8
-  %11 = fadd double %i.fd, %10
-  call void @_ZN18QCPPolarAxisRadial8setRangeEdd(ptr noundef align 8 dereferenceable_or_null(776) %i.av, double noundef %8, double noundef %11)
+  %i.ff = getelementptr [16 x i8], ptr %i.fe, i64 %i.as
+  %7 = load <2 x double>, ptr %i.ff, align 8
+  %8 = insertelement <2 x double> poison, double %i.fd, i64 0
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = fadd <2 x double> %9, %7                  ; 2 uses
+  %11 = extractelement <2 x double> %10, i64 0
+  %12 = extractelement <2 x double> %10, i64 1
+  call void @_ZN18QCPPolarAxisRadial8setRangeEdd(ptr noundef align 8 dereferenceable_or_null(776) %i.av, double noundef %11, double noundef %12)
   br label %bb.w
 
 bb.u:                                             ; preds = %_ZNK18QCPPolarAxisRadial12pixelToCoordE7QPointFRdS1_.exit37
@@ -742,15 +745,16 @@ bb.u:                                             ; preds = %_ZNK18QCPPolarAxisR
   br i1 %or.cond, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.fi = fdiv double %.0.i.i, %.0.i.i36          ; 2 uses
+  %i.fi = fdiv double %.0.i.i, %.0.i.i36
   %i.fj = load ptr, ptr %i.ar, align 8
-  %i.fk = getelementptr [16 x i8], ptr %i.fj, i64 %i.as ; 2 uses
-  %12 = load double, ptr %i.fk, align 8
-  %13 = fmul double %i.fi, %12
-  %14 = getelementptr inbounds nuw i8, ptr %i.fk, i64 8
-  %15 = load double, ptr %14, align 8
-  %16 = fmul double %i.fi, %15
-  call void @_ZN18QCPPolarAxisRadial8setRangeEdd(ptr noundef align 8 dereferenceable_or_null(776) %i.av, double noundef %13, double noundef %16)
+  %i.fk = getelementptr [16 x i8], ptr %i.fj, i64 %i.as
+  %13 = load <2 x double>, ptr %i.fk, align 8
+  %14 = insertelement <2 x double> poison, double %i.fi, i64 0
+  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
+  %16 = fmul <2 x double> %15, %13                ; 2 uses
+  %17 = extractelement <2 x double> %16, i64 0
+  %18 = extractelement <2 x double> %16, i64 1
+  call void @_ZN18QCPPolarAxisRadial8setRangeEdd(ptr noundef align 8 dereferenceable_or_null(776) %i.av, double noundef %17, double noundef %18)
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.t, %bb.v, %bb.u, %bb.f

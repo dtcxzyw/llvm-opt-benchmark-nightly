@@ -204,8 +204,8 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   br label %bb.b
 
@@ -217,52 +217,54 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4geos4g
   %i.h = load ptr, ptr %0, align 8, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.j = load ptr, ptr %i.i, align 8
-  %i.k = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.j(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %.05)
-  %2 = load <2 x double>, ptr %i.k, align 8, !tbaa !21 ; 3 uses
-  %3 = extractelement <2 x double> %2, i64 1      ; 4 uses
-  %4 = extractelement <2 x double> %2, i64 0      ; 5 uses
+  %i.k = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.j(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %.05) ; 2 uses
+  %2 = load double, ptr %i.k, align 8, !tbaa !16  ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %4 = load double, ptr %3, align 8, !tbaa !17    ; 5 uses
   %i.l = load double, ptr %i.e, align 8, !tbaa !45 ; 2 uses
   %i.m = fcmp uno double %i.l, 0.000000e+00
   br i1 %i.m, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  store double %4, ptr %1, align 8, !tbaa !46
-  store <2 x double> %2, ptr %i.e, align 8, !tbaa !21
+  %5 = insertelement <2 x double> poison, double %2, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  store <2 x double> %6, ptr %1, align 8, !tbaa !21
+  store double %4, ptr %i.f, align 8, !tbaa !46
   br label %_ZN4geos4geom8Envelope15expandToIncludeERKNS0_10CoordinateE.exit.sink.split
 
 bb.d:                                             ; preds = %bb.b
-  %i.n = load double, ptr %1, align 8, !tbaa !46
-  %i.o = fcmp olt double %4, %i.n
+  %i.n = load double, ptr %1, align 8, !tbaa !47
+  %i.o = fcmp olt double %2, %i.n
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  store double %4, ptr %1, align 8, !tbaa !46
+  store double %2, ptr %1, align 8, !tbaa !47
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.p = fcmp ogt double %4, %i.l
+  %i.p = fcmp ogt double %2, %i.l
   br i1 %i.p, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  store double %4, ptr %i.e, align 8, !tbaa !45
+  store double %2, ptr %i.e, align 8, !tbaa !45
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.q = load double, ptr %i.f, align 8, !tbaa !47
-  %i.r = fcmp olt double %3, %i.q
+  %i.q = load double, ptr %i.f, align 8, !tbaa !46
+  %i.r = fcmp olt double %4, %i.q
   br i1 %i.r, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  store double %3, ptr %i.f, align 8, !tbaa !47
+  store double %4, ptr %i.f, align 8, !tbaa !46
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.s = load double, ptr %i.g, align 8, !tbaa !48
-  %i.t = fcmp ogt double %3, %i.s
+  %i.t = fcmp ogt double %4, %i.s
   br i1 %i.t, label %_ZN4geos4geom8Envelope15expandToIncludeERKNS0_10CoordinateE.exit.sink.split, label %_ZN4geos4geom8Envelope15expandToIncludeERKNS0_10CoordinateE.exit
 
 _ZN4geos4geom8Envelope15expandToIncludeERKNS0_10CoordinateE.exit.sink.split: ; preds = %bb.j, %bb.c
-  store double %3, ptr %i.g, align 8, !tbaa !48
+  store double %4, ptr %i.g, align 8, !tbaa !48
   br label %_ZN4geos4geom8Envelope15expandToIncludeERKNS0_10CoordinateE.exit
 
 _ZN4geos4geom8Envelope15expandToIncludeERKNS0_10CoordinateE.exit: ; preds = %_ZN4geos4geom8Envelope15expandToIncludeERKNS0_10CoordinateE.exit.sink.split, %bb.j
@@ -661,8 +663,8 @@ attributes #15 = { noreturn nounwind }
 !43 = distinct !{!43, !19}
 !44 = !{!"_ZTSN4geos4geom8EnvelopeE", !14, i64 0, !14, i64 8, !14, i64 16, !14, i64 24}
 !45 = !{!44, !14, i64 8}
-!46 = !{!44, !14, i64 0}
-!47 = !{!44, !14, i64 16}
+!46 = !{!44, !14, i64 16}
+!47 = !{!44, !14, i64 0}
 !48 = !{!44, !14, i64 24}
 !49 = distinct !{!49, !19, !50}
 !50 = !{!"llvm.loop.peeled.count", i32 1}

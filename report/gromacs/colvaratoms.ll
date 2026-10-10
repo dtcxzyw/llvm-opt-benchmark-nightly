@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f
 
 .lr.ph:                                           ; preds = %bb.h
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 1320 ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ax = load i8, ptr %i.aw, align 8, !tbaa !220, !range !55, !noundef !56
@@ -321,20 +321,22 @@ _ZN12colvarmodule10atom_group18group_force_object14add_atom_forceEmRKNS_7rvector
 _ZN12colvarmodule10atom_group18group_force_object14add_atom_forceEmRKNS_7rvectorE.exit.us: ; preds = %_ZN12colvarmodule10atom_group18group_force_object14add_atom_forceEmRKNS_7rvectorE.exit.us.preheader, %_ZN12colvarmodule10atom_group18group_force_object14add_atom_forceEmRKNS_7rvectorE.exit.us
   %.035.us = phi i64 [ %i.di, %_ZN12colvarmodule10atom_group18group_force_object14add_atom_forceEmRKNS_7rvectorE.exit.us ], [ %.035.us.ph, %_ZN12colvarmodule10atom_group18group_force_object14add_atom_forceEmRKNS_7rvectorE.exit.us.preheader ] ; 3 uses
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %.035.us
-  %i.cw = load double, ptr %i.cv, align 8, !tbaa !109 ; 3 uses
-  %4 = load double, ptr %1, align 8, !tbaa !117, !noalias !915
-  %5 = fmul double %i.cw, %4
-  %6 = load double, ptr %i.au, align 8, !tbaa !118, !noalias !915
-  %7 = fmul double %i.cw, %6
+  %i.cw = load double, ptr %i.cv, align 8, !tbaa !109 ; 2 uses
+  %4 = load <2 x double>, ptr %1, align 8, !tbaa !109, !noalias !915
+  %5 = insertelement <2 x double> poison, double %i.cw, i64 0
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %7 = fmul <2 x double> %6, %4                   ; 2 uses
   %i.cx = load double, ptr %i.av, align 8, !tbaa !119, !noalias !915
   %i.cy = fmul double %i.cw, %i.cx
   %i.cz = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %.035.us ; 4 uses
   %i.da = load double, ptr %i.cz, align 8, !tbaa !109
-  %i.db = fadd double %5, %i.da
+  %8 = extractelement <2 x double> %7, i64 0
+  %i.db = fadd double %8, %i.da
   store double %i.db, ptr %i.cz, align 8, !tbaa !109
   %i.dc = getelementptr [8 x i8], ptr %i.cz, i64 %i.be ; 2 uses
   %i.dd = load double, ptr %i.dc, align 8, !tbaa !109
-  %i.de = fadd double %7, %i.dd
+  %9 = extractelement <2 x double> %7, i64 1
+  %i.de = fadd double %9, %i.dd
   store double %i.de, ptr %i.dc, align 8, !tbaa !109
   %i.df = getelementptr i8, ptr %i.cz, i64 %.idx.i.i.us ; 2 uses
   %i.dg = load double, ptr %i.df, align 8, !tbaa !109

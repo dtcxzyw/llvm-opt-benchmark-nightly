@@ -205,65 +205,63 @@ bb.a:
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses
-  %.02834.epil.init = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %i.y, %._crit_edge.unr-lcssa ]
-  %.02933.epil.init = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %20, %._crit_edge.unr-lcssa ]
-  %.03032.epil.init = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %17, %._crit_edge.unr-lcssa ]
+  %.02933.epil.init = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %i.y, %._crit_edge.unr-lcssa ]
+  %.epil.init = phi <2 x double> [ zeroinitializer, %.lr.ph.preheader ], [ %22, %._crit_edge.unr-lcssa ]
   %lcmp.mod54 = trunc i32 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod54)
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.epil.init
-  %i.d = load float, ptr %i.c, align 4, !tbaa !291 ; 3 uses
+  %i.d = load float, ptr %i.c, align 4, !tbaa !291
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.epil.init
   %i.f = load float, ptr %i.e, align 4, !tbaa !291 ; 3 uses
-  %3 = fmul float %i.d, %i.f
-  %4 = fpext float %3 to double
-  %5 = fadd double %.03032.epil.init, %4
-  %6 = fmul float %i.d, %i.d
-  %7 = fpext float %6 to double
-  %8 = fadd double %.02933.epil.init, %7
+  %3 = insertelement <2 x float> poison, float %i.d, i64 0 ; 2 uses
+  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
+  %5 = insertelement <2 x float> %3, float %i.f, i64 1
+  %6 = fmul <2 x float> %4, %5
+  %7 = fpext <2 x float> %6 to <2 x double>
+  %8 = fadd <2 x double> %.epil.init, %7
   %i.g = fmul float %i.f, %i.f
   %i.h = fpext float %i.g to double
-  %i.i = fadd double %.02834.epil.init, %i.h
+  %i.i = fadd double %.02933.epil.init, %i.h
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.lr.ph.epil.preheader
-  %.lcssa50 = phi double [ %17, %._crit_edge.unr-lcssa ], [ %5, %.lr.ph.epil.preheader ]
-  %.lcssa49.a = phi double [ %20, %._crit_edge.unr-lcssa ], [ %8, %.lr.ph.epil.preheader ] ; 2 uses
-  %.lcssa = phi double [ %i.y, %._crit_edge.unr-lcssa ], [ %i.i, %.lr.ph.epil.preheader ] ; 2 uses
-  %i.j = fcmp oeq double %.lcssa49.a, 0.000000e+00 ; 2 uses
-  %i.k = fcmp oeq double %.lcssa, 0.000000e+00    ; 2 uses
+  %.lcssa49 = phi <2 x double> [ %22, %._crit_edge.unr-lcssa ], [ %8, %.lr.ph.epil.preheader ] ; 2 uses
+  %.lcssa49.a = phi double [ %i.y, %._crit_edge.unr-lcssa ], [ %i.i, %.lr.ph.epil.preheader ] ; 2 uses
+  %9 = extractelement <2 x double> %.lcssa49, i64 0 ; 2 uses
+  %i.j = fcmp oeq double %9, 0.000000e+00         ; 2 uses
+  %i.k = fcmp oeq double %.lcssa49.a, 0.000000e+00 ; 2 uses
   %or.cond = select i1 %i.j, i1 true, i1 %i.k
   br i1 %or.cond, label %._crit_edge.thread, label %bb.b
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 4 uses
-  %.02834 = phi double [ 0.000000e+00, %.lr.ph.preheader.new ], [ %i.y, %.lr.ph ]
-  %.02933 = phi double [ 0.000000e+00, %.lr.ph.preheader.new ], [ %20, %.lr.ph ]
-  %.03032 = phi double [ 0.000000e+00, %.lr.ph.preheader.new ], [ %17, %.lr.ph ]
+  %.02933 = phi double [ 0.000000e+00, %.lr.ph.preheader.new ], [ %i.y, %.lr.ph ]
+  %10 = phi <2 x double> [ zeroinitializer, %.lr.ph.preheader.new ], [ %22, %.lr.ph ]
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
-  %i.m = load float, ptr %i.l, align 4, !tbaa !291 ; 3 uses
+  %i.m = load float, ptr %i.l, align 4, !tbaa !291
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   %i.o = load float, ptr %i.n, align 4, !tbaa !291 ; 3 uses
-  %9 = fmul float %i.m, %i.o
-  %10 = fpext float %9 to double
-  %11 = fadd double %.03032, %10
-  %12 = fmul float %i.m, %i.m
-  %13 = fpext float %12 to double
-  %14 = fadd double %.02933, %13
+  %11 = insertelement <2 x float> poison, float %i.m, i64 0 ; 2 uses
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = insertelement <2 x float> %11, float %i.o, i64 1
+  %14 = fmul <2 x float> %12, %13
+  %15 = fpext <2 x float> %14 to <2 x double>
+  %16 = fadd <2 x double> %10, %15
   %i.p = fmul float %i.o, %i.o
   %i.q = fpext float %i.p to double
-  %i.r = fadd double %.02834, %i.q
+  %i.r = fadd double %.02933, %i.q
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.next
-  %i.t = load float, ptr %i.s, align 4, !tbaa !291 ; 3 uses
+  %i.t = load float, ptr %i.s, align 4, !tbaa !291
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next
   %i.v = load float, ptr %i.u, align 4, !tbaa !291 ; 3 uses
-  %15 = fmul float %i.t, %i.v
-  %16 = fpext float %15 to double
-  %17 = fadd double %11, %16                      ; 3 uses
-  %18 = fmul float %i.t, %i.t
-  %19 = fpext float %18 to double
-  %20 = fadd double %14, %19                      ; 3 uses
+  %17 = insertelement <2 x float> poison, float %i.t, i64 0 ; 2 uses
+  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
+  %19 = insertelement <2 x float> %17, float %i.v, i64 1
+  %20 = fmul <2 x float> %18, %19
+  %21 = fpext <2 x float> %20 to <2 x double>
+  %22 = fadd <2 x double> %16, %21                ; 3 uses
   %i.w = fmul float %i.v, %i.v
   %i.x = fpext float %i.w to double
   %i.y = fadd double %i.r, %i.x                   ; 3 uses
@@ -280,10 +278,11 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.ab = tail call double @sqrt(double noundef %.lcssa49.a) #47
-  %i.ac = tail call double @sqrt(double noundef %.lcssa) #47
+  %i.ab = tail call double @sqrt(double noundef %9) #47
+  %i.ac = tail call double @sqrt(double noundef %.lcssa49.a) #47
   %i.ad = fmul double %i.ab, %i.ac
-  %i.ae = fdiv double %.lcssa50, %i.ad
+  %23 = extractelement <2 x double> %.lcssa49, i64 1
+  %i.ae = fdiv double %23, %i.ad
   %i.af = fptrunc double %i.ae to float
   br label %bb.c
 

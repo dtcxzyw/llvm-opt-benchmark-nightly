@@ -204,20 +204,22 @@ _ZN4Json5ValueixERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; 
 
 _ZN4Json5ValueaSERKS0_.exit:                      ; preds = %_ZN4Json5ValueixERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %i.sd = getelementptr inbounds nuw i8, ptr %i.sc, i64 8 ; 2 uses
-  %16 = load i16, ptr %i.sd, align 8              ; 2 uses
-  %i.se = load i16, ptr %i.pv, align 8            ; 2 uses
-  %17 = and i16 %16, -512
-  %18 = and i16 %i.se, -512
+  %i.se = load i16, ptr %i.sd, align 8
+  %16 = load <8 x i16>, ptr %i.pv, align 8
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.sc, align 8, !tbaa !50
   %i.sf = load i64, ptr %2, align 8, !tbaa !50
   store i64 %i.sf, ptr %i.sc, align 8, !tbaa !50
   store i64 %.sroa.0.0.copyload.i.i.i.i, ptr %2, align 8, !tbaa !50
-  %19 = and i16 %i.se, 511
-  %20 = or disjoint i16 %19, %17
-  store i16 %20, ptr %i.sd, align 8
-  %21 = and i16 %16, 511
-  %22 = or disjoint i16 %18, %21
-  store i16 %22, ptr %i.pv, align 8
+  %17 = shufflevector <8 x i16> %16, <8 x i16> poison, <2 x i32> zeroinitializer
+  %18 = and <2 x i16> %17, <i16 511, i16 -512>
+  %19 = insertelement <2 x i16> poison, i16 %i.se, i64 0
+  %20 = shufflevector <2 x i16> %19, <2 x i16> poison, <2 x i32> zeroinitializer
+  %21 = and <2 x i16> %20, <i16 -512, i16 511>
+  %22 = or disjoint <2 x i16> %18, %21            ; 2 uses
+  %23 = extractelement <2 x i16> %22, i64 0
+  store i16 %23, ptr %i.sd, align 8
+  %24 = extractelement <2 x i16> %22, i64 1
+  store i16 %24, ptr %i.pv, align 8
   %i.sg = getelementptr inbounds nuw i8, ptr %i.sc, i64 16 ; 2 uses
   %i.sh = load ptr, ptr %i.sg, align 8, !tbaa !130
   %i.si = load ptr, ptr %i.pw, align 8, !tbaa !130
@@ -620,20 +622,22 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8 ; 2 uses
-  %6 = load i16, ptr %i.cd, align 8               ; 2 uses
-  %i.ce = load i16, ptr %i.bd, align 8            ; 2 uses
-  %7 = and i16 %6, -512
-  %8 = and i16 %i.ce, -512
+  %i.ce = load i16, ptr %i.cd, align 8
+  %6 = load <8 x i16>, ptr %i.bd, align 8
   %.sroa.0.0.copyload.i.i.i.i25 = load i64, ptr %i.cc, align 8, !tbaa !50
   %i.cf = load i64, ptr %3, align 8, !tbaa !50
   store i64 %i.cf, ptr %i.cc, align 8, !tbaa !50
   store i64 %.sroa.0.0.copyload.i.i.i.i25, ptr %3, align 8, !tbaa !50
-  %9 = and i16 %i.ce, 511
-  %10 = or disjoint i16 %9, %7
-  store i16 %10, ptr %i.cd, align 8
-  %11 = and i16 %6, 511
-  %12 = or disjoint i16 %8, %11
-  store i16 %12, ptr %i.bd, align 8
+  %7 = shufflevector <8 x i16> %6, <8 x i16> poison, <2 x i32> zeroinitializer
+  %8 = and <2 x i16> %7, <i16 511, i16 -512>
+  %9 = insertelement <2 x i16> poison, i16 %i.ce, i64 0
+  %10 = shufflevector <2 x i16> %9, <2 x i16> poison, <2 x i32> zeroinitializer
+  %11 = and <2 x i16> %10, <i16 -512, i16 511>
+  %12 = or disjoint <2 x i16> %8, %11             ; 2 uses
+  %13 = extractelement <2 x i16> %12, i64 0
+  store i16 %13, ptr %i.cd, align 8
+  %14 = extractelement <2 x i16> %12, i64 1
+  store i16 %14, ptr %i.bd, align 8
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cc, i64 16 ; 2 uses
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !130
   %i.ci = load ptr, ptr %i.be, align 8, !tbaa !130
@@ -1036,20 +1040,22 @@ _ZN4Json5ValueixERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; 
 
 _ZN4Json5ValueaSERKS0_.exit:                      ; preds = %_ZN4Json5ValueixERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lt, i64 8 ; 2 uses
-  %12 = load i16, ptr %i.lu, align 8              ; 2 uses
-  %i.lv = load i16, ptr %i.jm, align 8            ; 2 uses
-  %13 = and i16 %12, -512
-  %14 = and i16 %i.lv, -512
+  %i.lv = load i16, ptr %i.lu, align 8
+  %12 = load <8 x i16>, ptr %i.jm, align 8
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.lt, align 8, !tbaa !50
   %i.lw = load i64, ptr %2, align 8, !tbaa !50
   store i64 %i.lw, ptr %i.lt, align 8, !tbaa !50
   store i64 %.sroa.0.0.copyload.i.i.i.i, ptr %2, align 8, !tbaa !50
-  %15 = and i16 %i.lv, 511
-  %16 = or disjoint i16 %15, %13
-  store i16 %16, ptr %i.lu, align 8
-  %17 = and i16 %12, 511
-  %18 = or disjoint i16 %14, %17
-  store i16 %18, ptr %i.jm, align 8
+  %13 = shufflevector <8 x i16> %12, <8 x i16> poison, <2 x i32> zeroinitializer
+  %14 = and <2 x i16> %13, <i16 511, i16 -512>
+  %15 = insertelement <2 x i16> poison, i16 %i.lv, i64 0
+  %16 = shufflevector <2 x i16> %15, <2 x i16> poison, <2 x i32> zeroinitializer
+  %17 = and <2 x i16> %16, <i16 -512, i16 511>
+  %18 = or disjoint <2 x i16> %14, %17            ; 2 uses
+  %19 = extractelement <2 x i16> %18, i64 0
+  store i16 %19, ptr %i.lu, align 8
+  %20 = extractelement <2 x i16> %18, i64 1
+  store i16 %20, ptr %i.jm, align 8
   %i.lx = getelementptr inbounds nuw i8, ptr %i.lt, i64 16 ; 2 uses
   %i.ly = load ptr, ptr %i.lx, align 8, !tbaa !130
   %i.lz = load ptr, ptr %i.jn, align 8, !tbaa !130

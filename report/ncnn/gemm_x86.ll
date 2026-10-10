@@ -205,10 +205,10 @@ middle.block2069:                                 ; preds = %vector.body2050
   %.10.lcssa = phi ptr [ %.91378, %bb.fh ], [ %scevgep1604, %._crit_edge1352.loopexit ] ; 5 uses
   %.01204.lcssa = phi ptr [ %.212801424, %bb.fh ], [ %.lcssa1818, %._crit_edge1352.loopexit ] ; 3 uses
   %.01202.lcssa = phi i32 [ 0, %bb.fh ], [ %i.aan, %._crit_edge1352.loopexit ] ; 4 uses
-  %i.bnh = phi <2 x float> [ %i.bey, %bb.fh ], [ %i.bng, %._crit_edge1352.loopexit ] ; 3 uses
+  %i.bnh = phi <2 x float> [ %i.bey, %bb.fh ], [ %i.bng, %._crit_edge1352.loopexit ] ; 4 uses
   %i.bni = icmp slt i32 %.01202.lcssa, %8
-  %i.bnj = extractelement <2 x float> %i.bnh, i64 0 ; 2 uses
-  %i.bnk = extractelement <2 x float> %i.bnh, i64 1 ; 2 uses
+  %i.bnj = extractelement <2 x float> %i.bnh, i64 0
+  %i.bnk = extractelement <2 x float> %i.bnh, i64 1
   br i1 %i.bni, label %.lr.ph1370.preheader, label %._crit_edge1371
 
 .lr.ph1370.preheader:                             ; preds = %._crit_edge1352
@@ -271,40 +271,43 @@ middle.block2037:                                 ; preds = %vector.body2019
   %bin.rdx2039 = fadd fast <4 x float> %i.bof, %i.boe
   %i.bom = tail call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx2039) ; 2 uses
   %cmp.n2040 = icmp eq i64 %i.bno, %n.vec2018
+  %10 = insertelement <2 x float> poison, float %i.bom, i64 0
+  %11 = insertelement <2 x float> %10, float %i.bol, i64 1
   br i1 %cmp.n2040, label %._crit_edge1371, label %.lr.ph1370.preheader2084
 
 .lr.ph1370.preheader2084:                         ; preds = %.lr.ph1370.preheader, %middle.block2037
   %.112031368.ph = phi i32 [ %.01202.lcssa, %.lr.ph1370.preheader ], [ %i.bnq, %middle.block2037 ]
   %.112051367.ph = phi ptr [ %.01204.lcssa, %.lr.ph1370.preheader ], [ %i.bns, %middle.block2037 ]
-  %.212081366.ph = phi float [ %i.bnk, %.lr.ph1370.preheader ], [ %i.bol, %middle.block2037 ]
-  %.212111365.ph = phi float [ %i.bnj, %.lr.ph1370.preheader ], [ %i.bom, %middle.block2037 ]
   %.111364.ph = phi ptr [ %.10.lcssa, %.lr.ph1370.preheader ], [ %i.bnu, %middle.block2037 ]
+  %.ph2085 = phi <2 x float> [ %i.bnh, %.lr.ph1370.preheader ], [ %11, %middle.block2037 ]
   br label %.lr.ph1370
 
 .lr.ph1370:                                       ; preds = %.lr.ph1370.preheader2084, %.lr.ph1370
   %.112031368 = phi i32 [ %i.boq, %.lr.ph1370 ], [ %.112031368.ph, %.lr.ph1370.preheader2084 ]
   %.112051367 = phi ptr [ %i.boo, %.lr.ph1370 ], [ %.112051367.ph, %.lr.ph1370.preheader2084 ] ; 2 uses
-  %.212081366 = phi float [ %16, %.lr.ph1370 ], [ %.212081366.ph, %.lr.ph1370.preheader2084 ]
-  %.212111365 = phi float [ %12, %.lr.ph1370 ], [ %.212111365.ph, %.lr.ph1370.preheader2084 ]
-  %.111364 = phi ptr [ %i.bop, %.lr.ph1370 ], [ %.111364.ph, %.lr.ph1370.preheader2084 ] ; 3 uses
-  %10 = load float, ptr %.112051367, align 4, !tbaa !67 ; 2 uses
-  %i.bon = load float, ptr %.111364, align 4, !tbaa !67
-  %11 = fmul fast float %i.bon, %10
-  %12 = fadd fast float %11, %.212111365          ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %.111364, i64 4
-  %14 = load float, ptr %13, align 4, !tbaa !67
-  %15 = fmul fast float %14, %10
-  %16 = fadd fast float %15, %.212081366          ; 2 uses
+  %.111364 = phi ptr [ %i.bop, %.lr.ph1370 ], [ %.111364.ph, %.lr.ph1370.preheader2084 ] ; 2 uses
+  %12 = phi <2 x float> [ %17, %.lr.ph1370 ], [ %.ph2085, %.lr.ph1370.preheader2084 ]
+  %i.bon = load float, ptr %.112051367, align 4, !tbaa !67
+  %13 = load <2 x float>, ptr %.111364, align 4, !tbaa !67
+  %14 = insertelement <2 x float> poison, float %i.bon, i64 0
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %16 = fmul fast <2 x float> %13, %15
+  %17 = fadd fast <2 x float> %16, %12            ; 3 uses
   %i.boo = getelementptr inbounds nuw i8, ptr %.112051367, i64 4
   %i.bop = getelementptr inbounds nuw i8, ptr %.111364, i64 8 ; 2 uses
   %i.boq = add nuw nsw i32 %.112031368, 1         ; 2 uses
   %exitcond1605.not = icmp eq i32 %i.boq, %8
-  br i1 %exitcond1605.not, label %._crit_edge1371, label %.lr.ph1370, !llvm.loop !341
+  br i1 %exitcond1605.not, label %._crit_edge1371.loopexit, label %.lr.ph1370, !llvm.loop !341
 
-._crit_edge1371:                                  ; preds = %.lr.ph1370, %middle.block2037, %._crit_edge1352
-  %.11.lcssa = phi ptr [ %.10.lcssa, %._crit_edge1352 ], [ %i.bnu, %middle.block2037 ], [ %i.bop, %.lr.ph1370 ] ; 2 uses
-  %.21211.lcssa = phi float [ %i.bnj, %._crit_edge1352 ], [ %i.bom, %middle.block2037 ], [ %12, %.lr.ph1370 ] ; 2 uses
-  %.21208.lcssa = phi float [ %i.bnk, %._crit_edge1352 ], [ %i.bol, %middle.block2037 ], [ %16, %.lr.ph1370 ] ; 2 uses
+._crit_edge1371.loopexit:                         ; preds = %.lr.ph1370
+  %18 = extractelement <2 x float> %17, i64 1
+  %19 = extractelement <2 x float> %17, i64 0
+  br label %._crit_edge1371
+
+._crit_edge1371:                                  ; preds = %._crit_edge1371.loopexit, %middle.block2037, %._crit_edge1352
+  %.11.lcssa = phi ptr [ %.10.lcssa, %._crit_edge1352 ], [ %i.bnu, %middle.block2037 ], [ %i.bop, %._crit_edge1371.loopexit ] ; 2 uses
+  %.21211.lcssa = phi float [ %i.bnj, %._crit_edge1352 ], [ %i.bom, %middle.block2037 ], [ %19, %._crit_edge1371.loopexit ] ; 2 uses
+  %.21208.lcssa = phi float [ %i.bnk, %._crit_edge1352 ], [ %i.bol, %middle.block2037 ], [ %18, %._crit_edge1371.loopexit ] ; 2 uses
   br i1 %9, label %bb.fi, label %bb.fj
 
 bb.fi:                                            ; preds = %._crit_edge1371

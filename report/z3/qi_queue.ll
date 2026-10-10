@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %_ZN6vectorIjLb0EjE9
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZNK3smt8qi_queue31display_delayed_instances_statsERSo(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1080) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 .lr.ph.i.i.i.i.i.i.i:
-  %2 = alloca %"struct.obj_map<quantifier, smt::delayed_qa_info>::key_data", align 8 ; 7 uses
+  %2 = alloca %"struct.obj_map<quantifier, smt::delayed_qa_info>::key_data", align 8 ; 6 uses
   %3 = alloca %class.obj_map.333, align 8         ; 12 uses
   %4 = alloca %class.ptr_vector.95, align 8       ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
@@ -249,9 +249,8 @@ _ZNK6vectorIN3smt8qi_queue5entryELb0EjE3endEv.exit: ; preds = %.lr.ph.i.i.i.i.i.
   br i1 %.not96, label %_ZN6vectorIP10quantifierLb0EjED2Ev.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK6vectorIN3smt8qi_queue5entryELb0EjE3endEv.exit
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.9.0..sroa_idx73.a = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %.sroa.14.0..sroa_idx75 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.sroa.9.0..sroa_idx73.a = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.sroa.14.0..sroa_idx75 = getelementptr inbounds nuw i8, ptr %2, i64 12
   br label %bb.a
 
 ._crit_edge:                                      ; preds = %bb.o
@@ -350,20 +349,18 @@ bb.h:                                             ; preds = %bb.f
   br label %.lr.ph38.i.i.i, !llvm.loop !760
 
 .loopexit:                                        ; preds = %bb.c, %bb.f
-  %.026.i.i.i = phi ptr [ %.137.i.i.i, %bb.f ], [ %.035.i.i.i, %bb.c ] ; 3 uses
+  %.026.i.i.i = phi ptr [ %.137.i.i.i, %bb.f ], [ %.035.i.i.i, %bb.c ] ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.026.i.i.i, i64 8
   %.sroa.071.0.copyload = load i32, ptr %i.bd, align 8, !tbaa !569
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.026.i.i.i, i64 12
-  %.sroa.9.0.copyload = load float, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !571 ; 2 uses
-  %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.026.i.i.i, i64 16
-  %.sroa.14.0.copyload = load float, ptr %.sroa.14.0..sroa_idx, align 8, !tbaa !571 ; 2 uses
-  %6 = add i32 %.sroa.071.0.copyload, 1
-  %7 = getelementptr inbounds nuw i8, ptr %.02697, i64 8
-  %8 = load float, ptr %7, align 8, !tbaa !571    ; 4 uses
-  %9 = fcmp olt float %8, %.sroa.9.0.copyload
-  %.sroa.speculated79 = select i1 %9, float %8, float %.sroa.9.0.copyload
-  %10 = fcmp olt float %8, %.sroa.14.0.copyload
-  %.sroa.speculated = select i1 %10, float %8, float %.sroa.14.0.copyload
+  %5 = add i32 %.sroa.071.0.copyload, 1
+  %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.02697, i64 8
+  %.sroa.14.0.copyload = load float, ptr %.sroa.14.0..sroa_idx, align 8, !tbaa !571
+  %6 = load <2 x float>, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !571 ; 2 uses
+  %7 = insertelement <2 x float> poison, float %.sroa.14.0.copyload, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %9 = fcmp olt <2 x float> %8, %6
+  %10 = select <2 x i1> %9, <2 x float> %8, <2 x float> %6
   br label %bb.m
 
 bb.i:                                             ; preds = %bb.m, %bb.k
@@ -404,18 +401,18 @@ bb.l:                                             ; preds = %.noexc, %bb.j
   %i.br = add i32 %i.bm, 1
   store i32 %i.br, ptr %i.bo, align 4, !tbaa !569
   %i.bs = getelementptr inbounds nuw i8, ptr %.02697, i64 8
-  %i.bt = load float, ptr %i.bs, align 8, !tbaa !612 ; 2 uses
+  %i.bt = load float, ptr %i.bs, align 8, !tbaa !612
+  %11 = insertelement <2 x float> poison, float %i.bt, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %.loopexit
-  %.sroa.9.0 = phi float [ %.sroa.speculated79, %.loopexit ], [ %i.bt, %bb.l ]
-  %.sroa.14.0 = phi float [ %.sroa.speculated, %.loopexit ], [ %i.bt, %bb.l ]
-  %.sroa.071.0 = phi i32 [ %6, %.loopexit ], [ 1, %bb.l ]
+  %.sroa.071.0 = phi i32 [ %5, %.loopexit ], [ 1, %bb.l ]
+  %13 = phi <2 x float> [ %10, %.loopexit ], [ %12, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   store ptr %i.ac, ptr %2, align 8, !tbaa !683
-  store i32 %.sroa.071.0, ptr %5, align 8, !tbaa !569
-  store float %.sroa.9.0, ptr %.sroa.9.0..sroa_idx73.a, align 4, !tbaa !571
-  store float %.sroa.14.0, ptr %.sroa.14.0..sroa_idx75, align 8, !tbaa !571
+  store i32 %.sroa.071.0, ptr %.sroa.9.0..sroa_idx73.a, align 8, !tbaa !569
+  store <2 x float> %13, ptr %.sroa.14.0..sroa_idx75, align 4, !tbaa !571
   invoke void @_ZN14core_hashtableIN7obj_mapI10quantifierN3smt15delayed_qa_infoEE13obj_map_entryE8obj_hashINS4_8key_dataEE10default_eqIS7_EE6insertEOS7_(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(20) %2)
           to label %bb.n unwind label %bb.i
 

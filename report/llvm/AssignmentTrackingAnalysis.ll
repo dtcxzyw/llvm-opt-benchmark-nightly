@@ -205,10 +205,11 @@ bb.a:
   br i1 %i.j, label %.loopexit116, label %.lr.ph149.preheader
 
 .lr.ph149.preheader:                              ; preds = %.preheader115
-  %i.k = load ptr, ptr %i.i, align 8, !tbaa !526  ; 48 uses
+  %i.k = load ptr, ptr %i.i, align 8, !tbaa !526  ; 49 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 128 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 128 ; 13 uses
-  %scevgep217 = getelementptr i8, ptr %i.k, i64 4 ; 6 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 128 ; 12 uses
+  %scevgep217 = getelementptr i8, ptr %i.k, i64 4 ; 5 uses
+  %4 = getelementptr i8, ptr %i.k, <2 x i64> <i64 4, i64 128>
   %scevgep219 = getelementptr i8, ptr %i.k, i64 8
   %scevgep221 = getelementptr i8, ptr %i.k, i64 132
   %scevgep225 = getelementptr i8, ptr %i.k, i64 4 ; 2 uses
@@ -217,8 +218,7 @@ bb.a:
   %scevgep232 = getelementptr i8, ptr %i.k, i64 132
   %i.n = insertelement <4 x ptr> poison, ptr %i.k, i64 0
   %i.o = shufflevector <4 x ptr> %i.n, <4 x ptr> poison, <4 x i32> zeroinitializer
-  %4 = insertelement <4 x ptr> poison, ptr %scevgep217, i64 0
-  %5 = insertelement <4 x ptr> %4, ptr %i.m, i64 1
+  %5 = shufflevector <2 x ptr> %4, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.p = getelementptr i8, ptr %i.k, i64 128      ; 11 uses
   %scevgep154 = getelementptr i8, ptr %i.k, i64 4 ; 2 uses
   %scevgep157 = getelementptr i8, ptr %i.k, i64 8
@@ -621,7 +621,7 @@ bb.e:                                             ; preds = %_ZN4llvm15IntervalM
   %i.hx = phi i32 [ %i.pu, %bb.e ], [ %i.hp, %.lr.ph153.preheader ]
   %i.hy = zext i32 %.0152 to i64                  ; 2 uses
   %i.hz = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.hy
-  %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !526 ; 48 uses
+  %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !526 ; 49 uses
   %i.ib = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.hy ; 3 uses
   %i.ic = load i32, ptr %i.ib, align 4, !tbaa !116 ; 15 uses
   %i.id = sub i32 %i.hw, %i.hx                    ; 3 uses
@@ -930,7 +930,7 @@ _ZN4llvm15IntervalMapImpl8NodeBaseISt4pairIjjEjLj16EE4copyILj16EEEvRKNS1_IS3_jXT
   br i1 %.not13.i.i.i.i.i88, label %_ZN4llvm15IntervalMapImpl8NodeBaseISt4pairIjjEjLj16EE17transferToLeftSibEjRS4_jj.exit.i94, label %.lr.ph.i.i.i.i.i89
 
 .lr.ph.i.i.i.i.i89:                               ; preds = %_ZN4llvm15IntervalMapImpl8NodeBaseISt4pairIjjEjLj16EE4copyILj16EEEvRKNS1_IS3_jXT_EEEjjj.exit.i.i87
-  %i.mk = getelementptr inbounds nuw i8, ptr %i.ia, i64 128 ; 13 uses
+  %i.mk = getelementptr inbounds nuw i8, ptr %i.ia, i64 128 ; 12 uses
   %i.ml = xor i32 %.sroa.speculated.i80, -1
   %i.mm = add i32 %i.ic, %i.ml                    ; 2 uses
   %i.mn = zext i32 %i.mm to i64
@@ -942,7 +942,8 @@ _ZN4llvm15IntervalMapImpl8NodeBaseISt4pairIjjEjLj16EE4copyILj16EEEvRKNS1_IS3_jXT
   br i1 %or.cond480, label %scalar.ph452.preheader, label %vector.memcheck386
 
 vector.memcheck386:                               ; preds = %.lr.ph.i.i.i.i.i89
-  %scevgep387 = getelementptr i8, ptr %i.ia, i64 4 ; 6 uses
+  %scevgep387 = getelementptr i8, ptr %i.ia, i64 4 ; 5 uses
+  %6 = getelementptr i8, ptr %i.ia, <2 x i64> <i64 4, i64 128>
   %i.mr = xor i32 %.sroa.speculated.i80, -1
   %i.ms = add i32 %i.ic, %i.mr
   %i.mt = zext i32 %i.ms to i64                   ; 2 uses
@@ -977,8 +978,7 @@ vector.memcheck386:                               ; preds = %.lr.ph.i.i.i.i.i89
   %i.ng = insertelement <4 x ptr> %i.nf, ptr %scevgep397, i64 2
   %i.nh = insertelement <4 x ptr> %i.ng, ptr %scevgep400, i64 3
   %i.ni = icmp ult <4 x ptr> %i.nd, %i.nh
-  %6 = insertelement <4 x ptr> poison, ptr %scevgep387, i64 0
-  %7 = insertelement <4 x ptr> %6, ptr %i.mk, i64 1
+  %7 = shufflevector <2 x ptr> %6, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.nj = insertelement <4 x ptr> %7, ptr %scevgep395, i64 2
   %i.nk = insertelement <4 x ptr> %i.nj, ptr %scevgep398, i64 3
   %i.nl = insertelement <4 x ptr> poison, ptr %scevgep388, i64 0

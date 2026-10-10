@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not1.i, label %.thread.i, label %.critedge.i
 
 .thread.i:                                        ; preds = %bb.l, %bb.k
-  %.val.i = phi ptr [ %.val.i.pre, %bb.l ], [ %i.cb, %bb.k ] ; 75 uses
+  %.val.i = phi ptr [ %.val.i.pre, %bb.l ], [ %i.cb, %bb.k ] ; 71 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cb, i64 786728
   %i.ci = load i32, ptr %i.ch, align 8, !tbaa !104
   %.not26.i = icmp eq i32 %i.ci, 0
@@ -608,23 +608,11 @@ bb.ca:                                            ; preds = %bb.bz
   %i.uv = getelementptr inbounds nuw i8, ptr %.val.i, i64 786624
   tail call void @llvm.experimental.noalias.scope.decl(metadata !198)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !199)
-  %6 = load float, ptr %i.uu, align 16, !tbaa !101, !noalias !200
-  %7 = getelementptr inbounds nuw i8, ptr %.val.i, i64 786576
-  %8 = load float, ptr %7, align 16, !tbaa !101, !noalias !200
-  %9 = getelementptr inbounds nuw i8, ptr %.val.i, i64 786592
-  %i.uw = load float, ptr %9, align 16, !tbaa !101, !noalias !200
+  %i.uw = load float, ptr %i.uu, align 16, !tbaa !101, !noalias !200
   %i.ux = getelementptr inbounds nuw i8, ptr %.val.i, i64 786564
-  %10 = load float, ptr %i.ux, align 4, !tbaa !101, !noalias !200
-  %11 = getelementptr inbounds nuw i8, ptr %.val.i, i64 786580
-  %12 = load float, ptr %11, align 4, !tbaa !101, !noalias !200
-  %13 = getelementptr inbounds nuw i8, ptr %.val.i, i64 786596
-  %i.uy = load float, ptr %13, align 4, !tbaa !101, !noalias !200
+  %i.uy = load float, ptr %i.ux, align 4, !tbaa !101, !noalias !200
   %i.uz = getelementptr inbounds nuw i8, ptr %.val.i, i64 786568
-  %14 = load float, ptr %i.uz, align 8, !tbaa !101, !noalias !200
-  %15 = getelementptr inbounds nuw i8, ptr %.val.i, i64 786584
-  %16 = load float, ptr %15, align 8, !tbaa !101, !noalias !200
-  %17 = getelementptr inbounds nuw i8, ptr %.val.i, i64 786600
-  %i.va = load float, ptr %17, align 8, !tbaa !101, !noalias !200
+  %i.va = load float, ptr %i.uz, align 8, !tbaa !101, !noalias !200
   %i.vb = load float, ptr %i.uv, align 16, !tbaa !101, !noalias !200
   %i.vc = getelementptr inbounds nuw i8, ptr %.val.i, i64 786640
   %i.vd = load float, ptr %i.vc, align 16, !tbaa !101, !noalias !200
@@ -646,6 +634,10 @@ bb.ca:                                            ; preds = %bb.bz
   br i1 %.not.i.i37.i, label %process_cmatrix.exit, label %.lr.ph.i.i38.i
 
 .lr.ph.i.i38.i:                                   ; preds = %bb.ca
+  %6 = getelementptr inbounds nuw i8, ptr %.val.i, i64 786596
+  %7 = load <2 x float>, ptr %6, align 4, !tbaa !101, !noalias !200
+  %8 = getelementptr inbounds nuw i8, ptr %.val.i, i64 786576
+  %9 = tail call <5 x float> @llvm.masked.load.v5f32.p0(ptr nonnull align 16 %8, <5 x i1> <i1 true, i1 true, i1 true, i1 false, i1 true>, <5 x float> poison), !tbaa !101, !noalias !200 ; 3 uses
   %i.vs = getelementptr inbounds nuw i8, ptr %.val.i, i64 48 ; 2 uses
   %i.vt = getelementptr inbounds nuw i8, ptr %.val.i, i64 786688
   %i.vu = load float, ptr %i.vs, align 16, !tbaa !101, !noalias !200
@@ -664,6 +656,10 @@ bb.ca:                                            ; preds = %bb.bz
   %i.wh = getelementptr inbounds nuw i8, ptr %.val.i, i64 786712
   %i.wi = getelementptr inbounds nuw i8, ptr %.val.i, i64 786716
   %i.wj = getelementptr inbounds nuw i8, ptr %.val.i, i64 786720
+  %10 = shufflevector <2 x float> %7, <2 x float> poison, <5 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison> ; 2 uses
+  %11 = shufflevector <5 x float> %9, <5 x float> %10, <2 x i32> <i32 1, i32 5>
+  %12 = shufflevector <5 x float> %9, <5 x float> poison, <2 x i32> <i32 0, i32 4>
+  %13 = shufflevector <5 x float> %9, <5 x float> %10, <2 x i32> <i32 2, i32 6>
   %i.wk = extractelement <2 x float> %i.bd, i64 0
   br label %bb.cb
 
@@ -712,7 +708,7 @@ bb.ce:                                            ; preds = %bb.cc
   br label %.sink.split.i.i.i.i
 
 .sink.split.i.i.i.i:                              ; preds = %bb.ce, %bb.cd, %bb.cb
-  %.sroa.038.0.i.i.i = phi nsz float [ %i.wo, %bb.cb ], [ %i.xp, %bb.ce ], [ %i.xj, %bb.cd ] ; 4 uses
+  %.sroa.038.0.i.i.i = phi nsz float [ %i.wo, %bb.cb ], [ %i.xp, %bb.ce ], [ %i.xj, %bb.cd ] ; 3 uses
   br i1 %i.wa, label %.sink.split24.i.i.i.i, label %bb.cf
 
 bb.cf:                                            ; preds = %.sink.split.i.i.i.i
@@ -746,7 +742,7 @@ bb.ch:                                            ; preds = %bb.cf
   br label %.sink.split24.i.i.i.i
 
 .sink.split24.i.i.i.i:                            ; preds = %bb.ch, %bb.cg, %.sink.split.i.i.i.i
-  %.sroa.9.0.i.i.i = phi nsz float [ %i.wr, %.sink.split.i.i.i.i ], [ %i.yk, %bb.ch ], [ %i.xw, %bb.cg ] ; 4 uses
+  %.sroa.9.0.i.i.i = phi nsz float [ %i.wr, %.sink.split.i.i.i.i ], [ %i.yk, %bb.ch ], [ %i.xw, %bb.cg ] ; 3 uses
   br i1 %i.wg, label %_apply_tone_curves.exit.i.i.i, label %bb.ci
 
 bb.ci:                                            ; preds = %.sink.split24.i.i.i.i
@@ -780,29 +776,30 @@ bb.ck:                                            ; preds = %bb.ci
   br label %_apply_tone_curves.exit.i.i.i
 
 _apply_tone_curves.exit.i.i.i:                    ; preds = %bb.ck, %bb.cj, %.sink.split24.i.i.i.i
-  %.sroa.16.0.i.i.i = phi nsz float [ %i.wu, %.sink.split24.i.i.i.i ], [ %i.zf, %bb.ck ], [ %i.yr, %bb.cj ] ; 4 uses
-  %i.zg = fmul reassoc nsz arcp contract afn float %.sroa.038.0.i.i.i, %6
-  %i.zh = fmul reassoc nsz arcp contract afn float %.sroa.9.0.i.i.i, %10
+  %.sroa.16.0.i.i.i = phi nsz float [ %i.wu, %.sink.split24.i.i.i.i ], [ %i.zf, %bb.ck ], [ %i.yr, %bb.cj ] ; 3 uses
+  %i.zg = fmul reassoc nsz arcp contract afn float %.sroa.038.0.i.i.i, %i.uw
+  %i.zh = fmul reassoc nsz arcp contract afn float %.sroa.9.0.i.i.i, %i.uy
   %i.zi = fadd reassoc nsz arcp contract afn float %i.zh, %i.zg
-  %i.zj = fmul reassoc nsz arcp contract afn float %.sroa.16.0.i.i.i, %14
+  %i.zj = fmul reassoc nsz arcp contract afn float %.sroa.16.0.i.i.i, %i.va
   %i.zk = fadd reassoc nsz arcp contract afn float %i.zi, %i.zj
   %.sroa.033.0.vec.insert.i.i.i = insertelement <4 x float> poison, float %i.zk, i64 0
-  %18 = fmul reassoc nsz arcp contract afn float %.sroa.038.0.i.i.i, %8
-  %19 = fmul reassoc nsz arcp contract afn float %.sroa.9.0.i.i.i, %12
-  %20 = fadd reassoc nsz arcp contract afn float %19, %18
-  %21 = fmul reassoc nsz arcp contract afn float %.sroa.16.0.i.i.i, %16
-  %22 = fadd reassoc nsz arcp contract afn float %20, %21
-  %.sroa.033.4.vec.insert.i.i.i = insertelement <4 x float> %.sroa.033.0.vec.insert.i.i.i, float %22, i64 1
-  %23 = fmul reassoc nsz arcp contract afn float %.sroa.038.0.i.i.i, %i.uw
-  %24 = fmul reassoc nsz arcp contract afn float %.sroa.9.0.i.i.i, %i.uy
-  %25 = fadd reassoc nsz arcp contract afn float %24, %23
-  %26 = fmul reassoc nsz arcp contract afn float %.sroa.16.0.i.i.i, %i.va
-  %27 = fadd reassoc nsz arcp contract afn float %25, %26
-  %.sroa.033.8.vec.insert.i.i.i = insertelement <4 x float> %.sroa.033.4.vec.insert.i.i.i, float %27, i64 2
+  %14 = insertelement <2 x float> poison, float %.sroa.038.0.i.i.i, i64 0
+  %15 = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %16 = fmul reassoc nsz arcp contract afn <2 x float> %15, %12
+  %17 = insertelement <2 x float> poison, float %.sroa.9.0.i.i.i, i64 0
+  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
+  %19 = fmul reassoc nsz arcp contract afn <2 x float> %18, %11
+  %20 = insertelement <2 x float> poison, float %.sroa.16.0.i.i.i, i64 0
+  %21 = shufflevector <2 x float> %20, <2 x float> poison, <2 x i32> zeroinitializer
+  %22 = fmul reassoc nsz arcp contract afn <2 x float> %21, %13
+  %23 = fadd reassoc nsz arcp contract afn <2 x float> %19, %16
+  %24 = fadd reassoc nsz arcp contract afn <2 x float> %23, %22
+  %25 = shufflevector <2 x float> %24, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %.sroa.033.8.vec.insert.i.i.i229 = shufflevector <4 x float> %.sroa.033.0.vec.insert.i.i.i, <4 x float> %25, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
   %i.zl = fadd reassoc nsz arcp contract afn float %.sroa.9.0.i.i.i, %.sroa.038.0.i.i.i
   %i.zm = fadd reassoc nsz arcp contract afn float %i.zl, %.sroa.16.0.i.i.i
   %i.zn = fmul reassoc nsz arcp contract afn float %i.zm, 0.000000e+00
-  %.sroa.033.12.vec.insert.i.i.i = insertelement <4 x float> %.sroa.033.8.vec.insert.i.i.i, float %i.zn, i64 3
+  %.sroa.033.12.vec.insert.i.i.i = insertelement <4 x float> %.sroa.033.8.vec.insert.i.i.i229, float %i.zn, i64 3
   %i.zo = tail call reassoc nsz arcp contract afn <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.033.12.vec.insert.i.i.i, <4 x float> zeroinitializer)
   %i.zp = tail call reassoc nsz arcp contract afn <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.zo, <4 x float> splat (float 1.000000e+00)) ; 3 uses
   %.sroa.033.0.vec.extract.i.i.i = extractelement <4 x float> %i.zp, i64 0 ; 4 uses

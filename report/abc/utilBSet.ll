@@ -205,10 +205,10 @@ bb.a:
   %i.k = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv.next ; 4 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !29
   %.not61 = icmp eq i32 %i.l, 0
-  %.neg = or i32 %i.j, -2
-  %3 = select i1 %.not61, i32 0, i32 %.neg
-  %4 = add i32 %3, %i.j
-  %.not65 = icmp slt i32 %i.h, %4
+  %3 = add i32 %i.j, -1
+  %4 = and i32 %3, -2
+  %5 = select i1 %.not61, i32 %i.j, i32 %4
+  %.not65 = icmp slt i32 %i.h, %5
   br i1 %.not65, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %.lr.ph
@@ -382,8 +382,12 @@ bb.b:                                             ; preds = %.preheader, %.loope
   %i.y = load i32, ptr %i.x, align 4, !tbaa !29
   %.not77.i = icmp eq i32 %i.y, 0
   %.phi.trans.insert = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.w
-  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !29 ; 2 uses
-  br i1 %.not77.i, label %.lr.ph.i, label %._crit_edge.i
+  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !29 ; 3 uses
+  br i1 %.not77.i, label %.lr.ph.i, label %._crit_edge.._crit_edge.i_crit_edge
+
+._crit_edge.._crit_edge.i_crit_edge:              ; preds = %._crit_edge
+  %.pre81 = add nsw i32 %.pre, -1
+  br label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %._crit_edge, %bb.e
   %i.z = phi i32 [ %i.ad, %bb.e ], [ %.pre, %._crit_edge ] ; 4 uses
@@ -398,10 +402,10 @@ bb.b:                                             ; preds = %.preheader, %.loope
   %i.ae = getelementptr inbounds [4 x i8], ptr %i.c, i64 %indvars.iv.next.i ; 4 uses
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !29
   %.not61.i = icmp eq i32 %i.af, 0
-  %.neg.i = or i32 %i.ad, -2
-  %2 = select i1 %.not61.i, i32 0, i32 %.neg.i
-  %3 = add i32 %2, %i.ad
-  %.not65.i = icmp slt i32 %i.ab, %3
+  %2 = add i32 %i.ad, -1                          ; 2 uses
+  %3 = and i32 %2, -2
+  %4 = select i1 %.not61.i, i32 %i.ad, i32 %3
+  %.not65.i = icmp slt i32 %i.ab, %4
   br i1 %.not65.i, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -442,20 +446,20 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.aw = select i1 %i.av, i32 %i.au, i32 %spec.select
   br label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %._crit_edge, %._crit_edge.loopexit.i
-  %i.ax = phi i32 [ %i.ad, %._crit_edge.loopexit.i ], [ %.pre, %._crit_edge ] ; 2 uses
-  %.055.lcssa.i = phi i32 [ %i.aw, %._crit_edge.loopexit.i ], [ %.029, %._crit_edge ]
-  %.054.lcssa.i = phi i32 [ %i.au, %._crit_edge.loopexit.i ], [ %.029, %._crit_edge ] ; 2 uses
-  %.lcssa68.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.loopexit.i ], [ %i.w, %._crit_edge ]
-  %.lcssa.i = phi ptr [ %i.ae, %._crit_edge.loopexit.i ], [ %i.x, %._crit_edge ]
+._crit_edge.i:                                    ; preds = %._crit_edge.._crit_edge.i_crit_edge, %._crit_edge.loopexit.i
+  %.pre-phi = phi i32 [ %.pre81, %._crit_edge.._crit_edge.i_crit_edge ], [ %2, %._crit_edge.loopexit.i ] ; 2 uses
+  %i.ax = phi i32 [ %.pre, %._crit_edge.._crit_edge.i_crit_edge ], [ %i.ad, %._crit_edge.loopexit.i ]
+  %.055.lcssa.i = phi i32 [ %.029, %._crit_edge.._crit_edge.i_crit_edge ], [ %i.aw, %._crit_edge.loopexit.i ]
+  %.054.lcssa.i = phi i32 [ %.029, %._crit_edge.._crit_edge.i_crit_edge ], [ %i.au, %._crit_edge.loopexit.i ] ; 2 uses
+  %.lcssa68.i = phi i64 [ %i.w, %._crit_edge.._crit_edge.i_crit_edge ], [ %indvars.iv.next.i, %._crit_edge.loopexit.i ]
+  %.lcssa.i = phi ptr [ %i.x, %._crit_edge.._crit_edge.i_crit_edge ], [ %i.ae, %._crit_edge.loopexit.i ]
   %i.ay = getelementptr inbounds [4 x i8], ptr %i.a, i64 %.lcssa68.i
-  %4 = add nsw i32 %i.ax, -1                      ; 2 uses
-  %i.az = and i32 %4, 1
+  %i.az = and i32 %.pre-phi, 1
   %.not58.i = icmp eq i32 %i.az, 0
   %i.ba = add nsw i32 %i.ax, -2                   ; 2 uses
   %.not59.i = icmp slt i32 %i.ba, %.054.lcssa.i
   %or.cond.i = select i1 %.not58.i, i1 true, i1 %.not59.i
-  %.0.i = select i1 %or.cond.i, i32 %4, i32 %i.ba ; 2 uses
+  %.0.i = select i1 %or.cond.i, i32 %.pre-phi, i32 %i.ba ; 2 uses
   store i32 %.0.i, ptr %i.ay, align 4, !tbaa !29
   %i.bb = icmp sgt i32 %.0.i, %.054.lcssa.i
   %i.bc = zext i1 %i.bb to i32

@@ -205,7 +205,7 @@ declare noundef zeroext i1 @_ZN7rocksdb3log6Writer15PublishIfClosedEv(ptr nounde
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7rocksdb6DBImpl14MarkLogsSyncedEmbPNS_11VersionEditE(ptr noundef nonnull align 64 dereferenceable(7336) %0, i64 noundef %1, i1 noundef zeroext %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"struct.std::_Deque_iterator.161", align 8 ; 7 uses
+  %4 = alloca %"struct.std::_Deque_iterator.161", align 8 ; 6 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %5 = alloca %"struct.std::_Deque_iterator.161", align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3040
@@ -245,8 +245,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 296 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 1319
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 3728
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.y = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.y = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 24
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 16
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 24
@@ -400,10 +399,9 @@ bb.q:                                             ; preds = %bb.p, %_ZN7rocksdb1
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.experimental.noalias.scope.decl(metadata !2710)
   store ptr %.sroa.018.028, ptr %4, align 8, !tbaa !1132, !alias.scope !2710, !noalias !2711
-  %i.cc = load ptr, ptr %.sroa.24.030, align 8, !tbaa !806, !noalias !2712 ; 2 uses
-  store ptr %i.cc, ptr %6, align 8, !tbaa !1133, !alias.scope !2710, !noalias !2711
-  %7 = getelementptr inbounds nuw i8, ptr %i.cc, i64 480
-  store ptr %7, ptr %i.y, align 8, !tbaa !1165, !alias.scope !2710, !noalias !2711
+  %i.cc = load ptr, ptr %.sroa.24.030, align 8, !tbaa !806, !noalias !2712
+  %6 = getelementptr inbounds nuw i8, ptr %i.cc, <2 x i64> <i64 0, i64 480>
+  store <2 x ptr> %6, ptr %i.y, align 8, !tbaa !806, !alias.scope !2710, !noalias !2711
   store ptr %.sroa.24.030, ptr %i.z, align 8, !tbaa !1134, !alias.scope !2710, !noalias !2711
   call void @_ZNSt5dequeIN7rocksdb6DBImpl15LogWriterNumberESaIS2_EE8_M_eraseESt15_Deque_iteratorIS2_RS2_PS2_E(ptr dead_on_unwind nonnull writable sret(%"struct.std::_Deque_iterator.161") align 8 %5, ptr noundef nonnull align 8 dereferenceable(80) %i.g, ptr noundef nonnull align 8 dead_on_return %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)

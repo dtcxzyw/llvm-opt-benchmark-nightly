@@ -205,15 +205,17 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %i.cl, label %.lr.ph484.i, label %._crit_edge485.i
 
 .lr.ph484.i:                                      ; preds = %bb.u
+  %1 = extractelement <2 x float> %i.me, i64 1
   %i.mf = fadd nsz <2 x float> %i.me, splat (float 1.280000e+02)
   %i.mg = fptosi <2 x float> %i.mf to <2 x i32>
-  %i.mh = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.mg, <2 x i32> zeroinitializer)
-  %1 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.mh, <2 x i32> splat (i32 255))
-  %2 = trunc nuw <2 x i32> %1 to <2 x i8>         ; 2 uses
-  %3 = extractelement <2 x float> %i.me, i64 1
-  %4 = fpext nsz float %3 to double
-  %5 = extractelement <2 x i8> %2, i64 0
-  %6 = extractelement <2 x i8> %2, i64 1
+  %i.mh = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.mg, <2 x i32> zeroinitializer) ; 2 uses
+  %2 = extractelement <2 x i32> %i.mh, i64 0
+  %.0.i416424.i = call i32 @llvm.umin.i32(i32 %2, i32 255)
+  %.0.i416.i = trunc nuw i32 %.0.i416424.i to i8
+  %3 = extractelement <2 x i32> %i.mh, i64 1
+  %.0.i425.i = call i32 @llvm.umin.i32(i32 %3, i32 255)
+  %.0.i.i = trunc nuw i32 %.0.i425.i to i8
+  %4 = fpext nsz float %1 to double
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.aj, %.lr.ph484.i
@@ -432,9 +434,9 @@ bb.ah:                                            ; preds = %bb.ai, %.lr.ph473.i
 bb.ai:                                            ; preds = %bb.ah
   store i8 %.0380.i, ptr %i.rj, align 1, !tbaa !99
   %i.rl = getelementptr inbounds nuw i8, ptr %.0373468.i, i64 %indvars.iv533.i
-  store i8 %5, ptr %i.rl, align 1, !tbaa !99
+  store i8 %.0.i416.i, ptr %i.rl, align 1, !tbaa !99
   %i.rm = getelementptr inbounds nuw i8, ptr %.0372469.i, i64 %indvars.iv533.i
-  store i8 %6, ptr %i.rm, align 1, !tbaa !99
+  store i8 %.0.i.i, ptr %i.rm, align 1, !tbaa !99
   %i.rn = getelementptr inbounds nuw i8, ptr %.0371470.i, i64 %indvars.iv533.i
   store i8 -1, ptr %i.rn, align 1, !tbaa !99
   %i.ro = getelementptr inbounds i8, ptr %.0374467.i, i64 %i.rf
@@ -836,9 +838,6 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #6
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

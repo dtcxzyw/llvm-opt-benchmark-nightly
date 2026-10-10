@@ -205,14 +205,19 @@ bb.d:                                             ; preds = %bb.h
 bb.e:                                             ; preds = %bb.c, %bb.h
   %.079 = phi i32 [ 0, %bb.c ], [ %i.dc, %bb.h ]  ; 3 uses
   %i.be = uitofp nsz nneg i32 %.079 to float
-  %i.bf = fmul reassoc nnan nsz arcp contract afn float %i.be, f0x3C820821 ; 2 uses
-  %6 = fadd reassoc nsz arcp contract afn float %i.bf, f0x3C020821
-  %7 = load float, ptr %i.ar, align 4, !tbaa !189 ; 2 uses
-  %8 = load float, ptr %i.as, align 8, !tbaa !190 ; 2 uses
-  %9 = fdiv reassoc nsz arcp contract afn float %6, %7
-  %i.bg = fadd reassoc nsz arcp contract afn float %9, %8 ; 2 uses
-  %10 = fdiv reassoc nsz arcp contract afn float %i.bf, %7
-  %i.bh = fadd reassoc nsz arcp contract afn float %10, %8
+  %6 = load float, ptr %i.ar, align 4, !tbaa !189
+  %7 = load float, ptr %i.as, align 8, !tbaa !190 ; 2 uses
+  %i.bf = fmul reassoc nnan nsz arcp contract afn float %i.be, f0x3C820821
+  %8 = insertelement <2 x float> poison, float %i.bf, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fadd reassoc nsz arcp contract afn <2 x float> %9, <float f0x3C020821, float -0.000000e+00>
+  %11 = insertelement <2 x float> poison, float %6, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = fdiv reassoc nsz arcp contract afn <2 x float> %10, %12 ; 2 uses
+  %14 = extractelement <2 x float> %13, i64 0
+  %i.bg = fadd reassoc nsz arcp contract afn float %14, %7 ; 2 uses
+  %15 = extractelement <2 x float> %13, i64 1
+  %i.bh = fadd reassoc nsz arcp contract afn float %15, %7
   switch i32 %i.at, label %bb.h [
     i32 0, label %bb.f
     i32 1, label %bb.g

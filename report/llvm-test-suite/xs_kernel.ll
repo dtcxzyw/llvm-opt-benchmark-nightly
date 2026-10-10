@@ -203,11 +203,12 @@ bb.g:                                             ; preds = %.lr.ph, %bb.s
   %.04856 = phi double [ %i.bd, %.lr.ph ], [ %i.di, %bb.s ]
   %.04955 = phi double [ %i.bc, %.lr.ph ], [ %i.cv, %bb.s ]
   %i.bq = load ptr, ptr %i.bi, align 8, !tbaa !23
-  %i.br = getelementptr inbounds [72 x i8], ptr %i.bq, i64 %indvars.iv ; 6 uses
+  %i.br = getelementptr inbounds [72 x i8], ptr %i.bq, i64 %indvars.iv ; 7 uses
   %.sroa.0.0.copyload = load double, ptr %i.br, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.br, i64 8
   %.sroa.4.0.copyload = load double, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !25
-  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.br, i64 16
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.br, i64 16
+  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.br, i64 24
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.br, i64 32
   %i.bs = load <2 x double>, ptr %.sroa.7.0..sroa_idx, align 8 ; 4 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.br, i64 48
@@ -216,60 +217,67 @@ bb.g:                                             ; preds = %.lr.ph, %bb.s
   %i.bt = tail call double @sqrt(double noundef %2) #8, !tbaa !7
   %i.bu = fsub double %.sroa.0.0.copyload, %i.bt
   %i.bv = load <2 x double>, ptr %.sroa.9.0..sroa_idx, align 8 ; 4 uses
-  %6 = load <2 x double>, ptr %.sroa.5.0..sroa_idx.a, align 8 ; 4 uses
+  %.sroa.5.0.copyload = load double, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.6.0.copyload = load double, ptr %.sroa.5.0..sroa_idx.a, align 8, !tbaa !25 ; 2 uses
   %i.bw = tail call { double, double } @__divdc3(double noundef -0.000000e+00, double noundef 1.000000e+00, double noundef %i.bu, double noundef %.sroa.4.0.copyload) #8 ; 2 uses
   %i.bx = extractvalue { double, double } %i.bw, 0
   %i.by = extractvalue { double, double } %i.bw, 1
   %i.bz = insertelement <2 x double> poison, double %i.bx, i64 0
   %i.ca = insertelement <2 x double> %i.bz, double %i.by, i64 1
-  %i.cb = fdiv <2 x double> %i.ca, %i.bl          ; 8 uses
-  %i.cc = shufflevector <2 x double> %i.cb, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
+  %i.cb = fdiv <2 x double> %i.ca, %i.bl          ; 9 uses
+  %i.cc = shufflevector <2 x double> %i.cb, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.cd = extractelement <2 x double> %i.cb, i64 0 ; 3 uses
-  %i.ce = fmul <2 x double> %6, %i.cb             ; 2 uses
-  %i.cf = fmul <2 x double> %6, %i.cc
-  %shift = shufflevector <2 x double> %i.ce, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop.a = fsub <2 x double> %i.ce, %shift
-  %i.cg = extractelement <2 x double> %foldExtExtBinop.a, i64 0 ; 3 uses
-  %7 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %i.cf) ; 3 uses
+  %6 = insertelement <2 x double> poison, double %.sroa.5.0.copyload, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = shufflevector <2 x double> %i.cb, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %i.ce = fmul <2 x double> %7, %8                ; 2 uses
+  %9 = insertelement <2 x double> poison, double %.sroa.6.0.copyload, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.cf = fmul <2 x double> %10, %i.cb            ; 2 uses
+  %11 = fadd <2 x double> %i.ce, %i.cf            ; 2 uses
+  %foldExtExtBinop.a = fsub <2 x double> %i.ce, %i.cf ; 2 uses
+  %12 = shufflevector <2 x double> %11, <2 x double> %foldExtExtBinop.a, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %i.cg = extractelement <2 x double> %foldExtExtBinop.a, i64 1 ; 3 uses
+  %13 = extractelement <2 x double> %11, i64 0    ; 3 uses
   %i.ch = fcmp uno double %i.cg, 0.000000e+00
   br i1 %i.ch, label %bb.h, label %bb.j, !prof !8
 
 bb.h:                                             ; preds = %bb.g
-  %i.ci = fcmp uno double %7, 0.000000e+00
+  %i.ci = fcmp uno double %13, 0.000000e+00
   br i1 %i.ci, label %bb.i, label %bb.j, !prof !8
 
 bb.i:                                             ; preds = %bb.h
   %i.cj = extractelement <2 x double> %i.cb, i64 1
-  %8 = extractelement <2 x double> %6, i64 0
-  %9 = extractelement <2 x double> %6, i64 1
-  %10 = tail call { double, double } @__muldc3(double noundef %8, double noundef %9, double noundef %i.cd, double noundef %i.cj) #8 ; 2 uses
-  %11 = extractvalue { double, double } %10, 0
-  %12 = extractvalue { double, double } %10, 1
+  %14 = tail call { double, double } @__muldc3(double noundef %.sroa.5.0.copyload, double noundef %.sroa.6.0.copyload, double noundef %i.cd, double noundef %i.cj) #8 ; 2 uses
+  %15 = extractvalue { double, double } %14, 0    ; 2 uses
+  %16 = extractvalue { double, double } %14, 1    ; 2 uses
+  %17 = insertelement <2 x double> poison, double %16, i64 0
+  %18 = insertelement <2 x double> %17, double %15, i64 1
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %i.ck = phi double [ %i.cg, %bb.g ], [ %i.cg, %bb.h ], [ %11, %bb.i ] ; 3 uses
-  %i.cl = phi double [ %7, %bb.g ], [ %7, %bb.h ], [ %12, %bb.i ] ; 3 uses
+  %i.ck = phi double [ %i.cg, %bb.g ], [ %i.cg, %bb.h ], [ %15, %bb.i ] ; 2 uses
+  %i.cl = phi double [ %13, %bb.g ], [ %13, %bb.h ], [ %16, %bb.i ] ; 2 uses
+  %19 = phi <2 x double> [ %12, %bb.g ], [ %12, %bb.h ], [ %18, %bb.i ]
   %i.cm = sext i16 %.sroa.11.0.copyload to i64
-  %i.cn = getelementptr inbounds [16 x i8], ptr %5, i64 %i.cm ; 2 uses
-  %13 = load double, ptr %i.cn, align 8           ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
-  %15 = load double, ptr %14, align 8             ; 3 uses
-  %16 = fmul double %i.ck, %13
-  %i.co = fmul double %i.cl, %15
-  %i.cp = fsub double %16, %i.co                  ; 3 uses
+  %i.cn = getelementptr inbounds [16 x i8], ptr %5, i64 %i.cm
+  %20 = load <2 x double>, ptr %i.cn, align 8     ; 3 uses
+  %21 = extractelement <2 x double> %20, i64 0    ; 2 uses
+  %22 = fmul double %i.ck, %21
+  %23 = extractelement <2 x double> %20, i64 1    ; 2 uses
+  %i.co = fmul double %i.cl, %23
+  %i.cp = fsub double %22, %i.co                  ; 3 uses
   %i.cq = fcmp uno double %i.cp, 0.000000e+00
   br i1 %i.cq, label %bb.k, label %bb.m, !prof !8
 
 bb.k:                                             ; preds = %bb.j
-  %17 = fmul double %i.ck, %15
-  %18 = fmul double %i.cl, %13
-  %19 = fadd double %18, %17
-  %i.cr = fcmp uno double %19, 0.000000e+00
+  %24 = fmul <2 x double> %19, %20
+  %25 = tail call reassoc double @llvm.vector.reduce.fadd.v2f64(double -0.000000e+00, <2 x double> %24)
+  %i.cr = fcmp uno double %25, 0.000000e+00
   br i1 %i.cr, label %bb.l, label %bb.m, !prof !8
 
 bb.l:                                             ; preds = %bb.k
-  %i.cs = tail call { double, double } @__muldc3(double noundef %i.ck, double noundef %i.cl, double noundef %13, double noundef %15) #8
+  %i.cs = tail call { double, double } @__muldc3(double noundef %i.ck, double noundef %i.cl, double noundef %21, double noundef %23) #8
   %i.ct = extractvalue { double, double } %i.cs, 0
   br label %bb.m
 

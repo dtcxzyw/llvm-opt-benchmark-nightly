@@ -202,16 +202,16 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   %7 = alloca %"class.std::vector", align 8       ; 12 uses
-  %8 = alloca %"struct.folly::TimeoutQueue::Event", align 8 ; 11 uses
+  %8 = alloca %"struct.folly::TimeoutQueue::Event", align 8 ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.h = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 9 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 6 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.g = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 9 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 6 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %8, i64 48
+  %i.j = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %9 = insertelement <2 x i64> <i64 poison, i64 0>, i64 %1, i64 0
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt6vectorIN5folly12TimeoutQueue5EventESaIS2_EED2Ev.exit, %bb.a
@@ -405,37 +405,38 @@ bb.h:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
   %i.bz = load i64, ptr %.sroa.060.087, align 8, !tbaa !36 ; 2 uses
   store i64 %i.bz, ptr %8, align 8, !tbaa !36
-  %i.ca = load i64, ptr %i.bw, align 8, !tbaa !38 ; 2 uses
-  %10 = add nsw i64 %i.ca, %1
-  store i64 %10, ptr %i.f, align 8, !tbaa !37
-  store i64 %i.ca, ptr %i.g, align 8, !tbaa !38
+  %i.ca = load i64, ptr %i.bw, align 8, !tbaa !38
+  %10 = insertelement <2 x i64> poison, i64 %i.ca, i64 0
+  %11 = shufflevector <2 x i64> %10, <2 x i64> poison, <2 x i32> zeroinitializer
+  %12 = add nsw <2 x i64> %11, %9
+  store <2 x i64> %12, ptr %i.f, align 8, !tbaa !45
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.060.087, i64 40 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.h, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, i8 0, i64 32, i1 false)
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !40 ; 2 uses
   %.not.i.i.not.i = icmp eq ptr %i.cc, null
   br i1 %.not.i.i.not.i, label %_ZNSt8functionIFvllEEC2ERKS1_.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.060.087, i64 24
-  %i.ce = invoke noundef zeroext i1 %i.cc(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %i.cd, i32 noundef 2)
+  %i.ce = invoke noundef zeroext i1 %i.cc(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %i.cd, i32 noundef 2)
           to label %bb.j unwind label %bb.k       ; 0 uses
 
 bb.j:                                             ; preds = %bb.i
   %i.cf = load <2 x ptr>, ptr %i.cb, align 8, !tbaa !54
   %i.cg = load ptr, ptr %i.cb, align 8, !tbaa !40
-  store <2 x ptr> %i.cf, ptr %i.i, align 8, !tbaa !54
+  store <2 x ptr> %i.cf, ptr %i.h, align 8, !tbaa !54
   %.pre = load i64, ptr %8, align 8, !tbaa !45
   br label %_ZNSt8functionIFvllEEC2ERKS1_.exit
 
 bb.k:                                             ; preds = %bb.i
   %i.ch = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.ci = load ptr, ptr %i.i, align 8, !tbaa !40  ; 2 uses
+  %i.ci = load ptr, ptr %i.h, align 8, !tbaa !40  ; 2 uses
   %.not.i.i = icmp eq ptr %i.ci, null
   br i1 %.not.i.i, label %.body, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.cj = invoke noundef zeroext i1 %i.ci(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i32 noundef 3)
+  %i.cj = invoke noundef zeroext i1 %i.ci(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i32 noundef 3)
           to label %.body unwind label %bb.m      ; 0 uses
 
 bb.m:                                             ; preds = %bb.l
@@ -584,17 +585,17 @@ select.unfold._crit_edge.loopexit.i.i:            ; preds = %select.unfold.i.i49
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 24 ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 48
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.er, i8 0, i64 24, i1 false)
-  %i.et = load ptr, ptr %i.j, align 8, !tbaa !39
+  %i.et = load ptr, ptr %i.i, align 8, !tbaa !39
   store ptr %i.et, ptr %i.es, align 8, !tbaa !39
-  %i.eu = load ptr, ptr %i.i, align 8, !tbaa !40  ; 2 uses
+  %i.eu = load ptr, ptr %i.h, align 8, !tbaa !40  ; 2 uses
   %.not.i.i.not.i.i.i.i.i.i = icmp eq ptr %i.eu, null
   br i1 %.not.i.i.not.i.i.i.i.i.i, label %_ZN5boost11multi_index6detail10index_baseIN5folly12TimeoutQueue5EventENS0_10indexed_byINS0_14ordered_uniqueINS0_6memberIS5_lXadL_ZNS5_2idEEEEEN4mpl_2naESB_EENS0_18ordered_non_uniqueINS8_IS5_lXadL_ZNS5_10expirationEEEEESB_SB_EESB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_EESaIS5_EE7insert_ERKS5_RPNS1_18ordered_index_nodeINS1_19null_augment_policyENSL_ISM_NS1_15index_node_baseIS5_SH_EEEEEENS1_10rvalue_tagE.exit.i, label %bb.q
 
 bb.q:                                             ; preds = %.noexc54
   %i.ev = getelementptr inbounds nuw i8, ptr %i.eq, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.er, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i64 16, i1 false), !tbaa.struct !42
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.er, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i64 16, i1 false), !tbaa.struct !42
   store ptr %i.eu, ptr %i.ev, align 8, !tbaa !40
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i8 0, i64 16, i1 false)
   br label %_ZN5boost11multi_index6detail10index_baseIN5folly12TimeoutQueue5EventENS0_10indexed_byINS0_14ordered_uniqueINS0_6memberIS5_lXadL_ZNS5_2idEEEEEN4mpl_2naESB_EENS0_18ordered_non_uniqueINS8_IS5_lXadL_ZNS5_10expirationEEEEESB_SB_EESB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_EESaIS5_EE7insert_ERKS5_RPNS1_18ordered_index_nodeINS1_19null_augment_policyENSL_ISM_NS1_15index_node_baseIS5_SH_EEEEEENS1_10rvalue_tagE.exit.i
 
 _ZN5boost11multi_index6detail10index_baseIN5folly12TimeoutQueue5EventENS0_10indexed_byINS0_14ordered_uniqueINS0_6memberIS5_lXadL_ZNS5_2idEEEEEN4mpl_2naESB_EENS0_18ordered_non_uniqueINS8_IS5_lXadL_ZNS5_10expirationEEEEESB_SB_EESB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_SB_EESaIS5_EE7insert_ERKS5_RPNS1_18ordered_index_nodeINS1_19null_augment_policyENSL_ISM_NS1_15index_node_baseIS5_SH_EEEEEENS1_10rvalue_tagE.exit.i: ; preds = %bb.q, %.noexc54
@@ -715,7 +716,7 @@ _ZN5boost11multi_index6detail23ordered_index_node_implINS1_19null_augment_policy
 
 .noexc33.thread:                                  ; preds = %_ZN5boost11multi_index6detail23ordered_index_node_implINS1_19null_augment_policyESaIcEE4linkEPS5_NS1_18ordered_index_sideES6_S6_.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %.pre98.pre = load ptr, ptr %i.i, align 8, !tbaa !40
+  %.pre98.pre = load ptr, ptr %i.h, align 8, !tbaa !40
   br label %bb.af
 
 .noexc33:                                         ; preds = %.loopexit140
@@ -735,7 +736,7 @@ bb.af:                                            ; preds = %.noexc33.thread, %.
   br i1 %.not.i.i34, label %_ZN5folly12TimeoutQueue5EventD2Ev.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %.noexc33.thread138
-  %i.gs = invoke noundef zeroext i1 %i.gr(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i32 noundef 3)
+  %i.gs = invoke noundef zeroext i1 %i.gr(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i32 noundef 3)
           to label %_ZN5folly12TimeoutQueue5EventD2Ev.exit unwind label %bb.ah ; 0 uses
 
 bb.ah:                                            ; preds = %bb.ag
@@ -752,12 +753,12 @@ _ZN5folly12TimeoutQueue5EventD2Ev.exit:           ; preds = %.noexc33.thread138,
 bb.ai:                                            ; preds = %bb.x, %select.unfold._crit_edge.loopexit.i.i, %_ZN5boost11multi_index6detail23ordered_index_node_implINS1_19null_augment_policyESaIcEE4linkEPS5_NS1_18ordered_index_sideES6_S6_.exit.i
   %i.gv = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.gw = load ptr, ptr %i.i, align 8, !tbaa !40  ; 2 uses
+  %i.gw = load ptr, ptr %i.h, align 8, !tbaa !40  ; 2 uses
   %.not.i.i36 = icmp eq ptr %i.gw, null
   br i1 %.not.i.i36, label %.body, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.gx = invoke noundef zeroext i1 %i.gw(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i32 noundef 3)
+  %i.gx = invoke noundef zeroext i1 %i.gw(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i32 noundef 3)
           to label %.body unwind label %bb.ak     ; 0 uses
 
 bb.ak:                                            ; preds = %bb.aj
@@ -874,7 +875,7 @@ _ZSt8_DestroyIPN5folly12TimeoutQueue5EventES2_EvT_S4_RSaIT0_E.exit.i: ; preds = 
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIN5folly12TimeoutQueue5EventESaIS2_EED2Ev.exit, label %bb.as
 
 bb.as:                                            ; preds = %_ZSt8_DestroyIPN5folly12TimeoutQueue5EventES2_EvT_S4_RSaIT0_E.exit.i
-  %i.ic = load ptr, ptr %9, align 8, !tbaa !58
+  %i.ic = load ptr, ptr %i.j, align 8, !tbaa !58
   %i.id = ptrtoint ptr %i.ic to i64
   %i.ie = ptrtoint ptr %i.ib to i64
   %i.if = sub i64 %i.id, %i.ie

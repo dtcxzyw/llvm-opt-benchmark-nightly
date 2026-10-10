@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %usUntilEarliestTime
   %i.ao = load ptr, ptr %i.aj, align 8, !tbaa !29 ; 5 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !21 ; 4 uses
-  %wide.trip.count.i = zext nneg i32 %i.am to i64 ; 5 uses
+  %wide.trip.count.i = zext nneg i32 %i.am to i64 ; 4 uses
   %min.iters.check = icmp ult i32 %i.am, 7
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -220,8 +220,8 @@ vector.memcheck:                                  ; preds = %.preheader.i105
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %wide.trip.count.i, -2
-  %n.vec = add nsw i64 %.neg, %wide.trip.count.i  ; 2 uses
+  %2 = add nsw i64 %wide.trip.count.i, -1
+  %n.vec = and i64 %2, -2                         ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

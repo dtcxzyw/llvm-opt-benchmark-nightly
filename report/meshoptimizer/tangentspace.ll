@@ -204,29 +204,30 @@ bb.at:                                            ; preds = %.lr.ph228, %bb.aw
 bb.au:                                            ; preds = %bb.at
   %.idx147 = shl nuw nsw i64 %.0128227, 4
   %i.adu = getelementptr inbounds nuw i8, ptr %0, i64 %.idx147 ; 4 uses
-  %12 = load float, ptr %i.adu, align 4, !tbaa !52 ; 3 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.adu, i64 4 ; 2 uses
-  %i.adv = load <2 x float>, ptr %13, align 4, !tbaa !52 ; 4 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.adu, i64 8 ; 2 uses
+  %13 = load float, ptr %12, align 4, !tbaa !52   ; 3 uses
+  %i.adv = load <2 x float>, ptr %i.adu, align 4, !tbaa !52 ; 4 uses
   %foldExtExtBinop354 = fmul <2 x float> %i.adv, %i.adv
-  %i.adw = extractelement <2 x float> %foldExtExtBinop354, i64 0
-  %14 = tail call float @llvm.fmuladd.f32(float %12, float %12, float %i.adw)
-  %15 = extractelement <2 x float> %i.adv, i64 1  ; 2 uses
-  %i.adx = tail call float @llvm.fmuladd.f32(float %15, float %15, float %14) ; 2 uses
+  %i.adw = extractelement <2 x float> %foldExtExtBinop354, i64 1
+  %14 = extractelement <2 x float> %i.adv, i64 0  ; 2 uses
+  %15 = tail call float @llvm.fmuladd.f32(float %14, float %14, float %i.adw)
+  %i.adx = tail call float @llvm.fmuladd.f32(float %13, float %13, float %15) ; 2 uses
   %sqrt = tail call float @llvm.sqrt.f32(float %i.adx)
   %i.ady = fcmp oeq float %i.adx, 0.000000e+00
   %i.adz = fdiv float 1.000000e+00, %sqrt
   %i.aea = select i1 %i.ady, float 0.000000e+00, float %i.adz ; 3 uses
-  %16 = fmul float %12, %i.aea                    ; 2 uses
-  store float %16, ptr %i.adu, align 4, !tbaa !52
-  %17 = insertelement <2 x float> poison, float %i.aea, i64 0
-  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
-  %19 = fmul <2 x float> %i.adv, %18
-  store <2 x float> %19, ptr %13, align 4, !tbaa !52
+  %16 = insertelement <2 x float> poison, float %i.aea, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = fmul <2 x float> %i.adv, %17              ; 2 uses
+  store <2 x float> %18, ptr %i.adu, align 4, !tbaa !52
+  %19 = fmul float %13, %i.aea
+  store float %19, ptr %12, align 4, !tbaa !52
   br i1 %i.acx, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
   %i.aeb = fcmp oeq float %i.aea, 0.000000e+00
-  %i.aec = select i1 %i.aeb, float 1.000000e+00, float %16
+  %20 = extractelement <2 x float> %18, i64 0
+  %i.aec = select i1 %i.aeb, float 1.000000e+00, float %20
   store float %i.aec, ptr %i.adu, align 4, !tbaa !52
   br label %bb.aw
 

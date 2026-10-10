@@ -202,27 +202,30 @@ bb.ak:                                            ; preds = %.loopexit
   br i1 %i.mx, label %bb.al, label %bb.ao
 
 bb.al:                                            ; preds = %bb.ak
-  %i.my = getelementptr inbounds [8 x i8], ptr %i.w, i64 %i.mu ; 3 uses
-  %16 = load double, ptr %i.my, align 8, !tbaa !17 ; 2 uses
+  %i.my = getelementptr inbounds [8 x i8], ptr %i.w, i64 %i.mu ; 2 uses
   %i.mz = mul i32 %i.mr, %i.cn
   %i.na = sext i32 %i.mz to i64
   %i.nb = getelementptr inbounds [8 x i8], ptr %i.v, i64 %i.na
-  %i.nc = load double, ptr %i.nb, align 8, !tbaa !17 ; 2 uses
-  %17 = fsub double %16, %i.nc
-  %18 = call double @llvm.fabs.f64(double %17)
-  %19 = getelementptr i8, ptr %i.my, i64 -8       ; 2 uses
-  %20 = load double, ptr %19, align 8, !tbaa !17  ; 2 uses
-  %21 = fsub double %20, %i.nc
-  %22 = call double @llvm.fabs.f64(double %21)
-  %23 = fcmp olt double %18, %22
+  %i.nc = load double, ptr %i.nb, align 8, !tbaa !17
+  %16 = getelementptr i8, ptr %i.my, i64 -8       ; 2 uses
+  %17 = load <2 x double>, ptr %16, align 8, !tbaa !17 ; 3 uses
+  %18 = insertelement <2 x double> poison, double %i.nc, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = fsub <2 x double> %17, %19
+  %21 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %20) ; 2 uses
+  %shift609 = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %22 = fcmp olt <2 x double> %shift609, %21
+  %23 = extractelement <2 x i1> %22, i64 0
   br i1 %23, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  store double %16, ptr %19, align 8, !tbaa !17
+  %24 = extractelement <2 x double> %17, i64 1
+  store double %24, ptr %16, align 8, !tbaa !17
   br label %bb.ao
 
 bb.an:                                            ; preds = %bb.al
-  store double %20, ptr %i.my, align 8, !tbaa !17
+  %25 = extractelement <2 x double> %17, i64 0
+  store double %25, ptr %i.my, align 8, !tbaa !17
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ak, %bb.an, %bb.am, %.loopexit
@@ -345,6 +348,9 @@ declare double @llvm.fabs.f64(double) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

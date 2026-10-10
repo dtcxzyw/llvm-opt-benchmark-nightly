@@ -205,8 +205,9 @@ bb.bf:                                            ; preds = %bb.by, %bb.ce
   %i.mm = uitofp nneg i32 %i.ml to float
   %i.mn = fsub nnan float %i.mm, %i.fh
   %i.mo = fmul float %i.lo, %i.mn                 ; 2 uses
-  %i.mp = fpext float %i.mo to double             ; 9 uses
+  %i.mp = fpext float %i.mo to double             ; 10 uses
   %i.mq = fmul double %i.mp, %i.mp
+  %43 = insertelement <2 x double> poison, double %i.mp, i64 0
   %i.mr = insertelement <2 x double> poison, double %i.mp, i64 1
   br label %bb.bg
 
@@ -221,7 +222,7 @@ bb.bg:                                            ; preds = %.lr.ph, %bb.bw
   %i.mt = uitofp nneg i32 %i.ms to float
   %i.mu = fsub nnan float %i.mt, %i.ah
   %i.mv = fmul float %i.lo, %i.mu                 ; 2 uses
-  %i.mw = fpext float %i.mv to double             ; 9 uses
+  %i.mw = fpext float %i.mv to double             ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   %i.mx = call double @llvm.fmuladd.f64(double %i.mw, double %i.mw, double %i.mq)
   %i.my = fadd double %i.mx, 1.000000e+00         ; 3 uses
@@ -238,7 +239,7 @@ bb.bg:                                            ; preds = %.lr.ph, %bb.bw
   %i.nj = fmul double %i.mz, %i.ni
   %i.nk = insertelement <2 x double> poison, double %i.nj, i64 0
   %i.nl = shufflevector <2 x double> %i.nk, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.nm = insertelement <2 x double> %i.mr, double %i.mw, i64 0 ; 7 uses
+  %i.nm = insertelement <2 x double> %i.mr, double %i.mw, i64 0 ; 6 uses
   %i.nn = fmul <2 x double> %i.nl, %i.nm          ; 4 uses
   br i1 %i.md, label %bb.bh, label %bb.bi
 
@@ -259,19 +260,20 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bg
   %i.nx = insertelement <2 x double> poison, double %i.nd, i64 0
   %i.ny = shufflevector <2 x double> %i.nx, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.nz = fmul <2 x double> %i.ny, %i.nm
+  %44 = insertelement <2 x double> %43, double %i.mw, i64 1
+  %i.nz = fmul <2 x double> %i.ny, %44
   %i.oa = fmul <2 x double> %i.nz, %i.eg          ; 2 uses
   %i.ob = fcmp ogt <2 x double> %i.oa, splat (double 1.000000e+00)
   %i.oc = select <2 x i1> %i.ob, <2 x double> splat (double 1.000000e+00), <2 x double> %i.oa ; 2 uses
   %i.od = fcmp olt <2 x double> %i.oc, splat (double -1.000000e+00)
   %i.oe = select <2 x i1> %i.od, <2 x double> splat (double -1.000000e+00), <2 x double> %i.oc ; 4 uses
-  %i.of = extractelement <2 x double> %i.oe, i64 0
-  %i.og = extractelement <2 x double> %i.oe, i64 1
+  %i.of = extractelement <2 x double> %i.oe, i64 1
+  %i.og = extractelement <2 x double> %i.oe, i64 0
   %i.oh = fneg <2 x double> %i.oe
   %i.oi = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.oh, <2 x double> %i.oe, <2 x double> splat (double 1.000000e+00)) ; 2 uses
-  %i.oj = extractelement <2 x double> %i.oi, i64 0
+  %i.oj = extractelement <2 x double> %i.oi, i64 1
   %i.ok = call double @sqrt(double noundef %i.oj) #23
-  %i.ol = extractelement <2 x double> %i.oi, i64 1
+  %i.ol = extractelement <2 x double> %i.oi, i64 0
   %i.om = call double @sqrt(double noundef %i.ol) #23
   %i.on = insertelement <2 x double> poison, double %i.om, i64 0
   %i.oo = insertelement <2 x double> %i.on, double %i.ok, i64 1

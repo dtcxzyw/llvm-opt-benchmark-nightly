@@ -205,8 +205,6 @@ bb.rs:                                            ; preds = %_ZN6ImFont15ClearOu
   %i.dtu = phi i16 [ %i.dsw, %._crit_edge.i466 ], [ 1, %_ZN6ImFont15ClearOutputDataEv.exit.i ]
   %i.dtv = getelementptr inbounds nuw i8, ptr %i.drs, i64 80
   store i16 %i.dtu, ptr %i.dtv, align 8, !tbaa !165
-  %8 = getelementptr inbounds nuw i8, ptr %i.drq, i64 44
-  %9 = load float, ptr %8, align 4, !tbaa !511    ; 2 uses
   %i.dtw = getelementptr inbounds nuw i8, ptr %i.drq, i64 48
   %i.dtx = load float, ptr %i.dtw, align 8, !tbaa !173
   %i.dty = fadd float %i.dtt, 5.000000e-01
@@ -217,6 +215,8 @@ bb.rs:                                            ; preds = %_ZN6ImFont15ClearOu
   br i1 %i.duc, label %.lr.ph667, label %.loopexit
 
 .lr.ph667:                                        ; preds = %bb.rs
+  %8 = getelementptr inbounds nuw i8, ptr %i.drq, i64 44
+  %9 = load float, ptr %8, align 4, !tbaa !511
   %i.dud = getelementptr inbounds nuw i8, ptr %i.drl, i64 264
   %i.due = getelementptr inbounds nuw i8, ptr %i.drl, i64 208
   %i.duf = getelementptr inbounds nuw i8, ptr %i.drq, i64 64
@@ -230,6 +230,8 @@ bb.rs:                                            ; preds = %_ZN6ImFont15ClearOu
   %i.dun = getelementptr inbounds nuw i8, ptr %i.drs, i64 88
   %i.duo = getelementptr inbounds nuw i8, ptr %i.drs, i64 104 ; 2 uses
   %i.dup = insertelement <4 x float> poison, float %i.dub, i64 0
+  %10 = insertelement <2 x float> poison, float %9, i64 0
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.ru
 
 bb.rt:                                            ; preds = %bb.rr, %bb.rq, %bb.rp
@@ -246,13 +248,14 @@ bb.ru:                                            ; preds = %.lr.ph667, %bb.rz
   %i.duv = getelementptr inbounds nuw [28 x i8], ptr %i.duu, i64 %indvars.iv755 ; 8 uses
   %i.duw = getelementptr inbounds nuw i8, ptr %i.duv, i64 8
   %i.dux = load float, ptr %i.duw, align 4, !tbaa !512
-  %10 = fadd float %i.dux, 0.000000e+00
   %i.duy = getelementptr inbounds nuw i8, ptr %i.duv, i64 12
   %i.duz = load float, ptr %i.duy, align 4, !tbaa !513
   %i.dva = fadd float %i.duz, 0.000000e+00
   %i.dvb = getelementptr inbounds nuw i8, ptr %i.duv, i64 20
   %i.dvc = load float, ptr %i.dvb, align 4, !tbaa !514
-  %11 = fadd float %i.dvc, 0.000000e+00
+  %12 = insertelement <2 x float> poison, float %i.dvc, i64 0
+  %13 = insertelement <2 x float> %12, float %i.dux, i64 1
+  %14 = fadd <2 x float> %13, zeroinitializer
   %i.dvd = getelementptr inbounds nuw i8, ptr %i.duv, i64 24
   %i.dve = load float, ptr %i.dvd, align 4, !tbaa !510
   %i.dvf = load <2 x i32>, ptr %i.v, align 8, !tbaa !112
@@ -272,9 +275,8 @@ bb.ru:                                            ; preds = %.lr.ph667, %bb.rz
   %i.dvt = uitofp i16 %i.dvs to float
   %i.dvu = extractelement <4 x float> %i.dvo, i64 2
   %i.dvv = fmul float %i.dvu, %i.dvt              ; 2 uses
-  %12 = fadd float %9, %10                        ; 2 uses
   %i.dvw = fadd float %i.dub, %i.dva              ; 2 uses
-  %13 = fadd float %9, %11                        ; 2 uses
+  %15 = fadd <2 x float> %11, %14                 ; 2 uses
   %i.dvx = insertelement <4 x float> %i.dup, float %i.dvh, i64 1
   %i.dvy = shufflevector <2 x i16> %i.dvq, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.dvz = uitofp <4 x i16> %i.dvy to <4 x float>
@@ -300,14 +302,14 @@ bb.rv:                                            ; preds = %bb.ru
   %i.dwq = fmul float %i.dwp, 5.000000e-01        ; 2 uses
   %i.dwr = fptosi float %i.dwq to i32
   %i.dws = sitofp i32 %i.dwr to float
-  %i.dwt = select i1 %i.dwo, float %i.dws, float %i.dwq ; 2 uses
-  %14 = fadd float %12, %i.dwt
-  %15 = fadd float %13, %i.dwt
+  %i.dwt = select i1 %i.dwo, float %i.dws, float %i.dwq
+  %16 = insertelement <2 x float> poison, float %i.dwt, i64 0
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
+  %18 = fadd <2 x float> %15, %17
   br label %._crit_edge.i473
 
 ._crit_edge.i473:                                 ; preds = %bb.rv, %bb.ru
-  %.052.i = phi float [ %15, %bb.rv ], [ %13, %bb.ru ] ; 2 uses
-  %.0.i474 = phi float [ %14, %bb.rv ], [ %12, %bb.ru ] ; 2 uses
+  %19 = phi <2 x float> [ %18, %bb.rv ], [ %15, %bb.ru ] ; 2 uses
   %i.dwu = fadd float %i.dwl, 5.000000e-01
   %i.dwv = fptosi float %i.dwu to i32
   %i.dww = sitofp i32 %i.dwv to float
@@ -368,7 +370,9 @@ bb.rz:                                            ; preds = %.noexc478, %._ZN8Im
   %i.dxr = getelementptr i8, ptr %i.dxq, i64 -40
   %i.dxs = shl i32 %i.dut, 2
   %i.dxt = and i32 %i.dxs, 262140
-  %i.dxu = fcmp une float %.0.i474, %.052.i
+  %20 = extractelement <2 x float> %19, i64 0     ; 2 uses
+  %21 = extractelement <2 x float> %19, i64 1     ; 2 uses
+  %i.dxu = fcmp une float %21, %20
   %i.dxv = extractelement <4 x float> %i.dwb, i64 0
   %i.dxw = fcmp une float %i.dvw, %i.dxv
   %i.dxx = and i1 %i.dxw, %i.dxu
@@ -376,11 +380,11 @@ bb.rz:                                            ; preds = %.noexc478, %._ZN8Im
   %i.dxz = or disjoint i32 %i.dxy, %i.dxt
   store i32 %i.dxz, ptr %i.dxr, align 4
   %i.dya = getelementptr i8, ptr %i.dxq, i64 -32
-  store float %.0.i474, ptr %i.dya, align 4, !tbaa !262
+  store float %21, ptr %i.dya, align 4, !tbaa !262
   %i.dyb = getelementptr i8, ptr %i.dxq, i64 -28
   store float %i.dvw, ptr %i.dyb, align 4, !tbaa !263
   %i.dyc = getelementptr i8, ptr %i.dxq, i64 -24
-  store float %.052.i, ptr %i.dyc, align 4, !tbaa !264
+  store float %20, ptr %i.dyc, align 4, !tbaa !264
   %i.dyd = getelementptr i8, ptr %i.dxq, i64 -20
   store <4 x float> %i.dwd, ptr %i.dyd, align 4, !tbaa !15
   %i.dye = getelementptr i8, ptr %i.dxq, i64 -4

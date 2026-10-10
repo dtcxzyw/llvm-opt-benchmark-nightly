@@ -205,10 +205,10 @@ _ZNSt10_HashtableIySt4pairIKySt6vectorISt5tupleIJ8PauliStrSt7complexIdEEESaIS7_E
 ; Function Attrs: mustprogress uwtable
 define { double, double } @_Z39localiser_densmatr_calcExpecPauliStrSum5Qureg11PauliStrSum(ptr nofree noundef readonly byval(%struct.Qureg) align 8 captures(none) %0, ptr nofree noundef readonly byval(%struct.PauliStrSum) align 8 captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = alloca %"class.std::complex", align 8      ; 5 uses
+  %2 = alloca %"class.std::complex", align 16     ; 5 uses
   tail call void @_Z29assert_localiserGivenDensMatr5Qureg(ptr noundef nonnull byval(%struct.Qureg) align 8 %0)
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.b = load i64, ptr %1, align 8, !tbaa !100    ; 2 uses
   %i.c = icmp sgt i64 %i.b, 0
   br i1 %i.c, label %.lr.ph, label %._crit_edge
@@ -220,62 +220,71 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !101
   br label %bb.b
 
-._crit_edge:                                      ; preds = %_ZStmlIdESt7complexIT_ERKS2_S4_.exit, %bb.a
-  %.fca.1.load10 = phi double [ 0.000000e+00, %bb.a ], [ %14, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit ]
-  %.fca.0.load8 = phi double [ 0.000000e+00, %bb.a ], [ %13, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit ]
+._crit_edge.loopexit:                             ; preds = %_ZStmlIdESt7complexIT_ERKS2_S4_.exit
+  %3 = extractelement <2 x double> %24, i64 1
+  %4 = extractelement <2 x double> %24, i64 0
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.fca.1.load10 = phi double [ 0.000000e+00, %bb.a ], [ %3, %._crit_edge.loopexit ]
+  %.fca.0.load8 = phi double [ 0.000000e+00, %bb.a ], [ %4, %._crit_edge.loopexit ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load i32, ptr %i.h, align 8, !tbaa !28
   %.not = icmp eq i32 %i.i, 0
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.b:                                             ; preds = %.lr.ph, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit
-  %3 = phi double [ 0.000000e+00, %.lr.ph ], [ %14, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit ]
-  %4 = phi double [ 0.000000e+00, %.lr.ph ], [ %13, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit ]
   %.06 = phi i64 [ 0, %.lr.ph ], [ %i.t, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit ] ; 3 uses
-  %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %.06 ; 2 uses
+  %5 = phi <2 x double> [ zeroinitializer, %.lr.ph ], [ %24, %_ZStmlIdESt7complexIT_ERKS2_S4_.exit ]
+  %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.e, i64 %.06
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %i.g, i64 %.06 ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.k, align 8, !tbaa !46
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !46
   %i.l = tail call { double, double } @_Z42getDensMatrExpecPauliStrTermOfOnlyThisNode5Qureg8PauliStr(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, i64 %.sroa.0.0.copyload, i64 %.sroa.2.0.copyload) ; 2 uses
-  %i.m = extractvalue { double, double } %i.l, 0  ; 3 uses
-  %i.n = extractvalue { double, double } %i.l, 1  ; 3 uses
-  %.sroa.0.0.copyload.i = load double, ptr %i.j, align 8 ; 3 uses
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %.sroa.4.0.copyload.i = load double, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !81 ; 3 uses
-  %5 = fmul double %.sroa.0.0.copyload.i, %i.m
-  %6 = fmul double %i.n, %.sroa.4.0.copyload.i
-  %7 = fmul double %.sroa.0.0.copyload.i, %i.n
-  %8 = fmul double %i.m, %.sroa.4.0.copyload.i
-  %9 = fsub double %5, %6                         ; 3 uses
-  %10 = fadd double %7, %8                        ; 3 uses
-  %i.o = fcmp uno double %9, 0.000000e+00
+  %i.m = extractvalue { double, double } %i.l, 0  ; 2 uses
+  %i.n = extractvalue { double, double } %i.l, 1  ; 2 uses
+  %6 = load <2 x double>, ptr %i.j, align 8       ; 4 uses
+  %7 = insertelement <2 x double> poison, double %i.n, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %10 = fmul <2 x double> %8, %9                  ; 2 uses
+  %11 = insertelement <2 x double> poison, double %i.m, i64 0
+  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %13 = fmul <2 x double> %6, %12                 ; 2 uses
+  %14 = fsub <2 x double> %13, %10                ; 2 uses
+  %15 = fadd <2 x double> %13, %10                ; 2 uses
+  %16 = shufflevector <2 x double> %14, <2 x double> %15, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %17 = extractelement <2 x double> %14, i64 0
+  %i.o = fcmp uno double %17, 0.000000e+00
   br i1 %i.o, label %bb.c, label %_ZStmlIdESt7complexIT_ERKS2_S4_.exit, !prof !93
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = fcmp uno double %10, 0.000000e+00
+  %18 = extractelement <2 x double> %15, i64 1
+  %i.p = fcmp uno double %18, 0.000000e+00
   br i1 %i.p, label %bb.d, label %_ZStmlIdESt7complexIT_ERKS2_S4_.exit, !prof !93
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = tail call noundef { double, double } @__muldc3(double noundef %.sroa.0.0.copyload.i, double noundef %.sroa.4.0.copyload.i, double noundef %i.m, double noundef %i.n) #17 ; 2 uses
+  %19 = extractelement <2 x double> %6, i64 0
+  %20 = extractelement <2 x double> %6, i64 1
+  %i.q = tail call noundef { double, double } @__muldc3(double noundef %19, double noundef %20, double noundef %i.m, double noundef %i.n) #17 ; 2 uses
   %i.r = extractvalue { double, double } %i.q, 0
   %i.s = extractvalue { double, double } %i.q, 1
+  %21 = insertelement <2 x double> poison, double %i.r, i64 0
+  %22 = insertelement <2 x double> %21, double %i.s, i64 1
   br label %_ZStmlIdESt7complexIT_ERKS2_S4_.exit
 
 _ZStmlIdESt7complexIT_ERKS2_S4_.exit:             ; preds = %bb.b, %bb.c, %bb.d
-  %11 = phi double [ %9, %bb.b ], [ %9, %bb.c ], [ %i.r, %bb.d ]
-  %12 = phi double [ %10, %bb.b ], [ %10, %bb.c ], [ %i.s, %bb.d ]
-  %13 = fadd double %11, %4                       ; 3 uses
-  %14 = fadd double %12, %3                       ; 3 uses
-  store double %13, ptr %2, align 8
-  store double %14, ptr %i.a, align 8
+  %23 = phi <2 x double> [ %16, %bb.b ], [ %16, %bb.c ], [ %22, %bb.d ]
+  %24 = fadd <2 x double> %23, %5                 ; 4 uses
+  store <2 x double> %24, ptr %2, align 16
   %i.t = add nuw nsw i64 %.06, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.t, %i.b
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !229
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !229
 
 bb.e:                                             ; preds = %._crit_edge
   call void @_Z14comm_reduceAmpPSt7complexIdE(ptr noundef nonnull %2)
-  %.fca.0.load.pre = load double, ptr %2, align 8
+  %.fca.0.load.pre = load double, ptr %2, align 16
   %.fca.1.load.pre = load double, ptr %i.a, align 8
   br label %bb.f
 

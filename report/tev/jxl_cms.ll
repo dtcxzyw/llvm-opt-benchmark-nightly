@@ -205,40 +205,42 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.e
   %.05966.us = phi i64 [ %i.aj, %bb.e ], [ 0, %.lr.ph ] ; 2 uses
-  %i.t = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.05966.us ; 5 uses
-  %4 = load float, ptr %i.t, align 4, !tbaa !37   ; 2 uses
-  %5 = getelementptr i8, ptr %i.t, i64 4          ; 3 uses
-  %6 = load float, ptr %5, align 4, !tbaa !37     ; 2 uses
-  %7 = fmul float %6, %i.o
-  %i.u = tail call float @llvm.fmuladd.f32(float %4, float %i.m, float %7)
+  %i.t = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.05966.us ; 4 uses
+  %4 = load <2 x float>, ptr %i.t, align 4, !tbaa !37 ; 3 uses
+  %5 = extractelement <2 x float> %4, i64 1
+  %6 = fmul float %5, %i.o
+  %7 = extractelement <2 x float> %4, i64 0
+  %i.u = tail call float @llvm.fmuladd.f32(float %7, float %i.m, float %6)
   %i.v = getelementptr i8, ptr %i.t, i64 8        ; 3 uses
   %i.w = load float, ptr %i.v, align 4, !tbaa !37 ; 2 uses
   %i.x = tail call float @llvm.fmuladd.f32(float %i.w, float %i.q, float %i.u)
-  %i.y = tail call noundef float @powf(float noundef %i.x, float noundef %i.r) #26 ; 4 uses
+  %i.y = tail call noundef float @powf(float noundef %i.x, float noundef %i.r) #26 ; 3 uses
   %i.z = tail call float @llvm.fabs.f32(float %i.y)
   %i.aa = fcmp ueq float %i.z, +inf
   br i1 %i.aa, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.split.us
-  %8 = fmul float %4, %i.y                        ; 4 uses
-  store float %8, ptr %i.t, align 4, !tbaa !37
-  %9 = fmul float %6, %i.y                        ; 4 uses
-  store float %9, ptr %5, align 4, !tbaa !37
+  %8 = insertelement <2 x float> poison, float %i.y, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = fmul <2 x float> %4, %9                   ; 4 uses
+  %11 = extractelement <2 x float> %10, i64 0     ; 2 uses
+  %12 = extractelement <2 x float> %10, i64 1     ; 2 uses
+  store <2 x float> %10, ptr %i.t, align 4, !tbaa !37
   %i.ab = fmul float %i.w, %i.y                   ; 4 uses
   store float %i.ab, ptr %i.v, align 4, !tbaa !37
-  %i.ac = fcmp olt float %9, %i.ab
-  %i.ad = select i1 %i.ac, float %i.ab, float %9  ; 2 uses
-  %i.ae = fcmp olt float %8, %i.ad
-  %i.af = select i1 %i.ae, float %i.ad, float %8  ; 2 uses
+  %i.ac = fcmp olt float %12, %i.ab
+  %i.ad = select i1 %i.ac, float %i.ab, float %12 ; 2 uses
+  %i.ae = fcmp olt float %11, %i.ad
+  %i.af = select i1 %i.ae, float %i.ad, float %11 ; 2 uses
   %i.ag = fcmp ogt float %i.af, 1.000000e+00
   br i1 %i.ag, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.ah = fdiv float 1.000000e+00, %i.af          ; 3 uses
-  %10 = fmul float %8, %i.ah
-  store float %10, ptr %i.t, align 4, !tbaa !37
-  %11 = fmul float %9, %i.ah
-  store float %11, ptr %5, align 4, !tbaa !37
+  %i.ah = fdiv float 1.000000e+00, %i.af          ; 2 uses
+  %13 = insertelement <2 x float> poison, float %i.ah, i64 0
+  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
+  %15 = fmul <2 x float> %10, %14
+  store <2 x float> %15, ptr %i.t, align 4, !tbaa !37
   %i.ai = fmul float %i.ab, %i.ah
   store float %i.ai, ptr %i.v, align 4, !tbaa !37
   br label %bb.e

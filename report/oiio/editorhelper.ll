@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN8ultrahdr12resize_imageEP14uhdr_raw_imageii(ptr dead_on_unwind noalias writable sret(%"class.std::unique_ptr") align 8 %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"struct.ultrahdr::Color", align 4  ; 7 uses
+  %4 = alloca %"struct.ultrahdr::Color", align 4  ; 6 uses
   %i.a = load i32, ptr %1, align 8, !tbaa !25
   %i.b = tail call noundef ptr @_ZN8ultrahdr10getPixelFnE12uhdr_img_fmt(i32 noundef %i.a) ; 5 uses
   %i.c = icmp eq ptr %i.b, null
@@ -258,8 +258,7 @@ _ZSt11make_uniqueIN8ultrahdr18uhdr_raw_image_extEJR12uhdr_img_fmtR16uhdr_color_g
   %i.z = add nsw i32 %i.y, -1                     ; 2 uses
   %i.aa = extractelement <2 x i32> %i.t, i64 1
   %i.ab = add nsw i32 %i.aa, -1                   ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 4
   br i1 %i.x, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
@@ -332,32 +331,33 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %.fca.0.extract = extractvalue { <2 x float>, float } %i.bg, 0 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
-  %.sroa.018.0.vec.extract = extractelement <2 x float> %.fca.0.extract14, i64 0
+  %.sroa.018.0.vec.extract = extractelement <2 x float> %.fca.0.extract2, i64 0
   %i.bh = fpext contract float %.sroa.018.0.vec.extract to double
-  %.sroa.012.0.vec.extract = extractelement <2 x float> %.fca.0.extract8, i64 0
+  %.sroa.012.0.vec.extract = extractelement <2 x float> %.fca.0.extract, i64 0
   %i.bi = fpext contract float %.sroa.012.0.vec.extract to double
-  %.sroa.06.0.vec.extract = extractelement <2 x float> %.fca.0.extract2, i64 0
-  %6 = fpext contract float %.sroa.06.0.vec.extract to double
-  %.sroa.01.0.vec.extract = extractelement <2 x float> %.fca.0.extract, i64 0
-  %7 = fpext contract float %.sroa.01.0.vec.extract to double
-  %8 = sitofp i32 %i.ax to double
-  %9 = fsub contract double %i.at, %8             ; 6 uses
-  %10 = fsub contract double 1.000000e+00, %9     ; 6 uses
-  %11 = fmul contract double %10, %10
-  %12 = fmul contract double %10, %11             ; 3 uses
-  %i.bj = fmul contract double %9, 3.000000e+00   ; 2 uses
-  %i.bk = fmul contract double %i.bj, %10
-  %i.bl = fmul contract double %10, %i.bk         ; 3 uses
-  %i.bm = fmul contract double %9, %i.bj
-  %13 = fmul contract double %10, %i.bm           ; 3 uses
-  %14 = fmul contract double %9, %9
-  %15 = fmul contract double %9, %14              ; 3 uses
-  %16 = fmul contract double %12, %i.bh
-  %17 = fmul contract double %i.bl, %i.bi
-  %18 = fadd contract double %16, %17
-  %i.bn = fmul contract double %13, %6
+  %5 = sitofp i32 %i.ax to double
+  %6 = fsub contract double %i.at, %5             ; 6 uses
+  %7 = fsub contract double 1.000000e+00, %6      ; 2 uses
+  %8 = insertelement <2 x double> poison, double %7, i64 0 ; 2 uses
+  %9 = insertelement <2 x double> %8, double %6, i64 1
+  %10 = fmul contract <2 x double> %9, <double 1.000000e+00, double 3.000000e+00> ; 2 uses
+  %11 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %12 = fmul contract <2 x double> %10, %11
+  %13 = fmul contract <2 x double> %11, %12       ; 3 uses
+  %14 = extractelement <2 x double> %10, i64 1
+  %i.bj = fmul contract double %6, %14
+  %i.bk = fmul contract double %7, %i.bj          ; 2 uses
+  %i.bl = fmul contract double %6, %6
+  %i.bm = fmul contract double %6, %i.bl          ; 2 uses
+  %15 = shufflevector <2 x float> %.fca.0.extract14, <2 x float> %.fca.0.extract8, <2 x i32> <i32 0, i32 2>
+  %16 = fpext <2 x float> %15 to <2 x double>
+  %17 = fmul contract <2 x double> %13, %16       ; 2 uses
+  %shift = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd contract <2 x double> %17, %shift
+  %18 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.bn = fmul contract double %i.bk, %i.bh
   %i.bo = fadd contract double %18, %i.bn
-  %i.bp = fmul contract double %15, %7
+  %i.bp = fmul contract double %i.bm, %i.bi
   %i.bq = fadd contract double %i.bo, %i.bp
   %i.br = fptrunc contract double %i.bq to float
   store float %i.br, ptr %4, align 4, !tbaa !10
@@ -367,36 +367,29 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %.fca.1.extract = extractvalue { <2 x float>, float } %i.bg, 1
-  %.sroa.018.4.vec.extract = extractelement <2 x float> %.fca.0.extract14, i64 1
-  %19 = fpext contract float %.sroa.018.4.vec.extract to double
-  %.sroa.012.4.vec.extract = extractelement <2 x float> %.fca.0.extract8, i64 1
-  %20 = fpext contract float %.sroa.012.4.vec.extract to double
-  %.sroa.06.4.vec.extract = extractelement <2 x float> %.fca.0.extract2, i64 1
-  %21 = fpext contract float %.sroa.06.4.vec.extract to double
-  %.sroa.01.4.vec.extract = extractelement <2 x float> %.fca.0.extract, i64 1
-  %22 = fpext contract float %.sroa.01.4.vec.extract to double
-  %23 = fmul contract double %12, %19
-  %24 = fmul contract double %i.bl, %20
-  %25 = fadd contract double %23, %24
-  %26 = fmul contract double %13, %21
-  %27 = fadd contract double %25, %26
-  %28 = fmul contract double %15, %22
-  %29 = fadd contract double %27, %28
-  %30 = fptrunc contract double %29 to float
-  store float %30, ptr %5, align 4, !tbaa !10
-  %31 = fpext contract float %.fca.1.extract15 to double
-  %32 = fpext contract float %.fca.1.extract9 to double
-  %33 = fpext contract float %.fca.1.extract3 to double
-  %34 = fpext contract float %.fca.1.extract to double
-  %35 = fmul contract double %12, %31
-  %36 = fmul contract double %i.bl, %32
-  %37 = fadd contract double %35, %36
-  %38 = fmul contract double %13, %33
-  %39 = fadd contract double %37, %38
-  %40 = fmul contract double %15, %34
-  %41 = fadd contract double %39, %40
-  %42 = fptrunc contract double %41 to float
-  store float %42, ptr %i.ac, align 4, !tbaa !10
+  %19 = insertelement <2 x float> %.fca.0.extract8, float %.fca.1.extract15, i64 0
+  %20 = fpext <2 x float> %19 to <2 x double>
+  %21 = insertelement <2 x float> %.fca.0.extract14, float %.fca.1.extract9, i64 0
+  %22 = fpext <2 x float> %21 to <2 x double>
+  %23 = insertelement <2 x float> %.fca.0.extract2, float %.fca.1.extract3, i64 0
+  %24 = fpext <2 x float> %23 to <2 x double>
+  %25 = insertelement <2 x float> %.fca.0.extract, float %.fca.1.extract, i64 0
+  %26 = fpext <2 x float> %25 to <2 x double>
+  %27 = fmul contract <2 x double> %13, %20
+  %28 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %29 = fmul contract <2 x double> %28, %22
+  %30 = fadd contract <2 x double> %27, %29
+  %31 = insertelement <2 x double> poison, double %i.bk, i64 0
+  %32 = shufflevector <2 x double> %31, <2 x double> poison, <2 x i32> zeroinitializer
+  %33 = fmul contract <2 x double> %32, %24
+  %34 = fadd contract <2 x double> %30, %33
+  %35 = insertelement <2 x double> poison, double %i.bm, i64 0
+  %36 = shufflevector <2 x double> %35, <2 x double> poison, <2 x i32> zeroinitializer
+  %37 = fmul contract <2 x double> %36, %26
+  %38 = fadd contract <2 x double> %34, %37
+  %39 = shufflevector <2 x double> %38, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %40 = fptrunc <2 x double> %39 to <2 x float>
+  store <2 x float> %40, ptr %i.ac, align 4, !tbaa !10
   br label %bb.o
 
 bb.k:                                             ; preds = %bb.e

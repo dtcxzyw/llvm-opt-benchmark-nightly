@@ -205,7 +205,7 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %.sroa.042.0.copyload.i = load double, ptr %i.q, align 8 ; 3 uses
   %.sroa.744.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.r = load <2 x double>, ptr %.sroa.744.0..sroa_idx.i, align 8 ; 3 uses
+  %i.r = load <2 x double>, ptr %.sroa.744.0..sroa_idx.i, align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #38
   %i.s = call noundef double @_ZNK4CGAL19Robust_constructionINS_20Lazy_construction_ntINS_5EpeckENS_23CartesianKernelFunctors24Compute_squared_radius_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS4_INS5_IN5boost14multiprecision6numberINSB_8backends16rational_adaptorINSD_15cpp_int_backendILm0ELm0ELNSB_16cpp_integer_typeE1ELNSB_18cpp_int_check_typeE0ESaIyEEEEELNSB_26expression_template_optionE1EEEEEEEEENS_19Cartesian_converterINS_5EpickES2_NS_12NT_converterIdNS_13Lazy_exact_ntISM_EEEEEENSQ_IS2_SR_NSS_ISU_dEEEEdEclIJNS_8Sphere_3ISR_EEEEEdDpRKT_(ptr noundef nonnull align 1 dereferenceable(5) %44, ptr noundef nonnull align 8 dereferenceable(40) %i.q)
   call void @llvm.lifetime.end.p0(ptr nonnull %44) #38
@@ -315,9 +315,12 @@ _ZN4CGAL25Random_points_in_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform
   br i1 %i.ci, label %.lr.ph.i, label %.loopexit46
 
 .lr.ph.i:                                         ; preds = %_ZN4CGAL25Random_points_in_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEC2EdRNS_6RandomE.exit.i
-  %i.cj = fmul double %i.t, %i.av                 ; 2 uses
-  %48 = fmul double %i.cj, %i.ax
-  %49 = fmul double %i.cj, %i.aw
+  %i.cj = fmul double %i.t, %i.av
+  %48 = insertelement <2 x double> poison, double %i.cj, i64 0
+  %49 = shufflevector <2 x double> %48, <2 x double> poison, <2 x i32> zeroinitializer
+  %50 = insertelement <2 x double> poison, double %i.aw, i64 0
+  %51 = insertelement <2 x double> %50, double %i.ax, i64 1
+  %52 = fmul <2 x double> %49, %51
   %i.ck = fmul double %i.bt, %i.cf
   %i.cl = fmul double %i.t, %i.ck                 ; 2 uses
   %i.cm = insertelement <2 x double> poison, double %i.cl, i64 0
@@ -328,19 +331,21 @@ _ZN4CGAL25Random_points_in_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform
   %i.cr = fmul double %i.cg, %i.cl
   %.sroa.0.i.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %46, i64 8
   %.sroa.0.i.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %46, i64 24
-  %.sroa.0.i.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %46, i64 32
+  %.sroa.0.i.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %46, i64 40
   %i.cs = getelementptr inbounds nuw i8, ptr %45, i64 8
+  %53 = extractelement <2 x double> %i.r, i64 1
+  %54 = shufflevector <2 x double> %i.r, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %55 = insertelement <2 x double> %54, double %.sroa.042.0.copyload.i, i64 0
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN4CGAL6ObjectD2Ev.exit.i, %.lr.ph.i
   %.01277.i = phi i32 [ %4, %.lr.ph.i ], [ %.113.i, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
-  %.sroa.017.076.i = phi double [ %.sroa.042.0.copyload.i, %.lr.ph.i ], [ %.sroa.017.1.i, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
-  %.sroa.029.073.i.a = phi double [ %i.cr, %.lr.ph.i ], [ %.sroa.029.1.i, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
-  %.sroa.031.070.i = phi double [ %49, %.lr.ph.i ], [ %50, %_ZN4CGAL6ObjectD2Ev.exit.i ]
-  %.sroa.632.069.i = phi double [ %48, %.lr.ph.i ], [ %52, %_ZN4CGAL6ObjectD2Ev.exit.i ]
-  %.pn.i = phi double [ %i.as, %.lr.ph.i ], [ %i.dp, %_ZN4CGAL6ObjectD2Ev.exit.i ]
-  %i.ct = phi <2 x double> [ %i.cq, %.lr.ph.i ], [ %i.gm, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
-  %i.cu = phi <2 x double> [ %i.r, %.lr.ph.i ], [ %i.gl, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
+  %.sroa.029.073.i.a = phi double [ %.sroa.042.0.copyload.i, %.lr.ph.i ], [ %.sroa.017.1.i, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
+  %.sroa.031.070.i = phi double [ %i.cr, %.lr.ph.i ], [ %.sroa.029.1.i, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
+  %.sroa.632.069.i = phi double [ %i.as, %.lr.ph.i ], [ %i.dp, %_ZN4CGAL6ObjectD2Ev.exit.i ]
+  %56 = phi <2 x double> [ %i.cq, %.lr.ph.i ], [ %i.gm, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
+  %i.ct = phi <2 x double> [ %i.r, %.lr.ph.i ], [ %i.gl, %_ZN4CGAL6ObjectD2Ev.exit.i ] ; 2 uses
+  %i.cu = phi <2 x double> [ %52, %.lr.ph.i ], [ %62, %_ZN4CGAL6ObjectD2Ev.exit.i ]
   %.promoted.i.i.i.i.i.i = load i64, ptr %i.x, align 8, !tbaa !292, !noalias !1474
   br label %bb.g
 
@@ -369,7 +374,7 @@ _ZN5boost6random6detail21generate_uniform_realINS0_6rand48EdEET0_RT_S4_S4_.exit.
   br i1 %i.dm, label %_ZN5boost6random6detail21generate_uniform_realINS0_6rand48EdEET0_RT_S4_S4_.exit.i.i.i.i, label %_ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEppEi.exit.i
 
 _ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform_3IdS3_EEEppEi.exit.i: ; preds = %_ZN5boost6random6detail21generate_uniform_realINS0_6rand48EdEET0_RT_S4_S4_.exit.i.i.i.i
-  %.sroa.933.068.i = fmul double %i.t, %.pn.i
+  %.sroa.933.068.i = fmul double %i.t, %.sroa.632.069.i
   %i.dn = fmul nnan double %i.dc, 2.000000e+00
   %i.do = fmul nnan double %i.dn, f0x400921FB54442D18 ; 2 uses
   store i64 %i.dh, ptr %i.x, align 8, !tbaa !292, !noalias !1474
@@ -377,20 +382,21 @@ _ZN4CGAL25Random_points_on_sphere_3INS_7Point_3INS_5EpickEEENS_17Creator_uniform
   %i.dq = fneg double %i.dp
   %i.dr = call double @llvm.fmuladd.f64(double %i.dq, double %i.dp, double 1.000000e+00)
   %i.ds = call double @sqrt(double noundef %i.dr) #38, !noalias !1474
-  %i.dt = fmul double %i.t, %i.ds                 ; 2 uses
-  %i.du = call double @cos(double noundef %i.do) #38, !noalias !1474
-  %50 = fmul double %i.dt, %i.du
-  %51 = call double @sin(double noundef %i.do) #38, !noalias !1474
-  %52 = fmul double %i.dt, %51
-  %53 = fadd double %.sroa.042.0.copyload.i, %.sroa.031.070.i
+  %i.dt = fmul double %i.t, %i.ds
+  %57 = call double @cos(double noundef %i.do) #38, !noalias !1474
+  %i.du = call double @sin(double noundef %i.do) #38, !noalias !1474
+  %58 = insertelement <2 x double> poison, double %i.dt, i64 0
+  %59 = shufflevector <2 x double> %58, <2 x double> poison, <2 x i32> zeroinitializer
+  %60 = insertelement <2 x double> poison, double %57, i64 0
+  %61 = insertelement <2 x double> %60, double %i.du, i64 1
+  %62 = fmul <2 x double> %59, %61
+  %63 = fadd double %53, %.sroa.933.068.i
   call void @llvm.lifetime.start.p0(ptr nonnull %45) #38
-  store double %.sroa.017.076.i, ptr %46, align 8
-  store <2 x double> %i.cu, ptr %.sroa.0.i.sroa.4.0..sroa_idx.i, align 8
-  store double %53, ptr %.sroa.0.i.sroa.6.0..sroa_idx.i, align 8
-  %54 = insertelement <2 x double> poison, double %.sroa.632.069.i, i64 0
-  %55 = insertelement <2 x double> %54, double %.sroa.933.068.i, i64 1
-  %56 = fadd <2 x double> %i.r, %55
-  store <2 x double> %56, ptr %.sroa.0.i.sroa.7.0..sroa_idx.i, align 8
+  store double %.sroa.029.073.i.a, ptr %46, align 8
+  store <2 x double> %i.ct, ptr %.sroa.0.i.sroa.4.0..sroa_idx.i, align 8
+  %64 = fadd <2 x double> %55, %i.cu
+  store <2 x double> %64, ptr %.sroa.0.i.sroa.6.0..sroa_idx.i, align 8
+  store double %63, ptr %.sroa.0.i.sroa.7.0..sroa_idx.i, align 8, !tbaa !91
   call fastcc void @_ZN4CGAL14Surface_mesher25Implicit_surface_oracle_3INS_28Robust_circumcenter_traits_3INS_5EpickEEENS_18Implicit_surface_3IS4_St8functionIFdNS_7Point_3IS3_EEEEEENS_10INTERN_RET27Real_embeddable_traits_baseIdSt17integral_constantIbLb1EEE3SgnENS0_12_GLOBAL__N_110Return_minINS_4SignEEENS_17Creator_uniform_3IdS8_EENS0_19Null_oracle_visitorEE11Intersect_3clERKSB_NS_9Segment_3IS3_EE(ptr dead_on_unwind noalias writable align 8 %45, ptr noundef nonnull align 8 dereferenceable(81) %1, ptr noundef nonnull byval(%"class.CGAL::Segment_3") align 8 %46)
   %i.dv = load ptr, ptr %45, align 8, !tbaa !434  ; 3 uses
   %.not.i.i.i = icmp eq ptr %i.dv, null
@@ -521,16 +527,16 @@ bb.p:                                             ; preds = %bb.o
   %i.gg = insertelement <2 x double> poison, double %i.ge, i64 0
   %i.gh = insertelement <2 x double> %i.gg, double %i.fk, i64 1
   %i.gi = fmul <2 x double> %i.gf, %i.gh
-  %i.gj = fadd double %.sroa.042.0.copyload.i, %.sroa.029.073.i.a
-  %i.gk = fadd <2 x double> %i.r, %i.ct
+  %i.gj = fadd double %.sroa.042.0.copyload.i, %.sroa.031.070.i
+  %i.gk = fadd <2 x double> %i.r, %56
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.k
-  %.sroa.029.1.i = phi double [ %i.gd, %bb.p ], [ %.sroa.029.073.i.a, %bb.k ]
-  %.sroa.017.1.i = phi double [ %i.gj, %bb.p ], [ %.sroa.017.076.i, %bb.k ]
+  %.sroa.029.1.i = phi double [ %i.gd, %bb.p ], [ %.sroa.031.070.i, %bb.k ]
+  %.sroa.017.1.i = phi double [ %i.gj, %bb.p ], [ %.sroa.029.073.i.a, %bb.k ]
   %.113.i = phi i32 [ %.01277.i, %bb.p ], [ %i.eq, %bb.k ] ; 2 uses
-  %i.gl = phi <2 x double> [ %i.gk, %bb.p ], [ %i.cu, %bb.k ]
-  %i.gm = phi <2 x double> [ %i.gi, %bb.p ], [ %i.ct, %bb.k ]
+  %i.gl = phi <2 x double> [ %i.gk, %bb.p ], [ %i.ct, %bb.k ]
+  %i.gm = phi <2 x double> [ %i.gi, %bb.p ], [ %56, %bb.k ]
   %i.gn = load ptr, ptr %i.cs, align 8, !tbaa !312 ; 8 uses
   %.not.i.i.i36.i = icmp eq ptr %i.gn, null
   br i1 %.not.i.i.i36.i, label %_ZN4CGAL6ObjectD2Ev.exit.i, label %bb.r

@@ -205,7 +205,7 @@ _ZN2cv5arucoL10_thresholdERKNS_11_InputArrayERKNS_12_OutputArrayEid.exit.i.i.i: 
   %i.bd = getelementptr inbounds nuw [24 x i8], ptr %i.bc, i64 %indvars.iv.i.i.i ; 3 uses
   %i.be = load ptr, ptr %.val, align 8, !tbaa !545, !nonnull !83, !align !271 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 24
-  %i.bg = load <4 x double>, ptr %i.bf, align 8, !tbaa !195 ; 6 uses
+  %i.bg = load <4 x double>, ptr %i.bf, align 8, !tbaa !195 ; 5 uses
   %i.bh = fcmp ogt <4 x double> %i.bg, zeroinitializer
   %i.bi = fcmp oge <4 x double> %i.bg, zeroinitializer
   %i.bj = shufflevector <4 x i1> %i.bh, <4 x i1> %i.bi, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
@@ -257,16 +257,18 @@ bb.l:                                             ; preds = %_ZN2cv5arucoL10_thr
   %i.bv = load i32, ptr %i.k, align 4, !tbaa !67
   %i.bw = load i32, ptr %i.l, align 8, !tbaa !67
   %i.bx = call i32 @llvm.smax.i32(i32 %i.bv, i32 %i.bw)
-  %i.by = sitofp i32 %i.bx to double              ; 2 uses
-  %17 = extractelement <4 x double> %i.bg, i64 0
-  %18 = fmul double %17, %i.by
-  %19 = fptoui double %18 to i32
-  %i.bz = extractelement <4 x double> %i.bg, i64 1
-  %20 = fmul double %i.bz, %i.by
-  %i.ca = fptoui double %20 to i32
+  %i.by = sitofp i32 %i.bx to double
+  %17 = shufflevector <4 x double> %i.bg, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %18 = insertelement <2 x double> poison, double %i.by, i64 0
+  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %20 = fmul <2 x double> %17, %19                ; 2 uses
+  %i.bz = extractelement <2 x double> %20, i64 0
+  %21 = fptoui double %i.bz to i32
+  %22 = extractelement <2 x double> %20, i64 1
+  %i.ca = fptoui double %22 to i32
   %.not.i.i.i.i = icmp eq i32 %i.bu, 0
   %i.cb = shl nsw i32 %i.bu, 2
-  %spec.select.i24.i.i.i = select i1 %.not.i.i.i.i, i32 %19, i32 %i.cb
+  %spec.select.i24.i.i.i = select i1 %.not.i.i.i.i, i32 %21, i32 %i.cb
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31

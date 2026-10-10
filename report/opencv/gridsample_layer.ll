@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i.i, 
   %i.ce = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bz, <2 x float> %i.cb, <2 x float> %i.cd) ; 3 uses
   %i.cf = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %i.ce) ; 2 uses
   %i.cg = shufflevector <2 x float> %i.cf, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %i.ch = tail call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.cg) ; 7 uses
+  %i.ch = tail call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.cg) ; 6 uses
   %i.ci = shufflevector <2 x float> %i.cf, <2 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %i.cj = tail call noundef i32 @llvm.x86.sse.cvtss2si(<4 x float> %i.ci) ; 4 uses
   %i.ck = sitofp i32 %i.ch to float               ; 2 uses
@@ -286,15 +286,17 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %i.eu = add nsw i32 %i.cj, -1
   %i.ev = add nsw i32 %i.ch, -1
   %i.ew = sitofp i32 %i.ev to float
-  %2 = add nsw i32 %i.ch, 1
-  %3 = sitofp i32 %2 to float
-  %4 = add nsw i32 %i.ch, 2
-  %5 = sitofp i32 %4 to float
+  %2 = insertelement <2 x i32> poison, i32 %i.ch, i64 0
+  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <2 x i32> zeroinitializer
+  %4 = add nsw <2 x i32> %3, <i32 1, i32 2>
+  %5 = sitofp <2 x i32> %4 to <2 x float>         ; 2 uses
   %i.ex = sext i32 %i.eu to i64                   ; 2 uses
   %i.ey = sext i32 %i.ch to i64
   %i.ez = load ptr, ptr %i.aq, align 8, !tbaa !1734, !nonnull !79, !align !114
   %i.fa = load i64, ptr %i.ez, align 8, !tbaa !18
   %invariant.gep.i.i.i = getelementptr [4 x i8], ptr %i.bj, i64 %indvars.iv58.i.i.i
+  %6 = extractelement <2 x float> %5, i64 0
+  %7 = extractelement <2 x float> %5, i64 1
   br label %bb.f
 
 bb.f:                                             ; preds = %.loopexit.i.i.i, %.lr.ph.i.i.i
@@ -315,8 +317,8 @@ bb.f:                                             ; preds = %.loopexit.i.i.i, %.
   %i.fk = select i1 %i.fj, float 0.000000e+00, float -5.000000e-01 ; 24 uses
   %i.fl = fsub float %i.ew, %i.fk
   %i.fm = fsub float %i.ck, %i.fk
-  %i.fn = fsub float %3, %i.fk
-  %i.fo = fsub float %5, %i.fk
+  %i.fn = fsub float %6, %i.fk
+  %i.fo = fsub float %7, %i.fk
   br label %bb.g
 
 .loopexit.loopexit.i.i.i:                         ; preds = %bb.f

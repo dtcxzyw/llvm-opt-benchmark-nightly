@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = ptrtoint ptr %i.c to i64
   %i.j = ptrtoint ptr %i.a to i64
   %i.k = sub i64 %i.i, %i.j                       ; 2 uses
-  %i.l = udiv i64 %i.k, 24                        ; 5 uses
+  %i.l = udiv i64 %i.k, 24                        ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
   %.promoted2.i.i.i.i.i.pre.i = load i64, ptr %i.n, align 8, !alias.scope !7033, !noalias !7034 ; 6 uses
@@ -254,8 +254,8 @@ vector.memcheck:                                  ; preds = %bb.b
   br i1 %conflict.rdx51, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %i.l, -2
-  %n.vec = add nsw i64 %.neg, %i.l                ; 3 uses
+  %2 = add nsw i64 %i.l, -1
+  %n.vec = and i64 %2, -2                         ; 3 uses
   %i.y = shl nsw i64 %n.vec, 1
   %i.z = add i64 %.promoted2.i.i.i.i.i.pre.i, %i.y
   %i.aa = add i64 %.promoted2.i.i.i.i.i.pre.i, 2

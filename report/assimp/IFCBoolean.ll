@@ -202,14 +202,9 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph.peel, %bb.a
   %.087.lcssa = phi double [ -1.000000e+00, %bb.a ], [ %i.ag, %.lr.ph.peel ] ; 3 uses
-  %6 = load double, ptr %1, align 8, !noalias !100
-  %7 = load double, ptr %0, align 8, !noalias !100
-  %8 = fsub double %6, %7                         ; 4 uses
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %10 = load double, ptr %9, align 8, !noalias !100
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %12 = load double, ptr %11, align 8, !noalias !100
-  %13 = fsub double %10, %12                      ; 4 uses
+  %6 = load <2 x double>, ptr %1, align 8, !noalias !100
+  %7 = load <2 x double>, ptr %0, align 8, !noalias !100
+  %8 = fsub <2 x double> %6, %7                   ; 5 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ai = load double, ptr %i.ah, align 8, !noalias !100
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -221,7 +216,8 @@ bb.a:
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 8 uses
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   %i.ao = tail call double @llvm.copysign.f64(double 0.000000e+00, double %.087.lcssa)
-  %14 = insertelement <2 x double> poison, double %8, i64 0
+  %9 = extractelement <2 x double> %8, i64 0      ; 2 uses
+  %10 = extractelement <2 x double> %8, i64 1     ; 2 uses
   %i.ap = insertelement <2 x i1> poison, i1 %5, i64 1
   br label %bb.b
 
@@ -271,8 +267,8 @@ bb.b:                                             ; preds = %.lr.ph219, %_ZNSt6v
   %i.bw = extractelement <2 x double> %i.bv, i64 0 ; 2 uses
   %i.bx = fneg double %i.bw                       ; 2 uses
   %i.by = extractelement <2 x double> %i.bv, i64 1 ; 2 uses
-  %i.bz = fmul double %8, %i.by
-  %i.ca = tail call double @llvm.fmuladd.f64(double %i.bx, double %13, double %i.bz) ; 2 uses
+  %i.bz = fmul double %9, %i.by
+  %i.ca = tail call double @llvm.fmuladd.f64(double %i.bx, double %10, double %i.bz) ; 2 uses
   %i.cb = tail call noundef double @llvm.fabs.f64(double %i.ca)
   %i.cc = fcmp olt double %i.cb, f0x3EB0C6F7A0000000
   br i1 %i.cc, label %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE12emplace_backIJRmRKS2_EEERS3_DpOT_.exit, label %bb.c
@@ -283,26 +279,23 @@ bb.c:                                             ; preds = %bb.b
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.cg = load double, ptr %i.cf, align 8, !noalias !102 ; 3 uses
   %i.ch = fsub double %i.ce, %i.cg                ; 4 uses
-  %i.ci = load <2 x double>, ptr %0, align 8      ; 6 uses
-  %15 = extractelement <2 x double> %i.ci, i64 0  ; 2 uses
-  %16 = extractelement <2 x double> %i.ci, i64 1  ; 2 uses
+  %i.ci = load <2 x double>, ptr %0, align 8      ; 7 uses
   %i.cj = fsub <2 x double> %i.bu, %i.ci          ; 2 uses
-  %i.ck = shufflevector <2 x double> %14, <2 x double> %i.bv, <2 x i32> <i32 0, i32 2>
+  %i.ck = shufflevector <2 x double> %8, <2 x double> %i.bv, <2 x i32> <i32 0, i32 2>
   %i.cl = fneg <2 x double> %i.cj
   %i.cm = shufflevector <2 x double> %i.cl, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.cn = fmul <2 x double> %i.ck, %i.cm
   %i.co = shufflevector <2 x double> %i.cj, <2 x double> poison, <2 x i32> zeroinitializer
-  %17 = insertelement <2 x double> %i.bv, double %13, i64 0
-  %i.cp = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.co, <2 x double> %17, <2 x double> %i.cn)
+  %11 = shufflevector <2 x double> %8, <2 x double> %i.bv, <2 x i32> <i32 1, i32 3>
+  %i.cp = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.co, <2 x double> %11, <2 x double> %i.cn)
   %i.cq = insertelement <2 x double> poison, double %i.ca, i64 0
   %i.cr = shufflevector <2 x double> %i.cq, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cs = fdiv <2 x double> %i.cp, %i.cr          ; 3 uses
-  %18 = extractelement <2 x double> %i.cs, i64 1  ; 4 uses
-  %19 = fmul double %8, %18
-  %20 = fmul double %13, %18
-  %i.ct = fmul double %i.al, %18
-  %21 = fadd double %15, %19                      ; 3 uses
-  %22 = fadd double %16, %20                      ; 3 uses
+  %i.cs = fdiv <2 x double> %i.cp, %i.cr          ; 4 uses
+  %12 = shufflevector <2 x double> %i.cs, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %13 = fmul <2 x double> %8, %12
+  %14 = extractelement <2 x double> %i.cs, i64 1  ; 2 uses
+  %i.ct = fmul double %i.al, %14
+  %15 = fadd <2 x double> %i.ci, %13              ; 4 uses
   %i.cu = load double, ptr %i.aj, align 8, !noalias !103
   %i.cv = fadd double %i.cu, %i.ct                ; 2 uses
   %i.cw = load <2 x double>, ptr %1, align 8      ; 3 uses
@@ -322,12 +315,12 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.speculated138 = select i1 %i.dj, double %i.di, double 1.000000e+00 ; 2 uses
   %i.dk = fcmp ogt double %.sroa.speculated138, 0.000000e+00
   %.sroa.speculated = select i1 %i.dk, double %.sroa.speculated138, double 0.000000e+00 ; 2 uses
+  %16 = fmul double %i.ch, %.sroa.speculated
   %i.dl = insertelement <2 x double> poison, double %.sroa.speculated, i64 0
   %i.dm = shufflevector <2 x double> %i.dl, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dn = fmul <2 x double> %i.bv, %i.dm
-  %23 = fmul double %i.ch, %.sroa.speculated
   %i.do = fadd <2 x double> %i.bu, %i.dn          ; 2 uses
-  %i.dp = fadd double %i.cg, %23                  ; 2 uses
+  %i.dp = fadd double %i.cg, %16                  ; 2 uses
   %foldExtExtBinop = fsub <2 x double> %i.do, %i.cw
   %i.dq = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
   %foldExtExtBinop242 = fsub <2 x double> %i.do, %i.cw ; 2 uses
@@ -340,6 +333,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond, label %bb.d, label %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE12emplace_backIJRmRKS2_EEERS3_DpOT_.exit
 
 bb.d:                                             ; preds = %bb.c
+  %17 = extractelement <2 x double> %i.ci, i64 0
+  %18 = extractelement <2 x double> %i.ci, i64 1
   %i.dv = fsub <2 x double> %i.ci, %i.bu          ; 2 uses
   %foldExtExtBinop246 = fmul <2 x double> %i.bv, %i.dv
   %i.dw = extractelement <2 x double> %foldExtExtBinop246, i64 1
@@ -369,8 +364,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.en = fmul double %.087.lcssa, %i.by
   %i.eo = fmul double %.087.lcssa, %i.bx
-  %i.ep = fmul double %13, %i.eo
-  %i.eq = tail call double @llvm.fmuladd.f64(double %i.en, double %8, double %i.ep)
+  %i.ep = fmul double %10, %i.eo
+  %i.eq = tail call double @llvm.fmuladd.f64(double %i.en, double %9, double %i.ep)
   %i.er = tail call noundef double @llvm.fmuladd.f64(double %i.ao, double %i.al, double %i.eq)
   %i.es = fcmp ule double %i.er, 0.000000e+00
   %i.et = xor i1 %3, %i.es
@@ -392,10 +387,10 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.fb = getelementptr inbounds i8, ptr %i.ev, i64 -24
   %i.fc = load double, ptr %i.fb, align 8, !noalias !104
-  %i.fd = fsub double %i.fc, %15                  ; 2 uses
+  %i.fd = fsub double %i.fc, %17                  ; 2 uses
   %i.fe = getelementptr inbounds i8, ptr %i.ev, i64 -16
   %i.ff = load double, ptr %i.fe, align 8, !noalias !104
-  %i.fg = fsub double %i.ff, %16                  ; 2 uses
+  %i.fg = fsub double %i.ff, %18                  ; 2 uses
   %i.fh = fmul double %i.fg, %i.fg
   %i.fi = tail call noundef double @llvm.fmuladd.f64(double %i.fd, double %i.fd, double %i.fh)
   %i.fj = fcmp uge double %i.fi, 1.000000e-10
@@ -479,7 +474,7 @@ bb.n:                                             ; preds = %bb.d
   br i1 %i.gk, label %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE12emplace_backIJRmRKS2_EEERS3_DpOT_.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.gl = fcmp oge double %18, 0.000000e+00
+  %i.gl = fcmp oge double %14, 0.000000e+00
   %.scalar = tail call double @llvm.fmuladd.f64(double %i.dg, double f0x3EB0C6F7A0000000, double 1.000000e+00)
   %i.gm = insertelement <2 x double> <double poison, double 1.000000e+00>, double %.scalar, i64 0
   %i.gn = fcmp ole <2 x double> %i.cs, %i.gm      ; 2 uses
@@ -493,7 +488,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.gu = load ptr, ptr %4, align 8               ; 5 uses
-  %i.gv = load ptr, ptr %i.am, align 8            ; 11 uses
+  %i.gv = load ptr, ptr %i.am, align 8            ; 10 uses
   %i.gw = icmp eq ptr %i.gu, %i.gv                ; 2 uses
   br i1 %i.gw, label %bb.s, label %bb.q
 
@@ -507,10 +502,12 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.hb = getelementptr inbounds i8, ptr %i.gv, i64 -24
   %i.hc = load double, ptr %i.hb, align 8, !noalias !106
-  %i.hd = fsub double %i.hc, %21                  ; 2 uses
+  %19 = extractelement <2 x double> %15, i64 0
+  %i.hd = fsub double %i.hc, %19                  ; 2 uses
   %i.he = getelementptr inbounds i8, ptr %i.gv, i64 -16
   %i.hf = load double, ptr %i.he, align 8, !noalias !106
-  %i.hg = fsub double %i.hf, %22                  ; 2 uses
+  %20 = extractelement <2 x double> %15, i64 1
+  %i.hg = fsub double %i.hf, %20                  ; 2 uses
   %i.hh = fmul double %i.hg, %i.hg
   %i.hi = tail call noundef double @llvm.fmuladd.f64(double %i.hd, double %i.hd, double %i.hh)
   %i.hj = fcmp uge double %i.hi, 1.000000e-10
@@ -524,9 +521,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p
 bb.t:                                             ; preds = %bb.s
   store i64 %.0217, ptr %i.gv, align 8
   %i.hl = getelementptr inbounds nuw i8, ptr %i.gv, i64 8
-  store double %21, ptr %i.hl, align 8
-  %.sroa.6167.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gv, i64 16
-  store double %22, ptr %.sroa.6167.0..sroa_idx, align 8
+  store <2 x double> %15, ptr %i.hl, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gv, i64 24
   store double %i.cv, ptr %.sroa.8.0..sroa_idx, align 8
   %i.hm = load ptr, ptr %i.am, align 8
@@ -556,13 +551,11 @@ _ZNKSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE12_M_check_lenEmPKc.exit.i.i98: ;
   tail call void @llvm.assume(i1 %.not.i.i.i100)
   %i.hx = shl nuw nsw i64 %i.hw, 5
   %i.hy = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hx) #23 ; 5 uses
-  %24 = getelementptr inbounds nuw i8, ptr %i.hy, i64 %i.hq ; 4 uses
-  store i64 %.0217, ptr %24, align 8
-  %i.hz = getelementptr inbounds nuw i8, ptr %24, i64 8
-  store double %21, ptr %i.hz, align 8
-  %.sroa.6167.0..sroa_idx168 = getelementptr inbounds nuw i8, ptr %24, i64 16
-  store double %22, ptr %.sroa.6167.0..sroa_idx168, align 8
-  %.sroa.8.0..sroa_idx170 = getelementptr inbounds nuw i8, ptr %24, i64 24
+  %i.hz = getelementptr inbounds nuw i8, ptr %i.hy, i64 %i.hq ; 3 uses
+  store i64 %.0217, ptr %i.hz, align 8
+  %.sroa.6167.0..sroa_idx168 = getelementptr inbounds nuw i8, ptr %i.hz, i64 8
+  store <2 x double> %15, ptr %.sroa.6167.0..sroa_idx168, align 8
+  %.sroa.8.0..sroa_idx170 = getelementptr inbounds nuw i8, ptr %i.hz, i64 24
   store double %i.cv, ptr %.sroa.8.0..sroa_idx170, align 8
   br i1 %i.gw, label %_ZNSt6vectorISt4pairIm10aiVector3tIdEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit33.i.i106, label %.lr.ph.i.i.i.i.i102
 

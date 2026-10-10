@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %_ZN8ImVectorI20ImGu
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5ImGui23TableAngledHeadersRowExEjffPK20ImGuiTableHeaderDatai(i32 noundef %0, float noundef %1, float noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4) local_unnamed_addr #3 {
 bb.a:
-  %5 = alloca %struct.ImRect, align 4             ; 7 uses
+  %5 = alloca %struct.ImRect, align 16            ; 8 uses
   %6 = alloca %struct.ImVec2, align 4             ; 5 uses
   %7 = alloca %struct.ImVec2, align 4             ; 5 uses
   %8 = alloca %struct.ImVec2, align 4             ; 5 uses
@@ -323,8 +323,8 @@ bb.l:                                             ; preds = %_ZN5ImGui33TableGet
   %.0169 = phi float [ %i.ax, %_ZN5ImGui33TableGetHeaderAngledMaxLabelWidthEv.exit ], [ %2, %bb.c ] ; 2 uses
   %i.ay = fcmp olt float %1, 0.000000e+00         ; 7 uses
   %i.az = fadd float %1, f0xBFC90FDB              ; 3 uses
-  %i.ba = tail call float @cosf(float noundef %i.az) #4 ; 7 uses
-  %i.bb = tail call float @sinf(float noundef %i.az) #4 ; 8 uses
+  %i.ba = tail call float @cosf(float noundef %i.az) #4 ; 6 uses
+  %i.bb = tail call float @sinf(float noundef %i.az) #4 ; 7 uses
   br i1 %i.ay, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -422,12 +422,12 @@ _ZN5ImGui12TableNextRowEif.exit:                  ; preds = %bb.p, %bb.q
   %i.dp = load float, ptr %i.do, align 8, !tbaa !378
   %i.dq = getelementptr inbounds nuw i8, ptr %i.c, i64 128
   %i.dr = load float, ptr %i.dq, align 8, !tbaa !253 ; 2 uses
-  store float %i.dk, ptr %5, align 4, !tbaa !228
+  store float %i.dk, ptr %5, align 16, !tbaa !228
   %i.ds = getelementptr inbounds nuw i8, ptr %5, i64 4
   store float %i.dn, ptr %i.ds, align 4, !tbaa !229
   %i.dt = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store float %i.dp, ptr %i.dt, align 4, !tbaa !228
-  %i.du = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 3 uses
+  store float %i.dp, ptr %i.dt, align 8, !tbaa !228
+  %i.du = getelementptr inbounds nuw i8, ptr %5, i64 12 ; 2 uses
   store float %i.dr, ptr %i.du, align 4, !tbaa !229
   %i.dv = getelementptr inbounds nuw i8, ptr %i.c, i64 416
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !211
@@ -523,7 +523,7 @@ _ZN5ImGui15TableSetBgColorEiji.exit:              ; preds = %bb.t, %bb.u, %bb.v
   %i.fw = fmul float %i.fv, %i.fu
   %.sroa.066.0.copyload = load float, ptr %i.bj, align 4, !tbaa !177 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 3320
-  %.sroa.5.0.copyload = load float, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !177 ; 3 uses
+  %.sroa.5.0.copyload = load float, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !177 ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.a, i64 3408
   %.sroa.065.0.copyload = load float, ptr %i.fx, align 8, !tbaa !177
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 3412
@@ -547,12 +547,16 @@ _ZN5ImGui15TableSetBgColorEiji.exit:              ; preds = %bb.t, %bb.u, %bb.v
   %i.gm = getelementptr inbounds nuw i8, ptr %i.g, i64 52 ; 2 uses
   %i.gn = fmul float %i.ba, %.sroa.066.0.copyload
   %i.go = call float @llvm.fabs.f32(float %i.gn)
-  %16 = fmul float %i.bb, %.sroa.5.0.copyload     ; 2 uses
-  %17 = call float @llvm.fabs.f32(float %16)
-  %18 = fneg float %17
-  %19 = getelementptr inbounds nuw i8, ptr %12, i64 4
-  %20 = getelementptr inbounds nuw i8, ptr %13, i64 4
-  %21 = fmul float %i.ba, %.sroa.5.0.copyload
+  %16 = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %17 = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %18 = insertelement <2 x float> poison, float %i.bb, i64 0
+  %19 = insertelement <2 x float> %18, float %i.ba, i64 1 ; 2 uses
+  %20 = insertelement <2 x float> poison, float %.sroa.5.0.copyload, i64 0
+  %21 = shufflevector <2 x float> %20, <2 x float> poison, <2 x i32> zeroinitializer
+  %22 = fmul <2 x float> %19, %21                 ; 2 uses
+  %23 = extractelement <2 x float> %22, i64 0
+  %24 = call float @llvm.fabs.f32(float %23)
+  %25 = fneg float %24
   %i.gp = getelementptr inbounds nuw i8, ptr %i.c, i64 524
   %i.gq = getelementptr inbounds nuw i8, ptr %i.c, i64 530
   %i.gr = getelementptr inbounds nuw i8, ptr %i.c, i64 122
@@ -706,7 +710,7 @@ bb.ab:                                            ; preds = %.lr.ph.us, %bb.ad
   %i.ke = load float, ptr %10, align 8, !tbaa !228
   %i.kf = fsub float %i.gh, %i.ke                 ; 3 uses
   %i.kg = call float @llvm.fmuladd.f32(float %i.go, float 2.000000e+00, float %i.kf)
-  %i.kh = call float @llvm.fmuladd.f32(float %18, float 2.000000e+00, float %i.kg) ; 2 uses
+  %i.kh = call float @llvm.fmuladd.f32(float %25, float 2.000000e+00, float %i.kg) ; 2 uses
   %i.ki = fcmp oge float %i.kh, 0.000000e+00
   %i.kj = select i1 %i.ki, float %i.kh, float 0.000000e+00
   %i.kk = fmul float %.sroa.4.0.copyload, %i.kj
@@ -718,32 +722,34 @@ bb.ab:                                            ; preds = %.lr.ph.us, %bb.ad
   %i.kp = load float, ptr %i.gi, align 4, !tbaa !229
   %i.kq = fadd float %i.ko, %i.kp
   store float %i.kn, ptr %12, align 4, !tbaa !228
-  store float %i.kq, ptr %19, align 4, !tbaa !229
+  store float %i.kq, ptr %16, align 4, !tbaa !229
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #4
   %i.kr = load float, ptr %i.je, align 4, !tbaa !351
-  %22 = load float, ptr %i.du, align 4, !tbaa !449
+  %26 = load <4 x float>, ptr %5, align 16
+  %27 = shufflevector <4 x float> %26, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
   %i.ks = fadd float %i.mg, %.0167227.us          ; 3 uses
-  %23 = fadd float %21, %i.kr                     ; 2 uses
-  %24 = fadd float %16, %22                       ; 2 uses
+  %28 = insertelement <2 x float> %27, float %i.kr, i64 1
+  %29 = fadd <2 x float> %22, %28                 ; 2 uses
   br i1 %i.ay, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
   %i.kt = fcmp ole float %i.kf, 0.000000e+00
   %i.ku = select i1 %i.kt, float 0.000000e+00, float %i.kf
-  %i.kv = fsub float %i.gh, %i.ku                 ; 2 uses
-  %25 = fmul float %i.ba, %i.kv
-  %26 = fmul float %i.bb, %i.kv
-  %27 = fadd float %25, %23
-  %28 = fadd float %26, %24
+  %i.kv = fsub float %i.gh, %i.ku
+  %30 = insertelement <2 x float> poison, float %i.kv, i64 0
+  %31 = shufflevector <2 x float> %30, <2 x float> poison, <2 x i32> zeroinitializer
+  %32 = fmul <2 x float> %19, %31
+  %33 = fadd <2 x float> %32, %29
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %storemerge = phi float [ %28, %bb.ac ], [ %24, %bb.ab ]
-  %29 = phi float [ %27, %bb.ac ], [ %23, %bb.ab ]
-  store float %storemerge, ptr %20, align 4, !tbaa !229
+  %34 = phi <2 x float> [ %33, %bb.ac ], [ %29, %bb.ab ] ; 2 uses
+  %35 = extractelement <2 x float> %34, i64 0
+  store float %35, ptr %17, align 4, !tbaa !229
   %i.kw = fadd float %i.il, %i.ks
   %i.kx = select i1 %i.ay, float %i.kw, float %i.ks
-  %i.ky = fadd float %i.kx, %29
+  %36 = extractelement <2 x float> %34, i64 1
+  %i.ky = fadd float %i.kx, %36
   store float %i.ky, ptr %13, align 4, !tbaa !228
   call void @_ZN5ImGui22ShadeVertsTransformPosEP10ImDrawListiiRK6ImVec2ffS4_(ptr noundef nonnull %i.g, i32 noundef %i.ka, i32 noundef %i.kd, ptr noundef nonnull align 4 dereferenceable(8) %12, float noundef %i.bf, float noundef %i.bg, ptr noundef nonnull align 4 dereferenceable(8) %13)
   %i.kz = getelementptr inbounds nuw i8, ptr %spec.select.us, i64 1 ; 2 uses

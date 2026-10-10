@@ -205,6 +205,8 @@ _ZNSt6vectorIN2cv8HOGCache7PixDataESaIS2_EE6resizeEm.exit: ; preds = %_ZSt8_Dest
   %i.ic = insertelement <4 x float> poison, float %i.hz, i64 0
   %i.id = insertelement <4 x float> %i.ic, float %i.hy, i64 1
   %i.ie = shufflevector <4 x float> %i.id, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %15 = insertelement <2 x float> poison, float %i.hz, i64 0
+  %16 = insertelement <2 x float> %15, float %i.hy, i64 1
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader290, %bb.ad
@@ -289,27 +291,26 @@ bb.z:                                             ; preds = %bb.w
   %i.kd = add nsw i32 %i.kb, %i.ac
   %i.ke = sext i32 %i.kd to i64
   %i.kf = load ptr, ptr %i.gp, align 8, !tbaa !125
-  %i.kg = getelementptr inbounds nuw [56 x i8], ptr %i.kf, i64 %i.ke ; 8 uses
+  %i.kg = getelementptr inbounds nuw [56 x i8], ptr %i.kf, i64 %i.ke ; 7 uses
   %i.kh = fsub float 1.000000e+00, %i.io
-  %.0219 = select i1 %i.it, float %i.kh, float %i.io ; 2 uses
+  %.0219 = select i1 %i.it, float %i.kh, float %i.io
   %.0216 = select i1 %i.it, i32 %i.il, i32 %i.im  ; 2 uses
   %i.ki = mul nsw i32 %i.is, %i.hv
   %i.kj = add nsw i32 %.0216, %i.ki
   %i.kk = mul nsw i32 %i.kj, %i.ab
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kg, i64 16
   store i32 %i.kk, ptr %i.kl, align 8, !tbaa !52
-  %15 = fmul float %i.hz, %.0219
   %i.km = getelementptr inbounds nuw i8, ptr %i.kg, i64 32
-  store float %15, ptr %i.km, align 8, !tbaa !54
   %i.kn = load i32, ptr %i.aq, align 4, !tbaa !251
   %i.ko = mul nsw i32 %i.kn, %i.hw
   %i.kp = add nsw i32 %i.ko, %.0216
   %i.kq = mul nsw i32 %i.kp, %i.ab
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kg, i64 20
   store i32 %i.kq, ptr %i.kr, align 4, !tbaa !52
-  %16 = fmul float %i.hy, %.0219
-  %17 = getelementptr inbounds nuw i8, ptr %i.kg, i64 36
-  store float %16, ptr %17, align 4, !tbaa !54
+  %17 = insertelement <2 x float> poison, float %.0219, i64 0
+  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
+  %19 = fmul <2 x float> %16, %18
+  store <2 x float> %19, ptr %i.km, align 8, !tbaa !54
   %i.ks = getelementptr inbounds nuw i8, ptr %i.kg, i64 28
   store i32 0, ptr %i.ks, align 4, !tbaa !52
   %i.kt = getelementptr inbounds nuw i8, ptr %i.kg, i64 24

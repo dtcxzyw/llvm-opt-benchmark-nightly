@@ -204,7 +204,7 @@ bb.am:                                            ; preds = %.loopexit
 
 bb.an:                                            ; preds = %.loopexit
   %i.gm = getelementptr inbounds nuw i8, ptr %.fr4248, i64 64
-  %i.gn = load float, ptr %i.gm, align 8, !tbaa !72 ; 5 uses
+  %i.gn = load float, ptr %i.gm, align 8, !tbaa !72 ; 4 uses
   %i.go = load i32, ptr %i.bd, align 8, !tbaa !28 ; 2 uses
   %i.gp = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.go, i32 -1) ; 2 uses
   %i.gq = extractvalue { i32, i1 } %i.gp, 1, !nosanitize !9
@@ -233,13 +233,13 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.ha, label %.preheader.lr.ph, label %._crit_edge3974
 
 .preheader.lr.ph:                                 ; preds = %.split3971
-  %.sroa.0697.0.copyload = load <2 x float>, ptr %i.ba, align 8, !tbaa !25 ; 6 uses
+  %.sroa.0697.0.copyload = load <2 x float>, ptr %i.ba, align 8, !tbaa !25 ; 5 uses
   %i.hb = icmp sgt i32 %i.p, 0
   %.not4285 = icmp eq i64 %i.bs, 0
   %i.hc = ptrtoint ptr %.fr7006 to i64            ; 37 uses
   %i.hd = icmp ne ptr %.fr7006, null              ; 2 uses
   %.sroa.07.0.vec.extract.i = extractelement <2 x float> %.sroa.0697.0.copyload, i64 0 ; 2 uses
-  %.sroa.07.4.vec.extract.i = extractelement <2 x float> %.sroa.0697.0.copyload, i64 1 ; 12 uses
+  %.sroa.07.4.vec.extract.i = extractelement <2 x float> %.sroa.0697.0.copyload, i64 1 ; 13 uses
   %.sroa.4590.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.he = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.sroa.4577.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20
@@ -270,6 +270,8 @@ bb.ao:                                            ; preds = %bb.an
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.hl = shl i32 %i.g, 1                         ; 2 uses
   %i.hm = add i32 %i.hl, -2
+  %7 = insertelement <2 x float> poison, float %i.gn, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
   %invariant.op = sub i32 2, %i.hl
   br label %.preheader.us
 
@@ -291,12 +293,16 @@ bb.ao:                                            ; preds = %bb.an
   %i.hx = extractvalue { i32, i1 } %i.hv, 1
   %i.hy = uitofp nneg i32 %.08863972.us to float
   %i.hz = uitofp nneg i32 %i.hu to float
-  %7 = fmul float %i.gn, %i.hy                    ; 12 uses
-  %8 = fmul float %i.gn, %i.hz                    ; 12 uses
-  %i.ia = fsub float %8, %7                       ; 4 uses
-  %9 = fsub float %7, %7                          ; 6 uses
-  %10 = fsub float %7, %8                         ; 4 uses
-  %11 = fsub float %8, %8                         ; 6 uses
+  %9 = insertelement <2 x float> poison, float %i.hy, i64 0
+  %10 = insertelement <2 x float> %9, float %i.hz, i64 1
+  %11 = fmul <2 x float> %8, %10                  ; 6 uses
+  %12 = extractelement <2 x float> %11, i64 0     ; 9 uses
+  %13 = extractelement <2 x float> %11, i64 1     ; 9 uses
+  %i.ia = fsub float %13, %12                     ; 4 uses
+  %foldExtExtBinop11052 = fsub <2 x float> %11, %11
+  %14 = extractelement <2 x float> %foldExtExtBinop11052, i64 0 ; 6 uses
+  %15 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %16 = fsub <2 x float> %11, %15                 ; 4 uses
   %i.ib = add nsw i32 %.08863972.us, -1           ; 5 uses
   %i.ic = call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %i.ib, i32 %i.p) ; 2 uses
   %i.id = extractvalue { i32, i1 } %i.ic, 0       ; 2 uses
@@ -307,7 +313,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.ih = extractvalue { i32, i1 } %i.if, 1
   %i.ii = sitofp i32 %i.ib to float
   %i.ij = fmul float %i.gn, %i.ii                 ; 3 uses
-  %i.ik = fsub float %i.ij, %7                    ; 2 uses
+  %i.ik = fsub float %i.ij, %12                   ; 2 uses
   %i.il = call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %i.hu, i32 %i.p) ; 2 uses
   %i.im = extractvalue { i32, i1 } %i.il, 0       ; 2 uses
   %i.in = extractvalue { i32, i1 } %i.il, 1
@@ -318,7 +324,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.is = extractvalue { i32, i1 } %i.iq, 1
   %i.it = uitofp nneg i32 %i.ip to float
   %i.iu = fmul float %i.gn, %i.it                 ; 3 uses
-  %i.iv = fsub float %i.iu, %8                    ; 2 uses
+  %i.iv = fsub float %i.iu, %13                   ; 2 uses
   br i1 %i.hq, label %.lr.ph3605.split.us, label %.lr.ph3605.split.us3975, !prof !20, !nosanitize !9
 
 .lr.ph3605.split.us3975:                          ; preds = %.preheader.us
@@ -327,6 +333,8 @@ bb.ao:                                            ; preds = %bb.an
 .lr.ph3605.split.split.us3976.preheader:          ; preds = %.lr.ph3605.split.us3975
   %i.iw = sext i32 %.08853973.us to i64
   %i.ix = add i32 %i.hm, %.08853973.us
+  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %18 = extractelement <2 x float> %16, i64 1     ; 2 uses
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.dw, %.lr.ph3605.split.split.us3976.preheader
@@ -479,16 +487,16 @@ bb.bh:                                            ; preds = %bb.bg
   %i.mc = fmul float %.sroa.07.4.vec.extract.i, %i.kl ; 4 uses
   %.sroa.05.4.vec.insert.i.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i.us, float %i.mc, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i.us, ptr %1, align 16, !tbaa !25
-  store float %7, ptr %.sroa.4590.0..sroa_idx, align 8, !tbaa !25
+  store float %12, ptr %.sroa.4590.0..sroa_idx, align 8, !tbaa !25
   %i.md = fmul float %.sroa.07.4.vec.extract.i, %i.ll ; 3 uses
   %.sroa.05.4.vec.insert.i1036.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i.us, float %i.md, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i1036.us, ptr %i.he, align 4, !tbaa !25
-  store float %8, ptr %.sroa.4577.0..sroa_idx, align 4, !tbaa !25
+  store float %13, ptr %.sroa.4577.0..sroa_idx, align 4, !tbaa !25
   br i1 %.not983, label %.split4047.us, label %bb.bi, !prof !20, !nosanitize !9
 
 bb.bi:                                            ; preds = %bb.bh
   %i.me = sitofp i32 %i.lz to float
-  %i.mf = fmul float %.sroa.07.0.vec.extract.i, %i.me ; 8 uses
+  %i.mf = fmul float %.sroa.07.0.vec.extract.i, %i.me ; 6 uses
   %.sroa.05.0.vec.insert.i1041.us = insertelement <2 x float> poison, float %i.mf, i64 0 ; 6 uses
   %i.mg = fmul float %.sroa.07.4.vec.extract.i, %i.ky ; 3 uses
   %.sroa.05.4.vec.insert.i1042.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i1041.us, float %i.mg, i64 1
@@ -496,11 +504,11 @@ bb.bi:                                            ; preds = %bb.bh
   %i.mi = fsub float %i.md, %i.mc                 ; 2 uses
   %i.mj = fsub float %i.mf, %i.mb                 ; 4 uses
   %i.mk = fsub float %i.mg, %i.mc                 ; 2 uses
-  %i.ml = fmul float %9, %i.mi
+  %i.ml = fmul float %14, %i.mi
   %i.mm = fmul float %i.ia, %i.mk
   %i.mn = fsub float %i.ml, %i.mm                 ; 3 uses
   %i.mo = fmul float %i.ia, %i.mj
-  %i.mp = fmul float %9, %i.mh
+  %i.mp = fmul float %14, %i.mh
   %i.mq = fsub float %i.mo, %i.mp                 ; 3 uses
   %i.mr = fmul float %i.mh, %i.mk
   %i.ms = fmul float %i.mj, %i.mi
@@ -531,63 +539,67 @@ b3MakePlaneFromPoints.exit.us:                    ; preds = %bb.bj, %bb.bi
   %i.ne = fmul float %i.mb, %.sroa.03.0.vec.extract.i.i.us
   %i.nf = fmul float %i.mc, %.sroa.03.4.vec.extract.i.i.us
   %i.ng = fadd float %i.ne, %i.nf
-  %i.nh = fmul float %7, %.sroa.5.0.i.i.us
+  %i.nh = fmul float %12, %.sroa.5.0.i.i.us
   %i.ni = fadd float %i.nh, %i.ng                 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
-  %i.nj = fmul float %.sroa.07.4.vec.extract.i, %i.ly ; 5 uses
+  %i.nj = fmul float %.sroa.07.4.vec.extract.i, %i.ly ; 4 uses
   %.sroa.05.4.vec.insert.i1072.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i1041.us, float %i.nj, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i1072.us, ptr %2, align 16, !tbaa !25
-  store float %8, ptr %.sroa.4515.0..sroa_idx, align 8, !tbaa !25
+  store float %13, ptr %.sroa.4515.0..sroa_idx, align 8, !tbaa !25
   store <2 x float> %.sroa.05.4.vec.insert.i1042.us, ptr %i.hf, align 4, !tbaa !25
-  store float %7, ptr %.sroa.4502.0..sroa_idx, align 4, !tbaa !25
+  store float %12, ptr %.sroa.4502.0..sroa_idx, align 4, !tbaa !25
   br i1 %.not984, label %.split4049.us, label %bb.bk, !prof !20, !nosanitize !9
 
 bb.bk:                                            ; preds = %b3MakePlaneFromPoints.exit.us
-  %12 = fsub float %i.mf, %i.mf                   ; 6 uses
-  %13 = fsub float %i.mg, %i.nj                   ; 2 uses
-  %14 = fsub float %i.mb, %i.mf                   ; 4 uses
-  %15 = fsub float %i.md, %i.nj                   ; 2 uses
-  %16 = fmul float %11, %13
-  %17 = fmul float %10, %15
-  %18 = fsub float %16, %17                       ; 3 uses
-  %19 = fmul float %10, %14
-  %i.nk = fmul float %11, %12
-  %20 = fsub float %19, %i.nk                     ; 3 uses
-  %21 = fmul float %12, %15
-  %i.nl = fmul float %14, %13
-  %i.nm = fsub float %21, %i.nl                   ; 3 uses
-  %22 = fmul float %18, %18
-  %23 = fmul float %20, %20
-  %24 = fadd float %23, %22
+  %19 = insertelement <2 x float> poison, float %i.md, i64 0
+  %20 = insertelement <2 x float> %19, float %i.mf, i64 1 ; 2 uses
+  %21 = insertelement <2 x float> %20, float %i.nj, i64 0 ; 2 uses
+  %22 = fsub <2 x float> %20, %21                 ; 3 uses
+  %23 = insertelement <2 x float> poison, float %i.mg, i64 0
+  %24 = insertelement <2 x float> %23, float %i.mb, i64 1
+  %25 = fsub <2 x float> %24, %21                 ; 3 uses
+  %26 = fmul <2 x float> %17, %25
+  %27 = fmul <2 x float> %16, %22
+  %28 = fsub <2 x float> %26, %27                 ; 3 uses
+  %29 = extractelement <2 x float> %22, i64 0
+  %30 = extractelement <2 x float> %22, i64 1     ; 5 uses
+  %i.nk = fmul float %30, %29
+  %31 = extractelement <2 x float> %25, i64 0
+  %32 = extractelement <2 x float> %25, i64 1     ; 3 uses
+  %i.nl = fmul float %32, %31
+  %i.nm = fsub float %i.nk, %i.nl                 ; 3 uses
+  %33 = fmul <2 x float> %28, %28                 ; 2 uses
+  %shift11054 = shufflevector <2 x float> %33, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop11055 = fadd <2 x float> %shift11054, %33
+  %34 = extractelement <2 x float> %foldExtExtBinop11055, i64 0
   %i.nn = fmul float %i.nm, %i.nm
-  %i.no = fadd float %i.nn, %24                   ; 2 uses
+  %i.no = fadd float %i.nn, %34                   ; 2 uses
   %i.np = fcmp ogt float %i.no, f0x057A0000
   br i1 %i.np, label %bb.bl, label %b3MakePlaneFromPoints.exit1108.us
 
 bb.bl:                                            ; preds = %bb.bk
   %sqrt.i1105.us = call float @llvm.sqrt.f32(float %i.no)
-  %i.nq = fdiv float 1.000000e+00, %sqrt.i1105.us ; 3 uses
-  %25 = fmul float %18, %i.nq
-  %.sroa.07.0.vec.insert.i.i1106.us = insertelement <2 x float> poison, float %25, i64 0
-  %26 = fmul float %20, %i.nq
-  %.sroa.07.4.vec.insert.i.i1107.us = insertelement <2 x float> %.sroa.07.0.vec.insert.i.i1106.us, float %26, i64 1
+  %i.nq = fdiv float 1.000000e+00, %sqrt.i1105.us ; 2 uses
+  %.sroa.07.0.vec.insert.i.i1106.us = insertelement <2 x float> poison, float %i.nq, i64 0
+  %35 = shufflevector <2 x float> %.sroa.07.0.vec.insert.i.i1106.us, <2 x float> poison, <2 x i32> zeroinitializer
+  %36 = fmul <2 x float> %28, %35
   %i.nr = fmul float %i.nm, %i.nq
   br label %b3MakePlaneFromPoints.exit1108.us
 
 b3MakePlaneFromPoints.exit1108.us:                ; preds = %bb.bl, %bb.bk
-  %.sroa.07.0.i.i1097.us = phi <2 x float> [ %.sroa.07.4.vec.insert.i.i1107.us, %bb.bl ], [ zeroinitializer, %bb.bk ] ; 6 uses
+  %.sroa.07.0.i.i1097.us = phi <2 x float> [ %36, %bb.bl ], [ zeroinitializer, %bb.bk ] ; 6 uses
   %.sroa.5.0.i.i1098.us = phi float [ %i.nr, %bb.bl ], [ 0.000000e+00, %bb.bk ] ; 6 uses
   %.sroa.03.0.vec.extract.i.i1100.us = extractelement <2 x float> %.sroa.07.0.i.i1097.us, i64 0 ; 2 uses
   %.sroa.03.4.vec.extract.i.i1101.us = extractelement <2 x float> %.sroa.07.0.i.i1097.us, i64 1 ; 2 uses
   %i.ns = fmul float %i.mf, %.sroa.03.0.vec.extract.i.i1100.us
   %i.nt = fmul float %i.nj, %.sroa.03.4.vec.extract.i.i1101.us
   %i.nu = fadd float %i.ns, %i.nt
-  %i.nv = fmul float %8, %.sroa.5.0.i.i1098.us
+  %i.nv = fmul float %13, %.sroa.5.0.i.i1098.us
   %i.nw = fadd float %i.nv, %i.nu                 ; 2 uses
   %i.nx = fmul float %i.mf, %.sroa.03.0.vec.extract.i.i.us ; 2 uses
   %i.ny = fmul float %i.nj, %.sroa.03.4.vec.extract.i.i.us
   %i.nz = fadd float %i.nx, %i.ny
-  %i.oa = fmul float %8, %.sroa.5.0.i.i.us        ; 2 uses
+  %i.oa = fmul float %13, %.sroa.5.0.i.i.us       ; 2 uses
   %i.ob = fadd float %i.oa, %i.nz
   %i.oc = fsub float %i.ob, %i.ni                 ; 2 uses
   %i.od = fmul <2 x float> %.sroa.07.0.i.i.us, %.sroa.07.0.i.i1097.us ; 2 uses
@@ -677,7 +689,7 @@ bb.bw:                                            ; preds = %bb.bv
   %i.ps = fmul float %.sroa.07.4.vec.extract.i, %i.pr ; 3 uses
   %.sroa.05.4.vec.insert.i1142.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i1041.us, float %i.ps, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i1142.us, ptr %3, align 16, !tbaa !25
-  store float %7, ptr %.sroa.4407.0..sroa_idx, align 8, !tbaa !25
+  store float %12, ptr %.sroa.4407.0..sroa_idx, align 8, !tbaa !25
   %i.pt = fmul float %.sroa.07.4.vec.extract.i, %i.pp ; 3 uses
   %.sroa.05.4.vec.insert.i1150.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i1041.us, float %i.pt, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i1150.us, ptr %i.hg, align 4, !tbaa !25
@@ -688,14 +700,14 @@ bb.bx:                                            ; preds = %bb.bw
   %i.pu = fmul float %.sroa.07.4.vec.extract.i, %i.pq
   %i.pv = fsub float %i.pt, %i.ps                 ; 2 uses
   %i.pw = fsub float %i.pu, %i.ps                 ; 2 uses
-  %i.px = fmul float %9, %i.pv
+  %i.px = fmul float %14, %i.pv
   %i.py = fmul float %i.ik, %i.pw
   %i.pz = fsub float %i.px, %i.py                 ; 3 uses
-  %i.qa = fmul float %i.ik, %14
-  %i.qb = fmul float %9, %12
+  %i.qa = fmul float %i.ik, %32
+  %i.qb = fmul float %14, %30
   %i.qc = fsub float %i.qa, %i.qb                 ; 3 uses
-  %i.qd = fmul float %12, %i.pw
-  %i.qe = fmul float %14, %i.pv
+  %i.qd = fmul float %30, %i.pw
+  %i.qe = fmul float %32, %i.pv
   %i.qf = fsub float %i.qd, %i.qe                 ; 3 uses
   %i.qg = fmul float %i.pz, %i.pz
   %i.qh = fmul float %i.qc, %i.qc
@@ -805,7 +817,7 @@ bb.ci:                                            ; preds = %bb.ch
   %i.si = fmul float %.sroa.07.4.vec.extract.i, %i.rt ; 3 uses
   %.sroa.05.4.vec.insert.i1195.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i.us, float %i.si, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i1195.us, ptr %4, align 16, !tbaa !25
-  store float %8, ptr %.sroa.4298.0..sroa_idx, align 8, !tbaa !25
+  store float %13, ptr %.sroa.4298.0..sroa_idx, align 8, !tbaa !25
   %i.sj = fmul float %.sroa.07.4.vec.extract.i, %i.sh ; 3 uses
   %.sroa.05.4.vec.insert.i1203.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i.us, float %i.sj, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i1203.us, ptr %i.hh, align 4, !tbaa !25
@@ -816,11 +828,11 @@ bb.cj:                                            ; preds = %bb.ci
   %i.sk = fmul float %.sroa.07.4.vec.extract.i, %i.ru
   %i.sl = fsub float %i.sj, %i.si                 ; 2 uses
   %i.sm = fsub float %i.sk, %i.si                 ; 2 uses
-  %i.sn = fmul float %11, %i.sl
+  %i.sn = fmul float %18, %i.sl
   %i.so = fmul float %i.iv, %i.sm
   %i.sp = fsub float %i.sn, %i.so                 ; 3 uses
   %i.sq = fmul float %i.iv, %i.mj
-  %i.sr = fmul float %11, %i.mh
+  %i.sr = fmul float %18, %i.mh
   %i.ss = fsub float %i.sq, %i.sr                 ; 3 uses
   %i.st = fmul float %i.mh, %i.sm
   %i.su = fmul float %i.mj, %i.sl
@@ -982,60 +994,56 @@ bb.cz:                                            ; preds = %bb.cy
   %i.wg = load float, ptr %i.vv, align 4, !tbaa !25
   %i.wh = uitofp nneg i32 %.08873603.us3978 to float
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
-  store float %8, ptr %.sroa.4188.0..sroa_idx, align 8, !tbaa !25
   %i.wi = insertelement <2 x float> poison, float %i.wh, i64 0
-  %i.wj = insertelement <2 x float> %i.wi, float %i.wg, i64 1 ; 2 uses
-  %i.wk = fmul <2 x float> %.sroa.0697.0.copyload, %i.wj ; 4 uses
-  %27 = insertelement <2 x float> %i.wj, float %i.vg, i64 1
-  %28 = fmul <2 x float> %.sroa.0697.0.copyload, %27 ; 2 uses
+  %i.wj = insertelement <2 x float> %i.wi, float %i.wg, i64 1
+  %i.wk = fmul <2 x float> %.sroa.0697.0.copyload, %i.wj ; 5 uses
   store <2 x float> %i.wk, ptr %5, align 16, !tbaa !25
-  %29 = shufflevector <2 x float> %i.wk, <2 x float> %28, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %29, ptr %i.hi, align 4, !tbaa !25
-  store float %7, ptr %.sroa.4175.0..sroa_idx, align 4, !tbaa !25
+  store float %13, ptr %.sroa.4188.0..sroa_idx, align 8, !tbaa !25
+  %37 = fmul float %.sroa.07.4.vec.extract.i, %i.vg ; 2 uses
+  %.sroa.05.4.vec.insert.i1261.us = insertelement <2 x float> %i.wk, float %37, i64 1
+  store <2 x float> %.sroa.05.4.vec.insert.i1261.us, ptr %i.hi, align 4, !tbaa !25
+  store float %12, ptr %.sroa.4175.0..sroa_idx, align 4, !tbaa !25
   br i1 %.not993, label %.split4183.us, label %bb.da, !prof !20, !nosanitize !9
 
 bb.da:                                            ; preds = %bb.cz
   %i.wl = uitofp nneg i32 %i.ty to float
   %i.wm = insertelement <2 x float> poison, float %i.wl, i64 0
   %i.wn = insertelement <2 x float> %i.wm, float %i.vt, i64 1
-  %i.wo = fmul <2 x float> %.sroa.0697.0.copyload, %i.wn ; 2 uses
-  %30 = fsub <2 x float> %28, %i.wk               ; 3 uses
-  %31 = extractelement <2 x float> %30, i64 1
-  %32 = fmul float %11, %31
-  %i.wp = fsub <2 x float> %i.wo, %i.wk           ; 3 uses
-  %33 = extractelement <2 x float> %i.wp, i64 1
-  %34 = fmul float %10, %33
-  %35 = fsub float %32, %34                       ; 3 uses
-  %36 = shufflevector <2 x float> %30, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %37 = insertelement <2 x float> %36, float %10, i64 0
-  %i.wq = fmul <2 x float> %37, %i.wp
-  %38 = shufflevector <2 x float> %i.wp, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %39 = insertelement <2 x float> %38, float %11, i64 0
-  %i.wr = fmul <2 x float> %39, %30
-  %i.ws = fsub <2 x float> %i.wq, %i.wr           ; 4 uses
-  %40 = fmul float %35, %35
-  %41 = fmul <2 x float> %i.ws, %i.ws             ; 2 uses
-  %42 = extractelement <2 x float> %41, i64 0
-  %43 = fadd float %42, %40
-  %44 = extractelement <2 x float> %41, i64 1
-  %45 = fadd float %44, %43                       ; 2 uses
+  %i.wo = fmul <2 x float> %.sroa.0697.0.copyload, %i.wn ; 3 uses
+  %38 = insertelement <2 x float> %i.wo, float %37, i64 1
+  %39 = fsub <2 x float> %38, %i.wk               ; 3 uses
+  %40 = shufflevector <2 x float> %i.wk, <2 x float> %i.wo, <2 x i32> <i32 0, i32 3>
+  %i.wp = fsub <2 x float> %40, %i.wk             ; 3 uses
+  %41 = fmul <2 x float> %16, %39
+  %42 = fmul <2 x float> %17, %i.wp
+  %43 = fsub <2 x float> %41, %42                 ; 3 uses
+  %shift11066 = shufflevector <2 x float> %i.wp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.wq = fmul <2 x float> %i.wp, %shift11066
+  %shift11069 = shufflevector <2 x float> %39, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.wr = fmul <2 x float> %39, %shift11069
+  %i.ws = fsub <2 x float> %i.wq, %i.wr           ; 3 uses
+  %44 = fmul <2 x float> %43, %43                 ; 2 uses
+  %shift11074 = shufflevector <2 x float> %44, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop11075 = fadd <2 x float> %44, %shift11074
+  %foldExtExtBinop11077 = fmul <2 x float> %i.ws, %i.ws
+  %foldExtExtBinop11079 = fadd <2 x float> %foldExtExtBinop11077, %foldExtExtBinop11075
+  %45 = extractelement <2 x float> %foldExtExtBinop11079, i64 0 ; 2 uses
   %i.wt = fcmp ogt float %45, f0x057A0000
   br i1 %i.wt, label %bb.db, label %b3Normalize.exit1014.us
 
 bb.db:                                            ; preds = %bb.da
+  %46 = extractelement <2 x float> %i.ws, i64 0
   %sqrt1391.us = call float @llvm.sqrt.f32(float %45)
-  %46 = fdiv float 1.000000e+00, %sqrt1391.us     ; 3 uses
-  %47 = fmul float %35, %46
+  %47 = fdiv float 1.000000e+00, %sqrt1391.us     ; 2 uses
   %.sroa.07.0.vec.insert.i1012.us = insertelement <2 x float> poison, float %47, i64 0
-  %48 = extractelement <2 x float> %i.ws, i64 0
-  %49 = fmul float %48, %46
-  %.sroa.07.4.vec.insert.i1013.us = insertelement <2 x float> %.sroa.07.0.vec.insert.i1012.us, float %49, i64 1
-  %50 = extractelement <2 x float> %i.ws, i64 1
-  %i.wu = fmul float %50, %46
+  %48 = shufflevector <2 x float> %43, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %49 = shufflevector <2 x float> %.sroa.07.0.vec.insert.i1012.us, <2 x float> poison, <2 x i32> zeroinitializer
+  %50 = fmul <2 x float> %48, %49
+  %i.wu = fmul float %46, %47
   br label %b3Normalize.exit1014.us
 
 b3Normalize.exit1014.us:                          ; preds = %bb.db, %bb.da
-  %.sroa.07.0.i1008.us = phi <2 x float> [ %.sroa.07.4.vec.insert.i1013.us, %bb.db ], [ zeroinitializer, %bb.da ]
+  %.sroa.07.0.i1008.us = phi <2 x float> [ %50, %bb.db ], [ zeroinitializer, %bb.da ]
   %.sroa.5.0.i1009.us = phi float [ %i.wu, %bb.db ], [ 0.000000e+00, %bb.da ]
   %i.wv = fmul <2 x float> %i.wo, %.sroa.07.0.i.i.us ; 2 uses
   %shift11061 = shufflevector <2 x float> %i.wv, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
@@ -1168,11 +1176,11 @@ bb.dp:                                            ; preds = %bb.do
   %i.zr = fmul float %.sroa.07.4.vec.extract.i, %i.yq ; 3 uses
   %.sroa.05.4.vec.insert.i1311.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i1041.us, float %i.zr, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i1311.us, ptr %6, align 16, !tbaa !25
-  store float %7, ptr %.sroa.480.0..sroa_idx, align 8, !tbaa !25
+  store float %12, ptr %.sroa.480.0..sroa_idx, align 8, !tbaa !25
   %i.zs = fmul float %.sroa.07.4.vec.extract.i, %i.zq ; 2 uses
   %.sroa.05.4.vec.insert.i1319.us = insertelement <2 x float> %.sroa.05.0.vec.insert.i1041.us, float %i.zs, i64 1
   store <2 x float> %.sroa.05.4.vec.insert.i1319.us, ptr %i.hj, align 4, !tbaa !25
-  store float %8, ptr %.sroa.467.0..sroa_idx, align 4, !tbaa !25
+  store float %13, ptr %.sroa.467.0..sroa_idx, align 4, !tbaa !25
   br i1 %.not996, label %.split4226.us, label %bb.dq, !prof !20, !nosanitize !9
 
 bb.dq:                                            ; preds = %bb.dp
@@ -1186,13 +1194,13 @@ bb.dq:                                            ; preds = %bb.dp
   %i.aaa = fsub float %i.zz, %i.mf                ; 2 uses
   %i.aab = extractelement <2 x float> %i.zx, i64 1
   %i.aac = fsub float %i.aab, %i.zr               ; 2 uses
-  %i.aad = fmul float %9, %i.zy
+  %i.aad = fmul float %14, %i.zy
   %i.aae = fmul float %i.ia, %i.aac
   %i.aaf = fsub float %i.aad, %i.aae              ; 3 uses
   %i.aag = fmul float %i.ia, %i.aaa
-  %i.aah = fmul float %9, %12
+  %i.aah = fmul float %14, %30
   %i.aai = fsub float %i.aag, %i.aah              ; 3 uses
-  %i.aaj = fmul float %12, %i.aac
+  %i.aaj = fmul float %30, %i.aac
   %i.aak = fmul float %i.aaa, %i.zy
   %i.aal = fsub float %i.aaj, %i.aak              ; 3 uses
   %i.aam = fmul float %i.aaf, %i.aaf
@@ -1220,7 +1228,7 @@ b3Normalize.exit.us:                              ; preds = %bb.dr, %bb.dq
   %shift11067 = shufflevector <2 x float> %i.aaw, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop11068 = fadd <2 x float> %i.aaw, %shift11067
   %i.aax = extractelement <2 x float> %foldExtExtBinop11068, i64 0
-  %i.aay = fmul float %7, %.sroa.5.0.i.i1098.us
+  %i.aay = fmul float %12, %.sroa.5.0.i.i1098.us
   %i.aaz = fadd float %i.aay, %i.aax
   %i.aba = fsub float %i.aaz, %i.nw               ; 2 uses
   %i.abb = fmul <2 x float> %.sroa.07.0.i.i1097.us, %.sroa.07.0.i.us ; 2 uses

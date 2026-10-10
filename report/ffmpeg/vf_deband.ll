@@ -204,12 +204,21 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.di = uitofp nneg i32 %i.k to float
   %i.dj = load i32, ptr %i.al, align 4, !tbaa !42 ; 2 uses
   %i.dk = icmp sgt i32 %i.dj, 0
-  br i1 %i.dk, label %.preheader, label %.loopexit
+  br i1 %i.dk, label %.preheader.preheader, label %.loopexit
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
-  %i.dl = phi i32 [ %i.ep, %._crit_edge ], [ %i.db, %.preheader.lr.ph ]
-  %i.dm = phi i32 [ %i.eq, %._crit_edge ], [ %i.dj, %.preheader.lr.ph ] ; 3 uses
-  %.0102 = phi i32 [ %i.er, %._crit_edge ], [ 0, %.preheader.lr.ph ] ; 4 uses
+.preheader.preheader:                             ; preds = %.preheader.lr.ph
+  %1 = insertelement <2 x i1> poison, i1 %i.dd, i64 0
+  %2 = insertelement <2 x i1> %1, i1 %i.df, i64 1
+  %3 = insertelement <2 x float> poison, float %i.de, i64 0
+  %4 = insertelement <2 x float> %3, float %i.dh, i64 1
+  %5 = insertelement <2 x float> poison, float %i.i, i64 0
+  %6 = insertelement <2 x float> %5, float %i.di, i64 1
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
+  %i.dl = phi i32 [ %i.ep, %._crit_edge ], [ %i.db, %.preheader.preheader ]
+  %i.dm = phi i32 [ %i.eq, %._crit_edge ], [ %i.dj, %.preheader.preheader ] ; 3 uses
+  %.0102 = phi i32 [ %i.er, %._crit_edge ], [ 0, %.preheader.preheader ] ; 4 uses
   %i.dn = icmp sgt i32 %i.dm, 0
   br i1 %i.dn, label %.lr.ph, label %._crit_edge
 
@@ -226,15 +235,17 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.dt = tail call nsz float @llvm.sin.f32(float %i.ds)
   %i.du = fmul nsz float %i.dt, f0x472AEE8C       ; 2 uses
   %i.dv = tail call nsz float @llvm.floor.f32(float %i.du)
-  %i.dw = fsub nsz float %i.du, %i.dv             ; 2 uses
-  %1 = fmul nsz float %i.i, %i.dw
-  %2 = select nsz i1 %i.dd, float %i.de, float %1
-  %sincos = tail call nsz { float, float } @llvm.sincos.f32(float %2) ; 2 uses
+  %i.dw = fsub nsz float %i.du, %i.dv
+  %7 = insertelement <2 x float> poison, float %i.dw, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = fmul nsz <2 x float> %6, %8
+  %10 = select <2 x i1> %2, <2 x float> %4, <2 x float> %9 ; 2 uses
+  %11 = extractelement <2 x float> %10, i64 0
+  %sincos = tail call nsz { float, float } @llvm.sincos.f32(float %11) ; 2 uses
   %sin = extractvalue { float, float } %sincos, 0
   %cos = extractvalue { float, float } %sincos, 1
-  %3 = fmul nsz float %i.dw, %i.di
-  %4 = select nsz i1 %i.df, float %i.dh, float %3
-  %i.dx = fptosi float %4 to i32
+  %12 = extractelement <2 x float> %10, i64 1
+  %i.dx = fptosi float %12 to i32
   %i.dy = sitofp nsz i32 %i.dx to float           ; 2 uses
   %i.dz = fmul nsz float %cos, %i.dy
   %i.ea = fptosi float %i.dz to i32
