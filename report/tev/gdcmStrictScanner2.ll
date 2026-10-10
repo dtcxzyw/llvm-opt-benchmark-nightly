@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.i = load i8, ptr %i.h, align 1, !tbaa !35
   %.not17 = icmp eq i8 %i.i, 0
-  %switch.tableidx = add nsw i16 %i.a, -1
-  %i.j = icmp ult i16 %switch.tableidx, 7
-  %or.cond = select i1 %.not17, i1 true, i1 %i.j
+  %i.j = icmp ult i16 %i.a, 8
+  %or.cond = or i1 %.not17, %i.j
   br i1 %or.cond, label %_ZNK4gdcm3Tag9IsIllegalEv.exit.thread, label %_ZNK4gdcm3Tag9IsIllegalEv.exit
 
 _ZNK4gdcm3Tag9IsIllegalEv.exit:                   ; preds = %bb.c

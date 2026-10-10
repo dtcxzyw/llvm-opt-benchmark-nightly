@@ -202,7 +202,7 @@ bb.a:
   %i.f = alloca [32 x i8], align 8                ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @_RINvNtNtCsg7jhnslYu1x_5rayon4iter6extend12fast_collectINtNtB4_3map3MapINtNtB4_10par_bridge10IterBridgeINtNtCs6Wt4yPw39th_9itertools11unique_impl6UniqueINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map4IterRNtNtB3m_4path4PathINtNtB2y_6option6OptionNtNtCsEhZmuQNqkz_11ruff_linter7package11PackageRootEENCNvMs2_NtCs8EvorvD8vmS_4ruff5cacheNtB5K_15PackageCacheMap4init0EEENCB5E_s_0ETB45_NtB5K_5CacheEEB5M_(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.f, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(96) %1)
-  %i.g = load i64, ptr %i.f, align 8, !range !9, !noundef !3 ; 3 uses
+  %i.g = load i64, ptr %i.f, align 8, !range !9, !noundef !3 ; 2 uses
   %i.h = trunc nuw i64 %i.g to i1                 ; 2 uses
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -264,10 +264,6 @@ _RINvYINtNtNtCscdodAO9FK5_5alloc11collections11linked_list4IterINtNtBa_3vec3VecT
           cleanup                                 ; 3 uses
   %i.af = icmp eq i64 %i.g, 0
   br i1 %i.af, label %.thread, label %bb.r
-
-.body.thread76:                                   ; preds = %.body15
-  %2 = icmp eq i64 %i.g, 0
-  br i1 %2, label %.thread, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc11collections11linked_list10LinkedListINtNtBI_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEEEB2v_.exit
 
 bb.d:                                             ; preds = %_RINvYINtNtNtCscdodAO9FK5_5alloc11collections11linked_list4IterINtNtBa_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB2u_8adapters3map8map_foldRBY_jjNvMs_B11_BY_3lenNCINvXsK_NtB2s_5accumjNtB4t_3Sum3sumINtB3u_3MapB3_B44_EE0E0EB1Q_.exit
   %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -364,9 +360,9 @@ bb.l:                                             ; preds = %_RINvYINtNtNtCscdod
   br label %.body15
 
 .body15:                                          ; preds = %bb.n, %bb.l
-  %eh.lpad-body16 = phi { ptr, i32 } [ %i.be, %bb.l ], [ %i.bn, %bb.n ] ; 2 uses
+  %eh.lpad-body16 = phi { ptr, i32 } [ %i.be, %bb.l ], [ %i.bn, %bb.n ]
   invoke void @_RNvXs7_NtNtCscdodAO9FK5_5alloc11collections11linked_listINtB5_10LinkedListINtNtB9_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropB22_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e)
-          to label %.body.thread76 unwind label %bb.q
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc11collections11linked_list10LinkedListINtNtBI_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEEEB2v_.exit unwind label %bb.q
 
 _RNvMs6_NtNtCscdodAO9FK5_5alloc11collections11linked_listINtB5_10LinkedListINtNtB9_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEE9pop_frontB22_.exit: ; preds = %bb.j, %bb.k
   %i.bf = phi ptr [ %i.az, %bb.k ], [ null, %bb.j ] ; 5 uses
@@ -449,12 +445,11 @@ bb.q:                                             ; preds = %.thread41, %.body15
 bb.r:                                             ; preds = %.body
   br i1 %.sroa.03.1, label %.thread41, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc11collections11linked_list10LinkedListINtNtBI_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEEEB2v_.exit
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc11collections11linked_list10LinkedListINtNtBI_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEEEB2v_.exit: ; preds = %.body.thread76, %bb.g, %.thread41, %.thread, %bb.r
-  %.pn34 = phi { ptr, i32 } [ %i.ae, %.thread41 ], [ %.pn8086, %.thread ], [ %i.ae, %bb.r ], [ %eh.lpad-body16, %.body.thread76 ], [ %i.aw, %bb.g ]
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc11collections11linked_list10LinkedListINtNtBI_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEEEB2v_.exit: ; preds = %.body15, %bb.g, %.thread41, %.thread, %bb.r
+  %.pn34 = phi { ptr, i32 } [ %i.ae, %.thread41 ], [ %i.ae, %.thread ], [ %i.ae, %bb.r ], [ %i.aw, %bb.g ], [ %eh.lpad-body16, %.body15 ]
   resume { ptr, i32 } %.pn34
 
-.thread:                                          ; preds = %.body, %.body.thread76
-  %.pn8086 = phi { ptr, i32 } [ %eh.lpad-body16, %.body.thread76 ], [ %i.ae, %.body ]
+.thread:                                          ; preds = %.body
   %i.bt = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEEB1J_(ptr noalias noundef align 8 dereferenceable(24) %i.bt) #32
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc11collections11linked_list10LinkedListINtNtBI_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEEEB2v_.exit unwind label %bb.q
