@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %._crit_edge
   %i.bi = add i64 %.sroa.3.0.i.i, -1
   br label %.preheader.i
 
-"_ZN4core3ptr63drop_in_place$LT$alloc..sync..Arc$LT$std..path..PathBuf$GT$$GT$17h7f530a8e6aa44a2fE.exit": ; preds = %bb.u, %bb.v, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17ha696533577fe6bb3E.exit.sink.split.i118", %.body35.thread, %bb.bz, %.body113, %.body35, %bb.i
-  %.pn29 = phi { ptr, i32 } [ %i.bj, %bb.i ], [ %i.eu, %.body35 ], [ %eh.lpad-body114, %bb.bz ], [ %eh.lpad-body114, %.body113 ], [ %.pn27338, %.body35.thread ], [ %.pn27338, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17ha696533577fe6bb3E.exit.sink.split.i118" ], [ %i.cd, %bb.v ], [ %i.cd, %bb.u ]
+"_ZN4core3ptr63drop_in_place$LT$alloc..sync..Arc$LT$std..path..PathBuf$GT$$GT$17h7f530a8e6aa44a2fE.exit": ; preds = %bb.u, %bb.v, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17ha696533577fe6bb3E.exit.sink.split.i118", %.body35.thread, %bb.bz, %.body113, %bb.i
+  %.pn29 = phi { ptr, i32 } [ %i.bj, %bb.i ], [ %i.cd, %bb.u ], [ %eh.lpad-body114, %bb.bz ], [ %eh.lpad-body114, %.body113 ], [ %.pn27338, %.body35.thread ], [ %.pn27338, %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17ha696533577fe6bb3E.exit.sink.split.i118" ], [ %i.cd, %bb.v ]
   invoke fastcc void @"_ZN4core3ptr179drop_in_place$LT$std..sync..poison..mutex..MutexGuard$LT$alloc..collections..btree..map..BTreeMap$LT$alloc..string..String$C$alloc..sync..Arc$LT$std..path..PathBuf$GT$$GT$$GT$$GT$17h82f7c8c0896ca791E"(ptr nonnull %.sroa.0.0.i.i, i8 %.sroa.01.0.i.i) #55
           to label %bb.fa unwind label %bb.ez
 
@@ -271,7 +271,7 @@ bb.q:                                             ; preds = %_ZN3std4sync6poison
   ret ptr %.sroa.0.0
 
 _ZN3std3env3var17h96a3dfc9e5c5af63E.exit:         ; preds = %.loopexit
-  %i.by = load i64, ptr %i.w, align 8, !range !44, !noundef !17 ; 2 uses
+  %i.by = load i64, ptr %i.w, align 8, !range !44, !noundef !17
   %i.bz = trunc nuw i64 %i.by to i1
   br i1 %i.bz, label %bb.r, label %bb.s
 
@@ -320,8 +320,7 @@ bb.v:                                             ; preds = %bb.u
 
 .body35:                                          ; preds = %bb.bt, %.body.i
   call fastcc void @"_ZN4core3ptr41drop_in_place$LT$std..process..Output$GT$17h1f37fb7fdb4e03eeE"(ptr noalias noundef align 8 dereferenceable(56) %i.v) #55
-  %2 = icmp eq i64 %i.by, 0
-  br i1 %2, label %"_ZN4core3ptr63drop_in_place$LT$alloc..sync..Arc$LT$std..path..PathBuf$GT$$GT$17h7f530a8e6aa44a2fE.exit", label %.body35.thread
+  br label %.body35.thread
 
 bb.w:                                             ; preds = %bb.ab, %bb.r
   %i.cf = landingpad { ptr, i32 }
@@ -720,7 +719,7 @@ bb.bq:                                            ; preds = %.lr.ph490
 
 bb.br:                                            ; preds = %bb.bp
   %i.eu = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
+          cleanup
   %i.ev = icmp eq i64 %i.er, %i.dq
   br i1 %i.ev, label %.body.i, label %.lr.ph490
 
@@ -1123,7 +1122,7 @@ bb.ez:                                            ; preds = %"_ZN4core3ptr63drop
   call void @_ZN4core9panicking16panic_in_cleanup17h5eff40bcc4481d72E() #56
   unreachable
 
-.body35.thread:                                   ; preds = %.body31, %bb.w, %bb.ae, %bb.ad, %.body35.thread343, %.body35
+.body35.thread:                                   ; preds = %.body35, %.body31, %bb.w, %bb.ae, %bb.ad, %.body35.thread343
   %.pn27338 = phi { ptr, i32 } [ %.pn.ph, %.body35.thread343 ], [ %i.eu, %.body35 ], [ %i.co, %bb.ad ], [ %i.co, %bb.ae ], [ %i.cf, %bb.w ], [ %eh.lpad-body32, %.body31 ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !6962)
   %i.qr = getelementptr inbounds nuw i8, ptr %i.w, i64 8

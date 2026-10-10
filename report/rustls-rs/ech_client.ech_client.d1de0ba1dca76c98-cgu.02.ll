@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %_RNvMs0_NtCs7ZUl82O
 
 bb.g:                                             ; preds = %bb.f
   %i.bb = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCsj6eKBz9Db1c_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc129 unwind label %3
+          to label %.noexc129 unwind label %4
 
 .noexc129:                                        ; preds = %bb.g
   %i.bc = lshr i64 %i.ay, 32
@@ -210,7 +210,7 @@ bb.g:                                             ; preds = %bb.f
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %i.bf = load ptr, ptr %i.be, align 8, !nonnull !6, !noundef !6
   %i.bg = invoke noundef i8 %i.bf(i32 noundef %i.bd)
-          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit unwind label %3, !inline_history !58
+          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit unwind label %4, !inline_history !58
 
 bb.h:                                             ; preds = %bb.f
   %i.bh = lshr i64 %i.ay, 32
@@ -240,12 +240,6 @@ bb.l:                                             ; preds = %bb.k
   %.val90 = load i64, ptr %i.p, align 8, !noundef !6
   %.not310 = icmp eq i64 %.val90, 0
   br i1 %.not310, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit134, label %.lr.ph
-
-3:                                                ; preds = %bb.g, %.noexc129
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_10ech_client(ptr nonnull %i.ax) #20
-          to label %.thread unwind label %bb.ap
 
 bb.m:                                             ; preds = %bb.k
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -410,7 +404,7 @@ bb.z:                                             ; preds = %.thread273, %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.df = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCsj6eKBz9Db1c_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc149 unwind label %bb.af
+          to label %.noexc149 unwind label %3
 
 .noexc149:                                        ; preds = %bb.aa
   %i.dg = lshr i64 %i.dd, 32
@@ -418,7 +412,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.di = getelementptr inbounds nuw i8, ptr %i.df, i64 8
   %i.dj = load ptr, ptr %i.di, align 8, !nonnull !6, !noundef !6
   %i.dk = invoke noundef i8 %i.dj(i32 noundef %i.dh)
-          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151 unwind label %bb.af, !inline_history !58
+          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151 unwind label %3, !inline_history !58
 
 bb.ab:                                            ; preds = %bb.z
   %i.dl = lshr i64 %i.dd, 32
@@ -445,11 +439,10 @@ bb.ae:                                            ; preds = %bb.y
   %spec.select = zext i1 %.not695 to i8
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit161
 
-bb.af:                                            ; preds = %bb.aa, %.noexc149, %bb.ah, %.noexc155
+bb.af:                                            ; preds = %bb.ao
   %i.dt = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_10ech_client(ptr nonnull %.sroa.5.0.i276) #20
-          to label %.thread unwind label %bb.ap
+  br label %.thread
 
 _RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151: ; preds = %bb.ad, %bb.ac, %bb.ab, %.noexc149
   %.sroa.0.0.i146 = phi i8 [ %i.dr, %bb.ad ], [ %switch.idx.cast.i.i.i147, %bb.ab ], [ %i.dp, %bb.ac ], [ %i.dk, %.noexc149 ]
@@ -466,7 +459,7 @@ bb.ag:                                            ; preds = %_RNvMs1_NtNtCsj6eKB
 
 bb.ah:                                            ; preds = %bb.ag
   %i.dv = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCsj6eKBz9Db1c_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc155 unwind label %bb.af
+          to label %.noexc155 unwind label %3
 
 .noexc155:                                        ; preds = %bb.ah
   %i.dw = lshr i64 %i.dd, 32
@@ -474,7 +467,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dv, i64 8
   %i.dz = load ptr, ptr %i.dy, align 8, !nonnull !6, !noundef !6
   %i.ea = invoke noundef i8 %i.dz(i32 noundef %i.dx)
-          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit157 unwind label %bb.af, !inline_history !58
+          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit157 unwind label %3, !inline_history !58
 
 bb.ai:                                            ; preds = %bb.ag
   %i.eb = lshr i64 %i.dd, 32
@@ -529,12 +522,7 @@ bb.ao:                                            ; preds = %bb.am
   store ptr %i.en, ptr %i.w, align 8, !alias.scope !90
   store i8 3, ptr %i.i, align 8, !alias.scope !90
   invoke void @_RNvXsd_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.w)
-          to label %.lr.ph502 unwind label %.thread286
-
-.thread286:                                       ; preds = %bb.ao
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread
+          to label %.lr.ph502 unwind label %bb.af
 
 .lr.ph502:                                        ; preds = %bb.an, %bb.am, %bb.am, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
@@ -545,7 +533,13 @@ bb.ao:                                            ; preds = %bb.am
   %or.cond.i139 = select i1 %i.ep, i1 true, i1 %i.er
   br i1 %or.cond.i139, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit161, label %.lr.ph972
 
-bb.ap:                                            ; preds = %bb.au, %bb.as, %.thread, %.split.thread, %bb.af, %bb.cc, %bb.cj, %3, %bb.az
+3:                                                ; preds = %.noexc155, %.noexc149, %bb.aa, %bb.ah
+  %lpad.thr_comm287 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_10ech_client(ptr nonnull %.sroa.5.0.i276) #20
+          to label %.thread unwind label %bb.ap
+
+bb.ap:                                            ; preds = %bb.au, %bb.as, %.thread, %.split.thread, %3, %bb.cc, %bb.cj, %4, %bb.az
   %i.es = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #19
@@ -948,10 +942,16 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit194
 
-.thread:                                          ; preds = %.thread236.loopexit, %.thread236.loopexit.split-lp.loopexit.split-lp, %.thread236.loopexit.split-lp.loopexit, %bb.as, %bb.ar, %.thread286, %3, %bb.af, %bb.az
-  %.pn77.pn226 = phi { ptr, i32 } [ %i.fj, %bb.az ], [ %5, %.thread286 ], [ %4, %3 ], [ %i.ez, %bb.as ], [ %i.dt, %bb.af ], [ %i.ev, %bb.ar ], [ %lpad.loopexit, %.thread236.loopexit ], [ %lpad.loopexit316, %.thread236.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp317, %.thread236.loopexit.split-lp.loopexit.split-lp ]
-  %.sroa.0.0216225 = phi ptr [ %.sroa.0.5, %bb.az ], [ %.sroa.0.5, %.thread286 ], [ null, %3 ], [ %.sroa.0.5, %bb.as ], [ %.sroa.0.5, %bb.af ], [ %.sroa.0.5, %bb.ar ], [ %.sroa.0.5, %.thread236.loopexit ], [ null, %.thread236.loopexit.split-lp.loopexit ], [ %.sroa.0.5, %.thread236.loopexit.split-lp.loopexit.split-lp ]
-  %.sroa.0196.0224 = phi ptr [ %.sroa.0196.2, %bb.az ], [ null, %.thread286 ], [ null, %3 ], [ %.sroa.0196.2, %bb.as ], [ null, %bb.af ], [ %.sroa.0196.2, %bb.ar ], [ null, %.thread236.loopexit ], [ null, %.thread236.loopexit.split-lp.loopexit ], [ %.sroa.0196.2, %.thread236.loopexit.split-lp.loopexit.split-lp ]
+4:                                                ; preds = %.noexc129, %bb.g
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_10ech_client(ptr nonnull %i.ax) #20
+          to label %.thread unwind label %bb.ap
+
+.thread:                                          ; preds = %.thread236.loopexit, %.thread236.loopexit.split-lp.loopexit.split-lp, %.thread236.loopexit.split-lp.loopexit, %bb.as, %bb.ar, %bb.af, %4, %3, %bb.az
+  %.pn77.pn226 = phi { ptr, i32 } [ %i.fj, %bb.az ], [ %i.ez, %bb.as ], [ %5, %4 ], [ %i.dt, %bb.af ], [ %lpad.thr_comm287, %3 ], [ %i.ev, %bb.ar ], [ %lpad.loopexit, %.thread236.loopexit ], [ %lpad.loopexit316, %.thread236.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp317, %.thread236.loopexit.split-lp.loopexit.split-lp ]
+  %.sroa.0.0216225 = phi ptr [ %.sroa.0.5, %bb.az ], [ %.sroa.0.5, %bb.as ], [ null, %4 ], [ %.sroa.0.5, %bb.af ], [ %.sroa.0.5, %3 ], [ %.sroa.0.5, %bb.ar ], [ %.sroa.0.5, %.thread236.loopexit ], [ null, %.thread236.loopexit.split-lp.loopexit ], [ %.sroa.0.5, %.thread236.loopexit.split-lp.loopexit.split-lp ]
+  %.sroa.0196.0224 = phi ptr [ %.sroa.0196.2, %bb.az ], [ %.sroa.0196.2, %bb.as ], [ null, %4 ], [ null, %bb.af ], [ null, %3 ], [ %.sroa.0196.2, %bb.ar ], [ null, %.thread236.loopexit ], [ null, %.thread236.loopexit.split-lp.loopexit ], [ %.sroa.0196.2, %.thread236.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client(ptr %.sroa.0196.0224) #20
           to label %.split.thread unwind label %bb.ap
 

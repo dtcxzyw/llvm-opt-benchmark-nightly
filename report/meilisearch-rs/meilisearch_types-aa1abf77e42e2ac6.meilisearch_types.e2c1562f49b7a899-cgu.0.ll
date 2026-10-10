@@ -205,7 +205,7 @@ _ZN3std4sync6poison4Flag4done17h723d8023d05917a8E.exit.i.i.i.i.i63: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %"_ZN4core3ptr73drop_in_place$LT$std..sync..poison..mutex..MutexGuard$LT$$LP$$RP$$GT$$GT$17h32e34c011a1d5618E.exit"
 
-.body:                                            ; preds = %bb.i, %bb.l
+.body:                                            ; preds = %bb.l, %bb.i
   %eh.lpad-body = phi { ptr, i32 } [ %i.au, %bb.i ], [ %i.ay, %bb.l ]
   invoke fastcc void @"_ZN4core3ptr195drop_in_place$LT$core..result..Result$LT$std..sync..poison..mutex..MutexGuard$LT$$LP$$RP$$GT$$C$std..sync..poison..TryLockError$LT$std..sync..poison..mutex..MutexGuard$LT$$LP$$RP$$GT$$GT$$GT$$GT$17h4b98bc5ecd57ee85E"(ptr noalias noundef align 8 dereferenceable(24) %i.d) #55
           to label %bb.aj unwind label %bb.al

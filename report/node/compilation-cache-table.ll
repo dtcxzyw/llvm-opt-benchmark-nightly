@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %_ZN2v88internal12Is
   %sext.i = add i64 %i.cb, 17179869184
   %i.co = ashr exact i64 %sext.i, 29
   %i.cp = getelementptr inbounds i8, ptr %i.ca, i64 %i.co
-  %i.cq = load atomic volatile i64, ptr %i.cp monotonic, align 8 ; 5 uses
+  %i.cq = load atomic volatile i64, ptr %i.cp monotonic, align 8 ; 4 uses
   %i.cr = trunc i64 %i.cq to i1
   br i1 %i.cr, label %_ZN2v88internal20IsSharedFunctionInfoENS0_6TaggedINS0_6ObjectEEE.exit, label %_ZN2v88internal20IsSharedFunctionInfoENS0_6TaggedINS0_6ObjectEEE.exit.thread
 
@@ -240,7 +240,7 @@ bb.l:                                             ; preds = %_ZN2v88internal20Is
   %i.di = load atomic volatile i16, ptr %i.dh monotonic, align 2
   %i.dj = add i16 %i.di, -257
   %i.dk = icmp ult i16 %i.dj, 2
-  br i1 %i.dk, label %bb.m, label %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit.thread
+  br i1 %i.dk, label %bb.m, label %_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit
 
 bb.m:                                             ; preds = %bb.l
   %i.dl = getelementptr inbounds nuw i8, ptr %i.de, i64 8
@@ -248,7 +248,7 @@ bb.m:                                             ; preds = %bb.l
   %i.dn = lshr i64 %i.dm, 32                      ; 2 uses
   %i.do = trunc nuw i64 %i.dn to i32
   %.not40.i = icmp sgt i32 %i.do, 0
-  br i1 %.not40.i, label %.lr.ph.i, label %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit.thread
+  br i1 %.not40.i, label %.lr.ph.i, label %_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit
 
 .lr.ph.i:                                         ; preds = %bb.m
   %i.dp = getelementptr inbounds nuw i8, ptr %i.de, i64 16
@@ -290,44 +290,28 @@ bb.p:                                             ; preds = %bb.o
 
 _ZNOSt8optionalIN2v88internal6TaggedINS1_13NativeContextEEEE5valueEv.exit.i: ; preds = %bb.o
   %i.em = icmp eq i64 %i.ei, %i.cz
-  br i1 %i.em, label %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit, label %.critedge.i
+  br i1 %i.em, label %_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit, label %.critedge.i
 
 .critedge.i:                                      ; preds = %_ZNOSt8optionalIN2v88internal6TaggedINS1_13NativeContextEEEE5valueEv.exit.i, %bb.n
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.dn
-  br i1 %exitcond.not.i, label %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit, label %bb.n, !llvm.loop !17
+  br i1 %exitcond.not.i, label %_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit, label %bb.n, !llvm.loop !17
 
-_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit: ; preds = %_ZNOSt8optionalIN2v88internal6TaggedINS1_13NativeContextEEEE5valueEv.exit.i, %.critedge.i
-  %.sroa.025.0.i = phi i64 [ %i.dz, %_ZNOSt8optionalIN2v88internal6TaggedINS1_13NativeContextEEEE5valueEv.exit.i ], [ 0, %.critedge.i ] ; 2 uses
-  %9 = icmp eq i64 %i.cq, 0
-  br i1 %9, label %10, label %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit.thread
-
-_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit.thread: ; preds = %bb.m, %bb.l, %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit
-  %.sroa.025.0.i101 = phi i64 [ %.sroa.025.0.i, %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit ], [ 0, %bb.l ], [ 0, %bb.m ]
+_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit: ; preds = %.critedge.i, %_ZNOSt8optionalIN2v88internal6TaggedINS1_13NativeContextEEEE5valueEv.exit.i, %bb.m, %bb.l
+  %.sroa.025.0.i101 = phi i64 [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %.critedge.i ], [ %i.dz, %_ZNOSt8optionalIN2v88internal6TaggedINS1_13NativeContextEEEE5valueEv.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   call void @_ZN2v88internal15IsCompiledScopeC2ENS0_6TaggedINS0_18SharedFunctionInfoEEEPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(9) %7, i64 %i.cq, ptr noundef %i.b)
   %.fca.0.load.i.i = load ptr, ptr %7, align 8
   %.fca.1.gep.i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
   %.fca.1.load.i.i = load i8, ptr %.fca.1.gep.i.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  br label %_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit
-
-10:                                               ; preds = %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %11, align 8
-  br label %_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit
-
-_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit: ; preds = %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit.thread, %10
-  %.sroa.025.0.i100 = phi i64 [ %.sroa.025.0.i, %10 ], [ %.sroa.025.0.i101, %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit.thread ]
-  %.fca.0.load.i.sink.i = phi ptr [ null, %10 ], [ %.fca.0.load.i.i, %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit.thread ]
-  %.fca.1.load.i.sink.i = phi i8 [ 0, %10 ], [ %.fca.1.load.i.i, %_ZN2v88internal12_GLOBAL__N_117SearchLiteralsMapENS0_6TaggedINS0_21CompilationCacheTableEEENS0_13InternalIndexENS2_INS0_7ContextEEE.exit.thread ]
-  store ptr %.fca.0.load.i.sink.i, ptr %0, align 8
+  store ptr %.fca.0.load.i.i, ptr %0, align 8
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %.fca.1.load.i.sink.i, ptr %i.en, align 8
+  store i8 %.fca.1.load.i.i, ptr %i.en, align 8
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.cq, ptr %i.eo, align 8
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.sroa.025.0.i100, ptr %i.ep, align 8
+  store i64 %.sroa.025.0.i101, ptr %i.ep, align 8
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN2v88internal20IsSharedFunctionInfoENS0_6TaggedINS0_6ObjectEEE.exit.thread, %_ZN2v88internal12InfoCellPairC2EPNS0_7IsolateENS0_6TaggedINS0_18SharedFunctionInfoEEENS4_INS0_10JSFunctionEEE.exit, %_ZN2v88internal12IsFixedArrayENS0_6TaggedINS0_6ObjectEEE.exit.thread, %.loopexit

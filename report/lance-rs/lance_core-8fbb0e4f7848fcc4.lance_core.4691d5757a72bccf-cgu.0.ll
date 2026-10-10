@@ -205,7 +205,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5
   ret ptr %.sroa.0.0
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73: ; preds = %bb.ax, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70, %bb.ar, %4
-  %.pn.pn = phi { ptr, i32 } [ %5, %4 ], [ %i.ip, %bb.ax ], [ %eh.lpad-body176, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70 ], [ %eh.lpad-body176, %bb.ar ]
+  %.pn.pn = phi { ptr, i32 } [ %5, %4 ], [ %eh.lpad-body176, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70 ], [ %i.ip, %bb.ax ], [ %eh.lpad-body176, %bb.ar ]
   resume { ptr, i32 } %.pn.pn
 
 .body.thread:                                     ; preds = %.body.thread178.loopexit, %.body.thread178.loopexit.split-lp, %bb.k, %bb.m
@@ -286,12 +286,6 @@ bb.ax:                                            ; preds = %bb.aw
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr %.val53, i8 %.val54) #69
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.as
 
-4:                                                ; preds = %bb.au, %bb.av, %bb.ba, %bb.bd, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr nonnull %i.f, i8 2) #69
-          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.as
-
 bb.ay:                                            ; preds = %bb.av
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ig, i64 20 ; 3 uses
   %i.ir = load atomic i8, ptr %i.iq monotonic, align 1, !noalias !464
@@ -359,6 +353,12 @@ _RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i: ; preds = %
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i: ; preds = %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i
   invoke void @_RNvMNtNtNtNtCsgczF5crJ4sT_3std3sys4sync5mutex5futexNtB2_5Mutex4wake(ptr noundef nonnull align 4 %i.ih)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit unwind label %4
+
+4:                                                ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i, %bb.bd, %bb.ba, %bb.av, %bb.au
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr nonnull %i.f, i8 2) #69
+          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.as
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -761,7 +761,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5
   ret ptr %.sroa.0.0
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73: ; preds = %bb.ax, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70, %bb.ar, %4
-  %.pn.pn = phi { ptr, i32 } [ %5, %4 ], [ %i.ip, %bb.ax ], [ %eh.lpad-body177, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70 ], [ %eh.lpad-body177, %bb.ar ]
+  %.pn.pn = phi { ptr, i32 } [ %5, %4 ], [ %eh.lpad-body177, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70 ], [ %i.ip, %bb.ax ], [ %eh.lpad-body177, %bb.ar ]
   resume { ptr, i32 } %.pn.pn
 
 .body.thread:                                     ; preds = %.body.thread179.loopexit, %.body.thread179.loopexit.split-lp, %bb.k, %bb.m
@@ -842,12 +842,6 @@ bb.ax:                                            ; preds = %bb.aw
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr %.val52, i8 %.val53) #69
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.as
 
-4:                                                ; preds = %bb.au, %bb.av, %bb.ba, %bb.bd, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr nonnull %i.f, i8 2) #69
-          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.as
-
 bb.ay:                                            ; preds = %bb.av
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ig, i64 20 ; 3 uses
   %i.ir = load atomic i8, ptr %i.iq monotonic, align 1, !noalias !514
@@ -915,6 +909,12 @@ _RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i: ; preds = %
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i: ; preds = %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i
   invoke void @_RNvMNtNtNtNtCsgczF5crJ4sT_3std3sys4sync5mutex5futexNtB2_5Mutex4wake(ptr noundef nonnull align 4 %i.ih)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit unwind label %4
+
+4:                                                ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i, %bb.bd, %bb.ba, %bb.av, %bb.au
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr nonnull %i.f, i8 2) #69
+          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.as
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1317,7 +1317,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5
   ret ptr %.sroa.0.0
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit78: ; preds = %bb.bg, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i75, %bb.ba, %4
-  %.pn.pn = phi { ptr, i32 } [ %5, %4 ], [ %i.jw, %bb.bg ], [ %eh.lpad-body177, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i75 ], [ %eh.lpad-body177, %bb.ba ]
+  %.pn.pn = phi { ptr, i32 } [ %5, %4 ], [ %eh.lpad-body177, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i75 ], [ %i.jw, %bb.bg ], [ %eh.lpad-body177, %bb.ba ]
   resume { ptr, i32 } %.pn.pn
 
 .body.thread:                                     ; preds = %.body.thread179.loopexit, %.body.thread179.loopexit.split-lp, %bb.k, %bb.m
@@ -1398,12 +1398,6 @@ bb.bg:                                            ; preds = %bb.bf
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr %.val52, i8 %.val53) #69
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit78 unwind label %bb.bb
 
-4:                                                ; preds = %bb.bd, %bb.be, %bb.bj, %bb.bm, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr nonnull %i.g, i8 2) #69
-          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit78 unwind label %bb.bb
-
 bb.bh:                                            ; preds = %bb.be
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jn, i64 20 ; 3 uses
   %i.jy = load atomic i8, ptr %i.jx monotonic, align 1, !noalias !581
@@ -1471,6 +1465,12 @@ _RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i: ; preds = %
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i: ; preds = %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i
   invoke void @_RNvMNtNtNtNtCsgczF5crJ4sT_3std3sys4sync5mutex5futexNtB2_5Mutex4wake(ptr noundef nonnull align 4 %i.jo)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit unwind label %4
+
+4:                                                ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i, %bb.bm, %bb.bj, %bb.be, %bb.bd
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr nonnull %i.g, i8 2) #69
+          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit78 unwind label %bb.bb
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1873,7 +1873,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5
   ret ptr %.sroa.0.0
 
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73: ; preds = %bb.az, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70, %bb.at, %4
-  %.pn.pn = phi { ptr, i32 } [ %5, %4 ], [ %i.jl, %bb.az ], [ %eh.lpad-body218, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70 ], [ %eh.lpad-body218, %bb.at ]
+  %.pn.pn = phi { ptr, i32 } [ %5, %4 ], [ %eh.lpad-body218, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i70 ], [ %i.jl, %bb.az ], [ %eh.lpad-body218, %bb.at ]
   resume { ptr, i32 } %.pn.pn
 
 .body.thread:                                     ; preds = %.body.thread220.loopexit, %.body.thread220.loopexit.split-lp, %bb.k, %bb.m
@@ -1954,12 +1954,6 @@ bb.az:                                            ; preds = %bb.ay
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr %.val50, i8 %.val51) #69
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.au
 
-4:                                                ; preds = %bb.aw, %bb.ax, %bb.bc, %bb.bf, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr nonnull %i.f, i8 2) #69
-          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.au
-
 bb.ba:                                            ; preds = %bb.ax
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jc, i64 20 ; 3 uses
   %i.jn = load atomic i8, ptr %i.jm monotonic, align 1, !noalias !631
@@ -2027,6 +2021,12 @@ _RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i: ; preds = %
 _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i: ; preds = %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i, %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i
   invoke void @_RNvMNtNtNtNtCsgczF5crJ4sT_3std3sys4sync5mutex5futexNtB2_5Mutex4wake(ptr noundef nonnull align 4 %i.jd)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit unwind label %4
+
+4:                                                ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit.sink.split.i, %bb.bf, %bb.bc, %bb.ax, %bb.aw
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCsgczF5crJ4sT_3std4sync6poison12TryLockErrorINtNtBE_5mutex10MutexGuarduEEECs63DIHKhvmTb_10lance_core(ptr nonnull %i.f, i8 2) #69
+          to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuarduEECs63DIHKhvmTb_10lance_core.exit73 unwind label %bb.au
 }
 
 ; Function Attrs: nonlazybind uwtable

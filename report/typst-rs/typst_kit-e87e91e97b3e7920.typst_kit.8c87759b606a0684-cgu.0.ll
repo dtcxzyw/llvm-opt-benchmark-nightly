@@ -206,8 +206,8 @@ default.unreachable:                              ; preds = %bb.fd, %bb.fa, %bb.
           cleanup
   br label %6
 
-common.resume:                                    ; preds = %.thread, %.body39, %bb.ii, %bb.l, %bb.cx, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i, %bb.cz, %6, %bb.dj, %bb.dq
-  %common.resume.op = phi { ptr, i32 } [ %.pn.i, %bb.dq ], [ %i.jf, %bb.cz ], [ %.pn47.i.i, %bb.l ], [ %i.jn, %bb.cx ], [ %i.jn, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i ], [ %i.jw, %bb.dj ], [ %.us-phi210.i, %6 ], [ %eh.lpad-body, %.thread ], [ %eh.lpad-body40, %.body39 ], [ %eh.lpad-body40, %bb.ii ]
+common.resume:                                    ; preds = %.thread, %.body39, %bb.ii, %bb.l, %bb.cx, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i, %bb.cz, %bb.dj, %bb.dq, %6
+  %common.resume.op = phi { ptr, i32 } [ %i.jw, %bb.dj ], [ %i.jf, %bb.cz ], [ %.pn47.i.i, %bb.l ], [ %i.jn, %bb.cx ], [ %i.jn, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i ], [ %.pn.i, %bb.dq ], [ %.us-phi207.i, %6 ], [ %eh.lpad-body, %.thread ], [ %eh.lpad-body40, %.body39 ], [ %eh.lpad-body40, %bb.ii ]
   resume { ptr, i32 } %common.resume.op
 
 bb.g:                                             ; preds = %.lr.ph.split.us.i.preheader.i
@@ -227,7 +227,7 @@ bb.g:                                             ; preds = %.lr.ph.split.us.i.p
 
 bb.h:                                             ; preds = %bb.g
   %i.cn = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCs3oUPovFnLWP_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc118.i unwind label %.split209.i, !noalias !5653
+          to label %.noexc118.i unwind label %.split206.i, !noalias !5653
 
 .noexc118.i:                                      ; preds = %bb.h
   %i.co = lshr i64 %i.cl, 32
@@ -235,7 +235,7 @@ bb.h:                                             ; preds = %bb.g
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
   %i.cr = load ptr, ptr %i.cq, align 8, !noalias !5653, !nonnull !17, !noundef !17
   %i.cs = invoke noundef i8 %i.cr(i32 noundef %i.cp)
-          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i unwind label %.split209.i, !noalias !5653, !inline_history !1
+          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i unwind label %.split206.i, !noalias !5653, !inline_history !1
 
 bb.i:                                             ; preds = %bb.g
   %i.ct = lshr i64 %i.cl, 32
@@ -638,16 +638,6 @@ _RNCNvNtCsc4241EHy6Do_9typst_kit6server12start_server0B5_.exit.i: ; preds = %_RN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !5653
   br label %_RNvNtCsc4241EHy6Do_9typst_kit6server12start_server.exit.thread
 
-.split209.i:                                      ; preds = %.noexc118.5.i, %bb.fh, %.noexc118.4.i, %bb.ez, %.noexc118.3.i, %bb.er, %.noexc118.2.i, %bb.ej, %.noexc118.1.i, %bb.eb, %.noexc118.i, %bb.h
-  %lpad.thr_comm.split-lp.i = landingpad { ptr, i32 }
-          cleanup
-  br label %6
-
-6:                                                ; preds = %.split209.i, %.split209.us.i.a
-  %.us-phi210.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i, %.split209.i ], [ %lpad.thr_comm.split-lp.us.i, %.split209.us.i.a ]
-  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsc4241EHy6Do_9typst_kit(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bm) #44
-          to label %common.resume unwind label %bb.di, !noalias !5653
-
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i: ; preds = %bb.k, %bb.j, %bb.i, %.noexc118.i
   %.sroa.0.0.i.i = phi i8 [ %i.cz, %bb.k ], [ %switch.idx.cast.i.i.i.i, %bb.i ], [ %i.cx, %bb.j ], [ %i.cs, %.noexc118.i ]
   %i.ju = icmp eq i8 %.sroa.0.0.i.i, 8
@@ -737,7 +727,7 @@ bb.dh:                                            ; preds = %bb.dw, %bb.dg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be), !noalias !5653
   br label %_RNvNtCsc4241EHy6Do_9typst_kit6server12start_server.exit.thread
 
-bb.di:                                            ; preds = %bb.du, %bb.dq, %bb.dk, %bb.dj, %bb.db, %6
+bb.di:                                            ; preds = %6, %bb.du, %bb.dq, %bb.dk, %bb.dj, %bb.db
   %i.kg = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #45, !noalias !5653
@@ -896,7 +886,7 @@ bb.ea:                                            ; preds = %bb.dx
 
 bb.eb:                                            ; preds = %bb.dx
   %i.lh = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCs3oUPovFnLWP_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc118.1.i unwind label %.split209.i, !noalias !5653
+          to label %.noexc118.1.i unwind label %.split206.i, !noalias !5653
 
 .noexc118.1.i:                                    ; preds = %bb.eb
   %i.li = lshr i64 %i.ky, 32
@@ -904,7 +894,7 @@ bb.eb:                                            ; preds = %bb.dx
   %i.lk = getelementptr inbounds nuw i8, ptr %i.lh, i64 8
   %i.ll = load ptr, ptr %i.lk, align 8, !noalias !5653, !nonnull !17, !noundef !17
   %i.lm = invoke noundef i8 %i.ll(i32 noundef %i.lj)
-          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.1.i unwind label %.split209.i, !noalias !5653, !inline_history !1
+          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.1.i unwind label %.split206.i, !noalias !5653, !inline_history !1
 
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.1.i: ; preds = %.noexc118.1.i, %bb.ea, %bb.dz, %bb.dy
   %.sroa.0.0.i.1.i = phi i8 [ %i.lb, %bb.dy ], [ %switch.idx.cast.i.i.i.1.i, %bb.ea ], [ %i.ld, %bb.dz ], [ %i.lm, %.noexc118.1.i ]
@@ -990,7 +980,7 @@ bb.ei:                                            ; preds = %bb.ef
 
 bb.ej:                                            ; preds = %bb.ef
   %i.me = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCs3oUPovFnLWP_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc118.2.i unwind label %.split209.i, !noalias !5653
+          to label %.noexc118.2.i unwind label %.split206.i, !noalias !5653
 
 .noexc118.2.i:                                    ; preds = %bb.ej
   %i.mf = lshr i64 %i.lv, 32
@@ -998,7 +988,7 @@ bb.ej:                                            ; preds = %bb.ef
   %i.mh = getelementptr inbounds nuw i8, ptr %i.me, i64 8
   %i.mi = load ptr, ptr %i.mh, align 8, !noalias !5653, !nonnull !17, !noundef !17
   %i.mj = invoke noundef i8 %i.mi(i32 noundef %i.mg)
-          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.2.i unwind label %.split209.i, !noalias !5653, !inline_history !1
+          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.2.i unwind label %.split206.i, !noalias !5653, !inline_history !1
 
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.2.i: ; preds = %.noexc118.2.i, %bb.ei, %bb.eh, %bb.eg
   %.sroa.0.0.i.2.i = phi i8 [ %i.ly, %bb.eg ], [ %switch.idx.cast.i.i.i.2.i, %bb.ei ], [ %i.ma, %bb.eh ], [ %i.mj, %.noexc118.2.i ]
@@ -1084,7 +1074,7 @@ bb.eq:                                            ; preds = %bb.en
 
 bb.er:                                            ; preds = %bb.en
   %i.nb = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCs3oUPovFnLWP_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc118.3.i unwind label %.split209.i, !noalias !5653
+          to label %.noexc118.3.i unwind label %.split206.i, !noalias !5653
 
 .noexc118.3.i:                                    ; preds = %bb.er
   %i.nc = lshr i64 %i.ms, 32
@@ -1092,7 +1082,7 @@ bb.er:                                            ; preds = %bb.en
   %i.ne = getelementptr inbounds nuw i8, ptr %i.nb, i64 8
   %i.nf = load ptr, ptr %i.ne, align 8, !noalias !5653, !nonnull !17, !noundef !17
   %i.ng = invoke noundef i8 %i.nf(i32 noundef %i.nd)
-          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.3.i unwind label %.split209.i, !noalias !5653, !inline_history !1
+          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.3.i unwind label %.split206.i, !noalias !5653, !inline_history !1
 
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.3.i: ; preds = %.noexc118.3.i, %bb.eq, %bb.ep, %bb.eo
   %.sroa.0.0.i.3.i = phi i8 [ %i.mv, %bb.eo ], [ %switch.idx.cast.i.i.i.3.i, %bb.eq ], [ %i.mx, %bb.ep ], [ %i.ng, %.noexc118.3.i ]
@@ -1178,7 +1168,7 @@ bb.ey:                                            ; preds = %bb.ev
 
 bb.ez:                                            ; preds = %bb.ev
   %i.ny = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCs3oUPovFnLWP_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc118.4.i unwind label %.split209.i, !noalias !5653
+          to label %.noexc118.4.i unwind label %.split206.i, !noalias !5653
 
 .noexc118.4.i:                                    ; preds = %bb.ez
   %i.nz = lshr i64 %i.np, 32
@@ -1186,7 +1176,7 @@ bb.ez:                                            ; preds = %bb.ev
   %i.ob = getelementptr inbounds nuw i8, ptr %i.ny, i64 8
   %i.oc = load ptr, ptr %i.ob, align 8, !noalias !5653, !nonnull !17, !noundef !17
   %i.od = invoke noundef i8 %i.oc(i32 noundef %i.oa)
-          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.4.i unwind label %.split209.i, !noalias !5653, !inline_history !1
+          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.4.i unwind label %.split206.i, !noalias !5653, !inline_history !1
 
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.4.i: ; preds = %.noexc118.4.i, %bb.ey, %bb.ex, %bb.ew
   %.sroa.0.0.i.4.i = phi i8 [ %i.ns, %bb.ew ], [ %switch.idx.cast.i.i.i.4.i, %bb.ey ], [ %i.nu, %bb.ex ], [ %i.od, %.noexc118.4.i ]
@@ -1271,7 +1261,7 @@ bb.fg:                                            ; preds = %bb.fd
 
 bb.fh:                                            ; preds = %bb.fd
   %i.ov = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCs3oUPovFnLWP_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc118.5.i unwind label %.split209.i, !noalias !5653
+          to label %.noexc118.5.i unwind label %.split206.i, !noalias !5653
 
 .noexc118.5.i:                                    ; preds = %bb.fh
   %i.ow = lshr i64 %i.om, 32
@@ -1279,12 +1269,22 @@ bb.fh:                                            ; preds = %bb.fd
   %i.oy = getelementptr inbounds nuw i8, ptr %i.ov, i64 8
   %i.oz = load ptr, ptr %i.oy, align 8, !noalias !5653, !nonnull !17, !noundef !17
   %i.pa = invoke noundef i8 %i.oz(i32 noundef %i.ox)
-          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.5.i unwind label %.split209.i, !noalias !5653, !inline_history !1
+          to label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.5.i unwind label %.split206.i, !noalias !5653, !inline_history !1
 
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.5.i: ; preds = %.noexc118.5.i, %bb.fg, %bb.ff, %bb.fe
   %.sroa.0.0.i.5.i = phi i8 [ %i.op, %bb.fe ], [ %switch.idx.cast.i.i.i.5.i, %bb.fg ], [ %i.or, %bb.ff ], [ %i.pa, %.noexc118.5.i ]
   %i.pb = icmp eq i8 %.sroa.0.0.i.5.i, 8
   br i1 %i.pb, label %bb.dr, label %.split212.us.i
+
+.split206.i:                                      ; preds = %.noexc118.5.i, %bb.fh, %.noexc118.4.i, %bb.ez, %.noexc118.3.i, %bb.er, %.noexc118.2.i, %bb.ej, %.noexc118.1.i, %bb.eb, %.noexc118.i, %bb.h
+  %lpad.thr_comm.split-lp.i = landingpad { ptr, i32 }
+          cleanup
+  br label %6
+
+6:                                                ; preds = %.split206.i, %.split209.us.i.a
+  %.us-phi207.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i, %.split206.i ], [ %lpad.thr_comm.split-lp.us.i, %.split209.us.i.a ]
+  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsc4241EHy6Do_9typst_kit(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bm) #44
+          to label %common.resume unwind label %bb.di, !noalias !5653
 
 _RNvNtCsc4241EHy6Do_9typst_kit6server12start_server.exit: ; preds = %bb.cn
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !5658
