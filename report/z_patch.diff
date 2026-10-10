@@ -1,0 +1,872 @@
+diff --git a/llvm/include/llvm/IR/Operator.h b/llvm/include/llvm/IR/Operator.h
+index c44cddca93009..eaafc7ada8dcd 100644
+--- a/llvm/include/llvm/IR/Operator.h
++++ b/llvm/include/llvm/IR/Operator.h
+@@ -475,7 +475,7 @@ class GEPOperator
+       });
+   }
+ 
+-  /// Compute the maximum alignment that this GEP is garranteed to preserve.
++  /// Compute the maximum alignment that this GEP is guaranteed to preserve.
+   LLVM_ABI Align getMaxPreservedAlignment(const DataLayout &DL) const;
+ 
+   /// Accumulate the constant address offset of this GEP if possible.
+diff --git a/llvm/lib/IR/Operator.cpp b/llvm/lib/IR/Operator.cpp
+index b453b65063595..4f5af207fbf4e 100644
+--- a/llvm/lib/IR/Operator.cpp
++++ b/llvm/lib/IR/Operator.cpp
+@@ -102,9 +102,8 @@ std::optional<ConstantRange> GEPOperator::getInRange() const {
+ }
+ 
+ Align GEPOperator::getMaxPreservedAlignment(const DataLayout &DL) const {
+-  /// compute the worse possible offset for every level of the GEP et accumulate
+-  /// the minimum alignment into Result.
+-
++  // Compute the worst possible offset for every level of the GEP to accumulate
++  // the minimum alignment into Result.
+   Align Result = Align(llvm::Value::MaximumAlignment);
+   for (gep_type_iterator GTI = gep_type_begin(this), GTE = gep_type_end(this);
+        GTI != GTE; ++GTI) {
+@@ -117,8 +116,8 @@ Align GEPOperator::getMaxPreservedAlignment(const DataLayout &DL) const {
+           SL->getElementOffset(OpC->getValue().getLoBits(32).getZExtValue());
+     } else {
+       assert(GTI.isSequential() && "should be sequencial");
+-      /// If the index isn't known, we take 1 because it is the index that will
+-      /// give the worse alignment of the offset.
++      // If the index isn't known, we take 1 because it is the index that will
++      // give the worse alignment of the offset.
+       const uint64_t ElemCount = OpC ? OpC->getLimitedValue() : 1;
+       Offset = GTI.getSequentialElementStride(DL) * ElemCount;
+     }
+diff --git a/llvm/lib/Transforms/IPO/GlobalOpt.cpp b/llvm/lib/Transforms/IPO/GlobalOpt.cpp
+index 3072371b9fede..242e9c8b25153 100644
+--- a/llvm/lib/Transforms/IPO/GlobalOpt.cpp
++++ b/llvm/lib/Transforms/IPO/GlobalOpt.cpp
+@@ -910,11 +910,9 @@ static void ConstantPropUsersOf(Value *V, const DataLayout &DL,
+ /// Because it is always the result of the specified malloc, there is no reason
+ /// to actually DO the malloc.  Instead, turn the malloc into a global, and any
+ /// loads of GV as uses of the new global.
+-static GlobalVariable *
+-OptimizeGlobalAddressOfAllocation(GlobalVariable *GV, CallInst *CI,
+-                                  uint64_t AllocSize, Constant *InitVal,
+-                                  const DataLayout &DL,
+-                                  TargetLibraryInfo *TLI) {
++static GlobalVariable *OptimizeGlobalAddressOfAllocation(
++    GlobalVariable *GV, CallInst *CI, uint64_t AllocSize, Constant *InitVal,
++    Align GVAlign, const DataLayout &DL, TargetLibraryInfo *TLI) {
+   LLVM_DEBUG(errs() << "PROMOTING GLOBAL: " << *GV << "  CALL = " << *CI
+                     << '\n');
+ 
+@@ -929,6 +927,12 @@ OptimizeGlobalAddressOfAllocation(GlobalVariable *GV, CallInst *CI,
+       UndefValue::get(GlobalType), GV->getName() + ".body", nullptr,
+       GV->getThreadLocalMode());
+ 
++  // Only specify the global alignment if it increases the preferred alignment.
++  // Otherwise leave it unset to allow other optimizations to increase it.
++  if (GVAlign > DL.getPreferredAlign(NewGV)) {
++    NewGV->setAlignment(GVAlign);
++  }
++
+   // Initialize the global at the point of the original call.  Note that this
+   // is a different point from the initialization referred to below for the
+   // nullability handling.  Sublety: We have not proven the original global was
+@@ -936,8 +940,7 @@ OptimizeGlobalAddressOfAllocation(GlobalVariable *GV, CallInst *CI,
+   // of the new global as may need to re-init the storage multiple times.
+   if (!isa<UndefValue>(InitVal)) {
+     IRBuilder<> Builder(CI->getNextNode());
+-    // TODO: Use alignment above if align!=1
+-    Builder.CreateMemSet(NewGV, InitVal, AllocSize, std::nullopt);
++    Builder.CreateMemSet(NewGV, InitVal, AllocSize, NewGV->getAlign());
+   }
+ 
+   // Update users of the allocation to use the new global instead.
+@@ -1070,6 +1073,78 @@ valueIsOnlyUsedLocallyOrStoredToOneGlobal(const CallInst *CI,
+   return true;
+ }
+ 
++/// Compute the alignment of the global that will replace the allocation `CI`,
++/// which is stored in `GV`. The global needs to be aligned enough for all loads
++/// and stores through `CI`, and through the pointers loaded from `GV`. Returns
++/// `std::nullopt` if an access is at an offset that no alignment of the global
++/// can make aligned enough.
++///
++/// This considers the uses that `valueIsOnlyUsedLocallyOrStoredToOneGlobal`
++/// allows on `CI`, and `allUsesOfLoadedValueWillTrapIfNull` allows on the
++/// pointers loaded from `GV`.
++static std::optional<Align> getAllocationGlobalAlign(GlobalVariable *GV,
++                                                     CallInst *CI,
++                                                     const DataLayout &DL) {
++  // Alignment of the return value of the allocator call.
++  Align GVAlign = CI->getPointerAlignment(DL);
++
++  // For each visited pointer, the alignment of its offset from the start of
++  // the allocation. We do not try to distinguish between different offsets of
++  // the pointer. The offset alignment of a pointer reached in multiple ways
++  // (via PHIs) is the minimum of them, so a pointer is visited again when its
++  // offset alignment decreases.
++  SmallDenseMap<const Value *, Align, 8> OffsetAligns;
++  SmallVector<std::pair<const Value *, Align>, 8> Worklist;
++  Worklist.emplace_back(CI, Align(Value::MaximumAlignment));
++
++  SmallVector<Value *, 4> Guses;
++  allUsesOfLoadAndStores(GV, Guses);
++  for (Value *Guse : Guses)
++    if (isa<LoadInst>(Guse))
++      Worklist.emplace_back(Guse, Align(Value::MaximumAlignment));
++
++  while (!Worklist.empty()) {
++    auto [V, OffsetAlign] = Worklist.pop_back_val();
++    auto [It, Inserted] = OffsetAligns.try_emplace(V, OffsetAlign);
++    if (!Inserted) {
++      if (It->second <= OffsetAlign)
++        continue;
++      It->second = OffsetAlign;
++    }
++
++    for (const Use &VUse : V->uses()) {
++      const User *U = VUse.getUser();
++      Align AccessAlign;
++      if (auto *LI = dyn_cast<LoadInst>(U)) {
++        AccessAlign = LI->getAlign();
++      } else if (auto *SI = dyn_cast<StoreInst>(U)) {
++        // Storing the pointer (into GV) is not an access to the allocation.
++        if (VUse.getOperandNo() != SI->getPointerOperandIndex())
++          continue;
++        AccessAlign = SI->getAlign();
++      } else if (auto *GEP = dyn_cast<GEPOperator>(U)) {
++        Worklist.emplace_back(
++            GEP, std::min(OffsetAlign, GEP->getMaxPreservedAlignment(DL)));
++        continue;
++      } else if (isa<AddrSpaceCastOperator>(U) || isa<PHINode>(U)) {
++        Worklist.emplace_back(U, OffsetAlign);
++        continue;
++      } else {
++        continue;
++      }
++
++      // If the access is at an offset that is only known to be a multiple of
++      // a smaller alignment than the access's, aligning the global does not
++      // make the access aligned.
++      if (AccessAlign > OffsetAlign)
++        return std::nullopt;
++      GVAlign = std::max(GVAlign, AccessAlign);
++    }
++  }
++
++  return GVAlign;
++}
++
+ /// If we have a global that is only initialized with a fixed size allocation
+ /// try to transform the program to use global memory instead of heap
+ /// allocated memory. This eliminates dynamic allocation, avoids an indirection
+@@ -1082,6 +1157,12 @@ static bool tryToOptimizeStoreOfAllocationToGlobal(GlobalVariable *GV,
+     // Must be able to remove the call when we get done..
+     return false;
+ 
++  // The new global is created in the default globals address space, so it can
++  // only replace the allocation if they are in the same address space.
++  if (CI->getType()->getPointerAddressSpace() !=
++      DL.getDefaultGlobalsAddressSpace())
++    return false;
++
+   Type *Int8Ty = Type::getInt8Ty(CI->getFunction()->getContext());
+   Constant *InitVal = getInitialValueOfAllocation(CI, TLI, Int8Ty);
+   if (!InitVal)
+@@ -1114,7 +1195,12 @@ static bool tryToOptimizeStoreOfAllocationToGlobal(GlobalVariable *GV,
+   if (!valueIsOnlyUsedLocallyOrStoredToOneGlobal(CI, GV))
+     return false;
+ 
+-  OptimizeGlobalAddressOfAllocation(GV, CI, AllocSize, InitVal, DL, TLI);
++  std::optional<Align> GVAlign = getAllocationGlobalAlign(GV, CI, DL);
++  if (!GVAlign)
++    return false;
++
++  OptimizeGlobalAddressOfAllocation(GV, CI, AllocSize, InitVal, *GVAlign, DL,
++                                    TLI);
+   return true;
+ }
+ 
+diff --git a/llvm/test/Transforms/GlobalOpt/calloc-promote.ll b/llvm/test/Transforms/GlobalOpt/calloc-promote.ll
+index c369ed9b9fc11..d12b4a8f82cad 100644
+--- a/llvm/test/Transforms/GlobalOpt/calloc-promote.ll
++++ b/llvm/test/Transforms/GlobalOpt/calloc-promote.ll
+@@ -6,7 +6,7 @@
+ define signext i32 @f() local_unnamed_addr {
+ ; CHECK-LABEL: @f(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr @g.body, i8 0, i64 4, i1 false)
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 16 @g.body, i8 0, i64 4, i1 false)
+ ; CHECK-NEXT:    store i16 -1, ptr @g.body, align 2
+ ; CHECK-NEXT:    ret i32 0
+ ;
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-1.ll b/llvm/test/Transforms/GlobalOpt/global-align-1.ll
+new file mode 100644
+index 0000000000000..0ab7fae067c1d
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-1.ll
+@@ -0,0 +1,44 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; Test from issue #215533.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@g10 = internal global ptr null, align 8
++@g26 = dso_local global <4 x i32> zeroinitializer, align 16
++@g5 = dso_local global i8 0, align 1
++
++;.
++; CHECK: @g26 = dso_local local_unnamed_addr global <4 x i32> zeroinitializer, align 16
++; CHECK: @g5 = dso_local local_unnamed_addr global i8 0, align 1
++; CHECK: @g10.body = internal unnamed_addr global [16 x i8] undef, align 16
++;.
++define dso_local i32 @main() {
++; CHECK-LABEL: define dso_local i32 @main() local_unnamed_addr {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TMP0:%.*]] = load <4 x i32>, ptr @g26, align 16
++; CHECK-NEXT:    store <4 x i32> [[TMP0]], ptr @g10.body, align 16
++; CHECK-NEXT:    [[BB3_0_COPYLOAD:%.*]] = load i32, ptr @g10.body, align 1
++; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp ne i32 [[BB3_0_COPYLOAD]], 0
++; CHECK-NEXT:    [[STOREDV:%.*]] = zext i1 [[TOBOOL]] to i8
++; CHECK-NEXT:    store i8 [[STOREDV]], ptr @g5, align 1
++; CHECK-NEXT:    ret i32 0
++;
++entry:
++  %call = call noalias align 16 ptr @aligned_alloc(i64 noundef 16, i64 noundef 16)
++  store ptr %call, ptr @g10, align 8
++  %0 = load <4 x i32>, ptr @g26, align 16
++  store <4 x i32> %0, ptr %call, align 16
++  %1 = load ptr, ptr @g10, align 8
++  %bb3.0.copyload = load i32, ptr %1, align 1
++  %tobool = icmp ne i32 %bb3.0.copyload, 0
++  %storedv = zext i1 %tobool to i8
++  store i8 %storedv, ptr @g5, align 1
++  ret i32 0
++}
++
++declare noalias noundef ptr @aligned_alloc(i64 allocalign noundef, i64 noundef) #0
++
++attributes #0 = { allockind("alloc,uninitialized,aligned") allocsize(1) }
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-2.ll b/llvm/test/Transforms/GlobalOpt/global-align-2.ll
+new file mode 100644
+index 0000000000000..9f8c6be68e4e4
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-2.ll
+@@ -0,0 +1,47 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; Use the declared alignment of the allocation as the global's alignment.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@g = internal global ptr null
++
++;.
++; CHECK: @g.body = internal unnamed_addr global [64 x i8] undef, align 64
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias align 64 ptr @malloc(i64 64)
++  store ptr %m, ptr @g, align 8
++  ret void
++}
++
++define void @store(<8 x float> %v, i8 %c) {
++; CHECK-LABEL: define void @store(
++; CHECK-SAME: <8 x float> [[V:%.*]], i8 [[C:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    store <8 x float> [[V]], ptr @g.body, align 32
++; CHECK-NEXT:    store i8 [[C]], ptr getelementptr inbounds nuw (i8, ptr @g.body, i64 3), align 1
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @g, align 8
++  store <8 x float> %v, ptr %p, align 32
++  %q = getelementptr i8, ptr %p, i64 3
++  store i8 %c, ptr %q, align 1
++  ret void
++}
++
++define <8 x float> @load() {
++; CHECK-LABEL: define <8 x float> @load() local_unnamed_addr {
++; CHECK-NEXT:    [[V:%.*]] = load <8 x float>, ptr @g.body, align 32
++; CHECK-NEXT:    ret <8 x float> [[V]]
++;
++  %p = load ptr, ptr @g, align 8
++  %v = load <8 x float>, ptr %p, align 32
++  ret <8 x float> %v
++}
++
++declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-3.ll b/llvm/test/Transforms/GlobalOpt/global-align-3.ll
+new file mode 100644
+index 0000000000000..3a17223c5eb95
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-3.ll
+@@ -0,0 +1,48 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; Do not add an align attribute to the global when the use site alignments are
++; less than the allocation's preferred alignment.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@g = internal global ptr null
++
++;.
++; CHECK: @g.body = internal unnamed_addr global [32 x i8] undef{{$}}
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @aligned_alloc(i64 8, i64 32)
++  store ptr %m, ptr @g, align 8
++  ret void
++}
++
++define void @store(<4 x float> %v, i8 %c) {
++; CHECK-LABEL: define void @store(
++; CHECK-SAME: <4 x float> [[V:%.*]], i8 [[C:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    store <4 x float> [[V]], ptr @g.body, align 16
++; CHECK-NEXT:    store i8 [[C]], ptr getelementptr inbounds nuw (i8, ptr @g.body, i64 3), align 1
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @g, align 8
++  store <4 x float> %v, ptr %p, align 16
++  %q = getelementptr i8, ptr %p, i64 3
++  store i8 %c, ptr %q, align 1
++  ret void
++}
++
++define <4 x float> @load() {
++; CHECK-LABEL: define <4 x float> @load() local_unnamed_addr {
++; CHECK-NEXT:    [[V:%.*]] = load <4 x float>, ptr @g.body, align 16
++; CHECK-NEXT:    ret <4 x float> [[V]]
++;
++  %p = load ptr, ptr @g, align 8
++  %v = load <4 x float>, ptr %p, align 16
++  ret <4 x float> %v
++}
++
++declare noalias ptr @aligned_alloc(i64 allocalign, i64) allockind("alloc,uninitialized,aligned") allocsize(1)
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-4.ll b/llvm/test/Transforms/GlobalOpt/global-align-4.ll
+new file mode 100644
+index 0000000000000..b4c172e41439e
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-4.ll
+@@ -0,0 +1,48 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; Use the alignment of the accesses through the pointers loaded from the global
++; as the new global's alignment.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@g = internal global ptr null
++
++;.
++; CHECK: @g.body = internal unnamed_addr global [64 x i8] undef, align 32
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @malloc(i64 64)
++  store ptr %m, ptr @g, align 8
++  ret void
++}
++
++define void @store(<8 x float> %v, i8 %c) {
++; CHECK-LABEL: define void @store(
++; CHECK-SAME: <8 x float> [[V:%.*]], i8 [[C:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    store <8 x float> [[V]], ptr @g.body, align 32
++; CHECK-NEXT:    store i8 [[C]], ptr getelementptr inbounds nuw (i8, ptr @g.body, i64 3), align 1
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @g, align 8
++  store <8 x float> %v, ptr %p, align 32
++  %q = getelementptr i8, ptr %p, i64 3
++  store i8 %c, ptr %q, align 1
++  ret void
++}
++
++define <8 x float> @load() {
++; CHECK-LABEL: define <8 x float> @load() local_unnamed_addr {
++; CHECK-NEXT:    [[V:%.*]] = load <8 x float>, ptr @g.body, align 32
++; CHECK-NEXT:    ret <8 x float> [[V]]
++;
++  %p = load ptr, ptr @g, align 8
++  %v = load <8 x float>, ptr %p, align 32
++  ret <8 x float> %v
++}
++
++declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-5.ll b/llvm/test/Transforms/GlobalOpt/global-align-5.ll
+new file mode 100644
+index 0000000000000..9e1c6bd741888
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-5.ll
+@@ -0,0 +1,49 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; The alignment of the store of the allocation's address into the global is not
++; an access to the allocation, so it should not affect the new global's
++; alignment.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@g = internal global ptr null
++
++;.
++; CHECK: @g.body = internal unnamed_addr global [8 x i8] undef{{$}}
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @malloc(i64 8)
++  store ptr %m, ptr @g, align 32
++  ret void
++}
++
++define void @store(i8 %c) {
++; CHECK-LABEL: define void @store(
++; CHECK-SAME: i8 [[C:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    store i8 [[C]], ptr @g.body, align 1
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @g, align 8
++  store i8 %c, ptr %p, align 1
++  ret void
++}
++
++define i8 @load(i64 %i) {
++; CHECK-LABEL: define i8 @load(
++; CHECK-SAME: i64 [[I:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    [[Q:%.*]] = getelementptr i8, ptr @g.body, i64 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[Q]], align 1
++; CHECK-NEXT:    ret i8 [[V]]
++;
++  %p = load ptr, ptr @g, align 8
++  %q = getelementptr i8, ptr %p, i64 %i
++  %v = load i8, ptr %q, align 1
++  ret i8 %v
++}
++
++declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-6.ll b/llvm/test/Transforms/GlobalOpt/global-align-6.ll
+new file mode 100644
+index 0000000000000..8e9c332768b63
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-6.ll
+@@ -0,0 +1,59 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; An access at a constant offset from the allocation that is not a multiple of
++; the access's alignment can't be made aligned by aligning the new global (the
++; store at offset 8 with align 16 would need the global to be at 8 mod 16), so
++; the allocation should not be replaced with a global.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@g = internal global ptr null
++
++;.
++; CHECK: @g = internal unnamed_addr global ptr null
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    [[M:%.*]] = call noalias ptr @malloc(i64 16)
++; CHECK-NEXT:    store ptr [[M]], ptr @g, align 8
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @malloc(i64 16)
++  store ptr %m, ptr @g, align 8
++  ret void
++}
++
++define void @store_offset(i64 %v) {
++; CHECK-LABEL: define void @store_offset(
++; CHECK-SAME: i64 [[V:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr @g, align 8
++; CHECK-NEXT:    [[Q:%.*]] = getelementptr i8, ptr [[P]], i64 8
++; CHECK-NEXT:    store i64 [[V]], ptr [[Q]], align 16
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @g, align 8
++  %q = getelementptr i8, ptr %p, i64 8
++  store i64 %v, ptr %q, align 16
++  ret void
++}
++
++define i8 @load(i64 %i) {
++; CHECK-LABEL: define i8 @load(
++; CHECK-SAME: i64 [[I:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr @g, align 8
++; CHECK-NEXT:    [[Q:%.*]] = getelementptr i8, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[Q]], align 1
++; CHECK-NEXT:    ret i8 [[V]]
++;
++  %p = load ptr, ptr @g, align 8
++  %q = getelementptr i8, ptr %p, i64 %i
++  %v = load i8, ptr %q, align 1
++  ret i8 %v
++}
++
++declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
++;.
++; CHECK: attributes #[[ATTR0:[0-9]+]] = { allockind("alloc,uninitialized") allocsize(0) }
++;.
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-7.ll b/llvm/test/Transforms/GlobalOpt/global-align-7.ll
+new file mode 100644
+index 0000000000000..9399ea997844e
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-7.ll
+@@ -0,0 +1,59 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; An access through a variable index is only known to be at an offset that is a
++; multiple of the index scale. If the access requires a larger alignment than
++; that, no alignment of the new global can satisfy it, so the allocation should
++; not be replaced with a global.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@g = internal global ptr null
++
++;.
++; CHECK: @g = internal unnamed_addr global ptr null
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    [[M:%.*]] = call noalias ptr @malloc(i64 16)
++; CHECK-NEXT:    store ptr [[M]], ptr @g, align 8
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @malloc(i64 16)
++  store ptr %m, ptr @g, align 8
++  ret void
++}
++
++define void @store(i64 %i, i64 %v) {
++; CHECK-LABEL: define void @store(
++; CHECK-SAME: i64 [[I:%.*]], i64 [[V:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr @g, align 8
++; CHECK-NEXT:    [[Q:%.*]] = getelementptr i64, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    store i64 [[V]], ptr [[Q]], align 16
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @g, align 8
++  %q = getelementptr i64, ptr %p, i64 %i
++  store i64 %v, ptr %q, align 16
++  ret void
++}
++
++define i8 @load(i64 %i) {
++; CHECK-LABEL: define i8 @load(
++; CHECK-SAME: i64 [[I:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr @g, align 8
++; CHECK-NEXT:    [[Q:%.*]] = getelementptr i8, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[Q]], align 1
++; CHECK-NEXT:    ret i8 [[V]]
++;
++  %p = load ptr, ptr @g, align 8
++  %q = getelementptr i8, ptr %p, i64 %i
++  %v = load i8, ptr %q, align 1
++  ret i8 %v
++}
++
++declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
++;.
++; CHECK: attributes #[[ATTR0:[0-9]+]] = { allockind("alloc,uninitialized") allocsize(0) }
++;.
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-8.ll b/llvm/test/Transforms/GlobalOpt/global-align-8.ll
+new file mode 100644
+index 0000000000000..d2f7a5c8120bd
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-8.ll
+@@ -0,0 +1,60 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; Accesses through PHIs of the pointers loaded from the global should also be
++; considered for the new global's alignment.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@phi = internal global ptr null
++
++;.
++; CHECK: @phi.body = internal unnamed_addr global [16 x i8] undef, align 16
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @malloc(i64 16)
++  store ptr %m, ptr @phi, align 8
++  ret void
++}
++
++define void @store_phi(<4 x i32> %v, i1 %c) {
++; CHECK-LABEL: define void @store_phi(
++; CHECK-SAME: <4 x i32> [[V:%.*]], i1 [[C:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[END:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    store <4 x i32> [[V]], ptr @phi.body, align 16
++; CHECK-NEXT:    ret void
++;
++entry:
++  %p1 = load ptr, ptr @phi, align 8
++  br i1 %c, label %then, label %end
++then:
++  %p2 = load ptr, ptr @phi, align 8
++  br label %end
++end:
++  %p = phi ptr [ %p1, %entry ], [ %p2, %then ]
++  store <4 x i32> %v, ptr %p, align 16
++  ret void
++}
++
++define i8 @load(i64 %i) {
++; CHECK-LABEL: define i8 @load(
++; CHECK-SAME: i64 [[I:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    [[Q:%.*]] = getelementptr i8, ptr @phi.body, i64 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[Q]], align 1
++; CHECK-NEXT:    ret i8 [[V]]
++;
++  %p = load ptr, ptr @phi, align 8
++  %q = getelementptr i8, ptr %p, i64 %i
++  %v = load i8, ptr %q, align 1
++  ret i8 %v
++}
++
++declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-9.ll b/llvm/test/Transforms/GlobalOpt/global-align-9.ll
+new file mode 100644
+index 0000000000000..0bd37dfffc1b3
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-9.ll
+@@ -0,0 +1,49 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; Accesses through address space casts of the pointers loaded from the global
++; should also be considered for the new global's alignment.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@ascast = internal global ptr null
++
++;.
++; CHECK: @ascast.body = internal unnamed_addr global [16 x i8] undef, align 16
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @malloc(i64 16)
++  store ptr %m, ptr @ascast
++  ret void
++}
++
++define void @store_ascast(<4 x i32> %v) {
++; CHECK-LABEL: define void @store_ascast(
++; CHECK-SAME: <4 x i32> [[V:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    store <4 x i32> [[V]], ptr addrspace(1) addrspacecast (ptr @ascast.body to ptr addrspace(1)), align 16
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @ascast
++  %q = addrspacecast ptr %p to ptr addrspace(1)
++  store <4 x i32> %v, ptr addrspace(1) %q, align 16
++  ret void
++}
++
++define i8 @load(i64 %i) {
++; CHECK-LABEL: define i8 @load(
++; CHECK-SAME: i64 [[I:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    [[Q:%.*]] = getelementptr i8, ptr @ascast.body, i64 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[Q]], align 1
++; CHECK-NEXT:    ret i8 [[V]]
++;
++  %p = load ptr, ptr @ascast
++  %q = getelementptr i8, ptr %p, i64 %i
++  %v = load i8, ptr %q, align 1
++  ret i8 %v
++}
++
++declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
+diff --git a/llvm/test/Transforms/GlobalOpt/global-align-memset.ll b/llvm/test/Transforms/GlobalOpt/global-align-memset.ll
+new file mode 100644
+index 0000000000000..53716b733caad
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/global-align-memset.ll
+@@ -0,0 +1,82 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; When initializing an aligned global pass the alignment to the memset call.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++@aligned = internal global ptr null
++@unaligned = internal global ptr null
++
++;.
++; CHECK: @aligned.body = internal unnamed_addr global [64 x i8] undef, align 32
++; CHECK: @unaligned.body = internal unnamed_addr global [64 x i8] undef{{$}}
++;.
++define void @init_aligned() {
++; CHECK-LABEL: define void @init_aligned() local_unnamed_addr {
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 32 @aligned.body, i8 0, i64 64, i1 false)
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias align 32 ptr @aligned_calloc(i64 32, i64 64)
++  store ptr %m, ptr @aligned, align 8
++  ret void
++}
++
++define void @store_aligned(<8 x float> %v) {
++; CHECK-LABEL: define void @store_aligned(
++; CHECK-SAME: <8 x float> [[V:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    store <8 x float> [[V]], ptr @aligned.body, align 32
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @aligned, align 8
++  store <8 x float> %v, ptr %p, align 32
++  ret void
++}
++
++define <8 x float> @load_aligned() {
++; CHECK-LABEL: define <8 x float> @load_aligned() local_unnamed_addr {
++; CHECK-NEXT:    [[V:%.*]] = load <8 x float>, ptr @aligned.body, align 32
++; CHECK-NEXT:    ret <8 x float> [[V]]
++;
++  %p = load ptr, ptr @aligned, align 8
++  %v = load <8 x float>, ptr %p, align 32
++  ret <8 x float> %v
++}
++
++define void @init_unaligned() {
++; CHECK-LABEL: define void @init_unaligned() local_unnamed_addr {
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr @unaligned.body, i8 0, i64 64, i1 false)
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @calloc(i64 1, i64 64)
++  store ptr %m, ptr @unaligned, align 8
++  ret void
++}
++
++define void @store_unaligned(i8 %c) {
++; CHECK-LABEL: define void @store_unaligned(
++; CHECK-SAME: i8 [[C:%.*]]) local_unnamed_addr {
++; CHECK-NEXT:    store i8 [[C]], ptr @unaligned.body, align 1
++; CHECK-NEXT:    ret void
++;
++  %p = load ptr, ptr @unaligned, align 8
++  store i8 %c, ptr %p, align 1
++  ret void
++}
++
++define i8 @load_unaligned() {
++; CHECK-LABEL: define i8 @load_unaligned() local_unnamed_addr {
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr @unaligned.body, align 1
++; CHECK-NEXT:    ret i8 [[V]]
++;
++  %p = load ptr, ptr @unaligned, align 8
++  %v = load i8, ptr %p, align 1
++  ret i8 %v
++}
++
++declare noalias ptr @aligned_calloc(i64, i64) allockind("alloc,zeroed,aligned") allocsize(1)
++declare noalias ptr @calloc(i64, i64) allockind("alloc,zeroed") allocsize(0,1)
++;.
++; CHECK: attributes #[[ATTR0:[0-9]+]] = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
++;.
+diff --git a/llvm/test/Transforms/GlobalOpt/malloc-addrspace.ll b/llvm/test/Transforms/GlobalOpt/malloc-addrspace.ll
+new file mode 100644
+index 0000000000000..f298b81c15595
+--- /dev/null
++++ b/llvm/test/Transforms/GlobalOpt/malloc-addrspace.ll
+@@ -0,0 +1,39 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals all --version 6
++; RUN: opt < %s -passes=globalopt -S | FileCheck %s
++
++; The default globals address space (G1) is different from the allocation's
++; address space, so the allocation can't be replaced with a new global.
++
++target datalayout = "G1"
++
++@g = internal global ptr null
++
++;.
++; CHECK: @g = internal unnamed_addr global ptr null{{$}}
++;.
++define void @init() {
++; CHECK-LABEL: define void @init() local_unnamed_addr {
++; CHECK-NEXT:    [[M:%.*]] = call noalias ptr @malloc(i64 1)
++; CHECK-NEXT:    store ptr [[M]], ptr @g, align 8
++; CHECK-NEXT:    ret void
++;
++  %m = call noalias ptr @malloc(i64 1)
++  store ptr %m, ptr @g
++  ret void
++}
++
++define i8 @use() {
++; CHECK-LABEL: define i8 @use() local_unnamed_addr {
++; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr @g, align 8
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    ret i8 [[V]]
++;
++  %p = load ptr, ptr @g
++  %v = load i8, ptr %p
++  ret i8 %v
++}
++
++declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
++;.
++; CHECK: attributes #[[ATTR0:[0-9]+]] = { allockind("alloc,uninitialized") allocsize(0) }
++;.
+diff --git a/llvm/test/Transforms/GlobalOpt/malloc-promote-opaque-ptr.ll b/llvm/test/Transforms/GlobalOpt/malloc-promote-opaque-ptr.ll
+index 4916354709878..5650bb231aa58 100644
+--- a/llvm/test/Transforms/GlobalOpt/malloc-promote-opaque-ptr.ll
++++ b/llvm/test/Transforms/GlobalOpt/malloc-promote-opaque-ptr.ll
+@@ -8,11 +8,11 @@
+ declare noalias ptr @malloc(i64) allockind("alloc,uninitialized") allocsize(0)
+ 
+ ;.
+-; CHECK: @[[G1_BODY_0:[a-zA-Z0-9_$"\\.-]+]] = internal unnamed_addr global i64 undef
+-; CHECK: @[[G2_BODY_0:[a-zA-Z0-9_$"\\.-]+]] = internal unnamed_addr global i32 undef
+-; CHECK: @[[G2_BODY_1:[a-zA-Z0-9_$"\\.-]+]] = internal unnamed_addr global i32 undef
+-; CHECK: @[[G2_BODY_2:[a-zA-Z0-9_$"\\.-]+]] = internal unnamed_addr global i32 undef
+-; CHECK: @[[G3_BODY:[a-zA-Z0-9_$"\\.-]+]] = internal unnamed_addr global [8 x i8] undef
++; CHECK: @g1.body.0 = internal unnamed_addr global i64 undef, align 8
++; CHECK: @g2.body.0 = internal unnamed_addr global i32 undef, align 4
++; CHECK: @g2.body.1 = internal unnamed_addr global i32 undef, align 4
++; CHECK: @g2.body.2 = internal unnamed_addr global i32 undef, align 4
++; CHECK: @g3.body = internal unnamed_addr global [8 x i8] undef, align 4
+ ;.
+ define void @test_store(i64 %a, i32 %b) {
+ ; CHECK-LABEL: @test_store(

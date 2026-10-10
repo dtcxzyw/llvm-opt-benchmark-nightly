@@ -30,7 +30,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.16 = private unnamed_addr constant [11 x i8] c"%9.2f sec\0A\00", align 1
 @.str.17 = private unnamed_addr constant [20 x i8] c"npnclass_stats5.txt\00", align 1
 @enable_dbg_outs = external local_unnamed_addr global i32, align 4
-@s_pManRwrExp5.body = internal unnamed_addr global [16 x i8] undef
+@s_pManRwrExp5.body = internal unnamed_addr global [16 x i8] undef, align 8
 
 ; Function Attrs: nounwind uwtable
 define void @Rwt_Man4ExploreStart() local_unnamed_addr #0 {
@@ -363,7 +363,7 @@ declare noundef i32 @fclose(ptr noundef captures(none)) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define void @Rwt_Man5ExploreStart() local_unnamed_addr #0 {
 bb.a:
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) @s_pManRwrExp5.body, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @s_pManRwrExp5.body, i8 0, i64 16, i1 false)
   %i.a = tail call ptr @stmm_init_table(ptr noundef nonnull @st__numcmp, ptr noundef nonnull @st__numhash) #19
   store ptr %i.a, ptr @s_pManRwrExp5.body, align 8, !tbaa !22
   %i.b = tail call ptr @stmm_init_table(ptr noundef nonnull @st__numcmp, ptr noundef nonnull @st__numhash) #19
