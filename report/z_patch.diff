@@ -1,0 +1,14 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 8d299bcbc4369..7144b8148e4c7 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -1739,6 +1739,9 @@ static Value *simplifyOperationIntoSelectOperand(Instruction &I, SelectInst *SI,
+                                     m_Specific(Op), m_Value(V))) &&
+                isGuaranteedNotToBeUndefOrPoison(V)) {
+       // Pass
++    } else if (!IsTrueArm &&
++               match(SI->getCondition(), m_NUWTrunc(m_Specific(Op)))) {
++      V = ConstantInt::getNullValue(Op->getType());
+     } else if (match(Op, m_ZExt(m_Specific(SI->getCondition())))) {
+       V = IsTrueArm ? ConstantInt::get(Op->getType(), 1)
+                     : ConstantInt::getNullValue(Op->getType());
