@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-xmpp-utils?download=true
 inline.NumInlined: 34
 inline.NumDeleted: 6
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@xmpp_unknown_items:bb.a
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.aj = getelementptr i8, ptr %i.y, i64 %index  ; 2 uses
@@ -204,25 +204,20 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.i = phi ptr [ %i.h, %bb.b ], [ @.str.16, %bb.a ]
   %i.j = getelementptr i8, ptr %2, i64 416
   %i.k = load ptr, ptr %i.j, align 8
-  %i.l = load ptr, ptr %3, align 8                ; 7 uses
-  %i.m = tail call i64 @strlen(ptr noundef readonly %i.l) #11 ; 7 uses
+  %i.l = load ptr, ptr %3, align 8                ; 4 uses
+  %i.m = tail call i64 @strlen(ptr noundef readonly %i.l) #11 ; 6 uses
   %i.n = trunc i64 %i.m to i32
   %i.o = shl i64 %i.m, 32
   %sext.i = add i64 %i.o, 4294967296
   %i.p = ashr exact i64 %sext.i, 32
-  %i.q = tail call noalias ptr @wmem_alloc0(ptr noundef %i.k, i64 noundef %i.p) #9 ; 7 uses
+  %i.q = tail call noalias ptr @wmem_alloc0(ptr noundef %i.k, i64 noundef %i.p) #9 ; 4 uses
   %i.r = icmp sgt i32 %i.n, 0
   br i1 %i.r, label %iter.check, label %xmpp_ep_string_upcase.exit
 
 iter.check:                                       ; preds = %bb.c
-  %4 = ptrtoaddr ptr %i.q to i64
-  %5 = ptrtoaddr ptr %i.l to i64
-  %wide.trip.count.i = and i64 %i.m, 2147483647   ; 6 uses
+  %wide.trip.count.i = and i64 %i.m, 2147483647   ; 5 uses
   %min.iters.check = icmp samesign ult i64 %wide.trip.count.i, 8
-  %6 = sub i64 %5, %4
-  %diff.check = icmp ugt i64 %6, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.preheader.a, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.prol, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check13 = icmp samesign ult i64 %wide.trip.count.i, 32
@@ -261,7 +256,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.s, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph.i.preheader.a, label %vec.epilog.ph, !prof !12
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.prol, label %vec.epilog.ph, !prof !12
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -280,60 +275,31 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %i.al, ptr %i.ah, align 1
   %index.next18 = add nuw i64 %index16, 8         ; 2 uses
   %i.am = icmp eq i64 %index.next18, %n.vec15
-  br i1 %i.am, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !25
+  br i1 %i.am, label %.lr.ph.i.preheader.a, label %vec.epilog.vector.body, !llvm.loop !25
 
-vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n19 = icmp eq i64 %wide.trip.count.i, %n.vec15
-  br i1 %cmp.n19, label %xmpp_ep_string_upcase.exit, label %.lr.ph.i.preheader.a
+.lr.ph.i.preheader.a:                             ; preds = %vec.epilog.vector.body
+  %lcmp.mod.not = icmp eq i64 %wide.trip.count.i, %n.vec15
+  br i1 %lcmp.mod.not, label %xmpp_ep_string_upcase.exit, label %.lr.ph.i.prol
 
-.lr.ph.i.preheader.a:                             ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec15, %vec.epilog.middle.block ] ; 5 uses
-  %.neg = or disjoint i64 %indvars.iv.i.ph, 1
-  %xtraiter = and i64 %i.m, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+.lr.ph.i.prol:                                    ; preds = %iter.check, %vec.epilog.iter.check, %.lr.ph.i.preheader.a
+  %indvars.iv.i.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec15, %.lr.ph.i.preheader.a ]
+  br label %.lr.ph.i
 
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader.a
-  %7 = getelementptr i8, ptr %i.l, i64 %indvars.iv.i.ph
-  %8 = load i8, ptr %7, align 1                   ; 3 uses
-  %9 = getelementptr i8, ptr %i.q, i64 %indvars.iv.i.ph
-  %10 = add i8 %8, -97
-  %or.cond.i.prol = icmp ult i8 %10, 26
-  %11 = add nsw i8 %8, -32
-  %spec.select.i.prol = select i1 %or.cond.i.prol, i8 %11, i8 %8
-  store i8 %spec.select.i.prol, ptr %9, align 1
-  %indvars.iv.next.i.prol = or disjoint i64 %indvars.iv.i.ph, 1
-  br label %.lr.ph.i.prol.loopexit
-
-.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader.a
-  %indvars.iv.i.unr = phi i64 [ %indvars.iv.i.ph, %.lr.ph.i.preheader.a ], [ %indvars.iv.next.i.prol, %.lr.ph.i.prol ]
-  %12 = icmp eq i64 %wide.trip.count.i, %.neg
-  br i1 %12, label %xmpp_ep_string_upcase.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %.lr.ph.i ], [ %indvars.iv.i.unr, %.lr.ph.i.prol.loopexit ] ; 4 uses
-  %13 = getelementptr i8, ptr %i.l, i64 %indvars.iv.i
-  %14 = load i8, ptr %13, align 1                 ; 3 uses
-  %15 = getelementptr i8, ptr %i.q, i64 %indvars.iv.i
-  %16 = add i8 %14, -97
-  %or.cond.i = icmp ult i8 %16, 26
-  %17 = add nsw i8 %14, -32
-  %spec.select.i = select i1 %or.cond.i, i8 %17, i8 %14
-  store i8 %spec.select.i, ptr %15, align 1
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.an = getelementptr i8, ptr %i.l, i64 %indvars.iv.next.i
+.lr.ph.i:                                         ; preds = %.lr.ph.i.prol, %.lr.ph.i
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %.lr.ph.i ], [ %indvars.iv.i.ph, %.lr.ph.i.prol ] ; 3 uses
+  %i.an = getelementptr i8, ptr %i.l, i64 %indvars.iv.i
   %i.ao = load i8, ptr %i.an, align 1             ; 3 uses
-  %i.ap = getelementptr i8, ptr %i.q, i64 %indvars.iv.next.i
+  %i.ap = getelementptr i8, ptr %i.q, i64 %indvars.iv.i
   %i.aq = add i8 %i.ao, -97
   %or.cond.i.1 = icmp ult i8 %i.aq, 26
   %i.ar = add nsw i8 %i.ao, -32
   %spec.select.i.1 = select i1 %or.cond.i.1, i8 %i.ar, i8 %i.ao
   store i8 %spec.select.i.1, ptr %i.ap, align 1
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, %wide.trip.count.i
   br i1 %exitcond.not.i.1, label %xmpp_ep_string_upcase.exit, label %.lr.ph.i, !llvm.loop !26
 
-xmpp_ep_string_upcase.exit:                       ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %middle.block, %vec.epilog.middle.block, %bb.c
+xmpp_ep_string_upcase.exit:                       ; preds = %.lr.ph.i, %middle.block, %.lr.ph.i.preheader.a, %bb.c
   %i.as = load ptr, ptr %i.f, align 8             ; 2 uses
   %.not11 = icmp eq ptr %i.as, null
   br i1 %.not11, label %bb.e, label %bb.d
@@ -736,7 +702,7 @@ attributes #12 = { noreturn }
 !23 = distinct !{!23, !9}
 !24 = distinct !{!24, !9, !10, !11}
 !25 = distinct !{!25, !9, !10, !11}
-!26 = distinct !{!26, !9, !10}
+!26 = distinct !{!26, !9, !11, !10}
 !27 = distinct !{!27, !9}
 !28 = distinct !{!28, !9}
 !29 = distinct !{!29, !9}

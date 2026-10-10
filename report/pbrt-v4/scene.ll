@@ -205,7 +205,7 @@ _ZNSt15__new_allocatorIN4pbrt5LightEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.
 bb.c:                                             ; preds = %_ZNSt15__new_allocatorIN4pbrt5LightEE8allocateEmPKv.exit.i.i.i.i, %bb.a
   %i.n = phi ptr [ %i.g, %bb.a ], [ %.pre4, %_ZNSt15__new_allocatorIN4pbrt5LightEE8allocateEmPKv.exit.i.i.i.i ] ; 3 uses
   %i.o = phi ptr [ %i.h, %bb.a ], [ %.pre, %_ZNSt15__new_allocatorIN4pbrt5LightEE8allocateEmPKv.exit.i.i.i.i ] ; 7 uses
-  %i.p = phi ptr [ null, %bb.a ], [ %i.m, %_ZNSt15__new_allocatorIN4pbrt5LightEE8allocateEmPKv.exit.i.i.i.i ] ; 9 uses
+  %i.p = phi ptr [ null, %bb.a ], [ %i.m, %_ZNSt15__new_allocatorIN4pbrt5LightEE8allocateEmPKv.exit.i.i.i.i ] ; 8 uses
   store ptr %i.p, ptr %9, align 8, !tbaa !439
   %i.q = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.k
@@ -215,18 +215,14 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   br i1 %.not11.i.i.i.i.i, label %_ZNSt6vectorIN4pbrt5LightESaIS1_EEC2ERKS3_.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.c
-  %i.t = ptrtoaddr ptr %i.o to i64                ; 2 uses
-  %10 = ptrtoaddr ptr %i.p to i64
+  %i.t = ptrtoaddr ptr %i.o to i64
   %i.u = ptrtoaddr ptr %i.n to i64
   %i.v = add i64 %i.u, -8
   %i.w = sub i64 %i.v, %i.t                       ; 3 uses
   %i.x = lshr i64 %i.w, 3
   %i.y = add nuw nsw i64 %i.x, 1                  ; 5 uses
   %min.iters.check = icmp ult i64 %i.w, 24
-  %11 = sub i64 %i.t, %10
-  %diff.check = icmp ugt i64 %11, -128
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check11 = icmp ult i64 %i.w, 120
@@ -629,7 +625,7 @@ vec.epilog.middle.block217:                       ; preds = %vec.epilog.vector.b
 
 bb.d:                                             ; preds = %bb.b
   %i.hc = load ptr, ptr %0, align 8, !tbaa !520   ; 9 uses
-  %i.hd = ptrtoint ptr %i.hc to i64               ; 4 uses
+  %i.hd = ptrtoint ptr %i.hc to i64               ; 3 uses
   %i.he = sub i64 %i.k, %i.hd
   %i.hf = ashr exact i64 %i.he, 3                 ; 4 uses
   %i.hg = sub nsw i64 1152921504606846975, %i.hf
@@ -655,21 +651,17 @@ bb.f:                                             ; preds = %_ZNKSt6vectorIN4pbr
   br label %_ZNSt12_Vector_baseIN4pbrt9PrimitiveESaIS1_EE11_M_allocateEm.exit
 
 _ZNSt12_Vector_baseIN4pbrt9PrimitiveESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN4pbrt9PrimitiveESaIS1_EE12_M_check_lenEmPKc.exit, %bb.f
-  %i.ho = phi ptr [ %i.hn, %bb.f ], [ null, %_ZNKSt6vectorIN4pbrt9PrimitiveESaIS1_EE12_M_check_lenEmPKc.exit ] ; 9 uses
+  %i.ho = phi ptr [ %i.hn, %bb.f ], [ null, %_ZNKSt6vectorIN4pbrt9PrimitiveESaIS1_EE12_M_check_lenEmPKc.exit ] ; 8 uses
   %.not13.i.i.i.i.i = icmp eq ptr %i.hc, %1
   br i1 %.not13.i.i.i.i.i, label %iter.check404, label %iter.check361
 
 iter.check361:                                    ; preds = %_ZNSt12_Vector_baseIN4pbrt9PrimitiveESaIS1_EE11_M_allocateEm.exit
-  %4 = ptrtoaddr ptr %i.ho to i64
   %i.hp = add i64 %i.a, -8
   %i.hq = sub i64 %i.hp, %i.hd                    ; 3 uses
   %i.hr = lshr i64 %i.hq, 3
   %i.hs = add nuw nsw i64 %i.hr, 1                ; 5 uses
   %min.iters.check343.a = icmp ult i64 %i.hq, 24
-  %5 = sub i64 %i.hd, %4
-  %diff.check342 = icmp ugt i64 %5, -128
-  %or.cond465 = or i1 %min.iters.check343.a, %diff.check342
-  br i1 %or.cond465, label %.lr.ph.i.i.i.i.i66.preheader, label %vector.main.loop.iter.check344
+  br i1 %min.iters.check343.a, label %.lr.ph.i.i.i.i.i66.preheader, label %vector.main.loop.iter.check344
 
 vector.main.loop.iter.check344:                   ; preds = %iter.check361
   %min.iters.check345 = icmp ult i64 %i.hq, 120
@@ -1072,7 +1064,7 @@ begin_hunk_2_@llvm.fma.v2f32
 !989 = !{!985}
 !990 = distinct !{!990, !81, !179, !180}
 !991 = distinct !{!991, !81, !179, !180}
-!992 = distinct !{!992, !81, !179}
+!992 = distinct !{!992, !81, !180, !179}
 !993 = !{!436, !436, i64 0}
 !994 = !{!250, !249, i64 16}
 !995 = distinct !{!995, i1 false, !"_ZSt4bindIRZN4pbrt10BasicScene22startLoadingNormalMapsERKNS0_19ParameterDictionaryEE3$_0JRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENSt12_Bind_helperIXsr15__is_socketlikeIT_EE5valueESF_JDpT0_EE4typeEOSF_DpOSG_"}
@@ -1475,7 +1467,7 @@ begin_hunk_3_@llvm.fma.v2f32
 !2456 = distinct !{!2456, !81, !179}
 !2457 = distinct !{!2457, !81, !179, !180}
 !2458 = distinct !{!2458, !81, !179, !180}
-!2459 = distinct !{!2459, !81, !179}
+!2459 = distinct !{!2459, !81, !180, !179}
 !2460 = distinct !{!2460, i1 false, !"LVerDomain"}
 !2461 = distinct !{!2461, !2460}
 !2462 = distinct !{!2462, !2460}

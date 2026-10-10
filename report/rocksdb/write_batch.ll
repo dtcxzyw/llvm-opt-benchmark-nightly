@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.o = load ptr, ptr %i.h, align 8, !tbaa !77   ; 9 uses
   %i.p = ptrtoint ptr %i.j to i64                 ; 2 uses
-  %i.q = ptrtoint ptr %i.o to i64                 ; 4 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 3 uses
   %i.r = sub i64 %i.p, %i.q                       ; 3 uses
   %i.s = icmp eq i64 %i.r, 9223372036854775800
   br i1 %i.s, label %bb.f, label %_ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit.i.i
@@ -223,7 +223,7 @@ _ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit.
   %.not.i.i.i = icmp ne i64 %i.x, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.y = shl nuw nsw i64 %i.x, 3
-  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #35 ; 10 uses
+  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #35 ; 9 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.r
   %i.ab = load i64, ptr %1, align 8, !tbaa !95
   store i64 %i.ab, ptr %i.aa, align 8, !tbaa !95
@@ -231,16 +231,12 @@ _ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit.
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit.i.i
-  %2 = ptrtoaddr ptr %i.z to i64
   %i.ac = add i64 %i.p, -8
   %i.ad = sub i64 %i.ac, %i.q                     ; 3 uses
   %i.ae = lshr i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.ad, 24
-  %3 = sub i64 %i.q, %2
-  %diff.check = icmp ugt i64 %3, -128
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check6 = icmp ult i64 %i.ad, 120
@@ -643,7 +639,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.o = load ptr, ptr %i.h, align 8, !tbaa !77   ; 9 uses
   %i.p = ptrtoint ptr %i.j to i64                 ; 2 uses
-  %i.q = ptrtoint ptr %i.o to i64                 ; 4 uses
+  %i.q = ptrtoint ptr %i.o to i64                 ; 3 uses
   %i.r = sub i64 %i.p, %i.q                       ; 3 uses
   %i.s = icmp eq i64 %i.r, 9223372036854775800
   br i1 %i.s, label %bb.f, label %_ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit.i.i
@@ -662,7 +658,7 @@ _ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit.
   %.not.i.i.i = icmp ne i64 %i.x, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.y = shl nuw nsw i64 %i.x, 3
-  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #35 ; 10 uses
+  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #35 ; 9 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.r
   %i.ab = load i64, ptr %1, align 8, !tbaa !95
   store i64 %i.ab, ptr %i.aa, align 8, !tbaa !95
@@ -670,16 +666,12 @@ _ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit.
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit.i.i
-  %2 = ptrtoaddr ptr %i.z to i64
   %i.ac = add i64 %i.p, -8
   %i.ad = sub i64 %i.ac, %i.q                     ; 3 uses
   %i.ae = lshr i64 %i.ad, 3
   %i.af = add nuw nsw i64 %i.ae, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.ad, 24
-  %3 = sub i64 %i.q, %2
-  %diff.check = icmp ugt i64 %3, -128
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check6 = icmp ult i64 %i.ad, 120
@@ -1082,7 +1074,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !78   ; 5 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !77     ; 9 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -1118,7 +1110,7 @@ _ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit:
   %i.r = add nuw nsw i64 %.sroa.speculated.i, %i.g
   %i.s = tail call i64 @llvm.umin.i64(i64 %i.r, i64 1152921504606846975) ; 2 uses
   %i.t = shl nuw nsw i64 %i.s, 3
-  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #35 ; 9 uses
+  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #35 ; 8 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.f ; 2 uses
   %i.w = shl nuw nsw i64 %1, 3
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.v, i8 0, i64 %i.w, i1 false), !tbaa !103
@@ -1126,16 +1118,12 @@ _ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit:
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIN7rocksdb18ProtectionInfoKVOCImEESaIS2_EE12_M_check_lenEmPKc.exit
-  %2 = ptrtoaddr ptr %i.u to i64
   %i.x = add i64 %i.d, -8
   %i.y = sub i64 %i.x, %i.e                       ; 3 uses
   %i.z = lshr i64 %i.y, 3
   %i.aa = add nuw nsw i64 %i.z, 1                 ; 5 uses
   %min.iters.check = icmp ult i64 %i.y, 24
-  %3 = sub i64 %i.e, %2
-  %diff.check = icmp ugt i64 %3, -128
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check40 = icmp ult i64 %i.y, 120
@@ -1538,7 +1526,7 @@ begin_hunk_3_@llvm.vector.reduce.add.v4i64
 !605 = distinct !{!605, !603, !"_ZSt19__relocate_object_aIN7rocksdb18ProtectionInfoKVOCImEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !606 = distinct !{!606, !83, !194, !195}
 !607 = distinct !{!607, !83, !194, !195}
-!608 = distinct !{!608, !83, !194}
+!608 = distinct !{!608, !83, !195, !194}
 !609 = !{!604}
 !610 = !{!605}
 !611 = distinct !{!611, i1 false, !"_ZN7rocksdb6Status11MemoryLimitEv"}
@@ -1941,7 +1929,7 @@ begin_hunk_4_@llvm.vector.reduce.add.v4i64
 !1198 = distinct !{!1198, !1196, !"_ZSt19__relocate_object_aIN7rocksdb18ProtectionInfoKVOCImEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !1199 = distinct !{!1199, !83, !194, !195}
 !1200 = distinct !{!1200, !83, !194, !195}
-!1201 = distinct !{!1201, !83, !194}
+!1201 = distinct !{!1201, !83, !195, !194}
 !1202 = !{!1197}
 !1203 = !{!1198}
 !1204 = distinct !{!1204, i1 false, !"_ZN7rocksdb12_GLOBAL__N_121ProtectionInfoUpdater14UpdateProtInfoEjRKNS_5SliceES4_NS_9ValueTypeE"}
@@ -2015,7 +2003,7 @@ begin_hunk_4_@llvm.vector.reduce.add.v4i64
 !1272 = distinct !{!1272, !1270, !"_ZSt19__relocate_object_aIN7rocksdb18ProtectionInfoKVOCImEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !1273 = distinct !{!1273, !83, !194, !195}
 !1274 = distinct !{!1274, !83, !194, !195}
-!1275 = distinct !{!1275, !83, !194}
+!1275 = distinct !{!1275, !83, !195, !194}
 !1276 = !{!1271}
 !1277 = !{!1272}
 !1278 = distinct !{!1278, !83, !194, !195}

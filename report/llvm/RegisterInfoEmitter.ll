@@ -206,7 +206,7 @@ _ZNSt15__new_allocatorIN4llvm3MVTEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i: ; preds 
 _ZNSt12_Vector_baseIN4llvm3MVTESaIS1_EEC2EmRKS2_.exit.i.i.i.i.i: ; preds = %_ZNSt15__new_allocatorIN4llvm3MVTEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i, %_ZNK4llvm21SequenceToOffsetTableISt6vectorINS_3MVTESaIS2_EESt4lessIS2_EE7SeqLessclERKS4_SA_.exit
   %i.ak = phi ptr [ %.pre4.i.i, %_ZNSt15__new_allocatorIN4llvm3MVTEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i ], [ %i.ad, %_ZNK4llvm21SequenceToOffsetTableISt6vectorINS_3MVTESaIS2_EESt4lessIS2_EE7SeqLessclERKS4_SA_.exit ] ; 3 uses
   %i.al = phi ptr [ %.pre.i.i, %_ZNSt15__new_allocatorIN4llvm3MVTEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i ], [ %i.ae, %_ZNK4llvm21SequenceToOffsetTableISt6vectorINS_3MVTESaIS2_EESt4lessIS2_EE7SeqLessclERKS4_SA_.exit ] ; 7 uses
-  %i.am = phi ptr [ %i.aj, %_ZNSt15__new_allocatorIN4llvm3MVTEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i ], [ null, %_ZNK4llvm21SequenceToOffsetTableISt6vectorINS_3MVTESaIS2_EESt4lessIS2_EE7SeqLessclERKS4_SA_.exit ] ; 9 uses
+  %i.am = phi ptr [ %i.aj, %_ZNSt15__new_allocatorIN4llvm3MVTEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i ], [ null, %_ZNK4llvm21SequenceToOffsetTableISt6vectorINS_3MVTESaIS2_EESt4lessIS2_EE7SeqLessclERKS4_SA_.exit ] ; 8 uses
   store ptr %i.am, ptr %i.ab, align 8, !tbaa !519
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ah
   %i.ao = getelementptr inbounds nuw i8, ptr %i.aa, i64 48
@@ -215,18 +215,14 @@ _ZNSt12_Vector_baseIN4llvm3MVTESaIS1_EEC2EmRKS2_.exit.i.i.i.i.i: ; preds = %_ZNS
   br i1 %.not7.i.i.i.i.i.i.i.i.i, label %_ZNKSt8_Rb_treeISt6vectorIN4llvm3MVTESaIS2_EESt4pairIKS4_jESt10_Select1stIS7_ENS1_21SequenceToOffsetTableIS4_St4lessIS2_EE7SeqLessESaIS7_EE11_Alloc_nodeclIS7_EEPSt13_Rb_tree_nodeIS7_EOT_.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt12_Vector_baseIN4llvm3MVTESaIS1_EEC2EmRKS2_.exit.i.i.i.i.i
-  %i.ap = ptrtoaddr ptr %i.al to i64              ; 2 uses
-  %5 = ptrtoaddr ptr %i.am to i64
+  %i.ap = ptrtoaddr ptr %i.al to i64
   %i.aq = ptrtoaddr ptr %i.ak to i64
   %i.ar = add i64 %i.aq, -2
   %i.as = sub i64 %i.ar, %i.ap                    ; 3 uses
   %i.at = lshr i64 %i.as, 1
   %i.au = add nuw i64 %i.at, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.as, 6
-  %6 = sub i64 %i.ap, %5
-  %diff.check = icmp ugt i64 %6, -32
-  %or.cond42 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond42, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check28 = icmp ult i64 %i.as, 30
@@ -629,7 +625,7 @@ begin_hunk_1_@llvm.ctpop.v2i64
 !2063 = distinct !{!2063, !2062, !"_ZNKSt6vectorIN4llvm3MVTESaIS1_EE4rendEv: argument 0"}
 !2064 = distinct !{!2064, !266, !525, !526}
 !2065 = distinct !{!2065, !266, !525, !526}
-!2066 = distinct !{!2066, !266, !525}
+!2066 = distinct !{!2066, !266, !526, !525}
 !2067 = !{!2057}
 !2068 = !{!2059}
 !2069 = !{!2061}

@@ -204,25 +204,21 @@ _ZNSt12_Vector_baseIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5a
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = sub i64 %i.m, %i.g
   %i.o = shl nuw nsw i64 %i.a, 2
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #23 ; 7 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #23 ; 6 uses
   %i.q = load ptr, ptr %2, align 8, !tbaa !166    ; 8 uses
   %i.r = load ptr, ptr %i.k, align 8, !tbaa !244  ; 3 uses
   %.not10.i.i.i.i = icmp eq ptr %i.q, %i.r
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEESaIS8_EE11_M_allocateEm.exit.i
-  %3 = ptrtoaddr ptr %i.q to i64                  ; 2 uses
-  %i.s = ptrtoaddr ptr %i.p to i64
-  %i.t = ptrtoaddr ptr %i.r to i64
-  %i.u = add i64 %i.t, -4
-  %i.v = sub i64 %i.u, %3                         ; 2 uses
+  %i.s = ptrtoaddr ptr %i.r to i64
+  %i.t = ptrtoaddr ptr %i.q to i64
+  %i.u = add i64 %i.s, -4
+  %i.v = sub i64 %i.u, %i.t                       ; 2 uses
   %i.w = lshr i64 %i.v, 2
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.v, 44
-  %4 = sub i64 %3, %i.s
-  %diff.check = icmp ugt i64 %4, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader44, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.v, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader44, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
   %n.vec = and i64 %i.x, 9223372036854775800      ; 3 uses
@@ -625,7 +621,7 @@ begin_hunk_1_@bcmp
 !892 = distinct !{!892, !891, !"_ZSt19__relocate_object_aIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEES8_SaIS8_EEvPT_PT0_RT1_: argument 0"}
 !893 = distinct !{!893, !891, !"_ZSt19__relocate_object_aIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEES8_SaIS8_EEvPT_PT0_RT1_: argument 1"}
 !894 = distinct !{!894, !93, !154, !155}
-!895 = distinct !{!895, !93, !154}
+!895 = distinct !{!895, !93, !155, !154}
 !896 = distinct !{!896, i1 false, !"_ZSt19__relocate_object_aIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEES8_SaIS8_EEvPT_PT0_RT1_"}
 !897 = distinct !{!897, !896, !"_ZSt19__relocate_object_aIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEES8_SaIS8_EEvPT_PT0_RT1_: argument 0"}
 !898 = distinct !{!898, !896, !"_ZSt19__relocate_object_aIN22arrow_vendored_private11flatbuffers6OffsetIN3org6apache5arrow7flatbuf8KeyValueEEES8_SaIS8_EEvPT_PT0_RT1_: argument 1"}

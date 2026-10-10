@@ -25,8 +25,7 @@ declare i32 @ff_mjpeg_decode_init(ptr noundef) #0
 define internal i32 @sp5x_decode_frame(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 5 uses
-  %4 = ptrtoaddr ptr %i.b to i64
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !20   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !21   ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -43,8 +42,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.i = add nsw i32 %i.d, 1024
   %i.j = sext i32 %i.i to i64
-  %i.k = tail call noalias ptr @av_mallocz(i64 noundef %i.j) #4 ; 20 uses
-  %5 = ptrtoaddr ptr %i.k to i64
+  %i.k = tail call noalias ptr @av_mallocz(i64 noundef %i.j) #4 ; 19 uses
   %.not77 = icmp eq ptr %i.k, null
   br i1 %.not77, label %bb.h, label %bb.d
 
@@ -104,15 +102,9 @@ iter.check:                                       ; preds = %.preheader
   %umin = tail call i64 @llvm.umin.i64(i64 %i.an, i64 %i.ao)
   %i.ap = add nsw i64 %umin, 1                    ; 7 uses
   %min.iters.check = icmp ult i64 %i.ap, 4
-  br i1 %min.iters.check, label %.lr.ph89.preheader, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph89.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck:                                  ; preds = %iter.check
-  %6 = sub i64 %5, %4
-  %7 = add i64 %6, 586
-  %diff.check = icmp ult i64 %7, 31
-  br i1 %diff.check, label %.lr.ph89.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check105 = icmp ult i64 %i.ap, 32
   br i1 %min.iters.check105, label %vec.epilog.ph, label %vector.ph
 
@@ -170,9 +162,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n112 = icmp eq i64 %i.ap, %n.vec108
   br i1 %cmp.n112, label %.critedge.loopexit, label %.lr.ph89.preheader
 
-.lr.ph89.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv96.ph = phi i64 [ 2, %iter.check ], [ 2, %vector.memcheck ], [ %i.ar, %vec.epilog.iter.check ], [ %i.ba, %vec.epilog.middle.block ]
-  %indvars.iv94.ph = phi i64 [ 589, %iter.check ], [ 589, %vector.memcheck ], [ %i.as, %vec.epilog.iter.check ], [ %i.bb, %vec.epilog.middle.block ]
+.lr.ph89.preheader:                               ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv96.ph = phi i64 [ 2, %iter.check ], [ %i.ar, %vec.epilog.iter.check ], [ %i.ba, %vec.epilog.middle.block ]
+  %indvars.iv94.ph = phi i64 [ 589, %iter.check ], [ %i.as, %vec.epilog.iter.check ], [ %i.bb, %vec.epilog.middle.block ]
   br label %.lr.ph89
 
 .lr.ph89:                                         ; preds = %.lr.ph89.preheader, %.lr.ph89
@@ -281,7 +273,7 @@ attributes #4 = { nounwind }
 !8 = !{!7, !6, i64 0}
 !9 = distinct !{!9, !41, !42, !43}
 !10 = distinct !{!10, !41, !42, !43}
-!11 = distinct !{!11, !41, !42}
+!11 = distinct !{!11, !41, !43, !42}
 !12 = distinct !{!12, !41}
 !13 = !{!"any pointer", !5, i64 0}
 !14 = !{!"p1 _ZTS11AVBufferRef", !13, i64 0}

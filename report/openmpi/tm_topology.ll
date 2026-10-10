@@ -204,8 +204,7 @@ bb.a:
   br i1 %i.c, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %0, align 8, !tbaa !59     ; 16 uses
-  %4 = ptrtoaddr ptr %i.d to i64                  ; 4 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !59     ; 15 uses
   %i.e = zext nneg i32 %3 to i64                  ; 17 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.e
   %i.g = load i32, ptr %i.f, align 4, !tbaa !13   ; 6 uses
@@ -221,8 +220,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 %i.l, ptr %2, align 4, !tbaa !13
   %i.m = sext i32 %i.l to i64
   %i.n = shl nsw i64 %i.m, 2
-  %i.o = tail call noalias ptr @malloc(i64 noundef %i.n) #27 ; 10 uses
-  %5 = ptrtoaddr ptr %i.o to i64                  ; 2 uses
+  %i.o = tail call noalias ptr @malloc(i64 noundef %i.n) #27 ; 9 uses
   store ptr %i.o, ptr %i.a, align 8, !tbaa !59
   %i.p = load i32, ptr %2, align 4, !tbaa !13
   %i.q = sext i32 %i.p to i64
@@ -233,19 +231,14 @@ bb.c:                                             ; preds = %bb.b
   %.not109 = icmp eq i32 %3, 0
   %.pre122 = load ptr, ptr %1, align 8, !tbaa !60 ; 8 uses
   %.pre122155 = ptrtoaddr ptr %.pre122 to i64     ; 2 uses
-  br i1 %.not109, label %._crit_edge104, label %.lr.ph103.preheader
+  br i1 %.not109, label %._crit_edge104, label %vector.memcheck153
 
-.lr.ph103.preheader:                              ; preds = %bb.c
-  %min.iters.check159 = icmp ult i32 %3, 12
-  br i1 %min.iters.check159, label %.lr.ph103.preheader196, label %vector.memcheck153
-
-vector.memcheck153:                               ; preds = %.lr.ph103.preheader
-  %6 = sub i64 %4, %5
-  %diff.check154 = icmp ugt i64 %6, -16
+vector.memcheck153:                               ; preds = %bb.c
+  %min.iters.check154 = icmp ult i32 %3, 6
   %i.u = sub i64 %.pre122155, %i.t
   %diff.check156 = icmp ugt i64 %i.u, -32
-  %conflict.rdx157 = or i1 %diff.check154, %diff.check156
-  br i1 %conflict.rdx157, label %.lr.ph103.preheader196, label %vector.ph160
+  %or.cond186 = select i1 %min.iters.check154, i1 true, i1 %diff.check156
+  br i1 %or.cond186, label %.lr.ph103.preheader196, label %vector.ph160
 
 vector.ph160:                                     ; preds = %vector.memcheck153
   %n.vec161 = and i64 %i.e, 2147483644            ; 3 uses
@@ -277,8 +270,8 @@ middle.block169:                                  ; preds = %vector.body162
   %cmp.n170 = icmp eq i64 %n.vec161, %i.e
   br i1 %cmp.n170, label %._crit_edge104, label %.lr.ph103.preheader196
 
-.lr.ph103.preheader196:                           ; preds = %vector.memcheck153, %.lr.ph103.preheader, %middle.block169
-  %indvars.iv114.ph = phi i64 [ 0, %vector.memcheck153 ], [ 0, %.lr.ph103.preheader ], [ %n.vec161, %middle.block169 ] ; 7 uses
+.lr.ph103.preheader196:                           ; preds = %vector.memcheck153, %middle.block169
+  %indvars.iv114.ph = phi i64 [ 0, %vector.memcheck153 ], [ %n.vec161, %middle.block169 ] ; 7 uses
   %xtraiter199 = and i64 %i.e, 1
   %lcmp.mod200.not = icmp eq i64 %xtraiter199, 0
   br i1 %lcmp.mod200.not, label %.lr.ph103.prol.loopexit, label %.lr.ph103.prol
@@ -344,34 +337,27 @@ middle.block169:                                  ; preds = %vector.body162
   br i1 %i.bj, label %.lr.ph107.preheader, label %._crit_edge108
 
 .lr.ph107.preheader:                              ; preds = %._crit_edge104
-  %i.bk = zext nneg i32 %i.bh to i64              ; 6 uses
+  %i.bk = zext nneg i32 %i.bh to i64              ; 5 uses
   %i.bl = add i32 %i.bi, -3
   %i.bm = sub i32 %i.bl, %3                       ; 2 uses
   %i.bn = zext i32 %i.bm to i64
   %i.bo = add nuw nsw i64 %i.bn, 1                ; 2 uses
-  %min.iters.check178 = icmp ugt i32 %i.bm, 26
+  %min.iters.check178 = icmp ugt i32 %i.bm, 16
   %i.bp = add i32 %i.bi, -2
   %.not192 = icmp ugt i32 %i.bp, %3
   %or.cond193 = and i1 %min.iters.check178, %.not192
   br i1 %or.cond193, label %vector.memcheck173, label %.lr.ph107.preheader195
 
 vector.memcheck173:                               ; preds = %.lr.ph107.preheader
-  %i.bq = shl nuw nsw i64 %i.bk, 2
-  %i.br = add i64 %i.bq, %5
+  %i.bq = shl nuw nsw i64 %i.bk, 3
+  %i.br = add i64 %i.bq, %i.t
   %i.bs = add nuw i32 %3, 1
-  %i.bt = zext i32 %i.bs to i64                   ; 2 uses
-  %7 = shl nuw nsw i64 %i.bt, 2
-  %8 = add i64 %7, %4
-  %9 = sub i64 %8, %i.br
-  %diff.check174 = icmp ugt i64 %9, -16
-  %10 = shl nuw nsw i64 %i.bk, 3
-  %11 = add i64 %10, %i.t
+  %i.bt = zext i32 %i.bs to i64
   %i.bu = shl nuw nsw i64 %i.bt, 3
   %i.bv = add i64 %i.bu, %.pre122155
-  %i.bw = sub i64 %i.bv, %11
+  %i.bw = sub i64 %i.bv, %i.br
   %diff.check175 = icmp ugt i64 %i.bw, -32
-  %conflict.rdx176 = or i1 %diff.check174, %diff.check175
-  br i1 %conflict.rdx176, label %.lr.ph107.preheader195, label %vector.ph179
+  br i1 %diff.check175, label %.lr.ph107.preheader195, label %vector.ph179
 
 vector.ph179:                                     ; preds = %vector.memcheck173
   %n.vec180 = and i64 %i.bo, 8589934588           ; 3 uses
@@ -455,8 +441,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.dd, ptr %2, align 4, !tbaa !13
   %i.de = sext i32 %i.dd to i64
   %i.df = shl nsw i64 %i.de, 2
-  %i.dg = tail call noalias ptr @malloc(i64 noundef %i.df) #27 ; 10 uses
-  %12 = ptrtoaddr ptr %i.dg to i64                ; 2 uses
+  %i.dg = tail call noalias ptr @malloc(i64 noundef %i.df) #27 ; 9 uses
   store ptr %i.dg, ptr %i.a, align 8, !tbaa !59
   %i.dh = load i32, ptr %2, align 4, !tbaa !13
   %i.di = sext i32 %i.dh to i64
@@ -467,19 +452,14 @@ bb.e:                                             ; preds = %bb.d
   %.not = icmp eq i32 %3, 0
   %.pre = load ptr, ptr %1, align 8, !tbaa !60    ; 8 uses
   %.pre130 = ptrtoaddr ptr %.pre to i64           ; 2 uses
-  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
+  br i1 %.not, label %._crit_edge, label %vector.memcheck
 
-.lr.ph.preheader:                                 ; preds = %bb.e
-  %min.iters.check = icmp ult i32 %3, 12
-  br i1 %min.iters.check, label %.lr.ph.preheader198, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %13 = sub i64 %4, %12
-  %diff.check = icmp ugt i64 %13, -16
+vector.memcheck:                                  ; preds = %bb.e
+  %min.iters.check = icmp ult i32 %3, 6
   %i.dm = sub i64 %.pre130, %i.dl
   %diff.check131 = icmp ugt i64 %i.dm, -32
-  %conflict.rdx = or i1 %diff.check, %diff.check131
-  br i1 %conflict.rdx, label %.lr.ph.preheader198, label %vector.ph
+  %or.cond188 = select i1 %min.iters.check, i1 true, i1 %diff.check131
+  br i1 %or.cond188, label %.lr.ph.preheader198, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.e, 2147483644               ; 3 uses
@@ -511,8 +491,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.e
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader198
 
-.lr.ph.preheader198:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block ] ; 7 uses
+.lr.ph.preheader198:                              ; preds = %vector.memcheck, %middle.block
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ %n.vec, %middle.block ] ; 7 uses
   %xtraiter = and i64 %i.e, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
@@ -578,34 +558,27 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.fb, label %.lr.ph99.preheader, label %._crit_edge100
 
 .lr.ph99.preheader:                               ; preds = %._crit_edge
-  %i.fc = zext nneg i32 %i.ez to i64              ; 6 uses
+  %i.fc = zext nneg i32 %i.ez to i64              ; 5 uses
   %i.fd = add i32 %i.fa, -3
   %i.fe = sub i32 %i.fd, %3                       ; 2 uses
   %i.ff = zext i32 %i.fe to i64
   %i.fg = add nuw nsw i64 %i.ff, 1                ; 2 uses
-  %min.iters.check140 = icmp ugt i32 %i.fe, 26
+  %min.iters.check140 = icmp ugt i32 %i.fe, 16
   %i.fh = add i32 %i.fa, -2
   %.not191 = icmp ugt i32 %i.fh, %3
   %or.cond194 = and i1 %min.iters.check140, %.not191
   br i1 %or.cond194, label %vector.memcheck135, label %.lr.ph99.preheader197
 
 vector.memcheck135:                               ; preds = %.lr.ph99.preheader
-  %i.fi = shl nuw nsw i64 %i.fc, 2
-  %i.fj = add i64 %i.fi, %12
+  %i.fi = shl nuw nsw i64 %i.fc, 3
+  %i.fj = add i64 %i.fi, %i.dl
   %i.fk = add nuw i32 %3, 1
-  %i.fl = zext i32 %i.fk to i64                   ; 2 uses
-  %14 = shl nuw nsw i64 %i.fl, 2
-  %15 = add i64 %14, %4
-  %16 = sub i64 %15, %i.fj
-  %diff.check136 = icmp ugt i64 %16, -16
-  %17 = shl nuw nsw i64 %i.fc, 3
-  %18 = add i64 %17, %i.dl
+  %i.fl = zext i32 %i.fk to i64
   %i.fm = shl nuw nsw i64 %i.fl, 3
   %i.fn = add i64 %i.fm, %.pre130
-  %i.fo = sub i64 %i.fn, %18
+  %i.fo = sub i64 %i.fn, %i.fj
   %diff.check137 = icmp ugt i64 %i.fo, -32
-  %conflict.rdx138 = or i1 %diff.check136, %diff.check137
-  br i1 %conflict.rdx138, label %.lr.ph99.preheader197, label %vector.ph141
+  br i1 %diff.check137, label %.lr.ph99.preheader197, label %vector.ph141
 
 vector.ph141:                                     ; preds = %vector.memcheck135
   %n.vec142 = and i64 %i.fg, 8589934588           ; 3 uses

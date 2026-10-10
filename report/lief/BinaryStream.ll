@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 0, ptr %i.t, align 8, !tbaa !41
   %i.u = ptrtoint ptr %i.q to i64                 ; 2 uses
-  %i.v = ptrtoint ptr %i.r to i64                 ; 3 uses
+  %i.v = ptrtoint ptr %i.r to i64                 ; 2 uses
   %i.w = sub i64 %i.u, %i.v                       ; 4 uses
   %i.x = ashr exact i64 %i.w, 1                   ; 5 uses
   %i.y = icmp ugt i64 %i.x, 7
@@ -224,21 +224,17 @@ _ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i:
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i, %.loopexit
-  %i.ac = phi ptr [ %i.ab, %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i ], [ %i.s, %.loopexit ] ; 9 uses
+  %i.ac = phi ptr [ %i.ab, %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE9_M_createERmm.exit.i.i ], [ %i.s, %.loopexit ] ; 8 uses
   %.not5.i.i.i = icmp eq ptr %i.r, %i.q
   br i1 %.not5.i.i.i, label %_ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEC2IN9__gnu_cxx17__normal_iteratorIPDsSt6vectorIDsS3_EEEvEET_SC_RKS3_.exit, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge.i.i
-  %5 = ptrtoaddr ptr %i.ac to i64
   %i.ad = add i64 %i.u, -2
   %i.ae = sub i64 %i.ad, %i.v                     ; 3 uses
   %i.af = lshr i64 %i.ae, 1
   %i.ag = add nuw i64 %i.af, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.ae, 6
-  %6 = sub i64 %i.v, %5
-  %diff.check = icmp ugt i64 %6, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check29 = icmp ult i64 %i.ae, 30
@@ -641,7 +637,7 @@ attributes #15 = { builtin nounwind allocsize(0) }
 !67 = distinct !{!67, !16}
 !68 = distinct !{!68, !16, !48, !49}
 !69 = distinct !{!69, !16, !48, !49}
-!70 = distinct !{!70, !16, !48}
+!70 = distinct !{!70, !16, !49, !48}
 !71 = !{!38, !38, i64 0}
 !72 = distinct !{null, null}
 !73 = distinct !{null, null}

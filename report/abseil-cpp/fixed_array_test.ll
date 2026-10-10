@@ -205,8 +205,7 @@ _ZNKSt6vectorIN4absl12lts_2026052610FixedArrayIiLm18446744073709551615ESaIiEEESa
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #28 ; 8 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 6 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 264
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !167  ; 5 uses
-  %3 = ptrtoaddr ptr %i.s to i64
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !167  ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 256
   %i.u = load i64, ptr %i.t, align 8, !tbaa !101  ; 5 uses
   %.idx4.i.i = shl i64 %i.u, 2                    ; 3 uses
@@ -243,16 +242,12 @@ bb.d:                                             ; preds = %_ZNKSt6vectorIN4abs
   br i1 %.not9.i.i.i.i, label %_ZNSt16allocator_traitsISaIN4absl12lts_2026052610FixedArrayIiLm18446744073709551615ESaIiEEEEE9constructIS4_JRKS4_EEEvRS5_PT_DpOT0_.exit, label %.lr.ph.i.i.preheader.i.i
 
 .lr.ph.i.i.preheader.i.i:                         ; preds = %bb.d, %.noexc28
-  %.0.i.i.i7.i.i = phi ptr [ %i.z, %.noexc28 ], [ %i.q, %bb.d ] ; 4 uses
+  %.0.i.i.i7.i.i = phi ptr [ %i.z, %.noexc28 ], [ %i.q, %bb.d ] ; 3 uses
   %i.ac = add i64 %.idx4.i.i, -4                  ; 2 uses
   %i.ad = lshr exact i64 %i.ac, 2
   %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ac, 44
-  %.0.i.i.i7.i.i49 = ptrtoaddr ptr %.0.i.i.i7.i.i to i64
-  %4 = sub i64 %3, %.0.i.i.i7.i.i49
-  %diff.check = icmp ugt i64 %4, -32
-  %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.ac, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader.i.i
   %n.vec = and i64 %i.ae, 9223372036854775800     ; 3 uses
@@ -655,7 +650,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !1988 = !{!1982}
 !1989 = !{!374, !373, i64 0}
 !1990 = distinct !{!1990, !141, !163, !164}
-!1991 = distinct !{!1991, !141, !163}
+!1991 = distinct !{!1991, !141, !164, !163}
 !1992 = distinct !{!1992, !141, !163, !164}
 !1993 = distinct !{!1993, !141, !163}
 !1994 = distinct !{!1994, !141}

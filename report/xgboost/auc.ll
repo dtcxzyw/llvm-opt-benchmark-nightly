@@ -205,11 +205,10 @@ _ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i11: ; preds = %.noexc16
 
 _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit17:             ; preds = %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i11, %.noexc16, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i9
   %.sroa.13.0 = phi ptr [ %i.p, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i11 ], [ %i.p, %.noexc16 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i9 ] ; 2 uses
-  %.sroa.032.0 = phi ptr [ %i.o, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i11 ], [ %i.o, %.noexc16 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i9 ] ; 15 uses
+  %.sroa.032.0 = phi ptr [ %i.o, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i11 ], [ %i.o, %.noexc16 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i9 ] ; 14 uses
   %.0.i.i.i.i.i13 = phi ptr [ %i.t, %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i11 ], [ %i.q, %.noexc16 ], [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i9 ] ; 2 uses
-  %.sroa.032.073 = ptrtoaddr ptr %.sroa.032.0 to i64 ; 6 uses
   %i.u = ptrtoint ptr %.0.i.i.i.i.i to i64
-  %i.v = ptrtoint ptr %.sroa.040.0 to i64         ; 8 uses
+  %i.v = ptrtoint ptr %.sroa.040.0 to i64         ; 6 uses
   %i.w = sub i64 %i.u, %i.v                       ; 3 uses
   %i.x = ashr exact i64 %i.w, 2                   ; 11 uses
   %.not = icmp eq ptr %.0.i.i.i.i.i, %.sroa.040.0
@@ -224,7 +223,7 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit17:             ; preds = %_ZSt6fill_nIPfmfET_
   %i.ad = mul i64 %i.ac, %1
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 48
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !180 ; 2 uses
-  %i.ag = ptrtoaddr ptr %i.af to i64              ; 4 uses
+  %i.ag = ptrtoaddr ptr %i.af to i64              ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.af, i64 %i.ad ; 8 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !498, !nonnull !80
@@ -239,8 +238,8 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit17:             ; preds = %_ZSt6fill_nIPfmfET_
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 48
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !180 ; 5 uses
-  %i.ar = ptrtoaddr ptr %i.aq to i64              ; 2 uses
-  %min.iters.check98 = icmp ult i64 %i.x, 36
+  %i.ar = ptrtoaddr ptr %i.aq to i64
+  %min.iters.check98 = icmp ult i64 %i.x, 20
   br i1 %min.iters.check98, label %scalar.ph97.preheader, label %vector.scevcheck84
 
 vector.scevcheck84:                               ; preds = %.lr.ph.split.us
@@ -250,24 +249,14 @@ vector.scevcheck84:                               ; preds = %.lr.ph.split.us
   br i1 %i.as, label %scalar.ph97.preheader, label %vector.memcheck87
 
 vector.memcheck87:                                ; preds = %vector.scevcheck84
-  %4 = sub i64 %i.v, %.sroa.032.073
-  %diff.check88 = icmp ugt i64 %4, -16
   %i.at = mul i64 %i.ac, %1
-  %i.au = shl i64 %i.at, 2                        ; 2 uses
+  %i.au = shl i64 %i.at, 2
   %i.av = add i64 %i.au, %i.ag
   %i.aw = sub i64 %i.av, %i.v
   %diff.check89 = icmp ugt i64 %i.aw, -16
-  %conflict.rdx90 = or i1 %diff.check88, %diff.check89
   %i.ax = sub i64 %i.v, %i.ar
-  %diff.check91 = icmp ugt i64 %i.ax, -16
-  %conflict.rdx92 = or i1 %conflict.rdx90, %diff.check91
-  %5 = add i64 %i.au, %i.ag
-  %6 = sub i64 %5, %.sroa.032.073
-  %diff.check93 = icmp ugt i64 %6, -16
-  %conflict.rdx94 = or i1 %conflict.rdx92, %diff.check93
-  %7 = sub i64 %i.ar, %.sroa.032.073
-  %diff.check95 = icmp ugt i64 %7, -16
-  %conflict.rdx96 = or i1 %conflict.rdx94, %diff.check95
+  %diff.check95 = icmp ugt i64 %i.ax, -16
+  %conflict.rdx96 = or i1 %diff.check89, %diff.check95
   br i1 %conflict.rdx96, label %scalar.ph97.preheader, label %vector.ph99
 
 vector.ph99:                                      ; preds = %vector.memcheck87
@@ -361,9 +350,9 @@ scalar.ph97:                                      ; preds = %scalar.ph97.prol.lo
   %i.cn = mul i64 %i.cm, %1
   %i.co = getelementptr inbounds nuw i8, ptr %i.an, i64 48
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !180 ; 2 uses
-  %i.cq = ptrtoaddr ptr %i.cp to i64              ; 2 uses
+  %i.cq = ptrtoaddr ptr %i.cp to i64
   %invariant.gep60 = getelementptr [4 x i8], ptr %i.cp, i64 %i.cn ; 4 uses
-  %min.iters.check = icmp ult i64 %i.x, 56
+  %min.iters.check = icmp ult i64 %i.x, 32
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.split
@@ -373,28 +362,17 @@ vector.scevcheck:                                 ; preds = %.lr.ph.split
   br i1 %i.cr, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %8 = sub i64 %i.v, %.sroa.032.073
-  %diff.check = icmp ugt i64 %8, -32
   %i.cs = mul i64 %i.ac, %1
-  %i.ct = shl i64 %i.cs, 2                        ; 2 uses
+  %i.ct = shl i64 %i.cs, 2
   %i.cu = add i64 %i.ct, %i.ag
   %i.cv = sub i64 %i.cu, %i.v
   %diff.check74 = icmp ugt i64 %i.cv, -32
-  %conflict.rdx = or i1 %diff.check, %diff.check74
   %i.cw = mul i64 %i.cm, %1
-  %i.cx = shl i64 %i.cw, 2                        ; 2 uses
-  %9 = add i64 %i.cx, %i.cq
-  %10 = sub i64 %i.v, %9
-  %diff.check75 = icmp ugt i64 %10, -32
-  %conflict.rdx76 = or i1 %conflict.rdx, %diff.check75
-  %11 = add i64 %i.ct, %i.ag
-  %12 = sub i64 %11, %.sroa.032.073
-  %diff.check77 = icmp ugt i64 %12, -32
-  %conflict.rdx78 = or i1 %conflict.rdx76, %diff.check77
+  %i.cx = shl i64 %i.cw, 2
   %i.cy = add i64 %i.cx, %i.cq
-  %i.cz = sub i64 %i.cy, %.sroa.032.073
+  %i.cz = sub i64 %i.v, %i.cy
   %diff.check79 = icmp ugt i64 %i.cz, -32
-  %conflict.rdx80 = or i1 %conflict.rdx78, %diff.check79
+  %conflict.rdx80 = or i1 %diff.check74, %diff.check79
   br i1 %conflict.rdx80, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

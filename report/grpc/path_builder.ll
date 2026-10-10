@@ -204,7 +204,7 @@ define linkonce_odr void @_ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderRes
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !5774 ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !5773   ; 10 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !5773   ; 7 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -227,7 +227,7 @@ _ZNKSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_delet
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 3
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #30 ; 10 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #30 ; 7 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n
   %i.r = load i64, ptr %2, align 8, !tbaa !5776
   store i64 %i.r, ptr %i.q, align 8, !tbaa !5776
@@ -237,23 +237,13 @@ _ZNKSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_delet
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZNKSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit
   %i.s = add i64 %i.m, -8
-  %i.t = sub i64 %i.s, %i.e                       ; 3 uses
+  %i.t = sub i64 %i.s, %i.e                       ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 136
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader64, label %vector.memcheck
+  %min.iters.check = icmp ult i64 %i.t, 24
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader64, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
-  %3 = and i64 %i.t, -8
-  %4 = add i64 %3, 8                              ; 2 uses
-  %5 = getelementptr i8, ptr %i.p, i64 %4
-  %6 = getelementptr i8, ptr %i.c, i64 %4
-  %bound0 = icmp ult ptr %i.p, %6
-  %bound1 = icmp ult ptr %i.c, %5
-  %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %.lr.ph.i.i.i.preheader64, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.i.i.i.preheader
   %n.vec = and i64 %i.v, 4611686018427387900      ; 3 uses
   %i.w = shl i64 %n.vec, 3                        ; 2 uses
   %i.x = getelementptr i8, ptr %i.p, i64 %i.w     ; 2 uses
@@ -265,42 +255,42 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.z = shl i64 %index, 3                        ; 2 uses
   %next.gep = getelementptr i8, ptr %i.p, i64 %i.z ; 2 uses
   %next.gep36 = getelementptr i8, ptr %i.c, i64 %i.z ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9742)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9743)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9739)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9740)
   %i.aa = getelementptr i8, ptr %next.gep36, i64 16
-  %wide.load = load <2 x i64>, ptr %next.gep36, align 8, !tbaa !5776, !alias.scope !9744, !noalias !9742
-  %wide.load37 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !5776, !alias.scope !9744, !noalias !9742
+  %wide.load = load <2 x i64>, ptr %next.gep36, align 8, !tbaa !5776, !alias.scope !9740, !noalias !9739
+  %wide.load37 = load <2 x i64>, ptr %i.aa, align 8, !tbaa !5776, !alias.scope !9740, !noalias !9739
   %i.ab = getelementptr i8, ptr %next.gep, i64 16
-  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !5776, !alias.scope !9745, !noalias !9744
-  store <2 x i64> %wide.load37, ptr %i.ab, align 8, !tbaa !5776, !alias.scope !9745, !noalias !9744
+  store <2 x i64> %wide.load, ptr %next.gep, align 8, !tbaa !5776, !alias.scope !9739, !noalias !9740
+  store <2 x i64> %wide.load37, ptr %i.ab, align 8, !tbaa !5776, !alias.scope !9739, !noalias !9740
   %i.ac = getelementptr i8, ptr %next.gep36, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep36, align 8, !tbaa !5776, !alias.scope !9744, !noalias !9742
-  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !5776, !alias.scope !9744, !noalias !9742
+  store <2 x ptr> splat (ptr null), ptr %next.gep36, align 8, !tbaa !5776, !alias.scope !9740, !noalias !9739
+  store <2 x ptr> splat (ptr null), ptr %i.ac, align 8, !tbaa !5776, !alias.scope !9740, !noalias !9739
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !9732
+  br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !9729
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.v, %n.vec
   br i1 %cmp.n, label %_ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i.preheader64
 
-.lr.ph.i.i.i.preheader64:                         ; preds = %vector.memcheck, %.lr.ph.i.i.i.preheader, %middle.block
-  %.012.i.i.i.ph = phi ptr [ %i.p, %vector.memcheck ], [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.x, %middle.block ]
-  %.0911.i.i.i.ph = phi ptr [ %i.c, %vector.memcheck ], [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.y, %middle.block ]
+.lr.ph.i.i.i.preheader64:                         ; preds = %.lr.ph.i.i.i.preheader, %middle.block
+  %.012.i.i.i.ph = phi ptr [ %i.p, %.lr.ph.i.i.i.preheader ], [ %i.x, %middle.block ]
+  %.0911.i.i.i.ph = phi ptr [ %i.c, %.lr.ph.i.i.i.preheader ], [ %i.y, %middle.block ]
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader64, %.lr.ph.i.i.i
   %.012.i.i.i = phi ptr [ %i.ag, %.lr.ph.i.i.i ], [ %.012.i.i.i.ph, %.lr.ph.i.i.i.preheader64 ] ; 2 uses
   %.0911.i.i.i = phi ptr [ %i.af, %.lr.ph.i.i.i ], [ %.0911.i.i.i.ph, %.lr.ph.i.i.i.preheader64 ] ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9742)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9743)
-  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !5776, !alias.scope !9743, !noalias !9742
-  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !5776, !alias.scope !9742, !noalias !9743
-  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !5776, !alias.scope !9743, !noalias !9742
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9739)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9740)
+  %i.ae = load i64, ptr %.0911.i.i.i, align 8, !tbaa !5776, !alias.scope !9740, !noalias !9739
+  store i64 %i.ae, ptr %.012.i.i.i, align 8, !tbaa !5776, !alias.scope !9739, !noalias !9740
+  store ptr null, ptr %.0911.i.i.i, align 8, !tbaa !5776, !alias.scope !9740, !noalias !9739
   %i.af = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.af, %1
-  br i1 %.not.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i, !llvm.loop !9733
+  br i1 %.not.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit, label %.lr.ph.i.i.i, !llvm.loop !9730
 
 _ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit: ; preds = %.lr.ph.i.i.i, %middle.block, %_ZNKSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit
   %.0.lcssa.i.i.i = phi ptr [ %i.p, %_ZNKSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit ], [ %i.x, %middle.block ], [ %i.ag, %.lr.ph.i.i.i ] ; 2 uses
@@ -339,20 +329,20 @@ vector.body52:                                    ; preds = %vector.body52, %vec
   %i.au = shl i64 %index53, 3                     ; 2 uses
   %next.gep54 = getelementptr i8, ptr %i.ah, i64 %i.au ; 2 uses
   %next.gep55 = getelementptr i8, ptr %1, i64 %i.au ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9746)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9747)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9741)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9742)
   %i.av = getelementptr i8, ptr %next.gep55, i64 16
-  %wide.load56 = load <2 x i64>, ptr %next.gep55, align 8, !tbaa !5776, !alias.scope !9748, !noalias !9746
-  %wide.load57 = load <2 x i64>, ptr %i.av, align 8, !tbaa !5776, !alias.scope !9748, !noalias !9746
+  %wide.load56 = load <2 x i64>, ptr %next.gep55, align 8, !tbaa !5776, !alias.scope !9743, !noalias !9741
+  %wide.load57 = load <2 x i64>, ptr %i.av, align 8, !tbaa !5776, !alias.scope !9743, !noalias !9741
   %i.aw = getelementptr i8, ptr %next.gep54, i64 16
-  store <2 x i64> %wide.load56, ptr %next.gep54, align 8, !tbaa !5776, !alias.scope !9749, !noalias !9748
-  store <2 x i64> %wide.load57, ptr %i.aw, align 8, !tbaa !5776, !alias.scope !9749, !noalias !9748
+  store <2 x i64> %wide.load56, ptr %next.gep54, align 8, !tbaa !5776, !alias.scope !9744, !noalias !9743
+  store <2 x i64> %wide.load57, ptr %i.aw, align 8, !tbaa !5776, !alias.scope !9744, !noalias !9743
   %i.ax = getelementptr i8, ptr %next.gep55, i64 16
-  store <2 x ptr> splat (ptr null), ptr %next.gep55, align 8, !tbaa !5776, !alias.scope !9748, !noalias !9746
-  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !5776, !alias.scope !9748, !noalias !9746
+  store <2 x ptr> splat (ptr null), ptr %next.gep55, align 8, !tbaa !5776, !alias.scope !9743, !noalias !9741
+  store <2 x ptr> splat (ptr null), ptr %i.ax, align 8, !tbaa !5776, !alias.scope !9743, !noalias !9741
   %index.next58 = add nuw i64 %index53, 4         ; 2 uses
   %i.ay = icmp eq i64 %index.next58, %n.vec51
-  br i1 %i.ay, label %middle.block59, label %vector.body52, !llvm.loop !9740
+  br i1 %i.ay, label %middle.block59, label %vector.body52, !llvm.loop !9737
 
 middle.block59:                                   ; preds = %vector.body52
   %cmp.n60 = icmp eq i64 %i.al, %n.vec51
@@ -366,15 +356,15 @@ middle.block59:                                   ; preds = %vector.body52
 .lr.ph.i.i.i17:                                   ; preds = %.lr.ph.i.i.i17.preheader63, %.lr.ph.i.i.i17
   %.012.i.i.i18 = phi ptr [ %i.bb, %.lr.ph.i.i.i17 ], [ %.012.i.i.i18.ph, %.lr.ph.i.i.i17.preheader63 ] ; 2 uses
   %.0911.i.i.i19 = phi ptr [ %i.ba, %.lr.ph.i.i.i17 ], [ %.0911.i.i.i19.ph, %.lr.ph.i.i.i17.preheader63 ] ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9746)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9747)
-  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !5776, !alias.scope !9747, !noalias !9746
-  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !5776, !alias.scope !9746, !noalias !9747
-  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !5776, !alias.scope !9747, !noalias !9746
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9741)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9742)
+  %i.az = load i64, ptr %.0911.i.i.i19, align 8, !tbaa !5776, !alias.scope !9742, !noalias !9741
+  store i64 %i.az, ptr %.012.i.i.i18, align 8, !tbaa !5776, !alias.scope !9741, !noalias !9742
+  store ptr null, ptr %.0911.i.i.i19, align 8, !tbaa !5776, !alias.scope !9742, !noalias !9741
   %i.ba = getelementptr inbounds nuw i8, ptr %.0911.i.i.i19, i64 8 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.012.i.i.i18, i64 8 ; 2 uses
   %.not.i.i.i20 = icmp eq ptr %i.ba, %i.b
-  br i1 %.not.i.i.i20, label %_ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22, label %.lr.ph.i.i.i17, !llvm.loop !9741
+  br i1 %.not.i.i.i20, label %_ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22, label %.lr.ph.i.i.i17, !llvm.loop !9738
 
 _ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22: ; preds = %.lr.ph.i.i.i17, %middle.block59, %_ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit
   %.0.lcssa.i.i.i21 = phi ptr [ %i.ah, %_ZNSt6vectorISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit ], [ %i.as, %middle.block59 ], [ %i.bb, %.lr.ph.i.i.i17 ]
@@ -777,25 +767,20 @@ begin_hunk_1_@bcmp
 !9726 = distinct !{!9726, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
 !9727 = distinct !{!9727, !9726, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !9728 = distinct !{!9728, !9726, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
-!9729 = distinct !{!9729, i1 false, !"LVerDomain"}
-!9730 = distinct !{!9730, !9729}
-!9731 = distinct !{!9731, !9729}
-!9732 = distinct !{!9732, !5691, !5740, !5741}
-!9733 = distinct !{!9733, !5691, !5740}
-!9734 = distinct !{!9734, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
-!9735 = distinct !{!9735, !9734, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
-!9736 = distinct !{!9736, !9734, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
-!9737 = distinct !{!9737, i1 false, !"LVerDomain"}
-!9738 = distinct !{!9738, !9737}
-!9739 = distinct !{!9739, !9737}
-!9740 = distinct !{!9740, !5691, !5740, !5741}
-!9741 = distinct !{!9741, !5691, !5740}
-!9742 = !{!9727}
-!9743 = !{!9728}
-!9744 = !{!9728, !9730}
-!9745 = !{!9727, !9731}
-!9746 = !{!9735}
-!9747 = !{!9736}
-!9748 = !{!9736, !9738}
-!9749 = !{!9735, !9739}
+!9729 = distinct !{!9729, !5691, !5740, !5741}
+!9730 = distinct !{!9730, !5691, !5741, !5740}
+!9731 = distinct !{!9731, i1 false, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_"}
+!9732 = distinct !{!9732, !9731, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
+!9733 = distinct !{!9733, !9731, !"_ZSt19__relocate_object_aISt10unique_ptrIN4bssl25CertPathBuilderResultPathESt14default_deleteIS2_EES5_SaIS5_EEvPT_PT0_RT1_: argument 1"}
+!9734 = distinct !{!9734, i1 false, !"LVerDomain"}
+!9735 = distinct !{!9735, !9734}
+!9736 = distinct !{!9736, !9734}
+!9737 = distinct !{!9737, !5691, !5740, !5741}
+!9738 = distinct !{!9738, !5691, !5740}
+!9739 = !{!9727}
+!9740 = !{!9728}
+!9741 = !{!9732}
+!9742 = !{!9733}
+!9743 = !{!9733, !9735}
+!9744 = !{!9732, !9736}
 end_hunk_1

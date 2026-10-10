@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.af
   %i.nw = ptrtoint ptr %i.nl to i64               ; 2 uses
-  %i.nx = ptrtoint ptr %i.nj to i64               ; 4 uses
+  %i.nx = ptrtoint ptr %i.nj to i64               ; 3 uses
   %i.ny = sub i64 %i.nw, %i.nx                    ; 4 uses
   %i.nz = icmp eq i64 %i.ny, 9223372036854775800
   br i1 %i.nz, label %bb.ai, label %iter.check
@@ -221,7 +221,7 @@ iter.check:                                       ; preds = %bb.ah
   %i.od = call i64 @llvm.umin.i64(i64 %i.ob, i64 1152921504606846975)
   %i.oe = select i1 %i.oc, i64 1152921504606846975, i64 %i.od ; 2 uses
   %i.of = shl nuw nsw i64 %i.oe, 3
-  %i.og = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.of) #36 ; 9 uses
+  %i.og = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.of) #36 ; 8 uses
   %i.oh = getelementptr inbounds nuw i8, ptr %i.og, i64 %i.ny
   store <2 x float> %i.nr, ptr %i.oh, align 4
   %i.oi = add i64 %i.nw, -8
@@ -229,11 +229,7 @@ iter.check:                                       ; preds = %bb.ah
   %i.ok = lshr i64 %i.oj, 3
   %i.ol = add nuw nsw i64 %i.ok, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.oj, 24
-  %8 = ptrtoaddr ptr %i.og to i64
-  %9 = sub i64 %i.nx, %8
-  %diff.check = icmp ugt i64 %9, -128
-  %or.cond261 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond261, label %.lr.ph.i.i.i.i.i.i169.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i169.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check244 = icmp ult i64 %i.oj, 120
@@ -636,7 +632,7 @@ begin_hunk_1_@llvm.fabs.v8f32
 !1825 = distinct !{!1825, !1823, !"_ZSt19__relocate_object_aIN4pbrt6Point2IfEES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !1826 = distinct !{!1826, !93, !94, !95}
 !1827 = distinct !{!1827, !93, !94, !95}
-!1828 = distinct !{!1828, !93, !94}
+!1828 = distinct !{!1828, !93, !95, !94}
 !1829 = !{!"_ZTSZN4pbrt5Shape6CreateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_9TransformESB_bRKNS_19ParameterDictionaryERKSt3mapIS6_NS_12FloatTextureESt4lessIS6_ESaISt4pairIS7_SG_EEEPKNS_7FileLocEN4pstd3pmr21polymorphic_allocatorISt4byteEEE3$_1", !245, i64 0}
 !1830 = !{!1829, !245, i64 0}
 !1831 = !{!308, !16, i64 4}

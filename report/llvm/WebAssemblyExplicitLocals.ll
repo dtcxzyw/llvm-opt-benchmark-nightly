@@ -202,7 +202,7 @@ vec.epilog.middle.block187:                       ; preds = %vec.epilog.vector.b
 
 bb.i:                                             ; preds = %bb.b
   %i.dh = load ptr, ptr %0, align 8, !tbaa !70    ; 9 uses
-  %i.di = ptrtoint ptr %i.dh to i64               ; 5 uses
+  %i.di = ptrtoint ptr %i.dh to i64               ; 4 uses
   %i.dj = sub i64 %i.f, %i.di
   %i.dk = ashr exact i64 %i.dj, 1                 ; 4 uses
   %i.dl = sub nsw i64 4611686018427387903, %i.dk
@@ -230,8 +230,7 @@ bb.k:                                             ; preds = %_ZNKSt6vectorIN4llv
   br label %iter.check266
 
 iter.check266:                                    ; preds = %bb.k, %_ZNKSt6vectorIN4llvm3MVTESaIS1_EE12_M_check_lenEmPKc.exit
-  %i.dv = phi ptr [ %i.du, %bb.k ], [ null, %_ZNKSt6vectorIN4llvm3MVTESaIS1_EE12_M_check_lenEmPKc.exit ] ; 10 uses
-  %4 = ptrtoaddr ptr %i.dv to i64
+  %i.dv = phi ptr [ %i.du, %bb.k ], [ null, %_ZNKSt6vectorIN4llvm3MVTESaIS1_EE12_M_check_lenEmPKc.exit ] ; 9 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 %i.ds ; 5 uses
   %.pre.i.i.i.i66 = load i16, ptr %3, align 2, !tbaa !135 ; 3 uses
   %min.iters.check251 = icmp ult i64 %2, 4
@@ -317,10 +316,7 @@ iter.check300:                                    ; preds = %_ZSt24__uninitializ
   %i.en = lshr i64 %i.em, 1
   %i.eo = add nuw i64 %i.en, 1                    ; 5 uses
   %min.iters.check284.a = icmp ult i64 %i.em, 6
-  %5 = sub i64 %i.di, %4
-  %diff.check283 = icmp ugt i64 %5, -32
-  %or.cond351 = or i1 %min.iters.check284.a, %diff.check283
-  br i1 %or.cond351, label %.lr.ph.i.i.i.i.i74.preheader, label %vector.main.loop.iter.check285
+  br i1 %min.iters.check284.a, label %.lr.ph.i.i.i.i.i74.preheader, label %vector.main.loop.iter.check285
 
 vector.main.loop.iter.check285:                   ; preds = %iter.check300
   %min.iters.check286 = icmp ult i64 %i.em, 30
@@ -723,7 +719,7 @@ begin_hunk_1_@llvm.umax.i64
 !553 = distinct !{!553, !28, !562, !561}
 !554 = distinct !{!554, !28, !561, !562}
 !555 = distinct !{!555, !28, !561, !562}
-!556 = distinct !{!556, !28, !561}
+!556 = distinct !{!556, !28, !562, !561}
 !557 = distinct !{!557, !28, !561, !562}
 !558 = distinct !{!558, !28, !561, !562}
 !559 = distinct !{!559, !28, !561}
