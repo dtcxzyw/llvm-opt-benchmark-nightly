@@ -202,12 +202,10 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   %i.lb = icmp ugt i64 %i.kx, 16
   %i.lc = select i1 %i.jk, i1 %i.lb, i1 false
   %spec.select68 = select i1 %i.lc, i64 %i.kx, i64 0
-  %.0190 = add i64 %i.la, %spec.select68          ; 2 uses
-  %i.ld = add i64 %.0190, 1
-  %56 = and i64 %i.ld, 4294967294
-  %57 = sub i64 %56, %.0190
-  %58 = trunc i64 %57 to i32
-  %i.le = add i32 %i.kr, %58
+  %i.ld = add i64 %i.la, %spec.select68
+  %56 = trunc i64 %i.ld to i32
+  %57 = and i32 %56, 1
+  %i.le = add i32 %57, %i.kr
   %i.lf = zext i32 %i.le to i64
   %i.lg = getelementptr inbounds nuw i8, ptr %i.kc, i64 72
   store ptr %_ZZL17computeMemberDataRN4llvm11raw_ostreamES1_NS_6object7Archive4KindEbbNS_17SymtabWritingModeEP6SymMapRNS_11LLVMContextENS_8ArrayRefINS_16NewArchiveMemberEEESt8optionalIbENS_12function_refIFvNS_5ErrorEEEEE14ZOSPaddingData._ZZL17computeMemberDataRN4llvm11raw_ostreamES1_NS_6object7Archive4KindEbbNS_17SymtabWritingModeEP6SymMapRNS_11LLVMContextENS_8ArrayRefINS_16NewArchiveMemberEEESt8optionalIbENS_12function_refIFvNS_5ErrorEEEEE11PaddingData, ptr %i.lg, align 8, !tbaa !23
@@ -610,10 +608,8 @@ bb.a:
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEtED2Ev.exit, %bb.a
-  %.0.lcssa = phi i64 [ %i.c, %bb.a ], [ %i.aa, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEtED2Ev.exit ] ; 3 uses
-  %4 = add i64 %.0.lcssa, 1
-  %i.j = and i64 %4, -2
-  %5 = sub i64 %i.j, %.0.lcssa                    ; 2 uses
+  %.0.lcssa = phi i64 [ %i.c, %bb.a ], [ %i.aa, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEtED2Ev.exit ] ; 2 uses
+  %i.j = and i64 %.0.lcssa, 1                     ; 2 uses
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %bb.g, label %bb.f
 
@@ -689,13 +685,12 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEtED2Ev.exit: ; p
   br i1 %.not17, label %._crit_edge, label %bb.b
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.ah = trunc i64 %5 to i32
+  %i.ah = trunc nuw nsw i64 %i.j to i32
   store i32 %i.ah, ptr %2, align 4, !tbaa !57
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge
-  %6 = and i64 %5, 4294967295
-  %i.ai = add i64 %6, %.0.lcssa
+  %i.ai = add i64 %i.j, %.0.lcssa
   ret i64 %i.ai
 }
 
@@ -717,10 +712,8 @@ bb.a:
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEtED2Ev.exit, %bb.a
-  %.0.lcssa = phi i64 [ 4, %bb.a ], [ %i.y, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEtED2Ev.exit ] ; 3 uses
-  %3 = add i64 %.0.lcssa, 1
-  %i.h = and i64 %3, -2
-  %4 = sub i64 %i.h, %.0.lcssa                    ; 2 uses
+  %.0.lcssa = phi i64 [ 4, %bb.a ], [ %i.y, %_ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEtED2Ev.exit ] ; 2 uses
+  %i.h = and i64 %.0.lcssa, 1                     ; 2 uses
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.g, label %bb.f
 
@@ -796,13 +789,12 @@ _ZNSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEtED2Ev.exit: ; p
   br i1 %.not15, label %._crit_edge, label %bb.b
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.af = trunc i64 %4 to i32
+  %i.af = trunc nuw nsw i64 %i.h to i32
   store i32 %i.af, ptr %1, align 4, !tbaa !57
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge
-  %5 = and i64 %4, 4294967295
-  %i.ag = add i64 %5, %.0.lcssa
+  %i.ag = add i64 %i.h, %.0.lcssa
   ret i64 %i.ag
 }
 

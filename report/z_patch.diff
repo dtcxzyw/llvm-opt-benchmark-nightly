@@ -1,0 +1,101 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 3ebcbe44c4c3d..53fb2b65122ca 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -3103,6 +3103,10 @@ Instruction *InstCombinerImpl::visitSub(BinaryOperator &I) {
+       }
+     }
+   }
++  if (match(Op0, m_And(m_Add(m_Value(X), m_Power2(AddC)), m_APInt(AndC))) &&
++      X == Op1 && *AddC == ~*AndC) {
++    return BinaryOperator::CreateAnd(X, ConstantInt::get(Ty, *AddC));
++  }
+ 
+   return TryToNarrowDeduceFlags();
+ }
+diff --git a/llvm/test/Transforms/InstCombine/sub.ll b/llvm/test/Transforms/InstCombine/sub.ll
+index 1e7fa477c362c..5b254d31abd1d 100644
+--- a/llvm/test/Transforms/InstCombine/sub.ll
++++ b/llvm/test/Transforms/InstCombine/sub.ll
+@@ -2948,3 +2948,81 @@ define i32 @sub_const_or_no_disjoint(i32 %x) {
+   %r = sub i32 100, %a
+   ret i32 %r
+ }
++
++define i8 @sub_and_add(i8 %x) {
++; CHECK-LABEL: @sub_and_add(
++; CHECK-NEXT:    [[RET:%.*]] = and i8 [[X:%.*]], 1
++; CHECK-NEXT:    ret i8 [[RET]]
++;
++  %add = add i8 %x, 1
++  %and = and i8 %add, -2
++  %ret = sub i8 %and, %x
++  ret i8 %ret
++}
++
++define i8 @sub_and_add_multi_use(i8 %x) {
++; CHECK-LABEL: @sub_and_add_multi_use(
++; CHECK-NEXT:    [[ADD:%.*]] = add i8 [[X:%.*]], 2
++; CHECK-NEXT:    call void @use8(i8 [[ADD]])
++; CHECK-NEXT:    [[AND:%.*]] = and i8 [[ADD]], -3
++; CHECK-NEXT:    call void @use8(i8 [[AND]])
++; CHECK-NEXT:    [[RET:%.*]] = and i8 [[X]], 2
++; CHECK-NEXT:    ret i8 [[RET]]
++;
++  %add = add i8 %x, 2
++  call void @use8(i8 %add)
++  %and = and i8 %add, -3
++  call void @use8(i8 %and)
++  %ret = sub i8 %and, %x
++  ret i8 %ret
++}
++
++define <2 x i8> @sub_and_add_vec(<2 x i8> %x) {
++; CHECK-LABEL: @sub_and_add_vec(
++; CHECK-NEXT:    [[RET:%.*]] = and <2 x i8> [[X:%.*]], splat (i8 1)
++; CHECK-NEXT:    ret <2 x i8> [[RET]]
++;
++  %add = add <2 x i8> %x, <i8 1, i8 1>
++  %and = and <2 x i8> %add, <i8 -2, i8 -2>
++  %ret = sub <2 x i8> %and, %x
++  ret <2 x i8> %ret
++}
++
++define i8 @neg_sub_and_add_commuted(i8 %x) {
++; CHECK-LABEL: @neg_sub_and_add_commuted(
++; CHECK-NEXT:    [[ADD:%.*]] = add i8 [[X:%.*]], 1
++; CHECK-NEXT:    [[AND:%.*]] = and i8 [[ADD]], -2
++; CHECK-NEXT:    [[RET:%.*]] = sub i8 [[X]], [[AND]]
++; CHECK-NEXT:    ret i8 [[RET]]
++;
++  %add = add i8 %x, 1
++  %and = and i8 %add, -2
++  %ret = sub i8 %x, %and
++  ret i8 %ret
++}
++
++define i8 @neg_sub_and_add_2(i8 %x) {
++; CHECK-LABEL: @neg_sub_and_add_2(
++; CHECK-NEXT:    [[ADD:%.*]] = add i8 [[X:%.*]], 3
++; CHECK-NEXT:    [[AND:%.*]] = and i8 [[ADD]], -2
++; CHECK-NEXT:    [[RET:%.*]] = sub i8 [[AND]], [[X]]
++; CHECK-NEXT:    ret i8 [[RET]]
++;
++  %add = add i8 %x, 3
++  %and = and i8 %add, -2
++  %ret = sub i8 %and, %x
++  ret i8 %ret
++}
++
++define i8 @neg_sub_and_-4_add(i8 %x) {
++; CHECK-LABEL: @neg_sub_and_-4_add(
++; CHECK-NEXT:    [[ADD:%.*]] = add i8 [[X:%.*]], 1
++; CHECK-NEXT:    [[AND:%.*]] = and i8 [[ADD]], -4
++; CHECK-NEXT:    [[RET:%.*]] = add i8 [[AND]], [[X]]
++; CHECK-NEXT:    ret i8 [[RET]]
++;
++  %add = add i8 %x, 1
++  %and = and i8 %add, -4
++  %ret = add i8 %and, %x
++  ret i8 %ret
++}
