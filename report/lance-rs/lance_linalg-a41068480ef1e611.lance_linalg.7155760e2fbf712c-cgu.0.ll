@@ -205,7 +205,7 @@ bb.af:                                            ; preds = %bb.ad
   %.sroa.5.0..sroa_idx100.i.i = getelementptr inbounds nuw i8, ptr %i.dx, i64 16
   %.sroa.5.0.copyload.i.i = load ptr, ptr %.sroa.5.0..sroa_idx100.i.i, align 8, !noalias !4690, !nonnull !18, !noundef !18 ; 6 uses
   %.sroa.6.0..sroa_idx101.i.i = getelementptr inbounds nuw i8, ptr %i.dx, i64 24
-  %.sroa.6.0.copyload.i.i = load i64, ptr %.sroa.6.0..sroa_idx101.i.i, align 8, !noalias !4690 ; 7 uses
+  %.sroa.6.0.copyload.i.i = load i64, ptr %.sroa.6.0..sroa_idx101.i.i, align 8, !noalias !4690 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dw), !noalias !4690
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.dw, ptr noundef nonnull align 8 dereferenceable(32) %i.dy, i64 32, i1 false), !noalias !4690
   call void @llvm.experimental.noalias.scope.decl(metadata !4693)
@@ -256,13 +256,9 @@ _RNvMNtCs40k4W9msRzi_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCs4YAKbnGhB
   store ptr %.sroa.5.0.copyload.i.i, ptr %i.ic, align 8, !noalias !4694
   %i.id = getelementptr inbounds nuw i8, ptr %i.di, i64 16
   store i64 %.sroa.6.0.copyload.i.i, ptr %i.id, align 8, !noalias !4694
-  %i.ie = ptrtoint ptr %.sroa.5.0.copyload.i.i to i64 ; 3 uses
-  %2 = add i64 %i.ie, 1
-  %i.if = and i64 %2, -2                          ; 2 uses
-  %3 = sub i64 %i.if, %i.ie                       ; 5 uses
-  %4 = icmp ult i64 %3, 2
-  call void @llvm.assume(i1 %4)
-  %i.ig = icmp eq i64 %i.if, %i.ie
+  %i.ie = ptrtoint ptr %.sroa.5.0.copyload.i.i to i64
+  %i.if = and i64 %i.ie, 1
+  %i.ig = icmp eq i64 %i.if, 0
   %i.ih = ptrtoint ptr %i.hy to i64               ; 5 uses
   br i1 %i.ig, label %bb.an, label %.invoke.i.i.i.i.i, !prof !16
 
@@ -373,19 +369,12 @@ bb.au:                                            ; preds = %_RNvMsf_NtCs40k4W9m
   store ptr %.sroa.5.0.copyload.i.i, ptr %.sroa.427.0..sroa_idx.i.i.i.i, align 8, !noalias !4701
   %.sroa.5.0..sroa_idx.i18.i.i.i = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   store i64 %.sroa.6.0.copyload.i.i, ptr %.sroa.5.0..sroa_idx.i18.i.i.i, align 8, !noalias !4701
-  %5 = icmp samesign ugt i64 %3, %.sroa.6.0.copyload.i.i
-  br i1 %5, label %_RINvXs_NvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs2k6O4uMwKJm_4half8binary163f16NtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i, label %_RINvMNtCscI6d9CVNmLh_4core5sliceSh8align_toNtNtCs2k6O4uMwKJm_4half8binary163f16ECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i
+  %2 = lshr i64 %.sroa.6.0.copyload.i.i, 1        ; 3 uses
+  %3 = and i64 %.sroa.6.0.copyload.i.i, 1
+  %4 = icmp eq i64 %3, 0
+  br i1 %4, label %bb.ay, label %bb.av, !prof !4702
 
-_RINvMNtCscI6d9CVNmLh_4core5sliceSh8align_toNtNtCs2k6O4uMwKJm_4half8binary163f16ECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i: ; preds = %bb.au
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload.i.i, i64 %3
-  %7 = sub nuw nsw i64 %.sroa.6.0.copyload.i.i, %3 ; 2 uses
-  %8 = lshr i64 %7, 1                             ; 2 uses
-  %9 = and i64 %7, 1
-  %10 = or i64 %9, %3
-  %11 = icmp eq i64 %10, 0
-  br i1 %11, label %bb.ay, label %bb.av, !prof !4702
-
-bb.av:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core5sliceSh8align_toNtNtCs2k6O4uMwKJm_4half8binary163f16ECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i
+bb.av:                                            ; preds = %bb.au
   invoke void @_RNvNtCscI6d9CVNmLh_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 56, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #74
           to label %.noexc.i.i.i.i.i unwind label %bb.aw, !noalias !4703
 
@@ -404,31 +393,29 @@ bb.ax:                                            ; preds = %bb.aw
   invoke void @_RNvMsn_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesE9drop_slowBK_(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dg)
           to label %.thread.i.i.i unwind label %bb.bd, !noalias !4705
 
-bb.ay:                                            ; preds = %_RINvMNtCscI6d9CVNmLh_4core5sliceSh8align_toNtNtCs2k6O4uMwKJm_4half8binary163f16ECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i.i
-  %12 = and i64 %.sroa.6.0.copyload.i.i, -2       ; 3 uses
-  %i.jj = icmp eq i64 %8, 0
+bb.ay:                                            ; preds = %bb.au
+  %i.jj = icmp eq i64 %2, 0
   br i1 %i.jj, label %_RINvXs_NvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs2k6O4uMwKJm_4half8binary163f16NtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #76, !noalias !4706
-  %i.jk = call noundef align 2 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %12, i64 noundef range(i64 1, 9) 2) #76, !noalias !4706 ; 3 uses
+  %i.jk = call noundef align 2 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %.sroa.6.0.copyload.i.i, i64 noundef range(i64 1, 9) 2) #76, !noalias !4706 ; 3 uses
   %i.jl = icmp eq ptr %i.jk, null
   br i1 %i.jl, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az
-  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 2, i64 %12) #74
+  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 2, i64 %.sroa.6.0.copyload.i.i) #74
           to label %.noexc3.i.i.i.i.i unwind label %bb.aw, !noalias !4703
 
 .noexc3.i.i.i.i.i:                                ; preds = %bb.ba
   unreachable
 
 bb.bb:                                            ; preds = %bb.az
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.jk, ptr nonnull readonly align 2 %6, i64 %12, i1 false), !noalias !4707
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.jk, ptr nonnull readonly align 2 %.sroa.5.0.copyload.i.i, i64 %.sroa.6.0.copyload.i.i, i1 false), !noalias !4707
   br label %_RINvXs_NvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs2k6O4uMwKJm_4half8binary163f16NtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i
 
-_RINvXs_NvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs2k6O4uMwKJm_4half8binary163f16NtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i: ; preds = %bb.bb, %bb.ay, %bb.au
-  %.sroa.11.0.i.i.i = phi i64 [ %8, %bb.bb ], [ 0, %bb.ay ], [ 0, %bb.au ] ; 2 uses
-  %.sroa.7.0.i.i.i = phi ptr [ %i.jk, %bb.bb ], [ inttoptr (i64 2 to ptr), %bb.ay ], [ inttoptr (i64 2 to ptr), %bb.au ]
+_RINvXs_NvMNtCs40k4W9msRzi_5alloc5sliceSp9to_vec_inNtNtCs2k6O4uMwKJm_4half8binary163f16NtB5_10ConvertVec6to_vecNtNtBa_5alloc6GlobalECs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i: ; preds = %bb.bb, %bb.ay
+  %.sroa.7.0.i.i.i = phi ptr [ %i.jk, %bb.bb ], [ inttoptr (i64 2 to ptr), %bb.ay ]
   %i.jm = atomicrmw sub ptr %.pre-phi.i.i.i.i, i64 1 release, align 8, !noalias !4708
   %i.jn = icmp eq i64 %i.jm, 1
   br i1 %i.jn, label %bb.bc, label %_RNCNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB7_12ScalarBufferB1o_EE4from0Cs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i
@@ -449,9 +436,9 @@ _RNCNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5allo
   br label %_RNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB5_12ScalarBufferB1m_EE4fromCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i
 
 _RNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB5_12ScalarBufferB1m_EE4fromCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i: ; preds = %_RNCNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB7_12ScalarBufferB1o_EE4from0Cs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i, %_RNvMsf_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesE10try_unwrapCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i
-  %.sroa.11.1.i.i.i = phi i64 [ %.sroa.11.0.i.i.i, %_RNCNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB7_12ScalarBufferB1o_EE4from0Cs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i ], [ %i.ja, %_RNvMsf_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesE10try_unwrapCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 8 uses
+  %.sroa.11.1.i.i.i = phi i64 [ %2, %_RNCNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB7_12ScalarBufferB1o_EE4from0Cs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i ], [ %i.ja, %_RNvMsf_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesE10try_unwrapCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 8 uses
   %.sroa.7.1.i.i.i = phi ptr [ %.sroa.7.0.i.i.i, %_RNCNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB7_12ScalarBufferB1o_EE4from0Cs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i ], [ %.sroa.0.0.copyload.i.i.i.i.i, %_RNvMsf_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesE10try_unwrapCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 4 uses
-  %.sroa.0.1.i.i.i = phi i64 [ %.sroa.11.0.i.i.i, %_RNCNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB7_12ScalarBufferB1o_EE4from0Cs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i ], [ %i.iv, %_RNvMsf_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesE10try_unwrapCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 3 uses
+  %.sroa.0.1.i.i.i = phi i64 [ %2, %_RNCNvXs6_NtNtCs4YAKbnGhBJc_12arrow_buffer6buffer6scalarINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtCs2k6O4uMwKJm_4half8binary163f16EINtNtCscI6d9CVNmLh_4core7convert4FromINtB7_12ScalarBufferB1o_EE4from0Cs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i ], [ %i.iv, %_RNvMsf_NtCs40k4W9msRzi_5alloc4syncINtB5_3ArcNtNtCs4YAKbnGhBJc_12arrow_buffer5bytes5BytesE10try_unwrapCs9JgWGBoX3PY_12lance_linalg.exit.i.i.i.i.i ] ; 3 uses
   %.sroa.07.0.copyload.i.i.i = load i64, ptr %i.dw, align 8, !alias.scope !4693, !noalias !4710 ; 2 uses
   %.not.i.i.i = icmp eq i64 %.sroa.07.0.copyload.i.i.i, 0
   br i1 %.not.i.i.i, label %bb.bf, label %bb.be
