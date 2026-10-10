@@ -1,0 +1,745 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 9ef4d0b0542f3..c214f079e9acb 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2120,8 +2120,33 @@ class ScalarEvolution {
+   /// execute if it exits via the specified block. If AllowPredicates is set,
+   /// this call will try to use a minimal set of SCEV predicates in order to
+   /// return an exact answer.
++  /// Loop guards for a loop, collected on first use. This allows the exit
++  /// limit computations for all exits of a loop to share a single collection.
++  class LazyLoopGuards {
++    const Loop *L;
++    ScalarEvolution &SE;
++    std::optional<LoopGuards> Guards;
++
++  public:
++    LazyLoopGuards(const Loop *L, ScalarEvolution &SE) : L(L), SE(SE) {}
++
++    /// Return the loop guards for the loop, collecting them on first use.
++    const LoopGuards &get() {
++      if (!Guards)
++        Guards.emplace(LoopGuards::collect(L, SE));
++      return *Guards;
++    }
++  };
++
+   ExitLimit computeExitLimit(const Loop *L, BasicBlock *ExitingBlock,
+-                             bool IsOnlyExit, bool AllowPredicates = false);
++                             bool IsOnlyExit, LazyLoopGuards &Guards,
++                             bool AllowPredicates = false);
++
++  /// Variant of the public computeExitLimitFromCond which uses \p Guards.
++  ExitLimit computeExitLimitFromCond(const Loop *L, Value *ExitCond,
++                                     bool ExitIfTrue, bool ControlsOnlyExit,
++                                     bool AllowPredicates,
++                                     LazyLoopGuards &Guards);
+ 
+   // Helper functions for computeExitLimitFromCond to avoid exponential time
+   // complexity.
+@@ -2158,15 +2183,18 @@ class ScalarEvolution {
+                                            const Loop *L, Value *ExitCond,
+                                            bool ExitIfTrue,
+                                            bool ControlsOnlyExit,
+-                                           bool AllowPredicates);
++                                           bool AllowPredicates,
++                                           LazyLoopGuards &Guards);
+   ExitLimit computeExitLimitFromCondImpl(ExitLimitCacheTy &Cache, const Loop *L,
+                                          Value *ExitCond, bool ExitIfTrue,
+                                          bool ControlsOnlyExit,
+-                                         bool AllowPredicates);
++                                         bool AllowPredicates,
++                                         LazyLoopGuards &Guards);
+   std::optional<ScalarEvolution::ExitLimit>
+   computeExitLimitFromCondFromBinOp(ExitLimitCacheTy &Cache, const Loop *L,
+                                     Value *ExitCond, bool ExitIfTrue,
+-                                    bool AllowPredicates);
++                                    bool AllowPredicates,
++                                    LazyLoopGuards &Guards);
+ 
+   /// Compute the number of times the backedge of the specified loop will
+   /// execute if its exit condition were a conditional branch of the ICmpInst
+@@ -2174,8 +2202,8 @@ class ScalarEvolution {
+   /// to use a minimal set of SCEV predicates in order to return an exact
+   /// answer.
+   ExitLimit computeExitLimitFromICmp(const Loop *L, ICmpInst *ExitCond,
+-                                     bool ExitIfTrue,
+-                                     bool IsSubExpr,
++                                     bool ExitIfTrue, bool IsSubExpr,
++                                     LazyLoopGuards &Guards,
+                                      bool AllowPredicates = false);
+ 
+   /// Variant of previous which takes the components representing an ICmp
+@@ -2184,6 +2212,7 @@ class ScalarEvolution {
+   /// has a materialized ICmp.
+   ExitLimit computeExitLimitFromICmp(const Loop *L, CmpPredicate Pred,
+                                      SCEVUse LHS, SCEVUse RHS, bool IsSubExpr,
++                                     LazyLoopGuards &Guards,
+                                      bool AllowPredicates = false);
+ 
+   /// Compute the number of times the backedge of the specified loop will
+@@ -2192,7 +2221,8 @@ class ScalarEvolution {
+   ExitLimit computeExitLimitFromSingleExitSwitch(const Loop *L,
+                                                  SwitchInst *Switch,
+                                                  BasicBlock *ExitingBB,
+-                                                 bool IsSubExpr);
++                                                 bool IsSubExpr,
++                                                 LazyLoopGuards &Guards);
+ 
+   /// Compute the exit limit of a loop that is controlled by a
+   /// "(IV >> 1) != 0" type comparison.  We cannot compute the exact trip
+@@ -2217,7 +2247,7 @@ class ScalarEvolution {
+   /// If AllowPredicates is set, this call will try to use a minimal set of
+   /// SCEV predicates in order to return an exact answer.
+   ExitLimit howFarToZero(const SCEV *V, const Loop *L, bool IsSubExpr,
+-                         bool AllowPredicates = false);
++                         LazyLoopGuards &Guards, bool AllowPredicates = false);
+ 
+   /// Return the number of times an exit condition checking the specified
+   /// value for nonzero will execute.  If not computable, return
+@@ -2240,6 +2270,7 @@ class ScalarEvolution {
+   /// SCEV predicates in order to return an exact answer.
+   ExitLimit howManyLessThans(const SCEV *LHS, const SCEV *RHS, const Loop *L,
+                              bool IsSigned, bool Invert, bool ControlsOnlyExit,
++                             LazyLoopGuards &Guards,
+                              bool AllowPredicates = false);
+ 
+   /// Return a predecessor of BB (which may not be an immediate predecessor)
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 731d376818e03..7538ffb17e4eb 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -9032,6 +9032,8 @@ ScalarEvolution::computeBackedgeTakenCount(const Loop *L,
+   const SCEV *MayExitMaxBECount = nullptr;
+   bool MustExitMaxOrZero = false;
+   bool IsOnlyExit = ExitingBlocks.size() == 1;
++  // Loop guards for L, shared by the exit limit computations for all exits.
++  LazyLoopGuards Guards(L, *this);
+ 
+   // Compute the ExitLimit for each loop exit. Use this to populate ExitCounts
+   // and compute maxBECount.
+@@ -9047,7 +9049,8 @@ ScalarEvolution::computeBackedgeTakenCount(const Loop *L,
+           continue;
+       }
+ 
+-    ExitLimit EL = computeExitLimit(L, ExitBB, IsOnlyExit, AllowPredicates);
++    ExitLimit EL =
++        computeExitLimit(L, ExitBB, IsOnlyExit, Guards, AllowPredicates);
+ 
+     assert((AllowPredicates || EL.Predicates.empty()) &&
+            "Predicated exit limit when predicates are not allowed!");
+@@ -9122,7 +9125,8 @@ ScalarEvolution::computeBackedgeTakenCount(const Loop *L,
+ 
+ ScalarEvolution::ExitLimit
+ ScalarEvolution::computeExitLimit(const Loop *L, BasicBlock *ExitingBlock,
+-                                  bool IsOnlyExit, bool AllowPredicates) {
++                                  bool IsOnlyExit, LazyLoopGuards &Guards,
++                                  bool AllowPredicates) {
+   assert(L->contains(ExitingBlock) && "Exit count for non-loop block?");
+   // If our exiting block does not dominate the latch, then its connection with
+   // loop's exit limit may be far from trivial.
+@@ -9138,7 +9142,7 @@ ScalarEvolution::computeExitLimit(const Loop *L, BasicBlock *ExitingBlock,
+     // Proceed to the next level to examine the exit condition expression.
+     return computeExitLimitFromCond(L, BI->getCondition(), ExitIfTrue,
+                                     /*ControlsOnlyExit=*/IsOnlyExit,
+-                                    AllowPredicates);
++                                    AllowPredicates, Guards);
+   }
+ 
+   if (SwitchInst *SI = dyn_cast<SwitchInst>(Term)) {
+@@ -9152,7 +9156,7 @@ ScalarEvolution::computeExitLimit(const Loop *L, BasicBlock *ExitingBlock,
+       }
+     assert(Exit && "Exiting block must have at least one exit");
+     return computeExitLimitFromSingleExitSwitch(
+-        L, SI, Exit, /*ControlsOnlyExit=*/IsOnlyExit);
++        L, SI, Exit, /*ControlsOnlyExit=*/IsOnlyExit, Guards);
+   }
+ 
+   return getCouldNotCompute();
+@@ -9161,9 +9165,18 @@ ScalarEvolution::computeExitLimit(const Loop *L, BasicBlock *ExitingBlock,
+ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromCond(
+     const Loop *L, Value *ExitCond, bool ExitIfTrue, bool ControlsOnlyExit,
+     bool AllowPredicates) {
++  LazyLoopGuards Guards(L, *this);
++  return computeExitLimitFromCond(L, ExitCond, ExitIfTrue, ControlsOnlyExit,
++                                  AllowPredicates, Guards);
++}
++
++ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromCond(
++    const Loop *L, Value *ExitCond, bool ExitIfTrue, bool ControlsOnlyExit,
++    bool AllowPredicates, LazyLoopGuards &Guards) {
+   ScalarEvolution::ExitLimitCacheTy Cache(L, ExitIfTrue, AllowPredicates);
+   return computeExitLimitFromCondCached(Cache, L, ExitCond, ExitIfTrue,
+-                                        ControlsOnlyExit, AllowPredicates);
++                                        ControlsOnlyExit, AllowPredicates,
++                                        Guards);
+ }
+ 
+ std::optional<ScalarEvolution::ExitLimit>
+@@ -9200,37 +9213,37 @@ void ScalarEvolution::ExitLimitCache::insert(const Loop *L, Value *ExitCond,
+ 
+ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromCondCached(
+     ExitLimitCacheTy &Cache, const Loop *L, Value *ExitCond, bool ExitIfTrue,
+-    bool ControlsOnlyExit, bool AllowPredicates) {
++    bool ControlsOnlyExit, bool AllowPredicates, LazyLoopGuards &Guards) {
+ 
+   if (auto MaybeEL = Cache.find(L, ExitCond, ExitIfTrue, ControlsOnlyExit,
+                                 AllowPredicates))
+     return *MaybeEL;
+ 
+   ExitLimit EL = computeExitLimitFromCondImpl(
+-      Cache, L, ExitCond, ExitIfTrue, ControlsOnlyExit, AllowPredicates);
++      Cache, L, ExitCond, ExitIfTrue, ControlsOnlyExit, AllowPredicates, Guards);
+   Cache.insert(L, ExitCond, ExitIfTrue, ControlsOnlyExit, AllowPredicates, EL);
+   return EL;
+ }
+ 
+ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromCondImpl(
+     ExitLimitCacheTy &Cache, const Loop *L, Value *ExitCond, bool ExitIfTrue,
+-    bool ControlsOnlyExit, bool AllowPredicates) {
++    bool ControlsOnlyExit, bool AllowPredicates, LazyLoopGuards &Guards) {
+   // Handle BinOp conditions (And, Or).
+   if (auto LimitFromBinOp = computeExitLimitFromCondFromBinOp(
+-          Cache, L, ExitCond, ExitIfTrue, AllowPredicates))
++          Cache, L, ExitCond, ExitIfTrue, AllowPredicates, Guards))
+     return *LimitFromBinOp;
+ 
+   // With an icmp, it may be feasible to compute an exact backedge-taken count.
+   // Proceed to the next level to examine the icmp.
+   if (ICmpInst *ExitCondICmp = dyn_cast<ICmpInst>(ExitCond)) {
+-    ExitLimit EL =
+-        computeExitLimitFromICmp(L, ExitCondICmp, ExitIfTrue, ControlsOnlyExit);
++    ExitLimit EL = computeExitLimitFromICmp(L, ExitCondICmp, ExitIfTrue,
++                                            ControlsOnlyExit, Guards);
+     if (EL.hasFullInfo() || !AllowPredicates)
+       return EL;
+ 
+     // Try again, but use SCEV predicates this time.
+     return computeExitLimitFromICmp(L, ExitCondICmp, ExitIfTrue,
+-                                    ControlsOnlyExit,
++                                    ControlsOnlyExit, Guards,
+                                     /*AllowPredicates=*/true);
+   }
+ 
+@@ -9265,7 +9278,8 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromCondImpl(
+     if (Offset != 0)
+       LHS = getAddExpr(LHS, getConstant(Offset));
+     auto EL = computeExitLimitFromICmp(L, Pred, LHS, getConstant(NewRHSC),
+-                                       ControlsOnlyExit, AllowPredicates);
++                                       ControlsOnlyExit, Guards,
++                                       AllowPredicates);
+     if (EL.hasAnyInfo())
+       return EL;
+   }
+@@ -9279,7 +9293,8 @@ ScalarEvolution::computeExitLimitFromCondFromBinOp(ExitLimitCacheTy &Cache,
+                                                    const Loop *L,
+                                                    Value *ExitCond,
+                                                    bool ExitIfTrue,
+-                                                   bool AllowPredicates) {
++                                                   bool AllowPredicates,
++                                                   LazyLoopGuards &Guards) {
+   // Check if the controlling expression for this loop is an And or Or.
+   Value *Op0, *Op1;
+   bool IsAnd;
+@@ -9292,10 +9307,14 @@ ScalarEvolution::computeExitLimitFromCondFromBinOp(ExitLimitCacheTy &Cache,
+ 
+   // A sub-condition of a non-trivial binop never solely controls the exit,
+   // whether we exit always depends on both conditions.
+-  ExitLimit EL0 = computeExitLimitFromCondCached(
+-      Cache, L, Op0, ExitIfTrue, /*ControlsOnlyExit=*/false, AllowPredicates);
+-  ExitLimit EL1 = computeExitLimitFromCondCached(
+-      Cache, L, Op1, ExitIfTrue, /*ControlsOnlyExit=*/false, AllowPredicates);
++  ExitLimit EL0 =
++      computeExitLimitFromCondCached(Cache, L, Op0, ExitIfTrue,
++                                     /*ControlsOnlyExit=*/false,
++                                     AllowPredicates, Guards);
++  ExitLimit EL1 =
++      computeExitLimitFromCondCached(Cache, L, Op1, ExitIfTrue,
++                                     /*ControlsOnlyExit=*/false,
++                                     AllowPredicates, Guards);
+ 
+   // EitherMayExit is true in these two cases:
+   //   br (and Op0 Op1), loop, exit
+@@ -9331,8 +9350,13 @@ ScalarEvolution::computeExitLimitFromCondFromBinOp(ExitLimitCacheTy &Cache,
+   } else {
+     // Both conditions must be same at the same time for the loop to exit.
+     // For now, be conservative.
+-    if (EL0.ExactNotTaken == EL1.ExactNotTaken)
++    if (EL0.ExactNotTaken == EL1.ExactNotTaken) {
+       BECount = EL0.ExactNotTaken;
++      // Both constant maxes are upper bounds of the shared exact count.
++      if (!isa<SCEVCouldNotCompute>(BECount))
++        ConstantMaxBECount = getUMinFromMismatchedTypes(
++            EL0.ConstantMaxNotTaken, EL1.ConstantMaxNotTaken);
++    }
+   }
+ 
+   // There are cases (e.g. PR26207) where computeExitLimitFromCond is able
+@@ -9353,7 +9377,7 @@ ScalarEvolution::computeExitLimitFromCondFromBinOp(ExitLimitCacheTy &Cache,
+ 
+ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+     const Loop *L, ICmpInst *ExitCond, bool ExitIfTrue, bool ControlsOnlyExit,
+-    bool AllowPredicates) {
++    LazyLoopGuards &Guards, bool AllowPredicates) {
+   // If the condition was exit on true, convert the condition to exit on false
+   CmpPredicate Pred;
+   if (!ExitIfTrue)
+@@ -9366,7 +9390,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+   const SCEV *RHS = getSCEV(ExitCond->getOperand(1));
+ 
+   ExitLimit EL = computeExitLimitFromICmp(L, Pred, LHS, RHS, ControlsOnlyExit,
+-                                          AllowPredicates);
++                                          Guards, AllowPredicates);
+   if (EL.hasAnyInfo())
+     return EL;
+ 
+@@ -9381,7 +9405,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+ }
+ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+     const Loop *L, CmpPredicate Pred, SCEVUse LHS, SCEVUse RHS,
+-    bool ControlsOnlyExit, bool AllowPredicates) {
++    bool ControlsOnlyExit, LazyLoopGuards &Guards, bool AllowPredicates) {
+ 
+   // Try to evaluate any dependencies out of the loop.
+   LHS = getSCEVAtScope(LHS, L);
+@@ -9470,7 +9494,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+         return RHS;
+     }
+     ExitLimit EL = howFarToZero(getMinusSCEV(LHS, RHS), L, ControlsOnlyExit,
+-                                AllowPredicates);
++                                Guards, AllowPredicates);
+     if (EL.hasAnyInfo())
+       return EL;
+     break;
+@@ -9521,7 +9545,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+   case ICmpInst::ICMP_ULT: { // while (X < Y)
+     bool IsSigned = ICmpInst::isSigned(Pred);
+     ExitLimit EL = howManyLessThans(LHS, RHS, L, IsSigned, /*Invert=*/false,
+-                                    ControlsOnlyExit, AllowPredicates);
++                                    ControlsOnlyExit, Guards, AllowPredicates);
+     if (EL.hasAnyInfo())
+       return EL;
+     break;
+@@ -9540,7 +9564,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromICmp(
+     // "X > Y" is analyzed as the equivalent "~X < ~Y".
+     bool IsSigned = ICmpInst::isSigned(Pred);
+     ExitLimit EL = howManyLessThans(LHS, RHS, L, IsSigned, /*Invert=*/true,
+-                                    ControlsOnlyExit, AllowPredicates);
++                                    ControlsOnlyExit, Guards, AllowPredicates);
+     if (EL.hasAnyInfo())
+       return EL;
+     break;
+@@ -9556,7 +9580,8 @@ ScalarEvolution::ExitLimit
+ ScalarEvolution::computeExitLimitFromSingleExitSwitch(const Loop *L,
+                                                       SwitchInst *Switch,
+                                                       BasicBlock *ExitingBlock,
+-                                                      bool ControlsOnlyExit) {
++                                                      bool ControlsOnlyExit,
++                                                      LazyLoopGuards &Guards) {
+   assert(!L->contains(ExitingBlock) && "Not an exiting block!");
+ 
+   // Give up if the exit is the default dest of a switch.
+@@ -9569,7 +9594,8 @@ ScalarEvolution::computeExitLimitFromSingleExitSwitch(const Loop *L,
+   const SCEV *RHS = getConstant(Switch->findCaseDest(ExitingBlock));
+ 
+   // while (X != Y) --> while (X-Y != 0)
+-  ExitLimit EL = howFarToZero(getMinusSCEV(LHS, RHS), L, ControlsOnlyExit);
++  ExitLimit EL =
++      howFarToZero(getMinusSCEV(LHS, RHS), L, ControlsOnlyExit, Guards);
+   if (EL.hasAnyInfo())
+     return EL;
+ 
+@@ -10759,6 +10785,7 @@ SolveQuadraticAddRecRange(const SCEVAddRecExpr *AddRec,
+ ScalarEvolution::ExitLimit ScalarEvolution::howFarToZero(const SCEV *V,
+                                                          const Loop *L,
+                                                          bool ControlsOnlyExit,
++                                                         LazyLoopGuards &LG,
+                                                          bool AllowPredicates) {
+ 
+   // This is only used for loops with a "x != y" exit test. The exit condition
+@@ -10821,7 +10848,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::howFarToZero(const SCEV *V,
+   if (!isLoopInvariant(Step, L))
+     return getCouldNotCompute();
+ 
+-  LoopGuards Guards = LoopGuards::collect(L, *this);
++  const LoopGuards &Guards = LG.get();
+   // Specialize step for this loop so we get context sensitive facts below.
+   const SCEV *StepWLG = applyLoopGuards(Step, Guards);
+ 
+@@ -13363,17 +13390,10 @@ ScalarEvolution::computeMaxBECountForLT(const SCEV *Start, const SCEV *Stride,
+ ScalarEvolution::ExitLimit
+ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+                                   const Loop *L, bool IsSigned, bool Invert,
+-                                  bool ControlsOnlyExit, bool AllowPredicates) {
++                                  bool ControlsOnlyExit, LazyLoopGuards &Guards,
++                                  bool AllowPredicates) {
+   SmallVector<const SCEVPredicate *> Predicates;
+ 
+-  // Loop guards for L, collected on demand.
+-  std::optional<LoopGuards> CachedGuards;
+-  auto getGuards = [&]() -> const LoopGuards & {
+-    if (!CachedGuards)
+-      CachedGuards.emplace(LoopGuards::collect(L, *this));
+-    return *CachedGuards;
+-  };
+-
+   // FIXME: Extend the non-invariant RHS analysis to greater-than comparisons.
+   if (Invert && !isLoopInvariant(RHS, L))
+     return getCouldNotCompute();
+@@ -13410,7 +13430,7 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+           APInt StrideMax = getUnsignedRangeMax(AR->getStepRecurrence(*this));
+           APInt Limit = APInt::getMaxValue(InnerBitWidth) - (StrideMax - 1);
+           Limit = Limit.zext(OuterBitWidth);
+-          return getUnsignedRangeMax(applyLoopGuards(RHS, getGuards()))
++          return getUnsignedRangeMax(applyLoopGuards(RHS, Guards.get()))
+               .ule(Limit);
+         };
+         auto Flags = AR->getNoWrapFlags();
+@@ -13474,7 +13494,7 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+   bool PositiveStride = isKnownPositive(Stride);
+   // A dominating guard may prove the stride positive.
+   if (!PositiveStride) {
+-    const SCEV *LoopGuardedStride = applyLoopGuards(Stride, getGuards());
++    const SCEV *LoopGuardedStride = applyLoopGuards(Stride, Guards.get());
+     if (isKnownPositive(LoopGuardedStride)) {
+       GuardedStride = LoopGuardedStride;
+       PositiveStride = true;
+@@ -13802,8 +13822,8 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+         };
+ 
+         auto CondGE = IsSigned ? ICmpInst::ICMP_SGE : ICmpInst::ICMP_UGE;
+-        const SCEV *GuardedRHS = applyLoopGuards(OrigRHS, getGuards());
+-        const SCEV *GuardedStart = applyLoopGuards(OrigStart, getGuards());
++        const SCEV *GuardedRHS = applyLoopGuards(OrigRHS, Guards.get());
++        const SCEV *GuardedStart = applyLoopGuards(OrigStart, Guards.get());
+         if (Invert)
+           std::swap(GuardedRHS, GuardedStart);
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/exact-exit-count-more-precise.ll b/llvm/test/Analysis/ScalarEvolution/exact-exit-count-more-precise.ll
+index d4ed168aa4cf6..a7bec504537b1 100644
+--- a/llvm/test/Analysis/ScalarEvolution/exact-exit-count-more-precise.ll
++++ b/llvm/test/Analysis/ScalarEvolution/exact-exit-count-more-precise.ll
+@@ -14,7 +14,7 @@ define void @test_and(i16 %in) {
+ ; CHECK-NEXT:    --> (%_tmp10.i umin %exitcond.i) U: full-set S: full-set Exits: true LoopDispositions: { %bb1.i: Variant, %bb2: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_and
+ ; CHECK-NEXT:  Loop %bb1.i: backedge-taken count is (1 + (-1 * %in))
+-; CHECK-NEXT:  Loop %bb1.i: constant max backedge-taken count is i16 -1
++; CHECK-NEXT:  Loop %bb1.i: constant max backedge-taken count is i16 -32767
+ ; CHECK-NEXT:  Loop %bb1.i: symbolic max backedge-taken count is (1 + (-1 * %in))
+ ; CHECK-NEXT:  Loop %bb1.i: Trip multiple is 1
+ ; CHECK-NEXT:  Loop %bb2: <multiple exits> Unpredictable backedge-taken count.
+@@ -53,7 +53,7 @@ define void @test_or() {
+ ; CHECK-NEXT:    --> (%C11 umax %C5) U: full-set S: full-set Exits: false LoopDispositions: { %BB: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_or
+ ; CHECK-NEXT:  Loop %BB: backedge-taken count is undef
+-; CHECK-NEXT:  Loop %BB: constant max backedge-taken count is i32 -1
++; CHECK-NEXT:  Loop %BB: constant max backedge-taken count is i32 -2147483647
+ ; CHECK-NEXT:  Loop %BB: symbolic max backedge-taken count is undef
+ ; CHECK-NEXT:  Loop %BB: Trip multiple is 1
+ ;
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+index fbc4c8aa5645d..b4eb1811991c4 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+@@ -2072,3 +2072,264 @@ loop:
+ exit:
+   ret void
+ }
++
++; The tests below exercise exits analyzed by howManyLessThans (ult/slt/ugt/sgt
++; exit conditions), whose constant max backedge-taken count should also be
++; limited by loop guards.
++
++define void @guard_ult_rhs(i64 %n) {
++; CHECK-LABEL: 'guard_ult_rhs'
++; CHECK-NEXT:  Classifying expressions for: @guard_ult_rhs
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-1 + (1 umax %n)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i64 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 umax %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_ult_rhs
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (1 umax %n))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (1 umax %n))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp ult i64 %n, 16
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nuw i64 %iv, 1
++  %ec = icmp ult i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @guard_slt_rhs(i32 %n) {
++; CHECK-LABEL: 'guard_slt_rhs'
++; CHECK-NEXT:  Classifying expressions for: @guard_slt_rhs
++; CHECK-NEXT:    %iv = phi i32 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + (1 smax %n))<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nsw i32 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,-2147483648) S: [1,-2147483648) Exits: (1 smax %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_slt_rhs
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (1 smax %n))<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 2147483646
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (1 smax %n))<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp slt i32 %n, 16
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i32 [ 0, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nsw i32 %iv, 1
++  %ec = icmp slt i32 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @guard_ult_rhs_stride_4(i64 %n) {
++; CHECK-LABEL: 'guard_ult_rhs_stride_4'
++; CHECK-NEXT:  Classifying expressions for: @guard_ult_rhs_stride_4
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,4}<nuw><%loop> U: [0,-7) S: [-9223372036854775808,9223372036854775805) Exits: (4 * ((-1 + (4 umax %n)) /u 4))<nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i64 %iv, 4
++; CHECK-NEXT:    --> {4,+,4}<nuw><%loop> U: [4,-3) S: [-9223372036854775808,9223372036854775805) Exits: (4 + (4 * ((-1 + (4 umax %n)) /u 4))<nuw>)<u nuw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_ult_rhs_stride_4
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 + (4 umax %n)) /u 4)
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4611686018427387902
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 + (4 umax %n)) /u 4)
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp ult i64 %n, 64
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nuw i64 %iv, 4
++  %ec = icmp ult i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @guard_ult_start(i64 %start) {
++; CHECK-LABEL: 'guard_ult_start'
++; CHECK-NEXT:  Classifying expressions for: @guard_ult_start
++; CHECK-NEXT:    %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,1}<nuw><%loop> U: full-set S: full-set Exits: (100 umax %start) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i64 %iv, 1
++; CHECK-NEXT:    --> {(1 + %start),+,1}<nw><%loop> U: full-set S: full-set Exits: (1 + (100 umax %start)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_ult_start
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-1 * %start) + (100 umax %start))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 100
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-1 * %start) + (100 umax %start))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp uge i64 %start, 90
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nuw i64 %iv, 1
++  %ec = icmp ult i64 %iv, 100
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @guard_slt_stride(i64 %s) {
++; CHECK-LABEL: 'guard_slt_stride'
++; CHECK-NEXT:  Classifying expressions for: @guard_slt_stride
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,%s}<nsw><%loop> U: full-set S: full-set Exits: (((((-1 * (1 umin ((-1 * %s) + (1000 smax %s))))<nuw><nsw> + (-1 * %s) + (1000 smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (1000 smax %s)))) * %s) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nsw i64 %iv, %s
++; CHECK-NEXT:    --> {%s,+,%s}<nsw><%loop> U: full-set S: full-set Exits: ((1 + (((-1 * (1 umin ((-1 * %s) + (1000 smax %s))))<nuw><nsw> + (-1 * %s) + (1000 smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (1000 smax %s)))) * %s) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_slt_stride
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((((-1 * (1 umin ((-1 * %s) + (1000 smax %s))))<nuw><nsw> + (-1 * %s) + (1000 smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (1000 smax %s))))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -9223372036854774808
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * %s) + (1000 smax %s))))<nuw><nsw> + (-1 * %s) + (1000 smax %s)) /u (1 umax %s)) + (1 umin ((-1 * %s) + (1000 smax %s))))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp sgt i64 %s, 9
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nsw i64 %iv, %s
++  %ec = icmp slt i64 %iv.next, 1000
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @guard_ugt_rhs(i64 %n) {
++; CHECK-LABEL: 'guard_ugt_rhs'
++; CHECK-NEXT:  Classifying expressions for: @guard_ugt_rhs
++; CHECK-NEXT:    %iv = phi i64 [ 100, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {100,+,-1}<nsw><%loop> U: [1,101) S: [1,101) Exits: (1 + (99 umin %n))<nuw><nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add i64 %iv, -1
++; CHECK-NEXT:    --> {99,+,-1}<nsw><%loop> U: [0,100) S: [0,100) Exits: (99 umin %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_ugt_rhs
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (99 + (-1 * (99 umin %n))<nsw>)<nsw>
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 99
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (99 + (-1 * (99 umin %n))<nsw>)<nsw>
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp uge i64 %n, 50
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 100, %entry ], [ %iv.next, %loop ]
++  %iv.next = add i64 %iv, -1
++  %ec = icmp ugt i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @guard_sgt_rhs(i32 %n) {
++; CHECK-LABEL: 'guard_sgt_rhs'
++; CHECK-NEXT:  Classifying expressions for: @guard_sgt_rhs
++; CHECK-NEXT:    %iv = phi i32 [ 10, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {10,+,-1}<nsw><%loop> U: [-2147483647,11) S: [-2147483647,11) Exits: (1 + (9 smin %n))<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nsw i32 %iv, -1
++; CHECK-NEXT:    --> {9,+,-1}<nsw><%loop> U: [-2147483648,10) S: [-2147483648,10) Exits: (9 smin %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_sgt_rhs
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (9 + (-1 * (9 smin %n)))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -2147483639
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (9 + (-1 * (9 smin %n)))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g = icmp sgt i32 %n, -20
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i32 [ 10, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nsw i32 %iv, -1
++  %ec = icmp sgt i32 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; The guard does not dominate the loop, so it must not limit the max count.
++define void @guard_ult_rhs_not_dominating(i64 %n, i1 %c) {
++; CHECK-LABEL: 'guard_ult_rhs_not_dominating'
++; CHECK-NEXT:  Classifying expressions for: @guard_ult_rhs_not_dominating
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ 0, %guard ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><%loop> U: [0,-1) S: [0,-1) Exits: (-1 + (1 umax %n)) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i64 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (1 umax %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @guard_ult_rhs_not_dominating
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (1 umax %n))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -2
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (1 umax %n))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  br i1 %c, label %guard, label %loop
++
++guard:
++  %g = icmp ult i64 %n, 16
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ 0, %guard ], [ %iv.next, %loop ]
++  %iv.next = add nuw i64 %iv, 1
++  %ec = icmp ult i64 %iv.next, %n
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++; Exit taken only if both conditions are true. Both have the same exact count,
++; so the constant max of either (the eq one is limited by the guard) applies.
++define void @and_exit_same_exact_count(i16 %start) {
++; CHECK-LABEL: 'and_exit_same_exact_count'
++; CHECK-NEXT:  Classifying expressions for: @and_exit_same_exact_count
++; CHECK-NEXT:    %g = and i1 %g.1, %g.2
++; CHECK-NEXT:    --> (%g.1 umin %g.2) U: full-set S: full-set
++; CHECK-NEXT:    %iv = phi i16 [ %start, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,1}<nsw><%loop> U: full-set S: full-set Exits: 1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nsw i16 %iv, 1
++; CHECK-NEXT:    --> {(1 + %start),+,1}<nsw><%loop> U: full-set S: full-set Exits: 2 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %and = and i1 %c.1, %c.2
++; CHECK-NEXT:    --> (%c.1 umin %c.2) U: full-set S: full-set Exits: true LoopDispositions: { %loop: Variant }
++; CHECK-NEXT:  Determining loop execution counts for: @and_exit_same_exact_count
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (1 + (-1 * %start))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i16 10
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (1 + (-1 * %start))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g.1 = icmp sgt i16 %start, -10
++  %g.2 = icmp slt i16 %start, 2
++  %g = and i1 %g.1, %g.2
++  br i1 %g, label %loop, label %exit
++
++loop:
++  %iv = phi i16 [ %start, %entry ], [ %iv.next, %loop ]
++  %iv.next = add nsw i16 %iv, 1
++  %c.1 = icmp sge i16 %iv.next, 2
++  %c.2 = icmp eq i16 %iv.next, 2
++  %and = and i1 %c.1, %c.2
++  br i1 %and, label %exit, label %loop
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
+index ee5a02ef0250a..7f71bd19dc106 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
+@@ -512,6 +512,32 @@ for.end:
+   ret i32 0
+ }
+ 
++; The start and the stride of the IV are both zext(%g). The range-based bound
++; does not account for the correlation, but the range of the exact count does.
++define void @start_and_stride_correlated(i1 %g, ptr %dst) mustprogress {
++; CHECK-LABEL: 'start_and_stride_correlated'
++; CHECK-NEXT:  Determining loop execution counts for: @start_and_stride_correlated
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (15 /u (zext i1 %g to i64))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 16
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (15 /u (zext i1 %g to i64))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  %g.64 = zext i1 %g to i64
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %gep = getelementptr inbounds i8, ptr %dst, i64 %iv
++  store i8 0, ptr %gep
++  %iv.next = add nuw nsw i64 %iv, %g.64
++  %ec = icmp ult i64 %iv.next, 16
++  br i1 %ec, label %loop, label %exit
++
++exit:
++  ret void
++}
++
+ declare void @llvm.assume(i1)
+ 
+ !8 = distinct !{!8, !9}
