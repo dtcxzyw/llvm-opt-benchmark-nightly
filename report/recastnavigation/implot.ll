@@ -205,13 +205,13 @@ _ZNK10ImPlotAxis10WillRenderEv.exit555.preheader: ; preds = %bb.ee
   %i.afs = load float, ptr %i.afn, align 8, !tbaa !307
   %i.aft = fpext float %i.afs to double           ; 2 uses
   %i.afu = load double, ptr %i.afo, align 8, !tbaa !308 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.afe to i64  ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.afe to i64  ; 2 uses
   %min.iters.check = icmp ult i32 %i.afe, 3
   br i1 %min.iters.check, label %._crit_edge.i557.us.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.us
-  %.neg = or i64 %wide.trip.count, -2
-  %n.vec = add nsw i64 %.neg, %wide.trip.count    ; 2 uses
+  %5 = add nsw i64 %wide.trip.count, -1
+  %n.vec = and i64 %5, -2                         ; 2 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %.pre.i.us, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splatinsert836 = insertelement <2 x double> poison, double %i.aft, i64 0

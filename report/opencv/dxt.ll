@@ -205,7 +205,7 @@ bb.bd:                                            ; preds = %.loopexit814, %bb.b
 .lr.ph845.us.us.preheader:                        ; preds = %.lr.ph849.us
   %i.hn = sext i32 %i.hh to i64                   ; 3 uses
   %i.ho = sext i32 %i.hg to i64                   ; 3 uses
-  %wide.trip.count968 = zext nneg i32 %.1634852.us to i64 ; 6 uses
+  %wide.trip.count968 = zext nneg i32 %.1634852.us to i64 ; 5 uses
   %i.hp = shl nuw nsw i64 %wide.trip.count968, 4  ; 6 uses
   %i.hq = shl nuw nsw i64 %i.hj, 4                ; 5 uses
   %scevgep1117 = getelementptr i8, ptr %scevgep1116, i64 %i.hq ; 6 uses
@@ -241,7 +241,6 @@ bb.bd:                                            ; preds = %.loopexit814, %bb.b
   %i.ij = insertelement <4 x ptr> %i.ii, ptr %scevgep1143, i64 1
   %i.ik = insertelement <4 x ptr> %i.ij, ptr %scevgep1146, i64 2
   %i.il = shufflevector <4 x ptr> %i.ic, <4 x ptr> %i.he, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %21 = add nsw i64 %wide.trip.count968, -1       ; 2 uses
   %min.iters.check = icmp ugt i32 %.1634852.us, 17
   %i.im = and i32 %.0799851.us, -4
   %ident.check.not = icmp eq i32 %i.im, 4
@@ -274,9 +273,9 @@ bb.bd:                                            ; preds = %.loopexit814, %bb.b
   %i.is = shufflevector <2 x i1> %i.ip, <2 x i1> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.it = shufflevector <4 x i32> %i.ie, <4 x i32> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.iu = icmp slt <8 x i32> %i.it, <i32 0, i32 0, i32 0, i32 0, i32 undef, i32 undef, i32 undef, i32 undef>
-  %.neg = or i64 %21, -2                          ; 2 uses
-  %n.vec = add nsw i64 %.neg, %21
-  %i.iv = add nsw i64 %.neg, %wide.trip.count968  ; 2 uses
+  %21 = and i64 %wide.trip.count968, 2147483644   ; 2 uses
+  %n.vec = add nsw i64 %21, -1                    ; 2 uses
+  %i.iv = add nsw i64 %21, -4
   br label %.lr.ph845.us.us
 
 .lr.ph849.split.us856:                            ; preds = %.lr.ph849.split.us856.preheader, %.lr.ph849.split.us856
@@ -476,7 +475,7 @@ vector.memcheck:                                  ; preds = %.lr.ph845.us.us
   br i1 %op.rdx1494, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 4 uses
   %i.mn = or disjoint i64 %index, 1               ; 4 uses
   %i.mo = add i64 %index, 2                       ; 2 uses
   %i.mp = getelementptr inbounds nuw [16 x i8], ptr %i.jv, i64 %i.mn ; 4 uses
@@ -566,13 +565,13 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   %i.pa = fsub <2 x double> %i.os, %i.oo
   %interleaved.vec1357 = shufflevector <2 x double> %i.oz, <2 x double> %i.pa, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec1357, ptr %i.nr, align 8, !tbaa !113
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %i.pb = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i64 %index, 2
+  %i.pb = icmp eq i64 %index, %i.iv
   br i1 %i.pb, label %scalar.ph.preheader, label %vector.body, !llvm.loop !521
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph845.us.us
-  %indvars.iv963.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph845.us.us ], [ %i.iv, %vector.body ]
-  %indvars.iv961.ph = phi i64 [ %i.hn, %vector.memcheck ], [ %i.hn, %.lr.ph845.us.us ], [ %i.iv, %vector.body ]
+  %indvars.iv963.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph845.us.us ], [ %n.vec, %vector.body ]
+  %indvars.iv961.ph = phi i64 [ %i.hn, %vector.memcheck ], [ %i.hn, %.lr.ph845.us.us ], [ %n.vec, %vector.body ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -975,7 +974,7 @@ middle.block:                                     ; preds = %vector.body
   %i.an = sext i32 %4 to i64                      ; 3 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 2)
   %i.ao = zext nneg i32 %3 to i64                 ; 2 uses
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 5 uses
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 4 uses
   %i.ap = shl nuw nsw i64 %i.ao, 4
   %i.aq = shl nuw nsw i64 %wide.trip.count, 4     ; 7 uses
   %i.ar = add nsw i64 %i.aq, -8                   ; 2 uses
@@ -992,7 +991,6 @@ middle.block:                                     ; preds = %vector.body
   %scevgep226 = getelementptr i8, ptr %i.aw, i64 -16 ; 3 uses
   %scevgep227 = getelementptr i8, ptr %5, i64 24  ; 3 uses
   %scevgep228 = getelementptr i8, ptr %5, i64 %i.aq ; 3 uses
-  %6 = add nsw i64 %wide.trip.count, -1           ; 2 uses
   %min.iters.check301 = icmp sgt i32 %3, 23
   %ident.check208.not = icmp eq i32 %4, 1
   %or.cond325 = and i1 %min.iters.check301, %ident.check208.not
@@ -1016,9 +1014,9 @@ middle.block:                                     ; preds = %vector.body
   %i.bo = getelementptr i8, ptr %1, i64 %i.as
   %i.bp = getelementptr i8, ptr %i.bo, i64 16
   %i.bq = getelementptr i8, ptr %1, i64 %i.ar
-  %.neg = or i64 %6, -2                           ; 2 uses
-  %n.vec303 = add nsw i64 %.neg, %6
-  %i.br = add nsw i64 %.neg, %wide.trip.count     ; 2 uses
+  %6 = and i64 %wide.trip.count, 1073741822       ; 2 uses
+  %n.vec303 = add nsw i64 %6, -1                  ; 2 uses
+  %i.br = add nsw i64 %6, -4
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
@@ -1134,7 +1132,7 @@ vector.memcheck209:                               ; preds = %.lr.ph.us
   br i1 %conflict.rdx299, label %scalar.ph300.preheader, label %vector.body304
 
 vector.body304:                                   ; preds = %vector.memcheck209, %vector.body304
-  %index305 = phi i64 [ %index.next321, %vector.body304 ], [ 0, %vector.memcheck209 ] ; 3 uses
+  %index305 = phi i64 [ %index.next321, %vector.body304 ], [ 0, %vector.memcheck209 ] ; 4 uses
   %i.ck = or disjoint i64 %index305, 1            ; 3 uses
   %i.cl = getelementptr inbounds nuw [16 x i8], ptr %i.bs, i64 %i.ck ; 4 uses
   %i.cm = getelementptr inbounds nuw [16 x i8], ptr %i.cl, i64 %i.c ; 2 uses
@@ -1197,13 +1195,13 @@ vector.body304:                                   ; preds = %vector.memcheck209,
   %i.eb = fsub <2 x double> %i.dx, %i.dt
   %interleaved.vec320 = shufflevector <2 x double> %i.ea, <2 x double> %i.eb, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
   store <4 x double> %interleaved.vec320, ptr %i.ct, align 8, !tbaa !113
-  %index.next321 = add nuw i64 %index305, 2       ; 2 uses
-  %i.ec = icmp eq i64 %index.next321, %n.vec303
+  %index.next321 = add nuw i64 %index305, 2
+  %i.ec = icmp eq i64 %index305, %i.br
   br i1 %i.ec, label %scalar.ph300.preheader, label %vector.body304, !llvm.loop !553
 
 scalar.ph300.preheader:                           ; preds = %vector.body304, %vector.memcheck209, %.lr.ph.us
-  %indvars.iv139.ph = phi i64 [ %i.an, %vector.memcheck209 ], [ %i.an, %.lr.ph.us ], [ %i.br, %vector.body304 ]
-  %indvars.iv137.ph = phi i64 [ 1, %vector.memcheck209 ], [ 1, %.lr.ph.us ], [ %i.br, %vector.body304 ]
+  %indvars.iv139.ph = phi i64 [ %i.an, %vector.memcheck209 ], [ %i.an, %.lr.ph.us ], [ %n.vec303, %vector.body304 ]
+  %indvars.iv137.ph = phi i64 [ 1, %vector.memcheck209 ], [ 1, %.lr.ph.us ], [ %n.vec303, %vector.body304 ]
   br label %scalar.ph300
 
 scalar.ph300:                                     ; preds = %scalar.ph300.preheader, %scalar.ph300
@@ -1317,7 +1315,7 @@ bb.a:
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.g = sext i32 %4 to i64
   %i.h = zext nneg i32 %3 to i64                  ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.a to i64    ; 7 uses
+  %wide.trip.count = zext nneg i32 %i.a to i64    ; 6 uses
   %i.i = shl nuw nsw i64 %wide.trip.count, 4      ; 11 uses
   %i.j = add nsw i64 %i.i, -8                     ; 2 uses
   %i.k = shl nuw nsw i64 %i.h, 4
@@ -1401,8 +1399,8 @@ bb.a:
   %i.cc = insertelement <4 x ptr> %i.cb, ptr %scevgep204, i64 3 ; 4 uses
   %i.cd = insertelement <4 x ptr> %i.ah, ptr %scevgep203, i64 2
   %i.ce = insertelement <4 x ptr> %i.cd, ptr %scevgep204, i64 3
-  %.neg = or i64 %wide.trip.count, -2
-  %n.vec = add nsw i64 %.neg, %wide.trip.count    ; 2 uses
+  %6 = add nsw i64 %wide.trip.count, -1
+  %n.vec = and i64 %6, -2                         ; 2 uses
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
