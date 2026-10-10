@@ -205,25 +205,21 @@ bb.jx:                                            ; preds = %bb.jq, %bb.jw
   br i1 %i.ayk, label %.lr.ph3412, label %._crit_edge3413
 
 ._crit_edge3413:                                  ; preds = %bb.jx, %.preheader
-  %.741263.lcssa = phi ptr [ %.731262, %.preheader ], [ %i.aya, %bb.jx ] ; 8 uses
-  %.74.lcssa = phi ptr [ %.73, %.preheader ], [ %.76, %bb.jx ] ; 8 uses
+  %.741263.lcssa = phi ptr [ %.731262, %.preheader ], [ %i.aya, %bb.jx ] ; 11 uses
+  %.74.lcssa = phi ptr [ %.73, %.preheader ], [ %.76, %bb.jx ] ; 11 uses
   %.411108.lcssa = phi i32 [ %.401107, %.preheader ], [ %i.ayi, %bb.jx ] ; 6 uses
-  %.41.lcssa = phi i32 [ %.40, %.preheader ], [ %i.ayj, %bb.jx ] ; 7 uses
+  %.41.lcssa = phi i32 [ %.40, %.preheader ], [ %i.ayj, %bb.jx ] ; 13 uses
   %i.ayl = icmp sgt i32 %.411108.lcssa, -1
   br i1 %i.ayl, label %bb.jy, label %bb.kn
 
 bb.jy:                                            ; preds = %._crit_edge3413
   %i.aym = shl nuw i32 %.411108.lcssa, 1          ; 2 uses
-  %i.ayn = add nsw i32 %.41.lcssa, -1             ; 2 uses
+  %i.ayn = add nsw i32 %.41.lcssa, -1
   %i.ayo = icmp samesign ult i32 %.41.lcssa, 9
   br i1 %i.ayo, label %.lr.ph3456, label %._crit_edge3457
 
-.lr.ph3456:                                       ; preds = %bb.jy, %bb.km
-  %.433454 = phi i32 [ %3, %bb.km ], [ %i.ayn, %bb.jy ] ; 3 uses
-  %.4311103453 = phi i32 [ %i.bae, %bb.km ], [ %i.aym, %bb.jy ]
-  %.783452 = phi ptr [ %.80, %bb.km ], [ %.74.lcssa, %bb.jy ] ; 2 uses
-  %.7812673451 = phi ptr [ %2, %bb.km ], [ %.741263.lcssa, %bb.jy ] ; 2 uses
-  %.not1510 = icmp ult ptr %.7812673451, %.783452
+.lr.ph3456:                                       ; preds = %bb.jy
+  %.not1510 = icmp ult ptr %.741263.lcssa, %.74.lcssa
   br i1 %.not1510, label %bb.kf, label %bb.jz
 
 bb.jz:                                            ; preds = %.lr.ph3456
@@ -269,8 +265,8 @@ bb.ke:                                            ; preds = %bb.kc, %bb.ka
   br label %bb.kf
 
 bb.kf:                                            ; preds = %bb.ke, %.lr.ph3456
-  %.791268 = phi ptr [ %i.azc, %bb.ke ], [ %.7812673451, %.lr.ph3456 ] ; 2 uses
-  %.79 = phi ptr [ %i.aze, %bb.ke ], [ %.783452, %.lr.ph3456 ] ; 2 uses
+  %.791268 = phi ptr [ %i.azc, %bb.ke ], [ %.741263.lcssa, %.lr.ph3456 ] ; 2 uses
+  %.79 = phi ptr [ %i.aze, %bb.ke ], [ %.74.lcssa, %.lr.ph3456 ] ; 2 uses
   %i.azf = getelementptr inbounds nuw i8, ptr %.791268, i64 1 ; 2 uses
   %i.azg = load i8, ptr %.791268, align 1, !tbaa !41
   %.not1512 = icmp ult ptr %i.azf, %.79
@@ -318,27 +314,26 @@ bb.kl:                                            ; preds = %bb.kj, %bb.kh
   store ptr %i.azw, ptr %i.ac, align 8, !tbaa !43
   br label %bb.km
 
-bb.km:                                            ; preds = %bb.kf, %bb.kl
+bb.km:                                            ; preds = %bb.kl, %bb.kf
   %.801269 = phi ptr [ %i.azu, %bb.kl ], [ %i.azf, %bb.kf ] ; 2 uses
-  %.80 = phi ptr [ %i.azw, %bb.kl ], [ %.79, %bb.kf ] ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.801269, i64 1 ; 2 uses
+  %.80 = phi ptr [ %i.azw, %bb.kl ], [ %.79, %bb.kf ]
+  %2 = add nuw nsw i32 %.41.lcssa, 15
   %i.azx = load i8, ptr %.801269, align 1, !tbaa !41
   %i.azy = zext i8 %i.azx to i32
   %i.azz = shl nuw nsw i32 %i.azy, 8
   %i.baa = zext i8 %i.azg to i32
   %i.bab = or disjoint i32 %i.azz, %i.baa
-  %i.bac = sub nuw nsw i32 16, %.433454
+  %i.bac = sub nuw nsw i32 17, %.41.lcssa
   %i.bad = shl nuw nsw i32 %i.bab, %i.bac
-  %i.bae = or i32 %i.bad, %.4311103453            ; 2 uses
-  %3 = add nuw nsw i32 %.433454, 16               ; 2 uses
-  %4 = icmp slt i32 %.433454, -8
-  br i1 %4, label %.lr.ph3456, label %._crit_edge3457
+  %i.bae = or i32 %i.bad, %i.aym
+  %3 = getelementptr inbounds nuw i8, ptr %.801269, i64 1
+  br label %._crit_edge3457
 
 ._crit_edge3457:                                  ; preds = %bb.km, %bb.jy
-  %.781267.lcssa = phi ptr [ %.741263.lcssa, %bb.jy ], [ %2, %bb.km ]
+  %.781267.lcssa = phi ptr [ %.741263.lcssa, %bb.jy ], [ %3, %bb.km ]
   %.78.lcssa = phi ptr [ %.74.lcssa, %bb.jy ], [ %.80, %bb.km ]
   %.431110.lcssa = phi i32 [ %i.aym, %bb.jy ], [ %i.bae, %bb.km ] ; 2 uses
-  %.43.lcssa = phi i32 [ %i.ayn, %bb.jy ], [ %3, %bb.km ]
+  %.43.lcssa = phi i32 [ %i.ayn, %bb.jy ], [ %2, %bb.km ]
   %i.baf = lshr i32 %.431110.lcssa, 24
   %i.bag = shl i32 %.431110.lcssa, 8
   %i.bah = add nsw i32 %.43.lcssa, -8
@@ -350,16 +345,12 @@ bb.kn:                                            ; preds = %._crit_edge3413
 
 bb.ko:                                            ; preds = %bb.kn
   %i.baj = shl i32 %.411108.lcssa, 2              ; 2 uses
-  %i.bak = add nsw i32 %.41.lcssa, -2             ; 2 uses
+  %i.bak = add nsw i32 %.41.lcssa, -2
   %i.bal = icmp samesign ult i32 %.41.lcssa, 12
   br i1 %i.bal, label %.lr.ph3445, label %._crit_edge3446
 
-.lr.ph3445:                                       ; preds = %bb.ko, %bb.kw
-  %.453443 = phi i32 [ %6, %bb.kw ], [ %i.bak, %bb.ko ] ; 3 uses
-  %.4511123442 = phi i32 [ %i.bbd, %bb.kw ], [ %i.baj, %bb.ko ]
-  %.823441 = phi ptr [ %.84, %bb.kw ], [ %.74.lcssa, %bb.ko ] ; 2 uses
-  %.8212713440 = phi ptr [ %5, %bb.kw ], [ %.741263.lcssa, %bb.ko ] ; 2 uses
-  %.not1506 = icmp ult ptr %.8212713440, %.823441
+.lr.ph3445:                                       ; preds = %bb.ko
+  %.not1506 = icmp ult ptr %.741263.lcssa, %.74.lcssa
   br i1 %.not1506, label %bb.ks, label %bb.kp
 
 bb.kp:                                            ; preds = %.lr.ph3445
@@ -377,8 +368,8 @@ bb.kr:                                            ; preds = %bb.kp
   br label %bb.ks
 
 bb.ks:                                            ; preds = %bb.kr, %.lr.ph3445
-  %.831272 = phi ptr [ %i.bao, %bb.kr ], [ %.8212713440, %.lr.ph3445 ] ; 2 uses
-  %.83 = phi ptr [ %i.bap, %bb.kr ], [ %.823441, %.lr.ph3445 ] ; 2 uses
+  %.831272 = phi ptr [ %i.bao, %bb.kr ], [ %.741263.lcssa, %.lr.ph3445 ] ; 2 uses
+  %.83 = phi ptr [ %i.bap, %bb.kr ], [ %.74.lcssa, %.lr.ph3445 ] ; 2 uses
   %i.baq = getelementptr inbounds nuw i8, ptr %.831272, i64 1 ; 2 uses
   %i.bar = load i8, ptr %.831272, align 1, !tbaa !41
   %.not1508 = icmp ult ptr %i.baq, %.83
@@ -398,27 +389,26 @@ bb.kv:                                            ; preds = %bb.kt
   %i.bav = load ptr, ptr %i.ac, align 8, !tbaa !43
   br label %bb.kw
 
-bb.kw:                                            ; preds = %bb.ks, %bb.kv
+bb.kw:                                            ; preds = %bb.kv, %bb.ks
   %.841273 = phi ptr [ %i.bau, %bb.kv ], [ %i.baq, %bb.ks ] ; 2 uses
-  %.84 = phi ptr [ %i.bav, %bb.kv ], [ %.83, %bb.ks ] ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.841273, i64 1 ; 2 uses
+  %.84 = phi ptr [ %i.bav, %bb.kv ], [ %.83, %bb.ks ]
+  %4 = add nuw nsw i32 %.41.lcssa, 14
   %i.baw = load i8, ptr %.841273, align 1, !tbaa !41
   %i.bax = zext i8 %i.baw to i32
   %i.bay = shl nuw nsw i32 %i.bax, 8
   %i.baz = zext i8 %i.bar to i32
   %i.bba = or disjoint i32 %i.bay, %i.baz
-  %i.bbb = sub nuw nsw i32 16, %.453443
+  %i.bbb = sub nuw nsw i32 18, %.41.lcssa
   %i.bbc = shl nuw nsw i32 %i.bba, %i.bbb
-  %i.bbd = or i32 %i.bbc, %.4511123442            ; 2 uses
-  %6 = add nuw nsw i32 %.453443, 16               ; 2 uses
-  %7 = icmp slt i32 %.453443, -6
-  br i1 %7, label %.lr.ph3445, label %._crit_edge3446
+  %i.bbd = or i32 %i.bbc, %i.baj
+  %5 = getelementptr inbounds nuw i8, ptr %.841273, i64 1
+  br label %._crit_edge3446
 
 ._crit_edge3446:                                  ; preds = %bb.kw, %bb.ko
   %.821271.lcssa = phi ptr [ %.741263.lcssa, %bb.ko ], [ %5, %bb.kw ]
   %.82.lcssa = phi ptr [ %.74.lcssa, %bb.ko ], [ %.84, %bb.kw ]
   %.451112.lcssa = phi i32 [ %i.baj, %bb.ko ], [ %i.bbd, %bb.kw ] ; 2 uses
-  %.45.lcssa = phi i32 [ %i.bak, %bb.ko ], [ %6, %bb.kw ]
+  %.45.lcssa = phi i32 [ %i.bak, %bb.ko ], [ %4, %bb.kw ]
   %i.bbe = lshr i32 %.451112.lcssa, 22
   %i.bbf = shl i32 %.451112.lcssa, 10
   %i.bbg = add nsw i32 %.45.lcssa, -10
@@ -428,19 +418,15 @@ bb.kw:                                            ; preds = %bb.ks, %bb.kv
 bb.kx:                                            ; preds = %bb.kn
   %i.bbi = icmp samesign ult i32 %.411108.lcssa, -536870912
   %i.bbj = shl i32 %.411108.lcssa, 3              ; 4 uses
-  %i.bbk = add nsw i32 %.41.lcssa, -3             ; 4 uses
+  %i.bbk = add nsw i32 %.41.lcssa, -3             ; 3 uses
   br i1 %i.bbi, label %bb.ky, label %bb.lh
 
 bb.ky:                                            ; preds = %bb.kx
   %i.bbl = icmp samesign ult i32 %.41.lcssa, 15
   br i1 %i.bbl, label %.lr.ph3434, label %._crit_edge3435
 
-.lr.ph3434:                                       ; preds = %bb.ky, %bb.lg
-  %.473432 = phi i32 [ %9, %bb.lg ], [ %i.bbk, %bb.ky ] ; 3 uses
-  %.4711143431 = phi i32 [ %i.bcd, %bb.lg ], [ %i.bbj, %bb.ky ]
-  %.863430 = phi ptr [ %.88, %bb.lg ], [ %.74.lcssa, %bb.ky ] ; 2 uses
-  %.8612753429 = phi ptr [ %8, %bb.lg ], [ %.741263.lcssa, %bb.ky ] ; 2 uses
-  %.not1502 = icmp ult ptr %.8612753429, %.863430
+.lr.ph3434:                                       ; preds = %bb.ky
+  %.not1502 = icmp ult ptr %.741263.lcssa, %.74.lcssa
   br i1 %.not1502, label %bb.lc, label %bb.kz
 
 bb.kz:                                            ; preds = %.lr.ph3434
@@ -458,8 +444,8 @@ bb.lb:                                            ; preds = %bb.kz
   br label %bb.lc
 
 bb.lc:                                            ; preds = %bb.lb, %.lr.ph3434
-  %.871276 = phi ptr [ %i.bbo, %bb.lb ], [ %.8612753429, %.lr.ph3434 ] ; 2 uses
-  %.87 = phi ptr [ %i.bbp, %bb.lb ], [ %.863430, %.lr.ph3434 ] ; 2 uses
+  %.871276 = phi ptr [ %i.bbo, %bb.lb ], [ %.741263.lcssa, %.lr.ph3434 ] ; 2 uses
+  %.87 = phi ptr [ %i.bbp, %bb.lb ], [ %.74.lcssa, %.lr.ph3434 ] ; 2 uses
   %i.bbq = getelementptr inbounds nuw i8, ptr %.871276, i64 1 ; 2 uses
   %i.bbr = load i8, ptr %.871276, align 1, !tbaa !41
   %.not1504 = icmp ult ptr %i.bbq, %.87
@@ -479,27 +465,26 @@ bb.lf:                                            ; preds = %bb.ld
   %i.bbv = load ptr, ptr %i.ac, align 8, !tbaa !43
   br label %bb.lg
 
-bb.lg:                                            ; preds = %bb.lc, %bb.lf
+bb.lg:                                            ; preds = %bb.lf, %bb.lc
   %.881277 = phi ptr [ %i.bbu, %bb.lf ], [ %i.bbq, %bb.lc ] ; 2 uses
-  %.88 = phi ptr [ %i.bbv, %bb.lf ], [ %.87, %bb.lc ] ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.881277, i64 1 ; 2 uses
+  %.88 = phi ptr [ %i.bbv, %bb.lf ], [ %.87, %bb.lc ]
+  %6 = add nuw nsw i32 %.41.lcssa, 13
   %i.bbw = load i8, ptr %.881277, align 1, !tbaa !41
   %i.bbx = zext i8 %i.bbw to i32
   %i.bby = shl nuw nsw i32 %i.bbx, 8
   %i.bbz = zext i8 %i.bbr to i32
   %i.bca = or disjoint i32 %i.bby, %i.bbz
-  %i.bcb = sub nuw nsw i32 16, %.473432
+  %i.bcb = sub nuw nsw i32 19, %.41.lcssa
   %i.bcc = shl nuw i32 %i.bca, %i.bcb
-  %i.bcd = or i32 %i.bcc, %.4711143431            ; 2 uses
-  %9 = add nuw nsw i32 %.473432, 16               ; 2 uses
-  %10 = icmp slt i32 %.473432, -4
-  br i1 %10, label %.lr.ph3434, label %._crit_edge3435
+  %i.bcd = or i32 %i.bcc, %i.bbj
+  %7 = getelementptr inbounds nuw i8, ptr %.881277, i64 1
+  br label %._crit_edge3435
 
 ._crit_edge3435:                                  ; preds = %bb.lg, %bb.ky
-  %.861275.lcssa = phi ptr [ %.741263.lcssa, %bb.ky ], [ %8, %bb.lg ]
+  %.861275.lcssa = phi ptr [ %.741263.lcssa, %bb.ky ], [ %7, %bb.lg ]
   %.86.lcssa = phi ptr [ %.74.lcssa, %bb.ky ], [ %.88, %bb.lg ]
   %.471114.lcssa = phi i32 [ %i.bbj, %bb.ky ], [ %i.bcd, %bb.lg ] ; 2 uses
-  %.47.lcssa = phi i32 [ %i.bbk, %bb.ky ], [ %9, %bb.lg ]
+  %.47.lcssa = phi i32 [ %i.bbk, %bb.ky ], [ %6, %bb.lg ]
   %i.bce = lshr i32 %.471114.lcssa, 20
   %i.bcf = shl i32 %.471114.lcssa, 12
   %i.bcg = add nsw i32 %.47.lcssa, -12
@@ -902,8 +887,23 @@ bb.mr:                                            ; preds = %._crit_edge3507
   br i1 %or.cond31, label %.preheader1893, label %.loopexit1894
 
 .preheader1893:                                   ; preds = %bb.mr
+  %8 = or disjoint i32 %.121057.lcssa, 16
   %.not1455 = icmp ult ptr %.201209.lcssa, %.201148.lcssa
   br i1 %.not1455, label %bb.mv, label %bb.ms
+
+.loopexit1894.loopexit:                           ; preds = %bb.my, %bb.mv
+  %.1041293 = phi ptr [ %i.bio, %bb.my ], [ %i.bik, %bb.mv ] ; 2 uses
+  %.104 = phi ptr [ %i.bip, %bb.my ], [ %.103, %bb.mv ]
+  %9 = getelementptr inbounds nuw i8, ptr %.1041293, i64 1
+  %10 = load i8, ptr %.1041293, align 1, !tbaa !41
+  %11 = zext i8 %10 to i32
+  %12 = shl nuw nsw i32 %11, 8
+  %13 = zext i8 %i.bil to i32
+  %14 = or disjoint i32 %12, %13
+  %15 = sub nuw nsw i32 16, %.121057.lcssa
+  %16 = shl nuw nsw i32 %14, %15
+  %17 = or i32 %16, %.121079.lcssa
+  br label %.loopexit1894
 
 bb.ms:                                            ; preds = %.preheader1893
   %i.big = tail call fastcc i32 @read_input(ptr noundef %0)
@@ -941,26 +941,11 @@ bb.my:                                            ; preds = %bb.mw
   %i.bip = load ptr, ptr %i.ac, align 8, !tbaa !43
   br label %.loopexit1894.loopexit
 
-.loopexit1894.loopexit:                           ; preds = %bb.mv, %bb.my
-  %.1041293 = phi ptr [ %i.bio, %bb.my ], [ %i.bik, %bb.mv ] ; 2 uses
-  %.104 = phi ptr [ %i.bip, %bb.my ], [ %.103, %bb.mv ]
-  %11 = or disjoint i32 %.121057.lcssa, 16
-  %12 = load i8, ptr %.1041293, align 1, !tbaa !41
-  %13 = zext i8 %12 to i32
-  %14 = shl nuw nsw i32 %13, 8
-  %15 = zext i8 %i.bil to i32
-  %16 = or disjoint i32 %14, %15
-  %17 = sub nuw nsw i32 16, %.121057.lcssa
-  %18 = shl nuw nsw i32 %16, %17
-  %19 = or i32 %18, %.121079.lcssa
-  %20 = getelementptr inbounds nuw i8, ptr %.1041293, i64 1
-  br label %.loopexit1894
-
 .loopexit1894:                                    ; preds = %.loopexit1894.loopexit, %bb.mr
-  %.1061295 = phi ptr [ %.201209.lcssa, %bb.mr ], [ %20, %.loopexit1894.loopexit ] ; 2 uses
+  %.1061295 = phi ptr [ %.201209.lcssa, %bb.mr ], [ %9, %.loopexit1894.loopexit ] ; 2 uses
   %.106 = phi ptr [ %.201148.lcssa, %bb.mr ], [ %.104, %.loopexit1894.loopexit ] ; 2 uses
-  %.591126 = phi i32 [ %.121079.lcssa, %bb.mr ], [ %19, %.loopexit1894.loopexit ]
-  %.59 = phi i32 [ %.121057.lcssa, %bb.mr ], [ %11, %.loopexit1894.loopexit ] ; 2 uses
+  %.591126 = phi i32 [ %.121079.lcssa, %bb.mr ], [ %17, %.loopexit1894.loopexit ]
+  %.59 = phi i32 [ %.121057.lcssa, %bb.mr ], [ %8, %.loopexit1894.loopexit ] ; 2 uses
   %i.biq = and i32 %.59, 15
   %i.bir = shl i32 %.591126, %i.biq               ; 2 uses
   %i.bis = and i32 %.59, -16                      ; 2 uses

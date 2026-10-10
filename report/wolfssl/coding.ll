@@ -202,16 +202,14 @@ bb.g:                                             ; preds = %.lr.ph, %CEscape.ex
   %.0130310 = phi i32 [ 0, %.lr.ph ], [ %.2, %CEscape.exit ] ; 2 uses
   %.0137308 = phi i32 [ %1, %.lr.ph ], [ %i.fe, %CEscape.exit ]
   %.045.i194304307 = phi i32 [ 0, %.lr.ph ], [ %.045.i194305, %CEscape.exit ] ; 13 uses
-  %5 = add nuw i64 %indvars.iv, 1
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
   %i.r = load i8, ptr %i.q, align 1, !tbaa !11    ; 2 uses
-  %6 = add nuw i64 %indvars.iv, 2
-  %7 = and i64 %5, 4294967295
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %7
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
+  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 1
   %i.t = load i8, ptr %i.s, align 1, !tbaa !11    ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %8 = and i64 %6, 4294967295
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 %8
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
+  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 2
   %i.v = load i8, ptr %i.u, align 1, !tbaa !11    ; 2 uses
   %i.w = lshr i8 %i.r, 2
   %i.x = shl i8 %i.t, 2
@@ -614,7 +612,7 @@ CEscape.exit:                                     ; preds = %CEscape.exit.sink.s
   br i1 %i.fw, label %bb.g, label %._crit_edge.loopexit
 
 ._crit_edge.loopexit:                             ; preds = %CEscape.exit
-  %indvars.le = trunc i64 %indvars.iv.next to i32
+  %indvars.le = trunc nuw i64 %indvars.iv.next to i32
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader

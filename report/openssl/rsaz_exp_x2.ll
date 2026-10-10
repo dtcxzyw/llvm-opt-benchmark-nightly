@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/rsaz_exp_x2?download=true
 inline.NumInlined: 17
 inline.NumDeleted: 10
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 5
 loop-unroll.NumUnrolled: 9
 begin_hunk_0_@ossl_rsaz_mod_exp_avx512_x2:bb.a
   %i.nn = getelementptr inbounds nuw i8, ptr %.056.i41.i132, i64 3
@@ -205,8 +205,8 @@ bb.a:
   br i1 %i.k, label %.lr.ph, label %._crit_edge, !llvm.loop !30
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.036.lcssa = phi i32 [ %3, %bb.a ], [ %i.i, %.lr.ph ] ; 4 uses
-  %.035.lcssa = phi ptr [ %2, %bb.a ], [ %i.g, %.lr.ph ] ; 17 uses
+  %.036.lcssa = phi i32 [ %3, %bb.a ], [ %i.i, %.lr.ph ] ; 10 uses
+  %.035.lcssa = phi ptr [ %2, %bb.a ], [ %i.g, %.lr.ph ] ; 19 uses
   %.033.lcssa = phi i32 [ %1, %bb.a ], [ %i.h, %.lr.ph ] ; 3 uses
   %.0.lcssa = phi ptr [ %0, %bb.a ], [ %i.j, %.lr.ph ] ; 6 uses
   %i.l = icmp sgt i32 %.036.lcssa, 52
@@ -333,78 +333,76 @@ bb.d:                                             ; preds = %._crit_edge
 
 bb.e:                                             ; preds = %bb.d
   %i.cf = add nuw nsw i32 %.036.lcssa, 7
-  %i.cg = lshr i32 %i.cf, 3                       ; 2 uses
-  %i.ch = zext nneg i32 %i.cg to i64              ; 4 uses
-  %xtraiter = and i64 %i.ch, 3                    ; 3 uses
-  %4 = add nsw i32 %i.cg, -1
-  %5 = icmp ult i32 %4, 3
-  br i1 %5, label %.epil.preheader, label %.new
+  %i.cg = lshr i32 %i.cf, 3
+  %i.ch = zext nneg i32 %i.cg to i64              ; 7 uses
+  %4 = getelementptr i8, ptr %.035.lcssa, i64 %i.ch
+  %5 = getelementptr i8, ptr %4, i64 -1
+  %6 = load i8, ptr %5, align 1, !tbaa !11
+  %7 = zext i8 %6 to i64                          ; 2 uses
+  %8 = icmp ugt i32 %.036.lcssa, 8
+  br i1 %8, label %.new, label %get_digit.exit44
 
 .new:                                             ; preds = %bb.e
-  %unroll_iter = and i64 %i.ch, 268435452
-  br label %bb.f
+  %9 = shl nuw nsw i64 %7, 8
+  %10 = getelementptr i8, ptr %.035.lcssa, i64 %i.ch
+  %11 = getelementptr i8, ptr %10, i64 -2
+  %12 = load i8, ptr %11, align 1, !tbaa !11
+  %13 = zext i8 %12 to i64
+  %14 = or disjoint i64 %9, %13                   ; 2 uses
+  %15 = icmp ugt i32 %.036.lcssa, 16
+  br i1 %15, label %bb.f, label %get_digit.exit44
 
-bb.f:                                             ; preds = %bb.f, %.new
-  %indvars.iv.i41 = phi i64 [ %i.ch, %.new ], [ %indvars.iv.next.i43.3, %bb.f ] ; 5 uses
-  %.08.i42 = phi i64 [ 0, %.new ], [ %i.cn, %bb.f ]
-  %niter = phi i64 [ 0, %.new ], [ %niter.next.3, %bb.f ]
-  %6 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41
-  %7 = getelementptr i8, ptr %6, i64 -1
-  %8 = load i8, ptr %7, align 1, !tbaa !11
-  %9 = zext i8 %8 to i64
-  %10 = shl i64 %.08.i42, 16
-  %11 = shl nuw nsw i64 %9, 8
-  %12 = or disjoint i64 %10, %11
-  %13 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41
-  %14 = getelementptr i8, ptr %13, i64 -2
-  %15 = load i8, ptr %14, align 1, !tbaa !11
-  %16 = zext i8 %15 to i64
-  %17 = or disjoint i64 %12, %16
-  %18 = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41
-  %19 = getelementptr i8, ptr %18, i64 -3
-  %20 = load i8, ptr %19, align 1, !tbaa !11
-  %21 = zext i8 %20 to i64
-  %22 = shl i64 %17, 16
-  %i.ci = shl nuw nsw i64 %21, 8
-  %23 = or disjoint i64 %22, %i.ci
-  %i.cj = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41
-  %i.ck = getelementptr i8, ptr %i.cj, i64 -4
+bb.f:                                             ; preds = %.new
+  %i.ci = shl nuw nsw i64 %14, 8
+  %i.cj = getelementptr i8, ptr %.035.lcssa, i64 %i.ch
+  %i.ck = getelementptr i8, ptr %i.cj, i64 -3
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !11
   %i.cm = zext i8 %i.cl to i64
-  %i.cn = or disjoint i64 %23, %i.cm              ; 3 uses
-  %indvars.iv.next.i43.3 = add nsw i64 %indvars.iv.i41, -4 ; 2 uses
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
-  %niter.ncmp.3.not = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3.not, label %get_digit.exit44.unr-lcssa, label %bb.f, !llvm.loop !31
+  %i.cn = or disjoint i64 %i.ci, %i.cm            ; 2 uses
+  %16 = icmp ugt i32 %.036.lcssa, 24
+  br i1 %16, label %get_digit.exit44.unr-lcssa, label %get_digit.exit44
 
 get_digit.exit44.unr-lcssa:                       ; preds = %bb.f
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %get_digit.exit44, label %.epil.preheader
+  %17 = shl nuw nsw i64 %i.cn, 8
+  %18 = getelementptr i8, ptr %.035.lcssa, i64 %i.ch
+  %19 = getelementptr i8, ptr %18, i64 -4
+  %20 = load i8, ptr %19, align 1, !tbaa !11
+  %21 = zext i8 %20 to i64
+  %22 = or disjoint i64 %17, %21                  ; 2 uses
+  %23 = icmp ugt i32 %.036.lcssa, 32
+  br i1 %23, label %.epil.preheader, label %get_digit.exit44
 
-.epil.preheader:                                  ; preds = %get_digit.exit44.unr-lcssa, %bb.e
-  %indvars.iv.i41.epil.init = phi i64 [ %i.ch, %bb.e ], [ %indvars.iv.next.i43.3, %get_digit.exit44.unr-lcssa ]
-  %.08.i42.epil.init = phi i64 [ 0, %bb.e ], [ %i.cn, %get_digit.exit44.unr-lcssa ]
-  %lcmp.mod78 = icmp ne i64 %xtraiter, 0
-  tail call void @llvm.assume(i1 %lcmp.mod78)
-  br label %bb.g
+.epil.preheader:                                  ; preds = %get_digit.exit44.unr-lcssa
+  %24 = shl i64 %22, 8
+  %25 = getelementptr i8, ptr %.035.lcssa, i64 %i.ch
+  %26 = getelementptr i8, ptr %25, i64 -5
+  %27 = load i8, ptr %26, align 1, !tbaa !11
+  %28 = zext i8 %27 to i64
+  %29 = or disjoint i64 %24, %28                  ; 2 uses
+  %30 = icmp ugt i32 %.036.lcssa, 40
+  br i1 %30, label %bb.g, label %get_digit.exit44
 
-bb.g:                                             ; preds = %bb.g, %.epil.preheader
-  %indvars.iv.i41.epil = phi i64 [ %indvars.iv.i41.epil.init, %.epil.preheader ], [ %indvars.iv.next.i43.epil, %bb.g ] ; 2 uses
-  %.08.i42.epil = phi i64 [ %.08.i42.epil.init, %.epil.preheader ], [ %i.ct, %bb.g ]
-  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.g ]
-  %i.co = shl i64 %.08.i42.epil, 8
-  %i.cp = getelementptr i8, ptr %.035.lcssa, i64 %indvars.iv.i41.epil
-  %i.cq = getelementptr i8, ptr %i.cp, i64 -1
+bb.g:                                             ; preds = %.epil.preheader
+  %i.co = shl i64 %29, 8
+  %i.cp = getelementptr i8, ptr %.035.lcssa, i64 %i.ch
+  %i.cq = getelementptr i8, ptr %i.cp, i64 -6
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !11
   %i.cs = zext i8 %i.cr to i64
   %i.ct = or disjoint i64 %i.co, %i.cs            ; 2 uses
-  %indvars.iv.next.i43.epil = add nsw i64 %indvars.iv.i41.epil, -1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %get_digit.exit44, label %bb.g, !llvm.loop !33
+  %31 = icmp ugt i32 %.036.lcssa, 48
+  br i1 %31, label %32, label %get_digit.exit44
 
-get_digit.exit44:                                 ; preds = %bb.g, %get_digit.exit44.unr-lcssa
-  %.lcssa72 = phi i64 [ %i.cn, %get_digit.exit44.unr-lcssa ], [ %i.ct, %bb.g ]
+32:                                               ; preds = %bb.g
+  %33 = shl i64 %i.ct, 8
+  %34 = getelementptr i8, ptr %.035.lcssa, i64 %i.ch
+  %35 = getelementptr i8, ptr %34, i64 -7
+  %36 = load i8, ptr %35, align 1, !tbaa !11
+  %37 = zext i8 %36 to i64
+  %38 = or disjoint i64 %33, %37
+  br label %get_digit.exit44
+
+get_digit.exit44:                                 ; preds = %32, %bb.g, %.epil.preheader, %get_digit.exit44.unr-lcssa, %bb.f, %.new, %bb.e
+  %.lcssa72 = phi i64 [ %7, %bb.e ], [ %14, %.new ], [ %i.cn, %bb.f ], [ %22, %get_digit.exit44.unr-lcssa ], [ %29, %.epil.preheader ], [ %i.ct, %bb.g ], [ %38, %32 ]
   store i64 %.lcssa72, ptr %.0.lcssa, align 8, !tbaa !9
   %i.cu = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8
   %i.cv = add nsw i32 %.033.lcssa, -1
@@ -523,5 +521,4 @@ attributes #9 = { nounwind memory(none) }
 !30 = distinct !{!30, !10}
 !31 = distinct !{!31, !10}
 !32 = distinct !{!32, !12}
-!33 = distinct !{!33, !12}
 end_hunk_0

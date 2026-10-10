@@ -205,18 +205,13 @@ bb.q:                                             ; preds = %bb.z, %bb.p
   %i.bs = call ptr @__memcpy_chk(ptr noundef nonnull %i.a, ptr noundef nonnull readonly %.us-phi221, i64 noundef range(i64 1, 2147483648) %i.av, i64 noundef 7) #28, !alias.scope !164 ; 0 uses
   %.val.i.i = load i32, ptr %i.w, align 4, !tbaa !42
   %i.bt = icmp sgt i32 %.val.i.i, 1
-  br i1 %i.bt, label %bb.v, label %.preheader74.i.i
+  br i1 %i.bt, label %bb.v, label %.preheader74.split.i.i.preheader
 
-.preheader74.i.i:                                 ; preds = %bb.q
-  br i1 %.not188, label %.preheader74.split.i.i.preheader, label %.preheader74.split.us.i.i
+.preheader74.split.i.i.preheader:                 ; preds = %bb.q
+  br i1 %.not188, label %.preheader74.split.i.i, label %.preheader74.split.us.i.i
 
-.preheader74.split.i.i.preheader:                 ; preds = %.preheader74.i.i
-  %1 = load i8, ptr %i.br, align 1, !tbaa !43     ; 2 uses
-  %2 = icmp eq i8 %1, 0
-  br i1 %2, label %enc_pred_char.exit.thread.loopexit68.i, label %.critedge.i.i
-
-.preheader74.split.us.i.i:                        ; preds = %.preheader74.i.i, %.preheader74.split.us.i.i.backedge
-  %.06377.us.i.i = phi i64 [ %.06377.us.i.i.be, %.preheader74.split.us.i.i.backedge ], [ %i.bq, %.preheader74.i.i ] ; 4 uses
+.preheader74.split.us.i.i:                        ; preds = %.preheader74.split.i.i.preheader, %.preheader74.split.us.i.i.backedge
+  %.06377.us.i.i = phi i64 [ %.06377.us.i.i.be, %.preheader74.split.us.i.i.backedge ], [ %i.bq, %.preheader74.split.i.i.preheader ] ; 4 uses
   %i.bu = getelementptr i8, ptr %.us-phi221, i64 %.06377.us.i.i ; 3 uses
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !43  ; 2 uses
   %i.bw = icmp eq i8 %i.bv, 0
@@ -277,6 +272,11 @@ bb.u:                                             ; preds = %.critedge.us.i.i
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.co, i8 noundef 0, i64 noundef %i.cp, i1 noundef false) #28
   br label %.preheader74.split.us.i.i.backedge
 
+.preheader74.split.i.i:                           ; preds = %.preheader74.split.i.i.preheader
+  %1 = load i8, ptr %i.br, align 1, !tbaa !43     ; 2 uses
+  %2 = icmp eq i8 %1, 0
+  br i1 %2, label %enc_pred_char.exit.thread.loopexit68.i, label %.critedge.i.i
+
 bb.v:                                             ; preds = %bb.q
   %i.cq = call i32 @rb_enc_precise_mbclen(ptr noundef nonnull %.us-phi221, ptr noundef %i.aw, ptr noundef nonnull %i.n) #28
   %i.cr = icmp sgt i32 %i.cq, 0
@@ -295,12 +295,12 @@ bb.x:                                             ; preds = %bb.w
   %.not72.i.i = icmp eq i32 %.us-phi219, %i.cw
   br i1 %.not72.i.i, label %enc_pred_char.exit.i, label %enc_pred_char.exit.thread.i
 
-enc_pred_char.exit.thread.loopexit68.i:           ; preds = %.preheader74.split.i.i.preheader, %.preheader74.split.i.i.a
+enc_pred_char.exit.thread.loopexit68.i:           ; preds = %.preheader74.split.i.i, %.preheader74.split.i.i.a
   store i8 -1, ptr %i.br, align 1, !tbaa !43
   br label %enc_pred_char.exit.thread.i
 
-.critedge.i.i:                                    ; preds = %.preheader74.split.i.i.preheader, %.preheader74.split.i.i.a
-  %i.cx = phi i8 [ %i.df, %.preheader74.split.i.i.a ], [ %1, %.preheader74.split.i.i.preheader ]
+.critedge.i.i:                                    ; preds = %.preheader74.split.i.i, %.preheader74.split.i.i.a
+  %i.cx = phi i8 [ %i.df, %.preheader74.split.i.i.a ], [ %1, %.preheader74.split.i.i ]
   %i.cy = add i8 %i.cx, -1
   store i8 %i.cy, ptr %i.br, align 1, !tbaa !43
   %i.cz = call i32 @rb_enc_precise_mbclen(ptr noundef nonnull %.us-phi221, ptr noundef %i.aw, ptr noundef nonnull %i.n) #28 ; 3 uses
@@ -703,7 +703,7 @@ bb.a:
   br i1 %i.b, label %bb.f, label %.preheader70
 
 .preheader70:                                     ; preds = %bb.a
-  %i.c = add nsw i64 %1, -1                       ; 9 uses
+  %i.c = add nsw i64 %1, -1                       ; 7 uses
   %i.d = getelementptr i8, ptr %0, i64 %1         ; 2 uses
   %i.e = icmp samesign ugt i64 %1, 1
   br i1 %i.e, label %.preheader70.split.us, label %.preheader70.split
@@ -770,6 +770,12 @@ bb.e:                                             ; preds = %.critedge.us
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.z, i8 noundef -1, i64 noundef %i.aa, i1 noundef false) #28
   br label %.preheader70.split.us.backedge
 
+.preheader70.split:                               ; preds = %.preheader70
+  %scevgep = getelementptr i8, ptr %0, i64 %i.c   ; 4 uses
+  %3 = load i8, ptr %scevgep, align 1, !tbaa !43  ; 2 uses
+  %4 = icmp eq i8 %3, -1
+  br i1 %4, label %.preheader70.split.backedge, label %.critedge
+
 bb.f:                                             ; preds = %bb.a
   %i.ab = getelementptr i8, ptr %0, i64 %1        ; 3 uses
   %i.ac = tail call i32 @rb_enc_precise_mbclen(ptr noundef nonnull %0, ptr noundef %i.ab, ptr noundef nonnull %2) #28
@@ -801,29 +807,17 @@ bb.i:                                             ; preds = %bb.h
   %. = zext i1 %i.aq to i32
   br label %.critedge.thread
 
-.preheader70.split:                               ; preds = %.preheader70, %.preheader70.split.backedge
-  %.06173 = phi i64 [ %.06173.be, %.preheader70.split.backedge ], [ %i.c, %.preheader70 ] ; 3 uses
-  %3 = getelementptr i8, ptr %0, i64 %.06173      ; 3 uses
-  %4 = load i8, ptr %3, align 1, !tbaa !43        ; 2 uses
-  %5 = icmp eq i8 %4, -1
-  br i1 %5, label %6, label %.critedge
+.preheader70.split.backedge:                      ; preds = %6, %.preheader70.split
+  store i8 0, ptr %scevgep, align 1, !tbaa !43
+  br label %.critedge.thread
 
-6:                                                ; preds = %.preheader70.split
-  store i8 0, ptr %3, align 1, !tbaa !43
-  %7 = add nsw i64 %.06173, -1
-  %8 = icmp sgt i64 %.06173, 0
-  br i1 %8, label %.preheader70.split.backedge, label %.critedge.thread
-
-.preheader70.split.backedge:                      ; preds = %6, %.thread, %.critedge
-  %.06173.be = phi i64 [ %7, %6 ], [ %i.c, %.critedge ], [ %i.c, %.thread ]
-  br label %.preheader70.split, !llvm.loop !243
-
-.critedge:                                        ; preds = %.preheader70.split
-  %i.ar = add nuw i8 %4, 1
-  store i8 %i.ar, ptr %3, align 1, !tbaa !43
+.critedge:                                        ; preds = %.preheader70.split, %6
+  %5 = phi i8 [ %7, %6 ], [ %3, %.preheader70.split ]
+  %i.ar = add nuw i8 %5, 1
+  store i8 %i.ar, ptr %scevgep, align 1, !tbaa !43
   %i.as = tail call i32 @rb_enc_precise_mbclen(ptr noundef nonnull %0, ptr noundef %i.d, ptr noundef %2) #28 ; 3 uses
   %i.at = icmp sgt i32 %i.as, 0
-  br i1 %i.at, label %bb.j, label %.preheader70.split.backedge
+  br i1 %i.at, label %bb.j, label %6
 
 bb.j:                                             ; preds = %.critedge
   %i.au = icmp eq i32 %i.as, 1
@@ -834,10 +828,15 @@ bb.j:                                             ; preds = %.critedge
   %i.aw = getelementptr i8, ptr %0, i64 %i.av
   %i.ax = sub nsw i64 1, %i.av
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.aw, i8 noundef -1, i64 noundef %i.ax, i1 noundef false) #28
-  br label %.preheader70.split.backedge
+  br label %6
 
-.critedge.thread:                                 ; preds = %bb.j, %6, %bb.e, %bb.b, %bb.f, %bb.g, %bb.h, %bb.i
-  %.1 = phi i32 [ 1, %bb.e ], [ 0, %bb.f ], [ 0, %bb.g ], [ 2, %bb.h ], [ %., %bb.i ], [ 2, %bb.b ], [ 2, %6 ], [ 1, %bb.j ]
+6:                                                ; preds = %.critedge, %.thread
+  %7 = load i8, ptr %scevgep, align 1, !tbaa !43  ; 2 uses
+  %8 = icmp eq i8 %7, -1
+  br i1 %8, label %.preheader70.split.backedge, label %.critedge
+
+.critedge.thread:                                 ; preds = %bb.j, %bb.e, %bb.b, %.preheader70.split.backedge, %bb.f, %bb.g, %bb.h, %bb.i
+  %.1 = phi i32 [ 2, %.preheader70.split.backedge ], [ 0, %bb.f ], [ 0, %bb.g ], [ 2, %bb.h ], [ %., %bb.i ], [ 1, %bb.e ], [ 2, %bb.b ], [ 1, %bb.j ]
   ret i32 %.1
 }
 

@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h155aa8008e550a6bE.exit.i"
   %i.dc = icmp sgt i64 %.pre250.i, -1
   call void @llvm.assume(i1 %i.dc)
-  %i.dd = zext i16 %i.da to i64                   ; 8 uses
+  %i.dd = zext i16 %i.da to i64                   ; 5 uses
   %i.de = add i64 %.pre250.i, %i.cv
   %i.df = urem i64 %i.de, %i.dd                   ; 2 uses
   %i.dg = icmp eq i64 %i.df, 0
@@ -224,25 +224,10 @@ bb.z:                                             ; preds = %bb.ag, %bb.y, %"_ZN
 bb.aa:                                            ; preds = %bb.y
   %i.dk = sub nuw nsw i64 %i.dd, %i.df            ; 3 uses
   %i.dl = icmp samesign ult i64 %i.dk, 6
-  br i1 %i.dl, label %5, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
+  br i1 %i.dl, label %bb.ab, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-5:                                                ; preds = %bb.aa
-  %6 = add nuw nsw i64 %i.dk, %i.dd               ; 3 uses
-  %7 = icmp samesign ult i64 %6, 6
-  br i1 %7, label %8, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-8:                                                ; preds = %5
-  %9 = add nuw nsw i64 %6, %i.dd                  ; 3 uses
-  %10 = icmp samesign ult i64 %9, 6
-  br i1 %10, label %11, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-11:                                               ; preds = %8
-  %12 = add nuw nsw i64 %9, %i.dd                 ; 3 uses
-  %13 = icmp samesign ult i64 %12, 6
-  br i1 %13, label %bb.ab, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-bb.ab:                                            ; preds = %11
-  %i.dm = add nuw nsw i64 %12, %i.dd              ; 3 uses
+bb.ab:                                            ; preds = %bb.aa
+  %i.dm = add nuw nsw i64 %i.dk, %i.dd            ; 3 uses
   %i.dn = icmp samesign ult i64 %i.dm, 6
   br i1 %i.dn, label %bb.ac, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
@@ -253,8 +238,8 @@ bb.ac:                                            ; preds = %bb.ab
   %spec.select = select i1 %i.dp, i64 %i.dq, i64 %i.do
   br label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.ac, %bb.ab, %11, %8, %5, %bb.aa
-  %.sroa.014.0.i.lcssa = phi i64 [ %i.dk, %bb.aa ], [ %6, %5 ], [ %9, %8 ], [ %12, %11 ], [ %i.dm, %bb.ab ], [ %spec.select, %bb.ac ]
+_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.ac, %bb.ab, %bb.aa
+  %.sroa.014.0.i.lcssa = phi i64 [ %i.dk, %bb.aa ], [ %i.dm, %bb.ab ], [ %spec.select, %bb.ac ]
   %i.dr = add nsw i64 %.sroa.014.0.i.lcssa, -4    ; 4 uses
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !1824
   %i.ds = call noundef ptr @_RNvCsiGVaDesi5rv_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 -65536, 65537) %i.dr, i64 noundef range(i64 1, -9223372036854775807) 1) #52, !noalias !1824 ; 3 uses
@@ -657,7 +642,7 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h155aa8008e550a6bE.exit.i"
   %i.dj = icmp sgt i64 %.pre262.i, -1
   call void @llvm.assume(i1 %i.dj)
-  %i.dk = zext i16 %.sroa.13.0.copyload to i64    ; 8 uses
+  %i.dk = zext i16 %.sroa.13.0.copyload to i64    ; 5 uses
   %i.dl = add i64 %.pre262.i, %i.dc
   %i.dm = urem i64 %i.dl, %i.dk                   ; 2 uses
   %i.dn = icmp eq i64 %i.dm, 0
@@ -930,25 +915,10 @@ bb.ar:                                            ; preds = %bb.aq, %bb.an
 bb.as:                                            ; preds = %bb.z
   %i.gh = sub nuw nsw i64 %i.dk, %i.dm            ; 3 uses
   %i.gi = icmp samesign ult i64 %i.gh, 6
-  br i1 %i.gi, label %4, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
+  br i1 %i.gi, label %bb.at, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-4:                                                ; preds = %bb.as
-  %5 = add nuw nsw i64 %i.gh, %i.dk               ; 3 uses
-  %6 = icmp samesign ult i64 %5, 6
-  br i1 %6, label %7, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-7:                                                ; preds = %4
-  %8 = add nuw nsw i64 %5, %i.dk                  ; 3 uses
-  %9 = icmp samesign ult i64 %8, 6
-  br i1 %9, label %10, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-10:                                               ; preds = %7
-  %11 = add nuw nsw i64 %8, %i.dk                 ; 3 uses
-  %12 = icmp samesign ult i64 %11, 6
-  br i1 %12, label %bb.at, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-bb.at:                                            ; preds = %10
-  %i.gj = add nuw nsw i64 %11, %i.dk              ; 3 uses
+bb.at:                                            ; preds = %bb.as
+  %i.gj = add nuw nsw i64 %i.gh, %i.dk            ; 3 uses
   %i.gk = icmp samesign ult i64 %i.gj, 6
   br i1 %i.gk, label %bb.au, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
@@ -959,8 +929,8 @@ bb.au:                                            ; preds = %bb.at
   %spec.select = select i1 %i.gm, i64 %i.gn, i64 %i.gl
   br label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.au, %bb.at, %10, %7, %4, %bb.as
-  %.sroa.014.0.i.lcssa = phi i64 [ %i.gh, %bb.as ], [ %5, %4 ], [ %8, %7 ], [ %11, %10 ], [ %i.gj, %bb.at ], [ %spec.select, %bb.au ]
+_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.au, %bb.at, %bb.as
+  %.sroa.014.0.i.lcssa = phi i64 [ %i.gh, %bb.as ], [ %i.gj, %bb.at ], [ %spec.select, %bb.au ]
   %i.go = add nsw i64 %.sroa.014.0.i.lcssa, -4    ; 4 uses
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !1984
   %i.gp = call noundef ptr @_RNvCsiGVaDesi5rv_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 -65536, 65537) %i.go, i64 noundef range(i64 1, -9223372036854775807) 1) #52, !noalias !1984 ; 3 uses
@@ -1363,7 +1333,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h155aa8008e550a6bE.exit.i"
   %i.df = icmp sgt i64 %.pre275.i, -1
   call void @llvm.assume(i1 %i.df)
-  %i.dg = zext i16 %i.dd to i64                   ; 8 uses
+  %i.dg = zext i16 %i.dd to i64                   ; 5 uses
   %i.dh = add i64 %.pre275.i, %i.cy
   %i.di = urem i64 %i.dh, %i.dg                   ; 2 uses
   %i.dj = icmp eq i64 %i.di, 0
@@ -1387,25 +1357,10 @@ bb.aa:                                            ; preds = %bb.h
 bb.ab:                                            ; preds = %bb.y
   %i.dn = sub nuw nsw i64 %i.dg, %i.di            ; 3 uses
   %i.do = icmp samesign ult i64 %i.dn, 6
-  br i1 %i.do, label %4, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
+  br i1 %i.do, label %bb.ac, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-4:                                                ; preds = %bb.ab
-  %5 = add nuw nsw i64 %i.dn, %i.dg               ; 3 uses
-  %6 = icmp samesign ult i64 %5, 6
-  br i1 %6, label %7, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-7:                                                ; preds = %4
-  %8 = add nuw nsw i64 %5, %i.dg                  ; 3 uses
-  %9 = icmp samesign ult i64 %8, 6
-  br i1 %9, label %10, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-10:                                               ; preds = %7
-  %11 = add nuw nsw i64 %8, %i.dg                 ; 3 uses
-  %12 = icmp samesign ult i64 %11, 6
-  br i1 %12, label %bb.ac, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-bb.ac:                                            ; preds = %10
-  %i.dp = add nuw nsw i64 %11, %i.dg              ; 3 uses
+bb.ac:                                            ; preds = %bb.ab
+  %i.dp = add nuw nsw i64 %i.dn, %i.dg            ; 3 uses
   %i.dq = icmp samesign ult i64 %i.dp, 6
   br i1 %i.dq, label %bb.ad, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
@@ -1416,8 +1371,8 @@ bb.ad:                                            ; preds = %bb.ac
   %spec.select = select i1 %i.ds, i64 %i.dt, i64 %i.dr
   br label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.ad, %bb.ac, %10, %7, %4, %bb.ab
-  %.sroa.014.0.i.lcssa = phi i64 [ %i.dn, %bb.ab ], [ %5, %4 ], [ %8, %7 ], [ %11, %10 ], [ %i.dp, %bb.ac ], [ %spec.select, %bb.ad ]
+_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.ad, %bb.ac, %bb.ab
+  %.sroa.014.0.i.lcssa = phi i64 [ %i.dn, %bb.ab ], [ %i.dp, %bb.ac ], [ %spec.select, %bb.ad ]
   %i.du = add nsw i64 %.sroa.014.0.i.lcssa, -4    ; 4 uses
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !2149
   %i.dv = call noundef ptr @_RNvCsiGVaDesi5rv_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 -65536, 65537) %i.du, i64 noundef range(i64 1, -9223372036854775807) 1) #52, !noalias !2149 ; 3 uses
@@ -1820,7 +1775,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h155aa8008e550a6bE.exit.i"
   %i.dl = icmp sgt i64 %.pre273.i, -1
   call void @llvm.assume(i1 %i.dl)
-  %i.dm = zext i16 %i.dj to i64                   ; 8 uses
+  %i.dm = zext i16 %i.dj to i64                   ; 5 uses
   %i.dn = add i64 %.pre273.i, %i.de
   %i.do = urem i64 %i.dn, %i.dm                   ; 2 uses
   %i.dp = icmp eq i64 %i.do, 0
@@ -1844,25 +1799,10 @@ bb.ad:                                            ; preds = %bb.i
 bb.ae:                                            ; preds = %bb.ab
   %i.dt = sub nuw nsw i64 %i.dm, %i.do            ; 3 uses
   %i.du = icmp samesign ult i64 %i.dt, 6
-  br i1 %i.du, label %4, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
+  br i1 %i.du, label %bb.af, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-4:                                                ; preds = %bb.ae
-  %5 = add nuw nsw i64 %i.dt, %i.dm               ; 3 uses
-  %6 = icmp samesign ult i64 %5, 6
-  br i1 %6, label %7, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-7:                                                ; preds = %4
-  %8 = add nuw nsw i64 %5, %i.dm                  ; 3 uses
-  %9 = icmp samesign ult i64 %8, 6
-  br i1 %9, label %10, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-10:                                               ; preds = %7
-  %11 = add nuw nsw i64 %8, %i.dm                 ; 3 uses
-  %12 = icmp samesign ult i64 %11, 6
-  br i1 %12, label %bb.af, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-bb.af:                                            ; preds = %10
-  %i.dv = add nuw nsw i64 %11, %i.dm              ; 3 uses
+bb.af:                                            ; preds = %bb.ae
+  %i.dv = add nuw nsw i64 %i.dt, %i.dm            ; 3 uses
   %i.dw = icmp samesign ult i64 %i.dv, 6
   br i1 %i.dw, label %bb.ag, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
@@ -1873,8 +1813,8 @@ bb.ag:                                            ; preds = %bb.af
   %spec.select = select i1 %i.dy, i64 %i.dz, i64 %i.dx
   br label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.ag, %bb.af, %10, %7, %4, %bb.ae
-  %.sroa.014.0.i.lcssa = phi i64 [ %i.dt, %bb.ae ], [ %5, %4 ], [ %8, %7 ], [ %11, %10 ], [ %i.dv, %bb.af ], [ %spec.select, %bb.ag ]
+_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.ag, %bb.af, %bb.ae
+  %.sroa.014.0.i.lcssa = phi i64 [ %i.dt, %bb.ae ], [ %i.dv, %bb.af ], [ %spec.select, %bb.ag ]
   %i.ea = add nsw i64 %.sroa.014.0.i.lcssa, -4    ; 4 uses
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !2326
   %i.eb = call noundef ptr @_RNvCsiGVaDesi5rv_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 -65536, 65537) %i.ea, i64 noundef range(i64 1, -9223372036854775807) 1) #52, !noalias !2326 ; 3 uses
@@ -2277,7 +2217,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h155aa8008e550a6bE.exit.i"
   %i.cw = icmp sgt i64 %.pre252.i, -1
   call void @llvm.assume(i1 %i.cw)
-  %i.cx = zext i16 %i.cu to i64                   ; 8 uses
+  %i.cx = zext i16 %i.cu to i64                   ; 5 uses
   %i.cy = add i64 %.pre252.i, %i.cp
   %i.cz = urem i64 %i.cy, %i.cx                   ; 2 uses
   %i.da = icmp eq i64 %i.cz, 0
@@ -2296,25 +2236,10 @@ bb.y:                                             ; preds = %bb.af, %bb.x, %"_ZN
 bb.z:                                             ; preds = %bb.x
   %i.de = sub nuw nsw i64 %i.cx, %i.cz            ; 3 uses
   %i.df = icmp samesign ult i64 %i.de, 6
-  br i1 %i.df, label %5, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
+  br i1 %i.df, label %bb.aa, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-5:                                                ; preds = %bb.z
-  %6 = add nuw nsw i64 %i.de, %i.cx               ; 3 uses
-  %7 = icmp samesign ult i64 %6, 6
-  br i1 %7, label %8, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-8:                                                ; preds = %5
-  %9 = add nuw nsw i64 %6, %i.cx                  ; 3 uses
-  %10 = icmp samesign ult i64 %9, 6
-  br i1 %10, label %11, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-11:                                               ; preds = %8
-  %12 = add nuw nsw i64 %9, %i.cx                 ; 3 uses
-  %13 = icmp samesign ult i64 %12, 6
-  br i1 %13, label %bb.aa, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
-
-bb.aa:                                            ; preds = %11
-  %i.dg = add nuw nsw i64 %12, %i.cx              ; 3 uses
+bb.aa:                                            ; preds = %bb.z
+  %i.dg = add nuw nsw i64 %i.de, %i.cx            ; 3 uses
   %i.dh = icmp samesign ult i64 %i.dg, 6
   br i1 %i.dh, label %bb.ab, label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
@@ -2325,8 +2250,8 @@ bb.ab:                                            ; preds = %bb.aa
   %spec.select = select i1 %i.dj, i64 %i.dk, i64 %i.di
   br label %_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i
 
-_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.ab, %bb.aa, %11, %8, %5, %bb.z
-  %.sroa.014.0.i.lcssa = phi i64 [ %i.de, %bb.z ], [ %6, %5 ], [ %9, %8 ], [ %12, %11 ], [ %i.dg, %bb.aa ], [ %spec.select, %bb.ab ]
+_ZN4core5alloc6layout6Layout6repeat17h70634feba4742ac7E.exit.i.i.i: ; preds = %bb.ab, %bb.aa, %bb.z
+  %.sroa.014.0.i.lcssa = phi i64 [ %i.de, %bb.z ], [ %i.dg, %bb.aa ], [ %spec.select, %bb.ab ]
   %i.dl = add nsw i64 %.sroa.014.0.i.lcssa, -4    ; 4 uses
   call void @_RNvCsiGVaDesi5rv_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #52, !noalias !2474
   %i.dm = call noundef ptr @_RNvCsiGVaDesi5rv_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 -65536, 65537) %i.dl, i64 noundef range(i64 1, -9223372036854775807) 1) #52, !noalias !2474 ; 3 uses

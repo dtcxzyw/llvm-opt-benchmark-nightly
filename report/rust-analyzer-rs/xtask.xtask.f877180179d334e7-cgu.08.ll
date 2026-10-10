@@ -204,7 +204,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringEC
 bb.y:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit.i
   %i.db = icmp sgt i64 %.pre240.i, -1
   call void @llvm.assume(i1 %i.db)
-  %i.dc = zext i16 %i.cz to i64                   ; 8 uses
+  %i.dc = zext i16 %i.cz to i64                   ; 5 uses
   %i.dd = add i64 %.pre240.i, %i.cv
   %i.de = urem i64 %i.dd, %i.dc                   ; 2 uses
   %i.df = icmp eq i64 %i.de, 0
@@ -224,25 +224,10 @@ bb.z:                                             ; preds = %bb.aj, %bb.y, %_RIN
 bb.aa:                                            ; preds = %bb.y
   %i.dj = sub nuw nsw i64 %i.dc, %i.de            ; 3 uses
   %i.dk = icmp samesign ult i64 %i.dj, 6
-  br i1 %i.dk, label %5, label %bb.ad
+  br i1 %i.dk, label %bb.ab, label %bb.ad
 
-5:                                                ; preds = %bb.aa
-  %6 = add nuw nsw i64 %i.dj, %i.dc               ; 3 uses
-  %7 = icmp samesign ult i64 %6, 6
-  br i1 %7, label %8, label %bb.ad
-
-8:                                                ; preds = %5
-  %9 = add nuw nsw i64 %6, %i.dc                  ; 3 uses
-  %10 = icmp samesign ult i64 %9, 6
-  br i1 %10, label %11, label %bb.ad
-
-11:                                               ; preds = %8
-  %12 = add nuw nsw i64 %9, %i.dc                 ; 3 uses
-  %13 = icmp samesign ult i64 %12, 6
-  br i1 %13, label %bb.ab, label %bb.ad
-
-bb.ab:                                            ; preds = %11
-  %i.dl = add nuw nsw i64 %12, %i.dc              ; 3 uses
+bb.ab:                                            ; preds = %bb.aa
+  %i.dl = add nuw nsw i64 %i.dj, %i.dc            ; 3 uses
   %i.dm = icmp samesign ult i64 %i.dl, 6
   br i1 %i.dm, label %bb.ac, label %bb.ad
 
@@ -253,8 +238,8 @@ bb.ac:                                            ; preds = %bb.ab
   %spec.select = select i1 %i.do, i64 %i.dp, i64 %i.dn
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ac, %bb.ab, %11, %8, %5, %bb.aa
-  %.sroa.09.0.i.lcssa = phi i64 [ %i.dj, %bb.aa ], [ %6, %5 ], [ %9, %8 ], [ %12, %11 ], [ %i.dl, %bb.ab ], [ %spec.select, %bb.ac ]
+bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.aa
+  %.sroa.09.0.i.lcssa = phi i64 [ %i.dj, %bb.aa ], [ %i.dl, %bb.ab ], [ %spec.select, %bb.ac ]
   %i.dq = add nsw i64 %.sroa.09.0.i.lcssa, -4     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !100
   invoke void @_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslkzCjlEuW1f_5xtask(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.p, i64 noundef range(i64 -65536, 65537) %i.dq, i1 noundef zeroext true, i64 noundef 1, i64 noundef 1)

@@ -205,7 +205,7 @@ bb.a:
   %i.ac = alloca [16 x i8], align 8               ; 6 uses
   %i.ad = alloca [8 x i8], align 8                ; 4 uses
   %i.ae = alloca [8 x i8], align 8                ; 4 uses
-  %i.af = alloca [16 x i8], align 16              ; 12 uses
+  %i.af = alloca [16 x i8], align 16              ; 11 uses
   %i.ag = alloca [24 x i8], align 8               ; 9 uses
   %i.ah = alloca [24 x i8], align 8               ; 8 uses
   %i.ai = alloca [72 x i8], align 8               ; 15 uses
@@ -534,12 +534,12 @@ bb.p:                                             ; preds = %bb.q, %_RINvXs1_NtC
   %i.eh = phi i64 [ %i.cu, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i ], [ %i.fa, %bb.q ] ; 4 uses
   %.lcssa214.i.i.i.i = phi i64 [ %.lcssa211.i.i.i.i, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i ], [ %i.fc, %bb.q ] ; 2 uses
   %i.ei = phi i64 [ %i.cv, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i ], [ %i.ex, %bb.q ] ; 2 uses
-  %.sroa.0.0.i.i.i.i.i = phi i64 [ 0, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i ], [ %i.dh, %bb.q ] ; 8 uses
+  %.sroa.0.0.i.i.i.i.i = phi i64 [ 0, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i ], [ %i.dh, %bb.q ] ; 7 uses
   %i.ej = sub nuw nsw i64 16, %.sroa.0.0.i.i.i.i.i ; 2 uses
   %i.ek = and i64 %i.ej, 7                        ; 5 uses
-  %i.el = and i64 %i.ej, 24                       ; 4 uses
+  %i.el = and i64 %i.ej, 24                       ; 3 uses
   %i.em = icmp samesign ult i64 %.sroa.0.0.i.i.i.i.i, %i.el
-  br i1 %i.em, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i
+  br i1 %i.em, label %.lr.ph.i.i.i.i.i.1.a, label %._crit_edge.i.i.i.i.i
 
 bb.q:                                             ; preds = %_RNvNtCs83m0le5ggt2_9siphasher6sip1289u8to64_le.exit.i.i.i.i.i
   %i.en = xor i64 %i.eb, %i.cv                    ; 3 uses
@@ -564,20 +564,20 @@ bb.r:                                             ; preds = %_RNvNtCs83m0le5ggt2
   %i.fd = add i64 %i.cx, 16
   br label %_RNvXsb_NtCs83m0le5ggt2_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i
 
-._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i.i.i.i.i.1.a, %.lr.ph.i.i.i.i.i.2.a, %.lr.ph.i.i.i.i.i.3, %bb.p
-  %.lcssa144158.i.i = phi i64 [ %.lcssa144155.i.i, %bb.p ], [ %26, %.lr.ph.i.i.i.i.i ], [ %i.gp, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hi, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ib, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %4 = phi i64 [ %i.ed, %bb.p ], [ %25, %.lr.ph.i.i.i.i.i ], [ %i.go, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hh, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ia, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %5 = phi i64 [ %i.ee, %bb.p ], [ %24, %.lr.ph.i.i.i.i.i ], [ %i.gn, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hg, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hz, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %6 = phi i64 [ %i.ef, %bb.p ], [ %21, %.lr.ph.i.i.i.i.i ], [ %i.gk, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hd, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hw, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %.promoted1646.i.i.i.i = phi i64 [ %.promoted1647.i.i.i.i, %bb.p ], [ %25, %.lr.ph.i.i.i.i.i ], [ %i.go, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hh, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ia, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %.promoted1537.i.i.i.i = phi i64 [ %.promoted1538.i.i.i.i, %bb.p ], [ %24, %.lr.ph.i.i.i.i.i ], [ %i.gn, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hg, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hz, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %.promoted1028.i.i.i.i = phi i64 [ %.promoted1029.i.i.i.i, %bb.p ], [ %26, %.lr.ph.i.i.i.i.i ], [ %i.gp, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hi, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ib, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %.promoted919.i.i.i.i = phi i64 [ %.promoted920.i.i.i.i, %bb.p ], [ %21, %.lr.ph.i.i.i.i.i ], [ %i.gk, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hd, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hw, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %7 = phi i64 [ %i.eg, %bb.p ], [ %25, %.lr.ph.i.i.i.i.i ], [ %i.go, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hh, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ia, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %8 = phi i64 [ %i.eh, %bb.p ], [ %24, %.lr.ph.i.i.i.i.i ], [ %i.gn, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hg, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hz, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %.lcssa213.i.i.i.i = phi i64 [ %.lcssa214.i.i.i.i, %bb.p ], [ %26, %.lr.ph.i.i.i.i.i ], [ %i.gp, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hi, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ib, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %9 = phi i64 [ %i.ei, %bb.p ], [ %21, %.lr.ph.i.i.i.i.i ], [ %i.gk, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hd, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hw, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
-  %.sroa.0.1.lcssa.i.i.i.i.i = phi i64 [ %.sroa.0.0.i.i.i.i.i, %bb.p ], [ %27, %.lr.ph.i.i.i.i.i ], [ %i.gq, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hj, %.lr.ph.i.i.i.i.i.2.a ], [ %29, %.lr.ph.i.i.i.i.i.3 ] ; 3 uses
+._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i.1.a, %.lr.ph.i.i.i.i.i.2.a, %.lr.ph.i.i.i.i.i.3, %bb.p
+  %.lcssa144158.i.i = phi i64 [ %.lcssa144155.i.i, %bb.p ], [ %i.gp, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hi, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ib, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %4 = phi i64 [ %i.ed, %bb.p ], [ %i.go, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hh, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ia, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %5 = phi i64 [ %i.ee, %bb.p ], [ %i.gn, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hg, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hz, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %6 = phi i64 [ %i.ef, %bb.p ], [ %i.gk, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hd, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hw, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %.promoted1646.i.i.i.i = phi i64 [ %.promoted1647.i.i.i.i, %bb.p ], [ %i.go, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hh, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ia, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %.promoted1537.i.i.i.i = phi i64 [ %.promoted1538.i.i.i.i, %bb.p ], [ %i.gn, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hg, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hz, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %.promoted1028.i.i.i.i = phi i64 [ %.promoted1029.i.i.i.i, %bb.p ], [ %i.gp, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hi, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ib, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %.promoted919.i.i.i.i = phi i64 [ %.promoted920.i.i.i.i, %bb.p ], [ %i.gk, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hd, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hw, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %7 = phi i64 [ %i.eg, %bb.p ], [ %i.go, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hh, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ia, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %8 = phi i64 [ %i.eh, %bb.p ], [ %i.gn, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hg, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hz, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %.lcssa213.i.i.i.i = phi i64 [ %.lcssa214.i.i.i.i, %bb.p ], [ %i.gp, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hi, %.lr.ph.i.i.i.i.i.2.a ], [ %i.ib, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %9 = phi i64 [ %i.ei, %bb.p ], [ %i.gk, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hd, %.lr.ph.i.i.i.i.i.2.a ], [ %i.hw, %.lr.ph.i.i.i.i.i.3 ] ; 2 uses
+  %.sroa.0.1.lcssa.i.i.i.i.i = phi i64 [ %.sroa.0.0.i.i.i.i.i, %bb.p ], [ %i.gq, %.lr.ph.i.i.i.i.i.1.a ], [ %i.hj, %.lr.ph.i.i.i.i.i.2.a ], [ %10, %.lr.ph.i.i.i.i.i.3 ] ; 3 uses
   %i.fe = icmp samesign ugt i64 %i.ek, 3
   br i1 %i.fe, label %bb.s, label %bb.t
 
@@ -623,38 +623,15 @@ bb.w:                                             ; preds = %bb.v
   %i.fy = or i64 %i.fx, %.sroa.0.1.i13.i.i.i.i.i
   br label %_RNvXsb_NtCs83m0le5ggt2_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %bb.p
-  %10 = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.0.0.i.i.i.i.i
-  %.sroa.07.0.copyload.i.i.i.i.i = load i64, ptr %10, align 1, !alias.scope !11575, !noalias !11572 ; 2 uses
-  %11 = xor i64 %.sroa.07.0.copyload.i.i.i.i.i, %i.ei ; 3 uses
-  %12 = add i64 %.lcssa214.i.i.i.i, %i.eh         ; 3 uses
-  %13 = tail call noundef i64 @llvm.fshl.i64(i64 %i.eh, i64 %i.eh, i64 13)
-  %14 = xor i64 %12, %13                          ; 3 uses
-  %15 = tail call noundef i64 @llvm.fshl.i64(i64 %12, i64 %12, i64 32)
-  %16 = add i64 %11, %i.eg                        ; 2 uses
-  %17 = tail call noundef i64 @llvm.fshl.i64(i64 %11, i64 %11, i64 16)
-  %18 = xor i64 %16, %17                          ; 3 uses
-  %19 = add i64 %18, %15                          ; 2 uses
-  %20 = tail call noundef i64 @llvm.fshl.i64(i64 %18, i64 %18, i64 21)
-  %21 = xor i64 %20, %19                          ; 4 uses
-  %22 = add i64 %16, %14                          ; 3 uses
-  %23 = tail call noundef i64 @llvm.fshl.i64(i64 %14, i64 %14, i64 17)
-  %24 = xor i64 %22, %23                          ; 6 uses
-  %25 = tail call noundef i64 @llvm.fshl.i64(i64 %22, i64 %22, i64 32) ; 4 uses
-  %26 = xor i64 %19, %.sroa.07.0.copyload.i.i.i.i.i ; 4 uses
-  %27 = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 8   ; 3 uses
-  %28 = icmp samesign ult i64 %27, %i.el
-  br i1 %28, label %.lr.ph.i.i.i.i.i.1.a, label %._crit_edge.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.1.a:                             ; preds = %.lr.ph.i.i.i.i.i
-  %i.fz = getelementptr inbounds nuw i8, ptr %i.af, i64 %27
+.lr.ph.i.i.i.i.i.1.a:                             ; preds = %bb.p
+  %i.fz = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sroa.0.0.i.i.i.i.i
   %.sroa.07.0.copyload.i.i.i.i.i.1.a = load i64, ptr %i.fz, align 1, !alias.scope !11575, !noalias !11572 ; 2 uses
-  %i.ga = xor i64 %.sroa.07.0.copyload.i.i.i.i.i.1.a, %21 ; 3 uses
-  %i.gb = add i64 %26, %24                        ; 3 uses
-  %i.gc = tail call noundef i64 @llvm.fshl.i64(i64 %24, i64 %24, i64 13)
+  %i.ga = xor i64 %.sroa.07.0.copyload.i.i.i.i.i.1.a, %i.ei ; 3 uses
+  %i.gb = add i64 %.lcssa214.i.i.i.i, %i.eh       ; 3 uses
+  %i.gc = tail call noundef i64 @llvm.fshl.i64(i64 %i.eh, i64 %i.eh, i64 13)
   %i.gd = xor i64 %i.gb, %i.gc                    ; 3 uses
   %i.ge = tail call noundef i64 @llvm.fshl.i64(i64 %i.gb, i64 %i.gb, i64 32)
-  %i.gf = add i64 %i.ga, %25                      ; 2 uses
+  %i.gf = add i64 %i.ga, %i.eg                    ; 2 uses
   %i.gg = tail call noundef i64 @llvm.fshl.i64(i64 %i.ga, i64 %i.ga, i64 16)
   %i.gh = xor i64 %i.gf, %i.gg                    ; 3 uses
   %i.gi = add i64 %i.gh, %i.ge                    ; 2 uses
@@ -665,7 +642,7 @@ bb.w:                                             ; preds = %bb.v
   %i.gn = xor i64 %i.gl, %i.gm                    ; 6 uses
   %i.go = tail call noundef i64 @llvm.fshl.i64(i64 %i.gl, i64 %i.gl, i64 32) ; 4 uses
   %i.gp = xor i64 %i.gi, %.sroa.07.0.copyload.i.i.i.i.i.1.a ; 4 uses
-  %i.gq = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 16 ; 3 uses
+  %i.gq = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 8 ; 3 uses
   %i.gr = icmp samesign ult i64 %i.gq, %i.el
   br i1 %i.gr, label %.lr.ph.i.i.i.i.i.2.a, label %._crit_edge.i.i.i.i.i
 
@@ -688,7 +665,7 @@ bb.w:                                             ; preds = %bb.v
   %i.hg = xor i64 %i.he, %i.hf                    ; 6 uses
   %i.hh = tail call noundef i64 @llvm.fshl.i64(i64 %i.he, i64 %i.he, i64 32) ; 4 uses
   %i.hi = xor i64 %i.hb, %.sroa.07.0.copyload.i.i.i.i.i.2.a ; 4 uses
-  %i.hj = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 24 ; 3 uses
+  %i.hj = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 16 ; 3 uses
   %i.hk = icmp samesign ult i64 %i.hj, %i.el
   br i1 %i.hk, label %.lr.ph.i.i.i.i.i.3, label %._crit_edge.i.i.i.i.i
 
@@ -711,7 +688,7 @@ bb.w:                                             ; preds = %bb.v
   %i.hz = xor i64 %i.hx, %i.hy                    ; 3 uses
   %i.ia = tail call noundef i64 @llvm.fshl.i64(i64 %i.hx, i64 %i.hx, i64 32) ; 3 uses
   %i.ib = xor i64 %i.hu, %.sroa.07.0.copyload.i.i.i.i.i.3 ; 3 uses
-  %29 = or disjoint i64 %.sroa.0.0.i.i.i.i.i, 32
+  %10 = add nuw nsw i64 %.sroa.0.0.i.i.i.i.i, 24
   br label %._crit_edge.i.i.i.i.i
 
 _RNvXsb_NtCs83m0le5ggt2_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i: ; preds = %bb.w, %bb.v, %bb.r

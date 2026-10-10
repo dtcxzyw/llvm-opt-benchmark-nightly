@@ -204,7 +204,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
 bb.w:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs8yaccCKGz54_10ruff_graph.exit.i
   %i.cx = icmp sgt i64 %.pre264.i, -1
   call void @llvm.assume(i1 %i.cx)
-  %i.cy = zext i16 %i.cv to i64                   ; 8 uses
+  %i.cy = zext i16 %i.cv to i64                   ; 5 uses
   %i.cz = add i64 %.pre264.i, %i.cr
   %i.da = urem i64 %i.cz, %i.cy                   ; 2 uses
   %i.db = icmp eq i64 %i.da, 0
@@ -225,25 +225,10 @@ bb.y:                                             ; preds = %bb.ah
 bb.z:                                             ; preds = %bb.w
   %i.df = sub nuw nsw i64 %i.cy, %i.da            ; 3 uses
   %i.dg = icmp samesign ult i64 %i.df, 6
-  br i1 %i.dg, label %5, label %bb.ac
+  br i1 %i.dg, label %bb.aa, label %bb.ac
 
-5:                                                ; preds = %bb.z
-  %6 = add nuw nsw i64 %i.df, %i.cy               ; 3 uses
-  %7 = icmp samesign ult i64 %6, 6
-  br i1 %7, label %8, label %bb.ac
-
-8:                                                ; preds = %5
-  %9 = add nuw nsw i64 %6, %i.cy                  ; 3 uses
-  %10 = icmp samesign ult i64 %9, 6
-  br i1 %10, label %11, label %bb.ac
-
-11:                                               ; preds = %8
-  %12 = add nuw nsw i64 %9, %i.cy                 ; 3 uses
-  %13 = icmp samesign ult i64 %12, 6
-  br i1 %13, label %bb.aa, label %bb.ac
-
-bb.aa:                                            ; preds = %11
-  %i.dh = add nuw nsw i64 %12, %i.cy              ; 3 uses
+bb.aa:                                            ; preds = %bb.z
+  %i.dh = add nuw nsw i64 %i.df, %i.cy            ; 3 uses
   %i.di = icmp samesign ult i64 %i.dh, 6
   br i1 %i.di, label %bb.ab, label %bb.ac
 
@@ -254,8 +239,8 @@ bb.ab:                                            ; preds = %bb.aa
   %spec.select = select i1 %i.dk, i64 %i.dl, i64 %i.dj
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ab, %bb.aa, %11, %8, %5, %bb.z
-  %.sroa.018.0.i.lcssa = phi i64 [ %i.df, %bb.z ], [ %6, %5 ], [ %9, %8 ], [ %12, %11 ], [ %i.dh, %bb.aa ], [ %spec.select, %bb.ab ] ; 2 uses
+bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.z
+  %.sroa.018.0.i.lcssa = phi i64 [ %i.df, %bb.z ], [ %i.dh, %bb.aa ], [ %spec.select, %bb.ab ] ; 2 uses
   %i.dm = add nuw i64 %.sroa.018.0.i.lcssa, %.pre264.i
   %i.dn = icmp ugt i64 %i.dm, 65535
   br i1 %i.dn, label %bb.x, label %bb.ad
