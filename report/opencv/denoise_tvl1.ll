@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseIN2cv4Mat_IdEESaIS2_EEC2EmRKS3_.exit.i: ; preds = %_ZNSt6vect
   %wide.trip.count377 = zext i32 %i.u to i64      ; 2 uses
   %wide.trip.count372 = zext i32 %i.cj to i64     ; 5 uses
   %wide.trip.count405 = zext nneg i32 %i.u to i64
-  %wide.trip.count390 = zext i32 %i.w to i64      ; 5 uses
+  %wide.trip.count390 = zext i32 %i.w to i64      ; 4 uses
   %wide.trip.count400 = zext nneg i32 %i.w to i64
   %i.ds = shl nuw nsw i64 %wide.trip.count390, 3
   %i.dt = add nsw i64 %wide.trip.count377, -1     ; 4 uses
@@ -215,11 +215,10 @@ _ZNSt12_Vector_baseIN2cv4Mat_IdEESaIS2_EEC2EmRKS3_.exit.i: ; preds = %_ZNSt6vect
   %min.iters.check503 = icmp eq i32 %i.w, 2
   %n.vec505 = and i64 %wide.trip.count372, 4294967294 ; 3 uses
   %cmp.n = icmp eq i64 %n.vec505, %wide.trip.count372
-  %34 = add nsw i64 %wide.trip.count390, -1       ; 2 uses
   %min.iters.check = icmp ult i32 %i.w, 6
-  %.neg = or i64 %34, -2                          ; 2 uses
-  %n.vec = add nsw i64 %.neg, %34
-  %i.dy = add nsw i64 %.neg, %wide.trip.count390
+  %34 = and i64 %wide.trip.count390, 2147483646   ; 2 uses
+  %n.vec = add nsw i64 %34, -1
+  %i.dy = add nsw i64 %34, -4
   br label %bb.ab
 
 bb.s:                                             ; preds = %.lr.ph327, %_ZN2cv4Mat_IdEaSERKNS_7MatExprE.exit
@@ -622,7 +621,7 @@ bb.cb:                                            ; preds = %.lr.ph353, %._crit_
   br i1 %min.iters.check, label %.preheader.preheader518, label %vector.memcheck
 
 .preheader.preheader518:                          ; preds = %vector.body, %vector.memcheck, %.preheader.preheader
-  %indvars.iv387.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.preheader.preheader ], [ %i.dy, %vector.body ]
+  %indvars.iv387.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.preheader.preheader ], [ %n.vec, %vector.body ]
   br label %.preheader
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
@@ -633,7 +632,7 @@ vector.memcheck:                                  ; preds = %.preheader.preheade
   br i1 %conflict.rdx.reass, label %.preheader.preheader518, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
-  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 4 uses
   %i.ri = or disjoint i64 %index, 1               ; 3 uses
   %i.rj = add i64 %index, 2                       ; 2 uses
   %i.rk = getelementptr inbounds nuw [8 x i8], ptr %i.pj, i64 %i.ri ; 2 uses
@@ -664,8 +663,8 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   %i.sf = fsub <2 x double> %i.se, %wide.load
   %i.sg = fadd <2 x double> %i.se, %i.sf
   store <2 x double> %i.sg, ptr %i.rk, align 8, !tbaa !71, !alias.scope !119, !noalias !120
-  %index.next = add nuw i64 %index, 2             ; 2 uses
-  %i.sh = icmp eq i64 %index.next, %n.vec
+  %index.next = add nuw i64 %index, 2
+  %i.sh = icmp eq i64 %index, %i.dy
   br i1 %i.sh, label %.preheader.preheader518, label %vector.body, !llvm.loop !60
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph, %._crit_edge348.us

@@ -205,8 +205,6 @@ bb.a:
   %i.i = sext i32 %i.h to i64
   %i.j = shl nsw i64 %i.i, 2                      ; 4 uses
   %i.k = lshr exact i32 %.v.v.i, 3
-  %narrow = add nuw nsw i32 %i.k, 1
-  %5 = zext nneg i32 %narrow to i64               ; 2 uses
   %min.iters.check = icmp samesign ult i32 %.v.v.i, 96
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -228,9 +226,9 @@ vector.memcheck:                                  ; preds = %bb.a
   br i1 %conflict.rdx27, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %5, -2
-  %n.vec = add nsw i64 %.neg, %5                  ; 2 uses
-  %i.u = shl nsw i64 %n.vec, 3
+  %5 = and i32 %i.k, 254
+  %n.vec = zext nneg i32 %5 to i64                ; 2 uses
+  %i.u = shl nuw nsw i64 %n.vec, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -559,8 +557,6 @@ bb.a:
   %i.i = sext i32 %i.h to i64
   %i.j = shl nsw i64 %i.i, 2                      ; 4 uses
   %i.k = lshr exact i32 %.v.v.i, 3
-  %narrow = add nuw nsw i32 %i.k, 1
-  %5 = zext nneg i32 %narrow to i64               ; 2 uses
   %min.iters.check = icmp samesign ult i32 %.v.v.i, 96
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -582,9 +578,9 @@ vector.memcheck:                                  ; preds = %bb.a
   br i1 %conflict.rdx27, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %5, -2
-  %n.vec = add nsw i64 %.neg, %5                  ; 2 uses
-  %i.u = shl nsw i64 %n.vec, 3
+  %5 = and i32 %i.k, 254
+  %n.vec = zext nneg i32 %5 to i64                ; 2 uses
+  %i.u = shl nuw nsw i64 %n.vec, 3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
