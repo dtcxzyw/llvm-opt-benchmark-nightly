@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %"_ZZN3tev11decode_r
   br label %"_ZZN3tev11decode_rle8EPKhmiiENK3$_1clEii.exit140"
 
 .lr.ph347:                                        ; preds = %.lr.ph347.preheader, %"_ZZN3tev11decode_rle8EPKhmiiENK3$_1clEii.exit158"
-  %indvar = phi i32 [ 0, %.lr.ph347.preheader ], [ %indvar.next, %"_ZZN3tev11decode_rle8EPKhmiiENK3$_1clEii.exit158" ] ; 2 uses
+  %indvars.iv390 = phi i64 [ 0, %.lr.ph347.preheader ], [ %indvars.iv.next391, %"_ZZN3tev11decode_rle8EPKhmiiENK3$_1clEii.exit158" ] ; 2 uses
   %.088346 = phi i32 [ %.088344, %.lr.ph347.preheader ], [ %.088, %"_ZZN3tev11decode_rle8EPKhmiiENK3$_1clEii.exit158" ] ; 3 uses
   %.088.in345 = phi i32 [ %.0101, %.lr.ph347.preheader ], [ %.088346, %"_ZZN3tev11decode_rle8EPKhmiiENK3$_1clEii.exit158" ]
   %i.fv = icmp sgt i32 %.088.in345, -2
@@ -215,7 +215,8 @@ bb.n:                                             ; preds = %"_ZZN3tev11decode_r
   br i1 %or.cond308, label %.lr.ph.i156.preheader, label %"_ZZN3tev11decode_rle8EPKhmiiENK3$_1clEii.exit158"
 
 .lr.ph.i156.preheader:                            ; preds = %.lr.ph347
-  %i.fw = add i32 %.088344, %indvar
+  %5 = trunc nuw nsw i64 %indvars.iv390 to i32
+  %i.fw = add i32 %.088344, %5
   %i.fx = mul i32 %i.c, %i.fw
   %i.fy = sext i32 %i.fx to i64
   %scevgep = getelementptr i8, ptr %i.f, i64 %i.fy
@@ -225,7 +226,7 @@ bb.n:                                             ; preds = %"_ZZN3tev11decode_r
 "_ZZN3tev11decode_rle8EPKhmiiENK3$_1clEii.exit158": ; preds = %.lr.ph.i156.preheader, %.lr.ph347
   %.088 = add nsw i32 %.088346, 1                 ; 2 uses
   %i.fz = icmp slt i32 %.088, %i.fo
-  %indvar.next = add i32 %indvar, 1
+  %indvars.iv.next391 = add nuw nsw i64 %indvars.iv390, 1
   br i1 %i.fz, label %.lr.ph347, label %._crit_edge
 
 bb.o:                                             ; preds = %bb.e
@@ -628,7 +629,7 @@ bb.o:                                             ; preds = %"_ZZN3tev12decode_r
   br label %"_ZZN3tev12decode_rle24EPKhmiiENK3$_1clEii.exit159"
 
 .lr.ph389:                                        ; preds = %.lr.ph389.preheader, %"_ZZN3tev12decode_rle24EPKhmiiENK3$_1clEii.exit177"
-  %indvar = phi i32 [ 0, %.lr.ph389.preheader ], [ %indvar.next, %"_ZZN3tev12decode_rle24EPKhmiiENK3$_1clEii.exit177" ] ; 2 uses
+  %indvars.iv432 = phi i64 [ 0, %.lr.ph389.preheader ], [ %indvars.iv.next433, %"_ZZN3tev12decode_rle24EPKhmiiENK3$_1clEii.exit177" ] ; 2 uses
   %.0104388 = phi i32 [ %.0104386, %.lr.ph389.preheader ], [ %.0104, %"_ZZN3tev12decode_rle24EPKhmiiENK3$_1clEii.exit177" ] ; 3 uses
   %.0104.in387 = phi i32 [ %.0117, %.lr.ph389.preheader ], [ %.0104388, %"_ZZN3tev12decode_rle24EPKhmiiENK3$_1clEii.exit177" ]
   %i.es = icmp sgt i32 %.0104.in387, -2
@@ -638,7 +639,8 @@ bb.o:                                             ; preds = %"_ZZN3tev12decode_r
   br i1 %or.cond351, label %.lr.ph.i175.preheader, label %"_ZZN3tev12decode_rle24EPKhmiiENK3$_1clEii.exit177"
 
 .lr.ph.i175.preheader:                            ; preds = %.lr.ph389
-  %i.et = add i32 %.0104386, %indvar
+  %5 = trunc nuw nsw i64 %indvars.iv432 to i32
+  %i.et = add i32 %.0104386, %5
   %i.eu = mul i32 %i.d, %i.et
   %i.ev = sext i32 %i.eu to i64
   %scevgep = getelementptr i8, ptr %i.g, i64 %i.ev
@@ -648,7 +650,7 @@ bb.o:                                             ; preds = %"_ZZN3tev12decode_r
 "_ZZN3tev12decode_rle24EPKhmiiENK3$_1clEii.exit177": ; preds = %.lr.ph.i175.preheader, %.lr.ph389
   %.0104 = add nsw i32 %.0104388, 1               ; 2 uses
   %i.ew = icmp slt i32 %.0104, %i.ek
-  %indvar.next = add i32 %indvar, 1
+  %indvars.iv.next433 = add nuw nsw i64 %indvars.iv432, 1
   br i1 %i.ew, label %.lr.ph389, label %._crit_edge
 
 bb.p:                                             ; preds = %bb.h

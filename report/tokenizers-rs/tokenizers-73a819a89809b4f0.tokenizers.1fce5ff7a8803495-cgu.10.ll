@@ -205,7 +205,7 @@ _RINvXs_NtNtCscdodAO9FK5_5alloc3vec14spec_from_elemINtNtCs4NRVxsYgnAr_4core6opti
 bb.c:                                             ; preds = %_RINvXs_NtNtCscdodAO9FK5_5alloc3vec14spec_from_elemINtNtCs4NRVxsYgnAr_4core6option6OptionjENtB5_12SpecFromElem9from_elemNtNtB9_5alloc6GlobalECs2JiOgHzbbc7_10tokenizers.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   invoke void @_RINvMs_NtCscdodAO9FK5_5alloc3vecINtB5_3VecINtNtCs4NRVxsYgnAr_4core6option6OptionjEE5drainINtNtNtBJ_3ops5range5RangejEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.y, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef 0, i64 noundef %i.f)
-          to label %bb.d unwind label %.loopexit.split-lp.split.us.a
+          to label %bb.d unwind label %.split.us.a
 
 bb.d:                                             ; preds = %bb.c
   %.not.not.us.not = icmp eq i64 %i.f, 0
@@ -214,27 +214,27 @@ bb.d:                                             ; preds = %bb.c
   store i64 0, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !929, !noalias !930
   store i64 %i.f, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !929, !noalias !930
   invoke void @_RNvXs1_NtNtCscdodAO9FK5_5alloc3vec6spliceINtB5_6SpliceINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources8repeat_n7RepeatNINtNtBZ_6option6OptionjEEENtNtNtBZ_3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.c)
-          to label %bb.e unwind label %.split.us.a
+          to label %bb.e unwind label %.split31.us.loopexit
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_RNvXs5_NtNtCscdodAO9FK5_5alloc3vec5drainINtB5_5DrainINtNtCs4NRVxsYgnAr_4core6option6OptionjEENtNtNtBT_3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.y)
-          to label %.split31.us.loopexit unwind label %.loopexit.split-lp.split.us.a
+          to label %.loopexit.split-lp.split.us.a unwind label %.split.us.a
 
-.loopexit.split-lp.split.us.a:                    ; preds = %bb.e, %bb.c
-  %lpad.loopexit.split-lp.us = landingpad { ptr, i32 }
-          cleanup
-  br label %.body
-
-.split.us.a:                                      ; preds = %bb.d
-  %i.z = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.j
-
-.split31.us.loopexit:                             ; preds = %bb.e
+.loopexit.split-lp.split.us.a:                    ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %.split31.us
 
-.split31.us:                                      ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec6splice6SpliceINtNtNtNtB4_4iter7sources8repeat_n7RepeatNINtNtB4_6option6OptionjEEEECs2JiOgHzbbc7_10tokenizers.exit, %.split31.us.loopexit
+.split.us.a:                                      ; preds = %bb.e, %bb.c
+  %i.z = landingpad { ptr, i32 }
+          cleanup
+  br label %.body
+
+.split31.us.loopexit:                             ; preds = %bb.d
+  %2 = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.j
+
+.split31.us:                                      ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec6splice6SpliceINtNtNtNtB4_4iter7sources8repeat_n7RepeatNINtNtB4_6option6OptionjEEEECs2JiOgHzbbc7_10tokenizers.exit, %.loopexit.split-lp.split.us.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   ret void
@@ -314,8 +314,8 @@ _RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapjINtNtNtCs4NRVxsYgnAr_4core
           cleanup
   br label %.body
 
-.body:                                            ; preds = %.loopexit, %.loopexit.split-lp.split.us.a, %.loopexit.split-lp.split, %bb.j
-  %eh.lpad-body = phi { ptr, i32 } [ %.us-phi29, %bb.j ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.split ], [ %lpad.loopexit.split-lp.us, %.loopexit.split-lp.split.us.a ]
+.body:                                            ; preds = %.loopexit, %.split.us.a, %.loopexit.split-lp.split, %bb.j
+  %eh.lpad-body = phi { ptr, i32 } [ %.us-phi29, %bb.j ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.split ], [ %i.z, %.split.us.a ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecINtNtB4_6option6OptionjEEECs2JiOgHzbbc7_10tokenizers(ptr noalias noundef align 8 dereferenceable(24) %i.d) #28
           to label %bb.n unwind label %bb.m
 
@@ -342,8 +342,8 @@ bb.i:                                             ; preds = %.loopexit24
           cleanup
   br label %bb.j
 
-bb.j:                                             ; preds = %.split.us.a, %.split
-  %.us-phi29 = phi { ptr, i32 } [ %i.ba, %.split ], [ %i.z, %.split.us.a ]
+bb.j:                                             ; preds = %.split31.us.loopexit, %.split
+  %.us-phi29 = phi { ptr, i32 } [ %i.ba, %.split ], [ %2, %.split31.us.loopexit ]
   invoke void @_RNvXs5_NtNtCscdodAO9FK5_5alloc3vec5drainINtB5_5DrainINtNtCs4NRVxsYgnAr_4core6option6OptionjEENtNtNtBT_3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.y)
           to label %.body unwind label %bb.l
 

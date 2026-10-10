@@ -205,25 +205,23 @@ _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.us.u
   br i1 %exitcond122.not, label %._crit_edge, label %.lr.ph.us.us.preheader, !llvm.loop !1116
 
 ._crit_edge61.split.us67.us:                      ; preds = %._crit_edge61.split.us67.us, %._crit_edge61.split.us67.us.preheader.new
-  %indvars.iv84 = phi i64 [ 0, %._crit_edge61.split.us67.us.preheader.new ], [ %indvars.iv.next85.1, %._crit_edge61.split.us67.us ] ; 4 uses
+  %indvars.iv84 = phi i64 [ 0, %._crit_edge61.split.us67.us.preheader.new ], [ %indvars.iv.next85.1, %._crit_edge61.split.us67.us ] ; 3 uses
   %niter146 = phi i64 [ 0, %._crit_edge61.split.us67.us.preheader.new ], [ %niter146.next.1, %._crit_edge61.split.us67.us ]
-  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv84
+  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv84 ; 2 uses
   %i.ca = load ptr, ptr %i.d, align 8, !tbaa !385
   %i.cb = load i64, ptr %i.bz, align 4, !tbaa !103
   store i64 %i.cb, ptr %i.ca, align 4, !tbaa !103
   %i.cc = load ptr, ptr %i.d, align 8, !tbaa !385
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv84
   %i.cd = load i64, ptr %i.cc, align 4, !tbaa !103
-  store i64 %i.cd, ptr %5, align 4, !tbaa !103
-  %indvars.iv.next85 = or disjoint i64 %indvars.iv84, 1 ; 2 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next85
+  store i64 %i.cd, ptr %i.bz, align 4, !tbaa !103
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv84
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.ce = load ptr, ptr %i.d, align 8, !tbaa !385
   %i.cf = load i64, ptr %6, align 4, !tbaa !103
   store i64 %i.cf, ptr %i.ce, align 4, !tbaa !103
   %i.cg = load ptr, ptr %i.d, align 8, !tbaa !385
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next85
   %i.ch = load i64, ptr %i.cg, align 4, !tbaa !103
-  store i64 %i.ch, ptr %7, align 4, !tbaa !103
+  store i64 %i.ch, ptr %6, align 4, !tbaa !103
   %indvars.iv.next85.1 = add nuw nsw i64 %indvars.iv84, 2 ; 2 uses
   %niter146.next.1 = add i64 %niter146, 2         ; 2 uses
   %niter146.ncmp.1 = icmp eq i64 %niter146.next.1, %unroll_iter145
@@ -234,17 +232,16 @@ _ZN7kissfftIfN13kissfft_utils6traitsIfEEE5C_MULERSt7complexIfERKS5_S8_.exit.us.u
   br i1 %lcmp.mod143.not, label %._crit_edge, label %._crit_edge61.split.us67.us.epil.preheader
 
 ._crit_edge61.split.us67.us.epil.preheader:       ; preds = %._crit_edge.loopexit.unr-lcssa, %._crit_edge61.split.us67.us.preheader
-  %indvars.iv84.epil.init = phi i64 [ 0, %._crit_edge61.split.us67.us.preheader ], [ %indvars.iv.next85.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %indvars.iv84.epil.init = phi i64 [ 0, %._crit_edge61.split.us67.us.preheader ], [ %indvars.iv.next85.1, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod144 = trunc i32 %3 to i1
   tail call void @llvm.assume(i1 %lcmp.mod144)
-  %i.ci = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv84.epil.init
+  %i.ci = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv84.epil.init ; 2 uses
   %i.cj = load ptr, ptr %i.d, align 8, !tbaa !385
   %i.ck = load i64, ptr %i.ci, align 4, !tbaa !103
   store i64 %i.ck, ptr %i.cj, align 4, !tbaa !103
   %i.cl = load ptr, ptr %i.d, align 8, !tbaa !385
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv84.epil.init
   %i.cm = load i64, ptr %i.cl, align 4, !tbaa !103
-  store i64 %i.cm, ptr %8, align 4, !tbaa !103
+  store i64 %i.cm, ptr %i.ci, align 4, !tbaa !103
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge61.split.us.us.us, %._crit_edge61.split.us67.us.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %.preheader52.lr.ph, %_ZNSt6vectorISt7complexIfESaIS1_EE6resizeEm.exit

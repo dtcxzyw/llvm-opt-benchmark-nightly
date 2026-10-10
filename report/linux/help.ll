@@ -204,14 +204,20 @@ bb.g:                                             ; preds = %bb.f, %get_term_dim
   %i.x = add nsw i64 %i.w, -1
   %i.y = add i64 %i.x, %i.v
   %i.z = udiv i64 %i.y, %i.w                      ; 3 uses
-  %i.aa = trunc i64 %i.z to i32                   ; 2 uses
+  %i.aa = trunc i64 %i.z to i32
   %i.ab = icmp sgt i32 %i.aa, 0
   br i1 %i.ab, label %.lr.ph47, label %._crit_edge48
 
 .lr.ph47:                                         ; preds = %bb.g
   %i.ac = icmp sgt i32 %.031, 0
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16
-  br i1 %i.ac, label %.lr.ph.us.preheader, label %.lr.ph47.split
+  br i1 %i.ac, label %.lr.ph.us.preheader, label %.lr.ph47.split.preheader
+
+.lr.ph47.split.preheader:                         ; preds = %.lr.ph47
+  %3 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16) ; 0 uses
+  %4 = load ptr, ptr @stdout, align 8, !tbaa !26
+  %5 = call i32 @putc(i32 noundef 10, ptr noundef %4), !inline_history !0 ; 0 uses
+  br label %._crit_edge48
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph47
   %i.ae = add nsw i32 %.031, -1
@@ -256,16 +262,7 @@ bb.i:                                             ; preds = %bb.h
   %i.av = icmp samesign ult i64 %indvars.iv.next52, %i.ah
   br i1 %i.av, label %.lr.ph.us, label %._crit_edge48, !llvm.loop !44
 
-.lr.ph47.split:                                   ; preds = %.lr.ph47, %.lr.ph47.split
-  %.03045 = phi i32 [ %6, %.lr.ph47.split ], [ 0, %.lr.ph47 ]
-  %3 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.16) ; 0 uses
-  %4 = load ptr, ptr @stdout, align 8, !tbaa !26
-  %5 = call i32 @putc(i32 noundef 10, ptr noundef %4), !inline_history !0 ; 0 uses
-  %6 = add nuw nsw i32 %.03045, 1                 ; 2 uses
-  %7 = icmp slt i32 %6, %i.aa
-  br i1 %7, label %.lr.ph47.split, label %._crit_edge48, !llvm.loop !44
-
-._crit_edge48:                                    ; preds = %.lr.ph47.split, %._crit_edge.us, %bb.g
+._crit_edge48:                                    ; preds = %._crit_edge.us, %.lr.ph47.split.preheader, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   ret void
 }

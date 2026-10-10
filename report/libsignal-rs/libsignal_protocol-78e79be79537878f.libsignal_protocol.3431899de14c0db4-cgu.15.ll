@@ -204,10 +204,10 @@ _RNvNtNtCsgxBkk5gSRhY_4core4hash3sip9u8to64_le.exit.i.i: ; preds = %bb.e, %bb.d
   br i1 %i.ae, label %bb.h, label %bb.g
 
 bb.f:                                             ; preds = %bb.g, %bb.a
-  %.sroa.0.0.i.i = phi i64 [ 0, %bb.a ], [ %i.g, %bb.g ] ; 8 uses
+  %.sroa.0.0.i.i = phi i64 [ 0, %bb.a ], [ %i.g, %bb.g ] ; 7 uses
   %i.af = sub nuw nsw i64 16, %.sroa.0.0.i.i      ; 2 uses
   %i.ag = and i64 %i.af, 7                        ; 4 uses
-  %i.ah = and i64 %i.af, 24                       ; 4 uses
+  %i.ah = and i64 %i.af, 24                       ; 3 uses
   %i.ai = icmp samesign ult i64 %.sroa.0.0.i.i, %i.ah
   br i1 %i.ai, label %.lr.ph.i.i, label %bb.i
 
@@ -239,7 +239,7 @@ bb.f:                                             ; preds = %bb.g, %bb.a
   %i.bc = xor i64 %i.aw, %.sroa.07.0.copyload.i.i ; 2 uses
   %i.bd = add nuw nsw i64 %.sroa.0.0.i.i, 8       ; 3 uses
   %i.be = icmp samesign ult i64 %i.bd, %i.ah
-  br i1 %i.be, label %2, label %._crit_edge.i.i
+  br i1 %i.be, label %bb.o, label %._crit_edge.i.i
 
 bb.g:                                             ; preds = %_RNvNtNtCsgxBkk5gSRhY_4core4hash3sip9u8to64_le.exit.i.i
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
@@ -275,12 +275,12 @@ bb.h:                                             ; preds = %_RNvNtNtCsgxBkk5gSR
   %i.cc = add i64 %i.e, 16
   br label %_RNvXs2_NtNtCs9k3SxhrAWiO_3std4hash6randomNtB5_13DefaultHasherNtNtCsgxBkk5gSRhY_4core4hash6Hasher5write.exit
 
-._crit_edge.i.i:                                  ; preds = %bb.p, %bb.o, %2, %.lr.ph.i.i
-  %.lcssa23 = phi i64 [ %i.ay, %.lr.ph.i.i ], [ %15, %2 ], [ %i.dl, %bb.o ], [ %i.ee, %bb.p ]
-  %.lcssa22 = phi i64 [ %i.ba, %.lr.ph.i.i ], [ %17, %2 ], [ %i.dn, %bb.o ], [ %i.eg, %bb.p ]
-  %.lcssa21 = phi i64 [ %i.bb, %.lr.ph.i.i ], [ %18, %2 ], [ %i.do, %bb.o ], [ %i.eh, %bb.p ]
-  %.lcssa20 = phi i64 [ %i.bc, %.lr.ph.i.i ], [ %19, %2 ], [ %i.dp, %bb.o ], [ %i.ei, %bb.p ]
-  %.lcssa = phi i64 [ %i.bd, %.lr.ph.i.i ], [ %20, %2 ], [ %i.dq, %bb.o ], [ %22, %bb.p ]
+._crit_edge.i.i:                                  ; preds = %bb.p, %bb.o, %.lr.ph.i.i
+  %.lcssa23 = phi i64 [ %i.ay, %.lr.ph.i.i ], [ %i.dl, %bb.o ], [ %i.ee, %bb.p ]
+  %.lcssa22 = phi i64 [ %i.ba, %.lr.ph.i.i ], [ %i.dn, %bb.o ], [ %i.eg, %bb.p ]
+  %.lcssa21 = phi i64 [ %i.bb, %.lr.ph.i.i ], [ %i.do, %bb.o ], [ %i.eh, %bb.p ]
+  %.lcssa20 = phi i64 [ %i.bc, %.lr.ph.i.i ], [ %i.dp, %bb.o ], [ %i.ei, %bb.p ]
+  %.lcssa = phi i64 [ %i.bd, %.lr.ph.i.i ], [ %i.dq, %bb.o ], [ %2, %bb.p ]
   store i64 %.lcssa22, ptr %i.aj, align 8, !alias.scope !158, !noalias !159
   store i64 %.lcssa23, ptr %i.ak, align 8, !alias.scope !161, !noalias !159
   store i64 %.lcssa21, ptr %i.al, align 8, !alias.scope !161, !noalias !159
@@ -340,36 +340,13 @@ _RNvNtNtCsgxBkk5gSRhY_4core4hash3sip9u8to64_le.exit18.i.i: ; preds = %bb.n, %bb.
   store i64 %.sroa.0.2.i15.i.i, ptr %i.cy, align 8, !alias.scope !158, !noalias !159
   br label %_RNvXs2_NtNtCs9k3SxhrAWiO_3std4hash6randomNtB5_13DefaultHasherNtNtCsgxBkk5gSRhY_4core4hash6Hasher5write.exit
 
-2:                                                ; preds = %.lr.ph.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %i.bd
-  %.sroa.07.0.copyload.i.i.1 = load i64, ptr %3, align 1, !alias.scope !159, !noalias !158 ; 2 uses
-  %4 = xor i64 %.sroa.07.0.copyload.i.i.1, %i.ba  ; 3 uses
-  %5 = add i64 %i.bc, %i.ay                       ; 3 uses
-  %6 = add i64 %4, %i.bb                          ; 2 uses
-  %7 = tail call noundef i64 @llvm.fshl.i64(i64 %i.ay, i64 %i.ay, i64 13)
-  %8 = xor i64 %5, %7                             ; 3 uses
-  %9 = tail call noundef i64 @llvm.fshl.i64(i64 %4, i64 %4, i64 16)
-  %10 = xor i64 %6, %9                            ; 3 uses
-  %11 = tail call noundef i64 @llvm.fshl.i64(i64 %5, i64 %5, i64 32)
-  %12 = add i64 %6, %8                            ; 3 uses
-  %13 = add i64 %10, %11                          ; 2 uses
-  %14 = tail call noundef i64 @llvm.fshl.i64(i64 %8, i64 %8, i64 17)
-  %15 = xor i64 %12, %14                          ; 4 uses
-  %16 = tail call noundef i64 @llvm.fshl.i64(i64 %10, i64 %10, i64 21)
-  %17 = xor i64 %16, %13                          ; 2 uses
-  %18 = tail call noundef i64 @llvm.fshl.i64(i64 %12, i64 %12, i64 32) ; 2 uses
-  %19 = xor i64 %13, %.sroa.07.0.copyload.i.i.1   ; 2 uses
-  %20 = add nuw nsw i64 %.sroa.0.0.i.i, 16        ; 3 uses
-  %21 = icmp samesign ult i64 %20, %i.ah
-  br i1 %21, label %bb.o, label %._crit_edge.i.i
-
-bb.o:                                             ; preds = %2
-  %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 %20
+bb.o:                                             ; preds = %.lr.ph.i.i
+  %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 %i.bd
   %.sroa.07.0.copyload.i.i.2.a = load i64, ptr %i.cz, align 1, !alias.scope !159, !noalias !158 ; 2 uses
-  %i.da = xor i64 %.sroa.07.0.copyload.i.i.2.a, %17 ; 3 uses
-  %i.db = add i64 %19, %15                        ; 3 uses
-  %i.dc = add i64 %i.da, %18                      ; 2 uses
-  %i.dd = tail call noundef i64 @llvm.fshl.i64(i64 %15, i64 %15, i64 13)
+  %i.da = xor i64 %.sroa.07.0.copyload.i.i.2.a, %i.ba ; 3 uses
+  %i.db = add i64 %i.bc, %i.ay                    ; 3 uses
+  %i.dc = add i64 %i.da, %i.bb                    ; 2 uses
+  %i.dd = tail call noundef i64 @llvm.fshl.i64(i64 %i.ay, i64 %i.ay, i64 13)
   %i.de = xor i64 %i.db, %i.dd                    ; 3 uses
   %i.df = tail call noundef i64 @llvm.fshl.i64(i64 %i.da, i64 %i.da, i64 16)
   %i.dg = xor i64 %i.dc, %i.df                    ; 3 uses
@@ -382,7 +359,7 @@ bb.o:                                             ; preds = %2
   %i.dn = xor i64 %i.dm, %i.dj                    ; 2 uses
   %i.do = tail call noundef i64 @llvm.fshl.i64(i64 %i.di, i64 %i.di, i64 32) ; 2 uses
   %i.dp = xor i64 %i.dj, %.sroa.07.0.copyload.i.i.2.a ; 2 uses
-  %i.dq = add nuw nsw i64 %.sroa.0.0.i.i, 24      ; 3 uses
+  %i.dq = add nuw nsw i64 %.sroa.0.0.i.i, 16      ; 3 uses
   %i.dr = icmp samesign ult i64 %i.dq, %i.ah
   br i1 %i.dr, label %bb.p, label %._crit_edge.i.i
 
@@ -405,7 +382,7 @@ bb.p:                                             ; preds = %bb.o
   %i.eg = xor i64 %i.ef, %i.ec
   %i.eh = tail call noundef i64 @llvm.fshl.i64(i64 %i.eb, i64 %i.eb, i64 32)
   %i.ei = xor i64 %i.ec, %.sroa.07.0.copyload.i.i.3
-  %22 = or disjoint i64 %.sroa.0.0.i.i, 32
+  %2 = add nuw nsw i64 %.sroa.0.0.i.i, 24
   br label %._crit_edge.i.i
 
 _RNvXs2_NtNtCs9k3SxhrAWiO_3std4hash6randomNtB5_13DefaultHasherNtNtCsgxBkk5gSRhY_4core4hash6Hasher5write.exit: ; preds = %bb.h, %_RNvNtNtCsgxBkk5gSRhY_4core4hash3sip9u8to64_le.exit18.i.i

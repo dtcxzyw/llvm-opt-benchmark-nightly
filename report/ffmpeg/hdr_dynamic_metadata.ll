@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 7 uses
-  %i.e = load i8, ptr %i.d, align 2, !tbaa !24    ; 7 uses
+  %i.e = load i8, ptr %i.d, align 2, !tbaa !24    ; 6 uses
   %i.f = icmp ugt i8 %i.e, 1
-  %i.g = zext i8 %i.e to i64
+  %i.g = zext i8 %i.e to i64                      ; 3 uses
   %i.h = mul nuw nsw i64 %i.g, 153
   %i.i = add nsw i64 %i.h, -143
   %.0244.lcssa = select i1 %i.f, i64 %i.i, i64 10 ; 2 uses
@@ -236,13 +236,12 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge
   br i1 %.not680, label %._crit_edge591, label %.lr.ph590.preheader
 
 .lr.ph590.preheader:                              ; preds = %bb.f
-  %wide.trip.count = zext i8 %i.e to i64          ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
+  %xtraiter = and i64 %i.g, 3                     ; 3 uses
   %i.w = icmp ult i8 %i.e, 4
   br i1 %i.w, label %.lr.ph590.epil.preheader, label %.lr.ph590.preheader.new
 
 .lr.ph590.preheader.new:                          ; preds = %.lr.ph590.preheader
-  %unroll_iter = and i64 %wide.trip.count, 252
+  %unroll_iter = and i64 %i.g, 252
   br label %.lr.ph590
 
 ._crit_edge591.loopexit.unr-lcssa:                ; preds = %.lr.ph590

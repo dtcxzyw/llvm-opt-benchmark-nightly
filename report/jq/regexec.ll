@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %.lr.ph42.split.us
   %i.bu = zext i1 %i.bt to i32
   br label %..loopexit_crit_edge.split.us
 
-..loopexit_crit_edge.split.us:                    ; preds = %.lr.ph42.split.us, %bb.q
+..loopexit_crit_edge.split.us:                    ; preds = %bb.q, %.lr.ph42.split.us
   %not..i.us = phi i32 [ 0, %.lr.ph42.split.us ], [ %i.bu, %bb.q ]
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bn, i64 96
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !97

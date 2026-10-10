@@ -204,7 +204,7 @@ _ZN4llvm11raw_ostreamlsEc.exit.peel:              ; preds = %.lr.ph.split
   tail call void @_ZN4llvm16SPIRVInstPrinter12printOperandEPKNS_6MCInstEjRNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(48) %3)
   %i.ad = add nuw i32 %2, 1                       ; 2 uses
   %exitcond24.peel.not = icmp eq i32 %i.ad, %i.b
-  br i1 %exitcond24.peel.not, label %._crit_edge, label %.lr.ph.split.split
+  br i1 %exitcond24.peel.not, label %._crit_edge, label %bb.m
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %_ZN4llvm11raw_ostreamlsEc.exit.us20
   %.015.us16 = phi i32 [ %i.ai, %_ZN4llvm11raw_ostreamlsEc.exit.us20 ], [ %2, %.lr.ph.split ] ; 2 uses
@@ -232,12 +232,8 @@ _ZN4llvm11raw_ostreamlsEc.exit.us20:              ; preds = %bb.l, %bb.k
 ._crit_edge:                                      ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.us20, %_ZN4llvm11raw_ostreamlsEc.exit, %bb.f, %bb.j, %_ZN4llvm11raw_ostreamlsEc.exit.peel, %bb.b, %bb.a
   ret void
 
-.lr.ph.split.split:                               ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.peel, %_ZN4llvm11raw_ostreamlsEc.exit
-  %.015 = phi i32 [ %i.an, %_ZN4llvm11raw_ostreamlsEc.exit ], [ %i.ad, %_ZN4llvm11raw_ostreamlsEc.exit.peel ] ; 3 uses
-  %.not = icmp eq i32 %.015, %2
-  br i1 %.not, label %_ZN4llvm11raw_ostreamlsEc.exit, label %bb.m
-
-bb.m:                                             ; preds = %.lr.ph.split.split
+bb.m:                                             ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.peel, %_ZN4llvm11raw_ostreamlsEc.exit
+  %.015 = phi i32 [ %i.an, %_ZN4llvm11raw_ostreamlsEc.exit ], [ %i.ad, %_ZN4llvm11raw_ostreamlsEc.exit.peel ] ; 2 uses
   %i.aj = load ptr, ptr %i.e, align 8, !tbaa !32  ; 3 uses
   %i.ak = load ptr, ptr %i.f, align 8, !tbaa !31
   %.not.i = icmp ult ptr %i.aj, %i.ak
@@ -253,11 +249,11 @@ bb.o:                                             ; preds = %bb.m
   store i8 32, ptr %i.aj, align 1, !tbaa !24
   br label %_ZN4llvm11raw_ostreamlsEc.exit
 
-_ZN4llvm11raw_ostreamlsEc.exit:                   ; preds = %bb.o, %bb.n, %.lr.ph.split.split
+_ZN4llvm11raw_ostreamlsEc.exit:                   ; preds = %bb.o, %bb.n
   tail call void @_ZN4llvm16SPIRVInstPrinter12printOperandEPKNS_6MCInstEjRNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull %1, i32 noundef %.015, ptr noundef nonnull align 8 dereferenceable(48) %3)
   %i.an = add i32 %.015, 1                        ; 2 uses
   %exitcond24.not = icmp eq i32 %i.an, %i.b
-  br i1 %exitcond24.not, label %._crit_edge, label %.lr.ph.split.split, !llvm.loop !1
+  br i1 %exitcond24.not, label %._crit_edge, label %bb.m, !llvm.loop !1
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

@@ -205,23 +205,23 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 13
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 14
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
   br label %.lr.ph101
 
-.lr.ph101:                                        ; preds = %.lr.ph101.preheader, %._crit_edge
-  %.04898 = phi i32 [ %7, %._crit_edge ], [ 0, %.lr.ph101.preheader ] ; 2 uses
-  %.05197 = phi i32 [ %.0.lcssa, %._crit_edge ], [ 0, %.lr.ph101.preheader ] ; 2 uses
+.lr.ph101:                                        ; preds = %.lr.ph101.preheader, %.lr.ph.preheader
+  %.04898 = phi i32 [ %5, %.lr.ph.preheader ], [ 0, %.lr.ph101.preheader ] ; 2 uses
+  %.05197 = phi i32 [ 15, %.lr.ph.preheader ], [ 0, %.lr.ph101.preheader ] ; 2 uses
   %i.k = load i32, ptr %i.b, align 4, !tbaa !11   ; 2 uses
-  %i.l = add i32 %i.k, %.05197                    ; 4 uses
+  %i.l = add i32 %i.k, %.05197                    ; 3 uses
   %i.m = icmp ult i32 %i.l, 16
   br i1 %i.m, label %_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit65.sink.split, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph101
-  %2 = add i32 %i.l, -16
   %i.n = load i32, ptr @_ZN8NArchive4NZip10NSignature15kDataDescriptorE, align 4, !tbaa !11
-  %3 = zext i32 %2 to i64                         ; 5 uses
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
-  %i.o = add nsw i32 %.05197, -15
-  %5 = add i32 %i.o, %i.k
+  %3 = add i32 %i.l, -15
+  %4 = add nsw i32 %.05197, -15
+  %i.o = add i32 %4, %i.k
+  %wide.trip.count = zext i32 %i.o to i64         ; 6 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader, %bb.f
@@ -270,47 +270,34 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %5, %lftr.wideiv
-  br i1 %exitcond.not, label %_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit, label %bb.c, !llvm.loop !116
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.lr.ph.preheader, label %bb.c, !llvm.loop !116
 
-_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit: ; preds = %bb.f
-  %6 = trunc nuw i64 %4 to i32                    ; 2 uses
-  %7 = add i32 %.04898, %6
-  %8 = icmp ugt i32 %i.l, %6
-  br i1 %8, label %.lr.ph.preheader, label %._crit_edge
-
-.lr.ph.preheader:                                 ; preds = %_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
+.lr.ph.preheader:                                 ; preds = %bb.f
+  %5 = add i32 %3, %.04898
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 %wide.trip.count
   %i.ap = load <8 x i8>, ptr %i.ao, align 1, !tbaa !35
   store <8 x i8> %i.ap, ptr %i.a, align 16, !tbaa !35
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 9
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 %wide.trip.count
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.as = load <4 x i8>, ptr %i.ar, align 1, !tbaa !35
   store <4 x i8> %i.as, ptr %i.g, align 8, !tbaa !35
-  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
-  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 13
+  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 %wide.trip.count
+  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 12
   %i.av = load i8, ptr %i.au, align 1, !tbaa !35
   store i8 %i.av, ptr %i.h, align 4, !tbaa !35
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 14
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 %wide.trip.count
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 13
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !35
   store i8 %i.ay, ptr %i.i, align 1, !tbaa !35
-  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 15
+  %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 %wide.trip.count
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 14
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !35
   store i8 %i.bb, ptr %i.j, align 2, !tbaa !35
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit
-  %.0.lcssa = phi i32 [ 0, %_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit ], [ 15, %.lr.ph.preheader ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
-  %9 = zext nneg i32 %.0.lcssa to i64
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 %9
-  %11 = sub nuw nsw i32 4096, %.0.lcssa
-  %12 = call noundef i32 @_ZN8NArchive4NZip10CInArchive9ReadBytesEPvjPj(ptr noundef nonnull align 8 dereferenceable(138) %0, ptr noundef nonnull %10, i32 noundef %11, ptr noundef nonnull %i.b) ; 2 uses
-  %.not = icmp eq i32 %12, 0
+  %6 = call noundef i32 @_ZN8NArchive4NZip10CInArchive9ReadBytesEPvjPj(ptr noundef nonnull align 8 dereferenceable(138) %0, ptr noundef nonnull %2, i32 noundef 4081, ptr noundef nonnull %i.b) ; 2 uses
+  %.not = icmp eq i32 %6, 0
   br i1 %.not, label %.lr.ph101, label %_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit65.sink.split
 
 bb.g:                                             ; preds = %bb.a
@@ -331,8 +318,8 @@ bb.h:                                             ; preds = %bb.g
   tail call void @__cxa_throw(ptr nonnull %i.bk, ptr nonnull @_ZTIN8NArchive4NZip19CInArchiveExceptionE, ptr null) #21
   unreachable
 
-_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit65.sink.split: ; preds = %._crit_edge, %.lr.ph101, %bb.b, %bb.d
-  %.357.ph = phi i32 [ 0, %bb.d ], [ %i.f, %bb.b ], [ %12, %._crit_edge ], [ 1, %.lr.ph101 ]
+_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit65.sink.split: ; preds = %.lr.ph.preheader, %.lr.ph101, %bb.b, %bb.d
+  %.357.ph = phi i32 [ 0, %bb.d ], [ %i.f, %bb.b ], [ %6, %.lr.ph.preheader ], [ 1, %.lr.ph101 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %_ZN8NArchive4NZip10CInArchive20IncreaseRealPositionEy.exit65

@@ -205,7 +205,7 @@ _RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsjjpCCFGI3ul_14lance_enc
   %i.ap = load ptr, ptr %i.ab, align 8, !alias.scope !1507, !noalias !1501, !nonnull !75, !noundef !75
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %i.ae
   store i64 %i.am, ptr %i.aq, align 8, !noalias !1502
-  %i.ar = add i64 %i.ae, 1                        ; 3 uses
+  %i.ar = add nuw nsw i64 %i.ae, 1                ; 3 uses
   store i64 %i.ar, ptr %i.aa, align 8, !alias.scope !1507, !noalias !1501
   %exitcond = icmp eq i64 %i.ar, %i.n
   br i1 %exitcond, label %.thread98.i, label %.lr.ph155.split.us.i
@@ -239,7 +239,7 @@ bb.k:                                             ; preds = %bb.g
   %.sroa.5.0132.us.i = phi i64 [ %i.au, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit45.us.i ], [ %i.n, %bb.k ]
   %.sroa.954.0131.us.i = phi i64 [ %i.bg, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit45.us.i ], [ %.sroa.756.24.copyload.i, %bb.k ] ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.068133.us.i) ]
-  %i.au = add i64 %.sroa.5.0132.us.i, -1          ; 2 uses
+  %i.au = add nsw i64 %.sroa.5.0132.us.i, -1      ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.0.068133.us.i, i64 4 ; 2 uses
   %i.aw = load i32, ptr %i.av, align 4, !alias.scope !1510, !noalias !1511, !noundef !75 ; 2 uses
   %i.ax = load i32, ptr %.sroa.0.068133.us.i, align 4, !alias.scope !1510, !noalias !1511, !noundef !75 ; 2 uses
@@ -642,7 +642,7 @@ _RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsjjpCCFGI3ul_14lance_enc
   %i.am = load ptr, ptr %i.z, align 8, !alias.scope !1632, !noalias !1626, !nonnull !75, !noundef !75
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.ac
   store i64 %i.aj, ptr %i.an, align 8, !noalias !1627
-  %i.ao = add i64 %i.ac, 1                        ; 3 uses
+  %i.ao = add nuw nsw i64 %i.ac, 1                ; 3 uses
   store i64 %i.ao, ptr %i.y, align 8, !alias.scope !1632, !noalias !1626
   %exitcond = icmp eq i64 %i.ao, %i.n
   br i1 %exitcond, label %.thread98.i, label %.lr.ph155.split.us.i
@@ -676,7 +676,7 @@ bb.k:                                             ; preds = %bb.g
   %.sroa.5.0132.us.i = phi i64 [ %i.ar, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit45.us.i ], [ %i.n, %bb.k ]
   %.sroa.954.0131.us.i = phi i64 [ %i.bb, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecxE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit45.us.i ], [ %.sroa.756.24.copyload.i, %bb.k ] ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.068133.us.i) ]
-  %i.ar = add i64 %.sroa.5.0132.us.i, -1          ; 2 uses
+  %i.ar = add nsw i64 %.sroa.5.0132.us.i, -1      ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0.068133.us.i, i64 8 ; 2 uses
   %i.at = load i64, ptr %i.as, align 8, !alias.scope !1635, !noalias !1636, !noundef !75 ; 2 uses
   %i.au = load i64, ptr %.sroa.0.068133.us.i, align 8, !alias.scope !1635, !noalias !1636, !noundef !75 ; 2 uses
@@ -1079,7 +1079,7 @@ bb.di:                                            ; preds = %bb.de
   %i.jm = phi ptr [ %i.li, %bb.eh ], [ %i.iw, %.lr.ph ]
   %i.jn = phi i64 [ %i.lk, %bb.eh ], [ 0, %.lr.ph ] ; 3 uses
   %.sroa.028.0163 = phi i64 [ %i.jo, %bb.eh ], [ 0, %.lr.ph ] ; 4 uses
-  %i.jo = add nuw i64 %.sroa.028.0163, 1          ; 2 uses
+  %i.jo = add nuw nsw i64 %.sroa.028.0163, 1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !48806
   br i1 %i.jf, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecINtNtB6_4sync3ArcDNtNtCs4ytUTZt2Gw9_11arrow_array5array5ArrayEL_EE7reserveCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i, label %bb.dj
@@ -1482,7 +1482,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecyE7reserveCsjjpCCFGI3ul_14lance_encod
   %i.hi = phi i64 [ %i.hy, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyuNCNvNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list14decode_offsetss_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callyNCINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB3s_3VecyE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter7WindowsyEBZ_EE0E0E0B19_.exit.i.i.i.i ], [ %i.hf, %.lr.ph.split.i.i.i.i.preheader ] ; 3 uses
   %i.hj = phi i64 [ %i.hl, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyuNCNvNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list14decode_offsetss_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callyNCINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB3s_3VecyE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter7WindowsyEBZ_EE0E0E0B19_.exit.i.i.i.i ], [ %i.gy, %.lr.ph.split.i.i.i.i.preheader ]
   %i.hk = phi ptr [ %i.hm, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyuNCNvNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list14decode_offsetss_0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callyNCINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB3s_3VecyE14extend_trustedINtB4_3MapINtNtNtBa_5slice4iter7WindowsyEBZ_EE0E0E0B19_.exit.i.i.i.i ], [ %i.gw, %.lr.ph.split.i.i.i.i.preheader ] ; 3 uses
-  %i.hl = add i64 %i.hj, -1                       ; 2 uses
+  %i.hl = add nsw i64 %i.hj, -1                   ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hk, i64 8 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !53170)
   call void @llvm.experimental.noalias.scope.decl(metadata !53171)
@@ -1885,7 +1885,7 @@ bb.p:                                             ; preds = %bb.k, %_RNvXs_NtNtC
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.bc
   %.sroa.030.0167 = phi i64 [ %i.ca, %bb.bc ], [ 0, %.lr.ph.preheader ] ; 5 uses
-  %i.ca = add nuw i64 %.sroa.030.0167, 1          ; 4 uses
+  %i.ca = add nuw nsw i64 %.sroa.030.0167, 1      ; 4 uses
   %exitcond.not = icmp eq i64 %.sroa.030.0167, %i.ad
   br i1 %exitcond.not, label %.invoke, label %bb.bb
 
@@ -2013,7 +2013,7 @@ bb.z:                                             ; preds = %bb.av, %bb.al, %.th
 
 bb.aa:                                            ; preds = %bb.ap, %.lr.ph173
   %.sroa.032.0171 = phi i64 [ 0, %.lr.ph173 ], [ %i.dd, %bb.ap ] ; 4 uses
-  %i.dd = add nuw i64 %.sroa.032.0171, 1          ; 2 uses
+  %i.dd = add nuw nsw i64 %.sroa.032.0171, 1      ; 2 uses
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %.sroa.10.0.i10.i231236, i64 %.sroa.032.0171 ; 2 uses
   %i.df = load i64, ptr %i.de, align 8, !noundef !75
   %i.dg = mul i64 %i.df, %3                       ; 5 uses
@@ -2416,7 +2416,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSmmmNCNvMs9_NtCsjjpC
   %.sroa.0.016.us.i.i.i.i = phi i32 [ %.sroa.0.0.i.i.i.us.i.i.i.i, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSmmmNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_length0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldmNvYmNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i ], [ %.sroa.0.016.us.i.i.i.i.ph, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSmmmNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_length0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldmNvYmNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i.preheader ]
   %i.cg = phi i64 [ %i.ci, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSmmmNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_length0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldmNvYmNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i ], [ %.ph67, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSmmmNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_length0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldmNvYmNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i.preheader ]
   %i.ch = phi ptr [ %i.cj, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSmmmNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_length0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldmNvYmNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i ], [ %.ph68, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSmmmNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_length0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldmNvYmNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i.preheader ]
-  %i.ci = add i64 %i.cg, -1                       ; 2 uses
+  %i.ci = add nsw i64 %i.cg, -1                   ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 4 ; 2 uses
   %i.ck = load i32, ptr %i.cj, align 4, !alias.scope !64381, !noalias !64382, !noundef !75 ; 2 uses
   %i.cl = sub i32 %i.ck, %i.cf
@@ -2460,7 +2460,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyyNCNvMs9_NtCsjjpC
   %i.dd = phi i64 [ %i.df, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyyNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_lengths_0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldyNvYyNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i.prol ], [ %i.cz, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyyNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_lengths_0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldyNvYyNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.preheader.i ]
   %i.de = phi ptr [ %i.dg, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyyNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_lengths_0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldyNvYyNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i.prol ], [ %i.ct, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyyNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_lengths_0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldyNvYyNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.preheader.i ]
   %prol.iter = phi i64 [ %prol.iter.next, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyyNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_lengths_0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldyNvYyNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.i.prol ], [ 0, %_RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyyNCNvMs9_NtCsjjpCCFGI3ul_14lance_encoding10statisticsNtNtB19_4data18VariableWidthBlock10max_lengths_0NCINvNvNtNtNtB8_6traits8iterator8Iterator6max_by4foldyNvYyNtNtBa_3cmp3Ord3cmpE0E0B19_.exit.us.i.i.i.preheader.i ]
-  %i.df = add i64 %i.dd, -1                       ; 2 uses
+  %i.df = add nsw i64 %i.dd, -1                   ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %i.de, i64 8 ; 3 uses
   %i.dh = load i64, ptr %i.dg, align 8, !alias.scope !64385, !noalias !64386, !noundef !75 ; 3 uses
   %i.di = sub i64 %i.dh, %i.dc
@@ -2496,7 +2496,7 @@ _RNCINvNtNtNtCscI6d9CVNmLh_4core4iter8adapters3map8map_foldRSyyyNCNvMs9_NtCsjjpC
   %i.dv = load i64, ptr %i.du, align 8, !alias.scope !64385, !noalias !64386, !noundef !75 ; 2 uses
   %i.dw = sub i64 %i.dv, %i.ds
   %.sroa.0.0.i.i.i.us.i.i.i22.i.2 = call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i.i.i.us.i.i.i22.i.1, i64 %i.dw)
-  %i.dx = add i64 %i.dm, -4                       ; 2 uses
+  %i.dx = add nsw i64 %i.dm, -4                   ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dn, i64 32 ; 2 uses
   %i.dz = load i64, ptr %i.dy, align 8, !alias.scope !64385, !noalias !64386, !noundef !75 ; 2 uses
   %i.ea = sub i64 %i.dz, %i.dv
@@ -2899,7 +2899,7 @@ bb.ah:                                            ; preds = %bb.bn, %.lr.ph.i
   %.sroa.5132.0203.i = phi i64 [ %i.cj, %.lr.ph.i ], [ %i.di, %bb.bn ]
   %.sroa.9134.0202.i = phi i64 [ %.sroa.9134.0.copyload.i, %.lr.ph.i ], [ %i.dq, %bb.bn ] ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0131.0204.i) ]
-  %i.di = add i64 %.sroa.5132.0203.i, -1          ; 2 uses
+  %i.di = add nsw i64 %.sroa.5132.0203.i, -1      ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %.sroa.0131.0204.i, i64 8 ; 2 uses
   %i.dk = icmp eq i64 %.sroa.9134.0202.i, %.sroa.11.0.copyload.i
   br i1 %i.dk, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7WindowsxENtNtNtCs4YAKbnGhBJc_12arrow_buffer4util12bit_iterator11BitIteratorEINtB5_7ZipImplBW_B1r_E4nextCsjjpCCFGI3ul_14lance_encoding.exit.thread.i, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7WindowsxENtNtNtCs4YAKbnGhBJc_12arrow_buffer4util12bit_iterator11BitIteratorEINtB5_7ZipImplBW_B1r_E4nextCsjjpCCFGI3ul_14lance_encoding.exit.i

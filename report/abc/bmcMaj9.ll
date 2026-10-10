@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %Exa9_KissatAddClaus
   %i.ic = getelementptr i8, ptr %2, i64 8
   %.val105.i = load ptr, ptr %i.ic, align 8, !tbaa !45
   %i.id = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 18 uses
-  %wide.trip.count.i.i65 = zext nneg i32 %.val to i64
+  %wide.trip.count.i.i65 = zext nneg i32 %.val to i64 ; 2 uses
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.at, %.lr.ph.i.i64
@@ -284,6 +284,7 @@ bb.ay:                                            ; preds = %Exa9_KissatAddClaus
   %i.jk = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 8 uses
   %scevgep.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %wide.trip.count.i54 = zext nneg i32 %i.jf to i64 ; 4 uses
+  %3 = zext nneg i32 %.val to i64
   br label %bb.bb
 
 bb.az:                                            ; preds = %bb.ay
@@ -302,28 +303,29 @@ Vec_IntFree.exit.i:                               ; preds = %bb.ba, %bb.az
   br label %Exa9_ManAddOneHotSeq.exit
 
 bb.bb:                                            ; preds = %._crit_edge175.i, %.lr.ph177.i
-  %indvars.iv102 = phi i32 [ %indvars.iv.next103, %._crit_edge175.i ], [ -1, %.lr.ph177.i ] ; 2 uses
-  %indvars.iv227.i = phi i64 [ %indvars.iv.next228.i, %._crit_edge175.i ], [ 0, %.lr.ph177.i ] ; 8 uses
-  %indvars.iv221.i = phi i32 [ %indvars.iv.next222.i, %._crit_edge175.i ], [ 4, %.lr.ph177.i ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge175.i ], [ 1, %.lr.ph177.i ] ; 2 uses
+  %indvars.iv227.i = phi i64 [ %indvars.iv.next228.i, %._crit_edge175.i ], [ 0, %.lr.ph177.i ] ; 9 uses
+  %indvars.iv221.i = phi i32 [ %indvars.iv.next222.i, %._crit_edge175.i ], [ 4, %.lr.ph177.i ] ; 3 uses
   %indvars.iv214.i = phi i64 [ %indvars.iv.next215.i, %._crit_edge175.i ], [ 1, %.lr.ph177.i ] ; 2 uses
   %indvars.iv204.i = phi i64 [ %indvars.iv.next205.i, %._crit_edge175.i ], [ 0, %.lr.ph177.i ] ; 4 uses
   %storemerge188.i = phi ptr [ %storemerge189.i, %._crit_edge175.i ], [ %i.jc, %.lr.ph177.i ] ; 6 uses
   %spec.select.sink.i183.i = phi i32 [ %spec.select.sink.i182.i, %._crit_edge175.i ], [ 16, %.lr.ph177.i ] ; 4 uses
-  %indvars108 = trunc i64 %indvars.iv214.i to i32
-  %smin105 = tail call i32 @llvm.smin.i32(i32 %.val, i32 %indvars.iv221.i) ; 3 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %smin105, i32 %indvars108)
-  %3 = add i32 %smax, %indvars.iv102
-  %4 = zext i32 %3 to i64
-  %5 = add nuw nsw i64 %4, 2
+  %4 = sext i32 %indvars.iv221.i to i64
+  %smin102 = tail call i64 @llvm.smin.i64(i64 %3, i64 %4) ; 2 uses
+  %smax = tail call i64 @llvm.smax.i64(i64 %smin102, i64 %indvars.iv214.i)
+  %5 = add i64 %smax, %indvars.iv
+  %smin223.i = tail call i32 @llvm.smin.i32(i32 %.val, i32 %indvars.iv221.i)
   %i.jm = shl nuw nsw i64 %indvars.iv227.i, 4
   %scevgep203.i = getelementptr i8, ptr %.val106.i, i64 %i.jm
-  %indvar.i.tr = trunc i64 %indvars.iv227.i to i32 ; 2 uses
-  %6 = shl i32 %indvar.i.tr, 2                    ; 4 uses
-  %i.jn = add i32 %6, 4
-  %smin.i55 = tail call i32 @llvm.smin.i32(i32 %.val, i32 %i.jn) ; 3 uses
-  %i.jo = or disjoint i32 %6, 1
+  %6 = shl nuw nsw i64 %indvars.iv227.i, 2        ; 2 uses
+  %7 = trunc i64 %6 to i32                        ; 2 uses
+  %i.jn = add i32 %7, 4
+  %smin.i55 = tail call i32 @llvm.smin.i32(i32 %.val, i32 %i.jn) ; 2 uses
+  %i.jo = or disjoint i32 %7, 1
   %smax.i = tail call i32 @llvm.smax.i32(i32 %smin.i55, i32 %i.jo)
-  %i.jp = xor i32 %6, -1
+  %indvar.tr.i = trunc i64 %indvars.iv227.i to i32 ; 2 uses
+  %8 = shl i32 %indvar.tr.i, 2
+  %i.jp = xor i32 %8, -1
   %i.jq = add i32 %smax.i, %i.jp
   %i.jr = zext i32 %i.jq to i64
   %i.js = shl nuw nsw i64 %i.jr, 2
@@ -331,7 +333,7 @@ bb.bb:                                            ; preds = %._crit_edge175.i, %
   %i.ju = getelementptr inbounds nuw [4 x i8], ptr %.val105.i, i64 %indvars.iv227.i
   %i.jv = load i32, ptr %i.ju, align 4, !tbaa !51 ; 2 uses
   %i.jw = shl nsw i32 %i.jv, 1                    ; 2 uses
-  %i.jx = icmp eq i32 %spec.select.sink.i183.i, %indvar.i.tr
+  %i.jx = icmp eq i32 %spec.select.sink.i183.i, %indvar.tr.i
   br i1 %i.jx, label %bb.bc, label %Vec_IntPush.exit.i
 
 bb.bc:                                            ; preds = %bb.bb
@@ -380,8 +382,8 @@ Vec_IntPush.exit.i:                               ; preds = %bb.bj, %bb.bi, %bb.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   %i.ki = or disjoint i32 %i.jw, 1
   store i32 %i.ki, ptr %i.a, align 16, !tbaa !51
-  %7 = icmp sgt i32 %.val, %6                     ; 2 uses
-  br i1 %7, label %.lr.ph.preheader.i, label %._crit_edge.i56
+  %9 = icmp samesign ult i64 %6, %wide.trip.count.i.i65 ; 2 uses
+  br i1 %9, label %.lr.ph.preheader.i, label %._crit_edge.i56
 
 .lr.ph.preheader.i:                               ; preds = %Vec_IntPush.exit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 4 dereferenceable(1) %scevgep203.i, i64 %i.jt, i1 false), !tbaa !51
@@ -453,10 +455,20 @@ bb.bp:                                            ; preds = %Exa9_KissatAddClaus
 
 .critedge.i57:                                    ; preds = %Exa9_KissatAddClause.exit124.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  br i1 %7, label %.lr.ph169.i, label %._crit_edge175.i
+  br i1 %9, label %.lr.ph169.preheader.i, label %._crit_edge175.i
 
-.lr.ph169.i:                                      ; preds = %.critedge.i57, %.critedge99.i
-  %indvars.iv211.i = phi i64 [ %indvars.iv.next212.i, %.critedge99.i ], [ %indvars.iv204.i, %.critedge.i57 ] ; 2 uses
+.lr.ph169.preheader.i:                            ; preds = %.critedge.i57
+  %sext.i = sext i32 %smin.i55 to i64             ; 2 uses
+  br label %.lr.ph169.i
+
+.preheader.i57:                                   ; preds = %.critedge99.i
+  %wide.trip.count.i58 = zext i32 %smin223.i to i64
+  %indvars.iv.next225.i82 = or disjoint i64 %indvars.iv204.i, 1 ; 2 uses
+  %10 = icmp slt i64 %indvars.iv.next225.i82, %sext.i
+  br i1 %10, label %.lr.ph172.i, label %._crit_edge175.i
+
+.lr.ph169.i:                                      ; preds = %.critedge99.i, %.lr.ph169.preheader.i
+  %indvars.iv211.i = phi i64 [ %indvars.iv204.i, %.lr.ph169.preheader.i ], [ %indvars.iv.next212.i, %.critedge99.i ] ; 2 uses
   %i.lc = getelementptr inbounds nuw [4 x i8], ptr %.val106.i, i64 %indvars.iv211.i
   %i.ld = load i32, ptr %i.lc, align 4, !tbaa !51 ; 2 uses
   %i.le = load ptr, ptr %i.id, align 8, !tbaa !40
@@ -521,25 +533,17 @@ Vec_IntFree.exit136.i:                            ; preds = %bb.bv, %bb.bu
 
 .critedge99.i:                                    ; preds = %Exa9_KissatAddClause.exit134.i
   %indvars.iv.next212.i = add nuw nsw i64 %indvars.iv211.i, 1 ; 2 uses
-  %8 = trunc nuw i64 %indvars.iv.next212.i to i32
-  %9 = icmp sgt i32 %smin.i55, %8
-  br i1 %9, label %.lr.ph169.i, label %.lr.ph174.i.preheader, !llvm.loop !133
-
-.lr.ph174.i.preheader:                            ; preds = %.critedge99.i
-  %indvars.iv.next225.i82 = or disjoint i64 %indvars.iv204.i, 1 ; 2 uses
-  %10 = trunc nuw i64 %indvars.iv.next225.i82 to i32
-  %11 = icmp sgt i32 %smin.i55, %10
-  br i1 %11, label %.lr.ph172.i, label %._crit_edge175.i
+  %11 = icmp slt i64 %indvars.iv.next212.i, %sext.i
+  br i1 %11, label %.lr.ph169.i, label %.preheader.i57, !llvm.loop !133
 
 .loopexit.i60:                                    ; preds = %.critedge101.i
-  %indvars.iv.next225.i = add nuw i64 %indvars.iv.next225.i85, 1 ; 2 uses
-  %lftr.wideiv106 = trunc i64 %indvars.iv.next225.i to i32
-  %exitcond107.not = icmp eq i32 %smin105, %lftr.wideiv106
+  %indvars.iv.next225.i = add nuw nsw i64 %indvars.iv.next225.i85, 1 ; 2 uses
+  %exitcond107.not = icmp eq i64 %indvars.iv.next225.i, %smin102
   br i1 %exitcond107.not, label %._crit_edge175.i, label %.lr.ph172.i
 
-.lr.ph172.i:                                      ; preds = %.lr.ph174.i.preheader, %.loopexit.i60
-  %indvars.iv.next225.i85 = phi i64 [ %indvars.iv.next225.i, %.loopexit.i60 ], [ %indvars.iv.next225.i82, %.lr.ph174.i.preheader ] ; 3 uses
-  %indvars.iv224.i83 = phi i64 [ %indvars.iv.next225.i85, %.loopexit.i60 ], [ %indvars.iv204.i, %.lr.ph174.i.preheader ]
+.lr.ph172.i:                                      ; preds = %.preheader.i57, %.loopexit.i60
+  %indvars.iv.next225.i85 = phi i64 [ %indvars.iv.next225.i, %.loopexit.i60 ], [ %indvars.iv.next225.i82, %.preheader.i57 ] ; 3 uses
+  %indvars.iv224.i83 = phi i64 [ %indvars.iv.next225.i85, %.loopexit.i60 ], [ %indvars.iv204.i, %.preheader.i57 ]
   %i.lw = getelementptr inbounds nuw [4 x i8], ptr %.val106.i, i64 %indvars.iv224.i83
   br label %._crit_edge.i142.i
 
@@ -614,17 +618,16 @@ Vec_IntFree.exit148.i:                            ; preds = %bb.cb, %bb.ca
   br label %Exa9_ManAddOneHotSeq.exit
 
 .critedge101.i:                                   ; preds = %Exa9_KissatAddClause.exit146.i
-  %indvars.iv.next219.i = add nuw i64 %indvars.iv218.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next219.i to i32
-  %exitcond = icmp eq i32 %smin105, %lftr.wideiv
+  %indvars.iv.next219.i = add nuw nsw i64 %indvars.iv218.i, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next219.i, %wide.trip.count.i58
   br i1 %exitcond, label %.loopexit.i60, label %._crit_edge.i142.i, !llvm.loop !134
 
-._crit_edge175.i:                                 ; preds = %.loopexit.i60, %.lr.ph174.i.preheader, %.critedge.i57
+._crit_edge175.i:                                 ; preds = %.loopexit.i60, %.preheader.i57, %.critedge.i57
   %indvars.iv.next205.i = add nuw nsw i64 %indvars.iv204.i, 4
-  %indvars.iv.next215.i = add nuw i64 %indvars.iv214.i, 4
-  %indvars.iv.next222.i = add i32 %indvars.iv221.i, 4
+  %indvars.iv.next215.i = add nuw nsw i64 %indvars.iv214.i, 4
+  %indvars.iv.next222.i = add nuw i32 %indvars.iv221.i, 4
   %exitcond232.not.i = icmp eq i64 %indvars.iv.next228.i, %wide.trip.count.i54
-  %indvars.iv.next103 = add i32 %indvars.iv102, -4
+  %indvars.iv.next = add i64 %indvars.iv, -4
   br i1 %exitcond232.not.i, label %.lr.ph5.i.i, label %bb.bb, !llvm.loop !135
 
 .lr.ph5.i.i:                                      ; preds = %._crit_edge175.i
@@ -948,6 +951,9 @@ declare i32 @llvm.ctlz.i32(i32, i1 immarg) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16

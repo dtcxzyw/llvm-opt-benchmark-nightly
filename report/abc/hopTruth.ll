@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/hopTruth?download=true
 inline.NumInlined: 60
 inline.NumDeleted: 28
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 12
-loop-unroll.NumUnrolled: 14
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@Hop_ManConvertAigToTruth_rec2:bb.a
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 5 uses
@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
 Vec_PtrAllocSimInfo.exit.i:                       ; preds = %bb.c, %Vec_PtrAllocSimInfo.exit.i.unr-lcssa
   %i.z = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #9 ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4
-  store i32 %2, ptr %i.aa, align 4, !tbaa !59
-  store i32 %2, ptr %i.z, align 8, !tbaa !60
+  store i32 %2, ptr %i.aa, align 4, !tbaa !58
+  store i32 %2, ptr %i.z, align 8, !tbaa !59
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   store ptr %i.i, ptr %i.ab, align 8, !tbaa !27
   %.not.i = icmp eq i32 %i.b, 31
@@ -362,7 +362,7 @@ Vec_PtrAllocTruthTables.exit:                     ; preds = %..loopexit27_crit_e
   %i.bo = inttoptr i64 %i.bn to ptr               ; 3 uses
   %i.bp = tail call i32 @Hop_ManConvertAigToTruth_rec1(ptr noundef %i.bo)
   %i.bq = icmp slt i32 %2, 6                      ; 2 uses
-  %i.br = select i1 %i.bq, i32 1, i32 %.pre-phi114 ; 11 uses
+  %i.br = select i1 %i.bq, i32 1, i32 %.pre-phi114 ; 14 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 3 uses
   store i32 0, ptr %i.bs, align 4, !tbaa !16
   %i.bt = add nsw i32 %i.bp, 1
@@ -415,7 +415,7 @@ bb.h:                                             ; preds = %Vec_IntGrow.exit
   br label %Vec_IntFetch.exit
 
 Vec_IntFetch.exit:                                ; preds = %Vec_IntGrow.exit, %bb.h
-  %.0.i = phi ptr [ %i.co, %bb.h ], [ null, %Vec_IntGrow.exit ] ; 12 uses
+  %.0.i = phi ptr [ %i.co, %bb.h ], [ null, %Vec_IntGrow.exit ] ; 17 uses
   %.0.i147 = ptrtoaddr ptr %.0.i to i64
   %i.cp = getelementptr i8, ptr %i.bo, i64 32
   %.val = load i32, ptr %i.cp, align 8
@@ -743,7 +743,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
 
 select.unfold.preheader.i74:                      ; preds = %.loopexit
   %i.gm = ptrtoaddr ptr %i.gk to i64
-  %i.gn = zext nneg i32 %i.br to i64              ; 8 uses
+  %i.gn = zext nneg i32 %i.br to i64              ; 13 uses
   %min.iters.check149 = icmp ult i32 %i.br, 8
   %i.go = sub i64 %.0.i147, %i.gm
   %diff.check = icmp ugt i64 %i.go, -32
@@ -826,7 +826,7 @@ Hop_ManTruthCopy.exit:                            ; preds = %vector.body152, %se
 
 select.unfold.i79.preheader:                      ; preds = %Hop_ManTruthCopy.exit
   %min.iters.check160 = icmp ult i32 %i.br, 8
-  br i1 %min.iters.check160, label %select.unfold.i79.a, label %vector.ph161
+  br i1 %min.iters.check160, label %select.unfold.i79, label %vector.ph161
 
 vector.ph161:                                     ; preds = %select.unfold.i79.preheader
   %n.vec162 = and i64 %i.gn, 2147483640
@@ -849,17 +849,52 @@ vector.body163:                                   ; preds = %vector.body163, %ve
   %i.hv = icmp eq i64 %index.next167, %n.vec162
   br i1 %i.hv, label %Hop_ManTruthNot.exit, label %vector.body163, !llvm.loop !57
 
-select.unfold.i79.a:                              ; preds = %select.unfold.i79.preheader, %select.unfold.i79.a
-  %indvars.iv.i80 = phi i64 [ %indvars.iv.next.i81, %select.unfold.i79.a ], [ %i.gn, %select.unfold.i79.preheader ] ; 2 uses
-  %indvars.iv.next.i81 = add nsw i64 %indvars.iv.i80, -1 ; 2 uses
-  %i.hw = getelementptr inbounds nuw [4 x i8], ptr %.0.i, i64 %indvars.iv.next.i81 ; 2 uses
-  %i.hx = load i32, ptr %i.hw, align 4, !tbaa !19
-  %i.hy = xor i32 %i.hx, -1
-  store i32 %i.hy, ptr %i.hw, align 4, !tbaa !19
-  %i.hz = icmp samesign ugt i64 %indvars.iv.i80, 1
-  br i1 %i.hz, label %select.unfold.i79.a, label %Hop_ManTruthNot.exit, !llvm.loop !58
+select.unfold.i79:                                ; preds = %select.unfold.i79.preheader
+  %5 = getelementptr [4 x i8], ptr %.0.i, i64 %i.gn
+  %6 = getelementptr i8, ptr %5, i64 -4           ; 2 uses
+  %7 = load i32, ptr %6, align 4, !tbaa !19
+  %8 = xor i32 %7, -1
+  store i32 %8, ptr %6, align 4, !tbaa !19
+  %.not210 = icmp eq i32 %i.br, 1
+  br i1 %.not210, label %Hop_ManTruthNot.exit, label %select.unfold.i79.1
 
-Hop_ManTruthNot.exit:                             ; preds = %vector.body163, %select.unfold.i79.a, %Hop_ManTruthCopy.exit, %.loopexit
+select.unfold.i79.1:                              ; preds = %select.unfold.i79
+  %9 = getelementptr [4 x i8], ptr %.0.i, i64 %i.gn
+  %10 = getelementptr i8, ptr %9, i64 -8          ; 2 uses
+  %11 = load i32, ptr %10, align 4, !tbaa !19
+  %12 = xor i32 %11, -1
+  store i32 %12, ptr %10, align 4, !tbaa !19
+  %13 = icmp ugt i32 %i.br, 2
+  br i1 %13, label %select.unfold.i79.a, label %Hop_ManTruthNot.exit
+
+select.unfold.i79.a:                              ; preds = %select.unfold.i79.1
+  %14 = getelementptr [4 x i8], ptr %.0.i, i64 %i.gn
+  %15 = getelementptr i8, ptr %14, i64 -12        ; 2 uses
+  %16 = load i32, ptr %15, align 4, !tbaa !19
+  %17 = xor i32 %16, -1
+  store i32 %17, ptr %15, align 4, !tbaa !19
+  %i.hw = getelementptr [4 x i8], ptr %.0.i, i64 %i.gn
+  %18 = getelementptr i8, ptr %i.hw, i64 -16      ; 2 uses
+  %i.hx = load i32, ptr %18, align 4, !tbaa !19
+  %i.hy = xor i32 %i.hx, -1
+  store i32 %i.hy, ptr %18, align 4, !tbaa !19
+  %i.hz = icmp ugt i32 %i.br, 4
+  br i1 %i.hz, label %select.unfold.i79.4, label %Hop_ManTruthNot.exit
+
+select.unfold.i79.4:                              ; preds = %select.unfold.i79.a
+  %19 = getelementptr [4 x i8], ptr %.0.i, i64 %i.gn
+  %20 = getelementptr i8, ptr %19, i64 -20        ; 2 uses
+  %21 = load i32, ptr %20, align 4, !tbaa !19
+  %22 = xor i32 %21, -1
+  store i32 %22, ptr %20, align 4, !tbaa !19
+  %23 = getelementptr [4 x i8], ptr %.0.i, i64 %i.gn
+  %24 = getelementptr i8, ptr %23, i64 -24        ; 2 uses
+  %25 = load i32, ptr %24, align 4, !tbaa !19
+  %26 = xor i32 %25, -1
+  store i32 %26, ptr %24, align 4, !tbaa !19
+  br label %Hop_ManTruthNot.exit
+
+Hop_ManTruthNot.exit:                             ; preds = %vector.body163, %select.unfold.i79, %select.unfold.i79.1, %select.unfold.i79.a, %select.unfold.i79.4, %Hop_ManTruthCopy.exit, %.loopexit
   %.not62 = icmp eq ptr %.0, null
   br i1 %.not62, label %Hop_ManTruthClear.exit, label %bb.p
 
@@ -894,7 +929,7 @@ common.ret:                                       ; preds = %bb.a
   %i.c = load i32, ptr %1, align 8, !tbaa !13
   %i.d = sext i32 %i.c to i64
   %i.e = getelementptr inbounds [8 x i8], ptr @Truth, i64 %i.d
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !61
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !60
   br label %common.ret21
 
 common.ret21:                                     ; preds = %bb.b, %common.ret
@@ -992,7 +1027,7 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !62
+  br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !61
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1017,7 +1052,7 @@ bb.b:                                             ; preds = %bb.a
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !63
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !62
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %.preheader
   %i.ac = tail call i64 @Hop_ManComputeTruth6_rec(ptr noundef %0, ptr noundef nonnull %i.c)
@@ -1124,10 +1159,9 @@ attributes #11 = { nounwind }
 !55 = distinct !{!55, !20, !21, !22}
 !56 = distinct !{!56, !20, !21}
 !57 = distinct !{!57, !20, !21, !22}
-!58 = distinct !{!58, !20, !22, !21}
-!59 = !{!26, !5, i64 4}
-!60 = !{!26, !5, i64 0}
-!61 = !{!30, !30, i64 0}
-!62 = distinct !{!62, !20}
-!63 = distinct !{!63, !23}
+!58 = !{!26, !5, i64 4}
+!59 = !{!26, !5, i64 0}
+!60 = !{!30, !30, i64 0}
+!61 = distinct !{!61, !20}
+!62 = distinct !{!62, !23}
 end_hunk_0

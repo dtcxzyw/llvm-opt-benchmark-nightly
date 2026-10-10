@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.5, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %bb.b
-  %.0211.lcssa = phi i32 [ 0, %bb.b ], [ 1, %.lr.ph ], [ 2, %.lr.ph.1 ], [ 3, %.lr.ph.2 ], [ 4, %.lr.ph.3 ], [ 5, %.lr.ph.4 ], [ %spec.select, %.lr.ph.5 ] ; 9 uses
+  %.0211.lcssa = phi i32 [ 0, %bb.b ], [ 1, %.lr.ph ], [ 2, %.lr.ph.1 ], [ 3, %.lr.ph.2 ], [ 4, %.lr.ph.3 ], [ 5, %.lr.ph.4 ], [ %spec.select, %.lr.ph.5 ] ; 7 uses
   %i.j = icmp samesign ugt i32 %.0211.lcssa, 3
   %i.k = zext nneg i32 %.0211.lcssa to i64
   %i.l = icmp samesign ult i64 %i.b, %i.k
@@ -240,46 +240,18 @@ bb.d:                                             ; preds = %._crit_edge
   %i.w = zext i8 %i.v to i64
   %i.x = or disjoint i64 %i.u, %i.w               ; 2 uses
   %i.y = icmp sgt i32 %.0211.lcssa, 2
-  br i1 %i.y, label %.lr.ph243.2, label %._crit_edge244.loopexit
+  br i1 %i.y, label %.lr.ph243.6, label %._crit_edge244.loopexit
 
-.lr.ph243.2:                                      ; preds = %.lr.ph243.1
-  %.0217.1 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %6 = shl nuw nsw i64 %i.x, 8
-  %7 = load i8, ptr %.0217.1, align 1, !tbaa !31
-  %8 = zext i8 %7 to i64
-  %9 = or disjoint i64 %6, %8                     ; 2 uses
-  %.not319 = icmp eq i32 %.0211.lcssa, 3
-  br i1 %.not319, label %._crit_edge244.loopexit, label %.lr.ph243.3
-
-.lr.ph243.3:                                      ; preds = %.lr.ph243.2
-  %.0217.2 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %10 = shl i64 %9, 8
-  %11 = load i8, ptr %.0217.2, align 1, !tbaa !31
-  %12 = zext i8 %11 to i64
-  %13 = or disjoint i64 %10, %12                  ; 2 uses
-  %14 = icmp sgt i32 %.0211.lcssa, 4
-  br i1 %14, label %.lr.ph243.6, label %._crit_edge244.loopexit
-
-.lr.ph243.6:                                      ; preds = %.lr.ph243.3
-  %15 = shl i64 %13, 16
-  %.0217.3 = getelementptr inbounds nuw i8, ptr %3, i64 5
-  %16 = load i8, ptr %.0217.3, align 1, !tbaa !31
-  %17 = zext i8 %16 to i64
-  %18 = shl nuw nsw i64 %17, 8
-  %19 = or disjoint i64 %15, %18
-  %.0217.4 = getelementptr inbounds nuw i8, ptr %3, i64 6
-  %20 = load i8, ptr %.0217.4, align 1, !tbaa !31
-  %21 = zext i8 %20 to i64
-  %22 = or disjoint i64 %19, %21
-  %.0217.5 = getelementptr inbounds nuw i8, ptr %3, i64 7
-  %i.z = shl i64 %22, 8
+.lr.ph243.6:                                      ; preds = %.lr.ph243.1
+  %.0217.5 = getelementptr inbounds nuw i8, ptr %3, i64 3
+  %i.z = shl nuw nsw i64 %i.x, 8
   %i.aa = load i8, ptr %.0217.5, align 1, !tbaa !31
   %i.ab = zext i8 %i.aa to i64
   %i.ac = or disjoint i64 %i.z, %i.ab
   br label %._crit_edge244.loopexit
 
-._crit_edge244.loopexit:                          ; preds = %.lr.ph243.6, %.lr.ph243.3, %.lr.ph243.2, %.lr.ph243.1, %.lr.ph243
-  %.lcssa = phi i64 [ %i.t, %.lr.ph243 ], [ %i.x, %.lr.ph243.1 ], [ %9, %.lr.ph243.2 ], [ %13, %.lr.ph243.3 ], [ %i.ac, %.lr.ph243.6 ]
+._crit_edge244.loopexit:                          ; preds = %.lr.ph243.6, %.lr.ph243.1, %.lr.ph243
+  %.lcssa = phi i64 [ %i.t, %.lr.ph243 ], [ %i.x, %.lr.ph243.1 ], [ %i.ac, %.lr.ph243.6 ]
   %i.ad = add nsw i64 %4, -2
   %i.ae = add nsw i32 %.0211.lcssa, -1
   %i.af = zext nneg i32 %i.ae to i64              ; 2 uses

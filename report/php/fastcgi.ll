@@ -202,6 +202,7 @@ close_packet.exit116:                             ; preds = %bb.r, %fcgi_make_he
 .lr.ph:                                           ; preds = %close_packet.exit116
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = zext nneg i32 %3 to i64
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph, %safe_write.exit.thread
@@ -272,24 +273,24 @@ bb.aa:                                            ; preds = %safe_write.exit
 
 safe_write.exit.thread:                           ; preds = %bb.z, %safe_write.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 65528 ; 3 uses
-  %4 = trunc nuw i64 %indvars.iv.next to i32
-  %5 = sub nsw i32 %3, %4                         ; 2 uses
-  %i.dw = icmp sgt i32 %5, 65535
+  %5 = sub nsw i64 %4, %indvars.iv.next           ; 2 uses
+  %i.dw = icmp sgt i64 %5, 65535
   br i1 %i.dw, label %bb.u, label %._crit_edge.loopexit, !llvm.loop !121
 
 ._crit_edge.loopexit:                             ; preds = %safe_write.exit.thread
+  %6 = trunc nuw nsw i64 %5 to i32
   %.pre = load ptr, ptr %i.al, align 8, !tbaa !45
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %close_packet.exit116, %._crit_edge.loopexit
   %i.dx = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.cu, %close_packet.exit116 ] ; 9 uses
   %.0.lcssa = phi i64 [ %indvars.iv.next, %._crit_edge.loopexit ], [ 0, %close_packet.exit116 ]
-  %.lcssa132 = phi i32 [ %5, %._crit_edge.loopexit ], [ %3, %close_packet.exit116 ] ; 4 uses
-  %i.dy = add nsw i32 %.lcssa132, 7
+  %.lcssa132 = phi i32 [ %6, %._crit_edge.loopexit ], [ %3, %close_packet.exit116 ] ; 4 uses
+  %i.dy = add nuw nsw i32 %.lcssa132, 7
   %i.dz = and i32 %i.dy, -8                       ; 2 uses
-  %.neg102 = sub i32 %.lcssa132, %i.dz
+  %.neg102 = sub nsw i32 %.lcssa132, %i.dz
   %.not101 = icmp eq i32 %i.dz, %.lcssa132        ; 2 uses
-  %i.ea = add i32 %.neg102, 8                     ; 2 uses
+  %i.ea = add nsw i32 %.neg102, 8                 ; 2 uses
   %i.eb = select i1 %.not101, i32 0, i32 %i.ea
   %i.ec = getelementptr inbounds nuw i8, ptr %i.dx, i64 1
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dx, i64 8 ; 2 uses

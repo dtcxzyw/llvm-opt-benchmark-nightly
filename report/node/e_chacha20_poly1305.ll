@@ -128,21 +128,21 @@ iter.check:                                       ; preds = %.preheader
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.p = sub i64 %i.a, %i.b
-  %diff.check = icmp ugt i64 %i.p, -32
+  %diff.check = icmp ugt i64 %i.p, -16
   %i.q = add i64 %i.e, %i.l
   %i.r = sub i64 %i.b, %i.q
   %i.s = add i64 %i.r, -49
-  %diff.check120 = icmp ult i64 %i.s, 31
+  %diff.check120 = icmp ult i64 %i.s, 15
   %conflict.rdx = or i1 %diff.check, %diff.check120
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check121 = icmp samesign ult i64 %umin, 31
+  %min.iters.check121 = icmp samesign ult i64 %umin, 15
   br i1 %min.iters.check121, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.t = and i64 %i.o, 28
-  %n.vec = and i64 %i.o, 96                       ; 7 uses
+  %i.t = and i64 %i.o, 12
+  %n.vec = and i64 %i.o, 112                      ; 7 uses
   %i.u = add nuw nsw i64 %n.vec, %i.l             ; 2 uses
   %i.v = sub i64 %3, %n.vec                       ; 2 uses
   %i.w = getelementptr i8, ptr %2, i64 %n.vec     ; 2 uses
@@ -154,19 +154,19 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %next.gep = getelementptr i8, ptr %2, i64 %index ; 2 uses
   %next.gep122 = getelementptr i8, ptr %1, i64 %index ; 2 uses
-  %i.y = getelementptr i8, ptr %next.gep, i64 16
-  %wide.load = load <16 x i8>, ptr %next.gep, align 1, !tbaa !16
-  %wide.load123 = load <16 x i8>, ptr %i.y, align 1, !tbaa !16
+  %i.y = getelementptr i8, ptr %next.gep, i64 8
+  %wide.load = load <8 x i8>, ptr %next.gep, align 1, !tbaa !16
+  %wide.load123 = load <8 x i8>, ptr %i.y, align 1, !tbaa !16
   %gep = getelementptr i8, ptr %invariant.gep, i64 %index ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %gep, i64 16
-  %wide.load124 = load <16 x i8>, ptr %gep, align 1, !tbaa !16
-  %wide.load125 = load <16 x i8>, ptr %i.z, align 1, !tbaa !16
-  %4 = xor <16 x i8> %wide.load124, %wide.load
-  %5 = xor <16 x i8> %wide.load125, %wide.load123
-  %i.aa = getelementptr i8, ptr %next.gep122, i64 16
-  store <16 x i8> %4, ptr %next.gep122, align 1, !tbaa !16
-  store <16 x i8> %5, ptr %i.aa, align 1, !tbaa !16
-  %index.next = add nuw i64 %index, 32            ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %gep, i64 8
+  %wide.load124 = load <8 x i8>, ptr %gep, align 1, !tbaa !16
+  %wide.load125 = load <8 x i8>, ptr %i.z, align 1, !tbaa !16
+  %4 = xor <8 x i8> %wide.load124, %wide.load
+  %5 = xor <8 x i8> %wide.load125, %wide.load123
+  %i.aa = getelementptr i8, ptr %next.gep122, i64 8
+  store <8 x i8> %4, ptr %next.gep122, align 1, !tbaa !16
+  store <8 x i8> %5, ptr %i.aa, align 1, !tbaa !16
+  %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ab = icmp eq i64 %index.next, %n.vec
   br i1 %i.ab, label %middle.block, label %vector.body, !llvm.loop !26
 
@@ -377,7 +377,7 @@ middle.block159:                                  ; preds = %vector.body152
 
 vec.epilog.iter.check164:                         ; preds = %middle.block159
   %min.epilog.iters.check165 = icmp eq i64 %i.bz, 0
-  br i1 %min.epilog.iters.check165, label %vec.epilog.scalar.ph163.preheader, label %vec.epilog.ph166, !prof !38
+  br i1 %min.epilog.iters.check165, label %vec.epilog.scalar.ph163.preheader, label %vec.epilog.ph166, !prof !37
 
 vec.epilog.ph166:                                 ; preds = %vector.main.loop.iter.check148, %vec.epilog.iter.check164
   %vec.epilog.resume.val161 = phi i64 [ %n.vec151, %vec.epilog.iter.check164 ], [ 0, %vector.main.loop.iter.check148 ]
@@ -656,13 +656,13 @@ bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 208
   call void @Poly1305_Init(ptr noundef nonnull %i.r, ptr noundef nonnull %i.a) #8
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 112
-  store i32 0, ptr %i.s, align 8, !tbaa !40
+  store i32 0, ptr %i.s, align 8, !tbaa !39
   %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 148
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, ptr noundef nonnull align 4 dereferenceable(16) %i.t, i64 16, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 168
-  store i64 13, ptr %i.u, align 8, !tbaa !41
+  store i64 13, ptr %i.u, align 8, !tbaa !40
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 176
-  store i64 %i.f, ptr %i.v, align 8, !tbaa !42
+  store i64 %i.f, ptr %i.v, align 8, !tbaa !41
   %.not106.i = icmp eq i64 %i.f, 0
   br i1 %.not106.i, label %bb.n, label %bb.f
 
@@ -695,13 +695,13 @@ bb.j:                                             ; preds = %bb.d
   call void @Poly1305_Init(ptr noundef nonnull %i.ae, ptr noundef nonnull %i.a) #8
   store i32 1, ptr %i.o, align 8, !tbaa !17
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 112
-  store i32 0, ptr %i.af, align 8, !tbaa !40
+  store i32 0, ptr %i.af, align 8, !tbaa !39
   %i.ag = getelementptr inbounds nuw i8, ptr %i.d, i64 148
   call void @Poly1305_Update(ptr noundef nonnull %i.ae, ptr noundef nonnull %i.ag, i64 noundef 16) #8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.d, i64 168
-  store i64 13, ptr %i.ah, align 8, !tbaa !41
+  store i64 13, ptr %i.ah, align 8, !tbaa !40
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 176
-  store i64 %i.f, ptr %i.ai, align 8, !tbaa !42
+  store i64 %i.f, ptr %i.ai, align 8, !tbaa !41
   %i.aj = call i32 @EVP_CIPHER_CTX_is_encrypting(ptr noundef nonnull %0) #8
   %.not105.i = icmp eq i32 %i.aj, 0
   br i1 %.not105.i, label %bb.l, label %bb.k
@@ -780,7 +780,7 @@ bb.s:                                             ; preds = %bb.b
   tail call void @Poly1305_Init(ptr noundef nonnull %i.bb, ptr noundef nonnull %i.ba) #8
   store i32 1, ptr %i.az, align 8, !tbaa !17
   %i.bc = getelementptr inbounds nuw i8, ptr %i.d, i64 112
-  store i32 0, ptr %i.bc, align 8, !tbaa !40
+  store i32 0, ptr %i.bc, align 8, !tbaa !39
   %i.bd = getelementptr inbounds nuw i8, ptr %i.d, i64 168 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bd, i8 0, i64 16, i1 false)
   store i32 1, ptr %i.g, align 4, !tbaa !24
@@ -789,9 +789,9 @@ bb.s:                                             ; preds = %bb.b
 bb.t:                                             ; preds = %bb.s
   %i.be = getelementptr inbounds nuw i8, ptr %i.d, i64 148
   tail call void @Poly1305_Update(ptr noundef nonnull %i.bb, ptr noundef nonnull %i.be, i64 noundef 13) #8
-  store i64 13, ptr %i.bd, align 8, !tbaa !41
+  store i64 13, ptr %i.bd, align 8, !tbaa !40
   %i.bf = getelementptr inbounds nuw i8, ptr %i.d, i64 184
-  store i32 1, ptr %i.bf, align 8, !tbaa !43
+  store i32 1, ptr %i.bf, align 8, !tbaa !42
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %bb.a
@@ -810,23 +810,23 @@ bb.w:                                             ; preds = %bb.v
   %i.bh = getelementptr inbounds nuw i8, ptr %i.d, i64 208
   tail call void @Poly1305_Update(ptr noundef nonnull %i.bh, ptr noundef nonnull %2, i64 noundef %3) #8
   %i.bi = getelementptr inbounds nuw i8, ptr %i.d, i64 168 ; 2 uses
-  %i.bj = load i64, ptr %i.bi, align 8, !tbaa !41
+  %i.bj = load i64, ptr %i.bi, align 8, !tbaa !40
   %i.bk = add i64 %i.bj, %3
-  store i64 %i.bk, ptr %i.bi, align 8, !tbaa !41
+  store i64 %i.bk, ptr %i.bi, align 8, !tbaa !40
   %i.bl = getelementptr inbounds nuw i8, ptr %i.d, i64 184
-  store i32 1, ptr %i.bl, align 8, !tbaa !43
+  store i32 1, ptr %i.bl, align 8, !tbaa !42
   %i.bm = trunc i64 %3 to i32
   br label %bb.aw
 
 bb.x:                                             ; preds = %bb.v
   %i.bn = getelementptr inbounds nuw i8, ptr %i.d, i64 184 ; 2 uses
-  %i.bo = load i32, ptr %i.bn, align 8, !tbaa !43
+  %i.bo = load i32, ptr %i.bn, align 8, !tbaa !42
   %.not118 = icmp eq i32 %i.bo, 0
   br i1 %.not118, label %bb.ab, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.bp = getelementptr inbounds nuw i8, ptr %i.d, i64 168
-  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !41
+  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !40
   %i.br = and i64 %i.bq, 15                       ; 2 uses
   %.not119 = icmp eq i64 %i.br, 0
   br i1 %.not119, label %bb.aa, label %bb.z
@@ -838,7 +838,7 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  store i32 0, ptr %i.bn, align 8, !tbaa !43
+  store i32 0, ptr %i.bn, align 8, !tbaa !42
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.x
@@ -871,9 +871,9 @@ bb.af:                                            ; preds = %bb.ad
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
-  %i.cc = load i64, ptr %i.bx, align 8, !tbaa !42
+  %i.cc = load i64, ptr %i.bx, align 8, !tbaa !41
   %i.cd = add i64 %i.cc, %.0104
-  store i64 %i.cd, ptr %i.bx, align 8, !tbaa !42
+  store i64 %i.cd, ptr %i.bx, align 8, !tbaa !41
   %.0107 = getelementptr inbounds nuw i8, ptr %2, i64 %.0104
   %.0108 = getelementptr inbounds nuw i8, ptr %1, i64 %.0104
   %.not122 = icmp eq i64 %.0104, %3
@@ -886,13 +886,13 @@ bb.ah:                                            ; preds = %.thread, %bb.ag
   %.0108140 = phi ptr [ %1, %.thread ], [ %.0108, %bb.ag ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   %i.ce = getelementptr inbounds nuw i8, ptr %i.d, i64 184 ; 2 uses
-  %i.cf = load i32, ptr %i.ce, align 8, !tbaa !43
+  %i.cf = load i32, ptr %i.ce, align 8, !tbaa !42
   %.not123 = icmp eq i32 %i.cf, 0
   br i1 %.not123, label %bb.al, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.cg = getelementptr inbounds nuw i8, ptr %i.d, i64 168
-  %i.ch = load i64, ptr %i.cg, align 8, !tbaa !41
+  %i.ch = load i64, ptr %i.cg, align 8, !tbaa !40
   %i.ci = and i64 %i.ch, 15                       ; 2 uses
   %.not124 = icmp eq i64 %i.ci, 0
   br i1 %.not124, label %bb.ak, label %bb.aj
@@ -904,13 +904,13 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  store i32 0, ptr %i.ce, align 8, !tbaa !43
+  store i32 0, ptr %i.ce, align 8, !tbaa !42
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.ah
   %i.cl = getelementptr inbounds nuw i8, ptr %i.d, i64 168
   %i.cm = getelementptr inbounds nuw i8, ptr %i.d, i64 176
-  %i.cn = load i64, ptr %i.cm, align 8, !tbaa !42
+  %i.cn = load i64, ptr %i.cm, align 8, !tbaa !41
   %i.co = and i64 %i.cn, 15                       ; 2 uses
   %.not125 = icmp eq i64 %i.co, 0
   br i1 %.not125, label %bb.an, label %bb.am
@@ -1280,16 +1280,15 @@ attributes #8 = { nounwind }
 !29 = distinct !{!29, !34}
 !30 = distinct !{!30, !34, !35, !36}
 !31 = distinct !{!31, !34, !35, !36}
-!32 = distinct !{!32, !39}
+!32 = distinct !{!32, !38}
 !33 = distinct !{!33, !34, !35}
 !34 = !{!"llvm.loop.mustprogress"}
 !35 = !{!"llvm.loop.isvectorized", i32 1}
 !36 = !{!"llvm.loop.unroll.runtime.disable"}
-!37 = !{!"branch_weights", i32 4, i32 28}
-!38 = !{!"branch_weights", i32 4, i32 12}
-!39 = !{!"llvm.loop.unroll.disable"}
-!40 = !{!21, !7, i64 112}
-!41 = !{!21, !13, i64 168}
-!42 = !{!21, !13, i64 176}
-!43 = !{!21, !7, i64 184}
+!37 = !{!"branch_weights", i32 4, i32 12}
+!38 = !{!"llvm.loop.unroll.disable"}
+!39 = !{!21, !7, i64 112}
+!40 = !{!21, !13, i64 168}
+!41 = !{!21, !13, i64 176}
+!42 = !{!21, !7, i64 184}
 end_hunk_0

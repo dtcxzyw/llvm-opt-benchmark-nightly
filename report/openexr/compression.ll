@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bd = tail call <16 x i32> @llvm.x86.avx512.vpdpbusd.512(<16 x i32> %i.ad, <64 x i8> %i.aq, <64 x i8> splat (i8 1)) ; 3 uses
   %i.be = tail call <16 x i32> @llvm.x86.avx512.vpdpbusd.512(<16 x i32> %i.ae, <64 x i8> %i.as, <64 x i8> splat (i8 1)) ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.3, i64 256 ; 2 uses
-  %i.bg = add i64 %.0135, -256                    ; 3 uses
+  %i.bg = add nsw i64 %.0135, -256                ; 3 uses
   %i.bh = icmp ugt i64 %i.bg, 255
   br i1 %i.bh, label %.preheader, label %bb.d, !llvm.loop !353
 
@@ -429,7 +429,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bd = tail call <8 x i32> @llvm.x86.avx512.vpdpbusd.256(<8 x i32> %i.ad, <32 x i8> %i.aq, <32 x i8> splat (i8 1)) ; 3 uses
   %i.be = tail call <8 x i32> @llvm.x86.avx512.vpdpbusd.256(<8 x i32> %i.ae, <32 x i8> %i.as, <32 x i8> splat (i8 1)) ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.3, i64 128 ; 2 uses
-  %i.bg = add i64 %.0135, -128                    ; 3 uses
+  %i.bg = add nsw i64 %.0135, -128                ; 3 uses
   %i.bh = icmp ugt i64 %i.bg, 127
   br i1 %i.bh, label %.preheader, label %bb.d, !llvm.loop !356
 
@@ -650,7 +650,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.be = tail call <8 x i32> @llvm.x86.avx512.vpdpbusd.256(<8 x i32> %i.ae, <32 x i8> %i.ar, <32 x i8> splat (i8 1)) ; 3 uses
   %i.bf = tail call <8 x i32> @llvm.x86.avx512.vpdpbusd.256(<8 x i32> %i.af, <32 x i8> %i.at, <32 x i8> splat (i8 1)) ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.3, i64 128 ; 2 uses
-  %i.bh = add i64 %.0136, -128                    ; 3 uses
+  %i.bh = add nsw i64 %.0136, -128                ; 3 uses
   %i.bi = icmp ugt i64 %i.bh, 127
   br i1 %i.bi, label %.preheader, label %bb.d, !llvm.loop !359
 
@@ -863,7 +863,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ax = add <8 x i32> %i.x, %i.av
   %i.ay = add <8 x i32> %i.ax, %i.aw              ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.3, i64 64 ; 2 uses
-  %i.ba = add i64 %.094, -64                      ; 3 uses
+  %i.ba = add nsw i64 %.094, -64                  ; 3 uses
   %i.bb = icmp ugt i64 %i.ba, 63
   br i1 %i.bb, label %.preheader222, label %bb.d, !llvm.loop !362
 
@@ -1107,7 +1107,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.au = add <4 x i32> %i.u, %i.as
   %i.av = add <4 x i32> %i.au, %i.at              ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.3, i64 32 ; 2 uses
-  %i.ax = add i64 %.094, -32                      ; 3 uses
+  %i.ax = add nsw i64 %.094, -32                  ; 3 uses
   %i.ay = icmp ugt i64 %i.ax, 31
   br i1 %i.ay, label %.preheader222, label %bb.d, !llvm.loop !368
 

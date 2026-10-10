@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %.critedge
   br label %bb.h
 
 bb.h:                                             ; preds = %.unr-lcssa, %bb.g
-  %.146 = phi i32 [ %i.bg, %.unr-lcssa ], [ %i.ai, %bb.g ] ; 7 uses
-  %.1 = phi i32 [ %i.ai, %.unr-lcssa ], [ %i.ac, %bb.g ] ; 6 uses
+  %.146 = phi i32 [ %i.bg, %.unr-lcssa ], [ %i.ai, %bb.g ] ; 6 uses
+  %.1 = phi i32 [ %i.ai, %.unr-lcssa ], [ %i.ac, %bb.g ] ; 5 uses
   %i.bh = icmp eq i32 %.146, 0
   br i1 %i.bh, label %bb.i, label %bb.n
 
@@ -284,7 +284,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 .lr.ph.preheader:                                 ; preds = %bb.s
   %i.ck = zext i32 %.146 to i64                   ; 2 uses
-  %narrow = sub nuw i32 %.1, %.146                ; 2 uses
+  %narrow = sub nuw i32 %.1, %.146                ; 4 uses
   %i.cl = zext i32 %narrow to i64                 ; 2 uses
   %xtraiter104 = and i64 %i.cl, 3                 ; 3 uses
   %i.cm = add i32 %narrow, -1
@@ -338,7 +338,7 @@ _ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.thread: ; preds 
 
 _ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit.unr-lcssa: ; preds = %.lr.ph
   %lcmp.mod105.not = icmp eq i64 %xtraiter104, 0
-  br i1 %lcmp.mod105.not, label %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit, label %.lr.ph.epil.preheader
+  br i1 %lcmp.mod105.not, label %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit, label %.lr.ph.epil.preheader
 
 .lr.ph.epil.preheader:                            ; preds = %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv88.epil.init = phi i64 [ %i.ck, %.lr.ph.preheader ], [ %indvars.iv.next89.3, %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit.unr-lcssa ]
@@ -360,14 +360,10 @@ _ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit.unr-lcs
   store i8 %i.dm, ptr %i.dn, align 1, !tbaa !63
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter104
-  br i1 %epil.iter.cmp.not, label %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit, label %.lr.ph.epil, !llvm.loop !72
+  br i1 %epil.iter.cmp.not, label %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit, label %.lr.ph.epil, !llvm.loop !72
 
-_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit: ; preds = %.lr.ph.epil, %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit.unr-lcssa
-  %6 = sub i32 %.1, %.146
-  br label %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit
-
-_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit: ; preds = %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit, %bb.s
-  %.0.lcssa = phi i32 [ 0, %bb.s ], [ %6, %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit ]
+_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit: ; preds = %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit.unr-lcssa, %.lr.ph.epil, %bb.s
+  %.0.lcssa = phi i32 [ 0, %bb.s ], [ %narrow, %.lr.ph.epil ], [ %narrow, %_ZN12CFilterCoder14WriteWithLimitEP20ISequentialOutStreamj.exit.loopexit.unr-lcssa ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %.pre = load i8, ptr %i.c, align 4, !tbaa !56, !range !57
   br label %bb.e, !llvm.loop !73

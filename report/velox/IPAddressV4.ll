@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/IPAddressV4?download=true
 inline.NumInlined: 744
 inline.NumDeleted: 340
-loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZNK5folly11IPAddressV422toFullyQualifiedAppendERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
 
 bb.f:                                             ; preds = %bb.d
@@ -204,7 +204,7 @@ define linkonce_odr i40 @_ZN5folly6detail5Bytes19longestCommonPrefixILm4EEESt4pa
 bb.a:
   %4 = alloca %"struct.fmt::v11::detail::format_arg_store.50", align 16 ; 5 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %6 = alloca %"struct.std::array", align 4       ; 6 uses
+  %6 = alloca %"struct.std::array", align 4       ; 9 uses
   %i.a = icmp ugt i8 %1, 32
   %i.b = icmp ugt i8 %3, 32
   %or.cond = or i1 %i.a, %i.b
@@ -263,10 +263,9 @@ bb.f:                                             ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.a
-  %.sroa.speculated44 = tail call i8 @llvm.umin.i8(i8 %3, i8 %1) ; 6 uses
+  %.sroa.speculated44 = tail call i8 @llvm.umin.i8(i8 %3, i8 %1) ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #32
   store i32 0, ptr %6, align 4
-  %7 = zext nneg i8 %.sroa.speculated44 to i32
   %.not = icmp eq i8 %.sroa.speculated44, 0
   br i1 %.not, label %.critedge4, label %.lr.ph.preheader
 
@@ -274,35 +273,63 @@ bb.g:                                             ; preds = %bb.a
   %i.m = load i8, ptr %0, align 1, !tbaa !12      ; 2 uses
   %i.n = load i8, ptr %2, align 1, !tbaa !12
   %i.o = icmp eq i8 %i.m, %i.n
-  br i1 %i.o, label %.lr.ph80.a, label %.critedge
+  br i1 %i.o, label %.lr.ph80, label %.critedge
 
-.lr.ph.a:                                         ; preds = %.lr.ph80.a
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next
+.lr.ph:                                           ; preds = %.lr.ph80
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %8 = load i8, ptr %7, align 1, !tbaa !12        ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %10 = load i8, ptr %9, align 1, !tbaa !12
+  %11 = icmp eq i8 %8, %10
+  br i1 %11, label %.lr.ph80.1, label %.critedge
+
+.lr.ph80.1:                                       ; preds = %.lr.ph
+  %12 = getelementptr inbounds nuw i8, ptr %6, i64 1
+  store i8 %8, ptr %12, align 1, !tbaa !12
+  %13 = icmp ugt i8 %.sroa.speculated44, 16
+  br i1 %13, label %.lr.ph.a, label %..critedge_crit_edge, !llvm.loop !177
+
+.lr.ph.a:                                         ; preds = %.lr.ph80.1
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.q = load i8, ptr %i.p, align 1, !tbaa !12    ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv.next
+  %i.r = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.s = load i8, ptr %i.r, align 1, !tbaa !12
   %i.t = icmp eq i8 %i.q, %i.s
-  br i1 %i.t, label %.lr.ph80.a, label %.critedge, !llvm.loop !177
+  br i1 %i.t, label %.lr.ph80.2, label %.critedge
 
-.lr.ph80.a:                                       ; preds = %.lr.ph.preheader, %.lr.ph.a
-  %8 = phi i8 [ %i.q, %.lr.ph.a ], [ %i.m, %.lr.ph.preheader ]
-  %indvars.iv79 = phi i64 [ %indvars.iv.next, %.lr.ph.a ], [ 0, %.lr.ph.preheader ] ; 2 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 %indvars.iv79
-  store i8 %8, ptr %i.u, align 1, !tbaa !12
-  %indvars.iv.next = add nuw i64 %indvars.iv79, 1 ; 4 uses
-  %9 = trunc nuw i64 %indvars.iv.next to i32
-  %10 = shl nuw nsw i32 %9, 3                     ; 3 uses
-  %11 = icmp samesign ult i32 %10, %7
-  br i1 %11, label %.lr.ph.a, label %..critedge_crit_edge, !llvm.loop !177
+.lr.ph80.2:                                       ; preds = %.lr.ph.a
+  %14 = getelementptr inbounds nuw i8, ptr %6, i64 2
+  store i8 %i.q, ptr %14, align 2, !tbaa !12
+  %15 = icmp ugt i8 %.sroa.speculated44, 24
+  br i1 %15, label %.lr.ph80.a, label %..critedge_crit_edge, !llvm.loop !177
 
-..critedge_crit_edge:                             ; preds = %.lr.ph80.a
+.lr.ph80.a:                                       ; preds = %.lr.ph80.2
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %16 = load i8, ptr %i.u, align 1, !tbaa !12     ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %18 = load i8, ptr %17, align 1, !tbaa !12
+  %19 = icmp eq i8 %16, %18
+  br i1 %19, label %.lr.ph80.3, label %.critedge
+
+.lr.ph80.3:                                       ; preds = %.lr.ph80.a
+  %20 = getelementptr inbounds nuw i8, ptr %6, i64 3
+  store i8 %16, ptr %20, align 1, !tbaa !12
+  %21 = icmp ugt i8 %.sroa.speculated44, 32
+  br i1 %21, label %.critedge, label %..critedge_crit_edge, !llvm.loop !177
+
+.lr.ph80:                                         ; preds = %.lr.ph.preheader
+  store i8 %i.m, ptr %6, align 4, !tbaa !12
+  %22 = icmp ugt i8 %.sroa.speculated44, 8
+  br i1 %22, label %.lr.ph, label %..critedge_crit_edge, !llvm.loop !177
+
+..critedge_crit_edge:                             ; preds = %.lr.ph80.3, %.lr.ph80.2, %.lr.ph80.1, %.lr.ph80
+  %.lcssa = phi i8 [ 8, %.lr.ph80 ], [ 16, %.lr.ph80.1 ], [ 24, %.lr.ph80.2 ], [ 32, %.lr.ph80.3 ]
   br label %.critedge, !llvm.loop !177
 
-.critedge:                                        ; preds = %.lr.ph.a, %..critedge_crit_edge, %.lr.ph.preheader
-  %.lcssa.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %10, %..critedge_crit_edge ], [ %10, %.lr.ph.a ]
-  %12 = trunc i32 %.lcssa.ph to i8                ; 2 uses
-  %.sroa.speculated = tail call i8 @llvm.umin.i8(i8 %.sroa.speculated44, i8 %12) ; 2 uses
-  %i.v = icmp ugt i8 %.sroa.speculated44, %12
+.critedge:                                        ; preds = %.lr.ph, %.lr.ph.a, %.lr.ph80.a, %.lr.ph80.3, %..critedge_crit_edge, %.lr.ph.preheader
+  %.lcssa.ph = phi i8 [ 0, %.lr.ph.preheader ], [ %.lcssa, %..critedge_crit_edge ], [ 8, %.lr.ph ], [ 16, %.lr.ph.a ], [ 24, %.lr.ph80.a ], [ 32, %.lr.ph80.3 ] ; 2 uses
+  %.sroa.speculated = tail call i8 @llvm.umin.i8(i8 %.sroa.speculated44, i8 %.lcssa.ph) ; 2 uses
+  %i.v = icmp ugt i8 %.sroa.speculated44, %.lcssa.ph
   br i1 %i.v, label %.lr.ph65, label %.critedge4
 
 .lr.ph65:                                         ; preds = %.critedge, %bb.h

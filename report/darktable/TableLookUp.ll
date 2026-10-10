@@ -204,7 +204,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n152, label %.preheader, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %iter.check, %vector.memcheck123, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv93.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.memcheck123 ], [ %i.ei, %vec.epilog.iter.check ], [ %i.fd, %vec.epilog.middle.block ] ; 7 uses
+  %indvars.iv93.ph = phi i64 [ 1, %iter.check ], [ 1, %vector.memcheck123 ], [ %i.ei, %vec.epilog.iter.check ], [ %i.fd, %vec.epilog.middle.block ] ; 6 uses
   %.neg = add nsw i64 %indvars.iv93.ph, 1
   %i.fx = and i64 %i.g, 2
   %lcmp.mod.not.not = icmp eq i64 %i.fx, 0
@@ -238,8 +238,6 @@ bb.i:                                             ; preds = %.peel.next.prol
   %i.go = sub nsw i32 %i.ga, %i.gn
   %.sroa.speculate.load.false.sroa.speculated.i.prol = tail call i32 @llvm.smax.i32(i32 %i.go, i32 0)
   %i.gp = trunc nuw i32 %.sroa.speculate.load.false.sroa.speculated.i.prol to i16
-  %3 = icmp samesign ult i64 %indvars.iv93.ph, 65536
-  tail call void @llvm.assume(i1 %3)
   %.idx.prol = shl nuw nsw i64 %indvars.iv93.ph, 2
   %i.gq = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx.prol ; 2 uses
   store i16 %i.gp, ptr %i.gq, align 2, !tbaa !22
@@ -454,7 +452,7 @@ vec.epilog.scalar.ph192.prol.loopexit:            ; preds = %vec.epilog.scalar.p
   br i1 %i.jx, label %.loopexit, label %vec.epilog.scalar.ph192
 
 .peel.next:                                       ; preds = %.peel.next.prol.loopexit, %bb.l
-  %indvars.iv93 = phi i64 [ %indvars.iv.next94.1, %bb.l ], [ %indvars.iv93.unr, %.peel.next.prol.loopexit ] ; 7 uses
+  %indvars.iv93 = phi i64 [ %indvars.iv.next94.1, %bb.l ], [ %indvars.iv93.unr, %.peel.next.prol.loopexit ] ; 5 uses
   %i.jy = getelementptr [2 x i8], ptr %i.d, i64 %indvars.iv93 ; 3 uses
   %i.jz = load i16, ptr %i.jy, align 2, !tbaa !22 ; 3 uses
   %i.ka = zext i16 %i.jz to i32                   ; 2 uses
@@ -482,8 +480,6 @@ bb.j:                                             ; preds = %.peel.next
   %i.ko = sub nsw i32 %i.ka, %i.kn
   %.sroa.speculate.load.false.sroa.speculated.i = tail call i32 @llvm.smax.i32(i32 %i.ko, i32 0)
   %i.kp = trunc nuw i32 %.sroa.speculate.load.false.sroa.speculated.i to i16
-  %4 = icmp samesign ult i64 %indvars.iv93, 65536
-  tail call void @llvm.assume(i1 %4)
   %.idx = shl nuw nsw i64 %indvars.iv93, 2
   %i.kq = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx ; 2 uses
   store i16 %i.kp, ptr %i.kq, align 2, !tbaa !22
@@ -518,8 +514,6 @@ bb.l:                                             ; preds = %bb.k, %.peel.next.1
   %i.lj = sub nsw i32 %i.kv, %i.li
   %.sroa.speculate.load.false.sroa.speculated.i.1 = tail call i32 @llvm.smax.i32(i32 %i.lj, i32 0)
   %i.lk = trunc nuw i32 %.sroa.speculate.load.false.sroa.speculated.i.1 to i16
-  %5 = icmp ne i64 %indvars.iv93, 65535
-  tail call void @llvm.assume(i1 %5)
   %.idx.1 = shl nuw nsw i64 %indvars.iv.next94, 2
   %i.ll = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx.1 ; 2 uses
   store i16 %i.lk, ptr %i.ll, align 2, !tbaa !22

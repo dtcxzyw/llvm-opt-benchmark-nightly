@@ -205,22 +205,18 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph
   br i1 %i.az, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.b
-  %.1346.lcssa = phi ptr [ %.0345, %bb.b ], [ %i.at, %bb.j ] ; 2 uses
-  %.1333.lcssa = phi ptr [ %.0332, %bb.b ], [ %.2334, %bb.j ] ; 2 uses
+  %.1346.lcssa = phi ptr [ %.0345, %bb.b ], [ %i.at, %bb.j ] ; 3 uses
+  %.1333.lcssa = phi ptr [ %.0332, %bb.b ], [ %.2334, %bb.j ] ; 3 uses
   %.1320.lcssa = phi i32 [ %.0319, %bb.b ], [ %i.ax, %bb.j ] ; 2 uses
-  %.1313.lcssa = phi i32 [ %.0312, %bb.b ], [ %i.ay, %bb.j ] ; 2 uses
+  %.1313.lcssa = phi i32 [ %.0312, %bb.b ], [ %i.ay, %bb.j ] ; 3 uses
   %i.ba = and i32 %.1320.lcssa, 1
   %i.bb = lshr i32 %.1320.lcssa, 1                ; 2 uses
   %i.bc = add nsw i32 %.1313.lcssa, -1            ; 2 uses
   %i.bd = icmp samesign ult i32 %.1313.lcssa, 3
   br i1 %i.bd, label %.lr.ph673, label %._crit_edge674
 
-.lr.ph673:                                        ; preds = %._crit_edge, %bb.r
-  %.2314671 = phi i32 [ %2, %bb.r ], [ %i.bc, %._crit_edge ] ; 3 uses
-  %.2321670 = phi i32 [ %i.bz, %bb.r ], [ %i.bb, %._crit_edge ]
-  %.3335669 = phi ptr [ %.4336, %bb.r ], [ %.1333.lcssa, %._crit_edge ] ; 2 uses
-  %.3348668 = phi ptr [ %1, %bb.r ], [ %.1346.lcssa, %._crit_edge ] ; 2 uses
-  %.not416 = icmp ult ptr %.3348668, %.3335669
+.lr.ph673:                                        ; preds = %._crit_edge
+  %.not416 = icmp ult ptr %.1346.lcssa, %.1333.lcssa
   br i1 %.not416, label %bb.r, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph673
@@ -271,23 +267,22 @@ bb.q:                                             ; preds = %bb.p, %bb.m
   store ptr %i.bv, ptr %i.g, align 8, !tbaa !25
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %.lr.ph673
-  %.4349 = phi ptr [ %i.bt, %bb.q ], [ %.3348668, %.lr.ph673 ] ; 2 uses
-  %.4336 = phi ptr [ %i.bv, %bb.q ], [ %.3335669, %.lr.ph673 ] ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %.4349, i64 1 ; 2 uses
+bb.r:                                             ; preds = %.lr.ph673, %bb.q
+  %.4349 = phi ptr [ %i.bt, %bb.q ], [ %.1346.lcssa, %.lr.ph673 ] ; 2 uses
+  %.4336 = phi ptr [ %i.bv, %bb.q ], [ %.1333.lcssa, %.lr.ph673 ]
+  %1 = add nuw nsw i32 %.1313.lcssa, 7
   %i.bw = load i8, ptr %.4349, align 1, !tbaa !32
   %i.bx = zext i8 %i.bw to i32
-  %i.by = shl nuw nsw i32 %i.bx, %.2314671
-  %i.bz = or i32 %i.by, %.2321670                 ; 2 uses
-  %2 = add nuw nsw i32 %.2314671, 8               ; 2 uses
-  %3 = icmp slt i32 %.2314671, -6
-  br i1 %3, label %.lr.ph673, label %._crit_edge674
+  %i.by = shl nuw nsw i32 %i.bx, %i.bc
+  %i.bz = or i32 %i.by, %i.bb
+  %2 = getelementptr inbounds nuw i8, ptr %.4349, i64 1
+  br label %._crit_edge674
 
 ._crit_edge674:                                   ; preds = %bb.r, %._crit_edge
-  %.3348.lcssa = phi ptr [ %.1346.lcssa, %._crit_edge ], [ %1, %bb.r ] ; 7 uses
+  %.3348.lcssa = phi ptr [ %.1346.lcssa, %._crit_edge ], [ %2, %bb.r ] ; 7 uses
   %.3335.lcssa = phi ptr [ %.1333.lcssa, %._crit_edge ], [ %.4336, %bb.r ] ; 7 uses
   %.2321.lcssa = phi i32 [ %i.bb, %._crit_edge ], [ %i.bz, %bb.r ] ; 2 uses
-  %.2314.lcssa = phi i32 [ %i.bc, %._crit_edge ], [ %2, %bb.r ] ; 3 uses
+  %.2314.lcssa = phi i32 [ %i.bc, %._crit_edge ], [ %1, %bb.r ] ; 3 uses
   %i.ca = and i32 %.2321.lcssa, 3
   %i.cb = lshr i32 %.2321.lcssa, 2                ; 5 uses
   %i.cc = add nsw i32 %.2314.lcssa, -2            ; 6 uses

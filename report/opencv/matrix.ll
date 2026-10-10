@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 721
 inline.NumDeleted: 173
 loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumRuntimeUnrolled: 28
-loop-unroll.NumUnrolled: 32
+loop-unroll.NumRuntimeUnrolled: 29
+loop-unroll.NumUnrolled: 33
 begin_hunk_0_@_ZN2cv8MatShape7assign_EPKiS2_:bb.a
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %6 = alloca %"class.std::allocator", align 1    ; 3 uses
   %i.a = load i32, ptr %0, align 4, !tbaa !32     ; 2 uses
-  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.a, i32 0) ; 9 uses
+  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.a, i32 0) ; 7 uses
   %i.b = add nuw nsw i32 %.sroa.speculated, 1
   %i.c = icmp slt i32 %i.a, 9
   br i1 %i.c, label %bb.g, label %bb.b
@@ -249,12 +249,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   br label %bb.n
 
 bb.g:                                             ; preds = %bb.a
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 6 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 12 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m                       ; 2 uses
   %i.o = ashr exact i64 %i.n, 2                   ; 2 uses
-  %i.p = zext nneg i32 %.sroa.speculated to i64   ; 2 uses
+  %i.p = zext nneg i32 %.sroa.speculated to i64
   %or.cond = icmp ugt i64 %i.o, %i.p
   br i1 %or.cond, label %bb.h, label %bb.m
 
@@ -298,67 +298,69 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit29: ; preds = %bb.
 
 bb.m:                                             ; preds = %bb.g
   store i32 %i.b, ptr %0, align 4, !tbaa !29
-  %i.x = trunc nuw nsw i64 %i.o to i32            ; 3 uses
+  %i.x = trunc nuw nsw i64 %i.o to i32            ; 4 uses
   %.not26.not31 = icmp samesign ugt i32 %.sroa.speculated, %i.x
-  br i1 %.not26.not31, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %.not26.not31, label %vector.memcheck, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.m
-  %7 = sub nuw i32 %.sroa.speculated, %i.x        ; 3 uses
-  %min.iters.check = icmp samesign ult i32 %7, 16
-  br i1 %min.iters.check, label %.lr.ph.preheader40, label %vector.memcheck
+vector.memcheck:                                  ; preds = %bb.m
+  %7 = sub nuw i32 %.sroa.speculated, %i.x
+  %xtraiter = and i32 %7, 3                       ; 2 uses
+  %diff.check = icmp eq i32 %xtraiter, 0
+  br i1 %diff.check, label %middle.block, label %vector.body
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %8 = add nsw i32 %.sroa.speculated, -1
-  %9 = zext i32 %8 to i64
-  %10 = sub nsw i64 %9, %i.p
-  %11 = and i64 %10, 4611686018427387896
-  %diff.check = icmp eq i64 %11, 0
-  br i1 %diff.check, label %.lr.ph.preheader40, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i32 %7, 2147483640                 ; 3 uses
-  %12 = sub nsw i32 %.sroa.speculated, %n.vec
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %13 = sub i32 %.sroa.speculated, %index         ; 2 uses
-  %14 = sext i32 %13 to i64
-  %15 = getelementptr [4 x i8], ptr %i.k, i64 %14 ; 2 uses
-  %16 = getelementptr i8, ptr %15, i64 -16
-  %17 = getelementptr i8, ptr %15, i64 -32
-  %wide.load = load <4 x i32>, ptr %16, align 4, !tbaa !32
-  %wide.load39 = load <4 x i32>, ptr %17, align 4, !tbaa !32
-  %i.y = zext nneg i32 %13 to i64
-  %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.y ; 2 uses
-  %18 = getelementptr inbounds i8, ptr %i.z, i64 -12
-  %19 = getelementptr inbounds i8, ptr %i.z, i64 -28
-  store <4 x i32> %wide.load, ptr %18, align 4, !tbaa !32
-  store <4 x i32> %wide.load39, ptr %19, align 4, !tbaa !32
-  %index.next = add nuw i32 %index, 8             ; 2 uses
-  %i.aa = icmp eq i32 %index.next, %n.vec
+vector.body:                                      ; preds = %vector.memcheck, %vector.body
+  %index = phi i32 [ %.0.prol, %vector.body ], [ %.sroa.speculated, %vector.memcheck ] ; 2 uses
+  %prol.iter = phi i32 [ %index.next, %vector.body ], [ 0, %vector.memcheck ]
+  %.0.prol = add nsw i32 %index, -1               ; 3 uses
+  %i.y = zext nneg i32 %.0.prol to i64
+  %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.y
+  %8 = load i32, ptr %i.z, align 4, !tbaa !32
+  %9 = zext nneg i32 %index to i64
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %9
+  store i32 %8, ptr %10, align 4, !tbaa !32
+  %index.next = add i32 %prol.iter, 1             ; 2 uses
+  %i.aa = icmp eq i32 %index.next, %xtraiter
   br i1 %i.aa, label %middle.block, label %vector.body, !llvm.loop !106
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %7, %n.vec
-  br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader40
+middle.block:                                     ; preds = %vector.body, %vector.memcheck
+  %.0.in32.unr = phi i32 [ %.sroa.speculated, %vector.memcheck ], [ %.0.prol, %vector.body ]
+  %11 = sub i32 %i.x, %.sroa.speculated
+  %12 = icmp ugt i32 %11, -4
+  br i1 %12, label %._crit_edge, label %.lr.ph
 
-.lr.ph.preheader40:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.0.in32.ph = phi i32 [ %.sroa.speculated, %vector.memcheck ], [ %.sroa.speculated, %.lr.ph.preheader ], [ %12, %middle.block ]
-  br label %.lr.ph
-
-._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.m
+._crit_edge:                                      ; preds = %middle.block, %.lr.ph, %bb.m
   %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.n
   store i32 %2, ptr %i.ab, align 4, !tbaa !32
   ret void
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader40, %.lr.ph
-  %.0.in32 = phi i32 [ %.0.a, %.lr.ph ], [ %.0.in32.ph, %.lr.ph.preheader40 ] ; 2 uses
-  %.0.a = add nsw i32 %.0.in32, -1                ; 3 uses
+.lr.ph:                                           ; preds = %middle.block, %.lr.ph
+  %.0.in32 = phi i32 [ %.0.a, %.lr.ph ], [ %.0.in32.unr, %middle.block ] ; 5 uses
+  %.0 = add nsw i32 %.0.in32, -1                  ; 2 uses
+  %13 = zext nneg i32 %.0 to i64
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %13
+  %15 = load i32, ptr %14, align 4, !tbaa !32
+  %16 = zext nneg i32 %.0.in32 to i64
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %16
+  store i32 %15, ptr %17, align 4, !tbaa !32
+  %.0.1 = add nsw i32 %.0.in32, -2                ; 2 uses
+  %18 = zext nneg i32 %.0.1 to i64
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %18
+  %20 = load i32, ptr %19, align 4, !tbaa !32
+  %21 = zext nneg i32 %.0 to i64
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %21
+  store i32 %20, ptr %22, align 4, !tbaa !32
+  %.0.2 = add nsw i32 %.0.in32, -3                ; 2 uses
+  %23 = zext nneg i32 %.0.2 to i64
+  %24 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %23
+  %25 = load i32, ptr %24, align 4, !tbaa !32
+  %26 = zext nneg i32 %.0.1 to i64
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %26
+  store i32 %25, ptr %27, align 4, !tbaa !32
+  %.0.a = add nsw i32 %.0.in32, -4                ; 3 uses
   %i.ac = zext nneg i32 %.0.a to i64
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.ac
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !32
-  %i.af = zext nneg i32 %.0.in32 to i64
+  %i.af = zext nneg i32 %.0.2 to i64
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.af
   store i32 %i.ae, ptr %i.ag, align 4, !tbaa !32
   %.not26.not = icmp samesign ugt i32 %.0.a, %i.x
@@ -761,8 +763,8 @@ attributes #28 = { noreturn nounwind }
 !103 = distinct !{!103, !36}
 !104 = distinct !{!104, !36}
 !105 = distinct !{!105, !36}
-!106 = distinct !{!106, !33, !34, !35}
-!107 = distinct !{!107, !33, !34}
+!106 = distinct !{!106, !36}
+!107 = distinct !{!107, !33}
 !108 = distinct !{!108, !33, !34, !35}
 !109 = distinct !{!109, !33, !34, !35}
 !110 = distinct !{!110, !33, !34}

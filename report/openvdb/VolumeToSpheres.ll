@@ -205,7 +205,7 @@ _ZNK7openvdb5v13_05tools12v2s_internal16ClosestPointDistINS0_4tree8LeafNodeIjLj3
 bb.as:                                            ; preds = %_ZNK7openvdb5v13_05tools12v2s_internal16ClosestPointDistINS0_4tree8LeafNodeIjLj3EEEE8evalLeafEmRKS6_.exit, %.lr.ph59.i
   %i.lv = phi ptr [ %i.hl, %.lr.ph59.i ], [ %.pre60.i, %_ZNK7openvdb5v13_05tools12v2s_internal16ClosestPointDistINS0_4tree8LeafNodeIjLj3EEEE8evalLeafEmRKS6_.exit ] ; 2 uses
   %i.lw = add nuw i64 %.03456.i, 1                ; 2 uses
-  %i.lx = add i64 %.057.i, 1
+  %i.lx = add nuw i64 %.057.i, 1
   %i.ly = getelementptr inbounds nuw [16 x i8], ptr %i.lv, i64 %.0117
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 8
   %i.ma = load i64, ptr %i.lz, align 8, !tbaa !863
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.139 = select i1 %i.au, i64 %.03653, i64 %.03851 ; 3 uses
   %.1 = select i1 %i.au, i1 true, i1 %.03752      ; 2 uses
   %i.av = add nuw i64 %.03653, 1
-  %i.aw = add i64 %.03554, 1                      ; 2 uses
+  %i.aw = add nuw i64 %.03554, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.aw, %i.ab
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !21
 
@@ -657,7 +657,7 @@ bb.e:                                             ; preds = %.lr.ph59
 bb.f:                                             ; preds = %.lr.ph59, %bb.e
   %i.bw = phi ptr [ %i.bj, %.lr.ph59 ], [ %.pre60, %bb.e ] ; 2 uses
   %i.bx = add nuw i64 %.03456, 1                  ; 2 uses
-  %i.by = add i64 %.057, 1
+  %i.by = add nuw i64 %.057, 1
   %i.bz = getelementptr inbounds nuw [16 x i8], ptr %i.bw, i64 %2
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !863

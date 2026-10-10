@@ -205,7 +205,11 @@ Mop_ManCountOutputLits.exit:                      ; preds = %Mop_ManCountOutputL
   %i.ca = call i32 @Mop_ManRemoveIdentical(ptr noundef nonnull readonly %0, ptr noundef %.val24.i) ; 2 uses
   %i.cb = zext nneg i32 %.val2228.i to i64        ; 5 uses
   %.not = icmp eq i32 %.val2228.i, 1              ; 3 uses
-  br i1 %.not, label %.lr.ph.i45, label %.lr.ph.i42.preheader
+  br i1 %.not, label %.lr.ph.i45, label %.lr.ph.i42.preheader.preheader
+
+.lr.ph.i42.preheader.preheader:                   ; preds = %.lr.ph31.i.preheader
+  %sext = zext nneg i32 %.val2228.i to i64
+  br label %.lr.ph.i42.preheader
 
 .critedge2.loopexit.i:                            ; preds = %.lr.ph.i42
   %indvars.iv.next37.i = add nuw nsw i64 %indvars.iv.next37.i160, 1 ; 2 uses
@@ -215,10 +219,10 @@ Mop_ManCountOutputLits.exit:                      ; preds = %Mop_ManCountOutputL
   %exitcond.not = icmp eq i64 %indvars.iv.next37.i, %i.cb
   br i1 %exitcond.not, label %.lr.ph.i45, label %.lr.ph.i42.preheader
 
-.lr.ph.i42.preheader:                             ; preds = %.lr.ph31.i.preheader, %.critedge2.loopexit.i
-  %indvars.iv.next37.i160 = phi i64 [ %indvars.iv.next37.i, %.critedge2.loopexit.i ], [ 1, %.lr.ph31.i.preheader ] ; 3 uses
-  %i.cf = phi i32 [ %i.ce, %.critedge2.loopexit.i ], [ %i.ca, %.lr.ph31.i.preheader ]
-  %i.cg = phi ptr [ %i.cc, %.critedge2.loopexit.i ], [ %.val24.i, %.lr.ph31.i.preheader ]
+.lr.ph.i42.preheader:                             ; preds = %.lr.ph.i42.preheader.preheader, %.critedge2.loopexit.i
+  %indvars.iv.next37.i160 = phi i64 [ %indvars.iv.next37.i, %.critedge2.loopexit.i ], [ 1, %.lr.ph.i42.preheader.preheader ] ; 3 uses
+  %i.cf = phi i32 [ %i.ce, %.critedge2.loopexit.i ], [ %i.ca, %.lr.ph.i42.preheader.preheader ]
+  %i.cg = phi ptr [ %i.cc, %.critedge2.loopexit.i ], [ %.val24.i, %.lr.ph.i42.preheader.preheader ]
   br label %.lr.ph.i42
 
 .lr.ph.i42:                                       ; preds = %.lr.ph.i42.preheader, %.lr.ph.i42
@@ -228,9 +232,8 @@ Mop_ManCountOutputLits.exit:                      ; preds = %Mop_ManCountOutputL
   %i.ci = call i32 @Mop_ManMergeContainTwo(ptr noundef nonnull readonly %0, ptr noundef %i.cg, ptr noundef nonnull %i.ch)
   %i.cj = add nsw i32 %i.ci, %.127.i              ; 2 uses
   %indvars.iv.next34.i = add nuw nsw i64 %indvars.iv33.i, 1 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next34.i to i32
-  %4 = icmp sgt i32 %.val2228.i, %3
-  br i1 %4, label %.lr.ph.i42, label %.critedge2.loopexit.i, !llvm.loop !6
+  %3 = icmp samesign ult i64 %indvars.iv.next34.i, %sext
+  br i1 %3, label %.lr.ph.i42, label %.critedge2.loopexit.i, !llvm.loop !6
 
 .lr.ph.i45:                                       ; preds = %.critedge2.loopexit.i, %.lr.ph31.i.preheader
   %.lcssa155 = phi i32 [ %i.ca, %.lr.ph31.i.preheader ], [ %i.ce, %.critedge2.loopexit.i ] ; 2 uses

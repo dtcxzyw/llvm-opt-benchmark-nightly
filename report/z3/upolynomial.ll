@@ -205,7 +205,7 @@ _ZN11upolynomial12core_manager10checkpointEv.exit: ; preds = %bb.b
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN13mpzzp_manager3addERK3mpzS2_RS0_.exit, %_ZN11upolynomial12core_manager10checkpointEv.exit
-  %i.q = add i32 %.01623, 1                       ; 2 uses
+  %i.q = add nuw i32 %.01623, 1                   ; 2 uses
   %indvars.iv.next = add i32 %indvars.iv, -1
   %exitcond29.not = icmp eq i32 %i.q, %1
   br i1 %exitcond29.not, label %.loopexit, label %bb.b, !llvm.loop !192
@@ -382,7 +382,7 @@ _ZN11upolynomial12core_manager10checkpointEv.exit: ; preds = %.noexc
   br i1 %.not2453, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN13mpzzp_manager3addERK3mpzS2_RS0_.exit, %_ZN11upolynomial12core_manager10checkpointEv.exit
-  %i.y = add i32 %.02156, 1                       ; 2 uses
+  %i.y = add nuw i32 %.02156, 1                   ; 2 uses
   %indvars.iv.next = add i32 %indvars.iv, -1
   %exitcond63.not = icmp eq i32 %i.y, %1
   br i1 %exitcond63.not, label %._crit_edge59, label %bb.c, !llvm.loop !194
@@ -669,7 +669,7 @@ _ZN11upolynomial12core_manager10checkpointEv.exit: ; preds = %bb.b
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit, %_ZN11upolynomial12core_manager10checkpointEv.exit
-  %i.q = add i32 %.01724, 1                       ; 2 uses
+  %i.q = add nuw i32 %.01724, 1                   ; 2 uses
   %indvars.iv.next = add i32 %indvars.iv, -1
   %exitcond30.not = icmp eq i32 %i.q, %1
   br i1 %exitcond30.not, label %.loopexit, label %bb.b, !llvm.loop !195
@@ -777,7 +777,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = mul i32 %i.c, %1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 16 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %wide.trip.count.i = zext i32 %1 to i64
+  %wide.trip.count.i = zext i32 %1 to i64         ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN13mpzzp_manager5mul2kER3mpzj.exit.i, %bb.b
@@ -875,8 +875,7 @@ bb.k:                                             ; preds = %._crit_edge
 _ZN13mpzzp_manager5mul2kER3mpzj.exit:             ; preds = %._crit_edge, %bb.k
   %indvars.iv.next63 = add nuw nsw i64 %indvars.iv62, 1 ; 2 uses
   %indvars.iv.next = add i32 %indvars.iv, -1
-  %lftr.wideiv65 = trunc i64 %indvars.iv.next63 to i32
-  %exitcond66.not = icmp eq i32 %1, %lftr.wideiv65
+  %exitcond66.not = icmp eq i64 %indvars.iv.next63, %wide.trip.count.i
   br i1 %exitcond66.not, label %.loopexit, label %bb.f, !llvm.loop !197
 
 .lr.ph:                                           ; preds = %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit, %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit42
@@ -1111,7 +1110,8 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
   %i.l = zext i32 %i.c to i64                     ; 2 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.l ; 3 uses
-  %i.n = zext i32 %i.f to i64
+  %4 = zext i32 %i.f to i64
+  %i.n = zext i32 %1 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph63, %_ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit
@@ -1153,7 +1153,7 @@ bb.f:                                             ; preds = %_ZN11upolynomial12c
   br label %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit
 
 _ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit:  ; preds = %_ZN11upolynomial12core_manager10checkpointEv.exit, %bb.f
-  %.not4458.not = icmp samesign ult i64 %i.t, %i.n
+  %.not4458.not = icmp samesign ult i64 %i.t, %4
   br i1 %.not4458.not, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit46, %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit
@@ -1170,8 +1170,7 @@ bb.g:                                             ; preds = %._crit_edge
 _ZN13mpzzp_manager3mulERK3mpzS2_RS0_.exit:        ; preds = %._crit_edge, %bb.g
   %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1 ; 2 uses
   %indvars.iv.next = add i32 %indvars.iv, -1
-  %lftr.wideiv70 = trunc i64 %indvars.iv.next68 to i32
-  %exitcond71.not = icmp eq i32 %1, %lftr.wideiv70
+  %exitcond71.not = icmp eq i64 %indvars.iv.next68, %i.n
   br i1 %exitcond71.not, label %.loopexit, label %bb.b, !llvm.loop !199
 
 .lr.ph:                                           ; preds = %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit, %_ZN13mpzzp_manager6addmulERK3mpzS2_S2_RS0_.exit46

@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %.sroa.speculated153 = call i64 @llvm.umax.i64(i64 %.1182224, i64 %i.cg)
   %i.dh = getelementptr inbounds nuw [12 x i8], ptr %.sroa.0170.0, i64 %i.cg ; 4 uses
-  %i.di = sub i64 %i.cg, %.089230                 ; 2 uses
+  %i.di = sub nuw i64 %i.cg, %.089230             ; 2 uses
   %i.dj = icmp eq i32 %i.df, 4
   br i1 %i.dj, label %bb.o, label %bb.p
 
