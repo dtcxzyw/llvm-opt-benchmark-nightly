@@ -237,7 +237,7 @@
   "instcombine.NegatorNumValuesVisited": 32941063,
   "instcombine.NegatorTotalNegationsAttempted": 30975818,
   "instcombine.NumAggregateReconstructionsSimplified": 36897,
-  "instcombine.NumCombined": 187087652,
+  "instcombine.NumCombined": 187087672,
   "instcombine.NumConstProp": 284893,
   "instcombine.NumDeadInst": 61346422,
   "instcombine.NumDeadStore": 34291,
