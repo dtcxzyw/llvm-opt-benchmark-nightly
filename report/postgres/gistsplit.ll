@@ -204,13 +204,13 @@ define internal fastcc void @gistunionsubkey(ptr noundef %0, ptr nofree noundef 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 640
   %i.b = load ptr, ptr %i.a, align 8              ; 8 uses
-  %i.c = load ptr, ptr %2, align 8                ; 6 uses
+  %i.c = load ptr, ptr %2, align 8                ; 8 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.e = load i32, ptr %i.d, align 8              ; 9 uses
+  %i.e = load i32, ptr %i.d, align 8              ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 320
   %i.h = sext i32 %i.e to i64
-  %i.i = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.h) #7 ; 8 uses
+  %i.i = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.h) #7 ; 10 uses
   %i.j = icmp sgt i32 %i.e, 0
   br i1 %i.j, label %.lr.ph.i.preheader, label %gistunionsubkeyvec.exit
 
@@ -229,16 +229,16 @@ bb.a:
   br label %.lr.ph.i
 
 .lr.ph.i.us.preheader:                            ; preds = %.lr.ph.i.preheader
-  %xtraiter65 = and i64 %i.k, 1
-  %3 = icmp eq i32 %i.e, 1
-  br i1 %3, label %.lr.ph.i.us.epil.preheader.a, label %.lr.ph.i.us.preheader.new
+  %xtraiter65 = and i64 %i.k, 3                   ; 3 uses
+  %3 = icmp ult i32 %i.e, 4
+  br i1 %3, label %.lr.ph.i.us.epil.preheader, label %.lr.ph.i.us.preheader.new
 
 .lr.ph.i.us.preheader.new:                        ; preds = %.lr.ph.i.us.preheader
-  %unroll_iter68 = and i64 %i.k, 2147483646
+  %unroll_iter68 = and i64 %i.k, 2147483644
   br label %.lr.ph.i.us
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.i.us, %.lr.ph.i.us.preheader.new
-  %indvars.iv.i.us = phi i64 [ 0, %.lr.ph.i.us.preheader.new ], [ %indvars.iv.next.i.us.1, %.lr.ph.i.us ] ; 4 uses
+  %indvars.iv.i.us = phi i64 [ 0, %.lr.ph.i.us.preheader.new ], [ %indvars.iv.next.i.us.3, %.lr.ph.i.us ] ; 6 uses
   %niter69 = phi i64 [ 0, %.lr.ph.i.us.preheader.new ], [ %niter69.next.1, %.lr.ph.i.us ]
   %.phi.trans.insert.i.us = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv.i.us
   %.pre26.i.us = load i16, ptr %.phi.trans.insert.i.us, align 2
@@ -247,22 +247,36 @@ bb.a:
   %i.n = getelementptr i8, ptr %i.m, i64 -8
   %i.o = load ptr, ptr %i.n, align 8
   %indvars.iv.next.i.us = or disjoint i64 %indvars.iv.i.us, 1 ; 2 uses
-  %4 = shl i64 %indvars.iv.i.us, 32
-  %5 = ashr exact i64 %4, 29
-  %i.p = getelementptr inbounds i8, ptr %i.i, i64 %5
-  store ptr %i.o, ptr %i.p, align 8
-  %.phi.trans.insert.i.us.1.a = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv.next.i.us
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i.us
+  store ptr %i.o, ptr %4, align 8
+  %.phi.trans.insert.i.us.1 = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv.next.i.us
+  %.pre26.i.us.1 = load i16, ptr %.phi.trans.insert.i.us.1, align 2
+  %.pre31.i.us.1 = zext i16 %.pre26.i.us.1 to i64
+  %5 = getelementptr [8 x i8], ptr %1, i64 %.pre31.i.us.1
+  %i.p = getelementptr i8, ptr %5, i64 -8
+  %6 = load ptr, ptr %i.p, align 8
+  %indvars.iv.next.i.us.1 = or disjoint i64 %indvars.iv.i.us, 2 ; 2 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next.i.us
+  store ptr %6, ptr %7, align 8
+  %.phi.trans.insert.i.us.1.a = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv.next.i.us.1
   %.pre26.i.us.1.a = load i16, ptr %.phi.trans.insert.i.us.1.a, align 2
   %.pre31.i.us.1.a = zext i16 %.pre26.i.us.1.a to i64
   %i.q = getelementptr [8 x i8], ptr %1, i64 %.pre31.i.us.1.a
   %i.r = getelementptr i8, ptr %i.q, i64 -8
   %i.s = load ptr, ptr %i.r, align 8
-  %indvars.iv.next.i.us.1 = add nuw nsw i64 %indvars.iv.i.us, 2 ; 2 uses
-  %6 = shl i64 %indvars.iv.next.i.us, 32
-  %7 = ashr exact i64 %6, 29
-  %i.t = getelementptr inbounds i8, ptr %i.i, i64 %7
-  store ptr %i.s, ptr %i.t, align 8
-  %niter69.next.1 = add i64 %niter69, 2           ; 2 uses
+  %indvars.iv.next.i.us.2 = or disjoint i64 %indvars.iv.i.us, 3 ; 2 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next.i.us.1
+  store ptr %i.s, ptr %8, align 8
+  %.phi.trans.insert.i.us.3 = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv.next.i.us.2
+  %.pre26.i.us.3 = load i16, ptr %.phi.trans.insert.i.us.3, align 2
+  %.pre31.i.us.3 = zext i16 %.pre26.i.us.3 to i64
+  %9 = getelementptr [8 x i8], ptr %1, i64 %.pre31.i.us.3
+  %i.t = getelementptr i8, ptr %9, i64 -8
+  %10 = load ptr, ptr %i.t, align 8
+  %indvars.iv.next.i.us.3 = add nuw nsw i64 %indvars.iv.i.us, 4 ; 2 uses
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next.i.us.2
+  store ptr %10, ptr %11, align 8
+  %niter69.next.1 = add i64 %niter69, 4           ; 2 uses
   %niter69.ncmp.1 = icmp eq i64 %niter69.next.1, %unroll_iter68
   br i1 %niter69.ncmp.1, label %gistunionsubkeyvec.exit.loopexit.unr-lcssa, label %.lr.ph.i.us, !llvm.loop !13
 
@@ -318,23 +332,29 @@ bb.b:                                             ; preds = %._crit_edge25.i.1, 
 
 gistunionsubkeyvec.exit.loopexit.unr-lcssa:       ; preds = %.lr.ph.i.us
   %lcmp.mod66.not = icmp eq i64 %xtraiter65, 0
-  br i1 %lcmp.mod66.not, label %gistunionsubkeyvec.exit, label %.lr.ph.i.us.epil.preheader.a
+  br i1 %lcmp.mod66.not, label %gistunionsubkeyvec.exit, label %.lr.ph.i.us.epil.preheader
 
-.lr.ph.i.us.epil.preheader.a:                     ; preds = %gistunionsubkeyvec.exit.loopexit.unr-lcssa, %.lr.ph.i.us.preheader
-  %indvars.iv.i.us.epil.init.a = phi i64 [ 0, %.lr.ph.i.us.preheader ], [ %indvars.iv.next.i.us.1, %gistunionsubkeyvec.exit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod67 = trunc i32 %i.e to i1
+.lr.ph.i.us.epil.preheader:                       ; preds = %gistunionsubkeyvec.exit.loopexit.unr-lcssa, %.lr.ph.i.us.preheader
+  %indvars.iv.i.us.epil.init = phi i64 [ 0, %.lr.ph.i.us.preheader ], [ %indvars.iv.next.i.us.3, %gistunionsubkeyvec.exit.loopexit.unr-lcssa ]
+  %lcmp.mod67 = icmp ne i64 %xtraiter65, 0
   tail call void @llvm.assume(i1 %lcmp.mod67)
+  br label %.lr.ph.i.us.epil.preheader.a
+
+.lr.ph.i.us.epil.preheader.a:                     ; preds = %.lr.ph.i.us.epil.preheader.a, %.lr.ph.i.us.epil.preheader
+  %indvars.iv.i.us.epil.init.a = phi i64 [ %indvars.iv.next.i.us.epil, %.lr.ph.i.us.epil.preheader.a ], [ %indvars.iv.i.us.epil.init, %.lr.ph.i.us.epil.preheader ] ; 3 uses
+  %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.i.us.epil.preheader.a ], [ 0, %.lr.ph.i.us.epil.preheader ]
   %.phi.trans.insert.i.us.epil = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %indvars.iv.i.us.epil.init.a
   %.pre26.i.us.epil = load i16, ptr %.phi.trans.insert.i.us.epil, align 2
   %.pre31.i.us.epil = zext i16 %.pre26.i.us.epil to i64
   %i.an = getelementptr [8 x i8], ptr %1, i64 %.pre31.i.us.epil
   %i.ao = getelementptr i8, ptr %i.an, i64 -8
   %i.ap = load ptr, ptr %i.ao, align 8
-  %8 = shl i64 %indvars.iv.i.us.epil.init.a, 32
-  %9 = ashr exact i64 %8, 29
-  %10 = getelementptr inbounds i8, ptr %i.i, i64 %9
-  store ptr %i.ap, ptr %10, align 8
-  br label %gistunionsubkeyvec.exit
+  %indvars.iv.next.i.us.epil = add nuw nsw i64 %indvars.iv.i.us.epil.init.a, 1
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.i.us.epil.init.a
+  store ptr %i.ap, ptr %12, align 8
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter65
+  br i1 %epil.iter.cmp.not, label %gistunionsubkeyvec.exit, label %.lr.ph.i.us.epil.preheader.a, !llvm.loop !14
 
 gistunionsubkeyvec.exit.loopexit62.unr-lcssa:     ; preds = %bb.b
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -363,16 +383,16 @@ gistunionsubkeyvec.exit.loopexit62.unr-lcssa:     ; preds = %bb.b
   store ptr %i.av, ptr %i.ay, align 8
   br label %gistunionsubkeyvec.exit
 
-gistunionsubkeyvec.exit:                          ; preds = %gistunionsubkeyvec.exit.loopexit62.unr-lcssa, %._crit_edge25.i.epil, %.lr.ph.i.epil.preheader, %.lr.ph.i.us.epil.preheader.a, %gistunionsubkeyvec.exit.loopexit.unr-lcssa, %bb.a
-  %.0.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.e, %.lr.ph.i.us.epil.preheader.a ], [ %i.e, %gistunionsubkeyvec.exit.loopexit.unr-lcssa ], [ %.1.i.1, %gistunionsubkeyvec.exit.loopexit62.unr-lcssa ], [ %.021.i.epil.init, %.lr.ph.i.epil.preheader ], [ %i.aw, %._crit_edge25.i.epil ]
+gistunionsubkeyvec.exit:                          ; preds = %gistunionsubkeyvec.exit.loopexit62.unr-lcssa, %._crit_edge25.i.epil, %.lr.ph.i.epil.preheader, %gistunionsubkeyvec.exit.loopexit.unr-lcssa, %.lr.ph.i.us.epil.preheader.a, %bb.a
+  %.0.lcssa.i = phi i32 [ 0, %bb.a ], [ %i.e, %gistunionsubkeyvec.exit.loopexit.unr-lcssa ], [ %i.e, %.lr.ph.i.us.epil.preheader.a ], [ %.1.i.1, %gistunionsubkeyvec.exit.loopexit62.unr-lcssa ], [ %.021.i.epil.init, %.lr.ph.i.epil.preheader ], [ %i.aw, %._crit_edge25.i.epil ]
   tail call void @gistMakeUnionItVec(ptr noundef %0, ptr noundef %i.i, i32 noundef %.0.lcssa.i, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g) #7
   tail call void @pfree(ptr noundef %i.i) #7
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.ba = load ptr, ptr %i.az, align 8            ; 6 uses
+  %i.ba = load ptr, ptr %i.az, align 8            ; 8 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.bc = load i32, ptr %i.bb, align 8            ; 9 uses
+  %i.bc = load i32, ptr %i.bb, align 8            ; 8 uses
   %i.bd = sext i32 %i.bc to i64
-  %i.be = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.bd) #7 ; 8 uses
+  %i.be = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.bd) #7 ; 10 uses
   %i.bf = icmp sgt i32 %i.bc, 0
   br i1 %i.bf, label %.lr.ph.i14.preheader, label %gistunionsubkeyvec.exit31
 
@@ -391,16 +411,16 @@ gistunionsubkeyvec.exit:                          ; preds = %gistunionsubkeyvec.
   br label %.lr.ph.i14
 
 .lr.ph.i14.us.preheader:                          ; preds = %.lr.ph.i14.preheader
-  %xtraiter76 = and i64 %i.bg, 1
-  %11 = icmp eq i32 %i.bc, 1
-  br i1 %11, label %.lr.ph.i14.us.epil.preheader.a, label %.lr.ph.i14.us.preheader.new
+  %xtraiter76 = and i64 %i.bg, 3                  ; 3 uses
+  %13 = icmp ult i32 %i.bc, 4
+  br i1 %13, label %.lr.ph.i14.us.epil.preheader, label %.lr.ph.i14.us.preheader.new
 
 .lr.ph.i14.us.preheader.new:                      ; preds = %.lr.ph.i14.us.preheader
-  %unroll_iter79 = and i64 %i.bg, 2147483646
+  %unroll_iter79 = and i64 %i.bg, 2147483644
   br label %.lr.ph.i14.us
 
 .lr.ph.i14.us:                                    ; preds = %.lr.ph.i14.us, %.lr.ph.i14.us.preheader.new
-  %indvars.iv.i18.us = phi i64 [ 0, %.lr.ph.i14.us.preheader.new ], [ %indvars.iv.next.i30.us.1, %.lr.ph.i14.us ] ; 4 uses
+  %indvars.iv.i18.us = phi i64 [ 0, %.lr.ph.i14.us.preheader.new ], [ %indvars.iv.next.i30.us.3, %.lr.ph.i14.us ] ; 6 uses
   %niter80 = phi i64 [ 0, %.lr.ph.i14.us.preheader.new ], [ %niter80.next.1, %.lr.ph.i14.us ]
   %.phi.trans.insert.i21.us = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %indvars.iv.i18.us
   %.pre26.i22.us = load i16, ptr %.phi.trans.insert.i21.us, align 2
@@ -409,22 +429,36 @@ gistunionsubkeyvec.exit:                          ; preds = %gistunionsubkeyvec.
   %i.bj = getelementptr i8, ptr %i.bi, i64 -8
   %i.bk = load ptr, ptr %i.bj, align 8
   %indvars.iv.next.i30.us = or disjoint i64 %indvars.iv.i18.us, 1 ; 2 uses
-  %12 = shl i64 %indvars.iv.i18.us, 32
-  %13 = ashr exact i64 %12, 29
-  %i.bl = getelementptr inbounds i8, ptr %i.be, i64 %13
-  store ptr %i.bk, ptr %i.bl, align 8
-  %.phi.trans.insert.i21.us.1.a = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %indvars.iv.next.i30.us
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv.i18.us
+  store ptr %i.bk, ptr %14, align 8
+  %.phi.trans.insert.i21.us.1 = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %indvars.iv.next.i30.us
+  %.pre26.i22.us.1 = load i16, ptr %.phi.trans.insert.i21.us.1, align 2
+  %.pre31.i23.us.1 = zext i16 %.pre26.i22.us.1 to i64
+  %15 = getelementptr [8 x i8], ptr %1, i64 %.pre31.i23.us.1
+  %i.bl = getelementptr i8, ptr %15, i64 -8
+  %16 = load ptr, ptr %i.bl, align 8
+  %indvars.iv.next.i30.us.1 = or disjoint i64 %indvars.iv.i18.us, 2 ; 2 uses
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv.next.i30.us
+  store ptr %16, ptr %17, align 8
+  %.phi.trans.insert.i21.us.1.a = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %indvars.iv.next.i30.us.1
   %.pre26.i22.us.1.a = load i16, ptr %.phi.trans.insert.i21.us.1.a, align 2
   %.pre31.i23.us.1.a = zext i16 %.pre26.i22.us.1.a to i64
   %i.bm = getelementptr [8 x i8], ptr %1, i64 %.pre31.i23.us.1.a
   %i.bn = getelementptr i8, ptr %i.bm, i64 -8
   %i.bo = load ptr, ptr %i.bn, align 8
-  %indvars.iv.next.i30.us.1 = add nuw nsw i64 %indvars.iv.i18.us, 2 ; 2 uses
-  %14 = shl i64 %indvars.iv.next.i30.us, 32
-  %15 = ashr exact i64 %14, 29
-  %i.bp = getelementptr inbounds i8, ptr %i.be, i64 %15
-  store ptr %i.bo, ptr %i.bp, align 8
-  %niter80.next.1 = add i64 %niter80, 2           ; 2 uses
+  %indvars.iv.next.i30.us.2 = or disjoint i64 %indvars.iv.i18.us, 3 ; 2 uses
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv.next.i30.us.1
+  store ptr %i.bo, ptr %18, align 8
+  %.phi.trans.insert.i21.us.3 = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %indvars.iv.next.i30.us.2
+  %.pre26.i22.us.3 = load i16, ptr %.phi.trans.insert.i21.us.3, align 2
+  %.pre31.i23.us.3 = zext i16 %.pre26.i22.us.3 to i64
+  %19 = getelementptr [8 x i8], ptr %1, i64 %.pre31.i23.us.3
+  %i.bp = getelementptr i8, ptr %19, i64 -8
+  %20 = load ptr, ptr %i.bp, align 8
+  %indvars.iv.next.i30.us.3 = add nuw nsw i64 %indvars.iv.i18.us, 4 ; 2 uses
+  %21 = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv.next.i30.us.2
+  store ptr %20, ptr %21, align 8
+  %niter80.next.1 = add i64 %niter80, 4           ; 2 uses
   %niter80.ncmp.1 = icmp eq i64 %niter80.next.1, %unroll_iter79
   br i1 %niter80.ncmp.1, label %gistunionsubkeyvec.exit31.loopexit.unr-lcssa, label %.lr.ph.i14.us, !llvm.loop !13
 
@@ -480,23 +514,29 @@ bb.c:                                             ; preds = %._crit_edge25.i24.1
 
 gistunionsubkeyvec.exit31.loopexit.unr-lcssa:     ; preds = %.lr.ph.i14.us
   %lcmp.mod77.not = icmp eq i64 %xtraiter76, 0
-  br i1 %lcmp.mod77.not, label %gistunionsubkeyvec.exit31, label %.lr.ph.i14.us.epil.preheader.a
+  br i1 %lcmp.mod77.not, label %gistunionsubkeyvec.exit31, label %.lr.ph.i14.us.epil.preheader
 
-.lr.ph.i14.us.epil.preheader.a:                   ; preds = %gistunionsubkeyvec.exit31.loopexit.unr-lcssa, %.lr.ph.i14.us.preheader
-  %indvars.iv.i18.us.epil.init.a = phi i64 [ 0, %.lr.ph.i14.us.preheader ], [ %indvars.iv.next.i30.us.1, %gistunionsubkeyvec.exit31.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod78 = trunc i32 %i.bc to i1
-  tail call void @llvm.assume(i1 %lcmp.mod78)
+.lr.ph.i14.us.epil.preheader:                     ; preds = %gistunionsubkeyvec.exit31.loopexit.unr-lcssa, %.lr.ph.i14.us.preheader
+  %indvars.iv.i18.us.epil.init = phi i64 [ 0, %.lr.ph.i14.us.preheader ], [ %indvars.iv.next.i30.us.3, %gistunionsubkeyvec.exit31.loopexit.unr-lcssa ]
+  %lcmp.mod80 = icmp ne i64 %xtraiter76, 0
+  tail call void @llvm.assume(i1 %lcmp.mod80)
+  br label %.lr.ph.i14.us.epil.preheader.a
+
+.lr.ph.i14.us.epil.preheader.a:                   ; preds = %.lr.ph.i14.us.epil.preheader.a, %.lr.ph.i14.us.epil.preheader
+  %indvars.iv.i18.us.epil.init.a = phi i64 [ %indvars.iv.next.i30.us.epil, %.lr.ph.i14.us.epil.preheader.a ], [ %indvars.iv.i18.us.epil.init, %.lr.ph.i14.us.epil.preheader ] ; 3 uses
+  %epil.iter78 = phi i64 [ %epil.iter78.next, %.lr.ph.i14.us.epil.preheader.a ], [ 0, %.lr.ph.i14.us.epil.preheader ]
   %.phi.trans.insert.i21.us.epil = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %indvars.iv.i18.us.epil.init.a
   %.pre26.i22.us.epil = load i16, ptr %.phi.trans.insert.i21.us.epil, align 2
   %.pre31.i23.us.epil = zext i16 %.pre26.i22.us.epil to i64
   %i.cj = getelementptr [8 x i8], ptr %1, i64 %.pre31.i23.us.epil
   %i.ck = getelementptr i8, ptr %i.cj, i64 -8
   %i.cl = load ptr, ptr %i.ck, align 8
-  %16 = shl i64 %indvars.iv.i18.us.epil.init.a, 32
-  %17 = ashr exact i64 %16, 29
-  %18 = getelementptr inbounds i8, ptr %i.be, i64 %17
-  store ptr %i.cl, ptr %18, align 8
-  br label %gistunionsubkeyvec.exit31
+  %indvars.iv.next.i30.us.epil = add nuw nsw i64 %indvars.iv.i18.us.epil.init.a, 1
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv.i18.us.epil.init.a
+  store ptr %i.cl, ptr %22, align 8
+  %epil.iter78.next = add i64 %epil.iter78, 1     ; 2 uses
+  %epil.iter78.cmp.not = icmp eq i64 %epil.iter78.next, %xtraiter76
+  br i1 %epil.iter78.cmp.not, label %gistunionsubkeyvec.exit31, label %.lr.ph.i14.us.epil.preheader.a, !llvm.loop !15
 
 gistunionsubkeyvec.exit31.loopexit60.unr-lcssa:   ; preds = %bb.c
   %lcmp.mod71.not = icmp eq i64 %xtraiter70, 0
@@ -525,8 +565,8 @@ gistunionsubkeyvec.exit31.loopexit60.unr-lcssa:   ; preds = %bb.c
   store ptr %i.cr, ptr %i.cu, align 8
   br label %gistunionsubkeyvec.exit31
 
-gistunionsubkeyvec.exit31:                        ; preds = %gistunionsubkeyvec.exit31.loopexit60.unr-lcssa, %._crit_edge25.i24.epil, %.lr.ph.i14.epil.preheader, %.lr.ph.i14.us.epil.preheader.a, %gistunionsubkeyvec.exit31.loopexit.unr-lcssa, %gistunionsubkeyvec.exit
-  %.0.lcssa.i13 = phi i32 [ 0, %gistunionsubkeyvec.exit ], [ %i.bc, %.lr.ph.i14.us.epil.preheader.a ], [ %i.bc, %gistunionsubkeyvec.exit31.loopexit.unr-lcssa ], [ %.1.i29.1, %gistunionsubkeyvec.exit31.loopexit60.unr-lcssa ], [ %.021.i19.epil.init, %.lr.ph.i14.epil.preheader ], [ %i.cs, %._crit_edge25.i24.epil ]
+gistunionsubkeyvec.exit31:                        ; preds = %gistunionsubkeyvec.exit31.loopexit60.unr-lcssa, %._crit_edge25.i24.epil, %.lr.ph.i14.epil.preheader, %gistunionsubkeyvec.exit31.loopexit.unr-lcssa, %.lr.ph.i14.us.epil.preheader.a, %gistunionsubkeyvec.exit
+  %.0.lcssa.i13 = phi i32 [ 0, %gistunionsubkeyvec.exit ], [ %i.bc, %gistunionsubkeyvec.exit31.loopexit.unr-lcssa ], [ %i.bc, %.lr.ph.i14.us.epil.preheader.a ], [ %.1.i29.1, %gistunionsubkeyvec.exit31.loopexit60.unr-lcssa ], [ %.021.i19.epil.init, %.lr.ph.i14.epil.preheader ], [ %i.cs, %._crit_edge25.i24.epil ]
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 608
   %i.cw = getelementptr inbounds nuw i8, ptr %2, i64 352
   tail call void @gistMakeUnionItVec(ptr noundef %0, ptr noundef %i.be, i32 noundef %.0.lcssa.i13, ptr noundef nonnull %i.cw, ptr noundef nonnull %i.cv) #7
@@ -672,7 +712,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h, %bb.g
   %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
   %exitcond = icmp eq i32 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond, label %genericPickSplit.exit, label %bb.f, !llvm.loop !14
+  br i1 %exitcond, label %genericPickSplit.exit, label %bb.f, !llvm.loop !17
 
 genericPickSplit.exit:                            ; preds = %bb.i, %bb.e
   %i.bx = load i32, ptr %1, align 8
@@ -951,7 +991,7 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i115
   %i.gu = load i32, ptr %i.ae, align 8
   %i.gv = sext i32 %i.gu to i64
   %i.gw = icmp slt i64 %indvars.iv.next.i, %i.gv
-  br i1 %i.gw, label %.lr.ph.i115, label %._crit_edge.i, !llvm.loop !15
+  br i1 %i.gw, label %.lr.ph.i115, label %._crit_edge.i, !llvm.loop !18
 
 ._crit_edge.i:                                    ; preds = %bb.ab, %bb.z
   %.0.lcssa.i = phi i32 [ 0, %bb.z ], [ %.1.i116, %bb.ab ] ; 2 uses
@@ -995,7 +1035,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.hm = load i32, ptr %i.gy, align 8            ; 2 uses
   %i.hn = sext i32 %i.hm to i64
   %i.ho = icmp slt i64 %indvars.iv.next42.i, %i.hn
-  br i1 %i.ho, label %bb.ac, label %findDontCares.exit, !llvm.loop !16
+  br i1 %i.ho, label %bb.ac, label %findDontCares.exit, !llvm.loop !19
 
 findDontCares.exit:                               ; preds = %bb.ae, %._crit_edge.i
   %i.hp = phi i32 [ %i.gz, %._crit_edge.i ], [ %i.hm, %bb.ae ]
@@ -1070,7 +1110,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %indvars.iv.next.i121.1 = add nuw nsw i64 %indvars.iv.i119, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %removeDontCares.exit.loopexit.unr-lcssa, label %.lr.ph.i118, !llvm.loop !17
+  br i1 %niter.ncmp.1, label %removeDontCares.exit.loopexit.unr-lcssa, label %.lr.ph.i118, !llvm.loop !20
 
 removeDontCares.exit.loopexit.unr-lcssa:          ; preds = %bb.ak
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -1173,7 +1213,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %indvars.iv.next.i132.1 = add nuw nsw i64 %indvars.iv.i127, 2 ; 2 uses
   %niter16.next.1 = add i64 %niter16, 2           ; 2 uses
   %niter16.ncmp.1 = icmp eq i64 %niter16.next.1, %unroll_iter15
-  br i1 %niter16.ncmp.1, label %removeDontCares.exit134.loopexit.unr-lcssa, label %.lr.ph.i126, !llvm.loop !17
+  br i1 %niter16.ncmp.1, label %removeDontCares.exit134.loopexit.unr-lcssa, label %.lr.ph.i126, !llvm.loop !20
 
 removeDontCares.exit134.loopexit.unr-lcssa:       ; preds = %bb.ar
   %lcmp.mod12.not = icmp eq i64 %xtraiter11, 0
@@ -1245,7 +1285,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.kj = add i16 %.0142, 1                       ; 3 uses
   %i.kk = zext i16 %i.kj to i32
   %i.kl = icmp samesign ugt i32 %i.kc, %i.kk
-  br i1 %i.kl, label %bb.aw, label %._crit_edge, !llvm.loop !18
+  br i1 %i.kl, label %bb.aw, label %._crit_edge, !llvm.loop !21
 
 ._crit_edge:                                      ; preds = %bb.ax, %bb.aw, %.preheader
   %.0.lcssa = phi i16 [ 1, %.preheader ], [ %.0142, %bb.aw ], [ %i.kj, %bb.ax ] ; 2 uses
@@ -1275,7 +1315,7 @@ bb.ay:                                            ; preds = %bb.az
   %i.kz = load i32, ptr %i.ky, align 8
   %i.la = sext i32 %i.kz to i64
   %i.lb = icmp slt i64 %indvars.iv.next.i137, %i.la
-  br i1 %i.lb, label %bb.az, label %placeOne.exit, !llvm.loop !19
+  br i1 %i.lb, label %bb.az, label %placeOne.exit, !llvm.loop !22
 
 bb.az:                                            ; preds = %bb.ay, %.lr.ph.i135
   %indvars.iv.i136 = phi i64 [ %i.kx, %.lr.ph.i135 ], [ %indvars.iv.next.i137, %bb.ay ] ; 8 uses
@@ -1416,10 +1456,13 @@ attributes #8 = { cold nounwind }
 !11 = distinct !{!11, !6}
 !12 = distinct !{!12, !6}
 !13 = distinct !{!13, !6}
-!14 = distinct !{!14, !6}
-!15 = distinct !{!15, !6}
-!16 = distinct !{!16, !6}
+!14 = distinct !{!14, !16}
+!15 = distinct !{!15, !16}
+!16 = !{!"llvm.loop.unroll.disable"}
 !17 = distinct !{!17, !6}
 !18 = distinct !{!18, !6}
 !19 = distinct !{!19, !6}
+!20 = distinct !{!20, !6}
+!21 = distinct !{!21, !6}
+!22 = distinct !{!22, !6}
 end_hunk_0

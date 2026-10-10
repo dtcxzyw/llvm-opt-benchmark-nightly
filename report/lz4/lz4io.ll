@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lz4/original/lz4io?download=true
 inline.NumInlined: 97
 inline.NumDeleted: 35
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@selectDecoder:bb.a
 
 bb.ev:                                            ; preds = %.preheader.i62
@@ -202,7 +204,7 @@ define internal fastcc i32 @LZ4IO_fwriteSparse(ptr nofree noundef captures(addre
 bb.a:
   %i.a = lshr i64 %2, 3
   %.idx = and i64 %2, -8                          ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 4 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 12 uses
   %i.c = load ptr, ptr @stdout, align 8, !tbaa !14
   %i.d = icmp eq ptr %0, %i.c
   %.neg = sext i1 %i.d to i32
@@ -527,33 +529,86 @@ bb.ap:                                            ; preds = %.critedge.thread, %
 
 ._crit_edge:                                      ; preds = %bb.ap, %bb.v
   %.181.lcssa = phi i32 [ %.080, %bb.v ], [ %.2, %bb.ap ] ; 2 uses
-  %i.ds = and i64 %2, 7                           ; 2 uses
+  %i.ds = and i64 %2, 7                           ; 8 uses
   %.not91 = icmp eq i64 %i.ds, 0
-  br i1 %.not91, label %bb.bj, label %.lr.ph147.preheader.a
+  br i1 %.not91, label %bb.bj, label %.lr.ph147.preheader
 
-.lr.ph147.preheader.a:                            ; preds = %._crit_edge
-  %i.dt = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ds ; 3 uses
-  br label %.lr.ph147
+.lr.ph147.preheader:                              ; preds = %._crit_edge
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ds ; 2 uses
+  %6 = load i8, ptr %i.b, align 1, !tbaa !66
+  %7 = icmp eq i8 %6, 0
+  br i1 %7, label %8, label %.critedge2
 
-.lr.ph147:                                        ; preds = %.lr.ph147.preheader.a, %bb.aq
-  %.0145 = phi ptr [ %i.dw, %bb.aq ], [ %i.b, %.lr.ph147.preheader.a ] ; 3 uses
-  %i.du = load i8, ptr %.0145, align 1, !tbaa !66
+8:                                                ; preds = %.lr.ph147.preheader
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 3 uses
+  %.not195 = icmp eq i64 %i.ds, 1
+  br i1 %.not195, label %.critedge2, label %.lr.ph147.1
+
+.lr.ph147.1:                                      ; preds = %8
+  %10 = load i8, ptr %9, align 1, !tbaa !66
+  %11 = icmp eq i8 %10, 0
+  br i1 %11, label %12, label %.critedge2
+
+12:                                               ; preds = %.lr.ph147.1
+  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 3 uses
+  %14 = icmp samesign ugt i64 %i.ds, 2
+  br i1 %14, label %.lr.ph147.2, label %.critedge2
+
+.lr.ph147.2:                                      ; preds = %12
+  %15 = load i8, ptr %13, align 1, !tbaa !66
+  %16 = icmp eq i8 %15, 0
+  br i1 %16, label %17, label %.critedge2
+
+17:                                               ; preds = %.lr.ph147.2
+  %18 = getelementptr inbounds nuw i8, ptr %i.b, i64 3 ; 3 uses
+  %.not196 = icmp eq i64 %i.ds, 3
+  br i1 %.not196, label %.critedge2, label %.lr.ph147.3
+
+.lr.ph147.3:                                      ; preds = %17
+  %19 = load i8, ptr %18, align 1, !tbaa !66
+  %20 = icmp eq i8 %19, 0
+  br i1 %20, label %21, label %.critedge2
+
+21:                                               ; preds = %.lr.ph147.3
+  %22 = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 3 uses
+  %23 = icmp samesign ugt i64 %i.ds, 4
+  br i1 %23, label %.lr.ph147.4, label %.critedge2
+
+.lr.ph147.4:                                      ; preds = %21
+  %24 = load i8, ptr %22, align 1, !tbaa !66
+  %25 = icmp eq i8 %24, 0
+  br i1 %25, label %.lr.ph147.preheader.a, label %.critedge2
+
+.lr.ph147.preheader.a:                            ; preds = %.lr.ph147.4
+  %i.dt = getelementptr inbounds nuw i8, ptr %i.b, i64 5 ; 3 uses
+  %.not197 = icmp eq i64 %i.ds, 5
+  br i1 %.not197, label %.critedge2, label %.lr.ph147
+
+.lr.ph147:                                        ; preds = %.lr.ph147.preheader.a
+  %i.du = load i8, ptr %i.dt, align 1, !tbaa !66
   %i.dv = icmp eq i8 %i.du, 0
   br i1 %i.dv, label %bb.aq, label %.critedge2
 
 bb.aq:                                            ; preds = %.lr.ph147
-  %i.dw = getelementptr inbounds nuw i8, ptr %.0145, i64 1 ; 3 uses
-  %5 = icmp ult ptr %i.dw, %i.dt
-  br i1 %5, label %.lr.ph147, label %.critedge2, !llvm.loop !167
+  %i.dw = getelementptr inbounds nuw i8, ptr %i.b, i64 6 ; 3 uses
+  %26 = icmp eq i64 %i.ds, 7
+  br i1 %26, label %.lr.ph147.6, label %.critedge2
 
-.critedge2:                                       ; preds = %.lr.ph147, %bb.aq
-  %.0.lcssa.ph = phi ptr [ %.0145, %.lr.ph147 ], [ %i.dw, %bb.aq ] ; 3 uses
+.lr.ph147.6:                                      ; preds = %bb.aq
+  %27 = load i8, ptr %i.dw, align 1, !tbaa !66
+  %28 = icmp eq i8 %27, 0
+  %29 = getelementptr inbounds nuw i8, ptr %i.b, i64 7
+  %spec.select200 = select i1 %28, ptr %29, ptr %i.dw
+  br label %.critedge2
+
+.critedge2:                                       ; preds = %.lr.ph147.6, %bb.aq, %.lr.ph147, %.lr.ph147.preheader.a, %.lr.ph147.4, %21, %.lr.ph147.3, %17, %.lr.ph147.2, %12, %.lr.ph147.1, %.lr.ph147.preheader, %8
+  %.0.lcssa.ph = phi ptr [ %i.b, %.lr.ph147.preheader ], [ %9, %8 ], [ %9, %.lr.ph147.1 ], [ %13, %12 ], [ %13, %.lr.ph147.2 ], [ %18, %17 ], [ %18, %.lr.ph147.3 ], [ %22, %21 ], [ %22, %.lr.ph147.4 ], [ %i.dt, %.lr.ph147.preheader.a ], [ %i.dt, %.lr.ph147 ], [ %i.dw, %bb.aq ], [ %spec.select200, %.lr.ph147.6 ] ; 3 uses
   %i.dx = ptrtoint ptr %.0.lcssa.ph to i64        ; 2 uses
   %i.dy = ptrtoint ptr %i.b to i64
   %i.dz = sub i64 %i.dx, %i.dy
   %i.ea = trunc i64 %i.dz to i32
   %i.eb = add i32 %.181.lcssa, %i.ea              ; 2 uses
-  %.not92 = icmp eq ptr %.0.lcssa.ph, %i.dt
+  %.not92 = icmp eq ptr %.0.lcssa.ph, %5
   br i1 %.not92, label %bb.bj, label %bb.ar
 
 bb.ar:                                            ; preds = %.critedge2
@@ -621,7 +676,7 @@ bb.az:                                            ; preds = %bb.ay
   unreachable
 
 bb.ba:                                            ; preds = %bb.ar
-  %i.fb = ptrtoint ptr %i.dt to i64
+  %i.fb = ptrtoint ptr %5 to i64
   %i.fc = sub i64 %i.fb, %i.dx                    ; 2 uses
   %i.fd = tail call i64 @fwrite(ptr noundef nonnull %.0.lcssa.ph, i64 noundef 1, i64 noundef %i.fc, ptr noundef %0)
   %.not94 = icmp eq i64 %i.fd, %i.fc
@@ -1024,5 +1079,4 @@ attributes #33 = { nounwind allocsize(1) }
 !164 = distinct !{!164, !30}
 !165 = distinct !{!165, !30}
 !166 = distinct !{!166, !30}
-!167 = distinct !{!167, !30}
 end_hunk_1

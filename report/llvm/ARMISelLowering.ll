@@ -205,11 +205,15 @@ bb.cs:                                            ; preds = %bb.cr
   %i.tw = call i16 %i.tv(ptr noundef nonnull align 8 dereferenceable(518435) %0, ptr noundef nonnull align 8 dereferenceable(912) %i.ts, i32 noundef 0) #38 ; 2 uses
   %i.tx = icmp ult i32 %i.to, %i.tq
   %i.ty = sub i32 %i.tq, %i.to                    ; 2 uses
-  br i1 %i.tx, label %.lr.ph1949, label %._crit_edge1950
+  br i1 %i.tx, label %.lr.ph1949.preheader, label %._crit_edge1950
 
-.lr.ph1949:                                       ; preds = %bb.cs, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIjNS_7SDValueEELb1EE9push_backERKS3_.exit1271
-  %indvars.iv2005 = phi i64 [ %indvars.iv.next2006, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIjNS_7SDValueEELb1EE9push_backERKS3_.exit1271 ], [ 0, %bb.cs ] ; 2 uses
-  %storemerge1946 = phi i32 [ %i.ut, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIjNS_7SDValueEELb1EE9push_backERKS3_.exit1271 ], [ %i.to, %bb.cs ] ; 2 uses
+.lr.ph1949.preheader:                             ; preds = %bb.cs
+  %wide.trip.count = zext i32 %i.ty to i64
+  br label %.lr.ph1949
+
+.lr.ph1949:                                       ; preds = %.lr.ph1949.preheader, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIjNS_7SDValueEELb1EE9push_backERKS3_.exit1271
+  %indvars.iv2005 = phi i64 [ 0, %.lr.ph1949.preheader ], [ %indvars.iv.next2006, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIjNS_7SDValueEELb1EE9push_backERKS3_.exit1271 ] ; 2 uses
+  %storemerge1946 = phi i32 [ %i.to, %.lr.ph1949.preheader ], [ %i.ut, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIjNS_7SDValueEELb1EE9push_backERKS3_.exit1271 ] ; 2 uses
   %i.tz = shl i64 %indvars.iv2005, 2
   %i.ua = and i64 %i.tz, 4294967292
   %i.ub = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.h, i64 noundef %i.ua, ptr noundef nonnull align 8 dereferenceable(12) %i.i, i16 7, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #38 ; 2 uses
@@ -281,8 +285,7 @@ _ZN4llvm23SmallVectorTemplateBaseISt4pairIjNS_7SDValueEELb1EE9push_backERKS3_.ex
   call void @llvm.lifetime.end.p0(ptr nonnull %52) #38
   %indvars.iv.next2006 = add nuw nsw i64 %indvars.iv2005, 1 ; 2 uses
   %i.ut = add nuw i32 %storemerge1946, 1
-  %lftr.wideiv = trunc i64 %indvars.iv.next2006 to i32
-  %exitcond.not = icmp eq i32 %i.ty, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next2006, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge1950, label %.lr.ph1949, !llvm.loop !1183
 
 ._crit_edge1950:                                  ; preds = %_ZN4llvm23SmallVectorTemplateBaseISt4pairIjNS_7SDValueEELb1EE9push_backERKS3_.exit1271, %bb.cs
@@ -685,6 +688,7 @@ _ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.thread: ; preds = %
   %.sroa.652.0..sroa_idx53 = getelementptr inbounds nuw i8, ptr %15, i64 8
   %.sroa.29.0..sroa_idx = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.bc = sub nuw i32 %.0129, %.0128
+  %wide.trip.count = zext i32 %i.bc to i64
   br label %bb.g
 
 ._crit_edge:                                      ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit
@@ -804,8 +808,7 @@ _ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit: ; preds 
   %i.cj = call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %2, i32 noundef 59, ptr noundef nonnull align 8 dereferenceable(12) %3, i16 %i.ag, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %15, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %16) #38
   %i.ck = add nuw i32 %.093133, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %i.bc, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.g, !llvm.loop !1293
 
 bb.l:                                             ; preds = %._crit_edge
@@ -1208,14 +1211,14 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %step.add = add nuw nsw <4 x i32> %vec.ind, splat (i32 4)
   %i.aa = shl i64 %index, 2
   %next.gep = getelementptr i8, ptr %i.v, i64 %i.aa ; 2 uses
   %i.ab = getelementptr i8, ptr %next.gep, i64 16
   store <4 x i32> %vec.ind, ptr %next.gep, align 4, !tbaa !324
   store <4 x i32> %step.add, ptr %i.ab, align 4, !tbaa !324
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
+  %vec.ind.next = add nuw nsw <4 x i32> %vec.ind, splat (i32 8)
   %i.ac = icmp eq i64 %index.next, %n.vec
   br i1 %i.ac, label %middle.block, label %vector.body, !llvm.loop !3038
 
@@ -1234,7 +1237,7 @@ middle.block:                                     ; preds = %vector.body
   %.049.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ae, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ], [ %.049.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
   %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i = phi i32 [ %i.ad, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader ] ; 2 uses
   store i32 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i, ptr %.049.i.i.i.i.i.i.i.i.i.i.i, align 4, !tbaa !324
-  %i.ad = add i32 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i, 1
+  %i.ad = add nuw nsw i32 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i, 1
   %i.ae = getelementptr inbounds nuw i8, ptr %.049.i.i.i.i.i.i.i.i.i.i.i, i64 4
   %i.af = add nsw i64 %.010.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.ag = icmp samesign ugt i64 %.010.i.i.i.i.i.i.i.i.i.i.i, 1

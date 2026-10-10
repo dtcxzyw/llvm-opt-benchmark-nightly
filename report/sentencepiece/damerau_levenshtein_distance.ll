@@ -25,9 +25,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.080.0 = phi i64 [ %2, %bb.b ], [ %0, %bb.a ] ; 5 uses
   %.sroa.11.0 = phi ptr [ %1, %bb.b ], [ %3, %bb.a ] ; 3 uses
-  %.sroa.0.0 = phi i64 [ %0, %bb.b ], [ %2, %bb.a ] ; 7 uses
+  %.sroa.0.0 = phi i64 [ %0, %bb.b ], [ %2, %bb.a ] ; 8 uses
   %.sroa.9.0 = phi ptr [ %3, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %i.c = zext nneg i8 %.sroa.speculated to i64    ; 4 uses
+  %i.c = zext nneg i8 %.sroa.speculated to i64    ; 5 uses
   %i.d = add i64 %.sroa.080.0, %i.c
   %i.e = icmp ult i64 %i.d, %.sroa.0.0
   %i.f = icmp ugt i64 %.sroa.0.0, 100
@@ -144,20 +144,23 @@ bb.f:                                             ; preds = %._crit_edge
   br label %bb.p
 
 bb.g:                                             ; preds = %_ZSt4iotaIPhiEvT_S1_T0_.exit, %._crit_edge
-  %indvar.a = phi i64 [ 0, %_ZSt4iotaIPhiEvT_S1_T0_.exit ], [ %indvar.next, %._crit_edge ] ; 3 uses
+  %indvar = phi i64 [ 0, %_ZSt4iotaIPhiEvT_S1_T0_.exit ], [ %indvar.next, %._crit_edge ] ; 3 uses
+  %indvar.a = phi i64 [ %i.c, %_ZSt4iotaIPhiEvT_S1_T0_.exit ], [ %indvars.iv, %._crit_edge ]
   %.06094 = phi i64 [ 1, %_ZSt4iotaIPhiEvT_S1_T0_.exit ], [ %i.bw, %._crit_edge ] ; 12 uses
-  %i.ae = mul nuw nsw i64 %indvar.a, 102
+  %i.ae = mul nuw nsw i64 %indvar, 102
   %i.af = getelementptr nuw i8, ptr %5, i64 %i.ae
   %scevgep138 = getelementptr nuw i8, ptr %i.af, i64 101
-  %i.ag = mul nuw nsw i64 %indvar.a, 102
+  %i.ag = mul nuw nsw i64 %indvar, 102
   %i.ah = getelementptr nuw i8, ptr %5, i64 %i.ag
   %scevgep = getelementptr nuw i8, ptr %i.ah, i64 101
-  %i.ai = icmp ugt i64 %.06094, %i.aa
+  %indvars.iv = add nuw nsw i64 %indvar.a, 1      ; 2 uses
+  %umin96 = call i64 @llvm.umin.i64(i64 %.sroa.0.0, i64 %indvars.iv) ; 2 uses
+  %i.ai = icmp samesign ugt i64 %.06094, %i.aa
   %i.aj = getelementptr inbounds nuw [102 x i8], ptr %5, i64 %.06094 ; 2 uses
   br i1 %i.ai, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ak = sub nuw i64 %.06094, %i.aa              ; 2 uses
+  %i.ak = sub nuw nsw i64 %.06094, %i.aa          ; 2 uses
   %i.al = getelementptr i8, ptr %i.aj, i64 %i.ak
   %i.am = getelementptr i8, ptr %i.al, i64 -1
   store i8 %i.a, ptr %i.am, align 1, !tbaa !13
@@ -170,7 +173,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.059 = phi i64 [ %i.ak, %bb.h ], [ 1, %bb.i ]  ; 5 uses
-  %i.ao = add i64 %.06094, %i.c                   ; 3 uses
+  %i.ao = add nuw nsw i64 %.06094, %i.c           ; 3 uses
   %i.ap = icmp ugt i64 %i.ao, %.sroa.0.0
   br i1 %i.ap, label %bb.l, label %bb.k
 
@@ -182,18 +185,18 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k
-  %.058 = phi i64 [ %i.ao, %bb.k ], [ %.sroa.0.0, %bb.j ] ; 3 uses
+  %.058 = phi i64 [ %i.ao, %bb.k ], [ %.sroa.0.0, %bb.j ]
   %.not6492 = icmp ugt i64 %.059, %.058
   br i1 %.not6492, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.l
-  %i.at = add i64 %.06094, -1                     ; 2 uses
+  %i.at = add nsw i64 %.06094, -1                 ; 2 uses
   %i.au = getelementptr inbounds nuw [102 x i8], ptr %5, i64 %i.at ; 4 uses
   %i.av = getelementptr inbounds nuw [102 x i8], ptr %5, i64 %.06094 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 %i.at
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !13  ; 3 uses
-  %i.ay = icmp ugt i64 %.06094, 1
-  %i.az = add i64 %.06094, -2                     ; 2 uses
+  %i.ay = icmp samesign ugt i64 %.06094, 1
+  %i.az = add nsw i64 %.06094, -2                 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 %i.az
   %i.bb = getelementptr inbounds nuw [102 x i8], ptr %5, i64 %i.az
   br i1 %i.ay, label %.lr.ph.split.preheader, label %.lr.ph.split.us.preheader
@@ -210,11 +213,11 @@ bb.l:                                             ; preds = %bb.j, %bb.k
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
   %store_forwarded = phi i8 [ %load_initial, %.lr.ph.split.us.preheader ], [ %.sroa.speculated103.a, %.lr.ph.split.us ]
-  %.05793.us = phi i64 [ %.059, %.lr.ph.split.us.preheader ], [ %i.bv, %.lr.ph.split.us ] ; 4 uses
+  %.05793.us = phi i64 [ %.059, %.lr.ph.split.us.preheader ], [ %i.bv, %.lr.ph.split.us ] ; 5 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.au, i64 %.05793.us
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !13
   %i.be = add i8 %i.bd, 1                         ; 2 uses
-  %i.bf = add i64 %.05793.us, -1                  ; 2 uses
+  %i.bf = add nsw i64 %.05793.us, -1              ; 2 uses
   %i.bg = add i8 %store_forwarded, 1              ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.11.0, i64 %i.bf
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !13
@@ -235,14 +238,14 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %.sroa.speculated103.a = select i1 %i.bt, i8 %i.a, i8 %.sroa.speculate.load.false102.sroa.speculated ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.av, i64 %.05793.us
   store i8 %.sroa.speculated103.a, ptr %i.bu, align 1, !tbaa !13
-  %i.bv = add i64 %.05793.us, 1                   ; 2 uses
-  %.not64.us = icmp ugt i64 %i.bv, %.058
-  br i1 %.not64.us, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !11
+  %i.bv = add nuw nsw i64 %.05793.us, 1
+  %exitcond = icmp eq i64 %.05793.us, %umin96
+  br i1 %exitcond, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %.lr.ph.split.us, %.lr.ph.i.i, %bb.l
-  %i.bw = add nuw i64 %.06094, 1
+  %i.bw = add nuw nsw i64 %.06094, 1
   %exitcond.a = icmp eq i64 %.06094, %.sroa.080.0
-  %indvar.next = add i64 %indvar.a, 1
+  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.a, label %bb.f, label %bb.g, !llvm.loop !12
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.lr.ph.i.i
@@ -260,7 +263,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %i.cg = load i8, ptr %i.cf, align 1, !tbaa !13
   %i.ch = zext i1 %i.ce to i8
   %i.ci = add i8 %i.cg, %i.ch                     ; 3 uses
-  %i.cj = icmp ugt i64 %.05793, 1
+  %i.cj = icmp samesign ugt i64 %.05793, 1
   br i1 %i.cj, label %bb.m, label %.lr.ph.i.i
 
 bb.m:                                             ; preds = %.lr.ph.split
@@ -296,8 +299,8 @@ bb.o:                                             ; preds = %bb.n
   %i.cz = getelementptr inbounds nuw i8, ptr %i.av, i64 %.05793
   store i8 %.sroa.speculated100, ptr %i.cz, align 1, !tbaa !13
   %i.da = add nuw nsw i64 %.05793, 1
-  %.not64.not = icmp ult i64 %.05793, %.058
-  br i1 %.not64.not, label %.lr.ph.split, label %._crit_edge, !llvm.loop !11
+  %exitcond97 = icmp eq i64 %.05793, %umin96
+  br i1 %exitcond97, label %._crit_edge, label %.lr.ph.split, !llvm.loop !11
 
 bb.p:                                             ; preds = %bb.c, %bb.f, %bb.e
   %.0 = phi i8 [ %i.ad, %bb.f ], [ %i.h, %bb.e ], [ %i.a, %bb.c ]
@@ -312,6 +315,9 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

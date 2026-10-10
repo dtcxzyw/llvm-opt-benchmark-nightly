@@ -205,7 +205,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.alw = load i16, ptr %i.alj, align 4, !tbaa !85
   %i.alx = zext i16 %i.alw to i32
   %i.aly = add nsw i32 %i.alx, -1
-  %i.alz = icmp slt i32 %.pre409, %i.aly
+  %i.alz = icmp slt i32 %1, %i.aly
+  %indvars.iv.next401 = add nuw nsw i32 %.0338.a, 1
   br i1 %i.alz, label %.preheader, label %.loopexit289, !llvm.loop !183
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit287
@@ -213,16 +214,16 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.sroa.10.0 = phi ptr [ %i.alo, %.preheader.lr.ph ], [ %.sroa.10.2, %.loopexit287 ] ; 2 uses
   %.sroa.6.0 = phi ptr [ %i.alp, %.preheader.lr.ph ], [ %.sroa.6.2, %.loopexit287 ] ; 2 uses
   %.sroa.0.0 = phi ptr [ %.0233, %.preheader.lr.ph ], [ %.sroa.0.2, %.loopexit287 ] ; 2 uses
-  %.0338.a = phi i32 [ -1, %.preheader.lr.ph ], [ %.1.lcssa, %.loopexit287 ] ; 3 uses
-  %.3226337.a = phi i32 [ 1, %.preheader.lr.ph ], [ %.pre409, %.loopexit287 ] ; 6 uses
-  %.not253330 = icmp sgt i32 %.0338.a, %.3226337.a
-  %.pre409 = add nuw i32 %.3226337.a, 1           ; 3 uses
+  %.0338.a = phi i32 [ 2, %.preheader.lr.ph ], [ %indvars.iv.next401, %.loopexit287 ] ; 3 uses
+  %.3226337.a = phi i32 [ -1, %.preheader.lr.ph ], [ %.1.lcssa, %.loopexit287 ] ; 3 uses
+  %.3226337 = phi i32 [ 1, %.preheader.lr.ph ], [ %1, %.loopexit287 ] ; 5 uses
+  %.not253330 = icmp sgt i32 %.3226337.a, %.3226337
   br i1 %.not253330, label %._crit_edge333, label %.lr.ph332
 
 .loopexit:                                        ; preds = %bb.l, %.lr.ph332
   %i.amb = phi i16 [ %i.amd, %.lr.ph332 ], [ %i.ani, %bb.l ] ; 2 uses
   %i.amc = phi i16 [ %i.ame, %.lr.ph332 ], [ %i.ani, %bb.l ]
-  %exitcond400.not = icmp eq i32 %.1331, %.3226337.a
+  %exitcond400.not = icmp eq i32 %i.amf, %.0338.a
   br i1 %exitcond400.not, label %._crit_edge333, label %.lr.ph332, !llvm.loop !184
 
 .lr.ph332:                                        ; preds = %.preheader, %.loopexit
@@ -231,8 +232,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.sroa.10.1 = phi ptr [ %.sroa.0.1, %.loopexit ], [ %.sroa.10.0, %.preheader ] ; 2 uses
   %.sroa.6.1 = phi ptr [ %.sroa.10.1, %.loopexit ], [ %.sroa.6.0, %.preheader ] ; 2 uses
   %.sroa.0.1 = phi ptr [ %.sroa.6.1, %.loopexit ], [ %.sroa.0.0, %.preheader ] ; 3 uses
-  %.1331 = phi i32 [ %i.amf, %.loopexit ], [ %.0338.a, %.preheader ] ; 2 uses
-  %i.amf = add nsw i32 %.1331, 1                  ; 3 uses
+  %.1331 = phi i32 [ %i.amf, %.loopexit ], [ %.3226337.a, %.preheader ]
+  %i.amf = add nsw i32 %.1331, 1                  ; 4 uses
   %i.amg = shl i32 %i.amf, 1
   %i.amh = and i32 %i.amg, 14                     ; 2 uses
   %i.ami = shl nuw nsw i32 %i.amh, 1
@@ -282,8 +283,9 @@ bb.l:                                             ; preds = %.lr.ph329, %bb.l
   %.sroa.10.2 = phi ptr [ %.sroa.10.0, %.preheader ], [ %.sroa.0.1, %.loopexit ] ; 3 uses
   %.sroa.6.2 = phi ptr [ %.sroa.6.0, %.preheader ], [ %.sroa.10.1, %.loopexit ] ; 2 uses
   %.sroa.0.2 = phi ptr [ %.sroa.0.0, %.preheader ], [ %.sroa.6.1, %.loopexit ] ; 3 uses
-  %.1.lcssa = phi i32 [ %.0338.a, %.preheader ], [ %.pre409, %.loopexit ]
-  %i.anm = shl nuw nsw i32 %.3226337.a, 1
+  %.1.lcssa = phi i32 [ %.3226337.a, %.preheader ], [ %.0338.a, %.loopexit ]
+  %1 = add nuw nsw i32 %.3226337, 1               ; 2 uses
+  %i.anm = shl nuw nsw i32 %.3226337, 1
   %i.ann = and i32 %i.anm, 14                     ; 2 uses
   %i.ano = shl nuw nsw i32 %i.ann, 1
   %i.anp = lshr i32 %i.akc, %i.ano                ; 3 uses
@@ -295,7 +297,7 @@ bb.l:                                             ; preds = %.lr.ph329, %bb.l
   br i1 %i.anu, label %.lr.ph336, label %.loopexit287
 
 .lr.ph336:                                        ; preds = %._crit_edge333
-  %i.anv = and i32 %.3226337.a, 1                 ; 2 uses
+  %i.anv = and i32 %.3226337, 1                   ; 2 uses
   %i.anw = xor i32 %i.anv, 1
   %i.anx = zext nneg i32 %i.anw to i64
   %i.any = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.anx
@@ -354,7 +356,7 @@ bb.m:                                             ; preds = %.lr.ph336, %bb.m
   %spec.select280 = select reassoc nsz arcp contract afn i1 %i.apr, float 0.000000e+00, float %i.aps ; 2 uses
   %i.apt = load i16, ptr %i.alq, align 4, !tbaa !87
   %i.apu = zext i16 %i.apt to i32                 ; 2 uses
-  %i.apv = lshr i32 %.3226337.a, %i.apu
+  %i.apv = lshr i32 %.3226337, %i.apu
   %i.apw = load i16, ptr %i.d, align 2, !tbaa !187
   %i.apx = zext i16 %i.apw to i32
   %i.apy = mul nuw nsw i32 %i.apv, %i.apx

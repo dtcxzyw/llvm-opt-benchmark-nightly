@@ -202,10 +202,15 @@ vec.epilog.scalar.ph1513:                         ; preds = %vec.epilog.scalar.p
   %indvars.iv.next881 = add nuw nsw i64 %indvars.iv880, 1
   %indvars.iv.next872 = add nuw i32 %indvars.iv871, 1
   %exitcond888.not = icmp eq i64 %indvars.iv.next883, %wide.trip.count887
-  br i1 %exitcond888.not, label %.preheader471.preheader, label %iter.check1553, !llvm.loop !83
+  br i1 %exitcond888.not, label %._crit_edge593.loopexit, label %iter.check1553, !llvm.loop !83
 
-.preheader471.preheader:                          ; preds = %._crit_edge588, %._crit_edge579
-  %.23.lcssa = phi i64 [ %indvars.iv.next851.lcssa, %._crit_edge579 ], [ %.25.lcssa.in, %._crit_edge588 ]
+._crit_edge593.loopexit:                          ; preds = %._crit_edge588
+  %sext993 = shl i64 %.25.lcssa.in, 32
+  %7 = ashr exact i64 %sext993, 32
+  br label %.preheader471.preheader
+
+.preheader471.preheader:                          ; preds = %._crit_edge579, %._crit_edge593.loopexit
+  %.23.lcssa = phi i64 [ %indvars.iv.next851.lcssa, %._crit_edge579 ], [ %7, %._crit_edge593.loopexit ]
   %i.aqh = sext i32 %i.d to i64                   ; 9 uses
   %umax = tail call i32 @llvm.umax.i32(i32 %i.v, i32 1)
   %i.aqi = lshr exact i32 %i.i, 1                 ; 2 uses
@@ -215,8 +220,6 @@ vec.epilog.scalar.ph1513:                         ; preds = %vec.epilog.scalar.p
   %i.aql = add nuw i32 %smax900, %i.aqi
   %i.aqm = sub i32 %i.aql, %i.v
   %wide.trip.count901 = zext i32 %i.aqm to i64
-  %sext993 = shl i64 %.23.lcssa, 32
-  %7 = ashr exact i64 %sext993, 32
   %wide.trip.count896 = zext nneg i32 %umax to i64 ; 8 uses
   %i.aqn = add i64 %i.b, 8
   %min.iters.check1575 = icmp ugt i32 %i.i, 7
@@ -234,7 +237,7 @@ vec.epilog.scalar.ph1513:                         ; preds = %vec.epilog.scalar.p
 iter.check1590:                                   ; preds = %.preheader471.preheader, %._crit_edge599
   %indvar1572 = phi i64 [ 0, %.preheader471.preheader ], [ %indvar.next1573, %._crit_edge599 ] ; 2 uses
   %indvars.iv898 = phi i64 [ %i.aqk, %.preheader471.preheader ], [ %indvars.iv.next899, %._crit_edge599 ] ; 2 uses
-  %.26603 = phi i64 [ %7, %.preheader471.preheader ], [ %indvars.iv.next890.lcssa, %._crit_edge599 ] ; 7 uses
+  %.26603 = phi i64 [ %.23.lcssa, %.preheader471.preheader ], [ %indvars.iv.next890.lcssa, %._crit_edge599 ] ; 7 uses
   %invariant.gep1039 = getelementptr [8 x i8], ptr %3, i64 %indvars.iv898 ; 11 uses
   br i1 %or.cond1837, label %vector.memcheck1571, label %vec.epilog.scalar.ph1591.preheader
 

@@ -204,13 +204,16 @@ bb.d:                                             ; preds = %bb.c, %i8042_wait_w
   %i.ac = lshr i32 %1, 8
   %i.ad = and i32 %i.ac, 15                       ; 2 uses
   %.not58 = icmp eq i32 %i.ad, 0
-  br i1 %.not58, label %.loopexit, label %.lr.ph54.a
+  br i1 %.not58, label %.loopexit, label %.lr.ph54
 
-.lr.ph54.a:                                       ; preds = %.preheader
+.lr.ph54:                                         ; preds = %.preheader
+  br i1 %i.c, label %.lr.ph54.split.us, label %.lr.ph54.a
+
+.lr.ph54.a:                                       ; preds = %.lr.ph54
   %wide.trip.count73 = zext nneg i32 %i.ad to i64
-  br i1 %i.c, label %.lr.ph54.split.us, label %.lr.ph54.split
+  br label %.lr.ph54.split
 
-.lr.ph54.split.us:                                ; preds = %.lr.ph54.a
+.lr.ph54.split.us:                                ; preds = %.lr.ph54
   %i.ae = load i32, ptr @i8042_command_reg, align 4
   %i.af = trunc i32 %i.ae to i16
   %i.ag = tail call i8 asm sideeffect "inb ${1:w}, ${0:b}", "={ax},N{dx},~{dirflag},~{fpsr},~{flags}"(i16 %i.af) #11, !srcloc !15
@@ -290,7 +293,15 @@ i8042_wait_write.exit37:                          ; preds = %.lr.ph.i33
 bb.g:                                             ; preds = %i8042_wait_write.exit37
   %i.bs = load i8, ptr @i8042_debug, align 1, !range !13, !noundef !14
   %i.bt = trunc nuw i8 %i.bs to i1
-  br i1 %i.bt, label %.loopexit.sink.split, label %.loopexit
+  br i1 %i.bt, label %2, label %.loopexit
+
+2:                                                ; preds = %bb.g
+  %3 = load volatile i64, ptr @jiffies, align 64
+  %4 = load i64, ptr @i8042_start_time, align 8
+  %5 = sub i64 %3, %4
+  %6 = trunc i64 %5 to i32
+  %7 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.2, i32 noundef %6) #12 ; 0 uses
+  br label %.loopexit
 
 i8042_wait_write.exit37.thread:                   ; preds = %.lr.ph, %i8042_wait_write.exit37
   %i.bu = load i8, ptr @i8042_debug, align 1, !range !13, !noundef !14
@@ -318,8 +329,8 @@ bb.i:                                             ; preds = %bb.h, %i8042_wait_w
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !22
 
-.lr.ph54.split:                                   ; preds = %.lr.ph54.a, %4
-  %indvars.iv65 = phi i64 [ %indvars.iv.next66, %4 ], [ 0, %.lr.ph54.a ] ; 2 uses
+.lr.ph54.split:                                   ; preds = %.lr.ph54.a, %17
+  %indvars.iv65 = phi i64 [ 0, %.lr.ph54.a ], [ %indvars.iv.next66, %17 ] ; 2 uses
   %i.ci = load i32, ptr @i8042_command_reg, align 4
   %i.cj = trunc i32 %i.ci to i16
   %i.ck = tail call i8 asm sideeffect "inb ${1:w}, ${0:b}", "={ax},N{dx},~{dirflag},~{fpsr},~{flags}"(i16 %i.cj) #11, !srcloc !15
@@ -347,7 +358,15 @@ i8042_wait_read.exit:                             ; preds = %.lr.ph.i39
 .split.us:                                        ; preds = %i8042_wait_read.exit, %i8042_wait_read.exit.us
   %i.cv = load i8, ptr @i8042_debug, align 1, !range !13, !noundef !14
   %i.cw = trunc nuw i8 %i.cv to i1
-  br i1 %i.cw, label %.loopexit.sink.split, label %.loopexit
+  br i1 %i.cw, label %8, label %.loopexit
+
+8:                                                ; preds = %.split.us
+  %9 = load volatile i64, ptr @jiffies, align 64
+  %10 = load i64, ptr @i8042_start_time, align 8
+  %11 = sub i64 %9, %10
+  %12 = trunc i64 %11 to i32
+  %13 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.4, i32 noundef %12) #12 ; 0 uses
+  br label %.loopexit
 
 i8042_wait_read.exit.thread:                      ; preds = %.lr.ph54.split, %i8042_wait_read.exit
   %i.cx = load i32, ptr @i8042_data_reg, align 4
@@ -357,38 +376,37 @@ i8042_wait_read.exit.thread:                      ; preds = %.lr.ph54.split, %i8
   store i8 %i.cz, ptr %i.da, align 1
   %i.db = load i8, ptr @i8042_debug, align 1, !range !13, !noundef !14
   %i.dc = trunc nuw i8 %i.db to i1
-  br i1 %i.dc, label %bb.j, label %4
+  br i1 %i.dc, label %.loopexit.sink.split, label %17
 
 .split56.us:                                      ; preds = %i8042_wait_read.exit.thread.us
   %i.dd = load i8, ptr @i8042_debug, align 1, !range !13, !noundef !14
   %i.de = trunc nuw i8 %i.dd to i1
-  br i1 %i.de, label %.loopexit.sink.split, label %.loopexit
+  br i1 %i.de, label %bb.j, label %.loopexit
 
-bb.j:                                             ; preds = %i8042_wait_read.exit.thread
-  %2 = zext i8 %i.cz to i32
+bb.j:                                             ; preds = %.split56.us
   %i.df = load volatile i64, ptr @jiffies, align 64
   %i.dg = load i64, ptr @i8042_start_time, align 8
   %i.dh = sub i64 %i.df, %i.dg
   %i.di = trunc i64 %i.dh to i32
-  %3 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.6, i32 noundef %i.di, i32 noundef %2) #12 ; 0 uses
-  br label %4
+  %14 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.5, i32 noundef %i.di) #12 ; 0 uses
+  br label %.loopexit
 
-4:                                                ; preds = %i8042_wait_read.exit.thread, %bb.j
-  %indvars.iv.next66 = add nuw nsw i64 %indvars.iv65, 1 ; 2 uses
-  %exitcond69.not = icmp eq i64 %indvars.iv.next66, %wide.trip.count73
-  br i1 %exitcond69.not, label %.loopexit, label %.lr.ph54.split, !llvm.loop !23
-
-.loopexit.sink.split:                             ; preds = %.split56.us, %.split.us, %bb.g
-  %.str.5.sink = phi ptr [ @.str.4, %.split.us ], [ @.str.2, %bb.g ], [ @.str.5, %.split56.us ]
+.loopexit.sink.split:                             ; preds = %i8042_wait_read.exit.thread
+  %15 = zext i8 %i.cz to i32
   %i.dj = load volatile i64, ptr @jiffies, align 64
   %i.dk = load i64, ptr @i8042_start_time, align 8
   %i.dl = sub i64 %i.dj, %i.dk
   %i.dm = trunc i64 %i.dl to i32
-  %5 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull %.str.5.sink, i32 noundef %i.dm) #12 ; 0 uses
-  br label %.loopexit
+  %16 = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.6, i32 noundef %i.dm, i32 noundef %15) #12 ; 0 uses
+  br label %17
 
-.loopexit:                                        ; preds = %4, %bb.f, %bb.e, %.loopexit.sink.split, %.preheader, %.split56.us, %.split.us, %bb.g, %i8042_wait_write.exit, %bb.a
-  %.0 = phi i32 [ -1, %.split56.us ], [ -1, %bb.a ], [ -1, %i8042_wait_write.exit ], [ -1, %bb.g ], [ -1, %.split.us ], [ 0, %.preheader ], [ -1, %.loopexit.sink.split ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %4 ]
+17:                                               ; preds = %i8042_wait_read.exit.thread, %.loopexit.sink.split
+  %indvars.iv.next66 = add nuw nsw i64 %indvars.iv65, 1 ; 2 uses
+  %exitcond69.not = icmp eq i64 %indvars.iv.next66, %wide.trip.count73
+  br i1 %exitcond69.not, label %.loopexit, label %.lr.ph54.split, !llvm.loop !23
+
+.loopexit:                                        ; preds = %17, %bb.e, %bb.f, %.preheader, %.split56.us, %bb.j, %.split.us, %8, %bb.g, %2, %i8042_wait_write.exit, %bb.a
+  %.0 = phi i32 [ -1, %.split56.us ], [ -1, %bb.a ], [ -1, %i8042_wait_write.exit ], [ -1, %bb.g ], [ -1, %.split.us ], [ -1, %2 ], [ -1, %8 ], [ -1, %bb.j ], [ 0, %.preheader ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %17 ]
   ret i32 %.0
 }
 

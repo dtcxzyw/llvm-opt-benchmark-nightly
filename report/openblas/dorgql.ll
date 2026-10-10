@@ -202,17 +202,18 @@ bb.q:                                             ; preds = %.lr.ph254._crit_edg
   br label %.lr.ph244
 
 .lr.ph244:                                        ; preds = %.lr.ph244.preheader, %.lr.ph244
-  %indvar = phi i32 [ 0, %.lr.ph244.preheader ], [ %indvar.next, %.lr.ph244 ] ; 2 uses
-  %.1175247 = phi i32 [ %i.gd, %.lr.ph244.preheader ], [ %i.gv, %.lr.ph244 ]
-  %i.gr = mul i32 %i.h, %indvar
+  %indvars.iv263 = phi i64 [ 0, %.lr.ph244.preheader ], [ %indvars.iv.next264, %.lr.ph244 ] ; 2 uses
+  %indvar = phi i32 [ %i.gd, %.lr.ph244.preheader ], [ %i.gv, %.lr.ph244 ]
+  %9 = trunc nuw nsw i64 %indvars.iv263 to i32
+  %i.gr = mul i32 %i.h, %9
   %i.gs = add i32 %i.gm, %i.gr
   %i.gt = sext i32 %i.gs to i64
   %i.gu = shl nsw i64 %i.gt, 3
   %scevgep259 = getelementptr i8, ptr %scevgep258, i64 %i.gu
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep259, i8 0, i64 %i.gq, i1 false), !tbaa !14
-  %i.gv = add nsw i32 %.1175247, 1                ; 2 uses
+  %i.gv = add nsw i32 %indvar, 1                  ; 2 uses
   %.not197.not = icmp slt i32 %i.gv, %i.gf
-  %indvar.next = add i32 %indvar, 1
+  %indvars.iv.next264 = add nuw nsw i64 %indvars.iv263, 1
   br i1 %.not197.not, label %.lr.ph244, label %._crit_edge250.split, !llvm.loop !10
 
 ._crit_edge250.split:                             ; preds = %.lr.ph244, %.lr.ph249, %bb.q
