@@ -205,8 +205,8 @@ bb.aq:                                            ; preds = %bb.ap
 .preheader1171.us.preheader:                      ; preds = %bb.bj
   %i.os = add nsw i32 %0, -1                      ; 8 uses
   %i.ot = zext nneg i32 %0 to i64                 ; 3 uses
-  %wide.trip.count1592 = zext i32 %i.os to i64    ; 4 uses
-  %i.ou = add nsw i64 %wide.trip.count1592, -1    ; 5 uses
+  %wide.trip.count1592 = zext i32 %i.os to i64    ; 5 uses
+  %i.ou = add nsw i64 %wide.trip.count1592, -1    ; 3 uses
   %n.vec = and i64 %i.ou, -2                      ; 2 uses
   %i.ov = or i64 %i.ou, 1
   %cmp.n = icmp eq i64 %i.ou, %n.vec
@@ -609,9 +609,10 @@ scalar.ph29:                                      ; preds = %middle.block35, %sc
 .preheader1163.preheader:                         ; preds = %._crit_edge1286
   %i.wq = zext nneg i32 %0 to i64                 ; 3 uses
   %wide.trip.count1640 = zext nneg i32 %i.os to i64 ; 2 uses
-  %n.vec39 = and i64 %i.ou, -4                    ; 3 uses
+  %4 = add nsw i64 %wide.trip.count1592, -1       ; 2 uses
+  %n.vec39 = and i64 %4, -4                       ; 3 uses
   %i.wr = or disjoint i64 %n.vec39, 1
-  %cmp.n47 = icmp eq i64 %i.ou, %n.vec39
+  %cmp.n47 = icmp eq i64 %4, %n.vec39
   br label %.preheader1163
 
 .preheader1165:                                   ; preds = %.preheader1166, %.preheader1165

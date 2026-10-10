@@ -205,20 +205,15 @@ bb.g:                                             ; preds = %_ZN5Eigen8internal2
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.thread, %bb.g
   %i.af = phi ptr [ %i.aa, %.thread ], [ %i.ae, %bb.g ] ; 4 uses
-  %i.ag = phi ptr [ %i.y, %.thread ], [ %i.ad, %bb.g ] ; 10 uses
-  %9 = ptrtoaddr ptr %i.ag to i64
-  %i.ah = load ptr, ptr %2, align 8, !tbaa !1179  ; 7 uses
-  %10 = ptrtoaddr ptr %i.ah to i64
+  %i.ag = phi ptr [ %i.y, %.thread ], [ %i.ad, %bb.g ] ; 9 uses
+  %i.ah = load ptr, ptr %2, align 8, !tbaa !1179  ; 6 uses
   %.pn = load ptr, ptr %i.af, align 8, !tbaa !1182, !nonnull !62, !align !87
   %.in = getelementptr inbounds nuw i8, ptr %.pn, i64 8
   %i.ai = load i64, ptr %.in, align 8, !tbaa !41  ; 6 uses
-  %min.iters.check = icmp ult i64 %i.t, 10
-  %ident.check.not = icmp ne i64 %i.ai, 1
-  %or.cond.not82 = select i1 %min.iters.check, i1 true, i1 %ident.check.not
-  %11 = sub i64 %10, %9
-  %diff.check = icmp ugt i64 %11, -32
-  %or.cond79 = select i1 %or.cond.not82, i1 true, i1 %diff.check
-  br i1 %or.cond79, label %.lr.ph.i.i.i.i.i.i.i.i.preheader85, label %vector.ph
+  %min.iters.check = icmp ugt i64 %i.t, 3
+  %ident.check.not = icmp eq i64 %i.ai, 1
+  %or.cond79 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
+  br i1 %or.cond79, label %vector.ph, label %.lr.ph.i.i.i.i.i.i.i.i.preheader85
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.t, 2305843009213693948      ; 3 uses

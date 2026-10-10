@@ -68,7 +68,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.p = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.q = ptrtoint ptr %i.b to i64                 ; 4 uses
+  %i.q = ptrtoint ptr %i.b to i64                 ; 3 uses
   %i.r = sub i64 %i.p, %i.q                       ; 4 uses
   %i.s = icmp eq i64 %i.r, 9223372036854775804
   br i1 %i.s, label %bb.g, label %_ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i
@@ -84,7 +84,7 @@ _ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ;
   %i.w = tail call i64 @llvm.umin.i64(i64 %i.u, i64 2305843009213693951)
   %i.x = select i1 %i.v, i64 2305843009213693951, i64 %i.w ; 2 uses
   %i.y = shl nuw nsw i64 %i.x, 2
-  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #10 ; 7 uses
+  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #10 ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.r
   %i.ab = or i32 %1, 1
   store i32 %i.ab, ptr %i.aa, align 4, !tbaa !8
@@ -92,12 +92,8 @@ _ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ;
   %i.ad = sub i64 %i.ac, %i.q                     ; 2 uses
   %i.ae = lshr i64 %i.ad, 2
   %i.af = add nuw nsw i64 %i.ae, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ad, 44
-  %2 = ptrtoaddr ptr %i.z to i64
-  %3 = sub i64 %i.q, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond11 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond11, label %.lr.ph.i.i.i.i.i.preheader, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.ad, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %_ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i
   %n.vec = and i64 %i.af, 9223372036854775800     ; 3 uses
@@ -195,7 +191,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %0, align 8, !tbaa !19     ; 7 uses
   %i.i = ptrtoint ptr %i.b to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.h to i64                 ; 4 uses
+  %i.j = ptrtoint ptr %i.h to i64                 ; 3 uses
   %i.k = sub i64 %i.i, %i.j                       ; 3 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775804
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i
@@ -214,7 +210,7 @@ _ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i: ; p
   %.not.i.i = icmp ne i64 %i.q, 0
   tail call void @llvm.assume(i1 %.not.i.i)
   %i.r = shl nuw nsw i64 %i.q, 2
-  %i.s = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #10 ; 8 uses
+  %i.s = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #10 ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.k
   %i.u = load i32, ptr %1, align 4, !tbaa !10
   %i.v = or i32 %i.u, 1
@@ -223,16 +219,12 @@ _ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i: ; p
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN6hermes10StringKind5EntryESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNKSt6vectorIN6hermes10StringKind5EntryESaIS2_EE12_M_check_lenEmPKc.exit.i
-  %2 = ptrtoaddr ptr %i.s to i64
   %i.w = add i64 %i.i, -4
   %i.x = sub i64 %i.w, %i.j                       ; 2 uses
   %i.y = lshr i64 %i.x, 2
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.x, 44
-  %3 = sub i64 %i.j, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader8, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.x, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader8, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
   %n.vec = and i64 %i.z, 9223372036854775800      ; 3 uses
@@ -366,7 +358,7 @@ attributes #11 = { builtin nounwind }
 !21 = distinct !{!21, !20, !"_ZSt19__relocate_object_aIN6hermes10StringKind5EntryES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
 !22 = distinct !{!22, !20, !"_ZSt19__relocate_object_aIN6hermes10StringKind5EntryES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !23 = distinct !{!23, !16, !17, !18}
-!24 = distinct !{!24, !16, !17}
+!24 = distinct !{!24, !16, !18, !17}
 !25 = !{!12, !12, i64 0}
 !26 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !27 = !{!"branch_weights", i32 2002, i32 2000}
@@ -376,7 +368,7 @@ attributes #11 = { builtin nounwind }
 !31 = distinct !{!31, !30, !"_ZSt19__relocate_object_aIN6hermes10StringKind5EntryES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
 !32 = distinct !{!32, !30, !"_ZSt19__relocate_object_aIN6hermes10StringKind5EntryES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !33 = distinct !{!33, !16, !17, !18}
-!34 = distinct !{!34, !16, !17}
+!34 = distinct !{!34, !16, !18, !17}
 !35 = !{!31}
 !36 = !{!32}
 end_hunk_0

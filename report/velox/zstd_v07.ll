@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.b
   %indvars.iv125 = phi i32 [ %i.j, %.preheader78.preheader ], [ %indvars.iv.next126, %.preheader78 ] ; 2 uses
   %indvars.iv120 = phi i32 [ 1, %.preheader78.preheader ], [ %indvars.iv.next121, %.preheader78 ] ; 2 uses
   %indvars.iv102 = phi i32 [ %i.q, %.preheader78.preheader ], [ %indvars.iv.next103, %.preheader78 ] ; 5 uses
-  %.071 = phi i32 [ %i.o, %.preheader78.preheader ], [ %i.v, %.preheader78 ] ; 12 uses
-  %i.r = zext i32 %.071 to i64                    ; 3 uses
+  %.071 = phi i32 [ %i.o, %.preheader78.preheader ], [ %i.v, %.preheader78 ] ; 13 uses
+  %i.r = zext i32 %.071 to i64
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.r
   %i.t = load i32, ptr %i.s, align 4, !tbaa !13
   %i.u = icmp eq i32 %i.t, 0
@@ -429,10 +429,11 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph93.preheader:                               ; preds = %._crit_edge90
   %i.cv = zext i32 %indvars.iv120 to i64          ; 2 uses
+  %4 = zext i32 %.071 to i64                      ; 2 uses
   %min.iters.check = icmp ult i32 %.071, 8
-  %n.vec = and i64 %i.r, 4294967288               ; 3 uses
+  %n.vec = and i64 %4, 4294967288                 ; 3 uses
   %i.cw = or disjoint i64 %n.vec, 1
-  %cmp.n = icmp eq i64 %n.vec, %i.r
+  %cmp.n = icmp eq i64 %n.vec, %4
   br label %.lr.ph93
 
 .lr.ph93:                                         ; preds = %.lr.ph93.preheader, %._crit_edge94

@@ -151,9 +151,8 @@ bb.k:                                             ; preds = %.lr.ph, %bb.ah
   %i.am = phi i32 [ %i.aj, %.lr.ph ], [ %i.dv, %bb.ah ] ; 2 uses
   %i.an = phi ptr [ %i.ak, %.lr.ph ], [ %i.du, %bb.ah ] ; 2 uses
   %.sroa.10.0.copyload.i114.in = phi ptr [ %.sroa.10.0..039145.sroa_idx.i108, %.lr.ph ], [ %.sroa.10.0..039145.sroa_idx.i, %bb.ah ]
-  %.039145.i112 = phi ptr [ %i.v, %.lr.ph ], [ %i.dt, %bb.ah ] ; 6 uses
+  %.039145.i112 = phi ptr [ %i.v, %.lr.ph ], [ %i.dt, %bb.ah ] ; 5 uses
   %.038146.i111 = phi ptr [ null, %.lr.ph ], [ %i.do, %bb.ah ] ; 4 uses
-  %.039145.i112334 = ptrtoaddr ptr %.039145.i112 to i64
   %.sroa.10.0.copyload.i114 = load i32, ptr %.sroa.10.0.copyload.i114.in, align 1 ; 3 uses
   %i.ao = icmp ugt i32 %.sroa.10.0.copyload.i114, %i.am
   br i1 %i.ao, label %bb.l, label %bb.m
@@ -190,7 +189,7 @@ bb.p:                                             ; preds = %bb.n
   %.sroa.9.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.039145.i112, i64 52
   %.sroa.9.0.copyload.i.i = load i32, ptr %.sroa.9.0..sroa_idx.i.i, align 1 ; 8 uses
   %i.as = shl i32 %.sroa.6.0.copyload.i.i, 9
-  %i.at = getelementptr inbounds nuw i8, ptr %.039145.i112, i64 56 ; 4 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %.039145.i112, i64 56 ; 3 uses
   %i.au = load i64, ptr %i.ai, align 8            ; 2 uses
   %.not.i.i = icmp eq i64 %.sroa.0.0.copyload.i.i, %i.au
   br i1 %.not.i.i, label %bb.r, label %bb.q
@@ -238,23 +237,16 @@ bb.w:                                             ; preds = %bb.u
   br i1 %.not61.i.i, label %bb.ae, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.bi = call noalias ptr @g_try_malloc_n(i64 noundef %i.aw, i64 noundef 8) #9 ; 11 uses
-  %5 = ptrtoaddr ptr %i.bi to i64
+  %i.bi = call noalias ptr @g_try_malloc_n(i64 noundef %i.aw, i64 noundef 8) #9 ; 10 uses
   %.not62.i.i = icmp eq ptr %i.bi, null
   br i1 %.not62.i.i, label %bb.y, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.x
   %i.bj = add i32 %.sroa.9.0.copyload.i.i, 2147483647
-  %or.cond = icmp ult i32 %i.bj, -2147483641
-  br i1 %or.cond, label %.lr.ph.i.i.preheader338, label %vector.memcheck
+  %or.cond = icmp ult i32 %i.bj, -2147483645
+  br i1 %or.cond, label %.lr.ph.i.i.preheader338, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %6 = sub i64 %5, %.039145.i112334
-  %7 = add i64 %6, -57
-  %diff.check = icmp ult i64 %7, 31
-  br i1 %diff.check, label %.lr.ph.i.i.preheader338, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
   %n.vec = and i64 %i.aw, 4294967292              ; 4 uses
   %i.bk = trunc nuw i64 %n.vec to i32
   %i.bl = shl nuw nsw i64 %n.vec, 3
@@ -282,9 +274,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.aw
   br i1 %cmp.n, label %.lr.ph.i18, label %.lr.ph.i.i.preheader338
 
-.lr.ph.i.i.preheader338:                          ; preds = %vector.memcheck, %.lr.ph.i.i.preheader, %middle.block
-  %.05067.i.i.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i.preheader ], [ %i.bk, %middle.block ] ; 4 uses
-  %.05166.i.i.ph = phi ptr [ %i.at, %vector.memcheck ], [ %i.at, %.lr.ph.i.i.preheader ], [ %i.bm, %middle.block ] ; 2 uses
+.lr.ph.i.i.preheader338:                          ; preds = %.lr.ph.i.i.preheader, %middle.block
+  %.05067.i.i.ph = phi i32 [ 0, %.lr.ph.i.i.preheader ], [ %i.bk, %middle.block ] ; 4 uses
+  %.05166.i.i.ph = phi ptr [ %i.at, %.lr.ph.i.i.preheader ], [ %i.bm, %middle.block ] ; 2 uses
   %i.bu = sub i32 %.sroa.9.0.copyload.i.i, %.05067.i.i.ph
   %xtraiter = and i32 %i.bu, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0

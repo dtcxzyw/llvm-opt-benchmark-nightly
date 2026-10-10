@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.w
   %i.ef = load ptr, ptr %i.r, align 8, !tbaa !79  ; 7 uses
   %i.eg = ptrtoint ptr %i.ea to i64               ; 2 uses
-  %i.eh = ptrtoint ptr %i.ef to i64               ; 4 uses
+  %i.eh = ptrtoint ptr %i.ef to i64               ; 3 uses
   %i.ei = sub i64 %i.eg, %i.eh                    ; 3 uses
   %i.ej = icmp eq i64 %i.ei, 9223372036854775804
   br i1 %i.ej, label %bb.z, label %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -223,23 +223,19 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %.not.i.i.i.i = icmp ne i64 %i.eo, 0
   call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.ep = shl nuw nsw i64 %i.eo, 2
-  %i.eq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ep) #20 ; 8 uses
+  %i.eq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ep) #20 ; 7 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 %i.ei
   store i32 536870911, ptr %i.er, align 4
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.ef, %i.ea
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
-  %3 = ptrtoaddr ptr %i.eq to i64
   %i.es = add i64 %i.eg, -4
   %i.et = sub i64 %i.es, %i.eh                    ; 2 uses
   %i.eu = lshr i64 %i.et, 2
   %i.ev = add nuw nsw i64 %i.eu, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.et, 44
-  %4 = sub i64 %i.eh, %3
-  %diff.check = icmp ugt i64 %4, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader102, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.et, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader102, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.ev, 9223372036854775800     ; 3 uses
@@ -642,7 +638,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !79   ; 7 uses
   %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %i.j = ptrtoint ptr %i.h to i64                 ; 4 uses
+  %i.j = ptrtoint ptr %i.h to i64                 ; 3 uses
   %i.k = sub i64 %i.i, %i.j                       ; 3 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775804
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -661,23 +657,19 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %.not.i.i.i.i = icmp ne i64 %i.q, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.r = shl nuw nsw i64 %i.q, 2
-  %i.s = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #20 ; 8 uses
+  %i.s = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #20 ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.k
   store i32 536870911, ptr %i.t, align 4
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.h, %i.c
   br i1 %.not10.i.i.i.i.i.i, label %_ZNSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
-  %2 = ptrtoaddr ptr %i.s to i64
   %i.u = add i64 %i.i, -4
   %i.v = sub i64 %i.u, %i.j                       ; 2 uses
   %i.w = lshr i64 %i.v, 2
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.v, 44
-  %3 = sub i64 %i.j, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader18, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.v, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.preheader
   %n.vec = and i64 %i.x, 9223372036854775800      ; 3 uses
@@ -1080,7 +1072,7 @@ middle.block143:                                  ; preds = %vector.body139
 
 bb.i:                                             ; preds = %bb.b
   %i.cj = load ptr, ptr %0, align 8, !tbaa !79    ; 7 uses
-  %i.ck = ptrtoint ptr %i.cj to i64               ; 5 uses
+  %i.ck = ptrtoint ptr %i.cj to i64               ; 4 uses
   %i.cl = sub i64 %i.f, %i.ck
   %i.cm = ashr exact i64 %i.cl, 2                 ; 4 uses
   %i.cn = sub nsw i64 2305843009213693951, %i.cm
@@ -1108,8 +1100,7 @@ bb.k:                                             ; preds = %_ZNKSt6vectorIN6her
   br label %.lr.ph.preheader.i.i.i.i65
 
 .lr.ph.preheader.i.i.i.i65:                       ; preds = %bb.k, %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit
-  %i.cx = phi ptr [ %i.cw, %bb.k ], [ null, %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit ] ; 8 uses
-  %4 = ptrtoaddr ptr %i.cx to i64
+  %i.cx = phi ptr [ %i.cw, %bb.k ], [ null, %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit ] ; 7 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.cu ; 3 uses
   %.pre.i.i.i.i66 = load i32, ptr %3, align 4     ; 2 uses
   %min.iters.check175 = icmp ult i64 %2, 8
@@ -1162,11 +1153,8 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
   %i.di = sub i64 %i.dh, %i.ck                    ; 2 uses
   %i.dj = lshr i64 %i.di, 2
   %i.dk = add nuw nsw i64 %i.dj, 1                ; 2 uses
-  %min.iters.check191 = icmp ult i64 %i.di, 44
-  %5 = sub i64 %i.ck, %4
-  %diff.check189 = icmp ugt i64 %5, -32
-  %or.cond223 = or i1 %min.iters.check191, %diff.check189
-  br i1 %or.cond223, label %.lr.ph.i.i.i.i.i74.preheader225, label %vector.ph192
+  %min.iters.check191 = icmp ult i64 %i.di, 28
+  br i1 %min.iters.check191, label %.lr.ph.i.i.i.i.i74.preheader225, label %vector.ph192
 
 vector.ph192:                                     ; preds = %.lr.ph.i.i.i.i.i74.preheader
   %n.vec193 = and i64 %i.dk, 9223372036854775800  ; 3 uses
@@ -1569,7 +1557,7 @@ attributes #22 = { nounwind allocsize(0) }
 !191 = distinct !{!191, !190, !"_ZSt19__relocate_object_aIN6hermes2vm12RootSymbolIDES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
 !192 = distinct !{!192, !190, !"_ZSt19__relocate_object_aIN6hermes2vm12RootSymbolIDES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !193 = distinct !{!193, !105, !158, !159}
-!194 = distinct !{!194, !105, !158}
+!194 = distinct !{!194, !105, !159, !158}
 !195 = !{!65, !65, i64 0}
 !196 = !{!73, !62, i64 8}
 !197 = !{!66, !6, i64 12}
@@ -1831,7 +1819,7 @@ attributes #22 = { nounwind allocsize(0) }
 !453 = distinct !{!453, !452, !"_ZSt19__relocate_object_aIN6hermes2vm12RootSymbolIDES2_SaIS2_EEvPT_PT0_RT1_: argument 0"}
 !454 = distinct !{!454, !452, !"_ZSt19__relocate_object_aIN6hermes2vm12RootSymbolIDES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !455 = distinct !{!455, !105, !158, !159}
-!456 = distinct !{!456, !105, !158}
+!456 = distinct !{!456, !105, !159, !158}
 !457 = distinct !{!457, !59}
 !458 = !{!453}
 !459 = !{!454}
@@ -1850,7 +1838,7 @@ attributes #22 = { nounwind allocsize(0) }
 !472 = distinct !{!472, !105, !158, !159}
 !473 = distinct !{!473, !105, !159, !158}
 !474 = distinct !{!474, !105, !158, !159}
-!475 = distinct !{!475, !105, !158}
+!475 = distinct !{!475, !105, !159, !158}
 !476 = distinct !{!476, !105, !158, !159}
 !477 = distinct !{!477, !105, !158}
 !478 = distinct !{!478, !59}

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !90   ; 11 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !91     ; 9 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
+  %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -317,8 +317,7 @@ iter.check72:                                     ; preds = %bb.c
   %i.ah = add nuw nsw i64 %.sroa.speculated.i, %i.g
   %i.ai = tail call i64 @llvm.umin.i64(i64 %i.ah, i64 1152921504606846975) ; 2 uses
   %i.aj = shl nuw nsw i64 %i.ai, 3
-  %i.ak = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #30 ; 9 uses
-  %2 = ptrtoaddr ptr %i.ak to i64
+  %i.ak = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #30 ; 8 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.f ; 9 uses
   %min.iters.check56 = icmp ult i64 %1, 4
   br i1 %min.iters.check56, label %.lr.ph.i.i.i30.preheader, label %vector.main.loop.iter.check57
@@ -408,10 +407,7 @@ iter.check103:                                    ; preds = %_ZSt27__uninitializ
   %i.bf = lshr i64 %i.be, 3
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 5 uses
   %min.iters.check86 = icmp ult i64 %i.be, 24
-  %3 = sub i64 %i.e, %2
-  %diff.check = icmp ugt i64 %3, -128
-  %or.cond = or i1 %min.iters.check86, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i37.preheader, label %vector.main.loop.iter.check87
+  br i1 %min.iters.check86, label %.lr.ph.i.i.i37.preheader, label %vector.main.loop.iter.check87
 
 vector.main.loop.iter.check87:                    ; preds = %iter.check103
   %min.iters.check88 = icmp ult i64 %i.be, 120
@@ -814,7 +810,7 @@ begin_hunk_1_@llvm.umax.i32
 !224 = distinct !{!224, !222, !"_ZSt19__relocate_object_aIN7rocksdb18CuckooTableBuilder12CuckooBucketES2_SaIS2_EEvPT_PT0_RT1_: argument 1"}
 !225 = distinct !{!225, !82, !228, !229}
 !226 = distinct !{!226, !82, !228, !229}
-!227 = distinct !{!227, !82, !228}
+!227 = distinct !{!227, !82, !229, !228}
 !228 = !{!"llvm.loop.isvectorized", i32 1}
 !229 = !{!"llvm.loop.unroll.runtime.disable"}
 !230 = !{!"branch_weights", i32 4, i32 28}

@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %_ZN5osgeo4proj22CPL
 bb.g:                                             ; preds = %_ZN5osgeo4proj22CPLJSonStreamingWriter9IncIndentEv.exit
   %i.al = load ptr, ptr %i.af, align 8, !tbaa !28 ; 9 uses
   %i.am = ptrtoint ptr %i.ah to i64               ; 2 uses
-  %i.an = ptrtoint ptr %i.al to i64               ; 4 uses
+  %i.an = ptrtoint ptr %i.al to i64               ; 3 uses
   %i.ao = sub i64 %i.am, %i.an                    ; 3 uses
   %i.ap = icmp eq i64 %i.ao, 9223372036854775806
   br i1 %i.ap, label %bb.h, label %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
@@ -221,23 +221,19 @@ _ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenE
   %.not.i.i.i = icmp ne i64 %i.au, 0
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.av = shl nuw nsw i64 %i.au, 1
-  %i.aw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #19 ; 10 uses
+  %i.aw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #19 ; 9 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.ao
   store i16 257, ptr %i.ax, align 1, !tbaa !39
   %.not10.i.i.i.i.i = icmp eq ptr %i.al, %i.ah
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
-  %2 = ptrtoaddr ptr %i.aw to i64
   %i.ay = add i64 %i.am, -2
   %i.az = sub i64 %i.ay, %i.an                    ; 3 uses
   %i.ba = lshr i64 %i.az, 1
   %i.bb = add nuw i64 %i.ba, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.az, 6
-  %3 = sub i64 %i.an, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check30 = icmp ult i64 %i.az, 30
@@ -640,7 +636,7 @@ bb.f:                                             ; preds = %_ZN5osgeo4proj22CPL
 bb.g:                                             ; preds = %_ZN5osgeo4proj22CPLJSonStreamingWriter9IncIndentEv.exit
   %i.al = load ptr, ptr %i.af, align 8, !tbaa !28 ; 9 uses
   %i.am = ptrtoint ptr %i.ah to i64               ; 2 uses
-  %i.an = ptrtoint ptr %i.al to i64               ; 4 uses
+  %i.an = ptrtoint ptr %i.al to i64               ; 3 uses
   %i.ao = sub i64 %i.am, %i.an                    ; 3 uses
   %i.ap = icmp eq i64 %i.ao, 9223372036854775806
   br i1 %i.ap, label %bb.h, label %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
@@ -659,23 +655,19 @@ _ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenE
   %.not.i.i.i = icmp ne i64 %i.au, 0
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.av = shl nuw nsw i64 %i.au, 1
-  %i.aw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #19 ; 10 uses
+  %i.aw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #19 ; 9 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.ao
   store i16 256, ptr %i.ax, align 1, !tbaa !39
   %.not10.i.i.i.i.i = icmp eq ptr %i.al, %i.ah
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIN5osgeo4proj22CPLJSonStreamingWriter5StateESaIS3_EE12_M_check_lenEmPKc.exit.i.i
-  %2 = ptrtoaddr ptr %i.aw to i64
   %i.ay = add i64 %i.am, -2
   %i.az = sub i64 %i.ay, %i.an                    ; 3 uses
   %i.ba = lshr i64 %i.az, 1
   %i.bb = add nuw i64 %i.ba, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.az, 6
-  %3 = sub i64 %i.an, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check30 = icmp ult i64 %i.az, 30
@@ -1078,7 +1070,7 @@ attributes #19 = { builtin allocsize(0) }
 !47 = distinct !{!47, !45, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
 !48 = distinct !{!48, !40, !41, !42}
 !49 = distinct !{!49, !40, !41, !42}
-!50 = distinct !{!50, !40, !41}
+!50 = distinct !{!50, !40, !42, !41}
 !51 = !{!46}
 !52 = !{!47}
 !53 = distinct !{!53, i1 false, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_"}
@@ -1086,7 +1078,7 @@ attributes #19 = { builtin allocsize(0) }
 !55 = distinct !{!55, !53, !"_ZSt19__relocate_object_aIN5osgeo4proj22CPLJSonStreamingWriter5StateES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
 !56 = distinct !{!56, !40, !41, !42}
 !57 = distinct !{!57, !40, !41, !42}
-!58 = distinct !{!58, !40, !41}
+!58 = distinct !{!58, !40, !42, !41}
 !59 = !{!54}
 !60 = !{!55}
 end_hunk_2

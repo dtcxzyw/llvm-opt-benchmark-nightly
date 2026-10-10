@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 152
 inline.NumDeleted: 85
 loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 9
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_RNvMsU_CseO5Jl7W60Eg_16rustls_pki_typesNtB5_8UnixTime3now:bb.a
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -205,10 +204,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define void @_RNvMsa_NtCseO5Jl7W60Eg_16rustls_pki_types11server_nameNtB5_7DnsName18to_lowercase_owned(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.0.0.in = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.0.0 = load ptr, ptr %.sroa.0.0.in, align 8, !nonnull !7, !noundef !7 ; 6 uses
-  %.sroa.0.07 = ptrtoaddr ptr %.sroa.0.0 to i64
+  %.sroa.0.0 = load ptr, ptr %.sroa.0.0.in, align 8, !nonnull !7, !noundef !7 ; 3 uses
   %.sroa.3.0.in = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.3.0 = load i64, ptr %.sroa.3.0.in, align 8, !noundef !7 ; 16 uses
+  %.sroa.3.0 = load i64, ptr %.sroa.3.0.in, align 8, !noundef !7 ; 14 uses
   %.not.i.i.i = icmp slt i64 %.sroa.3.0, 0
   br i1 %.not.i.i.i, label %bb.d, label %bb.b, !prof !13
 
@@ -218,17 +216,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !174
-  %i.b = tail call noundef ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %.sroa.3.0, i64 noundef range(i64 1, -9223372036854775807) 1) #25, !noalias !174 ; 11 uses
+  %i.b = tail call noundef ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %.sroa.3.0, i64 noundef range(i64 1, -9223372036854775807) 1) #25, !noalias !174 ; 7 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.d, label %iter.check
 
 iter.check:                                       ; preds = %bb.c
-  %2 = ptrtoaddr ptr %i.b to i64
   %min.iters.check = icmp ult i64 %.sroa.3.0, 8
-  %3 = sub i64 %.sroa.0.07, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.preheader.i.i.i.preheader.a, label %vector.main.loop.iter.check
+  br i1 %min.iters.check, label %.preheader.i.i.i.prol, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check8 = icmp ult i64 %.sroa.3.0, 32
@@ -267,7 +261,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.d, 0
-  br i1 %min.epilog.iters.check, label %.preheader.i.i.i.preheader.a, label %vec.epilog.ph, !prof !179
+  br i1 %min.epilog.iters.check, label %.preheader.i.i.i.prol, label %vec.epilog.ph, !prof !179
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -286,69 +280,40 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   store <8 x i8> %i.v, ptr %i.w, align 1, !noalias !176
   %index.next13 = add nuw i64 %index11, 8         ; 2 uses
   %i.x = icmp eq i64 %index.next13, %n.vec10
-  br i1 %i.x, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !172
+  br i1 %i.x, label %.preheader.i.i.i.preheader.a, label %vec.epilog.vector.body, !llvm.loop !172
 
-vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n14 = icmp eq i64 %.sroa.3.0, %n.vec10
-  br i1 %cmp.n14, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvMs_NtB8_5sliceSh18to_ascii_lowercase0EE9from_iterCseO5Jl7W60Eg_16rustls_pki_types.exit, label %.preheader.i.i.i.preheader.a
+.preheader.i.i.i.preheader.a:                     ; preds = %vec.epilog.vector.body
+  %lcmp.mod.not = icmp eq i64 %.sroa.3.0, %n.vec10
+  br i1 %lcmp.mod.not, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvMs_NtB8_5sliceSh18to_ascii_lowercase0EE9from_iterCseO5Jl7W60Eg_16rustls_pki_types.exit, label %.preheader.i.i.i.prol
 
-.preheader.i.i.i.preheader.a:                     ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec10, %vec.epilog.middle.block ] ; 5 uses
-  %.neg = or disjoint i64 %.ph, 1
-  %xtraiter = and i64 %.sroa.3.0, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader.i.i.i.prol.loopexit, label %.preheader.i.i.i.prol
-
-.preheader.i.i.i.prol:                            ; preds = %.preheader.i.i.i.preheader.a
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %.ph
-  %.val15.i.i.i.i.i.i.prol = load i8, ptr %4, align 1, !noalias !175, !noundef !7 ; 2 uses
-  %5 = add i8 %.val15.i.i.i.i.i.i.prol, -65
-  %6 = icmp ult i8 %5, 26
-  %7 = select i1 %6, i8 32, i8 0
-  %.sroa.0.0.i.i.i.i.i.i.i.i.prol = or i8 %7, %.val15.i.i.i.i.i.i.prol
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.ph
-  store i8 %.sroa.0.0.i.i.i.i.i.i.i.i.prol, ptr %8, align 1, !noalias !176
-  %9 = or disjoint i64 %.ph, 1
-  br label %.preheader.i.i.i.prol.loopexit
-
-.preheader.i.i.i.prol.loopexit:                   ; preds = %.preheader.i.i.i.prol, %.preheader.i.i.i.preheader.a
-  %.unr = phi i64 [ %.ph, %.preheader.i.i.i.preheader.a ], [ %9, %.preheader.i.i.i.prol ]
-  %10 = icmp eq i64 %.sroa.3.0, %.neg
-  br i1 %10, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvMs_NtB8_5sliceSh18to_ascii_lowercase0EE9from_iterCseO5Jl7W60Eg_16rustls_pki_types.exit, label %.preheader.i.i.i
+.preheader.i.i.i.prol:                            ; preds = %iter.check, %vec.epilog.iter.check, %.preheader.i.i.i.preheader.a
+  %.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec10, %.preheader.i.i.i.preheader.a ]
+  br label %.preheader.i.i.i
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   %.sroa.4.0.ph.i.i = phi i64 [ 1, %bb.c ], [ 0, %bb.a ]
   tail call void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %.sroa.3.0) #26, !noalias !180
   unreachable
 
-.preheader.i.i.i:                                 ; preds = %.preheader.i.i.i.prol.loopexit, %.preheader.i.i.i
-  %i.y = phi i64 [ %i.ae, %.preheader.i.i.i ], [ %.unr, %.preheader.i.i.i.prol.loopexit ] ; 4 uses
-  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %i.y
-  %.val15.i.i.i.i.i.i = load i8, ptr %11, align 1, !noalias !175, !noundef !7 ; 2 uses
-  %12 = add i8 %.val15.i.i.i.i.i.i, -65
-  %13 = icmp ult i8 %12, 26
-  %14 = select i1 %13, i8 32, i8 0
-  %.sroa.0.0.i.i.i.i.i.i.i.i = or i8 %14, %.val15.i.i.i.i.i.i
-  %15 = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.y
-  store i8 %.sroa.0.0.i.i.i.i.i.i.i.i, ptr %15, align 1, !noalias !176
-  %16 = add nuw nsw i64 %i.y, 1                   ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %16
+.preheader.i.i.i:                                 ; preds = %.preheader.i.i.i.prol, %.preheader.i.i.i
+  %i.y = phi i64 [ %i.ae, %.preheader.i.i.i ], [ %.ph, %.preheader.i.i.i.prol ] ; 3 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 %i.y
   %.val15.i.i.i.i.i.i.1 = load i8, ptr %i.z, align 1, !noalias !175, !noundef !7 ; 2 uses
   %i.aa = add i8 %.val15.i.i.i.i.i.i.1, -65
   %i.ab = icmp ult i8 %i.aa, 26
   %i.ac = select i1 %i.ab, i8 32, i8 0
   %.sroa.0.0.i.i.i.i.i.i.i.i.1 = or i8 %i.ac, %.val15.i.i.i.i.i.i.1
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 %16
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.y
   store i8 %.sroa.0.0.i.i.i.i.i.i.i.i.1, ptr %i.ad, align 1, !noalias !176
-  %i.ae = add nuw nsw i64 %i.y, 2                 ; 2 uses
+  %i.ae = add nuw nsw i64 %i.y, 1                 ; 2 uses
   %i.af = icmp eq i64 %i.ae, %.sroa.3.0
   br i1 %i.af, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvMs_NtB8_5sliceSh18to_ascii_lowercase0EE9from_iterCseO5Jl7W60Eg_16rustls_pki_types.exit, label %.preheader.i.i.i, !llvm.loop !173
 
-_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvMs_NtB8_5sliceSh18to_ascii_lowercase0EE9from_iterCseO5Jl7W60Eg_16rustls_pki_types.exit: ; preds = %.preheader.i.i.i.prol.loopexit, %.preheader.i.i.i, %middle.block, %vec.epilog.middle.block, %bb.b
-  %17 = phi ptr [ inttoptr (i64 1 to ptr), %bb.b ], [ %i.b, %middle.block ], [ %i.b, %vec.epilog.middle.block ], [ %i.b, %.preheader.i.i.i ], [ %i.b, %.preheader.i.i.i.prol.loopexit ]
+_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvMs_NtB8_5sliceSh18to_ascii_lowercase0EE9from_iterCseO5Jl7W60Eg_16rustls_pki_types.exit: ; preds = %.preheader.i.i.i, %middle.block, %.preheader.i.i.i.preheader.a, %bb.b
+  %2 = phi ptr [ inttoptr (i64 1 to ptr), %bb.b ], [ %i.b, %middle.block ], [ %i.b, %.preheader.i.i.i.preheader.a ], [ %i.b, %.preheader.i.i.i ]
   store i64 %.sroa.3.0, ptr %0, align 8
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %17, ptr %.sroa.45.0..sroa_idx, align 8
+  store ptr %2, ptr %.sroa.45.0..sroa_idx, align 8
   %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.3.0, ptr %.sroa.56.0..sroa_idx, align 8
   ret void
@@ -751,7 +716,7 @@ attributes #28 = { inlinehint }
 !170 = distinct !{!170, !169, !"_RNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB8_3VechE14extend_trustedINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtNtB19_5slice4iter4IterhENCNvMs_NtBa_5sliceSh18to_ascii_lowercase0EE0CseO5Jl7W60Eg_16rustls_pki_types: argument 0"}
 !171 = distinct !{!171, !177, !178}
 !172 = distinct !{!172, !177, !178}
-!173 = distinct !{!173, !177}
+!173 = distinct !{!173, !178, !177}
 !174 = !{!154, !152}
 !175 = !{!164, !162, !160, !158, !156, !152}
 !176 = !{!170, !168, !166, !164, !162, !160, !158, !156, !152}

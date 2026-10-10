@@ -205,7 +205,7 @@ middle.block164:                                  ; preds = %vector.body160
 
 bb.f:                                             ; preds = %bb.b
   %i.cq = load ptr, ptr %0, align 8, !tbaa !58    ; 7 uses
-  %i.cr = ptrtoint ptr %i.cq to i64               ; 5 uses
+  %i.cr = ptrtoint ptr %i.cq to i64               ; 4 uses
   %i.cs = sub i64 %i.f, %i.cr
   %i.ct = ashr exact i64 %i.cs, 2                 ; 4 uses
   %i.cu = sub nsw i64 2305843009213693951, %i.ct
@@ -233,8 +233,7 @@ bb.h:                                             ; preds = %_ZNKSt6vectorIN5dra
   br label %.lr.ph.preheader.i.i.i.i85
 
 .lr.ph.preheader.i.i.i.i85:                       ; preds = %bb.h, %_ZNKSt6vectorIN5draco9IndexTypeIjNS0_29AttributeValueIndex_tag_type_EEESaIS3_EE12_M_check_lenEmPKc.exit
-  %i.de = phi ptr [ %i.dd, %bb.h ], [ null, %_ZNKSt6vectorIN5draco9IndexTypeIjNS0_29AttributeValueIndex_tag_type_EEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 8 uses
-  %4 = ptrtoaddr ptr %i.de to i64
+  %i.de = phi ptr [ %i.dd, %bb.h ], [ null, %_ZNKSt6vectorIN5draco9IndexTypeIjNS0_29AttributeValueIndex_tag_type_EEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 7 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 %i.db ; 3 uses
   %.pre.i.i.i.i86 = load i32, ptr %3, align 4, !tbaa !68 ; 2 uses
   %min.iters.check214 = icmp ult i64 %2, 8
@@ -287,11 +286,8 @@ _ZSt24__uninitialized_fill_n_aIPN5draco9IndexTypeIjNS0_29AttributeValueIndex_tag
   %i.dp = sub i64 %i.do, %i.cr                    ; 2 uses
   %i.dq = lshr i64 %i.dp, 2
   %i.dr = add nuw nsw i64 %i.dq, 1                ; 2 uses
-  %min.iters.check230 = icmp ult i64 %i.dp, 44
-  %5 = sub i64 %i.cr, %4
-  %diff.check228 = icmp ugt i64 %5, -32
-  %or.cond263 = or i1 %min.iters.check230, %diff.check228
-  br i1 %or.cond263, label %.lr.ph.i.i.i.i.i93.preheader265, label %vector.ph231
+  %min.iters.check230 = icmp ult i64 %i.dp, 28
+  br i1 %min.iters.check230, label %.lr.ph.i.i.i.i.i93.preheader265, label %vector.ph231
 
 vector.ph231:                                     ; preds = %.lr.ph.i.i.i.i.i93.preheader
   %n.vec232 = and i64 %i.dr, 9223372036854775800  ; 3 uses
@@ -694,7 +690,7 @@ begin_hunk_1_@llvm.assume
 !221 = distinct !{!221, !70, !71, !72}
 !222 = distinct !{!222, !70, !72, !71}
 !223 = distinct !{!223, !70, !71, !72}
-!224 = distinct !{!224, !70, !71}
+!224 = distinct !{!224, !70, !72, !71}
 !225 = distinct !{!225, !70, !71, !72}
 !226 = distinct !{!226, !70, !71}
 !227 = distinct !{!227, !70}

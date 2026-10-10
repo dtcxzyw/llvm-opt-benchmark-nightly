@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = load i32, ptr %i.g, align 8
   %i.i = icmp eq i32 %i.h, 0
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   br i1 %i.i, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
   %i.j = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.f) #24 ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8              ; 4 uses
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.m = load i64, ptr %1, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.j, ptr align 1 %i.l, i64 %i.m, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 640
@@ -232,13 +232,12 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.c
   %i.q = shl nuw nsw i64 %i.b, 2
-  %i.r = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.q) #24 ; 6 uses
-  %2 = ptrtoaddr ptr %i.r to i64
-  %i.s = load i64, ptr %1, align 8                ; 10 uses
+  %i.r = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.q) #24 ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %i.s = load i64, ptr %2, align 8                ; 10 uses
   %.not13 = icmp eq i64 %i.s, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8 ; 6 uses
-  %.pre18 = ptrtoaddr ptr %.pre to i64
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8 ; 5 uses
   br i1 %.not13, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.g
@@ -251,10 +250,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.v = icmp eq i64 %i.u, 4294967295
   %i.w = icmp ugt i64 %i.t, 4294967295
   %i.x = or i1 %i.v, %i.w
-  %3 = sub i64 %.pre18, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond26 = select i1 %i.x, i1 true, i1 %diff.check
-  br i1 %or.cond26, label %.lr.ph.preheader, label %vector.main.loop.iter.check
+  br i1 %i.x, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
   %min.iters.check19 = icmp ult i64 %i.s, 16
@@ -307,7 +303,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n25, label %._crit_edge.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec21, %vec.epilog.middle.block ]
+  %indvars.iv.ph = phi i64 [ 0, %iter.check ], [ 0, %vector.scevcheck ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec21, %vec.epilog.middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.g

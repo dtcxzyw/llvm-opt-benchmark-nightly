@@ -204,8 +204,8 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i: ; preds = %_ZN5
   store i32 %i.aep, ptr %i.agi, align 4, !tbaa !77, !alias.scope !645, !noalias !651
   %i.agj = getelementptr inbounds nuw [8 x i8], ptr %i.aem, i64 %i.agh
   store i64 %i.aeq, ptr %i.agj, align 8, !tbaa !91, !alias.scope !646, !noalias !650
-  %.not.i348.i.i = icmp ne i64 %i.aeq, -1
-  %i.agk = zext i1 %.not.i348.i.i to i64          ; 2 uses
+  %.not.i348.i.i = icmp ne i64 %i.aeq, -1         ; 2 uses
+  %i.agk = zext i1 %.not.i348.i.i to i64
   %spec.select.i.i.i = add i64 %.041.i.i.i, %i.agk ; 9 uses
   %i.agl = add nuw i64 %.03740.i.i.i, 1           ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.agl, %i.m
@@ -229,13 +229,14 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i: ; preds = %_ZN5
   %i.agu = sub nuw i64 %i.m, %spec.select.i.i.i
   %i.agv = shl nuw i64 %i.agu, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i, i8 -1, i64 %i.agv, i1 false), !tbaa !91, !alias.scope !646, !noalias !650
-  %24 = add i64 %.041.i.i.i, %i.agk
-  %i.agw = sub i64 %i.m, %24                      ; 3 uses
-  %min.iters.check2519 = icmp ult i64 %i.agw, 8
+  %.neg2564 = sext i1 %.not.i348.i.i to i64
+  %i.agw = sub i64 %i.m, %.041.i.i.i
+  %24 = add i64 %i.agw, %.neg2564                 ; 3 uses
+  %min.iters.check2519 = icmp ult i64 %24, 8
   br i1 %min.iters.check2519, label %.lr.ph44.i.i.i.preheader, label %vector.ph2520
 
 vector.ph2520:                                    ; preds = %.lr.ph44.i.preheader.i.i
-  %n.vec2521 = and i64 %i.agw, -8                 ; 3 uses
+  %n.vec2521 = and i64 %24, -8                    ; 3 uses
   %i.agx = add i64 %spec.select.i.i.i, %n.vec2521
   %i.agy = getelementptr inbounds nuw [4 x i8], ptr %i.ael, i64 %spec.select.i.i.i
   br label %vector.body2522
@@ -251,7 +252,7 @@ vector.body2522:                                  ; preds = %vector.body2522, %v
   br i1 %i.ahb, label %middle.block2525, label %vector.body2522, !llvm.loop !363
 
 middle.block2525:                                 ; preds = %vector.body2522
-  %cmp.n2526 = icmp eq i64 %i.agw, %n.vec2521
+  %cmp.n2526 = icmp eq i64 %24, %n.vec2521
   br i1 %cmp.n2526, label %_ZN5faiss12heap_reorderINS_4CMaxIilEEEEmmPNT_1TEPNS3_2TIE.exit.i.i, label %.lr.ph44.i.i.i.preheader
 
 .lr.ph44.i.i.i.preheader:                         ; preds = %.lr.ph44.i.preheader.i.i, %middle.block2525
@@ -654,8 +655,8 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i42: ; preds = %_Z
   store i32 %i.bnh, ptr %i.bpa, align 4, !tbaa !77, !alias.scope !687, !noalias !693
   %i.bpb = getelementptr inbounds nuw [8 x i8], ptr %i.bne, i64 %i.boz
   store i64 %i.bni, ptr %i.bpb, align 8, !tbaa !91, !alias.scope !688, !noalias !692
-  %.not.i300.i.i = icmp ne i64 %i.bni, -1
-  %i.bpc = zext i1 %.not.i300.i.i to i64          ; 2 uses
+  %.not.i300.i.i = icmp ne i64 %i.bni, -1         ; 2 uses
+  %i.bpc = zext i1 %.not.i300.i.i to i64
   %spec.select.i.i.i43 = add i64 %.041.i.i.i33, %i.bpc ; 9 uses
   %i.bpd = add nuw i64 %.03740.i.i.i34, 1         ; 2 uses
   %exitcond.not.i301.i.i = icmp eq i64 %i.bpd, %i.m
@@ -679,13 +680,14 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i42: ; preds = %_Z
   %i.bpm = sub nuw i64 %i.m, %spec.select.i.i.i43
   %i.bpn = shl nuw i64 %i.bpm, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i49, i8 -1, i64 %i.bpn, i1 false), !tbaa !91, !alias.scope !688, !noalias !692
-  %25 = add i64 %.041.i.i.i33, %i.bpc
-  %i.bpo = sub i64 %i.m, %25                      ; 3 uses
-  %min.iters.check2487 = icmp ult i64 %i.bpo, 8
+  %.neg2563 = sext i1 %.not.i300.i.i to i64
+  %i.bpo = sub i64 %i.m, %.041.i.i.i33
+  %25 = add i64 %i.bpo, %.neg2563                 ; 3 uses
+  %min.iters.check2487 = icmp ult i64 %25, 8
   br i1 %min.iters.check2487, label %.lr.ph44.i.i.i50.preheader, label %vector.ph2488
 
 vector.ph2488:                                    ; preds = %.lr.ph44.i.preheader.i.i48
-  %n.vec2489 = and i64 %i.bpo, -8                 ; 3 uses
+  %n.vec2489 = and i64 %25, -8                    ; 3 uses
   %i.bpp = add i64 %spec.select.i.i.i43, %n.vec2489
   %i.bpq = getelementptr inbounds nuw [4 x i8], ptr %i.bnd, i64 %spec.select.i.i.i43
   br label %vector.body2490
@@ -701,7 +703,7 @@ vector.body2490:                                  ; preds = %vector.body2490, %v
   br i1 %i.bpt, label %middle.block2493, label %vector.body2490, !llvm.loop !406
 
 middle.block2493:                                 ; preds = %vector.body2490
-  %cmp.n2494 = icmp eq i64 %i.bpo, %n.vec2489
+  %cmp.n2494 = icmp eq i64 %25, %n.vec2489
   br i1 %cmp.n2494, label %_ZN5faiss12heap_reorderINS_4CMaxIilEEEEmmPNT_1TEPNS3_2TIE.exit.i.i45, label %.lr.ph44.i.i.i50.preheader
 
 .lr.ph44.i.i.i50.preheader:                       ; preds = %.lr.ph44.i.preheader.i.i48, %middle.block2493
@@ -1104,8 +1106,8 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i179: ; preds = %_
   store i32 %i.cvn, ptr %i.cxg, align 4, !tbaa !77, !alias.scope !729, !noalias !735
   %i.cxh = getelementptr inbounds nuw [8 x i8], ptr %i.cvk, i64 %i.cxf
   store i64 %i.cvo, ptr %i.cxh, align 8, !tbaa !91, !alias.scope !730, !noalias !734
-  %.not.i297.i.i = icmp ne i64 %i.cvo, -1
-  %i.cxi = zext i1 %.not.i297.i.i to i64          ; 2 uses
+  %.not.i297.i.i = icmp ne i64 %i.cvo, -1         ; 2 uses
+  %i.cxi = zext i1 %.not.i297.i.i to i64
   %spec.select.i.i.i180 = add i64 %.041.i.i.i170, %i.cxi ; 9 uses
   %i.cxj = add nuw i64 %.03740.i.i.i171, 1        ; 2 uses
   %exitcond.not.i298.i.i = icmp eq i64 %i.cxj, %i.m
@@ -1129,13 +1131,14 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i179: ; preds = %_
   %i.cxs = sub nuw i64 %i.m, %spec.select.i.i.i180
   %i.cxt = shl nuw i64 %i.cxs, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i186, i8 -1, i64 %i.cxt, i1 false), !tbaa !91, !alias.scope !730, !noalias !734
-  %26 = add i64 %.041.i.i.i170, %i.cxi
-  %i.cxu = sub i64 %i.m, %26                      ; 3 uses
-  %min.iters.check2455 = icmp ult i64 %i.cxu, 8
+  %.neg2562 = sext i1 %.not.i297.i.i to i64
+  %i.cxu = sub i64 %i.m, %.041.i.i.i170
+  %26 = add i64 %i.cxu, %.neg2562                 ; 3 uses
+  %min.iters.check2455 = icmp ult i64 %26, 8
   br i1 %min.iters.check2455, label %.lr.ph44.i.i.i187.preheader, label %vector.ph2456
 
 vector.ph2456:                                    ; preds = %.lr.ph44.i.preheader.i.i185
-  %n.vec2457 = and i64 %i.cxu, -8                 ; 3 uses
+  %n.vec2457 = and i64 %26, -8                    ; 3 uses
   %i.cxv = add i64 %spec.select.i.i.i180, %n.vec2457
   %i.cxw = getelementptr inbounds nuw [4 x i8], ptr %i.cvj, i64 %spec.select.i.i.i180
   br label %vector.body2458
@@ -1151,7 +1154,7 @@ vector.body2458:                                  ; preds = %vector.body2458, %v
   br i1 %i.cxz, label %middle.block2461, label %vector.body2458, !llvm.loop !449
 
 middle.block2461:                                 ; preds = %vector.body2458
-  %cmp.n2462 = icmp eq i64 %i.cxu, %n.vec2457
+  %cmp.n2462 = icmp eq i64 %26, %n.vec2457
   br i1 %cmp.n2462, label %_ZN5faiss12heap_reorderINS_4CMaxIilEEEEmmPNT_1TEPNS3_2TIE.exit.i.i182, label %.lr.ph44.i.i.i187.preheader
 
 .lr.ph44.i.i.i187.preheader:                      ; preds = %.lr.ph44.i.preheader.i.i185, %middle.block2461
@@ -1554,8 +1557,8 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i307: ; preds = %_
   store i32 %i.dze, ptr %i.eax, align 4, !tbaa !77, !alias.scope !771, !noalias !777
   %i.eay = getelementptr inbounds nuw [8 x i8], ptr %i.dzb, i64 %i.eaw
   store i64 %i.dzf, ptr %i.eay, align 8, !tbaa !91, !alias.scope !772, !noalias !776
-  %.not.i306.i.i = icmp ne i64 %i.dzf, -1
-  %i.eaz = zext i1 %.not.i306.i.i to i64          ; 2 uses
+  %.not.i306.i.i = icmp ne i64 %i.dzf, -1         ; 2 uses
+  %i.eaz = zext i1 %.not.i306.i.i to i64
   %spec.select.i.i.i308 = add i64 %.041.i.i.i298, %i.eaz ; 9 uses
   %i.eba = add nuw i64 %.03740.i.i.i299, 1        ; 2 uses
   %exitcond.not.i307.i.i = icmp eq i64 %i.eba, %i.m
@@ -1579,13 +1582,14 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i307: ; preds = %_
   %i.ebj = sub nuw i64 %i.m, %spec.select.i.i.i308
   %i.ebk = shl nuw i64 %i.ebj, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i314, i8 -1, i64 %i.ebk, i1 false), !tbaa !91, !alias.scope !772, !noalias !776
-  %27 = add i64 %.041.i.i.i298, %i.eaz
-  %i.ebl = sub i64 %i.m, %27                      ; 3 uses
-  %min.iters.check2423 = icmp ult i64 %i.ebl, 8
+  %.neg2561 = sext i1 %.not.i306.i.i to i64
+  %i.ebl = sub i64 %i.m, %.041.i.i.i298
+  %27 = add i64 %i.ebl, %.neg2561                 ; 3 uses
+  %min.iters.check2423 = icmp ult i64 %27, 8
   br i1 %min.iters.check2423, label %.lr.ph44.i.i.i315.preheader, label %vector.ph2424
 
 vector.ph2424:                                    ; preds = %.lr.ph44.i.preheader.i.i313
-  %n.vec2425 = and i64 %i.ebl, -8                 ; 3 uses
+  %n.vec2425 = and i64 %27, -8                    ; 3 uses
   %i.ebm = add i64 %spec.select.i.i.i308, %n.vec2425
   %i.ebn = getelementptr inbounds nuw [4 x i8], ptr %i.dza, i64 %spec.select.i.i.i308
   br label %vector.body2426
@@ -1601,7 +1605,7 @@ vector.body2426:                                  ; preds = %vector.body2426, %v
   br i1 %i.ebq, label %middle.block2429, label %vector.body2426, !llvm.loop !494
 
 middle.block2429:                                 ; preds = %vector.body2426
-  %cmp.n2430 = icmp eq i64 %i.ebl, %n.vec2425
+  %cmp.n2430 = icmp eq i64 %27, %n.vec2425
   br i1 %cmp.n2430, label %_ZN5faiss12heap_reorderINS_4CMaxIilEEEEmmPNT_1TEPNS3_2TIE.exit.i.i310, label %.lr.ph44.i.i.i315.preheader
 
 .lr.ph44.i.i.i315.preheader:                      ; preds = %.lr.ph44.i.preheader.i.i313, %middle.block2429
@@ -2004,8 +2008,8 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i424: ; preds = %_
   store i32 %i.fbi, ptr %i.fdb, align 4, !tbaa !77, !alias.scope !817, !noalias !823
   %i.fdc = getelementptr inbounds nuw [8 x i8], ptr %i.fbf, i64 %i.fda
   store i64 %i.fbj, ptr %i.fdc, align 8, !tbaa !91, !alias.scope !818, !noalias !822
-  %.not.i321.i.i = icmp ne i64 %i.fbj, -1
-  %i.fdd = zext i1 %.not.i321.i.i to i64          ; 2 uses
+  %.not.i321.i.i = icmp ne i64 %i.fbj, -1         ; 2 uses
+  %i.fdd = zext i1 %.not.i321.i.i to i64
   %spec.select.i.i.i425 = add i64 %.041.i.i.i415, %i.fdd ; 9 uses
   %i.fde = add nuw i64 %.03740.i.i.i416, 1        ; 2 uses
   %exitcond.not.i322.i.i = icmp eq i64 %i.fde, %i.m
@@ -2029,13 +2033,14 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i424: ; preds = %_
   %i.fdn = sub nuw i64 %i.m, %spec.select.i.i.i425
   %i.fdo = shl nuw i64 %i.fdn, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i431, i8 -1, i64 %i.fdo, i1 false), !tbaa !91, !alias.scope !818, !noalias !822
-  %28 = add i64 %.041.i.i.i415, %i.fdd
-  %i.fdp = sub i64 %i.m, %28                      ; 3 uses
-  %min.iters.check2391 = icmp ult i64 %i.fdp, 8
+  %.neg2560 = sext i1 %.not.i321.i.i to i64
+  %i.fdp = sub i64 %i.m, %.041.i.i.i415
+  %28 = add i64 %i.fdp, %.neg2560                 ; 3 uses
+  %min.iters.check2391 = icmp ult i64 %28, 8
   br i1 %min.iters.check2391, label %.lr.ph44.i.i.i432.preheader, label %vector.ph2392
 
 vector.ph2392:                                    ; preds = %.lr.ph44.i.preheader.i.i430
-  %n.vec2393 = and i64 %i.fdp, -8                 ; 3 uses
+  %n.vec2393 = and i64 %28, -8                    ; 3 uses
   %i.fdq = add i64 %spec.select.i.i.i425, %n.vec2393
   %i.fdr = getelementptr inbounds nuw [4 x i8], ptr %i.fbe, i64 %spec.select.i.i.i425
   br label %vector.body2394
@@ -2051,7 +2056,7 @@ vector.body2394:                                  ; preds = %vector.body2394, %v
   br i1 %i.fdu, label %middle.block2397, label %vector.body2394, !llvm.loop !539
 
 middle.block2397:                                 ; preds = %vector.body2394
-  %cmp.n2398 = icmp eq i64 %i.fdp, %n.vec2393
+  %cmp.n2398 = icmp eq i64 %28, %n.vec2393
   br i1 %cmp.n2398, label %_ZN5faiss12heap_reorderINS_4CMaxIilEEEEmmPNT_1TEPNS3_2TIE.exit.i.i427, label %.lr.ph44.i.i.i432.preheader
 
 .lr.ph44.i.i.i432.preheader:                      ; preds = %.lr.ph44.i.preheader.i.i430, %middle.block2397
@@ -2454,8 +2459,8 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i562: ; preds = %_
   store i32 %i.gef, ptr %i.gfy, align 4, !tbaa !77, !alias.scope !863, !noalias !868
   %i.gfz = getelementptr inbounds nuw [8 x i8], ptr %i.gec, i64 %i.gfx
   store i64 %i.geg, ptr %i.gfz, align 8, !tbaa !91, !alias.scope !864, !noalias !867
-  %.not.i369.i.i = icmp ne i64 %i.geg, -1
-  %i.gga = zext i1 %.not.i369.i.i to i64          ; 2 uses
+  %.not.i369.i.i = icmp ne i64 %i.geg, -1         ; 2 uses
+  %i.gga = zext i1 %.not.i369.i.i to i64
   %spec.select.i.i.i563 = add i64 %.041.i.i.i553, %i.gga ; 9 uses
   %i.ggb = add nuw i64 %.03740.i.i.i554, 1        ; 2 uses
   %exitcond.not.i370.i.i = icmp eq i64 %i.ggb, %i.m
@@ -2479,13 +2484,14 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i562: ; preds = %_
   %i.ggk = sub nuw i64 %i.m, %spec.select.i.i.i563
   %i.ggl = shl nuw i64 %i.ggk, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i569, i8 -1, i64 %i.ggl, i1 false), !tbaa !91, !alias.scope !864, !noalias !867
-  %29 = add i64 %.041.i.i.i553, %i.gga
-  %i.ggm = sub i64 %i.m, %29                      ; 3 uses
-  %min.iters.check2359 = icmp ult i64 %i.ggm, 8
+  %.neg = sext i1 %.not.i369.i.i to i64
+  %i.ggm = sub i64 %i.m, %.041.i.i.i553
+  %29 = add i64 %i.ggm, %.neg                     ; 3 uses
+  %min.iters.check2359 = icmp ult i64 %29, 8
   br i1 %min.iters.check2359, label %.lr.ph44.i.i.i570.preheader, label %vector.ph2360
 
 vector.ph2360:                                    ; preds = %.lr.ph44.i.preheader.i.i568
-  %n.vec2361 = and i64 %i.ggm, -8                 ; 3 uses
+  %n.vec2361 = and i64 %29, -8                    ; 3 uses
   %i.ggn = add i64 %spec.select.i.i.i563, %n.vec2361
   %i.ggo = getelementptr inbounds nuw [4 x i8], ptr %i.geb, i64 %spec.select.i.i.i563
   br label %vector.body2362
@@ -2501,7 +2507,7 @@ vector.body2362:                                  ; preds = %vector.body2362, %v
   br i1 %i.ggr, label %middle.block2365, label %vector.body2362, !llvm.loop !586
 
 middle.block2365:                                 ; preds = %vector.body2362
-  %cmp.n2366 = icmp eq i64 %i.ggm, %n.vec2361
+  %cmp.n2366 = icmp eq i64 %29, %n.vec2361
   br i1 %cmp.n2366, label %_ZN5faiss12heap_reorderINS_4CMaxIilEEEEmmPNT_1TEPNS3_2TIE.exit.i.i565, label %.lr.ph44.i.i.i570.preheader
 
 .lr.ph44.i.i.i570.preheader:                      ; preds = %.lr.ph44.i.preheader.i.i568, %middle.block2365
@@ -2904,8 +2910,8 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i673: ; preds = %_
   store i32 %i.kbe, ptr %i.kcx, align 4, !tbaa !77, !alias.scope !910, !noalias !915
   %i.kcy = getelementptr inbounds nuw [8 x i8], ptr %i.kbb, i64 %i.kcw
   store i64 %i.kbf, ptr %i.kcy, align 8, !tbaa !91, !alias.scope !911, !noalias !914
-  %.not.i379.i.i = icmp ne i64 %i.kbf, -1
-  %i.kcz = zext i1 %.not.i379.i.i to i64          ; 2 uses
+  %.not.i379.i.i = icmp ne i64 %i.kbf, -1         ; 2 uses
+  %i.kcz = zext i1 %.not.i379.i.i to i64
   %spec.select.i.i.i674 = add i64 %.041.i.i.i664, %i.kcz ; 9 uses
   %i.kda = add nuw i64 %.03740.i.i.i665, 1        ; 2 uses
   %exitcond.not.i.i.i675 = icmp eq i64 %i.kda, %i.m
@@ -2929,13 +2935,14 @@ _ZN5faiss8heap_popINS_4CMaxIilEEEEvmPNT_1TEPNS3_2TIE.exit.i.i.i673: ; preds = %_
   %i.kdj = sub nuw i64 %i.m, %spec.select.i.i.i674
   %i.kdk = shl nuw i64 %i.kdj, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i681, i8 -1, i64 %i.kdk, i1 false), !tbaa !91, !alias.scope !911, !noalias !914
-  %30 = add i64 %.041.i.i.i664, %i.kcz
-  %i.kdl = sub i64 %i.m, %30                      ; 3 uses
-  %min.iters.check2551 = icmp ult i64 %i.kdl, 8
+  %.neg2565 = sext i1 %.not.i379.i.i to i64
+  %i.kdl = sub i64 %i.m, %.041.i.i.i664
+  %30 = add i64 %i.kdl, %.neg2565                 ; 3 uses
+  %min.iters.check2551 = icmp ult i64 %30, 8
   br i1 %min.iters.check2551, label %.lr.ph44.i.i.i682.preheader, label %vector.ph2552
 
 vector.ph2552:                                    ; preds = %.lr.ph44.i.preheader.i.i680
-  %n.vec2553 = and i64 %i.kdl, -8                 ; 3 uses
+  %n.vec2553 = and i64 %30, -8                    ; 3 uses
   %i.kdm = add i64 %spec.select.i.i.i674, %n.vec2553
   %i.kdn = getelementptr inbounds nuw [4 x i8], ptr %i.kba, i64 %spec.select.i.i.i674
   br label %vector.body2554
@@ -2951,7 +2958,7 @@ vector.body2554:                                  ; preds = %vector.body2554, %v
   br i1 %i.kdq, label %middle.block2557, label %vector.body2554, !llvm.loop !629
 
 middle.block2557:                                 ; preds = %vector.body2554
-  %cmp.n2558 = icmp eq i64 %i.kdl, %n.vec2553
+  %cmp.n2558 = icmp eq i64 %30, %n.vec2553
   br i1 %cmp.n2558, label %_ZN5faiss12heap_reorderINS_4CMaxIilEEEEmmPNT_1TEPNS3_2TIE.exit.i.i677, label %.lr.ph44.i.i.i682.preheader
 
 .lr.ph44.i.i.i682.preheader:                      ; preds = %.lr.ph44.i.preheader.i.i680, %middle.block2557

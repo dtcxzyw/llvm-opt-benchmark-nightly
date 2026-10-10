@@ -123,8 +123,7 @@ bb.a:
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = ashr exact i64 %i.g, 2                   ; 3 uses
   %i.i = add i64 %i.g, 24
-  %i.j = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.i) #21 ; 13 uses
-  %1 = ptrtoaddr ptr %i.j to i64
+  %i.j = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.i) #21 ; 12 uses
   store ptr null, ptr %i.j, align 8, !tbaa !26
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.l = load i64, ptr %i.k, align 8, !tbaa !47
@@ -133,29 +132,23 @@ bb.a:
   %i.n = trunc i64 %i.h to i32
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 3 uses
   store i32 %i.n, ptr %i.o, align 8, !tbaa !49
-  %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 20 ; 12 uses
-  %i.q = load ptr, ptr %i.a, align 8, !tbaa !50   ; 6 uses
-  %2 = ptrtoaddr ptr %i.q to i64                  ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 20 ; 11 uses
+  %i.q = load ptr, ptr %i.a, align 8, !tbaa !50   ; 5 uses
   %i.r = load ptr, ptr %i.b, align 8, !tbaa !50   ; 3 uses
   %.not7781 = icmp eq ptr %i.q, %i.r
   br i1 %.not7781, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.s = ptrtoaddr ptr %i.r to i64
+  %1 = ptrtoaddr ptr %i.q to i64
   %i.t = add i64 %i.s, -4
-  %i.u = sub i64 %i.t, %2                         ; 2 uses
+  %i.u = sub i64 %i.t, %1                         ; 2 uses
   %i.v = lshr i64 %i.u, 2
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.u, 60
-  br i1 %min.iters.check, label %.lr.ph.preheader131, label %vector.memcheck
+  %min.iters.check = icmp ult i64 %i.u, 28
+  br i1 %min.iters.check, label %.lr.ph.preheader131, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %3 = sub i64 %1, %2
-  %4 = add i64 %3, 19
-  %diff.check = icmp ult i64 %4, 31
-  br i1 %diff.check, label %.lr.ph.preheader131, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %i.w, 9223372036854775800      ; 3 uses
   %i.x = shl i64 %n.vec, 2                        ; 2 uses
   %i.y = getelementptr i8, ptr %i.p, i64 %i.x
@@ -181,9 +174,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.w, %n.vec
   br i1 %cmp.n, label %._crit_edge.loopexit, label %.lr.ph.preheader131
 
-.lr.ph.preheader131:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.03983.ph = phi ptr [ %i.p, %vector.memcheck ], [ %i.p, %.lr.ph.preheader ], [ %i.y, %middle.block ]
-  %.sroa.073.082.ph = phi ptr [ %i.q, %vector.memcheck ], [ %i.q, %.lr.ph.preheader ], [ %i.z, %middle.block ]
+.lr.ph.preheader131:                              ; preds = %.lr.ph.preheader, %middle.block
+  %.03983.ph = phi ptr [ %i.p, %.lr.ph.preheader ], [ %i.y, %middle.block ]
+  %.sroa.073.082.ph = phi ptr [ %i.q, %.lr.ph.preheader ], [ %i.z, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %middle.block
@@ -586,7 +579,7 @@ attributes #26 = { cold nounwind }
 !88 = !{!"p1 _ZTS8_IO_FILE", !15, i64 0}
 !89 = !{!88, !88, i64 0}
 !90 = distinct !{!90, !52, !53}
-!91 = distinct !{!91, !52}
+!91 = distinct !{!91, !53, !52}
 !92 = distinct !{!92, i1 false, !"_ZSt19__relocate_object_aIN7CaDiCaL12CheckerWatchES1_SaIS1_EEvPT_PT0_RT1_"}
 !93 = distinct !{!93, !92, !"_ZSt19__relocate_object_aIN7CaDiCaL12CheckerWatchES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !94 = distinct !{!94, !92, !"_ZSt19__relocate_object_aIN7CaDiCaL12CheckerWatchES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}

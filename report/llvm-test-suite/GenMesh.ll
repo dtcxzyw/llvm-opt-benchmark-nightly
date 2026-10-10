@@ -202,7 +202,7 @@ define linkonce_odr dso_local void @_ZNSt6vectorI7double2SaIS0_EE17_M_realloc_in
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !36   ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !35     ; 13 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !35     ; 8 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -225,7 +225,7 @@ _ZNKSt6vectorI7double2SaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 4
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #19 ; 13 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #19 ; 8 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n
   %i.r = load <2 x double>, ptr %2, align 8, !tbaa !19
   store <2 x double> %i.r, ptr %i.q, align 8, !tbaa !19
@@ -234,32 +234,13 @@ _ZNKSt6vectorI7double2SaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorI7double2SaIS0_EE12_M_check_lenEmPKc.exit
   %i.s = add i64 %i.m, -16
-  %i.t = sub i64 %i.s, %i.e                       ; 3 uses
+  %i.t = sub i64 %i.s, %i.e                       ; 2 uses
   %i.u = lshr i64 %i.t, 4
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.t, 368
-  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader104, label %vector.memcheck
+  %min.iters.check = icmp ult i64 %i.t, 48
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader104, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.preheader
-  %3 = and i64 %i.t, -16                          ; 2 uses
-  %4 = or disjoint i64 %3, 8                      ; 2 uses
-  %5 = getelementptr i8, ptr %i.p, i64 %4
-  %6 = getelementptr i8, ptr %i.c, i64 %4
-  %7 = getelementptr i8, ptr %i.p, i64 8
-  %8 = add i64 %3, 16                             ; 2 uses
-  %9 = getelementptr i8, ptr %i.p, i64 %8
-  %10 = getelementptr i8, ptr %i.c, i64 8
-  %11 = getelementptr i8, ptr %i.c, i64 %8
-  %bound0 = icmp ult ptr %i.p, %6
-  %bound1 = icmp ult ptr %i.c, %5
-  %found.conflict = and i1 %bound0, %bound1
-  %bound057 = icmp ult ptr %7, %11
-  %bound158 = icmp ult ptr %10, %9
-  %found.conflict59 = and i1 %bound057, %bound158
-  %conflict.rdx = or i1 %found.conflict, %found.conflict59
-  br i1 %conflict.rdx, label %.lr.ph.i.i.i.i.i.preheader104, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.preheader
   %n.vec = and i64 %i.v, 2305843009213693950      ; 3 uses
   %i.w = shl i64 %n.vec, 4                        ; 2 uses
   %i.x = getelementptr i8, ptr %i.p, i64 %i.w     ; 2 uses
@@ -286,9 +267,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.v, %n.vec
   br i1 %cmp.n, label %_ZSt34__uninitialized_move_if_noexcept_aIP7double2S1_SaIS0_EET0_T_S4_S3_RT1_.exit, label %.lr.ph.i.i.i.i.i.preheader104
 
-.lr.ph.i.i.i.i.i.preheader104:                    ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i.preheader, %middle.block
-  %.015.i.i.i.i.i.ph = phi ptr [ %i.p, %vector.memcheck ], [ %i.p, %.lr.ph.i.i.i.i.i.preheader ], [ %i.x, %middle.block ]
-  %.01214.i.i.i.i.i.ph = phi ptr [ %i.c, %vector.memcheck ], [ %i.c, %.lr.ph.i.i.i.i.i.preheader ], [ %i.y, %middle.block ]
+.lr.ph.i.i.i.i.i.preheader104:                    ; preds = %.lr.ph.i.i.i.i.i.preheader, %middle.block
+  %.015.i.i.i.i.i.ph = phi ptr [ %i.p, %.lr.ph.i.i.i.i.i.preheader ], [ %i.x, %middle.block ]
+  %.01214.i.i.i.i.i.ph = phi ptr [ %i.c, %.lr.ph.i.i.i.i.i.preheader ], [ %i.y, %middle.block ]
   br label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader104, %.lr.ph.i.i.i.i.i
@@ -691,7 +672,7 @@ attributes #19 = { builtin allocsize(0) }
 !107 = !{!96}
 !108 = !{!39, !39, i64 0}
 !109 = distinct !{!109, !23, !37, !38}
-!110 = distinct !{!110, !23, !37}
+!110 = distinct !{!110, !23, !38, !37}
 !111 = distinct !{!111, !23, !37, !38}
 !112 = distinct !{!112, !23, !37}
 end_hunk_1

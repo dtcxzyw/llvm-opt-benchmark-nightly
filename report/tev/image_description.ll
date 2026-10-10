@@ -202,7 +202,7 @@ define linkonce_odr hidden ptr @_ZNSt3__16vectorIjNS_9allocatorIjEEE18__insert_w
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !39     ; 3 uses
   %i.b = ptrtoint ptr %1 to i64                   ; 4 uses
-  %i.c = ptrtoint ptr %i.a to i64                 ; 4 uses
+  %i.c = ptrtoint ptr %i.a to i64                 ; 3 uses
   %i.d = sub i64 %i.b, %i.c                       ; 2 uses
   %i.e = getelementptr inbounds i8, ptr %i.a, i64 %i.d ; 12 uses
   %i.f = icmp sgt i64 %4, 0
@@ -379,7 +379,7 @@ _ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIjEEEENS_19__allocation_re
 
 _ZNSt3__114__split_bufferIjRNS_9allocatorIjEEEC2EmmS3_.exit: ; preds = %_ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8ne180100Em.exit, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIjEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i
   %i.bp = phi ptr [ %.pre, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIjEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i ], [ %i.a, %_ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8ne180100Em.exit ] ; 6 uses
-  %storemerge.i = phi ptr [ %i.bo, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIjEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i ], [ null, %_ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8ne180100Em.exit ] ; 3 uses
+  %storemerge.i = phi ptr [ %i.bo, %_ZNSt3__119__allocate_at_leastB8ne180100INS_9allocatorIjEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i ], [ null, %_ZNKSt3__16vectorIjNS_9allocatorIjEEE11__recommendB8ne180100Em.exit ] ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 %i.d ; 8 uses
   %.idx.i = shl nuw nsw i64 %4, 2                 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.bq, ptr align 4 %2, i64 %.idx.i, i1 false), !tbaa !26
@@ -389,17 +389,13 @@ _ZNSt3__114__split_bufferIjRNS_9allocatorIjEEEC2EmmS3_.exit: ; preds = %_ZNKSt3_
   br i1 %.not4.i.i.i.i.i.i.i, label %_ZNSt3__142__uninitialized_allocator_move_if_noexceptB8ne180100INS_9allocatorIjEENS_16reverse_iteratorIPjEES5_jvEET1_RT_T0_S9_S6_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %_ZNSt3__114__split_bufferIjRNS_9allocatorIjEEEC2EmmS3_.exit
-  %storemerge.i63 = ptrtoaddr ptr %storemerge.i to i64
   %i.bt = ptrtoaddr ptr %i.bp to i64
   %i.bu = add i64 %i.b, -4
   %i.bv = sub i64 %i.bu, %i.bt                    ; 2 uses
   %i.bw = lshr i64 %i.bv, 2
   %i.bx = add nuw nsw i64 %i.bw, 1                ; 2 uses
-  %min.iters.check66 = icmp ult i64 %i.bv, 44
-  %5 = sub i64 %storemerge.i63, %i.c
-  %diff.check64 = icmp ugt i64 %5, -32
-  %or.cond = select i1 %min.iters.check66, i1 true, i1 %diff.check64
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.preheader80, label %vector.ph67
+  %min.iters.check66 = icmp ult i64 %i.bv, 28
+  br i1 %min.iters.check66, label %.lr.ph.i.i.i.i.i.i.i.preheader80, label %vector.ph67
 
 vector.ph67:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
   %n.vec68 = and i64 %i.bx, 9223372036854775800   ; 3 uses
@@ -802,7 +798,7 @@ begin_hunk_1_@llvm.umax.i64
 !490 = distinct !{!490, i1 false, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8ne180100INS_16reverse_iteratorIPjEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_"}
 !491 = distinct !{!491, !490, !"_ZNKSt3__111__move_loopINS_17_ClassicAlgPolicyEEclB8ne180100INS_16reverse_iteratorIPjEES6_S6_EENS_4pairIT_T1_EES8_T0_S9_: argument 0"}
 !492 = distinct !{!492, !27, !41, !42}
-!493 = distinct !{!493, !27, !41}
+!493 = distinct !{!493, !27, !42, !41}
 !494 = !{!491, !489, !487, !485}
 !495 = !{!"_ZTSNSt3__16vectorI29SensorNonUniformityCorrectionNS_9allocatorIS1_EEE16__destroy_vectorE", !110, i64 0}
 !496 = !{!495, !110, i64 0}

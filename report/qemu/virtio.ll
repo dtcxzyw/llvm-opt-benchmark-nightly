@@ -205,8 +205,7 @@ trace_virtqueue_alloc_element.exit:               ; preds = %bb.c, %bb.d, %bb.e,
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @qemu_put_virtqueue_element(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.VirtQueueElementOld, align 8 ; 20 uses
-  %4 = ptrtoaddr ptr %3 to i64                    ; 2 uses
+  %3 = alloca %struct.VirtQueueElementOld, align 8 ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(49160) %i.a, i8 0, i64 49160, i1 false)
@@ -225,20 +224,13 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.j = load ptr, ptr %i.i, align 8              ; 7 uses
+  %i.j = load ptr, ptr %i.i, align 8              ; 6 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 6 uses
   %i.l = add i32 %i.d, 2147483647
-  %or.cond = icmp ult i32 %i.l, -2147483637
-  br i1 %or.cond, label %scalar.ph.preheader, label %vector.memcheck
+  %or.cond = icmp ult i32 %i.l, -2147483645
+  br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph
-  %5 = ptrtoaddr ptr %i.j to i64
-  %6 = sub i64 %4, %5
-  %7 = add i64 %6, 15
-  %diff.check = icmp ult i64 %7, 31
-  br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i32 %i.d, -4                       ; 3 uses
   br label %vector.body
 
@@ -261,8 +253,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i32 %i.d, %n.vec
   br i1 %cmp.n, label %.preheader32, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
-  %.033.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
+scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
+  %.033.ph = phi i32 [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 3 uses
   %xtraiter = and i32 %i.d, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
@@ -292,20 +284,13 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 .lr.ph35:                                         ; preds = %.preheader32
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.aa = load ptr, ptr %i.z, align 8             ; 7 uses
+  %i.aa = load ptr, ptr %i.z, align 8             ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8208 ; 6 uses
   %i.ac = add i32 %i.g, 2147483647
-  %or.cond67 = icmp ult i32 %i.ac, -2147483637
-  br i1 %or.cond67, label %scalar.ph53.preheader, label %vector.memcheck51
+  %or.cond67 = icmp ult i32 %i.ac, -2147483645
+  br i1 %or.cond67, label %scalar.ph53.preheader, label %vector.ph55
 
-vector.memcheck51:                                ; preds = %.lr.ph35
-  %8 = ptrtoaddr ptr %i.aa to i64
-  %9 = sub i64 %4, %8
-  %10 = add i64 %9, 8207
-  %diff.check52 = icmp ult i64 %10, 31
-  br i1 %diff.check52, label %scalar.ph53.preheader, label %vector.ph55
-
-vector.ph55:                                      ; preds = %vector.memcheck51
+vector.ph55:                                      ; preds = %.lr.ph35
   %n.vec56 = and i32 %i.g, -4                     ; 3 uses
   br label %vector.body57
 
@@ -328,8 +313,8 @@ middle.block62:                                   ; preds = %vector.body57
   %cmp.n63 = icmp eq i32 %i.g, %n.vec56
   br i1 %cmp.n63, label %.preheader31, label %scalar.ph53.preheader
 
-scalar.ph53.preheader:                            ; preds = %vector.memcheck51, %.lr.ph35, %middle.block62
-  %.134.ph = phi i32 [ 0, %vector.memcheck51 ], [ 0, %.lr.ph35 ], [ %n.vec56, %middle.block62 ] ; 3 uses
+scalar.ph53.preheader:                            ; preds = %.lr.ph35, %middle.block62
+  %.134.ph = phi i32 [ 0, %.lr.ph35 ], [ %n.vec56, %middle.block62 ] ; 3 uses
   %xtraiter68 = and i32 %i.g, 3                   ; 2 uses
   %lcmp.mod69.not = icmp eq i32 %xtraiter68, 0
   br i1 %lcmp.mod69.not, label %scalar.ph53.prol.loopexit, label %scalar.ph53.prol
@@ -432,7 +417,7 @@ scalar.ph53:                                      ; preds = %scalar.ph53.prol.lo
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph37
   %.236.epil.init = phi i32 [ 0, %.lr.ph37 ], [ %i.ds, %.preheader.loopexit.unr-lcssa ]
   %lcmp.mod73 = icmp ne i32 %xtraiter71, 0
-  call void @llvm.assume(i1 %lcmp.mod73)
+  tail call void @llvm.assume(i1 %lcmp.mod73)
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.epil.preheader
@@ -549,7 +534,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph39.new
 .epil.preheader74:                                ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph39
   %.338.epil.init = phi i32 [ 0, %.lr.ph39 ], [ %i.eu, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod78 = icmp ne i32 %xtraiter75, 0
-  call void @llvm.assume(i1 %lcmp.mod78)
+  tail call void @llvm.assume(i1 %lcmp.mod78)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.epil.preheader74

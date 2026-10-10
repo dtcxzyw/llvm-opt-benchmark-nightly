@@ -204,7 +204,8 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br i1 %i.dn, label %.lr.ph94.i.preheader, label %.preheader.i
 
 .lr.ph94.i.preheader:                             ; preds = %.preheader63.i
-  %i.do = add i32 %isdigittmp6088.i, %i.dw
+  %8 = mul i32 %.04487.i, 10
+  %i.do = add i32 %isdigittmp6088.i, %8
   %i.dp = add i32 %i.do, -8                       ; 2 uses
   %i.dq = lshr i32 %i.dp, 3
   %i.dr = add nuw nsw i32 %i.dq, 1                ; 2 uses
@@ -237,9 +238,9 @@ middle.block633:                                  ; preds = %vector.body628
 
 .lr.ph90.i:                                       ; preds = %bb.t, %.lr.ph90.i
   %isdigittmp6088.i = phi i32 [ %isdigittmp60.i, %.lr.ph90.i ], [ %isdigittmp6084.i, %bb.t ] ; 2 uses
-  %.04487.i = phi i32 [ %i.dx, %.lr.ph90.i ], [ 0, %bb.t ]
+  %.04487.i = phi i32 [ %i.dx, %.lr.ph90.i ], [ 0, %bb.t ] ; 2 uses
   %.586.i = phi ptr [ %i.dy, %.lr.ph90.i ], [ %.4.i, %bb.t ]
-  %i.dw = mul i32 %.04487.i, 10                   ; 2 uses
+  %i.dw = mul i32 %.04487.i, 10
   %i.dx = add i32 %i.dw, %isdigittmp6088.i        ; 5 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %.586.i, i64 1 ; 2 uses
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !29
@@ -642,7 +643,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %i.ac, label %.lr.ph94.preheader, label %.preheader
 
 .lr.ph94.preheader:                               ; preds = %.preheader63
-  %i.ad = add i32 %isdigittmp6088, %i.al
+  %1 = mul i32 %.04487, 10
+  %i.ad = add i32 %isdigittmp6088, %1
   %i.ae = add i32 %i.ad, -8                       ; 2 uses
   %i.af = lshr i32 %i.ae, 3
   %i.ag = add nuw nsw i32 %i.af, 1                ; 2 uses
@@ -675,9 +677,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph90:                                         ; preds = %bb.f, %.lr.ph90
   %isdigittmp6088 = phi i32 [ %isdigittmp60, %.lr.ph90 ], [ %isdigittmp6084, %bb.f ] ; 2 uses
-  %.04487 = phi i32 [ %i.am, %.lr.ph90 ], [ 0, %bb.f ]
+  %.04487 = phi i32 [ %i.am, %.lr.ph90 ], [ 0, %bb.f ] ; 2 uses
   %.586 = phi ptr [ %i.an, %.lr.ph90 ], [ %.4, %bb.f ]
-  %i.al = mul i32 %.04487, 10                     ; 2 uses
+  %i.al = mul i32 %.04487, 10
   %i.am = add i32 %isdigittmp6088, %i.al          ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.586, i64 1 ; 2 uses
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !29

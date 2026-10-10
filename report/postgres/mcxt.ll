@@ -202,14 +202,12 @@ declare void @BumpStats(ptr noundef, ptr noundef, ptr noundef, ptr noundef, i1 n
 ; Function Attrs: nounwind uwtable
 define internal void @MemoryContextStatsPrint(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, i1 noundef zeroext %3) #0 {
 bb.a:
-  %i.a = alloca [110 x i8], align 16              ; 14 uses
-  %4 = ptrtoaddr ptr %i.a to i64
+  %i.a = alloca [110 x i8], align 16              ; 13 uses
   %i.b = load i32, ptr %1, align 4                ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.d = load ptr, ptr %i.c, align 8              ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.f = load ptr, ptr %i.e, align 8              ; 12 uses
-  %5 = ptrtoaddr ptr %i.f to i64
+  %i.f = load ptr, ptr %i.e, align 8              ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %.thread, label %bb.b
@@ -228,8 +226,8 @@ bb.c:                                             ; preds = %bb.b
   %i.i = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.f) #23
   %i.j = trunc i64 %i.i to i32                    ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(3) %i.a, ptr noundef nonnull align 1 dereferenceable(3) @.str.18, i64 3, i1 false) #18
-  %i.k = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #23 ; 4 uses
-  %i.l = trunc i64 %i.k to i32                    ; 8 uses
+  %i.k = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #23 ; 3 uses
+  %i.l = trunc i64 %i.k to i32                    ; 7 uses
   %i.m = icmp sgt i32 %i.j, 100                   ; 2 uses
   br i1 %i.m, label %bb.d, label %bb.e
 
@@ -238,7 +236,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.026 = phi i32 [ %i.n, %bb.d ], [ %i.j, %bb.c ] ; 10 uses
+  %.026 = phi i32 [ %i.n, %bb.d ], [ %i.j, %bb.c ] ; 9 uses
   %i.o = icmp sgt i32 %.026, 0
   br i1 %i.o, label %iter.check, label %._crit_edge
 
@@ -251,17 +249,9 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.q = add nsw i32 %.026, -1
   %i.r = add i32 %i.q, %i.l
   %i.s = icmp slt i32 %i.r, %i.l
-  br i1 %i.s, label %.lr.ph.preheader, label %vector.memcheck
+  br i1 %i.s, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
-vector.memcheck:                                  ; preds = %vector.scevcheck
-  %sext = shl i64 %i.k, 32
-  %6 = ashr exact i64 %sext, 32
-  %7 = add i64 %6, %4
-  %8 = sub i64 %5, %7
-  %diff.check = icmp ugt i64 %8, -32
-  br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
-
-vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+vector.main.loop.iter.check:                      ; preds = %vector.scevcheck
   %min.iters.check50 = icmp ult i32 %.026, 32
   br i1 %min.iters.check50, label %vec.epilog.ph, label %vector.ph
 
@@ -281,14 +271,14 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.z = getelementptr i8, ptr %next.gep, i64 16
   %wide.load = load <16 x i8>, ptr %next.gep, align 1
   %wide.load51 = load <16 x i8>, ptr %i.z, align 1
-  %9 = call <16 x i8> @llvm.umax.v16i8(<16 x i8> %wide.load, <16 x i8> splat (i8 32))
-  %10 = call <16 x i8> @llvm.umax.v16i8(<16 x i8> %wide.load51, <16 x i8> splat (i8 32))
+  %4 = tail call <16 x i8> @llvm.umax.v16i8(<16 x i8> %wide.load, <16 x i8> splat (i8 32))
+  %5 = tail call <16 x i8> @llvm.umax.v16i8(<16 x i8> %wide.load51, <16 x i8> splat (i8 32))
   %sext63.a = shl i64 %i.y, 32
   %i.aa = ashr exact i64 %sext63.a, 32
   %i.ab = getelementptr inbounds i8, ptr %i.a, i64 %i.aa ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  store <16 x i8> %9, ptr %i.ab, align 1
-  store <16 x i8> %10, ptr %i.ac, align 1
+  store <16 x i8> %4, ptr %i.ab, align 1
+  store <16 x i8> %5, ptr %i.ac, align 1
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.ad = icmp eq i64 %index.next, %n.vec
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !38
@@ -315,11 +305,11 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ai = add i64 %i.k, %index55
   %next.gep56 = getelementptr i8, ptr %i.f, i64 %index55
   %wide.load57 = load <4 x i8>, ptr %next.gep56, align 1
-  %11 = call <4 x i8> @llvm.umax.v4i8(<4 x i8> %wide.load57, <4 x i8> splat (i8 32))
+  %6 = tail call <4 x i8> @llvm.umax.v4i8(<4 x i8> %wide.load57, <4 x i8> splat (i8 32))
   %sext64 = shl i64 %i.ai, 32
   %i.aj = ashr exact i64 %sext64, 32
   %i.ak = getelementptr inbounds i8, ptr %i.a, i64 %i.aj
-  store <4 x i8> %11, ptr %i.ak, align 1
+  store <4 x i8> %6, ptr %i.ak, align 1
   %index.next58 = add nuw i64 %index55, 4         ; 2 uses
   %i.al = icmp eq i64 %index.next58, %n.vec54
   br i1 %i.al, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !39
@@ -328,10 +318,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n59 = icmp eq i64 %n.vec54, %i.p
   br i1 %cmp.n59, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.144.ph = phi i32 [ %.026, %iter.check ], [ %.026, %vector.scevcheck ], [ %.026, %vector.memcheck ], [ %i.v, %vec.epilog.iter.check ], [ %i.af, %vec.epilog.middle.block ]
-  %.02743.ph = phi i32 [ %i.l, %iter.check ], [ %i.l, %vector.scevcheck ], [ %i.l, %vector.memcheck ], [ %i.w, %vec.epilog.iter.check ], [ %i.ag, %vec.epilog.middle.block ]
-  %.13042.ph = phi ptr [ %i.f, %iter.check ], [ %i.f, %vector.scevcheck ], [ %i.f, %vector.memcheck ], [ %i.x, %vec.epilog.iter.check ], [ %i.ah, %vec.epilog.middle.block ]
+.lr.ph.preheader:                                 ; preds = %iter.check, %vector.scevcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.144.ph = phi i32 [ %.026, %iter.check ], [ %.026, %vector.scevcheck ], [ %i.v, %vec.epilog.iter.check ], [ %i.af, %vec.epilog.middle.block ]
+  %.02743.ph = phi i32 [ %i.l, %iter.check ], [ %i.l, %vector.scevcheck ], [ %i.w, %vec.epilog.iter.check ], [ %i.ag, %vec.epilog.middle.block ]
+  %.13042.ph = phi ptr [ %i.f, %iter.check ], [ %i.f, %vector.scevcheck ], [ %i.x, %vec.epilog.iter.check ], [ %i.ah, %vec.epilog.middle.block ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

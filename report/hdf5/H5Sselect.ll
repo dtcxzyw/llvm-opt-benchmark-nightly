@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hdf5/original/H5Sselect?download=true
 inline.NumInlined: 10
-loop-unroll.NumRuntimeUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@H5FL_reg_calloc
 
 declare i32 @H5S__extent_copy_real(ptr noundef, ptr noundef, i1 noundef zeroext) local_unnamed_addr #4
@@ -203,14 +203,10 @@ declare i64 @H5I_register(i32 noundef, ptr noundef, i1 noundef zeroext) local_un
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @H5S_select_subtract(ptr noundef %0, ptr noundef %1) local_unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [32 x i64], align 16              ; 9 uses
-  %2 = ptrtoaddr ptr %i.a to i64                  ; 4 uses
-  %i.b = alloca [32 x i64], align 16              ; 9 uses
-  %3 = ptrtoaddr ptr %i.b to i64                  ; 4 uses
-  %i.c = alloca [32 x i64], align 16              ; 9 uses
-  %4 = ptrtoaddr ptr %i.c to i64                  ; 4 uses
-  %i.d = alloca [32 x i64], align 16              ; 9 uses
-  %5 = ptrtoaddr ptr %i.d to i64                  ; 4 uses
+  %i.a = alloca [32 x i64], align 16              ; 6 uses
+  %i.b = alloca [32 x i64], align 16              ; 6 uses
+  %i.c = alloca [32 x i64], align 16              ; 6 uses
+  %i.d = alloca [32 x i64], align 16              ; 6 uses
   %i.e = load i8, ptr @H5S_init_g, align 1, !tbaa !9, !range !10, !noundef !11
   %i.f = trunc nuw i8 %i.e to i1                  ; 2 uses
   %i.g = load i8, ptr @H5_libterm_g, align 1, !range !10
@@ -297,45 +293,12 @@ bb.k:                                             ; preds = %bb.i
 
 .lr.ph:                                           ; preds = %bb.k
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !44 ; 5 uses
-  %wide.trip.count = zext i32 %i.af to i64        ; 5 uses
-  %min.iters.check = icmp ult i32 %i.af, 56
-  br i1 %min.iters.check, label %scalar.ph.preheader.a, label %vector.memcheck
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !44 ; 2 uses
+  %wide.trip.count = zext i32 %i.af to i64        ; 3 uses
+  %min.iters.check = icmp ult i32 %i.af, 4
+  br i1 %min.iters.check, label %scalar.ph.prol.loopexit, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph
-  %6 = ptrtoaddr ptr %i.ah to i64                 ; 4 uses
-  %7 = sub i64 %2, %3
-  %diff.check = icmp ugt i64 %7, -32
-  %8 = sub i64 %2, %4
-  %diff.check43 = icmp ugt i64 %8, -32
-  %conflict.rdx = or i1 %diff.check, %diff.check43
-  %9 = sub i64 %2, %5
-  %diff.check44 = icmp ugt i64 %9, -32
-  %conflict.rdx45 = or i1 %conflict.rdx, %diff.check44
-  %10 = sub i64 %2, %6
-  %diff.check46 = icmp ugt i64 %10, -32
-  %conflict.rdx47 = or i1 %conflict.rdx45, %diff.check46
-  %11 = sub i64 %3, %4
-  %diff.check48 = icmp ugt i64 %11, -32
-  %conflict.rdx49 = or i1 %conflict.rdx47, %diff.check48
-  %12 = sub i64 %3, %5
-  %diff.check50 = icmp ugt i64 %12, -32
-  %conflict.rdx51 = or i1 %conflict.rdx49, %diff.check50
-  %13 = sub i64 %3, %6
-  %diff.check52 = icmp ugt i64 %13, -32
-  %conflict.rdx53 = or i1 %conflict.rdx51, %diff.check52
-  %14 = sub i64 %4, %5
-  %diff.check54 = icmp ugt i64 %14, -32
-  %conflict.rdx55 = or i1 %conflict.rdx53, %diff.check54
-  %15 = sub i64 %4, %6
-  %diff.check56 = icmp ugt i64 %15, -32
-  %conflict.rdx57 = or i1 %conflict.rdx55, %diff.check56
-  %16 = sub i64 %6, %5
-  %diff.check58 = icmp ugt i64 %16, -32
-  %conflict.rdx59 = or i1 %conflict.rdx57, %diff.check58
-  br i1 %conflict.rdx59, label %scalar.ph.preheader.a, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph
   %n.vec = and i64 %wide.trip.count, 4294967292   ; 3 uses
   br label %vector.body
 
@@ -363,66 +326,33 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %wide.load60, ptr %i.ar, align 16, !tbaa !24
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.as = icmp eq i64 %index.next, %n.vec
-  br i1 %i.as, label %middle.block, label %vector.body, !llvm.loop !109
+  br i1 %i.as, label %scalar.ph.preheader.a, label %vector.body, !llvm.loop !109
 
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
-  br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader.a
+scalar.ph.preheader.a:                            ; preds = %vector.body
+  %lcmp.mod.not = icmp eq i64 %n.vec, %wide.trip.count
+  br i1 %lcmp.mod.not, label %._crit_edge, label %scalar.ph.prol.loopexit
 
-scalar.ph.preheader.a:                            ; preds = %vector.memcheck, %.lr.ph, %middle.block
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 8 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
-
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader.a
-  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.ph
-  store i64 0, ptr %17, align 16, !tbaa !24
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.ph
-  store i64 1, ptr %18, align 16, !tbaa !24
-  %19 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.ph
-  store i64 1, ptr %19, align 16, !tbaa !24
-  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv.ph
-  %21 = load i64, ptr %20, align 8, !tbaa !24
-  %22 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.ph
-  store i64 %21, ptr %22, align 16, !tbaa !24
-  %indvars.iv.next.prol = or disjoint i64 %indvars.iv.ph, 1
-  br label %scalar.ph.prol.loopexit
-
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader.a
-  %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader.a ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
-  %23 = add nsw i64 %wide.trip.count, -1
-  %24 = icmp eq i64 %indvars.iv.ph, %23
-  br i1 %24, label %._crit_edge, label %scalar.ph
+scalar.ph.prol.loopexit:                          ; preds = %.lr.ph, %scalar.ph.preheader.a
+  %indvars.iv.unr = phi i64 [ 0, %.lr.ph ], [ %n.vec, %scalar.ph.preheader.a ]
+  br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next.1, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 7 uses
-  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
-  store i64 0, ptr %25, align 8, !tbaa !24
-  %26 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv
-  store i64 1, ptr %26, align 8, !tbaa !24
-  %27 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
-  store i64 1, ptr %27, align 8, !tbaa !24
-  %28 = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv
-  %29 = load i64, ptr %28, align 8, !tbaa !24
-  %30 = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
-  store i64 %29, ptr %30, align 8, !tbaa !24
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 5 uses
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 6 uses
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   store i64 0, ptr %i.at, align 8, !tbaa !24
-  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.next
+  %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv
   store i64 1, ptr %i.au, align 8, !tbaa !24
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.next
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   store i64 1, ptr %i.av, align 8, !tbaa !24
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv.next
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %indvars.iv
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !24
-  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.next
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv
   store i64 %i.ax, ptr %i.ay, align 8, !tbaa !24
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
   br i1 %exitcond.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !110
 
-._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.k
+._crit_edge:                                      ; preds = %scalar.ph, %scalar.ph.preheader.a, %bb.k
   %i.az = call i32 @H5S_select_hyperslab(ptr noundef nonnull %0, i32 noundef 0, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d) #8
   %i.ba = icmp slt i32 %i.az, 0
   br i1 %i.ba, label %bb.l, label %.thread
@@ -825,7 +755,7 @@ attributes #8 = { nounwind }
 !107 = !{!106, !106, i64 0}
 !108 = !{!"branch_weights", i32 1132716, i32 2146350932}
 !109 = distinct !{!109, !37, !111, !112}
-!110 = distinct !{!110, !37, !111}
+!110 = distinct !{!110, !37, !112, !111}
 !111 = !{!"llvm.loop.isvectorized", i32 1}
 !112 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_1

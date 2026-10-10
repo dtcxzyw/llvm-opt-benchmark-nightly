@@ -205,6 +205,7 @@ _ZN6embree13bitInterleaveINS_9vint_implILi4EEEEET_RKS3_S5_S5_.exit103.i.i: ; pre
   store <2 x i64> %i.bl, ptr %1, align 16
   %i.bm = sub i64 %i.dm, %i.dl
   %i.bn = getelementptr [8 x i8], ptr %i.n, i64 %i.bm ; 9 uses
+  %3 = add nuw nsw i64 %i.dl, 1                   ; 2 uses
   %min.iters.check = icmp ult i64 %i.dl, 17
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
@@ -217,7 +218,7 @@ vector.scevcheck:                                 ; preds = %_ZN6embree13bitInte
   br i1 %i.bq, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
-  %n.vec = and i64 %i.ed, 4611686018427387900     ; 3 uses
+  %n.vec = and i64 %3, 4611686018427387900        ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -242,7 +243,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.by, label %middle.block, label %vector.body, !llvm.loop !189
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %i.ed, %n.vec
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %_ZN6embree13bitInterleaveINS_9vint_implILi4EEEEET_RKS3_S5_S5_.exit103.i.i, %middle.block
@@ -321,7 +322,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 .noexc12.i.i:                                     ; preds = %.noexc12.i.i.backedge, %.noexc12.lr.ph.i.i
   %.0250.i.i = phi i64 [ %i.d, %.noexc12.lr.ph.i.i ], [ %.0250.i.i.be, %.noexc12.i.i.backedge ] ; 4 uses
-  %i.dl = phi i64 [ 0, %.noexc12.lr.ph.i.i ], [ %.be, %.noexc12.i.i.backedge ] ; 12 uses
+  %i.dl = phi i64 [ 0, %.noexc12.lr.ph.i.i ], [ %.be, %.noexc12.i.i.backedge ] ; 13 uses
   %i.dm = phi i64 [ 0, %.noexc12.lr.ph.i.i ], [ %i.ee, %.noexc12.i.i.backedge ] ; 2 uses
   %i.dn = load ptr, ptr %i.w, align 8, !nonnull !50, !align !54
   %i.do = load ptr, ptr %i.dn, align 8
@@ -345,7 +346,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %.sroa.07.8.vec.extract.i.i, ptr %i.eb, align 4
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.dl
   store i32 %i.dt, ptr %i.ec, align 4
-  %i.ed = add nuw nsw i64 %i.dl, 1                ; 4 uses
+  %i.ed = add nuw nsw i64 %i.dl, 1                ; 2 uses
   %i.ee = add i64 %i.dm, 1                        ; 2 uses
   %i.ef = icmp eq i64 %i.ed, 4
   br i1 %i.ef, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit.i.thread.i, label %_ZN6embree4sse216BVHBuilderMorton19MortonCodeGeneratorclERKNS_4BBoxINS_6Vec3faEEEj.exit.i.i

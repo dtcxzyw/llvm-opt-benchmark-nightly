@@ -205,10 +205,10 @@ tailrecurse._crit_edge:                           ; preds = %bb.a
 
 .lr.ph141:                                        ; preds = %.lr.ph, %tailrecurse
   %accumulator.tr76140 = phi i32 [ %i.ax, %tailrecurse ], [ 0, %.lr.ph ] ; 7 uses
-  %.tr5577139 = phi i32 [ %i.at, %tailrecurse ], [ %2, %.lr.ph ] ; 3 uses
+  %.tr5577139 = phi i32 [ %i.at, %tailrecurse ], [ %2, %.lr.ph ] ; 4 uses
   %.tr5678138 = phi ptr [ %i.aw, %tailrecurse ], [ %3, %.lr.ph ] ; 13 uses
   %.tr5779137 = phi i32 [ %i.ao, %tailrecurse ], [ %4, %.lr.ph ] ; 9 uses
-  %i.d = phi ptr [ %i.aq, %tailrecurse ], [ %i.a, %.lr.ph ]
+  %i.d = phi ptr [ %i.aq, %tailrecurse ], [ %i.a, %.lr.ph ] ; 2 uses
   %i.e = load i32, ptr %i.b, align 8, !tbaa !158
   %.not53 = icmp slt i32 %.tr5577139, %i.e
   br i1 %.not53, label %bb.b, label %._crit_edge.loopexit
@@ -227,7 +227,7 @@ bb.b:                                             ; preds = %.lr.ph141
   %i.g = sub nsw i32 %5, %.tr5779137              ; 2 uses
   %i.h = shl nuw i32 1, %i.g                      ; 4 uses
   %i.i = zext nneg i32 %.tr5577139 to i64         ; 2 uses
-  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.i ; 10 uses
+  %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.i ; 9 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !131  ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   %i.m = load i32, ptr %i.l, align 4, !tbaa !131
@@ -235,7 +235,6 @@ bb.b:                                             ; preds = %.lr.ph141
   br i1 %i.n, label %.preheader, label %bb.c
 
 .preheader:                                       ; preds = %bb.b
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   %.not82 = icmp eq i32 %i.g, 31
   br i1 %.not82, label %.loopexit, label %.lr.ph81.preheader
 
@@ -256,9 +255,13 @@ bb.b:                                             ; preds = %.lr.ph141
 
 vector.memcheck:                                  ; preds = %.lr.ph81.preheader
   %i.p = shl nuw nsw i64 %wide.trip.count, 3
-  %i.q = getelementptr i8, ptr %.tr5678138, i64 %i.p
-  %bound0 = icmp ult ptr %.tr5678138, %6
-  %bound1 = icmp ult ptr %i.j, %i.q
+  %6 = getelementptr i8, ptr %.tr5678138, i64 %i.p
+  %7 = zext nneg i32 %.tr5577139 to i64
+  %8 = shl nuw nsw i64 %7, 3
+  %9 = getelementptr i8, ptr %i.d, i64 %8
+  %i.q = getelementptr i8, ptr %9, i64 4
+  %bound0 = icmp ult ptr %.tr5678138, %i.q
+  %bound1 = icmp ult ptr %i.j, %6
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph81.preheader149, label %vector.ph
 

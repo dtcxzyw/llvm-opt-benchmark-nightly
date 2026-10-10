@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !134
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !129  ; 7 uses
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = ptrtoint ptr %i.e to i64                 ; 4 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
   %i.i = ashr exact i64 %i.h, 2
   %i.j = icmp ult i64 %i.i, %1
@@ -216,21 +216,17 @@ _ZNSt12_Vector_baseIN16CustomIdentifier9entity_idESaIS1_EE11_M_allocateEm.exit.i
   %i.m = ptrtoint ptr %i.l to i64                 ; 2 uses
   %i.n = sub i64 %i.m, %i.g
   %i.o = shl nuw nsw i64 %1, 2
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #24 ; 7 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #24 ; 6 uses
   %.not10.i.i.i.i.i = icmp eq ptr %i.e, %i.l
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN16CustomIdentifier9entity_idESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNSt12_Vector_baseIN16CustomIdentifier9entity_idESaIS1_EE11_M_allocateEm.exit.i.i
-  %2 = ptrtoaddr ptr %i.p to i64
   %i.q = add i64 %i.m, -4
   %i.r = sub i64 %i.q, %i.g                       ; 2 uses
   %i.s = lshr i64 %i.r, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
-  %3 = sub i64 %i.g, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader8, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.r, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.preheader8, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.preheader
   %n.vec = and i64 %i.t, 9223372036854775800      ; 3 uses
@@ -633,7 +629,7 @@ _ZN4entt16basic_sparse_setIN16CustomIdentifier9entity_idESaIS2_EE15assure_at_lea
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !130  ; 11 uses
   %i.z = load ptr, ptr %i.w, align 8, !tbaa !129  ; 17 uses
   %i.aa = ptrtoint ptr %i.y to i64                ; 3 uses
-  %i.ab = ptrtoint ptr %i.z to i64                ; 7 uses
+  %i.ab = ptrtoint ptr %i.z to i64                ; 5 uses
   %i.ac = sub i64 %i.aa, %i.ab                    ; 7 uses
   %i.ad = ashr exact i64 %i.ac, 2                 ; 8 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -694,23 +690,19 @@ _ZNKSt6vectorIN16CustomIdentifier9entity_idESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %.not.i.i.i = icmp ne i64 %i.ax, 0
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.ay = shl nuw nsw i64 %i.ax, 2
-  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24 ; 9 uses
+  %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #24 ; 8 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.ac
   store i32 %1, ptr %i.ba, align 4, !tbaa !46
   %.not10.i.i.i.i.i = icmp eq ptr %i.z, %i.y
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIN16CustomIdentifier9entity_idESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIN16CustomIdentifier9entity_idESaIS1_EE12_M_check_lenEmPKc.exit.i.i
-  %4 = ptrtoaddr ptr %i.az to i64
   %i.bb = add i64 %i.aa, -4
   %i.bc = sub i64 %i.bb, %i.ab                    ; 2 uses
   %i.bd = lshr i64 %i.bc, 2
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
-  %min.iters.check73 = icmp ult i64 %i.bc, 44
-  %5 = sub i64 %i.ab, %4
-  %diff.check71 = icmp ugt i64 %5, -32
-  %or.cond87 = or i1 %min.iters.check73, %diff.check71
-  br i1 %or.cond87, label %.lr.ph.i.i.i.i.i.preheader89, label %vector.ph74
+  %min.iters.check73 = icmp ult i64 %i.bc, 28
+  br i1 %min.iters.check73, label %.lr.ph.i.i.i.i.i.preheader89, label %vector.ph74
 
 vector.ph74:                                      ; preds = %.lr.ph.i.i.i.i.i.preheader
   %n.vec75 = and i64 %i.be, 9223372036854775800   ; 3 uses
@@ -824,23 +816,19 @@ _ZNKSt6vectorIN16CustomIdentifier9entity_idESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %.not.i.i.i25 = icmp ne i64 %i.cj, 0
   call void @llvm.assume(i1 %.not.i.i.i25)
   %i.ck = shl nuw nsw i64 %i.cj, 2
-  %i.cl = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ck) #24 ; 10 uses
+  %i.cl = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ck) #24 ; 9 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 %i.ac
   store i32 %1, ptr %i.cm, align 4, !tbaa !46
   %.not10.i.i.i.i.i26 = icmp eq ptr %i.z, %i.y
   br i1 %.not10.i.i.i.i.i26, label %_ZNSt6vectorIN16CustomIdentifier9entity_idESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i31, label %.lr.ph.i.i.i.i.i27.preheader
 
 .lr.ph.i.i.i.i.i27.preheader:                     ; preds = %_ZNKSt6vectorIN16CustomIdentifier9entity_idESaIS1_EE12_M_check_lenEmPKc.exit.i.i23
-  %6 = ptrtoaddr ptr %i.cl to i64
   %i.cn = add i64 %i.aa, -4
   %i.co = sub i64 %i.cn, %i.ab                    ; 2 uses
   %i.cp = lshr i64 %i.co, 2
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.co, 44
-  %7 = sub i64 %i.ab, %6
-  %diff.check = icmp ugt i64 %7, -32
-  %or.cond88 = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond88, label %.lr.ph.i.i.i.i.i27.preheader90, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.co, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i27.preheader90, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i27.preheader
   %n.vec = and i64 %i.cq, 9223372036854775800     ; 3 uses
@@ -1060,7 +1048,7 @@ bb.c:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !134
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !129  ; 7 uses
   %i.f = ptrtoint ptr %i.d to i64
-  %i.g = ptrtoint ptr %i.e to i64                 ; 4 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
   %i.i = ashr exact i64 %i.h, 2
   %i.j = icmp ult i64 %i.i, %1
@@ -1072,21 +1060,17 @@ _ZNSt12_Vector_baseIN16CustomIdentifier9entity_idESaIS1_EE11_M_allocateEm.exit.i
   %i.m = ptrtoint ptr %i.l to i64                 ; 2 uses
   %i.n = sub i64 %i.m, %i.g
   %i.o = shl nuw nsw i64 %1, 2
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #24 ; 7 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #24 ; 6 uses
   %.not10.i.i.i.i = icmp eq ptr %i.e, %i.l
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN16CustomIdentifier9entity_idESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIN16CustomIdentifier9entity_idESaIS1_EE11_M_allocateEm.exit.i
-  %2 = ptrtoaddr ptr %i.p to i64
   %i.q = add i64 %i.m, -4
   %i.r = sub i64 %i.q, %i.g                       ; 2 uses
   %i.s = lshr i64 %i.r, 2
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.r, 44
-  %3 = sub i64 %i.g, %2
-  %diff.check = icmp ugt i64 %3, -32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader6, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.r, 28
+  br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader6, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.preheader
   %n.vec = and i64 %i.t, 9223372036854775800      ; 3 uses
@@ -1489,7 +1473,7 @@ begin_hunk_2_@llvm.umin.i64
 !247 = distinct !{!247, !246, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !248 = distinct !{!248, !246, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !249 = distinct !{!249, !70, !135, !136}
-!250 = distinct !{!250, !70, !135}
+!250 = distinct !{!250, !70, !136, !135}
 !251 = !{!247}
 !252 = !{!248}
 !253 = distinct !{!253, !70}
@@ -1499,12 +1483,12 @@ begin_hunk_2_@llvm.umin.i64
 !257 = distinct !{!257, !256, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !258 = distinct !{!258, !256, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !259 = distinct !{!259, !70, !135, !136}
-!260 = distinct !{!260, !70, !135}
+!260 = distinct !{!260, !70, !136, !135}
 !261 = distinct !{!261, i1 false, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_"}
 !262 = distinct !{!262, !261, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !263 = distinct !{!263, !261, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !264 = distinct !{!264, !70, !135, !136}
-!265 = distinct !{!265, !70, !135}
+!265 = distinct !{!265, !70, !136, !135}
 !266 = !{!257}
 !267 = !{!258}
 !268 = !{!262}
@@ -1513,7 +1497,7 @@ begin_hunk_2_@llvm.umin.i64
 !271 = distinct !{!271, !270, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_: argument 0"}
 !272 = distinct !{!272, !270, !"_ZSt19__relocate_object_aIN16CustomIdentifier9entity_idES1_SaIS1_EEvPT_PT0_RT1_: argument 1"}
 !273 = distinct !{!273, !70, !135, !136}
-!274 = distinct !{!274, !70, !135}
+!274 = distinct !{!274, !70, !136, !135}
 !275 = !{!271}
 !276 = !{!272}
 !277 = distinct !{!277, !146}

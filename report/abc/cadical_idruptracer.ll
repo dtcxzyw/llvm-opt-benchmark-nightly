@@ -204,8 +204,7 @@ bb.a:
   %i.i = add nsw i64 %i.h, %.neg
   %i.j = shl i64 %i.i, 2
   %i.k = add i64 %i.j, 32
-  %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.k) #17 ; 7 uses
-  %1 = ptrtoaddr ptr %i.l to i64
+  %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.k) #17 ; 6 uses
   store ptr null, ptr %i.l, align 8, !tbaa !44
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
@@ -214,29 +213,23 @@ bb.a:
   %i.p = trunc i64 %i.h to i32
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   store i32 %i.p, ptr %i.q, align 8, !tbaa !50
-  %i.r = load ptr, ptr %i.a, align 8, !tbaa !51   ; 6 uses
-  %2 = ptrtoaddr ptr %i.r to i64                  ; 2 uses
+  %i.r = load ptr, ptr %i.a, align 8, !tbaa !51   ; 5 uses
   %i.s = load ptr, ptr %i.b, align 8, !tbaa !51   ; 3 uses
   %.not2021 = icmp eq ptr %i.r, %i.s
   br i1 %.not2021, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 28 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 28 ; 3 uses
   %i.u = ptrtoaddr ptr %i.s to i64
+  %1 = ptrtoaddr ptr %i.r to i64
   %i.v = add i64 %i.u, -4
-  %i.w = sub i64 %i.v, %2                         ; 2 uses
+  %i.w = sub i64 %i.v, %1                         ; 2 uses
   %i.x = lshr i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %i.w, 60
-  br i1 %min.iters.check, label %.lr.ph.preheader28, label %vector.memcheck
+  %min.iters.check = icmp ult i64 %i.w, 28
+  br i1 %min.iters.check, label %.lr.ph.preheader28, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %3 = sub i64 %1, %2
-  %4 = add i64 %3, 27
-  %diff.check = icmp ult i64 %4, 31
-  br i1 %diff.check, label %.lr.ph.preheader28, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %i.y, 9223372036854775800      ; 3 uses
   %i.z = shl i64 %n.vec, 2                        ; 2 uses
   %i.aa = getelementptr i8, ptr %i.t, i64 %i.z
@@ -262,9 +255,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.y, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader28
 
-.lr.ph.preheader28:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
-  %.023.ph = phi ptr [ %i.t, %vector.memcheck ], [ %i.t, %.lr.ph.preheader ], [ %i.aa, %middle.block ]
-  %.sroa.017.022.ph = phi ptr [ %i.r, %vector.memcheck ], [ %i.r, %.lr.ph.preheader ], [ %i.ab, %middle.block ]
+.lr.ph.preheader28:                               ; preds = %.lr.ph.preheader, %middle.block
+  %.023.ph = phi ptr [ %i.t, %.lr.ph.preheader ], [ %i.aa, %middle.block ]
+  %.sroa.017.022.ph = phi ptr [ %i.r, %.lr.ph.preheader ], [ %i.ab, %middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %bb.a
@@ -534,8 +527,7 @@ _ZN7CaDiCaL11IdrupTracer11reduce_hashEmm.exit:    ; preds = %.lr.ph.i, %bb.c
   %i.ae = add nsw i64 %i.ad, %.neg.i
   %i.af = shl i64 %i.ae, 2
   %i.ag = add i64 %i.af, 32
-  %i.ah = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ag) #17 ; 8 uses
-  %1 = ptrtoaddr ptr %i.ah to i64
+  %i.ah = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ag) #17 ; 7 uses
   store ptr null, ptr %i.ah, align 8, !tbaa !44
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.aj = load <2 x i64>, ptr %i.o, align 8, !tbaa !34
@@ -543,29 +535,23 @@ _ZN7CaDiCaL11IdrupTracer11reduce_hashEmm.exit:    ; preds = %.lr.ph.i, %bb.c
   %i.ak = trunc i64 %i.ad to i32
   %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
   store i32 %i.ak, ptr %i.al, align 8, !tbaa !50
-  %i.am = load ptr, ptr %i.w, align 8, !tbaa !51  ; 6 uses
-  %2 = ptrtoaddr ptr %i.am to i64                 ; 2 uses
+  %i.am = load ptr, ptr %i.w, align 8, !tbaa !51  ; 5 uses
   %i.an = load ptr, ptr %i.x, align 8, !tbaa !51  ; 3 uses
   %.not2021.i = icmp eq ptr %i.am, %i.an
   br i1 %.not2021.i, label %_ZN7CaDiCaL11IdrupTracer10new_clauseEv.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %_ZN7CaDiCaL11IdrupTracer11reduce_hashEmm.exit
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.ah, i64 28 ; 4 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.ah, i64 28 ; 3 uses
   %i.ap = ptrtoaddr ptr %i.an to i64
+  %1 = ptrtoaddr ptr %i.am to i64
   %i.aq = add i64 %i.ap, -4
-  %i.ar = sub i64 %i.aq, %2                       ; 2 uses
+  %i.ar = sub i64 %i.aq, %1                       ; 2 uses
   %i.as = lshr i64 %i.ar, 2
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ar, 60
-  br i1 %min.iters.check, label %.lr.ph.i4.preheader, label %vector.memcheck
+  %min.iters.check = icmp ult i64 %i.ar, 28
+  br i1 %min.iters.check, label %.lr.ph.i4.preheader, label %vector.ph
 
-vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
-  %3 = sub i64 %1, %2
-  %4 = add i64 %3, 27
-  %diff.check = icmp ult i64 %4, 31
-  br i1 %diff.check, label %.lr.ph.i4.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %.lr.ph.preheader.i
   %n.vec = and i64 %i.at, 9223372036854775800     ; 3 uses
   %i.au = shl i64 %n.vec, 2                       ; 2 uses
   %i.av = getelementptr i8, ptr %i.ao, i64 %i.au
@@ -591,9 +577,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.at, %n.vec
   br i1 %cmp.n, label %_ZN7CaDiCaL11IdrupTracer10new_clauseEv.exit, label %.lr.ph.i4.preheader
 
-.lr.ph.i4.preheader:                              ; preds = %vector.memcheck, %.lr.ph.preheader.i, %middle.block
-  %.023.i.ph = phi ptr [ %i.ao, %vector.memcheck ], [ %i.ao, %.lr.ph.preheader.i ], [ %i.av, %middle.block ]
-  %.sroa.017.022.i.ph = phi ptr [ %i.am, %vector.memcheck ], [ %i.am, %.lr.ph.preheader.i ], [ %i.aw, %middle.block ]
+.lr.ph.i4.preheader:                              ; preds = %.lr.ph.preheader.i, %middle.block
+  %.023.i.ph = phi ptr [ %i.ao, %.lr.ph.preheader.i ], [ %i.av, %middle.block ]
+  %.sroa.017.022.i.ph = phi ptr [ %i.am, %.lr.ph.preheader.i ], [ %i.aw, %middle.block ]
   br label %.lr.ph.i4
 
 .lr.ph.i4:                                        ; preds = %.lr.ph.i4.preheader, %.lr.ph.i4
@@ -996,12 +982,12 @@ attributes #18 = { noreturn nounwind }
 !74 = distinct !{!74, !42}
 !75 = distinct !{!75, !42}
 !76 = distinct !{!76, !53, !54}
-!77 = distinct !{!77, !53}
+!77 = distinct !{!77, !54, !53}
 !78 = distinct !{!78, !42}
 !79 = distinct !{!79, !42}
 !80 = !{!43, !21, i64 16}
 !81 = distinct !{!81, !53, !54}
-!82 = distinct !{!82, !53}
+!82 = distinct !{!82, !54, !53}
 !83 = distinct !{!83, !42}
 !84 = distinct !{!84, !42}
 !85 = distinct !{!85, !42}
