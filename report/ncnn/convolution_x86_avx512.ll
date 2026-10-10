@@ -205,15 +205,15 @@ bb.le:                                            ; preds = %bb.le, %.preheader1
   store <8 x float> %i.bol, ptr %.512471733.us.i.epil.init, align 32, !tbaa !85
   %i.bom = getelementptr inbounds nuw [4 x i8], ptr %i.bok, i64 %i.apk ; 2 uses
   %i.bon = getelementptr inbounds nuw i8, ptr %.512471733.us.i.epil.init, i64 32
-  %i.boo = call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr %i.bom, <8 x i32> %i.apj, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.boo = call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr nonnull %i.bom, <8 x i32> %i.apj, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
   store <8 x float> %i.boo, ptr %i.bon, align 32, !tbaa !85
   %i.bop = getelementptr inbounds nuw [4 x i8], ptr %i.bom, i64 %i.apk ; 2 uses
   %i.boq = getelementptr inbounds nuw i8, ptr %.512471733.us.i.epil.init, i64 64
-  %i.bor = call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr %i.bop, <8 x i32> %i.apj, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.bor = call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr nonnull %i.bop, <8 x i32> %i.apj, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
   store <8 x float> %i.bor, ptr %i.boq, align 32, !tbaa !85
   %i.bos = getelementptr inbounds nuw [4 x i8], ptr %i.bop, i64 %i.apk
   %i.bot = getelementptr inbounds nuw i8, ptr %.512471733.us.i.epil.init, i64 96
-  %i.bou = call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr %i.bos, <8 x i32> %i.apj, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.bou = call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr nonnull %i.bos, <8 x i32> %i.apj, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
   store <8 x float> %i.bou, ptr %i.bot, align 32, !tbaa !85
   %i.bov = getelementptr inbounds nuw i8, ptr %.512471733.us.i.epil.init, i64 128
   br label %._crit_edge1734.us.i
@@ -616,7 +616,7 @@ bb.fn:                                            ; preds = %bb.fn, %.preheader1
   store <8 x i16> %i.bmk, ptr %.812641754.us.i.epil.init, align 1, !tbaa !85
   %i.bml = getelementptr inbounds nuw [4 x i8], ptr %i.bme, i64 %i.aaf
   %i.bmm = getelementptr inbounds nuw i8, ptr %.812641754.us.i.epil.init, i64 16
-  %i.bmn = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr %i.bml, <8 x i32> %i.aae, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.bmn = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr nonnull %i.bml, <8 x i32> %i.aae, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
   %i.bmo = bitcast <8 x float> %i.bmn to <8 x i32>
   %i.bmp = lshr <8 x i32> %i.bmo, splat (i32 16)  ; 2 uses
   %i.bmq = shufflevector <8 x i32> %i.bmp, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -1019,7 +1019,7 @@ bb.fr:                                            ; preds = %bb.fr, %.preheader1
   store i64 %i.bzy, ptr %.712091840.us.i.epil.init, align 1, !tbaa !85
   %i.bzz = getelementptr inbounds nuw [4 x i8], ptr %i.bzs, i64 %i.axs
   %i.caa = getelementptr inbounds nuw i8, ptr %.712091840.us.i.epil.init, i64 8
-  %i.cab = tail call fast <4 x float> @llvm.x86.avx2.gather.d.ps(<4 x float> zeroinitializer, ptr %i.bzz, <4 x i32> %i.axr, <4 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.cab = tail call fast <4 x float> @llvm.x86.avx2.gather.d.ps(<4 x float> zeroinitializer, ptr nonnull %i.bzz, <4 x i32> %i.axr, <4 x float> splat (float -nan(0x3FFFFF)), i8 4)
   %i.cac = bitcast <4 x float> %i.cab to <4 x i32>
   %i.cad = lshr <4 x i32> %i.cac, splat (i32 16)
   %i.cae = tail call <8 x i16> @llvm.x86.sse41.packusdw(<4 x i32> %i.cad, <4 x i32> poison)

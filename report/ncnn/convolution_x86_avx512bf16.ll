@@ -205,17 +205,17 @@ bb.bb:                                            ; preds = %bb.bb, %.preheader1
   store <8 x bfloat> %i.akr, ptr %.512551732.us.i.epil.init, align 1, !tbaa !18
   %i.aks = getelementptr inbounds nuw [4 x i8], ptr %i.akp, i64 %i.jz ; 2 uses
   %i.akt = getelementptr inbounds nuw i8, ptr %.512551732.us.i.epil.init, i64 16
-  %i.aku = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr %i.aks, <8 x i32> %i.jy, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.aku = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr nonnull %i.aks, <8 x i32> %i.jy, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
   %i.akv = tail call fast <8 x bfloat> @llvm.x86.vcvtneps2bf16256(<8 x float> %i.aku)
   store <8 x bfloat> %i.akv, ptr %i.akt, align 1, !tbaa !18
   %i.akw = getelementptr inbounds nuw [4 x i8], ptr %i.aks, i64 %i.jz ; 2 uses
   %i.akx = getelementptr inbounds nuw i8, ptr %.512551732.us.i.epil.init, i64 32
-  %i.aky = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr %i.akw, <8 x i32> %i.jy, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.aky = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr nonnull %i.akw, <8 x i32> %i.jy, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
   %i.akz = tail call fast <8 x bfloat> @llvm.x86.vcvtneps2bf16256(<8 x float> %i.aky)
   store <8 x bfloat> %i.akz, ptr %i.akx, align 1, !tbaa !18
   %i.ala = getelementptr inbounds nuw [4 x i8], ptr %i.akw, i64 %i.jz
   %i.alb = getelementptr inbounds nuw i8, ptr %.512551732.us.i.epil.init, i64 48
-  %i.alc = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr %i.ala, <8 x i32> %i.jy, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.alc = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr nonnull %i.ala, <8 x i32> %i.jy, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
   %i.ald = tail call fast <8 x bfloat> @llvm.x86.vcvtneps2bf16256(<8 x float> %i.alc)
   store <8 x bfloat> %i.ald, ptr %i.alb, align 1, !tbaa !18
   %i.ale = getelementptr inbounds nuw i8, ptr %.512551732.us.i.epil.init, i64 64
@@ -289,7 +289,7 @@ bb.bb:                                            ; preds = %bb.bb, %.preheader1
   store <8 x bfloat> %i.ame, ptr %.812581748.us.i.epil.init, align 1, !tbaa !18
   %i.amf = getelementptr inbounds nuw [4 x i8], ptr %i.amc, i64 %i.jz
   %i.amg = getelementptr inbounds nuw i8, ptr %.812581748.us.i.epil.init, i64 16
-  %i.amh = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr %i.amf, <8 x i32> %i.jy, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.amh = tail call fast <8 x float> @llvm.x86.avx2.gather.d.ps.256(<8 x float> zeroinitializer, ptr nonnull %i.amf, <8 x i32> %i.jy, <8 x float> splat (float -nan(0x3FFFFF)), i8 4)
   %i.ami = tail call fast <8 x bfloat> @llvm.x86.vcvtneps2bf16256(<8 x float> %i.amh)
   store <8 x bfloat> %i.ami, ptr %i.amg, align 1, !tbaa !18
   %i.amj = getelementptr inbounds nuw i8, ptr %.812581748.us.i.epil.init, i64 32
@@ -692,7 +692,7 @@ bb.bf:                                            ; preds = %bb.bf, %.preheader1
   store i64 %i.awo, ptr %.712031834.us.i.epil.init, align 1, !tbaa !18
   %i.awp = getelementptr inbounds nuw [4 x i8], ptr %i.awk, i64 %i.aar
   %i.awq = getelementptr inbounds nuw i8, ptr %.712031834.us.i.epil.init, i64 8
-  %i.awr = tail call fast <4 x float> @llvm.x86.avx2.gather.d.ps(<4 x float> zeroinitializer, ptr %i.awp, <4 x i32> %i.aaq, <4 x float> splat (float -nan(0x3FFFFF)), i8 4)
+  %i.awr = tail call fast <4 x float> @llvm.x86.avx2.gather.d.ps(<4 x float> zeroinitializer, ptr nonnull %i.awp, <4 x i32> %i.aaq, <4 x float> splat (float -nan(0x3FFFFF)), i8 4)
   %i.aws = tail call fast <8 x bfloat> @llvm.x86.vcvtneps2bf16128(<4 x float> %i.awr)
   %i.awt = bitcast <8 x bfloat> %i.aws to <2 x i64>
   %i.awu = extractelement <2 x i64> %i.awt, i64 0
