@@ -205,8 +205,8 @@ bb.ab:                                            ; preds = %"_ZN12tokio_rustls6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %"_ZN104_$LT$tokio_rustls..common..handshake..MidHandshake$LT$IS$GT$$u20$as$u20$core..future..future..Future$GT$4poll17h77985b3c5a77b5ecE.exit.thread17.i.i"
 
-.thread161.i.i.i:                                 ; preds = %bb.ay, %.body105.thread.i.i.i, %.thread157.i.i.i, %bb.ai, %.loopexit.split-lp.i.i.i, %bb.aa, %bb.z, %bb.x, %bb.v
-  %.pn81.pn.i.i.i = phi { ptr, i32 } [ %lpad.phi.i.i.i, %.loopexit.split-lp.i.i.i ], [ %i.dk, %bb.ai ], [ %i.dc, %bb.ay ], [ %i.fe, %.body105.thread.i.i.i ], [ %i.cr, %bb.v ], [ %i.ct, %bb.x ], [ %i.cz, %bb.z ], [ %i.da, %bb.aa ], [ %i.dt, %.thread157.i.i.i ]
+.thread161.i.i.i:                                 ; preds = %bb.ay, %.body105.thread.i.i.i, %bb.ai, %bb.ag, %.loopexit.split-lp.i.i.i, %bb.aa, %bb.z, %bb.x, %bb.v
+  %.pn81.pn.i.i.i = phi { ptr, i32 } [ %lpad.phi.i.i.i, %.loopexit.split-lp.i.i.i ], [ %i.dt, %bb.ag ], [ %i.dc, %bb.ay ], [ %i.fe, %.body105.thread.i.i.i ], [ %i.cr, %bb.v ], [ %i.ct, %bb.x ], [ %i.cz, %bb.z ], [ %i.da, %bb.aa ], [ %i.dk, %bb.ai ]
   resume { ptr, i32 } %.pn81.pn.i.i.i
 
 .loopexit.i.i.i:                                  ; preds = %bb.q
@@ -239,7 +239,7 @@ bb.ab:                                            ; preds = %"_ZN12tokio_rustls6
   invoke fastcc void @"_ZN4core3ptr94drop_in_place$LT$tokio_rustls..server..TlsStream$LT$tokio..net..tcp..stream..TcpStream$GT$$GT$17h4635cea1d1c4a5cbE"(ptr noalias noundef align 8 dereferenceable(1208) %i.p) #44
           to label %.thread161.i.i.i unwind label %bb.w, !noalias !674
 
-bb.ac:                                            ; preds = %bb.ag, %bb.c
+bb.ac:                                            ; preds = %3, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !668
   store ptr %i.o, ptr %i.l, align 8, !noalias !668
   store ptr %2, ptr %i.t, align 8, !noalias !668
@@ -266,15 +266,19 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ad
   %i.dj = icmp eq ptr %i.de, null
-  br i1 %i.dj, label %.loopexit197.i.i.i, label %bb.ag
+  br i1 %i.dj, label %.loopexit197.i.i.i, label %3
 
 .loopexit197.i.i.i:                               ; preds = %bb.af
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.17.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.o, i64 32, i1 false), !noalias !678
   br label %"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h255c5d003656fdfdE.exit107.i.i.i"
 
-bb.ag:                                            ; preds = %bb.af
+3:                                                ; preds = %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !668
   br label %bb.ac
+
+bb.ag:                                            ; preds = %.thread157.i.i.i, %bb.ao
+  call void @mi_free(ptr noundef nonnull %i.dn) #38, !noalias !679
+  br label %.thread161.i.i.i
 
 bb.ah:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !668
@@ -351,15 +355,11 @@ bb.ao:                                            ; preds = %bb.am
   %i.du = getelementptr inbounds nuw i8, ptr %.val1.i.i.i.i.i.i.i.i, i64 8
   %i.dv = load i64, ptr %i.du, align 8, !range !46, !invariant.load !45, !noalias !679
   %i.dw = icmp eq i64 %i.dv, 0
-  br i1 %i.dw, label %.thread157.i.i.i, label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i4.i.i.i.i.i.i.i.i.i.i"
+  br i1 %i.dw, label %bb.ag, label %.thread157.i.i.i
 
-"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i4.i.i.i.i.i.i.i.i.i.i": ; preds = %bb.ao
+.thread157.i.i.i:                                 ; preds = %bb.ao
   call void @mi_free(ptr noundef nonnull %.val.i.i.i.i.i.i.i.i) #38, !noalias !679
-  br label %.thread157.i.i.i
-
-.thread157.i.i.i:                                 ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i4.i.i.i.i.i.i.i.i.i.i", %bb.ao
-  call void @mi_free(ptr noundef nonnull %i.dn) #38, !noalias !679
-  br label %.thread161.i.i.i
+  br label %bb.ag
 
 "_ZN4core3ptr68drop_in_place$LT$alloc..boxed..Box$LT$std..io..error..Custom$GT$$GT$17hf9f3542050d139d7E.exit.i.i.i.i.i.i.i": ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h1e0b43146c957e5eE.exit.i.i.i.i.i.i.i.i.i.i.i", %bb.an
   call void @mi_free(ptr noundef nonnull %i.dn) #38, !noalias !679

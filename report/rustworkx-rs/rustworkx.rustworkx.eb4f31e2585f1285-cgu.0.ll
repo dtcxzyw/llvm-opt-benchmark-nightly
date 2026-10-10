@@ -205,9 +205,9 @@ bb.ct:                                            ; preds = %select.unfold
   store i64 1, ptr %0, align 8
   br label %bb.cu
 
-bb.cu:                                            ; preds = %bb.ct, %.thread495
-  %.val175 = phi i64 [ %i.cz, %bb.ct ], [ 0, %.thread495 ] ; 3 uses
-  %.val174 = phi ptr [ %i.da, %bb.ct ], [ @111, %.thread495 ] ; 2 uses
+bb.cu:                                            ; preds = %.thread495, %bb.ct
+  %.val175 = phi i64 [ 0, %.thread495 ], [ %i.cz, %bb.ct ] ; 3 uses
+  %.val174 = phi ptr [ @111, %.thread495 ], [ %i.da, %bb.ct ] ; 2 uses
   %i.pz = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   invoke void @_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueNtNtCsi0YPOvDEjiZ_4pyo33err5PyErrECskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(64) %i.pz)
           to label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtB4_6result6ResultdNtNtCsi0YPOvDEjiZ_4pyo33err5PyErrEECskcxRuJ53GpR_9rustworkx.exit240 unwind label %bb.v
@@ -610,9 +610,9 @@ bb.cm:                                            ; preds = %select.unfold
   store i64 1, ptr %0, align 8
   br label %bb.cn
 
-bb.cn:                                            ; preds = %bb.cm, %.thread494
-  %.val175 = phi i64 [ %i.cz, %bb.cm ], [ 0, %.thread494 ] ; 3 uses
-  %.val174 = phi ptr [ %i.da, %bb.cm ], [ @111, %.thread494 ] ; 2 uses
+bb.cn:                                            ; preds = %.thread494, %bb.cm
+  %.val175 = phi i64 [ 0, %.thread494 ], [ %i.cz, %bb.cm ] ; 3 uses
+  %.val174 = phi ptr [ @111, %.thread494 ], [ %i.da, %bb.cm ] ; 2 uses
   %i.ph = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   invoke void @_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueNtNtCsi0YPOvDEjiZ_4pyo33err5PyErrECskcxRuJ53GpR_9rustworkx(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(64) %i.ph)
           to label %_RINvNtCslwFuT2d6ECx_4core3ptr9drop_glueINtNtB4_6result6ResultdNtNtCsi0YPOvDEjiZ_4pyo33err5PyErrEECskcxRuJ53GpR_9rustworkx.exit239 unwind label %bb.v

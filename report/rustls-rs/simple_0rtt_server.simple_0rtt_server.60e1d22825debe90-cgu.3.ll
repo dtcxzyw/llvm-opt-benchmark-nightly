@@ -173,7 +173,7 @@ bb.f:                                             ; preds = %_RNvMs0_NtCs7ZUl82O
 
 bb.g:                                             ; preds = %bb.f
   %i.bb = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCsj6eKBz9Db1c_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc129 unwind label %3
+          to label %.noexc129 unwind label %4
 
 .noexc129:                                        ; preds = %bb.g
   %i.bc = lshr i64 %i.ay, 32
@@ -181,7 +181,7 @@ bb.g:                                             ; preds = %bb.f
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %i.bf = load ptr, ptr %i.be, align 8, !nonnull !6, !noundef !6
   %i.bg = invoke noundef i8 %i.bf(i32 noundef %i.bd)
-          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit unwind label %3, !inline_history !27
+          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit unwind label %4, !inline_history !27
 
 bb.h:                                             ; preds = %bb.f
   %i.bh = lshr i64 %i.ay, 32
@@ -211,12 +211,6 @@ bb.l:                                             ; preds = %bb.k
   %.val90 = load i64, ptr %i.p, align 8, !noundef !6
   %.not310 = icmp eq i64 %.val90, 0
   br i1 %.not310, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server.exit134, label %.lr.ph
-
-3:                                                ; preds = %bb.g, %.noexc129
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %i.ax) #13
-          to label %.thread unwind label %bb.ap
 
 bb.m:                                             ; preds = %bb.k
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -335,7 +329,7 @@ bb.u:                                             ; preds = %.noexc143
   br i1 %i.cr, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server.exit161, label %bb.w
 
 bb.v:                                             ; preds = %.noexc143
-  %i.cs = invoke noundef nonnull ptr @_RINvMNtNtCs4wP2HXfJTCR_5alloc2io5errorNtNtNtCsj6eKBz9Db1c_4core2io5error5Error3newReECsaKJjC64KgbL_3std(i8 noundef 42, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 30) #14
+  %i.cs = invoke noundef nonnull ptr @_RINvMNtNtCs4wP2HXfJTCR_5alloc2io5errorNtNtNtCsj6eKBz9Db1c_4core2io5error5Error3newReECsaKJjC64KgbL_3std(i8 noundef 42, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 30) #13
           to label %.thread273 unwind label %.thread236.loopexit ; 2 uses
 
 .thread273:                                       ; preds = %bb.v
@@ -381,7 +375,7 @@ bb.z:                                             ; preds = %.thread273, %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.df = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCsj6eKBz9Db1c_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc149 unwind label %bb.af
+          to label %.noexc149 unwind label %3
 
 .noexc149:                                        ; preds = %bb.aa
   %i.dg = lshr i64 %i.dd, 32
@@ -389,7 +383,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.di = getelementptr inbounds nuw i8, ptr %i.df, i64 8
   %i.dj = load ptr, ptr %i.di, align 8, !nonnull !6, !noundef !6
   %i.dk = invoke noundef i8 %i.dj(i32 noundef %i.dh)
-          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151 unwind label %bb.af, !inline_history !27
+          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151 unwind label %3, !inline_history !27
 
 bb.ab:                                            ; preds = %bb.z
   %i.dl = lshr i64 %i.dd, 32
@@ -416,11 +410,10 @@ bb.ae:                                            ; preds = %bb.y
   %spec.select = zext i1 %.not695 to i8
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server.exit161
 
-bb.af:                                            ; preds = %bb.aa, %.noexc149, %bb.ah, %.noexc155
+bb.af:                                            ; preds = %bb.ao
   %i.dt = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr %.sroa.5.0.i276) #13
-          to label %.thread unwind label %bb.ap
+  br label %.thread
 
 _RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit151: ; preds = %bb.ad, %bb.ac, %bb.ab, %.noexc149
   %.sroa.0.0.i146 = phi i8 [ %i.dr, %bb.ad ], [ %switch.idx.cast.i.i.i147, %bb.ab ], [ %i.dp, %bb.ac ], [ %i.dk, %.noexc149 ]
@@ -438,7 +431,7 @@ bb.ag:                                            ; preds = %_RNvMs1_NtNtCsj6eKB
 
 bb.ah:                                            ; preds = %bb.ag
   %i.dv = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCsj6eKBz9Db1c_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc155 unwind label %bb.af
+          to label %.noexc155 unwind label %3
 
 .noexc155:                                        ; preds = %bb.ah
   %i.dw = lshr i64 %i.dd, 32
@@ -446,7 +439,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dv, i64 8
   %i.dz = load ptr, ptr %i.dy, align 8, !nonnull !6, !noundef !6
   %i.ea = invoke noundef i8 %i.dz(i32 noundef %i.dx)
-          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit157 unwind label %bb.af, !inline_history !27
+          to label %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit157 unwind label %3, !inline_history !27
 
 bb.ai:                                            ; preds = %bb.ag
   %i.eb = lshr i64 %i.dd, 32
@@ -502,12 +495,7 @@ bb.ao:                                            ; preds = %bb.am
   store ptr %i.en, ptr %i.w, align 8, !alias.scope !60
   store i8 3, ptr %i.i, align 8, !alias.scope !60
   invoke void @_RNvXsd_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.w)
-          to label %.lr.ph502 unwind label %.thread286
-
-.thread286:                                       ; preds = %bb.ao
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread
+          to label %.lr.ph502 unwind label %bb.af
 
 .lr.ph502:                                        ; preds = %bb.an, %bb.am, %bb.am, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
@@ -518,7 +506,13 @@ bb.ao:                                            ; preds = %bb.am
   %or.cond.i139 = select i1 %i.ep, i1 true, i1 %i.er
   br i1 %or.cond.i139, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server.exit161, label %.lr.ph972
 
-bb.ap:                                            ; preds = %bb.au, %bb.as, %.thread, %.split.thread, %bb.af, %bb.cc, %bb.cj, %3, %bb.az
+3:                                                ; preds = %.noexc155, %.noexc149, %bb.aa, %bb.ah
+  %lpad.thr_comm287 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr %.sroa.5.0.i276) #14
+          to label %.thread unwind label %bb.ap
+
+bb.ap:                                            ; preds = %bb.au, %bb.as, %.thread, %.split.thread, %3, %bb.cc, %bb.cj, %4, %bb.az
   %i.es = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #15
@@ -541,7 +535,7 @@ bb.ar:                                            ; preds = %bb.ay
   br label %.thread
 
 bb.as:                                            ; preds = %bb.au
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server(i64 %i.ew, ptr %i.ex) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server(i64 %i.ew, ptr %i.ex) #14
           to label %.thread unwind label %bb.ap
 
 bb.at:                                            ; preds = %bb.aq
@@ -555,7 +549,7 @@ bb.at:                                            ; preds = %bb.aq
 bb.au:                                            ; preds = %bb.at
   %i.ez = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server(ptr null) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server(ptr null) #14
           to label %bb.as unwind label %bb.ap
 
 bb.av:                                            ; preds = %bb.at
@@ -602,7 +596,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_1
 bb.az:                                            ; preds = %bb.aq
   %i.fj = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.l) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.l) #14
           to label %.thread unwind label %bb.ap
 
 bb.ba:                                            ; preds = %_RNvMs_NtCs7ZUl82OSlxp_6rustls4connINtB4_16ConnectionCommonNtNtNtB6_6server11server_conn20ServerConnectionDataE19process_new_packetsCs8jHtsX8J7SC_18simple_0rtt_server.exit
@@ -839,7 +833,7 @@ bb.cc:                                            ; preds = %bb.cb
   %i.hg = landingpad { ptr, i32 }
           cleanup
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fq) ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %i.fq) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %i.fq) #14
           to label %.thread245 unwind label %bb.ap
 
 bb.cd:                                            ; preds = %bb.ca, %bb.bz, %bb.bz, %bb.cb
@@ -915,7 +909,7 @@ bb.cj:                                            ; preds = %bb.ci
   %i.hu = landingpad { ptr, i32 }
           cleanup
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fq) ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %i.fq) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %i.fq) #14
           to label %.thread245 unwind label %bb.ap
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server.exit125: ; preds = %bb.t, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server.exit194.thread, %bb.bp, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server.exit182, %.thread257, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server.exit194, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server.exit.i123
@@ -959,17 +953,23 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server.exit194
 
-.thread:                                          ; preds = %.thread236.loopexit, %.thread236.loopexit.split-lp.loopexit.split-lp, %.thread236.loopexit.split-lp.loopexit, %bb.as, %bb.ar, %.thread286, %3, %bb.af, %bb.az
-  %.pn77.pn226 = phi { ptr, i32 } [ %i.fj, %bb.az ], [ %5, %.thread286 ], [ %4, %3 ], [ %i.ez, %bb.as ], [ %i.dt, %bb.af ], [ %i.ev, %bb.ar ], [ %lpad.loopexit, %.thread236.loopexit ], [ %lpad.loopexit316, %.thread236.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp317, %.thread236.loopexit.split-lp.loopexit.split-lp ]
-  %.sroa.0.0216225 = phi ptr [ %.sroa.0.5, %bb.az ], [ %.sroa.0.5, %.thread286 ], [ null, %3 ], [ %.sroa.0.5, %bb.as ], [ %.sroa.0.5, %bb.af ], [ %.sroa.0.5, %bb.ar ], [ %.sroa.0.5, %.thread236.loopexit ], [ null, %.thread236.loopexit.split-lp.loopexit ], [ %.sroa.0.5, %.thread236.loopexit.split-lp.loopexit.split-lp ]
-  %.sroa.0196.0224 = phi ptr [ %.sroa.0196.2, %bb.az ], [ null, %.thread286 ], [ null, %3 ], [ %.sroa.0196.2, %bb.as ], [ null, %bb.af ], [ %.sroa.0196.2, %bb.ar ], [ null, %.thread236.loopexit ], [ null, %.thread236.loopexit.split-lp.loopexit ], [ %.sroa.0196.2, %.thread236.loopexit.split-lp.loopexit.split-lp ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server(ptr %.sroa.0196.0224) #13
+4:                                                ; preds = %.noexc129, %bb.g
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %i.ax) #14
+          to label %.thread unwind label %bb.ap
+
+.thread:                                          ; preds = %.thread236.loopexit, %.thread236.loopexit.split-lp.loopexit.split-lp, %.thread236.loopexit.split-lp.loopexit, %bb.as, %bb.ar, %bb.af, %4, %3, %bb.az
+  %.pn77.pn226 = phi { ptr, i32 } [ %i.fj, %bb.az ], [ %i.ez, %bb.as ], [ %5, %4 ], [ %i.dt, %bb.af ], [ %lpad.thr_comm287, %3 ], [ %i.ev, %bb.ar ], [ %lpad.loopexit, %.thread236.loopexit ], [ %lpad.loopexit316, %.thread236.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp317, %.thread236.loopexit.split-lp.loopexit.split-lp ]
+  %.sroa.0.0216225 = phi ptr [ %.sroa.0.5, %bb.az ], [ %.sroa.0.5, %bb.as ], [ null, %4 ], [ %.sroa.0.5, %bb.af ], [ %.sroa.0.5, %3 ], [ %.sroa.0.5, %bb.ar ], [ %.sroa.0.5, %.thread236.loopexit ], [ null, %.thread236.loopexit.split-lp.loopexit ], [ %.sroa.0.5, %.thread236.loopexit.split-lp.loopexit.split-lp ]
+  %.sroa.0196.0224 = phi ptr [ %.sroa.0196.2, %bb.az ], [ %.sroa.0196.2, %bb.as ], [ null, %4 ], [ null, %bb.af ], [ null, %3 ], [ %.sroa.0196.2, %bb.ar ], [ null, %.thread236.loopexit ], [ null, %.thread236.loopexit.split-lp.loopexit ], [ %.sroa.0196.2, %.thread236.loopexit.split-lp.loopexit.split-lp ]
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server(ptr %.sroa.0196.0224) #14
           to label %.split.thread unwind label %bb.ap
 
 .split.thread:                                    ; preds = %.split.thread.loopexit, %.split.thread.loopexit.split-lp, %.thread
   %.pn80250 = phi { ptr, i32 } [ %.pn77.pn226, %.thread ], [ %lpad.loopexit319, %.split.thread.loopexit ], [ %lpad.loopexit.split-lp, %.split.thread.loopexit.split-lp ]
   %.sroa.0.2218249 = phi ptr [ %.sroa.0.0216225, %.thread ], [ %.sroa.0.5, %.split.thread.loopexit ], [ %.sroa.0.5, %.split.thread.loopexit.split-lp ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server(ptr %.sroa.0.2218249) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECs8jHtsX8J7SC_18simple_0rtt_server(ptr %.sroa.0.2218249) #14
           to label %.thread245 unwind label %bb.ap
 }
 
@@ -1372,7 +1372,7 @@ bb.g:                                             ; preds = %bb.e
 .body.i:                                          ; preds = %bb.g, %bb.d
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.e, %bb.g ], [ %i.c, %bb.d ]
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake18PresharedKeyBinderEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake18PresharedKeyBinderEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #14
           to label %common.resume.i unwind label %bb.j
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20PresharedKeyIdentityEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i: ; preds = %bb.e
@@ -1513,7 +1513,7 @@ bb.e:                                             ; preds = %_RINvNtCsj6eKBz9Db1
 .body.i.i:                                        ; preds = %bb.e, %bb.c
   %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.d, %bb.e ], [ %i.b, %bb.c ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #14
           to label %common.resume.i.i unwind label %bb.h
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i
@@ -1588,7 +1588,7 @@ bb.f:                                             ; preds = %bb.d
 .body.i.i:                                        ; preds = %bb.f, %bb.c
   %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.d, %bb.f ], [ %i.b, %bb.c ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16ECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16ECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #14
           to label %common.resume.i unwind label %bb.i
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake11ResponderIdEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i: ; preds = %bb.d
@@ -1991,7 +1991,7 @@ bb.e:                                             ; preds = %_RINvNtCsj6eKBz9Db1
 .body.i:                                          ; preds = %bb.e, %bb.c
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.e, %bb.e ], [ %i.c, %bb.c ]
   %i.f = getelementptr inbounds nuw i8, ptr %.0.val, i64 336
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake24CertificateStatusRequestEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(48) %i.f) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake24CertificateStatusRequestEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(48) %i.f) #14
           to label %bb.f unwind label %bb.bu
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17ServerNamePayloadEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i, %bb.a, %bb.a, %bb.a, %bb.a
@@ -2002,7 +2002,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlx
 bb.f:                                             ; preds = %bb.g, %.body.i
   %.pn.i = phi { ptr, i32 } [ %i.i, %bb.g ], [ %eh.lpad-body.i, %.body.i ]
   %i.h = getelementptr inbounds nuw i8, ptr %.0.val, i64 24
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums10NamedGroupEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums10NamedGroupEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.h) #14
           to label %.body34.i unwind label %bb.bu
 
 bb.g:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17ServerNamePayloadEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i
@@ -2039,7 +2039,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
 .body34.i:                                        ; preds = %bb.l, %bb.j, %bb.f
   %.pn2.i = phi { ptr, i32 } [ %.pn.i, %bb.f ], [ %i.p, %bb.l ], [ %i.m, %bb.j ]
   %i.o = getelementptr inbounds nuw i8, ptr %.0.val, i64 48
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.o) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.o) #14
           to label %.body37.i unwind label %bb.bu
 
 bb.l:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums10NamedGroupEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2076,7 +2076,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7
 .body37.i:                                        ; preds = %bb.p, %bb.n, %.body34.i
   %.pn4.i = phi { ptr, i32 } [ %.pn2.i, %.body34.i ], [ %i.w, %bb.p ], [ %i.t, %bb.n ]
   %i.v = getelementptr inbounds nuw i8, ptr %.0.val, i64 72
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake12ProtocolNameEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.v) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake12ProtocolNameEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.v) #14
           to label %.body40.i unwind label %bb.bu
 
 bb.p:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2113,7 +2113,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
 .body40.i:                                        ; preds = %bb.t, %bb.r, %.body37.i
   %.pn6.i = phi { ptr, i32 } [ %.pn4.i, %.body37.i ], [ %i.ad, %bb.t ], [ %i.aa, %bb.r ]
   %i.ac = getelementptr inbounds nuw i8, ptr %.0.val, i64 96
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15CertificateTypeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ac) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15CertificateTypeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ac) #14
           to label %.body43.i unwind label %bb.bu
 
 bb.t:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake12ProtocolNameEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2150,7 +2150,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7
 .body43.i:                                        ; preds = %bb.x, %bb.v, %.body40.i
   %.pn8.i = phi { ptr, i32 } [ %.pn6.i, %.body40.i ], [ %i.ak, %bb.x ], [ %i.ah, %bb.v ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.0.val, i64 120
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15CertificateTypeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.aj) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15CertificateTypeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.aj) #14
           to label %.body48.i unwind label %bb.bu
 
 bb.x:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15CertificateTypeEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2187,7 +2187,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7
 .body48.i:                                        ; preds = %bb.ab, %bb.z, %.body43.i
   %.pn10.i = phi { ptr, i32 } [ %.pn8.i, %.body43.i ], [ %i.ar, %bb.ab ], [ %i.ao, %bb.z ]
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.val, i64 144
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums31CertificateCompressionAlgorithmEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.aq) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums31CertificateCompressionAlgorithmEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.aq) #14
           to label %.body52.i unwind label %bb.bu
 
 bb.ab:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15CertificateTypeEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i47.i
@@ -2224,7 +2224,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7
 .body52.i:                                        ; preds = %bb.af, %bb.ad, %.body48.i
   %.pn12.i = phi { ptr, i32 } [ %.pn10.i, %.body48.i ], [ %i.ay, %bb.af ], [ %i.av, %bb.ad ]
   %i.ax = getelementptr inbounds nuw i8, ptr %.0.val, i64 496
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake19ClientSessionTicketEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ax) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake19ClientSessionTicketEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ax) #14
           to label %.body55.i unwind label %bb.bu
 
 bb.af:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums31CertificateCompressionAlgorithmEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2261,7 +2261,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8j
 .body55.i:                                        ; preds = %bb.aj, %bb.ah, %.body52.i
   %.pn14.i = phi { ptr, i32 } [ %.pn12.i, %.body52.i ], [ %i.bf, %bb.aj ], [ %i.bc, %bb.ah ]
   %i.be = getelementptr inbounds nuw i8, ptr %.0.val, i64 168
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17PresharedKeyOfferEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(48) %i.be) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17PresharedKeyOfferEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(48) %i.be) #14
           to label %bb.ak unwind label %bb.bu
 
 bb.aj:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i
@@ -2277,7 +2277,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlx
 bb.ak:                                            ; preds = %bb.al, %.body55.i
   %.pn16.i = phi { ptr, i32 } [ %i.bi, %bb.al ], [ %.pn14.i, %.body55.i ]
   %i.bh = getelementptr inbounds nuw i8, ptr %.0.val, i64 216
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtB10_8NonEmptyEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bh) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtB10_8NonEmptyEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bh) #14
           to label %.body58.i unwind label %bb.bu
 
 bb.al:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake19ClientSessionTicketEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i
@@ -2314,7 +2314,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10
 .body58.i:                                        ; preds = %bb.aq, %bb.ao, %bb.ak
   %.pn18.i = phi { ptr, i32 } [ %.pn16.i, %bb.ak ], [ %i.bp, %bb.aq ], [ %i.bm, %bb.ao ]
   %i.bo = getelementptr inbounds nuw i8, ptr %.0.val, i64 240
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17DistinguishedNameEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bo) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17DistinguishedNameEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bo) #14
           to label %.body61.i unwind label %bb.bu
 
 bb.aq:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2351,7 +2351,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
 .body61.i:                                        ; preds = %bb.au, %bb.as, %.body58.i
   %.pn20.i = phi { ptr, i32 } [ %.pn18.i, %.body58.i ], [ %i.bw, %bb.au ], [ %i.bt, %bb.as ]
   %i.bv = getelementptr inbounds nuw i8, ptr %.0.val, i64 264
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake13KeyShareEntryEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bv) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake13KeyShareEntryEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bv) #14
           to label %.body64.i unwind label %bb.bu
 
 bb.au:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17DistinguishedNameEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2388,7 +2388,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
 .body64.i:                                        ; preds = %bb.ay, %bb.aw, %.body61.i
   %.pn22.i = phi { ptr, i32 } [ %.pn20.i, %.body61.i ], [ %i.cd, %bb.ay ], [ %i.ca, %bb.aw ]
   %i.cc = getelementptr inbounds nuw i8, ptr %.0.val, i64 384
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cc) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cc) #14
           to label %.body68.i unwind label %bb.bu
 
 bb.ay:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake13KeyShareEntryEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2425,7 +2425,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8j
 .body68.i:                                        ; preds = %bb.bc, %bb.ba, %.body64.i
   %.pn24.i = phi { ptr, i32 } [ %.pn22.i, %.body64.i ], [ %i.cj, %bb.bc ], [ %i.cg, %bb.ba ]
   %i.ci = getelementptr inbounds nuw i8, ptr %.0.val, i64 288
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8EECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ci) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8EECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ci) #14
           to label %.body72.i unwind label %bb.bu
 
 bb.bc:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i
@@ -2462,7 +2462,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9Pa
 .body72.i:                                        ; preds = %bb.bg, %bb.be, %.body68.i
   %.pn26.i = phi { ptr, i32 } [ %.pn24.i, %.body68.i ], [ %i.cq, %bb.bg ], [ %i.cn, %bb.be ]
   %i.cp = getelementptr inbounds nuw i8, ptr %.0.val, i64 408
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cp) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cp) #14
           to label %.body78.i unwind label %bb.bu
 
 bb.bg:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2499,7 +2499,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8j
 .body78.i:                                        ; preds = %bb.bk, %bb.bi, %.body72.i
   %.pn28.i = phi { ptr, i32 } [ %.pn26.i, %.body72.i ], [ %i.cw, %bb.bk ], [ %i.ct, %bb.bi ]
   %i.cv = getelementptr inbounds nuw i8, ptr %.0.val, i64 432
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20EncryptedClientHelloEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.cv) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake20EncryptedClientHelloEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.cv) #14
           to label %bb.bl unwind label %bb.bu
 
 bb.bk:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i77.i
@@ -2515,7 +2515,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlx
 bb.bl:                                            ; preds = %bb.bm, %.body78.i
   %.pn30.i = phi { ptr, i32 } [ %i.cz, %bb.bm ], [ %.pn28.i, %.body78.i ]
   %i.cy = getelementptr inbounds nuw i8, ptr %.0.val, i64 312
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums13ExtensionTypeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cy) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums13ExtensionTypeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cy) #14
           to label %.body82.i unwind label %bb.bu
 
 bb.bm:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server.exit81.i
@@ -2551,7 +2551,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
 
 .body82.i:                                        ; preds = %bb.br, %bb.bp, %bb.bl
   %.pn32.i = phi { ptr, i32 } [ %.pn30.i, %bb.bl ], [ %i.df, %bb.br ], [ %i.dd, %bb.bp ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums13ExtensionTypeEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(560) %.0.val) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums13ExtensionTypeEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(560) %.0.val) #14
           to label %bb.bw unwind label %bb.bu
 
 bb.br:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums13ExtensionTypeEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2636,7 +2636,7 @@ bb.e:                                             ; preds = %_RINvNtCsj6eKBz9Db1
 .body.i:                                          ; preds = %bb.e, %bb.c
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.e, %bb.e ], [ %i.c, %bb.c ]
   %i.f = getelementptr inbounds nuw i8, ptr %.0.val, i64 24
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake18SingleProtocolNameEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake18SingleProtocolNameEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #14
           to label %.body10.i unwind label %bb.z
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8EECs8jHtsX8J7SC_18simple_0rtt_server.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i, %bb.a
@@ -2668,7 +2668,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handsha
 .body10.i:                                        ; preds = %bb.i, %bb.g, %.body.i
   %.pn.i = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %i.m, %bb.i ], [ %i.j, %bb.g ]
   %i.l = getelementptr inbounds nuw i8, ptr %.0.val, i64 48
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake13KeyShareEntryEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(32) %i.l) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake13KeyShareEntryEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(32) %i.l) #14
           to label %.body13.i unwind label %bb.z
 
 bb.i:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake18SingleProtocolNameECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2705,7 +2705,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handsha
 .body13.i:                                        ; preds = %bb.m, %bb.k, %.body10.i
   %.pn2.i = phi { ptr, i32 } [ %.pn.i, %.body10.i ], [ %i.t, %bb.m ], [ %i.q, %bb.k ]
   %i.s = getelementptr inbounds nuw i8, ptr %.0.val, i64 104
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.s) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.s) #14
           to label %.body17.i unwind label %bb.z
 
 bb.m:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake13KeyShareEntryECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i
@@ -2742,7 +2742,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8j
 .body17.i:                                        ; preds = %bb.q, %bb.o, %.body13.i
   %.pn4.i = phi { ptr, i32 } [ %.pn2.i, %.body13.i ], [ %i.z, %bb.q ], [ %i.w, %bb.o ]
   %i.y = getelementptr inbounds nuw i8, ptr %.0.val, i64 128
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.y) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.y) #14
           to label %.body23.i unwind label %bb.z
 
 bb.q:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i
@@ -2779,7 +2779,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8j
 .body23.i:                                        ; preds = %bb.u, %bb.s, %.body17.i
   %.pn6.i = phi { ptr, i32 } [ %.pn4.i, %.body17.i ], [ %i.af, %bb.u ], [ %i.ac, %bb.s ]
   %i.ae = getelementptr inbounds nuw i8, ptr %.0.val, i64 80
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake26ServerEncryptedClientHelloEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ae) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake26ServerEncryptedClientHelloEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ae) #14
           to label %.body27.i unwind label %bb.z
 
 bb.u:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i22.i
@@ -2950,7 +2950,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   fence acquire
-  tail call void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcDNtNtCsj6eKBz9Db1c_4core5error5ErrorNtNtBL_6marker4SendNtB1i_4SyncEL_E9drop_slowCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b) #14
+  tail call void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcDNtNtCsj6eKBz9Db1c_4core5error5ErrorNtNtBL_6marker4SendNtB1i_4SyncEL_E9drop_slowCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.b) #13
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls5error11other_error10OtherErrorECs8jHtsX8J7SC_18simple_0rtt_server.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -3075,7 +3075,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   fence acquire
-  tail call void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcDNtNtCsj6eKBz9Db1c_4core5error5ErrorNtNtBL_6marker4SendNtB1i_4SyncEL_E9drop_slowCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.w) #14
+  tail call void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcDNtNtCsj6eKBz9Db1c_4core5error5ErrorNtNtBL_6marker4SendNtB1i_4SyncEL_E9drop_slowCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.w) #13
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls5error11other_error10OtherErrorECs8jHtsX8J7SC_18simple_0rtt_server.exit
 
 bb.q:                                             ; preds = %bb.n
@@ -3186,7 +3186,7 @@ bb.ah:                                            ; preds = %bb.s
 .body.i:                                          ; preds = %bb.ah, %bb.r
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.as, %bb.ah ], [ %i.ab, %bb.r ]
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 40
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCseO5Jl7W60Eg_16rustls_pki_types6alg_id19AlgorithmIdentifierEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.at) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCseO5Jl7W60Eg_16rustls_pki_types6alg_id19AlgorithmIdentifierEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.at) #14
           to label %common.resume unwind label %bb.ak
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i: ; preds = %bb.s
@@ -3224,7 +3224,7 @@ bb.al:                                            ; preds = %bb.w
 .body3.i:                                         ; preds = %bb.al, %bb.v
   %eh.lpad-body4.i = phi { ptr, i32 } [ %i.ay, %bb.al ], [ %i.ae, %bb.v ]
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 40
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.az) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.az) #14
           to label %common.resume unwind label %bb.ak
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit5.i: ; preds = %bb.w
@@ -3255,7 +3255,7 @@ bb.ao:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 
 .body6.i:                                         ; preds = %bb.ao, %bb.ab
   %eh.lpad-body7.i = phi { ptr, i32 } [ %i.bd, %bb.ao ], [ %i.am, %bb.ab ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtBG_6string6StringEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.q) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtBG_6string6StringEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.q) #14
           to label %common.resume unwind label %bb.ak
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECs8jHtsX8J7SC_18simple_0rtt_server.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i, %bb.z, %bb.y
@@ -3286,7 +3286,7 @@ bb.ar:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 .body8.i:                                         ; preds = %bb.ar, %bb.af
   %eh.lpad-body9.i = phi { ptr, i32 } [ %i.bg, %bb.ar ], [ %i.aq, %bb.af ]
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 16
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5error18ExtendedKeyPurposeEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bh) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5error18ExtendedKeyPurposeEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bh) #14
           to label %common.resume unwind label %bb.ak
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error18ExtendedKeyPurposeECs8jHtsX8J7SC_18simple_0rtt_server.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecjEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i, %bb.ad
@@ -3374,7 +3374,7 @@ bb.bd:                                            ; preds = %bb.au
 
 bb.be:                                            ; preds = %bb.bd
   fence acquire
-  tail call void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcDNtNtCsj6eKBz9Db1c_4core5error5ErrorNtNtBL_6marker4SendNtB1i_4SyncEL_E9drop_slowCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.bt) #14
+  tail call void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcDNtNtCsj6eKBz9Db1c_4core5error5ErrorNtNtBL_6marker4SendNtB1i_4SyncEL_E9drop_slowCs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.bt) #13
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls5error11other_error10OtherErrorECs8jHtsX8J7SC_18simple_0rtt_server.exit
 
 bb.bf:                                            ; preds = %bb.ax
@@ -3385,7 +3385,7 @@ bb.bf:                                            ; preds = %bb.ax
 .body.i6:                                         ; preds = %bb.bf, %bb.aw
   %eh.lpad-body.i7 = phi { ptr, i32 } [ %i.bx, %bb.bf ], [ %i.bo, %bb.aw ]
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 40
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCseO5Jl7W60Eg_16rustls_pki_types6alg_id19AlgorithmIdentifierEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.by) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCseO5Jl7W60Eg_16rustls_pki_types6alg_id19AlgorithmIdentifierEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.by) #14
           to label %common.resume unwind label %bb.bi
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i8: ; preds = %bb.ax
@@ -3423,7 +3423,7 @@ bb.bj:                                            ; preds = %bb.bb
 .body3.i1:                                        ; preds = %bb.bj, %bb.ba
   %eh.lpad-body4.i2 = phi { ptr, i32 } [ %i.cd, %bb.bj ], [ %i.br, %bb.ba ]
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 40
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ce) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ce) #14
           to label %common.resume unwind label %bb.bi
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit5.i5: ; preds = %bb.bb
@@ -3764,7 +3764,7 @@ bb.o:                                             ; preds = %bb.m
 .body.i.i.i.i:                                    ; preds = %bb.o, %bb.l
   %eh.lpad-body.i.i.i.i = phi { ptr, i32 } [ %i.x, %bb.o ], [ %i.v, %bb.l ]
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 48
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums11CompressionEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.y) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums11CompressionEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.y) #14
           to label %.body3.i.i.i.i unwind label %bb.t
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums11CipherSuiteEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i: ; preds = %bb.m
@@ -3792,7 +3792,7 @@ bb.r:                                             ; preds = %bb.p
   %.pn.i.i.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i.i.i, %.body.i.i.i.i ], [ %i.ad, %bb.s ], [ %i.aa, %bb.p ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 72
   %.val2.i.i.i.i = load ptr, ptr %i.ac, align 8, !alias.scope !285, !nonnull !6, !noundef !6
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ClientExtensionsEECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %.val2.i.i.i.i) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ClientExtensionsEECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %.val2.i.i.i.i) #14
           to label %.body.i unwind label %bb.t
 
 bb.s:                                             ; preds = %bb.q
@@ -3846,7 +3846,7 @@ bb.y:                                             ; preds = %_RINvNtCsj6eKBz9Db1
 .body.i.i.i.i.i:                                  ; preds = %bb.y, %bb.w
   %eh.lpad-body.i.i.i.i.i = phi { ptr, i32 } [ %i.al, %bb.y ], [ %i.aj, %bb.w ]
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.am) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.am) #14
           to label %.body3.i.i.i.i.i unwind label %bb.ag
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtB10_8NonEmptyEEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i.i, %bb.u
@@ -3878,7 +3878,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8j
 .body3.i.i.i.i.i:                                 ; preds = %bb.ac, %bb.aa, %.body.i.i.i.i.i
   %.pn.i.i.i.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i.i.i.i, %.body.i.i.i.i.i ], [ %i.as, %bb.ac ], [ %i.ap, %bb.aa ]
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 56
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums13ExtensionTypeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ar) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums13ExtensionTypeEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ar) #14
           to label %.body.i unwind label %bb.ag
 
 bb.ac:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i.i.i
@@ -3968,7 +3968,7 @@ bb.an:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 .body.i2.i.i.i:                                   ; preds = %bb.an, %bb.al
   %eh.lpad-body.i3.i.i.i = phi { ptr, i32 } [ %i.bf, %bb.an ], [ %i.bd, %bb.al ]
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 56
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16CertificateEntryEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bg) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16CertificateEntryEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bg) #14
           to label %.body.i unwind label %bb.aq
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i4.i.i.i
@@ -4077,7 +4077,7 @@ bb.bd:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 .body.i.i.i.i.i.i.i:                              ; preds = %bb.bd, %bb.bb
   %eh.lpad-body.i.i.i.i.i.i.i = phi { ptr, i32 } [ %i.ca, %bb.bd ], [ %i.by, %bb.bb ]
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 88
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cb) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cb) #14
           to label %.body4.i.i.i.i.i.i.i unwind label %bb.bj
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i.i.i.i
@@ -4104,7 +4104,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8j
 .body4.i.i.i.i.i.i.i:                             ; preds = %bb.bg, %bb.be, %.body.i.i.i.i.i.i.i
   %.pn.i.i.i.i.i.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i.i.i.i.i.i, %.body.i.i.i.i.i.i.i ], [ %i.cg, %bb.bg ], [ %i.cd, %bb.be ]
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 112
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cf) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16NtBE_8NonEmptyEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cf) #14
           to label %.body.i.i5.i.i.i unwind label %bb.bj
 
 bb.bg:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i3.i.i.i.i.i.i.i
@@ -4147,7 +4147,7 @@ bb.bk:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 
 .body.i.i5.i.i.i:                                 ; preds = %bb.bk, %bb.bh, %.body4.i.i.i.i.i.i.i, %bb.ay
   %eh.lpad-body.i.i6.i.i.i = phi { ptr, i32 } [ %i.cl, %bb.bk ], [ %i.bw, %bb.ay ], [ %i.ci, %bb.bh ], [ %.pn.i.i.i.i.i.i.i, %.body4.i.i.i.i.i.i.i ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls6verify21DigitallySignedStructECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.bq) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls6verify21DigitallySignedStructECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.bq) #14
           to label %.body.i unwind label %bb.bn
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake23ServerKeyExchangeParamsECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerEcdhParamsECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i.i
@@ -4223,7 +4223,7 @@ bb.bw:                                            ; preds = %bb.bu
 .body.i9.i.i.i:                                   ; preds = %bb.bw, %bb.bt
   %eh.lpad-body.i10.i.i.i = phi { ptr, i32 } [ %i.cx, %bb.bw ], [ %i.cv, %bb.bt ]
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 56
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cy) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.cy) #14
           to label %.body2.i.i.i.i unwind label %bb.cd
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums21ClientCertificateTypeEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i: ; preds = %bb.bu
@@ -4250,7 +4250,7 @@ bb.bz:                                            ; preds = %bb.bx
 .body2.i.i.i.i:                                   ; preds = %bb.ca, %bb.bx, %.body.i9.i.i.i
   %.pn.i11.i.i.i = phi { ptr, i32 } [ %eh.lpad-body.i10.i.i.i, %.body.i9.i.i.i ], [ %i.dd, %bb.ca ], [ %i.da, %bb.bx ]
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 80
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17DistinguishedNameEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.dc) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17DistinguishedNameEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.dc) #14
           to label %.body.i unwind label %bb.cd
 
 bb.ca:                                            ; preds = %bb.by
@@ -4314,7 +4314,7 @@ bb.ch:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 .body.i14.i.i.i:                                  ; preds = %bb.ch, %bb.cf
   %eh.lpad-body.i15.i.i.i = phi { ptr, i32 } [ %i.dl, %bb.ch ], [ %i.dj, %bb.cf ]
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 56
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake28CertificateRequestExtensionsECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(72) %i.dm) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake28CertificateRequestExtensionsECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(72) %i.dm) #14
           to label %.body.i unwind label %bb.ci
 
 bb.ci:                                            ; preds = %.body.i14.i.i.i
@@ -4415,7 +4415,7 @@ bb.cu:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 
 bb.cv:                                            ; preds = %.body.i19.i.i.i
   fence acquire
-  invoke void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16E9drop_slowBM_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ef) #14
+  invoke void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16E9drop_slowBM_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ef) #13
           to label %.body.i unwind label %bb.cw
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i22.i.i.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i21.i.i.i
@@ -4430,7 +4430,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9Pa
 .invoke24.i:                                      ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i22.i.i.i, %bb.cq
   %i.en = phi ptr [ %i.dx, %bb.cq ], [ %i.ej, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i22.i.i.i ]
   fence acquire
-  invoke void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16E9drop_slowBM_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.en) #14
+  invoke void @_RNvMsn_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base10PayloadU16E9drop_slowBM_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.en) #13
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake23HandshakeMessagePayloadECs8jHtsX8J7SC_18simple_0rtt_server.exit.i unwind label %bb.do
 
 bb.cw:                                            ; preds = %bb.cv
@@ -4549,7 +4549,7 @@ bb.do:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 
 .body.i:                                          ; preds = %bb.do, %bb.di, %bb.de, %bb.da, %bb.cv, %.body.i19.i.i.i, %bb.co, %bb.ck, %.body.i14.i.i.i, %bb.cb, %.body2.i.i.i.i, %bb.bq, %bb.bl, %.body.i.i5.i.i.i, %bb.at, %bb.ao, %.body.i2.i.i.i, %bb.ai, %bb.ae, %.body3.i.i.i.i.i, %.body3.i.i.i.i, %bb.i
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.fl, %bb.do ], [ %i.ey, %bb.de ], [ %i.t, %bb.i ], [ %.pn.i.i.i.i, %.body3.i.i.i.i ], [ %.pn.i.i.i.i.i, %.body3.i.i.i.i.i ], [ %i.ba, %bb.ai ], [ %eh.lpad-body.i3.i.i.i, %.body.i2.i.i.i ], [ %i.bo, %bb.at ], [ %i.cs, %bb.bq ], [ %.pn.i11.i.i.i, %.body2.i.i.i.i ], [ %eh.lpad-body.i15.i.i.i, %.body.i14.i.i.i ], [ %i.dq, %bb.ck ], [ %i.dv, %bb.co ], [ %eh.lpad-body.i20.i.i.i, %.body.i19.i.i.i ], [ %i.et, %bb.da ], [ %i.aw, %bb.ae ], [ %i.bi, %bb.ao ], [ %eh.lpad-body.i.i6.i.i.i, %.body.i.i5.i.i.i ], [ %i.cm, %bb.bl ], [ %i.df, %bb.cb ], [ %eh.lpad-body.i20.i.i.i, %bb.cv ], [ %i.fd, %bb.di ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %0) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef nonnull align 8 dereferenceable(160) %0) #14
           to label %common.resume.i unwind label %bb.ds
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake23HandshakeMessagePayloadECs8jHtsX8J7SC_18simple_0rtt_server.exit.i: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i29.i.i.invoke.i, %bb.dg, %bb.dc, %bb.cy, %.invoke.i, %.invoke24.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base9PayloadU8ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i22.i.i.i, %bb.cq, %bb.cm, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake30CertificateRequestPayloadTls13ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake25CertificateRequestPayloadECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i, %bb.bo, %bb.ar, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake23CertificatePayloadTls13ECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16CertificateChainECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs5enums13ExtensionTypeEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs7ZUl82OSlxp_6rustls4msgs4base7PayloadEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake18ClientHelloPayloadECs8jHtsX8J7SC_18simple_0rtt_server.exit.i.i.i, %bb.g, %bb.f, %bb.f, %bb.f, %bb.f
@@ -4618,7 +4618,7 @@ bb.e:                                             ; preds = %_RINvNtCsj6eKBz9Db1
 .body:                                            ; preds = %bb.c, %bb.e
   %eh.lpad-body = phi { ptr, i32 } [ %i.e, %bb.e ], [ %i.c, %bb.c ]
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17DistinguishedNameEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17DistinguishedNameEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.f) #14
           to label %.body2 unwind label %bb.m
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEEECs8jHtsX8J7SC_18simple_0rtt_server.exit: ; preds = %bb.a, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums15SignatureSchemeEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i
@@ -4650,7 +4650,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtC
 .body2:                                           ; preds = %bb.i, %bb.g, %.body
   %.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.m, %bb.i ], [ %i.j, %bb.g ]
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums31CertificateCompressionAlgorithmEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs7ZUl82OSlxp_6rustls5enums31CertificateCompressionAlgorithmEEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #14
           to label %common.resume unwind label %bb.m
 
 bb.i:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake17DistinguishedNameEECs8jHtsX8J7SC_18simple_0rtt_server.exit.i
@@ -4720,7 +4720,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.f, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = tail call noundef nonnull ptr @_RINvMNtNtCs4wP2HXfJTCR_5alloc2io5errorNtNtNtCsj6eKBz9Db1c_4core2io5error5Error3newReECsaKJjC64KgbL_3std(i8 noundef 42, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 30) #14
+  %i.f = tail call noundef nonnull ptr @_RINvMNtNtCs4wP2HXfJTCR_5alloc2io5errorNtNtNtCsj6eKBz9Db1c_4core2io5error5Error3newReECsaKJjC64KgbL_3std(i8 noundef 42, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 30) #13
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -5123,7 +5123,7 @@ bb.bj:                                            ; preds = %bb.bm, %bb.bi
 bb.bk:                                            ; preds = %bb.bg
   %i.gb = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7MessageECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(168) %i.e) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7MessageECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(168) %i.e) #14
           to label %.thread.i unwind label %bb.bl, !noalias !392
 
 bb.bl:                                            ; preds = %.thread.i, %bb.bk
@@ -5140,7 +5140,7 @@ bb.bm:                                            ; preds = %bb.be
 
 .thread.i:                                        ; preds = %bb.bk, %.thread43.i
   %.pn39.i = phi { ptr, i32 } [ %lpad.thr_comm.i, %.thread43.i ], [ %i.gb, %bb.bk ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtCs7ZUl82OSlxp_6rustls12common_state5StateNtNtNtB1g_6server11server_conn20ServerConnectionDataEEL_EECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %.sroa.0.2, ptr nonnull readonly align 8 dereferenceable(80) %.sroa.10.2) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtCs7ZUl82OSlxp_6rustls12common_state5StateNtNtNtB1g_6server11server_conn20ServerConnectionDataEEL_EECs8jHtsX8J7SC_18simple_0rtt_server(ptr nonnull %.sroa.0.2, ptr nonnull readonly align 8 dereferenceable(80) %.sroa.10.2) #14
           to label %common.resume unwind label %bb.bl, !noalias !402
 
 _RNvMs8_NtCs7ZUl82OSlxp_6rustls4connINtB5_14ConnectionCoreNtNtNtB7_6server11server_conn20ServerConnectionDataE11process_msgCs8jHtsX8J7SC_18simple_0rtt_server.exit: ; preds = %.noexc68, %bb.ba, %bb.az
@@ -5195,7 +5195,7 @@ bb.br:                                            ; preds = %bb.bo
 
 bb.bs:                                            ; preds = %.body72, %bb.bt
   %.pn = phi { ptr, i32 } [ %i.go, %bb.bt ], [ %eh.lpad-body73, %.body72 ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.y) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.y) #14
           to label %common.resume unwind label %bb.cf
 
 bb.bt:                                            ; preds = %bb.cd, %bb.bn
@@ -5376,7 +5376,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtN
 
 bb.cp:                                            ; preds = %.body87, %bb.cq
   %.pn35 = phi { ptr, i32 } [ %i.hz, %bb.cq ], [ %eh.lpad-body88, %.body87 ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.ad) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.ad) #14
           to label %.thread116 unwind label %bb.cf
 
 bb.cq:                                            ; preds = %bb.da, %.loopexit
@@ -5502,12 +5502,12 @@ common.resume:                                    ; preds = %bb.dh, %.thread116,
   %.pn35.pn115 = phi { ptr, i32 } [ %i.ep, %bb.ak ], [ %.pn35, %bb.cp ], [ %lpad.loopexit, %.thread129.loopexit ], [ %lpad.loopexit139, %.thread129.loopexit.split-lp.loopexit ], [ %lpad.loopexit148, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit152, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp153, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   %.sroa.0.0114 = phi ptr [ %.sroa.0.2, %bb.ak ], [ %.sroa.0.2, %bb.cp ], [ %.sroa.0.2, %.thread129.loopexit ], [ %.sroa.0.2, %.thread129.loopexit.split-lp.loopexit ], [ %.sroa.0.2, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %.sroa.0.1.ph.ph.ph.ph.ph, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %.sroa.0.1.ph.ph.ph.ph.ph151, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   %.sroa.10.0113 = phi ptr [ %.sroa.10.2, %bb.ak ], [ %.sroa.10.2, %bb.cp ], [ %.sroa.10.2, %.thread129.loopexit ], [ %.sroa.10.2, %.thread129.loopexit.split-lp.loopexit ], [ %.sroa.10.2, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %.sroa.10.1.ph.ph.ph.ph.ph, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ], [ %.sroa.10.1.ph.ph.ph.ph.ph150, %.thread129.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtCs7ZUl82OSlxp_6rustls12common_state5StateNtNtNtB1g_6server11server_conn20ServerConnectionDataEEL_EECs8jHtsX8J7SC_18simple_0rtt_server(ptr %.sroa.0.0114, ptr %.sroa.10.0113) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtCs7ZUl82OSlxp_6rustls12common_state5StateNtNtNtB1g_6server11server_conn20ServerConnectionDataEEL_EECs8jHtsX8J7SC_18simple_0rtt_server(ptr %.sroa.0.0114, ptr %.sroa.10.0113) #14
           to label %common.resume unwind label %bb.cf
 
 bb.dh:                                            ; preds = %.body95, %bb.di
   %.pn38 = phi { ptr, i32 } [ %eh.lpad-body96, %.body95 ], [ %i.je, %bb.di ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.ai) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %i.ai) #14
           to label %common.resume unwind label %bb.cf
 
 bb.di:                                            ; preds = %bb.b
@@ -5652,7 +5652,7 @@ bb.k:                                             ; preds = %bb.l
 bb.l:                                             ; preds = %bb.i
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %2) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error5ErrorECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(64) %2) #14
           to label %bb.k unwind label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -5870,7 +5870,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECs
 
 bb.q:                                             ; preds = %.thread, %bb.g
   %i.ai = phi { ptr, i32 } [ %i.r, %.thread ], [ %i.q, %bb.g ]
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.c) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.c) #14
           to label %common.resume unwind label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -6243,7 +6243,7 @@ bb.ak:                                            ; preds = %bb.o
 bb.al:                                            ; preds = %bb.ac
   %i.cb = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.m) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.m) #14
           to label %common.resume unwind label %bb.an, !noalias !456
 
 bb.am:                                            ; preds = %bb.ac
@@ -6268,7 +6268,7 @@ common.resume:                                    ; preds = %bb.bk, %bb.bn, %bb.
 bb.ao:                                            ; preds = %bb.ad
   %i.cf = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.k) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.k) #14
           to label %common.resume unwind label %bb.an, !noalias !456
 
 bb.ap:                                            ; preds = %bb.ad
@@ -6332,7 +6332,7 @@ bb.av:                                            ; preds = %bb.au, %bb.aq
 bb.aw:                                            ; preds = %bb.av
   %i.cr = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(32) %i.i) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(32) %i.i) #14
           to label %common.resume unwind label %bb.an, !noalias !456
 
 bb.ax:                                            ; preds = %bb.av
@@ -6366,7 +6366,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.
 bb.bc:                                            ; preds = %bb.bb
   %i.ct = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error18ExtendedKeyPurposeECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.g) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs7ZUl82OSlxp_6rustls5error18ExtendedKeyPurposeECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.g) #14
           to label %common.resume unwind label %bb.an, !noalias !456
 
 bb.bd:                                            ; preds = %bb.bb
@@ -6456,7 +6456,7 @@ bb.bj:                                            ; preds = %bb.bg
 bb.bk:                                            ; preds = %bb.bh
   %i.dn = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #14
           to label %common.resume unwind label %bb.bm, !noalias !459
 
 bb.bl:                                            ; preds = %bb.bh
@@ -6477,7 +6477,7 @@ bb.bm:                                            ; preds = %bb.bn, %bb.bk
 bb.bn:                                            ; preds = %bb.bi
   %i.dr = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #13
+  invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECs8jHtsX8J7SC_18simple_0rtt_server(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #14
           to label %common.resume unwind label %bb.bm, !noalias !459
 
 bb.bo:                                            ; preds = %bb.bi
@@ -6880,8 +6880,8 @@ attributes #9 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inli
 attributes #10 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #11 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #13 = { cold }
-attributes #14 = { noinline }
+attributes #13 = { noinline }
+attributes #14 = { cold }
 attributes #15 = { cold noreturn nounwind }
 attributes #16 = { nounwind }
 attributes #17 = { noinline noreturn }

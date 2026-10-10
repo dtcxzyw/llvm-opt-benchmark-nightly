@@ -204,12 +204,6 @@ bb.f:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.n
 
-2:                                                ; preds = %.noexc, %bb.c
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.r) #19
-          to label %bb.k unwind label %bb.l
-
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.f, %bb.e, %bb.d, %.noexc
   %.sroa.0.0.i = phi i8 [ %i.aj, %bb.f ], [ %switch.idx.cast.i.i.i, %bb.d ], [ %i.ah, %bb.e ], [ %i.ac, %.noexc ]
   %i.ak = icmp eq i8 %.sroa.0.0.i, 35
@@ -266,7 +260,13 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   br i1 %i.az, label %bb.b, label %._crit_edge
 
 bb.k:                                             ; preds = %2
-  resume { ptr, i32 } %3
+  resume { ptr, i32 } %lpad.thr_comm
+
+2:                                                ; preds = %.noexc, %bb.c
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.r) #19
+          to label %bb.k unwind label %bb.l
 
 bb.l:                                             ; preds = %2
   %i.ba = landingpad { ptr, i32 }
@@ -434,12 +434,6 @@ bb.f:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.n
 
-2:                                                ; preds = %.noexc, %bb.c
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.r) #19
-          to label %bb.k unwind label %bb.l
-
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.f, %bb.e, %bb.d, %.noexc
   %.sroa.0.0.i = phi i8 [ %i.aj, %bb.f ], [ %switch.idx.cast.i.i.i, %bb.d ], [ %i.ah, %bb.e ], [ %i.ac, %.noexc ]
   %i.ak = icmp eq i8 %.sroa.0.0.i, 35
@@ -496,7 +490,13 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   br i1 %i.az, label %bb.b, label %._crit_edge
 
 bb.k:                                             ; preds = %2
-  resume { ptr, i32 } %3
+  resume { ptr, i32 } %lpad.thr_comm
+
+2:                                                ; preds = %.noexc, %bb.c
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.r) #19
+          to label %bb.k unwind label %bb.l
 
 bb.l:                                             ; preds = %2
   %i.ba = landingpad { ptr, i32 }

@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   invoke void @_RNvNtCsbNLsQi0JuJ4_5tgrep5serve16open_within_root(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.bp, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.cd, i64 noundef %i.cf, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1)
           to label %bb.d unwind label %bb.c
 
-.thread66:                                        ; preds = %bb.da, %bb.hz, %.thread59, %bb.jm, %bb.jw, %.thread70, %bb.m, %.thread16, %bb.jr, %bb.c
-  %.pn116.pn = phi { ptr, i32 } [ %i.wa, %bb.jr ], [ %.pn109.pn, %bb.jm ], [ %i.cg, %bb.c ], [ %.pn11415, %.thread16 ], [ %lpad.thr_comm.split-lp, %bb.m ], [ %i.wl, %bb.jw ], [ %6, %.thread70 ], [ %.pn105, %bb.da ], [ %.pn105, %bb.hz ], [ %.pn109.pn, %.thread59 ]
+.thread66:                                        ; preds = %bb.da, %bb.hz, %.thread59, %bb.jm, %bb.jw, %bb.jr, %bb.m, %.thread16, %bb.ka, %bb.c
+  %.pn116.pn = phi { ptr, i32 } [ %lpad.thr_comm75, %bb.ka ], [ %i.wa, %bb.jr ], [ %i.cg, %bb.c ], [ %.pn11415, %.thread16 ], [ %lpad.thr_comm.split-lp, %bb.m ], [ %i.wl, %bb.jw ], [ %.pn105, %bb.da ], [ %.pn105, %bb.hz ], [ %.pn109.pn, %.thread59 ], [ %.pn109.pn, %bb.jm ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison5mutex10MutexGuarduEECsbNLsQi0JuJ4_5tgrep(ptr nonnull %i.by, i8 %i.ca) #31
           to label %bb.kb unwind label %bb.an
 
@@ -237,7 +237,7 @@ default.unreachable:                              ; preds = %bb.jx, %bb.js, %bb.
 
 bb.f:                                             ; preds = %bb.e
   %i.cm = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCsf3Ta7LF998c_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc unwind label %bb.jr
+          to label %.noexc unwind label %bb.ka
 
 .noexc:                                           ; preds = %bb.f
   %i.cn = lshr i64 %i.ck, 32
@@ -245,7 +245,7 @@ bb.f:                                             ; preds = %bb.e
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
   %i.cq = load ptr, ptr %i.cp, align 8, !nonnull !9, !noundef !9
   %i.cr = invoke noundef i8 %i.cq(i32 noundef %i.co)
-          to label %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error4kind.exit.i unwind label %bb.jr, !inline_history !33
+          to label %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error4kind.exit.i unwind label %bb.ka, !inline_history !33
 
 bb.g:                                             ; preds = %bb.e
   %i.cs = lshr i64 %i.ck, 32
@@ -468,7 +468,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std4sync6poison6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bk)
   br label %bb.v
 
-bb.an:                                            ; preds = %bb.in, %bb.hy, %bb.hg, %.thread51, %bb.fe, %.body132, %.body128, %bb.ai, %bb.ed, %bb.gn, %.thread66, %bb.jr, %bb.jw, %bb.jm, %bb.iv, %bb.jb, %bb.ib, %bb.hz, %bb.dq, %bb.hs, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapmNtNtCsbzNSmZPCnTx_10tgrep_core7trigram12TrigramMasksINtNtB4_4hash18BuildHasherDefaultNtB1z_13TrigramHasherEEECsbNLsQi0JuJ4_5tgrep.exit223
+bb.an:                                            ; preds = %bb.in, %bb.hy, %bb.hg, %.thread51, %bb.fe, %.body132, %.body128, %bb.ai, %bb.ed, %bb.gn, %.thread66, %bb.ka, %bb.jw, %bb.jm, %5, %bb.jb, %bb.ib, %bb.hz, %bb.dq, %bb.hs, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapmNtNtCsbzNSmZPCnTx_10tgrep_core7trigram12TrigramMasksINtNtB4_4hash18BuildHasherDefaultNtB1z_13TrigramHasherEEECsbNLsQi0JuJ4_5tgrep.exit223
   %i.er = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #30
@@ -522,8 +522,8 @@ bb.ao:                                            ; preds = %bb.x, %_RINvNtCsf3T
   %.not88 = icmp eq i64 %i.ft, -1
   br i1 %.not88, label %bb.cz, label %bb.cy
 
-.thread59:                                        ; preds = %.loopexit85, %.loopexit.split-lp, %bb.jb, %.thread63, %.body126, %bb.iv
-  %.pn109.pn = phi { ptr, i32 } [ %i.vb, %bb.iv ], [ %i.vg, %bb.jb ], [ %5, %.thread63 ], [ %.pn107, %.body126 ], [ %lpad.loopexit, %.loopexit85 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 2 uses
+.thread59:                                        ; preds = %.loopexit85, %.loopexit.split-lp, %bb.jb, %bb.iv, %.body126, %5
+  %.pn109.pn = phi { ptr, i32 } [ %lpad.thr_comm64, %5 ], [ %i.vb, %bb.iv ], [ %i.vg, %bb.jb ], [ %.pn107, %.body126 ], [ %lpad.loopexit, %.loopexit85 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 2 uses
   %i.fu = load i64, ptr %i.bh, align 8, !range !8, !noundef !9
   %.not112 = icmp eq i64 %i.fu, -1
   br i1 %.not112, label %.thread66, label %bb.jm
@@ -547,7 +547,7 @@ bb.aq:                                            ; preds = %bb.by, %bb.ap
   %i.fx = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 3 uses
   %.val153 = load ptr, ptr %i.fx, align 8, !nonnull !9, !noundef !9 ; 2 uses
   %i.fy = invoke fastcc noundef zeroext i1 @_RNvNtCsbNLsQi0JuJ4_5tgrep5serve17proves_ineligible(ptr nonnull %.val153)
-          to label %bb.iw unwind label %bb.iv
+          to label %bb.iw unwind label %5
 
 bb.ar:                                            ; preds = %bb.ap
   %i.fz = load i32, ptr %i.et, align 4, !range !23, !noundef !9
@@ -950,11 +950,10 @@ bb.iu:                                            ; preds = %bb.ir, %bb.ja
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bg)
   br label %bb.ia
 
-bb.iv:                                            ; preds = %bb.aq, %bb.ix
+bb.iv:                                            ; preds = %bb.jc
   %i.vb = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.fx) #31
-          to label %.thread59 unwind label %bb.an
+  br label %.thread59
 
 bb.iw:                                            ; preds = %bb.aq
   br i1 %i.fy, label %bb.iy, label %bb.ix
@@ -963,7 +962,7 @@ bb.ix:                                            ; preds = %bb.iw
   %i.vc = load ptr, ptr %i.br, align 8, !nonnull !9, !noundef !9
   %i.vd = load i64, ptr %i.bs, align 8, !noundef !9
   invoke fastcc void @_RNvNtCsbNLsQi0JuJ4_5tgrep5serve20retry_failed_reindex(ptr nonnull %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.vc, i64 noundef %i.vd, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @113, i64 noundef 43)
-          to label %bb.iz unwind label %bb.iv
+          to label %bb.iz unwind label %5
 
 bb.iy:                                            ; preds = %bb.iw
   call void @llvm.lifetime.start.p0(ptr nonnull %i.be)
@@ -989,12 +988,7 @@ bb.jb:                                            ; preds = %bb.iy
 
 bb.jc:                                            ; preds = %bb.iy
   invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.be)
-          to label %bb.jd unwind label %.thread63
-
-.thread63:                                        ; preds = %bb.jc
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread59
+          to label %bb.jd unwind label %bb.iv
 
 bb.jd:                                            ; preds = %bb.jc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.be)
@@ -1039,6 +1033,12 @@ bb.jk:                                            ; preds = %_RNvMNtNtCs5Xr050g3
 bb.jl:                                            ; preds = %bb.jq, %bb.v
   %i.vo = call noundef i32 @close(i32 noundef %i.dd) #32 ; 0 uses
   br label %bb.jg
+
+5:                                                ; preds = %bb.ix, %bb.aq
+  %lpad.thr_comm64 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.fx) #31
+          to label %.thread59 unwind label %bb.an
 
 bb.jm:                                            ; preds = %.thread59
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VechEECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bh) #31
@@ -1087,11 +1087,10 @@ bb.jq:                                            ; preds = %bb.jp, %bb.jo, %bb.
   %i.vz = call noundef i32 @close(i32 noundef %i.dd) #32 ; 0 uses
   br label %.thread66
 
-bb.jr:                                            ; preds = %_RNvNtCsbNLsQi0JuJ4_5tgrep5serve17proves_ineligible.exit.thread, %bb.f, %.noexc
+bb.jr:                                            ; preds = %bb.jz
   %i.wa = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.cj) #31
-          to label %.thread66 unwind label %bb.an
+  br label %.thread66
 
 _RNvNtCsbNLsQi0JuJ4_5tgrep5serve17proves_ineligible.exit: ; preds = %bb.j
   %.mask.i = and i64 %i.ck, -4294967296
@@ -1102,7 +1101,7 @@ _RNvNtCsbNLsQi0JuJ4_5tgrep5serve17proves_ineligible.exit.thread: ; preds = %bb.k
   %i.wc = load ptr, ptr %i.br, align 8, !nonnull !9, !noundef !9
   %i.wd = load i64, ptr %i.bs, align 8, !noundef !9
   invoke fastcc void @_RNvNtCsbNLsQi0JuJ4_5tgrep5serve20retry_failed_reindex(ptr nonnull %.0.val, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.wc, i64 noundef %i.wd, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @115, i64 noundef 28)
-          to label %bb.js unwind label %bb.jr
+          to label %bb.js unwind label %bb.ka
 
 _RNvNtCsbNLsQi0JuJ4_5tgrep5serve17proves_ineligible.exit.thread75: ; preds = %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error4kind.exit.i, %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error4kind.exit.i, %_RNvMs1_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_5Error4kind.exit.i, %_RNvNtCsbNLsQi0JuJ4_5tgrep5serve17proves_ineligible.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bo)
@@ -1142,7 +1141,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1202
   br label %bb.jv
 
-bb.jv:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5tgrep.exit, %bb.ka
+bb.jv:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5tgrep.exit, %.thread70
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bp)
   br label %bb.jg
 
@@ -1155,9 +1154,9 @@ bb.jw:                                            ; preds = %_RNvNtCsbNLsQi0JuJ4
 bb.jx:                                            ; preds = %_RNvNtCsbNLsQi0JuJ4_5tgrep5serve17proves_ineligible.exit.thread75
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1204
   switch i64 %i.cl, label %default.unreachable [
-    i64 2, label %bb.ka
+    i64 2, label %.thread70
     i64 3, label %bb.jy
-    i64 0, label %bb.ka
+    i64 0, label %.thread70
     i64 1, label %bb.jz
   ], !prof !18
 
@@ -1167,7 +1166,7 @@ bb.jy:                                            ; preds = %bb.jx
   %i.wo = icmp ne i64 %i.wn, 1095216660480
   call void @llvm.assume(i1 %i.wm)
   call void @llvm.assume(i1 %i.wo)
-  br label %bb.ka
+  br label %.thread70
 
 bb.jz:                                            ; preds = %bb.jx
   %i.wp = getelementptr i8, ptr %.val154, i64 -1  ; 2 uses
@@ -1176,17 +1175,18 @@ bb.jz:                                            ; preds = %bb.jx
   store ptr %i.wp, ptr %i.wq, align 8, !alias.scope !1205, !noalias !1204
   store i8 3, ptr %i.a, align 8, !alias.scope !1205, !noalias !1204
   invoke void @_RNvXsd_NtNtCsf3Ta7LF998c_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.wq)
-          to label %bb.ka unwind label %.thread70
+          to label %.thread70 unwind label %bb.jr
 
-.thread70:                                        ; preds = %bb.jz
-  %6 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread66
-
-bb.ka:                                            ; preds = %bb.jy, %bb.jx, %bb.jx, %bb.jz
+.thread70:                                        ; preds = %bb.jy, %bb.jx, %bb.jx, %bb.jz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1204
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bo)
   br label %bb.jv
+
+bb.ka:                                            ; preds = %_RNvNtCsbNLsQi0JuJ4_5tgrep5serve17proves_ineligible.exit.thread, %.noexc, %bb.f
+  %lpad.thr_comm75 = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.cj) #31
+          to label %.thread66 unwind label %bb.an
 
 bb.kb:                                            ; preds = %.thread66
   resume { ptr, i32 } %.pn116.pn

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = inttoptr i64 %1 to ptr
-  %i.g = tail call noundef ptr @_ZN2v88internal21HeapSnapshotGenerator14FindOrAddEntryEPvPNS0_20HeapEntriesAllocatorE(ptr noundef nonnull align 8 dereferenceable(504) %i.e, ptr noundef %i.f, ptr noundef nonnull %0)
+  %i.g = tail call noundef ptr @_ZN2v88internal21HeapSnapshotGenerator14FindOrAddEntryEPvPNS0_20HeapEntriesAllocatorE(ptr noundef nonnull align 8 dereferenceable(504) %i.e, ptr noundef nonnull %i.f, ptr noundef nonnull %0)
   br label %_ZN2v88internal21HeapSnapshotGenerator14FindOrAddEntryENS0_6TaggedINS0_3SmiEEEPNS0_20HeapEntriesAllocatorE.exit
 
 bb.c:                                             ; preds = %bb.a

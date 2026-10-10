@@ -202,7 +202,7 @@ bb.nv:                                            ; preds = %bb.nt, %bb.nr
           to label %bb.nz unwind label %bb.ls, !noalias !91
 
 bb.nw:                                            ; preds = %bb.nq, %bb.np, %bb.mf
-  %.pn150.ph.i.i = phi { ptr, i32 } [ %.pn146.i.i, %bb.nq ], [ %i.aaz, %bb.np ], [ %i.zd, %bb.mf ]
+  %.pn150.ph.i.i = phi { ptr, i32 } [ %i.zd, %bb.mf ], [ %i.aaz, %bb.np ], [ %.pn146.i.i, %bb.nq ]
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCsghEUimwObfx_11proc_macro25IdentEBD_(ptr nonnull align 8 %i.jt) #7
           to label %bb.nx unwind label %bb.ls, !noalias !91
 

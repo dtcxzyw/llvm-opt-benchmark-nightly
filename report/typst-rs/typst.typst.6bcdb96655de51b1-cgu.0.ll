@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %_RINvMs0_NtNtCsaL1Q
           to label %bb.l unwind label %bb.k, !noalias !44127
 
 bb.i:                                             ; preds = %3, %.thread.i, %bb.k
-  %.pn.i = phi { ptr, i32 } [ %lpad.thr_comm.split-lp.i, %3 ], [ %lpad.thr_comm.i.a, %.thread.i ], [ %i.ad, %bb.k ] ; 2 uses
+  %.pn.i = phi { ptr, i32 } [ %lpad.thr_comm.i, %3 ], [ %lpad.thr_comm.i.a, %.thread.i ], [ %i.ad, %bb.k ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !44128)
   %.val.i.i = load i64, ptr %i.e, align 8, !range !37, !alias.scope !44128, !noalias !44127, !noundef !28 ; 2 uses
   %i.ac = icmp eq i64 %.val.i.i, 0
@@ -294,12 +294,6 @@ _RNvNtCs9fPPV5zPXBl_5typst5world15read_from_stdin.exit.thread: ; preds = %bb.m, 
           cleanup
   br label %bb.i
 
-3:                                                ; preds = %.noexc.i, %bb.o
-  %lpad.thr_comm.split-lp.i = landingpad { ptr, i32 }
-          cleanup
-  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs9fPPV5zPXBl_5typst(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ah) #62
-          to label %bb.i unwind label %bb.z, !noalias !44127
-
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit.i: ; preds = %bb.r, %bb.q, %bb.p, %.noexc.i
   %.sroa.0.0.i.i = phi i8 [ %i.ax, %bb.r ], [ %switch.idx.cast.i.i.i.i, %bb.p ], [ %i.av, %bb.q ], [ %i.aq, %.noexc.i ]
   %i.ay = icmp eq i8 %.sroa.0.0.i.i, 11
@@ -362,6 +356,12 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.v, %bb.u, %bb.t, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !44130
   br label %_RNvNtCs9fPPV5zPXBl_5typst5world15read_from_stdin.exit.thread
+
+3:                                                ; preds = %.noexc.i, %bb.o
+  %lpad.thr_comm.i = landingpad { ptr, i32 }
+          cleanup
+  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs9fPPV5zPXBl_5typst(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ah) #62
+          to label %bb.i unwind label %bb.z, !noalias !44127
 
 bb.z:                                             ; preds = %3
   %i.bg = landingpad { ptr, i32 }

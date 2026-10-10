@@ -205,16 +205,16 @@ bb.r:                                             ; preds = %bb.o, %bb.af, %"_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   ret void
 
+4:                                                ; preds = %bb.s
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  br label %.thread
+
 bb.s:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store ptr %i.ah, ptr %i.h, align 8
   invoke void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE"(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.h)
-          to label %bb.t unwind label %.thread82
-
-.thread82:                                        ; preds = %bb.s
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread
+          to label %bb.t unwind label %4
 
 bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
@@ -333,8 +333,8 @@ bb.ag:                                            ; preds = %.thread
   call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #53
   unreachable
 
-.thread:                                          ; preds = %.thread78.loopexit.split-lp, %.thread78.loopexit.loopexit.split-lp, %.thread78.loopexit.loopexit, %.thread82
-  %.pn73 = phi { ptr, i32 } [ %4, %.thread82 ], [ %lpad.loopexit.split-lp, %.thread78.loopexit.split-lp ], [ %lpad.loopexit85, %.thread78.loopexit.loopexit ], [ %lpad.loopexit.split-lp86, %.thread78.loopexit.loopexit.split-lp ]
+.thread:                                          ; preds = %.thread78.loopexit.split-lp, %.thread78.loopexit.loopexit.split-lp, %.thread78.loopexit.loopexit, %4
+  %.pn73 = phi { ptr, i32 } [ %5, %4 ], [ %lpad.loopexit.split-lp, %.thread78.loopexit.split-lp ], [ %lpad.loopexit85, %.thread78.loopexit.loopexit ], [ %lpad.loopexit.split-lp86, %.thread78.loopexit.loopexit.split-lp ]
   invoke fastcc void @"_ZN4core3ptr147drop_in_place$LT$anki..import_export..package..colpkg..export..MaybeEncodedWriter$LT$zip..write..zip_writer..ZipWriter$LT$std..fs..File$GT$$GT$$GT$17h99b1f272d2373a37E"(ptr noalias noundef align 8 dereferenceable(64) %i.i) #51
           to label %common.resume unwind label %bb.ag
 }
@@ -737,16 +737,16 @@ bb.w:                                             ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !4219
   br label %bb.ap
 
+7:                                                ; preds = %bb.x
+  %8 = landingpad { ptr, i32 }
+          cleanup
+  br label %.thread.i
+
 bb.x:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !4219
   store ptr %i.as, ptr %i.h, align 8, !noalias !4219
   invoke void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE"(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.h)
-          to label %bb.y unwind label %.thread80.i, !noalias !4217
-
-.thread80.i:                                      ; preds = %bb.x
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread.i
+          to label %bb.y unwind label %7, !noalias !4217
 
 bb.y:                                             ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !4219
@@ -867,8 +867,8 @@ bb.al:                                            ; preds = %.thread.i
   call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #53, !noalias !4217
   unreachable
 
-.thread.i:                                        ; preds = %.thread80.i, %.thread76.loopexit.split-lp.i, %.thread76.loopexit.loopexit.split-lp.i, %.thread76.loopexit.loopexit.i
-  %.pn71.i = phi { ptr, i32 } [ %7, %.thread80.i ], [ %lpad.loopexit.split-lp.i, %.thread76.loopexit.split-lp.i ], [ %lpad.loopexit83.i, %.thread76.loopexit.loopexit.i ], [ %lpad.loopexit.split-lp84.i, %.thread76.loopexit.loopexit.split-lp.i ]
+.thread.i:                                        ; preds = %7, %.thread76.loopexit.split-lp.i, %.thread76.loopexit.loopexit.split-lp.i, %.thread76.loopexit.loopexit.i
+  %.pn71.i = phi { ptr, i32 } [ %8, %7 ], [ %lpad.loopexit.split-lp.i, %.thread76.loopexit.split-lp.i ], [ %lpad.loopexit83.i, %.thread76.loopexit.loopexit.i ], [ %lpad.loopexit.split-lp84.i, %.thread76.loopexit.loopexit.split-lp.i ]
   invoke fastcc void @"_ZN4core3ptr122drop_in_place$LT$anki..import_export..package..colpkg..export..MaybeEncodedWriter$LT$tempfile..file..NamedTempFile$GT$$GT$17h97acb92641ef5963E"(ptr noalias noundef align 8 dereferenceable(64) %i.i) #51
           to label %.thread118 unwind label %bb.al, !noalias !4217
 
