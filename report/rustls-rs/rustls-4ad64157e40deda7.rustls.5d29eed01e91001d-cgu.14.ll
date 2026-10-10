@@ -202,7 +202,7 @@ bb.a:
   %i.h = insertelement <16 x i8> poison, i8 %i.d, i64 0
   %i.i = shufflevector <16 x i8> %i.h, <16 x i8> poison, <16 x i32> zeroinitializer ; 3 uses
   %i.j = load i8, ptr %2, align 8, !range !4, !alias.scope !296, !noalias !295
-  %.fr24 = freeze i8 %i.j                         ; 6 uses
+  %.fr24 = freeze i8 %i.j                         ; 4 uses
   %i.k = trunc i8 %.fr24 to i1
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 1
@@ -210,9 +210,7 @@ bb.a:
   %.fr = freeze i8 %i.n                           ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 2 uses
   %i.p = load i32, ptr %i.o, align 2, !alias.scope !296, !noalias !295
-  %i.q = load i128, ptr %i.o, align 2, !alias.scope !296, !noalias !295 ; 2 uses
-  %3 = lshr i128 %i.q, 48
-  %4 = trunc i128 %3 to i64                       ; 2 uses
+  %i.q = load i128, ptr %i.o, align 2, !alias.scope !296, !noalias !295
   br i1 %i.k, label %.split14.us, label %.split14
 
 .split14.us:                                      ; preds = %bb.a
@@ -253,7 +251,7 @@ bb.b:                                             ; preds = %.lr.ph.i.us.us.us.u
   %i.ah = getelementptr inbounds i8, ptr %i.aa, i64 -214
   %i.ai = load i128, ptr %i.ah, align 2, !alias.scope !301, !noalias !302, !noundef !5
   %i.aj = icmp eq i128 %i.ai, %i.q
-  br i1 %i.aj, label %.split.us, label %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i.us.us.us.us, !prof !8
+  br i1 %i.aj, label %.split.us.loopexit27, label %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i.us.us.us.us, !prof !8
 
 _RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i.us.us.us.us: ; preds = %.split.i.us.us.us.us, %bb.b, %.lr.ph.i.us.us.us.us
   %i.ak = add i16 %.sroa.06.0.i33.i.us.us.us.us, -1
@@ -306,7 +304,7 @@ _RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rus
   %i.bg = getelementptr inbounds i8, ptr %i.az, i64 -214
   %i.bh = load i32, ptr %i.bg, align 2, !alias.scope !301, !noalias !302, !noundef !5
   %i.bi = icmp eq i32 %i.bh, %i.p
-  br i1 %i.bi, label %.split.us, label %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i.us.us18, !prof !8
+  br i1 %i.bi, label %.split.us.loopexit27, label %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i.us.us18, !prof !8
 
 _RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i.us.us18: ; preds = %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.i.us.us, %bb.d, %.lr.ph.i.us.us16
   %i.bj = add i16 %.sroa.06.0.i33.i.us.us17, -1
@@ -370,7 +368,7 @@ bb.f:                                             ; preds = %.loopexit.split-lp,
           to label %.noexc unwind label %.loopexit
 
 .noexc:                                           ; preds = %.split25.i
-  br i1 %i.cd, label %.split.us.loopexit27, label %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i, !prof !8
+  br i1 %i.cd, label %.split.us, label %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i, !prof !8
 
 ._crit_edge.i:                                    ; preds = %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.thread.i, %.split14
   %i.ce = icmp eq <16 x i8> %.sroa.0.0.copyload.i26.i, splat (i8 -1)
@@ -389,23 +387,26 @@ bb.g:                                             ; preds = %._crit_edge.i
   %i.ck = add i64 %.sroa.01.0.i.i, %i.cj
   br label %.split14
 
-.split.us.loopexit27:                             ; preds = %.noexc
+.split.us.loopexit27:                             ; preds = %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.i.us.us, %.split.i.us.us.us.us
+  %.us-phi.ph = phi ptr [ %i.aa, %.split.i.us.us.us.us ], [ %i.az, %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.i.us.us ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %.us-phi.ph, ptr %3, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %1, ptr %4, align 8
+  store i8 2, ptr %0, align 8
+  br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECs7ZUl82OSlxp_6rustls.exit
+
+.split.us:                                        ; preds = %.noexc
   %.pre = load i8, ptr %2, align 8, !range !4, !alias.scope !303
   %.pre35 = load i64, ptr %i.l, align 8, !range !6
-  br label %.split.us
-
-.split.us:                                        ; preds = %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.i.us.us, %.split.i.us.us.us.us, %.split.us.loopexit27
-  %5 = phi i64 [ %.pre35, %.split.us.loopexit27 ], [ %4, %.split.i.us.us.us.us ], [ %4, %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.i.us.us ]
-  %6 = phi i8 [ %.pre, %.split.us.loopexit27 ], [ %.fr24, %.split.i.us.us.us.us ], [ %.fr24, %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.i.us.us ]
-  %.us-phi = phi ptr [ %i.by, %.split.us.loopexit27 ], [ %i.aa, %.split.i.us.us.us.us ], [ %i.az, %_RNCINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB8_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtBa_11rustc_entryINtNtBa_3map7HashMapBS_B1R_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0E0B1Z_.exit.i.us.us ]
+  %5 = icmp ne i8 %.pre, 0
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.us-phi, ptr %i.cl, align 8
+  store ptr %i.by, ptr %i.cl, align 8
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %1, ptr %i.cm, align 8
   store i8 2, ptr %0, align 8
-  %7 = icmp ne i8 %6, 0
-  %i.cn = icmp eq i64 %5, -1
-  %or.cond = select i1 %7, i1 true, i1 %i.cn
+  %i.cn = icmp eq i64 %.pre35, -1
+  %or.cond = select i1 %5, i1 true, i1 %i.cn
   br i1 %or.cond, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECs7ZUl82OSlxp_6rustls.exit, label %bb.h
 
 bb.h:                                             ; preds = %.split.us
@@ -436,7 +437,7 @@ _RINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB6_8RawTableTNtNtCseO5Jl7W60Eg_16rustl
   invoke void @_RINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB6_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE7reserveNCINvNtB8_3map11make_hasherBQ_B1P_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE0EB1X_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, i64 noundef 1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a)
           to label %bb.k unwind label %.loopexit.split-lp
 
-_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECs7ZUl82OSlxp_6rustls.exit: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECs7ZUl82OSlxp_6rustls.exit.i.i.i, %.split.us, %bb.k
+_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECs7ZUl82OSlxp_6rustls.exit: ; preds = %.split.us.loopexit27, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECs7ZUl82OSlxp_6rustls.exit.i.i.i, %.split.us, %bb.k
   ret void
 
 bb.k:                                             ; preds = %_RINvMs6_NtCs37Y8JGf013z_9hashbrown3rawINtB6_8RawTableTNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameNtNtNtNtCs7ZUl82OSlxp_6rustls6client5handy5cache10ServerDataEE4findNCNvMNtB8_11rustc_entryINtNtB8_3map7HashMapBQ_B1P_NtNtNtCsaKJjC64KgbL_3std4hash6random11RandomStateE11rustc_entry0EB1X_.exit
