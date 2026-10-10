@@ -205,7 +205,7 @@ define linkonce_odr hidden void @_Z25ExtractTranslationSamplerRN5glTF25AssetERNS
 .noexc:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 1028
   %i.b = load i32, ptr %i.a, align 4              ; 4 uses
-  %i.c = zext i32 %i.b to i64                     ; 10 uses
+  %i.c = zext i32 %i.b to i64                     ; 9 uses
   %.not.i.i.i.i = icmp ne i32 %i.b, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.d = shl nuw nsw i64 %i.c, 2
@@ -266,8 +266,8 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %i.c, -2
-  %n.vec = add nsw i64 %.neg, %i.c                ; 2 uses
+  %6 = add nsw i64 %i.c, -1
+  %n.vec = and i64 %6, -2                         ; 2 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.s, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
   br label %vector.body
@@ -603,7 +603,7 @@ define linkonce_odr hidden void @_Z22ExtractRotationSamplerRN5glTF25AssetERNSt7_
 .noexc:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 1040
   %i.b = load i32, ptr %i.a, align 8              ; 4 uses
-  %i.c = zext i32 %i.b to i64                     ; 12 uses
+  %i.c = zext i32 %i.b to i64                     ; 11 uses
   %.not.i.i.i.i = icmp ne i32 %i.b, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.d = shl nuw nsw i64 %i.c, 2
@@ -682,8 +682,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %conflict.rdx122, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %i.c, -2
-  %n.vec = add nsw i64 %.neg, %i.c                ; 2 uses
+  %6 = add nsw i64 %i.c, -1
+  %n.vec = and i64 %6, -2                         ; 2 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.s, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
   br label %vector.body
@@ -846,7 +846,7 @@ define linkonce_odr hidden void @_Z19ExtractScaleSamplerRN5glTF25AssetERNSt7__cx
 .noexc:
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 1056
   %i.b = load i32, ptr %i.a, align 8              ; 4 uses
-  %i.c = zext i32 %i.b to i64                     ; 10 uses
+  %i.c = zext i32 %i.b to i64                     ; 9 uses
   %.not.i.i.i.i = icmp ne i32 %i.b, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.d = shl nuw nsw i64 %i.c, 2
@@ -907,8 +907,8 @@ vector.memcheck:                                  ; preds = %.lr.ph
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %.neg = or i64 %i.c, -2
-  %n.vec = add nsw i64 %.neg, %i.c                ; 2 uses
+  %6 = add nsw i64 %i.c, -1
+  %n.vec = and i64 %6, -2                         ; 2 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.s, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
   br label %vector.body

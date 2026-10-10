@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   %i.b = zext i32 %1 to i64
   %i.c = zext i32 %2 to i64
-  %mul.i29 = mul nuw i64 %i.c, %i.b               ; 6 uses
+  %mul.i29 = mul nuw i64 %i.c, %i.b               ; 5 uses
   %i.d = call fastcc noundef i32 @_ZN7lodepngL7getChrmEPfS0_jPKNS_10LodePNGICCEPK11LodePNGInfo(ptr noundef %i.a, ptr noundef %6, i32 noundef %4, ptr noundef %5, ptr noundef %3)
   %.not27 = icmp eq i32 %i.d, 0
   br i1 %.not27, label %bb.b, label %.loopexit
@@ -250,8 +250,8 @@ bb.d:                                             ; preds = %bb.b
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %.neg = or i64 %mul.i29, -2
-  %n.vec = add i64 %.neg, %mul.i29                ; 2 uses
+  %7 = add i64 %mul.i29, -1
+  %n.vec = and i64 %7, -2                         ; 2 uses
   %broadcast.splat = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splat32 = shufflevector <2 x double> %i.p, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splat34 = shufflevector <2 x double> %i.r, <2 x double> poison, <2 x i32> zeroinitializer
