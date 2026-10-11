@@ -205,7 +205,8 @@ bb.u:                                             ; preds = %bb.w, %bb.s
   br label %bb.x
 
 bb.v:                                             ; preds = %.lr.ph371
-  %i.fs = extractvalue { ptr, ptr } %.pn376, 1
+  %i.fs = extractvalue { ptr, ptr } %.pn376, 1    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fs) ], !noalias !695
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cd), !noalias !698
   %i.ft = load ptr, ptr %i.dy, align 8, !noalias !698, !nonnull !12, !align !13, !noundef !12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cc), !noalias !698
@@ -608,7 +609,8 @@ bb.bu:                                            ; preds = %.lr.ph365, %bb.bw
   br label %bb.bb
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.lb = extractvalue { ptr, ptr } %.pn374, 1
+  %i.lb = extractvalue { ptr, ptr } %.pn374, 1    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lb) ], !noalias !695
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag), !noalias !698
   %i.lc = load ptr, ptr %i.gd, align 8, !noalias !698, !nonnull !12, !align !13, !noundef !12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !noalias !698
@@ -1011,7 +1013,8 @@ bb.c:                                             ; preds = %_RINvYINtNtNtNtCs4N
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevar14BindingContextEEEB1C_.exit: ; preds = %bb.c, %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters10filter_map9FilterMapNtCs2O29vuvTAEJ_14ty_python_core13AncestorsIterNCNvNtNtCsoTR8nlGN3X_18ty_python_semantic5types8generics26enclosing_binding_contexts0ENtNtNtBa_6traits8iterator8Iterator7collectINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtNtB1W_7typevar14BindingContextEEB1Y_.exit
   %i.i = extractvalue { ptr, i64 } %i.b, 1
-  %i.j = extractvalue { ptr, i64 } %i.b, 0
+  %i.j = extractvalue { ptr, i64 } %i.b, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.j) ]
   store ptr %i.j, ptr %i.d, align 8
   store i64 %i.i, ptr %i.e, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(432) %0, ptr noundef nonnull align 8 dereferenceable(432) %1, i64 432, i1 false)
@@ -1414,7 +1417,8 @@ _RNCNCNvMsq_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types4call4bindNtB9_12Bindin
   %i.t = icmp ugt i8 %i.l, -49
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 80 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !alias.scope !25387
-  %.sroa.01.0.i.i.i.i.i.i = select i1 %i.t, ptr %i.v, ptr %i.u ; 2 uses
+  %.sroa.01.0.i.i.i.i.i.i = select i1 %i.t, ptr %i.v, ptr %i.u ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i.i) ]
   %i.w = load i64, ptr %.sroa.01.0.i.i.i.i.i.i, align 1
   %i.x = xor i64 %i.w, 8314045561195226477
   %i.y = getelementptr i8, ptr %.sroa.01.0.i.i.i.i.i.i, i64 8
@@ -1473,7 +1477,8 @@ _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNCNvMsq_NtNtNtCsoTR8nlGN3
   %i.aw = icmp ugt i8 %i.ao, -49
   %i.ax = getelementptr inbounds nuw i8, ptr %i.al, i64 80 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !alias.scope !25388
-  %.sroa.01.0.i.i.i.i.i.i.i = select i1 %i.aw, ptr %i.ay, ptr %i.ax ; 2 uses
+  %.sroa.01.0.i.i.i.i.i.i.i = select i1 %i.aw, ptr %i.ay, ptr %i.ax ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i.i.i) ]
   %i.az = load i64, ptr %.sroa.01.0.i.i.i.i.i.i.i, align 1
   %i.ba = xor i64 %i.az, 8314045561195226477
   %i.bb = getelementptr i8, ptr %.sroa.01.0.i.i.i.i.i.i.i, i64 8

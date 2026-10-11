@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not98, label %._crit_edge.split.us.us, label %.thread.us.us.peel
 
 .thread.us.us.peel:                               ; preds = %bb.f
-  %i.bb = load ptr, ptr %i.ah, align 8, !tbaa !141
+  %i.bb = load ptr, ptr %i.ah, align 8, !tbaa !141 ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.bb, i64 64) ]
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %i.al ; 5 uses
   %i.bd = load i32, ptr %i.az, align 64, !tbaa !27 ; 4 uses
   %i.be = tail call i32 @llvm.abs.i32(i32 %i.bd, i1 false)
@@ -309,7 +310,8 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not97, label %._crit_edge.split, label %.thread.peel
 
 .thread.peel:                                     ; preds = %bb.k
-  %i.cz = load ptr, ptr %i.ah, align 8, !tbaa !141
+  %i.cz = load ptr, ptr %i.ah, align 8, !tbaa !141 ; 2 uses
+  call void @llvm.assume(i1 true) [ "align"(ptr %i.cz, i64 64) ]
   %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %i.cd ; 5 uses
   %i.db = load i32, ptr %i.cv, align 64, !tbaa !27 ; 3 uses
   %i.dc = sext i32 %i.db to i64

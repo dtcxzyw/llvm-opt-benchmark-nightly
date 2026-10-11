@@ -204,7 +204,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskVIURZGHVHJ_12tensor_tools.exit.i: ; preds = %bb.b
-  %i.o = extractvalue { ptr, ptr } %i.d, 1
+  %i.o = extractvalue { ptr, ptr } %i.d, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.p = load ptr, ptr %i.m, align 8, !noalias !855, !nonnull !5, !noundef !5 ; 3 uses
   %i.q = icmp ule i64 %i.h, %i.l
   tail call void @llvm.assume(i1 %i.q)
@@ -345,7 +346,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskVIURZGHVHJ_12tensor_tools.exit.i: ; preds = %bb.b
-  %i.o = extractvalue { ptr, ptr } %i.d, 1
+  %i.o = extractvalue { ptr, ptr } %i.d, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.p = load ptr, ptr %i.m, align 8, !noalias !875, !nonnull !5, !noundef !5 ; 3 uses
   %i.q = icmp ule i64 %i.h, %i.l
   tail call void @llvm.assume(i1 %i.q)
@@ -748,7 +750,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskVIURZGHVHJ_12tensor_tools.exit: ; preds = %bb.b
-  %i.q = extractvalue { ptr, ptr } %i.d, 1
+  %i.q = extractvalue { ptr, ptr } %i.d, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   %i.r = load ptr, ptr %i.o, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %i.s = icmp ule i64 %i.j, %i.n
   tail call void @llvm.assume(i1 %i.s)

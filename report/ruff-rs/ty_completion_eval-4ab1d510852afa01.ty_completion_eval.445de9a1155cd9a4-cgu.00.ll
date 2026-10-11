@@ -204,12 +204,13 @@ bb.w:                                             ; preds = %bb.u
 
 _RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit46: ; preds = %bb.v, %bb.w
   %.sroa.01.0.i44 = phi i64 [ %i.bf, %bb.w ], [ %.sroa.0.0.i.i43, %bb.v ]
-  %.sroa.0.0.i45 = phi ptr [ %i.bd, %bb.w ], [ %i.av, %bb.v ]
+  %.sroa.0.0.i45 = phi ptr [ %i.bd, %bb.w ], [ %i.av, %bb.v ] ; 2 uses
   %i.bg = icmp eq i64 %i.at, %.sroa.01.0.i44
   br i1 %i.bg, label %bb.x, label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit42
 
 bb.x:                                             ; preds = %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit46
-  %bcmp32 = call i32 @bcmp(ptr nonnull %i.ar, ptr %.sroa.0.0.i45, i64 %i.at)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i45) ]
+  %bcmp32 = call i32 @bcmp(ptr nonnull %i.ar, ptr nonnull %.sroa.0.0.i45, i64 %i.at)
   %i.bh = icmp eq i32 %bcmp32, 0
   br label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit42
 }

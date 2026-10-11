@@ -204,7 +204,8 @@ _RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB8_5
 
 bb.g:                                             ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB8_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultERB1u_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECsEhZmuQNqkz_11ruff_linter.exit
   %i.av = extractvalue { ptr, ptr } %i.at, 1
-  %i.aw = extractvalue { ptr, ptr } %i.at, 0      ; 2 uses
+  %i.aw = extractvalue { ptr, ptr } %i.at, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
   %i.ax = icmp eq ptr %i.aw, %i.av
   br i1 %i.ax, label %_RNvMs2_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker15typing_importer.exit.sink.split, label %bb.h
 
@@ -607,7 +608,8 @@ bb.l:                                             ; preds = %bb.k
   %i.eo = icmp ugt i8 %i.eg, -49
   %i.ep = getelementptr inbounds nuw i8, ptr %i.dq, i64 8 ; 2 uses
   %i.eq = load ptr, ptr %i.ep, align 8, !alias.scope !7846, !noalias !7845
-  %.sroa.01.0.i.i.i.i.i.us.i.i = select i1 %i.eo, ptr %i.eq, ptr %i.ep
+  %.sroa.01.0.i.i.i.i.i.us.i.i = select i1 %i.eo, ptr %i.eq, ptr %i.ep ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i.i.i.us.i.i) ]
   %bcmp.i.i.i.i.us.i.i = call i32 @bcmp(ptr nonnull %.sroa.01.0.i.i.i.i.i.us.i.i, ptr nonnull %i.ce, i64 %i.bm), !noalias !7845
   %i.er = icmp eq i32 %bcmp.i.i.i.i.us.i.i, 0
   br i1 %i.er, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules20add_required_imports19add_required_import.exit, label %.backedge.i.i.i.us.i.i
@@ -828,7 +830,8 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ih = icmp ugt i8 %i.hz, -49
   %i.ii = getelementptr inbounds nuw i8, ptr %i.hj, i64 8 ; 2 uses
   %i.ij = load ptr, ptr %i.ii, align 8, !alias.scope !7850, !noalias !7849
-  %.sroa.01.0.i.i.i30.i.i.i.i = select i1 %i.ih, ptr %i.ij, ptr %i.ii
+  %.sroa.01.0.i.i.i30.i.i.i.i = select i1 %i.ih, ptr %i.ij, ptr %i.ii ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i.i.i30.i.i.i.i) ]
   %bcmp.i.i31.i.i.i.i = call i32 @bcmp(ptr nonnull %.sroa.01.0.i.i.i30.i.i.i.i, ptr nonnull %.fr.i.i, i64 %i.bz), !noalias !7851
   %i.ik = icmp eq i32 %bcmp.i.i31.i.i.i.i, 0
   br i1 %i.ik, label %_RNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort5rules20add_required_imports19add_required_import.exit, label %.backedge.i17.i.i.i.i
@@ -1231,7 +1234,8 @@ _RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB8_5
 
 bb.p:                                             ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtNtB8_5slice4iter4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes20ParameterWithDefaultERB1u_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECsEhZmuQNqkz_11ruff_linter.exit
   %i.cy = extractvalue { ptr, ptr } %i.cw, 1
-  %i.cz = extractvalue { ptr, ptr } %i.cw, 0      ; 2 uses
+  %i.cz = extractvalue { ptr, ptr } %i.cw, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cz) ]
   %i.da = icmp eq ptr %i.cz, %i.cy
   br i1 %i.da, label %_RNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4_13SemanticModel27first_non_type_parent_scope.exit.thread.sink.split, label %bb.q
 
@@ -1634,7 +1638,8 @@ bb.e:                                             ; preds = %bb.d
   %i.au = icmp ugt i8 %i.am, -49
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.01.015, i64 80 ; 2 uses
   %i.aw = load ptr, ptr %i.av, align 8, !alias.scope !8700
-  %.sroa.01.0.i = select i1 %i.au, ptr %i.aw, ptr %i.av ; 2 uses
+  %.sroa.01.0.i = select i1 %i.au, ptr %i.aw, ptr %i.av ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i) ]
   %i.ax = load i64, ptr %.sroa.01.0.i, align 1
   %i.ay = xor i64 %i.ax, 8314045561195226477
   %i.az = getelementptr i8, ptr %.sroa.01.0.i, i64 8

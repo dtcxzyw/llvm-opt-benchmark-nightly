@@ -205,7 +205,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.noexc17, %bb.f
   %i.p = phi ptr [ %i.h, %bb.f ], [ %.pre, %.noexc17 ]
   %i.q = phi i64 [ %i.j, %bb.f ], [ %.pre.i.i, %.noexc17 ] ; 3 uses
-  %i.r = extractvalue { ptr, i64 } %i.k, 0
+  %i.r = extractvalue { ptr, i64 } %i.k, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = icmp sgt i64 %i.q, -1
   call void @llvm.assume(i1 %i.s)
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.q
@@ -608,8 +609,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN71_$LT$liquid_core..error..error..Error$u20$as$u20$core..fmt..Display$GT$3fmt17h5abd3d47d35a46c1E", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !6, !noundef !6
+  %.val = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15906
   store ptr @666, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1012,8 +1013,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17ha1ea5792533ec5ecE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !6, !noundef !6
+  %.val = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15973
   store ptr @683, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1416,8 +1417,8 @@ bb.a:
 define noundef zeroext i1 @"_ZN78_$LT$liquid_core..model..value..state..State$u20$as$u20$core..fmt..Display$GT$3fmt17ha54078f521d28b18E"(ptr noalias readonly align 1 captures(none) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 {
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val1 = load ptr, ptr %i.a, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val1 = load ptr, ptr %i.a, align 8, !nonnull !6, !noundef !6
+  %.val = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.b = getelementptr inbounds nuw i8, ptr %.val1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !invariant.load !6, !noalias !16036, !nonnull !6
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 1 %.val, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) inttoptr (i64 1 to ptr), i64 noundef 0), !noalias !16036, !inline_history !2
@@ -1820,8 +1821,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN60_$LT$alloc..string..String$u20$as$u20$core..fmt..Display$GT$3fmt17h86a528f6a97fe10dE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !6, !noundef !6
+  %.val = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !16096
   store ptr @666, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -2224,8 +2225,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17ha1ea5792533ec5ecE", ptr %.sroa.42.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.c, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.c, align 8, !nonnull !6, !noundef !6
+  %.val = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !16263
   store ptr @34, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -2628,7 +2629,8 @@ bb.i:                                             ; preds = %bb.h
 "_ZN50_$LT$i8$u20$as$u20$alloc..string..SpecToString$GT$14spec_to_string17hfec9c5a07f2a5a7eE.exit": ; preds = %bb.f, %.noexc17.i
   %i.s = phi ptr [ %i.i, %bb.f ], [ %.pre.i, %.noexc17.i ]
   %i.t = phi i64 [ %i.k, %bb.f ], [ %.pre.i.i.i, %.noexc17.i ] ; 3 uses
-  %i.u = extractvalue { ptr, i64 } %i.l, 0
+  %i.u = extractvalue { ptr, i64 } %i.l, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %i.v = icmp sgt i64 %i.t, -1
   call void @llvm.assume(i1 %i.v)
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t
@@ -2905,7 +2907,8 @@ bb.i:                                             ; preds = %bb.h
 "_ZN51_$LT$i16$u20$as$u20$alloc..string..SpecToString$GT$14spec_to_string17h31b0fb7b6dec011cE.exit": ; preds = %bb.f, %.noexc17.i
   %i.s = phi ptr [ %i.i, %bb.f ], [ %.pre.i, %.noexc17.i ]
   %i.t = phi i64 [ %i.k, %bb.f ], [ %.pre.i.i.i, %.noexc17.i ] ; 3 uses
-  %i.u = extractvalue { ptr, i64 } %i.l, 0
+  %i.u = extractvalue { ptr, i64 } %i.l, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %i.v = icmp sgt i64 %i.t, -1
   call void @llvm.assume(i1 %i.v)
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t
@@ -3075,7 +3078,8 @@ bb.i:                                             ; preds = %bb.h
 "_ZN51_$LT$i32$u20$as$u20$alloc..string..SpecToString$GT$14spec_to_string17h572eb671b30dea37E.exit": ; preds = %bb.f, %.noexc17.i
   %i.s = phi ptr [ %i.i, %bb.f ], [ %.pre.i, %.noexc17.i ]
   %i.t = phi i64 [ %i.k, %bb.f ], [ %.pre.i.i.i, %.noexc17.i ] ; 3 uses
-  %i.u = extractvalue { ptr, i64 } %i.l, 0
+  %i.u = extractvalue { ptr, i64 } %i.l, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %i.v = icmp sgt i64 %i.t, -1
   call void @llvm.assume(i1 %i.v)
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t

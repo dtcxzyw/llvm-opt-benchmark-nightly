@@ -204,7 +204,12 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !754, !noundef !7 ; 5 uses
   store ptr null, ptr %i.h, align 8, !alias.scope !754
   %.not.i.i = icmp eq ptr %i.i, null
-  br i1 %.not.i.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources10successors10SuccessorsNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentNCNvMsf_NtB1Q_8node_extNtB1M_4Path8segments0EEECsf8NQSppxkmK_14ide_completion.exit, label %bb.c
+  br i1 %.not.i.i, label %.thread, label %bb.c
+
+.thread:                                          ; preds = %bb.b
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !754
+  store i64 0, ptr %0, align 8
+  br label %bb.am
 
 bb.c:                                             ; preds = %bb.b
   store ptr %i.i, ptr %i.e, align 8, !noalias !754
@@ -542,14 +547,9 @@ _RNvYNvYINtNtNtNtCshzWfHUSfYae_4core4iter7sources10successors10SuccessorsNtNtNtN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !754
   br label %bb.am
 
-bb.am:                                            ; preds = %_RNvYNvYINtNtNtNtCshzWfHUSfYae_4core4iter7sources10successors10SuccessorsNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentNCNvMsf_NtB1e_8node_extNtB1a_4Path8segments0ENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceCsf8NQSppxkmK_14ide_completion.exit, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources10successors10SuccessorsNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentNCNvMsf_NtB1Q_8node_extNtB1M_4Path8segments0EEECsf8NQSppxkmK_14ide_completion.exit, %bb.a
-  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ null, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources10successors10SuccessorsNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentNCNvMsf_NtB1Q_8node_extNtB1M_4Path8segments0EEECsf8NQSppxkmK_14ide_completion.exit ], [ %i.i, %_RNvYNvYINtNtNtNtCshzWfHUSfYae_4core4iter7sources10successors10SuccessorsNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentNCNvMsf_NtB1e_8node_extNtB1a_4Path8segments0ENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceCsf8NQSppxkmK_14ide_completion.exit ]
+bb.am:                                            ; preds = %_RNvYNvYINtNtNtNtCshzWfHUSfYae_4core4iter7sources10successors10SuccessorsNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentNCNvMsf_NtB1e_8node_extNtB1a_4Path8segments0ENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceCsf8NQSppxkmK_14ide_completion.exit, %.thread, %bb.a
+  %.sroa.0.0 = phi ptr [ null, %bb.a ], [ null, %.thread ], [ %i.i, %_RNvYNvYINtNtNtNtCshzWfHUSfYae_4core4iter7sources10successors10SuccessorsNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentNCNvMsf_NtB1e_8node_extNtB1a_4Path8segments0ENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceCsf8NQSppxkmK_14ide_completion.exit ]
   ret ptr %.sroa.0.0
-
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter7sources10successors10SuccessorsNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentNCNvMsf_NtB1Q_8node_extNtB1M_4Path8segments0EEECsf8NQSppxkmK_14ide_completion.exit: ; preds = %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !754
-  store i64 0, ptr %0, align 8
-  br label %bb.am
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -952,7 +952,8 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsf8NQSppxkmK_14ide_completion.exit.i: ; preds = %bb.b
-  %i.n = extractvalue { ptr, ptr } %i.d, 1
+  %i.n = extractvalue { ptr, ptr } %i.d, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.n) ]
   %i.o = load ptr, ptr %i.l, align 8, !noalias !4572, !nonnull !7, !noundef !7 ; 3 uses
   %i.p = icmp ule i64 %..i.i, %i.k
   tail call void @llvm.assume(i1 %i.p)

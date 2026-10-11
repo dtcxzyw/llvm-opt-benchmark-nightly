@@ -202,17 +202,17 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11m
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsh7jLiOpeRCu_8ordermap3map8OrderMapNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameNtNtB1k_8typeshed14PyVersionRangeINtNtB4_4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEEEB1k_(ptr noalias noundef align 8 dereferenceable(56) %i.g) #24
           to label %common.resume unwind label %bb.bs
 
-.loopexit:                                        ; preds = %bb.al
+.loopexit:                                        ; preds = %bb.ae
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit248
 
-.loopexit.split-lp.loopexit:                      ; preds = %select.unfold.i.i
+.loopexit.split-lp.loopexit:                      ; preds = %bb.al
   %lpad.loopexit313 = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit248
 
-.loopexit.split-lp.loopexit.split-lp.loopexit:    ; preds = %bb.ae
+.loopexit.split-lp.loopexit.split-lp.loopexit:    ; preds = %select.unfold.i.i
   %lpad.loopexit316 = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit248
@@ -460,12 +460,13 @@ _RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10nex
           to label %bb.q unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
 
 bb.q:                                             ; preds = %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i
-  %i.bp = extractvalue { ptr, i64 } %i.bo, 1      ; 22 uses
+  %i.bp = extractvalue { ptr, i64 } %i.bo, 1      ; 23 uses
   %i.bq = icmp eq i64 %i.bp, 0
   br i1 %i.bq, label %.backedge, label %.lr.ph.split.i.i141
 
 .lr.ph.split.i.i141:                              ; preds = %bb.q
   %i.br = extractvalue { ptr, i64 } %i.bo, 0      ; 10 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.br) ]
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.v, %.lr.ph.split.i.i141
@@ -506,7 +507,7 @@ _RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143: ; preds = %bb.s, %.
   %.merged.i.i.i144 = phi { i64, i64 } [ %i.by, %._crit_edge.i.i.i165 ], [ %i.bw, %bb.s ] ; 2 uses
   %i.cd = extractvalue { i64, i64 } %.merged.i.i.i144, 0
   %i.ce = trunc nuw i64 %i.cd to i1
-  br i1 %i.ce, label %bb.u, label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit
+  br i1 %i.ce, label %bb.u, label %.thread788
 
 bb.u:                                             ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143
   %i.cf = extractvalue { i64, i64 } %.merged.i.i.i144, 1 ; 3 uses
@@ -518,7 +519,7 @@ bb.u:                                             ; preds = %_RNvNtNtCs4NRVxsYgn
   br i1 %or.cond.i.i157.not, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.w, %bb.u
-  br i1 %.not13.i.i156, label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit, label %bb.r
+  br i1 %.not13.i.i156, label %.thread788, label %bb.r
 
 bb.w:                                             ; preds = %bb.u
   %i.cj = add i64 %i.bs, %i.cf                    ; 2 uses
@@ -527,30 +528,20 @@ bb.w:                                             ; preds = %bb.u
   %i.cl = icmp eq i8 %lhsc780, 58
   br i1 %i.cl, label %.thread788, label %bb.v
 
-_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit: ; preds = %bb.v, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143
-  %storemerge = phi i64 [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143 ], [ %i.ch, %bb.v ]
-  %.not124 = icmp eq ptr %i.br, null
-  br i1 %.not124, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit.sink.split, label %.thread788
-
-.thread788:                                       ; preds = %bb.w, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit
-  %.sroa.4.1.i153797 = phi i64 [ %i.bp, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit ], [ %i.cj, %bb.w ]
-  %3 = phi i1 [ true, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit ], [ false, %bb.w ]
-  %.promoted441795 = phi i64 [ %storemerge, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit ], [ %i.ch, %bb.w ] ; 3 uses
-  %.pre.i2.i180793 = phi i64 [ 0, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit ], [ %i.ch, %bb.w ] ; 5 uses
-  %i.cm = invoke { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsfDzkztWVnn_18ty_module_resolver(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.br, i64 noundef %.sroa.4.1.i153797)
+.thread788:                                       ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143, %bb.v, %bb.w
+  %.pre.i2.i180 = phi i64 [ %i.ch, %bb.w ], [ 0, %bb.v ], [ 0, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143 ] ; 5 uses
+  %.promoted459 = phi i64 [ %i.ch, %bb.w ], [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143 ], [ %i.ch, %bb.v ] ; 3 uses
+  %3 = phi i1 [ false, %bb.w ], [ true, %bb.v ], [ true, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143 ]
+  %.sroa.4.1.i153 = phi i64 [ %i.cj, %bb.w ], [ %i.bp, %bb.v ], [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i143 ]
+  %i.cm = invoke { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsfDzkztWVnn_18ty_module_resolver(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.br, i64 noundef %.sroa.4.1.i153)
           to label %4 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
 
-4:                                                ; preds = %.thread788
-  %5 = extractvalue { ptr, i64 } %i.cm, 0         ; 16 uses
-  %6 = extractvalue { ptr, i64 } %i.cm, 1         ; 30 uses
-  br i1 %3, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit.sink.split, label %bb.x
-
 bb.x:                                             ; preds = %4
-  %i.cn = icmp ult i64 %i.bp, %.promoted441795
+  %i.cn = icmp ult i64 %i.bp, %.promoted459
   br i1 %i.cn, label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i193, label %.lr.ph.split.i.i175
 
 .lr.ph.split.i.i175:                              ; preds = %bb.x, %bb.ab
-  %i.co = phi i64 [ %i.dd, %bb.ab ], [ %.promoted441795, %bb.x ] ; 5 uses
+  %i.co = phi i64 [ %i.dd, %bb.ab ], [ %.promoted459, %bb.x ] ; 5 uses
   %i.cp = sub nuw i64 %i.bp, %i.co                ; 5 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.co ; 2 uses
   %i.cr = icmp samesign ult i64 %i.cp, 16
@@ -608,24 +599,34 @@ bb.ac:                                            ; preds = %bb.aa
   %i.dh = icmp eq i8 %lhsc782, 58
   br i1 %i.dh, label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i193, label %bb.ab
 
-_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i193: ; preds = %bb.x, %bb.ab, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177, %bb.ac
-  %i.di = phi i64 [ %i.dd, %bb.ac ], [ %.pre.i2.i180793, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177 ], [ %.pre.i2.i180793, %bb.ab ], [ %.pre.i2.i180793, %bb.x ] ; 2 uses
-  %.promoted.i.i206730 = phi i64 [ %i.dd, %bb.ac ], [ %.promoted441795, %bb.x ], [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177 ], [ %i.dd, %bb.ab ] ; 2 uses
-  %i.dj = phi i1 [ false, %bb.ac ], [ true, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177 ], [ true, %bb.ab ], [ true, %bb.x ]
-  %.pn784 = phi i64 [ %i.df, %bb.ac ], [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177 ], [ %i.bp, %bb.ab ], [ %i.bp, %bb.x ]
-  %.sroa.4.1.i187 = sub nuw i64 %.pn784, %.pre.i2.i180793
-  %.sroa.0.1.i188 = getelementptr inbounds nuw i8, ptr %i.br, i64 %.pre.i2.i180793
-  %i.dk = invoke { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsfDzkztWVnn_18ty_module_resolver(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i188, i64 noundef %.sroa.4.1.i187)
-          to label %.split unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
+4:                                                ; preds = %.thread788
+  %5 = extractvalue { ptr, i64 } %i.cm, 0         ; 16 uses
+  %6 = extractvalue { ptr, i64 } %i.cm, 1         ; 30 uses
+  br i1 %3, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit.sink.split, label %bb.x
 
-bb.ad:                                            ; preds = %.split
+_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i193: ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177, %bb.ab, %bb.ac, %bb.x
+  %i.di = phi i64 [ %.pre.i2.i180, %bb.x ], [ %i.dd, %bb.ac ], [ %.pre.i2.i180, %bb.ab ], [ %.pre.i2.i180, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177 ] ; 2 uses
+  %.promoted.i.i206730 = phi i64 [ %.promoted459, %bb.x ], [ %i.dd, %bb.ac ], [ %i.dd, %bb.ab ], [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177 ] ; 2 uses
+  %i.dj = phi i1 [ true, %bb.x ], [ false, %bb.ac ], [ true, %bb.ab ], [ true, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177 ]
+  %.pn784 = phi i64 [ %i.bp, %bb.x ], [ %i.df, %bb.ac ], [ %i.bp, %bb.ab ], [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i177 ]
+  %.sroa.4.1.i187 = sub nuw i64 %.pn784, %.pre.i2.i180
+  %.sroa.0.1.i188 = getelementptr inbounds nuw i8, ptr %i.br, i64 %.pre.i2.i180
+  %i.dk = invoke { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsfDzkztWVnn_18ty_module_resolver(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i188, i64 noundef %.sroa.4.1.i187)
+          to label %.thread unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
+
+.thread:                                          ; preds = %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i193
+  %7 = extractvalue { ptr, i64 } %i.dk, 0         ; 2 uses
+  %8 = extractvalue { ptr, i64 } %i.dk, 1
+  br i1 %i.dj, label %.thread303, label %bb.ad
+
+bb.ad:                                            ; preds = %.thread
   %i.dl = icmp ult i64 %i.bp, %.promoted.i.i206730
   br i1 %i.dl, label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227, label %.lr.ph.split.i.i209
 
-.lr.ph.split.i.i209:                              ; preds = %bb.ai, %bb.ad, %bb.ah
-  %7 = phi i64 [ %i.ea, %bb.ah ], [ %.promoted.i.i206730, %bb.ad ], [ %i.ea, %bb.ai ] ; 5 uses
-  %i.dm = sub nuw i64 %i.bp, %7                   ; 5 uses
-  %i.dn = getelementptr inbounds nuw i8, ptr %i.br, i64 %7 ; 2 uses
+.lr.ph.split.i.i209:                              ; preds = %bb.ad, %.backedge945.backedge
+  %9 = phi i64 [ %i.ea, %.backedge945.backedge ], [ %.promoted.i.i206730, %bb.ad ] ; 5 uses
+  %i.dm = sub nuw i64 %i.bp, %9                   ; 5 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.br, i64 %9 ; 2 uses
   %i.do = icmp samesign ult i64 %i.dm, 16
   br i1 %i.do, label %.preheader.i.i.i228, label %bb.ae
 
@@ -635,7 +636,7 @@ bb.ad:                                            ; preds = %.split
 
 bb.ae:                                            ; preds = %.lr.ph.split.i.i209
   %i.dp = invoke { i64, i64 } @_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr14memchr_aligned(i8 noundef 58, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.dn, i64 noundef range(i64 0, -9223372036854775808) %i.dm)
-          to label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i211 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
+          to label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i211 unwind label %.loopexit
 
 ._crit_edge.i.i.i233:                             ; preds = %bb.af, %.lr.ph.i.i.i230, %.preheader.i.i.i228
   %.sroa.01.0.lcssa.i.i.i234 = phi i64 [ 0, %.preheader.i.i.i228 ], [ %i.dm, %bb.af ], [ %.sroa.01.05.i.i.i231, %.lr.ph.i.i.i230 ]
@@ -664,40 +665,41 @@ _RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i211: ; preds = %bb.ae, %
 
 bb.ag:                                            ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i211
   %i.dy = extractvalue { i64, i64 } %.merged.i.i.i212, 1 ; 3 uses
-  %i.dz = add i64 %7, 1
-  %i.ea = add i64 %i.dz, %i.dy                    ; 3 uses
+  %i.dz = add i64 %9, 1
+  %i.ea = add i64 %i.dz, %i.dy                    ; 2 uses
   %.not13.i.i224 = icmp ugt i64 %i.ea, %i.bp      ; 2 uses
-  %i.eb = add i64 %7, %i.dy
+  %i.eb = add i64 %9, %i.dy
   %or.cond.i.i225.not = icmp ult i64 %i.eb, %i.bp
   br i1 %or.cond.i.i225.not, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  br i1 %.not13.i.i224, label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227, label %.lr.ph.split.i.i209
+  br i1 %.not13.i.i224, label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227, label %.backedge945.backedge
+
+.backedge945.backedge:                            ; preds = %bb.ah, %bb.ai
+  br label %.lr.ph.split.i.i209
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.ec = add i64 %7, %i.dy                       ; 2 uses
+  %i.ec = add i64 %9, %i.dy                       ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.ec
   %lhsc785 = load i8, ptr %i.ed, align 1
   %i.ee = icmp eq i8 %lhsc785, 58                 ; 2 uses
   %brmerge1245 = or i1 %i.ee, %.not13.i.i224
-  %.mux = select i1 %i.ee, i64 %i.ec, i64 %i.bp
-  br i1 %brmerge1245, label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227, label %.lr.ph.split.i.i209
+  br i1 %brmerge1245, label %.split, label %.backedge945.backedge
 
-.split:                                           ; preds = %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i193
-  %8 = extractvalue { ptr, i64 } %i.dk, 0         ; 2 uses
-  %9 = extractvalue { ptr, i64 } %i.dk, 1
-  br i1 %i.dj, label %.thread303, label %bb.ad
+.split:                                           ; preds = %bb.ai
+  %.mux944.le = select i1 %i.ee, i64 %i.ec, i64 %i.bp
+  br label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227
 
-_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227: ; preds = %bb.ai, %bb.ad, %bb.ah, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i211
-  %.pn787.lcssa = phi i64 [ %.mux, %bb.ai ], [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i211 ], [ %i.bp, %bb.ah ], [ %i.bp, %bb.ad ]
+_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227: ; preds = %.split, %bb.ah, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i211, %bb.ad
+  %.pn787.lcssa = phi i64 [ %i.bp, %bb.ad ], [ %i.bp, %bb.ah ], [ %.mux944.le, %.split ], [ %i.bp, %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i211 ]
   %.sroa.4.1.i221 = sub nuw i64 %.pn787.lcssa, %i.di
   %.sroa.0.1.i222 = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.di
   %i.ef = invoke { ptr, i64 } @_RINvMNtCs4NRVxsYgnAr_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECsfDzkztWVnn_18ty_module_resolver(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i222, i64 noundef %.sroa.4.1.i221)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit.sink.split unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
-.thread303:                                       ; preds = %.split
+.thread303:                                       ; preds = %.thread
   %.not127 = icmp eq ptr %5, null
-  %.not128 = icmp eq ptr %8, null
+  %.not128 = icmp eq ptr %7, null
   %or.cond = select i1 %.not127, i1 true, i1 %.not128
   br i1 %or.cond, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit.sink.split, label %bb.aj
 
@@ -728,7 +730,7 @@ bb.ak:                                            ; preds = %.split.i.i
 
 bb.al:                                            ; preds = %.lr.ph.i.i.i.i.i
   %i.eo = invoke { i64, i64 } @_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr14memchr_aligned(i8 noundef 46, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.em, i64 noundef range(i64 0, -9223372036854775808) %i.el)
-          to label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i unwind label %.loopexit
+          to label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.am, %.lr.ph.i.i.i.i.i.i239, %.preheader.i.i.i.i.i.i
   %.sroa.01.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i.i.i ], [ %.sroa.01.05.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i239 ], [ %i.el, %bb.am ]
@@ -781,7 +783,7 @@ select.unfold.i.i:                                ; preds = %bb.ap, %bb.ao, %_RN
   %.sroa.4.1.i.i.ph.i.i = sub nuw i64 %.pn.i.i, %.lcssa1418.i.i
   %.sroa.0.1.i.i.ph.i.i = getelementptr inbounds nuw i8, ptr %5, i64 %.lcssa1418.i.i
   %i.ff = invoke noundef zeroext i1 @_RNvNtCs4xX4QTdRF9r_18ruff_python_stdlib11identifiers13is_identifier(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i.i.ph.i.i, i64 noundef %.sroa.4.1.i.i.ph.i.i)
-          to label %.noexc241 unwind label %.loopexit.split-lp.loopexit
+          to label %.noexc241 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc241:                                        ; preds = %select.unfold.i.i
   br i1 %i.ff, label %.split.i.i, label %_RNvMNtCsfDzkztWVnn_18ty_module_resolver11module_nameNtB2_10ModuleName13is_valid_name.exit.thread308
@@ -944,7 +946,7 @@ _RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECsfDzkztWVnn_18ty_mo
   %.sroa.3.0.i = phi i64 [ %.sroa.03.1.i.i.i, %_RNvMNtNtCsg7m2K3K1Fzf_11compact_str4repr6inlineNtB2_12InlineBuffer3new.exit.i.i ], [ %6, %bb.be ]
   %.sroa.0.0.i242 = phi ptr [ %i.gt, %_RNvMNtNtCsg7m2K3K1Fzf_11compact_str4repr6inlineNtB2_12InlineBuffer3new.exit.i.i ], [ %i.fi, %bb.be ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  invoke void @_RNvXs4_NtCsfDzkztWVnn_18ty_module_resolver8typeshedNtB5_14PyVersionRangeNtNtNtCs4NRVxsYgnAr_4core3str6traits7FromStr8from_str(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.f, ptr noalias noundef nonnull readonly captures(address, read_provenance) %8, i64 noundef %9)
+  invoke void @_RNvXs4_NtCsfDzkztWVnn_18ty_module_resolver8typeshedNtB5_14PyVersionRangeNtNtNtCs4NRVxsYgnAr_4core3str6traits7FromStr8from_str(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.f, ptr noalias noundef nonnull readonly captures(address, read_provenance) %7, i64 noundef %8)
           to label %bb.bl unwind label %bb.bq
 
 bb.bk:                                            ; preds = %bb.bo
@@ -993,12 +995,12 @@ bb.bp:                                            ; preds = %bb.bo
 .backedge:                                        ; preds = %bb.bp, %bb.q
   br i1 %i.ae, label %_RNvXss_NtNtCs4NRVxsYgnAr_4core3str4iterNtB5_5LinesNtNtNtNtB9_4iter6traits8iterator8Iterator4next.exit.i._crit_edge, label %bb.a
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit.sink.split: ; preds = %4, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit, %.thread303, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227, %bb.bi
-  %.sink929 = phi i64 [ 32, %bb.bi ], [ 8, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227 ], [ 8, %.thread303 ], [ 8, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit ], [ 8, %4 ]
-  %.sink928 = phi i64 [ %6, %bb.bi ], [ 1, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227 ], [ 1, %.thread303 ], [ 1, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCsfDzkztWVnn_18ty_module_resolver.exit.i145.loopexit ], [ 1, %4 ]
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsfDzkztWVnn_18ty_module_resolver11module_name10ModuleNameEBF_.exit.sink.split: ; preds = %4, %.thread303, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227, %bb.bi
+  %.sink942 = phi i64 [ 32, %bb.bi ], [ 8, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227 ], [ 8, %.thread303 ], [ 8, %4 ]
+  %.sink941 = phi i64 [ %6, %bb.bi ], [ 1, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i227 ], [ 1, %.thread303 ], [ 1, %4 ]
   %.sink = trunc nuw i64 %i.ar to i16
-  %.sroa.032.sroa.4.sroa.5.0..sroa.032.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 %.sink929
-  store i64 %.sink928, ptr %.sroa.032.sroa.4.sroa.5.0..sroa.032.sroa.4.0..sroa_idx.sroa_idx, align 8
+  %.sroa.032.sroa.4.sroa.5.0..sroa.032.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 %.sink942
+  store i64 %.sink941, ptr %.sroa.032.sroa.4.sroa.5.0..sroa.032.sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.433.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i16 %.sink, ptr %.sroa.433.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8

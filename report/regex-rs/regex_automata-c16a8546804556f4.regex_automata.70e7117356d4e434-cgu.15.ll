@@ -202,7 +202,8 @@ begin_hunk_0_@_RNvMs4_NtNtCs9GYDdpCSJ4S_14regex_automata4meta5regexNtB5_9RegexIn
   br i1 %i.ak, label %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterNtNtCs3roNzt6HBWW_12regex_syntax3hir10PropertiesENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs9GYDdpCSJ4S_14regex_automata.exit.thread.i, label %.lr.ph60.preheader, !dbg !12958
 
 .lr.ph60.preheader:                               ; preds = %.peel.next.i
-  %.sroa.7.0.i41 = getelementptr i8, ptr %.val30.pre, i64 8, !dbg !12959
+  %.sroa.7.0.i41 = getelementptr i8, ptr %.val30.pre, i64 8, !dbg !12959 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.0.i41) ]
   %.sroa.011.1.peel.i = xor i1 %i.aj, true, !dbg !12960
   %.sroa.010.2.peel.i = xor i1 %i.ae, true, !dbg !12961
   br label %.lr.ph60, !dbg !12962

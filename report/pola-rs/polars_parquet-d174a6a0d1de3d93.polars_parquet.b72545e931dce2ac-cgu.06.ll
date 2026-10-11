@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
 
 _RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i: ; preds = %bb.g, %bb.f
   %.sroa.01.0.i.i = phi i64 [ %i.ac, %bb.g ], [ %.sroa.0.0.i.i.i, %bb.f ], !dbg !33218 ; 2 uses
-  %.sroa.0.0.i.i = phi ptr [ %i.aa, %bb.g ], [ %i.u, %bb.f ], !dbg !33219
+  %.sroa.0.0.i.i = phi ptr [ %i.aa, %bb.g ], [ %i.u, %bb.f ], !dbg !33219 ; 2 uses
   %i.ad = load i64, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field16MAINTAIN_PL_TYPE, i64 8), align 8, !dbg !33220, !noundef !1738
   %i.ae = icmp eq i64 %.sroa.01.0.i.i, %i.ad, !dbg !33221
   br i1 %i.ae, label %_RNCNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read6schema8metadata13convert_fields0_0Bb_.exit, label %_RNCNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read6schema8metadata13convert_fields0_0Bb_.exit.thread, !dbg !33221
@@ -225,8 +225,9 @@ bb.i:                                             ; preds = %bb.d, %_RNCNvNtNtNt
   br label %bb.h
 
 _RNCNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read6schema8metadata13convert_fields0_0Bb_.exit: ; preds = %_RNvMs0_NtCs7VARH73bmU_11compact_str4reprNtB5_4Repr8as_slice.exit.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i.i) ]
   %i.ai = load ptr, ptr @_RNvNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field16MAINTAIN_PL_TYPE, align 8, !dbg !33220, !nonnull !1738, !noundef !1738
-  %bcmp.i = tail call i32 @bcmp(ptr %.sroa.0.0.i.i, ptr nonnull %i.ai, i64 %.sroa.01.0.i.i), !dbg !33224
+  %bcmp.i = tail call i32 @bcmp(ptr nonnull %.sroa.0.0.i.i, ptr nonnull %i.ai, i64 %.sroa.01.0.i.i), !dbg !33224
   %i.aj = icmp eq i32 %bcmp.i, 0, !dbg !33224
   br i1 %i.aj, label %bb.j, label %_RNCNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow4read6schema8metadata13convert_fields0_0Bb_.exit.thread, !dbg !33225
 

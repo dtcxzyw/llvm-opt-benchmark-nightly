@@ -205,8 +205,10 @@ bb.bg:                                            ; preds = %_RNvXs4_NtNtNtCseXb
 .body.i.i.i.i.i.i:                                ; preds = %bb.bh
   %i.dh = landingpad { ptr, i32 }
           cleanup
-  %i.di = extractelement <2 x ptr> %i.dd, i64 1
-  %i.dj = extractelement <2 x ptr> %i.dd, i64 0
+  %i.di = extractelement <2 x ptr> %i.dd, i64 1   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.di) ]
+  %i.dj = extractelement <2 x ptr> %i.dd, i64 0   ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dj) ]
   store i64 2, ptr %i.p, align 8, !alias.scope !109293, !noalias !109310
   %.sroa.596.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   store ptr %i.dj, ptr %.sroa.596.0..sroa_idx.i.i.i.i.i.i, align 8, !alias.scope !109293, !noalias !109310

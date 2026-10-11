@@ -205,7 +205,8 @@ bb.ai:                                            ; preds = %bb.ah
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultyNtNtNtB4_2io5error5ErrorEECsgZlHlzpN0xi_7uu_tail.exit
 
 bb.aj:                                            ; preds = %bb.ah
-  %i.gz = inttoptr i64 %.sroa.7.0523 to ptr
+  %i.gz = inttoptr i64 %.sroa.7.0523 to ptr       ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gz) ]
   %i.ha = getelementptr i8, ptr %i.gz, i64 -1     ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ha) ]
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 2 uses

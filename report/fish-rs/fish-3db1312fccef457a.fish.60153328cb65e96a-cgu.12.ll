@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.k
 
 bb.g:                                             ; preds = %bb.e
-  %i.ac = inttoptr i64 %.sroa.7.04146.i to ptr
+  %i.ac = inttoptr i64 %.sroa.7.04146.i to ptr    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ac) ]
   %i.ad = getelementptr i8, ptr %i.ac, i64 -1     ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ad) ]
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
@@ -341,7 +342,8 @@ bb.q:                                             ; preds = %_RNvXs4_NtNtNtCs1xw
   br i1 %i.ca, label %bb.r, label %bb.t, !prof !4305
 
 bb.r:                                             ; preds = %bb.q
-  %i.cb = inttoptr i64 %.sroa.8.0.i to ptr
+  %i.cb = inttoptr i64 %.sroa.8.0.i to ptr        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cb) ]
   %i.cc = getelementptr i8, ptr %i.cb, i64 -1     ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cc) ]
   %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
