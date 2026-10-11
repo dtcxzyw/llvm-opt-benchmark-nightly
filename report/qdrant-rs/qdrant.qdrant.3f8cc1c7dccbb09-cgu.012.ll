@@ -202,11 +202,8 @@ bb.cm:                                            ; preds = %bb.ci
 
 bb.cn:                                            ; preds = %bb.ci
   %i.fw = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 18
-  %3 = load <16 x i8>, ptr %2, align 2
   %i.fx = load <4 x i8>, ptr %i.fw, align 8
-  %4 = shufflevector <16 x i8> %3, <16 x i8> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>
-  %5 = shufflevector <4 x i8> %i.fx, <4 x i8> %4, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %2 = freeze <4 x i8> %i.fx
   br label %_RNvXsO_NtCs5QaNqjAn6vc_5shard10operationsNtB5_11CreateIndexNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
 
 bb.co:                                            ; preds = %bb.ci
@@ -318,11 +315,8 @@ _RNvXs1H_NtNtCs607s0NAIaWN_7segment10data_types5indexNtB6_15TextIndexParamsNtNtC
 
 bb.cx:                                            ; preds = %bb.ci
   %i.hj = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 18
-  %7 = load <16 x i8>, ptr %6, align 2
   %i.hk = load <4 x i8>, ptr %i.hj, align 8
-  %8 = shufflevector <16 x i8> %7, <16 x i8> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>
-  %9 = shufflevector <4 x i8> %i.hk, <4 x i8> %8, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %3 = freeze <4 x i8> %i.hk
   br label %_RNvXsO_NtCs5QaNqjAn6vc_5shard10operationsNtB5_11CreateIndexNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
 
 bb.cy:                                            ; preds = %bb.ci
@@ -371,7 +365,7 @@ _RNvXsO_NtCs5QaNqjAn6vc_5shard10operationsNtB5_11CreateIndexNtNtCskKLDkoKarTP_4c
   %.sroa.5.sroa.4.sroa.7.0.i.i = phi i8 [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ undef, %bb.da ], [ undef, %bb.ck ], [ %i.fr, %bb.cl ], [ undef, %bb.cm ], [ undef, %bb.cn ], [ %.sroa.11.sroa.33.0.extract.trunc.i.i, %_RNvXs1H_NtNtCs607s0NAIaWN_7segment10data_types5indexNtB6_15TextIndexParamsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ undef, %bb.cx ], [ undef, %bb.cy ], [ undef, %bb.cz ]
   %.sroa.5.sroa.4.sroa.6.0.i.i = phi i8 [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ undef, %bb.da ], [ %i.fm, %bb.ck ], [ %i.ft, %bb.cl ], [ undef, %bb.cm ], [ undef, %bb.cn ], [ %.sroa.11.sroa.31.0.extract.trunc.i.i, %_RNvXs1H_NtNtCs607s0NAIaWN_7segment10data_types5indexNtB6_15TextIndexParamsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ undef, %bb.cx ], [ undef, %bb.cy ], [ undef, %bb.cz ]
   %.sroa.0.0.i.i12 = phi i64 [ %i.eu, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ -1, %bb.da ], [ 2, %bb.ck ], [ 3, %bb.cl ], [ 4, %bb.cm ], [ 5, %bb.cn ], [ %i.eu, %_RNvXs1H_NtNtCs607s0NAIaWN_7segment10data_types5indexNtB6_15TextIndexParamsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ 7, %bb.cx ], [ 8, %bb.cy ], [ 9, %bb.cz ]
-  %i.hu = phi <4 x i8> [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %i.hr, %bb.da ], [ %i.fn, %bb.ck ], [ %i.fp, %bb.cl ], [ %i.fv, %bb.cm ], [ %5, %bb.cn ], [ %i.hh, %_RNvXs1H_NtNtCs607s0NAIaWN_7segment10data_types5indexNtB6_15TextIndexParamsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ %9, %bb.cx ], [ %i.hm, %bb.cy ], [ %i.ho, %bb.cz ]
+  %i.hu = phi <4 x i8> [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ %i.hr, %bb.da ], [ %i.fn, %bb.ck ], [ %i.fp, %bb.cl ], [ %i.fv, %bb.cm ], [ %2, %bb.cn ], [ %i.hh, %_RNvXs1H_NtNtCs607s0NAIaWN_7segment10data_types5indexNtB6_15TextIndexParamsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ %3, %bb.cx ], [ %i.hm, %bb.cy ], [ %i.ho, %bb.cz ]
   %i.hv = phi <4 x i8> [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i ], [ undef, %bb.da ], [ undef, %bb.ck ], [ undef, %bb.cl ], [ undef, %bb.cm ], [ undef, %bb.cn ], [ %i.hi, %_RNvXs1H_NtNtCs607s0NAIaWN_7segment10data_types5indexNtB6_15TextIndexParamsNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ undef, %bb.cx ], [ undef, %bb.cy ], [ undef, %bb.cz ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.28, ptr noundef nonnull align 8 dereferenceable(48) %i.f, i64 48, i1 false), !noalias !9042
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !9048

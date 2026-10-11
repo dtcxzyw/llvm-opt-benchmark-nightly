@@ -205,34 +205,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIfLj3EEELj4EEELj5EE12begi
   ret void
 
 .lr.ph106:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIfLj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEEppEv.exit
-  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 15 uses
+  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 13 uses
   %i.eq = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.u       ; 2 uses
+          to label %bb.q unwind label %bb.u
 
 bb.q:                                             ; preds = %.lr.ph106
   %i.er = load i32, ptr %i.eo, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.er, 7
-  %5 = and i32 %4, 3968
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.eq, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ep, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.eu = lshr i32 %i.er, 3
   %i.ev = shl i32 %i.er, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.eu, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ev, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.es, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.et, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !1500
+  %4 = shl i32 %i.er, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.eu, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.ev, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.es, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.et, align 8, !tbaa !1131
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
@@ -635,34 +629,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIdLj3EEELj4EEELj5EE12begi
   ret void
 
 .lr.ph106:                                        ; preds = %.lr.ph106.preheader, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEppEv.exit
-  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 11 uses
+  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 9 uses
   %i.eq = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %vector.ph203 unwind label %bb.s ; 2 uses
+          to label %vector.ph203 unwind label %bb.s
 
 vector.ph203:                                     ; preds = %.lr.ph106
   %i.er = load i32, ptr %i.eo, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.er, 7
-  %5 = and i32 %4, 3968
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.eq, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ep, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.eu = lshr i32 %i.er, 3
   %i.ev = shl i32 %i.er, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.eu, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ev, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.es, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.et, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !2175
+  %4 = shl i32 %i.er, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.eu, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.ev, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.es, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.et, align 8, !tbaa !1131
   br label %vector.body204
 
 vector.body204:                                   ; preds = %vector.body204, %vector.ph203
@@ -1065,34 +1053,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIiLj3EEELj4EEELj5EE12begi
   ret void
 
 .lr.ph106:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIiLj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEEppEv.exit
-  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 15 uses
+  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 13 uses
   %i.eq = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIiLj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.u       ; 2 uses
+          to label %bb.q unwind label %bb.u
 
 bb.q:                                             ; preds = %.lr.ph106
   %i.er = load i32, ptr %i.eo, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.er, 7
-  %5 = and i32 %4, 3968
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.eq, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ep, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.eu = lshr i32 %i.er, 3
   %i.ev = shl i32 %i.er, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.eu, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ev, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.es, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.et, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !2795
+  %4 = shl i32 %i.er, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.eu, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.ev, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.es, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.et, align 8, !tbaa !1131
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
@@ -1495,34 +1477,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIlLj3EEELj4EEELj5EE12begi
   ret void
 
 .lr.ph106:                                        ; preds = %.lr.ph106.preheader, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEEppEv.exit
-  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 11 uses
+  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 9 uses
   %i.eq = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIlLj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %vector.ph203 unwind label %bb.s ; 2 uses
+          to label %vector.ph203 unwind label %bb.s
 
 vector.ph203:                                     ; preds = %.lr.ph106
   %i.er = load i32, ptr %i.eo, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.er, 7
-  %5 = and i32 %4, 3968
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.eq, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ep, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.eu = lshr i32 %i.er, 3
   %i.ev = shl i32 %i.er, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.eu, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ev, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.es, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.et, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !3416
+  %4 = shl i32 %i.er, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.eu, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.ev, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.es, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.et, align 8, !tbaa !1131
   br label %vector.body204
 
 vector.body204:                                   ; preds = %vector.body204, %vector.ph203
@@ -1925,34 +1901,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_4math8internal4halfE
   ret void
 
 .lr.ph107:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_4math8internal4halfELj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_4math8internal4halfELj3EEELj4EEELj5EEEEppEv.exit
-  %i.eo = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 15 uses
+  %i.eo = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 13 uses
   %i.ep = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_4math8internal4halfELj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.u       ; 2 uses
+          to label %bb.q unwind label %bb.u
 
 bb.q:                                             ; preds = %.lr.ph107
   %i.eq = load i32, ptr %i.en, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.eq, 7
-  %5 = and i32 %4, 3968
   %i.er = getelementptr inbounds nuw i8, ptr %i.ep, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.ep, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.eo, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.et = lshr i32 %i.eq, 3
   %i.eu = shl i32 %i.eq, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.et, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.eu, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.er, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.es, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.eo, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.eo, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !4029
+  %4 = shl i32 %i.eq, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.et, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.eu, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.er, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.es, align 8, !tbaa !1131
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
@@ -2355,16 +2325,15 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_4math4Vec3IiEELj3EEE
   ret void
 
 .lr.ph115:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_4math4Vec3IiEELj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_4math4Vec3IiEELj3EEELj4EEELj5EEEEppEv.exit
-  %i.el = call noalias noundef nonnull dereferenceable(66576) ptr @_Znwm(i64 noundef 66576) #32 ; 19 uses
+  %i.el = call noalias noundef nonnull dereferenceable(66576) ptr @_Znwm(i64 noundef 66576) #32 ; 17 uses
   %i.em = invoke noundef nonnull align 8 dereferenceable(532496) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_4math4Vec3IiEELj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.w       ; 2 uses
+          to label %bb.q unwind label %bb.w
 
 bb.q:                                             ; preds = %.lr.ph115
   %i.en = load i32, ptr %i.ek, align 8, !tbaa !1360 ; 4 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.em, i64 532480
-  %4 = load <2 x i32>, ptr %i.eo, align 8, !tbaa !1131
-  %5 = getelementptr inbounds nuw i8, ptr %i.em, i64 532488
-  %6 = load i32, ptr %5, align 8, !tbaa !1131
+  %4 = load <4 x i32>, ptr %i.eo, align 8
+  %5 = freeze <4 x i32> %4
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
@@ -2400,22 +2369,17 @@ bb.s:                                             ; preds = %bb.r
   %i.ex = lshr i32 %i.en, 3
   %i.ey = shl i32 %i.en, 2
   %i.ez = shl i32 %i.en, 7
-  %7 = and i32 %i.ez, 3968
-  %8 = add nsw i32 %6, %7
   %i.fa = getelementptr inbounds nuw i8, ptr %i.el, i64 65536
   %i.fb = getelementptr inbounds nuw i8, ptr %i.el, i64 66560
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %i.fa, i8 0, i64 1024, i1 false)
-  %9 = and i32 %8, -128
-  %10 = insertelement <2 x i32> poison, i32 %i.ex, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ey, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = add nsw <2 x i32> %12, %4
-  %14 = and <2 x i32> %13, splat (i32 -128)
-  store <2 x i32> %14, ptr %i.fb, align 8, !tbaa !1131
-  %15 = getelementptr inbounds nuw i8, ptr %i.el, i64 66568
-  store i32 %9, ptr %15, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.el, i64 66572
-  store i32 0, ptr %16, align 4, !tbaa !4645
+  %6 = insertelement <4 x i32> poison, i32 %i.ex, i64 0
+  %7 = insertelement <4 x i32> %6, i32 %i.ey, i64 1
+  %8 = insertelement <4 x i32> %7, i32 %i.ez, i64 2
+  %9 = and <4 x i32> %8, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %.fr = freeze <4 x i32> %9
+  %10 = add <4 x i32> %.fr, %5
+  %11 = and <4 x i32> %10, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %11, ptr %i.fb, align 8, !tbaa !1131
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %bb.s
@@ -2818,16 +2782,15 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEE
   ret void
 
 .lr.ph115:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEppEv.exit
-  %i.el = call noalias noundef nonnull dereferenceable(66576) ptr @_Znwm(i64 noundef 66576) #32 ; 19 uses
+  %i.el = call noalias noundef nonnull dereferenceable(66576) ptr @_Znwm(i64 noundef 66576) #32 ; 17 uses
   %i.em = invoke noundef nonnull align 8 dereferenceable(532496) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.w       ; 2 uses
+          to label %bb.q unwind label %bb.w
 
 bb.q:                                             ; preds = %.lr.ph115
   %i.en = load i32, ptr %i.ek, align 8, !tbaa !1360 ; 4 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.em, i64 532480
-  %4 = load <2 x i32>, ptr %i.eo, align 8, !tbaa !1131
-  %5 = getelementptr inbounds nuw i8, ptr %i.em, i64 532488
-  %6 = load i32, ptr %5, align 8, !tbaa !1131
+  %4 = load <4 x i32>, ptr %i.eo, align 8
+  %5 = freeze <4 x i32> %4
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
@@ -2863,22 +2826,17 @@ bb.s:                                             ; preds = %bb.r
   %i.ex = lshr i32 %i.en, 3
   %i.ey = shl i32 %i.en, 2
   %i.ez = shl i32 %i.en, 7
-  %7 = and i32 %i.ez, 3968
-  %8 = add nsw i32 %6, %7
   %i.fa = getelementptr inbounds nuw i8, ptr %i.el, i64 65536
   %i.fb = getelementptr inbounds nuw i8, ptr %i.el, i64 66560
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %i.fa, i8 0, i64 1024, i1 false)
-  %9 = and i32 %8, -128
-  %10 = insertelement <2 x i32> poison, i32 %i.ex, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ey, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = add nsw <2 x i32> %12, %4
-  %14 = and <2 x i32> %13, splat (i32 -128)
-  store <2 x i32> %14, ptr %i.fb, align 8, !tbaa !1131
-  %15 = getelementptr inbounds nuw i8, ptr %i.el, i64 66568
-  store i32 %9, ptr %15, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.el, i64 66572
-  store i32 0, ptr %16, align 4, !tbaa !5259
+  %6 = insertelement <4 x i32> poison, i32 %i.ex, i64 0
+  %7 = insertelement <4 x i32> %6, i32 %i.ey, i64 1
+  %8 = insertelement <4 x i32> %7, i32 %i.ez, i64 2
+  %9 = and <4 x i32> %8, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %.fr = freeze <4 x i32> %9
+  %10 = add <4 x i32> %.fr, %5
+  %11 = and <4 x i32> %10, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %11, ptr %i.fb, align 8, !tbaa !1131
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %bb.s
@@ -3281,16 +3239,15 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_4math4Vec3IdEELj3EEE
   ret void
 
 .lr.ph107:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_4math4Vec3IdEELj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_4math4Vec3IdEELj3EEELj4EEELj5EEEEppEv.exit
-  %i.el = call noalias noundef nonnull dereferenceable(99344) ptr @_Znwm(i64 noundef 99344) #32 ; 19 uses
+  %i.el = call noalias noundef nonnull dereferenceable(99344) ptr @_Znwm(i64 noundef 99344) #32 ; 17 uses
   %i.em = invoke noundef nonnull align 8 dereferenceable(794640) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_4math4Vec3IdEELj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.r unwind label %bb.x       ; 2 uses
+          to label %bb.r unwind label %bb.x
 
 bb.r:                                             ; preds = %.lr.ph107
   %i.en = load i32, ptr %i.ek, align 8, !tbaa !1360 ; 4 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.em, i64 794624
-  %4 = load <2 x i32>, ptr %i.eo, align 8, !tbaa !1131
-  %5 = getelementptr inbounds nuw i8, ptr %i.em, i64 794632
-  %6 = load i32, ptr %5, align 8, !tbaa !1131
+  %4 = load <4 x i32>, ptr %i.eo, align 8
+  %5 = freeze <4 x i32> %4
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.s, %bb.r
@@ -3326,22 +3283,17 @@ bb.t:                                             ; preds = %bb.s
   %i.ex = lshr i32 %i.en, 3
   %i.ey = shl i32 %i.en, 2
   %i.ez = shl i32 %i.en, 7
-  %7 = and i32 %i.ez, 3968
-  %8 = add nsw i32 %6, %7
   %i.fa = getelementptr inbounds nuw i8, ptr %i.el, i64 98304
   %i.fb = getelementptr inbounds nuw i8, ptr %i.el, i64 99328
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %i.fa, i8 0, i64 1024, i1 false)
-  %9 = and i32 %8, -128
-  %10 = insertelement <2 x i32> poison, i32 %i.ex, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ey, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = add nsw <2 x i32> %12, %4
-  %14 = and <2 x i32> %13, splat (i32 -128)
-  store <2 x i32> %14, ptr %i.fb, align 8, !tbaa !1131
-  %15 = getelementptr inbounds nuw i8, ptr %i.el, i64 99336
-  store i32 %9, ptr %15, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.el, i64 99340
-  store i32 0, ptr %16, align 4, !tbaa !5868
+  %6 = insertelement <4 x i32> poison, i32 %i.ex, i64 0
+  %7 = insertelement <4 x i32> %6, i32 %i.ey, i64 1
+  %8 = insertelement <4 x i32> %7, i32 %i.ez, i64 2
+  %9 = and <4 x i32> %8, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %.fr = freeze <4 x i32> %9
+  %10 = add <4 x i32> %.fr, %5
+  %11 = and <4 x i32> %10, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %11, ptr %i.fb, align 8, !tbaa !1131
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.u, %bb.t
@@ -3744,34 +3696,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_5tools18PointIndexLeafNodeINS0_10P
   ret void
 
 .lr.ph108:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_5tools18PointIndexLeafNodeINS0_10PointIndexIjLj0EEELj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS0_5tools18PointIndexLeafNodeINS0_10PointIndexIjLj0EEELj3EEELj4EEELj5EEEEppEv.exit
-  %i.ev = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 15 uses
+  %i.ev = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 13 uses
   %i.ew = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS0_5tools18PointIndexLeafNodeINS0_10PointIndexIjLj0EEELj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.p unwind label %bb.t       ; 2 uses
+          to label %bb.p unwind label %bb.t
 
 bb.p:                                             ; preds = %.lr.ph108
   %i.ex = load i32, ptr %i.eu, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.ex, 7
-  %5 = and i32 %4, 3968
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ew, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.ew, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ev, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ev, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.fa = lshr i32 %i.ex, 3
   %i.fb = shl i32 %i.ex, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.fa, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.fb, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.ey, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.ez, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.ev, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.ev, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !6487
+  %4 = shl i32 %i.ex, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.fa, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.fb, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.ey, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.ez, align 8, !tbaa !1131
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %bb.p
@@ -4174,34 +4120,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10P
   ret void
 
 .lr.ph108:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEEppEv.exit
-  %i.ev = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 15 uses
+  %i.ev = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 13 uses
   %i.ew = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS0_6points17PointDataLeafNodeINS0_10PointIndexIjLj1EEELj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.p unwind label %bb.t       ; 2 uses
+          to label %bb.p unwind label %bb.t
 
 bb.p:                                             ; preds = %.lr.ph108
   %i.ex = load i32, ptr %i.eu, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.ex, 7
-  %5 = and i32 %4, 3968
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ew, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.ew, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ev, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ev, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.fa = lshr i32 %i.ex, 3
   %i.fb = shl i32 %i.ex, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.fa, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.fb, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.ey, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.ez, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.ev, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.ev, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !7105
+  %4 = shl i32 %i.ex, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.fa, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.fb, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.ey, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.ez, align 8, !tbaa !1131
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %bb.p
@@ -4604,34 +4544,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE12begi
   ret void
 
 .lr.ph106:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEEppEv.exit
-  %i.eo = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 15 uses
+  %i.eo = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 13 uses
   %i.ep = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.u       ; 2 uses
+          to label %bb.q unwind label %bb.u
 
 bb.q:                                             ; preds = %.lr.ph106
   %i.eq = load i32, ptr %i.en, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.eq, 7
-  %5 = and i32 %4, 3968
   %i.er = getelementptr inbounds nuw i8, ptr %i.ep, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.ep, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.eo, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.et = lshr i32 %i.eq, 3
   %i.eu = shl i32 %i.eq, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.et, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.eu, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.er, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.es, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.eo, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.eo, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !7746
+  %4 = shl i32 %i.eq, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.et, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.eu, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.er, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.es, align 8, !tbaa !1131
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
@@ -5034,34 +4968,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4
   ret void
 
 .lr.ph106:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit
-  %i.eo = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 15 uses
+  %i.eo = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #32 ; 13 uses
   %i.ep = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.u       ; 2 uses
+          to label %bb.q unwind label %bb.u
 
 bb.q:                                             ; preds = %.lr.ph106
   %i.eq = load i32, ptr %i.en, align 8, !tbaa !1360 ; 4 uses
-  %4 = shl i32 %i.eq, 7
-  %5 = and i32 %4, 3968
   %i.er = getelementptr inbounds nuw i8, ptr %i.ep, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.ep, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !1131
-  %8 = add nsw i32 %7, %5
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.eo, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.et = lshr i32 %i.eq, 3
   %i.eu = shl i32 %i.eq, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.et, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.eu, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.er, align 8, !tbaa !1131
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.es, align 8, !tbaa !1131
-  %16 = getelementptr inbounds nuw i8, ptr %i.eo, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !1131
-  %17 = getelementptr inbounds nuw i8, ptr %i.eo, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !8357
+  %4 = shl i32 %i.eq, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.et, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.eu, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.er, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.es, align 8, !tbaa !1131
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
