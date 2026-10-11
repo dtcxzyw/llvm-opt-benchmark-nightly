@@ -205,9 +205,8 @@ bb.a:
   %.elt8.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.unpack9.i.i.i.i.i.i = load i64, ptr %.elt8.i.i.i.i.i.i, align 8, !tbaa !585
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.unpack9.i.i.i.i.i.i ; 2 uses
-  %7 = and i64 %.unpack.i.i.i.i.i.i, 1
-  %.not.i.i.i.i.i.i = icmp eq i64 %7, 0
-  br i1 %.not.i.i.i.i.i.i, label %bb.c, label %bb.b
+  %.not.i.i.i.i.i.i = trunc i64 %.unpack.i.i.i.i.i.i to i1
+  br i1 %.not.i.i.i.i.i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !620

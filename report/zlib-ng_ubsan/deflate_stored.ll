@@ -202,8 +202,8 @@ bb.ht:                                            ; preds = %bb.hs, %bb.hr
   br label %bb.hu
 
 bb.hu:                                            ; preds = %bb.ef, %bb.ht
-  %2 = icmp eq i32 %i.ew, 0
-  br i1 %2, label %bb.af, label %bb.hv, !llvm.loop !30
+  %2 = trunc nuw i32 %i.ew to i1
+  br i1 %2, label %bb.hv, label %bb.af, !llvm.loop !30
 
 bb.hv:                                            ; preds = %bb.by, %bb.bq, %bb.ao, %bb.hu
   %.not249 = phi i1 [ true, %bb.ao ], [ true, %bb.bq ], [ true, %bb.by ], [ false, %bb.hu ]
@@ -606,12 +606,11 @@ bb.xj:                                            ; preds = %bb.xi
 .critedge358:                                     ; preds = %bb.xi, %bb.xj
   %i.afm = load ptr, ptr %0, align 64, !tbaa !34
   call void @zng_flush_pending(ptr noundef %i.afm) #6
-  %3 = icmp eq i32 %i.aes, 0
-  %4 = select i1 %3, i32 0, i32 2
+  %3 = shl nuw nsw i32 %i.aes, 1
   br label %bb.xk
 
 bb.xk:                                            ; preds = %bb.wp, %.critedge358, %bb.wj, %bb.nu, %bb.ni
-  %.0224 = phi i32 [ 1, %bb.nu ], [ 3, %bb.ni ], [ %4, %.critedge358 ], [ 0, %bb.wj ], [ 0, %bb.wp ]
+  %.0224 = phi i32 [ 1, %bb.nu ], [ 3, %bb.ni ], [ %3, %.critedge358 ], [ 0, %bb.wj ], [ 0, %bb.wp ]
   ret i32 %.0224
 }
 

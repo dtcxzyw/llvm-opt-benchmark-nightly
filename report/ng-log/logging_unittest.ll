@@ -204,8 +204,8 @@ bb.s:                                             ; preds = %.critedge
   store i8 %i.v, ptr %4, align 8, !tbaa !84
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store ptr null, ptr %i.w, align 8, !tbaa !85
-  %.not63.not = icmp eq i8 %i.u, 0
-  br i1 %.not63.not, label %_ZN7testing15AssertionResultD2Ev.exit, label %bb.u
+  %.not63 = trunc nuw i8 %i.u to i1
+  br i1 %.not63, label %bb.u, label %_ZN7testing15AssertionResultD2Ev.exit
 
 bb.t:                                             ; preds = %bb.r
   unreachable
@@ -608,9 +608,8 @@ bb.a:
   %.elt2.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.unpack3.i.i.i.i = load i64, ptr %.elt2.i.i.i.i, align 8, !tbaa !75
   %i.d = getelementptr inbounds i8, ptr %i.c, i64 %.unpack3.i.i.i.i ; 2 uses
-  %1 = and i64 %.unpack.i.i.i.i, 1
-  %.not.i.i.i.i = icmp eq i64 %1, 0
-  br i1 %.not.i.i.i.i, label %bb.c, label %bb.b
+  %.not.i.i.i.i = trunc i64 %.unpack.i.i.i.i to i1
+  br i1 %.not.i.i.i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !31
