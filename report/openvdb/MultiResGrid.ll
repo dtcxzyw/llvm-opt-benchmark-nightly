@@ -205,34 +205,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIfLj3EEELj4EEELj5EE12begi
   ret void
 
 .lr.ph106:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIfLj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEEppEv.exit
-  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #30 ; 15 uses
+  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #30 ; 13 uses
   %i.eq = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIfLj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.u       ; 2 uses
+          to label %bb.q unwind label %bb.u
 
 bb.q:                                             ; preds = %.lr.ph106
   %i.er = load i32, ptr %i.eo, align 8, !tbaa !489 ; 4 uses
-  %4 = shl i32 %i.er, 7
-  %5 = and i32 %4, 3968
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.eq, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !340
-  %8 = add nsw i32 %7, %5
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ep, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.eu = lshr i32 %i.er, 3
   %i.ev = shl i32 %i.er, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.eu, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ev, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.es, align 8, !tbaa !340
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.et, align 8, !tbaa !340
-  %16 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !340
-  %17 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !1387
+  %4 = shl i32 %i.er, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.eu, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.ev, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.es, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.et, align 8, !tbaa !340
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
@@ -635,7 +629,7 @@ bb.h:                                             ; preds = %bb.f, %bb.e
           to label %bb.i unwind label %bb.o
 
 bb.i:                                             ; preds = %bb.h
-  %i.s = load i8, ptr %6, align 4, !tbaa !1389
+  %i.s = load i8, ptr %6, align 4, !tbaa !1386
   store i8 %i.s, ptr %i.a, align 1, !tbaa !367
   %i.t = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.a, i64 noundef 1)
           to label %bb.j unwind label %bb.o       ; 0 uses
@@ -1038,11 +1032,11 @@ _ZNK7openvdb5v13_04util8NodeMaskILj5EE8beginOffEv.exit: ; preds = %bb.b, %_ZNK7o
   br i1 %.not44, label %.thread64, label %.lr.ph
 
 .thread64:                                        ; preds = %bb.f, %_ZNK7openvdb5v13_04util8NodeMaskILj5EE8beginOffEv.exit
-  store i8 0, ptr %0, align 4, !tbaa !1389
+  store i8 0, ptr %0, align 4, !tbaa !1386
   br label %.thread38
 
 .critedge:                                        ; preds = %.critedge28, %_ZN7openvdb5v13_04util15OffMaskIteratorINS1_8NodeMaskILj5EEEEppEv.exit, %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
-  store i8 0, ptr %0, align 4, !tbaa !1389
+  store i8 0, ptr %0, align 4, !tbaa !1386
   switch i32 %.2, label %bb.z [
     i32 1, label %bb.m
     i32 2, label %bb.q
@@ -1167,11 +1161,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bn, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  store i8 1, ptr %0, align 4, !tbaa !1389
+  store i8 1, ptr %0, align 4, !tbaa !1386
   br label %.thread38
 
 bb.p:                                             ; preds = %bb.n
-  store i8 2, ptr %0, align 4, !tbaa !1389
+  store i8 2, ptr %0, align 4, !tbaa !1386
   br label %.thread38
 
 bb.q:                                             ; preds = %.critedge
@@ -1186,7 +1180,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bs, label %.thread37, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  store i8 5, ptr %0, align 4, !tbaa !1389
+  store i8 5, ptr %0, align 4, !tbaa !1386
   br label %.thread38
 
 bb.t:                                             ; preds = %bb.q
@@ -1198,11 +1192,11 @@ bb.t:                                             ; preds = %bb.q
   br i1 %i.bu, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %.thread37
-  store i8 3, ptr %0, align 4, !tbaa !1389
+  store i8 3, ptr %0, align 4, !tbaa !1386
   br label %.thread38
 
 bb.v:                                             ; preds = %.thread37
-  store i8 4, ptr %0, align 4, !tbaa !1389
+  store i8 4, ptr %0, align 4, !tbaa !1386
   br label %.thread38
 
 bb.w:                                             ; preds = %bb.t
@@ -1211,7 +1205,7 @@ bb.w:                                             ; preds = %bb.t
   br i1 %i.bw, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  store i8 3, ptr %0, align 4, !tbaa !1389
+  store i8 3, ptr %0, align 4, !tbaa !1386
   store float %i.br, ptr %i.b, align 4, !tbaa !369
   store float %i.bo, ptr %i.c, align 4, !tbaa !369
   br label %.thread38
@@ -1219,7 +1213,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.w
   store float %i.br, ptr %i.b, align 4, !tbaa !369
   store float %i.bo, ptr %i.c, align 4, !tbaa !369
-  store i8 4, ptr %0, align 4, !tbaa !1389
+  store i8 4, ptr %0, align 4, !tbaa !1386
   br label %.thread38
 
 bb.z:                                             ; preds = %.critedge
@@ -1227,7 +1221,7 @@ bb.z:                                             ; preds = %.critedge
   br i1 %i.bx, label %bb.aa, label %.thread38
 
 bb.aa:                                            ; preds = %bb.z
-  store i8 6, ptr %0, align 4, !tbaa !1389
+  store i8 6, ptr %0, align 4, !tbaa !1386
   br label %.thread38
 
 .thread38:                                        ; preds = %.thread64, %bb.v, %bb.u, %bb.x, %bb.y, %bb.s, %bb.aa, %bb.z, %bb.m, %bb.p, %bb.o
@@ -1445,7 +1439,7 @@ bb.h:                                             ; preds = %bb.f, %bb.e
           to label %bb.i unwind label %bb.o
 
 bb.i:                                             ; preds = %bb.h
-  %i.s = load i8, ptr %6, align 4, !tbaa !1391
+  %i.s = load i8, ptr %6, align 4, !tbaa !1388
   store i8 %i.s, ptr %i.a, align 1, !tbaa !367
   %i.t = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.a, i64 noundef 1)
           to label %bb.j unwind label %bb.o       ; 0 uses
@@ -1848,7 +1842,7 @@ _ZNSt10unique_ptrIA_fSt14default_deleteIS0_EED2Ev.exit93: ; preds = %bb.bv, %_ZN
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN7openvdb5v13_02io12MaskCompressIfNS0_4util8NodeMaskILj4EEEEC2ERKS5_S8_PKfRS9_(ptr noundef nonnull align 4 dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(512) %1, ptr noundef nonnull align 8 dereferenceable(512) %2, ptr noundef %3, ptr noundef nonnull align 4 dereferenceable(4) %4) unnamed_addr #5 comdat align 2 {
 bb.a:
-  store i8 6, ptr %0, align 4, !tbaa !1391
+  store i8 6, ptr %0, align 4, !tbaa !1388
   %i.a = load float, ptr %4, align 4, !tbaa !369  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
@@ -1859,11 +1853,11 @@ bb.a:
   br i1 %.not41, label %.thread55, label %.lr.ph
 
 .thread55:                                        ; preds = %bb.a
-  store i8 0, ptr %0, align 4, !tbaa !1391
+  store i8 0, ptr %0, align 4, !tbaa !1388
   br label %.thread38
 
 .critedge:                                        ; preds = %.critedge28, %_ZN7openvdb5v13_04util15OffMaskIteratorINS1_8NodeMaskILj4EEEEppEv.exit, %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
-  store i8 0, ptr %0, align 4, !tbaa !1391
+  store i8 0, ptr %0, align 4, !tbaa !1388
   switch i32 %.2, label %bb.u [
     i32 1, label %bb.h
     i32 2, label %bb.l
@@ -1988,11 +1982,11 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ax, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  store i8 1, ptr %0, align 4, !tbaa !1391
+  store i8 1, ptr %0, align 4, !tbaa !1388
   br label %.thread38
 
 bb.k:                                             ; preds = %bb.i
-  store i8 2, ptr %0, align 4, !tbaa !1391
+  store i8 2, ptr %0, align 4, !tbaa !1388
   br label %.thread38
 
 bb.l:                                             ; preds = %.critedge
@@ -2007,7 +2001,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bc, label %.thread37, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  store i8 5, ptr %0, align 4, !tbaa !1391
+  store i8 5, ptr %0, align 4, !tbaa !1388
   br label %.thread38
 
 bb.o:                                             ; preds = %bb.l
@@ -2019,11 +2013,11 @@ bb.o:                                             ; preds = %bb.l
   br i1 %i.be, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %.thread37
-  store i8 3, ptr %0, align 4, !tbaa !1391
+  store i8 3, ptr %0, align 4, !tbaa !1388
   br label %.thread38
 
 bb.q:                                             ; preds = %.thread37
-  store i8 4, ptr %0, align 4, !tbaa !1391
+  store i8 4, ptr %0, align 4, !tbaa !1388
   br label %.thread38
 
 bb.r:                                             ; preds = %bb.o
@@ -2032,7 +2026,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %i.bg, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  store i8 3, ptr %0, align 4, !tbaa !1391
+  store i8 3, ptr %0, align 4, !tbaa !1388
   store float %i.bb, ptr %i.b, align 4, !tbaa !369
   store float %i.ay, ptr %i.c, align 4, !tbaa !369
   br label %.thread38
@@ -2040,7 +2034,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r
   store float %i.bb, ptr %i.b, align 4, !tbaa !369
   store float %i.ay, ptr %i.c, align 4, !tbaa !369
-  store i8 4, ptr %0, align 4, !tbaa !1391
+  store i8 4, ptr %0, align 4, !tbaa !1388
   br label %.thread38
 
 bb.u:                                             ; preds = %.critedge
@@ -2048,7 +2042,7 @@ bb.u:                                             ; preds = %.critedge
   br i1 %i.bh, label %bb.v, label %.thread38
 
 bb.v:                                             ; preds = %bb.u
-  store i8 6, ptr %0, align 4, !tbaa !1391
+  store i8 6, ptr %0, align 4, !tbaa !1388
   br label %.thread38
 
 .thread38:                                        ; preds = %.thread55, %bb.q, %bb.p, %bb.s, %bb.t, %bb.n, %bb.v, %bb.u, %bb.h, %bb.k, %bb.j
@@ -2451,7 +2445,7 @@ bb.c:                                             ; preds = %_ZNK7openvdb5v13_04
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bs, i64 33800
   store i32 %i.bz, ptr %i.cb, align 8, !tbaa !340
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bs, i64 33804
-  store i32 0, ptr %i.cc, align 4, !tbaa !1387
+  store i32 0, ptr %i.cc, align 4, !tbaa !1391
   br i1 %.not126, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -2854,8 +2848,8 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ag, ptr noundef nonnull align 8 dereferenceable(12) %i.ah, i64 12, i1 false), !tbaa.struct !963
   %i.ai = getelementptr inbounds nuw i8, ptr %i.w, i64 33804
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 33804
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !1387
-  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !1387
+  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !1391
+  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !1391
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr %i.z, ptr %4, align 8, !tbaa !1489
   store ptr %i.w, ptr %i.e, align 8, !tbaa !1490
@@ -3258,7 +3252,7 @@ bb.d:                                             ; preds = %bb.c
   %i.dg = getelementptr inbounds nuw i8, ptr %i.db, i64 33800
   store i32 %i.cv, ptr %i.dg, align 8, !tbaa !340
   %i.dh = getelementptr inbounds nuw i8, ptr %i.db, i64 33804
-  store i32 0, ptr %i.dh, align 4, !tbaa !1387
+  store i32 0, ptr %i.dh, align 4, !tbaa !1391
   %i.di = getelementptr inbounds nuw i8, ptr %i.db, i64 33280 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(512) %i.di, i8 -1, i64 512, i1 false), !tbaa !402
   %.pre.i = load float, ptr %i.dd, align 4, !tbaa !369 ; 8 uses
@@ -3661,7 +3655,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = call noundef nonnull align 8 dereferenceable(512) ptr @_ZN7openvdb5v13_04util8NodeMaskILj4EEaSERKS3_(ptr noundef nonnull align 8 dereferenceable(512) %i.z, ptr noundef nonnull align 8 dereferenceable(512) %i.aa) ; 0 uses
   %i.aj = call noundef nonnull align 8 dereferenceable(512) ptr @_ZN7openvdb5v13_04util8NodeMaskILj4EEaSERKS3_(ptr noundef nonnull align 8 dereferenceable(512) %i.ab, ptr noundef nonnull align 8 dereferenceable(512) %i.ac) ; 0 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ad, ptr noundef nonnull align 8 dereferenceable(12) %i.ae, i64 12, i1 false), !tbaa.struct !963
-  %i.ak = load i32, ptr %i.ag, align 4, !tbaa !1387
+  %i.ak = load i32, ptr %i.ag, align 4, !tbaa !1391
   store i32 %i.ak, ptr %i.af, align 4, !tbaa !1622
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr %i.y, ptr %4, align 8, !tbaa !1625
@@ -4064,34 +4058,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4
   ret void
 
 .lr.ph106:                                        ; preds = %_ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EE12beginChildOnEv.exit, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEEppEv.exit
-  %i.eo = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #30 ; 15 uses
+  %i.eo = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #30 ; 13 uses
   %i.ep = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %bb.q unwind label %bb.u       ; 2 uses
+          to label %bb.q unwind label %bb.u
 
 bb.q:                                             ; preds = %.lr.ph106
   %i.eq = load i32, ptr %i.en, align 8, !tbaa !489 ; 4 uses
-  %4 = shl i32 %i.eq, 7
-  %5 = and i32 %4, 3968
   %i.er = getelementptr inbounds nuw i8, ptr %i.ep, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.ep, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !340
-  %8 = add nsw i32 %7, %5
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.eo, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.et = lshr i32 %i.eq, 3
   %i.eu = shl i32 %i.eq, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.et, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.eu, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.er, align 8, !tbaa !340
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.es, align 8, !tbaa !340
-  %16 = getelementptr inbounds nuw i8, ptr %i.eo, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !340
-  %17 = getelementptr inbounds nuw i8, ptr %i.eo, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !1622
+  %4 = shl i32 %i.eq, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.et, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.eu, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.er, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.es, align 8, !tbaa !340
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %bb.q
@@ -4494,8 +4482,8 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ag, ptr noundef nonnull align 8 dereferenceable(12) %i.ah, i64 12, i1 false), !tbaa.struct !963
   %i.ai = getelementptr inbounds nuw i8, ptr %i.v, i64 33804
   %i.aj = getelementptr inbounds nuw i8, ptr %i.y, i64 33804
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !1387
-  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !1387
+  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !1391
+  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !1391
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr %i.y, ptr %4, align 8, !tbaa !2179
   store ptr %i.v, ptr %i.f, align 8, !tbaa !2180
@@ -4898,8 +4886,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.au, ptr noundef nonnull align 8 dereferenceable(12) %i.av, i64 12, i1 false), !tbaa.struct !963
   %i.aw = getelementptr inbounds nuw i8, ptr %i.al, i64 33804
   %i.ax = getelementptr inbounds nuw i8, ptr %i.v, i64 33804
-  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !1387
-  store i32 %i.ay, ptr %i.aw, align 4, !tbaa !1387
+  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !1391
+  store i32 %i.ay, ptr %i.aw, align 4, !tbaa !1391
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr %i.v, ptr %4, align 8, !tbaa !2179
   store ptr %i.al, ptr %i.f, align 8, !tbaa !2180
@@ -5302,34 +5290,28 @@ _ZN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIdLj3EEELj4EEELj5EE12begi
   ret void
 
 .lr.ph106:                                        ; preds = %.lr.ph106.preheader, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEppEv.exit
-  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #30 ; 11 uses
+  %i.ep = call noalias noundef nonnull dereferenceable(33808) ptr @_Znwm(i64 noundef 33808) #30 ; 9 uses
   %i.eq = invoke noundef nonnull align 8 dereferenceable(270352) ptr @_ZNK7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj5EEEEENS1_12InternalNodeINS8_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE6parentEv(ptr noundef nonnull align 8 dereferenceable(24) %3)
-          to label %vector.ph203 unwind label %bb.s ; 2 uses
+          to label %vector.ph203 unwind label %bb.s
 
 vector.ph203:                                     ; preds = %.lr.ph106
   %i.er = load i32, ptr %i.eo, align 8, !tbaa !489 ; 4 uses
-  %4 = shl i32 %i.er, 7
-  %5 = and i32 %4, 3968
   %i.es = getelementptr inbounds nuw i8, ptr %i.eq, i64 270336
-  %6 = getelementptr inbounds nuw i8, ptr %i.eq, i64 270344
-  %7 = load i32, ptr %6, align 8, !tbaa !340
-  %8 = add nsw i32 %7, %5
   %i.et = getelementptr inbounds nuw i8, ptr %i.ep, i64 33792
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33808) %i.ep, i8 0, i64 33792, i1 false)
-  %9 = and i32 %8, -128
   %i.eu = lshr i32 %i.er, 3
   %i.ev = shl i32 %i.er, 2
-  %10 = insertelement <2 x i32> poison, i32 %i.eu, i64 0
-  %11 = insertelement <2 x i32> %10, i32 %i.ev, i64 1
-  %12 = and <2 x i32> %11, <i32 536870784, i32 3968>
-  %13 = load <2 x i32>, ptr %i.es, align 8, !tbaa !340
-  %14 = add nsw <2 x i32> %12, %13
-  %15 = and <2 x i32> %14, splat (i32 -128)
-  store <2 x i32> %15, ptr %i.et, align 8, !tbaa !340
-  %16 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33800
-  store i32 %9, ptr %16, align 8, !tbaa !340
-  %17 = getelementptr inbounds nuw i8, ptr %i.ep, i64 33804
-  store i32 0, ptr %17, align 4, !tbaa !2667
+  %4 = shl i32 %i.er, 7
+  %5 = insertelement <4 x i32> poison, i32 %i.eu, i64 0
+  %6 = insertelement <4 x i32> %5, i32 %i.ev, i64 1
+  %7 = insertelement <4 x i32> %6, i32 %4, i64 2
+  %8 = and <4 x i32> %7, <i32 536870784, i32 3968, i32 3968, i32 poison>
+  %9 = load <4 x i32>, ptr %i.es, align 8
+  %10 = freeze <4 x i32> %9
+  %.fr = freeze <4 x i32> %8
+  %11 = add <4 x i32> %.fr, %10
+  %12 = and <4 x i32> %11, <i32 -128, i32 -128, i32 -128, i32 0>
+  store <4 x i32> %12, ptr %i.et, align 8, !tbaa !340
   br label %vector.body204
 
 vector.body204:                                   ; preds = %vector.body204, %vector.ph203
@@ -5732,7 +5714,7 @@ bb.h:                                             ; preds = %bb.f, %bb.e
           to label %bb.i unwind label %bb.o
 
 bb.i:                                             ; preds = %bb.h
-  %i.s = load i8, ptr %6, align 8, !tbaa !2669
+  %i.s = load i8, ptr %6, align 8, !tbaa !2667
   store i8 %i.s, ptr %i.a, align 1, !tbaa !367
   %i.t = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.a, i64 noundef 1)
           to label %bb.j unwind label %bb.o       ; 0 uses
@@ -6135,11 +6117,11 @@ _ZNK7openvdb5v13_04util8NodeMaskILj5EE8beginOffEv.exit: ; preds = %bb.b, %_ZNK7o
   br i1 %.not44, label %.thread64, label %.lr.ph
 
 .thread64:                                        ; preds = %bb.f, %_ZNK7openvdb5v13_04util8NodeMaskILj5EE8beginOffEv.exit
-  store i8 0, ptr %0, align 8, !tbaa !2669
+  store i8 0, ptr %0, align 8, !tbaa !2667
   br label %.thread38
 
 .critedge:                                        ; preds = %.critedge28, %_ZN7openvdb5v13_04util15OffMaskIteratorINS1_8NodeMaskILj5EEEEppEv.exit, %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
-  store i8 0, ptr %0, align 8, !tbaa !2669
+  store i8 0, ptr %0, align 8, !tbaa !2667
   switch i32 %.2, label %bb.z [
     i32 1, label %bb.m
     i32 2, label %bb.q
@@ -6264,11 +6246,11 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bn, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  store i8 1, ptr %0, align 8, !tbaa !2669
+  store i8 1, ptr %0, align 8, !tbaa !2667
   br label %.thread38
 
 bb.p:                                             ; preds = %bb.n
-  store i8 2, ptr %0, align 8, !tbaa !2669
+  store i8 2, ptr %0, align 8, !tbaa !2667
   br label %.thread38
 
 bb.q:                                             ; preds = %.critedge
@@ -6283,7 +6265,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bs, label %.thread37, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  store i8 5, ptr %0, align 8, !tbaa !2669
+  store i8 5, ptr %0, align 8, !tbaa !2667
   br label %.thread38
 
 bb.t:                                             ; preds = %bb.q
@@ -6295,11 +6277,11 @@ bb.t:                                             ; preds = %bb.q
   br i1 %i.bu, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %.thread37
-  store i8 3, ptr %0, align 8, !tbaa !2669
+  store i8 3, ptr %0, align 8, !tbaa !2667
   br label %.thread38
 
 bb.v:                                             ; preds = %.thread37
-  store i8 4, ptr %0, align 8, !tbaa !2669
+  store i8 4, ptr %0, align 8, !tbaa !2667
   br label %.thread38
 
 bb.w:                                             ; preds = %bb.t
@@ -6308,7 +6290,7 @@ bb.w:                                             ; preds = %bb.t
   br i1 %i.bw, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  store i8 3, ptr %0, align 8, !tbaa !2669
+  store i8 3, ptr %0, align 8, !tbaa !2667
   store double %i.br, ptr %i.b, align 8, !tbaa !535
   store double %i.bo, ptr %i.c, align 8, !tbaa !535
   br label %.thread38
@@ -6316,7 +6298,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.w
   store double %i.br, ptr %i.b, align 8, !tbaa !535
   store double %i.bo, ptr %i.c, align 8, !tbaa !535
-  store i8 4, ptr %0, align 8, !tbaa !2669
+  store i8 4, ptr %0, align 8, !tbaa !2667
   br label %.thread38
 
 bb.z:                                             ; preds = %.critedge
@@ -6324,7 +6306,7 @@ bb.z:                                             ; preds = %.critedge
   br i1 %i.bx, label %bb.aa, label %.thread38
 
 bb.aa:                                            ; preds = %bb.z
-  store i8 6, ptr %0, align 8, !tbaa !2669
+  store i8 6, ptr %0, align 8, !tbaa !2667
   br label %.thread38
 
 .thread38:                                        ; preds = %.thread64, %bb.v, %bb.u, %bb.x, %bb.y, %bb.s, %bb.aa, %bb.z, %bb.m, %bb.p, %bb.o
@@ -6539,7 +6521,7 @@ bb.h:                                             ; preds = %bb.f, %bb.e
           to label %bb.i unwind label %bb.o
 
 bb.i:                                             ; preds = %bb.h
-  %i.s = load i8, ptr %6, align 8, !tbaa !2671
+  %i.s = load i8, ptr %6, align 8, !tbaa !2669
   store i8 %i.s, ptr %i.a, align 1, !tbaa !367
   %i.t = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %i.a, i64 noundef 1)
           to label %bb.j unwind label %bb.o       ; 0 uses
@@ -6942,7 +6924,7 @@ _ZNSt10unique_ptrIA_dSt14default_deleteIS0_EED2Ev.exit93: ; preds = %bb.bv, %_ZN
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN7openvdb5v13_02io12MaskCompressIdNS0_4util8NodeMaskILj4EEEEC2ERKS5_S8_PKdRS9_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(512) %1, ptr noundef nonnull align 8 dereferenceable(512) %2, ptr noundef %3, ptr noundef nonnull align 8 dereferenceable(8) %4) unnamed_addr #5 comdat align 2 {
 bb.a:
-  store i8 6, ptr %0, align 8, !tbaa !2671
+  store i8 6, ptr %0, align 8, !tbaa !2669
   %i.a = load double, ptr %4, align 8, !tbaa !535 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
@@ -6953,11 +6935,11 @@ bb.a:
   br i1 %.not41, label %.thread55, label %.lr.ph
 
 .thread55:                                        ; preds = %bb.a
-  store i8 0, ptr %0, align 8, !tbaa !2671
+  store i8 0, ptr %0, align 8, !tbaa !2669
   br label %.thread38
 
 .critedge:                                        ; preds = %.critedge28, %_ZN7openvdb5v13_04util15OffMaskIteratorINS1_8NodeMaskILj4EEEEppEv.exit, %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
-  store i8 0, ptr %0, align 8, !tbaa !2671
+  store i8 0, ptr %0, align 8, !tbaa !2669
   switch i32 %.2, label %bb.u [
     i32 1, label %bb.h
     i32 2, label %bb.l
@@ -7082,11 +7064,11 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ax, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  store i8 1, ptr %0, align 8, !tbaa !2671
+  store i8 1, ptr %0, align 8, !tbaa !2669
   br label %.thread38
 
 bb.k:                                             ; preds = %bb.i
-  store i8 2, ptr %0, align 8, !tbaa !2671
+  store i8 2, ptr %0, align 8, !tbaa !2669
   br label %.thread38
 
 bb.l:                                             ; preds = %.critedge
@@ -7101,7 +7083,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bc, label %.thread37, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  store i8 5, ptr %0, align 8, !tbaa !2671
+  store i8 5, ptr %0, align 8, !tbaa !2669
   br label %.thread38
 
 bb.o:                                             ; preds = %bb.l
@@ -7113,11 +7095,11 @@ bb.o:                                             ; preds = %bb.l
   br i1 %i.be, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %.thread37
-  store i8 3, ptr %0, align 8, !tbaa !2671
+  store i8 3, ptr %0, align 8, !tbaa !2669
   br label %.thread38
 
 bb.q:                                             ; preds = %.thread37
-  store i8 4, ptr %0, align 8, !tbaa !2671
+  store i8 4, ptr %0, align 8, !tbaa !2669
   br label %.thread38
 
 bb.r:                                             ; preds = %bb.o
@@ -7126,7 +7108,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %i.bg, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  store i8 3, ptr %0, align 8, !tbaa !2671
+  store i8 3, ptr %0, align 8, !tbaa !2669
   store double %i.bb, ptr %i.b, align 8, !tbaa !535
   store double %i.ay, ptr %i.c, align 8, !tbaa !535
   br label %.thread38
@@ -7134,7 +7116,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r
   store double %i.bb, ptr %i.b, align 8, !tbaa !535
   store double %i.ay, ptr %i.c, align 8, !tbaa !535
-  store i8 4, ptr %0, align 8, !tbaa !2671
+  store i8 4, ptr %0, align 8, !tbaa !2669
   br label %.thread38
 
 bb.u:                                             ; preds = %.critedge
@@ -7142,7 +7124,7 @@ bb.u:                                             ; preds = %.critedge
   br i1 %i.bh, label %bb.v, label %.thread38
 
 bb.v:                                             ; preds = %bb.u
-  store i8 6, ptr %0, align 8, !tbaa !2671
+  store i8 6, ptr %0, align 8, !tbaa !2669
   br label %.thread38
 
 .thread38:                                        ; preds = %.thread55, %bb.q, %bb.p, %bb.s, %bb.t, %bb.n, %bb.v, %bb.u, %bb.h, %bb.k, %bb.j
@@ -7545,7 +7527,7 @@ bb.c:                                             ; preds = %_ZNK7openvdb5v13_04
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bs, i64 33800
   store i32 %i.bz, ptr %i.cb, align 8, !tbaa !340
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bs, i64 33804
-  store i32 0, ptr %i.cc, align 4, !tbaa !2667
+  store i32 0, ptr %i.cc, align 4, !tbaa !2671
   br i1 %.not126, label %vector.ph, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -7948,8 +7930,8 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ag, ptr noundef nonnull align 8 dereferenceable(12) %i.ah, i64 12, i1 false), !tbaa.struct !963
   %i.ai = getelementptr inbounds nuw i8, ptr %i.w, i64 33804
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 33804
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !2667
-  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !2667
+  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !2671
+  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !2671
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr %i.z, ptr %4, align 8, !tbaa !2760
   store ptr %i.w, ptr %i.e, align 8, !tbaa !2761
@@ -8352,7 +8334,7 @@ vector.ph31:                                      ; preds = %bb.c
   %i.df = getelementptr inbounds nuw i8, ptr %i.db, i64 33800
   store i32 %i.cv, ptr %i.df, align 8, !tbaa !340
   %i.dg = getelementptr inbounds nuw i8, ptr %i.db, i64 33804
-  store i32 0, ptr %i.dg, align 4, !tbaa !2667
+  store i32 0, ptr %i.dg, align 4, !tbaa !2671
   %i.dh = getelementptr inbounds nuw i8, ptr %i.db, i64 33280 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(512) %i.dh, i8 -1, i64 512, i1 false), !tbaa !402
   %i.di = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %i.cu
@@ -8755,7 +8737,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ai = call noundef nonnull align 8 dereferenceable(512) ptr @_ZN7openvdb5v13_04util8NodeMaskILj4EEaSERKS3_(ptr noundef nonnull align 8 dereferenceable(512) %i.z, ptr noundef nonnull align 8 dereferenceable(512) %i.aa) ; 0 uses
   %i.aj = call noundef nonnull align 8 dereferenceable(512) ptr @_ZN7openvdb5v13_04util8NodeMaskILj4EEaSERKS3_(ptr noundef nonnull align 8 dereferenceable(512) %i.ab, ptr noundef nonnull align 8 dereferenceable(512) %i.ac) ; 0 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ad, ptr noundef nonnull align 8 dereferenceable(12) %i.ae, i64 12, i1 false), !tbaa.struct !963
-  %i.ak = load i32, ptr %i.ag, align 4, !tbaa !2667
+  %i.ak = load i32, ptr %i.ag, align 4, !tbaa !2671
   store i32 %i.ak, ptr %i.af, align 4, !tbaa !1622
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr %i.y, ptr %4, align 8, !tbaa !2847
@@ -9158,8 +9140,8 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ag, ptr noundef nonnull align 8 dereferenceable(12) %i.ah, i64 12, i1 false), !tbaa.struct !963
   %i.ai = getelementptr inbounds nuw i8, ptr %i.v, i64 33804
   %i.aj = getelementptr inbounds nuw i8, ptr %i.y, i64 33804
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !2667
-  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !2667
+  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !2671
+  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !2671
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr %i.y, ptr %4, align 8, !tbaa !2863
   store ptr %i.v, ptr %i.f, align 8, !tbaa !2864
@@ -9562,8 +9544,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.au, ptr noundef nonnull align 8 dereferenceable(12) %i.av, i64 12, i1 false), !tbaa.struct !963
   %i.aw = getelementptr inbounds nuw i8, ptr %i.al, i64 33804
   %i.ax = getelementptr inbounds nuw i8, ptr %i.v, i64 33804
-  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !2667
-  store i32 %i.ay, ptr %i.aw, align 4, !tbaa !2667
+  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !2671
+  store i32 %i.ay, ptr %i.aw, align 4, !tbaa !2671
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store ptr %i.v, ptr %4, align 8, !tbaa !2863
   store ptr %i.al, ptr %i.f, align 8, !tbaa !2864
@@ -9966,13 +9948,13 @@ begin_hunk_21_@llvm.vector.reduce.and.v2i64
 !1382 = !{!"_ZTSN3tbb6detail2d119reduction_tree_nodeIN7openvdb5v13_04tree8NodeListIKNS5_8LeafNodeIfLj3EEEE11NodeReducerINS4_5tools14count_internal10MemUsageOpINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSH_IS8_Lj4EEELj5EEEEEEEEENSA_11OpWithIndexEEEEE", !1051, i64 0, !1381, i64 32, !1376, i64 48, !354, i64 56}
 !1383 = !{!1382, !354, i64 56}
 !1384 = !{!1376, !1376, i64 0}
-!1385 = !{!"_ZTSN7openvdb5v13_04util8NodeMaskILj4EEE", !336, i64 0}
-!1386 = !{!"_ZTSN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeIfLj3EEELj4EEE", !336, i64 0, !1385, i64 32768, !1385, i64 33280, !412, i64 33792, !337, i64 33804}
-!1387 = !{!1386, !337, i64 33804}
-!1388 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIfNS0_4util8NodeMaskILj5EEEEE", !336, i64 0, !336, i64 4}
-!1389 = !{!1388, !336, i64 0}
-!1390 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIfNS0_4util8NodeMaskILj4EEEEE", !336, i64 0, !336, i64 4}
-!1391 = !{!1390, !336, i64 0}
+!1385 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIfNS0_4util8NodeMaskILj5EEEEE", !336, i64 0, !336, i64 4}
+!1386 = !{!1385, !336, i64 0}
+!1387 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIfNS0_4util8NodeMaskILj4EEEEE", !336, i64 0, !336, i64 4}
+!1388 = !{!1387, !336, i64 0}
+!1389 = !{!"_ZTSN7openvdb5v13_04util8NodeMaskILj4EEE", !336, i64 0}
+!1390 = !{!"_ZTSN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeIfLj3EEELj4EEE", !336, i64 0, !1389, i64 32768, !1389, i64 33280, !412, i64 33792, !337, i64 33804}
+!1391 = !{!1390, !337, i64 33804}
 !1392 = !{!372, !370, i64 0}
 !1393 = !{!372, !371, i64 8}
 !1394 = !{!"_ZTSN7openvdb5v13_04util8NodeMaskILj5EEE", !336, i64 0}
@@ -10202,7 +10184,7 @@ begin_hunk_21_@llvm.vector.reduce.and.v2i64
 !1618 = !{i64 0, i64 8, !544, i64 8, i64 8, !1617, i64 16, i64 8, !1104, i64 24, i64 8, !1104}
 !1619 = !{!"_ZTSN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04tree12InternalNodeINS8_INS7_8LeafNodeINS6_9ValueMaskELj3EEELj4EEELj5EE13TopologyCopy2INS8_INS8_INS9_IfLj3EEELj4EEELj5EEEEEKNS1_16auto_partitionerEEE", !873, i64 0, !431, i64 64, !1596, i64 80, !874, i64 112, !878, i64 120, !869, i64 136}
 !1620 = !{!1619, !874, i64 112}
-!1621 = !{!"_ZTSN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEE", !336, i64 0, !1385, i64 32768, !1385, i64 33280, !412, i64 33792, !337, i64 33804}
+!1621 = !{!"_ZTSN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEE", !336, i64 0, !1389, i64 32768, !1389, i64 33280, !412, i64 33792, !337, i64 33804}
 !1622 = !{!1621, !337, i64 33804}
 !1623 = !{!"p1 _ZTSN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EEE", !346, i64 0}
 !1624 = !{!"_ZTSN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeINS0_9ValueMaskELj3EEELj4EE13TopologyCopy2INS2_INS3_IfLj3EEELj4EEEEE", !444, i64 0, !1623, i64 8, !1095, i64 16, !1095, i64 24}
@@ -10605,12 +10587,12 @@ begin_hunk_22_@llvm.vector.reduce.and.v2i64
 !2663 = !{!"_ZTSN3tbb6detail2d119reduction_tree_nodeIN7openvdb5v13_04tree8NodeListIKNS5_8LeafNodeIdLj3EEEE11NodeReducerINS4_5tools14count_internal10MemUsageOpINS5_4TreeINS5_8RootNodeINS5_12InternalNodeINSH_IS8_Lj4EEELj5EEEEEEEEENSA_11OpWithIndexEEEEE", !1051, i64 0, !2662, i64 32, !2657, i64 48, !354, i64 56}
 !2664 = !{!2663, !354, i64 56}
 !2665 = !{!2657, !2657, i64 0}
-!2666 = !{!"_ZTSN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeIdLj3EEELj4EEE", !336, i64 0, !1385, i64 32768, !1385, i64 33280, !412, i64 33792, !337, i64 33804}
-!2667 = !{!2666, !337, i64 33804}
-!2668 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIdNS0_4util8NodeMaskILj5EEEEE", !336, i64 0, !336, i64 8}
+!2666 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIdNS0_4util8NodeMaskILj5EEEEE", !336, i64 0, !336, i64 8}
+!2667 = !{!2666, !336, i64 0}
+!2668 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIdNS0_4util8NodeMaskILj4EEEEE", !336, i64 0, !336, i64 8}
 !2669 = !{!2668, !336, i64 0}
-!2670 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIdNS0_4util8NodeMaskILj4EEEEE", !336, i64 0, !336, i64 8}
-!2671 = !{!2670, !336, i64 0}
+!2670 = !{!"_ZTSN7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeIdLj3EEELj4EEE", !336, i64 0, !1389, i64 32768, !1389, i64 33280, !412, i64 33792, !337, i64 33804}
+!2671 = !{!2670, !337, i64 33804}
 !2672 = !{!"_ZTSN7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIdLj3EEELj4EEELj5EEE", !336, i64 0, !1394, i64 262144, !1394, i64 266240, !412, i64 270336, !337, i64 270348}
 !2673 = !{!2672, !337, i64 270348}
 !2674 = !{!"_ZTSN7openvdb5v13_02io12MaskCompressIdNS0_4util8NodeMaskILj3EEEEE", !336, i64 0, !336, i64 8}

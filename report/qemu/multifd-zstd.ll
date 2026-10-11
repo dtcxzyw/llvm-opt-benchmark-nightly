@@ -175,9 +175,11 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.s = load i64, ptr getelementptr inbounds nuw (i8, ptr @target_page, i64 8), align 8
   %i.t = sub i64 0, %i.s
-  %2 = and i64 %i.t, 4294967295
+  %2 = insertelement <2 x i64> poison, i64 %i.t, i64 0
+  %3 = freeze <2 x i64> %2
+  %4 = and <2 x i64> %3, <i64 4294967295, i64 0>
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   br label %bb.d
 
 bb.c:                                             ; preds = %.critedge52
@@ -202,8 +204,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
   %i.ai = load i64, ptr %i.ah, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ai
   store ptr %i.aj, ptr %i.r, align 8
-  store i64 %2, ptr %i.u, align 8
-  store i64 0, ptr %i.v, align 8
+  store <2 x i64> %4, ptr %i.u, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %bb.d

@@ -202,9 +202,9 @@ bb.a:
   %.sroa.736 = alloca [88 x i8], align 8          ; 5 uses
   %.sroa.928 = alloca [88 x i8], align 8          ; 5 uses
   %i.k = alloca [104 x i8], align 8               ; 19 uses
-  %i.l = alloca [112 x i8], align 8               ; 18 uses
+  %i.l = alloca [112 x i8], align 8               ; 20 uses
   %i.m = alloca [24 x i8], align 8                ; 4 uses
-  %i.n = alloca [72 x i8], align 8                ; 10 uses
+  %i.n = alloca [72 x i8], align 8                ; 12 uses
   %i.o = alloca [24 x i8], align 8                ; 7 uses
   %i.p = alloca [48 x i8], align 8                ; 6 uses
   %i.q = alloca [48 x i8], align 8                ; 6 uses
@@ -437,15 +437,18 @@ bb.u:                                             ; preds = %bb.t
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant13SparseIndicesEECs5QaNqjAn6vc_5shard.exit
 
 bb.v:                                             ; preds = %bb.t
-  %.sroa.5129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 2 uses
+  %.sroa.5129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 16
+  %.sroa.5129.sroa.0.0.copyload = load i64, ptr %.sroa.5129.0..sroa_idx, align 8 ; 4 uses
   %.sroa.5129.sroa.4.0..sroa.5129.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 24
+  %.sroa.5129.sroa.4.0.copyload = load i64, ptr %.sroa.5129.sroa.4.0..sroa.5129.0..sroa_idx.sroa_idx, align 8 ; 4 uses
   %.sroa.5129.sroa.5.0..sroa.5129.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 32
   %.sroa.5129.sroa.5.0.copyload = load ptr, ptr %.sroa.5129.sroa.5.0..sroa.5129.0..sroa_idx.sroa_idx, align 8 ; 3 uses
   %.sroa.5129.sroa.6.0..sroa.5129.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 40
-  %2 = load <2 x i64>, ptr %.sroa.5129.0..sroa_idx, align 8
-  %.sroa.5129.sroa.4.0.copyload = load i64, ptr %.sroa.5129.sroa.4.0..sroa.5129.0..sroa_idx.sroa_idx, align 8 ; 3 uses
-  %.sroa.5129.sroa.0.0.copyload = load i64, ptr %.sroa.5129.0..sroa_idx, align 8 ; 3 uses
-  %3 = load <4 x i64>, ptr %.sroa.5129.sroa.6.0..sroa.5129.0..sroa_idx.sroa_idx, align 8 ; 3 uses
+  %.sroa.5129.sroa.6.0.copyload = load i64, ptr %.sroa.5129.sroa.6.0..sroa.5129.0..sroa_idx.sroa_idx, align 8 ; 3 uses
+  %.sroa.5129.sroa.7.0..sroa.5129.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 48
+  %2 = load <2 x i64>, ptr %.sroa.5129.sroa.7.0..sroa.5129.0..sroa_idx.sroa_idx, align 8 ; 3 uses
+  %.sroa.5129.sroa.8.sroa.4.0..sroa.5129.sroa.8.0..sroa.5129.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 64
+  %.sroa.5129.sroa.8.sroa.4.0.copyload = load i64, ptr %.sroa.5129.sroa.8.sroa.4.0..sroa.5129.sroa.8.0..sroa.5129.0..sroa_idx.sroa_idx.sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.bq = icmp ne i64 %i.bl, -9223372036854775806
@@ -453,8 +456,7 @@ bb.v:                                             ; preds = %bb.t
   %i.br = xor i64 %i.bl, -9223372036854775808
   %i.bs = icmp slt i64 %i.bl, 0
   %i.bt = select i1 %i.bs, i64 %i.br, i64 2
-  %4 = shufflevector <2 x i64> %2, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %5 = shufflevector <4 x i64> %4, <4 x i64> <i64 poison, i64 poison, i64 undef, i64 undef>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %3 = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %.sroa.5129.sroa.4.0.copyload, i64 0
   switch i64 %i.bt, label %bb.w [
     i64 0, label %_RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit
     i64 1, label %bb.x
@@ -468,7 +470,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.v
   %i.bu = ptrtoint ptr %i.bo to i64
   %i.bv = inttoptr i64 %.sroa.5129.sroa.0.0.copyload to ptr
-  %6 = shufflevector <4 x i64> %3, <4 x i64> <i64 poison, i64 poison, i64 undef, i64 undef>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %4 = insertelement <2 x i64> %2, i64 undef, i64 1
   br label %_RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit
 
 bb.y:                                             ; preds = %bb.v
@@ -477,16 +479,17 @@ bb.y:                                             ; preds = %bb.v
 bb.z:                                             ; preds = %bb.v
   %i.bw = ptrtoint ptr %i.bo to i64
   %i.bx = inttoptr i64 %.sroa.5129.sroa.0.0.copyload to ptr
-  %7 = insertelement <4 x i64> %3, i64 undef, i64 3
   br label %_RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit
 
 _RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14VectorInternalEINtNtCskKLDkoKarTP_4core7convert4FromNtB5_17NamedVectorStructE4from.exit: ; preds = %bb.z, %bb.y, %bb.x, %bb.v
+  %.sroa.19.sroa.5.0 = phi i64 [ undef, %bb.v ], [ undef, %bb.x ], [ %.sroa.5129.sroa.8.sroa.4.0.copyload, %bb.y ], [ undef, %bb.z ]
+  %.sroa.18.sroa.0.0 = phi i64 [ %.sroa.5129.sroa.0.0.copyload, %bb.v ], [ %.sroa.5129.sroa.6.0.copyload, %bb.x ], [ %.sroa.5129.sroa.6.0.copyload, %bb.y ], [ %.sroa.5129.sroa.6.0.copyload, %bb.z ]
   %.sroa.15.0 = phi ptr [ %i.bo, %bb.v ], [ %.sroa.5129.sroa.5.0.copyload, %bb.x ], [ %.sroa.5129.sroa.5.0.copyload, %bb.y ], [ %.sroa.5129.sroa.5.0.copyload, %bb.z ]
   %.sroa.11.0 = phi i64 [ -9223372036854775808, %bb.v ], [ -9223372036854775808, %bb.x ], [ %.sroa.5129.sroa.4.0.copyload, %bb.y ], [ -9223372036854775806, %bb.z ]
   %.sroa.10.0 = phi i64 [ undef, %bb.v ], [ %.sroa.5129.sroa.4.0.copyload, %bb.x ], [ %.sroa.5129.sroa.0.0.copyload, %bb.y ], [ %.sroa.5129.sroa.4.0.copyload, %bb.z ]
   %.sroa.7256.0 = phi ptr [ undef, %bb.v ], [ %i.bv, %bb.x ], [ %i.bo, %bb.y ], [ %i.bx, %bb.z ]
   %.sroa.0255.0 = phi i64 [ -1, %bb.v ], [ %i.bu, %bb.x ], [ %i.bl, %bb.y ], [ %i.bw, %bb.z ]
-  %8 = phi <4 x i64> [ %5, %bb.v ], [ %6, %bb.x ], [ %3, %bb.y ], [ %7, %bb.z ]
+  %5 = phi <2 x i64> [ %3, %bb.v ], [ %4, %bb.x ], [ %2, %bb.y ], [ %2, %bb.z ]
   %i.by = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store i64 %.sroa.0255.0, ptr %i.by, align 8
   %.sroa.7256.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 16
@@ -498,7 +501,11 @@ _RNvXsG_NtNtCs607s0NAIaWN_7segment10data_types7vectorsINtB5_10NamedQueryNtB5_14V
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   store ptr %.sroa.15.0, ptr %.sroa.15.0..sroa_idx, align 8
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 48
-  store <4 x i64> %8, ptr %.sroa.18.0..sroa_idx, align 8
+  store i64 %.sroa.18.sroa.0.0, ptr %.sroa.18.0..sroa_idx, align 8
+  %.sroa.18.sroa.7.0..sroa.18.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 56
+  store <2 x i64> %5, ptr %.sroa.18.sroa.7.0..sroa.18.0..sroa_idx.sroa_idx, align 8
+  %.sroa.19.sroa.5.0..sroa.19.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 72
+  store i64 %.sroa.19.sroa.5.0, ptr %.sroa.19.sroa.5.0..sroa.19.0..sroa_idx.sroa_idx, align 8
   store i64 -9223372036854775808, ptr %i.l, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.928)
