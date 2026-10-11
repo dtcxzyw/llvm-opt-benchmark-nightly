@@ -205,7 +205,7 @@ bb.eh:                                            ; preds = %bb.eg
   %i.xw = load i64, ptr %i.xv, align 8, !dbg !47140, !noundef !3137
   %i.xx = and i64 %i.xw, 2, !dbg !47141
   %i.xy = icmp eq i64 %i.xx, 0, !dbg !45225
-  br i1 %i.xy, label %.split1264.us.loopexit, label %.outer.split.us, !dbg !45225
+  br i1 %i.xy, label %.split1264.us, label %.outer.split.us, !dbg !45225
 
 .loopexit.loopexit.split.us:                      ; preds = %.outer.split.us
   %lpad.loopexit980.us = landingpad { ptr, i32 }
@@ -224,7 +224,7 @@ bb.eh:                                            ; preds = %bb.eg
 bb.ei:                                            ; preds = %.outer.split
   %i.ya = extractvalue { ptr, ptr } %i.xz, 0, !dbg !44889 ; 2 uses
   %.not573 = icmp eq ptr %i.ya, null, !dbg !44889
-  br i1 %.not573, label %.split.us, label %.split1264, !dbg !44889
+  br i1 %.not573, label %.split.us, label %.split1264.us, !dbg !44889
 
 .split.us:                                        ; preds = %bb.ei, %bb.eg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.gr), !dbg !47142
@@ -467,46 +467,11 @@ bb.ex:                                            ; preds = %bb.ew
   call void @llvm.lifetime.end.p0(ptr nonnull %i.hu), !dbg !46905
   ret void, !dbg !47191
 
-.split1264:                                       ; preds = %bb.ei
-  %9 = extractvalue { ptr, ptr } %i.xz, 1, !dbg !44889 ; 2 uses
-    #dbg_value(ptr %i.ya, !44791, !DIExpression(), !45847)
-    #dbg_value(ptr %i.ya, !45223, !DIExpression(), !45226)
+.split1264.us:                                    ; preds = %bb.eh, %bb.ei
+  %.lcssa1325.sink = phi { ptr, ptr } [ %i.xz, %bb.ei ], [ %i.xu, %bb.eh ]
+  %.us-phi1265 = phi ptr [ %i.ya, %bb.ei ], [ %i.xv, %bb.eh ], !dbg !47192 ; 2 uses
+  %9 = extractvalue { ptr, ptr } %.lcssa1325.sink, 1, !dbg !44889 ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %9) ]
-    #dbg_value(ptr %9, !44792, !DIExpression(), !45847)
-    #dbg_value(ptr %9, !45848, !DIExpression(), !45851)
-    #dbg_value(ptr %9, !45852, !DIExpression(), !45855)
-    #dbg_value(ptr %9, !45856, !DIExpression(), !45860)
-    #dbg_value(ptr %9, !45848, !DIExpression(), !45862)
-    #dbg_value(ptr %9, !45852, !DIExpression(), !45865)
-    #dbg_value(ptr %9, !45856, !DIExpression(), !45868)
-    #dbg_value(ptr %9, !45848, !DIExpression(), !45870)
-    #dbg_value(ptr %9, !45852, !DIExpression(), !45873)
-    #dbg_value(ptr %9, !45856, !DIExpression(), !45876)
-    #dbg_value(ptr %9, !45848, !DIExpression(), !45878)
-    #dbg_value(ptr %9, !45852, !DIExpression(), !45881)
-    #dbg_value(ptr %9, !45856, !DIExpression(), !45884)
-  br label %.split1264.us, !dbg !47192
-
-.split1264.us.loopexit:                           ; preds = %bb.eh
-  %10 = extractvalue { ptr, ptr } %i.xu, 1, !dbg !44889
-    #dbg_value(ptr %10, !44792, !DIExpression(), !45847)
-    #dbg_value(ptr %10, !45848, !DIExpression(), !45851)
-    #dbg_value(ptr %10, !45852, !DIExpression(), !45855)
-    #dbg_value(ptr %10, !45856, !DIExpression(), !45860)
-    #dbg_value(ptr %10, !45848, !DIExpression(), !45862)
-    #dbg_value(ptr %10, !45852, !DIExpression(), !45865)
-    #dbg_value(ptr %10, !45856, !DIExpression(), !45868)
-    #dbg_value(ptr %10, !45848, !DIExpression(), !45870)
-    #dbg_value(ptr %10, !45852, !DIExpression(), !45873)
-    #dbg_value(ptr %10, !45856, !DIExpression(), !45876)
-    #dbg_value(ptr %10, !45848, !DIExpression(), !45878)
-    #dbg_value(ptr %10, !45852, !DIExpression(), !45881)
-    #dbg_value(ptr %10, !45856, !DIExpression(), !45884)
-  br label %.split1264.us, !dbg !47192
-
-.split1264.us:                                    ; preds = %.split1264.us.loopexit, %.split1264
-  %.us-phi1265 = phi ptr [ %i.ya, %.split1264 ], [ %i.xv, %.split1264.us.loopexit ], !dbg !47192 ; 2 uses
-  %.us-phi1266 = phi ptr [ %9, %.split1264 ], [ %10, %.split1264.us.loopexit ], !dbg !47192 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.gq), !dbg !47192
   call void @llvm.lifetime.start.p0(ptr nonnull %i.gp), !dbg !47193
   invoke void @_RNvXs_NtNtCs4bweDUTR8gt_8plotters7drawing4areaINtB4_11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtB8_5coord5ShiftENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.gp, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.gw)
@@ -658,8 +623,8 @@ bb.fk:                                            ; preds = %bb.fh
 
 bb.fl:                                            ; preds = %bb.fk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.gj), !dbg !47240
-  %i.zq = getelementptr inbounds nuw i8, ptr %.us-phi1266, i64 8, !dbg !47241 ; 2 uses
-  %i.zr = getelementptr inbounds nuw i8, ptr %.us-phi1266, i64 16, !dbg !47242 ; 2 uses
+  %i.zq = getelementptr inbounds nuw i8, ptr %9, i64 8, !dbg !47241 ; 2 uses
+  %i.zr = getelementptr inbounds nuw i8, ptr %9, i64 16, !dbg !47242 ; 2 uses
   %i.zs = load i64, ptr %i.zr, align 8, !dbg !47242, !noundef !3137 ; 2 uses
     #dbg_value(ptr poison, !45920, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !45925)
     #dbg_value(i64 %i.zs, !45920, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !45925)
@@ -1062,7 +1027,7 @@ bb.dg:                                            ; preds = %bb.df
   %i.nq = load i64, ptr %i.np, align 8, !dbg !51471, !noundef !3137
   %i.nr = and i64 %i.nq, 2, !dbg !51472
   %i.ns = icmp eq i64 %i.nr, 0, !dbg !50255
-  br i1 %i.ns, label %.split904.us.loopexit, label %.outer.split.us, !dbg !50255
+  br i1 %i.ns, label %.split904.us, label %.outer.split.us, !dbg !50255
 
 .loopexit.loopexit.split.us:                      ; preds = %.outer.split.us
   %lpad.loopexit726.us = landingpad { ptr, i32 }
@@ -1334,18 +1299,10 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringEC
 bb.ea:                                            ; preds = %.outer.split
   %i.pb = extractvalue { ptr, ptr } %i.nt, 0, !dbg !50101 ; 2 uses
   %.not439 = icmp eq ptr %i.pb, null, !dbg !50101
-  br i1 %.not439, label %.split902.us, label %.split904, !dbg !50101
-
-.split904:                                        ; preds = %bb.ea
-  %6 = extractvalue { ptr, ptr } %i.nt, 1, !dbg !50101 ; 2 uses
-    #dbg_value(ptr %i.pb, !49951, !DIExpression(), !50704)
-    #dbg_value(ptr %i.pb, !50216, !DIExpression(), !50256)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %6) ]
-    #dbg_value(ptr %6, !49952, !DIExpression(), !50704)
-  br label %.split904.us, !dbg !51526
+  br i1 %.not439, label %.split902.us, label %.split904.us, !dbg !50101
 
 .split902.us:                                     ; preds = %bb.ea, %bb.df
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ca), !dbg !51527
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ca), !dbg !51526
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters5chart7context12ChartContextNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendINtNtNtNtBI_5coord8ranged2d9cartesian11Cartesian2dNtNtNtNtB2z_8ranged1d5types7numeric14RangedCoordf64NtB3i_14RangedCoordi32EEECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef align 8 dereferenceable(224) %i.cm)
           to label %bb.eb unwind label %bb.dn, !dbg !51436
 
@@ -1353,31 +1310,31 @@ bb.eb:                                            ; preds = %.split902.us
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cm), !dbg !51436
   call void @llvm.experimental.noalias.scope.decl(metadata !50738), !dbg !51476
     #dbg_value(ptr %i.co, !8124, !DIExpression(), !49185)
-  call void @llvm.experimental.noalias.scope.decl(metadata !50739), !dbg !51528
+  call void @llvm.experimental.noalias.scope.decl(metadata !50739), !dbg !51527
     #dbg_value(ptr %i.co, !8129, !DIExpression(), !49189)
-  call void @llvm.experimental.noalias.scope.decl(metadata !50740), !dbg !51529
+  call void @llvm.experimental.noalias.scope.decl(metadata !50740), !dbg !51528
     #dbg_value(ptr %i.co, !8136, !DIExpression(), !49193)
     #dbg_value(ptr %i.co, !9359, !DIExpression(), !49195)
     #dbg_value(ptr %i.co, !9359, !DIExpression(), !49197)
-  %i.pc = load ptr, ptr %i.co, align 8, !dbg !51530, !alias.scope !50741, !nonnull !3137, !noundef !3137 ; 2 uses
+  %i.pc = load ptr, ptr %i.co, align 8, !dbg !51529, !alias.scope !50741, !nonnull !3137, !noundef !3137 ; 2 uses
     #dbg_value(ptr %i.pc, !8139, !DIExpression(), !49200)
     #dbg_value(ptr %i.pc, !8147, !DIExpression(), !49202)
     #dbg_value(ptr %i.pc, !8152, !DIExpression(), !49204)
     #dbg_value(ptr %i.pc, !8158, !DIExpression(), !49206)
     #dbg_value(ptr %i.pc, !8164, !DIExpression(), !49208)
-  %i.pd = load i64, ptr %i.pc, align 8, !dbg !51531, !noalias !50741, !noundef !3137
-  %i.pe = add i64 %i.pd, -1, !dbg !51532          ; 2 uses
+  %i.pd = load i64, ptr %i.pc, align 8, !dbg !51530, !noalias !50741, !noundef !3137
+  %i.pe = add i64 %i.pd, -1, !dbg !51531          ; 2 uses
     #dbg_value(i64 %i.pe, !8156, !DIExpression(), !49209)
     #dbg_value(i64 %i.pe, !8162, !DIExpression(), !49210)
-  store i64 %i.pe, ptr %i.pc, align 8, !dbg !51533, !noalias !50741
+  store i64 %i.pe, ptr %i.pc, align 8, !dbg !51532, !noalias !50741
     #dbg_value(ptr %i.pc, !8147, !DIExpression(), !49213)
     #dbg_value(ptr %i.pc, !8164, !DIExpression(), !49215)
-  %i.pf = icmp eq i64 %i.pe, 0, !dbg !51534
-  br i1 %i.pf, label %bb.ec, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit585, !dbg !51534
+  %i.pf = icmp eq i64 %i.pe, 0, !dbg !51533
+  br i1 %i.pf, label %bb.ec, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit585, !dbg !51533
 
 bb.ec:                                            ; preds = %bb.eb
   invoke void @_RNvMs6_NtCsexYYUdYSQU6_5alloc2rcINtB5_2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendEE9drop_slowCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.co) #25
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit585 unwind label %.loopexit.split-lp734, !dbg !51535
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit585 unwind label %.loopexit.split-lp734, !dbg !51534
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit585: ; preds = %bb.eb, %bb.ec
   call void @llvm.lifetime.end.p0(ptr nonnull %i.co), !dbg !51476
@@ -1388,129 +1345,126 @@ bb.ed:                                            ; preds = %_RINvNtCskKLDkoKarT
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cz), !dbg !51349
   call void @llvm.experimental.noalias.scope.decl(metadata !50742), !dbg !51493
     #dbg_value(ptr %i.db, !8124, !DIExpression(), !49219)
-  call void @llvm.experimental.noalias.scope.decl(metadata !50743), !dbg !51536
+  call void @llvm.experimental.noalias.scope.decl(metadata !50743), !dbg !51535
     #dbg_value(ptr %i.db, !8129, !DIExpression(), !49223)
-  call void @llvm.experimental.noalias.scope.decl(metadata !50744), !dbg !51537
+  call void @llvm.experimental.noalias.scope.decl(metadata !50744), !dbg !51536
     #dbg_value(ptr %i.db, !8136, !DIExpression(), !49227)
     #dbg_value(ptr %i.db, !9359, !DIExpression(), !49229)
     #dbg_value(ptr %i.db, !9359, !DIExpression(), !49231)
-  %i.pg = load ptr, ptr %i.db, align 8, !dbg !51538, !alias.scope !50745, !nonnull !3137, !noundef !3137 ; 2 uses
+  %i.pg = load ptr, ptr %i.db, align 8, !dbg !51537, !alias.scope !50745, !nonnull !3137, !noundef !3137 ; 2 uses
     #dbg_value(ptr %i.pg, !8139, !DIExpression(), !49234)
     #dbg_value(ptr %i.pg, !8147, !DIExpression(), !49236)
     #dbg_value(ptr %i.pg, !8152, !DIExpression(), !49238)
     #dbg_value(ptr %i.pg, !8158, !DIExpression(), !49240)
     #dbg_value(ptr %i.pg, !8164, !DIExpression(), !49242)
-  %i.ph = load i64, ptr %i.pg, align 8, !dbg !51539, !noalias !50745, !noundef !3137
-  %i.pi = add i64 %i.ph, -1, !dbg !51540          ; 2 uses
+  %i.ph = load i64, ptr %i.pg, align 8, !dbg !51538, !noalias !50745, !noundef !3137
+  %i.pi = add i64 %i.ph, -1, !dbg !51539          ; 2 uses
     #dbg_value(i64 %i.pi, !8156, !DIExpression(), !49243)
     #dbg_value(i64 %i.pi, !8162, !DIExpression(), !49244)
-  store i64 %i.pi, ptr %i.pg, align 8, !dbg !51541, !noalias !50745
+  store i64 %i.pi, ptr %i.pg, align 8, !dbg !51540, !noalias !50745
     #dbg_value(ptr %i.pg, !8147, !DIExpression(), !49247)
     #dbg_value(ptr %i.pg, !8164, !DIExpression(), !49249)
-  %i.pj = icmp eq i64 %i.pi, 0, !dbg !51542
-  br i1 %i.pj, label %bb.ee, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit587, !dbg !51542
+  %i.pj = icmp eq i64 %i.pi, 0, !dbg !51541
+  br i1 %i.pj, label %bb.ee, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit587, !dbg !51541
 
 bb.ee:                                            ; preds = %bb.ed
   invoke void @_RNvMs6_NtCsexYYUdYSQU6_5alloc2rcINtB5_2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendEE9drop_slowCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.db) #25
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit587 unwind label %bb.af, !dbg !51543
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit587 unwind label %bb.af, !dbg !51542
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit587: ; preds = %bb.ed, %bb.ee
   call void @llvm.lifetime.end.p0(ptr nonnull %i.db), !dbg !51493
     #dbg_value(ptr %i.dc, !50403, !DIExpression(), !49251)
     #dbg_value(ptr %i.dc, !50410, !DIExpression(), !49253)
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtNtCs4bweDUTR8gt_8plotters5style5color8RGBColorENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.dc)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs4bweDUTR8gt_8plotters5style5color8RGBColorEECsaTqK2fWTXJW_11qlog_dancer.exit.i589 unwind label %bb.ef, !dbg !51544
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs4bweDUTR8gt_8plotters5style5color8RGBColorEECsaTqK2fWTXJW_11qlog_dancer.exit.i589 unwind label %bb.ef, !dbg !51543
 
 bb.ef:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit587
   %i.pk = landingpad { ptr, i32 }
           cleanup
     #dbg_value(ptr %i.dc, !50417, !DIExpression(), !49255)
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs4bweDUTR8gt_8plotters5style5color8RGBColorENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.dc)
-          to label %.body572 unwind label %bb.eg, !dbg !51545
+          to label %.body572 unwind label %bb.eg, !dbg !51544
 
 bb.eg:                                            ; preds = %bb.ef
   %i.pl = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23, !dbg !51544
-  unreachable, !dbg !51544
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23, !dbg !51543
+  unreachable, !dbg !51543
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs4bweDUTR8gt_8plotters5style5color8RGBColorEECsaTqK2fWTXJW_11qlog_dancer.exit.i589: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit587
     #dbg_value(ptr %i.dc, !50417, !DIExpression(), !49257)
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs4bweDUTR8gt_8plotters5style5color8RGBColorENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.dc)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsaTqK2fWTXJW_11qlog_dancer5plots6colors10ColorCycleEBH_.exit593 unwind label %bb.ac, !dbg !51546
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsaTqK2fWTXJW_11qlog_dancer5plots6colors10ColorCycleEBH_.exit593 unwind label %bb.ac, !dbg !51545
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsaTqK2fWTXJW_11qlog_dancer5plots6colors10ColorCycleEBH_.exit593: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs4bweDUTR8gt_8plotters5style5color8RGBColorEECsaTqK2fWTXJW_11qlog_dancer.exit.i589
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dc), !dbg !51513
   call void @llvm.experimental.noalias.scope.decl(metadata !50746), !dbg !51303
     #dbg_value(ptr %i.dd, !8124, !DIExpression(), !49261)
-  call void @llvm.experimental.noalias.scope.decl(metadata !50747), !dbg !51547
+  call void @llvm.experimental.noalias.scope.decl(metadata !50747), !dbg !51546
     #dbg_value(ptr %i.dd, !8129, !DIExpression(), !49265)
-  call void @llvm.experimental.noalias.scope.decl(metadata !50748), !dbg !51548
+  call void @llvm.experimental.noalias.scope.decl(metadata !50748), !dbg !51547
     #dbg_value(ptr %i.dd, !8136, !DIExpression(), !49269)
     #dbg_value(ptr %i.dd, !9359, !DIExpression(), !49271)
     #dbg_value(ptr %i.dd, !9359, !DIExpression(), !49273)
-  %i.pm = load ptr, ptr %i.dd, align 8, !dbg !51549, !alias.scope !50749, !nonnull !3137, !noundef !3137 ; 2 uses
+  %i.pm = load ptr, ptr %i.dd, align 8, !dbg !51548, !alias.scope !50749, !nonnull !3137, !noundef !3137 ; 2 uses
     #dbg_value(ptr %i.pm, !8139, !DIExpression(), !49276)
     #dbg_value(ptr %i.pm, !8147, !DIExpression(), !49278)
     #dbg_value(ptr %i.pm, !8152, !DIExpression(), !49280)
     #dbg_value(ptr %i.pm, !8158, !DIExpression(), !49282)
     #dbg_value(ptr %i.pm, !8164, !DIExpression(), !49284)
-  %i.pn = load i64, ptr %i.pm, align 8, !dbg !51550, !noalias !50749, !noundef !3137
-  %i.po = add i64 %i.pn, -1, !dbg !51551          ; 2 uses
+  %i.pn = load i64, ptr %i.pm, align 8, !dbg !51549, !noalias !50749, !noundef !3137
+  %i.po = add i64 %i.pn, -1, !dbg !51550          ; 2 uses
     #dbg_value(i64 %i.po, !8156, !DIExpression(), !49285)
     #dbg_value(i64 %i.po, !8162, !DIExpression(), !49286)
-  store i64 %i.po, ptr %i.pm, align 8, !dbg !51552, !noalias !50749
+  store i64 %i.po, ptr %i.pm, align 8, !dbg !51551, !noalias !50749
     #dbg_value(ptr %i.pm, !8147, !DIExpression(), !49289)
     #dbg_value(ptr %i.pm, !8164, !DIExpression(), !49291)
-  %i.pp = icmp eq i64 %i.po, 0, !dbg !51553
-  br i1 %i.pp, label %bb.eh, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit595, !dbg !51553
+  %i.pp = icmp eq i64 %i.po, 0, !dbg !51552
+  br i1 %i.pp, label %bb.eh, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit595, !dbg !51552
 
 bb.eh:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsaTqK2fWTXJW_11qlog_dancer5plots6colors10ColorCycleEBH_.exit593
   invoke void @_RNvMs6_NtCsexYYUdYSQU6_5alloc2rcINtB5_2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendEE9drop_slowCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.dd) #25
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit595 unwind label %bb.z, !dbg !51554
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit595 unwind label %bb.z, !dbg !51553
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit595: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsaTqK2fWTXJW_11qlog_dancer5plots6colors10ColorCycleEBH_.exit593, %bb.eh
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dd), !dbg !51303
     #dbg_value(ptr %i.de, !3843, !DIExpression(), !49293)
     #dbg_value(ptr %i.de, !3849, !DIExpression(), !49295)
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.de)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i597.invoke unwind label %bb.ei, !dbg !51555
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i597.invoke unwind label %bb.ei, !dbg !51554
 
 bb.ei:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit595
   %i.pq = landingpad { ptr, i32 }
           cleanup
     #dbg_value(ptr %i.de, !3854, !DIExpression(), !49297)
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.de)
-          to label %.body580 unwind label %bb.ej, !dbg !51556
+          to label %.body580 unwind label %bb.ej, !dbg !51555
 
 bb.ej:                                            ; preds = %bb.ei
   %i.pr = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23, !dbg !51555
-  unreachable, !dbg !51555
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23, !dbg !51554
+  unreachable, !dbg !51554
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsaTqK2fWTXJW_11qlog_dancer.exit.i597.invoke: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit595, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs4bweDUTR8gt_8plotters7drawing4area11DrawingAreaNtNtCs29sfksKwgjx_15plotters_bitmap6bitmap13BitMapBackendNtNtBI_5coord5ShiftEECsaTqK2fWTXJW_11qlog_dancer.exit577
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.de)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsaTqK2fWTXJW_11qlog_dancer.exit601 unwind label %bb.u, !dbg !51557
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsaTqK2fWTXJW_11qlog_dancer.exit601 unwind label %bb.u, !dbg !51556
 
-.split904.us.loopexit:                            ; preds = %bb.dg
-  %7 = extractvalue { ptr, ptr } %i.no, 1, !dbg !50101
-    #dbg_value(ptr %7, !49952, !DIExpression(), !50704)
-  br label %.split904.us, !dbg !51526
-
-.split904.us:                                     ; preds = %.split904.us.loopexit, %.split904
-  %.us-phi905 = phi ptr [ %i.pb, %.split904 ], [ %i.np, %.split904.us.loopexit ], !dbg !51526
-  %.us-phi906 = phi ptr [ %6, %.split904 ], [ %7, %.split904.us.loopexit ], !dbg !51526 ; 5 uses
-  %.sroa.049.0 = getelementptr inbounds nuw i8, ptr %.us-phi906, i64 %.sroa.026.0.v, !dbg !51526 ; 2 uses
+.split904.us:                                     ; preds = %bb.dg, %bb.ea
+  %.lcssa1012.sink = phi { ptr, ptr } [ %i.nt, %bb.ea ], [ %i.no, %bb.dg ]
+  %.us-phi905 = phi ptr [ %i.pb, %bb.ea ], [ %i.np, %bb.dg ], !dbg !51557
+  %6 = extractvalue { ptr, ptr } %.lcssa1012.sink, 1, !dbg !50101 ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %6) ]
+  %.sroa.049.0 = getelementptr inbounds nuw i8, ptr %6, i64 %.sroa.026.0.v, !dbg !51557 ; 2 uses
     #dbg_value(ptr %.sroa.049.0, !50529, !DIExpression(), !50759)
     #dbg_value(ptr %.sroa.049.0, !50538, !DIExpression(), !50765)
     #dbg_value(ptr %.sroa.049.0, !50536, !DIExpression(), !50766)
     #dbg_value(ptr %.sroa.049.0, !50763, !DIExpression(), !50767)
     #dbg_value(ptr %.sroa.049.0, !49953, !DIExpression(), !50768)
-  %i.ps = getelementptr inbounds nuw i8, ptr %.us-phi906, i64 16, !dbg !51558 ; 2 uses
-  %i.pt = getelementptr inbounds nuw i8, ptr %.us-phi906, i64 24, !dbg !51558 ; 2 uses
-  %i.pu = getelementptr inbounds nuw i8, ptr %.us-phi906, i64 32, !dbg !51558 ; 2 uses
-  %i.pv = getelementptr inbounds nuw i8, ptr %.us-phi906, i64 40, !dbg !51558 ; 2 uses
+  %i.ps = getelementptr inbounds nuw i8, ptr %6, i64 16, !dbg !51558 ; 2 uses
+  %i.pt = getelementptr inbounds nuw i8, ptr %6, i64 24, !dbg !51558 ; 2 uses
+  %i.pu = getelementptr inbounds nuw i8, ptr %6, i64 32, !dbg !51558 ; 2 uses
+  %i.pv = getelementptr inbounds nuw i8, ptr %6, i64 40, !dbg !51558 ; 2 uses
   %.sroa.553.0.in = select i1 %i.dn, ptr %i.pt, ptr %i.pv, !dbg !51558
   %.sroa.052.0.in = select i1 %i.dn, ptr %i.ps, ptr %i.pu, !dbg !51558
   %.sroa.052.0 = load i64, ptr %.sroa.052.0.in, align 8, !dbg !50768, !range !3838, !noundef !3137
@@ -1913,38 +1867,38 @@ begin_hunk_2_@llvm.vector.reduce.smin.v4i32
 !51523 = !DILocation(line: 848, column: 1, scope: !232, inlinedAt: !49180)
 !51524 = !DILocation(line: 456, column: 1, scope: !48651)
 !51525 = !DILocation(line: 456, column: 2, scope: !48672)
-!51526 = !DILocation(line: 278, column: 27, scope: !48615)
-!51527 = !DILocation(line: 455, column: 5, scope: !48618)
-!51528 = !DILocation(line: 848, column: 1, scope: !1383, inlinedAt: !49184)
-!51529 = !DILocation(line: 848, column: 1, scope: !1384, inlinedAt: !49188)
-!51530 = !DILocation(line: 454, column: 20, scope: !1692, inlinedAt: !49198)
-!51531 = !DILocation(line: 558, column: 18, scope: !1390, inlinedAt: !49207)
-!51532 = !DILocation(line: 3845, column: 31, scope: !1386, inlinedAt: !49199)
-!51533 = !DILocation(line: 976, column: 49, scope: !1391, inlinedAt: !49211)
-!51534 = !DILocation(line: 2548, column: 16, scope: !1385, inlinedAt: !49192)
-!51535 = !DILocation(line: 2549, column: 22, scope: !1385, inlinedAt: !49192)
-!51536 = !DILocation(line: 848, column: 1, scope: !1383, inlinedAt: !49218)
-!51537 = !DILocation(line: 848, column: 1, scope: !1384, inlinedAt: !49222)
-!51538 = !DILocation(line: 454, column: 20, scope: !1692, inlinedAt: !49232)
-!51539 = !DILocation(line: 558, column: 18, scope: !1390, inlinedAt: !49241)
-!51540 = !DILocation(line: 3845, column: 31, scope: !1386, inlinedAt: !49233)
-!51541 = !DILocation(line: 976, column: 49, scope: !1391, inlinedAt: !49245)
-!51542 = !DILocation(line: 2548, column: 16, scope: !1385, inlinedAt: !49226)
-!51543 = !DILocation(line: 2549, column: 22, scope: !1385, inlinedAt: !49226)
-!51544 = !DILocation(line: 848, column: 1, scope: !48810, inlinedAt: !49252)
-!51545 = !DILocation(line: 848, column: 1, scope: !48813, inlinedAt: !49254)
-!51546 = !DILocation(line: 848, column: 1, scope: !48813, inlinedAt: !49256)
-!51547 = !DILocation(line: 848, column: 1, scope: !1383, inlinedAt: !49260)
-!51548 = !DILocation(line: 848, column: 1, scope: !1384, inlinedAt: !49264)
-!51549 = !DILocation(line: 454, column: 20, scope: !1692, inlinedAt: !49274)
-!51550 = !DILocation(line: 558, column: 18, scope: !1390, inlinedAt: !49283)
-!51551 = !DILocation(line: 3845, column: 31, scope: !1386, inlinedAt: !49275)
-!51552 = !DILocation(line: 976, column: 49, scope: !1391, inlinedAt: !49287)
-!51553 = !DILocation(line: 2548, column: 16, scope: !1385, inlinedAt: !49268)
-!51554 = !DILocation(line: 2549, column: 22, scope: !1385, inlinedAt: !49268)
-!51555 = !DILocation(line: 848, column: 1, scope: !231, inlinedAt: !49294)
-!51556 = !DILocation(line: 848, column: 1, scope: !232, inlinedAt: !49296)
-!51557 = !DILocation(line: 848, column: 1, scope: !232, inlinedAt: !50752)
+!51526 = !DILocation(line: 455, column: 5, scope: !48618)
+!51527 = !DILocation(line: 848, column: 1, scope: !1383, inlinedAt: !49184)
+!51528 = !DILocation(line: 848, column: 1, scope: !1384, inlinedAt: !49188)
+!51529 = !DILocation(line: 454, column: 20, scope: !1692, inlinedAt: !49198)
+!51530 = !DILocation(line: 558, column: 18, scope: !1390, inlinedAt: !49207)
+!51531 = !DILocation(line: 3845, column: 31, scope: !1386, inlinedAt: !49199)
+!51532 = !DILocation(line: 976, column: 49, scope: !1391, inlinedAt: !49211)
+!51533 = !DILocation(line: 2548, column: 16, scope: !1385, inlinedAt: !49192)
+!51534 = !DILocation(line: 2549, column: 22, scope: !1385, inlinedAt: !49192)
+!51535 = !DILocation(line: 848, column: 1, scope: !1383, inlinedAt: !49218)
+!51536 = !DILocation(line: 848, column: 1, scope: !1384, inlinedAt: !49222)
+!51537 = !DILocation(line: 454, column: 20, scope: !1692, inlinedAt: !49232)
+!51538 = !DILocation(line: 558, column: 18, scope: !1390, inlinedAt: !49241)
+!51539 = !DILocation(line: 3845, column: 31, scope: !1386, inlinedAt: !49233)
+!51540 = !DILocation(line: 976, column: 49, scope: !1391, inlinedAt: !49245)
+!51541 = !DILocation(line: 2548, column: 16, scope: !1385, inlinedAt: !49226)
+!51542 = !DILocation(line: 2549, column: 22, scope: !1385, inlinedAt: !49226)
+!51543 = !DILocation(line: 848, column: 1, scope: !48810, inlinedAt: !49252)
+!51544 = !DILocation(line: 848, column: 1, scope: !48813, inlinedAt: !49254)
+!51545 = !DILocation(line: 848, column: 1, scope: !48813, inlinedAt: !49256)
+!51546 = !DILocation(line: 848, column: 1, scope: !1383, inlinedAt: !49260)
+!51547 = !DILocation(line: 848, column: 1, scope: !1384, inlinedAt: !49264)
+!51548 = !DILocation(line: 454, column: 20, scope: !1692, inlinedAt: !49274)
+!51549 = !DILocation(line: 558, column: 18, scope: !1390, inlinedAt: !49283)
+!51550 = !DILocation(line: 3845, column: 31, scope: !1386, inlinedAt: !49275)
+!51551 = !DILocation(line: 976, column: 49, scope: !1391, inlinedAt: !49287)
+!51552 = !DILocation(line: 2548, column: 16, scope: !1385, inlinedAt: !49268)
+!51553 = !DILocation(line: 2549, column: 22, scope: !1385, inlinedAt: !49268)
+!51554 = !DILocation(line: 848, column: 1, scope: !231, inlinedAt: !49294)
+!51555 = !DILocation(line: 848, column: 1, scope: !232, inlinedAt: !49296)
+!51556 = !DILocation(line: 848, column: 1, scope: !232, inlinedAt: !50752)
+!51557 = !DILocation(line: 278, column: 27, scope: !48615)
 !51558 = !DILocation(line: 283, column: 28, scope: !48614)
 !51559 = !DILocation(line: 288, column: 32, scope: !48613)
 !51560 = !DILocation(line: 293, column: 13, scope: !48612)

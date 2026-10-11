@@ -204,9 +204,8 @@ bb.k:                                             ; preds = %.thread45
   br label %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit31
 
 _RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit31: ; preds = %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit23, %bb.i, %bb.k, %bb.j
-  %.sroa.0.0.i30.sink = phi ptr [ %i.v, %bb.j ], [ %i.ab, %bb.k ], [ %spec.select, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit23 ], [ %.sroa.0.0.i, %bb.i ] ; 2 uses
-  %.sroa.7.1.pn = phi i64 [ %.sroa.0.0.i.i28, %bb.j ], [ %i.ad, %bb.k ], [ %spec.select54, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit23 ], [ %.sroa.01.0.i, %bb.i ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i30.sink) ]
+  %.sroa.0.0.i30.sink = phi ptr [ %i.v, %bb.j ], [ %spec.select, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit23 ], [ %i.ab, %bb.k ], [ %.sroa.0.0.i, %bb.i ]
+  %.sroa.7.1.pn = phi i64 [ %.sroa.0.0.i.i28, %bb.j ], [ %spec.select54, %_RNvMs0_NtCsg7m2K3K1Fzf_11compact_str4reprNtB5_4Repr8as_slice.exit23 ], [ %i.ad, %bb.k ], [ %.sroa.01.0.i, %bb.i ]
   %.pn = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0.i30.sink, 0
   %.merged = insertvalue { ptr, i64 } %.pn, i64 %.sroa.7.1.pn, 1
   ret { ptr, i64 } %.merged
@@ -609,7 +608,7 @@ bb.es:                                            ; preds = %bb.er
 
 bb.et:                                            ; preds = %bb.er, %.noexc197.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i.i)
-  br label %.thread307.i.i
+  br label %bb.gk
 
 bb.eu:                                            ; preds = %bb.es
   %i.tm = landingpad { ptr, i32 }
@@ -640,8 +639,9 @@ bb.ey:                                            ; preds = %bb.ex
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit.i.i.i: ; preds = %bb.ew
   %i.tr = extractvalue { i64, ptr } %i.tl, 1      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.tr) ]
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dh)
-          to label %bb.gk unwind label %bb.du, !noalias !2205
+          to label %.thread307.i.i unwind label %bb.du, !noalias !2205
 
 bb.ez:                                            ; preds = %bb.ev
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dh)
@@ -661,7 +661,7 @@ bb.fb:                                            ; preds = %bb.fa
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit16.i.i.i: ; preds = %bb.ez
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dh)
-          to label %.thread307.i.i unwind label %bb.du, !noalias !2205
+          to label %bb.gk unwind label %bb.du, !noalias !2205
 
 bb.fc:                                            ; preds = %bb.eu
   %i.tu = landingpad { ptr, i32 }
@@ -741,7 +741,7 @@ bb.fj:                                            ; preds = %bb.fi
 
 bb.fk:                                            ; preds = %bb.fi, %.noexc215.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i200.i.i)
-  br label %.thread303.i.i
+  br label %bb.fy
 
 bb.fl:                                            ; preds = %bb.fj
   %i.ug = landingpad { ptr, i32 }
@@ -772,6 +772,7 @@ bb.fp:                                            ; preds = %bb.fo
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit.i209.i.i: ; preds = %bb.fn
   %i.ul = extractvalue { i64, ptr } %i.uf, 1      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ul) ]
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.de)
           to label %bb.fx unwind label %bb.du, !noalias !2205
 
@@ -793,7 +794,7 @@ bb.fs:                                            ; preds = %bb.fr
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit16.i207.i.i: ; preds = %bb.fq
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecNtNtCskLngH8kgpZI_15ruff_python_ast9generated10AnyNodeRefENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.de)
-          to label %.thread303.i.i unwind label %bb.du, !noalias !2205
+          to label %bb.fy unwind label %bb.du, !noalias !2205
 
 bb.ft:                                            ; preds = %bb.fl
   %i.uo = landingpad { ptr, i32 }
@@ -827,30 +828,26 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs
   invoke void @_RNvXs1_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dq)
           to label %.noexc63.i unwind label %.loopexit.split-lp.i, !noalias !2176
 
-.thread303.i.i:                                   ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit16.i207.i.i, %bb.fk
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.de), !noalias !2206
-  br label %bb.gg
-
 bb.fx:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit.i209.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.de), !noalias !2206
-  %.not174.i.i = icmp eq ptr %i.ul, null
-  br i1 %.not174.i.i, label %bb.gg, label %bb.fy
-
-bb.fy:                                            ; preds = %bb.fx
   %8 = trunc nuw i8 %.sroa.02.0.ph330.i.i to i1
   br i1 %8, label %bb.fz, label %bb.ga
 
-bb.fz:                                            ; preds = %bb.fy
+bb.fy:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit16.i207.i.i, %bb.fk
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.de), !noalias !2206
+  br label %bb.gg
+
+bb.fz:                                            ; preds = %bb.fx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dp), !noalias !2206
   %i.ur = load ptr, ptr %.sroa.497.0..sroa_idx.i.i, align 8, !noalias !2206, !nonnull !4, !noundef !4
   %i.us = load i64, ptr %.sroa.598.0..sroa_idx.i.i, align 8, !noalias !2206, !noundef !4
   invoke fastcc void @_RINvMNtCs4NRVxsYgnAr_4core3stre11rsplit_oncecECskEUeM34gmJU_6ty_ide(ptr noalias noundef align 8 captures(none) dereferenceable(32) %i.dp, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ur, i64 noundef %i.us)
           to label %bb.gb unwind label %bb.du
 
-bb.ga:                                            ; preds = %bb.gj, %bb.fy
-  %.sroa.049.i.sroa.0.0.i = phi i64 [ %.sroa.049.i.sroa.0.0.copyload.i, %bb.gj ], [ undef, %bb.fy ]
-  %.sroa.049.i.sroa.5.0.i = phi i8 [ %.sroa.049.i.sroa.5.0.copyload.i, %bb.gj ], [ undef, %bb.fy ]
-  %.sroa.30.39.insert.insert.i = phi i64 [ %.sroa.049.i.sroa.6.0.copyload.i, %bb.gj ], [ -72057594037927936, %bb.fy ]
+bb.ga:                                            ; preds = %bb.gj, %bb.fx
+  %.sroa.049.i.sroa.0.0.i = phi i64 [ %.sroa.049.i.sroa.0.0.copyload.i, %bb.gj ], [ undef, %bb.fx ]
+  %.sroa.049.i.sroa.5.0.i = phi i8 [ %.sroa.049.i.sroa.5.0.copyload.i, %bb.gj ], [ undef, %bb.fx ]
+  %.sroa.30.39.insert.insert.i = phi i64 [ %.sroa.049.i.sroa.6.0.copyload.i, %bb.gj ], [ -72057594037927936, %bb.fx ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %.sroa.28.i, ptr noundef nonnull align 8 dereferenceable(7) %.sroa.049.i.sroa.4.i, i64 7, i1 false), !noalias !2210
   %i.ut = inttoptr i64 %.sroa.30.39.insert.insert.i to ptr
   br label %bb.fu
@@ -879,9 +876,9 @@ bb.gf:                                            ; preds = %bb.ge
   invoke fastcc void @_RINvMCsg7m2K3K1Fzf_11compact_strNtB3_13CompactString3newReECskEUeM34gmJU_6ty_ide(ptr noalias noundef align 8 captures(none) dereferenceable(24) %i.dj, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.uu, i64 noundef %.sroa.4110.0.copyload.i.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @57)
           to label %bb.gj unwind label %bb.du, !noalias !2205
 
-bb.gg:                                            ; preds = %bb.hf, %bb.he, %bb.hb, %bb.gy, %bb.gk, %.thread307.i.i, %bb.ge, %bb.gd, %bb.fx, %.thread303.i.i, %bb.el, %bb.ej, %bb.ei, %.thread301.i.i, %bb.eh
-  %.sroa.19.0.i = phi i8 [ undef, %bb.hb ], [ 1, %bb.eh ], [ 0, %.thread301.i.i ], [ undef, %bb.gd ], [ undef, %.thread303.i.i ], [ undef, %bb.ge ], [ undef, %bb.he ], [ undef, %.thread307.i.i ], [ undef, %bb.gy ], [ 1, %bb.ej ], [ 1, %bb.ei ], [ 0, %bb.el ], [ undef, %bb.fx ], [ undef, %bb.gk ], [ undef, %bb.hf ]
-  %.sroa.0.097.i = phi i8 [ -1, %bb.hb ], [ 5, %bb.eh ], [ 5, %.thread301.i.i ], [ -1, %bb.gd ], [ -1, %.thread303.i.i ], [ -1, %bb.ge ], [ -1, %bb.he ], [ -1, %.thread307.i.i ], [ -1, %bb.gy ], [ 5, %bb.ej ], [ 5, %bb.ei ], [ 5, %bb.el ], [ -1, %bb.fx ], [ -1, %bb.gk ], [ -1, %bb.hf ]
+bb.gg:                                            ; preds = %bb.hf, %bb.he, %bb.hb, %bb.gy, %bb.gk, %bb.ge, %bb.gd, %bb.fy, %bb.el, %bb.ej, %bb.ei, %.thread301.i.i, %bb.eh
+  %.sroa.19.0.i = phi i8 [ undef, %bb.hb ], [ 1, %bb.eh ], [ undef, %bb.fy ], [ undef, %bb.gd ], [ 0, %.thread301.i.i ], [ undef, %bb.gk ], [ undef, %bb.he ], [ undef, %bb.ge ], [ undef, %bb.gy ], [ 1, %bb.ej ], [ 1, %bb.ei ], [ 0, %bb.el ], [ undef, %bb.hf ]
+  %.sroa.0.097.i = phi i8 [ -1, %bb.hb ], [ 5, %bb.eh ], [ -1, %bb.fy ], [ -1, %bb.gd ], [ 5, %.thread301.i.i ], [ -1, %bb.gk ], [ -1, %bb.he ], [ -1, %bb.ge ], [ -1, %bb.gy ], [ 5, %bb.ej ], [ 5, %bb.ei ], [ 5, %bb.el ], [ -1, %bb.hf ]
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCskEUeM34gmJU_6ty_ide(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.dq)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECskEUeM34gmJU_6ty_ide.exit219.i.i unwind label %bb.gh, !noalias !2207
 
@@ -912,19 +909,15 @@ bb.gj:                                            ; preds = %bb.gf
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dj), !noalias !2206
   br label %bb.ga
 
-.thread307.i.i:                                   ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit16.i.i.i, %bb.et
+.thread307.i.i:                                   ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit.i.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.dh), !noalias !2206
+  br i1 %.not171.i.i, label %bb.gm, label %bb.gl
+
+bb.gk:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit16.i.i.i, %bb.et
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dh), !noalias !2206
   br label %bb.gg
 
-bb.gk:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCskLngH8kgpZI_15ruff_python_ast9find_node12CoveringNodeECskEUeM34gmJU_6ty_ide.exit.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.dh), !noalias !2206
-  %.not176.i.i = icmp eq ptr %i.tr, null
-  br i1 %.not176.i.i, label %bb.gg, label %9
-
-9:                                                ; preds = %bb.gk
-  br i1 %.not171.i.i, label %bb.gm, label %bb.gl
-
-bb.gl:                                            ; preds = %9
+bb.gl:                                            ; preds = %.thread307.i.i
   %i.uy = trunc nuw i8 %.sroa.02.0.ph330.i.i to i1
   br i1 %i.uy, label %bb.gn, label %bb.gm
 
@@ -940,12 +933,12 @@ bb.gl:                                            ; preds = %9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(7) %.sroa.669.sroa.0.i.sroa.6.i, ptr noundef nonnull align 8 dereferenceable(7) %.sroa.0129.sink.i.sroa.phi173.i, i64 7, i1 false), !noalias !2206
   br label %bb.gm
 
-bb.gm:                                            ; preds = %.sink.split.i.i, %bb.gl, %9
-  %.sroa.669.sroa.0.i.sroa.3.0.i = phi ptr [ undef, %9 ], [ %.sroa.669.sroa.0.i.sroa.3.6.copyload.i, %.sink.split.i.i ], [ undef, %bb.gl ]
-  %.sroa.669.sroa.0.i.sroa.5.0.i = phi i64 [ undef, %9 ], [ %.sroa.669.sroa.0.i.sroa.5.6.copyload.i, %.sink.split.i.i ], [ undef, %bb.gl ]
-  %.sroa.568.0.i.i = phi i8 [ undef, %9 ], [ %.sroa.568.0.ph.i.i, %.sink.split.i.i ], [ undef, %bb.gl ]
-  %.sroa.067.0.i.i = phi i8 [ 3, %9 ], [ %.sroa.067.0.ph.i.i, %.sink.split.i.i ], [ 0, %bb.gl ]
-  %.sroa.669.sroa.3.0.i.i = phi i8 [ undef, %9 ], [ %.sroa.669.sroa.3.0.ph.i.i, %.sink.split.i.i ], [ undef, %bb.gl ]
+bb.gm:                                            ; preds = %.sink.split.i.i, %bb.gl, %.thread307.i.i
+  %.sroa.669.sroa.0.i.sroa.3.0.i = phi ptr [ undef, %.thread307.i.i ], [ %.sroa.669.sroa.0.i.sroa.3.6.copyload.i, %.sink.split.i.i ], [ undef, %bb.gl ]
+  %.sroa.669.sroa.0.i.sroa.5.0.i = phi i64 [ undef, %.thread307.i.i ], [ %.sroa.669.sroa.0.i.sroa.5.6.copyload.i, %.sink.split.i.i ], [ undef, %bb.gl ]
+  %.sroa.568.0.i.i = phi i8 [ undef, %.thread307.i.i ], [ %.sroa.568.0.ph.i.i, %.sink.split.i.i ], [ undef, %bb.gl ]
+  %.sroa.067.0.i.i = phi i8 [ 3, %.thread307.i.i ], [ %.sroa.067.0.ph.i.i, %.sink.split.i.i ], [ 0, %bb.gl ]
+  %.sroa.669.sroa.3.0.i.i = phi i8 [ undef, %.thread307.i.i ], [ %.sroa.669.sroa.3.0.ph.i.i, %.sink.split.i.i ], [ undef, %bb.gl ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %.sroa.28.i, ptr noundef nonnull align 2 dereferenceable(7) %.sroa.669.sroa.0.i.sroa.6.i, i64 7, i1 false), !noalias !2210
   br label %bb.fu
 

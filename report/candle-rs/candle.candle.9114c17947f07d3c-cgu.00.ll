@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   %i.w = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 3 uses
   call void @_RNvXsn_NtNtNtCs4dfyxXSEGwW_4pyo311conversions3std3numiNtNtBb_10conversion12FromPyObject7extract(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.u, ptr noundef nonnull %i.w)
-  %i.x = load i64, ptr %i.u, align 8, !range !6, !noundef !4 ; 4 uses
+  %i.x = load i64, ptr %i.u, align 8, !range !6, !noundef !4
   %i.y = trunc nuw i64 %i.x to i1
   br i1 %i.y, label %bb.b, label %bb.c
 
@@ -288,10 +288,9 @@ bb.i:                                             ; preds = %bb.h
 
 .body233:                                         ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECscsgjCEAuSgO_6candle.exit, %bb.cq
   call void @_Py_DecRef(ptr noundef nonnull @PySlice_Type) #23
-  %6 = icmp eq i64 %i.x, 0
-  br i1 %6, label %common.resume, label %bb.j
+  br label %bb.j
 
-bb.j:                                             ; preds = %.body233.thread438, %.body233.thread435, %.body233
+bb.j:                                             ; preds = %.body233, %.body233.thread438, %.body233.thread435
   %.pn208437 = phi { ptr, i32 } [ %lpad.thr_comm.split-lp, %.body233.thread435 ], [ %.pn204, %.body233 ], [ %lpad.thr_comm, %.body233.thread438 ]
   %i.at = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   invoke void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs4dfyxXSEGwW_4pyo33err5PyErrECscsgjCEAuSgO_6candle(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(48) %i.at)
@@ -331,10 +330,9 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGw
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241: ; preds = %bb.cn, %bb.co
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   call void @_Py_DecRef(ptr noundef nonnull @PySlice_Type) #23
-  %7 = icmp eq i64 %i.x, 0
-  br i1 %7, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultiNtNtCs4dfyxXSEGwW_4pyo33err5PyErrEECscsgjCEAuSgO_6candle.exit236, label %bb.k
+  br label %bb.k
 
-bb.k:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241.thread449, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241.thread440, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241
+bb.k:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241.thread449, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241.thread440
   call void @llvm.experimental.noalias.scope.decl(metadata !2921)
   call void @llvm.experimental.noalias.scope.decl(metadata !2922)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.u, i64 24
@@ -387,8 +385,8 @@ bb.r:                                             ; preds = %bb.q
   call void @_RNvCsh0WfaQiVYm0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i, i64 noundef range(i64 1, 0) %i.bk, i64 noundef range(i64 1, 536870913) %i.bn) #23, !noalias !2925
   br label %common.resume
 
-common.resume:                                    ; preds = %bb.h, %bb.j, %.body233, %bb.ab, %bb.ac, %bb.q, %bb.r
-  %common.resume.op = phi { ptr, i32 } [ %i.cb, %bb.ab ], [ %i.bi, %bb.q ], [ %i.bi, %bb.r ], [ %i.cb, %bb.ac ], [ %.pn204, %.body233 ], [ %.pn208437, %bb.j ], [ %i.ar, %bb.h ]
+common.resume:                                    ; preds = %bb.h, %bb.j, %bb.ab, %bb.ac, %bb.q, %bb.r
+  %common.resume.op = phi { ptr, i32 } [ %i.cb, %bb.ab ], [ %i.bi, %bb.q ], [ %i.bi, %bb.r ], [ %i.cb, %bb.ac ], [ %i.ar, %bb.h ], [ %.pn208437, %bb.j ]
   resume { ptr, i32 } %common.resume.op
 
 bb.s:                                             ; preds = %bb.l
@@ -408,10 +406,9 @@ bb.u:                                             ; preds = %bb.s
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types4list6PyListENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit255.thread, %bb.cp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   call void @_Py_DecRef(ptr noundef nonnull @PySlice_Type) #23
-  %8 = icmp eq i64 %i.x, 0
-  br i1 %8, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultiNtNtCs4dfyxXSEGwW_4pyo33err5PyErrEECscsgjCEAuSgO_6candle.exit236, label %bb.v
+  br label %bb.v
 
-bb.v:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242.thread450, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242.thread441, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242
+bb.v:                                             ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242.thread450, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242.thread441
   call void @llvm.experimental.noalias.scope.decl(metadata !2926)
   call void @llvm.experimental.noalias.scope.decl(metadata !2927)
   %i.bq = getelementptr inbounds nuw i8, ptr %i.u, i64 24
@@ -700,7 +697,7 @@ bb.av:                                            ; preds = %bb.au
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types4list6PyListENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit255 unwind label %bb.aw
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECscsgjCEAuSgO_6candle.exit: ; preds = %bb.bj, %bb.bo, %bb.bc, %bb.ca, %bb.bv, %.thread387, %bb.by, %bb.as, %bb.at, %bb.aw
-  %.pn204 = phi { ptr, i32 } [ %i.eh, %bb.aw ], [ %i.dw, %bb.as ], [ %i.dw, %bb.at ], [ %i.fl, %bb.bv ], [ %lpad.thr_comm.split-lp403, %bb.by ], [ %eh.lpad-body394, %.thread387 ], [ %.pn199369, %bb.ca ], [ %i.eq, %bb.bc ], [ %i.ex, %bb.bj ], [ %i.fa, %bb.bo ] ; 2 uses
+  %.pn204 = phi { ptr, i32 } [ %i.eh, %bb.aw ], [ %i.dw, %bb.as ], [ %i.dw, %bb.at ], [ %i.fl, %bb.bv ], [ %lpad.thr_comm.split-lp403, %bb.by ], [ %eh.lpad-body394, %.thread387 ], [ %.pn199369, %bb.ca ], [ %i.eq, %bb.bc ], [ %i.ex, %bb.bj ], [ %i.fa, %bb.bo ]
   %i.ef = load i64, ptr %i.s, align 8, !range !6, !noundef !4
   %i.eg = icmp eq i64 %i.ef, 0
   br i1 %i.eg, label %.body233, label %bb.cq
@@ -1066,7 +1063,7 @@ bb.co:                                            ; preds = %bb.cn
   call void @_Py_DecRef(ptr noundef nonnull %.val1.i) #23, !noalias !2945
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultiNtNtCs4dfyxXSEGwW_4pyo33err5PyErrEECscsgjCEAuSgO_6candle.exit236: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242, %bb.v, %bb.z, %bb.aa, %bb.ae, %bb.af, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242.thread, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241, %bb.k, %bb.o, %bb.p, %bb.t, %bb.u, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241.thread
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultiNtNtCs4dfyxXSEGwW_4pyo33err5PyErrEECscsgjCEAuSgO_6candle.exit236: ; preds = %bb.v, %bb.z, %bb.aa, %bb.ae, %bb.af, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit242.thread, %bb.k, %bb.o, %bb.p, %bb.t, %bb.u, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultRINtNtCs4dfyxXSEGwW_4pyo38instance5BoundNtNtNtB13_5types5slice7PySliceENtNtNtB13_3err10cast_error9CastErrorEECscsgjCEAuSgO_6candle.exit241.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   ret void
 
