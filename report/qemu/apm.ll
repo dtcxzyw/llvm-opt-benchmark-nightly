@@ -46,10 +46,11 @@ declare ptr @pci_address_space_io(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nounwind sspstrong uwtable
 define internal range(i64 0, 256) i64 @apm_ioport_readb(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i32 %2) #0 {
 bb.a:
-  %i.a = and i64 %1, 1                            ; 2 uses
+  %i.a = and i64 %1, 1
   %.0.in.in = getelementptr inbounds nuw i8, ptr %0, i64 %i.a
   %.0.in = load i8, ptr %.0.in.in, align 1        ; 2 uses
-  %i.b = trunc nuw nsw i64 %i.a to i32
+  %i.b = trunc i64 %1 to i32
+  %3 = and i32 %i.b, 1
   %i.c = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %trace_apm_io_read.exit, label %bb.b, !prof !7
@@ -67,7 +68,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = zext i8 %.0.in to i32
-  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.5, i32 noundef %i.b, i32 noundef %i.g) #2
+  tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.5, i32 noundef %3, i32 noundef %i.g) #2
   br label %trace_apm_io_read.exit
 
 trace_apm_io_read.exit:                           ; preds = %bb.a, %bb.b, %bb.c, %bb.d
@@ -78,8 +79,8 @@ trace_apm_io_read.exit:                           ; preds = %bb.a, %bb.b, %bb.c,
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @apm_ioport_writeb(ptr nofree noundef captures(none) %0, i64 noundef %1, i64 noundef %2, i32 %3) #0 {
 bb.a:
-  %4 = and i64 %1, 1                              ; 2 uses
-  %5 = trunc nuw nsw i64 %4 to i32
+  %4 = trunc i64 %1 to i32
+  %5 = and i32 %4, 1
   %i.a = trunc i64 %2 to i8                       ; 2 uses
   %i.b = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i = icmp eq i32 %i.b, 0
@@ -103,8 +104,8 @@ bb.d:                                             ; preds = %bb.c
   br label %trace_apm_io_write.exit
 
 trace_apm_io_write.exit:                          ; preds = %bb.a, %bb.b, %bb.c, %bb.d
-  %6 = icmp eq i64 %4, 0
-  br i1 %6, label %bb.e, label %bb.g
+  %6 = trunc i64 %1 to i1
+  br i1 %6, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %trace_apm_io_write.exit
   store i8 %i.a, ptr %0, align 16

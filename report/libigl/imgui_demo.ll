@@ -205,8 +205,8 @@ bb.a:
   %84 = alloca %struct.ImVec2, align 8            ; 4 uses
   %85 = alloca %struct.ImVec2, align 8            ; 4 uses
   %86 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %87 = alloca %struct.ImVec2, align 8            ; 4 uses
-  %88 = alloca %struct.ImVec2, align 8            ; 4 uses
+  %87 = alloca %struct.ImVec2, align 4            ; 5 uses
+  %88 = alloca %struct.ImVec2, align 4            ; 5 uses
   %i.d = alloca [7 x ptr], align 16               ; 4 uses
   %89 = alloca %struct.ImVec2, align 8            ; 4 uses
   %90 = alloca %struct.ImVec2, align 8            ; 4 uses
@@ -609,19 +609,18 @@ bb.bn:                                            ; preds = %._crit_edge33.i, %b
   br i1 %i.kd, label %.preheader2.i, label %bb.bu
 
 .preheader2.i:                                    ; preds = %bb.bn
-  %i.ke = load i32, ptr @_ZZL23ShowExampleAppDocumentsPbE11close_queue, align 8, !tbaa !169 ; 4 uses
+  %i.ke = load i32, ptr @_ZZL23ShowExampleAppDocumentsPbE11close_queue, align 8, !tbaa !169 ; 5 uses
   %i.kf = icmp sgt i32 %i.ke, 0
   %.pre93.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZL23ShowExampleAppDocumentsPbE11close_queue, i64 8), align 8, !tbaa !38 ; 5 uses
   br i1 %i.kf, label %.lr.ph35.i, label %._crit_edge36.i
 
 .lr.ph35.i:                                       ; preds = %.preheader2.i
-  %wide.trip.count73.i = zext nneg i32 %i.ke to i64 ; 2 uses
-  %xtraiter161 = and i64 %wide.trip.count73.i, 1
   %i.kg = icmp eq i32 %i.ke, 1
   br i1 %i.kg, label %.epil.preheader160, label %.lr.ph35.i.new
 
 .lr.ph35.i.new:                                   ; preds = %.lr.ph35.i
-  %unroll_iter165 = and i64 %wide.trip.count73.i, 2147483646
+  %133 = and i32 %i.ke, 2147483646
+  %unroll_iter165 = zext nneg i32 %133 to i64
   br label %bb.bp
 
 ._crit_edge36.i:                                  ; preds = %.preheader2.i
@@ -629,8 +628,8 @@ bb.bn:                                            ; preds = %._crit_edge33.i, %b
   br i1 %.not.i85.i, label %_ZN8ImVectorIP10MyDocumentE5clearEv.exit86.i, label %._crit_edge36.thread.i
 
 ._crit_edge36.thread.i.loopexit.unr-lcssa:        ; preds = %bb.bt
-  %lcmp.mod163.not = icmp eq i64 %xtraiter161, 0
-  br i1 %lcmp.mod163.not, label %._crit_edge36.thread.i, label %.epil.preheader160
+  %lcmp.mod163.not = trunc i32 %i.ke to i1
+  br i1 %lcmp.mod163.not, label %.epil.preheader160, label %._crit_edge36.thread.i
 
 .epil.preheader160:                               ; preds = %._crit_edge36.thread.i.loopexit.unr-lcssa, %.lr.ph35.i
   %indvars.iv70.i.epil.init = phi i64 [ 0, %.lr.ph35.i ], [ %indvars.iv.next71.i.1, %._crit_edge36.thread.i.loopexit.unr-lcssa ]
@@ -1033,25 +1032,37 @@ bb.fj:                                            ; preds = %bb.fi
   br i1 %.not.i46, label %bb.fl, label %bb.fk
 
 bb.fk:                                            ; preds = %bb.fj
-  %i.to = call noundef ptr @_ZN5ImGui15GetMainViewportEv() ; 2 uses
-  %i.tp = getelementptr inbounds nuw i8, ptr %i.to, i64 20
-  %i.tq = getelementptr inbounds nuw i8, ptr %i.to, i64 28
+  %i.to = call noundef ptr @_ZN5ImGui15GetMainViewportEv() ; 4 uses
+  %134 = getelementptr inbounds nuw i8, ptr %i.to, i64 20
+  %.sroa.01.0.copyload.i = load float, ptr %134, align 4, !tbaa !41 ; 2 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.to, i64 24
+  %.sroa.5.0.copyload.i = load float, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !41 ; 2 uses
+  %i.tp = getelementptr inbounds nuw i8, ptr %i.to, i64 28
+  %.sroa.0.0.copyload.i = load float, ptr %i.tp, align 4, !tbaa !41
+  %i.tq = getelementptr inbounds nuw i8, ptr %i.to, i64 32
+  %.sroa.4.0.copyload.i = load float, ptr %i.tq, align 4, !tbaa !41
   call void @llvm.lifetime.start.p0(ptr nonnull %87) #27
+  %135 = getelementptr inbounds nuw i8, ptr %87, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %88) #27
-  %i.tr = load i32, ptr @_ZZL27ShowExampleAppSimpleOverlayPbE6corner, align 4, !tbaa !42
-  %133 = load <2 x float>, ptr %i.tp, align 4, !tbaa !41 ; 2 uses
-  %134 = load <2 x float>, ptr %i.tq, align 4, !tbaa !41
-  %135 = insertelement <2 x i32> poison, i32 %i.tr, i64 0
-  %136 = shufflevector <2 x i32> %135, <2 x i32> poison, <2 x i32> zeroinitializer
-  %137 = and <2 x i32> %136, <i32 1, i32 2>
-  %138 = icmp eq <2 x i32> %137, zeroinitializer  ; 2 uses
-  %139 = fadd <2 x float> %133, %134
-  %140 = fadd <2 x float> %139, splat (float -1.000000e+01)
-  %141 = fadd <2 x float> %133, splat (float 1.000000e+01)
-  %142 = select <2 x i1> %138, <2 x float> %141, <2 x float> %140
-  store <2 x float> %142, ptr %87, align 8, !tbaa !41
-  %143 = select <2 x i1> %138, <2 x float> zeroinitializer, <2 x float> splat (float 1.000000e+00)
-  store <2 x float> %143, ptr %88, align 8, !tbaa !41
+  %136 = getelementptr inbounds nuw i8, ptr %88, i64 4
+  %i.tr = load i32, ptr @_ZZL27ShowExampleAppSimpleOverlayPbE6corner, align 4, !tbaa !42 ; 2 uses
+  %.not12.i = trunc i32 %i.tr to i1               ; 2 uses
+  %137 = fadd float %.sroa.01.0.copyload.i, %.sroa.0.0.copyload.i
+  %138 = fadd float %137, -1.000000e+01
+  %139 = fadd float %.sroa.01.0.copyload.i, 1.000000e+01
+  %140 = select i1 %.not12.i, float %138, float %139
+  store float %140, ptr %87, align 4, !tbaa !39
+  %141 = and i32 %i.tr, 2
+  %.not13.i = icmp eq i32 %141, 0                 ; 2 uses
+  %142 = fadd float %.sroa.5.0.copyload.i, %.sroa.4.0.copyload.i
+  %143 = fadd float %142, -1.000000e+01
+  %144 = fadd float %.sroa.5.0.copyload.i, 1.000000e+01
+  %145 = select i1 %.not13.i, float %144, float %143
+  store float %145, ptr %135, align 4, !tbaa !40
+  %146 = select i1 %.not12.i, float 1.000000e+00, float 0.000000e+00
+  store float %146, ptr %88, align 4, !tbaa !39
+  %147 = select i1 %.not13.i, float 0.000000e+00, float 1.000000e+00
+  store float %147, ptr %136, align 4, !tbaa !40
   call void @_ZN5ImGui16SetNextWindowPosERK6ImVec2iS2_(ptr noundef nonnull align 4 dereferenceable(8) %87, i32 noundef 1, ptr noundef nonnull align 4 dereferenceable(8) %88)
   call void @llvm.lifetime.end.p0(ptr nonnull %88) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %87) #27
@@ -1454,9 +1465,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.s = load i32, ptr %i.f, align 8, !tbaa !63
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.122, i32 noundef %i.s)
   %i.t = load i32, ptr %i.f, align 8, !tbaa !63   ; 2 uses
-  %3 = and i32 %i.t, 1
-  %.not47 = icmp eq i32 %3, 0
-  br i1 %.not47, label %bb.h, label %bb.g
+  %.not47 = trunc i32 %i.t to i1
+  br i1 %.not47, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.123)
@@ -1583,9 +1593,8 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !64
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.131, i32 noundef %i.ay)
   %i.az = load i32, ptr %i.ax, align 4, !tbaa !64 ; 2 uses
-  %4 = and i32 %i.az, 1
-  %.not53 = icmp eq i32 %4, 0
-  br i1 %.not53, label %bb.af, label %bb.ae
+  %.not53 = trunc i32 %i.az to i1
+  br i1 %.not53, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.132)
@@ -1988,9 +1997,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.cx = phi i32 [ %i.cw, %bb.f ], [ %.pre, %bb.e ]
-  %70 = and i32 %i.cx, 1
-  %.not366 = icmp eq i32 %70, 0
-  br i1 %.not366, label %.peel.next, label %bb.h
+  %.not366 = trunc i32 %i.cx to i1
+  br i1 %.not366, label %bb.h, label %.peel.next
 
 bb.h:                                             ; preds = %bb.g
   call void @_ZN5ImGui8SameLineEff(float noundef 0.000000e+00, float noundef -1.000000e+00)
@@ -2393,9 +2401,8 @@ bb.cd:                                            ; preds = %bb.cb, %bb.cc
 
 bb.ce:                                            ; preds = %.lr.ph, %.loopexit273
   %.0158246 = phi i32 [ 0, %.lr.ph ], [ %i.lr, %.loopexit273 ] ; 6 uses
-  %63 = and i32 %.0158246, 1
-  %.not170 = icmp eq i32 %63, 0
-  %.v = select i1 %.not170, i32 3, i32 9
+  %.not170 = trunc i32 %.0158246 to i1
+  %.v = select i1 %.not170, i32 9, i32 3
   %i.la = mul nuw nsw i32 %.0158246, 1000         ; 2 uses
   %i.lb = mul i32 %.v, %.0158246
   %i.lc = add i32 %i.lb, 10                       ; 2 uses
@@ -2798,9 +2805,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define internal noundef float @_ZZL21ShowDemoWindowWidgetsvEN5Funcs3SawE_2Pvi(ptr nofree readnone captures(none) %0, i32 noundef %1) #15 align 2 {
 bb.a:
-  %2 = and i32 %1, 1
-  %.not = icmp eq i32 %2, 0
-  %i.a = select i1 %.not, float -1.000000e+00, float 1.000000e+00
+  %.not = trunc i32 %1 to i1
+  %i.a = select i1 %.not, float 1.000000e+00, float -1.000000e+00
   ret float %i.a
 }
 

@@ -204,19 +204,20 @@ bb.m:                                             ; preds = %bb.l
   %i.bb = icmp ult i32 %i.ba, 65
   %i.bc = load ptr, ptr %11, align 8
   %.in.i.i = select i1 %i.bb, ptr %11, ptr %i.bc
-  %i.bd = load i64, ptr %.in.i.i, align 8, !tbaa !32 ; 3 uses
-  %35 = icmp ugt i64 %i.bd, 2                     ; 2 uses
+  %i.bd = load i64, ptr %.in.i.i, align 8, !tbaa !32 ; 4 uses
   br i1 %i.az, label %bb.n, label %.critedge
 
 bb.n:                                             ; preds = %bb.m
   %i.be = and i64 %i.bd, 2
   %.not182 = icmp eq i64 %i.be, 0
+  %35 = icmp ugt i64 %i.bd, 2
   %or.cond211 = or i1 %.not182, %35
   br i1 %or.cond211, label %bb.o, label %bb.p
 
 .critedge:                                        ; preds = %bb.m
   %.not181 = trunc i64 %i.bd to i1
-  %or.cond212 = or i1 %35, %.not181
+  %.old = icmp ugt i64 %i.bd, 2
+  %or.cond212 = or i1 %.old, %.not181
   br i1 %or.cond212, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %.critedge, %bb.n

@@ -19,21 +19,21 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef zeroext i1 @_ZN6nbytes11SwapBytes16EPcm(ptr nofree noundef captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = and i64 %1, 1
-  %.not = icmp eq i64 %2, 0                       ; 2 uses
+  %.not = trunc i64 %1 to i1                      ; 2 uses
   %i.a = icmp ne i64 %1, 0
-  %or.cond = and i1 %.not, %i.a
+  %or.cond = xor i1 %i.a, %.not
   br i1 %or.cond, label %iter.check, label %.loopexit
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = add i64 %1, -2                           ; 3 uses
-  %i.c = lshr exact i64 %i.b, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %1, i64 2)
+  %i.b = add i64 %umax, -1
+  %i.c = lshr i64 %i.b, 1
   %i.d = add nuw i64 %i.c, 1                      ; 5 uses
-  %min.iters.check = icmp ult i64 %i.b, 6
+  %min.iters.check = icmp ult i64 %1, 7
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check13 = icmp ult i64 %i.b, 30
+  %min.iters.check13 = icmp ult i64 %1, 31
   br i1 %min.iters.check13, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -101,7 +101,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.u, label %.lr.ph, label %.loopexit, !llvm.loop !13
 
 .loopexit:                                        ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.a
-  ret i1 %.not
+  %.011 = xor i1 %.not, true
+  ret i1 %.011
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
@@ -502,6 +503,9 @@ declare i32 @llvm.bswap.i32(i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #5

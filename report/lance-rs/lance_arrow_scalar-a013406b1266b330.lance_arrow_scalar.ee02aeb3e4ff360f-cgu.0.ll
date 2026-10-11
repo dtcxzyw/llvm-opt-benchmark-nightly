@@ -204,10 +204,14 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !2224)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !2224, !noalias !2225, !noundef !3
-  %i.ac = ptrtoint ptr %i.ab to i64
-  %i.ad = and i64 %i.ac, 1
-  %3 = icmp eq i64 %i.ad, 0
-  br i1 %3, label %bb.k, label %.invoke.i.i.i.i, !prof !12
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 2 uses
+  %3 = add i64 %i.ac, 1
+  %i.ad = and i64 %3, -2
+  %4 = sub i64 %i.ad, %i.ac                       ; 2 uses
+  %5 = icmp ult i64 %4, 2
+  call void @llvm.assume(i1 %5)
+  %6 = trunc nuw i64 %4 to i1
+  br i1 %6, label %.invoke.i.i.i.i, label %bb.k, !prof !14
 
 bb.h:                                             ; preds = %.invoke.i.i.i.i
   %i.ae = landingpad { ptr, i32 }
@@ -610,10 +614,14 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !2467)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !2467, !noalias !2468, !noundef !3
-  %i.ac = ptrtoint ptr %i.ab to i64
-  %i.ad = and i64 %i.ac, 1
-  %3 = icmp eq i64 %i.ad, 0
-  br i1 %3, label %bb.k, label %.invoke.i.i.i.i, !prof !12
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 2 uses
+  %3 = add i64 %i.ac, 1
+  %i.ad = and i64 %3, -2
+  %4 = sub i64 %i.ad, %i.ac                       ; 2 uses
+  %5 = icmp ult i64 %4, 2
+  call void @llvm.assume(i1 %5)
+  %6 = trunc nuw i64 %4 to i1
+  br i1 %6, label %.invoke.i.i.i.i, label %bb.k, !prof !14
 
 bb.h:                                             ; preds = %.invoke.i.i.i.i
   %i.ae = landingpad { ptr, i32 }
@@ -1016,10 +1024,14 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.experimental.noalias.scope.decl(metadata !2770)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !2770, !noalias !2771, !noundef !3
-  %i.ac = ptrtoint ptr %i.ab to i64
-  %i.ad = and i64 %i.ac, 1
-  %3 = icmp eq i64 %i.ad, 0
-  br i1 %3, label %bb.k, label %.invoke.i.i.i.i, !prof !12
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 2 uses
+  %3 = add i64 %i.ac, 1
+  %i.ad = and i64 %3, -2
+  %4 = sub i64 %i.ad, %i.ac                       ; 2 uses
+  %5 = icmp ult i64 %4, 2
+  call void @llvm.assume(i1 %5)
+  %6 = trunc nuw i64 %4 to i1
+  br i1 %6, label %.invoke.i.i.i.i, label %bb.k, !prof !14
 
 bb.h:                                             ; preds = %.invoke.i.i.i.i
   %i.ae = landingpad { ptr, i32 }

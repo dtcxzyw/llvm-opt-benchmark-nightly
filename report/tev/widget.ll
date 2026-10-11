@@ -204,12 +204,16 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 4
   br label %bb.b
 
-._crit_edge:                                      ; preds = %bb.g, %bb.a
-  %.0.lcssa = phi i1 [ false, %bb.a ], [ %.3, %bb.g ]
+._crit_edge.loopexit:                             ; preds = %bb.g
+  %6 = trunc nuw i8 %.3 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %.0.lcssa = phi i1 [ false, %bb.a ], [ %6, %._crit_edge.loopexit ]
   ret i1 %.0.lcssa
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %.052 = phi i1 [ false, %.lr.ph ], [ %.3, %bb.g ] ; 3 uses
+  %.052 = phi i8 [ 0, %.lr.ph ], [ %.3, %bb.g ]   ; 3 uses
   %.sroa.344.051 = phi ptr [ %i.c, %.lr.ph ], [ %i.i, %bb.g ]
   %i.i = getelementptr inbounds i8, ptr %.sroa.344.051, i64 -8 ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !48   ; 9 uses
@@ -261,11 +265,12 @@ bb.d:                                             ; preds = %bb.c
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 56
   %i.au = load ptr, ptr %i.at, align 8
   %i.av = call noundef zeroext i1 %i.au(ptr noundef nonnull align 8 dereferenceable(148) %i.j, ptr noundef nonnull align 4 dereferenceable(8) %1, i1 noundef zeroext %i.ag)
-  %6 = or i1 %.052, %i.av
+  %7 = zext i1 %i.av to i8
+  %8 = or i8 %.052, %7
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.1 = phi i1 [ %6, %bb.d ], [ %.052, %bb.c ]    ; 2 uses
+  %.1 = phi i8 [ %8, %bb.d ], [ %.052, %bb.c ]    ; 2 uses
   %or.cond = or i1 %i.ag, %i.aq
   br i1 %or.cond, label %bb.f, label %bb.g
 
@@ -286,15 +291,16 @@ bb.f:                                             ; preds = %bb.e
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 40
   %i.be = load ptr, ptr %i.bd, align 8
   %i.bf = call noundef zeroext i1 %i.be(ptr noundef nonnull align 8 dereferenceable(148) %i.j, ptr noundef nonnull align 4 dereferenceable(8) %5, ptr noundef nonnull align 4 dereferenceable(8) %2, i32 noundef %3, i32 noundef %4)
-  %7 = or i1 %.1, %i.bf
+  %9 = zext i1 %i.bf to i8
+  %10 = or i8 %.1, %9
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.b
-  %.3 = phi i1 [ %.052, %bb.b ], [ %7, %bb.f ], [ %.1, %bb.e ] ; 2 uses
+  %.3 = phi i8 [ %.052, %bb.b ], [ %10, %bb.f ], [ %.1, %bb.e ] ; 2 uses
   %i.bg = load ptr, ptr %i.a, align 8, !tbaa !44
   %.not = icmp eq ptr %i.i, %i.bg
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !72
+  br i1 %.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !72
 }
 
 ; Function Attrs: mustprogress uwtable

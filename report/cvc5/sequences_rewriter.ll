@@ -205,7 +205,8 @@ bb.fx:                                            ; preds = %_ZNK4cvc58internal1
   br label %bb.apz
 
 .preheader1405:                                   ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1, %.thread1307
-  %i.wv = phi i1 [ true, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1 ], [ false, %.thread1307 ] ; 3 uses
+  %i.wv = phi i1 [ true, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1 ], [ false, %.thread1307 ]
+  %.03481451 = phi i1 [ false, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit705.1 ], [ true, %.thread1307 ] ; 2 uses
   br i1 %.not1463, label %.thread1307, label %.lr.ph
 
 bb.fy:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit728
@@ -216,7 +217,7 @@ bb.fy:                                            ; preds = %_ZN4cvc58internal12
 .lr.ph:                                           ; preds = %.preheader1405, %bb.fy
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.fy ], [ 0, %.preheader1405 ] ; 4 uses
   %.pre = load ptr, ptr %49, align 16, !tbaa !56  ; 2 uses
-  br i1 %i.wv, label %.thread1302, label %bb.fz
+  br i1 %.03481451, label %bb.fz, label %.thread1302
 
 bb.fz:                                            ; preds = %.lr.ph
   %i.ww = load ptr, ptr %i.we, align 8, !tbaa !57
@@ -331,7 +332,7 @@ bb.gk:                                            ; preds = %bb.gj
 bb.gl:                                            ; preds = %bb.gk
   %i.yw = call i64 @llvm.umin.i64(i64 %i.yt, i64 %i.yv) ; 2 uses
   %i.yx = load ptr, ptr %51, align 8, !tbaa !41   ; 2 uses
-  br i1 %i.wv, label %bb.gn, label %bb.gm
+  br i1 %.03481451, label %bb.gm, label %bb.gn
 
 bb.gm:                                            ; preds = %bb.gl
   store ptr %i.yx, ptr %55, align 8, !tbaa !45
@@ -715,7 +716,8 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit:   ; preds = %.critedge587, %bb.i
   br label %.preheader1404
 
 .preheader1404:                                   ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.1
-  %.not = phi i1 [ true, %_ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit ], [ false, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.1 ] ; 3 uses
+  %.not = phi i1 [ true, %_ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit ], [ false, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.1 ]
+  %.03361458 = phi i1 [ false, %_ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit ], [ true, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.1 ] ; 2 uses
   %.03371457 = phi i1 [ false, %_ZN4cvc58internal12NodeTemplateILb1EEC2Ev.exit ], [ %.3340, %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPN4cvc58internal12NodeTemplateILb1EEESt6vectorIS5_SaIS5_EEEEEvT_SB_.exit.1 ] ; 3 uses
   %i.acy = load ptr, ptr %49, align 16, !tbaa !65
   %i.acz = load ptr, ptr %i.we, align 8, !tbaa !65 ; 3 uses
@@ -1105,7 +1107,7 @@ bb.ka:                                            ; preds = %_ZN4cvc58internal12
   %.val1383 = load ptr, ptr %63, align 16
   %.sroa.gep1275.val1384 = load ptr, ptr %.sroa.gep1275, align 8
   %i.aie = select i1 %.not1381, ptr %.val1383, ptr %.sroa.gep1275.val1384 ; 2 uses
-  br i1 %.not, label %bb.kd, label %bb.ke
+  br i1 %.03361458, label %bb.ke, label %bb.kd
 
 bb.kb:                                            ; preds = %bb.jy, %bb.jw, %bb.js, %bb.jp
   %i.aif = landingpad { ptr, i32 }
@@ -1169,7 +1171,7 @@ bb.kj:                                            ; preds = %.critedge589
   %.val1391 = load ptr, ptr %63, align 16
   %.sroa.gep1275.val1392 = load ptr, ptr %.sroa.gep1275, align 8
   %i.aiv = select i1 %.not1381, ptr %.val1391, ptr %.sroa.gep1275.val1392 ; 2 uses
-  br i1 %.not, label %bb.kk, label %bb.kl
+  br i1 %.03361458, label %bb.kl, label %bb.kk
 
 bb.kk:                                            ; preds = %bb.kj
   store ptr %i.aiv, ptr %69, align 8, !tbaa !45

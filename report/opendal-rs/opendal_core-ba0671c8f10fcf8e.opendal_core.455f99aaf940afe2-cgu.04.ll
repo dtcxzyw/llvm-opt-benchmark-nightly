@@ -202,8 +202,8 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCs6i54tJFfzR_5alloc6string6StringECs
 define internal fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %0) unnamed_addr #1 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !9, !noundef !4
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEBJ_.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEBJ_.exit
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEBJ_.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.a
   ret void
@@ -240,8 +240,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63)
   %i.d = load i64, ptr %i.c, align 8, !range !9, !alias.scope !63, !noundef !4
-  %1 = icmp eq i64 %i.d, 0
-  br i1 %1, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit, label %bb.c
+  %1 = trunc nuw i64 %i.d to i1
+  br i1 %1, label %bb.c, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -644,8 +644,8 @@ bb.j:                                             ; preds = %bb.i
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcDNtNtNtCs5XgW7KoffLW_12opendal_core3raw8accessor10ServiceDynEL_EEB1f_.exit6: ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtNtCs5XgW7KoffLW_12opendal_core5types7context9operation16OperationContextEBJ_.exit, %bb.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !799)
   %i.y = load i64, ptr %0, align 8, !range !9, !alias.scope !799, !noundef !4
-  %1 = icmp eq i64 %i.y, 0
-  br i1 %1, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit, label %bb.k
+  %1 = trunc nuw i64 %i.y to i1
+  br i1 %1, label %bb.k, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit
 
 bb.k:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcDNtNtNtCs5XgW7KoffLW_12opendal_core3raw8accessor10ServiceDynEL_EEB1f_.exit6
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -776,8 +776,8 @@ define internal fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueTINtNtB4_6o
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !850)
   %i.a = load i64, ptr %0, align 8, !range !9, !alias.scope !850, !noundef !4
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1180,8 +1180,9 @@ bb.bm:                                            ; preds = %_RINvNtCsgxBkk5gSRh
   store ptr %.sroa.3121.sroa.0.0.copyload.i, ptr %i.f, align 8, !noalias !1066
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   store ptr %.sroa.3121.sroa.3.0.copyload.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !1066
-  %.not.i = icmp eq ptr %.sroa.3121.sroa.0.0.copyload.i, null
-  br i1 %.not.i, label %bb.bq, label %bb.bn
+  %.val49.cast.i = ptrtoint ptr %.sroa.3121.sroa.0.0.copyload.i to i64
+  %3 = trunc nuw i64 %.val49.cast.i to i1
+  br i1 %3, label %bb.bn, label %bb.bq
 
 bb.bn:                                            ; preds = %bb.bm
   %i.er = icmp eq ptr %.sroa.3121.sroa.3.0.copyload.i, null
@@ -1584,8 +1585,8 @@ _RNvXs7_NtNtCsgxBkk5gSRhY_4core3cmp5implsReNtB7_9PartialEq2neCs5XgW7KoffLW_12ope
   %i.cu = load ptr, ptr %1, align 8, !nonnull !4, !align !10, !noundef !4 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1331)
   %i.cv = load i64, ptr %i.cu, align 8, !range !9, !alias.scope !1331, !noundef !4
-  %3 = icmp eq i64 %i.cv, 0
-  br i1 %3, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit, label %bb.ak
+  %3 = trunc nuw i64 %i.cv to i1
+  br i1 %3, label %bb.ak, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit
 
 bb.ak:                                            ; preds = %_RNvXs7_NtNtCsgxBkk5gSRhY_4core3cmp5implsReNtB7_9PartialEq2neCs5XgW7KoffLW_12opendal_core.exit.thread
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 8 ; 2 uses
@@ -1988,8 +1989,8 @@ _RNvXs7_NtNtCsgxBkk5gSRhY_4core3cmp5implsReNtB7_9PartialEq2neCs5XgW7KoffLW_12ope
   %i.hp = load ptr, ptr %1, align 8, !nonnull !4, !align !10, !noundef !4 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1364)
   %i.hq = load i64, ptr %i.hp, align 8, !range !9, !alias.scope !1364, !noundef !4
-  %4 = icmp eq i64 %i.hq, 0
-  br i1 %4, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit206, label %bb.ct
+  %4 = trunc nuw i64 %i.hq to i1
+  br i1 %4, label %bb.ct, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs5XgW7KoffLW_12opendal_core3raw3oio5entry5EntryEEB15_.exit206
 
 bb.ct:                                            ; preds = %_RNvXs7_NtNtCsgxBkk5gSRhY_4core3cmp5implsReNtB7_9PartialEq2neCs5XgW7KoffLW_12opendal_core.exit202.thread
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hp, i64 8 ; 2 uses
@@ -2392,7 +2393,7 @@ bb.fr:                                            ; preds = %.thread301, %bb.x
   %.sroa.025.0306 = phi i1 [ true, %.thread301 ], [ %.sroa.025.0, %bb.x ]
   %i.mx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.my = load i64, ptr %i.mx, align 8, !range !9, !noundef !4
-  %5 = icmp ne i64 %i.my, 0
+  %5 = trunc nuw i64 %i.my to i1
   %or.cond5 = and i1 %.sroa.025.0306, %5
   br i1 %or.cond5, label %bb.fs, label %.body
 
@@ -2795,7 +2796,7 @@ bb.do:                                            ; preds = %bb.dl, %bb.dg, %bb.
 
 bb.dp:                                            ; preds = %bb.do
   %i.lq = load i64, ptr %i.kn, align 8, !range !9, !noalias !1721, !noundef !4
-  %3 = icmp ne i64 %i.lq, 0
+  %3 = trunc nuw i64 %i.lq to i1
   %or.cond4.i.i.i = and i1 %.sroa.0.0.i.i.i, %3
   br i1 %or.cond4.i.i.i, label %bb.dr, label %.body.i.i.i
 
@@ -3055,7 +3056,7 @@ bb.ew:                                            ; preds = %bb.et, %bb.eo, %bb.
 
 bb.ex:                                            ; preds = %bb.ew
   %i.ns = load i64, ptr %i.mr, align 8, !range !9, !noalias !1736, !noundef !4
-  %4 = icmp ne i64 %i.ns, 0
+  %4 = trunc nuw i64 %i.ns to i1
   %or.cond4.i35.i.i = and i1 %.sroa.0.0.i34.i.i, %4
   br i1 %or.cond4.i35.i.i, label %bb.ez, label %.body42.thread.i.i
 
@@ -3458,8 +3459,8 @@ bb.aj:                                            ; preds = %.thread62, %bb.ah
   %.pn64 = phi { ptr, i32 } [ %i.bn, %.thread62 ], [ %i.aw, %bb.ah ] ; 4 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.bv = load i64, ptr %i.bu, align 8, !range !9, !noundef !4
-  %.not26 = icmp eq i64 %i.bv, 0
-  br i1 %.not26, label %common.resume, label %bb.al
+  %3 = trunc nuw i64 %i.bv to i1
+  br i1 %3, label %bb.al, label %common.resume
 
 bb.ak:                                            ; preds = %bb.ah
   invoke fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtNtCs5XgW7KoffLW_12opendal_core5types5error5ErrorEBH_(ptr noalias nofree noundef align 8 dereferenceable(88) %i.b) #24

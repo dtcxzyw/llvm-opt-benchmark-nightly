@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.t, label %.thread59, label %bb.g
 
 bb.f:                                             ; preds = %.thread, %bb.h
-  %.1.us80 = phi i32 [ -244, %.thread ], [ -1, %bb.h ]
+  %.1.us80 = phi i32 [ -244, %.thread ], [ %..i.us, %bb.h ]
   %i.u = load ptr, ptr %i.e, align 8, !tbaa !21
   %i.v = tail call ptr @readdir(ptr noundef %i.u) #18 ; 3 uses
   store ptr %i.v, ptr %0, align 8, !tbaa !22
@@ -230,9 +230,10 @@ bb.g:                                             ; preds = %.lr.ph.split.us
 bb.h:                                             ; preds = %bb.g
   %i.ad = load i32, ptr %i.n, align 8, !tbaa !20
   %i.ae = and i32 %i.ad, 61440
-  %.not84 = icmp eq i32 %i.ae, 32768
+  %4 = icmp ne i32 %i.ae, 32768                   ; 2 uses
+  %..i.us = sext i1 %4 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  br i1 %.not84, label %wc_ReadDirClose.exit, label %bb.f
+  br i1 %4, label %bb.f, label %wc_ReadDirClose.exit
 
 bb.i:                                             ; preds = %wc_FileExists.exit, %wc_FileExists.exit.thread
   %.1 = phi i32 [ -1, %wc_FileExists.exit ], [ -244, %wc_FileExists.exit.thread ]
@@ -378,7 +379,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.t, label %.thread51, label %bb.f
 
 bb.e:                                             ; preds = %.thread70, %bb.g
-  %.1.us73 = phi i32 [ -244, %.thread70 ], [ -1, %bb.g ]
+  %.1.us73 = phi i32 [ -244, %.thread70 ], [ %..i.us, %bb.g ]
   %i.u = load ptr, ptr %i.f, align 8, !tbaa !21
   %i.v = tail call ptr @readdir(ptr noundef %i.u) #18 ; 3 uses
   store ptr %i.v, ptr %0, align 8, !tbaa !22
@@ -407,9 +408,10 @@ bb.f:                                             ; preds = %.lr.ph.split.us
 bb.g:                                             ; preds = %bb.f
   %i.ad = load i32, ptr %i.n, align 8, !tbaa !20
   %i.ae = and i32 %i.ad, 61440
-  %.not77 = icmp eq i32 %i.ae, 32768
+  %4 = icmp ne i32 %i.ae, 32768                   ; 2 uses
+  %..i.us = sext i1 %4 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  br i1 %.not77, label %wc_ReadDirClose.exit, label %bb.e
+  br i1 %4, label %bb.e, label %wc_ReadDirClose.exit
 
 bb.h:                                             ; preds = %wc_FileExists.exit, %wc_FileExists.exit.thread
   %.1 = phi i32 [ -1, %wc_FileExists.exit ], [ -244, %wc_FileExists.exit.thread ]

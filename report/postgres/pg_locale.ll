@@ -204,8 +204,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %2 = add nsw i32 %0, -48
-  %.not = icmp ult i32 %2, 10
+  %2 = zext nneg i32 %0 to i64
+  %3 = getelementptr inbounds nuw i8, ptr @pg_char_properties, i64 %2
+  %4 = load i8, ptr %3, align 1
+  %.not = trunc i8 %4 to i1
   %i.e = add nsw i32 %0, -65
   %or.cond = icmp ult i32 %i.e, 6
   %or.cond13 = select i1 %.not, i1 true, i1 %or.cond

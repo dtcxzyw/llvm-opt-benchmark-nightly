@@ -205,8 +205,8 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 20 ; 2 uses
   %i.i = load float, ptr %i.h, align 4, !tbaa !27
   %i.j = tail call fastcc i32 @_gradient_get_points(ptr noundef %0, float noundef %i.c, float noundef %i.e, float noundef %i.g, float noundef %i.i, ptr noundef %2, ptr noundef %3)
-  %.not = icmp eq i32 %i.j, 0
-  br i1 %.not, label %bb.d, label %bb.b
+  %.not = trunc nuw i32 %i.j to i1
+  br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %.not18 = icmp eq ptr %4, null
@@ -609,8 +609,8 @@ bb.b:                                             ; preds = %bb.a
   %i.s = load float, ptr %i.c, align 4, !tbaa !29 ; 2 uses
   %i.t = load float, ptr %i.e, align 4, !tbaa !29 ; 2 uses
   %i.u = call fastcc i32 @_gradient_get_points(ptr noundef %i.p, float noundef %i.q, float noundef %i.r, float noundef %i.s, float noundef %i.t, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g)
-  %.not54 = icmp eq i32 %i.u, 0
-  br i1 %.not54, label %bb.e, label %bb.c
+  %.not54 = trunc nuw i32 %i.u to i1
+  br i1 %.not54, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
   %i.v = load float, ptr %i.d, align 4, !tbaa !29 ; 2 uses
@@ -1013,8 +1013,8 @@ dt_masks_get_image_size.exit:
   %i.ai = extractelement <4 x float> %i.ae, i64 2
   %i.aj = extractelement <4 x float> %i.ae, i64 3
   %i.ak = call fastcc i32 @_gradient_get_points(ptr noundef %0, float noundef %i.ai, float noundef %i.aj, float noundef %3, float noundef %5, ptr noundef nonnull %i.b, ptr noundef nonnull %i.d)
-  %8 = icmp ne i32 %i.ah, 0                       ; 2 uses
-  %9 = icmp ne i32 %i.ak, 0                       ; 2 uses
+  %8 = trunc nuw i32 %i.ah to i1                  ; 2 uses
+  %9 = trunc nuw i32 %i.ak to i1                  ; 2 uses
   %or.cond = select i1 %8, i1 %9, i1 false
   %i.al = load i32, ptr %i.c, align 4             ; 4 uses
   %i.am = icmp sgt i32 %i.al, 4                   ; 2 uses
@@ -1417,17 +1417,22 @@ declare void @cairo_save(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @_gradient_draw_lines(i32 noundef range(i32 0, 2) %0, ptr noundef %1, i32 noundef %2, float noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) unnamed_addr #0 {
-bb.a:
-  %.not = icmp eq i32 %0, 0                       ; 3 uses
-  %or.cond81.v = select i1 %.not, i32 4, i32 3
-  %or.cond81 = icmp sgt i32 %5, %or.cond81.v
-  br i1 %or.cond81, label %dt_masks_get_image_size.exit, label %.loopexit
+  %7 = trunc nuw i32 %0 to i1                     ; 3 uses
+  %8 = icmp slt i32 %5, 4
+  %or.cond = and i1 %8, %7
+  br i1 %or.cond, label %.loopexit, label %bb.a
+
+bb.a:                                             ; preds = %6
+  %.not = icmp eq i32 %0, 0
+  %9 = icmp slt i32 %5, 5
+  %or.cond3 = and i1 %.not, %9
+  br i1 %or.cond3, label %.loopexit, label %dt_masks_get_image_size.exit
 
 dt_masks_get_image_size.exit:                     ; preds = %bb.a
-  %.idx = select i1 %.not, i64 24, i64 0
+  %.idx = select i1 %7, i64 0, i64 24
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 %.idx ; 2 uses
   %i.b = add nsw i32 %5, -3
-  %i.c = select i1 %.not, i32 %i.b, i32 %5        ; 5 uses
+  %i.c = select i1 %7, i32 %5, i32 %i.b           ; 5 uses
   %i.d = icmp sgt i32 %i.c, 0
   br i1 %i.d, label %.lr.ph66, label %.loopexit
 
@@ -1449,8 +1454,8 @@ bb.b:                                             ; preds = %.lr.ph66, %.backedg
   %i.o = sext i32 %i.n to i64
   %i.p = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.o ; 2 uses
   %i.q = load float, ptr %i.p, align 4, !tbaa !29 ; 4 uses
-  %i.r = tail call i1 @llvm.is.fpclass.f32(float %i.q, /* (nan inf zero sub) */ i32 759)
-  br i1 %i.r, label %bb.c, label %bb.d
+  %i.r = tail call i1 @llvm.is.fpclass.f32(float %i.q, /* (norm) */ i32 264)
+  br i1 %i.r, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.s = add nsw i32 %.065, 1
@@ -1496,8 +1501,8 @@ bb.e:                                             ; preds = %bb.d
   %.idx75 = shl nsw i64 %indvars.iv, 3
   %i.ag = getelementptr inbounds i8, ptr %i.a, i64 %.idx75 ; 2 uses
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !29 ; 4 uses
-  %i.ai = tail call i1 @llvm.is.fpclass.f32(float %i.ah, /* (nan inf zero sub) */ i32 759)
-  br i1 %i.ai, label %.critedge.loopexit.split.loop.exit78, label %bb.f
+  %i.ai = tail call i1 @llvm.is.fpclass.f32(float %i.ah, /* (norm) */ i32 264)
+  br i1 %i.ai, label %bb.f, label %.critedge.loopexit.split.loop.exit78
 
 bb.f:                                             ; preds = %.lr.ph
   %i.aj = getelementptr i8, ptr %i.ag, i64 4
@@ -1534,7 +1539,7 @@ bb.g:                                             ; preds = %bb.f
   tail call void @dt_masks_line_stroke(ptr noundef %1, i32 noundef %0, i32 noundef 0, i32 noundef %2, float noundef %3) #12
   br label %.backedge
 
-.loopexit:                                        ; preds = %.backedge, %dt_masks_get_image_size.exit, %bb.a
+.loopexit:                                        ; preds = %.backedge, %dt_masks_get_image_size.exit, %bb.a, %6
   ret void
 }
 

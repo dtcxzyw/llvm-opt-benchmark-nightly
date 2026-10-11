@@ -202,20 +202,24 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 20
   %.val.i.i.i = load i32, ptr %i.g, align 1, !alias.scope !208, !noalias !209
   %i.h = tail call noundef i32 @_RNvMs9_NtCseHTIzroA4w0_6object6endianINtB5_3U32NtB5_10EndiannessE3getCs8aoZCP6pRcV_7objdump(i32 noundef %.val.i.i.i, i1 noundef zeroext %2), !noalias !207 ; 3 uses
+  %5 = zext i32 %i.h to i64                       ; 2 uses
   %i.i = icmp eq i32 %i.h, 0
   br i1 %i.i, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %5 = zext i32 %i.h to i64                       ; 2 uses
   %i.j = zext i32 %i.f to i64                     ; 3 uses
   %i.k = icmp samesign ult i64 %4, %i.j
   %i.l = sub nuw nsw i64 %4, %i.j
   %.not.i.i.i = icmp samesign ult i64 %i.l, %5
   %or.cond.i.i = select i1 %i.k, i1 true, i1 %.not.i.i.i
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 %i.j
   %i.m = trunc i32 %i.h to i1
   %or.cond.i = or i1 %or.cond.i.i, %i.m
-  br i1 %or.cond.i, label %bb.f, label %bb.g
+  br i1 %or.cond.i, label %bb.f, label %.thread.i
+
+.thread.i:                                        ; preds = %bb.d
+  %6 = lshr exact i64 %5, 1
+  %7 = getelementptr inbounds nuw i8, ptr %3, i64 %i.j
+  br label %bb.g
 
 bb.e:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
@@ -229,10 +233,9 @@ bb.f:                                             ; preds = %bb.d
   store i64 1, ptr %0, align 8
   br label %bb.h
 
-bb.g:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.sink.i.ph18.i = phi i64 [ %5, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ]
-  %.sink13.i.ph17.i = phi ptr [ %6, %bb.d ], [ inttoptr (i64 1 to ptr), %bb.c ], [ inttoptr (i64 1 to ptr), %bb.b ]
-  %7 = lshr exact i64 %.sink.i.ph18.i, 1
+bb.g:                                             ; preds = %bb.c, %bb.b, %.thread.i
+  %.sink13.i.ph17.i = phi ptr [ %7, %.thread.i ], [ inttoptr (i64 1 to ptr), %bb.b ], [ inttoptr (i64 1 to ptr), %bb.c ]
+  %.sink.i.ph = phi i64 [ %6, %.thread.i ], [ 0, %bb.b ], [ 0, %bb.c ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !210)
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val.i = load i32, ptr %i.p, align 1, !alias.scope !210
@@ -241,7 +244,7 @@ bb.g:                                             ; preds = %bb.d, %bb.c, %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sink13.i.ph17.i, ptr %i.s, align 8
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %7, ptr %.sroa.48.0..sroa_idx, align 8
+  store i64 %.sink.i.ph, ptr %.sroa.48.0..sroa_idx, align 8
   %.sroa.59.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.r, ptr %.sroa.59.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8
@@ -644,10 +647,14 @@ bb.d:                                             ; preds = %bb.c
   %i.k = sub nuw nsw i64 %4, %i.f
   %.not.i.i.i = icmp ugt i64 %i.h, %i.k
   %or.cond.i.i = select i1 %i.j, i1 true, i1 %.not.i.i.i
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 %i.f
   %i.l = trunc i64 %i.h to i1
   %or.cond.i = or i1 %or.cond.i.i, %i.l
-  br i1 %or.cond.i, label %bb.f, label %bb.g
+  br i1 %or.cond.i, label %bb.f, label %.thread.i
+
+.thread.i:                                        ; preds = %bb.d
+  %5 = lshr exact i64 %i.h, 1
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 %i.f
+  br label %bb.g
 
 bb.e:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
@@ -661,10 +668,9 @@ bb.f:                                             ; preds = %bb.d
   store i64 1, ptr %0, align 8
   br label %bb.h
 
-bb.g:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.sink.i.ph18.i = phi i64 [ %i.h, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ]
-  %.sink13.i.ph17.i = phi ptr [ %5, %bb.d ], [ inttoptr (i64 1 to ptr), %bb.c ], [ inttoptr (i64 1 to ptr), %bb.b ]
-  %6 = lshr exact i64 %.sink.i.ph18.i, 1
+bb.g:                                             ; preds = %bb.c, %bb.b, %.thread.i
+  %.sink13.i.ph17.i = phi ptr [ %6, %.thread.i ], [ inttoptr (i64 1 to ptr), %bb.b ], [ inttoptr (i64 1 to ptr), %bb.c ]
+  %.sink.i.ph = phi i64 [ %5, %.thread.i ], [ 0, %bb.b ], [ 0, %bb.c ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !350)
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 40
   %.val.i = load i32, ptr %i.o, align 1, !alias.scope !350
@@ -673,7 +679,7 @@ bb.g:                                             ; preds = %bb.d, %bb.c, %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sink13.i.ph17.i, ptr %i.r, align 8
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %6, ptr %.sroa.48.0..sroa_idx, align 8
+  store i64 %.sink.i.ph, ptr %.sroa.48.0..sroa_idx, align 8
   %.sroa.59.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.q, ptr %.sroa.59.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8

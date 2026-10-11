@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.b
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdTHTBGblh3Z_11libp2p_core15signed_envelope14SignedEnvelopeECsg9QLscIEtAL_17libp2p_rendezvous(ptr noalias nofree noundef nonnull align 8 dereferenceable(272) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !11, !alias.scope !162, !noundef !6
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2iisHxfqoT7_15libp2p_identity7keypair9PublicKeyECsg9QLscIEtAL_17libp2p_rendezvous.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2iisHxfqoT7_15libp2p_identity7keypair9PublicKeyECsg9QLscIEtAL_17libp2p_rendezvous.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -606,7 +606,7 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !601
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.sroa.7.i.i.i.i)
   %i.av = load i64, ptr %.sroa.012.0135.i, align 8, !range !11, !alias.scope !602, !noalias !603, !noundef !6
-  %i.aw = trunc nuw i64 %i.av to i1               ; 2 uses
+  %i.aw = trunc nuw i64 %i.av to i1
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.012.0135.i, i64 16 ; 2 uses
   br i1 %i.aw, label %bb.e, label %bb.h
 
@@ -659,7 +659,7 @@ _RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtCskKLDkoKarTP_4core5clone5Clon
   %.sroa.5.sroa.6.0.i.i.i.i = phi i64 [ %.sroa.5.0.copyload.i.i.i.i, %bb.h ], [ 0, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i.i.i.i.i ], [ %i.ba, %bb.g ]
   %.sroa.5.sroa.5.0.i.i.i.i = phi ptr [ %.sroa.433.0.copyload.i.i.i.i, %bb.h ], [ %i.bf, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i.i.i.i.i ], [ %i.bf, %bb.g ]
   %.sroa.5.sroa.0.0.i.i.i.i = phi i64 [ %.sroa.032.0.copyload.i.i.i.i, %bb.h ], [ %i.bd, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i.i.i.i.i ], [ %i.bd, %bb.g ]
-  %i.bi = phi i64 [ 0, %bb.h ], [ 1, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i.i.i.i.i ], [ 1, %bb.g ]
+  %i.bi = phi i64 [ 0, %bb.h ], [ 1, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i.i.i.i.i ], [ 1, %bb.g ] ; 2 uses
   store i64 %i.bi, ptr %i.g, align 8, !noalias !601
   store i64 %.sroa.5.sroa.0.0.i.i.i.i, ptr %.sroa.5.0..sroa_idx.i.i.i.i, align 8, !noalias !601
   store ptr %.sroa.5.sroa.5.0.i.i.i.i, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.i.i.i.i, align 8, !noalias !601
@@ -710,7 +710,8 @@ bb.j:                                             ; preds = %_RNvMs5_NtCsexYYUdY
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i.i.i: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsg9QLscIEtAL_17libp2p_rendezvous.exit21.i.i.i.i, %.loopexit.split-lp56.i, %.loopexit55.i
   %.pn.pn.i.i.i.i = phi { ptr, i32 } [ %.pn.i.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsg9QLscIEtAL_17libp2p_rendezvous.exit21.i.i.i.i ], [ %lpad.loopexit57.i, %.loopexit55.i ], [ %lpad.loopexit.split-lp58.i, %.loopexit.split-lp56.i ] ; 2 uses
-  br i1 %i.aw, label %bb.k, label %.body.i.i.i
+  %2 = trunc nuw i64 %i.bi to i1
+  br i1 %2, label %bb.k, label %.body.i.i.i
 
 bb.k:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsg9QLscIEtAL_17libp2p_rendezvous.exit.i.i.i.i
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsg9QLscIEtAL_17libp2p_rendezvous(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx.i.i.i.i)
@@ -1113,8 +1114,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !708)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !709)
   %i.h = load i64, ptr %i.f, align 8, !range !11, !alias.scope !710, !noundef !6
-  %1 = icmp eq i64 %i.h, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECsg9QLscIEtAL_17libp2p_rendezvous.exit.i, label %bb.b
+  %1 = trunc nuw i64 %i.h to i1
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECsg9QLscIEtAL_17libp2p_rendezvous.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -1147,8 +1148,8 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !715)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !716)
   %i.r = load i64, ptr %i.p, align 8, !range !11, !alias.scope !717, !noundef !6
-  %2 = icmp eq i64 %i.r, 0
-  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECsg9QLscIEtAL_17libp2p_rendezvous.exit8.i, label %bb.e
+  %2 = trunc nuw i64 %i.r to i1
+  br i1 %2, label %bb.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECsg9QLscIEtAL_17libp2p_rendezvous.exit8.i
 
 bb.e:                                             ; preds = %.lr.ph12.i
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 2 uses

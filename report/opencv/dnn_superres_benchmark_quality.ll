@@ -204,16 +204,17 @@ bb.dg:                                            ; preds = %_ZNK2cv7MatExprcvNS
   br label %bb.ev
 
 bb.dh:                                            ; preds = %bb.ec, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.ec ] ; 6 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.ec ] ; 7 uses
   %.035267.i = phi i32 [ -1, %.lr.ph.i ], [ %spec.select.i, %bb.ec ]
   %i.zr = trunc nuw nsw i64 %indvars.iv.i to i32
-  %i.zs = and i32 %i.zr, 1                        ; 2 uses
+  %97 = trunc i64 %indvars.iv.i to i1
+  %i.zs = and i32 %i.zr, 1
   %i.zt = xor i32 %i.zs, 1
   %spec.select.i = add nsw i32 %i.zt, %.035267.i  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
-  %97 = mul nuw nsw i32 %i.zs, %i.yc
+  %98 = select i1 %97, i32 %i.yc, i32 0
   %i.zu = mul nsw i32 %spec.select.i, %i.yd
-  store i32 %97, ptr %5, align 4, !tbaa !103
+  store i32 %98, ptr %5, align 4, !tbaa !103
   store i32 %i.zu, ptr %i.ye, align 4, !tbaa !104
   store i64 %.sroa.0614.0.insert.insert, ptr %i.yf, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #18

@@ -195,9 +195,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.i = or disjoint i64 %.sroa.0.04.ph, 1
@@ -600,7 +599,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.noexc16.i, %.noexc8.i
   %.sroa.0.1.i = phi i8 [ %.sroa.0.031.i, %.noexc8.i ], [ %i.bj, %.noexc16.i ] ; 2 uses
-  %.sroa.01.04.i.i.i.i.i = phi i32 [ 0, %.noexc8.i ], [ %i.aw, %.noexc16.i ] ; 2 uses
+  %.sroa.01.04.i.i.i.i.i = phi i32 [ 0, %.noexc8.i ], [ %i.aw, %.noexc16.i ] ; 3 uses
   %i.aw = add nuw nsw i32 %.sroa.01.04.i.i.i.i.i, 1 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !216
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(33) %i.i, ptr noundef nonnull align 1 dereferenceable(33) %i.k, i64 33, i1 false), !noalias !215
@@ -618,7 +617,11 @@ bb.i:                                             ; preds = %.noexc16.i, %.noexc
   %i.bc = lshr i8 %i.bb, 2
   %spec.select.i.i.i.i.i.i.i = or i8 %i.bc, %.sroa.03.0.copyload.i.i.i.i ; 2 uses
   %i.bd = shl i8 %i.bb, 6
-  %.sroa.55.1.i.i.i.i.i.i.i.a = or i8 %i.bd, %.sroa.5.0.copyload.i.i.i.i ; 2 uses
+  %4 = and i8 %i.bd, -128
+  %.sroa.55.0.i.i.i.i.i.i.i = or i8 %4, %.sroa.5.0.copyload.i.i.i.i ; 2 uses
+  %5 = trunc i32 %.sroa.01.04.i.i.i.i.i to i1
+  %.sroa.55.1.i.i.i.i.i.i.i.a = or i8 %.sroa.55.0.i.i.i.i.i.i.i, 64
+  %.sroa.55.1.i.i.i.i.i.i.i = select i1 %5, i8 %.sroa.55.1.i.i.i.i.i.i.i.a, i8 %.sroa.55.0.i.i.i.i.i.i.i ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !221
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !221
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.011.i.i.i.i.i.i.i)
@@ -638,7 +641,7 @@ bb.i:                                             ; preds = %.noexc16.i, %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !221
   store i8 %spec.select.i.i.i.i.i.i.i, ptr %i.e, align 1, !noalias !221
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(30) %.sroa.5.0..sroa_idx3.i.i.i.i.i.i.i, ptr noundef nonnull align 1 dereferenceable(30) %.sroa.4.i.i.i.i, i64 30, i1 false), !noalias !223
-  store i8 %.sroa.55.1.i.i.i.i.i.i.i.a, ptr %.sroa.55.0..sroa_idx6.i.i.i.i.i.i.i, align 1, !noalias !221
+  store i8 %.sroa.55.1.i.i.i.i.i.i.i, ptr %.sroa.55.0..sroa_idx6.i.i.i.i.i.i.i, align 1, !noalias !221
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !221
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.d, ptr noundef nonnull readonly align 1 dereferenceable(16) %3, i64 16, i1 false), !noalias !224
   invoke void @_RNvMNtNtCs807GXlIGG3x_7zkgroup6crypto18profile_key_structNtB2_16ProfileKeyStruct7calc_M3(ptr noalias nofree noundef nonnull sret([160 x i8]) align 8 captures(address) dereferenceable(160) %i.g, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(224) %i.f, ptr noalias nofree noundef nonnull readonly align 1 captures(address) dereferenceable(32) %i.e, ptr noalias nofree noundef nonnull readonly align 1 captures(address) dereferenceable(16) %i.d)
@@ -672,7 +675,7 @@ bb.j:                                             ; preds = %.noexc13.i
 _RINvMsg_Cs7yXBOrgAdI3_6subtleINtB6_8CtOptionAhj20_E7or_elseNCNCNCNvMs0_NtNtCs807GXlIGG3x_7zkgroup6crypto22profile_key_encryptionNtB17_26ProfileKeyEncryptionDomain23decrypt_from_candidates000EB1b_.exit.i.i.i.i.i: ; preds = %.noexc13.i
   store i8 %spec.select.i.i.i.i.i.i.i, ptr %i.h, align 1, !alias.scope !220, !noalias !226
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(30) %.sroa.5.0..sroa_idx4.i.i.i.i.i.i.i, ptr noundef nonnull align 1 dereferenceable(30) %.sroa.4.i.i.i.i, i64 30, i1 false), !noalias !223
-  store i8 %.sroa.55.1.i.i.i.i.i.i.i.a, ptr %.sroa.55.0..sroa_idx8.i.i.i.i.i.i.i, align 1, !alias.scope !220, !noalias !226
+  store i8 %.sroa.55.1.i.i.i.i.i.i.i, ptr %.sroa.55.0..sroa_idx8.i.i.i.i.i.i.i, align 1, !alias.scope !220, !noalias !226
   store i8 %i.bf, ptr %i.am, align 1, !alias.scope !220, !noalias !226
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !221
   invoke void @_RNvXsh_Cs7yXBOrgAdI3_6subtleINtB5_8CtOptionAhj20_ENtB5_23ConditionallySelectable18conditional_selectCs807GXlIGG3x_7zkgroup(ptr noalias nofree noundef nonnull sret([33 x i8]) align 1 captures(none) dereferenceable(33) %i.k, ptr noalias nofree noundef nonnull readonly align 1 captures(address, read_provenance) dereferenceable(33) %i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(33) %i.h, i8 noundef %i.ba)

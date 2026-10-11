@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit72.i: ; preds = %b
   br label %bb.ao
 
 bb.m:                                             ; preds = %bb.g
-  %i.s = zext nneg i32 %.val to i64               ; 2 uses
+  %i.s = zext nneg i32 %.val to i64               ; 4 uses
   %i.t = getelementptr inbounds nuw [112 x i8], ptr @_ZN11opencv_testL24testConvolution3DConfigsE, i64 %i.s ; 21 uses
   %i.u = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.84, i64 noundef 7) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #27
@@ -328,10 +328,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i83
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85.i: ; preds = %bb.v, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i83.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #27
-  %9 = shl nuw nsw i64 1, %i.s                    ; 2 uses
-  %10 = and i64 %9, 49190
-  %.not.i = icmp eq i64 %10, 0
-  br i1 %.not.i, label %bb.y, label %bb.w
+  %9 = lshr i64 49190, %i.s
+  %.not.i = trunc i64 %9 to i1
+  br i1 %.not.i, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85.i
   %i.bq = getelementptr inbounds nuw i8, ptr %i.t, i64 36
@@ -381,9 +380,12 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %11 = and i64 %9, 43961
-  %or.cond.i = icmp eq i64 %11, 0
-  br i1 %or.cond.i, label %bb.ab, label %bb.ac
+  %10 = lshr i64 43945, %i.s
+  %.not60.not.i = trunc i64 %10 to i1
+  %11 = lshr i64 43961, %i.s
+  %.not61.not.i = trunc i64 %11 to i1
+  %or.cond.i = select i1 %.not60.not.i, i1 true, i1 %.not61.not.i
+  br i1 %or.cond.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cp = getelementptr inbounds nuw i8, ptr %i.t, i64 64

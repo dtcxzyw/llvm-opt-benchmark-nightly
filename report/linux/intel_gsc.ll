@@ -159,8 +159,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %gsc_init_one.exit
-  %i.k = phi i1 [ true, %.preheader ], [ false, %gsc_init_one.exit ] ; 4 uses
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ 1, %gsc_init_one.exit ] ; 4 uses
+  %i.k = phi i1 [ true, %.preheader ], [ false, %gsc_init_one.exit ]
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ 1, %gsc_init_one.exit ] ; 5 uses
   %i.l = load ptr, ptr %i.f, align 8              ; 4 uses
   %i.m = getelementptr [24 x i8], ptr %0, i64 %indvars.iv ; 6 uses
   %i.n = getelementptr i8, ptr %i.m, i64 16       ; 3 uses
@@ -185,7 +185,8 @@ __drm_to_dev.exit.i:                              ; preds = %bb.d, %bb.c
   br label %gsc_init_one.exit
 
 bb.e:                                             ; preds = %bb.b
-  br i1 %i.k, label %bb.f, label %bb.g
+  %2 = trunc nuw i64 %indvars.iv to i1            ; 3 uses
+  br i1 %2, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.t = load ptr, ptr %i.a, align 8
@@ -475,7 +476,7 @@ __drm_to_dev.exit119.i:                           ; preds = %bb.am, %bb.al
 
 bb.an:                                            ; preds = %bb.ak
   store ptr %i.av, ptr %i.m, align 8
-  br i1 %i.k, label %bb.ao, label %bb.ap
+  br i1 %2, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.do = getelementptr i8, ptr %i.av, i64 96
@@ -498,7 +499,7 @@ bb.ar:                                            ; preds = %bb.aq
 __drm_to_dev.exit121.i:                           ; preds = %bb.ar, %bb.aq
   %i.dt = phi ptr [ %i.ds, %bb.ar ], [ null, %bb.aq ]
   tail call void (ptr, ptr, ...) @_dev_err(ptr noundef %i.dt, ptr noundef nonnull @.str.14, i32 noundef %i.dq) #6
-  br i1 %i.k, label %bb.as, label %bb.at
+  br i1 %2, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %__drm_to_dev.exit121.i
   %i.du = getelementptr i8, ptr %i.av, i64 96

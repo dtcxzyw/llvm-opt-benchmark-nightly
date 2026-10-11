@@ -73,7 +73,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i, %.lr.ph.i
   %.sroa.07.022.i = phi ptr [ %.sroa.07.019.i, %.lr.ph.i ], [ %.sroa.07.0.i, %_ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i ] ; 17 uses
-  %.021.i = phi i1 [ false, %.lr.ph.i ], [ %11, %_ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i ]
+  %.021.i = phi i1 [ false, %.lr.ph.i ], [ %.0.in.i.i, %_ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %5, i8 0, i64 20, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.c, i8 0, i64 20, i1 false)
@@ -300,15 +300,19 @@ bb.q:                                             ; preds = %._crit_edge.i.i.i.i
 .critedge.i.i.i.i:                                ; preds = %bb.q, %._crit_edge.i.i.i.i, %_ZN4llvh6detail12DenseSetImplIPN6hermes8CallInstENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit.i.i.i.i
   %.1.i.i.i.i = phi i1 [ %.03057.i.i.i.i, %._crit_edge.i.i.i.i ], [ true, %bb.q ], [ %.03057.i.i.i.i, %_ZN4llvh6detail12DenseSetImplIPN6hermes8CallInstENS_8DenseMapIS4_NS0_13DenseSetEmptyENS_12DenseMapInfoIS4_EENS0_12DenseSetPairIS4_EEEES8_E5beginEv.exit.i.i.i.i ] ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %.pre.i.i.i.i, %wide.trip.count.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i, label %_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.i, label %bb.h, !llvm.loop !64
+  br i1 %exitcond.not.i.i.i.i, label %_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.loopexit.i, label %bb.h, !llvm.loop !64
 
-_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.i: ; preds = %.critedge.i.i.i.i, %bb.g
-  %.0.ph.i.i.i = phi i1 [ false, %bb.g ], [ %.1.i.i.i.i, %.critedge.i.i.i.i ]
+_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.loopexit.i: ; preds = %.critedge.i.i.i.i
+  %6 = or i1 %.021.i, %.1.i.i.i.i
+  br label %_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.i
+
+_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.i: ; preds = %_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.loopexit.i, %bb.g
+  %.0.ph.i.i.i = phi i1 [ %.021.i, %bb.g ], [ %6, %_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.loopexit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   br label %_ZN12_GLOBAL__N_117TypeInferenceImpl11inferParamsEPN6hermes8FunctionE.exit.i.i
 
 _ZN12_GLOBAL__N_117TypeInferenceImpl11inferParamsEPN6hermes8FunctionE.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.i, %bb.f, %bb.b
-  %.0.i.i.i = phi i1 [ false, %bb.f ], [ false, %bb.b ], [ %.0.ph.i.i.i, %_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.i ], [ false, %.lr.ph.i.i.i.i.i.i ]
+  %.0.i.i.i = phi i1 [ %.021.i, %bb.f ], [ %.021.i, %bb.b ], [ %.0.ph.i.i.i, %_ZN6hermes17CallGraphProvider19hasUnknownCallsitesEPNS_8FunctionE.exit.thread.sink.split.i.i.i ], [ %.021.i, %.lr.ph.i.i.i.i.i.i ]
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.07.022.i, i64 88 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.07.022.i, i64 80 ; 4 uses
   %i.db = getelementptr inbounds nuw i8, ptr %.sroa.07.022.i, i64 16
@@ -318,7 +322,7 @@ _ZN12_GLOBAL__N_117TypeInferenceImpl11inferParamsEPN6hermes8FunctionE.exit.i.i: 
   br label %bb.r
 
 bb.r:                                             ; preds = %.loopexit.i.i, %_ZN12_GLOBAL__N_117TypeInferenceImpl11inferParamsEPN6hermes8FunctionE.exit.i.i
-  %.0.in.i.i = phi i1 [ %.0.i.i.i, %_ZN12_GLOBAL__N_117TypeInferenceImpl11inferParamsEPN6hermes8FunctionE.exit.i.i ], [ %10, %.loopexit.i.i ]
+  %.0.in.i.i = phi i1 [ %.0.i.i.i, %_ZN12_GLOBAL__N_117TypeInferenceImpl11inferParamsEPN6hermes8FunctionE.exit.i.i ], [ true, %.loopexit.i.i ] ; 2 uses
   %.sroa.0102.0123.i.i = load ptr, ptr %i.cz, align 8, !tbaa !74 ; 2 uses
   %.not105124.i.i = icmp eq ptr %.sroa.0102.0123.i.i, %i.da
   br i1 %.not105124.i.i, label %._crit_edge129.i.i, label %.lr.ph128.i.i
@@ -721,11 +725,15 @@ bb.dc:                                            ; preds = %_ZL23inferFunctionR
   %.idx.i.i = shl nuw nsw i64 %i.sg, 3
   %i.sh = getelementptr inbounds nuw i8, ptr %i.sd, i64 %.idx.i.i
   %.not131.i.i = icmp eq i32 %i.sf, 0
-  br i1 %.not131.i.i, label %.loopexit.i.i, label %.lr.ph135.i.i
+  br i1 %.not131.i.i, label %.loopexit.i.i, label %.lr.ph134.preheader.i.i
 
-.lr.ph135.i.i:                                    ; preds = %bb.dc, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i
-  %.027133.i.i = phi ptr [ %i.tg, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ], [ %i.sd, %bb.dc ] ; 2 uses
-  %.2132.i.i = phi i8 [ %7, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ], [ %.0.i31.i.i, %bb.dc ]
+.lr.ph134.preheader.i.i:                          ; preds = %bb.dc
+  %7 = trunc nuw i8 %.0.i31.i.i to i1
+  br label %.lr.ph135.i.i
+
+.lr.ph135.i.i:                                    ; preds = %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i, %.lr.ph134.preheader.i.i
+  %.027133.i.i = phi ptr [ %i.tg, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ], [ %i.sd, %.lr.ph134.preheader.i.i ] ; 2 uses
+  %.2131.i.i = phi i1 [ %8, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ], [ %7, %.lr.ph134.preheader.i.i ]
   %i.si = load ptr, ptr %.027133.i.i, align 8, !tbaa !151 ; 2 uses
   %i.sj = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6hermes5Value8getUsersEv(ptr noundef nonnull align 8 dereferenceable(40) %i.si) #8 ; 2 uses
   %i.sk = load ptr, ptr %i.sj, align 8, !tbaa !123 ; 2 uses
@@ -810,22 +818,21 @@ bb.di:                                            ; preds = %_ZL23inferMemoryLoc
   br label %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i
 
 _ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i:    ; preds = %bb.di, %_ZL23inferMemoryLocationTypePN6hermes5ValueE.exit.i.i.i
-  %6 = zext i1 %i.tf to i8
-  %7 = or i8 %.2132.i.i, %6                       ; 2 uses
+  %8 = or i1 %.2131.i.i, %i.tf                    ; 2 uses
   %i.tg = getelementptr inbounds nuw i8, ptr %.027133.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.tg, %i.sh
-  br i1 %.not.i.i, label %.loopexit.i.i, label %.lr.ph135.i.i
+  br i1 %.not.i.i, label %.loopexit.loopexit.i.i, label %.lr.ph135.i.i
 
-.loopexit.i.i:                                    ; preds = %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i, %bb.dc, %_ZL23inferFunctionReturnTypePN6hermes8FunctionE.exit.i.i
-  %.3.i.i = phi i8 [ %.0.i31.i.i, %_ZL23inferFunctionReturnTypePN6hermes8FunctionE.exit.i.i ], [ %.0.i31.i.i, %bb.dc ], [ %7, %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i ] ; 2 uses
+.loopexit.loopexit.i.i:                           ; preds = %_ZL15inferMemoryTypePN6hermes5ValueE.exit.i.i
+  %9 = zext i1 %8 to i8
+  br label %.loopexit.i.i
+
+.loopexit.i.i:                                    ; preds = %.loopexit.loopexit.i.i, %bb.dc, %_ZL23inferFunctionReturnTypePN6hermes8FunctionE.exit.i.i
+  %.3.i.i = phi i8 [ %.0.i31.i.i, %_ZL23inferFunctionReturnTypePN6hermes8FunctionE.exit.i.i ], [ %.0.i31.i.i, %bb.dc ], [ %9, %.loopexit.loopexit.i.i ]
   %i.th = trunc nuw i8 %.3.i.i to i1
-  %8 = zext i1 %.0.in.i.i to i8
-  %9 = or i8 %.3.i.i, %8
-  %10 = icmp ne i8 %9, 0                          ; 2 uses
   br i1 %i.th, label %bb.r, label %_ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i, !llvm.loop !71
 
 _ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i: ; preds = %.loopexit.i.i
-  %11 = or i1 %.021.i, %10                        ; 2 uses
   call void @_ZN6hermes17CallGraphProviderD2Ev(ptr noundef nonnull align 8 dereferenceable(96) %5) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   %i.ti = getelementptr inbounds nuw i8, ptr %.sroa.07.022.i, i64 8
@@ -834,7 +841,7 @@ _ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i: 
   br i1 %.not.i, label %_ZN12_GLOBAL__N_117TypeInferenceImpl11runOnModuleEPN6hermes6ModuleE.exit, label %bb.b
 
 _ZN12_GLOBAL__N_117TypeInferenceImpl11runOnModuleEPN6hermes6ModuleE.exit: ; preds = %_ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i, %bb.a
-  %.0.lcssa.i = phi i1 [ false, %bb.a ], [ %11, %_ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i ]
+  %.0.lcssa.i = phi i1 [ false, %bb.a ], [ %.0.in.i.i, %_ZN12_GLOBAL__N_117TypeInferenceImpl13runOnFunctionEPN6hermes8FunctionE.exit.i ]
   ret i1 %.0.lcssa.i
 }
 

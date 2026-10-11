@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/compress_io?download=true
-inline.NumInlined: 9
+inline.NumInlined: 10
 inline.NumDeleted: 2
 begin_hunk_0
 
@@ -202,25 +202,31 @@ hasSuffix.exit21.thread:                          ; preds = %bb.a, %hasSuffix.ex
   br i1 %i.af, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %hasSuffix.exit21.thread
-  %i.ag = tail call ptr @__errno_location() #10   ; 2 uses
+  %i.ag = tail call ptr @__errno_location() #10   ; 4 uses
   %i.ah = load i32, ptr %i.ag, align 4
   tail call void @free(ptr noundef nonnull %i.b) #8
   store i32 %i.ah, ptr %i.ag, align 4
-  %i.ai = tail call ptr (ptr, ...) @psprintf(ptr noundef nonnull @.str.7, ptr noundef %0, ptr noundef nonnull @.str.4) #8 ; 2 uses
+  %i.ai = tail call ptr (ptr, ...) @psprintf(ptr noundef nonnull @.str.7, ptr noundef %0, ptr noundef nonnull @.str.4) #8 ; 3 uses
   store ptr %i.ai, ptr %i.a, align 8
   %i.aj = tail call i32 @access(ptr noundef %i.ai, i32 noundef 0) #8
   %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = call fastcc zeroext i1 @check_compressed_file(ptr noundef %0, ptr noundef %i.a, ptr noundef nonnull @.str.5)
-  br i1 %4, label %bb.g, label %bb.d
+  %4 = load i32, ptr %i.ag, align 4
+  tail call void @free(ptr noundef %i.ai) #8
+  store i32 %4, ptr %i.ag, align 4
+  %5 = tail call ptr (ptr, ...) @psprintf(ptr noundef nonnull @.str.7, ptr noundef %0, ptr noundef nonnull @.str.5) #8 ; 2 uses
+  store ptr %5, ptr %i.a, align 8
+  %6 = tail call i32 @access(ptr noundef %5, i32 noundef 0) #8
+  %7 = icmp eq i32 %6, 0
+  br i1 %7, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.al = call fastcc zeroext i1 @check_compressed_file(ptr noundef %0, ptr noundef %i.a, ptr noundef nonnull @.str.6)
   br i1 %i.al, label %bb.h, label %bb.e
 
-bb.e:                                             ; preds = %hasSuffix.exit21.thread, %bb.d
+bb.e:                                             ; preds = %bb.d, %hasSuffix.exit21.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
   %i.am = tail call ptr @pg_malloc0(i64 noundef 112) #8 ; 2 uses

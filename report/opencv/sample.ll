@@ -202,12 +202,13 @@ bb.w:                                             ; preds = %_ZNK2cv17CommandLin
   %i.ez = zext i8 %i.ey to i16
   %i.fa = xor i16 %i.ez, 109
   %i.fb = or i16 %i.ew, %i.fa
-  %i.fc = icmp ne i16 %i.fb, 0                    ; 2 uses
-  %i.fd = zext i1 %i.fc to i32                    ; 0 uses
+  %i.fc = icmp ne i16 %i.fb, 0
+  %i.fd = zext i1 %i.fc to i32
+  %40 = icmp eq i32 %i.fd, 0
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i: ; preds = %bb.w, %_ZNK2cv17CommandLineParser3getINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEET_RKS7_b.exit.i
-  %i.fe = phi i1 [ true, %_ZNK2cv17CommandLineParser3getINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEET_RKS7_b.exit.i ], [ %i.fc, %bb.w ]
+  %i.fe = phi i1 [ false, %_ZNK2cv17CommandLineParser3getINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEET_RKS7_b.exit.i ], [ %40, %bb.w ]
   %i.ff = icmp eq ptr %.pre.i, %i.em
   br i1 %i.ff, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i177.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i176.i
 
@@ -610,7 +611,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.bw, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i118
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #9
-  br i1 %i.fe, label %bb.bx, label %bb.dd
+  br i1 %i.fe, label %bb.dd, label %bb.bx
 
 bb.bx:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #9

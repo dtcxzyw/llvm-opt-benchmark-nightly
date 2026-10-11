@@ -79,8 +79,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche6ranges8RangeSe
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1783), !dbg !1899
     #dbg_value(ptr %0, !1785, !DIExpression(), !1643)
-  %1 = icmp eq i64 %i.b, 0, !dbg !1900
-  br i1 %1, label %bb.c, label %bb.g, !dbg !1900
+  %1 = trunc nuw i64 %i.b to i1, !dbg !1900
+  br i1 %1, label %bb.g, label %bb.c, !dbg !1900
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1791), !dbg !1900
@@ -396,9 +396,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.012.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.012.ph, 1, !dbg !2018
-  %xtraiter = and i64 %2, 1, !dbg !2018
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !2018
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !dbg !2018
+  %lcmp.mod.not = trunc i64 %2 to i1, !dbg !2018
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit, !dbg !2018
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
     #dbg_value(i64 poison, !2032, !DIExpression(), !2078)
@@ -614,8 +613,8 @@ bb.a:                                             ; preds = %.lr.ph, %bb.i
     #dbg_value(ptr %i.z, !3693, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !2421)
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 16, !dbg !3878
   %i.ad = load i64, ptr %i.ac, align 8, !dbg !3878, !range !1235, !alias.scope !3672, !noalias !3698, !noundef !453
-  %.not.i.i.i.i.i.i.i = icmp eq i64 %i.ad, 0, !dbg !3879
-  br i1 %.not.i.i.i.i.i.i.i, label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters6filter15filter_try_foldTjRNtNtCs3f36owOmepS_6quiche4path4PathEuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs1_B1c_NtB1c_10Connection10paths_iter0NCIB2_B15_uB1J_NCB2v_s_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCB2v_s0_0E0E0E0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i, label %bb.b, !dbg !3880
+  %2 = trunc nuw i64 %i.ad to i1, !dbg !3879
+  br i1 %2, label %bb.b, label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters6filter15filter_try_foldTjRNtNtCs3f36owOmepS_6quiche4path4PathEuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs1_B1c_NtB1c_10Connection10paths_iter0NCIB2_B15_uB1J_NCB2v_s_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCB2v_s0_0E0E0E0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i, !dbg !3880
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !3700), !dbg !3881
@@ -642,8 +641,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i.i.i.i
     #dbg_value(ptr %i.z, !3773, !DIExpression(), !2463)
     #dbg_value(ptr %i.z, !3776, !DIExpression(), !2466)
   %.old.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 2584
-  %.old6.i.i.i.i.i.i.i.i = load i64, ptr %.old.i.i.i.i.i.i.i.i, align 8, !alias.scope !3672, !noalias !3698
-  %.old7.i.i.i.i.i.i.i.i = icmp eq i64 %.old6.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %.old6.i.i.i.i.i.i.i.i = load i64, ptr %.old.i.i.i.i.i.i.i.i, align 8, !alias.scope !3672, !noalias !3698 ; 2 uses
   br i1 %i.ag, label %bb.c, label %._crit_edge.i.i.i.i.i.i.i.i.i, !dbg !3882
 
 bb.c:                                             ; preds = %bb.b
@@ -652,15 +650,17 @@ bb.c:                                             ; preds = %bb.b
     #dbg_value(i8 poison, !3780, !DIExpression(), !2474)
     #dbg_value(i8 poison, !3760, !DIExpression(), !2475)
   %.not.i.i.i.i.i.i.i.i.i = icmp eq i8 %i.ai, 0, !dbg !3884
-  %or.cond.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i.i, i1 %.old7.i.i.i.i.i.i.i.i, i1 false, !dbg !3885
+  %.old8.i.i.i.i.i.i.i.i = icmp eq i64 %.old6.i.i.i.i.i.i.i.i, 0
+  %or.cond.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i.i, i1 %.old8.i.i.i.i.i.i.i.i, i1 false, !dbg !3885
   br i1 %or.cond.i.i.i.i.i.i.i, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i.i.i, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.thread.i.i.i.i.i.i.i.i, !dbg !3885
 
 ._crit_edge.i.i.i.i.i.i.i.i.i:                    ; preds = %bb.b
     #dbg_value(ptr %i.z, !3765, !DIExpression(DW_OP_plus_uconst, 2791, DW_OP_stack_value), !2476)
     #dbg_value(i8 %i.ai, !3766, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !2477)
-  %i.aj = icmp ne i8 %i.ai, 4, !dbg !3886
-  %or.cond8.i.i.i.i.i.i.i.i = select i1 %i.aj, i1 %.old7.i.i.i.i.i.i.i.i, i1 false, !dbg !3887
-  br i1 %or.cond8.i.i.i.i.i.i.i.i, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i.i.i, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.thread.i.i.i.i.i.i.i.i, !dbg !3887
+  %3 = icmp eq i8 %i.ai, 4, !dbg !3886
+  %i.aj = icmp ne i64 %.old6.i.i.i.i.i.i.i.i, 0
+  %or.cond8.i.i.i.i.i.i.i.i = select i1 %3, i1 true, i1 %i.aj, !dbg !3887
+  br i1 %or.cond8.i.i.i.i.i.i.i.i, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.thread.i.i.i.i.i.i.i.i, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i.i.i, !dbg !3887
 
 _RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i, %bb.c
   %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 2787, !dbg !3888
@@ -717,8 +717,8 @@ _RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB5_3MapINtNtB7_6filter6Fil
     #dbg_value(ptr %i.aq, !3693, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !2507)
   %i.at = getelementptr inbounds nuw i8, ptr %i.aq, i64 16, !dbg !3897
   %i.au = load i64, ptr %i.at, align 8, !dbg !3897, !range !1235, !alias.scope !3824, !noalias !3825, !noundef !453
-  %.not.i.i.i.i.i.i.i22 = icmp eq i64 %i.au, 0, !dbg !3898
-  br i1 %.not.i.i.i.i.i.i.i22, label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters6filter15filter_try_foldTjRNtNtCs3f36owOmepS_6quiche4path4PathEuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs1_B1c_NtB1c_10Connection10paths_iter0NCIB2_B15_uB1J_NCB2v_s_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCB2v_s0_0E0E0E0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i29, label %bb.d, !dbg !3899
+  %4 = trunc nuw i64 %i.au to i1, !dbg !3898
+  br i1 %4, label %bb.d, label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters6filter15filter_try_foldTjRNtNtCs3f36owOmepS_6quiche4path4PathEuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs1_B1c_NtB1c_10Connection10paths_iter0NCIB2_B15_uB1J_NCB2v_s_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCB2v_s0_0E0E0E0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i29, !dbg !3899
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i.i21
   call void @llvm.experimental.noalias.scope.decl(metadata !3826), !dbg !3900
@@ -745,8 +745,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i.i2
     #dbg_value(ptr %i.aq, !3773, !DIExpression(), !2532)
     #dbg_value(ptr %i.aq, !3776, !DIExpression(), !2534)
   %.old.i.i.i.i.i.i.i.i23 = getelementptr inbounds nuw i8, ptr %i.aq, i64 2584
-  %.old6.i.i.i.i.i.i.i.i24 = load i64, ptr %.old.i.i.i.i.i.i.i.i23, align 8, !alias.scope !3824, !noalias !3825
-  %.old7.i.i.i.i.i.i.i.i25 = icmp eq i64 %.old6.i.i.i.i.i.i.i.i24, 0 ; 2 uses
+  %.old6.i.i.i.i.i.i.i.i24 = load i64, ptr %.old.i.i.i.i.i.i.i.i23, align 8, !alias.scope !3824, !noalias !3825 ; 2 uses
   br i1 %i.ax, label %bb.e, label %._crit_edge.i.i.i.i.i.i.i.i.i26, !dbg !3901
 
 bb.e:                                             ; preds = %bb.d
@@ -755,15 +754,17 @@ bb.e:                                             ; preds = %bb.d
     #dbg_value(i8 poison, !3780, !DIExpression(), !2539)
     #dbg_value(i8 poison, !3760, !DIExpression(), !2540)
   %.not.i.i.i.i.i.i.i.i.i33 = icmp eq i8 %i.az, 0, !dbg !3903
-  %or.cond.i.i.i.i.i.i.i34 = select i1 %.not.i.i.i.i.i.i.i.i.i33, i1 %.old7.i.i.i.i.i.i.i.i25, i1 false, !dbg !3904
+  %.old8.i.i.i.i.i.i.i.i32 = icmp eq i64 %.old6.i.i.i.i.i.i.i.i24, 0
+  %or.cond.i.i.i.i.i.i.i34 = select i1 %.not.i.i.i.i.i.i.i.i.i33, i1 %.old8.i.i.i.i.i.i.i.i32, i1 false, !dbg !3904
   br i1 %or.cond.i.i.i.i.i.i.i34, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i.i.i32, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.thread.i.i.i.i.i.i.i.i28, !dbg !3904
 
 ._crit_edge.i.i.i.i.i.i.i.i.i26:                  ; preds = %bb.d
     #dbg_value(ptr %i.aq, !3765, !DIExpression(DW_OP_plus_uconst, 2791, DW_OP_stack_value), !2541)
     #dbg_value(i8 %i.az, !3766, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !2542)
-  %i.ba = icmp ne i8 %i.az, 4, !dbg !3905
-  %or.cond8.i.i.i.i.i.i.i.i27 = select i1 %i.ba, i1 %.old7.i.i.i.i.i.i.i.i25, i1 false, !dbg !3906
-  br i1 %or.cond8.i.i.i.i.i.i.i.i27, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i.i.i32, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.thread.i.i.i.i.i.i.i.i28, !dbg !3906
+  %5 = icmp eq i8 %i.az, 4, !dbg !3905
+  %i.ba = icmp ne i64 %.old6.i.i.i.i.i.i.i.i24, 0
+  %or.cond8.i.i.i.i.i.i.i.i27 = select i1 %5, i1 true, i1 %i.ba, !dbg !3906
+  br i1 %or.cond8.i.i.i.i.i.i.i.i27, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.thread.i.i.i.i.i.i.i.i28, label %_RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i.i.i32, !dbg !3906
 
 _RNCNvMs1_Cs3f36owOmepS_6quicheNtB7_10Connection10paths_iters_0CslusEaBCZKLp_13quiche_client.exit.i.i.i.i.i.i.i.i32: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i26, %bb.e
   %i.bb = getelementptr inbounds nuw i8, ptr %i.aq, i64 2787, !dbg !3907

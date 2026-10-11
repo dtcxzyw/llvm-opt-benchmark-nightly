@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2286), !dbg !2319
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2287), !dbg !2320
   %i.c = load i64, ptr %i.b, align 8, !dbg !2321, !range !658, !alias.scope !2288, !noundef !531
-  %1 = icmp eq i64 %i.c, 0, !dbg !2321
-  br i1 %1, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgjwxzEoLG5s_12polars_error6python9PyErrWrapECshquuC4dCYVj_10polars_sql.exit, label %bb.c, !dbg !2321
+  %1 = trunc nuw i64 %i.c to i1, !dbg !2321
+  br i1 %1, label %bb.c, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsgjwxzEoLG5s_12polars_error6python9PyErrWrapECshquuC4dCYVj_10polars_sql.exit, !dbg !2321
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !2321
@@ -606,8 +606,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5341), !dbg !5349
-  %1 = icmp eq i64 %i.a, 0, !dbg !5350
-  br i1 %1, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsfcROwRM8ZtH_11polars_plan8callback12PlanCallbackjNtNtCsgZ49sUHp3tW_5alloc6string6StringEEECshquuC4dCYVj_10polars_sql.exit, label %bb.c, !dbg !5350
+  %1 = trunc nuw i64 %i.a to i1, !dbg !5350
+  br i1 %1, label %bb.c, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsfcROwRM8ZtH_11polars_plan8callback12PlanCallbackjNtNtCsgZ49sUHp3tW_5alloc6string6StringEEECshquuC4dCYVj_10polars_sql.exit, !dbg !5350
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !5350 ; 2 uses
@@ -1010,8 +1010,8 @@ bb.d:                                             ; preds = %bb.c
   br label %.sink.split.sink.split.i.i, !dbg !14214
 
 bb.e:                                             ; preds = %bb.c
-  %3 = icmp sgt i64 %i.i, -1, !dbg !14215
-  br i1 %3, label %bb.f, label %.sink.split.i.i, !dbg !14215
+  %3 = icmp slt i64 %i.i, 0, !dbg !14215
+  br i1 %3, label %.sink.split.i.i, label %bb.f, !dbg !14215
 
 bb.f:                                             ; preds = %bb.e
   %i.n = udiv i64 %i.f, 5, !dbg !14216
@@ -1170,8 +1170,8 @@ bb.d:                                             ; preds = %bb.c
   br label %.sink.split.sink.split.i.i, !dbg !14324
 
 bb.e:                                             ; preds = %bb.c
-  %3 = icmp sgt i64 %i.i, -1, !dbg !14325
-  br i1 %3, label %bb.f, label %.sink.split.i.i, !dbg !14325
+  %3 = icmp slt i64 %i.i, 0, !dbg !14325
+  br i1 %3, label %.sink.split.i.i, label %bb.f, !dbg !14325
 
 bb.f:                                             ; preds = %bb.e
   %i.n = udiv i64 %i.f, 5, !dbg !14326
@@ -1574,8 +1574,8 @@ bb.aq:                                            ; preds = %bb.bs, %bb.br, %bb.
   call fastcc void @_RNvMs8_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_valueNtB5_8AnyValue7to_i128(ptr noalias noundef align 16 captures(none) dereferenceable(32) %i.b, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(48) %0), !dbg !15826
   %i.eg = load i128, ptr %i.b, align 16, !dbg !15826, !range !15630, !noundef !531
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !15826
-  %.not23 = icmp eq i128 %i.eg, 0, !dbg !15825
-  br i1 %.not23, label %bb.ea, label %bb.du, !dbg !15825
+  %2 = trunc nuw i128 %i.eg to i1, !dbg !15825
+  br i1 %2, label %bb.du, label %bb.ea, !dbg !15825
 
 bb.ar:                                            ; preds = %bb.ap
   %i.eh = icmp eq i8 %i.w, 1, !dbg !15738
@@ -1978,8 +1978,8 @@ bb.du:                                            ; preds = %bb.aq
   call fastcc void @_RNvMs8_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_valueNtB5_8AnyValue7to_i128(ptr noalias noundef align 16 captures(none) dereferenceable(32) %i.a, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(48) %1), !dbg !15997
   %i.og = load i128, ptr %i.a, align 16, !dbg !15997, !range !15630, !noundef !531
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !15997
-  %.not24 = icmp eq i128 %i.og, 0, !dbg !15996
-  br i1 %.not24, label %bb.ea, label %bb.dv, !dbg !15996
+  %3 = trunc nuw i128 %i.og to i1, !dbg !15996
+  br i1 %3, label %bb.dv, label %bb.ea, !dbg !15996
 
 bb.dv:                                            ; preds = %bb.du
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !15723
@@ -2382,7 +2382,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = load i8, ptr %0, align 2, !dbg !27843, !range !987, !noundef !531 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !27843
   %.not = icmp eq i8 %i.k, 2, !dbg !27843
-  %i.m = load i8, ptr %1, align 2, !dbg !27843, !range !987, !noundef !531 ; 2 uses
+  %i.m = load i8, ptr %1, align 2, !dbg !27843, !range !987, !noundef !531 ; 4 uses
   br i1 %.not, label %bb.f, label %bb.e, !dbg !27844
 
 bb.d:                                             ; preds = %bb.g, %bb.e, %bb.a, %bb.b, %bb.h, %bb.f
@@ -2391,16 +2391,20 @@ bb.d:                                             ; preds = %bb.g, %bb.e, %bb.a,
 
 bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 1, !dbg !27843
-  %i.o = icmp eq i8 %i.k, %i.m
-  br i1 %i.o, label %bb.g, label %bb.d, !dbg !27844
+  %i.o = icmp eq i8 %i.m, 2, !dbg !27843
+  %2 = xor i8 %i.m, %i.k
+  %3 = trunc i8 %2 to i1
+  %or.cond4 = or i1 %i.o, %3, !dbg !27844
+  br i1 %or.cond4, label %bb.d, label %bb.g, !dbg !27844
 
 bb.f:                                             ; preds = %bb.c
   %i.p = icmp eq i8 %i.m, 2, !dbg !27843
   br label %bb.d, !dbg !27844
 
 bb.g:                                             ; preds = %bb.e
-  %or.cond.not = icmp eq i8 %i.k, 0, !dbg !27846
-  br i1 %or.cond.not, label %bb.d, label %bb.h, !dbg !27846
+  %4 = and i8 %i.m, %i.k, !dbg !27846
+  %or.cond = trunc nuw i8 %4 to i1, !dbg !27846
+  br i1 %or.cond, label %bb.h, label %bb.d, !dbg !27846
 
 bb.h:                                             ; preds = %bb.g
   %i.q = load i8, ptr %i.l, align 1, !dbg !27847, !noundef !531

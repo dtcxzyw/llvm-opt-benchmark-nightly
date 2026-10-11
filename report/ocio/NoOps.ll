@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.e = mul i32 %2, %2
-  %i.f = mul i32 %i.e, %2                         ; 5 uses
+  %i.f = mul i32 %i.e, %2                         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !92)
   %i.g = tail call noalias noundef nonnull dereferenceable(248) ptr @_Znwm(i64 noundef 248) #24, !noalias !92 ; 6 uses
@@ -292,8 +292,9 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %4 = add nsw i64 %wide.trip.count, -1
-  %n.vec = and i64 %4, -2                         ; 2 uses
+  %4 = trunc i32 %i.f to i1
+  %.neg = select i1 %4, i64 -1, i64 -2
+  %n.vec = add nsw i64 %.neg, %wide.trip.count    ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

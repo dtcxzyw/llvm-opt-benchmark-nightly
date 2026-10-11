@@ -205,8 +205,8 @@ bb.cf:                                            ; preds = %bb.om, %bb.oj, %.cr
   br label %bb.ou
 
 .backedge:                                        ; preds = %.backedge.backedge, %.preheader
-  %.old = phi i1 [ true, %.preheader ], [ false, %.backedge.backedge ] ; 3 uses
-  %.070611 = phi i64 [ 0, %.preheader ], [ 1, %.backedge.backedge ] ; 5 uses
+  %.old = phi i1 [ true, %.preheader ], [ false, %.backedge.backedge ] ; 2 uses
+  %.070611 = phi i64 [ 0, %.preheader ], [ 1, %.backedge.backedge ] ; 6 uses
   %i.jl = load ptr, ptr %0, align 8, !tbaa !53, !noalias !1072 ; 2 uses
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jl, i64 8
   %i.jn = load i64, ptr %i.jm, align 8, !noalias !1072
@@ -289,7 +289,8 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit245: ; preds = %_ZNK4cvc58internal
 
 bb.cm:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit245
   call void @llvm.lifetime.start.p0(ptr nonnull %34) #22
-  br i1 %.old, label %bb.cn, label %bb.cp
+  %61 = trunc nuw i64 %.070611 to i1
+  br i1 %61, label %bb.cp, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
   call void @llvm.experimental.noalias.scope.decl(metadata !1073)

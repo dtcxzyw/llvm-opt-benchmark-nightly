@@ -202,11 +202,12 @@ bb.f:                                             ; preds = %bb.e
   br label %.outer
 
 .outer:                                           ; preds = %bb.r, %.preheader
-  %.not108 = phi i1 [ false, %bb.r ], [ true, %.preheader ] ; 2 uses
+  %.not108 = phi i1 [ false, %bb.r ], [ true, %.preheader ]
+  %.084.ph = phi i1 [ true, %bb.r ], [ false, %.preheader ]
   br label %bb.g
 
 bb.g:                                             ; preds = %.outer, %append_extradata.exit104
-  br i1 %.not108, label %.thread, label %bb.h
+  br i1 %.084.ph, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g
   %i.bd = load i32, ptr %i.bb, align 8, !tbaa !40

@@ -204,9 +204,6 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.wb = fdiv reassoc nsz arcp contract afn double %i.wa, %i.vz
   %i.wc = fptrunc reassoc nsz arcp contract afn double %i.wb to float
   %i.wd = fcmp reassoc nsz arcp contract afn ogt float %.0215.i.i, 1.200000e+01
-  %6 = fcmp reassoc nsz arcp contract afn olt float %.0215.i.i, -5.000000e+00
-  %7 = select reassoc nsz arcp contract afn i1 %6, float -5.000000e+00, float %.0215.i.i
-  %8 = select reassoc nsz arcp contract afn i1 %i.wd, float 1.200000e+01, float %7 ; 2 uses
   %i.we = fcmp reassoc nsz arcp contract afn olt float %i.tk, 1.000000e+02
   %i.wf = select reassoc nsz arcp contract afn i1 %i.we, float %i.tk, float 1.000000e+02 ; 2 uses
   %i.wg = fcmp reassoc nsz arcp contract afn olt float %i.wf, -1.000000e+02
@@ -214,17 +211,22 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.wi = fmul reassoc nsz arcp contract afn float %i.wc, f0x3C23D70A ; 2 uses
   %i.wj = fmul reassoc nsz arcp contract afn float %i.wh, f0x3C23D70A ; 2 uses
   %i.wk = fmul reassoc nsz arcp contract afn float %i.tq, f0x3C23D70A ; 2 uses
-  %9 = fcmp ord float %8, 0.000000e+00
-  br i1 %9, label %bb.bw, label %bb.bv
+  br i1 %i.wd, label %bb.bw, label %6
 
-bb.bv:                                            ; preds = %bb.bu
+6:                                                ; preds = %bb.bu
+  %7 = fcmp reassoc nsz arcp contract afn olt float %.0215.i.i, -5.000000e+00
+  %8 = select reassoc nsz arcp contract afn i1 %7, float -5.000000e+00, float %.0215.i.i ; 2 uses
+  %9 = fcmp uno float %8, 0.000000e+00
+  br i1 %9, label %bb.bv, label %bb.bw
+
+bb.bv:                                            ; preds = %6
   call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.57) #23
   br label %bb.bw
 
-bb.bw:                                            ; preds = %bb.bv, %bb.bu
-  %.2.i.i = phi nsz float [ %8, %bb.bu ], [ 0.000000e+00, %bb.bv ] ; 2 uses
-  %10 = fcmp ord float %i.wi, 0.000000e+00
-  br i1 %10, label %bb.by, label %bb.bx
+bb.bw:                                            ; preds = %bb.bv, %6, %bb.bu
+  %.2.i.i = phi nsz float [ %8, %6 ], [ 0.000000e+00, %bb.bv ], [ 1.200000e+01, %bb.bu ] ; 2 uses
+  %10 = fcmp uno float %i.wi, 0.000000e+00
+  br i1 %10, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
   call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.58) #23
@@ -232,8 +234,8 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.bx, %bb.bw
   %.1221.i.i = phi nsz float [ %i.wi, %bb.bw ], [ 0.000000e+00, %bb.bx ] ; 2 uses
-  %11 = fcmp ord float %i.wj, 0.000000e+00
-  br i1 %11, label %bb.ca, label %bb.bz
+  %11 = fcmp uno float %i.wj, 0.000000e+00
+  br i1 %11, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %bb.by
   call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.59) #23
@@ -241,19 +243,19 @@ bb.bz:                                            ; preds = %bb.by
 
 bb.ca:                                            ; preds = %bb.bz, %bb.by
   %.2224.i.i = phi nsz float [ %i.wj, %bb.by ], [ 0.000000e+00, %bb.bz ] ; 2 uses
-  %12 = fcmp ord float %i.wk, 0.000000e+00
-  br i1 %12, label %_auto_exposure.exit, label %bb.cb
+  %12 = fcmp uno float %i.wk, 0.000000e+00
+  br i1 %12, label %bb.cb, label %_auto_exposure.exit
 
 bb.cb:                                            ; preds = %bb.ca
   call void (ptr, ...) @dt_print_ext(ptr noundef nonnull @.str.60) #23
   br label %_auto_exposure.exit
 
 _auto_exposure.exit:                              ; preds = %middle.block, %._crit_edge.i14.i, %.preheader334.i.i, %._crit_edge350.i.i, %.preheader.i.i, %bb.ca, %bb.cb
-  %.2224326.i.i = phi float [ %.2224.i.i, %bb.ca ], [ %.2224.i.i, %bb.cb ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
-  %.2304312325.i.i = phi float [ %.2.i.i, %bb.ca ], [ %.2.i.i, %bb.cb ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
-  %.0227290303313324.i.i = phi float [ %i.ss, %bb.ca ], [ %i.ss, %bb.cb ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
-  %.1221315323.i.i = phi float [ %.1221.i.i, %bb.ca ], [ %.1221.i.i, %bb.cb ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
-  %.1226.i.i = phi nsz float [ %i.wk, %bb.ca ], [ 0.000000e+00, %bb.cb ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
+  %.2224326.i.i = phi float [ %.2224.i.i, %bb.ca ], [ %.2224.i.i, %bb.cb ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
+  %.2304312325.i.i = phi float [ %.2.i.i, %bb.ca ], [ %.2.i.i, %bb.cb ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
+  %.0227290303313324.i.i = phi float [ %i.ss, %bb.ca ], [ %i.ss, %bb.cb ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
+  %.1221315323.i.i = phi float [ %.1221.i.i, %bb.ca ], [ %.1221.i.i, %bb.cb ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
+  %.1226.i.i = phi nsz float [ %i.wk, %bb.ca ], [ 0.000000e+00, %bb.cb ], [ 0.000000e+00, %._crit_edge.i14.i ], [ 0.000000e+00, %.preheader.i.i ], [ 0.000000e+00, %._crit_edge350.i.i ], [ 0.000000e+00, %middle.block ], [ 0.000000e+00, %.preheader334.i.i ]
   store float %.2304312325.i.i, ptr %i.ch, align 4, !tbaa !12
   store float %.1221315323.i.i, ptr %i.m, align 8, !tbaa !12
   store float %.2224326.i.i, ptr %i.ci, align 4, !tbaa !12
