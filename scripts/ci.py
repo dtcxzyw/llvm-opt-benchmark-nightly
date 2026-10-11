@@ -1689,6 +1689,7 @@ def generate_diff_report(
     MAX_DIFF_TOTAL = 15000
     MAX_FILE_TOTAL = 200
     TRIVIAL_PENALTY = 200
+    IMPROVEMENT_PENALTY = 100
     DIVERSITY_PENALTY_INC = 30
 
     # proj -> list of (cost, real_cost, order_key, rendered_file, proj, added, removed)
@@ -1752,6 +1753,8 @@ def generate_diff_report(
             continue
         if number_of_added_lines == number_of_removed_lines:
             cost += TRIVIAL_PENALTY
+        elif number_of_added_lines < number_of_removed_lines:
+            cost += IMPROVEMENT_PENALTY
         diffs.setdefault(proj, []).append(
             (
                 cost,
@@ -1817,12 +1820,33 @@ def generate_diff_report(
         else:
             break
 
-    report = "| Scope | Files | Added Lines | Removed Lines |\n"
-    report += "| --- | ---: | ---: | ---: |\n"
+    original_add_gt_sub = 0
+    original_add_lt_sub = 0
+    original_add_eq_sub = 0
+    for add, sub, _, _ in full_diff_rows:
+        if add is None or sub is None:
+            continue
+        if add > sub:
+            original_add_gt_sub += 1
+        elif add < sub:
+            original_add_lt_sub += 1
+        else:
+            original_add_eq_sub += 1
+
+    kept_add_gt_sub = sum(1 for kept_file in kept_files if kept_file.delta > 0)
+    kept_add_lt_sub = sum(1 for kept_file in kept_files if kept_file.delta < 0)
+    kept_add_eq_sub = sum(1 for kept_file in kept_files if kept_file.delta == 0)
+
+    report = "| Scope | Files | Added Lines | Removed Lines | Add > Sub | Add < Sub | Add == Sub |\n"
+    report += "| --- | ---: | ---: | ---: | ---: | ---: | ---: |\n"
     report += (
-        f"| Original | {len(rendered_files)} | {total_added} | {total_removed} |\n"
+        f"| Original | {len(rendered_files)} | {total_added} | {total_removed} | "
+        f"{original_add_gt_sub} | {original_add_lt_sub} | {original_add_eq_sub} |\n"
     )
-    report += f"| Kept | {len(kept_files)} | {kept_added} | {kept_removed} |\n\n"
+    report += (
+        f"| Kept | {len(kept_files)} | {kept_added} | {kept_removed} | "
+        f"{kept_add_gt_sub} | {kept_add_lt_sub} | {kept_add_eq_sub} |\n\n"
+    )
 
     if full_diff_rows:
         report += "FULLDIFF_LINK_PLACEHOLDER\n\n"
@@ -1883,6 +1907,8 @@ def build_full_diff_link(has_rows: bool, metadata_committed: bool) -> str:
         "Download the full diff list: "
         "[z_fulldiff.csv]"
         f"(https://raw.githubusercontent.com/dtcxzyw/llvm-opt-benchmark-nightly/{commit_hash}/report/z_fulldiff.csv)\n"
+        "Kept files are selected by a heuristic that prioritizes regressions to optimize the GitHub review experience; "
+        "please check the full diff list if the distribution is unexpected.\n"
     )
 
 
