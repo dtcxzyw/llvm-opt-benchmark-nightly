@@ -205,8 +205,8 @@ default.unreachable35:                            ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val12 = load ptr, ptr %i.h, align 8
-  %.val11 = load ptr, ptr %1, align 8
+  %.val12 = load ptr, ptr %i.h, align 8, !nonnull !12, !noundef !12
+  %.val11 = load ptr, ptr %1, align 8, !nonnull !12, !noundef !12
   %i.i = getelementptr inbounds nuw i8, ptr %.val12, i64 24
   %i.j = load ptr, ptr %i.i, align 8, !invariant.load !12, !noalias !8310, !nonnull !12
   %i.k = tail call noundef zeroext i1 %i.j(ptr noundef nonnull align 1 %.val11, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @390, i64 noundef 18), !noalias !8310, !inline_history !8
@@ -373,8 +373,8 @@ default.unreachable35:                            ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val12 = load ptr, ptr %i.h, align 8
-  %.val11 = load ptr, ptr %1, align 8
+  %.val12 = load ptr, ptr %i.h, align 8, !nonnull !12, !noundef !12
+  %.val11 = load ptr, ptr %1, align 8, !nonnull !12, !noundef !12
   %i.i = getelementptr inbounds nuw i8, ptr %.val12, i64 24
   %i.j = load ptr, ptr %i.i, align 8, !invariant.load !12, !noalias !8325, !nonnull !12
   %i.k = tail call noundef zeroext i1 %i.j(ptr noundef nonnull align 1 %.val11, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @390, i64 noundef 18), !noalias !8325, !inline_history !8

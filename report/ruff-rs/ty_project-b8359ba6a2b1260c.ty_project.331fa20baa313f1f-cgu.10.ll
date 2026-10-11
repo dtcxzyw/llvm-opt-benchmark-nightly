@@ -204,7 +204,8 @@ bb.f:                                             ; preds = %bb.g, %bb.i, %bb.h,
   %i.w = and i64 %i.a, -8
   %i.x = getelementptr i8, ptr %1, i64 %i.w
   %i.y = sub i64 0, %i.a
-  %i.z = getelementptr i8, ptr %i.x, i64 %i.y
+  %i.z = getelementptr i8, ptr %i.x, i64 %i.y     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   tail call void %.sroa.0.0(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull %i.z, i64 noundef %i.j, i8 noundef %i.f, i8 noundef %.sroa.4.0.i)
   ret void
 
@@ -460,7 +461,8 @@ bb.f:                                             ; preds = %bb.g, %bb.i, %bb.h,
   %i.w = and i64 %i.a, -8
   %i.x = getelementptr i8, ptr %1, i64 %i.w
   %i.y = sub i64 0, %i.a
-  %i.z = getelementptr i8, ptr %i.x, i64 %i.y
+  %i.z = getelementptr i8, ptr %i.x, i64 %i.y     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   tail call void %.sroa.0.0(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull %i.z, i64 noundef %i.j, i8 noundef %i.f, i8 noundef %.sroa.4.0.i)
   ret void
 

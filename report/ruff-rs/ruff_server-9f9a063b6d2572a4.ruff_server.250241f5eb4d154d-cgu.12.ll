@@ -205,7 +205,7 @@ _RNvMs0_NtCs3aZOKTqqjPR_11ruff_server6formatNtB5_15UvFormatCommand13build_comman
   invoke void @_RNvMsk_NtCs2AWtUsOyxgP_3std7processNtB5_7Command5spawn(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.bf, ptr noalias noundef nonnull align 8 dereferenceable(200) %i.bh)
           to label %bb.av unwind label %bb.au
 
-.thread121:                                       ; preds = %bb.dt, %bb.du, %bb.ds, %.thread135, %.body106, %.thread126, %bb.ce, %bb.au
+.thread121:                                       ; preds = %bb.ds, %bb.dt, %bb.du, %.thread135, %.body106, %.thread126, %bb.ce, %bb.au
   %.pn89.pn = phi { ptr, i32 } [ %.pn87116, %bb.ds ], [ %eh.lpad-body107, %.body106 ], [ %i.ep, %bb.au ], [ %lpad.thr_comm, %.thread126 ], [ %i.gz, %bb.ce ], [ %.pn133, %.thread135 ], [ %i.jn, %bb.dt ], [ %i.jr, %bb.du ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2AWtUsOyxgP_3std7process7CommandECs3aZOKTqqjPR_11ruff_server(ptr noalias noundef align 8 dereferenceable(200) %i.bh) #36
           to label %common.resume unwind label %bb.dn

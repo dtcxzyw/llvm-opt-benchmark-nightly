@@ -204,7 +204,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !181086
 
 bb.h:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i
-  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !181085
+  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !181085 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
   %i.ba = load i16, ptr %i.az, align 2, !dbg !181087, !alias.scope !181029, !noalias !181030, !noundef !3008
   br label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterNtNtCs2mZqlW55729_12polars_utils7float164pf16ENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.i.i.i.i.i.outer, !dbg !181088
 
@@ -268,7 +269,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !181106
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i
-  %i.bz = extractvalue { i8, ptr } %i.bx, 1, !dbg !181105
+  %i.bz = extractvalue { i8, ptr } %i.bx, 1, !dbg !181105 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bz) ]
   %i.ca = load i16, ptr %i.bz, align 2, !dbg !181107, !alias.scope !181033, !noalias !181034, !noundef !3008 ; 6 uses
   br i1 %i.bc, label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterNtNtCs2mZqlW55729_12polars_utils7float164pf16ENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.i.i.i.i.i.backedge, label %bb.k, !dbg !181108
 
@@ -459,7 +461,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !181325
 
 bb.h:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i
-  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !181324
+  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !181324 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
   %i.ba = load i16, ptr %i.az, align 2, !dbg !181326, !alias.scope !181268, !noalias !181269, !noundef !3008
   br label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterNtNtCs2mZqlW55729_12polars_utils7float164pf16ENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.i.i.i.i.i.outer, !dbg !181327
 
@@ -521,7 +524,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !181345
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i
-  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !181344
+  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !181344 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bx) ]
   %i.by = load i16, ptr %i.bx, align 2, !dbg !181346, !alias.scope !181272, !noalias !181273, !noundef !3008 ; 6 uses
   %i.bz = and i16 %.sroa.0.0.i.i.i.i.ph, 32767, !dbg !181347 ; 2 uses
   %i.ca = icmp samesign ugt i16 %i.bz, 31744, !dbg !181347 ; 2 uses
@@ -706,7 +710,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !181559
 
 bb.h:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i
-  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !181558
+  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !181558 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
   %i.ba = load float, ptr %i.az, align 4, !dbg !181560, !alias.scope !181502, !noalias !181503, !noundef !3008
   br label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.i.i.i.i.i.outer, !dbg !181561
 
@@ -768,7 +773,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !181579
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i
-  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !181578
+  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !181578 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bx) ]
   %i.by = load float, ptr %i.bx, align 4, !dbg !181580, !alias.scope !181506, !noalias !181507, !noundef !3008 ; 2 uses
   %i.bz = fcmp ogt float %.sroa.0.0.i.i.i.i.ph, %i.by, !dbg !181581
   %i.ca = fcmp uno float %.sroa.0.0.i.i.i.i.ph, 0.000000e+00, !dbg !181582
@@ -924,7 +930,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !181786
 
 bb.h:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i
-  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !181785
+  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !181785 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
   %i.ba = load float, ptr %i.az, align 4, !dbg !181787, !alias.scope !181729, !noalias !181730, !noundef !3008
   br label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterfENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.i.i.i.i.i.outer, !dbg !181788
 
@@ -986,7 +993,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !181806
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i
-  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !181805
+  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !181805 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bx) ]
   %i.by = load float, ptr %i.bx, align 4, !dbg !181807, !alias.scope !181733, !noalias !181734, !noundef !3008 ; 2 uses
   %i.bz = fcmp olt float %.sroa.0.0.i.i.i.i.ph, %i.by, !dbg !181808
   %i.ca = fcmp uno float %.sroa.0.0.i.i.i.i.ph, 0.000000e+00, !dbg !181809
@@ -1142,7 +1150,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !182013
 
 bb.h:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i
-  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !182012
+  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !182012 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
   %i.ba = load double, ptr %i.az, align 8, !dbg !182014, !alias.scope !181956, !noalias !181957, !noundef !3008
   br label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterdENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.i.i.i.i.i.outer, !dbg !182015
 
@@ -1204,7 +1213,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !182033
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i
-  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !182032
+  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !182032 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bx) ]
   %i.by = load double, ptr %i.bx, align 8, !dbg !182034, !alias.scope !181960, !noalias !181961, !noundef !3008 ; 2 uses
   %i.bz = fcmp ogt double %.sroa.0.0.i.i.i.i.ph, %i.by, !dbg !182035
   %i.ca = fcmp uno double %.sroa.0.0.i.i.i.i.ph, 0.000000e+00, !dbg !182036
@@ -1360,7 +1370,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !182240
 
 bb.h:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i.i
-  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !182239
+  %i.az = extractvalue { i8, ptr } %i.ax, 1, !dbg !182239 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.az) ]
   %i.ba = load double, ptr %i.az, align 8, !dbg !182241, !alias.scope !182183, !noalias !182184, !noundef !3008
   br label %_RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterdENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskY9G75ZWc4U_11polars_expr.exit.i.i.i.i.i.outer, !dbg !182242
 
@@ -1422,7 +1433,8 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
   ], !dbg !182260
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i.i.i
-  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !182259
+  %i.bx = extractvalue { i8, ptr } %i.bv, 1, !dbg !182259 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bx) ]
   %i.by = load double, ptr %i.bx, align 8, !dbg !182261, !alias.scope !182187, !noalias !182188, !noundef !3008 ; 2 uses
   %i.bz = fcmp olt double %.sroa.0.0.i.i.i.i.ph, %i.by, !dbg !182262
   %i.ca = fcmp uno double %.sroa.0.0.i.i.i.i.ph, 0.000000e+00, !dbg !182263

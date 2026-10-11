@@ -205,7 +205,8 @@ bb.d:                                             ; preds = %bb.c
   br label %_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters10take_whileINtB6_9TakeWhileINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map5RangeNtNtNtNtCs607s0NAIaWN_7segment5index11field_index8geo_hash7GeoHashINtNtCsyIGusAaLFh_5ahash8hash_set8AHashSetmEENCNvMs_NtNtNtB2b_9geo_index17mutable_geo_index5innerNtB41_16InMemoryGeoIndex18stored_sub_regions0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNtB8_3map12map_try_foldTRB27_RB3b_EINtNtB8_6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4ItermEEuINtNtNtBc_3ops12control_flow11ControlFlowmENCB3W_s_0NCINvNvMsg_NtB8_7flattenINtB98_13FlattenCompatppE13iter_try_fold7flattenB6Q_uB87_NCINvNvXsi_B98_B9l_B5u_8try_fold7flattenB6Q_uB87_QNCINvNvB5u_8find_map5checkmmNCNvXs2_NtCs9XvERIT2X68_9itertools11unique_implINtBbE_6UniqueINtB98_7FlatMapINtNtNtB1k_3vec9into_iter8IntoIterB27_EIBcw_BV_B6Q_B8O_ENCNvXs0_B41_B4K_NtNtB45_8read_ops12GeoIndexRead8iterator0EEB5u_4next0E0E0E0E0B87_EB2f_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.i = extractvalue { ptr, ptr } %i.f, 1
+  %i.i = extractvalue { ptr, ptr } %i.f, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1239
   call void @_RNvMs0_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapmuNtNtCsyIGusAaLFh_5ahash12random_state11RandomStateE4iterCs607s0NAIaWN_7segment(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.i), !noalias !1240
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull readonly align 8 dereferenceable(40) %i.a, i64 40, i1 false), !alias.scope !1241, !noalias !1242

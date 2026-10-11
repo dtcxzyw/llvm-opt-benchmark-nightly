@@ -205,7 +205,8 @@ bb.h:                                             ; preds = %"_ZN63_$LT$alloc..a
   br label %"_ZN111_$LT$core..iter..adapters..zip..Zip$LT$A$C$B$GT$$u20$as$u20$core..iter..adapters..zip..ZipImpl$LT$A$C$B$GT$$GT$3nth17h8d6ced4e7e68f989E.exit"
 
 bb.i:                                             ; preds = %bb.g
-  %i.u = extractvalue { ptr, ptr } %i.k, 1
+  %i.u = extractvalue { ptr, ptr } %i.k, 1        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %.sroa.610.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %.sroa.610.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(7) %.sroa.105.i.i, i64 7, i1 false), !noalias !719
   store i64 %i.j, ptr %0, align 8, !alias.scope !718, !noalias !719
@@ -608,8 +609,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit:
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr @"_ZN44_$LT$$RF$T$u20$as$u20$core..fmt..Display$GT$3fmt17hdede6b7140aa9959E", ptr %.sroa.42.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %i.e, align 8
-  %.val = load ptr, ptr %1, align 8
+  %.val3 = load ptr, ptr %i.e, align 8, !nonnull !16, !noundef !16
+  %.val = load ptr, ptr %1, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !44870
   store ptr @1543, ptr %i.a, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8

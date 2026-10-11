@@ -205,8 +205,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.w, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.x = extractvalue { ptr, i64 } %i.u, 0
-  %bcmp = call i32 @bcmp(ptr %i.x, ptr nonnull %2, i64 %3)
+  %i.x = extractvalue { ptr, i64 } %i.u, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.x) ]
+  %bcmp = call i32 @bcmp(ptr nonnull %i.x, ptr nonnull %2, i64 %3)
   %i.y = icmp eq i32 %bcmp, 0
   br i1 %i.y, label %bb.i, label %bb.h
 

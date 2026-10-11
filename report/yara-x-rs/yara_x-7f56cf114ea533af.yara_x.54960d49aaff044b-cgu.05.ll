@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.d, %.noexc
   br i1 %i.ad, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %.noexc19
-  %i.ae = extractvalue { ptr, i64 } %i.ac, 0
+  %i.ae = extractvalue { ptr, i64 } %i.ac, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
   %i.af = extractvalue { ptr, i64 } %i.ac, 1
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false)
@@ -453,7 +454,8 @@ bb.d:                                             ; preds = %.loopexit
 bb.e:                                             ; preds = %.thread, %.loopexit
   %i.y = phi { ptr, i64 } [ %i.h, %.thread ], [ %i.x, %.loopexit ] ; 2 uses
   %i.z = extractvalue { ptr, i64 } %i.y, 1
-  %i.aa = extractvalue { ptr, i64 } %i.y, 0
+  %i.aa = extractvalue { ptr, i64 } %i.y, 0       ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa) ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.aa, ptr %i.ab, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -566,7 +568,8 @@ bb.d:                                             ; preds = %.thread, %.loopexit
 
 bb.e:                                             ; preds = %.loopexit
   %i.y = extractvalue { ptr, i64 } %i.x, 1
-  %i.z = extractvalue { ptr, i64 } %i.x, 0
+  %i.z = extractvalue { ptr, i64 } %i.x, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.z, ptr %i.aa, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -680,7 +683,8 @@ bb.d:                                             ; preds = %.thread, %.loopexit
 
 bb.e:                                             ; preds = %.loopexit
   %i.y = extractvalue { ptr, i64 } %i.w, 1
-  %i.z = extractvalue { ptr, i64 } %i.w, 0
+  %i.z = extractvalue { ptr, i64 } %i.w, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.z, ptr %i.aa, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -794,7 +798,8 @@ bb.d:                                             ; preds = %.thread, %.loopexit
 
 bb.e:                                             ; preds = %.loopexit
   %i.y = extractvalue { ptr, i64 } %i.w, 1
-  %i.z = extractvalue { ptr, i64 } %i.w, 0
+  %i.z = extractvalue { ptr, i64 } %i.w, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.z, ptr %i.aa, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -878,7 +883,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.q = extractvalue { ptr, i64 } %i.o, 1
-  %i.r = extractvalue { ptr, i64 } %i.o, 0
+  %i.r = extractvalue { ptr, i64 } %i.o, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.r, ptr %i.s, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -970,7 +976,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1062,7 +1069,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1156,7 +1164,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1248,7 +1257,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1342,7 +1352,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.e
   %i.u = extractvalue { ptr, i64 } %i.t, 1
-  %i.v = extractvalue { ptr, i64 } %i.t, 0
+  %i.v = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.v, ptr %i.w, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1436,7 +1447,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1530,7 +1542,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1624,7 +1637,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1716,7 +1730,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1810,7 +1825,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1902,7 +1918,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1996,7 +2013,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2090,7 +2108,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2184,7 +2203,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2278,7 +2298,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2372,7 +2393,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2464,7 +2486,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2556,7 +2579,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2648,7 +2672,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.v = extractvalue { ptr, i64 } %i.t, 1
-  %i.w = extractvalue { ptr, i64 } %i.t, 0
+  %i.w = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.w, ptr %i.x, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2745,24 +2770,28 @@ bb.d:                                             ; preds = %bb.a
   %.sroa.638.24.insert.shift.i = shl nuw i128 %.sroa.638.24.insert.ext.i, 64
   %.sroa.638.24.insert.insert.i = or disjoint i128 %.sroa.638.24.insert.shift.i, %.sroa.638.8.insert.ext.i
   %i.w = icmp eq i128 %.sroa.638.24.insert.insert.i, 93045959704944114645041356371858166785
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %.sroa.511.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   br i1 %i.w, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.split.loop.exit
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 1, ptr %i.x, align 8
-  store ptr %2, ptr %4, align 16
-  store i64 %3, ptr %.sroa.410.0..sroa_idx, align 8
-  store i8 45, ptr %.sroa.511.0..sroa_idx, align 16
+  %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %2, ptr %.sroa.413.0..sroa_idx, align 16
+  %.sroa.413.sroa.4.0..sroa.413.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i64 %3, ptr %.sroa.413.sroa.4.0..sroa.413.0..sroa_idx.sroa_idx, align 8
+  %.sroa.413.sroa.5.0..sroa.413.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store i8 45, ptr %.sroa.413.sroa.5.0..sroa.413.0..sroa_idx.sroa_idx, align 16
   br label %bb.g
 
 bb.f:                                             ; preds = %.split.loop.exit
   %i.y = extractvalue { ptr, i64 } %i.v, 1
-  %i.z = extractvalue { ptr, i64 } %i.v, 0
+  %i.z = extractvalue { ptr, i64 } %i.v, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.z) ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.z, ptr %4, align 16
+  %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.y, ptr %.sroa.410.0..sroa_idx, align 8
+  %.sroa.511.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i128 93045959704944114645041356371858166785, ptr %.sroa.511.0..sroa_idx, align 16
   br label %bb.g
 
@@ -3165,7 +3194,8 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.bc = extractvalue { ptr, i64 } %i.az, 1
-  %i.bd = extractvalue { ptr, i64 } %i.az, 0
+  %i.bd = extractvalue { ptr, i64 } %i.az, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bd) ]
   %i.be = load ptr, ptr %i.z, align 8, !noalias !1958, !nonnull !5, !noundef !5
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %i.x
   %i.bg = load i64, ptr %i.bf, align 8, !noalias !1958, !noundef !5
@@ -3568,7 +3598,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.bf = extractvalue { ptr, i64 } %i.bc, 1
-  %i.bg = extractvalue { ptr, i64 } %i.bc, 0
+  %i.bg = extractvalue { ptr, i64 } %i.bc, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bg) ]
   %i.bh = load ptr, ptr %i.y, align 8, !noalias !2139, !nonnull !5, !noundef !5
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %i.w
   %i.bj = load i64, ptr %i.bi, align 8, !noalias !2139, !noundef !5
@@ -3971,7 +4002,8 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s
   %i.br = extractvalue { ptr, i64 } %i.bo, 1
-  %i.bs = extractvalue { ptr, i64 } %i.bo, 0
+  %i.bs = extractvalue { ptr, i64 } %i.bo, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bs) ]
   %i.bt = load ptr, ptr %i.ac, align 8, !noalias !2237, !nonnull !5, !noundef !5
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %i.aa
   %i.bv = load i64, ptr %i.bu, align 8, !noalias !2237, !noundef !5
@@ -4374,7 +4406,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ax = extractvalue { ptr, i64 } %i.au, 1
-  %i.ay = extractvalue { ptr, i64 } %i.au, 0
+  %i.ay = extractvalue { ptr, i64 } %i.au, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ay) ]
   %i.az = load ptr, ptr %i.x, align 8, !noalias !2834, !nonnull !5, !noundef !5
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.v
   %i.bb = load i64, ptr %i.ba, align 8, !noalias !2834, !noundef !5
@@ -4669,7 +4702,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.an = extractvalue { ptr, i64 } %i.ak, 1
-  %i.ao = extractvalue { ptr, i64 } %i.ak, 0
+  %i.ao = extractvalue { ptr, i64 } %i.ak, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   %i.ap = load ptr, ptr %i.w, align 8, !noalias !2884, !nonnull !5, !noundef !5
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %i.u
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !2884, !noundef !5
@@ -4952,7 +4986,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.an = extractvalue { ptr, i64 } %i.ak, 1
-  %i.ao = extractvalue { ptr, i64 } %i.ak, 0
+  %i.ao = extractvalue { ptr, i64 } %i.ak, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   %i.ap = load ptr, ptr %i.w, align 8, !noalias !2934, !nonnull !5, !noundef !5
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ap, i64 %i.u
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !2934, !noundef !5
@@ -5355,7 +5390,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.ah = extractvalue { ptr, i64 } %i.ae, 1      ; 3 uses
-  %i.ai = extractvalue { ptr, i64 } %i.ae, 0      ; 3 uses
+  %i.ai = extractvalue { ptr, i64 } %i.ae, 0      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   %i.aj = zext nneg i16 %.sroa.0.0.lcssa.i.i.i.i.i to i64 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   call void @llvm.experimental.noalias.scope.decl(metadata !3712)
@@ -5439,10 +5475,9 @@ _RNCINvXsc_NtCsgkljs906P5b_3nom5multiINtB8_11LengthCountINtNtBa_10combinator6Ver
 
 bb.i:                                             ; preds = %.lr.ph, %bb.z
   %.sroa.012.0123 = phi i64 [ 0, %.lr.ph ], [ %i.bc, %bb.z ]
-  %.sroa.015.0122 = phi ptr [ %i.ai, %.lr.ph ], [ %i.di, %bb.z ] ; 5 uses
+  %.sroa.015.0122 = phi ptr [ %i.ai, %.lr.ph ], [ %i.di, %bb.z ] ; 4 uses
   %.sroa.616.0121 = phi i64 [ %i.ah, %.lr.ph ], [ %i.dh, %bb.z ] ; 4 uses
   %i.bc = add nuw nsw i64 %.sroa.012.0123, 1      ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.015.0122) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !3713
   store ptr %.sroa.015.0122, ptr %i.f, align 8, !noalias !3714
   store i64 %.sroa.616.0121, ptr %i.au, align 8, !noalias !3714
@@ -5845,7 +5880,8 @@ bb.e:                                             ; preds = %bb.d, %.noexc.i.i
   br i1 %.not.i.i.i, label %.loopexit.i, label %bb.f
 
 bb.f:                                             ; preds = %.noexc17.i.i
-  %i.ao = extractvalue { ptr, i64 } %i.an, 0      ; 3 uses
+  %i.ao = extractvalue { ptr, i64 } %i.an, 0      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   %i.ap = extractvalue { ptr, i64 } %i.an, 1      ; 5 uses
   %i.aq = icmp eq i64 %i.ap, %.sroa.3.048.i.i
   br i1 %i.aq, label %bb.l, label %bb.g
@@ -6248,7 +6284,8 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k, %bb.k, %bb.k, %bb.k
   %i.bg = extractvalue { ptr, i64 } %i.be, 1
-  %i.bh = extractvalue { ptr, i64 } %i.be, 0
+  %i.bh = extractvalue { ptr, i64 } %i.be, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bh) ]
   switch i32 %.sroa.0.2.lcssa.i.i.i.i.i.i, label %bb.n [
     i32 -889275714, label %bb.p
     i32 -889275713, label %bb.p
@@ -6651,7 +6688,8 @@ bb.p:                                             ; preds = %bb.n, %.noexc
 
 bb.q:                                             ; preds = %.noexc149
   %i.di = extractvalue { ptr, i64 } %i.dg, 1      ; 3 uses
-  %i.dj = extractvalue { ptr, i64 } %i.dg, 0      ; 3 uses
+  %i.dj = extractvalue { ptr, i64 } %i.dg, 0      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dj) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !6225
   store ptr %i.dj, ptr %i.v, align 8, !noalias !6226
   store i64 %i.di, ptr %i.bv, align 8, !noalias !6226
@@ -6921,7 +6959,8 @@ bb.ak:                                            ; preds = %.noexc199
   br i1 %i.gq, label %.loopexit332, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ak
-  %i.gr = extractvalue { ptr, i64 } %i.gg, 0
+  %i.gr = extractvalue { ptr, i64 } %i.gg, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gr) ]
   %i.gs = extractvalue { ptr, i64 } %i.gg, 1
   %i.gt = add nuw nsw i32 %i.cn, 1
   br label %bb.al
@@ -7324,7 +7363,8 @@ bb.l:                                             ; preds = %bb.j, %.noexc232
 
 bb.m:                                             ; preds = %.noexc233
   %i.cd = extractvalue { ptr, i64 } %i.cb, 1      ; 4 uses
-  %i.ce = extractvalue { ptr, i64 } %i.cb, 0      ; 4 uses
+  %i.ce = extractvalue { ptr, i64 } %i.cb, 0      ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ce) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !8095
   store ptr %i.ce, ptr %i.s, align 8, !noalias !8096
   %i.cf = getelementptr inbounds nuw i8, ptr %i.s, i64 8
@@ -7727,7 +7767,8 @@ bb.at:                                            ; preds = %.noexc279, %bb.ar
 
 bb.au:                                            ; preds = %.noexc279
   %i.gk = extractvalue { ptr, i64 } %i.gh, 1      ; 4 uses
-  %i.gl = extractvalue { ptr, i64 } %i.gh, 0      ; 4 uses
+  %i.gl = extractvalue { ptr, i64 } %i.gh, 0      ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.gl) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !8116
   store ptr %i.gl, ptr %i.g, align 8, !noalias !8117
   %i.gm = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -8130,7 +8171,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.e
   %i.eb = extractvalue { ptr, i64 } %i.dy, 1      ; 4 uses
-  %i.ec = extractvalue { ptr, i64 } %i.dy, 0      ; 4 uses
+  %i.ec = extractvalue { ptr, i64 } %i.dy, 0      ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ec) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cn), !noalias !9979
   store ptr %i.ec, ptr %i.cn, align 8, !noalias !9980
   %i.ed = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
@@ -8533,7 +8575,8 @@ bb.cb:                                            ; preds = %bb.bz, %_RNvXs_NtNt
 
 bb.cc:                                            ; preds = %bb.cb
   %i.kz = extractvalue { ptr, i64 } %i.kx, 1      ; 4 uses
-  %i.la = extractvalue { ptr, i64 } %i.kx, 0      ; 4 uses
+  %i.la = extractvalue { ptr, i64 } %i.kx, 0      ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.la) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bz), !noalias !10024
   store ptr %i.la, ptr %i.bz, align 8, !noalias !10025
   %i.lb = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
@@ -8936,7 +8979,8 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 
 bb.h:                                             ; preds = %bb.f, %bb.f, %bb.f, %bb.f
   %i.hi = extractvalue { ptr, i64 } %i.hg, 1
-  %i.hj = extractvalue { ptr, i64 } %i.hg, 0
+  %i.hj = extractvalue { ptr, i64 } %i.hg, 0      ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.hj) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.gt)
   store i32 %.sroa.0.2.lcssa.i.i.i.i.i, ptr %i.gt, align 4
   switch i32 %.sroa.0.2.lcssa.i.i.i.i.i, label %bb.i [
@@ -9339,12 +9383,11 @@ bb.mo:                                            ; preds = %bb.ko
   br label %bb.mp
 
 bb.mp:                                            ; preds = %.loopexit432.i, %.lr.ph540.i
-  %.sroa.0.0538.i = phi ptr [ %i.amm, %.lr.ph540.i ], [ %.sroa.0.1.i, %.loopexit432.i ] ; 4 uses
+  %.sroa.0.0538.i = phi ptr [ %i.amm, %.lr.ph540.i ], [ %.sroa.0.1.i, %.loopexit432.i ] ; 3 uses
   %.sroa.15.0537.i = phi i64 [ %i.amk, %.lr.ph540.i ], [ %.sroa.15.1.i, %.loopexit432.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.at), !noalias !10977
   store ptr %.sroa.0.0538.i, ptr %i.at, align 8, !noalias !10978
   store i64 %.sroa.15.0537.i, ptr %i.afw, align 8, !noalias !10978
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0538.i) ]
   %i.amn = getelementptr inbounds nuw i8, ptr %.sroa.0.0538.i, i64 %.sroa.15.0537.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.as), !noalias !10977
   store ptr %.sroa.0.0538.i, ptr %i.as, align 8, !noalias !10977
@@ -9365,14 +9408,11 @@ bb.mp:                                            ; preds = %.loopexit432.i, %.l
 .lr.ph.i._crit_edge.thread.i:                     ; preds = %.noexc495
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as), !noalias !10977
   %i.amr = invoke { ptr, i64 } @_RNvXNtCsgkljs906P5b_3nom6traitsRShNtB2_5Input9take_from(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.at, i64 noundef 1)
-          to label %.noexc496 unwind label %.loopexit.split-lp762.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
+          to label %.noexc496 unwind label %.loopexit.split-lp762.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc496:                                        ; preds = %.lr.ph.i._crit_edge.thread.i
-  %3 = extractvalue { ptr, i64 } %i.amr, 0        ; 2 uses
-  %4 = extractvalue { ptr, i64 } %i.amr, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !10977
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %3) ]
-  br label %.loopexit432.i
+  br label %.loopexit432.i.sink.split
 
 .lr.ph.i.i470:                                    ; preds = %.lr.ph.i469.preheader, %.lr.ph.i469
   %.pr.i.i1045 = phi i64 [ %.pr.i.i, %.lr.ph.i469 ], [ %.pr.i.i1044, %.lr.ph.i469.preheader ]
@@ -9414,9 +9454,16 @@ bb.mp:                                            ; preds = %.loopexit432.i, %.l
     i8 4, label %bb.mz
   ]
 
-.loopexit432.i:                                   ; preds = %bb.my, %bb.ne, %bb.ms, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtB7_6string6StringE8push_mutCs7gfv9tzbXmh_6yara_x.exit.i480, %.noexc519, %.noexc518, %.thread634.i, %.thread629.i, %.thread.i, %.noexc498, %.noexc496
-  %.sroa.15.1.i = phi i64 [ %i.anb, %.noexc498 ], [ %i.anu, %bb.ms ], [ %9, %.thread634.i ], [ %4, %.noexc496 ], [ %i.aqw, %.noexc518 ], [ %i.aqw, %.noexc519 ], [ %i.aqs, %bb.ne ], [ %i.aqw, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtB7_6string6StringE8push_mutCs7gfv9tzbXmh_6yara_x.exit.i480 ], [ %5, %.thread.i ], [ %7, %.thread629.i ], [ %i.aph, %bb.my ] ; 2 uses
-  %.sroa.0.1.i = phi ptr [ %i.ana, %.noexc498 ], [ %i.anv, %bb.ms ], [ %10, %.thread634.i ], [ %3, %.noexc496 ], [ %i.aqv, %.noexc518 ], [ %i.aqv, %.noexc519 ], [ %i.aqt, %bb.ne ], [ %i.aqv, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtB7_6string6StringE8push_mutCs7gfv9tzbXmh_6yara_x.exit.i480 ], [ %6, %.thread.i ], [ %8, %.thread629.i ], [ %i.api, %bb.my ]
+.loopexit432.i.sink.split:                        ; preds = %.noexc516, %.noexc510, %.noexc502, %.noexc496
+  %.pn1645 = phi { ptr, i64 } [ %i.apd, %.noexc510 ], [ %i.anq, %.noexc502 ], [ %i.amr, %.noexc496 ], [ %i.aqo, %.noexc516 ] ; 2 uses
+  %.sink = extractvalue { ptr, i64 } %.pn1645, 0  ; 2 uses
+  %.sroa.15.1.i.ph = extractvalue { ptr, i64 } %.pn1645, 1
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink) ]
+  br label %.loopexit432.i
+
+.loopexit432.i:                                   ; preds = %bb.my, %bb.ne, %bb.ms, %.loopexit432.i.sink.split, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtB7_6string6StringE8push_mutCs7gfv9tzbXmh_6yara_x.exit.i480, %.noexc519, %.noexc518, %.noexc498
+  %.sroa.15.1.i = phi i64 [ %i.anb, %.noexc498 ], [ %.sroa.15.1.i.ph, %.loopexit432.i.sink.split ], [ %i.aqw, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtB7_6string6StringE8push_mutCs7gfv9tzbXmh_6yara_x.exit.i480 ], [ %i.anu, %bb.ms ], [ %i.aqw, %.noexc518 ], [ %i.aqw, %.noexc519 ], [ %i.aqs, %bb.ne ], [ %i.aph, %bb.my ] ; 2 uses
+  %.sroa.0.1.i = phi ptr [ %i.ana, %.noexc498 ], [ %.sink, %.loopexit432.i.sink.split ], [ %i.aqv, %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtB7_6string6StringE8push_mutCs7gfv9tzbXmh_6yara_x.exit.i480 ], [ %i.anv, %bb.ms ], [ %i.aqv, %.noexc518 ], [ %i.aqv, %.noexc519 ], [ %i.aqt, %bb.ne ], [ %i.api, %bb.my ]
   %i.anc = icmp eq i64 %.sroa.15.1.i, 0
   br i1 %i.anc, label %_RNvMs1_NtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parserNtB5_9MachOFile13parse_imports.exit.backedge, label %bb.mp
 
@@ -9491,23 +9538,19 @@ bb.mr:                                            ; preds = %bb.ms
 .lr.ph.i._crit_edge.i.thread.i:                   ; preds = %.noexc499
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !10979
   %i.anq = invoke { ptr, i64 } @_RNvXNtCsgkljs906P5b_3nom6traitsRShNtB2_5Input9take_from(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ar, i64 noundef 1)
-          to label %.noexc502 unwind label %.loopexit.split-lp762.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
+          to label %.noexc502 unwind label %.loopexit.split-lp762.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc502:                                        ; preds = %.lr.ph.i._crit_edge.i.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !10979
   %i.anr = icmp samesign ult i64 %indvars.iv.i.i, 64
-  br i1 %i.anr, label %.thread.i, label %_RNvMs1_NtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parserNtB5_9MachOFile13parse_imports.exit.backedge
-
-.thread.i:                                        ; preds = %.noexc502
-  %5 = extractvalue { ptr, i64 } %i.anq, 1
-  %6 = extractvalue { ptr, i64 } %i.anq, 0
-  br label %.loopexit432.i
+  br i1 %i.anr, label %.loopexit432.i.sink.split, label %_RNvMs1_NtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parserNtB5_9MachOFile13parse_imports.exit.backedge
 
 bb.ms:                                            ; preds = %.noexc501
   %i.ans = extractvalue { i1, i8 } %.lcssa462.i, 1
   %i.ant = icmp sgt i8 %i.ans, -1
   %i.anu = extractvalue { ptr, i64 } %i.ano, 1    ; 4 uses
-  %i.anv = extractvalue { ptr, i64 } %i.ano, 0    ; 3 uses
+  %i.anv = extractvalue { ptr, i64 } %i.ano, 0    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.anv) ]
   br i1 %i.ant, label %.loopexit432.i, label %bb.mr
 
 bb.mt:                                            ; preds = %.noexc498
@@ -9590,14 +9633,16 @@ bb.mu:                                            ; preds = %bb.mv
 
 .thread625.i:                                     ; preds = %.noexc506
   %i.aol = extractvalue { ptr, i64 } %i.aoj, 1
-  %i.aom = extractvalue { ptr, i64 } %i.aoj, 0
+  %i.aom = extractvalue { ptr, i64 } %i.aoj, 0    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aom) ]
   br label %.loopexit637.i
 
 bb.mv:                                            ; preds = %.noexc505
   %i.aon = extractvalue { i1, i8 } %.lcssa448.i, 1
   %i.aoo = icmp sgt i8 %i.aon, -1
   %i.aop = extractvalue { ptr, i64 } %i.aoh, 1    ; 4 uses
-  %i.aoq = extractvalue { ptr, i64 } %i.aoh, 0    ; 3 uses
+  %i.aoq = extractvalue { ptr, i64 } %i.aoh, 0    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aoq) ]
   br i1 %i.aoo, label %.loopexit637.i, label %bb.mu
 
 .preheader.i:                                     ; preds = %.noexc498, %bb.my
@@ -9666,23 +9711,19 @@ _RNvMs1_NtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parserNtB5_9MachOFile13parse_i
 .lr.ph.i._crit_edge.i249.thread.i:                ; preds = %.noexc507
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !10983
   %i.apd = invoke { ptr, i64 } @_RNvXNtCsgkljs906P5b_3nom6traitsRShNtB2_5Input9take_from(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.an, i64 noundef 1)
-          to label %.noexc510 unwind label %.loopexit.split-lp762.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
+          to label %.noexc510 unwind label %.loopexit.split-lp762.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc510:                                        ; preds = %.lr.ph.i._crit_edge.i249.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !noalias !10983
   %i.ape = icmp samesign ult i64 %indvars.iv.i248.i, 64
-  br i1 %i.ape, label %.thread629.i, label %_RNvMs1_NtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parserNtB5_9MachOFile13parse_imports.exit.backedge
-
-.thread629.i:                                     ; preds = %.noexc510
-  %7 = extractvalue { ptr, i64 } %i.apd, 1
-  %8 = extractvalue { ptr, i64 } %i.apd, 0
-  br label %.loopexit432.i
+  br i1 %i.ape, label %.loopexit432.i.sink.split, label %_RNvMs1_NtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parserNtB5_9MachOFile13parse_imports.exit.backedge
 
 bb.my:                                            ; preds = %.noexc509
   %i.apf = extractvalue { i1, i8 } %.lcssa.i490, 1
   %i.apg = icmp sgt i8 %i.apf, -1
   %i.aph = extractvalue { ptr, i64 } %i.apb, 1    ; 2 uses
-  %i.api = extractvalue { ptr, i64 } %i.apb, 0    ; 2 uses
+  %i.api = extractvalue { ptr, i64 } %i.apb, 0    ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.api) ]
   %indvars.iv.next.i251.i = add nuw nsw i64 %indvars.iv.i248.i, 7
   br i1 %i.apg, label %.loopexit432.i, label %.preheader.i
 
@@ -9840,23 +9881,19 @@ bb.nd:                                            ; preds = %bb.ne
 .lr.ph.i._crit_edge.i265.thread.i:                ; preds = %.noexc513
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !10999
   %i.aqo = invoke { ptr, i64 } @_RNvXNtCsgkljs906P5b_3nom6traitsRShNtB2_5Input9take_from(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.ai, i64 noundef 1)
-          to label %.noexc516 unwind label %.loopexit.split-lp762.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 2 uses
+          to label %.noexc516 unwind label %.loopexit.split-lp762.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
 
 .noexc516:                                        ; preds = %.lr.ph.i._crit_edge.i265.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !10999
   %i.aqp = icmp samesign ult i64 %indvars.iv.i261.i, 64
-  br i1 %i.aqp, label %.thread634.i, label %_RNvMs1_NtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parserNtB5_9MachOFile13parse_imports.exit.backedge
-
-.thread634.i:                                     ; preds = %.noexc516
-  %9 = extractvalue { ptr, i64 } %i.aqo, 1
-  %10 = extractvalue { ptr, i64 } %i.aqo, 0
-  br label %.loopexit432.i
+  br i1 %i.aqp, label %.loopexit432.i.sink.split, label %_RNvMs1_NtNtNtCs7gfv9tzbXmh_6yara_x7modules5macho6parserNtB5_9MachOFile13parse_imports.exit.backedge
 
 bb.ne:                                            ; preds = %.noexc515
   %i.aqq = extractvalue { i1, i8 } %.lcssa457.i, 1
   %i.aqr = icmp sgt i8 %i.aqq, -1
   %i.aqs = extractvalue { ptr, i64 } %i.aqm, 1    ; 4 uses
-  %i.aqt = extractvalue { ptr, i64 } %i.aqm, 0    ; 3 uses
+  %i.aqt = extractvalue { ptr, i64 } %i.aqm, 0    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aqt) ]
   br i1 %i.aqr, label %.loopexit432.i, label %bb.nd
 
 .loopexit439.i:                                   ; preds = %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3zip3ZipINtNtNtBc_5slice4iter4IterhEBR_ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvNvB1n_8position5checkTRhB2w_ENCNvXse_NtCsgkljs906P5b_3nom6traitsRShINtB2L_7CompareB3c_E7compare0E0INtNtNtBc_3ops12control_flow11ControlFlowjEECs7gfv9tzbXmh_6yara_x.exit.thread.i.i.i.i478, %bb.nc
@@ -10259,7 +10296,8 @@ bb.oh:                                            ; preds = %bb.oi
 
 bb.oi:                                            ; preds = %.noexc422.i
   %i.atn = extractvalue { ptr, i64 } %i.atl, 1    ; 7 uses
-  %i.ato = extractvalue { ptr, i64 } %i.atl, 0    ; 5 uses
+  %i.ato = extractvalue { ptr, i64 } %i.atl, 0    ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ato) ]
   %i.atp = and i8 %.sroa.0.0.lcssa.i.i.i534, 127
   %i.atq = zext nneg i8 %i.atp to i64
   %i.atr = shl i64 %i.atq, %indvars.iv.i.i530
@@ -10271,15 +10309,9 @@ bb.oj:                                            ; preds = %bb.oi
   %.not336.i = icmp eq i64 %i.ats, 0              ; 2 uses
   br i1 %.not336.i, label %.noexc.i, label %bb.om
 
-.noexc.sink.split.i:                              ; preds = %bb.oy, %bb.pi
-  %.sink.i548 = phi ptr [ %i.ayb, %bb.pi ], [ %i.awt, %bb.oy ] ; 2 uses
-  %.sroa.6329.0.ph.i = phi i64 [ %i.ayc, %bb.pi ], [ %i.aws, %bb.oy ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink.i548) ]
-  br label %.noexc.i
-
-.noexc.i:                                         ; preds = %bb.os, %.noexc.sink.split.i, %bb.oj
-  %.sroa.0327.0.i = phi ptr [ %i.ato, %bb.oj ], [ %.sink.i548, %.noexc.sink.split.i ], [ %i.avo, %bb.os ] ; 4 uses
-  %.sroa.6329.0.i = phi i64 [ %i.atn, %bb.oj ], [ %.sroa.6329.0.ph.i, %.noexc.sink.split.i ], [ %i.avn, %bb.os ] ; 3 uses
+.noexc.i:                                         ; preds = %bb.oy, %bb.os, %bb.pi, %bb.oj
+  %.sroa.0327.0.i = phi ptr [ %i.ato, %bb.oj ], [ %i.avo, %bb.os ], [ %i.ayb, %bb.pi ], [ %i.awt, %bb.oy ] ; 3 uses
+  %.sroa.6329.0.i = phi i64 [ %i.atn, %bb.oj ], [ %i.avn, %bb.os ], [ %i.ayc, %bb.pi ], [ %i.aws, %bb.oy ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !11006
   store ptr %.sroa.0327.0.i, ptr %i.v, align 8, !noalias !11013
   store i64 %.sroa.6329.0.i, ptr %i.ye, align 8, !noalias !11013
@@ -10287,7 +10319,6 @@ bb.oj:                                            ; preds = %bb.oi
   br i1 %i.atu, label %bb.pj, label %bb.ok
 
 bb.ok:                                            ; preds = %.noexc.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0327.0.i) ]
   %i.atv = getelementptr inbounds nuw i8, ptr %.sroa.0327.0.i, i64 %.sroa.6329.0.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !11006
   store ptr %.sroa.0327.0.i, ptr %i.s, align 8, !noalias !11006
@@ -10394,7 +10425,8 @@ bb.on:                                            ; preds = %bb.oo
 
 bb.oo:                                            ; preds = %.noexc452.i
   %i.aur = extractvalue { ptr, i64 } %i.aup, 1    ; 10 uses
-  %i.aus = extractvalue { ptr, i64 } %i.aup, 0    ; 8 uses
+  %i.aus = extractvalue { ptr, i64 } %i.aup, 0    ; 9 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aus) ]
   %i.aut = and i8 %.sroa.0.0.lcssa.i.i434.i, 127
   %i.auu = zext nneg i8 %i.aut to i64
   %i.auv = shl i64 %i.auu, %indvars.iv.i429.i
@@ -10484,7 +10516,8 @@ bb.or:                                            ; preds = %bb.os
 
 bb.os:                                            ; preds = %.noexc480.i
   %i.avn = extractvalue { ptr, i64 } %i.avl, 1    ; 4 uses
-  %i.avo = extractvalue { ptr, i64 } %i.avl, 0    ; 3 uses
+  %i.avo = extractvalue { ptr, i64 } %i.avl, 0    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.avo) ]
   br i1 %.sroa.0.0.lcssa.i.i462.i, label %.noexc.i, label %bb.or
 
 bb.ot:                                            ; preds = %bb.op
@@ -10498,7 +10531,8 @@ bb.ou:                                            ; preds = %bb.ov
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !11018
   store ptr %i.awd, ptr %i.n, align 8, !noalias !11019
   store i64 %i.awc, ptr %i.yb, align 8, !noalias !11019
-  br i1 %11, label %._crit_edge115.i.i.i, label %.lr.ph114.i.i.i
+  %3 = icmp eq i64 %i.awc, 0
+  br i1 %3, label %._crit_edge115.i.i.i, label %.lr.ph114.i.i.i
 
 .lr.ph114.i.i.i:                                  ; preds = %bb.ot, %bb.ou
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.ou ], [ 0, %bb.ot ] ; 2 uses
@@ -10560,17 +10594,17 @@ bb.ou:                                            ; preds = %bb.ov
   br i1 %i.awb, label %bb.ov, label %.loopexit982.i
 
 bb.ov:                                            ; preds = %.noexc485.i
-  %i.awc = extractvalue { ptr, i64 } %i.awa, 1    ; 5 uses
+  %i.awc = extractvalue { ptr, i64 } %i.awa, 1    ; 6 uses
   %i.awd = extractvalue { ptr, i64 } %i.awa, 0    ; 5 uses
-  %11 = icmp eq i64 %i.awc, 0                     ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.awd) ]
   br i1 %.sroa.0.0.lcssa.i.i.i.i, label %bb.ow, label %bb.ou
 
 bb.ow:                                            ; preds = %bb.ov
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.awd) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !11020
   store ptr %i.awd, ptr %i.l, align 8, !noalias !11021
   store i64 %i.awc, ptr %i.yc, align 8, !noalias !11021
-  br i1 %11, label %._crit_edge115.i.i503.i, label %.lr.ph114.i.i486.i
+  %4 = icmp eq i64 %i.awc, 0
+  br i1 %4, label %._crit_edge115.i.i503.i, label %.lr.ph114.i.i486.i
 
 bb.ox:                                            ; preds = %bb.oy
   %indvars.iv.next.i.i502.i = add nuw nsw i64 %indvars.iv.i.i489.i, 7
@@ -10641,8 +10675,9 @@ bb.ox:                                            ; preds = %bb.oy
 
 bb.oy:                                            ; preds = %.noexc517.i
   %i.aws = extractvalue { ptr, i64 } %i.awq, 1    ; 4 uses
-  %i.awt = extractvalue { ptr, i64 } %i.awq, 0    ; 3 uses
-  br i1 %.sroa.0.0.lcssa.i.i.i494.i, label %.noexc.sink.split.i, label %bb.ox
+  %i.awt = extractvalue { ptr, i64 } %i.awq, 0    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.awt) ]
+  br i1 %.sroa.0.0.lcssa.i.i.i494.i, label %.noexc.i, label %bb.ox
 
 bb.oz:                                            ; preds = %bb.op
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !11022
@@ -10720,6 +10755,7 @@ bb.pa:                                            ; preds = %bb.pb
 bb.pb:                                            ; preds = %.noexc545.i
   %i.axi = extractvalue { ptr, i64 } %i.axg, 1    ; 8 uses
   %i.axj = extractvalue { ptr, i64 } %i.axg, 0    ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.axj) ]
   br i1 %.sroa.0.0.lcssa.i.i527.i, label %bb.pc, label %bb.pa
 
 bb.pc:                                            ; preds = %bb.pb
@@ -10760,7 +10796,6 @@ bb.pe:                                            ; preds = %.loopexit.i.i.i541
   %.sink13.i.i.i544 = extractvalue { ptr, i64 } %i.axs, 0 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !11026
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink13.i.i.i544) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.axj) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !11031
   store ptr %.sink13.i.i.i544, ptr %i.g, align 8, !noalias !11032
   store i64 %.sink.i.i.i543, ptr %i.xx, align 8, !noalias !11032
@@ -10813,10 +10848,11 @@ bb.ph:                                            ; preds = %_RINvYINtNtNtNtCskK
   br label %.loopexit982.i
 
 bb.pi:                                            ; preds = %bb.ph
-  %i.ayb = extractvalue { ptr, i64 } %i.aya, 0
+  %i.ayb = extractvalue { ptr, i64 } %i.aya, 0    ; 2 uses
   %i.ayc = extractvalue { ptr, i64 } %i.aya, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !11031
-  br label %.noexc.sink.split.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ayb) ]
+  br label %.noexc.i
 
 bb.pj:                                            ; preds = %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !11006
@@ -10829,7 +10865,8 @@ bb.pk:                                            ; preds = %._crit_edge.i.i549
 
 .lr.ph.preheader.i:                               ; preds = %bb.pk
   %i.ayd = extractvalue { ptr, i64 } %i.aua, 1
-  %i.aye = extractvalue { ptr, i64 } %i.aua, 0
+  %i.aye = extractvalue { ptr, i64 } %i.aua, 0    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aye) ]
   br label %.lr.ph.i551
 
 ._crit_edge.i553:                                 ; preds = %bb.qi, %bb.pk
@@ -10837,7 +10874,7 @@ bb.pk:                                            ; preds = %._crit_edge.i.i549
 
 .lr.ph.i551:                                      ; preds = %bb.qi, %.lr.ph.preheader.i
   %.sroa.3.01334.i = phi i64 [ %i.azz, %bb.qi ], [ %i.ayd, %.lr.ph.preheader.i ] ; 4 uses
-  %.sroa.0331.01333.i = phi ptr [ %i.baa, %bb.qi ], [ %i.aye, %.lr.ph.preheader.i ] ; 6 uses
+  %.sroa.0331.01333.i = phi ptr [ %i.baa, %bb.qi ], [ %i.aye, %.lr.ph.preheader.i ] ; 5 uses
   %.sroa.0325.01332.i = phi i8 [ %i.ayf, %bb.qi ], [ 0, %.lr.ph.preheader.i ]
   %i.ayf = add nuw i8 %.sroa.0325.01332.i, 1      ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !11038)
@@ -10872,7 +10909,6 @@ bb.pm:                                            ; preds = %.loopexit.i.i555.i
   %.sink13.i.i558.i = extractvalue { ptr, i64 } %i.ayn, 0 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !11040
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sink13.i.i558.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0331.01333.i) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !11044
   store ptr %.sink13.i.i558.i, ptr %i.d, align 8, !noalias !11045
   store i64 %.sink.i.i557.i, ptr %i.yg, align 8, !noalias !11045
@@ -11061,7 +11097,8 @@ bb.pz:                                            ; preds = %bb.qa
 
 bb.qa:                                            ; preds = %.noexc620.i
   %i.azz = extractvalue { ptr, i64 } %i.azx, 1    ; 4 uses
-  %i.baa = extractvalue { ptr, i64 } %i.azx, 0    ; 3 uses
+  %i.baa = extractvalue { ptr, i64 } %i.azx, 0    ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.baa) ]
   %i.bab = and i8 %.sroa.0.0.lcssa.i.i602.i, 127
   %i.bac = zext nneg i8 %i.bab to i64
   %i.bad = shl i64 %i.bac, %indvars.iv.i597.i
@@ -11464,7 +11501,8 @@ bb.d:                                             ; preds = %.lr.ph.i._crit_edge
 
 bb.e:                                             ; preds = %.lr.ph.i._crit_edge
   %i.s = extractvalue { ptr, i64 } %i.p, 1        ; 4 uses
-  %i.t = extractvalue { ptr, i64 } %i.p, 0        ; 4 uses
+  %i.t = extractvalue { ptr, i64 } %i.p, 0        ; 5 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   %i.u = and i8 %.sroa.0.0.lcssa.i, 127
   %i.v = zext nneg i8 %i.u to i64
   %i.w = shl i64 %i.v, %indvars.iv

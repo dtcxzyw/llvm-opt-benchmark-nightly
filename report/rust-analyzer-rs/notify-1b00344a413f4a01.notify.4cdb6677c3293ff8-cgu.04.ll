@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.f
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   br label %.backedge.i.i.i
 
-.backedge.i.i.i:                                  ; preds = %.backedge.i.i.i.backedge, %bb.h
+.backedge.i.i.i:                                  ; preds = %bb.y, %bb.h
   %i.av = invoke { i64, ptr } @_RNvXsa_NtCscAsMj0W7j8b_3std2fsNtB5_4FileNtNtNtCsbSS6DM8SDEO_5alloc2io4read4Read4read(ptr noalias nofree noundef nonnull align 4 dereferenceable(4) %i.e, ptr noalias nofree noundef nonnull %i.c, i64 noundef 512)
           to label %bb.i unwind label %.loopexit.i.i.i, !noalias !134 ; 2 uses
 
@@ -235,7 +235,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bb = invoke noundef nonnull align 8 ptr @_RNvNtNtNtCshzWfHUSfYae_4core2io5error12os_functions16get_os_functions()
-          to label %.noexc.i.i.i unwind label %bb.t, !noalias !134
+          to label %.noexc.i.i.i unwind label %.backedge.i.i.i.backedge, !noalias !134
 
 .noexc.i.i.i:                                     ; preds = %bb.k
   %i.bc = lshr i64 %i.ay, 32
@@ -243,7 +243,7 @@ bb.k:                                             ; preds = %bb.j
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %i.bf = load ptr, ptr %i.be, align 8, !noalias !134, !nonnull !5, !noundef !5
   %i.bg = invoke noundef i8 %i.bf(i32 noundef %i.bd)
-          to label %_RNvMs1_NtNtCshzWfHUSfYae_4core2io5errorNtB5_5Error4kind.exit.i.i.i unwind label %bb.t, !noalias !134, !inline_history !0
+          to label %_RNvMs1_NtNtCshzWfHUSfYae_4core2io5errorNtB5_5Error4kind.exit.i.i.i unwind label %.backedge.i.i.i.backedge, !noalias !134, !inline_history !0
 
 bb.l:                                             ; preds = %bb.j
   %i.bh = lshr i64 %i.ay, 32
@@ -278,16 +278,15 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p
   call fastcc void @_RNvXs3_NtNtCshzWfHUSfYae_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCs6B6HQbbxj7M_6notify(ptr noalias nofree noundef align 8 dereferenceable(72) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.c, i64 noundef %i.ay), !noalias !134
-  br label %.backedge.i.i.i.backedge
+  br label %bb.y
 
 bb.s:                                             ; preds = %bb.q
   unreachable
 
-bb.t:                                             ; preds = %.noexc.i.i.i, %bb.k
+bb.t:                                             ; preds = %bb.x
   %i.bq = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs6B6HQbbxj7M_6notify(ptr nonnull %i.ax) #19
-          to label %bb.aa unwind label %bb.z, !noalias !134
+  br label %bb.aa
 
 _RNvMs1_NtNtCshzWfHUSfYae_4core2io5errorNtB5_5Error4kind.exit.i.i.i: ; preds = %bb.n, %bb.m, %bb.l, %.noexc.i.i.i
   %.sroa.0.0.i.i.i8.i = phi i8 [ %i.bn, %bb.n ], [ %switch.idx.cast.i.i.i.i.i.i, %bb.l ], [ %i.bl, %bb.m ], [ %i.bg, %.noexc.i.i.i ]
@@ -303,9 +302,9 @@ bb.u:                                             ; preds = %_RNvMs1_NtNtCshzWfH
 bb.v:                                             ; preds = %_RNvMs1_NtNtCshzWfHUSfYae_4core2io5errorNtB5_5Error4kind.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !141
   switch i64 %i.ba, label %default.unreachable [
-    i64 2, label %bb.y
+    i64 2, label %.thread.i.i.i
     i64 3, label %bb.w
-    i64 0, label %bb.y
+    i64 0, label %.thread.i.i.i
     i64 1, label %bb.x
   ], !prof !15
 
@@ -315,7 +314,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bv = icmp ne i64 %i.bu, 1095216660480
   call void @llvm.assume(i1 %i.bt)
   call void @llvm.assume(i1 %i.bv)
-  br label %bb.y
+  br label %.thread.i.i.i
 
 bb.x:                                             ; preds = %bb.v
   %i.bw = getelementptr i8, ptr %i.ax, i64 -1     ; 2 uses
@@ -323,28 +322,29 @@ bb.x:                                             ; preds = %bb.v
   store ptr %i.bw, ptr %i.au, align 8, !alias.scope !145, !noalias !141
   store i8 3, ptr %i.b, align 8, !alias.scope !145, !noalias !141
   invoke void @_RNvXsd_NtNtCshzWfHUSfYae_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.au)
-          to label %bb.y unwind label %.thread.i.i.i, !noalias !134
+          to label %.thread.i.i.i unwind label %bb.t, !noalias !134
 
-.thread.i.i.i:                                    ; preds = %bb.x
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.aa
-
-bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.v
+.thread.i.i.i:                                    ; preds = %bb.x, %bb.w, %bb.v, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !141
-  br label %.backedge.i.i.i.backedge
+  br label %bb.y
 
-.backedge.i.i.i.backedge:                         ; preds = %bb.y, %bb.r
+bb.y:                                             ; preds = %.thread.i.i.i, %bb.r
   br label %.backedge.i.i.i
 
-bb.z:                                             ; preds = %bb.t
+.backedge.i.i.i.backedge:                         ; preds = %.noexc.i.i.i, %bb.k
+  %lpad.thr_comm.i.i.i = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs6B6HQbbxj7M_6notify(ptr nonnull %i.ax) #19
+          to label %bb.aa unwind label %bb.z, !noalias !134
+
+bb.z:                                             ; preds = %.backedge.i.i.i.backedge
   %i.bx = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #18, !noalias !134
   unreachable
 
-bb.aa:                                            ; preds = %.thread.i.i.i, %bb.t, %.loopexit.split-lp.i.i.i, %.loopexit.i.i.i
-  %.pn.i.i.i = phi { ptr, i32 } [ %i.bq, %bb.t ], [ %3, %.thread.i.i.i ], [ %lpad.loopexit.i.i.i, %.loopexit.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
+bb.aa:                                            ; preds = %.backedge.i.i.i.backedge, %bb.t, %.loopexit.split-lp.i.i.i, %.loopexit.i.i.i
+  %.pn.i.i.i = phi { ptr, i32 } [ %lpad.thr_comm.i.i.i, %.backedge.i.i.i.backedge ], [ %i.bq, %bb.t ], [ %lpad.loopexit.i.i.i, %.loopexit.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
   %.val34.i.i.i = load i32, ptr %i.e, align 4, !range !143, !noalias !141, !noundef !5
   %i.by = call noundef i32 @close(i32 noundef %.val34.i.i.i) #20, !noalias !134 ; 0 uses
   resume { ptr, i32 } %.pn.i.i.i

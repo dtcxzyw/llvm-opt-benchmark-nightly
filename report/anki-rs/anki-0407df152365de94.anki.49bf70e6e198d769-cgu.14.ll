@@ -205,8 +205,8 @@ bb.n:                                             ; preds = %bb.m
   store i8 0, ptr %.sroa.3.0..sroa_idx.i, align 1, !alias.scope !4308
   br label %.backedge
 
-.thread98:                                        ; preds = %.thread105.loopexit, %.thread105.loopexit.split-lp, %.thread109, %bb.v, %bb.o
-  %.pn.pn = phi { ptr, i32 } [ %i.bb, %bb.v ], [ %lpad.thr_comm.split-lp, %bb.o ], [ %5, %.thread109 ], [ %lpad.loopexit, %.thread105.loopexit ], [ %lpad.loopexit.split-lp, %.thread105.loopexit.split-lp ]
+.thread98:                                        ; preds = %.thread105.loopexit, %.thread105.loopexit.split-lp, %5, %bb.v, %bb.o
+  %.pn.pn = phi { ptr, i32 } [ %i.bb, %bb.v ], [ %lpad.thr_comm.split-lp, %bb.o ], [ %6, %5 ], [ %lpad.loopexit, %.thread105.loopexit ], [ %lpad.loopexit.split-lp, %.thread105.loopexit.split-lp ]
   %.val71 = load i32, ptr %i.l, align 4, !range !55, !noundef !10
   %i.an = call noundef i32 @close(i32 noundef %.val71) #26 ; 0 uses
   br label %bb.d
@@ -317,16 +317,16 @@ bb.z:                                             ; preds = %bb.d
   call void @_ZN4core9panicking16panic_in_cleanup17h6ca8ea5ab49097b2E() #34
   unreachable
 
+5:                                                ; preds = %bb.aa
+  %6 = landingpad { ptr, i32 }
+          cleanup
+  br label %.thread98
+
 bb.aa:                                            ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   store ptr %i.aq, ptr %i.i, align 8
   invoke void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE"(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.i)
-          to label %bb.ab unwind label %.thread109
-
-.thread109:                                       ; preds = %bb.aa
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  br label %.thread98
+          to label %bb.ab unwind label %5
 
 bb.ab:                                            ; preds = %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)

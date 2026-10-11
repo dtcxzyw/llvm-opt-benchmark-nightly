@@ -204,7 +204,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !6772
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !6764
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !6764 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !6773
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -479,7 +480,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !7021
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !7013
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !7013 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !7022
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -754,7 +756,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !7270
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !7262
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !7262 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !7271
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -1029,7 +1032,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !7519
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !7511
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !7511 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !7520
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -1304,7 +1308,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !7768
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !7760
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !7760 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !7769
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -1579,7 +1584,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !8017
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !8009
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !8009 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !8018
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -1854,7 +1860,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !8266
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !8258
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !8258 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !8267
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -2129,7 +2136,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !8515
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !8507
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !8507 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !8516
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -2532,7 +2540,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !10042
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !10034
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !10034 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !10043
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -2807,7 +2816,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !10291
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !10283
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !10283 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !10292
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -3082,7 +3092,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !10540
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !10532
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !10532 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !10541
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -3357,7 +3368,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !10789
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !10781
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !10781 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !10790
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -3632,7 +3644,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !11038
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !11030
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !11030 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !11039
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -3907,7 +3920,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !11287
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !11279
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !11279 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !11288
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -4182,7 +4196,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !11536
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !11528
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !11528 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !11537
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -4457,7 +4472,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !11785
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !11777
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !11777 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !11786
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -4860,7 +4876,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !13312
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !13304
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !13304 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !13313
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -5135,7 +5152,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !13561
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !13553
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !13553 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !13562
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -5410,7 +5428,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !13810
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !13802
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !13802 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !13811
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -5685,7 +5704,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !14059
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !14051
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !14051 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !14060
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -5960,7 +5980,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !14308
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !14300
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !14300 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !14309
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -6235,7 +6256,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !14557
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !14549
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !14549 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !14558
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -6510,7 +6532,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !14806
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !14798
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !14798 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !14807
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -6785,7 +6808,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !15055
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !15047
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !15047 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !15056
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -7188,7 +7212,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !16582
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !16574
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !16574 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !16583
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -7463,7 +7488,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !16831
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !16823
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !16823 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !16832
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -7738,7 +7764,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !17080
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !17072
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !17072 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !17081
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -8013,7 +8040,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !17329
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !17321
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !17321 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !17330
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -8288,7 +8316,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !17578
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !17570
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !17570 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !17579
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -8563,7 +8592,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !17827
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !17819
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !17819 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !17828
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -8838,7 +8868,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !18076
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !18068
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !18068 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !18077
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -9113,7 +9144,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !18325
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !18317
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !18317 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !18326
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -9516,7 +9548,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !19852
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !19844
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !19844 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !19853
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -9796,7 +9829,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !20101
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !20093
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !20093 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !20102
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -10076,7 +10110,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !20350
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !20342
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !20342 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !20351
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -10356,7 +10391,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !20599
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !20591
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !20591 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !20600
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -10636,7 +10672,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !20848
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !20840
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !20840 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !20849
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -10916,7 +10953,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !21097
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !21089
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !21089 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !21098
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -11196,7 +11234,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !21346
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !21338
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !21338 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !21347
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -11476,7 +11515,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !21595
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !21587
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !21587 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !21596
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -11879,7 +11919,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !23122
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !23114
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !23114 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !23123
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -12159,7 +12200,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !23371
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !23363
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !23363 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !23372
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -12439,7 +12481,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !23620
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !23612
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !23612 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !23621
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -12719,7 +12762,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !23869
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !23861
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !23861 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !23870
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -12999,7 +13043,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !24118
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !24110
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !24110 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !24119
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -13279,7 +13324,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !24367
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !24359
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !24359 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !24368
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -13559,7 +13605,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !24616
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !24608
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !24608 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !24617
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -13839,7 +13886,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !24865
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !24857
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !24857 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !24866
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -14242,7 +14290,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !26392
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !26384
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !26384 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !26393
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -14517,7 +14566,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !26641
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !26633
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !26633 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !26642
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -14792,7 +14842,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !26890
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !26882
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !26882 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !26891
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -15067,7 +15118,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !27139
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !27131
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !27131 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !27140
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -15342,7 +15394,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !27388
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !27380
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !27380 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !27389
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -15617,7 +15670,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !27637
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !27629
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !27629 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !27638
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -15892,7 +15946,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !27886
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !27878
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !27878 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !27887
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -16167,7 +16222,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !28135
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !28127
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !28127 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !28136
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -16570,7 +16626,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !29662
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !29654
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !29654 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !29663
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -16845,7 +16902,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !29911
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !29903
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !29903 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !29912
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -17120,7 +17178,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !30160
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !30152
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !30152 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !30161
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -17395,7 +17454,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !30409
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !30401
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !30401 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !30410
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -17670,7 +17730,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !30658
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !30650
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !30650 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !30659
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -17945,7 +18006,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !30907
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !30899
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !30899 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !30908
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -18220,7 +18282,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !31156
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !31148
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !31148 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !31157
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -18495,7 +18558,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !31405
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !31397
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !31397 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !31406
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -18898,7 +18962,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !32932
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !32924
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !32924 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !32933
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -19173,7 +19238,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !33181
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !33173
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !33173 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !33182
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -19448,7 +19514,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !33430
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !33422
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !33422 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !33431
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -19723,7 +19790,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !33679
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !33671
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !33671 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !33680
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -19998,7 +20066,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !33928
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !33920
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !33920 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !33929
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -20273,7 +20342,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !34177
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !34169
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !34169 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !34178
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -20548,7 +20618,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !34426
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !34418
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !34418 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !34427
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -20823,7 +20894,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !34675
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !34667
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !34667 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !34676
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -21226,7 +21298,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !36202
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !36194
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !36194 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !36203
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -21501,7 +21574,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !36451
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !36443
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !36443 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !36452
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -21776,7 +21850,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !36700
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !36692
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !36692 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !36701
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -22051,7 +22126,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !36949
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !36941
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !36941 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !36950
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -22326,7 +22402,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !37198
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !37190
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !37190 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !37199
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -22601,7 +22678,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !37447
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !37439
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !37439 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !37448
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -22876,7 +22954,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !37696
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !37688
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !37688 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !37697
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d
@@ -23151,7 +23230,8 @@ bb.e:                                             ; preds = %bb.m, %.loopexit
   ret void, !dbg !37945
 
 .loopexit71:                                      ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !37937
+  %i.y = extractvalue { i8, ptr } %i.u, 1, !dbg !37937 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   br label %bb.f, !dbg !37946
 
 bb.f:                                             ; preds = %.loopexit71, %bb.d

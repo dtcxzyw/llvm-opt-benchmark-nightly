@@ -204,7 +204,8 @@ bb.ak:                                            ; preds = %bb.aj
   %i.dm = icmp ugt i8 %i.de, -49
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.do = load ptr, ptr %i.dn, align 8, !alias.scope !7667
-  %.sroa.01.0.i = select i1 %i.dm, ptr %i.do, ptr %i.dn ; 2 uses
+  %.sroa.01.0.i = select i1 %i.dm, ptr %i.do, ptr %i.dn ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0.i) ]
   %i.dp = load i64, ptr %.sroa.01.0.i, align 1
   %i.dq = xor i64 %i.dp, 7310034288222035807
   %i.dr = getelementptr i8, ptr %.sroa.01.0.i, i64 8

@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.d, %_RINvNtCskKL
   br label %.thread135
 
 .thread135:                                       ; preds = %.thread135.sink.split, %bb.ax, %bb.y, %bb.ad, %bb.av, %bb.bc, %.thread153, %.loopexit.split-lp
-  %.pn67.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.en, %bb.av ], [ %.pn.pn126151, %bb.bc ], [ %.pn.pn126151, %.thread153 ], [ %i.ep, %bb.ax ], [ %i.cx, %bb.y ], [ %i.df, %bb.ad ], [ %.pn67.pn.ph, %.thread135.sink.split ]
+  %.pn67.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.en, %bb.av ], [ %.pn.pn126.ph, %bb.bc ], [ %.pn.pn126.ph, %.thread153 ], [ %i.ep, %bb.ax ], [ %i.cx, %bb.y ], [ %i.df, %bb.ad ], [ %.pn67.pn.ph, %.thread135.sink.split ]
   resume { ptr, i32 } %.pn67.pn
 
 .loopexit:                                        ; preds = %bb.s
@@ -322,12 +322,6 @@ bb.ao:                                            ; preds = %bb.ai
 bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.ah
-
-3:                                                ; preds = %bb.ak, %.noexc90
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.dl) #36
-          to label %.thread118 unwind label %bb.z
 
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.an, %bb.am, %bb.al, %.noexc90
   %.sroa.0.0.i89 = phi i8 [ %i.eb, %bb.an ], [ %switch.idx.cast.i.i.i, %bb.al ], [ %i.dz, %bb.am ], [ %i.du, %.noexc90 ]
@@ -452,16 +446,22 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11se
   br label %bb.ag
 
 .thread153:                                       ; preds = %bb.bb
-  br i1 %.sroa.059.0124152, label %bb.bc, label %.thread135
+  br i1 %.sroa.059.0124.ph, label %bb.bc, label %.thread135
 
-.thread118:                                       ; preds = %.thread128.thread145, %3
-  %.pn.pn127 = phi { ptr, i32 } [ %i.di, %.thread128.thread145 ], [ %4, %3 ]
+3:                                                ; preds = %.noexc90, %bb.ak
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.dl) #36
+          to label %.thread118 unwind label %bb.z
+
+.thread118:                                       ; preds = %3, %.thread128.thread145
+  %.pn.pn127 = phi { ptr, i32 } [ %i.di, %.thread128.thread145 ], [ %lpad.thr_comm, %3 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %.sroa.107.0.copyload) #36
           to label %bb.bb unwind label %bb.z
 
 bb.bb:                                            ; preds = %.thread118, %.thread147
-  %.sroa.059.0124152 = phi i1 [ false, %.thread147 ], [ true, %.thread118 ]
-  %.pn.pn126151 = phi { ptr, i32 } [ %i.dj, %.thread147 ], [ %.pn.pn127, %.thread118 ] ; 2 uses
+  %.pn.pn126.ph = phi { ptr, i32 } [ %i.dj, %.thread147 ], [ %.pn.pn127, %.thread118 ] ; 2 uses
+  %.sroa.059.0124.ph = phi i1 [ false, %.thread147 ], [ true, %.thread118 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection13AcceptedAlertECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(56) %i.l) #36
           to label %.thread153 unwind label %bb.z
 
@@ -864,7 +864,7 @@ bb.ag:                                            ; preds = %bb.d, %_RINvNtCskKL
   br label %.thread135
 
 .thread135:                                       ; preds = %.thread135.sink.split, %bb.ax, %bb.y, %bb.ad, %bb.av, %bb.bc, %.thread153, %.loopexit.split-lp
-  %.pn67.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.en, %bb.av ], [ %.pn.pn126151, %bb.bc ], [ %.pn.pn126151, %.thread153 ], [ %i.ep, %bb.ax ], [ %i.cx, %bb.y ], [ %i.df, %bb.ad ], [ %.pn67.pn.ph, %.thread135.sink.split ]
+  %.pn67.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.en, %bb.av ], [ %.pn.pn126.ph, %bb.bc ], [ %.pn.pn126.ph, %.thread153 ], [ %i.ep, %bb.ax ], [ %i.cx, %bb.y ], [ %i.df, %bb.ad ], [ %.pn67.pn.ph, %.thread135.sink.split ]
   resume { ptr, i32 } %.pn67.pn
 
 .loopexit:                                        ; preds = %bb.s
@@ -982,12 +982,6 @@ bb.ao:                                            ; preds = %bb.ai
 bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.ah
-
-3:                                                ; preds = %bb.ak, %.noexc90
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.dl) #36
-          to label %.thread118 unwind label %bb.z
 
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.an, %bb.am, %bb.al, %.noexc90
   %.sroa.0.0.i89 = phi i8 [ %i.eb, %bb.an ], [ %switch.idx.cast.i.i.i, %bb.al ], [ %i.dz, %bb.am ], [ %i.du, %.noexc90 ]
@@ -1112,16 +1106,22 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11se
   br label %bb.ag
 
 .thread153:                                       ; preds = %bb.bb
-  br i1 %.sroa.059.0124152, label %bb.bc, label %.thread135
+  br i1 %.sroa.059.0124.ph, label %bb.bc, label %.thread135
 
-.thread118:                                       ; preds = %.thread128.thread145, %3
-  %.pn.pn127 = phi { ptr, i32 } [ %i.di, %.thread128.thread145 ], [ %4, %3 ]
+3:                                                ; preds = %.noexc90, %bb.ak
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.dl) #36
+          to label %.thread118 unwind label %bb.z
+
+.thread118:                                       ; preds = %3, %.thread128.thread145
+  %.pn.pn127 = phi { ptr, i32 } [ %i.di, %.thread128.thread145 ], [ %lpad.thr_comm, %3 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %.sroa.107.0.copyload) #36
           to label %bb.bb unwind label %bb.z
 
 bb.bb:                                            ; preds = %.thread118, %.thread147
-  %.sroa.059.0124152 = phi i1 [ false, %.thread147 ], [ true, %.thread118 ]
-  %.pn.pn126151 = phi { ptr, i32 } [ %i.dj, %.thread147 ], [ %.pn.pn127, %.thread118 ] ; 2 uses
+  %.pn.pn126.ph = phi { ptr, i32 } [ %i.dj, %.thread147 ], [ %.pn.pn127, %.thread118 ] ; 2 uses
+  %.sroa.059.0124.ph = phi i1 [ false, %.thread147 ], [ true, %.thread118 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection13AcceptedAlertECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(56) %i.l) #36
           to label %.thread153 unwind label %bb.z
 
@@ -1520,7 +1520,7 @@ bb.ab:                                            ; preds = %bb.d, %_RINvNtCskKL
   br label %.thread143
 
 .thread143:                                       ; preds = %.thread143.sink.split, %bb.as, %bb.t, %bb.y, %bb.aq, %bb.ax, %.thread161, %.loopexit.split-lp
-  %.pn68.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.dv, %bb.aq ], [ %.pn.pn134159, %bb.ax ], [ %.pn.pn134159, %.thread161 ], [ %i.dx, %bb.as ], [ %i.cf, %bb.t ], [ %i.cn, %bb.y ], [ %.pn68.pn.ph, %.thread143.sink.split ]
+  %.pn68.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.dv, %bb.aq ], [ %.pn.pn134.ph, %bb.ax ], [ %.pn.pn134.ph, %.thread161 ], [ %i.dx, %bb.as ], [ %i.cf, %bb.t ], [ %i.cn, %bb.y ], [ %.pn68.pn.ph, %.thread143.sink.split ]
   resume { ptr, i32 } %.pn68.pn
 
 .loopexit:                                        ; preds = %bb.o
@@ -1633,12 +1633,6 @@ bb.aj:                                            ; preds = %bb.ad
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.ac
-
-3:                                                ; preds = %bb.af, %.noexc88
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.ct) #36
-          to label %.thread126 unwind label %bb.u
 
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.ai, %bb.ah, %bb.ag, %.noexc88
   %.sroa.0.0.i87 = phi i8 [ %i.dj, %bb.ai ], [ %switch.idx.cast.i.i.i, %bb.ag ], [ %i.dh, %bb.ah ], [ %i.dc, %.noexc88 ]
@@ -1761,16 +1755,22 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11se
   br label %bb.ab
 
 .thread161:                                       ; preds = %bb.aw
-  br i1 %.sroa.060.0132160, label %bb.ax, label %.thread143
+  br i1 %.sroa.060.0132.ph, label %bb.ax, label %.thread143
 
-.thread126:                                       ; preds = %.thread136.thread153, %3
-  %.pn.pn135 = phi { ptr, i32 } [ %i.cq, %.thread136.thread153 ], [ %4, %3 ]
+3:                                                ; preds = %.noexc88, %bb.af
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.ct) #36
+          to label %.thread126 unwind label %bb.u
+
+.thread126:                                       ; preds = %3, %.thread136.thread153
+  %.pn.pn135 = phi { ptr, i32 } [ %i.cq, %.thread136.thread153 ], [ %lpad.thr_comm, %3 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %.sroa.107.0.copyload) #36
           to label %bb.aw unwind label %bb.u
 
 bb.aw:                                            ; preds = %.thread126, %.thread155
-  %.sroa.060.0132160 = phi i1 [ false, %.thread155 ], [ true, %.thread126 ]
-  %.pn.pn134159 = phi { ptr, i32 } [ %i.cr, %.thread155 ], [ %.pn.pn135, %.thread126 ] ; 2 uses
+  %.pn.pn134.ph = phi { ptr, i32 } [ %i.cr, %.thread155 ], [ %.pn.pn135, %.thread126 ] ; 2 uses
+  %.sroa.060.0132.ph = phi i1 [ false, %.thread155 ], [ true, %.thread126 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection13AcceptedAlertECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(56) %i.l) #36
           to label %.thread161 unwind label %bb.u
 
@@ -2173,7 +2173,7 @@ bb.ag:                                            ; preds = %bb.d, %_RINvNtCskKL
   br label %.thread136
 
 .thread136:                                       ; preds = %.thread136.sink.split, %bb.ax, %bb.y, %bb.ad, %bb.av, %bb.bc, %.thread154, %.loopexit.split-lp
-  %.pn67.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.en, %bb.av ], [ %.pn.pn127152, %bb.bc ], [ %.pn.pn127152, %.thread154 ], [ %i.ep, %bb.ax ], [ %i.cx, %bb.y ], [ %i.df, %bb.ad ], [ %.pn67.pn.ph, %.thread136.sink.split ]
+  %.pn67.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.en, %bb.av ], [ %.pn.pn127.ph, %bb.bc ], [ %.pn.pn127.ph, %.thread154 ], [ %i.ep, %bb.ax ], [ %i.cx, %bb.y ], [ %i.df, %bb.ad ], [ %.pn67.pn.ph, %.thread136.sink.split ]
   resume { ptr, i32 } %.pn67.pn
 
 .loopexit:                                        ; preds = %bb.s
@@ -2291,12 +2291,6 @@ bb.ao:                                            ; preds = %bb.ai
 bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.ah
-
-3:                                                ; preds = %bb.ak, %.noexc91
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.dl) #36
-          to label %.thread119 unwind label %bb.z
 
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.an, %bb.am, %bb.al, %.noexc91
   %.sroa.0.0.i90 = phi i8 [ %i.eb, %bb.an ], [ %switch.idx.cast.i.i.i, %bb.al ], [ %i.dz, %bb.am ], [ %i.du, %.noexc91 ]
@@ -2421,16 +2415,22 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11se
   br label %bb.ag
 
 .thread154:                                       ; preds = %bb.bb
-  br i1 %.sroa.059.0125153, label %bb.bc, label %.thread136
+  br i1 %.sroa.059.0125.ph, label %bb.bc, label %.thread136
 
-.thread119:                                       ; preds = %.thread129.thread146, %3
-  %.pn.pn128 = phi { ptr, i32 } [ %i.di, %.thread129.thread146 ], [ %4, %3 ]
+3:                                                ; preds = %.noexc91, %bb.ak
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.dl) #36
+          to label %.thread119 unwind label %bb.z
+
+.thread119:                                       ; preds = %3, %.thread129.thread146
+  %.pn.pn128 = phi { ptr, i32 } [ %i.di, %.thread129.thread146 ], [ %lpad.thr_comm, %3 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %.sroa.107.0.copyload) #36
           to label %bb.bb unwind label %bb.z
 
 bb.bb:                                            ; preds = %.thread119, %.thread148
-  %.sroa.059.0125153 = phi i1 [ false, %.thread148 ], [ true, %.thread119 ]
-  %.pn.pn127152 = phi { ptr, i32 } [ %i.dj, %.thread148 ], [ %.pn.pn128, %.thread119 ] ; 2 uses
+  %.pn.pn127.ph = phi { ptr, i32 } [ %i.dj, %.thread148 ], [ %.pn.pn128, %.thread119 ] ; 2 uses
+  %.sroa.059.0125.ph = phi i1 [ false, %.thread148 ], [ true, %.thread119 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection13AcceptedAlertECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(56) %i.l) #36
           to label %.thread154 unwind label %bb.z
 
@@ -2833,7 +2833,7 @@ bb.ag:                                            ; preds = %bb.d, %_RINvNtCskKL
   br label %.thread136
 
 .thread136:                                       ; preds = %.thread136.sink.split, %bb.ax, %bb.y, %bb.ad, %bb.av, %bb.bc, %.thread154, %.loopexit.split-lp
-  %.pn67.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.en, %bb.av ], [ %.pn.pn127152, %bb.bc ], [ %.pn.pn127152, %.thread154 ], [ %i.ep, %bb.ax ], [ %i.cx, %bb.y ], [ %i.df, %bb.ad ], [ %.pn67.pn.ph, %.thread136.sink.split ]
+  %.pn67.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.en, %bb.av ], [ %.pn.pn127.ph, %bb.bc ], [ %.pn.pn127.ph, %.thread154 ], [ %i.ep, %bb.ax ], [ %i.cx, %bb.y ], [ %i.df, %bb.ad ], [ %.pn67.pn.ph, %.thread136.sink.split ]
   resume { ptr, i32 } %.pn67.pn
 
 .loopexit:                                        ; preds = %bb.s
@@ -2951,12 +2951,6 @@ bb.ao:                                            ; preds = %bb.ai
 bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.ah
-
-3:                                                ; preds = %bb.ak, %.noexc91
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.dl) #36
-          to label %.thread119 unwind label %bb.z
 
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.an, %bb.am, %bb.al, %.noexc91
   %.sroa.0.0.i90 = phi i8 [ %i.eb, %bb.an ], [ %switch.idx.cast.i.i.i, %bb.al ], [ %i.dz, %bb.am ], [ %i.du, %.noexc91 ]
@@ -3081,16 +3075,22 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11se
   br label %bb.ag
 
 .thread154:                                       ; preds = %bb.bb
-  br i1 %.sroa.059.0125153, label %bb.bc, label %.thread136
+  br i1 %.sroa.059.0125.ph, label %bb.bc, label %.thread136
 
-.thread119:                                       ; preds = %.thread129.thread146, %3
-  %.pn.pn128 = phi { ptr, i32 } [ %i.di, %.thread129.thread146 ], [ %4, %3 ]
+3:                                                ; preds = %.noexc91, %bb.ak
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.dl) #36
+          to label %.thread119 unwind label %bb.z
+
+.thread119:                                       ; preds = %3, %.thread129.thread146
+  %.pn.pn128 = phi { ptr, i32 } [ %i.di, %.thread129.thread146 ], [ %lpad.thr_comm, %3 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %.sroa.107.0.copyload) #36
           to label %bb.bb unwind label %bb.z
 
 bb.bb:                                            ; preds = %.thread119, %.thread148
-  %.sroa.059.0125153 = phi i1 [ false, %.thread148 ], [ true, %.thread119 ]
-  %.pn.pn127152 = phi { ptr, i32 } [ %i.dj, %.thread148 ], [ %.pn.pn128, %.thread119 ] ; 2 uses
+  %.pn.pn127.ph = phi { ptr, i32 } [ %i.dj, %.thread148 ], [ %.pn.pn128, %.thread119 ] ; 2 uses
+  %.sroa.059.0125.ph = phi i1 [ false, %.thread148 ], [ true, %.thread119 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection13AcceptedAlertECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(56) %i.l) #36
           to label %.thread154 unwind label %bb.z
 
@@ -3489,7 +3489,7 @@ bb.ab:                                            ; preds = %bb.d, %_RINvNtCskKL
   br label %.thread144
 
 .thread144:                                       ; preds = %.thread144.sink.split, %bb.as, %bb.t, %bb.y, %bb.aq, %bb.ax, %.thread162, %.loopexit.split-lp
-  %.pn68.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.dv, %bb.aq ], [ %.pn.pn135160, %bb.ax ], [ %.pn.pn135160, %.thread162 ], [ %i.dx, %bb.as ], [ %i.cf, %bb.t ], [ %i.cn, %bb.y ], [ %.pn68.pn.ph, %.thread144.sink.split ]
+  %.pn68.pn = phi { ptr, i32 } [ %lpad.phi, %.loopexit.split-lp ], [ %i.dv, %bb.aq ], [ %.pn.pn135.ph, %bb.ax ], [ %.pn.pn135.ph, %.thread162 ], [ %i.dx, %bb.as ], [ %i.cf, %bb.t ], [ %i.cn, %bb.y ], [ %.pn68.pn.ph, %.thread144.sink.split ]
   resume { ptr, i32 } %.pn68.pn
 
 .loopexit:                                        ; preds = %bb.o
@@ -3602,12 +3602,6 @@ bb.aj:                                            ; preds = %bb.ad
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   br label %bb.ac
-
-3:                                                ; preds = %bb.af, %.noexc89
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.ct) #36
-          to label %.thread127 unwind label %bb.u
 
 _RNvMs1_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.ai, %bb.ah, %bb.ag, %.noexc89
   %.sroa.0.0.i88 = phi i8 [ %i.dj, %bb.ai ], [ %switch.idx.cast.i.i.i, %bb.ag ], [ %i.dh, %bb.ah ], [ %i.dc, %.noexc89 ]
@@ -3730,16 +3724,22 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11se
   br label %bb.ab
 
 .thread162:                                       ; preds = %bb.aw
-  br i1 %.sroa.060.0133161, label %bb.ax, label %.thread144
+  br i1 %.sroa.060.0133.ph, label %bb.ax, label %.thread144
 
-.thread127:                                       ; preds = %.thread137.thread154, %3
-  %.pn.pn136 = phi { ptr, i32 } [ %i.cq, %.thread137.thread154 ], [ %4, %3 ]
+3:                                                ; preds = %.noexc89, %bb.af
+  %lpad.thr_comm = landingpad { ptr, i32 }
+          cleanup
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %i.ct) #36
+          to label %.thread127 unwind label %bb.u
+
+.thread127:                                       ; preds = %3, %.thread137.thread154
+  %.pn.pn136 = phi { ptr, i32 } [ %i.cq, %.thread137.thread154 ], [ %lpad.thr_comm, %3 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshnt8FRa5Rut_11native_ping(ptr nonnull %.sroa.107.0.copyload) #36
           to label %bb.aw unwind label %bb.u
 
 bb.aw:                                            ; preds = %.thread127, %.thread156
-  %.sroa.060.0133161 = phi i1 [ false, %.thread156 ], [ true, %.thread127 ]
-  %.pn.pn135160 = phi { ptr, i32 } [ %i.cr, %.thread156 ], [ %.pn.pn136, %.thread127 ] ; 2 uses
+  %.pn.pn135.ph = phi { ptr, i32 } [ %i.cr, %.thread156 ], [ %.pn.pn136, %.thread127 ] ; 2 uses
+  %.sroa.060.0133.ph = phi i1 [ false, %.thread156 ], [ true, %.thread127 ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCshPShd8ZVvJf_6rustls6server11server_conn10connection13AcceptedAlertECshnt8FRa5Rut_11native_ping(ptr noalias nofree noundef align 8 dereferenceable(56) %i.l) #36
           to label %.thread162 unwind label %bb.u
 

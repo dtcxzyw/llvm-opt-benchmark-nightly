@@ -202,8 +202,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit70, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7complex7EqualOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 
@@ -606,8 +606,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   br label %.thread152
 
-.thread152:                                       ; preds = %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit70, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit43 ], [ 0, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ 1, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit70 ]
+.thread152:                                       ; preds = %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit43, %bb.a, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit70, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.10 = phi i8 [ %i.am, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit70 ], [ 0, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit43 ], [ 0, %bb.a ], [ 0, %_ZN4mlir7complex10NotEqualOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.10
 }
 

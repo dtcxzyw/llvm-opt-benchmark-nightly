@@ -204,7 +204,8 @@ _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allo
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic17DiagnosticMessageEECsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i, %bb.b, %bb.a
   %i.g = extractvalue { ptr, i64 } %i.a, 1
-  %i.h = extractvalue { ptr, i64 } %i.a, 0
+  %i.h = extractvalue { ptr, i64 } %i.a, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.b, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.g, ptr %i.i, align 8
@@ -233,7 +234,8 @@ _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allo
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic17DiagnosticMessageEECsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i, %bb.b, %bb.a
   %i.g = extractvalue { ptr, i64 } %i.a, 1
-  %i.h = extractvalue { ptr, i64 } %i.a, 0
+  %i.h = extractvalue { ptr, i64 } %i.a, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.b, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.g, ptr %i.i, align 8
@@ -262,7 +264,8 @@ _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allo
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic17DiagnosticMessageEECsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i, %bb.b, %bb.a
   %i.g = extractvalue { ptr, i64 } %i.a, 1
-  %i.h = extractvalue { ptr, i64 } %i.a, 0
+  %i.h = extractvalue { ptr, i64 } %i.a, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.b, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.g, ptr %i.i, align 8
@@ -329,7 +332,8 @@ _RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allo
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic17DiagnosticMessageEECsoTR8nlGN3X_18ty_python_semantic.exit: ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator10deallocate.exit.i.i.i.i, %bb.d, %_RNvXsu_NtCs56aZGHL6Dc6_7ruff_db10diagnosticReNtB5_21IntoDiagnosticMessage23into_diagnostic_messageCsoTR8nlGN3X_18ty_python_semantic.exit
   %i.q = extractvalue { ptr, i64 } %i.k, 1
-  %i.r = extractvalue { ptr, i64 } %i.k, 0
+  %i.r = extractvalue { ptr, i64 } %i.k, 0        ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   store ptr %i.r, ptr %i.l, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.q, ptr %i.s, align 8
@@ -732,7 +736,8 @@ bb.ae:                                            ; preds = %bb.b
   %i.hp = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.hq = load i64, ptr %i.hp, align 8, !noundef !24 ; 6 uses
   %i.hr = tail call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range7RangeTojEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ho, i64 noundef %i.hq, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @206) ; 2 uses
-  %i.hs = extractvalue { ptr, i64 } %i.am, 0      ; 2 uses
+  %i.hs = extractvalue { ptr, i64 } %i.am, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.hs) ]
   %i.ht = extractvalue { ptr, i64 } %i.am, 1
   %i.hu = getelementptr inbounds nuw [16 x i8], ptr %i.hs, i64 %i.ht
   %i.hv = extractvalue { ptr, i64 } %i.hr, 0      ; 2 uses
@@ -1135,6 +1140,7 @@ _RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.og = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range7RangeTojEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aj, i64 noundef %i.al, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @206) ; 2 uses
   %i.oh = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range7RangeTojEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ho, i64 noundef %i.hq, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @206)
   %i.oi = extractvalue { ptr, i64 } %i.og, 0      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.oi) ]
   %i.oj = extractvalue { ptr, i64 } %i.og, 1      ; 3 uses
   %.idx1022.a = shl nuw nsw i64 %i.oj, 4
   %i.ok = getelementptr inbounds nuw i8, ptr %i.oi, i64 %.idx1022.a ; 2 uses
@@ -1155,7 +1161,6 @@ _RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.oq = getelementptr inbounds nuw i8, ptr %.pre, i64 128 ; 20 uses
   %i.or = getelementptr inbounds nuw i8, ptr %.pre, i64 8 ; 30 uses
   %.not191.peel = icmp eq i64 %i.ol, 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.oi) ]
   br i1 %.not191.peel, label %bb.bd, label %bb.bc, !prof !29
 
 bb.bc:                                            ; preds = %_RNvXs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBW_EINtB5_7ZipImplBW_BW_E4nextB1q_.exit323.thread
@@ -1258,6 +1263,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.pt = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range7RangeTojEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ho, i64 noundef %i.hq, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @206) ; 2 uses
   %i.pu = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range7RangeTojEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aj, i64 noundef %i.al, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @206)
   %i.pv = extractvalue { ptr, i64 } %i.pt, 0      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pv) ]
   %i.pw = extractvalue { ptr, i64 } %i.pt, 1      ; 3 uses
   %.idx1024.a = shl nuw nsw i64 %i.pw, 4
   %i.px = getelementptr inbounds nuw i8, ptr %i.pv, i64 %.idx1024.a ; 2 uses
@@ -1275,7 +1281,6 @@ bb.bi:                                            ; preds = %bb.bh
   %i.qa = getelementptr inbounds nuw i8, ptr %i.ab, i64 16 ; 4 uses
   %i.qb = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 3 uses
   %.not193.peel = icmp eq i64 %i.py, 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.pv) ]
   br i1 %.not193.peel, label %bb.bk, label %bb.bj, !prof !29
 
 bb.bj:                                            ; preds = %.peel.begin908
@@ -1443,6 +1448,7 @@ bb.bs:                                            ; preds = %.loopexit911
   %i.rt = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range9RangeFromjEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aj, i64 noundef %i.al, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @207) ; 2 uses
   %i.ru = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range9RangeFromjEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ho, i64 noundef %i.hq, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @207)
   %i.rv = extractvalue { ptr, i64 } %i.rt, 0      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.rv) ]
   %i.rw = extractvalue { ptr, i64 } %i.rt, 1      ; 3 uses
   %.idx1026 = shl nuw nsw i64 %i.rw, 4
   %i.rx = getelementptr inbounds nuw i8, ptr %i.rv, i64 %.idx1026 ; 2 uses
@@ -1452,7 +1458,6 @@ bb.bs:                                            ; preds = %.loopexit911
   %.sroa.543.sroa.5.0..sroa.543.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 24 ; 2 uses
   %i.sa = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 3 uses
   %.not196.peel = icmp eq i64 %i.ry, 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.rv) ]
   br i1 %.not196.peel, label %bb.bu, label %bb.bt, !prof !29
 
 bb.bt:                                            ; preds = %.peel.begin913
@@ -1557,6 +1562,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.te = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range9RangeFromjEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ho, i64 noundef %i.hq, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @207) ; 2 uses
   %i.tf = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range9RangeFromjEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aj, i64 noundef %i.al, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @207)
   %i.tg = extractvalue { ptr, i64 } %i.te, 0      ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.tg) ]
   %i.th = extractvalue { ptr, i64 } %i.te, 1      ; 3 uses
   %.idx1028 = shl nuw nsw i64 %i.th, 4
   %i.ti = getelementptr inbounds nuw i8, ptr %i.tg, i64 %.idx1028 ; 2 uses
@@ -1566,7 +1572,6 @@ bb.bz:                                            ; preds = %bb.by
   %i.tk = getelementptr inbounds nuw i8, ptr %i.y, i64 16 ; 4 uses
   %i.tl = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 3 uses
   %.not198.peel = icmp eq i64 %i.tj, 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.tg) ]
   br i1 %.not198.peel, label %bb.cb, label %bb.ca, !prof !29
 
 bb.ca:                                            ; preds = %.peel.begin919
@@ -1671,10 +1676,10 @@ bb.cg:                                            ; preds = %bb.cf
   %i.up = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range9RangeFromjEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aj, i64 noundef %i.al, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @207) ; 2 uses
   %i.uq = call { ptr, i64 } @_RNvXsp_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexINtNtB1D_5range9RangeFromjEE5indexBM_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ho, i64 noundef %i.hq, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @207) ; 2 uses
   %i.ur = extractvalue { ptr, i64 } %i.up, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ur) ]
   %6 = extractvalue { ptr, i64 } %i.up, 1         ; 2 uses
   %7 = extractvalue { ptr, i64 } %i.uq, 0         ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %7) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ur) ]
   %i.us = icmp eq i64 %6, 0
   br i1 %i.us, label %select.unfold824, label %.lr.ph
 
@@ -2077,7 +2082,8 @@ bb.bh:                                            ; preds = %bb.bg
   %.sroa.0.0.i.i.i.i = select i1 %i.fo, i32 18, i32 %.pr.pr.i.i
   %.sroa.5.sroa.5.0.i.i.i.i = select i1 %i.fo, i64 undef, i64 %.sroa.54.sroa.4.0.copyload.i.i.i.i
   %.sroa.5.sroa.0.0.i.i.i.i = select i1 %i.fo, i32 5, i32 %.sroa.54.sroa.0.0.copyload.i.i.i.i
-  %i.fp = extractvalue { ptr, i64 } %i.fm, 0      ; 2 uses
+  %i.fp = extractvalue { ptr, i64 } %i.fm, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fp) ]
   %i.fq = extractvalue { ptr, i64 } %i.fm, 1
   %i.fr = getelementptr inbounds nuw [16 x i8], ptr %i.fp, i64 %i.fq
   %i.fs = extractvalue { ptr, i64 } %i.fn, 0      ; 3 uses
@@ -2480,7 +2486,8 @@ bb.m:                                             ; preds = %bb.o, %bb.n, %bb.l
           to label %common.resume unwind label %bb.p, !noalias !24992
 
 bb.n:                                             ; preds = %bb.l
-  %i.bf = extractvalue { ptr, i64 } %i.bc, 0      ; 2 uses
+  %i.bf = extractvalue { ptr, i64 } %i.bc, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bf) ]
   %i.bg = extractvalue { ptr, i64 } %i.bc, 1
   %i.bh = getelementptr inbounds nuw [16 x i8], ptr %i.bf, i64 %i.bg
   %i.bi = load i64, ptr %i.bd, align 8, !alias.scope !24993, !noalias !24994, !noundef !24
@@ -2883,7 +2890,8 @@ bb.i:                                             ; preds = %bb.k, %bb.j, %bb.h
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCsheqz6YZvxwl_8smallvec8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej0_EEB1f_.exit.i.i unwind label %bb.l, !noalias !26290
 
 bb.j:                                             ; preds = %bb.h
-  %i.bl = extractvalue { ptr, i64 } %i.bi, 0      ; 2 uses
+  %i.bl = extractvalue { ptr, i64 } %i.bi, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bl) ]
   %i.bm = extractvalue { ptr, i64 } %i.bi, 1
   %i.bn = getelementptr inbounds nuw [16 x i8], ptr %i.bl, i64 %i.bm
   %i.bo = load i64, ptr %i.bj, align 8, !alias.scope !26292, !noalias !26293, !noundef !24
@@ -3103,7 +3111,8 @@ bb.f:                                             ; preds = %bb.h, %bb.g, %bb.e
           to label %common.resume.i unwind label %bb.i, !noalias !26348
 
 bb.g:                                             ; preds = %bb.e
-  %i.v = extractvalue { ptr, i64 } %i.s, 0        ; 2 uses
+  %i.v = extractvalue { ptr, i64 } %i.s, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.v) ]
   %i.w = extractvalue { ptr, i64 } %i.s, 1
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %i.w
   %i.y = load i64, ptr %i.t, align 8, !alias.scope !26349, !noalias !26350, !noundef !24
@@ -3506,7 +3515,8 @@ bb.m:                                             ; preds = %bb.e
           to label %.noexc24 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc24:                                         ; preds = %.noexc23
-  %i.bq = extractvalue { ptr, i64 } %i.bl, 0      ; 2 uses
+  %i.bq = extractvalue { ptr, i64 } %i.bl, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bq) ]
   %i.br = extractvalue { ptr, i64 } %i.bl, 1
   %i.bs = getelementptr inbounds nuw [56 x i8], ptr %i.bq, i64 %i.br
   %i.bt = extractvalue { ptr, i64 } %i.bp, 0      ; 3 uses
@@ -3594,7 +3604,8 @@ _RNvMs2_NtNtCsoTR8nlGN3X_18ty_python_semantic5types5tupleNtB5_15VariableSegment1
           to label %.noexc31 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc31:                                         ; preds = %.noexc30
-  %i.co = extractvalue { ptr, i64 } %i.cm, 0      ; 2 uses
+  %i.co = extractvalue { ptr, i64 } %i.cm, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.co) ]
   %i.cp = extractvalue { ptr, i64 } %i.cm, 1
   %i.cq = getelementptr inbounds nuw [56 x i8], ptr %i.co, i64 %i.cp
   %i.cr = extractvalue { ptr, i64 } %i.cn, 0      ; 3 uses
@@ -3997,7 +4008,8 @@ bb.k:                                             ; preds = %_RNvMso_NtNtCsoTR8n
   %.sroa.0.0.i.i = select i1 %i.as, i32 18, i32 %i.g
   %.sroa.5.sroa.5.0.i.i = select i1 %i.as, i64 undef, i64 %.sroa.54.sroa.4.0.copyload.i.i
   %.sroa.5.sroa.0.0.i.i = select i1 %i.as, i32 5, i32 %.sroa.54.sroa.0.0.copyload.i.i
-  %i.at = extractvalue { ptr, i64 } %i.aq, 0      ; 2 uses
+  %i.at = extractvalue { ptr, i64 } %i.aq, 0      ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
   %i.au = extractvalue { ptr, i64 } %i.aq, 1
   %i.av = getelementptr inbounds nuw [16 x i8], ptr %i.at, i64 %i.au
   %i.aw = extractvalue { ptr, i64 } %i.ar, 0      ; 3 uses

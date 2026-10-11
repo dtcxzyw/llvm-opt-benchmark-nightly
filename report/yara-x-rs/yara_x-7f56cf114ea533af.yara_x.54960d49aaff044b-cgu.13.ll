@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %_RNvMNtNtCscjxkGEBy
   %i.ac = and i64 %i.u, -8
   %i.ad = getelementptr i8, ptr %i.n, i64 %i.ac
   %i.ae = sub i64 0, %i.u
-  %i.af = getelementptr i8, ptr %i.ad, i64 %i.ae
+  %i.af = getelementptr i8, ptr %i.ad, i64 %i.ae  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.af) ]
   invoke void @_RINvMNtCskKLDkoKarTP_4core5sliceSj9fill_withNCNvMNtCscjxkGEBy879_6bitvec3vecNtBL_6BitVec6repeat0ECs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull align 8 %i.af, i64 noundef %i.ab, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(1) %i.f)
           to label %bb.g unwind label %bb.e
 
@@ -608,7 +609,8 @@ _RNvMs4_NtCscjxkGEBy879_6bitvec6domainINtB5_6DomainNtNtCs3f5EAvbiDJf_3wyz4comu3M
   %i.cf = and i64 %i.bk, -8
   %i.cg = getelementptr i8, ptr %i.bj, i64 %i.cf
   %i.ch = sub i64 0, %i.bk
-  %i.ci = getelementptr i8, ptr %i.cg, i64 %i.ch
+  %i.ci = getelementptr i8, ptr %i.cg, i64 %i.ch  ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ci) ]
   call void %.sroa.0.0.i.i(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.a, ptr noundef nonnull %i.ci, i64 noundef %i.br, i8 noundef %i.bs, i8 noundef %.sroa.4.0.i.i.i.i), !inline_history !4457
   %i.cj = load ptr, ptr %i.a, align 8, !noalias !4468, !noundef !10 ; 2 uses
   %.not.i5 = icmp eq ptr %i.cj, null
@@ -1011,7 +1013,8 @@ bb.f:                                             ; preds = %bb.h, %bb.g, %bb.i,
   %i.x = and i64 %i.a, -8
   %i.y = getelementptr i8, ptr %1, i64 %i.x
   %i.z = sub i64 0, %i.a
-  %i.aa = getelementptr i8, ptr %i.y, i64 %i.z
+  %i.aa = getelementptr i8, ptr %i.y, i64 %i.z    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa) ]
   tail call void %.sroa.0.0(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull %i.aa, i64 noundef %i.j, i8 noundef %i.k, i8 noundef %.sroa.4.0.i.i)
   ret void
 
@@ -1414,7 +1417,8 @@ bb.f:                                             ; preds = %bb.h, %bb.g, %bb.i,
   %i.x = and i64 %i.a, -8
   %i.y = getelementptr i8, ptr %1, i64 %i.x
   %i.z = sub i64 0, %i.a
-  %i.aa = getelementptr i8, ptr %i.y, i64 %i.z
+  %i.aa = getelementptr i8, ptr %i.y, i64 %i.z    ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aa) ]
   tail call void %.sroa.0.0(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull %i.aa, i64 noundef %i.j, i8 noundef %i.k, i8 noundef %.sroa.4.0.i.i)
   ret void
 
