@@ -202,7 +202,7 @@ bb.ae:                                            ; preds = %bb.a
   tail call void @_RNvNtNtCs2AWtUsOyxgP_3std6thread5local18panic_access_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #22
   unreachable
 
-bb.af:                                            ; preds = %bb.ab, %bb.aa, %bb.z
+bb.af:                                            ; preds = %bb.z, %bb.aa, %bb.ab
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   ret ptr %i.cx
 }
@@ -581,7 +581,7 @@ bb.ae:                                            ; preds = %bb.a
   tail call void @_RNvNtNtCs2AWtUsOyxgP_3std6thread5local18panic_access_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #22
   unreachable
 
-bb.af:                                            ; preds = %bb.ab, %bb.aa, %bb.z
+bb.af:                                            ; preds = %bb.z, %bb.aa, %bb.ab
   %i.cx = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   ret ptr %i.cx
 }

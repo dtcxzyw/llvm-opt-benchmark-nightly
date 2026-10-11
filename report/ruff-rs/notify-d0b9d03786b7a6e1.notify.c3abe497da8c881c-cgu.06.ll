@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
   %.sroa.29.0.ph.i.i.i = phi i64 [ %i.as, %bb.r ], [ %.sroa.29.0.ph.i.i.i.ph, %.outer.i.i.i.outer ] ; 2 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.y, %.outer.i.i.i
+bb.f:                                             ; preds = %.thread.i.i.i, %.outer.i.i.i
   %i.aj = invoke { i64, ptr } @_RNvXsa_NtCs2AWtUsOyxgP_3std2fsNtB5_4FileNtNtB7_2io4Read4read(ptr noalias noundef nonnull align 4 dereferenceable(4) %i.c, ptr noalias noundef nonnull %i.a, i64 noundef 512)
           to label %bb.g unwind label %.loopexit.i.i.i, !noalias !105 ; 2 uses
 
@@ -225,7 +225,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.an = call fastcc noundef i8 @_RNvMs3_NtNtCs2AWtUsOyxgP_3std2io5errorNtB5_5Error4kind(ptr %i.al), !noalias !105
   %i.ao = icmp eq i8 %i.an, 35
-  br i1 %i.ao, label %bb.y, label %bb.z
+  br i1 %i.ao, label %.thread.i.i.i, label %bb.z
 
 bb.i:                                             ; preds = %bb.g
   %i.ap = ptrtoint ptr %i.al to i64               ; 7 uses
@@ -413,15 +413,15 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.k
   unreachable
 
-bb.y:                                             ; preds = %bb.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsgNynMj4ykPw_6notify(ptr nonnull %i.al)
-          to label %bb.f unwind label %.thread.i.i.i, !noalias !105
-
-.thread.i.i.i:                                    ; preds = %bb.y
+bb.y:                                             ; preds = %.thread.i.i.i
   %3 = landingpad { ptr, i32 }
           cleanup
   br label %bb.aa
+
+.thread.i.i.i:                                    ; preds = %bb.h
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.al) ]
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorECsgNynMj4ykPw_6notify(ptr nonnull %i.al)
+          to label %bb.f unwind label %bb.y, !noalias !105
 
 bb.z:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !111
@@ -429,8 +429,8 @@ bb.z:                                             ; preds = %bb.h
   %i.ed = call noundef i32 @close(i32 noundef %.val32.i.i.i) #17, !noalias !105 ; 0 uses
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultyNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsgNynMj4ykPw_6notify.exit.i.i
 
-bb.aa:                                            ; preds = %.thread.i.i.i, %.loopexit.split-lp.i.i.i, %.loopexit.i.i.i
-  %.pn.i.i.i = phi { ptr, i32 } [ %3, %.thread.i.i.i ], [ %lpad.loopexit.i.i.i, %.loopexit.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
+bb.aa:                                            ; preds = %bb.y, %.loopexit.split-lp.i.i.i, %.loopexit.i.i.i
+  %.pn.i.i.i = phi { ptr, i32 } [ %3, %bb.y ], [ %lpad.loopexit.i.i.i, %.loopexit.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
   %.val34.i.i.i = load i32, ptr %i.c, align 4, !range !113, !noalias !111, !noundef !4
   %i.ee = call noundef i32 @close(i32 noundef %.val34.i.i.i) #17, !noalias !105 ; 0 uses
   resume { ptr, i32 } %.pn.i.i.i

@@ -202,13 +202,6 @@ bb.bk:                                            ; preds = %bb.bj
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val50, i8 %.val51) #24
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 
-4:                                                ; preds = %bb.bi, %bb.bo, %bb.bs, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  %.val46 = load ptr, ptr %i.u, align 8
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
-
 bb.bl:                                            ; preds = %bb.bi
   call void @llvm.experimental.noalias.scope.decl(metadata !220)
   %i.ep = load i64, ptr %i.n, align 8, !range !9, !alias.scope !220, !noundef !3
@@ -279,6 +272,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6pois
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+
+4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i, %bb.bs, %bb.bo, %bb.bi
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  %.val46 = load ptr, ptr %i.u, align 8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -681,13 +681,6 @@ bb.bk:                                            ; preds = %bb.bj
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val50, i8 %.val51) #24
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 
-4:                                                ; preds = %bb.bi, %bb.bo, %bb.bs, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  %.val46 = load ptr, ptr %i.u, align 8
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
-
 bb.bl:                                            ; preds = %bb.bi
   call void @llvm.experimental.noalias.scope.decl(metadata !242)
   %i.ep = load i64, ptr %i.n, align 8, !range !9, !alias.scope !242, !noundef !3
@@ -758,6 +751,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6pois
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+
+4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i, %bb.bs, %bb.bo, %bb.bi
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  %.val46 = load ptr, ptr %i.u, align 8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1160,13 +1160,6 @@ bb.bk:                                            ; preds = %bb.bj
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val50, i8 %.val51) #24
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 
-4:                                                ; preds = %bb.bi, %bb.bo, %bb.bs, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  %.val46 = load ptr, ptr %i.u, align 8
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
-
 bb.bl:                                            ; preds = %bb.bi
   call void @llvm.experimental.noalias.scope.decl(metadata !264)
   %i.eo = load i64, ptr %i.n, align 8, !range !9, !alias.scope !264, !noundef !3
@@ -1237,6 +1230,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6pois
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+
+4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i, %bb.bs, %bb.bo, %bb.bi
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  %.val46 = load ptr, ptr %i.u, align 8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1639,13 +1639,6 @@ bb.bl:                                            ; preds = %bb.bk
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val50, i8 %.val51) #24
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bi
 
-4:                                                ; preds = %bb.bj, %bb.bp, %bb.bt, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  %.val46 = load ptr, ptr %i.u, align 8
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bi
-
 bb.bm:                                            ; preds = %bb.bj
   call void @llvm.experimental.noalias.scope.decl(metadata !286)
   %i.es = load i64, ptr %i.n, align 8, !range !9, !alias.scope !286, !noundef !3
@@ -1716,6 +1709,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6pois
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+
+4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i, %bb.bt, %bb.bp, %bb.bj
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  %.val46 = load ptr, ptr %i.u, align 8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bi
 }
 
 ; Function Attrs: cold nonlazybind uwtable

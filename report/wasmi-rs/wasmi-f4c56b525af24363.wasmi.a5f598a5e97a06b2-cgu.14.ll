@@ -204,14 +204,14 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.n = tail call { ptr, i64 } @_RNvMs2_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxSNtNtCsefoF4u9kbII_5wasmi4func10FuncEntityE16new_uninit_sliceBM_(i64 noundef %i.h), !noalias !1186
-  %i.o = extractvalue { ptr, i64 } %i.n, 0        ; 2 uses
+  %i.o = extractvalue { ptr, i64 } %i.n, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   store ptr %i.o, ptr %i.l, align 8, !alias.scope !1184, !noalias !1185
   br label %_RNvMs1_NtNtCsg06799QCvd1_17wasmi_collections5arena10stable_vecINtB5_9StableVecNtNtCsefoF4u9kbII_5wasmi4func10FuncEntityE4pushB1i_.exit.i
 
 _RNvMs1_NtNtCsg06799QCvd1_17wasmi_collections5arena10stable_vecINtB5_9StableVecNtNtCsefoF4u9kbII_5wasmi4func10FuncEntityE4pushB1i_.exit.i: ; preds = %bb.e, %bb.c
-  %.sroa.0.0.i.i = phi ptr [ %i.o, %bb.e ], [ %i.m, %bb.c ] ; 2 uses
+  %.sroa.0.0.i.i = phi ptr [ %i.o, %bb.e ], [ %i.m, %bb.c ]
   %i.p = sub nsw i64 %i.f, %i.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i.i) ]
   %i.q = getelementptr inbounds nuw [40 x i8], ptr %.sroa.0.0.i.i, i64 %i.p
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.q, ptr noundef nonnull readonly align 8 dereferenceable(40) %1, i64 40, i1 false), !noalias !1184
   %i.r = add nuw nsw i64 %i.b, 1
@@ -273,7 +273,8 @@ bb.g:                                             ; preds = %bb.c
           to label %bb.h unwind label %bb.e, !noalias !1199
 
 bb.h:                                             ; preds = %bb.g
-  %i.o = extractvalue { ptr, i64 } %i.n, 0        ; 2 uses
+  %i.o = extractvalue { ptr, i64 } %i.n, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   store ptr %i.o, ptr %i.k, align 8, !alias.scope !1197, !noalias !1198
   br label %_RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB1o_5table5TableENtNtCs5zeGauAcNNa_10wasmi_core5table5TableE5allocB1o_.exit
 
@@ -310,9 +311,8 @@ _RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableA
   unreachable
 
 _RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB1o_5table5TableENtNtCs5zeGauAcNNa_10wasmi_core5table5TableE5allocB1o_.exit: ; preds = %bb.c, %bb.h
-  %.sroa.0.0.i14.i = phi ptr [ %i.o, %bb.h ], [ %i.l, %bb.c ] ; 2 uses
+  %.sroa.0.0.i14.i = phi ptr [ %i.o, %bb.h ], [ %i.l, %bb.c ]
   %i.t = sub nsw i64 %i.e, %i.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i14.i) ]
   %i.u = getelementptr inbounds nuw [56 x i8], ptr %.sroa.0.0.i14.i, i64 %i.t
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.u, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false), !noalias !1193
   %i.v = add nuw nsw i64 %i.c, 1
@@ -357,14 +357,14 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.c
   %i.l = tail call { ptr, i64 } @_RNvMs2_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxSNtNtCs5zeGauAcNNa_10wasmi_core6global6GlobalE16new_uninit_sliceCsefoF4u9kbII_5wasmi(i64 noundef %i.g), !noalias !1212
-  %i.m = extractvalue { ptr, i64 } %i.l, 0        ; 2 uses
+  %i.m = extractvalue { ptr, i64 } %i.l, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.m) ]
   store ptr %i.m, ptr %i.j, align 8, !alias.scope !1210, !noalias !1211
   br label %_RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB1o_6global6GlobalENtNtCs5zeGauAcNNa_10wasmi_core6global6GlobalE5allocB1o_.exit
 
 _RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB1o_6global6GlobalENtNtCs5zeGauAcNNa_10wasmi_core6global6GlobalE5allocB1o_.exit: ; preds = %bb.c, %bb.e
-  %.sroa.0.0.i12.i = phi ptr [ %i.m, %bb.e ], [ %i.k, %bb.c ] ; 2 uses
+  %.sroa.0.0.i12.i = phi ptr [ %i.m, %bb.e ], [ %i.k, %bb.c ]
   %i.n = sub nsw i64 %i.d, %i.g
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i12.i) ]
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.i12.i, i64 %i.n
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull readonly align 8 dereferenceable(24) %1, i64 24, i1 false), !noalias !1210
   %i.p = add nuw nsw i64 %i.b, 1
@@ -428,7 +428,8 @@ bb.g:                                             ; preds = %bb.c
           to label %bb.h unwind label %bb.e, !noalias !1225
 
 bb.h:                                             ; preds = %bb.g
-  %i.p = extractvalue { ptr, i64 } %i.o, 0        ; 2 uses
+  %i.p = extractvalue { ptr, i64 } %i.o, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.p) ]
   store ptr %i.p, ptr %i.k, align 8, !alias.scope !1223, !noalias !1224
   br label %_RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB1o_6memory6MemoryENtNtCs5zeGauAcNNa_10wasmi_core6memory6MemoryE5allocB1o_.exit
 
@@ -448,9 +449,8 @@ _RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableA
   resume { ptr, i32 } %i.m
 
 _RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtB1o_6memory6MemoryENtNtCs5zeGauAcNNa_10wasmi_core6memory6MemoryE5allocB1o_.exit: ; preds = %bb.c, %bb.h
-  %.sroa.0.0.i14.i = phi ptr [ %i.p, %bb.h ], [ %i.l, %bb.c ] ; 2 uses
+  %.sroa.0.0.i14.i = phi ptr [ %i.p, %bb.h ], [ %i.l, %bb.c ]
   %i.s = sub nsw i64 %i.e, %i.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i14.i) ]
   %i.t = getelementptr inbounds nuw [64 x i8], ptr %.sroa.0.0.i14.i, i64 %i.s
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.t, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false), !noalias !1219
   %i.u = add nuw nsw i64 %i.c, 1
@@ -739,7 +739,8 @@ bb.i:                                             ; preds = %bb.c
           to label %bb.j unwind label %bb.e, !noalias !1301
 
 bb.j:                                             ; preds = %bb.i
-  %i.u = extractvalue { ptr, i64 } %i.t, 0        ; 2 uses
+  %i.u = extractvalue { ptr, i64 } %i.t, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   store ptr %i.u, ptr %i.n, align 8, !alias.scope !1301
   br label %_RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtNtB1o_6memory4data11DataSegmentENtB21_17DataSegmentEntityE5allocB1o_.exit
 
@@ -772,9 +773,8 @@ _RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableA
   unreachable
 
 _RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtNtB1o_6memory4data11DataSegmentENtB21_17DataSegmentEntityE5allocB1o_.exit: ; preds = %bb.c, %bb.j
-  %.sroa.0.0.i14.i = phi ptr [ %i.u, %bb.j ], [ %i.o, %bb.c ] ; 2 uses
+  %.sroa.0.0.i14.i = phi ptr [ %i.u, %bb.j ], [ %i.o, %bb.c ]
   %i.z = sub nsw i64 %i.h, %i.k
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i14.i) ]
   %i.aa = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.i14.i, i64 %i.z ; 2 uses
   store ptr %1, ptr %i.aa, align 8, !noalias !1301
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
@@ -1177,7 +1177,8 @@ bb.h:                                             ; preds = %bb.c
           to label %bb.i unwind label %bb.e, !noalias !1446
 
 bb.i:                                             ; preds = %bb.h
-  %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 2 uses
+  %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 3 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   store ptr %i.q, ptr %i.k, align 8, !alias.scope !1444, !noalias !1445
   br label %_RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtNtB1o_5table7element14ElementSegmentENtNtNtCs5zeGauAcNNa_10wasmi_core5table7element14ElementSegmentE5allocB1o_.exit
 
@@ -1197,9 +1198,8 @@ bb.k:                                             ; preds = %bb.j
   resume { ptr, i32 } %i.m
 
 _RNvMs4_NtNtCsg06799QCvd1_17wasmi_collections5arena12stable_arenaINtB5_11StableArenaINtNtCsefoF4u9kbII_5wasmi6handle9RawHandleNtNtNtB1o_5table7element14ElementSegmentENtNtNtCs5zeGauAcNNa_10wasmi_core5table7element14ElementSegmentE5allocB1o_.exit: ; preds = %bb.c, %bb.i
-  %.sroa.0.0.i17.i = phi ptr [ %i.q, %bb.i ], [ %i.l, %bb.c ] ; 2 uses
+  %.sroa.0.0.i17.i = phi ptr [ %i.q, %bb.i ], [ %i.l, %bb.c ]
   %i.u = sub nsw i64 %i.e, %i.h
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i17.i) ]
   %i.v = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.i17.i, i64 %i.u ; 2 uses
   store ptr %.sroa.0.0.copyload.i, ptr %i.v, align 8, !noalias !1448
   %.sroa.5.0..sroa_idx20.i = getelementptr inbounds nuw i8, ptr %i.v, i64 8

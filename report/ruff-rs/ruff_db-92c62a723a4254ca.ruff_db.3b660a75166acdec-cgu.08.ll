@@ -205,6 +205,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtNtCs56aZ
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtNtCs56aZGHL6Dc6_7ruff_db5files9directory1__38directory_listing_query_Configuration_E12refresh_memoB19_.exit.i.i.i.i.i: ; preds = %.noexc17.i.i.i, %.thread.i.i.i.i.i, %.noexc15.i.i.i, %bb.o
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.aq, %bb.o ], [ %i.aq, %.noexc15.i.i.i ], [ %i.aq, %.thread.i.i.i.i.i ], [ %i.bh, %.noexc17.i.i.i ] ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 48
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 30
   %i.bk = load i8, ptr %i.bj, align 2, !range !14, !noalias !145, !noundef !6
@@ -297,7 +298,6 @@ bb.y:                                             ; preds = %.noexc15.i.i.i.i.i,
   %i.ce = phi i64 [ %i.ca, %.noexc15.i.i.i.i.i ], [ 0, %bb.v ]
   store i64 %i.ce, ptr %i.br, align 8, !noalias !147
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !145
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 48
   %i.cf = load i8, ptr %2, align 8, !range !157, !noalias !145, !noundef !6
   %.not.i.i.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i, null
   br i1 %.not.i.i.i.i.i, label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs45bxiIjzMqg_5salsa6attach8AttachedE8try_withNCINvBW_6attachINtNtCs4NRVxsYgnAr_4core6result6ResultRNtNtNtCs56aZGHL6Dc6_7ruff_db5files9directory16DirectoryListingRNtB2C_21DirectoryListingErrorEDNtB2G_2DbEL_NCNvB2C_23directory_listing_query0E0B1X_EB2G_.exit, label %bb.z
@@ -328,9 +328,9 @@ bb.ac:                                            ; preds = %.body.i.i.i
   resume { ptr, i32 } %eh.lpad-body.i.i.i
 
 _RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs45bxiIjzMqg_5salsa6attach8AttachedE8try_withNCINvBW_6attachINtNtCs4NRVxsYgnAr_4core6result6ResultRNtNtNtCs56aZGHL6Dc6_7ruff_db5files9directory16DirectoryListingRNtB2C_21DirectoryListingErrorEDNtB2G_2DbEL_NCNvB2C_23directory_listing_query0E0B1X_EB2G_.exit: ; preds = %bb.y, %bb.z, %bb.aa
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %.not.i4.i.i.i = icmp ne i8 %i.cf, -1
   %..i.i.i.i = zext i1 %.not.i4.i.i.i to i64
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %i.cn = insertvalue { i64, ptr } poison, i64 %..i.i.i.i, 0
   %i.co = insertvalue { i64, ptr } %i.cn, ptr %3, 1
   ret { i64, ptr } %i.co
@@ -568,6 +568,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtCs56aZGH
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtCs56aZGHL6Dc6_7ruff_db6source1__26source_text_Configuration_E12refresh_memoB17_.exit.i.i.i.i.i: ; preds = %.noexc16.i.i.i, %.thread.i.i.i.i.i, %.noexc14.i.i.i, %bb.o
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.aq, %bb.o ], [ %i.aq, %.noexc14.i.i.i ], [ %i.aq, %.thread.i.i.i.i.i ], [ %i.bh, %.noexc16.i.i.i ] ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 30
   %i.bk = load i8, ptr %i.bj, align 2, !range !14, !noalias !194, !noundef !6
@@ -643,7 +644,6 @@ bb.x:                                             ; preds = %bb.w, %bb.u
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtCs56aZGHL6Dc6_7ruff_db6source1__26source_text_Configuration_E5fetchB17_.exit.i.i.i.i: ; preds = %.noexc14.i.i.i.i.i, %bb.v
   %i.ce = phi i64 [ %i.ca, %.noexc14.i.i.i.i.i ], [ 0, %bb.v ]
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   store i64 %i.ce, ptr %i.br, align 8, !noalias !196
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !194
   %i.cf = load ptr, ptr %2, align 8, !noalias !194, !nonnull !6, !noundef !6 ; 2 uses
@@ -935,6 +935,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtCs56aZGH
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtCs56aZGHL6Dc6_7ruff_db6sources_1__25line_index_Configuration_E12refresh_memoB17_.exit.i.i.i.i.i: ; preds = %.noexc16.i.i.i, %.thread.i.i.i.i.i, %.noexc14.i.i.i, %bb.o
   %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.aq, %bb.o ], [ %i.aq, %.noexc14.i.i.i ], [ %i.aq, %.thread.i.i.i.i.i ], [ %i.bh, %.noexc16.i.i.i ] ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 30
   %i.bk = load i8, ptr %i.bj, align 2, !range !14, !noalias !241, !noundef !6
@@ -1010,7 +1011,6 @@ bb.x:                                             ; preds = %bb.w, %bb.u
 
 _RNvMNtNtCs45bxiIjzMqg_5salsa8function5fetchINtB4_14IngredientImplNtNvNtCs56aZGHL6Dc6_7ruff_db6sources_1__25line_index_Configuration_E5fetchB17_.exit.i.i.i.i: ; preds = %.noexc14.i.i.i.i.i, %bb.v
   %i.ce = phi i64 [ %i.ca, %.noexc14.i.i.i.i.i ], [ 0, %bb.v ]
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   store i64 %i.ce, ptr %i.br, align 8, !noalias !243
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !241
   %i.cf = load ptr, ptr %2, align 8, !noalias !241, !nonnull !6, !noundef !6 ; 2 uses
@@ -1413,7 +1413,7 @@ bb.ae:                                            ; preds = %bb.a
   tail call void @_RNvNtNtCs2AWtUsOyxgP_3std6thread5local18panic_access_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #31
   unreachable
 
-bb.af:                                            ; preds = %bb.ab, %bb.aa, %bb.z
+bb.af:                                            ; preds = %bb.z, %bb.aa, %bb.ab
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 32
   ret ptr %i.cl
 }

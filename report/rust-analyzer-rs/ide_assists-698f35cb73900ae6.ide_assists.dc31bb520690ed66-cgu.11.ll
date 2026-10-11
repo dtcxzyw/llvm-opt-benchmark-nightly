@@ -205,17 +205,6 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTok
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba)
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprECsiU5vK8fN4ZC_11ide_assists.exit414
 
-2:                                                ; preds = %bb.j
-  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
-          cleanup                                 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bm) ]
-  %3 = getelementptr inbounds nuw i8, ptr %i.bm, i64 48 ; 2 uses
-  %4 = load i32, ptr %3, align 4, !noundef !4
-  %5 = add i32 %4, -1                             ; 2 uses
-  store i32 %5, ptr %3, align 4
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.aa, label %common.resume
-
 bb.l:                                             ; preds = %bb.j
   %i.cf = icmp eq i16 %i.ce, 150
   br i1 %i.cf, label %.noexc, label %bb.m
@@ -351,8 +340,19 @@ _RNvNtCs8yWYkJLPqIi_8cov_mark4___rt3hit.exit:     ; preds = %.noexc, %.noexc214
   br i1 %i.dm, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsiU5vK8fN4ZC_11ide_assists.exit340.sink.split, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECsiU5vK8fN4ZC_11ide_assists.exit340
 
 common.resume:                                    ; preds = %bb.br, %bb.bk, %bb.bl, %bb.az, %bb.ba, %bb.ah, %bb.ai, %.body, %bb.bn, %bb.aa, %2, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECsiU5vK8fN4ZC_11ide_assists.exit.sink.split.i, %.body386, %bb.cs, %.body419, %bb.s, %bb.r, %bb.z, %bb.y
-  %common.resume.op = phi { ptr, i32 } [ %i.hf, %bb.bk ], [ %i.de, %bb.z ], [ %i.ec, %bb.ah ], [ %i.fz, %bb.az ], [ %.pn153, %.body386 ], [ %.pn159, %.body ], [ %lpad.thr_comm.split-lp, %2 ], [ %i.hr, %bb.bn ], [ %i.ht, %bb.br ], [ %i.de, %bb.y ], [ %.pn210, %.body419 ], [ %lpad.thr_comm.split-lp, %bb.aa ], [ %.pn153, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECsiU5vK8fN4ZC_11ide_assists.exit.sink.split.i ], [ %.pn210, %bb.cs ], [ %i.cm, %bb.r ], [ %i.cm, %bb.s ], [ %i.ec, %bb.ai ], [ %i.fz, %bb.ba ], [ %i.hf, %bb.bl ]
+  %common.resume.op = phi { ptr, i32 } [ %i.hf, %bb.bk ], [ %i.de, %bb.y ], [ %i.ec, %bb.ah ], [ %i.fz, %bb.az ], [ %.pn153, %.body386 ], [ %.pn159, %.body ], [ %lpad.thr_comm.split-lp, %2 ], [ %i.hr, %bb.bn ], [ %.pn210, %.body419 ], [ %i.ht, %bb.br ], [ %lpad.thr_comm.split-lp, %bb.aa ], [ %.pn153, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECsiU5vK8fN4ZC_11ide_assists.exit.sink.split.i ], [ %.pn210, %bb.cs ], [ %i.cm, %bb.r ], [ %i.cm, %bb.s ], [ %i.de, %bb.z ], [ %i.ec, %bb.ai ], [ %i.fz, %bb.ba ], [ %i.hf, %bb.bl ]
   resume { ptr, i32 } %common.resume.op
+
+2:                                                ; preds = %bb.j
+  %lpad.thr_comm.split-lp = landingpad { ptr, i32 }
+          cleanup                                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bm) ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.bm, i64 48 ; 2 uses
+  %4 = load i32, ptr %3, align 4, !noundef !4
+  %5 = add i32 %4, -1                             ; 2 uses
+  store i32 %5, ptr %3, align 4
+  %6 = icmp eq i32 %5, 0
+  br i1 %6, label %bb.aa, label %common.resume
 
 bb.aa:                                            ; preds = %2
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %i.bm) #32

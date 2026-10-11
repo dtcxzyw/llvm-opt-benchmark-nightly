@@ -175,7 +175,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.z, %bb.x, %bb.ab, %bb.ac, %bb.aa, %bb.y, %bb.q, %bb.v, %bb.s
+bb.w:                                             ; preds = %bb.z, %bb.ab, %bb.x, %bb.ac, %bb.aa, %bb.y, %bb.q, %bb.v, %bb.s
   ret void
 
 bb.x:                                             ; preds = %bb.n
@@ -578,7 +578,7 @@ bb.k:                                             ; preds = %bb.i, %.body, %bb.b
   unreachable
 
 common.resume:                                    ; preds = %bb.bj, %bb.be, %bb.ba, %bb.i, %.body
-  %common.resume.op = phi { ptr, i32 } [ %i.et, %bb.be ], [ %i.ev, %bb.bj ], [ %i.eq, %bb.ba ], [ %i.ao, %bb.i ], [ %.pn135, %.body ]
+  %common.resume.op = phi { ptr, i32 } [ %i.et, %bb.be ], [ %i.ao, %bb.i ], [ %.pn135, %.body ], [ %i.ev, %bb.bj ], [ %i.eq, %bb.ba ]
   resume { ptr, i32 } %common.resume.op
 
 bb.l:                                             ; preds = %bb.d
