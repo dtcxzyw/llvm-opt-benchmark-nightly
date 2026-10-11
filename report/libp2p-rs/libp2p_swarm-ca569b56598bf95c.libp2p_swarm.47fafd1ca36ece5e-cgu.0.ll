@@ -202,9 +202,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cx = or i64 %1, 1
@@ -495,8 +494,8 @@ _RNCNvMs4_NtNtNtCsc13h7DQFCSE_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !261
   tail call void @llvm.experimental.noalias.scope.decl(metadata !262)
   %i.j = load i64, ptr %1, align 8, !range !11, !alias.scope !262, !noundef !6
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsc13h7DQFCSE_5tokio7runtime4task5error9JoinErrorEEECs6b9j1MKPRPC_12libp2p_swarm.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsc13h7DQFCSE_5tokio7runtime4task5error9JoinErrorEEECs6b9j1MKPRPC_12libp2p_swarm.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsc13h7DQFCSE_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB15_6future6future6Futurep6OutputuNtNtB15_6marker4SendEL_EEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cs6b9j1MKPRPC_12libp2p_swarm.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -553,6 +552,7 @@ bb.m:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void
 
 .body:                                            ; preds = %bb.l, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i.i
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -955,8 +955,8 @@ _RNCNvMs4_NtNtNtCsc13h7DQFCSE_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !291
   tail call void @llvm.experimental.noalias.scope.decl(metadata !292)
   %i.j = load i64, ptr %1, align 8, !range !11, !alias.scope !292, !noundef !6
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsc13h7DQFCSE_5tokio7runtime4task5error9JoinErrorEEECs6b9j1MKPRPC_12libp2p_swarm.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsc13h7DQFCSE_5tokio7runtime4task5error9JoinErrorEEECs6b9j1MKPRPC_12libp2p_swarm.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsc13h7DQFCSE_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB15_6future6future6Futurep6OutputuNtNtB15_6marker4SendEL_EEINtNtB1B_4sync3ArcNtNtNtNtBb_9scheduler12multi_thread6handle6HandleEE11take_output0Cs6b9j1MKPRPC_12libp2p_swarm.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1013,6 +1013,7 @@ bb.m:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void
 
 .body:                                            ; preds = %bb.l, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i.i
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1415,8 +1416,8 @@ _RNCNvMs4_NtNtNtCsc13h7DQFCSE_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !321
   tail call void @llvm.experimental.noalias.scope.decl(metadata !322)
   %i.j = load i64, ptr %1, align 8, !range !11, !alias.scope !322, !noundef !6
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsc13h7DQFCSE_5tokio7runtime4task5error9JoinErrorEEECs6b9j1MKPRPC_12libp2p_swarm.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsc13h7DQFCSE_5tokio7runtime4task5error9JoinErrorEEECs6b9j1MKPRPC_12libp2p_swarm.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsc13h7DQFCSE_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxIB11_IB1x_DNtNtNtB15_6future6future6Futurep6OutputuNtNtB15_6marker4SendEL_EEEEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cs6b9j1MKPRPC_12libp2p_swarm.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1473,6 +1474,7 @@ bb.m:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void
 
 .body:                                            ; preds = %bb.l, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i.i
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1875,8 +1877,8 @@ _RNCNvMs4_NtNtNtCsc13h7DQFCSE_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !351
   tail call void @llvm.experimental.noalias.scope.decl(metadata !352)
   %i.j = load i64, ptr %1, align 8, !range !11, !alias.scope !352, !noundef !6
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsc13h7DQFCSE_5tokio7runtime4task5error9JoinErrorEEECs6b9j1MKPRPC_12libp2p_swarm.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsc13h7DQFCSE_5tokio7runtime4task5error9JoinErrorEEECs6b9j1MKPRPC_12libp2p_swarm.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsc13h7DQFCSE_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxIB11_IB1x_DNtNtNtB15_6future6future6Futurep6OutputuNtNtB15_6marker4SendEL_EEEEINtNtB1B_4sync3ArcNtNtNtNtBb_9scheduler12multi_thread6handle6HandleEE11take_output0Cs6b9j1MKPRPC_12libp2p_swarm.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1933,6 +1935,7 @@ bb.m:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void
 
 .body:                                            ; preds = %bb.l, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i.i.i
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 

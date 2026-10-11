@@ -204,9 +204,10 @@ bb.i:                                             ; preds = %.critedge.i
   %i.t = zext i32 %i.s to i64
   %i.u = xor i64 %i.t, 4294901760
   %i.v = or i64 %i.q, %i.u
-  %i.w = icmp ne i64 %i.v, 0                      ; 3 uses
-  %i.x = zext i1 %i.w to i32                      ; 0 uses
-  br i1 %i.w, label %thread-pre-split, label %_Z25grpc_sockaddr_is_v4mappedPK21grpc_resolved_addressPS_.exit
+  %i.w = icmp ne i64 %i.v, 0
+  %i.x = zext i1 %i.w to i32
+  %.not28.i = icmp eq i32 %i.x, 0                 ; 2 uses
+  br i1 %.not28.i, label %_Z25grpc_sockaddr_is_v4mappedPK21grpc_resolved_addressPS_.exit, label %thread-pre-split
 
 _Z25grpc_sockaddr_is_v4mappedPK21grpc_resolved_addressPS_.exit: ; preds = %bb.i
   %i.y = getelementptr inbounds nuw i8, ptr %29, i64 8
@@ -231,7 +232,7 @@ thread-pre-split:                                 ; preds = %_Z25grpc_sockaddr_i
 
 bb.j:                                             ; preds = %thread-pre-split, %.critedge.i
   %i.ag = phi i16 [ %.pr269, %thread-pre-split ], [ %i.n, %.critedge.i ] ; 4 uses
-  %.not267 = phi i1 [ %i.w, %thread-pre-split ], [ true, %.critedge.i ] ; 5 uses
+  %.not267 = phi i1 [ %.not28.i, %thread-pre-split ], [ false, %.critedge.i ] ; 5 uses
   %i.ah = phi ptr [ %.ph, %thread-pre-split ], [ %1, %.critedge.i ]
   switch i16 %i.ag, label %_Z28grpc_sockaddr_get_uri_schemePK21grpc_resolved_address.exit [
     i16 2, label %bb.p
@@ -423,14 +424,14 @@ bb.x:                                             ; preds = %bb.j
   %i.bx = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 8 uses
   store i64 0, ptr %i.bx, align 8, !tbaa !33, !noalias !63
   store i8 0, ptr %i.bw, align 8, !tbaa !23, !noalias !63
-  %spec.select.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not267, ptr %1, ptr %29
+  %spec.select.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not267, ptr %29, ptr %1
   %spec.select.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %spec.select.sroa.sel.v.sroa.sel.v.sroa.sel.v, i64 2 ; 3 uses
   %i.by = load i8, ptr %spec.select.sroa.sel.v.sroa.sel.v.sroa.sel, align 2, !tbaa !23, !noalias !63
   %i.bz = icmp eq i8 %i.by, 0
   br i1 %i.bz, label %bb.y, label %bb.ak
 
 bb.y:                                             ; preds = %bb.x
-  %spec.select.sroa.sel122.v.sroa.sel.v.sroa.sel.v = select i1 %.not267, ptr %1, ptr %29
+  %spec.select.sroa.sel122.v.sroa.sel.v.sroa.sel.v = select i1 %.not267, ptr %29, ptr %1
   %spec.select.sroa.sel122.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %spec.select.sroa.sel122.v.sroa.sel.v.sroa.sel.v, i64 3 ; 3 uses
   %i.ca = load i8, ptr %spec.select.sroa.sel122.v.sroa.sel.v.sroa.sel, align 1, !tbaa !23, !noalias !63
   %.not19.i = icmp eq i8 %i.ca, 0
@@ -443,7 +444,7 @@ bb.z:                                             ; preds = %bb.y
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit.i: ; preds = %bb.z
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #18, !noalias !63
   %.sroa.gep124 = getelementptr inbounds nuw i8, ptr %29, i64 128
-  %spec.select.sroa.sel125 = select i1 %.not267, ptr %i.c, ptr %.sroa.gep124
+  %spec.select.sroa.sel125 = select i1 %.not267, ptr %.sroa.gep124, ptr %i.c
   %i.cc = load i32, ptr %spec.select.sroa.sel125, align 4, !tbaa !21, !noalias !63
   %i.cd = zext i32 %i.cc to i64
   %i.ce = add nsw i64 %i.cd, -3                   ; 4 uses
@@ -846,7 +847,7 @@ bb.bg:                                            ; preds = %bb.ay
   %i.jq = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr @.str.24, ptr %i.jq, align 8, !noalias !64
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18, !noalias !64
-  %spec.select.sroa.sel128.v.sroa.sel.v.sroa.sel.v = select i1 %.not267, ptr %1, ptr %29
+  %spec.select.sroa.sel128.v.sroa.sel.v.sroa.sel.v = select i1 %.not267, ptr %29, ptr %1
   %spec.select.sroa.sel128.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %spec.select.sroa.sel128.v.sroa.sel.v.sroa.sel.v, i64 8
   %i.jr = load i32, ptr %spec.select.sroa.sel128.v.sroa.sel.v.sroa.sel, align 4, !tbaa !39, !noalias !64
   %i.js = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
@@ -862,7 +863,7 @@ bb.bg:                                            ; preds = %bb.ay
   %i.jy = getelementptr inbounds nuw i8, ptr %10, i64 8
   store ptr @.str.7, ptr %i.jy, align 8, !noalias !64
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #18, !noalias !64
-  %spec.select.sroa.sel131.v.sroa.sel.v.sroa.sel.v = select i1 %.not267, ptr %1, ptr %29
+  %spec.select.sroa.sel131.v.sroa.sel.v.sroa.sel.v = select i1 %.not267, ptr %29, ptr %1
   %spec.select.sroa.sel131.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %spec.select.sroa.sel131.v.sroa.sel.v.sroa.sel.v, i64 4
   %i.jz = load i32, ptr %spec.select.sroa.sel131.v.sroa.sel.v.sroa.sel, align 4, !tbaa !43, !noalias !64
   %i.ka = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 3 uses

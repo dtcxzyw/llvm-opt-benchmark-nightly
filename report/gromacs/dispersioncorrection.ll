@@ -204,9 +204,8 @@ _ZNSt6vectorIfSaIfEED2Ev.exit240:                 ; preds = %bb.j, %bb.k
   ret void
 
 bb.l:                                             ; preds = %bb.i, %bb.ar
-  %.0.in.in.v.i = phi i64 [ 16, %bb.i ], [ 18, %bb.ar ] ; 5 uses
   %i.dr = phi i1 [ true, %bb.i ], [ false, %bb.ar ]
-  %indvars.iv481 = phi i64 [ 0, %bb.i ], [ 1, %bb.ar ] ; 2 uses
+  %indvars.iv481 = phi i64 [ 0, %bb.i ], [ 1, %bb.ar ] ; 4 uses
   %i.ds = load i32, ptr %i.cx, align 4, !tbaa !219
   %.off = add i32 %i.ds, -7
   %switch = icmp ult i32 %.off, 2
@@ -271,9 +270,8 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   %i.eh = mul nsw i64 %i.eg, %i.ef
   %i.ei = sdiv i64 %i.eh, 2                       ; 4 uses
   %i.ej = mul nuw nsw i64 %indvars.iv440, %i.dj   ; 3 uses
-  %xtraiter555 = and i64 %i.ec, 1
-  %lcmp.mod556.not = icmp eq i64 %xtraiter555, 0
-  br i1 %lcmp.mod556.not, label %.prol.loopexit554, label %.prol.loopexit554.unr-lcssa
+  %lcmp.mod556.not = trunc i64 %i.ec to i1
+  br i1 %lcmp.mod556.not, label %.prol.loopexit554.unr-lcssa, label %.prol.loopexit554
 
 .prol.loopexit554.unr-lcssa:                      ; preds = %.preheader.us
   %i.ek = sitofp i64 %i.ei to float
@@ -370,9 +368,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.fr = mul nsw i64 %i.fq, %i.fp
   %i.fs = sdiv i64 %i.fr, 2                       ; 4 uses
   %i.ft = mul nuw nsw i64 %indvars.iv430, %i.dj   ; 3 uses
-  %xtraiter550 = and i64 %i.fm, 1
-  %lcmp.mod551.not = icmp eq i64 %xtraiter550, 0
-  br i1 %lcmp.mod551.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %lcmp.mod551.not = trunc i64 %i.fm to i1
+  br i1 %lcmp.mod551.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.preheader
   %i.fu = sitofp i64 %i.fs to float
@@ -413,6 +410,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 .lr.ph342:                                        ; preds = %._crit_edge302
   %i.gk = load ptr, ptr %i.dh, align 8, !tbaa !225
+  %8 = trunc nuw i64 %indvars.iv481 to i1
+  %.0.in.in.v.i = select i1 %8, i64 18, i64 16
   %i.gl = load ptr, ptr %4, align 16              ; 2 uses
   br label %bb.z
 
@@ -710,6 +709,8 @@ bb.ah:                                            ; preds = %bb.l
   %i.lf = sub i64 %i.ld, %i.le
   %i.lg = sdiv exact i64 %i.lf, 56                ; 2 uses
   %i.lh = add nsw i64 %i.lg, -1
+  %9 = trunc nuw i64 %indvars.iv481 to i1
+  %.0.in.in.v.i250 = select i1 %9, i64 18, i64 16 ; 4 uses
   %i.li = icmp sgt i32 %.fr409, 0
   %i.lj = getelementptr inbounds nuw i8, ptr %i.kw, i64 16 ; 2 uses
   %i.lk = load ptr, ptr %4, align 16              ; 10 uses
@@ -778,11 +779,11 @@ bb.ai:                                            ; preds = %.lr.ph396, %._crit_
 .lr.ph352.us.us:                                  ; preds = %.lr.ph366.split.us.split.us
   %i.mk = load ptr, ptr %i.md, align 8, !tbaa !234
   %i.ml = getelementptr inbounds nuw [36 x i8], ptr %i.mk, i64 %indvars.iv475
-  %.0.in.in.i251.us.us = getelementptr inbounds nuw i8, ptr %i.ml, i64 %.0.in.in.v.i
+  %.0.in.in.i251.us.us = getelementptr inbounds nuw i8, ptr %i.ml, i64 %.0.in.in.v.i250
   %.0.in.i252.us.us = load i16, ptr %.0.in.in.i251.us.us, align 2, !tbaa !237
   %.0.i253.us.us = zext i16 %.0.in.i252.us.us to i32 ; 5 uses
   %i.mm = load ptr, ptr %i.lj, align 8, !tbaa !234
-  %invariant.gep357.us.us = getelementptr inbounds nuw i8, ptr %i.mm, i64 %.0.in.in.v.i ; 5 uses
+  %invariant.gep357.us.us = getelementptr inbounds nuw i8, ptr %i.mm, i64 %.0.in.in.v.i250 ; 5 uses
   br i1 %i.lp, label %.epil.preheader563, label %.lr.ph352.us.us.new
 
 .lr.ph352.us.us.new:                              ; preds = %.lr.ph352.us.us, %.lr.ph352.us.us.new
@@ -896,11 +897,11 @@ bb.aj:                                            ; preds = %bb.aj, %.epil.prehe
 .lr.ph352.us:                                     ; preds = %.lr.ph366.split.us.split
   %i.ob = load ptr, ptr %i.md, align 8, !tbaa !234
   %i.oc = getelementptr inbounds nuw [36 x i8], ptr %i.ob, i64 %indvars.iv465
-  %.0.in.in.i251.us = getelementptr inbounds nuw i8, ptr %i.oc, i64 %.0.in.in.v.i
+  %.0.in.in.i251.us = getelementptr inbounds nuw i8, ptr %i.oc, i64 %.0.in.in.v.i250
   %.0.in.i252.us = load i16, ptr %.0.in.in.i251.us, align 2, !tbaa !237
   %.0.i253.us = zext i16 %.0.in.i252.us to i32    ; 5 uses
   %i.od = load ptr, ptr %i.lj, align 8, !tbaa !234
-  %invariant.gep357.us = getelementptr inbounds nuw i8, ptr %i.od, i64 %.0.in.in.v.i ; 5 uses
+  %invariant.gep357.us = getelementptr inbounds nuw i8, ptr %i.od, i64 %.0.in.in.v.i250 ; 5 uses
   br i1 %i.lo, label %.epil.preheader, label %.lr.ph352.us.new
 
 .lr.ph352.us.new:                                 ; preds = %.lr.ph352.us, %.lr.ph352.us.new

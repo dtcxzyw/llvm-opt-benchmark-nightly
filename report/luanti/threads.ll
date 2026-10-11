@@ -204,17 +204,32 @@ bb.ap:                                            ; preds = %_ZNSt7__cxx1112basi
 bb.aq:                                            ; preds = %bb.aa
   %i.cx = zext nneg i8 %i.ai to i64
   %i.cy = getelementptr inbounds nuw [16 x i8], ptr @_ZN3con23ConnectionReceiveThread16packetTypeRouterE, i64 %i.cx
-  %.unpack = load i64, ptr %i.cy, align 16, !tbaa !360
-  %11 = inttoptr i64 %.unpack to ptr
-  invoke void %11(ptr dead_on_unwind writable sret(%class.SharedBuffer) align 8 %0, ptr noundef nonnull align 8 dereferenceable(168) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull %i.f, i8 noundef zeroext %5, i1 noundef zeroext %6)
+  %.unpack = load i64, ptr %i.cy, align 16, !tbaa !360 ; 3 uses
+  %.not = trunc i64 %.unpack to i1
+  br i1 %.not, label %11, label %16
+
+11:                                               ; preds = %bb.aq
+  %12 = load ptr, ptr %1, align 8, !tbaa !30
+  %13 = getelementptr i8, ptr %12, i64 %.unpack
+  %14 = getelementptr i8, ptr %13, i64 -1
+  %15 = load ptr, ptr %14, align 8, !nosanitize !69
+  br label %18
+
+16:                                               ; preds = %bb.aq
+  %17 = inttoptr i64 %.unpack to ptr
+  br label %18
+
+18:                                               ; preds = %16, %11
+  %19 = phi ptr [ %15, %11 ], [ %17, %16 ]
+  invoke void %19(ptr dead_on_unwind writable sret(%class.SharedBuffer) align 8 %0, ptr noundef nonnull align 8 dereferenceable(168) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull %i.f, i8 noundef zeroext %5, i1 noundef zeroext %6)
           to label %bb.ar unwind label %bb.as
 
-bb.ar:                                            ; preds = %bb.aq
+bb.ar:                                            ; preds = %18
   call void @_ZN3con10PeerHelperD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   ret void
 
-bb.as:                                            ; preds = %bb.aq
+bb.as:                                            ; preds = %18
   %i.cz = landingpad { ptr, i32 }
           cleanup
   br label %bb.at

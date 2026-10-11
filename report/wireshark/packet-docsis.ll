@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
   store i8 0, ptr %i.b, align 1
-  %i.c = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0) ; 3 uses
+  %i.c = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0) ; 4 uses
   %i.d = lshr i8 %i.c, 6                          ; 3 uses
   %i.e = lshr i8 %i.c, 1
   %i.f = and i8 %i.e, 31                          ; 9 uses
@@ -224,9 +224,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.0280 = phi i16 [ %i.k, %bb.c ], [ %i.i, %bb.b ] ; 6 uses
   %.0279 = phi i32 [ 6, %bb.c ], [ 7, %bb.b ]
   %i.l = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.sink) ; 13 uses
-  %.not284 = icmp eq i8 %i.g, 0                   ; 2 uses
+  %4 = trunc i8 %i.c to i1
   %i.m = zext i16 %.0280 to i32                   ; 7 uses
-  %i.n = select i1 %.not284, i32 0, i32 %i.m
+  %i.n = select i1 %4, i32 %i.m, i32 0
   %.1 = add nuw nsw i32 %i.n, %.0279
   %i.o = and i32 %.1, 255                         ; 19 uses
   %i.p = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.o)
@@ -369,7 +369,8 @@ bb.u:                                             ; preds = %bb.p
 
 bb.v:                                             ; preds = %bb.u
   %i.bj = icmp eq i8 %i.f, 1
-  %or.cond9 = and i1 %.not284, %i.bj
+  %5 = icmp eq i8 %i.g, 0
+  %or.cond9 = and i1 %5, %i.bj
   %i.bk = call ptr @tvb_new_subset_remaining(ptr noundef %0, i32 noundef %i.o) ; 3 uses
   br i1 %or.cond9, label %bb.w, label %bb.z
 
@@ -661,8 +662,8 @@ declare void @proto_item_append_text(ptr noundef, ptr noundef, ...) local_unname
 define internal fastcc ptr @dissect_exthdr_length_field(ptr noundef %0, ptr noundef %1, ptr noundef %2, i8 noundef zeroext range(i8 0, 2) %3, i16 noundef zeroext %4, i16 noundef zeroext %5, ptr nofree noundef captures(none) %6, ptr noundef %7) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 12 uses
-  %.not = icmp eq i8 %3, 0
-  br i1 %.not, label %bb.aa, label %bb.b
+  %8 = trunc nuw i8 %3 to i1
+  br i1 %8, label %bb.b, label %bb.aa
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load i32, ptr @hf_docsis_ehdrlen, align 4

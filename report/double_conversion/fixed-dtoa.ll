@@ -204,10 +204,9 @@ bb.b:                                             ; preds = %.lr.ph87
 bb.c:                                             ; preds = %._crit_edge88
   %i.t = add nsw i32 %.036.lcssa, -1
   %i.u = zext nneg i32 %i.t to i64
-  %6 = shl nuw i64 1, %i.u
-  %7 = and i64 %6, %.0.lcssa
-  %.not41 = icmp eq i64 %7, 0
-  br i1 %.not41, label %_ZN17double_conversionL7RoundUpENS_6VectorIcEEPiS2_.exit, label %bb.d
+  %6 = lshr i64 %.0.lcssa, %i.u
+  %7 = trunc i64 %6 to i1
+  br i1 %7, label %bb.d, label %_ZN17double_conversionL7RoundUpENS_6VectorIcEEPiS2_.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.v = load i32, ptr %4, align 4, !tbaa !10     ; 2 uses
@@ -349,10 +348,9 @@ _ZN17double_conversion7UInt12814DivModPowerOf2Ei.exit: ; preds = %.lr.ph
   %.sink7.i = add nsw i32 %.sink7.i.v, %.039.lcssa
   %.sink.i42 = select i1 %i.ca, i64 %.sroa.0.0.lcssa, i64 %.sroa.17.0.lcssa
   %i.cb = zext nneg i32 %.sink7.i to i64
-  %8 = shl nuw i64 1, %i.cb
-  %9 = and i64 %8, %.sink.i42
-  %.not68 = icmp eq i64 %9, 0
-  br i1 %.not68, label %_ZN17double_conversionL7RoundUpENS_6VectorIcEEPiS2_.exit, label %bb.l
+  %8 = lshr i64 %.sink.i42, %i.cb
+  %9 = trunc i64 %8 to i1
+  br i1 %9, label %bb.l, label %_ZN17double_conversionL7RoundUpENS_6VectorIcEEPiS2_.exit
 
 bb.l:                                             ; preds = %._crit_edge
   %i.cc = load i32, ptr %4, align 4, !tbaa !10    ; 2 uses

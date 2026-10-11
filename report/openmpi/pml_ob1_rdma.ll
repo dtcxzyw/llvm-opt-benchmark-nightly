@@ -202,8 +202,8 @@ bb.a:
   %i.i = icmp eq i64 %.val35, 1                   ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 3 uses
-  %i.l = load i8, ptr getelementptr inbounds nuw (i8, ptr @mca_pml_ob1, i64 232), align 8, !tbaa !30, !range !31, !noundef !50
-  %i.m = icmp eq i8 %i.l, 0                       ; 3 uses
+  %i.l = load i8, ptr getelementptr inbounds nuw (i8, ptr @mca_pml_ob1, i64 232), align 8, !tbaa !30, !range !31, !noundef !50 ; 2 uses
+  %i.m = icmp eq i8 %i.l, 0
   %i.n = icmp sgt i32 %i.h, 0
   %i.o = and i1 %i.m, %i.n
   br i1 %i.o, label %.lr.ph.split.us, label %.lr.ph.split
@@ -279,11 +279,12 @@ bb.f:                                             ; preds = %mca_bml_base_btl_ar
   br i1 %i.ap, label %bb.b, label %._crit_edge44, !llvm.loop !64
 
 .lr.ph.split:                                     ; preds = %.lr.ph
+  %.not = trunc nuw i8 %i.l to i1                 ; 2 uses
   %i.aq = load ptr, ptr %i.k, align 8, !tbaa !32  ; 3 uses
   br i1 %i.i, label %.lr.ph.split.split.us, label %.lr.ph.split.split
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
-  br i1 %i.m, label %.thread, label %.lr.ph.split.split.us.split
+  br i1 %.not, label %.lr.ph.split.split.us.split, label %.thread
 
 .lr.ph.split.split.us.split:                      ; preds = %.lr.ph.split.split.us
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 4
@@ -309,7 +310,7 @@ mca_bml_base_btl_array_get_next.exit.us54:        ; preds = %mca_bml_base_btl_ar
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   %.pre95 = load i64, ptr %i.j, align 8, !tbaa !51 ; 2 uses
-  br i1 %i.m, label %mca_bml_base_btl_array_get_next.exit.us62, label %mca_bml_base_btl_array_get_next.exit
+  br i1 %.not, label %mca_bml_base_btl_array_get_next.exit, label %mca_bml_base_btl_array_get_next.exit.us62
 
 mca_bml_base_btl_array_get_next.exit.us62:        ; preds = %.lr.ph.split.split, %mca_bml_base_btl_array_get_next.exit.us62
   %i.bb = phi i64 [ %..i.us66, %mca_bml_base_btl_array_get_next.exit.us62 ], [ %.pre95, %.lr.ph.split.split ]
@@ -330,8 +331,8 @@ mca_bml_base_btl_array_get_next.exit.us62:        ; preds = %.lr.ph.split.split,
   br label %._crit_edge.i
 
 ._crit_edge44:                                    ; preds = %mca_bml_base_btl_array_get_next.exit, %mca_bml_base_btl_array_get_next.exit.us54, %._crit_edge.us
-  %.033.lcssa = phi double [ %.134.us, %._crit_edge.us ], [ %i.aw, %mca_bml_base_btl_array_get_next.exit.us54 ], [ %i.cr, %mca_bml_base_btl_array_get_next.exit ]
-  %.031.lcssa = phi i32 [ %.132.us, %._crit_edge.us ], [ %indvars87, %mca_bml_base_btl_array_get_next.exit.us54 ], [ %indvars, %mca_bml_base_btl_array_get_next.exit ] ; 4 uses
+  %.033.lcssa = phi double [ %i.aw, %mca_bml_base_btl_array_get_next.exit.us54 ], [ %.134.us, %._crit_edge.us ], [ %i.cr, %mca_bml_base_btl_array_get_next.exit ]
+  %.031.lcssa = phi i32 [ %indvars87, %mca_bml_base_btl_array_get_next.exit.us54 ], [ %.132.us, %._crit_edge.us ], [ %indvars, %mca_bml_base_btl_array_get_next.exit ] ; 4 uses
   %i.bj = icmp eq i32 %.031.lcssa, 1
   br i1 %i.bj, label %bb.g, label %bb.h, !prof !65
 

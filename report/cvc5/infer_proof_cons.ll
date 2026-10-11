@@ -204,10 +204,11 @@ bb.g:                                             ; preds = %_ZN4cvc58internal12
   br i1 %i.z, label %bb.h, label %bb.dj, !llvm.loop !349
 
 bb.h:                                             ; preds = %.preheader, %bb.g
-  %i.z = phi i1 [ true, %.preheader ], [ false, %bb.g ] ; 2 uses
-  %.060181 = phi i64 [ 0, %.preheader ], [ 1, %bb.g ]
+  %i.z = phi i1 [ true, %.preheader ], [ false, %bb.g ]
+  %.060181 = phi i32 [ 0, %.preheader ], [ 1, %bb.g ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
-  br i1 %i.z, label %bb.i, label %bb.u
+  %20 = trunc nuw i32 %.060181 to i1
+  br i1 %20, label %bb.u, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
@@ -610,10 +611,11 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit112: ; preds = %_ZN4cvc58internal1
 
 .noexc114:                                        ; preds = %.critedge83
   %i.hc = icmp eq i32 %i.hb, 2
-  %20 = zext i1 %i.hc to i64
+  %21 = zext i1 %i.hc to i32
+  %spec.select.i.i113 = add nuw nsw i32 %.060181, %21
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gu, i64 24
-  %21 = getelementptr inbounds nuw [8 x i8], ptr %i.hd, i64 %.060181
-  %i.he = getelementptr inbounds nuw [8 x i8], ptr %21, i64 %20
+  %22 = zext nneg i32 %spec.select.i.i113 to i64
+  %i.he = getelementptr inbounds nuw [8 x i8], ptr %i.hd, i64 %22
   %i.hf = load ptr, ptr %i.he, align 8, !tbaa !56, !noalias !384 ; 9 uses
   store ptr %i.hf, ptr %16, align 8, !tbaa !42, !alias.scope !384
   %i.hg = load i64, ptr %i.hf, align 8, !noalias !384 ; 3 uses

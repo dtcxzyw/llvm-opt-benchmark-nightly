@@ -205,7 +205,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   tail call void @_ZNSt18condition_variableC1Ev(ptr noundef nonnull align 8 dereferenceable(48) %i.b) #25
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.d = add i64 %1, 1                            ; 6 uses
+  %i.d = add i64 %1, 1                            ; 7 uses
   store i64 %i.d, ptr %i.c, align 8, !tbaa !134
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
@@ -235,9 +235,8 @@ _ZNSt12_Vector_baseIN6spdlog7details9async_msgESaIS2_EEC2EmRKS3_.exit.i.i: ; pre
   %i.j = getelementptr inbounds nuw [408 x i8], ptr %i.i, i64 %i.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 184
   store ptr %i.j, ptr %i.k, align 8, !tbaa !204
-  %2 = and i64 %1, 1
-  %lcmp.mod.not.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
+  %lcmp.mod.not = trunc i64 %i.d to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.i.i.i.prol:                          ; preds = %.noexc3
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 16

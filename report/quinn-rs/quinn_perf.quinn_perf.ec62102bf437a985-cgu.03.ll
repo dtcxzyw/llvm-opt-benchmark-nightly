@@ -88,8 +88,8 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6op
 bb.a:
     #dbg_value(ptr %0, !2769, !DIExpression(), !10985)
   %i.a = load i64, ptr %0, align 8, !dbg !10992, !range !2773, !noundef !2579
-  %1 = icmp eq i64 %i.a, 0, !dbg !10992
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiveruEECskigd7sy4fqX_10quinn_perf.exit, label %bb.b, !dbg !10992
+  %1 = trunc nuw i64 %i.a to i1, !dbg !10992
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiveruEECskigd7sy4fqX_10quinn_perf.exit, !dbg !10992
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiveruEECskigd7sy4fqX_10quinn_perf.exit: ; preds = %bb.h, %bb.g, %bb.f, %bb.a
   ret void, !dbg !10992
@@ -492,8 +492,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio7runtime9sched
   %.pn.i.i.i.i = phi { ptr, i32 } [ %i.ac, %bb.p ], [ %i.n, %bb.k ], [ %i.n, %bb.j ] ; 3 uses
     #dbg_value(ptr %i.m, !14185, !DIExpression(), !13949)
   %i.w = load i64, ptr %i.m, align 8, !dbg !14260, !range !2773, !noundef !2579
-  %1 = icmp eq i64 %i.w, 0, !dbg !14260
-  br i1 %1, label %.body6.i, label %bb.n, !dbg !14260
+  %1 = trunc nuw i64 %i.w to i1, !dbg !14260
+  br i1 %1, label %bb.n, label %.body6.i, !dbg !14260
 
 bb.n:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio7runtime9scheduler6HandleECskigd7sy4fqX_10quinn_perf.exit.i.i.i.i
   %i.x = getelementptr i8, ptr %0, i64 80, !dbg !14260
@@ -525,8 +525,8 @@ bb.p:                                             ; preds = %bb.m
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio7runtime9scheduler6HandleECskigd7sy4fqX_10quinn_perf.exit4.i.i.i.i: ; preds = %bb.m, %bb.l
     #dbg_value(ptr %i.m, !14185, !DIExpression(), !13971)
   %i.ad = load i64, ptr %i.m, align 8, !dbg !14263, !range !2773, !noundef !2579
-  %2 = icmp eq i64 %i.ad, 0, !dbg !14263
-  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio4time5sleep5SleepECskigd7sy4fqX_10quinn_perf.exit.i, label %bb.q, !dbg !14263
+  %2 = trunc nuw i64 %i.ad to i1, !dbg !14263
+  br i1 %2, label %bb.q, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio4time5sleep5SleepECskigd7sy4fqX_10quinn_perf.exit.i, !dbg !14263
 
 bb.q:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio7runtime9scheduler6HandleECskigd7sy4fqX_10quinn_perf.exit4.i.i.i.i
   %i.ae = getelementptr i8, ptr %0, i64 80, !dbg !14263
@@ -929,8 +929,8 @@ bb.aa:                                            ; preds = %bb.y
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiverbEECskigd7sy4fqX_10quinn_perf.exit.i.i.i.i: ; preds = %bb.y, %bb.x, %bb.w
     #dbg_value(ptr %i.m, !2769, !DIExpression(), !17181)
   %i.am = load i64, ptr %i.m, align 8, !dbg !17804, !range !2773, !alias.scope !17662, !noundef !2579
-  %1 = icmp eq i64 %i.am, 0, !dbg !17804
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsB8MOEg02Qk_5quinn8incoming14IncomingFutureECskigd7sy4fqX_10quinn_perf.exit.i, label %bb.ab, !dbg !17804
+  %1 = trunc nuw i64 %i.am to i1, !dbg !17804
+  br i1 %1, label %bb.ab, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsB8MOEg02Qk_5quinn8incoming14IncomingFutureECskigd7sy4fqX_10quinn_perf.exit.i, !dbg !17804
 
 bb.ab:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiverbEECskigd7sy4fqX_10quinn_perf.exit.i.i.i.i
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 824, !dbg !17804 ; 5 uses
@@ -1333,8 +1333,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20185), !dbg !20200
     #dbg_value(ptr %1, !9775, !DIExpression(), !20080)
   %i.j = load i64, ptr %1, align 8, !dbg !20201, !range !2773, !alias.scope !20185, !noundef !2579
-  %3 = icmp eq i64 %i.j, 0, !dbg !20201
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !20201
+  %3 = trunc nuw i64 %i.j to i1, !dbg !20201
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.g, !dbg !20201
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNCNCNvNtCs7OITKvp9Irj_4perf6client8drive_bi00EEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !20201 ; 2 uses
@@ -1462,6 +1462,7 @@ bb.o:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !20215
 
 .body:                                            ; preds = %bb.m, %bb.n
+  store i64 0, ptr %1, align 8, !dbg !20200
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !20200
   br label %common.resume, !dbg !20216
 
@@ -1864,8 +1865,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21417), !dbg !21432
     #dbg_value(ptr %1, !9775, !DIExpression(), !21312)
   %i.j = load i64, ptr %1, align 8, !dbg !21433, !range !2773, !alias.scope !21417, !noundef !2579
-  %3 = icmp eq i64 %i.j, 0, !dbg !21433
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !21433
+  %3 = trunc nuw i64 %i.j to i1, !dbg !21433
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.g, !dbg !21433
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNCNCNvNtCs7OITKvp9Irj_4perf6client9drive_uni00EEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !21433 ; 2 uses
@@ -1993,6 +1994,7 @@ bb.o:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !21447
 
 .body:                                            ; preds = %bb.m, %bb.n
+  store i64 0, ptr %1, align 8, !dbg !21432
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !21432
   br label %common.resume, !dbg !21448
 
@@ -2395,8 +2397,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22649), !dbg !22664
     #dbg_value(ptr %1, !9775, !DIExpression(), !22544)
   %i.j = load i64, ptr %1, align 8, !dbg !22665, !range !2773, !alias.scope !22649, !noundef !2579
-  %3 = icmp eq i64 %i.j, 0, !dbg !22665
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !22665
+  %3 = trunc nuw i64 %i.j to i1, !dbg !22665
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.g, !dbg !22665
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNCNCNvNtCs7OITKvp9Irj_4perf6server3run00EEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !22665 ; 2 uses
@@ -2524,6 +2526,7 @@ bb.o:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !22679
 
 .body:                                            ; preds = %bb.m, %bb.n
+  store i64 0, ptr %1, align 8, !dbg !22664
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !22664
   br label %common.resume, !dbg !22680
 
@@ -2926,8 +2929,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23881), !dbg !23896
     #dbg_value(ptr %1, !9775, !DIExpression(), !23776)
   %i.j = load i64, ptr %1, align 8, !dbg !23897, !range !2773, !alias.scope !23881, !noundef !2579
-  %3 = icmp eq i64 %i.j, 0, !dbg !23897
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !23897
+  %3 = trunc nuw i64 %i.j to i1, !dbg !23897
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.g, !dbg !23897
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNCNCNvNtCs7OITKvp9Irj_4perf6server8drive_bi00EEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !23897 ; 2 uses
@@ -3055,6 +3058,7 @@ bb.o:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !23911
 
 .body:                                            ; preds = %bb.m, %bb.n
+  store i64 0, ptr %1, align 8, !dbg !23896
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !23896
   br label %common.resume, !dbg !23912
 
@@ -3457,8 +3461,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKa
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25113), !dbg !25128
     #dbg_value(ptr %1, !9775, !DIExpression(), !25008)
   %i.j = load i64, ptr %1, align 8, !dbg !25129, !range !2773, !alias.scope !25113, !noundef !2579
-  %3 = icmp eq i64 %i.j, 0, !dbg !25129
-  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !25129
+  %3 = trunc nuw i64 %i.j to i1, !dbg !25129
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.g, !dbg !25129
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreINtNtCskKLDkoKarTP_4core3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNCNCNvNtCs7OITKvp9Irj_4perf6server9drive_uni00EEINtNtB1B_4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !25129 ; 2 uses
@@ -3586,6 +3590,7 @@ bb.o:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !25143
 
 .body:                                            ; preds = %bb.m, %bb.n
+  store i64 0, ptr %1, align 8, !dbg !25128
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !25128
   br label %common.resume, !dbg !25144
 
@@ -3988,8 +3993,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITK
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26345), !dbg !26360
     #dbg_value(ptr %1, !9775, !DIExpression(), !26240)
   %i.l = load i64, ptr %1, align 8, !dbg !26361, !range !2773, !alias.scope !26345, !noundef !2579
-  %3 = icmp eq i64 %i.l, 0, !dbg !26361
-  br i1 %3, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !26361
+  %3 = trunc nuw i64 %i.l to i1, !dbg !26361
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.h, !dbg !26361
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITKvp9Irj_4perf6client8drive_bi00INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !26361 ; 2 uses
@@ -4117,6 +4122,7 @@ bb.p:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !26375
 
 .body:                                            ; preds = %bb.n, %bb.o
+  store i64 0, ptr %1, align 8, !dbg !26360
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !26360
   br label %common.resume, !dbg !26376
 
@@ -4519,8 +4525,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITK
   tail call void @llvm.experimental.noalias.scope.decl(metadata !27577), !dbg !27592
     #dbg_value(ptr %1, !9775, !DIExpression(), !27472)
   %i.l = load i64, ptr %1, align 8, !dbg !27593, !range !2773, !alias.scope !27577, !noundef !2579
-  %3 = icmp eq i64 %i.l, 0, !dbg !27593
-  br i1 %3, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !27593
+  %3 = trunc nuw i64 %i.l to i1, !dbg !27593
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.h, !dbg !27593
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITKvp9Irj_4perf6client9drive_uni00INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !27593 ; 2 uses
@@ -4648,6 +4654,7 @@ bb.p:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !27607
 
 .body:                                            ; preds = %bb.n, %bb.o
+  store i64 0, ptr %1, align 8, !dbg !27592
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !27592
   br label %common.resume, !dbg !27608
 
@@ -5050,8 +5057,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITK
   tail call void @llvm.experimental.noalias.scope.decl(metadata !28809), !dbg !28824
     #dbg_value(ptr %1, !9775, !DIExpression(), !28704)
   %i.l = load i64, ptr %1, align 8, !dbg !28825, !range !2773, !alias.scope !28809, !noundef !2579
-  %3 = icmp eq i64 %i.l, 0, !dbg !28825
-  br i1 %3, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !28825
+  %3 = trunc nuw i64 %i.l to i1, !dbg !28825
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.h, !dbg !28825
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITKvp9Irj_4perf6server3run00INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !28825 ; 2 uses
@@ -5179,6 +5186,7 @@ bb.p:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !28839
 
 .body:                                            ; preds = %bb.n, %bb.o
+  store i64 0, ptr %1, align 8, !dbg !28824
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !28824
   br label %common.resume, !dbg !28840
 
@@ -5581,8 +5589,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITK
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30041), !dbg !30056
     #dbg_value(ptr %1, !9775, !DIExpression(), !29936)
   %i.l = load i64, ptr %1, align 8, !dbg !30057, !range !2773, !alias.scope !30041, !noundef !2579
-  %3 = icmp eq i64 %i.l, 0, !dbg !30057
-  br i1 %3, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !30057
+  %3 = trunc nuw i64 %i.l to i1, !dbg !30057
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.h, !dbg !30057
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITKvp9Irj_4perf6server8drive_bi00INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !30057 ; 2 uses
@@ -5710,6 +5718,7 @@ bb.p:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !30071
 
 .body:                                            ; preds = %bb.n, %bb.o
+  store i64 0, ptr %1, align 8, !dbg !30056
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !30056
   br label %common.resume, !dbg !30072
 
@@ -6112,8 +6121,8 @@ _RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITK
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31273), !dbg !31288
     #dbg_value(ptr %1, !9775, !DIExpression(), !31168)
   %i.l = load i64, ptr %1, align 8, !dbg !31289, !range !2773, !alias.scope !31273, !noundef !2579
-  %3 = icmp eq i64 %i.l, 0, !dbg !31289
-  br i1 %3, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, !dbg !31289
+  %3 = trunc nuw i64 %i.l to i1, !dbg !31289
+  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCsar2VadbF9t7_5tokio7runtime4task5error9JoinErrorEEECskigd7sy4fqX_10quinn_perf.exit, label %bb.h, !dbg !31289
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCsar2VadbF9t7_5tokio7runtime4task4coreINtB7_4CoreNCNCNvNtCs7OITKvp9Irj_4perf6server9drive_uni00INtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtBb_9scheduler14current_thread6HandleEE11take_output0Cskigd7sy4fqX_10quinn_perf.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !31289 ; 2 uses
@@ -6241,6 +6250,7 @@ bb.p:                                             ; preds = %bb.a, %_RINvNtCskKL
   ret void, !dbg !31303
 
 .body:                                            ; preds = %bb.n, %bb.o
+  store i64 0, ptr %1, align 8, !dbg !31288
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !dbg !31288
   br label %common.resume, !dbg !31304
 

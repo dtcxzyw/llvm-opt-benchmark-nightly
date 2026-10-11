@@ -202,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = load i64, ptr %i.z, align 8, !range !183, !alias.scope !181, !noalias !180, !noundef !5
   %.not72.i = icmp ne i64 %i.aa, -1               ; 2 uses
   %.sroa.06.0.i = zext i1 %.not72.i to i64
-  %.not73.not.i = icmp eq i64 %i.v, 0
+  %2 = trunc nuw i64 %i.v to i1
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !range !11, !alias.scope !181, !noalias !180, !noundef !5 ; 2 uses
-  %.not74.not.i = icmp eq i64 %i.ac, 0
+  %3 = trunc nuw i64 %i.ac to i1
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 320 ; 2 uses
   %i.ae = load i64, ptr %i.ad, align 8, !range !4, !alias.scope !181, !noalias !180, !noundef !5
   %.not75.i.a = icmp ne i64 %i.ae, -1             ; 2 uses
@@ -282,7 +282,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not83.i.a, label %bb.l, label %bb.ae
 
 bb.l:                                             ; preds = %bb.k, %bb.i
-  br i1 %.not73.not.i, label %bb.o, label %bb.m
+  br i1 %2, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
   %i.bb = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB6_12SerializeMapNtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs607s0NAIaWN_7segment5types14GeoBoundingBoxEECshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.u, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 16, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(376) %1)
@@ -293,7 +293,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not85.i.a, label %bb.o, label %bb.ae
 
 bb.o:                                             ; preds = %bb.n, %bb.l
-  br i1 %.not74.not.i, label %bb.r, label %bb.p
+  br i1 %3, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
   %i.bc = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB6_12SerializeMapNtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs607s0NAIaWN_7segment5types9GeoRadiusEECshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.u, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 10, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ab)
@@ -696,7 +696,7 @@ bb.a:
   %.not = icmp eq i8 %i.e, 2                      ; 2 uses
   %. = select i1 %.not, i64 1, i64 2
   %i.f = load i64, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
-  %.not30.not = icmp eq i64 %i.f, 0
+  %2 = trunc nuw i64 %i.f to i1
   %i.g = add nuw nsw i64 %., %i.f
   call void @_RNvXs_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB4_10SerializerNtNtCs4NSHK7GLW4I_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @73, i64 noundef 24, i64 noundef %i.g)
   %i.h = load i64, ptr %i.b, align 8, !range !4, !noundef !5 ; 2 uses
@@ -740,7 +740,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not32.a, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.e, %bb.g
-  br i1 %.not30.not, label %bb.l, label %bb.j
+  br i1 %2, label %bb.j, label %bb.l
 
 bb.i:                                             ; preds = %bb.g, %bb.d, %bb.k
   %.sink = phi ptr [ %i.q, %bb.k ], [ %i.n, %bb.d ], [ %i.o, %bb.g ]
@@ -793,9 +793,9 @@ bb.a:
   %i.c = alloca [96 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.d = load i64, ptr %1, align 8, !range !11, !noundef !5
-  %.not = icmp eq i64 %i.d, 0                     ; 2 uses
-  %. = select i1 %.not, i64 1, i64 2
+  %i.d = load i64, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
+  %2 = trunc nuw i64 %i.d to i1
+  %. = add nuw nsw i64 %i.d, 1
   call void @_RNvXs_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB4_10SerializerNtNtCs4NSHK7GLW4I_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 17, i64 noundef %.)
   %i.e = load i64, ptr %i.b, align 8, !range !4, !noundef !5 ; 2 uses
   %i.f = icmp eq i64 %i.e, -1
@@ -827,7 +827,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not23.a, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d
-  br i1 %.not, label %bb.h, label %bb.f
+  br i1 %2, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.l = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB6_12SerializeMapNtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCskKLDkoKarTP_4core6option6OptionINtCs3EstPQUvMw7_13ordered_float12OrderedFloatdEEECshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @79, i64 noundef 15, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1)
@@ -876,12 +876,11 @@ bb.m:                                             ; preds = %bb.l
 define hidden void @_RINvXNvNtCs607s0NAIaWN_7segment5typesso_1__NtB5_12SearchParamsNtNtCs4NSHK7GLW4I_10serde_core3ser9Serialize9serializeNtNtNtCs8O45qwFIwQX_10serde_json5value3ser10SerializerECshMzyYDJGtjv_3api(ptr dead_on_unwind noalias nofree noundef writable sret([72 x i8]) align 8 captures(address) dereferenceable(72) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(176) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 4 uses
-  %i.b = alloca [96 x i8], align 8                ; 7 uses
+  %i.b = alloca [96 x i8], align 8                ; 8 uses
   %i.c = alloca [96 x i8], align 8                ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.d = load i64, ptr %1, align 8, !range !11, !noundef !5
-  %.not = icmp eq i64 %i.d, 0                     ; 2 uses
+  %i.d = load i64, ptr %1, align 8, !range !11, !noundef !5 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8, !range !14, !noundef !5
   %.not47.a = icmp ne i64 %i.f, 2                 ; 2 uses
@@ -894,18 +893,18 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8, !range !6, !noundef !5
   %.not49.a = icmp ne i64 %i.j, -3                ; 2 uses
   %.sroa.08.0 = zext i1 %.not49.a to i64
-  %2 = select i1 %.not, i64 2, i64 3
+  %2 = or disjoint i64 %i.d, 2
   %i.k = add nuw nsw i64 %2, %.sroa.06.0
   %i.l = add nuw nsw i64 %i.k, %.sroa.07.0
   %i.m = add nuw nsw i64 %i.l, %.sroa.08.0
   call void @_RNvXs_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB4_10SerializerNtNtCs4NSHK7GLW4I_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @80, i64 noundef 12, i64 noundef %i.m)
   %i.n = load i64, ptr %i.b, align 8, !range !4, !noundef !5 ; 2 uses
   %i.o = icmp eq i64 %i.n, -1
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %4 = load ptr, ptr %3, align 8                  ; 2 uses
   br i1 %i.o, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %4 = load ptr, ptr %3, align 8, !nonnull !5, !align !8, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %4, ptr %i.p, align 8
@@ -913,14 +912,17 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.t
 
 bb.c:                                             ; preds = %bb.a
+  %5 = trunc nuw i64 %i.d to i1
+  %.sroa.442.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %.sroa.442.0.copyload = load ptr, ptr %.sroa.442.0..sroa_idx, align 8
   %.sroa.543.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.543.0..sroa_idx, i64 80, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   store i64 %i.n, ptr %i.c, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr %4, ptr %.sroa.4.0..sroa_idx, align 8
-  br i1 %.not, label %bb.f, label %bb.d
+  store ptr %.sroa.442.0.copyload, ptr %.sroa.4.0..sroa_idx, align 8
+  br i1 %5, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.q = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB6_12SerializeMapNtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCskKLDkoKarTP_4core6option6OptionjEECshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @81, i64 noundef 7, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %1)

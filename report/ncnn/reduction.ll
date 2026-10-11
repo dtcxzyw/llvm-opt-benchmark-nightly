@@ -204,10 +204,10 @@ bb.f:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.bj = trunc nuw i8 %i.bi to i1                ; 6 uses
   %i.bk = load i8, ptr %i.u, align 1, !tbaa !72, !range !73, !noundef !74 ; 6 uses
   %i.bl = trunc nuw i8 %i.bk to i1                ; 9 uses
-  %i.bm = load i8, ptr %i.v, align 1, !tbaa !72, !range !73, !noundef !74
-  %i.bn = trunc nuw i8 %i.bm to i1                ; 12 uses
-  %i.bo = load i8, ptr %i.w, align 1, !tbaa !72, !range !73, !noundef !74
-  %i.bp = trunc nuw i8 %i.bo to i1                ; 24 uses
+  %i.bm = load i8, ptr %i.v, align 1, !tbaa !72, !range !73, !noundef !74 ; 2 uses
+  %i.bn = trunc nuw i8 %i.bm to i1                ; 11 uses
+  %i.bo = load i8, ptr %i.w, align 1, !tbaa !72, !range !73, !noundef !74 ; 3 uses
+  %i.bp = trunc nuw i8 %i.bo to i1                ; 22 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 296
   %i.br = load i32, ptr %i.bq, align 8, !tbaa !71
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 208
@@ -301,8 +301,8 @@ bb.o:                                             ; preds = %bb.n
   %i.cl = load i32, ptr %i.ck, align 8, !tbaa !78 ; 2 uses
   store i32 %i.cl, ptr %i.g, align 4, !tbaa !69
   %i.cm = and i8 %i.bk, %i.bi
-  %or.cond.i.not = icmp eq i8 %i.cm, 0
-  br i1 %or.cond.i.not, label %bb.x, label %bb.p
+  %or.cond.i = trunc nuw i8 %i.cm to i1
+  br i1 %or.cond.i, label %bb.p, label %bb.x
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
@@ -463,9 +463,9 @@ bb.ah:                                            ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #14
   %i.em = mul nsw i32 %i.ej, %i.eh
   store i32 %i.em, ptr %i.k, align 4, !tbaa !69
-  %i.en = and i8 %i.bk, %i.bi
-  %or.cond14.i = icmp ne i8 %i.en, 0              ; 2 uses
-  %or.cond16.i = and i1 %or.cond14.i, %i.bp
+  %i.en = and i8 %i.bk, %i.bi                     ; 2 uses
+  %8 = and i8 %i.bo, %i.en
+  %or.cond16.i = trunc nuw i8 %8 to i1
   br i1 %or.cond16.i, label %bb.ai, label %bb.aq
 
 bb.ai:                                            ; preds = %bb.ah
@@ -546,6 +546,7 @@ bb.ap:                                            ; preds = %bb.am
   br label %.thread47.thread
 
 bb.aq:                                            ; preds = %bb.ah
+  %or.cond14.i = trunc nuw i8 %i.en to i1
   %or.cond18.not.i = xor i1 %or.cond14.i, true
   %or.cond20.i = or i1 %or.cond18.not.i, %i.bp
   br i1 %or.cond20.i, label %bb.ar, label %.thread60.thread298
@@ -687,10 +688,11 @@ bb.bd:                                            ; preds = %bb.n
   %i.gy = mul nsw i32 %i.gt, %i.gr
   %i.gz = mul nsw i32 %i.gy, %i.gv
   store i32 %i.gz, ptr %i.p, align 4, !tbaa !69
-  %i.ha = and i8 %i.bk, %i.bi
-  %or.cond46.i = icmp ne i8 %i.ha, 0              ; 2 uses
-  %or.cond48.i = and i1 %or.cond46.i, %i.bn       ; 2 uses
-  %or.cond50.i = and i1 %or.cond48.i, %i.bp
+  %i.ha = and i8 %i.bk, %i.bi                     ; 2 uses
+  %or.cond46.i = trunc nuw i8 %i.ha to i1
+  %9 = and i8 %i.ha, %i.bm                        ; 2 uses
+  %10 = and i8 %9, %i.bo
+  %or.cond50.i = trunc nuw i8 %10 to i1
   br i1 %or.cond50.i, label %bb.be, label %bb.bm
 
 bb.be:                                            ; preds = %bb.bd
@@ -771,6 +773,7 @@ bb.bl:                                            ; preds = %bb.bi
   br label %.thread93.thread.thread
 
 bb.bm:                                            ; preds = %bb.bd
+  %or.cond48.i = trunc nuw i8 %9 to i1
   %or.cond54.not.i = xor i1 %or.cond48.i, true
   %or.cond56.i = or i1 %i.bp, %or.cond54.not.i
   br i1 %or.cond56.i, label %bb.bo, label %bb.bn
@@ -926,7 +929,7 @@ bb.ca:                                            ; preds = %.thread93
   %or.cond72.i104114127 = phi i1 [ %or.cond72.i104114.ph, %.thread118 ], [ %or.cond72.i, %.thread93.thread ], [ false, %bb.bp ], [ false, %bb.bn ], [ false, %.thread70 ], [ false, %_ZN4ncnn3MatD2Ev.exit428.i ] ; 2 uses
   %or.cond67.i91101116126 = phi i1 [ %or.cond67.i, %.thread118 ], [ %or.cond67.i, %.thread93.thread ], [ false, %bb.bp ], [ false, %bb.bn ], [ false, %.thread70 ], [ true, %_ZN4ncnn3MatD2Ev.exit428.i ]
   %i.jq = or i8 %i.bk, %i.bi
-  %or.cond91.i = icmp ne i8 %i.jq, 0              ; 3 uses
+  %or.cond91.i = trunc nuw i8 %i.jq to i1         ; 3 uses
   %or.cond91.not.i = xor i1 %or.cond91.i, true
   %or.cond93.i = and i1 %i.bn, %or.cond91.not.i   ; 3 uses
   %or.cond95.i = and i1 %or.cond93.i, %i.bp
@@ -1329,23 +1332,22 @@ bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !47   ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 268
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !98   ; 4 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !98   ; 5 uses
   %i.j = icmp sgt i32 %i.i, 0
   br i1 %i.j, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %wide.trip.count = zext nneg i32 %i.i to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.k = icmp eq i32 %i.i, 1
   br i1 %i.k, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %11 = and i32 %i.i, 2147483646
+  %unroll_iter = zext nneg i32 %11 to i64
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]

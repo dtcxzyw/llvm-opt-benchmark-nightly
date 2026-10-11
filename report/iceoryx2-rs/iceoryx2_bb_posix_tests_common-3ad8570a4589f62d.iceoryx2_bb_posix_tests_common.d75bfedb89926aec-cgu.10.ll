@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/iceoryx2-rs/original/iceoryx2_bb_posix_tests_common-3ad8570a4589f62d.iceoryx2_bb_posix_tests_common.d75bfedb89926aec-cgu.10?download=true
-inline.NumInlined: 127
+inline.NumInlined: 128
 inline.NumDeleted: 39
 loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumUnrolled: 4
@@ -204,8 +204,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @_RNvMs4_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix7processNtB5_7Process10executable(ptr noalias nofree noundef nonnull sret([272 x i8]) align 8 captures(none) dereferenceable(272) %i.d, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.e) #10
   %i.g = load i8, ptr %i.d, align 8, !range !14, !noundef !5
-  %0 = icmp eq i8 %i.g, 0
-  br i1 %0, label %bb.c, label %bb.b, !prof !10
+  %0 = trunc nuw i8 %i.g to i1
+  br i1 %0, label %bb.b, label %bb.c, !prof !7
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -308,8 +308,49 @@ _RNvNtCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common13process_tests21can_acquire
 
 ; Function Attrs: nounwind nonlazybind uwtable
 define internal void @_RNvNtCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common13process_tests33___iox2_test_executable_path_works() unnamed_addr #0 {
-bb.a:
-  tail call void @_RNvNtCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common13process_tests21executable_path_works() #10
+  %1 = alloca [32 x i8], align 8                  ; 6 uses
+  %2 = alloca [16 x i8], align 8                  ; 4 uses
+  %3 = alloca [16 x i8], align 8                  ; 4 uses
+  %4 = alloca [272 x i8], align 8                 ; 4 uses
+  %5 = alloca [4 x i8], align 4                   ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  %6 = tail call noundef i32 @_RNvMs4_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix7processNtB5_7Process9from_self() #10
+  store i32 %6, ptr %5, align 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @_RNvMs4_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix7processNtB5_7Process10executable(ptr noalias nofree noundef nonnull sret([272 x i8]) align 8 captures(none) dereferenceable(272) %4, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %5) #10
+  %7 = load i8, ptr %4, align 8, !range !14, !noundef !5
+  %8 = trunc nuw i8 %7 to i1
+  br i1 %8, label %9, label %bb.a, !prof !7
+
+9:                                                ; preds = %0
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  %10 = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #10 ; 2 uses
+  %spec.select.i = select i1 %10, ptr @29, ptr inttoptr (i64 1 to ptr)
+  %spec.select10.i = select i1 %10, i64 9, i64 0
+  store ptr %spec.select.i, ptr %3, align 8, !captures !4
+  %11 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 %spec.select10.i, ptr %11, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  %12 = call noundef zeroext i1 @_RNvCs7iP7wj4erds_20iceoryx2_pal_testing11is_terminal() #10 ; 2 uses
+  %.sink9.i = select i1 %12, ptr @30, ptr inttoptr (i64 1 to ptr)
+  %.sink8.i = select i1 %12, i64 4, i64 0
+  store ptr %.sink9.i, ptr %2, align 8, !captures !4
+  %13 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store i64 %.sink8.i, ptr %13, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
+  store ptr %3, ptr %1, align 8
+  %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store ptr @_RNvXs1i_NtCs8Chj7Szqq0n_4core3fmtReNtB6_7Display3fmtCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common, ptr %.sroa.42.0..sroa_idx.i, align 8
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  store ptr %2, ptr %14, align 8
+  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 24
+  store ptr @_RNvXs1i_NtCs8Chj7Szqq0n_4core3fmtReNtB6_7Display3fmtCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common, ptr %.sroa.46.0..sroa_idx.i, align 8
+  call void @_RNvNtCs8Chj7Szqq0n_4core9panicking9panic_fmt(ptr noundef nonnull @47, ptr noundef nonnull %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @48) #11
+  unreachable
+
+bb.a:                                             ; preds = %0
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   ret void
 }
 
@@ -712,8 +753,8 @@ bb.c:                                             ; preds = %_RNvMNtCs8Chj7Szqq0
 
 _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultINtNtB4_6option6OptionNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix10udp_socket14ReceiveDetailsENtB15_15UdpReceiveErrorE6unwrapCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit: ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix10udp_socket9UdpServerNtBJ_20UdpServerCreateErrorE6unwrapCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  %.not = icmp eq i64 %i.r, 0
-  br i1 %.not, label %bb.e, label %bb.d, !prof !10
+  %0 = trunc nuw i64 %i.r to i1
+  br i1 %0, label %bb.d, label %bb.e, !prof !7
 
 bb.d:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultINtNtB4_6option6OptionNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix10udp_socket14ReceiveDetailsENtB15_15UdpReceiveErrorE6unwrapCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -1116,8 +1157,8 @@ bb.d:                                             ; preds = %_RNvMNtCs8Chj7Szqq0
 
 _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultINtNtB4_6option6OptionNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix10udp_socket14ReceiveDetailsENtB15_15UdpReceiveErrorE6unwrapCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit: ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix5clock4TimeNtBJ_9TimeErrorE6expectCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
-  %.not = icmp eq i64 %i.aj, 0
-  br i1 %.not, label %bb.f, label %bb.e, !prof !10
+  %0 = trunc nuw i64 %i.aj to i1
+  br i1 %0, label %bb.e, label %bb.f, !prof !7
 
 bb.e:                                             ; preds = %_RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultINtNtB4_6option6OptionNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix10udp_socket14ReceiveDetailsENtB15_15UdpReceiveErrorE6unwrapCsiulSbLFg4oq_30iceoryx2_bb_posix_tests_common.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)

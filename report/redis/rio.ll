@@ -204,9 +204,8 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %i.au = load i8, ptr %i.f, align 8
-  %3 = and i8 %i.au, 1
-  %.not60 = icmp eq i8 %3, 0
-  br i1 %.not60, label %.critedge, label %bb.o
+  %.not60 = trunc i8 %i.au to i1
+  br i1 %.not60, label %bb.o, label %.critedge
 
 bb.o:                                             ; preds = %bb.n
   %i.av = load ptr, ptr %i.a, align 8, !tbaa !18
@@ -453,16 +452,29 @@ bb.r:                                             ; preds = %bb.a
   br label %.thread
 
 bb.s:                                             ; preds = %bb.r
-  %i.aw = tail call ptr @sdscatlen(ptr noundef %i.e, ptr noundef %1, i64 noundef %2) #16 ; 6 uses
+  %i.aw = tail call ptr @sdscatlen(ptr noundef %i.e, ptr noundef %1, i64 noundef %2) #16 ; 7 uses
   store ptr %i.aw, ptr %i.d, align 8, !tbaa !18
   %i.ax = getelementptr i8, ptr %i.aw, i64 -1
-  %.val.i45.a = load i8, ptr %i.ax, align 1, !tbaa !18 ; 2 uses
+  %.val.i45.a = load i8, ptr %i.ax, align 1, !tbaa !18 ; 3 uses
   %i.ay = and i8 %.val.i45.a, 7
-  switch i8 %i.ay, label %.critedge [
-    i8 4, label %bb.v
-    i8 3, label %bb.u
+  switch i8 %i.ay, label %sdslen.exit47.a [
+    i8 0, label %3
+    i8 1, label %6
     i8 2, label %bb.t
+    i8 3, label %bb.u
+    i8 4, label %bb.v
   ]
+
+3:                                                ; preds = %bb.s
+  %4 = lshr i8 %.val.i45.a, 3
+  %5 = zext nneg i8 %4 to i64
+  br label %sdslen.exit47.a
+
+6:                                                ; preds = %bb.s
+  %7 = getelementptr inbounds i8, ptr %i.aw, i64 -3
+  %8 = load i8, ptr %7, align 1, !tbaa !18
+  %9 = zext i8 %8 to i64
+  br label %sdslen.exit47.a
 
 bb.t:                                             ; preds = %bb.s
   %i.az = getelementptr inbounds i8, ptr %i.aw, i64 -5
@@ -481,10 +493,9 @@ bb.v:                                             ; preds = %bb.s
   %i.bg = load i64, ptr %i.bf, align 1, !tbaa !17
   br label %sdslen.exit47.a
 
-sdslen.exit47.a:                                  ; preds = %bb.t, %bb.u, %bb.v
-  %.0.i46 = phi i64 [ %i.bg, %bb.v ], [ %i.bb, %bb.t ], [ %i.be, %bb.u ]
-  %.0.i46.fr = freeze i64 %.0.i46
-  %i.bh = icmp ugt i64 %.0.i46.fr, 16384
+sdslen.exit47.a:                                  ; preds = %bb.s, %3, %6, %bb.t, %bb.u, %bb.v
+  %.0.i43 = phi i64 [ %i.bg, %bb.v ], [ %5, %3 ], [ %9, %6 ], [ %i.bb, %bb.t ], [ %i.be, %bb.u ], [ 0, %bb.s ]
+  %i.bh = icmp ugt i64 %.0.i43, 16384
   %brmerge = or i1 %.not41.not61, %i.bh
   br i1 %brmerge, label %.thread, label %.critedge
 
@@ -585,8 +596,8 @@ bb.ae:                                            ; preds = %bb.ad
   tail call void @sdsclear(ptr noundef %i.cm) #16
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.p, %bb.o, %bb.ad, %bb.ac, %bb.s, %sdslen.exit47.a, %bb.q, %.outer._crit_edge, %bb.ae
-  %.1 = phi i64 [ 0, %bb.ad ], [ 1, %sdslen.exit47.a ], [ 1, %.outer._crit_edge ], [ 0, %bb.q ], [ 0, %bb.ae ], [ 1, %bb.s ], [ 0, %bb.ac ], [ 0, %bb.o ], [ 0, %bb.p ]
+.critedge:                                        ; preds = %bb.p, %bb.o, %bb.ad, %bb.ac, %bb.q, %.outer._crit_edge, %bb.ae, %sdslen.exit47.a
+  %.1 = phi i64 [ 0, %bb.q ], [ 1, %sdslen.exit47.a ], [ 1, %.outer._crit_edge ], [ 0, %bb.ad ], [ 0, %bb.ae ], [ 0, %bb.ac ], [ 0, %bb.o ], [ 0, %bb.p ]
   ret i64 %.1
 }
 

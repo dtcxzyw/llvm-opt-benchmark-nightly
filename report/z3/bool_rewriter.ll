@@ -204,7 +204,7 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ai
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.ai ] ; 2 uses
   %.031204 = phi ptr [ null, %.lr.ph.preheader ], [ %.233.ph, %bb.ai ] ; 5 uses
-  %.034203 = phi i1 [ false, %.lr.ph.preheader ], [ %.236.ph, %bb.ai ]
+  %.034203 = phi i8 [ 0, %.lr.ph.preheader ], [ %.236.ph, %bb.ai ]
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !65   ; 10 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !67, !nonnull !18, !align !19 ; 2 uses
@@ -607,11 +607,12 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.of = phi i1 [ false, %bb.af ], [ %i.oe, %bb.ag ]
-  %7 = or i1 %.034203, %i.of
+  %7 = zext i1 %i.of to i8
+  %8 = or i8 %.034203, %7
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.g, %bb.t, %bb.k, %bb.ah
-  %.236.ph = phi i1 [ %7, %bb.ah ], [ true, %bb.k ], [ true, %bb.t ], [ true, %bb.g ] ; 4 uses
+  %.236.ph = phi i8 [ %8, %bb.ah ], [ 1, %bb.k ], [ 1, %bb.t ], [ 1, %bb.g ] ; 2 uses
   %.233.ph = phi ptr [ %i.k, %bb.ah ], [ %.031204, %bb.k ], [ %.031204, %bb.t ], [ %.031204, %bb.g ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -620,6 +621,7 @@ bb.ai:                                            ; preds = %bb.g, %bb.t, %bb.k,
 ._crit_edge:                                      ; preds = %bb.ai
   %.pre = load ptr, ptr %5, align 8, !tbaa !142   ; 3 uses
   %.pre206 = load i32, ptr %i.e, align 8, !tbaa !143 ; 2 uses
+  %9 = trunc nuw i8 %.236.ph to i1                ; 3 uses
   %i.og = zext i32 %.pre206 to i64
   %.idx.i117 = shl nuw nsw i64 %i.og, 3           ; 2 uses
   %i.oh = getelementptr inbounds nuw i8, ptr %.pre, i64 %.idx.i117
@@ -747,7 +749,7 @@ bb.ai:                                            ; preds = %bb.g, %bb.t, %bb.k,
   br i1 %.not.i128.3, label %.loopexit195, label %.lr.ph.i126
 
 .loopexit195:                                     ; preds = %.lr.ph.i126.prol.loopexit, %.lr.ph.i126, %.loopexit196.thread, %.loopexit196
-  %.034.lcssa238242 = phi i1 [ false, %.loopexit196.thread ], [ %.236.ph, %.loopexit196 ], [ %.236.ph, %.lr.ph.i126 ], [ %.236.ph, %.lr.ph.i126.prol.loopexit ] ; 2 uses
+  %.034.lcssa238242 = phi i1 [ false, %.loopexit196.thread ], [ %9, %.loopexit196 ], [ %9, %.lr.ph.i126 ], [ %9, %.lr.ph.i126.prol.loopexit ] ; 2 uses
   store i32 0, ptr %i.h, align 8, !tbaa !143
   %i.qr = load i32, ptr %i.b, align 8, !tbaa !154 ; 3 uses
   switch i32 %i.qr, label %bb.as [
@@ -1150,9 +1152,9 @@ _ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit:  ; preds = %_ZN6bufferIP4exprLb
 .lr.ph99:                                         ; preds = %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit, %.loopexit
   %indvars.iv105 = phi i64 [ %indvars.iv.next106, %.loopexit ], [ %indvars.iv, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit ] ; 2 uses
   %.03698 = phi ptr [ %.137, %.loopexit ], [ null, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit ] ; 4 uses
-  %.03897 = phi i1 [ %.139, %.loopexit ], [ true, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit ] ; 2 uses
+  %.03897 = phi i8 [ %.139, %.loopexit ], [ 1, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit ]
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv105
-  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !65 ; 8 uses
+  %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !65 ; 7 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 4
   %i.bq = load i32, ptr %i.bp, align 4
   %i.br = and i32 %i.bq, 65535
@@ -1483,7 +1485,7 @@ bb.o:                                             ; preds = %_ZN6bufferIP4exprLb
   %i.fi = add i32 %i.fe, 1
   store i32 %i.fi, ptr %i.s, align 8, !tbaa !154
   %.not45 = icmp eq ptr %.03698, null
-  br i1 %.not45, label %.loopexit, label %bb.p
+  br i1 %.not45, label %6, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.fj = invoke noundef zeroext i1 @_Z2ltP3astS0_(ptr noundef nonnull %i.bo, ptr noundef nonnull %.03698)
@@ -1491,12 +1493,17 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.fk = xor i1 %i.fj, true
-  %5 = and i1 %.03897, %i.fk
+  %5 = zext i1 %i.fk to i8
+  br label %6
+
+6:                                                ; preds = %bb.q, %bb.o
+  %7 = phi i8 [ 1, %bb.o ], [ %5, %bb.q ]
+  %8 = and i8 %.03897, %7
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.k, %bb.o, %bb.q, %bb.g
-  %.139 = phi i1 [ %5, %bb.q ], [ false, %bb.g ], [ %.03897, %bb.o ], [ false, %bb.k ] ; 2 uses
-  %.137 = phi ptr [ %i.bo, %bb.q ], [ %.03698, %bb.g ], [ %i.bo, %bb.o ], [ %.03698, %bb.k ]
+.loopexit:                                        ; preds = %bb.k, %bb.g, %6
+  %.139 = phi i8 [ %8, %6 ], [ 0, %bb.g ], [ 0, %bb.k ] ; 2 uses
+  %.137 = phi ptr [ %i.bo, %6 ], [ %.03698, %bb.g ], [ %.03698, %bb.k ]
   %indvars.iv.next106 = add nuw nsw i64 %indvars.iv105, 1 ; 2 uses
   %exitcond108.not = icmp eq i64 %indvars.iv.next106, %wide.trip.count
   br i1 %exitcond108.not, label %._crit_edge.loopexit, label %.lr.ph99, !llvm.loop !325
@@ -1504,12 +1511,13 @@ bb.q:                                             ; preds = %bb.p
 ._crit_edge.loopexit:                             ; preds = %.loopexit
   %.pre112 = load i32, ptr %i.s, align 8, !tbaa !154
   %.pre113 = load ptr, ptr %4, align 8, !tbaa !153
+  %9 = trunc nuw i8 %.139 to i1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit
   %i.fl = phi ptr [ %i.bk, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit ], [ %.pre113, %._crit_edge.loopexit ]
   %i.fm = phi i32 [ %i.bl, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit ], [ %.pre112, %._crit_edge.loopexit ]
-  %.038.lcssa = phi i1 [ true, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit ], [ %.139, %._crit_edge.loopexit ]
+  %.038.lcssa = phi i1 [ true, %_ZN10ptr_bufferI4exprLj16EE6appendEjPKPS0_.exit ], [ %9, %._crit_edge.loopexit ]
   %i.fn = invoke noundef i32 @_ZN13bool_rewriter16mk_nflat_or_coreEjPKP4exprR7obj_refIS0_11ast_managerE(ptr noundef nonnull align 8 dereferenceable(368) %0, i32 noundef %i.fm, ptr noundef %i.fl, ptr noundef nonnull align 8 dereferenceable(16) %3)
           to label %bb.r unwind label %.loopexit.split-lp
 

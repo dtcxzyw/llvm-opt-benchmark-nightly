@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca [40 x i8], align 8                ; 4 uses
   %i.b = alloca [40 x i8], align 8                ; 5 uses
   %i.c = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 8 uses
-  %i.d = ptrtoint ptr %i.c to i64                 ; 6 uses
+  %i.d = ptrtoint ptr %i.c to i64                 ; 7 uses
   %i.e = icmp eq ptr %i.c, inttoptr (i64 15 to ptr)
   br i1 %i.e, label %.thread, label %bb.b
 
@@ -301,24 +301,27 @@ _RNvXs5_NtCsldpiDtalS19_7tendril3fmtNtB5_4UTF8NtB5_6Format15validate_subseq.exit
   br i1 %i.ak, label %_RNvXs5_NtCsldpiDtalS19_7tendril3fmtNtB5_4UTF8NtB5_6Format15validate_subseq.exit.thread.thread, label %bb.j
 
 bb.j:                                             ; preds = %_RNvXs5_NtCsldpiDtalS19_7tendril3fmtNtB5_4UTF8NtB5_6Format15validate_subseq.exit.thread
-  %4 = and i64 %i.d, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.k, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsj1ugBVjDER0_8xml5ever.exit.i
+  %4 = trunc i64 %i.d to i1
+  br i1 %4, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsj1ugBVjDER0_8xml5ever.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.am = load i32, ptr %i.al, align 4, !noalias !109, !noundef !4
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 %i.am, ptr %i.an, align 8, !noalias !109
-  %i.ao = getelementptr i8, ptr %i.c, i64 1       ; 3 uses
+  %i.ao = getelementptr i8, ptr %i.c, i64 1       ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ao) ]
   store ptr %i.ao, ptr %1, align 8, !noalias !109
   store i32 0, ptr %i.al, align 4, !noalias !109
+  %.pre.i = ptrtoint ptr %i.ao to i64
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsj1ugBVjDER0_8xml5ever.exit.i
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsj1ugBVjDER0_8xml5ever.exit.i: ; preds = %bb.k, %bb.j
+  %.pre-phi.i = phi i64 [ %i.d, %bb.j ], [ %.pre.i, %bb.k ]
   %i.ap = phi ptr [ %i.c, %bb.j ], [ %i.ao, %bb.k ]
-  %i.aq = getelementptr i8, ptr %i.ap, i64 -1     ; 2 uses
+  %5 = and i64 %.pre-phi.i, 1
+  %6 = sub nsw i64 0, %5
+  %i.aq = getelementptr i8, ptr %i.ap, i64 %6     ; 2 uses
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !109, !noundef !4 ; 2 uses
   %i.as = icmp eq i64 %i.ar, -1
   br i1 %i.as, label %bb.l, label %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i, !prof !6

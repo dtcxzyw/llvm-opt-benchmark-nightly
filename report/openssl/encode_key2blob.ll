@@ -33,18 +33,20 @@ bb.a:
 define internal range(i32 0, 2) i32 @ec2blob_does_selection(ptr nofree readnone captures(none) %0, i32 noundef %1) #0 {
 bb.a:
   %i.a = icmp eq i32 %1, 0
-  br i1 %i.a, label %key2blob_check_selection.exit, label %.preheader.preheader.i.a
+  br i1 %i.a, label %key2blob_check_selection.exit, label %.preheader.preheader.i
 
-.preheader.preheader.i.a:                         ; preds = %bb.a
-  %i.b = and i32 %1, 1
+.preheader.preheader.i:                           ; preds = %bb.a
   %2 = and i32 %1, 135
   %or.cond19.i = icmp eq i32 %2, 0
+  br i1 %or.cond19.i, label %key2blob_check_selection.exit, label %.preheader.preheader.i.a
+
+.preheader.preheader.i.a:                         ; preds = %.preheader.preheader.i
+  %i.b = and i32 %1, 1
   %i.c = xor i32 %i.b, 1
-  %spec.select.i = select i1 %or.cond19.i, i32 0, i32 %i.c
   br label %key2blob_check_selection.exit
 
-key2blob_check_selection.exit:                    ; preds = %bb.a, %.preheader.preheader.i.a
-  %.2.i = phi i32 [ 1, %bb.a ], [ %spec.select.i, %.preheader.preheader.i.a ]
+key2blob_check_selection.exit:                    ; preds = %bb.a, %.preheader.preheader.i, %.preheader.preheader.i.a
+  %.2.i = phi i32 [ 1, %bb.a ], [ %i.c, %.preheader.preheader.i.a ], [ 0, %.preheader.preheader.i ]
   ret i32 %.2.i
 }
 
@@ -111,18 +113,20 @@ bb.f:                                             ; preds = %key2blob_encode.exi
 define internal range(i32 0, 2) i32 @sm22blob_does_selection(ptr nofree readnone captures(none) %0, i32 noundef %1) #0 {
 bb.a:
   %i.a = icmp eq i32 %1, 0
-  br i1 %i.a, label %key2blob_check_selection.exit, label %.preheader.preheader.i.a
+  br i1 %i.a, label %key2blob_check_selection.exit, label %.preheader.preheader.i
 
-.preheader.preheader.i.a:                         ; preds = %bb.a
-  %i.b = and i32 %1, 1
+.preheader.preheader.i:                           ; preds = %bb.a
   %2 = and i32 %1, 135
   %or.cond19.i = icmp eq i32 %2, 0
+  br i1 %or.cond19.i, label %key2blob_check_selection.exit, label %.preheader.preheader.i.a
+
+.preheader.preheader.i.a:                         ; preds = %.preheader.preheader.i
+  %i.b = and i32 %1, 1
   %i.c = xor i32 %i.b, 1
-  %spec.select.i = select i1 %or.cond19.i, i32 0, i32 %i.c
   br label %key2blob_check_selection.exit
 
-key2blob_check_selection.exit:                    ; preds = %bb.a, %.preheader.preheader.i.a
-  %.2.i = phi i32 [ 1, %bb.a ], [ %spec.select.i, %.preheader.preheader.i.a ]
+key2blob_check_selection.exit:                    ; preds = %bb.a, %.preheader.preheader.i, %.preheader.preheader.i.a
+  %.2.i = phi i32 [ 1, %bb.a ], [ %i.c, %.preheader.preheader.i.a ], [ 0, %.preheader.preheader.i ]
   ret i32 %.2.i
 }
 

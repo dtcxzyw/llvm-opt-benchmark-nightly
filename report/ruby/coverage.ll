@@ -202,9 +202,8 @@ rbimpl_intern_const.exit51:                       ; preds = %.lr.ph.i49, %rbimpl
   br i1 %.not68, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %rbimpl_intern_const.exit51
-  %3 = and i32 %.2, 1
-  %.not23 = icmp eq i32 %3, 0
-  br i1 %.not23, label %bb.h, label %bb.g
+  %.not23 = trunc i32 %.2 to i1
+  br i1 %.not23, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.ab = load i64, ptr @rb_eRuntimeError, align 8, !tbaa !12
@@ -348,7 +347,8 @@ rbimpl_intern_const.exit:                         ; preds = %.lr.ph.i, %bb.e
   %i.i = tail call i64 @rb_id2sym(i64 noundef %.lcssa.i) #9
   %i.j = tail call i64 @rb_hash_lookup(i64 noundef %i.g, i64 noundef %i.i) #9
   %i.k = and i64 %i.j, -5
-  %.not25 = icmp eq i64 %i.k, 0
+  %3 = icmp ne i64 %i.k, 0
+  %4 = zext i1 %3 to i32
   %.pr.i15 = load i64, ptr @rb_coverage_result.rbimpl_id.36, align 8, !tbaa !12 ; 2 uses
   %.not4.i16 = icmp eq i64 %.pr.i15, 0
   br i1 %.not4.i16, label %.lr.ph.i18, label %rbimpl_intern_const.exit20
@@ -369,7 +369,7 @@ rbimpl_intern_const.exit20:                       ; preds = %.lr.ph.i18, %rbimpl
 
 rb_scan_args_set.exit:                            ; preds = %.preheader.split.split, %rbimpl_intern_const.exit20
   %.012 = phi i1 [ %i.p, %rbimpl_intern_const.exit20 ], [ true, %.preheader.split.split ] ; 2 uses
-  %.0 = phi i1 [ %.not25, %rbimpl_intern_const.exit20 ], [ false, %.preheader.split.split ] ; 2 uses
+  %.0 = phi i32 [ %4, %rbimpl_intern_const.exit20 ], [ 1, %.preheader.split.split ] ; 2 uses
   %i.q = tail call i64 @rb_get_coverages() #9     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.r = tail call i64 @rb_hash_new() #9          ; 3 uses
@@ -400,7 +400,8 @@ rb_coverage_peek_result.exit:                     ; preds = %bb.g, %bb.h
   %i.x = call i64 @rb_hash_freeze(i64 noundef %i.w) #9 ; 0 uses
   %i.y = load i64, ptr %i.a, align 8, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  %or.cond = select i1 %.0, i1 true, i1 %.012
+  %5 = icmp eq i32 %.0, 0
+  %or.cond = select i1 %5, i1 true, i1 %.012
   br i1 %or.cond, label %bb.i, label %.thread
 
 .thread:                                          ; preds = %rb_coverage_peek_result.exit
@@ -421,7 +422,8 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
-  br i1 %.0, label %bb.o, label %bb.m
+  %.not13 = trunc nuw i32 %.0 to i1
+  br i1 %.not13, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
   %i.ab = load i32, ptr @current_state, align 4, !tbaa !10
@@ -622,9 +624,8 @@ RARRAY_AREF.exit:                                 ; preds = %bb.c, %bb.d
 bb.e:                                             ; preds = %bb.a
   %i.l = tail call i64 @rb_hash_new() #9          ; 5 uses
   %i.m = load i32, ptr @current_mode, align 4, !tbaa !10 ; 3 uses
-  %4 = and i32 %i.m, 1
-  %.not = icmp eq i32 %4, 0
-  br i1 %.not, label %bb.i, label %bb.f
+  %.not = trunc i32 %i.m to i1
+  br i1 %.not, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
   %i.n = inttoptr i64 %1 to ptr                   ; 3 uses

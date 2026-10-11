@@ -202,13 +202,13 @@ bb.cg:                                            ; preds = %bb.cf
           to label %.thread131 unwind label %bb.ad
 
 .thread131:                                       ; preds = %bb.cf, %bb.ce, %bb.cg, %bb.cc, %bb.cb, %bb.cd, %bb.bz, %bb.by, %bb.ca, %bb.bw, %bb.bv, %bb.bx, %bb.ax, %bb.as, %bb.an, %bb.aj, %bb.ab, %bb.ac, %bb.y, %.thread148
-  %.pn140 = phi { ptr, i32 } [ %lpad.thr_comm, %.thread148 ], [ %i.bh, %bb.y ], [ %i.bn, %bb.ab ], [ %i.ce, %bb.aj ], [ %i.er, %bb.cc ], [ %i.cg, %bb.an ], [ %i.em, %bb.bz ], [ %i.cl, %bb.as ], [ %i.eh, %bb.bw ], [ %i.cq, %bb.ax ], [ %i.bn, %bb.ac ], [ %i.eh, %bb.bx ], [ %i.eh, %bb.bv ], [ %i.em, %bb.ca ], [ %i.em, %bb.by ], [ %i.er, %bb.cd ], [ %i.er, %bb.cb ], [ %i.ew, %bb.cg ], [ %i.ew, %bb.ce ], [ %i.ew, %bb.cf ] ; 3 uses
-  %.sroa.0.1138 = phi i64 [ %.sroa.0.2.ph, %.thread148 ], [ 1, %bb.y ], [ 1, %bb.ab ], [ %.sroa.0.0128160, %bb.aj ], [ %.sroa.0.0129, %bb.cc ], [ %.sroa.0.0129, %bb.an ], [ %.sroa.0.0129, %bb.bz ], [ %.sroa.0.0129, %bb.as ], [ %.sroa.0.0129, %bb.bw ], [ %.sroa.0.0129, %bb.ax ], [ 1, %bb.ac ], [ %.sroa.0.0129, %bb.bx ], [ %.sroa.0.0129, %bb.bv ], [ %.sroa.0.0129, %bb.ca ], [ %.sroa.0.0129, %bb.by ], [ %.sroa.0.0129, %bb.cd ], [ %.sroa.0.0129, %bb.cb ], [ 1, %bb.cg ], [ 1, %bb.ce ], [ 1, %bb.cf ]
-  %.sroa.7.1137 = phi ptr [ %.sroa.7.2.ph, %.thread148 ], [ %i.ay, %bb.y ], [ %i.ay, %bb.ab ], [ %.sroa.7.0126161, %bb.aj ], [ %.sroa.7.0127, %bb.cc ], [ %.sroa.7.0127, %bb.an ], [ %.sroa.7.0127, %bb.bz ], [ %.sroa.7.0127, %bb.as ], [ %.sroa.7.0127, %bb.bw ], [ %.sroa.7.0127, %bb.ax ], [ %i.ay, %bb.ac ], [ %.sroa.7.0127, %bb.bx ], [ %.sroa.7.0127, %bb.bv ], [ %.sroa.7.0127, %bb.ca ], [ %.sroa.7.0127, %bb.by ], [ %.sroa.7.0127, %bb.cd ], [ %.sroa.7.0127, %bb.cb ], [ %.sroa.7.0126161, %bb.cg ], [ %.sroa.7.0126161, %bb.ce ], [ %.sroa.7.0126161, %bb.cf ] ; 3 uses
-  %3 = icmp eq i64 %.sroa.0.1138, 0
-  %.not.i.i99 = icmp eq ptr %.sroa.7.1137, null
-  %or.cond.i100 = or i1 %3, %.not.i.i99
-  br i1 %or.cond.i100, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEuEEECs3smBju6uAx0_7ide_ssr.exit102, label %bb.ch
+  %.pn140 = phi { ptr, i32 } [ %lpad.thr_comm, %.thread148 ], [ %i.bh, %bb.y ], [ %i.bn, %bb.ab ], [ %i.ce, %bb.aj ], [ %i.er, %bb.cc ], [ %i.cg, %bb.an ], [ %i.em, %bb.bz ], [ %i.cl, %bb.as ], [ %i.eh, %bb.bw ], [ %i.cq, %bb.ax ], [ %i.bn, %bb.ac ], [ %i.ew, %bb.cf ], [ %i.eh, %bb.bx ], [ %i.eh, %bb.bv ], [ %i.em, %bb.ca ], [ %i.em, %bb.by ], [ %i.er, %bb.cd ], [ %i.er, %bb.cb ], [ %i.ew, %bb.cg ], [ %i.ew, %bb.ce ] ; 3 uses
+  %.sroa.0.1138 = phi i64 [ %.sroa.0.2.ph, %.thread148 ], [ 1, %bb.y ], [ 1, %bb.ab ], [ %.sroa.0.0128160, %bb.aj ], [ %.sroa.0.0129, %bb.cc ], [ %.sroa.0.0129, %bb.an ], [ %.sroa.0.0129, %bb.bz ], [ %.sroa.0.0129, %bb.as ], [ %.sroa.0.0129, %bb.bw ], [ %.sroa.0.0129, %bb.ax ], [ 1, %bb.ac ], [ 1, %bb.cf ], [ %.sroa.0.0129, %bb.bx ], [ %.sroa.0.0129, %bb.bv ], [ %.sroa.0.0129, %bb.ca ], [ %.sroa.0.0129, %bb.by ], [ %.sroa.0.0129, %bb.cd ], [ %.sroa.0.0129, %bb.cb ], [ 1, %bb.cg ], [ 1, %bb.ce ]
+  %.sroa.7.1137 = phi ptr [ %.sroa.7.2.ph, %.thread148 ], [ %i.ay, %bb.y ], [ %i.ay, %bb.ab ], [ %.sroa.7.0126161, %bb.aj ], [ %.sroa.7.0127, %bb.cc ], [ %.sroa.7.0127, %bb.an ], [ %.sroa.7.0127, %bb.bz ], [ %.sroa.7.0127, %bb.as ], [ %.sroa.7.0127, %bb.bw ], [ %.sroa.7.0127, %bb.ax ], [ %i.ay, %bb.ac ], [ %.sroa.7.0126161, %bb.cf ], [ %.sroa.7.0127, %bb.bx ], [ %.sroa.7.0127, %bb.bv ], [ %.sroa.7.0127, %bb.ca ], [ %.sroa.7.0127, %bb.by ], [ %.sroa.7.0127, %bb.cd ], [ %.sroa.7.0127, %bb.cb ], [ %.sroa.7.0126161, %bb.cg ], [ %.sroa.7.0126161, %bb.ce ] ; 3 uses
+  %3 = trunc nuw i64 %.sroa.0.1138 to i1
+  %4 = icmp ne ptr %.sroa.7.1137, null
+  %or.cond.not.i93 = and i1 %4, %3
+  br i1 %or.cond.not.i93, label %bb.ch, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEuEEECs3smBju6uAx0_7ide_ssr.exit102
 
 bb.ch:                                            ; preds = %.thread131
   %i.fb = getelementptr inbounds nuw i8, ptr %.sroa.7.1137, i64 48 ; 2 uses
@@ -611,12 +611,11 @@ bb.w:                                             ; preds = %bb.c
   %i.az = icmp eq i32 %i.ay, 0
   br i1 %i.az, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29.sink.split, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29.sink.split: ; preds = %bb.w, %bb.x
-  %.sink = phi ptr [ %3, %bb.x ], [ %1, %bb.w ]
-  tail call void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sink) #32
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29.sink.split: ; preds = %bb.w
+  tail call void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %1) #32
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29.sink.split, %bb.w, %bb.x, %.thread
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29.sink.split, %bb.w, %4, %bb.x, %.thread
   ret void
 
 bb.x:                                             ; preds = %.thread
@@ -625,7 +624,11 @@ bb.x:                                             ; preds = %.thread
   %i.bc = add i32 %i.bb, -1                       ; 2 uses
   store i32 %i.bc, ptr %i.ba, align 4
   %i.bd = icmp eq i32 %i.bc, 0
-  br i1 %i.bd, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29.sink.split, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29
+  br i1 %i.bd, label %4, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29
+
+4:                                                ; preds = %bb.x
+  tail call void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %3) #32
+  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEECs3smBju6uAx0_7ide_ssr.exit29
 }
 
 ; Function Attrs: nonlazybind uwtable

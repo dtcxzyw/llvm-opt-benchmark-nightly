@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lean4/original/BorrowedAnnotation?download=true
-inline.NumInlined: 37
+inline.NumInlined: 38
 inline.NumDeleted: 20
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -25,9 +25,8 @@ define zeroext range(i8 0, 2) i8 @l_Lean_isMarkedBorrowed(ptr noundef %0) local_
 bb.a:
   %i.a = tail call ptr @l_Lean_annotation_x3f(ptr noundef nonnull @l_Lean_markBorrowed___closed__1_value, ptr noundef %0) #3 ; 7 uses
   %i.b = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %1 = and i64 %i.b, 1
-  %.not.i = icmp eq i64 %1, 0
-  br i1 %.not.i, label %bb.c, label %bb.b
+  %1 = trunc i64 %i.b to i1
+  br i1 %1, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.c = lshr i64 %i.b, 1
@@ -54,9 +53,8 @@ bb.d:                                             ; preds = %lean_obj_tag.exit
   %i.i = getelementptr i8, ptr %i.a, i64 8
   %.val8.i = load ptr, ptr %i.i, align 8, !tbaa !12 ; 4 uses
   %i.j = ptrtoint ptr %.val8.i to i64
-  %2 = and i64 %i.j, 1
-  %.not.i7.i = icmp eq i64 %2, 0
-  br i1 %.not.i7.i, label %bb.e, label %lean_dec.exit.i
+  %2 = trunc i64 %i.j to i1
+  br i1 %2, label %lean_dec.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %.preheader.i
   %i.k = load i32, ptr %.val8.i, align 4, !tbaa !10 ; 3 uses
@@ -105,9 +103,81 @@ lean_dec_ref_known.exit:                          ; preds = %bb.l, %bb.k, %bb.j,
 declare ptr @l_Lean_annotation_x3f(ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define nonnull ptr @l_Lean_isMarkedBorrowed___boxed(ptr noundef %0) local_unnamed_addr #0 {
-bb.a:
-  %1 = tail call zeroext i8 @l_Lean_isMarkedBorrowed(ptr noundef %0)
+define noundef nonnull ptr @l_Lean_isMarkedBorrowed___boxed(ptr noundef %0) local_unnamed_addr #0 {
+  %2 = tail call ptr @l_Lean_annotation_x3f(ptr noundef nonnull @l_Lean_markBorrowed___closed__1_value, ptr noundef %0) #3 ; 7 uses
+  %3 = ptrtoint ptr %2 to i64                     ; 2 uses
+  %4 = trunc i64 %3 to i1
+  br i1 %4, label %5, label %8
+
+5:                                                ; preds = %1
+  %6 = lshr i64 %3, 1
+  %7 = trunc i64 %6 to i32
+  br label %lean_obj_tag.exit.i
+
+8:                                                ; preds = %1
+  %9 = getelementptr i8, ptr %2, i64 4
+  %.val.i.i = load i32, ptr %9, align 4
+  %10 = lshr i32 %.val.i.i, 24
+  br label %lean_obj_tag.exit.i
+
+lean_obj_tag.exit.i:                              ; preds = %8, %5
+  %.0.i.i = phi i32 [ %7, %5 ], [ %10, %8 ]
+  %11 = icmp eq i32 %.0.i.i, 0
+  br i1 %11, label %bb.a, label %12
+
+12:                                               ; preds = %lean_obj_tag.exit.i
+  %.val.i6.i = load i32, ptr %2, align 4, !tbaa !10 ; 4 uses
+  %13 = icmp eq i32 %.val.i6.i, 1
+  br i1 %13, label %.preheader.i.i, label %24
+
+.preheader.i.i:                                   ; preds = %12
+  %14 = getelementptr i8, ptr %2, i64 8
+  %.val8.i.i = load ptr, ptr %14, align 8, !tbaa !12 ; 4 uses
+  %15 = ptrtoint ptr %.val8.i.i to i64
+  %16 = trunc i64 %15 to i1
+  br i1 %16, label %lean_dec.exit.i.i, label %17
+
+17:                                               ; preds = %.preheader.i.i
+  %18 = load i32, ptr %.val8.i.i, align 4, !tbaa !10 ; 3 uses
+  %19 = icmp sgt i32 %18, 1
+  br i1 %19, label %20, label %22, !prof !13
+
+20:                                               ; preds = %17
+  %21 = add nsw i32 %18, -1
+  store i32 %21, ptr %.val8.i.i, align 4, !tbaa !10
+  br label %lean_dec.exit.i.i
+
+22:                                               ; preds = %17
+  %.not.i.i.i.i = icmp eq i32 %18, 0
+  br i1 %.not.i.i.i.i, label %lean_dec.exit.i.i, label %23
+
+23:                                               ; preds = %22
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %.val8.i.i) #3
+  br label %lean_dec.exit.i.i
+
+lean_dec.exit.i.i:                                ; preds = %23, %22, %20, %.preheader.i.i
+  tail call void @lean_free_object(ptr noundef nonnull %2) #3
+  br label %bb.a
+
+24:                                               ; preds = %12
+  %25 = icmp sgt i32 %.val.i6.i, 1
+  br i1 %25, label %26, label %28, !prof !13
+
+26:                                               ; preds = %24
+  %27 = add nsw i32 %.val.i6.i, -1
+  store i32 %27, ptr %2, align 4, !tbaa !10
+  br label %bb.a
+
+28:                                               ; preds = %24
+  %.not.i.i.i = icmp eq i32 %.val.i6.i, 0
+  br i1 %.not.i.i.i, label %bb.a, label %29
+
+29:                                               ; preds = %28
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %2) #3
+  br label %bb.a
+
+bb.a:                                             ; preds = %lean_obj_tag.exit.i, %lean_dec.exit.i.i, %26, %28, %29
+  %.0.i = phi i64 [ 1, %lean_obj_tag.exit.i ], [ 3, %lean_dec.exit.i.i ], [ 3, %26 ], [ 3, %28 ], [ 3, %29 ]
   %i.a = load i32, ptr %0, align 4, !tbaa !10     ; 3 uses
   %i.b = icmp sgt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.c, !prof !13
@@ -126,10 +196,7 @@ bb.d:                                             ; preds = %bb.c
   br label %lean_dec_ref.exit
 
 lean_dec_ref.exit:                                ; preds = %bb.b, %bb.c, %bb.d
-  %2 = shl nuw nsw i8 %1, 1
-  %3 = or disjoint i8 %2, 1
-  %4 = zext nneg i8 %3 to i64
-  %i.d = inttoptr i64 %4 to ptr
+  %i.d = inttoptr i64 %.0.i to ptr
   ret ptr %i.d
 }
 

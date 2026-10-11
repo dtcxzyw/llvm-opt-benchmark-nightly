@@ -202,8 +202,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs9j2PgAuXC7p_12futures_util12unfol
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6future6future4fuse4FuseNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB1I_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1I_6server9LifecycleINtNtB1I_5panic11CatchUnwindINtNtB1I_11concurrency11ConcurrencyINtNtB1I_6router6RouterNtNtB2r_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls(ptr noundef nonnull align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !16, !noundef !5
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB15_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB15_6server9LifecycleINtNtB15_5panic11CatchUnwindINtNtB15_11concurrency11ConcurrencyINtNtB15_6router6RouterNtNtB1O_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB15_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB15_6server9LifecycleINtNtB15_5panic11CatchUnwindINtNtB15_11concurrency11ConcurrencyINtNtB15_6router6RouterNtNtB1O_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 352
@@ -404,8 +404,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1728
   %i.e = load i64, ptr %i.d, align 8, !range !16, !noundef !5
-  %1 = icmp eq i64 %i.e, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6future6future4fuse4FuseNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB1I_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1I_6server9LifecycleINtNtB1I_5panic11CatchUnwindINtNtB1I_11concurrency11ConcurrencyINtNtB1I_6router6RouterNtNtB2r_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit, label %bb.d
+  %1 = trunc nuw i64 %i.e to i1
+  br i1 %1, label %bb.d, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6future6future4fuse4FuseNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB1I_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1I_6server9LifecycleINtNtB1I_5panic11CatchUnwindINtNtB1I_11concurrency11ConcurrencyINtNtB1I_6router6RouterNtNtB2r_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2080
@@ -808,8 +808,8 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsyyk
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !16, !noundef !5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.d
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !278)
@@ -857,8 +857,8 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !302)
   %i.b = load i64, ptr %0, align 8, !range !16, !alias.scope !302, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.b, 0
-  br i1 %1, label %bb.d, label %bb.f
+  %1 = trunc nuw i64 %i.b to i1
+  br i1 %1, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !303)
@@ -1261,8 +1261,8 @@ bb.ci:                                            ; preds = %bb.cg
   store i64 %.sroa.3.sroa.3.sroa.13.0.copyload.i.i.i, ptr %.sroa.46.sroa.4.sroa.14.0..sroa.46.sroa.4.0..sroa.46.0..sroa_idx.sroa_idx.sroa_idx.i.i.i, align 8, !noalias !476
   %i.gx = getelementptr inbounds nuw i8, ptr %1, i64 2296
   %i.gy = load i64, ptr %i.gx, align 8, !range !16, !noalias !476, !noundef !5
-  %3 = icmp eq i64 %i.gy, 0
-  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6future6future4fuse4FuseNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB1I_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1I_6server9LifecycleINtNtB1I_5panic11CatchUnwindINtNtB1I_11concurrency11ConcurrencyINtNtB1I_6router6RouterNtNtB2r_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit.i.i.i, label %bb.cj
+  %3 = trunc nuw i64 %i.gy to i1
+  br i1 %3, label %bb.cj, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6future6future4fuse4FuseNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB1I_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1I_6server9LifecycleINtNtB1I_5panic11CatchUnwindINtNtB1I_11concurrency11ConcurrencyINtNtB1I_6router6RouterNtNtB2r_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit.i.i.i
 
 bb.cj:                                            ; preds = %bb.ci
   %i.gz = getelementptr inbounds nuw i8, ptr %1, i64 2648
@@ -1338,8 +1338,8 @@ bb.cq:                                            ; preds = %bb.bv
 bb.cr:                                            ; preds = %bb.ch
   %i.hu = getelementptr inbounds nuw i8, ptr %1, i64 2296
   %i.hv = load i64, ptr %i.hu, align 8, !range !16, !noalias !476, !noundef !5
-  %4 = icmp eq i64 %i.hv, 0
-  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6future6future4fuse4FuseNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB1I_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1I_6server9LifecycleINtNtB1I_5panic11CatchUnwindINtNtB1I_11concurrency11ConcurrencyINtNtB1I_6router6RouterNtNtB2r_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit65.i.i.i, label %bb.cs
+  %4 = trunc nuw i64 %i.hv to i1
+  br i1 %4, label %bb.cs, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs9j2PgAuXC7p_12futures_util6future6future4fuse4FuseNCNvMs3_Cs6m2LFPinx2P_9async_lspINtB1I_8MainLoopINtNtCs4KzxGwe94yc_9yara_x_ls7tracing14MessageTracingINtNtB1I_6server9LifecycleINtNtB1I_5panic11CatchUnwindINtNtB1I_11concurrency11ConcurrencyINtNtB1I_6router6RouterNtNtB2r_6server18YARALanguageServerEEEEEE16dispatch_message0EECsddkiMbsmfqo_5yr_ls.exit65.i.i.i
 
 bb.cs:                                            ; preds = %bb.cr
   %i.hw = getelementptr inbounds nuw i8, ptr %1, i64 2648
@@ -1742,8 +1742,9 @@ define hidden noundef zeroext i1 @_RNvXs_NtCsljouJN4AMMC_12futures_core6futureIN
 bb.a:
   %.val = load ptr, ptr %0, align 8, !nonnull !5, !align !6, !noundef !5
   %.val1 = load i64, ptr %.val, align 8, !range !16, !noundef !5
-  %.not.i = icmp eq i64 %.val1, 0
-  ret i1 %.not.i
+  %1 = trunc nuw i64 %.val1 to i1
+  %2 = xor i1 %1, true
+  ret i1 %2
 }
 
 ; Function Attrs: nonlazybind uwtable

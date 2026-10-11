@@ -202,8 +202,8 @@ define internal fastcc void @do_callback(ptr nofree noundef readonly captures(no
 bb.a:
   %5 = alloca %struct._zval_struct, align 8       ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  %6 = icmp ne i32 %4, 0                          ; 4 uses
-  %spec.store.select = select i1 %6, i32 2, i32 0 ; 3 uses
+  %6 = trunc nuw i32 %4 to i1                     ; 3 uses
+  %spec.store.select = shl nuw nsw i32 %4, 1      ; 2 uses
   %i.a = add nsw i32 %spec.store.select, %1       ; 4 uses
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -387,7 +387,8 @@ zend_call_known_fcc.exit:                         ; preds = %bb.o, %bb.n, %._cri
   br i1 %i.w, label %.lr.ph117.preheader, label %._crit_edge118
 
 .lr.ph117.preheader:                              ; preds = %.preheader
-  %i.bl = zext nneg i32 %spec.store.select to i64
+  %7 = shl nuw nsw i32 %4, 1
+  %i.bl = zext nneg i32 %7 to i64
   %i.bm = zext nneg i32 %i.a to i64
   br label %.lr.ph117
 

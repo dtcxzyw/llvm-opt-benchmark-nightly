@@ -202,10 +202,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = load i8, ptr %i.e, align 1, !range !9, !noundef !10
   %i.i = trunc nuw i8 %i.h to i1
+  %.not21 = xor i1 %i.i, true
   %i.j = load i8, ptr %i.a, align 1, !range !9
-  %6 = icmp eq i8 %i.j, 0
-  %or.cond = select i1 %i.i, i1 %6, i1 false
-  br i1 %or.cond, label %bb.d, label %bb.e
+  %6 = trunc nuw i8 %i.j to i1
+  %or.cond = select i1 %.not21, i1 true, i1 %6
+  br i1 %or.cond, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = load i32, ptr @ett_expert_inf_sim, align 4

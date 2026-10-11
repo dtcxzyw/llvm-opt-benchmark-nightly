@@ -7,6 +7,8 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
+@ia64_code.BRANCH_TABLE = internal unnamed_addr constant [32 x i32] [i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 6, i32 6, i32 0, i32 0, i32 7, i32 7, i32 4, i32 4, i32 0, i32 0, i32 4, i32 4, i32 0, i32 0], align 16
+
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @lzma_simple_ia64_encoder_init(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
@@ -34,16 +36,17 @@ bb.a:
   %.06072 = phi i64 [ %i.a, %.loopexit.2 ], [ 0, %bb.a ] ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 %.06072 ; 19 uses
   %i.c = load i8, ptr %i.b, align 1, !tbaa !10    ; 2 uses
-  %i.d = and i8 %i.c, 31                          ; 2 uses
-  %i.e = zext nneg i8 %i.d to i64                 ; 2 uses
+  %i.d = and i8 %i.c, 31
+  %i.e = zext nneg i8 %i.d to i64                 ; 3 uses
+  %5 = getelementptr inbounds nuw [4 x i8], ptr @ia64_code.BRANCH_TABLE, i64 %i.e
+  %6 = load i32, ptr %5, align 4, !tbaa !11
   %i.f = trunc i64 %.06072 to i32
   %i.g = add i32 %1, %i.f                         ; 2 uses
   %i.h = sub i32 0, %i.g
   %.055.p = select i1 %2, i32 %i.g, i32 %i.h
   %i.i = lshr i32 %.055.p, 4                      ; 3 uses
-  %5 = add nsw i8 %i.d, -24
-  %6 = icmp ult i8 %5, -2
-  br i1 %6, label %.loopexit, label %bb.b
+  %7 = trunc i32 %6 to i1
+  br i1 %7, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %.lr.ph
   %i.j = zext i8 %i.c to i64                      ; 2 uses
@@ -113,10 +116,9 @@ bb.b:                                             ; preds = %.lr.ph
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.b, %.lr.ph
-  %7 = shl nuw nsw i64 1, %i.e
-  %8 = and i64 %7, 4281597951
-  %.not76 = icmp eq i64 %8, 0
-  br i1 %.not76, label %bb.c, label %.loopexit.1
+  %8 = lshr i64 4281597951, %i.e
+  %.not76.not = trunc i64 %8 to i1
+  br i1 %.not76.not, label %.loopexit.1, label %bb.c
 
 bb.c:                                             ; preds = %.loopexit
   %invariant.gep.1 = getelementptr i8, ptr %i.b, i64 5 ; 2 uses
@@ -188,10 +190,9 @@ bb.c:                                             ; preds = %.loopexit
   br label %.loopexit.1
 
 .loopexit.1:                                      ; preds = %.loopexit.loopexit.1, %bb.c, %.loopexit
-  %9 = shl nuw nsw i64 1, %i.e
-  %10 = and i64 %9, 3425763327
-  %.not77 = icmp eq i64 %10, 0
-  br i1 %.not77, label %bb.d, label %.loopexit.2
+  %9 = lshr i64 3425763327, %i.e
+  %.not77.not = trunc i64 %9 to i1
+  br i1 %.not77.not, label %.loopexit.2, label %bb.d
 
 bb.d:                                             ; preds = %.loopexit.1
   %invariant.gep.2 = getelementptr i8, ptr %i.b, i64 10 ; 2 uses
@@ -289,7 +290,8 @@ attributes #3 = { nounwind }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
-!9 = distinct !{!9, !11}
+!9 = distinct !{!9, !12}
 !10 = !{!5, !5, i64 0}
-!11 = !{!"llvm.loop.mustprogress"}
+!11 = !{!6, !6, i64 0}
+!12 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

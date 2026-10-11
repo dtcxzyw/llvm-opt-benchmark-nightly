@@ -202,8 +202,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !282)
   %i.a = load i64, ptr %0, align 8, !range !7, !alias.scope !283, !noundef !4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.d
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !284)
@@ -344,8 +344,8 @@ _RNCNvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8bloc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !304
   tail call void @llvm.experimental.noalias.scope.decl(metadata !305)
   %i.j = load i64, ptr %1, align 8, !range !7, !alias.scope !305, !noundef !4
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCseCDlJsl44RV_5tokio7runtime4task5error9JoinErrorEEECskkCPRT7oCWw_16influxdb3_py_api.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCseCDlJsl44RV_5tokio7runtime4task5error9JoinErrorEEECskkCPRT7oCWw_16influxdb3_py_api.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8blocking4task12BlockingTaskINtNtCscdodAO9FK5_5alloc5boxed3BoxNCNCINvNtNtNtBb_9scheduler12multi_thread6worker14block_in_placeNCNCNvMsg_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB3l_15PyPluginCallApi16write_sync_to_db00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtB1H_6string6StringEE00EENtNtB15_8schedule16BlockingScheduleE11take_output0B3n_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -402,6 +402,7 @@ bb.o:                                             ; preds = %bb.a, %_RINvNtCs4NR
   ret void
 
 .body:                                            ; preds = %bb.m, %bb.n
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -804,8 +805,8 @@ _RNCNvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8bloc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !334
   tail call void @llvm.experimental.noalias.scope.decl(metadata !335)
   %i.j = load i64, ptr %1, align 8, !range !7, !alias.scope !335, !noundef !4
-  %3 = icmp eq i64 %i.j, 0
-  br i1 %3, label %bb.g, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCseCDlJsl44RV_5tokio7runtime4task5error9JoinErrorEEECskkCPRT7oCWw_16influxdb3_py_api.exit
+  %3 = trunc nuw i64 %i.j to i1
+  br i1 %3, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCseCDlJsl44RV_5tokio7runtime4task5error9JoinErrorEEECskkCPRT7oCWw_16influxdb3_py_api.exit, label %bb.g
 
 bb.g:                                             ; preds = %_RNCNvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8blocking4task12BlockingTaskINtNtCscdodAO9FK5_5alloc5boxed3BoxNCNCINvNtNtNtBb_9scheduler12multi_thread6worker14block_in_placeNCNCNvMsg_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB3l_15PyPluginCallApi5querys0_00INtNtCs4NRVxsYgnAr_4core6result6ResultINtNtB1H_3vec3VecNtNtCs6ePPILGZvJ2_11arrow_array12record_batch11RecordBatchENtNtCs9xaRPakndqT_4pyo33err5PyErrEE00EENtNtB15_8schedule16BlockingScheduleE11take_output0B3n_.exit
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -862,6 +863,7 @@ bb.o:                                             ; preds = %bb.a, %_RINvNtCs4NR
   ret void
 
 .body:                                            ; preds = %bb.m, %bb.n
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1264,8 +1266,8 @@ _RNCNvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8bloc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !364
   tail call void @llvm.experimental.noalias.scope.decl(metadata !365)
   %i.l = load i64, ptr %1, align 8, !range !7, !alias.scope !365, !noundef !4
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %bb.h, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCseCDlJsl44RV_5tokio7runtime4task5error9JoinErrorEEECskkCPRT7oCWw_16influxdb3_py_api.exit
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCseCDlJsl44RV_5tokio7runtime4task5error9JoinErrorEEECskkCPRT7oCWw_16influxdb3_py_api.exit, label %bb.h
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8blocking4task12BlockingTaskNCNCINvNtNtNtBb_9scheduler12multi_thread6worker14block_in_placeNCNCNvMsg_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB2N_15PyPluginCallApi16write_sync_to_db00INtNtCs4NRVxsYgnAr_4core6result6ResultuNtNtCscdodAO9FK5_5alloc6string6StringEE00ENtNtB15_8schedule16BlockingScheduleE11take_output0B2P_.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1322,6 +1324,7 @@ bb.p:                                             ; preds = %bb.a, %_RINvNtCs4NR
   ret void
 
 .body:                                            ; preds = %bb.n, %bb.o
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1724,8 +1727,8 @@ _RNCNvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8bloc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !394
   tail call void @llvm.experimental.noalias.scope.decl(metadata !395)
   %i.l = load i64, ptr %1, align 8, !range !7, !alias.scope !395, !noundef !4
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %bb.h, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCseCDlJsl44RV_5tokio7runtime4task5error9JoinErrorEEECskkCPRT7oCWw_16influxdb3_py_api.exit
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtNtCseCDlJsl44RV_5tokio7runtime4task5error9JoinErrorEEECskkCPRT7oCWw_16influxdb3_py_api.exit, label %bb.h
 
 bb.h:                                             ; preds = %_RNCNvMs4_NtNtNtCseCDlJsl44RV_5tokio7runtime4task4coreINtB7_4CoreINtNtNtBb_8blocking4task12BlockingTaskNCNCINvNtNtNtBb_9scheduler12multi_thread6worker14block_in_placeNCNCNvMsg_NtCskkCPRT7oCWw_16influxdb3_py_api9system_pyNtB2N_15PyPluginCallApi5querys0_00INtNtCs4NRVxsYgnAr_4core6result6ResultINtNtCscdodAO9FK5_5alloc3vec3VecNtNtCs6ePPILGZvJ2_11arrow_array12record_batch11RecordBatchENtNtCs9xaRPakndqT_4pyo33err5PyErrEE00ENtNtB15_8schedule16BlockingScheduleE11take_output0B2P_.exit
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -1782,6 +1785,7 @@ bb.p:                                             ; preds = %bb.a, %_RINvNtCs4NR
   ret void
 
 .body:                                            ; preds = %bb.n, %bb.o
+  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 

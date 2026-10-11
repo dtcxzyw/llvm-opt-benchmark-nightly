@@ -68,24 +68,26 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.e, ptr %0, align 8, !tbaa !7
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !27   ; 6 uses
-  %i.h = load atomic i32, ptr %i.g monotonic, align 4 ; 3 uses
-  %3 = and i32 %i.h, 1
-  %.not.i.i.i.i.i = icmp eq i32 %3, 0
-  br i1 %.not.i.i.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i
+  %i.h = load atomic i32, ptr %i.g monotonic, align 4 ; 4 uses
+  %.not.i.i.i.i.i = trunc i32 %i.h to i1
+  br i1 %.not.i.i.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a
 
 _ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a: ; preds = %bb.b
   %i.i = or disjoint i32 %i.h, 1
   %i.j = cmpxchg ptr %i.g, i32 %i.h, i32 %i.i acquire monotonic, align 4
   %i.k = extractvalue { i32, i1 } %i.j, 0
-  %.pre.i.i.i.i = and i32 %i.k, 1
-  %4 = icmp eq i32 %.pre.i.i.i.i, 0
-  br i1 %4, label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i
+  br label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i
 
-_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a, %bb.b
+_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a, %bb.b
+  %.04.i.i.i.i.i = phi i32 [ %i.h, %bb.b ], [ %i.k, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a ]
+  %3 = trunc i32 %.04.i.i.i.i.i to i1
+  br i1 %3, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i, label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i
+
+_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i
   tail call void @_ZN4absl12lts_2025051213base_internal8SpinLock8SlowLockEv(ptr noundef nonnull align 4 dereferenceable(4) %i.g) #17
   br label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i
 
-_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a
+_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i
   %i.l = load ptr, ptr %i.f, align 8, !tbaa !27
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.n = load atomic ptr, ptr %i.m acquire, align 8 ; 3 uses
@@ -143,24 +145,26 @@ define void @_ZN4absl12lts_2025051213cord_internal9CordzInfo5TrackEv(ptr noundef
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 6 uses
-  %i.c = load atomic i32, ptr %i.b monotonic, align 4 ; 3 uses
-  %1 = and i32 %i.c, 1
-  %.not.i.i.i.i = icmp eq i32 %1, 0
-  br i1 %.not.i.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
+  %i.c = load atomic i32, ptr %i.b monotonic, align 4 ; 4 uses
+  %.not.i.i.i.i = trunc i32 %i.c to i1
+  br i1 %.not.i.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a
 
 _ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a: ; preds = %bb.a
   %i.d = or disjoint i32 %i.c, 1
   %i.e = cmpxchg ptr %i.b, i32 %i.c, i32 %i.d acquire monotonic, align 4
   %i.f = extractvalue { i32, i1 } %i.e, 0
-  %.pre.i.i.i = and i32 %i.f, 1
-  %2 = icmp eq i32 %.pre.i.i.i, 0
-  br i1 %2, label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
+  br label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i
 
-_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a, %bb.a
+_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a, %bb.a
+  %.04.i.i.i.i = phi i32 [ %i.c, %bb.a ], [ %i.f, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a ]
+  %1 = trunc i32 %.04.i.i.i.i to i1
+  br i1 %1, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i, label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit
+
+_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i
   tail call void @_ZN4absl12lts_2025051213base_internal8SpinLock8SlowLockEv(ptr noundef nonnull align 4 dereferenceable(4) %i.b) #17
   br label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit
 
-_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
+_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !27
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.i = load atomic ptr, ptr %i.h acquire, align 8 ; 3 uses
@@ -231,24 +235,26 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.m, ptr %0, align 8, !tbaa !7
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 3 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !27   ; 6 uses
-  %i.p = load atomic i32, ptr %i.o monotonic, align 4 ; 3 uses
-  %3 = and i32 %i.p, 1
-  %.not.i.i.i.i.i = icmp eq i32 %3, 0
-  br i1 %.not.i.i.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i
+  %i.p = load atomic i32, ptr %i.o monotonic, align 4 ; 4 uses
+  %.not.i.i.i.i.i = trunc i32 %i.p to i1
+  br i1 %.not.i.i.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a
 
 _ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a: ; preds = %bb.d
   %i.q = or disjoint i32 %i.p, 1
   %i.r = cmpxchg ptr %i.o, i32 %i.p, i32 %i.q acquire monotonic, align 4
   %i.s = extractvalue { i32, i1 } %i.r, 0
-  %.pre.i.i.i.i = and i32 %i.s, 1
-  %4 = icmp eq i32 %.pre.i.i.i.i, 0
-  br i1 %4, label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i
+  br label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i
 
-_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a, %bb.d
+_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a, %bb.d
+  %.04.i.i.i.i.i = phi i32 [ %i.p, %bb.d ], [ %i.s, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a ]
+  %3 = trunc i32 %.04.i.i.i.i.i to i1
+  br i1 %3, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i, label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i
+
+_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i
   tail call void @_ZN4absl12lts_2025051213base_internal8SpinLock8SlowLockEv(ptr noundef nonnull align 4 dereferenceable(4) %i.o) #17
   br label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i
 
-_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i.a
+_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i.i, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.i
   %i.t = load ptr, ptr %i.n, align 8, !tbaa !27
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load atomic ptr, ptr %i.u acquire, align 8 ; 3 uses
@@ -298,24 +304,26 @@ define void @_ZN4absl12lts_2025051213cord_internal9CordzInfo7UntrackEv(ptr nound
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 6 uses
-  %i.c = load atomic i32, ptr %i.b monotonic, align 4 ; 3 uses
-  %1 = and i32 %i.c, 1
-  %.not.i.i.i.i = icmp eq i32 %1, 0
-  br i1 %.not.i.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
+  %i.c = load atomic i32, ptr %i.b monotonic, align 4 ; 4 uses
+  %.not.i.i.i.i = trunc i32 %i.c to i1
+  br i1 %.not.i.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a
 
 _ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a: ; preds = %bb.a
   %i.d = or disjoint i32 %i.c, 1
   %i.e = cmpxchg ptr %i.b, i32 %i.c, i32 %i.d acquire monotonic, align 4
   %i.f = extractvalue { i32, i1 } %i.e, 0
-  %.pre.i.i.i = and i32 %i.f, 1
-  %2 = icmp eq i32 %.pre.i.i.i, 0
-  br i1 %2, label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
+  br label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i
 
-_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a, %bb.a
+_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a, %bb.a
+  %.04.i.i.i.i = phi i32 [ %i.c, %bb.a ], [ %i.f, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a ]
+  %1 = trunc i32 %.04.i.i.i.i to i1
+  br i1 %1, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i, label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit
+
+_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i
   tail call void @_ZN4absl12lts_2025051213base_internal8SpinLock8SlowLockEv(ptr noundef nonnull align 4 dereferenceable(4) %i.b) #17
   br label %_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit
 
-_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i.a, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
+_ZN4absl12lts_2025051213base_internal14SpinLockHolderC2EPNS1_8SpinLockE.exit: ; preds = %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i.i, %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i.i
   %i.g = load ptr, ptr %i.a, align 8, !tbaa !27
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.i = load atomic ptr, ptr %i.h acquire, align 8 ; 0 uses

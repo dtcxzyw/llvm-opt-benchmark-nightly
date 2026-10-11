@@ -202,8 +202,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.bu = load ptr, ptr %i.bi, align 8, !tbaa !25
   %i.bv = call ptr @ucbuf_resolveFileName(ptr noundef %i.bt, ptr noundef %i.bu, ptr noundef nonnull %i.bp, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) ; 0 uses
   %i.bw = load i32, ptr %i.b, align 4, !tbaa !37  ; 2 uses
-  %4 = icmp slt i32 %i.bw, 1
-  br i1 %4, label %bb.al, label %bb.ak
+  %4 = icmp sgt i32 %i.bw, 0
+  br i1 %4, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
   store i32 %i.bw, ptr %3, align 4, !tbaa !37
@@ -216,8 +216,8 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.bz, ptr %i.ca, align 8, !tbaa !22
   %i.cb = load i32, ptr %3, align 4, !tbaa !37    ; 2 uses
-  %5 = icmp slt i32 %i.cb, 1
-  br i1 %5, label %.sink.split, label %bb.am
+  %5 = icmp sgt i32 %i.cb, 0
+  br i1 %5, label %bb.am, label %.sink.split
 
 bb.am:                                            ; preds = %bb.al
   %i.cc = load ptr, ptr %i.bi, align 8, !tbaa !25
@@ -305,8 +305,8 @@ define noundef ptr @_ZN9UPerfTest8getLinesER10UErrorCode(ptr nofree noundef nonn
 bb.a:
   %i.a = alloca i32, align 4                      ; 8 uses
   %i.b = load i32, ptr %1, align 4, !tbaa !37
-  %2 = icmp slt i32 %i.b, 1
-  br i1 %2, label %bb.b, label %bb.i
+  %2 = icmp sgt i32 %i.b, 0
+  br i1 %2, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 6 uses
@@ -331,8 +331,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = phi ptr [ %i.an, %bb.h ], [ %i.i, %bb.c ]
   %.01424 = phi i32 [ %.1, %bb.h ], [ 40000, %bb.c ] ; 4 uses
   %i.l = load i32, ptr %1, align 4, !tbaa !37
-  %3 = icmp slt i32 %i.l, 1
-  br i1 %3, label %bb.d, label %._crit_edge
+  %3 = icmp sgt i32 %i.l, 0
+  br i1 %3, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
   %i.m = load i32, ptr %i.a, align 4, !tbaa !39   ; 2 uses
@@ -413,8 +413,8 @@ declare void @_ZdaPv(ptr noundef) local_unnamed_addr #9
 define noundef ptr @_ZN9UPerfTest9getBufferERiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(160) %0, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %1, ptr noundef nonnull align 4 dereferenceable(4) %2) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load i32, ptr %2, align 4, !tbaa !37
-  %3 = icmp slt i32 %i.a, 1
-  br i1 %3, label %bb.b, label %bb.c
+  %3 = icmp sgt i32 %i.a, 0
+  br i1 %3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -817,8 +817,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bf = load ptr, ptr %i.be, align 8
   %i.bg = call noundef double %i.bf(ptr noundef nonnull align 8 dereferenceable(8) %i.t, i32 noundef %.298, ptr noundef nonnull %i.b)
   %i.bh = load i32, ptr %i.b, align 4, !tbaa !37  ; 2 uses
-  %3 = icmp slt i32 %i.bh, 1
-  br i1 %3, label %bb.k, label %bb.p, !llvm.loop !62
+  %3 = icmp sgt i32 %i.bh, 0
+  br i1 %3, label %bb.p, label %bb.k, !llvm.loop !62
 
 bb.p:                                             ; preds = %bb.o
   %i.bi = call ptr @u_errorName_78(i32 noundef %i.bh)
@@ -863,8 +863,8 @@ bb.r:                                             ; preds = %.sink.split, %.lr.p
   %i.by = load ptr, ptr %i.bx, align 8
   %i.bz = call noundef double %i.by(ptr noundef nonnull align 8 dereferenceable(8) %i.t, i32 noundef %.5, ptr noundef nonnull %i.b) ; 5 uses
   %i.ca = load i32, ptr %i.b, align 4, !tbaa !37  ; 2 uses
-  %4 = icmp slt i32 %i.ca, 1
-  br i1 %4, label %bb.t, label %bb.s
+  %4 = icmp sgt i32 %i.ca, 0
+  br i1 %4, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.cb = call ptr @u_errorName_78(i32 noundef %i.ca)
@@ -909,12 +909,14 @@ bb.x:                                             ; preds = %bb.t, %bb.w, %bb.v
   %.086140 = phi i64 [ %.086148, %bb.s ], [ -1, %.thread ], [ %i.ci, %bb.x ] ; 2 uses
   %i.ct = load i8, ptr %i.f, align 4, !tbaa !38
   %.not124 = icmp eq i8 %i.ct, 0
-  %i.cu = load i32, ptr %i.b, align 4
-  %5 = icmp sgt i32 %i.cu, 0                      ; 2 uses
-  %or.cond134 = select i1 %.not124, i1 true, i1 %5
-  br i1 %or.cond134, label %bb.ad, label %bb.y
+  %i.cu = load i32, ptr %i.b, align 4, !tbaa !37
+  %5 = icmp slt i32 %i.cu, 1                      ; 2 uses
+  br i1 %.not124, label %bb.ad, label %6
 
-bb.y:                                             ; preds = %.loopexit
+6:                                                ; preds = %.loopexit
+  br i1 %5, label %bb.y, label %.split
+
+bb.y:                                             ; preds = %6
   %i.cv = load i32, ptr %i.g, align 8, !tbaa !30
   %i.cw = sitofp i32 %i.cv to double
   %i.cx = fdiv double %.087142, %i.cw             ; 3 uses
@@ -961,7 +963,7 @@ bb.ac:                                            ; preds = %bb.aa
   br label %.split
 
 bb.ad:                                            ; preds = %.loopexit
-  br i1 %5, label %.split, label %bb.ae
+  br i1 %5, label %bb.ae, label %.split
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ea = load ptr, ptr @stdout, align 8, !tbaa !46
@@ -974,7 +976,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.eh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ea, ptr noundef nonnull @.str.22, ptr noundef %i.eb, double noundef %i.eg) #22 ; 0 uses
   br label %.split
 
-.split:                                           ; preds = %bb.ae, %bb.ad, %bb.ab, %bb.ac, %bb.z
+.split:                                           ; preds = %6, %bb.ae, %bb.ad, %bb.ab, %bb.ac, %bb.z
   %i.ei = load ptr, ptr %i.t, align 8, !tbaa !9
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
   %i.ek = load ptr, ptr %i.ej, align 8
