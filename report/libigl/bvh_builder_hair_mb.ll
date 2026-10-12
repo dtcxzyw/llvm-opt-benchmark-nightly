@@ -205,7 +205,7 @@ _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvR
   %i.dn = select i1 %i.dm, float %i.aq, float %.sroa.053.0.vec.extract.i.i.i ; 2 uses
   %i.do = fcmp olt float %i.ar, %.sroa.053.4.vec.extract.i.i.i
   %i.dp = select i1 %i.do, float %.sroa.053.4.vec.extract.i.i.i, float %i.ar ; 2 uses
-  %i.dq = add nuw i64 %i.aj, 1                    ; 2 uses
+  %i.dq = add i64 %i.aj, 1                        ; 2 uses
   %i.dr = zext i32 %i.cn to i64
   %i.ds = add i64 %i.as, %i.dr                    ; 2 uses
   %i.dt = zext i32 %i.cq to i64                   ; 2 uses

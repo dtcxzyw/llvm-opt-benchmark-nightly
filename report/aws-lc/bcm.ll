@@ -205,7 +205,7 @@ BN_num_bits.exit:                                 ; preds = %bb.c, %bn_minimal_w
   %.02330.i.prol = phi ptr [ %i.bf, %.lr.ph.i.prol ], [ %1, %.lr.ph.i.preheader ] ; 2 uses
   %.02429.i.prol = phi i64 [ %i.bg, %.lr.ph.i.prol ], [ %i.aw, %.lr.ph.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
-  %i.bc = add nsw i64 %.02231.i.prol, -8          ; 4 uses
+  %i.bc = add i64 %.02231.i.prol, -8              ; 4 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 %i.bc
   %.0.copyload.i.i.prol = load i64, ptr %i.bd, align 1
   %i.be = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i.i.prol)
@@ -252,7 +252,7 @@ bb.d:                                             ; preds = %BN_num_bits.exit
   %i.bs = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i.i.2)
   store i64 %i.bs, ptr %i.bp, align 8, !tbaa !80
   %i.bt = getelementptr inbounds nuw i8, ptr %.02330.i, i64 24
-  %i.bu = add nsw i64 %.02231.i, -32              ; 4 uses
+  %i.bu = add i64 %.02231.i, -32                  ; 4 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 %i.bu
   %.0.copyload.i.i.3 = load i64, ptr %i.bv, align 1
   %i.bw = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i.i.3)

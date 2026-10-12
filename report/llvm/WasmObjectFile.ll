@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i89
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i90: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i89
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #26
-  %i.ki = add nuw nsw i64 %.0274, 1               ; 2 uses
+  %i.ki = add nuw i64 %.0274, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.ki, %.130.i.i.i54
   br i1 %exitcond.not, label %.critedge33.loopexit, label %bb.q, !llvm.loop !1116
 
@@ -252,7 +252,7 @@ bb.az:                                            ; preds = %.critedge33
 _ZL13readVaruint32RN4llvm6object14WasmObjectFile11ReadContextE.exit: ; preds = %bb.az, %.critedge33
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
-  %i.ks = add nuw nsw i64 %.025276, 1             ; 2 uses
+  %i.ks = add nuw i64 %.025276, 1                 ; 2 uses
   %exitcond288.not = icmp eq i64 %i.ks, %.130.i.i.i
   br i1 %exitcond288.not, label %.critedge31.loopexit, label %bb.f, !llvm.loop !1121
 
@@ -655,7 +655,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN4llvm4wasm16WasmFeatureEntryD2Ev.exit:         ; preds = %_ZNSt6vectorIN4llvm4wasm16WasmFeatureEntryESaIS2_EE9push_backERKS2_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
-  %i.fg = add nuw nsw i64 %.01160, 1              ; 2 uses
+  %i.fg = add nuw i64 %.01160, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.fg, %.130.i.i.i
   br i1 %exitcond.not, label %.critedge14.loopexit, label %bb.f, !llvm.loop !1148
 

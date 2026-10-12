@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %step.add = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %step.add = add <2 x i64> %vec.ind, splat (i64 2)
   %i.an = shl i64 %index, 3
   %next.gep = getelementptr i8, ptr %i.ai, i64 %i.an ; 2 uses
   %i.ao = and <2 x i64> %vec.ind, splat (i64 4294967295)
@@ -214,7 +214,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.ao, ptr %next.gep, align 8, !tbaa !106
   store <2 x i64> %i.ap, ptr %i.aq, align 8, !tbaa !106
   %index.next = add nuw i64 %index, 4             ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
   %i.ar = icmp eq i64 %index.next, %n.vec
   br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !571
 
@@ -233,7 +233,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.1:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i
   %i.au = getelementptr inbounds nuw i8, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.ph, i64 8
-  %i.av = add nuw nsw i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph, 1
+  %i.av = add i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph, 1
   %i.aw = and i64 %i.av, 4294967295
   store i64 %i.aw, ptr %i.au, align 8, !tbaa !106
   %i.ax = icmp eq i64 %.010.i.i.i.i.i.i.i.i.i.i.i.ph, 3
@@ -241,7 +241,7 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.2:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.1
   %i.ay = getelementptr inbounds nuw i8, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.ph, i64 16
-  %i.az = add nuw nsw i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph, 2
+  %i.az = add i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.ph, 2
   %i.ba = and i64 %i.az, 4294967295
   store i64 %i.ba, ptr %i.ay, align 8, !tbaa !106
   br label %_ZN4llvm11SmallVectorIlLj2EEC2INS_6detail15SafeIntIteratorIjLb0EEEvEET_S6_.exit.i
@@ -644,14 +644,14 @@ vector.ph457:                                     ; preds = %.lr.ph.i.i.i.i.i.i.
 vector.body459:                                   ; preds = %vector.body459, %vector.ph457
   %index460 = phi i64 [ 0, %vector.ph457 ], [ %index.next462, %vector.body459 ] ; 2 uses
   %vec.ind = phi <2 x i64> [ %induction, %vector.ph457 ], [ %vec.ind.next, %vector.body459 ] ; 3 uses
-  %step.add = add nuw nsw <2 x i64> %vec.ind, splat (i64 2)
+  %step.add = add <2 x i64> %vec.ind, splat (i64 2)
   %i.jh = shl i64 %index460, 3
   %next.gep461 = getelementptr i8, ptr %i.jc, i64 %i.jh ; 2 uses
   %i.ji = getelementptr i8, ptr %next.gep461, i64 16
   store <2 x i64> %vec.ind, ptr %next.gep461, align 8, !tbaa !106
   store <2 x i64> %step.add, ptr %i.ji, align 8, !tbaa !106
   %index.next462 = add nuw i64 %index460, 4       ; 2 uses
-  %vec.ind.next = add nuw nsw <2 x i64> %vec.ind, splat (i64 4)
+  %vec.ind.next = add <2 x i64> %vec.ind, splat (i64 4)
   %i.jj = icmp eq i64 %index.next462, %n.vec458
   br i1 %i.jj, label %middle.block463, label %vector.body459, !llvm.loop !1027
 
@@ -669,14 +669,14 @@ middle.block463:                                  ; preds = %vector.body459
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.1:                 ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i
   %i.jl = getelementptr inbounds nuw i8, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.i.ph, i64 8
-  %i.jm = add nuw nsw i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.i.ph, 1
+  %i.jm = add i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.i.ph, 1
   store i64 %i.jm, ptr %i.jl, align 8, !tbaa !106
   %i.jn = icmp eq i64 %.010.i.i.i.i.i.i.i.i.i.i.i.i.ph, 3
   br i1 %i.jn, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.2, label %_ZN4llvm11SmallVectorIlLj2EEC2INS_6detail15SafeIntIteratorIlLb0EEEvEET_S6_.exit.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.2:                 ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.1
   %i.jo = getelementptr inbounds nuw i8, ptr %.049.i.i.i.i.i.i.i.i.i.i.i.i.ph, i64 16
-  %i.jp = add nuw nsw i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.i.ph, 2
+  %i.jp = add i64 %.sroa.05.08.i.i.i.i.i.i.i.i.i.i.i.i.ph, 2
   store i64 %i.jp, ptr %i.jo, align 8, !tbaa !106
   br label %_ZN4llvm11SmallVectorIlLj2EEC2INS_6detail15SafeIntIteratorIlLb0EEEvEET_S6_.exit.i.i
 
