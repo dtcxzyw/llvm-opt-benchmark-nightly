@@ -204,16 +204,16 @@ bb.t:                                             ; preds = %bb.s
   br label %Cba_NtkRangeRight.exit114
 
 Cba_NtkRangeRight.exit114:                        ; preds = %bb.s, %bb.t
-  %i.da = phi i32 [ %i.cx, %bb.t ], [ 0, %bb.s ]  ; 3 uses
-  %i.db = phi i32 [ %i.cz, %bb.t ], [ 0, %bb.s ]  ; 3 uses
-  %3 = tail call noundef i32 @llvm.smin.i32(i32 %i.da, i32 %i.db)
-  %i.dc = tail call noundef i32 @llvm.smax.i32(i32 %i.da, i32 %i.db) ; 2 uses
-  %i.dd = tail call i32 @llvm.smin.i32(i32 %i.da, i32 %i.db) ; 3 uses
+  %i.da = phi i32 [ %i.cx, %bb.t ], [ 0, %bb.s ]  ; 4 uses
+  %i.db = phi i32 [ %i.cz, %bb.t ], [ 0, %bb.s ]  ; 4 uses
+  %i.dc = tail call noundef i32 @llvm.smin.i32(i32 %i.da, i32 %i.db)
+  %i.dd = tail call i32 @llvm.smin.i32(i32 %i.da, i32 %i.db) ; 2 uses
   %smin = sext i32 %i.dd to i64                   ; 3 uses
-  %i.de = add i32 %i.dc, 1
-  %i.df = add i32 %i.de, %i.dd
-  %i.dg = sub i32 %i.df, %3
-  %i.dh = sub i32 %i.dc, %i.dd                    ; 2 uses
+  %i.de = add i32 %i.da, %i.db
+  %i.df = add i32 %i.de, 1
+  %i.dg = sub i32 %i.df, %i.dc
+  %3 = tail call i32 @llvm.smax.i32(i32 %i.da, i32 %i.db)
+  %i.dh = sub i32 %3, %i.dd                       ; 2 uses
   %i.di = zext i32 %i.dh to i64
   %i.dj = add nuw nsw i64 %i.di, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.dh, 7
