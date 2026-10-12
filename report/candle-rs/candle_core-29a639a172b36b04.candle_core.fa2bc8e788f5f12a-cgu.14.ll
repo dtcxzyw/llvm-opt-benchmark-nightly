@@ -205,11 +205,7 @@ bb.a:
   ret void
 
 .lr.ph:                                           ; preds = %bb.a, %.loopexit
-  %.sroa.05.021 = phi i64 [ %i.b, %.loopexit ], [ 0, %bb.a ] ; 6 uses
-  %4 = mul nsw i64 %.sroa.05.021, -32             ; 2 uses
-  %5 = add i64 %4, -16
-  %6 = shl nuw nsw i64 %.sroa.05.021, 5
-  %7 = or disjoint i64 %6, 16
+  %.sroa.05.021 = phi i64 [ %i.b, %.loopexit ], [ 0, %bb.a ] ; 5 uses
   %i.b = add nuw nsw i64 %.sroa.05.021, 1         ; 2 uses
   %exitcond31.not = icmp eq i64 %.sroa.05.021, %1
   br i1 %exitcond31.not, label %bb.c, label %bb.b
@@ -309,11 +305,14 @@ bb.m:                                             ; preds = %.split, %_RNvNtNtCs
 bb.n:                                             ; preds = %bb.m, %_RNvNtNtCsdsILkMb8ZHY_4half8binary164arch19f16_to_f32_fallback.exit
   %.sroa.01.0 = phi float [ %i.aq, %bb.m ], [ %i.ap, %_RNvNtNtCsdsILkMb8ZHY_4half8binary164arch19f16_to_f32_fallback.exit ] ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
-  %i.as = shl nuw nsw i64 %.sroa.05.021, 5        ; 3 uses
-  %i.at = tail call i64 @llvm.umax.i64(i64 %3, i64 %7)
-  %i.au = add i64 %i.at, %5
+  %i.as = shl nuw nsw i64 %.sroa.05.021, 5        ; 4 uses
+  %4 = or disjoint i64 %i.as, 16
+  %i.at = tail call i64 @llvm.umax.i64(i64 %3, i64 %4)
+  %5 = mul i64 %.sroa.05.021, -32                 ; 2 uses
+  %6 = add i64 %5, -16
+  %i.au = add i64 %i.at, %6
   %i.av = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.as)
-  %i.aw = add i64 %i.av, %4
+  %i.aw = add i64 %i.av, %5
   %i.ax = tail call i64 @llvm.umin.i64(i64 %i.au, i64 %i.aw) ; 2 uses
   %min.iters.check = icmp ult i64 %i.ax, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -716,11 +715,7 @@ bb.a:
   ret void
 
 .lr.ph:                                           ; preds = %bb.a, %.loopexit
-  %.sroa.05.021 = phi i64 [ %i.b, %.loopexit ], [ 0, %bb.a ] ; 6 uses
-  %4 = mul nsw i64 %.sroa.05.021, -32             ; 2 uses
-  %5 = add i64 %4, -16
-  %6 = shl nuw nsw i64 %.sroa.05.021, 5
-  %7 = or disjoint i64 %6, 16
+  %.sroa.05.021 = phi i64 [ %i.b, %.loopexit ], [ 0, %bb.a ] ; 5 uses
   %i.b = add nuw nsw i64 %.sroa.05.021, 1         ; 2 uses
   %exitcond31.not = icmp eq i64 %.sroa.05.021, %1
   br i1 %exitcond31.not, label %bb.c, label %bb.b
@@ -822,11 +817,14 @@ bb.n:                                             ; preds = %_RNvNtNtCsdsILkMb8Z
   %i.ar = getelementptr inbounds nuw i8, ptr %i.c, i64 2
   %.val = load i32, ptr %i.ar, align 2            ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.c, i64 6 ; 2 uses
-  %i.at = shl nuw nsw i64 %.sroa.05.021, 5        ; 3 uses
-  %i.au = tail call i64 @llvm.umax.i64(i64 %3, i64 %7)
-  %i.av = add i64 %i.au, %5
+  %i.at = shl nuw nsw i64 %.sroa.05.021, 5        ; 4 uses
+  %4 = or disjoint i64 %i.at, 16
+  %i.au = tail call i64 @llvm.umax.i64(i64 %3, i64 %4)
+  %5 = mul i64 %.sroa.05.021, -32                 ; 2 uses
+  %6 = add i64 %5, -16
+  %i.av = add i64 %i.au, %6
   %i.aw = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.at)
-  %i.ax = add i64 %i.aw, %4
+  %i.ax = add i64 %i.aw, %5
   %i.ay = tail call i64 @llvm.umin.i64(i64 %i.av, i64 %i.ax) ; 2 uses
   %min.iters.check = icmp ult i64 %i.ay, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -1229,11 +1227,7 @@ bb.a:
   ret void
 
 .lr.ph:                                           ; preds = %bb.a, %.loopexit
-  %.sroa.07.033 = phi i64 [ %i.b, %.loopexit ], [ 0, %bb.a ] ; 6 uses
-  %4 = mul nsw i64 %.sroa.07.033, -32             ; 2 uses
-  %5 = add i64 %4, -16
-  %6 = shl nuw nsw i64 %.sroa.07.033, 5
-  %7 = or disjoint i64 %6, 16
+  %.sroa.07.033 = phi i64 [ %i.b, %.loopexit ], [ 0, %bb.a ] ; 5 uses
   %i.b = add nuw nsw i64 %.sroa.07.033, 1         ; 2 uses
   %exitcond43.not = icmp eq i64 %.sroa.07.033, %1
   br i1 %exitcond43.not, label %bb.c, label %bb.b
@@ -1424,11 +1418,14 @@ bb.y:                                             ; preds = %_RNvNtNtCsdsILkMb8Z
   %i.cg = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %.val = load i32, ptr %i.cg, align 2            ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %i.ci = shl nuw nsw i64 %.sroa.07.033, 5        ; 3 uses
-  %i.cj = tail call i64 @llvm.umax.i64(i64 %3, i64 %7)
-  %i.ck = add i64 %i.cj, %5
+  %i.ci = shl nuw nsw i64 %.sroa.07.033, 5        ; 4 uses
+  %4 = or disjoint i64 %i.ci, 16
+  %i.cj = tail call i64 @llvm.umax.i64(i64 %3, i64 %4)
+  %5 = mul i64 %.sroa.07.033, -32                 ; 2 uses
+  %6 = add i64 %5, -16
+  %i.ck = add i64 %i.cj, %6
   %i.cl = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.ci)
-  %i.cm = add i64 %i.cl, %4
+  %i.cm = add i64 %i.cl, %5
   %i.cn = tail call i64 @llvm.umin.i64(i64 %i.ck, i64 %i.cm) ; 2 uses
   %min.iters.check = icmp ult i64 %i.cn, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -1831,7 +1828,6 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pg
   %i.bn = getelementptr inbounds nuw i8, ptr %i.c, i64 14
   %i.bo = getelementptr inbounds nuw i8, ptr %i.e, i64 15
   %i.bp = getelementptr inbounds nuw i8, ptr %i.c, i64 15
-  %7 = and i64 %6, -256
   %i.bq = add nuw i64 %i.f, 16
   %i.br = add nuw i64 %i.d, 16
   %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -1884,7 +1880,7 @@ bb.b:                                             ; preds = %_RNvXs4_NtNtCsgCecv
   %.sroa.8.16.copyload = load ptr, ptr %.sroa.7.0..sroa_idx2.i, align 8, !noalias !871, !nonnull !7, !noundef !7 ; 22 uses
   %.sroa.10.16..sroa.7.0..sroa_idx2.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   %.sroa.10.16.copyload = load i64, ptr %.sroa.10.16..sroa.7.0..sroa_idx2.i.sroa_idx, align 8, !noalias !871 ; 37 uses
-  %i.cb = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !871, !noalias !876, !noundef !7 ; 4 uses
+  %i.cb = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !871, !noalias !876, !noundef !7 ; 3 uses
   %i.cc = add i64 %i.cb, 1
   store i64 %i.cc, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !871, !noalias !876
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
@@ -1977,7 +1973,6 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pg
   br i1 %.not.i.i184, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.loopexit146
-  %8 = shl i64 %i.cb, 8
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.da, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
   br label %.lr.ph
@@ -2380,16 +2375,15 @@ _RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   %i.ty = shl nuw i64 %i.tx, 8
   %invariant.op = add i64 %i.tw, %i.ty            ; 3 uses
   %i.tz = sub i64 %.sroa.03.sroa.6.0.copyload, %.sroa.03.sroa.5.0.copyload
-  %9 = udiv i64 %i.cb, %i.v
-  %10 = mul i64 %7, %9
+  %7 = xor i64 %.sroa.03.sroa.5.0.copyload, -1
+  %8 = add i64 %.sroa.03.sroa.6.0.copyload, %7
+  %9 = call i64 @llvm.umax.i64(i64 %5, i64 %invariant.op)
+  %10 = urem i64 %i.cb, %i.v
+  %.neg = mul i64 %10, -256
   %11 = shl i64 %.sroa.12.0185, 4
-  %12 = add i64 %8, %11
-  %13 = sub i64 %10, %12
-  %14 = xor i64 %.sroa.03.sroa.5.0.copyload, -1
-  %15 = add i64 %.sroa.03.sroa.6.0.copyload, %14
-  %16 = call i64 @llvm.umax.i64(i64 %5, i64 %invariant.op)
-  %i.ua = add i64 %16, %13
-  %i.ub = call i64 @llvm.umin.i64(i64 %15, i64 %i.ua)
+  %12 = sub i64 %.neg, %11
+  %i.ua = add i64 %9, %12
+  %i.ub = call i64 @llvm.umin.i64(i64 %8, i64 %i.ua)
   %i.uc = add i64 %i.ub, 1                        ; 3 uses
   %min.iters.check = icmp ult i64 %i.uc, 5
   %i.ud = sub i64 %.sroa.03.sroa.3.0.copyload335, %.sroa.03.sroa.0.0.copyload334
@@ -2792,7 +2786,6 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pg
   %i.ag = getelementptr inbounds nuw i8, ptr %i.e, i64 56
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 60
   %scevgep363 = getelementptr inbounds nuw i8, ptr %i.b, i64 128
-  %7 = and i64 %6, -256
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.ak = getelementptr inbounds nuw i8, ptr %i.b, i64 48
@@ -2842,7 +2835,7 @@ bb.b:                                             ; preds = %_RNvXs4_NtNtCsgCecv
   %.sroa.8.16.copyload = load ptr, ptr %.sroa.7.0..sroa_idx2.i, align 8, !noalias !1012, !nonnull !7, !noundef !7 ; 22 uses
   %.sroa.10.16..sroa.7.0..sroa_idx2.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %.sroa.10.16.copyload = load i64, ptr %.sroa.10.16..sroa.7.0..sroa_idx2.i.sroa_idx, align 8, !noalias !1012 ; 37 uses
-  %i.ar = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1012, !noalias !1017, !noundef !7 ; 4 uses
+  %i.ar = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1012, !noalias !1017, !noundef !7 ; 3 uses
   %i.as = add i64 %i.ar, 1
   store i64 %i.as, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1012, !noalias !1017
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -2934,7 +2927,6 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pg
   br i1 %.not.i.i201, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.loopexit159
-  %8 = shl i64 %i.ar, 8
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.br, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
   br label %.lr.ph
@@ -3337,16 +3329,15 @@ _RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   %i.rt = shl nuw i64 %i.rs, 8
   %invariant.op = add i64 %i.rr, %i.rt            ; 3 uses
   %i.ru = sub i64 %.sroa.03.sroa.6.0.copyload, %.sroa.03.sroa.5.0.copyload
-  %9 = udiv i64 %i.ar, %i.r
-  %10 = mul i64 %7, %9
+  %7 = xor i64 %.sroa.03.sroa.5.0.copyload, -1
+  %8 = add i64 %.sroa.03.sroa.6.0.copyload, %7
+  %9 = call i64 @llvm.umax.i64(i64 %5, i64 %invariant.op)
+  %10 = urem i64 %i.ar, %i.r
+  %.neg = mul i64 %10, -256
   %11 = shl i64 %.sroa.12.0202, 4
-  %12 = add i64 %8, %11
-  %13 = sub i64 %10, %12
-  %14 = xor i64 %.sroa.03.sroa.5.0.copyload, -1
-  %15 = add i64 %.sroa.03.sroa.6.0.copyload, %14
-  %16 = call i64 @llvm.umax.i64(i64 %5, i64 %invariant.op)
-  %i.rv = add i64 %16, %13
-  %i.rw = call i64 @llvm.umin.i64(i64 %15, i64 %i.rv)
+  %12 = sub i64 %.neg, %11
+  %i.rv = add i64 %9, %12
+  %i.rw = call i64 @llvm.umin.i64(i64 %8, i64 %i.rv)
   %i.rx = add i64 %i.rw, 1                        ; 3 uses
   %min.iters.check = icmp ult i64 %i.rx, 5
   %i.ry = sub i64 %.sroa.03.sroa.3.0.copyload373, %.sroa.03.sroa.0.0.copyload372
@@ -3749,7 +3740,6 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pg
   %.phi.trans.insert267 = getelementptr inbounds nuw i8, ptr %i.c, i64 6
   %.phi.trans.insert269 = getelementptr inbounds nuw i8, ptr %i.e, i64 7
   %.phi.trans.insert271 = getelementptr inbounds nuw i8, ptr %i.c, i64 7
-  %7 = and i64 %6, -256
   %i.bc = add nuw i64 %i.f, 8
   %i.bd = add nuw i64 %i.d, 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -3990,7 +3980,7 @@ bb.b:                                             ; preds = %_RNvXs4_NtNtCsgCecv
   %.sroa.8.16.copyload = load ptr, ptr %.sroa.7.0..sroa_idx2.i, align 8, !noalias !1151, !nonnull !7, !noundef !7 ; 8 uses
   %.sroa.10.16..sroa.7.0..sroa_idx2.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ir, i64 16
   %.sroa.10.16.copyload = load i64, ptr %.sroa.10.16..sroa.7.0..sroa_idx2.i.sroa_idx, align 8, !noalias !1151 ; 8 uses
-  %i.it = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1151, !noalias !1156, !noundef !7 ; 4 uses
+  %i.it = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1151, !noalias !1156, !noundef !7 ; 3 uses
   %i.iu = add i64 %i.it, 1
   store i64 %i.iu, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1151, !noalias !1156
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
@@ -4083,7 +4073,6 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pg
   br i1 %.not.i.i181, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.loopexit152
-  %8 = shl i64 %i.it, 8
   %broadcast.splatinsert335 = insertelement <4 x float> poison, float %i.js, i64 0
   %broadcast.splat336 = shufflevector <4 x float> %broadcast.splatinsert335, <4 x float> poison, <4 x i32> zeroinitializer
   br label %.lr.ph
@@ -4486,16 +4475,15 @@ _RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   %i.aml = shl nuw i64 %i.amk, 8
   %invariant.op = add i64 %i.amj, %i.aml          ; 3 uses
   %i.amm = sub i64 %.sroa.03.sroa.6.0.copyload, %.sroa.03.sroa.5.0.copyload
-  %9 = udiv i64 %i.it, %i.v
-  %10 = mul i64 %7, %9
+  %7 = xor i64 %.sroa.03.sroa.5.0.copyload, -1
+  %8 = add i64 %.sroa.03.sroa.6.0.copyload, %7
+  %9 = call i64 @llvm.umax.i64(i64 %5, i64 %invariant.op)
+  %10 = urem i64 %i.it, %i.v
+  %.neg = mul i64 %10, -256
   %11 = shl i64 %.sroa.12.0182, 5
-  %12 = add i64 %8, %11
-  %13 = sub i64 %10, %12
-  %14 = xor i64 %.sroa.03.sroa.5.0.copyload, -1
-  %15 = add i64 %.sroa.03.sroa.6.0.copyload, %14
-  %16 = call i64 @llvm.umax.i64(i64 %5, i64 %invariant.op)
-  %i.amn = add i64 %16, %13
-  %i.amo = call i64 @llvm.umin.i64(i64 %15, i64 %i.amn)
+  %12 = sub i64 %.neg, %11
+  %i.amn = add i64 %9, %12
+  %i.amo = call i64 @llvm.umin.i64(i64 %8, i64 %i.amn)
   %i.amp = add i64 %i.amo, 1                      ; 3 uses
   %min.iters.check332 = icmp ult i64 %i.amp, 5
   %i.amq = sub i64 %.sroa.03.sroa.3.0.copyload330, %.sroa.03.sroa.0.0.copyload329
@@ -4898,7 +4886,6 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pg
   %.phi.trans.insert275 = getelementptr inbounds nuw i8, ptr %i.e, i64 6
   %.phi.trans.insert281 = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   %.phi.trans.insert279 = getelementptr inbounds nuw i8, ptr %i.e, i64 7
-  %7 = and i64 %6, -256
   %i.bc = add nuw i64 %i.f, 8
   %i.bd = add nuw i64 %i.d, 8
   br label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pgfu_11candle_core9quantized8k_quants8BlockQ5KRSfEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB14_.exit.i
@@ -4944,7 +4931,7 @@ bb.b:                                             ; preds = %_RNvXs4_NtNtCsgCecv
   %.sroa.8.16.copyload = load ptr, ptr %.sroa.7.0..sroa_idx2.i, align 8, !noalias !1270, !nonnull !7, !noundef !7 ; 8 uses
   %.sroa.10.16..sroa.7.0..sroa_idx2.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.be, i64 16
   %.sroa.10.16.copyload = load i64, ptr %.sroa.10.16..sroa.7.0..sroa_idx2.i.sroa_idx, align 8, !noalias !1270 ; 8 uses
-  %i.bg = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1270, !noalias !1275, !noundef !7 ; 4 uses
+  %i.bg = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1270, !noalias !1275, !noundef !7 ; 3 uses
   %i.bh = add i64 %i.bg, 1
   store i64 %i.bh, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !1270, !noalias !1275
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
@@ -5037,7 +5024,6 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterTQNtNtNtCsltEA4u8Pg
   br i1 %.not.i.i191, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.loopexit164
-  %8 = shl i64 %i.bg, 8
   %broadcast.splatinsert356 = insertelement <4 x float> poison, float %i.cf, i64 0
   %broadcast.splat357 = shufflevector <4 x float> %broadcast.splatinsert356, <4 x float> poison, <4 x i32> zeroinitializer
   br label %.lr.ph
@@ -5440,16 +5426,15 @@ _RNvXs_NtNtNtCsf3Ta7LF998c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   %i.pm = shl nuw i64 %i.pl, 8
   %invariant.op = add i64 %i.pk, %i.pm            ; 3 uses
   %i.pn = sub i64 %.sroa.03.sroa.6.0.copyload, %.sroa.03.sroa.5.0.copyload
-  %9 = udiv i64 %i.bg, %i.v
-  %10 = mul i64 %7, %9
+  %7 = xor i64 %.sroa.03.sroa.5.0.copyload, -1
+  %8 = add i64 %.sroa.03.sroa.6.0.copyload, %7
+  %9 = call i64 @llvm.umax.i64(i64 %5, i64 %invariant.op)
+  %10 = urem i64 %i.bg, %i.v
+  %.neg = mul i64 %10, -256
   %11 = shl i64 %.sroa.12.0192, 5
-  %12 = add i64 %8, %11
-  %13 = sub i64 %10, %12
-  %14 = xor i64 %.sroa.03.sroa.5.0.copyload, -1
-  %15 = add i64 %.sroa.03.sroa.6.0.copyload, %14
-  %16 = call i64 @llvm.umax.i64(i64 %5, i64 %invariant.op)
-  %i.po = add i64 %16, %13
-  %i.pp = call i64 @llvm.umin.i64(i64 %15, i64 %i.po)
+  %12 = sub i64 %.neg, %11
+  %i.po = add i64 %9, %12
+  %i.pp = call i64 @llvm.umin.i64(i64 %8, i64 %i.po)
   %i.pq = add i64 %i.pp, 1                        ; 3 uses
   %min.iters.check353 = icmp ult i64 %i.pq, 5
   %i.pr = sub i64 %.sroa.03.sroa.3.0.copyload351, %.sroa.03.sroa.0.0.copyload350
@@ -5852,11 +5837,7 @@ bb.a:
   ret void
 
 .lr.ph:                                           ; preds = %bb.a, %.loopexit
-  %.sroa.07.033 = phi i64 [ %i.b, %.loopexit ], [ 0, %bb.a ] ; 6 uses
-  %4 = mul nsw i64 %.sroa.07.033, -32             ; 2 uses
-  %5 = add i64 %4, -16
-  %6 = shl nuw nsw i64 %.sroa.07.033, 5
-  %7 = or disjoint i64 %6, 16
+  %.sroa.07.033 = phi i64 [ %i.b, %.loopexit ], [ 0, %bb.a ] ; 5 uses
   %i.b = add nuw nsw i64 %.sroa.07.033, 1         ; 2 uses
   %exitcond43.not = icmp eq i64 %.sroa.07.033, %1
   br i1 %exitcond43.not, label %bb.c, label %bb.b
@@ -6045,11 +6026,14 @@ bb.x:                                             ; preds = %.split22, %_RNvNtNt
 bb.y:                                             ; preds = %bb.x, %_RNvNtNtCsdsILkMb8ZHY_4half8binary164arch19f16_to_f32_fallback.exit21
   %.sroa.03.0 = phi float [ %i.cf, %bb.x ], [ %i.ce, %_RNvNtNtCsdsILkMb8ZHY_4half8binary164arch19f16_to_f32_fallback.exit21 ] ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
-  %i.ch = shl nuw nsw i64 %.sroa.07.033, 5        ; 3 uses
-  %i.ci = tail call i64 @llvm.umax.i64(i64 %3, i64 %7)
-  %i.cj = add i64 %i.ci, %5
+  %i.ch = shl nuw nsw i64 %.sroa.07.033, 5        ; 4 uses
+  %4 = or disjoint i64 %i.ch, 16
+  %i.ci = tail call i64 @llvm.umax.i64(i64 %3, i64 %4)
+  %5 = mul i64 %.sroa.07.033, -32                 ; 2 uses
+  %6 = add i64 %5, -16
+  %i.cj = add i64 %i.ci, %6
   %i.ck = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.ch)
-  %i.cl = add i64 %i.ck, %4
+  %i.cl = add i64 %i.ck, %5
   %i.cm = tail call i64 @llvm.umin.i64(i64 %i.cj, i64 %i.cl) ; 2 uses
   %min.iters.check = icmp ult i64 %i.cm, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph

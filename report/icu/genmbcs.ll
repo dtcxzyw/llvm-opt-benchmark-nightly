@@ -205,8 +205,8 @@ bb.cy:                                            ; preds = %bb.cx
   br label %.loopexit.i59.i
 
 .critedge.i49.i:                                  ; preds = %bb.cx, %bb.cw, %bb.cv, %bb.cu
-  %indvars.iv.i47.i.lcssa = phi i64 [ %indvars.iv.i47.i, %bb.cv ], [ %indvars.iv.i47.i, %bb.cu ], [ %indvars.iv.next.i66.i, %bb.cw ], [ %indvars.iv.next.i66.i, %bb.cx ] ; 4 uses
-  %indvars33.le.i = trunc i64 %indvars.iv.i47.i.lcssa to i32 ; 2 uses
+  %indvars.iv.i47.i.lcssa = phi i64 [ %indvars.iv.i47.i, %bb.cv ], [ %indvars.iv.i47.i, %bb.cu ], [ %indvars.iv.next.i66.i, %bb.cw ], [ %indvars.iv.next.i66.i, %bb.cx ] ; 3 uses
+  %indvars33.le.i = trunc i64 %indvars.iv.i47.i.lcssa to i32 ; 3 uses
   %i.aah = trunc i64 %indvars.iv.i47.i.lcssa to i16 ; 3 uses
   %.not64.i50.i = icmp eq i32 %indvars33.le.i, 0
   %i.aai = lshr i32 %i.zm, 6
@@ -223,8 +223,7 @@ bb.cy:                                            ; preds = %bb.cx
 
 .lr.ph.preheader.i53.i:                           ; preds = %.critedge.thread.i51.i
   %i.aan = sub nuw nsw i16 64, %i.aah             ; 4 uses
-  %3 = trunc i64 %indvars.iv.i47.i.lcssa to i32
-  %i.aao = sub i32 64, %3                         ; 3 uses
+  %i.aao = sub i32 64, %indvars33.le.i            ; 3 uses
   %min.iters.check246 = icmp ult i32 %i.aao, 16
   br i1 %min.iters.check246, label %.lr.ph.i54.i.preheader, label %vector.scevcheck242
 

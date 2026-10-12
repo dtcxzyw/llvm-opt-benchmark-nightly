@@ -205,14 +205,12 @@ bb.aw:                                            ; preds = %.preheader645.prehe
   unreachable
 
 bb.ax:                                            ; preds = %gv_calloc.exit571.i, %gv_calloc.exit571.preheader.i
-  %indvar = phi i64 [ %indvar.next, %gv_calloc.exit571.i ], [ 0, %gv_calloc.exit571.preheader.i ] ; 2 uses
-  %indvars.iv755.i = phi i64 [ %indvars.iv.next756.pre-phi.i, %gv_calloc.exit571.i ], [ 0, %gv_calloc.exit571.preheader.i ] ; 18 uses
-  %indvars.iv751.i = phi i64 [ %indvars.iv.next752.i, %gv_calloc.exit571.i ], [ 1, %gv_calloc.exit571.preheader.i ] ; 7 uses
-  %.0488676.i = phi i64 [ %.1.i, %gv_calloc.exit571.i ], [ 0, %gv_calloc.exit571.preheader.i ]
-  %.0498675.i = phi ptr [ %.2500.i, %gv_calloc.exit571.i ], [ null, %gv_calloc.exit571.preheader.i ] ; 5 uses
-  %.0501674.i = phi ptr [ %.2503.i, %gv_calloc.exit571.i ], [ null, %gv_calloc.exit571.preheader.i ] ; 5 uses
-  %.0504673.i = phi i32 [ %.2506.i, %gv_calloc.exit571.i ], [ 0, %gv_calloc.exit571.preheader.i ] ; 6 uses
-  %8 = sub i64 %i.iu, %indvar                     ; 3 uses
+  %indvars.iv755.i = phi i64 [ 0, %gv_calloc.exit571.preheader.i ], [ %indvars.iv.next756.pre-phi.i, %gv_calloc.exit571.i ] ; 19 uses
+  %indvars.iv751.i = phi i64 [ 1, %gv_calloc.exit571.preheader.i ], [ %indvars.iv.next752.i, %gv_calloc.exit571.i ] ; 7 uses
+  %.0488676.i = phi i64 [ 0, %gv_calloc.exit571.preheader.i ], [ %.1.i, %gv_calloc.exit571.i ]
+  %.0498675.i = phi ptr [ null, %gv_calloc.exit571.preheader.i ], [ %.2500.i, %gv_calloc.exit571.i ] ; 5 uses
+  %.0501674.i = phi ptr [ null, %gv_calloc.exit571.preheader.i ], [ %.2503.i, %gv_calloc.exit571.i ] ; 5 uses
+  %.0504673.i = phi i32 [ 0, %gv_calloc.exit571.preheader.i ], [ %.2506.i, %gv_calloc.exit571.i ] ; 6 uses
   %i.iz = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv755.i
   %i.ja = load i32, ptr %i.iz, align 4, !tbaa !46 ; 3 uses
   %i.jb = icmp sgt i32 %i.ja, -1
@@ -340,6 +338,7 @@ scalar.ph855.prol.loopexit:                       ; preds = %scalar.ph855.prol, 
   %i.kp = zext nneg i32 %i.ja to i64
   %i.kq = getelementptr inbounds nuw [8 x i8], ptr %i.dw, i64 %i.kp
   %i.kr = load ptr, ptr %i.kq, align 8, !tbaa !146 ; 5 uses
+  %8 = sub i64 %i.iu, %indvars.iv755.i            ; 3 uses
   %min.iters.check = icmp ult i64 %8, 12
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -565,7 +564,6 @@ gv_calloc.exit571.i:                              ; preds = %scalar.ph.prol.loop
   %.1.i = add i64 %.pn.i, %.0488676.i             ; 2 uses
   %indvars.iv.next752.i = add nuw i64 %indvars.iv751.i, 1
   %exitcond = icmp eq i64 %indvars.iv751.i, %i.ca
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond, label %bb.bi, label %bb.ax, !llvm.loop !93
 
 bb.bi:                                            ; preds = %gv_calloc.exit571.i

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   %.0110223 = phi i32 [ %i.iv, %bb.ac ], [ 0, %.preheader203 ]
   %.0118222 = phi ptr [ %.0119221, %bb.ac ], [ %i.k, %.preheader203 ] ; 8 uses
   %.0119221 = phi ptr [ %.0118222, %bb.ac ], [ %i.j, %.preheader203 ] ; 6 uses
-  %.0120220 = phi i64 [ %i.ay, %bb.ac ], [ 2, %.preheader203 ] ; 20 uses
+  %.0120220 = phi i64 [ %i.ay, %bb.ac ], [ 2, %.preheader203 ] ; 17 uses
   %.0121219 = phi i64 [ %i.iw, %bb.ac ], [ %.1.i, %.preheader203 ]
   %.0118222284 = ptrtoaddr ptr %.0118222 to i64   ; 2 uses
   %i.ay = shl i64 %.0120220, 1                    ; 13 uses
@@ -215,7 +215,6 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   %i.bc = icmp sgt i64 %.0120220, 0
   %.not.i.i142 = icmp eq i64 %i.ay, 0
   %i.bd = shl i64 %.0120220, 3
-  %7 = mul i64 %.0120220, -2
   %i.be = shl i64 %.0120220, 3
   %i.bf = mul i64 %.0120220, -2
   br label %bb.m
@@ -226,17 +225,13 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   br i1 %.not224, label %.critedge, label %.lr.ph226
 
 bb.m:                                             ; preds = %.preheader202, %bary_add.exit
-  %indvar = phi i64 [ 0, %.preheader202 ], [ %indvar.next, %bary_add.exit ] ; 5 uses
+  %indvar = phi i64 [ 0, %.preheader202 ], [ %indvar.next, %bary_add.exit ] ; 4 uses
   %.2217 = phi i64 [ 0, %.preheader202 ], [ %i.it, %bary_add.exit ] ; 11 uses
   %i.bg = mul i64 %i.bf, %indvar
   %i.bh = add i64 %4, %i.bg
   %umin318 = call i64 @llvm.umin.i64(i64 %.0120220, i64 %i.bh)
-  %8 = mul i64 %i.be, %indvar
-  %9 = add i64 %8, %.0118222284
-  %i.bi = mul i64 %7, %indvar
-  %i.bj = add i64 %4, %i.bi                       ; 2 uses
-  %umax = call i64 @llvm.umax.i64(i64 %.0120220, i64 %i.bj)
-  %umin = call i64 @llvm.umin.i64(i64 %.0120220, i64 %i.bj)
+  %i.bi = mul i64 %i.be, %indvar
+  %i.bj = add i64 %i.bi, %.0118222284
   %i.bk = mul i64 %i.bd, %indvar
   %i.bl = add i64 %i.bk, %.0118222284
   %i.bm = sub nuw i64 %4, %.2217                  ; 10 uses
@@ -370,7 +365,7 @@ bb.s:                                             ; preds = %.lr.ph83.i.i
 .lr.ph91.i.i.preheader:                           ; preds = %.preheader69.i.i
   %i.dn = sub nuw i64 %.062.i.i264, %.3.i.i       ; 3 uses
   %min.iters.check294 = icmp ult i64 %i.dn, 8
-  %i.do = sub i64 %.063.i.i262291, %9
+  %i.do = sub i64 %.063.i.i262291, %i.bj
   %diff.check292 = icmp ugt i64 %i.do, -32
   %or.cond305 = select i1 %min.iters.check294, i1 true, i1 %diff.check292
   br i1 %or.cond305, label %.lr.ph91.i.i.preheader309, label %vector.ph295
@@ -498,9 +493,9 @@ bb.x:                                             ; preds = %BIGNUM_LEN.exit149
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %BIGNUM_LEN.exit149
-  %.064.i.i150 = phi i64 [ %.0120220, %bb.x ], [ %i.bm, %BIGNUM_LEN.exit149 ] ; 6 uses
+  %.064.i.i150 = phi i64 [ %.0120220, %bb.x ], [ %i.bm, %BIGNUM_LEN.exit149 ] ; 7 uses
   %.063.i.i151 = phi ptr [ %i.ex, %bb.x ], [ %i.fe, %BIGNUM_LEN.exit149 ] ; 12 uses
-  %.062.i.i152 = phi i64 [ %i.bm, %bb.x ], [ %.0120220, %BIGNUM_LEN.exit149 ] ; 7 uses
+  %.062.i.i152 = phi i64 [ %i.bm, %bb.x ], [ %.0120220, %BIGNUM_LEN.exit149 ] ; 8 uses
   %i.fj = phi ptr [ %.0119221, %bb.x ], [ %.0118222, %BIGNUM_LEN.exit149 ]
   %.063.i.i151285 = ptrtoaddr ptr %.063.i.i151 to i64
   %.not.i.i154 = icmp eq i64 %.064.i.i150, 0
@@ -608,8 +603,8 @@ bb.z:                                             ; preds = %.lr.ph83.i.i180
   br i1 %or.cond, label %.lr.ph91.i.i177.preheader, label %bary_add.exit
 
 .lr.ph91.i.i177.preheader:                        ; preds = %.loopexit71.i.i169
-  %i.hi = add i64 %umin, %indvar286
-  %i.hj = sub i64 %umax, %i.hi                    ; 3 uses
+  %i.hi = add i64 %.064.i.i150, %indvar286
+  %i.hj = sub i64 %.062.i.i152, %i.hi             ; 3 uses
   %min.iters.check = icmp ult i64 %i.hj, 8
   %i.hk = sub i64 %.063.i.i151285, %i.bl
   %diff.check = icmp ugt i64 %i.hk, -32
@@ -1012,11 +1007,11 @@ bb.k:                                             ; preds = %.lr.ph123.1
   br i1 %i.bg, label %.preheader.preheader, label %bb.l
 
 .preheader.preheader:                             ; preds = %.preheader94
-  %i.bh = add i64 %indvar, %.068116.lcssa
-  %i.bi = add nuw nsw i64 %.068116.lcssa, 1
-  %2 = add i64 %i.bi, %indvar
-  %3 = tail call i64 @llvm.smax.i64(i64 %.0.i83, i64 %2)
-  %i.bj = sub i64 %3, %i.bh                       ; 3 uses
+  %i.bh = add nuw nsw i64 %.068116.lcssa, 1
+  %i.bi = add nuw i64 %indvar, %i.bh
+  %2 = tail call i64 @llvm.smax.i64(i64 %.0.i83, i64 %i.bi)
+  %3 = add i64 %indvar, %.068116.lcssa
+  %i.bj = sub i64 %2, %3                          ; 3 uses
   %min.iters.check203 = icmp ult i64 %i.bj, 8
   %i.bk = sub i64 %.0.i92201, %.0.i86200
   %diff.check = icmp ugt i64 %i.bk, -32
@@ -1419,11 +1414,11 @@ bb.o:                                             ; preds = %.lr.ph110.1
   br i1 %i.bu, label %.preheader.preheader, label %bb.p
 
 .preheader.preheader:                             ; preds = %.preheader86
-  %i.bv = add i64 %indvar, %.064104.lcssa
-  %i.bw = add nuw nsw i64 %.064104.lcssa, 1
-  %2 = add i64 %i.bw, %indvar
-  %3 = tail call i64 @llvm.smax.i64(i64 %.0.i77, i64 %2)
-  %i.bx = sub i64 %3, %i.bv                       ; 3 uses
+  %i.bv = add nuw nsw i64 %.064104.lcssa, 1
+  %i.bw = add nuw i64 %indvar, %i.bv
+  %2 = tail call i64 @llvm.smax.i64(i64 %.0.i77, i64 %i.bw)
+  %3 = add i64 %indvar, %.064104.lcssa
+  %i.bx = sub i64 %2, %3                          ; 3 uses
   %min.iters.check = icmp ult i64 %i.bx, 8
   %i.by = sub i64 %.0.i84163, %.0.i80162
   %diff.check = icmp ugt i64 %i.by, -32
