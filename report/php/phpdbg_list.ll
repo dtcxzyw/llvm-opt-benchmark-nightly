@@ -201,10 +201,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !49, !nonnull !53, !noundef !53 ; 4 uses
-  %spec.select = tail call i32 @llvm.smax.i32(i32 %2, i32 0) ; 3 uses
-  %4 = tail call i32 @llvm.smin.i32(i32 %2, i32 0)
-  %spec.select46 = add i32 %4, %1
-  %i.e = add i32 %spec.select46, %spec.select
+  %spec.select = tail call i32 @llvm.smax.i32(i32 %2, i32 0) ; 2 uses
+  %i.e = add i32 %2, %1
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 272
   %i.g = load i32, ptr %i.f, align 8, !tbaa !69
   %.0 = tail call i32 @llvm.umin.i32(i32 %i.e, i32 %i.g) ; 3 uses
@@ -605,9 +603,6 @@ declare ptr @zend_hash_add(ptr noundef, ptr noundef, ptr noundef) local_unnamed_
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #10

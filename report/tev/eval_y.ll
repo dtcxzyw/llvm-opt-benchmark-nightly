@@ -205,19 +205,19 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.n
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.dg = load i64, ptr %i.df, align 8, !tbaa !46 ; 8 uses
-  %i.dh = add nsw i64 %i.dg, %i.r                 ; 2 uses
+  %i.dg = load i64, ptr %i.df, align 8, !tbaa !46 ; 6 uses
+  %i.dh = add nsw i64 %i.dg, %i.r                 ; 3 uses
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.dj = load i64, ptr %i.di, align 8, !tbaa !217
-  %i.dk = add i64 %i.dj, %i.ao                    ; 4 uses
+  %i.dk = add i64 %i.dj, %i.ao                    ; 3 uses
   %i.dl = icmp sgt i64 %i.dh, %i.dk
   br i1 %i.dl, label %bb.s, label %.thread255
 
 bb.s:                                             ; preds = %bb.r
-  %i.dm = sub nsw i64 %i.dh, %i.dk                ; 3 uses
+  %i.dm = sub nsw i64 %i.dh, %i.dk                ; 2 uses
   %i.dn = icmp sgt i64 %i.dm, %i.dg
   %. = select i1 %i.dn, i64 %i.r, i64 %i.dk       ; 7 uses
-  %.234 = tail call i64 @llvm.smin.i64(i64 %i.dm, i64 %i.dg) ; 8 uses
+  %.234 = tail call i64 @llvm.smin.i64(i64 %i.dm, i64 %i.dg) ; 7 uses
   %i.do = sub nsw i64 %i.dg, %.234                ; 5 uses
   %i.dp = mul nsw i64 %i.do, %.0                  ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
@@ -248,11 +248,7 @@ bb.s:                                             ; preds = %bb.r
 
 .lr.ph281.split.us.split.us:                      ; preds = %.lr.ph281.split.us
   %i.ec = add nsw i64 %.234, -1
-  %2 = add i64 %i.dk, %.234
-  %smax = tail call i64 @llvm.smax.i64(i64 %i.dg, i64 %i.dm)
-  %3 = add i64 %2, %smax
-  %4 = xor i64 %i.dg, -1
-  %i.ed = add i64 %3, %4                          ; 2 uses
+  %i.ed = add nsw i64 %i.dh, -1                   ; 2 uses
   %smin = tail call i64 @llvm.smin.i64(i64 %i.ds, i64 %i.ed)
   %i.ee = sub i64 %i.ed, %smin
   %i.ef = tail call i64 @llvm.usub.sat.i64(i64 %i.ec, i64 %i.ee)
