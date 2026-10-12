@@ -205,8 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.xa = load i16, ptr %i.wn, align 4, !tbaa !79
   %i.xb = zext i16 %i.xa to i32
   %i.xc = add nsw i32 %i.xb, -1
-  %i.xd = icmp slt i32 %1, %i.xc
-  %indvars.iv.next411 = add nuw nsw i32 %indvars.iv410, 1
+  %i.xd = icmp slt i32 %.pre, %i.xc
   br i1 %i.xd, label %.preheader, label %.loopexit288, !llvm.loop !156
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit286
@@ -214,16 +213,16 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.sroa.10.0 = phi ptr [ %i.ws, %.preheader.lr.ph ], [ %.sroa.10.2, %.loopexit286 ] ; 2 uses
   %.sroa.6.0 = phi ptr [ %i.wt, %.preheader.lr.ph ], [ %.sroa.6.2, %.loopexit286 ] ; 2 uses
   %.sroa.0.0 = phi ptr [ %i.al, %.preheader.lr.ph ], [ %.sroa.0.2, %.loopexit286 ] ; 2 uses
-  %indvars.iv410 = phi i32 [ 2, %.preheader.lr.ph ], [ %indvars.iv.next411, %.loopexit286 ] ; 3 uses
-  %.0343 = phi i32 [ -1, %.preheader.lr.ph ], [ %.1.lcssa, %.loopexit286 ] ; 3 uses
-  %.3226342 = phi i32 [ 1, %.preheader.lr.ph ], [ %1, %.loopexit286 ] ; 5 uses
-  %.not251335 = icmp sgt i32 %.0343, %.3226342
+  %indvars.iv410 = phi i32 [ -1, %.preheader.lr.ph ], [ %.1.lcssa, %.loopexit286 ] ; 3 uses
+  %.0343 = phi i32 [ 1, %.preheader.lr.ph ], [ %.pre, %.loopexit286 ] ; 6 uses
+  %.not251335 = icmp sgt i32 %indvars.iv410, %.0343
+  %.pre = add nuw i32 %.0343, 1                   ; 3 uses
   br i1 %.not251335, label %._crit_edge338, label %.lr.ph337
 
 .loopexit:                                        ; preds = %bb.p, %.lr.ph337
   %i.xf = phi i16 [ %i.xh, %.lr.ph337 ], [ %i.ym, %bb.p ] ; 2 uses
   %i.xg = phi i16 [ %i.xi, %.lr.ph337 ], [ %i.ym, %bb.p ]
-  %exitcond412.not = icmp eq i32 %i.xj, %indvars.iv410
+  %exitcond412.not = icmp eq i32 %.1336, %.0343
   br i1 %exitcond412.not, label %._crit_edge338, label %.lr.ph337, !llvm.loop !157
 
 .lr.ph337:                                        ; preds = %.preheader, %.loopexit
@@ -232,8 +231,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.sroa.10.1 = phi ptr [ %.sroa.0.1, %.loopexit ], [ %.sroa.10.0, %.preheader ] ; 2 uses
   %.sroa.6.1 = phi ptr [ %.sroa.10.1, %.loopexit ], [ %.sroa.6.0, %.preheader ] ; 2 uses
   %.sroa.0.1 = phi ptr [ %.sroa.6.1, %.loopexit ], [ %.sroa.0.0, %.preheader ] ; 3 uses
-  %.1336 = phi i32 [ %i.xj, %.loopexit ], [ %.0343, %.preheader ]
-  %i.xj = add nsw i32 %.1336, 1                   ; 4 uses
+  %.1336 = phi i32 [ %i.xj, %.loopexit ], [ %indvars.iv410, %.preheader ] ; 2 uses
+  %i.xj = add nsw i32 %.1336, 1                   ; 3 uses
   %i.xk = shl i32 %i.xj, 1
   %i.xl = and i32 %i.xk, 14                       ; 2 uses
   %i.xm = shl nuw nsw i32 %i.xl, 1
@@ -283,9 +282,8 @@ bb.p:                                             ; preds = %.lr.ph334, %bb.p
   %.sroa.10.2 = phi ptr [ %.sroa.10.0, %.preheader ], [ %.sroa.0.1, %.loopexit ] ; 3 uses
   %.sroa.6.2 = phi ptr [ %.sroa.6.0, %.preheader ], [ %.sroa.10.1, %.loopexit ] ; 2 uses
   %.sroa.0.2 = phi ptr [ %.sroa.0.0, %.preheader ], [ %.sroa.6.1, %.loopexit ] ; 3 uses
-  %.1.lcssa = phi i32 [ %.0343, %.preheader ], [ %indvars.iv410, %.loopexit ]
-  %1 = add nuw nsw i32 %.3226342, 1               ; 2 uses
-  %i.yq = shl nuw nsw i32 %.3226342, 1
+  %.1.lcssa = phi i32 [ %indvars.iv410, %.preheader ], [ %.pre, %.loopexit ]
+  %i.yq = shl nuw nsw i32 %.0343, 1
   %i.yr = and i32 %i.yq, 14                       ; 2 uses
   %i.ys = shl nuw nsw i32 %i.yr, 1
   %i.yt = lshr i32 %i.vg, %i.ys                   ; 3 uses
@@ -297,7 +295,7 @@ bb.p:                                             ; preds = %.lr.ph334, %bb.p
   br i1 %i.yy, label %.lr.ph341, label %.loopexit286
 
 .lr.ph341:                                        ; preds = %._crit_edge338
-  %i.yz = and i32 %.3226342, 1                    ; 2 uses
+  %i.yz = and i32 %.0343, 1                       ; 2 uses
   %i.za = xor i32 %i.yz, 1
   %i.zb = zext nneg i32 %i.za to i64
   %i.zc = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.zb
@@ -361,7 +359,7 @@ bb.s:                                             ; preds = %bb.q, %bb.r
   %i.aaw = phi float [ %i.aav, %bb.r ], [ 0.000000e+00, %bb.q ] ; 2 uses
   %i.aax = load i16, ptr %i.wu, align 4, !tbaa !81
   %i.aay = zext i16 %i.aax to i32                 ; 2 uses
-  %i.aaz = lshr i32 %.3226342, %i.aay
+  %i.aaz = lshr i32 %.0343, %i.aay
   %i.aba = load i16, ptr %i.d, align 2, !tbaa !160
   %i.abb = zext i16 %i.aba to i32
   %i.abc = mul nuw nsw i32 %i.aaz, %i.abb

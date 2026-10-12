@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/meilisearch-0ef5570b62e7676c.meilisearch.614e4e7626a6e7a0-cgu.0?download=true
 inline.NumInlined: 17146
 inline.NumDeleted: 6832
-loop-unroll.NumCompletelyUnrolled: 150
+loop-unroll.NumCompletelyUnrolled: 149
 loop-unroll.NumRuntimeUnrolled: 76
-loop-unroll.NumUnrolled: 285
+loop-unroll.NumUnrolled: 284
 begin_hunk_0_@"_ZN6brotli3enc17brotli_bit_stream25BlockEncoder$LT$Alloc$GT$12store_symbol17h640489a63fbb42b3E":bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load i64, ptr %i.j, align 8, !noundef !45 ; 2 uses
@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.f
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_ZN6brotli3enc17brotli_bit_stream34BrotliBuildAndStoreHuffmanTreeFast17hd0a5c367cceed3c5E(ptr noalias noundef nonnull readonly align 4 captures(none) %0, i64 noundef range(i64 256, 705) %1, i64 noundef %2, i64 noundef range(i64 0, 4294967296) %3, ptr noalias noundef nonnull align 1 %4, i64 noundef range(i64 140, 705) %5, ptr noalias noundef nonnull align 2 %6, i64 noundef range(i64 140, 705) %7, ptr noalias noundef nonnull align 8 dereferenceable(8) %8, ptr noalias noundef nonnull align 1 %9, i64 noundef %10) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 17 uses
+  %i.a = alloca [32 x i8], align 8                ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   %i.b = icmp eq i64 %2, 0
@@ -444,7 +444,7 @@ bb.n:                                             ; preds = %._crit_edge158
   tail call void @_ZN6brotli3enc17brotli_bit_stream15BrotliWriteBits17h35b6bcda16fa19feE(i8 noundef 2, i64 noundef 1, ptr noalias noundef nonnull align 8 dereferenceable(8) %8, ptr noalias noundef nonnull align 1 %9, i64 noundef %10)
   %i.bb = add nsw i64 %.sroa.0.1, -1
   tail call void @_ZN6brotli3enc17brotli_bit_stream15BrotliWriteBits17h35b6bcda16fa19feE(i8 noundef 2, i64 noundef %i.bb, ptr noalias noundef nonnull align 8 dereferenceable(8) %8, ptr noalias noundef nonnull align 1 %9, i64 noundef %10)
-  br label %bb.ah
+  br label %bb.ab
 
 .split:                                           ; preds = %.split.preheader, %.loopexit40
   %.sroa.085.0171 = phi i8 [ %.sroa.085.1, %.loopexit40 ], [ 8, %.split.preheader ] ; 2 uses
@@ -581,83 +581,22 @@ bb.z:                                             ; preds = %.lr.ph168
   tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.bw, i64 noundef 18, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1646) #43
   unreachable
 
-.preheader.1:                                     ; preds = %bb.ak
-  %cond = icmp eq i64 %.sroa.0.1, 2
-  br i1 %cond, label %.loopexit.3, label %.lr.ph173.1
+bb.aa:                                            ; preds = %bb.ak, %bb.ab
+  %11 = icmp ult i64 %.sroa.0107.0172.2, %.sroa.0.1
+  %i.cs = add i64 %.sroa.0107.0172.2, 1
+  br i1 %11, label %bb.ab, label %.loopexit.3
 
-.lr.ph173.1:                                      ; preds = %.preheader.1
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  br label %bb.aa
+bb.ab:                                            ; preds = %.preheader.a, %bb.aa
+  %.sroa.0107.0172.2 = phi i64 [ 1, %.preheader.a ], [ %i.cs, %bb.aa ] ; 5 uses
+  %.sroa.0105.0174 = phi i64 [ 0, %.preheader.a ], [ %.sroa.0107.0172.2, %bb.aa ]
+  %i.ct = icmp ult i64 %.sroa.0107.0172.2, %.sroa.0.1
+  br i1 %i.ct, label %bb.ac, label %bb.aa
 
-bb.aa:                                            ; preds = %25, %.lr.ph173.1
-  %.sroa.0107.0172.1 = phi i64 [ 2, %.lr.ph173.1 ], [ %i.cs, %25 ] ; 2 uses
-  %i.cs = add i64 %.sroa.0107.0172.1, 1           ; 2 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.sroa.0107.0172.1 ; 2 uses
-  %13 = load i64, ptr %12, align 8, !noundef !45  ; 4 uses
-  %14 = icmp ult i64 %13, %5
-  br i1 %14, label %15, label %.loopexit486
+bb.ac:                                            ; preds = %bb.ab
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.sroa.0105.0174 ; 2 uses
+  br label %bb.ah
 
-15:                                               ; preds = %bb.aa
-  %16 = load i64, ptr %11, align 8, !noundef !45  ; 4 uses
-  %17 = icmp ult i64 %16, %5
-  br i1 %17, label %18, label %.loopexit487
-
-18:                                               ; preds = %15
-  %19 = getelementptr inbounds nuw i8, ptr %4, i64 %13
-  %20 = load i8, ptr %19, align 1, !noundef !45
-  %21 = getelementptr inbounds nuw i8, ptr %4, i64 %16
-  %22 = load i8, ptr %21, align 1, !noundef !45
-  %23 = icmp ult i8 %20, %22
-  br i1 %23, label %24, label %25
-
-24:                                               ; preds = %18
-  store i64 %16, ptr %12, align 8
-  store i64 %13, ptr %11, align 8
-  br label %25
-
-25:                                               ; preds = %24, %18
-  %exitcond272.not.1 = icmp eq i64 %i.cs, %.sroa.0.1
-  br i1 %exitcond272.not.1, label %.loopexit.1, label %bb.aa
-
-.loopexit.1:                                      ; preds = %25
-  %cond531 = icmp eq i64 %.sroa.0.1, 4
-  br i1 %cond531, label %.lr.ph173.2, label %.loopexit.3
-
-.lr.ph173.2:                                      ; preds = %.loopexit.1
-  %26 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  br label %bb.ab
-
-bb.ab:                                            ; preds = %39, %.lr.ph173.2
-  %.sroa.0107.0172.2 = phi i64 [ 3, %.lr.ph173.2 ], [ %27, %39 ] ; 2 uses
-  %27 = add i64 %.sroa.0107.0172.2, 1             ; 2 uses
-  %28 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.sroa.0107.0172.2 ; 2 uses
-  %29 = load i64, ptr %28, align 8, !noundef !45  ; 4 uses
-  %i.ct = icmp ult i64 %29, %5
-  br i1 %i.ct, label %30, label %.loopexit486
-
-30:                                               ; preds = %bb.ab
-  %31 = load i64, ptr %26, align 8, !noundef !45  ; 4 uses
-  %32 = icmp ult i64 %31, %5
-  br i1 %32, label %33, label %.loopexit487
-
-33:                                               ; preds = %30
-  %34 = getelementptr inbounds nuw i8, ptr %4, i64 %29
-  %35 = load i8, ptr %34, align 1, !noundef !45
-  %36 = getelementptr inbounds nuw i8, ptr %4, i64 %31
-  %37 = load i8, ptr %36, align 1, !noundef !45
-  %38 = icmp ult i8 %35, %37
-  br i1 %38, label %bb.ac, label %39
-
-bb.ac:                                            ; preds = %33
-  store i64 %31, ptr %28, align 8
-  store i64 %29, ptr %26, align 8
-  br label %39
-
-39:                                               ; preds = %bb.ac, %33
-  %exitcond272.not.2 = icmp eq i64 %27, %.sroa.0.1
-  br i1 %exitcond272.not.2, label %.loopexit.3, label %bb.ab
-
-.loopexit.3:                                      ; preds = %39, %.loopexit.1, %.preheader.1
+.loopexit.3:                                      ; preds = %bb.aa
   %i.cu = trunc i64 %3 to i8                      ; 5 uses
   %i.cv = load i64, ptr %i.a, align 8, !noundef !45 ; 4 uses
   tail call void @_ZN6brotli3enc17brotli_bit_stream15BrotliWriteBits17h35b6bcda16fa19feE(i8 noundef %i.cu, i64 noundef %i.cv, ptr noalias noundef nonnull align 8 dereferenceable(8) %8, ptr noalias noundef nonnull align 1 %9, i64 noundef %10)
@@ -701,8 +640,8 @@ bb.ag:                                            ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 
-bb.ah:                                            ; preds = %.preheader.a, %bb.ak
-  %.sroa.0107.0172 = phi i64 [ 1, %.preheader.a ], [ %i.di, %bb.ak ] ; 2 uses
+bb.ah:                                            ; preds = %bb.ac, %bb.ak
+  %.sroa.0107.0172 = phi i64 [ %.sroa.0107.0172.2, %bb.ac ], [ %i.di, %bb.ak ] ; 2 uses
   %i.di = add i64 %.sroa.0107.0172, 1             ; 2 uses
   %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.sroa.0107.0172 ; 2 uses
   %i.dk = load i64, ptr %i.dj, align 8, !noundef !45 ; 4 uses
@@ -710,13 +649,12 @@ bb.ah:                                            ; preds = %.preheader.a, %bb.a
   br i1 %i.dl, label %bb.ai, label %.loopexit486
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.dm = load i64, ptr %i.a, align 8, !noundef !45 ; 4 uses
+  %i.dm = load i64, ptr %12, align 8, !noundef !45 ; 4 uses
   %i.dn = icmp ult i64 %i.dm, %5
   br i1 %i.dn, label %bb.aj, label %.loopexit487
 
-.loopexit486:                                     ; preds = %bb.ab, %bb.aa, %bb.ah
-  %.lcssa = phi i64 [ %13, %bb.aa ], [ %i.dk, %bb.ah ], [ %29, %bb.ab ]
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.lcssa, i64 noundef %5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1648) #43
+.loopexit486:                                     ; preds = %bb.ah
+  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.dk, i64 noundef %5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1648) #43
   unreachable
 
 bb.aj:                                            ; preds = %bb.ai
@@ -727,18 +665,17 @@ bb.aj:                                            ; preds = %bb.ai
   %i.ds = icmp ult i8 %i.dp, %i.dr
   br i1 %i.ds, label %bb.al, label %bb.ak
 
-.loopexit487:                                     ; preds = %30, %15, %bb.ai
-  %.lcssa461 = phi i64 [ %16, %15 ], [ %i.dm, %bb.ai ], [ %31, %30 ]
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %.lcssa461, i64 noundef %5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1649) #43
+.loopexit487:                                     ; preds = %bb.ai
+  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.dm, i64 noundef %5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1649) #43
   unreachable
 
 bb.ak:                                            ; preds = %bb.aj, %bb.al
   %exitcond272.not = icmp eq i64 %i.di, %.sroa.0.1
-  br i1 %exitcond272.not, label %.preheader.1, label %bb.ah
+  br i1 %exitcond272.not, label %bb.aa, label %bb.ah
 
 bb.al:                                            ; preds = %bb.aj
   store i64 %i.dm, ptr %i.dj, align 8
-  store i64 %i.dk, ptr %i.a, align 8
+  store i64 %i.dk, ptr %12, align 8
   br label %bb.ak
 
 .lr.ph157:                                        ; preds = %.lr.ph157.preheader, %bb.at
@@ -910,7 +847,7 @@ bb.be:                                            ; preds = %.lr.ph.preheader
 
 bb.bf:                                            ; preds = %.lr.ph.preheader, %bb.bh
   %.sroa.020.1 = phi i64 [ %.sroa.020.0136458, %.lr.ph.preheader ], [ %i.fu, %bb.bh ] ; 2 uses
-  %.sroa.0.1 = phi i64 [ %.sroa.0.0138456, %.lr.ph.preheader ], [ %i.fs, %bb.bh ] ; 10 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0138456, %.lr.ph.preheader ], [ %i.fs, %bb.bh ] ; 8 uses
   %i.fp = add nuw nsw i64 %.sroa.010.0137457, 1   ; 8 uses
   %i.fq = icmp eq i64 %.sroa.020.1, 0
   br i1 %i.fq, label %._crit_edge, label %.lr.ph
