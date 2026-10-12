@@ -205,14 +205,14 @@ _ZSt10__distanceIN4llvm6detail12DenseSetImplINS0_3orc15SymbolStringPtrENS0_8Dens
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !435 ; 17 uses
   %i.al = ptrtoint ptr %i.ai to i64
-  %i.am = ptrtoint ptr %i.ak to i64               ; 5 uses
+  %i.am = ptrtoint ptr %i.ak to i64               ; 4 uses
   %i.an = sub i64 %i.al, %i.am
   %i.ao = ashr exact i64 %i.an, 3
   %.not.not = icmp ugt i64 %i.ao, %.07.i
   br i1 %.not.not, label %bb.d, label %bb.s
 
 bb.d:                                             ; preds = %_ZSt10__distanceIN4llvm6detail12DenseSetImplINS0_3orc15SymbolStringPtrENS0_8DenseMapIS4_NS1_13DenseSetEmptyENS0_12DenseMapInfoIS4_vEENS1_12DenseSetPairIS4_EEEEE16DenseSetIteratorILb0EEEENSt15iterator_traitsIT_E15difference_typeESG_SG_St18input_iterator_tag.exit
-  %i.ap = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.ap = ptrtoint ptr %1 to i64                  ; 3 uses
   %i.aq = sub i64 %i.am, %i.ap                    ; 2 uses
   %i.ar = ashr exact i64 %i.aq, 3                 ; 3 uses
   %i.as = icmp ugt i64 %i.ar, %i.ag
@@ -579,21 +579,19 @@ _ZSt22__uninitialized_copy_aIN4llvm6detail12DenseSetImplINS0_3orc15SymbolStringP
 
 .lr.ph.i.i.i.i.i56.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN4llvm6detail12DenseSetImplINS0_3orc15SymbolStringPtrENS0_8DenseMapIS4_NS1_13DenseSetEmptyENS0_12DenseMapInfoIS4_vEENS1_12DenseSetPairIS4_EEEEE16DenseSetIteratorILb0EEEPS4_S4_ET0_T_SH_SG_RSaIT1_E.exit
   %i.ge = add i64 %i.am, -8
-  %i.gf = sub i64 %i.ge, %i.ap                    ; 2 uses
+  %i.gf = sub i64 %i.ge, %i.ap                    ; 3 uses
   %i.gg = lshr i64 %i.gf, 3
   %i.gh = add nuw nsw i64 %i.gg, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.gf, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i56.preheader335, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i56.preheader
-  %4 = add i64 %i.am, -8
-  %5 = sub i64 %4, %i.ap
-  %i.gi = and i64 %5, -8                          ; 2 uses
-  %6 = sub i64 %i.gi, %i.aq
-  %scevgep = getelementptr i8, ptr %i.gb, i64 %6
-  %7 = shl i64 %.07.i, 3
-  %8 = getelementptr i8, ptr %scevgep, i64 %7
-  %scevgep307 = getelementptr i8, ptr %8, i64 16
+  %4 = shl i64 %.07.i, 3
+  %5 = add i64 %4, 16
+  %i.gi = and i64 %i.gf, -8                       ; 2 uses
+  %6 = add i64 %5, %i.gi
+  %7 = sub i64 %6, %i.aq
+  %scevgep307 = getelementptr i8, ptr %i.gb, i64 %7
   %i.gj = getelementptr i8, ptr %1, i64 %i.gi
   %scevgep308 = getelementptr i8, ptr %i.gj, i64 8
   %bound0 = icmp ult ptr %i.gd, %scevgep308

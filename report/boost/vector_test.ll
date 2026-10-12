@@ -205,7 +205,6 @@ _ZN5boost9container3dtl24scoped_array_deallocatorINS0_9allocatorINS0_4test11mova
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container54expand_backward_forward_and_insert_alloc_move_backwardIPNS0_4test11movable_intENS0_3dtl18insert_range_proxyINS0_9allocatorIS3_Lj2ELj0EEENS_13move_iteratorIS4_EEEES8_EEvT_mSC_SC_mT0_RT1_(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, ptr %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = ptrtoaddr ptr %5 to i64                    ; 2 uses
   %i.a = getelementptr [4 x i8], ptr %0, i64 %1   ; 29 uses
   %i.b = ptrtoint ptr %3 to i64                   ; 10 uses
   %i.c = ptrtoint ptr %0 to i64                   ; 13 uses
@@ -608,6 +607,7 @@ bb.k:                                             ; preds = %_ZN5boost9container
   br i1 %min.iters.check632, label %.lr.ph.i.i278.preheader729, label %vector.memcheck625
 
 vector.memcheck625:                               ; preds = %.lr.ph.i.i278.preheader
+  %7 = ptrtoaddr ptr %5 to i64
   %i.il = ptrtoaddr ptr %.lcssa735 to i64
   %reass.sub724 = sub i64 %i.il, %7
   %i.im = getelementptr i8, ptr %5, i64 %reass.sub724
@@ -721,11 +721,12 @@ vector.memcheck579:                               ; preds = %.lr.ph.i.i287.prehe
   %scevgep = getelementptr i8, ptr %0, i64 %i.jq
   %i.jr = add i64 %i.jp, 4
   %i.js = sub i64 %i.jr, %i.g
+  %8 = ptrtoaddr ptr %5 to i64
   %i.jt = ptrtoaddr ptr %.lcssa735 to i64
-  %reass.sub = sub i64 %i.jt, %7
-  %i.ju = getelementptr i8, ptr %5, i64 %i.js
-  %i.jv = getelementptr i8, ptr %i.ju, i64 %reass.sub
-  %scevgep580 = getelementptr i8, ptr %i.jv, i64 -4
+  %reass.sub = sub i64 %i.jt, %8
+  %i.ju = getelementptr i8, ptr %5, i64 %reass.sub
+  %i.jv = getelementptr i8, ptr %i.ju, i64 -4
+  %scevgep580 = getelementptr i8, ptr %i.jv, i64 %i.js
   %bound0581 = icmp ult ptr %0, %scevgep580
   %bound1582 = icmp ult ptr %.lcssa735, %scevgep
   %found.conflict583 = and i1 %bound0581, %bound1582
@@ -1128,7 +1129,6 @@ _ZN5boost9container3dtl24scoped_array_deallocatorINS0_9allocatorINS0_4test24mova
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container54expand_backward_forward_and_insert_alloc_move_backwardIPNS0_4test24movable_and_copyable_intENS0_3dtl18insert_range_proxyINS0_9allocatorIS3_Lj2ELj0EEENS_13move_iteratorIS4_EEEES8_EEvT_mSC_SC_mT0_RT1_(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, ptr %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = ptrtoaddr ptr %5 to i64                    ; 2 uses
   %i.a = getelementptr [4 x i8], ptr %0, i64 %1   ; 29 uses
   %i.b = ptrtoint ptr %3 to i64                   ; 10 uses
   %i.c = ptrtoint ptr %0 to i64                   ; 13 uses
@@ -1531,6 +1531,7 @@ bb.k:                                             ; preds = %_ZN5boost9container
   br i1 %min.iters.check632, label %.lr.ph.i.i278.preheader729, label %vector.memcheck625
 
 vector.memcheck625:                               ; preds = %.lr.ph.i.i278.preheader
+  %7 = ptrtoaddr ptr %5 to i64
   %i.il = ptrtoaddr ptr %.lcssa735 to i64
   %reass.sub724 = sub i64 %i.il, %7
   %i.im = getelementptr i8, ptr %5, i64 %reass.sub724
@@ -1644,11 +1645,12 @@ vector.memcheck579:                               ; preds = %.lr.ph.i.i287.prehe
   %scevgep = getelementptr i8, ptr %0, i64 %i.jq
   %i.jr = add i64 %i.jp, 4
   %i.js = sub i64 %i.jr, %i.g
+  %8 = ptrtoaddr ptr %5 to i64
   %i.jt = ptrtoaddr ptr %.lcssa735 to i64
-  %reass.sub = sub i64 %i.jt, %7
-  %i.ju = getelementptr i8, ptr %5, i64 %i.js
-  %i.jv = getelementptr i8, ptr %i.ju, i64 %reass.sub
-  %scevgep580 = getelementptr i8, ptr %i.jv, i64 -4
+  %reass.sub = sub i64 %i.jt, %8
+  %i.ju = getelementptr i8, ptr %5, i64 %reass.sub
+  %i.jv = getelementptr i8, ptr %i.ju, i64 -4
+  %scevgep580 = getelementptr i8, ptr %i.jv, i64 %i.js
   %bound0581 = icmp ult ptr %0, %scevgep580
   %bound1582 = icmp ult ptr %.lcssa735, %scevgep
   %found.conflict583 = and i1 %bound0581, %bound1582

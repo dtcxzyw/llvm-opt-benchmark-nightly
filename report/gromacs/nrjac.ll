@@ -189,8 +189,9 @@ bb.a:
   %scevgep = getelementptr i8, ptr %i.b, i64 %i.au ; 2 uses
   %scevgep18 = getelementptr i8, ptr %2, i64 %i.au ; 2 uses
   %scevgep19 = getelementptr i8, ptr %i.c, i64 %i.au ; 2 uses
-  %i.av = add nsw i32 %1, -3                      ; 2 uses
+  %i.av = add nsw i32 %1, -3
   %i.aw = add nsw i64 %i.e, -2
+  %6 = add nsw i32 %1, -3
   %xtraiter82 = and i64 %i.e, 1
   %i.ax = icmp eq i64 %i.g, 0
   %unroll_iter86 = and i64 %i.e, 2147483646
@@ -453,6 +454,7 @@ middle.block:                                     ; preds = %vector.body
   %i.fa = getelementptr inbounds nuw [8 x i8], ptr %i.ew, i64 %indvars.iv266.i ; 2 uses
   %i.fb = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv266.i
   %indvars.iv.next269.i.prol = add nuw nsw i64 %indvars.iv266.i, 1
+  %7 = trunc i64 %indvars.iv292.i to i32
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.l, %.lr.ph229.i
@@ -460,9 +462,6 @@ bb.c:                                             ; preds = %bb.l, %.lr.ph229.i
   %indvars.iv286.i = phi i64 [ %indvars.iv.next287.i, %bb.l ], [ %indvars.iv266.i, %.lr.ph229.i ] ; 18 uses
   %indvars.iv275.i = phi i64 [ %indvars.iv.next276.i, %bb.l ], [ %indvars.iv273.i, %.lr.ph229.i ] ; 5 uses
   %.2170227.i = phi i32 [ %.3171.i, %bb.l ], [ %.1169232.i, %.lr.ph229.i ] ; 3 uses
-  %6 = add i64 %indvars.iv292.i, %indvar
-  %7 = trunc i64 %6 to i32
-  %8 = sub i32 %i.av, %7                          ; 2 uses
   %i.fc = shl i64 %indvar, 3                      ; 2 uses
   %i.fd = add i64 %i.et, %i.fc                    ; 2 uses
   %scevgep31 = getelementptr i8, ptr %i.ew, i64 %i.fd
@@ -658,9 +657,12 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.jb = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv286.i
   %i.jc = load ptr, ptr %i.jb, align 8, !tbaa !11 ; 8 uses
   %i.jd = fneg double %i.gq                       ; 9 uses
-  %i.je = zext i32 %8 to i64
+  %8 = trunc i64 %indvar to i32
+  %9 = add i32 %7, %8
+  %10 = sub i32 %6, %9                            ; 2 uses
+  %i.je = zext i32 %10 to i64
   %i.jf = add nuw nsw i64 %i.je, 1                ; 2 uses
-  %min.iters.check40 = icmp ult i32 %8, 7
+  %min.iters.check40 = icmp ult i32 %10, 7
   br i1 %min.iters.check40, label %scalar.ph39.preheader, label %vector.memcheck30
 
 vector.memcheck30:                                ; preds = %.lr.ph221.i

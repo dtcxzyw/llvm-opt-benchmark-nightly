@@ -205,8 +205,8 @@ Abc_TtCanonicizePhaseVar6.exit.thread.us:         ; preds = %bb.d, %bb.f, %bb.e
   %.123.lcssa67 = phi i32 [ %.022, %.preheader ], [ %.022, %.lr.ph ], [ %i.be, %Abc_TtCanonicizePhaseVar6.exit.thread.us ]
   %i.bh = zext i32 %i.d to i64
   %i.bi = zext nneg i32 %.0.lcssa68 to i64
-  %2 = zext i32 %i.d to i64
-  %3 = icmp sgt i32 %i.d, 0
+  %2 = icmp sgt i32 %i.d, 0
+  %3 = zext nneg i32 %i.d to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph44, %Abc_TtCanonicizePhaseVar5.exit.thread
@@ -217,7 +217,7 @@ bb.g:                                             ; preds = %.lr.ph44, %Abc_TtCa
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr @s_Truths6, i64 %indvars.iv
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !32 ; 5 uses
   %i.bn = zext nneg i32 %i.bk to i64              ; 4 uses
-  br i1 %3, label %.lr.ph91, label %Abc_TtCanonicizePhaseVar5.exit.thread
+  br i1 %2, label %.lr.ph91, label %Abc_TtCanonicizePhaseVar5.exit.thread
 
 select.unfold.i:                                  ; preds = %.lr.ph91
   %i.bo = trunc nuw i64 %i.bq to i32
@@ -243,7 +243,7 @@ bb.h:                                             ; preds = %.lr.ph91
 
 .preheader.preheader.i:                           ; preds = %bb.h
   %i.by = and i64 %i.bq, 4294967295               ; 3 uses
-  %i.bz = sub i64 %2, %indvar                     ; 3 uses
+  %i.bz = sub i64 %3, %indvar                     ; 3 uses
   %min.iters.check94 = icmp ult i64 %i.bz, 4
   br i1 %min.iters.check94, label %.preheader.i.preheader, label %vector.ph95
 

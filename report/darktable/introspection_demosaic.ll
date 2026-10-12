@@ -205,7 +205,6 @@ bb.ob:                                            ; preds = %._crit_edge935.spli
   %i.jhb = sext i32 %i.jha to i64
   %i.jhc = shl nsw i64 %i.jhb, 2                  ; 5 uses
   %scevgep3520 = getelementptr i8, ptr %scevgep3519, i64 %i.jhc
-  %6 = add i32 %indvars.iv1018.i, -1
   %smin1174 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %indvars.iv1016.i)
   %i.jhd = add i32 %smin1174, %indvars.iv1018.i
   %smin1175 = call i32 @llvm.smin.i32(i32 %i.jhd, i32 112) ; 11 uses
@@ -608,6 +607,7 @@ scalar.ph3212:                                    ; preds = %scalar.ph3212.prehe
   %i.leg = add i32 %i.leb, %indvars.iv1058.i
   %i.leh = shl i32 %i.leg, 2
   %i.lei = or disjoint i32 %i.leb, %i.jgn
+  %6 = add i32 %indvars.iv1018.i, -1
   %i.lej = add i32 %.neg793.i, %i.jhn
   %i.lek = add i32 %i.lej, %6
   %i.lel = sub i32 %i.lek, %i.leb                 ; 2 uses
@@ -1010,7 +1010,7 @@ bb.oq:                                            ; preds = %bb.op, %bb.oo
   br i1 %exitcond1318.i, label %._crit_edge1190.split.i, label %.preheader1027.i
 
 bb.or:                                            ; preds = %._crit_edge1183.split.i, %.preheader1027.i
-  %indvars.iv1121 = phi i32 [ %indvars.iv.next1122, %._crit_edge1183.split.i ], [ 0, %.preheader1027.i ] ; 7 uses
+  %indvars.iv1121 = phi i32 [ %indvars.iv.next1122, %._crit_edge1183.split.i ], [ 0, %.preheader1027.i ] ; 6 uses
   %indvars.iv1118 = phi i32 [ %indvars.iv.next1119, %._crit_edge1183.split.i ], [ 128, %.preheader1027.i ] ; 5 uses
   %indvars.iv1212.i = phi i32 [ %indvars.iv.next1213.i, %._crit_edge1183.split.i ], [ %indvars.iv.i555, %.preheader1027.i ] ; 2 uses
   %.08871185.i = phi i32 [ %i.pob, %._crit_edge1183.split.i ], [ 0, %.preheader1027.i ] ; 7 uses
@@ -1035,8 +1035,6 @@ bb.or:                                            ; preds = %._crit_edge1183.spl
   %i.lye = add i32 %smin4414, -1                  ; 3 uses
   %i.lyf = zext i32 %i.lye to i64
   %i.lyg = add nuw nsw i64 %i.lyf, 1              ; 5 uses
-  %7 = add i32 %indvars.iv1121, -1
-  %8 = add i32 %indvars.iv1121, -1
   %smin1149 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %indvars.iv1118)
   %i.lyh = add i32 %smin1149, %indvars.iv1121
   %smin1150 = call i32 @llvm.smin.i32(i32 %i.lyh, i32 128)
@@ -1439,7 +1437,7 @@ bb.py:                                            ; preds = %bb.py, %.preheader1
   br i1 %niter4719.ncmp.3, label %._crit_edge1142.i.unr-lcssa, label %bb.py
 
 ._crit_edge1168.i:                                ; preds = %._crit_edge1165.i.loopexit, %.lr.ph1167.i, %.preheader1020.i
-  %i.oqz = select i1 %i.nmu, i32 4, i32 8         ; 3 uses
+  %i.oqz = select i1 %i.nmu, i32 4, i32 8         ; 2 uses
   %i.ora = or disjoint i32 %i.oqz, %i.lyk         ; 7 uses
   %.neg951.i = select i1 %i.nmw, i32 -4, i32 -8   ; 2 uses
   %i.orb = add nsw i32 %i.lym, %.neg951.i         ; 3 uses
@@ -1453,30 +1451,26 @@ bb.py:                                            ; preds = %bb.py, %.preheader1
 
 .lr.ph1175.i.preheader:                           ; preds = %.lr.ph1182.i
   %reass.sub = sub nsw i32 %i.ora, %i.lyk
-  %.reass1178.i.a = add nsw i32 %reass.sub, 4
-  %i.orf = add i32 %.neg951.i, %i.lym             ; 2 uses
-  %i.org = add i32 %i.orf, %7
+  %.reass1178.i = add nsw i32 %reass.sub, 4
+  %.reass1178.i.a = add i32 %indvars.iv1121, -1
+  %i.orf = add i32 %.neg951.i, %i.lym
+  %i.org = add i32 %i.orf, %.reass1178.i.a
   %i.orh = sub i32 %i.org, %i.oqz                 ; 2 uses
   %i.ori = zext i32 %i.orh to i64
-  %i.orj = add nuw nsw i64 %i.ori, 1              ; 2 uses
-  %min.iters.check3696 = icmp ult i32 %i.orh, 7
+  %i.orj = add nuw nsw i64 %i.ori, 1              ; 4 uses
+  %min.iters.check3696 = icmp ult i32 %i.orh, 7   ; 2 uses
   %n.vec3698 = and i64 %i.orj, 8589934584         ; 5 uses
   %i.ork = trunc i64 %n.vec3698 to i32
   %i.orl = add i32 %i.ora, %i.ork
   %i.orm = shl nuw nsw i64 %n.vec3698, 2          ; 3 uses
   %i.orn = shl nuw nsw i64 %n.vec3698, 4
   %cmp.n3731 = icmp eq i64 %i.orj, %n.vec3698
-  %9 = add i32 %i.orf, %8
-  %10 = sub i32 %9, %i.oqz                        ; 2 uses
-  %11 = zext i32 %10 to i64
-  %12 = add nuw nsw i64 %11, 1                    ; 2 uses
-  %min.iters.check3673 = icmp ult i32 %10, 7
-  %n.vec3675 = and i64 %12, 8589934584            ; 5 uses
+  %n.vec3675 = and i64 %i.orj, 8589934584         ; 5 uses
   %i.oro = trunc i64 %n.vec3675 to i32
   %i.orp = add i32 %i.ora, %i.oro
   %i.orq = shl nuw nsw i64 %n.vec3675, 2          ; 3 uses
   %i.orr = shl nuw nsw i64 %n.vec3675, 4
-  %cmp.n3689 = icmp eq i64 %12, %n.vec3675
+  %cmp.n3689 = icmp eq i64 %i.orj, %n.vec3675
   br label %.lr.ph1175.i
 
 .lr.ph1150.i.preheader:                           ; preds = %.lr.ph1150.i.preheader.preheader, %._crit_edge1165.i.loopexit
@@ -1879,7 +1873,7 @@ scalar.ph3755:                                    ; preds = %scalar.ph3755.prehe
   %i.pog = zext nneg i32 %i.pof to i64
   %i.poh = getelementptr inbounds nuw [4 x i8], ptr %i.anw, i64 %i.pog ; 6 uses
   %i.poi = mul i32 %indvars.iv1307.i, 136
-  %i.poj = add i32 %.reass1178.i.a, %i.poi
+  %i.poj = add i32 %.reass1178.i, %i.poi
   %i.pok = sext i32 %i.poj to i64                 ; 3 uses
   %i.pol = getelementptr inbounds [4 x i8], ptr %i.lus, i64 %i.pok ; 6 uses
   %i.pom = getelementptr inbounds [4 x i8], ptr %i.luu, i64 %i.pok ; 6 uses
@@ -1983,7 +1977,7 @@ middle.block3730:                                 ; preds = %vector.body3701
   br label %.lr.ph1175.split.i
 
 _calc_gamma.exit979.us.i.preheader:               ; preds = %.lr.ph1175.i
-  br i1 %min.iters.check3673, label %_calc_gamma.exit979.us.i.preheader4605, label %vector.ph3674
+  br i1 %min.iters.check3696, label %_calc_gamma.exit979.us.i.preheader4605, label %vector.ph3674
 
 vector.ph3674:                                    ; preds = %_calc_gamma.exit979.us.i.preheader
   %i.pqj = getelementptr i8, ptr %i.pon, i64 %i.orq

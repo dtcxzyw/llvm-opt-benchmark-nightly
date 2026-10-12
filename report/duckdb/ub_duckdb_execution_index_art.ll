@@ -205,7 +205,7 @@ bb.a:
   call void @_ZN6duckdb10NodeHandleINS_5Node4EEC2ERNS_3ARTENS_4NodeE(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(433) %0, i64 %.sroa.03.0.copyload)
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !658, !nonnull !68, !align !69 ; 17 uses
-  %i.c = load i8, ptr %i.b, align 8, !tbaa !200   ; 7 uses
+  %i.c = load i8, ptr %i.b, align 8, !tbaa !200   ; 6 uses
   %.not.not = icmp eq i8 %i.c, 4                  ; 2 uses
   br i1 %.not.not, label %bb.d, label %bb.b
 
@@ -231,38 +231,34 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN6duckdb8BaseNodeILh4ELNS_5NTypeE3EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17, label %.lr.ph.i, !llvm.loop !1462
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 3 uses
+  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.j = add i8 %i.c, -1
   %i.k = call i8 @llvm.usub.sat.i8(i8 %i.j, i8 %i.h) ; 2 uses
-  %i.l = zext i8 %i.k to i64
+  %i.l = zext i8 %i.k to i64                      ; 4 uses
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i8 %i.k, 53
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.critedge.i
   %i.n = add nuw nsw i64 %wide.trip.count.i, 1    ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.b, i64 %i.n
-  %6 = add i8 %i.c, -1
-  %7 = call i8 @llvm.usub.sat.i8(i8 %6, i8 %i.h)
-  %8 = zext i8 %7 to i64                          ; 2 uses
-  %i.o = sub nsw i64 0, %8                        ; 2 uses
-  %scevgep24 = getelementptr i8, ptr %scevgep, i64 %i.o ; 3 uses
+  %i.o = sub nsw i64 %i.n, %i.l
+  %scevgep24 = getelementptr i8, ptr %i.b, i64 %i.o ; 3 uses
   %i.p = getelementptr i8, ptr %i.b, i64 %wide.trip.count.i
   %scevgep25 = getelementptr i8, ptr %i.p, i64 2  ; 3 uses
   %i.q = shl nuw nsw i64 %wide.trip.count.i, 3    ; 3 uses
-  %9 = add nuw nsw i64 %i.q, 8                    ; 2 uses
-  %scevgep26 = getelementptr i8, ptr %i.b, i64 %9
-  %10 = mul nsw i64 %8, -8                        ; 2 uses
-  %scevgep27 = getelementptr i8, ptr %scevgep26, i64 %10 ; 3 uses
+  %6 = shl nuw nsw i64 %i.l, 3                    ; 2 uses
+  %7 = add nuw nsw i64 %i.q, 8                    ; 2 uses
+  %8 = sub nsw i64 %7, %6
+  %scevgep27 = getelementptr i8, ptr %i.b, i64 %8 ; 3 uses
   %i.r = getelementptr i8, ptr %i.b, i64 %i.q
   %scevgep28 = getelementptr i8, ptr %i.r, i64 16 ; 3 uses
-  %scevgep29 = getelementptr i8, ptr %i.b, i64 %wide.trip.count.i
-  %scevgep30 = getelementptr i8, ptr %scevgep29, i64 %i.o ; 2 uses
+  %9 = sub nsw i64 %wide.trip.count.i, %i.l
+  %scevgep30 = getelementptr i8, ptr %i.b, i64 %9 ; 2 uses
   %scevgep31 = getelementptr i8, ptr %i.b, i64 %i.n ; 2 uses
-  %scevgep32 = getelementptr i8, ptr %i.b, i64 %i.q
-  %scevgep33 = getelementptr i8, ptr %scevgep32, i64 %10 ; 2 uses
-  %scevgep34 = getelementptr i8, ptr %i.b, i64 %9 ; 2 uses
+  %10 = sub nsw i64 %i.q, %6
+  %scevgep33 = getelementptr i8, ptr %i.b, i64 %10 ; 2 uses
+  %scevgep34 = getelementptr i8, ptr %i.b, i64 %7 ; 2 uses
   %bound0 = icmp ult ptr %scevgep24, %scevgep28
   %bound1 = icmp ult ptr %scevgep27, %scevgep25
   %found.conflict = and i1 %bound0, %bound1
@@ -665,7 +661,7 @@ bb.a:
   call void @_ZN6duckdb10NodeHandleINS_6Node16EEC2ERNS_3ARTENS_4NodeE(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(433) %0, i64 %.sroa.03.0.copyload)
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !668, !nonnull !68, !align !69 ; 15 uses
-  %i.c = load i8, ptr %i.b, align 8, !tbaa !475   ; 7 uses
+  %i.c = load i8, ptr %i.b, align 8, !tbaa !475   ; 6 uses
   %.not.not = icmp eq i8 %i.c, 16                 ; 2 uses
   br i1 %.not.not, label %bb.d, label %bb.b
 
@@ -691,39 +687,35 @@ bb.c:                                             ; preds = %.lr.ph.i
   br i1 %exitcond.not.i, label %_ZN6duckdb8BaseNodeILh16ELNS_5NTypeE4EE19InsertChildInternalERS2_hNS_4NodeE.exit.loopexit17, label %.lr.ph.i, !llvm.loop !1531
 
 .critedge.i:                                      ; preds = %.lr.ph.i
-  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 3 uses
+  %i.h = trunc nuw i64 %indvars.iv.i to i8        ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   %i.j = add i8 %i.c, -1
   %i.k = call i8 @llvm.usub.sat.i8(i8 %i.j, i8 %i.h) ; 2 uses
-  %i.l = zext i8 %i.k to i64
+  %i.l = zext i8 %i.k to i64                      ; 4 uses
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i8 %i.k, 55
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.critedge.i
   %i.n = add nuw nsw i64 %wide.trip.count.i, 1    ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.b, i64 %i.n
-  %6 = add i8 %i.c, -1
-  %7 = call i8 @llvm.usub.sat.i8(i8 %6, i8 %i.h)
-  %8 = zext i8 %7 to i64                          ; 2 uses
-  %i.o = sub nsw i64 0, %8                        ; 2 uses
-  %scevgep24 = getelementptr i8, ptr %scevgep, i64 %i.o ; 3 uses
+  %i.o = sub nsw i64 %i.n, %i.l
+  %scevgep24 = getelementptr i8, ptr %i.b, i64 %i.o ; 3 uses
   %i.p = getelementptr i8, ptr %i.b, i64 %wide.trip.count.i
   %scevgep25 = getelementptr i8, ptr %i.p, i64 2  ; 3 uses
   %i.q = shl nuw nsw i64 %wide.trip.count.i, 3    ; 3 uses
-  %9 = add nuw nsw i64 %i.q, 24                   ; 2 uses
-  %scevgep26 = getelementptr i8, ptr %i.b, i64 %9
-  %10 = mul nsw i64 %8, -8                        ; 2 uses
-  %scevgep27 = getelementptr i8, ptr %scevgep26, i64 %10 ; 3 uses
+  %6 = shl nuw nsw i64 %i.l, 3                    ; 2 uses
+  %7 = add nuw nsw i64 %i.q, 24                   ; 2 uses
+  %8 = sub nsw i64 %7, %6
+  %scevgep27 = getelementptr i8, ptr %i.b, i64 %8 ; 3 uses
   %i.r = getelementptr i8, ptr %i.b, i64 %i.q
   %scevgep28 = getelementptr i8, ptr %i.r, i64 32 ; 3 uses
-  %scevgep29 = getelementptr i8, ptr %i.b, i64 %wide.trip.count.i
-  %scevgep30 = getelementptr i8, ptr %scevgep29, i64 %i.o ; 2 uses
+  %9 = sub nsw i64 %wide.trip.count.i, %i.l
+  %scevgep30 = getelementptr i8, ptr %i.b, i64 %9 ; 2 uses
   %scevgep31 = getelementptr i8, ptr %i.b, i64 %i.n ; 2 uses
-  %11 = getelementptr i8, ptr %i.b, i64 %i.q
-  %scevgep32 = getelementptr i8, ptr %11, i64 16
-  %scevgep33 = getelementptr i8, ptr %scevgep32, i64 %10 ; 2 uses
-  %scevgep34 = getelementptr i8, ptr %i.b, i64 %9 ; 2 uses
+  %10 = add nuw nsw i64 %i.q, 16
+  %11 = sub nsw i64 %10, %6
+  %scevgep33 = getelementptr i8, ptr %i.b, i64 %11 ; 2 uses
+  %scevgep34 = getelementptr i8, ptr %i.b, i64 %7 ; 2 uses
   %bound0 = icmp ult ptr %scevgep24, %scevgep28
   %bound1 = icmp ult ptr %scevgep27, %scevgep25
   %found.conflict = and i1 %bound0, %bound1

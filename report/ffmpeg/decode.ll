@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %bb.a ] ; 7 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %bb.a ] ; 6 uses
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   %i.c = load i32, ptr %i.b, align 4, !tbaa !65
   %.not = icmp eq i32 %i.c, -1
@@ -212,7 +212,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br i1 %.not, label %bb.c, label %bb.b, !llvm.loop !207
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = trunc nuw nsw i64 %indvars.iv to i32
+  %i.d = trunc i64 %indvars.iv to i32             ; 2 uses
   %.not99 = icmp eq i64 %indvars.iv, 0
   br i1 %.not99, label %bb.d, label %bb.e
 
@@ -255,8 +255,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 516
-  %2 = trunc i64 %indvars.iv to i32
-  %i.y = add i32 %2, -2
+  %i.y = add i32 %i.d, -2
   br label %bb.h
 
 bb.h:                                             ; preds = %.preheader133, %._crit_edge184

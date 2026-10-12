@@ -205,8 +205,6 @@ bb.w:                                             ; preds = %.loopexit.i.loopexi
   %indvars.iv324.in.i = phi i32 [ %i.fu, %.loopexit ], [ %indvars.iv324.i, %.loopexit.i.loopexit ]
   %i.ip = add i64 %i.in, %indvars.iv346.i
   %i.iq = trunc i64 %i.ip to i32
-  %11 = shl nuw nsw i64 %indvars.iv346.i, 1
-  %12 = add nuw i64 %11, 2
   %indvars.iv324.i = add i32 %indvars.iv324.in.i, -1 ; 3 uses
   %i.ir = sext i32 %indvars.iv324.i to i64        ; 6 uses
   %i.is = getelementptr inbounds nuw [4 x i8], ptr %i.hw, i64 %indvars.iv346.i
@@ -470,6 +468,8 @@ bb.av:                                            ; preds = %bb.au, %.lr.ph297.i
   br i1 %or.cond, label %.lr.ph300.i.preheader1122, label %vector.ph1079
 
 vector.ph1079:                                    ; preds = %.lr.ph300.i.preheader
+  %11 = shl nuw i64 %indvars.iv346.i, 1
+  %12 = add nuw i64 %11, 2
   %n.vec1080 = and i64 %12, -8                    ; 2 uses
   %i.lz = add i64 %n.vec1080, %i.ir
   br label %vector.body1081
@@ -872,9 +872,7 @@ bb.bq:                                            ; preds = %._crit_edge298.i.lo
   %indvars.iv362.i = phi i64 [ %i.vf, %._crit_edge.i385 ], [ %indvars.iv.next363.i, %._crit_edge298.i.loopexit ] ; 5 uses
   %indvars.iv337.in.i = phi i64 [ %i.ut, %._crit_edge.i385 ], [ %indvars.iv337.i, %._crit_edge298.i.loopexit ] ; 2 uses
   %indvars.iv327.i = phi i32 [ -1, %._crit_edge.i385 ], [ %indvars.iv.next328.i, %._crit_edge298.i.loopexit ] ; 2 uses
-  %13 = add nuw i64 %indvars.iv366.i, %wide.trip.count374.i
-  %14 = shl nuw nsw i64 %indvars.iv366.i, 1
-  %i.vh = add nuw i64 %14, 2
+  %i.vh = add nuw i64 %indvars.iv366.i, %wide.trip.count374.i
   %indvars.iv337.i = add nsw i64 %indvars.iv337.in.i, -1 ; 7 uses
   %i.vi = getelementptr inbounds nuw [4 x i8], ptr %i.ux, i64 %indvars.iv366.i
   %i.vj = load i32, ptr %i.vi, align 4, !tbaa !10 ; 3 uses
@@ -1152,7 +1150,9 @@ bb.cr:                                            ; preds = %bb.cq, %.lr.ph294.i
   br i1 %or.cond1113, label %.lr.ph297.i391.preheader1121, label %vector.ph1065
 
 vector.ph1065:                                    ; preds = %.lr.ph297.i391.preheader
-  %n.vec1066 = and i64 %i.vh, -8                  ; 2 uses
+  %13 = shl nuw i64 %indvars.iv366.i, 1
+  %14 = add nuw i64 %13, 2
+  %n.vec1066 = and i64 %14, -8                    ; 2 uses
   %i.yo = add i64 %indvars.iv337.i, %n.vec1066
   br label %vector.body1067
 
@@ -1174,7 +1174,7 @@ vector.body1067:                                  ; preds = %vector.body1067, %v
 .lr.ph297.i391.preheader1121:                     ; preds = %vector.body1067, %.lr.ph297.i391.preheader
   %indvars.iv356.i.ph = phi i64 [ %indvars.iv337.i, %.lr.ph297.i391.preheader ], [ %i.yo, %vector.body1067 ] ; 4 uses
   %i.yv = sub i64 %indvars.iv362.i, %indvars.iv356.i.ph
-  %i.yw = sub i64 %13, %indvars.iv356.i.ph
+  %i.yw = sub i64 %i.vh, %indvars.iv356.i.ph
   %xtraiter1198 = and i64 %i.yv, 3                ; 2 uses
   %lcmp.mod1199.not = icmp eq i64 %xtraiter1198, 0
   br i1 %lcmp.mod1199.not, label %.lr.ph297.i391.prol.loopexit, label %.lr.ph297.i391.prol

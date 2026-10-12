@@ -205,8 +205,6 @@ bb.a:
   %indvars.iv38 = phi i64 [ 1, %.lr.ph37.preheader ], [ %indvars.iv.next39, %.loopexit ] ; 5 uses
   %.036 = phi i32 [ 0, %.lr.ph37.preheader ], [ %.1.lcssa, %.loopexit ] ; 3 uses
   %.03035 = phi i32 [ 0, %.lr.ph37.preheader ], [ %i.p, %.loopexit ] ; 4 uses
-  %2 = xor i64 %indvar, -1
-  %3 = add i64 %2, %wide.trip.count               ; 3 uses
   %i.p = add nuw nsw i32 %.03035, 1               ; 3 uses
   %i.q = icmp slt i32 %i.p, %1
   br i1 %i.q, label %.lr.ph, label %.loopexit
@@ -216,6 +214,8 @@ bb.a:
   %i.s = sext i32 %.036 to i64                    ; 3 uses
   %i.t = zext nneg i32 %i.r to i64
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.t ; 2 uses
+  %2 = xor i64 %indvar, -1
+  %3 = add i64 %2, %wide.trip.count               ; 3 uses
   %min.iters.check = icmp ult i64 %3, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -618,10 +618,9 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   br i1 %exitcond45.not.i, label %Abc_ZddManCreatePerms.exit, label %.lr.ph37.i, !llvm.loop !1
 
 .lr.ph37.i:                                       ; preds = %.loopexit.i, %Abc_Clock.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.i ], [ 0, %Abc_Clock.exit ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.i ], [ 0, %Abc_Clock.exit ] ; 6 uses
   %indvars.iv38.i = phi i64 [ %indvars.iv.next39.i, %.loopexit.i ], [ 1, %Abc_Clock.exit ] ; 5 uses
   %.036.i = phi i32 [ %.1.lcssa.i, %.loopexit.i ], [ 0, %Abc_Clock.exit ] ; 3 uses
-  %4 = sub nsw i64 23, %indvars.iv                ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.w = icmp samesign ult i64 %indvars.iv, 23
   br i1 %i.w, label %.lr.ph.i, label %.loopexit.i
@@ -631,13 +630,14 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
   %invariant.gep.i.idx = mul nuw nsw i64 %indvars.iv, 96
   %invariant.gep.i = getelementptr inbounds nuw i8, ptr %i.t, i64 %invariant.gep.i.idx ; 2 uses
   %i.y = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
-  %min.iters.check = icmp ult i64 %4, 8
+  %4 = sub nuw nsw i64 23, %indvars.iv            ; 2 uses
+  %min.iters.check = icmp samesign ugt i64 %indvars.iv, 15
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %4, -8                         ; 4 uses
-  %i.z = add i64 %indvars.iv38.i, %n.vec
-  %i.aa = add i64 %n.vec, %i.x                    ; 2 uses
+  %n.vec = and i64 %4, 24                         ; 4 uses
+  %i.z = add nuw i64 %indvars.iv38.i, %n.vec
+  %i.aa = add nsw i64 %n.vec, %i.x                ; 2 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.y, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.ab = trunc i64 %indvars.iv38.i to i32

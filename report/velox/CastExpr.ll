@@ -205,19 +205,19 @@ bb.o:                                             ; preds = %.lr.ph58, %._crit_e
   br i1 %i.co, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.o
-  %2 = sub i32 %i.bk, %indvar                     ; 2 uses
-  %3 = sext i32 %indvars.iv78 to i64              ; 3 uses
-  %i.cp = zext i32 %2 to i64
+  %2 = sext i32 %indvars.iv78 to i64              ; 3 uses
+  %3 = sub i32 %i.bk, %indvar                     ; 2 uses
+  %i.cp = zext i32 %3 to i64
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
-  %min.iters.check153 = icmp ult i32 %2, 3
+  %min.iters.check153 = icmp ult i32 %3, 3
   br i1 %min.iters.check153, label %.lr.ph.preheader174, label %vector.ph154
 
 vector.ph154:                                     ; preds = %.lr.ph.preheader
   %n.vec155 = and i64 %i.cq, 8589934588           ; 4 uses
   %i.cr = sub nsw i64 %i.bi, %n.vec155
-  %i.cs = add nsw i64 %n.vec155, %3
+  %i.cs = add nsw i64 %n.vec155, %2
   %i.ct = insertelement <2 x i128> <i128 poison, i128 0>, i128 %.256, i64 0
-  %invariant.gep = getelementptr [4 x i8], ptr %i.bh, i64 %3
+  %invariant.gep = getelementptr [4 x i8], ptr %i.bh, i64 %2
   br label %vector.body156
 
 vector.body156:                                   ; preds = %vector.body156, %vector.ph154
@@ -258,7 +258,7 @@ middle.block167:                                  ; preds = %vector.body156
 
 .lr.ph.preheader174:                              ; preds = %.lr.ph.preheader, %middle.block167
   %indvars.iv82.in.ph = phi i64 [ %i.bi, %.lr.ph.preheader ], [ %i.cr, %middle.block167 ]
-  %indvars.iv80.ph = phi i64 [ %3, %.lr.ph.preheader ], [ %i.cs, %middle.block167 ]
+  %indvars.iv80.ph = phi i64 [ %2, %.lr.ph.preheader ], [ %i.cs, %middle.block167 ]
   %.352.ph = phi i128 [ %.256, %.lr.ph.preheader ], [ %i.dk, %middle.block167 ]
   br label %.lr.ph
 

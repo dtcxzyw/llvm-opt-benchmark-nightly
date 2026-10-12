@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s, %._crit_edge5
   br i1 %i.dh, label %bb.u, label %bb.at
 
 bb.u:                                             ; preds = %bb.t
-  %i.di = shl nuw nsw i32 %i.dg, 1                ; 2 uses
+  %i.di = shl nuw nsw i32 %i.dg, 1                ; 3 uses
   %i.dj = add nsw i32 %i.di, %1                   ; 8 uses
   %i.dk = add nsw i32 %i.dj, -1                   ; 3 uses
   %i.dl = mul nsw i32 %i.dk, %i.dj
@@ -250,8 +250,10 @@ gv_calloc.exit:                                   ; preds = %.thread.i, %bb.x
   %i.ea = fdiv float 1.000000e+00, %.0415.lcssa   ; 2 uses
   %.mux.peel = select i1 %i.dz, float %.0415.lcssa, float %i.ea
   %i.eb = add i32 %1, %i.di                       ; 2 uses
-  %i.ec = add i32 %i.eb, -2
-  %i.ed = add i32 %i.eb, -3                       ; 2 uses
+  %8 = add i32 %i.eb, -2
+  %9 = add i32 %i.eb, -3                          ; 2 uses
+  %i.ec = add i32 %1, %i.di
+  %i.ed = add i32 %i.ec, -2
   br label %.preheader550
 
 .preheader550:                                    ; preds = %.preheader550.lr.ph, %._crit_edge593
@@ -259,8 +261,8 @@ gv_calloc.exit:                                   ; preds = %.thread.i, %bb.x
   %indvars.iv761 = phi i32 [ %i.dj, %.preheader550.lr.ph ], [ %indvars.iv.next762, %._crit_edge593 ] ; 12 uses
   %.0407623 = phi i32 [ 0, %.preheader550.lr.ph ], [ %.1.lcssa, %._crit_edge593 ] ; 3 uses
   %.0408622 = phi i32 [ 0, %.preheader550.lr.ph ], [ %.1409.lcssa, %._crit_edge593 ] ; 11 uses
-  %.6621 = phi i32 [ 0, %.preheader550.lr.ph ], [ %i.ib, %._crit_edge593 ] ; 9 uses
-  %i.ee = sub i32 %i.ec, %.6621                   ; 8 uses
+  %.6621 = phi i32 [ 0, %.preheader550.lr.ph ], [ %i.ib, %._crit_edge593 ] ; 10 uses
+  %i.ee = sub i32 %8, %.6621                      ; 6 uses
   %i.ef = zext i32 %indvars.iv761 to i64
   %i.eg = shl nuw nsw i64 %i.ef, 2
   %i.eh = icmp sgt i32 %i.dj, %.6621
@@ -292,8 +294,9 @@ gv_calloc.exit:                                   ; preds = %.thread.i, %bb.x
   br i1 %exitcond763.peel770.not, label %._crit_edge593.loopexit708, label %.lr.ph592.split.us.split.preheader970
 
 .lr.ph592.split.us.split.preheader970:            ; preds = %.lr.ph592.split.us.split.peel.next
-  %i.eo = zext i32 %i.ee to i64                   ; 2 uses
-  %min.iters.check1011 = icmp ult i32 %i.ee, 8
+  %10 = sub i32 %i.ed, %.6621                     ; 2 uses
+  %i.eo = zext i32 %10 to i64                     ; 2 uses
+  %min.iters.check1011 = icmp ult i32 %10, 8
   br i1 %min.iters.check1011, label %.lr.ph592.split.us.split.preheader1068, label %vector.ph1012
 
 vector.ph1012:                                    ; preds = %.lr.ph592.split.us.split.preheader970
@@ -441,7 +444,7 @@ bb.af:                                            ; preds = %.lr.ph592.split.spl
 
 .lr.ph592.split.split.split.us.preheader1067:     ; preds = %bb.af
   %xtraiter1079 = and i32 %i.ee, 1
-  %i.gd = icmp eq i32 %i.ed, %.6621
+  %i.gd = icmp eq i32 %9, %.6621
   br i1 %i.gd, label %.lr.ph592.split.split.split.us.epil.preheader, label %.lr.ph592.split.split.split.us.preheader1067.new
 
 .lr.ph592.split.split.split.us.preheader1067.new: ; preds = %.lr.ph592.split.split.split.us.preheader1067
@@ -489,7 +492,7 @@ bb.aj:                                            ; preds = %.lr.ph592.split.spl
 
 .lr.ph592.split.split.split.preheader1066:        ; preds = %bb.aj
   %xtraiter1087 = and i32 %i.ee, 1
-  %i.gp = icmp eq i32 %i.ed, %.6621
+  %i.gp = icmp eq i32 %9, %.6621
   br i1 %i.gp, label %.lr.ph592.split.split.split.epil.preheader, label %.lr.ph592.split.split.split.preheader1066.new
 
 .lr.ph592.split.split.split.preheader1066.new:    ; preds = %.lr.ph592.split.split.split.preheader1066

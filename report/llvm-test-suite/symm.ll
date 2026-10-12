@@ -203,9 +203,8 @@ middle.block:                                     ; preds = %vector.body, %scala
   br label %.preheader44.i
 
 .preheader.i:                                     ; preds = %middle.block, %.loopexit.i
-  %indvars.iv68.i = phi i64 [ %indvars.iv.next69.i, %.loopexit.i ], [ 0, %middle.block ] ; 6 uses
+  %indvars.iv68.i = phi i64 [ %indvars.iv.next69.i, %.loopexit.i ], [ 0, %middle.block ] ; 7 uses
   %indvars.iv62.i = phi i64 [ %indvars.iv.next63.i, %.loopexit.i ], [ 1, %middle.block ] ; 8 uses
-  %2 = sub nsw i64 59, %indvars.iv68.i            ; 3 uses
   %i.bj = getelementptr inbounds nuw [480 x i8], ptr %i.k, i64 %indvars.iv68.i ; 4 uses
   %min.iters.check45 = icmp samesign ult i64 %indvars.iv62.i, 2
   br i1 %min.iters.check45, label %scalar.ph44.preheader, label %vector.ph46
@@ -258,12 +257,13 @@ scalar.ph44:                                      ; preds = %scalar.ph44.prehead
   br i1 %i.bx, label %.lr.ph.i.preheader, label %.loopexit.i
 
 .lr.ph.i.preheader:                               ; preds = %.loopexit
-  %min.iters.check = icmp ult i64 %2, 4
+  %2 = sub nuw nsw i64 59, %indvars.iv68.i        ; 2 uses
+  %min.iters.check = icmp samesign ugt i64 %indvars.iv68.i, 55
   br i1 %min.iters.check, label %.lr.ph.i.preheader79, label %vector.ph39
 
 vector.ph39:                                      ; preds = %.lr.ph.i.preheader
-  %n.vec = and i64 %2, -4                         ; 3 uses
-  %i.by = add i64 %indvars.iv62.i, %n.vec
+  %n.vec = and i64 %2, 60                         ; 3 uses
+  %i.by = add nuw i64 %indvars.iv62.i, %n.vec
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %indvars.iv62.i
   br label %vector.body40
 

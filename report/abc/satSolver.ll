@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.y = sext i32 %i.x to i64
   %i.z = getelementptr inbounds [16 x i8], ptr %.val126, i64 %i.y ; 2 uses
   %i.aa = getelementptr i8, ptr %i.z, i64 8       ; 2 uses
-  %.val124 = load ptr, ptr %i.aa, align 8, !tbaa !41 ; 5 uses
+  %.val124 = load ptr, ptr %i.aa, align 8, !tbaa !41 ; 6 uses
   %i.ab = getelementptr i8, ptr %i.z, i64 4       ; 2 uses
   %.val127 = load i32, ptr %i.ab, align 4, !tbaa !44 ; 2 uses
   %i.ac = sext i32 %.val127 to i64
@@ -217,14 +217,15 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ag, label %.lr.ph.lr.ph, label %.outer._crit_edge
 
 .lr.ph.lr.ph:                                     ; preds = %bb.c
-  %.val124249 = ptrtoaddr ptr %.val124 to i64     ; 2 uses
   %i.ah = shl nsw i32 %i.x, 1
   %i.ai = or disjoint i32 %i.ah, 1
   %i.aj = xor i32 %i.x, 1                         ; 4 uses
-  %i.ak = add i64 %.val124249, -5
-  %i.al = add i64 %i.ak, %.idx
-  %i.am = add i64 %.val124249, -5
-  %i.an = add i64 %i.am, %.idx
+  %1 = ptrtoaddr ptr %.val124 to i64
+  %i.ak = add i64 %.idx, %1
+  %i.al = add i64 %i.ak, -5
+  %2 = ptrtoaddr ptr %.val124 to i64
+  %i.am = add i64 %.idx, %2
+  %i.an = add i64 %i.am, -5
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.thread
@@ -323,7 +324,7 @@ bb.i:                                             ; preds = %sat_solver_enqueue.
 .lr.ph165.preheader:                              ; preds = %bb.i
   %i.cc = shl i64 %indvar, 2
   %i.cd = add i64 %i.cc, %.092.ph181248
-  %i.ce = sub i64 %i.an, %i.cd                    ; 2 uses
+  %i.ce = sub i64 %i.al, %i.cd                    ; 2 uses
   %i.cf = lshr i64 %i.ce, 2
   %i.cg = add nuw nsw i64 %i.cf, 1                ; 2 uses
   %min.iters.check256 = icmp ult i64 %i.ce, 28
@@ -683,7 +684,7 @@ bb.ab:                                            ; preds = %sat_solver_enqueue.
 .lr.ph177.preheader:                              ; preds = %bb.ab
   %i.ie = shl i64 %indvar, 2
   %i.if = add i64 %i.ie, %.092.ph181248
-  %i.ig = sub i64 %i.al, %i.if                    ; 2 uses
+  %i.ig = sub i64 %i.an, %i.if                    ; 2 uses
   %i.ih = lshr i64 %i.ig, 2
   %i.ii = add nuw nsw i64 %i.ih, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ig, 28

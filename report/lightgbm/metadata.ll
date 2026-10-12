@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %indvar = phi i64 [ 0, %.preheader.lr.ph ], [ %indvar.next, %.loopexit ] ; 2 uses
   %indvars.iv = phi i64 [ %i.r, %.preheader.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 5 uses
   %i.u = phi i32 [ %i.j, %.preheader.lr.ph ], [ %i.ap, %.loopexit ] ; 2 uses
-  %4 = mul i64 %indvar, %i.s
-  %5 = add i64 %4, %i.r
-  %6 = sext i32 %i.u to i64                       ; 2 uses
-  %7 = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %6)
-  %reass.sub = sub i64 %7, %5
+  %4 = sext i32 %i.u to i64                       ; 2 uses
+  %5 = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %4)
+  %6 = mul i64 %indvar, %i.s
+  %7 = add i64 %6, %i.r
+  %reass.sub = sub i64 %5, %7
   %i.v = add i64 %reass.sub, 1                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.v, 4
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -268,7 +268,7 @@ _ZN8LightGBM6CommonL8AvoidInfEf.exit:             ; preds = %bb.d, %bb.c, %scala
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv22
   store float %.0.i, ptr %i.an, align 4, !tbaa !83
   %indvars.iv.next23 = add nsw i64 %indvars.iv22, 1
-  %.not15.not = icmp slt i64 %indvars.iv22, %6
+  %.not15.not = icmp slt i64 %indvars.iv22, %4
   br i1 %.not15.not, label %scalar.ph, label %.loopexit, !llvm.loop !616
 
 .loopexit:                                        ; preds = %_ZN8LightGBM6CommonL8AvoidInfEf.exit, %middle.block
@@ -671,11 +671,11 @@ bb.b:                                             ; preds = %bb.a
   %indvar = phi i64 [ 0, %.preheader.lr.ph ], [ %indvar.next, %.loopexit ] ; 2 uses
   %indvars.iv = phi i64 [ %i.r, %.preheader.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 5 uses
   %i.u = phi i32 [ %i.j, %.preheader.lr.ph ], [ %i.ap, %.loopexit ] ; 2 uses
-  %4 = mul i64 %indvar, %i.s
-  %5 = add i64 %4, %i.r
-  %6 = sext i32 %i.u to i64                       ; 2 uses
-  %7 = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %6)
-  %reass.sub = sub i64 %7, %5
+  %4 = sext i32 %i.u to i64                       ; 2 uses
+  %5 = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %4)
+  %6 = mul i64 %indvar, %i.s
+  %7 = add i64 %6, %i.r
+  %reass.sub = sub i64 %5, %7
   %i.v = add i64 %reass.sub, 1                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.v, 4
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -735,7 +735,7 @@ _ZN8LightGBM6CommonL8AvoidInfEf.exit:             ; preds = %bb.d, %bb.c, %scala
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %indvars.iv22
   store float %.0.i, ptr %i.an, align 4, !tbaa !83
   %indvars.iv.next23 = add nsw i64 %indvars.iv22, 1
-  %.not15.not = icmp slt i64 %indvars.iv22, %6
+  %.not15.not = icmp slt i64 %indvars.iv22, %4
   br i1 %.not15.not, label %scalar.ph, label %.loopexit, !llvm.loop !750
 
 .loopexit:                                        ; preds = %_ZN8LightGBM6CommonL8AvoidInfEf.exit, %middle.block

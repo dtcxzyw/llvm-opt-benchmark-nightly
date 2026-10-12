@@ -205,8 +205,6 @@ bb.az:                                            ; preds = %bb.ay
 bb.ba:                                            ; preds = %bb.bm, %.lr.ph82.i
   %indvars.iv88.i = phi i64 [ 0, %.lr.ph82.i ], [ %indvars.iv.next89.i, %bb.bm ] ; 4 uses
   %indvars.iv.i38 = phi i64 [ 1, %.lr.ph82.i ], [ %indvars.iv.next.i39, %bb.bm ] ; 4 uses
-  %4 = trunc i64 %indvars.iv88.i to i16
-  %5 = sub i16 %i.ki, %4                          ; 2 uses
   %i.kj = getelementptr inbounds nuw [6 x i8], ptr %i.kc, i64 %indvars.iv88.i ; 5 uses
   %i.kk = load i16, ptr %i.kj, align 2, !tbaa !38 ; 8 uses
   %i.kl = zext i16 %i.kk to i32                   ; 2 uses
@@ -272,6 +270,8 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %i.ll, label %.lr.ph.i44.preheader, label %._crit_edge.i43
 
 .lr.ph.i44.preheader:                             ; preds = %bb.bi
+  %4 = trunc i64 %indvars.iv88.i to i16
+  %5 = sub i16 %i.ki, %4                          ; 2 uses
   %min.iters.check153 = icmp ult i16 %5, 8
   br i1 %min.iters.check153, label %.lr.ph.i44.preheader177, label %vector.ph154
 

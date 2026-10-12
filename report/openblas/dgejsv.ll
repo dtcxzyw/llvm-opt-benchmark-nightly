@@ -202,17 +202,17 @@ bb.cz:                                            ; preds = %bb.cy
 bb.da:                                            ; preds = %.lr.ph2410, %.loopexit3826
   %indvar = phi i64 [ 0, %.lr.ph2410 ], [ %indvar.next, %.loopexit3826 ] ; 2 uses
   %indvars.iv2928 = phi i64 [ 1, %.lr.ph2410 ], [ %indvars.iv.next2929, %.loopexit3826 ] ; 6 uses
-  %19 = xor i64 %indvar, -1
-  %20 = add i64 %19, %wide.trip.count2936         ; 3 uses
-  %21 = mul nsw i64 %indvars.iv2928, %i.md
-  %invariant.gep = getelementptr [8 x i8], ptr %i.u, i64 %21 ; 6 uses
+  %19 = mul nsw i64 %indvars.iv2928, %i.md
+  %invariant.gep = getelementptr [8 x i8], ptr %i.u, i64 %19 ; 6 uses
   %invariant.gep3438 = getelementptr [8 x i8], ptr %i.u, i64 %indvars.iv2928 ; 6 uses
-  %min.iters.check = icmp ugt i64 %20, 7
+  %20 = xor i64 %indvar, -1
+  %21 = add i64 %20, %wide.trip.count2936         ; 3 uses
+  %min.iters.check = icmp ugt i64 %21, 7
   %or.cond3827 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   br i1 %or.cond3827, label %vector.ph, label %scalar.ph.preheader
 
 vector.ph:                                        ; preds = %bb.da
-  %n.vec = and i64 %20, -8                        ; 3 uses
+  %n.vec = and i64 %21, -8                        ; 3 uses
   %i.me = add i64 %indvars.iv2928, %n.vec
   %invariant.op4049 = add nuw i64 %indvars.iv2928, 1
   br label %vector.body
@@ -237,7 +237,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.mj, label %middle.block, label %vector.body, !llvm.loop !15
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %20, %n.vec
+  %cmp.n = icmp eq i64 %21, %n.vec
   br i1 %cmp.n, label %.loopexit3826, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %bb.da, %middle.block

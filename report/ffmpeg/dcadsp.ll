@@ -205,7 +205,6 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @assemble_freq_bands_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4) #3 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64
   %i.a = icmp sgt i64 %4, 0
   br i1 %i.a, label %.lr.ph.i, label %._crit_edge
 
@@ -608,11 +607,12 @@ vector.memcheck173:                               ; preds = %.preheader
   %scevgep = getelementptr i8, ptr %0, i64 %i.kc  ; 2 uses
   %i.kd = shl i64 %4, 2                           ; 2 uses
   %scevgep174 = getelementptr i8, ptr %2, i64 %i.kd
+  %5 = ptrtoaddr ptr %1 to i64
   %i.ke = ptrtoaddr ptr %i.kb to i64
   %reass.sub = sub i64 %i.ke, %5
-  %i.kf = getelementptr i8, ptr %1, i64 %i.kd
-  %i.kg = getelementptr i8, ptr %i.kf, i64 %reass.sub
-  %scevgep175 = getelementptr i8, ptr %i.kg, i64 4
+  %i.kf = getelementptr i8, ptr %1, i64 %reass.sub
+  %i.kg = getelementptr i8, ptr %i.kf, i64 4
+  %scevgep175 = getelementptr i8, ptr %i.kg, i64 %i.kd
   %bound0176 = icmp ult ptr %0, %scevgep174
   %bound1177 = icmp ult ptr %2, %scevgep
   %found.conflict178 = and i1 %bound0176, %bound1177

@@ -204,7 +204,7 @@ _ZN7msdfgen18BitmapConstSectionIfLi1EE8reorientENS_16YAxisOrientationE.exit: ; p
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef zeroext i1 @_ZN7msdfgenL7pngSaveEPKfiiiiiPKc(ptr nofree noundef readonly captures(address) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef range(i32 1, 5) %4, i32 noundef range(i32 0, 7) %5, ptr nofree noundef readonly captures(none) %6) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 6 uses
   %i.b = icmp ne ptr %0, null
   %i.c = icmp ne i32 %1, 0
   %or.cond = and i1 %i.b, %i.c
@@ -246,12 +246,14 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.c, %_ZNSt6vector
   %i.p = icmp sgt i32 %i.e, 0
   %i.q = add i64 %.idx, %i.a
   %i.r = shl nsw i64 %i.o, 2
-  %i.s = add i64 %i.a, 4                          ; 2 uses
-  %i.t = xor i64 %i.a, -1                         ; 2 uses
+  %i.s = add i64 %i.a, 4
+  %i.t = xor i64 %i.a, -1
   %i.u = mul nsw i64 %i.o, -4
-  %7 = mul nsw i64 %i.o, -4
+  %7 = add i64 %.idx, %i.a
   %i.v = shl nsw i64 %i.o, 2
-  %i.w = add i64 %.idx, %i.a
+  %i.w = add i64 %i.a, 4
+  %8 = xor i64 %i.a, -1
+  %9 = mul nsw i64 %i.o, -4
   br label %bb.d
 
 ._crit_edge59:                                    ; preds = %._crit_edge, %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
@@ -279,13 +281,13 @@ bb.d:                                             ; preds = %.lr.ph58, %._crit_e
   br i1 %i.p, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %i.ai = mul i64 %i.v, %indvar                   ; 2 uses
-  %i.aj = add i64 %i.w, %i.ai
-  %i.ak = add i64 %i.s, %i.ai
-  %8 = mul i64 %7, %indvar
-  %9 = add i64 %8, %i.t
+  %i.ai = mul i64 %indvar, %i.v                   ; 2 uses
+  %i.aj = add i64 %i.ai, %7
+  %i.ak = add i64 %i.ai, %i.w
   %10 = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.ak)
-  %i.al = add i64 %10, %9                         ; 2 uses
+  %11 = mul i64 %indvar, %9
+  %12 = add i64 %11, %8
+  %i.al = add i64 %10, %12                        ; 2 uses
   %i.am = lshr i64 %i.al, 2
   %i.an = add nuw nsw i64 %i.am, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.al, 12

@@ -205,12 +205,10 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph135
 
 .lr.ph135:                                        ; preds = %._crit_edge140, %._crit_edge131
-  %indvar174 = phi i64 [ %indvar.next175, %._crit_edge140 ], [ 0, %._crit_edge131 ] ; 7 uses
+  %indvar174 = phi i64 [ %indvar.next175, %._crit_edge140 ], [ 0, %._crit_edge131 ] ; 5 uses
   %indvars.iv159 = phi i32 [ %indvars.iv.next160, %._crit_edge140 ], [ 2, %._crit_edge131 ] ; 3 uses
   %.0143 = phi i32 [ %i.hb, %._crit_edge140 ], [ 1, %._crit_edge131 ] ; 7 uses
   %.098142 = phi i64 [ %indvars.iv.next157, %._crit_edge140 ], [ 1, %._crit_edge131 ] ; 6 uses
-  %0 = shl nuw nsw i64 %indvar174, 1
-  %1 = add nuw i64 %0, 2
   %i.dv = shl nuw nsw i64 %indvar174, 3
   %i.dw = add nuw i64 %i.dv, 16
   %i.dx = sub nsw i32 0, %.0143                   ; 5 uses
@@ -219,8 +217,8 @@ middle.block:                                     ; preds = %vector.body
   %i.ea = shl i16 %i.dz, 1                        ; 2 uses
   %i.eb = trunc i32 %.0143 to i16                 ; 3 uses
   %i.ec = shl i16 %i.eb, 1                        ; 2 uses
-  %i.ed = shl nuw nsw i64 %indvar174, 1
-  %min.iters.check267 = icmp ult i64 %indvar174, 6
+  %i.ed = shl i64 %indvar174, 1                   ; 2 uses
+  %min.iters.check267 = icmp ult i64 %i.ed, 12
   br i1 %min.iters.check267, label %scalar.ph266.preheader, label %vector.memcheck230
 
 scalar.ph266.preheader:                           ; preds = %vector.body281, %vector.memcheck230, %.lr.ph135
@@ -271,8 +269,8 @@ vector.memcheck230:                               ; preds = %.lr.ph135
   br i1 %conflict.rdx265, label %scalar.ph266.preheader, label %vector.ph268
 
 vector.ph268:                                     ; preds = %vector.memcheck230
-  %n.vec269 = and i64 %i.ed, 9223372036854775800  ; 4 uses
-  %i.eh = shl nuw i64 %n.vec269, 1
+  %n.vec269 = and i64 %i.ed, -8                   ; 4 uses
+  %i.eh = shl i64 %n.vec269, 1
   %i.ei = add i64 %.098142, %i.eh
   %i.ej = trunc i64 %n.vec269 to i32
   %i.ek = add i32 %i.dy, %i.ej
@@ -327,7 +325,9 @@ vector.body281:                                   ; preds = %vector.body281, %ve
   %i.fb = shl i16 %i.fa, 1                        ; 2 uses
   %i.fc = trunc i32 %.0143 to i16                 ; 3 uses
   %i.fd = shl i16 %i.fc, 1                        ; 2 uses
-  %min.iters.check203 = icmp ult i64 %indvar174, 5
+  %0 = shl i64 %indvar174, 1                      ; 2 uses
+  %1 = add nuw i64 %0, 2
+  %min.iters.check203 = icmp ult i64 %0, 9
   br i1 %min.iters.check203, label %scalar.ph202.preheader, label %vector.memcheck
 
 scalar.ph202.preheader:                           ; preds = %vector.body216, %vector.memcheck, %.lr.ph139.loopexit

@@ -204,7 +204,6 @@ bb.a:
   %i.a = sub i64 %3, %5                           ; 36 uses
   %.not = icmp eq i64 %i.a, 0
   %i.b = load ptr, ptr %0, align 8, !tbaa !62     ; 11 uses
-  %6 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   br i1 %.not, label %bb.b, label %bb.c, !prof !38
 
 bb.b:                                             ; preds = %bb.a
@@ -304,7 +303,7 @@ _ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24mov
 bb.f:                                             ; preds = %bb.c
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.ar = load i16, ptr %i.aq, align 8, !tbaa !63 ; 3 uses
-  %i.as = zext i16 %i.ar to i64                   ; 7 uses
+  %i.as = zext i16 %i.ar to i64                   ; 6 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.as ; 16 uses
   %i.au = icmp eq ptr %1, %i.at
   br i1 %i.au, label %bb.g, label %bb.i
@@ -707,7 +706,8 @@ _ZN5boost9container33uninitialized_move_alloc_n_sourceINS0_13new_allocatorINS0_4
 
 .lr.ph.i40.i81.preheader:                         ; preds = %_ZN5boost9container33uninitialized_move_alloc_n_sourceINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S9_mSA_.exit.i
   %i.hc = shl i64 %5, 2
-  %i.hd = add i64 %3, %i.as
+  %6 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
+  %i.hd = add i64 %3, %i.as                       ; 2 uses
   %i.he = shl i64 %i.hd, 2
   %i.hf = add i64 %i.hc, %i.bw
   %i.hg = add i64 %i.hf, -4
@@ -720,18 +720,17 @@ _ZN5boost9container33uninitialized_move_alloc_n_sourceINS0_13new_allocatorINS0_4
 
 vector.memcheck165:                               ; preds = %.lr.ph.i40.i81.preheader
   %i.hl = shl i64 %5, 2
-  %7 = add i64 %i.hl, %i.bw
-  %i.hm = add i64 %7, -4
-  %i.hn = add i64 %3, %i.as
-  %8 = shl i64 %i.hn, 2
-  %i.ho = add i64 %8, %6
-  %i.hp = sub i64 %i.hm, %i.ho
+  %7 = shl i64 %i.hd, 2
+  %i.hm = add i64 %i.hl, %i.bw
+  %i.hn = add i64 %i.hm, -4
+  %i.ho = add i64 %7, %6
+  %i.hp = sub i64 %i.hn, %i.ho
   %i.hq = and i64 %i.hp, -4
   %i.hr = shl nuw nsw i64 %i.as, 2
   %i.hs = add i64 %i.hq, %i.hr                    ; 2 uses
   %i.ht = getelementptr i8, ptr %i.b, i64 %i.hs
   %scevgep = getelementptr i8, ptr %i.ht, i64 4
-  %i.hu = shl nuw nsw i64 %indvar.lcssa, 2
+  %i.hu = shl i64 %indvar.lcssa, 2
   %i.hv = getelementptr i8, ptr %i.b, i64 %i.hu
   %i.hw = getelementptr i8, ptr %i.hv, i64 %i.hs
   %scevgep166 = getelementptr i8, ptr %i.hw, i64 8
@@ -1134,8 +1133,8 @@ bb.a:
   %i.c = sub i64 %i.a, %i.b                       ; 11 uses
   %i.d = ashr exact i64 %i.c, 2                   ; 32 uses
   %.not = icmp eq ptr %3, %2
-  %i.e = load ptr, ptr %0, align 8, !tbaa !62     ; 11 uses
-  %i.f = ptrtoaddr ptr %i.e to i64                ; 3 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !62     ; 12 uses
+  %i.f = ptrtoaddr ptr %i.e to i64
   br i1 %.not, label %bb.b, label %bb.c, !prof !38
 
 bb.b:                                             ; preds = %bb.a
@@ -1225,7 +1224,7 @@ _ZN5boost9container24uninitialized_copy_allocINS0_13new_allocatorINS0_4test24mov
   br label %bb.n
 
 bb.h:                                             ; preds = %bb.e
-  %i.au = ptrtoint ptr %1 to i64                  ; 8 uses
+  %i.au = ptrtoint ptr %1 to i64                  ; 7 uses
   %i.av = ptrtoint ptr %i.ah to i64
   %i.aw = sub i64 %i.au, %i.av
   %i.ax = ashr exact i64 %i.aw, 2                 ; 10 uses
@@ -1628,21 +1627,20 @@ _ZN5boost9container33uninitialized_move_alloc_n_sourceINS0_13new_allocatorINS0_4
   br i1 %.not8.i.i63, label %_ZN5boost9container4moveIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i, label %.lr.ph.i40.i64.preheader
 
 .lr.ph.i40.i64.preheader:                         ; preds = %_ZN5boost9container33uninitialized_move_alloc_n_sourceINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_S9_E4typeERT_S9_mSA_.exit.i
+  %4 = ptrtoaddr ptr %i.e to i64
   %i.il = shl nuw nsw i64 %i.ag, 2
   %i.im = add i64 %i.au, -4
-  %4 = add i64 %i.c, %i.f
-  %i.in = add i64 %4, %i.il
-  %i.io = sub i64 %i.im, %i.in                    ; 2 uses
+  %5 = sub i64 %i.im, %4                          ; 2 uses
+  %i.in = add i64 %i.c, %i.il
+  %i.io = sub i64 %5, %i.in                       ; 2 uses
   %i.ip = lshr i64 %i.io, 2
   %i.iq = add nuw nsw i64 %i.ip, 1                ; 2 uses
   %min.iters.check167 = icmp ult i64 %i.io, 140
   br i1 %min.iters.check167, label %.lr.ph.i40.i64.preheader225, label %vector.memcheck161
 
 vector.memcheck161:                               ; preds = %.lr.ph.i40.i64.preheader
-  %5 = add i64 %i.au, -4
-  %6 = add i64 %i.c, %i.f
   %i.ir = shl nuw nsw i64 %i.ag, 2                ; 2 uses
-  %i.is = add i64 %6, %i.ir
+  %i.is = add i64 %i.c, %i.ir
   %i.it = sub i64 %5, %i.is
   %i.iu = and i64 %i.it, -4
   %i.iv = add i64 %i.iu, %i.ir                    ; 2 uses

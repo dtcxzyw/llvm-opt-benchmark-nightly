@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l
 
 vector.memcheck628:                               ; preds = %.preheader.lr.ph.i227
   %i.ok = shl nuw nsw i64 %wide.trip.count.i206, 1 ; 7 uses
-  %i.ol = mul i64 %1, %indvar
+  %i.ol = mul i64 %indvar, %1
   %i.om = getelementptr i8, ptr %.0157, i64 %i.ol
   %i.on = getelementptr i8, ptr %i.om, i64 %1
   %scevgep629 = getelementptr i8, ptr %i.on, i64 %i.ok ; 7 uses
@@ -433,7 +433,7 @@ vector.memcheck701:                               ; preds = %.preheader.lr.ph.i2
   %i.sq = shl nuw nsw i64 %wide.trip.count.i206, 1 ; 6 uses
   %i.sr = add i64 %1, %wide.trip.count.i206
   %i.ss = shl i64 %i.sr, 1
-  %i.st = mul i64 %1, %indvar
+  %i.st = mul i64 %indvar, %1
   %i.su = getelementptr i8, ptr %.0157, i64 %i.st
   %scevgep702 = getelementptr i8, ptr %i.su, i64 %i.ss ; 7 uses
   %scevgep703 = getelementptr i8, ptr %.0..0..0.319, i64 %i.sq

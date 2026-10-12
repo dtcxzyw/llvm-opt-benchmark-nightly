@@ -205,7 +205,7 @@ bb.cf:                                            ; preds = %.preheader654, %bb.
   %i.qx = load i32, ptr %i.qw, align 4, !tbaa !47 ; 5 uses
   %i.qy = load ptr, ptr %i.l, align 8, !tbaa !89  ; 9 uses
   %i.qz = load ptr, ptr %i.h, align 8, !tbaa !92  ; 3 uses
-  %i.ra = sext i32 %i.qv to i64                   ; 9 uses
+  %i.ra = sext i32 %i.qv to i64                   ; 8 uses
   %i.rb = getelementptr inbounds [4 x i8], ptr %i.qz, i64 %i.ra ; 5 uses
   %i.rc = load i32, ptr %i.rb, align 4, !tbaa !47
   %i.rd = sext i32 %i.rc to i64
@@ -608,7 +608,6 @@ _ZL10gyro_eigenPPdS_S0_Pi.exit:                   ; preds = %.thread39.i, %.thre
 
 .preheader639.preheader:                          ; preds = %.preheader643
   %i.abj = xor i64 %i.ra, -1
-  %21 = add nsw i64 %i.ra, 2
   br label %.preheader639
 
 bb.cm:                                            ; preds = %.lr.ph696, %bb.cm
@@ -649,11 +648,8 @@ bb.cm:                                            ; preds = %.lr.ph696, %bb.cm
   br i1 %exitcond796.not, label %.preheader643, label %bb.cm
 
 .preheader639:                                    ; preds = %.preheader639.preheader, %..critedge_crit_edge
-  %indvar = phi i64 [ 0, %.preheader639.preheader ], [ %indvar.next, %..critedge_crit_edge ] ; 3 uses
-  %indvars.iv800 = phi i64 [ %i.ra, %.preheader639.preheader ], [ %indvars.iv.next801, %..critedge_crit_edge ] ; 3 uses
-  %22 = sub i64 %i.abj, %indvar
-  %23 = add i64 %21, %indvar
-  %i.acl = sub nsw i64 %indvars.iv800, %i.ra      ; 2 uses
+  %indvars.iv800 = phi i64 [ %indvars.iv.next801, %..critedge_crit_edge ], [ %i.ra, %.preheader639.preheader ] ; 4 uses
+  %i.acl = sub nsw i64 %indvars.iv800, %i.ra      ; 3 uses
   %i.acm = getelementptr inbounds [12 x i8], ptr %.0632, i64 %i.acl ; 3 uses
   %i.acn = load float, ptr %i.acm, align 4, !tbaa !93 ; 2 uses
   %i.aco = getelementptr inbounds nuw i8, ptr %i.acm, i64 4
@@ -661,7 +657,9 @@ bb.cm:                                            ; preds = %.lr.ph696, %bb.cm
   %i.acq = getelementptr inbounds nuw i8, ptr %i.acm, i64 8
   %i.acr = load float, ptr %i.acq, align 4, !tbaa !93 ; 2 uses
   %invariant.gep = getelementptr [12 x i8], ptr %.0632, i64 %i.acl ; 2 uses
-  %i.acs = call i64 @llvm.smax.i64(i64 %23, i64 %i.rg)
+  %21 = add i64 %indvars.iv800, 2
+  %i.acs = call i64 @llvm.smax.i64(i64 %21, i64 %i.rg)
+  %22 = sub i64 %i.abj, %i.acl
   %i.act = add i64 %i.acs, %22
   %i.acu = lshr i64 %i.act, 1
   %i.acv = call i64 @llvm.umin.i64(i64 %i.qj, i64 %i.acu) ; 2 uses
@@ -747,7 +745,6 @@ scalar.ph1135:                                    ; preds = %scalar.ph1135.prehe
 ..critedge_crit_edge:                             ; preds = %scalar.ph1135
   %indvars.iv.next801 = add nsw i64 %indvars.iv800, 1 ; 2 uses
   %exitcond804.not = icmp eq i64 %indvars.iv.next801, %i.rg
-  %indvar.next = add i64 %indvar, 1
   br i1 %exitcond804.not, label %.loopexit, label %.preheader639, !llvm.loop !39
 
 .loopexit:                                        ; preds = %..critedge_crit_edge, %.preheader643, %.loopexit645

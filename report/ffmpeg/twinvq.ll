@@ -205,14 +205,13 @@ bb.a:
   br label %.lr.ph.us.us
 
 .lr.ph.us.us:                                     ; preds = %.lr.ph.us.us.preheader, %.critedge.us.us
-  %indvars.iv62 = phi i64 [ %indvars.iv.next63, %.critedge.us.us ], [ 0, %.lr.ph.us.us.preheader ] ; 4 uses
-  %6 = trunc i64 %indvars.iv62 to i32
-  %7 = mul i32 %1, %6
-  %i.k = trunc i64 %indvars.iv62 to i32
+  %indvars.iv62 = phi i64 [ %indvars.iv.next63, %.critedge.us.us ], [ 0, %.lr.ph.us.us.preheader ] ; 3 uses
+  %6 = mul nuw nsw i64 %indvars.iv62, %i.h        ; 3 uses
+  %i.k = trunc i64 %indvars.iv62 to i32           ; 2 uses
   %i.l = mul i32 %1, %i.k
-  %8 = mul nuw nsw i64 %indvars.iv62, %i.h        ; 3 uses
-  %9 = tail call i32 @llvm.smax.i32(i32 %i.l, i32 %i.f)
-  %i.m = sub i32 %9, %7
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.l, i32 %i.f)
+  %8 = mul i32 %1, %i.k
+  %i.m = sub i32 %7, %8
   %i.n = zext i32 %i.m to i64
   %i.o = tail call i64 @llvm.umin.i64(i64 %i.j, i64 %i.n) ; 2 uses
   %min.iters.check7 = icmp samesign ult i64 %i.o, 8
@@ -224,9 +223,9 @@ vector.ph8:                                       ; preds = %.lr.ph.us.us
   %i.r = icmp eq i64 %i.q, 0
   %i.s = select i1 %i.r, i64 8, i64 %i.q
   %n.vec9 = sub nsw i64 %i.p, %i.s                ; 2 uses
-  %i.t = insertelement <8 x i64> poison, i64 %8, i64 0
+  %i.t = insertelement <8 x i64> poison, i64 %6, i64 0
   %i.u = shufflevector <8 x i64> %i.t, <8 x i64> poison, <8 x i32> zeroinitializer
-  %invariant.gep16 = getelementptr [2 x i8], ptr %0, i64 %8
+  %invariant.gep16 = getelementptr [2 x i8], ptr %0, i64 %6
   br label %vector.body10
 
 vector.body10:                                    ; preds = %vector.body10, %vector.ph8
@@ -248,7 +247,7 @@ scalar.ph6.preheader:                             ; preds = %vector.body10, %.lr
 
 scalar.ph6:                                       ; preds = %scalar.ph6.preheader, %bb.b
   %indvars.iv57 = phi i64 [ %indvars.iv.next58, %bb.b ], [ %indvars.iv57.ph, %scalar.ph6.preheader ] ; 2 uses
-  %i.ab = add nuw nsw i64 %indvars.iv57, %8       ; 3 uses
+  %i.ab = add nuw nsw i64 %indvars.iv57, %6       ; 3 uses
   %i.ac = trunc nuw i64 %i.ab to i32
   %i.ad = icmp sgt i32 %i.f, %i.ac
   br i1 %i.ad, label %bb.b, label %.critedge.us.us
@@ -270,8 +269,6 @@ bb.b:                                             ; preds = %scalar.ph6
 
 .lr.ph43.split.us.split:                          ; preds = %.lr.ph43.split.us.split.preheader, %.critedge.us
   %indvars.iv54 = phi i64 [ %indvars.iv.next55, %.critedge.us ], [ 0, %.lr.ph43.split.us.split.preheader ] ; 6 uses
-  %10 = trunc i64 %indvars.iv54 to i32
-  %11 = mul i32 %1, %10
   br i1 %i.b, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph43.split.us.split
@@ -298,7 +295,9 @@ bb.e:                                             ; preds = %.thread.us
   %i.ao = mul nuw nsw i64 %indvars.iv54, %i.h     ; 3 uses
   %i.ap = trunc i64 %i.ao to i32                  ; 3 uses
   %i.aq = tail call i32 @llvm.smax.i32(i32 %i.ap, i32 %i.f)
-  %i.ar = sub i32 %i.aq, %11
+  %9 = trunc i64 %indvars.iv54 to i32
+  %10 = mul i32 %1, %9
+  %i.ar = sub i32 %i.aq, %10
   %i.as = zext i32 %i.ar to i64
   %i.at = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.as) ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.at, 8

@@ -204,8 +204,6 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 bb.c:                                             ; preds = %.lr.ph33, %.loopexit
   %indvars.iv43 = phi i64 [ 0, %.lr.ph33 ], [ %indvars.iv.next44, %.loopexit ] ; 5 uses
   %indvars.iv36 = phi i64 [ 1, %.lr.ph33 ], [ %indvars.iv.next37, %.loopexit ] ; 5 uses
-  %3 = xor i64 %indvars.iv43, -1
-  %4 = add nsw i64 %3, %wide.trip.count           ; 3 uses
   %i.at = mul i64 %i.aa, %indvars.iv43
   %i.au = add i64 %i.at, 8                        ; 2 uses
   %scevgep = getelementptr i8, ptr %i.w, i64 %i.au
@@ -220,6 +218,8 @@ bb.c:                                             ; preds = %.lr.ph33, %.loopexi
 
 .lr.ph30:                                         ; preds = %bb.c
   %i.ay = mul nuw nsw i64 %indvars.iv43, %i.y     ; 4 uses
+  %3 = xor i64 %indvars.iv43, -1
+  %4 = add nsw i64 %3, %wide.trip.count           ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 

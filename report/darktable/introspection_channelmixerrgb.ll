@@ -205,10 +205,8 @@ transpose_dot_vector.exit.i.i:                    ; preds = %vec.epilog.scalar.p
   br i1 %exitcond146.not.i.i.i.i, label %gauss_make_triangular.exit.i.i.i, label %bb.t
 
 bb.t:                                             ; preds = %.loopexit.i.i.i.i, %transpose_dot_vector.exit.i.i
-  %indvars.iv143.i.i.i.i = phi i64 [ 0, %transpose_dot_vector.exit.i.i ], [ %indvars.iv.next144.i.i.i.i, %.loopexit.i.i.i.i ] ; 20 uses
+  %indvars.iv143.i.i.i.i = phi i64 [ 0, %transpose_dot_vector.exit.i.i ], [ %indvars.iv.next144.i.i.i.i, %.loopexit.i.i.i.i ] ; 23 uses
   %indvars.iv.i.i.i.i = phi i64 [ 1, %transpose_dot_vector.exit.i.i ], [ %indvars.iv.next.i.i.i.i, %.loopexit.i.i.i.i ] ; 14 uses
-  %6 = sub nsw i64 8, %indvars.iv143.i.i.i.i      ; 3 uses
-  %7 = sub nsw i64 8, %indvars.iv143.i.i.i.i      ; 3 uses
   %i.anq = shl nuw nsw i64 %indvars.iv143.i.i.i.i, 3
   %i.anr = getelementptr i8, ptr %i.pq, i64 %i.anq
   %scevgep1425 = getelementptr i8, ptr %i.anr, i64 8
@@ -218,7 +216,6 @@ bb.t:                                             ; preds = %.loopexit.i.i.i.i, 
   %i.anu = mul nuw nsw i64 %indvars.iv143.i.i.i.i, 72
   %i.anv = getelementptr i8, ptr %i.pq, i64 %i.anu
   %scevgep1430 = getelementptr i8, ptr %i.anv, i64 72
-  %8 = sub nsw i64 8, %indvars.iv143.i.i.i.i      ; 3 uses
   %i.anw = mul nuw nsw i64 %indvars.iv143.i.i.i.i, 80 ; 3 uses
   %i.anx = getelementptr i8, ptr %i.pq, i64 %i.anw
   %scevgep = getelementptr i8, ptr %i.anx, i64 80 ; 2 uses
@@ -294,7 +291,8 @@ bb.t:                                             ; preds = %.loopexit.i.i.i.i, 
   br i1 %i.aoe, label %.lr.ph115.i.i.i.i.preheader, label %.loopexit.i.i.i.i
 
 .lr.ph115.i.i.i.i.preheader:                      ; preds = %.preheader111.i.i.i.i
-  %min.iters.check1447 = icmp ult i64 %6, 4
+  %6 = sub nuw nsw i64 8, %indvars.iv143.i.i.i.i  ; 2 uses
+  %min.iters.check1447 = icmp samesign ugt i64 %indvars.iv143.i.i.i.i, 4
   br i1 %min.iters.check1447, label %.lr.ph115.i.i.i.i.preheader1519, label %vector.ph1448
 
 vector.ph1448:                                    ; preds = %.lr.ph115.i.i.i.i.preheader
@@ -397,7 +395,8 @@ middle.block1462:                                 ; preds = %vector.body1455
 .lr.ph118.preheader.i.i.i.i:                      ; preds = %._crit_edge116.i.i.i.i
   %invariant.gep153.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.pq, i64 %i.aot ; 6 uses
   %invariant.gep155.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.pq, i64 %i.aox ; 6 uses
-  %min.iters.check1435 = icmp ult i64 %7, 4
+  %7 = sub nuw nsw i64 8, %indvars.iv143.i.i.i.i  ; 2 uses
+  %min.iters.check1435 = icmp samesign ugt i64 %indvars.iv143.i.i.i.i, 4
   br i1 %min.iters.check1435, label %.lr.ph118.i.i.i.i.preheader, label %vector.memcheck1424
 
 vector.memcheck1424:                              ; preds = %.lr.ph118.preheader.i.i.i.i
@@ -505,7 +504,8 @@ middle.block1443:                                 ; preds = %vector.body1438
 
 .preheader.preheader.i.i.i.i:                     ; preds = %.lr.ph118.i.i.i.i.prol.loopexit, %.lr.ph118.i.i.i.i, %middle.block1443, %._crit_edge116.i.i.i.i
   %invariant.gep157.i.i.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.pq, i64 %i.aox ; 6 uses
-  %min.iters.check1411 = icmp ult i64 %8, 4
+  %8 = sub nuw nsw i64 8, %indvars.iv143.i.i.i.i  ; 2 uses
+  %min.iters.check1411 = icmp samesign ugt i64 %indvars.iv143.i.i.i.i, 4
   %bound0 = icmp ult ptr %scevgep, %scevgep1405
   %bound1 = icmp ult ptr %scevgep1404, %scevgep1403
   %found.conflict = and i1 %bound0, %bound1

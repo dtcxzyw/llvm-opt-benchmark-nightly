@@ -205,8 +205,6 @@ bb.g:                                             ; preds = %_ZL13_box_min_vertI
   %.051134.i.i = phi i64 [ %i.mr, %bb.j ], [ 0, %.lr.ph135.i.i.preheader ] ; 7 uses
   %i.gz = phi <16 x float> [ %i.ms, %bb.j ], [ %i.gc, %.lr.ph135.i.i.preheader ]
   %i.ha = phi <32 x float> [ %i.mq, %bb.j ], [ %i.gd, %.lr.ph135.i.i.preheader ] ; 3 uses
-  %5 = xor i64 %.051134.i.i, -1
-  %6 = add nsw i64 %i.c, %5
   %umin.i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i72.i, i64 %i.eg) ; 2 uses
   %i.hb = add nuw nsw i64 %.051134.i.i, 24
   %i.hc = mul i64 %i.hb, %i.ef
@@ -230,6 +228,8 @@ bb.h:                                             ; preds = %.lr.ph135.i.i
   br i1 %i.hi, label %.lr.ph111.i.i.preheader, label %.loopexit.i.i
 
 .lr.ph111.i.i.preheader:                          ; preds = %bb.h
+  %5 = xor i64 %.051134.i.i, -1
+  %6 = add nsw i64 %i.c, %5
   %i.hj = add i64 %umin.i.i, %6                   ; 3 uses
   %min.iters.check = icmp ult i64 %i.hj, 8
   br i1 %min.iters.check, label %.lr.ph111.i.i.preheader374, label %vector.ph
@@ -578,8 +578,6 @@ bb.k:                                             ; preds = %_ZL13_box_min_vertI
   %.05189.i.i = phi i64 [ %i.rh, %bb.n ], [ 0, %.preheader.i80.i ] ; 7 uses
   %i.ol = phi <4 x float> [ %i.rg, %bb.n ], [ %i.np, %.preheader.i80.i ]
   %i.om = phi <4 x float> [ %i.rf, %bb.n ], [ %i.np, %.preheader.i80.i ] ; 2 uses
-  %7 = xor i64 %.05189.i.i, -1
-  %8 = add nsw i64 %i.c, %7
   %umin.i89.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i88.i, i64 %i.fp) ; 2 uses
   %i.on = add nuw nsw i64 %.05189.i.i, 24
   %i.oo = mul i64 %i.on, %i.fo
@@ -599,6 +597,8 @@ bb.l:                                             ; preds = %.lr.ph90.i.i
   br i1 %i.os, label %.lr.ph79.i.i.preheader, label %.loopexit.i97.i
 
 .lr.ph79.i.i.preheader:                           ; preds = %bb.l
+  %7 = xor i64 %.05189.i.i, -1
+  %8 = add nsw i64 %i.c, %7
   %i.ot = add i64 %umin.i89.i, %8                 ; 3 uses
   %min.iters.check271 = icmp ult i64 %i.ot, 16
   br i1 %min.iters.check271, label %.lr.ph79.i.i.preheader361, label %vector.ph272
@@ -861,8 +861,6 @@ bb.o:                                             ; preds = %_ZL13_box_min_vertI
   %indvars.iv.i114.i = phi i64 [ %indvars.iv.next.i121.i, %bb.r ], [ %i.nd, %.preheader.i113.i ] ; 2 uses
   %.05169.i.i = phi i64 [ %i.vb, %bb.r ], [ 0, %.preheader.i113.i ] ; 7 uses
   %.sroa.0.268.i.i = phi float [ %.sroa.0.5.i.i, %bb.r ], [ %.sroa.0.1.lcssa.i.i, %.preheader.i113.i ] ; 2 uses
-  %9 = xor i64 %.05169.i.i, -1
-  %10 = add nsw i64 %i.c, %9
   %umin.i115.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i114.i, i64 %i.nc) ; 2 uses
   %i.tj = add nuw nsw i64 %.05169.i.i, 24
   %i.tk = mul i64 %i.tj, %i.nb
@@ -882,6 +880,8 @@ bb.p:                                             ; preds = %.lr.ph70.i.i
   br i1 %i.to, label %.lr.ph66.i.i.preheader, label %.loopexit.i120.i
 
 .lr.ph66.i.i.preheader:                           ; preds = %bb.p
+  %9 = xor i64 %.05169.i.i, -1
+  %10 = add nsw i64 %i.c, %9
   %i.tp = add i64 %umin.i115.i, %10               ; 3 uses
   %min.iters.check319 = icmp ult i64 %i.tp, 32
   br i1 %min.iters.check319, label %.lr.ph66.i.i.preheader354, label %vector.ph320
@@ -1284,8 +1284,6 @@ bb.g:                                             ; preds = %_ZL13_box_max_vertI
   %.051134.i.i = phi i64 [ %i.mp, %bb.j ], [ 0, %.lr.ph135.i.i.preheader ] ; 7 uses
   %i.gx = phi <16 x float> [ %i.mq, %bb.j ], [ %i.ga, %.lr.ph135.i.i.preheader ]
   %i.gy = phi <32 x float> [ %i.mo, %bb.j ], [ %i.gb, %.lr.ph135.i.i.preheader ] ; 3 uses
-  %5 = xor i64 %.051134.i.i, -1
-  %6 = add nsw i64 %i.c, %5
   %umin.i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i72.i, i64 %i.ef) ; 2 uses
   %i.gz = add nuw nsw i64 %.051134.i.i, 24
   %i.ha = mul i64 %i.gz, %2
@@ -1309,6 +1307,8 @@ bb.h:                                             ; preds = %.lr.ph135.i.i
   br i1 %i.hg, label %.lr.ph111.i.i.preheader, label %.loopexit.i.i
 
 .lr.ph111.i.i.preheader:                          ; preds = %bb.h
+  %5 = xor i64 %.051134.i.i, -1
+  %6 = add nsw i64 %i.c, %5
   %i.hh = add i64 %umin.i.i, %6                   ; 3 uses
   %min.iters.check = icmp ult i64 %i.hh, 8
   br i1 %min.iters.check, label %.lr.ph111.i.i.preheader374, label %vector.ph
@@ -1655,8 +1655,6 @@ bb.k:                                             ; preds = %_ZL13_box_max_vertI
   %.05189.i.i = phi i64 [ %i.re, %bb.n ], [ 0, %.preheader.i80.i ] ; 7 uses
   %i.oi = phi <4 x float> [ %i.rd, %bb.n ], [ %i.nm, %.preheader.i80.i ]
   %i.oj = phi <4 x float> [ %i.rc, %bb.n ], [ %i.nm, %.preheader.i80.i ] ; 2 uses
-  %7 = xor i64 %.05189.i.i, -1
-  %8 = add nsw i64 %i.c, %7
   %umin.i89.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i88.i, i64 %i.fn) ; 2 uses
   %i.ok = add nuw nsw i64 %.05189.i.i, 24
   %i.ol = mul i64 %i.ok, %2
@@ -1676,6 +1674,8 @@ bb.l:                                             ; preds = %.lr.ph90.i.i
   br i1 %i.op, label %.lr.ph79.i.i.preheader, label %.loopexit.i97.i
 
 .lr.ph79.i.i.preheader:                           ; preds = %bb.l
+  %7 = xor i64 %.05189.i.i, -1
+  %8 = add nsw i64 %i.c, %7
   %i.oq = add i64 %umin.i89.i, %8                 ; 3 uses
   %min.iters.check271 = icmp ult i64 %i.oq, 16
   br i1 %min.iters.check271, label %.lr.ph79.i.i.preheader361, label %vector.ph272
@@ -1938,8 +1938,6 @@ bb.o:                                             ; preds = %_ZL13_box_max_vertI
   %indvars.iv.i114.i = phi i64 [ %indvars.iv.next.i121.i, %bb.r ], [ %i.na, %.preheader.i113.i ] ; 2 uses
   %.05169.i.i = phi i64 [ %i.uy, %bb.r ], [ 0, %.preheader.i113.i ] ; 7 uses
   %.sroa.0.268.i.i = phi float [ %.sroa.0.5.i.i, %bb.r ], [ %.sroa.0.1.lcssa.i.i, %.preheader.i113.i ] ; 2 uses
-  %9 = xor i64 %.05169.i.i, -1
-  %10 = add nsw i64 %i.c, %9
   %umin.i115.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i114.i, i64 %i.mz) ; 2 uses
   %i.tg = add nuw nsw i64 %.05169.i.i, 24
   %i.th = mul i64 %i.tg, %2
@@ -1959,6 +1957,8 @@ bb.p:                                             ; preds = %.lr.ph70.i.i
   br i1 %i.tl, label %.lr.ph66.i.i.preheader, label %.loopexit.i120.i
 
 .lr.ph66.i.i.preheader:                           ; preds = %bb.p
+  %9 = xor i64 %.05169.i.i, -1
+  %10 = add nsw i64 %i.c, %9
   %i.tm = add i64 %umin.i115.i, %10               ; 3 uses
   %min.iters.check319 = icmp ult i64 %i.tm, 32
   br i1 %min.iters.check319, label %.lr.ph66.i.i.preheader354, label %vector.ph320

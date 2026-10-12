@@ -204,8 +204,8 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.preheader20
   %i.d = zext i32 %indvars.iv to i64              ; 3 uses
-  %4 = add i32 %3, -2
-  %5 = sub i32 %4, %.022                          ; 2 uses
+  %4 = xor i32 %indvars.iv, -1
+  %5 = add i32 %3, %4                             ; 2 uses
   %i.e = zext i32 %5 to i64
   %i.f = add nuw nsw i64 %i.e, 1                  ; 2 uses
   %min.iters.check = icmp ult i32 %5, 7
@@ -265,8 +265,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.t, label %.preheader, label %.lr.ph
 
 bb.b:                                             ; preds = %bb.a, %bb.b
-  %indvars.iv = phi i32 [ 1, %bb.a ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %.022 = phi i32 [ 0, %bb.a ], [ %i.aa, %bb.b ]  ; 3 uses
+  %indvars.iv = phi i32 [ 1, %bb.a ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %.022 = phi i32 [ 0, %bb.a ], [ %i.aa, %bb.b ]  ; 2 uses
   %i.u = zext i32 %.022 to i64                    ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.u
   %.0.copyload.i.i = load i64, ptr %i.v, align 1

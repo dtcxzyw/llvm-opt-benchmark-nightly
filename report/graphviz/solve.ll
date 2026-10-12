@@ -97,7 +97,6 @@ bb.g:                                             ; preds = %bb.f
 
 .preheader184:                                    ; preds = %.preheader184.preheader, %._crit_edge204
   %.0168205 = phi i64 [ %.0160200, %._crit_edge204 ], [ 0, %.preheader184.preheader ] ; 20 uses
-  %4 = sub i64 %3, %.0168205                      ; 3 uses
   %i.aa = sub i64 %3, %.0168205                   ; 3 uses
   %i.ab = shl i64 %.0168205, 3
   %scevgep = getelementptr i8, ptr %0, i64 %i.ab
@@ -110,12 +109,12 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ae, label %.lr.ph193.preheader, label %.loopexit185
 
 .lr.ph193.preheader:                              ; preds = %.preheader184
-  %xtraiter = and i64 %4, 1
+  %xtraiter = and i64 %i.aa, 1
   %i.af = icmp eq i64 %i.u, %.0168205
   br i1 %i.af, label %.lr.ph193.epil.preheader, label %.lr.ph193.preheader.new
 
 .lr.ph193.preheader.new:                          ; preds = %.lr.ph193.preheader
-  %unroll_iter = and i64 %4, -2
+  %unroll_iter = and i64 %i.aa, -2
   br label %.lr.ph193
 
 ._crit_edge194.unr-lcssa:                         ; preds = %.lr.ph193
@@ -126,7 +125,7 @@ bb.g:                                             ; preds = %bb.f
   %.0162192.epil.init = phi i64 [ %.0168205, %.lr.ph193.preheader ], [ %i.br, %._crit_edge194.unr-lcssa ] ; 2 uses
   %.0163191.epil.init = phi i64 [ 0, %.lr.ph193.preheader ], [ %.0163..0162.1, %._crit_edge194.unr-lcssa ]
   %.0164190.epil.init = phi double [ 0.000000e+00, %.lr.ph193.preheader ], [ %.0164..1, %._crit_edge194.unr-lcssa ] ; 2 uses
-  %lcmp.mod272 = trunc i64 %4 to i1
+  %lcmp.mod272 = trunc i64 %i.aa to i1
   tail call void @llvm.assume(i1 %lcmp.mod272)
   %i.ag = mul i64 %.0162192.epil.init, %3
   %gep.epil = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.ag
@@ -148,7 +147,8 @@ bb.g:                                             ; preds = %bb.f
   %i.am = getelementptr [8 x i8], ptr %0, i64 %i.al ; 4 uses
   %i.an = mul i64 %.0168205, %3
   %i.ao = getelementptr [8 x i8], ptr %0, i64 %i.an ; 4 uses
-  %min.iters.check256 = icmp ult i64 %i.aa, 8
+  %4 = sub i64 %3, %.0168205                      ; 3 uses
+  %min.iters.check256 = icmp ult i64 %4, 8
   br i1 %min.iters.check256, label %scalar.ph255.preheader, label %vector.memcheck249
 
 vector.memcheck249:                               ; preds = %.lr.ph197
@@ -164,7 +164,7 @@ vector.memcheck249:                               ; preds = %.lr.ph197
   br i1 %found.conflict, label %scalar.ph255.preheader, label %vector.ph257
 
 vector.ph257:                                     ; preds = %vector.memcheck249
-  %n.vec258 = and i64 %i.aa, -4                   ; 3 uses
+  %n.vec258 = and i64 %4, -4                      ; 3 uses
   %i.at = add i64 %.0168205, %n.vec258
   br label %vector.body259
 
@@ -190,7 +190,7 @@ vector.body259:                                   ; preds = %vector.body259, %ve
   br i1 %i.bb, label %middle.block266, label %vector.body259, !llvm.loop !11
 
 middle.block266:                                  ; preds = %vector.body259
-  %cmp.n267 = icmp eq i64 %i.aa, %n.vec258
+  %cmp.n267 = icmp eq i64 %4, %n.vec258
   br i1 %cmp.n267, label %._crit_edge198, label %scalar.ph255.preheader
 
 scalar.ph255.preheader:                           ; preds = %vector.memcheck249, %.lr.ph197, %middle.block266

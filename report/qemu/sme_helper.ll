@@ -205,7 +205,7 @@ bb.a:
   %i.i = icmp eq i32 %i.e, 2
   %.v.v.i = select i1 %i.i, i32 %i.h, i32 %i.f
   %.v.i = add nuw nsw i32 %.v.v.i, 8              ; 2 uses
-  %i.j = zext nneg i32 %.v.i to i64               ; 5 uses
+  %i.j = zext nneg i32 %.v.i to i64               ; 3 uses
   %i.k = ashr i32 %4, 10                          ; 7 uses
   %i.l = lshr exact i32 %.v.i, 2                  ; 20 uses
   %i.m = and i32 %3, 15
@@ -262,11 +262,10 @@ decode_counter.exit.thread:                       ; preds = %decode_counter.exit
 
 .lr.ph208.preheader:                              ; preds = %.preheader181
   %wide.trip.count256 = zext nneg i32 %i.k to i64
-  %5 = xor i32 %.sroa.0107.sroa.0.0.extract.trunc174286, -1
-  %6 = add i32 %i.l, %5
-  %7 = lshr exact i64 %i.j, 2
-  %8 = sub i64 %i.a, %i.c
-  %diff.check419 = icmp ugt i64 %8, -32
+  %5 = sub i64 %i.a, %i.c
+  %diff.check419 = icmp ugt i64 %5, -32
+  %6 = xor i32 %.sroa.0107.sroa.0.0.extract.trunc174286, -1
+  %7 = add i32 %i.l, %6
   %i.ak = sub i64 %i.b, %i.c
   %diff.check405 = icmp ugt i64 %i.ak, -32
   br label %.lr.ph208
@@ -278,28 +277,24 @@ decode_counter.exit.thread:                       ; preds = %decode_counter.exit
 
 .lr.ph214.preheader:                              ; preds = %.preheader176
   %wide.trip.count274 = zext nneg i32 %i.k to i64
+  %8 = sub i64 %i.b, %i.c
+  %diff.check391 = icmp ugt i64 %8, -32
   %9 = xor i32 %.sroa.0107.sroa.0.0.extract.trunc174287, -1
   %10 = add i32 %i.l, %9
-  %11 = lshr exact i64 %i.j, 2
-  %12 = sub i64 %i.b, %i.c
-  %diff.check391 = icmp ugt i64 %12, -32
   %i.am = sub i64 %i.a, %i.c
   %diff.check377 = icmp ugt i64 %i.am, -32
   br label %.lr.ph214
 
 .lr.ph214:                                        ; preds = %.lr.ph214.preheader, %.loopexit
-  %indvars.iv271 = phi i64 [ 0, %.lr.ph214.preheader ], [ %indvars.iv.next272, %.loopexit ] ; 4 uses
+  %indvars.iv271 = phi i64 [ 0, %.lr.ph214.preheader ], [ %indvars.iv.next272, %.loopexit ] ; 3 uses
   %indvars.iv261 = phi i32 [ %.sroa.0107.sroa.0.0.extract.trunc174287, %.lr.ph214.preheader ], [ %indvars.iv.next262, %.loopexit ] ; 3 uses
-  %13 = mul i64 %11, %indvars.iv271
-  %14 = trunc i64 %13 to i32
-  %15 = add i32 %10, %14                          ; 2 uses
   %i.an = zext i32 %indvars.iv261 to i64          ; 8 uses
   %i.ao = shl nuw nsw i64 %indvars.iv271, 8       ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %i.ao ; 9 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 %i.ao ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 %i.ao ; 7 uses
   %i.as = trunc i64 %indvars.iv271 to i32
-  %i.at = mul i32 %i.l, %i.as
+  %i.at = mul i32 %i.l, %i.as                     ; 2 uses
   %i.au = sub i32 %.sroa.0107.sroa.0.0.extract.trunc174287, %i.at ; 2 uses
   %i.av = icmp slt i32 %i.au, 1
   br i1 %i.av, label %.loopexit.sink.split, label %bb.e
@@ -385,9 +380,10 @@ middle.block401:                                  ; preds = %vector.body396
   br i1 %exitcond264.not.3, label %.lr.ph212.preheader, label %.lr.ph210, !llvm.loop !1033
 
 .lr.ph212.preheader:                              ; preds = %.lr.ph210.prol.loopexit, %.lr.ph210, %middle.block401
-  %i.bs = zext i32 %15 to i64
+  %11 = add i32 %i.at, %10                        ; 2 uses
+  %i.bs = zext i32 %11 to i64
   %i.bt = add nuw nsw i64 %i.bs, 1                ; 2 uses
-  %min.iters.check379 = icmp ult i32 %15, 7
+  %min.iters.check379 = icmp ult i32 %11, 7
   %or.cond433 = or i1 %min.iters.check379, %diff.check377
   br i1 %or.cond433, label %.lr.ph212.preheader440, label %vector.ph380
 
@@ -442,18 +438,15 @@ middle.block387:                                  ; preds = %vector.body382
   br i1 %exitcond275.not, label %.loopexit177, label %.lr.ph214, !llvm.loop !1036
 
 .lr.ph208:                                        ; preds = %.lr.ph208.preheader, %.loopexit179
-  %indvars.iv253 = phi i64 [ 0, %.lr.ph208.preheader ], [ %indvars.iv.next254, %.loopexit179 ] ; 4 uses
+  %indvars.iv253 = phi i64 [ 0, %.lr.ph208.preheader ], [ %indvars.iv.next254, %.loopexit179 ] ; 3 uses
   %indvars.iv243 = phi i32 [ %.sroa.0107.sroa.0.0.extract.trunc174286, %.lr.ph208.preheader ], [ %indvars.iv.next244, %.loopexit179 ] ; 3 uses
-  %16 = mul i64 %7, %indvars.iv253
-  %17 = trunc i64 %16 to i32
-  %18 = add i32 %6, %17                           ; 2 uses
   %i.cg = zext i32 %indvars.iv243 to i64          ; 8 uses
   %i.ch = shl nuw nsw i64 %indvars.iv253, 8       ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 %i.ch ; 9 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 %i.ch ; 7 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 %i.ch ; 3 uses
   %i.cl = trunc i64 %indvars.iv253 to i32
-  %i.cm = mul i32 %i.l, %i.cl
+  %i.cm = mul i32 %i.l, %i.cl                     ; 2 uses
   %i.cn = sub i32 %.sroa.0107.sroa.0.0.extract.trunc174286, %i.cm ; 2 uses
   %i.co = icmp slt i32 %i.cn, 1
   br i1 %i.co, label %.loopexit179.sink.split, label %bb.f
@@ -539,9 +532,10 @@ middle.block429:                                  ; preds = %vector.body424
   br i1 %exitcond246.not.3, label %.lr.ph206.preheader, label %.lr.ph204, !llvm.loop !1039
 
 .lr.ph206.preheader:                              ; preds = %.lr.ph204.prol.loopexit, %.lr.ph204, %middle.block429
-  %i.dl = zext i32 %18 to i64
+  %12 = add i32 %i.cm, %7                         ; 2 uses
+  %i.dl = zext i32 %12 to i64
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses
-  %min.iters.check407 = icmp ult i32 %18, 7
+  %min.iters.check407 = icmp ult i32 %12, 7
   %or.cond435 = or i1 %min.iters.check407, %diff.check405
   br i1 %or.cond435, label %.lr.ph206.preheader438, label %vector.ph408
 

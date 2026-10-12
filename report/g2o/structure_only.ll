@@ -205,8 +205,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %.backedge
-  %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %.backedge ] ; 6 uses
-  %.0116447 = phi i64 [ 0, %bb.a ], [ %.pre-phi, %.backedge ] ; 20 uses
+  %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %.backedge ] ; 5 uses
+  %.0116447 = phi i64 [ 0, %bb.a ], [ %.pre-phi, %.backedge ] ; 21 uses
   %.0118446 = phi i8 [ 1, %bb.a ], [ %.3, %.backedge ] ; 6 uses
   %.0120445 = phi i1 [ false, %bb.a ], [ %.1121, %.backedge ] ; 2 uses
   %i.p = sub i64 2, %indvar                       ; 3 uses
@@ -352,7 +352,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %i.bs, label %.lr.ph.i17.i.i.i.i.i.i.preheader, label %_ZN5Eigen9DenseBaseINS_5BlockINS1_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEE4swapIS5_EEvRKNS0_IT_EE.exit
 
 .lr.ph.i17.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %i.bt = add i64 %indvar, %.sroa.0.1.i.i.lcssa
+  %i.bt = add i64 %.0116447, %.sroa.0.1.i.i.lcssa
   %i.bu = add i64 %i.bt, %i.bk
   %i.bv = add i64 %i.bu, %i.bm
   %i.bw = sub i64 2, %i.bv                        ; 3 uses

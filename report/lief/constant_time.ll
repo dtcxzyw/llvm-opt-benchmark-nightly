@@ -205,9 +205,9 @@ bb.a:
 
 .lr.ph.i.preheader.preheader:                     ; preds = %.lr.ph
   %scevgep23 = getelementptr i8, ptr %0, i64 %5
-  %6 = add i64 %5, -8
-  %i.a = getelementptr i8, ptr %1, i64 %5
-  %7 = getelementptr i8, ptr %i.a, i64 %3
+  %6 = getelementptr i8, ptr %1, i64 %5
+  %i.a = getelementptr i8, ptr %6, i64 %3
+  %7 = add i64 %5, -8
   %invariant.gep = getelementptr i8, ptr %1, i64 %3
   br label %.lr.ph.i.preheader
 
@@ -349,7 +349,7 @@ mbedtls_ct_memcpy_if.exit.loopexit.us.us:         ; preds = %.lr.ph34.i.us.us.6,
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.preheader, %mbedtls_ct_memcpy_if.exit
   %indvar = phi i64 [ 0, %.lr.ph.i.preheader.preheader ], [ %indvar.next, %mbedtls_ct_memcpy_if.exit ] ; 3 uses
   %.010 = phi i64 [ %3, %.lr.ph.i.preheader.preheader ], [ %i.et, %mbedtls_ct_memcpy_if.exit ] ; 3 uses
-  %scevgep25 = getelementptr i8, ptr %7, i64 %indvar
+  %scevgep25 = getelementptr i8, ptr %i.a, i64 %indvar
   %i.ch = tail call i64 asm sideeffect "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %.010) #4, !srcloc !12
   %i.ci = tail call i64 asm sideeffect "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 %2) #4, !srcloc !12
   %i.cj = xor i64 %i.ci, %i.ch
@@ -366,7 +366,7 @@ mbedtls_ct_memcpy_if.exit.loopexit.us.us:         ; preds = %.lr.ph34.i.us.us.6,
 
 .lr.ph34.i.preheader:                             ; preds = %.preheader.i.loopexit
   %i.cq = shl i64 %indvar26, 3
-  %i.cr = sub i64 %6, %i.cq                       ; 3 uses
+  %i.cr = sub i64 %7, %i.cq                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.cr, 32
   br i1 %min.iters.check, label %.lr.ph34.i.preheader32, label %vector.memcheck
 

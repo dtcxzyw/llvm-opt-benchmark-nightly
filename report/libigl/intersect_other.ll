@@ -205,7 +205,6 @@ _ZN4CGAL18Box_intersection_d18Predicate_traits_dINS0_12Box_traits_dINS0_17Box_wi
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorIN4CGAL10Triangle_3INS0_5EpeckEEESaIS3_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPS3_S5_EEEEvSA_T_SB_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %.not112 = icmp eq ptr %2, %3
   br i1 %.not112, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3INS2_5EpeckEEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit, label %bb.b
 
@@ -219,7 +218,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !203  ; 26 uses
   %i.i = ptrtoint ptr %i.f to i64
-  %i.j = ptrtoint ptr %i.h to i64                 ; 6 uses
+  %i.j = ptrtoint ptr %i.h to i64                 ; 5 uses
   %i.k = sub i64 %i.i, %i.j
   %.not = icmp ult i64 %i.k, %i.c
   br i1 %.not, label %bb.s, label %bb.c
@@ -622,7 +621,6 @@ middle.block221:                                  ; preds = %vector.body214
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN4CGAL10Triangle_3INS0_5EpeckEEES4_SaIS3_EET0_T_S7_S6_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i75, %middle.block221, %_ZNSt12_Vector_baseIN4CGAL10Triangle_3INS0_5EpeckEEESaIS3_EE11_M_allocateEm.exit
   %.0.lcssa.i.i.i.i.i79 = phi ptr [ %i.fq, %_ZNSt12_Vector_baseIN4CGAL10Triangle_3INS0_5EpeckEEESaIS3_EE11_M_allocateEm.exit ], [ %i.fx, %middle.block221 ], [ %i.gf, %.lr.ph.i.i.i.i.i75 ] ; 3 uses
-  %.0.lcssa.i.i.i.i.i79226 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i79 to i64
   br label %.lr.ph.i.i.i.i81
 
 .lr.ph.i.i.i.i81:                                 ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN4CGAL10Triangle_3INS0_5EpeckEEES4_SaIS3_EET0_T_S7_S6_RT1_.exit, %_ZSt10_ConstructIN4CGAL10Triangle_3INS0_5EpeckEEEJRS3_EEvPT_DpOT0_.exit.i.i.i.i85
@@ -656,23 +654,23 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3I
   br i1 %.not11.i.i.i.i.i89, label %_ZSt34__uninitialized_move_if_noexcept_aIPN4CGAL10Triangle_3INS0_5EpeckEEES4_SaIS3_EET0_T_S7_S6_RT1_.exit95, label %.lr.ph.i.i.i.i.i90.preheader
 
 .lr.ph.i.i.i.i.i90.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPN4CGAL10Triangle_3INS2_5EpeckEEESt6vectorIS5_SaIS5_EEEES6_S5_ET0_T_SC_SB_RSaIT1_E.exit88
+  %4 = ptrtoaddr ptr %1 to i64
   %i.go = add i64 %i.j, -8
-  %i.gp = sub i64 %i.go, %4                       ; 2 uses
+  %i.gp = sub i64 %i.go, %4                       ; 3 uses
   %i.gq = lshr i64 %i.gp, 3
   %i.gr = add nuw nsw i64 %i.gq, 1                ; 2 uses
   %min.iters.check232 = icmp ult i64 %i.gp, 216
   br i1 %min.iters.check232, label %.lr.ph.i.i.i.i.i90.preheader246, label %vector.memcheck225
 
 vector.memcheck225:                               ; preds = %.lr.ph.i.i.i.i.i90.preheader
-  %5 = add i64 %i.j, -8
-  %6 = sub i64 %5, %4
-  %7 = and i64 %6, -8                             ; 2 uses
+  %5 = and i64 %i.gp, -8                          ; 2 uses
+  %6 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i79 to i64
   %i.gs = ptrtoaddr ptr %i.gn to i64
-  %reass.sub = sub i64 %i.gs, %.0.lcssa.i.i.i.i.i79226
+  %reass.sub = sub i64 %i.gs, %6
   %i.gt = getelementptr i8, ptr %.0.lcssa.i.i.i.i.i79, i64 %reass.sub
-  %i.gu = getelementptr i8, ptr %i.gt, i64 %7
+  %i.gu = getelementptr i8, ptr %i.gt, i64 %5
   %scevgep = getelementptr i8, ptr %i.gu, i64 8
-  %i.gv = getelementptr i8, ptr %1, i64 %7
+  %i.gv = getelementptr i8, ptr %1, i64 %5
   %scevgep227 = getelementptr i8, ptr %i.gv, i64 8
   %bound0228 = icmp ult ptr %i.gn, %scevgep227
   %bound1229 = icmp ult ptr %1, %scevgep

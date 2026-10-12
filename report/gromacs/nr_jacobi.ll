@@ -129,8 +129,6 @@ bb.b:                                             ; preds = %.lr.ph237, %bb.n
   %indvar = phi i64 [ 0, %.lr.ph237 ], [ %indvar.next, %bb.n ] ; 2 uses
   %i.bp = phi i32 [ %i.bf, %.lr.ph237 ], [ %i.hu, %bb.n ] ; 3 uses
   %indvars.iv259 = phi i64 [ %indvars.iv252, %.lr.ph237 ], [ %indvars.iv.next260, %bb.n ] ; 19 uses
-  %4 = add i64 %indvars.iv271, %indvar
-  %5 = sub i64 2, %4                              ; 3 uses
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %indvars.iv259 ; 3 uses
   %i.br = load double, ptr %i.bq, align 8, !tbaa !10 ; 4 uses
   %i.bs = tail call noundef double @llvm.fabs.f64(double %i.br) ; 2 uses
@@ -280,6 +278,8 @@ bb.l:                                             ; preds = %.lr.ph228
 .lr.ph233:                                        ; preds = %.preheader212
   %i.ev = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %indvars.iv259 ; 2 uses
   %i.ew = fneg double %i.cw                       ; 4 uses
+  %4 = add i64 %indvars.iv271, %indvar
+  %5 = sub i64 2, %4                              ; 3 uses
   %min.iters.check = icmp ult i64 %5, 2
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 

@@ -205,9 +205,10 @@ middle.block:                                     ; preds = %vector.body
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.f
-  %.026.i = phi ptr [ %.1.i, %bb.f ], [ %5, %.lr.ph.i.preheader ] ; 11 uses
-  %.sroa.0.025.i = phi ptr [ %i.z, %bb.f ], [ %0, %.lr.ph.i.preheader ] ; 10 uses
-  %.sroa.016.024.i = phi ptr [ %.sroa.016.1.i, %bb.f ], [ %1, %.lr.ph.i.preheader ] ; 5 uses
+  %indvar = phi i64 [ 0, %.lr.ph.i.preheader ], [ %indvar.next, %bb.f ] ; 2 uses
+  %.026.i = phi ptr [ %5, %.lr.ph.i.preheader ], [ %.1.i, %bb.f ] ; 11 uses
+  %.sroa.0.025.i = phi ptr [ %0, %.lr.ph.i.preheader ], [ %i.z, %bb.f ] ; 9 uses
+  %.sroa.016.024.i = phi ptr [ %1, %.lr.ph.i.preheader ], [ %.sroa.016.1.i, %bb.f ] ; 5 uses
   %.not19.i = icmp eq ptr %.sroa.016.024.i, %2
   br i1 %.not19.i, label %.critedge.i, label %bb.c
 
@@ -237,6 +238,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i32 %.sink.i, ptr %i.y, align 4, !tbaa !260
   %i.z = getelementptr i8, ptr %.sroa.0.025.i, i64 8
   %.not.i = icmp eq ptr %.1.i, %.lcssa76
+  %indvar.next = add i64 %indvar, 1
   br i1 %.not.i, label %_ZSt21__move_merge_adaptiveIPSt4pairIiiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEES8_NS3_5__ops15_Iter_comp_iterIZN8LightGBM6CommonL11SortForPairIiiEEvPS5_IT_SaISE_EEPS5_IT0_SaISI_EEmbEUlRKS1_SN_E0_EEEvSE_SE_SI_SI_T1_T2_.exit, label %.lr.ph.i, !llvm.loop !1695
 
 .critedge.i:                                      ; preds = %.lr.ph.i
@@ -252,7 +254,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %min.iters.check94, label %.lr.ph.i.i.i.i.i.i.preheader160, label %vector.memcheck88
 
 vector.memcheck88:                                ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %scevgep = getelementptr i8, ptr %.sroa.0.025.i, i64 %i.ac
+  %6 = shl i64 %indvar, 3
+  %7 = getelementptr i8, ptr %0, i64 %6
+  %scevgep = getelementptr i8, ptr %7, i64 %i.ac
   %bound090 = icmp ult ptr %.sroa.0.025.i, %.lcssa76
   %bound191 = icmp ult ptr %.026.i, %scevgep
   %found.conflict92 = and i1 %bound090, %bound191

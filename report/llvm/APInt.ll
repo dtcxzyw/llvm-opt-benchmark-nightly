@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %"class.llvm::APInt", align 8       ; 8 uses
   %5 = alloca %"class.llvm::APInt", align 8       ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !23   ; 7 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !23   ; 6 uses
   %i.c = icmp eq i32 %i.b, %2
   br i1 %i.c, label %bb.b, label %bb.e
 
@@ -305,12 +305,12 @@ bb.i:                                             ; preds = %.split, %_ZNK4llvm5
   br i1 %i.ao, label %bb.j, label %bb.s
 
 bb.j:                                             ; preds = %bb.i
-  %i.ap = udiv i32 %2, %i.b                       ; 2 uses
+  %i.ap = udiv i32 %2, %i.b                       ; 3 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %_ZN4llvm5APInt7setBitsEjj.exit
   %i.aq = phi i32 [ %.pre95, %bb.j ], [ %i.cu, %_ZN4llvm5APInt7setBitsEjj.exit ] ; 6 uses
-  %indvars.iv = phi i64 [ 0, %bb.j ], [ %indvars.iv.next, %_ZN4llvm5APInt7setBitsEjj.exit ] ; 5 uses
+  %indvars.iv = phi i64 [ 0, %bb.j ], [ %indvars.iv.next, %_ZN4llvm5APInt7setBitsEjj.exit ] ; 4 uses
   %i.ar = and i64 %indvars.iv, 63
   %i.as = shl nuw i64 1, %i.ar
   %i.at = icmp ult i32 %i.aq, 65
@@ -325,7 +325,7 @@ bb.k:                                             ; preds = %bb.j, %_ZN4llvm5API
   br i1 %.not70, label %_ZN4llvm5APInt7setBitsEjj.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ba = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %i.ba = trunc nuw i64 %indvars.iv to i32        ; 3 uses
   %i.bb = mul i32 %i.ap, %i.ba                    ; 5 uses
   %i.bc = add i32 %i.ba, 1
   %i.bd = mul i32 %i.bc, %i.ap                    ; 5 uses
@@ -396,9 +396,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n
 .lr.ph.preheader.i.i:                             ; preds = %bb.r
   %i.ck = zext nneg i32 %.022.i.i to i64          ; 3 uses
   %wide.trip.count.i.i = zext nneg i32 %i.bp to i64 ; 2 uses
-  %6 = udiv i32 %2, %i.b
-  %7 = trunc i64 %indvars.iv to i32
-  %i.cl = mul i32 %6, %7
+  %i.cl = mul i32 %i.ap, %i.ba
   %i.cm = lshr i32 %i.cl, 6
   %i.cn = xor i32 %i.cm, -1
   %i.co = sext i32 %i.cn to i64

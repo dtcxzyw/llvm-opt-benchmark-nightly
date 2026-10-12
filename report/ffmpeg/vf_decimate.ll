@@ -204,11 +204,11 @@ bb.u:                                             ; preds = %._crit_edge.i, %.pr
   br i1 %i.fz, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.u
-  %1 = add i64 %indvars.iv.i, 1
-  %2 = mul i64 %indvars.iv202.i, %i.fu
-  %3 = sext i32 %i.fy to i64                      ; 2 uses
-  %4 = tail call i64 @llvm.smax.i64(i64 %3, i64 %1)
-  %i.ga = sub i64 %4, %2                          ; 3 uses
+  %1 = sext i32 %i.fy to i64                      ; 2 uses
+  %2 = add i64 %indvars.iv.i, 1
+  %3 = tail call i64 @llvm.smax.i64(i64 %1, i64 %2)
+  %4 = mul i64 %indvars.iv202.i, %i.fu
+  %i.ga = sub i64 %3, %4                          ; 3 uses
   %min.iters.check = icmp ult i64 %i.ga, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
@@ -271,7 +271,7 @@ middle.block:                                     ; preds = %vector.body
   %i.hd = zext nneg i32 %i.hc to i64
   %i.he = add nuw nsw i64 %.0161.i, %i.hd         ; 2 uses
   %indvars.iv.next200.i = add nsw i64 %indvars.iv199.i, 1 ; 2 uses
-  %i.hf = icmp slt i64 %indvars.iv.next200.i, %3
+  %i.hf = icmp slt i64 %indvars.iv.next200.i, %1
   br i1 %i.hf, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !77
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %middle.block, %bb.u

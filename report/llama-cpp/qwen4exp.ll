@@ -204,10 +204,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge118.us.us, %.preheader.us141
-  %indvar = phi i64 [ %indvar.next, %._crit_edge118.us.us ], [ 0, %.preheader.us141 ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %._crit_edge118.us.us ], [ 0, %.preheader.us141 ] ; 3 uses
   %.067120.us.us = phi i64 [ %i.du, %._crit_edge118.us.us ], [ 2, %.preheader.us141 ] ; 4 uses
-  %i.bs = add i64 %indvar, 1                      ; 3 uses
-  %min.iters.check = icmp ult i64 %i.bs, 4
+  %i.bs = add nuw i64 %indvar, 1                  ; 2 uses
+  %min.iters.check = icmp ult i64 %indvar, 3
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.j

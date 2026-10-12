@@ -205,9 +205,6 @@ _ZN4llvm11SmallVectorIiLj32EEC2Em.exit.i.i:       ; preds = %.sink.split.i.i.i.i
 .preheader.i.i:                                   ; preds = %_ZL19isShuffleEquivalentN4llvm8ArrayRefIiEES1_NS_7SDValueES2_.exit96.i.i, %.preheader129.i.i
   %indvar = phi i64 [ %indvar.next, %_ZL19isShuffleEquivalentN4llvm8ArrayRefIiEES1_NS_7SDValueES2_.exit96.i.i ], [ 0, %.preheader129.i.i ] ; 3 uses
   %indvars.iv192.i.i = phi i64 [ %indvars.iv.next193.i.i, %_ZL19isShuffleEquivalentN4llvm8ArrayRefIiEES1_NS_7SDValueES2_.exit96.i.i ], [ 1, %.preheader129.i.i ] ; 4 uses
-  %170 = and i64 %indvar, 4611686018427387903     ; 2 uses
-  %171 = shl i64 %indvar, 2
-  %172 = sub i64 %i.buu, %171                     ; 2 uses
   br i1 %i.bui, label %._crit_edge.i442.i, label %.lr.ph.i439.i
 
 .lr.ph.i439.i:                                    ; preds = %.preheader.i.i
@@ -218,12 +215,15 @@ _ZN4llvm11SmallVectorIiLj32EEC2Em.exit.i.i:       ; preds = %.sink.split.i.i.i.i
   br i1 %.not6.i68.i.i, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i.preheader
 
 .lr.ph.split.i.i.preheader:                       ; preds = %.lr.ph.i439.i
+  %170 = and i64 %indvar, 4611686018427387903     ; 2 uses
   %i.bvc = add nuw nsw i64 %170, 1                ; 2 uses
   %min.iters.check3769 = icmp samesign ult i64 %170, 7
   %n.vec3771 = and i64 %i.bvc, 9223372036854775800 ; 4 uses
   %i.bvd = trunc i64 %n.vec3771 to i32
   %i.bve = shl i64 %n.vec3771, 2
   %cmp.n3783 = icmp eq i64 %i.bvc, %n.vec3771
+  %171 = shl i64 %indvar, 2
+  %172 = sub i64 %i.buu, %171                     ; 2 uses
   %i.bvf = lshr exact i64 %172, 2
   %i.bvg = add nuw nsw i64 %i.bvf, 1              ; 2 uses
   %min.iters.check3751 = icmp ult i64 %172, 28

@@ -205,9 +205,9 @@ OPENSSL_memset.exit.split:                        ; preds = %OPENSSL_memset.exit
   br i1 %i.y, label %RAND_bytes_with_user_prediction_resistance.exit.us, label %OPENSSL_memset.exit.split.split.preheader
 
 OPENSSL_memset.exit.split.split.preheader:        ; preds = %OPENSSL_memset.exit.split
+  %cond = icmp eq i64 %.02732.i, 1
   %i.z = xor i64 %indvar, -1
   %i.aa = add i64 %3, %i.z                        ; 3 uses
-  %cond = icmp eq i64 %.02732.i, 1
   %min.iters.check = icmp ult i64 %i.aa, 4
   %n.vec = and i64 %i.aa, -4                      ; 3 uses
   %i.ab = or disjoint i64 %n.vec, 1
@@ -241,7 +241,7 @@ OPENSSL_memset.exit.split.split:                  ; preds = %bn_in_range_words.e
   br label %.loopexit
 
 RAND_bytes_with_user_prediction_resistance.exit:  ; preds = %OPENSSL_memset.exit.split.split.preheader, %OPENSSL_memset.exit.split.split
-  %i.aj = phi i32 [ 99, %OPENSSL_memset.exit.split.split.preheader ], [ %i.ai, %OPENSSL_memset.exit.split.split ]
+  %i.aj = phi i32 [ %i.ai, %OPENSSL_memset.exit.split.split ], [ 99, %OPENSSL_memset.exit.split.split.preheader ]
   tail call fastcc void @rand_bytes_impl(i32 noundef 5, ptr noundef %0, i64 noundef %i.w, ptr noundef nonnull readonly %4, i32 noundef 1)
   %i.ak = load i64, ptr %i.x, align 8, !tbaa !80
   %i.al = and i64 %i.ak, %i.r

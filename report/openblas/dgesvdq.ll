@@ -202,8 +202,6 @@ bb.dv:                                            ; preds = %._crit_edge2032.thr
 bb.dw:                                            ; preds = %.lr.ph2043, %bb.dx
   %indvar2824 = phi i64 [ 0, %.lr.ph2043 ], [ %indvar.next2825, %bb.dx ] ; 2 uses
   %indvars.iv2275 = phi i64 [ 1, %.lr.ph2043 ], [ %indvars.iv.next2276, %bb.dx ] ; 7 uses
-  %22 = xor i64 %indvar2824, -1
-  %23 = add i64 %22, %wide.trip.count2280         ; 3 uses
   %.not1823.not2034 = icmp samesign ult i64 %indvars.iv2275, %i.wy
   br i1 %.not1823.not2034, label %.lr.ph2037, label %bb.dx
 
@@ -211,6 +209,8 @@ bb.dw:                                            ; preds = %.lr.ph2043, %bb.dx
   %i.xa = mul nsw i64 %indvars.iv2275, %i.wx
   %invariant.gep2552 = getelementptr [8 x i8], ptr %i.p, i64 %i.xa ; 6 uses
   %invariant.gep2554 = getelementptr [8 x i8], ptr %i.p, i64 %indvars.iv2275 ; 6 uses
+  %22 = xor i64 %indvar2824, -1
+  %23 = add i64 %22, %wide.trip.count2280         ; 3 uses
   %min.iters.check2826 = icmp ugt i64 %23, 7
   %or.cond3221 = select i1 %min.iters.check2826, i1 %ident.check2823.not, i1 false
   br i1 %or.cond3221, label %vector.ph2827, label %scalar.ph.preheader
@@ -613,8 +613,6 @@ bb.en:                                            ; preds = %bb.em, %bb.el
 bb.eo:                                            ; preds = %.lr.ph2077, %bb.ep
   %indvar2901 = phi i64 [ 0, %.lr.ph2077 ], [ %indvar.next2902, %bb.ep ] ; 2 uses
   %indvars.iv2305 = phi i64 [ 1, %.lr.ph2077 ], [ %indvars.iv.next2306, %bb.ep ] ; 7 uses
-  %24 = xor i64 %indvar2901, -1
-  %25 = add i64 %24, %wide.trip.count2310         ; 3 uses
   %.not1836.not2068 = icmp samesign ult i64 %indvars.iv2305, %i.ada
   br i1 %.not1836.not2068, label %.lr.ph2071, label %bb.ep
 
@@ -622,6 +620,8 @@ bb.eo:                                            ; preds = %.lr.ph2077, %bb.ep
   %i.adc = mul nsw i64 %indvars.iv2305, %i.acz
   %invariant.gep2564 = getelementptr [8 x i8], ptr %i.s, i64 %i.adc ; 6 uses
   %invariant.gep2566 = getelementptr [8 x i8], ptr %i.s, i64 %indvars.iv2305 ; 6 uses
+  %24 = xor i64 %indvar2901, -1
+  %25 = add i64 %24, %wide.trip.count2310         ; 3 uses
   %min.iters.check2904 = icmp ugt i64 %25, 7
   %or.cond3223 = select i1 %min.iters.check2904, i1 %ident.check2900.not, i1 false
   br i1 %or.cond3223, label %vector.ph2905, label %scalar.ph2903.preheader
@@ -955,8 +955,6 @@ bb.er:                                            ; preds = %bb.em
 bb.es:                                            ; preds = %.lr.ph2065, %bb.et
   %indvar2883 = phi i64 [ 0, %.lr.ph2065 ], [ %indvar.next2884, %bb.et ] ; 2 uses
   %indvars.iv2295 = phi i64 [ 1, %.lr.ph2065 ], [ %indvars.iv.next2296, %bb.et ] ; 7 uses
-  %26 = xor i64 %indvar2883, -1
-  %27 = add i64 %26, %wide.trip.count2300         ; 3 uses
   %.not1830.not2056 = icmp samesign ult i64 %indvars.iv2295, %i.agj
   br i1 %.not1830.not2056, label %.lr.ph2059, label %bb.et
 
@@ -964,6 +962,8 @@ bb.es:                                            ; preds = %.lr.ph2065, %bb.et
   %i.agl = mul nsw i64 %indvars.iv2295, %i.agi
   %invariant.gep2560 = getelementptr [8 x i8], ptr %i.s, i64 %i.agl ; 6 uses
   %invariant.gep2562 = getelementptr [8 x i8], ptr %i.s, i64 %indvars.iv2295 ; 6 uses
+  %26 = xor i64 %indvar2883, -1
+  %27 = add i64 %26, %wide.trip.count2300         ; 3 uses
   %min.iters.check2886 = icmp ugt i64 %27, 7
   %or.cond3225 = select i1 %min.iters.check2886, i1 %ident.check2882.not, i1 false
   br i1 %or.cond3225, label %vector.ph2887, label %scalar.ph2885.preheader
@@ -1366,8 +1366,6 @@ bb.ff:                                            ; preds = %._crit_edge2156.thr
 bb.fg:                                            ; preds = %.lr.ph2167, %bb.fh
   %indvar3153 = phi i64 [ 0, %.lr.ph2167 ], [ %indvar.next3154, %bb.fh ] ; 2 uses
   %indvars.iv2385 = phi i64 [ 1, %.lr.ph2167 ], [ %indvars.iv.next2386, %bb.fh ] ; 7 uses
-  %28 = xor i64 %indvar3153, -1
-  %29 = add i64 %28, %wide.trip.count2390         ; 3 uses
   %.not1865.not2158 = icmp samesign ult i64 %indvars.iv2385, %i.alj
   br i1 %.not1865.not2158, label %.lr.ph2161, label %bb.fh
 
@@ -1375,6 +1373,8 @@ bb.fg:                                            ; preds = %.lr.ph2167, %bb.fh
   %i.all = mul nsw i64 %indvars.iv2385, %i.ali
   %invariant.gep2596 = getelementptr [8 x i8], ptr %i.s, i64 %i.all ; 6 uses
   %invariant.gep2598 = getelementptr [8 x i8], ptr %i.s, i64 %indvars.iv2385 ; 6 uses
+  %28 = xor i64 %indvar3153, -1
+  %29 = add i64 %28, %wide.trip.count2390         ; 3 uses
   %min.iters.check3156 = icmp ugt i64 %29, 7
   %or.cond3227 = select i1 %min.iters.check3156, i1 %ident.check3152.not, i1 false
   br i1 %or.cond3227, label %vector.ph3157, label %scalar.ph3155.preheader
@@ -1689,8 +1689,6 @@ bb.fi:                                            ; preds = %._crit_edge2168.thr
 bb.fj:                                            ; preds = %.lr.ph2189, %bb.fk
   %indvar3203 = phi i64 [ 0, %.lr.ph2189 ], [ %indvar.next3204, %bb.fk ] ; 2 uses
   %indvars.iv2405 = phi i64 [ 1, %.lr.ph2189 ], [ %indvars.iv.next2406, %bb.fk ] ; 7 uses
-  %30 = xor i64 %indvar3203, -1
-  %31 = add i64 %30, %wide.trip.count2410         ; 3 uses
   %.not1863.not2180 = icmp samesign ult i64 %indvars.iv2405, %i.aog
   br i1 %.not1863.not2180, label %.lr.ph2183, label %bb.fk
 
@@ -1698,6 +1696,8 @@ bb.fj:                                            ; preds = %.lr.ph2189, %bb.fk
   %i.aoi = mul nsw i64 %indvars.iv2405, %i.aof
   %invariant.gep2604 = getelementptr [8 x i8], ptr %i.p, i64 %i.aoi ; 6 uses
   %invariant.gep2606 = getelementptr [8 x i8], ptr %i.p, i64 %indvars.iv2405 ; 6 uses
+  %30 = xor i64 %indvar3203, -1
+  %31 = add i64 %30, %wide.trip.count2410         ; 3 uses
   %min.iters.check3206 = icmp ugt i64 %31, 7
   %or.cond3229 = select i1 %min.iters.check3206, i1 %ident.check3202.not, i1 false
   br i1 %or.cond3229, label %vector.ph3207, label %scalar.ph3205.preheader
@@ -2100,8 +2100,6 @@ bb.fr:                                            ; preds = %._crit_edge2121.thr
 bb.fs:                                            ; preds = %.lr.ph2132, %bb.ft
   %indvar3075 = phi i64 [ 0, %.lr.ph2132 ], [ %indvar.next3076, %bb.ft ] ; 2 uses
   %indvars.iv2355 = phi i64 [ 1, %.lr.ph2132 ], [ %indvars.iv.next2356, %bb.ft ] ; 7 uses
-  %32 = xor i64 %indvar3075, -1
-  %33 = add i64 %32, %wide.trip.count2360         ; 3 uses
   %.not1852.not2123 = icmp samesign ult i64 %indvars.iv2355, %i.ata
   br i1 %.not1852.not2123, label %.lr.ph2126, label %bb.ft
 
@@ -2109,6 +2107,8 @@ bb.fs:                                            ; preds = %.lr.ph2132, %bb.ft
   %i.atc = mul nsw i64 %indvars.iv2355, %i.asz
   %invariant.gep2584 = getelementptr [8 x i8], ptr %i.s, i64 %i.atc ; 6 uses
   %invariant.gep2586 = getelementptr [8 x i8], ptr %i.s, i64 %indvars.iv2355 ; 6 uses
+  %32 = xor i64 %indvar3075, -1
+  %33 = add i64 %32, %wide.trip.count2360         ; 3 uses
   %min.iters.check3078 = icmp ugt i64 %33, 7
   %or.cond3231 = select i1 %min.iters.check3078, i1 %ident.check3074.not, i1 false
   br i1 %or.cond3231, label %vector.ph3079, label %scalar.ph3077.preheader
@@ -2242,8 +2242,6 @@ bb.ft:                                            ; preds = %._crit_edge2127, %b
 bb.fu:                                            ; preds = %.lr.ph2144, %bb.fv
   %indvar3093 = phi i64 [ 0, %.lr.ph2144 ], [ %indvar.next3094, %bb.fv ] ; 2 uses
   %indvars.iv2365 = phi i64 [ 1, %.lr.ph2144 ], [ %indvars.iv.next2366, %bb.fv ] ; 7 uses
-  %34 = xor i64 %indvar3093, -1
-  %35 = add i64 %34, %wide.trip.count2370         ; 3 uses
   %.not1851.not2135 = icmp samesign ult i64 %indvars.iv2365, %i.aue
   br i1 %.not1851.not2135, label %.lr.ph2138, label %bb.fv
 
@@ -2251,6 +2249,8 @@ bb.fu:                                            ; preds = %.lr.ph2144, %bb.fv
   %i.aug = mul nsw i64 %indvars.iv2365, %i.aud
   %invariant.gep2588 = getelementptr [8 x i8], ptr %i.p, i64 %i.aug ; 6 uses
   %invariant.gep2590 = getelementptr [8 x i8], ptr %i.p, i64 %indvars.iv2365 ; 6 uses
+  %34 = xor i64 %indvar3093, -1
+  %35 = add i64 %34, %wide.trip.count2370         ; 3 uses
   %min.iters.check3096 = icmp ugt i64 %35, 7
   %or.cond3232 = select i1 %min.iters.check3096, i1 %ident.check3092.not, i1 false
   br i1 %or.cond3232, label %vector.ph3097, label %scalar.ph3095.preheader
