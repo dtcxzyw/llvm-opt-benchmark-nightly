@@ -1,0 +1,61 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 4c09470e4e1b6..f125c24469183 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -13385,8 +13385,11 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+           APInt StrideMax = getUnsignedRangeMax(AR->getStepRecurrence(*this));
+           APInt Limit = APInt::getMaxValue(InnerBitWidth) - (StrideMax - 1);
+           Limit = Limit.zext(OuterBitWidth);
+-          return getUnsignedRangeMax(applyLoopGuards(RHS, getGuards()))
+-              .ule(Limit);
++          // Applying loop guards may lose information, e.g. by dropping
++          // no-wrap flags, so check RHS without loop guards first.
++          return getUnsignedRangeMax(RHS).ule(Limit) ||
++                 getUnsignedRangeMax(applyLoopGuards(RHS, getGuards()))
++                     .ule(Limit);
+         };
+         auto Flags = AR->getNoWrapFlags();
+         if (!hasFlags(Flags, SCEV::FlagNUW) && canProveNUW())
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-implied-addrec.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-implied-addrec.ll
+index 2ee2ec53f6c9e..3e90a79b3d057 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-implied-addrec.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-implied-addrec.ll
+@@ -471,7 +471,38 @@ for.end:                                          ; preds = %for.body, %entry
+   ret void
+ }
+ 
++; Without loop guards, rhs <=u 102 (511 /u 5), so the IV exits before wrapping.
++; The divisibility guard rewrites %n to (4 * (%n /u 4)), dropping nuw from the
++; rewritten (4 + %n), so with loop guards rhs is only known to be <=u 511.
++define void @ult_rhs_udiv_divisibility_guard(i16 %x, i16 range(i16 1, 0) %n) {
++; CHECK-LABEL: 'ult_rhs_udiv_divisibility_guard'
++; CHECK-NEXT:  Determining loop execution counts for: @ult_rhs_udiv_divisibility_guard
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + (1 umax ((zext i9 (trunc i16 %x to i9) to i16) /u (4 + %n)<nuw>)))<nsw>
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i16 101
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + (1 umax ((zext i9 (trunc i16 %x to i9) to i16) /u (4 + %n)<nuw>)))<nsw>
++; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
++;
++entry:
++  %num = and i16 %x, 511
++  %den = add nuw i16 %n, 4
++  call void @use(i16 noundef %den)
++  %rhs = udiv i16 %num, %den
++  %rem = urem i16 %n, 4
++  %n.mul4 = icmp eq i16 %rem, 0
++  br i1 %n.mul4, label %for.body, label %for.end
++
++for.body:
++  %iv = phi i8 [ %iv.next, %for.body ], [ 0, %entry ]
++  %iv.next = add i8 %iv, 1
++  %zext = zext i8 %iv.next to i16
++  %cmp = icmp ult i16 %zext, %rhs
++  br i1 %cmp, label %for.body, label %for.end
++
++for.end:
++  ret void
++}
+ 
++declare void @use(i16)
+ 
+ declare void @llvm.assume(i1)
+ 

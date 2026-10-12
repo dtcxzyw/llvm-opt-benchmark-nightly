@@ -204,6 +204,7 @@ _kzalloc_noprof.exit:                             ; preds = %.thread
   br i1 %i.ap, label %.lr.ph152.preheader, label %._crit_edge
 
 .lr.ph152.preheader:                              ; preds = %.preheader148
+  %2 = zext i16 %.0116.lcssa to i64
   %.pre162 = load ptr, ptr %i.af, align 8
   br label %.lr.ph152
 
@@ -227,21 +228,20 @@ _kzalloc_noprof.exit:                             ; preds = %.thread
   br i1 %exitcond.not, label %.preheader148.loopexit, label %.lr.ph, !llvm.loop !30
 
 .lr.ph152:                                        ; preds = %.lr.ph152.preheader, %.lr.ph152
-  %i.bb = phi ptr [ %i.bf, %.lr.ph152 ], [ %.pre162, %.lr.ph152.preheader ]
-  %2 = phi i32 [ %5, %.lr.ph152 ], [ %i.ao, %.lr.ph152.preheader ]
-  %.1151 = phi i16 [ %4, %.lr.ph152 ], [ %.0116.lcssa, %.lr.ph152.preheader ] ; 2 uses
-  %3 = zext i16 %.1151 to i64                     ; 3 uses
-  %i.bc = getelementptr [64 x i8], ptr %i.bb, i64 %3
+  %i.bb = phi ptr [ %.pre162, %.lr.ph152.preheader ], [ %i.bf, %.lr.ph152 ]
+  %indvars.iv157 = phi i64 [ %2, %.lr.ph152.preheader ], [ %indvars.iv.next158, %.lr.ph152 ] ; 4 uses
+  %3 = phi i32 [ %i.ao, %.lr.ph152.preheader ], [ %4, %.lr.ph152 ]
+  %i.bc = getelementptr [64 x i8], ptr %i.bb, i64 %indvars.iv157
   %i.bd = getelementptr i8, ptr %i.bc, i64 12
-  %i.be = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.bd, i64 noundef 16, ptr noundef nonnull @.str.13, i32 noundef %2) #13 ; 0 uses
+  %i.be = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.bd, i64 noundef 16, ptr noundef nonnull @.str.13, i32 noundef %3) #13 ; 0 uses
   %i.bf = load ptr, ptr %i.af, align 8            ; 2 uses
-  %i.bg = getelementptr [64 x i8], ptr %i.bf, i64 %3
+  %i.bg = getelementptr [64 x i8], ptr %i.bf, i64 %indvars.iv157
   %i.bh = getelementptr i8, ptr %i.bg, i64 12
-  %i.bi = getelementptr [24 x i8], ptr %i.ah, i64 %3
+  %i.bi = getelementptr [24 x i8], ptr %i.ah, i64 %indvars.iv157
   store ptr %i.bh, ptr %i.bi, align 8
-  %4 = add nuw i16 %.1151, 1                      ; 2 uses
-  %5 = zext i16 %4 to i32                         ; 2 uses
-  %i.bj = icmp samesign ugt i32 %i.t, %5
+  %indvars.iv.next158 = add nuw nsw i64 %indvars.iv157, 1 ; 2 uses
+  %4 = trunc nuw i64 %indvars.iv.next158 to i32   ; 2 uses
+  %i.bj = icmp samesign ugt i32 %i.t, %4
   br i1 %i.bj, label %.lr.ph152, label %._crit_edge, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %.lr.ph152, %.preheader148
