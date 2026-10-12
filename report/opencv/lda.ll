@@ -204,8 +204,7 @@ bb.a:
   %i.q = sub i64 %wide.trip.count, %smin          ; 2 uses
   %i.r = xor i64 %smin, -1
   %i.s = add i64 %i.r, %wide.trip.count           ; 2 uses
-  %1 = sub i64 %i.k, %indvar
-  %i.t = sub i64 %i.i, %indvar                    ; 3 uses
+  %i.t = sub i64 %i.k, %indvar
   %i.u = shl nuw nsw i64 %indvar, 3
   %i.v = add nuw i64 %i.u, 8                      ; 2 uses
   %scevgep303 = getelementptr i8, ptr %i.g, i64 %i.v
@@ -239,7 +238,7 @@ bb.a:
   %.lcssa320.unr = phi double [ poison, %.lr.ph.preheader ], [ %i.ae, %.lr.ph.prol ]
   %indvars.iv231.unr = phi i64 [ %indvars.iv, %.lr.ph.preheader ], [ %indvars.iv.next232.prol, %.lr.ph.prol ]
   %.0145169.unr = phi double [ 0.000000e+00, %.lr.ph.preheader ], [ %i.ae, %.lr.ph.prol ]
-  %i.af = icmp ult i64 %1, 3
+  %i.af = icmp ult i64 %i.t, 3
   br i1 %i.af, label %._crit_edge, label %.lr.ph
 
 .preheader160:                                    ; preds = %._crit_edge.thread, %bb.a
@@ -462,10 +461,11 @@ bb.a:
   %lcmp.mod339.not = icmp eq i64 %xtraiter338, 0
   %i.eo = sub i64 %smin337, %wide.trip.count
   %i.ep = icmp ugt i64 %i.eo, -4
-  %min.iters.check = icmp ult i64 %i.t, 4
-  %n.vec = and i64 %i.t, -4                       ; 3 uses
+  %1 = sub i64 %i.i, %indvar                      ; 3 uses
+  %min.iters.check = icmp ult i64 %1, 4
+  %n.vec = and i64 %1, -4                         ; 3 uses
   %i.eq = add i64 %indvars.iv, %n.vec
-  %cmp.n = icmp eq i64 %i.t, %n.vec
+  %cmp.n = icmp eq i64 %1, %n.vec
   br label %.lr.ph190
 
 .lr.ph184.new:                                    ; preds = %.prol.loopexit331, %.lr.ph184.new

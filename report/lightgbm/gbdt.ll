@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %indvar = phi i64 [ 0, %.preheader.lr.ph ], [ %indvar.next, %.loopexit ] ; 2 uses
   %i.r = phi i64 [ %i.j, %.preheader.lr.ph ], [ %i.af, %.loopexit ] ; 5 uses
   %i.s = phi i64 [ %i.i, %.preheader.lr.ph ], [ %i.ah, %.loopexit ] ; 3 uses
-  %5 = mul i64 %i.p, %indvar
-  %6 = add i64 %i.j, %5
-  %7 = call i64 @llvm.smax.i64(i64 %i.s, i64 %i.r)
-  %reass.sub = sub i64 %7, %6
+  %5 = call i64 @llvm.smax.i64(i64 %i.s, i64 %i.r)
+  %6 = mul i64 %i.p, %indvar
+  %7 = add i64 %i.j, %6
+  %reass.sub = sub i64 %5, %7
   %i.t = add i64 %reass.sub, 1                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.t, 4
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -610,11 +610,11 @@ bb.b:                                             ; preds = %bb.a
   %indvar = phi i64 [ 0, %.preheader.lr.ph ], [ %indvar.next, %.loopexit ] ; 4 uses
   %indvars.iv = phi i64 [ %i.p, %.preheader.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
   %i.x = phi i32 [ %i.j, %.preheader.lr.ph ], [ %i.ar, %.loopexit ] ; 2 uses
-  %5 = mul i64 %indvar, %i.q
-  %6 = add i64 %5, %i.p
-  %7 = sext i32 %i.x to i64                       ; 3 uses
-  %8 = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %7)
-  %reass.sub = sub i64 %8, %6
+  %5 = sext i32 %i.x to i64                       ; 3 uses
+  %6 = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %5)
+  %7 = mul i64 %indvar, %i.q
+  %8 = add i64 %7, %i.p
+  %reass.sub = sub i64 %6, %8
   %i.y = add i64 %reass.sub, 1                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 6
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -625,7 +625,7 @@ vector.memcheck:                                  ; preds = %.preheader
   %i.ab = mul i64 %i.t, %indvar                   ; 2 uses
   %scevgep30 = getelementptr i8, ptr %i.v, i64 %i.ab
   %scevgep = getelementptr i8, ptr %i.w, i64 %i.ab
-  %smax = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %7)
+  %smax = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %5)
   %i.ac = sub i64 %smax, %i.aa
   %i.ad = shl i64 %i.ac, 3
   %scevgep31 = getelementptr i8, ptr %scevgep30, i64 %i.ad
@@ -673,7 +673,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ap = fadd double %i.am, %i.ao
   store double %i.ap, ptr %i.an, align 8, !tbaa !273
   %indvars.iv.next23 = add nsw i64 %indvars.iv22, 1
-  %.not15.not = icmp slt i64 %indvars.iv22, %7
+  %.not15.not = icmp slt i64 %indvars.iv22, %5
   br i1 %.not15.not, label %scalar.ph, label %.loopexit, !llvm.loop !622
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
@@ -757,11 +757,11 @@ bb.b:                                             ; preds = %bb.a
   %indvar = phi i64 [ 0, %.preheader.lr.ph ], [ %indvar.next, %.loopexit ] ; 4 uses
   %indvars.iv = phi i64 [ %i.p, %.preheader.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
   %i.x = phi i32 [ %i.j, %.preheader.lr.ph ], [ %i.ar, %.loopexit ] ; 2 uses
-  %5 = mul i64 %indvar, %i.q
-  %6 = add i64 %5, %i.p
-  %7 = sext i32 %i.x to i64                       ; 3 uses
-  %8 = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %7)
-  %reass.sub = sub i64 %8, %6
+  %5 = sext i32 %i.x to i64                       ; 3 uses
+  %6 = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %5)
+  %7 = mul i64 %indvar, %i.q
+  %8 = add i64 %7, %i.p
+  %reass.sub = sub i64 %6, %8
   %i.y = add i64 %reass.sub, 1                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.y, 6
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -772,7 +772,7 @@ vector.memcheck:                                  ; preds = %.preheader
   %i.ab = mul i64 %i.t, %indvar                   ; 2 uses
   %scevgep30 = getelementptr i8, ptr %i.v, i64 %i.ab
   %scevgep = getelementptr i8, ptr %i.w, i64 %i.ab
-  %smax = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %7)
+  %smax = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %5)
   %i.ac = sub i64 %smax, %i.aa
   %i.ad = shl i64 %i.ac, 3
   %scevgep31 = getelementptr i8, ptr %scevgep30, i64 %i.ad
@@ -820,7 +820,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ap = fmul double %i.am, %i.ao
   store double %i.ap, ptr %i.an, align 8, !tbaa !273
   %indvars.iv.next23 = add nsw i64 %indvars.iv22, 1
-  %.not15.not = icmp slt i64 %indvars.iv22, %7
+  %.not15.not = icmp slt i64 %indvars.iv22, %5
   br i1 %.not15.not, label %scalar.ph, label %.loopexit, !llvm.loop !629
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block

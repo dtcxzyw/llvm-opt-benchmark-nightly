@@ -205,8 +205,6 @@ bb.t:                                             ; preds = %bb.s, %_ZNSt10uniqu
 
 .lr.ph143:                                        ; preds = %.lr.ph143.preheader, %.loopexit
   %.068141 = phi i64 [ %i.jb, %.loopexit ], [ 0, %.lr.ph143.preheader ] ; 4 uses
-  %10 = xor i64 %.068141, -1
-  %11 = add nsw i64 %10, %i.iy                    ; 3 uses
   %i.jb = add nuw nsw i64 %.068141, 1             ; 6 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.ei, i64 %.068141 ; 4 uses
   %i.jc = icmp samesign ult i64 %i.jb, %i.iy
@@ -215,6 +213,8 @@ bb.t:                                             ; preds = %bb.s, %_ZNSt10uniqu
 .lr.ph140:                                        ; preds = %.lr.ph143
   %i.jd = mul nuw i64 %.068141, %i.ej
   %i.je = getelementptr [4 x i8], ptr %i.ei, i64 %i.jd ; 4 uses
+  %10 = xor i64 %.068141, -1
+  %11 = add nsw i64 %10, %i.iy                    ; 3 uses
   %min.iters.check195 = icmp ugt i64 %11, 3
   %or.cond = select i1 %min.iters.check195, i1 %ident.check.not, i1 false
   br i1 %or.cond, label %vector.ph196, label %scalar.ph194.preheader
@@ -617,8 +617,6 @@ bb.r:                                             ; preds = %bb.q, %_ZNSt10uniqu
 
 .lr.ph142:                                        ; preds = %.lr.ph142.preheader, %.loopexit
   %.068140 = phi i64 [ %i.hz, %.loopexit ], [ 0, %.lr.ph142.preheader ] ; 4 uses
-  %10 = xor i64 %.068140, -1
-  %11 = add nsw i64 %10, %i.hw                    ; 3 uses
   %i.hz = add nuw nsw i64 %.068140, 1             ; 6 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.dg, i64 %.068140 ; 4 uses
   %i.ia = icmp samesign ult i64 %i.hz, %i.hw
@@ -627,6 +625,8 @@ bb.r:                                             ; preds = %bb.q, %_ZNSt10uniqu
 .lr.ph139:                                        ; preds = %.lr.ph142
   %i.ib = mul nuw i64 %.068140, %i.dh
   %i.ic = getelementptr [4 x i8], ptr %i.dg, i64 %i.ib ; 4 uses
+  %10 = xor i64 %.068140, -1
+  %11 = add nsw i64 %10, %i.hw                    ; 3 uses
   %min.iters.check191 = icmp ugt i64 %11, 3
   %or.cond = select i1 %min.iters.check191, i1 %ident.check.not, i1 false
   br i1 %or.cond, label %vector.ph192, label %scalar.ph190.preheader
@@ -1029,8 +1029,6 @@ bb.s:                                             ; preds = %bb.r, %_ZNSt10uniqu
 
 .lr.ph142:                                        ; preds = %.lr.ph142.preheader, %.loopexit
   %.068140 = phi i64 [ %i.jr, %.loopexit ], [ 0, %.lr.ph142.preheader ] ; 4 uses
-  %10 = xor i64 %.068140, -1
-  %11 = add nsw i64 %10, %i.jo                    ; 3 uses
   %i.jr = add nuw nsw i64 %.068140, 1             ; 6 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.ey, i64 %.068140 ; 4 uses
   %i.js = icmp samesign ult i64 %i.jr, %i.jo
@@ -1039,6 +1037,8 @@ bb.s:                                             ; preds = %bb.r, %_ZNSt10uniqu
 .lr.ph139:                                        ; preds = %.lr.ph142
   %i.jt = mul nuw i64 %.068140, %i.ez
   %i.ju = getelementptr [4 x i8], ptr %i.ey, i64 %i.jt ; 4 uses
+  %10 = xor i64 %.068140, -1
+  %11 = add nsw i64 %10, %i.jo                    ; 3 uses
   %min.iters.check198 = icmp ugt i64 %11, 3
   %or.cond = select i1 %min.iters.check198, i1 %ident.check.not, i1 false
   br i1 %or.cond, label %vector.ph199, label %scalar.ph197.preheader
@@ -1441,8 +1441,6 @@ bb.r:                                             ; preds = %bb.q, %_ZNSt10uniqu
 
 .lr.ph142:                                        ; preds = %.lr.ph142.preheader, %.loopexit
   %.068140 = phi i64 [ %i.hz, %.loopexit ], [ 0, %.lr.ph142.preheader ] ; 4 uses
-  %10 = xor i64 %.068140, -1
-  %11 = add nsw i64 %10, %i.hw                    ; 3 uses
   %i.hz = add nuw nsw i64 %.068140, 1             ; 6 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.dg, i64 %.068140 ; 4 uses
   %i.ia = icmp samesign ult i64 %i.hz, %i.hw
@@ -1451,6 +1449,8 @@ bb.r:                                             ; preds = %bb.q, %_ZNSt10uniqu
 .lr.ph139:                                        ; preds = %.lr.ph142
   %i.ib = mul nuw i64 %.068140, %i.dh
   %i.ic = getelementptr [4 x i8], ptr %i.dg, i64 %i.ib ; 4 uses
+  %10 = xor i64 %.068140, -1
+  %11 = add nsw i64 %10, %i.hw                    ; 3 uses
   %min.iters.check191 = icmp ugt i64 %11, 3
   %or.cond = select i1 %min.iters.check191, i1 %ident.check.not, i1 false
   br i1 %or.cond, label %vector.ph192, label %scalar.ph190.preheader

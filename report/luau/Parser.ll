@@ -205,8 +205,8 @@ bb.a:
           to label %.lr.ph.i.i.preheader unwind label %bb.h ; 8 uses
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph.preheader.i.i
-  %i.r = add i64 %.0825, 1                        ; 4 uses
-  %min.iters.check = icmp ult i64 %i.r, 14
+  %i.r = add nuw i64 %.0825, 1                    ; 3 uses
+  %min.iters.check = icmp ult i64 %.0825, 13
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader47, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
@@ -303,7 +303,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.g
   %i.ay = phi ptr [ %i.d, %.lr.ph ], [ %i.cf, %bb.g ] ; 6 uses
   %i.az = phi ptr [ %.pre, %.lr.ph ], [ %i.cg, %bb.g ] ; 5 uses
   %i.ba = phi ptr [ %i.c, %.lr.ph ], [ %i.ch, %bb.g ] ; 3 uses
-  %.0825 = phi i64 [ 0, %.lr.ph ], [ %i.ci, %bb.g ] ; 5 uses
+  %.0825 = phi i64 [ 0, %.lr.ph ], [ %i.ci, %bb.g ] ; 6 uses
   %i.bb = load ptr, ptr %1, align 8, !tbaa !382, !nonnull !67, !align !337
   %i.bc = load i64, ptr %i.j, align 8, !tbaa !369
   %i.bd = load ptr, ptr %i.bb, align 8, !tbaa !184
@@ -706,8 +706,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
           to label %.lr.ph.i.i.preheader unwind label %bb.l ; 8 uses
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph.preheader.i.i
-  %i.u = add i64 %.01032, 1                       ; 4 uses
-  %min.iters.check = icmp ult i64 %i.u, 14
+  %i.u = add nuw i64 %.01032, 1                   ; 3 uses
+  %min.iters.check = icmp ult i64 %.01032, 13
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader50, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
@@ -790,7 +790,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i.i.3, label %.loopexit.loopexit, label %.lr.ph.i.i, !llvm.loop !902
 
 bb.d:                                             ; preds = %.lr.ph, %bb.k
-  %.01032 = phi i64 [ 0, %.lr.ph ], [ %i.cc, %bb.k ] ; 5 uses
+  %.01032 = phi i64 [ 0, %.lr.ph ], [ %i.cc, %bb.k ] ; 6 uses
   %i.ba = load ptr, ptr %4, align 8, !tbaa !382, !nonnull !67, !align !337
   %i.bb = load i64, ptr %i.n, align 8, !tbaa !369
   %i.bc = load ptr, ptr %i.ba, align 8, !tbaa !184

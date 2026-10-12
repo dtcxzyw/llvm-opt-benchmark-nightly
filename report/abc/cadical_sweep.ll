@@ -205,7 +205,6 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !268  ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 304 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !268  ; 8 uses
-  %3 = ptrtoaddr ptr %i.d to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -260,6 +259,7 @@ bb.c:                                             ; preds = %.lr.ph71
   br i1 %.not4351, label %.loopexit, label %.lr.ph54.preheader
 
 .lr.ph54.preheader:                               ; preds = %.preheader
+  %3 = ptrtoaddr ptr %i.d to i64
   %i.n = add i64 %3, -8
   %i.o = shl i64 %indvar, 2
   %i.p = add i64 %i.o, %.cast
@@ -662,7 +662,6 @@ bb.cb:                                            ; preds = %bb.ca
   store i32 %i.ea, ptr %i.kx, align 4, !tbaa !207
   %i.ky = load ptr, ptr %i.a, align 8, !tbaa !268 ; 7 uses
   %i.kz = load ptr, ptr %i.c, align 8, !tbaa !268 ; 8 uses
-  %10 = ptrtoaddr ptr %i.kz to i64
   br label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cc, %bb.cb
@@ -717,6 +716,7 @@ bb.cd:                                            ; preds = %.lr.ph285
   br i1 %.not4351.i, label %.loopexit.i, label %.lr.ph54.i.preheader
 
 .lr.ph54.i.preheader:                             ; preds = %.preheader.i
+  %10 = ptrtoaddr ptr %i.kz to i64
   %i.lj = add i64 %10, -8
   %i.lk = shl i64 %indvar292, 2
   %i.ll = add i64 %i.lk, %.cast.i
@@ -830,7 +830,6 @@ bb.cj:                                            ; preds = %bb.ca
   store i32 %i.dz, ptr %i.mq, align 4, !tbaa !207
   %i.mr = load ptr, ptr %i.a, align 8, !tbaa !268 ; 7 uses
   %i.ms = load ptr, ptr %i.c, align 8, !tbaa !268 ; 8 uses
-  %11 = ptrtoaddr ptr %i.ms to i64
   br label %bb.ck
 
 bb.ck:                                            ; preds = %bb.ck, %bb.cj
@@ -885,6 +884,7 @@ bb.cl:                                            ; preds = %.lr.ph
   br i1 %.not4351.i175, label %.loopexit.i169, label %.lr.ph54.i176.preheader
 
 .lr.ph54.i176.preheader:                          ; preds = %.preheader.i173
+  %11 = ptrtoaddr ptr %i.ms to i64
   %i.nc = add i64 %11, -8
   %i.nd = shl i64 %indvar, 2
   %i.ne = add i64 %i.nd, %.cast.i150

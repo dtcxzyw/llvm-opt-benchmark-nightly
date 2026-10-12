@@ -156,12 +156,12 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph92:                                         ; preds = %.lr.ph92.preheader, %._crit_edge89
   %.091 = phi ptr [ %i.ci, %._crit_edge89 ], [ %3, %.lr.ph92.preheader ] ; 7 uses
   %.17290 = phi i64 [ %i.cj, %._crit_edge89 ], [ 0, %.lr.ph92.preheader ] ; 7 uses
-  %5 = sub nsw i64 %0, %.17290                    ; 3 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.17290 ; 6 uses
   %i.at = icmp slt i64 %.17290, %0
   br i1 %i.at, label %.lr.ph88.preheader, label %._crit_edge89
 
 .lr.ph88.preheader:                               ; preds = %.lr.ph92
+  %5 = sub nsw i64 %0, %.17290                    ; 3 uses
   %min.iters.check122 = icmp ugt i64 %5, 7
   %or.cond153 = and i1 %min.iters.check122, %ident.check120.not
   br i1 %or.cond153, label %vector.ph123, label %.lr.ph88.preheader155
@@ -268,8 +268,6 @@ middle.block132:                                  ; preds = %vector.body125
 .lr.ph85:                                         ; preds = %.lr.ph85.preheader, %._crit_edge
   %.184 = phi ptr [ %i.et, %._crit_edge ], [ %3, %.lr.ph85.preheader ] ; 7 uses
   %.27383 = phi i64 [ %i.cp, %._crit_edge ], [ 0, %.lr.ph85.preheader ] ; 4 uses
-  %6 = xor i64 %.27383, -1
-  %7 = add nsw i64 %0, %6                         ; 3 uses
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.27383 ; 7 uses
   %i.cl = mul nsw i64 %.27383, %4
   %i.cm = getelementptr inbounds [8 x i8], ptr %i.ck, i64 %i.cl ; 2 uses
@@ -281,6 +279,8 @@ middle.block132:                                  ; preds = %vector.body125
   br i1 %i.cq, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph85
+  %6 = xor i64 %.27383, -1
+  %7 = add nsw i64 %0, %6                         ; 3 uses
   %min.iters.check = icmp ugt i64 %7, 7
   %or.cond154 = and i1 %min.iters.check, %ident.check.not
   br i1 %or.cond154, label %vector.ph, label %.lr.ph.preheader157

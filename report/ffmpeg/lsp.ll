@@ -204,9 +204,8 @@ lsp2poly.exit.thread:                             ; preds = %bb.a
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.loopexit80, %.lr.ph.preheader.i
-  %indvar = phi i64 [ %indvar.next, %.loopexit80 ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %.loopexit80 ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.loopexit80 ], [ 2, %.lr.ph.preheader.i ] ; 6 uses
-  %3 = add i64 %indvar, 1                         ; 3 uses
   %i.k = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv.i ; 2 uses
   %i.l = getelementptr i8, ptr %i.k, i64 -8
   %i.m = load i32, ptr %i.l, align 4, !tbaa !40
@@ -216,7 +215,8 @@ lsp2poly.exit.thread:                             ; preds = %bb.a
   %i.o = getelementptr i8, ptr %i.n, i64 -4
   %i.p = load i16, ptr %i.o, align 2, !tbaa !11   ; 2 uses
   %i.q = sext i16 %i.p to i64                     ; 2 uses
-  %min.iters.check = icmp ult i64 %3, 4
+  %3 = add nuw i64 %indvar, 1                     ; 2 uses
+  %min.iters.check = icmp ult i64 %indvar, 3
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
@@ -296,9 +296,8 @@ lsp2poly.exit:                                    ; preds = %.loopexit80
   br label %.lr.ph.i25
 
 .lr.ph.i25:                                       ; preds = %.loopexit, %lsp2poly.exit
-  %indvar43 = phi i64 [ %indvar.next44, %.loopexit ], [ 0, %lsp2poly.exit ] ; 2 uses
+  %indvar43 = phi i64 [ %indvar.next44, %.loopexit ], [ 0, %lsp2poly.exit ] ; 3 uses
   %indvars.iv.i26 = phi i64 [ %indvars.iv.next.i30, %.loopexit ], [ 2, %lsp2poly.exit ] ; 6 uses
-  %4 = add i64 %indvar43, 1                       ; 3 uses
   %i.az = getelementptr [4 x i8], ptr %i.b, i64 %indvars.iv.i26 ; 2 uses
   %i.ba = getelementptr i8, ptr %i.az, i64 -8
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !40
@@ -308,7 +307,8 @@ lsp2poly.exit:                                    ; preds = %.loopexit80
   %i.bd = getelementptr i8, ptr %i.bc, i64 -4
   %i.be = load i16, ptr %i.bd, align 2, !tbaa !11 ; 2 uses
   %i.bf = sext i16 %i.be to i64                   ; 2 uses
-  %min.iters.check46 = icmp ult i64 %4, 4
+  %4 = add nuw i64 %indvar43, 1                   ; 2 uses
+  %min.iters.check46 = icmp ult i64 %indvar43, 3
   br i1 %min.iters.check46, label %scalar.ph45.preheader, label %vector.ph47
 
 vector.ph47:                                      ; preds = %.lr.ph.i25

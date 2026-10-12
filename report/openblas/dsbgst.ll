@@ -202,13 +202,12 @@ vec.epilog.scalar.ph4406:                         ; preds = %vec.epilog.scalar.p
   br label %.lr.ph2957
 
 .lr.ph2957:                                       ; preds = %._crit_edge2967, %.lr.ph2977
-  %indvar4330 = phi i64 [ %indvar.next4331, %._crit_edge2967 ], [ 0, %.lr.ph2977 ] ; 5 uses
+  %indvar4330 = phi i64 [ %indvar.next4331, %._crit_edge2967 ], [ 0, %.lr.ph2977 ] ; 6 uses
   %indvar = phi i32 [ %indvar.next, %._crit_edge2967 ], [ 0, %.lr.ph2977 ] ; 9 uses
   %indvars.iv3555 = phi i64 [ %indvars.iv.next3556, %._crit_edge2967 ], [ %i.he, %.lr.ph2977 ] ; 4 uses
   %indvars.iv3548 = phi i32 [ %indvars.iv.next3549, %._crit_edge2967 ], [ %i.hf, %.lr.ph2977 ] ; 3 uses
   %i.jl = trunc i64 %indvar4330 to i32
   %i.jm = add i32 %i.bw, %i.jl
-  %13 = add i64 %indvar4330, 1                    ; 3 uses
   %i.jn = mul i32 %.0255729743492, %indvar
   %i.jo = add i32 %i.it, %i.jn
   %i.jp = sext i32 %i.jo to i64
@@ -247,7 +246,8 @@ vec.epilog.scalar.ph4406:                         ; preds = %vec.epilog.scalar.p
   %i.km = add i32 %i.cc, %i.ki
   %i.kn = sext i32 %i.km to i64
   %i.ko = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.kn ; 5 uses
-  %min.iters.check4364 = icmp ult i64 %13, 8
+  %13 = add nuw i64 %indvar4330, 1                ; 2 uses
+  %min.iters.check4364 = icmp ult i64 %indvar4330, 7
   br i1 %min.iters.check4364, label %scalar.ph4363.preheader, label %vector.scevcheck4326
 
 vector.scevcheck4326:                             ; preds = %.lr.ph2957
@@ -650,7 +650,6 @@ bb.do:                                            ; preds = %.lr.ph3387.us, %._c
   %indvar4500 = phi i32 [ 0, %.lr.ph3387.us ], [ %indvar.next4501, %._crit_edge3379.us ] ; 4 uses
   %indvars.iv3724 = phi i64 [ %i.ddt, %.lr.ph3387.us ], [ %indvars.iv.next3725, %._crit_edge3379.us ] ; 12 uses
   %.182575.neg3385.us.in = phi i32 [ %.32608.us, %.lr.ph3387.us ], [ %i.cae, %._crit_edge3379.us ]
-  %14 = add i64 %indvar4560, %i.ddt
   %i.byx = trunc i64 %indvar4560 to i32
   %i.byy = mul i32 %i.n, %i.byx
   %i.byz = add i32 %i.byy, %i.deq
@@ -702,6 +701,7 @@ bb.do:                                            ; preds = %.lr.ph3387.us, %._c
   %i.caj = sext i32 %i.cai to i64
   %i.cak = getelementptr [8 x i8], ptr %i.s, i64 %i.caj ; 4 uses
   %i.cal = call i64 @llvm.smax.i64(i64 %indvars.iv3724, i64 %i.ddu)
+  %14 = add i64 %indvar4560, %i.ddt
   %reass.sub4649 = sub i64 %i.cal, %14
   %i.cam = add i64 %reass.sub4649, 1              ; 3 uses
   %min.iters.check4596 = icmp ult i64 %i.cam, 12

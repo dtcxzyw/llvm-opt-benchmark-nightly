@@ -205,17 +205,9 @@ bb.b:                                             ; preds = %.preheader3944, %._
   %i.hc = add i32 %i.gz, %i.hb
   %i.hd = trunc i64 %indvars.iv4374 to i32
   %i.he = add i32 %i.gu, %i.hd
-  %6 = trunc i64 %indvar to i32
-  %7 = mul i32 %6, -128
-  %8 = or disjoint i32 %7, 12
-  %9 = trunc i64 %indvar to i32
-  %10 = mul i32 %9, -128
-  %11 = or disjoint i32 %10, 8
   %i.hf = trunc i64 %indvar to i32
   %i.hg = mul i32 %i.hf, -128
   %i.hh = or disjoint i32 %i.hg, 3
-  %indvar.tr = trunc i64 %indvar to i32
-  %12 = shl i32 %indvar.tr, 7
   %indvar.tr7437.a = trunc i64 %indvar to i32
   %i.hi = shl i32 %indvar.tr7437.a, 7
   %indvar.tr7438 = trunc i64 %indvar to i32
@@ -618,6 +610,9 @@ begin_hunk_1_@amaze_demosaic:bb.a
   br i1 %i.euj, label %.lr.ph3979.preheader, label %.preheader3927
 
 .lr.ph3979.preheader:                             ; preds = %.lr.ph3983
+  %6 = trunc i64 %indvar to i32
+  %7 = mul i32 %6, -128
+  %8 = or disjoint i32 %7, 12
   %i.euk = add i32 %i.hv, %8                      ; 2 uses
   %i.eul = zext i32 %i.euk to i64                 ; 2 uses
   %min.iters.check5260 = icmp ult i32 %i.euk, 8
@@ -636,6 +631,9 @@ begin_hunk_1_@amaze_demosaic:bb.a
   br i1 %i.eup, label %.lr.ph3988.preheader, label %.preheader3925
 
 .lr.ph3988.preheader:                             ; preds = %.lr.ph3991
+  %9 = trunc i64 %indvar to i32
+  %10 = mul i32 %9, -128
+  %11 = or disjoint i32 %10, 8
   %i.euq = add i32 %i.hv, %11                     ; 2 uses
   %i.eur = zext i32 %i.euq to i64                 ; 2 uses
   %min.iters.check5212 = icmp ult i32 %i.euq, 8
@@ -1038,6 +1036,8 @@ bb.cv:                                            ; preds = %bb.cu, %bb.ct
 
 .lr.ph4116:                                       ; preds = %.preheader3916
   %i.hxl = add nsw i32 %i.hx, -12                 ; 2 uses
+  %12 = trunc i64 %indvar to i32
+  %13 = shl i32 %12, 7
   %i.hxm = add i32 %i.hv, -9
   %i.hxn = add i32 %i.hv, -9
   %i.hxo = add i32 %i.hv, -9
@@ -1172,7 +1172,7 @@ bb.cz:                                            ; preds = %.lr.ph4116, %._crit
   %i.iam = lshr exact i32 %indvars.iv4351, 1
   %i.ian = zext nneg i32 %i.iam to i64            ; 5 uses
   %i.iao = sext i32 %i.ial to i64                 ; 6 uses
-  %i.iap = or disjoint i32 %12, %i.iai
+  %i.iap = or disjoint i32 %13, %i.iai
   %i.iaq = sub i32 %i.hxm, %i.iap                 ; 2 uses
   %i.iar = lshr i32 %i.iaq, 1
   %narrow7449 = add nuw i32 %i.iar, 1
@@ -1575,9 +1575,9 @@ bb.ei:                                            ; preds = %.lr.ph4123, %._crit
   br i1 %i.iqw, label %.lr.ph4120.preheader, label %._crit_edge4121
 
 .lr.ph4120.preheader:                             ; preds = %bb.ei
+  %14 = zext i32 %indvars.iv4360 to i64           ; 3 uses
   %i.iqx = mul i32 %indvar4844, -160
   %.reass7660 = add i32 %i.iqx, %invariant.op7659
-  %13 = zext i32 %indvars.iv4360 to i64           ; 3 uses
   %i.iqy = add i32 %i.iqv, %.reass7660            ; 2 uses
   %i.iqz = zext i32 %i.iqy to i64
   %i.ira = add nuw nsw i64 %i.iqz, 1              ; 2 uses
@@ -1586,12 +1586,12 @@ bb.ei:                                            ; preds = %.lr.ph4123, %._crit
 
 vector.ph4848:                                    ; preds = %.lr.ph4120.preheader
   %n.vec4849 = and i64 %i.ira, 8589934584         ; 3 uses
-  %i.irb = add nuw nsw i64 %n.vec4849, %13
+  %i.irb = add nuw nsw i64 %n.vec4849, %14
   br label %vector.body4850
 
 vector.body4850:                                  ; preds = %vector.body4850, %vector.ph4848
   %index4851 = phi i64 [ 0, %vector.ph4848 ], [ %index.next4852, %vector.body4850 ] ; 2 uses
-  %i.irc = add nuw i64 %index4851, %13            ; 2 uses
+  %i.irc = add nuw i64 %index4851, %14            ; 2 uses
   %i.ird = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.irc ; 2 uses
   %wide.load = load <8 x float>, ptr %i.ird, align 8, !tbaa !322
   %i.ire = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %i.irc
@@ -1606,7 +1606,7 @@ middle.block4853:                                 ; preds = %vector.body4850
   br i1 %cmp.n4854, label %._crit_edge4121, label %.lr.ph4120.preheader7452
 
 .lr.ph4120.preheader7452:                         ; preds = %.lr.ph4120.preheader, %middle.block4853
-  %indvars.iv4362.ph = phi i64 [ %13, %.lr.ph4120.preheader ], [ %i.irb, %middle.block4853 ]
+  %indvars.iv4362.ph = phi i64 [ %14, %.lr.ph4120.preheader ], [ %i.irb, %middle.block4853 ]
   br label %.lr.ph4120
 
 ._crit_edge4121:                                  ; preds = %.lr.ph4120, %middle.block4853, %bb.ei

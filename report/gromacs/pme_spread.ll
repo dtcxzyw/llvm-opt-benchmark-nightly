@@ -205,10 +205,9 @@ vec.epilog.middle.block400:                       ; preds = %vec.epilog.vector.b
   br i1 %i.wk, label %._crit_edge260.i, label %.lr.ph259.i
 
 .lr.ph251.preheader.i:                            ; preds = %.lr.ph251.preheader.i.preheader, %._crit_edge252.i
-  %indvar403 = phi i64 [ %indvar.next404, %._crit_edge252.i ], [ 0, %.lr.ph251.preheader.i.preheader ] ; 2 uses
+  %indvar403 = phi i64 [ %indvar.next404, %._crit_edge252.i ], [ 0, %.lr.ph251.preheader.i.preheader ] ; 3 uses
   %indvars.iv327.i = phi i64 [ %indvars.iv.next328.i, %._crit_edge252.i ], [ 3, %.lr.ph251.preheader.i.preheader ] ; 5 uses
   %indvars.iv325.i = phi i64 [ %indvars.iv.next326.i, %._crit_edge252.i ], [ 2, %.lr.ph251.preheader.i.preheader ] ; 2 uses
-  %9 = add i64 %indvar403, 1                      ; 3 uses
   %i.wl = add nsw i64 %indvars.iv327.i, -1        ; 2 uses
   %i.wm = trunc nuw nsw i64 %i.wl to i32
   %i.wn = sitofp i32 %i.wm to double
@@ -221,7 +220,8 @@ vec.epilog.middle.block400:                       ; preds = %vec.epilog.vector.b
   %i.wu = fmul float %i.wt, %i.wq
   %i.wv = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.wl
   store float %i.wu, ptr %i.wv, align 4, !tbaa !134
-  %min.iters.check406 = icmp ult i64 %9, 8
+  %9 = add nuw i64 %indvar403, 1                  ; 2 uses
+  %min.iters.check406 = icmp ult i64 %indvar403, 7
   br i1 %min.iters.check406, label %.lr.ph251.i.preheader, label %vector.ph407
 
 vector.ph407:                                     ; preds = %.lr.ph251.preheader.i
@@ -498,10 +498,9 @@ middle.block357:                                  ; preds = %vector.body345
   br label %.lr.ph251.preheader.1.i
 
 .lr.ph251.preheader.1.i:                          ; preds = %.lr.ph251.preheader.1.i.preheader, %._crit_edge252.1.i
-  %indvar308 = phi i64 [ %indvar.next309, %._crit_edge252.1.i ], [ 0, %.lr.ph251.preheader.1.i.preheader ] ; 2 uses
+  %indvar308 = phi i64 [ %indvar.next309, %._crit_edge252.1.i ], [ 0, %.lr.ph251.preheader.1.i.preheader ] ; 3 uses
   %indvars.iv327.1.i = phi i64 [ %indvars.iv.next328.1.i, %._crit_edge252.1.i ], [ 3, %.lr.ph251.preheader.1.i.preheader ] ; 5 uses
   %indvars.iv325.1.i = phi i64 [ %indvars.iv.next326.1.i, %._crit_edge252.1.i ], [ 2, %.lr.ph251.preheader.1.i.preheader ] ; 2 uses
-  %10 = add i64 %indvar308, 1                     ; 3 uses
   %i.abr = add nsw i64 %indvars.iv327.1.i, -1     ; 2 uses
   %i.abs = trunc nuw nsw i64 %i.abr to i32
   %i.abt = sitofp i32 %i.abs to double
@@ -514,7 +513,8 @@ middle.block357:                                  ; preds = %vector.body345
   %i.aca = fmul float %i.abz, %i.abw
   %i.acb = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.abr
   store float %i.aca, ptr %i.acb, align 4, !tbaa !134
-  %min.iters.check311 = icmp ult i64 %10, 8
+  %10 = add nuw i64 %indvar308, 1                 ; 2 uses
+  %min.iters.check311 = icmp ult i64 %indvar308, 7
   br i1 %min.iters.check311, label %.lr.ph251.1.i.preheader, label %vector.ph312
 
 vector.ph312:                                     ; preds = %.lr.ph251.preheader.1.i
@@ -908,10 +908,9 @@ middle.block261:                                  ; preds = %vector.body249
   br label %.lr.ph251.preheader.2.i
 
 .lr.ph251.preheader.2.i:                          ; preds = %.lr.ph251.preheader.2.i.preheader, %._crit_edge252.2.i
-  %indvar = phi i64 [ %indvar.next, %._crit_edge252.2.i ], [ 0, %.lr.ph251.preheader.2.i.preheader ] ; 2 uses
+  %indvar = phi i64 [ %indvar.next, %._crit_edge252.2.i ], [ 0, %.lr.ph251.preheader.2.i.preheader ] ; 3 uses
   %indvars.iv327.2.i = phi i64 [ %indvars.iv.next328.2.i, %._crit_edge252.2.i ], [ 3, %.lr.ph251.preheader.2.i.preheader ] ; 5 uses
   %indvars.iv325.2.i = phi i64 [ %indvars.iv.next326.2.i, %._crit_edge252.2.i ], [ 2, %.lr.ph251.preheader.2.i.preheader ] ; 2 uses
-  %11 = add i64 %indvar, 1                        ; 3 uses
   %i.aih = add nsw i64 %indvars.iv327.2.i, -1     ; 2 uses
   %i.aii = trunc nuw nsw i64 %i.aih to i32
   %i.aij = sitofp i32 %i.aii to double
@@ -924,7 +923,8 @@ middle.block261:                                  ; preds = %vector.body249
   %i.aiq = fmul float %i.aip, %i.aim
   %i.air = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.aih
   store float %i.aiq, ptr %i.air, align 4, !tbaa !134
-  %min.iters.check215 = icmp ult i64 %11, 8
+  %11 = add nuw i64 %indvar, 1                    ; 2 uses
+  %min.iters.check215 = icmp ult i64 %indvar, 7
   br i1 %min.iters.check215, label %.lr.ph251.2.i.preheader, label %vector.ph216
 
 vector.ph216:                                     ; preds = %.lr.ph251.preheader.2.i

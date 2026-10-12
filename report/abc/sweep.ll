@@ -205,7 +205,6 @@ bb.hb:                                            ; preds = %clear_core.exit164.
   %i.aol = load ptr, ptr %i.sm, align 8, !tbaa !78 ; 6 uses
   %i.aom = ptrtoaddr ptr %i.aol to i64            ; 2 uses
   %i.aon = load ptr, ptr %i.sk, align 8, !tbaa !79 ; 6 uses
-  %3 = ptrtoaddr ptr %i.aon to i64
   br label %bb.hc
 
 bb.hc:                                            ; preds = %bb.hc, %bb.hb
@@ -265,6 +264,7 @@ bb.he:                                            ; preds = %bb.hd
   br i1 %.not4755.i.i.i, label %.loopexit.i.i.i, label %.lr.ph58.i.i.i.preheader
 
 .lr.ph58.i.i.i.preheader:                         ; preds = %.preheader.i167.i.i
+  %3 = ptrtoaddr ptr %i.aon to i64
   %i.aoz = add i64 %3, -8
   %i.apa = add i64 %indvar, %indvar336
   %i.apb = shl i64 %i.apa, 2
@@ -362,7 +362,6 @@ bb.hh:                                            ; preds = %clear_core.exit164.
   %i.aqc = load ptr, ptr %i.sm, align 8, !tbaa !78 ; 6 uses
   %i.aqd = ptrtoaddr ptr %i.aqc to i64            ; 2 uses
   %i.aqe = load ptr, ptr %i.sk, align 8, !tbaa !79 ; 6 uses
-  %4 = ptrtoaddr ptr %i.aqe to i64
   br label %bb.hi
 
 bb.hi:                                            ; preds = %bb.hi, %bb.hh
@@ -422,6 +421,7 @@ bb.hk:                                            ; preds = %bb.hj
   br i1 %.not4755.i189.i.i, label %.loopexit.i186.i.i, label %.lr.ph58.i190.i.i.preheader
 
 .lr.ph58.i190.i.i.preheader:                      ; preds = %.preheader.i188.i.i
+  %4 = ptrtoaddr ptr %i.aqe to i64
   %i.aqq = add i64 %4, -8
   %i.aqr = add i64 %indvar352, %indvar354
   %i.aqs = shl i64 %i.aqr, 2

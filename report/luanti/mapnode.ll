@@ -205,7 +205,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
 scalar.ph:                                        ; preds = %vector.body, %.lr.ph.preheader
   %bc.resume.val = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %vector.body ]
   %bc.resume.val127 = phi ptr [ %storemerge.i, %.lr.ph.preheader ], [ %i.u, %vector.body ] ; 3 uses
-  %bc.resume.val127128 = ptrtoaddr ptr %bc.resume.val127 to i64
   br label %.lr.ph
 
 bb.l:                                             ; preds = %_ZN6BufferIhEC2Em.exit
@@ -309,8 +308,9 @@ iter.check:                                       ; preds = %.lr.ph
   br i1 %min.iters.check133, label %vec.epilog.scalar.ph, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %9 = ptrtoaddr ptr %bc.resume.val127 to i64
   %i.bv = ptrtoaddr ptr %i.gk to i64
-  %reass.sub = sub i64 %i.bv, %bc.resume.val127128
+  %reass.sub = sub i64 %i.bv, %9
   %i.bw = getelementptr i8, ptr %bc.resume.val127, i64 %reass.sub
   %scevgep129 = getelementptr i8, ptr %i.bw, i64 %wide.trip.count
   %scevgep130 = getelementptr i8, ptr %2, i64 2
@@ -462,7 +462,6 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.vector.body, %iter.check, %vector.memcheck, %vec.epilog.iter.check
   %bc.resume.val147 = phi i64 [ 0, %iter.check ], [ %n.vec136, %vec.epilog.iter.check ], [ 0, %vector.memcheck ], [ %n.vec143, %vec.epilog.vector.body ] ; 4 uses
   %bc.resume.val148 = phi ptr [ %i.gk, %iter.check ], [ %i.cc, %vec.epilog.iter.check ], [ %i.gk, %vector.memcheck ], [ %i.et, %vec.epilog.vector.body ] ; 4 uses
-  %bc.resume.val148150 = ptrtoaddr ptr %bc.resume.val148 to i64
   %i.gb = sub nsw i64 %wide.trip.count, %bc.resume.val147
   %xtraiter = and i64 %i.gb, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -509,7 +508,8 @@ iter.check170:                                    ; preds = %.lr.ph80, %.lr.ph80
   br i1 %min.iters.check158, label %.lr.ph84.preheader, label %vector.memcheck149
 
 vector.memcheck149:                               ; preds = %iter.check170
-  %i.gl = xor i64 %bc.resume.val148150, -1
+  %10 = ptrtoaddr ptr %bc.resume.val148 to i64
+  %i.gl = xor i64 %10, -1
   %i.gm = ptrtoaddr ptr %.lcssa214 to i64
   %i.gn = getelementptr i8, ptr %bc.resume.val148, i64 %i.gm
   %i.go = getelementptr i8, ptr %i.gn, i64 %i.gl

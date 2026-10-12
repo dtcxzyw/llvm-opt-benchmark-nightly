@@ -205,7 +205,6 @@ begin_hunk_0_@encode_frame:bb.a
   %indvars.iv117.i = phi i64 [ %indvars.iv.next118.i, %._crit_edge97.i ], [ 384, %.preheader82.i.preheader ] ; 3 uses
   %i.zi = phi i1 [ false, %._crit_edge97.i ], [ true, %.preheader82.i.preheader ]
   %indvar.i = phi i64 [ 1, %._crit_edge97.i ], [ 0, %.preheader82.i.preheader ] ; 2 uses
-  %4 = shl nuw nsw i64 %indvar, 8
   %i.zj = shl nuw nsw i64 %indvar.i, 10           ; 2 uses
   %i.zk = sub nuw nsw i64 1536, %i.zj
   %i.zl = icmp sgt i32 %i.zh, 0
@@ -215,6 +214,7 @@ begin_hunk_0_@encode_frame:bb.a
   %i.zm = getelementptr inbounds nuw [1024 x i8], ptr %i.ro, i64 %indvar.i
   %i.zn = getelementptr i8, ptr %i.k, i64 %i.zj
   %i.zo = getelementptr i8, ptr %i.zn, i64 7568
+  %4 = shl i64 %indvar, 8
   %i.zp = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv117.i
   %i.zq = or disjoint i64 %4, 120
   br label %.lr.ph93.i

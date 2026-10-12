@@ -205,11 +205,11 @@ bb.q:                                             ; preds = %"_ZSt25__unguarded_
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph143
-  %i.fa = shl nuw nsw i64 %indvars.iv, 2
+  %i.fa = shl i64 %indvars.iv, 2
   %i.fb = add nuw i64 %i.fa, 4                    ; 2 uses
   %scevgep = getelementptr i8, ptr %i.ex, i64 %i.fb ; 2 uses
   %scevgep243 = getelementptr i8, ptr %i.ez, i64 %i.fb ; 2 uses
-  %i.fc = shl nuw nsw i64 %indvars.iv, 3
+  %i.fc = shl i64 %indvars.iv, 3
   %i.fd = getelementptr i8, ptr %.sroa.082.3, i64 %i.fc
   %scevgep244 = getelementptr i8, ptr %i.fd, i64 8 ; 2 uses
   %bound0 = icmp ult ptr %i.ex, %scevgep243

@@ -205,14 +205,14 @@ bb.dh:                                            ; preds = %bb.dj, %.lr.ph33.i.
   %indvars.iv43.i.i = phi i64 [ 0, %.lr.ph33.i.i ], [ %indvars.iv.next44.i.i, %bb.dj ] ; 4 uses
   %indvars.iv38.i.i = phi i64 [ 1, %.lr.ph33.i.i ], [ %indvars.iv.next39.i.i, %bb.dj ] ; 4 uses
   %.02132.i.i = phi i32 [ 0, %.lr.ph33.i.i ], [ %.1.i.i, %bb.dj ]
-  %25 = xor i64 %indvars.iv43.i.i, -1
-  %26 = add nsw i64 %25, %i.uh                    ; 3 uses
   %indvars.iv.next44.i.i = add nuw nsw i64 %indvars.iv43.i.i, 1 ; 3 uses
   %i.uw = icmp samesign ult i64 %indvars.iv.next44.i.i, %i.uh
   br i1 %i.uw, label %.preheader.i.i, label %bb.di
 
 .preheader.i.i:                                   ; preds = %bb.dh
   %i.ux = load ptr, ptr %i.ai, align 8, !tbaa !60 ; 2 uses
+  %25 = xor i64 %indvars.iv43.i.i, -1
+  %26 = add nsw i64 %25, %i.uh                    ; 3 uses
   %min.iters.check438 = icmp ult i64 %26, 8
   br i1 %min.iters.check438, label %scalar.ph437.preheader, label %vector.ph439
 
@@ -468,14 +468,14 @@ bb.ec:                                            ; preds = %bb.ee, %.lr.ph33.i.
   %indvars.iv43.i.i204 = phi i64 [ 0, %.lr.ph33.i.i203 ], [ %indvars.iv.next44.i.i207, %bb.ee ] ; 4 uses
   %indvars.iv38.i.i205 = phi i64 [ 1, %.lr.ph33.i.i203 ], [ %indvars.iv.next39.i.i210, %bb.ee ] ; 4 uses
   %.02132.i.i206 = phi i32 [ 0, %.lr.ph33.i.i203 ], [ %.1.i.i209, %bb.ee ]
-  %27 = xor i64 %indvars.iv43.i.i204, -1
-  %28 = add nsw i64 %27, %i.xj                    ; 3 uses
   %indvars.iv.next44.i.i207 = add nuw nsw i64 %indvars.iv43.i.i204, 1 ; 3 uses
   %i.xy = icmp samesign ult i64 %indvars.iv.next44.i.i207, %i.xj
   br i1 %i.xy, label %.preheader.i.i212, label %bb.ed
 
 .preheader.i.i212:                                ; preds = %bb.ec
   %i.xz = load ptr, ptr %i.al, align 8, !tbaa !60 ; 2 uses
+  %27 = xor i64 %indvars.iv43.i.i204, -1
+  %28 = add nsw i64 %27, %i.xj                    ; 3 uses
   %min.iters.check425 = icmp ult i64 %28, 8
   br i1 %min.iters.check425, label %scalar.ph424.preheader, label %vector.ph426
 
@@ -878,14 +878,14 @@ bb.ac:                                            ; preds = %bb.ae, %.lr.ph33.i.
   %indvars.iv43.i.i = phi i64 [ 0, %.lr.ph33.i.i ], [ %indvars.iv.next44.i.i, %bb.ae ] ; 4 uses
   %indvars.iv38.i.i = phi i64 [ 1, %.lr.ph33.i.i ], [ %indvars.iv.next39.i.i, %bb.ae ] ; 4 uses
   %.02132.i.i = phi i32 [ 0, %.lr.ph33.i.i ], [ %.1.i.i, %bb.ae ]
-  %6 = xor i64 %indvars.iv43.i.i, -1
-  %7 = add nsw i64 %6, %i.gz                      ; 3 uses
   %indvars.iv.next44.i.i = add nuw nsw i64 %indvars.iv43.i.i, 1 ; 3 uses
   %i.ho = icmp samesign ult i64 %indvars.iv.next44.i.i, %i.gz
   br i1 %i.ho, label %.preheader.i.i, label %bb.ad
 
 .preheader.i.i:                                   ; preds = %bb.ac
   %i.hp = load ptr, ptr %i.bb, align 8, !tbaa !60 ; 2 uses
+  %6 = xor i64 %indvars.iv43.i.i, -1
+  %7 = add nsw i64 %6, %i.gz                      ; 3 uses
   %min.iters.check678 = icmp ult i64 %7, 8
   br i1 %min.iters.check678, label %scalar.ph677.preheader, label %vector.ph679
 
@@ -1001,14 +1001,14 @@ bb.ag:                                            ; preds = %bb.ai, %.lr.ph33.i.
   %indvars.iv43.i.i143 = phi i64 [ 0, %.lr.ph33.i.i142 ], [ %indvars.iv.next44.i.i146, %bb.ai ] ; 4 uses
   %indvars.iv38.i.i144 = phi i64 [ 1, %.lr.ph33.i.i142 ], [ %indvars.iv.next39.i.i149, %bb.ai ] ; 4 uses
   %.02132.i.i145 = phi i32 [ 0, %.lr.ph33.i.i142 ], [ %.1.i.i148, %bb.ai ]
-  %8 = xor i64 %indvars.iv43.i.i143, -1
-  %9 = add nsw i64 %8, %i.ir                      ; 3 uses
   %indvars.iv.next44.i.i146 = add nuw nsw i64 %indvars.iv43.i.i143, 1 ; 3 uses
   %i.jg = icmp samesign ult i64 %indvars.iv.next44.i.i146, %i.ir
   br i1 %i.jg, label %.preheader.i.i151, label %bb.ah
 
 .preheader.i.i151:                                ; preds = %bb.ag
   %i.jh = load ptr, ptr %i.bh, align 8, !tbaa !60 ; 2 uses
+  %8 = xor i64 %indvars.iv43.i.i143, -1
+  %9 = add nsw i64 %8, %i.ir                      ; 3 uses
   %min.iters.check662 = icmp ult i64 %9, 8
   br i1 %min.iters.check662, label %scalar.ph661.preheader, label %vector.ph663
 
@@ -1125,14 +1125,14 @@ bb.ak:                                            ; preds = %bb.am, %.lr.ph33.i.
   %indvars.iv43.i.i162 = phi i64 [ 0, %.lr.ph33.i.i161 ], [ %indvars.iv.next44.i.i165, %bb.am ] ; 4 uses
   %indvars.iv38.i.i163 = phi i64 [ 1, %.lr.ph33.i.i161 ], [ %indvars.iv.next39.i.i168, %bb.am ] ; 4 uses
   %.02132.i.i164 = phi i32 [ 0, %.lr.ph33.i.i161 ], [ %.1.i.i167, %bb.am ]
-  %10 = xor i64 %indvars.iv43.i.i162, -1
-  %11 = add nsw i64 %10, %i.ko                    ; 3 uses
   %indvars.iv.next44.i.i165 = add nuw nsw i64 %indvars.iv43.i.i162, 1 ; 3 uses
   %i.ld = icmp samesign ult i64 %indvars.iv.next44.i.i165, %i.ko
   br i1 %i.ld, label %.preheader.i.i171, label %bb.al
 
 .preheader.i.i171:                                ; preds = %bb.ak
   %i.le = load ptr, ptr %i.bh, align 8, !tbaa !60 ; 2 uses
+  %10 = xor i64 %indvars.iv43.i.i162, -1
+  %11 = add nsw i64 %10, %i.ko                    ; 3 uses
   %min.iters.check646 = icmp ult i64 %11, 8
   br i1 %min.iters.check646, label %scalar.ph645.preheader, label %vector.ph647
 
@@ -1294,14 +1294,14 @@ bb.as:                                            ; preds = %bb.au, %.lr.ph33.i.
   %indvars.iv43.i.i186 = phi i64 [ 0, %.lr.ph33.i.i185 ], [ %indvars.iv.next44.i.i189, %bb.au ] ; 4 uses
   %indvars.iv38.i.i187 = phi i64 [ 1, %.lr.ph33.i.i185 ], [ %indvars.iv.next39.i.i192, %bb.au ] ; 4 uses
   %.02132.i.i188 = phi i32 [ 0, %.lr.ph33.i.i185 ], [ %.1.i.i191, %bb.au ]
-  %12 = xor i64 %indvars.iv43.i.i186, -1
-  %13 = add nsw i64 %12, %i.mr                    ; 3 uses
   %indvars.iv.next44.i.i189 = add nuw nsw i64 %indvars.iv43.i.i186, 1 ; 3 uses
   %i.ng = icmp samesign ult i64 %indvars.iv.next44.i.i189, %i.mr
   br i1 %i.ng, label %.preheader.i.i195, label %bb.at
 
 .preheader.i.i195:                                ; preds = %bb.as
   %i.nh = load ptr, ptr %i.bb, align 8, !tbaa !60 ; 2 uses
+  %12 = xor i64 %indvars.iv43.i.i186, -1
+  %13 = add nsw i64 %12, %i.mr                    ; 3 uses
   %min.iters.check630 = icmp ult i64 %13, 8
   br i1 %min.iters.check630, label %scalar.ph629.preheader, label %vector.ph631
 
@@ -1568,14 +1568,14 @@ bb.bp:                                            ; preds = %bb.br, %.lr.ph33.i.
   %indvars.iv43.i.i207 = phi i64 [ 0, %.lr.ph33.i.i206 ], [ %indvars.iv.next44.i.i210, %bb.br ] ; 4 uses
   %indvars.iv38.i.i208 = phi i64 [ 1, %.lr.ph33.i.i206 ], [ %indvars.iv.next39.i.i213, %bb.br ] ; 4 uses
   %.02132.i.i209 = phi i32 [ 0, %.lr.ph33.i.i206 ], [ %.1.i.i212, %bb.br ]
-  %14 = xor i64 %indvars.iv43.i.i207, -1
-  %15 = add nsw i64 %14, %i.qa                    ; 3 uses
   %indvars.iv.next44.i.i210 = add nuw nsw i64 %indvars.iv43.i.i207, 1 ; 3 uses
   %i.qp = icmp samesign ult i64 %indvars.iv.next44.i.i210, %i.qa
   br i1 %i.qp, label %.preheader.i.i216, label %bb.bq
 
 .preheader.i.i216:                                ; preds = %bb.bp
   %i.qq = load ptr, ptr %i.bh, align 8, !tbaa !60 ; 2 uses
+  %14 = xor i64 %indvars.iv43.i.i207, -1
+  %15 = add nsw i64 %14, %i.qa                    ; 3 uses
   %min.iters.check = icmp ult i64 %15, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -1978,14 +1978,14 @@ bb.n:                                             ; preds = %bb.p, %.lr.ph33.i.i
   %indvars.iv43.i.i = phi i64 [ 0, %.lr.ph33.i.i ], [ %indvars.iv.next44.i.i, %bb.p ] ; 4 uses
   %indvars.iv38.i.i = phi i64 [ 1, %.lr.ph33.i.i ], [ %indvars.iv.next39.i.i, %bb.p ] ; 4 uses
   %.02132.i.i = phi i32 [ 0, %.lr.ph33.i.i ], [ %.1.i.i, %bb.p ]
-  %4 = xor i64 %indvars.iv43.i.i, -1
-  %5 = add nsw i64 %4, %i.bq                      ; 3 uses
   %indvars.iv.next44.i.i = add nuw nsw i64 %indvars.iv43.i.i, 1 ; 3 uses
   %i.cf = icmp samesign ult i64 %indvars.iv.next44.i.i, %i.bq
   br i1 %i.cf, label %.preheader.i.i, label %bb.o
 
 .preheader.i.i:                                   ; preds = %bb.n
   %i.cg = load ptr, ptr %i.bp, align 8, !tbaa !60 ; 2 uses
+  %4 = xor i64 %indvars.iv43.i.i, -1
+  %5 = add nsw i64 %4, %i.bq                      ; 3 uses
   %min.iters.check174 = icmp ult i64 %5, 8
   br i1 %min.iters.check174, label %scalar.ph173.preheader, label %vector.ph175
 
@@ -2111,14 +2111,14 @@ bb.r:                                             ; preds = %bb.t, %.lr.ph33.i.i
   %indvars.iv43.i.i47 = phi i64 [ 0, %.lr.ph33.i.i46 ], [ %indvars.iv.next44.i.i50, %bb.t ] ; 4 uses
   %indvars.iv38.i.i48 = phi i64 [ 1, %.lr.ph33.i.i46 ], [ %indvars.iv.next39.i.i53, %bb.t ] ; 4 uses
   %.02132.i.i49 = phi i32 [ 0, %.lr.ph33.i.i46 ], [ %.1.i.i52, %bb.t ]
-  %6 = xor i64 %indvars.iv43.i.i47, -1
-  %7 = add nsw i64 %6, %i.dr                      ; 3 uses
   %indvars.iv.next44.i.i50 = add nuw nsw i64 %indvars.iv43.i.i47, 1 ; 3 uses
   %i.eg = icmp samesign ult i64 %indvars.iv.next44.i.i50, %i.dr
   br i1 %i.eg, label %.preheader.i.i56, label %bb.s
 
 .preheader.i.i56:                                 ; preds = %bb.r
   %i.eh = load ptr, ptr %i.dq, align 8, !tbaa !60 ; 2 uses
+  %6 = xor i64 %indvars.iv43.i.i47, -1
+  %7 = add nsw i64 %6, %i.dr                      ; 3 uses
   %min.iters.check = icmp ult i64 %7, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -2249,14 +2249,14 @@ bb.v:                                             ; preds = %bb.x, %.lr.ph33.i.i
   %indvars.iv43.i.i68 = phi i64 [ 0, %.lr.ph33.i.i67 ], [ %indvars.iv.next44.i.i71, %bb.x ] ; 4 uses
   %indvars.iv38.i.i69 = phi i64 [ 1, %.lr.ph33.i.i67 ], [ %indvars.iv.next39.i.i74, %bb.x ] ; 4 uses
   %.02132.i.i70 = phi i32 [ 0, %.lr.ph33.i.i67 ], [ %.1.i.i73, %bb.x ]
-  %8 = xor i64 %indvars.iv43.i.i68, -1
-  %9 = add nsw i64 %8, %i.ft                      ; 3 uses
   %indvars.iv.next44.i.i71 = add nuw nsw i64 %indvars.iv43.i.i68, 1 ; 3 uses
   %i.gi = icmp samesign ult i64 %indvars.iv.next44.i.i71, %i.ft
   br i1 %i.gi, label %.preheader.i.i76, label %bb.w
 
 .preheader.i.i76:                                 ; preds = %bb.v
   %i.gj = load ptr, ptr %i.fs, align 8, !tbaa !60 ; 2 uses
+  %8 = xor i64 %indvars.iv43.i.i68, -1
+  %9 = add nsw i64 %8, %i.ft                      ; 3 uses
   %min.iters.check190 = icmp ult i64 %9, 8
   br i1 %min.iters.check190, label %scalar.ph189.preheader, label %vector.ph191
 
@@ -2416,14 +2416,14 @@ bb.ac:                                            ; preds = %bb.ae, %.lr.ph33.i.
   %indvars.iv43.i.i87 = phi i64 [ 0, %.lr.ph33.i.i86 ], [ %indvars.iv.next44.i.i90, %bb.ae ] ; 4 uses
   %indvars.iv38.i.i88 = phi i64 [ 1, %.lr.ph33.i.i86 ], [ %indvars.iv.next39.i.i93, %bb.ae ] ; 4 uses
   %.02132.i.i89 = phi i32 [ 0, %.lr.ph33.i.i86 ], [ %.1.i.i92, %bb.ae ]
-  %10 = xor i64 %indvars.iv43.i.i87, -1
-  %11 = add nsw i64 %10, %i.ij                    ; 3 uses
   %indvars.iv.next44.i.i90 = add nuw nsw i64 %indvars.iv43.i.i87, 1 ; 3 uses
   %i.iy = icmp samesign ult i64 %indvars.iv.next44.i.i90, %i.ij
   br i1 %i.iy, label %.preheader.i.i95, label %bb.ad
 
 .preheader.i.i95:                                 ; preds = %bb.ac
   %i.iz = load ptr, ptr %i.ii, align 8, !tbaa !60 ; 2 uses
+  %10 = xor i64 %indvars.iv43.i.i87, -1
+  %11 = add nsw i64 %10, %i.ij                    ; 3 uses
   %min.iters.check206 = icmp ult i64 %11, 8
   br i1 %min.iters.check206, label %scalar.ph205.preheader, label %vector.ph207
 
@@ -2826,14 +2826,14 @@ bb.d:                                             ; preds = %bb.f, %.lr.ph33.i.i
   %indvars.iv43.i.i = phi i64 [ 0, %.lr.ph33.i.i ], [ %indvars.iv.next44.i.i, %bb.f ] ; 4 uses
   %indvars.iv38.i.i = phi i64 [ 1, %.lr.ph33.i.i ], [ %indvars.iv.next39.i.i, %bb.f ] ; 4 uses
   %.02132.i.i = phi i32 [ 0, %.lr.ph33.i.i ], [ %.1.i.i, %bb.f ]
-  %2 = xor i64 %indvars.iv43.i.i, -1
-  %3 = add nsw i64 %2, %i.bq                      ; 3 uses
   %indvars.iv.next44.i.i = add nuw nsw i64 %indvars.iv43.i.i, 1 ; 3 uses
   %i.cf = icmp samesign ult i64 %indvars.iv.next44.i.i, %i.bq
   br i1 %i.cf, label %.preheader.i.i, label %bb.e
 
 .preheader.i.i:                                   ; preds = %bb.d
   %i.cg = load ptr, ptr %i.as, align 8, !tbaa !60 ; 2 uses
+  %2 = xor i64 %indvars.iv43.i.i, -1
+  %3 = add nsw i64 %2, %i.bq                      ; 3 uses
   %min.iters.check1323 = icmp ult i64 %3, 8
   br i1 %min.iters.check1323, label %scalar.ph1322.preheader, label %vector.ph1324
 
@@ -2947,14 +2947,14 @@ bb.h:                                             ; preds = %bb.j, %.lr.ph33.i.i
   %indvars.iv43.i.i132 = phi i64 [ 0, %.lr.ph33.i.i131 ], [ %indvars.iv.next44.i.i135, %bb.j ] ; 4 uses
   %indvars.iv38.i.i133 = phi i64 [ 1, %.lr.ph33.i.i131 ], [ %indvars.iv.next39.i.i138, %bb.j ] ; 4 uses
   %.02132.i.i134 = phi i32 [ 0, %.lr.ph33.i.i131 ], [ %.1.i.i137, %bb.j ]
-  %4 = xor i64 %indvars.iv43.i.i132, -1
-  %5 = add nsw i64 %4, %i.dh                      ; 3 uses
   %indvars.iv.next44.i.i135 = add nuw nsw i64 %indvars.iv43.i.i132, 1 ; 3 uses
   %i.dw = icmp samesign ult i64 %indvars.iv.next44.i.i135, %i.dh
   br i1 %i.dw, label %.preheader.i.i141, label %bb.i
 
 .preheader.i.i141:                                ; preds = %bb.h
   %i.dx = load ptr, ptr %i.as, align 8, !tbaa !60 ; 2 uses
+  %4 = xor i64 %indvars.iv43.i.i132, -1
+  %5 = add nsw i64 %4, %i.dh                      ; 3 uses
   %min.iters.check1307 = icmp ult i64 %5, 8
   br i1 %min.iters.check1307, label %scalar.ph1306.preheader, label %vector.ph1308
 
@@ -3107,14 +3107,14 @@ bb.n:                                             ; preds = %bb.p, %.lr.ph33.i.i
   %indvars.iv43.i.i153 = phi i64 [ 0, %.lr.ph33.i.i152 ], [ %indvars.iv.next44.i.i156, %bb.p ] ; 4 uses
   %indvars.iv38.i.i154 = phi i64 [ 1, %.lr.ph33.i.i152 ], [ %indvars.iv.next39.i.i159, %bb.p ] ; 4 uses
   %.02132.i.i155 = phi i32 [ 0, %.lr.ph33.i.i152 ], [ %.1.i.i158, %bb.p ]
-  %6 = xor i64 %indvars.iv43.i.i153, -1
-  %7 = add nsw i64 %6, %i.fp                      ; 3 uses
   %indvars.iv.next44.i.i156 = add nuw nsw i64 %indvars.iv43.i.i153, 1 ; 3 uses
   %i.ge = icmp samesign ult i64 %indvars.iv.next44.i.i156, %i.fp
   br i1 %i.ge, label %.preheader.i.i161, label %bb.o
 
 .preheader.i.i161:                                ; preds = %bb.n
   %i.gf = load ptr, ptr %i.fo, align 8, !tbaa !60 ; 2 uses
+  %6 = xor i64 %indvars.iv43.i.i153, -1
+  %7 = add nsw i64 %6, %i.fp                      ; 3 uses
   %min.iters.check1291 = icmp ult i64 %7, 8
   br i1 %min.iters.check1291, label %scalar.ph1290.preheader, label %vector.ph1292
 
@@ -3235,14 +3235,14 @@ bb.r:                                             ; preds = %bb.t, %.lr.ph33.i.i
   %indvars.iv43.i.i172 = phi i64 [ 0, %.lr.ph33.i.i171 ], [ %indvars.iv.next44.i.i175, %bb.t ] ; 4 uses
   %indvars.iv38.i.i173 = phi i64 [ 1, %.lr.ph33.i.i171 ], [ %indvars.iv.next39.i.i178, %bb.t ] ; 4 uses
   %.02132.i.i174 = phi i32 [ 0, %.lr.ph33.i.i171 ], [ %.1.i.i177, %bb.t ]
-  %8 = xor i64 %indvars.iv43.i.i172, -1
-  %9 = add nsw i64 %8, %i.hm                      ; 3 uses
   %indvars.iv.next44.i.i175 = add nuw nsw i64 %indvars.iv43.i.i172, 1 ; 3 uses
   %i.ib = icmp samesign ult i64 %indvars.iv.next44.i.i175, %i.hm
   br i1 %i.ib, label %.preheader.i.i181, label %bb.s
 
 .preheader.i.i181:                                ; preds = %bb.r
   %i.ic = load ptr, ptr %i.hl, align 8, !tbaa !60 ; 2 uses
+  %8 = xor i64 %indvars.iv43.i.i172, -1
+  %9 = add nsw i64 %8, %i.hm                      ; 3 uses
   %min.iters.check1275 = icmp ult i64 %9, 8
   br i1 %min.iters.check1275, label %scalar.ph1274.preheader, label %vector.ph1276
 
@@ -3364,14 +3364,14 @@ bb.v:                                             ; preds = %bb.x, %.lr.ph33.i.i
   %indvars.iv43.i.i192 = phi i64 [ 0, %.lr.ph33.i.i191 ], [ %indvars.iv.next44.i.i195, %bb.x ] ; 4 uses
   %indvars.iv38.i.i193 = phi i64 [ 1, %.lr.ph33.i.i191 ], [ %indvars.iv.next39.i.i198, %bb.x ] ; 4 uses
   %.02132.i.i194 = phi i32 [ 0, %.lr.ph33.i.i191 ], [ %.1.i.i197, %bb.x ]
-  %10 = xor i64 %indvars.iv43.i.i192, -1
-  %11 = add nsw i64 %10, %i.jj                    ; 3 uses
   %indvars.iv.next44.i.i195 = add nuw nsw i64 %indvars.iv43.i.i192, 1 ; 3 uses
   %i.jy = icmp samesign ult i64 %indvars.iv.next44.i.i195, %i.jj
   br i1 %i.jy, label %.preheader.i.i201, label %bb.w
 
 .preheader.i.i201:                                ; preds = %bb.v
   %i.jz = load ptr, ptr %i.ji, align 8, !tbaa !60 ; 2 uses
+  %10 = xor i64 %indvars.iv43.i.i192, -1
+  %11 = add nsw i64 %10, %i.jj                    ; 3 uses
   %min.iters.check1259 = icmp ult i64 %11, 8
   br i1 %min.iters.check1259, label %scalar.ph1258.preheader, label %vector.ph1260
 
@@ -3491,14 +3491,14 @@ bb.z:                                             ; preds = %bb.ab, %.lr.ph33.i.
   %indvars.iv43.i.i213 = phi i64 [ 0, %.lr.ph33.i.i212 ], [ %indvars.iv.next44.i.i216, %bb.ab ] ; 4 uses
   %indvars.iv38.i.i214 = phi i64 [ 1, %.lr.ph33.i.i212 ], [ %indvars.iv.next39.i.i219, %bb.ab ] ; 4 uses
   %.02132.i.i215 = phi i32 [ 0, %.lr.ph33.i.i212 ], [ %.1.i.i218, %bb.ab ]
-  %12 = xor i64 %indvars.iv43.i.i213, -1
-  %13 = add nsw i64 %12, %i.lf                    ; 3 uses
   %indvars.iv.next44.i.i216 = add nuw nsw i64 %indvars.iv43.i.i213, 1 ; 3 uses
   %i.lu = icmp samesign ult i64 %indvars.iv.next44.i.i216, %i.lf
   br i1 %i.lu, label %.preheader.i.i222, label %bb.aa
 
 .preheader.i.i222:                                ; preds = %bb.z
   %i.lv = load ptr, ptr %i.le, align 8, !tbaa !60 ; 2 uses
+  %12 = xor i64 %indvars.iv43.i.i213, -1
+  %13 = add nsw i64 %12, %i.lf                    ; 3 uses
   %min.iters.check1243 = icmp ult i64 %13, 8
   br i1 %min.iters.check1243, label %scalar.ph1242.preheader, label %vector.ph1244
 
@@ -3604,14 +3604,14 @@ bb.ad:                                            ; preds = %bb.af, %.lr.ph33.i.
   %indvars.iv43.i.i234 = phi i64 [ 0, %.lr.ph33.i.i233 ], [ %indvars.iv.next44.i.i237, %bb.af ] ; 4 uses
   %indvars.iv38.i.i235 = phi i64 [ 1, %.lr.ph33.i.i233 ], [ %indvars.iv.next39.i.i240, %bb.af ] ; 4 uses
   %.02132.i.i236 = phi i32 [ 0, %.lr.ph33.i.i233 ], [ %.1.i.i239, %bb.af ]
-  %14 = xor i64 %indvars.iv43.i.i234, -1
-  %15 = add nsw i64 %14, %i.mr                    ; 3 uses
   %indvars.iv.next44.i.i237 = add nuw nsw i64 %indvars.iv43.i.i234, 1 ; 3 uses
   %i.ng = icmp samesign ult i64 %indvars.iv.next44.i.i237, %i.mr
   br i1 %i.ng, label %.preheader.i.i243, label %bb.ae
 
 .preheader.i.i243:                                ; preds = %bb.ad
   %i.nh = load ptr, ptr %i.le, align 8, !tbaa !60 ; 2 uses
+  %14 = xor i64 %indvars.iv43.i.i234, -1
+  %15 = add nsw i64 %14, %i.mr                    ; 3 uses
   %min.iters.check1227 = icmp ult i64 %15, 8
   br i1 %min.iters.check1227, label %scalar.ph1226.preheader, label %vector.ph1228
 
@@ -3732,14 +3732,14 @@ bb.ah:                                            ; preds = %bb.aj, %.lr.ph33.i.
   %indvars.iv43.i.i255 = phi i64 [ 0, %.lr.ph33.i.i254 ], [ %indvars.iv.next44.i.i258, %bb.aj ] ; 4 uses
   %indvars.iv38.i.i256 = phi i64 [ 1, %.lr.ph33.i.i254 ], [ %indvars.iv.next39.i.i261, %bb.aj ] ; 4 uses
   %.02132.i.i257 = phi i32 [ 0, %.lr.ph33.i.i254 ], [ %.1.i.i260, %bb.aj ]
-  %16 = xor i64 %indvars.iv43.i.i255, -1
-  %17 = add nsw i64 %16, %i.oo                    ; 3 uses
   %indvars.iv.next44.i.i258 = add nuw nsw i64 %indvars.iv43.i.i255, 1 ; 3 uses
   %i.pd = icmp samesign ult i64 %indvars.iv.next44.i.i258, %i.oo
   br i1 %i.pd, label %.preheader.i.i264, label %bb.ai
 
 .preheader.i.i264:                                ; preds = %bb.ah
   %i.pe = load ptr, ptr %i.on, align 8, !tbaa !60 ; 2 uses
+  %16 = xor i64 %indvars.iv43.i.i255, -1
+  %17 = add nsw i64 %16, %i.oo                    ; 3 uses
   %min.iters.check1214 = icmp ult i64 %17, 8
   br i1 %min.iters.check1214, label %scalar.ph1213.preheader, label %vector.ph1215
 
@@ -4142,14 +4142,14 @@ bb.ax:                                            ; preds = %bb.az, %.lr.ph33.i.
   %indvars.iv43.i.i316 = phi i64 [ 0, %.lr.ph33.i.i315 ], [ %indvars.iv.next44.i.i319, %bb.az ] ; 4 uses
   %indvars.iv38.i.i317 = phi i64 [ 1, %.lr.ph33.i.i315 ], [ %indvars.iv.next39.i.i322, %bb.az ] ; 4 uses
   %.02132.i.i318 = phi i32 [ 0, %.lr.ph33.i.i315 ], [ %.1.i.i321, %bb.az ]
-  %18 = xor i64 %indvars.iv43.i.i316, -1
-  %19 = add nsw i64 %18, %i.wr                    ; 3 uses
   %indvars.iv.next44.i.i319 = add nuw nsw i64 %indvars.iv43.i.i316, 1 ; 3 uses
   %i.xg = icmp samesign ult i64 %indvars.iv.next44.i.i319, %i.wr
   br i1 %i.xg, label %.preheader.i.i324, label %bb.ay
 
 .preheader.i.i324:                                ; preds = %bb.ax
   %i.xh = load ptr, ptr %i.tg, align 8, !tbaa !60 ; 2 uses
+  %18 = xor i64 %indvars.iv43.i.i316, -1
+  %19 = add nsw i64 %18, %i.wr                    ; 3 uses
   %min.iters.check1530 = icmp ult i64 %19, 8
   br i1 %min.iters.check1530, label %scalar.ph1529.preheader, label %vector.ph1531
 
@@ -4417,14 +4417,14 @@ bb.bm:                                            ; preds = %bb.bo, %.lr.ph33.i.
   %indvars.iv43.i.i336 = phi i64 [ 0, %.lr.ph33.i.i335 ], [ %indvars.iv.next44.i.i339, %bb.bo ] ; 4 uses
   %indvars.iv38.i.i337 = phi i64 [ 1, %.lr.ph33.i.i335 ], [ %indvars.iv.next39.i.i342, %bb.bo ] ; 4 uses
   %.02132.i.i338 = phi i32 [ 0, %.lr.ph33.i.i335 ], [ %.1.i.i341, %bb.bo ]
-  %20 = xor i64 %indvars.iv43.i.i336, -1
-  %21 = add nsw i64 %20, %i.abf                   ; 3 uses
   %indvars.iv.next44.i.i339 = add nuw nsw i64 %indvars.iv43.i.i336, 1 ; 3 uses
   %i.abu = icmp samesign ult i64 %indvars.iv.next44.i.i339, %i.abf
   br i1 %i.abu, label %.preheader.i.i345, label %bb.bn
 
 .preheader.i.i345:                                ; preds = %bb.bm
   %i.abv = load ptr, ptr %i.abe, align 8, !tbaa !60 ; 2 uses
+  %20 = xor i64 %indvars.iv43.i.i336, -1
+  %21 = add nsw i64 %20, %i.abf                   ; 3 uses
   %min.iters.check1514 = icmp ult i64 %21, 8
   br i1 %min.iters.check1514, label %scalar.ph1513.preheader, label %vector.ph1515
 
@@ -4545,14 +4545,14 @@ bb.bq:                                            ; preds = %bb.bs, %.lr.ph33.i.
   %indvars.iv43.i.i357 = phi i64 [ 0, %.lr.ph33.i.i356 ], [ %indvars.iv.next44.i.i360, %bb.bs ] ; 4 uses
   %indvars.iv38.i.i358 = phi i64 [ 1, %.lr.ph33.i.i356 ], [ %indvars.iv.next39.i.i363, %bb.bs ] ; 4 uses
   %.02132.i.i359 = phi i32 [ 0, %.lr.ph33.i.i356 ], [ %.1.i.i362, %bb.bs ]
-  %22 = xor i64 %indvars.iv43.i.i357, -1
-  %23 = add nsw i64 %22, %i.add                   ; 3 uses
   %indvars.iv.next44.i.i360 = add nuw nsw i64 %indvars.iv43.i.i357, 1 ; 3 uses
   %i.ads = icmp samesign ult i64 %indvars.iv.next44.i.i360, %i.add
   br i1 %i.ads, label %.preheader.i.i366, label %bb.br
 
 .preheader.i.i366:                                ; preds = %bb.bq
   %i.adt = load ptr, ptr %i.adc, align 8, !tbaa !60 ; 2 uses
+  %22 = xor i64 %indvars.iv43.i.i357, -1
+  %23 = add nsw i64 %22, %i.add                   ; 3 uses
   %min.iters.check1498 = icmp ult i64 %23, 8
   br i1 %min.iters.check1498, label %scalar.ph1497.preheader, label %vector.ph1499
 
@@ -4672,14 +4672,14 @@ bb.bv:                                            ; preds = %bb.bx, %.lr.ph33.i.
   %indvars.iv43.i.i379 = phi i64 [ 0, %.lr.ph33.i.i378 ], [ %indvars.iv.next44.i.i382, %bb.bx ] ; 4 uses
   %indvars.iv38.i.i380 = phi i64 [ 1, %.lr.ph33.i.i378 ], [ %indvars.iv.next39.i.i385, %bb.bx ] ; 4 uses
   %.02132.i.i381 = phi i32 [ 0, %.lr.ph33.i.i378 ], [ %.1.i.i384, %bb.bx ]
-  %24 = xor i64 %indvars.iv43.i.i379, -1
-  %25 = add nsw i64 %24, %i.aew                   ; 3 uses
   %indvars.iv.next44.i.i382 = add nuw nsw i64 %indvars.iv43.i.i379, 1 ; 3 uses
   %i.afl = icmp samesign ult i64 %indvars.iv.next44.i.i382, %i.aew
   br i1 %i.afl, label %.preheader.i.i388, label %bb.bw
 
 .preheader.i.i388:                                ; preds = %bb.bv
   %i.afm = load ptr, ptr %i.tg, align 8, !tbaa !60 ; 2 uses
+  %24 = xor i64 %indvars.iv43.i.i379, -1
+  %25 = add nsw i64 %24, %i.aew                   ; 3 uses
   %min.iters.check1482 = icmp ult i64 %25, 8
   br i1 %min.iters.check1482, label %scalar.ph1481.preheader, label %vector.ph1483
 
@@ -4922,14 +4922,14 @@ bb.cj:                                            ; preds = %bb.cl, %.lr.ph33.i.
   %indvars.iv43.i.i401 = phi i64 [ 0, %.lr.ph33.i.i400 ], [ %indvars.iv.next44.i.i404, %bb.cl ] ; 4 uses
   %indvars.iv38.i.i402 = phi i64 [ 1, %.lr.ph33.i.i400 ], [ %indvars.iv.next39.i.i407, %bb.cl ] ; 4 uses
   %.02132.i.i403 = phi i32 [ 0, %.lr.ph33.i.i400 ], [ %.1.i.i406, %bb.cl ]
-  %26 = xor i64 %indvars.iv43.i.i401, -1
-  %27 = add nsw i64 %26, %i.ajg                   ; 3 uses
   %indvars.iv.next44.i.i404 = add nuw nsw i64 %indvars.iv43.i.i401, 1 ; 3 uses
   %i.ajv = icmp samesign ult i64 %indvars.iv.next44.i.i404, %i.ajg
   br i1 %i.ajv, label %.preheader.i.i410, label %bb.ck
 
 .preheader.i.i410:                                ; preds = %bb.cj
   %i.ajw = load ptr, ptr %i.ajf, align 8, !tbaa !60 ; 2 uses
+  %26 = xor i64 %indvars.iv43.i.i401, -1
+  %27 = add nsw i64 %26, %i.ajg                   ; 3 uses
   %min.iters.check1466 = icmp ult i64 %27, 8
   br i1 %min.iters.check1466, label %scalar.ph1465.preheader, label %vector.ph1467
 
@@ -5050,14 +5050,14 @@ bb.cn:                                            ; preds = %bb.cp, %.lr.ph33.i.
   %indvars.iv43.i.i422 = phi i64 [ 0, %.lr.ph33.i.i421 ], [ %indvars.iv.next44.i.i425, %bb.cp ] ; 4 uses
   %indvars.iv38.i.i423 = phi i64 [ 1, %.lr.ph33.i.i421 ], [ %indvars.iv.next39.i.i428, %bb.cp ] ; 4 uses
   %.02132.i.i424 = phi i32 [ 0, %.lr.ph33.i.i421 ], [ %.1.i.i427, %bb.cp ]
-  %28 = xor i64 %indvars.iv43.i.i422, -1
-  %29 = add nsw i64 %28, %i.ald                   ; 3 uses
   %indvars.iv.next44.i.i425 = add nuw nsw i64 %indvars.iv43.i.i422, 1 ; 3 uses
   %i.als = icmp samesign ult i64 %indvars.iv.next44.i.i425, %i.ald
   br i1 %i.als, label %.preheader.i.i431, label %bb.co
 
 .preheader.i.i431:                                ; preds = %bb.cn
   %i.alt = load ptr, ptr %i.alc, align 8, !tbaa !60 ; 2 uses
+  %28 = xor i64 %indvars.iv43.i.i422, -1
+  %29 = add nsw i64 %28, %i.ald                   ; 3 uses
   %min.iters.check1450 = icmp ult i64 %29, 8
   br i1 %min.iters.check1450, label %scalar.ph1449.preheader, label %vector.ph1451
 
@@ -5179,14 +5179,14 @@ bb.cs:                                            ; preds = %bb.cu, %.lr.ph33.i.
   %indvars.iv43.i.i444 = phi i64 [ 0, %.lr.ph33.i.i443 ], [ %indvars.iv.next44.i.i447, %bb.cu ] ; 4 uses
   %indvars.iv38.i.i445 = phi i64 [ 1, %.lr.ph33.i.i443 ], [ %indvars.iv.next39.i.i450, %bb.cu ] ; 4 uses
   %.02132.i.i446 = phi i32 [ 0, %.lr.ph33.i.i443 ], [ %.1.i.i449, %bb.cu ]
-  %30 = xor i64 %indvars.iv43.i.i444, -1
-  %31 = add nsw i64 %30, %i.amx                   ; 3 uses
   %indvars.iv.next44.i.i447 = add nuw nsw i64 %indvars.iv43.i.i444, 1 ; 3 uses
   %i.anm = icmp samesign ult i64 %indvars.iv.next44.i.i447, %i.amx
   br i1 %i.anm, label %.preheader.i.i453, label %bb.ct
 
 .preheader.i.i453:                                ; preds = %bb.cs
   %i.ann = load ptr, ptr %i.tg, align 8, !tbaa !60 ; 2 uses
+  %30 = xor i64 %indvars.iv43.i.i444, -1
+  %31 = add nsw i64 %30, %i.amx                   ; 3 uses
   %min.iters.check1434 = icmp ult i64 %31, 8
   br i1 %min.iters.check1434, label %scalar.ph1433.preheader, label %vector.ph1435
 
@@ -5589,14 +5589,14 @@ bb.dn:                                            ; preds = %bb.dp, %.lr.ph33.i.
   %indvars.iv43.i.i479 = phi i64 [ 0, %.lr.ph33.i.i478 ], [ %indvars.iv.next44.i.i482, %bb.dp ] ; 4 uses
   %indvars.iv38.i.i480 = phi i64 [ 1, %.lr.ph33.i.i478 ], [ %indvars.iv.next39.i.i485, %bb.dp ] ; 4 uses
   %.02132.i.i481 = phi i32 [ 0, %.lr.ph33.i.i478 ], [ %.1.i.i484, %bb.dp ]
-  %32 = xor i64 %indvars.iv43.i.i479, -1
-  %33 = add nsw i64 %32, %i.atp                   ; 3 uses
   %indvars.iv.next44.i.i482 = add nuw nsw i64 %indvars.iv43.i.i479, 1 ; 3 uses
   %i.aue = icmp samesign ult i64 %indvars.iv.next44.i.i482, %i.atp
   br i1 %i.aue, label %.preheader.i.i487, label %bb.do
 
 .preheader.i.i487:                                ; preds = %bb.dn
   %i.auf = load ptr, ptr %i.tr, align 8, !tbaa !60 ; 2 uses
+  %32 = xor i64 %indvars.iv43.i.i479, -1
+  %33 = add nsw i64 %32, %i.atp                   ; 3 uses
   %min.iters.check1379 = icmp ult i64 %33, 8
   br i1 %min.iters.check1379, label %scalar.ph1378.preheader, label %vector.ph1380
 
@@ -5727,14 +5727,14 @@ bb.ds:                                            ; preds = %bb.du, %.lr.ph33.i.
   %indvars.iv43.i.i499 = phi i64 [ 0, %.lr.ph33.i.i498 ], [ %indvars.iv.next44.i.i502, %bb.du ] ; 4 uses
   %indvars.iv38.i.i500 = phi i64 [ 1, %.lr.ph33.i.i498 ], [ %indvars.iv.next39.i.i505, %bb.du ] ; 4 uses
   %.02132.i.i501 = phi i32 [ 0, %.lr.ph33.i.i498 ], [ %.1.i.i504, %bb.du ]
-  %34 = xor i64 %indvars.iv43.i.i499, -1
-  %35 = add nsw i64 %34, %i.avl                   ; 3 uses
   %indvars.iv.next44.i.i502 = add nuw nsw i64 %indvars.iv43.i.i499, 1 ; 3 uses
   %i.awa = icmp samesign ult i64 %indvars.iv.next44.i.i502, %i.avl
   br i1 %i.awa, label %.preheader.i.i508, label %bb.dt
 
 .preheader.i.i508:                                ; preds = %bb.ds
   %i.awb = load ptr, ptr %i.tx, align 8, !tbaa !60 ; 2 uses
+  %34 = xor i64 %indvars.iv43.i.i499, -1
+  %35 = add nsw i64 %34, %i.avl                   ; 3 uses
   %min.iters.check1363 = icmp ult i64 %35, 8
   br i1 %min.iters.check1363, label %scalar.ph1362.preheader, label %vector.ph1364
 
@@ -6137,14 +6137,14 @@ bb.ad:                                            ; preds = %bb.af, %.lr.ph33.i.
   %indvars.iv43.i.i = phi i64 [ 0, %.lr.ph33.i.i ], [ %indvars.iv.next44.i.i, %bb.af ] ; 4 uses
   %indvars.iv38.i.i = phi i64 [ 1, %.lr.ph33.i.i ], [ %indvars.iv.next39.i.i, %bb.af ] ; 4 uses
   %.02132.i.i = phi i32 [ 0, %.lr.ph33.i.i ], [ %.1.i.i, %bb.af ]
-  %9 = xor i64 %indvars.iv43.i.i, -1
-  %10 = add nsw i64 %9, %i.hu                     ; 3 uses
   %indvars.iv.next44.i.i = add nuw nsw i64 %indvars.iv43.i.i, 1 ; 3 uses
   %i.ij = icmp samesign ult i64 %indvars.iv.next44.i.i, %i.hu
   br i1 %i.ij, label %.preheader.i.i, label %bb.ae
 
 .preheader.i.i:                                   ; preds = %bb.ad
   %i.ik = load ptr, ptr %i.fl, align 8, !tbaa !60 ; 2 uses
+  %9 = xor i64 %indvars.iv43.i.i, -1
+  %10 = add nsw i64 %9, %i.hu                     ; 3 uses
   %min.iters.check883 = icmp ult i64 %10, 8
   br i1 %min.iters.check883, label %scalar.ph882.preheader, label %vector.ph884
 
@@ -6269,14 +6269,14 @@ bb.ah:                                            ; preds = %bb.aj, %.lr.ph33.i.
   %indvars.iv43.i.i161 = phi i64 [ 0, %.lr.ph33.i.i160 ], [ %indvars.iv.next44.i.i164, %bb.aj ] ; 4 uses
   %indvars.iv38.i.i162 = phi i64 [ 1, %.lr.ph33.i.i160 ], [ %indvars.iv.next39.i.i167, %bb.aj ] ; 4 uses
   %.02132.i.i163 = phi i32 [ 0, %.lr.ph33.i.i160 ], [ %.1.i.i166, %bb.aj ]
-  %11 = xor i64 %indvars.iv43.i.i161, -1
-  %12 = add nsw i64 %11, %i.jp                    ; 3 uses
   %indvars.iv.next44.i.i164 = add nuw nsw i64 %indvars.iv43.i.i161, 1 ; 3 uses
   %i.ke = icmp samesign ult i64 %indvars.iv.next44.i.i164, %i.jp
   br i1 %i.ke, label %.preheader.i.i170, label %bb.ai
 
 .preheader.i.i170:                                ; preds = %bb.ah
   %i.kf = load ptr, ptr %i.fl, align 8, !tbaa !60 ; 2 uses
+  %11 = xor i64 %indvars.iv43.i.i161, -1
+  %12 = add nsw i64 %11, %i.jp                    ; 3 uses
   %min.iters.check867 = icmp ult i64 %12, 8
   br i1 %min.iters.check867, label %scalar.ph866.preheader, label %vector.ph868
 
@@ -6490,14 +6490,14 @@ bb.ap:                                            ; preds = %bb.ar, %.lr.ph33.i.
   %indvars.iv43.i.i189 = phi i64 [ 0, %.lr.ph33.i.i188 ], [ %indvars.iv.next44.i.i192, %bb.ar ] ; 4 uses
   %indvars.iv38.i.i190 = phi i64 [ 1, %.lr.ph33.i.i188 ], [ %indvars.iv.next39.i.i195, %bb.ar ] ; 4 uses
   %.02132.i.i191 = phi i32 [ 0, %.lr.ph33.i.i188 ], [ %.1.i.i194, %bb.ar ]
-  %13 = xor i64 %indvars.iv43.i.i189, -1
-  %14 = add nsw i64 %13, %i.mt                    ; 3 uses
   %indvars.iv.next44.i.i192 = add nuw nsw i64 %indvars.iv43.i.i189, 1 ; 3 uses
   %i.ni = icmp samesign ult i64 %indvars.iv.next44.i.i192, %i.mt
   br i1 %i.ni, label %.preheader.i.i197, label %bb.aq
 
 .preheader.i.i197:                                ; preds = %bb.ap
   %i.nj = load ptr, ptr %i.ez, align 8, !tbaa !60 ; 2 uses
+  %13 = xor i64 %indvars.iv43.i.i189, -1
+  %14 = add nsw i64 %13, %i.mt                    ; 3 uses
   %min.iters.check854 = icmp ult i64 %14, 8
   br i1 %min.iters.check854, label %scalar.ph853.preheader, label %vector.ph855
 
@@ -6662,14 +6662,14 @@ bb.aw:                                            ; preds = %bb.ay, %.lr.ph33.i.
   %indvars.iv43.i.i212 = phi i64 [ 0, %.lr.ph33.i.i211 ], [ %indvars.iv.next44.i.i215, %bb.ay ] ; 4 uses
   %indvars.iv38.i.i213 = phi i64 [ 1, %.lr.ph33.i.i211 ], [ %indvars.iv.next39.i.i218, %bb.ay ] ; 4 uses
   %.02132.i.i214 = phi i32 [ 0, %.lr.ph33.i.i211 ], [ %.1.i.i217, %bb.ay ]
-  %15 = xor i64 %indvars.iv43.i.i212, -1
-  %16 = add nsw i64 %15, %i.pc                    ; 3 uses
   %indvars.iv.next44.i.i215 = add nuw nsw i64 %indvars.iv43.i.i212, 1 ; 3 uses
   %i.pr = icmp samesign ult i64 %indvars.iv.next44.i.i215, %i.pc
   br i1 %i.pr, label %.preheader.i.i221, label %bb.ax
 
 .preheader.i.i221:                                ; preds = %bb.aw
   %i.ps = load ptr, ptr %i.ez, align 8, !tbaa !60 ; 2 uses
+  %15 = xor i64 %indvars.iv43.i.i212, -1
+  %16 = add nsw i64 %15, %i.pc                    ; 3 uses
   %min.iters.check1043 = icmp ult i64 %16, 8
   br i1 %min.iters.check1043, label %scalar.ph1042.preheader, label %vector.ph1044
 
@@ -6784,14 +6784,14 @@ bb.ba:                                            ; preds = %bb.bc, %.lr.ph33.i.
   %indvars.iv43.i.i233 = phi i64 [ 0, %.lr.ph33.i.i232 ], [ %indvars.iv.next44.i.i236, %bb.bc ] ; 4 uses
   %indvars.iv38.i.i234 = phi i64 [ 1, %.lr.ph33.i.i232 ], [ %indvars.iv.next39.i.i239, %bb.bc ] ; 4 uses
   %.02132.i.i235 = phi i32 [ 0, %.lr.ph33.i.i232 ], [ %.1.i.i238, %bb.bc ]
-  %17 = xor i64 %indvars.iv43.i.i233, -1
-  %18 = add nsw i64 %17, %i.qt                    ; 3 uses
   %indvars.iv.next44.i.i236 = add nuw nsw i64 %indvars.iv43.i.i233, 1 ; 3 uses
   %i.ri = icmp samesign ult i64 %indvars.iv.next44.i.i236, %i.qt
   br i1 %i.ri, label %.preheader.i.i242, label %bb.bb
 
 .preheader.i.i242:                                ; preds = %bb.ba
   %i.rj = load ptr, ptr %i.fg, align 8, !tbaa !60 ; 2 uses
+  %17 = xor i64 %indvars.iv43.i.i233, -1
+  %18 = add nsw i64 %17, %i.qt                    ; 3 uses
   %min.iters.check1027 = icmp ult i64 %18, 8
   br i1 %min.iters.check1027, label %scalar.ph1026.preheader, label %vector.ph1028
 
@@ -6899,14 +6899,14 @@ bb.be:                                            ; preds = %bb.bg, %.lr.ph33.i.
   %indvars.iv43.i.i254 = phi i64 [ 0, %.lr.ph33.i.i253 ], [ %indvars.iv.next44.i.i257, %bb.bg ] ; 4 uses
   %indvars.iv38.i.i255 = phi i64 [ 1, %.lr.ph33.i.i253 ], [ %indvars.iv.next39.i.i260, %bb.bg ] ; 4 uses
   %.02132.i.i256 = phi i32 [ 0, %.lr.ph33.i.i253 ], [ %.1.i.i259, %bb.bg ]
-  %19 = xor i64 %indvars.iv43.i.i254, -1
-  %20 = add nsw i64 %19, %i.sh                    ; 3 uses
   %indvars.iv.next44.i.i257 = add nuw nsw i64 %indvars.iv43.i.i254, 1 ; 3 uses
   %i.sw = icmp samesign ult i64 %indvars.iv.next44.i.i257, %i.sh
   br i1 %i.sw, label %.preheader.i.i263, label %bb.bf
 
 .preheader.i.i263:                                ; preds = %bb.be
   %i.sx = load ptr, ptr %i.fg, align 8, !tbaa !60 ; 2 uses
+  %19 = xor i64 %indvars.iv43.i.i254, -1
+  %20 = add nsw i64 %19, %i.sh                    ; 3 uses
   %min.iters.check1011 = icmp ult i64 %20, 8
   br i1 %min.iters.check1011, label %scalar.ph1010.preheader, label %vector.ph1012
 
@@ -7026,14 +7026,14 @@ bb.bj:                                            ; preds = %bb.bl, %.lr.ph33.i.
   %indvars.iv43.i.i275 = phi i64 [ 0, %.lr.ph33.i.i274 ], [ %indvars.iv.next44.i.i278, %bb.bl ] ; 4 uses
   %indvars.iv38.i.i276 = phi i64 [ 1, %.lr.ph33.i.i274 ], [ %indvars.iv.next39.i.i281, %bb.bl ] ; 4 uses
   %.02132.i.i277 = phi i32 [ 0, %.lr.ph33.i.i274 ], [ %.1.i.i280, %bb.bl ]
-  %21 = xor i64 %indvars.iv43.i.i275, -1
-  %22 = add nsw i64 %21, %i.ua                    ; 3 uses
   %indvars.iv.next44.i.i278 = add nuw nsw i64 %indvars.iv43.i.i275, 1 ; 3 uses
   %i.up = icmp samesign ult i64 %indvars.iv.next44.i.i278, %i.ua
   br i1 %i.up, label %.preheader.i.i284, label %bb.bk
 
 .preheader.i.i284:                                ; preds = %bb.bj
   %i.uq = load ptr, ptr %i.fl, align 8, !tbaa !60 ; 2 uses
+  %21 = xor i64 %indvars.iv43.i.i275, -1
+  %22 = add nsw i64 %21, %i.ua                    ; 3 uses
   %min.iters.check931 = icmp ult i64 %22, 8
   br i1 %min.iters.check931, label %scalar.ph930.preheader, label %vector.ph932
 
@@ -7154,14 +7154,14 @@ bb.bo:                                            ; preds = %bb.bq, %.lr.ph33.i.
   %indvars.iv43.i.i296 = phi i64 [ 0, %.lr.ph33.i.i295 ], [ %indvars.iv.next44.i.i299, %bb.bq ] ; 4 uses
   %indvars.iv38.i.i297 = phi i64 [ 1, %.lr.ph33.i.i295 ], [ %indvars.iv.next39.i.i302, %bb.bq ] ; 4 uses
   %.02132.i.i298 = phi i32 [ 0, %.lr.ph33.i.i295 ], [ %.1.i.i301, %bb.bq ]
-  %23 = xor i64 %indvars.iv43.i.i296, -1
-  %24 = add nsw i64 %23, %i.vu                    ; 3 uses
   %indvars.iv.next44.i.i299 = add nuw nsw i64 %indvars.iv43.i.i296, 1 ; 3 uses
   %i.wj = icmp samesign ult i64 %indvars.iv.next44.i.i299, %i.vu
   br i1 %i.wj, label %.preheader.i.i305, label %bb.bp
 
 .preheader.i.i305:                                ; preds = %bb.bo
   %i.wk = load ptr, ptr %i.fl, align 8, !tbaa !60 ; 2 uses
+  %23 = xor i64 %indvars.iv43.i.i296, -1
+  %24 = add nsw i64 %23, %i.vu                    ; 3 uses
   %min.iters.check995 = icmp ult i64 %24, 8
   br i1 %min.iters.check995, label %scalar.ph994.preheader, label %vector.ph996
 
@@ -7278,14 +7278,14 @@ bb.bs:                                            ; preds = %bb.bu, %.lr.ph33.i.
   %indvars.iv43.i.i317 = phi i64 [ 0, %.lr.ph33.i.i316 ], [ %indvars.iv.next44.i.i320, %bb.bu ] ; 4 uses
   %indvars.iv38.i.i318 = phi i64 [ 1, %.lr.ph33.i.i316 ], [ %indvars.iv.next39.i.i323, %bb.bu ] ; 4 uses
   %.02132.i.i319 = phi i32 [ 0, %.lr.ph33.i.i316 ], [ %.1.i.i322, %bb.bu ]
-  %25 = xor i64 %indvars.iv43.i.i317, -1
-  %26 = add nsw i64 %25, %i.xn                    ; 3 uses
   %indvars.iv.next44.i.i320 = add nuw nsw i64 %indvars.iv43.i.i317, 1 ; 3 uses
   %i.yc = icmp samesign ult i64 %indvars.iv.next44.i.i320, %i.xn
   br i1 %i.yc, label %.preheader.i.i326, label %bb.bt
 
 .preheader.i.i326:                                ; preds = %bb.bs
   %i.yd = load ptr, ptr %i.ez, align 8, !tbaa !60 ; 2 uses
+  %25 = xor i64 %indvars.iv43.i.i317, -1
+  %26 = add nsw i64 %25, %i.xn                    ; 3 uses
   %min.iters.check979 = icmp ult i64 %26, 8
   br i1 %min.iters.check979, label %scalar.ph978.preheader, label %vector.ph980
 
@@ -7400,14 +7400,14 @@ bb.bw:                                            ; preds = %bb.by, %.lr.ph33.i.
   %indvars.iv43.i.i338 = phi i64 [ 0, %.lr.ph33.i.i337 ], [ %indvars.iv.next44.i.i341, %bb.by ] ; 4 uses
   %indvars.iv38.i.i339 = phi i64 [ 1, %.lr.ph33.i.i337 ], [ %indvars.iv.next39.i.i344, %bb.by ] ; 4 uses
   %.02132.i.i340 = phi i32 [ 0, %.lr.ph33.i.i337 ], [ %.1.i.i343, %bb.by ]
-  %27 = xor i64 %indvars.iv43.i.i338, -1
-  %28 = add nsw i64 %27, %i.ze                    ; 3 uses
   %indvars.iv.next44.i.i341 = add nuw nsw i64 %indvars.iv43.i.i338, 1 ; 3 uses
   %i.zt = icmp samesign ult i64 %indvars.iv.next44.i.i341, %i.ze
   br i1 %i.zt, label %.preheader.i.i347, label %bb.bx
 
 .preheader.i.i347:                                ; preds = %bb.bw
   %i.zu = load ptr, ptr %i.fr, align 8, !tbaa !60 ; 2 uses
+  %27 = xor i64 %indvars.iv43.i.i338, -1
+  %28 = add nsw i64 %27, %i.ze                    ; 3 uses
   %min.iters.check963 = icmp ult i64 %28, 8
   br i1 %min.iters.check963, label %scalar.ph962.preheader, label %vector.ph964
 
@@ -7524,14 +7524,14 @@ bb.ca:                                            ; preds = %bb.cc, %.lr.ph33.i.
   %indvars.iv43.i.i359 = phi i64 [ 0, %.lr.ph33.i.i358 ], [ %indvars.iv.next44.i.i362, %bb.cc ] ; 4 uses
   %indvars.iv38.i.i360 = phi i64 [ 1, %.lr.ph33.i.i358 ], [ %indvars.iv.next39.i.i365, %bb.cc ] ; 4 uses
   %.02132.i.i361 = phi i32 [ 0, %.lr.ph33.i.i358 ], [ %.1.i.i364, %bb.cc ]
-  %29 = xor i64 %indvars.iv43.i.i359, -1
-  %30 = add nsw i64 %29, %i.aax                   ; 3 uses
   %indvars.iv.next44.i.i362 = add nuw nsw i64 %indvars.iv43.i.i359, 1 ; 3 uses
   %i.abm = icmp samesign ult i64 %indvars.iv.next44.i.i362, %i.aax
   br i1 %i.abm, label %.preheader.i.i368, label %bb.cb
 
 .preheader.i.i368:                                ; preds = %bb.ca
   %i.abn = load ptr, ptr %i.fg, align 8, !tbaa !60 ; 2 uses
+  %29 = xor i64 %indvars.iv43.i.i359, -1
+  %30 = add nsw i64 %29, %i.aax                   ; 3 uses
   %min.iters.check947 = icmp ult i64 %30, 8
   br i1 %min.iters.check947, label %scalar.ph946.preheader, label %vector.ph948
 
@@ -7771,14 +7771,14 @@ bb.ck:                                            ; preds = %bb.cm, %.lr.ph33.i.
   %indvars.iv43.i.i392 = phi i64 [ 0, %.lr.ph33.i.i391 ], [ %indvars.iv.next44.i.i395, %bb.cm ] ; 4 uses
   %indvars.iv38.i.i393 = phi i64 [ 1, %.lr.ph33.i.i391 ], [ %indvars.iv.next39.i.i398, %bb.cm ] ; 4 uses
   %.02132.i.i394 = phi i32 [ 0, %.lr.ph33.i.i391 ], [ %.1.i.i397, %bb.cm ]
-  %31 = xor i64 %indvars.iv43.i.i392, -1
-  %32 = add nsw i64 %31, %i.aeg                   ; 3 uses
   %indvars.iv.next44.i.i395 = add nuw nsw i64 %indvars.iv43.i.i392, 1 ; 3 uses
   %i.aev = icmp samesign ult i64 %indvars.iv.next44.i.i395, %i.aeg
   br i1 %i.aev, label %.preheader.i.i401, label %bb.cl
 
 .preheader.i.i401:                                ; preds = %bb.ck
   %i.aew = load ptr, ptr %i.ez, align 8, !tbaa !60 ; 2 uses
+  %31 = xor i64 %indvars.iv43.i.i392, -1
+  %32 = add nsw i64 %31, %i.aeg                   ; 3 uses
   %min.iters.check915 = icmp ult i64 %32, 8
   br i1 %min.iters.check915, label %scalar.ph914.preheader, label %vector.ph916
 
@@ -7893,14 +7893,14 @@ bb.co:                                            ; preds = %bb.cq, %.lr.ph33.i.
   %indvars.iv43.i.i413 = phi i64 [ 0, %.lr.ph33.i.i412 ], [ %indvars.iv.next44.i.i416, %bb.cq ] ; 4 uses
   %indvars.iv38.i.i414 = phi i64 [ 1, %.lr.ph33.i.i412 ], [ %indvars.iv.next39.i.i419, %bb.cq ] ; 4 uses
   %.02132.i.i415 = phi i32 [ 0, %.lr.ph33.i.i412 ], [ %.1.i.i418, %bb.cq ]
-  %33 = xor i64 %indvars.iv43.i.i413, -1
-  %34 = add nsw i64 %33, %i.afx                   ; 3 uses
   %indvars.iv.next44.i.i416 = add nuw nsw i64 %indvars.iv43.i.i413, 1 ; 3 uses
   %i.agm = icmp samesign ult i64 %indvars.iv.next44.i.i416, %i.afx
   br i1 %i.agm, label %.preheader.i.i422, label %bb.cp
 
 .preheader.i.i422:                                ; preds = %bb.co
   %i.agn = load ptr, ptr %i.fg, align 8, !tbaa !60 ; 2 uses
+  %33 = xor i64 %indvars.iv43.i.i413, -1
+  %34 = add nsw i64 %33, %i.afx                   ; 3 uses
   %min.iters.check899 = icmp ult i64 %34, 8
   br i1 %min.iters.check899, label %scalar.ph898.preheader, label %vector.ph900
 
@@ -8303,14 +8303,14 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph33.i.i
   %indvars.iv43.i.i = phi i64 [ 0, %.lr.ph33.i.i ], [ %indvars.iv.next44.i.i, %bb.d ] ; 4 uses
   %indvars.iv38.i.i = phi i64 [ 1, %.lr.ph33.i.i ], [ %indvars.iv.next39.i.i, %bb.d ] ; 4 uses
   %.02132.i.i = phi i32 [ 0, %.lr.ph33.i.i ], [ %.1.i.i, %bb.d ]
-  %2 = xor i64 %indvars.iv43.i.i, -1
-  %3 = add nsw i64 %2, %i.s                       ; 3 uses
   %indvars.iv.next44.i.i = add nuw nsw i64 %indvars.iv43.i.i, 1 ; 3 uses
   %i.ah = icmp samesign ult i64 %indvars.iv.next44.i.i, %i.s
   br i1 %i.ah, label %.preheader.i.i, label %bb.c
 
 .preheader.i.i:                                   ; preds = %bb.b
   %i.ai = load ptr, ptr %i.r, align 8, !tbaa !60  ; 2 uses
+  %2 = xor i64 %indvars.iv43.i.i, -1
+  %3 = add nsw i64 %2, %i.s                       ; 3 uses
   %min.iters.check = icmp ult i64 %3, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -8490,14 +8490,14 @@ bb.i:                                             ; preds = %bb.k, %.lr.ph33.i.i
   %indvars.iv43.i.i34 = phi i64 [ 0, %.lr.ph33.i.i33 ], [ %indvars.iv.next44.i.i37, %bb.k ] ; 4 uses
   %indvars.iv38.i.i35 = phi i64 [ 1, %.lr.ph33.i.i33 ], [ %indvars.iv.next39.i.i40, %bb.k ] ; 4 uses
   %.02132.i.i36 = phi i32 [ 0, %.lr.ph33.i.i33 ], [ %.1.i.i39, %bb.k ]
-  %4 = xor i64 %indvars.iv43.i.i34, -1
-  %5 = add nsw i64 %4, %i.dc                      ; 3 uses
   %indvars.iv.next44.i.i37 = add nuw nsw i64 %indvars.iv43.i.i34, 1 ; 3 uses
   %i.dr = icmp samesign ult i64 %indvars.iv.next44.i.i37, %i.dc
   br i1 %i.dr, label %.preheader.i.i42, label %bb.j
 
 .preheader.i.i42:                                 ; preds = %bb.i
   %i.ds = load ptr, ptr %i.bx, align 8, !tbaa !60 ; 2 uses
+  %4 = xor i64 %indvars.iv43.i.i34, -1
+  %5 = add nsw i64 %4, %i.dc                      ; 3 uses
   %min.iters.check628 = icmp ult i64 %5, 8
   br i1 %min.iters.check628, label %scalar.ph627.preheader, label %vector.ph629
 
@@ -8617,14 +8617,14 @@ bb.n:                                             ; preds = %bb.p, %.lr.ph33.i.i
   %indvars.iv43.i.i53 = phi i64 [ 0, %.lr.ph33.i.i52 ], [ %indvars.iv.next44.i.i56, %bb.p ] ; 4 uses
   %indvars.iv38.i.i54 = phi i64 [ 1, %.lr.ph33.i.i52 ], [ %indvars.iv.next39.i.i59, %bb.p ] ; 4 uses
   %.02132.i.i55 = phi i32 [ 0, %.lr.ph33.i.i52 ], [ %.1.i.i58, %bb.p ]
-  %6 = xor i64 %indvars.iv43.i.i53, -1
-  %7 = add nsw i64 %6, %i.eu                      ; 3 uses
   %indvars.iv.next44.i.i56 = add nuw nsw i64 %indvars.iv43.i.i53, 1 ; 3 uses
   %i.fj = icmp samesign ult i64 %indvars.iv.next44.i.i56, %i.eu
   br i1 %i.fj, label %.preheader.i.i62, label %bb.o
 
 .preheader.i.i62:                                 ; preds = %bb.n
   %i.fk = load ptr, ptr %i.cb, align 8, !tbaa !60 ; 2 uses
+  %6 = xor i64 %indvars.iv43.i.i53, -1
+  %7 = add nsw i64 %6, %i.eu                      ; 3 uses
   %min.iters.check500 = icmp ult i64 %7, 8
   br i1 %min.iters.check500, label %scalar.ph499.preheader, label %vector.ph501
 
@@ -8738,14 +8738,14 @@ bb.r:                                             ; preds = %bb.t, %.lr.ph33.i.i
   %indvars.iv43.i.i73 = phi i64 [ 0, %.lr.ph33.i.i72 ], [ %indvars.iv.next44.i.i76, %bb.t ] ; 4 uses
   %indvars.iv38.i.i74 = phi i64 [ 1, %.lr.ph33.i.i72 ], [ %indvars.iv.next39.i.i79, %bb.t ] ; 4 uses
   %.02132.i.i75 = phi i32 [ 0, %.lr.ph33.i.i72 ], [ %.1.i.i78, %bb.t ]
-  %8 = xor i64 %indvars.iv43.i.i73, -1
-  %9 = add nsw i64 %8, %i.gk                      ; 3 uses
   %indvars.iv.next44.i.i76 = add nuw nsw i64 %indvars.iv43.i.i73, 1 ; 3 uses
   %i.gz = icmp samesign ult i64 %indvars.iv.next44.i.i76, %i.gk
   br i1 %i.gz, label %.preheader.i.i81, label %bb.s
 
 .preheader.i.i81:                                 ; preds = %bb.r
   %i.ha = load ptr, ptr %i.cg, align 8, !tbaa !60 ; 2 uses
+  %8 = xor i64 %indvars.iv43.i.i73, -1
+  %9 = add nsw i64 %8, %i.gk                      ; 3 uses
   %min.iters.check484 = icmp ult i64 %9, 8
   br i1 %min.iters.check484, label %scalar.ph483.preheader, label %vector.ph485
 
@@ -8870,14 +8870,14 @@ bb.w:                                             ; preds = %bb.y, %.lr.ph33.i.i
   %indvars.iv43.i.i92 = phi i64 [ 0, %.lr.ph33.i.i91 ], [ %indvars.iv.next44.i.i95, %bb.y ] ; 4 uses
   %indvars.iv38.i.i93 = phi i64 [ 1, %.lr.ph33.i.i91 ], [ %indvars.iv.next39.i.i98, %bb.y ] ; 4 uses
   %.02132.i.i94 = phi i32 [ 0, %.lr.ph33.i.i91 ], [ %.1.i.i97, %bb.y ]
-  %10 = xor i64 %indvars.iv43.i.i92, -1
-  %11 = add nsw i64 %10, %i.ie                    ; 3 uses
   %indvars.iv.next44.i.i95 = add nuw nsw i64 %indvars.iv43.i.i92, 1 ; 3 uses
   %i.it = icmp samesign ult i64 %indvars.iv.next44.i.i95, %i.ie
   br i1 %i.it, label %.preheader.i.i101, label %bb.x
 
 .preheader.i.i101:                                ; preds = %bb.w
   %i.iu = load ptr, ptr %i.cb, align 8, !tbaa !60 ; 2 uses
+  %10 = xor i64 %indvars.iv43.i.i92, -1
+  %11 = add nsw i64 %10, %i.ie                    ; 3 uses
   %min.iters.check612 = icmp ult i64 %11, 8
   br i1 %min.iters.check612, label %scalar.ph611.preheader, label %vector.ph613
 
@@ -8991,14 +8991,14 @@ bb.aa:                                            ; preds = %bb.ac, %.lr.ph33.i.
   %indvars.iv43.i.i113 = phi i64 [ 0, %.lr.ph33.i.i112 ], [ %indvars.iv.next44.i.i116, %bb.ac ] ; 4 uses
   %indvars.iv38.i.i114 = phi i64 [ 1, %.lr.ph33.i.i112 ], [ %indvars.iv.next39.i.i119, %bb.ac ] ; 4 uses
   %.02132.i.i115 = phi i32 [ 0, %.lr.ph33.i.i112 ], [ %.1.i.i118, %bb.ac ]
-  %12 = xor i64 %indvars.iv43.i.i113, -1
-  %13 = add nsw i64 %12, %i.ju                    ; 3 uses
   %indvars.iv.next44.i.i116 = add nuw nsw i64 %indvars.iv43.i.i113, 1 ; 3 uses
   %i.kj = icmp samesign ult i64 %indvars.iv.next44.i.i116, %i.ju
   br i1 %i.kj, label %.preheader.i.i122, label %bb.ab
 
 .preheader.i.i122:                                ; preds = %bb.aa
   %i.kk = load ptr, ptr %i.cg, align 8, !tbaa !60 ; 2 uses
+  %12 = xor i64 %indvars.iv43.i.i113, -1
+  %13 = add nsw i64 %12, %i.ju                    ; 3 uses
   %min.iters.check596 = icmp ult i64 %13, 8
   br i1 %min.iters.check596, label %scalar.ph595.preheader, label %vector.ph597
 
@@ -9114,14 +9114,14 @@ bb.ae:                                            ; preds = %bb.ag, %.lr.ph33.i.
   %indvars.iv43.i.i134 = phi i64 [ 0, %.lr.ph33.i.i133 ], [ %indvars.iv.next44.i.i137, %bb.ag ] ; 4 uses
   %indvars.iv38.i.i135 = phi i64 [ 1, %.lr.ph33.i.i133 ], [ %indvars.iv.next39.i.i140, %bb.ag ] ; 4 uses
   %.02132.i.i136 = phi i32 [ 0, %.lr.ph33.i.i133 ], [ %.1.i.i139, %bb.ag ]
-  %14 = xor i64 %indvars.iv43.i.i134, -1
-  %15 = add nsw i64 %14, %i.lm                    ; 3 uses
   %indvars.iv.next44.i.i137 = add nuw nsw i64 %indvars.iv43.i.i134, 1 ; 3 uses
   %i.mb = icmp samesign ult i64 %indvars.iv.next44.i.i137, %i.lm
   br i1 %i.mb, label %.preheader.i.i143, label %bb.af
 
 .preheader.i.i143:                                ; preds = %bb.ae
   %i.mc = load ptr, ptr %i.cm, align 8, !tbaa !60 ; 2 uses
+  %14 = xor i64 %indvars.iv43.i.i134, -1
+  %15 = add nsw i64 %14, %i.lm                    ; 3 uses
   %min.iters.check580 = icmp ult i64 %15, 8
   br i1 %min.iters.check580, label %scalar.ph579.preheader, label %vector.ph581
 
@@ -9237,14 +9237,14 @@ bb.ai:                                            ; preds = %bb.ak, %.lr.ph33.i.
   %indvars.iv43.i.i155 = phi i64 [ 0, %.lr.ph33.i.i154 ], [ %indvars.iv.next44.i.i158, %bb.ak ] ; 4 uses
   %indvars.iv38.i.i156 = phi i64 [ 1, %.lr.ph33.i.i154 ], [ %indvars.iv.next39.i.i161, %bb.ak ] ; 4 uses
   %.02132.i.i157 = phi i32 [ 0, %.lr.ph33.i.i154 ], [ %.1.i.i160, %bb.ak ]
-  %16 = xor i64 %indvars.iv43.i.i155, -1
-  %17 = add nsw i64 %16, %i.ne                    ; 3 uses
   %indvars.iv.next44.i.i158 = add nuw nsw i64 %indvars.iv43.i.i155, 1 ; 3 uses
   %i.nt = icmp samesign ult i64 %indvars.iv.next44.i.i158, %i.ne
   br i1 %i.nt, label %.preheader.i.i164, label %bb.aj
 
 .preheader.i.i164:                                ; preds = %bb.ai
   %i.nu = load ptr, ptr %i.cs, align 8, !tbaa !60 ; 2 uses
+  %16 = xor i64 %indvars.iv43.i.i155, -1
+  %17 = add nsw i64 %16, %i.ne                    ; 3 uses
   %min.iters.check564 = icmp ult i64 %17, 8
   br i1 %min.iters.check564, label %scalar.ph563.preheader, label %vector.ph565
 
@@ -9360,14 +9360,14 @@ bb.am:                                            ; preds = %bb.ao, %.lr.ph33.i.
   %indvars.iv43.i.i176 = phi i64 [ 0, %.lr.ph33.i.i175 ], [ %indvars.iv.next44.i.i179, %bb.ao ] ; 4 uses
   %indvars.iv38.i.i177 = phi i64 [ 1, %.lr.ph33.i.i175 ], [ %indvars.iv.next39.i.i182, %bb.ao ] ; 4 uses
   %.02132.i.i178 = phi i32 [ 0, %.lr.ph33.i.i175 ], [ %.1.i.i181, %bb.ao ]
-  %18 = xor i64 %indvars.iv43.i.i176, -1
-  %19 = add nsw i64 %18, %i.ow                    ; 3 uses
   %indvars.iv.next44.i.i179 = add nuw nsw i64 %indvars.iv43.i.i176, 1 ; 3 uses
   %i.pl = icmp samesign ult i64 %indvars.iv.next44.i.i179, %i.ow
   br i1 %i.pl, label %.preheader.i.i185, label %bb.an
 
 .preheader.i.i185:                                ; preds = %bb.am
   %i.pm = load ptr, ptr %i.bx, align 8, !tbaa !60 ; 2 uses
+  %18 = xor i64 %indvars.iv43.i.i176, -1
+  %19 = add nsw i64 %18, %i.ow                    ; 3 uses
   %min.iters.check548 = icmp ult i64 %19, 8
   br i1 %min.iters.check548, label %scalar.ph547.preheader, label %vector.ph549
 
@@ -9484,14 +9484,14 @@ bb.aq:                                            ; preds = %bb.as, %.lr.ph33.i.
   %indvars.iv43.i.i197 = phi i64 [ 0, %.lr.ph33.i.i196 ], [ %indvars.iv.next44.i.i200, %bb.as ] ; 4 uses
   %indvars.iv38.i.i198 = phi i64 [ 1, %.lr.ph33.i.i196 ], [ %indvars.iv.next39.i.i203, %bb.as ] ; 4 uses
   %.02132.i.i199 = phi i32 [ 0, %.lr.ph33.i.i196 ], [ %.1.i.i202, %bb.as ]
-  %20 = xor i64 %indvars.iv43.i.i197, -1
-  %21 = add nsw i64 %20, %i.qp                    ; 3 uses
   %indvars.iv.next44.i.i200 = add nuw nsw i64 %indvars.iv43.i.i197, 1 ; 3 uses
   %i.re = icmp samesign ult i64 %indvars.iv.next44.i.i200, %i.qp
   br i1 %i.re, label %.preheader.i.i206, label %bb.ar
 
 .preheader.i.i206:                                ; preds = %bb.aq
   %i.rf = load ptr, ptr %i.cm, align 8, !tbaa !60 ; 2 uses
+  %20 = xor i64 %indvars.iv43.i.i197, -1
+  %21 = add nsw i64 %20, %i.qp                    ; 3 uses
   %min.iters.check532 = icmp ult i64 %21, 8
   br i1 %min.iters.check532, label %scalar.ph531.preheader, label %vector.ph533
 
@@ -9605,14 +9605,14 @@ bb.au:                                            ; preds = %bb.aw, %.lr.ph33.i.
   %indvars.iv43.i.i218 = phi i64 [ 0, %.lr.ph33.i.i217 ], [ %indvars.iv.next44.i.i221, %bb.aw ] ; 4 uses
   %indvars.iv38.i.i219 = phi i64 [ 1, %.lr.ph33.i.i217 ], [ %indvars.iv.next39.i.i224, %bb.aw ] ; 4 uses
   %.02132.i.i220 = phi i32 [ 0, %.lr.ph33.i.i217 ], [ %.1.i.i223, %bb.aw ]
-  %22 = xor i64 %indvars.iv43.i.i218, -1
-  %23 = add nsw i64 %22, %i.sf                    ; 3 uses
   %indvars.iv.next44.i.i221 = add nuw nsw i64 %indvars.iv43.i.i218, 1 ; 3 uses
   %i.su = icmp samesign ult i64 %indvars.iv.next44.i.i221, %i.sf
   br i1 %i.su, label %.preheader.i.i227, label %bb.av
 
 .preheader.i.i227:                                ; preds = %bb.au
   %i.sv = load ptr, ptr %i.bx, align 8, !tbaa !60 ; 2 uses
+  %22 = xor i64 %indvars.iv43.i.i218, -1
+  %23 = add nsw i64 %22, %i.sf                    ; 3 uses
   %min.iters.check516 = icmp ult i64 %23, 8
   br i1 %min.iters.check516, label %scalar.ph515.preheader, label %vector.ph517
 

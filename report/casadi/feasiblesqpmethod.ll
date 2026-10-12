@@ -205,24 +205,23 @@ bb.k:                                             ; preds = %.lr.ph145, %bb.k
   %i.et = add i64 %0, %i.es
   %i.eu = shl i64 %i.et, 3
   %i.ev = mul i64 %i.ea, %i.ej
-  %i.ew = add i64 %i.eb, %i.ei
-  %8 = sub i64 %0, %i.ew
-  %9 = add nsw i64 %i.eb, -3
-  %10 = add i64 %9, %i.ei
-  %i.ex = getelementptr i8, ptr %1, i64 %i.en
-  %11 = getelementptr i8, ptr %1, i64 %i.eu
-  %12 = getelementptr i8, ptr %1, i64 %i.ev
+  %i.ew = add nsw i64 %i.eb, -3
+  %8 = add i64 %i.ew, %i.ei
+  %9 = getelementptr i8, ptr %1, i64 %i.en
+  %10 = getelementptr i8, ptr %1, i64 %i.eu
+  %i.ex = getelementptr i8, ptr %1, i64 %i.ev
+  %11 = add i64 %i.eb, %i.ei
+  %12 = sub i64 %0, %11
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph155, %_ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit
   %.0121153 = phi ptr [ %i.eg, %.lr.ph155 ], [ %i.fb, %_ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit ] ; 2 uses
   %.2126152 = phi i64 [ 0, %.lr.ph155 ], [ %i.is, %_ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit ] ; 7 uses
-  %13 = add i64 %8, %.2126152                     ; 3 uses
   %i.ey = mul i64 %i.dx, %.2126152                ; 2 uses
-  %scevgep188 = getelementptr i8, ptr %i.ex, i64 %i.ey
+  %scevgep188 = getelementptr i8, ptr %9, i64 %i.ey
   %i.ez = mul i64 %i.dz, %.2126152
-  %scevgep189 = getelementptr i8, ptr %11, i64 %i.ez
-  %scevgep190 = getelementptr i8, ptr %12, i64 %i.ey
+  %scevgep189 = getelementptr i8, ptr %10, i64 %i.ez
+  %scevgep190 = getelementptr i8, ptr %i.ex, i64 %i.ey
   %i.fa = getelementptr inbounds i8, ptr %.0121153, i64 -8
   %i.fb = getelementptr inbounds i8, ptr %.0121153, i64 -16 ; 2 uses
   %i.fc = load double, ptr %i.fa, align 8, !tbaa !155 ; 9 uses
@@ -235,7 +234,7 @@ bb.l:                                             ; preds = %.lr.ph155, %_ZN6cas
 
 .lr.ph.i.preheader:                               ; preds = %bb.l
   %xtraiter244 = and i64 %i.fe, 1
-  %i.fi = icmp eq i64 %10, %.2126152
+  %i.fi = icmp eq i64 %8, %.2126152
   br i1 %i.fi, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
@@ -332,6 +331,7 @@ bb.l:                                             ; preds = %.lr.ph155, %_ZN6cas
   %i.hr = getelementptr [8 x i8], ptr %1, i64 %i.hq
   %i.hs = getelementptr [8 x i8], ptr %i.hr, i64 %i.ff
   %i.ht = getelementptr i8, ptr %i.hs, i64 16     ; 5 uses
+  %13 = add i64 %.2126152, %12                    ; 3 uses
   %min.iters.check = icmp ult i64 %13, 2
   br i1 %min.iters.check, label %.lr.ph84.i.preheader, label %vector.memcheck
 
@@ -436,11 +436,10 @@ _ZN6casadi23casadi_cvx_givens_applyIdEEvxPT_S1_S1_x.exit: ; preds = %.lr.ph84.i,
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph164, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit
-  %indvar = phi i64 [ 0, %.lr.ph164 ], [ %indvar.next, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit ] ; 10 uses
+  %indvar = phi i64 [ 0, %.lr.ph164 ], [ %indvar.next, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit ] ; 11 uses
   %.0123162 = phi i64 [ %i.iu, %.lr.ph164 ], [ %i.ov, %_ZN6casadi22casadi_cvx_house_applyIdEEvxxxPT_S2_PKS1_S1_.exit ] ; 12 uses
   %i.jl = add i64 %indvar, 1                      ; 3 uses
   %i.jm = sub i64 %i.jc, %indvar                  ; 5 uses
-  %14 = add i64 %indvar, 1                        ; 3 uses
   %i.jn = mul i64 %indvar, -8                     ; 2 uses
   %scevgep196 = getelementptr i8, ptr %i.je, i64 %i.jn ; 2 uses
   %i.jo = mul i64 %i.iy, %indvar
@@ -546,7 +545,8 @@ _ZN6casadi12casadi_clearIdEEvPT_x.exit.thread.i:  ; preds = %bb.m
   br i1 %exitcond58.not.i, label %.lr.ph.us53.i.preheader, label %.lr.ph.us.i, !llvm.loop !1314
 
 .lr.ph.us53.i.preheader:                          ; preds = %._crit_edge.us.i
-  %min.iters.check209 = icmp ult i64 %14, 6
+  %14 = add nuw i64 %indvar, 1                    ; 2 uses
+  %min.iters.check209 = icmp ult i64 %indvar, 5
   %bound0201 = icmp ult ptr %scevgep196, %scevgep199
   %bound1202 = icmp ult ptr %scevgep198, %scevgep197
   %found.conflict203 = and i1 %bound0201, %bound1202
@@ -786,7 +786,6 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %.not.i = icmp eq ptr %0, null
   %i.c = add nsw i64 %1, -3                       ; 2 uses
-  %4 = add nsw i64 %1, -2
   %i.d = mul i64 %1, %1
   %i.e = shl i64 %i.d, 3
   %i.f = shl i64 %1, 3                            ; 2 uses
@@ -796,6 +795,7 @@ bb.a:
   %i.j = getelementptr i8, ptr %0, i64 %i.e
   %i.k = getelementptr i8, ptr %i.j, i64 -8
   %i.l = getelementptr i8, ptr %0, i64 %i.f
+  %4 = add nsw i64 %1, -2
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN6casadi16casadi_cvx_houseIdEET_PS1_S2_x.exit
@@ -806,7 +806,6 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN6casadi
   %scevgep = getelementptr i8, ptr %i.k, i64 %i.o
   %i.p = mul i64 %i.h, %.027
   %scevgep30 = getelementptr i8, ptr %i.l, i64 %i.p
-  %5 = sub i64 %4, %.027                          ; 4 uses
   %i.q = getelementptr [8 x i8], ptr %0, i64 %.027
   %i.r = getelementptr i8, ptr %i.q, i64 8
   %i.s = mul i64 %.027, %1
@@ -1026,6 +1025,7 @@ bb.e:                                             ; preds = %._crit_edge.i
   br i1 %i.ck, label %.lr.ph44.i.preheader, label %_ZN6casadi16casadi_cvx_houseIdEET_PS1_S2_x.exit
 
 .lr.ph44.i.preheader:                             ; preds = %bb.e
+  %5 = sub i64 %4, %.027                          ; 4 uses
   %min.iters.check = icmp ult i64 %5, 2
   br i1 %min.iters.check, label %.lr.ph44.i.preheader46, label %vector.ph
 
@@ -1428,8 +1428,6 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph99:                                         ; preds = %.lr.ph99.preheader, %._crit_edge95
   %.298 = phi ptr [ %i.ej, %._crit_edge95 ], [ %i.i, %.lr.ph99.preheader ] ; 9 uses
   %.17497 = phi i64 [ %i.cz, %._crit_edge95 ], [ 0, %.lr.ph99.preheader ] ; 7 uses
-  %6 = add i64 %1, %.17497
-  %7 = sub i64 %i.cn, %6                          ; 3 uses
   %i.co = shl i64 %.17497, 3
   %i.cp = sub i64 %i.cm, %i.co
   %i.cq = shl i64 %.17497, 3
@@ -1449,6 +1447,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.da, label %.lr.ph94.preheader, label %._crit_edge95
 
 .lr.ph94.preheader:                               ; preds = %.lr.ph99
+  %6 = add i64 %1, %.17497
+  %7 = sub i64 %i.cn, %6                          ; 3 uses
   %min.iters.check139 = icmp ult i64 %7, 6
   br i1 %min.iters.check139, label %.lr.ph94.preheader160, label %vector.memcheck118
 

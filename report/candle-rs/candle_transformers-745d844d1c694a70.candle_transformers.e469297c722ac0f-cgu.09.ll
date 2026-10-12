@@ -205,13 +205,13 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %..loopexit_crit_edge
   %.sroa.03.025 = phi i64 [ %i.f, %..loopexit_crit_edge ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.f = add nuw i64 %.sroa.03.025, 1             ; 2 uses
-  %i.g = mul i64 %.sroa.03.025, %7                ; 3 uses
+  %i.g = mul i64 %.sroa.03.025, %7                ; 4 uses
   %i.h = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.g)
-  %i.i = mul i64 %.sroa.03.025, %7                ; 3 uses
+  %i.i = mul i64 %7, %.sroa.03.025                ; 2 uses
   %reass.sub = sub i64 %i.h, %i.i
   %i.j = add i64 %reass.sub, 1
   %i.k = lshr i64 %i.j, 1
-  %i.l = add i64 %i.i, 1
+  %i.l = add i64 %i.g, 1
   %i.m = tail call i64 @llvm.umax.i64(i64 %1, i64 %i.l)
   %i.n = sub i64 %i.m, %i.i
   %i.o = lshr i64 %i.n, 1

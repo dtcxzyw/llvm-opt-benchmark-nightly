@@ -205,7 +205,6 @@ _RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 .lr.ph376.split.i.i:                              ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i, %.lr.ph376.split.preheader.i.i
   %.sroa.0.0288374.i.i = phi ptr [ %i.xi, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i ], [ %i.bg, %.lr.ph376.split.preheader.i.i ] ; 2 uses
   %.sroa.7.0373.i.i = phi i64 [ %i.xj, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i ], [ 0, %.lr.ph376.split.preheader.i.i ] ; 7 uses
-  %15 = mul i64 %i.uk, %.sroa.7.0373.i.i
   %i.xi = getelementptr inbounds nuw i8, ptr %.sroa.0.0288374.i.i, i64 1 ; 2 uses
   %i.xj = add nuw nsw i64 %.sroa.7.0373.i.i, 1
   %exitcond424.not.i.i = icmp eq i64 %.sroa.7.0373.i.i, %i.ec
@@ -448,6 +447,7 @@ bb.fz:                                            ; preds = %bb.gb, %._crit_edge
 
 .lr.ph372.i.i.preheader:                          ; preds = %bb.fz
   %i.zy = call i64 @llvm.umax.i64(i64 %i.es, i64 %i.yd)
+  %15 = mul i64 %i.uk, %.sroa.7.0373.i.i
   %i.zz = sub i64 %i.zy, %15
   %i.aaa = call i64 @llvm.umin.i64(i64 %i.xc, i64 %i.zz) ; 2 uses
   %min.iters.check5854 = icmp samesign ult i64 %i.aaa, 4
@@ -850,7 +850,6 @@ _RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 .lr.ph376.split.i.i144:                           ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i209, %.lr.ph376.split.preheader.i.i143
   %.sroa.0.0288374.i.i145 = phi ptr [ %i.bkp, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i209 ], [ %i.amu, %.lr.ph376.split.preheader.i.i143 ] ; 2 uses
   %.sroa.7.0373.i.i146 = phi i64 [ %i.bkq, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i209 ], [ 0, %.lr.ph376.split.preheader.i.i143 ] ; 7 uses
-  %16 = mul i64 %i.bhr, %.sroa.7.0373.i.i146
   %i.bkp = getelementptr inbounds nuw i8, ptr %.sroa.0.0288374.i.i145, i64 2 ; 2 uses
   %i.bkq = add nuw i64 %.sroa.7.0373.i.i146, 1
   %exitcond429.not.i.i = icmp eq i64 %.sroa.7.0373.i.i146, %i.arj
@@ -1093,6 +1092,7 @@ bb.pg:                                            ; preds = %bb.pi, %._crit_edge
 
 .lr.ph372.i.i182.preheader:                       ; preds = %bb.pg
   %i.bnf = call i64 @llvm.umax.i64(i64 %i.arz, i64 %i.blk)
+  %16 = mul i64 %i.bhr, %.sroa.7.0373.i.i146
   %i.bng = sub i64 %i.bnf, %16
   %i.bnh = call i64 @llvm.umin.i64(i64 %i.bkj, i64 %i.bng) ; 2 uses
   %min.iters.check5943 = icmp samesign ult i64 %i.bnh, 4
@@ -1495,7 +1495,6 @@ _RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 .lr.ph376.split.i.i658:                           ; preds = %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i724, %.lr.ph376.split.preheader.i.i656
   %.sroa.0.0288374.i.i659 = phi ptr [ %i.cwc, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i724 ], [ %i.cab, %.lr.ph376.split.preheader.i.i656 ] ; 2 uses
   %.sroa.7.0373.i.i660 = phi i64 [ %i.cwd, %_RNvNtNtCsiRgJJXJ4lb7_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i724 ], [ 0, %.lr.ph376.split.preheader.i.i656 ] ; 7 uses
-  %17 = mul i64 %i.cte, %.sroa.7.0373.i.i660
   %i.cwc = getelementptr inbounds nuw i8, ptr %.sroa.0.0288374.i.i659, i64 2 ; 2 uses
   %i.cwd = add nuw i64 %.sroa.7.0373.i.i660, 1
   %exitcond429.not.i.i661 = icmp eq i64 %.sroa.7.0373.i.i660, %i.ccw
@@ -1738,6 +1737,7 @@ bb.yn:                                            ; preds = %bb.yp, %._crit_edge
 
 .lr.ph372.i.i697.preheader:                       ; preds = %bb.yn
   %i.cys = call i64 @llvm.umax.i64(i64 %i.cdm, i64 %i.cwx)
+  %17 = mul i64 %i.cte, %.sroa.7.0373.i.i660
   %i.cyt = sub i64 %i.cys, %17
   %i.cyu = call i64 @llvm.umin.i64(i64 %i.cvw, i64 %i.cyt) ; 2 uses
   %min.iters.check6025 = icmp samesign ult i64 %i.cyu, 4

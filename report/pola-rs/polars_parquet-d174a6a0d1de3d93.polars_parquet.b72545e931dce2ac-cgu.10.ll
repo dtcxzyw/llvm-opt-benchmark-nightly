@@ -205,7 +205,6 @@ _RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 .lr.ph377.split.i.i:                              ; preds = %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i, %.lr.ph377.split.preheader.i.i
   %.sroa.0.0289375.i.i = phi ptr [ %i.ajw, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i ], [ %i.fx, %.lr.ph377.split.preheader.i.i ] ; 2 uses
   %.sroa.7.0374.i.i = phi i64 [ %i.ajx, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i ], [ 0, %.lr.ph377.split.preheader.i.i ] ; 7 uses
-  %14 = mul i64 %i.ahb, %.sroa.7.0374.i.i, !dbg !12569
   %i.ajw = getelementptr inbounds nuw i8, ptr %.sroa.0.0289375.i.i, i64 1, !dbg !12569 ; 2 uses
   %i.ajx = add nuw nsw i64 %.sroa.7.0374.i.i, 1, !dbg !12570
   %exitcond425.not.i.i = icmp eq i64 %.sroa.7.0374.i.i, %i.kz, !dbg !12562
@@ -448,6 +447,7 @@ bb.gu:                                            ; preds = %bb.gw, %._crit_edge
 
 .lr.ph373.i.i.preheader:                          ; preds = %bb.gu
   %i.amm = call i64 @llvm.umax.i64(i64 %i.mh, i64 %i.akr), !dbg !12616
+  %14 = mul i64 %i.ahb, %.sroa.7.0374.i.i, !dbg !12616
   %i.amn = sub i64 %i.amm, %14, !dbg !12616
   %i.amo = call i64 @llvm.umin.i64(i64 %i.ajr, i64 %i.amn), !dbg !12616 ; 2 uses
   %min.iters.check4533 = icmp samesign ult i64 %i.amo, 4, !dbg !12616
@@ -850,7 +850,6 @@ _RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 .lr.ph377.split.i.i122:                           ; preds = %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i186, %.lr.ph377.split.preheader.i.i121
   %.sroa.0.0289375.i.i123 = phi ptr [ %i.chd, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i186 ], [ %i.bba, %.lr.ph377.split.preheader.i.i121 ] ; 2 uses
   %.sroa.7.0374.i.i124 = phi i64 [ %i.che, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i186 ], [ 0, %.lr.ph377.split.preheader.i.i121 ] ; 7 uses
-  %15 = mul i64 %i.cei, %.sroa.7.0374.i.i124, !dbg !13583
   %i.chd = getelementptr inbounds nuw i8, ptr %.sroa.0.0289375.i.i123, i64 2, !dbg !13583 ; 2 uses
   %i.che = add nuw i64 %.sroa.7.0374.i.i124, 1, !dbg !13584
   %exitcond430.not.i.i = icmp eq i64 %.sroa.7.0374.i.i124, %i.bid, !dbg !13576
@@ -1093,6 +1092,7 @@ bb.rg:                                            ; preds = %bb.ri, %._crit_edge
 
 .lr.ph373.i.i159.preheader:                       ; preds = %bb.rg
   %i.cjt = call i64 @llvm.umax.i64(i64 %i.bjl, i64 %i.chy), !dbg !13630
+  %15 = mul i64 %i.cei, %.sroa.7.0374.i.i124, !dbg !13630
   %i.cju = sub i64 %i.cjt, %15, !dbg !13630
   %i.cjv = call i64 @llvm.umin.i64(i64 %i.cgy, i64 %i.cju), !dbg !13630 ; 2 uses
   %min.iters.check4622 = icmp samesign ult i64 %i.cjv, 4, !dbg !13630
@@ -1495,7 +1495,6 @@ _RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.l
 .lr.ph377.split.i.i467:                           ; preds = %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i533, %.lr.ph377.split.preheader.i.i465
   %.sroa.0.0289375.i.i468 = phi ptr [ %i.ect, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i533 ], [ %i.cyj, %.lr.ph377.split.preheader.i.i465 ] ; 2 uses
   %.sroa.7.0374.i.i469 = phi i64 [ %i.ecu, %_RNvNtNtCsk4ZPsEfLtLH_6brotli3enc14block_splitter22update_cost_and_signal.exit.loopexit.i.i533 ], [ 0, %.lr.ph377.split.preheader.i.i465 ] ; 7 uses
-  %16 = mul i64 %i.dzy, %.sroa.7.0374.i.i469, !dbg !14596
   %i.ect = getelementptr inbounds nuw i8, ptr %.sroa.0.0289375.i.i468, i64 2, !dbg !14596 ; 2 uses
   %i.ecu = add nuw i64 %.sroa.7.0374.i.i469, 1, !dbg !14597
   %exitcond430.not.i.i470 = icmp eq i64 %.sroa.7.0374.i.i469, %i.ddt, !dbg !14589
@@ -1738,6 +1737,7 @@ bb.abs:                                           ; preds = %bb.abu, %._crit_edg
 
 .lr.ph373.i.i506.preheader:                       ; preds = %bb.abs
   %i.efj = call i64 @llvm.umax.i64(i64 %i.dfb, i64 %i.edo), !dbg !14643
+  %16 = mul i64 %i.dzy, %.sroa.7.0374.i.i469, !dbg !14643
   %i.efk = sub i64 %i.efj, %16, !dbg !14643
   %i.efl = call i64 @llvm.umin.i64(i64 %i.eco, i64 %i.efk), !dbg !14643 ; 2 uses
   %min.iters.check4704 = icmp samesign ult i64 %i.efl, 4, !dbg !14643
@@ -2140,7 +2140,7 @@ bb.b:                                             ; preds = %.lr.ph152, %.loopex
   %.sroa.09.0.ph157 = phi float [ f0x7E967699, %.outer.loopexit ], [ 0.000000e+00, %.lr.ph152.preheader ]
   %.sroa.010.0.ph156 = phi i64 [ %12, %.outer.loopexit ], [ 1, %.lr.ph152.preheader ] ; 2 uses
   %i.t = add i64 %.sroa.0.0.ph158, -1, !dbg !27960 ; 2 uses
-  %i.u = add i64 %.sroa.0.0.ph158, -2, !dbg !27960
+  %i.u = add i64 %.sroa.0.0.ph158, -2
   br label %bb.b, !dbg !27960
 
 bb.c:                                             ; preds = %.lr.ph152.lr.ph
@@ -2419,10 +2419,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph144:                                        ; preds = %bb.o
   %i.dj = add nuw nsw i64 %.sroa.014.0142, 1      ; 3 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.sroa.014.0142, !dbg !28003 ; 2 uses
-  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28003
   %i.dk = add i64 %indvar, %.sroa.014.0142, !dbg !28003
   %i.dl = sub i64 %i.u, %i.dk, !dbg !28003
   %i.dm = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dj), !dbg !28003
+  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28003
   %i.dn = add nsw i64 %i.dm, %15, !dbg !28003
   %i.do = tail call i64 @llvm.umin.i64(i64 %i.dl, i64 %i.dn), !dbg !28003
   %i.dp = add i64 %i.do, 1, !dbg !28003           ; 3 uses
@@ -2711,7 +2711,7 @@ bb.b:                                             ; preds = %.lr.ph152, %.loopex
   %.sroa.09.0.ph157 = phi float [ f0x7E967699, %.outer.loopexit ], [ 0.000000e+00, %.lr.ph152.preheader ]
   %.sroa.010.0.ph156 = phi i64 [ %12, %.outer.loopexit ], [ 1, %.lr.ph152.preheader ] ; 2 uses
   %i.t = add i64 %.sroa.0.0.ph158, -1, !dbg !28189 ; 2 uses
-  %i.u = add i64 %.sroa.0.0.ph158, -2, !dbg !28189
+  %i.u = add i64 %.sroa.0.0.ph158, -2
   br label %bb.b, !dbg !28189
 
 bb.c:                                             ; preds = %.lr.ph152.lr.ph
@@ -2990,10 +2990,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph144:                                        ; preds = %bb.o
   %i.dj = add nuw nsw i64 %.sroa.014.0142, 1      ; 3 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.sroa.014.0142, !dbg !28232 ; 2 uses
-  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28232
   %i.dk = add i64 %indvar, %.sroa.014.0142, !dbg !28232
   %i.dl = sub i64 %i.u, %i.dk, !dbg !28232
   %i.dm = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dj), !dbg !28232
+  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28232
   %i.dn = add nsw i64 %i.dm, %15, !dbg !28232
   %i.do = tail call i64 @llvm.umin.i64(i64 %i.dl, i64 %i.dn), !dbg !28232
   %i.dp = add i64 %i.do, 1, !dbg !28232           ; 3 uses
@@ -3282,7 +3282,7 @@ bb.b:                                             ; preds = %.lr.ph152, %.loopex
   %.sroa.09.0.ph157 = phi float [ f0x7E967699, %.outer.loopexit ], [ 0.000000e+00, %.lr.ph152.preheader ]
   %.sroa.010.0.ph156 = phi i64 [ %12, %.outer.loopexit ], [ 1, %.lr.ph152.preheader ] ; 2 uses
   %i.t = add i64 %.sroa.0.0.ph158, -1, !dbg !28418 ; 2 uses
-  %i.u = add i64 %.sroa.0.0.ph158, -2, !dbg !28418
+  %i.u = add i64 %.sroa.0.0.ph158, -2
   br label %bb.b, !dbg !28418
 
 bb.c:                                             ; preds = %.lr.ph152.lr.ph
@@ -3561,10 +3561,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph144:                                        ; preds = %bb.o
   %i.dj = add nuw nsw i64 %.sroa.014.0142, 1      ; 3 uses
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %.sroa.014.0142, !dbg !28461 ; 2 uses
-  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28461
   %i.dk = add i64 %indvar, %.sroa.014.0142, !dbg !28461
   %i.dl = sub i64 %i.u, %i.dk, !dbg !28461
   %i.dm = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dj), !dbg !28461
+  %15 = xor i64 %.sroa.014.0142, -1, !dbg !28461
   %i.dn = add nsw i64 %i.dm, %15, !dbg !28461
   %i.do = tail call i64 @llvm.umin.i64(i64 %i.dl, i64 %i.dn), !dbg !28461
   %i.dp = add i64 %i.do, 1, !dbg !28461           ; 3 uses

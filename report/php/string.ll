@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 
 .lr.ph353.preheader:                              ; preds = %.critedge
   %i.aw = add i64 %.0228, 2
-  %i.ax = add i64 %i.aw, %indvar
+  %i.ax = add i64 %indvar, %i.aw
   %i.ay = add i64 %.0204, 2
   %i.az = call i64 @llvm.umax.i64(i64 %i.ax, i64 %i.ay)
   %i.ba = xor i64 %.0204, -1

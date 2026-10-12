@@ -67,7 +67,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph133.i:                                      ; preds = %.preheader.i, %bb.b
   %i.p = zext i32 %2 to i64                       ; 7 uses
   %wide.trip.count.i = zext i32 %i.h to i64
-  %i.q = add i32 %2, -2                           ; 2 uses
+  %3 = add i32 %2, -2
+  %i.q = add i32 %2, -2
   br label %bb.c
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader75, %.lr.ph.i
@@ -80,17 +81,15 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i, label %.preheader.i, label %.lr.ph.i, !llvm.loop !8
 
 bb.c:                                             ; preds = %._crit_edge126.split.us.i, %.lr.ph133.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph133.i ], [ %indvars.iv.next.i, %._crit_edge126.split.us.i ] ; 11 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph133.i ], [ %indvars.iv.next.i, %._crit_edge126.split.us.i ] ; 10 uses
   %.0132.i = phi i32 [ %i.h, %.lr.ph133.i ], [ %i.di, %._crit_edge126.split.us.i ] ; 2 uses
   %.082131.i = phi i32 [ 1, %.lr.ph133.i ], [ %i.dh, %._crit_edge126.split.us.i ] ; 6 uses
   %.086130.i = phi ptr [ %0, %.lr.ph133.i ], [ %i.dj, %._crit_edge126.split.us.i ] ; 5 uses
   %.094128.i = phi i32 [ 0, %.lr.ph133.i ], [ %.296.i.lcssa, %._crit_edge126.split.us.i ] ; 2 uses
   %.198127.i = phi ptr [ %i.c, %.lr.ph133.i ], [ %i.dk, %._crit_edge126.split.us.i ] ; 4 uses
-  %3 = trunc i64 %indvars.iv.i to i32
   %i.t = trunc i64 %indvars.iv.i to i32
-  %4 = sub i32 %i.q, %i.t                         ; 2 uses
   %i.u = trunc i64 %indvars.iv.i to i32
-  %i.v = sub i32 %i.q, %i.u
+  %i.v = sub i32 %3, %i.u
   %i.w = zext i32 %i.v to i64
   %i.x = shl nuw nsw i64 %i.w, 2                  ; 2 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %.086130.i, i64 %indvars.iv.i ; 6 uses
@@ -100,7 +99,7 @@ bb.c:                                             ; preds = %._crit_edge126.spli
 .lr.ph110.preheader.i:                            ; preds = %bb.c
   %i.z = trunc i64 %indvars.iv.i to i32
   %i.aa = sub i32 %2, %i.z
-  %i.ab = trunc nuw i64 %indvars.iv.i to i32      ; 4 uses
+  %i.ab = trunc i64 %indvars.iv.i to i32          ; 5 uses
   %xtraiter = and i32 %i.aa, 1
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph110.i.prol.loopexit, label %.lr.ph110.i.prol
@@ -124,7 +123,7 @@ bb.c:                                             ; preds = %._crit_edge126.spli
   %.087108.i.unr = phi float [ 0.000000e+00, %.lr.ph110.preheader.i ], [ %.188.i.prol, %.lr.ph110.i.prol ]
   %.192107.i.unr = phi i32 [ %i.ab, %.lr.ph110.preheader.i ], [ %i.ai, %.lr.ph110.i.prol ]
   %.195106.i.unr = phi i32 [ %.094128.i, %.lr.ph110.preheader.i ], [ %.296.i.prol, %.lr.ph110.i.prol ]
-  %i.aj = icmp eq i32 %i.h, %3
+  %i.aj = icmp eq i32 %i.h, %i.t
   br i1 %i.aj, label %._crit_edge.i, label %.lr.ph110.i
 
 .lr.ph110.i:                                      ; preds = %.lr.ph110.i.prol.loopexit, %.lr.ph110.i
@@ -191,6 +190,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %i.p
   %i.bn = zext i32 %.0132.i to i64
   %i.bo = sub nsw i64 0, %i.bn
+  %4 = sub i32 %i.q, %i.ab                        ; 2 uses
   %i.bp = zext i32 %4 to i64
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
   %min.iters.check55 = icmp ult i32 %4, 7

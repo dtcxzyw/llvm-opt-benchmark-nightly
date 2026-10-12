@@ -204,11 +204,11 @@ iter.check183:                                    ; preds = %.preheader.i.1
   br i1 %min.iters.check166, label %.lr.ph.i.1.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check183
-  %scevgep = getelementptr i8, ptr %.6, i64 2
   %i.bt = icmp ne i32 %indvars.iv.i.1, 0          ; 2 uses
   %umin160.neg = sext i1 %i.bt to i64
-  %i.bu = getelementptr i8, ptr %scevgep, i64 %umin160.neg
-  %scevgep161 = getelementptr i8, ptr %i.bu, i64 %i.bp
+  %3 = getelementptr i8, ptr %.6, i64 %i.bp
+  %i.bu = getelementptr i8, ptr %3, i64 2
+  %scevgep161 = getelementptr i8, ptr %i.bu, i64 %umin160.neg
   %not. = xor i1 %i.bt, true
   %umin160.sroa.sel.idx = sext i1 %not. to i64
   %umin160.sroa.sel = getelementptr i8, ptr %i.b, i64 %umin160.sroa.sel.idx
@@ -338,11 +338,11 @@ iter.check227:                                    ; preds = %.preheader.i.2
   br i1 %min.iters.check210, label %.lr.ph.i.2.preheader, label %vector.memcheck199
 
 vector.memcheck199:                               ; preds = %iter.check227
-  %scevgep200 = getelementptr i8, ptr %.6.1, i64 2
   %i.dc = icmp ne i32 %indvars.iv.i.2, 0          ; 2 uses
   %umin201.neg = sext i1 %i.dc to i64
-  %i.dd = getelementptr i8, ptr %scevgep200, i64 %umin201.neg
-  %scevgep202 = getelementptr i8, ptr %i.dd, i64 %i.cy
+  %4 = getelementptr i8, ptr %.6.1, i64 %i.cy
+  %i.dd = getelementptr i8, ptr %4, i64 2
+  %scevgep202 = getelementptr i8, ptr %i.dd, i64 %umin201.neg
   %not.298 = xor i1 %i.dc, true
   %umin201.sroa.sel.idx = sext i1 %not.298 to i64
   %umin201.sroa.sel = getelementptr i8, ptr %i.b, i64 %umin201.sroa.sel.idx
@@ -472,11 +472,11 @@ iter.check271:                                    ; preds = %.preheader.i.3
   br i1 %min.iters.check254, label %.lr.ph.i.3.preheader, label %vector.memcheck243
 
 vector.memcheck243:                               ; preds = %iter.check271
-  %scevgep244 = getelementptr i8, ptr %.6.2, i64 2
   %i.el = icmp ne i32 %indvars.iv.i.3, 0          ; 2 uses
   %umin245.neg = sext i1 %i.el to i64
-  %i.em = getelementptr i8, ptr %scevgep244, i64 %umin245.neg
-  %scevgep246 = getelementptr i8, ptr %i.em, i64 %i.eh
+  %5 = getelementptr i8, ptr %.6.2, i64 %i.eh
+  %i.em = getelementptr i8, ptr %5, i64 2
+  %scevgep246 = getelementptr i8, ptr %i.em, i64 %umin245.neg
   %not.299 = xor i1 %i.el, true
   %umin245.sroa.sel.idx = sext i1 %not.299 to i64
   %umin245.sroa.sel = getelementptr i8, ptr %i.b, i64 %umin245.sroa.sel.idx

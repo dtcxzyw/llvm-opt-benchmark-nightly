@@ -205,9 +205,6 @@ bb.aa:                                            ; preds = %.lr.ph177, %stbir__
   %.0136173 = phi i32 [ %i.gr, %.lr.ph177 ], [ %i.ka, %stbir__insert_coeff.exit ] ; 4 uses
   %.1172 = phi i32 [ %.0137182, %.lr.ph177 ], [ %.2, %stbir__insert_coeff.exit ] ; 8 uses
   %.0138171 = phi ptr [ %i.gw, %.lr.ph177 ], [ %i.jy, %stbir__insert_coeff.exit ] ; 8 uses
-  %3 = add i64 %indvar, %i.gv
-  %4 = shl i64 %3, 3
-  %5 = add i64 %4, -16
   %i.hc = getelementptr inbounds nuw i8, ptr %.0134175, i64 4
   %i.hd = load float, ptr %.0134175, align 4, !tbaa !58 ; 5 uses
   %i.he = tail call float @llvm.fabs.f32(float %i.hd)
@@ -234,6 +231,9 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   br i1 %i.hn, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.ad
+  %3 = add i64 %indvar, %i.gv
+  %4 = shl i64 %3, 3
+  %5 = add i64 %4, -16
   %i.ho = shl nsw i64 %i.hl, 3
   %i.hp = sub i64 %5, %i.ho                       ; 2 uses
   %i.hq = lshr exact i64 %i.hp, 3

@@ -205,7 +205,7 @@ _ZNSt6vectorISt7variantIJPKN4absl12lts_2026052610FixedArrayIiLm18446744073709551
   br label %.body
 
 bb.g:                                             ; preds = %bb.a, %_ZN4absl12lts_2026052610FixedArrayIiLm18446744073709551615ESaIiEED2Ev.exit
-  %i.s = phi i64 [ 0, %bb.a ], [ %indvars.iv.next47, %_ZN4absl12lts_2026052610FixedArrayIiLm18446744073709551615ESaIiEED2Ev.exit ] ; 12 uses
+  %i.s = phi i64 [ 0, %bb.a ], [ %indvars.iv.next47, %_ZN4absl12lts_2026052610FixedArrayIiLm18446744073709551615ESaIiEED2Ev.exit ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   store i64 %i.s, ptr %i.b, align 8, !tbaa !69
   store ptr %3, ptr %i.c, align 8, !tbaa !167
@@ -262,7 +262,7 @@ bb.g:                                             ; preds = %bb.a, %_ZN4absl12lt
   br label %_ZN4absl12lts_2026052610FixedArrayIiLm18446744073709551615ESaIiEEC2ERKS3_.exit.i
 
 bb.h:                                             ; preds = %._crit_edge
-  %.idx4.i.i.i = shl nuw nsw i64 %i.s, 2          ; 2 uses
+  %.idx4.i.i.i = shl nuw nsw i64 %i.s, 2          ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 %.idx4.i.i.i
   %i.ad = getelementptr inbounds nuw i8, ptr %i.w, i64 256
   store i64 %i.s, ptr %i.ad, align 8, !tbaa !69
@@ -288,10 +288,10 @@ bb.i:                                             ; preds = %bb.h
   %.sink = phi ptr [ %i.ag, %.thread.i.i.i ], [ %i.w, %bb.h ] ; 5 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.w, i64 264
   store ptr %.sink, ptr %i.ah, align 8, !tbaa !167
-  %i.ai = add nuw i64 %i.s, 4611686018427387903
-  %9 = and i64 %i.ai, 4611686018427387903         ; 2 uses
+  %i.ai = add nsw i64 %.idx4.i.i.i, -4            ; 2 uses
+  %9 = lshr exact i64 %i.ai, 2
   %i.aj = add nuw nsw i64 %9, 1                   ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %9, 7
+  %min.iters.check = icmp ult i64 %i.ai, 28
   %.sink75 = ptrtoaddr ptr %.sink to i64
   %i.ak = sub i64 %i.a, %.sink75
   %diff.check = icmp ugt i64 %i.ak, -32

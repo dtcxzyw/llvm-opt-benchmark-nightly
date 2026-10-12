@@ -205,8 +205,6 @@ bb.a:
   %.0116157 = phi ptr [ %i.az, %.lr.ph162.split.preheader ], [ %i.lb, %bb.e ] ; 8 uses
   %.1146156 = phi i32 [ %.0145, %.lr.ph162.split.preheader ], [ %.1149155, %bb.e ] ; 6 uses
   %.1149155 = phi i32 [ %.0148, %.lr.ph162.split.preheader ], [ %.1146156, %bb.e ] ; 6 uses
-  %2 = mul i64 %i.aa, %indvar
-  %3 = add i64 %i.bj, %2
   %i.bx = mul i64 %i.aa, %indvar
   %i.by = add i64 %i.be, %i.bx
   %i.bz = getelementptr inbounds nuw [2 x i8], ptr %.0116157, i64 %i.w ; 2 uses
@@ -253,6 +251,8 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph162.sp
 
 .lr.ph:                                           ; preds = %bb.c
   %i.dc = shl nsw i32 %.1149155, 2                ; 2 uses
+  %2 = mul i64 %indvar, %i.aa
+  %3 = add i64 %2, %i.bj
   %i.dd = add i64 %.0110176, 4
   %i.de = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.dd)
   %i.df = xor i64 %.0110176, -1
