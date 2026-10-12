@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.loopexit, %.lr.ph40.preheader
   %.01939 = phi i64 [ %i.r, %.loopexit ], [ 0, %.lr.ph40.preheader ] ; 3 uses
-  %i.r = add nuw nsw i64 %.01939, 1               ; 2 uses
+  %i.r = add nuw i64 %.01939, 1                   ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit
@@ -223,7 +223,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.aa = icmp eq i32 %i.z, 2
   %i.ab = zext i1 %i.aa to i64
-  %spec.select.i.i = add nuw i64 %.01939, %i.ab
+  %spec.select.i.i = add i64 %.01939, %i.ab
   %i.ac = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   %sext = shl i64 %spec.select.i.i, 32
   %i.ad = ashr exact i64 %sext, 29
@@ -242,7 +242,7 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %bb.b
   %i.ao = icmp eq i32 %i.an, 2
   %i.ap = zext i1 %i.ao to i64
-  %spec.select.i.i26 = add nuw i64 %.01838, %i.ap
+  %spec.select.i.i26 = add i64 %.01838, %i.ap
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   %sext37 = shl i64 %spec.select.i.i26, 32
   %i.ar = ashr exact i64 %sext37, 29
@@ -330,7 +330,7 @@ bb.n:                                             ; preds = %bb.m
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit:   ; preds = %bb.k, %bb.l, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #21
-  %i.bn = add nuw nsw i64 %.01838, 1              ; 2 uses
+  %i.bn = add nsw i64 %.01838, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.bn, %i.o
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !146
 
