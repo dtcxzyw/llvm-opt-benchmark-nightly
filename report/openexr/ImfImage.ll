@@ -202,7 +202,7 @@ _ZN7Imf_3_47Array2DIPNS_10ImageLevelEE11resizeEraseEll.exit: ; preds = %.noexc89
 .preheader.lr.ph.thread:                          ; preds = %_ZN7Imf_3_47Array2DIPNS_10ImageLevelEE11resizeEraseEll.exit
   %i.ea = zext nneg i32 %.0.i118 to i64
   %i.eb = zext nneg i32 %.0.i69 to i64
-  %i.ec = mul nuw nsw i64 %i.ea, %i.eb
+  %i.ec = mul nuw nsw i64 %i.eb, %i.ea
   %i.ed = shl i64 %i.ec, 3
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.du, i8 0, i64 %i.ed, i1 false), !tbaa !33
   %i.ee = getelementptr inbounds nuw i8, ptr %7, i64 8

@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %.lr.ph.i.i.i6.i.i.i
   %i.ff = add i64 %i.fa, 1                        ; 4 uses
   store i64 %i.ff, ptr %i.w, align 8, !alias.scope !6622, !noalias !6623
   call void @llvm.experimental.noalias.scope.decl(metadata !6624)
-  %umax.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ff, i64 %i.ep) ; 2 uses
+  %umax.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ep, i64 %i.ff) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !6625)
   call void @llvm.experimental.noalias.scope.decl(metadata !6626)
   %exitcond.not.i9.not.i.i.i.i.i = icmp ult i64 %i.ff, %i.ep
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %i.aa, ptr %i.r, align 8, !alias.scope !63322
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63323)
   %i.ab = load ptr, ptr %i.q, align 8, !alias.scope !63323, !noalias !63324, !nonnull !28 ; 3 uses
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.aa, i64 %i.u)
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.aa)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63325)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63326)
   %exitcond.not.i.not = icmp ult i64 %i.aa, %i.u
@@ -669,7 +669,7 @@ bb.k:                                             ; preds = %bb.b
   store i64 %i.an, ptr %i.r, align 8, !alias.scope !63339
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63340)
   %i.ao = load ptr, ptr %i.q, align 8, !alias.scope !63340, !noalias !63341, !nonnull !28 ; 3 uses
-  %umax.i24 = tail call i64 @llvm.umax.i64(i64 %i.an, i64 %i.u)
+  %umax.i24 = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.an)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63342)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63343)
   %exitcond.not.i26.not = icmp ult i64 %i.an, %i.u
@@ -730,7 +730,7 @@ bb.r:                                             ; preds = %bb.b
   store i64 %i.ba, ptr %i.r, align 8, !alias.scope !63356
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63357)
   %i.bb = load ptr, ptr %i.q, align 8, !alias.scope !63357, !noalias !63358, !nonnull !28 ; 4 uses
-  %umax.i32 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.u) ; 2 uses
+  %umax.i32 = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.ba) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63359)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63360)
   %exitcond.not.i34.not = icmp ult i64 %i.ba, %i.u
@@ -1133,7 +1133,7 @@ bb.eh:                                            ; preds = %bb.ee
   %i.ly = add i64 %i.ls, 1                        ; 4 uses
   store i64 %i.ly, ptr %.sroa.568.0..sroa_idx, align 8, !alias.scope !67148, !noalias !67111
   call void @llvm.experimental.noalias.scope.decl(metadata !67149)
-  %umax.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ly, i64 %i.lr) ; 2 uses
+  %umax.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.lr, i64 %i.ly) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !67150)
   call void @llvm.experimental.noalias.scope.decl(metadata !67151)
   %exitcond.not.i53.not.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.ly, %i.lr
@@ -1199,7 +1199,7 @@ bb.en:                                            ; preds = %bb.ee
   %i.mk = add i64 %i.ls, 1                        ; 4 uses
   store i64 %i.mk, ptr %.sroa.568.0..sroa_idx, align 8, !alias.scope !67164, !noalias !67111
   call void @llvm.experimental.noalias.scope.decl(metadata !67165)
-  %umax.i56.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.mk, i64 %i.lr) ; 2 uses
+  %umax.i56.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.lr, i64 %i.mk) ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !67166)
   call void @llvm.experimental.noalias.scope.decl(metadata !67167)
   %exitcond.not.i58.not.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.mk, %i.lr
@@ -1265,7 +1265,7 @@ bb.et:                                            ; preds = %bb.ee
   %i.mw = add i64 %i.ls, 1                        ; 4 uses
   store i64 %i.mw, ptr %.sroa.568.0..sroa_idx, align 8, !alias.scope !67180, !noalias !67111
   call void @llvm.experimental.noalias.scope.decl(metadata !67181)
-  %umax.i65.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.mw, i64 %i.lr) ; 3 uses
+  %umax.i65.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.lr, i64 %i.mw) ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !67182)
   call void @llvm.experimental.noalias.scope.decl(metadata !67183)
   %exitcond.not.i67.not.i.i.i.i.i.i.i.i.i.i = icmp ult i64 %i.mw, %i.lr
@@ -1668,9 +1668,9 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph.i.i.i.i.i.i.i.preheader106:                ; preds = %bb.aa
   %i.gp = icmp samesign ugt i64 %.sroa.13.0.copyload, 4294967295
-  %i.gq = trunc nuw i64 %.sroa.13.0.copyload to i32
+  %i.gq = trunc nuw i64 %.sroa.13.0.copyload to i32 ; 2 uses
   %i.gr = sub i32 0, %i.gq                        ; 2 uses
-  %i.gs = zext nneg i64 %.sroa.13.0.copyload to i128 ; 2 uses
+  %i.gs = zext nneg i64 %.sroa.13.0.copyload to i128
   %i.gt = sub nsw i64 0, %.sroa.13.0.copyload
   br label %.lr.ph.i.i.i.i.i.i.i
 
@@ -1762,12 +1762,9 @@ _RINvYNtNtNtCs3R0z6j4fLAW_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randommE
   %.in.i.i.i.i17.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.gv, %.thread.i.i.i.i18.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.hz, %.thread ]
   %i.id = load i32, ptr %.in.i.i.i.i17.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 4, !alias.scope !78307, !noalias !78306, !noundef !28
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i16.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr %i.gv, align 4, !alias.scope !78307, !noalias !78306
-  %6 = zext i32 %i.id to i64
-  %7 = mul nuw i64 %.sroa.13.0.copyload, %6
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32
+  %6 = call i32 @llvm.umulh.i32(i32 %i.id, i32 %i.gq)
   %i.ie = xor i32 %i.ic, -1
-  %.not9.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ult i32 %i.ie, %9
+  %.not9.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ugt i32 %6, %i.ie
   %i.if = zext i1 %.not9.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i to i64
   %i.ig = add nuw nsw i64 %i.ib, %i.if
   br label %_RINvYNtNtNtCs3R0z6j4fLAW_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt12random_rangejINtNtNtCsj6eKBz9Db1c_4core3ops5range7RangeTojEECskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i.i.i
@@ -1877,12 +1874,9 @@ _RINvYNtNtNtCs3R0z6j4fLAW_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randomyE
   %i.jz = shl nuw i64 %i.jy, 32
   %i.ka = zext i32 %.sroa.02.017.i.i.i.i26.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i to i64
   %i.kb = or disjoint i64 %i.jz, %i.ka
-  %10 = zext i64 %i.kb to i128
-  %11 = mul nuw nsw i128 %10, %i.gs
-  %12 = lshr i128 %11, 64
-  %13 = trunc nuw nsw i128 %12 to i64
+  %7 = call i64 @llvm.umulh.i64(i64 %i.kb, i64 range(i64 0, 2305843009213693952) %.sroa.13.0.copyload)
   %i.kc = xor i64 %i.jg, -1
-  %.not6.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp samesign ult i64 %i.kc, %13
+  %.not6.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp ugt i64 %7, %i.kc
   %i.kd = zext i1 %.not6.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i to i64
   %i.ke = add nuw nsw i64 %i.kd, %i.jf
   br label %_RINvYNtNtNtCs3R0z6j4fLAW_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt12random_rangejINtNtNtCsj6eKBz9Db1c_4core3ops5range7RangeTojEECskXtk6F4WjxZ_4just.exit.i.i.i.i.i.i.i.i.i.i
@@ -2285,7 +2279,7 @@ define noundef zeroext i1 @_RNvXs_NtCskXtk6F4WjxZ_4just8justfileNtB4_8JustfileNt
   %.sroa.4101.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.sroa.4105.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %i.ab = add i64 %i.i, %i.p
+  %i.ab = add i64 %i.p, %i.i
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.ah, %.lr.ph
@@ -2686,6 +2680,12 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #57
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #57
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #57
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #57

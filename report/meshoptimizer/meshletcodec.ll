@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph149
 ._crit_edge150:                                   ; preds = %._crit_edge150.loopexit, %bb.b
   %.067.lcssa = phi ptr [ %4, %bb.b ], [ %i.aa, %._crit_edge150.loopexit ] ; 4 uses
   %.038.i.lcssa = phi ptr [ %3, %bb.b ], [ %i.d, %._crit_edge150.loopexit ]
-  %.lcssa = phi <4 x i32> [ <i32 -1, i32 -1, i32 -1, i32 undef>, %bb.b ], [ %i.ad, %._crit_edge150.loopexit ]
+  %.lcssa = phi <4 x i32> [ <i32 -1, i32 -1, i32 -1, i32 poison>, %bb.b ], [ %i.ad, %._crit_edge150.loopexit ]
   %i.ae = and i64 %6, 3                           ; 3 uses
   %.not42.i = icmp eq i64 %i.ae, 0
   br i1 %.not42.i, label %_ZN7meshoptL18decodeVerticesSimdEPjPKhS2_S2_m.exit.thread97, label %bb.d
@@ -312,7 +312,7 @@ bb.i:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h
   %.069.lcssa = phi ptr [ %4, %bb.h ], [ %i.cj, %._crit_edge.loopexit ] ; 4 uses
-  %.lcssa135 = phi <4 x i32> [ <i32 -1, i32 -1, i32 undef, i32 undef>, %bb.h ], [ %i.cq, %._crit_edge.loopexit ]
+  %.lcssa135 = phi <4 x i32> [ <i32 -1, i32 -1, i32 poison, i32 poison>, %bb.h ], [ %i.cq, %._crit_edge.loopexit ]
   %.029.i.lcssa = phi ptr [ %3, %bb.h ], [ %i.bm, %._crit_edge.loopexit ]
   %i.cr = and i64 %i.bj, -4
   %i.cs = icmp ult i64 %i.cr, %6

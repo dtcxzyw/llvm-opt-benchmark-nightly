@@ -205,8 +205,8 @@ AddHeaders.exit:                                  ; preds = %bb.y, %bb.z
   store i8 %i.eo, ptr %i.ep, align 1, !tbaa !52
   %i.eq = getelementptr inbounds nuw i8, ptr %i.dp, i64 9
   store i8 2, ptr %i.eq, align 1, !tbaa !52
-  %i.er = getelementptr i8, ptr %.pre111.sink, i64 %i.do
-  %i.es = getelementptr i8, ptr %i.er, i64 %i.dm  ; 2 uses
+  %i.er = getelementptr i8, ptr %.pre111.sink, i64 %i.dm
+  %i.es = getelementptr i8, ptr %i.er, i64 %i.do  ; 2 uses
   %scevgep = getelementptr i8, ptr %i.es, i64 10
   store i8 %.sink13.i, ptr %scevgep, align 1, !tbaa !52
   %.sroa.4.0.scevgep.sroa_idx = getelementptr i8, ptr %i.es, i64 11

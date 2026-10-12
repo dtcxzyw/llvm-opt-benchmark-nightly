@@ -205,7 +205,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.h = load i64, ptr %i.g, align 8, !tbaa !66, !noalias !810 ; 2 uses
   %i.i = load ptr, ptr %2, align 8, !noalias !810
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %i.h) ; 2 uses
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 %i.b) ; 2 uses
   %exitcond.not.i.i.i3.not = icmp ult i64 %i.b, %i.h
   br i1 %exitcond.not.i.i.i3.not, label %.lr.ph.preheader, label %._crit_edge
 
@@ -398,7 +398,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !251, !noalias !835, !nonnull !143, !align !144 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load i64, ptr %i.e, align 8, !tbaa !66, !noalias !835 ; 2 uses
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %i.f) ; 3 uses
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.f, i64 %i.b) ; 3 uses
   %exitcond.not.i.i.i2.not = icmp ult i64 %i.b, %i.f
   br i1 %exitcond.not.i.i.i2.not, label %.lr.ph.preheader, label %_ZSt8__invokeIR15parser_executorJRK23common_peg_space_parserEENSt15__invoke_resultIT_JDpT0_EE4typeEOS6_DpOS7_.exit
 
