@@ -206,7 +206,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d, %bb.c
 define internal fastcc zeroext i8 @getSafetyLevel(ptr nofree noundef nonnull readonly captures(none) %0, i32 noundef range(i32 0, 2) %1, i8 noundef zeroext range(i8 0, 2) %2) unnamed_addr #20 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  %i.b = load i8, ptr %0, align 1, !tbaa !741     ; 15 uses
+  %i.b = load i8, ptr %0, align 1, !tbaa !741     ; 8 uses
   %i.c = add i8 %i.b, -58
   %.not = icmp ult i8 %i.c, -10
   br i1 %.not, label %bb.c, label %bb.b
@@ -367,7 +367,8 @@ sqlite3_strnicmp.exit.us.3:                       ; preds = %.lr.ph.i.preheader.
   br i1 %i.bv, label %.split27.us, label %.lr.ph.i.preheader.us.6
 
 .lr.ph.i.preheader.us.4:                          ; preds = %sqlite3_strnicmp.exit.us.2
-  %i.bw = and i8 %i.b, -33
+  %3 = load i8, ptr %0, align 1, !tbaa !741
+  %i.bw = and i8 %3, -33
   %i.bx = icmp eq i8 %i.bw, 89
   br i1 %i.bx, label %.lr.ph.i.us.4.1, label %sqlite3_strnicmp.exit.us.4
 
@@ -397,7 +398,8 @@ sqlite3_strnicmp.exit.us.4:                       ; preds = %.lr.ph.i.preheader.
   br i1 %i.cl, label %.split27.us, label %.loopexit
 
 .lr.ph.i.preheader.us.5:                          ; preds = %.split.split.us.2
-  %i.cm = and i8 %i.b, -33
+  %4 = load i8, ptr %0, align 1, !tbaa !741
+  %i.cm = and i8 %4, -33
   %i.cn = icmp eq i8 %i.cm, 84
   br i1 %i.cn, label %.lr.ph.i.us.5.1, label %sqlite3_strnicmp.exit.us.5
 
@@ -434,7 +436,8 @@ sqlite3_strnicmp.exit.us.5:                       ; preds = %.lr.ph.i.preheader.
   br i1 %i.df, label %.split27.us, label %.lr.ph.i.preheader.us.7
 
 .lr.ph.i.preheader.us.6:                          ; preds = %sqlite3_strnicmp.exit.us.3
-  %i.dg = and i8 %i.b, -33
+  %5 = load i8, ptr %0, align 1, !tbaa !741
+  %i.dg = and i8 %5, -33
   %i.dh = icmp eq i8 %i.dg, 69
   br i1 %i.dh, label %.lr.ph.i.us.6.1, label %sqlite3_strnicmp.exit.us.6
 
@@ -478,7 +481,8 @@ sqlite3_strnicmp.exit.us.6:                       ; preds = %.lr.ph.i.preheader.
   br i1 %i.ed, label %.split27.us, label %.loopexit
 
 .lr.ph.i.preheader.us.7:                          ; preds = %sqlite3_strnicmp.exit.us.5
-  %i.ee = and i8 %i.b, -33
+  %6 = load i8, ptr %0, align 1, !tbaa !741
+  %i.ee = and i8 %6, -33
   %i.ef = icmp eq i8 %i.ee, 70
   br i1 %i.ef, label %.lr.ph.i.us.7.1, label %sqlite3_strnicmp.exit.us.7
 
@@ -549,17 +553,16 @@ sqlite3_strnicmp.exit:                            ; preds = %.lr.ph.i.preheader,
   br i1 %i.fn, label %bb.m, label %sqlite3_strnicmp.exit.1
 
 bb.m:                                             ; preds = %.lr.ph.i.preheader.1
-  %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %i.fp = load i8, ptr %i.fo, align 1, !tbaa !741
+  %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %i.fp = load i8, ptr %i.fo, align 1, !tbaa !741 ; 2 uses
   %i.fq = and i8 %i.fp, -33
   %i.fr = icmp eq i8 %i.fq, 79
   br i1 %i.fr, label %.split27.us, label %sqlite3_strnicmp.exit.1
 
 sqlite3_strnicmp.exit.1:                          ; preds = %.lr.ph.i.preheader.1, %bb.m
+  %.pn.in = phi i8 [ %i.b, %.lr.ph.i.preheader.1 ], [ %i.fp, %bb.m ]
   %.lcssa62.1 = phi i32 [ 110, %.lr.ph.i.preheader.1 ], [ 111, %bb.m ]
-  %.023.i.lcssa59.1 = phi ptr [ %0, %.lr.ph.i.preheader.1 ], [ %i.fo, %bb.m ]
-  %3 = load i8, ptr %.023.i.lcssa59.1, align 1, !tbaa !741
-  %i.fs = zext i8 %3 to i64
+  %i.fs = zext i8 %.pn.in to i64
   %i.ft = getelementptr inbounds nuw i8, ptr @sqlite3UpperToLower, i64 %i.fs
   %i.fu = load i8, ptr %i.ft, align 1, !tbaa !741
   %i.fv = zext i8 %i.fu to i32
@@ -574,7 +577,8 @@ sqlite3_strnicmp.exit.1:                          ; preds = %.lr.ph.i.preheader.
   ]
 
 .lr.ph.i.preheader.2:                             ; preds = %.split.split.2
-  %i.fx = and i8 %i.b, -33
+  %7 = load i8, ptr %0, align 1, !tbaa !741
+  %i.fx = and i8 %7, -33
   %i.fy = icmp eq i8 %i.fx, 79
   br i1 %i.fy, label %.lr.ph.i.2.1, label %sqlite3_strnicmp.exit.2
 
@@ -604,7 +608,8 @@ sqlite3_strnicmp.exit.2:                          ; preds = %.lr.ph.i.preheader.
   br i1 %i.gm, label %.split27.us, label %.lr.ph.i.preheader.4
 
 .lr.ph.i.preheader.3:                             ; preds = %.split.split.2
-  %i.gn = and i8 %i.b, -33
+  %8 = load i8, ptr %0, align 1, !tbaa !741
+  %i.gn = and i8 %8, -33
   %i.go = icmp eq i8 %i.gn, 70
   br i1 %i.go, label %.lr.ph.i.3.1, label %sqlite3_strnicmp.exit.3
 
@@ -648,7 +653,8 @@ sqlite3_strnicmp.exit.3:                          ; preds = %.lr.ph.i.preheader.
   br i1 %i.hk, label %.split27.us, label %.loopexit
 
 .lr.ph.i.preheader.4:                             ; preds = %sqlite3_strnicmp.exit.2
-  %i.hl = and i8 %i.b, -33
+  %9 = load i8, ptr %0, align 1, !tbaa !741
+  %i.hl = and i8 %9, -33
   %i.hm = icmp eq i8 %i.hl, 89
   br i1 %i.hm, label %.lr.ph.i.4.1, label %sqlite3_strnicmp.exit.4
 
@@ -678,7 +684,8 @@ sqlite3_strnicmp.exit.4:                          ; preds = %.lr.ph.i.preheader.
   br i1 %i.ia, label %.split27.us, label %.loopexit
 
 .lr.ph.i.preheader.5:                             ; preds = %.split.split.2
-  %i.ib = and i8 %i.b, -33
+  %10 = load i8, ptr %0, align 1, !tbaa !741
+  %i.ib = and i8 %10, -33
   %i.ic = icmp eq i8 %i.ib, 84
   br i1 %i.ic, label %.lr.ph.i.5.1, label %sqlite3_strnicmp.exit.5
 
