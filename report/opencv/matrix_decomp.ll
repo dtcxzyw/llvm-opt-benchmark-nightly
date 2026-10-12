@@ -86,7 +86,7 @@ bb.a:
   %.not141 = icmp eq ptr %3, null                 ; 2 uses
   %i.d = icmp slt i32 %5, 1                       ; 2 uses
   %i.e = zext nneg i32 %2 to i64
-  %wide.trip.count227 = zext nneg i32 %2 to i64   ; 16 uses
+  %wide.trip.count227 = zext nneg i32 %2 to i64   ; 18 uses
   %brmerge = or i1 %.not141, %i.d
   %wide.trip.count209 = zext i32 %5 to i64        ; 17 uses
   %brmerge192 = or i1 %.not141, %i.d
@@ -107,7 +107,7 @@ bb.a:
   %i.r = getelementptr i8, ptr %0, i64 %i.q
   %scevgep10 = getelementptr i8, ptr %i.r, i64 %i.o
   %i.s = and i64 %1, -4
-  %i.t = add nsw i64 %wide.trip.count227, -1      ; 3 uses
+  %i.t = add nuw nsw i64 %wide.trip.count227, 4611686018427387903
   %i.u = mul i64 %i.b, %i.t
   %i.v = shl nuw nsw i64 %wide.trip.count209, 2
   %i.w = add i64 %i.u, %wide.trip.count209
@@ -155,14 +155,12 @@ bb.b:                                             ; preds = %.lr.ph174, %.loopex
   %indvars.iv199 = phi i64 [ 0, %.lr.ph174 ], [ %indvars.iv.next200, %.loopexit147 ] ; 26 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph174 ], [ %indvars.iv.next, %.loopexit147 ] ; 9 uses
   %.0124172 = phi i32 [ 1, %.lr.ph174 ], [ %.1, %.loopexit147 ] ; 2 uses
-  %6 = sub nsw i64 %wide.trip.count227, %indvars.iv199 ; 3 uses
   %i.ao = mul i64 %i.aa, %indvars.iv199
   %scevgep56 = getelementptr i8, ptr %0, i64 %i.ao
   %i.ap = mul i64 %i.ac, %indvars.iv199
   %scevgep57 = getelementptr i8, ptr %i.af, i64 %i.ap
   %i.aq = shl nuw nsw i64 %indvars.iv199, 2
   %scevgep58 = getelementptr i8, ptr %0, i64 %i.aq
-  %7 = sub i64 %i.t, %indvars.iv199               ; 3 uses
   %i.ar = mul i64 %i.n, %indvars.iv199            ; 2 uses
   %scevgep9 = getelementptr i8, ptr %i.ag, i64 %i.ar
   %i.as = getelementptr i8, ptr %0, i64 %i.ar
@@ -178,11 +176,11 @@ bb.b:                                             ; preds = %.lr.ph174, %.loopex
   br i1 %i.av, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b
-  %8 = sub i64 %i.t, %indvars.iv199
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %indvars.iv199 ; 6 uses
-  %xtraiter = and i64 %8, 1
+  %6 = sub nsw i64 %indvars.iv199, %wide.trip.count227
+  %xtraiter = and i64 %6, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  br i1 %lcmp.mod.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
   %i.ax = mul i64 %i.a, %indvars.iv
@@ -257,7 +255,8 @@ bb.c:                                             ; preds = %._crit_edge
 .lr.ph158:                                        ; preds = %bb.c
   %i.cg = mul i64 %i.a, %indvars.iv199
   %i.ch = getelementptr [4 x i8], ptr %0, i64 %i.cg ; 4 uses
-  %min.iters.check66 = icmp ult i64 %6, 8
+  %7 = sub nsw i64 %wide.trip.count227, %indvars.iv199 ; 3 uses
+  %min.iters.check66 = icmp ult i64 %7, 8
   br i1 %min.iters.check66, label %scalar.ph65.preheader, label %vector.memcheck55
 
 vector.memcheck55:                                ; preds = %.lr.ph158
@@ -270,7 +269,7 @@ vector.memcheck55:                                ; preds = %.lr.ph158
   br i1 %found.conflict64, label %scalar.ph65.preheader, label %vector.ph67
 
 vector.ph67:                                      ; preds = %vector.memcheck55
-  %n.vec68 = and i64 %6, -8                       ; 3 uses
+  %n.vec68 = and i64 %7, -8                       ; 3 uses
   %i.cj = add i64 %indvars.iv199, %n.vec68
   br label %vector.body69
 
@@ -294,7 +293,7 @@ vector.body69:                                    ; preds = %vector.body69, %vec
   br i1 %i.cp, label %middle.block76, label %vector.body69, !llvm.loop !27
 
 middle.block76:                                   ; preds = %vector.body69
-  %cmp.n77 = icmp eq i64 %6, %n.vec68
+  %cmp.n77 = icmp eq i64 %7, %n.vec68
   br i1 %cmp.n77, label %._crit_edge159, label %scalar.ph65.preheader
 
 scalar.ph65.preheader:                            ; preds = %vector.memcheck55, %.lr.ph158, %middle.block76
@@ -432,14 +431,16 @@ bb.d:                                             ; preds = %.loopexit149, %bb.c
 .lr.ph170:                                        ; preds = %bb.d
   %i.ei = mul i64 %i.b, %indvars.iv199
   %i.ej = getelementptr [4 x i8], ptr %3, i64 %i.ei ; 5 uses
-  %min.iters.check18 = icmp ult i64 %7, 8
+  %8 = xor i64 %indvars.iv199, -1
+  %9 = add nsw i64 %8, %wide.trip.count227        ; 3 uses
+  %min.iters.check18 = icmp ult i64 %9, 8
   %bound013 = icmp ult ptr %scevgep9, %scevgep12
   %bound114 = icmp ult ptr %scevgep11, %scevgep10
   %found.conflict15 = and i1 %bound013, %bound114
   %i.ek = or i1 %found.conflict15, %stride.check16
-  %n.vec20 = and i64 %7, -8                       ; 3 uses
+  %n.vec20 = and i64 %9, -8                       ; 3 uses
   %i.el = add i64 %indvars.iv, %n.vec20
-  %cmp.n31 = icmp eq i64 %7, %n.vec20
+  %cmp.n31 = icmp eq i64 %9, %n.vec20
   %bound0 = icmp ult ptr %scevgep, %scevgep4
   %bound1 = icmp ult ptr %i.ej, %scevgep3
   %found.conflict = and i1 %bound0, %bound1
@@ -830,7 +831,7 @@ bb.a:
   %.not141 = icmp eq ptr %3, null                 ; 2 uses
   %i.d = icmp slt i32 %5, 1                       ; 2 uses
   %i.e = zext nneg i32 %2 to i64
-  %wide.trip.count227 = zext nneg i32 %2 to i64   ; 16 uses
+  %wide.trip.count227 = zext nneg i32 %2 to i64   ; 18 uses
   %brmerge = or i1 %.not141, %i.d
   %wide.trip.count209 = zext i32 %5 to i64        ; 17 uses
   %brmerge192 = or i1 %.not141, %i.d
@@ -851,7 +852,7 @@ bb.a:
   %i.r = getelementptr i8, ptr %0, i64 %i.q
   %scevgep10 = getelementptr i8, ptr %i.r, i64 %i.o
   %i.s = and i64 %1, -8
-  %i.t = add nsw i64 %wide.trip.count227, -1      ; 3 uses
+  %i.t = add nuw nsw i64 %wide.trip.count227, 2305843009213693951
   %i.u = mul i64 %i.b, %i.t
   %i.v = shl nuw nsw i64 %wide.trip.count209, 3
   %i.w = add i64 %i.u, %wide.trip.count209
@@ -899,14 +900,12 @@ bb.b:                                             ; preds = %.lr.ph174, %.loopex
   %indvars.iv199 = phi i64 [ 0, %.lr.ph174 ], [ %indvars.iv.next200, %.loopexit147 ] ; 26 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph174 ], [ %indvars.iv.next, %.loopexit147 ] ; 9 uses
   %.0124172 = phi i32 [ 1, %.lr.ph174 ], [ %.1, %.loopexit147 ] ; 2 uses
-  %6 = sub nsw i64 %wide.trip.count227, %indvars.iv199 ; 3 uses
   %i.ao = mul i64 %i.aa, %indvars.iv199
   %scevgep56 = getelementptr i8, ptr %0, i64 %i.ao
   %i.ap = mul i64 %i.ac, %indvars.iv199
   %scevgep57 = getelementptr i8, ptr %i.af, i64 %i.ap
   %i.aq = shl nuw nsw i64 %indvars.iv199, 3
   %scevgep58 = getelementptr i8, ptr %0, i64 %i.aq
-  %7 = sub i64 %i.t, %indvars.iv199               ; 3 uses
   %i.ar = mul i64 %i.n, %indvars.iv199            ; 2 uses
   %scevgep9 = getelementptr i8, ptr %i.ag, i64 %i.ar
   %i.as = getelementptr i8, ptr %0, i64 %i.ar
@@ -922,11 +921,11 @@ bb.b:                                             ; preds = %.lr.ph174, %.loopex
   br i1 %i.av, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b
-  %8 = sub i64 %i.t, %indvars.iv199
   %invariant.gep = getelementptr [8 x i8], ptr %0, i64 %indvars.iv199 ; 6 uses
-  %xtraiter = and i64 %8, 1
+  %6 = sub nsw i64 %indvars.iv199, %wide.trip.count227
+  %xtraiter = and i64 %6, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  br i1 %lcmp.mod.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
   %i.ax = mul i64 %i.a, %indvars.iv
@@ -1001,7 +1000,8 @@ bb.c:                                             ; preds = %._crit_edge
 .lr.ph158:                                        ; preds = %bb.c
   %i.cg = mul i64 %i.a, %indvars.iv199
   %i.ch = getelementptr [8 x i8], ptr %0, i64 %i.cg ; 4 uses
-  %min.iters.check66 = icmp ult i64 %6, 4
+  %7 = sub nsw i64 %wide.trip.count227, %indvars.iv199 ; 3 uses
+  %min.iters.check66 = icmp ult i64 %7, 4
   br i1 %min.iters.check66, label %scalar.ph65.preheader, label %vector.memcheck55
 
 vector.memcheck55:                                ; preds = %.lr.ph158
@@ -1014,7 +1014,7 @@ vector.memcheck55:                                ; preds = %.lr.ph158
   br i1 %found.conflict64, label %scalar.ph65.preheader, label %vector.ph67
 
 vector.ph67:                                      ; preds = %vector.memcheck55
-  %n.vec68 = and i64 %6, -4                       ; 3 uses
+  %n.vec68 = and i64 %7, -4                       ; 3 uses
   %i.cj = add i64 %indvars.iv199, %n.vec68
   br label %vector.body69
 
@@ -1038,7 +1038,7 @@ vector.body69:                                    ; preds = %vector.body69, %vec
   br i1 %i.cp, label %middle.block76, label %vector.body69, !llvm.loop !69
 
 middle.block76:                                   ; preds = %vector.body69
-  %cmp.n77 = icmp eq i64 %6, %n.vec68
+  %cmp.n77 = icmp eq i64 %7, %n.vec68
   br i1 %cmp.n77, label %._crit_edge159, label %scalar.ph65.preheader
 
 scalar.ph65.preheader:                            ; preds = %vector.memcheck55, %.lr.ph158, %middle.block76
@@ -1176,14 +1176,16 @@ bb.d:                                             ; preds = %.loopexit149, %bb.c
 .lr.ph170:                                        ; preds = %bb.d
   %i.ei = mul i64 %i.b, %indvars.iv199
   %i.ej = getelementptr [8 x i8], ptr %3, i64 %i.ei ; 5 uses
-  %min.iters.check18 = icmp ult i64 %7, 4
+  %8 = xor i64 %indvars.iv199, -1
+  %9 = add nsw i64 %8, %wide.trip.count227        ; 3 uses
+  %min.iters.check18 = icmp ult i64 %9, 4
   %bound013 = icmp ult ptr %scevgep9, %scevgep12
   %bound114 = icmp ult ptr %scevgep11, %scevgep10
   %found.conflict15 = and i1 %bound013, %bound114
   %i.ek = or i1 %found.conflict15, %stride.check16
-  %n.vec20 = and i64 %7, -4                       ; 3 uses
+  %n.vec20 = and i64 %9, -4                       ; 3 uses
   %i.el = add i64 %indvars.iv, %n.vec20
-  %cmp.n31 = icmp eq i64 %7, %n.vec20
+  %cmp.n31 = icmp eq i64 %9, %n.vec20
   %bound0 = icmp ult ptr %scevgep, %scevgep4
   %bound1 = icmp ult ptr %i.ej, %scevgep3
   %found.conflict = and i1 %bound0, %bound1

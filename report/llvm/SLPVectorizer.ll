@@ -205,13 +205,15 @@ bb.az:                                            ; preds = %_ZN4llvm23SmallVect
   %i.nf = getelementptr inbounds nuw i8, ptr %27, i64 12
   %i.ng = getelementptr inbounds nuw i8, ptr %19, i64 20 ; 2 uses
   %i.nh = getelementptr inbounds nuw i8, ptr %19, i64 8
-  %i.ni = zext i32 %.0.in.v.i to i64              ; 2 uses
+  %i.ni = zext i32 %.0.in.v.i to i64              ; 3 uses
   %.pre684 = load ptr, ptr %14, align 8, !tbaa !886, !noalias !3108
-  %28 = shl nuw nsw i64 %i.ni, 2
-  %29 = add nsw i64 %28, -4                       ; 2 uses
-  %i.nj = getelementptr inbounds nuw i8, ptr %22, i64 20
-  %30 = getelementptr inbounds nuw i8, ptr %22, i64 24
-  %31 = getelementptr inbounds nuw i8, ptr %22, i64 28
+  %28 = getelementptr inbounds nuw i8, ptr %22, i64 20
+  %29 = getelementptr inbounds nuw i8, ptr %22, i64 24
+  %i.nj = getelementptr inbounds nuw i8, ptr %22, i64 28
+  %30 = shl nuw nsw i64 %i.ni, 2
+  %31 = add nsw i64 %30, -4
+  %32 = shl nuw nsw i64 %i.ni, 2
+  %33 = add nsw i64 %32, -4
   %i.nk = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.nl = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.nm = getelementptr inbounds nuw i8, ptr %2, i64 40
@@ -228,10 +230,6 @@ bb.ba:                                            ; preds = %.lr.ph652, %bb.fx
   %indvar = phi i64 [ 0, %.lr.ph652 ], [ %indvar.next, %bb.fx ] ; 3 uses
   %i.nu = phi ptr [ %.pre684, %.lr.ph652 ], [ %i.baj, %bb.fx ] ; 4 uses
   %indvars.iv = phi i64 [ %i.ni, %.lr.ph652 ], [ %indvars.iv.next, %bb.fx ] ; 13 uses
-  %32 = shl i64 %indvar, 2
-  %33 = sub i64 %29, %32                          ; 2 uses
-  %34 = shl i64 %indvar, 2
-  %35 = sub i64 %29, %34                          ; 2 uses
   %i.nv = load ptr, ptr %i.lo, align 8, !tbaa !887, !noalias !3108 ; 2 uses
   %i.nw = load i32, ptr %i.lp, align 4, !tbaa !888, !noalias !3108 ; 4 uses
   %i.nx = icmp eq i32 %i.nw, 0
@@ -634,17 +632,17 @@ _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.i.i:          ; preds = %_ZL18inversePermuta
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZN4llvm11SmallVectorIjLj4EEC2EmRKj.exit, label %.lr.ph.i.i.i.i.i.i.i.i.1
 
 .lr.ph.i.i.i.i.i.i.i.i.1:                         ; preds = %.lr.ph.i.i.i.i.i.i.i.i
-  store i32 %.pre687, ptr %i.nj, align 4, !tbaa !380
+  store i32 %.pre687, ptr %28, align 4, !tbaa !380
   %.not.i.i.i.i.i.i.i.i.1 = icmp eq i32 %.pre687, 2
   br i1 %.not.i.i.i.i.i.i.i.i.1, label %_ZN4llvm11SmallVectorIjLj4EEC2EmRKj.exit, label %.lr.ph.i.i.i.i.i.i.i.i.2
 
 .lr.ph.i.i.i.i.i.i.i.i.2:                         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.1
-  store i32 %.pre687, ptr %30, align 8, !tbaa !380
+  store i32 %.pre687, ptr %29, align 8, !tbaa !380
   %.not.i.i.i.i.i.i.i.i.2 = icmp eq i32 %.pre687, 3
   br i1 %.not.i.i.i.i.i.i.i.i.2, label %_ZN4llvm11SmallVectorIjLj4EEC2EmRKj.exit, label %.lr.ph.i.i.i.i.i.i.i.i.3
 
 .lr.ph.i.i.i.i.i.i.i.i.3:                         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.2
-  store i32 %.pre687, ptr %31, align 4, !tbaa !380
+  store i32 %.pre687, ptr %i.nj, align 4, !tbaa !380
   br label %_ZN4llvm11SmallVectorIjLj4EEC2EmRKj.exit
 
 _ZN4llvm11SmallVectorIjLj4EEC2EmRKj.exit.loopexit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %middle.block994
@@ -889,6 +887,8 @@ bb.dd:                                            ; preds = %bb.dc
   %.idx.i.i.i.i.i.i.i209 = shl nuw nsw i64 %indvars.iv, 2
   %i.aer = getelementptr inbounds nuw i8, ptr %i.aeq, i64 %.idx.i.i.i.i.i.i.i209
   %i.aes = trunc nuw i64 %indvars.iv to i32       ; 3 uses
+  %34 = shl i64 %indvar, 2
+  %35 = sub i64 %33, %34                          ; 2 uses
   %i.aet = lshr exact i64 %35, 2
   %i.aeu = add nuw nsw i64 %i.aet, 1              ; 2 uses
   %min.iters.check939 = icmp ult i64 %35, 28
@@ -932,9 +932,11 @@ _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.i.i202:       ; preds = %bb.dc
   %.idx.i.i.i.i.i.i204 = shl nuw nsw i64 %indvars.iv, 2
   %i.afb = getelementptr inbounds nuw i8, ptr %i.ml, i64 %.idx.i.i.i.i.i.i204
   %i.afc = trunc nuw nsw i64 %indvars.iv to i32   ; 3 uses
-  %i.afd = lshr exact i64 %33, 2
+  %36 = shl i64 %indvar, 2
+  %37 = sub i64 %31, %36                          ; 2 uses
+  %i.afd = lshr exact i64 %37, 2
   %i.afe = add nuw nsw i64 %i.afd, 1              ; 2 uses
-  %min.iters.check952 = icmp ult i64 %33, 28
+  %min.iters.check952 = icmp ult i64 %37, 28
   br i1 %min.iters.check952, label %.lr.ph.i.i.i.i.i.i.i.i205.preheader, label %vector.ph953
 
 vector.ph953:                                     ; preds = %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.i.i202

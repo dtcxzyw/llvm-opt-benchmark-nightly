@@ -205,12 +205,11 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZSt16__is_permutationIPKPN6hermes10BasicBlockES4_N9__gnu_cxx5__ops19_Iter_equal_to_iterEEbT_S8_T0_T1_(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %3 = ptrtoaddr ptr %0 to i64
   %.not57 = icmp eq ptr %0, %1
   br i1 %.not57, label %.critedge42, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %indvar.a = phi i64 [ %indvar.next.a, %bb.b ], [ 0, %bb.a ] ; 2 uses
+  %indvar.a = phi i64 [ %indvar.next.a, %bb.b ], [ 0, %bb.a ] ; 3 uses
   %.03159 = phi ptr [ %i.d, %bb.b ], [ %0, %bb.a ] ; 8 uses
   %.03258 = phi ptr [ %i.e, %bb.b ], [ %2, %bb.a ] ; 6 uses
   %i.a = load ptr, ptr %.03159, align 8, !tbaa !63
@@ -226,7 +225,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not, label %.critedge42, label %.lr.ph, !llvm.loop !274
 
 _ZSt9__advanceIPKPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %.lr.ph
-  %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.f = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.g = ptrtoint ptr %.03159 to i64              ; 2 uses
   %i.h = sub i64 %i.f, %i.g
   %i.i = getelementptr inbounds i8, ptr %.03258, i64 %i.h
@@ -234,10 +233,11 @@ _ZSt9__advanceIPKPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.e
   br i1 %.not3868, label %.critedge42, label %.lr.ph70.a
 
 .lr.ph70.a:                                       ; preds = %_ZSt9__advanceIPKPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.exit
+  %3 = ptrtoaddr ptr %0 to i64
   %i.j = add i64 %i.f, -8
   %i.k = shl i64 %indvar.a, 3
   %i.l = add i64 %i.k, %3
-  %i.m = sub i64 %i.j, %i.l                       ; 3 uses
+  %i.m = sub i64 %i.j, %i.l                       ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check112 = icmp ult i64 %i.m, 24
@@ -245,13 +245,13 @@ _ZSt9__advanceIPKPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.e
   %i.p = shl i64 %n.vec114, 3
   %i.q = getelementptr i8, ptr %.03258, i64 %i.p
   %cmp.n127 = icmp eq i64 %i.o, %n.vec114
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = add i64 %i.f, -8
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph70.a, %.critedge
-  %indvar107 = phi i64 [ 0, %.lr.ph70.a ], [ %indvar.next108, %.critedge ] ; 2 uses
-  %.03569 = phi ptr [ %.03159, %.lr.ph70.a ], [ %i.ci, %.critedge ] ; 12 uses
-  %4 = shl i64 %indvar107, 3
-  %5 = sub i64 %i.m, %4                           ; 2 uses
+  %indvar107 = phi i64 [ %indvar.next108, %.critedge ], [ 0, %.lr.ph70.a ] ; 2 uses
+  %.03569 = phi ptr [ %i.ci, %.critedge ], [ %.03159, %.lr.ph70.a ] ; 12 uses
   %i.r = ptrtoint ptr %.03569 to i64              ; 2 uses
   %i.s = sub i64 %i.r, %i.g                       ; 3 uses
   %i.t = ashr i64 %i.s, 5                         ; 2 uses
@@ -421,9 +421,13 @@ _ZSt10__count_ifIPKPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIS4
   br i1 %i.bp, label %.critedge42, label %.lr.ph.i44.preheader
 
 .lr.ph.i44.preheader:                             ; preds = %_ZSt10__count_ifIPKPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIS4_EEENSt15iterator_traitsIT_E15difference_typeESA_SA_T0_.exit
-  %i.bq = lshr i64 %5, 3
+  %6 = add i64 %indvar.a, %indvar107
+  %7 = shl i64 %6, 3
+  %8 = add i64 %7, %4
+  %9 = sub i64 %5, %8                             ; 2 uses
+  %i.bq = lshr i64 %9, 3
   %i.br = add nuw nsw i64 %i.bq, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %5, 24
+  %min.iters.check = icmp ult i64 %9, 24
   br i1 %min.iters.check, label %.lr.ph.i44.preheader130, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i44.preheader
@@ -826,12 +830,11 @@ declare void @_ZN4llvh11raw_ostream14flush_nonemptyEv(ptr noundef nonnull align 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZSt16__is_permutationIPKPN6hermes10BasicBlockEPS2_N9__gnu_cxx5__ops19_Iter_equal_to_iterEEbT_S9_T0_T1_(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %3 = ptrtoaddr ptr %0 to i64
   %.not56 = icmp eq ptr %0, %1
   br i1 %.not56, label %.critedge42, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %indvar.a = phi i64 [ %indvar.next.a, %bb.b ], [ 0, %bb.a ] ; 2 uses
+  %indvar.a = phi i64 [ %indvar.next.a, %bb.b ], [ 0, %bb.a ] ; 3 uses
   %.03158 = phi ptr [ %i.d, %bb.b ], [ %0, %bb.a ] ; 8 uses
   %.03257 = phi ptr [ %i.e, %bb.b ], [ %2, %bb.a ] ; 6 uses
   %i.a = load ptr, ptr %.03158, align 8, !tbaa !63
@@ -847,7 +850,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not, label %.critedge42, label %.lr.ph, !llvm.loop !402
 
 _ZSt9__advanceIPPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %.lr.ph
-  %i.f = ptrtoint ptr %1 to i64                   ; 2 uses
+  %i.f = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.g = ptrtoint ptr %.03158 to i64              ; 2 uses
   %i.h = sub i64 %i.f, %i.g
   %i.i = getelementptr inbounds i8, ptr %.03257, i64 %i.h
@@ -855,10 +858,11 @@ _ZSt9__advanceIPPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.ex
   br i1 %.not3867, label %.critedge42, label %.lr.ph69.a
 
 .lr.ph69.a:                                       ; preds = %_ZSt9__advanceIPPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.exit
+  %3 = ptrtoaddr ptr %0 to i64
   %i.j = add i64 %i.f, -8
   %i.k = shl i64 %indvar.a, 3
   %i.l = add i64 %i.k, %3
-  %i.m = sub i64 %i.j, %i.l                       ; 3 uses
+  %i.m = sub i64 %i.j, %i.l                       ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check111 = icmp ult i64 %i.m, 24
@@ -866,13 +870,13 @@ _ZSt9__advanceIPPN6hermes10BasicBlockElEvRT_T0_St26random_access_iterator_tag.ex
   %i.p = shl i64 %n.vec113, 3
   %i.q = getelementptr i8, ptr %.03257, i64 %i.p
   %cmp.n126 = icmp eq i64 %i.o, %n.vec113
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = add i64 %i.f, -8
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph69.a, %.critedge
-  %indvar106 = phi i64 [ 0, %.lr.ph69.a ], [ %indvar.next107, %.critedge ] ; 2 uses
-  %.03568 = phi ptr [ %.03158, %.lr.ph69.a ], [ %i.ci, %.critedge ] ; 12 uses
-  %4 = shl i64 %indvar106, 3
-  %5 = sub i64 %i.m, %4                           ; 2 uses
+  %indvar106 = phi i64 [ %indvar.next107, %.critedge ], [ 0, %.lr.ph69.a ] ; 2 uses
+  %.03568 = phi ptr [ %i.ci, %.critedge ], [ %.03158, %.lr.ph69.a ] ; 12 uses
   %i.r = ptrtoint ptr %.03568 to i64              ; 2 uses
   %i.s = sub i64 %i.r, %i.g                       ; 3 uses
   %i.t = ashr i64 %i.s, 5                         ; 2 uses
@@ -1042,9 +1046,13 @@ _ZSt10__count_ifIPPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIPKS
   br i1 %i.bp, label %.critedge42, label %.lr.ph.i44.preheader
 
 .lr.ph.i44.preheader:                             ; preds = %_ZSt10__count_ifIPPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIPKS2_EEENSt15iterator_traitsIT_E15difference_typeESB_SB_T0_.exit
-  %i.bq = lshr i64 %5, 3
+  %6 = add i64 %indvar.a, %indvar106
+  %7 = shl i64 %6, 3
+  %8 = add i64 %7, %4
+  %9 = sub i64 %5, %8                             ; 2 uses
+  %i.bq = lshr i64 %9, 3
   %i.br = add nuw nsw i64 %i.bq, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %5, 24
+  %min.iters.check = icmp ult i64 %9, 24
   br i1 %min.iters.check, label %.lr.ph.i44.preheader129, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i44.preheader

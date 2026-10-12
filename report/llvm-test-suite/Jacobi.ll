@@ -160,30 +160,26 @@ bb.a:
   %i.g = add nsw i64 %i.f, -8
   %i.h = mul i32 %1, 3
   %i.i = zext i32 %i.h to i64
-  %i.j = sub nsw i32 1, %1                        ; 2 uses
+  %i.j = sub nsw i32 1, %1
   %i.k = zext i32 %i.j to i64
-  %i.l = sub nsw i32 0, %1                        ; 2 uses
-  %2 = zext i32 %i.l to i64
-  %3 = zext i32 %i.j to i64
+  %i.l = sub nsw i32 0, %1
   %i.m = zext i32 %i.l to i64
   %i.n = shl nuw i32 %1, 1
   %i.o = zext i32 %i.n to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge75
-  %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge75 ] ; 8 uses
+  %indvar = phi i64 [ 0, %.preheader.preheader ], [ %indvar.next, %._crit_edge75 ] ; 7 uses
   %indvars.iv = phi i64 [ %i.e, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge75 ] ; 10 uses
   %i.p = shl i64 %indvar, 1
   %i.q = sub i64 %i.o, %i.p
-  %4 = add i64 %indvar, %3
-  %5 = add i64 %indvar, %i.m
   %i.r = mul nsw i64 %indvar, -8                  ; 2 uses
   %i.s = add i64 %i.g, %i.r
   %i.t = add i64 %i.f, %i.r                       ; 2 uses
   %i.u = mul i64 %indvar, 4294967293
   %i.v = add i64 %i.u, %i.i
   %i.w = add i64 %indvar, %i.k
-  %i.x = add i64 %indvar, %2
+  %i.x = add i64 %indvar, %i.m
   %i.y = sub nsw i64 51, %indvars.iv              ; 3 uses
   %i.z = icmp samesign ult i64 %indvars.iv, 51
   br i1 %i.z, label %.lr.ph.i.lr.ph, label %._crit_edge75
@@ -191,25 +187,26 @@ bb.a:
 .lr.ph.i.lr.ph:                                   ; preds = %.preheader
   %i.aa = shl nuw nsw i64 %indvars.iv, 1          ; 2 uses
   %i.ab = trunc nuw nsw i64 %indvars.iv to i32
-  %invariant.op.a = add nsw i32 %i.ab, -1
+  %invariant.op = add nsw i32 %i.ab, -1
+  %2 = trunc i64 %indvar to i32                   ; 2 uses
+  %invariant.op.a = add i32 %2, 1
+  %3 = sub i32 %2, %1
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.lr.ph, %._crit_edge
-  %indvars.iv83 = phi i64 [ 0, %.lr.ph.i.lr.ph ], [ %indvars.iv.next84, %._crit_edge ] ; 18 uses
+  %indvars.iv83 = phi i64 [ 0, %.lr.ph.i.lr.ph ], [ %indvars.iv.next84, %._crit_edge ] ; 17 uses
   %indvars.iv78 = phi i64 [ %indvars.iv, %.lr.ph.i.lr.ph ], [ %indvars.iv.next79, %._crit_edge ] ; 2 uses
-  %6 = trunc i64 %indvars.iv83 to i32             ; 2 uses
-  %7 = sub i64 %4, %indvars.iv83
   %i.ac = shl nuw nsw i64 %indvars.iv83, 3        ; 3 uses
   %i.ad = add i64 %i.s, %i.ac
   %i.ae = add i64 %i.t, %i.ac
   %i.af = add i64 %i.v, %indvars.iv83
   %i.ag = sub i64 %i.w, %indvars.iv83
-  %indvars86 = trunc i64 %indvars.iv83 to i32
+  %indvars86 = trunc i64 %indvars.iv83 to i32     ; 3 uses
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv83
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !11 ; 2 uses
   %i.aj = add nuw nsw i64 %indvars.iv83, %indvars.iv ; 6 uses
   %i.ak = add nsw i64 %i.aj, -1                   ; 3 uses
-  %.reass = add i32 %invariant.op.a, %indvars86
+  %.reass = add i32 %invariant.op, %indvars86
   %i.al = getelementptr inbounds [8 x i8], ptr %i.ai, i64 %i.ak
   %i.am = load double, ptr %i.al, align 8, !tbaa !13
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.aj
@@ -225,10 +222,10 @@ bb.a:
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.aj
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !11 ; 4 uses
   %i.ay = add nuw nsw i32 %i.at, 1                ; 2 uses
-  %i.az = sub i32 %i.at, %6
+  %i.az = sub i32 %i.at, %indvars86
   %i.ba = zext i32 %i.az to i64
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
-  %min.iters.check111 = icmp eq i32 %i.at, %6
+  %min.iters.check111 = icmp eq i32 %i.at, %indvars86
   br i1 %min.iters.check111, label %scalar.ph110.preheader, label %vector.memcheck102
 
 vector.memcheck102:                               ; preds = %.lr.ph.i
@@ -346,11 +343,17 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   %i.df = trunc nsw i64 %i.aj to i32
   call void @ApplyRGivens(ptr noundef %i.c, double noundef %i.dd, double noundef %i.de, i32 noundef %.reass, i32 noundef %i.df) #5
   %i.dg = icmp slt i64 %i.aj, %i.y
-  br i1 %i.dg, label %.lr.ph, label %._crit_edge
+  br i1 %i.dg, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %ApplyGivens.exit.loopexit, %ApplyGivens.exit72
-  %indvar94 = phi i64 [ %indvar.next95, %ApplyGivens.exit72 ], [ 0, %ApplyGivens.exit.loopexit ] ; 5 uses
-  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %ApplyGivens.exit72 ], [ %indvars.iv78, %ApplyGivens.exit.loopexit ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %ApplyGivens.exit.loopexit
+  %4 = trunc i64 %indvars.iv83 to i32
+  %5 = add i32 %1, %4
+  %6 = sub i32 %invariant.op.a, %5
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %ApplyGivens.exit72
+  %indvar94 = phi i64 [ %indvar.next95, %ApplyGivens.exit72 ], [ 0, %.lr.ph.preheader ] ; 5 uses
+  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %ApplyGivens.exit72 ], [ %indvars.iv78, %.lr.ph.preheader ] ; 3 uses
   %i.dh = mul i64 %i.t, %indvar94                 ; 2 uses
   %i.di = add i64 %i.ad, %i.dh                    ; 2 uses
   %i.dj = add i64 %i.ae, %i.dh
@@ -387,15 +390,15 @@ ApplyGivens.exit.loopexit:                        ; preds = %.lr.ph53.i
   br i1 %.not49.i61, label %ApplyGivens.exit72, label %.lr.ph.i62
 
 .lr.ph.i62:                                       ; preds = %.lr.ph
-  %8 = mul i64 %5, %indvar94
-  %9 = add i64 %7, %8
-  %10 = trunc i64 %9 to i32
   %i.ej = getelementptr inbounds [8 x i8], ptr %0, i64 %i.dx
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !11 ; 4 uses
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next81
   %i.em = load ptr, ptr %i.el, align 8, !tbaa !11 ; 4 uses
   %i.en = add nuw nsw i32 %i.eh, 1                ; 2 uses
-  %i.eo = add i32 %i.eh, %10                      ; 2 uses
+  %7 = trunc i64 %indvar94 to i32
+  %8 = mul i32 %3, %7
+  %9 = add i32 %8, %6
+  %i.eo = add i32 %i.eh, %9                       ; 2 uses
   %i.ep = zext i32 %i.eo to i64
   %i.eq = add nuw nsw i64 %i.ep, 1                ; 2 uses
   %min.iters.check = icmp eq i32 %i.eo, 0
