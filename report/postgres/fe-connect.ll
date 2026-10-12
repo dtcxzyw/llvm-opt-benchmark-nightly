@@ -204,10 +204,10 @@ bb.s:                                             ; preds = %parse_comma_separat
   br i1 %i.bt, label %.preheader681, label %._crit_edge, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %bb.s
-  %i.bu = trunc nuw nsw i64 %indvars.iv.next777 to i32 ; 2 uses
+  %i.bu = trunc nuw nsw i64 %indvars.iv.next777 to i32
   %.not484 = icmp ne i32 %i.bq, %i.bu
   %or.cond544.not = or i1 %i.bb, %.not484
-  br i1 %or.cond544.not, label %._crit_edge.thread, label %.thread606
+  br i1 %or.cond544.not, label %._crit_edge.thread, label %.lr.ph.preheader
 
 ._crit_edge.thread:                               ; preds = %.preheader682, %._crit_edge
   %.lcssa712858 = phi i32 [ %i.bq, %._crit_edge ], [ %.pre797, %.preheader682 ]
@@ -238,13 +238,16 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   tail call void (ptr, ptr, ...) @libpq_append_conn_error(ptr noundef nonnull %0, ptr noundef nonnull @.str.1, i32 noundef %.0.i559, i32 noundef %.lcssa712858) #23
   br label %.thread659
 
-.thread606:                                       ; preds = %.thread..thread606_crit_edge, %._crit_edge, %bb.o
-  %5 = phi i32 [ %.pre, %.thread..thread606_crit_edge ], [ %i.bu, %._crit_edge ], [ %.pre797, %bb.o ] ; 2 uses
+.thread606:                                       ; preds = %.thread..thread606_crit_edge, %bb.o
+  %5 = phi i32 [ %.pre, %.thread..thread606_crit_edge ], [ %.pre797, %bb.o ] ; 2 uses
   %i.ca = icmp sgt i32 %5, 0
-  br i1 %i.ca, label %.lr.ph, label %._crit_edge724
+  br i1 %i.ca, label %.lr.ph.preheader, label %._crit_edge724
 
-.lr.ph:                                           ; preds = %.thread606, %bb.ab
-  %indvars.iv779 = phi i64 [ %indvars.iv.next780, %bb.ab ], [ 0, %.thread606 ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %._crit_edge, %.thread606
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ab
+  %indvars.iv779 = phi i64 [ %indvars.iv.next780, %bb.ab ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.cb = load ptr, ptr %i.t, align 8
   %i.cc = getelementptr inbounds nuw [40 x i8], ptr %i.cb, i64 %indvars.iv779 ; 5 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 16

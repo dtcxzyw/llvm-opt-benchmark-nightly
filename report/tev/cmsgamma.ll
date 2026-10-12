@@ -205,7 +205,7 @@ GetParametricCurveByType.exit:                    ; preds = %.lr.ph.i33.i, %bb.b
 
 bb.e:                                             ; preds = %GetParametricCurveByType.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !30 ; 8 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !30 ; 7 uses
   %i.ag = load i16, ptr %i.af, align 2, !tbaa !35
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !29
@@ -331,7 +331,7 @@ _cmsQuickSaturateWord.exit65.us:                  ; preds = %bb.f, %scalar.ph
 .lr.ph12.i:                                       ; preds = %.preheader.i62, %bb.i
   %i.cl = phi i16 [ %i.cn, %bb.i ], [ %i.cj, %.preheader.i62 ] ; 3 uses
   %indvars.iv21.i = phi i64 [ %indvars.iv.next22.i, %bb.i ], [ %i.at, %.preheader.i62 ] ; 2 uses
-  %indvars.iv.next22.i = add nsw i64 %indvars.iv21.i, -1 ; 4 uses
+  %indvars.iv.next22.i = add nsw i64 %indvars.iv21.i, -1 ; 3 uses
   %i.cm = getelementptr inbounds nuw [2 x i8], ptr %i.af, i64 %indvars.iv.next22.i
   %i.cn = load i16, ptr %i.cm, align 2, !tbaa !35 ; 4 uses
   %.not58.i = icmp ugt i16 %i.cn, %i.cl
@@ -372,7 +372,7 @@ bb.j:                                             ; preds = %.lr.ph.i60
   %i.dc = uitofp i16 %i.cz to double
   %i.dd = fcmp ugt double %i.ch, %i.dc
   %or.cond63.i = or i1 %i.db, %i.dd
-  br i1 %or.cond63.i, label %bb.l, label %GetInterval.exit
+  br i1 %or.cond63.i, label %bb.l, label %.loopexit.loopexit32.split.loop.exit36.i
 
 bb.k:                                             ; preds = %.lr.ph.i60
   %i.de = uitofp i16 %i.cz to double
@@ -380,35 +380,41 @@ bb.k:                                             ; preds = %.lr.ph.i60
   %i.dg = uitofp i16 %i.cx to double
   %i.dh = fcmp ugt double %i.ch, %i.dg
   %or.cond65.i = or i1 %i.dh, %i.df
-  br i1 %or.cond65.i, label %bb.l, label %GetInterval.exit
+  br i1 %or.cond65.i, label %bb.l, label %.loopexit.loopexit32.split.loop.exit34.i
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.at
   br i1 %exitcond.not.i, label %GetInterval.exit.thread, label %.lr.ph.i60, !llvm.loop !88
 
-GetInterval.exit:                                 ; preds = %bb.j, %bb.k, %bb.g, %bb.h
-  %.046.i.in = phi i64 [ %indvars.iv.next22.i, %bb.g ], [ %indvars.iv.next22.i, %bb.h ], [ %indvars.iv.i, %bb.k ], [ %indvars.iv.i, %bb.j ] ; 2 uses
-  %.046.i = trunc i64 %.046.i.in to i32           ; 3 uses
+.loopexit.loopexit32.split.loop.exit34.i:         ; preds = %bb.k
+  %2 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %bb.m
+
+.loopexit.loopexit32.split.loop.exit36.i:         ; preds = %bb.j
+  %3 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %bb.m
+
+GetInterval.exit:                                 ; preds = %bb.g, %bb.h
+  %.046.i = trunc i64 %indvars.iv.next22.i to i32 ; 2 uses
   %i.di = icmp sgt i32 %.046.i, -1
   br i1 %i.di, label %bb.m, label %GetInterval.exit.thread
 
-bb.m:                                             ; preds = %GetInterval.exit
-  %2 = and i64 %.046.i.in, 2147483647
-  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.af, i64 %2
-  %4 = load i16, ptr %3, align 2, !tbaa !35
-  %5 = uitofp i16 %4 to double                    ; 2 uses
-  %6 = add nuw nsw i32 %.046.i, 1                 ; 2 uses
-  %7 = zext nneg i32 %6 to i64
-  %8 = getelementptr inbounds nuw [2 x i8], ptr %i.af, i64 %7
-  %9 = load i16, ptr %8, align 2, !tbaa !35
-  %10 = uitofp i16 %9 to double                   ; 3 uses
-  %i.dj = uitofp nneg i32 %.046.i to double
-  %i.dk = uitofp nneg i32 %6 to double
+bb.m:                                             ; preds = %.loopexit.loopexit32.split.loop.exit34.i, %.loopexit.loopexit32.split.loop.exit36.i, %GetInterval.exit
+  %.046.i72 = phi i32 [ %.046.i, %GetInterval.exit ], [ %2, %.loopexit.loopexit32.split.loop.exit34.i ], [ %3, %.loopexit.loopexit32.split.loop.exit36.i ] ; 3 uses
+  %4 = zext nneg i32 %.046.i72 to i64
+  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.af, i64 %4
+  %6 = load <2 x i16>, ptr %5, align 2, !tbaa !35
+  %7 = uitofp <2 x i16> %6 to <2 x double>        ; 2 uses
+  %8 = add nuw nsw i32 %.046.i72, 1
+  %i.dj = uitofp nneg i32 %.046.i72 to double
+  %i.dk = uitofp nneg i32 %8 to double
   %i.dl = insertelement <2 x double> poison, double %i.dj, i64 0
   %i.dm = insertelement <2 x double> %i.dl, double %i.dk, i64 1
   %i.dn = fmul nnan <2 x double> %i.dm, splat (double 6.553500e+04)
   %i.do = fdiv <2 x double> %i.dn, %i.az          ; 4 uses
-  %i.dp = fcmp oeq double %5, %10
+  %9 = extractelement <2 x double> %7, i64 0      ; 2 uses
+  %10 = extractelement <2 x double> %7, i64 1     ; 3 uses
+  %i.dp = fcmp oeq double %9, %10
   br i1 %i.dp, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -432,7 +438,7 @@ bb.p:                                             ; preds = %bb.m
   %i.eb = extractelement <2 x double> %i.do, i64 0
   %i.ec = extractelement <2 x double> %i.do, i64 1 ; 2 uses
   %i.ed = fsub double %i.ec, %i.eb
-  %i.ee = fsub double %10, %5
+  %i.ee = fsub double %10, %9
   %i.ef = fdiv double %i.ed, %i.ee                ; 2 uses
   %i.eg = fneg double %i.ef
   %i.eh = tail call double @llvm.fmuladd.f64(double %i.eg, double %10, double %i.ec)

@@ -118,9 +118,9 @@ bb.h:                                             ; preds = %bb.n
 
 bb.i:                                             ; preds = %.lr.ph.1
   %i.u = getelementptr [8 x i8], ptr %i.p, i64 %indvars.iv.next.i.i
-  %i.v = load i64, ptr %i.u, align 8
+  %i.v = load i64, ptr %i.u, align 8              ; 2 uses
   %i.w = lshr i64 %i.v, 9
-  %i.x = and i64 %i.w, 18014398509481983
+  %i.x = and i64 %i.w, 18014398509481983          ; 2 uses
   %.not.i.i32.1 = icmp ugt i64 %i.x, %.0.i
   br i1 %.not.i.i32.1, label %prev_by_hint.exit.thread.i, label %bb.j
 
@@ -143,9 +143,9 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %.lr.ph
   %i.ae = getelementptr [8 x i8], ptr %i.p, i64 %i.q
-  %i.af = load i64, ptr %i.ae, align 8
+  %i.af = load i64, ptr %i.ae, align 8            ; 2 uses
   %i.ag = lshr i64 %i.af, 9
-  %i.ah = and i64 %i.ag, 18014398509481983
+  %i.ah = and i64 %i.ag, 18014398509481983        ; 2 uses
   %.not.i.i32 = icmp ugt i64 %i.ah, %.0.i
   br i1 %.not.i.i32, label %prev_by_hint.exit.thread.i, label %bb.m
 
@@ -162,9 +162,12 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.an, label %.critedge.split.loop.exit22.i.i, label %bb.h, !llvm.loop !1
 
 .critedge.split.loop.exit22.i.i:                  ; preds = %bb.k, %bb.n
-  %indvars.iv.i.i61.lcssa66 = phi i64 [ %i.q, %bb.n ], [ %indvars.iv.next.i.i, %bb.k ]
+  %indvars.iv.i.i61.lcssa66 = phi i64 [ %i.q, %bb.n ], [ %indvars.iv.next.i.i, %bb.k ] ; 2 uses
+  %.lcssa83 = phi i64 [ %i.af, %bb.n ], [ %i.v, %bb.k ]
+  %.lcssa81 = phi i64 [ %i.ah, %bb.n ], [ %i.x, %bb.k ]
   %i.ao = trunc nuw nsw i64 %indvars.iv.i.i61.lcssa66 to i32
-  br label %prev_badblocks.exit
+  %5 = add nuw i32 %i.ao, 1
+  br label %6
 
 prev_by_hint.exit.thread.i:                       ; preds = %bb.h, %.lr.ph, %bb.l, %.lr.ph.1, %bb.i, %bb.k, %bb.g, %.prev_by_hint.exit.thread_crit_edge.i
   %i.ap = phi ptr [ %.pre.i30, %.prev_by_hint.exit.thread_crit_edge.i ], [ %i.p, %bb.g ], [ %i.p, %bb.k ], [ %i.p, %bb.i ], [ %i.p, %.lr.ph.1 ], [ %i.p, %bb.l ], [ %i.p, %.lr.ph ], [ %i.p, %bb.h ] ; 9 uses
@@ -223,46 +226,54 @@ bb.p:                                             ; preds = %.lr.ph.i31
   %.not49.i = icmp ugt i64 %.pre-phi19.i, %.0.i
   br i1 %.not49.i, label %.critedge.i, label %prev_badblocks.exit
 
-prev_badblocks.exit:                              ; preds = %bb.m, %bb.j, %.lr.ph.i31, %._crit_edge.i, %.critedge.split.loop.exit22.i.i, %bb.o
-  %.val81.pre.i = phi ptr [ %i.p, %.critedge.split.loop.exit22.i.i ], [ %i.ap, %bb.o ], [ %i.ap, %._crit_edge.i ], [ %i.ap, %.lr.ph.i31 ], [ %i.p, %bb.j ], [ %i.p, %bb.m ] ; 4 uses
-  %.042.i = phi i32 [ %i.ao, %.critedge.split.loop.exit22.i.i ], [ %i.au, %bb.o ], [ %.036.lcssa.i, %._crit_edge.i ], [ %i.bc, %.lr.ph.i31 ], [ %i.t, %bb.j ], [ %i.t, %bb.m ] ; 3 uses
+prev_badblocks.exit:                              ; preds = %bb.m, %bb.j, %.lr.ph.i31, %._crit_edge.i, %bb.o
+  %.val81.pre.i49 = phi ptr [ %i.ap, %.lr.ph.i31 ], [ %i.ap, %bb.o ], [ %i.ap, %._crit_edge.i ], [ %i.p, %bb.j ], [ %i.p, %bb.m ] ; 3 uses
+  %.042.i = phi i32 [ %i.bc, %.lr.ph.i31 ], [ %i.au, %bb.o ], [ %.036.lcssa.i, %._crit_edge.i ], [ %i.t, %bb.j ], [ %i.t, %bb.m ] ; 3 uses
   %i.bm = icmp sgt i32 %.042.i, -1
-  %i.bn = add i32 %.042.i, 1                      ; 4 uses
+  %i.bn = add i32 %.042.i, 1                      ; 2 uses
   br i1 %i.bm, label %bb.q, label %.critedge.i
 
 bb.q:                                             ; preds = %prev_badblocks.exit
-  %.not76.i = icmp slt i32 %i.bn, %.val.i
   %.phi.trans.insert.i = zext nneg i32 %.042.i to i64 ; 2 uses
-  %.phi.trans.insert97.i = getelementptr [8 x i8], ptr %.val81.pre.i, i64 %.phi.trans.insert.i
-  %.pre.i.a = load i64, ptr %.phi.trans.insert97.i, align 8 ; 3 uses
+  %.phi.trans.insert97.i = getelementptr [8 x i8], ptr %.val81.pre.i49, i64 %.phi.trans.insert.i
+  %.pre.i.a = load i64, ptr %.phi.trans.insert97.i, align 8 ; 2 uses
   %.pre98.i = lshr i64 %.pre.i.a, 9
-  %.pre100.i = and i64 %.pre98.i, 18014398509481983 ; 4 uses
+  %.pre100.i = and i64 %.pre98.i, 18014398509481983
+  br label %6
+
+6:                                                ; preds = %bb.q, %.critedge.split.loop.exit22.i.i
+  %.pre100.i.pre-phi = phi i64 [ %.pre100.i, %bb.q ], [ %.lcssa81, %.critedge.split.loop.exit22.i.i ] ; 4 uses
+  %.phi.trans.insert.i.pre-phi = phi i64 [ %.phi.trans.insert.i, %bb.q ], [ %indvars.iv.i.i61.lcssa66, %.critedge.split.loop.exit22.i.i ]
+  %.pre.i = phi i64 [ %.pre.i.a, %bb.q ], [ %.lcssa83, %.critedge.split.loop.exit22.i.i ] ; 2 uses
+  %.val81.pre.i = phi ptr [ %.val81.pre.i49, %bb.q ], [ %i.p, %.critedge.split.loop.exit22.i.i ] ; 2 uses
+  %7 = phi i32 [ %i.bn, %bb.q ], [ %5, %.critedge.split.loop.exit22.i.i ] ; 3 uses
+  %.not76.i = icmp slt i32 %7, %.val.i
   br i1 %.not76.i, label %overlap_front.exit.thread.i, label %bb.r
 
-bb.r:                                             ; preds = %bb.q
-  %.not.i.i = icmp ult i64 %.0.i, %.pre100.i
+bb.r:                                             ; preds = %6
+  %.not.i.i = icmp ult i64 %.0.i, %.pre100.i.pre-phi
   br i1 %.not.i.i, label %overlap_front.exit.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.bo = and i64 %.pre.i.a, 511
+  %i.bo = and i64 %.pre.i, 511
   %i.bp = add nuw nsw i64 %i.bo, 1
-  %i.bq = add nuw nsw i64 %i.bp, %.pre100.i
+  %i.bq = add nuw nsw i64 %i.bp, %.pre100.i.pre-phi
   %i.br = icmp ult i64 %.0.i, %i.bq
   br i1 %i.br, label %overlap_front.exit.thread.i, label %overlap_front.exit.i
 
-overlap_front.exit.thread.i:                      ; preds = %bb.s, %bb.q
-  %.not.i88.i = icmp ult i64 %.0.i, %.pre100.i
+overlap_front.exit.thread.i:                      ; preds = %bb.s, %6
+  %.not.i88.i = icmp ult i64 %.0.i, %.pre100.i.pre-phi
   br i1 %.not.i88.i, label %.critedge.i, label %bb.t
 
 bb.t:                                             ; preds = %overlap_front.exit.thread.i
-  %i.bs = and i64 %.pre.i.a, 511
+  %i.bs = and i64 %.pre.i, 511
   %i.bt = add nuw nsw i64 %i.bs, 1
-  %i.bu = add nuw nsw i64 %i.bt, %.pre100.i
+  %i.bu = add nuw nsw i64 %i.bt, %.pre100.i.pre-phi
   %i.bv = icmp ult i64 %.0.i, %i.bu
   br i1 %i.bv, label %bb.u, label %.critedge.i
 
 bb.u:                                             ; preds = %bb.t
-  %i.bw = getelementptr [8 x i8], ptr %i.m, i64 %.phi.trans.insert.i ; 2 uses
+  %i.bw = getelementptr [8 x i8], ptr %i.m, i64 %.phi.trans.insert.i.pre-phi ; 2 uses
   %i.bx = load i64, ptr %i.bw, align 8            ; 3 uses
   %.not77.i = icmp sgt i64 %i.bx, -1              ; 2 uses
   %i.by = zext i1 %.not77.i to i32
@@ -291,8 +302,8 @@ bb.v:                                             ; preds = %bb.u
   br label %overlap_front.exit.i
 
 .critedge.i:                                      ; preds = %._crit_edge.i, %prev_by_hint.exit.thread.i, %bb.t, %overlap_front.exit.thread.i, %prev_badblocks.exit
-  %.val85.i = phi ptr [ %.val81.pre.i, %prev_badblocks.exit ], [ %.val81.pre.i, %bb.t ], [ %.val81.pre.i, %overlap_front.exit.thread.i ], [ %i.ap, %prev_by_hint.exit.thread.i ], [ %i.ap, %._crit_edge.i ]
-  %i.cl = phi i32 [ %i.bn, %prev_badblocks.exit ], [ %i.bn, %bb.t ], [ %i.bn, %overlap_front.exit.thread.i ], [ 0, %prev_by_hint.exit.thread.i ], [ 0, %._crit_edge.i ] ; 3 uses
+  %.val85.i = phi ptr [ %.val81.pre.i49, %prev_badblocks.exit ], [ %.val81.pre.i, %bb.t ], [ %.val81.pre.i, %overlap_front.exit.thread.i ], [ %i.ap, %prev_by_hint.exit.thread.i ], [ %i.ap, %._crit_edge.i ]
+  %i.cl = phi i32 [ %i.bn, %prev_badblocks.exit ], [ %7, %bb.t ], [ %7, %overlap_front.exit.thread.i ], [ 0, %prev_by_hint.exit.thread.i ], [ 0, %._crit_edge.i ] ; 3 uses
   %i.cm = icmp slt i32 %i.cl, %.val.i
   br i1 %i.cm, label %bb.w, label %overlap_front.exit.i
 

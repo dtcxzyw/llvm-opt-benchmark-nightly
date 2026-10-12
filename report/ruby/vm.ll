@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %bb.aw
 rb_array_len.exit.i:                              ; preds = %bb.ay, %bb.ax
   %i.gv = phi i32 [ %i.gn, %bb.ax ], [ %i.gs, %bb.ay ] ; 12 uses
   %.0.i485672 = phi ptr [ %i.gm, %bb.ax ], [ %i.gr, %bb.ay ] ; 7 uses
-  %.0.i.i487 = phi i64 [ %i.gp, %bb.ax ], [ %i.gu, %bb.ay ] ; 7 uses
+  %.0.i.i487 = phi i64 [ %i.gp, %bb.ax ], [ %i.gu, %bb.ay ] ; 9 uses
   %.0.i485672874 = ptrtoaddr ptr %.0.i485672 to i64
   %i.gw = add i64 %.0.i.i487, 2147483648
   %.not.i1.i = icmp ult i64 %i.gw, 4294967296
@@ -216,7 +216,7 @@ bb.az:                                            ; preds = %rb_array_len.exit.i
   unreachable
 
 RARRAY_LENINT.exit:                               ; preds = %rb_array_len.exit.i
-  %i.gx = trunc i64 %.0.i.i487 to i32             ; 3 uses
+  %i.gx = trunc nsw i64 %.0.i.i487 to i32         ; 2 uses
   %.not416 = icmp eq i64 %.0.i.i487, 0
   br i1 %.not416, label %.thread688.thread856, label %bb.ba
 
@@ -243,16 +243,18 @@ bb.bc:                                            ; preds = %bb.ba
   br i1 %i.hh, label %.lr.ph763.preheader, label %.thread688.thread856
 
 .lr.ph763.preheader:                              ; preds = %bb.bc
-  %7 = call i32 @llvm.smax.i32(i32 %i.gx, i32 1)  ; 2 uses
-  %wide.trip.count773 = zext nneg i32 %7 to i64   ; 5 uses
-  %min.iters.check876 = icmp slt i64 %.0.i.i487, 20
+  %wide.trip.count773 = and i64 %.0.i.i487, 4294967295 ; 5 uses
+  %min.iters.check876 = icmp samesign ult i64 %wide.trip.count773, 20
   br i1 %min.iters.check876, label %.lr.ph763.preheader943, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph763.preheader
-  %8 = add nsw i32 %7, -1
+  %7 = add nsw i64 %wide.trip.count773, -1        ; 2 uses
+  %8 = trunc i64 %7 to i32
   %i.hi = add i32 %i.gv, %8
   %i.hj = icmp slt i32 %i.hi, %i.gv
-  br i1 %i.hj, label %.lr.ph763.preheader943, label %vector.memcheck
+  %9 = icmp ugt i64 %7, 4294967295
+  %10 = or i1 %i.hj, %9
+  br i1 %10, label %.lr.ph763.preheader943, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.hk = sext i32 %i.gv to i64
@@ -263,8 +265,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %diff.check, label %.lr.ph763.preheader943, label %vector.ph877
 
 vector.ph877:                                     ; preds = %vector.memcheck
-  %n.vec878 = and i64 %wide.trip.count773, 2147483644 ; 4 uses
-  %i.ho = trunc nuw nsw i64 %n.vec878 to i32
+  %n.vec878 = and i64 %.0.i.i487, 4294967292      ; 4 uses
+  %i.ho = trunc nuw i64 %n.vec878 to i32
   %i.hp = add i32 %i.gv, %i.ho                    ; 2 uses
   br label %vector.body879
 
@@ -286,13 +288,13 @@ vector.body879:                                   ; preds = %vector.body879, %ve
   br i1 %i.hx, label %middle.block883, label %vector.body879, !llvm.loop !765
 
 middle.block883:                                  ; preds = %vector.body879
-  %cmp.n884 = icmp eq i64 %n.vec878, %wide.trip.count773
+  %cmp.n884 = icmp eq i64 %wide.trip.count773, %n.vec878
   br i1 %cmp.n884, label %.thread688.thread856, label %.lr.ph763.preheader943
 
 .lr.ph763.preheader943:                           ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph763.preheader, %middle.block883
   %indvars.iv770.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph763.preheader ], [ %n.vec878, %middle.block883 ] ; 3 uses
   %.0336760.ph = phi i32 [ %i.gv, %vector.memcheck ], [ %i.gv, %vector.scevcheck ], [ %i.gv, %.lr.ph763.preheader ], [ %i.hp, %middle.block883 ] ; 2 uses
-  %xtraiter = and i64 %wide.trip.count773, 3      ; 2 uses
+  %xtraiter = and i64 %.0.i.i487, 3               ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph763.prol.loopexit, label %.lr.ph763.prol
 
@@ -695,7 +697,7 @@ bb.l:                                             ; preds = %._crit_edge.i, %.lr
   %i.ce = load i32, ptr %i.cd, align 8, !tbaa !211 ; 3 uses
   %i.cf = load ptr, ptr %i.bp, align 8, !tbaa !889
   %i.cg = trunc nuw nsw i64 %indvars.iv190.i to i32
-  %i.ch = sub i32 %.0130.i, %i.cg
+  %i.ch = sub nsw i32 %.0130.i, %i.cg
   %i.ci = sext i32 %i.ch to i64
   %i.cj = getelementptr [24 x i8], ptr %i.cf, i64 %i.ci ; 3 uses
   %i.ck = sext i32 %i.ce to i64
@@ -868,7 +870,7 @@ bb.aa:                                            ; preds = %._crit_edge175.i, %
 
 .lr.ph174.i:                                      ; preds = %bb.aa
   %i.eq = trunc nuw nsw i64 %indvars.iv202.i to i32
-  %i.er = sub i32 %.0130.i, %i.eq
+  %i.er = sub nsw i32 %.0130.i, %i.eq
   %i.es = sext i32 %i.er to i64
   %i.et = getelementptr [24 x i8], ptr %i.ee, i64 %i.es
   %i.eu = getelementptr i8, ptr %i.et, i64 8

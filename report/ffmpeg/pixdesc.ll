@@ -205,12 +205,12 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.f, %bb.c
-  %indvars.iv.i = phi i64 [ 0, %bb.c ], [ %indvars.iv.next.i, %bb.f ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.c ], [ %indvars.iv.next.i, %bb.f ] ; 4 uses
   %i.d = getelementptr inbounds nuw [112 x i8], ptr @av_pix_fmt_descriptors, i64 %indvars.iv.i ; 2 uses
   %i.e = load ptr, ptr %i.d, align 16, !tbaa !26
   %i.f = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.e, ptr noundef nonnull dereferenceable(1) %.05) #16
   %.not.i = icmp eq i32 %i.f, 0
-  br i1 %.not.i, label %get_pix_fmt_internal.exit.a, label %bb.e
+  br i1 %.not.i, label %.split.loop.exit13.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 104
@@ -224,12 +224,15 @@ bb.f:                                             ; preds = %bb.e
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 267
   br i1 %exitcond.not.i, label %get_pix_fmt_internal.exit.thread.a, label %bb.d, !llvm.loop !0
 
-get_pix_fmt_internal.exit.a:                      ; preds = %bb.e, %bb.d
-  %.08.i = trunc i64 %indvars.iv.i to i32         ; 2 uses
-  %1 = icmp eq i32 %.08.i, -1
-  br i1 %1, label %get_pix_fmt_internal.exit.thread.a, label %bb.j
+.split.loop.exit13.i:                             ; preds = %bb.d
+  %1 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %bb.j
 
-get_pix_fmt_internal.exit.thread.a:               ; preds = %bb.f, %get_pix_fmt_internal.exit.a
+get_pix_fmt_internal.exit.a:                      ; preds = %bb.e
+  %.08.i = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %bb.j
+
+get_pix_fmt_internal.exit.thread.a:               ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   %i.j = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 32, ptr noundef nonnull @.str.4, ptr noundef nonnull %.05, ptr noundef nonnull @.str.5) #17 ; 0 uses
   br label %bb.g
@@ -267,8 +270,8 @@ get_pix_fmt_internal.exit16:                      ; preds = %bb.i, %.split.loop.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   br label %bb.j
 
-bb.j:                                             ; preds = %get_pix_fmt_internal.exit16, %get_pix_fmt_internal.exit.a
-  %.0 = phi i32 [ %.08.i12, %get_pix_fmt_internal.exit16 ], [ %.08.i, %get_pix_fmt_internal.exit.a ]
+bb.j:                                             ; preds = %.split.loop.exit13.i, %get_pix_fmt_internal.exit.a, %get_pix_fmt_internal.exit16
+  %.0 = phi i32 [ %.08.i12, %get_pix_fmt_internal.exit16 ], [ %1, %.split.loop.exit13.i ], [ %.08.i, %get_pix_fmt_internal.exit.a ]
   ret i32 %.0
 }
 

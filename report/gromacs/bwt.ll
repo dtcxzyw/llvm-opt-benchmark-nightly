@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.j, label %iter.check, label %._crit_edge208.thread
 
 iter.check:                                       ; preds = %.preheader156
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 6 uses
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 8 uses
   %min.iters.check = icmp ult i32 %1, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
@@ -294,7 +294,9 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph207.preheader:                              ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.g, i8 0, i64 %i.f, i1 false)
-  %wide.trip.count237 = zext nneg i32 %1 to i64   ; 3 uses
+  %wide.trip.count237 = zext nneg i32 %1 to i64
+  %4 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer
   br label %.lr.ph207
 
 .lr.ph207:                                        ; preds = %.lr.ph207.preheader, %bb.l
@@ -305,7 +307,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.preheader152.preheader, label %bb.l
 
 .preheader152.preheader:                          ; preds = %.lr.ph207
-  %i.z = trunc nuw nsw i64 %indvars.iv234 to i32  ; 2 uses
+  %i.z = trunc nsw i64 %indvars.iv234 to i32      ; 2 uses
+  %6 = insertelement <2 x i32> poison, i32 %i.z, i64 0
   br label %.preheader151
 
 .preheader154:                                    ; preds = %.loopexit, %.split.us
@@ -333,20 +336,23 @@ bb.b:                                             ; preds = %bb.a
   %.2170.us = phi i32 [ %.4.ph.us, %bb.g ], [ %.1196, %.preheader.lr.ph ] ; 4 uses
   %.2113169.us = phi i32 [ %.4115.ph.us, %bb.g ], [ %.1112195, %.preheader.lr.ph ] ; 5 uses
   %.0125168.us = phi i32 [ %i.ao, %bb.g ], [ %.1120194, %.preheader.lr.ph ] ; 3 uses
-  %i.ae = add nsw i32 %.0125168.us, %i.z
+  %i.ae = add nuw nsw i32 %.0125168.us, %i.z
+  %7 = insertelement <2 x i32> %6, i32 %i.ae, i64 1
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader.us, %bb.d
-  %.0117166.us = phi i32 [ 0, %.preheader.us ], [ %i.ak, %bb.d ] ; 3 uses
-  %4 = add nuw nsw i32 %.0117166.us, %i.z
-  %5 = urem i32 %4, %1
-  %i.af = zext nneg i32 %5 to i64
+  %.0117166.us = phi i32 [ 0, %.preheader.us ], [ %i.ak, %bb.d ] ; 2 uses
+  %8 = insertelement <2 x i32> poison, i32 %.0117166.us, i64 0
+  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %10 = add nuw nsw <2 x i32> %9, %7
+  %11 = urem <2 x i32> %10, %5                    ; 2 uses
+  %12 = extractelement <2 x i32> %11, i64 0
+  %i.af = zext nneg i32 %12 to i64
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.af
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !8
-  %6 = add nsw i32 %i.ae, %.0117166.us
-  %7 = srem i32 %6, %1
-  %8 = sext i32 %7 to i64
-  %i.ai = getelementptr inbounds [4 x i8], ptr %0, i64 %8
+  %13 = extractelement <2 x i32> %11, i64 1
+  %14 = zext nneg i32 %13 to i64
+  %i.ai = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %14
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !8
   %.not138.us = icmp eq i32 %i.ah, %i.aj
   br i1 %.not138.us, label %bb.d, label %.split.us
@@ -482,12 +488,12 @@ bb.m:                                             ; preds = %.lr.ph211
 ._crit_edge212:                                   ; preds = %bb.m, %._crit_edge212.split.loop.exit280
   %.2128.lcssa = phi i32 [ %i.bq, %._crit_edge212.split.loop.exit280 ], [ %1, %bb.m ]
   store i32 %.2128.lcssa, ptr %3, align 4, !tbaa !8
-  %xtraiter = and i64 %wide.trip.count237, 3      ; 3 uses
+  %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.br = icmp ult i32 %1, 4
   br i1 %i.br, label %.lr.ph218.epil.preheader, label %._crit_edge212.new
 
 ._crit_edge212.new:                               ; preds = %._crit_edge212
-  %unroll_iter = and i64 %wide.trip.count237, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 2147483644
   br label %.lr.ph218
 
 .lr.ph218:                                        ; preds = %.lr.ph218, %._crit_edge212.new

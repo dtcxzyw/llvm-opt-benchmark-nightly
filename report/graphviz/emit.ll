@@ -205,18 +205,19 @@ bb.j:                                             ; preds = %.lr.ph.i57
 
 .loopexit.loopexit.split.loop.exit21.i62:         ; preds = %.lr.ph.i57
   %i.ba = trunc nuw nsw i64 %indvars.iv.i58 to i32
-  br label %layer_index.exit63
+  br label %.split
 
-layer_index.exit63:                               ; preds = %bb.j, %layer_index.exit, %bb.h, %bb.i, %.preheader.i53, %.loopexit.loopexit.split.loop.exit21.i62
-  %.012.i61 = phi i32 [ -1, %bb.i ], [ %i.as, %bb.h ], [ %2, %layer_index.exit ], [ -1, %.preheader.i53 ], [ %i.ba, %.loopexit.loopexit.split.loop.exit21.i62 ], [ -1, %bb.j ] ; 3 uses
+layer_index.exit63:                               ; preds = %bb.j, %layer_index.exit, %bb.h, %bb.i, %.preheader.i53
+  %.012.i61 = phi i32 [ -1, %bb.i ], [ %i.as, %bb.h ], [ %2, %layer_index.exit ], [ -1, %.preheader.i53 ], [ -1, %bb.j ] ; 2 uses
   %i.bb = icmp sgt i32 %.012.i, -1
   %i.bc = icmp sgt i32 %.012.i61, -1
   %or.cond = select i1 %i.bb, i1 true, i1 %i.bc
   br i1 %or.cond, label %.split, label %.backedge
 
-.split:                                           ; preds = %layer_index.exit63
-  %spec.select = call i32 @llvm.smax.i32(i32 %.012.i, i32 %.012.i61)
-  %spec.select47 = call i32 @llvm.smin.i32(i32 %.012.i, i32 %.012.i61)
+.split:                                           ; preds = %.loopexit.loopexit.split.loop.exit21.i62, %layer_index.exit63
+  %.012.i6184 = phi i32 [ %i.ba, %.loopexit.loopexit.split.loop.exit21.i62 ], [ %.012.i61, %layer_index.exit63 ] ; 2 uses
+  %spec.select = call i32 @llvm.smax.i32(i32 %.012.i, i32 %.012.i6184)
+  %spec.select47 = call i32 @llvm.smin.i32(i32 %.012.i, i32 %.012.i6184)
   %i.bd = icmp sle i32 %spec.select47, %1
   %i.be = icmp sle i32 %1, %spec.select
   %i.bf = and i1 %i.bd, %i.be

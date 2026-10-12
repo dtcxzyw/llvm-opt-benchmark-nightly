@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %mca_han_algorithm_enumerator_create.exit.thread, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.d, %.preheader.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.preheader.i.i ], [ 0, %bb.d ] ; 6 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %.preheader.i.i ], [ 0, %bb.d ] ; 7 uses
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %indvars.iv.i.i
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !14
   %.not4.i.i = icmp eq ptr %i.n, null
@@ -213,14 +213,14 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not4.i.i, label %mca_han_algorithm_count.exit.i, label %.preheader.i.i, !llvm.loop !22
 
 mca_han_algorithm_count.exit.i:                   ; preds = %.preheader.i.i
-  %indvars20.le = trunc i64 %indvars.iv.i.i to i32 ; 2 uses
+  %indvars20.le = trunc i64 %indvars.iv.i.i to i32
   %i.o = icmp eq i64 %indvars.iv.i.i, 0
   br i1 %i.o, label %mca_han_algorithm_enumerator_create.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %mca_han_algorithm_count.exit.i
-  %i.p = shl i64 %indvars.iv.i.i, 32
-  %sext.i = add i64 %i.p, 8589934592
-  %0 = ashr exact i64 %sext.i, 28
+  %i.p = shl i64 %indvars.iv.i.i, 4
+  %sext.i = add i64 %i.p, 32
+  %0 = and i64 %sext.i, 68719476720
   %i.q = tail call noalias ptr @malloc(i64 noundef %0) #12 ; 8 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %bb.f, label %.lr.ph.preheader.i
@@ -229,14 +229,15 @@ bb.e:                                             ; preds = %mca_han_algorithm_c
   store i32 0, ptr %i.q, align 8, !tbaa !25
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store ptr @.str, ptr %i.s, align 8, !tbaa !18
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %indvars20.le, i32 1) ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 2 uses
+  %smax.i = tail call i32 @llvm.umax.i32(i32 %indvars20.le, i32 1) ; 2 uses
+  %wide.trip.count.i = zext i32 %smax.i to i64    ; 2 uses
+  %1 = and i64 %indvars.iv.i.i, 4294967294
   %xtraiter = and i64 %wide.trip.count.i, 1
-  %1 = icmp slt i32 %indvars20.le, 2
-  br i1 %1, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
+  %2 = icmp eq i64 %1, 0
+  br i1 %2, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
+  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
   br label %.lr.ph.i
 
 ._crit_edge.i.unr-lcssa:                          ; preds = %.lr.ph.i
@@ -518,7 +519,7 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #7
 declare void @opal_output(i32 noundef, ptr noundef, ...) local_unnamed_addr #0
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #8
+declare i32 @llvm.umax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9

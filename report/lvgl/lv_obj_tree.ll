@@ -34,7 +34,7 @@ bb.a:
   br i1 %.not, label %lv_obj_get_parent.exit, label %lv_obj_get_display.exit.thread
 
 lv_obj_get_parent.exit:                           ; preds = %bb.a
-  %i.d = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #7 ; 0 uses
+  %i.d = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #8 ; 0 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !22   ; 5 uses
   %i.g = icmp eq ptr %i.f, null
@@ -49,7 +49,7 @@ lv_obj_get_parent.exit:                           ; preds = %bb.a
   br i1 %.not23, label %.split, label %lv_obj_get_display.exit.thread
 
 lv_obj_get_screen.exit.i:                         ; preds = %lv_obj_get_parent.exit
-  %i.k = tail call ptr @lv_ll_get_head(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16)) #7 ; 2 uses
+  %i.k = tail call ptr @lv_ll_get_head(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16)) #8 ; 2 uses
   %.not2130.i = icmp eq ptr %i.k, null
   br i1 %.not2130.i, label %lv_obj_get_display.exit.thread, label %.preheader24.i
 
@@ -79,7 +79,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
   br i1 %i.r, label %bb.d, label %bb.b
 
 ._crit_edge.i:                                    ; preds = %bb.b, %.preheader24.i
-  %i.s = tail call ptr @lv_ll_get_next(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16), ptr noundef nonnull %.01731.i) #7 ; 2 uses
+  %i.s = tail call ptr @lv_ll_get_next(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16), ptr noundef nonnull %.01731.i) #8 ; 2 uses
   %.not21.i = icmp eq ptr %i.s, null
   br i1 %.not21.i, label %lv_obj_get_display.exit.thread, label %.preheader24.i, !llvm.loop !1
 
@@ -91,9 +91,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.v, label %bb.e, label %lv_obj_get_display.exit.thread
 
 .split:                                           ; preds = %.thread
-  tail call void @lv_obj_scrollbar_invalidate(ptr noundef nonnull %i.f) #7
-  %i.w = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.f, i32 noundef 43, ptr noundef null) #7 ; 0 uses
-  %i.x = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.f, i32 noundef 45, ptr noundef null) #7 ; 0 uses
+  tail call void @lv_obj_scrollbar_invalidate(ptr noundef nonnull %i.f) #8
+  %i.w = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.f, i32 noundef 43, ptr noundef null) #8 ; 0 uses
+  %i.x = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.f, i32 noundef 45, ptr noundef null) #8 ; 0 uses
   br label %lv_obj_get_display.exit.thread
 
 bb.e:                                             ; preds = %bb.d
@@ -149,7 +149,7 @@ bb.b:                                             ; preds = %bb.a
 
 lv_obj_get_screen.exit:                           ; preds = %.preheader8.i, %bb.b
   %.018 = phi ptr [ %0, %bb.b ], [ %.0.i, %.preheader8.i ]
-  %i.f = tail call ptr @lv_ll_get_head(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16)) #7 ; 2 uses
+  %i.f = tail call ptr @lv_ll_get_head(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16)) #8 ; 2 uses
   %.not2130 = icmp eq ptr %i.f, null
   br i1 %.not2130, label %.thread, label %.preheader24
 
@@ -179,7 +179,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
   br i1 %i.m, label %.thread, label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.c, %.preheader24
-  %i.n = tail call ptr @lv_ll_get_next(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16), ptr noundef nonnull %.01731) #7 ; 2 uses
+  %i.n = tail call ptr @lv_ll_get_next(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16), ptr noundef nonnull %.01731) #8 ; 2 uses
   %.not21 = icmp eq ptr %i.n, null
   br i1 %.not21, label %.thread, label %.preheader24, !llvm.loop !1
 
@@ -200,7 +200,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = or disjoint i32 %i.b, 16384
   store i32 %i.d, ptr %i.a, align 2
-  %i.e = tail call i32 @lv_obj_send_event(ptr noundef nonnull %0, i32 noundef 42, ptr noundef null) #7
+  %i.e = tail call i32 @lv_obj_send_event(ptr noundef nonnull %0, i32 noundef 42, ptr noundef null) #8
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -218,7 +218,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  tail call void @lv_event_remove_all(ptr noundef nonnull %i.k) #7
+  tail call void @lv_event_remove_all(ptr noundef nonnull %i.k) #8
   %.pr = load ptr, ptr %i.i, align 8, !tbaa !42   ; 3 uses
   %i.l = icmp eq ptr %.pr, null
   br i1 %i.l, label %._crit_edge, label %bb.f
@@ -255,14 +255,14 @@ lv_obj_get_child.exit85:                          ; preds = %bb.g
   br i1 %.not81, label %._crit_edge, label %.lr.ph, !llvm.loop !50
 
 ._crit_edge:                                      ; preds = %bb.g, %.lr.ph, %lv_obj_get_child.exit85, %bb.d, %bb.f, %bb.e, %lv_obj_get_child.exit
-  %i.w = tail call ptr @lv_obj_get_group(ptr noundef nonnull %0) #7
-  %i.x = tail call ptr @lv_indev_get_next(ptr noundef null) #7 ; 2 uses
+  %i.w = tail call ptr @lv_obj_get_group(ptr noundef nonnull %0) #8
+  %i.x = tail call ptr @lv_indev_get_next(ptr noundef null) #8 ; 2 uses
   %.not82105 = icmp eq ptr %i.x, null
   br i1 %.not82105, label %.preheader.preheader, label %.lr.ph108
 
 .lr.ph108:                                        ; preds = %._crit_edge, %bb.t
   %.074106 = phi ptr [ %i.at, %bb.t ], [ %i.x, %._crit_edge ] ; 13 uses
-  %i.y = tail call i32 @lv_indev_get_type(ptr noundef nonnull %.074106) #7
+  %i.y = tail call i32 @lv_indev_get_type(ptr noundef nonnull %.074106) #8
   %i.z = and i32 %i.y, -3
   %or.cond = icmp eq i32 %i.z, 1
   br i1 %or.cond, label %bb.h, label %bb.p
@@ -280,16 +280,16 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.af, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.ag = tail call i32 @lv_indev_get_state(ptr noundef nonnull %.074106) #7
+  %i.ag = tail call i32 @lv_indev_get_state(ptr noundef nonnull %.074106) #8
   %.not.i = icmp eq i32 %i.ag, 0
   br i1 %.not.i, label %obj_indev_reset.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @lv_indev_wait_release(ptr noundef nonnull %.074106) #7
+  tail call void @lv_indev_wait_release(ptr noundef nonnull %.074106) #8
   br label %obj_indev_reset.exit
 
 obj_indev_reset.exit:                             ; preds = %bb.j, %bb.k
-  tail call void @lv_indev_reset(ptr noundef nonnull %.074106, ptr noundef nonnull %0) #7
+  tail call void @lv_indev_reset(ptr noundef nonnull %.074106, ptr noundef nonnull %0) #8
   br label %bb.l
 
 bb.l:                                             ; preds = %obj_indev_reset.exit, %bb.i
@@ -319,25 +319,25 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %.lr.p
   br i1 %i.ap, label %bb.q, label %bb.t
 
 bb.q:                                             ; preds = %bb.p
-  %i.aq = tail call ptr @lv_indev_get_active_obj() #7
+  %i.aq = tail call ptr @lv_indev_get_active_obj() #8
   %i.ar = icmp eq ptr %0, %i.aq
   br i1 %i.ar, label %bb.r, label %bb.t
 
 bb.r:                                             ; preds = %bb.q
-  %i.as = tail call i32 @lv_indev_get_state(ptr noundef nonnull %.074106) #7
+  %i.as = tail call i32 @lv_indev_get_state(ptr noundef nonnull %.074106) #8
   %.not.i86 = icmp eq i32 %i.as, 0
   br i1 %.not.i86, label %obj_indev_reset.exit87, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  tail call void @lv_indev_wait_release(ptr noundef nonnull %.074106) #7
+  tail call void @lv_indev_wait_release(ptr noundef nonnull %.074106) #8
   br label %obj_indev_reset.exit87
 
 obj_indev_reset.exit87:                           ; preds = %bb.r, %bb.s
-  tail call void @lv_indev_reset(ptr noundef nonnull %.074106, ptr noundef nonnull %0) #7
+  tail call void @lv_indev_reset(ptr noundef nonnull %.074106, ptr noundef nonnull %0) #8
   br label %bb.t
 
 bb.t:                                             ; preds = %obj_indev_reset.exit87, %bb.q, %bb.p
-  %i.at = tail call ptr @lv_indev_get_next(ptr noundef nonnull %.074106) #7 ; 2 uses
+  %i.at = tail call ptr @lv_indev_get_next(ptr noundef nonnull %.074106) #8 ; 2 uses
   %.not82 = icmp eq ptr %i.at, null
   br i1 %.not82, label %.preheader.preheader, label %.lr.ph108, !llvm.loop !51
 
@@ -345,19 +345,19 @@ bb.t:                                             ; preds = %obj_indev_reset.exi
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %i.au = tail call i32 @lv_async_call_cancel(ptr noundef nonnull @lv_obj_delete_async_cb, ptr noundef nonnull %0) #7
+  %i.au = tail call i32 @lv_async_call_cancel(ptr noundef nonnull @lv_obj_delete_async_cb, ptr noundef nonnull %0) #8
   %i.av = icmp eq i32 %i.au, 1
   br i1 %i.av, label %.preheader, label %bb.u, !llvm.loop !52
 
 bb.u:                                             ; preds = %.preheader
-  tail call void @lv_obj_destruct(ptr noundef nonnull %0) #7
+  tail call void @lv_obj_destruct(ptr noundef nonnull %0) #8
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !22 ; 2 uses
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %lv_obj_get_screen.exit.i, label %.preheader14.i
 
 lv_obj_get_screen.exit.i:                         ; preds = %bb.u
-  %i.az = tail call ptr @lv_ll_get_head(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16)) #7
+  %i.az = tail call ptr @lv_ll_get_head(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16)) #8
   br label %.preheader24.i
 
 .preheader24.i:                                   ; preds = %._crit_edge.i, %lv_obj_get_screen.exit.i
@@ -387,7 +387,7 @@ bb.w:                                             ; preds = %bb.v, %.lr.ph.i
   br i1 %i.bg, label %.lr.ph116, label %bb.v
 
 ._crit_edge.i:                                    ; preds = %bb.v, %.preheader24.i
-  %i.bh = tail call ptr @lv_ll_get_next(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16), ptr noundef nonnull %.sink) #7
+  %i.bh = tail call ptr @lv_ll_get_next(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @lv_global, i64 16), ptr noundef nonnull %.sink) #8
   br label %.preheader24.i
 
 .lr.ph116:                                        ; preds = %bb.w
@@ -435,7 +435,7 @@ bb.y:                                             ; preds = %bb.x
   store i32 %i.bo, ptr %i.bi, align 8, !tbaa !38
   %i.by = zext i32 %i.bo to i64
   %i.bz = shl nuw nsw i64 %i.by, 3
-  %i.ca = tail call ptr @lv_realloc(ptr noundef nonnull %i.bd, i64 noundef %i.bz) #7
+  %i.ca = tail call ptr @lv_realloc(ptr noundef nonnull %i.bd, i64 noundef %i.bz) #8
   store ptr %i.ca, ptr %i.bj, align 8, !tbaa !39
   br label %bb.ab
 
@@ -516,7 +516,7 @@ lv_obj_get_index.exit:                            ; preds = %bb.z
   store i16 %i.dh, ptr %i.dg, align 8, !tbaa !46
   %i.di = zext i16 %i.dh to i64
   %i.dj = shl nuw nsw i64 %i.di, 3
-  %i.dk = tail call ptr @lv_realloc(ptr noundef %i.df, i64 noundef %i.dj) #7
+  %i.dk = tail call ptr @lv_realloc(ptr noundef %i.df, i64 noundef %i.dj) #8
   %i.dl = load ptr, ptr %i.aw, align 8, !tbaa !22
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !42
@@ -524,7 +524,7 @@ lv_obj_get_index.exit:                            ; preds = %bb.z
   br label %bb.ab
 
 bb.ab:                                            ; preds = %._crit_edge112, %._crit_edge126
-  tail call void @lv_free(ptr noundef nonnull %0) #7
+  tail call void @lv_free(ptr noundef nonnull %0) #8
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.c, %bb.ab, %bb.a
@@ -548,7 +548,7 @@ bb.a:
   br label %.preheader
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #7 ; 0 uses
+  %i.a = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #8 ; 0 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !42   ; 3 uses
   %i.d = icmp eq ptr %i.c, null
@@ -622,7 +622,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i21
 ._crit_edge:                                      ; preds = %bb.d, %.lr.ph.loopexit, %.lr.ph60, %bb.f, %.lr.ph.preheader, %bb.c, %bb.b
   %.0.i34.shrunk44.shrunk = phi i16 [ 0, %bb.c ], [ %i.f, %.lr.ph.preheader ], [ 0, %bb.b ], [ %i.f, %bb.f ], [ %i.f, %.lr.ph.loopexit ], [ %i.f, %.lr.ph60 ], [ %i.f, %bb.d ]
   %.0.i34.shrunk44 = zext i16 %.0.i34.shrunk44.shrunk to i32
-  tail call void @lv_obj_scroll_to(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 0, i1 noundef zeroext false) #7
+  tail call void @lv_obj_scroll_to(ptr noundef nonnull %0, i32 noundef 0, i32 noundef 0, i1 noundef zeroext false) #8
   %i.w = load ptr, ptr %i.b, align 8, !tbaa !42   ; 4 uses
   %.not17 = icmp eq ptr %i.w, null
   br i1 %.not17, label %lv_obj_get_child_count.exit32, label %bb.h
@@ -643,8 +643,8 @@ lv_obj_get_child_count.exit32:                    ; preds = %._crit_edge, %bb.h
   br i1 %i.ac, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %lv_obj_get_child_count.exit32
-  %i.ad = tail call i32 @lv_obj_send_event(ptr noundef nonnull %0, i32 noundef 43, ptr noundef null) #7 ; 0 uses
-  %i.ae = tail call i32 @lv_obj_send_event(ptr noundef nonnull %0, i32 noundef 45, ptr noundef null) #7 ; 0 uses
+  %i.ad = tail call i32 @lv_obj_send_event(ptr noundef nonnull %0, i32 noundef 43, ptr noundef null) #8 ; 0 uses
+  %i.ae = tail call i32 @lv_obj_send_event(ptr noundef nonnull %0, i32 noundef 45, ptr noundef null) #8 ; 0 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %lv_obj_get_child_count.exit32, %bb.i
@@ -683,15 +683,15 @@ declare void @lv_obj_scroll_to(ptr noundef, i32 noundef, i32 noundef, i1 noundef
 define void @lv_obj_delete_delayed(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct._lv_anim_t, align 8         ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
-  call void @lv_anim_init(ptr noundef nonnull %2) #7
-  call void @lv_anim_set_var(ptr noundef nonnull %2, ptr noundef %0) #7
-  call void @lv_anim_set_exec_cb(ptr noundef nonnull %2, ptr noundef null) #7
-  call void @lv_anim_set_duration(ptr noundef nonnull %2, i32 noundef 1) #7
-  call void @lv_anim_set_delay(ptr noundef nonnull %2, i32 noundef %1) #7
-  call void @lv_anim_set_completed_cb(ptr noundef nonnull %2, ptr noundef nonnull @lv_obj_delete_anim_completed_cb) #7
-  %i.a = call ptr @lv_anim_start(ptr noundef nonnull %2) #7 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
+  call void @lv_anim_init(ptr noundef nonnull %2) #8
+  call void @lv_anim_set_var(ptr noundef nonnull %2, ptr noundef %0) #8
+  call void @lv_anim_set_exec_cb(ptr noundef nonnull %2, ptr noundef null) #8
+  call void @lv_anim_set_duration(ptr noundef nonnull %2, i32 noundef 1) #8
+  call void @lv_anim_set_delay(ptr noundef nonnull %2, i32 noundef %1) #8
+  call void @lv_anim_set_completed_cb(ptr noundef nonnull %2, ptr noundef nonnull @lv_obj_delete_anim_completed_cb) #8
+  %i.a = call ptr @lv_anim_start(ptr noundef nonnull %2) #8 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   ret void
 }
 
@@ -727,7 +727,7 @@ bb.a:
   br label %.preheader
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i32 @lv_async_call(ptr noundef nonnull @lv_obj_delete_async_cb, ptr noundef nonnull %0) #7 ; 0 uses
+  %i.a = tail call i32 @lv_async_call(ptr noundef nonnull @lv_obj_delete_async_cb, ptr noundef nonnull %0) #8 ; 0 uses
   ret void
 }
 
@@ -772,8 +772,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond, label %bb.h, label %lv_obj_get_parent.exit.i
 
 lv_obj_get_parent.exit.i:                         ; preds = %bb.c
-  %i.e = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #7 ; 0 uses
-  tail call void @lv_obj_allocate_spec_attr(ptr noundef nonnull %1) #7
+  %i.e = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #8 ; 0 uses
+  tail call void @lv_obj_allocate_spec_attr(ptr noundef nonnull %1) #8
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !22   ; 5 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %.preheader.i50, label %.preheader14.i
@@ -842,11 +842,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.split
   %i.aa = zext i16 %i.z to i64
   %i.ab = shl nuw nsw i64 %i.aa, 3
-  %i.ac = tail call ptr @lv_realloc(ptr noundef nonnull %i.l, i64 noundef %i.ab) #7
+  %i.ac = tail call ptr @lv_realloc(ptr noundef nonnull %i.l, i64 noundef %i.ab) #8
   br label %lv_obj_get_child_count.exit54
 
 bb.g:                                             ; preds = %.split
-  tail call void @lv_free(ptr noundef nonnull %i.l) #7
+  tail call void @lv_free(ptr noundef nonnull %i.l) #8
   br label %lv_obj_get_child_count.exit54
 
 lv_obj_get_child_count.exit54:                    ; preds = %bb.f, %bb.g
@@ -862,7 +862,7 @@ lv_obj_get_child_count.exit54:                    ; preds = %bb.f, %bb.g
   %i.aj = load ptr, ptr %i.af, align 8, !tbaa !47
   %i.ak = zext i16 %i.ai to i64
   %i.al = shl nuw nsw i64 %i.ak, 3
-  %i.am = tail call ptr @lv_realloc(ptr noundef %i.aj, i64 noundef %i.al) #7 ; 2 uses
+  %i.am = tail call ptr @lv_realloc(ptr noundef %i.aj, i64 noundef %i.al) #8 ; 2 uses
   %i.an = load ptr, ptr %i.ae, align 8, !tbaa !42 ; 2 uses
   store ptr %i.am, ptr %i.an, align 8, !tbaa !47
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 64
@@ -873,13 +873,13 @@ lv_obj_get_child_count.exit54:                    ; preds = %bb.f, %bb.g
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.as
   store ptr %0, ptr %i.at, align 8, !tbaa !41
   store ptr %1, ptr %i.a, align 8, !tbaa !22
-  tail call void @lv_obj_scrollbar_invalidate(ptr noundef nonnull %i.f) #7
-  %i.au = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.f, i32 noundef 43, ptr noundef nonnull %0) #7 ; 0 uses
-  %i.av = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.f, i32 noundef 45, ptr noundef null) #7 ; 0 uses
-  %i.aw = tail call i32 @lv_obj_send_event(ptr noundef nonnull %1, i32 noundef 43, ptr noundef nonnull %0) #7 ; 0 uses
-  %i.ax = tail call i32 @lv_obj_send_event(ptr noundef nonnull %1, i32 noundef 44, ptr noundef null) #7 ; 0 uses
-  tail call void @lv_obj_mark_layout_as_dirty(ptr noundef nonnull %0) #7
-  %i.ay = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #7 ; 0 uses
+  tail call void @lv_obj_scrollbar_invalidate(ptr noundef nonnull %i.f) #8
+  %i.au = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.f, i32 noundef 43, ptr noundef nonnull %0) #8 ; 0 uses
+  %i.av = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.f, i32 noundef 45, ptr noundef null) #8 ; 0 uses
+  %i.aw = tail call i32 @lv_obj_send_event(ptr noundef nonnull %1, i32 noundef 43, ptr noundef nonnull %0) #8 ; 0 uses
+  %i.ax = tail call i32 @lv_obj_send_event(ptr noundef nonnull %1, i32 noundef 44, ptr noundef null) #8 ; 0 uses
+  tail call void @lv_obj_mark_layout_as_dirty(ptr noundef nonnull %0) #8
+  %i.ay = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %0) #8 ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.c, %lv_obj_get_child_count.exit54
@@ -966,7 +966,7 @@ lv_obj_get_parent.exit:                           ; preds = %bb.a
 
 bb.b:                                             ; preds = %lv_obj_get_parent.exit
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !42   ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !42   ; 4 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %.preheader14.i, label %bb.c
 
@@ -984,12 +984,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not17.i, label %.preheader13.i.preheader, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader14.i
-  %i.k = load ptr, ptr %i.d, align 8, !tbaa !47
+  %i.k = load ptr, ptr %i.d, align 8, !tbaa !47   ; 6 uses
   %wide.trip.count.i = zext i16 %i.j to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 8 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.e ] ; 10 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.i
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !41
   %i.n = icmp eq ptr %i.m, %0
@@ -1007,10 +1007,10 @@ bb.e:                                             ; preds = %bb.d
   br label %.preheader13.i
 
 bb.f:                                             ; preds = %bb.d
-  %i.o = trunc nuw nsw i64 %indvars.iv.i to i32   ; 4 uses
+  %i.o = trunc nuw nsw i64 %indvars.iv.i to i32   ; 3 uses
   %i.p = icmp slt i32 %1, 0
-  %i.q = select i1 %i.p, i32 %.0.i44, i32 0
-  %spec.select = add i32 %i.q, %1                 ; 8 uses
+  %i.q = select i1 %i.p, i32 %.0.i44, i32 0       ; 2 uses
+  %spec.select = add nsw i32 %i.q, %1             ; 7 uses
   %i.r = icmp slt i32 %spec.select, 0
   %.not42 = icmp sge i32 %spec.select, %.0.i44
   %or.cond.not48 = select i1 %i.r, i1 true, i1 %.not42
@@ -1019,21 +1019,22 @@ bb.f:                                             ; preds = %bb.d
   br i1 %or.cond43, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %2 = icmp samesign ult i32 %spec.select, %i.o
+  %2 = icmp slt i32 %spec.select, %i.o
   br i1 %2, label %.preheader49, label %.preheader50
 
 .preheader50:                                     ; preds = %bb.g
-  %3 = icmp samesign ugt i32 %spec.select, %i.o
-  %.pre = load ptr, ptr %i.d, align 8, !tbaa !47  ; 4 uses
+  %3 = icmp sgt i32 %spec.select, %i.o
   br i1 %3, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader50
   %i.t = shl nuw nsw i64 %indvars.iv.i, 3         ; 2 uses
-  %scevgep = getelementptr nuw i8, ptr %.pre, i64 %i.t
-  %i.u = getelementptr nuw i8, ptr %.pre, i64 %i.t
+  %scevgep = getelementptr nuw i8, ptr %i.k, i64 %i.t
+  %i.u = getelementptr nuw i8, ptr %i.k, i64 %i.t
   %scevgep58 = getelementptr nuw i8, ptr %i.u, i64 8
-  %i.v = xor i32 %i.o, -1
-  %i.w = add nsw i32 %spec.select, %i.v
+  %4 = trunc i64 %indvars.iv.i to i32
+  %i.v = xor i32 %4, -1
+  %5 = add i32 %1, %i.v
+  %i.w = add i32 %i.q, %5
   %i.x = zext i32 %i.w to i64
   %i.y = shl nuw nsw i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 8
@@ -1041,9 +1042,10 @@ bb.g:                                             ; preds = %bb.f
   br label %.loopexit
 
 .preheader49:                                     ; preds = %bb.g
-  %4 = load ptr, ptr %i.d, align 8, !tbaa !47     ; 4 uses
-  %5 = zext nneg i32 %spec.select to i64          ; 2 uses
-  %i.aa = sub nsw i64 %indvars.iv.i, %5           ; 3 uses
+  %6 = zext nneg i32 %spec.select to i64          ; 2 uses
+  %7 = add nsw i64 %indvars.iv.i, -1
+  %8 = tail call i64 @llvm.smin.i64(i64 %7, i64 %6)
+  %i.aa = sub i64 %indvars.iv.i, %8               ; 3 uses
   %min.iters.check = icmp ult i64 %i.aa, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -1055,7 +1057,7 @@ vector.ph:                                        ; preds = %.preheader49
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ac = sub i64 %indvars.iv.i, %index
-  %i.ad = getelementptr [8 x i8], ptr %4, i64 %i.ac ; 4 uses
+  %i.ad = getelementptr [8 x i8], ptr %i.k, i64 %i.ac ; 4 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 -16
   %i.af = getelementptr i8, ptr %i.ad, i64 -32
   %wide.load = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !41
@@ -1078,21 +1080,20 @@ scalar.ph.preheader:                              ; preds = %.preheader49, %midd
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
-  %i.aj = getelementptr [8 x i8], ptr %4, i64 %indvars.iv ; 2 uses
+  %i.aj = getelementptr [8 x i8], ptr %i.k, i64 %indvars.iv ; 2 uses
   %i.ak = getelementptr i8, ptr %i.aj, i64 -8
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !41
   store ptr %i.al, ptr %i.aj, align 8, !tbaa !41
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.am = icmp sgt i64 %indvars.iv.next, %5
+  %i.am = icmp sgt i64 %indvars.iv.next, %6
   br i1 %i.am, label %scalar.ph, label %.loopexit, !llvm.loop !71
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %.lr.ph, %.preheader50
-  %6 = phi ptr [ %.pre, %.lr.ph ], [ %.pre, %.preheader50 ], [ %4, %middle.block ], [ %4, %scalar.ph ]
   %i.an = zext nneg i32 %spec.select to i64
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.an
+  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.an
   store ptr %0, ptr %i.ao, align 8, !tbaa !41
-  %i.ap = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.b, i32 noundef 43, ptr noundef null) #7 ; 0 uses
-  %i.aq = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %i.b) #7 ; 0 uses
+  %i.ap = tail call i32 @lv_obj_send_event(ptr noundef nonnull %i.b, i32 noundef 43, ptr noundef null) #8 ; 0 uses
+  %i.aq = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %i.b) #8 ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit, %bb.f, %lv_obj_get_parent.exit
@@ -1192,8 +1193,8 @@ bb.f:                                             ; preds = %bb.e
 
 lv_obj_get_index.exit52:                          ; preds = %bb.e, %lv_obj_get_parent.exit.i40
   %.010.i50 = phi i64 [ -1, %lv_obj_get_parent.exit.i40 ], [ %indvars.iv.i45, %bb.e ]
-  %i.w = tail call i32 @lv_obj_send_event(ptr noundef %i.d, i32 noundef 45, ptr noundef nonnull %1) #7 ; 0 uses
-  %i.x = tail call i32 @lv_obj_send_event(ptr noundef %i.b, i32 noundef 45, ptr noundef nonnull %0) #7 ; 0 uses
+  %i.w = tail call i32 @lv_obj_send_event(ptr noundef %i.d, i32 noundef 45, ptr noundef nonnull %1) #8 ; 0 uses
+  %i.x = tail call i32 @lv_obj_send_event(ptr noundef %i.b, i32 noundef 45, ptr noundef nonnull %0) #8 ; 0 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !42
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !47
@@ -1206,20 +1207,20 @@ lv_obj_get_index.exit52:                          ; preds = %bb.e, %lv_obj_get_p
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %.010.i50
   store ptr %0, ptr %i.af, align 8, !tbaa !41
   store ptr %i.d, ptr %i.a, align 8, !tbaa !22
-  %i.ag = tail call i32 @lv_obj_send_event(ptr noundef %i.b, i32 noundef 43, ptr noundef nonnull %1) #7 ; 0 uses
-  %i.ah = tail call i32 @lv_obj_send_event(ptr noundef %i.b, i32 noundef 44, ptr noundef nonnull %1) #7 ; 0 uses
-  %i.ai = tail call i32 @lv_obj_send_event(ptr noundef %i.d, i32 noundef 43, ptr noundef nonnull %0) #7 ; 0 uses
-  %i.aj = tail call i32 @lv_obj_send_event(ptr noundef %i.d, i32 noundef 44, ptr noundef nonnull %0) #7 ; 0 uses
-  %i.ak = tail call i32 @lv_obj_invalidate(ptr noundef %i.b) #7 ; 0 uses
+  %i.ag = tail call i32 @lv_obj_send_event(ptr noundef %i.b, i32 noundef 43, ptr noundef nonnull %1) #8 ; 0 uses
+  %i.ah = tail call i32 @lv_obj_send_event(ptr noundef %i.b, i32 noundef 44, ptr noundef nonnull %1) #8 ; 0 uses
+  %i.ai = tail call i32 @lv_obj_send_event(ptr noundef %i.d, i32 noundef 43, ptr noundef nonnull %0) #8 ; 0 uses
+  %i.aj = tail call i32 @lv_obj_send_event(ptr noundef %i.d, i32 noundef 44, ptr noundef nonnull %0) #8 ; 0 uses
+  %i.ak = tail call i32 @lv_obj_invalidate(ptr noundef %i.b) #8 ; 0 uses
   %.not36 = icmp eq ptr %i.b, %i.d
   br i1 %.not36, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %lv_obj_get_index.exit52
-  %i.al = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %i.d) #7 ; 0 uses
+  %i.al = tail call i32 @lv_obj_invalidate(ptr noundef nonnull %i.d) #8 ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %lv_obj_get_index.exit52
-  tail call void @lv_group_swap_obj(ptr noundef nonnull %0, ptr noundef nonnull %1) #7
+  tail call void @lv_group_swap_obj(ptr noundef nonnull %0, ptr noundef nonnull %1) #8
   ret void
 }
 
@@ -1622,7 +1623,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @lv_display_get_next(ptr noundef null) #7 ; 2 uses
+  %i.b = tail call ptr @lv_display_get_next(ptr noundef null) #8 ; 2 uses
   %.not3141 = icmp eq ptr %i.b, null
   br i1 %.not3141, label %.loopexit, label %.preheader
 
@@ -1650,12 +1651,12 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   br i1 %i.l, label %bb.c, label %._crit_edge, !llvm.loop !78
 
 ._crit_edge:                                      ; preds = %bb.c, %.preheader
-  %i.m = tail call ptr @lv_display_get_next(ptr noundef nonnull %.02642) #7 ; 2 uses
+  %i.m = tail call ptr @lv_display_get_next(ptr noundef nonnull %.02642) #8 ; 2 uses
   %.not31 = icmp eq ptr %i.m, null
   br i1 %.not31, label %.loopexit, label %.preheader, !llvm.loop !79
 
 bb.d:                                             ; preds = %bb.a
-  %i.n = tail call i32 %1(ptr noundef nonnull %0, ptr noundef %2) #7 ; 2 uses
+  %i.n = tail call i32 %1(ptr noundef nonnull %0, ptr noundef %2) #8 ; 2 uses
   switch i32 %i.n, label %.preheader37 [
     i32 2, label %.loopexit
     i32 1, label %.critedge
@@ -1705,7 +1706,7 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @lv_display_get_next(ptr noundef null) #7 ; 2 uses
+  %i.b = tail call ptr @lv_display_get_next(ptr noundef null) #8 ; 2 uses
   %.not11 = icmp eq ptr %i.b, null
   br i1 %.not11, label %.loopexit, label %.preheader
 
@@ -1732,7 +1733,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !81
 
 ._crit_edge:                                      ; preds = %bb.c, %.preheader
-  %i.i = tail call ptr @lv_display_get_next(ptr noundef nonnull %.0812) #7 ; 2 uses
+  %i.i = tail call ptr @lv_display_get_next(ptr noundef nonnull %.0812) #8 ; 2 uses
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %.loopexit, label %.preheader, !llvm.loop !82
 
@@ -1809,6 +1810,9 @@ declare void @llvm.assume(i1 noundef) #6
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #7
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1816,7 +1820,8 @@ attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #4 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nofree nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #7 = { nounwind }
+attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!6, !7}
 !llvm.ident = !{!8}

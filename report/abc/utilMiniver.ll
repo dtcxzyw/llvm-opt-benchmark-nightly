@@ -203,8 +203,8 @@ bb.t:                                             ; preds = %.lr.ph.i.i
   br i1 %i.cm, label %.thread.sink.split, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %4 = sext i32 %i.cl to i64
-  %i.cn = getelementptr inbounds i8, ptr %.0122, i64 %4 ; 5 uses
+  %4 = zext nneg i32 %i.cl to i64
+  %i.cn = getelementptr inbounds nuw i8, ptr %.0122, i64 %4 ; 5 uses
   %i.co = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.cn, i32 noundef 61) #19 ; 4 uses
   %i.cp = icmp eq i8 %i.aq, 105
   br i1 %i.cp, label %bb.v, label %bb.ao
@@ -556,17 +556,15 @@ bb.as:                                            ; preds = %bb.ar
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #16
   %i.fo = ptrtoint ptr %i.co to i64
   %i.fp = ptrtoint ptr %.0122 to i64
-  %i.fq = sub i64 %i.fo, %i.fp                    ; 2 uses
-  %i.fr = trunc i64 %i.fq to i32
+  %i.fq = sub i64 %i.fo, %i.fp
+  %i.fr = trunc i64 %i.fq to i32                  ; 4 uses
   %i.fs = icmp slt i32 %i.cl, %i.fr
   %i.ft = icmp eq i8 %i.aq, 111                   ; 2 uses
   br i1 %i.fs, label %.lr.ph.i189, label %._crit_edge.i
 
 .lr.ph.i189:                                      ; preds = %bb.as
-  %5 = sext i32 %indvars.iv.i to i64              ; 2 uses
-  %sext.i = shl i64 %i.fq, 32
-  %6 = ashr exact i64 %sext.i, 32                 ; 3 uses
-  %i.fu = getelementptr inbounds i8, ptr %.0122, i64 %5
+  %5 = zext i32 %indvars.iv.i to i64              ; 2 uses
+  %i.fu = getelementptr inbounds nuw i8, ptr %.0122, i64 %5
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !9   ; 4 uses
   %i.fw = zext i8 %i.fv to i64
   %i.fx = getelementptr inbounds nuw [2 x i8], ptr %i.bt, i64 %i.fw
@@ -594,14 +592,15 @@ switch.early.test183.peel.i:                      ; preds = %.thread.peel.i
 
 .thread157.peel.i:                                ; preds = %switch.early.test181.peel.i, %switch.early.test181.peel.i, %switch.early.test183.peel.i, %switch.early.test183.peel.i, %.thread.peel.i
   store i8 %i.fv, ptr %i.d, align 16, !tbaa !9
-  %indvars.iv.next227.peel.i = add nsw i64 %5, 1  ; 2 uses
-  %i.gb = icmp slt i64 %indvars.iv.next227.peel.i, %6
+  %indvars.iv.next227.peel.i = add nuw nsw i64 %5, 1 ; 2 uses
+  %6 = trunc nuw i64 %indvars.iv.next227.peel.i to i32
+  %i.gb = icmp slt i32 %6, %i.fr
   br i1 %i.gb, label %.peel.next.i, label %._crit_edge.loopexit.loopexit.i
 
 .peel.next.i:                                     ; preds = %.thread157.peel.i, %.thread157.i.1
   %indvars.iv228.i = phi i64 [ %indvars.iv.next229.i.1, %.thread157.i.1 ], [ 1, %.thread157.peel.i ] ; 3 uses
   %indvars.iv226.i = phi i64 [ %indvars.iv.next227.i.1, %.thread157.i.1 ], [ %indvars.iv.next227.peel.i, %.thread157.peel.i ] ; 3 uses
-  %i.gc = getelementptr inbounds i8, ptr %.0122, i64 %indvars.iv226.i
+  %i.gc = getelementptr inbounds nuw i8, ptr %.0122, i64 %indvars.iv226.i
   %i.gd = load i8, ptr %i.gc, align 1, !tbaa !9   ; 3 uses
   %i.ge = zext i8 %i.gd to i64
   %i.gf = getelementptr inbounds nuw [2 x i8], ptr %i.bt, i64 %i.ge
@@ -629,12 +628,13 @@ switch.early.test182.i:                           ; preds = %.peel.next.i
   %indvars.iv.next229.i = add nuw nsw i64 %indvars.iv228.i, 1 ; 3 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv228.i
   store i8 %i.gd, ptr %i.gl, align 1, !tbaa !9
-  %indvars.iv.next227.i = add nsw i64 %indvars.iv226.i, 1 ; 2 uses
-  %i.gm = icmp slt i64 %indvars.iv.next227.i, %6
+  %indvars.iv.next227.i = add nuw nsw i64 %indvars.iv226.i, 1 ; 2 uses
+  %7 = trunc nuw i64 %indvars.iv.next227.i to i32
+  %i.gm = icmp slt i32 %7, %i.fr
   br i1 %i.gm, label %.peel.next.i.1, label %._crit_edge.loopexit.loopexit.i
 
 .peel.next.i.1:                                   ; preds = %.thread157.i
-  %i.gn = getelementptr inbounds i8, ptr %.0122, i64 %indvars.iv.next227.i
+  %i.gn = getelementptr inbounds nuw i8, ptr %.0122, i64 %indvars.iv.next227.i
   %i.go = load i8, ptr %i.gn, align 1, !tbaa !9   ; 3 uses
   %i.gp = zext i8 %i.go to i64
   %i.gq = getelementptr inbounds nuw [2 x i8], ptr %i.bt, i64 %i.gp
@@ -658,8 +658,9 @@ bb.at:                                            ; preds = %switch.early.test18
   %indvars.iv.next229.i.1 = add nuw nsw i64 %indvars.iv228.i, 2 ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.next229.i
   store i8 %i.go, ptr %i.gu, align 1, !tbaa !9
-  %indvars.iv.next227.i.1 = add nsw i64 %indvars.iv226.i, 2 ; 2 uses
-  %i.gv = icmp slt i64 %indvars.iv.next227.i.1, %6
+  %indvars.iv.next227.i.1 = add nuw nsw i64 %indvars.iv226.i, 2 ; 2 uses
+  %8 = trunc nuw i64 %indvars.iv.next227.i.1 to i32
+  %i.gv = icmp slt i32 %8, %i.fr
   br i1 %i.gv, label %.peel.next.i, label %._crit_edge.loopexit.loopexit.i, !llvm.loop !34
 
 ._crit_edge.i:                                    ; preds = %bb.as
