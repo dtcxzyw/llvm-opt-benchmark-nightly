@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.b = sub nuw i64 %2, %1                       ; 2 uses
-  %i.c = add i64 %i.b, 1                          ; 2 uses
+  %i.c = add i64 %i.b, 1                          ; 3 uses
   %i.d = icmp eq i64 %i.c, 0
   %i.e = load i32, ptr %3, align 4, !noundef !4   ; 7 uses
   %i.f = icmp ult i32 %i.e, 63                    ; 2 uses
@@ -286,7 +286,7 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randomyECs31YA
   %i.al = zext i32 %.sroa.02.017.i.i.i.i9 to i64
   %i.am = or disjoint i64 %i.ak, %i.al
   %i.an = zext i64 %i.am to i128
-  %i.ao = zext i64 %i.c to i128                   ; 2 uses
+  %i.ao = zext i64 %i.c to i128
   %i.ap = mul nuw i128 %i.an, %i.ao               ; 2 uses
   %i.aq = lshr i128 %i.ap, 64
   %i.ar = trunc nuw i128 %i.aq to i64             ; 2 uses
@@ -336,12 +336,9 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randomyECs31YA
   %i.bj = shl nuw i64 %i.bi, 32
   %i.bk = zext i32 %.sroa.02.017.i.i.i.i14 to i64
   %i.bl = or disjoint i64 %i.bj, %i.bk
-  %4 = zext i64 %i.bl to i128
-  %5 = mul nuw i128 %4, %i.ao
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.bl, i64 %i.c)
   %i.bm = xor i64 %i.as, -1
-  %.not6 = icmp ult i64 %i.bm, %7
+  %.not6 = icmp ugt i64 %4, %i.bm
   %i.bn = zext i1 %.not6 to i64
   %i.bo = add nuw i64 %i.bn, %i.ar
   br label %bb.q
@@ -379,7 +376,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.g = sub nuw i32 %i.f, %i.e                   ; 2 uses
-  %i.h = add i32 %i.g, 1                          ; 2 uses
+  %i.h = add i32 %i.g, 1                          ; 3 uses
   %i.i = icmp eq i32 %i.h, 0
   %i.j = load i32, ptr %0, align 4, !alias.scope !149, !noalias !150, !noundef !4 ; 5 uses
   %i.k = icmp ugt i32 %i.j, 63                    ; 2 uses
@@ -426,7 +423,7 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs31YA
   %i.u = load i32, ptr %.in.i.i.i.i11.i.i.i, align 4, !alias.scope !152, !noalias !150, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i10.i.i.i, ptr %0, align 4, !alias.scope !152, !noalias !150
   %i.v = zext i32 %i.u to i64
-  %i.w = zext i32 %i.h to i64                     ; 2 uses
+  %i.w = zext i32 %i.h to i64
   %i.x = mul nuw i64 %i.v, %i.w                   ; 2 uses
   %i.y = lshr i64 %i.x, 32
   %i.z = trunc nuw i64 %i.y to i32                ; 2 uses
@@ -455,12 +452,9 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs31YA
   %.in.i.i.i.i15.i.i.i = phi ptr [ %0, %.thread.i.i.i.i16.i.i.i ], [ %i.ag, %bb.j ]
   %i.ai = load i32, ptr %.in.i.i.i.i15.i.i.i, align 4, !alias.scope !153, !noalias !150, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i14.i.i.i, ptr %0, align 4, !alias.scope !153, !noalias !150
-  %3 = zext i32 %i.ai to i64
-  %4 = mul nuw i64 %3, %i.w
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.ai, i32 %i.h)
   %i.aj = xor i32 %i.aa, -1
-  %.not9.i.i.i = icmp ult i32 %i.aj, %6
+  %.not9.i.i.i = icmp ugt i32 %3, %i.aj
   %i.ak = zext i1 %.not9.i.i.i to i32
   %i.al = add nuw i32 %i.ak, %i.z
   br label %bb.k
@@ -525,13 +519,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %_RINvXsn_NtNtNtCs4DkaUnCZMGd_4rand5distr7uniform3intINtB6_10UniformIntyENtB8_14UniformSampler13sample_singleNtNtNtBc_4rngs3std6StdRngyyECs31YAwBA1AlL_19xet_core_structures.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = trunc i64 %1 to i32                      ; 2 uses
-  %i.e = trunc nuw i64 %2 to i32                  ; 2 uses
+  %i.d = trunc i64 %1 to i32                      ; 3 uses
+  %i.e = trunc nuw i64 %2 to i32                  ; 3 uses
   %i.f = icmp ult i32 %i.d, %i.e
   br i1 %i.f, label %bb.d, label %_RINvXs6_NtNtCs4DkaUnCZMGd_4rand5distr7uniformINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEINtB6_11SampleRangejE13sample_singleNtNtNtBa_4rngs3std6StdRngECs31YAwBA1AlL_19xet_core_structures.exit.thread
 
 bb.d:                                             ; preds = %bb.c
-  %4 = sub nuw i64 %2, %1                         ; 2 uses
+  %4 = sub nuw i32 %i.e, %i.d                     ; 2 uses
   %i.g = load i32, ptr %0, align 4, !alias.scope !188, !noalias !189, !noundef !4 ; 3 uses
   %i.h = icmp ugt i32 %i.g, 63
   br i1 %i.h, label %.thread.i.i.i.i12.i.i.i.i, label %bb.e
@@ -552,8 +546,9 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs31YA
   %.in.i.i.i.i11.i.i.i.i = phi ptr [ %0, %.thread.i.i.i.i12.i.i.i.i ], [ %i.k, %bb.e ]
   %i.m = load i32, ptr %.in.i.i.i.i11.i.i.i.i, align 4, !alias.scope !190, !noalias !189, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i10.i.i.i.i, ptr %0, align 4, !alias.scope !190, !noalias !189
-  %i.n = zext i32 %i.m to i64
-  %i.o = mul nuw i64 %4, %i.n                     ; 2 uses
+  %5 = zext i32 %i.m to i64
+  %i.n = zext i32 %4 to i64
+  %i.o = mul nuw i64 %5, %i.n                     ; 2 uses
   %i.p = lshr i64 %i.o, 32                        ; 2 uses
   %i.q = trunc i64 %i.o to i32                    ; 2 uses
   %i.r = sub i32 %i.d, %i.e
@@ -580,12 +575,9 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs31YA
   %.in.i.i.i.i15.i.i.i.i = phi ptr [ %0, %.thread.i.i.i.i16.i.i.i.i ], [ %i.w, %bb.g ]
   %i.y = load i32, ptr %.in.i.i.i.i15.i.i.i.i, align 4, !alias.scope !191, !noalias !189, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i14.i.i.i.i, ptr %0, align 4, !alias.scope !191, !noalias !189
-  %5 = zext i32 %i.y to i64
-  %6 = mul nuw i64 %4, %5
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %6 = tail call i32 @llvm.umulh.i32(i32 %i.y, i32 %4)
   %i.z = xor i32 %i.q, -1
-  %.not9.i.i.i.i = icmp ult i32 %i.z, %8
+  %.not9.i.i.i.i = icmp ugt i32 %6, %i.z
   %i.aa = zext i1 %.not9.i.i.i.i to i64
   %i.ab = add nuw nsw i64 %i.p, %i.aa
   br label %_RINvXs6_NtNtCs4DkaUnCZMGd_4rand5distr7uniformINtNtNtCskKLDkoKarTP_4core3ops5range5RangejEINtB6_11SampleRangejE13sample_singleNtNtNtBa_4rngs3std6StdRngECs31YAwBA1AlL_19xet_core_structures.exit.thread8
@@ -639,7 +631,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.f, !prof !14
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = sub i32 %2, %1
+  %i.a = sub i32 %2, %1                           ; 2 uses
   %i.b = load i32, ptr %0, align 4, !alias.scope !217, !noundef !4 ; 3 uses
   %i.c = icmp ugt i32 %i.b, 63
   br i1 %i.c, label %.thread.i.i.i.i.i.i.i, label %bb.c
@@ -661,7 +653,7 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs31YA
   %i.h = load i32, ptr %.in.i.i.i.i.i.i.i, align 4, !alias.scope !218, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i.i.i.i, ptr %0, align 4, !alias.scope !218
   %i.i = zext i32 %i.h to i64
-  %i.j = zext i32 %i.a to i64                     ; 2 uses
+  %i.j = zext i32 %i.a to i64
   %i.k = mul nuw i64 %i.i, %i.j                   ; 2 uses
   %i.l = lshr i64 %i.k, 32
   %i.m = trunc nuw i64 %i.l to i32                ; 2 uses
@@ -690,12 +682,9 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs31YA
   %.in.i.i.i.i11.i.i.i = phi ptr [ %0, %.thread.i.i.i.i12.i.i.i ], [ %i.t, %bb.e ]
   %i.v = load i32, ptr %.in.i.i.i.i11.i.i.i, align 4, !alias.scope !219, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i10.i.i.i, ptr %0, align 4, !alias.scope !219
-  %4 = zext i32 %i.v to i64
-  %5 = mul nuw i64 %4, %i.j
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
+  %4 = tail call i32 @llvm.umulh.i32(i32 %i.v, i32 %i.a)
   %i.w = xor i32 %i.n, -1
-  %.not9.i.i.i = icmp ult i32 %i.w, %7
+  %.not9.i.i.i = icmp ugt i32 %4, %i.w
   %i.x = zext i1 %.not9.i.i.i to i32
   %i.y = add nuw i32 %i.x, %i.m
   br label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtCs4DkaUnCZMGd_4rand5distr7uniform5ErrorE6unwrapCs31YAwBA1AlL_19xet_core_structures.exit
@@ -722,7 +711,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.val8 = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 7 uses
   %i.b = sub nuw i32 %.val5, %.val                ; 2 uses
-  %i.c = add i32 %i.b, 1                          ; 2 uses
+  %i.c = add i32 %i.b, 1                          ; 3 uses
   %i.d = icmp eq i32 %i.c, 0
   %i.e = getelementptr inbounds nuw i8, ptr %.val8, i64 16 ; 13 uses
   %i.f = load i32, ptr %i.e, align 4, !noalias !249, !noundef !4 ; 5 uses
@@ -790,7 +779,7 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randommE
   %i.w = load i32, ptr %.in.i.i.i.i13.i.i, align 4, !alias.scope !257, !noalias !256, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i12.i.i, ptr %i.e, align 4, !alias.scope !257, !noalias !256
   %i.x = zext i32 %i.w to i64
-  %i.y = zext i32 %i.c to i64                     ; 2 uses
+  %i.y = zext i32 %i.c to i64
   %i.z = mul nuw i64 %i.x, %i.y                   ; 2 uses
   %i.aa = lshr i64 %i.z, 32
   %i.ab = trunc nuw i64 %i.aa to i32              ; 2 uses
@@ -829,12 +818,9 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs6thread9ThreadRngNtNtB9_3rng6RngExt6randommE
   %.in.i.i.i.i17.i.i = phi ptr [ %i.e, %.thread.i.i.i.i18.i.i ], [ %i.al, %bb.n ]
   %i.an = load i32, ptr %.in.i.i.i.i17.i.i, align 4, !alias.scope !261, !noalias !260, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i16.i.i, ptr %i.e, align 4, !alias.scope !261, !noalias !260
-  %3 = zext i32 %i.an to i64
-  %4 = mul nuw i64 %3, %i.y
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.an, i32 %i.c)
   %i.ao = xor i32 %i.ac, -1
-  %.not9.i.i = icmp ult i32 %i.ao, %6
+  %.not9.i.i = icmp ugt i32 %3, %i.ao
   %i.ap = zext i1 %.not9.i.i to i32
   %i.aq = add nuw i32 %i.ap, %i.ab
   br label %bb.o
@@ -1237,12 +1223,9 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs31YA
   %.in.i.i.i.i11.i.i.i.i = phi ptr [ %i.li, %.thread94 ], [ %i.s, %.thread.i.i.i.i12.i.i.i.i ]
   %i.lm = load i32, ptr %.in.i.i.i.i11.i.i.i.i, align 4, !alias.scope !422, !noalias !421, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i10.i.i.i.i, ptr %i.s, align 4, !alias.scope !422, !noalias !421
-  %9 = zext i32 %i.lm to i64
-  %10 = mul nuw nsw i64 %9, 10000
-  %11 = lshr i64 %10, 32
-  %12 = trunc nuw nsw i64 %11 to i32
+  %9 = call i32 @llvm.umulh.i32(i32 %i.lm, i32 10000)
   %i.ln = xor i32 %i.ll, -1
-  %.not9.i.i.i.i = icmp samesign ult i32 %i.ln, %12
+  %.not9.i.i.i.i = icmp ugt i32 %9, %i.ln
   %i.lo = zext i1 %.not9.i.i.i.i to i32
   %i.lp = add nuw nsw i32 %i.lk, %i.lo
   br label %bb.af
@@ -1326,12 +1309,9 @@ _RINvYNtNtNtCs4DkaUnCZMGd_4rand4rngs3std6StdRngNtNtB9_3rng6RngExt6randommECs31YA
   %.in.i.i.i.i15.i.i.i.i = phi ptr [ %i.ms, %.thread.i.i ], [ %i.s, %.thread.i.i.i.i16.i.i.i.i ]
   %i.mw = load i32, ptr %.in.i.i.i.i15.i.i.i.i, align 4, !alias.scope !427, !noundef !4
   store i32 %.sroa.6.0.extract.trunc.i.i.i.i.i.i14.i.i.i.i, ptr %i.s, align 4, !alias.scope !427
-  %13 = zext i32 %i.mw to i64
-  %14 = mul nuw nsw i64 %13, 10000
-  %15 = lshr i64 %14, 32
-  %16 = trunc nuw nsw i64 %15 to i32
+  %10 = call i32 @llvm.umulh.i32(i32 %i.mw, i32 10000)
   %i.mx = xor i32 %i.mv, -1
-  %.not9.i.i.i.i58 = icmp samesign ult i32 %i.mx, %16
+  %.not9.i.i.i.i58 = icmp ugt i32 %10, %i.mx
   %i.my = zext i1 %.not9.i.i.i.i58 to i64
   %i.mz = add nuw nsw i64 %i.mu, %i.my
   br label %bb.ak
@@ -1733,6 +1713,12 @@ declare noundef zeroext i1 @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter3pad
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs31YAwBA1AlL_19xet_core_structures(ptr noalias nofree noundef nonnull, i64 noundef range(i64 0, -9223372036854775808), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #20

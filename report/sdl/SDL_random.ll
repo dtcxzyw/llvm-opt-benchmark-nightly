@@ -14,7 +14,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i64 @SDL_GetPerformanceCounter_REAL() #3
+  %i.a = tail call i64 @SDL_GetPerformanceCounter_REAL() #4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -33,7 +33,7 @@ bb.a:
   br i1 %.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i64 @SDL_GetPerformanceCounter_REAL() #3
+  %i.a = tail call i64 @SDL_GetPerformanceCounter_REAL() #4
   store i64 %i.a, ptr @SDL_rand_state, align 8
   store i1 true, ptr @SDL_rand_initialized, align 1
   br label %bb.c
@@ -48,25 +48,22 @@ bb.d:                                             ; preds = %bb.c
   %i.e = add i64 %i.d, 5                          ; 2 uses
   store i64 %i.e, ptr @SDL_rand_state, align 8
   %i.f = lshr i64 %i.e, 32
-  %1 = zext nneg i32 %0 to i64
-  %2 = mul nuw nsw i64 %i.f, %1
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw nsw i64 %3 to i32
+  %1 = trunc nuw i64 %i.f to i32
+  %2 = tail call i32 @llvm.umulh.i32(i32 %1, i32 %0)
   br label %SDL_rand_r_REAL.exit
 
 SDL_rand_r_REAL.exit:                             ; preds = %bb.c, %bb.d
-  %.0.i = phi i32 [ %4, %bb.d ], [ 0, %bb.c ]
+  %.0.i = phi i32 [ 0, %bb.c ], [ %2, %bb.d ]
   ret i32 %.0.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define hidden range(i32 0, 2147483647) i32 @SDL_rand_r_REAL(ptr nofree noundef captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #2 {
-  %3 = icmp slt i32 %1, 0
-  br i1 %3, label %bb.c, label %bb.a
-
-bb.a:                                             ; preds = %2
+bb.a:
+  %2 = icmp slt i32 %1, 0
   %.not.i = icmp eq ptr %0, null
-  br i1 %.not.i, label %SDL_rand_bits_r_REAL.exit, label %bb.b
+  %or.cond = or i1 %.not.i, %2
+  br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load i64, ptr %0, align 8
@@ -74,18 +71,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = add i64 %i.b, 5                          ; 2 uses
   store i64 %i.c, ptr %0, align 8
   %i.d = lshr i64 %i.c, 32
-  br label %SDL_rand_bits_r_REAL.exit
-
-SDL_rand_bits_r_REAL.exit:                        ; preds = %bb.a, %bb.b
-  %.0.i = phi i64 [ %i.d, %bb.b ], [ 0, %bb.a ]
-  %4 = zext nneg i32 %1 to i64
-  %5 = mul nuw nsw i64 %.0.i, %4
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw nsw i64 %6 to i32
+  %3 = trunc nuw i64 %i.d to i32
+  %4 = tail call i32 @llvm.umulh.i32(i32 %3, i32 %1)
   br label %bb.c
 
-bb.c:                                             ; preds = %2, %SDL_rand_bits_r_REAL.exit
-  %.0 = phi i32 [ %7, %SDL_rand_bits_r_REAL.exit ], [ 0, %2 ]
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.0 = phi i32 [ 0, %bb.a ], [ %4, %bb.b ]
   ret i32 %.0
 }
 
@@ -100,7 +91,7 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i64 @SDL_GetPerformanceCounter_REAL() #3
+  %i.a = tail call i64 @SDL_GetPerformanceCounter_REAL() #4
   store i1 true, ptr @SDL_rand_initialized, align 1
   br label %bb.c
 
@@ -149,7 +140,7 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call i64 @SDL_GetPerformanceCounter_REAL() #3
+  %i.a = tail call i64 @SDL_GetPerformanceCounter_REAL() #4
   store i1 true, ptr @SDL_rand_initialized, align 1
   br label %bb.c
 
@@ -183,10 +174,14 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   ret i32 %.0
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #3
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

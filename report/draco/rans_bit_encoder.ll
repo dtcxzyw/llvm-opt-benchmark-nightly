@@ -202,15 +202,11 @@ bb.c:                                             ; preds = %bb.b
 _ZN5dracoL15rabs_desc_writeEPNS_8AnsCoderEih.exit: ; preds = %bb.b, %bb.c
   %.sroa.10.3 = phi i32 [ %.sroa.10.081, %bb.b ], [ %i.as, %bb.c ] ; 2 uses
   %i.aw = phi i32 [ %.sroa.22.082, %bb.b ], [ %i.av, %bb.c ] ; 3 uses
-  %2 = zext nneg i32 %i.aw to i64
   %i.ax = zext i8 %i.ao to i64
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr @_ZN5draco16vp10_fastdiv_tabE, i64 %i.ax ; 2 uses
   %i.az = load i32, ptr %i.ay, align 8, !tbaa !52
-  %3 = zext i32 %i.az to i64
-  %4 = mul nuw nsw i64 %3, %2
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw nsw i64 %5 to i32
-  %i.ba = add nuw nsw i32 %i.aw, %6
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.aw, i32 %i.az)
+  %i.ba = add i32 %2, %i.aw
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !53
   %i.bd = lshr i32 %i.ba, %i.bc
@@ -305,15 +301,11 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j
   %.sroa.10.4 = phi i32 [ %.sroa.10.285, %bb.j ], [ %i.cl, %bb.k ] ; 3 uses
   %i.cp = phi i32 [ %.sroa.22.286, %bb.j ], [ %i.co, %bb.k ] ; 3 uses
-  %7 = zext nneg i32 %i.cp to i64
   %i.cq = zext i8 %i.ch to i64
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr @_ZN5draco16vp10_fastdiv_tabE, i64 %i.cq ; 2 uses
   %i.cs = load i32, ptr %i.cr, align 8, !tbaa !52
-  %8 = zext i32 %i.cs to i64
-  %9 = mul nuw nsw i64 %8, %7
-  %10 = lshr i64 %9, 32
-  %11 = trunc nuw nsw i64 %10 to i32
-  %i.ct = add nuw nsw i32 %i.cp, %11
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.cp, i32 %i.cs)
+  %i.ct = add i32 %3, %i.cp
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cr, i64 4
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !53
   %i.cw = lshr i32 %i.ct, %i.cv
@@ -716,7 +708,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
 .lr.ph.i.i.i.i.i.i.i.i63.preheader:               ; preds = %bb.t
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.df, ptr align 1 %2, i64 %i.c, i1 false), !tbaa !31
   %i.dh = add i64 %i.a, %i.da
-  %i.di = add i64 %i.b, %i.cq
+  %i.di = add i64 %i.cq, %i.b
   %i.dj = sub i64 %i.dh, %i.di
   %scevgep = getelementptr i8, ptr %i.cz, i64 %i.dj
   br label %_ZSt22__uninitialized_copy_aIPKhPccET0_T_S4_S3_RSaIT1_E.exit67
@@ -781,6 +773,9 @@ declare i32 @llvm.bitreverse.i32(i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #6

@@ -205,11 +205,10 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 12
   %.sroa.029.0.copyload = load <2 x float>, ptr %i.k, align 4 ; 2 uses
   %.sroa.230.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %.sroa.230.0.copyload = load float, ptr %.sroa.230.0..sroa_idx, align 4
+  %8 = load <1 x float>, ptr %.sroa.230.0..sroa_idx, align 4
   %.sroa.05.4.vec.insert.i38 = shufflevector <2 x float> %.sroa.029.0.copyload, <2 x float> poison, <2 x i32> zeroinitializer
   %.sroa.03.4.vec.insert.i = shufflevector <2 x float> %.sroa.029.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %.sroa.0.0.vec.insert.i39 = insertelement <2 x float> poison, float %.sroa.230.0.copyload, i64 0
-  %.sroa.0.4.vec.insert.i40 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i39, <2 x float> poison, <2 x i32> zeroinitializer
+  %.sroa.0.4.vec.insert.i40 = shufflevector <1 x float> %8, <1 x float> poison, <2 x i32> zeroinitializer
   store <2 x float> %.sroa.05.4.vec.insert.i38, ptr %7, align 8, !tbaa !28
   %i.l = getelementptr inbounds nuw i8, ptr %7, i64 8
   store <2 x float> %.sroa.03.4.vec.insert.i, ptr %i.l, align 8, !tbaa !28
@@ -346,7 +345,7 @@ _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit:
   %i.m = fneg float %i.e
   %i.n = fsub float %i.k, %i.i
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %7 = load <4 x float>, ptr %i.o, align 4
+  %7 = load <1 x float>, ptr %i.o, align 4
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.q = load i8, ptr %i.p, align 8, !tbaa !105, !range !42, !noundef !43
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 17
@@ -369,7 +368,7 @@ _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit:
   %i.af = load ptr, ptr %1, align 8, !tbaa !103
   %.sroa.0.0.vec.insert.i.i = shufflevector <2 x float> %.sroa.040.0.copyload, <2 x float> poison, <2 x i32> zeroinitializer
   %.sroa.0.0.vec.insert.i24.i = shufflevector <2 x float> %.sroa.040.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %.sroa.0.0.vec.insert.i41.i = shufflevector <4 x float> %7, <4 x float> poison, <2 x i32> zeroinitializer
+  %.sroa.0.0.vec.insert.i41.i = shufflevector <1 x float> %7, <1 x float> poison, <2 x i32> zeroinitializer
   %sqrt = tail call float @llvm.sqrt.f32(float %i.g) ; 2 uses
   %i.ag = fsub float %i.i, %sqrt
   %i.ah = insertelement <2 x float> poison, float %i.c, i64 0

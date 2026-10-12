@@ -204,16 +204,12 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.an, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph456.split.us
-  %13 = zext i8 %i.mw to i16
   %i.mx = load i8, ptr %i.al, align 8, !tbaa !51
-  %14 = zext i8 %i.mx to i16
-  %15 = mul nuw i16 %14, %13
-  %16 = lshr i16 %15, 8
-  %17 = trunc nuw i16 %16 to i8
+  %13 = call i8 @llvm.umulh.i8(i8 %i.mw, i8 %i.mx)
   br label %bb.au
 
 bb.au:                                            ; preds = %.lr.ph456.split.us, %bb.at
-  %i.my = phi i8 [ %17, %bb.at ], [ %i.mw, %.lr.ph456.split.us ]
+  %i.my = phi i8 [ %13, %bb.at ], [ %i.mw, %.lr.ph456.split.us ]
   store i8 %i.my, ptr %i.id, align 8, !tbaa !69
   call void @lv_draw_sw_blend(ptr noundef %0, ptr noundef nonnull %12) #6
   %i.mz = getelementptr inbounds i8, ptr %.2375453.us, i64 %i.mv
@@ -326,16 +322,12 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %i.an, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %.critedge
-  %18 = zext i8 %i.ot to i16
   %i.ou = load i8, ptr %i.al, align 8, !tbaa !51
-  %19 = zext i8 %i.ou to i16
-  %20 = mul nuw i16 %19, %18
-  %21 = lshr i16 %20, 8
-  %22 = trunc nuw i16 %21 to i8
+  %14 = call i8 @llvm.umulh.i8(i8 %i.ot, i8 %i.ou)
   br label %bb.bc
 
 bb.bc:                                            ; preds = %.critedge, %bb.bb
-  %i.ov = phi i8 [ %22, %bb.bb ], [ %i.ot, %.critedge ]
+  %i.ov = phi i8 [ %14, %bb.bb ], [ %i.ot, %.critedge ]
   store i8 %i.ov, ptr %i.id, align 8, !tbaa !69
   br label %bb.bd
 
@@ -736,6 +728,9 @@ declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #4

@@ -205,7 +205,7 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   br label %.preheader.i
 
 .preheader.i.us23.preheader:                      ; preds = %.preheader.lr.ph.split.i.split
-  %i.az = mul i64 %i.y, %i.x
+  %i.az = mul i64 %i.x, %i.y
   %i.ba = shl i64 %i.az, 3
   %scevgep = getelementptr i8, ptr %i.z, i64 %i.ba ; 2 uses
   %i.bb = shl i64 %i.x, 3                         ; 2 uses
@@ -608,7 +608,7 @@ bb.a:
   %i.ag = fmul <2 x double> %i.af, %i.af
   %i.ah = fadd <2 x double> %i.ad, %i.ag          ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %5 = load double, ptr %i.ai, align 8, !tbaa !38
+  %5 = load <2 x double>, ptr %i.ai, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 400
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 120
@@ -623,8 +623,7 @@ bb.a:
   %i.au = shufflevector <2 x double> %i.ah, <2 x double> %i.ar, <2 x i32> <i32 0, i32 2>
   %i.av = shufflevector <2 x double> %i.ah, <2 x double> %i.ar, <2 x i32> <i32 1, i32 3>
   %i.aw = fadd <2 x double> %i.au, %i.av
-  %6 = insertelement <2 x double> poison, double %5, i64 0
-  %i.ax = insertelement <2 x double> %6, double %i.at, i64 1 ; 2 uses
+  %i.ax = insertelement <2 x double> %5, double %i.at, i64 1 ; 2 uses
   %i.ay = fmul <2 x double> %i.ax, %i.ax
   %i.az = fadd <2 x double> %i.ay, %i.aw
   %i.ba = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.az) ; 2 uses

@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph27.split.us:                                ; preds = %.lr.ph27
   store i32 0, ptr %i.h, align 4, !tbaa !240
-  %smin = tail call i32 @llvm.smin.i32(i32 %storemerge24, i32 %i.l)
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.l, i32 %storemerge24)
   %i.q = add i32 %smin, -1
   %storemerge1921.us.le = add nsw i32 %i.o, -1
   store i32 %storemerge1921.us.le, ptr %i.n, align 4, !tbaa !228
@@ -608,16 +608,12 @@ bb.q:                                             ; preds = %bb.o
   %i.dk = getelementptr inbounds nuw i8, ptr @ff_sqrt_tab, i64 %i.dj
   %i.dl = load i8, ptr %i.dk, align 1, !tbaa !52  ; 2 uses
   %i.dm = zext i8 %i.dl to i32
-  %3 = zext nneg i32 %i.dg to i64
   %i.dn = zext i8 %i.dl to i64
   %i.do = getelementptr inbounds nuw [4 x i8], ptr @ff_inverse, i64 %i.dn
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !54
-  %4 = zext i32 %i.dp to i64
-  %5 = mul nuw nsw i64 %3, %4
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw nsw i64 %6 to i32
+  %3 = tail call i32 @llvm.umulh.i32(i32 %i.dg, i32 %i.dp)
   %i.dq = shl i32 %i.dm, %i.de
-  %i.dr = add i32 %i.dq, %7
+  %i.dr = add i32 %3, %i.dq
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.n, %bb.l
@@ -1019,6 +1015,9 @@ declare i32 @llvm.bswap.i32(i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.abs.i16(i16, i1 immarg) #12

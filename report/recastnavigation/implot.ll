@@ -205,15 +205,14 @@ bb.hv:                                            ; preds = %bb.hu, %bb.ht
   %i.bue = phi float [ %i.btv, %bb.ht ], [ %.pre788, %bb.hu ]
   %.sink = phi float [ %i.btv, %bb.ht ], [ %i.bub, %bb.hu ]
   %i.buf = phi float [ %i.btx, %bb.ht ], [ %i.bud, %bb.hu ]
-  %1 = load float, ptr %i.g, align 8, !tbaa !172
+  %1 = load <4 x float>, ptr %i.g, align 8
   %i.bug = insertelement <4 x float> poison, float %i.btr, i64 0
-  %2 = insertelement <4 x float> %i.bug, float %.sink, i64 1
-  %i.buh = insertelement <4 x float> %2, float %i.bts, i64 2
-  %i.bui = insertelement <4 x float> %i.buh, float %i.buf, i64 3
-  %i.buj = insertelement <4 x float> poison, float %1, i64 0
-  %i.buk = insertelement <4 x float> %i.buj, float %i.bue, i64 1
+  %i.buh = insertelement <4 x float> %i.bug, float %.sink, i64 1
+  %i.bui = insertelement <4 x float> %i.buh, float %i.bts, i64 2
+  %i.buj = insertelement <4 x float> %i.bui, float %i.buf, i64 3
+  %i.buk = insertelement <4 x float> %1, float %i.bue, i64 1
   %i.bul = shufflevector <4 x float> %i.buk, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.bum = fsub <4 x float> %i.bui, %i.bul
+  %i.bum = fsub <4 x float> %i.buj, %i.bul
   store <4 x float> %i.bum, ptr %i.btt, align 8, !tbaa !41
   %i.bun = getelementptr inbounds nuw i8, ptr %0, i64 2555
   store i8 1, ptr %i.bun, align 1, !tbaa !378

@@ -205,14 +205,12 @@ bb.h:                                             ; preds = %_ZN7openvdb5v13_04t
   br i1 %found.conflict, label %scalar.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader
-  %3 = load double, ptr %0, align 8, !tbaa !675, !alias.scope !4908
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %3, i64 0
-  %4 = load double, ptr %i.af, align 8, !tbaa !675, !alias.scope !4908
-  %broadcast.splatinsert10 = insertelement <2 x double> poison, double %4, i64 0
+  %3 = load <2 x double>, ptr %0, align 8
+  %4 = load <2 x double>, ptr %i.af, align 8
   %i.aj = load double, ptr %i.ag, align 8, !tbaa !675, !alias.scope !4908
   %broadcast.splatinsert12 = insertelement <2 x double> poison, double %i.aj, i64 0
   %broadcast.splat13 = shufflevector <2 x double> %broadcast.splatinsert12, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ak = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> %broadcast.splatinsert10, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
+  %i.ak = shufflevector <2 x double> %3, <2 x double> %4, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

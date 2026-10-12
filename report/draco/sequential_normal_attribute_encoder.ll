@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
 .lr.ph.i.i.i.i.i.i.i.i63.preheader:               ; preds = %bb.t
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.df, ptr align 1 %2, i64 %i.c, i1 false), !tbaa !54
   %i.dh = add i64 %i.a, %i.da
-  %i.di = add i64 %i.b, %i.cq
+  %i.di = add i64 %i.cq, %i.b
   %i.dj = sub i64 %i.dh, %i.di
   %scevgep = getelementptr i8, ptr %i.cz, i64 %i.dj
   br label %_ZSt22__uninitialized_copy_aIPKhPccET0_T_S4_S3_RSaIT1_E.exit67
@@ -470,14 +470,13 @@ bb.o:                                             ; preds = %.split, %_ZNK5draco
   %i.ck = phi i32 [ 0, %.split ], [ %.sroa.7.0, %_ZNK5draco58PredictionSchemeNormalOctahedronCanonicalizedTransformBaseIiE11RotatePointENS_7VectorDIiLi2EEEi.exit9 ], [ %i.bj, %_ZNK5draco58PredictionSchemeNormalOctahedronCanonicalizedTransformBaseIiE14IsInBottomLeftERKNS_7VectorDIiLi2EEE.exit ]
   %i.cl = phi i32 [ 0, %.split ], [ %.sroa.018.0, %_ZNK5draco58PredictionSchemeNormalOctahedronCanonicalizedTransformBaseIiE11RotatePointENS_7VectorDIiLi2EEEi.exit9 ], [ %i.bk, %_ZNK5draco58PredictionSchemeNormalOctahedronCanonicalizedTransformBaseIiE14IsInBottomLeftERKNS_7VectorDIiLi2EEE.exit ]
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %4 = load i32, ptr %i.cm, align 4
+  %4 = load <4 x i32>, ptr %i.cm, align 4
   %i.cn = load <2 x i32>, ptr %2, align 4, !tbaa !13, !noalias !311
   %i.co = insertelement <2 x i32> poison, i32 %i.cl, i64 0
   %i.cp = insertelement <2 x i32> %i.co, i32 %i.ck, i64 1
   %i.cq = sub nsw <2 x i32> %i.cn, %i.cp          ; 2 uses
   %i.cr = icmp slt <2 x i32> %i.cq, zeroinitializer
-  %5 = insertelement <2 x i32> poison, i32 %4, i64 0
-  %i.cs = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.cs = shufflevector <4 x i32> %4, <4 x i32> poison, <2 x i32> zeroinitializer
   %i.ct = select <2 x i1> %i.cr, <2 x i32> %i.cs, <2 x i32> zeroinitializer
   %i.cu = add nsw <2 x i32> %i.ct, %i.cq
   store <2 x i32> %i.cu, ptr %0, align 4, !tbaa !13

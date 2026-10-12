@@ -205,7 +205,7 @@ _ZN19__llvm_libc_apfloat6BigIntILm128ELb0EmEC2ImvEET_.exit.thread.i: ; preds = %
 
 _ZN19__llvm_libc_apfloat6fputil11DyadicFloatILm128EEC2IdTnNS_3cpp9enable_ifIXsr3cppE19is_floating_point_vIT_EEiE4typeELi0EEES6_.exit: ; preds = %bb.a, %_ZN19__llvm_libc_apfloat6BigIntILm128ELb0EmEC2ImvEET_.exit.thread.i
   %.sroa.5195.0 = phi i32 [ %i.i, %bb.a ], [ %i.q, %_ZN19__llvm_libc_apfloat6BigIntILm128ELb0EmEC2ImvEET_.exit.thread.i ] ; 2 uses
-  %storemerge.i = phi i64 [ 0, %bb.a ], [ %.sroa.4.0.extract.trunc.i.i.i.i, %_ZN19__llvm_libc_apfloat6BigIntILm128ELb0EmEC2ImvEET_.exit.thread.i ] ; 3 uses
+  %storemerge.i = phi i64 [ 0, %bb.a ], [ %.sroa.4.0.extract.trunc.i.i.i.i, %_ZN19__llvm_libc_apfloat6BigIntILm128ELb0EmEC2ImvEET_.exit.thread.i ] ; 5 uses
   %.sroa.01.0.copyload = load i8, ptr %2, align 8, !tbaa !38
   %i.t = and i8 %.sroa.01.0.copyload, 1
   %i.u = xor i8 %i.t, 1                           ; 4 uses
@@ -225,17 +225,14 @@ _ZN19__llvm_libc_apfloat6fputil11DyadicFloatILm128EEC2IdTnNS_3cpp9enable_ifIXsr3
   br i1 %or.cond, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %_ZN19__llvm_libc_apfloat6fputil11DyadicFloatILm128EEC2IdTnNS_3cpp9enable_ifIXsr3cppE19is_floating_point_vIT_EEiE4typeELi0EEES6_.exit
-  %4 = zext i64 %i.aa to i128
-  %i.ac = zext i64 %storemerge.i to i128          ; 2 uses
-  %5 = mul nuw i128 %4, %i.ac
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64
+  %i.ac = zext i64 %storemerge.i to i128
+  %4 = tail call i64 @llvm.umulh.i64(i64 %storemerge.i, i64 %i.aa)
   %i.ad = zext i64 %i.ab to i128
   %i.ae = mul nuw i128 %i.ad, %i.ac               ; 2 uses
   %i.af = trunc i128 %i.ae to i64
   %i.ag = lshr i128 %i.ae, 64
   %i.ah = trunc nuw i128 %i.ag to i64
-  %i.ai = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %7, i64 %i.af) ; 2 uses
+  %i.ai = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %4, i64 %i.af) ; 2 uses
   %i.aj = extractvalue { i64, i1 } %i.ai, 1
   %i.ak = extractvalue { i64, i1 } %i.ai, 0       ; 2 uses
   %i.al = zext i1 %i.aj to i64
@@ -433,16 +430,13 @@ bb.p:                                             ; preds = %_ZN19__llvm_libc_ap
 
 bb.q:                                             ; preds = %bb.p
   %i.cq = zext i64 %.sroa.13183.0 to i128
-  %i.cr = zext i64 %storemerge.i to i128          ; 2 uses
-  %8 = zext i64 %.sroa.10181.0 to i128
-  %9 = mul nuw i128 %8, %i.cr
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64
+  %i.cr = zext i64 %storemerge.i to i128
+  %5 = tail call i64 @llvm.umulh.i64(i64 %.sroa.10181.0, i64 %storemerge.i)
   %i.cs = mul nuw i128 %i.cq, %i.cr               ; 2 uses
   %i.ct = trunc i128 %i.cs to i64
   %i.cu = lshr i128 %i.cs, 64
   %i.cv = trunc nuw i128 %i.cu to i64
-  %i.cw = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %11, i64 %i.ct) ; 2 uses
+  %i.cw = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 %i.ct) ; 2 uses
   %i.cx = extractvalue { i64, i1 } %i.cw, 1
   %i.cy = extractvalue { i64, i1 } %i.cw, 0       ; 2 uses
   %i.cz = zext i1 %i.cx to i64
@@ -843,6 +837,9 @@ declare double @llvm.fabs.f64(double) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #19

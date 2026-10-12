@@ -205,13 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.j = add i32 %i.h, 1
   %i.k = sub i32 %i.j, %i.i
   %i.l = call i32 @get_random_u32() #19           ; 2 uses
-  %3 = zext i32 %i.l to i64
-  %4 = zext i32 %i.k to i64
-  %5 = mul nuw i64 %4, %3
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
+  %3 = call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.l, i32 %i.k)
   %i.m = load i32, ptr %i.b, align 4
-  %i.n = add i32 %i.m, %7                         ; 2 uses
+  %i.n = add i32 %3, %i.m                         ; 2 uses
   %i.o = trunc i32 %i.n to i16
   %i.p = or i32 %i.l, 1
   %i.q = getelementptr i8, ptr %i.f, i64 24       ; 2 uses
@@ -612,6 +608,9 @@ declare dso_local noalias ptr @vmalloc_huge_node_noprof(i64 noundef, i32 noundef
 
 ; Function Attrs: noredzone null_pointer_is_valid
 declare dso_local void @kvfree(ptr noundef) local_unnamed_addr #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4

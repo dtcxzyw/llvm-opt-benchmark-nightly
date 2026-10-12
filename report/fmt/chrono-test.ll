@@ -205,21 +205,18 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.at = ashr i32 %i.as, 19
   %i.au = add nsw i32 %i.at, %.0108
   %i.av = zext nneg i32 %i.au to i64
-  %i.aw = shl i64 %.0109, %i.av
+  %i.aw = shl i64 %.0109, %i.av                   ; 2 uses
   %i.ax = tail call { i64, i64 } @_ZN3fmt3v126detail9dragonbox16get_cached_powerEi(i32 noundef %i.ar) #30 ; 2 uses
   %i.ay = extractvalue { i64, i64 } %i.ax, 0
   %i.az = extractvalue { i64, i64 } %i.ax, 1
-  %i.ba = zext i64 %i.aw to i128                  ; 2 uses
+  %i.ba = zext i64 %i.aw to i128
   %i.bb = zext i64 %i.az to i128
   %i.bc = mul nuw i128 %i.ba, %i.bb               ; 2 uses
   %i.bd = lshr i128 %i.bc, 64
   %i.be = trunc nuw i128 %i.bd to i64
   %i.bf = trunc i128 %i.bc to i64
-  %6 = zext i64 %i.ay to i128
-  %7 = mul nuw i128 %i.ba, %6
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64
-  %i.bg = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.bf, i64 %9) ; 2 uses
+  %6 = tail call noundef i64 @llvm.umulh.i64(i64 %i.aw, i64 %i.ay)
+  %i.bg = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.bf, i64 %6) ; 2 uses
   %i.bh = extractvalue { i64, i1 } %i.bg, 1
   %i.bi = extractvalue { i64, i1 } %i.bg, 0       ; 2 uses
   %i.bj = zext i1 %i.bh to i64
@@ -315,11 +312,9 @@ bb.w:                                             ; preds = %bb.p
   %i.cm = sub nuw nsw i32 %.0106, %.0187
   %i.cn = add nsw i32 %i.cm, %.neg125             ; 2 uses
   store i32 %i.cn, ptr %i.a, align 4, !tbaa !239
-  %10 = zext i64 %.0107 to i128
-  %11 = mul nuw nsw i128 %10, 7922816251426433760
-  %sum.shift = lshr i128 %11, 96
-  %12 = trunc nuw nsw i128 %sum.shift to i64      ; 3 uses
-  %.neg126 = mul i64 %12, -10000000000
+  %7 = tail call noundef i64 @llvm.umulh.i64(i64 %.0107, i64 7922816251426433760)
+  %8 = lshr i64 %7, 32                            ; 3 uses
+  %.neg126 = mul i64 %8, -10000000000
   %i.co = add i64 %.neg126, %.0107                ; 5 uses
   %i.cp = tail call i32 @llvm.umin.i32(i32 %.0187, i32 9) ; 3 uses
   %i.cq = load ptr, ptr %4, align 8, !tbaa !338   ; 6 uses
@@ -328,7 +323,7 @@ bb.w:                                             ; preds = %bb.p
   br i1 %.not.i, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.cs = mul nuw nsw i64 %12, 720575941
+  %i.cs = mul nuw nsw i64 %8, 720575941
   %i.ct = lshr i64 %i.cs, 24
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
   %i.cv = lshr i64 %i.cu, 32                      ; 2 uses
@@ -338,7 +333,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w
-  %i.cy = mul nuw nsw i64 %12, 450359963
+  %i.cy = mul nuw nsw i64 %8, 450359963
   %i.cz = lshr i64 %i.cy, 20
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
   %i.db = lshr i64 %i.da, 32                      ; 2 uses
@@ -446,10 +441,8 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %or.cond223, label %.critedge134.thread, label %.critedge136
 
 bb.ag:                                            ; preds = %_ZZN3fmt3v126detail12format_floatIdEEiT_iRKNS0_12format_specsEbRNS1_6bufferIcEEENKUljPcE_clEjSA_.exit
-  %13 = zext i64 %i.co to i128
-  %14 = mul nuw nsw i128 %13, 1844674407370955162
-  %15 = lshr i128 %14, 64                         ; 2 uses
-  %i.fd = trunc i128 %15 to i32
+  %9 = tail call noundef i64 @llvm.umulh.i64(i64 %i.co, i64 1844674407370955162) ; 2 uses
+  %i.fd = trunc i64 %9 to i32
   %i.fe = trunc i64 %i.co to i32
   %.neg127 = mul i32 %i.fd, -10
   %i.ff = add i32 %.neg127, %i.fe                 ; 3 uses
@@ -458,8 +451,7 @@ bb.ag:                                            ; preds = %_ZZN3fmt3v126detail
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 9 ; 3 uses
   %i.fj = and i32 %i.fg, 1
   %.not.i142 = icmp eq i32 %i.fj, 0
-  %16 = trunc nuw nsw i128 %15 to i64
-  %i.fk = and i64 %16, 4294967295                 ; 2 uses
+  %i.fk = and i64 %9, 4294967295                  ; 2 uses
   br i1 %.not.i142, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
@@ -860,6 +852,9 @@ declare i32 @llvm.smax.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #25

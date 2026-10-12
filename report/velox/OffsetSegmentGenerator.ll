@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %3 = load double, ptr %i.s, align 8, !tbaa !28
+  %3 = load <2 x double>, ptr %i.s, align 8
   %i.t = load double, ptr %i.q, align 8, !tbaa !49
   %i.u = load double, ptr %i.c, align 8, !tbaa !49 ; 2 uses
   %i.v = fsub double %i.t, %i.u
@@ -241,8 +241,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 16
   store double +qnan, ptr %i.av, align 16, !tbaa !30
-  %4 = insertelement <2 x double> poison, double %3, i64 0
-  %i.aw = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.aw = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.split.us.i
 
 .split.us.i:                                      ; preds = %.split.us.i, %bb.g
@@ -623,14 +622,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.bl, label %_ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %8 = load double, ptr %i.b, align 8, !tbaa !28
+  %8 = load <2 x double>, ptr %i.b, align 8
   %i.bm = uitofp nneg i32 %i.bk to double
   %i.bn = fdiv double %i.bf, %i.bm
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   %i.bo = getelementptr inbounds nuw i8, ptr %3, i64 16
   store double +qnan, ptr %i.bo, align 16, !tbaa !30
-  %9 = insertelement <2 x double> poison, double %8, i64 0
-  %i.bp = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.bp = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.split.us.i
 
 .split.us.i:                                      ; preds = %.split.us.i, %bb.c

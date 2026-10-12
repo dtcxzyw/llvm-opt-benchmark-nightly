@@ -204,7 +204,6 @@ convert_indent_pct.exit.i.i:                      ; preds = %lv_spangroup_get_mo
   %i.bm = getelementptr inbounds nuw i8, ptr %15, i64 140 ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %15, i64 80
   %i.bo = icmp ult i8 %i.ah, -3
-  %17 = zext i8 %i.ah to i16
   %i.bp = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.bq = getelementptr inbounds nuw i8, ptr %15, i64 64 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %15, i64 128 ; 6 uses
@@ -607,11 +606,8 @@ lv_span_get_style_text_font.exit268.i.i:          ; preds = %bb.bf, %bb.be
 
 bb.bg:                                            ; preds = %lv_span_get_style_text_font.exit268.i.i
   %i.kg = load i8, ptr %i.bm, align 4, !tbaa !81
-  %18 = zext i8 %i.kg to i16
-  %19 = mul nuw i16 %18, %17
-  %20 = lshr i16 %19, 8
-  %21 = trunc nuw i16 %20 to i8
-  store i8 %21, ptr %i.bm, align 4, !tbaa !81
+  %17 = call i8 @llvm.umulh.i8(i8 %i.kg, i8 %i.ah)
+  store i8 %17, ptr %i.bm, align 4, !tbaa !81
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %lv_span_get_style_text_font.exit268.i.i
@@ -1012,6 +1008,9 @@ declare void @lv_area_set(ptr noundef, i32 noundef, i32 noundef, i32 noundef, i3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #9

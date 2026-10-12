@@ -107,19 +107,16 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   %i.ba = and i32 %i.at, 15                       ; 2 uses
   %i.bb = zext nneg i32 %i.ba to i64
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr @_ZL10kPow5Table, i64 %i.bb
-  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !16
+  %i.bd = load i64, ptr %i.bc, align 8, !tbaa !16 ; 2 uses
   %i.be = zext i64 %i.ax to i128
-  %i.bf = zext i64 %i.bd to i128                  ; 2 uses
+  %i.bf = zext i64 %i.bd to i128
   %i.bg = mul nuw i128 %i.bf, %i.be               ; 2 uses
   %i.bh = lshr i128 %i.bg, 64
   %i.bi = trunc nuw i128 %i.bh to i64
   %i.bj = trunc i128 %i.bg to i64
-  %2 = zext i64 %i.az to i128
-  %3 = mul nuw i128 %i.bf, %2
-  %4 = lshr i128 %3, 64
-  %5 = trunc nuw i128 %4 to i64                   ; 2 uses
-  %i.bk = add i64 %5, %i.bj                       ; 3 uses
-  %i.bl = icmp ult i64 %i.bk, %5
+  %2 = tail call i64 @llvm.umulh.i64(i64 %i.bd, i64 %i.az) ; 2 uses
+  %i.bk = add i64 %2, %i.bj                       ; 3 uses
+  %i.bl = icmp ult i64 %i.bk, %2
   %i.bm = zext i1 %i.bl to i64
   %i.bn = add nuw i64 %i.bm, %i.bi
   %i.bo = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
@@ -136,53 +133,46 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   %i.bz = shl i64 %i.bk, %i.bu
   %i.ca = and i64 %i.bs, 7
   %reass.sub = sub i64 %i.bz, %i.ca
-  %i.cb = add i64 %reass.sub, 4
+  %i.cb = add i64 %reass.sub, 4                   ; 3 uses
   %i.cc = zext i32 %i.as to i64                   ; 3 uses
-  %i.cd = shl i64 %i.aj, %i.cc
-  %6 = zext i64 %i.cb to i128                     ; 3 uses
-  %i.ce = zext i64 %i.cd to i128                  ; 2 uses
-  %7 = mul nuw i128 %6, %i.ce
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64                   ; 2 uses
+  %i.cd = shl i64 %i.aj, %i.cc                    ; 2 uses
+  %i.ce = zext i64 %i.cd to i128
+  %3 = tail call i64 @llvm.umulh.i64(i64 %i.cd, i64 %i.cb) ; 2 uses
   %i.cf = zext i64 %i.by to i128                  ; 3 uses
   %i.cg = mul nuw i128 %i.cf, %i.ce               ; 2 uses
   %i.ch = lshr i128 %i.cg, 64
   %i.ci = trunc nuw i128 %i.ch to i64
   %i.cj = trunc i128 %i.cg to i64
-  %i.ck = add i64 %i.cj, %9                       ; 2 uses
-  %i.cl = icmp ult i64 %i.ck, %9
+  %i.ck = add i64 %3, %i.cj                       ; 2 uses
+  %i.cl = icmp ult i64 %i.ck, %3
   %i.cm = zext i1 %i.cl to i64
   %i.cn = add nuw i64 %i.cm, %i.ci
   %i.co = icmp ugt i64 %i.ck, 1
   %i.cp = zext i1 %i.co to i64
   %i.cq = or i64 %i.cn, %i.cp                     ; 2 uses
-  %i.cr = shl i64 %i.ag, %i.cc
-  %i.cs = zext i64 %i.cr to i128                  ; 2 uses
-  %10 = mul nuw i128 %6, %i.cs
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw i128 %11 to i64                 ; 2 uses
+  %i.cr = shl i64 %i.ag, %i.cc                    ; 2 uses
+  %i.cs = zext i64 %i.cr to i128
+  %4 = tail call i64 @llvm.umulh.i64(i64 %i.cr, i64 %i.cb) ; 2 uses
   %i.ct = mul nuw i128 %i.cf, %i.cs               ; 2 uses
   %i.cu = lshr i128 %i.ct, 64
   %i.cv = trunc nuw i128 %i.cu to i64
   %i.cw = trunc i128 %i.ct to i64
-  %i.cx = add i64 %i.cw, %12                      ; 2 uses
-  %i.cy = icmp ult i64 %i.cx, %12
+  %i.cx = add i64 %4, %i.cw                       ; 2 uses
+  %i.cy = icmp ult i64 %i.cx, %4
   %i.cz = zext i1 %i.cy to i64
   %i.da = add nuw i64 %i.cz, %i.cv                ; 6 uses
   %i.db = icmp ugt i64 %i.cx, 1
   %i.dc = zext i1 %i.db to i64
   %i.dd = or i64 %i.da, %i.dc
-  %i.de = shl i64 %i.ak, %i.cc
-  %i.df = zext i64 %i.de to i128                  ; 2 uses
-  %13 = mul nuw i128 %6, %i.df
-  %14 = lshr i128 %13, 64
-  %15 = trunc nuw i128 %14 to i64                 ; 2 uses
+  %i.de = shl i64 %i.ak, %i.cc                    ; 2 uses
+  %i.df = zext i64 %i.de to i128
+  %5 = tail call i64 @llvm.umulh.i64(i64 %i.de, i64 %i.cb) ; 2 uses
   %i.dg = mul nuw i128 %i.cf, %i.df               ; 2 uses
   %i.dh = lshr i128 %i.dg, 64
   %i.di = trunc nuw i128 %i.dh to i64
   %i.dj = trunc i128 %i.dg to i64
-  %i.dk = add i64 %i.dj, %15                      ; 2 uses
-  %i.dl = icmp ult i64 %i.dk, %15
+  %i.dk = add i64 %5, %i.dj                       ; 2 uses
+  %i.dl = icmp ult i64 %i.dk, %5
   %i.dm = zext i1 %i.dl to i64
   %i.dn = add nuw i64 %i.dm, %i.di
   %i.do = icmp ugt i64 %i.dk, 1
@@ -230,7 +220,7 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge.
 _ZL9schubfachim.exit:                             ; preds = %bb.i, %bb.k, %bb.l
   %.sroa.0.2.i = phi i64 [ %i.ab, %bb.i ], [ %i.eo, %bb.l ], [ %i.eb, %bb.k ] ; 3 uses
   %.sroa.4.2.i = phi i32 [ 0, %bb.i ], [ %i.ao, %bb.l ], [ %i.ec, %bb.k ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.ep = getelementptr inbounds nuw i8, ptr %i.a, i64 20 ; 3 uses
   %i.eq = icmp samesign ugt i64 %.sroa.0.2.i, 9999
   br i1 %i.eq, label %.lr.ph.i, label %._crit_edge.i78
@@ -430,7 +420,7 @@ _ZL8printexpPci.exit:                             ; preds = %_Z8trimzeroPc.exit8
 
 _Z8trimzeroPc.exit:                               ; preds = %bb.u, %bb.p, %_ZL8printexpPci.exit, %bb.v, %bb.r
   %.071 = phi ptr [ %i.id, %_ZL8printexpPci.exit ], [ %i.gm, %bb.r ], [ %.0.i80, %bb.p ], [ %i.hb, %bb.v ], [ %.0.i81, %bb.u ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %bb.z
 
 bb.z:                                             ; preds = %_Z8trimzeroPc.exit, %bb.f, %_ZL12printspecialPcim.exit
@@ -517,12 +507,16 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #4
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.abs.i64(i64, i1 immarg) #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #5
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

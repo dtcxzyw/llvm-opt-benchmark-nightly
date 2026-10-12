@@ -202,7 +202,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load i32, ptr %i.n, align 8, !tbaa !22
   %i.p = mul i32 %i.o, %i.m                       ; 2 uses
-  %i.q = sub i32 0, %i.p                          ; 3 uses
+  %i.q = sub i32 0, %i.p                          ; 4 uses
   %.not = icmp eq i32 %i.p, 0
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 5 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !70   ; 3 uses
@@ -234,7 +234,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ac, label %.lr.ph128.a, label %.loopexit
 
 .lr.ph128.a:                                      ; preds = %.preheader123
-  %1 = zext i32 %i.q to i64                       ; 2 uses
   %i.ad = zext i32 %.0.lcssa to i64               ; 8 uses
   %i.ae = xor i32 %.0.lcssa, -1
   %i.af = add i32 %i.i, %i.ae                     ; 2 uses
@@ -285,8 +284,8 @@ vector.ph:                                        ; preds = %vector.memcheck
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.aw, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ax = zext <4 x i32> %broadcast.splat to <4 x i64>
-  %broadcast.splatinsert194 = insertelement <4 x i64> poison, i64 %1, i64 0
-  %broadcast.splat195 = shufflevector <4 x i64> %broadcast.splatinsert194, <4 x i64> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert194 = insertelement <4 x i32> poison, i32 %i.q, i64 0
+  %broadcast.splat195 = shufflevector <4 x i32> %broadcast.splatinsert194, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -294,13 +293,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ay = add nuw i64 %index, %i.ad               ; 3 uses
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %i.ay
   %wide.load = load <4 x i32>, ptr %i.az, align 4, !tbaa !23, !alias.scope !72
-  %2 = zext <4 x i32> %wide.load to <4 x i64>
-  %3 = mul nuw <4 x i64> %broadcast.splat195, %2
-  %4 = lshr <4 x i64> %3, splat (i64 32)
-  %5 = trunc nuw <4 x i64> %4 to <4 x i32>        ; 2 uses
+  %1 = tail call <4 x i32> @llvm.umulh.v4i32(<4 x i32> %wide.load, <4 x i32> %broadcast.splat195) ; 2 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.ay ; 2 uses
   %wide.load196 = load <4 x i32>, ptr %i.ba, align 4, !tbaa !23, !alias.scope !73, !noalias !74
-  %i.bb = sub <4 x i32> %wide.load196, %5
+  %i.bb = sub <4 x i32> %wide.load196, %1
   %i.bc = zext <4 x i32> %i.bb to <4 x i64>
   %i.bd = mul nuw <4 x i64> %i.bc, %i.ax
   %i.be = add nuw <4 x i64> %i.bd, splat (i64 2147483648)
@@ -311,7 +307,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bj = select <4 x i1> %i.bh, <4 x i8> splat (i8 -1), <4 x i8> %i.bi
   %i.bk = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.ay
   store <4 x i8> %i.bj, ptr %i.bk, align 1, !tbaa !16, !alias.scope !75, !noalias !76
-  store <4 x i32> %5, ptr %i.ba, align 4, !tbaa !23, !alias.scope !73, !noalias !74
+  store <4 x i32> %1, ptr %i.ba, align 4, !tbaa !23, !alias.scope !73, !noalias !74
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bl = icmp eq i64 %index.next, %n.vec
   br i1 %i.bl, label %middle.block, label %vector.body, !llvm.loop !61
@@ -394,13 +390,10 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv142 = phi i64 [ %indvars.iv.next143, %scalar.ph ], [ %indvars.iv142.ph, %scalar.ph.preheader ] ; 4 uses
   %i.dl = getelementptr inbounds nuw [4 x i8], ptr %i.k, i64 %indvars.iv142
   %i.dm = load i32, ptr %i.dl, align 4, !tbaa !23
-  %6 = zext i32 %i.dm to i64
-  %7 = mul nuw i64 %6, %1
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32                    ; 2 uses
+  %2 = tail call i32 @llvm.umulh.i32(i32 %i.dm, i32 %i.q) ; 2 uses
   %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv142 ; 2 uses
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !23
-  %i.dp = sub i32 %i.do, %9
+  %i.dp = sub i32 %i.do, %2
   %i.dq = zext i32 %i.dp to i64
   %i.dr = load i32, ptr %i.r, align 4, !tbaa !70
   %i.ds = zext i32 %i.dr to i64
@@ -413,7 +406,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.dz = select i1 %i.dx, i8 -1, i8 %i.dy
   %i.ea = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv142
   store i8 %i.dz, ptr %i.ea, align 1, !tbaa !16
-  store i32 %9, ptr %i.dn, align 4, !tbaa !23
+  store i32 %2, ptr %i.dn, align 4, !tbaa !23
   %indvars.iv.next143 = add nuw nsw i64 %indvars.iv142, 1 ; 2 uses
   %i.eb = trunc nuw i64 %indvars.iv.next143 to i32
   %i.ec = icmp sgt i32 %i.i, %i.eb
@@ -578,8 +571,14 @@ declare <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16>, <8 x i16>) #4
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.umulh.v8i16(<8 x i16>, <8 x i16>) #5
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #5
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.umulh.v4i32(<4 x i32>, <4 x i32>) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -204,7 +204,7 @@ Vec_IntFill.exit:                                 ; preds = %Vec_IntGrow.exit.i,
 
 .preheader:                                       ; preds = %.loopexit, %Vec_IntFill.exit
   %i.bp = getelementptr i8, ptr %0, i64 424
-  %i.bq = tail call i32 @llvm.smin.i32(i32 %i.av, i32 %i.au) ; 2 uses
+  %i.bq = tail call i32 @llvm.smin.i32(i32 %i.au, i32 %i.av) ; 2 uses
   %smin131 = sext i32 %i.bq to i64                ; 4 uses
   %i.br = add i32 %i.au, %i.av
   %i.bs = add i32 %i.br, 1
@@ -284,17 +284,16 @@ bb.t:                                             ; preds = %bb.s
   br label %Cba_NtkRangeRight.exit114
 
 Cba_NtkRangeRight.exit114:                        ; preds = %bb.s, %bb.t
-  %i.da = phi i32 [ %i.cx, %bb.t ], [ 0, %bb.s ]  ; 4 uses
-  %i.db = phi i32 [ %i.cz, %bb.t ], [ 0, %bb.s ]  ; 4 uses
+  %i.da = phi i32 [ %i.cx, %bb.t ], [ 0, %bb.s ]  ; 3 uses
+  %i.db = phi i32 [ %i.cz, %bb.t ], [ 0, %bb.s ]  ; 3 uses
   %i.dc = tail call noundef i32 @llvm.smin.i32(i32 %i.da, i32 %i.db)
-  %i.dd = tail call noundef i32 @llvm.smax.i32(i32 %i.da, i32 %i.db)
-  %i.de = tail call i32 @llvm.smin.i32(i32 %i.db, i32 %i.da) ; 3 uses
+  %i.dd = tail call noundef i32 @llvm.smax.i32(i32 %i.da, i32 %i.db) ; 2 uses
+  %i.de = tail call i32 @llvm.smin.i32(i32 %i.da, i32 %i.db) ; 3 uses
   %smin = sext i32 %i.de to i64                   ; 3 uses
   %i.df = add i32 %i.dd, 1
   %i.dg = add i32 %i.df, %i.de
   %i.dh = sub i32 %i.dg, %i.dc
-  %3 = tail call i32 @llvm.smax.i32(i32 %i.da, i32 %i.db)
-  %i.di = sub i32 %3, %i.de                       ; 2 uses
+  %i.di = sub i32 %i.dd, %i.de                    ; 2 uses
   %i.dj = zext i32 %i.di to i64
   %i.dk = add nuw nsw i64 %i.dj, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.di, 7

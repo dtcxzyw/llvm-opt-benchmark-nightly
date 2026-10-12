@@ -202,25 +202,17 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
-define dso_local i64 @helper_mulsh_i64(i64 noundef %0, i64 noundef %1) #0 {
+define dso_local noundef i64 @helper_mulsh_i64(i64 noundef %0, i64 noundef %1) #0 {
 bb.a:
-  %2 = sext i64 %0 to i128
-  %3 = sext i64 %1 to i128
-  %4 = mul nsw i128 %3, %2
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64
-  ret i64 %6
+  %2 = tail call i64 @llvm.smulh.i64(i64 %1, i64 %0)
+  ret i64 %2
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
 define dso_local range(i64 0, -1) i64 @helper_muluh_i64(i64 noundef %0, i64 noundef %1) #0 {
 bb.a:
-  %2 = zext i64 %0 to i128
-  %3 = zext i64 %1 to i128
-  %4 = mul nuw i128 %3, %2
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64
-  ret i64 %6
+  %2 = tail call i64 @llvm.umulh.i64(i64 %1, i64 %0)
+  ret i64 %2
 }
 
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable
@@ -622,6 +614,12 @@ declare i32 @llvm.ctpop.i32(i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.ctpop.i64(i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smulh.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #7
 
 attributes #0 = { mustprogress nofree noinline norecurse nosync nounwind sspstrong willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }

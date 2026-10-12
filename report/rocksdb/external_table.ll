@@ -204,14 +204,13 @@ bb.o:                                             ; preds = %bb.b
   %i.dw = load i64, ptr %i.dv, align 8, !tbaa !353
   %i.dx = add i64 %i.dw, 1
   store i64 %i.dx, ptr %i.dv, align 8, !tbaa !353
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %12 = load i64, ptr %11, align 8, !tbaa !78
+  %11 = load <2 x i64>, ptr %1, align 8
+  %12 = shufflevector <2 x i64> %11, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ea = load i64, ptr %i.dz, align 8, !tbaa !78
   %i.eb = load <2 x i64>, ptr %i.dy, align 8, !tbaa !132
-  %13 = insertelement <2 x i64> poison, i64 %12, i64 0
-  %i.ec = insertelement <2 x i64> %13, i64 %i.ea, i64 1
+  %i.ec = insertelement <2 x i64> %12, i64 %i.ea, i64 1
   %i.ed = add <2 x i64> %i.eb, %i.ec
   store <2 x i64> %i.ed, ptr %i.dy, align 8, !tbaa !132
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 832

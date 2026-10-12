@@ -204,10 +204,9 @@ bb.a:
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load i32, ptr %i.a, align 4, !tbaa !43
+  %2 = load <4 x i32>, ptr %i.a, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = insertelement <2 x i32> poison, i32 %2, i64 0
-  %i.g = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
+  %i.g = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> zeroinitializer
   %i.h = add nsw <2 x i32> %i.g, <i32 32, i32 100>
   store <2 x i32> %i.h, ptr %i.f, align 8, !tbaa !45
   ret void
