@@ -204,11 +204,9 @@ bb.r:                                             ; preds = %bb.q
 __migrate_engines.exit:                           ; preds = %bb.q, %bb.r
   %.1.8.i = phi i32 [ %i.at, %bb.r ], [ %.1.7.i, %bb.q ]
   %i.aw = tail call i32 @get_random_u32() #9
-  %1 = zext i32 %i.aw to i64
-  %2 = zext nneg i32 %.1.8.i to i64
-  %3 = mul nuw nsw i64 %1, %2
-  %4 = lshr i64 %3, 32
-  %i.ax = getelementptr [8 x i8], ptr %i.a, i64 %4
+  %1 = tail call range(i32 0, -1) i32 @llvm.umulh.i32(i32 %.1.8.i, i32 %i.aw)
+  %2 = sext i32 %1 to i64
+  %i.ax = getelementptr [8 x i8], ptr %i.a, i64 %2
   %i.ay = load ptr, ptr %i.ax, align 8
   %i.az = tail call ptr @intel_context_create(ptr noundef %i.ay) #9 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
@@ -610,6 +608,9 @@ declare i32 @llvm.cttz.i32(i32, i1 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #7

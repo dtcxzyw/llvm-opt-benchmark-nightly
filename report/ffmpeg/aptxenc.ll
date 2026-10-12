@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %aptx_quantize_diffe
   %.0.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.yz, i32 8388607) ; 2 uses
   %i.za = getelementptr inbounds nuw [12 x i8], ptr %i.yo, i64 %indvars.iv.i.i ; 3 uses
   %i.zb = getelementptr inbounds nuw [4 x i8], ptr %i.yp, i64 %indvars.iv.i.i
-  %i.zc = load i32, ptr %i.zb, align 4, !tbaa !52
+  %i.zc = load i32, ptr %i.zb, align 4, !tbaa !52 ; 3 uses
   %i.zd = getelementptr inbounds nuw [12 x i8], ptr %i.yq, i64 %indvars.iv.i.i
   %i.ze = load i32, ptr %i.zd, align 4, !tbaa !62 ; 2 uses
   %i.zf = getelementptr inbounds nuw [48 x i8], ptr %i.ys, i64 %indvars.iv.i.i ; 3 uses
@@ -246,17 +246,15 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i.i.i
 aptx_quantize_difference.exit.i.i:                ; preds = %bb.e, %.aptx_bin_search.exit_crit_edge.i.i.i
   %.pre-phi.i.i.i = phi i64 [ %.pre.i.i.i, %.aptx_bin_search.exit_crit_edge.i.i.i ], [ %i.zo, %bb.e ]
   %.010.i.lcssa.i.i.i = phi i32 [ 0, %.aptx_bin_search.exit_crit_edge.i.i.i ], [ %spec.select.i.i.i.i, %bb.e ] ; 4 uses
-  %4 = sext i32 %i.zc to i64                      ; 3 uses
-  %5 = mul nsw i64 %4, %4
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32                    ; 2 uses
-  %i.zy = add nuw nsw i32 %7, 64
-  %8 = lshr i32 %i.zy, 7
-  %i.zz = and i32 %7, 255
+  %4 = tail call range(i32 -1073741824, 1073741825) i32 @llvm.smulh.i32(i32 %i.zc, i32 %i.zc) ; 2 uses
+  %i.zy = add nsw i32 %4, 64
+  %5 = ashr i32 %i.zy, 7
+  %i.zz = and i32 %4, 255
   %i.aaa = icmp eq i32 %i.zz, 64
   %.neg.i53.i.i.i = sext i1 %i.aaa to i32
-  %i.aab = add nsw i32 %8, %.neg.i53.i.i.i
-  %.0.i.i52.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.aab, i32 8388607)
+  %i.aab = add nsw i32 %5, %.neg.i53.i.i.i
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.aab, i32 -8388608)
+  %.0.i.i52.i.i.i = tail call i32 @llvm.smin.i32(i32 %6, i32 8388607)
   %i.aac = add nsw i32 %.0.i.i52.i.i.i, -8388608
   %i.aad = sext i32 %i.aac to i64
   %i.aae = getelementptr inbounds nuw i8, ptr %i.zf, i64 16
@@ -283,8 +281,9 @@ aptx_quantize_difference.exit.i.i:                ; preds = %bb.e, %.aptx_bin_se
   %.lobit.neg.i.i.i = ashr i32 %.0.i.i.i, 31      ; 3 uses
   %i.aay = or i32 %.lobit.neg.i.i.i, 1
   %i.aaz = mul nsw i32 %i.aax, %i.aay
+  %7 = sext i32 %i.zc to i64
   %i.aba = sext i32 %i.aaz to i64
-  %i.abb = mul nsw i64 %i.aba, %4
+  %i.abb = mul nsw i64 %i.aba, %7
   %i.abc = add nsw i32 %i.aaw, %i.aaq
   %i.abd = tail call i32 @llvm.smax.i32(i32 %i.abc, i32 -8388608)
   %.0.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.abd, i32 8388607)
@@ -611,6 +610,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smulh.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #4

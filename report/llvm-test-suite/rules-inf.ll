@@ -193,8 +193,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 .lr.ph:                                           ; preds = %bb.m
   %i.at = getelementptr i8, ptr %i.al, i64 56
   %i.au = and i64 %indvars.iv105, 4294967295
-  %i.av = add i32 %.val3.i.i, %.val.i.i
-  %i.aw = add i32 %i.av, %.val83
+  %i.av = add i32 %.val83, %.val.i.i
+  %i.aw = add i32 %i.av, %.val3.i.i
   %wide.trip.count = zext i32 %i.aw to i64
   br label %bb.n
 
@@ -597,11 +597,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr i8, ptr %0, i64 64         ; 2 uses
-  %.val3.i.i = load i32, ptr %i.f, align 8        ; 2 uses
+  %.val3.i.i = load i32, ptr %i.f, align 8        ; 3 uses
   %i.g = getelementptr i8, ptr %0, i64 68         ; 2 uses
-  %.val.i.i = load i32, ptr %i.g, align 4         ; 2 uses
+  %.val.i.i = load i32, ptr %i.g, align 4         ; 3 uses
   %.val4.i.i = load i32, ptr %i.b, align 8        ; 2 uses
-  %i.h = add i32 %.val.i.i, %.val3.i.i            ; 3 uses
+  %i.h = add i32 %.val.i.i, %.val3.i.i            ; 2 uses
   %i.i = add i32 %i.h, -1
   %i.j = add i32 %i.i, %.val4.i.i                 ; 3 uses
   %.not99184 = icmp sgt i32 %i.h, %i.j
@@ -613,7 +613,8 @@ bb.d:                                             ; preds = %bb.c
   %i.m = sext i32 %.val3.i.i to i64
   %i.n = sext i32 %.val.i.i to i64
   %i.o = add nsw i64 %i.m, %i.n
-  %i.p = add i32 %i.h, %.val4.i.i
+  %3 = add i32 %.val4.i.i, %.val3.i.i
+  %i.p = add i32 %3, %.val.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph188, %.loopexit
@@ -1016,7 +1017,7 @@ bb.a:
   %i.r = getelementptr i8, ptr %0, i64 56
   %i.s = getelementptr i8, ptr %i.f, i64 56
   %i.t = zext nneg i32 %.057.lcssa to i64
-  %i.u = add i32 %.val73, %.val63                 ; 2 uses
+  %i.u = add i32 %.val63, %.val73                 ; 2 uses
   %wide.trip.count93 = zext i32 %i.u to i64       ; 2 uses
   br label %bb.c
 
@@ -1169,12 +1170,12 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.g = tail call ptr @clause_Copy(ptr noundef nonnull %0) #14 ; 13 uses
   %i.h = getelementptr i8, ptr %i.g, i64 64       ; 3 uses
-  %.val3.i.i = load i32, ptr %i.h, align 8        ; 2 uses
+  %.val3.i.i = load i32, ptr %i.h, align 8        ; 3 uses
   %i.i = getelementptr i8, ptr %i.g, i64 68       ; 2 uses
-  %.val.i.i = load i32, ptr %i.i, align 4         ; 2 uses
+  %.val.i.i = load i32, ptr %i.i, align 4         ; 3 uses
   %i.j = getelementptr i8, ptr %i.g, i64 72       ; 2 uses
   %.val4.i.i = load i32, ptr %i.j, align 8        ; 2 uses
-  %i.k = add i32 %.val.i.i, %.val3.i.i            ; 3 uses
+  %i.k = add i32 %.val.i.i, %.val3.i.i            ; 2 uses
   %i.l = add i32 %i.k, -1
   %i.m = add i32 %i.l, %.val4.i.i
   %.not57116 = icmp sgt i32 %i.k, %i.m
@@ -1191,7 +1192,8 @@ bb.d:                                             ; preds = %bb.c
   %i.r = sext i32 %.val3.i.i to i64
   %i.s = sext i32 %.val.i.i to i64
   %i.t = add nsw i64 %i.r, %i.s
-  %i.u = add i32 %i.k, %.val4.i.i
+  %7 = add i32 %.val4.i.i, %.val3.i.i
+  %i.u = add i32 %7, %.val.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %list_Nconc.exit98
@@ -1594,12 +1596,12 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.e = tail call ptr @clause_Copy(ptr noundef nonnull %0) #14 ; 9 uses
   %i.f = getelementptr i8, ptr %i.e, i64 64
-  %.val3.i.i = load i32, ptr %i.f, align 8        ; 2 uses
+  %.val3.i.i = load i32, ptr %i.f, align 8        ; 3 uses
   %i.g = getelementptr i8, ptr %i.e, i64 68
-  %.val.i.i = load i32, ptr %i.g, align 4         ; 2 uses
+  %.val.i.i = load i32, ptr %i.g, align 4         ; 3 uses
   %i.h = getelementptr i8, ptr %i.e, i64 72
   %.val4.i.i = load i32, ptr %i.h, align 8        ; 2 uses
-  %i.i = add i32 %.val.i.i, %.val3.i.i            ; 3 uses
+  %i.i = add i32 %.val.i.i, %.val3.i.i            ; 2 uses
   %i.j = add i32 %i.i, -1
   %i.k = add i32 %i.j, %.val4.i.i
   %.not4583 = icmp sgt i32 %i.i, %i.k
@@ -1610,7 +1612,8 @@ bb.d:                                             ; preds = %bb.c
   %i.m = sext i32 %.val3.i.i to i64
   %i.n = sext i32 %.val.i.i to i64
   %i.o = add nsw i64 %i.m, %i.n
-  %i.p = add i32 %i.i, %.val4.i.i
+  %4 = add i32 %.val4.i.i, %.val3.i.i
+  %i.p = add i32 %4, %.val.i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %list_Nconc.exit80
@@ -2013,7 +2016,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.au = getelementptr i8, ptr %i.ab, i64 56
   %i.av = sext i32 %.0113.lcssa to i64
   %i.aw = sext i32 %i.at to i64
-  %i.ax = add i32 %.val3.i.i159, %.val.i.i160     ; 2 uses
+  %i.ax = add i32 %.val.i.i160, %.val3.i.i159     ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph183, %bb.e
@@ -2416,8 +2419,8 @@ bb.a:
   %i.k = getelementptr i8, ptr %i.c, i64 56
   %i.l = getelementptr i8, ptr %i.c, i64 48
   %.not66 = icmp eq i32 %2, 0
-  %i.m = add i32 %.val3.i.i, %.val.i.i
-  %i.n = add i32 %i.m, %.val4.i.i
+  %i.m = add i32 %.val4.i.i, %.val.i.i
+  %i.n = add i32 %i.m, %.val3.i.i
   %wide.trip.count = zext i32 %i.n to i64
   br label %bb.b
 
@@ -2731,12 +2734,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr i8, ptr %0, i64 64         ; 4 uses
-  %.val3.i.i = load i32, ptr %i.f, align 8
+  %.val3.i.i = load i32, ptr %i.f, align 8        ; 2 uses
   %i.g = getelementptr i8, ptr %0, i64 68         ; 3 uses
-  %.val.i.i = load i32, ptr %i.g, align 4
+  %.val.i.i = load i32, ptr %i.g, align 4         ; 2 uses
   %i.h = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.h, align 8        ; 2 uses
-  %i.i = add i32 %.val.i.i, %.val3.i.i            ; 4 uses
+  %i.i = add i32 %.val.i.i, %.val3.i.i            ; 3 uses
   %i.j = add i32 %i.i, -1
   %i.k = add i32 %i.j, %.val4.i.i                 ; 3 uses
   %i.l = getelementptr i8, ptr %0, i64 48         ; 2 uses
@@ -2753,7 +2756,8 @@ bb.b:                                             ; preds = %bb.a
   %.not137 = icmp eq i32 %3, 0
   %i.o = sext i32 %i.k to i64
   %i.p = sext i32 %i.i to i64
-  %i.q = add i32 %i.i, %.val4.i.i
+  %6 = add i32 %.val4.i.i, %.val3.i.i
+  %i.q = add i32 %6, %.val.i.i
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph287, %.loopexit275
@@ -3074,7 +3078,7 @@ bb.ac:                                            ; preds = %.loopexit276
   %i.cp = getelementptr i8, ptr %0, i64 56        ; 2 uses
   %.not151 = icmp eq i32 %3, 0
   %.not155 = icmp ne i32 %1, 0                    ; 4 uses
-  %i.cq = add i32 %.val176, %.val177              ; 2 uses
+  %i.cq = add i32 %.val177, %.val176              ; 2 uses
   %i.cr = sext i32 %.val176 to i64
   br label %bb.ad
 
@@ -3477,12 +3481,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call ptr @clause_Copy(ptr noundef %0) #14 ; 14 uses
   %i.e = getelementptr i8, ptr %i.d, i64 64       ; 4 uses
-  %.val3.i.i = load i32, ptr %i.e, align 8        ; 3 uses
+  %.val3.i.i = load i32, ptr %i.e, align 8        ; 4 uses
   %i.f = getelementptr i8, ptr %i.d, i64 68       ; 3 uses
-  %.val.i.i = load i32, ptr %i.f, align 4         ; 3 uses
+  %.val.i.i = load i32, ptr %i.f, align 4         ; 4 uses
   %i.g = getelementptr i8, ptr %i.d, i64 72       ; 2 uses
   %.val4.i.i = load i32, ptr %i.g, align 8        ; 3 uses
-  %i.h = add i32 %.val.i.i, %.val3.i.i            ; 5 uses
+  %i.h = add i32 %.val.i.i, %.val3.i.i            ; 4 uses
   %i.i = getelementptr i8, ptr %i.d, i64 48       ; 4 uses
   %.val101 = load i32, ptr %i.i, align 8          ; 3 uses
   %i.j = and i32 %.val101, 2
@@ -3505,7 +3509,8 @@ bb.c:                                             ; preds = %bb.b
   %.not75 = icmp eq i32 %3, 0
   %.not77 = icmp eq i32 %2, 0
   %i.p = sext i32 %i.h to i64
-  %i.q = add i32 %i.h, %.val4.i.i
+  %7 = add i32 %.val4.i.i, %.val3.i.i
+  %i.q = add i32 %7, %.val.i.i
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %list_Nconc.exit115
@@ -3908,7 +3913,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ah = getelementptr i8, ptr %i.p, i64 56
   %i.ai = sext i32 %.0119.lcssa to i64
   %i.aj = sext i32 %.val134 to i64
-  %i.ak = add i32 %.val3.i.i159, %.val.i.i160     ; 2 uses
+  %i.ak = add i32 %.val.i.i160, %.val3.i.i159     ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph178, %bb.c
@@ -4022,7 +4027,7 @@ bb.h:                                             ; preds = %.lr.ph190, %bb.h
   %i.bx = sext i32 %.3.lcssa to i64
   %i.by = sext i32 %i.bu to i64
   %sext = sext i32 %4 to i64                      ; 2 uses
-  %i.bz = add i32 %.val3.i.i, %.val.i.i           ; 2 uses
+  %i.bz = add i32 %.val.i.i, %.val3.i.i           ; 2 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph196, %bb.l
@@ -4425,12 +4430,12 @@ define internal fastcc ptr @inf_Lit2MParamod(ptr nofree noundef readonly capture
 bb.a:
   %i.a = alloca ptr, align 8                      ; 16 uses
   %i.b = getelementptr i8, ptr %1, i64 64         ; 3 uses
-  %.val3.i.i = load i32, ptr %i.b, align 8        ; 2 uses
+  %.val3.i.i = load i32, ptr %i.b, align 8        ; 3 uses
   %i.c = getelementptr i8, ptr %1, i64 68         ; 3 uses
-  %.val.i.i = load i32, ptr %i.c, align 4         ; 2 uses
+  %.val.i.i = load i32, ptr %i.c, align 4         ; 3 uses
   %i.d = getelementptr i8, ptr %1, i64 72
   %.val4.i.i = load i32, ptr %i.d, align 8        ; 2 uses
-  %i.e = add i32 %.val.i.i, %.val3.i.i            ; 3 uses
+  %i.e = add i32 %.val.i.i, %.val3.i.i            ; 2 uses
   %i.f = add i32 %i.e, -1
   %i.g = add i32 %i.f, %.val4.i.i
   %.not184 = icmp sgt i32 %i.e, %i.g
@@ -4448,7 +4453,8 @@ bb.a:
   %i.p = sext i32 %.val.i.i to i64
   %i.q = add nsw i64 %i.o, %i.p
   %sext = sext i32 %3 to i64
-  %i.r = add i32 %i.e, %.val4.i.i
+  %12 = add i32 %.val4.i.i, %.val3.i.i
+  %i.r = add i32 %12, %.val.i.i
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.aa
@@ -4851,7 +4857,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ai = getelementptr i8, ptr %i.p, i64 56
   %i.aj = sext i32 %.0128.lcssa to i64
   %i.ak = sext i32 %.val142 to i64
-  %i.al = add i32 %.val3.i.i167, %.val.i.i168     ; 2 uses
+  %i.al = add i32 %.val.i.i168, %.val3.i.i167     ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph183, %bb.c
@@ -4967,7 +4973,7 @@ bb.h:                                             ; preds = %.lr.ph195, %bb.h
   %i.ca = getelementptr i8, ptr %i.p, i64 56
   %i.cb = sext i32 %.3.lcssa to i64
   %i.cc = sext i32 %i.by to i64
-  %i.cd = add i32 %.val3.i.i, %.val.i.i           ; 2 uses
+  %i.cd = add i32 %.val.i.i, %.val3.i.i           ; 2 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph201, %bb.i
@@ -5370,13 +5376,13 @@ clause_GetLiteralAtom.exit:                       ; preds = %bb.b, %bb.c
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.val3.i.i = phi i32 [ %.val91, %bb.a ], [ %.val3.i.i.pre, %._crit_edge.loopexit ] ; 3 uses
+  %.val3.i.i = phi i32 [ %.val91, %bb.a ], [ %.val3.i.i.pre, %._crit_edge.loopexit ] ; 4 uses
   %.0139.lcssa = phi ptr [ null, %bb.a ], [ %i.m, %._crit_edge.loopexit ] ; 2 uses
   %i.o = getelementptr i8, ptr %0, i64 68         ; 2 uses
-  %.val.i.i = load i32, ptr %i.o, align 4         ; 3 uses
+  %.val.i.i = load i32, ptr %i.o, align 4         ; 4 uses
   %i.p = getelementptr i8, ptr %0, i64 72
   %.val4.i.i = load i32, ptr %i.p, align 8        ; 2 uses
-  %i.q = add i32 %.val.i.i, %.val3.i.i            ; 3 uses
+  %i.q = add i32 %.val.i.i, %.val3.i.i            ; 2 uses
   %i.r = add i32 %i.q, -1
   %i.s = add i32 %i.r, %.val4.i.i
   %.not74160 = icmp sgt i32 %i.q, %i.s
@@ -5387,7 +5393,8 @@ clause_GetLiteralAtom.exit:                       ; preds = %bb.b, %bb.c
   %i.u = sext i32 %.val3.i.i to i64
   %i.v = sext i32 %.val.i.i to i64
   %i.w = add nsw i64 %i.u, %i.v
-  %i.x = add i32 %i.q, %.val4.i.i
+  %6 = add i32 %.val4.i.i, %.val3.i.i
+  %i.x = add i32 %6, %.val.i.i
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph164, %clause_GetLiteralAtom.exit99

@@ -204,11 +204,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %spec.select.i.i = select i1 %i.v, i32 %i.w, i32 %i.u ; 2 uses
   store i32 %spec.select.i.i, ptr %i.n, align 4, !tbaa !80
   %i.x = lshr exact i64 %.pre-phi6.i, 2
-  %2 = and i64 %i.x, 4294967295
-  %3 = zext i32 %spec.select.i.i to i64
-  %4 = mul nuw i64 %2, %3
-  %5 = lshr i64 %4, 32
-  %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %5
+  %2 = trunc i64 %i.x to i32
+  %3 = tail call noundef i32 @llvm.umulh.i32(i32 %2, i32 %spec.select.i.i)
+  %4 = zext i32 %3 to i64
+  %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %4
   br label %_ZNK7rocksdb23JemallocNodumpAllocator13GetArenaIndexEv.exit
 
 _ZNK7rocksdb23JemallocNodumpAllocator13GetArenaIndexEv.exit: ; preds = %bb.a, %bb.d
@@ -323,11 +322,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %spec.select.i = select i1 %i.u, i32 %i.v, i32 %i.t ; 2 uses
   store i32 %spec.select.i, ptr %i.m, align 4, !tbaa !80
   %i.w = lshr exact i64 %.pre-phi6, 2
-  %1 = and i64 %i.w, 4294967295
-  %2 = zext i32 %spec.select.i to i64
-  %3 = mul nuw i64 %1, %2
-  %4 = lshr i64 %3, 32
-  %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %4
+  %1 = trunc i64 %i.w to i32
+  %2 = tail call noundef i32 @llvm.umulh.i32(i32 %1, i32 %spec.select.i)
+  %3 = zext i32 %2 to i64
+  %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %3
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.d
@@ -729,6 +727,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #26
