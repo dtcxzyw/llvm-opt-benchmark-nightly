@@ -205,12 +205,7 @@ bb.ar:                                            ; preds = %_ZN5boost9container
 
 bb.as:                                            ; preds = %bb.ar
   %i.ig = call noundef zeroext i1 @_ZN5boost9container4test57test_vector_methods_with_initializer_list_as_argument_forINS0_13stable_vectorIivEEEEbv()
-  br i1 %i.ig, label %.lr.ph.preheader, label %21
-
-21:                                               ; preds = %bb.as
-  %22 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, ptr noundef nonnull @.str.3, i64 noundef 53) ; 0 uses
-  %23 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr), !inline_history !6 ; 0 uses
-  br label %_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit.thread
+  br i1 %i.ig, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #24
@@ -220,10 +215,10 @@ bb.as:                                            ; preds = %bb.ar
   invoke void @_ZN5boost9container13stable_vectorIivE14priv_push_backIiEEvOT_(ptr noundef nonnull align 8 dereferenceable(40) %16, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
           to label %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit unwind label %.loopexit
 
-._crit_edge:                                      ; preds = %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
-  invoke void @_ZN5boost9intrusive4test35test_iterator_random_and_compatibleINS_9container13stable_vectorIivEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(40) %16)
-          to label %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit unwind label %bb.au
+._crit_edge:                                      ; preds = %bb.as
+  %21 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, ptr noundef nonnull @.str.3, i64 noundef 53) ; 0 uses
+  %22 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr), !inline_history !6 ; 0 uses
+  br label %_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit.thread
 
 _ZN5boost9container13stable_vectorIivE9push_backEOi.exit: ; preds = %.lr.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
@@ -286,7 +281,12 @@ _ZN5boost9container13stable_vectorIivE9push_backEOi.exit.8: ; preds = %_ZN5boost
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i32 9, ptr %i.a, align 4, !tbaa !126
   invoke void @_ZN5boost9container13stable_vectorIivE14priv_push_backIiEEvOT_(ptr noundef nonnull align 8 dereferenceable(40) %16, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
-          to label %._crit_edge unwind label %.loopexit
+          to label %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.9 unwind label %.loopexit
+
+_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.9: ; preds = %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
+  invoke void @_ZN5boost9intrusive4test35test_iterator_random_and_compatibleINS_9container13stable_vectorIivEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(40) %16)
+          to label %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit unwind label %bb.au
 
 .loopexit:                                        ; preds = %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.8, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.7, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.6, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.5, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.4, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.3151, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.2147, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.1143, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit, %.lr.ph.preheader
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -313,7 +313,7 @@ _ZN5boost9container13stable_vectorIivE9push_backEOi.exit.8: ; preds = %_ZN5boost
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   br label %bb.ay
 
-_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit: ; preds = %._crit_edge
+_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit: ; preds = %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.9
   %i.ih = invoke noundef i32 @_ZN5boost13report_errorsEv()
           to label %bb.at unwind label %bb.au
 
@@ -323,7 +323,7 @@ bb.at:                                            ; preds = %_ZN5boost9intrusive
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #24
   br i1 %.not29, label %.lr.ph.preheader.1, label %_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit.thread
 
-bb.au:                                            ; preds = %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit.3, %._crit_edge.3, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit.2, %._crit_edge.2, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit.1, %._crit_edge.1, %._crit_edge, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit
+bb.au:                                            ; preds = %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit.3, %._crit_edge.3, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit.2, %._crit_edge.2, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit.1, %._crit_edge.1, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.9, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container13stable_vectorIivEEEEvRT_.exit
   %i.ii = landingpad { ptr, i32 }
           cleanup
   br label %bb.ay
@@ -334,7 +334,7 @@ bb.au:                                            ; preds = %_ZN5boost9intrusive
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.1, %.lr.ph.preheader.1
-  %.023132.1 = phi i32 [ %i.ij, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.1 ], [ 0, %.lr.ph.preheader.1 ] ; 2 uses
+  %.023132.1 = phi i32 [ 0, %.lr.ph.preheader.1 ], [ %i.ij, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.1 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i32 %.023132.1, ptr %i.a, align 4, !tbaa !126
   invoke void @_ZN5boost9container13stable_vectorIivE14priv_push_backIiEEvOT_(ptr noundef nonnull align 8 dereferenceable(40) %16, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
@@ -366,7 +366,7 @@ bb.av:                                            ; preds = %_ZN5boost9intrusive
   br label %.lr.ph.2
 
 .lr.ph.2:                                         ; preds = %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.2, %.lr.ph.preheader.2
-  %.023132.2 = phi i32 [ %i.il, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.2 ], [ 0, %.lr.ph.preheader.2 ] ; 2 uses
+  %.023132.2 = phi i32 [ 0, %.lr.ph.preheader.2 ], [ %i.il, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.2 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i32 %.023132.2, ptr %i.a, align 4, !tbaa !126
   invoke void @_ZN5boost9container13stable_vectorIivE14priv_push_backIiEEvOT_(ptr noundef nonnull align 8 dereferenceable(40) %16, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
@@ -398,7 +398,7 @@ bb.aw:                                            ; preds = %_ZN5boost9intrusive
   br label %.lr.ph.3
 
 .lr.ph.3:                                         ; preds = %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.3, %.lr.ph.preheader.3
-  %.023132.3 = phi i32 [ %i.in, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.3 ], [ 0, %.lr.ph.preheader.3 ] ; 2 uses
+  %.023132.3 = phi i32 [ 0, %.lr.ph.preheader.3 ], [ %i.in, %_ZN5boost9container13stable_vectorIivE9push_backEOi.exit.3 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i32 %.023132.3, ptr %i.a, align 4, !tbaa !126
   invoke void @_ZN5boost9container13stable_vectorIivE14priv_push_backIiEEvOT_(ptr noundef nonnull align 8 dereferenceable(40) %16, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
@@ -537,8 +537,8 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.bd, %bb.bc, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #24
   br label %common.resume
 
-_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit.thread: ; preds = %bb.at, %bb.av, %bb.aw, %bb.ax, %bb.aq, %_ZNSt6vectorIiSaIiEED2Ev.exit60, %21, %_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit, %bb.ar, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit101, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit96, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit
-  %.5 = phi i32 [ 1, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit ], [ 1, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit96 ], [ 1, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit101 ], [ 1, %bb.ar ], [ %cond1, %_ZNSt6vectorIiSaIiEED2Ev.exit60 ], [ 1, %bb.aq ], [ 1, %21 ], [ 1, %_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit ], [ 1, %bb.ax ], [ 1, %bb.aw ], [ 1, %bb.av ], [ 1, %bb.at ]
+_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit.thread: ; preds = %bb.at, %bb.av, %bb.aw, %bb.ax, %bb.aq, %_ZNSt6vectorIiSaIiEED2Ev.exit60, %._crit_edge, %_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit, %bb.ar, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit101, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit96, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit
+  %.5 = phi i32 [ 1, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit ], [ 1, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit96 ], [ 1, %_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit101 ], [ 1, %bb.ar ], [ %cond1, %_ZNSt6vectorIiSaIiEED2Ev.exit60 ], [ 1, %bb.aq ], [ 1, %._crit_edge ], [ 1, %_ZN5boost9container4test12test_emplaceINS0_13stable_vectorINS1_10EmplaceIntEvEELNS1_14EmplaceOptionsE5EEEbv.exit ], [ 1, %bb.ax ], [ 1, %bb.aw ], [ 1, %bb.av ], [ 1, %bb.at ]
   ret i32 %.5
 }
 

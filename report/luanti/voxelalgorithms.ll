@@ -204,7 +204,7 @@ _ZN7voxalgo23is_sunlight_above_blockEP3MapN4core8vector3dIsEEPK14NodeDefManagerP
 .preheader.i:                                     ; preds = %.split352.us, %_ZN7voxalgo23is_sunlight_above_blockEP3MapN4core8vector3dIsEEPK14NodeDefManagerPA16_b.exit
   %indvars.iv57.i = phi i64 [ 0, %_ZN7voxalgo23is_sunlight_above_blockEP3MapN4core8vector3dIsEEPK14NodeDefManagerPA16_b.exit ], [ %indvars.iv.next58.i, %.split352.us ] ; 3 uses
   %i.kr = trunc nuw nsw i64 %indvars.iv57.i to i32
-  %.sroa.7.0.insert.shift331 = add i32 %i.kr, %.sroa.7.0.insert.ext
+  %.sroa.7.0.insert.shift331 = add nuw i32 %i.kr, %.sroa.7.0.insert.ext
   %.sroa.2.0.extract.shift63.i = shl i32 %.sroa.7.0.insert.shift331, 16
   %i.ks = ashr exact i32 %.sroa.2.0.extract.shift63.i, 16
   %i.kt = sub nsw i32 %i.ks, %i.kk
@@ -228,7 +228,7 @@ _ZN7voxalgo23is_sunlight_above_blockEP3MapN4core8vector3dIsEEPK14NodeDefManagerP
 .lr.ph.i:                                         ; preds = %._crit_edge.i.loopexit, %.preheader.i.split
   %indvars.iv.i234 = phi i64 [ 0, %.preheader.i.split ], [ %indvars.iv.next.i238, %._crit_edge.i.loopexit ] ; 3 uses
   %i.kz = trunc nuw nsw i64 %indvars.iv.i234 to i32
-  %i.la = add i32 %i.kz, %.sroa.0323.0.insert.ext
+  %i.la = add nuw i32 %i.kz, %.sroa.0323.0.insert.ext
   %sext.i = shl i32 %i.la, 16
   %i.lb = ashr exact i32 %sext.i, 16
   %i.lc = sub nsw i32 %i.lb, %i.kq                ; 2 uses

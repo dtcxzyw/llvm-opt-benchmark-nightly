@@ -204,7 +204,7 @@ _ZNK4llvm8TypeSizecvmEv.exit.i.i.i:               ; preds = %_ZNK4llvm3LLT14getS
 
 bb.d:                                             ; preds = %_ZNK4llvm8TypeSizecvmEv.exit.i.i.i
   %i.v = trunc nuw nsw i64 %i.u to i32
-  %i.w = tail call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %i.v)
+  %i.w = tail call range(i32 1, 32) i32 @llvm.ctpop.i32(i32 %i.v)
   %i.x = icmp samesign ugt i32 %i.w, 1
   br label %"_ZSt10__invoke_rIbRZN4llvm18LegalityPredicates21memSizeInBytesNotPow2EjE3$_0JRKNS0_13LegalityQueryEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit"
 
@@ -309,7 +309,7 @@ _ZNK4llvm3LLT14getSizeInBytesEv.exit.i.i.i:       ; preds = %.thread.i.i.i, %.th
 
 bb.c:                                             ; preds = %_ZNK4llvm3LLT14getSizeInBytesEv.exit.i.i.i
   %i.ad = trunc nuw nsw i64 %i.ac to i32
-  %i.ae = tail call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %i.ad)
+  %i.ae = tail call range(i32 1, 32) i32 @llvm.ctpop.i32(i32 %i.ad)
   %i.af = icmp samesign ugt i32 %i.ae, 1
   br label %"_ZSt10__invoke_rIbRZN4llvm18LegalityPredicates22memSizeNotByteSizePow2EjE3$_0JRKNS0_13LegalityQueryEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit"
 

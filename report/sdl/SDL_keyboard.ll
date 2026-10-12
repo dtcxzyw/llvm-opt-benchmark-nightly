@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %SDL_GetKeyboardInde
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.i ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.k = xor i32 %i.g, -1
-  %i.l = add i32 %i.a, %i.k
+  %i.l = add nsw i32 %i.a, %i.k
   %i.m = sext i32 %i.l to i64
-  %i.n = shl nsw i64 %i.m, 2
+  %i.n = shl nuw nsw i64 %i.m, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %i.j, i64 %i.n, i1 false)
   br label %bb.e
 
@@ -609,9 +609,9 @@ bb.d:                                             ; preds = %SDL_GetKeyboardInde
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %indvars.iv.i.i ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   %i.t = xor i32 %i.p, -1
-  %i.u = add i32 %i.h, %i.t
+  %i.u = add nsw i32 %i.h, %i.t
   %i.v = sext i32 %i.u to i64
-  %i.w = shl nsw i64 %i.v, 2
+  %i.w = shl nuw nsw i64 %i.v, 2
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.r, ptr nonnull align 4 %i.s, i64 %i.w, i1 false)
   br label %bb.e
 

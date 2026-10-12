@@ -205,8 +205,8 @@ bb.n:                                             ; preds = %.lr.ph.i.i.i
   br i1 %.not41.i.i, label %.preheader.i.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.n
-  %smax.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv46.i.i, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %smax.i.i = call i32 @llvm.umax.i32(i32 %indvars.iv46.i.i, i32 1)
+  %wide.trip.count.i.i = zext i32 %smax.i.i to i64
   br label %.lr.ph.i.i
 
 bb.o:                                             ; preds = %.lr.ph.i.i

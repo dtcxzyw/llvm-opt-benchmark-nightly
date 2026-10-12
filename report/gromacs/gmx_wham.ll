@@ -205,7 +205,7 @@ vector.ph447:                                     ; preds = %.split.us.us.i.preh
 vector.body453:                                   ; preds = %vector.body453, %vector.ph447
   %index454 = phi i64 [ 0, %vector.ph447 ], [ %index.next456, %vector.body453 ] ; 2 uses
   %vec.ind455 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph447 ], [ %vec.ind.next457, %vector.body453 ] ; 3 uses
-  %50 = srem <8 x i32> %vec.ind455, %broadcast.splat450
+  %50 = urem <8 x i32> %vec.ind455, %broadcast.splat450
   %i.vp = sub nuw nsw <8 x i32> %vec.ind455, %50
   %i.vq = getelementptr inbounds nuw [4 x i8], ptr %i.vl, i64 %index454
   store <8 x i32> %i.vp, ptr %i.vq, align 4, !tbaa !12
@@ -224,7 +224,7 @@ middle.block458:                                  ; preds = %vector.body453
 .split.us.us.i:                                   ; preds = %.split.us.us.i.preheader465, %.split.us.us.i
   %indvars.iv35.i = phi i64 [ %indvars.iv.next36.i, %.split.us.us.i ], [ %indvars.iv35.i.ph, %.split.us.us.i.preheader465 ] ; 3 uses
   %i.vs = trunc nuw nsw i64 %indvars.iv35.i to i32 ; 2 uses
-  %51 = srem i32 %i.vs, %i.vm
+  %51 = urem i32 %i.vs, %i.vm
   %i.vt = sub nuw nsw i32 %i.vs, %51              ; 2 uses
   %.not.us.us.i = icmp slt i32 %i.vt, %.0180.lcssa
   call void @llvm.assume(i1 %.not.us.us.i)
@@ -243,7 +243,7 @@ bb.ba:                                            ; preds = %bb.az
   %.sroa.8.015.i = phi i64 [ %i.yz, %_ZN3gmx22UniformIntDistributionIiEC2Eii.exit.i ], [ 0, %.lr.ph.i220 ]
   %.sroa.11.014.i = phi i32 [ %i.zd, %_ZN3gmx22UniformIntDistributionIiEC2Eii.exit.i ], [ 0, %.lr.ph.i220 ]
   %i.vv = trunc nuw nsw i64 %indvars.iv.i221 to i32 ; 2 uses
-  %52 = srem i32 %i.vv, %i.vm
+  %52 = urem i32 %i.vv, %i.vm
   %i.vw = sub nuw nsw i32 %i.vv, %52              ; 2 uses
   br label %bb.bb
 

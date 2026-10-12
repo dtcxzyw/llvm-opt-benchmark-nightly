@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.k ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.k ] ; 4 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv.i
   %i.v = load ptr, ptr %i.u, align 8
   %i.w = icmp eq ptr %i.m, %i.v
@@ -226,7 +226,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ac = load ptr, ptr %i.ab, align 8
   %i.ad = tail call i32 @xstrcasecmp(ptr noundef nonnull %i.m, ptr noundef %i.ac) #9
   %.not.i = icmp eq i32 %i.ad, 0
-  br i1 %.not.i, label %_find_plugin_by_type.exit, label %bb.l
+  br i1 %.not.i, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph46.i
   %indvars.iv.next60.i = add nuw nsw i64 %indvars.iv59.i, 1 ; 2 uses
@@ -246,7 +246,7 @@ bb.l:                                             ; preds = %.lr.ph46.i
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 12
   %i.ao = tail call i32 @xstrcasecmp(ptr noundef nonnull %i.m, ptr noundef nonnull %i.an) #9
   %.not30.i = icmp eq i32 %i.ao, 0
-  br i1 %.not30.i, label %_find_plugin_by_type.exit, label %bb.m
+  br i1 %.not30.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph48.i
   %indvars.iv.next63.i = add nuw nsw i64 %indvars.iv62.i, 1 ; 2 uses
@@ -256,10 +256,8 @@ bb.m:                                             ; preds = %.lr.ph48.i
   %i.as = icmp ugt i64 %i.ar, %indvars.iv.next63.i
   br i1 %i.as, label %.lr.ph48.i, label %_find_plugin_by_type.exit.thread, !llvm.loop !2
 
-_find_plugin_by_type.exit:                        ; preds = %bb.j, %.lr.ph46.i, %.lr.ph48.i
-  %.3.i.in = phi i64 [ %indvars.iv62.i, %.lr.ph48.i ], [ %indvars.iv59.i, %.lr.ph46.i ], [ %indvars.iv.i, %bb.j ]
-  %.3.i = trunc i64 %.3.i.in to i32               ; 2 uses
-  %i.at = icmp slt i32 %.3.i, 0
+_find_plugin_by_type.exit:                        ; preds = %bb.j
+  %i.at = icmp slt i64 %indvars.iv.i, 0
   br i1 %i.at, label %_find_plugin_by_type.exit.thread, label %bb.n
 
 _find_plugin_by_type.exit.thread:                 ; preds = %bb.m, %.preheader.i, %.preheader40.i, %bb.i, %_find_plugin_by_type.exit
@@ -267,11 +265,13 @@ _find_plugin_by_type.exit.thread:                 ; preds = %bb.m, %.preheader.i
   %i.av = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.5, ptr noundef nonnull @__func__.data_parser_g_new, ptr noundef %i.au) #9 ; 0 uses
   br label %.preheader
 
-bb.n:                                             ; preds = %_find_plugin_by_type.exit
+bb.n:                                             ; preds = %.lr.ph46.i, %.lr.ph48.i, %_find_plugin_by_type.exit
+  %.3.i41.in = phi i64 [ %indvars.iv.i, %_find_plugin_by_type.exit ], [ %indvars.iv62.i, %.lr.ph48.i ], [ %indvars.iv59.i, %.lr.ph46.i ]
+  %.3.i41 = trunc i64 %.3.i41.in to i32
   %i.aw = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.ax = load ptr, ptr %i.aw, align 8
   store ptr null, ptr %i.aw, align 8
-  %i.ay = tail call fastcc ptr @_new_parser(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, i32 noundef %.3.i, ptr noundef %i.ax)
+  %i.ay = tail call fastcc ptr @_new_parser(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, i32 noundef %.3.i41, ptr noundef %i.ax)
   br label %.preheader
 
 bb.o:                                             ; preds = %bb.d
@@ -605,7 +605,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ] ; 4 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %indvars.iv.i
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = icmp eq ptr %i.q, %i.x
@@ -629,7 +629,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ae = load ptr, ptr %i.ad, align 8
   %i.af = tail call i32 @xstrcasecmp(ptr noundef nonnull %i.q, ptr noundef %i.ae) #9
   %.not.i = icmp eq i32 %i.af, 0
-  br i1 %.not.i, label %_find_plugin_by_type.exit, label %bb.g
+  br i1 %.not.i, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph46.i
   %indvars.iv.next60.i = add nuw nsw i64 %indvars.iv59.i, 1 ; 2 uses
@@ -649,7 +649,7 @@ bb.g:                                             ; preds = %.lr.ph46.i
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 12
   %i.aq = tail call i32 @xstrcasecmp(ptr noundef nonnull %i.q, ptr noundef nonnull %i.ap) #9
   %.not30.i = icmp eq i32 %i.aq, 0
-  br i1 %.not30.i, label %_find_plugin_by_type.exit, label %bb.h
+  br i1 %.not30.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph48.i
   %indvars.iv.next63.i = add nuw nsw i64 %indvars.iv62.i, 1 ; 2 uses
@@ -659,10 +659,8 @@ bb.h:                                             ; preds = %.lr.ph48.i
   %i.au = icmp ugt i64 %i.at, %indvars.iv.next63.i
   br i1 %i.au, label %.lr.ph48.i, label %.thread, !llvm.loop !2
 
-_find_plugin_by_type.exit:                        ; preds = %bb.e, %.lr.ph46.i, %.lr.ph48.i
-  %.3.i.in = phi i64 [ %indvars.iv62.i, %.lr.ph48.i ], [ %indvars.iv59.i, %.lr.ph46.i ], [ %indvars.iv.i, %bb.e ]
-  %.3.i = trunc i64 %.3.i.in to i32               ; 2 uses
-  %i.av = icmp slt i32 %.3.i, 0
+_find_plugin_by_type.exit:                        ; preds = %bb.e
+  %i.av = icmp slt i64 %indvars.iv.i, 0
   br i1 %i.av, label %.thread, label %bb.i
 
 .thread:                                          ; preds = %_find_plugin_by_type.exit, %.lr.ph, %.preheader40.i, %.preheader.i, %bb.h
@@ -671,11 +669,13 @@ _find_plugin_by_type.exit:                        ; preds = %bb.e, %.lr.ph46.i, 
   %i.ay = tail call i32 (ptr, ...) @error(ptr noundef nonnull @.str.5, ptr noundef nonnull @__func__.data_parser_g_new_array, ptr noundef %i.ax) #9 ; 0 uses
   br label %.preheader68
 
-bb.i:                                             ; preds = %_find_plugin_by_type.exit
+bb.i:                                             ; preds = %.lr.ph46.i, %.lr.ph48.i, %_find_plugin_by_type.exit
+  %.3.i67.in = phi i64 [ %indvars.iv.i, %_find_plugin_by_type.exit ], [ %indvars.iv62.i, %.lr.ph48.i ], [ %indvars.iv59.i, %.lr.ph46.i ]
+  %.3.i67 = trunc i64 %.3.i67.in to i32
   %i.az = getelementptr inbounds nuw [16 x i8], ptr %i.p, i64 %indvars.iv
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.bb = load ptr, ptr %i.ba, align 8
-  %i.bc = tail call fastcc ptr @_new_parser(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, i32 noundef %.3.i, ptr noundef %i.bb)
+  %i.bc = tail call fastcc ptr @_new_parser(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, i32 noundef %.3.i67, ptr noundef %i.bb)
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv
   store ptr %i.bc, ptr %i.bd, align 8
   %i.be = load ptr, ptr %i.b, align 8

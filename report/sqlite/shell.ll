@@ -206,9 +206,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond22.i, label %.critedge.i, label %.critedge2.i, !llvm.loop !2
 
 .critedge2.i:                                     ; preds = %.critedge.i
-  %i.m = add i8 %i.k, -64
-  %or.cond23.i = icmp ult i8 %i.m, 63
-  br i1 %or.cond23.i, label %bb.d, label %qrfIsVt100.exit.thread
+  %i.m = add i8 %i.k, -127
+  %or.cond23.i = icmp ult i8 %i.m, -63
+  br i1 %or.cond23.i, label %qrfIsVt100.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %.critedge2.i
   %i.n = and i64 %indvars.iv.next26.i, 4294967295
@@ -611,9 +611,9 @@ bb.t:                                             ; preds = %bb.s
   br i1 %or.cond22.i.i, label %.critedge.i.i, label %.critedge2.i.i, !llvm.loop !2
 
 .critedge2.i.i:                                   ; preds = %.critedge.i.i
-  %i.ge = add i8 %i.gc, -64
-  %or.cond23.i.i = icmp ult i8 %i.ge, 63
-  br i1 %or.cond23.i.i, label %bb.u, label %qrfIsVt100.exit.thread.i
+  %i.ge = add i8 %i.gc, -127
+  %or.cond23.i.i = icmp ult i8 %i.ge, -63
+  br i1 %or.cond23.i.i, label %qrfIsVt100.exit.thread.i, label %bb.u
 
 bb.u:                                             ; preds = %.critedge2.i.i
   %i.gf = and i64 %indvars.iv.next26.i.i, 4294967295
@@ -1016,9 +1016,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond22.i, label %.critedge.i, label %.critedge2.i, !llvm.loop !2
 
 .critedge2.i:                                     ; preds = %.critedge.i
-  %i.l = add i8 %i.j, -64
-  %or.cond23.i = icmp ult i8 %i.l, 63
-  br i1 %or.cond23.i, label %bb.d, label %.thread
+  %i.l = add i8 %i.j, -127
+  %or.cond23.i = icmp ult i8 %i.l, -63
+  br i1 %or.cond23.i, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %.critedge2.i
   %i.m = and i64 %indvars.iv.next26.i, 4294967295
@@ -1029,7 +1029,7 @@ bb.d:                                             ; preds = %.critedge2.i
   store i8 32, ptr %.052.ph, align 1, !tbaa !52
   br label %.thread65
 
-.thread:                                          ; preds = %bb.b, %.critedge2.i, %bb.c
+.thread:                                          ; preds = %bb.b, %bb.c, %.critedge2.i
   %i.o = getelementptr inbounds nuw i8, ptr %.052.ph, i64 1
   br label %.thread65.outer.backedge
 
@@ -1294,9 +1294,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond22.i, label %.critedge.i, label %.critedge2.i, !llvm.loop !2
 
 .critedge2.i:                                     ; preds = %.critedge.i
-  %i.n = add i8 %i.l, -64
-  %or.cond23.i = icmp ult i8 %i.n, 63
-  br i1 %or.cond23.i, label %bb.d, label %.thread
+  %i.n = add i8 %i.l, -127
+  %or.cond23.i = icmp ult i8 %i.n, -63
+  br i1 %or.cond23.i, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %.critedge2.i
   %i.o = and i64 %indvars.iv.next26.i, 4294967295
@@ -1313,7 +1313,7 @@ bb.f:                                             ; preds = %bb.b, %bb.b
   %spec.select = tail call i32 @llvm.smax.i32(i32 %.03658, i32 %.04057)
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %.critedge2.i, %bb.c, %bb.f, %bb.e
+.thread:                                          ; preds = %bb.b, %bb.c, %.critedge2.i, %bb.f, %bb.e
   %.242 = phi i32 [ %.04057, %bb.e ], [ %spec.select, %bb.f ], [ %.04057, %bb.b ], [ %.04057, %.critedge2.i ], [ %.04057, %bb.c ]
   %.137 = phi i32 [ %i.r, %bb.e ], [ 0, %bb.f ], [ %.03658, %bb.b ], [ %.03658, %.critedge2.i ], [ %.03658, %bb.c ]
   %.134 = phi i32 [ %.03359, %bb.e ], [ %i.s, %bb.f ], [ %.03359, %bb.b ], [ %.03359, %.critedge2.i ], [ %.03359, %bb.c ]
@@ -1716,12 +1716,12 @@ bb.am:                                            ; preds = %bb.al
 
 .critedge2.i:                                     ; preds = %.critedge.i204
   %i.ir = trunc nuw nsw i64 %indvars.iv25.i to i32
-  %i.is = add i8 %i.ip, -64
-  %or.cond23.i = icmp ult i8 %i.is, 63
+  %i.is = add i8 %i.ip, -127
+  %or.cond23.i = icmp ult i8 %i.is, -63
   %i.it = add nuw nsw i32 %i.ir, 1
-  br i1 %or.cond23.i, label %.thread213, label %.thread212.a
+  br i1 %or.cond23.i, label %.thread212.a, label %.thread213
 
-.thread212.a:                                     ; preds = %bb.am, %.critedge2.i
+.thread212.a:                                     ; preds = %.critedge2.i, %bb.am
   br label %.thread213
 
 bb.an:                                            ; preds = %bb.ak
@@ -1891,8 +1891,8 @@ sqlite3_qrf_wcwidth.exit:                         ; preds = %bb.aw, %bb.ax, %bb.
   br i1 %i.lz, label %bb.bh, label %.thread213
 
 .thread213:                                       ; preds = %bb.ao, %.thread212.a, %.critedge2.i, %bb.al, %sqlite3_qrf_wcwidth.exit
-  %.pn.pn = phi i32 [ %.0.i218, %sqlite3_qrf_wcwidth.exit ], [ 1, %.thread212.a ], [ %i.it, %.critedge2.i ], [ 1, %bb.al ], [ 1, %bb.ao ]
-  %.1 = phi i32 [ %i.ly, %sqlite3_qrf_wcwidth.exit ], [ %.0, %.thread212.a ], [ %.0, %.critedge2.i ], [ %.0, %bb.al ], [ %i.iv, %bb.ao ]
+  %.pn.pn = phi i32 [ %.0.i218, %sqlite3_qrf_wcwidth.exit ], [ 1, %.thread212.a ], [ 1, %bb.al ], [ %i.it, %.critedge2.i ], [ 1, %bb.ao ]
+  %.1 = phi i32 [ %i.ly, %sqlite3_qrf_wcwidth.exit ], [ %.0, %.thread212.a ], [ %.0, %bb.al ], [ %.0, %.critedge2.i ], [ %i.iv, %bb.ao ]
   %.4 = add nsw i32 %.pn.pn, %.0171
   br label %bb.ak
 
@@ -2295,9 +2295,9 @@ bb.aa:                                            ; preds = %bb.x
   br i1 %or.cond22.i, label %.critedge.i, label %.critedge2.i, !llvm.loop !2
 
 .critedge2.i:                                     ; preds = %.critedge.i
-  %i.de = add i8 %i.dc, -64
-  %or.cond23.i = icmp ult i8 %i.de, 63
-  br i1 %or.cond23.i, label %bb.ab, label %qrfIsVt100.exit.thread
+  %i.de = add i8 %i.dc, -127
+  %or.cond23.i = icmp ult i8 %i.de, -63
+  br i1 %or.cond23.i, label %qrfIsVt100.exit.thread, label %bb.ab
 
 bb.ab:                                            ; preds = %.critedge2.i
   %i.df = trunc nuw nsw i64 %indvars.iv25.i to i32
@@ -2601,9 +2601,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond22.i, label %.critedge.i, label %.critedge2.i, !llvm.loop !2
 
 .critedge2.i:                                     ; preds = %.critedge.i
-  %i.r = add i8 %i.p, -64
-  %or.cond23.i = icmp ult i8 %i.r, 63
-  br i1 %or.cond23.i, label %bb.e, label %.thread
+  %i.r = add i8 %i.p, -127
+  %or.cond23.i = icmp ult i8 %i.r, -63
+  br i1 %or.cond23.i, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %.critedge2.i
   %i.s = trunc nuw nsw i64 %indvars.iv25.i to i32
@@ -3006,9 +3006,9 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond22.i, label %.critedge.i, label %.critedge2.i, !llvm.loop !2
 
 .critedge2.i:                                     ; preds = %.critedge.i
-  %i.cv = add i8 %i.ct, -64
-  %or.cond23.i = icmp ult i8 %i.cv, 63
-  br i1 %or.cond23.i, label %bb.v, label %qrfIsVt100.exit.thread
+  %i.cv = add i8 %i.ct, -127
+  %or.cond23.i = icmp ult i8 %i.cv, -63
+  br i1 %or.cond23.i, label %qrfIsVt100.exit.thread, label %bb.v
 
 bb.v:                                             ; preds = %.critedge2.i
   %i.cw = trunc nuw nsw i64 %indvars.iv25.i to i32

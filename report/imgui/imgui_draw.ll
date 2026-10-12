@@ -205,9 +205,9 @@ vector.body:                                      ; preds = %vector.body, %.spli
   %indvars.iv115 = phi i32 [ %i.by, %.split.preheader ], [ %indvars.iv.next116, %.critedge ] ; 2 uses
   %indvar = phi i64 [ 0, %.split.preheader ], [ %indvar.next, %.critedge ] ; 11 uses
   %i.eu = shl nuw nsw i64 %indvar, 2
-  %i.ev = sub nsw i64 %i.ch, %indvar              ; 3 uses
+  %i.ev = sub nsw i64 %i.ch, %indvar              ; 4 uses
   %i.ew = trunc nsw i64 %i.ev to i32
-  %i.ex = sdiv i32 %i.ew, 2                       ; 10 uses
+  %i.ex = sdiv i32 %i.ew, 2                       ; 9 uses
   %i.ey = trunc nuw nsw i64 %indvar to i32
   %i.ez = add i32 %i.ex, %i.ey
   %i.fa = sub i32 %i.by, %i.ez                    ; 3 uses
@@ -278,12 +278,12 @@ bb.l:                                             ; preds = %.split
   br i1 %i.gf, label %.lr.ph.preheader, label %.preheader88
 
 .lr.ph.preheader:                                 ; preds = %bb.l
-  %wide.trip.count = zext i32 %i.ex to i64        ; 3 uses
-  %min.iters.check191 = icmp ult i32 %i.ex, 8
+  %wide.trip.count = zext nneg i32 %i.ex to i64   ; 3 uses
+  %min.iters.check191 = icmp ult i64 %i.ev, 16
   br i1 %min.iters.check191, label %.lr.ph.preheader200, label %vector.ph192
 
 vector.ph192:                                     ; preds = %.lr.ph.preheader
-  %n.vec193 = and i64 %wide.trip.count, 4294967288 ; 3 uses
+  %n.vec193 = and i64 %wide.trip.count, 1073741816 ; 3 uses
   br label %vector.body194
 
 vector.body194:                                   ; preds = %vector.body194, %vector.ph192

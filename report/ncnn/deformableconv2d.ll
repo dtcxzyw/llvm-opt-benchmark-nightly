@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %wide.trip.count465 = zext nneg i32 %i.bj to i64
   %i.bz = zext nneg i32 %i.bj to i64
   %i.ca = trunc nuw nsw i64 %indvars.iv472 to i32
-  %i.cb = mul nsw i32 %i.bw, %i.ca
-  %15 = sext i32 %i.cb to i64
+  %i.cb = mul nuw nsw i32 %i.bw, %i.ca
+  %15 = zext nneg i32 %i.cb to i64
   %wide.trip.count = zext nneg i32 %i.bw to i64
   br label %.preheader.us
 
@@ -316,7 +316,7 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.split.us.us.preheader:                     ; preds = %.thread394.us.thread
   %i.fc = load ptr, ptr %13, align 8, !tbaa !57
-  %invariant.gep546 = getelementptr [4 x i8], ptr %i.fc, i64 %indvars.iv462
+  %invariant.gep546 = getelementptr inbounds nuw [4 x i8], ptr %i.fc, i64 %indvars.iv462
   br label %.lr.ph.split.us.us
 
 .lr.ph.split.us.us:                               ; preds = %.lr.ph.split.us.us.preheader, %.critedge178.us.us
@@ -410,11 +410,11 @@ bb.g:                                             ; preds = %bb.f
 .critedge178.us.us:                               ; preds = %.noexc229.us.us, %.critedge176.us.us
   %i.hn = phi float [ %i.hm, %.noexc229.us.us ], [ %i.gx, %.critedge176.us.us ]
   %i.ho = fmul fast float %i.hn, %i.dh
-  %i.hp = add nsw i64 %indvars.iv, %15
-  %i.hq = mul nsw i64 %i.hp, %i.az
-  %i.hr = add nsw i64 %i.hq, %indvars.iv467
-  %i.hs = mul nsw i64 %i.hr, %i.by
-  %gep = getelementptr [4 x i8], ptr %invariant.gep546, i64 %i.hs
+  %i.hp = add nuw nsw i64 %indvars.iv, %15
+  %i.hq = mul nuw nsw i64 %i.hp, %i.az
+  %i.hr = add nuw nsw i64 %i.hq, %indvars.iv467
+  %i.hs = mul nuw nsw i64 %i.hr, %i.by
+  %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep546, i64 %i.hs
   %i.ht = load float, ptr %gep, align 4, !tbaa !91
   %i.hu = fmul fast float %i.ht, %i.ho
   %i.hv = fadd fast float %i.hu, %.3425.us.us     ; 2 uses

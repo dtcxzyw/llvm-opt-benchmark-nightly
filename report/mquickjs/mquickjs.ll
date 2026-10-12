@@ -204,7 +204,7 @@ find_var.exit.i.i:                                ; preds = %.lr.ph.i.i.i
   %i.he = trunc i64 %i.hd to i32
   %i.hf = lshr i32 %i.he, 7                       ; 2 uses
   %i.hg = and i32 %i.hf, 65535
-  %.not52.i.i = icmp sgt i32 %i.hg, %i.hc
+  %.not52.i.i = icmp samesign ugt i32 %i.hg, %i.hc
   br i1 %.not52.i.i, label %find_var.exit.thread.i.i, label %bb.af
 
 bb.af:                                            ; preds = %find_var.exit.i.i
@@ -607,7 +607,7 @@ bb.cb:                                            ; preds = %.lr.ph.i.i111.i
 
 find_func_var.exit.i.i:                           ; preds = %.lr.ph.i.i111.i
   %i.tk = trunc nuw nsw i64 %indvars.iv.i.i112.i to i32 ; 3 uses
-  %11 = icmp sgt i32 %i.sk, %i.tk
+  %11 = icmp samesign ugt i32 %i.sk, %i.tk
   br i1 %11, label %bb.cf, label %bb.cc
 
 bb.cc:                                            ; preds = %find_func_var.exit.i.i
@@ -1010,7 +1010,7 @@ bb.p:                                             ; preds = %.lr.ph.i
 
 find_var.exit:                                    ; preds = %.lr.ph.i
   %i.ci = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
-  %4 = icmp sgt i32 %i.bv, %i.ci                  ; 2 uses
+  %4 = icmp samesign ugt i32 %i.bv, %i.ci         ; 2 uses
   %i.cj = select i1 %4, i32 0, i32 %i.bv
   %spec.select = sub nsw i32 %i.ci, %i.cj
   %spec.select329 = select i1 %4, i32 46, i32 44
@@ -1413,7 +1413,7 @@ bb.e:                                             ; preds = %.lr.ph.i
 
 find_var.exit:                                    ; preds = %.lr.ph.i
   %i.al = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
-  %3 = icmp sle i32 %i.aa, %i.al                  ; 2 uses
+  %3 = icmp samesign ule i32 %i.aa, %i.al         ; 2 uses
   %i.am = select i1 %3, i32 %i.aa, i32 0
   %spec.select = sub nsw i32 %i.al, %i.am
   %spec.select30 = zext i1 %3 to i32

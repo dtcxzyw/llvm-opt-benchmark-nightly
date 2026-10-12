@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.b
   %i.am = and i32 %i.ak, %i.al
   %i.an = xor i32 %i.aj, -1
   %i.ao = tail call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.an) #7, !srcloc !10
-  %i.ap = and i32 %i.ao, %.088115
-  %i.aq = or i32 %i.ap, %i.am                     ; 5 uses
+  %i.ap = and i32 %i.ao, %.088115                 ; 2 uses
+  %i.aq = or i32 %i.ap, %i.am                     ; 4 uses
   %i.ar = select i1 %i.ah, i32 -1, i32 %.089114
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond132.not = icmp eq i64 %indvars.iv.next, %i.e
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %bb.b
 
 ._crit_edge118:                                   ; preds = %.lr.ph117
   %i.as = sub i32 9, %i.aq
-  %i.at = or i32 %i.as, %i.aq
+  %i.at = or i32 %i.as, %i.ap
   %.lobit = ashr i32 %i.at, 31
   %.neg = xor i32 %i.aq, -1
   %i.au = add i32 %4, %.neg                       ; 6 uses

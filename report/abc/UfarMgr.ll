@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.d
   %i.aq = icmp samesign ult i64 %indvars.iv303, 1073741823
   %indvars.iv303.tr = trunc nsw i64 %indvars.iv303 to i32
-  %i.ar = shl nsw i32 %indvars.iv303.tr, 1
+  %i.ar = shl nuw nsw i32 %indvars.iv303.tr, 1
   %spec.select.i = select i1 %i.aq, i32 %i.ar, i32 2147483647 ; 4 uses
-  %22 = sext i32 %spec.select.i to i64
+  %22 = zext nneg i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv303, %22
   br i1 %.not.i9.i, label %bb.i, label %_ZL11Vec_IntPushP10Vec_Int_t_i.exit
 

@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %.lr.ph.split.prehea
   %i.hu = load i16, ptr %i.j, align 2, !tbaa !72
   %i.hv = zext i16 %i.hu to i32
   %i.hw = mul nuw nsw i32 %.087146, %i.hv
-  %i.hx = add i32 %i.hw, %i.hk
+  %i.hx = add nuw i32 %i.hw, %i.hk
   %i.hy = zext i32 %i.hx to i64
   %i.hz = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.hy
   store i16 %i.ht, ptr %i.hz, align 2, !tbaa !74
@@ -254,7 +254,7 @@ bb.x:                                             ; preds = %.lr.ph.split.peel.n
   %i.iw = load i16, ptr %i.j, align 2, !tbaa !72
   %i.ix = zext i16 %i.iw to i32
   %i.iy = mul nuw nsw i32 %.087146, %i.ix
-  %i.iz = add i32 %i.iy, %i.hk
+  %i.iz = add nuw i32 %i.iy, %i.hk
   %i.ja = zext i32 %i.iz to i64
   %i.jb = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.ja
   store i16 %i.iv, ptr %i.jb, align 2, !tbaa !74
@@ -304,7 +304,7 @@ bb.ab:                                            ; preds = %.lr.ph.split.peel.n
   %i.jz = load i16, ptr %i.j, align 2, !tbaa !72
   %i.ka = zext i16 %i.jz to i32
   %i.kb = mul nuw nsw i32 %.087146, %i.ka
-  %i.kc = add i32 %i.kb, %i.hk
+  %i.kc = add nuw i32 %i.kb, %i.hk
   %i.kd = zext i32 %i.kc to i64
   %i.ke = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.kd
   store i16 %i.jy, ptr %i.ke, align 2, !tbaa !74
@@ -353,7 +353,7 @@ bb.af:                                            ; preds = %.lr.ph.split.peel.n
   %i.lb = load i16, ptr %i.j, align 2, !tbaa !72
   %i.lc = zext i16 %i.lb to i32
   %i.ld = mul nuw nsw i32 %.087146, %i.lc
-  %i.le = add i32 %i.ld, %i.hk
+  %i.le = add nuw i32 %i.ld, %i.hk
   %i.lf = zext i32 %i.le to i64
   %i.lg = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.lf
   store i16 %i.la, ptr %i.lg, align 2, !tbaa !74
@@ -465,7 +465,7 @@ bb.aj:                                            ; preds = %.lr.ph.split.us.spl
   %i.mn = load i16, ptr %i.j, align 2, !tbaa !72
   %i.mo = zext i16 %i.mn to i32
   %i.mp = mul nuw nsw i32 %.087146, %i.mo
-  %i.mq = add i32 %i.mp, %i.hk
+  %i.mq = add nuw i32 %i.mp, %i.hk
   %i.mr = zext i32 %i.mq to i64
   %i.ms = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.mr
   store i16 %i.mm, ptr %i.ms, align 2, !tbaa !74
@@ -485,7 +485,7 @@ bb.ak:                                            ; preds = %.lr.ph.split.us.spl
   %i.my = load i16, ptr %i.j, align 2, !tbaa !72
   %i.mz = zext i16 %i.my to i32
   %i.na = mul nuw nsw i32 %.087146, %i.mz
-  %i.nb = add i32 %i.na, %i.hk
+  %i.nb = add nuw i32 %i.na, %i.hk
   %i.nc = zext i32 %i.nb to i64
   %i.nd = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.nc
   store i16 %i.mx, ptr %i.nd, align 2, !tbaa !74
@@ -514,7 +514,7 @@ bb.am:                                            ; preds = %.lr.ph.split
   %i.nk = load i16, ptr %i.j, align 2, !tbaa !72
   %i.nl = zext i16 %i.nk to i32
   %i.nm = mul nuw nsw i32 %.087146, %i.nl
-  %i.nn = add i32 %i.nm, %i.hk
+  %i.nn = add nuw i32 %i.nm, %i.hk
   %i.no = zext i32 %i.nn to i64
   %i.np = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.no
   store i16 %i.nj, ptr %i.np, align 2, !tbaa !74
@@ -581,7 +581,7 @@ bb.aq:                                            ; preds = %.lr.ph.split.us.spl
   %i.ou = load i16, ptr %i.j, align 2, !tbaa !72
   %i.ov = zext i16 %i.ou to i32
   %i.ow = mul nuw nsw i32 %.087146, %i.ov
-  %i.ox = add i32 %i.ow, %i.hk
+  %i.ox = add nuw i32 %i.ow, %i.hk
   %i.oy = zext i32 %i.ox to i64
   %i.oz = getelementptr inbounds nuw [2 x i8], ptr %.fr, i64 %i.oy
   store i16 %i.ot, ptr %i.oz, align 2, !tbaa !74

@@ -204,12 +204,12 @@ bb.p:                                             ; preds = %bb.n
   %i.gd = sub i32 %i.ab, %i.gc
   %i.ge = zext i32 %i.gd to i64                   ; 2 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ge ; 17 uses
-  %i.gg = icmp ult i32 %i.gc, %i.ed
+  %i.gg = icmp samesign ult i32 %i.gc, %i.ed
   br i1 %i.gg, label %bb.q, label %CHUNKCOPY_SAFE.exit
 
 bb.q:                                             ; preds = %bb.p
   %i.gh = sub nuw nsw i32 %i.ed, %i.gc            ; 7 uses
-  %i.gi = zext i32 %i.gc to i64                   ; 2 uses
+  %i.gi = zext nneg i32 %i.gc to i64              ; 2 uses
   %i.gj = icmp eq ptr %.1223799, %i.gf
   br i1 %i.gj, label %bb.r, label %bb.s
 
@@ -247,7 +247,7 @@ vector.main.loop.iter.check1197:                  ; preds = %vector.memcheck1194
 
 vector.ph1199:                                    ; preds = %vector.main.loop.iter.check1197
   %i.gu = and i64 %i.gm, 28
-  %n.vec1200 = and i64 %i.gm, 4294967264          ; 5 uses
+  %n.vec1200 = and i64 %i.gm, 2147483616          ; 5 uses
   %i.gv = and i64 %i.gm, 31
   %i.gw = getelementptr i8, ptr %i.gf, i64 %n.vec1200
   %i.gx = getelementptr i8, ptr %.1223799, i64 %n.vec1200 ; 2 uses
@@ -277,7 +277,7 @@ vec.epilog.iter.check1215:                        ; preds = %middle.block1208
 
 vec.epilog.ph1217:                                ; preds = %vector.main.loop.iter.check1197, %vec.epilog.iter.check1215
   %vec.epilog.resume.val1210 = phi i64 [ %n.vec1200, %vec.epilog.iter.check1215 ], [ 0, %vector.main.loop.iter.check1197 ]
-  %n.vec1218 = and i64 %i.gm, 4294967292          ; 4 uses
+  %n.vec1218 = and i64 %i.gm, 2147483644          ; 4 uses
   %i.hb = and i64 %i.gm, 3
   %i.hc = getelementptr i8, ptr %i.gf, i64 %n.vec1218
   %i.hd = getelementptr i8, ptr %.1223799, i64 %n.vec1218 ; 2 uses

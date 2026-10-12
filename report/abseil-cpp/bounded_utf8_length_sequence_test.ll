@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.aa = trunc nuw nsw i64 %i.i to i32
   store i32 %i.aa, ptr %i.b, align 4, !tbaa !43
-  %i.ab = zext i32 %i.u to i64
+  %i.ab = zext nneg i32 %i.u to i64
   %i.ac = icmp eq i64 %i.i, %i.ab
   br i1 %i.ac, label %bb.b, label %bb.c
 

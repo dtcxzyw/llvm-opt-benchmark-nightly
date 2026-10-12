@@ -205,7 +205,7 @@ bb.ej:                                            ; preds = %.noexc501
   %i.zr = icmp slt i64 %indvars.iv.next.i499, %i.zq
   br i1 %i.zr, label %.lr.ph.i497, label %_ZNK10CArcInfoEx13FindExtensionERK11CStringBaseIwE.exit502, !llvm.loop !95
 
-_ZNK10CArcInfoEx13FindExtensionERK11CStringBaseIwE.exit502: ; preds = %bb.ej, %.noexc501, %bb.ei
+_ZNK10CArcInfoEx13FindExtensionERK11CStringBaseIwE.exit502: ; preds = %.noexc501, %bb.ej, %bb.ei
   %spec.store.select = phi i64 [ 0, %bb.ei ], [ %indvars.iv.i498, %.noexc501 ], [ 0, %bb.ej ]
   %i.zs = load ptr, ptr %i.zh, align 8, !tbaa !41
   %i.zt = getelementptr inbounds nuw [8 x i8], ptr %i.zs, i64 %spec.store.select

@@ -205,7 +205,7 @@ _ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModule
   %.sroa.0.0.extract.trunc.i = trunc i16 %.sroa.5.0.i.i to i8
   %sh.diff.i = lshr i16 %.sroa.5.0.i.i, 6
   %tr.sh.diff.i = trunc nuw nsw i16 %sh.diff.i to i8
-  %i.cm = and i8 %tr.sh.diff.i, -4
+  %i.cm = and i8 %tr.sh.diff.i, 124
   %i.cn = or i8 %i.cm, %.sroa.0.0.extract.trunc.i ; 3 uses
   %.idx66.i = shl i64 %4, 2                       ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %3, i64 %.idx66.i
@@ -608,7 +608,7 @@ _ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModule
 _ZSt6fill_nIPhmhET_S1_T0_RKT1_.exit.i:            ; preds = %_ZN2v88internal4wasm12_GLOBAL__N_124GetDefaultTiersPerModuleEPNS1_12NativeModuleENS1_10DebugStateEb.exit
   %sh.diff = lshr i16 %.sroa.5.0.i, 6
   %tr.sh.diff = trunc nuw nsw i16 %sh.diff to i8
-  %i.ag = and i8 %tr.sh.diff, -4
+  %i.ag = and i8 %tr.sh.diff, 124
   %i.ah = or i8 %i.ag, %.sroa.03.0.extract.trunc
   %i.ai = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ae) #30, !noalias !192 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ai, i8 %i.ah, i64 %i.ae, i1 false), !noalias !193

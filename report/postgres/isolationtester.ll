@@ -204,8 +204,8 @@ bb.r:                                             ; preds = %.lr.ph28
 
 bb.s:                                             ; preds = %bb.r
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv76
-  %8 = sext i32 %i.cl to i64
-  %i.co = getelementptr inbounds [8 x i8], ptr %i.c, i64 %8
+  %8 = zext nneg i32 %i.cl to i64
+  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %8
   %i.cp = sub nuw nsw i32 %.112331, %i.cl
   %i.cq = zext nneg i32 %i.cp to i64
   %i.cr = shl nuw nsw i64 %i.cq, 3

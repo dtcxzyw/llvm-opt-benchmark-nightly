@@ -205,7 +205,7 @@ vec.epilog.middle.block437:                       ; preds = %vec.epilog.vector.b
 .preheader203.us:                                 ; preds = %.lr.ph220.us, %vec.epilog.middle.block437, %middle.block424
   %indvars.iv.next285.lcssa = phi i64 [ %n.vec432, %vec.epilog.middle.block437 ], [ %n.vec418, %middle.block424 ], [ %indvars.iv.next285, %.lr.ph220.us ]
   %i.kw = trunc nuw nsw i64 %indvars.iv.next285.lcssa to i32 ; 2 uses
-  %5 = icmp sgt i32 %.v.i, %i.kw
+  %5 = icmp samesign ugt i32 %.v.i, %i.kw
   br i1 %5, label %.lr.ph224.us.us.preheader, label %._crit_edge228.split.us.us
 
 .lr.ph224.us.us.preheader:                        ; preds = %.lr.ph230.split.us, %.preheader203.us
@@ -440,7 +440,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .preheader203:                                    ; preds = %.lr.ph220, %vec.epilog.middle.block, %middle.block
   %indvars.iv.next277.lcssa = phi i64 [ %n.vec376, %vec.epilog.middle.block ], [ %n.vec, %middle.block ], [ %indvars.iv.next277, %.lr.ph220 ]
   %i.nz = trunc nuw nsw i64 %indvars.iv.next277.lcssa to i32 ; 2 uses
-  %6 = icmp sgt i32 %.v.i, %i.nz
+  %6 = icmp samesign ugt i32 %.v.i, %i.nz
   br i1 %6, label %.lr.ph227.preheader, label %._crit_edge228.split
 
 .lr.ph227.preheader:                              ; preds = %.lr.ph230.split, %.preheader203
@@ -843,7 +843,7 @@ vector.body471:                                   ; preds = %vector.main.loop.it
   %index472 = phi i64 [ %index.next475, %vector.body471 ], [ 0, %vector.main.loop.iter.check467 ] ; 2 uses
   %i.gg = trunc i64 %index472 to i32
   %i.gh = or disjoint i32 %i.gg, 1
-  %i.gi = add i32 %.0168210.us.us, %i.gh
+  %i.gi = add nuw i32 %.0168210.us.us, %i.gh
   %i.gj = sext i32 %i.gi to i64                   ; 2 uses
   %i.gk = getelementptr inbounds [2 x i8], ptr %i.ft, i64 %i.gj ; 2 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 16
@@ -871,7 +871,7 @@ vec.epilog.vector.body486:                        ; preds = %vec.epilog.vector.b
   %index487 = phi i64 [ %vec.epilog.resume.val478, %vec.epilog.ph484 ], [ %index.next489, %vec.epilog.vector.body486 ] ; 2 uses
   %i.gp = trunc i64 %index487 to i32
   %i.gq = or disjoint i32 %i.gp, 1
-  %i.gr = add i32 %.0168210.us.us, %i.gq
+  %i.gr = add nuw i32 %.0168210.us.us, %i.gq
   %i.gs = sext i32 %i.gr to i64                   ; 2 uses
   %i.gt = getelementptr inbounds [2 x i8], ptr %i.ft, i64 %i.gs
   %wide.load488 = load <4 x i16>, ptr %i.gt, align 2
@@ -895,7 +895,7 @@ vec.epilog.scalar.ph481.prol:                     ; preds = %vec.epilog.scalar.p
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %vec.epilog.scalar.ph481.prol ], [ %indvars.iv.ph, %vec.epilog.scalar.ph481.preheader ] ; 2 uses
   %prol.iter566 = phi i64 [ %prol.iter566.next, %vec.epilog.scalar.ph481.prol ], [ 0, %vec.epilog.scalar.ph481.preheader ]
   %i.gx = trunc nuw nsw i64 %indvars.iv.prol to i32
-  %i.gy = add i32 %.0168210.us.us, %i.gx
+  %i.gy = add nuw i32 %.0168210.us.us, %i.gx
   %i.gz = sext i32 %i.gy to i64                   ; 2 uses
   %i.ha = getelementptr inbounds [2 x i8], ptr %i.ft, i64 %i.gz
   %i.hb = load i16, ptr %i.ha, align 2
@@ -921,7 +921,7 @@ vec.epilog.scalar.ph481.preheader.new:            ; preds = %vec.epilog.scalar.p
 vec.epilog.scalar.ph481:                          ; preds = %vec.epilog.scalar.ph481, %vec.epilog.scalar.ph481.preheader.new
   %indvars.iv = phi i64 [ %indvars.iv.unr, %vec.epilog.scalar.ph481.preheader.new ], [ %indvars.iv.next.3, %vec.epilog.scalar.ph481 ] ; 5 uses
   %i.hf = trunc nuw nsw i64 %indvars.iv to i32
-  %i.hg = add i32 %.0168210.us.us, %i.hf
+  %i.hg = add nuw i32 %.0168210.us.us, %i.hf
   %i.hh = sext i32 %i.hg to i64                   ; 2 uses
   %i.hi = getelementptr inbounds [2 x i8], ptr %i.ft, i64 %i.hh
   %i.hj = load i16, ptr %i.hi, align 2
@@ -1198,7 +1198,7 @@ vec.epilog.middle.block431:                       ; preds = %vec.epilog.vector.b
 .preheader203.us:                                 ; preds = %.lr.ph220.us, %vec.epilog.middle.block431, %middle.block418
   %indvars.iv.next263.lcssa = phi i64 [ %n.vec426, %vec.epilog.middle.block431 ], [ %n.vec412, %middle.block418 ], [ %indvars.iv.next263, %.lr.ph220.us ]
   %i.kv = trunc nuw nsw i64 %indvars.iv.next263.lcssa to i32 ; 2 uses
-  %5 = icmp sgt i32 %i.l, %i.kv
+  %5 = icmp samesign ugt i32 %i.l, %i.kv
   br i1 %5, label %.lr.ph224.us.us.preheader, label %._crit_edge228.split.us.us
 
 .lr.ph224.us.us.preheader:                        ; preds = %.lr.ph230.split.us, %.preheader203.us
@@ -1601,7 +1601,7 @@ vector.body361:                                   ; preds = %vector.body361, %ve
 
 .preheader186:                                    ; preds = %.lr.ph
   %i.ii = trunc nuw nsw i64 %indvars.iv.next to i32
-  %5 = icmp sgt i32 %i.l, %i.ii
+  %5 = icmp samesign ugt i32 %i.l, %i.ii
   br i1 %5, label %.lr.ph191.preheader, label %._crit_edge
 
 .lr.ph191.preheader:                              ; preds = %.lr.ph193, %.preheader186

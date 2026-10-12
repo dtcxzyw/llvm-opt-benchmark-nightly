@@ -206,7 +206,7 @@ begin_hunk_0_@_RNvXs_NtNtCs9o5SvTbM2BP_6chrono6format10formattingINtB4_13Delayed
   %i.gf = trunc nuw nsw i16 %i.ge to i8           ; 2 uses
   %i.gg = udiv i8 %i.gf, 10
   %i.gh = icmp samesign ult i16 %.lhs.trunc1.i142.i.i, 70
-  %2 = add nuw nsw i8 %i.gg, 48
+  %2 = or disjoint i8 %i.gg, 48
   %i.gi = urem i8 %i.gf, 10
   %i.gj = or disjoint i8 %i.gi, 48
   %spec.select.i131.i.i = zext nneg i16 %i.ck to i32 ; 2 uses

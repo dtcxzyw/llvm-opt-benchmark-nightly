@@ -204,16 +204,16 @@ _ZN5Ipopt9TimedTask5StartEv.exit:                 ; preds = %bb.k, %bb.j, %bb.i
 .lr.ph97:                                         ; preds = %_ZN5Ipopt9TimedTask5StartEv.exit
   %i.ci = load ptr, ptr %i.af, align 8, !tbaa !41 ; 8 uses
   %i.cj = mul nuw nsw i32 %i.cg, %i.aq
-  %6 = sext i32 %i.cj to i64                      ; 2 uses
+  %6 = zext nneg i32 %i.cj to i64                 ; 2 uses
   %wide.trip.count = zext nneg i32 %i.cg to i64   ; 7 uses
-  %invariant.gep = getelementptr [8 x i8], ptr %i.aa, i64 %6 ; 7 uses
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %6 ; 7 uses
   %min.iters.check = icmp ult i32 %i.cg, 6
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph97
   %i.ck = shl nuw nsw i64 %wide.trip.count, 3
-  %i.cl = add nsw i64 %6, %wide.trip.count
-  %i.cm = shl nsw i64 %i.cl, 3
+  %i.cl = add nuw nsw i64 %wide.trip.count, %6
+  %i.cm = shl nuw nsw i64 %i.cl, 3
   %scevgep = getelementptr i8, ptr %i.aa, i64 %i.cm
   %scevgep153 = getelementptr i8, ptr %i.ci, i64 %i.ck
   %bound0 = icmp ult ptr %invariant.gep, %scevgep153
@@ -231,8 +231,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 16
   %wide.load = load <2 x double>, ptr %i.cn, align 8, !tbaa !85, !alias.scope !136
   %wide.load154 = load <2 x double>, ptr %i.co, align 8, !tbaa !85, !alias.scope !136
-  %i.cp = getelementptr [8 x i8], ptr %invariant.gep, i64 %index ; 3 uses
-  %i.cq = getelementptr i8, ptr %i.cp, i64 16     ; 2 uses
+  %i.cp = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %index ; 3 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 16 ; 2 uses
   %wide.load155 = load <2 x double>, ptr %i.cp, align 8, !tbaa !85, !alias.scope !137, !noalias !136
   %wide.load156 = load <2 x double>, ptr %i.cq, align 8, !tbaa !85, !alias.scope !137, !noalias !136
   %i.cr = fmul <2 x double> %wide.load, %wide.load155
@@ -258,7 +258,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
   %i.cu = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv.prol
   %i.cv = load double, ptr %i.cu, align 8, !tbaa !85
-  %gep.prol = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.prol ; 2 uses
+  %gep.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.prol ; 2 uses
   %i.cw = load double, ptr %gep.prol, align 8, !tbaa !85
   %i.cx = fmul double %i.cv, %i.cw
   store double %i.cx, ptr %gep.prol, align 8, !tbaa !85
@@ -282,28 +282,28 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 6 uses
   %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv
   %i.dc = load double, ptr %i.db, align 8, !tbaa !85
-  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv ; 2 uses
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv ; 2 uses
   %i.dd = load double, ptr %gep, align 8, !tbaa !85
   %i.de = fmul double %i.dc, %i.dd
   store double %i.de, ptr %gep, align 8, !tbaa !85
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv.next
   %i.dg = load double, ptr %i.df, align 8, !tbaa !85
-  %gep.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next ; 2 uses
+  %gep.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next ; 2 uses
   %i.dh = load double, ptr %gep.1, align 8, !tbaa !85
   %i.di = fmul double %i.dg, %i.dh
   store double %i.di, ptr %gep.1, align 8, !tbaa !85
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv.next.1
   %i.dk = load double, ptr %i.dj, align 8, !tbaa !85
-  %gep.2 = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.1 ; 2 uses
+  %gep.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.1 ; 2 uses
   %i.dl = load double, ptr %gep.2, align 8, !tbaa !85
   %i.dm = fmul double %i.dk, %i.dl
   store double %i.dm, ptr %gep.2, align 8, !tbaa !85
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
   %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv.next.2
   %i.do = load double, ptr %i.dn, align 8, !tbaa !85
-  %gep.3 = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.2 ; 2 uses
+  %gep.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.2 ; 2 uses
   %i.dp = load double, ptr %gep.3, align 8, !tbaa !85
   %i.dq = fmul double %i.do, %i.dp
   store double %i.dq, ptr %gep.3, align 8, !tbaa !85

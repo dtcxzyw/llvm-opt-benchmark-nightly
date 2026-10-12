@@ -205,7 +205,7 @@ bb.em:                                            ; preds = %bb.aa
   %i.pr = udiv i32 %i.pq, %i.nn
   %i.ps = urem i32 %i.pq, %i.nn
   %i.pt = mul nuw nsw i32 %i.pr, %i.bh
-  %i.pu = zext i32 %i.pt to i64
+  %i.pu = zext nneg i32 %i.pt to i64
   %i.pv = getelementptr i8, ptr %.val, i64 %i.pn
   %i.pw = getelementptr i8, ptr %i.pd, i64 %i.pn
   %i.px = getelementptr i8, ptr %.val, i64 %i.po
@@ -608,11 +608,11 @@ bb.e:                                             ; preds = %bb.c
   %i.cj = add i32 %i.ci, %i.as
   %i.ck = sitofp fast i32 %i.cj to float
   %i.cl = trunc nuw nsw i64 %indvars.iv980 to i32
-  %i.cm = mul nsw i32 %i.bt, %i.cl
+  %i.cm = mul nuw nsw i32 %i.bt, %i.cl
   %i.cn = trunc nuw nsw i64 %indvars.iv980 to i32
-  %i.co = mul nsw i32 %i.bt, %i.cn
+  %i.co = mul nuw nsw i32 %i.bt, %i.cn
   %i.cp = trunc nuw nsw i64 %indvars.iv980 to i32
-  %i.cq = mul nsw i32 %i.bt, %i.cp
+  %i.cq = mul nuw nsw i32 %i.bt, %i.cp
   br label %bb.f
 
 bb.f:                                             ; preds = %.preheader856.us, %._crit_edge.us
@@ -674,10 +674,10 @@ _ZN4ncnn3MatD2Ev.exit308.us:                      ; preds = %bb.f
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ef, i64 %i.ei
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.ej, i64 %indvars.iv988
   %i.el = trunc nuw nsw i64 %indvars.iv975 to i32
-  %i.em = add nsw i32 %i.cm, %i.el
-  %i.en = shl nsw i32 %i.em, 1
+  %i.em = add nuw nsw i32 %i.cm, %i.el
+  %i.en = shl nuw nsw i32 %i.em, 1
   %i.eo = or disjoint i32 %i.en, 1
-  %29 = sext i32 %i.eo to i64
+  %29 = zext nneg i32 %i.eo to i64
   %i.ep = mul i64 %i.ed, %i.eb
   %i.eq = mul i64 %i.ep, %29
   %i.er = getelementptr inbounds nuw i8, ptr %i.ea, i64 %i.eq
@@ -701,7 +701,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ex, label %_ZN4ncnn3MatD2Ev.exit304.us, label %_ZN4ncnn3MatD2Ev.exit303.us
 
 _ZN4ncnn3MatD2Ev.exit303.us:                      ; preds = %bb.h
-  %i.ez = add nsw i32 %i.co, %i.ey                ; 2 uses
+  %i.ez = add nuw nsw i32 %i.co, %i.ey            ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.eu, i64 168
   %i.fb = load i32, ptr %i.fa, align 8, !tbaa !56 ; 3 uses
   %i.fc = sdiv i32 %i.ez, %i.fb
@@ -729,13 +729,13 @@ _ZN4ncnn3MatD2Ev.exit303.us:                      ; preds = %bb.h
   br label %bb.i
 
 _ZN4ncnn3MatD2Ev.exit304.us:                      ; preds = %bb.h
-  %i.fy = add nsw i32 %i.cq, %i.ey
+  %i.fy = add nuw nsw i32 %i.cq, %i.ey
   %i.fz = getelementptr inbounds nuw i8, ptr %i.eu, i64 188
   %i.ga = load i32, ptr %i.fz, align 4, !tbaa !51, !noalias !180
   %i.gb = load ptr, ptr %i.ev, align 8, !tbaa !19, !noalias !180
   %i.gc = getelementptr inbounds nuw i8, ptr %i.eu, i64 208
   %i.gd = load i64, ptr %i.gc, align 8, !tbaa !20, !noalias !180
-  %30 = sext i32 %i.fy to i64
+  %30 = zext nneg i32 %i.fy to i64
   %i.ge = mul i64 %i.gd, %30
   %i.gf = getelementptr inbounds nuw i8, ptr %i.eu, i64 160
   %i.gg = load i64, ptr %i.gf, align 8, !tbaa !52, !noalias !180 ; 2 uses

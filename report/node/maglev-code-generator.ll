@@ -205,7 +205,7 @@ _ZNK2v88internal6maglev13VirtualObject25ForEachNestedRuntimeInputIZNS1_12_GLOBAL
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   br label %_ZN2v88internal6maglev12_GLOBAL__N_129MaglevFrameTranslationBuilder18BuildVirtualObjectEPKNS1_13VirtualObjectERPKNS1_13InputLocationERKNS1_17VirtualObjectListE.exit.thread
 
-_ZN2v88internal6maglev12_GLOBAL__N_129MaglevFrameTranslationBuilder15GetDuplicatedIdEl.exit.thread: ; preds = %bb.l, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJRKlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i14.i
+_ZN2v88internal6maglev12_GLOBAL__N_129MaglevFrameTranslationBuilder15GetDuplicatedIdEl.exit.thread: ; preds = %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJRKlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i14.i, %bb.l
   %i.dd = load i8, ptr %i.s, align 4
   switch i8 %i.dd, label %_ZN2v88internal6maglev12_GLOBAL__N_129MaglevFrameTranslationBuilder18BuildVirtualObjectEPKNS1_13VirtualObjectERPKNS1_13InputLocationERKNS1_17VirtualObjectListE.exit.thread [
     i8 1, label %bb.r

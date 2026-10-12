@@ -205,9 +205,9 @@ bb.eb:                                            ; preds = %bb.eb, %.lr.ph146.i
   %i.vt = load float, ptr %i.vs, align 4, !tbaa !110 ; 4 uses
   %i.vu = getelementptr inbounds [12 x i8], ptr %i.vg, i64 %i.vr ; 3 uses
   %i.vv = trunc nuw nsw i64 %indvars.iv.i to i32
-  %39 = sdiv i32 %i.vv, %i.vm
-  %40 = sext i32 %39 to i64                       ; 2 uses
-  %i.vw = getelementptr inbounds [12 x i8], ptr %i.ds, i64 %40 ; 4 uses
+  %39 = udiv i32 %i.vv, %i.vm
+  %40 = zext nneg i32 %39 to i64                  ; 2 uses
+  %i.vw = getelementptr inbounds nuw [12 x i8], ptr %i.ds, i64 %40 ; 4 uses
   %i.vx = load float, ptr %i.vu, align 4, !tbaa !108
   %i.vy = load float, ptr %i.vw, align 4, !tbaa !108
   %i.vz = call float @llvm.fmuladd.f32(float %i.vt, float %i.vx, float %i.vy)
@@ -224,7 +224,7 @@ bb.eb:                                            ; preds = %bb.eb, %.lr.ph146.i
   %i.wi = load float, ptr %i.wh, align 4, !tbaa !108
   %i.wj = call float @llvm.fmuladd.f32(float %i.vt, float %i.wg, float %i.wi)
   store float %i.wj, ptr %i.wh, align 4, !tbaa !108
-  %i.wk = getelementptr inbounds [4 x i8], ptr %i.vk, i64 %40 ; 2 uses
+  %i.wk = getelementptr inbounds nuw [4 x i8], ptr %i.vk, i64 %40 ; 2 uses
   %i.wl = load float, ptr %i.wk, align 4, !tbaa !108
   %i.wm = fadd float %i.vt, %i.wl
   store float %i.wm, ptr %i.wk, align 4, !tbaa !108
@@ -327,9 +327,9 @@ bb.ec:                                            ; preds = %bb.ec, %.lr.ph146.i
   %i.ym = load float, ptr %i.yl, align 4, !tbaa !110 ; 4 uses
   %i.yn = getelementptr inbounds [12 x i8], ptr %i.vg, i64 %i.yk ; 3 uses
   %i.yo = trunc nuw nsw i64 %indvars.iv.i.1 to i32
-  %41 = sdiv i32 %i.yo, %i.yf
-  %42 = sext i32 %41 to i64                       ; 2 uses
-  %i.yp = getelementptr inbounds [12 x i8], ptr %i.dv, i64 %42 ; 4 uses
+  %41 = udiv i32 %i.yo, %i.yf
+  %42 = zext nneg i32 %41 to i64                  ; 2 uses
+  %i.yp = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %42 ; 4 uses
   %i.yq = load float, ptr %i.yn, align 4, !tbaa !108
   %i.yr = load float, ptr %i.yp, align 4, !tbaa !108
   %i.ys = call float @llvm.fmuladd.f32(float %i.ym, float %i.yq, float %i.yr)
@@ -346,7 +346,7 @@ bb.ec:                                            ; preds = %bb.ec, %.lr.ph146.i
   %i.zb = load float, ptr %i.za, align 4, !tbaa !108
   %i.zc = call float @llvm.fmuladd.f32(float %i.ym, float %i.yz, float %i.zb)
   store float %i.zc, ptr %i.za, align 4, !tbaa !108
-  %i.zd = getelementptr inbounds [4 x i8], ptr %i.vk, i64 %42 ; 2 uses
+  %i.zd = getelementptr inbounds nuw [4 x i8], ptr %i.vk, i64 %42 ; 2 uses
   %i.ze = load float, ptr %i.zd, align 4, !tbaa !108
   %i.zf = fadd float %i.ym, %i.ze
   store float %i.zf, ptr %i.zd, align 4, !tbaa !108
@@ -452,9 +452,9 @@ bb.ed:                                            ; preds = %bb.ed, %.lr.ph146.i
   %i.abf = load float, ptr %i.abe, align 4, !tbaa !110 ; 4 uses
   %i.abg = getelementptr inbounds [12 x i8], ptr %i.vg, i64 %i.abd ; 3 uses
   %i.abh = trunc nuw nsw i64 %indvars.iv.i.2 to i32
-  %43 = sdiv i32 %i.abh, %i.aay
-  %44 = sext i32 %43 to i64                       ; 2 uses
-  %i.abi = getelementptr inbounds [12 x i8], ptr %i.dz, i64 %44 ; 4 uses
+  %43 = udiv i32 %i.abh, %i.aay
+  %44 = zext nneg i32 %43 to i64                  ; 2 uses
+  %i.abi = getelementptr inbounds nuw [12 x i8], ptr %i.dz, i64 %44 ; 4 uses
   %i.abj = load float, ptr %i.abg, align 4, !tbaa !108
   %i.abk = load float, ptr %i.abi, align 4, !tbaa !108
   %i.abl = call float @llvm.fmuladd.f32(float %i.abf, float %i.abj, float %i.abk)
@@ -471,7 +471,7 @@ bb.ed:                                            ; preds = %bb.ed, %.lr.ph146.i
   %i.abu = load float, ptr %i.abt, align 4, !tbaa !108
   %i.abv = call float @llvm.fmuladd.f32(float %i.abf, float %i.abs, float %i.abu)
   store float %i.abv, ptr %i.abt, align 4, !tbaa !108
-  %i.abw = getelementptr inbounds [4 x i8], ptr %i.vk, i64 %44 ; 2 uses
+  %i.abw = getelementptr inbounds nuw [4 x i8], ptr %i.vk, i64 %44 ; 2 uses
   %i.abx = load float, ptr %i.abw, align 4, !tbaa !108
   %i.aby = fadd float %i.abf, %i.abx
   store float %i.aby, ptr %i.abw, align 4, !tbaa !108

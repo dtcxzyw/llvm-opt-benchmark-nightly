@@ -204,9 +204,9 @@ bb.d:                                             ; preds = %SDL_GetMouseIndex.e
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.i ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   %i.k = xor i32 %i.g, -1
-  %i.l = add i32 %i.a, %i.k
+  %i.l = add nsw i32 %i.a, %i.k
   %i.m = sext i32 %i.l to i64
-  %i.n = shl nsw i64 %i.m, 2
+  %i.n = shl nuw nsw i64 %i.m, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.i, ptr nonnull align 4 %i.j, i64 %i.n, i1 false)
   br label %bb.e
 

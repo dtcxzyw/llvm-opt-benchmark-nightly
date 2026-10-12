@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %.lr.ph979, %bb.em
   %.0465978 = phi i32 [ 0, %.lr.ph979 ], [ %.3468, %bb.em ] ; 2 uses
   %.0469977 = phi i32 [ %i.e, %.lr.ph979 ], [ %.5, %bb.em ] ; 7 uses
   %.0473976 = phi i32 [ 0, %.lr.ph979 ], [ %.5478, %bb.em ] ; 12 uses
-  %.0481975 = phi i32 [ 0, %.lr.ph979 ], [ %.5486, %bb.em ] ; 8 uses
+  %.0481975 = phi i32 [ 0, %.lr.ph979 ], [ %.5486, %bb.em ] ; 9 uses
   %.0489974 = phi i32 [ %i.cy, %.lr.ph979 ], [ %.4493, %bb.em ] ; 12 uses
   %.0858973 = phi i32 [ 0, %.lr.ph979 ], [ %.3861, %bb.em ] ; 9 uses
   %i.er = phi <2 x i32> [ %i.dz, %.lr.ph979 ], [ %i.aqp, %bb.em ] ; 3 uses
@@ -608,12 +608,12 @@ positive_int.exit632:                             ; preds = %bb.cs, %bb.ct, %bb.
 
 .preheader892:                                    ; preds = %.lr.ph918, %vec.epilog.middle.block1541, %.preheader893
   %.0457.lcssa = phi i32 [ 0, %.preheader893 ], [ %i.tk, %vec.epilog.middle.block1541 ], [ %spec.select566, %.lr.ph918 ]
-  %5 = mul nuw nsw i32 %.0481975, 3
-  %invariant.smin = tail call i32 @llvm.smin.i32(i32 %5, i32 %.0863) ; 4 uses
-  %6 = icmp sgt i32 %invariant.smin, 0
-  br i1 %6, label %iter.check1488, label %._crit_edge923
+  %.not1199 = icmp eq i32 %.0481975, 0
+  br i1 %.not1199, label %._crit_edge923, label %iter.check1488
 
 iter.check1488:                                   ; preds = %.preheader892
+  %5 = mul nuw nsw i32 %.0481975, 3
+  %invariant.smin = tail call i32 @llvm.smin.i32(i32 %5, i32 %.0863) ; 3 uses
   %wide.trip.count1035 = zext nneg i32 %invariant.smin to i64 ; 6 uses
   %min.iters.check1465 = icmp ult i32 %invariant.smin, 4
   br i1 %min.iters.check1465, label %.lr.ph922.preheader, label %vector.main.loop.iter.check1466
@@ -722,7 +722,7 @@ vec.epilog.middle.block1501:                      ; preds = %vec.epilog.vector.b
   %.3452 = tail call i32 @llvm.umax.i32(i32 %.2451, i32 1)
   %.1448 = select i1 %i.ur, i32 %.0489974, i32 %.
   %invariant.smin925 = tail call i32 @llvm.smin.i32(i32 %.0863, i32 36) ; 2 uses
-  %wide.trip.count1040 = zext nneg i32 %invariant.smin925 to i64
+  %wide.trip.count1040 = zext i32 %invariant.smin925 to i64
   br label %.lr.ph928.preheader
 
 .lr.ph928.preheader:                              ; preds = %._crit_edge923, %._crit_edge937

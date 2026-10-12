@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o, %decode_dec.e
   store ptr %.033.i, ptr %0, align 8, !tbaa !23
   br label %bn_x2bn.exit
 
-bb.q:                                             ; preds = %bb.l, %bb.m
+bb.q:                                             ; preds = %bb.m, %bb.l
   %i.aj = load ptr, ptr %0, align 8, !tbaa !23
   %i.ak = icmp eq ptr %i.aj, null
   br i1 %i.ak, label %bb.r, label %bn_x2bn.exit

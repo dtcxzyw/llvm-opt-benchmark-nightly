@@ -205,7 +205,7 @@ helper1.exit.thread:                              ; preds = %bb.s
   %i.lw = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.lv, i1 true)
   %i.lx = trunc nuw nsw i64 %i.lw to i32
   %i.ly = lshr i32 %i.lx, 3
-  %i.lz = add i32 %i.ly, %i.lu
+  %i.lz = add nuw i32 %i.ly, %i.lu
   %i.ma = call i32 @llvm.umin.i32(i32 %i.lz, i32 %i.le)
   br label %lzma_memcmplen.exit.i
 
@@ -264,7 +264,7 @@ bb.u:                                             ; preds = %lzma_memcmplen.exit
   %i.mu = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.mt, i1 true)
   %i.mv = trunc nuw nsw i64 %i.mu to i32
   %i.mw = lshr i32 %i.mv, 3
-  %i.mx = add i32 %i.mw, %i.ms
+  %i.mx = add nuw i32 %i.mw, %i.ms
   %i.my = call i32 @llvm.umin.i32(i32 %i.mx, i32 %i.le)
   br label %lzma_memcmplen.exit.1.i
 
@@ -321,7 +321,7 @@ bb.x:                                             ; preds = %bb.w
   %i.nq = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.np, i1 true)
   %i.nr = trunc nuw nsw i64 %i.nq to i32
   %i.ns = lshr i32 %i.nr, 3
-  %i.nt = add i32 %i.ns, %i.no
+  %i.nt = add nuw i32 %i.ns, %i.no
   %i.nu = call i32 @llvm.umin.i32(i32 %i.nt, i32 %i.le)
   br label %lzma_memcmplen.exit.2.i
 
@@ -380,7 +380,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.on = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.om, i1 true)
   %i.oo = trunc nuw nsw i64 %i.on to i32
   %i.op = lshr i32 %i.oo, 3
-  %i.oq = add i32 %i.op, %i.ol
+  %i.oq = add nuw i32 %i.op, %i.ol
   %i.or = call i32 @llvm.umin.i32(i32 %i.oq, i32 %i.le)
   br label %lzma_memcmplen.exit.3.i
 

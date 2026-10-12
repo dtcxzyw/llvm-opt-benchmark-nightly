@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %._crit_edge
   br i1 %.not43, label %bb.l, label %bb.k
 
 bb.h:                                             ; preds = %.lr.ph69, %.loopexit
-  %indvars.iv = phi i64 [ 1, %.lr.ph69 ], [ %indvars.iv.next, %.loopexit ] ; 5 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph69 ], [ %indvars.iv.next, %.loopexit ] ; 6 uses
   %.03366 = phi i32 [ 0, %.lr.ph69 ], [ %.4, %.loopexit ] ; 4 uses
   %.03465 = phi i64 [ 0, %.lr.ph69 ], [ %.438, %.loopexit ] ; 5 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %indvars.iv
@@ -246,9 +246,9 @@ bb.j:                                             ; preds = %.preheader.preheade
 .loopexit.loopexit:                               ; preds = %.preheader.preheader, %bb.j
   %.337 = phi i64 [ %..135, %bb.j ], [ %.03465, %.preheader.preheader ] ; 2 uses
   %.3 = phi i32 [ %..1, %bb.j ], [ %.03366, %.preheader.preheader ]
-  %i.bl = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
-  %1 = tail call noundef i32 @llvm.fshl.i32(i32 %i.bl, i32 %i.bl, i32 1)
-  %2 = zext i32 %1 to i64
+  %i.bl = trunc nuw nsw i64 %indvars.iv to i32
+  %1 = shl nuw i64 %indvars.iv, 1
+  %2 = and i64 %1, 4294967294
   %i.bm = load ptr, ptr %i.ao, align 8, !tbaa !183
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %2
   %i.bo = load i64, ptr %i.bn, align 8, !tbaa !184 ; 2 uses
