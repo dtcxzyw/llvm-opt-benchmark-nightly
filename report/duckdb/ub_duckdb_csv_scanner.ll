@@ -205,7 +205,7 @@ bb.a:
   %.promoted = load i64, ptr %i.c, align 8, !tbaa !206 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %umax = tail call i64 @llvm.umax.i64(i64 %.promoted, i64 %i.b)
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %.promoted)
   %exitcond.not15.not = icmp ult i64 %.promoted, %i.b
   br i1 %exitcond.not15.not, label %.lr.ph, label %.loopexit
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.511.0.copyload, i64 %.sroa.7.0.copyload)
+  %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.7.0.copyload, i64 %.sroa.511.0.copyload)
   %exitcond.not.i23.not = icmp ult i64 %.sroa.511.0.copyload, %.sroa.7.0.copyload
   br i1 %exitcond.not.i23.not, label %.lr.ph, label %_ZNK6duckdb18StringValueScanner21FirstValueEndsOnQuoteENS_11CSVIteratorE.exit
 
@@ -1011,14 +1011,14 @@ bb.bf:                                            ; preds = %bb.be
 .noexc:                                           ; preds = %bb.bf
   %i.hg = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sroa.7.0.ph463483, i1 true) ; 2 uses
   %i.hh = trunc nuw nsw i64 %i.hg to i32
-  %i.hi = shl i64 %.sroa.7.0.ph463483, %i.hg
+  %i.hi = shl i64 %.sroa.7.0.ph463483, %i.hg      ; 2 uses
   %i.hj = trunc nsw i64 %.sroa.093.0.ph464480 to i32 ; 2 uses
   %i.hk = shl nsw i32 %i.hj, 1
   %i.hl = sext i32 %i.hk to i64
   %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl ; 2 uses
   %i.hn = getelementptr i8, ptr %i.hm, i64 5472
   %i.ho = load i64, ptr %i.hn, align 16, !tbaa !137
-  %i.hp = zext i64 %i.hi to i128                  ; 2 uses
+  %i.hp = zext i64 %i.hi to i128
   %i.hq = zext i64 %i.ho to i128
   %i.hr = mul nuw i128 %i.hq, %i.hp               ; 2 uses
   %i.hs = trunc i128 %i.hr to i64                 ; 2 uses
@@ -1031,13 +1031,10 @@ bb.bf:                                            ; preds = %bb.be
 .noexc73:                                         ; preds = %.noexc
   %i.hx = getelementptr i8, ptr %i.hm, i64 5480
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !137
-  %6 = zext i64 %i.hy to i128
-  %7 = mul nuw i128 %6, %i.hp
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64                   ; 2 uses
-  %i.hz = add i64 %9, %i.hs                       ; 2 uses
-  %10 = icmp ult i64 %i.hz, %9
-  %i.ia = zext i1 %10 to i64
+  %6 = tail call i64 @llvm.umulh.i64(i64 %i.hi, i64 %i.hy) ; 2 uses
+  %i.hz = add i64 %6, %i.hs                       ; 2 uses
+  %7 = icmp ugt i64 %6, %i.hz
+  %i.ia = zext i1 %7 to i64
   %spec.select.i72 = add nuw i64 %i.ia, %i.hu
   br label %_ZN17duckdb_fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit
 
@@ -1132,14 +1129,14 @@ bb.bi:                                            ; preds = %bb.bh
 .noexc76:                                         ; preds = %bb.bi
   %i.jn = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.jj, i1 true) ; 2 uses
   %i.jo = trunc nuw nsw i64 %i.jn to i32
-  %i.jp = shl i64 %i.jj, %i.jn
+  %i.jp = shl i64 %i.jj, %i.jn                    ; 2 uses
   %i.jq = trunc nsw i64 %.sroa.093.0.ph464481 to i32 ; 2 uses
   %i.jr = shl nsw i32 %i.jq, 1
   %i.js = sext i32 %i.jr to i64
   %i.jt = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.js ; 2 uses
   %i.ju = getelementptr i8, ptr %i.jt, i64 5472
   %i.jv = load i64, ptr %i.ju, align 16, !tbaa !137
-  %i.jw = zext i64 %i.jp to i128                  ; 2 uses
+  %i.jw = zext i64 %i.jp to i128
   %i.jx = zext i64 %i.jv to i128
   %i.jy = mul nuw i128 %i.jx, %i.jw               ; 2 uses
   %i.jz = trunc i128 %i.jy to i64                 ; 2 uses
@@ -1152,13 +1149,10 @@ bb.bi:                                            ; preds = %bb.bh
 .noexc77:                                         ; preds = %.noexc76
   %i.ke = getelementptr i8, ptr %i.jt, i64 5480
   %i.kf = load i64, ptr %i.ke, align 8, !tbaa !137
-  %11 = zext i64 %i.kf to i128
-  %12 = mul nuw i128 %11, %i.jw
-  %13 = lshr i128 %12, 64
-  %14 = trunc nuw i128 %13 to i64                 ; 2 uses
-  %i.kg = add i64 %14, %i.jz                      ; 2 uses
-  %15 = icmp ult i64 %i.kg, %14
-  %i.kh = zext i1 %15 to i64
+  %8 = tail call i64 @llvm.umulh.i64(i64 %i.jp, i64 %i.kf) ; 2 uses
+  %i.kg = add i64 %8, %i.jz                       ; 2 uses
+  %9 = icmp ugt i64 %8, %i.kg
+  %i.kh = zext i1 %9 to i64
   %spec.select.i75 = add nuw i64 %i.kh, %i.kb
   br label %_ZN17duckdb_fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit78
 
@@ -1561,14 +1555,14 @@ bb.bf:                                            ; preds = %bb.be
 bb.bg:                                            ; preds = %bb.bf
   %i.hg = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sroa.7.0.ph456476, i1 true) ; 2 uses
   %i.hh = trunc nuw nsw i64 %i.hg to i32
-  %i.hi = shl i64 %.sroa.7.0.ph456476, %i.hg
+  %i.hi = shl i64 %.sroa.7.0.ph456476, %i.hg      ; 2 uses
   %i.hj = trunc nsw i64 %.sroa.086.0.ph457473 to i32 ; 2 uses
   %i.hk = shl nsw i32 %i.hj, 1
   %i.hl = sext i32 %i.hk to i64
   %i.hm = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hl ; 2 uses
   %i.hn = getelementptr i8, ptr %i.hm, i64 5472
   %i.ho = load i64, ptr %i.hn, align 16, !tbaa !137
-  %i.hp = zext i64 %i.hi to i128                  ; 2 uses
+  %i.hp = zext i64 %i.hi to i128
   %i.hq = zext i64 %i.ho to i128
   %i.hr = mul nuw i128 %i.hq, %i.hp               ; 2 uses
   %i.hs = trunc i128 %i.hr to i64                 ; 2 uses
@@ -1581,13 +1575,10 @@ bb.bg:                                            ; preds = %bb.bf
 bb.bh:                                            ; preds = %bb.bg
   %i.hx = getelementptr i8, ptr %i.hm, i64 5480
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !137
-  %6 = zext i64 %i.hy to i128
-  %7 = mul nuw i128 %6, %i.hp
-  %8 = lshr i128 %7, 64
-  %9 = trunc nuw i128 %8 to i64                   ; 2 uses
-  %i.hz = add i64 %9, %i.hs                       ; 2 uses
-  %10 = icmp ult i64 %i.hz, %9
-  %i.ia = zext i1 %10 to i64
+  %6 = tail call i64 @llvm.umulh.i64(i64 %i.hi, i64 %i.hy) ; 2 uses
+  %i.hz = add i64 %6, %i.hs                       ; 2 uses
+  %7 = icmp ugt i64 %6, %i.hz
+  %i.ia = zext i1 %7 to i64
   %spec.select.i72 = add nuw i64 %i.ia, %i.hu
   br label %_ZN17duckdb_fast_float29compute_product_approximationILi26EEENS_8value128Elm.exit
 
@@ -1682,14 +1673,14 @@ bb.bk:                                            ; preds = %bb.bj
 bb.bl:                                            ; preds = %bb.bk
   %i.jn = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.jj, i1 true) ; 2 uses
   %i.jo = trunc nuw nsw i64 %i.jn to i32
-  %i.jp = shl i64 %i.jj, %i.jn
+  %i.jp = shl i64 %i.jj, %i.jn                    ; 2 uses
   %i.jq = trunc nsw i64 %.sroa.086.0.ph457474 to i32 ; 2 uses
   %i.jr = shl nsw i32 %i.jq, 1
   %i.js = sext i32 %i.jr to i64
   %i.jt = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.js ; 2 uses
   %i.ju = getelementptr i8, ptr %i.jt, i64 5472
   %i.jv = load i64, ptr %i.ju, align 16, !tbaa !137
-  %i.jw = zext i64 %i.jp to i128                  ; 2 uses
+  %i.jw = zext i64 %i.jp to i128
   %i.jx = zext i64 %i.jv to i128
   %i.jy = mul nuw i128 %i.jx, %i.jw               ; 2 uses
   %i.jz = trunc i128 %i.jy to i64                 ; 2 uses
@@ -1702,13 +1693,10 @@ bb.bl:                                            ; preds = %bb.bk
 bb.bm:                                            ; preds = %bb.bl
   %i.ke = getelementptr i8, ptr %i.jt, i64 5480
   %i.kf = load i64, ptr %i.ke, align 8, !tbaa !137
-  %11 = zext i64 %i.kf to i128
-  %12 = mul nuw i128 %11, %i.jw
-  %13 = lshr i128 %12, 64
-  %14 = trunc nuw i128 %13 to i64                 ; 2 uses
-  %i.kg = add i64 %14, %i.jz                      ; 2 uses
-  %15 = icmp ult i64 %i.kg, %14
-  %i.kh = zext i1 %15 to i64
+  %8 = tail call i64 @llvm.umulh.i64(i64 %i.jp, i64 %i.kf) ; 2 uses
+  %i.kg = add i64 %8, %i.jz                       ; 2 uses
+  %9 = icmp ugt i64 %8, %i.kg
+  %i.kh = zext i1 %9 to i64
   %spec.select.i78 = add nuw i64 %i.kh, %i.kb
   br label %_ZN17duckdb_fast_float29compute_product_approximationILi26EEENS_8value128Elm.exit79
 
@@ -2109,6 +2097,9 @@ declare i64 @llvm.umax.i64(i64, i64) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.usub.sat.i8(i8, i8) #30

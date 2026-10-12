@@ -187,6 +187,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bx = urem i32 %.lhs.trunc, %i.bw
   %.zext = zext i32 %i.bx to i64
   %.062 = select i1 %or.cond7, i64 %.sroa.7.0.extract.shift, i64 %.zext ; 2 uses
+  %8 = trunc i64 %.063 to i32                     ; 2 uses
   %.not = icmp eq i64 %.062, %.sroa.7.0.extract.shift ; 2 uses
   br i1 %i.ar, label %bb.m, label %bb.r
 
@@ -244,16 +245,13 @@ index_alpha.exit:                                 ; preds = %bb.n, %bb.p, %bb.q,
   %.0.i = phi i64 [ 0, %bb.u ], [ %i.co, %bb.v ], [ 0, %bb.q ], [ 0, %bb.p ], [ 0, %bb.n ]
   %i.cp = add i32 %.03036.i, -1
   %i.cq = zext i32 %i.cp to i64
-  %8 = and i64 %.063, 4294967295                  ; 2 uses
-  %9 = mul nuw i64 %8, %8
-  %10 = lshr i64 %9, 32
-  %i.cr = zext i32 %.03036.i to i64
-  %11 = mul nuw i64 %10, %i.cr
-  %12 = lshr i64 %11, 32
-  %i.cs = add nuw nsw i64 %.0.i, %i.cq
-  %13 = sub nsw i64 %i.cs, %12
+  %9 = call i32 @llvm.umulh.i32(i32 %8, i32 %8)
+  %10 = call i32 @llvm.umulh.i32(i32 %.03036.i, i32 %9)
+  %i.cr = zext i32 %10 to i64
+  %11 = sub nsw i64 %.0.i, %i.cr
+  %i.cs = add nsw i64 %11, %i.cq
   %i.ct = zext i32 %i.bl to i64                   ; 2 uses
-  %i.cu = urem i64 %13, %i.ct
+  %i.cu = urem i64 %i.cs, %i.ct
   %i.cv = load ptr, ptr %0, align 8
   %i.cw = getelementptr i8, ptr %i.cv, i64 8
   %i.cx = load ptr, ptr %i.cw, align 8            ; 3 uses
@@ -655,6 +653,9 @@ xor_block.exit399:                                ; preds = %vector.body421
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1

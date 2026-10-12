@@ -205,13 +205,13 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 6 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 7 uses
   %i.f = load <2 x i32>, ptr %2, align 4, !tbaa !18
   %i.g = sitofp <2 x i32> %i.f to <2 x double>    ; 4 uses
   store <2 x double> %i.g, ptr %i.b, align 8, !tbaa !61
   %i.h = load <2 x i32>, ptr %i.d, align 4, !tbaa !18
   %i.i = sitofp <2 x i32> %i.h to <2 x double>    ; 6 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 4 uses
   store <2 x double> %i.i, ptr %i.e, align 8, !tbaa !61
   %shift = shufflevector <2 x double> %i.i, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fmul nnan <2 x double> %shift, %i.i
@@ -252,7 +252,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.af = fmul nnan <2 x double> %i.ae, splat (double 5.000000e-01)
   %i.ag = fsub <2 x double> %i.ad, %i.af
   store <2 x double> %i.ag, ptr %i.b, align 8, !tbaa !61
-  %i.ah = fmul nnan <2 x double> %i.ae, splat (double 2.000000e+00) ; 3 uses
+  %i.ah = fmul nnan <2 x double> %i.ae, splat (double 2.000000e+00)
   store <2 x double> %i.ah, ptr %i.e, align 8, !tbaa !61
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 11 uses
@@ -261,12 +261,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   store i64 0, ptr %i.ak, align 8
   store i32 33619968, ptr %6, align 8, !tbaa !67
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !68
-  %17 = tail call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %i.ah)
-  %18 = shufflevector <2 x double> %i.ah, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %17 = load <2 x double>, ptr %i.e, align 8
+  %18 = load <2 x double>, ptr %i.j, align 8
+  %19 = tail call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %17)
   %i.al = tail call noundef i32 @llvm.x86.sse2.cvtsd2si(<2 x double> %18)
   %.sroa.2.0.insert.ext.i = zext i32 %i.al to i64
   %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
-  %.sroa.0.0.insert.ext.i = zext i32 %17 to i64
+  %.sroa.0.0.insert.ext.i = zext i32 %19 to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   call void @_ZNK2cv8tracking4impl14TrackerKCFImpl19createHanningWindowERKNS_12_OutputArrayENS_5Size_IiEEi(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 %.sroa.0.0.insert.insert.i, i32 noundef 5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25

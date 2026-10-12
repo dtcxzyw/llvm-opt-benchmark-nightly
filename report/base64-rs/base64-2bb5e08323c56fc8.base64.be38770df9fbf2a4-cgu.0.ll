@@ -204,14 +204,11 @@ bb.b:                                             ; preds = %.preheader
   %i.f = shufflevector <32 x i8> %i.e, <32 x i8> poison, <32 x i32> <i32 1, i32 0, i32 2, i32 1, i32 4, i32 3, i32 5, i32 4, i32 7, i32 6, i32 8, i32 7, i32 10, i32 9, i32 11, i32 10, i32 17, i32 16, i32 18, i32 17, i32 20, i32 19, i32 21, i32 20, i32 23, i32 22, i32 24, i32 23, i32 26, i32 25, i32 27, i32 26> ; 2 uses
   %i.g = bitcast <32 x i8> %i.f to <16 x i16>
   %i.h = and <16 x i16> %i.g, <i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032>
-  %4 = zext <16 x i16> %i.h to <16 x i32>
-  %5 = shl nuw nsw <16 x i32> %4, <i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10>
-  %6 = lshr <16 x i32> %5, splat (i32 16)
-  %7 = trunc nuw nsw <16 x i32> %6 to <16 x i16>
+  %4 = tail call <16 x i16> @llvm.umulh.v16i16(<16 x i16> %i.h, <16 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
   %i.i = bitcast <32 x i8> %i.f to <16 x i16>
   %i.j = and <16 x i16> %i.i, <i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63>
   %i.k = shl <16 x i16> %i.j, <i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8>
-  %i.l = or <16 x i16> %i.k, %7
+  %i.l = or <16 x i16> %4, %i.k
   %i.m = bitcast <16 x i16> %i.l to <32 x i8>     ; 3 uses
   %i.n = tail call <32 x i8> @llvm.usub.sat.v32i8(<32 x i8> %i.m, <32 x i8> splat (i8 51))
   %i.o = icmp sgt <32 x i8> %i.m, splat (i8 25)
@@ -255,14 +252,11 @@ bb.b:                                             ; preds = %.preheader
   %i.f = shufflevector <32 x i8> %i.e, <32 x i8> poison, <32 x i32> <i32 1, i32 0, i32 2, i32 1, i32 4, i32 3, i32 5, i32 4, i32 7, i32 6, i32 8, i32 7, i32 10, i32 9, i32 11, i32 10, i32 17, i32 16, i32 18, i32 17, i32 20, i32 19, i32 21, i32 20, i32 23, i32 22, i32 24, i32 23, i32 26, i32 25, i32 27, i32 26> ; 2 uses
   %i.g = bitcast <32 x i8> %i.f to <16 x i16>
   %i.h = and <16 x i16> %i.g, <i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032, i16 -1024, i16 4032>
-  %4 = zext <16 x i16> %i.h to <16 x i32>
-  %5 = shl nuw nsw <16 x i32> %4, <i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10, i32 6, i32 10>
-  %6 = lshr <16 x i32> %5, splat (i32 16)
-  %7 = trunc nuw nsw <16 x i32> %6 to <16 x i16>
+  %4 = tail call <16 x i16> @llvm.umulh.v16i16(<16 x i16> %i.h, <16 x i16> <i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024, i16 64, i16 1024>)
   %i.i = bitcast <32 x i8> %i.f to <16 x i16>
   %i.j = and <16 x i16> %i.i, <i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63, i16 1008, i16 63>
   %i.k = shl <16 x i16> %i.j, <i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8, i16 4, i16 8>
-  %i.l = or <16 x i16> %i.k, %7
+  %i.l = or <16 x i16> %4, %i.k
   %i.m = bitcast <16 x i16> %i.l to <32 x i8>     ; 3 uses
   %i.n = tail call <32 x i8> @llvm.usub.sat.v32i8(<32 x i8> %i.m, <32 x i8> splat (i8 51))
   %i.o = icmp sgt <32 x i8> %i.m, splat (i8 25)
@@ -663,6 +657,9 @@ declare i8 @llvm.fshl.i8(i8, i8, i8) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <16 x i16> @llvm.umulh.v16i16(<16 x i16>, <16 x i16>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #11

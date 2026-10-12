@@ -85,7 +85,7 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 48
   store double +qnan, ptr %i.r, align 8, !tbaa !17
-  store double +qnan, ptr %i.q, align 8, !tbaa !18
+  store double +qnan, ptr %i.q, align 8, !tbaa !19
   %ldexp.i = tail call double @ldexp(double 1.000000e+00, i32 %i.o)
   %i.s = load <2 x double>, ptr %1, align 8
   %i.t = load double, ptr %i.i, align 8, !tbaa !17
@@ -111,10 +111,9 @@ bb.a:
   %i.ai = add nsw i32 %i.ah, 1                    ; 2 uses
   store i32 %i.ai, ptr %i.p, align 8, !tbaa !15
   %ldexp.i5 = tail call double @ldexp(double 1.000000e+00, i32 %i.ai)
-  %2 = load double, ptr %1, align 8, !tbaa !18
+  %2 = load <2 x double>, ptr %1, align 8
   %i.aj = load double, ptr %i.i, align 8, !tbaa !17
-  %3 = insertelement <2 x double> poison, double %2, i64 0
-  %i.ak = insertelement <2 x double> %3, double %i.aj, i64 1
+  %i.ak = insertelement <2 x double> %2, double %i.aj, i64 1
   %i.al = insertelement <2 x double> poison, double %ldexp.i5, i64 0
   %i.am = shufflevector <2 x double> %i.al, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.an = fdiv <2 x double> %i.ak, %i.am
@@ -129,7 +128,7 @@ bb.a:
   %i.av = select <4 x i1> %i.as, <4 x double> %i.at, <4 x double> %i.au
   store <4 x double> %i.av, ptr %i.q, align 8, !tbaa !16
   %i.aw = tail call noundef zeroext i1 @_ZNK4geos4geom8Envelope6coversERKS1_(ptr noundef nonnull align 8 dereferenceable(32) %i.q, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  br i1 %i.aw, label %._crit_edge, label %.lr.ph, !llvm.loop !19
+  br i1 %i.aw, label %._crit_edge, label %.lr.ph, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -161,13 +160,12 @@ define noalias noundef nonnull ptr @_ZNK4geos5index8quadtree3Key9getCentreEv(ptr
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %1 = load double, ptr %i.b, align 8, !tbaa !18
+  %1 = load <2 x double>, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.e = load double, ptr %i.d, align 8, !tbaa !21
   %i.f = load <2 x double>, ptr %i.c, align 8, !tbaa !16
-  %2 = insertelement <2 x double> poison, double %1, i64 0
-  %i.g = insertelement <2 x double> %2, double %i.e, i64 1
+  %i.g = insertelement <2 x double> %1, double %i.e, i64 1
   %i.h = fadd <2 x double> %i.f, %i.g
   %i.i = fmul <2 x double> %i.h, splat (double 5.000000e-01)
   store <2 x double> %i.i, ptr %i.a, align 8, !tbaa !16
@@ -253,8 +251,8 @@ attributes #12 = { builtin allocsize(0) }
 !15 = !{!14, !5, i64 24}
 !16 = !{!8, !8, i64 0}
 !17 = !{!9, !8, i64 16}
-!18 = !{!9, !8, i64 0}
-!19 = distinct !{!19, !20}
+!18 = distinct !{!18, !20}
+!19 = !{!9, !8, i64 0}
 !20 = !{!"llvm.loop.mustprogress"}
 !21 = !{!9, !8, i64 24}
 end_hunk_0

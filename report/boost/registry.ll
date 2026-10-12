@@ -205,12 +205,8 @@ bb.e:                                             ; preds = %_ZNK5boost9unordere
   %i.ci = load i64, ptr %i.ch, align 8, !tbaa !75
   %i.cj = and i64 %i.ce, 4294967295
   %i.ck = mul i64 %i.cg, %i.cj
-  %4 = zext i64 %i.ck to i128
   %.mask.i.i = and i64 %i.ci, 4294967295
-  %5 = zext nneg i64 %.mask.i.i to i128
-  %6 = mul nuw nsw i128 %5, %4
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw nsw i128 %7 to i64
+  %4 = tail call i64 @llvm.umulh.i64(i64 %.mask.i.i, i64 %i.ck)
   br label %_ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit
 
 bb.f:                                             ; preds = %_ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE4hashIS5_EEmRKT_.exit
@@ -221,7 +217,7 @@ bb.f:                                             ; preds = %_ZNK5boost9unordere
   br label %_ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit
 
 _ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit: ; preds = %bb.e, %bb.f
-  %.0.i.i = phi i64 [ %8, %bb.e ], [ %i.co, %bb.f ] ; 2 uses
+  %.0.i.i = phi i64 [ %4, %bb.e ], [ %i.co, %bb.f ] ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !24 ; 2 uses
   %.not.i = icmp eq i64 %i.cq, 0                  ; 2 uses
@@ -272,14 +268,13 @@ _ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5
 
 _ZN5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE16bucket_count_forEm.exit.i.i: ; preds = %_ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE14find_node_implIS5_EEPNS1_4nodeIS5_PvEERKT_NS1_23grouped_bucket_iteratorINS1_6bucketISG_SF_EEEE.exit.thread
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %9 = load float, ptr %i.dl, align 8, !tbaa !20
+  %5 = load <4 x float>, ptr %i.dl, align 8
   %i.dm = uitofp i64 %i.dh to float
   %i.dn = uitofp i64 %i.dg to float
-  %10 = insertelement <2 x float> poison, float %i.dn, i64 0
-  %i.do = insertelement <2 x float> %10, float %i.dm, i64 1
-  %i.dp = insertelement <2 x float> poison, float %9, i64 0
-  %i.dq = shufflevector <2 x float> %i.dp, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.dr = fdiv <2 x float> %i.do, %i.dq
+  %i.do = insertelement <2 x float> poison, float %i.dn, i64 0
+  %i.dp = insertelement <2 x float> %i.do, float %i.dm, i64 1
+  %i.dq = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.dr = fdiv <2 x float> %i.dp, %i.dq
   %i.ds = tail call <2 x float> @llvm.ceil.v2f32(<2 x float> %i.dr) ; 3 uses
   %i.dt = extractelement <2 x float> %i.ds, i64 1
   %i.du = fptoui float %i.dt to i64
@@ -316,12 +311,8 @@ bb.i:                                             ; preds = %_ZN5boost9unordered
   %i.eo = load i64, ptr %i.en, align 8, !tbaa !75
   %i.ep = and i64 %i.ek, 4294967295
   %i.eq = mul i64 %i.em, %i.ep
-  %11 = zext i64 %i.eq to i128
   %.mask.i.i25 = and i64 %i.eo, 4294967295
-  %12 = zext nneg i64 %.mask.i.i25 to i128
-  %13 = mul nuw nsw i128 %12, %11
-  %14 = lshr i128 %13, 64
-  %15 = trunc nuw nsw i128 %14 to i64
+  %6 = tail call i64 @llvm.umulh.i64(i64 %.mask.i.i25, i64 %i.eq)
   br label %bb.k
 
 bb.j:                                             ; preds = %_ZN5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE7reserveEm.exit
@@ -332,7 +323,7 @@ bb.j:                                             ; preds = %_ZN5boost9unordered
           to label %bb.k unwind label %bb.m, !inline_history !112
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.0.i.i24 = phi i64 [ %15, %bb.i ], [ %i.eu, %bb.j ] ; 2 uses
+  %.0.i.i24 = phi i64 [ %6, %bb.i ], [ %i.eu, %bb.j ] ; 2 uses
   %i.ev = load i64, ptr %i.cp, align 8, !tbaa !24
   %.not.i28 = icmp eq i64 %i.ev, 0                ; 2 uses
   %i.ew = load ptr, ptr %i.cr, align 8, !tbaa !25
@@ -694,12 +685,8 @@ bb.f:                                             ; preds = %_ZNK5boost9unordere
   %i.cu = load i64, ptr %i.ct, align 8, !tbaa !75
   %i.cv = and i64 %i.cq, 4294967295
   %i.cw = mul i64 %i.cs, %i.cv
-  %4 = zext i64 %i.cw to i128
   %.mask.i.i.i = and i64 %i.cu, 4294967295
-  %5 = zext nneg i64 %.mask.i.i.i to i128
-  %6 = mul nuw nsw i128 %5, %4
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw nsw i128 %7 to i64
+  %4 = call i64 @llvm.umulh.i64(i64 %.mask.i.i.i, i64 %i.cw)
   br label %_ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit.i
 
 bb.g:                                             ; preds = %_ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE4hashIS5_EEmRKT_.exit.i
@@ -710,7 +697,7 @@ bb.g:                                             ; preds = %_ZNK5boost9unordere
           to label %_ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit.i unwind label %bb.l, !inline_history !122
 
 _ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit.i: ; preds = %bb.g, %bb.f
-  %.0.i.i.i = phi i64 [ %8, %bb.f ], [ %i.da, %bb.g ] ; 2 uses
+  %.0.i.i.i = phi i64 [ %4, %bb.f ], [ %i.da, %bb.g ] ; 2 uses
   %i.db = load i64, ptr %i.g, align 8, !tbaa !24  ; 2 uses
   %.not.i.i = icmp eq i64 %i.db, 0                ; 2 uses
   %i.dc = load ptr, ptr %i.h, align 16, !tbaa !25 ; 2 uses
@@ -1113,12 +1100,8 @@ bb.e:                                             ; preds = %_ZNK5boost9unordere
   %i.ci = load i64, ptr %i.ch, align 8, !tbaa !75
   %i.cj = and i64 %i.ce, 4294967295
   %i.ck = mul i64 %i.cg, %i.cj
-  %2 = zext i64 %i.ck to i128
   %.mask.i.i = and i64 %i.ci, 4294967295
-  %3 = zext nneg i64 %.mask.i.i to i128
-  %4 = mul nuw nsw i128 %3, %2
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw nsw i128 %5 to i64
+  %2 = tail call i64 @llvm.umulh.i64(i64 %.mask.i.i, i64 %i.ck)
   br label %_ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit
 
 bb.f:                                             ; preds = %_ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE4hashIS5_EEmRKT_.exit
@@ -1129,7 +1112,7 @@ bb.f:                                             ; preds = %_ZNK5boost9unordere
   br label %_ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit
 
 _ZNK5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE8positionEm.exit: ; preds = %bb.e, %bb.f
-  %.0.i.i = phi i64 [ %6, %bb.e ], [ %i.co, %bb.f ] ; 2 uses
+  %.0.i.i = phi i64 [ %2, %bb.e ], [ %i.co, %bb.f ] ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !24
   %.not.i = icmp eq i64 %i.cq, 0                  ; 2 uses
@@ -1220,6 +1203,9 @@ declare i32 @llvm.smin.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #16

@@ -205,8 +205,8 @@ bb.az:                                            ; preds = %bb.ay, %bb.au
 
 .lr.ph280.preheader.i.i:                          ; preds = %bb.az
   %scevgep.i.i = getelementptr i8, ptr %i.hq, i64 %i.lb
-  %.neg.i.i = xor i64 %i.la, -1
-  %.neg316.i.i = sub i64 %.neg.i.i, %i.kz
+  %.neg.i.i = xor i64 %i.kz, -1
+  %.neg316.i.i = sub i64 %.neg.i.i, %i.la
   %i.ld = and i64 %.neg316.i.i, 3
   %i.le = add nuw nsw i64 %i.ld, 1
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i.i, i8 0, i64 %i.le, i1 false), !tbaa !29

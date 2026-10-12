@@ -205,9 +205,8 @@ _ZN4llvm15SmallPtrSetImplIPN5clang11DeclContextEE6insertES3_.exit179: ; preds = 
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 161
   %i.bh = getelementptr inbounds nuw i8, ptr %7, i64 163
   %i.bi = getelementptr inbounds nuw i8, ptr %7, i64 164
-  %12 = load <2 x i8>, ptr %i.bg, align 1, !tbaa !1296
-  %13 = shufflevector <2 x i8> %12, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.bj = shufflevector <4 x i8> %13, <4 x i8> <i8 poison, i8 poison, i8 0, i8 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %12 = load <4 x i8>, ptr %i.bg, align 1
+  %i.bj = shufflevector <4 x i8> %12, <4 x i8> <i8 poison, i8 poison, i8 0, i8 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i8> %i.bj, ptr %i.bf, align 1, !tbaa !1296
   %i.bk = getelementptr inbounds nuw i8, ptr %7, i64 165
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 165

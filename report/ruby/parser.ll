@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %json_parse_digits.e
 peek.exit.thread:                                 ; preds = %bb.g, %bb.o, %peek.exit
   %i.gz = phi ptr [ %.val60, %peek.exit ], [ %.val58229, %bb.o ], [ %.val60, %bb.g ] ; 6 uses
   %i.ha = phi i1 [ true, %peek.exit ], [ false, %bb.o ], [ true, %bb.g ]
-  %.0131 = phi i64 [ %.6, %peek.exit ], [ %.12, %bb.o ], [ %.6, %bb.g ] ; 12 uses
+  %.0131 = phi i64 [ %.6, %peek.exit ], [ %.12, %bb.o ], [ %.6, %bb.g ] ; 14 uses
   %.049 = phi i32 [ -1, %peek.exit ], [ %i.cy, %bb.o ], [ -1, %bb.g ] ; 2 uses
   %.048 = phi i32 [ %i.cy, %peek.exit ], [ %i.gy, %bb.o ], [ %i.cy, %bb.g ] ; 4 uses
   %.not.i84 = icmp ult ptr %i.gz, %.val42.i
@@ -568,13 +568,12 @@ bb.ar:                                            ; preds = %bb.aq
   %.val75.i.i = load i64, ptr %i.nh, align 16, !tbaa !11
   %i.ni = getelementptr i8, ptr %i.nh, i64 8
   %.val76.i.i = load i64, ptr %i.ni, align 8, !tbaa !11
-  %i.nj = zext i64 %.0131 to i128                 ; 2 uses
-  %i.nk = zext i64 %.val75.i.i to i128
+  %i.nj = zext i64 %.0131 to i128
+  %i.nk = zext i64 %.val76.i.i to i128
   %i.nl = mul nuw i128 %i.nk, %i.nj
-  %4 = zext i64 %.val76.i.i to i128
-  %5 = mul nuw i128 %4, %i.nj
-  %6 = lshr i128 %i.nl, 64
-  %i.nm = add nuw i128 %6, %5
+  %4 = tail call i64 @llvm.umulh.i64(i64 range(i64 1, 0) %.0131, i64 %.val75.i.i)
+  %5 = zext i64 %4 to i128
+  %i.nm = add nuw i128 %i.nl, %5
   %reass.sub190 = sub i32 %i.nf, %i.nc
   %i.nn = add i32 %reass.sub190, 60
   %i.no = zext nneg i32 %i.nn to i128
@@ -619,13 +618,12 @@ multipleOfPowerOf5.exit.i.i:                      ; preds = %bb.av
   %i.oh = add nuw nsw i32 %i.og, %i.oe
   %i.oi = sub nuw i32 %.1, %i.oh
   %i.oj = add i32 %i.oi, 9                        ; 2 uses
-  %i.ok = zext i64 %.0131 to i128                 ; 2 uses
-  %i.ol = zext i64 %.val.i.i to i128
+  %i.ok = zext i64 %.0131 to i128
+  %i.ol = zext i64 %.val74.i.i to i128
   %i.om = mul nuw i128 %i.ol, %i.ok
-  %7 = zext i64 %.val74.i.i to i128
-  %8 = mul nuw i128 %7, %i.ok
-  %9 = lshr i128 %i.om, 64
-  %i.on = add nuw i128 %9, %8
+  %6 = tail call i64 @llvm.umulh.i64(i64 range(i64 1, 0) %.0131, i64 %.val.i.i)
+  %7 = zext i64 %6 to i128
+  %i.on = add nuw i128 %i.om, %7
   %reass.sub = sub i32 %i.og, %.1
   %i.oo = add nuw i32 %reass.sub, 61
   %i.op = add i32 %i.oo, %i.oj
@@ -1026,6 +1024,9 @@ RSTRING_PTR.exit:                                 ; preds = %bb.a, %bb.b
 declare i64 @rb_inspect(i64 noundef) local_unnamed_addr #1
 
 declare i64 @rb_hash_aset(i64 noundef, i64 noundef, i64 noundef) local_unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #17

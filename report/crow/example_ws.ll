@@ -205,7 +205,7 @@ bb.gl:                                            ; preds = %.lr.ph2317
   %i.aiy = getelementptr inbounds nuw i8, ptr %i.aik, i64 12
   %i.aiz = load i32, ptr %i.aiy, align 4, !tbaa !2412
   %i.aja = sext i32 %i.aiu to i64
-  %smax = call i32 @llvm.smax.i32(i32 %i.aiu, i32 %i.aiz) ; 2 uses
+  %smax = call i32 @llvm.smax.i32(i32 %i.aiz, i32 %i.aiu) ; 2 uses
   %wide.trip.count1526 = sext i32 %smax to i64
   br label %bb.gm
 

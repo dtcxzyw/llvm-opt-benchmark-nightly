@@ -202,14 +202,13 @@ bb.d:                                             ; preds = %bb.b
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %.preheader.lr.ph.i
-  %.019.i = phi ptr [ %i.e, %.preheader.lr.ph.i ], [ %i.o, %.preheader.i ] ; 4 uses
+  %.019.i = phi ptr [ %i.e, %.preheader.lr.ph.i ], [ %i.o, %.preheader.i ] ; 3 uses
   %scevgep.i = getelementptr nuw i8, ptr %.019.i, i64 1
-  %strlen.i = call i64 @strlen(ptr nonnull dereferenceable(1) %scevgep.i) ; 2 uses
-  %scevgep20.i = getelementptr i8, ptr %.019.i, i64 %strlen.i
+  %strlen.i = call i64 @strlen(ptr nonnull dereferenceable(1) %scevgep.i)
+  %scevgep20.i = getelementptr i8, ptr %.019.i, i64 %strlen.i ; 2 uses
   %i.n = getelementptr i8, ptr %scevgep20.i, i64 2 ; 2 uses
   %strlen21.i = call i64 @strlen(ptr nonnull dereferenceable(1) %i.n)
-  %4 = getelementptr i8, ptr %.019.i, i64 %strlen21.i
-  %scevgep23.i = getelementptr i8, ptr %4, i64 %strlen.i
+  %scevgep23.i = getelementptr i8, ptr %scevgep20.i, i64 %strlen21.i
   %i.o = getelementptr i8, ptr %scevgep23.i, i64 3 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   store ptr %.019.i, ptr %3, align 8
@@ -270,14 +269,13 @@ bb.d:                                             ; preds = %bb.b
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %.preheader.lr.ph.i
-  %.019.i = phi ptr [ %i.f, %.preheader.lr.ph.i ], [ %i.p, %.preheader.i ] ; 4 uses
+  %.019.i = phi ptr [ %i.f, %.preheader.lr.ph.i ], [ %i.p, %.preheader.i ] ; 3 uses
   %scevgep.i = getelementptr nuw i8, ptr %.019.i, i64 1
-  %strlen.i = call i64 @strlen(ptr nonnull dereferenceable(1) %scevgep.i) ; 2 uses
-  %scevgep20.i = getelementptr i8, ptr %.019.i, i64 %strlen.i
+  %strlen.i = call i64 @strlen(ptr nonnull dereferenceable(1) %scevgep.i)
+  %scevgep20.i = getelementptr i8, ptr %.019.i, i64 %strlen.i ; 2 uses
   %i.o = getelementptr i8, ptr %scevgep20.i, i64 2 ; 2 uses
   %strlen21.i = call i64 @strlen(ptr nonnull dereferenceable(1) %i.o)
-  %5 = getelementptr i8, ptr %.019.i, i64 %strlen21.i
-  %scevgep23.i = getelementptr i8, ptr %5, i64 %strlen.i
+  %scevgep23.i = getelementptr i8, ptr %scevgep20.i, i64 %strlen21.i
   %i.p = getelementptr i8, ptr %scevgep23.i, i64 3 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   store ptr %.019.i, ptr %4, align 8

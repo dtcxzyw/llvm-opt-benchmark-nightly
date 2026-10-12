@@ -205,8 +205,8 @@ begin_hunk_0_@_ZN4ncnn24Deconvolution_x86_avx51215create_pipelineERKNS_6OptionE:
   %i.fyz = insertelement <64 x ptr> %i.fyy, ptr %scevgep4031, i64 62
   %i.fza = insertelement <64 x ptr> %i.fyz, ptr %scevgep4034, i64 63
   %i.fzb = insertelement <8 x i64> poison, i64 %i.fjh, i64 0
-  %15 = shufflevector <8 x i64> %i.fzb, <8 x i64> poison, <64 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %16 = icmp slt <64 x i64> %15, <i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef>
+  %15 = icmp slt <8 x i64> %i.fzb, zeroinitializer
+  %16 = shufflevector <8 x i1> %15, <8 x i1> poison, <64 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   br label %iter.check4497
 
 iter.check4497:                                   ; preds = %._crit_edge2054.us.i, %.preheader1775.us.preheader.i
@@ -609,8 +609,8 @@ begin_hunk_1_@_ZN4ncnn24Deconvolution_x86_avx51215create_pipelineERKNS_6OptionE:
   %i.iez = insertelement <32 x ptr> %i.iey, ptr %scevgep5133, i64 30
   %i.ifa = insertelement <32 x ptr> %i.iez, ptr %scevgep5136, i64 31
   %i.ifb = insertelement <4 x i64> poison, i64 %i.hwv, i64 0
-  %17 = shufflevector <4 x i64> %i.ifb, <4 x i64> poison, <32 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %18 = icmp slt <32 x i64> %17, <i64 0, i64 0, i64 0, i64 0, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef>
+  %17 = icmp slt <4 x i64> %i.ifb, zeroinitializer
+  %18 = shufflevector <4 x i1> %17, <4 x i1> poison, <32 x i32> <i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   br label %iter.check5375
 
 iter.check5375:                                   ; preds = %._crit_edge2167.us.i, %.preheader1756.us.preheader.i
@@ -1013,7 +1013,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.noexc1263
 
 .noexc1263:                                       ; preds = %.noexc1263.preheader, %._crit_edge2396.split
-  %indvars.iv = phi i64 [ %i.aa, %.noexc1263.preheader ], [ %indvars.iv.next, %._crit_edge2396.split ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.aa, %.noexc1263.preheader ], [ %indvars.iv.next, %._crit_edge2396.split ] ; 4 uses
   %i.ac = load i32, ptr %i.l, align 8, !tbaa !62
   %.fr = freeze i32 %i.ac                         ; 5 uses
   %i.ad = load i32, ptr %i.m, align 8, !tbaa !64
@@ -1095,10 +1095,10 @@ bb.d:                                             ; preds = %bb.c
 _ZN4ncnn3MatD2Ev.exit1002:                        ; preds = %bb.d, %bb.c
   %.0778 = phi nsz <16 x float> [ %i.br, %bb.d ], [ zeroinitializer, %bb.c ] ; 3 uses
   %i.bs = load ptr, ptr %6, align 8, !tbaa !20, !noalias !1565 ; 2 uses
-  %i.bt = load i64, ptr %i.u, align 8, !tbaa !21, !noalias !1565
+  %i.bt = load i64, ptr %i.u, align 8, !tbaa !21, !noalias !1565 ; 2 uses
   %i.bu = mul i64 %i.bt, %indvars.iv
-  %i.bv = load i64, ptr %i.v, align 8, !tbaa !56, !noalias !1565
-  %i.bw = mul i64 %i.bu, %i.bv                    ; 2 uses
+  %i.bv = load i64, ptr %i.v, align 8, !tbaa !56, !noalias !1565 ; 2 uses
+  %i.bw = mul i64 %i.bu, %i.bv
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bs, i64 %i.bw ; 2 uses
   br i1 %i.an, label %.preheader2165.lr.ph, label %.preheader2169
 
@@ -1112,8 +1112,10 @@ _ZN4ncnn3MatD2Ev.exit1002:                        ; preds = %bb.d, %bb.c
   br i1 %i.bz, label %.preheader2165.lr.ph.split.us, label %.preheader2165.preheader
 
 .preheader2165.preheader:                         ; preds = %.preheader2165.lr.ph
+  %19 = mul i64 %indvars.iv, %i.bv
+  %20 = mul i64 %19, %i.bt
   %i.cd = mul nsw i64 %i.bg, %i.cc
-  %i.ce = getelementptr i8, ptr %i.bs, i64 %i.bw
+  %i.ce = getelementptr i8, ptr %i.bs, i64 %20
   %scevgep = getelementptr i8, ptr %i.ce, i64 %i.cd
   br label %.preheader2169
 
@@ -1516,7 +1518,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.noexc1189
 
 .noexc1189:                                       ; preds = %.noexc1189.preheader, %._crit_edge2584.split
-  %indvars.iv = phi i64 [ %i.aa, %.noexc1189.preheader ], [ %indvars.iv.next, %._crit_edge2584.split ] ; 3 uses
+  %indvars.iv = phi i64 [ %i.aa, %.noexc1189.preheader ], [ %indvars.iv.next, %._crit_edge2584.split ] ; 4 uses
   %i.ac = load i32, ptr %i.l, align 8, !tbaa !62
   %.fr = freeze i32 %i.ac                         ; 5 uses
   %i.ad = load i32, ptr %i.m, align 8, !tbaa !64
@@ -1598,10 +1600,10 @@ bb.d:                                             ; preds = %bb.c
 _ZN4ncnn3MatD2Ev.exit928:                         ; preds = %bb.d, %bb.c
   %.02260 = phi nsz <16 x float> [ zeroinitializer, %bb.c ], [ %i.br, %bb.d ] ; 3 uses
   %i.bs = load ptr, ptr %6, align 8, !tbaa !20, !noalias !1961 ; 2 uses
-  %i.bt = load i64, ptr %i.u, align 8, !tbaa !21, !noalias !1961
+  %i.bt = load i64, ptr %i.u, align 8, !tbaa !21, !noalias !1961 ; 2 uses
   %i.bu = mul i64 %i.bt, %indvars.iv
-  %i.bv = load i64, ptr %i.v, align 8, !tbaa !56, !noalias !1961
-  %i.bw = mul i64 %i.bu, %i.bv                    ; 2 uses
+  %i.bv = load i64, ptr %i.v, align 8, !tbaa !56, !noalias !1961 ; 2 uses
+  %i.bw = mul i64 %i.bu, %i.bv
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bs, i64 %i.bw ; 2 uses
   br i1 %i.an, label %.preheader2354.lr.ph, label %.preheader2358
 
@@ -1615,8 +1617,10 @@ _ZN4ncnn3MatD2Ev.exit928:                         ; preds = %bb.d, %bb.c
   br i1 %i.bz, label %.preheader2354.lr.ph.split.us, label %.preheader2354.preheader
 
 .preheader2354.preheader:                         ; preds = %.preheader2354.lr.ph
+  %19 = mul i64 %indvars.iv, %i.bv
+  %20 = mul i64 %19, %i.bt
   %i.cd = mul nsw i64 %i.bg, %i.cc
-  %i.ce = getelementptr i8, ptr %i.bs, i64 %i.bw
+  %i.ce = getelementptr i8, ptr %i.bs, i64 %20
   %scevgep = getelementptr i8, ptr %i.ce, i64 %i.cd
   br label %.preheader2358
 

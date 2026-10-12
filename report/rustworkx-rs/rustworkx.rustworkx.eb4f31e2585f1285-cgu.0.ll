@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.a, %bb.c
   %.sroa.0.0.i20.i.i.i.i.i.i.i.i.i = select i1 %spec.select.i.i.i15.i.i.i.i.i.i.i.i.i, i64 2, i64 1 ; 2 uses
   %injected.cond.i.i.i.i.i.i = icmp ule i64 %.sroa.6.0.copyload, %.sroa.1270.0.copyload
   %injected.cond.fr.i.i.i.i.i.i = freeze i1 %injected.cond.i.i.i.i.i.i
-  %umax37.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.sroa.967.0.copyload, i64 %.sroa.1068.0.copyload) ; 2 uses
+  %umax37.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.sroa.1068.0.copyload, i64 %.sroa.967.0.copyload) ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 24 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 32 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 40 ; 2 uses
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.a, %bb.c
   %.sroa.0.0.i20.i.i.i.i.i.i.i.i.i = select i1 %spec.select.i.i.i15.i.i.i.i.i.i.i.i.i, i64 2, i64 1 ; 2 uses
   %injected.cond.i.i.i.i.i.i = icmp ule i64 %.sroa.6.0.copyload, %.sroa.1270.0.copyload
   %injected.cond.fr.i.i.i.i.i.i = freeze i1 %injected.cond.i.i.i.i.i.i
-  %umax37.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.sroa.967.0.copyload, i64 %.sroa.1068.0.copyload) ; 2 uses
+  %umax37.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.sroa.1068.0.copyload, i64 %.sroa.967.0.copyload) ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 24 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 32 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.val1.i.i, i64 40 ; 2 uses
@@ -1011,7 +1011,7 @@ bb.f:                                             ; preds = %bb.a, %bb.c
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.f
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %.sroa.54.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %umax.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.sroa.034.0.copyload, i64 %.sroa.435.0.copyload)
+  %umax.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.sroa.435.0.copyload, i64 %.sroa.034.0.copyload)
   %i.p = getelementptr i8, ptr %.val.i.i, i64 8
   br label %bb.g
 
@@ -1215,7 +1215,7 @@ bb.f:                                             ; preds = %bb.a, %bb.c
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.f
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %.sroa.54.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %umax.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.sroa.034.0.copyload, i64 %.sroa.435.0.copyload)
+  %umax.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.sroa.435.0.copyload, i64 %.sroa.034.0.copyload)
   %i.p = getelementptr i8, ptr %.val.i.i, i64 8
   br label %bb.g
 
@@ -1618,7 +1618,7 @@ bb.av:                                            ; preds = %bb.b
   %i.dn = add i64 %i.y, 1                         ; 4 uses
   store i64 %i.dn, ptr %i.s, align 8, !alias.scope !45046, !noalias !45047
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45048)
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.dn, i64 %i.u) ; 2 uses
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.dn) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45049)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45050)
   %exitcond.not.i8.not.i.i = icmp ult i64 %i.dn, %i.u
@@ -1954,7 +1954,7 @@ bb.d:                                             ; preds = %bb.b
   %i.q = add i64 %i.i, 1                          ; 4 uses
   store i64 %i.q, ptr %i.c, align 8, !alias.scope !45197, !noalias !45198
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45199)
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.q, i64 %i.e) ; 2 uses
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %i.q) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45200)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45201)
   %exitcond.not.i8.not.i.i = icmp ult i64 %i.q, %i.e
@@ -2357,7 +2357,7 @@ bb.d:                                             ; preds = %bb.b
   %i.s = add i64 %i.m, 1                          ; 4 uses
   store i64 %i.s, ptr %i.g, align 8, !alias.scope !46546, !noalias !46544
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46547)
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.s, i64 %i.i) ; 2 uses
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %i.s) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46548)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46549)
   %exitcond.not.i9.not.i.i = icmp ult i64 %i.s, %i.i
@@ -2417,7 +2417,7 @@ bb.k:                                             ; preds = %bb.b
   %i.ae = add i64 %i.m, 1                         ; 4 uses
   store i64 %i.ae, ptr %i.g, align 8, !alias.scope !46563, !noalias !46544
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46564)
-  %umax.i12.i.i = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %i.i) ; 3 uses
+  %umax.i12.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %i.ae) ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46565)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46566)
   %exitcond.not.i14.not.i.i = icmp ult i64 %i.ae, %i.i
@@ -2820,7 +2820,7 @@ bb.i:                                             ; preds = %bb.f
   %i.ao = add i64 %i.ai, 1                        ; 4 uses
   store i64 %i.ao, ptr %i.q, align 8, !alias.scope !50302
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50303)
-  %umax.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ao, i64 %i.ah) ; 2 uses
+  %umax.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ah, i64 %i.ao) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50304)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50305)
   %exitcond.not.i53.not.i.i.i.i.i = icmp ult i64 %i.ao, %i.ah
@@ -2880,7 +2880,7 @@ bb.o:                                             ; preds = %bb.f
   %i.ba = add i64 %i.ai, 1                        ; 4 uses
   store i64 %i.ba, ptr %i.q, align 8, !alias.scope !50319
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50320)
-  %umax.i56.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.ah) ; 2 uses
+  %umax.i56.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ah, i64 %i.ba) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50321)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50322)
   %exitcond.not.i58.not.i.i.i.i.i = icmp ult i64 %i.ba, %i.ah
@@ -2940,7 +2940,7 @@ bb.u:                                             ; preds = %bb.f
   %i.bm = add i64 %i.ai, 1                        ; 4 uses
   store i64 %i.bm, ptr %i.q, align 8, !alias.scope !50336
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50337)
-  %umax.i65.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.bm, i64 %i.ah) ; 3 uses
+  %umax.i65.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ah, i64 %i.bm) ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50338)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50339)
   %exitcond.not.i67.not.i.i.i.i.i = icmp ult i64 %i.bm, %i.ah
@@ -3343,7 +3343,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = trunc nuw i64 %1 to i32
+  %i.c = trunc nuw i64 %1 to i32                  ; 2 uses
   %i.d = load i128, ptr %0, align 16, !alias.scope !50581, !noalias !50582, !noundef !67
   %i.e = mul i128 %i.d, 47026247687942121848144207491837523525
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -3374,12 +3374,10 @@ bb.d:                                             ; preds = %bb.c
   %i.z = xor i128 %i.y, %i.v
   %i.aa = trunc i128 %i.z to i64                  ; 2 uses
   %i.ab = tail call noundef i64 @llvm.fshr.i64(i64 %i.aa, i64 %i.aa, i64 %i.x)
-  %3 = and i64 %i.ab, 4294967295
-  %4 = mul nuw i64 %3, %1
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %3 = trunc i64 %i.ab to i32
+  %4 = tail call i32 @llvm.umulh.i32(i32 %3, i32 %i.c)
   %i.ac = xor i32 %i.r, -1
-  %.not9.i.i.i.i = icmp ult i32 %i.ac, %6
+  %.not9.i.i.i.i = icmp ugt i32 %4, %i.ac
   %i.ad = zext i1 %.not9.i.i.i.i to i64
   %i.ae = add nuw nsw i64 %i.q, %i.ad
   br label %_RNvMNtCslwFuT2d6ECx_4core6resultINtB2_6ResultjNtNtNtCsjH8OHv3LeEG_4rand5distr7uniform5ErrorE6unwrapCskcxRuJ53GpR_9rustworkx.exit
@@ -3398,7 +3396,7 @@ bb.e:                                             ; preds = %bb.b
   %i.ao = trunc i128 %i.an to i64                 ; 2 uses
   %i.ap = tail call noundef i64 @llvm.fshr.i64(i64 %i.ao, i64 %i.ao, i64 %i.al)
   %i.aq = zext i64 %i.ap to i128
-  %i.ar = zext i64 %1 to i128                     ; 2 uses
+  %i.ar = zext i64 %1 to i128
   %i.as = mul nuw i128 %i.aq, %i.ar               ; 2 uses
   %i.at = lshr i128 %i.as, 64
   %i.au = trunc nuw i128 %i.at to i64             ; 2 uses
@@ -3417,12 +3415,9 @@ bb.f:                                             ; preds = %bb.e
   %i.bd = xor i128 %i.bc, %i.az
   %i.be = trunc i128 %i.bd to i64                 ; 2 uses
   %i.bf = tail call noundef i64 @llvm.fshr.i64(i64 %i.be, i64 %i.be, i64 %i.bb)
-  %7 = zext i64 %i.bf to i128
-  %8 = mul nuw i128 %7, %i.ar
-  %9 = lshr i128 %8, 64
-  %10 = trunc nuw i128 %9 to i64
+  %5 = tail call i64 @llvm.umulh.i64(i64 %i.bf, i64 %1)
   %i.bg = xor i64 %i.av, -1
-  %.not6.i.i.i.i = icmp ult i64 %i.bg, %10
+  %.not6.i.i.i.i = icmp ugt i64 %5, %i.bg
   %i.bh = zext i1 %.not6.i.i.i.i to i64
   %i.bi = add nuw i64 %i.bh, %i.au
   br label %_RNvMNtCslwFuT2d6ECx_4core6resultINtB2_6ResultjNtNtNtCsjH8OHv3LeEG_4rand5distr7uniform5ErrorE6unwrapCskcxRuJ53GpR_9rustworkx.exit
@@ -3825,7 +3820,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %i.aa, ptr %i.r, align 8, !alias.scope !65131
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65132)
   %i.ab = load ptr, ptr %i.q, align 8, !alias.scope !65132, !noalias !65133, !nonnull !67 ; 3 uses
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.aa, i64 %i.u)
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.aa)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65134)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65135)
   %exitcond.not.i.not = icmp ult i64 %i.aa, %i.u
@@ -3886,7 +3881,7 @@ bb.k:                                             ; preds = %bb.b
   store i64 %i.an, ptr %i.r, align 8, !alias.scope !65148
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65149)
   %i.ao = load ptr, ptr %i.q, align 8, !alias.scope !65149, !noalias !65150, !nonnull !67 ; 3 uses
-  %umax.i24 = tail call i64 @llvm.umax.i64(i64 %i.an, i64 %i.u)
+  %umax.i24 = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.an)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65151)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65152)
   %exitcond.not.i26.not = icmp ult i64 %i.an, %i.u
@@ -3947,7 +3942,7 @@ bb.r:                                             ; preds = %bb.b
   store i64 %i.ba, ptr %i.r, align 8, !alias.scope !65165
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65166)
   %i.bb = load ptr, ptr %i.q, align 8, !alias.scope !65166, !noalias !65167, !nonnull !67 ; 4 uses
-  %umax.i32 = tail call i64 @llvm.umax.i64(i64 %i.ba, i64 %i.u) ; 2 uses
+  %umax.i32 = tail call i64 @llvm.umax.i64(i64 %i.u, i64 %i.ba) ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65168)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65169)
   %exitcond.not.i34.not = icmp ult i64 %i.ba, %i.u
@@ -4350,14 +4345,13 @@ bb.ag:                                            ; preds = %bb.af
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.ag, %bb.al
   %i.ir = phi i128 [ %i.ku, %bb.al ], [ %.promoted.i.i.i.i, %bb.ag ] ; 2 uses
-  %.sroa.06.017.i.i.i.i = phi i64 [ %i.is, %bb.al ], [ 0, %bb.ag ] ; 5 uses
-  %i.is = add nuw nsw i64 %.sroa.06.017.i.i.i.i, 1 ; 5 uses
+  %.sroa.06.017.i.i.i.i = phi i64 [ %i.is, %bb.al ], [ 0, %bb.ag ] ; 4 uses
+  %i.is = add nuw nsw i64 %.sroa.06.017.i.i.i.i, 1 ; 6 uses
   %i.it = icmp samesign ugt i64 %.sroa.06.017.i.i.i.i, 4294967294
   br i1 %i.it, label %bb.aj, label %bb.ah
 
 bb.ah:                                            ; preds = %.lr.ph.i.i.i.i
-  %i.iu = trunc nuw i64 %.sroa.06.017.i.i.i.i to i32
-  %.neg576.i.i.i = xor i32 %i.iu, -1
+  %i.iu = trunc nuw i64 %i.is to i32              ; 2 uses
   %i.iv = mul i128 %i.ir, 47026247687942121848144207491837523525
   %i.iw = add i128 %i.iv, %i.iq                   ; 5 uses
   %i.ix = lshr i128 %i.iw, 122
@@ -4370,7 +4364,8 @@ bb.ah:                                            ; preds = %.lr.ph.i.i.i.i
   %i.je = mul nuw i64 %i.jd, %i.is                ; 2 uses
   %i.jf = lshr i64 %i.je, 32                      ; 2 uses
   %i.jg = trunc i64 %i.je to i32                  ; 2 uses
-  %i.jh = icmp ult i32 %.neg576.i.i.i, %i.jg
+  %5 = sub i32 0, %i.iu
+  %i.jh = icmp ult i32 %5, %i.jg
   br i1 %i.jh, label %bb.ai, label %.noexc68.i.i.i
 
 bb.ai:                                            ; preds = %bb.ah
@@ -4382,12 +4377,10 @@ bb.ai:                                            ; preds = %bb.ah
   %i.jn = xor i128 %i.jm, %i.jj
   %i.jo = trunc i128 %i.jn to i64                 ; 2 uses
   %i.jp = call noundef i64 @llvm.fshr.i64(i64 %i.jo, i64 %i.jo, i64 %i.jl)
-  %5 = and i64 %i.jp, 4294967295
-  %6 = mul nuw i64 %5, %i.is
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32
+  %6 = trunc i64 %i.jp to i32
+  %7 = call i32 @llvm.umulh.i32(i32 %6, i32 %i.iu)
   %i.jq = xor i32 %i.jg, -1
-  %.not9.i.i.i.i.i.i.i.i = icmp ult i32 %i.jq, %8
+  %.not9.i.i.i.i.i.i.i.i = icmp ugt i32 %7, %i.jq
   %i.jr = zext i1 %.not9.i.i.i.i.i.i.i.i to i64
   %i.js = add nuw nsw i64 %i.jf, %i.jr
   br label %.noexc68.i.i.i
@@ -4402,7 +4395,7 @@ bb.aj:                                            ; preds = %.lr.ph.i.i.i.i
   %i.jz = trunc i128 %i.jy to i64                 ; 2 uses
   %i.ka = call noundef i64 @llvm.fshr.i64(i64 %i.jz, i64 %i.jz, i64 %i.jw)
   %i.kb = zext i64 %i.ka to i128
-  %i.kc = zext nneg i64 %i.is to i128             ; 2 uses
+  %i.kc = zext nneg i64 %i.is to i128
   %i.kd = mul nuw nsw i128 %i.kb, %i.kc           ; 2 uses
   %i.ke = lshr i128 %i.kd, 64
   %i.kf = trunc nuw nsw i128 %i.ke to i64         ; 2 uses
@@ -4420,12 +4413,9 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ko = xor i128 %i.kn, %i.kk
   %i.kp = trunc i128 %i.ko to i64                 ; 2 uses
   %i.kq = call noundef i64 @llvm.fshr.i64(i64 %i.kp, i64 %i.kp, i64 %i.km)
-  %9 = zext i64 %i.kq to i128
-  %10 = mul nuw nsw i128 %9, %i.kc
-  %11 = lshr i128 %10, 64
-  %12 = trunc nuw nsw i128 %11 to i64
+  %8 = call i64 @llvm.umulh.i64(i64 %i.kq, i64 %i.is)
   %i.kr = xor i64 %i.kg, -1
-  %.not6.i.i.i.i.i.i.i.i = icmp ult i64 %i.kr, %12
+  %.not6.i.i.i.i.i.i.i.i = icmp ugt i64 %8, %i.kr
   %i.ks = zext i1 %.not6.i.i.i.i.i.i.i.i to i64
   %i.kt = add nuw i64 %i.ks, %i.kf
   br label %.noexc68.i.i.i
@@ -4480,7 +4470,7 @@ bb.an:                                            ; preds = %.lr.ph22.i.i.i.i
   br i1 %i.ll, label %bb.ap, label %.thread.i.i.i.i.i.i, !prof !116179
 
 .thread.i.i.i.i.i.i:                              ; preds = %._crit_edge.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i, %bb.an
-  %.sroa.03.010.i.i.i.i.i.i = phi i32 [ %i.mn, %._crit_edge.i.i.i.i.i.i ], [ 479001600, %bb.an ], [ %i.lc, %.preheader.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.03.010.i.i.i.i.i.i = phi i32 [ %i.mn, %._crit_edge.i.i.i.i.i.i ], [ 479001600, %bb.an ], [ %i.lc, %.preheader.i.i.i.i.i.i ] ; 3 uses
   %.sroa.05.09.i.i.i.i.i.i = phi i8 [ %i.lk, %._crit_edge.i.i.i.i.i.i ], [ 10, %bb.an ], [ 0, %.preheader.i.i.i.i.i.i ]
   %i.lm = mul i128 %i.la, 47026247687942121848144207491837523525
   %i.ln = add i128 %i.lm, %i.iq                   ; 5 uses
@@ -4491,7 +4481,7 @@ bb.an:                                            ; preds = %.lr.ph22.i.i.i.i
   %i.ls = trunc i128 %i.lr to i64                 ; 2 uses
   %i.lt = call noundef i64 @llvm.fshr.i64(i64 %i.ls, i64 %i.ls, i64 %i.lp)
   %i.lu = and i64 %i.lt, 4294967295
-  %i.lv = zext i32 %.sroa.03.010.i.i.i.i.i.i to i64 ; 2 uses
+  %i.lv = zext i32 %.sroa.03.010.i.i.i.i.i.i to i64
   %i.lw = mul nuw i64 %i.lu, %i.lv                ; 2 uses
   %i.lx = lshr i64 %i.lw, 32                      ; 2 uses
   %i.ly = trunc i64 %i.lw to i32                  ; 2 uses
@@ -4508,12 +4498,10 @@ bb.ao:                                            ; preds = %.thread.i.i.i.i.i.i
   %i.mg = xor i128 %i.mf, %i.mc
   %i.mh = trunc i128 %i.mg to i64                 ; 2 uses
   %i.mi = call noundef i64 @llvm.fshr.i64(i64 %i.mh, i64 %i.mh, i64 %i.me)
-  %13 = and i64 %i.mi, 4294967295
-  %14 = mul nuw i64 %13, %i.lv
-  %15 = lshr i64 %14, 32
-  %16 = trunc nuw i64 %15 to i32
+  %9 = trunc i64 %i.mi to i32
+  %10 = call i32 @llvm.umulh.i32(i32 %9, i32 %.sroa.03.010.i.i.i.i.i.i)
   %i.mj = xor i32 %i.ly, -1
-  %.not9.i.i.i.i.i.i.i.i.i.i = icmp ult i32 %i.mj, %16
+  %.not9.i.i.i.i.i.i.i.i.i.i = icmp ugt i32 %10, %i.mj
   %i.mk = zext i1 %.not9.i.i.i.i.i.i.i.i.i.i to i64
   %i.ml = add nuw nsw i64 %i.lx, %i.mk
   br label %_RNCNvMNtNtCsjH8OHv3LeEG_4rand3seq18increasing_uniformINtB4_17IncreasingUniformQNtNtCs6EUok6QJynq_8rand_pcg6pcg12811Lcg128Xsl64E10next_index0CskcxRuJ53GpR_9rustworkx.exit.i.i.i.i.i
@@ -4916,7 +4904,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !171819, !noalias !171820, !noundef !67
   %.promoted.i.i.i = load i64, ptr %i.a, align 8, !alias.scope !171819, !noalias !171820 ; 5 uses
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %.promoted.i.i.i, i64 %i.c) ; 2 uses
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.c, i64 %.promoted.i.i.i) ; 2 uses
   %i.d = sub i64 %umax.i.i, %.promoted.i.i.i
   %i.e = add i64 %1, -1
   %i.f = tail call i64 @llvm.umin.i64(i64 %i.d, i64 %i.e)
@@ -4987,7 +4975,7 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.b = load i64, ptr %i.a, align 8, !alias.scope !171855, !noalias !171856, !noundef !67 ; 2 uses
   %.promoted.i.i.i.i = load i64, ptr %.phi.trans.insert, align 8, !alias.scope !171855, !noalias !171856 ; 5 uses
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %.promoted.i.i.i.i, i64 %i.b) ; 2 uses
+  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %.promoted.i.i.i.i) ; 2 uses
   %i.c = sub i64 %umax.i.i.i, %.promoted.i.i.i.i
   %i.d = add i64 %2, -1
   %i.e = tail call i64 @llvm.umin.i64(i64 %i.c, i64 %i.d)
@@ -5388,6 +5376,12 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { double, double } @llvm.sincos.f64(double) #47
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #41
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #41
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i1 @llvm.is.fpclass.f64(double, i32 immarg) #41

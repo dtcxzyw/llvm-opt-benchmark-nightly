@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 nk_layout_peek.exit:                              ; preds = %bb.c, %bb.h
   %i.u = phi float [ %i.s, %bb.h ], [ 0.000000e+00, %bb.c ]
-  %.sroa.0.0.vec.insert.i = phi <2 x float> [ %i.t, %bb.h ], [ <float 0.000000e+00, float undef>, %bb.c ]
+  %.sroa.0.0.vec.insert.i = phi <2 x float> [ %i.t, %bb.h ], [ <float 0.000000e+00, float poison>, %bb.c ]
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.u, i64 1
   br label %bb.i
 
@@ -277,7 +277,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 nk_layout_peek.exit:                              ; preds = %bb.c, %bb.h
   %i.u = phi float [ %i.s, %bb.h ], [ 0.000000e+00, %bb.c ]
-  %.sroa.0.0.vec.insert.i = phi <2 x float> [ %i.t, %bb.h ], [ <float 0.000000e+00, float undef>, %bb.c ]
+  %.sroa.0.0.vec.insert.i = phi <2 x float> [ %i.t, %bb.h ], [ <float 0.000000e+00, float poison>, %bb.c ]
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.u, i64 1
   br label %bb.i
 
@@ -680,7 +680,7 @@ nk_is_word_boundary.exit:                         ; preds = %bb.d
   br i1 %.not, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %nk_is_word_boundary.exit
-  %smax = call i32 @llvm.smax.i32(i32 %i.j, i32 %i.h) ; 3 uses
+  %smax = call i32 @llvm.smax.i32(i32 %i.h, i32 %i.j) ; 3 uses
   %exitcond.not55.not = icmp slt i32 %i.j, %i.h
   br i1 %exitcond.not55.not, label %.lr.ph57, label %.critedge2
 

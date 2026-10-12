@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.loopexit7, %bb.a
   %i.x = load i64, ptr %i.w, align 8              ; 2 uses
   %scevgep = getelementptr i8, ptr %.sroa.6.0.copyload, i64 %.val6
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 %i.u, i64 %i.x, i1 false), !noalias !4627
-  %i.y = add i64 %i.x, %.val6
+  %i.y = add i64 %.val6, %i.x
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.c, %.lr.ph.i.preheader

@@ -204,12 +204,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !36
   %i.c = load i64, ptr %1, align 8, !tbaa !37
-  %3 = zext i64 %2 to i128
-  %4 = zext i64 %i.c to i128
-  %5 = mul nuw i128 %4, %3
-  %6 = lshr i128 %5, 64
-  %7 = trunc nuw i128 %6 to i64
-  %i.d = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %7 ; 11 uses
+  %3 = tail call noundef i64 @llvm.umulh.i64(i64 %2, i64 %i.c)
+  %i.d = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %3 ; 11 uses
   %i.e = trunc i64 %2 to i16                      ; 3 uses
   %i.f = load i16, ptr %i.d, align 2, !tbaa !28
   %i.g = icmp eq i16 %i.f, %i.e
@@ -324,12 +320,8 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !36
   %i.c = load i64, ptr %0, align 8, !tbaa !37
-  %2 = zext i64 %1 to i128
-  %3 = zext i64 %i.c to i128
-  %4 = mul nuw i128 %3, %2
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64
-  %i.d = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %6
+  %2 = tail call noundef i64 @llvm.umulh.i64(i64 %1, i64 %i.c)
+  %i.d = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %2
   ret ptr %i.d
 }
 
@@ -493,6 +485,9 @@ bb.a:
   %i.a = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt3setImSt4lessImESaImEED2Ev, ptr nonnull @_ZN9StockfishL26STARTUP_PROCESSOR_AFFINITYE, ptr nonnull @__dso_handle) #19 ; 0 uses
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #18

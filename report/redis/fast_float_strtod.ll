@@ -205,14 +205,14 @@ bb.p:                                             ; preds = %bb.o
 .noexc98:                                         ; preds = %bb.p
   %i.ay = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.au, i1 true) ; 2 uses
   %i.az = trunc nuw nsw i64 %i.ay to i32
-  %i.ba = shl i64 %i.au, %i.ay
+  %i.ba = shl i64 %i.au, %i.ay                    ; 2 uses
   %i.bb = trunc nsw i64 %i.d to i32               ; 2 uses
   %i.bc = shl nsw i32 %i.bb, 1
   %i.bd = sext i32 %i.bc to i64
   %i.be = getelementptr [8 x i8], ptr @_ZN10fast_float15powers_templateIvE17power_of_five_128E, i64 %i.bd ; 2 uses
   %i.bf = getelementptr i8, ptr %i.be, i64 5472
   %i.bg = load i64, ptr %i.bf, align 16, !tbaa !17
-  %i.bh = zext i64 %i.ba to i128                  ; 2 uses
+  %i.bh = zext i64 %i.ba to i128
   %i.bi = zext i64 %i.bg to i128
   %i.bj = mul nuw i128 %i.bi, %i.bh               ; 2 uses
   %i.bk = trunc i128 %i.bj to i64                 ; 2 uses
@@ -225,13 +225,10 @@ bb.p:                                             ; preds = %bb.o
 .noexc99:                                         ; preds = %.noexc98
   %i.bp = getelementptr i8, ptr %i.be, i64 5480
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !17
-  %3 = zext i64 %i.bq to i128
-  %4 = mul nuw i128 %3, %i.bh
-  %5 = lshr i128 %4, 64
-  %6 = trunc nuw i128 %5 to i64                   ; 2 uses
-  %i.br = add i64 %6, %i.bk                       ; 2 uses
-  %7 = icmp ult i64 %i.br, %6
-  %i.bs = zext i1 %7 to i64
+  %3 = tail call i64 @llvm.umulh.i64(i64 %i.ba, i64 %i.bq) ; 2 uses
+  %i.br = add i64 %3, %i.bk                       ; 2 uses
+  %4 = icmp ugt i64 %3, %i.br
+  %i.bs = zext i1 %4 to i64
   %spec.select.i97 = add nuw i64 %i.bs, %i.bm
   br label %_ZN10fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit100
 
@@ -315,14 +312,14 @@ bb.w:                                             ; preds = %bb.v
 .noexc103:                                        ; preds = %bb.w
   %i.dc = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.cz, i1 true) ; 2 uses
   %i.dd = trunc nuw nsw i64 %i.dc to i32
-  %i.de = shl i64 %i.cz, %i.dc
+  %i.de = shl i64 %i.cz, %i.dc                    ; 2 uses
   %i.df = trunc nsw i64 %i.d to i32               ; 2 uses
   %i.dg = shl nsw i32 %i.df, 1
   %i.dh = sext i32 %i.dg to i64
   %i.di = getelementptr [8 x i8], ptr @_ZN10fast_float15powers_templateIvE17power_of_five_128E, i64 %i.dh ; 2 uses
   %i.dj = getelementptr i8, ptr %i.di, i64 5472
   %i.dk = load i64, ptr %i.dj, align 16, !tbaa !17
-  %i.dl = zext i64 %i.de to i128                  ; 2 uses
+  %i.dl = zext i64 %i.de to i128
   %i.dm = zext i64 %i.dk to i128
   %i.dn = mul nuw i128 %i.dm, %i.dl               ; 2 uses
   %i.do = trunc i128 %i.dn to i64                 ; 2 uses
@@ -335,13 +332,10 @@ bb.w:                                             ; preds = %bb.v
 .noexc104:                                        ; preds = %.noexc103
   %i.dt = getelementptr i8, ptr %i.di, i64 5480
   %i.du = load i64, ptr %i.dt, align 8, !tbaa !17
-  %8 = zext i64 %i.du to i128
-  %9 = mul nuw i128 %8, %i.dl
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64                 ; 2 uses
-  %i.dv = add i64 %11, %i.do                      ; 2 uses
-  %12 = icmp ult i64 %i.dv, %11
-  %i.dw = zext i1 %12 to i64
+  %5 = tail call i64 @llvm.umulh.i64(i64 %i.de, i64 %i.du) ; 2 uses
+  %i.dv = add i64 %5, %i.do                       ; 2 uses
+  %6 = icmp ugt i64 %5, %i.dv
+  %i.dw = zext i1 %6 to i64
   %spec.select.i102 = add nuw i64 %i.dw, %i.dq
   br label %_ZN10fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit105
 
@@ -425,14 +419,14 @@ bb.ad:                                            ; preds = %bb.ac
 .noexc:                                           ; preds = %bb.ac
   %i.ff = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.au, i1 true) ; 2 uses
   %i.fg = trunc nuw nsw i64 %i.ff to i32
-  %i.fh = shl i64 %i.au, %i.ff
+  %i.fh = shl i64 %i.au, %i.ff                    ; 2 uses
   %i.fi = trunc i64 %i.d to i32                   ; 4 uses
   %i.fj = shl i32 %i.fi, 1                        ; 2 uses
   %i.fk = add i32 %i.fj, 684
   %i.fl = sext i32 %i.fk to i64
   %i.fm = getelementptr inbounds [8 x i8], ptr @_ZN10fast_float15powers_templateIvE17power_of_five_128E, i64 %i.fl
   %i.fn = load i64, ptr %i.fm, align 16, !tbaa !17
-  %i.fo = zext i64 %i.fh to i128                  ; 2 uses
+  %i.fo = zext i64 %i.fh to i128
   %i.fp = zext i64 %i.fn to i128
   %i.fq = mul nuw i128 %i.fp, %i.fo               ; 2 uses
   %i.fr = lshr i128 %i.fq, 64
@@ -447,13 +441,10 @@ bb.ad:                                            ; preds = %bb.ac
   %i.fx = sext i32 %i.fw to i64
   %i.fy = getelementptr inbounds [8 x i8], ptr @_ZN10fast_float15powers_templateIvE17power_of_five_128E, i64 %i.fx
   %i.fz = load i64, ptr %i.fy, align 8, !tbaa !17
-  %13 = zext i64 %i.fz to i128
-  %14 = mul nuw i128 %13, %i.fo
-  %15 = lshr i128 %14, 64
-  %16 = trunc nuw i128 %15 to i64
-  %i.ga = xor i64 %16, -1
-  %17 = icmp ult i64 %i.ga, %i.fv
-  %i.gb = zext i1 %17 to i64
+  %7 = tail call i64 @llvm.umulh.i64(i64 %i.fh, i64 %i.fz)
+  %i.ga = xor i64 %7, -1
+  %8 = icmp ugt i64 %i.fv, %i.ga
+  %i.gb = zext i1 %8 to i64
   %spec.select.i = add nuw i64 %i.gb, %i.fs
   br label %bb.ae
 
@@ -854,6 +845,9 @@ declare i32 @llvm.umin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umulh.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.vector.reduce.or.v4i8(<4 x i8>) #8

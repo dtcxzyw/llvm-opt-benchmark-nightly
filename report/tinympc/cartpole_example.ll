@@ -205,7 +205,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit.
 
 bb.i:                                             ; preds = %.thread, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit.i.i.i.i.i, %bb.f
   %i.z = phi ptr [ %i.r, %bb.f ], [ %i.r, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit.i.i.i.i.i ], [ %i.h, %.thread ]
-  %i.aa = phi ptr [ %i.q, %bb.f ], [ %i.q, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit.i.i.i.i.i ], [ %i.g, %.thread ] ; 11 uses
+  %i.aa = phi ptr [ %i.q, %bb.f ], [ %i.q, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit.i.i.i.i.i ], [ %i.g, %.thread ] ; 10 uses
   %i.ab = phi ptr [ %.pre, %bb.f ], [ %.pre, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit.i.i.i.i.i ], [ %i.a, %.thread ] ; 2 uses
   %i.ac = phi i64 [ %.pre12, %bb.f ], [ %.pre12, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit.i.i.i.i.i ], [ %i.c, %.thread ] ; 11 uses
   %i.ad = phi ptr [ %.sink.i.i, %bb.f ], [ %.sink.i.i.i.i.i.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit.i.i.i.i.i ], [ %.pre.i.i.i.i.pre, %.thread ] ; 5 uses
@@ -220,7 +220,6 @@ bb.i:                                             ; preds = %.thread, %_ZN5Eigen
   %.idx.i.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %i.ac, 4
   %i.aj = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %.idx.i.i.i.i.i.i.i.i.i = mul nuw nsw i64 %i.ac, 24
-  %3 = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   br label %.lr.ph.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i, %bb.i
@@ -366,31 +365,26 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %.011.i.i.i.i.i
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %.011.i.i.i.i.i ; 4 uses
   %i.df = load <2 x double>, ptr %i.de, align 1, !tbaa !13
-  %4 = load double, ptr %i.aa, align 16, !tbaa !12
-  %5 = insertelement <2 x double> poison, double %4, i64 0
-  %i.dg = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = load <1 x double>, ptr %i.aa, align 16
+  %i.dg = shufflevector <1 x double> %3, <1 x double> poison, <2 x i32> zeroinitializer
   %i.dh = fmul <2 x double> %i.df, %i.dg
   %i.di = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %i.ac
   %i.dj = load <2 x double>, ptr %i.di, align 1, !tbaa !13
-  %6 = load double, ptr %i.ai, align 8, !tbaa !12
-  %7 = insertelement <2 x double> poison, double %6, i64 0
-  %i.dk = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = load <1 x double>, ptr %i.ai, align 8
+  %i.dk = shufflevector <1 x double> %4, <1 x double> poison, <2 x i32> zeroinitializer
   %i.dl = fmul <2 x double> %i.dj, %i.dk
   %i.dm = fadd <2 x double> %i.dh, %i.dl
   %i.dn = getelementptr inbounds nuw i8, ptr %i.de, i64 %.idx.i.i.i.i.i.i.i.i.i.i
   %i.do = load <2 x double>, ptr %i.dn, align 1, !tbaa !13
-  %8 = load double, ptr %i.aj, align 16, !tbaa !12
-  %9 = insertelement <2 x double> poison, double %8, i64 0
-  %i.dp = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = load <2 x double>, ptr %i.aj, align 16     ; 2 uses
+  %i.dp = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dq = fmul <2 x double> %i.do, %i.dp
   %i.dr = fadd <2 x double> %i.dm, %i.dq
   %i.ds = getelementptr inbounds nuw i8, ptr %i.de, i64 %.idx.i.i.i.i.i.i.i.i.i
   %i.dt = load <2 x double>, ptr %i.ds, align 1, !tbaa !13
-  %10 = load double, ptr %3, align 8, !tbaa !12
-  %11 = insertelement <2 x double> poison, double %10, i64 0
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.du = fmul <2 x double> %i.dt, %12
-  %i.dv = fadd <2 x double> %i.dr, %i.du
+  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.du = fmul <2 x double> %i.dt, %6
+  %i.dv = fadd <2 x double> %i.du, %i.dr
   store <2 x double> %i.dv, ptr %i.dd, align 16, !tbaa !13
   %i.dw = add nuw nsw i64 %.011.i.i.i.i.i, 2      ; 2 uses
   %i.dx = icmp slt i64 %i.dw, %i.ag

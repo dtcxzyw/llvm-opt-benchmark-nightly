@@ -40,7 +40,7 @@ define weak_odr void @_ZN3gmx15nbnxmKernelSimdIL12KernelLayout1ELNS_17KernelCoul
   %i.v = bitcast <16 x i1> %i.q to i16            ; 2 uses
   %i.w = bitcast <16 x i1> %i.s to i16            ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %i.y = load <4 x float>, ptr %i.x, align 8      ; 4 uses
+  %i.y = load <4 x float>, ptr %i.x, align 8      ; 3 uses
   %i.z = shufflevector <4 x float> %i.y, <4 x float> poison, <16 x i32> zeroinitializer ; 8 uses
   %foldExtExtBinop = fmul <4 x float> %i.y, %i.y
   %i.aa = shufflevector <4 x float> %foldExtExtBinop, <4 x float> poison, <16 x i32> zeroinitializer ; 8 uses
@@ -92,7 +92,9 @@ define weak_odr void @_ZN3gmx15nbnxmKernelSimdIL12KernelLayout1ELNS_17KernelCoul
   br i1 %.not37643921, label %._crit_edge, label %.lr.ph3923
 
 .lr.ph3923:                                       ; preds = %.preheader3778.preheader
-  %5 = shufflevector <4 x float> %i.y, <4 x float> poison, <16 x i32> <i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3> ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 100
+  %6 = load <1 x float>, ptr %5, align 4
+  %7 = shufflevector <1 x float> %6, <1 x float> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %bb.a
 
 ._crit_edge:                                      ; preds = %.loopexit, %.preheader3778.preheader
@@ -202,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ew = insertelement <4 x float> poison, float %.val.i661, i64 0
   %i.ex = insertelement <4 x float> poison, float %.val2.i, i64 0
   %i.ey = shufflevector <4 x float> %i.ew, <4 x float> %i.ex, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4>
-  %i.ez = fmul <16 x float> %5, %i.ey
+  %i.ez = fmul <16 x float> %7, %i.ey
   %i.fa = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
   %.val.i662 = load float, ptr %i.fa, align 1, !tbaa !32, !noalias !77
   %i.fb = getelementptr i8, ptr %i.eu, i64 12
@@ -210,7 +212,7 @@ bb.b:                                             ; preds = %bb.a
   %i.fc = insertelement <4 x float> poison, float %.val.i662, i64 0
   %i.fd = insertelement <4 x float> poison, float %.val2.i663, i64 0
   %i.fe = shufflevector <4 x float> %i.fc, <4 x float> %i.fd, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4>
-  %i.ff = fmul <16 x float> %5, %i.fe
+  %i.ff = fmul <16 x float> %7, %i.fe
   br label %._crit_edge4028
 
 ._crit_edge4028:                                  ; preds = %bb.a, %bb.b

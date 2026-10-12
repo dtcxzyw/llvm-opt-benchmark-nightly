@@ -205,9 +205,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i, label %_ZN2OT9glyf_impl20CompositeGlyphRecord9translateERK15contour_point_t10hb_array_tIS2_E.exit, label %.lr.ph.i
 
 _ZN2OT9glyf_impl20CompositeGlyphRecord9translateERK15contour_point_t10hb_array_tIS2_E.exit: ; preds = %.lr.ph.i, %.lr.ph47.i, %.lr.ph50.i, %bb.c, %bb.e, %bb.f, %bb.g
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ac = load <4 x float>, ptr %3, align 4
   %.fr105 = freeze <4 x float> %i.ac
   %i.ad = fcmp une <4 x float> %.fr105, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
@@ -246,18 +244,11 @@ vector.ph86:                                      ; preds = %vector.memcheck82
   %n.vec87 = sub nsw i64 %i.aj, %i.aq             ; 2 uses
   %i.ar = mul i64 %n.vec87, 12
   %i.as = getelementptr i8, ptr %1, i64 %i.ar
-  %7 = load float, ptr %3, align 4, !tbaa !319, !alias.scope !1093
-  %broadcast.splatinsert96 = insertelement <4 x float> poison, float %7, i64 0
-  %broadcast.splat97 = shufflevector <4 x float> %broadcast.splatinsert96, <4 x float> poison, <4 x i32> zeroinitializer
-  %8 = load float, ptr %i.ab, align 4, !tbaa !319, !alias.scope !1093
-  %broadcast.splatinsert94 = insertelement <4 x float> poison, float %8, i64 0
-  %broadcast.splat95 = shufflevector <4 x float> %broadcast.splatinsert94, <4 x float> poison, <4 x i32> zeroinitializer
-  %9 = load float, ptr %5, align 4, !tbaa !319, !alias.scope !1093
-  %broadcast.splatinsert100 = insertelement <4 x float> poison, float %9, i64 0
-  %broadcast.splat101.a = shufflevector <4 x float> %broadcast.splatinsert100, <4 x float> poison, <4 x i32> zeroinitializer
-  %10 = load float, ptr %6, align 4, !tbaa !319, !alias.scope !1093
-  %broadcast.splatinsert98 = insertelement <4 x float> poison, float %10, i64 0
-  %broadcast.splat99 = shufflevector <4 x float> %broadcast.splatinsert98, <4 x float> poison, <4 x i32> zeroinitializer
+  %5 = load <4 x float>, ptr %3, align 4          ; 4 uses
+  %broadcast.splat101.a = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splat95 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %broadcast.splat101 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %broadcast.splat99 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   br label %vector.body88
 
 vector.body88:                                    ; preds = %vector.body88, %vector.ph86
@@ -270,10 +261,10 @@ vector.body88:                                    ; preds = %vector.body88, %vec
   %next.gep92 = getelementptr i8, ptr %i.av, i64 24 ; 2 uses
   %i.aw = getelementptr i8, ptr %1, i64 %i.at     ; 2 uses
   %next.gep93 = getelementptr i8, ptr %i.aw, i64 36 ; 2 uses
-  %i.ax = load float, ptr %next.gep90, align 4, !tbaa !335, !alias.scope !1094, !noalias !1093
-  %i.ay = load float, ptr %next.gep91, align 4, !tbaa !335, !alias.scope !1094, !noalias !1093
-  %i.az = load float, ptr %next.gep92, align 4, !tbaa !335, !alias.scope !1094, !noalias !1093
-  %i.ba = load float, ptr %next.gep93, align 4, !tbaa !335, !alias.scope !1094, !noalias !1093
+  %i.ax = load float, ptr %next.gep90, align 4, !tbaa !335, !alias.scope !1093, !noalias !1094
+  %i.ay = load float, ptr %next.gep91, align 4, !tbaa !335, !alias.scope !1093, !noalias !1094
+  %i.az = load float, ptr %next.gep92, align 4, !tbaa !335, !alias.scope !1093, !noalias !1094
+  %i.ba = load float, ptr %next.gep93, align 4, !tbaa !335, !alias.scope !1093, !noalias !1094
   %i.bb = insertelement <4 x float> poison, float %i.ax, i64 0
   %i.bc = insertelement <4 x float> %i.bb, float %i.ay, i64 1
   %i.bd = insertelement <4 x float> %i.bc, float %i.az, i64 2
@@ -282,28 +273,28 @@ vector.body88:                                    ; preds = %vector.body88, %vec
   %i.bg = getelementptr i8, ptr %i.au, i64 16
   %i.bh = getelementptr i8, ptr %i.av, i64 28
   %i.bi = getelementptr i8, ptr %i.aw, i64 40
-  %i.bj = load float, ptr %i.bf, align 4, !tbaa !336, !alias.scope !1094, !noalias !1093
-  %i.bk = load float, ptr %i.bg, align 4, !tbaa !336, !alias.scope !1094, !noalias !1093
-  %i.bl = load float, ptr %i.bh, align 4, !tbaa !336, !alias.scope !1094, !noalias !1093
-  %i.bm = load float, ptr %i.bi, align 4, !tbaa !336, !alias.scope !1094, !noalias !1093
+  %i.bj = load float, ptr %i.bf, align 4, !tbaa !336, !alias.scope !1093, !noalias !1094
+  %i.bk = load float, ptr %i.bg, align 4, !tbaa !336, !alias.scope !1093, !noalias !1094
+  %i.bl = load float, ptr %i.bh, align 4, !tbaa !336, !alias.scope !1093, !noalias !1094
+  %i.bm = load float, ptr %i.bi, align 4, !tbaa !336, !alias.scope !1093, !noalias !1094
   %i.bn = insertelement <4 x float> poison, float %i.bj, i64 0
   %i.bo = insertelement <4 x float> %i.bn, float %i.bk, i64 1
   %i.bp = insertelement <4 x float> %i.bo, float %i.bl, i64 2
   %i.bq = insertelement <4 x float> %i.bp, float %i.bm, i64 3 ; 2 uses
   %i.br = fmul <4 x float> %i.bq, %broadcast.splat95
-  %i.bs = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.be, <4 x float> %broadcast.splat97, <4 x float> %i.br) ; 4 uses
+  %i.bs = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.be, <4 x float> %broadcast.splat101.a, <4 x float> %i.br) ; 4 uses
   %i.bt = fmul <4 x float> %i.bq, %broadcast.splat99
-  %i.bu = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.be, <4 x float> %broadcast.splat101.a, <4 x float> %i.bt) ; 4 uses
+  %i.bu = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.be, <4 x float> %broadcast.splat101, <4 x float> %i.bt) ; 4 uses
   %i.bv = extractelement <4 x float> %i.bu, i64 0
-  store float %i.bv, ptr %i.bf, align 4, !tbaa !336, !alias.scope !1094, !noalias !1093
+  store float %i.bv, ptr %i.bf, align 4, !tbaa !336, !alias.scope !1093, !noalias !1094
   %i.bw = extractelement <4 x float> %i.bs, i64 0
-  store float %i.bw, ptr %next.gep90, align 4, !tbaa !335, !alias.scope !1094, !noalias !1093
+  store float %i.bw, ptr %next.gep90, align 4, !tbaa !335, !alias.scope !1093, !noalias !1094
   %i.bx = shufflevector <4 x float> %i.bs, <4 x float> %i.bu, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.bx, ptr %next.gep91, align 4, !tbaa !319, !alias.scope !1094, !noalias !1093
+  store <2 x float> %i.bx, ptr %next.gep91, align 4, !tbaa !319, !alias.scope !1093, !noalias !1094
   %i.by = shufflevector <4 x float> %i.bs, <4 x float> %i.bu, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.by, ptr %next.gep92, align 4, !tbaa !319, !alias.scope !1094, !noalias !1093
+  store <2 x float> %i.by, ptr %next.gep92, align 4, !tbaa !319, !alias.scope !1093, !noalias !1094
   %i.bz = shufflevector <4 x float> %i.bs, <4 x float> %i.bu, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.bz, ptr %next.gep93, align 4, !tbaa !319, !alias.scope !1094, !noalias !1093
+  store <2 x float> %i.bz, ptr %next.gep93, align 4, !tbaa !319, !alias.scope !1093, !noalias !1094
   %index.next102 = add nuw i64 %index89, 4        ; 2 uses
   %i.ca = icmp eq i64 %index.next102, %n.vec87
   br i1 %i.ca, label %.lr.ph.i17.preheader107, label %vector.body88, !llvm.loop !1086
@@ -327,9 +318,7 @@ vector.body88:                                    ; preds = %vector.body88, %vec
   br i1 %.not.i18, label %_ZN2OT9glyf_impl20CompositeGlyphRecord9transformERA4_Kf10hb_array_tI15contour_point_tE.exit, label %.lr.ph.i17, !llvm.loop !1087
 
 bb.i:                                             ; preds = %bb.a
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %i.cj = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %i.cj = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ck = load <4 x float>, ptr %3, align 4
   %.fr = freeze <4 x float> %i.ck
   %i.cl = fcmp une <4 x float> %.fr, <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>
@@ -368,18 +357,11 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = sub nsw i64 %i.cr, %i.cy               ; 2 uses
   %i.cz = mul i64 %n.vec, 12
   %i.da = getelementptr i8, ptr %1, i64 %i.cz
-  %13 = load float, ptr %3, align 4, !tbaa !319, !alias.scope !1095
-  %broadcast.splatinsert69 = insertelement <4 x float> poison, float %13, i64 0
-  %broadcast.splat70 = shufflevector <4 x float> %broadcast.splatinsert69, <4 x float> poison, <4 x i32> zeroinitializer
-  %14 = load float, ptr %i.cj, align 4, !tbaa !319, !alias.scope !1095
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %14, i64 0
-  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
-  %15 = load float, ptr %11, align 4, !tbaa !319, !alias.scope !1095
-  %broadcast.splatinsert73 = insertelement <4 x float> poison, float %15, i64 0
-  %broadcast.splat74.a = shufflevector <4 x float> %broadcast.splatinsert73, <4 x float> poison, <4 x i32> zeroinitializer
-  %16 = load float, ptr %12, align 4, !tbaa !319, !alias.scope !1095
-  %broadcast.splatinsert71 = insertelement <4 x float> poison, float %16, i64 0
-  %broadcast.splat72 = shufflevector <4 x float> %broadcast.splatinsert71, <4 x float> poison, <4 x i32> zeroinitializer
+  %6 = load <4 x float>, ptr %3, align 4          ; 4 uses
+  %broadcast.splat74.a = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splat = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %broadcast.splat74 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %broadcast.splat72 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -392,10 +374,10 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep67 = getelementptr i8, ptr %i.dd, i64 24 ; 2 uses
   %i.de = getelementptr i8, ptr %1, i64 %i.db     ; 2 uses
   %next.gep68 = getelementptr i8, ptr %i.de, i64 36 ; 2 uses
-  %i.df = load float, ptr %next.gep, align 4, !tbaa !335, !alias.scope !1096, !noalias !1095
-  %i.dg = load float, ptr %next.gep66, align 4, !tbaa !335, !alias.scope !1096, !noalias !1095
-  %i.dh = load float, ptr %next.gep67, align 4, !tbaa !335, !alias.scope !1096, !noalias !1095
-  %i.di = load float, ptr %next.gep68, align 4, !tbaa !335, !alias.scope !1096, !noalias !1095
+  %i.df = load float, ptr %next.gep, align 4, !tbaa !335, !alias.scope !1095, !noalias !1096
+  %i.dg = load float, ptr %next.gep66, align 4, !tbaa !335, !alias.scope !1095, !noalias !1096
+  %i.dh = load float, ptr %next.gep67, align 4, !tbaa !335, !alias.scope !1095, !noalias !1096
+  %i.di = load float, ptr %next.gep68, align 4, !tbaa !335, !alias.scope !1095, !noalias !1096
   %i.dj = insertelement <4 x float> poison, float %i.df, i64 0
   %i.dk = insertelement <4 x float> %i.dj, float %i.dg, i64 1
   %i.dl = insertelement <4 x float> %i.dk, float %i.dh, i64 2
@@ -404,28 +386,28 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.do = getelementptr i8, ptr %i.dc, i64 16
   %i.dp = getelementptr i8, ptr %i.dd, i64 28
   %i.dq = getelementptr i8, ptr %i.de, i64 40
-  %i.dr = load float, ptr %i.dn, align 4, !tbaa !336, !alias.scope !1096, !noalias !1095
-  %i.ds = load float, ptr %i.do, align 4, !tbaa !336, !alias.scope !1096, !noalias !1095
-  %i.dt = load float, ptr %i.dp, align 4, !tbaa !336, !alias.scope !1096, !noalias !1095
-  %i.du = load float, ptr %i.dq, align 4, !tbaa !336, !alias.scope !1096, !noalias !1095
+  %i.dr = load float, ptr %i.dn, align 4, !tbaa !336, !alias.scope !1095, !noalias !1096
+  %i.ds = load float, ptr %i.do, align 4, !tbaa !336, !alias.scope !1095, !noalias !1096
+  %i.dt = load float, ptr %i.dp, align 4, !tbaa !336, !alias.scope !1095, !noalias !1096
+  %i.du = load float, ptr %i.dq, align 4, !tbaa !336, !alias.scope !1095, !noalias !1096
   %i.dv = insertelement <4 x float> poison, float %i.dr, i64 0
   %i.dw = insertelement <4 x float> %i.dv, float %i.ds, i64 1
   %i.dx = insertelement <4 x float> %i.dw, float %i.dt, i64 2
   %i.dy = insertelement <4 x float> %i.dx, float %i.du, i64 3 ; 2 uses
   %i.dz = fmul <4 x float> %i.dy, %broadcast.splat
-  %i.ea = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dm, <4 x float> %broadcast.splat70, <4 x float> %i.dz) ; 4 uses
+  %i.ea = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dm, <4 x float> %broadcast.splat74.a, <4 x float> %i.dz) ; 4 uses
   %i.eb = fmul <4 x float> %i.dy, %broadcast.splat72
-  %i.ec = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dm, <4 x float> %broadcast.splat74.a, <4 x float> %i.eb) ; 4 uses
+  %i.ec = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dm, <4 x float> %broadcast.splat74, <4 x float> %i.eb) ; 4 uses
   %i.ed = extractelement <4 x float> %i.ec, i64 0
-  store float %i.ed, ptr %i.dn, align 4, !tbaa !336, !alias.scope !1096, !noalias !1095
+  store float %i.ed, ptr %i.dn, align 4, !tbaa !336, !alias.scope !1095, !noalias !1096
   %i.ee = extractelement <4 x float> %i.ea, i64 0
-  store float %i.ee, ptr %next.gep, align 4, !tbaa !335, !alias.scope !1096, !noalias !1095
+  store float %i.ee, ptr %next.gep, align 4, !tbaa !335, !alias.scope !1095, !noalias !1096
   %i.ef = shufflevector <4 x float> %i.ea, <4 x float> %i.ec, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.ef, ptr %next.gep66, align 4, !tbaa !319, !alias.scope !1096, !noalias !1095
+  store <2 x float> %i.ef, ptr %next.gep66, align 4, !tbaa !319, !alias.scope !1095, !noalias !1096
   %i.eg = shufflevector <4 x float> %i.ea, <4 x float> %i.ec, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.eg, ptr %next.gep67, align 4, !tbaa !319, !alias.scope !1096, !noalias !1095
+  store <2 x float> %i.eg, ptr %next.gep67, align 4, !tbaa !319, !alias.scope !1095, !noalias !1096
   %i.eh = shufflevector <4 x float> %i.ea, <4 x float> %i.ec, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.eh, ptr %next.gep68, align 4, !tbaa !319, !alias.scope !1096, !noalias !1095
+  store <2 x float> %i.eh, ptr %next.gep68, align 4, !tbaa !319, !alias.scope !1095, !noalias !1096
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ei = icmp eq i64 %index.next, %n.vec
   br i1 %i.ei, label %.lr.ph.i24.preheader113, label %vector.body, !llvm.loop !1091
@@ -828,7 +810,7 @@ bb.ao:                                            ; preds = %_ZNK12hb_bit_set_t8
 
 "_ZNR9hb_iter_tI16hb_filter_iter_tIS0_IS0_I10hb_array_tIKN2OT10NameRecordEER8hb_set_tMS3_NS2_7NumTypeILb1EtLj2EEELPv0EES7_SA_LSB_0EEZNKS2_4name6subsetEP19hb_subset_context_tEUlRS4_E_RK4$_19LSB_0EESH_EppEv.exit.loopexit.i": ; preds = %"_ZNK4$_23clIRZNK2OT4name6subsetEP19hb_subset_context_tEUlRKNS1_10NameRecordEE_S7_EEN10_hb_head_tIbJDTcl4implclsr3stdE7forwardIT_Efp_Eclsr3stdE7forwardIT0_Efp0_Ecv11hb_priorityILj16EE_EEEEE4typeEOSB_OSC_.exit.backedge.i.i.i", %_ZNR9hb_iter_tI10hb_array_tIKN2OT10NameRecordEERS3_EppEv.exit.i.i.i.i
   %.lcssa215 = phi ptr [ %i.kb, %_ZNR9hb_iter_tI10hb_array_tIKN2OT10NameRecordEERS3_EppEv.exit.i.i.i.i ], [ %i.jz, %"_ZNK4$_23clIRZNK2OT4name6subsetEP19hb_subset_context_tEUlRKNS1_10NameRecordEE_S7_EEN10_hb_head_tIbJDTcl4implclsr3stdE7forwardIT_Efp_Eclsr3stdE7forwardIT0_Efp0_Ecv11hb_priorityILj16EE_EEEEE4typeEOSB_OSC_.exit.backedge.i.i.i" ] ; 2 uses
-  %i.nm = add i32 %.promoted99.i, %.promoted96100.i
+  %i.nm = add i32 %.promoted96100.i, %.promoted99.i
   store i32 0, ptr %i.ih, align 8, !tbaa !646
   store i32 %i.nm, ptr %i.il, align 4, !tbaa !647
   store ptr %.lcssa215, ptr %4, align 8, !tbaa !648
@@ -1231,7 +1213,7 @@ _ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i: ; preds
 
 "_ZN16hb_filter_iter_tIS_I17hb_sorted_array_tIK9hb_pair_tIjjEEZNK2OT4cmap6subsetEP19hb_subset_context_tEUlS2_E_RK4$_19LPv0EERK8hb_set_tRK3$_6LSD_0EEC2ERKSE_SH_SK_.exit.loopexit": ; preds = %_ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i.preheader, %_ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i
   store ptr %.lcssa575661, ptr %9, align 8
-  %i.ge = add i32 %.lcssa319336, %.lcssa321339
+  %i.ge = add i32 %.lcssa321339, %.lcssa319336
   %scevgep.le = getelementptr i8, ptr %.val5.i, i64 8
   %i.gf = add i32 %.lcssa319336, -1
   %i.gg = zext i32 %i.gf to i64
@@ -1634,7 +1616,7 @@ _ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i146: ; pr
 
 "_ZN16hb_filter_iter_tIS_I17hb_sorted_array_tIK9hb_pair_tIjjEEZNK2OT4cmap6subsetEP19hb_subset_context_tEUlS2_E_RK4$_19LPv0EERK8hb_set_tRK3$_6LSD_0EEC2ERKSE_SH_SK_.exit164.loopexit": ; preds = %_ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i146.preheader, %_ZNR9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEv.exit.i.i.i146
   store ptr %.lcssa651668, ptr %10, align 8
-  %i.ys = add i32 %.lcssa341359, %.lcssa343363
+  %i.ys = add i32 %.lcssa343363, %.lcssa341359
   %scevgep479.le = getelementptr i8, ptr %.val5.i133, i64 8
   %i.yt = add i32 %.lcssa341359, -1
   %i.yu = zext i32 %i.yt to i64

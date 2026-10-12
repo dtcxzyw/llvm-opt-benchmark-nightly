@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.466.0..sroa_idx, i8 0, i64 16, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.668.0..sroa_idx, i8 0, i64 16, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.870.0..sroa_idx, i8 0, i64 16, i1 false)
-  %3 = load float, ptr %i.i, align 4, !tbaa !80
+  %3 = load <4 x float>, ptr %i.i, align 4
   %i.bi = load float, ptr %i.j, align 16, !tbaa !80
   %i.bj = fptosi float %i.bi to i32
   %i.bk = sitofp i32 %i.bj to float               ; 2 uses
@@ -237,10 +237,9 @@ bb.e:                                             ; preds = %bb.d
   %i.ck = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cc, <4 x float> zeroinitializer, <4 x float> %i.cj) ; 3 uses
   %i.cl = fadd <2 x float> %i.ca, zeroinitializer
   %i.cm = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bz, <2 x float> zeroinitializer, <2 x float> %i.cl) ; 4 uses
-  %4 = insertelement <2 x float> %i.bx, float 0.000000e+00, i64 1
-  %i.cn = insertelement <2 x float> poison, float %3, i64 0
-  %i.co = shufflevector <2 x float> %i.cn, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cp = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> %i.co, <2 x float> zeroinitializer) ; 2 uses
+  %i.cn = insertelement <2 x float> %i.bx, float 0.000000e+00, i64 1
+  %i.co = shufflevector <4 x float> %3, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.cp = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cn, <2 x float> %i.co, <2 x float> zeroinitializer) ; 2 uses
   %i.cq = insertelement <2 x float> %i.bx, float 0.000000e+00, i64 0
   %i.cr = insertelement <2 x float> poison, float %i.bk, i64 0
   %i.cs = shufflevector <2 x float> %i.cr, <2 x float> poison, <2 x i32> zeroinitializer

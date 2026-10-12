@@ -205,7 +205,7 @@ _ZN9Stockfish12_GLOBAL__N_16numberIjLi1EEET_Pv.exit..preheader146_crit_edge: ; p
   %i.bc = shufflevector <2 x i64> %i.az, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.bd = shufflevector <4 x i64> %i.bc, <4 x i64> %i.ax, <8 x i32> <i32 1, i32 0, i32 7, i32 6, i32 5, i32 4, i32 poison, i32 poison>
   %i.be = shufflevector <2 x i64> %i.ba, <2 x i64> poison, <8 x i32> <i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.bf = lshr <8 x i64> %i.be, <i64 0, i64 56, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef, i64 undef> ; 2 uses
+  %i.bf = lshr <8 x i64> %i.be, <i64 0, i64 56, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison> ; 2 uses
   %i.bg = shufflevector <8 x i64> %i.bd, <8 x i64> %i.bf, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
   br i1 %i.bb, label %bb.e, label %_ZN9Stockfish12_GLOBAL__N_16numberImLi0EEET_Pv.exit
 

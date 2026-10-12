@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.i, label %.preheader101.preheader, label %bb.b
 
 .preheader101.preheader:                          ; preds = %.lr.ph
-  %i.j = add i32 %i.d, %i.h                       ; 3 uses
+  %i.j = add i32 %i.h, %i.d                       ; 3 uses
   %i.k = add i32 %i.f, 1                          ; 2 uses
   %i.l = tail call i32 @llvm.smax.i32(i32 %i.j, i32 %i.k)
   %i.m = icmp slt i32 %i.j, %i.k
@@ -305,7 +305,7 @@ bb.d:                                             ; preds = %._crit_edge
 
 .preheader.preheader:                             ; preds = %.lr.ph121
   %i.ar = sext i32 %.4119 to i64                  ; 3 uses
-  %i.as = add i32 %i.al, %i.ap                    ; 3 uses
+  %i.as = add i32 %i.ap, %i.al                    ; 3 uses
   %i.at = add i32 %i.an, 1                        ; 2 uses
   %i.au = tail call i32 @llvm.smax.i32(i32 %i.as, i32 %i.at)
   %i.av = icmp slt i32 %i.as, %i.at
@@ -438,7 +438,7 @@ bb.a:
   br i1 %i.h, label %.preheader127.preheader, label %bb.b
 
 .preheader127.preheader:                          ; preds = %.lr.ph
-  %i.i = add i32 %i.c, %i.g                       ; 3 uses
+  %i.i = add i32 %i.g, %i.c                       ; 3 uses
   %i.j = add i32 %i.e, 1                          ; 2 uses
   %i.k = tail call i32 @llvm.smax.i32(i32 %i.i, i32 %i.j)
   %i.l = icmp slt i32 %i.i, %i.j
@@ -540,7 +540,7 @@ bb.d:                                             ; preds = %._crit_edge
 
 .preheader124.preheader:                          ; preds = %.lr.ph144
   %i.aq = sext i32 %.098142 to i64                ; 3 uses
-  %i.ar = add i32 %i.ak, %i.ao                    ; 3 uses
+  %i.ar = add i32 %i.ao, %i.ak                    ; 3 uses
   %i.as = add i32 %i.am, 1                        ; 2 uses
   %i.at = tail call i32 @llvm.smax.i32(i32 %i.ar, i32 %i.as)
   %i.au = icmp slt i32 %i.ar, %i.as

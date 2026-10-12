@@ -204,10 +204,9 @@ bb.a:                                             ; preds = %.peel.begin
   %i.as = load float, ptr %i.af, align 16, !tbaa !12
   store float %i.as, ptr %i.b, align 4, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
-  %11 = load float, ptr %i.ae, align 16, !tbaa !12
+  %.sroa.0.0.vec.insert.i.i.peel = load <2 x float>, ptr %i.ae, align 16
   %i.at = load float, ptr %i.ad, align 16, !tbaa !12
   %i.au = load float, ptr %i.ac, align 16, !tbaa !12
-  %.sroa.0.0.vec.insert.i.i.peel = insertelement <2 x float> poison, float %11, i64 0
   %.sroa.0.4.vec.insert.i.i.peel = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i.peel, float %i.at, i64 1
   %.sroa.3.12.vec.insert.i.i.peel = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.au, i64 0
   store <2 x float> %.sroa.0.4.vec.insert.i.i.peel, ptr %10, align 16
@@ -610,7 +609,8 @@ bb.h:                                             ; preds = %bb.g
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 624
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 632
-  %13 = load float, ptr %i.ax, align 8, !tbaa !9
+  %13 = load <4 x float>, ptr %i.ax, align 8
+  %14 = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.az = load float, ptr %i.ay, align 8, !tbaa !9
   %i.ba = load <2 x float>, ptr %i.ar, align 16, !tbaa !9 ; 2 uses
@@ -623,7 +623,6 @@ bb.h:                                             ; preds = %bb.g
   %i.bh = shufflevector <2 x float> %i.bc, <2 x float> %i.ao, <2 x i32> <i32 1, i32 3>
   %i.bi = shufflevector <2 x float> %i.bd, <2 x float> %i.ba, <2 x i32> <i32 1, i32 3>
   %i.bj = fsub <2 x float> %i.bh, %i.bi           ; 3 uses
-  %14 = insertelement <2 x float> poison, float %13, i64 0
   %i.bk = insertelement <2 x float> %14, float %i.aq, i64 1
   %i.bl = insertelement <2 x float> poison, float %i.az, i64 0
   %i.bm = insertelement <2 x float> %i.bl, float %i.at, i64 1

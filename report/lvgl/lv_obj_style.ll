@@ -204,20 +204,15 @@ get_selector_style_prop.exit.i31:                 ; preds = %.lr.ph63.i.i39, %.l
 lv_obj_get_style_opa.exit44:                      ; preds = %get_selector_style_prop.exit.i31, %.thread.i.i35
   %.sroa.0.0.i.i33 = phi ptr [ %.sroa.0.0.copyload.i.i32, %get_selector_style_prop.exit.i31 ], [ %i.an, %.thread.i.i35 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
-  %i.ao = ptrtoint ptr %.sroa.0.0.i.i33 to i64    ; 2 uses
-  %i.ap = trunc i64 %i.ao to i8                   ; 2 uses
+  %i.ao = ptrtoint ptr %.sroa.0.0.i.i33 to i64
+  %i.ap = trunc i64 %i.ao to i8                   ; 3 uses
   %i.aq = icmp ult i8 %i.ap, 3
   br i1 %i.aq, label %.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %lv_obj_get_style_opa.exit44
-  %4 = trunc i64 %i.ao to i16
-  %5 = and i16 %4, 255
   %i.ar = icmp ult i8 %i.ap, -3
-  %6 = zext i8 %.149 to i16
-  %7 = mul nuw i16 %5, %6
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
-  %.2 = select i1 %i.ar, i8 %9, i8 %.149          ; 2 uses
+  %4 = tail call i8 @llvm.umulh.i8(i8 %.149, i8 %i.ap)
+  %.2 = select i1 %i.ar, i8 %4, i8 %.149          ; 2 uses
   %i.as = tail call ptr @lv_obj_get_parent(ptr noundef nonnull %.12147) #10 ; 2 uses
   %.not28 = icmp eq ptr %i.as, null
   br i1 %.not28, label %._crit_edge, label %.lr.ph, !llvm.loop !127
@@ -618,6 +613,9 @@ declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umulh.i8(i8, i8) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #9

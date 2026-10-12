@@ -170,12 +170,8 @@ _RINvMs2_NtNtCsaL1QbXo9JQH_3std6thread5localINtB6_8LocalKeyNtNtNtCs3rvrQdG6Evv_1
   store i32 %i.h, ptr %i.a, align 4
   store i32 %i.o, ptr %i.g, align 4
   %i.p = add i32 %i.o, %i.h
-  %1 = zext i32 %i.p to i64
-  %2 = zext i32 %0 to i64
-  %3 = mul nuw i64 %1, %2
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  ret i32 %5
+  %1 = tail call noundef range(i32 0, -1) i32 @llvm.umulh.i32(i32 %i.p, i32 %0)
+  ret i32 %1
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -216,6 +212,9 @@ declare noundef zeroext i1 @_RNvXsi_NtCs3oUPovFnLWP_4core3fmteNtB5_7Display3fmt(
 
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i32 } @_RNvMs0_NtNtCslghKHtsL3a4_5tokio4time8intervalNtB5_8Interval9poll_tick(ptr noalias nofree noundef align 8 dereferenceable(32), ptr noalias nofree noundef align 8 dereferenceable(32)) unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umulh.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #3
