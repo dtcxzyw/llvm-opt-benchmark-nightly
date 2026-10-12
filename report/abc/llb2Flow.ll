@@ -204,9 +204,9 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.f
   %i.ao = icmp samesign ult i64 %indvars.iv399, 1073741823
   %indvars.iv399.tr = trunc nsw i64 %indvars.iv399 to i32
-  %i.ap = shl nsw i32 %indvars.iv399.tr, 1
+  %i.ap = shl nuw nsw i32 %indvars.iv399.tr, 1
   %spec.select.i = select i1 %i.ao, i32 %i.ap, i32 2147483647 ; 4 uses
-  %3 = sext i32 %spec.select.i to i64
+  %3 = zext nneg i32 %spec.select.i to i64
   %.not.i10.i = icmp samesign ult i64 %indvars.iv399, %3
   br i1 %.not.i10.i, label %bb.k, label %Vec_PtrPush.exit
 
@@ -246,7 +246,7 @@ Vec_PtrPush.exit:                                 ; preds = %bb.i, %bb.h, %bb.m,
 .critedge:                                        ; preds = %..critedge_crit_edge, %bb.a
   %i.ay = phi ptr [ %storemerge344357, %..critedge_crit_edge ], [ %i.c, %bb.a ] ; 6 uses
   %i.az = phi i32 [ %spec.select.sink.i353, %..critedge_crit_edge ], [ 100, %bb.a ] ; 5 uses
-  %i.ba = phi i32 [ %i.ax, %..critedge_crit_edge ], [ 0, %bb.a ] ; 7 uses
+  %i.ba = phi i32 [ %i.ax, %..critedge_crit_edge ], [ 0, %bb.a ] ; 6 uses
   %i.bb = getelementptr i8, ptr %0, i64 32        ; 4 uses
   %.val257 = load ptr, ptr %i.bb, align 8, !tbaa !47
   %i.bc = getelementptr i8, ptr %.val257, i64 4
@@ -649,7 +649,6 @@ bb.ao:                                            ; preds = %bb.am, %Saig_ObjIsP
   br i1 %i.iz, label %.lr.ph393, label %.critedge18
 
 .lr.ph393:                                        ; preds = %.critedge14
-  %.not337382 = icmp slt i32 %i.ba, 0             ; 2 uses
   %wide.trip.count447 = zext i32 %i.by to i64
   %wide.trip.count452 = zext i32 %i.by to i64
   br label %bb.ap
@@ -678,8 +677,8 @@ bb.ar:                                            ; preds = %bb.aq
   %narrow.i = icmp ult i32 %i.jj, -2
   br i1 %narrow.i, label %.critedge20.thread, label %bb.as
 
-bb.as:                                            ; preds = %bb.ar, %bb.aq
-  br i1 %.not337382, label %.critedge20, label %.lr.ph384
+bb.as:                                            ; preds = %bb.aq, %bb.ar
+  br label %.lr.ph384
 
 .lr.ph384:                                        ; preds = %bb.as, %bb.at
   %indvars.iv444 = phi i64 [ %indvars.iv.next445, %bb.at ], [ 0, %bb.as ] ; 3 uses
@@ -690,20 +689,16 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.jn = getelementptr inbounds nuw [4 x i8], ptr %.val275, i64 %indvars.iv454
   %i.jo = load i32, ptr %i.jn, align 4, !tbaa !51
   %.not216 = icmp eq i32 %i.jo, 0
-  br i1 %.not216, label %bb.at, label %.critedge20.loopexit
+  br i1 %.not216, label %bb.at, label %.critedge20
 
 bb.at:                                            ; preds = %.lr.ph384
   %indvars.iv.next445 = add nuw nsw i64 %indvars.iv444, 1 ; 2 uses
   %exitcond448.not = icmp eq i64 %indvars.iv.next445, %wide.trip.count447
   br i1 %exitcond448.not, label %.critedge20.thread, label %.lr.ph384, !llvm.loop !77
 
-.critedge20.loopexit:                             ; preds = %.lr.ph384
+.critedge20:                                      ; preds = %.lr.ph384
   %4 = trunc nuw nsw i64 %indvars.iv444 to i32
-  br label %.critedge20
-
-.critedge20:                                      ; preds = %.critedge20.loopexit, %bb.as
-  %.4.lcssa = phi i32 [ 0, %bb.as ], [ %4, %.critedge20.loopexit ]
-  %i.jp = icmp eq i32 %.4.lcssa, %i.by
+  %i.jp = icmp eq i32 %i.by, %4
   br i1 %i.jp, label %.critedge20.thread, label %bb.au
 
 bb.au:                                            ; preds = %.critedge20
@@ -734,7 +729,7 @@ Saig_ObjIsLo.exit.thread:                         ; preds = %bb.au
   br label %bb.av
 
 bb.av:                                            ; preds = %.sink.split, %Saig_ObjIsLo.exit.thread
-  br i1 %.not337382, label %.critedge22, label %.lr.ph390
+  br label %.lr.ph390
 
 .lr.ph390:                                        ; preds = %bb.av, %.lr.ph390
   %indvars.iv449 = phi i64 [ %indvars.iv.next450, %.lr.ph390 ], [ 0, %bb.av ] ; 2 uses
@@ -749,7 +744,7 @@ bb.av:                                            ; preds = %.sink.split, %Saig_
   %exitcond453.not = icmp eq i64 %indvars.iv.next450, %wide.trip.count452
   br i1 %exitcond453.not, label %.critedge22, label %.lr.ph390, !llvm.loop !78
 
-.critedge22:                                      ; preds = %.lr.ph390, %bb.av
+.critedge22:                                      ; preds = %.lr.ph390
   %putchar220 = tail call i32 @putchar(i32 10)    ; 0 uses
   %.pre467 = load ptr, ptr %i.bb, align 8, !tbaa !47
   br label %.critedge20.thread
@@ -1152,9 +1147,9 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.b
   %i.r = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
-  %i.s = shl nsw i32 %indvars.iv.tr, 1
+  %i.s = shl nuw nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.r, i32 %i.s, i32 2147483647 ; 4 uses
-  %1 = sext i32 %spec.select.i to i64
+  %1 = zext nneg i32 %spec.select.i to i64
   %.not.i10.i = icmp samesign ult i64 %indvars.iv, %1
   br i1 %.not.i10.i, label %bb.g, label %Vec_PtrPush.exit
 

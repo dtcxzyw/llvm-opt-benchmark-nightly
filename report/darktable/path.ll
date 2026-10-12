@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %bb.bc, %.epil.prehe
   br i1 %exitcond355.not.i, label %_path_crop_to_roi.exit, label %.preheader.i
 
 _path_crop_to_roi.exit:                           ; preds = %bb.ah, %.thread299.i, %bb.af
-  %.not321 = phi i1 [ false, %.thread299.i ], [ true, %bb.af ], [ true, %bb.ah ]
+  %.not321 = phi i1 [ true, %bb.af ], [ false, %.thread299.i ], [ true, %bb.ah ]
   %.not320 = icmp ne i32 %.1285, 0
   %spec.select353 = or i1 %.not320, %.not321      ; 2 uses
   %i.zk = zext i1 %spec.select353 to i32

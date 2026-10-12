@@ -204,14 +204,14 @@ GetTable.exit.i.us.preheader.i:                   ; preds = %.lr.ph.split.us.i
   br label %GetTable.exit.i.us.i
 
 GetTable.exit.i.us.i:                             ; preds = %bb.p, %GetTable.exit.i.us.preheader.i
-  %indvars.iv.i36 = phi i64 [ 0, %GetTable.exit.i.us.preheader.i ], [ %indvars.iv.next.i37, %bb.p ] ; 4 uses
+  %indvars.iv.i36 = phi i64 [ 0, %GetTable.exit.i.us.preheader.i ], [ %indvars.iv.next.i37, %bb.p ] ; 5 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.i36, %wide.trip.count.i
   br i1 %exitcond.not.i, label %LocateEmptyPatch.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %GetTable.exit.i.us.i
   %i.bk = load ptr, ptr %i.bd, align 8, !tbaa !81 ; 2 uses
   %.not19.i.us.i = icmp eq ptr %i.bk, null
-  br i1 %.not19.i.us.i, label %LocateEmptyPatch.exit.a, label %GetData.exit.us.i
+  br i1 %.not19.i.us.i, label %GetData.exit.thread.loopexit.split.loop.exit36.i, label %GetData.exit.us.i
 
 GetData.exit.us.i:                                ; preds = %bb.o
   %i.bl = mul nuw nsw i64 %indvars.iv.i36, %i.bh
@@ -277,17 +277,20 @@ bb.t:                                             ; preds = %GetData.exit.i
   %i.cl = icmp slt i32 %i.cj, %i.ck
   br i1 %i.cl, label %.lr.ph.split.i, label %LocateEmptyPatch.exit.thread42, !llvm.loop !133
 
-LocateEmptyPatch.exit.a:                          ; preds = %GetData.exit.us.i, %bb.o
-  %.09.i = trunc i64 %indvars.iv.i36 to i32       ; 2 uses
-  %4 = icmp slt i32 %.09.i, 0
-  br i1 %4, label %LocateEmptyPatch.exit.thread42, label %LocateEmptyPatch.exit.thread
+GetData.exit.thread.loopexit.split.loop.exit36.i: ; preds = %bb.o
+  %4 = trunc nuw nsw i64 %indvars.iv.i36 to i32
+  br label %LocateEmptyPatch.exit.thread
 
-LocateEmptyPatch.exit.thread42:                   ; preds = %bb.t, %bb.p, %GetTable.exit.i30, %LocateEmptyPatch.exit.a
+LocateEmptyPatch.exit.a:                          ; preds = %GetData.exit.us.i
+  %.09.i = trunc nuw nsw i64 %indvars.iv.i36 to i32
+  br label %LocateEmptyPatch.exit.thread
+
+LocateEmptyPatch.exit.thread42:                   ; preds = %bb.t, %bb.p, %GetTable.exit.i30
   tail call void (ptr, ptr, ...) @SynError(ptr noundef nonnull %0, ptr noundef nonnull @.str.10, ptr noundef %1)
   br label %LocateSample.exit.thread
 
-LocateEmptyPatch.exit.thread:                     ; preds = %GetData.exit.i, %GetTable.exit.i.i34, %bb.s, %GetTable.exit.i.us.i, %.lr.ph.split.us.i, %LocateEmptyPatch.exit.a
-  %.09.i40 = phi i32 [ %.09.i, %LocateEmptyPatch.exit.a ], [ %smax.i, %GetTable.exit.i.us.i ], [ 0, %.lr.ph.split.us.i ], [ %.013.i, %bb.s ], [ %.013.i, %GetTable.exit.i.i34 ], [ %.013.i, %GetData.exit.i ]
+LocateEmptyPatch.exit.thread:                     ; preds = %bb.s, %GetTable.exit.i.i34, %GetData.exit.i, %GetTable.exit.i.us.i, %.lr.ph.split.us.i, %LocateEmptyPatch.exit.a, %GetData.exit.thread.loopexit.split.loop.exit36.i
+  %.09.i.ph = phi i32 [ %4, %GetData.exit.thread.loopexit.split.loop.exit36.i ], [ %.09.i, %LocateEmptyPatch.exit.a ], [ %smax.i, %GetTable.exit.i.us.i ], [ 0, %.lr.ph.split.us.i ], [ %.013.i, %GetData.exit.i ], [ %.013.i, %GetTable.exit.i.i34 ], [ %.013.i, %bb.s ]
   %i.cm = getelementptr inbounds nuw i8, ptr %.0.i79, i64 1032
   %i.cn = load i32, ptr %i.cm, align 8, !tbaa !90
   br label %bb.v
@@ -299,7 +302,7 @@ bb.u:                                             ; preds = %bb.k
 
 bb.v:                                             ; preds = %bb.u, %LocateEmptyPatch.exit.thread
   %.022 = phi i32 [ %i.cn, %LocateEmptyPatch.exit.thread ], [ %i.ae, %bb.u ]
-  %.0 = phi i32 [ %.09.i40, %LocateEmptyPatch.exit.thread ], [ %i.co, %bb.u ]
+  %.0 = phi i32 [ %.09.i.ph, %LocateEmptyPatch.exit.thread ], [ %i.co, %bb.u ]
   %i.cq = tail call fastcc i32 @SetData(ptr noundef nonnull %0, i32 noundef %.0, i32 noundef %.022, ptr noundef %3)
   br label %LocateSample.exit.thread
 

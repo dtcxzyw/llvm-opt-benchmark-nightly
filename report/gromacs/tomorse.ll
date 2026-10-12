@@ -202,11 +202,11 @@ bb.s:                                             ; preds = %.lr.ph
   %i.cl = load ptr, ptr %6, align 8, !tbaa !17    ; 6 uses
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.s, %bb.am
-  %indvars.iv.i70 = phi i64 [ %indvars.iv.next.i72, %bb.am ], [ 0, %bb.s ] ; 3 uses
-  %.0137.i = phi i32 [ %.1.i, %bb.am ], [ 0, %bb.s ] ; 7 uses
-  %.061136.i = phi i32 [ %.162.i, %bb.am ], [ 0, %bb.s ] ; 7 uses
-  %.063135.i = phi i32 [ %.164.i, %bb.am ], [ -1, %bb.s ] ; 3 uses
+.lr.ph.i:                                         ; preds = %bb.am, %bb.s
+  %indvars.iv.i70 = phi i64 [ 0, %bb.s ], [ %indvars.iv.next.i72, %bb.am ] ; 3 uses
+  %.0137.i = phi i32 [ 0, %bb.s ], [ %.1.i, %bb.am ] ; 7 uses
+  %.061136.i = phi i32 [ 0, %bb.s ], [ %.162.i, %bb.am ] ; 7 uses
+  %.063135.i = phi i32 [ -1, %bb.s ], [ %.164.i, %bb.am ] ; 3 uses
   %i.cm = getelementptr inbounds nuw [24 x i8], ptr %.0.i, i64 %indvars.iv.i70 ; 5 uses
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !51
   %i.co = invoke noundef i32 @_Z14gmx_strcasecmpPKcS0_(ptr noundef %i.cn, ptr noundef %i.ce)

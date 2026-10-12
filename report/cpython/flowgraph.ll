@@ -205,7 +205,7 @@ fold_constant_intrinsic_list_to_tuple.exit.i.i:   ; preds = %bb.gp, %bb.gm, %bb.
   br i1 %i.aod, label %bb.jg, label %.critedge.i.i
 
 bb.jg:                                            ; preds = %.lr.ph474.i.i
-  %i.aoe = sub i32 %i.any, %storemerge473.i.i     ; 3 uses
+  %i.aoe = sub i32 %i.any, %storemerge473.i.i     ; 2 uses
   %i.aof = icmp sgt i32 %i.aoe, 1
   br i1 %i.aof, label %.lr.ph.preheader.i.i.i, label %bb.jp
 
@@ -214,17 +214,17 @@ bb.jg:                                            ; preds = %.lr.ph474.i.i
   %i.aoh = load i32, ptr %i.aog, align 4, !tbaa !50
   %i.aoi = xor i32 %storemerge473.i.i, -1
   %i.aoj = add i32 %i.any, %i.aoi
-  %wide.trip.count.i363.i.i = zext nneg i32 %i.aoe to i64
+  %wide.trip.count.i363.i.i = zext nneg i32 %i.aoe to i64 ; 2 uses
   br label %.lr.ph.i364.i.i
 
 .lr.ph.i364.i.i:                                  ; preds = %bb.ji, %.lr.ph.preheader.i.i.i
-  %indvars.iv.i365.i.i = phi i64 [ 1, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next.i366.i.i, %bb.ji ] ; 3 uses
+  %indvars.iv.i365.i.i = phi i64 [ 1, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next.i366.i.i, %bb.ji ] ; 4 uses
   %.07610.i.i.i = phi i32 [ %i.aoh, %.lr.ph.preheader.i.i.i ], [ %.278.i.i.i, %bb.ji ] ; 3 uses
   %.0809.i.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i.i ], [ %i.aom, %bb.ji ]
   %.0848.i.i.i = phi i32 [ 0, %.lr.ph.preheader.i.i.i ], [ %.286.i.i.i, %bb.ji ] ; 2 uses
   %i.aok = getelementptr [40 x i8], ptr %i.aob, i64 %indvars.iv.i365.i.i ; 2 uses
   %i.aol = load i32, ptr %i.aok, align 8, !tbaa !39
-  %i.aom = trunc nuw nsw i64 %indvars.iv.i365.i.i to i32 ; 2 uses
+  %i.aom = trunc nuw nsw i64 %indvars.iv.i365.i.i to i32
   switch i32 %i.aol, label %.thread.i.i30.i [
     i32 117, label %bb.jh
     i32 27, label %bb.ji
@@ -244,27 +244,30 @@ bb.ji:                                            ; preds = %bb.jh, %.lr.ph.i364
   br i1 %exitcond.not.i367.i.i, label %.thread.i.i30.i, label %.lr.ph.i364.i.i
 
 .thread.i.i30.i:                                  ; preds = %bb.ji, %.lr.ph.i364.i.i
-  %.084.lcssa.ph.i.i.i = phi i32 [ %.286.i.i.i, %bb.ji ], [ %.0848.i.i.i, %.lr.ph.i364.i.i ]
-  %.080.lcssa.ph.i.i.i.a = phi i32 [ %i.aoj, %bb.ji ], [ %.0809.i.i.i, %.lr.ph.i364.i.i ] ; 3 uses
-  %.076.lcssa.ph.i.i.i.a = phi i32 [ %.278.i.i.i, %bb.ji ], [ %.07610.i.i.i, %.lr.ph.i364.i.i ] ; 5 uses
-  %.lcssa.ph.i.i.i = phi i32 [ %i.aoe, %bb.ji ], [ %i.aom, %.lr.ph.i364.i.i ] ; 2 uses
-  %i.aop = icmp eq i32 %.084.lcssa.ph.i.i.i, 0
+  %.pre-phi.i.i = phi i64 [ %indvars.iv.i365.i.i, %.lr.ph.i364.i.i ], [ %wide.trip.count.i363.i.i, %bb.ji ]
+  %.080.lcssa.ph.i.i.i.a = phi i32 [ %.0848.i.i.i, %.lr.ph.i364.i.i ], [ %.286.i.i.i, %bb.ji ]
+  %.076.lcssa.ph.i.i.i.a = phi i32 [ %.0809.i.i.i, %.lr.ph.i364.i.i ], [ %i.aoj, %bb.ji ] ; 3 uses
+  %.lcssa.ph.i.i.i = phi i32 [ %.07610.i.i.i, %.lr.ph.i364.i.i ], [ %.278.i.i.i, %bb.ji ] ; 5 uses
+  %i.aop = icmp eq i32 %.080.lcssa.ph.i.i.i.a, 0
   br i1 %i.aop, label %bb.jp, label %bb.jj
 
 bb.jj:                                            ; preds = %.thread.i.i30.i
-  %i.aoq = sext i32 %.076.lcssa.ph.i.i.i.a to i64
+  %i.aoq = sext i32 %.lcssa.ph.i.i.i to i64
   %i.aor = shl nsw i64 %i.aoq, 2
   %i.aos = call ptr @PyMem_Malloc(i64 noundef %i.aor) #8 ; 9 uses
   %i.aot = icmp eq ptr %i.aos, null
   br i1 %i.aot, label %bb.kc, label %.preheader7.i.i.i
 
 .preheader7.i.i.i:                                ; preds = %bb.jj
-  %i.aou = icmp sgt i32 %.076.lcssa.ph.i.i.i.a, 0 ; 2 uses
-  br i1 %i.aou, label %.lr.ph20.preheader.i.i.i, label %.preheader6.i.i.i
+  %i.aou = icmp sgt i32 %.lcssa.ph.i.i.i, 0       ; 2 uses
+  br i1 %i.aou, label %.lr.ph20.preheader.i.i.i, label %.lr.ph22.i.i.i.preheader
+
+.lr.ph22.i.i.i.preheader:                         ; preds = %.lr.ph20.i.i.i, %middle.block, %.preheader7.i.i.i
+  br label %.lr.ph22.i.i.i
 
 .lr.ph20.preheader.i.i.i:                         ; preds = %.preheader7.i.i.i
-  %wide.trip.count33.i.i.i = zext nneg i32 %.076.lcssa.ph.i.i.i.a to i64 ; 3 uses
-  %min.iters.check = icmp ult i32 %.076.lcssa.ph.i.i.i.a, 8
+  %wide.trip.count33.i.i.i = zext nneg i32 %.lcssa.ph.i.i.i to i64 ; 3 uses
+  %min.iters.check = icmp ult i32 %.lcssa.ph.i.i.i, 8
   br i1 %min.iters.check, label %.lr.ph20.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph20.preheader.i.i.i
@@ -286,19 +289,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count33.i.i.i
-  br i1 %cmp.n, label %.preheader6.i.i.i, label %.lr.ph20.i.i.i.preheader
+  br i1 %cmp.n, label %.lr.ph22.i.i.i.preheader, label %.lr.ph20.i.i.i.preheader
 
 .lr.ph20.i.i.i.preheader:                         ; preds = %.lr.ph20.preheader.i.i.i, %middle.block
   %indvars.iv30.i.i.i.ph = phi i64 [ 0, %.lr.ph20.preheader.i.i.i ], [ %n.vec, %middle.block ]
   br label %.lr.ph20.i.i.i
-
-.preheader6.i.i.i:                                ; preds = %.lr.ph20.i.i.i, %middle.block, %.preheader7.i.i.i
-  %17 = icmp sgt i32 %.lcssa.ph.i.i.i, 0
-  br i1 %17, label %.lr.ph22.preheader.i.i.i, label %.preheader5.i.i.i
-
-.lr.ph22.preheader.i.i.i:                         ; preds = %.preheader6.i.i.i
-  %wide.trip.count38.i.i.i = zext nneg i32 %.lcssa.ph.i.i.i to i64
-  br label %.lr.ph22.i.i.i
 
 .lr.ph20.i.i.i:                                   ; preds = %.lr.ph20.i.i.i.preheader, %.lr.ph20.i.i.i
   %indvars.iv30.i.i.i = phi i64 [ %indvars.iv.next31.i.i.i, %.lr.ph20.i.i.i ], [ %indvars.iv30.i.i.i.ph, %.lr.ph20.i.i.i.preheader ] ; 3 uses
@@ -307,17 +302,17 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.aoz, ptr %i.aoy, align 4, !tbaa !20
   %indvars.iv.next31.i.i.i = add nuw nsw i64 %indvars.iv30.i.i.i, 1 ; 2 uses
   %exitcond34.not.i.i.i = icmp eq i64 %indvars.iv.next31.i.i.i, %wide.trip.count33.i.i.i
-  br i1 %exitcond34.not.i.i.i, label %.preheader6.i.i.i, label %.lr.ph20.i.i.i, !llvm.loop !108
+  br i1 %exitcond34.not.i.i.i, label %.lr.ph22.i.i.i.preheader, label %.lr.ph20.i.i.i, !llvm.loop !108
 
-.preheader5.i.i.i:                                ; preds = %bb.jl, %.preheader6.i.i.i
+.preheader5.i.i.i:                                ; preds = %bb.jl
   br i1 %i.aou, label %.lr.ph25.preheader.i.i.i, label %.preheader.i368.i.i
 
 .lr.ph25.preheader.i.i.i:                         ; preds = %.preheader5.i.i.i
-  %wide.trip.count43.i.i.i = zext nneg i32 %.076.lcssa.ph.i.i.i.a to i64
+  %wide.trip.count43.i.i.i = zext nneg i32 %.lcssa.ph.i.i.i to i64
   br label %.lr.ph25.i.i.i
 
-.lr.ph22.i.i.i:                                   ; preds = %bb.jl, %.lr.ph22.preheader.i.i.i
-  %indvars.iv35.i.i.i = phi i64 [ 0, %.lr.ph22.preheader.i.i.i ], [ %indvars.iv.next36.i.i.i, %bb.jl ] ; 2 uses
+.lr.ph22.i.i.i:                                   ; preds = %.lr.ph22.i.i.i.preheader, %bb.jl
+  %indvars.iv35.i.i.i = phi i64 [ %indvars.iv.next36.i.i.i, %bb.jl ], [ 0, %.lr.ph22.i.i.i.preheader ] ; 2 uses
   %i.apa = getelementptr [40 x i8], ptr %i.aob, i64 %indvars.iv35.i.i.i ; 2 uses
   %i.apb = load i32, ptr %i.apa, align 8, !tbaa !39
   %i.apc = icmp eq i32 %i.apb, 117
@@ -337,11 +332,11 @@ bb.jk:                                            ; preds = %.lr.ph22.i.i.i
 
 bb.jl:                                            ; preds = %bb.jk, %.lr.ph22.i.i.i
   %indvars.iv.next36.i.i.i = add nuw nsw i64 %indvars.iv35.i.i.i, 1 ; 2 uses
-  %exitcond39.not.i.i.i = icmp eq i64 %indvars.iv.next36.i.i.i, %wide.trip.count38.i.i.i
+  %exitcond39.not.i.i.i = icmp eq i64 %indvars.iv.next36.i.i.i, %.pre-phi.i.i
   br i1 %exitcond39.not.i.i.i, label %.preheader5.i.i.i, label %.lr.ph22.i.i.i, !llvm.loop !109
 
 .preheader.i368.i.i:                              ; preds = %.loopexit.i372.i.i, %.preheader5.i.i.i
-  %.074.lcssa.i.i.i = phi i32 [ %.080.lcssa.ph.i.i.i.a, %.preheader5.i.i.i ], [ %.3.i373.i.i, %.loopexit.i372.i.i ] ; 3 uses
+  %.074.lcssa.i.i.i = phi i32 [ %.076.lcssa.ph.i.i.i.a, %.preheader5.i.i.i ], [ %.3.i373.i.i, %.loopexit.i372.i.i ] ; 3 uses
   %i.apk = icmp sgt i32 %.074.lcssa.i.i.i, -1
   br i1 %i.apk, label %.lr.ph28.preheader.i.i.i, label %._crit_edge.i369.i.i
 
@@ -371,7 +366,7 @@ bb.jl:                                            ; preds = %bb.jk, %.lr.ph22.i.
 
 .lr.ph25.i.i.i:                                   ; preds = %.loopexit.i372.i.i, %.lr.ph25.preheader.i.i.i
   %indvars.iv40.i.i.i = phi i64 [ 0, %.lr.ph25.preheader.i.i.i ], [ %indvars.iv.next41.i.i.i, %.loopexit.i372.i.i ] ; 4 uses
-  %.07423.i.i.i = phi i32 [ %.080.lcssa.ph.i.i.i.a, %.lr.ph25.preheader.i.i.i ], [ %.3.i373.i.i, %.loopexit.i372.i.i ] ; 2 uses
+  %.07423.i.i.i = phi i32 [ %.076.lcssa.ph.i.i.i.a, %.lr.ph25.preheader.i.i.i ], [ %.3.i373.i.i, %.loopexit.i372.i.i ] ; 2 uses
   %i.apq = getelementptr [4 x i8], ptr %i.aos, i64 %indvars.iv40.i.i.i
   %i.apr = load i32, ptr %i.apq, align 4, !tbaa !20 ; 2 uses
   %i.aps = icmp eq i32 %i.apr, -1
@@ -445,7 +440,7 @@ bb.jo:                                            ; preds = %bb.jn
 
 ._crit_edge.i369.i.i:                             ; preds = %.lr.ph28.i.i.i.prol.loopexit, %.lr.ph28.i.i.i, %.preheader.i368.i.i
   call void @PyMem_Free(ptr noundef nonnull %i.aos) #8
-  %i.aqp = add i32 %.080.lcssa.ph.i.i.i.a, %storemerge473.i.i
+  %i.aqp = add i32 %.076.lcssa.ph.i.i.i.a, %storemerge473.i.i
   br label %bb.jp
 
 bb.jp:                                            ; preds = %._crit_edge.i369.i.i, %.thread.i.i30.i, %bb.jg

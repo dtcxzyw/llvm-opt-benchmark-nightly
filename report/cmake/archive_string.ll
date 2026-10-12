@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.z, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %.lr.ph179
-  %i.aa = trunc i64 %.149115178 to i32            ; 3 uses
+  %i.aa = trunc i64 %.149115178 to i32            ; 4 uses
   %i.ab = icmp sgt i32 %i.aa, 1
   br i1 %i.ab, label %.lr.ph95.preheader.i, label %_utf8_to_unicode.exit
 
@@ -339,6 +339,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p, %bb.o
   %.066.i = phi i64 [ 5, %bb.q ], [ 2, %bb.o ], [ 4, %bb.p ], [ %i.cb, %bb.r ]
   %spec.select88.i = call i64 @llvm.umin.i64(i64 %.149115178, i64 %.066.i) ; 7 uses
+  %spec.select.i63 = trunc nuw nsw i64 %spec.select88.i to i32
   %i.cc = icmp samesign ugt i64 %spec.select88.i, 1
   br i1 %i.cc, label %.lr.ph.i, label %utf8_to_unicode.exit.thread145
 
@@ -346,7 +347,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p,
   %i.cd = getelementptr inbounds nuw i8, ptr %.0116177, i64 1
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !20
   %.not83.i = icmp slt i8 %i.ce, -64
-  br i1 %.not83.i, label %bb.t, label %_utf8_to_unicode.exit
+  br i1 %.not83.i, label %bb.t, label %utf8_to_unicode.exit.thread145
 
 bb.t:                                             ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %spec.select88.i, 2
@@ -356,7 +357,7 @@ bb.t:                                             ; preds = %.lr.ph.i
   %i.cf = getelementptr inbounds nuw i8, ptr %.0116177, i64 2
   %i.cg = load i8, ptr %i.cf, align 1, !tbaa !20
   %.not83.i.1 = icmp slt i8 %i.cg, -64
-  br i1 %.not83.i.1, label %bb.u, label %_utf8_to_unicode.exit
+  br i1 %.not83.i.1, label %bb.u, label %utf8_to_unicode.exit.thread145
 
 bb.u:                                             ; preds = %.lr.ph.i.1
   %exitcond.not.i.1 = icmp eq i64 %spec.select88.i, 3
@@ -366,7 +367,7 @@ bb.u:                                             ; preds = %.lr.ph.i.1
   %i.ch = getelementptr inbounds nuw i8, ptr %.0116177, i64 3
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !20
   %.not83.i.2 = icmp slt i8 %i.ci, -64
-  br i1 %.not83.i.2, label %bb.v, label %_utf8_to_unicode.exit
+  br i1 %.not83.i.2, label %bb.v, label %utf8_to_unicode.exit.thread145
 
 bb.v:                                             ; preds = %.lr.ph.i.2
   %exitcond.not.i.2 = icmp eq i64 %spec.select88.i, 4
@@ -376,7 +377,7 @@ bb.v:                                             ; preds = %.lr.ph.i.2
   %i.cj = getelementptr inbounds nuw i8, ptr %.0116177, i64 4
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !20
   %.not83.i.3 = icmp slt i8 %i.ck, -64
-  br i1 %.not83.i.3, label %bb.w, label %_utf8_to_unicode.exit
+  br i1 %.not83.i.3, label %bb.w, label %utf8_to_unicode.exit.thread145
 
 bb.w:                                             ; preds = %.lr.ph.i.3
   %exitcond.not.i.3 = icmp eq i64 %spec.select88.i, 5
@@ -386,7 +387,7 @@ bb.w:                                             ; preds = %.lr.ph.i.3
   %i.cl = getelementptr inbounds nuw i8, ptr %.0116177, i64 5
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !20
   %.not83.i.4 = icmp slt i8 %i.cm, -64
-  br i1 %.not83.i.4, label %bb.x, label %_utf8_to_unicode.exit
+  br i1 %.not83.i.4, label %bb.x, label %utf8_to_unicode.exit.thread145
 
 bb.x:                                             ; preds = %.lr.ph.i.4
   %exitcond.not.i.4 = icmp eq i64 %spec.select88.i, 6
@@ -396,24 +397,22 @@ bb.x:                                             ; preds = %.lr.ph.i.4
   %i.cn = getelementptr inbounds nuw i8, ptr %.0116177, i64 6
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !20
   %.not83.i.5 = icmp slt i8 %i.co, -64
-  br i1 %.not83.i.5, label %utf8_to_unicode.exit.thread145.loopexit, label %_utf8_to_unicode.exit
+  br i1 %.not83.i.5, label %utf8_to_unicode.exit.thread145.loopexit, label %utf8_to_unicode.exit.thread145
 
 .loopexit.loopexit.split.loop.exit.i:             ; preds = %.lr.ph95.i
   %i.cp = trunc nuw nsw i64 %indvars.iv102.i to i32
-  br label %_utf8_to_unicode.exit
-
-utf8_to_unicode.exit.thread145.loopexit:          ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %.lr.ph.i.5
-  %spec.select.i63.le = trunc nuw nsw i64 %spec.select88.i to i32
   br label %utf8_to_unicode.exit.thread145
 
-utf8_to_unicode.exit.thread145:                   ; preds = %bb.s, %bb.j, %bb.h, %bb.f, %bb.l, %bb.i, %bb.m, %bb.k, %bb.n, %utf8_to_unicode.exit.thread145.loopexit
-  %.2.i.ph = phi i32 [ %spec.select.i63.le, %utf8_to_unicode.exit.thread145.loopexit ], [ 1, %bb.k ], [ 3, %bb.m ], [ 2, %bb.i ], [ 2, %bb.l ], [ 1, %bb.f ], [ 1, %bb.h ], [ 3, %bb.j ], [ 1, %bb.s ], [ 4, %bb.n ]
+utf8_to_unicode.exit.thread145.loopexit:          ; preds = %.lr.ph.i.5, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t
+  br label %utf8_to_unicode.exit.thread145
+
+utf8_to_unicode.exit.thread145:                   ; preds = %bb.j, %bb.h, %bb.f, %bb.l, %bb.i, %bb.m, %bb.k, %bb.n, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %utf8_to_unicode.exit.thread145.loopexit, %.loopexit.loopexit.split.loop.exit.i, %bb.s
+  %.2.i.ph = phi i32 [ %spec.select.i63, %utf8_to_unicode.exit.thread145.loopexit ], [ 6, %.lr.ph.i.5 ], [ %i.cp, %.loopexit.loopexit.split.loop.exit.i ], [ 1, %bb.s ], [ 1, %.lr.ph.i ], [ 2, %.lr.ph.i.1 ], [ 3, %.lr.ph.i.2 ], [ 4, %.lr.ph.i.3 ], [ 5, %.lr.ph.i.4 ], [ 1, %bb.k ], [ 3, %bb.m ], [ 2, %bb.i ], [ 2, %bb.l ], [ 1, %bb.f ], [ 1, %bb.h ], [ 3, %bb.j ], [ 4, %bb.n ]
   %i.cq = sub nsw i32 0, %.2.i.ph
   br label %utf8_to_unicode.exit.thread86
 
-_utf8_to_unicode.exit:                            ; preds = %bb.c, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %bb.b, %.loopexit.loopexit.split.loop.exit.i
-  %.2.i = phi i32 [ 6, %.lr.ph.i.5 ], [ %i.cp, %.loopexit.loopexit.split.loop.exit.i ], [ %i.aa, %bb.b ], [ 1, %.lr.ph.i ], [ 2, %.lr.ph.i.1 ], [ 3, %.lr.ph.i.2 ], [ 4, %.lr.ph.i.3 ], [ 5, %.lr.ph.i.4 ], [ %i.aa, %bb.c ] ; 3 uses
-  %i.cr = icmp eq i32 %.2.i, -3
+_utf8_to_unicode.exit:                            ; preds = %bb.c, %bb.b
+  %i.cr = icmp eq i32 %i.aa, -3
   br i1 %i.cr, label %utf8_to_unicode.exit.thread, label %utf8_to_unicode.exit
 
 bb.y:                                             ; preds = %bb.j
@@ -424,8 +423,8 @@ bb.y:                                             ; preds = %bb.j
   br i1 %or.cond.i, label %utf8_to_unicode.exit.thread86, label %utf8_to_unicode.exit.thread
 
 utf8_to_unicode.exit:                             ; preds = %_utf8_to_unicode.exit
-  %i.cv = sub nsw i32 0, %.2.i                    ; 2 uses
-  %i.cw = icmp slt i32 %.2.i, 0
+  %i.cv = sub nsw i32 0, %i.aa                    ; 2 uses
+  %i.cw = icmp slt i32 %i.aa, 0
   br i1 %i.cw, label %utf8_to_unicode.exit.thread, label %utf8_to_unicode.exit.thread86
 
 utf8_to_unicode.exit.thread:                      ; preds = %bb.e, %bb.g, %bb.n, %bb.y, %_utf8_to_unicode.exit, %utf8_to_unicode.exit

@@ -204,7 +204,7 @@ _ZL10safeArcCosd.exit.thread1.i.i.i:              ; preds = %_ZL10safeArcCosd.ex
   %i.cd = tail call double @llvm.fmuladd.f64(double %i.bl, double %i.az, double %i.cc)
   %i.ce = tail call double @atan2(double noundef %i.ca, double noundef %i.cd) #17
   %i.cf = trunc nuw nsw i64 %indvars.iv.i.i.i to i32 ; 9 uses
-  %switch.tableidx = add i32 %i.cf, -5            ; 2 uses
+  %switch.tableidx = add nsw i32 %i.cf, -5        ; 2 uses
   %i.cg = icmp ult i32 %switch.tableidx, 12
   %switch.maskindex = trunc i32 %switch.tableidx to i16
   %switch.shifted = lshr i16 3103, %switch.maskindex
@@ -311,20 +311,20 @@ _ZL14isea_transformPN12_GLOBAL__N_112pj_isea_dataEPNS_8GeoPointEPNS_7isea_ptE.ex
   br i1 %i.eq, label %switch.lookup, label %bb.i
 
 switch.lookup:                                    ; preds = %_ZL14isea_transformPN12_GLOBAL__N_112pj_isea_dataEPNS_8GeoPointEPNS_7isea_ptE.exit.i
-  %7 = sdiv i32 %i.cf, 5
-  %i.er = and i32 %7, -2147483647
-  %i.es = icmp eq i32 %i.er, 1                    ; 2 uses
+  %7 = udiv i32 %i.cf, 5
+  %i.er = and i32 %7, 1
+  %i.es = icmp eq i32 %i.er, 0                    ; 2 uses
   %i.et = fneg double %i.ej
   %i.eu = fneg double %i.el
-  %i.ev = select i1 %i.es, double %i.eu, double %i.el
-  %i.ew = select i1 %i.es, double %i.et, double %i.ej
-  %8 = srem i32 %i.cf, 20                         ; 2 uses
+  %i.ev = select i1 %i.es, double %i.el, double %i.eu
+  %i.ew = select i1 %i.es, double %i.ej, double %i.et
+  %8 = urem i32 %i.cf, 20                         ; 2 uses
   %.lhs.trunc5.i.i.i = trunc nuw nsw i32 %8 to i8 ; 2 uses
   %i.ex = udiv i8 %.lhs.trunc5.i.i.i, 5
   %i.ey = zext nneg i8 %i.ex to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZL14isea_s_forward5PJ_LPP8PJconsts, i64 %i.ey
   %switch.load = load double, ptr %switch.gep, align 8
-  %9 = icmp sgt i32 %8, 9
+  %9 = icmp samesign ugt i32 %8, 9
   %i.ez = urem i8 %.lhs.trunc5.i.i.i, 5
   %narrow.i.i.i = add nsw i8 %i.ez, -2
   %i.fa = sitofp i8 %narrow.i.i.i to double
@@ -353,11 +353,11 @@ bb.i:                                             ; preds = %_ZL14isea_transform
   ]
 
 _ZL9isea_ptddiPN12_GLOBAL__N_17isea_ptE.exit.i:   ; preds = %bb.i
-  %10 = sdiv i32 %i.cf, 5
-  %11 = srem i32 %i.cf, 5
-  %i.fl = and i32 %10, -2147483647
-  %i.fm = icmp eq i32 %i.fl, 1                    ; 2 uses
-  %i.fn = select i1 %i.fm, double f0xC010C152382D7365, double f0xBFF0C152382D7365 ; 3 uses
+  %10 = udiv i32 %i.cf, 5
+  %11 = urem i32 %i.cf, 5
+  %i.fl = and i32 %10, 1
+  %i.fm = icmp eq i32 %i.fl, 0                    ; 2 uses
+  %i.fn = select i1 %i.fm, double f0xBFF0C152382D7365, double f0xC010C152382D7365 ; 3 uses
   %i.fo = tail call double @cos(double noundef %i.fn) #17
   %i.fp = tail call double @sin(double noundef %i.fn) #17 ; 2 uses
   %i.fq = fneg double %i.fj
@@ -373,9 +373,9 @@ _ZL9isea_ptddiPN12_GLOBAL__N_17isea_ptE.exit.i:   ; preds = %bb.i
   %i.ga = insertelement <2 x double> %i.fz, double %i.fp, i64 1
   %i.gb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fy, <2 x double> %i.ga, <2 x double> %i.fw) ; 2 uses
   %i.gc = fadd <2 x double> %i.gb, <double 5.000000e-01, double f0x3FEBB67AE8584CAA>
-  %storemerge = select i1 %i.fm, <2 x double> %i.gc, <2 x double> %i.gb
+  %storemerge = select i1 %i.fm, <2 x double> %i.gb, <2 x double> %i.gc
   store <2 x double> %storemerge, ptr %5, align 16, !tbaa !38
-  %12 = sdiv i32 %i.cf, 10
+  %12 = udiv i32 %i.cf, 10
   %i.gd = mul nuw nsw i32 %12, 5
   %i.ge = add nuw nsw i32 %11, 1
   %i.gf = add nuw nsw i32 %i.ge, %i.gd

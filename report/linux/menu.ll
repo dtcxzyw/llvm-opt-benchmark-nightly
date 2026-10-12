@@ -204,14 +204,14 @@ bb.ax:                                            ; preds = %bb.aq
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.aw, %which_bucket.exit, %bb.ax
-  %.1103 = phi i64 [ %i.en, %bb.ax ], [ %i.fm, %which_bucket.exit ], [ %spec.select, %bb.aw ] ; 7 uses
+  %.1103 = phi i64 [ %i.en, %bb.ax ], [ %i.fm, %which_bucket.exit ], [ %spec.select, %bb.aw ] ; 6 uses
   %i.ft = icmp eq i64 %i.g, 0
   br i1 %i.ft, label %bb.bc, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   %i.fu = getelementptr i8, ptr %i.d, i64 8
   %i.fv = load i64, ptr %i.fu, align 8            ; 2 uses
-  %i.fw = getelementptr i8, ptr %0, i64 24        ; 4 uses
+  %i.fw = getelementptr i8, ptr %0, i64 24        ; 5 uses
   %i.fx = getelementptr i8, ptr %0, i64 184
   %i.fy = load i64, ptr %i.fx, align 8
   %i.fz = icmp ult i64 %i.fv, %i.fy
@@ -251,7 +251,7 @@ bb.bd:                                            ; preds = %bb.bb, %bb.ba
 
 bb.be:                                            ; preds = %.lr.ph, %bb.bn
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.bn ] ; 5 uses
-  %.096169 = phi i32 [ -1, %.lr.ph ], [ %.3, %bb.bn ] ; 5 uses
+  %.096169 = phi i32 [ -1, %.lr.ph ], [ %.3.fr, %bb.bn ] ; 5 uses
   %i.go = getelementptr [104 x i8], ptr %i.fw, i64 %indvars.iv ; 3 uses
   %i.gp = getelementptr [64 x i8], ptr %i.gn, i64 %indvars.iv
   %i.gq = load i64, ptr %i.gp, align 8
@@ -268,13 +268,13 @@ bb.bg:                                            ; preds = %bb.bf
   %i.gu = getelementptr i8, ptr %i.go, i64 56
   %i.gv = load i64, ptr %i.gu, align 8            ; 4 uses
   %.not117 = icmp ugt i64 %i.gv, %.1103
-  %i.gw = trunc nuw nsw i64 %indvars.iv to i32    ; 4 uses
+  %i.gw = trunc nuw nsw i64 %indvars.iv to i32    ; 5 uses
   br i1 %.not117, label %bb.bh, label %bb.bn
 
 bb.bh:                                            ; preds = %bb.bg
   %i.gx = getelementptr i8, ptr %i.go, i64 56
   %i.gy = icmp eq i32 %.096169, -1
-  %spec.select125.le162 = select i1 %i.gy, i32 %i.gw, i32 %.096169 ; 5 uses
+  %spec.select125.le162 = select i1 %i.gy, i32 %i.gw, i32 %.096169 ; 8 uses
   %i.gz = sext i32 %spec.select125.le162 to i64
   %i.ha = getelementptr [104 x i8], ptr %i.fw, i64 %i.gz ; 2 uses
   %i.hb = getelementptr i8, ptr %i.ha, i64 64
@@ -288,17 +288,21 @@ bb.bi:                                            ; preds = %bb.bh
   %.not119 = icmp ugt i64 %i.gv, %i.fv
   %.not120 = icmp ugt i64 %i.gs, %.1103
   %or.cond127 = select i1 %.not119, i1 true, i1 %.not120
-  br i1 %or.cond127, label %bb.bj, label %.thread136
+  br i1 %or.cond127, label %bb.bj, label %.thread136.thread
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh
   %i.he = icmp ult i64 %.1103, 1000000
-  br i1 %i.he, label %.thread136, label %bb.bk
+  br i1 %i.he, label %.thread136.thread217.thread, label %bb.bk
+
+.thread136.thread217.thread:                      ; preds = %bb.bj
+  %3 = sext i32 %spec.select125.le162 to i64
+  br label %bb.bo
 
 bb.bk:                                            ; preds = %bb.bj
   %i.hf = call zeroext i1 @tick_nohz_tick_stopped() #7
   %i.hg = getelementptr i8, ptr %i.ha, i64 56
   %i.hh = load i64, ptr %i.hg, align 8            ; 2 uses
-  br i1 %i.hf, label %bb.bl, label %.thread136
+  br i1 %i.hf, label %bb.bl, label %.thread136.thread
 
 bb.bl:                                            ; preds = %bb.bk
   %i.hi = icmp slt i64 %i.hh, 1000000
@@ -312,7 +316,8 @@ bb.bm:                                            ; preds = %bb.bl
   br label %.thread143
 
 bb.bn:                                            ; preds = %bb.be, %bb.bg
-  %.3 = phi i32 [ %i.gw, %bb.bg ], [ %.096169, %bb.be ] ; 2 uses
+  %.3 = phi i32 [ %i.gw, %bb.bg ], [ %.096169, %bb.be ]
+  %.3.fr = freeze i32 %.3                         ; 4 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.thread136, label %bb.be, !llvm.loop !10
@@ -320,23 +325,20 @@ bb.bn:                                            ; preds = %bb.be, %bb.bg
 .thread136.loopexit.split.loop.exit159:           ; preds = %bb.bf
   %i.hl = trunc nuw nsw i64 %indvars.iv to i32
   %i.hm = icmp eq i32 %.096169, -1
-  %spec.select125.le = select i1 %i.hm, i32 %i.hl, i32 %.096169
-  br label %.thread136
-
-.thread136:                                       ; preds = %bb.bn, %bb.bk, %.thread136.loopexit.split.loop.exit159, %bb.bj, %bb.bi
-  %.4106 = phi i64 [ %i.hh, %bb.bk ], [ %.1103, %bb.bj ], [ %i.gv, %bb.bi ], [ %.1103, %.thread136.loopexit.split.loop.exit159 ], [ %.1103, %bb.bn ]
-  %.4 = phi i32 [ %spec.select125.le162, %bb.bk ], [ %spec.select125.le162, %bb.bj ], [ %i.gw, %bb.bi ], [ %spec.select125.le, %.thread136.loopexit.split.loop.exit159 ], [ %.3, %bb.bn ]
-  %.4.fr = freeze i32 %.4                         ; 3 uses
-  %i.hn = icmp eq i32 %.4.fr, -1
-  %spec.select233 = select i1 %i.hn, i32 0, i32 %.4.fr
+  %spec.select125.le = select i1 %i.hm, i32 %i.hl, i32 %.096169 ; 2 uses
   br label %.thread136.thread
 
-.thread136.thread:                                ; preds = %.thread136, %bb.bd
-  %.4217 = phi i32 [ %.4.fr, %.thread136 ], [ -1, %bb.bd ] ; 4 uses
-  %.4106215 = phi i64 [ %.4106, %.thread136 ], [ %.1103, %bb.bd ]
-  %3 = phi i32 [ %spec.select233, %.thread136 ], [ 0, %bb.bd ] ; 5 uses
-  %i.ho = sext i32 %3 to i64
-  %i.hp = getelementptr [104 x i8], ptr %i.fw, i64 %i.ho ; 2 uses
+.thread136:                                       ; preds = %bb.bn
+  %i.hn = icmp eq i32 %.3.fr, -1
+  %spec.select233 = select i1 %i.hn, i32 0, i32 %.3.fr
+  br label %.thread136.thread
+
+.thread136.thread:                                ; preds = %.thread136, %bb.bk, %.thread136.loopexit.split.loop.exit159, %bb.bi, %bb.bd
+  %.4216 = phi i32 [ -1, %bb.bd ], [ %.3.fr, %.thread136 ], [ %spec.select125.le162, %bb.bk ], [ %spec.select125.le, %.thread136.loopexit.split.loop.exit159 ], [ %i.gw, %bb.bi ]
+  %.4106215 = phi i64 [ %.1103, %bb.bd ], [ %.1103, %.thread136 ], [ %i.hh, %bb.bk ], [ %.1103, %.thread136.loopexit.split.loop.exit159 ], [ %i.gv, %bb.bi ]
+  %4 = phi i32 [ 0, %bb.bd ], [ %spec.select233, %.thread136 ], [ %spec.select125.le162, %bb.bk ], [ %spec.select125.le, %.thread136.loopexit.split.loop.exit159 ], [ %i.gw, %bb.bi ] ; 3 uses
+  %i.ho = sext i32 %4 to i64                      ; 2 uses
+  %i.hp = getelementptr [104 x i8], ptr %i.fw, i64 %i.ho
   %i.hq = getelementptr i8, ptr %i.hp, i64 64
   %i.hr = load i32, ptr %i.hq, align 8
   %i.hs = trunc i32 %i.hr to i1
@@ -344,32 +346,36 @@ bb.bn:                                            ; preds = %bb.be, %bb.bg
   %or.cond3 = select i1 %i.hs, i1 true, i1 %i.ht
   br i1 %or.cond3, label %bb.bo, label %.thread143
 
-bb.bo:                                            ; preds = %.thread136.thread
+bb.bo:                                            ; preds = %.thread136.thread217.thread, %.thread136.thread
+  %5 = phi i64 [ %3, %.thread136.thread217.thread ], [ %i.ho, %.thread136.thread ]
+  %6 = phi i32 [ %spec.select125.le162, %.thread136.thread217.thread ], [ %4, %.thread136.thread ] ; 3 uses
+  %.4216226 = phi i32 [ %spec.select125.le162, %.thread136.thread217.thread ], [ %.4216, %.thread136.thread ] ; 4 uses
   %i.hu = call zeroext i1 @tick_nohz_tick_stopped() #7
   br i1 %i.hu, label %.thread143, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
   store i8 0, ptr %2, align 1
-  %i.hv = icmp sgt i32 %3, 0
+  %i.hv = icmp sgt i32 %6, 0
   br i1 %i.hv, label %bb.bq, label %.thread143
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.hw = getelementptr i8, ptr %i.hp, i64 56
+  %7 = getelementptr [104 x i8], ptr %i.fw, i64 %5
+  %i.hw = getelementptr i8, ptr %7, i64 56
   %i.hx = load i64, ptr %i.hw, align 8
   %i.hy = load i64, ptr %i.a, align 8             ; 2 uses
   %i.hz = icmp sgt i64 %i.hx, %i.hy
-  %i.ia = icmp sgt i32 %.4217, 0
-  %or.cond234 = and i1 %i.hz, %i.ia
-  br i1 %or.cond234, label %.lr.ph173, label %.thread143
+  %i.ia = icmp sgt i32 %.4216226, 0
+  %or.cond242 = select i1 %i.hz, i1 %i.ia, i1 false
+  br i1 %or.cond242, label %.lr.ph173, label %.thread143
 
 .lr.ph173:                                        ; preds = %bb.bq
   %i.ib = getelementptr i8, ptr %1, i64 48
-  %i.ic = zext nneg i32 %.4217 to i64
+  %i.ic = zext nneg i32 %.4216226 to i64
   br label %bb.br
 
 bb.br:                                            ; preds = %.lr.ph173, %bb.bt
   %indvars.iv192 = phi i64 [ %i.ic, %.lr.ph173 ], [ %indvars.iv.next193, %bb.bt ] ; 2 uses
-  %.5171 = phi i32 [ %.4217, %.lr.ph173 ], [ %.6, %bb.bt ]
+  %.5171 = phi i32 [ %.4216226, %.lr.ph173 ], [ %.6, %bb.bt ]
   %indvars.iv.next193 = add nsw i64 %indvars.iv192, -1 ; 4 uses
   %i.id = getelementptr [64 x i8], ptr %i.ib, i64 %indvars.iv.next193
   %i.ie = load i64, ptr %i.id, align 8
@@ -390,7 +396,7 @@ bb.bt:                                            ; preds = %bb.bs, %bb.br
   br i1 %i.ij, label %bb.br, label %.thread143, !llvm.loop !11
 
 .thread143:                                       ; preds = %bb.bs, %bb.bt, %bb.bm, %bb.bl, %bb.bo, %.thread136.thread, %bb.bq, %bb.bp, %bb.bc
-  %.2 = phi i32 [ 0, %bb.bc ], [ %3, %.thread136.thread ], [ %3, %bb.bo ], [ %spec.select128, %bb.bm ], [ %spec.select125.le162, %bb.bl ], [ %.4217, %bb.bq ], [ %3, %bb.bp ], [ %i.ii, %bb.bs ], [ %.6, %bb.bt ]
+  %.2 = phi i32 [ 0, %bb.bc ], [ %4, %.thread136.thread ], [ %6, %bb.bo ], [ %spec.select128, %bb.bm ], [ %spec.select125.le162, %bb.bl ], [ %.4216226, %bb.bq ], [ %6, %bb.bp ], [ %i.ii, %bb.bs ], [ %.6, %bb.bt ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.2
 }

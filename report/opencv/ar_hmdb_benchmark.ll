@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.std::allocator.1", align 1  ; 3 uses
   %i.a = load i64, ptr %1, align 8, !tbaa !137
   %.fr98 = freeze i64 %i.a                        ; 2 uses
-  %i.b = trunc i64 %.fr98 to i32                  ; 7 uses
+  %i.b = trunc i64 %.fr98 to i32                  ; 6 uses
   %i.c = icmp slt i32 %i.b, 1
   br i1 %i.c, label %bb.b, label %bb.e
 
@@ -247,7 +247,7 @@ bb.e:                                             ; preds = %bb.a
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !179  ; 5 uses
   store ptr %i.o, ptr %i.l, align 8, !tbaa !179
   %.not = icmp eq i32 %i.b, 1
-  br i1 %.not, label %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread, label %.preheader.lr.ph.i
+  br i1 %.not, label %.lr.ph95, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
@@ -282,7 +282,7 @@ bb.e:                                             ; preds = %bb.a
   %i.ac = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !189
   %.not.i.us78125 = icmp eq ptr %i.ad, null
-  br i1 %.not.i.us78125, label %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread, label %._crit_edge73.i.split.us86
+  br i1 %.not.i.us78125, label %.lr.ph95, label %._crit_edge73.i.split.us86
 
 .preheader.i.us:                                  ; preds = %.preheader.i.us.preheader, %.loopexit.i.us
   %.05782.i.us = phi float [ %.256.i.us.us, %.loopexit.i.us ], [ %i.u, %.preheader.i.us.preheader ]
@@ -382,7 +382,7 @@ bb.f:                                             ; preds = %._crit_edge.i.loope
   %.reass.i.us = add i32 %invariant.op.i, %.06081.i.us
   %i.bt = icmp sgt i32 %.reass.i.us, %i.b
   %or.cond.i.us = or i1 %i.bs, %i.bt
-  br i1 %or.cond.i.us, label %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit, label %bb.g
+  br i1 %or.cond.i.us, label %.lr.ph95, label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge73.i.split.us.us
   %i.bu = sext i32 %.2.i.us.us to i64
@@ -445,7 +445,7 @@ middle.block:                                     ; preds = %vector.body
 .loopexit.i.us:                                   ; preds = %.loopexit.loopexit.i.us, %bb.g
   %.161.lcssa.i.us = phi i32 [ %.06081.i.us, %bb.g ], [ %i.cj, %.loopexit.loopexit.i.us ] ; 3 uses
   %i.ck = icmp slt i32 %.161.lcssa.i.us, %i.b
-  br i1 %i.ck, label %.preheader.i.us, label %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit
+  br i1 %i.ck, label %.preheader.i.us, label %.lr.ph95
 
 ._crit_edge73.i.split.us86:                       ; preds = %.preheader.i.us72.preheader, %.loopexit.i.us89
   %.05782.i.us73126 = phi float [ %i.cs, %.loopexit.i.us89 ], [ %i.u, %.preheader.i.us72.preheader ]
@@ -458,7 +458,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cr = fneg float %i.cn
   %i.cs = tail call float @llvm.fmuladd.f32(float %i.cr, float %i.cq, float %.05782.i.us73126) ; 2 uses
   %i.ct = fcmp uge float %i.cs, f0x7F7FFFFF
-  br i1 %i.ct, label %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread, label %.loopexit.i.us89
+  br i1 %i.ct, label %.lr.ph95, label %.loopexit.i.us89
 
 .loopexit.i.us89:                                 ; preds = %._crit_edge73.i.split.us86
   %i.cu = load ptr, ptr %i.l, align 8, !tbaa !179
@@ -469,20 +469,11 @@ middle.block:                                     ; preds = %vector.body
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 24
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !189
   %.not.i.us78 = icmp eq ptr %i.cz, null
-  br i1 %.not.i.us78, label %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread, label %._crit_edge73.i.split.us86
+  br i1 %.not.i.us78, label %.lr.ph95, label %._crit_edge73.i.split.us86
 
-_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread: ; preds = %.loopexit.i.us89, %._crit_edge73.i.split.us86, %.preheader.i.us72.preheader, %bb.e
-  %4 = tail call noundef i32 (ptr, ...) @_ZN7cvflann6Logger4infoEPKcz(ptr noundef nonnull @.str.64, i32 noundef %i.b, i32 noundef 1) ; 0 uses
-  br label %.lr.ph95
-
-_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit: ; preds = %.loopexit.i.us, %._crit_edge73.i.split.us.us
-  %.060.lcssa.i.ph = phi i32 [ %.06081.i.us, %._crit_edge73.i.split.us.us ], [ %.161.lcssa.i.us, %.loopexit.i.us ] ; 4 uses
-  %5 = tail call noundef i32 (ptr, ...) @_ZN7cvflann6Logger4infoEPKcz(ptr noundef nonnull @.str.64, i32 noundef %i.b, i32 noundef %.060.lcssa.i.ph) ; 0 uses
-  %6 = icmp sgt i32 %.060.lcssa.i.ph, 0
-  br i1 %6, label %.lr.ph95, label %._crit_edge96.split
-
-.lr.ph95:                                         ; preds = %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit
-  %.060.lcssa.i120 = phi i32 [ 1, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread ], [ %.060.lcssa.i.ph, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit ] ; 3 uses
+.lr.ph95:                                         ; preds = %._crit_edge73.i.split.us86, %.loopexit.i.us89, %._crit_edge73.i.split.us.us, %.loopexit.i.us, %bb.e, %.preheader.i.us72.preheader
+  %.060.lcssa.i.ph.sink = phi i32 [ 1, %bb.e ], [ 1, %.preheader.i.us72.preheader ], [ %.06081.i.us, %._crit_edge73.i.split.us.us ], [ %.161.lcssa.i.us, %.loopexit.i.us ], [ 1, %.loopexit.i.us89 ], [ 1, %._crit_edge73.i.split.us86 ] ; 4 uses
+  %4 = tail call noundef i32 (ptr, ...) @_ZN7cvflann6Logger4infoEPKcz(ptr noundef nonnull @.str.64, i32 noundef %i.b, i32 noundef %.060.lcssa.i.ph.sink) ; 0 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.db = load i64, ptr %i.da, align 8, !tbaa !190 ; 7 uses
   %.not99 = icmp eq i64 %i.db, 0
@@ -494,7 +485,7 @@ _ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEP
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !139 ; 2 uses
   %i.df = ptrtoaddr ptr %i.de to i64
   %i.dg = load i64, ptr %i.dc, align 8, !tbaa !140 ; 2 uses
-  %wide.trip.count110 = zext nneg i32 %.060.lcssa.i120 to i64
+  %wide.trip.count110 = zext nneg i32 %.060.lcssa.i.ph.sink to i64
   %i.dh = shl i64 %i.dg, 2
   %min.iters.check130 = icmp ult i64 %i.db, 8
   %n.vec132 = and i64 %i.db, -8                   ; 3 uses
@@ -589,8 +580,8 @@ scalar.ph129:                                     ; preds = %scalar.ph129.prol.l
   %exitcond106.not.3 = icmp eq i64 %i.er, %i.db
   br i1 %exitcond106.not.3, label %._crit_edge, label %scalar.ph129, !llvm.loop !393
 
-._crit_edge96.split:                              ; preds = %._crit_edge, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread121, %.lr.ph95, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit
-  %.060.lcssa.i119 = phi i32 [ %.06081.i.us, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread121 ], [ %.060.lcssa.i120, %.lr.ph95 ], [ %.060.lcssa.i.ph, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit ], [ %.060.lcssa.i120, %._crit_edge ]
+._crit_edge96.split:                              ; preds = %._crit_edge, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread121, %.lr.ph95
+  %.060.lcssa.i119 = phi i32 [ %.06081.i.us, %_ZN7cvflann11KMeansIndexINS_2L2IfEEE22getMinVarianceClustersEPNS3_10KMeansNodeEPS5_iRf.exit.thread121 ], [ %.060.lcssa.i.ph.sink, %.lr.ph95 ], [ %.060.lcssa.i.ph.sink, %._crit_edge ]
   tail call void @_ZdaPv(ptr noundef nonnull %i.l) #32
   ret i32 %.060.lcssa.i119
 }

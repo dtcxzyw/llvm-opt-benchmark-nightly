@@ -204,11 +204,11 @@ bb.y:                                             ; preds = %bb.x
   %i.du = udiv i128 %i.dt, %i.dk, !dbg !26302
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !dbg !26306
     #dbg_value(i128 %i.du, !25200, !DIExpression(), !25577)
-  %trunc = trunc nuw nsw i128 %i.du to i95, !dbg !26307
-  switch i95 %trunc, label %bb.ab [
-    i95 0, label %bb.ak
-    i95 1, label %bb.af
-    i95 2, label %bb.ag
+  %trunc169 = trunc nuw i128 %i.du to i94, !dbg !26307
+  switch i94 %trunc169, label %bb.ab [
+    i94 0, label %bb.ak
+    i94 1, label %bb.af
+    i94 2, label %bb.ag
   ], !dbg !26307
 
 bb.z:                                             ; preds = %bb.x

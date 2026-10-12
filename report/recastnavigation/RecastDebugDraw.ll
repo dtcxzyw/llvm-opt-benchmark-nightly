@@ -205,7 +205,7 @@ bb.a:
   %indvars.iv66.i = phi i64 [ 0, %.preheader59.preheader.i ], [ %indvars.iv.next67.i, %._crit_edge.i ] ; 3 uses
   %i.cr = mul nuw nsw i64 %indvars.iv66.i, %i.cq
   %i.cs = trunc i64 %indvars.iv66.i to i32        ; 2 uses
-  %3 = sitofp i32 %i.cs to float                  ; 2 uses
+  %3 = uitofp nneg i32 %i.cs to float             ; 2 uses
   %i.ct = add i32 %i.cs, 1
   %i.cu = sitofp i32 %i.ct to float               ; 2 uses
   %i.cv = insertelement <4 x float> poison, float %3, i64 2 ; 2 uses
@@ -242,7 +242,7 @@ bb.b:                                             ; preds = %.loopexit.i, %.preh
 
 bb.c:                                             ; preds = %.preheader.i
   %i.dm = trunc nuw nsw i64 %indvars.iv.i to i32
-  %4 = sitofp i32 %i.dm to float
+  %4 = uitofp nneg i32 %i.dm to float
   %i.dn = load <3 x float>, ptr %1, align 8, !tbaa !35
   %i.do = shufflevector <3 x float> %i.dn, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
   %i.dp = insertelement <4 x float> %i.cx, float %4, i64 0
@@ -274,8 +274,8 @@ bb.d:                                             ; preds = %bb.c, %.preheader.i
 
 bb.e:                                             ; preds = %bb.d
   %i.ed = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
-  %5 = sitofp i32 %i.ed to float
-  %i.ee = add i32 %i.ed, 1
+  %5 = uitofp nneg i32 %i.ed to float
+  %i.ee = add nuw i32 %i.ed, 1
   %i.ef = sitofp i32 %i.ee to float
   %i.eg = load <3 x float>, ptr %1, align 8, !tbaa !35
   %i.eh = shufflevector <3 x float> %i.eg, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
@@ -344,7 +344,7 @@ bb.i:                                             ; preds = %bb.h
   %i.fq = trunc i64 %indvars.iv.i to i32          ; 2 uses
   %i.fr = add i32 %i.fq, 1
   %i.fs = sitofp i32 %i.fr to float
-  %6 = sitofp i32 %i.fq to float
+  %6 = uitofp nneg i32 %i.fq to float
   %i.ft = load <3 x float>, ptr %1, align 8, !tbaa !35
   %i.fu = shufflevector <3 x float> %i.ft, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.fv = insertelement <4 x float> %i.cv, float %i.fs, i64 0

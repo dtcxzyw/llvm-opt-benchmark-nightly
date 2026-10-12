@@ -204,6 +204,13 @@ bb.ad:                                            ; preds = %_ZL12equal_uint32PK
   %.not.i.i.i = icmp slt i32 %i.jw, %i.kg
   br i1 %.not.i.i.i, label %.lr.ph141.i.i, label %bb.aa, !llvm.loop !61
 
+.lr.ph141.i.i:                                    ; preds = %bb.z, %bb.ad
+  %3 = getelementptr inbounds [4 x i8], ptr %i.jv, i64 %.pre708.i
+  %4 = zext nneg i32 %spec.select.i.i to i64
+  %5 = add nsw i64 %4, -4
+  %6 = sext i32 %.099.ph161.i.i to i64            ; 6 uses
+  br label %bb.ae
+
 _ZL17findSameDataBlockPKjiii.exit.i.i:            ; preds = %_ZL12equal_uint32PKjS0_i.exit.i.i.i, %bb.ac
   %i.kh = trunc nuw nsw i64 %indvars.iv.i.i.i to i32 ; 3 uses
   %i.ki = tail call i32 @llvm.smin.i32(i32 %spec.select110.i.i, i32 1)
@@ -248,13 +255,6 @@ middle.block1663:                                 ; preds = %vector.body1657
   %.192132.i.i.ph = phi i32 [ %spec.select110.i.i, %_ZL17findSameDataBlockPKjiii.exit.i.i ], [ %i.ko, %middle.block1663 ]
   %.097131.i.i.ph = phi i32 [ %i.kh, %_ZL17findSameDataBlockPKjiii.exit.i.i ], [ %i.kq, %middle.block1663 ]
   br label %.lr.ph.i32.i
-
-.lr.ph141.i.i:                                    ; preds = %bb.z, %bb.ad
-  %3 = getelementptr inbounds [4 x i8], ptr %i.jv, i64 %.pre708.i
-  %4 = zext nneg i32 %spec.select.i.i to i64
-  %5 = add nsw i64 %4, -4
-  %6 = sext i32 %.099.ph161.i.i to i64            ; 6 uses
-  br label %bb.ae
 
 .lr.ph.i32.i:                                     ; preds = %.lr.ph.i32.i.preheader, %.lr.ph.i32.i
   %indvars.iv.i33.i = phi i64 [ %indvars.iv.next.i34.i, %.lr.ph.i32.i ], [ %indvars.iv.i33.i.ph, %.lr.ph.i32.i.preheader ] ; 2 uses
@@ -609,7 +609,7 @@ bb.ak:                                            ; preds = %_ZL11compactDataP9U
   %.not15.i.i39.i = icmp slt i32 %.061.ph95.i.i, 64
   %i.pe = add nsw i32 %.061.ph95.i.i, -63
   %wide.trip.count.i.i.i = zext nneg i32 %i.pe to i64
-  br i1 %.not15.i.i39.i, label %.preheader74.i.i, label %.lr.ph.i.preheader.i.i
+  br i1 %.not15.i.i39.i, label %_ZL19findSameIndex2BlockPKiii.exit.i.i, label %.lr.ph.i.preheader.i.i
 
 .lr.ph.i.preheader.i.i:                           ; preds = %.lr.ph.i38.i
   %i.pf = sext i32 %.163.ph94.i.i to i64
@@ -672,7 +672,18 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %bb.ap, %bb.ao, %bb.an, %bb.am
   %indvars.iv.next.i.i46.i = add nuw nsw i64 %indvars.iv.i.i42.i, 1 ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i46.i, %wide.trip.count.i.i.i
-  br i1 %exitcond.not.i.i.i, label %.preheader74.loopexit.i.i, label %bb.al, !llvm.loop !72
+  br i1 %exitcond.not.i.i.i, label %_ZL19findSameIndex2BlockPKiii.exit.loopexit.i.i, label %bb.al, !llvm.loop !72
+
+_ZL19findSameIndex2BlockPKiii.exit.loopexit.i.i:  ; preds = %bb.ar
+  %7 = trunc nsw i64 %indvars.iv.i41.i to i32
+  br label %_ZL19findSameIndex2BlockPKiii.exit.i.i
+
+_ZL19findSameIndex2BlockPKiii.exit.i.i:           ; preds = %_ZL19findSameIndex2BlockPKiii.exit.loopexit.i.i, %.lr.ph.i38.i
+  %.16382.i.i = phi i32 [ %.163.ph94.i.i, %.lr.ph.i38.i ], [ %7, %_ZL19findSameIndex2BlockPKiii.exit.loopexit.i.i ] ; 7 uses
+  %8 = sext i32 %.16382.i.i to i64                ; 2 uses
+  %9 = getelementptr inbounds [4 x i8], ptr %i.w, i64 %8 ; 2 uses
+  %10 = sext i32 %.061.ph95.i.i to i64            ; 7 uses
+  br label %bb.as
 
 _ZL19findSameIndex2BlockPKiii.exit.i.i.a:         ; preds = %bb.aq
   %i.qd = trunc nuw nsw i64 %indvars.iv.i.i42.i to i32
@@ -687,19 +698,8 @@ _ZL19findSameIndex2BlockPKiii.exit.i.i.a:         ; preds = %bb.aq
   %i.qk = icmp slt i64 %indvars.iv.next.i53.i, %i.qj
   br i1 %i.qk, label %.lr.ph.i.i40.i, label %.preheader.i35.i, !llvm.loop !73
 
-.preheader74.loopexit.i.i:                        ; preds = %bb.ar
-  %7 = trunc nsw i64 %indvars.iv.i41.i to i32
-  br label %.preheader74.i.i
-
-.preheader74.i.i:                                 ; preds = %.preheader74.loopexit.i.i, %.lr.ph.i38.i
-  %.us-phi85.i.i = phi i32 [ %.163.ph94.i.i, %.lr.ph.i38.i ], [ %7, %.preheader74.loopexit.i.i ] ; 7 uses
-  %8 = sext i32 %.us-phi85.i.i to i64             ; 2 uses
-  %9 = getelementptr inbounds [4 x i8], ptr %i.w, i64 %8 ; 2 uses
-  %10 = sext i32 %.061.ph95.i.i to i64            ; 7 uses
-  br label %bb.as
-
-bb.as:                                            ; preds = %bb.ay, %.preheader74.i.i
-  %indvars.iv112.i.i = phi i64 [ 63, %.preheader74.i.i ], [ %indvars.iv.next113.i.i.1, %bb.ay ] ; 5 uses
+bb.as:                                            ; preds = %bb.ay, %_ZL19findSameIndex2BlockPKiii.exit.i.i
+  %indvars.iv112.i.i = phi i64 [ 63, %_ZL19findSameIndex2BlockPKiii.exit.i.i ], [ %indvars.iv.next113.i.i.1, %bb.ay ] ; 5 uses
   %i.ql = sub nsw i64 %10, %indvars.iv112.i.i
   %i.qm = getelementptr inbounds [4 x i8], ptr %i.w, i64 %i.ql
   %i.qn = trunc nuw nsw i64 %indvars.iv112.i.i to i32 ; 2 uses
@@ -753,8 +753,8 @@ bb.az:                                            ; preds = %bb.ax
   br i1 %i.rf, label %bb.ax, label %.critedge.i.i, !llvm.loop !71
 
 .critedge71.i.i:                                  ; preds = %bb.av
-  %.old.i50.i = icmp slt i32 %.061.ph95.i.i, %.us-phi85.i.i
-  %i.rg = ashr i32 %.us-phi85.i.i, 6
+  %.old.i50.i = icmp slt i32 %.061.ph95.i.i, %.16382.i.i
+  %i.rg = ashr i32 %.16382.i.i, 6
   %i.rh = sext i32 %i.rg to i64
   %i.ri = getelementptr inbounds [4 x i8], ptr %i.jd, i64 %i.rh ; 2 uses
   br i1 %.old.i50.i, label %.critedge.thread.i.i, label %bb.ba
@@ -766,11 +766,11 @@ bb.az:                                            ; preds = %bb.ax
 .critedge.i.i:                                    ; preds = %bb.au, %bb.az
   %.lcssa1753 = phi i32 [ %i.qy, %bb.az ], [ %i.qn, %bb.au ] ; 3 uses
   %i.rj = sub nsw i32 %.061.ph95.i.i, %.lcssa1753
-  %i.rk = ashr i32 %.us-phi85.i.i, 6
+  %i.rk = ashr i32 %.16382.i.i, 6
   %i.rl = sext i32 %i.rk to i64
   %i.rm = getelementptr inbounds [4 x i8], ptr %i.jd, i64 %i.rl
   store i32 %i.rj, ptr %i.rm, align 4, !tbaa !27
-  %i.rn = add i32 %.us-phi85.i.i, %.lcssa1753
+  %i.rn = add i32 %.16382.i.i, %.lcssa1753
   %i.ro = sub nuw nsw i32 64, %.lcssa1753
   %.pre707.i = sext i32 %i.rn to i64
   br label %.lr.ph91.preheader.i.i
@@ -838,8 +838,8 @@ middle.block1679:                                 ; preds = %vector.body1674
   br i1 %i.sg, label %.lr.ph91.i.i, label %.outer.loopexit.i52.i, !llvm.loop !75
 
 bb.ba:                                            ; preds = %.critedge71.i.i
-  store i32 %.us-phi85.i.i, ptr %i.ri, align 4, !tbaa !27
-  %i.sh = add nsw i32 %.us-phi85.i.i, 64          ; 2 uses
+  store i32 %.16382.i.i, ptr %i.ri, align 4, !tbaa !27
+  %i.sh = add nsw i32 %.16382.i.i, 64             ; 2 uses
   br label %.outer.i51.i
 
 .outer.loopexit.i52.i:                            ; preds = %.lr.ph91.i.i, %middle.block1679

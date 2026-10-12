@@ -204,23 +204,20 @@ config_wstr_to_int.exit.thread.i127.i:            ; preds = %bb.dm, %bb.dl
   br label %bb.dp
 
 bb.dn:                                            ; preds = %bb.dm
+  %19 = trunc nuw nsw i64 %i.hq to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #28, !noalias !521
   %i.hw = icmp eq i64 %i.hq, 0
   %i.hx = icmp sgt i64 %i.hq, 639
   %i.hy = or i1 %i.hw, %i.hx
-  br i1 %i.hy, label %.thread.i, label %bb.dp
-
-.thread.i:                                        ; preds = %bb.dn
-  %19 = trunc nuw nsw i64 %i.hq to i32
-  br label %config_init_int_max_str_digits.exit.sink.split.i
+  br i1 %i.hy, label %config_init_int_max_str_digits.exit.sink.split.i, label %bb.dp
 
 bb.do:                                            ; preds = %bb.dj
   %.pre.i.i = load i32, ptr %i.hd, align 8, !tbaa !151, !noalias !521
   %i.hz = icmp slt i32 %.pre.i.i, 0
   br i1 %i.hz, label %config_init_int_max_str_digits.exit.sink.split.i, label %config_init_int_max_str_digits.exit.i
 
-config_init_int_max_str_digits.exit.sink.split.i: ; preds = %bb.do, %.thread.i
-  %.sink.i = phi i32 [ %19, %.thread.i ], [ 4300, %bb.do ]
+config_init_int_max_str_digits.exit.sink.split.i: ; preds = %bb.do, %bb.dn
+  %.sink.i = phi i32 [ %19, %bb.dn ], [ 4300, %bb.do ]
   store i32 %.sink.i, ptr %i.hd, align 8, !tbaa !151, !noalias !521
   br label %config_init_int_max_str_digits.exit.i
 

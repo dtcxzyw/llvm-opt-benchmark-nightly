@@ -205,7 +205,6 @@ begin_hunk_0
 @.str.301 = private unnamed_addr constant [5 x i8] c"ReLU\00", align 1
 @.str.302 = private unnamed_addr constant [6 x i8] c"scale\00", align 1
 @.str.303 = private unnamed_addr constant [6 x i8] c"Scale\00", align 1
-@_ZZN2cv3dnn14dnn5_v2026060512_GLOBAL__N_110TFImporter8parseMulERN17opencv_tensorflow8GraphDefERKNS4_7NodeDefERNS1_11LayerParamsEE16__cv_check__1879 = internal constant %"struct.cv::detail::CheckContext" { ptr @.str.294, ptr @.str.2, i32 1879, i32 1, ptr @.str.79, ptr @.str.80, ptr @.str.210 }, align 8
 @.str.304 = private unnamed_addr constant [4 x i8] c"div\00", align 1
 @.str.305 = private unnamed_addr constant [4 x i8] c"mul\00", align 1
 @.str.306 = private unnamed_addr constant [12 x i8] c"NaryEltwise\00", align 1
@@ -608,8 +607,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %i.s, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v2026060512_GLOBAL__N_110TFImporter8parseMulERN17opencv_tensorflow8GraphDefERKNS4_7NodeDefERNS1_11LayerParamsEE16__cv_check__1783) #29
   unreachable
 
-bb.c:                                             ; preds = %.preheader, %bb.f
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.f ] ; 3 uses
+bb.c:                                             ; preds = %.preheader, %.split.loop.exit702
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %.split.loop.exit702 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   %i.z = load ptr, ptr %i.u, align 8, !tbaa !70
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -701,23 +700,20 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN2cv3dnn14dnn5_v2026060512_GLOBAL__N_13PinD2Ev.exit: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE4findERS9_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
-  br i1 %.sroa.0.0.i.i, label %bb.f, label %.split.loop.exit702
+  br i1 %.sroa.0.0.i.i, label %.split.loop.exit702, label %bb.f
 
 bb.f:                                             ; preds = %_ZN2cv3dnn14dnn5_v2026060512_GLOBAL__N_13PinD2Ev.exit
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not.a = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not.a, label %.split.loop.exit, label %bb.c, !llvm.loop !743
+  %exitcond.not.a = icmp eq i32 %i.s, 2
+  br i1 %exitcond.not.a, label %bb.m, label %bb.l
 
 .split.loop.exit702:                              ; preds = %_ZN2cv3dnn14dnn5_v2026060512_GLOBAL__N_13PinD2Ev.exit
-  %44 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %.split.loop.exit
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %.split.loop.exit, label %bb.c, !llvm.loop !743
 
-.split.loop.exit:                                 ; preds = %bb.f, %.split.loop.exit702
-  %.2 = phi i32 [ %44, %.split.loop.exit702 ], [ -1, %bb.f ] ; 2 uses
-  %45 = icmp ne i32 %.2, -1                       ; 2 uses
-  %i.az = icmp eq i32 %i.s, 2                     ; 3 uses
-  %or.cond = or i1 %i.az, %45
-  br i1 %or.cond, label %46, label %bb.g
+.split.loop.exit:                                 ; preds = %.split.loop.exit702
+  %i.az = icmp eq i32 %i.s, 2
+  br i1 %i.az, label %._crit_edge.i.i458, label %bb.g
 
 bb.g:                                             ; preds = %.split.loop.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
@@ -757,17 +753,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.k,
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   br label %bb.en
 
-46:                                               ; preds = %.split.loop.exit
-  br i1 %45, label %47, label %48
-
-47:                                               ; preds = %46
-  br i1 %i.az, label %bb.m, label %bb.l
-
-bb.l:                                             ; preds = %47
+bb.l:                                             ; preds = %bb.f
   call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %i.s, i32 noundef 2, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v2026060512_GLOBAL__N_110TFImporter8parseMulERN17opencv_tensorflow8GraphDefERKNS4_7NodeDefERNS1_11LayerParamsEE16__cv_check__1799) #29
   unreachable
 
-bb.m:                                             ; preds = %47
+bb.m:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
   %i.bh = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
   store i32 0, ptr %i.bh, align 8, !tbaa !138
@@ -906,7 +896,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br i1 %i.cv, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread536
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %i.cw = icmp eq i32 %.2, 0
+  %i.cw = icmp eq i64 %indvars.iv, 0
   br i1 %i.cw, label %bb.aa, label %bb.af
 
 bb.aa:                                            ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
@@ -1309,14 +1299,7 @@ bb.dw:                                            ; preds = %bb.dv, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
   br label %bb.en
 
-48:                                               ; preds = %46
-  br i1 %i.az, label %._crit_edge.i.i458, label %49
-
-49:                                               ; preds = %48
-  call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %i.s, i32 noundef 2, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v2026060512_GLOBAL__N_110TFImporter8parseMulERN17opencv_tensorflow8GraphDefERKNS4_7NodeDefERNS1_11LayerParamsEE16__cv_check__1879) #29
-  unreachable
-
-._crit_edge.i.i458:                               ; preds = %48
+._crit_edge.i.i458:                               ; preds = %.split.loop.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #26
   %i.vw = getelementptr inbounds nuw i8, ptr %40, i64 16 ; 6 uses
   store ptr %i.vw, ptr %40, align 8, !tbaa !64

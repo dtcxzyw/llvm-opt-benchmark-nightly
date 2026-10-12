@@ -205,9 +205,9 @@ stbtt__fill_active_edges_new.exit.i.i.i.i.i.i:    ; preds = %stbtt__handle_clipp
   %spec.store.select.i.i.i.i.i.i = call i32 @llvm.umin.i32(i32 %i.bpe, i32 255)
   %i.bpf = trunc nuw i32 %spec.store.select.i.i.i.i.i.i to i8
   %i.bpg = trunc nuw nsw i64 %indvars.iv.i.i.i.i.i.i to i32
-  %i.bph = add nsw i32 %i.bov, %i.bpg
-  %10 = sext i32 %i.bph to i64
-  %i.bpi = getelementptr inbounds i8, ptr %i.aaf, i64 %10
+  %i.bph = add nuw nsw i32 %i.bov, %i.bpg
+  %10 = zext nneg i32 %i.bph to i64
+  %i.bpi = getelementptr inbounds nuw i8, ptr %i.aaf, i64 %10
   store i8 %i.bpf, ptr %i.bpi, align 1
   %indvars.iv.next.i.i.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i153 = icmp eq i64 %indvars.iv.next.i.i.i.i.i.i, %i.aih

@@ -205,7 +205,7 @@ vec.epilog.vector.body:                           ; preds = %iter.check
 .loopexit.loopexit30.i.i.i.i:                     ; preds = %.split.i.i.i.i, %vec.epilog.vector.body
   %indvars.iv.next.i.i.i.i.lcssa = phi i64 [ %i.az, %vec.epilog.vector.body ], [ %indvars.iv.next.i.i.i.i, %.split.i.i.i.i ]
   %i.bn = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i.lcssa to i32
-  %i.bo = add i32 %i.bn, 1
+  %i.bo = add nuw i32 %i.bn, 1
   br label %.thread.i.i201
 
 .thread.i.i201:                                   ; preds = %.loopexit.loopexit30.i.i.i.i, %bb.aj
@@ -295,7 +295,7 @@ vec.epilog.vector.body415:                        ; preds = %iter.check405
 .loopexit.loopexit30.i.i.i.i210:                  ; preds = %.split.i.i.i.i205, %vec.epilog.vector.body415
   %indvars.iv.next.i.i.i.i208.lcssa = phi i64 [ %i.cg, %vec.epilog.vector.body415 ], [ %indvars.iv.next.i.i.i.i208, %.split.i.i.i.i205 ]
   %i.cu = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i208.lcssa to i32
-  %i.cv = add i32 %i.cu, 1
+  %i.cv = add nuw i32 %i.cu, 1
   br label %.thread.i.i218
 
 .thread.i.i218:                                   ; preds = %.loopexit.loopexit30.i.i.i.i210, %bb.an
@@ -401,7 +401,7 @@ vec.epilog.vector.body452:                        ; preds = %iter.check442
 .loopexit.loopexit30.i.i.i.i254:                  ; preds = %.split.i.i.i.i249, %vec.epilog.vector.body452
   %indvars.iv.next.i.i.i.i252.lcssa = phi i64 [ %i.dt, %vec.epilog.vector.body452 ], [ %indvars.iv.next.i.i.i.i252, %.split.i.i.i.i249 ]
   %i.eh = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i252.lcssa to i32
-  %i.ei = add i32 %i.eh, 1
+  %i.ei = add nuw i32 %i.eh, 1
   br label %.thread.i.i262
 
 .thread.i.i262:                                   ; preds = %.loopexit.loopexit30.i.i.i.i254, %bb.ar
@@ -804,7 +804,7 @@ vec.epilog.vector.body836:                        ; preds = %iter.check826
 .loopexit.loopexit30.i.i.i.i187:                  ; preds = %.split.i.i.i.i182, %vec.epilog.vector.body836
   %indvars.iv.next.i.i.i.i185.lcssa = phi i64 [ %i.bt, %vec.epilog.vector.body836 ], [ %indvars.iv.next.i.i.i.i185, %.split.i.i.i.i182 ]
   %i.ch = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i185.lcssa to i32
-  %i.ci = add i32 %i.ch, 1
+  %i.ci = add nuw i32 %i.ch, 1
   br label %SetSequence.exit
 
 SetSequence.exit:                                 ; preds = %bb.s, %.loopexit.loopexit30.i.i.i.i187
@@ -923,7 +923,7 @@ vec.epilog.vector.body873:                        ; preds = %iter.check863
 .loopexit.loopexit30.i.i.i.i221:                  ; preds = %.split.i.i.i.i216, %vec.epilog.vector.body873
   %indvars.iv.next.i.i.i.i219.lcssa = phi i64 [ %i.dh, %vec.epilog.vector.body873 ], [ %indvars.iv.next.i.i.i.i219, %.split.i.i.i.i216 ]
   %i.dv = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i219.lcssa to i32
-  %i.dw = add i32 %i.dv, 1
+  %i.dw = add nuw i32 %i.dv, 1
   br label %SetSequence.exit227
 
 SetSequence.exit227:                              ; preds = %bb.z, %.loopexit.loopexit30.i.i.i.i221
@@ -1016,7 +1016,7 @@ vec.epilog.vector.body910:                        ; preds = %iter.check900
 .loopexit.loopexit30.i.i.i.i255:                  ; preds = %.split.i.i.i.i250, %vec.epilog.vector.body910
   %indvars.iv.next.i.i.i.i253.lcssa = phi i64 [ %i.er, %vec.epilog.vector.body910 ], [ %indvars.iv.next.i.i.i.i253, %.split.i.i.i.i250 ]
   %i.ff = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i253.lcssa to i32
-  %i.fg = add i32 %i.ff, 1
+  %i.fg = add nuw i32 %i.ff, 1
   br label %SetSequence.exit261
 
 SetSequence.exit261:                              ; preds = %bb.ad, %.loopexit.loopexit30.i.i.i.i255
@@ -1098,7 +1098,7 @@ vec.epilog.vector.body947:                        ; preds = %iter.check937
 .loopexit.loopexit30.i.i.i.i272:                  ; preds = %.split.i.i.i.i267, %vec.epilog.vector.body947
   %indvars.iv.next.i.i.i.i270.lcssa = phi i64 [ %i.ft, %vec.epilog.vector.body947 ], [ %indvars.iv.next.i.i.i.i270, %.split.i.i.i.i267 ]
   %i.gh = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i270.lcssa to i32
-  %i.gi = add i32 %i.gh, 1
+  %i.gi = add nuw i32 %i.gh, 1
   br label %SetSequence.exit278
 
 SetSequence.exit278:                              ; preds = %bb.ah, %.loopexit.loopexit30.i.i.i.i272
@@ -1190,7 +1190,7 @@ vec.epilog.vector.body984:                        ; preds = %iter.check974
 .loopexit.loopexit30.i.i.i.i293:                  ; preds = %.split.i.i.i.i288, %vec.epilog.vector.body984
   %indvars.iv.next.i.i.i.i291.lcssa = phi i64 [ %i.hc, %vec.epilog.vector.body984 ], [ %indvars.iv.next.i.i.i.i291, %.split.i.i.i.i288 ]
   %i.hq = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i291.lcssa to i32
-  %i.hr = add i32 %i.hq, 1
+  %i.hr = add nuw i32 %i.hq, 1
   br label %SetSequence.exit299
 
 SetSequence.exit299:                              ; preds = %bb.al, %.loopexit.loopexit30.i.i.i.i293
@@ -1272,7 +1272,7 @@ vec.epilog.vector.body1021:                       ; preds = %iter.check1011
 .loopexit.loopexit30.i.i.i.i310:                  ; preds = %.split.i.i.i.i305, %vec.epilog.vector.body1021
   %indvars.iv.next.i.i.i.i308.lcssa = phi i64 [ %i.ie, %vec.epilog.vector.body1021 ], [ %indvars.iv.next.i.i.i.i308, %.split.i.i.i.i305 ]
   %i.is = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i308.lcssa to i32
-  %i.it = add i32 %i.is, 1
+  %i.it = add nuw i32 %i.is, 1
   br label %SetOctetString.exit316
 
 SetOctetString.exit316:                           ; preds = %bb.ap, %.loopexit.loopexit30.i.i.i.i310
@@ -1519,7 +1519,7 @@ vec.epilog.vector.body1058:                       ; preds = %iter.check1048
 .loopexit.loopexit30.i.i.i.i427:                  ; preds = %.split.i.i.i.i422, %vec.epilog.vector.body1058
   %indvars.iv.next.i.i.i.i425.lcssa = phi i64 [ %i.mk, %vec.epilog.vector.body1058 ], [ %indvars.iv.next.i.i.i.i425, %.split.i.i.i.i422 ]
   %i.my = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i425.lcssa to i32
-  %i.mz = add i32 %i.my, 1
+  %i.mz = add nuw i32 %i.my, 1
   br label %SetOctetString.exit433
 
 SetOctetString.exit433:                           ; preds = %bb.bc, %.loopexit.loopexit30.i.i.i.i427

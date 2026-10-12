@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %.preheader.i.i.i, label %rt_get_selected_shape_index.exit.thread.i
 
 .preheader.i.i.i:                                 ; preds = %bb.b, %.preheader.i.i.i
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.preheader.i.i.i ], [ 0, %bb.b ] ; 4 uses
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.preheader.i.i.i ], [ 0, %bb.b ] ; 3 uses
   %i.o = getelementptr inbounds nuw [44 x i8], ptr %i.f, i64 %indvars.iv.i.i.i ; 7 uses
   %i.p = load i32, ptr %i.o, align 4, !tbaa !106
   %i.q = icmp ne i32 %i.p, %i.m                   ; 2 uses
@@ -215,7 +215,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.s, label %.preheader.i.i.i, label %.loopexit.loopexit.i.i.i
 
 .loopexit.loopexit.i.i.i:                         ; preds = %.preheader.i.i.i
-  %3 = trunc nuw nsw i64 %indvars.iv.i.i.i to i32 ; 2 uses
   br i1 %i.q, label %rt_get_selected_shape_index.exit.thread.i, label %rt_get_selected_shape_index.exit.i
 
 rt_get_selected_shape_index.exit.i:               ; preds = %.loopexit.loopexit.i.i.i
@@ -379,7 +378,7 @@ bb.j:                                             ; preds = %.thread.i, %bb.i
   br label %rt_get_selected_shape_index.exit.thread.i
 
 rt_get_selected_shape_index.exit.thread.i:        ; preds = %bb.j, %.thread95.i, %.loopexit.loopexit.i.i.i, %bb.b
-  %.2.i.i80.i = phi i32 [ -1, %.loopexit.loopexit.i.i.i ], [ %3, %bb.j ], [ -1, %bb.b ], [ %3, %.thread95.i ]
+  %.2.i.i80.i = phi i1 [ true, %.loopexit.loopexit.i.i.i ], [ false, %bb.j ], [ true, %bb.b ], [ false, %.thread95.i ]
   %.2.i = phi i1 [ true, %.loopexit.loopexit.i.i.i ], [ false, %bb.j ], [ true, %bb.b ], [ true, %.thread95.i ]
   %i.cu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 64), align 8, !tbaa !78 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 2888
@@ -421,8 +420,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %rt_display_selected_shapes_lbl.exit.i
   %i.dk = phi i1 [ false, %bb.m ], [ false, %rt_display_selected_shapes_lbl.exit.i ], [ %i.dj, %bb.n ]
-  %4 = icmp slt i32 %.2.i.i80.i, 0
-  %or.cond.i = select i1 %4, i1 true, i1 %i.dk
+  %or.cond.i = select i1 %.2.i.i80.i, i1 true, i1 %i.dk
   %i.dl = getelementptr inbounds nuw i8, ptr %i.g, i64 328
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !129 ; 2 uses
   br i1 %or.cond.i, label %bb.q, label %bb.p

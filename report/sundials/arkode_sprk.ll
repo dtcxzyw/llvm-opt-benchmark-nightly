@@ -204,28 +204,24 @@ bb.b:                                             ; preds = %bb.a
   %i.y = load ptr, ptr %i.p, align 8, !tbaa !38
   %wide.trip.count127 = zext nneg i32 %i.f to i64
   %wide.trip.count137 = zext nneg i32 %i.f to i64
-  br label %3
+  %3 = load ptr, ptr %i.m, align 8, !tbaa !40
+  br label %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   tail call void @ARKodeButcherTable_Free(ptr noundef nonnull %i.c) #14
   br label %bb.h
 
-3:                                                ; preds = %.lr.ph98, %._crit_edge95
-  %.06697 = phi i32 [ 0, %.lr.ph98 ], [ %.4.lcssa, %._crit_edge95 ] ; 5 uses
+.lr.ph:                                           ; preds = %.lr.ph98, %._crit_edge95
+  %.06697 = phi i32 [ 0, %.lr.ph98 ], [ %.4.lcssa, %._crit_edge95 ] ; 3 uses
   %4 = sext i32 %.06697 to i64                    ; 3 uses
   %5 = getelementptr inbounds [8 x i8], ptr %i.i, i64 %4
   %6 = load double, ptr %5, align 8, !tbaa !16
   %7 = getelementptr inbounds [8 x i8], ptr %i.l, i64 %4
   store double %6, ptr %7, align 8, !tbaa !16
-  %.not7481 = icmp slt i32 %.06697, 0
-  br i1 %.not7481, label %.preheader76.preheader, label %.lr.ph
-
-.lr.ph:                                           ; preds = %3
-  %8 = load ptr, ptr %i.m, align 8, !tbaa !40
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %4
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %4
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !41  ; 7 uses
-  %i.ab = add nuw i32 %.06697, 1
-  %wide.trip.count = zext i32 %i.ab to i64        ; 4 uses
+  %i.ab = add i32 %.06697, 1
+  %wide.trip.count = zext i32 %i.ab to i64        ; 5 uses
   %min.iters.check146 = icmp ult i32 %.06697, 3
   %i.ac = ptrtoaddr ptr %i.aa to i64
   %i.ad = sub i64 %i.j, %i.ac
@@ -257,8 +253,6 @@ middle.block154:                                  ; preds = %vector.body149
 
 scalar.ph145.preheader:                           ; preds = %.lr.ph, %middle.block154
   %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec148, %middle.block154 ] ; 3 uses
-  %9 = zext nneg i32 %.06697 to i64
-  %10 = sub nsw i64 %9, %indvars.iv.ph
   %xtraiter = and i64 %wide.trip.count, 3         ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph145.prol.loopexit, label %scalar.ph145.prol
@@ -277,8 +271,9 @@ scalar.ph145.prol:                                ; preds = %scalar.ph145.prehea
 
 scalar.ph145.prol.loopexit:                       ; preds = %scalar.ph145.prol, %scalar.ph145.preheader
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph145.preheader ], [ %indvars.iv.next.prol, %scalar.ph145.prol ]
-  %11 = icmp ult i64 %10, 3
-  br i1 %11, label %.preheader76.preheader, label %scalar.ph145
+  %8 = sub nsw i64 %indvars.iv.ph, %wide.trip.count
+  %9 = icmp ugt i64 %8, -4
+  br i1 %9, label %.preheader76.preheader, label %scalar.ph145
 
 scalar.ph145:                                     ; preds = %scalar.ph145.prol.loopexit, %scalar.ph145
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph145 ], [ %indvars.iv.unr, %scalar.ph145.prol.loopexit ] ; 6 uses
@@ -305,7 +300,7 @@ scalar.ph145:                                     ; preds = %scalar.ph145.prol.l
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
   br i1 %exitcond.not.3, label %.preheader76.preheader, label %scalar.ph145, !llvm.loop !29
 
-.preheader76.preheader:                           ; preds = %scalar.ph145.prol.loopexit, %scalar.ph145, %middle.block154, %3
+.preheader76.preheader:                           ; preds = %scalar.ph145.prol.loopexit, %scalar.ph145, %middle.block154
   br label %.preheader76
 
 .preheader76:                                     ; preds = %.preheader76.preheader, %.epilog-lcssa
@@ -562,7 +557,7 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   store i32 0, ptr %i.t, align 4, !tbaa !44
   store i32 0, ptr %i.u, align 4, !tbaa !44
   %i.dy = icmp slt i32 %.4.lcssa, %i.f
-  br i1 %i.dy, label %3, label %._crit_edge99
+  br i1 %i.dy, label %.lr.ph, label %._crit_edge99
 
 ._crit_edge99:                                    ; preds = %._crit_edge95, %.preheader80
   store ptr %i.c, ptr %1, align 8, !tbaa !20

@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.ag, %._crit_edge
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.1, %.lr.ph.preheader.1
-  %.01230.1 = phi i32 [ %i.aj, %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.1 ], [ 0, %.lr.ph.preheader.1 ] ; 3 uses
+  %.01230.1 = phi i32 [ 0, %.lr.ph.preheader.1 ], [ %i.aj, %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.1 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   store i32 %.01230.1, ptr %i.a, align 4, !tbaa !67
   %i.ac = load i64, ptr %i.r, align 8, !tbaa !69  ; 4 uses
@@ -274,7 +274,7 @@ _ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvE
   br label %.lr.ph.2
 
 .lr.ph.2:                                         ; preds = %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.2, %.lr.ph.preheader.2
-  %.01230.2 = phi i32 [ %i.aw, %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.2 ], [ 0, %.lr.ph.preheader.2 ] ; 3 uses
+  %.01230.2 = phi i32 [ 0, %.lr.ph.preheader.2 ], [ %i.aw, %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.2 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   store i32 %.01230.2, ptr %i.a, align 4, !tbaa !67
   %i.ap = load i64, ptr %i.r, align 8, !tbaa !69  ; 4 uses
@@ -343,7 +343,7 @@ _ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvE
   br label %.lr.ph.3
 
 .lr.ph.3:                                         ; preds = %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.3, %.lr.ph.preheader.3
-  %.01230.3 = phi i32 [ %i.bj, %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.3 ], [ 0, %.lr.ph.preheader.3 ] ; 3 uses
+  %.01230.3 = phi i32 [ 0, %.lr.ph.preheader.3 ], [ %i.bj, %_ZN5boost9container6vectorIiNS0_22small_vector_allocatorIiNS0_13new_allocatorIvEEvEEvE9push_backEOi.exit.3 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   store i32 %.01230.3, ptr %i.a, align 4, !tbaa !67
   %i.bc = load i64, ptr %i.r, align 8, !tbaa !69  ; 4 uses

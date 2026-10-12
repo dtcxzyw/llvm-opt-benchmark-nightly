@@ -205,8 +205,8 @@ bb.em:                                            ; preds = %bb.aa
   %i.nv = zext nneg i32 %i.bo to i64              ; 2 uses
   %wide.trip.count31.i = zext nneg i32 %i.bn to i64
   %i.nw = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.054, i1 true)
-  %i.nx = add nsw i32 %.054, -1
-  %i.ny = add nsw i32 %.055, -1
+  %i.nx = add nuw i32 %.054, 2147483647
+  %i.ny = add nuw i32 %.055, 2147483647
   br label %.preheader2.us.i
 
 .preheader2.us.i:                                 ; preds = %._crit_edge8.us.i, %.preheader2.lr.ph.split.us.split.split.i
@@ -216,7 +216,7 @@ bb.em:                                            ; preds = %bb.aa
   %i.ob = lshr i32 %i.oa, %i.nw
   %i.oc = and i32 %i.nx, %i.oa
   %i.od = mul nuw nsw i32 %i.ob, %i.bh
-  %i.oe = zext i32 %i.od to i64
+  %i.oe = zext nneg i32 %i.od to i64
   br label %.preheader1.us.i
 
 bb.en:                                            ; preds = %.preheader.us.i, %bb.en
@@ -252,7 +252,7 @@ bb.en:                                            ; preds = %.preheader.us.i, %b
 
 .preheader1.us.i:                                 ; preds = %._crit_edge5.us.i, %.preheader2.us.i
   %indvars.iv23.i = phi i64 [ 0, %.preheader2.us.i ], [ %indvars.iv.next24.i, %._crit_edge5.us.i ] ; 3 uses
-  %i.ox = add nuw i64 %indvars.iv23.i, %i.oe
+  %i.ox = add nuw nsw i64 %indvars.iv23.i, %i.oe
   %i.oy = mul i64 %i.ox, %i.nu
   br label %.preheader.us.i
 
@@ -655,11 +655,11 @@ bb.e:                                             ; preds = %bb.c, %.thread, %bb
   %i.cg = add i32 %i.cf, %i.as
   %i.ch = sitofp fast i32 %i.cg to float
   %i.ci = trunc nuw nsw i64 %indvars.iv723 to i32
-  %i.cj = mul nsw i32 %i.br, %i.ci
+  %i.cj = mul nuw nsw i32 %i.br, %i.ci
   %i.ck = trunc nuw nsw i64 %indvars.iv723 to i32
-  %i.cl = mul nsw i32 %i.br, %i.ck
+  %i.cl = mul nuw nsw i32 %i.br, %i.ck
   %i.cm = trunc nuw nsw i64 %indvars.iv723 to i32
-  %i.cn = mul nsw i32 %i.br, %i.cm
+  %i.cn = mul nuw nsw i32 %i.br, %i.cm
   %i.co = insertelement <2 x float> poison, float %i.ch, i64 1
   br label %bb.f
 
@@ -721,10 +721,10 @@ _ZN4ncnn3MatD2Ev.exit274.us:                      ; preds = %bb.f
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ed, i64 %i.eg
   %i.ei = getelementptr inbounds nuw [4 x i8], ptr %i.eh, i64 %indvars.iv731
   %i.ej = trunc nuw nsw i64 %indvars.iv718 to i32
-  %i.ek = add nsw i32 %i.cj, %i.ej
-  %i.el = shl nsw i32 %i.ek, 1
+  %i.ek = add nuw nsw i32 %i.cj, %i.ej
+  %i.el = shl nuw nsw i32 %i.ek, 1
   %i.em = or disjoint i32 %i.el, 1
-  %29 = sext i32 %i.em to i64
+  %29 = zext nneg i32 %i.em to i64
   %i.en = mul i64 %i.eb, %i.dz
   %i.eo = mul i64 %i.en, %29
   %i.ep = getelementptr inbounds nuw i8, ptr %i.dy, i64 %i.eo
@@ -748,7 +748,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ev, label %_ZN4ncnn3MatD2Ev.exit270.us, label %_ZN4ncnn3MatD2Ev.exit269.us
 
 _ZN4ncnn3MatD2Ev.exit269.us:                      ; preds = %bb.h
-  %i.ex = add nsw i32 %i.cl, %i.ew                ; 2 uses
+  %i.ex = add nuw nsw i32 %i.cl, %i.ew            ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.es, i64 168
   %i.ez = load i32, ptr %i.ey, align 8, !tbaa !54 ; 3 uses
   %i.fa = sdiv i32 %i.ex, %i.ez
@@ -776,13 +776,13 @@ _ZN4ncnn3MatD2Ev.exit269.us:                      ; preds = %bb.h
   br label %bb.i
 
 _ZN4ncnn3MatD2Ev.exit270.us:                      ; preds = %bb.h
-  %i.fw = add nsw i32 %i.cn, %i.ew
+  %i.fw = add nuw nsw i32 %i.cn, %i.ew
   %i.fx = getelementptr inbounds nuw i8, ptr %i.es, i64 188
   %i.fy = load i32, ptr %i.fx, align 4, !tbaa !51, !noalias !155
   %i.fz = load ptr, ptr %i.et, align 8, !tbaa !19, !noalias !155
   %i.ga = getelementptr inbounds nuw i8, ptr %i.es, i64 208
   %i.gb = load i64, ptr %i.ga, align 8, !tbaa !20, !noalias !155
-  %30 = sext i32 %i.fw to i64
+  %30 = zext nneg i32 %i.fw to i64
   %i.gc = mul i64 %i.gb, %30
   %i.gd = getelementptr inbounds nuw i8, ptr %i.es, i64 160
   %i.ge = load i64, ptr %i.gd, align 8, !tbaa !52, !noalias !155 ; 2 uses

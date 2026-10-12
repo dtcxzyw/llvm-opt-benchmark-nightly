@@ -139,6 +139,15 @@ bb.j:                                             ; preds = %.lr.ph.i37
   %exitcond.not.i40 = icmp eq i64 %indvars.iv.next.i39, %wide.trip.count.i
   br i1 %exitcond.not.i40, label %find_any_idle_slot.exit.thread, label %.lr.ph.i37, !llvm.loop !9
 
+find_any_idle_slot.exit.thread.thread:            ; preds = %wait_on_slots.exit, %find_matching_idle_slot.exit.thread, %wait_on_slots.exit.thread79, %bb.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
+  br label %wait_on_slots.exit.thread
+
+find_any_idle_slot.exit.thread:                   ; preds = %bb.j
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %2, i8 0, i64 128, i1 false)
+  br label %bb.k
+
 find_any_idle_slot.exit:                          ; preds = %.lr.ph.i37
   %i.ap = trunc nuw nsw i64 %indvars.iv.i38 to i32
   %i.aq = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %indvars.iv.i38 ; 4 uses
@@ -149,15 +158,6 @@ find_any_idle_slot.exit:                          ; preds = %.lr.ph.i37
   %i.as = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   store i8 1, ptr %i.as, align 8
   br label %bb.y
-
-find_any_idle_slot.exit.thread.thread:            ; preds = %wait_on_slots.exit, %find_matching_idle_slot.exit.thread, %wait_on_slots.exit.thread79, %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
-  br label %wait_on_slots.exit.thread
-
-find_any_idle_slot.exit.thread:                   ; preds = %bb.j
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %2, i8 0, i64 128, i1 false)
-  br label %bb.k
 
 bb.k:                                             ; preds = %bb.o, %find_any_idle_slot.exit.thread
   %indvars.iv.i42 = phi i64 [ 0, %find_any_idle_slot.exit.thread ], [ %indvars.iv.next.i43, %bb.o ] ; 2 uses

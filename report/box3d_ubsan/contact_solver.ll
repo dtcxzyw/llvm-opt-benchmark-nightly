@@ -204,23 +204,22 @@ bb.v:                                             ; preds = %bb.u
   br i1 %exitcond3291, label %.split1594.us, label %bb.w, !prof !89, !nosanitize !10
 
 bb.w:                                             ; preds = %bb.v
-  %3 = shl i64 %indvars.iv3289, 32
-  %sext4247 = add i64 %3, 4294967296              ; 2 uses
-  %4 = ashr exact i64 %sext4247, 28
-  %5 = getelementptr inbounds i8, ptr %.076.fr, i64 %4 ; 2 uses
-  %6 = ashr exact i64 %sext4247, 28
-  %i.cg = add i64 %6, %i.bd, !nosanitize !10      ; 2 uses
+  %sext4247 = add nuw i64 %indvars.iv3289, 1
+  %3 = and i64 %sext4247, 4294967295              ; 2 uses
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %.076.fr, i64 %3 ; 2 uses
+  %5 = shl nuw nsw i64 %3, 4
+  %i.cg = add i64 %5, %i.bd, !nosanitize !10      ; 2 uses
   %.not4248 = icmp ult i64 %i.cg, %i.bd, !nosanitize !10
   br i1 %.not4248, label %.split1597.us, label %bb.x, !prof !89, !nosanitize !10
 
 bb.x:                                             ; preds = %bb.w
-  %i.ch = ptrtoint ptr %5 to i64, !nosanitize !10 ; 2 uses
+  %i.ch = ptrtoint ptr %4 to i64, !nosanitize !10 ; 2 uses
   %i.ci = and i64 %i.ch, 7, !nosanitize !10
   %i.cj = icmp eq i64 %i.ci, 0, !nosanitize !10
   br i1 %i.cj, label %bb.y, label %.split1600.us, !prof !11, !nosanitize !10
 
 bb.y:                                             ; preds = %bb.x
-  %i.ck = load i32, ptr %5, align 8, !tbaa !96
+  %i.ck = load i32, ptr %4, align 8, !tbaa !96
   %i.cl = tail call noundef i32 @llvm.smin.i32(i32 %i.ck, i32 %i.bb) ; 3 uses
   %i.cm = icmp slt i32 %.0821574.us, %i.cl
   br i1 %i.cm, label %.lr.ph1348.us.preheader, label %.loopexit.us
@@ -623,12 +622,11 @@ bb.t:                                             ; preds = %bb.s
   unreachable, !nosanitize !10
 
 bb.u:                                             ; preds = %bb.s
-  %3 = shl i64 %indvars.iv4451, 32
-  %sext = add i64 %3, 4294967296                  ; 2 uses
-  %4 = ashr exact i64 %sext, 28
-  %5 = getelementptr inbounds i8, ptr %.fr2439, i64 %4 ; 2 uses
-  %6 = ashr exact i64 %sext, 28
-  %i.ca = add i64 %6, %i.av, !nosanitize !10      ; 2 uses
+  %sext = add nuw i64 %indvars.iv4451, 1
+  %3 = and i64 %sext, 4294967295                  ; 2 uses
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %.fr2439, i64 %3 ; 2 uses
+  %5 = shl nuw nsw i64 %3, 4
+  %i.ca = add i64 %5, %i.av, !nosanitize !10      ; 2 uses
   %.not6484 = icmp ult i64 %i.ca, %i.av, !nosanitize !10
   br i1 %.not6484, label %bb.v, label %bb.w, !prof !89, !nosanitize !10
 
@@ -637,7 +635,7 @@ bb.v:                                             ; preds = %bb.u
   unreachable, !nosanitize !10
 
 bb.w:                                             ; preds = %bb.u
-  %i.cb = ptrtoint ptr %5 to i64, !nosanitize !10 ; 2 uses
+  %i.cb = ptrtoint ptr %4 to i64, !nosanitize !10 ; 2 uses
   %i.cc = and i64 %i.cb, 7, !nosanitize !10
   %i.cd = icmp eq i64 %i.cc, 0, !nosanitize !10
   br i1 %i.cd, label %bb.y, label %bb.x, !prof !11, !nosanitize !10
@@ -647,7 +645,7 @@ bb.x:                                             ; preds = %bb.w
   unreachable, !nosanitize !10
 
 bb.y:                                             ; preds = %bb.w
-  %i.ce = load i32, ptr %5, align 8, !tbaa !173
+  %i.ce = load i32, ptr %4, align 8, !tbaa !173
   %i.cf = tail call noundef i32 @llvm.smin.i32(i32 %i.ce, i32 %i.at) ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bt, i64 4
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !174

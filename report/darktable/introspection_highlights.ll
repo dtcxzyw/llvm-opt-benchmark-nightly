@@ -205,10 +205,10 @@ bb.o:                                             ; preds = %.thread290.i, %.lr.
 
 .preheader294.i:                                  ; preds = %bb.o
   %i.kp = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
-  %i.kq = sub i32 %i.kp, %i.al
+  %i.kq = sub nsw i32 %i.kp, %i.al
   %i.kr = call i32 @llvm.smax.i32(i32 %i.kq, i32 0)
   %i.ks = zext nneg i32 %i.kr to i64              ; 3 uses
-  %i.kt = add i32 %i.al, %i.kp
+  %i.kt = add nuw i32 %i.al, %i.kp
   %.269.i = call i32 @llvm.smin.i32(i32 %i.kt, i32 %i.q)
   %i.ku = sext i32 %.269.i to i64                 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33, !noalias !636

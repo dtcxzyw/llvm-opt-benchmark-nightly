@@ -205,11 +205,6 @@ bb.ay:                                            ; preds = %bb.ax
   %i.es = call noundef zeroext i1 @_ZN5boost9container4test57test_vector_methods_with_initializer_list_as_argument_forINS0_6vectorIivvEEEEbv()
   br i1 %i.es, label %bb.az, label %_Z15test_expand_bwdv.exit.thread
 
-._crit_edge:                                      ; preds = %bb.bq, %.noexc158.9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #26
-  invoke void @_ZN5boost9intrusive4test20test_iterator_randomINS_9container6vectorIivvEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(24) %8)
-          to label %bb.bs unwind label %bb.bv
-
 bb.az:                                            ; preds = %bb.ay
   %i.et = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 24 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 17 uses
@@ -477,7 +472,7 @@ bb.bq:                                            ; preds = %_ZN5boost9container
   store i32 9, ptr %i.ha, align 4, !tbaa !247
   %i.hb = add i64 %i.gy, 1
   store i64 %i.hb, ptr %i.et, align 8, !tbaa !253
-  br label %._crit_edge
+  br label %_ZN5boost9container6vectorIivvE9push_backEOi.exit.9
 
 bb.br:                                            ; preds = %_ZN5boost9container6vectorIivvE9push_backEOi.exit.8
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #26
@@ -488,7 +483,12 @@ bb.br:                                            ; preds = %_ZN5boost9container
 
 .noexc158.9:                                      ; preds = %bb.br
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #26
-  br label %._crit_edge
+  br label %_ZN5boost9container6vectorIivvE9push_backEOi.exit.9
+
+_ZN5boost9container6vectorIivvE9push_backEOi.exit.9: ; preds = %.noexc158.9, %bb.bq
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #26
+  invoke void @_ZN5boost9intrusive4test20test_iterator_randomINS_9container6vectorIivvEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(24) %8)
+          to label %bb.bs unwind label %bb.bv
 
 .loopexit237:                                     ; preds = %bb.br, %bb.bp, %bb.bn, %bb.bl, %bb.bj, %bb.bh, %bb.bf, %bb.bd, %bb.bb, %bb.az
   %lpad.loopexit239 = landingpad { ptr, i32 }
@@ -515,7 +515,7 @@ bb.br:                                            ; preds = %_ZN5boost9container
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #26
   br label %bb.cl
 
-bb.bs:                                            ; preds = %._crit_edge
+bb.bs:                                            ; preds = %_ZN5boost9container6vectorIivvE9push_backEOi.exit.9
   %i.he = invoke noundef i32 @_ZN5boost13report_errorsEv()
           to label %bb.bt unwind label %bb.bv
 
@@ -535,7 +535,7 @@ _ZN5boost9container6vectorIivvED2Ev.exit160:      ; preds = %bb.bt, %bb.bu
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
   br i1 %.not74, label %.lr.ph234.preheader.1, label %_Z15test_expand_bwdv.exit.thread
 
-bb.bv:                                            ; preds = %bb.ci, %._crit_edge.3, %bb.cd, %._crit_edge.2, %bb.by, %._crit_edge.1, %bb.bs, %._crit_edge
+bb.bv:                                            ; preds = %bb.ci, %._crit_edge.3, %bb.cd, %._crit_edge.2, %bb.by, %._crit_edge.1, %bb.bs, %_ZN5boost9container6vectorIivvE9push_backEOi.exit.9
   %i.hi = landingpad { ptr, i32 }
           cleanup
   br label %bb.cl
@@ -546,7 +546,7 @@ bb.bv:                                            ; preds = %bb.ci, %._crit_edge
   br label %.lr.ph234.1
 
 .lr.ph234.1:                                      ; preds = %_ZN5boost9container6vectorIivvE9push_backEOi.exit.1, %.lr.ph234.preheader.1
-  %.060233.1 = phi i32 [ %i.hq, %_ZN5boost9container6vectorIivvE9push_backEOi.exit.1 ], [ 0, %.lr.ph234.preheader.1 ] ; 3 uses
+  %.060233.1 = phi i32 [ 0, %.lr.ph234.preheader.1 ], [ %i.hq, %_ZN5boost9container6vectorIivvE9push_backEOi.exit.1 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
   store i32 %.060233.1, ptr %i.e, align 4, !tbaa !247
   %i.hj = load i64, ptr %i.et, align 8, !tbaa !253 ; 4 uses
@@ -609,7 +609,7 @@ _ZN5boost9container6vectorIivvED2Ev.exit160.1:    ; preds = %bb.ca, %bb.bz
   br label %.lr.ph234.2
 
 .lr.ph234.2:                                      ; preds = %_ZN5boost9container6vectorIivvE9push_backEOi.exit.2, %.lr.ph234.preheader.2
-  %.060233.2 = phi i32 [ %i.ic, %_ZN5boost9container6vectorIivvE9push_backEOi.exit.2 ], [ 0, %.lr.ph234.preheader.2 ] ; 3 uses
+  %.060233.2 = phi i32 [ 0, %.lr.ph234.preheader.2 ], [ %i.ic, %_ZN5boost9container6vectorIivvE9push_backEOi.exit.2 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
   store i32 %.060233.2, ptr %i.e, align 4, !tbaa !247
   %i.hv = load i64, ptr %i.et, align 8, !tbaa !253 ; 4 uses
@@ -672,7 +672,7 @@ _ZN5boost9container6vectorIivvED2Ev.exit160.2:    ; preds = %bb.cf, %bb.ce
   br label %.lr.ph234.3
 
 .lr.ph234.3:                                      ; preds = %_ZN5boost9container6vectorIivvE9push_backEOi.exit.3, %.lr.ph234.preheader.3
-  %.060233.3 = phi i32 [ %i.io, %_ZN5boost9container6vectorIivvE9push_backEOi.exit.3 ], [ 0, %.lr.ph234.preheader.3 ] ; 3 uses
+  %.060233.3 = phi i32 [ 0, %.lr.ph234.preheader.3 ], [ %i.io, %_ZN5boost9container6vectorIivvE9push_backEOi.exit.3 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #26
   store i32 %.060233.3, ptr %i.e, align 4, !tbaa !247
   %i.ih = load i64, ptr %i.et, align 8, !tbaa !253 ; 4 uses

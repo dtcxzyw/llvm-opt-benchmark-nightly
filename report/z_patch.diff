@@ -1,0 +1,157 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 1cb2f2eb80a13..f9b79cda5eea7 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -1591,7 +1591,17 @@ static void computeKnownBitsFromOperator(const Operator *I,
+     if (auto *Inst = dyn_cast<PossiblyNonNegInst>(I);
+         Inst && Inst->hasNonNeg() && !Known.isNegative())
+       Known.makeNonNegative();
++    bool SignBitsKnownZero = false, SignBitsKnownOne = false;
++    if (auto *TI = dyn_cast<TruncInst>(I); TI && Q.IIQ.hasNoSignedWrap(TI)) {
++      APInt SignBits = APInt::getBitsSetFrom(SrcBitWidth, BitWidth - 1);
++      SignBitsKnownZero = Known.Zero.intersects(SignBits);
++      SignBitsKnownOne = Known.One.intersects(SignBits);
++    }
+     Known = Known.zextOrTrunc(BitWidth);
++    if (SignBitsKnownZero && !Known.isNegative())
++      Known.makeNonNegative();
++    else if (SignBitsKnownOne && !Known.isNonNegative())
++      Known.makeNegative();
+     break;
+   }
+   case Instruction::BitCast: {
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+index 1c0b5af5594d3..bbfd305bbb756 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSimplifyDemanded.cpp
+@@ -516,7 +516,17 @@ Value *InstCombinerImpl::SimplifyDemandedUseBits(Instruction *I,
+     if (I->getOpcode() == Instruction::ZExt && I->hasNonNeg() &&
+         !InputKnown.isNegative())
+       InputKnown.makeNonNegative();
++    bool SignBitsKnownZero = false, SignBitsKnownOne = false;
++    if (auto *TI = dyn_cast<TruncInst>(I); TI && TI->hasNoSignedWrap()) {
++      APInt SignBits = APInt::getBitsSetFrom(SrcBitWidth, BitWidth - 1);
++      SignBitsKnownZero = InputKnown.Zero.intersects(SignBits);
++      SignBitsKnownOne = InputKnown.One.intersects(SignBits);
++    }
+     Known = InputKnown.zextOrTrunc(BitWidth);
++    if (SignBitsKnownZero && !Known.isNegative())
++      Known.makeNonNegative();
++    else if (SignBitsKnownOne && !Known.isNonNegative())
++      Known.makeNegative();
+ 
+     break;
+   }
+diff --git a/llvm/test/Transforms/InstCombine/instcombine-verify-known-bits.ll b/llvm/test/Transforms/InstCombine/instcombine-verify-known-bits.ll
+index a4a2ef1c4a874..8b576bdb2c26e 100644
+--- a/llvm/test/Transforms/InstCombine/instcombine-verify-known-bits.ll
++++ b/llvm/test/Transforms/InstCombine/instcombine-verify-known-bits.ll
+@@ -23,3 +23,27 @@ bb:
+   %i8 = trunc i32 %i7 to i16
+   ret i16 %i8
+ }
++
++define i32 @trunc_nsw_high_bits_known_zero(i64 range(i64 0, 4294967296) %x) {
++; CHECK-LABEL: define i32 @trunc_nsw_high_bits_known_zero(
++; CHECK-SAME: i64 range(i64 0, 4294967296) [[X:%.*]]) {
++; CHECK-NEXT:    [[T:%.*]] = trunc nuw nsw i64 [[X]] to i32
++; CHECK-NEXT:    [[R:%.*]] = xor i32 [[T]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %t = trunc nsw i64 %x to i32
++  %r = xor i32 %t, 1
++  ret i32 %r
++}
++
++define i32 @trunc_nsw_high_bits_known_one(i64 range(i64 -4294967296, 0) %x) {
++; CHECK-LABEL: define i32 @trunc_nsw_high_bits_known_one(
++; CHECK-SAME: i64 range(i64 -4294967296, 0) [[X:%.*]]) {
++; CHECK-NEXT:    [[T:%.*]] = trunc nsw i64 [[X]] to i32
++; CHECK-NEXT:    [[R:%.*]] = xor i32 [[T]], 1
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %t = trunc nsw i64 %x to i32
++  %r = xor i32 %t, 1
++  ret i32 %r
++}
+diff --git a/llvm/test/Transforms/InstCombine/logical-select.ll b/llvm/test/Transforms/InstCombine/logical-select.ll
+index dbe35ab47f366..db28bace0d0a6 100644
+--- a/llvm/test/Transforms/InstCombine/logical-select.ll
++++ b/llvm/test/Transforms/InstCombine/logical-select.ll
+@@ -1672,9 +1672,9 @@ define i1 @neg_test_logical_and_trunc_nuw_no_noundef(i1 %c, i8 range(i8 0,2) %x)
+   ret i1 %and
+ }
+ 
+-define i1 @neg_test_logical_and_trunc_nsw(i1 %c, i8 noundef range(i8 0,2) %x) {
++define i1 @neg_test_logical_and_trunc_nsw(i1 %c, i8 noundef range(i8 -1,2) %x) {
+ ; CHECK-LABEL: @neg_test_logical_and_trunc_nsw(
+-; CHECK-NEXT:    [[TRUNC:%.*]] = trunc nuw nsw i8 [[X:%.*]] to i1
++; CHECK-NEXT:    [[TRUNC:%.*]] = trunc nsw i8 [[X:%.*]] to i1
+ ; CHECK-NEXT:    [[AND:%.*]] = select i1 [[C:%.*]], i1 [[TRUNC]], i1 false
+ ; CHECK-NEXT:    ret i1 [[AND]]
+ ;
+@@ -1683,9 +1683,9 @@ define i1 @neg_test_logical_and_trunc_nsw(i1 %c, i8 noundef range(i8 0,2) %x) {
+   ret i1 %and
+ }
+ 
+-define i1 @neg_test_logical_or_trunc_nsw(i1 %c, i8 noundef range(i8 0,2) %x) {
++define i1 @neg_test_logical_or_trunc_nsw(i1 %c, i8 noundef range(i8 -1,2) %x) {
+ ; CHECK-LABEL: @neg_test_logical_or_trunc_nsw(
+-; CHECK-NEXT:    [[TRUNC:%.*]] = trunc nuw nsw i8 [[X:%.*]] to i1
++; CHECK-NEXT:    [[TRUNC:%.*]] = trunc nsw i8 [[X:%.*]] to i1
+ ; CHECK-NEXT:    [[OR:%.*]] = select i1 [[C:%.*]], i1 true, i1 [[TRUNC]]
+ ; CHECK-NEXT:    ret i1 [[OR]]
+ ;
+@@ -1694,7 +1694,7 @@ define i1 @neg_test_logical_or_trunc_nsw(i1 %c, i8 noundef range(i8 0,2) %x) {
+   ret i1 %or
+ }
+ 
+-define <2 x i1> @neg_test_logical_and_trunc_nuw_nsw_vec(<2 x i1> %c, <2 x i8> noundef range(i8 0,2) %x) {
++define <2 x i1> @neg_test_logical_and_trunc_nuw_nsw_vec(<2 x i1> %c, <2 x i8> noundef range(i8 -1,2) %x) {
+ ; CHECK-LABEL: @neg_test_logical_and_trunc_nuw_nsw_vec(
+ ; CHECK-NEXT:    [[TRUNC:%.*]] = trunc nuw nsw <2 x i8> [[X:%.*]] to <2 x i1>
+ ; CHECK-NEXT:    [[AND:%.*]] = select <2 x i1> [[C:%.*]], <2 x i1> [[TRUNC]], <2 x i1> zeroinitializer
+diff --git a/llvm/test/Transforms/InstSimplify/cast.ll b/llvm/test/Transforms/InstSimplify/cast.ll
+index 8de8d0e0e013f..55a8c44503165 100644
+--- a/llvm/test/Transforms/InstSimplify/cast.ll
++++ b/llvm/test/Transforms/InstSimplify/cast.ll
+@@ -77,6 +77,39 @@ define i64 @sext_of_trunc_nsw(i64 %x) {
+   ret i64 %s
+ }
+ 
++define i1 @trunc_nsw_high_bits_known_zero(i64 %x) {
++; CHECK-LABEL: @trunc_nsw_high_bits_known_zero(
++; CHECK-NEXT:    ret i1 true
++;
++  %y = and i64 %x, 4294967295
++  %t = trunc nsw i64 %y to i32
++  %c = icmp sgt i32 %t, -1
++  ret i1 %c
++}
++
++define i1 @trunc_nsw_high_bits_known_one(i64 %x) {
++; CHECK-LABEL: @trunc_nsw_high_bits_known_one(
++; CHECK-NEXT:    ret i1 true
++;
++  %y = or i64 %x, 1099511627776
++  %t = trunc nsw i64 %y to i32
++  %c = icmp slt i32 %t, 0
++  ret i1 %c
++}
++
++define i1 @trunc_high_bits_known_zero_no_nsw(i64 %x) {
++; CHECK-LABEL: @trunc_high_bits_known_zero_no_nsw(
++; CHECK-NEXT:    [[Y:%.*]] = and i64 [[X:%.*]], 4294967295
++; CHECK-NEXT:    [[T:%.*]] = trunc nuw i64 [[Y]] to i32
++; CHECK-NEXT:    [[C:%.*]] = icmp sgt i32 [[T]], -1
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %y = and i64 %x, 4294967295
++  %t = trunc nuw i64 %y to i32
++  %c = icmp sgt i32 %t, -1
++  ret i1 %c
++}
++
+ ; Same folds work on vectors.
+ define <2 x i64> @zext_of_trunc_nuw_vec(<2 x i64> %x) {
+ ; CHECK-LABEL: @zext_of_trunc_nuw_vec(

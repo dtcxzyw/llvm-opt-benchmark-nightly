@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.er = icmp eq i32 %i.eq, %i.dq
   %spec.select.i4 = select i1 %i.er, i32 %i.ef, i32 3 ; 3 uses
   %invariant.gep.us94.us.i = getelementptr i8, ptr %i.eh, i64 %.idx.i.i.i.us.us.i ; 6 uses
-  %wide.trip.count150.i = zext i32 %spec.select.i4 to i64 ; 5 uses
-  %min.iters.check59 = icmp ult i32 %spec.select.i4, 4
+  %wide.trip.count150.i = zext nneg i32 %spec.select.i4 to i64 ; 5 uses
+  %min.iters.check59 = icmp samesign ult i32 %spec.select.i4, 4
   br i1 %min.iters.check59, label %scalar.ph58.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.k
@@ -216,8 +216,8 @@ vector.memcheck:                                  ; preds = %bb.k
   br i1 %diff.check, label %scalar.ph58.preheader, label %vector.ph60
 
 vector.ph60:                                      ; preds = %vector.memcheck
-  %n.vec61 = and i64 %wide.trip.count150.i, 4294967292 ; 6 uses
-  %i.eu = trunc nuw i64 %n.vec61 to i32
+  %n.vec61 = and i64 %wide.trip.count150.i, 2147483644 ; 6 uses
+  %i.eu = trunc nuw nsw i64 %n.vec61 to i32
   %i.ev = add i32 %i.eq, %i.eu
   %i.ew = shl nuw nsw i64 %n.vec61, 3
   %i.ex = getelementptr i8, ptr %.24062.us90.us.i, i64 %i.ew ; 2 uses
@@ -620,8 +620,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.er = icmp eq i32 %i.eq, %i.dq
   %spec.select.i4 = select i1 %i.er, i32 %i.ef, i32 6 ; 3 uses
   %invariant.gep.us94.us.i = getelementptr i8, ptr %i.eh, i64 %.idx.i.i.i.us.us.i ; 6 uses
-  %wide.trip.count150.i = zext i32 %spec.select.i4 to i64 ; 5 uses
-  %min.iters.check59 = icmp ult i32 %spec.select.i4, 4
+  %wide.trip.count150.i = zext nneg i32 %spec.select.i4 to i64 ; 5 uses
+  %min.iters.check59 = icmp samesign ult i32 %spec.select.i4, 4
   br i1 %min.iters.check59, label %scalar.ph58.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.k
@@ -631,8 +631,8 @@ vector.memcheck:                                  ; preds = %bb.k
   br i1 %diff.check, label %scalar.ph58.preheader, label %vector.ph60
 
 vector.ph60:                                      ; preds = %vector.memcheck
-  %n.vec61 = and i64 %wide.trip.count150.i, 4294967292 ; 6 uses
-  %i.eu = trunc nuw i64 %n.vec61 to i32
+  %n.vec61 = and i64 %wide.trip.count150.i, 2147483644 ; 6 uses
+  %i.eu = trunc nuw nsw i64 %n.vec61 to i32
   %i.ev = add i32 %i.eq, %i.eu
   %i.ew = shl nuw nsw i64 %n.vec61, 3
   %i.ex = getelementptr i8, ptr %.24062.us90.us.i, i64 %i.ew ; 2 uses
@@ -1035,8 +1035,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.er = icmp eq i32 %i.eq, %i.dq
   %spec.select.i4 = select i1 %i.er, i32 %i.ef, i32 7 ; 3 uses
   %invariant.gep.us94.us.i = getelementptr i8, ptr %i.eh, i64 %.idx.i.i.i.us.us.i ; 6 uses
-  %wide.trip.count150.i = zext i32 %spec.select.i4 to i64 ; 5 uses
-  %min.iters.check59 = icmp ult i32 %spec.select.i4, 4
+  %wide.trip.count150.i = zext nneg i32 %spec.select.i4 to i64 ; 5 uses
+  %min.iters.check59 = icmp samesign ult i32 %spec.select.i4, 4
   br i1 %min.iters.check59, label %scalar.ph58.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.k
@@ -1046,8 +1046,8 @@ vector.memcheck:                                  ; preds = %bb.k
   br i1 %diff.check, label %scalar.ph58.preheader, label %vector.ph60
 
 vector.ph60:                                      ; preds = %vector.memcheck
-  %n.vec61 = and i64 %wide.trip.count150.i, 4294967292 ; 6 uses
-  %i.eu = trunc nuw i64 %n.vec61 to i32
+  %n.vec61 = and i64 %wide.trip.count150.i, 2147483644 ; 6 uses
+  %i.eu = trunc nuw nsw i64 %n.vec61 to i32
   %i.ev = add i32 %i.eq, %i.eu
   %i.ew = shl nuw nsw i64 %n.vec61, 3
   %i.ex = getelementptr i8, ptr %.24062.us90.us.i, i64 %i.ew ; 2 uses

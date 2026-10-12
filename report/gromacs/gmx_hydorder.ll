@@ -205,9 +205,9 @@ bb.bv:                                            ; preds = %.noexc118, %.prehea
   %i.ajp = getelementptr inbounds nuw [8 x i8], ptr %i.ajo, i64 %indvars.iv428.i
   %i.ajq = load ptr, ptr %i.ajp, align 8, !tbaa !119
   %i.ajr = trunc nuw nsw i64 %indvars.iv422.i to i32
-  %i.ajs = add nsw i32 %i.aiv, %i.ajr
-  %36 = sext i32 %i.ajs to i64                    ; 2 uses
-  %i.ajt = getelementptr inbounds [4 x i8], ptr %i.ajq, i64 %36
+  %i.ajs = add nuw nsw i32 %i.aiv, %i.ajr
+  %36 = zext nneg i32 %i.ajs to i64               ; 2 uses
+  %i.ajt = getelementptr inbounds nuw [4 x i8], ptr %i.ajq, i64 %36
   store float %i.ajn, ptr %i.ajt, align 4, !tbaa !93
   %i.aju = sext i32 %i.ajh to i64
   %i.ajv = getelementptr inbounds [4 x i8], ptr %i.aig, i64 %i.aju
@@ -218,7 +218,7 @@ bb.bv:                                            ; preds = %.noexc118, %.prehea
   %i.aka = load ptr, ptr %i.aie, align 8, !tbaa !117
   %i.akb = getelementptr inbounds nuw [8 x i8], ptr %i.aka, i64 %indvars.iv428.i
   %i.akc = load ptr, ptr %i.akb, align 8, !tbaa !119
-  %i.akd = getelementptr inbounds [4 x i8], ptr %i.akc, i64 %36
+  %i.akd = getelementptr inbounds nuw [4 x i8], ptr %i.akc, i64 %36
   store float %i.ajz, ptr %i.akd, align 4, !tbaa !93
   %indvars.iv.next423.i = add nuw nsw i64 %indvars.iv422.i, 1 ; 2 uses
   %exitcond328.not = icmp eq i64 %indvars.iv.next423.i, %wide.trip.count287.i.i

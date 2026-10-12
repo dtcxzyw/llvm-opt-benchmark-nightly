@@ -204,7 +204,8 @@ bb.aj:                                            ; preds = %bb.ag, %bb.ag, %bb.
   %indvars.iv72 = phi i64 [ 0, %.lr.ph.split.us.split.us.preheader.new ], [ %indvars.iv.next73.1, %.lr.ph.split.us.split.us ] ; 5 uses
   %.04255.us.us = phi i64 [ 0, %.lr.ph.split.us.split.us.preheader.new ], [ %i.ed, %.lr.ph.split.us.split.us ]
   %niter110 = phi i64 [ 0, %.lr.ph.split.us.split.us.preheader.new ], [ %niter110.next.1, %.lr.ph.split.us.split.us ]
-  %i.do = sub nsw i64 2, %indvars.iv72
+  %20 = and i64 %indvars.iv72, 2147483646
+  %i.do = sub nsw i64 2, %20
   %i.dp = and i64 %i.do, 4294967294
   %i.dq = getelementptr inbounds nuw i8, ptr %4, i64 %i.dp
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !27
@@ -212,7 +213,8 @@ bb.aj:                                            ; preds = %bb.ag, %bb.ag, %bb.
   %i.dt = shl nuw nsw i64 %indvars.iv72, 3
   %i.du = shl i64 %i.ds, %i.dt
   %i.dv = or i64 %i.du, %.04255.us.us
-  %i.dw = sub nsw i64 3, %indvars.iv72
+  %21 = and i64 %indvars.iv72, 2147483646
+  %i.dw = sub nsw i64 3, %21
   %i.dx = and i64 %i.dw, 4294967295
   %i.dy = getelementptr inbounds nuw i8, ptr %4, i64 %i.dx
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !27
@@ -271,7 +273,7 @@ bb.aj:                                            ; preds = %bb.ag, %bb.ag, %bb.
   %.04255.us.us.epil.init = phi i64 [ 0, %.lr.ph.split.us.split.us.preheader ], [ %i.ed, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod108 = trunc i32 %i.dc to i1
   call void @llvm.assume(i1 %lcmp.mod108)
-  %i.fc = and i64 %indvars.iv72.epil.init, 4294967294
+  %i.fc = and i64 %indvars.iv72.epil.init, 2147483646
   %i.fd = and i64 %indvars.iv72.epil.init, 1
   %reass.sub.epil = sub nsw i64 %i.fd, %i.fc
   %i.fe = add nsw i64 %reass.sub.epil, 2
@@ -375,10 +377,10 @@ bb.ak:                                            ; preds = %.lr.ph61.split.us
   br label %bb.am
 
 bb.al:                                            ; preds = %.lr.ph61.split.us
-  %i.gx = and i32 %i.gu, -2
+  %i.gx = and i32 %i.gu, 2147483646
   %i.gy = and i32 %i.gu, 1
-  %reass.sub62 = sub i32 %i.gy, %i.gx
-  %i.gz = add i32 %reass.sub62, 2
+  %reass.sub62 = sub nsw i32 %i.gy, %i.gx
+  %i.gz = add nsw i32 %reass.sub62, 2
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak

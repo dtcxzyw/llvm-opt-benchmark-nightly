@@ -204,10 +204,9 @@ bb.ar:                                            ; preds = %_ZL14countPolyVerts
   br i1 %i.hu, label %.lr.ph.preheader.i, label %_ZL17getPolyMergeValuePtS_PKtRiS2_i.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.ar
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %i.hq, i32 0)
   %i.hv = zext nneg i32 %i.hl to i64
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
-  %exitcond.not.i1404 = icmp slt i32 %i.hq, 1
+  %wide.trip.count.i = zext nneg i32 %i.hq to i64
+  %exitcond.not.i1404 = icmp eq i32 %i.hq, 0
   br label %.lr.ph.i408
 
 ._crit_edge.i410:                                 ; preds = %.loopexit.i
@@ -610,10 +609,9 @@ bb.dg:                                            ; preds = %_ZL14countPolyVerts
   br i1 %i.apl, label %.lr.ph.preheader.i470, label %_ZL17getPolyMergeValuePtS_PKtRiS2_i.exit513
 
 .lr.ph.preheader.i470:                            ; preds = %bb.dg
-  %smax.i471 = tail call i32 @llvm.smax.i32(i32 %i.aph, i32 0)
   %i.apm = zext nneg i32 %i.apc to i64
-  %wide.trip.count.i472 = zext nneg i32 %smax.i471 to i64
-  %exitcond.not.i4801413 = icmp slt i32 %i.aph, 1
+  %wide.trip.count.i472 = zext nneg i32 %i.aph to i64
+  %exitcond.not.i4801413 = icmp eq i32 %i.aph, 0
   br label %.lr.ph.i473
 
 ._crit_edge.i487:                                 ; preds = %.loopexit.i486
@@ -1016,7 +1014,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ab = zext nneg i32 %i.aa to i64
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ab ; 2 uses
   %i.ad = add nuw nsw i32 %i.t, 1                 ; 2 uses
-  %i.ae = zext i32 %i.ad to i64
+  %i.ae = zext nneg i32 %i.ad to i64
   %i.af = icmp samesign ugt i64 %indvars.iv203, %i.ae
   %i.ag = zext nneg i32 %i.ad to i64
   %i.ah = select i1 %i.af, i64 %i.ag, i64 0
@@ -1064,7 +1062,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.be = trunc nuw nsw i64 %indvars.iv.next194 to i32
   %i.bf = select i1 %i.bd, i32 %i.be, i32 0       ; 2 uses
   %i.bg = add nuw nsw i32 %i.bf, 1                ; 2 uses
-  %i.bh = zext i32 %i.bg to i64
+  %i.bh = zext nneg i32 %i.bg to i64
   %i.bi = icmp samesign ugt i64 %indvars.iv203, %i.bh
   %i.bj = select i1 %i.bi, i32 %i.bg, i32 0       ; 3 uses
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv193
@@ -1176,7 +1174,7 @@ bb.j:                                             ; preds = %.thread76.i.i, %_ZL
   %i.ee = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
   %i.ef = select i1 %i.ed, i32 %i.ee, i32 0       ; 2 uses
   %i.eg = icmp eq i64 %indvars.iv.i.i, %indvars.iv193
-  %i.eh = zext i32 %i.ef to i64                   ; 2 uses
+  %i.eh = zext nneg i32 %i.ef to i64              ; 2 uses
   %i.ei = icmp eq i64 %indvars.iv193, %i.eh
   %or.cond.i.i = or i1 %i.eg, %i.ei
   %i.ej = icmp eq i64 %indvars.iv.i.i, %i.bq

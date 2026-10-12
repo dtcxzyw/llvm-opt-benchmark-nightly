@@ -205,8 +205,8 @@ bb.bb:                                            ; preds = %bb.ba
   br i1 %or.cond.i.i164.4, label %validate_mix_level.exit172, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.eb = load float, ptr getelementptr inbounds nuw (i8, ptr @ff_ac3_gain_levels, i64 20), align 4, !tbaa !225 ; 5 uses
-  %i.ec = fpext nsz float %i.eb to double         ; 2 uses
+  %i.eb = load float, ptr getelementptr inbounds nuw (i8, ptr @ff_ac3_gain_levels, i64 20), align 4, !tbaa !225 ; 4 uses
+  %i.ec = fpext nsz float %i.eb to double         ; 3 uses
   %i.ed = fadd nsz double %i.ec, 1.000000e-02
   %i.ee = fcmp nsz ogt double %i.ed, %i.cw
   %i.ef = fadd nsz double %i.ec, -1.000000e-02
@@ -239,11 +239,10 @@ bb.be:                                            ; preds = %bb.bd
   br i1 %i.et, label %validate_mix_level.exit172, label %bb.bf
 
 bb.bf:                                            ; preds = %.thread217
-  %1 = fpext nsz float %i.eb to double
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.b, i32 noundef 24, ptr noundef nonnull @.str.81, ptr noundef nonnull @.str.74, double noundef %1) #15
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.b, i32 noundef 24, ptr noundef nonnull @.str.81, ptr noundef nonnull @.str.74, double noundef %i.ec) #15
   br label %validate_mix_level.exit172
 
-validate_mix_level.exit172:                       ; preds = %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %.thread217, %bb.bf
+validate_mix_level.exit172:                       ; preds = %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %.thread217, %bb.bf
   %i.eu = phi float [ %i.eb, %bb.bf ], [ %i.eb, %.thread217 ], [ %i.cx, %bb.ax ], [ %i.dd, %bb.ay ], [ %i.dj, %bb.az ], [ %i.dp, %bb.ba ], [ %i.dv, %bb.bb ], [ %i.eb, %bb.bc ], [ %i.eh, %bb.bd ], [ %i.en, %bb.be ]
   %.0.i170 = phi i32 [ 5, %bb.bf ], [ 5, %.thread217 ], [ 0, %bb.ax ], [ 1, %bb.ay ], [ 2, %bb.az ], [ 3, %bb.ba ], [ 4, %bb.bb ], [ 5, %bb.bc ], [ 6, %bb.bd ], [ 7, %bb.be ]
   store float %i.eu, ptr %i.ct, align 8, !tbaa !225
@@ -298,8 +297,8 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %or.cond.i.i174.4, label %validate_float_option.exit.i177._crit_edge, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.fz = load float, ptr getelementptr inbounds nuw (i8, ptr @ff_ac3_gain_levels, i64 20), align 4, !tbaa !225 ; 5 uses
-  %i.ga = fpext nsz float %i.fz to double         ; 2 uses
+  %i.fz = load float, ptr getelementptr inbounds nuw (i8, ptr @ff_ac3_gain_levels, i64 20), align 4, !tbaa !225 ; 4 uses
+  %i.ga = fpext nsz float %i.fz to double         ; 3 uses
   %i.gb = fadd nsz double %i.ga, 1.000000e-02
   %i.gc = fcmp nsz ogt double %i.gb, %i.ey
   %i.gd = fadd nsz double %i.ga, -1.000000e-02
@@ -332,11 +331,10 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %i.gr, label %validate_float_option.exit.i177._crit_edge, label %bb.bn
 
 bb.bn:                                            ; preds = %.thread221
-  %2 = fpext nsz float %i.fz to double
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.b, i32 noundef 24, ptr noundef nonnull @.str.81, ptr noundef nonnull @.str.75, double noundef %2) #15
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.b, i32 noundef 24, ptr noundef nonnull @.str.81, ptr noundef nonnull @.str.75, double noundef %i.ga) #15
   br label %validate_float_option.exit.i177._crit_edge
 
-validate_float_option.exit.i177._crit_edge:       ; preds = %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %validate_mix_level.exit172, %bb.bn, %.thread221
+validate_float_option.exit.i177._crit_edge:       ; preds = %validate_mix_level.exit172, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn, %.thread221
   %i.gs = phi float [ %i.fz, %bb.bn ], [ %i.fz, %.thread221 ], [ %i.cx, %validate_mix_level.exit172 ], [ %i.fb, %bb.bg ], [ %i.fh, %bb.bh ], [ %i.fn, %bb.bi ], [ %i.ft, %bb.bj ], [ %i.fz, %bb.bk ], [ %i.gf, %bb.bl ], [ %i.gl, %bb.bm ]
   %.0.i180 = phi i32 [ 5, %bb.bn ], [ 5, %.thread221 ], [ 0, %validate_mix_level.exit172 ], [ 1, %bb.bg ], [ 2, %bb.bh ], [ 3, %bb.bi ], [ 4, %bb.bj ], [ 5, %bb.bk ], [ 6, %bb.bl ], [ 7, %bb.bm ]
   store float %i.gs, ptr %i.ev, align 16, !tbaa !225

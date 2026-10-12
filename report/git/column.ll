@@ -205,7 +205,6 @@ middle.block133:                                  ; preds = %vector.body130
   br label %.lr.ph35.i39.i.us.i
 
 .lr.ph35.i39.i.us.us.i.preheader:                 ; preds = %.lr.ph35.i39.i.preheader.split.us.i
-  %3 = shl nuw nsw i64 %indvars.iv143.i.lcssa, 32
   %xtraiter177 = and i64 %indvars.iv143.i.lcssa, 1
   %i.ia = icmp eq i64 %indvars.iv143.i.lcssa, 1
   %unroll_iter183 = and i64 %indvars.iv143.i.lcssa, 9223372036854775806
@@ -216,18 +215,18 @@ middle.block133:                                  ; preds = %vector.body130
 .lr.ph35.i39.i.us.us.i:                           ; preds = %.lr.ph35.i39.i.us.us.i.preheader, %._crit_edge.i41.i.loopexit.split.us.us.us.i
   %indvars.iv.i40.i.us.us.i = phi i64 [ %indvars.iv.next.i42.i.us.us.i, %._crit_edge.i41.i.loopexit.split.us.us.us.i ], [ 0, %.lr.ph35.i39.i.us.us.i.preheader ] ; 4 uses
   %i.ib = trunc nuw nsw i64 %indvars.iv.i40.i.us.us.i to i32
-  %i.ic = mul nsw i32 %i.hq, %i.ib                ; 3 uses
+  %i.ic = mul nuw nsw i32 %i.hq, %i.ib            ; 3 uses
   %i.id = getelementptr inbounds nuw [4 x i8], ptr %i.hn, i64 %indvars.iv.i40.i.us.us.i ; 4 uses
   store i32 %i.ic, ptr %i.id, align 4, !tbaa !20
-  %sext230.i = mul i64 %3, %indvars.iv.i40.i.us.us.i
-  %4 = ashr exact i64 %sext230.i, 32              ; 3 uses
+  %sext230.i = mul i64 %indvars.iv.i40.i.us.us.i, %indvars.iv143.i.lcssa
+  %3 = and i64 %sext230.i, 4294967295             ; 3 uses
   br i1 %i.ia, label %.epil.preheader176, label %.lr.ph35.i39.i.us.us.i.new
 
 .lr.ph35.i39.i.us.us.i.new:                       ; preds = %.lr.ph35.i39.i.us.us.i, %bb.ar
   %indvars.iv150.i = phi i64 [ %indvars.iv.next151.i.1, %bb.ar ], [ 0, %.lr.ph35.i39.i.us.us.i ] ; 3 uses
   %i.ie = phi i32 [ %i.iy, %bb.ar ], [ %i.ic, %.lr.ph35.i39.i.us.us.i ] ; 3 uses
   %niter184 = phi i64 [ %niter184.next.1, %bb.ar ], [ 0, %.lr.ph35.i39.i.us.us.i ]
-  %i.if = add nsw i64 %indvars.iv150.i, %4        ; 3 uses
+  %i.if = add nuw nsw i64 %indvars.iv150.i, %3    ; 3 uses
   %i.ig = icmp ugt i64 %i.hy, %i.if
   br i1 %i.ig, label %bb.am, label %bb.ao
 
@@ -235,20 +234,20 @@ bb.am:                                            ; preds = %.lr.ph35.i39.i.us.u
   %i.ih = sext i32 %i.ie to i64
   %i.ii = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.ih
   %i.ij = load i32, ptr %i.ii, align 4, !tbaa !20
-  %i.ik = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.if
+  %i.ik = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.if
   %i.il = load i32, ptr %i.ik, align 4, !tbaa !20
   %i.im = icmp slt i32 %i.ij, %i.il
   br i1 %i.im, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.in = trunc nsw i64 %i.if to i32              ; 2 uses
+  %i.in = trunc nuw i64 %i.if to i32              ; 2 uses
   store i32 %i.in, ptr %i.id, align 4, !tbaa !20
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am, %.lr.ph35.i39.i.us.us.i.new
   %i.io = phi i32 [ %i.ie, %.lr.ph35.i39.i.us.us.i.new ], [ %i.ie, %bb.am ], [ %i.in, %bb.an ] ; 3 uses
   %indvars.iv.next151.i = or disjoint i64 %indvars.iv150.i, 1
-  %i.ip = add nsw i64 %indvars.iv.next151.i, %4   ; 3 uses
+  %i.ip = add nuw nsw i64 %indvars.iv.next151.i, %3 ; 3 uses
   %i.iq = icmp ugt i64 %i.hy, %i.ip
   br i1 %i.iq, label %bb.ap, label %bb.ar
 
@@ -256,13 +255,13 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ir = sext i32 %i.io to i64
   %i.is = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.ir
   %i.it = load i32, ptr %i.is, align 4, !tbaa !20
-  %i.iu = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.ip
+  %i.iu = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.ip
   %i.iv = load i32, ptr %i.iu, align 4, !tbaa !20
   %i.iw = icmp slt i32 %i.it, %i.iv
   br i1 %i.iw, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.ix = trunc nsw i64 %i.ip to i32              ; 2 uses
+  %i.ix = trunc nuw i64 %i.ip to i32              ; 2 uses
   store i32 %i.ix, ptr %i.id, align 4, !tbaa !20
   br label %bb.ar
 
@@ -280,7 +279,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.
   %indvars.iv150.i.epil.init = phi i64 [ 0, %.lr.ph35.i39.i.us.us.i ], [ %indvars.iv.next151.i.1, %._crit_edge.i41.i.loopexit.split.us.us.us.i.unr-lcssa ]
   %.epil.init180 = phi i32 [ %i.ic, %.lr.ph35.i39.i.us.us.i ], [ %i.iy, %._crit_edge.i41.i.loopexit.split.us.us.us.i.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod182)
-  %i.iz = add nsw i64 %indvars.iv150.i.epil.init, %4 ; 3 uses
+  %i.iz = add nuw nsw i64 %indvars.iv150.i.epil.init, %3 ; 3 uses
   %i.ja = icmp ugt i64 %i.hy, %i.iz
   br i1 %i.ja, label %bb.as, label %._crit_edge.i41.i.loopexit.split.us.us.us.i
 
@@ -288,13 +287,13 @@ bb.as:                                            ; preds = %.epil.preheader176
   %i.jb = sext i32 %.epil.init180 to i64
   %i.jc = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.jb
   %i.jd = load i32, ptr %i.jc, align 4, !tbaa !20
-  %i.je = getelementptr inbounds [4 x i8], ptr %i.am, i64 %i.iz
+  %i.je = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.iz
   %i.jf = load i32, ptr %i.je, align 4, !tbaa !20
   %i.jg = icmp slt i32 %i.jd, %i.jf
   br i1 %i.jg, label %bb.at, label %._crit_edge.i41.i.loopexit.split.us.us.us.i
 
 bb.at:                                            ; preds = %bb.as
-  %i.jh = trunc nsw i64 %i.iz to i32
+  %i.jh = trunc nuw i64 %i.iz to i32
   store i32 %i.jh, ptr %i.id, align 4, !tbaa !20
   br label %._crit_edge.i41.i.loopexit.split.us.us.us.i
 
@@ -306,7 +305,7 @@ bb.at:                                            ; preds = %bb.as
 .lr.ph35.i39.i.us.i:                              ; preds = %.lr.ph35.i39.i.us.i.preheader, %._crit_edge.i41.i.loopexit.split.us105.i
   %indvars.iv.i40.i.us.i = phi i64 [ %indvars.iv.next.i42.i.us.i, %._crit_edge.i41.i.loopexit.split.us105.i ], [ 0, %.lr.ph35.i39.i.us.i.preheader ] ; 6 uses
   %i.ji = trunc nuw nsw i64 %indvars.iv.i40.i.us.i to i32
-  %i.jj = mul nsw i32 %i.hq, %i.ji                ; 3 uses
+  %i.jj = mul nuw nsw i32 %i.hq, %i.ji            ; 3 uses
   %i.jk = getelementptr inbounds nuw [4 x i8], ptr %i.hn, i64 %indvars.iv.i40.i.us.i ; 4 uses
   store i32 %i.jj, ptr %i.jk, align 4, !tbaa !20
   br i1 %i.hz, label %.epil.preheader167, label %.lr.ph35.i39.i.us.i.new
@@ -330,7 +329,7 @@ bb.au:                                            ; preds = %.lr.ph35.i39.i.us.i
   br i1 %i.ju, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
-  %i.jv = trunc nuw nsw i64 %i.jn to i32          ; 2 uses
+  %i.jv = trunc nuw i64 %i.jn to i32              ; 2 uses
   store i32 %i.jv, ptr %i.jk, align 4, !tbaa !20
   br label %bb.aw
 
@@ -352,7 +351,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %i.kf, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.kg = trunc nuw nsw i64 %i.jy to i32          ; 2 uses
+  %i.kg = trunc nuw i64 %i.jy to i32              ; 2 uses
   store i32 %i.kg, ptr %i.jk, align 4, !tbaa !20
   br label %bb.az
 
@@ -385,7 +384,7 @@ bb.ba:                                            ; preds = %.epil.preheader167
   br i1 %i.kq, label %bb.bb, label %._crit_edge.i41.i.loopexit.split.us105.i
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.kr = trunc nuw nsw i64 %i.kj to i32
+  %i.kr = trunc nuw i64 %i.kj to i32
   store i32 %i.kr, ptr %i.jk, align 4, !tbaa !20
   br label %._crit_edge.i41.i.loopexit.split.us105.i
 

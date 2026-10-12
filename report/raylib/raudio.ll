@@ -205,8 +205,8 @@ bb.gy:                                            ; preds = %._crit_edge1422
 .lr.ph1425.prol:                                  ; preds = %.lr.ph1425.preheader
   %indvars.iv.next1613.prol = add nsw i64 %i.ajq, -1 ; 2 uses
   %i.ajs = zext i8 %.pre1662 to i32
-  %2 = srem i32 %i.ajr, %i.ajs
-  %i.ajt = trunc i32 %2 to i8
+  %2 = urem i32 %i.ajr, %i.ajs
+  %i.ajt = trunc nuw i32 %2 to i8
   %i.aju = load ptr, ptr %i.air, align 8
   %i.ajv = getelementptr inbounds nuw [8 x i8], ptr %i.aju, i64 %indvars.iv1615
   %i.ajw = load ptr, ptr %i.ajv, align 8
@@ -214,7 +214,7 @@ bb.gy:                                            ; preds = %._crit_edge1422
   store i8 %i.ajt, ptr %i.ajx, align 1
   %i.ajy = load i8, ptr %i.act, align 4           ; 2 uses
   %i.ajz = zext i8 %i.ajy to i32
-  %3 = sdiv i32 %i.ajr, %i.ajz
+  %3 = udiv i32 %i.ajr, %i.ajz
   br label %.lr.ph1425.prol.loopexit
 
 .lr.ph1425.prol.loopexit:                         ; preds = %.lr.ph1425.prol, %.lr.ph1425.preheader
@@ -617,8 +617,8 @@ bb.n:                                             ; preds = %.lr.ph.i.i.i
   br i1 %.not41.i.i, label %.preheader.i.i, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.n
-  %smax.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv46.i.i, i32 1)
-  %wide.trip.count.i.i = zext nneg i32 %smax.i.i to i64
+  %smax.i.i = call i32 @llvm.umax.i32(i32 %indvars.iv46.i.i, i32 1)
+  %wide.trip.count.i.i = zext i32 %smax.i.i to i64
   br label %.lr.ph.i.i
 
 bb.o:                                             ; preds = %.lr.ph.i.i
@@ -1021,7 +1021,7 @@ bb.l:                                             ; preds = %.epil.preheader991
 .preheader642:                                    ; preds = %._crit_edge.thread, %._crit_edge
   %i.cv = icmp sgt i32 %i.ac, 0
   %i.cw = icmp slt i32 %2, 1
-  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 1784 ; 29 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 1784 ; 31 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 1780 ; 29 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 1764 ; 17 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 1772 ; 17 uses
@@ -1424,7 +1424,8 @@ bb.er:                                            ; preds = %bb.eq
   %i.ur = load i8, ptr %i.uq, align 1
   %i.us = zext i8 %i.ur to i32
   %i.ut = sub nsw i32 %i.um, %i.us
-  br label %codebook_decode_scalar_raw.exit432.us.us.us
+  store i32 %i.ut, ptr %i.cx, align 8
+  br label %codebook_decode_start.exit374.us.us.us
 
 bb.es:                                            ; preds = %prep_huffman.exit.i400.us.us.us
   %i.uu = load ptr, ptr %.phi.trans.insert.i415.us.us.us, align 8 ; 2 uses
@@ -1468,7 +1469,7 @@ bb.et:                                            ; preds = %._crit_edge.i419.us
   br label %bb.eu
 
 bb.eu:                                            ; preds = %bb.et, %._crit_edge.i419.us.us.us
-  %.2.i422.us.us.us = phi i32 [ %.054.lcssa.i420.us.us.us, %._crit_edge.i419.us.us.us ], [ %i.vm, %bb.et ] ; 2 uses
+  %.2.i422.us.us.us = phi i32 [ %.054.lcssa.i420.us.us.us, %._crit_edge.i419.us.us.us ], [ %i.vm, %bb.et ] ; 3 uses
   %i.vn = load ptr, ptr %i.pg, align 8
   %i.vo = sext i32 %.2.i422.us.us.us to i64
   %i.vp = getelementptr inbounds i8, ptr %i.vn, i64 %i.vo
@@ -1476,19 +1477,14 @@ bb.eu:                                            ; preds = %bb.et, %._crit_edge
   %i.vr = zext i8 %i.vq to i32                    ; 3 uses
   %i.vs = load i32, ptr %i.cx, align 8            ; 2 uses
   %.not64.i423.us.us.us = icmp slt i32 %i.vs, %i.vr
-  br i1 %.not64.i423.us.us.us, label %codebook_decode_scalar_raw.exit432.thread581, label %6
+  br i1 %.not64.i423.us.us.us, label %codebook_decode_scalar_raw.exit432.thread581, label %codebook_decode_scalar_raw.exit432.us.us.us
 
-6:                                                ; preds = %bb.eu
-  %7 = lshr i32 %i.ux, %i.vr
-  store i32 %7, ptr %i.cy, align 4
-  %8 = sub nuw nsw i32 %i.vs, %i.vr
-  br label %codebook_decode_scalar_raw.exit432.us.us.us
-
-codebook_decode_scalar_raw.exit432.us.us.us:      ; preds = %6, %bb.er
-  %.sink.i405.us.us.us = phi i32 [ %i.ut, %bb.er ], [ %8, %6 ]
-  %.158.ph.i406.us.us.us = phi i32 [ %i.un, %bb.er ], [ %.2.i422.us.us.us, %6 ] ; 2 uses
-  store i32 %.sink.i405.us.us.us, ptr %i.cx, align 8
-  %i.vt = icmp slt i32 %.158.ph.i406.us.us.us, 0
+codebook_decode_scalar_raw.exit432.us.us.us:      ; preds = %bb.eu
+  %6 = lshr i32 %i.ux, %i.vr
+  store i32 %6, ptr %i.cy, align 4
+  %7 = sub nuw nsw i32 %i.vs, %i.vr
+  store i32 %7, ptr %i.cx, align 8
+  %i.vt = icmp slt i32 %.2.i422.us.us.us, 0
   br i1 %i.vt, label %.thread.i365, label %codebook_decode_start.exit374.us.us.us
 
 bb.ev:                                            ; preds = %prep_huffman.exit.i363.us.us.us
@@ -1507,8 +1503,8 @@ bb.ev:                                            ; preds = %prep_huffman.exit.i
   store i32 %spec.select.i371.us.us.us, ptr %i.cx, align 8
   br i1 %i.wd, label %.thread.i365, label %codebook_decode_start.exit374.us.us.us
 
-codebook_decode_start.exit374.us.us.us:           ; preds = %bb.ev, %codebook_decode_scalar_raw.exit432.us.us.us
-  %.025.i364.us.us.us = phi i32 [ %i.vu, %bb.ev ], [ %.158.ph.i406.us.us.us, %codebook_decode_scalar_raw.exit432.us.us.us ]
+codebook_decode_start.exit374.us.us.us:           ; preds = %bb.ev, %codebook_decode_scalar_raw.exit432.us.us.us, %bb.er
+  %.025.i364.ph.us.us.us = phi i32 [ %i.un, %bb.er ], [ %i.vu, %bb.ev ], [ %.2.i422.us.us.us, %codebook_decode_scalar_raw.exit432.us.us.us ]
   %i.we = trunc nuw nsw i64 %indvars.iv.i354.us.us.us to i32
   %i.wf = add i32 %i.os, %i.we
   %i.wg = sub i32 %i.oq, %i.wf
@@ -1518,7 +1514,7 @@ codebook_decode_start.exit374.us.us.us:           ; preds = %bb.ev, %codebook_de
   br i1 %i.wi, label %.lr.ph.i.i.us.us.us, label %.loopexit.i.us.us.us
 
 .lr.ph.i.i.us.us.us:                              ; preds = %codebook_decode_start.exit374.us.us.us
-  %i.wj = mul nuw nsw i32 %i.wh, %.025.i364.us.us.us
+  %i.wj = mul nuw nsw i32 %i.wh, %.025.i364.ph.us.us.us
   %i.wk = sext i32 %i.wj to i64
   %wide.trip.count.i.i.us.us.us = zext nneg i32 %spec.select.i.i.us.us.us to i64
   br label %bb.ew
@@ -1921,7 +1917,8 @@ bb.if:                                            ; preds = %bb.ie
   %i.aex = load i8, ptr %i.aew, align 1
   %i.aey = zext i8 %i.aex to i32
   %i.aez = sub nsw i32 %i.aes, %i.aey
-  br label %codebook_decode_scalar_raw.exit.us
+  store i32 %i.aez, ptr %i.cx, align 8
+  br label %codebook_decode_start.exit.us
 
 bb.ig:                                            ; preds = %prep_huffman.exit.i375.us
   %i.afa = load ptr, ptr %.phi.trans.insert.i.us, align 8 ; 2 uses
@@ -1965,7 +1962,7 @@ bb.ih:                                            ; preds = %._crit_edge.i.us
   br label %bb.ii
 
 bb.ii:                                            ; preds = %bb.ih, %._crit_edge.i.us
-  %.2.i.us = phi i32 [ %.054.lcssa.i.us, %._crit_edge.i.us ], [ %i.afs, %bb.ih ] ; 2 uses
+  %.2.i.us = phi i32 [ %.054.lcssa.i.us, %._crit_edge.i.us ], [ %i.afs, %bb.ih ] ; 3 uses
   %i.aft = load ptr, ptr %i.ye, align 8
   %i.afu = sext i32 %.2.i.us to i64
   %i.afv = getelementptr inbounds i8, ptr %i.aft, i64 %i.afu
@@ -1973,19 +1970,14 @@ bb.ii:                                            ; preds = %bb.ih, %._crit_edge
   %i.afx = zext i8 %i.afw to i32                  ; 3 uses
   %i.afy = load i32, ptr %i.cx, align 8           ; 2 uses
   %.not64.i.us = icmp slt i32 %i.afy, %i.afx
-  br i1 %.not64.i.us, label %codebook_decode_scalar_raw.exit.thread606, label %9
+  br i1 %.not64.i.us, label %codebook_decode_scalar_raw.exit.thread606, label %codebook_decode_scalar_raw.exit.us
 
-9:                                                ; preds = %bb.ii
-  %10 = lshr i32 %i.afd, %i.afx
-  store i32 %10, ptr %i.cy, align 4
-  %11 = sub nuw nsw i32 %i.afy, %i.afx
-  br label %codebook_decode_scalar_raw.exit.us
-
-codebook_decode_scalar_raw.exit.us:               ; preds = %9, %bb.if
-  %.sink.i.us = phi i32 [ %i.aez, %bb.if ], [ %11, %9 ]
-  %.158.ph.i.us = phi i32 [ %i.aet, %bb.if ], [ %.2.i.us, %9 ] ; 2 uses
-  store i32 %.sink.i.us, ptr %i.cx, align 8
-  %i.afz = icmp slt i32 %.158.ph.i.us, 0
+codebook_decode_scalar_raw.exit.us:               ; preds = %bb.ii
+  %8 = lshr i32 %i.afd, %i.afx
+  store i32 %8, ptr %i.cy, align 4
+  %9 = sub nuw nsw i32 %i.afy, %i.afx
+  store i32 %9, ptr %i.cx, align 8
+  %i.afz = icmp slt i32 %.2.i.us, 0
   br i1 %i.afz, label %.thread.i, label %codebook_decode_start.exit.us
 
 bb.ij:                                            ; preds = %prep_huffman.exit.i.us
@@ -2004,12 +1996,12 @@ bb.ij:                                            ; preds = %prep_huffman.exit.i
   store i32 %spec.select.i.us, ptr %i.cx, align 8
   br i1 %i.agj, label %.thread.i, label %codebook_decode_start.exit.us
 
-codebook_decode_start.exit.us:                    ; preds = %bb.ij, %codebook_decode_scalar_raw.exit.us
-  %.025.i.us = phi i32 [ %i.aga, %bb.ij ], [ %.158.ph.i.us, %codebook_decode_scalar_raw.exit.us ]
+codebook_decode_start.exit.us:                    ; preds = %bb.ij, %codebook_decode_scalar_raw.exit.us, %bb.if
+  %.025.i.ph.us = phi i32 [ %i.aet, %bb.if ], [ %i.aga, %bb.ij ], [ %.2.i.us, %codebook_decode_scalar_raw.exit.us ]
   %i.agk = sub nsw i32 %i.xq, %.153.i.us
   %i.agl = load i32, ptr %i.xs, align 8           ; 2 uses
   %spec.select.i36.i.us = call i32 @llvm.smin.i32(i32 %i.agk, i32 %i.agl) ; 7 uses
-  %i.agm = mul nsw i32 %i.agl, %.025.i.us         ; 2 uses
+  %i.agm = mul nsw i32 %i.agl, %.025.i.ph.us      ; 2 uses
   %i.agn = load i8, ptr %i.xx, align 2
   %.not.i37.i.us = icmp eq i8 %i.agn, 0
   %i.ago = icmp sgt i32 %spec.select.i36.i.us, 0  ; 2 uses
@@ -2226,7 +2218,7 @@ bb.in:                                            ; preds = %.thread.i
   %exitcond784.not = icmp eq i64 %indvars.iv.next782, 8
   br i1 %exitcond784.not, label %.thread618, label %.preheader641
 
-.thread618:                                       ; preds = %._crit_edge701, %bb.bx, %bb.m, %..loopexit626_crit_edge, %..loopexit_crit_edge.us, %.preheader628.split, %.preheader642, %.preheader628.split.us, %bb.im, %.thread31.sink.split.i368, %bb.in, %.thread31.sink.split.i, %.thread535, %.thread546, %._crit_edge705
+.thread618:                                       ; preds = %._crit_edge701, %bb.bx, %bb.m, %..loopexit626_crit_edge, %..loopexit_crit_edge.us, %.preheader628.split, %.preheader642, %.preheader628.split.us, %.thread31.sink.split.i, %bb.in, %bb.im, %.thread31.sink.split.i368, %.thread535, %.thread546, %._crit_edge705
   store i32 %i.ae, ptr %i.ad, align 4
   ret void
 }

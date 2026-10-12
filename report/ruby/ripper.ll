@@ -205,11 +205,10 @@ vtable_included.exit45.i:                         ; preds = %bb.j
   br i1 %.not13, label %local_id_ref.exit.thread, label %local_id_ref.exit
 
 local_id_ref.exit:                                ; preds = %vtable_included.exit45.i
-  %2 = load ptr, ptr %.054.i, align 8, !tbaa !183
-  %3 = shl i64 %indvars.iv.i42.i, 32
-  %sext.i = add i64 %3, 4294967296
-  %4 = ashr exact i64 %sext.i, 29
-  %5 = getelementptr i8, ptr %2, i64 %4
+  %2 = add nuw i64 %indvars.iv.i42.i, 1
+  %3 = load ptr, ptr %.054.i, align 8, !tbaa !183
+  %4 = and i64 %2, 4294967295
+  %5 = getelementptr [8 x i8], ptr %3, i64 %4
   %i.ao = getelementptr i8, ptr %5, i64 -8        ; 3 uses
   %.not42 = icmp eq ptr %i.ao, null
   br i1 %.not42, label %local_id_ref.exit.thread, label %bb.l
@@ -612,11 +611,10 @@ vtable_included.exit45:                           ; preds = %bb.h
   br i1 %or.cond3, label %bb.j, label %vtable_included.exit
 
 bb.j:                                             ; preds = %vtable_included.exit45
-  %3 = load ptr, ptr %.054, align 8, !tbaa !183
-  %4 = shl i64 %indvars.iv.i42, 32
-  %sext = add i64 %4, 4294967296
-  %5 = ashr exact i64 %sext, 29
-  %6 = getelementptr i8, ptr %3, i64 %5
+  %3 = add nuw i64 %indvars.iv.i42, 1
+  %4 = load ptr, ptr %.054, align 8, !tbaa !183
+  %5 = and i64 %3, 4294967295
+  %6 = getelementptr [8 x i8], ptr %4, i64 %5
   %i.aj = getelementptr i8, ptr %6, i64 -8
   store ptr %i.aj, ptr %2, align 8, !tbaa !305
   br label %vtable_included.exit

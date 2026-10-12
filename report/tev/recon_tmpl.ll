@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m, %bb.n
   %not.621 = phi i32 [ 1, %bb.m ], [ %i.ic, %bb.n ]
-  %i.id = zext i32 %.0583661 to i64
+  %i.id = zext nneg i32 %.0583661 to i64
   %i.ie = icmp samesign ult i64 %indvars.iv724, %i.id ; 2 uses
   %brmerge = select i1 %i.ie, i1 true, i1 %.not622.not650
   %.mux = select i1 %i.ie, i32 0, i32 8
@@ -608,7 +608,7 @@ bb.ci:                                            ; preds = %.lr.ph991.split, %b
   %i.amc = call i32 @llvm.smax.i32(i32 %i.aje, i32 %i.amb)
   %i.amd = icmp slt i32 %i.amb, %i.aje
   %i.ame = zext i1 %i.amd to i32                  ; 2 uses
-  %i.amf = add i32 %i.amb, %i.ame
+  %i.amf = add nuw i32 %i.amb, %i.ame
   %i.amg = sub i32 %i.amc, %i.amf
   %i.amh = call i32 @llvm.umax.i32(i32 %i.alz, i32 1)
   %i.ami = udiv i32 %i.amg, %i.amh

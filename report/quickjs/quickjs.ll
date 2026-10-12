@@ -205,9 +205,9 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph251.preheader:                              ; preds = %bb.r
   %scevgep = getelementptr i8, ptr %i.bj, i64 8
   %i.bl = tail call i32 @llvm.umax.i32(i32 %i.bi, i32 2)
-  %6 = shl nuw nsw i32 %i.bl, 2
+  %6 = add nsw i32 %i.bl, -1
   %i.bm = zext nneg i32 %6 to i64
-  %7 = add nsw i64 %i.bm, -4
+  %7 = shl nuw nsw i64 %i.bm, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 -1, i64 %7, i1 false), !tbaa !191
   br label %JS_FreeValue.exit204
 

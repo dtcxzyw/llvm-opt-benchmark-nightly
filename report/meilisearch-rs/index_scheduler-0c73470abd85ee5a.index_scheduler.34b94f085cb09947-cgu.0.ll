@@ -206,7 +206,7 @@ bb.a:
   %i.g = load i64, ptr %i.a, align 8, !range !71, !noundef !57
   %i.h = trunc nuw i64 %i.g to i1
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.j = load i64, ptr %i.i, align 8, !noundef !57 ; 9 uses
+  %i.j = load i64, ptr %i.i, align 8, !noundef !57 ; 10 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.l = load i32, ptr %i.k, align 8, !range !181, !noundef !57 ; 3 uses
   br i1 %i.h, label %bb.b, label %bb.l
@@ -309,10 +309,7 @@ bb.e:                                             ; preds = %bb.d, %_ZN4time4tim
   %.sroa.04.040.i.i5102330 = phi i32 [ %.sroa.04.040.i.i511, %_ZN4time4time4Time17adjusting_sub_std17hf29ef2d769c2f610E.exit.i.thread ], [ 0, %bb.d ] ; 2 uses
   %.sroa.016.1.i.i2529 = phi i64 [ %i.x, %_ZN4time4time4Time17adjusting_sub_std17hf29ef2d769c2f610E.exit.i.thread ], [ 0, %bb.d ] ; 2 uses
   %.pn = phi i64 [ 23, %_ZN4time4time4Time17adjusting_sub_std17hf29ef2d769c2f610E.exit.i.thread ], [ 24, %bb.d ] ; 2 uses
-  %1 = udiv i64 %i.j, 86400
-  %2 = trunc nuw nsw i64 %1 to i32                ; 2 uses
-  %3 = add i32 %2, -4371588
-  %or.cond.i.i16.i = icmp ult i32 %3, -7304484
+  %or.cond.i.i16.i = icmp samesign ugt i64 %i.j, 377705203199
   br i1 %or.cond.i.i16.i, label %bb.k, label %bb.g, !prof !107
 
 bb.f:                                             ; preds = %bb.c
@@ -320,7 +317,9 @@ bb.f:                                             ; preds = %bb.c
   unreachable
 
 bb.g:                                             ; preds = %bb.e
-  %i.bj = sub i32 869850581, %2                   ; 2 uses
+  %1 = udiv i64 %i.j, 86400
+  %2 = trunc nuw nsw i64 %1 to i32
+  %i.bj = sub nuw nsw i32 869850581, %2           ; 2 uses
   %i.bk = zext nneg i32 %i.bj to i64
   %i.bl = mul nuw nsw i64 %i.bk, 3853261555       ; 2 uses
   %i.bm = lshr i64 %i.bl, 15

@@ -204,12 +204,12 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %exitcond171.not.1, label %.preheader, label %.lr.ph149.new, !llvm.loop !10
 
 bb.g:                                             ; preds = %.lr.ph154, %bb.i
-  %indvars.iv172 = phi i64 [ %i.bf, %.lr.ph154 ], [ %indvars.iv.next173, %bb.i ] ; 3 uses
+  %indvars.iv172 = phi i64 [ %i.bf, %.lr.ph154 ], [ %indvars.iv.next173, %bb.i ] ; 4 uses
   %.2108152 = phi i32 [ %.1107.lcssa, %.lr.ph154 ], [ %.3109, %bb.i ] ; 2 uses
-  %i.ce = trunc nsw i64 %indvars.iv172 to i32     ; 2 uses
-  %3 = ashr i32 %i.ce, 3
-  %4 = sext i32 %3 to i64
-  %i.cf = getelementptr inbounds i8, ptr %i.c, i64 %4
+  %i.ce = trunc nsw i64 %indvars.iv172 to i32
+  %3 = lshr i64 %indvars.iv172, 3
+  %4 = and i64 %3, 536870911
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.c, i64 %4
   %i.cg = load i8, ptr %i.cf, align 1
   %i.ch = zext i8 %i.cg to i32
   %i.ci = and i32 %i.ce, 7
@@ -352,12 +352,12 @@ bb.s:                                             ; preds = %VARSIZE_ANY.exit, %
   br i1 %exitcond.not, label %.preheader136, label %bb.j, !llvm.loop !12
 
 bb.t:                                             ; preds = %.lr.ph145, %bb.ae
-  %indvars.iv162 = phi i64 [ %i.cz, %.lr.ph145 ], [ %indvars.iv.next163, %bb.ae ] ; 3 uses
+  %indvars.iv162 = phi i64 [ %i.cz, %.lr.ph145 ], [ %indvars.iv.next163, %bb.ae ] ; 4 uses
   %.5143 = phi i32 [ %.4.lcssa, %.lr.ph145 ], [ %.6, %bb.ae ] ; 4 uses
-  %i.ew = trunc nsw i64 %indvars.iv162 to i32     ; 2 uses
-  %5 = ashr i32 %i.ew, 3
-  %6 = sext i32 %5 to i64
-  %i.ex = getelementptr inbounds i8, ptr %i.c, i64 %6
+  %i.ew = trunc nsw i64 %indvars.iv162 to i32
+  %5 = lshr i64 %indvars.iv162, 3
+  %6 = and i64 %5, 536870911
+  %i.ex = getelementptr inbounds nuw i8, ptr %i.c, i64 %6
   %i.ey = load i8, ptr %i.ex, align 1
   %i.ez = zext i8 %i.ey to i32
   %i.fa = and i32 %i.ew, 7
@@ -760,12 +760,12 @@ align_fetch_then_add.exit:                        ; preds = %bb.q, %bb.r, %bb.s,
   br label %.lr.ph117
 
 bb.ae:                                            ; preds = %.lr.ph114, %bb.ax
-  %indvars.iv130 = phi i64 [ %i.bo, %.lr.ph114 ], [ %indvars.iv.next131, %bb.ax ] ; 7 uses
+  %indvars.iv130 = phi i64 [ %i.bo, %.lr.ph114 ], [ %indvars.iv.next131, %bb.ax ] ; 8 uses
   %.1100112 = phi i32 [ %.099.lcssa, %.lr.ph114 ], [ %.2101, %bb.ax ] ; 6 uses
-  %i.ee = trunc nuw nsw i64 %indvars.iv130 to i32 ; 2 uses
-  %4 = ashr i32 %i.ee, 3
-  %5 = sext i32 %4 to i64
-  %i.ef = getelementptr inbounds i8, ptr %i.f, i64 %5
+  %i.ee = trunc nuw nsw i64 %indvars.iv130 to i32
+  %4 = lshr i64 %indvars.iv130, 3
+  %5 = and i64 %4, 536870911
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.f, i64 %5
   %i.eg = load i8, ptr %i.ef, align 1
   %i.eh = zext i8 %i.eg to i32
   %i.ei = and i32 %i.ee, 7

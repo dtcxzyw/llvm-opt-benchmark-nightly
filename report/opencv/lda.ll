@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.epil.
   br label %.preheader810
 
 .lr.ph:                                           ; preds = %._crit_edge.1, %.new
-  %indvars.iv942 = phi i64 [ 0, %.new ], [ %indvars.iv.next943.1, %._crit_edge.1 ] ; 4 uses
+  %indvars.iv942 = phi i64 [ 0, %.new ], [ %indvars.iv.next943.1, %._crit_edge.1 ] ; 5 uses
   %.0616814 = phi double [ 0.000000e+00, %.new ], [ %i.ao, %._crit_edge.1 ]
   %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %._crit_edge.1 ]
   %i.af = trunc nuw nsw i64 %indvars.iv942 to i32
@@ -216,25 +216,21 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.epil.
   br label %bb.j
 
 ._crit_edge:                                      ; preds = %bb.j
-  %indvars.iv.next943 = or disjoint i64 %indvars.iv942, 1 ; 2 uses
-  %5 = trunc nuw nsw i64 %indvars.iv.next943 to i32
-  %smax.1 = tail call i32 @llvm.smax.i32(i32 %5, i32 1)
-  %6 = zext nneg i32 %smax.1 to i64
-  %7 = add nsw i64 %6, -1
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.next943
-  %i.ak = load ptr, ptr %8, align 8, !tbaa !65
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv942
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.ak = load ptr, ptr %6, align 8, !tbaa !65
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %._crit_edge
-  %indvars.iv.1 = phi i64 [ %7, %._crit_edge ], [ %indvars.iv.next.1, %bb.i ] ; 2 uses
+  %indvars.iv.1 = phi i64 [ %indvars.iv942, %._crit_edge ], [ %indvars.iv.next.1, %bb.i ] ; 2 uses
   %.1617812.1 = phi double [ %i.as, %._crit_edge ], [ %i.ao, %bb.i ]
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %indvars.iv.1
   %i.am = load double, ptr %i.al, align 8, !tbaa !48
   %i.an = tail call noundef double @llvm.fabs.f64(double %i.am)
   %i.ao = fadd double %.1617812.1, %i.an          ; 4 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.1, 1 ; 2 uses
-  %9 = icmp slt i64 %indvars.iv.next.1, %i.m
-  br i1 %9, label %bb.i, label %._crit_edge.1, !llvm.loop !338
+  %7 = icmp samesign ult i64 %indvars.iv.next.1, %i.m
+  br i1 %7, label %bb.i, label %._crit_edge.1, !llvm.loop !338
 
 ._crit_edge.1:                                    ; preds = %bb.i
   %indvars.iv.next943.1 = add nuw nsw i64 %indvars.iv942, 2 ; 2 uses

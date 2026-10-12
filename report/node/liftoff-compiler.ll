@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.sroa.7.sroa.4.0.extract.shift = and i64 %i.h, 4294967040
+  %.sroa.7.sroa.4.0.extract.shift = and i64 %i.h, 2147483392
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31: ; preds = %bb.b, %bb.a, %bb.c
@@ -215,7 +215,7 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31: ; preds = %bb.b, %bb.a, %bb.c
   %i.k = phi ptr [ inttoptr (i64 6 to ptr), %bb.c ], [ inttoptr (i64 2 to ptr), %bb.a ], [ inttoptr (i64 3 to ptr), %bb.b ]
   %.sroa.7.sroa.0.0.insert.ext = and i64 %.sroa.7.sroa.0.0, 248
   %.sroa.7.sroa.0.0.insert.insert = or disjoint i64 %.sroa.7.sroa.4.sroa.0.0, %.sroa.7.sroa.0.0.insert.ext
-  %.sroa.7.0.insert.shift = shl nuw i64 %.sroa.7.sroa.0.0.insert.insert, 32
+  %.sroa.7.0.insert.shift = shl nuw nsw i64 %.sroa.7.sroa.0.0.insert.insert, 32
   %.sroa.6181.0.insert.insert = or disjoint i64 %.sroa.7.0.insert.shift, %.sroa.3.0
   %.sroa.3.0.insert.insert = or disjoint i64 %.sroa.6181.0.insert.insert, 603979776
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %.sroa.3.0.insert.insert, ptr nonnull %i.k, i32 noundef 8) #24

@@ -205,9 +205,8 @@ bb.ae:                                            ; preds = %bb.ad, %bb.z
   store i32 0, ptr %i.cj, align 8, !tbaa !121
   %i.ck = getelementptr i8, ptr %.1.i.i, i64 24   ; 4 uses
   %i.cl = and i32 %.sroa.0.4.extract.trunc774, 1048575 ; 3 uses
-  %i.cm = lshr i32 %.sroa.0.4.extract.trunc774, 20
-  %6 = and i32 %i.cm, 2047                        ; 3 uses
-  %.not.i665 = icmp eq i32 %6, 0                  ; 3 uses
+  %i.cm = lshr i32 %.sroa.0.4.extract.trunc774, 20 ; 3 uses
+  %.not.i665 = icmp eq i32 %i.cm, 0               ; 3 uses
   %i.cn = or disjoint i32 %i.cl, 1048576
   %spec.select.i = select i1 %.not.i665, i32 %i.cl, i32 %i.cn ; 13 uses
   %.sroa.0.0.extract.trunc764 = trunc i64 %.pre-phi to i32 ; 14 uses
@@ -375,12 +374,12 @@ bb.au:                                            ; preds = %lo0bits.exit60.i, %
   br i1 %.not.i665, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.eh = add nsw i32 %6, -1075
+  %i.eh = add nsw i32 %i.cm, -1075
   %i.ei = add nsw i32 %i.eh, %.029.i
   %i.ej = sub nsw i32 53, %.029.i
   %i.ek = and i64 %.pre-phi, 4503599627370495
   %.sroa.086.4.insert.insert95 = or disjoint i64 %i.ek, 4607182418800017408
-  %i.el = add nsw i32 %6, -1023
+  %i.el = add nsw i32 %i.cm, -1023
   br label %bb.ba
 
 bb.aw:                                            ; preds = %bb.au

@@ -205,7 +205,7 @@ begin_hunk_0_@process:bb.a
   %indvars.iv2355.prol = phi i64 [ %indvars.iv.next2356.prol, %.prol.preheader4313 ], [ %i.cvd, %.preheader1917 ] ; 4 uses
   %prol.iter4317 = phi i64 [ %prol.iter4317.next, %.prol.preheader4313 ], [ 0, %.preheader1917 ]
   %i.cvo = trunc nuw nsw i64 %indvars.iv2355.prol to i32
-  %i.cvp = shl i32 %i.cvo, 1
+  %i.cvp = shl nuw i32 %i.cvo, 1
   %i.cvq = and i32 %i.cvp, 2
   %i.cvr = or disjoint i32 %i.cvm, %i.cvq
   %i.cvs = lshr i32 %i.q, %i.cvr
@@ -233,9 +233,9 @@ begin_hunk_0_@process:bb.a
   br i1 %i.cwb, label %.preheader1917, label %.loopexit1957
 
 .preheader1917.new:                               ; preds = %.prol.loopexit4314, %.preheader1917.new
-  %indvars.iv2355 = phi i64 [ %indvars.iv.next2356.3, %.preheader1917.new ], [ %indvars.iv2355.unr, %.prol.loopexit4314 ] ; 8 uses
+  %indvars.iv2355 = phi i64 [ %indvars.iv.next2356.3, %.preheader1917.new ], [ %indvars.iv2355.unr, %.prol.loopexit4314 ] ; 7 uses
   %i.cwc = trunc nuw nsw i64 %indvars.iv2355 to i32
-  %i.cwd = shl i32 %i.cwc, 1
+  %i.cwd = shl nuw i32 %i.cwc, 1
   %i.cwe = and i32 %i.cwd, 2
   %i.cwf = or disjoint i32 %i.cvm, %i.cwe
   %i.cwg = lshr i32 %i.q, %i.cwf
@@ -250,7 +250,7 @@ begin_hunk_0_@process:bb.a
   store float %i.cwj, ptr %i.cwo, align 4, !tbaa !33
   %indvars.iv.next2356 = add nuw nsw i64 %indvars.iv2355, 1 ; 3 uses
   %i.cwp = trunc nuw nsw i64 %indvars.iv.next2356 to i32
-  %i.cwq = shl i32 %i.cwp, 1
+  %i.cwq = shl nuw i32 %i.cwp, 1
   %i.cwr = and i32 %i.cwq, 2
   %i.cws = or disjoint i32 %i.cvm, %i.cwr
   %i.cwt = lshr i32 %i.q, %i.cws
@@ -263,9 +263,9 @@ begin_hunk_0_@process:bb.a
   %i.cxa = getelementptr [4 x i8], ptr %i.cwz, i64 %indvars.iv.next2356
   %i.cxb = getelementptr i8, ptr %i.cxa, i64 %.idx2917
   store float %i.cww, ptr %i.cxb, align 4, !tbaa !33
-  %indvars.iv.next2356.1 = add nuw nsw i64 %indvars.iv2355, 2 ; 2 uses
-  %i.cxc = trunc i64 %indvars.iv2355 to i32
-  %i.cxd = shl i32 %i.cxc, 1
+  %indvars.iv.next2356.1 = add nuw nsw i64 %indvars.iv2355, 2 ; 3 uses
+  %i.cxc = trunc nuw nsw i64 %indvars.iv.next2356.1 to i32
+  %i.cxd = shl nuw i32 %i.cxc, 1
   %i.cxe = and i32 %i.cxd, 2
   %i.cxf = or disjoint i32 %i.cvm, %i.cxe
   %i.cxg = lshr i32 %i.q, %i.cxf
@@ -280,7 +280,7 @@ begin_hunk_0_@process:bb.a
   store float %i.cxj, ptr %i.cxo, align 4, !tbaa !33
   %indvars.iv.next2356.2 = add nuw nsw i64 %indvars.iv2355, 3 ; 3 uses
   %i.cxp = trunc nuw nsw i64 %indvars.iv.next2356.2 to i32
-  %i.cxq = shl i32 %i.cxp, 1
+  %i.cxq = shl nuw i32 %i.cxp, 1
   %i.cxr = and i32 %i.cxq, 2
   %i.cxs = or disjoint i32 %i.cvm, %i.cxr
   %i.cxt = lshr i32 %i.q, %i.cxs
@@ -679,7 +679,7 @@ bb.t:                                             ; preds = %bb.t, %.epil.prehea
   %indvars.iv2388.epil = phi i64 [ %indvars.iv2388.epil.init, %.epil.preheader4324 ], [ %indvars.iv.next2389.epil, %bb.t ] ; 3 uses
   %epil.iter4327 = phi i64 [ 0, %.epil.preheader4324 ], [ %epil.iter4327.next, %bb.t ]
   %i.dho = trunc nuw nsw i64 %indvars.iv2388.epil to i32 ; 2 uses
-  %i.dhp = shl i32 %i.dho, 1
+  %i.dhp = shl nuw i32 %i.dho, 1
   %i.dhq = and i32 %i.dhp, 2
   %i.dhr = or disjoint i32 %i.dgj, %i.dhq
   %i.dhs = lshr i32 %i.q, %i.dhr
@@ -1082,7 +1082,7 @@ begin_hunk_1_@process:bb.a
 .preheader1905.new:                               ; preds = %.prol.loopexit4433, %.preheader1905.new
   %indvars.iv2615 = phi i64 [ %indvars.iv.next2616.1, %.preheader1905.new ], [ %indvars.iv2615.unr, %.prol.loopexit4433 ] ; 5 uses
   %i.god = trunc nuw nsw i64 %indvars.iv2615 to i32
-  %i.goe = shl i32 %i.god, 1
+  %i.goe = shl nuw i32 %i.god, 1
   %i.gof = and i32 %i.goe, 2
   %i.gog = or disjoint i32 %i.gno, %i.gof
   %i.goh = lshr i32 %i.q, %i.gog
@@ -1102,7 +1102,7 @@ begin_hunk_1_@process:bb.a
   store float %i.gos, ptr %i.got, align 4, !tbaa !33
   %indvars.iv.next2616 = add nuw nsw i64 %indvars.iv2615, 1 ; 3 uses
   %i.gou = trunc nuw nsw i64 %indvars.iv.next2616 to i32
-  %i.gov = shl i32 %i.gou, 1
+  %i.gov = shl nuw i32 %i.gou, 1
   %i.gow = and i32 %i.gov, 2
   %i.gox = or disjoint i32 %i.gno, %i.gow
   %i.goy = lshr i32 %i.q, %i.gox
@@ -1505,7 +1505,7 @@ begin_hunk_2_@process:bb.a
   %indvars.iv2648.epil.init = phi i64 [ 0, %.preheader1901 ], [ %indvars.iv.next2649.1, %._crit_edge2151.unr-lcssa ] ; 2 uses
   call void @llvm.assume(i1 %lcmp.mod4450)
   %i.gzi = trunc nuw nsw i64 %indvars.iv2648.epil.init to i32 ; 2 uses
-  %i.gzj = shl i32 %i.gzi, 1
+  %i.gzj = shl nuw i32 %i.gzi, 1
   %i.gzk = and i32 %i.gzj, 2
   %i.gzl = or disjoint i32 %i.gyw, %i.gzk
   %i.gzm = lshr i32 %i.q, %i.gzl

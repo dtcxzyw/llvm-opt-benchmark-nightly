@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %exitcond189.not, label %._crit_edge173.us.us, label %bb.l, !llvm.loop !147
 
 ._crit_edge173.us.us:                             ; preds = %bb.n
-  %.reass.us.us = add i32 %invariant.op.us, %i.fo
+  %.reass.us.us = add nuw i32 %invariant.op.us, %i.fo
   %i.gi = sext i32 %.reass.us.us to i64
   %i.gj = getelementptr inbounds [4 x i8], ptr %i.es, i64 %i.gi
   %i.gk = fptrunc double %.sroa.speculated.us.us to float
@@ -243,7 +243,7 @@ vector.main.loop.iter.check306:                   ; preds = %vector.scevcheck
 vector.body310:                                   ; preds = %vector.main.loop.iter.check306, %vector.body310
   %index311 = phi i64 [ %index.next312, %vector.body310 ], [ 0, %vector.main.loop.iter.check306 ] ; 2 uses
   %i.gr = trunc nuw nsw i64 %index311 to i32
-  %i.gs = add i32 %invariant.op, %i.gr
+  %i.gs = add nuw i32 %invariant.op, %i.gr
   %i.gt = sext i32 %i.gs to i64
   %i.gu = getelementptr inbounds [4 x i8], ptr %i.es, i64 %i.gt ; 4 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 32
@@ -270,7 +270,7 @@ vec.epilog.ph320:                                 ; preds = %vector.main.loop.it
 vec.epilog.vector.body322:                        ; preds = %vec.epilog.vector.body322, %vec.epilog.ph320
   %index323 = phi i64 [ %vec.epilog.resume.val315, %vec.epilog.ph320 ], [ %index.next324, %vec.epilog.vector.body322 ] ; 2 uses
   %i.gz = trunc nuw nsw i64 %index323 to i32
-  %i.ha = add i32 %invariant.op, %i.gz
+  %i.ha = add nuw i32 %invariant.op, %i.gz
   %i.hb = sext i32 %i.ha to i64
   %i.hc = getelementptr inbounds [4 x i8], ptr %i.es, i64 %i.hb
   store <4 x float> zeroinitializer, ptr %i.hc, align 4, !tbaa !15
@@ -292,7 +292,7 @@ vec.epilog.middle.block325:                       ; preds = %vec.epilog.vector.b
   %indvars.iv196.prol = phi i64 [ %indvars.iv.next197.prol, %.preheader.prol ], [ %indvars.iv196.ph, %.preheader.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %.preheader.prol ], [ 0, %.preheader.preheader ]
   %i.hf = trunc nuw nsw i64 %indvars.iv196.prol to i32
-  %.reass.prol = add i32 %invariant.op, %i.hf
+  %.reass.prol = add nuw i32 %invariant.op, %i.hf
   %i.hg = sext i32 %.reass.prol to i64
   %i.hh = getelementptr inbounds [4 x i8], ptr %i.es, i64 %i.hg
   store float 0.000000e+00, ptr %i.hh, align 4, !tbaa !15
@@ -335,7 +335,7 @@ bb.q:                                             ; preds = %.lr.ph.preheader.i.
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
   %indvars.iv196 = phi i64 [ %indvars.iv196.unr, %.preheader.preheader.new ], [ %indvars.iv.next197.7, %.preheader ] ; 9 uses
   %i.hn = trunc nuw nsw i64 %indvars.iv196 to i32
-  %.reass = add i32 %invariant.op, %i.hn
+  %.reass = add nuw i32 %invariant.op, %i.hn
   %i.ho = sext i32 %.reass to i64
   %i.hp = getelementptr inbounds [4 x i8], ptr %i.es, i64 %i.ho
   store float 0.000000e+00, ptr %i.hp, align 4, !tbaa !15

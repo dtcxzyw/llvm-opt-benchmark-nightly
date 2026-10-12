@@ -205,13 +205,11 @@ vector.body1081:                                  ; preds = %vector.body1081, %v
   br label %.critedge5.i.a
 
 .critedge5.i.a:                                   ; preds = %.loopexit.i.loopexit, %.critedge5.split.loop.exit377.i, %.critedge5.split.loop.exit375.i
-  %.lcssa.i = phi i32 [ %i.nb, %.critedge5.split.loop.exit375.i ], [ %i.nc, %.critedge5.split.loop.exit377.i ], [ %i.ii, %.loopexit.i.loopexit ] ; 2 uses
-  %smin.i = call i32 @llvm.smin.i32(i32 %.lcssa.i, i32 1)
-  %11 = add i32 %smin.i, -1
+  %.lcssa.i = phi i32 [ %i.nb, %.critedge5.split.loop.exit375.i ], [ %i.nc, %.critedge5.split.loop.exit377.i ], [ %i.ii, %.loopexit.i.loopexit ]
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.ax, %.critedge5.i.a
-  %.2233306.i = phi i32 [ %.lcssa.i, %.critedge5.i.a ], [ %i.nk, %bb.ax ] ; 4 uses
+bb.aw:                                            ; preds = %.critedge5.i.a, %bb.ax
+  %.2233306.i = phi i32 [ %i.nk, %bb.ax ], [ %.lcssa.i, %.critedge5.i.a ] ; 4 uses
   %i.nd = zext nneg i32 %.2233306.i to i64
   %i.ne = getelementptr [4 x i8], ptr %i.hw, i64 %i.nd ; 2 uses
   %i.nf = getelementptr i8, ptr %i.ne, i64 -4
@@ -227,7 +225,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %i.nl, label %bb.aw, label %.critedge15.i, !llvm.loop !84
 
 .critedge15.i:                                    ; preds = %bb.ax, %bb.aw
-  %.2233.lcssa.i = phi i32 [ %11, %bb.ax ], [ %.2233306.i, %bb.aw ] ; 2 uses
+  %.2233.lcssa.i = phi i32 [ 0, %bb.ax ], [ %.2233306.i, %bb.aw ] ; 2 uses
   %i.nm = sext i32 %.2233.lcssa.i to i64          ; 2 uses
   %i.nn = getelementptr inbounds [4 x i8], ptr %i.hw, i64 %i.nm
   %i.no = load i32, ptr %i.nn, align 4, !tbaa !10 ; 2 uses
@@ -630,13 +628,11 @@ vector.body1067:                                  ; preds = %vector.body1067, %v
   br label %.critedge2.i.a
 
 .critedge2.i.a:                                   ; preds = %._crit_edge298.i.loopexit, %.critedge2.split.loop.exit406.i, %.critedge2.split.loop.exit404.i
-  %.lcssa.i392 = phi i32 [ %i.zq, %.critedge2.split.loop.exit404.i ], [ %i.zr, %.critedge2.split.loop.exit406.i ], [ %i.vf, %._crit_edge298.i.loopexit ] ; 2 uses
-  %smin.i393 = call i32 @llvm.smin.i32(i32 %.lcssa.i392, i32 1)
-  %12 = add i32 %smin.i393, -1
+  %.lcssa.i392 = phi i32 [ %i.zq, %.critedge2.split.loop.exit404.i ], [ %i.zr, %.critedge2.split.loop.exit406.i ], [ %i.vf, %._crit_edge298.i.loopexit ]
   br label %bb.cs
 
-bb.cs:                                            ; preds = %bb.ct, %.critedge2.i.a
-  %.2226303.i = phi i32 [ %.lcssa.i392, %.critedge2.i.a ], [ %i.zz, %bb.ct ] ; 4 uses
+bb.cs:                                            ; preds = %.critedge2.i.a, %bb.ct
+  %.2226303.i = phi i32 [ %i.zz, %bb.ct ], [ %.lcssa.i392, %.critedge2.i.a ] ; 4 uses
   %i.zs = zext nneg i32 %.2226303.i to i64
   %i.zt = getelementptr inbounds nuw [4 x i8], ptr %i.uy, i64 %i.zs ; 2 uses
   %i.zu = load i32, ptr %i.zt, align 4, !tbaa !10
@@ -652,7 +648,7 @@ bb.ct:                                            ; preds = %bb.cs
   br i1 %i.aaa, label %bb.cs, label %.critedge8.i, !llvm.loop !97
 
 .critedge8.i:                                     ; preds = %bb.ct, %bb.cs
-  %.2226.lcssa.i = phi i32 [ %12, %bb.ct ], [ %.2226303.i, %bb.cs ] ; 2 uses
+  %.2226.lcssa.i = phi i32 [ 0, %bb.ct ], [ %.2226303.i, %bb.cs ] ; 2 uses
   %i.aab = sext i32 %.2226.lcssa.i to i64         ; 2 uses
   %i.aac = getelementptr inbounds [4 x i8], ptr %i.uy, i64 %i.aab
   %i.aad = load i32, ptr %i.aac, align 4, !tbaa !10 ; 2 uses

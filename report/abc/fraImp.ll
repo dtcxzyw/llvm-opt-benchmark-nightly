@@ -204,9 +204,9 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.cl = icmp samesign ult i64 %indvars.iv149, 1073741823
   %indvars.iv149.tr = trunc nsw i64 %indvars.iv149 to i32
-  %i.cm = shl nsw i32 %indvars.iv149.tr, 1
+  %i.cm = shl nuw nsw i32 %indvars.iv149.tr, 1
   %spec.select.i105 = select i1 %i.cl, i32 %i.cm, i32 2147483647 ; 3 uses
-  %2 = sext i32 %spec.select.i105 to i64
+  %2 = zext nneg i32 %spec.select.i105 to i64
   %.not.i10.i106 = icmp samesign ult i64 %indvars.iv149, %2
   br i1 %.not.i10.i106, label %bb.p, label %Vec_PtrPush.exit112
 
@@ -224,7 +224,7 @@ Vec_PtrPush.exit112.sink.split:                   ; preds = %bb.n, %bb.p
 Vec_PtrPush.exit112:                              ; preds = %Vec_PtrPush.exit112.sink.split, %bb.m, %bb.o
   %storemerge132 = phi ptr [ %storemerge131, %bb.m ], [ %storemerge131, %bb.o ], [ %i.cp, %Vec_PtrPush.exit112.sink.split ] ; 4 uses
   %spec.select.sink.i109128 = phi i32 [ %spec.select.sink.i109129, %bb.m ], [ %spec.select.sink.i109129, %bb.o ], [ %spec.select.sink.i109128.ph, %Vec_PtrPush.exit112.sink.split ] ; 2 uses
-  %indvars.iv.next150 = add nuw nsw i64 %indvars.iv149, 1 ; 2 uses
+  %indvars.iv.next150 = add nuw nsw i64 %indvars.iv149, 1 ; 3 uses
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %storemerge132, i64 %indvars.iv149
   store ptr %i.ch, ptr %i.cq, align 8, !tbaa !29
   %indvars.iv.next152 = add nuw nsw i64 %indvars.iv151, 1 ; 2 uses
@@ -232,7 +232,7 @@ Vec_PtrPush.exit112:                              ; preds = %Vec_PtrPush.exit112
   br i1 %exitcond157.not, label %._crit_edge, label %bb.m, !llvm.loop !68
 
 ._crit_edge:                                      ; preds = %Vec_PtrPush.exit112
-  %i.cr = trunc nsw i64 %indvars.iv.next150 to i32 ; 2 uses
+  %i.cr = trunc nsw i64 %indvars.iv.next150 to i32
   store i32 %i.cr, ptr %i.bw, align 4, !tbaa !72
   store i32 %spec.select.sink.i109128, ptr %i.bv, align 8
   store ptr %storemerge132, ptr %i.ca, align 8
@@ -241,10 +241,11 @@ Vec_PtrPush.exit112:                              ; preds = %Vec_PtrPush.exit112
   %.pre169 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !26 ; 2 uses
   %.phi.trans.insert170 = getelementptr i8, ptr %.pre169, i64 4
   %.val93133.pre = load i32, ptr %.phi.trans.insert170, align 4, !tbaa !72
+  %3 = and i64 %indvars.iv.next150, 4294967295
   br label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge, %Vec_PtrPush.exit
-  %.val = phi i32 [ %i.cr, %._crit_edge ], [ 1, %Vec_PtrPush.exit ] ; 4 uses
+  %.val = phi i64 [ %3, %._crit_edge ], [ 1, %Vec_PtrPush.exit ] ; 4 uses
   %.val95 = phi ptr [ %storemerge132, %._crit_edge ], [ %i.bz, %Vec_PtrPush.exit ] ; 4 uses
   %.val93.peel = phi i32 [ %.val93133.pre, %._crit_edge ], [ %.val14.val.i, %Vec_PtrPush.exit ] ; 3 uses
   %i.cs = phi ptr [ %.pre169, %._crit_edge ], [ %.val14.i, %Vec_PtrPush.exit ] ; 2 uses
@@ -259,20 +260,6 @@ bb.r:                                             ; preds = %bb.q
   %.not85 = icmp eq i32 %1, 0
   %.not = icmp eq i32 %.val93.peel, 1
   br i1 %.not, label %.critedge2.preheader, label %.peel.next
-
-.critedge2.preheader:                             ; preds = %bb.w, %bb.r, %bb.q
-  %3 = icmp sgt i32 %.val, 0
-  br i1 %3, label %.lr.ph138, label %.critedge4
-
-.lr.ph138:                                        ; preds = %.critedge2.preheader
-  %wide.trip.count165 = zext nneg i32 %.val to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count165, 1
-  %4 = icmp eq i32 %.val, 1
-  br i1 %4, label %.critedge2.epil.preheader, label %.lr.ph138.new
-
-.lr.ph138.new:                                    ; preds = %.lr.ph138
-  %unroll_iter = and i64 %wide.trip.count165, 2147483646
-  br label %.critedge2
 
 .peel.next:                                       ; preds = %bb.r, %bb.w
   %.val93175 = phi i32 [ %.val93, %bb.w ], [ %.val93.peel, %bb.r ] ; 3 uses
@@ -326,9 +313,18 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %.peel
   %i.dr = icmp slt i64 %indvars.iv.next159, %i.dq
   br i1 %i.dr, label %.peel.next, label %.critedge2.preheader, !llvm.loop !69
 
-.critedge2:                                       ; preds = %.critedge2, %.lr.ph138.new
-  %indvars.iv162 = phi i64 [ 0, %.lr.ph138.new ], [ %indvars.iv.next163.1, %.critedge2 ] ; 4 uses
-  %niter = phi i64 [ 0, %.lr.ph138.new ], [ %niter.next.1, %.critedge2 ]
+.critedge2.preheader:                             ; preds = %bb.w, %bb.q, %bb.r
+  %xtraiter = and i64 %.val, 1
+  %4 = icmp eq i64 %.val, 1
+  br i1 %4, label %.critedge2.epil.preheader, label %.critedge2.preheader.new
+
+.critedge2.preheader.new:                         ; preds = %.critedge2.preheader
+  %unroll_iter = and i64 %.val, 4294967294
+  br label %.critedge2
+
+.critedge2:                                       ; preds = %.critedge2, %.critedge2.preheader.new
+  %indvars.iv162 = phi i64 [ 0, %.critedge2.preheader.new ], [ %indvars.iv.next163.1, %.critedge2 ] ; 4 uses
+  %niter = phi i64 [ 0, %.critedge2.preheader.new ], [ %niter.next.1, %.critedge2 ]
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %.val95, i64 %indvars.iv162
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !29
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %calloc, i64 %indvars.iv162 ; 2 uses
@@ -357,9 +353,9 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %.peel
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.critedge4, label %.critedge2.epil.preheader
 
-.critedge2.epil.preheader:                        ; preds = %.critedge4.loopexit.unr-lcssa, %.lr.ph138
-  %indvars.iv162.epil.init = phi i64 [ 0, %.lr.ph138 ], [ %indvars.iv.next163.1, %.critedge4.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod189 = trunc i32 %.val to i1
+.critedge2.epil.preheader:                        ; preds = %.critedge4.loopexit.unr-lcssa, %.critedge2.preheader
+  %indvars.iv162.epil.init = phi i64 [ 0, %.critedge2.preheader ], [ %indvars.iv.next163.1, %.critedge4.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod189 = trunc i64 %.val to i1
   tail call void @llvm.assume(i1 %lcmp.mod189)
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %.val95, i64 %indvars.iv162.epil.init
   %i.eh = load ptr, ptr %i.eg, align 8, !tbaa !29
@@ -372,8 +368,8 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %.peel
   store i32 0, ptr %i.em, align 4, !tbaa !32
   br label %.critedge4
 
-.critedge4:                                       ; preds = %.critedge2.epil.preheader, %.critedge4.loopexit.unr-lcssa, %.critedge2.preheader
-  tail call void @free(ptr noundef %calloc) #23
+.critedge4:                                       ; preds = %.critedge4.loopexit.unr-lcssa, %.critedge2.epil.preheader
+  tail call void @free(ptr noundef nonnull %calloc) #23
   %.not84 = icmp eq ptr %calloc.i, null
   br i1 %.not84, label %bb.y, label %bb.x
 

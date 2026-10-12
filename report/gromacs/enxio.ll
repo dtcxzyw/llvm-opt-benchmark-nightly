@@ -204,17 +204,13 @@ bb.u:                                             ; preds = %bb.s, %bb.t
 .loopexit185.thread271:                           ; preds = %.preheader
   %i.ee = load ptr, ptr @stdout, align 8, !tbaa !72
   %i.ef = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ee, ptr noundef nonnull @.str.119, i32 noundef %.080.lcssa) #22 ; 0 uses
-  br label %.loopexit185.._crit_edge_crit_edge
+  %.pre233 = zext nneg i32 %.080.lcssa to i64
+  br label %._crit_edge
 
 .lr.ph206:                                        ; preds = %.preheader
   %.not87 = icmp eq ptr %4, null
   %i.eg = load ptr, ptr %i.k, align 8
-  br i1 %.not87, label %.loopexit185.thread, label %.lr.ph206.split.preheader
-
-.loopexit185.thread:                              ; preds = %.lr.ph206
-  %14 = load ptr, ptr @stdout, align 8, !tbaa !72
-  %15 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %14, ptr noundef nonnull @.str.119, i32 noundef %.080.lcssa) #22 ; 0 uses
-  br label %.lr.ph208
+  br i1 %.not87, label %.lr.ph208, label %.lr.ph206.split.preheader
 
 .lr.ph206.split.preheader:                        ; preds = %.lr.ph206
   %wide.trip.count = zext nneg i32 %.080.lcssa to i64
@@ -255,30 +251,20 @@ bb.x:                                             ; preds = %bb.v, %bb.w
 bb.y:                                             ; preds = %.lr.ph206.split
   %i.ev = trunc nuw nsw i64 %indvars.iv224 to i32
   %i.ew = add nuw nsw i32 %i.ev, 1
-  br label %.loopexit185
+  br label %.lr.ph208
 
 bb.z:                                             ; preds = %.lr.ph206.split
   %indvars.iv.next225 = add nuw nsw i64 %indvars.iv224, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next225, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit185, label %.lr.ph206.split, !llvm.loop !336
+  br i1 %exitcond.not, label %.lr.ph208, label %.lr.ph206.split, !llvm.loop !336
 
-.loopexit185:                                     ; preds = %bb.z, %bb.y
-  %.077 = phi i32 [ %i.ew, %bb.y ], [ %.080.lcssa, %bb.z ] ; 4 uses
-  %16 = load ptr, ptr @stdout, align 8, !tbaa !72
-  %17 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %16, ptr noundef nonnull @.str.119, i32 noundef %.077) #22 ; 0 uses
-  %18 = icmp sgt i32 %.077, 0
-  br i1 %18, label %.lr.ph208, label %.loopexit185.._crit_edge_crit_edge
-
-.loopexit185.._crit_edge_crit_edge:               ; preds = %.loopexit185.thread271, %.loopexit185
-  %.077273 = phi i32 [ %.080.lcssa, %.loopexit185.thread271 ], [ %.077, %.loopexit185 ] ; 2 uses
-  %.pre233 = zext nneg i32 %.077273 to i64
-  br label %._crit_edge
-
-.lr.ph208:                                        ; preds = %.loopexit185.thread, %.loopexit185
-  %.077270 = phi i32 [ %.080.lcssa, %.loopexit185.thread ], [ %.077, %.loopexit185 ] ; 2 uses
+.lr.ph208:                                        ; preds = %bb.z, %.lr.ph206, %bb.y
+  %.080.lcssa.sink = phi i32 [ %i.ew, %bb.y ], [ %.080.lcssa, %.lr.ph206 ], [ %.080.lcssa, %bb.z ] ; 3 uses
+  %14 = load ptr, ptr @stdout, align 8, !tbaa !72
+  %15 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %14, ptr noundef nonnull @.str.119, i32 noundef %.080.lcssa.sink) #22 ; 0 uses
   %i.ex = load ptr, ptr %i.k, align 8, !tbaa !73
   %i.ey = load ptr, ptr %i.l, align 8, !tbaa !73
-  %wide.trip.count230 = zext nneg i32 %.077270 to i64 ; 2 uses
+  %wide.trip.count230 = zext nneg i32 %.080.lcssa.sink to i64 ; 2 uses
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph208, %bb.aa
@@ -302,10 +288,9 @@ bb.aa:                                            ; preds = %.lr.ph208, %bb.aa
   %exitcond231.not = icmp eq i64 %indvars.iv.next228, %wide.trip.count230
   br i1 %exitcond231.not, label %._crit_edge, label %bb.aa, !llvm.loop !337
 
-._crit_edge:                                      ; preds = %bb.aa, %.loopexit185.._crit_edge_crit_edge
-  %19 = phi i1 [ false, %.loopexit185.._crit_edge_crit_edge ], [ true, %bb.aa ]
-  %.077269 = phi i32 [ %.077273, %.loopexit185.._crit_edge_crit_edge ], [ %.077270, %bb.aa ]
-  %wide.trip.count.i.pre-phi = phi i64 [ %.pre233, %.loopexit185.._crit_edge_crit_edge ], [ %wide.trip.count230, %bb.aa ] ; 2 uses
+._crit_edge:                                      ; preds = %bb.aa, %.loopexit185.thread271
+  %.077269 = phi i32 [ %.080.lcssa, %.loopexit185.thread271 ], [ %.080.lcssa.sink, %bb.aa ]
+  %wide.trip.count.i.pre-phi = phi i64 [ %.pre233, %.loopexit185.thread271 ], [ %wide.trip.count230, %bb.aa ] ; 2 uses
   %i.fn = call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.121, ptr noundef nonnull @.str.9, i32 noundef 1591, i64 noundef 1, i64 noundef 80) ; 9 uses
   %i.fo = call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.122, ptr noundef nonnull @.str.9, i32 noundef 1592, i64 noundef 1, i64 noundef 80) ; 9 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 7 uses
@@ -708,7 +693,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.ke = load ptr, ptr %i.fy, align 8, !tbaa !21 ; 3 uses
   %i.kf = load ptr, ptr %i.k, align 8, !tbaa !73  ; 5 uses
   %i.kg = call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.128, ptr noundef nonnull @.str.9, i32 noundef 1352, i64 noundef range(i64 -2147483648, 2147483648) %i.fz, i64 noundef 4) ; 4 uses
-  br i1 %19, label %.lr.ph.i, label %_ZL12cmp_energiesP8_IO_FILEiiP8t_energyS2_P11gmx_enxnm_tffiPiS5_i.exit
+  br i1 %i.ed, label %.lr.ph.i, label %_ZL12cmp_energiesP8_IO_FILEiiP8t_energyS2_P11gmx_enxnm_tffiPiS5_i.exit
 
 .lr.ph.i:                                         ; preds = %bb.az, %bb.bd
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.bd ], [ 0, %bb.az ] ; 3 uses
@@ -771,26 +756,23 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb, %bb.
   br i1 %i.ln, label %bb.bo, label %switch.early.test.i
 
 switch.early.test.i:                              ; preds = %.preheader.i
-  switch i32 %.fr.i, label %20 [
+  switch i32 %.fr.i, label %.lr.ph.i.i [
     i32 8, label %bb.bo
     i32 4, label %bb.bo
     i32 0, label %bb.bo
   ]
 
-20:                                               ; preds = %switch.early.test.i
-  %21 = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %indvars.iv96.i
-  %22 = load i32, ptr %21, align 4, !tbaa !57
-  %23 = sext i32 %22 to i64
-  %24 = getelementptr inbounds [16 x i8], ptr %i.kf, i64 %23
-  %25 = load ptr, ptr %24, align 8, !tbaa !75     ; 2 uses
-  %26 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %25) #27 ; 2 uses
-  br i1 %i.ed, label %.lr.ph.i.i, label %_ZL16ener_tensor_diagiPKiS0_P11gmx_enxnm_tS0_iP8t_energyS4_.exit.i
-
-.lr.ph.i.i:                                       ; preds = %20
+.lr.ph.i.i:                                       ; preds = %switch.early.test.i
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %indvars.iv96.i
+  %17 = load i32, ptr %16, align 4, !tbaa !57
+  %18 = sext i32 %17 to i64
+  %19 = getelementptr inbounds [16 x i8], ptr %i.kf, i64 %18
+  %20 = load ptr, ptr %19, align 8, !tbaa !75     ; 2 uses
+  %21 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %20) #27 ; 2 uses
   %i.lo = udiv i32 %.fr.i, 3                      ; 2 uses
   %.neg.i.i = mul i32 %i.lo, 1073741821
   %i.lp = add i32 %.neg.i.i, %.fr.i
-  %i.lq = add i64 %26, -2
+  %i.lq = add i64 %21, -2
   %i.lr = shl nuw nsw i32 %i.lo, 2
   %i.ls = shl i32 %i.lp, 2
   br label %bb.be
@@ -811,11 +793,11 @@ bb.bf:                                            ; preds = %bb.be
   %i.ma = getelementptr inbounds [16 x i8], ptr %i.kf, i64 %i.lz
   %i.mb = load ptr, ptr %i.ma, align 8, !tbaa !75 ; 2 uses
   %i.mc = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.mb) #27
-  %i.md = icmp eq i64 %i.mc, %26
+  %i.md = icmp eq i64 %i.mc, %21
   br i1 %i.md, label %bb.bg, label %bb.bj
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.me = call i32 @strncmp(ptr noundef nonnull %25, ptr noundef nonnull %i.mb, i64 noundef %i.lq) #27
+  %i.me = call i32 @strncmp(ptr noundef nonnull %20, ptr noundef nonnull %i.mb, i64 noundef %i.lq) #27
   %i.mf = icmp eq i32 %i.me, 0
   br i1 %i.mf, label %bb.bh, label %bb.bj
 
@@ -860,8 +842,8 @@ bb.bk:                                            ; preds = %._crit_edge.i.i
   %i.nb = fmul float %i.na, 5.000000e-01
   br label %_ZL16ener_tensor_diagiPKiS0_P11gmx_enxnm_tS0_iP8t_energyS4_.exit.i
 
-_ZL16ener_tensor_diagiPKiS0_P11gmx_enxnm_tS0_iP8t_energyS4_.exit.i: ; preds = %bb.bk, %._crit_edge.i.i, %20
-  %.049.i.i = phi float [ %i.nb, %bb.bk ], [ 0.000000e+00, %._crit_edge.i.i ], [ 0.000000e+00, %20 ]
+_ZL16ener_tensor_diagiPKiS0_P11gmx_enxnm_tS0_iP8t_energyS4_.exit.i: ; preds = %bb.bk, %._crit_edge.i.i
+  %.049.i.i = phi float [ %i.nb, %bb.bk ], [ 0.000000e+00, %._crit_edge.i.i ]
   %i.nc = fmul float %2, %.049.i.i                ; 4 uses
   %i.nd = load ptr, ptr @debug, align 8, !tbaa !72 ; 2 uses
   %.not79.i = icmp eq ptr %i.nd, null

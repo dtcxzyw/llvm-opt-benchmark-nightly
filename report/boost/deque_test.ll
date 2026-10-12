@@ -205,12 +205,6 @@ bb.v:                                             ; preds = %bb.u
   %i.v = call noundef zeroext i1 @_ZN5boost9container4test57test_vector_methods_with_initializer_list_as_argument_forINS0_5dequeIivvEEEEbv()
   br i1 %i.v, label %_ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0EmLb0EEELb0EE25prot_push_back_simple_posEv.exit.thread.i, label %.loopexit
 
-._crit_edge:                                      ; preds = %_ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0EmLb0EEELb0EE25prot_push_back_simple_posEv.exit.thread.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
-  invoke void @_ZN5boost9intrusive4test35test_iterator_random_and_compatibleINS_9container5dequeIivvEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(32) %2)
-          to label %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit unwind label %bb.x
-
 _ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0EmLb0EEELb0EE25prot_push_back_simple_posEv.exit.thread.i: ; preds = %bb.v
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
@@ -219,7 +213,13 @@ _ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0Em
   store i32 0, ptr %i.b, align 4, !tbaa !370
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #22
   invoke void @_ZN5boost9container10deque_implIivLb0EvE25priv_insert_back_aux_implINS0_3dtl31insert_nonmovable_emplace_proxyINS0_13new_allocatorIiEEJiEEEEENS0_14deque_iteratorIPiLb0ELj0ELj0EmEEmT_(ptr dead_on_unwind nonnull writable sret(%"class.boost::container::deque_iterator.18") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 1, ptr nonnull align 4 dereferenceable(4) %i.b)
-          to label %._crit_edge unwind label %.loopexit30
+          to label %_ZN5boost9container10deque_implIivLb0EvE9push_backEOi.exit unwind label %.loopexit30
+
+_ZN5boost9container10deque_implIivLb0EvE9push_backEOi.exit: ; preds = %_ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0EmLb0EEELb0EE25prot_push_back_simple_posEv.exit.thread.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
+  invoke void @_ZN5boost9intrusive4test35test_iterator_random_and_compatibleINS_9container5dequeIivvEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(32) %2)
+          to label %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit unwind label %bb.x
 
 .loopexit30:                                      ; preds = %_ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0EmLb0EEELb0EE25prot_push_back_simple_posEv.exit.thread.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -251,7 +251,7 @@ _ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0Em
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
   br label %bb.as
 
-_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit: ; preds = %._crit_edge
+_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit: ; preds = %_ZN5boost9container10deque_implIivLb0EvE9push_backEOi.exit
   %i.x = invoke noundef i32 @_ZN5boost13report_errorsEv()
           to label %bb.w unwind label %bb.x
 
@@ -261,7 +261,7 @@ bb.w:                                             ; preds = %_ZN5boost9intrusive
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   br i1 %.not23, label %_ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0EmLb0EEELb0EE25prot_push_back_simple_posEv.exit.thread.i.1, label %.loopexit
 
-bb.x:                                             ; preds = %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.4, %._crit_edge.4, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.3, %._crit_edge.3, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.2, %._crit_edge.2, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.1, %._crit_edge.1, %._crit_edge, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit
+bb.x:                                             ; preds = %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.4, %._crit_edge.4, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.3, %._crit_edge.3, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.2, %._crit_edge.2, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.1, %._crit_edge.1, %_ZN5boost9container10deque_implIivLb0EvE9push_backEOi.exit, %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit
   %i.y = landingpad { ptr, i32 }
           cleanup
   br label %bb.as
@@ -617,7 +617,7 @@ _ZNK5boost9container10deque_baseINS0_13new_allocatorIiEENS0_9deque_optILm0ELm0Em
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #22
   br label %._crit_edge.1
 
-._crit_edge.1:                                    ; preds = %bb.ah, %.noexc.1.9
+._crit_edge.1:                                    ; preds = %.noexc.1.9, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
   invoke void @_ZN5boost9intrusive4test35test_iterator_random_and_compatibleINS_9container5dequeIivvEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %_ZN5boost9intrusive4test20test_iterator_randomINS_9container5dequeIivvEEEEvRT_.exit.1 unwind label %bb.x

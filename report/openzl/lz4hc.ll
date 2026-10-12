@@ -205,8 +205,8 @@ bb.kk:                                            ; preds = %LZ4HC_FindLongerMat
   %i.bhy = lshr exact i64 %.sroa.03.sroa.4.0.insert.shift.i, 32
   %i.bhz = icmp samesign ugt i64 %i.bhy, %spec.store.select
   %i.bia = trunc nuw nsw i64 %indvars.iv2148 to i32 ; 4 uses
-  %i.bib = add nsw i32 %i.bia, %.sroa.0104.4.extract.trunc
-  %11 = icmp sgt i32 %i.bib, 4095
+  %i.bib = add nuw nsw i32 %i.bia, %.sroa.0104.4.extract.trunc
+  %11 = icmp samesign ugt i32 %i.bib, 4095
   %or.cond = select i1 %i.bhz, i1 true, i1 %11
   br i1 %or.cond, label %bb.lj, label %LZ4HC_literalsPrice.exit920
 

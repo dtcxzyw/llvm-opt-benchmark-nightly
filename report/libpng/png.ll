@@ -205,127 +205,127 @@ bb.a:
   %i.aw = trunc nuw nsw i64 %indvars.iv71 to i32
   %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.aw, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 32 uses
-  %i.ax = add <8 x i32> %i.o, %broadcast.splat
-  %i.ay = add <8 x i32> %i.p, %broadcast.splat
+  %i.ax = add nuw <8 x i32> %i.o, %broadcast.splat
+  %i.ay = add nuw <8 x i32> %i.p, %broadcast.splat
   %i.az = trunc <8 x i32> %i.ax to <8 x i16>
   %i.ba = trunc <8 x i32> %i.ay to <8 x i16>
   %i.bb = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store <8 x i16> %i.az, ptr %i.au, align 2, !tbaa !36
   store <8 x i16> %i.ba, ptr %i.bb, align 2, !tbaa !36
-  %i.bc = add <8 x i32> %i.q, %broadcast.splat
-  %i.bd = add <8 x i32> %i.r, %broadcast.splat
+  %i.bc = add nuw <8 x i32> %i.q, %broadcast.splat
+  %i.bd = add nuw <8 x i32> %i.r, %broadcast.splat
   %i.be = trunc <8 x i32> %i.bc to <8 x i16>
   %i.bf = trunc <8 x i32> %i.bd to <8 x i16>
   %i.bg = getelementptr inbounds nuw i8, ptr %i.au, i64 32
   %i.bh = getelementptr inbounds nuw i8, ptr %i.au, i64 48
   store <8 x i16> %i.be, ptr %i.bg, align 2, !tbaa !36
   store <8 x i16> %i.bf, ptr %i.bh, align 2, !tbaa !36
-  %i.bi = add <8 x i32> %i.s, %broadcast.splat
-  %i.bj = add <8 x i32> %i.t, %broadcast.splat
+  %i.bi = add nuw <8 x i32> %i.s, %broadcast.splat
+  %i.bj = add nuw <8 x i32> %i.t, %broadcast.splat
   %i.bk = trunc <8 x i32> %i.bi to <8 x i16>
   %i.bl = trunc <8 x i32> %i.bj to <8 x i16>
   %i.bm = getelementptr inbounds nuw i8, ptr %i.au, i64 64
   %i.bn = getelementptr inbounds nuw i8, ptr %i.au, i64 80
   store <8 x i16> %i.bk, ptr %i.bm, align 2, !tbaa !36
   store <8 x i16> %i.bl, ptr %i.bn, align 2, !tbaa !36
-  %i.bo = add <8 x i32> %i.u, %broadcast.splat
-  %i.bp = add <8 x i32> %i.v, %broadcast.splat
+  %i.bo = add nuw <8 x i32> %i.u, %broadcast.splat
+  %i.bp = add nuw <8 x i32> %i.v, %broadcast.splat
   %i.bq = trunc <8 x i32> %i.bo to <8 x i16>
   %i.br = trunc <8 x i32> %i.bp to <8 x i16>
   %i.bs = getelementptr inbounds nuw i8, ptr %i.au, i64 96
   %i.bt = getelementptr inbounds nuw i8, ptr %i.au, i64 112
   store <8 x i16> %i.bq, ptr %i.bs, align 2, !tbaa !36
   store <8 x i16> %i.br, ptr %i.bt, align 2, !tbaa !36
-  %i.bu = add <8 x i32> %i.w, %broadcast.splat
-  %i.bv = add <8 x i32> %i.x, %broadcast.splat
+  %i.bu = add nuw <8 x i32> %i.w, %broadcast.splat
+  %i.bv = add nuw <8 x i32> %i.x, %broadcast.splat
   %i.bw = trunc <8 x i32> %i.bu to <8 x i16>
   %i.bx = trunc <8 x i32> %i.bv to <8 x i16>
   %i.by = getelementptr inbounds nuw i8, ptr %i.au, i64 128
   %i.bz = getelementptr inbounds nuw i8, ptr %i.au, i64 144
   store <8 x i16> %i.bw, ptr %i.by, align 2, !tbaa !36
   store <8 x i16> %i.bx, ptr %i.bz, align 2, !tbaa !36
-  %i.ca = add <8 x i32> %i.y, %broadcast.splat
-  %i.cb = add <8 x i32> %i.z, %broadcast.splat
+  %i.ca = add nuw <8 x i32> %i.y, %broadcast.splat
+  %i.cb = add nuw <8 x i32> %i.z, %broadcast.splat
   %i.cc = trunc <8 x i32> %i.ca to <8 x i16>
   %i.cd = trunc <8 x i32> %i.cb to <8 x i16>
   %i.ce = getelementptr inbounds nuw i8, ptr %i.au, i64 160
   %i.cf = getelementptr inbounds nuw i8, ptr %i.au, i64 176
   store <8 x i16> %i.cc, ptr %i.ce, align 2, !tbaa !36
   store <8 x i16> %i.cd, ptr %i.cf, align 2, !tbaa !36
-  %i.cg = add <8 x i32> %i.aa, %broadcast.splat
-  %i.ch = add <8 x i32> %i.ab, %broadcast.splat
+  %i.cg = add nuw <8 x i32> %i.aa, %broadcast.splat
+  %i.ch = add nuw <8 x i32> %i.ab, %broadcast.splat
   %i.ci = trunc <8 x i32> %i.cg to <8 x i16>
   %i.cj = trunc <8 x i32> %i.ch to <8 x i16>
   %i.ck = getelementptr inbounds nuw i8, ptr %i.au, i64 192
   %i.cl = getelementptr inbounds nuw i8, ptr %i.au, i64 208
   store <8 x i16> %i.ci, ptr %i.ck, align 2, !tbaa !36
   store <8 x i16> %i.cj, ptr %i.cl, align 2, !tbaa !36
-  %i.cm = add <8 x i32> %i.ac, %broadcast.splat
-  %i.cn = add <8 x i32> %i.ad, %broadcast.splat
+  %i.cm = add nuw <8 x i32> %i.ac, %broadcast.splat
+  %i.cn = add nuw <8 x i32> %i.ad, %broadcast.splat
   %i.co = trunc <8 x i32> %i.cm to <8 x i16>
   %i.cp = trunc <8 x i32> %i.cn to <8 x i16>
   %i.cq = getelementptr inbounds nuw i8, ptr %i.au, i64 224
   %i.cr = getelementptr inbounds nuw i8, ptr %i.au, i64 240
   store <8 x i16> %i.co, ptr %i.cq, align 2, !tbaa !36
   store <8 x i16> %i.cp, ptr %i.cr, align 2, !tbaa !36
-  %i.cs = add <8 x i32> %i.ae, %broadcast.splat
-  %i.ct = add <8 x i32> %i.af, %broadcast.splat
+  %i.cs = add nuw <8 x i32> %i.ae, %broadcast.splat
+  %i.ct = add nuw <8 x i32> %i.af, %broadcast.splat
   %i.cu = trunc <8 x i32> %i.cs to <8 x i16>
   %i.cv = trunc <8 x i32> %i.ct to <8 x i16>
   %i.cw = getelementptr inbounds nuw i8, ptr %i.au, i64 256
   %i.cx = getelementptr inbounds nuw i8, ptr %i.au, i64 272
   store <8 x i16> %i.cu, ptr %i.cw, align 2, !tbaa !36
   store <8 x i16> %i.cv, ptr %i.cx, align 2, !tbaa !36
-  %i.cy = add <8 x i32> %i.ag, %broadcast.splat
-  %i.cz = add <8 x i32> %i.ah, %broadcast.splat
+  %i.cy = add nuw <8 x i32> %i.ag, %broadcast.splat
+  %i.cz = add nuw <8 x i32> %i.ah, %broadcast.splat
   %i.da = trunc <8 x i32> %i.cy to <8 x i16>
   %i.db = trunc <8 x i32> %i.cz to <8 x i16>
   %i.dc = getelementptr inbounds nuw i8, ptr %i.au, i64 288
   %i.dd = getelementptr inbounds nuw i8, ptr %i.au, i64 304
   store <8 x i16> %i.da, ptr %i.dc, align 2, !tbaa !36
   store <8 x i16> %i.db, ptr %i.dd, align 2, !tbaa !36
-  %i.de = add <8 x i32> %i.ai, %broadcast.splat
-  %i.df = add <8 x i32> %i.aj, %broadcast.splat
+  %i.de = add nuw <8 x i32> %i.ai, %broadcast.splat
+  %i.df = add nuw <8 x i32> %i.aj, %broadcast.splat
   %i.dg = trunc <8 x i32> %i.de to <8 x i16>
   %i.dh = trunc <8 x i32> %i.df to <8 x i16>
   %i.di = getelementptr inbounds nuw i8, ptr %i.au, i64 320
   %i.dj = getelementptr inbounds nuw i8, ptr %i.au, i64 336
   store <8 x i16> %i.dg, ptr %i.di, align 2, !tbaa !36
   store <8 x i16> %i.dh, ptr %i.dj, align 2, !tbaa !36
-  %i.dk = add <8 x i32> %i.ak, %broadcast.splat
-  %i.dl = add <8 x i32> %i.al, %broadcast.splat
+  %i.dk = add nuw <8 x i32> %i.ak, %broadcast.splat
+  %i.dl = add nuw <8 x i32> %i.al, %broadcast.splat
   %i.dm = trunc <8 x i32> %i.dk to <8 x i16>
   %i.dn = trunc <8 x i32> %i.dl to <8 x i16>
   %i.do = getelementptr inbounds nuw i8, ptr %i.au, i64 352
   %i.dp = getelementptr inbounds nuw i8, ptr %i.au, i64 368
   store <8 x i16> %i.dm, ptr %i.do, align 2, !tbaa !36
   store <8 x i16> %i.dn, ptr %i.dp, align 2, !tbaa !36
-  %i.dq = add <8 x i32> %i.am, %broadcast.splat
-  %i.dr = add <8 x i32> %i.an, %broadcast.splat
+  %i.dq = add nuw <8 x i32> %i.am, %broadcast.splat
+  %i.dr = add nuw <8 x i32> %i.an, %broadcast.splat
   %i.ds = trunc <8 x i32> %i.dq to <8 x i16>
   %i.dt = trunc <8 x i32> %i.dr to <8 x i16>
   %i.du = getelementptr inbounds nuw i8, ptr %i.au, i64 384
   %i.dv = getelementptr inbounds nuw i8, ptr %i.au, i64 400
   store <8 x i16> %i.ds, ptr %i.du, align 2, !tbaa !36
   store <8 x i16> %i.dt, ptr %i.dv, align 2, !tbaa !36
-  %i.dw = add <8 x i32> %i.ao, %broadcast.splat
-  %i.dx = add <8 x i32> %i.ap, %broadcast.splat
+  %i.dw = add nuw <8 x i32> %i.ao, %broadcast.splat
+  %i.dx = add nuw <8 x i32> %i.ap, %broadcast.splat
   %i.dy = trunc <8 x i32> %i.dw to <8 x i16>
   %i.dz = trunc <8 x i32> %i.dx to <8 x i16>
   %i.ea = getelementptr inbounds nuw i8, ptr %i.au, i64 416
   %i.eb = getelementptr inbounds nuw i8, ptr %i.au, i64 432
   store <8 x i16> %i.dy, ptr %i.ea, align 2, !tbaa !36
   store <8 x i16> %i.dz, ptr %i.eb, align 2, !tbaa !36
-  %i.ec = add <8 x i32> %i.aq, %broadcast.splat
-  %i.ed = add <8 x i32> %i.ar, %broadcast.splat
+  %i.ec = add nuw <8 x i32> %i.aq, %broadcast.splat
+  %i.ed = add nuw <8 x i32> %i.ar, %broadcast.splat
   %i.ee = trunc <8 x i32> %i.ec to <8 x i16>
   %i.ef = trunc <8 x i32> %i.ed to <8 x i16>
   %i.eg = getelementptr inbounds nuw i8, ptr %i.au, i64 448
   %i.eh = getelementptr inbounds nuw i8, ptr %i.au, i64 464
   store <8 x i16> %i.ee, ptr %i.eg, align 2, !tbaa !36
   store <8 x i16> %i.ef, ptr %i.eh, align 2, !tbaa !36
-  %i.ei = add <8 x i32> %i.as, %broadcast.splat
-  %i.ej = add <8 x i32> %i.at, %broadcast.splat
+  %i.ei = add nuw <8 x i32> %i.as, %broadcast.splat
+  %i.ej = add nuw <8 x i32> %i.at, %broadcast.splat
   %i.ek = trunc <8 x i32> %i.ei to <8 x i16>
   %i.el = trunc <8 x i32> %i.ej to <8 x i16>
   %i.em = getelementptr inbounds nuw i8, ptr %i.au, i64 480
@@ -348,7 +348,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader.u
   %indvars.iv58 = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next59.1, %bb.b ] ; 4 uses
   %i.er = trunc nuw nsw i64 %indvars.iv58 to i32
   %i.es = shl nuw nsw i32 %i.er, %i.a
-  %i.et = add i32 %i.es, %i.eq
+  %i.et = add nuw i32 %i.es, %i.eq
   %i.eu = mul i32 %i.et, 65535
   %i.ev = add i32 %i.eu, %i.g
   %i.ew = udiv i32 %i.ev, %i.d
@@ -358,7 +358,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader.u
   %indvars.iv.next59 = or disjoint i64 %indvars.iv58, 1 ; 2 uses
   %i.ez = trunc nuw nsw i64 %indvars.iv.next59 to i32
   %i.fa = shl nuw nsw i32 %i.ez, %i.a
-  %i.fb = add i32 %i.fa, %i.eq
+  %i.fb = add nuw i32 %i.fa, %i.eq
   %i.fc = mul i32 %i.fb, 65535
   %i.fd = add i32 %i.fc, %i.g
   %i.fe = udiv i32 %i.fd, %i.d
@@ -386,7 +386,7 @@ bb.c:                                             ; preds = %bb.c, %.preheader40
   %indvars.iv = phi i64 [ 0, %.preheader40 ], [ %indvars.iv.next.1, %bb.c ] ; 4 uses
   %i.fk = trunc nuw nsw i64 %indvars.iv to i32
   %i.fl = shl nuw nsw i32 %i.fk, %i.a
-  %i.fm = add i32 %i.fl, %i.fj
+  %i.fm = add nuw i32 %i.fl, %i.fj
   %i.fn = uitofp i32 %i.fm to double
   %i.fo = fmul double %i.f, %i.fn
   %i.fp = tail call double @pow(double noundef %i.fo, double noundef %i.n) #28
@@ -398,7 +398,7 @@ bb.c:                                             ; preds = %bb.c, %.preheader40
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.fu = trunc nuw nsw i64 %indvars.iv.next to i32
   %i.fv = shl nuw nsw i32 %i.fu, %i.a
-  %i.fw = add i32 %i.fv, %i.fj
+  %i.fw = add nuw i32 %i.fv, %i.fj
   %i.fx = uitofp i32 %i.fw to double
   %i.fy = fmul double %i.f, %i.fx
   %i.fz = tail call double @pow(double noundef %i.fy, double noundef %i.n) #28

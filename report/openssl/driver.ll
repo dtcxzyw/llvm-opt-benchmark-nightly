@@ -202,7 +202,9 @@ bb.k:                                             ; preds = %bb.b
   %i.z = trunc nuw nsw i64 %indvars.iv.i.i to i32
   %i.aa = add nuw nsw i32 %i.z, 1                 ; 2 uses
   store i32 %i.aa, ptr @single_test, align 4, !tbaa !9
-  br label %bb.m
+  %1 = load i32, ptr @single_iter, align 4        ; 2 uses
+  %2 = icmp ne i32 %1, -1
+  br label %bb.o
 
 bb.l:                                             ; preds = %.lr.ph.i.i
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
@@ -215,11 +217,11 @@ bb.l:                                             ; preds = %.lr.ph.i.i
   store i32 %i.ac, ptr @single_test, align 4, !tbaa !9
   br label %bb.m
 
-bb.m:                                             ; preds = %._crit_edge.i.i, %.thread.i.i, %._crit_edge29.i.i
-  %1 = phi i32 [ %.pre.i.i, %._crit_edge29.i.i ], [ %i.aa, %.thread.i.i ], [ %i.ac, %._crit_edge.i.i ] ; 2 uses
-  %i.ad = icmp eq i32 %1, -1                      ; 2 uses
-  %i.ae = load i32, ptr @single_iter, align 4     ; 3 uses
-  %i.af = icmp ne i32 %i.ae, -1                   ; 2 uses
+bb.m:                                             ; preds = %._crit_edge.i.i, %._crit_edge29.i.i
+  %3 = phi i32 [ %.pre.i.i, %._crit_edge29.i.i ], [ %i.ac, %._crit_edge.i.i ] ; 2 uses
+  %i.ad = icmp eq i32 %3, -1                      ; 2 uses
+  %i.ae = load i32, ptr @single_iter, align 4     ; 4 uses
+  %i.af = icmp ne i32 %i.ae, -1                   ; 3 uses
   %or.cond.i.i = select i1 %i.ad, i1 %i.af, i1 false
   br i1 %or.cond.i.i, label %.thread23.i.i, label %bb.n
 
@@ -230,11 +232,13 @@ bb.m:                                             ; preds = %._crit_edge.i.i, %.
 bb.n:                                             ; preds = %bb.m
   br i1 %i.ad, label %bb.q, label %bb.o
 
-bb.o:                                             ; preds = %bb.n, %.thread23.i.i
-  %2 = phi i32 [ 1, %.thread23.i.i ], [ %1, %bb.n ] ; 3 uses
-  %i.ag = icmp slt i32 %2, 1
+bb.o:                                             ; preds = %bb.n, %.thread23.i.i, %.thread.i.i
+  %4 = phi i1 [ true, %.thread23.i.i ], [ %i.af, %bb.n ], [ %2, %.thread.i.i ]
+  %5 = phi i32 [ %i.ae, %.thread23.i.i ], [ %i.ae, %bb.n ], [ %1, %.thread.i.i ]
+  %6 = phi i32 [ 1, %.thread23.i.i ], [ %3, %bb.n ], [ %i.aa, %.thread.i.i ] ; 3 uses
+  %i.ag = icmp slt i32 %6, 1
   %i.ah = load i32, ptr @num_tests, align 4       ; 2 uses
-  %i.ai = icmp sgt i32 %2, %i.ah
+  %i.ai = icmp sgt i32 %6, %i.ah
   %or.cond21.i.i = select i1 %i.ag, i1 true, i1 %i.ai
   br i1 %or.cond21.i.i, label %bb.p, label %bb.q
 
@@ -243,11 +247,13 @@ bb.p:                                             ; preds = %bb.o
   br label %.loopexit131
 
 bb.q:                                             ; preds = %bb.o, %bb.n
-  %i.ak = phi i32 [ %2, %bb.o ], [ -1, %bb.n ]    ; 4 uses
-  br i1 %i.af, label %bb.r, label %bb.v
+  %7 = phi i32 [ %6, %bb.o ], [ -1, %bb.n ]       ; 4 uses
+  %8 = phi i1 [ %4, %bb.o ], [ %i.af, %bb.n ]
+  %i.ak = phi i32 [ %5, %bb.o ], [ %i.ae, %bb.n ] ; 2 uses
+  br i1 %8, label %bb.r, label %bb.v
 
 bb.r:                                             ; preds = %bb.q
-  %i.al = sext i32 %i.ak to i64
+  %i.al = sext i32 %7 to i64
   %i.am = getelementptr [32 x i8], ptr @all_tests, i64 %i.al ; 3 uses
   %i.an = getelementptr i8, ptr %i.am, i64 -8
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !15 ; 3 uses
@@ -257,19 +263,19 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.aq = getelementptr i8, ptr %i.am, i64 -32
   %i.ar = load ptr, ptr %i.aq, align 16, !tbaa !13
-  %i.as = call i32 (ptr, ...) @test_printf_stderr(ptr noundef nonnull @.str.17, ptr noundef %.06.i.ph226, i32 noundef %i.ak, ptr noundef %i.ar) #13 ; 0 uses
+  %i.as = call i32 (ptr, ...) @test_printf_stderr(ptr noundef nonnull @.str.17, ptr noundef %.06.i.ph226, i32 noundef %7, ptr noundef %i.ar) #13 ; 0 uses
   br label %.loopexit131
 
 bb.t:                                             ; preds = %bb.r
-  %i.at = icmp slt i32 %i.ae, 1
-  %i.au = icmp sgt i32 %i.ae, %i.ao
+  %i.at = icmp slt i32 %i.ak, 1
+  %i.au = icmp sgt i32 %i.ak, %i.ao
   %or.cond22.i.i = or i1 %i.at, %i.au
   br i1 %or.cond22.i.i, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   %i.av = getelementptr i8, ptr %i.am, i64 -32
   %i.aw = load ptr, ptr %i.av, align 16, !tbaa !13
-  %i.ax = call i32 (ptr, ...) @test_printf_stderr(ptr noundef nonnull @.str.18, ptr noundef %.06.i.ph226, i32 noundef %i.ak, ptr noundef %i.aw, i32 noundef 1, i32 noundef %i.ao) #13 ; 0 uses
+  %i.ax = call i32 (ptr, ...) @test_printf_stderr(ptr noundef nonnull @.str.18, ptr noundef %.06.i.ph226, i32 noundef %7, ptr noundef %i.aw, i32 noundef 1, i32 noundef %i.ao) #13 ; 0 uses
   br label %.loopexit131
 
 process_shared_options.exit:                      ; preds = %bb.b
@@ -294,7 +300,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.v
   %.b104 = load i1, ptr @show_list, align 4
-  %i.bc = icmp ne i32 %i.ak, -1
+  %i.bc = icmp ne i32 %7, -1
   %or.cond.not = or i1 %.b104, %i.bc
   br i1 %or.cond.not, label %bb.ab, label %bb.y
 

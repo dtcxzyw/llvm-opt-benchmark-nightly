@@ -205,7 +205,7 @@ _ZL18ggml_vec_scale_f32iPff.exit524.i.i:          ; preds = %.preheader27.i520.i
 
 .preheader.loopexit.i.i.i:                        ; preds = %.lr.ph.i.i.i
   %i.aju = trunc nuw nsw i64 %indvars.iv.next.i528.i.i to i32
-  %2 = icmp sgt i32 %i.ya, %i.aju
+  %2 = icmp samesign ugt i32 %i.ya, %i.aju
   br i1 %2, label %iter.check330, label %_ZL16ggml_vec_add_f32iPfPKfS1_.exit.i.i
 
 iter.check330:                                    ; preds = %.preheader.loopexit.i.i.i

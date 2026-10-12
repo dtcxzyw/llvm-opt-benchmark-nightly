@@ -204,19 +204,11 @@ bb.ap:                                            ; preds = %Abc_NtkIncrementTra
   %i.ij = getelementptr i8, ptr %i.ig, i64 48
   br label %bb.aq
 
-.thread-pre-split.preheader.loopexit_crit_edge.i.i.i.i: ; preds = %Vec_PtrPush.exit.i61.i.i.i
-  %2 = trunc nuw nsw i64 %indvars.iv.next235.i.i.i.i to i32
-  br label %thread-pre-split.preheader.i.i.i.i
-
-.thread-pre-split.preheader.loopexit185_crit_edge.i.i.i.i: ; preds = %Vec_PtrPush.exit133.i.i.i.i
-  %3 = trunc nuw nsw i64 %indvars.iv.next228.i.i.i.i to i32
-  br label %thread-pre-split.preheader.i.i.i.i
-
-thread-pre-split.preheader.i.i.i.i:               ; preds = %bb.az, %.thread-pre-split.preheader.loopexit185_crit_edge.i.i.i.i, %.thread-pre-split.preheader.loopexit_crit_edge.i.i.i.i, %bb.ap
-  %i.ik = phi i32 [ %spec.store.select.i.i.i.i, %bb.az ], [ %spec.select.sink.i130190.i.i.i.i, %.thread-pre-split.preheader.loopexit185_crit_edge.i.i.i.i ], [ %spec.store.select.i.i.i.i, %bb.ap ], [ %spec.select.sink.i201.i.i.i.i, %.thread-pre-split.preheader.loopexit_crit_edge.i.i.i.i ] ; 2 uses
-  %.val82260.i.i.i.i = phi ptr [ %i.hl, %bb.az ], [ %storemerge183194.i.i.i.i, %.thread-pre-split.preheader.loopexit185_crit_edge.i.i.i.i ], [ %i.hl, %bb.ap ], [ %storemerge205.i.i.i.i, %.thread-pre-split.preheader.loopexit_crit_edge.i.i.i.i ] ; 3 uses
-  %.promoted212.i.i.i.i = phi i32 [ 0, %bb.az ], [ %3, %.thread-pre-split.preheader.loopexit185_crit_edge.i.i.i.i ], [ 0, %bb.ap ], [ %2, %.thread-pre-split.preheader.loopexit_crit_edge.i.i.i.i ] ; 3 uses
-  %exitcond.i.i.i.i209216 = icmp slt i32 %.promoted212.i.i.i.i, 1
+thread-pre-split.preheader.i.i.i.i:               ; preds = %Vec_PtrPush.exit133.i.i.i.i, %Vec_PtrPush.exit.i61.i.i.i, %bb.az, %bb.ap
+  %i.ik = phi i32 [ %spec.store.select.i.i.i.i, %bb.az ], [ %spec.select.sink.i201.i.i.i.i, %Vec_PtrPush.exit.i61.i.i.i ], [ %spec.store.select.i.i.i.i, %bb.ap ], [ %spec.select.sink.i130190.i.i.i.i, %Vec_PtrPush.exit133.i.i.i.i ] ; 2 uses
+  %.val82260.i.i.i.i = phi ptr [ %i.hl, %bb.az ], [ %storemerge205.i.i.i.i, %Vec_PtrPush.exit.i61.i.i.i ], [ %i.hl, %bb.ap ], [ %storemerge183194.i.i.i.i, %Vec_PtrPush.exit133.i.i.i.i ] ; 3 uses
+  %.promoted212.i.i.i.i = phi i64 [ 0, %bb.az ], [ %indvars.iv.next235.i.i.i.i, %Vec_PtrPush.exit.i61.i.i.i ], [ 0, %bb.ap ], [ %indvars.iv.next228.i.i.i.i, %Vec_PtrPush.exit133.i.i.i.i ] ; 3 uses
+  %exitcond.i.i.i.i209216 = icmp eq i64 %.promoted212.i.i.i.i, 0
   br i1 %exitcond.i.i.i.i209216, label %Io_NtkBfsPads.exit.i.i.i, label %.lr.ph212
 
 bb.aq:                                            ; preds = %Vec_PtrPush.exit.i61.i.i.i, %.lr.ph197.i.i.i.i
@@ -284,7 +276,7 @@ Vec_PtrPush.exit.i61.i.i.i:                       ; preds = %bb.ay, %bb.ax, %bb.
   %.val112.i.i.i.i = load i32, ptr %i.ih, align 4, !tbaa !45
   %i.je = sext i32 %.val112.i.i.i.i to i64
   %i.jf = icmp slt i64 %indvars.iv.next235.i.i.i.i, %i.je
-  br i1 %i.jf, label %bb.aq, label %.thread-pre-split.preheader.loopexit_crit_edge.i.i.i.i, !llvm.loop !57
+  br i1 %i.jf, label %bb.aq, label %thread-pre-split.preheader.i.i.i.i, !llvm.loop !57
 
 bb.az:                                            ; preds = %Abc_NtkIncrementTravId.exit.i.i.i.i
   %i.jg = getelementptr i8, ptr %.043108.lcssa.i.i.i, i64 32
@@ -367,21 +359,19 @@ Vec_PtrPush.exit133.i.i.i.i:                      ; preds = %bb.bi, %bb.bh, %bb.
   %.val110.i.i.i.i = load i32, ptr %i.jk, align 4, !tbaa !47
   %i.kg = sext i32 %.val110.i.i.i.i to i64
   %i.kh = icmp slt i64 %indvars.iv.next228.i.i.i.i, %i.kg
-  br i1 %i.kh, label %bb.ba, label %.thread-pre-split.preheader.loopexit185_crit_edge.i.i.i.i, !llvm.loop !58
+  br i1 %i.kh, label %bb.ba, label %thread-pre-split.preheader.i.i.i.i, !llvm.loop !58
 
 .thread-pre-split.loopexit_crit_edge.i.i.i.i:     ; preds = %bb.ec
   br label %thread-pre-split.backedge.i.i.i.i, !llvm.loop !59
 
 .lr.ph212:                                        ; preds = %thread-pre-split.preheader.i.i.i.i, %thread-pre-split.backedge.i.i.i.i
-  %wide.trip.count.i57.i.i.i218.in = phi i32 [ %i.qv, %thread-pre-split.backedge.i.i.i.i ], [ %.promoted212.i.i.i.i, %thread-pre-split.preheader.i.i.i.i ]
-  %.in = phi i32 [ %.val.pr214.i.i.i.i, %thread-pre-split.backedge.i.i.i.i ], [ %.promoted212.i.i.i.i, %thread-pre-split.preheader.i.i.i.i ]
+  %wide.trip.count.i57.i.i.i218 = phi i64 [ %wide.trip.count.i57.i.i.i, %thread-pre-split.backedge.i.i.i.i ], [ %.promoted212.i.i.i.i, %thread-pre-split.preheader.i.i.i.i ]
+  %2 = phi i64 [ %3, %thread-pre-split.backedge.i.i.i.i ], [ %.promoted212.i.i.i.i, %thread-pre-split.preheader.i.i.i.i ] ; 2 uses
   %.val82.i.i.i.i217 = phi ptr [ %.val82257.i.i.i.i, %thread-pre-split.backedge.i.i.i.i ], [ %.val82260.i.i.i.i, %thread-pre-split.preheader.i.i.i.i ] ; 7 uses
   %i.ki = phi i32 [ %i.qu, %thread-pre-split.backedge.i.i.i.i ], [ %i.ik, %thread-pre-split.preheader.i.i.i.i ] ; 3 uses
   %i.kj = phi ptr [ %i.qt, %thread-pre-split.backedge.i.i.i.i ], [ %.val82260.i.i.i.i, %thread-pre-split.preheader.i.i.i.i ] ; 3 uses
   %i.kk = phi i32 [ %i.qs, %thread-pre-split.backedge.i.i.i.i ], [ %i.ik, %thread-pre-split.preheader.i.i.i.i ] ; 3 uses
   %i.kl = phi ptr [ %i.qr, %thread-pre-split.backedge.i.i.i.i ], [ %.val82260.i.i.i.i, %thread-pre-split.preheader.i.i.i.i ] ; 3 uses
-  %wide.trip.count.i57.i.i.i218 = zext i32 %wide.trip.count.i57.i.i.i218.in to i64
-  %4 = zext i32 %.in to i64                       ; 2 uses
   %scevgep.i.i.i.i219 = getelementptr i8, ptr %.val82.i.i.i.i217, i64 -8
   br label %bb.bk
 
@@ -392,7 +382,7 @@ bb.bj:                                            ; preds = %Abc_NodeIsTravIdCur
 
 bb.bk:                                            ; preds = %.lr.ph212, %bb.bj
   %indvar.i.i.i.i211 = phi i64 [ 0, %.lr.ph212 ], [ %indvar.next.i.i.i.i, %bb.bj ] ; 2 uses
-  %indvars.iv241.i.i.i.i210 = phi i64 [ %4, %.lr.ph212 ], [ %indvars.iv.next242.i.i.i.i, %bb.bj ] ; 4 uses
+  %indvars.iv241.i.i.i.i210 = phi i64 [ %2, %.lr.ph212 ], [ %indvars.iv.next242.i.i.i.i, %bb.bj ] ; 4 uses
   %i.km = load ptr, ptr %.val82.i.i.i.i217, align 8, !tbaa !32 ; 15 uses
   %i.kn = trunc nuw i64 %indvars.iv241.i.i.i.i210 to i32 ; 2 uses
   %i.ko = icmp sgt i32 %i.kn, 0
@@ -427,7 +417,7 @@ bb.bl:                                            ; preds = %.lr.ph206
   %scevgep239.i.i.i.i = getelementptr i8, ptr %scevgep.i.i.i.i219, i64 %i.kz
   %scevgep240.i.i.i.i = getelementptr i8, ptr %.val82.i.i.i.i217, i64 %i.kz
   %i.la = add nuw i64 %indvar.i.i.i.i211, %i.ky
-  %i.lb = sub i64 %4, %i.la
+  %i.lb = sub i64 %2, %i.la
   %i.lc = shl i64 %i.lb, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep239.i.i.i.i, ptr align 8 %scevgep240.i.i.i.i, i64 %i.lc, i1 false), !tbaa !32
   br label %Vec_PtrRemove.exit.i.i.i.i
@@ -830,10 +820,12 @@ thread-pre-split.backedge.i.i.i.i:                ; preds = %bb.df, %.critedge4.
   %i.qt = phi ptr [ %i.qo, %.critedge4.i.i.i.i ], [ %i.ug, %.thread-pre-split.loopexit_crit_edge.i.i.i.i ], [ %i.qo, %bb.df ]
   %i.qu = phi i32 [ %i.qp, %.critedge4.i.i.i.i ], [ %i.uh, %.thread-pre-split.loopexit_crit_edge.i.i.i.i ], [ %i.qp, %bb.df ]
   %.val82257.i.i.i.i = phi ptr [ %.val82258.i.i.i.i, %.critedge4.i.i.i.i ], [ %.val82255.i.i.i.i, %.thread-pre-split.loopexit_crit_edge.i.i.i.i ], [ %.val82258.i.i.i.i, %bb.df ]
-  %.val.pr214.i.i.i.i = phi i32 [ %.val.pr221.i.i.i.i, %.critedge4.i.i.i.i ], [ %.val.pr217.i.i.i.i, %.thread-pre-split.loopexit_crit_edge.i.i.i.i ], [ %.val.pr221.i.i.i.i, %bb.df ] ; 3 uses
+  %.val.pr214.i.i.i.i = phi i32 [ %.val.pr221.i.i.i.i, %.critedge4.i.i.i.i ], [ %.val.pr217.i.i.i.i, %.thread-pre-split.loopexit_crit_edge.i.i.i.i ], [ %.val.pr221.i.i.i.i, %bb.df ] ; 4 uses
+  %3 = zext i32 %.val.pr214.i.i.i.i to i64
   %smin.i.i.i.i = tail call i32 @llvm.smin.i32(i32 %.val.pr214.i.i.i.i, i32 0)
-  %i.qv = sub i32 %.val.pr214.i.i.i.i, %smin.i.i.i.i ; 2 uses
-  %exitcond.i.i.i.i209 = icmp eq i32 %i.qv, 0
+  %i.qv = sub i32 %.val.pr214.i.i.i.i, %smin.i.i.i.i
+  %wide.trip.count.i57.i.i.i = zext i32 %i.qv to i64
+  %exitcond.i.i.i.i209 = icmp slt i32 %.val.pr214.i.i.i.i, 1
   br i1 %exitcond.i.i.i.i209, label %Io_NtkBfsPads.exit.i.i.i, label %.lr.ph212, !llvm.loop !59
 
 bb.dc:                                            ; preds = %.critedge4.i.i.i.i

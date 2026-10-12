@@ -205,7 +205,7 @@ _kzalloc_noprof.exit.i:                           ; preds = %bb.a
 
 _kzalloc_noprof.exit66.i:                         ; preds = %.lr.ph80.i, %._crit_edge.i
   %i.m = phi i32 [ %.pre.i, %.lr.ph80.i ], [ %i.al, %._crit_edge.i ] ; 2 uses
-  %indvars.iv92.i = phi i64 [ 0, %.lr.ph80.i ], [ %indvars.iv.next93.i, %._crit_edge.i ] ; 4 uses
+  %indvars.iv92.i = phi i64 [ 0, %.lr.ph80.i ], [ %indvars.iv.next93.i, %._crit_edge.i ] ; 3 uses
   %i.n = icmp slt i32 %i.m, 0
   %i.o = sext i32 %i.m to i64
   %i.p = shl nsw i64 %i.o, 4
@@ -214,7 +214,7 @@ _kzalloc_noprof.exit66.i:                         ; preds = %.lr.ph80.i, %._crit
   %i.r = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv92.i ; 3 uses
   store ptr %i.q, ptr %i.r, align 8
   %.not57.i = icmp eq ptr %i.q, null
-  br i1 %.not57.i, label %.loopexit.i, label %.preheader72.i
+  br i1 %.not57.i, label %.preheader.preheader.i, label %.preheader72.i
 
 .preheader72.i:                                   ; preds = %_kzalloc_noprof.exit66.i
   %i.s = load i32, ptr %i.b, align 4              ; 3 uses
@@ -256,7 +256,7 @@ _kmalloc_array_noprof.exit.i:                     ; preds = %bb.d, %bb.c
   %i.aj = getelementptr i8, ptr %i.ai, i64 8
   %i.ak = load ptr, ptr %i.aj, align 8
   %.not58.i = icmp eq ptr %i.ak, null
-  br i1 %.not58.i, label %.loopexit.i, label %bb.b
+  br i1 %.not58.i, label %.preheader.preheader.i, label %bb.b
 
 ._crit_edge.i:                                    ; preds = %bb.b, %.preheader72.i
   %i.al = phi i32 [ %i.s, %.preheader72.i ], [ %i.v, %bb.b ]
@@ -266,13 +266,8 @@ _kmalloc_array_noprof.exit.i:                     ; preds = %bb.d, %bb.c
   %i.ao = icmp slt i64 %indvars.iv.next93.i, %i.an
   br i1 %i.ao, label %_kzalloc_noprof.exit66.i, label %.loopexit, !llvm.loop !67
 
-.loopexit.i:                                      ; preds = %_kzalloc_noprof.exit66.i, %_kmalloc_array_noprof.exit.i
-  %4 = and i64 %indvars.iv92.i, 2147483648
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %.preheader.preheader.i, label %._crit_edge86.i
-
-.preheader.preheader.i:                           ; preds = %.loopexit.i
-  %i.ap = and i64 %indvars.iv92.i, 2147483647
+.preheader.preheader.i:                           ; preds = %_kzalloc_noprof.exit66.i, %_kmalloc_array_noprof.exit.i
+  %i.ap = and i64 %indvars.iv92.i, 4294967295
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge84.i, %.preheader.preheader.i
@@ -306,7 +301,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph83.i
   %i.bc = icmp sgt i64 %indvars.iv98.i, 0
   br i1 %i.bc, label %.preheader.i, label %._crit_edge86.i, !llvm.loop !69
 
-._crit_edge86.i:                                  ; preds = %._crit_edge84.i, %.loopexit.i
+._crit_edge86.i:                                  ; preds = %._crit_edge84.i
   tail call void @kfree(ptr noundef nonnull %i.h) #23
   br label %pmu_free_topology.exit
 

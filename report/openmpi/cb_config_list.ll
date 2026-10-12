@@ -204,12 +204,10 @@ bb.ah:                                            ; preds = %get_max_procs.exit
   br label %.preheader.i64.i
 
 .preheader.i64.i:                                 ; preds = %.preheader.loopexit.i97.i, %bb.ah
-  %.038.lcssa.i65.i = phi i32 [ 0, %bb.ah ], [ %i.fl, %.preheader.loopexit.i97.i ] ; 3 uses
+  %.038.lcssa.i65.i = phi i32 [ 0, %bb.ah ], [ %i.fl, %.preheader.loopexit.i97.i ] ; 2 uses
   %.036.lcssa.i66.i = phi i32 [ %.06197, %bb.ah ], [ %i.ex, %.preheader.loopexit.i97.i ] ; 3 uses
-  %4 = icmp sgt i32 %.038.lcssa.i65.i, -1
   %i.ey = icmp slt i32 %.038.lcssa.i65.i, %i.c
-  %or.cond123.i = and i1 %4, %i.ey
-  br i1 %or.cond123.i, label %.lr.ph.preheader.i43.i71.i, label %match_this_proc.exit98.i
+  br i1 %i.ey, label %.lr.ph.preheader.i43.i71.i, label %match_this_proc.exit98.i
 
 .lr.ph.i81.i:                                     ; preds = %bb.ak, %.lr.ph.preheader.i80.i
   %indvars.iv.i82.i = phi i64 [ %i.ew, %.lr.ph.preheader.i80.i ], [ %indvars.iv.next.i96.i, %bb.ak ] ; 4 uses
@@ -302,7 +300,7 @@ find_name.exit.thread.loopexit82.i85.i:           ; preds = %find_name.exit.i95.
   br label %match_this_proc.exit98.i
 
 match_this_proc.exit98.i:                         ; preds = %find_name.exit52.thread.i79.i, %bb.am, %find_name.exit.thread.loopexit82.i85.i, %find_name.exit.thread.loopexit81.i93.i, %.preheader.i64.i
-  %.03661.i67.i = phi i32 [ %.036.lcssa.i66.i, %bb.am ], [ %.036.lcssa.i66.i, %.preheader.i64.i ], [ %i.ga, %find_name.exit.thread.loopexit82.i85.i ], [ %i.fz, %find_name.exit.thread.loopexit81.i93.i ], [ %.036.lcssa.i66.i, %find_name.exit52.thread.i79.i ]
+  %.03661.i67.i = phi i32 [ %i.fz, %find_name.exit.thread.loopexit81.i93.i ], [ %.036.lcssa.i66.i, %.preheader.i64.i ], [ %i.ga, %find_name.exit.thread.loopexit82.i85.i ], [ %.036.lcssa.i66.i, %bb.am ], [ %.036.lcssa.i66.i, %find_name.exit52.thread.i79.i ]
   %spec.select74 = call i32 @llvm.smax.i32(i32 %.03661.i67.i, i32 %.06197)
   br label %match_procs.exit
 

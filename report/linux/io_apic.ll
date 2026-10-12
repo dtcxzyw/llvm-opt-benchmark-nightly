@@ -203,18 +203,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
 
 ._crit_edge.loopexit.split.loop.exit16.i:         ; preds = %bb.f
   %i.aa = trunc nuw nsw i64 %indvars.iv.i19 to i32
-  br label %find_irq_entry.exit
+  br label %bb.h
 
-find_irq_entry.exit:                              ; preds = %bb.g, %mp_find_ioapic_pin.exit, %._crit_edge.loopexit.split.loop.exit16.i
-  %.011.i = phi i32 [ -1, %mp_find_ioapic_pin.exit ], [ %i.aa, %._crit_edge.loopexit.split.loop.exit16.i ], [ -1, %bb.g ] ; 2 uses
+find_irq_entry.exit:                              ; preds = %bb.g, %mp_find_ioapic_pin.exit
   %i.ab = and i32 %1, 2
-  %3 = icmp ne i32 %i.ab, 0
-  %4 = icmp slt i32 %.011.i, 0
-  %or.cond = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond, label %mp_find_ioapic.exit.thread, label %bb.h
+  %.not = icmp eq i32 %i.ab, 0
+  br i1 %.not, label %bb.h, label %mp_find_ioapic.exit.thread
 
-bb.h:                                             ; preds = %find_irq_entry.exit
-  %i.ac = tail call fastcc i32 @mp_map_pin_to_irq(i32 noundef %0, i32 noundef %.011.i, i32 noundef %i.j, i32 noundef %i.k, i32 noundef %1, ptr noundef %2) #24, !srcloc !45
+bb.h:                                             ; preds = %._crit_edge.loopexit.split.loop.exit16.i, %find_irq_entry.exit
+  %.011.i25 = phi i32 [ %i.aa, %._crit_edge.loopexit.split.loop.exit16.i ], [ -1, %find_irq_entry.exit ]
+  %i.ac = tail call fastcc i32 @mp_map_pin_to_irq(i32 noundef %0, i32 noundef %.011.i25, i32 noundef %i.j, i32 noundef %i.k, i32 noundef %1, ptr noundef %2) #24, !srcloc !45
   br label %mp_find_ioapic.exit.thread
 
 mp_find_ioapic.exit.thread:                       ; preds = %bb.a, %._crit_edge.i, %find_irq_entry.exit, %bb.h
@@ -617,8 +615,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.am = trunc nuw nsw i64 %indvars.iv.i19.i to i32
   br label %find_irq_entry.exit.i
 
-find_irq_entry.exit.i:                            ; preds = %bb.h, %._crit_edge.loopexit.split.loop.exit16.i.i, %mp_find_ioapic_pin.exit.i
-  %.011.i.i = phi i32 [ -1, %mp_find_ioapic_pin.exit.i ], [ %i.am, %._crit_edge.loopexit.split.loop.exit16.i.i ], [ -1, %bb.h ] ; 2 uses
+find_irq_entry.exit.i:                            ; preds = %bb.h, %mp_find_ioapic_pin.exit.i, %._crit_edge.loopexit.split.loop.exit16.i.i
+  %.011.i.i = phi i32 [ %i.am, %._crit_edge.loopexit.split.loop.exit16.i.i ], [ -1, %mp_find_ioapic_pin.exit.i ], [ -1, %bb.h ] ; 2 uses
   %i.an = getelementptr i8, ptr %i.q, i64 56
   %i.ao = load ptr, ptr %i.an, align 8            ; 2 uses
   %.not.i39 = icmp eq ptr %i.ao, null

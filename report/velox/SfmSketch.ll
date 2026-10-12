@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
 declare double @llvm.round.f64(double) #7
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define noundef i32 @_ZNK8facebook5velox9functions3sfm9SfmSketch14serializedSizeEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(2584) %0) local_unnamed_addr #5 align 2 {
+define noundef range(i32 21, 0) i32 @_ZNK8facebook5velox9functions3sfm9SfmSketch14serializedSizeEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(2584) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !44   ; 2 uses
@@ -272,7 +272,7 @@ _ZN8facebook5velox4bits16testWordsReverseIZNS1_11findLastBitEPKmiibEUlimE_ZNS1_1
   %i.ac = add nsw i64 %i.ab, 8
   %i.ad = lshr i64 %i.ac, 3
   %i.ae = trunc nuw nsw i64 %i.ad to i32
-  %i.af = add i32 %i.ae, 21
+  %i.af = add nuw i32 %i.ae, 21
   br label %_ZNK8facebook5velox9functions3sfm9SfmSketch14compactBitSizeEv.exit
 
 _ZNK8facebook5velox9functions3sfm9SfmSketch14compactBitSizeEv.exit: ; preds = %_ZZN8facebook5velox4bits11findLastBitEPKmiibENKUliE_clEi.exit.i.i, %_ZZN8facebook5velox4bits11findLastBitEPKmiibENKUlimE_clEim.exit40.thread.i.i, %bb.a, %_ZN8facebook5velox4bits16testWordsReverseIZNS1_11findLastBitEPKmiibEUlimE_ZNS1_11findLastBitES4_iibEUliE_EEbiiT_T0_.exit.thread22.i

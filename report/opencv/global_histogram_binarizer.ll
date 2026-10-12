@@ -204,7 +204,7 @@ bb.ar:                                            ; preds = %bb.am
 
 .lr.ph96:                                         ; preds = %.lr.ph99.split
   %i.gn = trunc nuw nsw i64 %indvars.iv107 to i32
-  %i.go = mul nsw i32 %i.gl, %i.gn
+  %i.go = mul nuw nsw i32 %i.gl, %i.gn
   %i.gp = zext nneg i32 %i.go to i64
   %.pre111 = load ptr, ptr %i.fj, align 8, !tbaa !19
   br label %bb.as

@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.i
   br label %.loopexit
 
 iter.check:                                       ; preds = %bb.i, %bb.h
-  %3 = zext i16 %i.af to i32
-  %4 = add nuw nsw i32 %3, 3                      ; 5 uses
+  %narrow = add nuw i16 %i.af, 3
+  %3 = zext i16 %narrow to i32                    ; 5 uses
   %min.iters.check = icmp eq i16 %i.af, 0
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
@@ -218,7 +218,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.be = trunc i32 %i.ah to i12
   %i.bf = sub i12 %i.be, %i.ba
   %i.bg = icmp ult i12 %i.bf, %i.bb
-  %i.bh = icmp ugt i16 %i.af, 4093
+  %i.bh = icmp samesign ugt i16 %i.af, 4093
   %i.bi = or i1 %i.bg, %i.bh
   %i.bj = or i1 %i.bd, %i.bi
   br i1 %i.bj, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
@@ -236,12 +236,12 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check165 = icmp ult i16 %i.af, 29
+  %min.iters.check165 = icmp samesign ult i16 %i.af, 29
   br i1 %min.iters.check165, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.br = and i32 %4, 28
-  %n.vec = and i32 %4, 8160                       ; 5 uses
+  %i.br = and i32 %3, 28
+  %n.vec = and i32 %3, 8160                       ; 5 uses
   %i.bs = trunc nuw nsw i32 %n.vec to i16
   %i.bt = sub nsw i16 %i.ag, %i.bs
   %i.bu = add i32 %.177150, %n.vec                ; 2 uses
@@ -268,7 +268,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.cf, label %middle.block, label %vector.body, !llvm.loop !66
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i32 %4, %n.vec
+  %cmp.n = icmp eq i32 %n.vec, %3
   br i1 %cmp.n, label %.loopexit, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -277,7 +277,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec168 = and i32 %4, 8188                    ; 4 uses
+  %n.vec168 = and i32 %3, 8188                    ; 4 uses
   %i.cg = trunc nuw nsw i32 %n.vec168 to i16
   %i.ch = sub nsw i16 %i.ag, %i.cg
   %i.ci = add i32 %.177150, %n.vec168             ; 2 uses
@@ -300,7 +300,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.cr, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !67
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n172 = icmp eq i32 %4, %n.vec168
+  %cmp.n172 = icmp eq i32 %n.vec168, %3
   br i1 %cmp.n172, label %.loopexit, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
@@ -344,7 +344,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.dk = zext nneg i32 %i.dj to i64
   %i.dl = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.dk
   store i8 %i.dh, ptr %i.dl, align 1, !tbaa !13
-  %i.dm = add i16 %.0149, -2                      ; 2 uses
+  %i.dm = add nsw i16 %.0149, -2                  ; 2 uses
   %i.dn = sub i32 %.278148, %i.ah
   %i.do = and i32 %i.dn, 4095
   %i.dp = zext nneg i32 %i.do to i64

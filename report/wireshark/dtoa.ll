@@ -205,9 +205,8 @@ Balloc.exit.i:                                    ; preds = %bb.fq, %bb.fm
   store i32 0, ptr %i.st, align 8
   %i.su = getelementptr i8, ptr %.1.i.i1034, i64 24 ; 4 uses
   %i.sv = and i32 %.sroa.0.4.extract.trunc1133, 1048575 ; 2 uses
-  %i.sw = lshr i32 %.sroa.0.4.extract.trunc1133, 20
-  %8 = and i32 %i.sw, 2047                        ; 2 uses
-  %.not.i1035 = icmp eq i32 %8, 0                 ; 2 uses
+  %i.sw = lshr i32 %.sroa.0.4.extract.trunc1133, 20 ; 2 uses
+  %.not.i1035 = icmp eq i32 %i.sw, 0              ; 2 uses
   %i.sx = or disjoint i32 %i.sv, 1048576
   %spec.select.i = select i1 %.not.i1035, i32 %i.sv, i32 %i.sx ; 13 uses
   %.sroa.0.0.extract.trunc1126 = trunc i64 %.pre-phi to i32 ; 12 uses
@@ -375,7 +374,7 @@ bb.gg:                                            ; preds = %lo0bits.exit56.i, %
   br i1 %.not.i1035, label %bb.gi, label %bb.gh
 
 bb.gh:                                            ; preds = %bb.gg
-  %i.ur = add nsw i32 %8, -1075
+  %i.ur = add nsw i32 %i.sw, -1075
   %i.us = add nsw i32 %i.ur, %.027.i
   %i.ut = sub nsw i32 53, %.027.i
   br label %d2b.exit

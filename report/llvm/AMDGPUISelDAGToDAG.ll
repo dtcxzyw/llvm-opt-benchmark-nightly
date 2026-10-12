@@ -204,7 +204,7 @@ _ZN4llvm11SmallVectorINS_7SDValueELj3EEC2IPS1_vEET_S5_.exit99: ; preds = %_ZN4ll
   %.not183 = icmp eq i32 %.sroa.037.0.extract.trunc, 0 ; 3 uses
   %.sroa.037.4.extract.shift90 = lshr i64 %i.ao, 32
   %.sroa.037.4.extract.trunc = trunc nuw i64 %.sroa.037.4.extract.shift90 to i8
-  %i.ap = select i1 %.not183, i8 %i.am, i8 %.sroa.037.4.extract.trunc ; 8 uses
+  %i.ap = select i1 %.not183, i8 %i.am, i8 %.sroa.037.4.extract.trunc ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   %i.aq = load ptr, ptr %2, align 8, !tbaa !472
   %i.ar = load i32, ptr %i.j, align 8, !tbaa !478 ; 4 uses
@@ -244,10 +244,10 @@ _ZN4llvm11SmallVectorINS_7SDValueELj3EEC2IPS1_vEET_S5_.exit105: ; preds = %_ZN4l
   %i.bc = call fastcc i64 @_ZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EE(ptr %.sroa.055.0.copyload, i32 %.sroa.6.0.copyload, ptr noundef nonnull align 8 dereferenceable(16) %2) ; 2 uses
   %.sroa.029.0.extract.trunc = trunc i64 %i.bc to i32 ; 2 uses
   %.not182 = icmp eq i32 %.sroa.029.0.extract.trunc, 0 ; 2 uses
-  %i.bd = add i32 %.sroa.029.0.extract.trunc, %.sroa.037.0.extract.trunc ; 7 uses
+  %i.bd = add i32 %.sroa.029.0.extract.trunc, %.sroa.037.0.extract.trunc ; 6 uses
   %.sroa.029.4.extract.shift91 = lshr i64 %i.bc, 32
   %.sroa.029.4.extract.trunc = trunc nuw i64 %.sroa.029.4.extract.shift91 to i8
-  %i.be = select i1 %.not182, i8 %i.an, i8 %.sroa.029.4.extract.trunc ; 7 uses
+  %i.be = select i1 %.not182, i8 %i.an, i8 %.sroa.029.4.extract.trunc ; 6 uses
   br i1 %.not183, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4llvm11SmallVectorINS_7SDValueELj3EEC2IPS1_vEET_S5_.exit105
@@ -444,17 +444,13 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 "_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit": ; preds = %bb.t, %bb.v, %bb.x
   %i.eo = phi ptr [ %i.dk, %bb.v ], [ %i.dk, %bb.x ], [ %i.dj, %bb.t ]
   %spec.select.i.in = phi i64 [ %indvars.iv18.i, %bb.v ], [ %indvars.iv18.i, %bb.x ], [ %indvars.iv.i, %bb.t ] ; 2 uses
-  %spec.select.i = trunc i64 %spec.select.i.in to i32 ; 2 uses
-  %i.ep = icmp sgt i32 %spec.select.i, -1
-  br i1 %i.ep, label %7, label %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread"
+  %spec.select.i = trunc i64 %spec.select.i.in to i32
+  %7 = load i32, ptr %i.j, align 8, !tbaa !478
+  %i.ep = icmp sgt i32 %7, %spec.select.i
+  br i1 %i.ep, label %bb.z, label %.thread173
 
-7:                                                ; preds = %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit"
-  %8 = load i32, ptr %i.j, align 8, !tbaa !478
-  %.not = icmp sgt i32 %8, %spec.select.i
-  br i1 %.not, label %bb.z, label %.thread173
-
-bb.z:                                             ; preds = %7
-  %i.eq = and i64 %spec.select.i.in, 2147483647   ; 2 uses
+bb.z:                                             ; preds = %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit"
+  %i.eq = and i64 %spec.select.i.in, 4294967295   ; 2 uses
   %i.er = load ptr, ptr %2, align 8, !tbaa !472
   %i.es = getelementptr inbounds nuw [16 x i8], ptr %i.er, i64 %i.eq ; 2 uses
   %i.et = getelementptr inbounds nuw [16 x i8], ptr %i.eo, i64 %i.eq ; 2 uses
@@ -469,7 +465,7 @@ bb.z:                                             ; preds = %7
   %.not3.i106 = select i1 %i.ew, i1 true, i1 %i.fb
   br i1 %.not3.i106, label %.thread173, label %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread"
 
-"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread": ; preds = %bb.u, %bb.y, %.thread.thread.i, %.thread.i, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit", %bb.z, %.loopexit
+"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread": ; preds = %bb.u, %bb.y, %.thread.thread.i, %.thread.i, %bb.z, %.loopexit
   br i1 %.not183, label %bb.aa, label %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133.thread.thread"
 
 bb.aa:                                            ; preds = %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread"
@@ -578,17 +574,13 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
 "_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133": ; preds = %bb.ac, %bb.ae, %bb.ag
   %i.gq = phi ptr [ %i.fm, %bb.ae ], [ %i.fm, %bb.ag ], [ %i.fl, %bb.ac ]
   %spec.select.i109.in = phi i64 [ %indvars.iv18.i128, %bb.ae ], [ %indvars.iv18.i128, %bb.ag ], [ %indvars.iv.i113, %bb.ac ] ; 2 uses
-  %spec.select.i109 = trunc i64 %spec.select.i109.in to i32 ; 2 uses
-  %i.gr = icmp sgt i32 %spec.select.i109, -1
-  br i1 %i.gr, label %9, label %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133.thread.thread"
+  %spec.select.i109 = trunc i64 %spec.select.i109.in to i32
+  %8 = load i32, ptr %i.j, align 8, !tbaa !478
+  %i.gr = icmp sgt i32 %8, %spec.select.i109
+  br i1 %i.gr, label %bb.ai, label %.thread173
 
-9:                                                ; preds = %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133"
-  %10 = load i32, ptr %i.j, align 8, !tbaa !478
-  %.not92 = icmp sgt i32 %10, %spec.select.i109
-  br i1 %.not92, label %bb.ai, label %.thread173
-
-bb.ai:                                            ; preds = %9
-  %i.gs = and i64 %spec.select.i109.in, 2147483647 ; 2 uses
+bb.ai:                                            ; preds = %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133"
+  %i.gs = and i64 %spec.select.i109.in, 4294967295 ; 2 uses
   %i.gt = load ptr, ptr %2, align 8, !tbaa !472
   %i.gu = getelementptr inbounds nuw [16 x i8], ptr %i.gt, i64 %i.gs ; 2 uses
   %i.gv = getelementptr inbounds nuw [16 x i8], ptr %i.gq, i64 %i.gs ; 2 uses
@@ -603,14 +595,14 @@ bb.ai:                                            ; preds = %9
   %.not3.i134 = select i1 %i.gy, i1 true, i1 %i.hd
   br i1 %.not3.i134, label %.thread173, label %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133.thread.thread"
 
-.thread173:                                       ; preds = %bb.j, %bb.n, %bb.q, %9, %bb.ai, %7, %bb.z
+.thread173:                                       ; preds = %bb.j, %bb.n, %bb.q, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133", %bb.ai, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit", %bb.z
   %i.he = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvm15SmallVectorImplINS_7SDValueEEaSEOS2_(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %5) ; 0 uses
   br label %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133.thread.thread"
 
-"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133.thread.thread": ; preds = %bb.ad, %bb.ah, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread", %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133", %bb.ai, %.thread.thread.i120, %.thread.i107, %.thread173
-  %11 = phi i8 [ %i.an, %.thread173 ], [ %i.be, %bb.ai ], [ %i.be, %.thread.i107 ], [ %i.be, %.thread.thread.i120 ], [ %i.be, %bb.ah ], [ %i.be, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread" ], [ %i.be, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133" ], [ %i.be, %bb.ad ] ; 3 uses
-  %12 = phi i8 [ %i.am, %.thread173 ], [ %i.ap, %bb.ai ], [ %i.ap, %.thread.i107 ], [ %i.ap, %.thread.thread.i120 ], [ %i.ap, %bb.ah ], [ %i.ap, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread" ], [ %i.ap, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133" ], [ %i.ap, %bb.ad ] ; 3 uses
-  %.2 = phi i32 [ 0, %.thread173 ], [ %i.bd, %bb.ai ], [ %i.bd, %.thread.i107 ], [ %i.bd, %.thread.thread.i120 ], [ %i.bd, %bb.ah ], [ %i.bd, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread" ], [ %i.bd, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133" ], [ %i.bd, %bb.ad ]
+"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit133.thread.thread": ; preds = %bb.ad, %bb.ah, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread", %bb.ai, %.thread.thread.i120, %.thread.i107, %.thread173
+  %9 = phi i8 [ %i.an, %.thread173 ], [ %i.be, %bb.ai ], [ %i.be, %.thread.i107 ], [ %i.be, %.thread.thread.i120 ], [ %i.be, %bb.ah ], [ %i.be, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread" ], [ %i.be, %bb.ad ] ; 3 uses
+  %10 = phi i8 [ %i.am, %.thread173 ], [ %i.ap, %bb.ai ], [ %i.ap, %.thread.i107 ], [ %i.ap, %.thread.thread.i120 ], [ %i.ap, %bb.ah ], [ %i.ap, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread" ], [ %i.ap, %bb.ad ] ; 3 uses
+  %.2 = phi i32 [ 0, %.thread173 ], [ %i.bd, %bb.ai ], [ %i.bd, %.thread.i107 ], [ %i.bd, %.thread.thread.i120 ], [ %i.bd, %bb.ah ], [ %i.bd, %"_ZZL9BitOp3_OpN4llvm7SDValueERNS_15SmallVectorImplIS0_EEENK3$_2clEhS0_RKS2_.exit.thread" ], [ %i.bd, %bb.ad ]
   %i.hf = load ptr, ptr %6, align 8, !tbaa !472   ; 2 uses
   %i.hg = icmp eq ptr %i.hf, %i.at
   br i1 %i.hg, label %_ZN4llvm11SmallVectorINS_7SDValueELj3EED2Ev.exit135, label %bb.aj
@@ -650,15 +642,15 @@ _ZN4llvm11SmallVectorINS_7SDValueELj3EED2Ev.exit137: ; preds = %_ZN4llvm11SmallV
   ]
 
 bb.am:                                            ; preds = %_ZN4llvm11SmallVectorINS_7SDValueELj3EED2Ev.exit137
-  %i.hn = and i8 %11, %12
+  %i.hn = and i8 %9, %10
   br label %bb.ap
 
 bb.an:                                            ; preds = %_ZN4llvm11SmallVectorINS_7SDValueELj3EED2Ev.exit137
-  %i.ho = or i8 %11, %12
+  %i.ho = or i8 %9, %10
   br label %bb.ap
 
 bb.ao:                                            ; preds = %_ZN4llvm11SmallVectorINS_7SDValueELj3EED2Ev.exit137
-  %i.hp = xor i8 %11, %12
+  %i.hp = xor i8 %9, %10
   br label %bb.ap
 
 bb.ap:                                            ; preds = %_ZN4llvm11SmallVectorINS_7SDValueELj3EED2Ev.exit137, %bb.ao, %bb.an, %bb.am

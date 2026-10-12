@@ -205,7 +205,7 @@ bb.a:
   %i.cf = or disjoint i64 %i.cb, %i.ce
   %i.cg = lshr i128 %i.ar, 64
   %i.ch = trunc nuw nsw i128 %i.cg to i64
-  %i.ci = and i64 %i.ch, -8608480567731124088
+  %i.ci = and i64 %i.ch, 614891469123651720
   %i.cj = or disjoint i64 %i.cf, %i.ci
   %i.ck = lshr i128 %i.bh, 64
   %i.cl = trunc nuw nsw i128 %i.ck to i64

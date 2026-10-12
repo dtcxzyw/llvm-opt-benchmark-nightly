@@ -202,7 +202,7 @@ bb.bk:                                            ; preds = %_RINvNtCskKLDkoKarT
   %i.du = load i64, ptr %i.a, align 8, !range !13, !noalias !345, !noundef !5
   %i.dv = trunc nuw i64 %i.du to i1
   %i.dw = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.dx = load i64, ptr %i.dw, align 8, !noalias !345, !noundef !5 ; 13 uses
+  %i.dx = load i64, ptr %i.dw, align 8, !noalias !345, !noundef !5 ; 14 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.dz = load i32, ptr %i.dy, align 8, !range !346, !noalias !345, !noundef !5 ; 3 uses
   %i.ea = urem i64 %i.dx, 60                      ; 4 uses
@@ -311,7 +311,7 @@ bb.br:                                            ; preds = %bb.bq, %_RNvMs2_NtC
   %.sroa.016.1.i.i4751.i.i = phi i64 [ %i.el, %_RNvMs2_NtCscSncaK1wFM2_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 0, %bb.bq ] ; 2 uses
   %.pn.i.i = phi i64 [ 23, %_RNvMs2_NtCscSncaK1wFM2_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 24, %bb.bq ] ; 2 uses
   %i.fz = udiv i64 %i.dx, 86400
-  %i.ga = trunc nuw nsw i64 %i.fz to i32          ; 3 uses
+  %i.ga = trunc nuw nsw i64 %i.fz to i32          ; 2 uses
   %i.gb = icmp samesign ult i64 %i.dx, 86400
   br i1 %i.gb, label %bb.bs, label %bb.bt
 
@@ -320,8 +320,7 @@ bb.bs:                                            ; preds = %bb.br
   br label %_RNvMNtCscSncaK1wFM2_4time4dateNtB2_4Date15checked_sub_std.exit22.i.i.i
 
 bb.bt:                                            ; preds = %bb.br
-  %2 = add nsw i32 %i.ga, -4371588
-  %or.cond.i.i19.i.i.i = icmp ult i32 %2, -7304484
+  %or.cond.i.i19.i.i.i = icmp samesign ugt i64 %i.dx, 377705203199
   br i1 %or.cond.i.i19.i.i.i, label %.invoke, label %bb.bu, !prof !348
 
 bb.bu:                                            ; preds = %bb.bt
@@ -421,8 +420,7 @@ bb.by:                                            ; preds = %_RNvMs2_NtCscSncaK1
   %i.ie = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.id, i32 1) ; 2 uses
   %i.if = extractvalue { i32, i1 } %i.ie, 0       ; 2 uses
   %i.ig = extractvalue { i32, i1 } %i.ie, 1
-  %3 = add i32 %i.if, -366
-  %or.cond.i.i5.i.i = icmp ult i32 %3, -365
+  %or.cond.i.i5.i.i = icmp ugt i32 %i.if, 365
   %or.cond.not.i.i = or i1 %i.ig, %or.cond.i.i5.i.i
   br i1 %or.cond.not.i.i, label %bb.ca, label %bb.bz, !prof !349
 

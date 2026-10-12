@@ -204,7 +204,7 @@ bb.ci:                                            ; preds = %bb.ch
   br i1 %i.ob, label %.preheader, label %bb.cj
 
 bb.cj:                                            ; preds = %.lr.ph
-  %.not4712 = icmp ult i32 %i.ns, %i.mw
+  %.not4712 = icmp samesign ult i32 %i.ns, %i.mw
   br i1 %.not4712, label %bb.ck, label %.thread
 
 bb.ck:                                            ; preds = %bb.cj, %bb.ci, %bb.cg
@@ -607,7 +607,7 @@ bb.do:                                            ; preds = %bb.dn
   br i1 %i.sj, label %.preheader, label %bb.dp
 
 bb.dp:                                            ; preds = %.lr.ph
-  %.not5551 = icmp ult i32 %i.ry, %i.qy
+  %.not5551 = icmp samesign ult i32 %i.ry, %i.qy
   br i1 %.not5551, label %bb.dq, label %.thread
 
 bb.dq:                                            ; preds = %bb.dp, %bb.do, %bb.dm

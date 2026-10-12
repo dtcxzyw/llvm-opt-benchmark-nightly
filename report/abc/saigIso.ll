@@ -156,9 +156,9 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.e
   %i.av = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
-  %i.aw = shl nsw i32 %indvars.iv.tr, 1
+  %i.aw = shl nuw nsw i32 %indvars.iv.tr, 1
   %spec.select.i56 = select i1 %i.av, i32 %i.aw, i32 2147483647 ; 4 uses
-  %2 = sext i32 %spec.select.i56 to i64
+  %2 = zext nneg i32 %spec.select.i56 to i64
   %.not.i10.i = icmp samesign ult i64 %indvars.iv, %2
   br i1 %.not.i10.i, label %bb.j, label %Vec_PtrPush.exit
 
@@ -200,16 +200,15 @@ Vec_PtrSort.exit.thread:                          ; preds = %.critedge
   %i.bg = and i64 %indvars.iv.next, 4294967295
   tail call void @qsort(ptr noundef nonnull %storemerge7887, i64 noundef %i.bg, i64 noundef 8, ptr noundef nonnull @Iso_ObjCompareByData) #25
   %.pre117.pre = load ptr, ptr %i.y, align 8, !tbaa !32
-  %3 = and i64 %indvars.iv.next, 4294967295
   br label %.lr.ph89
 
 .lr.ph89:                                         ; preds = %.critedge, %Vec_PtrSort.exit.thread
   %.pre117130 = phi ptr [ %.pre117.pre, %Vec_PtrSort.exit.thread ], [ %storemerge7887, %.critedge ]
-  %wide.trip.count = phi i64 [ %3, %Vec_PtrSort.exit.thread ], [ 1, %.critedge ]
   %.promoted90 = load i32, ptr %i.d, align 4, !tbaa !12
   %.promoted92 = load i32, ptr %i.b, align 8, !tbaa !13
   %.promoted95 = load ptr, ptr %i.r, align 8, !tbaa !14
   %i.bh = sext i32 %.promoted90 to i64
+  %wide.trip.count = and i64 %indvars.iv.next, 4294967295
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph89, %Vec_IntPush.exit66
@@ -243,10 +242,10 @@ bb.q:                                             ; preds = %bb.o
 bb.r:                                             ; preds = %bb.n
   %i.bp = icmp samesign ult i64 %indvars.iv107, 1073741823
   %indvars.iv107.tr = trunc nsw i64 %indvars.iv107 to i32
-  %i.bq = shl nsw i32 %indvars.iv107.tr, 1
+  %i.bq = shl nuw nsw i32 %indvars.iv107.tr, 1
   %spec.select.i59 = select i1 %i.bp, i32 %i.bq, i32 2147483647 ; 4 uses
-  %4 = sext i32 %spec.select.i59 to i64
-  %.not.i9.i60 = icmp samesign ult i64 %indvars.iv107, %4
+  %3 = zext nneg i32 %spec.select.i59 to i64
+  %.not.i9.i60 = icmp samesign ult i64 %indvars.iv107, %3
   br i1 %.not.i9.i60, label %bb.s, label %Vec_IntPush.exit66
 
 bb.s:                                             ; preds = %bb.r
@@ -649,9 +648,9 @@ bb.ba:                                            ; preds = %bb.ay
 bb.bb:                                            ; preds = %bb.ax
   %i.hy = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
-  %i.hz = shl nsw i32 %indvars.iv.tr, 1
+  %i.hz = shl nuw nsw i32 %indvars.iv.tr, 1
   %spec.select.i139 = select i1 %i.hy, i32 %i.hz, i32 2147483647 ; 4 uses
-  %13 = sext i32 %spec.select.i139 to i64
+  %13 = zext nneg i32 %spec.select.i139 to i64
   %.not.i9.i140 = icmp samesign ult i64 %indvars.iv, %13
   br i1 %.not.i9.i140, label %bb.bc, label %Vec_IntPush.exit146
 

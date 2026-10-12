@@ -42,7 +42,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.l = and i32 %i.h, 28
-  %n.vec = and i32 %i.h, 2147483616               ; 4 uses
+  %n.vec = and i32 %i.h, 1073741792               ; 4 uses
   %i.m = add i32 %.03138, %n.vec                  ; 2 uses
   %i.n = and i32 %i.h, 31
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.i, i64 0
@@ -71,7 +71,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec55 = and i32 %i.h, 2147483644             ; 3 uses
+  %n.vec55 = and i32 %i.h, 1073741820             ; 3 uses
   %i.t = add i32 %.03138, %n.vec55                ; 2 uses
   %i.u = and i32 %i.h, 3
   %broadcast.splatinsert56 = insertelement <4 x i8> poison, i8 %i.i, i64 0
@@ -95,7 +95,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.132.ph = phi i32 [ %.03138, %iter.check ], [ %i.m, %vec.epilog.iter.check ], [ %i.t, %vec.epilog.middle.block ] ; 2 uses
   %.0.ph = phi i32 [ %i.h, %iter.check ], [ %i.n, %vec.epilog.iter.check ], [ %i.u, %vec.epilog.middle.block ] ; 4 uses
-  %i.z = add i32 %.0.ph, -1
+  %i.z = add nsw i32 %.0.ph, -1
   %xtraiter = and i32 %.0.ph, 3                   ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br label %rb_array_len.exit.i
 
 rb_array_len.exit.i:                              ; preds = %bb.c, %bb.b
-  %.0.i.i = phi i64 [ %i.y, %bb.b ], [ %i.aa, %bb.c ] ; 5 uses
+  %.0.i.i = phi i64 [ %i.y, %bb.b ], [ %i.aa, %bb.c ] ; 6 uses
   %i.ab = add i64 %.0.i.i, 2147483648
   %.not.i1.i = icmp ult i64 %i.ab, 4294967296
   br i1 %.not.i1.i, label %RARRAY_LENINT.exit, label %bb.d
@@ -215,7 +215,7 @@ bb.d:                                             ; preds = %rb_array_len.exit.i
   unreachable
 
 RARRAY_LENINT.exit:                               ; preds = %rb_array_len.exit.i
-  %i.ac = trunc nsw i64 %.0.i.i to i32            ; 2 uses
+  %i.ac = trunc nsw i64 %.0.i.i to i32
   %i.ad = getelementptr i8, ptr %0, i64 16        ; 32 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !70 ; 3 uses
   %i.af = getelementptr i8, ptr %i.ae, i64 240
@@ -235,8 +235,7 @@ bb.e:                                             ; preds = %RARRAY_LENINT.exit
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !179
   %i.ak = getelementptr i8, ptr %i.u, i64 16
   %i.al = getelementptr i8, ptr %i.u, i64 32
-  %smax = call i32 @llvm.smax.i32(i32 %i.ac, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %wide.trip.count = and i64 %.0.i.i, 4294967295
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.k
@@ -556,7 +555,7 @@ bb.am:                                            ; preds = %bb.ak
   br label %rb_array_len.exit.i124
 
 rb_array_len.exit.i124:                           ; preds = %bb.am, %bb.al
-  %.0.i.i125 = phi i64 [ %i.fm, %bb.al ], [ %i.fo, %bb.am ] ; 5 uses
+  %.0.i.i125 = phi i64 [ %i.fm, %bb.al ], [ %i.fo, %bb.am ] ; 6 uses
   %i.fp = add i64 %.0.i.i125, 2147483648
   %.not.i1.i126 = icmp ult i64 %i.fp, 4294967296
   br i1 %.not.i1.i126, label %RARRAY_LENINT.exit127, label %bb.an
@@ -566,7 +565,7 @@ bb.an:                                            ; preds = %rb_array_len.exit.i
   unreachable
 
 RARRAY_LENINT.exit127:                            ; preds = %rb_array_len.exit.i124
-  %i.fq = trunc nsw i64 %.0.i.i125 to i32         ; 2 uses
+  %i.fq = trunc nsw i64 %.0.i.i125 to i32
   %i.fr = add i32 %i.fq, -1                       ; 2 uses
   %i.fs = icmp sgt i32 %i.fr, -1
   %i.ft = load ptr, ptr %i.ad, align 8, !tbaa !70
@@ -591,8 +590,7 @@ bb.ao:                                            ; preds = %RARRAY_LENINT.exit1
 .lr.ph248:                                        ; preds = %bb.ao
   %i.gf = getelementptr i8, ptr %i.fg, i64 16
   %i.gg = getelementptr i8, ptr %i.fg, i64 32
-  %smax298 = call i32 @llvm.smax.i32(i32 %i.fq, i32 1)
-  %wide.trip.count299 = zext nneg i32 %smax298 to i64
+  %wide.trip.count300 = and i64 %.0.i.i125, 4294967295
   br label %bb.ap
 
 bb.ap:                                            ; preds = %.lr.ph248, %RARRAY_AREF.exit130
@@ -615,7 +613,7 @@ RARRAY_AREF.exit130:                              ; preds = %bb.ap, %bb.aq
   %i.go = getelementptr [8 x i8], ptr %i.gd, i64 %indvars.iv295
   store i64 %i.gn, ptr %i.go, align 8, !tbaa !63
   %indvars.iv.next296 = add nuw nsw i64 %indvars.iv295, 1 ; 2 uses
-  %exitcond300.not = icmp eq i64 %indvars.iv.next296, %wide.trip.count299
+  %exitcond300.not = icmp eq i64 %indvars.iv.next296, %wide.trip.count300
   br i1 %exitcond300.not, label %._crit_edge249, label %bb.ap, !llvm.loop !721
 
 ._crit_edge249:                                   ; preds = %RARRAY_AREF.exit130, %bb.ao
@@ -1018,7 +1016,7 @@ get_local_var_idx.exit225:                        ; preds = %get_dyna_var_idx_at
 
 ._crit_edge274.loopexit:                          ; preds = %get_local_var_idx.exit225
   %i.hl = trunc nuw nsw i64 %indvars.iv.next to i32
-  %i.hm = shl i32 %i.hl, 1
+  %i.hm = shl nuw i32 %i.hl, 1
   %i.hn = or disjoint i32 %i.hm, 1
   %i.ho = sext i32 %i.hn to i64
   %i.hp = shl nsw i64 %i.ho, 1
@@ -1421,7 +1419,7 @@ get_local_var_idx.exit:                           ; preds = %get_dyna_var_idx_at
 
 ._crit_edge324.loopexit:                          ; preds = %get_local_var_idx.exit
   %i.mq = trunc nuw nsw i64 %indvars.iv.next to i32
-  %i.mr = shl i32 %i.mq, 1
+  %i.mr = shl nuw i32 %i.mq, 1
   %i.ms = or disjoint i32 %i.mr, 1
   %i.mt = sext i32 %i.ms to i64
   %i.mu = shl nsw i64 %i.mt, 1

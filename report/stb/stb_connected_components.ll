@@ -204,14 +204,13 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.x, %bb.s
-  %indvars.iv135.2 = phi i64 [ 0, %bb.s ], [ %indvars.iv.next136.2, %bb.x ] ; 3 uses
+  %indvars.iv135.2 = phi i64 [ 0, %bb.s ], [ %indvars.iv.next136.2, %bb.x ] ; 4 uses
   %.1129.2 = phi i32 [ %.4.1159, %bb.s ], [ %.3.2, %bb.x ] ; 4 uses
   %.0106128.2 = phi i32 [ 0, %bb.s ], [ %i.ef, %bb.x ]
   %i.cu = add nuw nsw i64 %indvars.iv135.2, %i.p  ; 4 uses
-  %3 = trunc nsw i64 %i.cu to i32
-  %4 = ashr i32 %3, 3
-  %5 = sext i32 %4 to i64
-  %i.cv = getelementptr inbounds i8, ptr %i.cp, i64 %5
+  %3 = lshr i64 %i.cu, 3
+  %4 = and i64 %3, 536870911
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.cp, i64 %4
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !11
   %i.cx = zext i8 %i.cw to i32
   %i.cy = trunc nuw nsw i64 %indvars.iv135.2 to i32
@@ -222,10 +221,10 @@ bb.t:                                             ; preds = %bb.x, %bb.s
   br i1 %.not123.2, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.dc = trunc nsw i64 %i.cu to i32              ; 2 uses
-  %6 = ashr i32 %i.dc, 3
-  %7 = sext i32 %6 to i64
-  %i.dd = getelementptr inbounds i8, ptr %i.cr, i64 %7
+  %i.dc = trunc i64 %indvars.iv135.2 to i32
+  %5 = lshr i64 %i.cu, 3
+  %6 = and i64 %5, 536870911
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.cr, i64 %6
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !11
   %i.df = zext i8 %i.de to i32
   %i.dg = and i32 %i.dc, 7
@@ -300,14 +299,13 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.ae, %bb.z
-  %indvars.iv135.3 = phi i64 [ 0, %bb.z ], [ %indvars.iv.next136.3, %bb.ae ] ; 3 uses
+  %indvars.iv135.3 = phi i64 [ 0, %bb.z ], [ %indvars.iv.next136.3, %bb.ae ] ; 4 uses
   %.1129.3 = phi i32 [ %.4.2163, %bb.z ], [ %.3.3, %bb.ae ] ; 4 uses
   %.0106128.3 = phi i32 [ 0, %bb.z ], [ %i.gc, %bb.ae ]
   %i.er = add nuw nsw i64 %indvars.iv135.3, %i.p  ; 4 uses
-  %8 = trunc nsw i64 %i.er to i32
-  %9 = ashr i32 %8, 3
-  %10 = sext i32 %9 to i64
-  %i.es = getelementptr inbounds i8, ptr %i.em, i64 %10
+  %7 = lshr i64 %i.er, 3
+  %8 = and i64 %7, 536870911
+  %i.es = getelementptr inbounds nuw i8, ptr %i.em, i64 %8
   %i.et = load i8, ptr %i.es, align 1, !tbaa !11
   %i.eu = zext i8 %i.et to i32
   %i.ev = trunc nuw nsw i64 %indvars.iv135.3 to i32
@@ -318,10 +316,10 @@ bb.aa:                                            ; preds = %bb.ae, %bb.z
   br i1 %.not123.3, label %bb.ae, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.ez = trunc nsw i64 %i.er to i32              ; 2 uses
-  %11 = ashr i32 %i.ez, 3
-  %12 = sext i32 %11 to i64
-  %i.fa = getelementptr inbounds i8, ptr %i.eo, i64 %12
+  %i.ez = trunc i64 %indvars.iv135.3 to i32
+  %9 = lshr i64 %i.er, 3
+  %10 = and i64 %9, 536870911
+  %i.fa = getelementptr inbounds nuw i8, ptr %i.eo, i64 %10
   %i.fb = load i8, ptr %i.fa, align 1, !tbaa !11
   %i.fc = zext i8 %i.fb to i32
   %i.fd = and i32 %i.ez, 7

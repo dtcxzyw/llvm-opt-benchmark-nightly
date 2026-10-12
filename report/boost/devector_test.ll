@@ -205,16 +205,7 @@ bb.y:                                             ; preds = %bb.x
   %i.bs = tail call noundef zeroext i1 @_ZN5boost9container4test57test_vector_methods_with_initializer_list_as_argument_forINS0_8devectorIivvEEEEbv()
   br i1 %i.bs, label %bb.z, label %_ZN5boost9container4test12test_emplaceINS0_8devectorINS1_10EmplaceIntEvvEELNS1_14EmplaceOptionsE7EEEbv.exit.thread
 
-._crit_edge:                                      ; preds = %bb.aq, %bb.ar
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
-  call void @llvm.lifetime.start.p0(ptr nonnull %0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  invoke void @_ZN5boost9intrusive4test42test_iterator_bidirectional_and_compatibleINS_9container8devectorIivvEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(40) %4)
-          to label %.noexc unwind label %bb.av
-
-.noexc:                                           ; preds = %._crit_edge
+.noexc:                                           ; preds = %_ZN5boost9container8devectorIivvE9push_backEOi.exit.9
   %i.bt = load ptr, ptr %4, align 8, !tbaa !312   ; 2 uses
   %i.bu = load i64, ptr %i.cp, align 8, !tbaa !313
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bt, i64 %i.bu
@@ -500,11 +491,20 @@ bb.aq:                                            ; preds = %_ZN5boost9container
   store i32 9, ptr %i.en, align 4, !tbaa !259
   %i.eo = add i64 %i.el, 1
   store i64 %i.eo, ptr %i.co, align 8, !tbaa !317
-  br label %._crit_edge
+  br label %_ZN5boost9container8devectorIivvE9push_backEOi.exit.9
 
 bb.ar:                                            ; preds = %_ZN5boost9container8devectorIivvE9push_backEOi.exit.8
   %i.ep = invoke noundef ptr @_ZN5boost9container8devectorIivvE22insert_range_slow_pathINS0_3dtl20insert_emplace_proxyINS0_13new_allocatorIiEEJiEEEEEPiPKimT_(ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef %i.en, i64 noundef 1, ptr nonnull align 4 dereferenceable(4) %i.a)
-          to label %._crit_edge unwind label %.loopexit ; 0 uses
+          to label %_ZN5boost9container8devectorIivvE9push_backEOi.exit.9 unwind label %.loopexit ; 0 uses
+
+_ZN5boost9container8devectorIivvE9push_backEOi.exit.9: ; preds = %bb.ar, %bb.aq
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
+  call void @llvm.lifetime.start.p0(ptr nonnull %0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  invoke void @_ZN5boost9intrusive4test42test_iterator_bidirectional_and_compatibleINS_9container8devectorIivvEEEEvRT_(ptr noundef nonnull align 8 dereferenceable(40) %4)
+          to label %.noexc unwind label %bb.av
 
 .loopexit:                                        ; preds = %bb.ar, %bb.ap, %bb.an, %bb.al, %bb.aj, %bb.ah, %bb.af, %bb.ad, %bb.ab, %bb.z
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -555,7 +555,7 @@ _ZN5boost9container8devectorIivvED2Ev.exit:       ; preds = %bb.at, %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   br i1 %.not18, label %.lr.ph.preheader.1, label %_ZN5boost9container4test12test_emplaceINS0_8devectorINS1_10EmplaceIntEvvEELNS1_14EmplaceOptionsE7EEEbv.exit.thread
 
-bb.av:                                            ; preds = %bb.bi, %.noexc31.3, %.noexc30.3, %.noexc29.3, %.noexc.3, %._crit_edge.3, %bb.bd, %.noexc31.2, %.noexc30.2, %.noexc29.2, %.noexc.2, %._crit_edge.2, %bb.ay, %.noexc31.1, %.noexc30.1, %.noexc29.1, %.noexc.1, %._crit_edge.1, %.noexc31, %.noexc30, %.noexc29, %.noexc, %._crit_edge, %bb.as
+bb.av:                                            ; preds = %bb.bi, %.noexc31.3, %.noexc30.3, %.noexc29.3, %.noexc.3, %._crit_edge.3, %bb.bd, %.noexc31.2, %.noexc30.2, %.noexc29.2, %.noexc.2, %._crit_edge.2, %bb.ay, %.noexc31.1, %.noexc30.1, %.noexc29.1, %.noexc.1, %._crit_edge.1, %.noexc31, %.noexc30, %.noexc29, %.noexc, %_ZN5boost9container8devectorIivvE9push_backEOi.exit.9, %bb.as
   %i.eu = landingpad { ptr, i32 }
           cleanup
   br label %bb.bl
@@ -566,7 +566,7 @@ bb.av:                                            ; preds = %bb.bi, %.noexc31.3,
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %_ZN5boost9container8devectorIivvE9push_backEOi.exit.1, %.lr.ph.preheader.1
-  %.01253.1 = phi i32 [ %i.fc, %_ZN5boost9container8devectorIivvE9push_backEOi.exit.1 ], [ 0, %.lr.ph.preheader.1 ] ; 3 uses
+  %.01253.1 = phi i32 [ 0, %.lr.ph.preheader.1 ], [ %i.fc, %_ZN5boost9container8devectorIivvE9push_backEOi.exit.1 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   store i32 %.01253.1, ptr %i.a, align 4, !tbaa !259
   %i.ev = load i64, ptr %i.cn, align 8, !tbaa !316 ; 2 uses
@@ -675,7 +675,7 @@ _ZN5boost9container8devectorIivvED2Ev.exit.1:     ; preds = %bb.ba, %bb.az
   br label %.lr.ph.2
 
 .lr.ph.2:                                         ; preds = %_ZN5boost9container8devectorIivvE9push_backEOi.exit.2, %.lr.ph.preheader.2
-  %.01253.2 = phi i32 [ %i.gi, %_ZN5boost9container8devectorIivvE9push_backEOi.exit.2 ], [ 0, %.lr.ph.preheader.2 ] ; 3 uses
+  %.01253.2 = phi i32 [ 0, %.lr.ph.preheader.2 ], [ %i.gi, %_ZN5boost9container8devectorIivvE9push_backEOi.exit.2 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   store i32 %.01253.2, ptr %i.a, align 4, !tbaa !259
   %i.gb = load i64, ptr %i.cn, align 8, !tbaa !316 ; 2 uses
@@ -784,7 +784,7 @@ _ZN5boost9container8devectorIivvED2Ev.exit.2:     ; preds = %bb.bf, %bb.be
   br label %.lr.ph.3
 
 .lr.ph.3:                                         ; preds = %_ZN5boost9container8devectorIivvE9push_backEOi.exit.3, %.lr.ph.preheader.3
-  %.01253.3 = phi i32 [ %i.ho, %_ZN5boost9container8devectorIivvE9push_backEOi.exit.3 ], [ 0, %.lr.ph.preheader.3 ] ; 3 uses
+  %.01253.3 = phi i32 [ 0, %.lr.ph.preheader.3 ], [ %i.ho, %_ZN5boost9container8devectorIivvE9push_backEOi.exit.3 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   store i32 %.01253.3, ptr %i.a, align 4, !tbaa !259
   %i.hh = load i64, ptr %i.cn, align 8, !tbaa !316 ; 2 uses

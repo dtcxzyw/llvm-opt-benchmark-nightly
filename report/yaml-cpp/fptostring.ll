@@ -138,7 +138,7 @@ bb.a:
   %5 = alloca %"struct.std::array", align 1       ; 19 uses
   %i.b = ptrtoaddr ptr %5 to i64                  ; 2 uses
   %6 = alloca %"struct.std::array.0", align 1     ; 10 uses
-  %7 = alloca %"struct.std::array", align 2       ; 9 uses
+  %7 = alloca %"struct.std::array", align 1       ; 7 uses
   %i.c = icmp eq i32 %2, 0
   %i.d = select i1 %i.c, i32 6, i32 %2            ; 9 uses
   %or.cond180 = tail call i1 @llvm.is.fpclass.f32(float %1, /* (nan inf zero) */ i32 615)
@@ -411,7 +411,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cy = getelementptr i8, ptr %.298, i64 2
   store i8 %i.cx, ptr %i.cv, align 1, !tbaa !10
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(20) %7, i8 0, i64 20, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %7, i8 0, i64 20, i1 false)
   %i.cz = getelementptr inbounds nuw i8, ptr %7, i64 20 ; 2 uses
   %.not33.i132 = icmp eq i32 %i.cl, 0
   br i1 %.not33.i132, label %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread, label %.lr.ph.i133.preheader
@@ -423,45 +423,36 @@ bb.o:                                             ; preds = %bb.n
 
 .preheader.i139:                                  ; preds = %.lr.ph.i133
   %i.dc = icmp eq i64 %indvars.iv.i134, 0
-  br i1 %i.dc, label %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread, label %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149
+  br i1 %i.dc, label %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread, label %.lr.ph218.preheader
 
-_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread: ; preds = %.preheader.i139, %.loopexit
+_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread: ; preds = %.loopexit, %.preheader.i139
   %.neg = phi i64 [ 1, %.preheader.i139 ], [ 2, %.loopexit ]
   %scevgep.i144 = getelementptr inbounds nuw i8, ptr %7, i64 18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i144, i8 48, i64 %.neg, i1 false), !tbaa !10
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 18
-  %9 = load i16, ptr %8, align 2
-  store i16 %9, ptr %7, align 2
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i144, i8 48, i64 %.neg, i1 false), !tbaa !10
   br label %.lr.ph218.preheader
 
 .lr.ph.i133:                                      ; preds = %.lr.ph.i133.preheader, %.lr.ph.i133
-  %indvars.iv.i134 = phi i64 [ %indvars.iv.next.i136, %.lr.ph.i133 ], [ 0, %.lr.ph.i133.preheader ] ; 4 uses
+  %indvars.iv.i134 = phi i64 [ %indvars.iv.next.i136, %.lr.ph.i133 ], [ 0, %.lr.ph.i133.preheader ] ; 3 uses
   %.02634.i135 = phi i64 [ %i.dg, %.lr.ph.i133 ], [ %i.db, %.lr.ph.i133.preheader ] ; 3 uses
   %i.dd = urem i64 %.02634.i135, 10
   %i.de = trunc nuw nsw i64 %i.dd to i8
   %i.df = or disjoint i8 %i.de, 48
   %i.dg = udiv i64 %.02634.i135, 10
-  %indvars.iv.next.i136 = add nuw nsw i64 %indvars.iv.i134, 1 ; 3 uses
+  %indvars.iv.next.i136 = add nuw nsw i64 %indvars.iv.i134, 1 ; 2 uses
   %i.dh = xor i64 %indvars.iv.i134, -1
   %i.di = getelementptr inbounds i8, ptr %i.cz, i64 %i.dh
   store i8 %i.df, ptr %i.di, align 1, !tbaa !10
   %.not.i137 = icmp samesign ult i64 %.02634.i135, 10
   br i1 %.not.i137, label %.preheader.i139, label %.lr.ph.i133, !llvm.loop !0
 
-_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149: ; preds = %.preheader.i139
-  %10 = trunc nuw nsw i64 %indvars.iv.next.i136 to i32
-  %11 = xor i64 %indvars.iv.i134, -1
-  %12 = getelementptr inbounds i8, ptr %i.cz, i64 %11
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %7, ptr noundef nonnull align 1 dereferenceable(1) %12, i64 %indvars.iv.next.i136, i1 false)
-  br label %.lr.ph218.preheader
-
-.lr.ph218.preheader:                              ; preds = %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread
-  %.1.lcssa.i142256 = phi i32 [ 2, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread ], [ %10, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149 ] ; 2 uses
-  %13 = zext nneg i32 %.1.lcssa.i142256 to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cy, ptr nonnull align 2 %7, i64 %13, i1 false), !tbaa !10
-  %narrow253 = add nuw i32 %.1.lcssa.i142256, 2
-  %14 = zext i32 %narrow253 to i64
-  %scevgep242 = getelementptr i8, ptr %.298, i64 %14
+.lr.ph218.preheader:                              ; preds = %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread, %.preheader.i139
+  %.pre-phi.i141 = phi i64 [ %indvars.iv.next.i136, %.preheader.i139 ], [ 2, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit149.thread ] ; 4 uses
+  %8 = sub nsw i64 0, %.pre-phi.i141
+  %9 = getelementptr inbounds i8, ptr %i.cz, i64 %8
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %7, ptr noundef nonnull align 1 dereferenceable(1) %9, i64 %.pre-phi.i141, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.cy, ptr noundef nonnull align 1 dereferenceable(1) %7, i64 %.pre-phi.i141, i1 false), !tbaa !10
+  %10 = getelementptr i8, ptr %.298, i64 %.pre-phi.i141
+  %scevgep242 = getelementptr i8, ptr %10, i64 2
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
   br label %.loopexit182
 
@@ -731,7 +722,7 @@ bb.a:
   %5 = alloca %"struct.std::array", align 1       ; 19 uses
   %i.b = ptrtoaddr ptr %5 to i64                  ; 2 uses
   %6 = alloca %"struct.std::array.0", align 1     ; 10 uses
-  %7 = alloca %"struct.std::array", align 2       ; 9 uses
+  %7 = alloca %"struct.std::array", align 1       ; 7 uses
   %i.c = icmp eq i32 %2, 0
   %i.d = select i1 %i.c, i32 6, i32 %2            ; 9 uses
   %or.cond175 = tail call i1 @llvm.is.fpclass.f64(double %1, /* (nan inf zero) */ i32 615)
@@ -1006,7 +997,7 @@ bb.o:                                             ; preds = %bb.n
   %i.da = getelementptr i8, ptr %.292, i64 2
   store i8 %i.cz, ptr %i.cx, align 1, !tbaa !10
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(20) %7, i8 0, i64 20, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %7, i8 0, i64 20, i1 false)
   %i.db = getelementptr inbounds nuw i8, ptr %7, i64 20 ; 2 uses
   %.not33.i127 = icmp eq i32 %i.cn, 0
   br i1 %.not33.i127, label %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread, label %.lr.ph.i128.preheader
@@ -1018,45 +1009,36 @@ bb.o:                                             ; preds = %bb.n
 
 .preheader.i134:                                  ; preds = %.lr.ph.i128
   %i.de = icmp eq i64 %indvars.iv.i129, 0
-  br i1 %i.de, label %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread, label %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144
+  br i1 %i.de, label %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread, label %.lr.ph213.preheader
 
-_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread: ; preds = %.preheader.i134, %.loopexit
+_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread: ; preds = %.loopexit, %.preheader.i134
   %.neg = phi i64 [ 1, %.preheader.i134 ], [ 2, %.loopexit ]
   %scevgep.i139 = getelementptr inbounds nuw i8, ptr %7, i64 18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep.i139, i8 48, i64 %.neg, i1 false), !tbaa !10
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 18
-  %9 = load i16, ptr %8, align 2
-  store i16 %9, ptr %7, align 2
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.i139, i8 48, i64 %.neg, i1 false), !tbaa !10
   br label %.lr.ph213.preheader
 
 .lr.ph.i128:                                      ; preds = %.lr.ph.i128.preheader, %.lr.ph.i128
-  %indvars.iv.i129 = phi i64 [ %indvars.iv.next.i131, %.lr.ph.i128 ], [ 0, %.lr.ph.i128.preheader ] ; 4 uses
+  %indvars.iv.i129 = phi i64 [ %indvars.iv.next.i131, %.lr.ph.i128 ], [ 0, %.lr.ph.i128.preheader ] ; 3 uses
   %.02634.i130 = phi i64 [ %i.di, %.lr.ph.i128 ], [ %i.dd, %.lr.ph.i128.preheader ] ; 3 uses
   %i.df = urem i64 %.02634.i130, 10
   %i.dg = trunc nuw nsw i64 %i.df to i8
   %i.dh = or disjoint i8 %i.dg, 48
   %i.di = udiv i64 %.02634.i130, 10
-  %indvars.iv.next.i131 = add nuw nsw i64 %indvars.iv.i129, 1 ; 3 uses
+  %indvars.iv.next.i131 = add nuw nsw i64 %indvars.iv.i129, 1 ; 2 uses
   %i.dj = xor i64 %indvars.iv.i129, -1
   %i.dk = getelementptr inbounds i8, ptr %i.db, i64 %i.dj
   store i8 %i.dh, ptr %i.dk, align 1, !tbaa !10
   %.not.i132 = icmp samesign ult i64 %.02634.i130, 10
   br i1 %.not.i132, label %.preheader.i134, label %.lr.ph.i128, !llvm.loop !0
 
-_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144: ; preds = %.preheader.i134
-  %10 = trunc nuw nsw i64 %indvars.iv.next.i131 to i32
-  %11 = xor i64 %indvars.iv.i129, -1
-  %12 = getelementptr inbounds i8, ptr %i.db, i64 %11
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %7, ptr noundef nonnull align 1 dereferenceable(1) %12, i64 %indvars.iv.next.i131, i1 false)
-  br label %.lr.ph213.preheader
-
-.lr.ph213.preheader:                              ; preds = %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread
-  %.1.lcssa.i137251 = phi i32 [ 2, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread ], [ %10, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144 ] ; 2 uses
-  %13 = zext nneg i32 %.1.lcssa.i137251 to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.da, ptr nonnull align 2 %7, i64 %13, i1 false), !tbaa !10
-  %narrow248 = add nuw i32 %.1.lcssa.i137251, 2
-  %14 = zext i32 %narrow248 to i64
-  %scevgep237 = getelementptr i8, ptr %.292, i64 %14
+.lr.ph213.preheader:                              ; preds = %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread, %.preheader.i134
+  %.pre-phi.i136 = phi i64 [ %indvars.iv.next.i131, %.preheader.i134 ], [ 2, %_ZN4YAML6detail13fp_formatting14ConvertToCharsEPcS2_mi.exit144.thread ] ; 4 uses
+  %8 = sub nsw i64 0, %.pre-phi.i136
+  %9 = getelementptr inbounds i8, ptr %i.db, i64 %8
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %7, ptr noundef nonnull align 1 dereferenceable(1) %9, i64 %.pre-phi.i136, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.da, ptr noundef nonnull align 1 dereferenceable(1) %7, i64 %.pre-phi.i136, i1 false), !tbaa !10
+  %10 = getelementptr i8, ptr %.292, i64 %.pre-phi.i136
+  %scevgep237 = getelementptr i8, ptr %10, i64 2
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
   br label %.loopexit177
 

@@ -202,11 +202,9 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.ay = mul nuw nsw i64 %i.ax, 8380417
   %i.az = add nuw nsw i64 %i.ay, %i.av
   %i.ba = lshr i64 %i.az, 32
-  %i.bb = trunc nuw nsw i64 %i.ba to i32          ; 3 uses
+  %i.bb = trunc nuw nsw i64 %i.ba to i32          ; 2 uses
   %i.bc = add nsw i32 %i.bb, -8380417             ; 2 uses
-  %1 = xor i32 %i.bb, -1
-  %2 = and i32 %i.bc, %1
-  %.neg.i.i.i.i42 = ashr i32 %2, 31               ; 2 uses
+  %.neg.i.i.i.i42 = ashr i32 %i.bc, 31            ; 2 uses
   %i.bd = tail call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 1) %.neg.i.i.i.i42) #1, !srcloc !9
   %i.be = and i32 %i.bd, %i.bb
   %i.bf = xor i32 %.neg.i.i.i.i42, -1

@@ -205,7 +205,7 @@ _ZN10tetgenmesh15maketetrahedronEPNS_7trifaceE.exit: ; preds = %._crit_edge.i, %
   %i.fm = sext i32 %i.fl to i64                   ; 2 uses
   %i.fn = zext nneg i32 %i.fi to i64              ; 2 uses
   %wide.trip.count = zext nneg i32 %i.fg to i64   ; 5 uses
-  %invariant.gep = getelementptr [8 x i8], ptr %i.fk, i64 %i.fn ; 6 uses
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.fk, i64 %i.fn ; 6 uses
   %invariant.gep1407 = getelementptr [8 x i8], ptr %i.ea, i64 %i.fm ; 6 uses
   %min.iters.check = icmp ult i32 %i.fg, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -226,8 +226,8 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.fu = getelementptr [8 x i8], ptr %invariant.gep, i64 %index ; 2 uses
-  %i.fv = getelementptr i8, ptr %i.fu, i64 16
+  %i.fu = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %index ; 2 uses
+  %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 16
   %wide.load = load <2 x double>, ptr %i.fu, align 8, !tbaa !58
   %wide.load1518 = load <2 x double>, ptr %i.fv, align 8, !tbaa !58
   %i.fw = getelementptr [8 x i8], ptr %invariant.gep1407, i64 %index ; 2 uses
@@ -251,7 +251,7 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
   %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %scalar.ph.prol ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %gep.prol = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.prol
+  %gep.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.prol
   %i.fz = load double, ptr %gep.prol, align 8, !tbaa !58
   %gep1408.prol = getelementptr [8 x i8], ptr %invariant.gep1407, i64 %indvars.iv.prol
   store double %i.fz, ptr %gep1408.prol, align 8, !tbaa !58
@@ -268,22 +268,22 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.3, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 6 uses
-  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv
   %i.gc = load double, ptr %gep, align 8, !tbaa !58
   %gep1408 = getelementptr [8 x i8], ptr %invariant.gep1407, i64 %indvars.iv
   store double %i.gc, ptr %gep1408, align 8, !tbaa !58
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %gep.1 = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next
+  %gep.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next
   %i.gd = load double, ptr %gep.1, align 8, !tbaa !58
   %gep1408.1 = getelementptr [8 x i8], ptr %invariant.gep1407, i64 %indvars.iv.next
   store double %i.gd, ptr %gep1408.1, align 8, !tbaa !58
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %gep.2 = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.1
+  %gep.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.1
   %i.ge = load double, ptr %gep.2, align 8, !tbaa !58
   %gep1408.2 = getelementptr [8 x i8], ptr %invariant.gep1407, i64 %indvars.iv.next.1
   store double %i.ge, ptr %gep1408.2, align 8, !tbaa !58
   %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
-  %gep.3 = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.2
+  %gep.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next.2
   %i.gf = load double, ptr %gep.3, align 8, !tbaa !58
   %gep1408.3 = getelementptr [8 x i8], ptr %invariant.gep1407, i64 %indvars.iv.next.2
   store double %i.gf, ptr %gep1408.3, align 8, !tbaa !58

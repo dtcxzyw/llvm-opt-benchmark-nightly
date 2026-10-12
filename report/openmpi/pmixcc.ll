@@ -204,21 +204,19 @@ bb.l:                                             ; preds = %.lr.ph.i
   br i1 %.not.not.i, label %.lr.ph19.i, label %find_options_index.exit, !llvm.loop !1
 
 .loopexit12.loopexit.i:                           ; preds = %.lr.ph.i
-  %i.bo = trunc nuw nsw i64 %indvars.iv23.i to i32
-  br label %find_options_index.exit
+  %i.bo = trunc nuw nsw i64 %indvars.iv23.i to i32 ; 2 uses
+  store i32 %i.bo, ptr @user_data_idx, align 4, !tbaa !12
+  br label %bb.n
 
-find_options_index.exit:                          ; preds = %.loopexit.i, %.lr.ph.split, %.loopexit12.loopexit.i
-  %.011.i = phi i32 [ -1, %.lr.ph.split ], [ %i.bo, %.loopexit12.loopexit.i ], [ -1, %.loopexit.i ] ; 3 uses
-  store i32 %.011.i, ptr @user_data_idx, align 4, !tbaa !12
+find_options_index.exit:                          ; preds = %.loopexit.i, %.lr.ph.split
+  store i32 -1, ptr @user_data_idx, align 4, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bp = icmp samesign ult i64 %indvars.iv.next, %i.ap
-  %3 = icmp slt i32 %.011.i, 0                    ; 2 uses
-  %4 = select i1 %i.bp, i1 %3, i1 false
-  br i1 %4, label %.lr.ph.splitthread-pre-split, label %._crit_edge, !llvm.loop !43
+  br i1 %i.bp, label %.lr.ph.splitthread-pre-split, label %._crit_edge, !llvm.loop !43
 
 ._crit_edge:                                      ; preds = %find_options_index.exit, %data_init.exit
-  %.pr209 = phi i32 [ %.pr, %data_init.exit ], [ %.011.i, %find_options_index.exit ]
-  %.lcssa = phi i1 [ %i.al, %data_init.exit ], [ %3, %find_options_index.exit ]
+  %.pr209 = phi i32 [ %.pr, %data_init.exit ], [ -1, %find_options_index.exit ]
+  %.lcssa = phi i1 [ %i.al, %data_init.exit ], [ true, %find_options_index.exit ]
   br i1 %.lcssa, label %.critedge310, label %thread-pre-split
 
 .critedge310:                                     ; preds = %.lr.ph, %._crit_edge
@@ -238,9 +236,10 @@ bb.m:                                             ; preds = %thread-pre-split
   call void @exit(i32 noundef 1) #19
   unreachable
 
-bb.n:                                             ; preds = %thread-pre-split
+bb.n:                                             ; preds = %.loopexit12.loopexit.i, %thread-pre-split
+  %3 = phi i32 [ %i.bo, %.loopexit12.loopexit.i ], [ %i.br, %thread-pre-split ]
   %i.bv = load ptr, ptr @options_data, align 8, !tbaa !20
-  %i.bw = zext nneg i32 %i.br to i64
+  %i.bw = zext nneg i32 %3 to i64
   %i.bx = getelementptr inbounds nuw [160 x i8], ptr %i.bv, i64 %i.bw ; 3 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 24
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !24 ; 2 uses

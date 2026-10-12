@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph256
   %i.u = getelementptr inbounds nuw i8, ptr %3, i64 %indvars.iv.next267
   %i.v = load i8, ptr %i.u, align 1, !tbaa !63
   %.not211 = icmp eq i8 %i.t, %i.v
-  br i1 %.not211, label %.lr.ph256, label %.critedge242, !llvm.loop !190
+  br i1 %.not211, label %.lr.ph256, label %bb.e, !llvm.loop !190
 
 ._crit_edge:                                      ; preds = %bb.d, %.preheader250
   %i.w = icmp eq i32 %2, %4
@@ -231,42 +231,44 @@ bb.d:                                             ; preds = %.lr.ph306
   %i.ad = icmp eq i32 %2, %i.ac
   br i1 %i.ad, label %._crit_edge, label %.lr.ph, !llvm.loop !191
 
-.critedge242:                                     ; preds = %.lr.ph306, %.lr.ph, %bb.c, %.lr.ph.preheader, %._crit_edge
-  %.promoted257 = phi i32 [ %i.r, %bb.c ], [ %2, %._crit_edge ], [ 0, %.lr.ph.preheader ], [ %.pr272304, %.lr.ph306 ], [ %i.ac, %.lr.ph ] ; 6 uses
-  %14 = phi i32 [ %i.r, %bb.c ], [ %2, %._crit_edge ], [ %4, %.lr.ph.preheader ], [ %.pr272304, %.lr.ph306 ], [ %4, %.lr.ph ] ; 5 uses
+.critedge242:                                     ; preds = %.lr.ph306, %.lr.ph, %.lr.ph.preheader, %._crit_edge
+  %.promoted257 = phi i32 [ %2, %._crit_edge ], [ 0, %.lr.ph.preheader ], [ %i.ac, %.lr.ph ], [ %.pr272304, %.lr.ph306 ] ; 2 uses
+  %14 = phi i32 [ %2, %._crit_edge ], [ %4, %.lr.ph.preheader ], [ %4, %.lr.ph ], [ %.pr272304, %.lr.ph306 ] ; 2 uses
   %i.ae = icmp sgt i32 %14, 0
   br i1 %i.ae, label %bb.e, label %.critedge
 
-bb.e:                                             ; preds = %.critedge242
-  %.not212 = icmp eq i32 %14, %2
+bb.e:                                             ; preds = %bb.c, %.critedge242
+  %15 = phi i32 [ %14, %.critedge242 ], [ %i.r, %bb.c ] ; 4 uses
+  %.promoted257298 = phi i32 [ %.promoted257, %.critedge242 ], [ %i.r, %bb.c ] ; 5 uses
+  %.not212 = icmp eq i32 %15, %2
   br i1 %.not212, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.af = zext nneg i32 %14 to i64
+  %i.af = zext nneg i32 %15 to i64
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 %i.af
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !63
   %i.ai = icmp slt i8 %i.ah, -64
   br i1 %i.ai, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.not213 = icmp eq i32 %14, %4
+  %.not213 = icmp eq i32 %15, %4
   br i1 %.not213, label %.critedge, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.aj = zext nneg i32 %14 to i64
+  %i.aj = zext nneg i32 %15 to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 %i.aj
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !63
   %i.am = icmp slt i8 %i.al, -64
   br i1 %i.am, label %bb.i, label %.critedge
 
 bb.i:                                             ; preds = %bb.h, %bb.f
-  %smin = tail call i32 @llvm.smin.i32(i32 %.promoted257, i32 1)
+  %smin = tail call i32 @llvm.smin.i32(i32 %.promoted257298, i32 1)
   %i.an = add i32 %smin, -1                       ; 2 uses
-  %i.ao = icmp sgt i32 %.promoted257, 1
+  %i.ao = icmp sgt i32 %.promoted257298, 1
   br i1 %i.ao, label %.lr.ph312, label %.critedge.loopexit
 
 .lr.ph312:                                        ; preds = %bb.i
-  %i.ap = zext nneg i32 %.promoted257 to i64
+  %i.ap = zext nneg i32 %.promoted257298 to i64
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.k
@@ -289,7 +291,7 @@ bb.k:                                             ; preds = %.lr.ph312, %bb.j
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.h, %bb.g, %.critedge242
-  %i.aw = phi i32 [ %.lcssa260, %.critedge.loopexit ], [ %.promoted257, %bb.h ], [ %.promoted257, %bb.g ], [ %.promoted257, %.critedge242 ] ; 9 uses
+  %i.aw = phi i32 [ %.lcssa260, %.critedge.loopexit ], [ %.promoted257298, %bb.h ], [ %.promoted257298, %bb.g ], [ %.promoted257, %.critedge242 ] ; 9 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !30
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 24

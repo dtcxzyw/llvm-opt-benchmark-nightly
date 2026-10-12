@@ -60,7 +60,7 @@ bb.b:                                             ; preds = %.lr.ph99, %bb.p
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.r = zext i32 %i.o to i64
+  %i.r = zext nneg i32 %i.o to i64
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 %i.r
   br label %bb.c
 
@@ -123,7 +123,7 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge
   br i1 %or.cond8489, label %.lr.ph93, label %._crit_edge94
 
 .lr.ph93:                                         ; preds = %bb.j
-  %i.am = zext i32 %i.o to i64
+  %i.am = zext nneg i32 %i.o to i64
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 %i.am
   br label %bb.k
 

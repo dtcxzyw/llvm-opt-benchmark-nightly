@@ -204,10 +204,10 @@ bb.e:                                             ; preds = %bb.d
 c11_sv__index2.exit:                              ; preds = %bb.d, %bb.b
   %i.x = add nuw nsw i32 %.073, 1                 ; 2 uses
   %exitcond87.not = icmp eq i32 %i.x, %spec.select.i.i.lcssa
-  br i1 %exitcond87.not, label %c11_sv__index2.exit50.thread, label %bb.b
+  br i1 %exitcond87.not, label %.lr.ph.i51.preheader, label %bb.b
 
 c11_sv__index2.exit.thread:                       ; preds = %bb.c, %bb.e, %c11_sv__u8_length.exit
-  %.2 = phi i32 [ 0, %c11_sv__u8_length.exit ], [ %.073, %bb.e ], [ %.073, %bb.c ] ; 7 uses
+  %.2 = phi i32 [ 0, %c11_sv__u8_length.exit ], [ %.073, %bb.e ], [ %.073, %bb.c ] ; 5 uses
   %i.y = icmp samesign ult i32 %.2, %spec.select.i.i.lcssa
   %or.cond81 = select i1 %5, i1 %i.y, i1 false
   br i1 %or.cond81, label %.lr.ph77, label %c11_sv__index2.exit50.thread
@@ -251,15 +251,19 @@ c11_sv__index2.exit50:                            ; preds = %bb.h, %bb.f
   %i.ai = icmp slt i32 %.2, %i.aa
   br i1 %i.ai, label %bb.f, label %c11_sv__index2.exit50.thread
 
-c11_sv__index2.exit50.thread:                     ; preds = %c11_sv__index2.exit, %c11_sv__index2.exit50, %bb.g, %bb.i, %c11_sv__index2.exit.thread
-  %.2100 = phi i32 [ %.2, %c11_sv__index2.exit.thread ], [ %.2, %c11_sv__index2.exit50 ], [ %.2, %bb.i ], [ %.2, %bb.g ], [ %spec.select.i.i.lcssa, %c11_sv__index2.exit ] ; 2 uses
-  %.236 = phi i32 [ %spec.select.i.i.lcssa, %c11_sv__index2.exit.thread ], [ %.2, %c11_sv__index2.exit50 ], [ %.03476, %bb.i ], [ %.03476, %bb.g ], [ %spec.select.i.i.lcssa, %c11_sv__index2.exit ] ; 2 uses
-  %6 = icmp sgt i32 %.2100, 0
-  br i1 %6, label %.lr.ph.i51, label %c11__unicode_index_to_byte.exit
+c11_sv__index2.exit50.thread:                     ; preds = %c11_sv__index2.exit50, %bb.g, %bb.i, %c11_sv__index2.exit.thread
+  %.236 = phi i32 [ %spec.select.i.i.lcssa, %c11_sv__index2.exit.thread ], [ %.03476, %bb.i ], [ %.03476, %bb.g ], [ %.2, %c11_sv__index2.exit50 ] ; 2 uses
+  %.not = icmp eq i32 %.2, 0
+  br i1 %.not, label %c11__unicode_index_to_byte.exit, label %.lr.ph.i51.preheader
 
-.lr.ph.i51:                                       ; preds = %c11_sv__index2.exit50.thread, %c11__u8_header.exit.i
-  %.08.i = phi i32 [ %i.ba, %c11__u8_header.exit.i ], [ 0, %c11_sv__index2.exit50.thread ] ; 2 uses
-  %.057.i = phi i32 [ %i.bb, %c11__u8_header.exit.i ], [ %.2100, %c11_sv__index2.exit50.thread ] ; 2 uses
+.lr.ph.i51.preheader:                             ; preds = %c11_sv__index2.exit, %c11_sv__index2.exit50.thread
+  %.236110 = phi i32 [ %.236, %c11_sv__index2.exit50.thread ], [ %spec.select.i.i.lcssa, %c11_sv__index2.exit ]
+  %.2100109 = phi i32 [ %.2, %c11_sv__index2.exit50.thread ], [ %spec.select.i.i.lcssa, %c11_sv__index2.exit ]
+  br label %.lr.ph.i51
+
+.lr.ph.i51:                                       ; preds = %.lr.ph.i51.preheader, %c11__u8_header.exit.i
+  %.08.i = phi i32 [ %i.ba, %c11__u8_header.exit.i ], [ 0, %.lr.ph.i51.preheader ] ; 2 uses
+  %.057.i = phi i32 [ %i.bb, %c11__u8_header.exit.i ], [ %.2100109, %.lr.ph.i51.preheader ] ; 2 uses
   %i.aj = zext nneg i32 %.08.i to i64
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 %i.aj
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !13  ; 2 uses
@@ -307,13 +311,14 @@ c11__u8_header.exit.i:                            ; preds = %bb.n, %bb.m, %bb.l,
   br i1 %i.bc, label %.lr.ph.i51, label %c11__unicode_index_to_byte.exit, !llvm.loop !1
 
 c11__unicode_index_to_byte.exit:                  ; preds = %c11__u8_header.exit.i, %c11_sv__index2.exit50.thread
+  %.236104 = phi i32 [ %.236, %c11_sv__index2.exit50.thread ], [ %.236110, %c11__u8_header.exit.i ] ; 2 uses
   %.0.lcssa.i = phi i32 [ 0, %c11_sv__index2.exit50.thread ], [ %i.ba, %c11__u8_header.exit.i ] ; 2 uses
-  %i.bd = icmp sgt i32 %.236, 0
+  %i.bd = icmp sgt i32 %.236104, 0
   br i1 %i.bd, label %.lr.ph.i53, label %c11__unicode_index_to_byte.exit59
 
 .lr.ph.i53:                                       ; preds = %c11__unicode_index_to_byte.exit, %c11__u8_header.exit.i57
   %.08.i54 = phi i32 [ %i.bv, %c11__u8_header.exit.i57 ], [ 0, %c11__unicode_index_to_byte.exit ] ; 2 uses
-  %.057.i55 = phi i32 [ %i.bw, %c11__u8_header.exit.i57 ], [ %.236, %c11__unicode_index_to_byte.exit ] ; 2 uses
+  %.057.i55 = phi i32 [ %i.bw, %c11__u8_header.exit.i57 ], [ %.236104, %c11__unicode_index_to_byte.exit ] ; 2 uses
   %i.be = zext nneg i32 %.08.i54 to i64
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 %i.be
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !13  ; 2 uses

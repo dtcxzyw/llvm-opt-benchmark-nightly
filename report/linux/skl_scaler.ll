@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.c = phi ptr [ %i.b, %bb.b ], [ null, %bb.a ] ; 9 uses
-  %i.d = getelementptr i8, ptr %0, i64 1440       ; 5 uses
+  %i.d = getelementptr i8, ptr %0, i64 1440       ; 6 uses
   %i.e = load i32, ptr %6, align 4                ; 2 uses
   %i.f = icmp slt i32 %i.e, 0
   br i1 %i.f, label %bb.d, label %.critedge
@@ -221,7 +221,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.j = getelementptr i8, ptr %2, i64 2136
   %i.k = load i32, ptr %i.j, align 8              ; 3 uses
   %i.l = icmp sgt i32 %i.k, 0
-  br i1 %i.l, label %.lr.ph.i, label %.thread161
+  br i1 %i.l, label %.lr.ph.i, label %bb.i
 
 .lr.ph.i:                                         ; preds = %bb.f
   %i.m = getelementptr i8, ptr %i.i, i64 1168
@@ -230,55 +230,58 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph.split.us.preheader.i:                      ; preds = %.lr.ph.i
   %exitcond19.peel.not.i = icmp eq i32 %i.k, 1
-  br i1 %exitcond19.peel.not.i, label %.thread161, label %.lr.ph.split.us.peel.next.i
+  br i1 %exitcond19.peel.not.i, label %bb.i, label %.lr.ph.split.us.peel.next.i
 
 .lr.ph.split.us.peel.next.i:                      ; preds = %.lr.ph.split.us.preheader.i
-  %i.n = getelementptr i8, ptr %0, i64 1460       ; 2 uses
+  %i.n = getelementptr i8, ptr %0, i64 1460
   %i.o = load i8, ptr %i.n, align 4, !range !12, !noundef !13
   %i.p = trunc nuw i8 %i.o to i1
-  br i1 %i.p, label %.thread161, label %bb.g
+  br i1 %i.p, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.split.us.peel.next.i
   %.val.us.peel22.i = load i16, ptr %i.m, align 8
   %i.q = icmp ugt i16 %.val.us.peel22.i, 19
-  br i1 %i.q, label %.thread163, label %.thread161
-
-.thread163:                                       ; preds = %bb.g
-  store i8 1, ptr %i.n, align 4
-  br label %.critedge.sink.split
+  br i1 %i.q, label %.thread161, label %bb.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.h
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.h ], [ 0, %.lr.ph.i ] ; 3 uses
-  %i.r = getelementptr [16 x i8], ptr %i.d, i64 %indvars.iv.i ; 2 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.h ], [ 0, %.lr.ph.i ] ; 4 uses
+  %i.r = getelementptr [16 x i8], ptr %i.d, i64 %indvars.iv.i
   %i.s = getelementptr i8, ptr %i.r, i64 4
   %i.t = load i8, ptr %i.s, align 4, !range !12, !noundef !13
   %i.u = trunc nuw i8 %i.t to i1
-  br i1 %i.u, label %bb.h, label %bb.i
+  br i1 %i.u, label %bb.h, label %.split.us.loopexit7.i
+
+.split.us.loopexit7.i:                            ; preds = %.lr.ph.split.i
+  %9 = trunc nuw nsw i64 %indvars.iv.i to i32
+  br label %.thread161
 
 bb.h:                                             ; preds = %.lr.ph.split.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count18.i
-  br i1 %exitcond.not.i, label %.thread161, label %.lr.ph.split.i, !llvm.loop !53
+  br i1 %exitcond.not.i, label %bb.i, label %.lr.ph.split.i, !llvm.loop !53
 
-.thread161:                                       ; preds = %bb.h, %.lr.ph.split.us.peel.next.i, %bb.g, %bb.f, %.lr.ph.split.us.preheader.i
+.thread161:                                       ; preds = %bb.g, %.split.us.loopexit7.i
+  %10 = phi i64 [ %indvars.iv.i, %.split.us.loopexit7.i ], [ 1, %bb.g ]
+  %.us-phi4.i = phi i32 [ %9, %.split.us.loopexit7.i ], [ 1, %bb.g ] ; 2 uses
+  %11 = getelementptr [16 x i8], ptr %i.d, i64 %10
+  %12 = getelementptr i8, ptr %11, i64 4
+  store i8 1, ptr %12, align 4
+  store i32 %.us-phi4.i, ptr %6, align 4
+  br label %.critedge
+
+bb.i:                                             ; preds = %bb.h, %.lr.ph.split.us.peel.next.i, %bb.g, %bb.f, %.lr.ph.split.us.preheader.i
   store i32 -1, ptr %6, align 4
-  %9 = load ptr, ptr %i.c, align 8                ; 2 uses
-  %.not.i132 = icmp eq ptr %9, null
+  %13 = load ptr, ptr %i.c, align 8               ; 2 uses
+  %.not.i132 = icmp eq ptr %13, null
   br i1 %.not.i132, label %__drm_to_dev.exit, label %bb.j
 
-bb.i:                                             ; preds = %.lr.ph.split.i
-  %10 = getelementptr i8, ptr %i.r, i64 4
-  %11 = trunc nuw nsw i64 %indvars.iv.i to i32
-  store i8 1, ptr %10, align 4
-  br label %.critedge.sink.split
-
-bb.j:                                             ; preds = %.thread161
-  %i.v = getelementptr i8, ptr %9, i64 8
+bb.j:                                             ; preds = %bb.i
+  %i.v = getelementptr i8, ptr %13, i64 8
   %i.w = load ptr, ptr %i.v, align 8
   br label %__drm_to_dev.exit
 
-__drm_to_dev.exit:                                ; preds = %.thread161, %bb.j
-  %i.x = phi ptr [ %i.w, %bb.j ], [ null, %.thread161 ]
+__drm_to_dev.exit:                                ; preds = %bb.i, %bb.j
+  %i.x = phi ptr [ %i.w, %bb.j ], [ null, %bb.i ]
   %i.y = tail call ptr @dev_driver_string(ptr noundef %i.x) #11 ; 0 uses
   %i.z = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.11, ptr nonnull @.str.3, i32 412, i32 2321, i64 16) #14, !srcloc !54
   %i.aa = load ptr, ptr %i.c, align 8             ; 2 uses
@@ -319,13 +322,8 @@ dev_name.exit143:                                 ; preds = %__drm_to_dev.exit13
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !55
   br label %bb.al
 
-.critedge.sink.split:                             ; preds = %.thread163, %bb.i
-  %.sink = phi i32 [ %11, %bb.i ], [ 1, %.thread163 ] ; 2 uses
-  store i32 %.sink, ptr %6, align 4
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.sink.split, %bb.c
-  %i.al = phi i32 [ %i.e, %bb.c ], [ %.sink, %.critedge.sink.split ]
+.critedge:                                        ; preds = %bb.c, %.thread161
+  %i.al = phi i32 [ %.us-phi4.i, %.thread161 ], [ %i.e, %bb.c ]
   %.not115 = icmp eq ptr %5, null                 ; 2 uses
   br i1 %.not115, label %bb.u, label %bb.n
 
@@ -392,8 +390,8 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.br, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  %12 = zext nneg i32 %i.al to i64
-  %i.bs = getelementptr [16 x i8], ptr %i.d, i64 %12
+  %14 = sext i32 %i.al to i64
+  %i.bs = getelementptr [16 x i8], ptr %i.d, i64 %14
   %i.bt = getelementptr i8, ptr %i.bs, i64 4
   store i8 0, ptr %i.bt, align 4
   store i32 0, ptr %6, align 4

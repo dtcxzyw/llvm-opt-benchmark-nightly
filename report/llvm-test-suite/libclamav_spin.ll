@@ -205,7 +205,8 @@ bb.ar:                                            ; preds = %bb.ap
 bb.as:                                            ; preds = %bb.ar
   %i.ia = add nuw nsw i32 %i.hr, 1
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.23) #7
-  br label %bb.av
+  tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.25) #7
+  br label %.lr.ph703.preheader
 
 bb.at:                                            ; preds = %bb.ao
   %i.ib = getelementptr inbounds nuw i8, ptr %i.gy, i64 8
@@ -225,14 +226,15 @@ bb.au:                                            ; preds = %bb.ar, %bb.at
   %exitcond724.not = icmp eq i64 %indvars.iv.next721, %wide.trip.count723
   br i1 %exitcond724.not, label %._crit_edge684, label %bb.aj, !llvm.loop !18
 
-bb.av:                                            ; preds = %bb.an, %bb.aq, %bb.as
-  %.3479.ph = phi i32 [ %i.ia, %bb.as ], [ %i.hp, %bb.aq ], [ %i.hk, %bb.an ] ; 2 uses
+bb.av:                                            ; preds = %bb.an, %bb.aq
+  %.3479.ph = phi i32 [ %i.hk, %bb.an ], [ %i.hp, %bb.aq ] ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.25) #7
   %i.ii = icmp sgt i32 %.3479.ph, 0
   br i1 %i.ii, label %.lr.ph703.preheader, label %._crit_edge704
 
-.lr.ph703.preheader:                              ; preds = %bb.av
-  %wide.trip.count728 = zext nneg i32 %.3479.ph to i64
+.lr.ph703.preheader:                              ; preds = %bb.as, %bb.av
+  %.3479.ph770 = phi i32 [ %i.ia, %bb.as ], [ %.3479.ph, %bb.av ]
+  %wide.trip.count728 = zext nneg i32 %.3479.ph770 to i64
   br label %.lr.ph703
 
 .lr.ph703:                                        ; preds = %.lr.ph703.preheader, %bb.ax
