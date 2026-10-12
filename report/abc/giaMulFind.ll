@@ -26,6 +26,8 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.17 = private unnamed_addr constant [4 x i8] c" = \00", align 1
 @.str.19 = private unnamed_addr constant [49 x i8] c"Detected %d booth and %d non-booth multipliers.\0A\00", align 1
 @str = private unnamed_addr constant [30 x i8] c"Internal verification failed.\00", align 1
+@switch.table.Gia_ManMulFindNextEntry2 = private unnamed_addr constant [3 x i8] c"\08\04\04", align 8
+@switch.table.Gia_ManMulFindNextEntry2.32 = private unnamed_addr constant [3 x i8] c"\0C\0C\08", align 8
 
 ; Function Attrs: nounwind uwtable
 define void @Gia_ManMulFindXors2_rec(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
@@ -428,36 +430,26 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph.i
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv.i
   %i.n = load i32, ptr %i.m, align 4, !tbaa !47
   %i.o = icmp eq i32 %i.n, %2
-  br i1 %i.o, label %Vec_IntFind.exit, label %bb.d
+  br i1 %i.o, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %Vec_IntFind.exit.thread, label %bb.c, !llvm.loop !6
 
-Vec_IntFind.exit:                                 ; preds = %bb.c
+bb.e:                                             ; preds = %bb.c
   %6 = trunc nuw nsw i64 %indvars.iv.i to i32
-  switch i32 %6, label %unreachable [
-    i32 -1, label %Vec_IntFind.exit.thread
-    i32 1, label %.loopexit
-    i32 2, label %bb.e
-    i32 3, label %7
-  ]
-
-7:                                                ; preds = %Vec_IntFind.exit
-  br label %bb.e
-
-unreachable:                                      ; preds = %Vec_IntFind.exit
-  unreachable
-
-.loopexit:                                        ; preds = %Vec_IntFind.exit
-  br label %bb.e
-
-bb.e:                                             ; preds = %Vec_IntFind.exit, %.loopexit, %7
-  %.sink154 = phi i64 [ 8, %.loopexit ], [ 4, %7 ], [ 4, %Vec_IntFind.exit ]
-  %.sink = phi i64 [ 12, %.loopexit ], [ 8, %7 ], [ 12, %Vec_IntFind.exit ]
-  %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sink154
-  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sink
+  %switch.tableidx = add nsw i32 %6, -1           ; 2 uses
+  %7 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.Gia_ManMulFindNextEntry2, i64 %7
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i64
+  %8 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep132 = getelementptr inbounds nuw i8, ptr @switch.table.Gia_ManMulFindNextEntry2.32, i64 %8
+  %switch.load133 = load i8, ptr %switch.gep132, align 1
+  %switch.ext134 = zext i8 %switch.load133 to i64
+  %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 %switch.ext
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %switch.ext134
   %.0 = load i32, ptr %i.q, align 4, !tbaa !47    ; 3 uses
   %.048 = load i32, ptr %i.p, align 4, !tbaa !47  ; 3 uses
   %i.r = getelementptr i8, ptr %3, i64 4
@@ -568,7 +560,7 @@ Vec_IntFind.exit88.thread:                        ; preds = %bb.i, %Vec_IntFind.
   %i.bb = icmp slt i64 %indvars.iv.next133, %i.ba
   br i1 %i.bb, label %.lr.ph122, label %.critedge, !llvm.loop !103
 
-Vec_IntFind.exit.thread:                          ; preds = %bb.d, %Vec_IntFind.exit, %bb.b
+Vec_IntFind.exit.thread:                          ; preds = %bb.d, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !104
@@ -971,7 +963,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.dr = shl nsw i64 %indvars.iv123, 4
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.dq, i8 0, i64 %i.dr, i1 false)
   %indvars.iv123.tr = trunc nsw i64 %indvars.iv123 to i32
-  %i.ds = shl nsw i32 %indvars.iv123.tr, 1
+  %i.ds = shl nuw nsw i32 %indvars.iv123.tr, 1
   br label %Vec_WecPushLevel.exit.thread
 
 Vec_WecPushLevel.exit.thread:                     ; preds = %Vec_WecGrow.exit.i, %bb.ae
@@ -1036,7 +1028,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.en = shl nsw i64 %i.dv, 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.em, i8 0, i64 %i.en, i1 false)
   %.tr = trunc nsw i64 %i.dv to i32
-  %i.eo = shl nsw i32 %.tr, 1                     ; 2 uses
+  %i.eo = shl nuw nsw i32 %.tr, 1                 ; 2 uses
   store i32 %i.eo, ptr %i.a, align 8, !tbaa !56
   br label %Vec_WecPushLevel.exit84
 
@@ -1439,9 +1431,9 @@ bb.d:                                             ; preds = %.lr.ph120
 bb.e:                                             ; preds = %bb.d
   %i.bq = icmp samesign ult i64 %indvars.iv87117, 1073741823
   %indvars.iv87.tr = trunc nsw i64 %indvars.iv87117 to i32
-  %i.br = shl nsw i32 %indvars.iv87.tr, 1
+  %i.br = shl nuw nsw i32 %indvars.iv87.tr, 1
   %spec.select.i.us = select i1 %i.bq, i32 %i.br, i32 2147483647 ; 4 uses
-  %3 = sext i32 %spec.select.i.us to i64
+  %3 = zext nneg i32 %spec.select.i.us to i64
   %.not.i9.i.us = icmp samesign ult i64 %indvars.iv87117, %3
   br i1 %.not.i9.i.us, label %bb.f, label %Vec_IntPush.exit.us
 
@@ -1844,9 +1836,9 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.d
   %i.aj = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
-  %i.ak = shl nsw i32 %indvars.iv.tr, 1
+  %i.ak = shl nuw nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.aj, i32 %i.ak, i32 2147483647 ; 4 uses
-  %4 = sext i32 %spec.select.i to i64
+  %4 = zext nneg i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %4
   br i1 %.not.i9.i, label %bb.i, label %Vec_IntPush.exit
 
@@ -2249,9 +2241,9 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.e
   %i.gl = icmp samesign ult i64 %indvars.iv141, 1073741823
   %indvars.iv141.tr = trunc nsw i64 %indvars.iv141 to i32
-  %i.gm = shl nsw i32 %indvars.iv141.tr, 1
+  %i.gm = shl nuw nsw i32 %indvars.iv141.tr, 1
   %spec.select.i = select i1 %i.gl, i32 %i.gm, i32 2147483647 ; 4 uses
-  %7 = sext i32 %spec.select.i to i64
+  %7 = zext nneg i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv141, %7
   br i1 %.not.i9.i, label %bb.j, label %Vec_WrdPush.exit
 

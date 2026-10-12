@@ -205,7 +205,7 @@ _ZL13getHeightDataP9rcContextRK20rcCompactHeightfieldPKtiS5_iR13rcHeightPatchR12
   %i.abx = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.abw ; 2 uses
   %i.aby = getelementptr i8, ptr %i.abu, i64 8
   %i.abz = getelementptr i8, ptr %i.abx, i64 8
-  %i.aca = zext i32 %iv.rem.i.i to i64
+  %i.aca = zext nneg i32 %iv.rem.i.i to i64
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.ca, %.lr.ph.us.i.i
@@ -608,14 +608,14 @@ _ZN12rcVectorBaseIiL11rcAllocHint1EE6resizeEl.exit.i.i: ; preds = %bb.ft, %_ZN12
   br label %._crit_edge.i328.i
 
 .preheader134.i.i:                                ; preds = %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i
-  store i32 %10, ptr %i.b, align 4
-  %i.bvx = icmp sgt i32 %10, 0
+  store i32 %8, ptr %i.b, align 4
+  %i.bvx = icmp sgt i32 %8, 0
   br i1 %i.bvx, label %.lr.ph140.i.i, label %._crit_edge.i328.i
 
 .lr.ph.i331.i:                                    ; preds = %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i, %.lr.ph.i331.preheader.i
   %i.bvy = phi i32 [ %i.bwb, %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i ], [ %.pre619.i, %.lr.ph.i331.preheader.i ] ; 3 uses
   %indvars.iv.i333.i = phi i64 [ %indvars.iv.next.i335.i, %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i ], [ 0, %.lr.ph.i331.preheader.i ] ; 2 uses
-  %i.bvz = phi i32 [ %10, %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i ], [ 0, %.lr.ph.i331.preheader.i ] ; 8 uses
+  %i.bvz = phi i32 [ %8, %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i ], [ 0, %.lr.ph.i331.preheader.i ] ; 9 uses
   %i.bwa = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv.i333.i
   %i.bwb = load i32, ptr %i.bwa, align 4, !tbaa !68 ; 4 uses
   %i.bwc = sext i32 %i.bvz to i64
@@ -635,7 +635,7 @@ bb.fv:                                            ; preds = %.lr.ph.i331.i
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.fz, %.lr.ph.preheader.i.i.i.i
-  %indvars.iv.i.i.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %bb.fz ] ; 3 uses
+  %indvars.iv.i.i.i.i = phi i64 [ 0, %.lr.ph.preheader.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %bb.fz ] ; 2 uses
   %.idx.i.i.i.i = shl nuw nsw i64 %indvars.iv.i.i.i.i, 4
   %i.bwe = getelementptr inbounds nuw i8, ptr %.sroa.14471.7, i64 %.idx.i.i.i.i ; 3 uses
   %i.bwf = load i32, ptr %i.bwe, align 4, !tbaa !68 ; 2 uses
@@ -646,7 +646,7 @@ bb.fw:                                            ; preds = %.lr.ph.i.i.i.i
   %i.bwh = getelementptr inbounds nuw i8, ptr %i.bwe, i64 4
   %i.bwi = load i32, ptr %i.bwh, align 4, !tbaa !68
   %i.bwj = icmp eq i32 %i.bwi, %i.bwb
-  br i1 %i.bwj, label %_ZL8findEdgePKiiii.exit.i.i.i, label %bb.fx
+  br i1 %i.bwj, label %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i, label %bb.fx
 
 bb.fx:                                            ; preds = %bb.fw, %.lr.ph.i.i.i.i
   %i.bwk = icmp eq i32 %i.bwf, %i.bwb
@@ -656,19 +656,14 @@ bb.fy:                                            ; preds = %bb.fx
   %i.bwl = getelementptr inbounds nuw i8, ptr %i.bwe, i64 4
   %i.bwm = load i32, ptr %i.bwl, align 4, !tbaa !68
   %i.bwn = icmp eq i32 %i.bwm, %i.bvy
-  br i1 %i.bwn, label %_ZL8findEdgePKiiii.exit.i.i.i, label %bb.fz
+  br i1 %i.bwn, label %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i, label %bb.fz
 
 bb.fz:                                            ; preds = %bb.fy, %bb.fx
   %indvars.iv.next.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.i, %wide.trip.count.i.i.i.i
   br i1 %exitcond.not.i.i.i.i, label %_ZL8findEdgePKiiii.exit.thread.i.i.i, label %.lr.ph.i.i.i.i
 
-_ZL8findEdgePKiiii.exit.i.i.i:                    ; preds = %bb.fy, %bb.fw
-  %8 = and i64 %indvars.iv.i.i.i.i, 4294967295
-  %9 = icmp eq i64 %8, 4294967295
-  br i1 %9, label %_ZL8findEdgePKiiii.exit.thread.i.i.i, label %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i
-
-_ZL8findEdgePKiiii.exit.thread.i.i.i:             ; preds = %bb.fz, %_ZL8findEdgePKiiii.exit.i.i.i, %bb.fv
+_ZL8findEdgePKiiii.exit.thread.i.i.i:             ; preds = %bb.fz, %bb.fv
   %i.bwo = shl nsw i32 %i.bvz, 2
   %i.bwp = sext i32 %i.bwo to i64
   %i.bwq = getelementptr inbounds [4 x i8], ptr %.sroa.14471.7, i64 %i.bwp ; 4 uses
@@ -682,8 +677,8 @@ _ZL8findEdgePKiiii.exit.thread.i.i.i:             ; preds = %bb.fz, %_ZL8findEdg
   %i.bwu = add nsw i32 %i.bvz, 1
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i
 
-_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i:         ; preds = %_ZL8findEdgePKiiii.exit.thread.i.i.i, %_ZL8findEdgePKiiii.exit.i.i.i, %bb.fu
-  %10 = phi i32 [ %i.bvz, %bb.fu ], [ %i.bvz, %_ZL8findEdgePKiiii.exit.i.i.i ], [ %i.bwu, %_ZL8findEdgePKiiii.exit.thread.i.i.i ] ; 4 uses
+_ZL7addEdgeP9rcContextPiRiiiiii.exit.i.i:         ; preds = %bb.fy, %bb.fw, %_ZL8findEdgePKiiii.exit.thread.i.i.i, %bb.fu
+  %8 = phi i32 [ %i.bwu, %_ZL8findEdgePKiiii.exit.thread.i.i.i ], [ %i.bvz, %bb.fu ], [ %i.bvz, %bb.fw ], [ %i.bvz, %bb.fy ] ; 4 uses
   %indvars.iv.next.i335.i = add nuw nsw i64 %indvars.iv.i333.i, 1 ; 2 uses
   %exitcond.not.i336.i = icmp eq i64 %indvars.iv.next.i335.i, %wide.trip.count.i332.i
   br i1 %exitcond.not.i336.i, label %.preheader134.i.i, label %.lr.ph.i331.i
@@ -726,7 +721,7 @@ bb.gd:                                            ; preds = %bb.gc, %bb.gb
 
 ._crit_edge.i328.i:                               ; preds = %._crit_edge.loopexit.i.i, %.preheader134.i.i, %.preheader134.thread.i.i
   %i.bxh = phi i32 [ 0, %.preheader134.i.i ], [ %.pre164.i.i.a, %._crit_edge.loopexit.i.i ], [ 0, %.preheader134.thread.i.i ] ; 2 uses
-  %.lcssa.i.i = phi i32 [ %10, %.preheader134.i.i ], [ %i.bxe, %._crit_edge.loopexit.i.i ], [ 0, %.preheader134.thread.i.i ] ; 2 uses
+  %.lcssa.i.i = phi i32 [ %8, %.preheader134.i.i ], [ %i.bxe, %._crit_edge.loopexit.i.i ], [ 0, %.preheader134.thread.i.i ] ; 2 uses
   %i.bxi = shl nsw i32 %i.bxh, 2                  ; 2 uses
   %i.bxj = sext i32 %i.bxi to i64                 ; 6 uses
   %i.bxk = load i64, ptr %6, align 8, !tbaa !67   ; 3 uses
@@ -1129,7 +1124,7 @@ bb.aa:                                            ; preds = %.lr.ph.i134
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jf, i64 4
   %i.jj = load i32, ptr %i.ji, align 4, !tbaa !68
   %i.jk = icmp eq i32 %i.jj, %.0104
-  br i1 %i.jk, label %_ZL8findEdgePKiiii.exit, label %bb.ab
+  br i1 %i.jk, label %bb.aj, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i134
   %i.jl = icmp eq i32 %i.jg, %.0104
@@ -1139,25 +1134,15 @@ bb.ac:                                            ; preds = %bb.ab
   %i.jm = getelementptr inbounds nuw i8, ptr %i.jf, i64 4
   %i.jn = load i32, ptr %i.jm, align 4, !tbaa !68
   %i.jo = icmp eq i32 %i.jn, %.3
-  br i1 %i.jo, label %_ZL8findEdgePKiiii.exit, label %bb.ad
+  br i1 %i.jo, label %bb.aj, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %indvars.iv.next.i137 = add nuw nsw i64 %indvars.iv.i135, 1 ; 2 uses
   %exitcond.not.i138 = icmp eq i64 %indvars.iv.next.i137, %wide.trip.count.i133
-  br i1 %exitcond.not.i138, label %_ZL8findEdgePKiiii.exit.thread.loopexit, label %.lr.ph.i134
+  br i1 %exitcond.not.i138, label %_ZL8findEdgePKiiii.exit.thread, label %.lr.ph.i134
 
-_ZL8findEdgePKiiii.exit:                          ; preds = %bb.ac, %bb.aa
-  %8 = trunc i64 %indvars.iv.i135 to i32          ; 2 uses
-  %9 = icmp eq i32 %8, -1
-  %.pre216 = load i32, ptr %6, align 4, !tbaa !68 ; 3 uses
-  br i1 %9, label %_ZL8findEdgePKiiii.exit.thread, label %bb.aj
-
-_ZL8findEdgePKiiii.exit.thread.loopexit:          ; preds = %bb.ad
-  %.pre = load i32, ptr %6, align 4, !tbaa !68
-  br label %_ZL8findEdgePKiiii.exit.thread
-
-_ZL8findEdgePKiiii.exit.thread:                   ; preds = %_ZL8findEdgePKiiii.exit.thread.loopexit, %_ZL8findEdgePKiiii.exit
-  %10 = phi i32 [ %.pre, %_ZL8findEdgePKiiii.exit.thread.loopexit ], [ %.pre216, %_ZL8findEdgePKiiii.exit ] ; 2 uses
+_ZL8findEdgePKiiii.exit.thread:                   ; preds = %bb.ad
+  %8 = load i32, ptr %6, align 4, !tbaa !68
   %.not.i = icmp slt i32 %i.jd, %5
   br i1 %.not.i, label %.lr.ph.i.i, label %bb.ae
 
@@ -1171,7 +1156,7 @@ bb.ae:                                            ; preds = %_ZL8findEdgePKiiii.
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split
 
 .lr.ph.i.i:                                       ; preds = %_ZL8findEdgePKiiii.exit.thread, %bb.ai
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ai ], [ 0, %_ZL8findEdgePKiiii.exit.thread ] ; 3 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.ai ], [ 0, %_ZL8findEdgePKiiii.exit.thread ] ; 2 uses
   %.idx.i.i = shl nuw nsw i64 %indvars.iv.i.i, 4
   %i.jq = getelementptr inbounds nuw i8, ptr %3, i64 %.idx.i.i ; 3 uses
   %i.jr = load i32, ptr %i.jq, align 4, !tbaa !68 ; 2 uses
@@ -1182,7 +1167,7 @@ bb.af:                                            ; preds = %.lr.ph.i.i
   %i.jt = getelementptr inbounds nuw i8, ptr %i.jq, i64 4
   %i.ju = load i32, ptr %i.jt, align 4, !tbaa !68
   %i.jv = icmp eq i32 %i.ju, %.0104
-  br i1 %i.jv, label %_ZL8findEdgePKiiii.exit.i, label %bb.ag
+  br i1 %i.jv, label %_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %.lr.ph.i.i
   %i.jw = icmp eq i32 %i.jr, %.0104
@@ -1192,20 +1177,15 @@ bb.ah:                                            ; preds = %bb.ag
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jq, i64 4
   %i.jy = load i32, ptr %i.jx, align 4, !tbaa !68
   %i.jz = icmp eq i32 %i.jy, %.3
-  br i1 %i.jz, label %_ZL8findEdgePKiiii.exit.i, label %bb.ai
+  br i1 %i.jz, label %_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i133
   br i1 %exitcond.not.i.i, label %_ZL8findEdgePKiiii.exit.thread.i, label %.lr.ph.i.i
 
-_ZL8findEdgePKiiii.exit.i:                        ; preds = %bb.ah, %bb.af
-  %11 = and i64 %indvars.iv.i.i, 4294967295
-  %12 = icmp eq i64 %11, 4294967295
-  br i1 %12, label %_ZL8findEdgePKiiii.exit.thread.i, label %_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split
-
-_ZL8findEdgePKiiii.exit.thread.i:                 ; preds = %bb.ai, %_ZL8findEdgePKiiii.exit.thread.thread, %_ZL8findEdgePKiiii.exit.i
-  %13 = phi i32 [ %i.jp, %_ZL8findEdgePKiiii.exit.thread.thread ], [ %10, %_ZL8findEdgePKiiii.exit.i ], [ %10, %bb.ai ]
+_ZL8findEdgePKiiii.exit.thread.i:                 ; preds = %bb.ai, %_ZL8findEdgePKiiii.exit.thread.thread
+  %9 = phi i32 [ %i.jp, %_ZL8findEdgePKiiii.exit.thread.thread ], [ %8, %bb.ai ]
   %i.ka = shl nsw i32 %i.jd, 2
   %i.kb = sext i32 %i.ka to i64
   %i.kc = getelementptr inbounds [4 x i8], ptr %3, i64 %i.kb ; 4 uses
@@ -1213,7 +1193,7 @@ _ZL8findEdgePKiiii.exit.thread.i:                 ; preds = %bb.ai, %_ZL8findEdg
   %i.kd = getelementptr inbounds nuw i8, ptr %i.kc, i64 4
   store i32 %.0104, ptr %i.kd, align 4, !tbaa !68
   %i.ke = getelementptr inbounds nuw i8, ptr %i.kc, i64 8
-  store i32 %13, ptr %i.ke, align 4, !tbaa !68
+  store i32 %9, ptr %i.ke, align 4, !tbaa !68
   %i.kf = getelementptr inbounds nuw i8, ptr %i.kc, i64 12
   store i32 -1, ptr %i.kf, align 4, !tbaa !68
   %i.kg = load i32, ptr %4, align 4, !tbaa !68
@@ -1221,10 +1201,12 @@ _ZL8findEdgePKiiii.exit.thread.i:                 ; preds = %bb.ai, %_ZL8findEdg
   store i32 %i.kh, ptr %4, align 4, !tbaa !68
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exit
 
-bb.aj:                                            ; preds = %_ZL8findEdgePKiiii.exit
-  %i.ki = shl nsw i32 %8, 2
+bb.aj:                                            ; preds = %bb.ac, %bb.aa
+  %10 = trunc i64 %indvars.iv.i135 to i32
+  %i.ki = shl nsw i32 %10, 2
   %i.kj = sext i32 %i.ki to i64
   %i.kk = getelementptr inbounds [4 x i8], ptr %3, i64 %i.kj ; 4 uses
+  %11 = load i32, ptr %6, align 4, !tbaa !68      ; 2 uses
   %i.kl = load i32, ptr %i.kk, align 4, !tbaa !68 ; 2 uses
   %i.km = icmp eq i32 %i.kl, %.3
   %i.kn = getelementptr inbounds nuw i8, ptr %i.kk, i64 4
@@ -1240,7 +1222,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.ks, label %bb.al, label %._crit_edge.i140
 
 bb.al:                                            ; preds = %bb.ak
-  store i32 %.pre216, ptr %i.kq, align 4, !tbaa !68
+  store i32 %11, ptr %i.kq, align 4, !tbaa !68
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split
 
 ._crit_edge.i140:                                 ; preds = %bb.ak, %bb.aj
@@ -1257,10 +1239,10 @@ bb.am:                                            ; preds = %._crit_edge.i140
   br i1 %i.ky, label %bb.an, label %_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split
 
 bb.an:                                            ; preds = %bb.am
-  store i32 %.pre216, ptr %i.kw, align 4, !tbaa !68
+  store i32 %11, ptr %i.kw, align 4, !tbaa !68
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split
 
-_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split: ; preds = %bb.ae, %_ZL8findEdgePKiiii.exit.i, %bb.al, %._crit_edge.i140, %bb.am, %bb.an
+_ZL7addEdgeP9rcContextPiRiiiiii.exitthread-pre-split: ; preds = %bb.af, %bb.ah, %bb.ae, %bb.al, %._crit_edge.i140, %bb.am, %bb.an
   %.pr = load i32, ptr %4, align 4, !tbaa !68
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exit
 
@@ -1285,7 +1267,7 @@ bb.ao:                                            ; preds = %.lr.ph.i146
   %i.le = getelementptr inbounds nuw i8, ptr %i.lb, i64 4
   %i.lf = load i32, ptr %i.le, align 4, !tbaa !68
   %i.lg = icmp eq i32 %i.lf, %.3
-  br i1 %i.lg, label %_ZL8findEdgePKiiii.exit153, label %bb.ap
+  br i1 %i.lg, label %bb.ax, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %.lr.ph.i146
   %i.lh = icmp eq i32 %i.lc, %.3
@@ -1295,25 +1277,15 @@ bb.aq:                                            ; preds = %bb.ap
   %i.li = getelementptr inbounds nuw i8, ptr %i.lb, i64 4
   %i.lj = load i32, ptr %i.li, align 4, !tbaa !68
   %i.lk = icmp eq i32 %i.lj, %.0103
-  br i1 %i.lk, label %_ZL8findEdgePKiiii.exit153, label %bb.ar
+  br i1 %i.lk, label %bb.ax, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %indvars.iv.next.i149 = add nuw nsw i64 %indvars.iv.i147, 1 ; 2 uses
   %exitcond.not.i150 = icmp eq i64 %indvars.iv.next.i149, %wide.trip.count.i145
-  br i1 %exitcond.not.i150, label %_ZL8findEdgePKiiii.exit153.thread.loopexit, label %.lr.ph.i146
+  br i1 %exitcond.not.i150, label %_ZL8findEdgePKiiii.exit153.thread, label %.lr.ph.i146
 
-_ZL8findEdgePKiiii.exit153:                       ; preds = %bb.aq, %bb.ao
-  %14 = trunc i64 %indvars.iv.i147 to i32         ; 2 uses
-  %15 = icmp eq i32 %14, -1
-  %.pre218 = load i32, ptr %6, align 4, !tbaa !68 ; 3 uses
-  br i1 %15, label %_ZL8findEdgePKiiii.exit153.thread, label %bb.ax
-
-_ZL8findEdgePKiiii.exit153.thread.loopexit:       ; preds = %bb.ar
-  %.pre217 = load i32, ptr %6, align 4, !tbaa !68
-  br label %_ZL8findEdgePKiiii.exit153.thread
-
-_ZL8findEdgePKiiii.exit153.thread:                ; preds = %_ZL8findEdgePKiiii.exit153.thread.loopexit, %_ZL8findEdgePKiiii.exit153
-  %16 = phi i32 [ %.pre217, %_ZL8findEdgePKiiii.exit153.thread.loopexit ], [ %.pre218, %_ZL8findEdgePKiiii.exit153 ] ; 2 uses
+_ZL8findEdgePKiiii.exit153.thread:                ; preds = %bb.ar
+  %12 = load i32, ptr %6, align 4, !tbaa !68
   %.not.i154 = icmp slt i32 %i.kz, %5
   br i1 %.not.i154, label %.lr.ph.i.i159, label %bb.as
 
@@ -1327,7 +1299,7 @@ bb.as:                                            ; preds = %_ZL8findEdgePKiiii.
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exit165
 
 .lr.ph.i.i159:                                    ; preds = %_ZL8findEdgePKiiii.exit153.thread, %bb.aw
-  %indvars.iv.i.i160 = phi i64 [ %indvars.iv.next.i.i162, %bb.aw ], [ 0, %_ZL8findEdgePKiiii.exit153.thread ] ; 3 uses
+  %indvars.iv.i.i160 = phi i64 [ %indvars.iv.next.i.i162, %bb.aw ], [ 0, %_ZL8findEdgePKiiii.exit153.thread ] ; 2 uses
   %.idx.i.i161 = shl nuw nsw i64 %indvars.iv.i.i160, 4
   %i.lm = getelementptr inbounds nuw i8, ptr %3, i64 %.idx.i.i161 ; 3 uses
   %i.ln = load i32, ptr %i.lm, align 4, !tbaa !68 ; 2 uses
@@ -1338,7 +1310,7 @@ bb.at:                                            ; preds = %.lr.ph.i.i159
   %i.lp = getelementptr inbounds nuw i8, ptr %i.lm, i64 4
   %i.lq = load i32, ptr %i.lp, align 4, !tbaa !68
   %i.lr = icmp eq i32 %i.lq, %.3
-  br i1 %i.lr, label %_ZL8findEdgePKiiii.exit.i164, label %bb.au
+  br i1 %i.lr, label %_ZL7addEdgeP9rcContextPiRiiiiii.exit165, label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %.lr.ph.i.i159
   %i.ls = icmp eq i32 %i.ln, %.3
@@ -1348,20 +1320,15 @@ bb.av:                                            ; preds = %bb.au
   %i.lt = getelementptr inbounds nuw i8, ptr %i.lm, i64 4
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !68
   %i.lv = icmp eq i32 %i.lu, %.0103
-  br i1 %i.lv, label %_ZL8findEdgePKiiii.exit.i164, label %bb.aw
+  br i1 %i.lv, label %_ZL7addEdgeP9rcContextPiRiiiiii.exit165, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
   %indvars.iv.next.i.i162 = add nuw nsw i64 %indvars.iv.i.i160, 1 ; 2 uses
   %exitcond.not.i.i163 = icmp eq i64 %indvars.iv.next.i.i162, %wide.trip.count.i145
   br i1 %exitcond.not.i.i163, label %_ZL8findEdgePKiiii.exit.thread.i156, label %.lr.ph.i.i159
 
-_ZL8findEdgePKiiii.exit.i164:                     ; preds = %bb.av, %bb.at
-  %17 = and i64 %indvars.iv.i.i160, 4294967295
-  %18 = icmp eq i64 %17, 4294967295
-  br i1 %18, label %_ZL8findEdgePKiiii.exit.thread.i156, label %_ZL7addEdgeP9rcContextPiRiiiiii.exit165
-
-_ZL8findEdgePKiiii.exit.thread.i156:              ; preds = %bb.aw, %_ZL8findEdgePKiiii.exit153.thread.thread, %_ZL8findEdgePKiiii.exit.i164
-  %19 = phi i32 [ %i.ll, %_ZL8findEdgePKiiii.exit153.thread.thread ], [ %16, %_ZL8findEdgePKiiii.exit.i164 ], [ %16, %bb.aw ]
+_ZL8findEdgePKiiii.exit.thread.i156:              ; preds = %bb.aw, %_ZL8findEdgePKiiii.exit153.thread.thread
+  %13 = phi i32 [ %i.ll, %_ZL8findEdgePKiiii.exit153.thread.thread ], [ %12, %bb.aw ]
   %i.lw = shl nsw i32 %i.kz, 2
   %i.lx = sext i32 %i.lw to i64
   %i.ly = getelementptr inbounds [4 x i8], ptr %3, i64 %i.lx ; 4 uses
@@ -1369,7 +1336,7 @@ _ZL8findEdgePKiiii.exit.thread.i156:              ; preds = %bb.aw, %_ZL8findEdg
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 4
   store i32 %.3, ptr %i.lz, align 4, !tbaa !68
   %i.ma = getelementptr inbounds nuw i8, ptr %i.ly, i64 8
-  store i32 %19, ptr %i.ma, align 4, !tbaa !68
+  store i32 %13, ptr %i.ma, align 4, !tbaa !68
   %i.mb = getelementptr inbounds nuw i8, ptr %i.ly, i64 12
   store i32 -1, ptr %i.mb, align 4, !tbaa !68
   %i.mc = load i32, ptr %4, align 4, !tbaa !68
@@ -1377,10 +1344,12 @@ _ZL8findEdgePKiiii.exit.thread.i156:              ; preds = %bb.aw, %_ZL8findEdg
   store i32 %i.md, ptr %4, align 4, !tbaa !68
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exit165
 
-bb.ax:                                            ; preds = %_ZL8findEdgePKiiii.exit153
+bb.ax:                                            ; preds = %bb.aq, %bb.ao
+  %14 = trunc i64 %indvars.iv.i147 to i32
   %i.me = shl nsw i32 %14, 2
   %i.mf = sext i32 %i.me to i64
   %i.mg = getelementptr inbounds [4 x i8], ptr %3, i64 %i.mf ; 4 uses
+  %15 = load i32, ptr %6, align 4, !tbaa !68      ; 2 uses
   %i.mh = load i32, ptr %i.mg, align 4, !tbaa !68 ; 2 uses
   %i.mi = icmp eq i32 %i.mh, %.0103
   %i.mj = getelementptr inbounds nuw i8, ptr %i.mg, i64 4
@@ -1396,7 +1365,7 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %i.mo, label %bb.az, label %._crit_edge.i167
 
 bb.az:                                            ; preds = %bb.ay
-  store i32 %.pre218, ptr %i.mm, align 4, !tbaa !68
+  store i32 %15, ptr %i.mm, align 4, !tbaa !68
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exit165
 
 ._crit_edge.i167:                                 ; preds = %bb.ay, %bb.ax
@@ -1413,10 +1382,10 @@ bb.ba:                                            ; preds = %._crit_edge.i167
   br i1 %i.mu, label %bb.bb, label %_ZL7addEdgeP9rcContextPiRiiiiii.exit165
 
 bb.bb:                                            ; preds = %bb.ba
-  store i32 %.pre218, ptr %i.ms, align 4, !tbaa !68
+  store i32 %15, ptr %i.ms, align 4, !tbaa !68
   br label %_ZL7addEdgeP9rcContextPiRiiiiii.exit165
 
-_ZL7addEdgeP9rcContextPiRiiiiii.exit165:          ; preds = %bb.bb, %bb.ba, %._crit_edge.i167, %bb.az, %_ZL8findEdgePKiiii.exit.thread.i156, %_ZL8findEdgePKiiii.exit.i164, %bb.as
+_ZL7addEdgeP9rcContextPiRiiiiii.exit165:          ; preds = %bb.av, %bb.at, %bb.bb, %bb.ba, %._crit_edge.i167, %bb.az, %_ZL8findEdgePKiiii.exit.thread.i156, %bb.as
   %i.mv = load i32, ptr %6, align 4, !tbaa !68
   %i.mw = add nsw i32 %i.mv, 1
   store i32 %i.mw, ptr %6, align 4, !tbaa !68

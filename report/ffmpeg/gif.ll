@@ -204,7 +204,8 @@ bb.f:                                             ; preds = %get_palette_transpa
   %i.ax = load i32, ptr %i.h, align 4, !tbaa !30  ; 13 uses
   %i.ay = load i32, ptr %i.f, align 8, !tbaa !29  ; 11 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.aw, i64 1088
-  %i.ba = load i32, ptr %i.az, align 8, !tbaa !33 ; 8 uses
+  %i.ba = load i32, ptr %i.az, align 8, !tbaa !33
+  %.fr.i = freeze i32 %i.ba                       ; 8 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
   %i.bc = load i32, ptr %i.bb, align 8, !tbaa !72 ; 3 uses
   %i.bd = and i32 %i.bc, 2
@@ -231,8 +232,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.bi = getelementptr inbounds nuw i8, ptr %i.aw, i64 52 ; 2 uses
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !74
   %.not201.i = icmp eq i32 %i.bj, 0
-  %i.bk = icmp sgt i32 %i.ba, -1
-  %or.cond79.not84.i = select i1 %.not201.i, i1 %i.bk, i1 false
+  %i.bk = icmp sgt i32 %.fr.i, -1                 ; 2 uses
+  %or.cond79.not84.i = and i1 %i.bk, %.not201.i
   %.not2330.i.i = icmp sgt i32 %i.ax, 0
   %or.cond80.i = select i1 %or.cond79.not84.i, i1 %.not2330.i.i, i1 false
   br i1 %or.cond80.i, label %.preheader.lr.ph.i.i, label %is_image_translucent.exit.thread.i
@@ -261,7 +262,7 @@ bb.k:                                             ; preds = %bb.j, %.preheader.u
   %i.bm = getelementptr inbounds nuw i8, ptr %.02131.us.i.i, i64 %indvars.iv.i.i
   %i.bn = load i8, ptr %i.bm, align 1, !tbaa !75
   %i.bo = zext i8 %i.bn to i32
-  %i.bp = icmp eq i32 %i.ba, %i.bo
+  %i.bp = icmp eq i32 %.fr.i, %i.bo
   br i1 %i.bp, label %is_image_translucent.exit.i, label %bb.j
 
 ..critedge_crit_edge.us.i.i:                      ; preds = %bb.j
@@ -300,7 +301,7 @@ bb.n:                                             ; preds = %bb.m, %.preheader11
   %gep.i.i = getelementptr i8, ptr %invariant.gep.i.i, i64 %indvars.iv.i220.i
   %i.bx = load i8, ptr %gep.i.i, align 1, !tbaa !75
   %i.by = zext i8 %i.bx to i32
-  %.not.us.i.i = icmp eq i32 %i.ba, %i.by
+  %.not.us.i.i = icmp eq i32 %.fr.i, %i.by
   br i1 %.not.us.i.i, label %bb.m, label %.thread.i.i
 
 ._crit_edge.us.i.i:                               ; preds = %bb.m
@@ -336,7 +337,7 @@ bb.p:                                             ; preds = %bb.o, %.preheader.u
   %gep205.i.i = getelementptr i8, ptr %invariant.gep204.i.i, i64 %indvars.iv154.i.i
   %i.ce = load i8, ptr %gep205.i.i, align 1, !tbaa !75
   %i.cf = zext i8 %i.ce to i32
-  %.not91.us.i.i = icmp eq i32 %i.ba, %i.cf
+  %.not91.us.i.i = icmp eq i32 %.fr.i, %i.cf
   br i1 %.not91.us.i.i, label %bb.o, label %.thread104.loopexit.i.i
 
 ._crit_edge.us125.i.i:                            ; preds = %bb.o
@@ -374,7 +375,7 @@ bb.p:                                             ; preds = %bb.o, %.preheader.u
   %gep207.i.us.i = getelementptr i8, ptr %invariant.gep206.i.us.i, i64 %i.ck
   %i.cl = load i8, ptr %gep207.i.us.i, align 1, !tbaa !75
   %i.cm = zext i8 %i.cl to i32
-  %.not93.i.us.i = icmp eq i32 %i.ba, %i.cm
+  %.not93.i.us.i = icmp eq i32 %.fr.i, %i.cm
   br i1 %.not93.i.us.i, label %bb.q, label %.thread107.i.i
 
 bb.q:                                             ; preds = %.lr.ph.i.us.i
@@ -415,7 +416,7 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph131.us
   %gep209.i.i = getelementptr i8, ptr %invariant.gep208.i.i, i64 %i.cp
   %i.cq = load i8, ptr %gep209.i.i, align 1, !tbaa !75
   %i.cr = zext i8 %i.cq to i32
-  %.not95.us.i.i = icmp eq i32 %i.ba, %i.cr
+  %.not95.us.i.i = icmp eq i32 %.fr.i, %i.cr
   br i1 %.not95.us.i.i, label %bb.r, label %.thread109.loopexit.i.i
 
 ._crit_edge132.us.i.i:                            ; preds = %bb.r
@@ -764,8 +765,8 @@ get_palette_transparency_index.exit.i:            ; preds = %.preheader.i.i
 .loopexit89.i:                                    ; preds = %.preheader88.i, %get_palette_transparency_index.exit.i, %bb.aa
   %.1 = phi ptr [ %i.gn, %get_palette_transparency_index.exit.i ], [ %i.r, %bb.aa ], [ %i.hj, %.preheader88.i ] ; 15 uses
   %i.hk = icmp ne i32 %.0183.i, 0                 ; 2 uses
-  %i.hl = icmp slt i32 %i.ba, 0
-  %or.cond6.i = select i1 %i.hk, i1 %i.hl, i1 false
+  %i.hl = icmp slt i32 %.fr.i, 0
+  %or.cond6.i = and i1 %i.hl, %i.hk
   br i1 %or.cond6.i, label %bb.ae, label %bb.ag
 
 bb.ae:                                            ; preds = %.loopexit89.i
@@ -926,18 +927,15 @@ pick_palette_entry.exit.i:                        ; preds = %vector.body.interim
   %i.js = add i64 %index.lcssa, %i.jr
   %i.jt = trunc nuw nsw i64 %i.js to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  br label %bb.ag
-
-bb.ag:                                            ; preds = %pick_palette_entry.exit.i, %.loopexit89.i
-  %.0185.i = phi i32 [ %i.ba, %.loopexit89.i ], [ %i.jt, %pick_palette_entry.exit.i ]
-  %.0185.fr.i = freeze i32 %.0185.i               ; 2 uses
-  %4 = icmp sgt i32 %.0185.fr.i, -1
-  %i.ju = and i1 %i.hk, %4
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ag, %.thread.i
-  %.0185209.i = phi i32 [ %.0185.fr.i, %bb.ag ], [ -1, %.thread.i ] ; 3 uses
-  %5 = phi i1 [ %i.ju, %bb.ag ], [ false, %.thread.i ] ; 4 uses
+bb.ag:                                            ; preds = %.loopexit89.i
+  %i.ju = and i1 %i.bk, %i.hk
+  br label %bb.ah
+
+bb.ah:                                            ; preds = %bb.ag, %pick_palette_entry.exit.i, %.thread.i
+  %.0185209.i = phi i32 [ %i.jt, %pick_palette_entry.exit.i ], [ %.fr.i, %bb.ag ], [ -1, %.thread.i ] ; 3 uses
+  %4 = phi i1 [ true, %pick_palette_entry.exit.i ], [ %i.ju, %bb.ag ], [ false, %.thread.i ] ; 4 uses
   %.not208.i = icmp eq ptr %.0, null              ; 4 uses
   br i1 %.not208.i, label %bb.ai, label %bb.aj
 
@@ -988,13 +986,13 @@ bb.ak:                                            ; preds = %.lr.ph.i252.i
   br i1 %exitcond27.not.i.i, label %shrink_palette.exit.i, label %.preheader.i250.i, !llvm.loop !57
 
 shrink_palette.exit.i:                            ; preds = %.loopexit.i.i
-  %or.cond8.i = or i1 %i.er, %5                   ; 2 uses
+  %or.cond8.i = or i1 %i.er, %4                   ; 2 uses
   %brmerge.i = or i1 %.not208.i, %or.cond8.i
   %.0185.mux.i = select i1 %or.cond8.i, i32 %.0185209.i, i32 -1
   br i1 %brmerge.i, label %get_palette_transparency_index.exit264.i, label %.preheader.i256.i
 
 shrink_palette.exit.thread.i:                     ; preds = %bb.ai
-  %or.cond871.i = or i1 %i.er, %5
+  %or.cond871.i = or i1 %i.er, %4
   %spec.select183.a = select i1 %or.cond871.i, i32 %.0185209.i, i32 -1
   br label %get_palette_transparency_index.exit264.i
 
@@ -1027,7 +1025,7 @@ bb.al:                                            ; preds = %.preheader.i256.i
   br label %get_palette_transparency_index.exit264.i
 
 get_palette_transparency_index.exit264.i:         ; preds = %bb.al, %shrink_palette.exit.thread.i, %shrink_palette.exit.i
-  %i.kt = phi i1 [ %5, %shrink_palette.exit.thread.i ], [ %5, %shrink_palette.exit.i ], [ false, %bb.al ]
+  %i.kt = phi i1 [ %4, %shrink_palette.exit.thread.i ], [ %4, %shrink_palette.exit.i ], [ false, %bb.al ]
   %.03973.i = phi i64 [ 0, %shrink_palette.exit.thread.i ], [ %.1.i254.i, %shrink_palette.exit.i ], [ %.1.i254.i, %bb.al ] ; 3 uses
   %i.ku = phi i32 [ %spec.select183.a, %shrink_palette.exit.thread.i ], [ %.0185.mux.i, %shrink_palette.exit.i ], [ %spec.select184, %bb.al ] ; 4 uses
   store i8 33, ptr %.1, align 1, !tbaa !75

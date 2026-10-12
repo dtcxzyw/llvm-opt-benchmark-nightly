@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.j, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %bb.g
-  %indvars.iv21.i = phi i64 [ %indvars.iv.next22.i, %bb.g ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvars.iv21.i = phi i64 [ %indvars.iv.next22.i, %bb.g ], [ 0, %.lr.ph.i ] ; 2 uses
   %i.k = getelementptr inbounds nuw [16 x i8], ptr @hw_breakpoint, i64 %indvars.iv21.i ; 2 uses
   %i.l = load i64, ptr %i.k, align 16
   %i.m = icmp eq i64 %i.l, %0
@@ -215,7 +215,7 @@ bb.f:                                             ; preds = %.lr.ph.split.us.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 12
   %i.o = load i32, ptr %i.n, align 4
   %i.p = icmp eq i32 %i.o, %2
-  br i1 %i.p, label %find_hw_breakpoint.exit, label %bb.g
+  br i1 %i.p, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph.split.us.i
   %indvars.iv.next22.i = add nuw nsw i64 %indvars.iv21.i, 1 ; 2 uses
@@ -223,7 +223,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.split
   br i1 %exitcond25.not.i, label %find_hw_breakpoint.exit.thread, label %.lr.ph.split.us.i, !llvm.loop !2
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.j
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.j ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.j ], [ 0, %.lr.ph.i ] ; 2 uses
   %i.q = getelementptr inbounds nuw [16 x i8], ptr @hw_breakpoint, i64 %indvars.iv.i ; 3 uses
   %i.r = load i64, ptr %i.q, align 16
   %i.s = icmp eq i64 %i.r, %0
@@ -239,20 +239,14 @@ bb.i:                                             ; preds = %bb.h
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.x = load i32, ptr %i.w, align 8
   %i.y = icmp eq i32 %i.x, %i.h
-  br i1 %i.y, label %find_hw_breakpoint.exit, label %bb.j
+  br i1 %i.y, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.ph.split.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count24.i
   br i1 %exitcond.not.i, label %find_hw_breakpoint.exit.thread, label %.lr.ph.split.i, !llvm.loop !2
 
-find_hw_breakpoint.exit:                          ; preds = %bb.i, %bb.f
-  %.012.i.in = phi i64 [ %indvars.iv21.i, %bb.f ], [ %indvars.iv.i, %bb.i ]
-  %3 = and i64 %.012.i.in, 2147483648
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.k, label %find_hw_breakpoint.exit.thread
-
-find_hw_breakpoint.exit.thread:                   ; preds = %bb.j, %bb.g, %bb.e, %find_hw_breakpoint.exit
+find_hw_breakpoint.exit.thread:                   ; preds = %bb.j, %bb.g, %bb.e
   %i.z = sext i32 %i.f to i64
   %i.aa = getelementptr inbounds [16 x i8], ptr @hw_breakpoint, i64 %i.z ; 3 uses
   store i64 %0, ptr %i.aa, align 16
@@ -264,8 +258,8 @@ find_hw_breakpoint.exit.thread:                   ; preds = %bb.j, %bb.g, %bb.e,
   store i32 %i.ad, ptr @nb_hw_breakpoint, align 4
   br label %bb.k
 
-bb.k:                                             ; preds = %find_hw_breakpoint.exit, %bb.d, %bb.a, %.split, %bb.b, %bb.c, %find_hw_breakpoint.exit.thread
-  %.0 = phi i32 [ -22, %.split ], [ -38, %bb.a ], [ -105, %bb.d ], [ 0, %find_hw_breakpoint.exit.thread ], [ -22, %bb.c ], [ -22, %bb.b ], [ -17, %find_hw_breakpoint.exit ]
+bb.k:                                             ; preds = %bb.i, %bb.f, %bb.d, %bb.a, %.split, %bb.b, %bb.c, %find_hw_breakpoint.exit.thread
+  %.0 = phi i32 [ -22, %.split ], [ -38, %bb.a ], [ -105, %bb.d ], [ 0, %find_hw_breakpoint.exit.thread ], [ -22, %bb.c ], [ -22, %bb.b ], [ -17, %bb.f ], [ -17, %bb.i ]
   ret i32 %.0
 }
 
@@ -295,7 +289,7 @@ bb.b:                                             ; preds = %.lr.ph.split.us.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 12
   %i.k = load i32, ptr %i.j, align 4
   %i.l = icmp eq i32 %i.k, %2
-  br i1 %i.l, label %find_hw_breakpoint.exit, label %bb.c
+  br i1 %i.l, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us.i
   %indvars.iv.next22.i = add nuw nsw i64 %indvars.iv21.i, 1 ; 2 uses
@@ -319,31 +313,26 @@ bb.e:                                             ; preds = %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.t = load i32, ptr %i.s, align 8
   %i.u = icmp eq i32 %i.t, %i.c
-  br i1 %i.u, label %find_hw_breakpoint.exit, label %bb.f
+  br i1 %i.u, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %.lr.ph.split.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count24.i
   br i1 %exitcond.not.i, label %find_hw_breakpoint.exit.thread, label %.lr.ph.split.i, !llvm.loop !2
 
-find_hw_breakpoint.exit:                          ; preds = %bb.e, %bb.b
-  %.012.i.in = phi i64 [ %indvars.iv21.i, %bb.b ], [ %indvars.iv.i, %bb.e ] ; 2 uses
-  %3 = and i64 %.012.i.in, 2147483648
-  %.not = icmp eq i64 %3, 0
-  br i1 %.not, label %bb.g, label %find_hw_breakpoint.exit.thread
-
-bb.g:                                             ; preds = %find_hw_breakpoint.exit
+bb.g:                                             ; preds = %bb.e, %bb.b
+  %.012.i.in = phi i64 [ %indvars.iv21.i, %bb.b ], [ %indvars.iv.i, %bb.e ]
   %i.v = add nsw i32 %i.d, -1                     ; 2 uses
   store i32 %i.v, ptr @nb_hw_breakpoint, align 4
-  %i.w = and i64 %.012.i.in, 2147483647
+  %i.w = and i64 %.012.i.in, 4294967295
   %i.x = getelementptr inbounds nuw [16 x i8], ptr @hw_breakpoint, i64 %i.w
   %i.y = zext nneg i32 %i.v to i64
   %i.z = getelementptr inbounds nuw [16 x i8], ptr @hw_breakpoint, i64 %i.y
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.x, ptr noundef nonnull align 16 dereferenceable(16) %i.z, i64 16, i1 false)
   br label %find_hw_breakpoint.exit.thread
 
-find_hw_breakpoint.exit.thread:                   ; preds = %bb.f, %bb.c, %bb.a, %find_hw_breakpoint.exit, %bb.g
-  %.0 = phi i32 [ 0, %bb.g ], [ -2, %find_hw_breakpoint.exit ], [ -2, %bb.c ], [ -2, %bb.a ], [ -2, %bb.f ]
+find_hw_breakpoint.exit.thread:                   ; preds = %bb.f, %bb.c, %bb.a, %bb.g
+  %.0 = phi i32 [ 0, %bb.g ], [ -2, %bb.c ], [ -2, %bb.a ], [ -2, %bb.f ]
   ret i32 %.0
 }
 

@@ -205,10 +205,9 @@ bb.e:                                             ; preds = %bb.d, %.critedge
 
 .lr.ph17:                                         ; preds = %.lr.ph17.preheader, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph17.preheader ], [ %indvars.iv.next, %bb.f ] ; 3 uses
-  %1 = trunc nsw i64 %indvars.iv to i32
-  %2 = sdiv i32 %1, 64
-  %.sext = sext i32 %2 to i64
-  %i.bd = getelementptr inbounds [8 x i8], ptr %i.n, i64 %.sext
+  %1 = lshr i64 %indvars.iv, 6
+  %.sext = and i64 %1, 67108863
+  %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %.sext
   %i.be = and i64 %indvars.iv, 63
   %i.bf = shl nuw i64 1, %i.be
   %i.bg = load i64, ptr %i.bd, align 8, !tbaa !92

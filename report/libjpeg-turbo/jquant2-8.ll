@@ -205,20 +205,15 @@ bb.l:                                             ; preds = %.thread89.i.i, %bb.
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %i.r
   %indvar.next = add i64 %indvar, 1
-  br i1 %exitcond.not.i.i, label %median_cut.exit.i, label %bb.b, !llvm.loop !92
+  br i1 %exitcond.not.i.i, label %.lr.ph.i, label %bb.b, !llvm.loop !92
 
 find_biggest_color_pop.exit._crit_edge.loopexit.split.loop.exit.i.i: ; preds = %find_biggest_color_pop.exit.i.i
   %i.dq = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  br label %median_cut.exit.i
+  br label %.lr.ph.i
 
-median_cut.exit.i:                                ; preds = %bb.l, %find_biggest_color_pop.exit._crit_edge.loopexit.split.loop.exit.i.i
-  %.072.lcssa.i.i = phi i32 [ %i.dq, %find_biggest_color_pop.exit._crit_edge.loopexit.split.loop.exit.i.i ], [ %i.g, %bb.l ] ; 3 uses
-  %1 = icmp sgt i32 %.072.lcssa.i.i, 0
-  br i1 %1, label %.lr.ph.i, label %select_colors.exit
-
-.lr.ph.i:                                         ; preds = %median_cut.exit.i, %bb.a
-  %.072.lcssa.i62.i = phi i32 [ %.072.lcssa.i.i, %median_cut.exit.i ], [ 1, %bb.a ] ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.072.lcssa.i62.i to i64
+.lr.ph.i:                                         ; preds = %bb.l, %find_biggest_color_pop.exit._crit_edge.loopexit.split.loop.exit.i.i, %bb.a
+  %.072.lcssa.i.i = phi i32 [ 1, %bb.a ], [ %i.dq, %find_biggest_color_pop.exit._crit_edge.loopexit.split.loop.exit.i.i ], [ %i.g, %bb.l ] ; 3 uses
+  %wide.trip.count.i = zext nneg i32 %.072.lcssa.i.i to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %compute_color.exit.i, %.lr.ph.i
@@ -368,15 +363,14 @@ compute_color.exit.i:                             ; preds = %._crit_edge87.split
   %exitcond.not.i = icmp eq i64 %indvars.iv.next53.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %select_colors.exit, label %bb.m, !llvm.loop !96
 
-select_colors.exit:                               ; preds = %compute_color.exit.i, %median_cut.exit.i
-  %.072.lcssa.i61.i = phi i32 [ %.072.lcssa.i.i, %median_cut.exit.i ], [ %.072.lcssa.i62.i, %compute_color.exit.i ] ; 2 uses
+select_colors.exit:                               ; preds = %compute_color.exit.i
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 156
-  store i32 %.072.lcssa.i61.i, ptr %i.gf, align 4, !tbaa !58
+  store i32 %.072.lcssa.i.i, ptr %i.gf, align 4, !tbaa !58
   %i.gg = load ptr, ptr %0, align 8, !tbaa !32    ; 2 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 40
   store i32 96, ptr %i.gh, align 8, !tbaa !35
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gg, i64 44
-  store i32 %.072.lcssa.i61.i, ptr %i.gi, align 4, !tbaa !36
+  store i32 %.072.lcssa.i.i, ptr %i.gi, align 4, !tbaa !36
   %i.gj = load ptr, ptr %0, align 8, !tbaa !32
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gj, i64 8
   %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !98

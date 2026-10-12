@@ -205,9 +205,8 @@ distance_limited.exit44.loopexit.us.i.i.i:        ; preds = %bb.am, %bb.al
   %.2.i36.ph.us.i.i.i = phi i32 [ 2147483647, %bb.al ], [ %i.wf, %bb.am ]
   %i.wg = icmp sgt i32 %.2.i.us.i120.i.i, %.2.i36.ph.us.i.i.i
   %.sroa.speculated.i = select i1 %i.wg, i64 %indvars.iv.i13.i, i64 %indvars.iv.i135
-  %sext.i = shl i64 %.sroa.speculated.i, 32
-  %4 = ashr exact i64 %sext.i, 29
-  %5 = getelementptr inbounds i8, ptr %i.m, i64 %4 ; 2 uses
+  %4 = and i64 %.sroa.speculated.i, 4294967295
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %4 ; 2 uses
   %i.wh = load ptr, ptr %5, align 8, !tbaa !81
   store ptr %i.wh, ptr %i.ve, align 8, !tbaa !82
   store ptr %.04.us.i.i.i, ptr %5, align 8, !tbaa !81

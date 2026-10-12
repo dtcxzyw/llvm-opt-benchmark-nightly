@@ -202,9 +202,8 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %i.hq, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %.lr.ph.i231
-  %3 = shl i64 %indvars.iv.i232, 32
-  %sext = ashr exact i64 %3, 32
-  %i.hr = or disjoint i64 %sext, 1
+  %3 = and i64 %indvars.iv.i232, 4294967294
+  %i.hr = or disjoint i64 %3, 1
   br label %get_xml_attr.exit236
 
 bb.ai:                                            ; preds = %.lr.ph.i231

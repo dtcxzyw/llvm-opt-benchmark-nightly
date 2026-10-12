@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btDantzigLCP?download=true
 inline.NumInlined: 132
 inline.NumDeleted: 60
-loop-unroll.NumRuntimeUnrolled: 68
-loop-unroll.NumUnrolled: 68
+loop-unroll.NumRuntimeUnrolled: 67
+loop-unroll.NumUnrolled: 67
 begin_hunk_0_@_Z12btFactorLDLTPfS_ii:bb.a
   store float %i.ch, ptr %i.cc, align 4, !tbaa !17
   %i.ci = fmul float %i.cb, %i.cg
@@ -204,38 +204,17 @@ bb.c:                                             ; preds = %._crit_edge.i344, %
 
 _ZL11btSolveL1_1PKfPfii.exit:                     ; preds = %._crit_edge.i344
   %i.hm = icmp samesign ugt i64 %indvars.iv, 3
-  br i1 %i.hm, label %.lr.ph389, label %.preheader
+  br i1 %i.hm, label %.lr.ph389, label %.lr.ph398.preheader.new
 
-.preheader:                                       ; preds = %.lr.ph389.rtcont, %_ZL11btSolveL1_1PKfPfii.exit
-  %.2335.in.lcssa = phi i32 [ %i.ga, %_ZL11btSolveL1_1PKfPfii.exit ], [ %.2335.rtmerge, %.lr.ph389.rtcont ] ; 4 uses
-  %.2331.lcssa = phi ptr [ %i.ge, %_ZL11btSolveL1_1PKfPfii.exit ], [ %.rtmerge508, %.lr.ph389.rtcont ] ; 5 uses
-  %.2327.lcssa = phi ptr [ %1, %_ZL11btSolveL1_1PKfPfii.exit ], [ %.rtmerge509, %.lr.ph389.rtcont ] ; 3 uses
-  %.2.lcssa = phi float [ 0.000000e+00, %_ZL11btSolveL1_1PKfPfii.exit ], [ %.rtmerge, %.lr.ph389.rtcont ] ; 3 uses
-  %4 = icmp sgt i32 %.2335.in.lcssa, 0
-  br i1 %4, label %.lr.ph398.preheader.a, label %._crit_edge399
+.lr.ph398.preheader.a:                            ; preds = %.lr.ph389.rtcont
+  %lcmp.mod.not = icmp eq i32 %.2335.rtmerge, 0
+  br i1 %lcmp.mod.not, label %._crit_edge399, label %.lr.ph398.preheader.new
 
-.lr.ph398.preheader.a:                            ; preds = %.preheader
-  %xtraiter = and i32 %.2335.in.lcssa, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph398.preheader.new, label %.lr.ph398.prol
-
-.lr.ph398.prol:                                   ; preds = %.lr.ph398.preheader.a
-  %5 = load float, ptr %.2331.lcssa, align 4, !tbaa !17 ; 2 uses
-  %6 = load float, ptr %.2327.lcssa, align 4, !tbaa !17
-  %7 = fmul float %5, %6                          ; 2 uses
-  store float %7, ptr %.2331.lcssa, align 4, !tbaa !17
-  %8 = fmul float %5, %7
-  %9 = fadd float %.2.lcssa, %8
-  %10 = getelementptr inbounds nuw i8, ptr %.2331.lcssa, i64 4
-  %11 = getelementptr inbounds nuw i8, ptr %.2327.lcssa, i64 4
-  %12 = add nsw i32 %.2335.in.lcssa, -1
-  br label %.lr.ph398.preheader.new
-
-.lr.ph398.preheader.new:                          ; preds = %.lr.ph398.preheader.a, %.lr.ph398.prol
-  %.3397.unr = phi float [ %.2.lcssa, %.lr.ph398.preheader.a ], [ %9, %.lr.ph398.prol ]
-  %.3328396.unr = phi ptr [ %.2327.lcssa, %.lr.ph398.preheader.a ], [ %11, %.lr.ph398.prol ]
-  %.3332395.unr = phi ptr [ %.2331.lcssa, %.lr.ph398.preheader.a ], [ %10, %.lr.ph398.prol ]
-  %.3336394.unr = phi i32 [ %.2335.in.lcssa, %.lr.ph398.preheader.a ], [ %12, %.lr.ph398.prol ]
+.lr.ph398.preheader.new:                          ; preds = %_ZL11btSolveL1_1PKfPfii.exit, %.lr.ph398.preheader.a
+  %.3397.unr = phi float [ 0.000000e+00, %_ZL11btSolveL1_1PKfPfii.exit ], [ %.rtmerge, %.lr.ph398.preheader.a ]
+  %.3328396.unr = phi ptr [ %1, %_ZL11btSolveL1_1PKfPfii.exit ], [ %.rtmerge509, %.lr.ph398.preheader.a ]
+  %.3332395.unr = phi ptr [ %i.ge, %_ZL11btSolveL1_1PKfPfii.exit ], [ %.rtmerge508, %.lr.ph398.preheader.a ]
+  %.3336394.unr = phi i32 [ %i.ga, %_ZL11btSolveL1_1PKfPfii.exit ], [ %.2335.rtmerge, %.lr.ph398.preheader.a ]
   br label %.lr.ph398
 
 .lr.ph389:                                        ; preds = %_ZL11btSolveL1_1PKfPfii.exit, %.lr.ph389.rtcont
@@ -253,35 +232,27 @@ _ZL11btSolveL1_1PKfPfii.exit:                     ; preds = %._crit_edge.i344
   %rt.guard = freeze i1 %rt.conflict
   br i1 %rt.guard, label %.lr.ph389.rtscalar, label %.lr.ph389.rtvec, !prof !70
 
-.lr.ph398:                                        ; preds = %.lr.ph398, %.lr.ph398.preheader.new
-  %.3397 = phi float [ %.3397.unr, %.lr.ph398.preheader.new ], [ %i.ht, %.lr.ph398 ]
-  %.3328396 = phi ptr [ %.3328396.unr, %.lr.ph398.preheader.new ], [ %i.hv, %.lr.ph398 ] ; 3 uses
-  %.3332395 = phi ptr [ %.3332395.unr, %.lr.ph398.preheader.new ], [ %i.hu, %.lr.ph398 ] ; 4 uses
-  %.3336394 = phi i32 [ %.3336394.unr, %.lr.ph398.preheader.new ], [ %i.hw, %.lr.ph398 ] ; 2 uses
-  %13 = load float, ptr %.3332395, align 4, !tbaa !17 ; 2 uses
-  %14 = load float, ptr %.3328396, align 4, !tbaa !17
-  %15 = fmul float %13, %14                       ; 2 uses
-  store float %15, ptr %.3332395, align 4, !tbaa !17
-  %16 = fmul float %13, %15
-  %17 = fadd float %.3397, %16
-  %18 = getelementptr inbounds nuw i8, ptr %.3332395, i64 4 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %.3328396, i64 4
-  %i.hp = load float, ptr %18, align 4, !tbaa !17 ; 2 uses
-  %i.hq = load float, ptr %19, align 4, !tbaa !17
+.lr.ph398:                                        ; preds = %.lr.ph398.preheader.new, %.lr.ph398
+  %.3397 = phi float [ %i.ht, %.lr.ph398 ], [ %.3397.unr, %.lr.ph398.preheader.new ]
+  %.3328396 = phi ptr [ %i.hv, %.lr.ph398 ], [ %.3328396.unr, %.lr.ph398.preheader.new ] ; 2 uses
+  %.3332395 = phi ptr [ %i.hu, %.lr.ph398 ], [ %.3332395.unr, %.lr.ph398.preheader.new ] ; 3 uses
+  %.3336394 = phi i32 [ %i.hw, %.lr.ph398 ], [ %.3336394.unr, %.lr.ph398.preheader.new ] ; 2 uses
+  %i.hp = load float, ptr %.3332395, align 4, !tbaa !17 ; 2 uses
+  %i.hq = load float, ptr %.3328396, align 4, !tbaa !17
   %i.hr = fmul float %i.hp, %i.hq                 ; 2 uses
-  store float %i.hr, ptr %18, align 4, !tbaa !17
+  store float %i.hr, ptr %.3332395, align 4, !tbaa !17
   %i.hs = fmul float %i.hp, %i.hr
-  %i.ht = fadd float %17, %i.hs                   ; 2 uses
-  %i.hu = getelementptr inbounds nuw i8, ptr %.3332395, i64 8 ; 2 uses
-  %i.hv = getelementptr inbounds nuw i8, ptr %.3328396, i64 8
-  %i.hw = add nsw i32 %.3336394, -2
-  %i.hx = icmp sgt i32 %.3336394, 2
+  %i.ht = fadd float %.3397, %i.hs                ; 2 uses
+  %i.hu = getelementptr inbounds nuw i8, ptr %.3332395, i64 4 ; 2 uses
+  %i.hv = getelementptr inbounds nuw i8, ptr %.3328396, i64 4
+  %i.hw = add nsw i32 %.3336394, -1
+  %i.hx = icmp sgt i32 %.3336394, 1
   br i1 %i.hx, label %.lr.ph398, label %._crit_edge399, !llvm.loop !68
 
-._crit_edge399:                                   ; preds = %.lr.ph398, %.preheader348, %.preheader
-  %.0337.lcssa448451453459 = phi i64 [ %indvars.iv.next, %.preheader ], [ 0, %.preheader348 ], [ %indvars.iv.next, %.lr.ph398 ]
-  %.3332.lcssa = phi ptr [ %.2331.lcssa, %.preheader ], [ %0, %.preheader348 ], [ %i.hu, %.lr.ph398 ]
-  %.3.lcssa = phi float [ %.2.lcssa, %.preheader ], [ 0.000000e+00, %.preheader348 ], [ %i.ht, %.lr.ph398 ]
+._crit_edge399:                                   ; preds = %.lr.ph398, %.preheader348, %.lr.ph398.preheader.a
+  %.0337.lcssa448451453459 = phi i64 [ %indvars.iv.next, %.lr.ph398.preheader.a ], [ 0, %.preheader348 ], [ %indvars.iv.next, %.lr.ph398 ]
+  %.3332.lcssa = phi ptr [ %.rtmerge508, %.lr.ph398.preheader.a ], [ %0, %.preheader348 ], [ %i.hu, %.lr.ph398 ]
+  %.3.lcssa = phi float [ %.rtmerge, %.lr.ph398.preheader.a ], [ 0.000000e+00, %.preheader348 ], [ %i.ht, %.lr.ph398 ]
   %i.hy = load float, ptr %.3332.lcssa, align 4, !tbaa !17
   %i.hz = fsub float %i.hy, %.3.lcssa
   %i.ia = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0337.lcssa448451453459
@@ -293,33 +264,29 @@ bb.d:                                             ; preds = %._crit_edge399, %._
   ret void
 
 .lr.ph389.rtvec:                                  ; preds = %.lr.ph389
-  %i.ic = load <4 x float>, ptr %.2331386, align 4, !tbaa !17 ; 5 uses
+  %i.ic = load <4 x float>, ptr %.2331386, align 4, !tbaa !17 ; 2 uses
   %i.id = load <4 x float>, ptr %.2327387, align 4, !tbaa !17
-  %20 = fmul <4 x float> %i.ic, %i.id             ; 5 uses
-  %foldExtExtBinop = fmul <4 x float> %i.ic, %20
-  %21 = extractelement <4 x float> %foldExtExtBinop, i64 0
-  %22 = fadd float %.2388, %21
-  %foldExtExtBinop512 = fmul <4 x float> %i.ic, %20
-  %i.ie = extractelement <4 x float> %foldExtExtBinop512, i64 1
-  %i.if = fadd float %22, %i.ie
-  %foldExtExtBinop514 = fmul <4 x float> %i.ic, %20
-  %i.ig = extractelement <4 x float> %foldExtExtBinop514, i64 2
+  %foldExtExtBinop = fmul <4 x float> %i.ic, %i.id ; 2 uses
+  store <4 x float> %foldExtExtBinop, ptr %.2331386, align 4, !tbaa !17
+  %foldExtExtBinop512 = fmul <4 x float> %i.ic, %foldExtExtBinop ; 4 uses
+  %i.ie = extractelement <4 x float> %foldExtExtBinop512, i64 0
+  %i.if = fadd float %.2388, %i.ie
+  %i.ig = extractelement <4 x float> %foldExtExtBinop512, i64 1
   %i.ih = fadd float %i.if, %i.ig
-  store <4 x float> %20, ptr %.2331386, align 4, !tbaa !17
-  %foldExtExtBinop516 = fmul <4 x float> %i.ic, %20
-  %i.ii = extractelement <4 x float> %foldExtExtBinop516, i64 3
-  %i.ij = fadd float %i.ih, %i.ii
+  %4 = extractelement <4 x float> %foldExtExtBinop512, i64 2
+  %5 = fadd float %i.ih, %4
+  %i.ii = extractelement <4 x float> %foldExtExtBinop512, i64 3
+  %i.ij = fadd float %5, %i.ii
   %i.ik = getelementptr inbounds nuw i8, ptr %.2331386, i64 16 ; 2 uses
   %i.il = getelementptr inbounds nuw i8, ptr %.2327387, i64 16
-  %i.im = load <2 x float>, ptr %i.ik, align 4, !tbaa !17 ; 3 uses
+  %i.im = load <2 x float>, ptr %i.ik, align 4, !tbaa !17 ; 2 uses
   %i.in = load <2 x float>, ptr %i.il, align 4, !tbaa !17
-  %i.io = fmul <2 x float> %i.im, %i.in           ; 3 uses
-  %foldExtExtBinop518 = fmul <2 x float> %i.im, %i.io
+  %i.io = fmul <2 x float> %i.im, %i.in           ; 2 uses
+  store <2 x float> %i.io, ptr %i.ik, align 4, !tbaa !17
+  %foldExtExtBinop518 = fmul <2 x float> %i.im, %i.io ; 2 uses
   %i.ip = extractelement <2 x float> %foldExtExtBinop518, i64 0
   %i.iq = fadd float %i.ij, %i.ip
-  store <2 x float> %i.io, ptr %i.ik, align 4, !tbaa !17
-  %foldExtExtBinop520 = fmul <2 x float> %i.im, %i.io
-  %i.ir = extractelement <2 x float> %foldExtExtBinop520, i64 1
+  %i.ir = extractelement <2 x float> %foldExtExtBinop518, i64 1
   %i.is = fadd float %i.iq, %i.ir
   br label %.lr.ph389.rtcont
 
@@ -373,12 +340,12 @@ bb.d:                                             ; preds = %._crit_edge399, %._
   br label %.lr.ph389.rtcont
 
 .lr.ph389.rtcont:                                 ; preds = %.lr.ph389.rtscalar, %.lr.ph389.rtvec
-  %.rtmerge = phi float [ %i.is, %.lr.ph389.rtvec ], [ %i.kg, %.lr.ph389.rtscalar ] ; 2 uses
+  %.rtmerge = phi float [ %i.is, %.lr.ph389.rtvec ], [ %i.kg, %.lr.ph389.rtscalar ] ; 3 uses
   %.rtmerge510 = icmp ugt i32 %.2335.in385, 11
   %.rtmerge509 = getelementptr inbounds nuw i8, ptr %.2327387, i64 24 ; 2 uses
-  %.rtmerge508 = getelementptr inbounds nuw i8, ptr %.2331386, i64 24 ; 2 uses
-  %.2335.rtmerge = add nsw i32 %.2335.in385, -6   ; 2 uses
-  br i1 %.rtmerge510, label %.lr.ph389, label %.preheader, !llvm.loop !69
+  %.rtmerge508 = getelementptr inbounds nuw i8, ptr %.2331386, i64 24 ; 3 uses
+  %.2335.rtmerge = add nsw i32 %.2335.in385, -6   ; 3 uses
+  br i1 %.rtmerge510, label %.lr.ph389, label %.lr.ph398.preheader.a, !llvm.loop !69
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)

@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.epil.preheader1051
 .preheader660:                                    ; preds = %._crit_edge.thread, %._crit_edge
   %i.cv = icmp sgt i32 %i.ac, 0
   %i.cw = icmp slt i32 %2, 1
-  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 1784 ; 29 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 1784 ; 31 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 1780 ; 29 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 1764 ; 17 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 1772 ; 17 uses
@@ -608,7 +608,8 @@ bb.ep:                                            ; preds = %bb.eo
   %i.us = load i8, ptr %i.up, align 1, !tbaa !50
   %i.ut = zext i8 %i.us to i32
   %i.uu = sub nsw i32 %i.uo, %i.ut
-  br label %codebook_decode_scalar_raw.exit434.us.us.us
+  store i32 %i.uu, ptr %i.cx, align 8, !tbaa !84
+  br label %codebook_decode_start.exit373.us.us.us
 
 bb.eq:                                            ; preds = %prep_huffman.exit.i402.us.us.us
   %i.uv = load ptr, ptr %.phi.trans.insert.i417.us.us.us, align 8, !tbaa !60 ; 2 uses
@@ -652,7 +653,7 @@ bb.er:                                            ; preds = %._crit_edge.i421.us
   br label %bb.es
 
 bb.es:                                            ; preds = %bb.er, %._crit_edge.i421.us.us.us
-  %.2.i424.us.us.us = phi i32 [ %.054.lcssa.i422.us.us.us, %._crit_edge.i421.us.us.us ], [ %i.vn, %bb.er ] ; 2 uses
+  %.2.i424.us.us.us = phi i32 [ %.054.lcssa.i422.us.us.us, %._crit_edge.i421.us.us.us ], [ %i.vn, %bb.er ] ; 3 uses
   %i.vo = load ptr, ptr %i.ph, align 8, !tbaa !57
   %i.vp = sext i32 %.2.i424.us.us.us to i64
   %i.vq = getelementptr inbounds i8, ptr %i.vo, i64 %i.vp
@@ -660,19 +661,14 @@ bb.es:                                            ; preds = %bb.er, %._crit_edge
   %i.vs = zext i8 %i.vr to i32                    ; 3 uses
   %i.vt = load i32, ptr %i.cx, align 8, !tbaa !84 ; 2 uses
   %.not64.i425.us.us.us = icmp slt i32 %i.vt, %i.vs
-  br i1 %.not64.i425.us.us.us, label %codebook_decode_scalar_raw.exit434.thread596, label %6
+  br i1 %.not64.i425.us.us.us, label %codebook_decode_scalar_raw.exit434.thread596, label %codebook_decode_scalar_raw.exit434.us.us.us
 
-6:                                                ; preds = %bb.es
-  %7 = lshr i32 %i.uy, %i.vs
-  store i32 %7, ptr %i.cy, align 4, !tbaa !88
-  %8 = sub nuw nsw i32 %i.vt, %i.vs
-  br label %codebook_decode_scalar_raw.exit434.us.us.us
-
-codebook_decode_scalar_raw.exit434.us.us.us:      ; preds = %6, %bb.ep
-  %.sink.i407.us.us.us = phi i32 [ %i.uu, %bb.ep ], [ %8, %6 ]
-  %.158.ph.i408.us.us.us = phi i32 [ %i.uq, %bb.ep ], [ %.2.i424.us.us.us, %6 ] ; 2 uses
-  store i32 %.sink.i407.us.us.us, ptr %i.cx, align 8, !tbaa !84
-  %i.vu = icmp slt i32 %.158.ph.i408.us.us.us, 0
+codebook_decode_scalar_raw.exit434.us.us.us:      ; preds = %bb.es
+  %6 = lshr i32 %i.uy, %i.vs
+  store i32 %6, ptr %i.cy, align 4, !tbaa !88
+  %7 = sub nuw nsw i32 %i.vt, %i.vs
+  store i32 %7, ptr %i.cx, align 8, !tbaa !84
+  %i.vu = icmp slt i32 %.2.i424.us.us.us, 0
   br i1 %i.vu, label %.thread.i364, label %codebook_decode_start.exit373.us.us.us
 
 bb.et:                                            ; preds = %prep_huffman.exit.i362.us.us.us
@@ -691,8 +687,8 @@ bb.et:                                            ; preds = %prep_huffman.exit.i
   store i32 %spec.select.i370.us.us.us, ptr %i.cx, align 8, !tbaa !84
   br i1 %i.we, label %.thread.i364, label %codebook_decode_start.exit373.us.us.us
 
-codebook_decode_start.exit373.us.us.us:           ; preds = %bb.et, %codebook_decode_scalar_raw.exit434.us.us.us
-  %.025.i363.us.us.us = phi i32 [ %i.vv, %bb.et ], [ %.158.ph.i408.us.us.us, %codebook_decode_scalar_raw.exit434.us.us.us ]
+codebook_decode_start.exit373.us.us.us:           ; preds = %bb.et, %codebook_decode_scalar_raw.exit434.us.us.us, %bb.ep
+  %.025.i363.ph.us.us.us = phi i32 [ %i.uq, %bb.ep ], [ %i.vv, %bb.et ], [ %.2.i424.us.us.us, %codebook_decode_scalar_raw.exit434.us.us.us ]
   %i.wf = trunc nuw nsw i64 %indvars.iv.i354.us.us.us to i32
   %i.wg = add i32 %i.ot, %i.wf
   %i.wh = sub i32 %i.or, %i.wg
@@ -702,7 +698,7 @@ codebook_decode_start.exit373.us.us.us:           ; preds = %bb.et, %codebook_de
   br i1 %i.wj, label %.lr.ph.i.i.us.us.us, label %.loopexit.i.us.us.us
 
 .lr.ph.i.i.us.us.us:                              ; preds = %codebook_decode_start.exit373.us.us.us
-  %i.wk = mul i32 %i.wi, %.025.i363.us.us.us
+  %i.wk = mul i32 %i.wi, %.025.i363.ph.us.us.us
   %i.wl = load ptr, ptr %i.pa, align 8, !tbaa !93 ; 2 uses
   %i.wm = load i8, ptr %i.pb, align 2, !tbaa !92
   %.fr.i.i.us.us.us = freeze i8 %i.wm
@@ -1105,7 +1101,8 @@ bb.ic:                                            ; preds = %bb.ib
   %i.ago = load i8, ptr %i.agl, align 1, !tbaa !50
   %i.agp = zext i8 %i.ago to i32
   %i.agq = sub nsw i32 %i.agk, %i.agp
-  br label %codebook_decode_scalar_raw.exit.us
+  store i32 %i.agq, ptr %i.cx, align 8, !tbaa !84
+  br label %codebook_decode_start.exit.us
 
 bb.id:                                            ; preds = %prep_huffman.exit.i374.us
   %i.agr = load ptr, ptr %.phi.trans.insert.i.us, align 8, !tbaa !60 ; 2 uses
@@ -1149,7 +1146,7 @@ bb.ie:                                            ; preds = %._crit_edge.i.us
   br label %bb.if
 
 bb.if:                                            ; preds = %bb.ie, %._crit_edge.i.us
-  %.2.i.us = phi i32 [ %.054.lcssa.i.us, %._crit_edge.i.us ], [ %i.ahj, %bb.ie ] ; 2 uses
+  %.2.i.us = phi i32 [ %.054.lcssa.i.us, %._crit_edge.i.us ], [ %i.ahj, %bb.ie ] ; 3 uses
   %i.ahk = load ptr, ptr %i.zw, align 8, !tbaa !57
   %i.ahl = sext i32 %.2.i.us to i64
   %i.ahm = getelementptr inbounds i8, ptr %i.ahk, i64 %i.ahl
@@ -1157,19 +1154,14 @@ bb.if:                                            ; preds = %bb.ie, %._crit_edge
   %i.aho = zext i8 %i.ahn to i32                  ; 3 uses
   %i.ahp = load i32, ptr %i.cx, align 8, !tbaa !84 ; 2 uses
   %.not64.i.us = icmp slt i32 %i.ahp, %i.aho
-  br i1 %.not64.i.us, label %codebook_decode_scalar_raw.exit.thread621, label %9
+  br i1 %.not64.i.us, label %codebook_decode_scalar_raw.exit.thread621, label %codebook_decode_scalar_raw.exit.us
 
-9:                                                ; preds = %bb.if
-  %10 = lshr i32 %i.agu, %i.aho
-  store i32 %10, ptr %i.cy, align 4, !tbaa !88
-  %11 = sub nuw nsw i32 %i.ahp, %i.aho
-  br label %codebook_decode_scalar_raw.exit.us
-
-codebook_decode_scalar_raw.exit.us:               ; preds = %9, %bb.ic
-  %.sink.i.us = phi i32 [ %i.agq, %bb.ic ], [ %11, %9 ]
-  %.158.ph.i.us = phi i32 [ %i.agm, %bb.ic ], [ %.2.i.us, %9 ] ; 2 uses
-  store i32 %.sink.i.us, ptr %i.cx, align 8, !tbaa !84
-  %i.ahq = icmp slt i32 %.158.ph.i.us, 0
+codebook_decode_scalar_raw.exit.us:               ; preds = %bb.if
+  %8 = lshr i32 %i.agu, %i.aho
+  store i32 %8, ptr %i.cy, align 4, !tbaa !88
+  %9 = sub nuw nsw i32 %i.ahp, %i.aho
+  store i32 %9, ptr %i.cx, align 8, !tbaa !84
+  %i.ahq = icmp slt i32 %.2.i.us, 0
   br i1 %i.ahq, label %.thread.i, label %codebook_decode_start.exit.us
 
 bb.ig:                                            ; preds = %prep_huffman.exit.i.us
@@ -1188,12 +1180,12 @@ bb.ig:                                            ; preds = %prep_huffman.exit.i
   store i32 %spec.select.i.us, ptr %i.cx, align 8, !tbaa !84
   br i1 %i.aia, label %.thread.i, label %codebook_decode_start.exit.us
 
-codebook_decode_start.exit.us:                    ; preds = %bb.ig, %codebook_decode_scalar_raw.exit.us
-  %.025.i.us = phi i32 [ %i.ahr, %bb.ig ], [ %.158.ph.i.us, %codebook_decode_scalar_raw.exit.us ]
+codebook_decode_start.exit.us:                    ; preds = %bb.ig, %codebook_decode_scalar_raw.exit.us, %bb.ic
+  %.025.i.ph.us = phi i32 [ %i.agm, %bb.ic ], [ %i.ahr, %bb.ig ], [ %.2.i.us, %codebook_decode_scalar_raw.exit.us ]
   %i.aib = sub i32 %i.zi, %.154.i.us
   %i.aic = load i32, ptr %i.zk, align 8, !tbaa !91 ; 4 uses
   %spec.select.i36.i.us = call i32 @llvm.smin.i32(i32 %i.aib, i32 %i.aic) ; 6 uses
-  %i.aid = mul nsw i32 %i.aic, %.025.i.us         ; 2 uses
+  %i.aid = mul nsw i32 %i.aic, %.025.i.ph.us      ; 2 uses
   %i.aie = load i8, ptr %i.zp, align 2, !tbaa !92
   %.not.i37.i.us = icmp eq i8 %i.aie, 0
   %i.aif = icmp sgt i32 %spec.select.i36.i.us, 0  ; 2 uses
@@ -1440,7 +1432,7 @@ bb.ij:                                            ; preds = %.thread.i
   %exitcond809.not = icmp eq i64 %indvars.iv.next807, 8
   br i1 %exitcond809.not, label %.thread633, label %.preheader659, !llvm.loop !233
 
-.thread633:                                       ; preds = %._crit_edge725, %bb.bw, %bb.m, %..loopexit641_crit_edge, %..loopexit_crit_edge.us, %.preheader643.split, %.preheader660, %.preheader643.split.us, %bb.ii, %.thread31.sink.split.i367, %bb.ij, %.thread31.sink.split.i, %.thread550, %.thread561, %._crit_edge729
+.thread633:                                       ; preds = %._crit_edge725, %bb.bw, %bb.m, %..loopexit641_crit_edge, %..loopexit_crit_edge.us, %.preheader643.split, %.preheader660, %.preheader643.split.us, %.thread31.sink.split.i, %bb.ij, %bb.ii, %.thread31.sink.split.i367, %.thread550, %.thread561, %._crit_edge729
   store i32 %i.ae, ptr %i.ad, align 4, !tbaa !46
   ret void
 }
@@ -1843,8 +1835,8 @@ bb.hc:                                            ; preds = %._crit_edge1443
 .lr.ph1446.prol:                                  ; preds = %.lr.ph1446.preheader
   %indvars.iv.next1656.prol = add nsw i64 %i.ajz, -1 ; 2 uses
   %i.akb = zext i8 %.pre1707 to i32
-  %2 = srem i32 %i.aka, %i.akb
-  %i.akc = trunc i32 %2 to i8
+  %2 = urem i32 %i.aka, %i.akb
+  %i.akc = trunc nuw i32 %2 to i8
   %i.akd = load ptr, ptr %i.ajd, align 8, !tbaa !103
   %i.ake = getelementptr inbounds nuw [8 x i8], ptr %i.akd, i64 %indvars.iv1658
   %i.akf = load ptr, ptr %i.ake, align 8, !tbaa !104
@@ -1852,7 +1844,7 @@ bb.hc:                                            ; preds = %._crit_edge1443
   store i8 %i.akc, ptr %i.akg, align 1, !tbaa !50
   %i.akh = load i8, ptr %i.aej, align 4, !tbaa !369 ; 2 uses
   %i.aki = zext i8 %i.akh to i32
-  %3 = sdiv i32 %i.aka, %i.aki
+  %3 = udiv i32 %i.aka, %i.aki
   br label %.lr.ph1446.prol.loopexit
 
 .lr.ph1446.prol.loopexit:                         ; preds = %.lr.ph1446.prol, %.lr.ph1446.preheader

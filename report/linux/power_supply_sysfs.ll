@@ -204,11 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = zext nneg i32 %i.j to i64                ; 2 uses
   %i.o = tail call i32 @__sysfs_match_string(ptr noundef %i.m, i64 noundef range(i64 1, 2147483648) %i.n, ptr noundef %2) #9 ; 2 uses
   %i.p = icmp sgt i32 %i.o, -1
-  br i1 %i.p, label %.thread33, label %.preheader.i
-
-.thread33:                                        ; preds = %bb.b
-  %5 = zext nneg i32 %i.o to i64
-  br label %.loopexit
+  br i1 %i.p, label %6, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.b, %bb.c
   %.021.i = phi i64 [ %i.v, %bb.c ], [ 0, %bb.b ] ; 3 uses
@@ -220,12 +216,21 @@ bb.b:                                             ; preds = %bb.a
   %i.t = call ptr @strreplace(ptr noundef nonnull %i.a, i8 noundef zeroext 32, i8 noundef zeroext 95) #9 ; 0 uses
   %i.u = call zeroext i1 @sysfs_streq(ptr noundef nonnull %i.a, ptr noundef %2) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  br i1 %i.u, label %.loopexit, label %bb.c
+  br i1 %i.u, label %.loopexit.split.loop.exit19.i, label %bb.c
 
 bb.c:                                             ; preds = %.preheader.i
   %i.v = add nuw nsw i64 %.021.i, 1               ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.v, %i.n
   br i1 %exitcond.not.i, label %.thread, label %.preheader.i, !llvm.loop !17
+
+.loopexit.split.loop.exit19.i:                    ; preds = %.preheader.i
+  %5 = trunc nuw nsw i64 %.021.i to i32
+  br label %6
+
+6:                                                ; preds = %.loopexit.split.loop.exit19.i, %bb.b
+  %.3.i = phi i32 [ %i.o, %bb.b ], [ %5, %.loopexit.split.loop.exit19.i ]
+  %7 = zext i32 %.3.i to i64
+  br label %.loopexit
 
 .thread:                                          ; preds = %bb.c, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
@@ -237,8 +242,8 @@ bb.c:                                             ; preds = %.preheader.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   br i1 %i.y, label %.loopexit, label %bb.d
 
-.loopexit:                                        ; preds = %.preheader.i, %.thread33, %.thread
-  %.2 = phi i64 [ %i.z, %.thread ], [ %5, %.thread33 ], [ %.021.i, %.preheader.i ]
+.loopexit:                                        ; preds = %6, %.thread
+  %.2 = phi i64 [ %i.z, %.thread ], [ %7, %6 ]
   %i.aa = trunc i64 %.2 to i32
   store i32 %i.aa, ptr %4, align 8
   %i.ab = call i32 @power_supply_set_property(ptr noundef %i.c, i32 noundef %i.h, ptr noundef nonnull %4) #9 ; 2 uses
@@ -509,9 +514,9 @@ bb.a:
 define dso_local range(i32 -22, -2147483648) i32 @power_supply_charge_types_parse(i32 noundef %0, ptr noundef %1) #4 align 16 prefalign(16) {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 54 uses
-  %i.b = tail call i32 @__sysfs_match_string(ptr noundef nonnull @POWER_SUPPLY_CHARGE_TYPE_TEXT, i64 noundef 9, ptr noundef %1) #9 ; 3 uses
+  %i.b = tail call i32 @__sysfs_match_string(ptr noundef nonnull @POWER_SUPPLY_CHARGE_TYPE_TEXT, i64 noundef 9, ptr noundef %1) #9 ; 2 uses
   %i.c = icmp sgt i32 %i.b, -1
-  br i1 %i.c, label %power_supply_match_string.exit.thread12, label %.preheader.i.preheader
+  br i1 %i.c, label %power_supply_match_string.exit, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
@@ -521,15 +526,6 @@ bb.a:
   %i.f = call zeroext i1 @sysfs_streq(ptr noundef nonnull %i.a, ptr noundef %1) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br i1 %i.f, label %power_supply_match_string.exit, label %.preheader.i.1
-
-power_supply_match_string.exit.thread12:          ; preds = %bb.a
-  %2 = zext i32 %0 to i64
-  %3 = zext nneg i32 %i.b to i64
-  %4 = shl nuw i64 1, %3
-  %5 = and i64 %4, %2
-  %.not14 = icmp eq i64 %5, 0
-  %.15 = select i1 %.not14, i32 -22, i32 %i.b
-  br label %power_supply_match_string.exit.thread
 
 .preheader.i.1:                                   ; preds = %.preheader.i.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
@@ -603,19 +599,19 @@ power_supply_match_string.exit.thread12:          ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br i1 %i.ad, label %power_supply_match_string.exit, label %power_supply_match_string.exit.thread
 
-power_supply_match_string.exit:                   ; preds = %.preheader.i.8, %.preheader.i.7, %.preheader.i.6, %.preheader.i.5, %.preheader.i.4, %.preheader.i.3, %.preheader.i.2, %.preheader.i.1, %.preheader.i.preheader
-  %.021.i.lcssa = phi i64 [ 0, %.preheader.i.preheader ], [ 1, %.preheader.i.1 ], [ 2, %.preheader.i.2 ], [ 3, %.preheader.i.3 ], [ 4, %.preheader.i.4 ], [ 5, %.preheader.i.5 ], [ 6, %.preheader.i.6 ], [ 7, %.preheader.i.7 ], [ 8, %.preheader.i.8 ] ; 2 uses
-  %6 = trunc nuw nsw i64 %.021.i.lcssa to i32
-  %i.ae = zext i32 %0 to i64
-  %i.af = shl nuw nsw i64 1, %.021.i.lcssa
-  %i.ag = and i64 %i.af, %i.ae
+power_supply_match_string.exit:                   ; preds = %.preheader.i.preheader, %.preheader.i.1, %.preheader.i.2, %.preheader.i.3, %.preheader.i.4, %.preheader.i.5, %.preheader.i.6, %.preheader.i.7, %.preheader.i.8, %bb.a
+  %.3.i.ph = phi i32 [ %i.b, %bb.a ], [ 0, %.preheader.i.preheader ], [ 1, %.preheader.i.1 ], [ 2, %.preheader.i.2 ], [ 3, %.preheader.i.3 ], [ 4, %.preheader.i.4 ], [ 5, %.preheader.i.5 ], [ 6, %.preheader.i.6 ], [ 7, %.preheader.i.7 ], [ 8, %.preheader.i.8 ] ; 2 uses
+  %2 = zext i32 %0 to i64
+  %i.ae = zext nneg i32 %.3.i.ph to i64
+  %i.af = shl nuw i64 1, %i.ae
+  %i.ag = and i64 %i.af, %2
   %.not = icmp eq i64 %i.ag, 0
-  %. = select i1 %.not, i32 -22, i32 %6
+  %. = select i1 %.not, i32 -22, i32 %.3.i.ph
   br label %power_supply_match_string.exit.thread
 
-power_supply_match_string.exit.thread:            ; preds = %.preheader.i.8, %power_supply_match_string.exit, %power_supply_match_string.exit.thread12
-  %7 = phi i32 [ %.15, %power_supply_match_string.exit.thread12 ], [ %., %power_supply_match_string.exit ], [ -22, %.preheader.i.8 ]
-  ret i32 %7
+power_supply_match_string.exit.thread:            ; preds = %.preheader.i.8, %power_supply_match_string.exit
+  %3 = phi i32 [ %., %power_supply_match_string.exit ], [ -22, %.preheader.i.8 ]
+  ret i32 %3
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong

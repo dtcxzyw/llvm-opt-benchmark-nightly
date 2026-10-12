@@ -205,16 +205,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not88.i, label %.preheader.i28, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.h
-  %i.eh = tail call i32 @llvm.smax.i32(i32 %indvars.iv, i32 257) ; 2 uses
-  %narrow = add nuw i32 %i.eh, 1
-  %6 = zext i32 %narrow to i64
-  %i.ei = zext nneg i32 %i.eh to i64              ; 2 uses
+  %i.eh = tail call i32 @llvm.umax.i32(i32 %indvars.iv, i32 257)
+  %i.ei = zext i32 %i.eh to i64                   ; 3 uses
   %xtraiter106 = and i64 %i.ei, 7                 ; 3 uses
-  %7 = icmp slt i32 %indvars.iv, 264
-  br i1 %7, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
+  %6 = icmp ult i32 %indvars.iv, 264
+  br i1 %6, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %i.ej = and i64 %i.ei, 2147483640
+  %i.ej = and i64 %i.ei, 4294967288
   %i.ek = add nsw i64 %i.ej, -264
   br label %.lr.ph.i
 
@@ -274,7 +272,7 @@ bb.h:                                             ; preds = %bb.g
   br label %.lr.ph95.i
 
 .lr.ph95.i:                                       ; preds = %.lr.ph95.i, %.lr.ph95.preheader.i
-  %indvars.iv109.i = phi i64 [ 257, %.lr.ph95.preheader.i ], [ %indvars.iv.next110.i, %.lr.ph95.i ] ; 3 uses
+  %indvars.iv109.i = phi i64 [ 257, %.lr.ph95.preheader.i ], [ %indvars.iv.next110.i, %.lr.ph95.i ] ; 4 uses
   %.07492.i = phi i32 [ 256, %.lr.ph95.preheader.i ], [ %.276.i, %.lr.ph95.i ] ; 3 uses
   %.07791.i = phi i32 [ %i.eg, %.lr.ph95.preheader.i ], [ %.279.i, %.lr.ph95.i ] ; 3 uses
   %i.fb = sext i32 %.07791.i to i64
@@ -317,13 +315,13 @@ bb.h:                                             ; preds = %bb.g
   store i16 %i.gd, ptr %i.ge, align 4, !tbaa !70
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fw, i64 4
   store i16 %i.gd, ptr %i.gf, align 4, !tbaa !70
-  %indvars.iv.next110.i = add nuw nsw i64 %indvars.iv109.i, 1 ; 2 uses
-  %exitcond62.not = icmp eq i64 %indvars.iv.next110.i, %6
+  %indvars.iv.next110.i = add nuw nsw i64 %indvars.iv109.i, 1
+  %exitcond62.not = icmp eq i64 %indvars.iv109.i, %i.ei
   br i1 %exitcond62.not, label %.lr.ph99.preheader.i, label %.lr.ph95.i, !llvm.loop !47
 
 .lr.ph99.preheader.i:                             ; preds = %.lr.ph95.i
-  %8 = sext i32 %i.dz to i64
-  %i.gg = getelementptr inbounds [8 x i8], ptr %i.h, i64 %8
+  %7 = zext nneg i32 %i.dz to i64
+  %i.gg = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %7
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 7
   store i8 0, ptr %i.gh, align 1, !tbaa !71
   %i.gi = zext i32 %indvars.iv112.i to i64
@@ -726,7 +724,7 @@ declare noundef i64 @_ZN11duckdb_zstd15HIST_count_wkspEPjS0_PKvmPvm(ptr noundef,
 declare i64 @llvm.usub.sat.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #11
+declare i32 @llvm.umax.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #11

@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bi = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bh)
   %i.bj = lshr i64 %i.bg, 32
   %i.bk = trunc nuw nsw i64 %i.bj to i32
-  %i.bl = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.bk)
+  %i.bl = call range(i32 0, 32) i32 @llvm.ctpop.i32(i32 %i.bk)
   %i.bm = add nuw nsw i32 %i.bl, %i.bi
   %i.bn = add nsw i32 %i.bm, %i.ax
   br label %.critedge
@@ -306,7 +306,7 @@ bb.i:                                             ; preds = %bb.h
   %i.af = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.ae)
   %i.ag = lshr i64 %i.ad, 32
   %i.ah = trunc nuw nsw i64 %i.ag to i32
-  %i.ai = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.ah)
+  %i.ai = tail call range(i32 0, 32) i32 @llvm.ctpop.i32(i32 %i.ah)
   %i.aj = add nuw nsw i32 %i.ai, %i.af
   %i.ak = add nsw i32 %i.aj, %i.u
   br label %.loopexit
@@ -668,7 +668,7 @@ bb.b:                                             ; preds = %av_channel_layout_i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i.us
-  %indvars.iv.i.us = phi i64 [ 0, %.lr.ph.i.us ], [ %indvars.iv.next.i.us, %bb.d ] ; 3 uses
+  %indvars.iv.i.us = phi i64 [ 0, %.lr.ph.i.us ], [ %indvars.iv.next.i.us, %bb.d ] ; 2 uses
   %i.i = getelementptr inbounds nuw [32 x i8], ptr %i.h, i64 %indvars.iv.i.us
   %i.j = load i32, ptr %i.i, align 8, !tbaa !26
   %i.k = zext i32 %i.j to i64
@@ -681,10 +681,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond.not.i.us, label %av_channel_layout_index_from_channel.exit.thread.us, label %bb.c, !llvm.loop !5
 
 .loopexit.loopexit.split.loop.exit36.i.us:        ; preds = %bb.c
-  %2 = and i64 %indvars.iv.i.us, 2147483648
-  %.not = icmp eq i64 %2, 0
-  %3 = select i1 %.not, i64 %i.d, i64 0
-  %spec.select.us = or i64 %3, %.01219.us
+  %spec.select.us = or i64 %i.d, %.01219.us
   br label %av_channel_layout_index_from_channel.exit.thread.us
 
 av_channel_layout_index_from_channel.exit.thread.us: ; preds = %bb.d, %.loopexit.loopexit.split.loop.exit36.i.us, %.preheader.i.us, %bb.b

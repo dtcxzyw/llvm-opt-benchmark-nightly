@@ -205,13 +205,14 @@ bb.hh:                                            ; preds = %bb.hg
   %indvars.iv73.i = phi i64 [ 0, %.preheader59.preheader.i ], [ %indvars.iv.next74.i, %._crit_edge.i ] ; 5 uses
   %i.axq = mul nuw nsw i64 %indvars.iv73.i, %i.aod
   %i.axr = trunc i64 %indvars.iv73.i to i32       ; 16 uses
-  %i.axs = add i32 %i.axr, -1                     ; 11 uses
+  %i.axs = add i32 %i.axr, -1                     ; 9 uses
   %i.axt = icmp slt i32 %i.axs, %i.axe
   %i.axu = shl i32 %i.axs, 1
   %i.axv = and i32 %i.axu, 14                     ; 3 uses
   %i.axw = zext nneg i32 %i.axs to i64
   %i.axx = mul nuw nsw i64 %i.axw, %i.aod
   %i.axy = getelementptr inbounds nuw [4 x i8], ptr %i.axo, i64 %i.axx ; 3 uses
+  %or.cond.1.i = icmp sgt i32 %i.axs, -1
   %i.axz = icmp slt i32 %i.axr, 2147483646
   %i.aya = icmp sgt i32 %i.axe, %i.axr
   %i.ayb = shl i32 %i.axr, 1
@@ -219,13 +220,15 @@ bb.hh:                                            ; preds = %bb.hg
   %i.ayd = and i64 %indvars.iv73.i, 4294967295
   %i.aye = mul nuw nsw i64 %i.ayd, %i.aod
   %i.ayf = getelementptr inbounds nuw [4 x i8], ptr %i.axo, i64 %i.aye ; 3 uses
-  %i.ayg = add nsw i32 %i.axr, 1                  ; 6 uses
+  %or.cond.1.i.1 = icmp sgt i32 %i.axr, -1
+  %i.ayg = add nsw i32 %i.axr, 1                  ; 4 uses
   %i.ayh = icmp slt i32 %i.ayg, %i.axe
   %i.ayi = shl i32 %i.ayg, 1
   %i.ayj = and i32 %i.ayi, 14                     ; 3 uses
   %i.ayk = zext nneg i32 %i.ayg to i64
   %i.ayl = mul nuw nsw i64 %i.ayk, %i.aod
   %i.aym = getelementptr inbounds nuw [4 x i8], ptr %i.axo, i64 %i.ayl ; 3 uses
+  %or.cond.1.i.2 = icmp sgt i32 %i.axr, -2
   %i.ayn = icmp slt i32 %i.axs, %i.axe
   %i.ayo = add i32 %i.axr, 599
   %i.ayp = srem i32 %i.ayo, 6
@@ -234,12 +237,14 @@ bb.hh:                                            ; preds = %bb.hg
   %i.ays = zext nneg i32 %i.axs to i64
   %i.ayt = mul nuw nsw i64 %i.ays, %i.aod
   %i.ayu = getelementptr inbounds nuw [4 x i8], ptr %i.axo, i64 %i.ayt ; 3 uses
+  %or.cond.us.1.i.us = icmp sgt i32 %i.axs, -1
   %i.ayv = icmp slt i32 %i.axr, 2147483646
   %i.ayw = icmp sgt i32 %i.axe, %i.axr
   %i.ayx = and i64 %indvars.iv73.i, 4294967295
   %i.ayy = mul nuw nsw i64 %i.ayx, %i.aod
   %i.ayz = getelementptr inbounds nuw [4 x i8], ptr %i.axo, i64 %i.ayy ; 3 uses
-  %i.aza = add nsw i32 %i.axr, 1                  ; 5 uses
+  %or.cond.us.1.i.us.1 = icmp sgt i32 %i.axr, -1
+  %i.aza = add nsw i32 %i.axr, 1                  ; 3 uses
   %i.azb = icmp slt i32 %i.aza, %i.axe
   %i.azc = insertelement <2 x i32> poison, i32 %i.axr, i64 0
   %i.azd = shufflevector <2 x i32> %i.azc, <2 x i32> poison, <2 x i32> zeroinitializer
@@ -254,6 +259,7 @@ bb.hh:                                            ; preds = %bb.hg
   %i.azm = zext nneg i32 %i.aza to i64
   %i.azn = mul nuw nsw i64 %i.azm, %i.aod
   %i.azo = getelementptr inbounds nuw [4 x i8], ptr %i.axo, i64 %i.azn ; 3 uses
+  %or.cond.us.1.i.us.2 = icmp sgt i32 %i.axr, -2
   br label %bb.hi
 
 ._crit_edge.i:                                    ; preds = %.preheader.i
@@ -270,12 +276,12 @@ bb.hi:                                            ; preds = %.preheader.i, %.pre
   %i.azp = add nsw i64 %indvars.iv.i, -1          ; 7 uses
   %i.azq = trunc nsw i64 %i.azp to i32            ; 7 uses
   %i.azr = and i32 %i.azq, 1                      ; 3 uses
-  %i.azs = trunc i64 %indvars.iv.i to i32         ; 9 uses
+  %i.azs = trunc i64 %indvars.iv.i to i32         ; 3 uses
   %i.azt = and i32 %i.azs, 1                      ; 3 uses
   %i.azu = add nuw nsw i64 %indvars.iv.i, 1       ; 10 uses
-  %6 = trunc nuw nsw i64 %i.azu to i32            ; 7 uses
-  %7 = icmp samesign ult i64 %i.azu, %i.aod       ; 6 uses
-  %i.azv = and i32 %6, 1                          ; 3 uses
+  %6 = icmp samesign ult i64 %i.azu, %i.aod       ; 6 uses
+  %7 = trunc nuw nsw i64 %i.azu to i32
+  %i.azv = and i32 %7, 1                          ; 3 uses
   %i.azw = add i32 %i.azs, 599
   %i.azx = srem i32 %i.azw, 6
   %i.azy = sext i32 %i.azx to i64                 ; 3 uses
@@ -319,9 +325,7 @@ bb.hj:                                            ; preds = %.split.i.us
   br label %.split.split.us.1.i.us
 
 .split.split.us.1.i.us:                           ; preds = %bb.hj, %.split.i.us
-  %8 = or i32 %i.axs, %i.azs
-  %or.cond.us.1.i.us = icmp sgt i32 %8, -1
-  br i1 %or.cond.us.1.i.us, label %bb.hk, label %.split.split.us.2.i.us
+  br i1 %or.cond.us.1.i.us, label %bb.hk, label %.split1053.us.1
 
 bb.hk:                                            ; preds = %.split.split.us.1.i.us
   %i.bau = getelementptr inbounds i8, ptr %i.ayr, i64 %i.bae
@@ -339,15 +343,9 @@ bb.hk:                                            ; preds = %.split.split.us.1.i
   %i.bbe = load float, ptr %i.bbd, align 4, !tbaa !12, !noalias !472
   %i.bbf = fadd reassoc nsz arcp contract afn float %i.bbe, 1.000000e+00
   store float %i.bbf, ptr %i.bbd, align 4, !tbaa !12, !noalias !472
-  br label %.split.split.us.2.i.us
+  br i1 %6, label %.split62.us.sink.split.i.us, label %.split62.us.i.us
 
-.split.split.us.2.i.us:                           ; preds = %bb.hk, %.split.split.us.1.i.us
-  %9 = or i32 %i.axs, %6
-  %or.cond.us.2.i.us = icmp sgt i32 %9, -1
-  %or.cond56.us.2.i.us = and i1 %7, %or.cond.us.2.i.us
-  br i1 %or.cond56.us.2.i.us, label %.split62.us.sink.split.i.us, label %.split62.us.i.us
-
-.split62.us.sink.split.i.us:                      ; preds = %.split.split.us.2.i.us
+.split62.us.sink.split.i.us:                      ; preds = %bb.hk
   %i.bbg = getelementptr inbounds i8, ptr %i.ayr, i64 %i.bag
   %i.bbh = load i8, ptr %i.bbg, align 1, !tbaa !133, !noalias !472
   %i.bbi = getelementptr inbounds nuw [4 x i8], ptr %i.ayu, i64 %i.azu
@@ -365,10 +363,10 @@ bb.hk:                                            ; preds = %.split.split.us.1.i
   store float %i.bbr, ptr %i.bbp, align 4, !tbaa !12, !noalias !472
   br label %.split62.us.i.us
 
-.split62.us.i.us:                                 ; preds = %.split62.us.sink.split.i.us, %.split.split.us.2.i.us, %.split1053.us.preheader
+.split62.us.i.us:                                 ; preds = %.split62.us.sink.split.i.us, %bb.hk, %.split1053.us.preheader
   br i1 %i.ayv, label %.split1053.us.1, label %.preheader.i
 
-.split1053.us.1:                                  ; preds = %.split62.us.i.us
+.split1053.us.1:                                  ; preds = %.split.split.us.1.i.us, %.split62.us.i.us
   br i1 %i.ayw, label %.split.i.us.1, label %.split62.us.i.us.1
 
 .split.i.us.1:                                    ; preds = %.split1053.us.1
@@ -395,9 +393,7 @@ bb.hl:                                            ; preds = %.split.i.us.1
   br label %.split.split.us.1.i.us.1
 
 .split.split.us.1.i.us.1:                         ; preds = %bb.hl, %.split.i.us.1
-  %10 = or i32 %i.axr, %i.azs
-  %or.cond.us.1.i.us.1 = icmp sgt i32 %10, -1
-  br i1 %or.cond.us.1.i.us.1, label %bb.hm, label %.split.split.us.2.i.us.1
+  br i1 %or.cond.us.1.i.us.1, label %bb.hm, label %.split62.us.i.us.1
 
 bb.hm:                                            ; preds = %.split.split.us.1.i.us.1
   %i.bcf = getelementptr inbounds i8, ptr %i.azi, i64 %i.bae
@@ -415,15 +411,9 @@ bb.hm:                                            ; preds = %.split.split.us.1.i
   %i.bcp = load float, ptr %i.bco, align 4, !tbaa !12, !noalias !472
   %i.bcq = fadd reassoc nsz arcp contract afn float %i.bcp, 1.000000e+00
   store float %i.bcq, ptr %i.bco, align 4, !tbaa !12, !noalias !472
-  br label %.split.split.us.2.i.us.1
+  br i1 %6, label %.split62.us.sink.split.i.us.1, label %.split62.us.i.us.1
 
-.split.split.us.2.i.us.1:                         ; preds = %bb.hm, %.split.split.us.1.i.us.1
-  %11 = or i32 %i.axr, %6
-  %or.cond.us.2.i.us.1 = icmp sgt i32 %11, -1
-  %or.cond56.us.2.i.us.1 = and i1 %7, %or.cond.us.2.i.us.1
-  br i1 %or.cond56.us.2.i.us.1, label %.split62.us.sink.split.i.us.1, label %.split62.us.i.us.1
-
-.split62.us.sink.split.i.us.1:                    ; preds = %.split.split.us.2.i.us.1
+.split62.us.sink.split.i.us.1:                    ; preds = %bb.hm
   %i.bcr = getelementptr inbounds i8, ptr %i.azi, i64 %i.bag
   %i.bcs = load i8, ptr %i.bcr, align 1, !tbaa !133, !noalias !472
   %i.bct = getelementptr inbounds nuw [4 x i8], ptr %i.ayz, i64 %i.azu
@@ -441,7 +431,7 @@ bb.hm:                                            ; preds = %.split.split.us.1.i
   store float %i.bdc, ptr %i.bda, align 4, !tbaa !12, !noalias !472
   br label %.split62.us.i.us.1
 
-.split62.us.i.us.1:                               ; preds = %.split62.us.sink.split.i.us.1, %.split.split.us.2.i.us.1, %.split1053.us.1
+.split62.us.i.us.1:                               ; preds = %.split62.us.sink.split.i.us.1, %bb.hm, %.split.split.us.1.i.us.1, %.split1053.us.1
   br i1 %i.azb, label %.split.i.us.2, label %.preheader.i
 
 .split.i.us.2:                                    ; preds = %.split62.us.i.us.1
@@ -468,9 +458,7 @@ bb.hn:                                            ; preds = %.split.i.us.2
   br label %.split.split.us.1.i.us.2
 
 .split.split.us.1.i.us.2:                         ; preds = %bb.hn, %.split.i.us.2
-  %12 = or i32 %i.aza, %i.azs
-  %or.cond.us.1.i.us.2 = icmp sgt i32 %12, -1
-  br i1 %or.cond.us.1.i.us.2, label %bb.ho, label %.split.split.us.2.i.us.2
+  br i1 %or.cond.us.1.i.us.2, label %bb.ho, label %.preheader.i
 
 bb.ho:                                            ; preds = %.split.split.us.1.i.us.2
   %i.bdq = getelementptr inbounds i8, ptr %i.azl, i64 %i.bae
@@ -488,15 +476,9 @@ bb.ho:                                            ; preds = %.split.split.us.1.i
   %i.bea = load float, ptr %i.bdz, align 4, !tbaa !12, !noalias !472
   %i.beb = fadd reassoc nsz arcp contract afn float %i.bea, 1.000000e+00
   store float %i.beb, ptr %i.bdz, align 4, !tbaa !12, !noalias !472
-  br label %.split.split.us.2.i.us.2
+  br i1 %6, label %.split62.us.sink.split.i.us.2, label %.preheader.i
 
-.split.split.us.2.i.us.2:                         ; preds = %bb.ho, %.split.split.us.1.i.us.2
-  %13 = or i32 %i.aza, %6
-  %or.cond.us.2.i.us.2 = icmp sgt i32 %13, -1
-  %or.cond56.us.2.i.us.2 = and i1 %7, %or.cond.us.2.i.us.2
-  br i1 %or.cond56.us.2.i.us.2, label %.split62.us.sink.split.i.us.2, label %.preheader.i
-
-.split62.us.sink.split.i.us.2:                    ; preds = %.split.split.us.2.i.us.2
+.split62.us.sink.split.i.us.2:                    ; preds = %bb.ho
   %i.bec = getelementptr inbounds i8, ptr %i.azl, i64 %i.bag
   %i.bed = load i8, ptr %i.bec, align 1, !tbaa !133, !noalias !472
   %i.bee = getelementptr inbounds nuw [4 x i8], ptr %i.azo, i64 %i.azu
@@ -519,7 +501,7 @@ bb.ho:                                            ; preds = %.split.split.us.1.i
   store float %i.ben, ptr %i.bel, align 4, !tbaa !12, !noalias !472
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %.preheader.i.sink.split, %.split62.us.i.1, %.split.split.2.i.2, %.split62.us.i, %.split62.us.i.us, %.split.split.us.2.i.us.2, %.split62.us.i.us.1
+.preheader.i:                                     ; preds = %.preheader.i.sink.split, %.split62.us.i.1, %.split.split.1.i.2, %bb.hs, %.split62.us.i, %.split62.us.i.us, %bb.ho, %.split.split.us.1.i.us.2, %.split62.us.i.us.1
   %i.beo = add nuw nsw i64 %indvars.iv.i, %i.axq
   %.idx.i = shl i64 %i.beo, 4
   %i.bep = getelementptr inbounds nuw i8, ptr %i.anw, i64 %.idx.i
@@ -539,10 +521,10 @@ bb.ho:                                            ; preds = %.split.split.us.1.i
   %or.cond.i471 = icmp sgt i32 %i.bev, -1
   br i1 %or.cond.i471, label %bb.ht, label %.split.split.1.i
 
-.split62.us.i:                                    ; preds = %.split.split.2.i, %.split62.us.sink.split.i, %.split1053.preheader
+.split62.us.i:                                    ; preds = %bb.hu, %.split62.us.sink.split.i, %.split1053.preheader
   br i1 %i.axz, label %.split1053.1, label %.preheader.i
 
-.split1053.1:                                     ; preds = %.split62.us.i
+.split1053.1:                                     ; preds = %.split.split.1.i, %.split62.us.i
   br i1 %i.aya, label %.split.i.1, label %.split62.us.i.1
 
 .split.i.1:                                       ; preds = %.split1053.1
@@ -571,9 +553,7 @@ bb.hp:                                            ; preds = %.split.i.1
   br label %.split.split.1.i.1
 
 .split.split.1.i.1:                               ; preds = %bb.hp, %.split.i.1
-  %14 = or i32 %i.axr, %i.azs
-  %or.cond.1.i.1 = icmp sgt i32 %14, -1
-  br i1 %or.cond.1.i.1, label %bb.hq, label %.split.split.2.i.1
+  br i1 %or.cond.1.i.1, label %bb.hq, label %.split62.us.i.1
 
 bb.hq:                                            ; preds = %.split.split.1.i.1
   %.tr.i.1.i.1 = or disjoint i32 %i.ayc, %i.azt
@@ -593,15 +573,9 @@ bb.hq:                                            ; preds = %.split.split.1.i.1
   %i.bfv = load float, ptr %i.bfu, align 4, !tbaa !12, !noalias !472
   %i.bfw = fadd reassoc nsz arcp contract afn float %i.bfv, 1.000000e+00
   store float %i.bfw, ptr %i.bfu, align 4, !tbaa !12, !noalias !472
-  br label %.split.split.2.i.1
+  br i1 %6, label %.split62.us.sink.split.i.1, label %.split62.us.i.1
 
-.split.split.2.i.1:                               ; preds = %bb.hq, %.split.split.1.i.1
-  %15 = or i32 %i.axr, %6
-  %or.cond.2.i.1 = icmp sgt i32 %15, -1
-  %or.cond56.2.i.1 = and i1 %7, %or.cond.2.i.1
-  br i1 %or.cond56.2.i.1, label %.split62.us.sink.split.i.1, label %.split62.us.i.1
-
-.split62.us.sink.split.i.1:                       ; preds = %.split.split.2.i.1
+.split62.us.sink.split.i.1:                       ; preds = %bb.hq
   %.tr.i.2.i.1 = or disjoint i32 %i.ayc, %i.azv
   %i.bfx = shl nuw nsw i32 %.tr.i.2.i.1, 1
   %i.bfy = lshr i32 %.fr1070, %i.bfx
@@ -621,7 +595,7 @@ bb.hq:                                            ; preds = %.split.split.1.i.1
   store float %i.bgj, ptr %i.bgh, align 4, !tbaa !12, !noalias !472
   br label %.split62.us.i.1
 
-.split62.us.i.1:                                  ; preds = %.split62.us.sink.split.i.1, %.split.split.2.i.1, %.split1053.1
+.split62.us.i.1:                                  ; preds = %.split62.us.sink.split.i.1, %bb.hq, %.split.split.1.i.1, %.split1053.1
   br i1 %i.ayh, label %.split.i.2, label %.preheader.i
 
 .split.i.2:                                       ; preds = %.split62.us.i.1
@@ -650,9 +624,7 @@ bb.hr:                                            ; preds = %.split.i.2
   br label %.split.split.1.i.2
 
 .split.split.1.i.2:                               ; preds = %bb.hr, %.split.i.2
-  %16 = or i32 %i.ayg, %i.azs
-  %or.cond.1.i.2 = icmp sgt i32 %16, -1
-  br i1 %or.cond.1.i.2, label %bb.hs, label %.split.split.2.i.2
+  br i1 %or.cond.1.i.2, label %bb.hs, label %.preheader.i
 
 bb.hs:                                            ; preds = %.split.split.1.i.2
   %.tr.i.1.i.2 = or disjoint i32 %i.ayj, %i.azt
@@ -672,15 +644,9 @@ bb.hs:                                            ; preds = %.split.split.1.i.2
   %i.bhj = load float, ptr %i.bhi, align 4, !tbaa !12, !noalias !472
   %i.bhk = fadd reassoc nsz arcp contract afn float %i.bhj, 1.000000e+00
   store float %i.bhk, ptr %i.bhi, align 4, !tbaa !12, !noalias !472
-  br label %.split.split.2.i.2
+  br i1 %6, label %.split62.us.sink.split.i.2, label %.preheader.i
 
-.split.split.2.i.2:                               ; preds = %bb.hs, %.split.split.1.i.2
-  %17 = or i32 %i.ayg, %6
-  %or.cond.2.i.2 = icmp sgt i32 %17, -1
-  %or.cond56.2.i.2 = and i1 %7, %or.cond.2.i.2
-  br i1 %or.cond56.2.i.2, label %.split62.us.sink.split.i.2, label %.preheader.i
-
-.split62.us.sink.split.i.2:                       ; preds = %.split.split.2.i.2
+.split62.us.sink.split.i.2:                       ; preds = %bb.hs
   %.tr.i.2.i.2 = or disjoint i32 %i.ayj, %i.azv
   %i.bhl = shl nuw nsw i32 %.tr.i.2.i.2, 1
   %i.bhm = lshr i32 %.fr1070, %i.bhl
@@ -713,9 +679,7 @@ bb.ht:                                            ; preds = %.split.i
   br label %.split.split.1.i
 
 .split.split.1.i:                                 ; preds = %bb.ht, %.split.i
-  %18 = or i32 %i.axs, %i.azs
-  %or.cond.1.i = icmp sgt i32 %18, -1
-  br i1 %or.cond.1.i, label %bb.hu, label %.split.split.2.i
+  br i1 %or.cond.1.i, label %bb.hu, label %.split1053.1
 
 bb.hu:                                            ; preds = %.split.split.1.i
   %.tr.i.1.i = or disjoint i32 %i.axv, %i.azt
@@ -735,15 +699,9 @@ bb.hu:                                            ; preds = %.split.split.1.i
   %i.biq = load float, ptr %i.bip, align 4, !tbaa !12, !noalias !472
   %i.bir = fadd reassoc nsz arcp contract afn float %i.biq, 1.000000e+00
   store float %i.bir, ptr %i.bip, align 4, !tbaa !12, !noalias !472
-  br label %.split.split.2.i
+  br i1 %6, label %.split62.us.sink.split.i, label %.split62.us.i
 
-.split.split.2.i:                                 ; preds = %bb.hu, %.split.split.1.i
-  %19 = or i32 %i.axs, %6
-  %or.cond.2.i = icmp sgt i32 %19, -1
-  %or.cond56.2.i = and i1 %7, %or.cond.2.i
-  br i1 %or.cond56.2.i, label %.split62.us.sink.split.i, label %.split62.us.i
-
-.split62.us.sink.split.i:                         ; preds = %.split.split.2.i
+.split62.us.sink.split.i:                         ; preds = %bb.hu
   %.tr.i.2.i = or disjoint i32 %i.axv, %i.azv
   %i.bis = shl nuw nsw i32 %.tr.i.2.i, 1
   %i.bit = lshr i32 %.fr1070, %i.bis

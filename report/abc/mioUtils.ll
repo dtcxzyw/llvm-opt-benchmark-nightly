@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.i = tail call ptr (...) @Abc_FrameReadLibGen() #30
-  %i.j = call noundef ptr @Mio_CollectRootsNew2(ptr noundef %i.i, i32 noundef 6, ptr noundef nonnull %i.a, i32 noundef 0) ; 3 uses
+  %i.j = call noundef ptr @Mio_CollectRootsNew2(ptr noundef %i.i, i32 noundef 6, ptr noundef nonnull %i.a, i32 noundef 0) ; 4 uses
   %i.k = load i32, ptr %i.a, align 4, !tbaa !69   ; 2 uses
   %i.l = icmp sgt i32 %i.k, 0
   br i1 %i.l, label %.lr.ph, label %bb.n
@@ -245,9 +245,9 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.f
   %i.u = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
-  %i.v = shl nsw i32 %indvars.iv.tr, 1
+  %i.v = shl nuw nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.u, i32 %i.v, i32 2147483647 ; 4 uses
-  %5 = sext i32 %spec.select.i to i64
+  %5 = zext nneg i32 %spec.select.i to i64
   %.not.i10.i = icmp samesign ult i64 %indvars.iv, %5
   br i1 %.not.i10.i, label %bb.k, label %Vec_PtrPush.exit
 
@@ -276,18 +276,12 @@ Vec_PtrPush.exit:                                 ; preds = %bb.i, %bb.h, %bb.m,
   br i1 %exitcond.not, label %.thread, label %bb.e, !llvm.loop !130
 
 .thread:                                          ; preds = %Vec_PtrPush.exit
-  %6 = trunc nsw i64 %indvars.iv.next to i32
-  br label %7
+  call void @free(ptr noundef nonnull %i.j) #30
+  br label %.loopexit
 
 bb.n:                                             ; preds = %bb.d
   %.not56 = icmp eq ptr %i.j, null
-  br i1 %.not56, label %.critedge, label %7
-
-7:                                                ; preds = %.thread, %bb.n
-  %.val59133143 = phi i32 [ %6, %.thread ], [ 0, %bb.n ]
-  %.val61135142 = phi ptr [ %storemerge77, %.thread ], [ %i.b, %bb.n ]
-  call void @free(ptr noundef nonnull %i.j) #30
-  br label %.loopexit
+  br i1 %.not56, label %.critedge, label %..loopexit_crit_edge
 
 bb.o:                                             ; preds = %.lr.ph79, %Vec_PtrPush.exit69
   %indvars.iv117 = phi i64 [ 0, %.lr.ph79 ], [ %indvars.iv.next118, %Vec_PtrPush.exit69 ] ; 2 uses
@@ -320,10 +314,10 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.p
   %i.aj = icmp samesign ult i64 %indvars.iv115, 1073741823
   %indvars.iv115.tr = trunc nsw i64 %indvars.iv115 to i32
-  %i.ak = shl nsw i32 %indvars.iv115.tr, 1
+  %i.ak = shl nuw nsw i32 %indvars.iv115.tr, 1
   %spec.select.i62 = select i1 %i.aj, i32 %i.ak, i32 2147483647 ; 4 uses
-  %8 = sext i32 %spec.select.i62 to i64
-  %.not.i10.i63 = icmp samesign ult i64 %indvars.iv115, %8
+  %6 = zext nneg i32 %spec.select.i62 to i64
+  %.not.i10.i63 = icmp samesign ult i64 %indvars.iv115, %6
   br i1 %.not.i10.i63, label %bb.u, label %Vec_PtrPush.exit69
 
 bb.u:                                             ; preds = %bb.t
@@ -350,27 +344,24 @@ Vec_PtrPush.exit69:                               ; preds = %bb.s, %bb.r, %bb.w,
   %i.aq = load i32, ptr %i.e, align 8, !tbaa !82
   %i.ar = sext i32 %i.aq to i64
   %i.as = icmp slt i64 %indvars.iv.next118, %i.ar
-  br i1 %i.as, label %bb.o, label %..loopexit_crit_edge, !llvm.loop !131
+  br i1 %i.as, label %bb.o, label %.loopexit, !llvm.loop !131
 
-..loopexit_crit_edge:                             ; preds = %Vec_PtrPush.exit69
-  %9 = trunc nsw i64 %indvars.iv.next116 to i32
-  br label %.loopexit
+..loopexit_crit_edge:                             ; preds = %bb.n
+  call void @free(ptr noundef nonnull %i.j) #30
+  br label %.critedge
 
-.loopexit:                                        ; preds = %..loopexit_crit_edge, %7
-  %i.at = phi ptr [ %.val61135142, %7 ], [ %storemerge7087, %..loopexit_crit_edge ] ; 3 uses
-  %.val59 = phi i32 [ %.val59133143, %7 ], [ %9, %..loopexit_crit_edge ] ; 4 uses
-  %10 = icmp sgt i32 %.val59, 0
-  br i1 %10, label %.lr.ph99, label %.critedge
-
-.lr.ph99:                                         ; preds = %.loopexit
-  %wide.trip.count125 = zext nneg i32 %.val59 to i64
+.loopexit:                                        ; preds = %Vec_PtrPush.exit69, %.thread
+  %.val59148.in = phi i64 [ %indvars.iv.next, %.thread ], [ %indvars.iv.next116, %Vec_PtrPush.exit69 ] ; 2 uses
+  %i.at = phi ptr [ %storemerge77, %.thread ], [ %storemerge7087, %Vec_PtrPush.exit69 ] ; 2 uses
+  %.val59148 = trunc i64 %.val59148.in to i32
+  %wide.trip.count125 = and i64 %.val59148.in, 4294967295
   br label %bb.x
 
-bb.x:                                             ; preds = %.lr.ph99, %._crit_edge93
-  %indvars.iv122 = phi i64 [ 0, %.lr.ph99 ], [ %indvars.iv.next123, %._crit_edge93 ] ; 2 uses
-  %.097 = phi i32 [ 0, %.lr.ph99 ], [ %i.bj, %._crit_edge93 ]
-  %.04996 = phi i32 [ 0, %.lr.ph99 ], [ %.1.lcssa, %._crit_edge93 ]
-  %.05095 = phi i32 [ 0, %.lr.ph99 ], [ %i.az, %._crit_edge93 ]
+bb.x:                                             ; preds = %.loopexit, %._crit_edge93
+  %indvars.iv122 = phi i64 [ 0, %.loopexit ], [ %indvars.iv.next123, %._crit_edge93 ] ; 2 uses
+  %.097 = phi i32 [ 0, %.loopexit ], [ %i.bj, %._crit_edge93 ]
+  %.04996 = phi i32 [ 0, %.loopexit ], [ %.1.lcssa, %._crit_edge93 ]
+  %.05095 = phi i32 [ 0, %.loopexit ], [ %i.az, %._crit_edge93 ]
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv122
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !87 ; 4 uses
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !64
@@ -408,13 +399,13 @@ bb.x:                                             ; preds = %.lr.ph99, %._crit_e
   %exitcond126.not = icmp eq i64 %indvars.iv.next123, %wide.trip.count125
   br i1 %exitcond126.not, label %.critedge, label %bb.x, !llvm.loop !133
 
-.critedge:                                        ; preds = %._crit_edge93, %bb.n, %.preheader, %.loopexit
-  %i.bq = phi i1 [ false, %.loopexit ], [ false, %bb.n ], [ false, %.preheader ], [ true, %._crit_edge93 ]
-  %.val59145 = phi i32 [ %.val59, %.loopexit ], [ 0, %bb.n ], [ 0, %.preheader ], [ %.val59, %._crit_edge93 ] ; 2 uses
-  %i.br = phi ptr [ %i.at, %.loopexit ], [ %i.b, %bb.n ], [ %i.b, %.preheader ], [ %i.at, %._crit_edge93 ] ; 3 uses
-  %.050.lcssa = phi i32 [ 0, %.loopexit ], [ 0, %bb.n ], [ 0, %.preheader ], [ %i.az, %._crit_edge93 ]
-  %.049.lcssa = phi i32 [ 0, %.loopexit ], [ 0, %bb.n ], [ 0, %.preheader ], [ %.1.lcssa, %._crit_edge93 ]
-  %.0.lcssa = phi i32 [ 0, %.loopexit ], [ 0, %bb.n ], [ 0, %.preheader ], [ %i.bj, %._crit_edge93 ]
+.critedge:                                        ; preds = %._crit_edge93, %bb.n, %.preheader, %..loopexit_crit_edge
+  %i.bq = phi i1 [ false, %..loopexit_crit_edge ], [ false, %bb.n ], [ false, %.preheader ], [ true, %._crit_edge93 ]
+  %.val59145 = phi i32 [ 0, %..loopexit_crit_edge ], [ 0, %bb.n ], [ 0, %.preheader ], [ %.val59148, %._crit_edge93 ] ; 2 uses
+  %i.br = phi ptr [ %i.b, %..loopexit_crit_edge ], [ %i.b, %bb.n ], [ %i.b, %.preheader ], [ %i.at, %._crit_edge93 ] ; 3 uses
+  %.050.lcssa = phi i32 [ 0, %..loopexit_crit_edge ], [ 0, %bb.n ], [ 0, %.preheader ], [ %i.az, %._crit_edge93 ]
+  %.049.lcssa = phi i32 [ 0, %..loopexit_crit_edge ], [ 0, %bb.n ], [ 0, %.preheader ], [ %.1.lcssa, %._crit_edge93 ]
+  %.0.lcssa = phi i32 [ 0, %..loopexit_crit_edge ], [ 0, %bb.n ], [ 0, %.preheader ], [ %i.bj, %._crit_edge93 ]
   %i.bs = load ptr, ptr %1, align 8, !tbaa !28
   %i.bt = call ptr (...) @Extra_TimeStamp() #30
   %i.bu = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.16, ptr noundef %i.bs, i32 noundef %.val59145, ptr noundef %i.bt) #30 ; 0 uses
@@ -776,9 +767,9 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.d
   %i.z = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
-  %i.aa = shl nsw i32 %indvars.iv.tr, 1
+  %i.aa = shl nuw nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.z, i32 %i.aa, i32 2147483647 ; 4 uses
-  %5 = sext i32 %spec.select.i to i64
+  %5 = zext nneg i32 %spec.select.i to i64
   %.not.i10.i = icmp samesign ult i64 %indvars.iv, %5
   br i1 %.not.i10.i, label %bb.i, label %Vec_PtrPush.exit
 
@@ -853,9 +844,9 @@ bb.r:                                             ; preds = %bb.p
 bb.s:                                             ; preds = %bb.o
   %i.ap = icmp samesign ult i64 %indvars.iv98, 1073741823
   %indvars.iv98.tr = trunc nsw i64 %indvars.iv98 to i32
-  %i.aq = shl nsw i32 %indvars.iv98.tr, 1
+  %i.aq = shl nuw nsw i32 %indvars.iv98.tr, 1
   %spec.select.i38 = select i1 %i.ap, i32 %i.aq, i32 2147483647 ; 4 uses
-  %6 = sext i32 %spec.select.i38 to i64
+  %6 = zext nneg i32 %spec.select.i38 to i64
   %.not.i10.i39 = icmp samesign ult i64 %indvars.iv98, %6
   br i1 %.not.i10.i39, label %bb.t, label %Vec_PtrPush.exit45
 
@@ -948,9 +939,9 @@ bb.aa:                                            ; preds = %bb.y
 bb.ab:                                            ; preds = %bb.x
   %i.bn = icmp samesign ult i64 %indvars.iv105, 1073741823
   %indvars.iv105.tr = trunc nsw i64 %indvars.iv105 to i32
-  %i.bo = shl nsw i32 %indvars.iv105.tr, 1
+  %i.bo = shl nuw nsw i32 %indvars.iv105.tr, 1
   %spec.select.i46 = select i1 %i.bn, i32 %i.bo, i32 2147483647 ; 4 uses
-  %7 = sext i32 %spec.select.i46 to i64
+  %7 = zext nneg i32 %spec.select.i46 to i64
   %.not.i10.i47 = icmp samesign ult i64 %indvars.iv105, %7
   br i1 %.not.i10.i47, label %bb.ac, label %Vec_PtrPush.exit53
 

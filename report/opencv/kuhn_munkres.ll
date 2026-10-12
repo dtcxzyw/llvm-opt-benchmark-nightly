@@ -204,7 +204,7 @@ _ZN2cv6detail8tracking11KuhnMunkres9FindInRowEii.exit.thread.splitthread-pre-spl
   %i.fd = add nuw nsw i32 %.039176, 2             ; 4 uses
   %i.fe = zext nneg i32 %i.fd to i64
   %i.ff = getelementptr inbounds nuw [8 x i8], ptr %i.ez, i64 %i.fe
-  %.sroa.0107.0.insert.insert = or i64 %.sroa.0107.0.insert.ext, %.sroa.4109.0.insert.shift
+  %.sroa.0107.0.insert.insert = or i64 %.sroa.0107.0.insert.ext, %.sroa.4109.0.insert.ext
   store i64 %.sroa.0107.0.insert.insert, ptr %i.ff, align 4, !tbaa !35
   %.pr = load i32, ptr %i.b, align 8, !tbaa !47   ; 2 uses
   %i.fg = zext nneg i32 %i.fd to i64
@@ -223,17 +223,11 @@ _ZN2cv6detail8tracking11KuhnMunkres9FindInRowEii.exit.thread.splitthread-pre-spl
   %i.fo = load i64, ptr %i.f, align 8
   %i.fp = sext i32 %i.fl to i64
   %invariant.gep.i = getelementptr i8, ptr %i.fc, i64 %i.fp ; 2 uses
-  br i1 %i.fn, label %.lr.ph.split.us.i69, label %.lr.ph.split.preheader.i
+  br i1 %i.fn, label %_ZN2cv6detail8tracking11KuhnMunkres9FindInColEii.exit, label %.lr.ph.split.preheader.i
 
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i63
   %wide.trip.count.i64 = zext nneg i32 %i.fk to i64
   br label %.lr.ph.split.i65
-
-.lr.ph.split.us.i69:                              ; preds = %.lr.ph.i63
-  %4 = load i8, ptr %invariant.gep.i, align 1, !tbaa !28
-  %5 = icmp ne i8 %4, 1
-  %spec.select.i = sext i1 %5 to i32
-  br label %_ZN2cv6detail8tracking11KuhnMunkres9FindInColEii.exit
 
 .lr.ph.split.i65:                                 ; preds = %bb.v, %.lr.ph.split.preheader.i
   %indvars.iv.i66 = phi i64 [ 0, %.lr.ph.split.preheader.i ], [ %indvars.iv.next.i67, %bb.v ] ; 3 uses
@@ -249,21 +243,20 @@ bb.v:                                             ; preds = %.lr.ph.split.i65
   br i1 %exitcond.not.i68, label %.lr.ph.preheader, label %.lr.ph.split.i65, !llvm.loop !7
 
 ._crit_edge.loopexit.split.loop.exit18.i:         ; preds = %.lr.ph.split.i65
-  %6 = trunc nuw nsw i64 %indvars.iv.i66 to i32
-  br label %_ZN2cv6detail8tracking11KuhnMunkres9FindInColEii.exit
+  %4 = shl nuw i64 %indvars.iv.i66, 32
+  br label %bb.w
 
-_ZN2cv6detail8tracking11KuhnMunkres9FindInColEii.exit: ; preds = %.lr.ph.split.us.i69, %._crit_edge.loopexit.split.loop.exit18.i
-  %7 = phi i32 [ %spec.select.i, %.lr.ph.split.us.i69 ], [ %6, %._crit_edge.loopexit.split.loop.exit18.i ] ; 3 uses
-  %8 = icmp sgt i32 %7, -1
-  br i1 %8, label %bb.w, label %.lr.ph.preheader
+_ZN2cv6detail8tracking11KuhnMunkres9FindInColEii.exit: ; preds = %.lr.ph.i63
+  %5 = load i8, ptr %invariant.gep.i, align 1, !tbaa !28
+  %.not114 = icmp eq i8 %5, 1
+  br i1 %.not114, label %bb.w, label %.lr.ph.preheader
 
-bb.w:                                             ; preds = %_ZN2cv6detail8tracking11KuhnMunkres9FindInColEii.exit
-  %9 = getelementptr i8, ptr %i.fj, i64 8
-  %.sroa.4109.0.insert.ext = zext nneg i32 %7 to i64
-  %.sroa.4109.0.insert.shift = shl nuw nsw i64 %.sroa.4109.0.insert.ext, 32 ; 2 uses
+bb.w:                                             ; preds = %._crit_edge.loopexit.split.loop.exit18.i, %_ZN2cv6detail8tracking11KuhnMunkres9FindInColEii.exit
+  %.sroa.4109.0.insert.ext = phi i64 [ %4, %._crit_edge.loopexit.split.loop.exit18.i ], [ 0, %_ZN2cv6detail8tracking11KuhnMunkres9FindInColEii.exit ] ; 3 uses
+  %6 = getelementptr i8, ptr %i.fj, i64 8
   %.sroa.0108.0.insert.ext = zext i32 %i.fl to i64
-  %.sroa.0108.0.insert.insert = or disjoint i64 %.sroa.4109.0.insert.shift, %.sroa.0108.0.insert.ext
-  store i64 %.sroa.0108.0.insert.insert, ptr %9, align 4, !tbaa !35
+  %.sroa.0108.0.insert.insert = or disjoint i64 %.sroa.4109.0.insert.ext, %.sroa.0108.0.insert.ext
+  store i64 %.sroa.0108.0.insert.insert, ptr %6, align 4, !tbaa !35
   %i.ft = load i32, ptr %i.b, align 8, !tbaa !47  ; 2 uses
   %i.fu = icmp sgt i32 %i.ft, 0
   br i1 %i.fu, label %.lr.ph.i71, label %_ZN2cv6detail8tracking11KuhnMunkres9FindInRowEii.exit.thread.splitthread-pre-split
@@ -272,8 +265,8 @@ bb.w:                                             ; preds = %_ZN2cv6detail8track
   %i.fv = load i32, ptr %i.l, align 4, !tbaa !58
   %i.fw = icmp slt i32 %i.fv, 2
   %i.fx = load i64, ptr %i.f, align 8
-  %10 = zext nneg i32 %7 to i64
-  %i.fy = mul i64 %i.fx, %10
+  %7 = ashr exact i64 %.sroa.4109.0.insert.ext, 32
+  %i.fy = mul i64 %i.fx, %7
   %.sink.idx.i.i72 = select i1 %i.fw, i64 0, i64 %i.fy
   %.sink.i.i73 = getelementptr inbounds nuw i8, ptr %i.fc, i64 %.sink.idx.i.i72
   %wide.trip.count.i74 = zext nneg i32 %i.ft to i64

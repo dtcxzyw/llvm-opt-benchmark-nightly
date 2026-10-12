@@ -204,7 +204,7 @@ declare ptr @register_dissector(ptr noundef, ptr noundef, i32 noundef) local_unn
 define internal i32 @dissect_macsec(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = alloca [12 x i8], align 1                ; 6 uses
-  %4 = alloca %struct.decode_user_data, align 8   ; 11 uses
+  %4 = alloca %struct.decode_user_data, align 8   ; 13 uses
   %i.b = alloca i8, align 1                       ; 5 uses
   %5 = alloca %struct.ethertype_data_s, align 8   ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
@@ -404,7 +404,7 @@ bb.s:                                             ; preds = %thread-pre-split, %
   br i1 %.not241, label %.thread, label %bb.t
 
 bb.t:                                             ; preds = %.thread286, %bb.s
-  %.1210291 = phi i32 [ %i.by, %.thread286 ], [ %.1210, %bb.s ] ; 5 uses
+  %.1210291 = phi i32 [ %i.by, %.thread286 ], [ %.1210, %bb.s ] ; 6 uses
   %.1212290 = phi ptr [ %i.cd, %.thread286 ], [ null, %bb.s ] ; 2 uses
   %i.co = call ptr @tvb_memcpy(ptr noundef %0, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @iv, i64 8), i32 noundef 2, i64 noundef 4) ; 0 uses
   br i1 %.not237.not, label %bb.v, label %bb.u
@@ -485,16 +485,13 @@ bb.ac:                                            ; preds = %.lr.ph.i
 
 .thread.loopexit.i:                               ; preds = %.lr.ph.i
   %i.dk = trunc nuw nsw i64 %indvars.iv.i to i32
-  br label %attempt_packet_decode_with_psks.exit
+  br label %bb.at
 
-attempt_packet_decode_with_psks.exit:             ; preds = %.thread.loopexit.i, %._crit_edge.i, %bb.aa
-  %.0204295 = phi i1 [ false, %bb.aa ], [ true, %._crit_edge.i ], [ true, %.thread.loopexit.i ] ; 2 uses
-  %.0206 = phi i32 [ -1, %bb.aa ], [ -1, %._crit_edge.i ], [ %i.dk, %.thread.loopexit.i ] ; 2 uses
+attempt_packet_decode_with_psks.exit:             ; preds = %._crit_edge.i, %bb.aa
+  %.0204295 = phi i1 [ false, %bb.aa ], [ true, %._crit_edge.i ] ; 2 uses
   %i.dl = load i8, ptr @try_mka, align 1, !range !7, !noundef !8
   %i.dm = trunc nuw i8 %i.dl to i1
-  %6 = icmp slt i32 %.0206, 0
-  %or.cond = select i1 %i.dm, i1 %6, i1 false     ; 4 uses
-  br i1 %or.cond, label %bb.ad, label %bb.as
+  br i1 %i.dm, label %bb.ad, label %.thread
 
 bb.ad:                                            ; preds = %attempt_packet_decode_with_psks.exit
   %i.dn = zext nneg i8 %i.j to i32
@@ -525,7 +522,7 @@ bb.ad:                                            ; preds = %attempt_packet_deco
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ar, %.lr.ph.i249
-  %indvars.iv.i251 = phi i64 [ 0, %.lr.ph.i249 ], [ %indvars.iv.next.i253, %bb.ar ] ; 4 uses
+  %indvars.iv.i251 = phi i64 [ 0, %.lr.ph.i249 ], [ %indvars.iv.next.i253, %bb.ar ] ; 3 uses
   %.02444.i = phi i32 [ 2, %.lr.ph.i249 ], [ %.2.ph.i, %bb.ar ] ; 3 uses
   %i.ea = getelementptr [112 x i8], ptr %i.dp, i64 %indvars.iv.i251
   %i.eb = load i32, ptr %i.dy, align 4
@@ -572,7 +569,7 @@ bb.aj:                                            ; preds = %bb.ah
   %i.er = ptrtoint ptr %i.eq to i64
   %i.es = and i64 %i.er, 4294967295
   %.not.i.i = icmp eq i64 %i.es, 0
-  br i1 %.not.i.i, label %attempt_packet_decode_with_default_suite.exit.thread34.i, label %.thread40.loopexit.i
+  br i1 %.not.i.i, label %attempt_packet_decode_with_default_suite.exit.thread34.i, label %attempt_packet_decode_with_saks.exit
 
 attempt_packet_decode_with_default_suite.exit.thread34.i: ; preds = %bb.aj
   %i.et = load ptr, ptr %i.eo, align 8
@@ -746,7 +743,7 @@ attempt_packet_decode_with_default_suite.exit.i:  ; preds = %attempt_packet_deco
   %.125.i = phi i32 [ %.2.i.i, %attempt_packet_decode_with_xpn.exit.i ], [ %i.en, %bb.ai ]
   %.125.fr.i = freeze i32 %.125.i                 ; 2 uses
   %i.ip = icmp eq i32 %.125.fr.i, 1
-  br i1 %i.ip, label %.thread40.loopexit58.i, label %bb.ar
+  br i1 %i.ip, label %attempt_packet_decode_with_saks.exit, label %bb.ar
 
 bb.ar:                                            ; preds = %attempt_packet_decode_with_default_suite.exit.i, %attempt_packet_decode_with_default_suite.exit.thread34.i, %bb.ag, %bb.af, %bb.ae
   %.2.ph.i = phi i32 [ %.125.fr.i, %attempt_packet_decode_with_default_suite.exit.i ], [ %spec.select.i.i, %attempt_packet_decode_with_default_suite.exit.thread34.i ], [ %.02444.i, %bb.af ], [ %.02444.i, %bb.ae ], [ %.02444.i, %bb.ag ] ; 2 uses
@@ -756,32 +753,26 @@ bb.ar:                                            ; preds = %attempt_packet_deco
 
 attempt_packet_decode_with_default_suite.exit._crit_edge.i: ; preds = %bb.ar
   %i.iq = icmp eq i32 %.2.ph.i, 1
-  br i1 %i.iq, label %attempt_packet_decode_with_saks.exit, label %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i
+  br i1 %i.iq, label %bb.as, label %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i
 
-attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i: ; preds = %attempt_packet_decode_with_default_suite.exit._crit_edge.i, %bb.ad
+attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i: ; preds = %bb.ad, %attempt_packet_decode_with_default_suite.exit._crit_edge.i
   store ptr null, ptr @sak_for_decode, align 8
   store i32 0, ptr @sak_for_decode_len, align 4
-  br label %attempt_packet_decode_with_saks.exit
-
-.thread40.loopexit.i:                             ; preds = %bb.aj
-  %7 = trunc nuw nsw i64 %indvars.iv.i251 to i32
-  br label %attempt_packet_decode_with_saks.exit
-
-.thread40.loopexit58.i:                           ; preds = %attempt_packet_decode_with_default_suite.exit.i
-  %8 = trunc nuw nsw i64 %indvars.iv.i251 to i32
-  br label %attempt_packet_decode_with_saks.exit
-
-attempt_packet_decode_with_saks.exit:             ; preds = %attempt_packet_decode_with_default_suite.exit._crit_edge.i, %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i, %.thread40.loopexit.i, %.thread40.loopexit58.i
-  %.1.i248 = phi i32 [ -1, %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i ], [ %i.dq, %attempt_packet_decode_with_default_suite.exit._crit_edge.i ], [ %7, %.thread40.loopexit.i ], [ %8, %.thread40.loopexit58.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
-  br label %bb.as
+  br label %.thread
 
-bb.as:                                            ; preds = %attempt_packet_decode_with_saks.exit, %attempt_packet_decode_with_psks.exit
-  %.1207 = phi i32 [ %.1.i248, %attempt_packet_decode_with_saks.exit ], [ %.0206, %attempt_packet_decode_with_psks.exit ] ; 4 uses
-  %9 = icmp sgt i32 %.1207, -1
-  br i1 %9, label %bb.at, label %.thread
+attempt_packet_decode_with_saks.exit:             ; preds = %attempt_packet_decode_with_default_suite.exit.i, %bb.aj
+  %.1.i248.ph = trunc i64 %indvars.iv.i251 to i32
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  br label %bb.at
 
-bb.at:                                            ; preds = %bb.as
+bb.as:                                            ; preds = %attempt_packet_decode_with_default_suite.exit._crit_edge.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  br label %bb.at
+
+bb.at:                                            ; preds = %bb.as, %attempt_packet_decode_with_saks.exit, %.thread.loopexit.i
+  %.1207306 = phi i32 [ %i.dk, %.thread.loopexit.i ], [ %i.dq, %bb.as ], [ %.1.i248.ph, %attempt_packet_decode_with_saks.exit ] ; 2 uses
+  %or.cond301305 = phi i1 [ false, %.thread.loopexit.i ], [ true, %bb.as ], [ true, %attempt_packet_decode_with_saks.exit ] ; 2 uses
   %i.ir = getelementptr i8, ptr %1, i64 416
   %i.is = load ptr, ptr %i.ir, align 8
   %i.it = load i32, ptr @proto_macsec, align 4
@@ -813,12 +804,12 @@ proto_item_set_generated.exit:                    ; preds = %bb.au, %bb.av, %bb.
   call void @proto_tree_move_item(ptr noundef %i.ad, ptr noundef %i.aj, ptr noundef %i.ix)
   br label %.thread
 
-.thread:                                          ; preds = %bb.l, %bb.as, %proto_item_set_generated.exit, %bb.at, %bb.s
-  %.1210285 = phi i32 [ %.1210, %bb.s ], [ %.1210291, %bb.as ], [ %.1210291, %proto_item_set_generated.exit ], [ %.1210291, %bb.at ], [ 0, %bb.l ]
-  %10 = phi i1 [ false, %bb.s ], [ false, %bb.as ], [ true, %proto_item_set_generated.exit ], [ true, %bb.at ], [ false, %bb.l ] ; 3 uses
-  %11 = phi i1 [ true, %bb.s ], [ true, %bb.as ], [ false, %proto_item_set_generated.exit ], [ false, %bb.at ], [ true, %bb.l ]
-  %.2 = phi i32 [ -1, %bb.s ], [ %.1207, %bb.as ], [ %.1207, %proto_item_set_generated.exit ], [ %.1207, %bb.at ], [ -1, %bb.l ] ; 5 uses
-  %.1 = phi i1 [ false, %bb.s ], [ %or.cond, %bb.as ], [ %or.cond, %proto_item_set_generated.exit ], [ %or.cond, %bb.at ], [ false, %bb.l ]
+.thread:                                          ; preds = %attempt_packet_decode_with_psks.exit, %bb.l, %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i, %proto_item_set_generated.exit, %bb.at, %bb.s
+  %.1210285 = phi i32 [ %.1210, %bb.s ], [ %.1210291, %attempt_packet_decode_with_psks.exit ], [ %.1210291, %proto_item_set_generated.exit ], [ %.1210291, %bb.at ], [ %.1210291, %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i ], [ 0, %bb.l ]
+  %6 = phi i1 [ false, %bb.s ], [ false, %attempt_packet_decode_with_psks.exit ], [ true, %proto_item_set_generated.exit ], [ true, %bb.at ], [ false, %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i ], [ false, %bb.l ] ; 3 uses
+  %7 = phi i1 [ true, %bb.s ], [ true, %attempt_packet_decode_with_psks.exit ], [ false, %proto_item_set_generated.exit ], [ false, %bb.at ], [ true, %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i ], [ true, %bb.l ]
+  %.2 = phi i32 [ -1, %bb.s ], [ -1, %attempt_packet_decode_with_psks.exit ], [ %.1207306, %proto_item_set_generated.exit ], [ %.1207306, %bb.at ], [ -1, %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i ], [ -1, %bb.l ] ; 5 uses
+  %.1 = phi i1 [ false, %bb.s ], [ false, %attempt_packet_decode_with_psks.exit ], [ %or.cond301305, %proto_item_set_generated.exit ], [ %or.cond301305, %bb.at ], [ true, %attempt_packet_decode_with_default_suite.exit._crit_edge.thread.i ], [ false, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   br i1 %or.cond246, label %bb.ay, label %bb.ax
 
@@ -831,7 +822,7 @@ bb.ax:                                            ; preds = %.thread
   br label %bb.ba
 
 bb.ay:                                            ; preds = %.thread
-  br i1 %10, label %bb.az, label %bb.ba
+  br i1 %6, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %bb.ay
   %i.ji = getelementptr i8, ptr %1, i64 416
@@ -888,7 +879,7 @@ proto_item_set_generated.exit258:                 ; preds = %bb.bc, %bb.bd, %bb.
   %i.ki = load i32, ptr @ett_macsec_verify, align 4
   %i.kj = call ptr @proto_item_add_subtree(ptr noundef %i.kc, i32 noundef %i.ki) ; 7 uses
   %i.kk = load i32, ptr @hf_macsec_ICV_check_success, align 4
-  %i.kl = zext i1 %10 to i64
+  %i.kl = zext i1 %6 to i64
   %i.km = call ptr @proto_tree_add_boolean(ptr noundef %i.kj, i32 noundef %i.kk, ptr noundef %0, i32 noundef 0, i32 noundef 0, i64 noundef %i.kl) ; 2 uses
   %.not.i259 = icmp eq ptr %i.km, null
   br i1 %.not.i259, label %proto_item_set_generated.exit261, label %bb.bf
@@ -907,7 +898,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %proto_item_set_generated.exit261
 
 proto_item_set_generated.exit261:                 ; preds = %proto_item_set_generated.exit258, %bb.bf, %bb.bg
-  br i1 %10, label %bb.bh, label %.critedge
+  br i1 %6, label %bb.bh, label %.critedge
 
 bb.bh:                                            ; preds = %proto_item_set_generated.exit261
   %i.ks = icmp sgt i32 %.2, -1
@@ -1083,7 +1074,7 @@ proto_item_set_generated.exit270:                 ; preds = %proto_item_set_gene
   %i.nj = load ptr, ptr %i.mx, align 8
   %i.nk = getelementptr i8, ptr %i.nj, i64 8
   store i32 %i.na, ptr %i.nk, align 8
-  br i1 %11, label %bb.by, label %bb.bz
+  br i1 %7, label %bb.by, label %bb.bz
 
 bb.by:                                            ; preds = %.thread297, %proto_item_set_generated.exit270
   %i.nl = load ptr, ptr %i.k, align 8

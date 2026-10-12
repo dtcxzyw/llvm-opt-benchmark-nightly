@@ -205,7 +205,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.js = load i32, ptr %i.fz, align 4            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #22
   store i64 0, ptr %i.g, align 8, !annotation !10
-  %i.jt = call noalias ptr @g_utf8_to_utf16(ptr noundef nonnull %i.ix, i64 noundef -1, ptr noundef null, ptr noundef nonnull %i.g, ptr noundef null) #22 ; 4 uses
+  %i.jt = call noalias ptr @g_utf8_to_utf16(ptr noundef nonnull %i.ix, i64 noundef -1, ptr noundef null, ptr noundef nonnull %i.g, ptr noundef null) #22 ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.jt, null         ; 2 uses
   br i1 %.not.i.i.i.i, label %bb.bh, label %bb.bi
 
@@ -320,7 +320,7 @@ array_get_next.exit.i:                            ; preds = %bb.bn
 bb.bp:                                            ; preds = %bb.bw, %.lr.ph54.i.i.i.i
   %indvars.iv.i.i.i.i = phi i64 [ 0, %.lr.ph54.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %bb.bw ] ; 4 uses
   %i.lm = load i32, ptr %i.fz, align 4            ; 2 uses
-  %i.ln = trunc nuw nsw i64 %indvars.iv.i.i.i.i to i32 ; 4 uses
+  %i.ln = trunc nuw nsw i64 %indvars.iv.i.i.i.i to i32 ; 3 uses
   %.neg.i.i.i.i = sdiv i32 %i.ln, -26
   %i.lo = add i32 %i.lm, -1
   %i.lp = add i32 %i.lo, %.neg.i.i.i.i            ; 2 uses
@@ -360,22 +360,18 @@ array_get.exit.i.i.i.i:                           ; preds = %bb.br
 bb.bt:                                            ; preds = %array_get.exit.i.i.i.i
   %i.mc = and i32 %i.ln, 1
   %i.md = icmp eq i32 %i.mc, 0
+  %10 = lshr i64 %indvars.iv.i.i.i.i, 1
+  %11 = and i64 %10, 2147483647
+  %12 = getelementptr inbounds nuw [2 x i8], ptr %i.jt, i64 %11
+  %13 = load i16, ptr %12, align 2                ; 2 uses
   br i1 %i.md, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt
-  %10 = ashr exact i32 %i.ln, 1
-  %11 = sext i32 %10 to i64
-  %12 = getelementptr inbounds [2 x i8], ptr %i.jt, i64 %11
-  %13 = load i16, ptr %12, align 2
   %i.me = trunc i16 %13 to i8
   br label %bb.bw
 
 bb.bv:                                            ; preds = %bb.bt
-  %.udiv65.i.i.i.i = lshr i64 %indvars.iv.i.i.i.i, 1
-  %14 = and i64 %.udiv65.i.i.i.i, 2147483647
-  %15 = getelementptr inbounds nuw [2 x i8], ptr %i.jt, i64 %14
-  %16 = load i16, ptr %15, align 2
-  %i.mf = lshr i16 %16, 8
+  %i.mf = lshr i16 %13, 8
   %i.mg = trunc nuw i16 %i.mf to i8
   br label %bb.bw
 

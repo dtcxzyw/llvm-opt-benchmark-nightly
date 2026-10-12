@@ -204,13 +204,11 @@ bb.h:                                             ; preds = %bb.g
 SDL_GetPlayerIndexForJoystickID.exit:             ; preds = %thread-pre-split, %._crit_edge.loopexit.split.loop.exit.i
   %.0.lcssa.i = phi i32 [ 0, %thread-pre-split ], [ %i.ab, %._crit_edge.loopexit.split.loop.exit.i ] ; 2 uses
   %i.ac = icmp eq i32 %.0.lcssa.i, %i.v
-  %spec.store.select.i = select i1 %i.ac, i32 -1, i32 %.0.lcssa.i ; 2 uses
-  %2 = icmp sgt i32 %spec.store.select.i, -1
-  br i1 %2, label %bb.i, label %SDL_GetPlayerIndexForJoystickID.exit.thread
+  br i1 %i.ac, label %SDL_GetPlayerIndexForJoystickID.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %SDL_GetPlayerIndexForJoystickID.exit
   %i.ad = load ptr, ptr @SDL_joystick_players, align 8
-  %i.ae = zext nneg i32 %spec.store.select.i to i64
+  %i.ae = zext nneg i32 %.0.lcssa.i to i64
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %i.ae
   store i32 0, ptr %i.af, align 4
   br label %SDL_GetPlayerIndexForJoystickID.exit.thread
@@ -613,13 +611,11 @@ bb.i:                                             ; preds = %bb.h
 SDL_GetPlayerIndexForJoystickID.exit:             ; preds = %bb.g, %._crit_edge.loopexit.split.loop.exit.i
   %.0.lcssa.i = phi i32 [ 0, %bb.g ], [ %i.p, %._crit_edge.loopexit.split.loop.exit.i ] ; 2 uses
   %i.q = icmp eq i32 %.0.lcssa.i, %i.j
-  %spec.store.select.i = select i1 %i.q, i32 -1, i32 %.0.lcssa.i ; 2 uses
-  %2 = icmp sgt i32 %spec.store.select.i, -1
-  br i1 %2, label %bb.j, label %SDL_GetPlayerIndexForJoystickID.exit.thread
+  br i1 %i.q, label %SDL_GetPlayerIndexForJoystickID.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %SDL_GetPlayerIndexForJoystickID.exit
   %i.r = load ptr, ptr @SDL_joystick_players, align 8
-  %i.s = zext nneg i32 %spec.store.select.i to i64
+  %i.s = zext nneg i32 %.0.lcssa.i to i64
   %i.t = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.s
   store i32 0, ptr %i.t, align 4
   br label %SDL_GetPlayerIndexForJoystickID.exit.thread
@@ -909,23 +905,18 @@ bb.f:                                             ; preds = %bb.g, %.lr.ph.i14
 bb.g:                                             ; preds = %bb.f
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i15 = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i15, label %SDL_FindFreePlayerIndex.exit, label %bb.f, !llvm.loop !5
+  br i1 %exitcond.not.i15, label %SDL_FindFreePlayerIndex.exit.thread, label %bb.f, !llvm.loop !5
 
 ._crit_edge.loopexit.split.loop.exit.i:           ; preds = %bb.f
   %i.ai = trunc nuw nsw i64 %indvars.iv.i to i32
-  br label %SDL_FindFreePlayerIndex.exit
+  br label %SDL_FindFreePlayerIndex.exit.thread
 
-SDL_FindFreePlayerIndex.exit:                     ; preds = %bb.g, %._crit_edge.loopexit.split.loop.exit.i
-  %.1 = phi i32 [ %i.ai, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.ac, %bb.g ] ; 2 uses
-  %2 = icmp sgt i32 %.1, -1
-  br i1 %2, label %SDL_FindFreePlayerIndex.exit.thread, label %SDL_FindFreePlayerIndex.exit.thread31
-
-SDL_FindFreePlayerIndex.exit.thread:              ; preds = %.loopexit, %bb.e, %bb.c, %SDL_FindFreePlayerIndex.exit
-  %.130 = phi i32 [ %.1, %SDL_FindFreePlayerIndex.exit ], [ 0, %bb.e ], [ %i.z, %bb.c ], [ %i.v, %.loopexit ]
+SDL_FindFreePlayerIndex.exit.thread:              ; preds = %bb.g, %.loopexit, %._crit_edge.loopexit.split.loop.exit.i, %bb.e, %bb.c
+  %.130 = phi i32 [ %i.v, %.loopexit ], [ %i.ai, %._crit_edge.loopexit.split.loop.exit.i ], [ 0, %bb.e ], [ %i.z, %bb.c ], [ %i.ac, %bb.g ]
   %i.aj = tail call fastcc zeroext i1 @SDL_SetJoystickIDForPlayerIndex(i32 noundef %.130, i32 noundef %0) ; 0 uses
   br label %SDL_FindFreePlayerIndex.exit.thread31
 
-SDL_FindFreePlayerIndex.exit.thread31:            ; preds = %bb.d, %SDL_FindFreePlayerIndex.exit.thread, %SDL_FindFreePlayerIndex.exit
+SDL_FindFreePlayerIndex.exit.thread31:            ; preds = %bb.d, %SDL_FindFreePlayerIndex.exit.thread
   %i.ak = tail call fastcc ptr @SDL_UpdateJoystickNameForID(i32 noundef %0) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
   store i32 1541, ptr %1, align 8

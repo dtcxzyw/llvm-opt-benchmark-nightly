@@ -199,7 +199,7 @@ _kzalloc_noprof.exit:                             ; preds = %.preheader42
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.u
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.u ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.u ] ; 5 uses
   %i.j = getelementptr [32 x i8], ptr %i.h, i64 %indvars.iv ; 16 uses
   %i.k = getelementptr [32 x i8], ptr %0, i64 %indvars.iv ; 6 uses
   %i.l = getelementptr i8, ptr %i.k, i64 8        ; 3 uses
@@ -220,14 +220,14 @@ property_get_pointer.exit.thread60.i:             ; preds = %bb.b
   br label %bb.c
 
 property_get_pointer.exit.thread.i:               ; preds = %.lr.ph
-  br i1 %i.p, label %property_get_pointer.exit.i, label %property_entry_copy_data.exit.loopexit
+  br i1 %i.p, label %property_get_pointer.exit.i, label %property_entry_copy_data.exit
 
 property_get_pointer.exit.i:                      ; preds = %property_get_pointer.exit.thread.i, %bb.b
   %.0.i4147.i = phi ptr [ null, %property_get_pointer.exit.thread.i ], [ %i.q, %bb.b ]
   %i.t = getelementptr i8, ptr %i.k, i64 20       ; 2 uses
   %i.u = load i32, ptr %i.t, align 4
   %i.v = icmp eq i32 %i.u, 5
-  br i1 %i.v, label %property_entry_copy_data.exit.loopexit, label %bb.c
+  br i1 %i.v, label %property_entry_copy_data.exit, label %bb.c
 
 bb.c:                                             ; preds = %property_get_pointer.exit.i, %property_get_pointer.exit.thread60.i
   %i.w = phi ptr [ %i.s, %property_get_pointer.exit.thread60.i ], [ %i.t, %property_get_pointer.exit.i ] ; 2 uses
@@ -244,7 +244,7 @@ bb.d:                                             ; preds = %bb.c
 _kmalloc_noprof.exit.i:                           ; preds = %bb.c
   %i.aa = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef %i.m, i32 noundef 3264) #15 ; 3 uses
   %.not36.i = icmp eq ptr %i.aa, null
-  br i1 %.not36.i, label %property_entry_copy_data.exit.loopexit, label %bb.e
+  br i1 %.not36.i, label %property_entry_copy_data.exit, label %bb.e
 
 bb.e:                                             ; preds = %_kmalloc_noprof.exit.i
   %i.ab = getelementptr i8, ptr %i.j, i64 24
@@ -282,7 +282,6 @@ bb.h:                                             ; preds = %.lr.ph.i.i
   br i1 %.not17.i.i, label %bb.i, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.h
-  %1 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
   %i.an = add i32 %.021.i.i, -1
   %i.ao = icmp sgt i32 %i.an, -1
   br i1 %i.ao, label %.lr.ph22.preheader.i.i, label %property_copy_string_array.exit.i
@@ -335,7 +334,6 @@ property_copy_string_array.exit.thread.i:         ; preds = %bb.i, %bb.k, %bb.g
   br i1 %.not37.i, label %bb.l, label %bb.u
 
 bb.l:                                             ; preds = %property_copy_string_array.exit.thread.i
-  %2 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
   %i.be = getelementptr i8, ptr %i.j, i64 20
   %i.bf = load i32, ptr %i.be, align 4
   %i.bg = icmp eq i32 %i.bf, 4
@@ -386,30 +384,23 @@ bb.p:                                             ; preds = %.loopexit.i.i
   br label %.thread.sink.split.i
 
 .thread.sink.split.i:                             ; preds = %.loopexit.i.i, %bb.p, %bb.j
-  %3 = phi i32 [ %1, %bb.j ], [ %2, %bb.p ], [ %2, %.loopexit.i.i ]
   %.sink.in.i = phi ptr [ %i.ax, %bb.j ], [ %i.j, %bb.p ], [ %i.j, %.loopexit.i.i ]
   %.sink.i = load ptr, ptr %.sink.in.i, align 8
   tail call void @kfree(ptr noundef %.sink.i) #14
   br label %property_entry_copy_data.exit
 
-property_entry_copy_data.exit.loopexit:           ; preds = %_kmalloc_noprof.exit.i, %property_get_pointer.exit.i, %property_get_pointer.exit.thread.i
-  %.0.i34.ph = phi i64 [ -22, %property_get_pointer.exit.i ], [ -12, %_kmalloc_noprof.exit.i ], [ -61, %property_get_pointer.exit.thread.i ]
-  %4 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %property_entry_copy_data.exit
-
-property_entry_copy_data.exit:                    ; preds = %property_entry_copy_data.exit.loopexit, %property_copy_string_array.exit.i, %.thread.sink.split.i
-  %5 = phi i32 [ %3, %.thread.sink.split.i ], [ %1, %property_copy_string_array.exit.i ], [ %4, %property_entry_copy_data.exit.loopexit ]
-  %.0.i34 = phi i64 [ -12, %.thread.sink.split.i ], [ -12, %property_copy_string_array.exit.i ], [ %.0.i34.ph, %property_entry_copy_data.exit.loopexit ]
-  %6 = add i32 %5, -1                             ; 2 uses
-  %7 = icmp sgt i32 %6, -1
-  br i1 %7, label %.lr.ph57.preheader, label %._crit_edge
+property_entry_copy_data.exit:                    ; preds = %property_get_pointer.exit.thread.i, %property_get_pointer.exit.i, %_kmalloc_noprof.exit.i, %property_copy_string_array.exit.i, %.thread.sink.split.i
+  %.0.i34 = phi i64 [ -12, %.thread.sink.split.i ], [ -12, %property_copy_string_array.exit.i ], [ -22, %property_get_pointer.exit.i ], [ -12, %_kmalloc_noprof.exit.i ], [ -61, %property_get_pointer.exit.thread.i ]
+  %.not84 = icmp eq i64 %indvars.iv, 0
+  br i1 %.not84, label %._crit_edge, label %.lr.ph57.preheader
 
 .lr.ph57.preheader:                               ; preds = %property_entry_copy_data.exit
-  %8 = zext nneg i32 %6 to i64
+  %1 = add nuw i64 %indvars.iv, 4294967295
+  %2 = and i64 %1, 4294967295
   br label %.lr.ph57
 
 .lr.ph57:                                         ; preds = %.lr.ph57.preheader, %property_entry_free_data.exit
-  %indvars.iv72 = phi i64 [ %8, %.lr.ph57.preheader ], [ %indvars.iv.next73, %property_entry_free_data.exit ] ; 3 uses
+  %indvars.iv72 = phi i64 [ %2, %.lr.ph57.preheader ], [ %indvars.iv.next73, %property_entry_free_data.exit ] ; 3 uses
   %i.bx = getelementptr [32 x i8], ptr %i.h, i64 %indvars.iv72 ; 7 uses
   %i.by = getelementptr i8, ptr %i.bx, i64 20
   %i.bz = load i32, ptr %i.by, align 4

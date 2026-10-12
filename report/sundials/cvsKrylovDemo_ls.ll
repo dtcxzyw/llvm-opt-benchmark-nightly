@@ -204,7 +204,7 @@ declare i32 @CVodeInit(ptr noundef, ptr noundef, double noundef, ptr noundef) lo
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @f(double noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef captures(none) initializes((2400, 2408)) %3) #0 {
 bb.a:
-  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #10 ; 15 uses
+  %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %1) #10 ; 14 uses
   %i.b = tail call ptr @N_VGetArrayPointer(ptr noundef %2) #10 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 2408
   %i.d = load double, ptr %i.c, align 8, !tbaa !36
@@ -242,7 +242,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %.peel.next
 
 .peel.next:                                       ; preds = %.loopexit.peel.begin, %bb.c
-  %indvars.iv128 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next129, %.loopexit.peel.begin ] ; 9 uses
+  %indvars.iv128 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next129, %.loopexit.peel.begin ] ; 8 uses
   %i.aa = trunc nuw nsw i64 %indvars.iv128 to i32
   %i.ab = uitofp nneg i32 %i.aa to double
   %i.ac = fadd double %i.ab, -5.000000e-01
@@ -296,34 +296,28 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.bw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bv, <2 x double> %i.bo, <2 x double> %i.bt) ; 2 uses
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.an
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
-  %4 = load double, ptr %i.by, align 8, !tbaa !13 ; 4 uses
   %i.bz = trunc nuw nsw i64 %i.aq to i32
-  %5 = mul i64 %indvars.iv128, 85899345920
-  %6 = ashr exact i64 %5, 29
-  %7 = getelementptr i8, ptr %i.a, i64 %6
-  %8 = getelementptr i8, ptr %7, i64 24
-  %9 = load double, ptr %8, align 8, !tbaa !13    ; 4 uses
-  %10 = insertelement <2 x double> poison, double %4, i64 0
-  %11 = insertelement <2 x double> %10, double %9, i64 1
-  %12 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ay, <2 x double> splat (double -2.000000e+00), <2 x double> %11) ; 2 uses
-  %i.ca = extractelement <2 x double> %12, i64 0
-  %13 = fadd double %4, %i.ca
-  %14 = fmul double %i.v, %13
-  %i.cb = extractelement <2 x double> %12, i64 1
-  %15 = fadd double %9, %i.cb
-  %16 = fmul double %i.v, %15
-  %17 = fsub double %4, %4
-  %i.cc = fmul double %i.x, %17
-  %18 = fsub double %9, %9
-  %i.cd = fmul double %i.x, %18
+  %4 = load <2 x double>, ptr %i.by, align 8, !tbaa !13 ; 5 uses
+  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ay, <2 x double> splat (double -2.000000e+00), <2 x double> %4) ; 2 uses
+  %foldExtExtBinop = fadd <2 x double> %4, %5
+  %i.ca = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %6 = fmul double %i.v, %i.ca
+  %foldExtExtBinop140 = fadd <2 x double> %4, %5
+  %i.cb = extractelement <2 x double> %foldExtExtBinop140, i64 1
+  %7 = fmul double %i.v, %i.cb
+  %8 = fsub <2 x double> %4, %4                   ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %i.cc = fmul double %i.x, %9
+  %10 = extractelement <2 x double> %8, i64 1
+  %i.cd = fmul double %i.x, %10
   %i.ce = extractelement <2 x double> %i.bw, i64 0
-  %i.cf = fadd double %i.ce, %14
+  %i.cf = fadd double %i.ce, %6
   %i.cg = fadd double %i.cc, %i.cf
   %i.ch = fadd double %i.bj, %i.cg
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.an
   store double %i.ch, ptr %i.ci, align 8, !tbaa !13
   %i.cj = extractelement <2 x double> %i.bw, i64 1
-  %i.ck = fadd double %i.cj, %16
+  %i.ck = fadd double %i.cj, %7
   %i.cl = fadd double %i.cd, %i.ck
   %i.cm = fadd double %i.bl, %i.cl
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.an
@@ -384,7 +378,7 @@ bb.d:                                             ; preds = %.peel.next, %bb.d
   %i.ee = load double, ptr %i.ed, align 8, !tbaa !13 ; 2 uses
   %i.ef = getelementptr [8 x i8], ptr %i.cq, i64 %i.ec
   %i.eg = load double, ptr %i.ef, align 8, !tbaa !13 ; 2 uses
-  %i.eh = shl i32 %i.dz, 1
+  %i.eh = shl nuw i32 %i.dz, 1
   %i.ei = add i32 %i.eh, 2                        ; 2 uses
   %i.ej = sext i32 %i.ei to i64
   %i.ek = getelementptr [8 x i8], ptr %i.cr, i64 %i.ej

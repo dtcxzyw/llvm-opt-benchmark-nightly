@@ -204,15 +204,14 @@ bb.j:                                             ; preds = %bb.g
   br i1 %.not491, label %nrv_alloc.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.o = lshr i32 %.sroa.090.4.extract.trunc139, 20
-  %6 = and i32 %i.o, 2047                         ; 2 uses
-  %.not492.not = icmp eq i32 %6, 0                ; 2 uses
+  %i.o = lshr i32 %.sroa.090.4.extract.trunc139, 20 ; 2 uses
+  %.not492.not = icmp eq i32 %i.o, 0              ; 2 uses
   br i1 %.not492.not, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.p = and i64 %.pre-phi, 4503599627370495
   %.sroa.072.4.insert.insert81 = or disjoint i64 %i.p, 4607182418800017408
-  %i.q = add nsw i32 %6, -1023
+  %i.q = add nsw i32 %i.o, -1023
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.k
@@ -615,12 +614,12 @@ bb.k:                                             ; preds = %bb.j
   %i.u = bitcast double %.sroa.0.1 to i64         ; 2 uses
   %.sroa.0.4.extract.shift37 = lshr i64 %i.u, 32
   %.sroa.0.4.extract.trunc38 = trunc nuw nsw i64 %.sroa.0.4.extract.shift37 to i32
-  %i.v = and i32 %.sroa.0.4.extract.trunc38, -2146435073
+  %i.v = and i32 %.sroa.0.4.extract.trunc38, 1048575
   %i.w = shl nuw nsw i32 %spec.store.select, 22
   %i.x = add nuw nsw i32 %i.w, 1013972992
   %i.y = or disjoint i32 %i.v, %i.x
-  %.sroa.0.4.insert.ext40 = zext i32 %i.y to i64
-  %.sroa.0.4.insert.shift41 = shl nuw i64 %.sroa.0.4.insert.ext40, 32
+  %.sroa.0.4.insert.ext40 = zext nneg i32 %i.y to i64
+  %.sroa.0.4.insert.shift41 = shl nuw nsw i64 %.sroa.0.4.insert.ext40, 32
   %.sroa.0.4.insert.mask42 = and i64 %i.u, 4294967295
   %.sroa.0.4.insert.insert43 = or disjoint i64 %.sroa.0.4.insert.shift41, %.sroa.0.4.insert.mask42
   %i.z = bitcast i64 %.sroa.0.4.insert.insert43 to double

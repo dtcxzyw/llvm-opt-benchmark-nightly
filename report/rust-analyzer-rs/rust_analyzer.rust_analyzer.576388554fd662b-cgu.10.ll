@@ -202,7 +202,7 @@ bb.a:
   %i.l = load i64, ptr %i.f, align 8, !range !13, !noalias !287, !noundef !5
   %i.m = trunc nuw i64 %i.l to i1
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.o = load i64, ptr %i.n, align 8, !noalias !287, !noundef !5 ; 11 uses
+  %i.o = load i64, ptr %i.n, align 8, !noalias !287, !noundef !5 ; 12 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.q = load i32, ptr %i.p, align 8, !range !288, !noalias !287, !noundef !5 ; 3 uses
   %i.r = urem i64 %i.o, 60                        ; 4 uses
@@ -303,10 +303,7 @@ bb.e:                                             ; preds = %bb.d, %_RNvMs2_NtCs
   %.sroa.04.040.i.i24294249.i = phi i32 [ %.sroa.04.040.i.i2430.i, %_RNvMs2_NtCsjsYc2335iSi_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i ], [ 0, %bb.d ] ; 2 uses
   %.sroa.016.1.i.i4448.i = phi i64 [ %i.ac, %_RNvMs2_NtCsjsYc2335iSi_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i ], [ 0, %bb.d ] ; 2 uses
   %.pn.i = phi i64 [ 23, %_RNvMs2_NtCsjsYc2335iSi_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i ], [ 24, %bb.d ] ; 2 uses
-  %2 = udiv i64 %i.o, 86400
-  %3 = trunc nuw nsw i64 %2 to i32                ; 2 uses
-  %4 = add nsw i32 %3, -4371588
-  %or.cond.i.i16.i.i = icmp ult i32 %4, -7304484
+  %or.cond.i.i16.i.i = icmp samesign ugt i64 %i.o, 377705203199
   br i1 %or.cond.i.i16.i.i, label %bb.k, label %bb.g, !prof !291
 
 bb.f:                                             ; preds = %bb.c
@@ -314,6 +311,8 @@ bb.f:                                             ; preds = %bb.c
   unreachable
 
 bb.g:                                             ; preds = %bb.e
+  %2 = udiv i64 %i.o, 86400
+  %3 = trunc nuw nsw i64 %2 to i32
   %i.bo = sub nuw nsw i32 869850581, %3           ; 2 uses
   %i.bp = zext nneg i32 %i.bo to i64
   %i.bq = mul nuw nsw i64 %i.bp, 3853261555       ; 2 uses

@@ -205,9 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit747: ; preds = %bb
   br label %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stEN3gmx20EqualCaseInsensitiveESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev.exit1244
 
 bb.gb:                                            ; preds = %.lr.ph5141, %bb.vm
-  %.05145140 = phi i32 [ 0, %.lr.ph5141 ], [ %i.eet, %bb.vm ] ; 8 uses
+  %.05145140 = phi i32 [ 0, %.lr.ph5141 ], [ %i.eet, %bb.vm ] ; 12 uses
   %.05695138 = phi i1 [ true, %.lr.ph5141 ], [ %.2571, %bb.vm ] ; 9 uses
-  %.05755137 = phi i32 [ 0, %.lr.ph5141 ], [ %.6581, %bb.vm ] ; 7 uses
   %.05835136 = phi i32 [ 0, %.lr.ph5141 ], [ %.3586, %bb.vm ] ; 11 uses
   %i.ahf = load ptr, ptr %i.wd, align 8, !tbaa !70
   %i.ahg = sext i32 %.05145140 to i64             ; 2 uses
@@ -353,13 +352,14 @@ bb.gi:                                            ; preds = %.critedge699
   store i64 %i.ajd, ptr %storemerge.i.i.i.i.i, align 8, !tbaa !33
   br label %bb.gl
 
-bb.gj:                                            ; preds = %bb.id
-  switch i32 %.1, label %bb.pu [
+bb.gj:                                            ; preds = %._crit_edge5085
+  %160 = add nsw i32 %.05145140, 1                ; 4 uses
+  %161 = trunc nuw nsw i64 %indvars.iv5615 to i32
+  switch i32 %161, label %bb.pu [
     i32 0, label %bb.ie
     i32 1, label %bb.il
     i32 2, label %bb.ip
     i32 3, label %bb.jz
-    i32 -409203, label %bb.qa
   ]
 
 .loopexit1610:                                    ; preds = %.noexc.i749
@@ -404,8 +404,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit772: ; preds = %_Z
 
 bb.gl:                                            ; preds = %bb.gi, %bb.id
   %indvars.iv5615 = phi i64 [ 0, %bb.gi ], [ %indvars.iv.next5616, %bb.id ] ; 9 uses
-  %.15155090 = phi i32 [ %.05145140, %bb.gi ], [ %.2, %bb.id ] ; 5 uses
-  %.15765089 = phi i32 [ %.05755137, %bb.gi ], [ %.5580, %bb.id ]
   %i.ajn = getelementptr inbounds nuw i8, ptr @__const._Z9do_vsitesN3gmx8ArrayRefIK17PreprocessResidueEEP22PreprocessingAtomTypesP7t_atomsP8t_symtabPSt6vectorINS_11BasicVectorIfEESaISC_EERNS_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLSH_95EEEPSA_I16VsiteTypeAndSignSaISL_EEfbRKNSt10filesystem7__cxx114pathE.bPartial, i64 %indvars.iv5615
   %i.ajo = load i8, ptr %i.ajn, align 1, !tbaa !168, !range !82, !noundef !83
   %i.ajp = zext nneg i8 %i.ajo to i64
@@ -768,12 +766,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit820: ; preds = %_Z
 .lr.ph5084:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit820
   %i.anf = getelementptr inbounds nuw [136 x i8], ptr @__const._Z9do_vsitesN3gmx8ArrayRefIK17PreprocessResidueEEP22PreprocessingAtomTypesP7t_atomsP8t_symtabPSt6vectorINS_11BasicVectorIfEESaISC_EERNS_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLSH_95EEEPSA_I16VsiteTypeAndSignSaISL_EEfbRKNSt10filesystem7__cxx114pathE.atnms, i64 %indvars.iv5615 ; 3 uses
   %i.ang = load i32, ptr %3, align 8, !tbaa !24   ; 2 uses
-  %i.anh = icmp slt i32 %.15155090, %i.ang
+  %i.anh = icmp slt i32 %.05145140, %i.ang
   br i1 %i.anh, label %.lr.ph5084.split.preheader, label %.critedge.us
 
 .lr.ph5084.split.preheader:                       ; preds = %.lr.ph5084
   %i.ani = load ptr, ptr %i.anf, align 8, !tbaa !79
-  %i.anj = sext i32 %.15155090 to i64             ; 2 uses
+  %i.anj = sext i32 %.05145140 to i64             ; 2 uses
   br label %.lr.ph5084.split
 
 .critedge.us:                                     ; preds = %.lr.ph5084, %.critedge.us
@@ -793,7 +791,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit820: ; preds = %_Z
   %.25775082 = phi i32 [ 0, %.lr.ph5084.split.preheader ], [ %.3578.lcssa, %.critedge ] ; 3 uses
   %i.anp = getelementptr inbounds nuw [4 x i8], ptr %i.bd, i64 %indvars.iv5612 ; 2 uses
   store i32 -409203, ptr %i.anp, align 4, !tbaa !15
-  %i.anq = icmp slt i32 %.15155090, %i.ann
+  %i.anq = icmp slt i32 %.05145140, %i.ann
   br i1 %i.anq, label %.lr.ph5076.preheader, label %.critedge
 
 .lr.ph5076.preheader:                             ; preds = %.lr.ph5084.split
@@ -992,14 +990,14 @@ bb.hw:                                            ; preds = %bb.hi, %bb.hj
   br i1 %.not676, label %._crit_edge5085, label %.lr.ph5084.split, !llvm.loop !122
 
 ._crit_edge5085:                                  ; preds = %.critedge.us, %.critedge
-  %.2577.lcssa = phi i32 [ %.3578.lcssa, %.critedge ], [ 0, %.critedge.us ] ; 3 uses
+  %.2577.lcssa = phi i32 [ %.3578.lcssa, %.critedge ], [ 0, %.critedge.us ] ; 7 uses
   %.0488.lcssa.in = phi i64 [ %indvars.iv.next5613, %.critedge ], [ %indvars.iv.next5607, %.critedge.us ]
   %.0488.lcssa = trunc i64 %.0488.lcssa.in to i32 ; 2 uses
   %i.apz = icmp eq i64 %indvars.iv5615, 3
   %i.aqa = add nsw i32 %.0488.lcssa, -3
   %.0574 = select i1 %i.apz, i32 %i.aqa, i32 %.0488.lcssa ; 2 uses
   %i.aqb = icmp slt i32 %.2577.lcssa, %.0574
-  br i1 %i.aqb, label %bb.hx, label %160
+  br i1 %i.aqb, label %bb.hx, label %bb.gj
 
 bb.hx:                                            ; preds = %._crit_edge5085
   call void @llvm.lifetime.start.p0(ptr nonnull %148) #26
@@ -1033,20 +1031,10 @@ bb.ic:                                            ; preds = %bb.ib, %bb.ia
   call void @llvm.lifetime.end.p0(ptr nonnull %148) #26
   br label %.body844
 
-160:                                              ; preds = %._crit_edge5085
-  %161 = add nsw i32 %.15155090, 1
-  %162 = trunc nuw nsw i64 %indvars.iv5615 to i32
-  br label %bb.id
-
-bb.id:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit820, %160
-  %.5580 = phi i32 [ %.2577.lcssa, %160 ], [ %.15765089, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit820 ] ; 9 uses
-  %.2 = phi i32 [ %161, %160 ], [ %.15155090, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit820 ] ; 4 uses
-  %.1 = phi i32 [ %162, %160 ], [ -409203, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit820 ] ; 2 uses
+bb.id:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit820
   %indvars.iv.next5616 = add nuw nsw i64 %indvars.iv5615, 1
   %i.aqi = icmp samesign ult i64 %indvars.iv5615, 3
-  %163 = icmp eq i32 %.1, -409203
-  %164 = and i1 %i.aqi, %163
-  br i1 %164, label %bb.gl, label %bb.gj, !llvm.loop !123
+  br i1 %i.aqi, label %bb.gl, label %bb.qa, !llvm.loop !123
 
 bb.ie:                                            ; preds = %bb.gj
   %i.aqj = load ptr, ptr @debug, align 8, !tbaa !14
@@ -1262,7 +1250,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80.i: ; preds = %_
   %i.auy = call float @llvm.fmuladd.f32(float %i.ask, float %i.aux, float %i.aus)
   %i.auz = fadd float %i.aut, %i.aux
   %i.ava = fdiv float %i.auy, %i.auz
-  %i.avb = invoke fastcc noundef i32 @_ZL16gen_vsites_6ringP7t_atomsN3gmx8ArrayRefI16VsiteTypeAndSignEERNS1_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLS6_95EEEiPifffb(ptr noundef nonnull readonly %3, ptr %i.vz, ptr noundef nonnull align 8 dereferenceable(21280) %6, i32 noundef %.5580, ptr noundef nonnull readonly %i.bd, float noundef %i.aqx, float noundef %i.ark, float noundef %i.ava, i1 noundef zeroext true)
+  %i.avb = invoke fastcc noundef i32 @_ZL16gen_vsites_6ringP7t_atomsN3gmx8ArrayRefI16VsiteTypeAndSignEERNS1_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLS6_95EEEiPifffb(ptr noundef nonnull readonly %3, ptr %i.vz, ptr noundef nonnull align 8 dereferenceable(21280) %6, i32 noundef %.2577.lcssa, ptr noundef nonnull readonly %i.bd, float noundef %i.aqx, float noundef %i.ark, float noundef %i.ava, i1 noundef zeroext true)
           to label %_ZL14gen_vsites_pheP7t_atomsN3gmx8ArrayRefI16VsiteTypeAndSignEERNS1_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLS6_95EEEiPiNS2_IK19VirtualSiteTopologyEE.exit unwind label %.loopexit.split-lp1602.loopexit.split-lp.loopexit
 
 bb.ij:                                            ; preds = %bb.ig
@@ -1395,7 +1383,7 @@ bb.in:                                            ; preds = %bb.il, %bb.im
   %i.awq = ptrtoint ptr %i.awn to i64
   %i.awr = sub i64 %i.awp, %i.awq
   %i.aws = getelementptr inbounds nuw i8, ptr %i.awn, i64 %i.awr
-  %i.awt = invoke fastcc noundef i32 @_ZL14gen_vsites_trpP22PreprocessingAtomTypesPSt6vectorIN3gmx11BasicVectorIfEESaIS4_EEPP6t_atomPPPPcPPiPS1_I16VsiteTypeAndSignSaISH_EEP8t_symtabSF_NS2_8ArrayRefIKS4_EEP7t_atomsNSN_ISH_EERNS2_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLSU_95EEEiSF_iNSN_IK19VirtualSiteTopologyEE(ptr noundef %2, ptr noundef %136, ptr noundef %i.be, ptr noundef %i.bf, ptr noundef %i.bc, ptr noundef %137, ptr noundef %4, ptr noundef %i.az, i64 %i.awm, ptr noundef nonnull %3, i64 %i.wa, ptr noundef nonnull align 8 dereferenceable(21280) %6, i32 noundef %.5580, ptr noundef %i.bd, i32 noundef %i.dk, ptr %i.awn, ptr %i.aws)
+  %i.awt = invoke fastcc noundef i32 @_ZL14gen_vsites_trpP22PreprocessingAtomTypesPSt6vectorIN3gmx11BasicVectorIfEESaIS4_EEPP6t_atomPPPPcPPiPS1_I16VsiteTypeAndSignSaISH_EEP8t_symtabSF_NS2_8ArrayRefIKS4_EEP7t_atomsNSN_ISH_EERNS2_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLSU_95EEEiSF_iNSN_IK19VirtualSiteTopologyEE(ptr noundef %2, ptr noundef %136, ptr noundef %i.be, ptr noundef %i.bf, ptr noundef %i.bc, ptr noundef %137, ptr noundef %4, ptr noundef %i.az, i64 %i.awm, ptr noundef nonnull %3, i64 %i.wa, ptr noundef nonnull align 8 dereferenceable(21280) %6, i32 noundef %.2577.lcssa, ptr noundef %i.bd, i32 noundef %i.dk, ptr %i.awn, ptr %i.aws)
           to label %bb.io unwind label %.loopexit.split-lp1602.loopexit.split-lp.loopexit
 
 bb.io:                                            ; preds = %bb.in
@@ -1426,7 +1414,7 @@ bb.ir:                                            ; preds = %bb.ip, %bb.iq
   %i.axi = sub i64 %i.axg, %i.axh
   %i.axj = getelementptr inbounds nuw i8, ptr %i.axe, i64 %i.axi ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac) #26
-  %.not.i846 = icmp eq i32 %.5580, 12
+  %.not.i846 = icmp eq i32 %.2577.lcssa, 12
   br i1 %.not.i846, label %._crit_edge.i.i.i850, label %bb.is
 
 bb.is:                                            ; preds = %bb.ir
@@ -1829,7 +1817,7 @@ bb.kb:                                            ; preds = %bb.jz, %bb.ka
   %i.bnv = sub i64 %i.bnt, %i.bnu
   %i.bnw = getelementptr inbounds nuw i8, ptr %i.bnr, i64 %i.bnv ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab) #26
-  %i.bnx = add i32 %.5580, -10
+  %i.bnx = add i32 %.2577.lcssa, -10
   %or.cond.i = icmp ult i32 %i.bnx, -4
   br i1 %or.cond.i, label %bb.kc, label %bb.kk
 
@@ -2232,7 +2220,7 @@ bb.pe:                                            ; preds = %bb.pd, %bb.pc
   %.1245.8.i = phi float [ %i.ctl, %bb.pd ], [ %.1245.7.i, %bb.pc ]
   %.1243.8.i = phi float [ %i.ctn, %bb.pd ], [ %.1243.7.i, %bb.pc ] ; 4 uses
   %i.ctq = add nuw nsw i32 %.1250.8.i, 3
-  %.not337.i = icmp eq i32 %i.ctq, %.5580
+  %.not337.i = icmp eq i32 %i.ctq, %.2577.lcssa
   br i1 %.not337.i, label %bb.pn, label %bb.pf
 
 bb.pf:                                            ; preds = %bb.pe
@@ -2458,14 +2446,15 @@ bb.pz:                                            ; preds = %bb.py, %bb.px
   call void @llvm.lifetime.end.p0(ptr nonnull %149) #26
   br label %.body844
 
-bb.qa:                                            ; preds = %bb.pt, %bb.jy, %bb.io, %_ZL14gen_vsites_pheP7t_atomsN3gmx8ArrayRefI16VsiteTypeAndSignEERNS1_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLS6_95EEEiPiNS2_IK19VirtualSiteTopologyEE.exit, %bb.gj
-  %.1584 = phi i32 [ %i.awc, %_ZL14gen_vsites_pheP7t_atomsN3gmx8ArrayRefI16VsiteTypeAndSignEERNS1_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLS6_95EEEiPiNS2_IK19VirtualSiteTopologyEE.exit ], [ %i.awu, %bb.io ], [ %i.bni, %bb.jy ], [ %i.cxc, %bb.pt ], [ %.05835136, %bb.gj ] ; 3 uses
-  %i.cxf = icmp sgt i32 %.2, 0
+bb.qa:                                            ; preds = %bb.id, %bb.pt, %bb.jy, %bb.io, %_ZL14gen_vsites_pheP7t_atomsN3gmx8ArrayRefI16VsiteTypeAndSignEERNS1_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLS6_95EEEiPiNS2_IK19VirtualSiteTopologyEE.exit
+  %.263556361 = phi i32 [ %160, %_ZL14gen_vsites_pheP7t_atomsN3gmx8ArrayRefI16VsiteTypeAndSignEERNS1_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLS6_95EEEiPiNS2_IK19VirtualSiteTopologyEE.exit ], [ %160, %bb.io ], [ %160, %bb.jy ], [ %160, %bb.pt ], [ %.05145140, %bb.id ] ; 3 uses
+  %.1584 = phi i32 [ %i.awc, %_ZL14gen_vsites_pheP7t_atomsN3gmx8ArrayRefI16VsiteTypeAndSignEERNS1_16EnumerationArrayI19InteractionFunction18InteractionsOfTypeLS6_95EEEiPiNS2_IK19VirtualSiteTopologyEE.exit ], [ %i.awu, %bb.io ], [ %i.bni, %bb.jy ], [ %i.cxc, %bb.pt ], [ %.05835136, %bb.id ] ; 3 uses
+  %i.cxf = icmp sgt i32 %.263556361, 0
   br i1 %i.cxf, label %.lr.ph5095, label %.critedge2
 
 .lr.ph5095:                                       ; preds = %bb.qa
   %i.cxg = load ptr, ptr %i.wd, align 8, !tbaa !70
-  %i.cxh = zext nneg i32 %.2 to i64
+  %i.cxh = zext nneg i32 %.263556361 to i64
   br label %bb.qb
 
 bb.qb:                                            ; preds = %.lr.ph5095, %bb.qc
@@ -2487,8 +2476,7 @@ bb.qc:                                            ; preds = %bb.qb
 
 .critedge2:                                       ; preds = %bb.qc, %.critedge2.loopexit.split.loop.exit, %sub_1, %sub_0, %bb.qa, %bb.gc, %.tail, %bb.gb, %.critedge699
   %.2585 = phi i32 [ %.05835136, %.tail ], [ %.05835136, %bb.gc ], [ %.05835136, %.critedge699 ], [ %.05835136, %bb.gb ], [ %.1584, %bb.qa ], [ %.05835136, %sub_0 ], [ %.05835136, %sub_1 ], [ %.1584, %.critedge2.loopexit.split.loop.exit ], [ %.1584, %bb.qc ] ; 3 uses
-  %.6581 = phi i32 [ %.05755137, %.tail ], [ %.05755137, %bb.gc ], [ %.05755137, %.critedge699 ], [ %.05755137, %bb.gb ], [ %.5580, %bb.qa ], [ %.05755137, %sub_0 ], [ %.05755137, %sub_1 ], [ %.5580, %.critedge2.loopexit.split.loop.exit ], [ %.5580, %bb.qc ]
-  %.4 = phi i32 [ %.05145140, %.tail ], [ %.05145140, %bb.gc ], [ %.05145140, %.critedge699 ], [ %.05145140, %bb.gb ], [ %.2, %bb.qa ], [ %.05145140, %sub_0 ], [ %.05145140, %sub_1 ], [ %i.cxn, %.critedge2.loopexit.split.loop.exit ], [ 0, %bb.qc ] ; 7 uses
+  %.4 = phi i32 [ %.05145140, %.tail ], [ %.05145140, %bb.gc ], [ %.05145140, %.critedge699 ], [ %.05145140, %bb.gb ], [ %.263556361, %bb.qa ], [ %.05145140, %sub_0 ], [ %.05145140, %sub_1 ], [ %i.cxn, %.critedge2.loopexit.split.loop.exit ], [ 0, %bb.qc ] ; 7 uses
   %i.cxo = sext i32 %.4 to i64                    ; 4 uses
   %i.cxp = getelementptr inbounds [12 x i8], ptr %i.vz, i64 %i.cxo ; 5 uses
   %i.cxq = getelementptr inbounds nuw i8, ptr %i.cxp, i64 4

@@ -160,7 +160,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ah = load i64, ptr %i.i, align 8, !range !5, !noalias !40, !noundef !6
   %i.ai = trunc nuw i64 %i.ah to i1
   %i.aj = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.ak = load i64, ptr %i.aj, align 8, !noalias !40, !noundef !6 ; 11 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !noalias !40, !noundef !6 ; 12 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.am = load i32, ptr %i.al, align 8, !range !8, !noalias !40, !noundef !6 ; 3 uses
   %i.an = urem i64 %i.ak, 60                      ; 4 uses
@@ -261,13 +261,12 @@ bb.g:                                             ; preds = %bb.f, %_RNvMs2_NtCs
   %.sroa.04.040.i.i24294249.i.i = phi i32 [ %.sroa.04.040.i.i2430.i.i, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 0, %bb.f ] ; 2 uses
   %.sroa.016.1.i.i4448.i.i = phi i64 [ %i.ay, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 0, %bb.f ] ; 2 uses
   %.pn.i.i = phi i64 [ 23, %_RNvMs2_NtCst0rBzRTPJg_4time4timeNtB5_4Time17adjusting_sub_std.exit.i.thread.i.i ], [ 24, %bb.f ] ; 2 uses
-  %6 = udiv i64 %i.ak, 86400
-  %7 = trunc nuw nsw i64 %6 to i32                ; 2 uses
-  %8 = add nsw i32 %7, -4371588
-  %or.cond.i.i16.i.i.i = icmp ult i32 %8, -7304484
+  %or.cond.i.i16.i.i.i = icmp samesign ugt i64 %i.ak, 377705203199
   br i1 %or.cond.i.i16.i.i.i, label %.invoke.i, label %bb.h, !prof !44
 
 bb.h:                                             ; preds = %bb.g
+  %6 = udiv i64 %i.ak, 86400
+  %7 = trunc nuw nsw i64 %6 to i32
   %i.ck = sub nuw nsw i32 869850581, %7           ; 2 uses
   %i.cl = zext nneg i32 %i.ck to i64
   %i.cm = mul nuw nsw i64 %i.cl, 3853261555       ; 2 uses

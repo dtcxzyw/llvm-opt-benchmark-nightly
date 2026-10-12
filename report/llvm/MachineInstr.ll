@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.lr.ph.split.us.split.split.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.split.split.i:                    ; preds = %.lr.ph.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.us.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.us.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.us.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %indvars.iv.i ; 2 uses
   %i.l = load i32, ptr %i.k, align 8
   %i.m = and i32 %i.l, 16777471
@@ -215,7 +215,7 @@ _ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.us.i: ; preds 
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %i.o = load i32, ptr %i.n, align 4, !tbaa !68
   %.not.i = icmp eq i32 %i.o, %.fr.i
-  br i1 %.not.i, label %_ZNK4llvm12MachineInstr25findRegisterDefOperandIdxENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit, label %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.us.i
+  br i1 %.not.i, label %.loopexit, label %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.us.i
 
 _ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.us.i: ; preds = %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.us.i, %.lr.ph.split.us.split.split.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -223,7 +223,7 @@ _ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.us.i: ;
   br i1 %.not40.us.i, label %_ZN4llvm12MachineInstr22findRegisterDefOperandENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit.thread, label %.lr.ph.split.us.split.split.i, !llvm.loop !4
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.i
-  %indvars.iv131.i = phi i64 [ %indvars.iv.next132.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.i ], [ 0, %.lr.ph.i ] ; 4 uses
+  %indvars.iv131.i = phi i64 [ %indvars.iv.next132.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.i ], [ 0, %.lr.ph.i ] ; 2 uses
   %i.p = getelementptr inbounds nuw [32 x i8], ptr %i.i, i64 %indvars.iv131.i ; 2 uses
   %i.q = load i32, ptr %i.p, align 8
   %i.r = and i32 %i.q, 16777471
@@ -272,20 +272,16 @@ _ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !5
 
 _ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.i: ; preds = %bb.c
-  br i1 %i.u, label %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.i, label %_ZNK4llvm12MachineInstr25findRegisterDefOperandIdxENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit
+  br i1 %i.u, label %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.i, label %.loopexit
 
 _ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.thread.i: ; preds = %_ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i.i.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.i, %bb.d, %.lr.ph.split.i
   %indvars.iv.next132.i = add nuw nsw i64 %indvars.iv131.i, 1 ; 2 uses
   %.not40.i = icmp eq i64 %indvars.iv.next132.i, %i.j
   br i1 %.not40.i, label %_ZN4llvm12MachineInstr22findRegisterDefOperandENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit.thread, label %.lr.ph.split.i, !llvm.loop !4
 
-_ZNK4llvm12MachineInstr25findRegisterDefOperandIdxENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit: ; preds = %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.i, %.lr.ph.i.i.i.i.i.i.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.us.i
-  %spec.select.i.in = phi i64 [ %indvars.iv131.i, %.lr.ph.i.i.i.i.i.i.i ], [ %indvars.iv.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.us.i ], [ %indvars.iv131.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.i ]
-  %4 = and i64 %spec.select.i.in, 4294967295
-  %5 = icmp eq i64 %4, 4294967295
+_ZNK4llvm12MachineInstr25findRegisterDefOperandIdxENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i
   %.not.not = icmp eq ptr %i.i, null
-  %or.cond = select i1 %5, i1 true, i1 %.not.not
-  br i1 %or.cond, label %_ZN4llvm12MachineInstr22findRegisterDefOperandENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit.thread, label %.loopexit
+  br i1 %.not.not, label %_ZN4llvm12MachineInstr22findRegisterDefOperandENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit.thread, label %.loopexit
 
 bb.e:                                             ; preds = %bb.a
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -366,7 +362,7 @@ _ZN4llvm12MachineInstr22findRegisterDefOperandENS_8RegisterEPKNS_18TargetRegiste
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.g, %_ZNK4llvm12MachineInstr25findRegisterDefOperandIdxENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit, %_ZN4llvm12MachineInstr22findRegisterDefOperandENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit.thread
+.loopexit:                                        ; preds = %bb.g, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.i, %_ZNK4llvm14MCRegisterInfo13isSubRegisterENS_10MCRegisterES1_.exit.us.i, %_ZNK4llvm12MachineInstr25findRegisterDefOperandIdxENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit, %_ZN4llvm12MachineInstr22findRegisterDefOperandENS_8RegisterEPKNS_18TargetRegisterInfoEbb.exit.thread
   ret void
 }
 

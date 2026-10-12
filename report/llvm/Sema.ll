@@ -205,7 +205,7 @@ _ZN4llvm14TimeTraceScopeD2Ev.exit:                ; preds = %bb.g, %bb.f, %_ZNSt
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !1426
   call void @_ZN5clang10SemaOpenMP39DiagnoseUnterminatedOpenMPDeclareTargetEv(ptr noundef nonnull align 8 dereferenceable(552) %i.bk) #27
   call void @_ZN5clang4Sema38DiagnosePrecisionLossInComplexDivisionEv(ptr noundef nonnull align 8 dereferenceable(18640) %0) #27
-  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 2832 ; 14 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 2832 ; 13 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 2872 ; 3 uses
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !971 ; 8 uses
   %i.bo = ashr i32 %i.bn, 2                       ; 2 uses
@@ -260,48 +260,26 @@ bb.h:                                             ; preds = %"_ZN9__gnu_cxx5__op
   br label %._crit_edge.i.i.i.i
 
 ._crit_edge.i.i.i.i:                              ; preds = %._crit_edge.loopexit.i.i.i.i, %_ZN4llvm14TimeTraceScopeD2Ev.exit
-  %.sroa.087.0.lcssa.i.i.i.i = phi i32 [ 0, %_ZN4llvm14TimeTraceScopeD2Ev.exit ], [ %i.ci, %._crit_edge.loopexit.i.i.i.i ] ; 8 uses
+  %.sroa.087.0.lcssa.i.i.i.i = phi i32 [ 0, %_ZN4llvm14TimeTraceScopeD2Ev.exit ], [ %i.ci, %._crit_edge.loopexit.i.i.i.i ] ; 7 uses
   %i.cj = sub nsw i32 %i.bn, %.sroa.087.0.lcssa.i.i.i.i
   switch i32 %i.cj, label %"_ZSt9remove_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0ET_SE_SE_T0_.exit" [
-    i32 3, label %40
-    i32 2, label %bb.j
-    i32 1, label %bb.m
+    i32 3, label %bb.i
+    i32 2, label %bb.l
+    i32 1, label %bb.o
   ]
 
-40:                                               ; preds = %._crit_edge.i.i.i.i
-  %41 = icmp slt i32 %.sroa.087.0.lcssa.i.i.i.i, 0
-  br i1 %41, label %bb.i, label %46
+bb.i:                                             ; preds = %._crit_edge.i.i.i.i
+  %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 2864
+  %40 = load ptr, ptr %i.ck, align 8, !tbaa !970
+  %i.cl = zext nneg i32 %.sroa.087.0.lcssa.i.i.i.i to i64
+  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %40, i64 %i.cl
+  %41 = load ptr, ptr %i.cm, align 8, !tbaa !2777
+  %42 = call fastcc noundef zeroext i1 @_ZL22ShouldRemoveFromUnusedPN5clang4SemaEPKNS_14DeclaratorDeclE(ptr noundef nonnull %0, ptr noundef %41)
+  br i1 %42, label %"_ZSt9__find_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEN9__gnu_cxx5__ops10_Iter_predIZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0EEET_SI_SI_T0_.exit.i.i", label %bb.j
 
-bb.i:                                             ; preds = %40
-  %42 = load ptr, ptr %i.bl, align 8, !tbaa !970
-  %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 2840
-  %43 = load i32, ptr %i.ck, align 8, !tbaa !971
-  %i.cl = zext i32 %43 to i64
-  %i.cm = getelementptr inbounds nuw [8 x i8], ptr %42, i64 %i.cl
-  %44 = sext i32 %.sroa.087.0.lcssa.i.i.i.i to i64
-  %45 = getelementptr inbounds [8 x i8], ptr %i.cm, i64 %44
-  br label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit71.i.i.i.i"
-
-46:                                               ; preds = %40
-  %47 = getelementptr inbounds nuw i8, ptr %0, i64 2864
-  %48 = load ptr, ptr %47, align 8, !tbaa !970
-  %49 = zext nneg i32 %.sroa.087.0.lcssa.i.i.i.i to i64
-  %50 = getelementptr inbounds nuw [8 x i8], ptr %48, i64 %49
-  br label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit71.i.i.i.i"
-
-"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit71.i.i.i.i": ; preds = %46, %bb.i
-  %.0.i.i70.i.i.i.i = phi ptr [ %45, %bb.i ], [ %50, %46 ]
-  %51 = load ptr, ptr %.0.i.i70.i.i.i.i, align 8, !tbaa !2777
-  %52 = call fastcc noundef zeroext i1 @_ZL22ShouldRemoveFromUnusedPN5clang4SemaEPKNS_14DeclaratorDeclE(ptr noundef nonnull %0, ptr noundef %51)
-  br i1 %52, label %"_ZSt9__find_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEN9__gnu_cxx5__ops10_Iter_predIZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0EEET_SI_SI_T0_.exit.i.i", label %53
-
-53:                                               ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit71.i.i.i.i"
-  %54 = add nsw i32 %.sroa.087.0.lcssa.i.i.i.i, 1
-  br label %bb.j
-
-bb.j:                                             ; preds = %53, %._crit_edge.i.i.i.i
-  %.sroa.087.1.i.i.i.i = phi i32 [ %54, %53 ], [ %.sroa.087.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 5 uses
-  %i.cn = icmp slt i32 %.sroa.087.1.i.i.i.i, 0
+bb.j:                                             ; preds = %bb.i
+  %43 = add nsw i32 %.sroa.087.0.lcssa.i.i.i.i, 1 ; 3 uses
+  %i.cn = icmp slt i32 %.sroa.087.0.lcssa.i.i.i.i, -1
   br i1 %i.cn, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -310,30 +288,28 @@ bb.k:                                             ; preds = %bb.j
   %i.cq = load i32, ptr %i.cp, align 8, !tbaa !971
   %i.cr = zext i32 %i.cq to i64
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.co, i64 %i.cr
-  %i.ct = sext i32 %.sroa.087.1.i.i.i.i to i64
+  %i.ct = sext i32 %43 to i64
   %i.cu = getelementptr inbounds [8 x i8], ptr %i.cs, i64 %i.ct
   br label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i"
 
-bb.l:                                             ; preds = %bb.j
+bb.l:                                             ; preds = %._crit_edge.i.i.i.i, %bb.j
+  %.sroa.087.1.i.i.i.i892 = phi i32 [ %43, %bb.j ], [ %.sroa.087.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 2864
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !970
-  %i.cx = zext nneg i32 %.sroa.087.1.i.i.i.i to i64
+  %i.cx = zext nneg i32 %.sroa.087.1.i.i.i.i892 to i64
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.cw, i64 %i.cx
   br label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i"
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i": ; preds = %bb.l, %bb.k
+  %.sroa.087.1.i.i.i.i891 = phi i32 [ %43, %bb.k ], [ %.sroa.087.1.i.i.i.i892, %bb.l ] ; 3 uses
   %.0.i.i72.i.i.i.i = phi ptr [ %i.cu, %bb.k ], [ %i.cy, %bb.l ]
   %i.cz = load ptr, ptr %.0.i.i72.i.i.i.i, align 8, !tbaa !2777
   %i.da = call fastcc noundef zeroext i1 @_ZL22ShouldRemoveFromUnusedPN5clang4SemaEPKNS_14DeclaratorDeclE(ptr noundef nonnull %0, ptr noundef %i.cz)
-  br i1 %i.da, label %"_ZSt9__find_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEN9__gnu_cxx5__ops10_Iter_predIZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0EEET_SI_SI_T0_.exit.i.i", label %55
+  br i1 %i.da, label %"_ZSt9__find_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEN9__gnu_cxx5__ops10_Iter_predIZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0EEET_SI_SI_T0_.exit.i.i", label %bb.m
 
-55:                                               ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i"
-  %56 = add nsw i32 %.sroa.087.1.i.i.i.i, 1
-  br label %bb.m
-
-bb.m:                                             ; preds = %55, %._crit_edge.i.i.i.i
-  %.sroa.087.2.i.i.i.i = phi i32 [ %56, %55 ], [ %.sroa.087.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 4 uses
-  %i.db = icmp slt i32 %.sroa.087.2.i.i.i.i, 0
+bb.m:                                             ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i"
+  %44 = add nsw i32 %.sroa.087.1.i.i.i.i891, 1    ; 3 uses
+  %i.db = icmp slt i32 %.sroa.087.1.i.i.i.i891, -1
   br i1 %i.db, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
@@ -342,18 +318,20 @@ bb.n:                                             ; preds = %bb.m
   %i.de = load i32, ptr %i.dd, align 8, !tbaa !971
   %i.df = zext i32 %i.de to i64
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %i.df
-  %i.dh = sext i32 %.sroa.087.2.i.i.i.i to i64
+  %i.dh = sext i32 %44 to i64
   %i.di = getelementptr inbounds [8 x i8], ptr %i.dg, i64 %i.dh
   br label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit75.i.i.i.i"
 
-bb.o:                                             ; preds = %bb.m
+bb.o:                                             ; preds = %._crit_edge.i.i.i.i, %bb.m
+  %.sroa.087.2.i.i.i.i896 = phi i32 [ %44, %bb.m ], [ %.sroa.087.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %0, i64 2864
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !970
-  %i.dl = zext nneg i32 %.sroa.087.2.i.i.i.i to i64
+  %i.dl = zext nneg i32 %.sroa.087.2.i.i.i.i896 to i64
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.dk, i64 %i.dl
   br label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit75.i.i.i.i"
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit75.i.i.i.i": ; preds = %bb.o, %bb.n
+  %.sroa.087.2.i.i.i.i895 = phi i32 [ %44, %bb.n ], [ %.sroa.087.2.i.i.i.i896, %bb.o ]
   %.0.i.i74.i.i.i.i = phi ptr [ %i.di, %bb.n ], [ %i.dm, %bb.o ]
   %i.dn = load ptr, ptr %.0.i.i74.i.i.i.i, align 8, !tbaa !2777
   %i.do = call fastcc noundef zeroext i1 @_ZL22ShouldRemoveFromUnusedPN5clang4SemaEPKNS_14DeclaratorDeclE(ptr noundef nonnull %0, ptr noundef %i.dn)
@@ -378,8 +356,8 @@ bb.o:                                             ; preds = %bb.m
   %i.dr = or disjoint i32 %indvars113.le127.i.i.i.i, 3
   br label %"_ZSt9__find_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEN9__gnu_cxx5__ops10_Iter_predIZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0EEET_SI_SI_T0_.exit.i.i"
 
-"_ZSt9__find_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEN9__gnu_cxx5__ops10_Iter_predIZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0EEET_SI_SI_T0_.exit.i.i": ; preds = %.loopexit.loopexit.split.loop.exit121.i.i.i.i, %.loopexit.loopexit.split.loop.exit119.i.i.i.i, %.loopexit.loopexit.split.loop.exit117.i.i.i.i, %.loopexit.loopexit.split.loop.exit.i.i.i.i, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit75.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit71.i.i.i.i"
-  %.sroa.021.0.in.sroa.speculated.i.i.i.i = phi i32 [ %.sroa.087.1.i.i.i.i, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i" ], [ %i.dr, %.loopexit.loopexit.split.loop.exit121.i.i.i.i ], [ %.sroa.087.2.i.i.i.i, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit75.i.i.i.i" ], [ %.sroa.087.0.lcssa.i.i.i.i, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit71.i.i.i.i" ], [ %i.dq, %.loopexit.loopexit.split.loop.exit119.i.i.i.i ], [ %i.dp, %.loopexit.loopexit.split.loop.exit117.i.i.i.i ], [ %indvars113.le129.i.i.i.i, %.loopexit.loopexit.split.loop.exit.i.i.i.i ] ; 5 uses
+"_ZSt9__find_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEN9__gnu_cxx5__ops10_Iter_predIZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0EEET_SI_SI_T0_.exit.i.i": ; preds = %.loopexit.loopexit.split.loop.exit121.i.i.i.i, %.loopexit.loopexit.split.loop.exit119.i.i.i.i, %.loopexit.loopexit.split.loop.exit117.i.i.i.i, %.loopexit.loopexit.split.loop.exit.i.i.i.i, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit75.i.i.i.i", %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i", %bb.i
+  %.sroa.021.0.in.sroa.speculated.i.i.i.i = phi i32 [ %.sroa.087.1.i.i.i.i891, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit73.i.i.i.i" ], [ %i.dr, %.loopexit.loopexit.split.loop.exit121.i.i.i.i ], [ %.sroa.087.2.i.i.i.i895, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN5clang4Sema25ActOnEndOfTranslationUnitEvE3$_0EclINS2_10LazyVectorIPKNS2_14DeclaratorDeclENS2_18ExternalSemaSourceEXadL_ZNSB_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplISA_EEEELj2ELj2EE8iteratorEEEbT_.exit75.i.i.i.i" ], [ %.sroa.087.0.lcssa.i.i.i.i, %bb.i ], [ %i.dq, %.loopexit.loopexit.split.loop.exit119.i.i.i.i ], [ %i.dp, %.loopexit.loopexit.split.loop.exit117.i.i.i.i ], [ %indvars113.le129.i.i.i.i, %.loopexit.loopexit.split.loop.exit.i.i.i.i ] ; 5 uses
   %i.ds = icmp eq i32 %.sroa.021.0.in.sroa.speculated.i.i.i.i, %i.bn
   br i1 %i.ds, label %"_ZSt9remove_ifIN5clang10LazyVectorIPKNS0_14DeclaratorDeclENS0_18ExternalSemaSourceEXadL_ZNS5_25ReadUnusedFileScopedDeclsERN4llvm15SmallVectorImplIS4_EEEELj2ELj2EE8iteratorEZNS0_4Sema25ActOnEndOfTranslationUnitEvE3$_0ET_SE_SE_T0_.exit", label %.preheader.i.i
 

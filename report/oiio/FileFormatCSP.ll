@@ -205,7 +205,7 @@ bb.fe:                                            ; preds = %bb.fd, %bb.fc, %._c
   %i.wk = tail call ptr @__errno_location() #29   ; 6 uses
   %i.wl = load i32, ptr %i.wk, align 4, !tbaa !10 ; 2 uses
   store i32 0, ptr %i.wk, align 4, !tbaa !10
-  %i.wm = call noundef i64 @__isoc23_strtol(ptr noundef %i.wj, ptr noundef nonnull %i.a, i32 noundef 10) ; 4 uses
+  %i.wm = call noundef i64 @__isoc23_strtol(ptr noundef %i.wj, ptr noundef nonnull %i.a, i32 noundef 10) ; 5 uses
   %i.wn = load ptr, ptr %i.a, align 8, !tbaa !112
   %i.wo = icmp eq ptr %i.wn, %i.wj
   br i1 %i.wo, label %bb.ff, label %bb.fj
@@ -258,7 +258,7 @@ bb.fm:                                            ; preds = %bb.fl
   br label %bb.fn
 
 bb.fn:                                            ; preds = %bb.fm, %bb.fl
-  %i.wz = trunc nsw i64 %i.wm to i32              ; 2 uses
+  %i.wz = trunc nsw i64 %i.wm to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   %i.xa = load ptr, ptr %39, align 8, !tbaa !25   ; 2 uses
   %i.xb = icmp eq ptr %i.xa, %i.vx
@@ -506,8 +506,7 @@ bb.gl:                                            ; preds = %bb.gj, %_ZNSt12__sh
   %i.zj = getelementptr inbounds nuw i8, ptr %43, i64 16 ; 2 uses
   %i.zk = getelementptr inbounds nuw i8, ptr %42, i64 8
   %i.zl = getelementptr inbounds nuw i8, ptr %42, i64 16
-  %smax1122 = call i32 @llvm.smax.i32(i32 %i.wz, i32 1)
-  %wide.trip.count = zext nneg i32 %smax1122 to i64
+  %wide.trip.count = and i64 %i.wm, 4294967295
   br label %bb.gm
 
 bb.gm:                                            ; preds = %.lr.ph1087, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit705
