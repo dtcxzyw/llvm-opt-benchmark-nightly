@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
 
 .critedge:                                        ; preds = %.critedge.loopexit.unr-lcssa, %bb.c, %bb.a
   %.0.lcssa = phi i32 [ -1, %bb.a ], [ %i.t, %.critedge.loopexit.unr-lcssa ], [ %i.x, %bb.c ] ; 3 uses
-  %i.y = add nsw i32 %.0.lcssa, 1                 ; 12 uses
+  %i.y = add i32 %.0.lcssa, 1                     ; 12 uses
   %i.z = icmp eq i32 %i.y, %2
   br i1 %i.z, label %bb.o, label %bb.d
 
@@ -218,8 +218,8 @@ bb.d:                                             ; preds = %.critedge
   br i1 %.not.i.i, label %Vec_IntAlloc.exit.thread.i72, label %Vec_IntAlloc.exit.i
 
 Vec_IntAlloc.exit.i:                              ; preds = %bb.d
-  %5 = zext nneg i32 %spec.store.select.i.i to i64
-  %i.ac = shl nuw nsw i64 %5, 2                   ; 2 uses
+  %5 = sext i32 %spec.store.select.i.i to i64
+  %i.ac = shl nsw i64 %5, 2                       ; 2 uses
   %i.ad = tail call noalias ptr @malloc(i64 noundef %i.ac) #20 ; 5 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !25
@@ -228,8 +228,8 @@ Vec_IntAlloc.exit.i:                              ; preds = %bb.d
   br i1 %.not.i, label %Vec_IntAlloc.exit.i70, label %bb.e
 
 bb.e:                                             ; preds = %Vec_IntAlloc.exit.i
-  %6 = zext nneg i32 %i.y to i64
-  %i.af = shl nuw nsw i64 %6, 2
+  %6 = sext i32 %i.y to i64
+  %i.af = shl nsw i64 %6, 2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.ad, i8 0, i64 %i.af, i1 false)
   br label %Vec_IntAlloc.exit.i70
 
@@ -257,8 +257,8 @@ Vec_IntAlloc.exit.i70:                            ; preds = %Vec_IntAlloc.exit.i
   br i1 %.not.i71, label %Vec_IntStart.exit73, label %bb.f
 
 bb.f:                                             ; preds = %Vec_IntAlloc.exit.i70
-  %7 = zext nneg i32 %i.y to i64
-  %i.ao = shl nuw nsw i64 %7, 2
+  %7 = sext i32 %i.y to i64
+  %i.ao = shl nsw i64 %7, 2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.am, i8 0, i64 %i.ao, i1 false)
   br label %Vec_IntStart.exit73
 
@@ -346,8 +346,8 @@ Vec_IntAlloc.exit.thread.i86:                     ; preds = %Vec_IntStart.exit80
   br label %Vec_IntStart.exit87
 
 Vec_IntAlloc.exit.i84:                            ; preds = %Vec_IntStart.exit80
-  %8 = zext nneg i32 %spec.store.select.i.i to i64
-  %i.br = shl nuw nsw i64 %8, 2
+  %8 = sext i32 %spec.store.select.i.i to i64
+  %i.br = shl nsw i64 %8, 2
   %i.bs = tail call noalias ptr @malloc(i64 noundef %i.br) #20 ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   store ptr %i.bs, ptr %i.bt, align 8, !tbaa !25
@@ -356,8 +356,8 @@ Vec_IntAlloc.exit.i84:                            ; preds = %Vec_IntStart.exit80
   br i1 %.not.i85, label %Vec_IntStart.exit87, label %bb.k
 
 bb.k:                                             ; preds = %Vec_IntAlloc.exit.i84
-  %9 = zext nneg i32 %i.y to i64
-  %i.bu = shl nuw nsw i64 %9, 2
+  %9 = sext i32 %i.y to i64
+  %i.bu = shl nsw i64 %9, 2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bs, i8 0, i64 %i.bu, i1 false)
   br label %Vec_IntStart.exit87
 
