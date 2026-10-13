@@ -205,11 +205,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.c = ptrtoaddr ptr %1 to i64
-  %i.d = ptrtoaddr ptr %0 to i64
+  %i.c = ptrtoaddr ptr %0 to i64
+  %i.d = ptrtoaddr ptr %1 to i64
   %wide.trip.count = zext i32 %i.b to i64         ; 8 uses
   %min.iters.check = icmp ult i32 %i.b, 4
-  %i.e = sub i64 %i.d, %i.c
+  %i.e = sub i64 %i.c, %i.d
   %diff.check = icmp ugt i64 %i.e, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -612,14 +612,14 @@ bb.g:                                             ; preds = %bb.a, %bb.f
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @PrelinEval8(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) #7 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 10 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !73   ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load i32, ptr %i.d, align 8, !tbaa !175  ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 200
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !176  ; 22 uses
-  %i.h = ptrtoaddr ptr %i.g to i64                ; 10 uses
+  %i.h = ptrtoaddr ptr %i.g to i64                ; 5 uses
   %i.i = load i16, ptr %0, align 2, !tbaa !45
   %i.j = lshr i16 %i.i, 8
   %i.k = zext nneg i16 %i.j to i64                ; 2 uses
@@ -736,21 +736,20 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %min.iters.check, label %.lr.ph.split.preheader462, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.preheader
-  %3 = sub i64 %i.a, %i.h                         ; 2 uses
-  %4 = shl nsw i64 %i.cb, 1
-  %i.cc = sub i64 %4, %3
+  %3 = shl nsw i64 %i.cb, 1
+  %4 = sub i64 %i.a, %i.h                         ; 4 uses
+  %i.cc = sub i64 %3, %4
   %diff.check = icmp ugt i64 %i.cc, -16
   %i.cd = shl nsw i64 %i.ca, 1
-  %i.ce = sub i64 %i.cd, %3
+  %i.ce = sub i64 %i.cd, %4
   %diff.check330 = icmp ugt i64 %i.ce, -16
   %conflict.rdx = or i1 %diff.check, %diff.check330
-  %5 = sub i64 %i.a, %i.h                         ; 2 uses
   %i.cf = shl nsw i64 %i.bz, 1
-  %i.cg = sub i64 %i.cf, %5
+  %i.cg = sub i64 %i.cf, %4
   %diff.check331 = icmp ugt i64 %i.cg, -16
   %conflict.rdx332 = or i1 %conflict.rdx, %diff.check331
   %i.ch = shl nsw i64 %i.by, 1
-  %i.ci = sub i64 %i.ch, %5
+  %i.ci = sub i64 %i.ch, %4
   %diff.check333 = icmp ugt i64 %i.ci, -16
   %conflict.rdx334 = or i1 %conflict.rdx332, %diff.check333
   br i1 %conflict.rdx334, label %.lr.ph.split.preheader462, label %vector.ph
@@ -822,21 +821,20 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check351, label %.lr.ph.split.us.split.preheader460, label %vector.memcheck342
 
 vector.memcheck342:                               ; preds = %.lr.ph.split.us.split.preheader
-  %6 = sub i64 %i.a, %i.h                         ; 2 uses
-  %7 = shl nsw i64 %i.dk, 1
-  %i.dl = sub i64 %7, %6
+  %5 = shl nsw i64 %i.dk, 1
+  %6 = sub i64 %i.a, %i.h                         ; 4 uses
+  %i.dl = sub i64 %5, %6
   %diff.check343 = icmp ugt i64 %i.dl, -16
   %i.dm = shl nsw i64 %i.dj, 1
   %i.dn = sub i64 %i.dm, %6
   %diff.check344 = icmp ugt i64 %i.dn, -16
   %conflict.rdx345 = or i1 %diff.check343, %diff.check344
-  %8 = sub i64 %i.a, %i.h                         ; 2 uses
   %i.do = shl nsw i64 %i.di, 1
-  %i.dp = sub i64 %i.do, %8
+  %i.dp = sub i64 %i.do, %6
   %diff.check346 = icmp ugt i64 %i.dp, -16
   %conflict.rdx347 = or i1 %conflict.rdx345, %diff.check346
   %i.dq = shl nsw i64 %i.dh, 1
-  %i.dr = sub i64 %i.dq, %8
+  %i.dr = sub i64 %i.dq, %6
   %diff.check348 = icmp ugt i64 %i.dr, -16
   %conflict.rdx349 = or i1 %conflict.rdx347, %diff.check348
   br i1 %conflict.rdx349, label %.lr.ph.split.us.split.preheader460, label %vector.ph352
@@ -906,21 +904,20 @@ middle.block367:                                  ; preds = %vector.body360
   br i1 %min.iters.check379, label %.lr.ph.split.us.split.us.split.preheader458, label %vector.memcheck370
 
 vector.memcheck370:                               ; preds = %.lr.ph.split.us.split.us.split.preheader
-  %9 = sub i64 %i.a, %i.h                         ; 2 uses
-  %10 = shl nsw i64 %i.es, 1
-  %i.et = sub i64 %10, %9
+  %7 = shl nsw i64 %i.es, 1
+  %8 = sub i64 %i.a, %i.h                         ; 4 uses
+  %i.et = sub i64 %7, %8
   %diff.check371 = icmp ugt i64 %i.et, -16
   %i.eu = shl nsw i64 %i.er, 1
-  %i.ev = sub i64 %i.eu, %9
+  %i.ev = sub i64 %i.eu, %8
   %diff.check372 = icmp ugt i64 %i.ev, -16
   %conflict.rdx373 = or i1 %diff.check371, %diff.check372
-  %11 = sub i64 %i.a, %i.h                        ; 2 uses
   %i.ew = shl nsw i64 %i.eq, 1
-  %i.ex = sub i64 %i.ew, %11
+  %i.ex = sub i64 %i.ew, %8
   %diff.check374 = icmp ugt i64 %i.ex, -16
   %conflict.rdx375 = or i1 %conflict.rdx373, %diff.check374
   %i.ey = shl nsw i64 %i.dh, 1
-  %i.ez = sub i64 %i.ey, %11
+  %i.ez = sub i64 %i.ey, %8
   %diff.check376 = icmp ugt i64 %i.ez, -16
   %conflict.rdx377 = or i1 %conflict.rdx375, %diff.check376
   br i1 %conflict.rdx377, label %.lr.ph.split.us.split.us.split.preheader458, label %vector.ph380
@@ -990,21 +987,20 @@ middle.block395:                                  ; preds = %vector.body388
   br i1 %min.iters.check407, label %.lr.ph.split.us.split.us.split.us.split.preheader456, label %vector.memcheck398
 
 vector.memcheck398:                               ; preds = %.lr.ph.split.us.split.us.split.us.split.preheader
-  %12 = sub i64 %i.a, %i.h                        ; 2 uses
-  %13 = shl nsw i64 %i.ga, 1
-  %i.gb = sub i64 %13, %12
+  %9 = shl nsw i64 %i.ga, 1
+  %10 = sub i64 %i.a, %i.h                        ; 4 uses
+  %i.gb = sub i64 %9, %10
   %diff.check399 = icmp ugt i64 %i.gb, -16
   %i.gc = shl nsw i64 %i.fz, 1
-  %i.gd = sub i64 %i.gc, %12
+  %i.gd = sub i64 %i.gc, %10
   %diff.check400 = icmp ugt i64 %i.gd, -16
   %conflict.rdx401 = or i1 %diff.check399, %diff.check400
-  %14 = sub i64 %i.a, %i.h                        ; 2 uses
   %i.ge = shl nsw i64 %i.fy, 1
-  %i.gf = sub i64 %i.ge, %14
+  %i.gf = sub i64 %i.ge, %10
   %diff.check402 = icmp ugt i64 %i.gf, -16
   %conflict.rdx403 = or i1 %conflict.rdx401, %diff.check402
   %i.gg = shl nsw i64 %i.dh, 1
-  %i.gh = sub i64 %i.gg, %14
+  %i.gh = sub i64 %i.gg, %10
   %diff.check404 = icmp ugt i64 %i.gh, -16
   %conflict.rdx405 = or i1 %conflict.rdx403, %diff.check404
   br i1 %conflict.rdx405, label %.lr.ph.split.us.split.us.split.us.split.preheader456, label %vector.ph408
@@ -1074,21 +1070,20 @@ middle.block423:                                  ; preds = %vector.body416
   br i1 %min.iters.check435, label %.lr.ph.split.us.split.us.split.us.split.us.split.preheader454, label %vector.memcheck426
 
 vector.memcheck426:                               ; preds = %.lr.ph.split.us.split.us.split.us.split.us.split.preheader
-  %15 = sub i64 %i.a, %i.h                        ; 2 uses
-  %16 = shl nsw i64 %i.hi, 1
-  %i.hj = sub i64 %16, %15
+  %11 = shl nsw i64 %i.hi, 1
+  %12 = sub i64 %i.a, %i.h                        ; 4 uses
+  %i.hj = sub i64 %11, %12
   %diff.check427 = icmp ugt i64 %i.hj, -16
   %i.hk = shl nsw i64 %i.hh, 1
-  %i.hl = sub i64 %i.hk, %15
+  %i.hl = sub i64 %i.hk, %12
   %diff.check428 = icmp ugt i64 %i.hl, -16
   %conflict.rdx429 = or i1 %diff.check427, %diff.check428
-  %17 = sub i64 %i.a, %i.h                        ; 2 uses
   %i.hm = shl nsw i64 %i.hg, 1
-  %i.hn = sub i64 %i.hm, %17
+  %i.hn = sub i64 %i.hm, %12
   %diff.check430 = icmp ugt i64 %i.hn, -16
   %conflict.rdx431 = or i1 %conflict.rdx429, %diff.check430
   %i.ho = shl nsw i64 %i.dh, 1
-  %i.hp = sub i64 %i.ho, %17
+  %i.hp = sub i64 %i.ho, %12
   %diff.check432 = icmp ugt i64 %i.hp, -16
   %conflict.rdx433 = or i1 %conflict.rdx431, %diff.check432
   br i1 %conflict.rdx433, label %.lr.ph.split.us.split.us.split.us.split.us.split.preheader454, label %vector.ph436

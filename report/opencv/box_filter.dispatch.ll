@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN2cv12cpu_baseline12_GLOBAL__N_16RowSumIiiEclEPKhPhii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3, i32 noundef %4) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 5 uses
-  %i.b = ptrtoaddr ptr %2 to i64                  ; 5 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %5 = alloca %"class.cv::utils::trace::details::Region", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   call void @_ZN2cv5utils5trace7details6RegionC1ERKNS3_21LocationStaticStorageE(ptr noundef nonnull align 8 dereferenceable(12) %5, ptr noundef nonnull align 8 dereferenceable(32) @_ZZN2cv12cpu_baseline12_GLOBAL__N_16RowSumIiiEclEPKhPhiiE24__cv_trace_location_fn82)
@@ -242,26 +242,25 @@ bb.a:
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %6 = sub i64 %i.b, %i.a                         ; 2 uses
-  %7 = shl nsw i64 %i.p, 2
-  %i.q = sub i64 %7, %6
+  %6 = shl nsw i64 %i.p, 2
+  %7 = sub i64 %i.b, %i.a                         ; 5 uses
+  %i.q = sub i64 %6, %7
   %diff.check = icmp ugt i64 %i.q, -32
   %i.r = shl nsw i64 %i.o, 2
-  %i.s = sub i64 %i.r, %6
+  %i.s = sub i64 %i.r, %7
   %diff.check393 = icmp ugt i64 %i.s, -32
   %conflict.rdx = or i1 %diff.check, %diff.check393
-  %8 = sub i64 %i.b, %i.a                         ; 2 uses
   %i.t = shl nsw i64 %i.n, 2
-  %i.u = sub i64 %i.t, %8
+  %i.u = sub i64 %i.t, %7
   %diff.check394 = icmp ugt i64 %i.u, -32
   %conflict.rdx395 = or i1 %conflict.rdx, %diff.check394
   %i.v = shl nsw i64 %i.m, 2
-  %i.w = sub i64 %i.v, %8
+  %i.w = sub i64 %i.v, %7
   %diff.check396 = icmp ugt i64 %i.w, -32
   %conflict.rdx397 = or i1 %conflict.rdx395, %diff.check396
-  %9 = sub i64 %i.a, %i.b
-  %diff.check398 = icmp ugt i64 %9, -32
-  %conflict.rdx399 = or i1 %conflict.rdx397, %diff.check398
+  %8 = add i64 %7, -1
+  %diff.check405 = icmp ult i64 %8, 31
+  %conflict.rdx399 = or i1 %conflict.rdx397, %diff.check405
   br i1 %conflict.rdx399, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -358,17 +357,17 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %min.iters.check416, label %scalar.ph415.preheader, label %vector.memcheck409
 
 vector.memcheck409:                               ; preds = %.lr.ph240
-  %10 = sub i64 %i.b, %i.a                        ; 2 uses
-  %11 = shl nsw i64 %i.bj, 2
-  %i.bk = sub i64 %11, %10
+  %9 = shl nsw i64 %i.bj, 2
+  %10 = sub i64 %i.b, %i.a                        ; 3 uses
+  %i.bk = sub i64 %9, %10
   %diff.check410 = icmp ugt i64 %i.bk, -32
   %i.bl = shl nsw i64 %i.bi, 2
   %i.bm = sub i64 %i.bl, %10
   %diff.check411 = icmp ugt i64 %i.bm, -32
   %conflict.rdx412 = or i1 %diff.check410, %diff.check411
-  %12 = sub i64 %i.a, %i.b
-  %diff.check413 = icmp ugt i64 %12, -32
-  %conflict.rdx414 = or i1 %conflict.rdx412, %diff.check413
+  %11 = add i64 %10, -1
+  %diff.check428 = icmp ult i64 %11, 31
+  %conflict.rdx414 = or i1 %conflict.rdx412, %diff.check428
   br i1 %conflict.rdx414, label %scalar.ph415.preheader, label %vector.ph417
 
 vector.ph417:                                     ; preds = %vector.memcheck409
@@ -771,8 +770,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN2cv12cpu_baseline12_GLOBAL__N_16RowSumIddEclEPKhPhii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3, i32 noundef %4) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 5 uses
-  %i.b = ptrtoaddr ptr %2 to i64                  ; 5 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %5 = alloca %"class.cv::utils::trace::details::Region", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   call void @_ZN2cv5utils5trace7details6RegionC1ERKNS3_21LocationStaticStorageE(ptr noundef nonnull align 8 dereferenceable(12) %5, ptr noundef nonnull align 8 dereferenceable(32) @_ZZN2cv12cpu_baseline12_GLOBAL__N_16RowSumIddEclEPKhPhiiE24__cv_trace_location_fn82)
@@ -808,26 +807,25 @@ bb.a:
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %6 = sub i64 %i.b, %i.a                         ; 2 uses
-  %7 = shl nsw i64 %i.p, 3
-  %i.q = sub i64 %7, %6
+  %6 = shl nsw i64 %i.p, 3
+  %7 = sub i64 %i.b, %i.a                         ; 5 uses
+  %i.q = sub i64 %6, %7
   %diff.check = icmp ugt i64 %i.q, -32
   %i.r = shl nsw i64 %i.o, 3
-  %i.s = sub i64 %i.r, %6
+  %i.s = sub i64 %i.r, %7
   %diff.check393 = icmp ugt i64 %i.s, -32
   %conflict.rdx = or i1 %diff.check, %diff.check393
-  %8 = sub i64 %i.b, %i.a                         ; 2 uses
   %i.t = shl nsw i64 %i.n, 3
-  %i.u = sub i64 %i.t, %8
+  %i.u = sub i64 %i.t, %7
   %diff.check394 = icmp ugt i64 %i.u, -32
   %conflict.rdx395 = or i1 %conflict.rdx, %diff.check394
   %i.v = shl nsw i64 %i.m, 3
-  %i.w = sub i64 %i.v, %8
+  %i.w = sub i64 %i.v, %7
   %diff.check396 = icmp ugt i64 %i.w, -32
   %conflict.rdx397 = or i1 %conflict.rdx395, %diff.check396
-  %9 = sub i64 %i.a, %i.b
-  %diff.check398 = icmp ugt i64 %9, -32
-  %conflict.rdx399 = or i1 %conflict.rdx397, %diff.check398
+  %8 = add i64 %7, -1
+  %diff.check405 = icmp ult i64 %8, 31
+  %conflict.rdx399 = or i1 %conflict.rdx397, %diff.check405
   br i1 %conflict.rdx399, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
@@ -924,17 +922,17 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %min.iters.check416, label %scalar.ph415.preheader, label %vector.memcheck409
 
 vector.memcheck409:                               ; preds = %.lr.ph240
-  %10 = sub i64 %i.b, %i.a                        ; 2 uses
-  %11 = shl nsw i64 %i.bj, 3
-  %i.bk = sub i64 %11, %10
+  %9 = shl nsw i64 %i.bj, 3
+  %10 = sub i64 %i.b, %i.a                        ; 3 uses
+  %i.bk = sub i64 %9, %10
   %diff.check410 = icmp ugt i64 %i.bk, -32
   %i.bl = shl nsw i64 %i.bi, 3
   %i.bm = sub i64 %i.bl, %10
   %diff.check411 = icmp ugt i64 %i.bm, -32
   %conflict.rdx412 = or i1 %diff.check410, %diff.check411
-  %12 = sub i64 %i.a, %i.b
-  %diff.check413 = icmp ugt i64 %12, -32
-  %conflict.rdx414 = or i1 %conflict.rdx412, %diff.check413
+  %11 = add i64 %10, -1
+  %diff.check428 = icmp ult i64 %11, 31
+  %conflict.rdx414 = or i1 %conflict.rdx412, %diff.check428
   br i1 %conflict.rdx414, label %scalar.ph415.preheader, label %vector.ph417
 
 vector.ph417:                                     ; preds = %vector.memcheck409

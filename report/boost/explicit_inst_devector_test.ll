@@ -204,8 +204,8 @@ define linkonce_odr hidden noundef ptr @_ZN5boost9container8devectorINS0_4test24
 bb.a:
   %i.a = sub i64 %3, %5                           ; 36 uses
   %.not = icmp eq i64 %i.a, 0
-  %i.b = load ptr, ptr %0, align 8, !tbaa !62     ; 11 uses
-  %i.c = ptrtoaddr ptr %i.b to i64                ; 2 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !62     ; 10 uses
+  %i.c = ptrtoaddr ptr %i.b to i64                ; 4 uses
   br i1 %.not, label %bb.b, label %bb.c, !prof !38
 
 bb.b:                                             ; preds = %bb.a
@@ -468,11 +468,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
   br i1 %.not8.i.i, label %.lr.ph.preheader.i.i.i, label %.lr.ph.i40.i.preheader
 
 .lr.ph.i40.i.preheader:                           ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i
-  %6 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   %i.de = shl i64 %3, 2
   %i.df = add i64 %5, %i.n
   %i.dg = shl i64 %i.df, 2
-  %i.dh = add i64 %i.dg, %6
+  %i.dh = add i64 %i.dg, %i.c
   %i.di = add i64 %i.dh, -4
   %i.dj = add i64 %i.de, %i.bx
   %i.dk = sub i64 %i.di, %i.dj                    ; 2 uses
@@ -485,7 +484,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i40.i.prehea
   %i.dn = shl nuw nsw i64 %i.n, 2                 ; 3 uses
   %i.do = shl i64 %5, 2                           ; 2 uses
   %i.dp = shl i64 %3, 2                           ; 2 uses
-  %i.dq = add i64 %i.do, %6
+  %i.dq = add i64 %i.do, %i.c
   %i.dr = add i64 %i.dq, %i.dn
   %i.ds = add i64 %i.dr, -4
   %i.dt = add i64 %i.dp, %i.bx
@@ -888,7 +887,8 @@ _ZN5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_13new_alloc
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef ptr @_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIS3_EENS0_12devector_optIvtLm0EEEE5eraseEPKS3_SA_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !62     ; 4 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !62     ; 3 uses
+  %3 = ptrtoaddr ptr %i.a to i64                  ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i16, ptr %i.b, align 8, !tbaa !63   ; 2 uses
   %i.d = zext i16 %i.c to i64                     ; 3 uses
@@ -913,7 +913,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not8.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.b
-  %3 = ptrtoaddr ptr %i.a to i64
   %i.s = shl nuw nsw i64 %i.d, 2
   %i.t = add i64 %i.n, -4
   %i.u = sub i64 %i.t, %3                         ; 2 uses
@@ -1007,9 +1006,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not8.i26.i, label %_ZN5boost9container4moveIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i, label %.lr.ph.i27.i.preheader
 
 .lr.ph.i27.i.preheader:                           ; preds = %bb.c
-  %4 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
   %i.av = shl nuw nsw i64 %i.k, 2
-  %i.aw = add i64 %i.av, %4
+  %i.aw = add i64 %i.av, %3
   %i.ax = add i64 %i.aw, -4
   %i.ay = sub i64 %i.ax, %i.f                     ; 2 uses
   %i.az = lshr i64 %i.ay, 2
@@ -1019,7 +1017,7 @@ bb.c:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %.lr.ph.i27.i.preheader
   %i.bb = shl nuw nsw i64 %i.k, 2
-  %i.bc = add i64 %i.bb, %4
+  %i.bc = add i64 %i.bb, %3
   %i.bd = add i64 %i.bc, -4
   %i.be = sub i64 %i.bd, %i.f
   %i.bf = and i64 %i.be, -4
@@ -1114,7 +1112,8 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef ptr @_ZN5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIS3_EENS0_12devector_optIvtLm0EEEE5eraseEPS3_S9_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !62     ; 4 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !62     ; 3 uses
+  %3 = ptrtoaddr ptr %i.a to i64                  ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i16, ptr %i.b, align 8, !tbaa !63   ; 2 uses
   %i.d = zext i16 %i.c to i64                     ; 3 uses
@@ -1139,7 +1138,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not8.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
-  %3 = ptrtoaddr ptr %i.a to i64
   %i.s = shl nuw nsw i64 %i.d, 2
   %i.t = add i64 %i.n, -4
   %i.u = sub i64 %i.t, %3                         ; 2 uses
@@ -1233,9 +1231,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not8.i26, label %_ZN5boost9container4moveIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit, label %.lr.ph.i27.preheader
 
 .lr.ph.i27.preheader:                             ; preds = %bb.c
-  %4 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
   %i.av = shl nuw nsw i64 %i.k, 2
-  %i.aw = add i64 %i.av, %4
+  %i.aw = add i64 %i.av, %3
   %i.ax = add i64 %i.aw, -4
   %i.ay = sub i64 %i.ax, %i.f                     ; 2 uses
   %i.az = lshr i64 %i.ay, 2
@@ -1245,7 +1242,7 @@ bb.c:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %.lr.ph.i27.preheader
   %i.bb = shl nuw nsw i64 %i.k, 2
-  %i.bc = add i64 %i.bb, %4
+  %i.bc = add i64 %i.bb, %3
   %i.bd = add i64 %i.bc, -4
   %i.be = sub i64 %i.bd, %i.f
   %i.bf = and i64 %i.be, -4
@@ -1648,6 +1645,8 @@ _ZN5boost9container3dtl19scoped_destructor_nINS0_13new_allocatorINS0_4test24mova
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container53expand_backward_forward_and_insert_alloc_move_forwardINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_NS0_3dtl20insert_emplace_proxyIS5_JRKS4_EEEEEvT0_mSC_SC_mT1_RT_(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, ptr %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
+  %7 = ptrtoaddr ptr %2 to i64                    ; 3 uses
+  %8 = ptrtoaddr ptr %0 to i64                    ; 7 uses
   %i.a = sub i64 0, %4
   %i.b = getelementptr inbounds [4 x i8], ptr %0, i64 %1 ; 27 uses
   %i.c = add i64 %4, %1                           ; 2 uses
@@ -1783,10 +1782,9 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit
   %i.ay = shl i64 %i.ae, 2
-  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.az = add i64 %i.ay, %i.f
   %i.ba = add i64 %i.az, -4
-  %i.bb = sub i64 %i.ba, %7                       ; 2 uses
+  %i.bb = sub i64 %i.ba, %8                       ; 2 uses
   %i.bc = lshr i64 %i.bb, 2
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bb, 140
@@ -1797,7 +1795,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheade
   %i.bf = shl i64 %i.ae, 2                        ; 2 uses
   %i.bg = add i64 %i.bf, %i.f
   %i.bh = add i64 %i.bg, -4
-  %i.bi = sub i64 %i.bh, %7
+  %i.bi = sub i64 %i.bh, %8
   %i.bj = and i64 %i.bi, -4                       ; 2 uses
   %i.bk = add i64 %i.be, -4
   %i.bl = sub i64 %i.bk, %i.bj
@@ -1968,7 +1966,6 @@ bb.g:                                             ; preds = %.loopexit
   br i1 %.not8.i.i162, label %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit167, label %.lr.ph.i.i163.preheader
 
 .lr.ph.i.i163.preheader:                          ; preds = %bb.g
-  %8 = ptrtoaddr ptr %0 to i64
   %i.dh = add i64 %i.f, -4
   %i.di = sub i64 %i.dh, %8                       ; 3 uses
   %i.dj = lshr i64 %i.di, 2
@@ -2115,13 +2112,11 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 .lr.ph.i.i191.preheader:                          ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit188
   %i.ff = shl nsw i64 %1, 2
-  %9 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %i.fg = shl i64 %9, 1
-  %10 = ptrtoaddr ptr %2 to i64                   ; 3 uses
+  %i.fg = shl i64 %8, 1
   %i.fh = shl i64 %4, 2
   %i.fi = add i64 %i.ff, %i.fg
   %i.fj = add i64 %i.fi, -4
-  %i.fk = add i64 %i.f, %10
+  %i.fk = add i64 %i.f, %7
   %i.fl = add i64 %i.fk, %i.fh
   %i.fm = sub i64 %i.fj, %i.fl                    ; 2 uses
   %i.fn = lshr i64 %i.fm, 2
@@ -2131,20 +2126,20 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 vector.memcheck299:                               ; preds = %.lr.ph.i.i191.preheader
   %i.fp = shl nsw i64 %1, 2                       ; 3 uses
-  %i.fq = shl i64 %9, 1
+  %i.fq = shl i64 %8, 1
   %i.fr = shl i64 %4, 2                           ; 2 uses
   %i.fs = add i64 %i.fp, %i.fq
   %i.ft = add i64 %i.fs, -4
-  %i.fu = add i64 %i.f, %10
+  %i.fu = add i64 %i.f, %7
   %i.fv = add i64 %i.fu, %i.fr
   %i.fw = sub i64 %i.ft, %i.fv
   %i.fx = and i64 %i.fw, -4                       ; 2 uses
   %i.fy = add i64 %i.fp, -4
   %i.fz = sub i64 %i.fy, %i.fx
   %i.ga = getelementptr i8, ptr %0, i64 %i.fz
-  %i.gb = add i64 %i.fp, %9
+  %i.gb = add i64 %i.fp, %8
   %i.gc = add i64 %i.gb, -4
-  %i.gd = add i64 %i.fr, %10
+  %i.gd = add i64 %i.fr, %7
   %i.ge = add i64 %i.gd, %i.fx
   %i.gf = sub i64 %i.gc, %i.ge
   %i.gg = getelementptr i8, ptr %0, i64 %i.gf
@@ -2212,9 +2207,8 @@ bb.i:                                             ; preds = %_ZN5boost9container
   br i1 %.not8.i.i197, label %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit202, label %.lr.ph.i.i198.preheader
 
 .lr.ph.i.i198.preheader:                          ; preds = %bb.i
-  %11 = ptrtoaddr ptr %0 to i64
   %i.gw = add i64 %i.f, -4
-  %i.gx = sub i64 %i.gw, %11                      ; 3 uses
+  %i.gx = sub i64 %i.gw, %8                       ; 3 uses
   %i.gy = lshr i64 %i.gx, 2
   %i.gz = add nuw nsw i64 %i.gy, 1                ; 2 uses
   %min.iters.check322 = icmp ult i64 %i.gx, 108
@@ -2617,6 +2611,8 @@ _ZN5boost9container3dtl19scoped_destructor_nINS0_13new_allocatorINS0_4test24mova
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container53expand_backward_forward_and_insert_alloc_move_forwardINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_NS0_3dtl20insert_emplace_proxyIS5_JS4_EEEEEvT0_mSA_SA_mT1_RT_(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, ptr %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
+  %7 = ptrtoaddr ptr %2 to i64                    ; 3 uses
+  %8 = ptrtoaddr ptr %0 to i64                    ; 7 uses
   %i.a = sub i64 0, %4
   %i.b = getelementptr inbounds [4 x i8], ptr %0, i64 %1 ; 27 uses
   %i.c = add i64 %4, %1                           ; 2 uses
@@ -2753,10 +2749,9 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit
   %i.ay = shl i64 %i.ae, 2
-  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.az = add i64 %i.ay, %i.f
   %i.ba = add i64 %i.az, -4
-  %i.bb = sub i64 %i.ba, %7                       ; 2 uses
+  %i.bb = sub i64 %i.ba, %8                       ; 2 uses
   %i.bc = lshr i64 %i.bb, 2
   %i.bd = add nuw nsw i64 %i.bc, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bb, 140
@@ -2767,7 +2762,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheade
   %i.bf = shl i64 %i.ae, 2                        ; 2 uses
   %i.bg = add i64 %i.bf, %i.f
   %i.bh = add i64 %i.bg, -4
-  %i.bi = sub i64 %i.bh, %7
+  %i.bi = sub i64 %i.bh, %8
   %i.bj = and i64 %i.bi, -4                       ; 2 uses
   %i.bk = add i64 %i.be, -4
   %i.bl = sub i64 %i.bk, %i.bj
@@ -2939,7 +2934,6 @@ bb.g:                                             ; preds = %.loopexit
   br i1 %.not8.i.i164, label %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit169, label %.lr.ph.i.i165.preheader
 
 .lr.ph.i.i165.preheader:                          ; preds = %bb.g
-  %8 = ptrtoaddr ptr %0 to i64
   %i.dh = add i64 %i.f, -4
   %i.di = sub i64 %i.dh, %8                       ; 3 uses
   %i.dj = lshr i64 %i.di, 2
@@ -3086,13 +3080,11 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 .lr.ph.i.i193.preheader:                          ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit190
   %i.ff = shl nsw i64 %1, 2
-  %9 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %i.fg = shl i64 %9, 1
-  %10 = ptrtoaddr ptr %2 to i64                   ; 3 uses
+  %i.fg = shl i64 %8, 1
   %i.fh = shl i64 %4, 2
   %i.fi = add i64 %i.ff, %i.fg
   %i.fj = add i64 %i.fi, -4
-  %i.fk = add i64 %i.f, %10
+  %i.fk = add i64 %i.f, %7
   %i.fl = add i64 %i.fk, %i.fh
   %i.fm = sub i64 %i.fj, %i.fl                    ; 2 uses
   %i.fn = lshr i64 %i.fm, 2
@@ -3102,20 +3094,20 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 vector.memcheck302:                               ; preds = %.lr.ph.i.i193.preheader
   %i.fp = shl nsw i64 %1, 2                       ; 3 uses
-  %i.fq = shl i64 %9, 1
+  %i.fq = shl i64 %8, 1
   %i.fr = shl i64 %4, 2                           ; 2 uses
   %i.fs = add i64 %i.fp, %i.fq
   %i.ft = add i64 %i.fs, -4
-  %i.fu = add i64 %i.f, %10
+  %i.fu = add i64 %i.f, %7
   %i.fv = add i64 %i.fu, %i.fr
   %i.fw = sub i64 %i.ft, %i.fv
   %i.fx = and i64 %i.fw, -4                       ; 2 uses
   %i.fy = add i64 %i.fp, -4
   %i.fz = sub i64 %i.fy, %i.fx
   %i.ga = getelementptr i8, ptr %0, i64 %i.fz
-  %i.gb = add i64 %i.fp, %9
+  %i.gb = add i64 %i.fp, %8
   %i.gc = add i64 %i.gb, -4
-  %i.gd = add i64 %i.fr, %10
+  %i.gd = add i64 %i.fr, %7
   %i.ge = add i64 %i.gd, %i.fx
   %i.gf = sub i64 %i.gc, %i.ge
   %i.gg = getelementptr i8, ptr %0, i64 %i.gf
@@ -3184,9 +3176,8 @@ bb.i:                                             ; preds = %.loopexit248
   br i1 %.not8.i.i199, label %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit204, label %.lr.ph.i.i200.preheader
 
 .lr.ph.i.i200.preheader:                          ; preds = %bb.i
-  %11 = ptrtoaddr ptr %0 to i64
   %i.gw = add i64 %i.f, -4
-  %i.gx = sub i64 %i.gw, %11                      ; 3 uses
+  %i.gx = sub i64 %i.gw, %8                       ; 3 uses
   %i.gy = lshr i64 %i.gx, 2
   %i.gz = add nuw nsw i64 %i.gy, 1                ; 2 uses
   %min.iters.check325 = icmp ult i64 %i.gx, 108
@@ -3589,6 +3580,8 @@ _ZN5boost9container3dtl19scoped_destructor_nINS0_13new_allocatorINS0_4test24mova
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container53expand_backward_forward_and_insert_alloc_move_forwardINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_NS0_3dtl18insert_range_proxyIS5_NS0_17constant_iteratorIS4_EEEEEEvT0_mSC_SC_mT1_RT_(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef byval(%"struct.boost::container::dtl::insert_range_proxy.20") align 8 %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
+  %7 = ptrtoaddr ptr %2 to i64                    ; 3 uses
+  %8 = ptrtoaddr ptr %0 to i64                    ; 7 uses
   %i.a = getelementptr inbounds [4 x i8], ptr %0, i64 %1 ; 28 uses
   %i.b = add i64 %4, %1                           ; 2 uses
   %i.c = getelementptr inbounds [4 x i8], ptr %2, i64 %i.b ; 4 uses
@@ -3778,10 +3771,9 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 .lr.ph.i.i140.preheader:                          ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit
   %i.bn = shl i64 %i.at, 2
-  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.bo = add i64 %i.bn, %i.e
   %i.bp = add i64 %i.bo, -4
-  %i.bq = sub i64 %i.bp, %7                       ; 2 uses
+  %i.bq = sub i64 %i.bp, %8                       ; 2 uses
   %i.br = lshr i64 %i.bq, 2
   %i.bs = add nuw nsw i64 %i.br, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bq, 140
@@ -3792,7 +3784,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i140.prehe
   %i.bu = shl i64 %i.at, 2                        ; 2 uses
   %i.bv = add i64 %i.bu, %i.e
   %i.bw = add i64 %i.bv, -4
-  %i.bx = sub i64 %i.bw, %7
+  %i.bx = sub i64 %i.bw, %8
   %i.by = and i64 %i.bx, -4                       ; 2 uses
   %i.bz = add i64 %i.bt, -4
   %i.ca = sub i64 %i.bz, %i.by
@@ -4064,7 +4056,6 @@ bb.g:                                             ; preds = %._crit_edge.loopexi
   br i1 %.not8.i.i184, label %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit189, label %.lr.ph.i.i185.preheader
 
 .lr.ph.i.i185.preheader:                          ; preds = %bb.g
-  %8 = ptrtoaddr ptr %0 to i64
   %i.fa = add i64 %i.e, -4
   %i.fb = sub i64 %i.fa, %8                       ; 3 uses
   %i.fc = lshr i64 %i.fb, 2
@@ -4209,13 +4200,11 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 .lr.ph.i.i213.preheader:                          ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit210
   %i.gw = shl nsw i64 %1, 2
-  %9 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %i.gx = shl i64 %9, 1
-  %10 = ptrtoaddr ptr %2 to i64                   ; 3 uses
+  %i.gx = shl i64 %8, 1
   %i.gy = shl i64 %4, 2
   %i.gz = add i64 %i.gw, %i.gx
   %i.ha = add i64 %i.gz, -4
-  %i.hb = add i64 %i.e, %10
+  %i.hb = add i64 %i.e, %7
   %i.hc = add i64 %i.hb, %i.gy
   %i.hd = sub i64 %i.ha, %i.hc                    ; 2 uses
   %i.he = lshr i64 %i.hd, 2
@@ -4225,20 +4214,20 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 vector.memcheck332:                               ; preds = %.lr.ph.i.i213.preheader
   %i.hg = shl nsw i64 %1, 2                       ; 3 uses
-  %i.hh = shl i64 %9, 1
+  %i.hh = shl i64 %8, 1
   %i.hi = shl i64 %4, 2                           ; 2 uses
   %i.hj = add i64 %i.hg, %i.hh
   %i.hk = add i64 %i.hj, -4
-  %i.hl = add i64 %i.e, %10
+  %i.hl = add i64 %i.e, %7
   %i.hm = add i64 %i.hl, %i.hi
   %i.hn = sub i64 %i.hk, %i.hm
   %i.ho = and i64 %i.hn, -4                       ; 2 uses
   %i.hp = add i64 %i.hg, -4
   %i.hq = sub i64 %i.hp, %i.ho
   %i.hr = getelementptr i8, ptr %0, i64 %i.hq
-  %i.hs = add i64 %i.hg, %9
+  %i.hs = add i64 %i.hg, %8
   %i.ht = add i64 %i.hs, -4
-  %i.hu = add i64 %i.hi, %10
+  %i.hu = add i64 %i.hi, %7
   %i.hv = add i64 %i.hu, %i.ho
   %i.hw = sub i64 %i.ht, %i.hv
   %i.hx = getelementptr i8, ptr %0, i64 %i.hw
@@ -4353,9 +4342,8 @@ bb.i:                                             ; preds = %._crit_edge.loopexi
   br i1 %.not8.i.i232, label %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit237, label %.lr.ph.i.i233.preheader
 
 .lr.ph.i.i233.preheader:                          ; preds = %bb.i
-  %11 = ptrtoaddr ptr %0 to i64
   %i.iv = add i64 %i.e, -4
-  %i.iw = sub i64 %i.iv, %11                      ; 3 uses
+  %i.iw = sub i64 %i.iv, %8                       ; 3 uses
   %i.ix = lshr i64 %i.iw, 2
   %i.iy = add nuw nsw i64 %i.ix, 1                ; 2 uses
   %min.iters.check367 = icmp ult i64 %i.iw, 108
@@ -4447,8 +4435,8 @@ bb.a:
   %i.c = sub i64 %i.a, %i.b                       ; 11 uses
   %i.d = ashr exact i64 %i.c, 2                   ; 32 uses
   %.not = icmp eq ptr %3, %2
-  %i.e = load ptr, ptr %0, align 8, !tbaa !62     ; 11 uses
-  %i.f = ptrtoaddr ptr %i.e to i64                ; 3 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !62     ; 10 uses
+  %i.f = ptrtoaddr ptr %i.e to i64                ; 5 uses
   br i1 %.not, label %bb.b, label %bb.c, !prof !38
 
 bb.b:                                             ; preds = %bb.a
@@ -4619,9 +4607,8 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
   br i1 %.not8.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i, label %.lr.ph.i40.i.preheader
 
 .lr.ph.i40.i.preheader:                           ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit.i
-  %4 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
   %i.cc = shl nuw nsw i64 %i.q, 2
-  %i.cd = add i64 %i.cc, %4
+  %i.cd = add i64 %i.cc, %i.f
   %i.ce = add i64 %i.cd, -4
   %i.cf = add i64 %i.c, %i.au
   %i.cg = sub i64 %i.ce, %i.cf                    ; 2 uses
@@ -4632,7 +4619,7 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 vector.memcheck:                                  ; preds = %.lr.ph.i40.i.preheader
   %i.cj = shl nuw nsw i64 %i.q, 2                 ; 2 uses
-  %i.ck = add i64 %i.cj, %4
+  %i.ck = add i64 %i.cj, %i.f
   %i.cl = add i64 %i.ck, -4
   %i.cm = add i64 %i.c, %i.au
   %i.cn = sub i64 %i.cl, %i.cm
@@ -5035,8 +5022,9 @@ _ZN5boost9container3dtl19scoped_destructor_nINS0_13new_allocatorINS0_4test24mova
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container53expand_backward_forward_and_insert_alloc_move_forwardINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_NS0_3dtl18insert_range_proxyIS5_PKS4_EEEEvT0_mSC_SC_mT1_RT_(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, ptr %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %5 to i64                  ; 2 uses
+  %7 = ptrtoaddr ptr %5 to i64                    ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 8 uses
   %i.c = getelementptr inbounds [4 x i8], ptr %0, i64 %1 ; 28 uses
   %i.d = add i64 %4, %1                           ; 2 uses
   %i.e = getelementptr inbounds [4 x i8], ptr %2, i64 %i.d ; 4 uses
@@ -5233,10 +5221,9 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 .lr.ph.i.i140.preheader:                          ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit
   %i.bu = shl i64 %i.ba, 2
-  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.bv = add i64 %i.bu, %i.g
   %i.bw = add i64 %i.bv, -4
-  %i.bx = sub i64 %i.bw, %7                       ; 2 uses
+  %i.bx = sub i64 %i.bw, %i.b                     ; 2 uses
   %i.by = lshr i64 %i.bx, 2
   %i.bz = add nuw nsw i64 %i.by, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bx, 140
@@ -5247,7 +5234,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i140.prehe
   %i.cb = shl i64 %i.ba, 2                        ; 2 uses
   %i.cc = add i64 %i.cb, %i.g
   %i.cd = add i64 %i.cc, -4
-  %i.ce = sub i64 %i.cd, %7
+  %i.ce = sub i64 %i.cd, %i.b
   %i.cf = and i64 %i.ce, -4                       ; 2 uses
   %i.cg = add i64 %i.ca, -4
   %i.ch = sub i64 %i.cg, %i.cf
@@ -5416,8 +5403,8 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINS0_4test24mov
 vector.memcheck387:                               ; preds = %.lr.ph.i.i166.preheader
   %i.ee = sub i64 %1, %i.eb
   %i.ef = shl i64 %i.ee, 2
-  %i.eg = add i64 %i.ef, %i.a
-  %i.eh = sub i64 %i.b, %i.eg
+  %i.eg = add i64 %i.ef, %i.b
+  %i.eh = sub i64 %7, %i.eg
   %diff.check388 = icmp ugt i64 %i.eh, -32
   br i1 %diff.check388, label %.lr.ph.i.i166.preheader432, label %vector.ph391
 
@@ -5595,7 +5582,7 @@ bb.g:                                             ; preds = %_ZN5boost9container
 
 .lr.ph.i.i179.preheader:                          ; preds = %bb.g
   %i.gv = add i64 %i.g, -4
-  %i.gw = sub i64 %i.gv, %i.a                     ; 3 uses
+  %i.gw = sub i64 %i.gv, %i.b                     ; 3 uses
   %i.gx = lshr i64 %i.gw, 2
   %i.gy = add nuw nsw i64 %i.gx, 1                ; 2 uses
   %min.iters.check411 = icmp ult i64 %i.gw, 124
@@ -5738,13 +5725,11 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 .lr.ph.i.i207.preheader:                          ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit204
   %i.ir = shl nsw i64 %1, 2
-  %8 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %i.is = shl i64 %8, 1
-  %9 = ptrtoaddr ptr %2 to i64                    ; 3 uses
+  %i.is = shl i64 %i.b, 1
   %i.it = shl i64 %4, 2
   %i.iu = add i64 %i.ir, %i.is
   %i.iv = add i64 %i.iu, -4
-  %i.iw = add i64 %i.g, %9
+  %i.iw = add i64 %i.g, %i.a
   %i.ix = add i64 %i.iw, %i.it
   %i.iy = sub i64 %i.iv, %i.ix                    ; 2 uses
   %i.iz = lshr i64 %i.iy, 2
@@ -5754,20 +5739,20 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24m
 
 vector.memcheck329:                               ; preds = %.lr.ph.i.i207.preheader
   %i.jb = shl nsw i64 %1, 2                       ; 3 uses
-  %i.jc = shl i64 %8, 1
+  %i.jc = shl i64 %i.b, 1
   %i.jd = shl i64 %4, 2                           ; 2 uses
   %i.je = add i64 %i.jb, %i.jc
   %i.jf = add i64 %i.je, -4
-  %i.jg = add i64 %i.g, %9
+  %i.jg = add i64 %i.g, %i.a
   %i.jh = add i64 %i.jg, %i.jd
   %i.ji = sub i64 %i.jf, %i.jh
   %i.jj = and i64 %i.ji, -4                       ; 2 uses
   %i.jk = add i64 %i.jb, -4
   %i.jl = sub i64 %i.jk, %i.jj
   %i.jm = getelementptr i8, ptr %0, i64 %i.jl
-  %i.jn = add i64 %i.jb, %8
+  %i.jn = add i64 %i.jb, %i.b
   %i.jo = add i64 %i.jn, -4
-  %i.jp = add i64 %i.jd, %9
+  %i.jp = add i64 %i.jd, %i.a
   %i.jq = add i64 %i.jp, %i.jj
   %i.jr = sub i64 %i.jo, %i.jq
   %i.js = getelementptr i8, ptr %0, i64 %i.jr
@@ -5836,7 +5821,7 @@ _ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_
 
 vector.memcheck346:                               ; preds = %.lr.ph.i.i213.preheader
   %i.kj = shl i64 %4, 2
-  %i.kk = add i64 %i.kj, %i.b
+  %i.kk = add i64 %i.kj, %7
   %i.kl = sub i64 %i.kk, %i.kg
   %diff.check = icmp ugt i64 %i.kl, -32
   br i1 %diff.check, label %.lr.ph.i.i213.preheader437, label %vector.ph349
@@ -5947,9 +5932,8 @@ bb.i:                                             ; preds = %_ZN5boost9container
   br i1 %.not8.i.i221, label %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit226, label %.lr.ph.i.i222.preheader
 
 .lr.ph.i.i222.preheader:                          ; preds = %bb.i
-  %10 = ptrtoaddr ptr %0 to i64
   %i.lz = add i64 %i.g, -4
-  %i.ma = sub i64 %i.lz, %10                      ; 3 uses
+  %i.ma = sub i64 %i.lz, %i.b                     ; 3 uses
   %i.mb = lshr i64 %i.ma, 2
   %i.mc = add nuw nsw i64 %i.mb, 1                ; 2 uses
   %min.iters.check369 = icmp ult i64 %i.ma, 108

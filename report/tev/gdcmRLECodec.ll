@@ -204,6 +204,7 @@ bb.o:                                             ; preds = %bb.g, %bb.j, %bb.m,
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef zeroext i1 @_ZN4gdcm27DoInvertPlanarConfigurationIsEEbPT_PKS1_j(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr i8, ptr %1, i64 2          ; 13 uses
   %i.b = getelementptr i8, ptr %1, i64 4          ; 13 uses
   %i.c = udiv i32 %2, 3                           ; 2 uses
@@ -322,6 +323,7 @@ bb.d:                                             ; preds = %bb.b
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader63
   %.051.lcssa = phi ptr [ %1, %.preheader63 ], [ %i.bb, %.lr.ph ] ; 3 uses
   %.0.lcssa = phi ptr [ %0, %.preheader63 ], [ %i.i, %.lr.ph ] ; 9 uses
+  %.0.lcssa106 = ptrtoaddr ptr %.0.lcssa to i64   ; 2 uses
   %i.bc = zext i32 %i.d to i64                    ; 2 uses
   %i.bd = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.bc
   %i.be = icmp eq ptr %.051.lcssa, %i.bd
@@ -333,14 +335,12 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not5768, label %._crit_edge72, label %.lr.ph71.preheader
 
 .lr.ph71.preheader:                               ; preds = %.preheader62
-  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.bg = udiv i32 %2, 3
   %i.bh = zext nneg i32 %i.bg to i64              ; 2 uses
   %i.bi = shl nuw nsw i64 %i.bh, 2
-  %4 = ptrtoaddr ptr %.0.lcssa to i64             ; 2 uses
   %i.bj = add i64 %i.bi, %3
   %i.bk = add i64 %i.bj, -2
-  %i.bl = sub i64 %i.bk, %4                       ; 2 uses
+  %i.bl = sub i64 %i.bk, %.0.lcssa106             ; 2 uses
   %i.bm = lshr i64 %i.bl, 1
   %i.bn = add nuw i64 %i.bm, 1                    ; 2 uses
   %min.iters.check107 = icmp ult i64 %i.bl, 288
@@ -355,7 +355,7 @@ vector.memcheck108:                               ; preds = %.lr.ph71.preheader
   %i.bo = shl nuw nsw i64 %i.bh, 2
   %i.bp = add i64 %i.bo, %3
   %i.bq = add i64 %i.bp, -2
-  %i.br = sub i64 %i.bq, %4                       ; 2 uses
+  %i.br = sub i64 %i.bq, %.0.lcssa106             ; 2 uses
   %i.bs = and i64 %i.br, -2
   %i.bt = getelementptr i8, ptr %.0.lcssa, i64 %i.bs
   %i.bu = getelementptr i8, ptr %i.bt, i64 2
@@ -447,6 +447,7 @@ bb.g:                                             ; preds = %bb.e
 ._crit_edge72:                                    ; preds = %.lr.ph71, %.preheader62
   %.050.lcssa = phi ptr [ %i.a, %.preheader62 ], [ %i.dk, %.lr.ph71 ]
   %.1.lcssa = phi ptr [ %.0.lcssa, %.preheader62 ], [ %i.bf, %.lr.ph71 ] ; 8 uses
+  %.1.lcssa136 = ptrtoaddr ptr %.1.lcssa to i64
   %i.dl = getelementptr inbounds nuw i8, ptr %.051.lcssa, i64 2
   %i.dm = icmp eq ptr %.050.lcssa, %i.dl
   br i1 %i.dm, label %.preheader, label %bb.h
@@ -457,14 +458,12 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not5875, label %._crit_edge79, label %.lr.ph78.preheader
 
 .lr.ph78.preheader:                               ; preds = %.preheader
-  %5 = ptrtoaddr ptr %0 to i64
   %i.do = udiv i32 %2, 3
   %i.dp = zext nneg i32 %i.do to i64
   %i.dq = mul nuw nsw i64 %i.dp, 6
-  %6 = ptrtoaddr ptr %.1.lcssa to i64
-  %i.dr = add i64 %i.dq, %5
+  %i.dr = add i64 %i.dq, %3
   %i.ds = add i64 %i.dr, -2
-  %i.dt = sub i64 %i.ds, %6                       ; 4 uses
+  %i.dt = sub i64 %i.ds, %.1.lcssa136             ; 4 uses
   %i.du = lshr i64 %i.dt, 1
   %i.dv = add nuw i64 %i.du, 1                    ; 2 uses
   %min.iters.check136 = icmp ult i64 %i.dt, 304

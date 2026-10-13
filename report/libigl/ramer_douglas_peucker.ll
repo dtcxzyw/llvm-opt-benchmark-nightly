@@ -205,7 +205,7 @@ thread-pre-split.i.i.i.i.i.i:                     ; preds = %_ZN5Eigen15PlainObj
 bb.c:                                             ; preds = %thread-pre-split.i.i.i.i.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi2ELi0ELin1ELi2EEEE16_resize_to_matchINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS_12ArrayWrapperIS2_EEKNS5_INS6_17scalar_product_opIddEEKNS5_INS6_20scalar_difference_opIddEESB_SB_EEKNS_9ReplicateINS9_INS1_IdLin1ELi1ELi0ELin1ELi1EEEEELi1ELi2EEEEEEEEEvRKNS_9EigenBaseIT_EE.exit
   %i.ae = phi i64 [ %.pr.i.i.i.i.i.i, %thread-pre-split.i.i.i.i.i.i ], [ %i.ab, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi2ELi0ELin1ELi2EEEE16_resize_to_matchINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS_12ArrayWrapperIS2_EEKNS5_INS6_17scalar_product_opIddEEKNS5_INS6_20scalar_difference_opIddEESB_SB_EEKNS_9ReplicateINS9_INS1_IdLin1ELi1ELi0ELin1ELi1EEEEELi1ELi2EEEEEEEEEvRKNS_9EigenBaseIT_EE.exit ] ; 15 uses
   %i.af = load ptr, ptr %0, align 8, !tbaa !91    ; 6 uses
-  %i.ag = ptrtoaddr ptr %i.af to i64              ; 6 uses
+  %i.ag = ptrtoaddr ptr %i.af to i64              ; 5 uses
   %i.ah = icmp sgt i64 %i.ae, 0
   br i1 %i.ah, label %.split.i.i.i.i.i.i.i.preheader, label %_ZN5Eigen10MatrixBaseINS_6MatrixIdLin1ELi2ELi0ELin1ELi2EEEEaSINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS_12ArrayWrapperIS2_EEKNS5_INS6_17scalar_product_opIddEEKNS5_INS6_20scalar_difference_opIddEESB_SB_EEKNS_9ReplicateINS9_INS1_IdLin1ELi1ELi0ELin1ELi1EEEEELi1ELi2EEEEEEEEERS2_RKNS_9DenseBaseIT_EE.exit
 
@@ -292,24 +292,23 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check22, label %scalar.ph21.preheader, label %vector.memcheck13
 
 vector.memcheck13:                                ; preds = %._crit_edge.i.i.i.i.i.i.i
-  %i.bf = shl i64 %i.ae, 3                        ; 2 uses
-  %2 = add i64 %i.bf, %i.ag                       ; 2 uses
-  %3 = shl i64 %i.q, 3
-  %i.bg = add i64 %3, %i.o
-  %i.bh = sub i64 %i.bg, %2
+  %i.bf = shl i64 %i.ae, 3
+  %2 = shl i64 %i.q, 3
+  %3 = add i64 %i.bf, %i.ag                       ; 4 uses
+  %i.bg = add i64 %2, %i.o
+  %i.bh = sub i64 %i.bg, %3
   %diff.check14 = icmp ugt i64 %i.bh, -16
   %i.bi = shl i64 %i.w, 3
   %i.bj = add i64 %i.bi, %i.u
-  %i.bk = sub i64 %i.bj, %2
+  %i.bk = sub i64 %i.bj, %3
   %diff.check15 = icmp ugt i64 %i.bk, -16
   %conflict.rdx16 = or i1 %diff.check14, %diff.check15
-  %4 = add i64 %i.bf, %i.ag                       ; 2 uses
-  %i.bl = sub i64 %i.z, %4
+  %i.bl = sub i64 %i.z, %3
   %diff.check17 = icmp ugt i64 %i.bl, -16
   %conflict.rdx18 = or i1 %conflict.rdx16, %diff.check17
   %i.bm = shl i64 %i.k, 3
   %i.bn = add i64 %i.bm, %i.i
-  %i.bo = sub i64 %i.bn, %4
+  %i.bo = sub i64 %i.bn, %3
   %diff.check19 = icmp ugt i64 %i.bo, -16
   %conflict.rdx20 = or i1 %conflict.rdx18, %diff.check19
   br i1 %conflict.rdx20, label %scalar.ph21.preheader, label %vector.ph23

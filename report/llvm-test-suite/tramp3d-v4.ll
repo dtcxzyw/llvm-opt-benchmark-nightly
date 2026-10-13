@@ -205,15 +205,15 @@ _ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i: ; preds = %_ZNSt15__ne
   br i1 %.not7.i.i.i.i.i.i, label %_ZNSt6vectorI3LocILi1EESaIS1_EEC2ERKS3_.exit.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i
-  %i.dq = ptrtoaddr ptr %i.dn to i64              ; 2 uses
-  %i.dr = ptrtoaddr ptr %i.do to i64
+  %i.dq = ptrtoaddr ptr %i.do to i64
+  %i.dr = ptrtoaddr ptr %i.dn to i64              ; 2 uses
   %i.ds = ptrtoaddr ptr %i.dm to i64
   %i.dt = add i64 %i.ds, -4
-  %i.du = sub i64 %i.dt, %i.dq                    ; 2 uses
+  %i.du = sub i64 %i.dt, %i.dr                    ; 2 uses
   %i.dv = lshr i64 %i.du, 2
   %i.dw = add nuw nsw i64 %i.dv, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.du, 44
-  %i.dx = sub i64 %i.dq, %i.dr
+  %i.dx = sub i64 %i.dr, %i.dq
   %diff.check = icmp ugt i64 %i.dx, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader301, label %vector.ph
@@ -381,15 +381,15 @@ _ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i.1: ; preds = %_ZNSt15__
   br i1 %.not7.i.i.i.i.i.i.1, label %_ZNSt6vectorI3LocILi1EESaIS1_EEC2ERKS3_.exit.i.1, label %.lr.ph.i.i.i.i.i.i.1.preheader
 
 .lr.ph.i.i.i.i.i.i.1.preheader:                   ; preds = %_ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i.1
-  %i.gd = ptrtoaddr ptr %i.ga to i64              ; 2 uses
-  %i.ge = ptrtoaddr ptr %i.gb to i64
+  %i.gd = ptrtoaddr ptr %i.gb to i64
+  %i.ge = ptrtoaddr ptr %i.ga to i64              ; 2 uses
   %i.gf = ptrtoaddr ptr %i.fz to i64
   %i.gg = add i64 %i.gf, -4
-  %i.gh = sub i64 %i.gg, %i.gd                    ; 2 uses
+  %i.gh = sub i64 %i.gg, %i.ge                    ; 2 uses
   %i.gi = lshr i64 %i.gh, 2
   %i.gj = add nuw nsw i64 %i.gi, 1                ; 2 uses
   %min.iters.check241 = icmp ult i64 %i.gh, 44
-  %i.gk = sub i64 %i.gd, %i.ge
+  %i.gk = sub i64 %i.ge, %i.gd
   %diff.check239 = icmp ugt i64 %i.gk, -32
   %or.cond289 = or i1 %min.iters.check241, %diff.check239
   br i1 %or.cond289, label %.lr.ph.i.i.i.i.i.i.1.preheader298, label %vector.ph242
@@ -611,15 +611,15 @@ _ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i61: ; preds = %_ZNSt15__
   br i1 %.not7.i.i.i.i.i.i62, label %_ZNSt6vectorI3LocILi1EESaIS1_EEC2ERKS3_.exit.i67, label %.lr.ph.i.i.i.i.i.i63.preheader
 
 .lr.ph.i.i.i.i.i.i63.preheader:                   ; preds = %_ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i61
-  %i.jh = ptrtoaddr ptr %i.je to i64              ; 2 uses
-  %i.ji = ptrtoaddr ptr %i.jf to i64
+  %i.jh = ptrtoaddr ptr %i.jf to i64
+  %i.ji = ptrtoaddr ptr %i.je to i64              ; 2 uses
   %i.jj = ptrtoaddr ptr %i.jd to i64
   %i.jk = add i64 %i.jj, -4
-  %i.jl = sub i64 %i.jk, %i.jh                    ; 2 uses
+  %i.jl = sub i64 %i.jk, %i.ji                    ; 2 uses
   %i.jm = lshr i64 %i.jl, 2
   %i.jn = add nuw nsw i64 %i.jm, 1                ; 2 uses
   %min.iters.check258 = icmp ult i64 %i.jl, 44
-  %i.jo = sub i64 %i.jh, %i.ji
+  %i.jo = sub i64 %i.ji, %i.jh
   %diff.check256 = icmp ugt i64 %i.jo, -32
   %or.cond290 = or i1 %min.iters.check258, %diff.check256
   br i1 %or.cond290, label %.lr.ph.i.i.i.i.i.i63.preheader295, label %vector.ph259
@@ -785,15 +785,15 @@ _ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i61.1: ; preds = %_ZNSt15
   br i1 %.not7.i.i.i.i.i.i62.1, label %_ZNSt6vectorI3LocILi1EESaIS1_EEC2ERKS3_.exit.i67.1, label %.lr.ph.i.i.i.i.i.i63.1.preheader
 
 .lr.ph.i.i.i.i.i.i63.1.preheader:                 ; preds = %_ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i61.1
-  %i.ls = ptrtoaddr ptr %i.lp to i64              ; 2 uses
-  %i.lt = ptrtoaddr ptr %i.lq to i64
+  %i.ls = ptrtoaddr ptr %i.lq to i64
+  %i.lt = ptrtoaddr ptr %i.lp to i64              ; 2 uses
   %i.lu = ptrtoaddr ptr %i.lo to i64
   %i.lv = add i64 %i.lu, -4
-  %i.lw = sub i64 %i.lv, %i.ls                    ; 2 uses
+  %i.lw = sub i64 %i.lv, %i.lt                    ; 2 uses
   %i.lx = lshr i64 %i.lw, 2
   %i.ly = add nuw nsw i64 %i.lx, 1                ; 2 uses
   %min.iters.check275 = icmp ult i64 %i.lw, 44
-  %i.lz = sub i64 %i.ls, %i.lt
+  %i.lz = sub i64 %i.lt, %i.ls
   %diff.check273 = icmp ugt i64 %i.lz, -32
   %or.cond291 = or i1 %min.iters.check275, %diff.check273
   br i1 %or.cond291, label %.lr.ph.i.i.i.i.i.i63.1.preheader292, label %vector.ph276
@@ -1196,6 +1196,7 @@ _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE10_Auto_nodeD2E
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorI3LocILi2EESaIS1_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEvNS6_IPS1_S3_EET_SC_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %.not88 = icmp eq ptr %2, %3
   br i1 %.not88, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPK3LocILi2EESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %bb.b
 
@@ -1598,7 +1599,6 @@ _ZNSt12_Vector_baseI3LocILi2EESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6ve
   br i1 %.not9.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIP3LocILi2EES2_SaIS1_EET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i.i.i.i58.preheader
 
 .lr.ph.i.i.i.i.i58.preheader:                     ; preds = %_ZNSt12_Vector_baseI3LocILi2EESaIS1_EE11_M_allocateEm.exit
-  %4 = ptrtoaddr ptr %1 to i64
   %i.gf = add i64 %4, -8
   %i.gg = sub i64 %i.gf, %i.ft                    ; 2 uses
   %i.gh = lshr i64 %i.gg, 3
@@ -1723,9 +1723,8 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK3LocILi2EESt6vecto
   br i1 %.not9.i.i.i.i.i68, label %_ZSt34__uninitialized_move_if_noexcept_aIP3LocILi2EES2_SaIS1_EET0_T_S5_S4_RT1_.exit74, label %.lr.ph.i.i.i.i.i69.preheader
 
 .lr.ph.i.i.i.i.i69.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK3LocILi2EESt6vectorIS3_SaIS3_EEEEPS3_S3_ET0_T_SC_SB_RSaIT1_E.exit67
-  %5 = ptrtoaddr ptr %1 to i64
   %i.hp = add i64 %i.j, -8
-  %i.hq = sub i64 %i.hp, %5                       ; 3 uses
+  %i.hq = sub i64 %i.hp, %4                       ; 3 uses
   %i.hr = lshr i64 %i.hq, 3
   %i.hs = add nuw nsw i64 %i.hr, 1                ; 2 uses
   %min.iters.check350 = icmp ult i64 %i.hq, 120
@@ -1813,6 +1812,7 @@ _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPK3LocILi2EESt6vectorIS3_SaIS3_EEEENS1_
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorI6VectorILi2Ed4FullESaIS2_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPKS2_S4_EEEEvNS7_IPS2_S4_EET_SD_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #1 comdat align 2 {
 bb.a:
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %.not94 = icmp eq ptr %2, %3
   br i1 %.not94, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPK6VectorILi2Ed4FullESt6vectorIS4_SaIS4_EEEENS1_IPS4_S9_EEET0_T_SE_SD_.exit, label %bb.b
 
@@ -2215,7 +2215,6 @@ _ZNSt12_Vector_baseI6VectorILi2Ed4FullESaIS2_EE11_M_allocateEm.exit: ; preds = %
   br i1 %.not9.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIP6VectorILi2Ed4FullES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i64.preheader
 
 .lr.ph.i.i.i.i.i64.preheader:                     ; preds = %_ZNSt12_Vector_baseI6VectorILi2Ed4FullESaIS2_EE11_M_allocateEm.exit
-  %4 = ptrtoaddr ptr %1 to i64
   %i.gi = add i64 %4, -16
   %i.gj = sub i64 %i.gi, %i.fw                    ; 2 uses
   %i.gk = lshr i64 %i.gj, 4
@@ -2340,9 +2339,8 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK6VectorILi2Ed4Full
   br i1 %.not9.i.i.i.i.i74, label %_ZSt34__uninitialized_move_if_noexcept_aIP6VectorILi2Ed4FullES3_SaIS2_EET0_T_S6_S5_RT1_.exit80, label %.lr.ph.i.i.i.i.i75.preheader
 
 .lr.ph.i.i.i.i.i75.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK6VectorILi2Ed4FullESt6vectorIS4_SaIS4_EEEEPS4_S4_ET0_T_SD_SC_RSaIT1_E.exit73
-  %5 = ptrtoaddr ptr %1 to i64
   %i.hs = add i64 %i.j, -16
-  %i.ht = sub i64 %i.hs, %5                       ; 3 uses
+  %i.ht = sub i64 %i.hs, %4                       ; 3 uses
   %i.hu = lshr i64 %i.ht, 4
   %i.hv = add nuw nsw i64 %i.hu, 1                ; 2 uses
   %min.iters.check262 = icmp ult i64 %i.ht, 208

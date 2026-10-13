@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.e, %.noexc13
   store ptr %i.aa, ptr %i.ab, align 8, !tbaa !642
   %i.ac = load ptr, ptr %i.h, align 8, !tbaa !233 ; 11 uses
   %i.ad = ptrtoaddr ptr %i.ac to i64              ; 4 uses
-  %i.ae = load ptr, ptr %i.n, align 8, !tbaa !233 ; 5 uses
+  %i.ae = load ptr, ptr %i.n, align 8, !tbaa !233 ; 4 uses
+  %3 = ptrtoaddr ptr %i.ae to i64                 ; 2 uses
   %.not12.i.i = icmp eq ptr %i.ac, %i.ae
   br i1 %.not12.i.i, label %_ZSt22__uninitialized_move_aIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiN4absl12lts_2026052618container_internal17CountingAllocatorIiEEEEES2_S8_ET0_T_SC_SB_RT1_.exit, label %.lr.ph.i.i
 
@@ -216,7 +217,6 @@ bb.f:                                             ; preds = %bb.e, %.noexc13
   br i1 %.not.i.i.i.i.i, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i.preheader, label %.lr.ph.split.i.i
 
 _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i.preheader: ; preds = %.lr.ph.i.i
-  %3 = ptrtoaddr ptr %i.ae to i64
   %i.ah = add i64 %3, -4
   %i.ai = sub i64 %i.ah, %i.ad                    ; 2 uses
   %i.aj = lshr i64 %i.ai, 2
@@ -270,8 +270,7 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i
   %.promoted.i.i = load i64, ptr %i.ag, align 8, !tbaa !197 ; 2 uses
-  %4 = ptrtoaddr ptr %i.ae to i64
-  %i.aw = add i64 %4, -4
+  %i.aw = add i64 %3, -4
   %i.ax = sub i64 %i.aw, %i.ad                    ; 2 uses
   %i.ay = lshr i64 %i.ax, 2
   %i.az = add nuw nsw i64 %i.ay, 1                ; 2 uses

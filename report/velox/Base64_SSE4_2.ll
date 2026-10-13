@@ -71,14 +71,14 @@ bb.a:
   br i1 %i.x, label %.lr.ph, label %_ZN5folly6detail13base64_detail20base64SimdEncodeImplINS1_22Base64_SSE4_2_PlatformELb0EEEPcPKcS6_S4_.exit, !llvm.loop !31
 
 _ZN5folly6detail13base64_detail20base64SimdEncodeImplINS1_22Base64_SSE4_2_PlatformELb0EEEPcPKcS6_S4_.exit: ; preds = %.lr.ph, %bb.a
-  %.011.i.lcssa = phi ptr [ %0, %bb.a ], [ %i.t, %.lr.ph ] ; 57 uses
+  %.011.i.lcssa = phi ptr [ %0, %bb.a ], [ %i.t, %.lr.ph ] ; 56 uses
   %.0.i.lcssa = phi ptr [ %2, %bb.a ], [ %i.u, %.lr.ph ] ; 9 uses
   %.lcssa5 = phi i64 [ %i.c, %bb.a ], [ %i.w, %.lr.ph ] ; 2 uses
+  %.011.i.lcssa31 = ptrtoaddr ptr %.011.i.lcssa to i64 ; 4 uses
   %i.y = icmp samesign ugt i64 %.lcssa5, 2
   br i1 %i.y, label %iter.check, label %._crit_edge.i.i
 
 iter.check:                                       ; preds = %_ZN5folly6detail13base64_detail20base64SimdEncodeImplINS1_22Base64_SSE4_2_PlatformELb0EEEPcPKcS6_S4_.exit
-  %.011.i.lcssa31 = ptrtoaddr ptr %.011.i.lcssa to i64 ; 2 uses
   %.neg = sub i64 %i.a, %.011.i.lcssa31
   %reass.sub = sub i64 %.011.i.lcssa31, %i.a
   %i.z = add i64 %reass.sub, 2
@@ -90,9 +90,8 @@ iter.check:                                       ; preds = %_ZN5folly6detail13b
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %3 = ptrtoaddr ptr %.011.i.lcssa to i64         ; 2 uses
-  %.neg93 = sub i64 %i.a, %3
-  %reass.sub92 = sub i64 %3, %i.a
+  %.neg93 = sub i64 %i.a, %.011.i.lcssa31
+  %reass.sub92 = sub i64 %.011.i.lcssa31, %i.a
   %i.ae = add i64 %reass.sub92, 2
   %i.af = tail call i64 @llvm.smax.i64(i64 %i.ae, i64 -3)
   %i.ag = add i64 %.neg93, %i.af
@@ -495,14 +494,14 @@ bb.a:
   br i1 %i.x, label %.lr.ph, label %_ZN5folly6detail13base64_detail20base64SimdEncodeImplINS1_22Base64_SSE4_2_PlatformELb1EEEPcPKcS6_S4_.exit, !llvm.loop !40
 
 _ZN5folly6detail13base64_detail20base64SimdEncodeImplINS1_22Base64_SSE4_2_PlatformELb1EEEPcPKcS6_S4_.exit: ; preds = %.lr.ph, %bb.a
-  %.011.i.lcssa = phi ptr [ %0, %bb.a ], [ %i.t, %.lr.ph ] ; 57 uses
+  %.011.i.lcssa = phi ptr [ %0, %bb.a ], [ %i.t, %.lr.ph ] ; 56 uses
   %.0.i.lcssa = phi ptr [ %2, %bb.a ], [ %i.u, %.lr.ph ] ; 9 uses
   %.lcssa5 = phi i64 [ %i.c, %bb.a ], [ %i.w, %.lr.ph ] ; 2 uses
+  %.011.i.lcssa31 = ptrtoaddr ptr %.011.i.lcssa to i64 ; 4 uses
   %i.y = icmp samesign ugt i64 %.lcssa5, 2
   br i1 %i.y, label %iter.check, label %._crit_edge.i.i
 
 iter.check:                                       ; preds = %_ZN5folly6detail13base64_detail20base64SimdEncodeImplINS1_22Base64_SSE4_2_PlatformELb1EEEPcPKcS6_S4_.exit
-  %.011.i.lcssa31 = ptrtoaddr ptr %.011.i.lcssa to i64 ; 2 uses
   %.neg = sub i64 %i.a, %.011.i.lcssa31
   %reass.sub = sub i64 %.011.i.lcssa31, %i.a
   %i.z = add i64 %reass.sub, 2
@@ -514,9 +513,8 @@ iter.check:                                       ; preds = %_ZN5folly6detail13b
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %3 = ptrtoaddr ptr %.011.i.lcssa to i64         ; 2 uses
-  %.neg93 = sub i64 %i.a, %3
-  %reass.sub92 = sub i64 %3, %i.a
+  %.neg93 = sub i64 %i.a, %.011.i.lcssa31
+  %reass.sub92 = sub i64 %.011.i.lcssa31, %i.a
   %i.ae = add i64 %reass.sub92, 2
   %i.af = tail call i64 @llvm.smax.i64(i64 %i.ae, i64 -3)
   %i.ag = add i64 %.neg93, %i.af

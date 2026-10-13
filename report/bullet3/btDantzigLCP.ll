@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
   tail call void @_Z9btSolveL1PKfPfii(ptr noundef %i.by, ptr noundef %i.k, i32 noundef %i.b, i32 noundef %i.ca)
   %i.cb = load i32, ptr %i.a, align 4, !tbaa !32  ; 9 uses
   %i.cc = load ptr, ptr %i.bx, align 8, !tbaa !40 ; 2 uses
-  %i.cd = ptrtoaddr ptr %i.cc to i64              ; 2 uses
+  %i.cd = ptrtoaddr ptr %i.cc to i64
   %i.ce = load i32, ptr %i.bz, align 4, !tbaa !30
   %i.cf = mul i32 %i.ce, %i.cb
   %i.cg = sext i32 %i.cf to i64                   ; 2 uses
@@ -234,8 +234,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check84, label %.lr.ph44.preheader97, label %vector.memcheck74
 
 vector.memcheck74:                                ; preds = %.lr.ph44.preheader
-  %i.cw = shl nsw i64 %i.cg, 2                    ; 2 uses
-  %i.cx = add i64 %i.cw, %i.cd
+  %i.cw = shl nsw i64 %i.cg, 2
+  %i.cx = add i64 %i.cw, %i.cd                    ; 3 uses
   %i.cy = sub i64 %i.ck, %i.cx
   %diff.check75 = icmp ugt i64 %i.cy, -32
   %i.cz = sub i64 %i.cm, %i.ck
@@ -244,11 +244,10 @@ vector.memcheck74:                                ; preds = %.lr.ph44.preheader
   %i.da = sub i64 %i.cp, %i.ck
   %diff.check77 = icmp ugt i64 %i.da, -32
   %conflict.rdx78 = or i1 %conflict.rdx, %diff.check77
-  %2 = add i64 %i.cw, %i.cd                       ; 2 uses
-  %i.db = sub i64 %i.cm, %2
+  %i.db = sub i64 %i.cm, %i.cx
   %diff.check79 = icmp ugt i64 %i.db, -32
   %conflict.rdx80 = or i1 %conflict.rdx78, %diff.check79
-  %i.dc = sub i64 %i.cp, %2
+  %i.dc = sub i64 %i.cp, %i.cx
   %diff.check81 = icmp ugt i64 %i.dc, -32
   %conflict.rdx82 = or i1 %conflict.rdx80, %diff.check81
   br i1 %conflict.rdx82, label %.lr.ph44.preheader97, label %vector.ph85
@@ -651,12 +650,12 @@ bb.q:                                             ; preds = %_ZN20btAlignedObjec
   br i1 %min.iters.check160, label %.lr.ph.preheader172, label %vector.memcheck156
 
 vector.memcheck156:                               ; preds = %.lr.ph.preheader
-  %9 = add i64 %i.g, %i.bd                        ; 2 uses
-  %10 = shl nsw i64 %i.db, 2
-  %i.de = add i64 %10, %i.b
-  %i.df = sub i64 %i.de, %9
+  %9 = shl nsw i64 %i.db, 2
+  %10 = add i64 %i.g, %i.bd                       ; 2 uses
+  %i.de = add i64 %9, %i.b
+  %i.df = sub i64 %i.de, %10
   %diff.check157 = icmp ugt i64 %i.df, -16
-  %i.dg = sub i64 %i.a, %9
+  %i.dg = sub i64 %i.a, %10
   %diff.check158 = icmp ugt i64 %i.dg, -16
   %conflict.rdx = or i1 %diff.check157, %diff.check158
   br i1 %conflict.rdx, label %.lr.ph.preheader172, label %vector.ph161

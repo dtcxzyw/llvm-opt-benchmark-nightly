@@ -205,7 +205,9 @@ _ZNSt6vectorIfSaIfEED2Ev.exit103:                 ; preds = %_ZNSt6vectorIfSaIfE
   tail call void @_ZN7VocData12getSortOrderERKSt6vectorIfSaIfEERS0_ImSaImEEb(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %6, i1 noundef zeroext true)
   %.not = icmp eq i32 %7, -1
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !121 ; 5 uses
+  %.pre222 = ptrtoaddr ptr %.pre to i64
   %.pre178 = load ptr, ptr %1, align 8, !tbaa !121 ; 9 uses
+  %.pre178221 = ptrtoaddr ptr %.pre178 to i64
   br i1 %.not, label %bb.h, label %"_ZSt8count_ifIN9__gnu_cxx17__normal_iteratorIPKcSt6vectorIcSaIcEEEEZN7VocData19calcPrecRecall_implERKS6_RKS4_IfSaIfEERSC_SF_RfRS4_ImSaImEEiE3$_0ENSt15iterator_traitsIT_E15difference_typeESM_SM_T0_.exit"
 
 bb.h:                                             ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit103
@@ -213,9 +215,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %.not4.i.i, label %"_ZSt8count_ifIN9__gnu_cxx17__normal_iteratorIPKcSt6vectorIcSaIcEEEEZN7VocData19calcPrecRecall_implERKS6_RKS4_IfSaIfEERSC_SF_RfRS4_ImSaImEEiE3$_0ENSt15iterator_traitsIT_E15difference_typeESM_SM_T0_.exit", label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.h
-  %10 = ptrtoaddr ptr %.pre to i64
-  %11 = ptrtoaddr ptr %.pre178 to i64
-  %i.be = sub i64 %10, %11                        ; 3 uses
+  %i.be = sub i64 %.pre222, %.pre178221           ; 3 uses
   %min.iters.check = icmp ult i64 %i.be, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader225, label %vector.ph
 
@@ -618,8 +618,10 @@ bb.mj:                                            ; preds = %.noexc173.i
   br label %_ZNSt6vectorIcSaIcEEC2ERKS1_.exit.i
 
 _ZNSt6vectorIcSaIcEEC2ERKS1_.exit.i:              ; preds = %bb.mj, %bb.mi, %bb.mh
-  %i.brf = phi ptr [ %i.brb, %bb.mh ], [ %i.brd, %bb.mi ], [ %i.brb, %bb.mj ] ; 10 uses
-  %i.brg = phi ptr [ %i.bra, %bb.mh ], [ null, %bb.mi ], [ %i.bra, %bb.mj ] ; 16 uses
+  %i.brf = phi ptr [ %i.brb, %bb.mh ], [ %i.brd, %bb.mi ], [ %i.brb, %bb.mj ] ; 9 uses
+  %i.brg = phi ptr [ %i.bra, %bb.mh ], [ null, %bb.mi ], [ %i.bra, %bb.mj ] ; 15 uses
+  %144 = ptrtoaddr ptr %i.brg to i64              ; 2 uses
+  %145 = ptrtoaddr ptr %i.brf to i64              ; 2 uses
   %i.brh = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZN2cv6theRNGEv()
           to label %.noexc179.i444 unwind label %.loopexit.split-lp369.i.loopexit, !noalias !652 ; 2 uses
 
@@ -628,9 +630,7 @@ _ZNSt6vectorIcSaIcEEC2ERKS1_.exit.i:              ; preds = %bb.mj, %bb.mi, %bb.
   br i1 %.not5.i.i.i.i, label %_ZSt5countIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEEcENSt15iterator_traitsIT_E15difference_typeES8_S8_RKT0_.exit42.i.i, label %.lr.ph.i.i.i.i445.preheader
 
 .lr.ph.i.i.i.i445.preheader:                      ; preds = %.noexc179.i444
-  %144 = ptrtoaddr ptr %i.brf to i64
-  %145 = ptrtoaddr ptr %i.brg to i64
-  %i.bri = sub i64 %144, %145                     ; 3 uses
+  %i.bri = sub i64 %145, %144                     ; 3 uses
   %min.iters.check2757 = icmp ult i64 %i.bri, 8
   br i1 %min.iters.check2757, label %.lr.ph.i.i.i.i445.preheader2794, label %vector.ph2758
 
@@ -681,9 +681,7 @@ middle.block2768:                                 ; preds = %vector.body2760
 
 .lr.ph.i.i36.i.i.preheader:                       ; preds = %.lr.ph.i.i.i.i445, %middle.block2768
   %spec.select.i.i.i.i.lcssa = phi i32 [ %i.brs, %middle.block2768 ], [ %spec.select.i.i.i.i, %.lr.ph.i.i.i.i445 ] ; 2 uses
-  %146 = ptrtoaddr ptr %i.brf to i64
-  %147 = ptrtoaddr ptr %i.brg to i64
-  %i.brx = sub i64 %146, %147                     ; 3 uses
+  %i.brx = sub i64 %145, %144                     ; 3 uses
   %min.iters.check = icmp ult i64 %i.brx, 8
   br i1 %min.iters.check, label %.lr.ph.i.i36.i.i.preheader2793, label %vector.ph
 

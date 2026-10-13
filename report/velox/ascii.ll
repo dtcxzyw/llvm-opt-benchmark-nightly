@@ -20,8 +20,8 @@ $_ZN4absl12lts_2024011627StripLeadingAsciiWhitespaceESt17basic_string_viewIcSt11
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN4absl12lts_2024011615AsciiStrToLowerEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !13     ; 8 uses
-  %i.b = ptrtoaddr ptr %i.a to i64
+  %i.a = load ptr, ptr %0, align 8, !tbaa !13     ; 7 uses
+  %i.b = ptrtoaddr ptr %i.a to i64                ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !14   ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.d ; 2 uses
@@ -31,11 +31,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = and i64 %i.d, -8                         ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.g
-  %1 = ptrtoaddr ptr %i.a to i64                  ; 3 uses
-  %i.i = add i64 %i.g, %1
-  %i.j = add i64 %1, 8
+  %i.i = add i64 %i.g, %i.b
+  %i.j = add i64 %i.b, 8
   %i.k = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %i.j)
-  %i.l = xor i64 %1, -1
+  %i.l = xor i64 %i.b, -1
   %i.m = add i64 %i.k, %i.l                       ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
@@ -212,8 +211,8 @@ _ZN4absl12lts_2024011614ascii_internalL16AsciiStrCaseFoldILb0EEEvPcS3_.exit: ; p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN4absl12lts_2024011615AsciiStrToUpperEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !13     ; 8 uses
-  %i.b = ptrtoaddr ptr %i.a to i64
+  %i.a = load ptr, ptr %0, align 8, !tbaa !13     ; 7 uses
+  %i.b = ptrtoaddr ptr %i.a to i64                ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !14   ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.d ; 2 uses
@@ -223,11 +222,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = and i64 %i.d, -8                         ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.g
-  %1 = ptrtoaddr ptr %i.a to i64                  ; 3 uses
-  %i.i = add i64 %i.g, %1
-  %i.j = add i64 %1, 8
+  %i.i = add i64 %i.g, %i.b
+  %i.j = add i64 %i.b, 8
   %i.k = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %i.j)
-  %i.l = xor i64 %1, -1
+  %i.l = xor i64 %i.b, -1
   %i.m = add i64 %i.k, %i.l                       ; 2 uses
   %i.n = lshr i64 %i.m, 3
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses

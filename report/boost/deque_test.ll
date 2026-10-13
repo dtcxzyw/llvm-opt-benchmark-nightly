@@ -205,7 +205,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.pre-phi13.i = phi i64 [ %.pre12.i, %bb.c ], [ %i.j, %bb.b ] ; 2 uses
   %i.m = phi ptr [ %.pre6.i, %bb.c ], [ %i.f, %bb.b ] ; 6 uses
-  %i.n = phi ptr [ %.pre.i, %bb.c ], [ %i.c, %bb.b ] ; 7 uses
+  %i.n = phi ptr [ %.pre.i, %bb.c ], [ %i.c, %bb.b ] ; 6 uses
+  %5 = ptrtoaddr ptr %i.m to i64
+  %6 = ptrtoaddr ptr %i.n to i64                  ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !427, !noalias !3199
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -311,10 +313,8 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
   br i1 %.not5.i18.i.i.i.i.i.i, label %_ZSt22__uninitialized_fill_aISt15_Deque_iteratorIiRiPiEiiEvT_S4_RKT0_RSaIT1_E.exit, label %.lr.ph.i19.i.i.i.i.i.i.preheader
 
 .lr.ph.i19.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %5 = ptrtoaddr ptr %i.n to i64
-  %6 = ptrtoaddr ptr %i.m to i64
-  %i.ax = add i64 %5, -4
-  %i.ay = sub i64 %i.ax, %6                       ; 2 uses
+  %i.ax = add i64 %6, -4
+  %i.ay = sub i64 %i.ax, %5                       ; 2 uses
   %i.az = lshr i64 %i.ay, 2
   %i.ba = add nuw nsw i64 %i.az, 1                ; 2 uses
   %min.iters.check176 = icmp ult i64 %i.ay, 28
@@ -437,9 +437,8 @@ bb.i:                                             ; preds = %_ZNSt5dequeIiSaIiEE
   br i1 %.not5.i28.i.i.i.i.i.i, label %_ZSt22__uninitialized_fill_aISt15_Deque_iteratorIiRiPiEiiEvT_S4_RKT0_RSaIT1_E.exit, label %.lr.ph.i29.i.i.i.i.i.i.preheader
 
 .lr.ph.i29.i.i.i.i.i.i.preheader:                 ; preds = %bb.i
-  %7 = ptrtoaddr ptr %i.n to i64
   %i.cq = ptrtoaddr ptr %storemerge.i.i.i.i96 to i64
-  %i.cr = add i64 %7, -4
+  %i.cr = add i64 %6, -4
   %i.cs = sub i64 %i.cr, %i.cq                    ; 2 uses
   %i.ct = lshr i64 %i.cs, 2
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses
@@ -519,7 +518,9 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.pre-phi.i = phi i64 [ %.pre7.i15, %bb.l ], [ %i.dh, %bb.k ]
   %i.dn = phi ptr [ %.pre6.i14, %bb.l ], [ %i.df, %bb.k ] ; 4 uses
-  %i.do = phi ptr [ %.pre.i13, %bb.l ], [ %i.dc, %bb.k ] ; 11 uses
+  %i.do = phi ptr [ %.pre.i13, %bb.l ], [ %i.dc, %bb.k ] ; 10 uses
+  %7 = ptrtoaddr ptr %i.do to i64                 ; 2 uses
+  %8 = ptrtoaddr ptr %i.dn to i64
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !426, !noalias !3201 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
@@ -568,10 +569,8 @@ bb.q:                                             ; preds = %_ZNSt5dequeIiSaIiEE
   br i1 %.not5.i.i.i.i.i.i.i17, label %_ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_.exit.i.i.i.i.i.i21, label %.lr.ph.i.i.i.i.i.i.i18.preheader
 
 .lr.ph.i.i.i.i.i.i.i18.preheader:                 ; preds = %bb.q
-  %8 = ptrtoaddr ptr %i.dn to i64
-  %9 = ptrtoaddr ptr %i.do to i64
   %i.ek = add i64 %8, -4
-  %i.el = sub i64 %i.ek, %9                       ; 2 uses
+  %i.el = sub i64 %i.ek, %7                       ; 2 uses
   %i.em = lshr i64 %i.el, 2
   %i.en = add nuw nsw i64 %i.em, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.el, 28
@@ -750,9 +749,8 @@ bb.r:                                             ; preds = %_ZNSt5dequeIiSaIiEE
 
 .lr.ph.i29.i.i.i.i.i.i38.preheader:               ; preds = %bb.r
   %i.gp = ptrtoaddr ptr %storemerge.i.i.i108 to i64
-  %10 = ptrtoaddr ptr %i.do to i64
   %i.gq = add i64 %i.gp, -4
-  %i.gr = sub i64 %i.gq, %10                      ; 2 uses
+  %i.gr = sub i64 %i.gq, %7                       ; 2 uses
   %i.gs = lshr i64 %i.gr, 2
   %i.gt = add nuw nsw i64 %i.gs, 1                ; 2 uses
   %min.iters.check143 = icmp ult i64 %i.gr, 28
@@ -932,6 +930,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.pre-phi13.i = phi i64 [ %.pre12.i, %bb.c ], [ %i.bc, %bb.b ]
   %i.bh = phi ptr [ %.pre6.i, %bb.c ], [ %i.az, %bb.b ] ; 4 uses
   %i.bi = phi ptr [ %.pre.i, %bb.c ], [ %i.x, %bb.b ] ; 12 uses
+  %29 = ptrtoaddr ptr %i.bg to i64
   %i.bj = sub nsw i64 0, %2                       ; 2 uses
   %i.bk = sub nsw i64 %.pre-phi13.i, %2           ; 5 uses
   %i.bl = icmp sgt i64 %i.bk, -1
@@ -1013,8 +1012,10 @@ _ZStplRKSt15_Deque_iteratorIiRiPiEl.exit:         ; preds = %bb.k, %bb.n
   store ptr %.sroa.6270.0, ptr %.sroa.6270.0..sroa_idx, align 8, !tbaa !369
   store ptr %.sroa.8271.0, ptr %i.c, align 8, !tbaa !554
   %.not = icmp slt i64 %i.ac, %2
-  %i.co = load ptr, ptr %i.b, align 8, !tbaa !425 ; 10 uses
+  %i.co = load ptr, ptr %i.b, align 8, !tbaa !425 ; 9 uses
+  %30 = ptrtoaddr ptr %i.co to i64                ; 2 uses
   %i.cp = load ptr, ptr %i.ay, align 8, !tbaa !426 ; 9 uses
+  %31 = ptrtoaddr ptr %i.cp to i64
   %i.cq = load ptr, ptr %i.v, align 8, !tbaa !427 ; 3 uses
   %i.cr = load ptr, ptr %i.e, align 8, !tbaa !420 ; 7 uses
   br i1 %.not, label %bb.ad, label %bb.o
@@ -1417,9 +1418,11 @@ bb.ad:                                            ; preds = %_ZStplRKSt15_Deque_
   call void @llvm.lifetime.end.p0(ptr nonnull %12), !noalias !3322
   call void @llvm.lifetime.end.p0(ptr nonnull %13), !noalias !3322
   call void @llvm.lifetime.end.p0(ptr nonnull %14), !noalias !3322
-  %i.hs = load ptr, ptr %15, align 8, !tbaa !425, !noalias !3324 ; 10 uses
+  %i.hs = load ptr, ptr %15, align 8, !tbaa !425, !noalias !3324 ; 9 uses
+  %32 = ptrtoaddr ptr %i.hs to i64                ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %15, i64 16
   %i.hu = load ptr, ptr %i.ht, align 8, !tbaa !427, !noalias !3324 ; 3 uses
+  %33 = ptrtoaddr ptr %i.hu to i64
   %i.hv = getelementptr inbounds nuw i8, ptr %15, i64 24
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !420, !noalias !3324 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %15), !noalias !3321
@@ -1431,10 +1434,8 @@ bb.ae:                                            ; preds = %.noexc
   br i1 %.not5.i.i.i.i.i.i.i.i, label %_ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_.exit.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %bb.ae
-  %29 = ptrtoaddr ptr %i.hu to i64
-  %30 = ptrtoaddr ptr %i.hs to i64
-  %i.hx = add i64 %29, -4
-  %i.hy = sub i64 %i.hx, %30                      ; 2 uses
+  %i.hx = add i64 %33, -4
+  %i.hy = sub i64 %i.hx, %32                      ; 2 uses
   %i.hz = lshr i64 %i.hy, 2
   %i.ia = add nuw nsw i64 %i.hz, 1                ; 2 uses
   %min.iters.check538 = icmp ult i64 %i.hy, 28
@@ -1489,10 +1490,8 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
   br i1 %.not5.i18.i.i.i.i.i.i.i, label %_ZSt25__uninitialized_move_fillISt15_Deque_iteratorIiRiPiES3_iSaIiEEvT_S5_T0_S6_RKT1_RT2_.exit, label %.lr.ph.i19.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i19.i.i.i.i.i.i.i.preheader:               ; preds = %._crit_edge.i.i.i.i.i.i.i
-  %31 = ptrtoaddr ptr %i.co to i64
-  %32 = ptrtoaddr ptr %i.cp to i64
-  %i.ii = add i64 %31, -4
-  %i.ij = sub i64 %i.ii, %32                      ; 2 uses
+  %i.ii = add i64 %30, -4
+  %i.ij = sub i64 %i.ii, %31                      ; 2 uses
   %i.ik = lshr i64 %i.ij, 2
   %i.il = add nuw nsw i64 %i.ik, 1                ; 2 uses
   %min.iters.check559 = icmp ult i64 %i.ij, 28
@@ -1607,10 +1606,8 @@ bb.af:                                            ; preds = %.noexc
   br i1 %.not5.i28.i.i.i.i.i.i.i, label %_ZSt25__uninitialized_move_fillISt15_Deque_iteratorIiRiPiES3_iSaIiEEvT_S5_T0_S6_RKT1_RT2_.exit, label %.lr.ph.i29.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i29.i.i.i.i.i.i.i.preheader:               ; preds = %bb.af
-  %33 = ptrtoaddr ptr %i.co to i64
-  %34 = ptrtoaddr ptr %i.hs to i64
-  %i.jz = add i64 %33, -4
-  %i.ka = sub i64 %i.jz, %34                      ; 2 uses
+  %i.jz = add i64 %30, -4
+  %i.ka = sub i64 %i.jz, %32                      ; 2 uses
   %i.kb = lshr i64 %i.ka, 2
   %i.kc = add nuw nsw i64 %i.kb, 1                ; 2 uses
   %min.iters.check572 = icmp ult i64 %i.ka, 28
@@ -1655,8 +1652,10 @@ _ZSt25__uninitialized_move_fillISt15_Deque_iteratorIiRiPiES3_iSaIiEEvT_S5_T0_S6_
   store ptr %.sroa.8283.0, ptr %i.ay, align 8, !tbaa !369
   store ptr %.sroa.12287.0, ptr %i.v, align 8, !tbaa !369
   store ptr %.sroa.16.0, ptr %i.e, align 8, !tbaa !554
-  %i.kj = load ptr, ptr %1, align 8, !tbaa !425   ; 6 uses
+  %i.kj = load ptr, ptr %1, align 8, !tbaa !425   ; 5 uses
+  %34 = ptrtoaddr ptr %i.kj to i64                ; 2 uses
   %i.kk = load ptr, ptr %i.o, align 8, !tbaa !426 ; 5 uses
+  %35 = ptrtoaddr ptr %i.kk to i64
   %i.kl = load ptr, ptr %i.c, align 8, !tbaa !420 ; 3 uses
   %.not.i.i.i33 = icmp eq ptr %i.bf, %i.kl
   br i1 %.not.i.i.i33, label %bb.ah, label %bb.ag
@@ -1666,8 +1665,7 @@ bb.ag:                                            ; preds = %_ZSt25__uninitializ
   br i1 %.not5.i.i.i.i34, label %_ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_.exit.i.i.i38, label %.lr.ph.i.i.i.i35.preheader
 
 .lr.ph.i.i.i.i35.preheader:                       ; preds = %bb.ag
-  %35 = ptrtoaddr ptr %i.bg to i64
-  %i.km = add i64 %35, -4
+  %i.km = add i64 %29, -4
   %i.kn = sub i64 %i.km, %i.bx                    ; 2 uses
   %i.ko = lshr i64 %i.kn, 2
   %i.kp = add nuw nsw i64 %i.ko, 1                ; 2 uses
@@ -1723,10 +1721,8 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
   br i1 %.not5.i18.i.i.i41, label %_ZSt4fillISt15_Deque_iteratorIiRiPiEiEvT_S4_RKT0_.exit, label %.lr.ph.i19.i.i.i42.preheader
 
 .lr.ph.i19.i.i.i42.preheader:                     ; preds = %._crit_edge.i.i.i40
-  %36 = ptrtoaddr ptr %i.kj to i64
-  %37 = ptrtoaddr ptr %i.kk to i64
-  %i.kx = add i64 %36, -4
-  %i.ky = sub i64 %i.kx, %37                      ; 2 uses
+  %i.kx = add i64 %34, -4
+  %i.ky = sub i64 %i.kx, %35                      ; 2 uses
   %i.kz = lshr i64 %i.ky, 2
   %i.la = add nuw nsw i64 %i.kz, 1                ; 2 uses
   %min.iters.check606 = icmp ult i64 %i.ky, 28
@@ -1841,8 +1837,7 @@ bb.ah:                                            ; preds = %_ZSt25__uninitializ
   br i1 %.not5.i28.i.i.i54, label %_ZSt4fillISt15_Deque_iteratorIiRiPiEiEvT_S4_RKT0_.exit, label %.lr.ph.i29.i.i.i55.preheader
 
 .lr.ph.i29.i.i.i55.preheader:                     ; preds = %bb.ah
-  %38 = ptrtoaddr ptr %i.kj to i64
-  %i.mo = add i64 %38, -4
+  %i.mo = add i64 %34, -4
   %i.mp = sub i64 %i.mo, %i.bx                    ; 2 uses
   %i.mq = lshr i64 %i.mp, 2
   %i.mr = add nuw nsw i64 %i.mq, 1                ; 2 uses
@@ -1944,6 +1939,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.np = phi ptr [ %.pre, %bb.am ], [ %i.ao, %bb.al ] ; 8 uses
   %i.nq = phi ptr [ %.pre6.i61, %bb.am ], [ %i.nh, %bb.al ] ; 3 uses
   %i.nr = phi ptr [ %.pre.i60, %bb.am ], [ %i.am, %bb.al ] ; 8 uses
+  %36 = ptrtoaddr ptr %i.np to i64
   %i.ns = add nsw i64 %.pre-phi332, %2            ; 5 uses
   %i.nt = icmp sgt i64 %i.ns, -1
   br i1 %i.nt, label %bb.ao, label %bb.ar
@@ -2142,6 +2138,7 @@ bb.bf:                                            ; preds = %bb.be
   call void @llvm.lifetime.end.p0(ptr nonnull %7), !noalias !3332
   %i.qm = load ptr, ptr %1, align 8, !tbaa !425   ; 9 uses
   %i.qn = load ptr, ptr %.sroa.6178.0..sroa_idx, align 8, !tbaa !427 ; 3 uses
+  %37 = ptrtoaddr ptr %i.qn to i64
   %i.qo = load ptr, ptr %i.c, align 8, !tbaa !420 ; 2 uses
   %i.qp = load ptr, ptr %i.o, align 8, !tbaa !426, !noalias !3335
   %i.qq = ptrtoint ptr %i.qm to i64               ; 2 uses
@@ -2177,8 +2174,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh
   br i1 %.not5.i.i.i.i73, label %_ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_.exit.i.i.i77, label %.lr.ph.i.i.i.i74.preheader
 
 .lr.ph.i.i.i.i74.preheader:                       ; preds = %bb.bj
-  %39 = ptrtoaddr ptr %i.qn to i64
-  %i.rf = add i64 %39, -4
+  %i.rf = add i64 %37, -4
   %i.rg = sub i64 %i.rf, %i.qq                    ; 2 uses
   %i.rh = lshr i64 %i.rg, 2
   %i.ri = add nuw nsw i64 %i.rh, 1                ; 2 uses
@@ -2484,8 +2480,10 @@ bb.bt:                                            ; preds = %_ZStplRKSt15_Deque_
   store ptr %.sroa.6187.0, ptr %i.an, align 8, !tbaa !369
   store ptr %.sroa.8190.0, ptr %i.ng, align 8, !tbaa !369
   store ptr %.sroa.10193.0, ptr %i.ae, align 8, !tbaa !554
-  %i.uz = load ptr, ptr %1, align 8, !tbaa !425   ; 10 uses
+  %i.uz = load ptr, ptr %1, align 8, !tbaa !425   ; 9 uses
+  %38 = ptrtoaddr ptr %i.uz to i64                ; 2 uses
   %i.va = load ptr, ptr %.sroa.6178.0..sroa_idx, align 8, !tbaa !427 ; 3 uses
+  %39 = ptrtoaddr ptr %i.va to i64
   %i.vb = load ptr, ptr %i.c, align 8, !tbaa !420 ; 2 uses
   %.not.i.i.i100 = icmp eq ptr %i.vb, %i.no
   %i.vc = load i32, ptr %i.a, align 4, !tbaa !370 ; 4 uses
@@ -2496,10 +2494,8 @@ bb.bu:                                            ; preds = %bb.bt
   br i1 %.not5.i.i.i.i101, label %_ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_.exit.i.i.i105, label %.lr.ph.i.i.i.i102.preheader
 
 .lr.ph.i.i.i.i102.preheader:                      ; preds = %bb.bu
-  %40 = ptrtoaddr ptr %i.va to i64
-  %41 = ptrtoaddr ptr %i.uz to i64
-  %i.vd = add i64 %40, -4
-  %i.ve = sub i64 %i.vd, %41                      ; 2 uses
+  %i.vd = add i64 %39, -4
+  %i.ve = sub i64 %i.vd, %38                      ; 2 uses
   %i.vf = lshr i64 %i.ve, 2
   %i.vg = add nuw nsw i64 %i.vf, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ve, 28
@@ -2556,9 +2552,8 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
   br i1 %.not5.i18.i.i.i108, label %_ZSt4fillISt15_Deque_iteratorIiRiPiEiEvT_S4_RKT0_.exit, label %.lr.ph.i19.i.i.i109.preheader
 
 .lr.ph.i19.i.i.i109.preheader:                    ; preds = %._crit_edge.i.i.i107
-  %42 = ptrtoaddr ptr %i.np to i64
   %i.vq = add i64 %i.oh, -4
-  %i.vr = sub i64 %i.vq, %42                      ; 2 uses
+  %i.vr = sub i64 %i.vq, %36                      ; 2 uses
   %i.vs = lshr i64 %i.vr, 2
   %i.vt = add nuw nsw i64 %i.vs, 1                ; 2 uses
   %min.iters.check419 = icmp ult i64 %i.vr, 28
@@ -2673,9 +2668,8 @@ bb.bv:                                            ; preds = %bb.bt
   br i1 %.not5.i28.i.i.i121, label %_ZSt4fillISt15_Deque_iteratorIiRiPiEiEvT_S4_RKT0_.exit, label %.lr.ph.i29.i.i.i122.preheader
 
 .lr.ph.i29.i.i.i122.preheader:                    ; preds = %bb.bv
-  %43 = ptrtoaddr ptr %i.uz to i64
   %i.xh = add i64 %i.oh, -4
-  %i.xi = sub i64 %i.xh, %43                      ; 2 uses
+  %i.xi = sub i64 %i.xh, %38                      ; 2 uses
   %i.xj = lshr i64 %i.xi, 2
   %i.xk = add nuw nsw i64 %i.xj, 1                ; 2 uses
   %min.iters.check432 = icmp ult i64 %i.xi, 28
@@ -2774,14 +2768,18 @@ bb.a:
   %8 = alloca %"struct.std::_Deque_iterator", align 16 ; 5 uses
   %9 = alloca %"struct.std::_Deque_iterator", align 8 ; 7 uses
   %10 = alloca %"struct.std::_Deque_iterator", align 16 ; 5 uses
-  %i.a = load ptr, ptr %1, align 8, !tbaa !425    ; 10 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !425    ; 9 uses
+  %11 = ptrtoaddr ptr %i.a to i64                 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !427  ; 3 uses
+  %12 = ptrtoaddr ptr %i.c to i64
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !420  ; 2 uses
-  %i.f = load ptr, ptr %2, align 8, !tbaa !425    ; 7 uses
+  %i.f = load ptr, ptr %2, align 8, !tbaa !425    ; 6 uses
+  %13 = ptrtoaddr ptr %i.f to i64                 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !426  ; 6 uses
+  %14 = ptrtoaddr ptr %i.h to i64
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !420  ; 4 uses
@@ -2794,10 +2792,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not5.i.i.i.i.i.i.i, label %_ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_.exit.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.preheader:                   ; preds = %bb.b
-  %11 = ptrtoaddr ptr %i.c to i64
-  %12 = ptrtoaddr ptr %i.a to i64
-  %i.m = add i64 %11, -4
-  %i.n = sub i64 %i.m, %12                        ; 2 uses
+  %i.m = add i64 %12, -4
+  %i.n = sub i64 %i.m, %11                        ; 2 uses
   %i.o = lshr i64 %i.n, 2
   %i.p = add nuw nsw i64 %i.o, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.n, 28
@@ -2848,8 +2844,6 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
   br i1 %.not5.i18.i.i.i.i.i.i, label %_ZSt22__uninitialized_fill_aISt15_Deque_iteratorIiRiPiEiiEvT_S4_RKT0_RSaIT1_E.exit, label %.lr.ph.i19.i.i.i.i.i.i.preheader
 
 .lr.ph.i19.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %13 = ptrtoaddr ptr %i.f to i64
-  %14 = ptrtoaddr ptr %i.h to i64
   %i.y = add i64 %13, -4
   %i.z = sub i64 %i.y, %14                        ; 2 uses
   %i.aa = lshr i64 %i.z, 2
@@ -2969,10 +2963,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not5.i28.i.i.i.i.i.i, label %_ZSt22__uninitialized_fill_aISt15_Deque_iteratorIiRiPiEiiEvT_S4_RKT0_RSaIT1_E.exit, label %.lr.ph.i29.i.i.i.i.i.i.preheader
 
 .lr.ph.i29.i.i.i.i.i.i.preheader:                 ; preds = %bb.c
-  %15 = ptrtoaddr ptr %i.f to i64
-  %16 = ptrtoaddr ptr %i.a to i64
-  %i.bq = add i64 %15, -4
-  %i.br = sub i64 %i.bq, %16                      ; 2 uses
+  %i.bq = add i64 %13, -4
+  %i.br = sub i64 %i.bq, %11                      ; 2 uses
   %i.bs = lshr i64 %i.br, 2
   %i.bt = add nuw nsw i64 %i.bs, 1                ; 2 uses
   %min.iters.check68 = icmp ult i64 %i.br, 28
@@ -3375,7 +3367,9 @@ _ZStplRKSt15_Deque_iteratorIiRiPiEl.exit:         ; preds = %bb.g, %bb.j
   %.sroa.239.0 = phi ptr [ %i.da, %bb.g ], [ %i.dm, %bb.j ] ; 6 uses
   %.sroa.440.0 = phi ptr [ %i.w, %bb.g ], [ %i.dn, %bb.j ]
   %.sroa.641.0 = phi ptr [ %i.f, %bb.g ], [ %i.dl, %bb.j ] ; 6 uses
-  %storemerge.i.i = phi ptr [ %i.dh, %bb.g ], [ %i.dq, %bb.j ] ; 7 uses
+  %storemerge.i.i = phi ptr [ %i.dh, %bb.g ], [ %i.dq, %bb.j ] ; 6 uses
+  %.sroa.239.083 = ptrtoaddr ptr %.sroa.239.0 to i64
+  %storemerge.i.i84 = ptrtoaddr ptr %storemerge.i.i to i64 ; 2 uses
   %i.dr = icmp ult ptr %.sroa.641.0, %i.d
   br i1 %i.dr, label %.lr.ph.i.i, label %_ZNSt5dequeIiSaIiEE15_M_erase_at_endESt15_Deque_iteratorIiRiPiE.exit
 
@@ -3396,7 +3390,9 @@ _ZNSt5dequeIiSaIiEE15_M_erase_at_endESt15_Deque_iteratorIiRiPiE.exit.loopexit: ;
 _ZNSt5dequeIiSaIiEE15_M_erase_at_endESt15_Deque_iteratorIiRiPiE.exit: ; preds = %_ZNSt5dequeIiSaIiEE15_M_erase_at_endESt15_Deque_iteratorIiRiPiE.exit.loopexit, %_ZStplRKSt15_Deque_iteratorIiRiPiEl.exit
   %i.du = phi ptr [ %.pre55, %_ZNSt5dequeIiSaIiEE15_M_erase_at_endESt15_Deque_iteratorIiRiPiE.exit.loopexit ], [ %i.f, %_ZStplRKSt15_Deque_iteratorIiRiPiEl.exit ] ; 2 uses
   %i.dv = phi ptr [ %.pre54, %_ZNSt5dequeIiSaIiEE15_M_erase_at_endESt15_Deque_iteratorIiRiPiE.exit.loopexit ], [ %i.w, %_ZStplRKSt15_Deque_iteratorIiRiPiEl.exit ] ; 3 uses
-  %i.dw = phi ptr [ %.pre, %_ZNSt5dequeIiSaIiEE15_M_erase_at_endESt15_Deque_iteratorIiRiPiE.exit.loopexit ], [ %i.x, %_ZStplRKSt15_Deque_iteratorIiRiPiEl.exit ] ; 10 uses
+  %i.dw = phi ptr [ %.pre, %_ZNSt5dequeIiSaIiEE15_M_erase_at_endESt15_Deque_iteratorIiRiPiE.exit.loopexit ], [ %i.x, %_ZStplRKSt15_Deque_iteratorIiRiPiEl.exit ] ; 9 uses
+  %4 = ptrtoaddr ptr %i.dw to i64                 ; 2 uses
+  %5 = ptrtoaddr ptr %i.dv to i64
   store ptr %storemerge.i.i, ptr %i.a, align 8, !tbaa !369
   store ptr %.sroa.239.0, ptr %i.o, align 8, !tbaa !369
   %.sroa.440.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -3411,10 +3407,8 @@ bb.k:                                             ; preds = %_ZNSt5dequeIiSaIiEE
   br i1 %.not5.i.i.i.i8, label %_ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__typeET_S6_RKS3_.exit.i.i.i12, label %.lr.ph.i.i.i.i9.preheader
 
 .lr.ph.i.i.i.i9.preheader:                        ; preds = %bb.k
-  %4 = ptrtoaddr ptr %i.dv to i64
-  %5 = ptrtoaddr ptr %i.dw to i64
-  %i.dy = add i64 %4, -4
-  %i.dz = sub i64 %i.dy, %5                       ; 2 uses
+  %i.dy = add i64 %5, -4
+  %i.dz = sub i64 %i.dy, %4                       ; 2 uses
   %i.ea = lshr i64 %i.dz, 2
   %i.eb = add nuw nsw i64 %i.ea, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dz, 28
@@ -3465,10 +3459,8 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
   br i1 %.not5.i18.i.i.i15, label %_ZSt4fillISt15_Deque_iteratorIiRiPiEiEvT_S4_RKT0_.exit32, label %.lr.ph.i19.i.i.i16.preheader
 
 .lr.ph.i19.i.i.i16.preheader:                     ; preds = %._crit_edge.i.i.i14
-  %6 = ptrtoaddr ptr %storemerge.i.i to i64
-  %7 = ptrtoaddr ptr %.sroa.239.0 to i64
-  %i.ek = add i64 %6, -4
-  %i.el = sub i64 %i.ek, %7                       ; 2 uses
+  %i.ek = add i64 %storemerge.i.i84, -4
+  %i.el = sub i64 %i.ek, %.sroa.239.083           ; 2 uses
   %i.em = lshr i64 %i.el, 2
   %i.en = add nuw nsw i64 %i.em, 1                ; 2 uses
   %min.iters.check84 = icmp ult i64 %i.el, 28
@@ -3586,10 +3578,8 @@ bb.l:                                             ; preds = %_ZNSt5dequeIiSaIiEE
   br i1 %.not5.i28.i.i.i28, label %_ZSt4fillISt15_Deque_iteratorIiRiPiEiEvT_S4_RKT0_.exit32, label %.lr.ph.i29.i.i.i29.preheader
 
 .lr.ph.i29.i.i.i29.preheader:                     ; preds = %bb.l
-  %8 = ptrtoaddr ptr %storemerge.i.i to i64
-  %9 = ptrtoaddr ptr %i.dw to i64
-  %i.gc = add i64 %8, -4
-  %i.gd = sub i64 %i.gc, %9                       ; 2 uses
+  %i.gc = add i64 %storemerge.i.i84, -4
+  %i.gd = sub i64 %i.gc, %4                       ; 2 uses
   %i.ge = lshr i64 %i.gd, 2
   %i.gf = add nuw nsw i64 %i.ge, 1                ; 2 uses
   %min.iters.check97 = icmp ult i64 %i.gd, 28
@@ -3992,6 +3982,7 @@ _ZNSt5dequeIiSaIiEE27_M_reserve_elements_at_backEm.exit: ; preds = %bb.f, %bb.i
   %.sroa.9.0 = phi ptr [ %i.l, %bb.f ], [ %i.ad, %bb.i ]
   %.sroa.12.0 = phi ptr [ %i.q, %bb.f ], [ %i.ab, %bb.i ] ; 4 uses
   %storemerge.i.i.i = phi ptr [ %i.x, %bb.f ], [ %i.ag, %bb.i ] ; 6 uses
+  %.sroa.6.016 = ptrtoaddr ptr %.sroa.6.0 to i64
   %i.ah = icmp eq ptr %i.m, %storemerge.i.i.i
   br i1 %i.ah, label %_ZSt25__uninitialized_default_aISt15_Deque_iteratorIiRiPiEiEvT_S4_RSaIT0_E.exit, label %bb.j
 
@@ -4052,9 +4043,8 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
   br i1 %.not5.i18.i.i.i.i.i.i, label %_ZSt25__uninitialized_default_aISt15_Deque_iteratorIiRiPiEiEvT_S4_RSaIT0_E.exit, label %.lr.ph.i19.i.i.i.i.i.i.preheader
 
 .lr.ph.i19.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %2 = ptrtoaddr ptr %.sroa.6.0 to i64
   %i.bc = add i64 %i.aq, -4
-  %i.bd = sub i64 %i.bc, %2                       ; 2 uses
+  %i.bd = sub i64 %i.bc, %.sroa.6.016             ; 2 uses
   %i.be = lshr i64 %i.bd, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bd, 28
