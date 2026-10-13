@@ -1,0 +1,911 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/BugReporterVisitors?download=true
+inline.NumInlined: 8634
+inline.NumDeleted: 4808
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 7
+begin_hunk_0
+$_ZN4llvm15SmallVectorImplIN5clang12ast_matchers10BoundNodesEEaSEOS4_ = comdat any
+
+$_ZNK5clang12ast_matchers8internal13BoundNodesMap9getNodeAsINS_15ObjCIvarRefExprEEEPKT_N4llvm9StringRefE = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseIjLb1EE15growAndPushBackEj = comdat any
+
+$_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev = comdat any
+
+$_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv = comdat any
+
+$_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv = comdat any
+
+$_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseIPKN5clang4ento9MemRegionELb1EE15growAndPushBackES5_ = comdat any
+
+$_ZN5clang4ento11bugreporter26TrackingBugReporterVisitorD0Ev = comdat any
+
+$_ZN5clang27ControlDependencyCalculatorD2Ev = comdat any
+
+$_ZN5clang27ControlDependencyCalculatorD0Ev = comdat any
+
+$_ZN5clang20CFGDominatorTreeImplILb1EED2Ev = comdat any
+
+$_ZN5clang20CFGDominatorTreeImplILb1EED0Ev = comdat any
+
+$_ZN5clang20CFGDominatorTreeImplILb1EE13releaseMemoryEv = comdat any
+
+$_ZNK5clang20CFGDominatorTreeImplILb1EE5printERN4llvm11raw_ostreamEPKNS2_6ModuleE = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE20CalculateFromScratchERS5_PNS6_15BatchUpdateInfoE = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE9FindRootsERKS5_PNS6_15BatchUpdateInfoE = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE13doFullDFSWalkIPFbPS4_S8_EEEvRKS5_T_ = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE13AlwaysDescendEPS4_S7_ = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE10runSemiNCAEv = comdat any
+
+$_ZN4llvm17DominatorTreeBaseIN5clang8CFGBlockELb1EE10createNodeEPS2_PNS_15DomTreeNodeBaseIS2_EE = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE16attachNewSubtreeERS5_PNS_15DomTreeNodeBaseIS4_EE = comdat any
+
+$_ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPN5clang8CFGBlockENS_9GraphDiffIS4_Lb1EE14DeletesInsertsELj4ENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S7_EEEES4_S7_S9_SC_E8copyFromERKSD_ = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE6runDFSILb0EPFbPS4_S8_EEEjS8_jT0_jPKNS_8DenseMapIS8_jNS_12DenseMapInfoIS8_vEENS_6detail12DenseMapPairIS8_jEEEE = comdat any
+
+$_ZZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE9FindRootsERKS5_PNS6_15BatchUpdateInfoEENKUlvE_clEv = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE6runDFSILb1EPFbPS4_S8_EEEjS8_jT0_jPKNS_8DenseMapIS8_jNS_12DenseMapInfoIS8_vEENS_6detail12DenseMapPairIS8_jEEEE = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE20RemoveRedundantRootsERKS5_PNS6_15BatchUpdateInfoERNS_11SmallVectorIPS4_Lj4EEE = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE11getChildrenILb0EEENS_11SmallVectorIPS4_Lj8EEES9_PNS6_15BatchUpdateInfoE = comdat any
+
+$_ZNK4llvm9GraphDiffIPN5clang8CFGBlockELb1EE11getChildrenILb0EEENS_11SmallVectorIS3_Lj8EEES3_ = comdat any
+
+$_ZN4llvm15SmallVectorImplIPN5clang8CFGBlockEE6insertIPKS3_vEEPS3_S8_T_S9_ = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseIPN5clang8CFGBlockELb1EE15growAndPushBackES3_ = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE11getChildrenILb1EEENS_11SmallVectorIPS4_Lj8EEES9_PNS6_15BatchUpdateInfoE = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseISt4pairIjjELb1EE18growAndEmplaceBackIJRKjRjEEERS2_DpOT_ = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseISt4pairIjjELb1EE15growAndPushBackES2_ = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseISt4pairIPN5clang8CFGBlockEjELb1EE15growAndPushBackES5_ = comdat any
+
+$_ZNK4llvm9GraphDiffIPN5clang8CFGBlockELb1EE11getChildrenILb1EEENS_11SmallVectorIS3_Lj8EEES3_ = comdat any
+
+$_ZSt16__introsort_loopIPPN5clang8CFGBlockElN9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb0EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SS_SG_T1_ = comdat any
+
+$_ZSt13__adjust_heapIPPN5clang8CFGBlockElS2_N9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb0EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SG_SG_T1_T2_ = comdat any
+
+$_ZSt11__push_heapIPPN5clang8CFGBlockElS2_N9__gnu_cxx5__ops14_Iter_comp_valIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb0EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SG_SG_T1_RT2_ = comdat any
+
+$_ZSt22__move_median_to_firstIPPN5clang8CFGBlockEN9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb0EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SS_SS_SS_SG_ = comdat any
+
+$_ZSt21__unguarded_partitionIPPN5clang8CFGBlockEN9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb0EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEET_SS_SS_SS_SG_ = comdat any
+
+$_ZSt16__insertion_sortIPPN5clang8CFGBlockEN9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb0EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SS_SG_ = comdat any
+
+$_ZSt25__unguarded_linear_insertIPPN5clang8CFGBlockEN9__gnu_cxx5__ops14_Val_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb0EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SG_ = comdat any
+
+$_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang8CFGBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E4growEj = comdat any
+
+$_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang8CFGBlockEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E8moveFromERSA_ = comdat any
+
+$_ZSt16__introsort_loopIPPN5clang8CFGBlockElN9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb1EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SS_SG_T1_ = comdat any
+
+$_ZSt13__adjust_heapIPPN5clang8CFGBlockElS2_N9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb1EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SG_SG_T1_T2_ = comdat any
+
+$_ZSt11__push_heapIPPN5clang8CFGBlockElS2_N9__gnu_cxx5__ops14_Iter_comp_valIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb1EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SG_SG_T1_RT2_ = comdat any
+
+$_ZSt22__move_median_to_firstIPPN5clang8CFGBlockEN9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb1EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SS_SS_SS_SG_ = comdat any
+
+$_ZSt21__unguarded_partitionIPPN5clang8CFGBlockEN9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb1EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEET_SS_SS_SS_SG_ = comdat any
+
+$_ZSt16__insertion_sortIPPN5clang8CFGBlockEN9__gnu_cxx5__ops15_Iter_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb1EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SS_SG_ = comdat any
+
+$_ZSt25__unguarded_linear_insertIPPN5clang8CFGBlockEN9__gnu_cxx5__ops14_Val_comp_iterIZN4llvm14DomTreeBuilder11SemiNCAInfoINS7_17DominatorTreeBaseIS1_Lb1EEEE6runDFSILb1EPFbS2_S2_EEEjS2_jT0_jPKNS7_8DenseMapIS2_jNS7_12DenseMapInfoIS2_vEENS7_6detail12DenseMapPairIS2_jEEEEEUlS2_S2_E_EEEvT_SG_ = comdat any
+
+$_ZN4llvm15SmallVectorImplIPN5clang8CFGBlockEEaSEOS4_ = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseIPNS_14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE7InfoRecELb1EE15growAndPushBackES9_ = comdat any
+
+$_ZN4llvm20BumpPtrAllocatorImplINS_15MallocAllocatorELm448ELm448ELm2ELm8EE12AllocateSlowEmmNS_5AlignE = comdat any
+
+$_ZN4llvm14DomTreeBuilder11SemiNCAInfoINS_17DominatorTreeBaseIN5clang8CFGBlockELb1EEEE15getNodeForBlockEPS4_RS5_ = comdat any
+
+$_ZN4llvm20BumpPtrAllocatorImplINS_15MallocAllocatorELm448ELm448ELm2ELm8EED2Ev = comdat any
+
+$_ZNK4llvm17DominatorTreeBaseIN5clang8CFGBlockELb1EE5printERNS_11raw_ostreamE = comdat any
+
+$_ZN4llvm12PrintDomTreeIN5clang8CFGBlockEEEvPKNS_15DomTreeNodeBaseIT_EERNS_11raw_ostreamEj = comdat any
+
+$_ZN4llvmlsIN5clang8CFGBlockEEERNS_11raw_ostreamES4_PKNS_15DomTreeNodeBaseIT_EE = comdat any
+
+$_ZN5clang4ento22PathSensitiveBugReport19addTrackedConditionEPKNS0_12ExplodedNodeE = comdat any
+
+$_ZN5clang27ControlDependencyCalculator22getControlDependenciesEPNS_8CFGBlockE = comdat any
+
+$_ZN4llvm17IDFCalculatorBaseIN5clang8CFGBlockELb1EE9calculateERNS_15SmallVectorImplIPS2_EE = comdat any
+
+$_ZNK4llvm17DominatorTreeBaseIN5clang8CFGBlockELb1EE16updateDFSNumbersEv = comdat any
+
+$_ZZN4llvm17IDFCalculatorBaseIN5clang8CFGBlockELb1EE9calculateERNS_15SmallVectorImplIPS2_EEENKUlS5_E_clES5_ = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseISt4pairIPKNS_15DomTreeNodeBaseIN5clang8CFGBlockEEENS5_14const_iteratorEELb1EE15growAndPushBackES9_ = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseISt4pairIPNS_15DomTreeNodeBaseIN5clang8CFGBlockEEES1_IjjEELb1EE15growAndPushBackES8_ = comdat any
+
+$_ZSt13__adjust_heapIPSt4pairIPN4llvm15DomTreeNodeBaseIN5clang8CFGBlockEEES0_IjjEElS8_N9__gnu_cxx5__ops15_Iter_comp_iterINS1_11less_secondEEEEvT_T0_SG_T1_T2_ = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseIPNS_15DomTreeNodeBaseIN5clang8CFGBlockEEELb1EE15growAndPushBackES5_ = comdat any
+
+$_ZN4llvm23SmallVectorTemplateBaseIPN5clang8CFGBlockELb1EE18growAndEmplaceBackIJRS3_EEES6_DpOT_ = comdat any
+
+$_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang8CFGBlockENS_11SmallVectorIS4_Lj4EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E24lookupOrInsertIntoBucketIS4_JS6_EEESt4pairIPSB_bEOT_DpOT0_ = comdat any
+
+$_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang8CFGBlockENS_11SmallVectorIS4_Lj4EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E15LookupBucketForIS4_EEbRKT_RPSB_ = comdat any
+
+$_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang8CFGBlockENS_11SmallVectorIS4_Lj4EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E4growEj = comdat any
+
+$_ZN4llvm12DenseMapBaseINS_8DenseMapIPN5clang8CFGBlockENS_11SmallVectorIS4_Lj4EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E8moveFromERSC_ = comdat any
+
+$_ZN5clang4ento22PathSensitiveBugReport10addVisitorINS0_24TrackConstraintBRVisitorEJNS0_11DefinedSValEbRA31_KcEEEvDpOT0_ = comdat any
+
+$_ZNK5clang13SourceManager16getDecomposedLocENS_14SourceLocationE = comdat any
+
+$_ZNK4llvm11PagedVectorIN5clang6SrcMgr9SLocEntryELm32EEixEm = comdat any
+
+$_ZNK5clang4ento12ProgramState20getSValAsScalarOrLocEPKNS_4ExprEPKNS_10StackFrameE = comdat any
+
+$_ZN5clang4ento22PathSensitiveBugReport10addVisitorINS0_24TrackConstraintBRVisitorEJNS0_3loc12MemRegionValEbRA31_KcEEEvDpOT0_ = comdat any
+
+$_ZN5clang4ento11bugreporter17ExpressionHandlerD2Ev = comdat any
+
+$_ZN5clang4ento11bugreporter12StoreHandlerD2Ev = comdat any
+
+$_ZN5clang4ento11bugreporter26TrackingBugReporterVisitorD2Ev = comdat any
+
+$_ZNSt5stackIPKN5clang4ento9SubRegionESt5dequeIS4_SaIS4_EEEC2IS7_vEEv = comdat any
+
+$_ZNSt5stackIPKN5clang4ento9SubRegionESt5dequeIS4_SaIS4_EEED2Ev = comdat any
+
+$_ZNSt5dequeIPKN5clang4ento16TypedValueRegionESaIS4_EE16_M_push_back_auxIJRKS4_EEEvDpOT_ = comdat any
+
+$_ZNSt5dequeIPKN5clang4ento16TypedValueRegionESaIS4_EE17_M_reallocate_mapEmb = comdat any
+
+$_ZNSt5dequeIPKN5clang4ento9SubRegionESaIS4_EE16_M_push_back_auxIJRKS4_EEEvDpOT_ = comdat any
+
+$_ZNSt5dequeIPKN5clang4ento9SubRegionESaIS4_EE17_M_reallocate_mapEmb = comdat any
+
+$_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev = comdat any
+
+$_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev = comdat any
+
+$_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv = comdat any
+
+$_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv = comdat any
+
+$_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info = comdat any
+
+$_ZTVN5clang12ast_matchers8internal37matcher_ignoringParenImpCasts0MatcherE = comdat any
+
+$_ZTVN5clang12ast_matchers8internal26matcher_equalsNode0MatcherE = comdat any
+
+$_ZTVN5clang12ast_matchers8internal22matcher_hasLHS0MatcherINS_14BinaryOperatorENS1_7MatcherINS_4ExprEEEEE = comdat any
+
+$_ZTVN5clang12ast_matchers8internal31matcher_hasOperatorName0MatcherINS_14BinaryOperatorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE = comdat any
+
+$_ZTVN5clang12ast_matchers8internal21HasDeclarationMatcherINS_15ObjCIvarRefExprENS1_7MatcherINS_4DeclEEEEE = comdat any
+
+$_ZTVN5clang12ast_matchers8internal20HasDescendantMatcherINS_4StmtES3_EE = comdat any
+
+$_ZTVN5clang12ast_matchers8internal22CollectMatchesCallbackE = comdat any
+
+$_ZZN5clang4ento39LikelyFalsePositiveSuppressionBRVisitor6getTagEvE3Tag = comdat any
+
+$_ZZNK5clang4ento21UndefOrNullArgVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3Tag = comdat any
+
+$_ZZNK5clang4ento18NoStoreFuncVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3Tag = comdat any
+
+$_ZZNK5clang4ento20NilReceiverBRVisitor7ProfileERN4llvm16FoldingSetNodeIDEE1x = comdat any
+
+$_ZZNK5clang4ento18ConditionBRVisitor7ProfileERN4llvm16FoldingSetNodeIDEE1x = comdat any
+
+$_ZTVSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE = comdat any
+
+$_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
+
+$_ZTVN5clang4ento11bugreporter26TrackingBugReporterVisitorE = comdat any
+
+$_ZTVN5clang27ControlDependencyCalculatorE = comdat any
+
+$_ZTVN5clang20CFGDominatorTreeImplILb1EEE = comdat any
+
+$_ZTVSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE = comdat any
+
+@_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
+@_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
+@_ZZN5clang4ento24NoStateChangeFuncVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportEE1i = internal global i32 0, align 4
+@.str.3 = private unnamed_addr constant [5 x i8] c"self\00", align 1
+@.str.4 = private unnamed_addr constant [5 x i8] c"this\00", align 1
+@.str.5 = private unnamed_addr constant [31 x i8] c"Returning without writing to '\00", align 1
+@.str.6 = private unnamed_addr constant [2 x i8] c"'\00", align 1
+@.str.7 = private unnamed_addr constant [3 x i8] c"->\00", align 1
+@.str.8 = private unnamed_addr constant [2 x i8] c".\00", align 1
+@.str.9 = private unnamed_addr constant [2 x i8] c"(\00", align 1
+@.str.10 = private unnamed_addr constant [2 x i8] c"*\00", align 1
+@.str.11 = private unnamed_addr constant [2 x i8] c")\00", align 1
+@_ZZNK5clang4ento24TrackConstraintBRVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3tag = internal global i32 0, align 4
+@.str.12 = private unnamed_addr constant [25 x i8] c"TrackConstraintBRVisitor\00", align 1
+@_ZTVN5clang4ento36SuppressInlineDefensiveChecksVisitorE = unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento18BugReporterVisitorD2Ev, ptr @_ZN5clang4ento36SuppressInlineDefensiveChecksVisitorD0Ev, ptr @_ZN5clang4ento36SuppressInlineDefensiveChecksVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK5clang4ento36SuppressInlineDefensiveChecksVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@_ZZNK5clang4ento36SuppressInlineDefensiveChecksVisitor7ProfileERN4llvm16FoldingSetNodeIDEE2id = internal global i32 0, align 4
+@.str.13 = private unnamed_addr constant [11 x i8] c"IDCVisitor\00", align 1
+@.str.14 = private unnamed_addr constant [13 x i8] c"Suppress IDC\00", align 1
+@.str.15 = private unnamed_addr constant [19 x i8] c"Suppress Macro IDC\00", align 1
+@_ZTVN5clang4ento11bugreporter7TrackerE = unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter7TrackerD2Ev, ptr @_ZN5clang4ento11bugreporter7TrackerD0Ev, ptr @_ZN5clang4ento11bugreporter7Tracker5trackEPKNS_4ExprEPKNS0_12ExplodedNodeENS1_15TrackingOptionsE, ptr @_ZN5clang4ento11bugreporter7Tracker5trackENS0_4SValEPKNS0_9MemRegionENS1_15TrackingOptionsEPKNS_10StackFrameE, ptr @_ZN5clang4ento11bugreporter7Tracker6handleENS1_9StoreInfoERNS0_18BugReporterContextENS1_15TrackingOptionsE] }, align 8
+@.str.16 = private unnamed_addr constant [13 x i8] c"' not called\00", align 1
+@.str.17 = private unnamed_addr constant [20 x i8] c"No method is called\00", align 1
+@.str.18 = private unnamed_addr constant [29 x i8] c" because the receiver is nil\00", align 1
+@.str.19 = private unnamed_addr constant [19 x i8] c"ConditionBRVisitor\00", align 1
+@.str.20 = private unnamed_addr constant [5 x i8] c"null\00", align 1
+@.str.21 = private unnamed_addr constant [4 x i8] c"nil\00", align 1
+@.str.22 = private unnamed_addr constant [8 x i8] c"field '\00", align 1
+@.str.23 = private unnamed_addr constant [10 x i8] c"Assuming \00", align 1
+@.str.24 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@.str.25 = private unnamed_addr constant [5 x i8] c" is \00", align 1
+@.str.26 = private unnamed_addr constant [10 x i8] c"equal to \00", align 1
+@.str.27 = private unnamed_addr constant [14 x i8] c"not equal to \00", align 1
+@.str.28 = private unnamed_addr constant [11 x i8] c"Assuming '\00", align 1
+@.str.29 = private unnamed_addr constant [6 x i8] c"' is \00", align 1
+@.str.30 = private unnamed_addr constant [17 x i8] c"Assuming field '\00", align 1
+@.str.31 = private unnamed_addr constant [8 x i8] c"Field '\00", align 1
+@.str.32 = private unnamed_addr constant [9 x i8] c"non-null\00", align 1
+@.str.33 = private unnamed_addr constant [8 x i8] c"non-nil\00", align 1
+@.str.34 = private unnamed_addr constant [5 x i8] c"true\00", align 1
+@.str.35 = private unnamed_addr constant [6 x i8] c"false\00", align 1
+@.str.36 = private unnamed_addr constant [15 x i8] c"not equal to 0\00", align 1
+@.str.37 = private unnamed_addr constant [2 x i8] c"0\00", align 1
+@_ZN5clang4ento7NoteTag4KindE = global i32 0, align 4
+@_ZZNK5clang4ento10TagVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3Tag = internal global i32 0, align 4
+@_ZTVN5clang4ento24TrackConstraintBRVisitorE = unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento24TrackConstraintBRVisitorD2Ev, ptr @_ZN5clang4ento24TrackConstraintBRVisitorD0Ev, ptr @_ZN5clang4ento24TrackConstraintBRVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK5clang4ento24TrackConstraintBRVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@_ZTVN5clang4ento21UndefOrNullArgVisitorE = unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento18BugReporterVisitorD2Ev, ptr @_ZN5clang4ento21UndefOrNullArgVisitorD0Ev, ptr @_ZN5clang4ento21UndefOrNullArgVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK5clang4ento21UndefOrNullArgVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@_ZTVN5clang4ento24NoStateChangeFuncVisitorE = unnamed_addr constant { [13 x ptr] } { [13 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento24NoStateChangeFuncVisitorD2Ev, ptr @_ZN5clang4ento24NoStateChangeFuncVisitorD0Ev, ptr @_ZN5clang4ento24NoStateChangeFuncVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @__cxa_pure_virtual, ptr @_ZN5clang4ento24NoStateChangeFuncVisitor25wasModifiedBeforeCallExitEPKNS0_12ExplodedNodeES4_, ptr @_ZN5clang4ento24NoStateChangeFuncVisitor21wasModifiedInFunctionEPKNS0_12ExplodedNodeES4_, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual, ptr @__cxa_pure_virtual] }, align 8
+@_ZTVN5clang4ento18NoStoreFuncVisitorE = unnamed_addr constant { [13 x ptr] } { [13 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento24NoStateChangeFuncVisitorD2Ev, ptr @_ZN5clang4ento18NoStoreFuncVisitorD0Ev, ptr @_ZN5clang4ento24NoStateChangeFuncVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK5clang4ento18NoStoreFuncVisitor7ProfileERN4llvm16FoldingSetNodeIDE, ptr @_ZN5clang4ento18NoStoreFuncVisitor25wasModifiedBeforeCallExitEPKNS0_12ExplodedNodeES4_, ptr @_ZN5clang4ento24NoStateChangeFuncVisitor21wasModifiedInFunctionEPKNS0_12ExplodedNodeES4_, ptr @_ZN5clang4ento18NoStoreFuncVisitor24maybeEmitNoteForObjCSelfERNS0_22PathSensitiveBugReportERKNS0_14ObjCMethodCallEPKNS0_12ExplodedNodeE, ptr @_ZN5clang4ento18NoStoreFuncVisitor23maybeEmitNoteForCXXThisERNS0_22PathSensitiveBugReportERKNS0_18CXXConstructorCallEPKNS0_12ExplodedNodeE, ptr @_ZN5clang4ento18NoStoreFuncVisitor26maybeEmitNoteForParametersERNS0_22PathSensitiveBugReportERKNS0_9CallEventEPKNS0_12ExplodedNodeE] }, align 8
+@_ZTVN5clang12ast_matchers8internal37matcher_ignoringParenImpCasts0MatcherE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang12ast_matchers8internal37matcher_ignoringParenImpCasts0MatcherD2Ev, ptr @_ZN5clang12ast_matchers8internal37matcher_ignoringParenImpCasts0MatcherD0Ev, ptr @_ZNK5clang12ast_matchers8internal16MatcherInterfaceINS_4ExprEE10dynMatchesERKNS_12DynTypedNodeEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE, ptr @_ZNK5clang12ast_matchers8internal19DynMatcherInterface13TraversalKindEv, ptr @_ZNK5clang12ast_matchers8internal37matcher_ignoringParenImpCasts0Matcher7matchesERKNS_4ExprEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE] }, comdat, align 8
+@_ZTVN5clang12ast_matchers8internal26matcher_equalsNode0MatcherE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang12ast_matchers8internal19DynMatcherInterfaceD2Ev, ptr @_ZN5clang12ast_matchers8internal26matcher_equalsNode0MatcherD0Ev, ptr @_ZNK5clang12ast_matchers8internal16MatcherInterfaceINS_4DeclEE10dynMatchesERKNS_12DynTypedNodeEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE, ptr @_ZNK5clang12ast_matchers8internal19DynMatcherInterface13TraversalKindEv, ptr @_ZNK5clang12ast_matchers8internal26matcher_equalsNode0Matcher7matchesERKNS_4DeclEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE] }, comdat, align 8
+@_ZTVN5clang4ento20NilReceiverBRVisitorE = unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento18BugReporterVisitorD2Ev, ptr @_ZN5clang4ento20NilReceiverBRVisitorD0Ev, ptr @_ZN5clang4ento20NilReceiverBRVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK5clang4ento20NilReceiverBRVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@_ZTVN5clang4ento18ConditionBRVisitorE = unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento18BugReporterVisitorD2Ev, ptr @_ZN5clang4ento18ConditionBRVisitorD0Ev, ptr @_ZN5clang4ento18ConditionBRVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK5clang4ento18ConditionBRVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@_ZTVN5clang4ento39LikelyFalsePositiveSuppressionBRVisitorE = unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento18BugReporterVisitorD2Ev, ptr @_ZN5clang4ento39LikelyFalsePositiveSuppressionBRVisitorD0Ev, ptr @_ZN5clang4ento39LikelyFalsePositiveSuppressionBRVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento39LikelyFalsePositiveSuppressionBRVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK5clang4ento39LikelyFalsePositiveSuppressionBRVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@_ZTVN5clang4ento10TagVisitorE = unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento18BugReporterVisitorD2Ev, ptr @_ZN5clang4ento10TagVisitorD0Ev, ptr @_ZN5clang4ento10TagVisitor9VisitNodeEPKNS0_12ExplodedNodeERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK5clang4ento10TagVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@.str.43 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
+@.str.46 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
+@__libc_single_threaded = external local_unnamed_addr global i8, align 1
+@.str.47 = private unnamed_addr constant [5 x i8] c"Ivar\00", align 1
+@_ZN5clang12ast_matchers14binaryOperatorE = external global %"class.clang::ast_matchers::internal::VariadicDynCastAllOfMatcher", align 1
+@.str.49 = private unnamed_addr constant [49 x i8] c"cannot create std::vector larger than max_size()\00", align 1
+@_ZTVN5clang12ast_matchers8internal22matcher_hasLHS0MatcherINS_14BinaryOperatorENS1_7MatcherINS_4ExprEEEEE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang12ast_matchers8internal22matcher_hasLHS0MatcherINS_14BinaryOperatorENS1_7MatcherINS_4ExprEEEED2Ev, ptr @_ZN5clang12ast_matchers8internal22matcher_hasLHS0MatcherINS_14BinaryOperatorENS1_7MatcherINS_4ExprEEEED0Ev, ptr @_ZNK5clang12ast_matchers8internal16MatcherInterfaceINS_14BinaryOperatorEE10dynMatchesERKNS_12DynTypedNodeEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE, ptr @_ZNK5clang12ast_matchers8internal19DynMatcherInterface13TraversalKindEv, ptr @_ZNK5clang12ast_matchers8internal22matcher_hasLHS0MatcherINS_14BinaryOperatorENS1_7MatcherINS_4ExprEEEE7matchesERKS3_PNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE] }, comdat, align 8
+@_ZTVN5clang12ast_matchers8internal31matcher_hasOperatorName0MatcherINS_14BinaryOperatorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang12ast_matchers8internal31matcher_hasOperatorName0MatcherINS_14BinaryOperatorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev, ptr @_ZN5clang12ast_matchers8internal31matcher_hasOperatorName0MatcherINS_14BinaryOperatorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED0Ev, ptr @_ZNK5clang12ast_matchers8internal16MatcherInterfaceINS_14BinaryOperatorEE10dynMatchesERKNS_12DynTypedNodeEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE, ptr @_ZNK5clang12ast_matchers8internal19DynMatcherInterface13TraversalKindEv, ptr @_ZNK5clang12ast_matchers8internal31matcher_hasOperatorName0MatcherINS_14BinaryOperatorENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7matchesERKS3_PNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE] }, comdat, align 8
+@_ZTVN5clang12ast_matchers8internal21HasDeclarationMatcherINS_15ObjCIvarRefExprENS1_7MatcherINS_4DeclEEEEE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang12ast_matchers8internal21HasDeclarationMatcherINS_15ObjCIvarRefExprENS1_7MatcherINS_4DeclEEEED2Ev, ptr @_ZN5clang12ast_matchers8internal21HasDeclarationMatcherINS_15ObjCIvarRefExprENS1_7MatcherINS_4DeclEEEED0Ev, ptr @_ZNK5clang12ast_matchers8internal16MatcherInterfaceINS_15ObjCIvarRefExprEE10dynMatchesERKNS_12DynTypedNodeEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE, ptr @_ZNK5clang12ast_matchers8internal19DynMatcherInterface13TraversalKindEv, ptr @_ZNK5clang12ast_matchers8internal21HasDeclarationMatcherINS_15ObjCIvarRefExprENS1_7MatcherINS_4DeclEEEE7matchesERKS3_PNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE] }, comdat, align 8
+@_ZTVN5clang12ast_matchers8internal20HasDescendantMatcherINS_4StmtES3_EE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang12ast_matchers8internal20HasDescendantMatcherINS_4StmtES3_ED2Ev, ptr @_ZN5clang12ast_matchers8internal20HasDescendantMatcherINS_4StmtES3_ED0Ev, ptr @_ZNK5clang12ast_matchers8internal16MatcherInterfaceINS_4StmtEE10dynMatchesERKNS_12DynTypedNodeEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE, ptr @_ZNK5clang12ast_matchers8internal19DynMatcherInterface13TraversalKindEv, ptr @_ZNK5clang12ast_matchers8internal20HasDescendantMatcherINS_4StmtES3_E7matchesERKS3_PNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE] }, comdat, align 8
+@_ZTVN5clang12ast_matchers8internal22CollectMatchesCallbackE = linkonce_odr unnamed_addr constant { [9 x ptr] } { [9 x ptr] [ptr null, ptr null, ptr @_ZN5clang12ast_matchers8internal22CollectMatchesCallbackD2Ev, ptr @_ZN5clang12ast_matchers8internal22CollectMatchesCallbackD0Ev, ptr @_ZN5clang12ast_matchers8internal22CollectMatchesCallback3runERKNS0_11MatchFinder11MatchResultE, ptr @_ZN5clang12ast_matchers11MatchFinder13MatchCallback24onStartOfTranslationUnitEv, ptr @_ZN5clang12ast_matchers11MatchFinder13MatchCallback22onEndOfTranslationUnitEv, ptr @_ZNK5clang12ast_matchers11MatchFinder13MatchCallback5getIDEv, ptr @_ZNK5clang12ast_matchers8internal22CollectMatchesCallback21getCheckTraversalKindEv] }, comdat, align 8
+@_ZTVN4llvm19raw_svector_ostreamE = external unnamed_addr constant { [16 x ptr] }, align 8
+@.str.50 = private unnamed_addr constant [42 x i8] c", which participates in a condition later\00", align 1
+@.str.52 = private unnamed_addr constant [31 x i8] c"Assuming the condition is true\00", align 1
+@.str.54 = private unnamed_addr constant [32 x i8] c"Assuming the condition is false\00", align 1
+@_ZZN5clang4ento39LikelyFalsePositiveSuppressionBRVisitor6getTagEvE3Tag = linkonce_odr global i32 0, comdat, align 4
+@_ZZNK5clang4ento21UndefOrNullArgVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3Tag = linkonce_odr global i32 0, comdat, align 4
+@_ZZNK5clang4ento18NoStoreFuncVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3Tag = linkonce_odr global i32 0, comdat, align 4
+@_ZZNK5clang4ento20NilReceiverBRVisitor7ProfileERN4llvm16FoldingSetNodeIDEE1x = linkonce_odr global i32 0, comdat, align 4
+@_ZZNK5clang4ento18ConditionBRVisitor7ProfileERN4llvm16FoldingSetNodeIDEE1x = linkonce_odr global i32 0, comdat, align 4
+@_ZTVSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
+@_ZTVN5clang4ento24PathDiagnosticEventPieceE = external unnamed_addr constant { [8 x ptr] }, align 8
+@_ZTVN5clang4ento23PathDiagnosticSpotPieceE = external unnamed_addr constant { [8 x ptr] }, align 8
+@_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = linkonce_odr constant [16 x i8] zeroinitializer, comdat, align 8
+@_ZTVN12_GLOBAL__N_124ControlDependencyHandlerE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter17ExpressionHandlerD2Ev, ptr @_ZN12_GLOBAL__N_124ControlDependencyHandlerD0Ev, ptr @_ZN12_GLOBAL__N_124ControlDependencyHandler6handleEPKN5clang4ExprEPKNS1_4ento12ExplodedNodeES8_NS5_11bugreporter15TrackingOptionsE] }, align 8
+@_ZTVN12_GLOBAL__N_135TrackControlDependencyCondBRVisitorE = internal unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN12_GLOBAL__N_135TrackControlDependencyCondBRVisitorD2Ev, ptr @_ZN12_GLOBAL__N_135TrackControlDependencyCondBRVisitorD0Ev, ptr @_ZN12_GLOBAL__N_135TrackControlDependencyCondBRVisitor9VisitNodeEPKN5clang4ento12ExplodedNodeERNS2_18BugReporterContextERNS2_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK12_GLOBAL__N_135TrackControlDependencyCondBRVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@_ZTVN5clang4ento11bugreporter26TrackingBugReporterVisitorE = linkonce_odr unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter26TrackingBugReporterVisitorD2Ev, ptr @_ZN5clang4ento11bugreporter26TrackingBugReporterVisitorD0Ev, ptr @__cxa_pure_virtual, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @__cxa_pure_virtual] }, comdat, align 8
+@_ZTVN5clang27ControlDependencyCalculatorE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZN5clang27ControlDependencyCalculatorD2Ev, ptr @_ZN5clang27ControlDependencyCalculatorD0Ev] }, comdat, align 8
+@_ZTVN5clang20CFGDominatorTreeImplILb1EEE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZN5clang20CFGDominatorTreeImplILb1EED2Ev, ptr @_ZN5clang20CFGDominatorTreeImplILb1EED0Ev, ptr @_ZN5clang20CFGDominatorTreeImplILb1EE6anchorEv, ptr @_ZN5clang20CFGDominatorTreeImplILb1EE13releaseMemoryEv, ptr @_ZNK5clang20CFGDominatorTreeImplILb1EE5printERN4llvm11raw_ostreamEPKNS2_6ModuleE] }, comdat, align 8
+@.str.56 = private unnamed_addr constant [63 x i8] c"=============================--------------------------------\0A\00", align 1
+@.str.57 = private unnamed_addr constant [29 x i8] c"Inorder PostDominator Tree: \00", align 1
+@.str.58 = private unnamed_addr constant [21 x i8] c"DFSNumbers invalid: \00", align 1
+@.str.59 = private unnamed_addr constant [15 x i8] c" slow queries.\00", align 1
+@.str.60 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.str.61 = private unnamed_addr constant [8 x i8] c"Roots: \00", align 1
+@.str.62 = private unnamed_addr constant [2 x i8] c" \00", align 1
+@.str.63 = private unnamed_addr constant [2 x i8] c"[\00", align 1
+@.str.64 = private unnamed_addr constant [3 x i8] c"] \00", align 1
+@.str.65 = private unnamed_addr constant [15 x i8] c" <<exit node>>\00", align 1
+@.str.66 = private unnamed_addr constant [3 x i8] c" {\00", align 1
+@.str.67 = private unnamed_addr constant [2 x i8] c",\00", align 1
+@.str.68 = private unnamed_addr constant [4 x i8] c"} [\00", align 1
+@.str.69 = private unnamed_addr constant [3 x i8] c"]\0A\00", align 1
+@.str.70 = private unnamed_addr constant [4 x i8] c"BB#\00", align 1
+@.str.71 = private unnamed_addr constant [21 x i8] c"Tracking condition '\00", align 1
+@_ZZNK12_GLOBAL__N_135TrackControlDependencyCondBRVisitor7ProfileERN4llvm16FoldingSetNodeIDEE1x = internal global i32 0, align 4
+@_ZTVN12_GLOBAL__N_118NilReceiverHandlerE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter17ExpressionHandlerD2Ev, ptr @_ZN12_GLOBAL__N_118NilReceiverHandlerD0Ev, ptr @_ZN12_GLOBAL__N_118NilReceiverHandler6handleEPKN5clang4ExprEPKNS1_4ento12ExplodedNodeES8_NS5_11bugreporter15TrackingOptionsE] }, align 8
+@_ZTVN12_GLOBAL__N_117ArrayIndexHandlerE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter17ExpressionHandlerD2Ev, ptr @_ZN12_GLOBAL__N_117ArrayIndexHandlerD0Ev, ptr @_ZN12_GLOBAL__N_117ArrayIndexHandler6handleEPKN5clang4ExprEPKNS1_4ento12ExplodedNodeES8_NS5_11bugreporter15TrackingOptionsE] }, align 8
+@_ZTVN12_GLOBAL__N_124InterestingLValueHandlerE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter17ExpressionHandlerD2Ev, ptr @_ZN12_GLOBAL__N_124InterestingLValueHandlerD0Ev, ptr @_ZN12_GLOBAL__N_124InterestingLValueHandler6handleEPKN5clang4ExprEPKNS1_4ento12ExplodedNodeES8_NS5_11bugreporter15TrackingOptionsE] }, align 8
+@.str.72 = private unnamed_addr constant [31 x i8] c"Assuming pointer value is null\00", align 1
+@_ZTVN12_GLOBAL__N_133MacroNullReturnSuppressionVisitorE = internal unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento18BugReporterVisitorD2Ev, ptr @_ZN12_GLOBAL__N_133MacroNullReturnSuppressionVisitorD0Ev, ptr @_ZN12_GLOBAL__N_133MacroNullReturnSuppressionVisitor9VisitNodeEPKN5clang4ento12ExplodedNodeERNS2_18BugReporterContextERNS2_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK12_GLOBAL__N_133MacroNullReturnSuppressionVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@_ZZNK12_GLOBAL__N_133MacroNullReturnSuppressionVisitor6getTagEvE3Tag = internal global i32 0, align 4
+@_ZTVN12_GLOBAL__N_126InlinedFunctionCallHandlerE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter17ExpressionHandlerD2Ev, ptr @_ZN12_GLOBAL__N_126InlinedFunctionCallHandlerD0Ev, ptr @_ZN12_GLOBAL__N_126InlinedFunctionCallHandler6handleEPKN5clang4ExprEPKNS1_4ento12ExplodedNodeES8_NS5_11bugreporter15TrackingOptionsE] }, align 8
+@_ZTVN12_GLOBAL__N_113ReturnVisitorE = internal unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter26TrackingBugReporterVisitorD2Ev, ptr @_ZN12_GLOBAL__N_113ReturnVisitorD0Ev, ptr @_ZN12_GLOBAL__N_113ReturnVisitor9VisitNodeEPKN5clang4ento12ExplodedNodeERNS2_18BugReporterContextERNS2_22PathSensitiveBugReportE, ptr @_ZN12_GLOBAL__N_113ReturnVisitor15finalizeVisitorERN5clang4ento18BugReporterContextEPKNS2_12ExplodedNodeERNS2_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK12_GLOBAL__N_113ReturnVisitor7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@.str.73 = private unnamed_addr constant [14 x i8] c"Returning nil\00", align 1
+@.str.74 = private unnamed_addr constant [23 x i8] c"Returning null pointer\00", align 1
+@.str.75 = private unnamed_addr constant [15 x i8] c"Returning zero\00", align 1
+@.str.76 = private unnamed_addr constant [21 x i8] c"Returning the value \00", align 1
+@.str.77 = private unnamed_addr constant [18 x i8] c"Returning pointer\00", align 1
+@.str.78 = private unnamed_addr constant [16 x i8] c"Returning value\00", align 1
+@.str.79 = private unnamed_addr constant [16 x i8] c" (reference to \00", align 1
+@.str.80 = private unnamed_addr constant [16 x i8] c" (loaded from '\00", align 1
+@.str.81 = private unnamed_addr constant [3 x i8] c"')\00", align 1
+@_ZZN12_GLOBAL__N_113ReturnVisitor6getTagEvE3Tag = internal global i32 0, align 4
+@_ZTVN12_GLOBAL__N_124DefaultExpressionHandlerE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter17ExpressionHandlerD2Ev, ptr @_ZN12_GLOBAL__N_124DefaultExpressionHandlerD0Ev, ptr @_ZN12_GLOBAL__N_124DefaultExpressionHandler6handleEPKN5clang4ExprEPKNS1_4ento12ExplodedNodeES8_NS5_11bugreporter15TrackingOptionsE] }, align 8
+@_ZTVN12_GLOBAL__N_114PRValueHandlerE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter17ExpressionHandlerD2Ev, ptr @_ZN12_GLOBAL__N_114PRValueHandlerD0Ev, ptr @_ZN12_GLOBAL__N_114PRValueHandler6handleEPKN5clang4ExprEPKNS1_4ento12ExplodedNodeES8_NS5_11bugreporter15TrackingOptionsE] }, align 8
+@_ZTVN12_GLOBAL__N_119DefaultStoreHandlerE = internal unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter12StoreHandlerD2Ev, ptr @_ZN12_GLOBAL__N_119DefaultStoreHandlerD0Ev, ptr @_ZN12_GLOBAL__N_119DefaultStoreHandler6handleEN5clang4ento11bugreporter9StoreInfoERNS2_18BugReporterContextENS3_15TrackingOptionsE] }, align 8
+@.str.82 = private unnamed_addr constant [16 x i8] c"initialized to \00", align 1
+@.str.83 = private unnamed_addr constant [17 x i8] c"Initializing to \00", align 1
+@.str.84 = private unnamed_addr constant [22 x i8] c"captured by block as \00", align 1
+@.str.85 = private unnamed_addr constant [22 x i8] c"Captured by block as \00", align 1
+@.str.86 = private unnamed_addr constant [21 x i8] c"a null pointer value\00", align 1
+@.str.87 = private unnamed_addr constant [14 x i8] c"the value of \00", align 1
+@.str.88 = private unnamed_addr constant [9 x i8] c"declared\00", align 1
+@.str.89 = private unnamed_addr constant [9 x i8] c"Declared\00", align 1
+@.str.90 = private unnamed_addr constant [26 x i8] c" without an initial value\00", align 1
+@.str.91 = private unnamed_addr constant [12 x i8] c"initialized\00", align 1
+@.str.92 = private unnamed_addr constant [12 x i8] c"Initialized\00", align 1
+@.str.93 = private unnamed_addr constant [6 x i8] c" here\00", align 1
+@.str.94 = private unnamed_addr constant [9 x i8] c"Passing \00", align 1
+@.str.95 = private unnamed_addr constant [21 x i8] c"nil object reference\00", align 1
+@.str.96 = private unnamed_addr constant [19 x i8] c"null pointer value\00", align 1
+@.str.97 = private unnamed_addr constant [27 x i8] c"object reference of value \00", align 1
+@.str.98 = private unnamed_addr constant [15 x i8] c"pointer value \00", align 1
+@.str.99 = private unnamed_addr constant [20 x i8] c"uninitialized value\00", align 1
+@.str.100 = private unnamed_addr constant [11 x i8] c"the value \00", align 1
+@.str.101 = private unnamed_addr constant [6 x i8] c"value\00", align 1
+@.str.102 = private unnamed_addr constant [6 x i8] c" via \00", align 1
+@.str.103 = private unnamed_addr constant [11 x i8] c" parameter\00", align 1
+@.str.104 = private unnamed_addr constant [31 x i8] c" via implicit parameter 'self'\00", align 1
+@.str.105 = private unnamed_addr constant [3 x i8] c"th\00", align 1
+@.str.106 = private unnamed_addr constant [3 x i8] c"st\00", align 1
+@.str.107 = private unnamed_addr constant [3 x i8] c"nd\00", align 1
+@.str.108 = private unnamed_addr constant [3 x i8] c"rd\00", align 1
+@.str.109 = private unnamed_addr constant [28 x i8] c"nil object reference stored\00", align 1
+@.str.110 = private unnamed_addr constant [26 x i8] c"Null pointer value stored\00", align 1
+@.str.111 = private unnamed_addr constant [27 x i8] c"Storing null pointer value\00", align 1
+@.str.112 = private unnamed_addr constant [8 x i8] c" stored\00", align 1
+@.str.113 = private unnamed_addr constant [18 x i8] c"Pointer value of \00", align 1
+@.str.114 = private unnamed_addr constant [26 x i8] c"Storing pointer value of \00", align 1
+@.str.115 = private unnamed_addr constant [27 x i8] c"Uninitialized value stored\00", align 1
+@.str.116 = private unnamed_addr constant [28 x i8] c"Storing uninitialized value\00", align 1
+@.str.117 = private unnamed_addr constant [11 x i8] c"The value \00", align 1
+@.str.118 = private unnamed_addr constant [13 x i8] c" is assigned\00", align 1
+@.str.119 = private unnamed_addr constant [11 x i8] c"Assigning \00", align 1
+@.str.120 = private unnamed_addr constant [14 x i8] c"The value of \00", align 1
+@.str.121 = private unnamed_addr constant [24 x i8] c"Assigning the value of \00", align 1
+@.str.122 = private unnamed_addr constant [15 x i8] c"Value assigned\00", align 1
+@.str.123 = private unnamed_addr constant [16 x i8] c"Assigning value\00", align 1
+@.str.124 = private unnamed_addr constant [5 x i8] c" to \00", align 1
+@_ZTVN12_GLOBAL__N_115StoreSiteFinderE = internal unnamed_addr constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr null, ptr @_ZN5clang4ento11bugreporter26TrackingBugReporterVisitorD2Ev, ptr @_ZN12_GLOBAL__N_115StoreSiteFinderD0Ev, ptr @_ZN12_GLOBAL__N_115StoreSiteFinder9VisitNodeEPKN5clang4ento12ExplodedNodeERNS2_18BugReporterContextERNS2_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor15finalizeVisitorERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZN5clang4ento18BugReporterVisitor10getEndPathERNS0_18BugReporterContextEPKNS0_12ExplodedNodeERNS0_22PathSensitiveBugReportE, ptr @_ZNK12_GLOBAL__N_115StoreSiteFinder7ProfileERN4llvm16FoldingSetNodeIDE] }, align 8
+@.str.125 = private unnamed_addr constant [48 x i8] c"cannot create std::deque larger than max_size()\00", align 1
+@_ZTVN5clang4ento12StoreManager17FindUniqueBindingE = external unnamed_addr constant { [5 x ptr] }, align 8
+@_ZZNK12_GLOBAL__N_115StoreSiteFinder7ProfileERN4llvm16FoldingSetNodeIDEE3tag = internal global i32 0, align 4
+@_ZTVSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE = linkonce_odr unnamed_addr constant { [7 x ptr] } { [7 x ptr] [ptr null, ptr null, ptr @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv, ptr @_ZNSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info] }, comdat, align 8
+@_ZTVN5clang4ento24PathDiagnosticPopUpPieceE = external unnamed_addr constant { [8 x ptr] }, align 8
+@llvm.global_ctors = appending global [0 x { i32, ptr, ptr }] zeroinitializer
+@switch.table._ZN5clang4ento18ConditionBRVisitor13VisitTrueTestEPKNS_4ExprEPKNS_14BinaryOperatorERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportEPKNS0_12ExplodedNodeEbb = private unnamed_addr constant [4 x i8] c"\0B\0A\0D\0C", align 4
+@switch.table._ZN12_GLOBAL__N_119DefaultStoreHandler6handleEN5clang4ento11bugreporter9StoreInfoERNS2_18BugReporterContextENS3_15TrackingOptionsE = private unnamed_addr constant [3 x ptr] [ptr @.str.106, ptr @.str.107, ptr @.str.108], align 8
+
+@_ZN5clang4ento36SuppressInlineDefensiveChecksVisitorC1ENS0_11DefinedSValEPKNS0_12ExplodedNodeE = unnamed_addr alias void (ptr, ptr, i8, ptr), ptr @_ZN5clang4ento36SuppressInlineDefensiveChecksVisitorC2ENS0_11DefinedSValEPKNS0_12ExplodedNodeE
+@_ZN5clang4ento11bugreporter7TrackerC1ERNS0_22PathSensitiveBugReportE = unnamed_addr alias void (ptr, ptr), ptr @_ZN5clang4ento11bugreporter7TrackerC2ERNS0_22PathSensitiveBugReportE
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #0
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #0
+
+; Function Attrs: inlinehint mustprogress nounwind uwtable
+define linkonce_odr hidden noundef zeroext i1 @_ZNK5clang12ast_matchers8internal37matcher_ignoringParenImpCasts0Matcher7matchesERKNS_4ExprEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, ptr noundef %3) unnamed_addr #1 comdat align 2 {
+bb.a:
+  %4 = alloca %"class.clang::DynTypedNode", align 8 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.b = tail call noundef ptr @_ZN5clang4Expr19IgnoreParenImpCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %1) #23 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1111)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1112)
+  %i.c = tail call i32 @_ZN5clang11ASTNodeKind11getFromNodeERKNS_4StmtE(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #24, !noalias !1113
+  store i32 %i.c, ptr %4, align 8, !tbaa !45, !alias.scope !1113
+  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store ptr %i.b, ptr %i.d, align 8, !tbaa !47, !alias.scope !1113
+  %i.e = call noundef zeroext i1 @_ZNK5clang12ast_matchers8internal15DynTypedMatcher7matchesERKNS_12DynTypedNodeEPNS1_14ASTMatchFinderEPNS1_21BoundNodesTreeBuilderE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef %2, ptr noundef %3) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
+  ret i1 %i.e
+}
+
+declare void @_ZNK5clang15DeclarationName11getAsStringB5cxx11Ev(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8, ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #2
+
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr hidden noundef zeroext i1 @_ZNK5clang13CXXRecordDecl13hasDefinitionEv(ptr noundef nonnull align 8 dereferenceable(144) %0) local_unnamed_addr #3 comdat align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !85
+  %.not = icmp eq ptr %i.b, null
+  br i1 %.not, label %bb.b, label %bb.m
+
+bb.b:                                             ; preds = %bb.a
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !86   ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 96 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %i.e, align 8 ; 3 uses
+  %i.f = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, 1
+  %i.g = icmp eq i64 %i.f, 0
+  %i.h = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, -2
+  %spec.select.i.i.i.i.i.i.i.i.i = select i1 %i.g, i64 %i.h, i64 0 ; 3 uses
+  %i.i = icmp ugt i64 %spec.select.i.i.i.i.i.i.i.i.i, 3
+  br i1 %i.i, label %bb.c, label %bb.j
+
+bb.c:                                             ; preds = %bb.b
+  %i.j = and i64 %spec.select.i.i.i.i.i.i.i.i.i, 2
+  %.not.i.i.i.i.i.i.i = icmp eq i64 %i.j, 0
+  %i.k = and i64 %spec.select.i.i.i.i.i.i.i.i.i, -4
+  %i.l = inttoptr i64 %i.k to ptr                 ; 3 uses
+  br i1 %.not.i.i.i.i.i.i.i, label %_ZNK5clang13CXXRecordDecl7dataPtrEv.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 18624
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !89   ; 2 uses
+  %.not.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.n, null
+  br i1 %.not.not.i.i.i.i.i.i.i.i.i, label %bb.i, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 2632 ; 3 uses
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !102  ; 2 uses
+  %i.q = ptrtoint ptr %i.p to i64                 ; 2 uses
+  %i.r = add i64 %i.q, 24                         ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 2640
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !103
+  %i.u = icmp ult i64 %i.r, %i.t
+  br i1 %i.u, label %bb.f, label %bb.g, !prof !104
+
+bb.f:                                             ; preds = %bb.e
+  %i.v = inttoptr i64 %i.r to ptr
+  store ptr %i.v, ptr %i.o, align 8, !tbaa !102
+  br label %bb.h
+
+bb.g:                                             ; preds = %bb.e
+  %i.w = tail call noundef nonnull ptr @_ZN4llvm20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096ELm128ELm8EE12AllocateSlowEmmNS_5AlignE(ptr noundef nonnull align 8 dereferenceable(80) %i.o, i64 noundef 24, i64 noundef 24, i8 3) ; 2 uses
+  %.pre.i.i.i.i.i.i.i.i.i = ptrtoint ptr %i.w to i64
+  br label %bb.h
+
+bb.h:                                             ; preds = %bb.g, %bb.f
+  %.pre-phi.i.i.i.i.i.i.i.i.i = phi i64 [ %.pre.i.i.i.i.i.i.i.i.i, %bb.g ], [ %i.q, %bb.f ]
+  %.0.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.w, %bb.g ], [ %i.p, %bb.f ] ; 3 uses
+  store ptr %i.n, ptr %.0.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !106
+  %i.x = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 8
+  store i32 0, ptr %i.x, align 8, !tbaa !107
+  %i.y = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 16
+  store ptr %i.d, ptr %i.y, align 8, !tbaa !108
+  %i.z = or i64 %.pre-phi.i.i.i.i.i.i.i.i.i, 4
+  br label %_ZN5clang25LazyGenerationalUpdatePtrIPKNS_4DeclEPS1_XadL_ZNS_17ExternalASTSource19CompleteRedeclChainES3_EEEC2ERKNS_10ASTContextES4_.exit.i.i.i.i.i.i.i
+
+bb.i:                                             ; preds = %bb.d
+  %i.aa = ptrtoint ptr %i.d to i64
+end_hunk_0
+begin_hunk_1_@_ZN5clang4ento18ConditionBRVisitor13VisitTrueTestEPKNS_4ExprERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportEPKNS0_12ExplodedNodeEb:bb.a
+  %.not.i.i.i72 = icmp eq i8 %i.au, 0
+  br i1 %.not.i.i.i72, label %bb.t, label %bb.s
+
+bb.s:                                             ; preds = %bb.r
+  %i.av = add nsw i32 %i.am, -1
+  store i32 %i.av, ptr %i.aj, align 8, !tbaa !166
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
+
+bb.t:                                             ; preds = %bb.r
+  %i.aw = atomicrmw volatile add ptr %i.aj, i32 -1 acq_rel, align 4
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
+
+_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i: ; preds = %bb.t, %bb.s
+  %.0.i.i.i.i = phi i32 [ %i.am, %bb.s ], [ %i.aw, %bb.t ]
+  %i.ax = icmp eq i32 %.0.i.i.i.i, 1
+  br i1 %i.ax, label %bb.u, label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, !prof !170
+
+bb.u:                                             ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.ai) #24
+  br label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+bb.v:                                             ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit70
+  %i.ay = trunc nuw i8 %.052 to i1
+  call void @_ZN5clang4ento18ConditionBRVisitor13VisitTrueTestEPKNS_4ExprEPKNS_11DeclRefExprERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportEPKNS0_12ExplodedNodeEbb(ptr dead_on_unwind writable sret(%"class.std::shared_ptr.750") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, ptr noundef nonnull %i.ac, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(1000) %4, ptr noundef nonnull %5, i1 noundef zeroext %i.ay, i1 noundef zeroext %i.ab)
+  %i.az = load ptr, ptr %0, align 8, !tbaa !164
+  %.not110 = icmp eq ptr %i.az, null
+  br i1 %.not110, label %bb.w, label %.critedge57
+
+bb.w:                                             ; preds = %bb.v
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !165 ; 8 uses
+  %.not.i.i73 = icmp eq ptr %i.bb, null
+  br i1 %.not.i.i73, label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.x
+
+bb.x:                                             ; preds = %bb.w
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8 ; 4 uses
+  %i.bd = load atomic i64, ptr %i.bc acquire, align 8 ; 2 uses
+  %i.be = icmp eq i64 %i.bd, 4294967297
+  %i.bf = trunc i64 %i.bd to i32                  ; 2 uses
+  br i1 %i.be, label %bb.y, label %bb.z
+
+bb.y:                                             ; preds = %bb.x
+  store i32 0, ptr %i.bc, align 8, !tbaa !149
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.bb, i64 12
+  store i32 0, ptr %i.bg, align 4, !tbaa !150
+  %i.bh = load ptr, ptr %i.bb, align 8, !tbaa !113
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
+  %i.bj = load ptr, ptr %i.bi, align 8
+  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(16) %i.bb) #24, !inline_history !0
+  %i.bk = load ptr, ptr %i.bb, align 8, !tbaa !113
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 24
+  %i.bm = load ptr, ptr %i.bl, align 8
+  call void %i.bm(ptr noundef nonnull align 8 dereferenceable(16) %i.bb) #24, !inline_history !0
+  br label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+bb.z:                                             ; preds = %bb.x
+  %i.bn = load i8, ptr @__libc_single_threaded, align 1, !tbaa !115
+  %.not.i.i.i74 = icmp eq i8 %i.bn, 0
+  br i1 %.not.i.i.i74, label %bb.ab, label %bb.aa
+
+bb.aa:                                            ; preds = %bb.z
+  %i.bo = add nsw i32 %i.bf, -1
+  store i32 %i.bo, ptr %i.bc, align 8, !tbaa !166
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i75
+
+bb.ab:                                            ; preds = %bb.z
+  %i.bp = atomicrmw volatile add ptr %i.bc, i32 -1 acq_rel, align 4
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i75
+
+_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i75: ; preds = %bb.ab, %bb.aa
+  %.0.i.i.i.i76 = phi i32 [ %i.bf, %bb.aa ], [ %i.bp, %bb.ab ]
+  %i.bq = icmp eq i32 %.0.i.i.i.i76, 1
+  br i1 %i.bq, label %bb.ac, label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, !prof !170
+
+bb.ac:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i75
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bb) #24
+  br label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+bb.ad:                                            ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit70
+  %i.br = trunc nuw i8 %.052 to i1
+  call void @_ZN5clang4ento18ConditionBRVisitor13VisitTrueTestEPKNS_4ExprEPKNS_10MemberExprERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportEPKNS0_12ExplodedNodeEbb(ptr dead_on_unwind writable sret(%"class.std::shared_ptr.750") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, ptr noundef nonnull %i.ac, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(1000) %4, ptr noundef nonnull %5, i1 noundef zeroext %i.br, i1 noundef zeroext %i.ab)
+  %i.bs = load ptr, ptr %0, align 8, !tbaa !164
+  %.not = icmp eq ptr %i.bs, null
+  br i1 %.not, label %bb.ae, label %.critedge57
+
+bb.ae:                                            ; preds = %bb.ad
+  %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !165 ; 8 uses
+  %.not.i.i78 = icmp eq ptr %i.bu, null
+  br i1 %.not.i.i78, label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.af
+
+bb.af:                                            ; preds = %bb.ae
+  %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8 ; 4 uses
+  %i.bw = load atomic i64, ptr %i.bv acquire, align 8 ; 2 uses
+  %i.bx = icmp eq i64 %i.bw, 4294967297
+  %i.by = trunc i64 %i.bw to i32                  ; 2 uses
+  br i1 %i.bx, label %bb.ag, label %bb.ah
+
+bb.ag:                                            ; preds = %bb.af
+  store i32 0, ptr %i.bv, align 8, !tbaa !149
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 12
+  store i32 0, ptr %i.bz, align 4, !tbaa !150
+  %i.ca = load ptr, ptr %i.bu, align 8, !tbaa !113
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
+  %i.cc = load ptr, ptr %i.cb, align 8
+  call void %i.cc(ptr noundef nonnull align 8 dereferenceable(16) %i.bu) #24, !inline_history !0
+  %i.cd = load ptr, ptr %i.bu, align 8, !tbaa !113
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 24
+  %i.cf = load ptr, ptr %i.ce, align 8
+  call void %i.cf(ptr noundef nonnull align 8 dereferenceable(16) %i.bu) #24, !inline_history !0
+  br label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+bb.ah:                                            ; preds = %bb.af
+  %i.cg = load i8, ptr @__libc_single_threaded, align 1, !tbaa !115
+  %.not.i.i.i79 = icmp eq i8 %i.cg, 0
+  br i1 %.not.i.i.i79, label %bb.aj, label %bb.ai
+
+bb.ai:                                            ; preds = %bb.ah
+  %i.ch = add nsw i32 %i.by, -1
+  store i32 %i.ch, ptr %i.bv, align 8, !tbaa !166
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i80
+
+bb.aj:                                            ; preds = %bb.ah
+  %i.ci = atomicrmw volatile add ptr %i.bv, i32 -1 acq_rel, align 4
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i80
+
+_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i80: ; preds = %bb.aj, %bb.ai
+  %.0.i.i.i.i81 = phi i32 [ %i.by, %bb.ai ], [ %i.ci, %bb.aj ]
+  %i.cj = icmp eq i32 %.0.i.i.i.i81, 1
+  br i1 %i.cj, label %bb.ak, label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, !prof !170
+
+bb.ak:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i80
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.bu) #24
+  br label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+bb.al:                                            ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit70
+  %i.ck = load i32, ptr %i.ac, align 8
+  %i.cl = and i32 %i.ck, 16252928
+  %i.cm = icmp eq i32 %i.cl, 4718592
+  br i1 %i.cm, label %bb.am, label %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+bb.am:                                            ; preds = %bb.al
+  %i.cn = xor i8 %.052, 1
+  %i.co = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
+  %i.cp = load ptr, ptr %i.co, align 8, !tbaa !862
+  br label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit70
+
+_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.al, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit70, %bb.ak, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i80, %bb.ag, %bb.ae, %bb.ac, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i75, %bb.y, %bb.w, %bb.u, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.q, %bb.o
+  br i1 %i.ab, label %bb.ao, label %bb.an
+
+bb.an:                                            ; preds = %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  br label %.critedge57
+
+bb.ao:                                            ; preds = %_ZNSt12__shared_ptrIN5clang4ento19PathDiagnosticPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
+  %i.cq = load ptr, ptr %i.k, align 8, !tbaa !194, !nonnull !114, !align !195
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 8
+  %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !728, !nonnull !114, !align !195 ; 2 uses
+  %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !113
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 32
+  %i.cv = load ptr, ptr %i.cu, align 8
+  %i.cw = call noundef nonnull align 8 dereferenceable(776) ptr %i.cv(ptr noundef nonnull align 8 dereferenceable(8) %i.cs) #24, !inline_history !5
+  %i.cx = call i32 @_ZNK5clang4Stmt11getBeginLocEv(ptr noundef nonnull align 8 dereferenceable(8) %2) #23
+  %.not.i = icmp eq i32 %i.cx, 0                  ; 2 uses
+  %i.cy = select i1 %.not.i, i32 1, i32 2
+  store i32 %i.cy, ptr %10, align 8, !tbaa !157
+  %i.cz = getelementptr inbounds nuw i8, ptr %10, i64 8
+  %i.da = select i1 %.not.i, ptr null, ptr %2
+  store ptr %i.da, ptr %i.cz, align 8, !tbaa !835
+  %i.db = getelementptr inbounds nuw i8, ptr %10, i64 16
+  store ptr null, ptr %i.db, align 8, !tbaa !836
+  %i.dc = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 2 uses
+  store ptr %i.cw, ptr %i.dc, align 8, !tbaa !729
+  %i.dd = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 2 uses
+  %i.de = call { i32, ptr } @_ZNK5clang4ento22PathDiagnosticLocation11genLocationENS_14SourceLocationEN4llvm12PointerUnionIJPKNS_10StackFrameEPNS_19AnalysisDeclContextEEEE(ptr noundef nonnull align 8 dereferenceable(60) %10, i32 0, i64 %i.i) #24 ; 2 uses
+  %i.df = extractvalue { i32, ptr } %i.de, 0
+  store i32 %i.df, ptr %i.dd, align 8
+  %i.dg = getelementptr inbounds nuw i8, ptr %10, i64 40
+  %i.dh = extractvalue { i32, ptr } %i.de, 1
+  store ptr %i.dh, ptr %i.dg, align 8
+  %i.di = getelementptr inbounds nuw i8, ptr %10, i64 48
+  %i.dj = call { i64, i8 } @_ZNK5clang4ento22PathDiagnosticLocation8genRangeEN4llvm12PointerUnionIJPKNS_10StackFrameEPNS_19AnalysisDeclContextEEEE(ptr noundef nonnull align 8 dereferenceable(60) %10, i64 %i.i) #24 ; 2 uses
+  %.fca.0.extract.i = extractvalue { i64, i8 } %i.dj, 0
+  %.fca.1.extract.i = extractvalue { i64, i8 } %i.dj, 1
+  store i64 %.fca.0.extract.i, ptr %i.di, align 8
+  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %10, i64 56
+  store i8 %.fca.1.extract.i, ptr %.sroa.2.0..sroa_idx.i, align 8
+  %i.dk = load ptr, ptr %i.dc, align 8, !tbaa !729
+  %.not112 = icmp eq ptr %i.dk, null
+  %.sroa.0.0.copyload.i = load i32, ptr %i.dd, align 8
+  %.not113 = icmp eq i32 %.sroa.0.0.copyload.i, 0
+  %or.cond = select i1 %.not112, i1 true, i1 %.not113
+  br i1 %or.cond, label %.critedge, label %bb.ap
+
+.critedge:                                        ; preds = %bb.ao
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
+  br label %bb.ar
+
+bb.ap:                                            ; preds = %bb.ao
+  %i.dl = call noalias noundef nonnull dereferenceable(216) ptr @_Znwm(i64 noundef 216) #25, !noalias !1416 ; 8 uses
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
+  store i32 1, ptr %i.dm, align 8, !tbaa !149, !noalias !1417
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.dl, i64 12
+  store i32 1, ptr %i.dn, align 4, !tbaa !150, !noalias !1417
+  store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.dl, align 8, !tbaa !113, !noalias !1417
+  %i.do = getelementptr inbounds nuw i8, ptr %i.dl, i64 16 ; 5 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = select i1 %6, ptr @.str.52, ptr @.str.54
+  %.sroa.2.0.copyload.i.i.i.i.i.i = select i1 %6, i64 30, i64 31
+  call void @_ZN5clang4ento19PathDiagnosticPieceC2EN4llvm9StringRefENS1_4KindENS1_11DisplayHintE(ptr noundef nonnull align 8 dereferenceable(194) %i.do, ptr nonnull %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %.sroa.2.0.copyload.i.i.i.i.i.i, i32 noundef 1, i32 noundef 1) #24, !noalias !1417
+  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN5clang4ento23PathDiagnosticSpotPieceE, i64 16), ptr %i.do, align 8, !tbaa !113, !noalias !1417
+  %i.dp = getelementptr inbounds nuw i8, ptr %i.dl, i64 144 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.dp, ptr noundef nonnull align 8 dereferenceable(64) %10, i64 64, i1 false), !noalias !1417
+  %i.dq = load i32, ptr %i.dp, align 8, !tbaa !157, !noalias !1417
+  switch i32 %i.dq, label %_ZNSt12__shared_ptrIN5clang4ento24PathDiagnosticEventPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit [
+    i32 2, label %bb.aq
+    i32 0, label %bb.aq
+    i32 3, label %bb.aq
+  ]
+
+bb.aq:                                            ; preds = %bb.ap, %bb.ap, %bb.ap
+  %i.dr = getelementptr inbounds nuw i8, ptr %i.dl, i64 192
+  %.sroa.01.0.copyload.i.i.i.i.i.i.i.i.i = load i64, ptr %i.dr, align 8, !noalias !1417
+  call void @_ZN5clang4ento19PathDiagnosticPiece8addRangeENS_11SourceRangeE(ptr noundef nonnull align 8 dereferenceable(194) %i.do, i64 %.sroa.01.0.copyload.i.i.i.i.i.i.i.i.i), !noalias !1417
+  br label %_ZNSt12__shared_ptrIN5clang4ento24PathDiagnosticEventPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+_ZNSt12__shared_ptrIN5clang4ento24PathDiagnosticEventPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.aq, %bb.ap
+  store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN5clang4ento24PathDiagnosticEventPieceE, i64 16), ptr %i.do, align 8, !tbaa !113, !noalias !1417
+  %i.ds = getelementptr inbounds nuw i8, ptr %i.dl, i64 209
+  store i8 0, ptr %i.ds, align 1, !tbaa !159, !noalias !1417
+  store ptr %i.do, ptr %0, align 8, !tbaa !164
+  %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %i.dl, ptr %i.dt, align 8, !tbaa !165
+  br label %bb.ar
+
+bb.ar:                                            ; preds = %_ZNSt12__shared_ptrIN5clang4ento24PathDiagnosticEventPieceELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %.critedge
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #24
+  br label %.critedge57
+
+.critedge57:                                      ; preds = %bb.ad, %bb.v, %bb.n, %bb.ar, %bb.an
+  br i1 %.not.i.i62, label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit88, label %bb.as
+
+bb.as:                                            ; preds = %.critedge57
+  call void @_ZN5clang4ento19ProgramStateReleaseEPKNS0_12ProgramStateE(ptr noundef nonnull %i.h) #24
+  br label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit88
+
+_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit88: ; preds = %.critedge57, %bb.as
+  br i1 %.not.i.i, label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit90, label %bb.at
+
+bb.at:                                            ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit88
+  call void @_ZN5clang4ento19ProgramStateReleaseEPKNS0_12ProgramStateE(ptr noundef nonnull %i.c) #24
+  br label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit90
+
+_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit90: ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit88, %bb.at
+  ret void
+}
+
+; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
+declare noundef ptr @_ZN5clang4Expr12IgnoreParensEv(ptr noundef nonnull align 8 dereferenceable(16)) local_unnamed_addr #4
+
+; Function Attrs: inlinehint mustprogress nounwind uwtable
+define linkonce_odr hidden { ptr, i8 } @_ZNK5clang4ento12ProgramState7getSValEPKNS_4ExprEPKNS_10StackFrameE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #1 comdat align 2 {
+bb.a:
+  %3 = alloca %"class.clang::ento::EnvironmentEntry", align 8 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
+  call void @_ZN5clang4ento16EnvironmentEntryC1EPKNS_4ExprEPKNS_10StackFrameE(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef %1, ptr noundef %2) #24
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !221
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 240
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !226
+  %i.f = call { ptr, i8 } @_ZNK5clang4ento11Environment7getSValERKNS0_16EnvironmentEntryERNS0_11SValBuilderE(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(412) %i.e) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
+  ret { ptr, i8 } %i.f
+}
+
+; Function Attrs: mustprogress nounwind uwtable
+define dso_local void @_ZN5clang4ento18ConditionBRVisitor13VisitTrueTestEPKNS_4ExprEPKNS_14BinaryOperatorERNS0_18BugReporterContextERNS0_22PathSensitiveBugReportEPKNS0_12ExplodedNodeEbb(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::shared_ptr.750") align 8 captures(none) %0, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(16) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(1000) %5, ptr nofree noundef readonly captures(none) %6, i1 noundef zeroext %7, i1 noundef zeroext %8) local_unnamed_addr #3 align 2 {
+bb.a:
+  %i.a = alloca i64, align 8                      ; 6 uses
+  %9 = alloca %"class.std::optional.1526", align 8 ; 7 uses
+  %10 = alloca %"class.std::optional.1526", align 8 ; 7 uses
+  %11 = alloca %"class.std::optional.812", align 1 ; 6 uses
+  %12 = alloca %"class.llvm::SmallString.1189", align 8 ; 11 uses
+  %13 = alloca %"class.llvm::SmallString.1189", align 8 ; 10 uses
+  %14 = alloca %"class.llvm::raw_svector_ostream", align 8 ; 11 uses
+  %15 = alloca %"class.llvm::raw_svector_ostream", align 8 ; 11 uses
+  %16 = alloca %"class.llvm::SmallString", align 8 ; 8 uses
+  %17 = alloca %"class.llvm::raw_svector_ostream", align 8 ; 20 uses
+  %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
+  %.sroa.8 = alloca [32 x i8], align 4            ; 7 uses
+  %.sroa.9 = alloca [21 x i8], align 4            ; 7 uses
+  %.sroa.10 = alloca [7 x i8], align 1            ; 7 uses
+  %19 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 14 uses
+  %20 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 7 uses
+  %21 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 14 uses
+  %22 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 7 uses
+  %23 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 13 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
+  %i.b = getelementptr inbounds nuw i8, ptr %11, i64 1 ; 2 uses
+  store i8 0, ptr %i.b, align 1, !tbaa !159
+  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !134
+  %i.e = tail call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.d) #23 ; 3 uses
+  %i.f = load i16, ptr %i.e, align 8
+  %i.g = and i16 %i.f, 511
+  %i.h = icmp eq i16 %i.g, 46                     ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !134
+  %i.k = tail call noundef ptr @_ZN5clang4Expr16IgnoreParenCastsEv(ptr noundef nonnull align 8 dereferenceable(16) %i.j) #23 ; 3 uses
+  %i.l = load i16, ptr %i.k, align 8
+  %i.m = and i16 %i.l, 511
+  %i.n = icmp eq i16 %i.m, 46                     ; 2 uses
+  %or.cond = and i1 %i.h, %i.n
+  br i1 %or.cond, label %bb.b, label %_ZN4llvmeqENS_9StringRefES0_.exit
+
+bb.b:                                             ; preds = %bb.a
+  %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 24
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !141
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 40
+  %i.r = load i64, ptr %i.q, align 8, !tbaa !879  ; 2 uses
+  %i.s = and i64 %i.r, 7
+  %i.t = icmp ne i64 %i.s, 0
+  %i.u = and i64 %i.r, -8                         ; 2 uses
+  %.not2.i = icmp eq i64 %i.u, 0
+  %.not.i = or i1 %i.t, %.not2.i
+  br i1 %.not.i, label %_ZNK5clang9NamedDecl7getNameEv.exit, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.v = inttoptr i64 %i.u to ptr
+  %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !882  ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
+  %i.z = load i64, ptr %i.x, align 8, !tbaa !884
+  %i.aa = and i64 %i.z, 4294967295
+  br label %_ZNK5clang9NamedDecl7getNameEv.exit
+
+_ZNK5clang9NamedDecl7getNameEv.exit:              ; preds = %bb.b, %bb.c
+  %.sroa.3.0.i = phi i64 [ %i.aa, %bb.c ], [ 0, %bb.b ] ; 3 uses
+  %.sroa.0.0.i = phi ptr [ %i.y, %bb.c ], [ @.str.24, %bb.b ]
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 24
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !141
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
+  %i.ae = load i64, ptr %i.ad, align 8, !tbaa !879 ; 2 uses
+  %i.af = and i64 %i.ae, 7
+  %i.ag = icmp ne i64 %i.af, 0
+  %i.ah = and i64 %i.ae, -8                       ; 2 uses
+  %.not2.i89 = icmp eq i64 %i.ah, 0
+  %.not.i90 = or i1 %i.ag, %.not2.i89
+  br i1 %.not.i90, label %_ZNK5clang9NamedDecl7getNameEv.exit95, label %bb.d
+
+bb.d:                                             ; preds = %_ZNK5clang9NamedDecl7getNameEv.exit
+  %i.ai = inttoptr i64 %i.ah to ptr
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !882 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
+  %i.am = load i64, ptr %i.ak, align 8, !tbaa !884
+  %i.an = and i64 %i.am, 4294967295
+  br label %_ZNK5clang9NamedDecl7getNameEv.exit95
+
+_ZNK5clang9NamedDecl7getNameEv.exit95:            ; preds = %_ZNK5clang9NamedDecl7getNameEv.exit, %bb.d
+  %.sroa.3.0.i91 = phi i64 [ %i.an, %bb.d ], [ 0, %_ZNK5clang9NamedDecl7getNameEv.exit ]
+  %.sroa.0.0.i92 = phi ptr [ %i.al, %bb.d ], [ @.str.24, %_ZNK5clang9NamedDecl7getNameEv.exit ]
+  %.not.i96 = icmp eq i64 %.sroa.3.0.i, %.sroa.3.0.i91
+  br i1 %.not.i96, label %bb.e, label %_ZN4llvmeqENS_9StringRefES0_.exit
+
+bb.e:                                             ; preds = %_ZNK5clang9NamedDecl7getNameEv.exit95
+  %i.ao = icmp eq i64 %.sroa.3.0.i, 0
+  br i1 %i.ao, label %_ZN4llvmeqENS_9StringRefES0_.exit, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  %bcmp.i = tail call i32 @bcmp(ptr nonnull %.sroa.0.0.i, ptr nonnull %.sroa.0.0.i92, i64 %.sroa.3.0.i)
+  %i.ap = icmp eq i32 %bcmp.i, 0
+  br label %_ZN4llvmeqENS_9StringRefES0_.exit
+
+_ZN4llvmeqENS_9StringRefES0_.exit:                ; preds = %bb.f, %bb.e, %_ZNK5clang9NamedDecl7getNameEv.exit95, %bb.a
+  %.0 = phi i1 [ false, %bb.a ], [ %i.ap, %bb.f ], [ false, %_ZNK5clang9NamedDecl7getNameEv.exit95 ], [ true, %bb.e ] ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
+  %i.aq = getelementptr inbounds nuw i8, ptr %12, i64 24 ; 2 uses
+  store ptr %i.aq, ptr %12, align 8, !tbaa !671
+  %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 5 uses
+  store i64 0, ptr %i.ar, align 8, !tbaa !672
+  %i.as = getelementptr inbounds nuw i8, ptr %12, i64 16
+  store i64 128, ptr %i.as, align 8, !tbaa !673
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
+  %i.at = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 2 uses
+  store ptr %i.at, ptr %13, align 8, !tbaa !671
+  %i.au = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
+  store i64 0, ptr %i.au, align 8, !tbaa !672
+  %i.av = getelementptr inbounds nuw i8, ptr %13, i64 16
+  store i64 128, ptr %i.av, align 8, !tbaa !673
+  call void @llvm.lifetime.start.p0(ptr nonnull %14) #24
+  %i.aw = getelementptr inbounds nuw i8, ptr %14, i64 8
+  store i32 2, ptr %i.aw, align 8, !tbaa !677
+  %i.ax = getelementptr inbounds nuw i8, ptr %14, i64 40
+  store i8 0, ptr %i.ax, align 8, !tbaa !678
+  %i.ay = getelementptr inbounds nuw i8, ptr %14, i64 44
+  store i32 1, ptr %i.ay, align 4, !tbaa !679
+  %i.az = getelementptr inbounds nuw i8, ptr %14, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.az, i8 0, i64 24, i1 false)
+  store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN4llvm19raw_svector_ostreamE, i64 16), ptr %14, align 8, !tbaa !113
+  %i.ba = getelementptr inbounds nuw i8, ptr %14, i64 48
+  store ptr %12, ptr %i.ba, align 8, !tbaa !681
+  call void @_ZN4llvm11raw_ostream16SetBufferAndModeEPcmNS0_10BufferKindE(ptr noundef nonnull align 8 dereferenceable(56) %14, ptr noundef null, i64 noundef 0, i32 noundef 0) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %15) #24
+  %i.bb = getelementptr inbounds nuw i8, ptr %15, i64 8
+  store i32 2, ptr %i.bb, align 8, !tbaa !677
+  %i.bc = getelementptr inbounds nuw i8, ptr %15, i64 40
+  store i8 0, ptr %i.bc, align 8, !tbaa !678
+  %i.bd = getelementptr inbounds nuw i8, ptr %15, i64 44
+end_hunk_1

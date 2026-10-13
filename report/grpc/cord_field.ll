@@ -1,0 +1,813 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/cord_field?download=true
+inline.NumInlined: 3084
+inline.NumDeleted: 1445
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
+begin_hunk_0
+
+$_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase9IsInlinedEv = comdat any
+
+$_ZN6google8protobuf8compiler3cpp20MakeDefaultFieldNameB5cxx11EPKNS0_15FieldDescriptorE = comdat any
+
+$__clang_call_terminate = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA8_cEESF_INSJ_8iteratorEbERKT_ = comdat any
+
+$_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE = comdat any
+
+$_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotFnINS1_10StringHashESt17basic_string_viewIcSt11char_traitsIcEEEEmPKvPv = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE19transfer_n_slots_fnEPvSK_SK_m = comdat any
+
+$_ZN4absl12lts_2025051218container_internal20AllocateBackingArrayILm8ESaIcEEEPvS4_m = comdat any
+
+$_ZN4absl12lts_2025051218container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE46transfer_unprobed_elements_to_next_capacity_fnERNS1_12CommonFieldsEPKNS1_6ctrl_tEPvSP_PFvSP_hmmE = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA15_cEESF_INSJ_8iteratorEbERKT_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA10_cEESF_INSJ_8iteratorEbERKT_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA22_cEESF_INSJ_8iteratorEbERKT_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA23_cEESF_INSJ_8iteratorEbERKT_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA17_cEESF_INSJ_8iteratorEbERKT_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEED2Ev = comdat any
+
+$_ZN4absl12lts_2025051219functional_internal12InvokeObjectIZNS0_18container_internal12raw_hash_setINS3_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS8_SaIcEEEEENS3_10StringHashENS3_8StringEqESaISt4pairIKS9_SD_EEE13destroy_slotsEvEUlPKNS3_6ctrl_tEPvE_vJSO_SP_EEET0_NS1_7VoidPtrEDpNS1_8ForwardTIT1_E4typeE = comdat any
+
+$_ZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS9_SaIcEEENS5_18container_internal10StringHashENSF_8StringEqESaISt4pairIKSA_SE_EEEEvvEEDaOT_ = comdat any
+
+$_ZN4absl12lts_202505127CleanupINS0_16cleanup_internal3TagEZN6google8protobuf2io7Printer8WithVarsIRKNS0_13flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcSC_SaIcEEENS0_18container_internal10StringHashENSI_8StringEqESaISt4pairIKSD_SH_EEEEvvEEDaOT_EUlvE_ED2Ev = comdat any
+
+$_ZZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS9_SaIcEEENS5_18container_internal10StringHashENSF_8StringEqESaISt4pairIKSA_SE_EEEEvvEEDaOT_ENUlSA_E_D2Ev = comdat any
+
+$_ZNSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE17_M_realloc_insertIJZNS5_8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISC_NSt7__cxx1112basic_stringIcSB_SaIcEEENSK_18container_internal10StringHashENSQ_8StringEqESaISt4pairIKSC_SP_EEEEvvEEDaOT_EUlSC_E_EEEvN9__gnu_cxx17__normal_iteratorIPSE_SG_EEDpOT_ = comdat any
+
+$_ZNSt17_Function_handlerIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEZNS4_8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISB_NSt7__cxx1112basic_stringIcSA_SaIcEEENSF_18container_internal10StringHashENSL_8StringEqESaISt4pairIKSB_SK_EEEEvvEEDaOT_EUlSB_E_E9_M_invokeERKSt9_Any_dataOSB_ = comdat any
+
+$_ZNSt17_Function_handlerIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEZNS4_8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISB_NSt7__cxx1112basic_stringIcSA_SaIcEEENSF_18container_internal10StringHashENSL_8StringEqESaISt4pairIKSB_SK_EEEEvvEEDaOT_EUlSB_E_E10_M_managerERSt9_Any_dataRKSZ_St18_Manager_operation = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEEC2EOSJ_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE4findIS7_EENSJ_8iteratorERKT_ = comdat any
+
+$_ZNSt8__detail9__variant16_Variant_storageILb0EJSt17basic_string_viewIcSt11char_traitsIcEESt8functionIFbvEEEED2Ev = comdat any
+
+$_ZNSt14_Function_base13_Base_managerIZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcSB_SaIcEEENS7_18container_internal10StringHashENSH_8StringEqESaISt4pairIKSC_SG_EEEEvvEEDaOT_EUlSC_E_E10_M_managerERSt9_Any_dataRKSV_St18_Manager_operation = comdat any
+
+$_ZN4absl12lts_2025051219functional_internal12InvokeObjectIZNS0_18container_internal12raw_hash_setINS3_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS8_SaIcEEEEENS3_10StringHashENS3_8StringEqESaISt4pairIKS9_SD_EEEC1ERKSL_RKSK_EUlPvPKvE_vJSQ_SS_EEET0_NS1_7VoidPtrEDpNS1_8ForwardTIT1_E4typeE = comdat any
+
+$_ZNSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EED2Ev = comdat any
+
+$_ZN4absl12lts_202505127CleanupINS0_16cleanup_internal3TagEZN6google8protobuf2io7Printer8WithDefsENS0_4SpanIKNS7_3SubEEEbEUlvE_ED2Ev = comdat any
+
+$_ZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEb = comdat any
+
+$_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEC2IS5_SB_TnNSt9enable_ifIXaaclsr5_PCCPE18_ConstructiblePairIT_T0_EEclsr5_PCCPE26_ImplicitlyConvertiblePairISF_SG_EEEbE4typeELb1EEERKS5_RKSB_ = comdat any
+
+$_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEED2Ev = comdat any
+
+$_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEED2Ev = comdat any
+
+$_ZZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbENUlSt17basic_string_viewIcSt11char_traitsIcEEE_D2Ev = comdat any
+
+$_ZZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbENUlSt17basic_string_viewIcSt11char_traitsIcEEE0_D2Ev = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEED2Ev = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEED2Ev = comdat any
+
+$_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotFnINS1_10StringHashENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEmPKvPv = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEE19transfer_n_slots_fnEPvSO_SO_m = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEE46transfer_unprobed_elements_to_next_capacity_fnERNS1_12CommonFieldsEPKNS1_6ctrl_tEPvST_PFvST_hmmE = comdat any
+
+$_ZN4absl12lts_2025051218container_internal15map_slot_policyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEE8transferISaISt4pairIKS8_SE_EEEEDaPT_PNS1_13map_slot_typeIS8_SE_EESP_ = comdat any
+
+$_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEC2EOSC_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEE30find_or_prepare_insert_non_sooIS9_EESJ_INSN_8iteratorEbERKT_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal15map_slot_policyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEE9constructISaISt4pairIKS8_SE_EEJRKSt21piecewise_construct_tSt5tupleIJOS8_EESO_IJOSE_EEEEEvPT_PNS1_13map_slot_typeIS8_SE_EEDpOT0_ = comdat any
+
+$_ZNSt8__detail9__variant16_Variant_storageILb0EJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8functionIFbvEEEED2Ev = comdat any
+
+$_ZSt10__do_visitINSt8__detail9__variant20__variant_idx_cookieEZNS1_15_Copy_ctor_baseILb0EJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8functionIFbvEEEEC1ERKSD_EUlOT_T0_E_JRKSt7variantIJS9_SC_EEEEDcOSI_DpOT1_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEE30find_or_prepare_insert_non_sooIS9_EESI_INSM_8iteratorEbERKT_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEE19transfer_n_slots_fnEPvSN_SN_m = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEE46transfer_unprobed_elements_to_next_capacity_fnERNS1_12CommonFieldsEPKNS1_6ctrl_tEPvSS_PFvSS_hmmE = comdat any
+
+$_ZN4absl12lts_2025051218container_internal15map_slot_policyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEE8transferISaISt4pairIKS8_SD_EEEEDaPT_PNS1_13map_slot_typeIS8_SD_EESO_ = comdat any
+
+$_ZN6google8protobuf2io7Printer16AnnotationRecordC2ERKS3_ = comdat any
+
+$_ZNSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEESaISE_EE17_M_realloc_insertIJZNS5_8WithDefsEN4absl12lts_202505124SpanIKNS5_3SubEEEbEUlSC_E_EEEvN9__gnu_cxx17__normal_iteratorIPSE_SG_EEDpOT_ = comdat any
+
+$_ZNSt17_Function_handlerIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEZNS4_8WithDefsEN4absl12lts_202505124SpanIKNS4_3SubEEEbEUlSB_E_E9_M_invokeERKSt9_Any_dataOSB_ = comdat any
+
+$_ZNSt17_Function_handlerIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb0EEEESt17basic_string_viewIcSt11char_traitsIcEEEZNS4_8WithDefsEN4absl12lts_202505124SpanIKNS4_3SubEEEbEUlSB_E_E10_M_managerERSt9_Any_dataRKSL_St18_Manager_operation = comdat any
+
+$_ZZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbENKUlSt17basic_string_viewIcSt11char_traitsIcEEE_clESC_ = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEE4findISt17basic_string_viewIcS7_EEENSN_8iteratorERKT_ = comdat any
+
+$_ZN6google8protobuf2io7Printer9ValueImplILb0EEaSILb1EEERS4_RKNS3_IXT_EEE = comdat any
+
+$_ZNSt7variantIJSt17basic_string_viewIcSt11char_traitsIcEESt8functionIFbvEEEEaSIRKS6_EENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJS3_S6_EE4typeEE18is_constructible_vISG_SD_E15is_assignable_vIRSG_SD_EERS7_E4typeESE_ = comdat any
+
+$_ZNSt18bad_variant_accessD0Ev = comdat any
+
+$_ZNKSt18bad_variant_access4whatEv = comdat any
+
+$_ZNSt14_Function_base13_Base_managerIZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS4_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE_E10_M_managerERSt9_Any_dataRKSH_St18_Manager_operation = comdat any
+
+$_ZN4absl12lts_2025051219functional_internal12InvokeObjectIZNS0_18container_internal12raw_hash_setINS3_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS3_10StringHashENS3_8StringEqESaISt4pairIKSB_SH_EEEC1ERKSP_RKSO_EUlPvPKvE_vJSU_SW_EEET0_NS1_7VoidPtrEDpNS1_8ForwardTIT1_E4typeE = comdat any
+
+$_ZNSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEC2IKS5_SB_TnNSt9enable_ifIXaaclsr6_PCCFPIT_T0_EE18_ConstructiblePairISG_SH_EEclsr6_PCCFPISG_SH_EE26_ImplicitlyConvertiblePairISG_SH_EEEbE4typeELb1EEERKS_ISG_SH_E = comdat any
+
+$_ZN4absl12lts_2025051219functional_internal12InvokeObjectIZNS0_18container_internal12raw_hash_setINS3_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS3_10StringHashENS3_8StringEqESaISt4pairIKSB_SH_EEE13destroy_slotsEvEUlPKNS3_6ctrl_tEPvE_vJSS_ST_EEET0_NS1_7VoidPtrEDpNS1_8ForwardTIT1_E4typeE = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEEC2EOSN_ = comdat any
+
+$_ZNSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer16AnnotationRecordEESt17basic_string_viewIcSt11char_traitsIcEEEESaISD_EE17_M_realloc_insertIJZNS5_8WithDefsEN4absl12lts_202505124SpanIKNS5_3SubEEEbEUlSB_E0_EEEvN9__gnu_cxx17__normal_iteratorIPSD_SF_EEDpOT_ = comdat any
+
+$_ZNSt17_Function_handlerIFSt8optionalIN6google8protobuf2io7Printer16AnnotationRecordEESt17basic_string_viewIcSt11char_traitsIcEEEZNS4_8WithDefsEN4absl12lts_202505124SpanIKNS4_3SubEEEbEUlSA_E0_E9_M_invokeERKSt9_Any_dataOSA_ = comdat any
+
+$_ZNSt17_Function_handlerIFSt8optionalIN6google8protobuf2io7Printer16AnnotationRecordEESt17basic_string_viewIcSt11char_traitsIcEEEZNS4_8WithDefsEN4absl12lts_202505124SpanIKNS4_3SubEEEbEUlSA_E0_E10_M_managerERSt9_Any_dataRKSK_St18_Manager_operation = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEE4findISt17basic_string_viewIcS7_EEENSM_8iteratorERKT_ = comdat any
+
+$_ZNSt14_Function_base13_Base_managerIZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS4_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE0_E10_M_managerERSt9_Any_dataRKSH_St18_Manager_operation = comdat any
+
+$_ZN4absl12lts_2025051219functional_internal12InvokeObjectIZNS0_18container_internal12raw_hash_setINS3_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS3_10StringHashENS3_8StringEqESaISt4pairIKSB_SG_EEEC1ERKSO_RKSN_EUlPvPKvE_vJST_SV_EEET0_NS1_7VoidPtrEDpNS1_8ForwardTIT1_E4typeE = comdat any
+
+$_ZN4absl12lts_2025051219functional_internal12InvokeObjectIZNS0_18container_internal12raw_hash_setINS3_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS3_10StringHashENS3_8StringEqESaISt4pairIKSB_SG_EEE13destroy_slotsEvEUlPKNS3_6ctrl_tEPvE_vJSR_SS_EEET0_NS1_7VoidPtrEDpNS1_8ForwardTIT1_E4typeE = comdat any
+
+$_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEEC2EOSM_ = comdat any
+
+$_ZN6google8protobuf2io7Printer3SubD2Ev = comdat any
+
+$_ZN6google8protobuf8compiler3cpp18FieldGeneratorBaseD2Ev = comdat any
+
+$_ZSt19piecewise_construct = comdat any
+
+$_ZZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE18GetPolicyFunctionsEvE5value = comdat any
+
+$_ZTIZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS9_SaIcEEENS5_18container_internal10StringHashENSF_8StringEqESaISt4pairIKSA_SE_EEEEvvEEDaOT_EUlSA_E_ = comdat any
+
+$_ZTSZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS9_SaIcEEENS5_18container_internal10StringHashENSF_8StringEqESaISt4pairIKSA_SE_EEEEvvEEDaOT_EUlSA_E_ = comdat any
+
+$_ZZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEE18GetPolicyFunctionsEvE5value = comdat any
+
+$_ZZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEE18GetPolicyFunctionsEvE5value = comdat any
+
+$_ZTISt18bad_variant_access = comdat any
+
+$_ZTSSt18bad_variant_access = comdat any
+
+$_ZTVSt18bad_variant_access = comdat any
+
+$_ZTIZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE_ = comdat any
+
+$_ZTSZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE_ = comdat any
+
+$_ZTIZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE0_ = comdat any
+
+$_ZTSZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE0_ = comdat any
+
+@_ZTVN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorE = internal constant { [31 x ptr] } { [31 x ptr] [ptr null, ptr @_ZTIN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorE, ptr @_ZN6google8protobuf8compiler3cpp18FieldGeneratorBaseD2Ev, ptr @_ZN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorD0Ev, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase13RequiresArenaENS3_17GeneratorFunctionE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase8MakeVarsEv, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator22GeneratePrivateMembersEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase21GenerateStaticMembersEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator28GenerateAccessorDeclarationsEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator33GenerateInlineAccessorDefinitionsEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase36GenerateNonInlineAccessorDefinitionsEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator20GenerateClearingCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase27GenerateMessageClearingCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator19GenerateMergingCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase27GenerateCopyConstructorCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator20GenerateSwappingCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase22GenerateDestructorCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator27GenerateArenaDestructorCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator34GenerateMemberConstexprConstructorEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator25GenerateMemberConstructorEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator29GenerateMemberCopyConstructorEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator26GenerateOneofCopyConstructEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator28GenerateAggregateInitializerEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator37GenerateConstexprAggregateInitializerEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase32GenerateCopyAggregateInitializerEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator39GenerateSerializeWithCachedSizesToArrayEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator16GenerateByteSizeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase21GenerateIsInitializedEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase18NeedsIsInitializedEv, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase9IsInlinedEv, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator20NeedsArenaDestructorEv] }, align 8
+@_ZTIN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorE, ptr @_ZTIN6google8protobuf8compiler3cpp18FieldGeneratorBaseE }, align 8
+@_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
+@_ZTSN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorE = internal constant [66 x i8] c"N6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorE\00", align 1
+@_ZTIN6google8protobuf8compiler3cpp18FieldGeneratorBaseE = external constant ptr
+@.str = private unnamed_addr constant [2 x i8] c"\22\00", align 1
+@.str.1 = private unnamed_addr constant [8 x i8] c"default\00", align 1
+@.str.2 = private unnamed_addr constant [15 x i8] c"default_length\00", align 1
+@.str.3 = private unnamed_addr constant [10 x i8] c"full_name\00", align 1
+@.str.4 = private unnamed_addr constant [22 x i8] c"default_variable_name\00", align 1
+@.str.5 = private unnamed_addr constant [23 x i8] c"default_variable_field\00", align 1
+@.str.6 = private unnamed_addr constant [3 x i8] c"::\00", align 1
+@.str.7 = private unnamed_addr constant [40 x i8] c"::internal::GetEmptyCordAlreadyInited()\00", align 1
+@.str.8 = private unnamed_addr constant [17 x i8] c"default_variable\00", align 1
+@_ZSt19piecewise_construct = linkonce_odr constant %"struct.std::piecewise_construct_t" zeroinitializer, comdat, align 1
+@_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE = external constant ptr, align 8
+@_ZZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE18GetPolicyFunctionsEvE5value = linkonce_odr hidden constant %"struct.absl::lts_20250512::container_internal::PolicyFunctions" { i32 16, i32 48, i32 48, i16 8, i8 0, i8 1, ptr @_ZN4absl12lts_2025051218container_internal19GetRefForEmptyClassERNS1_12CommonFieldsE, ptr @_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotFnINS1_10StringHashESt17basic_string_viewIcSt11char_traitsIcEEEEmPKvPv, ptr @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE19transfer_n_slots_fnEPvSK_SK_m, ptr @_ZN4absl12lts_2025051218container_internal19GetRefForEmptyClassERNS1_12CommonFieldsE, ptr @_ZN4absl12lts_2025051218container_internal20AllocateBackingArrayILm8ESaIcEEEPvS4_m, ptr @_ZN4absl12lts_2025051218container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb, ptr @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE46transfer_unprobed_elements_to_next_capacity_fnERNS1_12CommonFieldsEPKNS1_6ctrl_tEPvSP_PFvSP_hmmE }, comdat, align 8
+@.str.10 = private unnamed_addr constant [47 x i8] c"_i_give_permission_to_break_this_code_default_\00", align 1
+@.str.11 = private unnamed_addr constant [2 x i8] c"_\00", align 1
+@.str.12 = private unnamed_addr constant [8 x i8] c"Impl_::\00", align 1
+@.str.13 = private unnamed_addr constant [7 x i8] c"proto2\00", align 1
+@.str.14 = private unnamed_addr constant [17 x i8] c"google::protobuf\00", align 1
+@_ZTVN6google8protobuf8compiler3cpp18FieldGeneratorBaseE = external constant { [31 x ptr] }, align 8
+@.str.15 = private unnamed_addr constant [30 x i8] c"\0A    ::absl::Cord $name$_;\0A  \00", align 1
+@.str.16 = private unnamed_addr constant [188 x i8] c"\0A      struct _default_$name$_func_ {\0A        constexpr ::absl::string_view operator()() const {\0A          return ::absl::string_view($default$, $default_length$);\0A        }\0A      };\0A    \00", align 1
+@_ZN4absl12lts_2025051218container_internal11kEmptyGroupE = external constant [32 x i8], align 16
+@_ZTIZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS9_SaIcEEENS5_18container_internal10StringHashENSF_8StringEqESaISt4pairIKSA_SE_EEEEvvEEDaOT_EUlSA_E_ = linkonce_odr hidden constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS9_SaIcEEENS5_18container_internal10StringHashENSF_8StringEqESaISt4pairIKSA_SE_EEEEvvEEDaOT_EUlSA_E_ }, comdat, align 8
+@_ZTVN10__cxxabiv117__class_type_infoE = external global [0 x ptr]
+@_ZTSZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS9_SaIcEEENS5_18container_internal10StringHashENSF_8StringEqESaISt4pairIKSA_SE_EEEEvvEEDaOT_EUlSA_E_ = linkonce_odr hidden constant [247 x i8] c"ZN6google8protobuf2io7Printer8WithVarsIRKN4absl12lts_2025051213flat_hash_mapISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS9_SaIcEEENS5_18container_internal10StringHashENSF_8StringEqESaISt4pairIKSA_SE_EEEEvvEEDaOT_EUlSA_E_\00", comdat, align 1
+@.str.20 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
+@.str.21 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@.str.22 = private unnamed_addr constant [11 x i8] c"_internal_\00", align 1
+@.str.23 = private unnamed_addr constant [19 x i8] c"_internal_mutable_\00", align 1
+@.str.24 = private unnamed_addr constant [15 x i8] c"_internal_set_\00", align 1
+@constinit = private unnamed_addr constant [4 x %"class.std::basic_string_view"] [%"class.std::basic_string_view" { i64 0, ptr @.str.21 }, %"class.std::basic_string_view" { i64 10, ptr @.str.22 }, %"class.std::basic_string_view" { i64 18, ptr @.str.23 }, %"class.std::basic_string_view" { i64 14, ptr @.str.24 }], align 8
+@.str.25 = private unnamed_addr constant [5 x i8] c"set_\00", align 1
+@.str.26 = private unnamed_addr constant [5 x i8] c"add_\00", align 1
+@constinit.27 = private unnamed_addr constant [2 x %"class.std::basic_string_view"] [%"class.std::basic_string_view" { i64 4, ptr @.str.25 }, %"class.std::basic_string_view" { i64 4, ptr @.str.26 }], align 8
+@.str.28 = private unnamed_addr constant [9 x i8] c"mutable_\00", align 1
+@.str.29 = private unnamed_addr constant [396 x i8] c"\0A    [[nodiscard]] $deprecated_attr$const ::absl::Cord& $name$() const;\0A    $deprecated_attr$void $set_name$(const ::absl::Cord& value);\0A    $deprecated_attr$void $set_name$(::absl::string_view value);\0A\0A    private:\0A    const ::absl::Cord& $_internal_name$() const;\0A    void $_internal_set_name$(const ::absl::Cord& value);\0A    ::absl::Cord* $nonnull$ $_internal_mutable_name$();\0A\0A    public:\0A  \00", align 1
+@.str.30 = private unnamed_addr constant [80 x i8] c"/opt-bench/work/grpc/grpc/third_party/protobuf/src/google/protobuf/io/printer.h\00", align 1
+@.str.31 = private unnamed_addr constant [54 x i8] c"allow_callbacks || var.value_.AsCallback() == nullptr\00", align 1
+@.str.32 = private unnamed_addr constant [54 x i8] c"callback arguments are not permitted in this position\00", align 1
+@.str.33 = private unnamed_addr constant [14 x i8] c"result.second\00", align 1
+@.str.34 = private unnamed_addr constant [50 x i8] c"repeated variable in Emit() or WithVars() call: \22\00", align 1
+@_ZZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEE18GetPolicyFunctionsEvE5value = linkonce_odr hidden constant %"struct.absl::lts_20250512::container_internal::PolicyFunctions" { i32 32, i32 112, i32 112, i16 8, i8 0, i8 1, ptr @_ZN4absl12lts_2025051218container_internal19GetRefForEmptyClassERNS1_12CommonFieldsE, ptr @_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotFnINS1_10StringHashENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEmPKvPv, ptr @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEE19transfer_n_slots_fnEPvSO_SO_m, ptr @_ZN4absl12lts_2025051218container_internal19GetRefForEmptyClassERNS1_12CommonFieldsE, ptr @_ZN4absl12lts_2025051218container_internal20AllocateBackingArrayILm8ESaIcEEEPvS4_m, ptr @_ZN4absl12lts_2025051218container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb, ptr @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer9ValueImplILb1EEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SF_EEE46transfer_unprobed_elements_to_next_capacity_fnERNS1_12CommonFieldsEPKNS1_6ctrl_tEPvST_PFvST_hmmE }, comdat, align 8
+@_ZZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEE18GetPolicyFunctionsEvE5value = linkonce_odr hidden constant %"struct.absl::lts_20250512::container_internal::PolicyFunctions" { i32 32, i32 96, i32 96, i16 8, i8 0, i8 1, ptr @_ZN4absl12lts_2025051218container_internal19GetRefForEmptyClassERNS1_12CommonFieldsE, ptr @_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotFnINS1_10StringHashENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEmPKvPv, ptr @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEE19transfer_n_slots_fnEPvSN_SN_m, ptr @_ZN4absl12lts_2025051218container_internal19GetRefForEmptyClassERNS1_12CommonFieldsE, ptr @_ZN4absl12lts_2025051218container_internal20AllocateBackingArrayILm8ESaIcEEEPvS4_m, ptr @_ZN4absl12lts_2025051218container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb, ptr @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6google8protobuf2io7Printer16AnnotationRecordEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS9_SE_EEE46transfer_unprobed_elements_to_next_capacity_fnERNS1_12CommonFieldsEPKNS1_6ctrl_tEPvSS_PFvSS_hmmE }, comdat, align 8
+@.str.36 = private unnamed_addr constant [34 x i8] c"std::get: wrong index for variant\00", align 1
+@_ZTISt18bad_variant_access = linkonce_odr constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSSt18bad_variant_access, ptr @_ZTISt9exception }, comdat, align 8
+@_ZTSSt18bad_variant_access = linkonce_odr constant [23 x i8] c"St18bad_variant_access\00", comdat, align 1
+@_ZTISt9exception = external constant ptr
+@_ZTVSt18bad_variant_access = linkonce_odr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTISt18bad_variant_access, ptr @_ZNSt9exceptionD2Ev, ptr @_ZNSt18bad_variant_accessD0Ev, ptr @_ZNKSt18bad_variant_access4whatEv] }, comdat, align 8
+@_ZTIZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE_ = linkonce_odr hidden constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE_ }, comdat, align 8
+@_ZTSZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE_ = linkonce_odr hidden constant [126 x i8] c"ZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE_\00", comdat, align 1
+@_ZTIZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE0_ = linkonce_odr hidden constant { ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv117__class_type_infoE, i64 2), ptr @_ZTSZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE0_ }, comdat, align 8
+@_ZTSZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE0_ = linkonce_odr hidden constant [127 x i8] c"ZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubEEEbEUlSt17basic_string_viewIcSt11char_traitsIcEEE0_\00", comdat, align 1
+@.str.37 = private unnamed_addr constant [112 x i8] c"\0A    inline const ::absl::Cord& $classname$::_internal_$name_internal$() const {\0A      return $field$;\0A    }\0A  \00", align 1
+@.str.38 = private unnamed_addr constant [261 x i8] c"\0A    inline const ::absl::Cord& $classname$::$name$() const\0A        ABSL_ATTRIBUTE_LIFETIME_BOUND {\0A      $WeakDescriptorSelfPin$;\0A      $annotate_get$;\0A      // @@protoc_insertion_point(field_get:$full_name$)\0A      return _internal_$name_internal$();\0A    }\0A  \00", align 1
+@.str.39 = private unnamed_addr constant [150 x i8] c"\0A    inline void $classname$::_internal_set_$name_internal$(\0A        const ::absl::Cord& value) {\0A      $set_hasbit$;\0A      $field$ = value;\0A    }\0A  \00", align 1
+@.str.40 = private unnamed_addr constant [270 x i8] c"\0A    inline void $classname$::set_$name$(const ::absl::Cord& value) {\0A      $WeakDescriptorSelfPin$;\0A      $PrepareSplitMessageForWrite$;\0A      _internal_set_$name_internal$(value);\0A      $annotate_set$;\0A      // @@protoc_insertion_point(field_set:$full_name$)\0A    }\0A  \00", align 1
+@.str.41 = private unnamed_addr constant [282 x i8] c"\0A    inline void $classname$::set_$name$(::absl::string_view value) {\0A      $WeakDescriptorSelfPin$;\0A      $PrepareSplitMessageForWrite$;\0A      $set_hasbit$;\0A      $field$ = value;\0A      $annotate_set$;\0A      // @@protoc_insertion_point(field_set_string_piece:$full_name$)\0A    }\0A  \00", align 1
+@.str.42 = private unnamed_addr constant [143 x i8] c"\0A    inline ::absl::Cord* $nonnull$\0A    $classname$::_internal_mutable_$name_internal$() {\0A      $set_hasbit$;\0A      return &$field$;\0A    }\0A  \00", align 1
+@.str.43 = private unnamed_addr constant [29 x i8] c"\0A      $field$.Clear();\0A    \00", align 1
+@.str.44 = private unnamed_addr constant [72 x i8] c"\0A      $field$ = ::absl::string_view($default$, $default_length$);\0A    \00", align 1
+@.str.45 = private unnamed_addr constant [62 x i8] c"\0A    _this->_internal_set_$name$(from._internal_$name$());\0A  \00", align 1
+@.str.46 = private unnamed_addr constant [38 x i8] c"\0A    $field$.swap(other->$field$);\0A  \00", align 1
+@.str.47 = private unnamed_addr constant [46 x i8] c"\0A    _this->$field$.::absl::Cord::~Cord();\0A  \00", align 1
+@.str.48 = private unnamed_addr constant [11 x i8] c"$name$_ {}\00", align 1
+@.str.49 = private unnamed_addr constant [6 x i8] c"Split\00", align 1
+@.str.50 = private unnamed_addr constant [8 x i8] c"Split::\00", align 1
+@.str.51 = private unnamed_addr constant [198 x i8] c"\0A                $name$_ {\0A                  ::absl::strings_internal::MakeStringConstant(\0A                      $classname$::Impl_::$Split$_default_$name$_func_{})\0A                }\0A              \00", align 1
+@.str.52 = private unnamed_addr constant [68 x i8] c"$name$_ { ::absl::string_view($default$, $default_length$) }\0A      \00", align 1
+@.str.53 = private unnamed_addr constant [25 x i8] c"$name$_ { from.$name$_ }\00", align 1
+@.str.54 = private unnamed_addr constant [77 x i8] c"\0A      $field$ = $pb$::Arena::Create<absl::Cord>(arena, *from.$field$);\0A    \00", align 1
+@.str.55 = private unnamed_addr constant [47 x i8] c"\0A      decltype(Impl_::Split::$name$_){},\0A    \00", align 1
+@.str.56 = private unnamed_addr constant [33 x i8] c"\0A      decltype($field$){},\0A    \00", align 1
+@.str.57 = private unnamed_addr constant [38 x i8] c"\0A      /*decltype($field$)*/ {},\0A    \00", align 1
+@.str.58 = private unnamed_addr constant [157 x i8] c"\0A          /*decltype($field$)*/ {::absl::strings_internal::MakeStringConstant(\0A              $classname$::Impl_::$Split$_default_$name$_func_{})},\0A        \00", align 1
+@.str.59 = private unnamed_addr constant [23 x i8] c"this_._internal_$0(), \00", align 1
+@.str.60 = private unnamed_addr constant [5 x i8] c"name\00", align 1
+@.str.61 = private unnamed_addr constant [133 x i8] c"\0A    target = stream->Write$declared_type$($number$, this_._internal_$name$(),\0A                                          target);\0A  \00", align 1
+@.str.62 = private unnamed_addr constant [141 x i8] c"\0A    total_size += $tag_size$ + $pbi$::WireFormatLite::$declared_type$Size(\0A                                   this_._internal_$name$());\0A  \00", align 1
+@.str.63 = private unnamed_addr constant [88 x i8] c"/opt-bench/work/grpc/grpc/third_party/protobuf/src/google/protobuf/compiler/cpp/field.h\00", align 1
+@.str.64 = private unnamed_addr constant [22 x i8] c"!NeedsIsInitialized()\00", align 1
+@_ZTVN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorE = internal constant { [31 x ptr] } { [31 x ptr] [ptr null, ptr @_ZTIN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorE, ptr @_ZN6google8protobuf8compiler3cpp18FieldGeneratorBaseD2Ev, ptr @_ZN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorD0Ev, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator13RequiresArenaENS2_18FieldGeneratorBase17GeneratorFunctionE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase8MakeVarsEv, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator22GeneratePrivateMembersEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator21GenerateStaticMembersEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator28GenerateAccessorDeclarationsEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator33GenerateInlineAccessorDefinitionsEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator36GenerateNonInlineAccessorDefinitionsEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator20GenerateClearingCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase27GenerateMessageClearingCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator19GenerateMergingCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase27GenerateCopyConstructorCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator20GenerateSwappingCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase22GenerateDestructorCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator27GenerateArenaDestructorCodeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator34GenerateMemberConstexprConstructorEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator25GenerateMemberConstructorEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator29GenerateMemberCopyConstructorEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator26GenerateOneofCopyConstructEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator28GenerateAggregateInitializerEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator37GenerateConstexprAggregateInitializerEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase32GenerateCopyAggregateInitializerEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator39GenerateSerializeWithCachedSizesToArrayEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGenerator16GenerateByteSizeEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase21GenerateIsInitializedEPNS0_2io7PrinterE, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase18NeedsIsInitializedEv, ptr @_ZNK6google8protobuf8compiler3cpp18FieldGeneratorBase9IsInlinedEv, ptr @_ZNK6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGenerator20NeedsArenaDestructorEv] }, align 8
+@_ZTIN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorE = internal constant { ptr, ptr, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv120__si_class_type_infoE, i64 2), ptr @_ZTSN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorE, ptr @_ZTIN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorE }, align 8
+@_ZTSN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorE = internal constant [71 x i8] c"N6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorE\00", align 1
+@.str.65 = private unnamed_addr constant [41 x i8] c"\0A    ::absl::Cord* $nonnull$ $name$_;\0A  \00", align 1
+@.str.66 = private unnamed_addr constant [245 x i8] c"\0A      struct _default_$name$_func_ {\0A        constexpr ::absl::string_view operator()() const {\0A          return ::absl::string_view($default$, $default_length$);\0A        }\0A      };\0A      static const ::absl::Cord $default_variable_name$;\0A    \00", align 1
+@.str.67 = private unnamed_addr constant [181 x i8] c"\0A    inline const ::absl::Cord& $classname$::_internal_$name_internal$() const {\0A      if ($has_field$) {\0A        return *$field$;\0A      }\0A      return $default_variable$;\0A    }\0A  \00", align 1
+@.str.68 = private unnamed_addr constant [380 x i8] c"\0A    inline void $classname$::set_$name$(const ::absl::Cord& value) {\0A      $WeakDescriptorSelfPin$;\0A      if ($not_has_field$) {\0A        clear_$oneof_name$();\0A        set_has_$name_internal$();\0A        $field$ = $pb$::Arena::Create<::absl::Cord>(GetArena());\0A      }\0A      *$field$ = value;\0A      $annotate_set$;\0A      // @@protoc_insertion_point(field_set:$full_name$)\0A    }\0A  \00", align 1
+@.str.69 = private unnamed_addr constant [393 x i8] c"\0A    inline void $classname$::set_$name$(::absl::string_view value) {\0A      $WeakDescriptorSelfPin$;\0A      if ($not_has_field$) {\0A        clear_$oneof_name$();\0A        set_has_$name_internal$();\0A        $field$ = $pb$::Arena::Create<::absl::Cord>(GetArena());\0A      }\0A      *$field$ = value;\0A      $annotate_set$;\0A      // @@protoc_insertion_point(field_set_string_piece:$full_name$)\0A    }\0A  \00", align 1
+@.str.70 = private unnamed_addr constant [289 x i8] c"\0A    inline ::absl::Cord* $nonnull$\0A    $classname$::_internal_mutable_$name_internal$() {\0A      if ($not_has_field$) {\0A        clear_$oneof_name$();\0A        set_has_$name_internal$();\0A        $field$ = $pb$::Arena::Create<::absl::Cord>(GetArena());\0A      }\0A      return $field$;\0A    }\0A  \00", align 1
+@.str.71 = private unnamed_addr constant [234 x i8] c"\0A      PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT const ::absl::Cord\0A          $classname$::$default_variable_field$(\0A              ::absl::strings_internal::MakeStringConstant(\0A                  _default_$name$_func_{}));\0A    \00", align 1
+@.str.72 = private unnamed_addr constant [65 x i8] c"\0A    if (GetArena() == nullptr) {\0A      delete $field$;\0A    }\0A  \00", align 1
+@.str.73 = private unnamed_addr constant [138 x i8] c"\0A    if (oneof_needs_init) {\0A      _this->$field$ = $pb$::Arena::Create<absl::Cord>(arena);\0A    }\0A    *_this->$field$ = *from.$field$;\0A  \00", align 1
+
+; Function Attrs: mustprogress uwtable
+define hidden void @_ZN6google8protobuf8compiler3cpp25MakeSingularCordGeneratorEPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(213) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+bb.a:
+  %i.a = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #27, !noalias !162 ; 3 uses
+  invoke fastcc void @_ZN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorC2EPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr noundef nonnull align 8 dereferenceable(71) %i.a, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(213) %2)
+          to label %_ZNSt10unique_ptrIN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorESt14default_deleteIS5_EED2Ev.exit unwind label %bb.b, !noalias !162
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = landingpad { ptr, i32 }
+          cleanup
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 72) #28, !noalias !162
+  resume { ptr, i32 } %i.b
+
+_ZNSt10unique_ptrIN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorESt14default_deleteIS5_EED2Ev.exit: ; preds = %bb.a
+  store ptr %i.a, ptr %0, align 8, !tbaa !13
+  ret void
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
+; Function Attrs: mustprogress uwtable
+define hidden void @_ZN6google8protobuf8compiler3cpp22MakeOneofCordGeneratorEPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(213) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+bb.a:
+  %i.a = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #27, !noalias !165 ; 4 uses
+  invoke fastcc void @_ZN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorC2EPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr noundef nonnull align 8 dereferenceable(71) %i.a, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(213) %2)
+          to label %_ZNSt10unique_ptrIN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorESt14default_deleteIS5_EED2Ev.exit unwind label %bb.b, !noalias !165
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = landingpad { ptr, i32 }
+          cleanup
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 72) #28, !noalias !165
+  resume { ptr, i32 } %i.b
+
+_ZNSt10unique_ptrIN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorESt14default_deleteIS5_EED2Ev.exit: ; preds = %bb.a
+  store ptr getelementptr inbounds nuw inrange(-16, 232) (i8, ptr @_ZTVN6google8protobuf8compiler3cpp12_GLOBAL__N_123CordOneofFieldGeneratorE, i64 16), ptr %i.a, align 8, !tbaa !15, !noalias !165
+  store ptr %i.a, ptr %0, align 8, !tbaa !13
+  ret void
+}
+
+; Function Attrs: nobuiltin allocsize(0)
+declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #2
+
+; Function Attrs: mustprogress uwtable
+define internal fastcc void @_ZN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorC2EPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr noundef nonnull align 8 dereferenceable(71) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(213) %2) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+bb.a:
+  %3 = alloca %"struct.std::pair", align 8        ; 6 uses
+  %4 = alloca %"struct.std::pair", align 8        ; 6 uses
+  %5 = alloca %"struct.std::pair", align 8        ; 6 uses
+  %6 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %7 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %9 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %10 = alloca %"struct.std::pair", align 8       ; 6 uses
+  %i.a = alloca i64, align 8                      ; 6 uses
+  %11 = alloca %"struct.std::pair", align 8       ; 6 uses
+  %i.b = alloca i64, align 8                      ; 6 uses
+  %12 = alloca %"struct.std::pair", align 8       ; 6 uses
+  %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
+  %14 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %15 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %17 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
+  %19 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 16 uses
+  %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
+  %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 18 uses
+  %23 = alloca %"class.std::__cxx11::basic_string", align 8 ; 19 uses
+  %24 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %25 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %26 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %27 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 6 uses
+  %28 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %29 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 8 uses
+  %30 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 8 uses
+  %31 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  tail call void @_ZN6google8protobuf8compiler3cpp18FieldGeneratorBaseC2EPKNS0_15FieldDescriptorERKNS2_7OptionsE(ptr noundef nonnull align 8 dereferenceable(71) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(213) %2)
+  store ptr getelementptr inbounds nuw inrange(-16, 232) (i8, ptr @_ZTVN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorE, i64 16), ptr %0, align 8, !tbaa !15
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %14) #29
+  store i64 1, ptr %14, align 8
+  %i.d = getelementptr inbounds nuw i8, ptr %14, i64 8
+  store ptr @.str, ptr %i.d, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %15) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %16) #29
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !16   ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !21
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !22
+  invoke void @_ZN4absl12lts_202505127CEscapeB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %16, i64 %i.i, ptr %i.g)
+          to label %.noexc unwind label %bb.bt
+
+.noexc:                                           ; preds = %bb.a
+  %i.j = load ptr, ptr %16, align 8, !tbaa !21
+  %i.k = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !22
+  store i64 %i.l, ptr %15, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %15, i64 8
+  store ptr %i.j, ptr %i.m, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %17) #29
+  store i64 1, ptr %17, align 8
+  %i.n = getelementptr inbounds nuw i8, ptr %17, i64 8
+  store ptr @.str, ptr %i.n, align 8
+  invoke void @_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumES3_S3_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %13, ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull align 8 dereferenceable(48) %15, ptr noundef nonnull align 8 dereferenceable(48) %17)
+          to label %bb.b unwind label %bb.bi
+
+bb.b:                                             ; preds = %.noexc
+  call void @llvm.lifetime.start.p0(ptr nonnull %12) #29
+  invoke void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA8_cEESF_INSJ_8iteratorEbERKT_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair") align 8 %12, ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 1 dereferenceable(8) @.str.1)
+          to label %.noexc.i unwind label %bb.bj
+
+.noexc.i:                                         ; preds = %bb.b
+  %i.o = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.p = load i8, ptr %i.o, align 8, !tbaa !26, !range !27, !alias.scope !194, !noundef !28
+  %i.q = trunc nuw i8 %i.p to i1
+  br i1 %i.q, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %.noexc.i
+  %.sroa.2.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %12, i64 8
+end_hunk_0
+begin_hunk_1_@_ZN6google8protobuf8compiler3cpp12_GLOBAL__N_118CordFieldGeneratorC2EPKNS0_15FieldDescriptorERKNS2_7OptionsE:bb.a
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i111.i: ; preds = %bb.am, %bb.al, %bb.ak
+  %i.gd = load i64, ptr %i.fz, align 8, !tbaa !22 ; 2 uses
+  %i.ge = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i103.i, i64 24
+  store i64 %i.gd, ptr %i.ge, align 8, !tbaa !22
+  %i.gf = load ptr, ptr %i.fs, align 8, !tbaa !21
+  %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 %i.gd
+  store i8 0, ptr %i.gg, align 1, !tbaa !16
+  %.pre.i112.i = load ptr, ptr %21, align 8, !tbaa !21
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit115.i
+
+.thread.i114.i:                                   ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i113.i
+  %i.gh = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i103.i, i64 24
+  store ptr %i.fw, ptr %i.fs, align 8, !tbaa !21
+  %i.gi = getelementptr inbounds nuw i8, ptr %21, i64 8
+  %i.gj = load <2 x i64>, ptr %i.gi, align 8, !tbaa !16
+  store <2 x i64> %i.gj, ptr %i.gh, align 8, !tbaa !16
+  br label %bb.ao
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i108.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i107.i
+  %i.gk = load i64, ptr %i.fu, align 8, !tbaa !16
+  store ptr %i.fw, ptr %i.fs, align 8, !tbaa !21
+  %i.gl = getelementptr inbounds nuw i8, ptr %21, i64 8
+  %i.gm = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i103.i, i64 24
+  %i.gn = load <2 x i64>, ptr %i.gl, align 8, !tbaa !16
+  store <2 x i64> %i.gn, ptr %i.gm, align 8, !tbaa !16
+  %.not.i109.i = icmp eq ptr %i.ft, null
+  br i1 %.not.i109.i, label %bb.ao, label %bb.an
+
+bb.an:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i108.i
+  store ptr %i.ft, ptr %21, align 8, !tbaa !21
+  store i64 %i.gk, ptr %i.fx, align 8, !tbaa !16
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit115.i
+
+bb.ao:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i108.i, %.thread.i114.i
+  store ptr %i.fx, ptr %21, align 8, !tbaa !21
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit115.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit115.i: ; preds = %bb.ao, %bb.an, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i111.i, %bb.aj
+  %i.go = phi ptr [ %i.ft, %bb.an ], [ %i.fx, %bb.ao ], [ %i.fw, %bb.aj ], [ %.pre.i112.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i111.i ]
+  %i.gp = getelementptr inbounds nuw i8, ptr %21, i64 8
+  store i64 0, ptr %i.gp, align 8, !tbaa !22
+  store i8 0, ptr %i.go, align 1, !tbaa !16
+  %i.gq = load ptr, ptr %21, align 8, !tbaa !21   ; 2 uses
+  %i.gr = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
+  %i.gs = icmp eq ptr %i.gq, %i.gr
+  br i1 %i.gs, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i116.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i116.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit115.i
+  %i.gt = load i64, ptr %i.gr, align 8, !tbaa !16
+  %i.gu = add i64 %i.gt, 1
+  call void @_ZdlPvm(ptr noundef %i.gq, i64 noundef %i.gu) #28
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit115.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i116.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %21) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %22) #29
+  invoke void @_ZN6google8protobuf8compiler3cpp20MakeDefaultFieldNameB5cxx11EPKNS0_15FieldDescriptorE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %22, ptr noundef nonnull %1)
+          to label %.noexc9 unwind label %bb.bt
+
+.noexc9:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit118.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
+  invoke void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA23_cEESF_INSJ_8iteratorEbERKT_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair") align 8 %4, ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 1 dereferenceable(23) @.str.5)
+          to label %.noexc123.i unwind label %bb.bo
+
+.noexc123.i:                                      ; preds = %.noexc9
+  %i.gv = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.gw = load i8, ptr %i.gv, align 8, !tbaa !26, !range !27, !alias.scope !201, !noundef !28
+  %i.gx = trunc nuw i8 %i.gw to i1
+  br i1 %i.gx, label %bb.ap, label %bb.aq
+
+bb.ap:                                            ; preds = %.noexc123.i
+  %.sroa.2.0..sroa_idx.i.i.i121.i = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %.sroa.2.0.copyload.i.i.i122.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.i121.i, align 8, !alias.scope !201 ; 5 uses
+  store i64 22, ptr %.sroa.2.0.copyload.i.i.i122.i, align 8, !tbaa !30
+  %i.gy = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i122.i, i64 8
+  store ptr @.str.5, ptr %i.gy, align 8, !tbaa !31
+  %i.gz = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i122.i, i64 16
+  %i.ha = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i122.i, i64 32 ; 2 uses
+  store ptr %i.ha, ptr %i.gz, align 8, !tbaa !32
+  %i.hb = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i122.i, i64 24
+  store i64 0, ptr %i.hb, align 8, !tbaa !22
+  store i8 0, ptr %i.ha, align 8, !tbaa !16
+  br label %bb.aq
+
+bb.aq:                                            ; preds = %bb.ap, %.noexc123.i
+  %.sroa.2.0..sroa_idx.i119.i = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %.sroa.2.0.copyload.i120.i = load ptr, ptr %.sroa.2.0..sroa_idx.i119.i, align 8 ; 5 uses
+  %i.hc = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i120.i, i64 16 ; 5 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
+  %i.hd = load ptr, ptr %i.hc, align 8, !tbaa !21 ; 6 uses
+  %i.he = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i120.i, i64 32 ; 2 uses
+  %i.hf = icmp eq ptr %i.hd, %i.he
+  %i.hg = load ptr, ptr %22, align 8, !tbaa !21   ; 6 uses
+  %i.hh = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 4 uses
+  %i.hi = icmp eq ptr %i.hg, %i.hh                ; 2 uses
+  br i1 %i.hf, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i130.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i124.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i130.i: ; preds = %bb.aq
+  br i1 %i.hi, label %bb.ar, label %.thread.i131.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i124.i: ; preds = %bb.aq
+  br i1 %i.hi, label %bb.ar, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i125.i
+
+bb.ar:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i124.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i130.i
+  %i.hj = getelementptr inbounds nuw i8, ptr %22, i64 8 ; 2 uses
+  %i.hk = load i64, ptr %i.hj, align 8, !tbaa !22 ; 3 uses
+  %i.hl = icmp ult i64 %i.hk, 16
+  call void @llvm.assume(i1 %i.hl)
+  %.not21.i127.i = icmp eq ptr %22, %i.hc
+  br i1 %.not21.i127.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit132.i, label %bb.as, !prof !33
+
+bb.as:                                            ; preds = %bb.ar
+  switch i64 %i.hk, label %bb.au [
+    i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i128.i
+    i64 1, label %bb.at
+  ]
+
+bb.at:                                            ; preds = %bb.as
+  %i.hm = load i8, ptr %i.hg, align 1, !tbaa !16
+  store i8 %i.hm, ptr %i.hd, align 1, !tbaa !16
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i128.i
+
+bb.au:                                            ; preds = %bb.as
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hd, ptr align 1 %i.hg, i64 %i.hk, i1 false)
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i128.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i128.i: ; preds = %bb.au, %bb.at, %bb.as
+  %i.hn = load i64, ptr %i.hj, align 8, !tbaa !22 ; 2 uses
+  %i.ho = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i120.i, i64 24
+  store i64 %i.hn, ptr %i.ho, align 8, !tbaa !22
+  %i.hp = load ptr, ptr %i.hc, align 8, !tbaa !21
+  %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 %i.hn
+  store i8 0, ptr %i.hq, align 1, !tbaa !16
+  %.pre.i129.i = load ptr, ptr %22, align 8, !tbaa !21
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit132.i
+
+.thread.i131.i:                                   ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i130.i
+  %i.hr = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i120.i, i64 24
+  store ptr %i.hg, ptr %i.hc, align 8, !tbaa !21
+  %i.hs = getelementptr inbounds nuw i8, ptr %22, i64 8
+  %i.ht = load <2 x i64>, ptr %i.hs, align 8, !tbaa !16
+  store <2 x i64> %i.ht, ptr %i.hr, align 8, !tbaa !16
+  br label %bb.aw
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i125.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i124.i
+  %i.hu = load i64, ptr %i.he, align 8, !tbaa !16
+  store ptr %i.hg, ptr %i.hc, align 8, !tbaa !21
+  %i.hv = getelementptr inbounds nuw i8, ptr %22, i64 8
+  %i.hw = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i120.i, i64 24
+  %i.hx = load <2 x i64>, ptr %i.hv, align 8, !tbaa !16
+  store <2 x i64> %i.hx, ptr %i.hw, align 8, !tbaa !16
+  %.not.i126.i = icmp eq ptr %i.hd, null
+  br i1 %.not.i126.i, label %bb.aw, label %bb.av
+
+bb.av:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i125.i
+  store ptr %i.hd, ptr %22, align 8, !tbaa !21
+  store i64 %i.hu, ptr %i.hh, align 8, !tbaa !16
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit132.i
+
+bb.aw:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i125.i, %.thread.i131.i
+  store ptr %i.hh, ptr %22, align 8, !tbaa !21
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit132.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit132.i: ; preds = %bb.aw, %bb.av, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i128.i, %bb.ar
+  %i.hy = phi ptr [ %i.hd, %bb.av ], [ %i.hh, %bb.aw ], [ %i.hg, %bb.ar ], [ %.pre.i129.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i128.i ]
+  %i.hz = getelementptr inbounds nuw i8, ptr %22, i64 8
+  store i64 0, ptr %i.hz, align 8, !tbaa !22
+  store i8 0, ptr %i.hy, align 1, !tbaa !16
+  %i.ia = load ptr, ptr %22, align 8, !tbaa !21   ; 2 uses
+  %i.ib = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 2 uses
+  %i.ic = icmp eq ptr %i.ia, %i.ib
+  br i1 %i.ic, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i133.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i133.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit132.i
+  %i.id = load i64, ptr %i.ib, align 8, !tbaa !16
+  %i.ie = add i64 %i.id, 1
+  call void @_ZdlPvm(ptr noundef %i.ia, i64 noundef %i.ie) #28
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit132.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i133.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %22) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %23) #29
+  %i.if = load ptr, ptr %i.e, align 8, !tbaa !16
+  %i.ig = getelementptr inbounds nuw i8, ptr %i.if, i64 8
+  %i.ih = load i64, ptr %i.ig, align 8, !tbaa !22
+  %.not.i = icmp eq i64 %i.ih, 0                  ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %24) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %25) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %26) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %27) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %29) #29
+  call void @llvm.lifetime.start.p0(ptr nonnull %30) #29
+  br i1 %.not.i, label %bb.ax, label %bb.ay
+
+bb.ax:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135.i
+  store i64 2, ptr %24, align 8
+  %i.ii = getelementptr inbounds nuw i8, ptr %24, i64 8
+  store ptr @.str.6, ptr %i.ii, align 8
+  %i.ij = getelementptr inbounds nuw i8, ptr %2, i64 206
+  %i.ik = load i8, ptr %i.ij, align 2, !tbaa !210, !range !27, !noundef !28
+  %i.il = trunc nuw i8 %i.ik to i1                ; 2 uses
+  %.sroa.0.0.copyload.i138.i = select i1 %i.il, i64 16, i64 6
+  %.sroa.2.0.copyload.i139.i = select i1 %i.il, ptr @.str.14, ptr @.str.13
+  store i64 %.sroa.0.0.copyload.i138.i, ptr %25, align 8, !tbaa !34
+  %.sroa.2.0..sroa_idx.i140.i = getelementptr inbounds nuw i8, ptr %25, i64 8
+  store ptr %.sroa.2.0.copyload.i139.i, ptr %.sroa.2.0..sroa_idx.i140.i, align 8, !tbaa !41
+  store i64 39, ptr %26, align 8
+  %i.im = getelementptr inbounds nuw i8, ptr %26, i64 8
+  store ptr @.str.7, ptr %i.im, align 8
+  invoke void @_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumES3_S3_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %23, ptr noundef nonnull align 8 dereferenceable(48) %24, ptr noundef nonnull align 8 dereferenceable(48) %25, ptr noundef nonnull align 8 dereferenceable(48) %26)
+          to label %.noexc10 unwind label %bb.bt
+
+bb.ay:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit135.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %28) #29
+  %i.in = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %i.io = load ptr, ptr %i.in, align 8, !tbaa !211
+  invoke void @_ZN6google8protobuf8compiler3cpp18QualifiedClassNameB5cxx11EPKNS0_10DescriptorERKNS2_7OptionsE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %28, ptr noundef %i.io, ptr noundef nonnull align 8 dereferenceable(213) %2)
+          to label %.noexc11 unwind label %bb.bt
+
+.noexc11:                                         ; preds = %bb.ay
+  %i.ip = load ptr, ptr %28, align 8, !tbaa !21
+  %i.iq = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %i.ir = load i64, ptr %i.iq, align 8, !tbaa !22
+  store i64 %i.ir, ptr %27, align 8
+  %i.is = getelementptr inbounds nuw i8, ptr %27, i64 8
+  store ptr %i.ip, ptr %i.is, align 8
+  store i64 2, ptr %29, align 8
+  %i.it = getelementptr inbounds nuw i8, ptr %29, i64 8
+  store ptr @.str.6, ptr %i.it, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %31) #29
+  invoke void @_ZN6google8protobuf8compiler3cpp20MakeDefaultFieldNameB5cxx11EPKNS0_15FieldDescriptorE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %31, ptr noundef nonnull %1)
+          to label %bb.az unwind label %bb.bp
+
+bb.az:                                            ; preds = %.noexc11
+  %i.iu = load ptr, ptr %31, align 8, !tbaa !21
+  %i.iv = getelementptr inbounds nuw i8, ptr %31, i64 8
+  %i.iw = load i64, ptr %i.iv, align 8, !tbaa !22
+  store i64 %i.iw, ptr %30, align 8
+  %i.ix = getelementptr inbounds nuw i8, ptr %30, i64 8
+  store ptr %i.iu, ptr %i.ix, align 8
+  invoke void @_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumES3_S3_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %23, ptr noundef nonnull align 8 dereferenceable(48) %27, ptr noundef nonnull align 8 dereferenceable(48) %29, ptr noundef nonnull align 8 dereferenceable(48) %30)
+          to label %.noexc10 unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit184.thread.i
+
+.noexc10:                                         ; preds = %bb.ax, %bb.az
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
+  invoke void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE30find_or_prepare_insert_non_sooIA17_cEESF_INSJ_8iteratorEbERKT_(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair") align 8 %3, ptr noundef nonnull align 8 dereferenceable(32) %i.c, ptr noundef nonnull align 1 dereferenceable(17) @.str.8)
+          to label %.noexc145.i unwind label %bb.bq
+
+.noexc145.i:                                      ; preds = %.noexc10
+  %i.iy = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.iz = load i8, ptr %i.iy, align 8, !tbaa !26, !range !27, !alias.scope !212, !noundef !28
+  %i.ja = trunc nuw i8 %i.iz to i1
+  br i1 %i.ja, label %bb.ba, label %bb.bb
+
+bb.ba:                                            ; preds = %.noexc145.i
+  %.sroa.2.0..sroa_idx.i.i.i143.i = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.2.0.copyload.i.i.i144.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.i143.i, align 8, !alias.scope !212 ; 5 uses
+  store i64 16, ptr %.sroa.2.0.copyload.i.i.i144.i, align 8, !tbaa !30
+  %i.jb = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i144.i, i64 8
+  store ptr @.str.8, ptr %i.jb, align 8, !tbaa !31
+  %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i144.i, i64 16
+  %i.jd = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i144.i, i64 32 ; 2 uses
+  store ptr %i.jd, ptr %i.jc, align 8, !tbaa !32
+  %i.je = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i144.i, i64 24
+  store i64 0, ptr %i.je, align 8, !tbaa !22
+  store i8 0, ptr %i.jd, align 8, !tbaa !16
+  br label %bb.bb
+
+bb.bb:                                            ; preds = %bb.ba, %.noexc145.i
+  %.sroa.2.0..sroa_idx.i141.i = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.2.0.copyload.i142.i = load ptr, ptr %.sroa.2.0..sroa_idx.i141.i, align 8 ; 5 uses
+  %i.jf = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i142.i, i64 16 ; 5 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
+  %i.jg = load ptr, ptr %i.jf, align 8, !tbaa !21 ; 6 uses
+  %i.jh = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i142.i, i64 32 ; 2 uses
+  %i.ji = icmp eq ptr %i.jg, %i.jh
+  %i.jj = load ptr, ptr %23, align 8, !tbaa !21   ; 6 uses
+  %i.jk = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 4 uses
+  %i.jl = icmp eq ptr %i.jj, %i.jk                ; 2 uses
+  br i1 %i.ji, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i152.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i146.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i152.i: ; preds = %bb.bb
+  br i1 %i.jl, label %bb.bc, label %.thread.i153.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i146.i: ; preds = %bb.bb
+  br i1 %i.jl, label %bb.bc, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i147.i
+
+bb.bc:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i146.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i152.i
+  %i.jm = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 2 uses
+  %i.jn = load i64, ptr %i.jm, align 8, !tbaa !22 ; 3 uses
+  %i.jo = icmp ult i64 %i.jn, 16
+  call void @llvm.assume(i1 %i.jo)
+  %.not21.i149.i = icmp eq ptr %23, %i.jf
+  br i1 %.not21.i149.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit154.i, label %bb.bd, !prof !33
+
+bb.bd:                                            ; preds = %bb.bc
+  switch i64 %i.jn, label %bb.bf [
+    i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i150.i
+    i64 1, label %bb.be
+  ]
+
+bb.be:                                            ; preds = %bb.bd
+  %i.jp = load i8, ptr %i.jj, align 1, !tbaa !16
+  store i8 %i.jp, ptr %i.jg, align 1, !tbaa !16
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i150.i
+
+bb.bf:                                            ; preds = %bb.bd
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jg, ptr align 1 %i.jj, i64 %i.jn, i1 false)
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i150.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i150.i: ; preds = %bb.bf, %bb.be, %bb.bd
+  %i.jq = load i64, ptr %i.jm, align 8, !tbaa !22 ; 2 uses
+  %i.jr = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i142.i, i64 24
+  store i64 %i.jq, ptr %i.jr, align 8, !tbaa !22
+  %i.js = load ptr, ptr %i.jf, align 8, !tbaa !21
+  %i.jt = getelementptr inbounds nuw i8, ptr %i.js, i64 %i.jq
+  store i8 0, ptr %i.jt, align 1, !tbaa !16
+  %.pre.i151.i = load ptr, ptr %23, align 8, !tbaa !21
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit154.i
+
+.thread.i153.i:                                   ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i152.i
+  %i.ju = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i142.i, i64 24
+  store ptr %i.jj, ptr %i.jf, align 8, !tbaa !21
+  %i.jv = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.jw = load <2 x i64>, ptr %i.jv, align 8, !tbaa !16
+  store <2 x i64> %i.jw, ptr %i.ju, align 8, !tbaa !16
+  br label %bb.bh
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i147.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i146.i
+  %i.jx = load i64, ptr %i.jh, align 8, !tbaa !16
+  store ptr %i.jj, ptr %i.jf, align 8, !tbaa !21
+  %i.jy = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.jz = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i142.i, i64 24
+  %i.ka = load <2 x i64>, ptr %i.jy, align 8, !tbaa !16
+  store <2 x i64> %i.ka, ptr %i.jz, align 8, !tbaa !16
+  %.not.i148.i = icmp eq ptr %i.jg, null
+  br i1 %.not.i148.i, label %bb.bh, label %bb.bg
+
+bb.bg:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i147.i
+  store ptr %i.jg, ptr %23, align 8, !tbaa !21
+  store i64 %i.jx, ptr %i.jk, align 8, !tbaa !16
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit154.i
+
+bb.bh:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i147.i, %.thread.i153.i
+  store ptr %i.jk, ptr %23, align 8, !tbaa !21
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit154.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit154.i: ; preds = %bb.bh, %bb.bg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i150.i, %bb.bc
+  %i.kb = phi ptr [ %i.jg, %bb.bg ], [ %i.jk, %bb.bh ], [ %i.jj, %bb.bc ], [ %.pre.i151.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i150.i ]
+  %i.kc = getelementptr inbounds nuw i8, ptr %23, i64 8
+  store i64 0, ptr %i.kc, align 8, !tbaa !22
+  store i8 0, ptr %i.kb, align 1, !tbaa !16
+  %i.kd = load ptr, ptr %23, align 8, !tbaa !21   ; 2 uses
+  %i.ke = getelementptr inbounds nuw i8, ptr %23, i64 16 ; 2 uses
+  %i.kf = icmp eq ptr %i.kd, %i.ke
+  br i1 %i.kf, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i155.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i155.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit154.i
+  %i.kg = load i64, ptr %i.ke, align 8, !tbaa !16
+  %i.kh = add i64 %i.kg, 1
+  call void @_ZdlPvm(ptr noundef %i.kd, i64 noundef %i.kh) #28
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit154.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i155.i
+  br i1 %.not.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit163.i, label %.critedge.i
+
+.critedge.i:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157.i
+  %i.ki = load ptr, ptr %31, align 8, !tbaa !21   ; 2 uses
+  %i.kj = getelementptr inbounds nuw i8, ptr %31, i64 16 ; 2 uses
+  %i.kk = icmp eq ptr %i.ki, %i.kj
+  br i1 %i.kk, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i158.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i158.i: ; preds = %.critedge.i
+  %i.kl = load i64, ptr %i.kj, align 8, !tbaa !16
+  %i.km = add i64 %i.kl, 1
+  call void @_ZdlPvm(ptr noundef %i.ki, i64 noundef %i.km) #28
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160.i: ; preds = %.critedge.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i158.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %31) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %30) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %29) #29
+  %i.kn = load ptr, ptr %28, align 8, !tbaa !21   ; 2 uses
+  %i.ko = getelementptr inbounds nuw i8, ptr %28, i64 16 ; 2 uses
+  %i.kp = icmp eq ptr %i.kn, %i.ko
+  br i1 %i.kp, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i162.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i161.i
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i161.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160.i
+  %i.kq = load i64, ptr %i.ko, align 8, !tbaa !16
+  %i.kr = add i64 %i.kq, 1
+  call void @_ZdlPvm(ptr noundef %i.kn, i64 noundef %i.kr) #28
+  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i162.i
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit163.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit157.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %30) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %29) #29
+  br label %bb.bs
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i162.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit160.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i161.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %28) #29
+  br label %bb.bs
+
+bb.bi:                                            ; preds = %.noexc
+end_hunk_1
