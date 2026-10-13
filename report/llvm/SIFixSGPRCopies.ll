@@ -36,6 +36,8 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.llvm::MCRegisterClass" = type <{ i32, i32, i32, i32, i16, i16, i16, i8, i8, i8, [3 x i8], i32, i32, [4 x i8], %"struct.llvm::LaneBitmask", i8, i8, i8, i8, i8, i8, [2 x i8], i32, i16, [2 x i8] }>
 %"struct.llvm::LaneBitmask" = type { i64 }
 %"struct.std::piecewise_construct_t" = type { i8 }
+%"class.llvm::AMDGPU::LaneMaskConstants" = type { %"class.llvm::Register", %"class.llvm::Register", i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32 }
+%"class.llvm::Register" = type { i32 }
 %"struct.llvm::AnalysisSetKey" = type { [8 x i8] }
 %"struct.llvm::AnalysisKey" = type { [8 x i8] }
 %class.anon.659 = type { ptr, ptr }
@@ -129,7 +131,6 @@ target triple = "x86_64-pc-linux-gnu"
 %union.anon.527 = type { %"struct.std::_Rb_tree_const_iterator" }
 %"struct.std::_Rb_tree_const_iterator" = type { ptr }
 %"struct.std::pair.529" = type { %"class.llvm::Register", i32 }
-%"class.llvm::Register" = type { i32 }
 %class.anon.629 = type { ptr, %"class.llvm::MachineInstrBundleIterator", %"class.llvm::MachineInstrBundleIterator" }
 %"class.llvm::MachineInstrBundleIterator" = type { %"class.llvm::ilist_iterator.345" }
 %"class.llvm::ilist_iterator.345" = type { ptr }
@@ -280,6 +281,8 @@ $_ZTVN4llvm2cl11OptionValueIbEE = comdat any
 @_ZN4llvm28AMDGPUMCRegisterClassStorageE = external global %"struct.llvm::MCRegisterClassStorage", align 8
 @.str.6 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @_ZSt19piecewise_construct = linkonce_odr constant %"struct.std::piecewise_construct_t" zeroinitializer, comdat, align 1
+@_ZN4llvm6AMDGPUL19LaneMaskConstants32E = internal unnamed_addr constant %"class.llvm::AMDGPU::LaneMaskConstants" { %"class.llvm::Register" { i32 4 }, %"class.llvm::Register" { i32 47 }, i32 4604, i32 4605, i32 4596, i32 4600, i32 4597, i32 4602, i32 4608, i32 4609, i32 4798, i32 5052, i32 5109, i32 5256, i32 5258, i32 5288, i32 5284, i32 5289, i32 5292, i32 5425, i32 5426, i32 5419 }, align 4
+@_ZN4llvm6AMDGPUL19LaneMaskConstants64E = internal unnamed_addr constant %"class.llvm::AMDGPU::LaneMaskConstants" { %"class.llvm::Register" { i32 2 }, %"class.llvm::Register" { i32 45 }, i32 4606, i32 4607, i32 4598, i32 4601, i32 4599, i32 4603, i32 4610, i32 4611, i32 4799, i32 5053, i32 5110, i32 5259, i32 5261, i32 5290, i32 5285, i32 5291, i32 5293, i32 5427, i32 5428, i32 5420 }, align 4
 @_ZN4llvm17PreservedAnalyses14AllAnalysesKeyE = external global %"struct.llvm::AnalysisSetKey", align 8
 @_ZTVN4llvm2cl11OptionValueIbEE = linkonce_odr unnamed_addr constant { [4 x ptr] } { [4 x ptr] [ptr null, ptr null, ptr @_ZNK4llvm2cl15OptionValueCopyIbE7compareERKNS0_18GenericOptionValueE, ptr @_ZN4llvm2cl18GenericOptionValue6anchorEv] }, comdat, align 8
 @_ZTVN4llvm2cl6parserIbEE = external unnamed_addr constant { [6 x ptr] }, align 8
@@ -511,7 +514,7 @@ bb.a:
   %14 = alloca %"class.llvm::MachineOperand", align 8 ; 7 uses
   %15 = alloca %"class.llvm::MIMetadata", align 8 ; 5 uses
   %16 = alloca %"struct.llvm::SIInstrWorklist", align 8 ; 15 uses
-  %17 = alloca %"class.llvm::MachineOperand", align 8 ; 7 uses
+  %17 = alloca %"class.llvm::MachineOperand", align 8 ; 6 uses
   %18 = alloca %"class.llvm::MachineOperand", align 8 ; 7 uses
   %19 = alloca %"class.llvm::MachineOperand", align 8 ; 7 uses
   %20 = alloca %"class.llvm::MachineOperand", align 8 ; 7 uses
@@ -914,19 +917,25 @@ _ZN12_GLOBAL__N_115SIFixSGPRCopies20lowerVGPR2SGPRCopiesERN4llvm15MachineFunctio
   %i.ana = load ptr, ptr %i.e, align 8, !tbaa !568, !nonnull !29, !align !187
   %i.anb = getelementptr inbounds nuw i8, ptr %i.ana, i64 384
   %i.anc = load i8, ptr %i.anb, align 8, !tbaa !603
-  %i.and = icmp eq i8 %i.anc, 5                   ; 3 uses
-  %.neg.i = select i1 %i.and, i64 -4604, i64 -4606
+  %i.and = icmp eq i8 %i.anc, 5
+  %_ZN4llvm6AMDGPUL19LaneMaskConstants32E._ZN4llvm6AMDGPUL19LaneMaskConstants64E.i.i = select i1 %i.and, ptr @_ZN4llvm6AMDGPUL19LaneMaskConstants32E, ptr @_ZN4llvm6AMDGPUL19LaneMaskConstants64E ; 3 uses
+  %57 = getelementptr inbounds nuw i8, ptr %_ZN4llvm6AMDGPUL19LaneMaskConstants32E._ZN4llvm6AMDGPUL19LaneMaskConstants64E.i.i, i64 8
+  %58 = load i32, ptr %57, align 4
+  %59 = zext i32 %58 to i64
+  %60 = sub nsw i64 0, %59
   %i.ane = getelementptr inbounds nuw i8, ptr %19, i64 8
   %i.anf = getelementptr inbounds nuw i8, ptr %19, i64 4
   %i.ang = getelementptr inbounds nuw i8, ptr %19, i64 16
   %i.anh = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.ani = getelementptr inbounds nuw i8, ptr %18, i64 4
   %i.anj = getelementptr inbounds nuw i8, ptr %18, i64 16
-  %.sroa.01.0.copyload.i = select i1 %i.and, i32 4, i32 2
+  %.sroa.01.0.copyload.i = load i32, ptr %_ZN4llvm6AMDGPUL19LaneMaskConstants32E._ZN4llvm6AMDGPUL19LaneMaskConstants64E.i.i, align 4
   %i.ank = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %i.anl = getelementptr inbounds nuw i8, ptr %17, i64 4
-  %i.anm = getelementptr inbounds nuw i8, ptr %17, i64 16
-  %.neg134.i = select i1 %i.and, i64 -5109, i64 -5110
+  %i.anl = getelementptr inbounds nuw i8, ptr %17, i64 16
+  %i.anm = getelementptr inbounds nuw i8, ptr %_ZN4llvm6AMDGPUL19LaneMaskConstants32E._ZN4llvm6AMDGPUL19LaneMaskConstants64E.i.i, i64 48
+  %61 = load i32, ptr %i.anm, align 4
+  %62 = zext i32 %61 to i64
+  %63 = sub nsw i64 0, %62
   %i.ann = getelementptr inbounds nuw i8, ptr %24, i64 8
   %i.ano = getelementptr inbounds nuw i8, ptr %24, i64 4
   %i.anp = getelementptr inbounds nuw i8, ptr %24, i64 16
@@ -939,6 +948,7 @@ _ZN12_GLOBAL__N_115SIFixSGPRCopies20lowerVGPR2SGPRCopiesERN4llvm15MachineFunctio
   %i.anw = getelementptr inbounds nuw i8, ptr %20, i64 8
   %i.anx = getelementptr inbounds nuw i8, ptr %20, i64 4
   %i.any = getelementptr inbounds nuw i8, ptr %20, i64 16
+  %64 = insertelement <2 x i32> <i32 0, i32 poison>, i32 %.sroa.01.0.copyload.i, i64 1
   br label %bb.cy
 
 bb.cy:                                            ; preds = %._crit_edge.i189, %.lr.ph148.i
@@ -1013,7 +1023,7 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i.i: ; pre
   %i.aph = load ptr, ptr %i.m, align 8, !tbaa !191
   %i.api = getelementptr inbounds nuw i8, ptr %i.aph, i64 8
   %i.apj = load ptr, ptr %i.api, align 8, !tbaa !589
-  %i.apk = getelementptr inbounds [32 x i8], ptr %i.apj, i64 %.neg134.i
+  %i.apk = getelementptr inbounds [32 x i8], ptr %i.apj, i64 %63
   %i.apl = getelementptr inbounds nuw i8, ptr %i.aou, i64 32
   %i.apm = load ptr, ptr %i.apl, align 8, !tbaa !321 ; 4 uses
   %i.apn = call noundef ptr @_ZN4llvm15MachineFunction18CreateMachineInstrERKNS_11MCInstrDescENS_8DebugLocEb(ptr noundef nonnull align 8 dereferenceable(1065) %i.apm, ptr noundef nonnull align 8 dereferenceable(32) %i.apk, ptr %.sroa.016.0.copyload.i, i1 noundef zeroext false) #18 ; 15 uses
@@ -1168,7 +1178,7 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i72.i: ; p
   %i.ary = load ptr, ptr %i.m, align 8, !tbaa !191
   %i.arz = getelementptr inbounds nuw i8, ptr %i.ary, i64 8
   %i.asa = load ptr, ptr %i.arz, align 8, !tbaa !589
-  %i.asb = getelementptr inbounds [32 x i8], ptr %i.asa, i64 %.neg.i
+  %i.asb = getelementptr inbounds [32 x i8], ptr %i.asa, i64 %60
   %i.asc = getelementptr inbounds nuw i8, ptr %i.arl, i64 32
   %i.asd = load ptr, ptr %i.asc, align 8, !tbaa !321 ; 4 uses
   %i.ase = call noundef ptr @_ZN4llvm15MachineFunction18CreateMachineInstrERKNS_11MCInstrDescENS_8DebugLocEb(ptr noundef nonnull align 8 dereferenceable(1065) %i.asd, ptr noundef nonnull align 8 dereferenceable(32) %i.asb, ptr %.sroa.04.0.copyload.i191, i1 noundef zeroext false) #18 ; 10 uses
@@ -1206,9 +1216,8 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i72.i: ; p
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #18
   store ptr null, ptr %i.ank, align 8, !tbaa !279, !alias.scope !621
-  store i32 %.sroa.01.0.copyload.i, ptr %i.anl, align 4, !tbaa !248, !alias.scope !621
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.anm, i8 0, i64 16, i1 false), !alias.scope !621
-  store i32 0, ptr %17, align 8, !alias.scope !621
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.anl, i8 0, i64 16, i1 false), !alias.scope !621
+  store <2 x i32> %64, ptr %17, align 8, !alias.scope !621
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.ase, ptr noundef nonnull align 8 dereferenceable(1065) %i.asd, ptr noundef nonnull align 8 dereferenceable(32) %17) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #18
   br label %.sink.split.i

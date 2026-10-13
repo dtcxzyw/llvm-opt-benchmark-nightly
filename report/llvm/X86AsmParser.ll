@@ -204,6 +204,10 @@ begin_hunk_0
 @.str.851 = private unnamed_addr constant [12 x i8] c"32-bit mode\00", align 1
 @.str.852 = private unnamed_addr constant [10 x i8] c"(unknown)\00", align 1
 @.str.853 = private unnamed_addr constant [41 x i8] c"instruction must have size higher than 0\00", align 1
+@.str.854 = private unnamed_addr constant [5 x i8] c"bwlq\00", align 1
+@.str.855 = private unnamed_addr constant [5 x i8] c"slt\00\00", align 1
+@.str.856 = private unnamed_addr constant [5 x i8] c"\08\10 @\00", align 1
+@.str.857 = private unnamed_addr constant [5 x i8] c" @P\00\00", align 1
 @.str.858 = private unnamed_addr constant [61 x i8] c"ambiguous instructions require an explicit suffix (could be \00", align 1
 @.str.859 = private unnamed_addr constant [3 x i8] c", \00", align 1
 @.str.860 = private unnamed_addr constant [4 x i8] c"or \00", align 1
@@ -606,7 +610,9 @@ _ZN4llvm11SmallStringILj16EEpLEc.exit.i:          ; preds = %bb.cs, %bb.cr
   %i.xb = trunc i64 %i.wz to i32
   store i32 %i.xb, ptr %i.wg, align 8, !tbaa !35
   %i.xc = load i8, ptr %i.wf, align 1, !tbaa !35
-  %.not.i38 = icmp eq i8 %i.xc, 102               ; 15 uses
+  %.not.i38 = icmp eq i8 %i.xc, 102               ; 2 uses
+  %.str.854..str.855.i = select i1 %.not.i38, ptr @.str.855, ptr @.str.854 ; 11 uses
+  %44 = select i1 %.not.i38, ptr @.str.857, ptr @.str.856 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %14, i8 0, i64 48, i1 false)
@@ -619,10 +625,10 @@ _ZN4llvm11SmallStringILj16EEpLEc.exit.i:          ; preds = %bb.cs, %bb.cr
   br i1 %.not191333.i, label %.thread420.i, label %.lr.ph.i40
 
 .thread420.i:                                     ; preds = %_ZN4llvm11SmallStringILj16EEpLEc.exit.i
-  %44 = select i1 %.not.i38, i8 115, i8 98        ; 2 uses
+  %45 = load i8, ptr %.str.854..str.855.i, align 1, !tbaa !35 ; 2 uses
   %i.xh = getelementptr inbounds nuw i8, ptr %i.xa, i64 %i.wz
   %i.xi = getelementptr inbounds i8, ptr %i.xh, i64 -1
-  store i8 %44, ptr %i.xi, align 1, !tbaa !35
+  store i8 %45, ptr %i.xi, align 1, !tbaa !35
   br label %bb.cv
 
 .lr.ph.i40:                                       ; preds = %_ZN4llvm11SmallStringILj16EEpLEc.exit.i, %.thread.i
@@ -654,31 +660,33 @@ bb.ct:                                            ; preds = %.lr.ph.i40
   %.not360.i = xor i1 %i.xo, true
   %or.cond5.i = select i1 %.not360.i, i1 %.0175.lcssa.ph.i, i1 false ; 2 uses
   %i.xp = getelementptr inbounds nuw i8, ptr %.2180.ph.i, i64 144 ; 3 uses
-  %45 = select i1 %.not.i38, i8 115, i8 98        ; 4 uses
+  %46 = load i8, ptr %.str.854..str.855.i, align 1, !tbaa !35 ; 4 uses
   %i.xq = getelementptr inbounds nuw i8, ptr %.pre361.i, i64 %.pre362.i
   %i.xr = getelementptr inbounds i8, ptr %i.xq, i64 -1
-  store i8 %45, ptr %i.xr, align 1, !tbaa !35
+  store i8 %46, ptr %i.xr, align 1, !tbaa !35
   br i1 %or.cond.i41, label %.thread324.i, label %bb.cu
 
 .thread324.i:                                     ; preds = %._crit_edge.i
-  %46 = select i1 %.not.i38, i32 32, i32 8
-  store i32 %46, ptr %i.xp, align 8, !tbaa !35
+  %47 = load i8, ptr %44, align 1, !tbaa !35
+  %48 = sext i8 %47 to i32
+  store i32 %48, ptr %i.xp, align 8, !tbaa !35
   br label %bb.cv
 
 bb.cu:                                            ; preds = %._crit_edge.i
   br i1 %or.cond5.i, label %.thread440.i, label %bb.cv
 
 .thread440.i:                                     ; preds = %bb.cu
-  %47 = select i1 %.not.i38, i8 108, i8 119       ; 2 uses
+  %49 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 1
+  %50 = load i8, ptr %49, align 1, !tbaa !35      ; 2 uses
   %i.xs = load ptr, ptr %13, align 8, !tbaa !105
   %i.xt = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.xu = getelementptr inbounds nuw i8, ptr %i.xs, i64 %i.xt
   %i.xv = getelementptr inbounds i8, ptr %i.xu, i64 -1
-  store i8 %47, ptr %i.xv, align 1, !tbaa !35
+  store i8 %50, ptr %i.xv, align 1, !tbaa !35
   br label %.thread470.i
 
 bb.cv:                                            ; preds = %bb.cu, %.thread324.i, %.thread420.i
-  %i.xw = phi i8 [ %45, %.thread324.i ], [ %45, %bb.cu ], [ %44, %.thread420.i ] ; 5 uses
+  %i.xw = phi i8 [ %46, %.thread324.i ], [ %46, %bb.cu ], [ %45, %.thread420.i ] ; 5 uses
   %i.xx = phi ptr [ %i.xp, %.thread324.i ], [ %i.xp, %bb.cu ], [ inttoptr (i64 144 to ptr), %.thread420.i ] ; 3 uses
   %or.cond5418.i = phi i1 [ %or.cond5.i, %.thread324.i ], [ false, %bb.cu ], [ false, %.thread420.i ] ; 2 uses
   %or.cond414.i = phi i1 [ true, %.thread324.i ], [ false, %bb.cu ], [ false, %.thread420.i ] ; 2 uses
@@ -695,31 +703,35 @@ bb.cv:                                            ; preds = %bb.cu, %.thread324.
 
 .split.i50:                                       ; preds = %bb.cv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull align 8 dereferenceable(48) %9, i64 48, i1 false), !tbaa.struct !152
-  %48 = select i1 %.not.i38, i8 108, i8 119       ; 3 uses
+  %51 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 1
+  %52 = load i8, ptr %51, align 1, !tbaa !35      ; 3 uses
   %i.yg = load ptr, ptr %13, align 8, !tbaa !105
   %i.yh = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.yi = getelementptr inbounds nuw i8, ptr %i.yg, i64 %i.yh
   %i.yj = getelementptr inbounds i8, ptr %i.yi, i64 -1
-  store i8 %48, ptr %i.yj, align 1, !tbaa !35
+  store i8 %52, ptr %i.yj, align 1, !tbaa !35
   br i1 %or.cond414.i, label %.thread324.1.i, label %bb.cx
 
 bb.cw:                                            ; preds = %bb.cv
-  %49 = select i1 %.not.i38, i8 108, i8 119       ; 3 uses
+  %53 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 1
+  %54 = load i8, ptr %53, align 1, !tbaa !35      ; 3 uses
   %i.yk = load ptr, ptr %13, align 8, !tbaa !105
   %i.yl = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.ym = getelementptr inbounds nuw i8, ptr %i.yk, i64 %i.yl
   %i.yn = getelementptr inbounds i8, ptr %i.ym, i64 -1
-  store i8 %49, ptr %i.yn, align 1, !tbaa !35
+  store i8 %54, ptr %i.yn, align 1, !tbaa !35
   br i1 %or.cond414.i, label %.thread324.1.i, label %bb.cx
 
 bb.cx:                                            ; preds = %bb.cw, %.split.i50
-  %i.yo = phi i8 [ %48, %.split.i50 ], [ %49, %bb.cw ] ; 2 uses
+  %i.yo = phi i8 [ %52, %.split.i50 ], [ %54, %bb.cw ] ; 2 uses
   br i1 %or.cond5418.i, label %.thread470.i, label %bb.cy
 
 .thread324.1.i:                                   ; preds = %bb.cw, %.split.i50
-  %i.yp = phi i8 [ %48, %.split.i50 ], [ %49, %bb.cw ]
-  %50 = select i1 %.not.i38, i32 64, i32 16
-  store i32 %50, ptr %i.xx, align 8, !tbaa !35
+  %i.yp = phi i8 [ %52, %.split.i50 ], [ %54, %bb.cw ]
+  %55 = getelementptr inbounds nuw i8, ptr %44, i64 1
+  %56 = load i8, ptr %55, align 1, !tbaa !35
+  %57 = sext i8 %56 to i32
+  store i32 %57, ptr %i.xx, align 8, !tbaa !35
   br label %bb.cy
 
 bb.cy:                                            ; preds = %.thread324.1.i, %bb.cx
@@ -739,43 +751,48 @@ bb.cy:                                            ; preds = %.thread324.1.i, %bb
 
 .split463.i:                                      ; preds = %bb.cy
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull align 8 dereferenceable(48) %9, i64 48, i1 false), !tbaa.struct !152
-  %51 = select i1 %.not.i38, i8 116, i8 108       ; 3 uses
+  %58 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 2
+  %59 = load i8, ptr %58, align 1, !tbaa !35      ; 3 uses
   %i.yz = load ptr, ptr %13, align 8, !tbaa !105
   %i.za = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.zb = getelementptr inbounds nuw i8, ptr %i.yz, i64 %i.za
   %i.zc = getelementptr inbounds i8, ptr %i.zb, i64 -1
-  store i8 %51, ptr %i.zc, align 1, !tbaa !35
+  store i8 %59, ptr %i.zc, align 1, !tbaa !35
   br i1 %or.cond415430.i, label %.thread324.2.i, label %bb.da
 
 .thread470.i:                                     ; preds = %bb.cx, %.thread440.i
-  %.ph.i = phi i8 [ %47, %.thread440.i ], [ %i.yo, %bb.cx ]
+  %.ph.i = phi i8 [ %50, %.thread440.i ], [ %i.yo, %bb.cx ]
   %.sroa.0.0434.ph.i = phi i32 [ 3, %.thread440.i ], [ %i.ye, %bb.cx ]
-  %.ph445.i = phi i8 [ %45, %.thread440.i ], [ %i.xw, %bb.cx ]
-  %52 = select i1 %.not.i38, i8 116, i8 108       ; 2 uses
+  %.ph445.i = phi i8 [ %46, %.thread440.i ], [ %i.xw, %bb.cx ]
+  %60 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 2
+  %61 = load i8, ptr %60, align 1, !tbaa !35      ; 2 uses
   %i.zd = load ptr, ptr %13, align 8, !tbaa !105
   %i.ze = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.zf = getelementptr inbounds nuw i8, ptr %i.zd, i64 %i.ze
   %i.zg = getelementptr inbounds i8, ptr %i.zf, i64 -1
-  store i8 %52, ptr %i.zg, align 1, !tbaa !35
+  store i8 %61, ptr %i.zg, align 1, !tbaa !35
   br label %.thread503.i
 
 bb.cz:                                            ; preds = %bb.cy
-  %53 = select i1 %.not.i38, i8 116, i8 108       ; 3 uses
+  %62 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 2
+  %63 = load i8, ptr %62, align 1, !tbaa !35      ; 3 uses
   %i.zh = load ptr, ptr %13, align 8, !tbaa !105
   %i.zi = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.zj = getelementptr inbounds nuw i8, ptr %i.zh, i64 %i.zi
   %i.zk = getelementptr inbounds i8, ptr %i.zj, i64 -1
-  store i8 %53, ptr %i.zk, align 1, !tbaa !35
+  store i8 %63, ptr %i.zk, align 1, !tbaa !35
   br i1 %or.cond415430.i, label %.thread324.2.i, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz, %.split463.i
-  %i.zl = phi i8 [ %51, %.split463.i ], [ %53, %bb.cz ] ; 2 uses
+  %i.zl = phi i8 [ %59, %.split463.i ], [ %63, %bb.cz ] ; 2 uses
   br i1 %or.cond5419428.i, label %.thread503.i, label %bb.db
 
 .thread324.2.i:                                   ; preds = %bb.cz, %.split463.i
-  %i.zm = phi i8 [ %51, %.split463.i ], [ %53, %bb.cz ]
-  %54 = select i1 %.not.i38, i32 80, i32 32
-  store i32 %54, ptr %i.xx, align 8, !tbaa !35
+  %i.zm = phi i8 [ %59, %.split463.i ], [ %63, %bb.cz ]
+  %64 = getelementptr inbounds nuw i8, ptr %44, i64 2
+  %65 = load i8, ptr %64, align 1, !tbaa !35
+  %66 = sext i8 %65 to i32
+  store i32 %66, ptr %i.xx, align 8, !tbaa !35
   br label %bb.db
 
 bb.db:                                            ; preds = %.thread324.2.i, %bb.da
@@ -795,45 +812,50 @@ bb.db:                                            ; preds = %.thread324.2.i, %bb
 
 .split496.i:                                      ; preds = %bb.db
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull align 8 dereferenceable(48) %9, i64 48, i1 false), !tbaa.struct !152
-  %55 = select i1 %.not.i38, i8 0, i8 113         ; 3 uses
+  %67 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 3
+  %68 = load i8, ptr %67, align 1, !tbaa !35      ; 3 uses
   %i.zw = load ptr, ptr %13, align 8, !tbaa !105
   %i.zx = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.zy = getelementptr inbounds nuw i8, ptr %i.zw, i64 %i.zx
   %i.zz = getelementptr inbounds i8, ptr %i.zy, i64 -1
-  store i8 %55, ptr %i.zz, align 1, !tbaa !35
+  store i8 %68, ptr %i.zz, align 1, !tbaa !35
   br i1 %or.cond415431454.i, label %.thread324.3.i, label %bb.dd
 
 .thread503.i:                                     ; preds = %bb.da, %.thread470.i
-  %.ph476.i = phi i8 [ %52, %.thread470.i ], [ %i.zl, %bb.da ]
+  %.ph476.i = phi i8 [ %61, %.thread470.i ], [ %i.zl, %bb.da ]
   %.sroa.7.0461.ph.i = phi i32 [ 3, %.thread470.i ], [ %i.yx, %bb.da ]
   %.ph477.i = phi i8 [ %.ph445.i, %.thread470.i ], [ %i.xw, %bb.da ]
   %.sroa.0.0434452.ph.i = phi i32 [ %.sroa.0.0434.ph.i, %.thread470.i ], [ %i.ye, %bb.da ]
   %.ph479.i = phi i8 [ %.ph.i, %.thread470.i ], [ %i.yq, %bb.da ]
-  %56 = select i1 %.not.i38, i8 0, i8 113         ; 2 uses
+  %69 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 3
+  %70 = load i8, ptr %69, align 1, !tbaa !35      ; 2 uses
   %i.aaa = load ptr, ptr %13, align 8, !tbaa !105
   %i.aab = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.aac = getelementptr inbounds nuw i8, ptr %i.aaa, i64 %i.aab
   %i.aad = getelementptr inbounds i8, ptr %i.aac, i64 -1
-  store i8 %56, ptr %i.aad, align 1, !tbaa !35
+  store i8 %70, ptr %i.aad, align 1, !tbaa !35
   br label %bb.dg
 
 bb.dc:                                            ; preds = %bb.db
-  %57 = select i1 %.not.i38, i8 0, i8 113         ; 3 uses
+  %71 = getelementptr inbounds nuw i8, ptr %.str.854..str.855.i, i64 3
+  %72 = load i8, ptr %71, align 1, !tbaa !35      ; 3 uses
   %i.aae = load ptr, ptr %13, align 8, !tbaa !105
   %i.aaf = load i64, ptr %i.wo, align 8, !tbaa !147
   %i.aag = getelementptr inbounds nuw i8, ptr %i.aae, i64 %i.aaf
   %i.aah = getelementptr inbounds i8, ptr %i.aag, i64 -1
-  store i8 %57, ptr %i.aah, align 1, !tbaa !35
+  store i8 %72, ptr %i.aah, align 1, !tbaa !35
   br i1 %or.cond415431454.i, label %.thread324.3.i, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc, %.split496.i
-  %i.aai = phi i8 [ %55, %.split496.i ], [ %57, %bb.dc ] ; 2 uses
+  %i.aai = phi i8 [ %68, %.split496.i ], [ %72, %bb.dc ] ; 2 uses
   br i1 %or.cond5419429458.i, label %bb.dg, label %bb.de
 
 .thread324.3.i:                                   ; preds = %bb.dc, %.split496.i
-  %i.aaj = phi i8 [ %55, %.split496.i ], [ %57, %bb.dc ]
-  %58 = select i1 %.not.i38, i32 0, i32 64
-  store i32 %58, ptr %i.xx, align 8, !tbaa !35
+  %i.aaj = phi i8 [ %68, %.split496.i ], [ %72, %bb.dc ]
+  %73 = getelementptr inbounds nuw i8, ptr %44, i64 3
+  %74 = load i8, ptr %73, align 1, !tbaa !35
+  %75 = sext i8 %74 to i32
+  store i32 %75, ptr %i.xx, align 8, !tbaa !35
   br label %bb.de
 
 bb.de:                                            ; preds = %.thread324.3.i, %bb.dd
@@ -854,7 +876,7 @@ bb.df:                                            ; preds = %bb.de
   br label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df, %bb.de, %bb.dd, %.thread503.i
-  %i.aat = phi i8 [ %i.aak, %bb.df ], [ %i.aak, %bb.de ], [ %i.aai, %bb.dd ], [ %56, %.thread503.i ]
+  %i.aat = phi i8 [ %i.aak, %bb.df ], [ %i.aak, %bb.de ], [ %i.aai, %bb.dd ], [ %70, %.thread503.i ]
   %.sroa.13.0494.i = phi i32 [ %i.zu, %bb.df ], [ %i.zu, %bb.de ], [ %i.zu, %bb.dd ], [ 3, %.thread503.i ] ; 5 uses
   %i.aau = phi i8 [ %i.yq, %bb.df ], [ %i.yq, %bb.de ], [ %i.yq, %bb.dd ], [ %.ph479.i, %.thread503.i ]
   %.sroa.0.0434452491.i = phi i32 [ %i.ye, %bb.df ], [ %i.ye, %bb.de ], [ %i.ye, %bb.dd ], [ %.sroa.0.0434452.ph.i, %.thread503.i ] ; 5 uses

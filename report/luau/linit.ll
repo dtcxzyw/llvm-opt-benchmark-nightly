@@ -30,23 +30,26 @@ define dso_local void @_Z13luaL_openlibsP9lua_State(ptr noundef %0) local_unname
 .lr.ph.preheader:
   %i.a = load i8, ptr @_ZN5FFlag18LuauIntegerLibraryE, align 8, !tbaa !16, !range !17, !noundef !18
   %i.b = trunc nuw i8 %i.a to i1
-  %_ZL7lualibs._ZL17lualibs_NOINTEGER = select i1 %i.b, ptr @_ZL7lualibs, ptr @_ZL17lualibs_NOINTEGER
-  br label %.lr.ph
+  %_ZL7lualibs._ZL17lualibs_NOINTEGER = select i1 %i.b, ptr @_ZL7lualibs, ptr @_ZL17lualibs_NOINTEGER ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %_ZL7lualibs._ZL17lualibs_NOINTEGER, i64 8
+  %2 = load ptr, ptr %1, align 8, !tbaa !20       ; 2 uses
+  %.not11 = icmp eq ptr %2, null
+  br i1 %.not11, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.c = phi ptr [ %i.g, %.lr.ph ], [ @_Z12luaopen_baseP9lua_State, %.lr.ph.preheader ]
+  %i.c = phi ptr [ %i.g, %.lr.ph ], [ %2, %.lr.ph.preheader ]
   %.112 = phi ptr [ %i.e, %.lr.ph ], [ %_ZL7lualibs._ZL17lualibs_NOINTEGER, %.lr.ph.preheader ] ; 3 uses
   tail call void @_Z17lua_pushcclosurekP9lua_StatePFiS0_EPKciPFiS0_iE(ptr noundef %0, ptr noundef nonnull %i.c, ptr noundef null, i32 noundef 0, ptr noundef null)
-  %i.d = load ptr, ptr %.112, align 8, !tbaa !20
+  %i.d = load ptr, ptr %.112, align 8, !tbaa !21
   tail call void @_Z14lua_pushstringP9lua_StatePKc(ptr noundef %0, ptr noundef %i.d)
   tail call void @_Z8lua_callP9lua_Stateii(ptr noundef %0, i32 noundef 1, i32 noundef 0)
   %i.e = getelementptr inbounds nuw i8, ptr %.112, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %.112, i64 24
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !21   ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !20   ; 2 uses
   %.not = icmp eq ptr %i.g, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !10
 
-._crit_edge:                                      ; preds = %.lr.ph
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.preheader
   %i.h = load i8, ptr @_ZN5FFlag34DebugLuauUserDefinedClassesRuntimeE, align 8, !tbaa !16, !range !17, !noundef !18
   %i.i = trunc nuw i8 %i.h to i1
   br i1 %i.i, label %bb.a, label %bb.b
@@ -240,7 +243,7 @@ attributes #6 = { nounwind allocsize(1) }
 !17 = !{i8 0, i8 2}
 !18 = !{}
 !19 = !{!"_ZTS8luaL_Reg", !13, i64 0, !12, i64 8}
-!20 = !{!19, !13, i64 0}
-!21 = !{!19, !12, i64 8}
+!20 = !{!19, !12, i64 8}
+!21 = !{!19, !13, i64 0}
 !22 = distinct !{!22, !9}
 end_hunk_0

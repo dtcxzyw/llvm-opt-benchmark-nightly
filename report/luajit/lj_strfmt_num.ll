@@ -154,8 +154,8 @@ bb.k:                                             ; preds = %bb.a
 
 bb.l:                                             ; preds = %bb.k
   %i.ba = and i32 %1, 8192
-  %.not591 = icmp eq i32 %i.ba, 0                 ; 3 uses
-  %i.bb = select i1 %.not591, ptr @.str.1, ptr @.str ; 3 uses
+  %.not591 = icmp eq i32 %i.ba, 0
+  %i.bb = select i1 %.not591, ptr @.str.1, ptr @.str ; 5 uses
   %i.bc = lshr i32 %.sroa.0.4.extract.trunc, 20
   %i.bd = and i32 %i.bc, 2047                     ; 2 uses
   %.not592 = icmp sgt i64 %i.j, -1
@@ -331,9 +331,10 @@ bb.ad:                                            ; preds = %bb.ac, %.loopexit87
   %.7518 = phi ptr [ %i.dw, %bb.ac ], [ %.6517, %.loopexit874 ] ; 4 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %.7518, i64 1
   store i8 48, ptr %.7518, align 1, !tbaa !16
-  %4 = select i1 %.not591, i8 120, i8 88
+  %4 = getelementptr inbounds nuw i8, ptr %i.bb, i64 17
+  %5 = load i8, ptr %4, align 1, !tbaa !16
   %i.dy = getelementptr i8, ptr %.7518, i64 2     ; 3 uses
-  store i8 %4, ptr %i.dx, align 1, !tbaa !16
+  store i8 %5, ptr %i.dx, align 1, !tbaa !16
   %i.dz = icmp eq i32 %i.dh, 1024
   br i1 %i.dz, label %.preheader871, label %.loopexit872
 
@@ -447,9 +448,10 @@ bb.ae:                                            ; preds = %.loopexit872
 
 .loopexit868:                                     ; preds = %.lr.ph1005.prol.loopexit, %.lr.ph1005, %.loopexit870, %.loopexit872
   %.10521 = phi ptr [ %i.er, %.loopexit872 ], [ %i.eu, %.loopexit870 ], [ %i.eu, %.lr.ph1005 ], [ %i.eu, %.lr.ph1005.prol.loopexit ] ; 3 uses
-  %5 = select i1 %.not591, i8 112, i8 80
+  %6 = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
+  %7 = load i8, ptr %6, align 1, !tbaa !16
   %i.fy = getelementptr inbounds nuw i8, ptr %.10521, i64 1
-  store i8 %5, ptr %.10521, align 1, !tbaa !16
+  store i8 %7, ptr %.10521, align 1, !tbaa !16
   %i.fz = getelementptr inbounds nuw i8, ptr %.10521, i64 2
   store i8 %spec.select618.a, ptr %i.fy, align 1, !tbaa !16
   %i.ga = tail call ptr @lj_strfmt_wint(ptr noundef nonnull %i.fz, i32 noundef %spec.select617.a) #8

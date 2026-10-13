@@ -202,20 +202,28 @@ ndisc_mc_map.exit:                                ; preds = %bb.q, %bb.p, %bb.n,
   %i.cr = load ptr, ptr %i.y, align 16
   %i.cs = getelementptr i8, ptr %i.cr, i64 16
   %i.ct = load ptr, ptr %i.cs, align 8
-  %.not46 = icmp ne ptr %i.ct, null               ; 2 uses
-  %spec.select = select i1 %.not46, ptr @ndisc_hh_ops, ptr @ndisc_generic_ops
+  %.not46 = icmp eq ptr %i.ct, null
+  %spec.select = select i1 %.not46, ptr @ndisc_generic_ops, ptr @ndisc_hh_ops ; 3 uses
   %i.cu = getelementptr i8, ptr %0, i64 328
   store ptr %spec.select, ptr %i.cu, align 8
   %i.cv = getelementptr i8, ptr %0, i64 156
   %i.cw = load i8, ptr %i.cv, align 4
   %i.cx = and i8 %i.cw, -34
   %.not47 = icmp eq i8 %i.cx, 0
-  %1 = select i1 %.not47, i1 true, i1 %.not46
-  %spec.select61 = select i1 %1, ptr @neigh_resolve_output, ptr @neigh_connected_output
+  br i1 %.not47, label %4, label %1
+
+1:                                                ; preds = %ndisc_mc_map.exit
+  %2 = getelementptr i8, ptr %spec.select, i64 32
+  %3 = load ptr, ptr %2, align 8
   br label %bb.w
 
-bb.w:                                             ; preds = %ndisc_mc_map.exit, %bb.g
-  %.sink = phi ptr [ %spec.select61, %ndisc_mc_map.exit ], [ @neigh_direct_output, %bb.g ]
+4:                                                ; preds = %ndisc_mc_map.exit
+  %5 = getelementptr i8, ptr %spec.select, i64 24
+  %6 = load ptr, ptr %5, align 8
+  br label %bb.w
+
+bb.w:                                             ; preds = %1, %4, %bb.g
+  %.sink = phi ptr [ %3, %1 ], [ %6, %4 ], [ @neigh_direct_output, %bb.g ]
   %i.cy = getelementptr i8, ptr %0, i64 320
   store ptr %.sink, ptr %i.cy, align 8
   %i.cz = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.h, i32 -1, ptr elementtype(i32) %i.h) #13, !srcloc !17 ; 2 uses

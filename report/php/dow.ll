@@ -202,12 +202,15 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %._crit_edge, %.preheader
   %.133.lcssa = phi i64 [ %i.av, %._crit_edge ], [ %.032.lcssa, %.preheader ] ; 3 uses
   %.1.lcssa = phi i1 [ %i.bc, %._crit_edge ], [ %.0.lcssa, %.preheader ]
-  %i.bf = select i1 %.1.lcssa, ptr @ml_table_leap, ptr @ml_table_common
-  %i.bg = icmp sgt i64 %.133.lcssa, 31
+  %i.bf = select i1 %.1.lcssa, ptr @ml_table_leap, ptr @ml_table_common ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.bf, i64 4
+  %7 = load i32, ptr %6, align 4, !tbaa !12
+  %8 = sext i32 %7 to i64                         ; 2 uses
+  %i.bg = icmp sgt i64 %.133.lcssa, %8
   br i1 %i.bg, label %.lr.ph55, label %._crit_edge56
 
 .lr.ph55:                                         ; preds = %bb.j, %.lr.ph55
-  %i.bh = phi i64 [ %i.bm, %.lr.ph55 ], [ 31, %bb.j ]
+  %i.bh = phi i64 [ %i.bm, %.lr.ph55 ], [ %8, %bb.j ]
   %.253 = phi i64 [ %i.bi, %.lr.ph55 ], [ %.133.lcssa, %bb.j ]
   %storemerge52 = phi i64 [ %i.bj, %.lr.ph55 ], [ 1, %bb.j ]
   %i.bi = sub i64 %.253, %i.bh                    ; 3 uses

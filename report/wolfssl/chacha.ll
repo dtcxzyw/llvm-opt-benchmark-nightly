@@ -10,6 +10,9 @@ target triple = "x86_64-pc-linux-gnu"
 
 %union.anon = type { i64, [56 x i8] }
 
+@sigma = internal unnamed_addr constant [4 x i32] [i32 1634760805, i32 857760878, i32 2036477234, i32 1797285236], align 16
+@tau = internal unnamed_addr constant [4 x i32] [i32 1634760805, i32 824206446, i32 2036477238, i32 1797285236], align 16
+
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define range(i32 -173, 1) i32 @wc_Chacha_SetIV(ptr nofree noundef writeonly captures(address_is_null) %0, ptr nofree noundef readonly captures(address_is_null) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
@@ -76,7 +79,8 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   %.val41 = load i32, ptr %i.h, align 1
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 %.val41, ptr %i.i, align 4, !tbaa !10
-  %i.j = icmp eq i32 %2, 32                       ; 3 uses
+  %i.j = icmp eq i32 %2, 32                       ; 2 uses
+  %.035 = select i1 %i.j, ptr @sigma, ptr @tau    ; 4 uses
   %.0.idx = select i1 %i.j, i64 16, i64 0
   %.0 = getelementptr inbounds nuw i8, ptr %1, i64 %.0.idx ; 4 uses
   %.0.val = load i32, ptr %.0, align 1
@@ -94,15 +98,20 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   %.val = load i32, ptr %i.p, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 44
   store i32 %.val, ptr %i.q, align 4, !tbaa !10
-  store i32 1634760805, ptr %0, align 4, !tbaa !10
-  %3 = select i1 %i.j, i32 857760878, i32 824206446
+  %3 = load i32, ptr %.035, align 16, !tbaa !10
+  store i32 %3, ptr %0, align 4, !tbaa !10
+  %4 = getelementptr inbounds nuw i8, ptr %.035, i64 4
+  %5 = load i32, ptr %4, align 4, !tbaa !10
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %3, ptr %i.r, align 4, !tbaa !10
-  %4 = select i1 %i.j, i32 2036477234, i32 2036477238
+  store i32 %5, ptr %i.r, align 4, !tbaa !10
+  %6 = getelementptr inbounds nuw i8, ptr %.035, i64 8
+  %7 = load i32, ptr %6, align 8, !tbaa !10
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %4, ptr %i.s, align 4, !tbaa !10
+  store i32 %7, ptr %i.s, align 4, !tbaa !10
+  %8 = getelementptr inbounds nuw i8, ptr %.035, i64 12
+  %9 = load i32, ptr %8, align 4, !tbaa !10
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 1797285236, ptr %i.t, align 4, !tbaa !10
+  store i32 %9, ptr %i.t, align 4, !tbaa !10
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i32 0, ptr %i.u, align 4, !tbaa !9
   br label %bb.d

@@ -205,6 +205,8 @@ begin_hunk_0
 @.str.17 = private unnamed_addr constant [27 x i8] c"when serializing %T object\00", align 1
 @.str.18 = private unnamed_addr constant [51 x i8] c"persistent IDs in protocol 0 must be ASCII strings\00", align 1
 @.str.19 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.str.20 = private unnamed_addr constant [5 x i8] c"I01\0A\00", align 1
+@.str.21 = private unnamed_addr constant [5 x i8] c"I00\0A\00", align 1
 @.str.22 = private unnamed_addr constant [7 x i8] c"%c%ld\0A\00", align 1
 @PyExc_OverflowError = external local_unnamed_addr global ptr, align 8
 @.str.23 = private unnamed_addr constant [24 x i8] c"int too large to pickle\00", align 1
@@ -607,7 +609,7 @@ bb.a:
   %i.g = alloca ptr, align 8                      ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #14
   store ptr null, ptr %i.g, align 8, !tbaa !45
-  %i.h = getelementptr i8, ptr %1, i64 96         ; 15 uses
+  %i.h = getelementptr i8, ptr %1, i64 96         ; 14 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !54
   %.not.i150 = icmp eq i32 %i.i, 0
   br i1 %.not.i150, label %bb.i, label %bb.b
@@ -995,13 +997,13 @@ bb.aw:                                            ; preds = %bb.av
   %i.ef = getelementptr i8, ptr %1, i64 88
   %i.eg = load i32, ptr %i.ef, align 8, !tbaa !47
   %i.eh = icmp sgt i32 %i.eg, 1
+  %4 = load i32, ptr %i.h, align 8, !tbaa !54
+  %.not.i.i154 = icmp eq i32 %4, 0                ; 2 uses
   br i1 %i.eh, label %bb.ax, label %bb.be
 
 bb.ax:                                            ; preds = %bb.aw
   %i.ei = select i1 %i.ee, i8 -120, i8 -119
-  %4 = load i32, ptr %i.h, align 8, !tbaa !54
-  %.not.i.i157 = icmp eq i32 %4, 0
-  br i1 %.not.i.i157, label %.thread.i.i160, label %bb.ay
+  br i1 %.not.i.i154, label %.thread.i.i160, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   %i.ej = getelementptr i8, ptr %1, i64 104
@@ -1071,9 +1073,8 @@ bb.bd:                                            ; preds = %bb.bc
   br label %_Pickler_OpcodeBoundary.exit
 
 bb.be:                                            ; preds = %bb.aw
-  %5 = load i32, ptr %i.h, align 8, !tbaa !54
-  %.not.i11.i = icmp eq i32 %5, 0
-  br i1 %.not.i11.i, label %.thread.i14.i, label %bb.bf
+  %5 = select i1 %i.ee, ptr @.str.20, ptr @.str.21 ; 4 uses
+  br i1 %.not.i.i154, label %.thread.i14.i, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
   %i.fm = getelementptr i8, ptr %1, i64 104
@@ -1135,21 +1136,27 @@ bb.bk:                                            ; preds = %bb.bj
 
 .lr.ph.i15.i:                                     ; preds = %bb.bk, %bb.bj
   %i.gl = phi i64 [ %i.gk, %bb.bk ], [ %.pre.i154, %bb.bj ]
+  %6 = load i8, ptr %5, align 1, !tbaa !51
   %i.gm = getelementptr i8, ptr %i.gg, i64 %i.gl
-  store i8 73, ptr %i.gm, align 1, !tbaa !51
+  store i8 %6, ptr %i.gm, align 1, !tbaa !51
+  %7 = getelementptr i8, ptr %5, i64 1
+  %8 = load i8, ptr %7, align 1, !tbaa !51
   %i.gn = load i64, ptr %i.fr, align 8, !tbaa !56
   %i.go = getelementptr i8, ptr %i.gg, i64 %i.gn
   %i.gp = getelementptr i8, ptr %i.go, i64 1
-  store i8 48, ptr %i.gp, align 1, !tbaa !51
-  %6 = select i1 %i.ee, i8 49, i8 48
+  store i8 %8, ptr %i.gp, align 1, !tbaa !51
+  %9 = getelementptr i8, ptr %5, i64 2
+  %10 = load i8, ptr %9, align 1, !tbaa !51
   %i.gq = load i64, ptr %i.fr, align 8, !tbaa !56
   %i.gr = getelementptr i8, ptr %i.gg, i64 %i.gq
   %i.gs = getelementptr i8, ptr %i.gr, i64 2
-  store i8 %6, ptr %i.gs, align 1, !tbaa !51
+  store i8 %10, ptr %i.gs, align 1, !tbaa !51
+  %11 = getelementptr i8, ptr %5, i64 3
+  %12 = load i8, ptr %11, align 1, !tbaa !51
   %i.gt = load i64, ptr %i.fr, align 8, !tbaa !56
   %i.gu = getelementptr i8, ptr %i.gg, i64 %i.gt
   %i.gv = getelementptr i8, ptr %i.gu, i64 3
-  store i8 10, ptr %i.gv, align 1, !tbaa !51
+  store i8 %12, ptr %i.gv, align 1, !tbaa !51
   %i.gw = load i64, ptr %i.fr, align 8, !tbaa !56
   %i.gx = add i64 %i.gw, 4
   store i64 %i.gx, ptr %i.fr, align 8, !tbaa !56

@@ -204,7 +204,9 @@ $_ZTSZN6google8protobuf2io7Printer8WithDefsEN4absl12lts_202505124SpanIKNS2_3SubE
 @.str.11 = private unnamed_addr constant [2 x i8] c"_\00", align 1
 @.str.12 = private unnamed_addr constant [8 x i8] c"Impl_::\00", align 1
 @.str.13 = private unnamed_addr constant [7 x i8] c"proto2\00", align 1
+@__const._ZN6google8protobuf8compiler3cpp17ProtobufNamespaceERKNS2_7OptionsE.kGoogle3Ns = private unnamed_addr constant %"class.std::basic_string_view" { i64 6, ptr @.str.13 }, align 8
 @.str.14 = private unnamed_addr constant [17 x i8] c"google::protobuf\00", align 1
+@__const._ZN6google8protobuf8compiler3cpp17ProtobufNamespaceERKNS2_7OptionsE.kOssNs = private unnamed_addr constant %"class.std::basic_string_view" { i64 16, ptr @.str.14 }, align 8
 @_ZTVN6google8protobuf8compiler3cpp18FieldGeneratorBaseE = external constant { [31 x ptr] }, align 8
 @.str.15 = private unnamed_addr constant [30 x i8] c"\0A    ::absl::Cord $name$_;\0A  \00", align 1
 @.str.16 = private unnamed_addr constant [188 x i8] c"\0A      struct _default_$name$_func_ {\0A        constexpr ::absl::string_view operator()() const {\0A          return ::absl::string_view($default$, $default_length$);\0A        }\0A      };\0A    \00", align 1
@@ -607,9 +609,11 @@ bb.ax:                                            ; preds = %_ZNSt7__cxx1112basi
   store ptr @.str.6, ptr %i.ii, align 8
   %i.ij = getelementptr inbounds nuw i8, ptr %2, i64 206
   %i.ik = load i8, ptr %i.ij, align 2, !tbaa !210, !range !27, !noundef !28
-  %i.il = trunc nuw i8 %i.ik to i1                ; 2 uses
-  %.sroa.0.0.copyload.i138.i = select i1 %i.il, i64 16, i64 6
-  %.sroa.2.0.copyload.i139.i = select i1 %i.il, ptr @.str.14, ptr @.str.13
+  %i.il = trunc nuw i8 %i.ik to i1
+  %..i.i = select i1 %i.il, ptr @__const._ZN6google8protobuf8compiler3cpp17ProtobufNamespaceERKNS2_7OptionsE.kOssNs, ptr @__const._ZN6google8protobuf8compiler3cpp17ProtobufNamespaceERKNS2_7OptionsE.kGoogle3Ns ; 2 uses
+  %.sroa.0.0.copyload.i138.i = load i64, ptr %..i.i, align 8, !tbaa !34
+  %.sroa.2.0...sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %..i.i, i64 8
+  %.sroa.2.0.copyload.i139.i = load ptr, ptr %.sroa.2.0...sroa_idx.i.i, align 8, !tbaa !41
   store i64 %.sroa.0.0.copyload.i138.i, ptr %25, align 8, !tbaa !34
   %.sroa.2.0..sroa_idx.i140.i = getelementptr inbounds nuw i8, ptr %25, i64 8
   store ptr %.sroa.2.0.copyload.i139.i, ptr %.sroa.2.0..sroa_idx.i140.i, align 8, !tbaa !41

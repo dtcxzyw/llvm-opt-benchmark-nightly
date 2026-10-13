@@ -95,6 +95,10 @@ $_ZZN4mlir6detail14TypeIDResolverINS_19FunctionOpInterfaceEvE13resolveTypeIDEvE2
 
 $_ZGVZN4mlir6detail14TypeIDResolverINS_19FunctionOpInterfaceEvE13resolveTypeIDEvE2id = comdat any
 
+$_ZN4mlir9transform16TransformDialect20kArgConsumedAttrNameE = comdat any
+
+$_ZN4mlir9transform16TransformDialect20kArgReadOnlyAttrNameE = comdat any
+
 @_ZN4llvm24DisableABIBreakingChecksE = external global i32, align 4
 @_ZN4llvm30VerifyDisableABIBreakingChecksE = weak hidden local_unnamed_addr global ptr @_ZN4llvm24DisableABIBreakingChecksE, align 8
 @_ZTVN12_GLOBAL__N_116InferEffectsPassE = internal unnamed_addr constant { [15 x ptr] } { [15 x ptr] [ptr null, ptr null, ptr @_ZN4mlir4PassD2Ev, ptr @_ZN12_GLOBAL__N_116InferEffectsPassD0Ev, ptr @_ZNK4mlir9transform4impl20InferEffectsPassBaseIN12_GLOBAL__N_116InferEffectsPassEE7getNameEv, ptr @_ZNK4mlir9transform4impl20InferEffectsPassBaseIN12_GLOBAL__N_116InferEffectsPassEE20getDependentDialectsERNS_15DialectRegistryE, ptr @_ZNK4mlir9transform4impl20InferEffectsPassBaseIN12_GLOBAL__N_116InferEffectsPassEE11getArgumentEv, ptr @_ZNK4mlir9transform4impl20InferEffectsPassBaseIN12_GLOBAL__N_116InferEffectsPassEE14getDescriptionEv, ptr @_ZN4mlir4Pass17initializeOptionsEN4llvm9StringRefENS1_12function_refIFNS1_13LogicalResultERKNS1_5TwineEEEE, ptr @_ZN12_GLOBAL__N_116InferEffectsPass14runOnOperationEv, ptr @_ZN4mlir4Pass10initializeEPNS_11MLIRContextE, ptr @_ZNK4mlir13OperationPassIvE13canScheduleOnENS_23RegisteredOperationNameE, ptr @_ZNK4mlir4Pass13canScheduleOnEPNS_9OperationE, ptr @_ZNK4mlir9transform4impl20InferEffectsPassBaseIN12_GLOBAL__N_116InferEffectsPassEE9clonePassEv, ptr @_ZN4mlir4Pass6anchorEv] }, align 8
@@ -112,7 +116,9 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_19FunctionOpInterfaceEvE13resolveTypeIDEv
 @_ZGVZN4mlir6detail14TypeIDResolverINS_19FunctionOpInterfaceEvE13resolveTypeIDEvE2id = linkonce_odr global i64 0, comdat, align 8
 @.str.9 = private unnamed_addr constant [76 x i8] c"StringRef llvm::getTypeName() [DesiredTypeName = mlir::FunctionOpInterface]\00", align 1
 @.str.10 = private unnamed_addr constant [19 x i8] c"transform.consumed\00", align 1
+@_ZN4mlir9transform16TransformDialect20kArgConsumedAttrNameE = linkonce_odr local_unnamed_addr constant { ptr, i64 } { ptr @.str.10, i64 18 }, comdat, align 8
 @.str.12 = private unnamed_addr constant [19 x i8] c"transform.readonly\00", align 1
+@_ZN4mlir9transform16TransformDialect20kArgReadOnlyAttrNameE = linkonce_odr local_unnamed_addr constant { ptr, i64 } { ptr @.str.12, i64 18 }, comdat, align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN4mlir9transform22createInferEffectsPassEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::unique_ptr") align 8 captures(none) initializes((0, 8)) %0) local_unnamed_addr #0 {
@@ -515,7 +521,10 @@ bb.r:                                             ; preds = %.lr.ph.i.i.i.i.i
   br i1 %i.cu, label %_ZNK4llvm6detail12DenseSetImplIjNS_13SmallDenseMapIjNS0_13DenseSetEmptyELj4ENS_12DenseMapInfoIjvEENS0_12DenseSetPairIjEEEEE8containsERKj.exit.i.i, label %bb.r, !prof !118
 
 _ZNK4llvm6detail12DenseSetImplIjNS_13SmallDenseMapIjNS0_13DenseSetEmptyELj4ENS_12DenseMapInfoIjvEENS0_12DenseSetPairIjEEEEE8containsERKj.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i, %bb.r, %bb.q, %bb.p
-  %i.cv = phi ptr [ @.str.12, %bb.q ], [ @.str.12, %bb.p ], [ @.str.12, %bb.r ], [ @.str.10, %.lr.ph.i.i.i.i.i ]
+  %i.cv = phi ptr [ @_ZN4mlir9transform16TransformDialect20kArgReadOnlyAttrNameE, %bb.q ], [ @_ZN4mlir9transform16TransformDialect20kArgReadOnlyAttrNameE, %bb.p ], [ @_ZN4mlir9transform16TransformDialect20kArgReadOnlyAttrNameE, %bb.r ], [ @_ZN4mlir9transform16TransformDialect20kArgConsumedAttrNameE, %.lr.ph.i.i.i.i.i ] ; 2 uses
+  %.sroa.02.0.copyload.i.i = load ptr, ptr %i.cv, align 8, !tbaa !37
+  %.sroa.2.0._ZN4mlir9transform16TransformDialect20kArgConsumedAttrNameE._ZN4mlir9transform16TransformDialect20kArgReadOnlyAttrNameE.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cv, i64 8
+  %.sroa.2.0.copyload.i.i = load i64, ptr %.sroa.2.0._ZN4mlir9transform16TransformDialect20kArgConsumedAttrNameE._ZN4mlir9transform16TransformDialect20kArgReadOnlyAttrNameE.sroa_idx.i.i, align 8, !tbaa !117
   %i.cw = call noundef ptr @_ZNK4mlir9Attribute10getContextEv(ptr noundef nonnull align 8 dereferenceable(8) %i.bf) #15
   %i.cx = call ptr @_ZN4mlir8UnitAttr3getEPNS_11MLIRContextE(ptr noundef %i.cw) #15
   %i.cy = load ptr, ptr %4, align 8, !tbaa !126
@@ -524,8 +533,8 @@ _ZNK4llvm6detail12DenseSetImplIjNS_13SmallDenseMapIjNS0_13DenseSetEmptyELj4ENS_1
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   store i8 5, ptr %i.bg, align 8, !tbaa !105
   store i8 1, ptr %i.bh, align 1, !tbaa !106
-  store ptr %i.cv, ptr %2, align 8, !tbaa !39
-  store i64 18, ptr %i.bi, align 8, !tbaa !39
+  store ptr %.sroa.02.0.copyload.i.i, ptr %2, align 8, !tbaa !39
+  store i64 %.sroa.2.0.copyload.i.i, ptr %i.bi, align 8, !tbaa !39
   %i.db = call ptr @_ZN4mlir10StringAttr3getEPNS_11MLIRContextERKN4llvm5TwineE(ptr noundef %i.da, ptr noundef nonnull align 8 dereferenceable(34) %2) #15
   %.sroa.02.0.copyload.i.i.i.i = load ptr, ptr %4, align 8
   %.sroa.2.0.copyload.i.i.i.i = load ptr, ptr %i.f, align 8

@@ -10,9 +10,9 @@ target triple = "x86_64-pc-linux-gnu"
 module asm
     ".globl _ZSt21ios_base_library_initv"
 
+%"class.std::basic_string_view" = type { i64, ptr }
 %"struct.absl::lts_20250512::container_internal::PolicyFunctions" = type { i32, i32, i32, i16, i8, i8, ptr, ptr, ptr, ptr, ptr, ptr, ptr }
 %"struct.std::piecewise_construct_t" = type { i8 }
-%"class.std::basic_string_view" = type { i64, ptr }
 %"class.std::unique_ptr" = type { %"struct.std::__uniq_ptr_data" }
 %"struct.std::__uniq_ptr_data" = type { %"class.std::__uniq_ptr_impl" }
 %"class.std::__uniq_ptr_impl" = type { %"class.std::tuple" }
@@ -332,7 +332,9 @@ $_ZTSZN6google8protobuf2io7Printer9ValueImplILb1EE18ToStringOrCallbackIZNS0_8com
 @.str.18 = private unnamed_addr constant [5 x i8] c"void\00", align 1
 @.str.19 = private unnamed_addr constant [5 x i8] c"char\00", align 1
 @.str.21 = private unnamed_addr constant [7 x i8] c"proto2\00", align 1
+@__const._ZN6google8protobuf8compiler3cpp17ProtobufNamespaceERKNS2_7OptionsE.kGoogle3Ns = private unnamed_addr constant %"class.std::basic_string_view" { i64 6, ptr @.str.21 }, align 8
 @.str.22 = private unnamed_addr constant [17 x i8] c"google::protobuf\00", align 1
+@__const._ZN6google8protobuf8compiler3cpp17ProtobufNamespaceERKNS2_7OptionsE.kOssNs = private unnamed_addr constant %"class.std::basic_string_view" { i64 16, ptr @.str.22 }, align 8
 @.str.23 = private unnamed_addr constant [3 x i8] c";,\00", align 1
 @.str.24 = private unnamed_addr constant [47 x i8] c"_i_give_permission_to_break_this_code_default_\00", align 1
 @.str.25 = private unnamed_addr constant [2 x i8] c"_\00", align 1
@@ -735,9 +737,11 @@ bb.b:                                             ; preds = %bb.a
   store ptr @.str.1, ptr %i.p, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 210
   %i.r = load i8, ptr %i.q, align 2, !tbaa !236, !range !37, !noundef !40
-  %i.s = trunc nuw i8 %i.r to i1                  ; 2 uses
-  %.sroa.0.0.copyload.i = select i1 %i.s, i64 16, i64 6
-  %.sroa.2.0.copyload.i = select i1 %i.s, ptr @.str.22, ptr @.str.21
+  %i.s = trunc nuw i8 %i.r to i1
+  %..i = select i1 %i.s, ptr @__const._ZN6google8protobuf8compiler3cpp17ProtobufNamespaceERKNS2_7OptionsE.kOssNs, ptr @__const._ZN6google8protobuf8compiler3cpp17ProtobufNamespaceERKNS2_7OptionsE.kGoogle3Ns ; 2 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %..i, align 8, !tbaa !57
+  %.sroa.2.0...sroa_idx.i = getelementptr inbounds nuw i8, ptr %..i, i64 8
+  %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0...sroa_idx.i, align 8, !tbaa !116
   store i64 %.sroa.0.0.copyload.i, ptr %12, align 8, !tbaa !57
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %12, i64 8
   store ptr %.sroa.2.0.copyload.i, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !116

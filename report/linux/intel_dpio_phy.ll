@@ -59,25 +59,59 @@ bb.a:
   %.val = load i64, ptr %i.a, align 8
   %i.b = and i64 %.val, 34359738368
   %.not.i = icmp eq i64 %i.b, 0                   ; 2 uses
-  %i.c = icmp eq i32 %1, 1
+  %bxt_dpio_phy_info.glk_dpio_phy_info.i = select i1 %.not.i, ptr @bxt_dpio_phy_info, ptr @glk_dpio_phy_info ; 9 uses
+  %4 = getelementptr i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, i64 16
+  %5 = load i32, ptr %4, align 16
+  %i.c = icmp eq i32 %1, %5
   br i1 %i.c, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = icmp eq i32 %1, 2
-  %or.cond = and i1 %.not.i, %i.d
+  %6 = load i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, align 16, !range !13, !noundef !14
+  %7 = trunc nuw i8 %6 to i1
+  %8 = getelementptr i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, i64 20
+  %9 = load i32, ptr %8, align 4
+  %i.d = icmp eq i32 %1, %9
+  %or.cond = select i1 %7, i1 %i.d, i1 false
   br i1 %or.cond, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = icmp eq i32 %1, 0
+  %10 = getelementptr i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, i64 40
+  %11 = load i32, ptr %10, align 8
+  %i.e = icmp eq i32 %1, %11
   br i1 %i.e, label %bb.j, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.not.i.not = xor i1 %.not.i, true
-  %i.f = icmp eq i32 %1, 2
-  %or.cond67 = and i1 %.not.i.not, %i.f
-  br i1 %or.cond67, label %bb.j, label %bb.e
+  %12 = getelementptr i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, i64 24
+  %13 = load i8, ptr %12, align 8, !range !13, !noundef !14
+  %14 = trunc nuw i8 %13 to i1
+  %15 = getelementptr i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, i64 44
+  %16 = load i32, ptr %15, align 4
+  %i.f = icmp eq i32 %1, %16
+  %or.cond63 = select i1 %14, i1 %i.f, i1 false
+  br i1 %or.cond63, label %bb.j, label %17
 
-bb.e:                                             ; preds = %bb.d
+17:                                               ; preds = %bb.d
+  br i1 %.not.i, label %bb.e, label %18
+
+18:                                               ; preds = %17
+  %19 = getelementptr i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, i64 64
+  %20 = load i32, ptr %19, align 16
+  %21 = icmp eq i32 %1, %20
+  br i1 %21, label %bb.j, label %22
+
+22:                                               ; preds = %18
+  %23 = getelementptr i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, i64 48
+  %24 = load i8, ptr %23, align 16, !range !13, !noundef !14
+  %25 = trunc nuw i8 %24 to i1
+  br i1 %25, label %26, label %bb.e
+
+26:                                               ; preds = %22
+  %27 = getelementptr i8, ptr %bxt_dpio_phy_info.glk_dpio_phy_info.i, i64 68
+  %28 = load i32, ptr %27, align 4
+  %29 = icmp eq i32 %1, %28
+  br i1 %29, label %bb.j, label %bb.e
+
+bb.e:                                             ; preds = %22, %26, %17
   %i.g = load ptr, ptr %0, align 8                ; 2 uses
   %.not.i30 = icmp eq ptr %i.g, null
   br i1 %.not.i30, label %__drm_to_dev.exit, label %bb.f
@@ -130,9 +164,9 @@ dev_name.exit41:                                  ; preds = %__drm_to_dev.exit37
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !22
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.d, %bb.b, %bb.a, %bb.c, %dev_name.exit41
-  %.sink54 = phi i32 [ 0, %dev_name.exit41 ], [ 2, %bb.d ], [ 0, %bb.a ], [ 1, %bb.c ], [ 0, %bb.b ]
-  %.sink = phi i32 [ 0, %dev_name.exit41 ], [ 0, %bb.a ], [ 0, %bb.d ], [ 0, %bb.c ], [ 1, %bb.b ]
+bb.j:                                             ; preds = %bb.d, %26, %bb.b, %bb.a, %bb.c, %18, %dev_name.exit41
+  %.sink54 = phi i32 [ 0, %dev_name.exit41 ], [ 2, %18 ], [ 0, %bb.a ], [ 1, %bb.c ], [ 0, %bb.b ], [ 1, %bb.d ], [ 2, %26 ]
+  %.sink = phi i32 [ 0, %dev_name.exit41 ], [ 0, %bb.a ], [ 0, %18 ], [ 0, %bb.c ], [ 1, %bb.b ], [ 1, %26 ], [ 1, %bb.d ]
   store i32 %.sink54, ptr %2, align 4
   store i32 %.sink, ptr %3, align 4
   ret void
@@ -167,11 +201,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.f = phi ptr [ %i.e, %bb.b ], [ null, %bb.a ] ; 29 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  store i32 0, ptr %i.a, align 4, !annotation !13
+  store i32 0, ptr %i.a, align 4, !annotation !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
-  store i32 0, ptr %i.b, align 4, !annotation !13
+  store i32 0, ptr %i.b, align 4, !annotation !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
-  store i32 0, ptr %i.c, align 4, !annotation !13
+  store i32 0, ptr %i.c, align 4, !annotation !15
   %i.g = call ptr @intel_ddi_buf_trans_get(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %i.c) #6 ; 4 uses
   %.not76 = icmp eq ptr %i.g, null
   br i1 %.not76, label %bb.d, label %.critedge, !prof !28
@@ -574,7 +608,7 @@ bb.l:                                             ; preds = %__drm_to_dev.exit79
   %i.bt = load ptr, ptr %i.bs, align 8
   tail call void %i.bt(ptr noundef %i.bn, i32 %i.bm, i32 noundef %i.br, i1 noundef zeroext true) #6, !inline_history !1
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 %i.bm) #6
-  %i.bu = load i8, ptr %i.d, align 8, !range !15, !noundef !16
+  %i.bu = load i8, ptr %i.d, align 8, !range !13, !noundef !14
   %i.bv = trunc nuw i8 %i.bu to i1
   br i1 %i.bv, label %bb.m, label %bb.n
 
@@ -721,7 +755,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = select i1 %i.f, i32 442480, i32 %i.o
   %i.q = tail call zeroext i1 (ptr, i32, i32, i32, i32, ptr, ...) @__phy_reg_verify_state(ptr noundef %0, i32 noundef %1, i32 %i.p, i32 noundef 12582915, i32 noundef 12582915, ptr noundef nonnull @.str.9, i32 noundef %1) #8, !srcloc !37
   %i.r = and i1 %i.n, %i.q                        ; 2 uses
-  %i.s = load i8, ptr %i.d, align 8, !range !15, !noundef !16
+  %i.s = load i8, ptr %i.d, align 8, !range !13, !noundef !14
   %i.t = trunc nuw i8 %i.s to i1
   br i1 %i.t, label %bb.c, label %bb.d
 
@@ -771,7 +805,7 @@ bb.a:
   %7 = alloca [1 x %struct.__va_list_tag], align 16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #7
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %7, i8 0, i64 24, i1 false), !annotation !13
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %7, i8 0, i64 24, i1 false), !annotation !15
   tail call void @intel_dmc_wl_get(ptr noundef %0, i32 %2) #6
   %.val.i = load ptr, ptr %0, align 8
   %i.a = tail call ptr @to_intel_uncore(ptr noundef %.val.i) #6 ; 2 uses
@@ -857,9 +891,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.f = getelementptr i8, ptr %0, i64 156
   %i.g = load i32, ptr %i.f, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  store i32 0, ptr %i.a, align 4, !annotation !13
+  store i32 0, ptr %i.a, align 4, !annotation !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
-  store i32 0, ptr %i.b, align 4, !annotation !13
+  store i32 0, ptr %i.b, align 4, !annotation !15
   call void @bxt_port_to_phy_channel(ptr noundef %i.e, i32 noundef %i.g, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #8
   %i.h = load i32, ptr %i.a, align 4              ; 2 uses
   %i.i = icmp eq i32 %i.h, 0
@@ -956,9 +990,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.f = getelementptr i8, ptr %0, i64 156
   %i.g = load i32, ptr %i.f, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  store i32 0, ptr %i.a, align 4, !annotation !13
+  store i32 0, ptr %i.a, align 4, !annotation !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
-  store i32 0, ptr %i.b, align 4, !annotation !13
+  store i32 0, ptr %i.b, align 4, !annotation !15
   call void @bxt_port_to_phy_channel(ptr noundef %i.e, i32 noundef %i.g, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #8
   %i.h = load i32, ptr %i.a, align 4              ; 2 uses
   %i.i = icmp eq i32 %i.h, 0
@@ -1361,7 +1395,7 @@ intel_encoder_is_dig_port.exit.thread.fold.split.i: ; preds = %bb.c
 enc_to_dig_port.exit:                             ; preds = %bb.c, %bb.c, %bb.c, %bb.c, %bb.d, %intel_encoder_is_dig_port.exit.thread.fold.split.i
   %.0.i = phi ptr [ %0, %bb.c ], [ %i.f, %bb.d ], [ %0, %bb.c ], [ %0, %bb.c ], [ %0, %bb.c ], [ null, %intel_encoder_is_dig_port.exit.thread.fold.split.i ]
   %i.g = getelementptr i8, ptr %.0.i, i64 4178    ; 2 uses
-  %i.h = load i8, ptr %i.g, align 2, !range !15, !noundef !16
+  %i.h = load i8, ptr %i.g, align 2, !range !13, !noundef !14
   %i.i = trunc nuw i8 %i.h to i1
   br i1 %i.i, label %bb.e, label %bb.f
 
@@ -1764,7 +1798,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.d = phi ptr [ %i.c, %bb.b ], [ null, %bb.a ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  store i32 0, ptr %i.a, align 4, !annotation !13
+  store i32 0, ptr %i.a, align 4, !annotation !15
   %i.e = getelementptr i8, ptr %0, i64 156        ; 2 uses
   %i.f = load i32, ptr %i.e, align 4
   switch i32 %i.f, label %bb.d [
@@ -1923,10 +1957,10 @@ attributes #9 = { cold noredzone nounwind "no-builtin-wcslen" }
 !10 = !{i32 1, !"override-stack-alignment", i32 8}
 !11 = !{i32 4, !"SkipRaxSetup", i32 1}
 !12 = !{!"Ubuntu clang version 24.0.0 (++20260807082003+f3bd40ce6ba5-1~exp1~20260807082012.1771)"}
-!13 = !{!"auto-init"}
-!14 = !{!"llvm.loop.mustprogress"}
-!15 = !{i8 0, i8 2}
-!16 = !{}
+!13 = !{i8 0, i8 2}
+!14 = !{}
+!15 = !{!"auto-init"}
+!16 = !{!"llvm.loop.mustprogress"}
 !17 = !{i64 2161746602, i64 2161746629, i64 2161747018, i64 2161747051, i64 2161747086, i64 2161747102, i64 2161747943, i64 2161748001, i64 2161748050, i64 2161747860, i64 2161747161, i64 2161747193}
 !18 = !{i64 2161744901}
 !19 = !{i64 2161750750, i64 2161750777, i64 2161751166, i64 2161751199, i64 2161751234, i64 2161751250, i64 2161752091, i64 2161752149, i64 2161752198, i64 2161752008, i64 2161751309, i64 2161751341}
@@ -1935,9 +1969,9 @@ attributes #9 = { cold noredzone nounwind "no-builtin-wcslen" }
 !22 = !{i64 2160825588}
 !23 = distinct !{null, null, null}
 !24 = distinct !{null, null, null}
-!25 = distinct !{!25, !14}
-!26 = distinct !{!26, !14}
-!27 = distinct !{!27, !14}
+!25 = distinct !{!25, !16}
+!26 = distinct !{!26, !16}
+!27 = distinct !{!27, !16}
 !28 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !29 = !{i64 2160837375, i64 2160837402, i64 2160837783, i64 2160837816, i64 2160837851, i64 2160837867, i64 2160838708, i64 2160838766, i64 2160838815, i64 2160838625, i64 2160837926, i64 2160837958}
 !30 = !{i64 2160835442}
@@ -1957,12 +1991,12 @@ attributes #9 = { cold noredzone nounwind "no-builtin-wcslen" }
 !44 = !{i64 2161753077}
 !45 = !{i64 2161758686, i64 2161758713, i64 2161759102, i64 2161759135, i64 2161759170, i64 2161759186, i64 2161760027, i64 2161760085, i64 2161760134, i64 2161759944, i64 2161759245, i64 2161759277}
 !46 = !{i64 2161757045}
-!47 = distinct !{!47, !14}
-!48 = distinct !{!48, !14}
-!49 = distinct !{!49, !14}
+!47 = distinct !{!47, !16}
+!48 = distinct !{!48, !16}
+!49 = distinct !{!49, !16}
 !50 = !{i64 24519}
 !51 = !{i64 25482}
-!52 = distinct !{!52, !14, !53}
+!52 = distinct !{!52, !16, !53}
 !53 = !{!"llvm.loop.peeled.count", i32 2}
 !54 = !{i64 29437}
 !55 = !{i64 2163236481, i64 2163236508, i64 2163236897, i64 2163236930, i64 2163236965, i64 2163236981, i64 2163237822, i64 2163237880, i64 2163237929, i64 2163237739, i64 2163237040, i64 2163237072}

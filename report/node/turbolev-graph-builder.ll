@@ -34,6 +34,9 @@ module asm
 %"class.std::locale" = type { ptr }
 %"struct.absl::container_internal::PolicyFunctions" = type { i32, i32, i32, i16, i8, i8, ptr, ptr, ptr, ptr, ptr, ptr, ptr }
 %"class.v8::internal::compiler::turboshaft::SupportedOperations" = type { i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8, i8 }
+%"struct.std::array.4627" = type { [2 x %"class.v8::internal::compiler::turboshaft::RegisterRepresentation"] }
+%"class.v8::internal::compiler::turboshaft::RegisterRepresentation" = type { %"class.v8::internal::compiler::turboshaft::MaybeRegisterRepresentation" }
+%"class.v8::internal::compiler::turboshaft::MaybeRegisterRepresentation" = type { i8 }
 %"class.v8::base::Vector.3912" = type { ptr, i64 }
 %"class.v8::internal::compiler::FeedbackCellRef" = type { %"class.v8::internal::compiler::HeapObjectRef" }
 %"class.v8::internal::compiler::HeapObjectRef" = type { %"class.v8::internal::compiler::ObjectRef" }
@@ -436,7 +439,6 @@ begin_hunk_1
 %class.anon.3671 = type { ptr, ptr }
 %"struct.v8::internal::compiler::turboshaft::SnapshotTableEntry.1306" = type <{ %"struct.v8::internal::compiler::turboshaft::VariableData", %"class.v8::internal::compiler::turboshaft::OpIndex", i32, i32, [4 x i8] }>
 %"struct.v8::internal::compiler::turboshaft::VariableData" = type { %"class.v8::internal::compiler::turboshaft::MaybeRegisterRepresentation", i8, %"class.v8::base::IntrusiveSetIndex" }
-%"class.v8::internal::compiler::turboshaft::MaybeRegisterRepresentation" = type { i8 }
 %"class.v8::base::IntrusiveSetIndex" = type { i64 }
 %"class.v8::internal::compiler::NativeContextRef" = type { %"class.v8::internal::compiler::ContextRef" }
 %"class.v8::internal::compiler::ContextRef" = type { %"class.v8::internal::compiler::HeapObjectRef" }
@@ -460,7 +462,6 @@ begin_hunk_1
 %"union.std::_Optional_payload_base<unsigned long>::_Storage" = type { i64 }
 %"class.v8::internal::compiler::turboshaft::V.4042" = type { %"class.v8::internal::compiler::turboshaft::OpIndex" }
 %"class.v8::internal::compiler::turboshaft::WordRepresentation" = type { %"class.v8::internal::compiler::turboshaft::RegisterRepresentation" }
-%"class.v8::internal::compiler::turboshaft::RegisterRepresentation" = type { %"class.v8::internal::compiler::turboshaft::MaybeRegisterRepresentation" }
 %"class.v8::internal::compiler::turboshaft::V.4059" = type { %"class.v8::internal::compiler::turboshaft::OpIndex" }
 %"class.std::optional.4103" = type { %"struct.std::_Optional_base.4104" }
 %"struct.std::_Optional_base.4104" = type { %"struct.std::_Optional_payload.4106" }
@@ -863,6 +864,10 @@ $_ZZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88intern
 
 $_ZZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPKN2v88internal6maglev10BasicBlockES8_EENS0_6HashEqIS8_vE4HashENSB_2EqENS4_13ZoneAllocatorISt4pairIKS8_S8_EEEE18GetPolicyFunctionsEvE5value = comdat any
 
+$_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE0ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array = comdat any
+
+$_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE1ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array = comdat any
+
 $_ZN2v88internal8compiler10turboshaft19ToNumberOrNumericOp8kOutRepsE = comdat any
 
 $_ZN2v88internal8compiler10turboshaft19ToNumberOrNumericOp18kOutputRepsStorageE = comdat any
@@ -929,6 +934,8 @@ $_ZN2v88internal8compiler10turboshaft13GenericUnopOp18kOutputRepsStorageE = comd
 @.str.53 = private unnamed_addr constant [19 x i8] c"unimplemented code\00", align 1
 @.str.55 = private unnamed_addr constant [19 x i8] c"!IsAnyHole(*value)\00", align 1
 @.str.56 = private unnamed_addr constant [8 x i8] c"IsMap()\00", align 1
+@_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE0ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array = linkonce_odr hidden local_unnamed_addr constant %"struct.std::array.4627" zeroinitializer, comdat, align 1
+@_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE1ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array = linkonce_odr hidden local_unnamed_addr constant { [2 x { i8 }] } { [2 x { i8 }] [{ i8 } { i8 1 }, { i8 } zeroinitializer] }, comdat, align 1
 @.str.63 = private unnamed_addr constant [11 x i8] c"!is_null()\00", align 1
 @_ZN2v88internal8compiler10turboshaft19ToNumberOrNumericOp8kOutRepsE = linkonce_odr hidden constant %"class.v8::base::Vector.3912" { ptr @_ZN2v88internal8compiler10turboshaft19ToNumberOrNumericOp18kOutputRepsStorageE, i64 1 }, comdat, align 8
 @_ZN2v88internal8compiler10turboshaft19ToNumberOrNumericOp18kOutputRepsStorageE = linkonce_odr hidden constant [1 x { i8 }] [{ i8 } { i8 4 }], comdat, align 1
@@ -1331,7 +1338,7 @@ bb.a:
   %3 = alloca %"class.v8::base::SmallVector.3913", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 5
   %i.b = load i8, ptr %i.a, align 1
-  %4 = icmp ne i8 %i.b, 0
+  %4 = icmp eq i8 %i.b, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 4 uses
   store ptr %i.c, ptr %3, align 8
@@ -1340,10 +1347,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 56
   store ptr %i.f, ptr %i.e, align 8
+  %5 = select i1 %4, ptr @_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE0ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE1ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 880 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 872 ; 2 uses
   %i.i = zext i32 %2 to i64                       ; 2 uses
-  %.sroa.01.0.copyload = zext i1 %4 to i8
+  %.sroa.01.0.copyload = load i8, ptr %5, align 1
   %i.j = load ptr, ptr %i.g, align 8
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS7_EE9push_backES7_.exit, label %bb.c, !prof !345
@@ -1400,6 +1408,8 @@ _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   store ptr %i.ag, ptr %i.d, align 8
   store i32 %.sroa.05.0.i.i21, ptr %i.af, align 4
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %.sroa.01.0.copyload.1 = load i8, ptr %6, align 1
   %i.ah = load ptr, ptr %i.g, align 8
   %i.ai = icmp eq ptr %i.ah, null
   br i1 %i.ai, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_26BlockOriginTrackingReducerENS2_28TurbolevEarlyLoweringReducerENS2_26MachineOptimizationReducerENS2_15VariableReducerENS2_27RequiredOptimizationReducerENS2_21ValueNumberingReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1, label %bb.f, !prof !345
@@ -1416,7 +1426,7 @@ bb.f:                                             ; preds = %_ZN2v84base11SmallV
   br i1 %i.aq, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ar = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_26BlockOriginTrackingReducerENS2_28TurbolevEarlyLoweringReducerENS2_26MachineOptimizationReducerENS2_15VariableReducerENS2_27RequiredOptimizationReducerENS2_21ValueNumberingReducerES3_EEEEEE4EmitINS2_12ProjectionOpEJNS2_14ShadowyOpIndexEtNS2_22RegisterRepresentationEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 8 dereferenceable(144) %0, i32 %2, i16 noundef zeroext 1, i8 0), !inline_history !333
+  %i.ar = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_26BlockOriginTrackingReducerENS2_28TurbolevEarlyLoweringReducerENS2_26MachineOptimizationReducerENS2_15VariableReducerENS2_27RequiredOptimizationReducerENS2_21ValueNumberingReducerES3_EEEEEE4EmitINS2_12ProjectionOpEJNS2_14ShadowyOpIndexEtNS2_22RegisterRepresentationEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 8 dereferenceable(144) %0, i32 %2, i16 noundef zeroext 1, i8 %.sroa.01.0.copyload.1), !inline_history !333
   %i.as = call i32 @_ZN2v88internal8compiler10turboshaft21ValueNumberingReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_26BlockOriginTrackingReducerENS2_28TurbolevEarlyLoweringReducerENS2_26MachineOptimizationReducerENS2_15VariableReducerENS2_27RequiredOptimizationReducerES3_S5_EEEEEEEEEE9AddOrFindINS2_12ProjectionOpEEENS2_7OpIndexESM_(ptr noundef nonnull align 8 dereferenceable(144) %0, i32 %i.ar), !inline_history !333
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_26BlockOriginTrackingReducerENS2_28TurbolevEarlyLoweringReducerENS2_26MachineOptimizationReducerENS2_15VariableReducerENS2_27RequiredOptimizationReducerENS2_21ValueNumberingReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1
 

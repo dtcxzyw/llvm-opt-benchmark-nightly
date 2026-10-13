@@ -205,6 +205,8 @@ $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
 @_ZN4llvm6AMDGPUL27WMMAOpcode3AddrMappingTableE = internal constant [88 x %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo"] [%"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11249, i32 11248 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11254, i32 11252 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11255, i32 11253 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11257, i32 11256 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11259, i32 11258 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11261, i32 11260 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11263, i32 11262 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11265, i32 11264 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11267, i32 11266 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11269, i32 11268 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11274, i32 11272 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11275, i32 11273 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11277, i32 11276 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11279, i32 11278 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11281, i32 11280 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11283, i32 11282 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11285, i32 11284 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11287, i32 11286 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11289, i32 11288 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11291, i32 11290 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11293, i32 11292 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11295, i32 11294 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11297, i32 11296 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11299, i32 11298 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11301, i32 11300 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11303, i32 11302 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11305, i32 11304 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11307, i32 11306 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11309, i32 11308 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11311, i32 11310 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11313, i32 11312 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11315, i32 11314 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11318, i32 11316 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11319, i32 11317 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11321, i32 11320 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11323, i32 11322 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11325, i32 11324 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11327, i32 11326 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11329, i32 11328 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11331, i32 11330 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11334, i32 11332 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11335, i32 11333 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11337, i32 11336 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11339, i32 11338 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11341, i32 11340 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11343, i32 11342 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11345, i32 11344 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11347, i32 11346 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11349, i32 11348 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11351, i32 11350 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11353, i32 11352 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11355, i32 11354 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11357, i32 11356 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11359, i32 11358 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11361, i32 11360 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11363, i32 11362 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11365, i32 11364 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11368, i32 11366 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11369, i32 11367 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11371, i32 11370 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11373, i32 11372 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11376, i32 11374 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11377, i32 11375 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11379, i32 11378 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11381, i32 11380 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11383, i32 11382 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11385, i32 11384 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11387, i32 11386 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11391, i32 11390 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11393, i32 11392 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11395, i32 11394 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11397, i32 11396 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11399, i32 11398 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11401, i32 11400 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11403, i32 11402 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11405, i32 11404 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11407, i32 11406 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11409, i32 11408 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11411, i32 11410 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11413, i32 11412 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11415, i32 11414 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11417, i32 11416 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11419, i32 11418 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11421, i32 11420 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11423, i32 11422 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11425, i32 11424 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11427, i32 11426 }, %"struct.llvm::AMDGPU::WMMAOpcodeMappingInfo" { i32 11429, i32 11428 }], align 16
 @_ZN4llvm6AMDGPUL23getMFMA_F8F6F4_WithSizeE = internal constant [99 x %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info"] [%"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52541, i32 52557, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52542, i32 52558, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52646, i32 52662, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52647, i32 52663, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52728, i32 52744, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52729, i32 52745, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52746, i32 52762, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52747, i32 52763, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52543, i32 52557, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52544, i32 52558, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52648, i32 52662, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52649, i32 52663, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52730, i32 52744, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52731, i32 52745, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52748, i32 52762, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52749, i32 52763, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52545, i32 52557, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52546, i32 52558, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52650, i32 52662, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52651, i32 52663, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52732, i32 52744, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52733, i32 52745, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52750, i32 52762, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52751, i32 52763, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52547, i32 52557, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52548, i32 52558, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52652, i32 52662, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52653, i32 52663, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52734, i32 52744, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52735, i32 52745, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52752, i32 52762, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52753, i32 52763, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52549, i32 52557, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52550, i32 52558, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52654, i32 52662, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52655, i32 52663, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52736, i32 52744, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52737, i32 52745, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52754, i32 52762, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52755, i32 52763, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52551, i32 52557, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52552, i32 52558, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52656, i32 52662, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52657, i32 52663, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52738, i32 52744, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52739, i32 52745, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52756, i32 52762, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52757, i32 52763, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52553, i32 52557, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52554, i32 52558, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52658, i32 52662, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52659, i32 52663, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52740, i32 52744, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52741, i32 52745, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52758, i32 52762, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52759, i32 52763, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52555, i32 52557, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52556, i32 52558, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52660, i32 52662, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52661, i32 52663, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52742, i32 52744, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52743, i32 52745, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52760, i32 52762, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52761, i32 52763, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52557, i32 52557, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52558, i32 52558, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52662, i32 52662, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52663, i32 52663, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52744, i32 52744, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52745, i32 52745, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52762, i32 52762, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52763, i32 52763, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55532, i32 55540, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55599, i32 55607, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55609, i32 55617, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55533, i32 55540, i8 8, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55600, i32 55607, i8 8, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55610, i32 55617, i8 8, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55534, i32 55540, i8 8, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55601, i32 55607, i8 8, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55611, i32 55617, i8 8, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55535, i32 55540, i8 12, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55602, i32 55607, i8 12, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55612, i32 55617, i8 12, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55536, i32 55540, i8 12, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55603, i32 55607, i8 12, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55613, i32 55617, i8 12, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55537, i32 55540, i8 12, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55604, i32 55607, i8 12, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55614, i32 55617, i8 12, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55538, i32 55540, i8 16, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55605, i32 55607, i8 16, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55615, i32 55617, i8 16, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55539, i32 55540, i8 16, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55606, i32 55607, i8 16, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55616, i32 55617, i8 16, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55540, i32 55540, i8 16, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55607, i32 55607, i8 16, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55617, i32 55617, i8 16, i8 16 }], align 16
 @_ZN4llvm6AMDGPUL18isMFMA_F8F6F4TableE = internal constant [99 x %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info"] [%"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52541, i32 52557, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52542, i32 52558, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52543, i32 52557, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52544, i32 52558, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52545, i32 52557, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52546, i32 52558, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52547, i32 52557, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52548, i32 52558, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52549, i32 52557, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52550, i32 52558, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52551, i32 52557, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52552, i32 52558, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52553, i32 52557, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52554, i32 52558, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52555, i32 52557, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52556, i32 52558, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52557, i32 52557, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52558, i32 52558, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52646, i32 52662, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52647, i32 52663, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52648, i32 52662, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52649, i32 52663, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52650, i32 52662, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52651, i32 52663, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52652, i32 52662, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52653, i32 52663, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52654, i32 52662, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52655, i32 52663, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52656, i32 52662, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52657, i32 52663, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52658, i32 52662, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52659, i32 52663, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52660, i32 52662, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52661, i32 52663, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52662, i32 52662, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52663, i32 52663, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52728, i32 52744, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52729, i32 52745, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52730, i32 52744, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52731, i32 52745, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52732, i32 52744, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52733, i32 52745, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52734, i32 52744, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52735, i32 52745, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52736, i32 52744, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52737, i32 52745, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52738, i32 52744, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52739, i32 52745, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52740, i32 52744, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52741, i32 52745, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52742, i32 52744, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52743, i32 52745, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52744, i32 52744, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52745, i32 52745, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52746, i32 52762, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52747, i32 52763, i8 4, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52748, i32 52762, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52749, i32 52763, i8 4, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52750, i32 52762, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52751, i32 52763, i8 4, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52752, i32 52762, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52753, i32 52763, i8 6, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52754, i32 52762, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52755, i32 52763, i8 6, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52756, i32 52762, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52757, i32 52763, i8 6, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52758, i32 52762, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52759, i32 52763, i8 8, i8 4 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52760, i32 52762, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52761, i32 52763, i8 8, i8 6 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52762, i32 52762, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 52763, i32 52763, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55532, i32 55540, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55533, i32 55540, i8 8, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55534, i32 55540, i8 8, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55535, i32 55540, i8 12, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55536, i32 55540, i8 12, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55537, i32 55540, i8 12, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55538, i32 55540, i8 16, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55539, i32 55540, i8 16, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55540, i32 55540, i8 16, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55599, i32 55607, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55600, i32 55607, i8 8, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55601, i32 55607, i8 8, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55602, i32 55607, i8 12, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55603, i32 55607, i8 12, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55604, i32 55607, i8 12, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55605, i32 55607, i8 16, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55606, i32 55607, i8 16, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55607, i32 55607, i8 16, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55609, i32 55617, i8 8, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55610, i32 55617, i8 8, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55611, i32 55617, i8 8, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55612, i32 55617, i8 12, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55613, i32 55617, i8 12, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55614, i32 55617, i8 12, i8 16 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55615, i32 55617, i8 16, i8 8 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55616, i32 55617, i8 16, i8 12 }, %"struct.llvm::AMDGPU::MFMA_F8F6F4_Info" { i32 55617, i32 55617, i8 16, i8 16 }], align 16
+@_ZN4llvm6AMDGPU4VOPDL21VOPD3_VGPR_BANK_MASKSE = internal unnamed_addr constant [4 x i32] [i32 1, i32 3, i32 3, i32 3], align 16
+@_ZN4llvm6AMDGPU4VOPDL20VOPD_VGPR_BANK_MASKSE = internal unnamed_addr constant [4 x i32] [i32 1, i32 3, i32 3, i32 1], align 16
 @.str.6 = private unnamed_addr constant [9 x i8] c"+sramecc\00", align 1
 @.str.8 = private unnamed_addr constant [77 x i8] c"warning: xnack 'On' was requested for a processor that does not support it!\0A\00", align 1
 @.str.9 = private unnamed_addr constant [78 x i8] c"warning: xnack 'Off' was requested for a processor that does not support it!\0A\00", align 1
@@ -607,7 +609,9 @@ bb.e:                                             ; preds = %_ZNSt8functionIFN4l
 
 _ZNSt14_Function_baseD2Ev.exit28:                 ; preds = %_ZNSt8functionIFN4llvm10MCRegisterEjjEEC2ERKS3_.exit26, %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 104 ; 4 uses
+  %.in.v = select i1 %5, ptr @_ZN4llvm6AMDGPU4VOPDL21VOPD3_VGPR_BANK_MASKSE, ptr @_ZN4llvm6AMDGPU4VOPDL20VOPD_VGPR_BANK_MASKSE ; 4 uses
   %.sroa.055.0.extract.trunc = trunc i64 %i.j to i32 ; 5 uses
+  %8 = load i32, ptr %.in.v, align 16, !tbaa !37  ; 3 uses
   %.not21 = icmp eq i32 %.sroa.055.0.extract.trunc, 0
   br i1 %.not21, label %bb.o, label %bb.f
 
@@ -644,7 +648,7 @@ bb.j:                                             ; preds = %bb.i
   %.not8.i = icmp eq i32 %i.an, 0
   %.sroa.0.0.i = select i1 %.not8.i, i32 %.sroa.0.0.extract.trunc, i32 %i.an ; 4 uses
   %i.ao = xor i32 %.sroa.0.0.i, %spec.select.i
-  %i.ap = and i32 %i.ao, 1
+  %i.ap = and i32 %i.ao, %8
   %i.aq = icmp eq i32 %i.ap, 0
   br i1 %i.aq, label %"_ZZNK4llvm6AMDGPU4VOPD8InstInfo26getInvalidCompOperandIndexESt8functionIFNS_10MCRegisterEjjEERKNS_14MCRegisterInfoEbbbENK3$_0clES4_S4_j.exit", label %bb.k
 
@@ -653,22 +657,26 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not15.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ar = xor i32 %spec.select.i, %.sroa.0.0.i
-  %i.as = and i32 %i.ar, 1
+  %9 = add i32 %spec.select.i, 1
+  %i.ar = xor i32 %9, %.sroa.0.0.i
+  %i.as = and i32 %i.ar, %8
   %.not73 = icmp eq i32 %i.as, 0
-  br i1 %.not73, label %bb.m, label %"_ZZNK4llvm6AMDGPU4VOPD8InstInfo26getInvalidCompOperandIndexESt8functionIFNS_10MCRegisterEjjEERKNS_14MCRegisterInfoEbbbENK3$_0clES4_S4_j.exit"
+  br i1 %.not73, label %"_ZZNK4llvm6AMDGPU4VOPD8InstInfo26getInvalidCompOperandIndexESt8functionIFNS_10MCRegisterEjjEERKNS_14MCRegisterInfoEbbbENK3$_0clES4_S4_j.exit", label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.not16.i = icmp eq i32 %.sroa.0.0.i, %.sroa.0.0.extract.trunc
   br i1 %.not16.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.at = xor i32 %.sroa.0.0.i, %spec.select.i
-  %i.au = and i32 %i.at, 1
+  %10 = add i32 %.sroa.0.0.i, 1
+  %i.at = xor i32 %10, %spec.select.i
+  %i.au = and i32 %i.at, %8
   %.not = icmp eq i32 %i.au, 0
-  br i1 %.not, label %bb.o, label %"_ZZNK4llvm6AMDGPU4VOPD8InstInfo26getInvalidCompOperandIndexESt8functionIFNS_10MCRegisterEjjEERKNS_14MCRegisterInfoEbbbENK3$_0clES4_S4_j.exit"
+  br i1 %.not, label %"_ZZNK4llvm6AMDGPU4VOPD8InstInfo26getInvalidCompOperandIndexESt8functionIFNS_10MCRegisterEjjEERKNS_14MCRegisterInfoEbbbENK3$_0clES4_S4_j.exit", label %bb.o
 
 bb.o:                                             ; preds = %_ZNSt14_Function_baseD2Ev.exit28, %bb.i, %bb.f, %bb.m, %bb.n
+  %.in.1 = getelementptr inbounds nuw i8, ptr %.in.v, i64 4
+  %11 = load i32, ptr %.in.1, align 4, !tbaa !37  ; 3 uses
   %.sroa.055.4.extract.shift = lshr i64 %i.j, 32  ; 5 uses
   %.sroa.055.4.extract.trunc = trunc nuw i64 %.sroa.055.4.extract.shift to i32 ; 3 uses
   %.not21.1 = icmp eq i64 %.sroa.055.4.extract.shift, 0
@@ -702,7 +710,7 @@ bb.s:                                             ; preds = %bb.r
   %.not8.i.1 = icmp eq i32 %i.bd, 0
   %.sroa.0.0.i.1 = select i1 %.not8.i.1, i32 %.sroa.0.4.extract.trunc, i32 %i.bd ; 4 uses
   %i.be = xor i32 %.sroa.0.0.i.1, %spec.select.i.1
-  %i.bf = and i32 %i.be, 3
+  %i.bf = and i32 %i.be, %11
   %i.bg = icmp eq i32 %i.bf, 0
   br i1 %i.bg, label %bb.x, label %bb.t
 
@@ -713,7 +721,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.bh = add i32 %spec.select.i.1, 1
   %i.bi = xor i32 %i.bh, %.sroa.0.0.i.1
-  %i.bj = and i32 %i.bi, 3
+  %i.bj = and i32 %i.bi, %11
   %i.bk = icmp eq i32 %i.bj, 0
   br i1 %i.bk, label %bb.x, label %bb.v
 
@@ -724,7 +732,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 bb.w:                                             ; preds = %bb.v
   %i.bl = add i32 %.sroa.0.0.i.1, 1
   %i.bm = xor i32 %i.bl, %spec.select.i.1
-  %i.bn = and i32 %i.bm, 3
+  %i.bn = and i32 %i.bm, %11
   %i.bo = icmp ne i32 %i.bn, 0
   %i.bp = icmp eq i64 %.sroa.055.4.extract.shift, %.sroa.0.4.extract.shift
   %i.bq = and i1 %4, %i.bp
@@ -737,6 +745,8 @@ bb.x:                                             ; preds = %bb.u, %bb.s
   br i1 %.old75.a, label %bb.y, label %"_ZZNK4llvm6AMDGPU4VOPD8InstInfo26getInvalidCompOperandIndexESt8functionIFNS_10MCRegisterEjjEERKNS_14MCRegisterInfoEbbbENK3$_0clES4_S4_j.exit"
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.r, %bb.p, %bb.o
+  %.in.2 = getelementptr inbounds nuw i8, ptr %.in.v, i64 8
+  %12 = load i32, ptr %.in.2, align 8, !tbaa !37  ; 3 uses
   %.sroa.6.8.extract.trunc = trunc i64 %i.k to i32 ; 6 uses
   %.not21.2 = icmp eq i32 %.sroa.6.8.extract.trunc, 0
   br i1 %.not21.2, label %bb.ai, label %bb.z
@@ -770,7 +780,7 @@ bb.ac:                                            ; preds = %bb.ab
   %.not8.i.2 = icmp eq i32 %i.cb, 0
   %.sroa.0.0.i.2 = select i1 %.not8.i.2, i32 %.sroa.5.8.extract.trunc, i32 %i.cb ; 4 uses
   %i.cc = xor i32 %.sroa.0.0.i.2, %spec.select.i.2
-  %i.cd = and i32 %i.cc, 3
+  %i.cd = and i32 %i.cc, %12
   %i.ce = icmp eq i32 %i.cd, 0
   br i1 %i.ce, label %bb.ah, label %bb.ad
 
@@ -781,7 +791,7 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %bb.ad
   %i.cf = add i32 %spec.select.i.2, 1
   %i.cg = xor i32 %i.cf, %.sroa.0.0.i.2
-  %i.ch = and i32 %i.cg, 3
+  %i.ch = and i32 %i.cg, %12
   %i.ci = icmp eq i32 %i.ch, 0
   br i1 %i.ci, label %bb.ah, label %bb.af
 
@@ -792,7 +802,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 bb.ag:                                            ; preds = %bb.af
   %i.cj = add i32 %.sroa.0.0.i.2, 1
   %i.ck = xor i32 %i.cj, %spec.select.i.2
-  %i.cl = and i32 %i.ck, 3
+  %i.cl = and i32 %i.ck, %12
   %i.cm = icmp ne i32 %i.cl, 0
   %i.cn = icmp eq i32 %.sroa.6.8.extract.trunc, %.sroa.5.8.extract.trunc
   %i.co = and i1 %4, %i.cn
@@ -805,7 +815,8 @@ bb.ah:                                            ; preds = %bb.ae, %bb.ac
   br i1 %.old77, label %bb.ai, label %"_ZZNK4llvm6AMDGPU4VOPD8InstInfo26getInvalidCompOperandIndexESt8functionIFNS_10MCRegisterEjjEERKNS_14MCRegisterInfoEbbbENK3$_0clES4_S4_j.exit"
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.af, %bb.ab, %bb.z, %bb.y
-  %8 = select i1 %5, i32 3, i32 1                 ; 3 uses
+  %.in.3 = getelementptr inbounds nuw i8, ptr %.in.v, i64 12
+  %13 = load i32, ptr %.in.3, align 4, !tbaa !37  ; 3 uses
   %.sroa.6.12.extract.shift = lshr i64 %i.k, 32   ; 5 uses
   %.sroa.6.12.extract.trunc = trunc nuw i64 %.sroa.6.12.extract.shift to i32 ; 3 uses
   %.not21.3 = icmp eq i64 %.sroa.6.12.extract.shift, 0
@@ -839,7 +850,7 @@ bb.am:                                            ; preds = %bb.al
   %.not8.i.3 = icmp eq i32 %i.cx, 0
   %.sroa.0.0.i.3 = select i1 %.not8.i.3, i32 %.sroa.5.12.extract.trunc, i32 %i.cx ; 4 uses
   %i.cy = xor i32 %.sroa.0.0.i.3, %spec.select.i.3
-  %i.cz = and i32 %i.cy, %8
+  %i.cz = and i32 %i.cy, %13
   %i.da = icmp eq i32 %i.cz, 0
   br i1 %i.da, label %bb.ar, label %bb.an
 
@@ -850,7 +861,7 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.an
   %i.db = add i32 %spec.select.i.3, 1
   %i.dc = xor i32 %i.db, %.sroa.0.0.i.3
-  %i.dd = and i32 %i.dc, %8
+  %i.dd = and i32 %i.dc, %13
   %i.de = icmp eq i32 %i.dd, 0
   br i1 %i.de, label %bb.ar, label %bb.ap
 
@@ -861,7 +872,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 bb.aq:                                            ; preds = %bb.ap
   %i.df = add i32 %.sroa.0.0.i.3, 1
   %i.dg = xor i32 %i.df, %spec.select.i.3
-  %i.dh = and i32 %i.dg, %8
+  %i.dh = and i32 %i.dg, %13
   %i.di = icmp ne i32 %i.dh, 0
   %i.dj = icmp eq i64 %.sroa.6.12.extract.shift, %.sroa.5.12.extract.shift
   %i.dk = and i1 %4, %i.dj

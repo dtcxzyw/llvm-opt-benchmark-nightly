@@ -98,6 +98,8 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.77 = private unnamed_addr constant [22 x i8] c"fm->got_frame[1] == 0\00", align 1
 @.str.78 = private unnamed_addr constant [33 x i8] c"fm->prv2 && fm->src2 && fm->nxt2\00", align 1
 @.str.79 = private unnamed_addr constant [53 x i8] c"order == 0 || order == 1 || field == 0 || field == 1\00", align 1
+@fxo1m = internal unnamed_addr constant [5 x i32] [i32 2, i32 1, i32 0, i32 4, i32 3], align 16
+@fxo0m = internal unnamed_addr constant [5 x i32] [i32 0, i32 1, i32 2, i32 3, i32 4], align 16
 @.str.80 = private unnamed_addr constant [28 x i8] c"COMBS: %3d %3d %3d %3d %3d\0A\00", align 1
 @.str.81 = private unnamed_addr constant [2 x i8] c"0\00", align 1
 @.str.82 = private unnamed_addr constant [38 x i8] c"Frame #%ld at %s is still interlaced\0A\00", align 1
@@ -500,7 +502,8 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %.thread, %bb.x
   %.289 = phi i32 [ %.286, %.thread ], [ %., %bb.x ] ; 20 uses
   %i.bk = phi i32 [ %.ph, %.thread ], [ %i.ba, %bb.x ]
-  %.not240 = icmp eq i32 %.289, %i.bk             ; 9 uses
+  %.not240 = icmp eq i32 %.289, %i.bk
+  %2 = select i1 %.not240, ptr @fxo0m, ptr @fxo1m ; 10 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.j, i64 156 ; 3 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !93
   %.not241 = icmp eq i32 %i.bm, 0
@@ -597,8 +600,10 @@ bb.aj:                                            ; preds = %bb.z
   br i1 %.not242, label %.loopexit304, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %2 = select i1 %.not240, i32 0, i32 2           ; 5 uses
-  %i.dd = tail call fastcc i32 @compare_fields(ptr noundef nonnull %i.j, i32 noundef 1, i32 noundef %2, i32 noundef %.289) ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %4 = load i32, ptr %3, align 4, !tbaa !42       ; 3 uses
+  %5 = load i32, ptr %2, align 16, !tbaa !42      ; 5 uses
+  %i.dd = tail call fastcc i32 @compare_fields(ptr noundef nonnull %i.j, i32 noundef %4, i32 noundef %5, i32 noundef %.289) ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.j, i64 112 ; 2 uses
   %i.df = load i32, ptr %i.de, align 8, !tbaa !94
   %i.dg = and i32 %i.df, -2
@@ -606,8 +611,9 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br i1 %switch, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  %3 = select i1 %.not240, i32 2, i32 0
-  %i.dh = tail call fastcc i32 @compare_fields(ptr noundef nonnull %i.j, i32 noundef %i.dd, i32 noundef %3, i32 noundef %.289)
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = load i32, ptr %6, align 8, !tbaa !42
+  %i.dh = tail call fastcc i32 @compare_fields(ptr noundef nonnull %i.j, i32 noundef %i.dd, i32 noundef %7, i32 noundef %.289)
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ak, %bb.al
@@ -871,41 +877,48 @@ bb.ar:                                            ; preds = %.thread291, %bb.aq
   ]
 
 bb.as:                                            ; preds = %bb.ar
-  %i.hy = icmp eq i32 %.0206, %2
-  %i.hz = select i1 %i.hy, i32 1, i32 %2
+  %i.hy = icmp eq i32 %.0206, %5
+  %i.hz = select i1 %i.hy, i32 %4, i32 %5
   %i.ia = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %i.hz, ptr noundef %i.b, i32 noundef %.289)
   br label %bb.az
 
 bb.at:                                            ; preds = %bb.ar
-  %4 = select i1 %.not240, i32 2, i32 0
-  %i.ib = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %4, ptr noundef %i.b, i32 noundef %.289)
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %9 = load i32, ptr %8, align 8, !tbaa !42
+  %i.ib = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %9, ptr noundef %i.b, i32 noundef %.289)
   br label %bb.az
 
 bb.au:                                            ; preds = %bb.ar
-  %5 = select i1 %.not240, i32 4, i32 3
-  %i.ic = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %5, ptr noundef %i.b, i32 noundef %.289)
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %11 = load i32, ptr %10, align 16, !tbaa !42
+  %i.ic = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %11, ptr noundef %i.b, i32 noundef %.289)
   br label %bb.az
 
 bb.av:                                            ; preds = %bb.ar
-  %6 = select i1 %.not240, i32 2, i32 0
-  %i.id = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %6, ptr noundef %i.b, i32 noundef %.289)
-  %7 = select i1 %.not240, i32 4, i32 3
-  %i.ie = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %i.id, i32 noundef %7, ptr noundef %i.b, i32 noundef %.289)
-  %8 = select i1 %.not240, i32 3, i32 4
-  %i.if = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %i.ie, i32 noundef %8, ptr noundef %i.b, i32 noundef %.289)
+  %12 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %13 = load i32, ptr %12, align 8, !tbaa !42
+  %i.id = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %13, ptr noundef %i.b, i32 noundef %.289)
+  %14 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %15 = load i32, ptr %14, align 16, !tbaa !42
+  %i.ie = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %i.id, i32 noundef %15, ptr noundef %i.b, i32 noundef %.289)
+  %16 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %17 = load i32, ptr %16, align 4, !tbaa !42
+  %i.if = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %i.ie, i32 noundef %17, ptr noundef %i.b, i32 noundef %.289)
   br label %bb.az
 
 bb.aw:                                            ; preds = %bb.ar
-  %i.ig = icmp eq i32 %.0206, %2
-  %i.ih = select i1 %i.ig, i32 1, i32 %2
+  %i.ig = icmp eq i32 %.0206, %5
+  %i.ih = select i1 %i.ig, i32 %4, i32 %5
   %i.ii = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %i.ih, ptr noundef %i.b, i32 noundef %.289)
   br label %bb.az
 
 bb.ax:                                            ; preds = %bb.ar
-  %9 = select i1 %.not240, i32 4, i32 3
-  %i.ij = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %9, ptr noundef %i.b, i32 noundef %.289)
-  %10 = select i1 %.not240, i32 3, i32 4
-  %i.ik = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %i.ij, i32 noundef %10, ptr noundef %i.b, i32 noundef %.289)
+  %18 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %19 = load i32, ptr %18, align 16, !tbaa !42
+  %i.ij = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %.0206, i32 noundef %19, ptr noundef %i.b, i32 noundef %.289)
+  %20 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %21 = load i32, ptr %20, align 4, !tbaa !42
+  %i.ik = call fastcc i32 @checkmm(ptr noundef %i.e, ptr noundef %i.a, i32 noundef %i.ij, i32 noundef %21, ptr noundef %i.b, i32 noundef %.289)
   br label %bb.az
 
 bb.ay:                                            ; preds = %bb.ar

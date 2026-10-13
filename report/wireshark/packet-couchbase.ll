@@ -204,8 +204,8 @@ bb.t:                                             ; preds = %bb.r
   br label %.lr.ph118.i.i
 
 .lr.ph118.i.i:                                    ; preds = %bb.t, %bb.r
-  %i.cy = phi ptr [ @flex_frame_request_dissect, %bb.t ], [ @flex_frame_response_dissect, %bb.r ] ; 2 uses
-  %.0.i2631.i = phi i1 [ true, %bb.t ], [ false, %bb.r ] ; 2 uses
+  %i.cy = phi ptr [ @flex_frame_request_dissect, %bb.t ], [ @flex_frame_response_dissect, %bb.r ] ; 3 uses
+  %.0.i2631.i = phi i1 [ true, %bb.t ], [ false, %bb.r ]
   %.in.i = phi ptr [ @hf_flex_frame_id_req_esc, %bb.t ], [ @hf_flex_frame_id_res_esc, %bb.r ]
   %i.cz = load i32, ptr %.in.i, align 4
   %i.da = load i32, ptr @hf_flex_frame_len, align 4
@@ -214,7 +214,9 @@ bb.t:                                             ; preds = %bb.r
   %i.db = load i32, ptr @hf_flex_extras, align 4
   %i.dc = tail call ptr @proto_tree_add_uint(ptr noundef %i.g, i32 noundef %i.db, ptr noundef %0, i32 noundef 24, i32 noundef %i.cq, i32 noundef %i.cq) ; 0 uses
   %spec.select = select i1 %.0.i2631.i, i32 %hf_flex_frame_id_req.val.i.i, i32 %hf_flex_frame_id_res.val.i.i
-  %spec.select101 = select i1 %.0.i2631.i, ptr @flex_frame_reorder_dissect, ptr @flex_frame_duration_dissect
+  %4 = getelementptr i8, ptr %i.cy, i64 8
+  %5 = load ptr, ptr %4, align 8                  ; 2 uses
+  %.not98110.i.i = icmp eq ptr %5, null
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.z, %.lr.ph118.i.i
@@ -275,12 +277,15 @@ bb.y:                                             ; preds = %bb.x
   %i.eb = add i32 %.092113.i.i, -1
   %i.ec = add i32 %i.eb, %.078.i.i
   %i.ed = add i32 %i.ec, %.077.i.i                ; 3 uses
-  %4 = load i32, ptr %i.cy, align 16
-  %5 = icmp eq i32 %4, %.080.i.i
-  br i1 %5, label %.lr.ph.i._crit_edge.i, label %.lr.ph.i
+  br i1 %.not98110.i.i, label %.critedge.i.i, label %.lr.ph.i.preheader.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.preheader.i.i, %.lr.ph.i.i
-  %.076111.i39.i = phi i32 [ %i.ee, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
+.lr.ph.i.preheader.i:                             ; preds = %.lr.ph.preheader.i.i
+  %6 = load i32, ptr %i.cy, align 16
+  %7 = icmp eq i32 %6, %.080.i.i
+  br i1 %7, label %.lr.ph.i._crit_edge.i, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader.i, %.lr.ph.i.i
+  %.076111.i39.i = phi i32 [ %i.ee, %.lr.ph.i.i ], [ 0, %.lr.ph.i.preheader.i ]
   %i.ee = add i32 %.076111.i39.i, 1               ; 2 uses
   %i.ef = sext i32 %i.ee to i64
   %i.eg = getelementptr [16 x i8], ptr %i.cy, i64 %i.ef ; 2 uses
@@ -294,12 +299,12 @@ bb.y:                                             ; preds = %bb.x
   %i.ek = icmp eq i32 %i.ej, %.080.i.i
   br i1 %i.ek, label %.lr.ph.i._crit_edge.i, label %.lr.ph.i, !llvm.loop !9
 
-.lr.ph.i._crit_edge.i:                            ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
-  %.lcssa.i = phi ptr [ %spec.select101, %.lr.ph.preheader.i.i ], [ %i.ei, %.lr.ph.i.i ]
+.lr.ph.i._crit_edge.i:                            ; preds = %.lr.ph.i.i, %.lr.ph.i.preheader.i
+  %.lcssa.i = phi ptr [ %5, %.lr.ph.i.preheader.i ], [ %i.ei, %.lr.ph.i.i ]
   tail call void %.lcssa.i(ptr noundef %0, ptr noundef %i.dy, i32 noundef %i.ed, i32 noundef %.079.i.i), !inline_history !10
   br label %bb.z
 
-.critedge.i.i:                                    ; preds = %.lr.ph.i
+.critedge.i.i:                                    ; preds = %.lr.ph.i, %.lr.ph.preheader.i.i
   %i.el = tail call ptr (ptr, ptr, ptr, ptr, i32, i32, ptr, ...) @proto_tree_add_expert_format(ptr noundef %i.dy, ptr noundef %1, ptr noundef nonnull @ei_warn_unknown_flex_id, ptr noundef %0, i32 noundef %i.ed, i32 noundef %.079.i.i, ptr noundef nonnull @.str.762, i32 noundef %.080.i.i) ; 0 uses
   br label %bb.z
 

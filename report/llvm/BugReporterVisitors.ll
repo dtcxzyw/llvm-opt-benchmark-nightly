@@ -205,6 +205,10 @@ $_ZTVN5clang12ast_matchers8internal20HasDescendantMatcherINS_4StmtES3_EE = comda
 
 $_ZTVN5clang12ast_matchers8internal22CollectMatchesCallbackE = comdat any
 
+$_ZN5clang4ento18ConditionBRVisitor18GenericTrueMessageE = comdat any
+
+$_ZN5clang4ento18ConditionBRVisitor19GenericFalseMessageE = comdat any
+
 $_ZZN5clang4ento39LikelyFalsePositiveSuppressionBRVisitor6getTagEvE3Tag = comdat any
 
 $_ZZNK5clang4ento21UndefOrNullArgVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3Tag = comdat any
@@ -295,7 +299,9 @@ $_ZTVSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticPopUpPieceESaIvELN9
 @_ZTVN4llvm19raw_svector_ostreamE = external unnamed_addr constant { [16 x ptr] }, align 8
 @.str.50 = private unnamed_addr constant [42 x i8] c", which participates in a condition later\00", align 1
 @.str.52 = private unnamed_addr constant [31 x i8] c"Assuming the condition is true\00", align 1
+@_ZN5clang4ento18ConditionBRVisitor18GenericTrueMessageE = linkonce_odr local_unnamed_addr constant { ptr, i64 } { ptr @.str.52, i64 30 }, comdat, align 8
 @.str.54 = private unnamed_addr constant [32 x i8] c"Assuming the condition is false\00", align 1
+@_ZN5clang4ento18ConditionBRVisitor19GenericFalseMessageE = linkonce_odr local_unnamed_addr constant { ptr, i64 } { ptr @.str.54, i64 31 }, comdat, align 8
 @_ZZN5clang4ento39LikelyFalsePositiveSuppressionBRVisitor6getTagEvE3Tag = linkonce_odr global i32 0, comdat, align 4
 @_ZZNK5clang4ento21UndefOrNullArgVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3Tag = linkonce_odr global i32 0, comdat, align 4
 @_ZZNK5clang4ento18NoStoreFuncVisitor7ProfileERN4llvm16FoldingSetNodeIDEE3Tag = linkonce_odr global i32 0, comdat, align 4
@@ -698,6 +704,7 @@ bb.ao:                                            ; preds = %_ZNSt12__shared_ptr
   br label %bb.ar
 
 bb.ap:                                            ; preds = %bb.ao
+  %_ZN5clang4ento18ConditionBRVisitor18GenericTrueMessageE._ZN5clang4ento18ConditionBRVisitor19GenericFalseMessageE = select i1 %6, ptr @_ZN5clang4ento18ConditionBRVisitor18GenericTrueMessageE, ptr @_ZN5clang4ento18ConditionBRVisitor19GenericFalseMessageE ; 2 uses
   %i.dl = call noalias noundef nonnull dereferenceable(216) ptr @_Znwm(i64 noundef 216) #25, !noalias !1416 ; 8 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
   store i32 1, ptr %i.dm, align 8, !tbaa !149, !noalias !1417
@@ -705,9 +712,10 @@ bb.ap:                                            ; preds = %bb.ao
   store i32 1, ptr %i.dn, align 4, !tbaa !150, !noalias !1417
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5clang4ento24PathDiagnosticEventPieceESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.dl, align 8, !tbaa !113, !noalias !1417
   %i.do = getelementptr inbounds nuw i8, ptr %i.dl, i64 16 ; 5 uses
-  %.sroa.0.0.copyload.i.i.i.i.i.i = select i1 %6, ptr @.str.52, ptr @.str.54
-  %.sroa.2.0.copyload.i.i.i.i.i.i = select i1 %6, i64 30, i64 31
-  call void @_ZN5clang4ento19PathDiagnosticPieceC2EN4llvm9StringRefENS1_4KindENS1_11DisplayHintE(ptr noundef nonnull align 8 dereferenceable(194) %i.do, ptr nonnull %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %.sroa.2.0.copyload.i.i.i.i.i.i, i32 noundef 1, i32 noundef 1) #24, !noalias !1417
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %_ZN5clang4ento18ConditionBRVisitor18GenericTrueMessageE._ZN5clang4ento18ConditionBRVisitor19GenericFalseMessageE, align 8, !tbaa !684, !noalias !1417
+  %.sroa.2.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %_ZN5clang4ento18ConditionBRVisitor18GenericTrueMessageE._ZN5clang4ento18ConditionBRVisitor19GenericFalseMessageE, i64 8
+  %.sroa.2.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !116, !noalias !1417
+  call void @_ZN5clang4ento19PathDiagnosticPieceC2EN4llvm9StringRefENS1_4KindENS1_11DisplayHintE(ptr noundef nonnull align 8 dereferenceable(194) %i.do, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %.sroa.2.0.copyload.i.i.i.i.i.i, i32 noundef 1, i32 noundef 1) #24, !noalias !1417
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN5clang4ento23PathDiagnosticSpotPieceE, i64 16), ptr %i.do, align 8, !tbaa !113, !noalias !1417
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dl, i64 144 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.dp, ptr noundef nonnull align 8 dereferenceable(64) %10, i64 64, i1 false), !noalias !1417
