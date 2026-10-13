@@ -205,13 +205,15 @@ bb.f:                                             ; preds = %.loopexit1144
   %i.oy = load i32, ptr %i.ox, align 4
   %i.oz = insertelement <4 x i32> poison, i32 %i.oy, i64 0
   %i.pa = shufflevector <4 x i32> %i.oz, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %4 = bitcast <4 x i32> %i.pa to <2 x i64>
   %i.pb = getelementptr i8, ptr %0, i64 60
   %i.pc = load i32, ptr %i.pb, align 4
   %i.pd = insertelement <4 x i32> poison, i32 %i.pc, i64 0
   %i.pe = shufflevector <4 x i32> %i.pd, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %5 = bitcast <4 x i32> %i.pe to <2 x i64>
   %i.pf = getelementptr i8, ptr %0, i64 48        ; 2 uses
-  %4 = bitcast <4 x i32> %i.pe to <2 x i64>
-  %5 = bitcast <4 x i32> %i.pa to <2 x i64>
+  %6 = getelementptr i8, ptr %.11099, i64 256
+  %7 = getelementptr i8, ptr %.11097, i64 256
   %i.pg = load i64, ptr %i.pf, align 4            ; 2 uses
   %i.ph = insertelement <2 x i64> poison, i64 %i.pg, i64 0
   %i.pi = shufflevector <2 x i64> %i.ph, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -229,8 +231,8 @@ bb.f:                                             ; preds = %.loopexit1144
 
 bb.g:                                             ; preds = %bb.f, %bb.g
   %.011151180 = phi i32 [ 0, %bb.f ], [ %i.vg, %bb.g ] ; 2 uses
-  %.011161179 = phi <2 x i64> [ %4, %bb.f ], [ %i.tc, %bb.g ]
-  %.011171178 = phi <2 x i64> [ %5, %bb.f ], [ %i.vb, %bb.g ]
+  %.011161179 = phi <2 x i64> [ %5, %bb.f ], [ %i.tc, %bb.g ]
+  %.011171178 = phi <2 x i64> [ %4, %bb.f ], [ %i.vb, %bb.g ]
   %.011181177 = phi <2 x i64> [ %i.pq, %bb.f ], [ %i.uk, %bb.g ]
   %.011191176 = phi <2 x i64> [ %i.po, %bb.f ], [ %i.tt, %bb.g ]
   %i.ps = phi <4 x i32> [ %i.ow, %bb.f ], [ %i.tv, %bb.g ]
@@ -528,15 +530,13 @@ bb.g:                                             ; preds = %bb.f, %bb.g
   %i.aac = xor <2 x i64> %i.aab, %i.zp
   %i.aad = getelementptr i8, ptr %.11099, i64 240
   store <2 x i64> %i.aac, ptr %i.aad, align 1
-  %6 = getelementptr i8, ptr %.11097, i64 256
-  %7 = getelementptr i8, ptr %.11099, i64 256
   %i.aae = add nsw i64 %.11104, -256
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %.loopexit1144
   %.31106 = phi i64 [ %.11104, %.loopexit1144 ], [ %i.aae, %.loopexit.loopexit ] ; 3 uses
-  %.31101 = phi ptr [ %.11099, %.loopexit1144 ], [ %7, %.loopexit.loopexit ] ; 2 uses
-  %.3 = phi ptr [ %.11097, %.loopexit1144 ], [ %6, %.loopexit.loopexit ] ; 2 uses
+  %.31101 = phi ptr [ %.11099, %.loopexit1144 ], [ %6, %.loopexit.loopexit ] ; 2 uses
+  %.3 = phi ptr [ %.11097, %.loopexit1144 ], [ %7, %.loopexit.loopexit ] ; 2 uses
   %i.aaf = icmp samesign ugt i64 %.31106, 63
   br i1 %i.aaf, label %.lr.ph, label %._crit_edge
 
@@ -845,7 +845,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.agy = xor i8 %i.agx, %i.agv
   %i.agz = getelementptr i8, ptr %.41102.lcssa, i64 %indvars.iv.prol
   store i8 %i.agy, ptr %i.agz, align 1
-  %indvars.iv.next.prol = add nuw i64 %indvars.iv.prol, 1 ; 2 uses
+  %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol, !llvm.loop !11
@@ -865,7 +865,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ahg = xor i8 %i.ahf, %i.ahd
   %i.ahh = getelementptr i8, ptr %.41102.lcssa, i64 %indvars.iv
   store i8 %i.ahg, ptr %i.ahh, align 1
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.ahi = getelementptr i8, ptr %.4.lcssa, i64 %indvars.iv.next
   %i.ahj = load i8, ptr %i.ahi, align 1
   %i.ahk = getelementptr i8, ptr %i.a, i64 %indvars.iv.next
@@ -873,7 +873,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ahm = xor i8 %i.ahl, %i.ahj
   %i.ahn = getelementptr i8, ptr %.41102.lcssa, i64 %indvars.iv.next
   store i8 %i.ahm, ptr %i.ahn, align 1
-  %indvars.iv.next.1 = add nuw i64 %indvars.iv, 2 ; 3 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.aho = getelementptr i8, ptr %.4.lcssa, i64 %indvars.iv.next.1
   %i.ahp = load i8, ptr %i.aho, align 1
   %i.ahq = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.1
@@ -881,7 +881,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ahs = xor i8 %i.ahr, %i.ahp
   %i.aht = getelementptr i8, ptr %.41102.lcssa, i64 %indvars.iv.next.1
   store i8 %i.ahs, ptr %i.aht, align 1
-  %indvars.iv.next.2 = add nuw i64 %indvars.iv, 3 ; 3 uses
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv, 3 ; 3 uses
   %i.ahu = getelementptr i8, ptr %.4.lcssa, i64 %indvars.iv.next.2
   %i.ahv = load i8, ptr %i.ahu, align 1
   %i.ahw = getelementptr i8, ptr %i.a, i64 %indvars.iv.next.2
@@ -889,7 +889,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ahy = xor i8 %i.ahx, %i.ahv
   %i.ahz = getelementptr i8, ptr %.41102.lcssa, i64 %indvars.iv.next.2
   store i8 %i.ahy, ptr %i.ahz, align 1
-  %indvars.iv.next.3 = add nuw i64 %indvars.iv, 4 ; 2 uses
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %.41107.lcssa
   br i1 %exitcond.not.3, label %.loopexit1358, label %vec.epilog.scalar.ph, !llvm.loop !12
 

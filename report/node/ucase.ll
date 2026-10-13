@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/ucase?download=true
 inline.NumInlined: 26
 inline.NumDeleted: 9
-loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@ucase_addSimpleCaseClosure_78:bb.a
 
 .split.3:                                         ; preds = %bb.x, %.split.2
@@ -204,7 +204,14 @@ bb.a:
   %i.d = shl nuw nsw i32 %1, 1
   %i.e = zext nneg i32 %i.d to i64
   %i.f = icmp eq i32 %1, 3
-  br i1 %i.f, label %.preheader63.split.us.preheader, label %.preheader63.split
+  br i1 %i.f, label %.preheader63.split.us.preheader, label %.preheader63.split.preheader
+
+.preheader63.split.preheader:                     ; preds = %.preheader63
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %4 = icmp samesign ugt i32 %1, 1
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %6 = icmp sgt i32 %1, 2
+  br label %.preheader63.split
 
 .preheader63.split.us.preheader:                  ; preds = %.preheader63
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -264,48 +271,69 @@ _ZL9strcmpMaxPKDsiS0_i.exit.us:                   ; preds = %bb.f, %bb.d, %bb.b
   %i.aa = icmp slt i32 %.145.us, %.1.us
   br i1 %i.aa, label %.preheader63.split.us, label %.critedge
 
-.preheader63.split:                               ; preds = %.preheader63, %.split
-  %.04368 = phi i32 [ %.1, %.split ], [ 73, %.preheader63 ] ; 2 uses
-  %.04467 = phi i32 [ %.145, %.split ], [ 0, %.preheader63 ] ; 2 uses
+.preheader63.split:                               ; preds = %.preheader63.split.preheader, %.split
+  %.04368 = phi i32 [ %.1, %.split ], [ 73, %.preheader63.split.preheader ] ; 2 uses
+  %.04467 = phi i32 [ %.145, %.split ], [ 0, %.preheader63.split.preheader ] ; 2 uses
   %i.ab = add nsw i32 %.04368, %.04467
   %i.ac = sdiv i32 %i.ab, 2                       ; 3 uses
   %i.ad = mul nsw i32 %i.ac, 5
   %i.ae = sext i32 %i.ad to i64
-  %i.af = getelementptr inbounds [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL18ucase_props_unfold, i64 10), i64 %i.ae ; 3 uses
-  %scevgep.i.a = getelementptr i8, ptr %i.af, i64 %i.e
-  br label %bb.g
+  %i.af = getelementptr inbounds [2 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZL18ucase_props_unfold, i64 10), i64 %i.ae ; 5 uses
+  %scevgep.i = getelementptr i8, ptr %i.af, i64 %i.e
+  %scevgep.i.a = getelementptr inbounds nuw i8, ptr %i.af, i64 2
+  %7 = load i16, ptr %i.af, align 2               ; 2 uses
+  %8 = icmp eq i16 %7, 0
+  br i1 %8, label %.split, label %bb.g
 
-bb.g:                                             ; preds = %bb.i, %.preheader63.split
-  %.014.i = phi ptr [ %0, %.preheader63.split ], [ %3, %bb.i ] ; 2 uses
-  %.013.i = phi i32 [ %1, %.preheader63.split ], [ %6, %bb.i ] ; 2 uses
-  %.0.i = phi ptr [ %i.af, %.preheader63.split ], [ %4, %bb.i ] ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.014.i, i64 2
-  %4 = getelementptr inbounds nuw i8, ptr %.0.i, i64 2
-  %5 = load i16, ptr %.0.i, align 2               ; 2 uses
-  %i.ag = icmp eq i16 %5, 0
-  br i1 %i.ag, label %.split, label %bb.h
+bb.g:                                             ; preds = %.preheader63.split
+  %9 = zext i16 %7 to i32
+  %10 = load i16, ptr %0, align 2
+  %11 = zext i16 %10 to i32
+  %12 = sub nsw i32 %11, %9                       ; 2 uses
+  %i.ag = icmp eq i32 %12, 0
+  br i1 %i.ag, label %13, label %_ZL9strcmpMaxPKDsiS0_i.exit
 
-bb.h:                                             ; preds = %bb.g
-  %i.ah = zext i16 %5 to i32
-  %i.ai = load i16, ptr %.014.i, align 2
+13:                                               ; preds = %bb.g
+  br i1 %4, label %14, label %bb.j
+
+14:                                               ; preds = %13
+  %15 = getelementptr inbounds nuw i8, ptr %i.af, i64 4
+  %16 = load i16, ptr %scevgep.i.a, align 2       ; 2 uses
+  %17 = icmp eq i16 %16, 0
+  br i1 %17, label %.split, label %bb.h
+
+bb.h:                                             ; preds = %14
+  %i.ah = zext i16 %16 to i32
+  %i.ai = load i16, ptr %3, align 2
   %i.aj = zext i16 %i.ai to i32
   %i.ak = sub nsw i32 %i.aj, %i.ah                ; 2 uses
   %.not.i = icmp eq i32 %i.ak, 0
-  br i1 %.not.i, label %bb.i, label %_ZL9strcmpMaxPKDsiS0_i.exit
+  br i1 %.not.i, label %18, label %_ZL9strcmpMaxPKDsiS0_i.exit
 
-bb.i:                                             ; preds = %bb.h
-  %6 = add nsw i32 %.013.i, -1
-  %7 = icmp samesign ugt i32 %.013.i, 1
-  br i1 %7, label %bb.g, label %bb.j, !llvm.loop !9
+18:                                               ; preds = %bb.h
+  br i1 %6, label %19, label %bb.j
 
-bb.j:                                             ; preds = %bb.i
-  %i.al = load i16, ptr %scevgep.i.a, align 2
+19:                                               ; preds = %18
+  %20 = load i16, ptr %15, align 2                ; 2 uses
+  %21 = icmp eq i16 %20, 0
+  br i1 %21, label %.split, label %bb.i
+
+bb.i:                                             ; preds = %19
+  %22 = zext i16 %20 to i32
+  %23 = load i16, ptr %5, align 2
+  %24 = zext i16 %23 to i32
+  %25 = sub nsw i32 %24, %22                      ; 2 uses
+  %.not.i.2 = icmp eq i32 %25, 0
+  br i1 %.not.i.2, label %bb.j, label %_ZL9strcmpMaxPKDsiS0_i.exit
+
+bb.j:                                             ; preds = %bb.i, %18, %13
+  %i.al = load i16, ptr %scevgep.i, align 2
   %i.am = icmp ne i16 %i.al, 0
   %spec.select.i = sext i1 %i.am to i32
   br label %_ZL9strcmpMaxPKDsiS0_i.exit
 
-_ZL9strcmpMaxPKDsiS0_i.exit:                      ; preds = %bb.h, %bb.j
-  %.015.i = phi i32 [ %spec.select.i, %bb.j ], [ %i.ak, %bb.h ] ; 2 uses
+_ZL9strcmpMaxPKDsiS0_i.exit:                      ; preds = %bb.g, %bb.h, %bb.i, %bb.j
+  %.015.i = phi i32 [ %spec.select.i, %bb.j ], [ %12, %bb.g ], [ %i.ak, %bb.h ], [ %25, %bb.i ] ; 2 uses
   %.not56 = icmp eq i32 %.015.i, 0
   br i1 %.not56, label %.preheader, label %.split
 
@@ -316,7 +344,7 @@ _ZL9strcmpMaxPKDsiS0_i.exit:                      ; preds = %bb.h, %bb.j
   %i.ap = load i16, ptr %i.ao, align 2            ; 2 uses
   %i.aq = zext i16 %i.ap to i32                   ; 4 uses
   %.not.peel = icmp eq i16 %i.ap, 0
-  br i1 %.not.peel, label %.critedge, label %bb.k, !llvm.loop !10
+  br i1 %.not.peel, label %.critedge, label %bb.k, !llvm.loop !9
 
 bb.k:                                             ; preds = %.preheader
   %i.ar = and i32 %i.aq, 64512
@@ -350,7 +378,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bh = shl nuw nsw i32 %i.be, 10
   %i.bi = getelementptr inbounds nuw i8, ptr %.us-phi, i64 10
   %i.bj = add nsw i32 %i.bh, -56613888
-  br i1 %.not, label %.critedge, label %bb.m, !llvm.loop !10
+  br i1 %.not, label %.critedge, label %bb.m, !llvm.loop !9
 
 bb.m:                                             ; preds = %.peel.next.critedge
   br i1 %i.bg, label %bb.n, label %bb.o
@@ -367,10 +395,10 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bo = load ptr, ptr %2, align 8
   tail call void %i.bn(ptr noundef %i.bo, i32 noundef %.0) #6
   tail call void @ucase_addCaseClosure_78(i32 noundef %.0, ptr noundef nonnull %2)
-  br label %.critedge, !llvm.loop !11
+  br label %.critedge, !llvm.loop !10
 
-.split:                                           ; preds = %bb.g, %_ZL9strcmpMaxPKDsiS0_i.exit
-  %.015.i60 = phi i32 [ %.015.i, %_ZL9strcmpMaxPKDsiS0_i.exit ], [ 1, %bb.g ]
+.split:                                           ; preds = %.preheader63.split, %14, %19, %_ZL9strcmpMaxPKDsiS0_i.exit
+  %.015.i60 = phi i32 [ %.015.i, %_ZL9strcmpMaxPKDsiS0_i.exit ], [ 1, %19 ], [ 1, %14 ], [ 1, %.preheader63.split ]
   %i.bp = icmp slt i32 %.015.i60, 0               ; 2 uses
   %i.bq = add nsw i32 %i.ac, 1
   %.145 = select i1 %i.bp, i32 %.04467, i32 %i.bq ; 2 uses
@@ -454,14 +482,14 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.lr.ph
   %i.ae = add nsw i32 %.01520, -1
   %i.af = icmp sgt i32 %.01520, 1
-  br i1 %i.af, label %.lr.ph, label %.critedge, !llvm.loop !12
+  br i1 %i.af, label %.lr.ph, label %.critedge, !llvm.loop !11
 
 .critedge:                                        ; preds = %.lr.ph, %bb.f, %bb.e
   %.015.lcssa = phi i32 [ %i.x, %bb.e ], [ 0, %bb.f ], [ %.01520, %.lr.ph ]
   store ptr %.016, ptr %2, align 8
   %i.ag = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString5setToEaNS_14ConstChar16PtrEi(ptr noundef nonnull align 8 dereferenceable(64) %1, i8 noundef signext 0, ptr noundef nonnull align 8 %2, i32 noundef %.015.lcssa) #6 ; 0 uses
   %i.ah = load ptr, ptr %2, align 8
-  call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %i.ah) #6, !srcloc !13
+  call void asm sideeffect "", "rm,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr %i.ah) #6, !srcloc !12
   %i.ai = load i32, ptr %i.i, align 8             ; 3 uses
   %i.aj = add nsw i32 %i.ai, 1                    ; 2 uses
   store i32 %i.aj, ptr %i.i, align 8
@@ -864,7 +892,7 @@ bb.n:                                             ; preds = %bb.m, %bb.m, %bb.m
   br i1 %i.ar, label %.loopexit11.i, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %bb.n
-  %i.as = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 1) #6, !inline_history !14 ; 11 uses
+  %i.as = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 1) #6, !inline_history !13 ; 11 uses
   %i.at = icmp sgt i32 %i.as, -1
   br i1 %i.at, label %bb.o, label %.loopexit11.i
 
@@ -950,7 +978,7 @@ _ZL10getDotTypei.exit.peel.i:                     ; preds = %bb.x, %bb.w
   ]
 
 .preheader.i:                                     ; preds = %_ZL10getDotTypei.exit.peel.i, %_ZL10getDotTypei.exit.i
-  %i.ch = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 0) #6, !inline_history !14 ; 11 uses
+  %i.ch = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 0) #6, !inline_history !13 ; 11 uses
   %i.ci = icmp sgt i32 %i.ch, -1
   br i1 %i.ci, label %bb.y, label %.loopexit11.i
 
@@ -1033,7 +1061,7 @@ _ZL10getDotTypei.exit.i:                          ; preds = %bb.ah, %bb.ag
   switch i32 %.0.i.i, label %.loopexit11.i [
     i32 64, label %_ZL21isFollowedByMoreAbovePFiPvaES_.exit
     i32 96, label %.preheader.i
-  ], !llvm.loop !15
+  ], !llvm.loop !14
 
 .loopexit11.i:                                    ; preds = %.preheader.i, %_ZL10getDotTypei.exit.i, %.preheader.preheader.i, %_ZL10getDotTypei.exit.peel.i, %bb.n
   switch i32 %0, label %bb.ao [
@@ -1091,7 +1119,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.dz, label %_ZL20isFollowedByDotAbovePFiPvaES_.exit.thread185, label %.preheader.preheader.i142
 
 .preheader.preheader.i142:                        ; preds = %bb.aq
-  %i.ea = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext -1) #6, !inline_history !16 ; 12 uses
+  %i.ea = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext -1) #6, !inline_history !15 ; 12 uses
   %i.eb = icmp sgt i32 %i.ea, -1
   br i1 %i.eb, label %bb.ar, label %_ZL20isFollowedByDotAbovePFiPvaES_.exit.thread185
 
@@ -1179,7 +1207,7 @@ _ZL10getDotTypei.exit.peel.i147:                  ; preds = %bb.bb, %bb.ba
   br i1 %.not.peel.i, label %.preheader.i149, label %_ZL20isFollowedByDotAbovePFiPvaES_.exit.thread185
 
 .preheader.i149:                                  ; preds = %_ZL10getDotTypei.exit.peel.i147, %_ZL10getDotTypei.exit.i153
-  %i.fq = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 0) #6, !inline_history !16 ; 12 uses
+  %i.fq = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 0) #6, !inline_history !15 ; 12 uses
   %i.fr = icmp sgt i32 %i.fq, -1
   br i1 %i.fr, label %bb.bc, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread
 
@@ -1264,7 +1292,7 @@ bb.bm:                                            ; preds = %bb.bk
 _ZL10getDotTypei.exit.i153:                       ; preds = %bb.bm, %bb.bl
   %.0.i.i154 = phi i32 [ %i.hf, %bb.bm ], [ %i.gy, %bb.bl ]
   %.not.i = icmp eq i32 %.0.i.i154, 96
-  br i1 %.not.i, label %.preheader.i149, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread, !llvm.loop !17
+  br i1 %.not.i, label %.preheader.i149, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread, !llvm.loop !16
 
 _ZL14isPrecededBy_IPFiPvaES_.exit.thread:         ; preds = %.preheader.i149, %_ZL10getDotTypei.exit.i153, %bb.ap
   %i.hg = icmp eq i32 %0, 73
@@ -1276,7 +1304,7 @@ bb.bn:                                            ; preds = %_ZL14isPrecededBy_I
   br i1 %i.hh, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread180, label %.preheader.preheader.i155
 
 .preheader.preheader.i155:                        ; preds = %bb.bn
-  %i.hi = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 1) #6, !inline_history !18 ; 12 uses
+  %i.hi = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 1) #6, !inline_history !17 ; 12 uses
   %i.hj = icmp sgt i32 %i.hi, -1
   br i1 %i.hj, label %bb.bo, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread180
 
@@ -1364,7 +1392,7 @@ _ZL10getDotTypei.exit.peel.i160:                  ; preds = %bb.by, %bb.bx
   br i1 %.not.peel.i162, label %.preheader.i163, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread180
 
 .preheader.i163:                                  ; preds = %_ZL10getDotTypei.exit.peel.i160, %_ZL10getDotTypei.exit.i167
-  %i.iy = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 0) #6, !inline_history !18 ; 12 uses
+  %i.iy = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 0) #6, !inline_history !17 ; 12 uses
   %i.iz = icmp sgt i32 %i.iy, -1
   br i1 %i.iz, label %bb.bz, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread180
 
@@ -1449,7 +1477,7 @@ bb.cj:                                            ; preds = %bb.ch
 _ZL10getDotTypei.exit.i167:                       ; preds = %bb.cj, %bb.ci
   %.0.i.i168 = phi i32 [ %i.kn, %bb.cj ], [ %i.kg, %bb.ci ]
   %.not.i169 = icmp eq i32 %.0.i.i168, 96
-  br i1 %.not.i169, label %.preheader.i163, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread180, !llvm.loop !19
+  br i1 %.not.i169, label %.preheader.i163, label %_ZL14isPrecededBy_IPFiPvaES_.exit.thread180, !llvm.loop !18
 
 _ZL20isFollowedByDotAbovePFiPvaES_.exit:          ; preds = %bb.bz, %_ZL14isPrecededBy_IPFiPvaES_.exit.thread
   br i1 %i.dx, label %bb.ck, label %bb.cl
@@ -1721,7 +1749,7 @@ ucase_getTypeOrIgnorable_78.exit:                 ; preds = %bb.m, %bb.n, %.sink
   %i.bl = load i16, ptr %i.bk, align 2
   %i.bm = and i16 %i.bl, 7                        ; 2 uses
   %.not = icmp samesign ugt i16 %i.bm, 3
-  br i1 %.not, label %.preheader, label %.loopexit.split.loop.exit, !llvm.loop !20
+  br i1 %.not, label %.preheader, label %.loopexit.split.loop.exit, !llvm.loop !19
 
 .loopexit.split.loop.exit:                        ; preds = %ucase_getTypeOrIgnorable_78.exit, %ucase_getTypeOrIgnorable_78.exit.peel
   %.lcssa = phi i16 [ %i.ag, %ucase_getTypeOrIgnorable_78.exit.peel ], [ %i.bm, %ucase_getTypeOrIgnorable_78.exit ]
@@ -1843,7 +1871,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.av, label %_ZL22isPrecededBySoftDottedPFiPvaES_.exit.thread.thread, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %bb.n
-  %i.aw = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext -1) #6, !inline_history !21 ; 11 uses
+  %i.aw = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext -1) #6, !inline_history !20 ; 11 uses
   %i.ax = icmp sgt i32 %i.aw, -1
   br i1 %i.ax, label %bb.o, label %_ZL22isPrecededBySoftDottedPFiPvaES_.exit.thread.thread
 
@@ -1929,7 +1957,7 @@ _ZL10getDotTypei.exit.peel.i:                     ; preds = %bb.x, %bb.w
   ]
 
 .preheader.i:                                     ; preds = %_ZL10getDotTypei.exit.peel.i, %_ZL10getDotTypei.exit.i
-  %i.cl = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 0) #6, !inline_history !21 ; 11 uses
+  %i.cl = tail call noundef i32 %1(ptr noundef %2, i8 noundef signext 0) #6, !inline_history !20 ; 11 uses
   %i.cm = icmp sgt i32 %i.cl, -1
   br i1 %i.cm, label %bb.y, label %_ZL22isPrecededBySoftDottedPFiPvaES_.exit.thread
 
@@ -2012,7 +2040,7 @@ _ZL10getDotTypei.exit.i:                          ; preds = %bb.ah, %bb.ag
   switch i32 %.0.i.i, label %_ZL22isPrecededBySoftDottedPFiPvaES_.exit.thread [
     i32 32, label %_ZL22isPrecededBySoftDottedPFiPvaES_.exit.thread131
     i32 96, label %.preheader.i
-  ], !llvm.loop !22
+  ], !llvm.loop !21
 
 _ZL22isPrecededBySoftDottedPFiPvaES_.exit.thread: ; preds = %.preheader.i, %_ZL10getDotTypei.exit.i, %bb.m
   %i.ea = icmp eq i32 %0, 1415
@@ -2415,17 +2443,16 @@ attributes #6 = { nounwind }
 !7 = distinct !{!7, !5}
 !8 = distinct !{!8, !5}
 !9 = distinct !{!9, !5}
-!10 = distinct !{!10, !5}
-!11 = distinct !{!11, !5, !6}
-!12 = distinct !{!12, !5}
-!13 = !{i64 2149132696}
-!14 = distinct !{null}
-!15 = distinct !{!15, !5, !6}
-!16 = distinct !{null}
-!17 = distinct !{!17, !5, !6}
-!18 = distinct !{null}
+!10 = distinct !{!10, !5, !6}
+!11 = distinct !{!11, !5}
+!12 = !{i64 2149132696}
+!13 = distinct !{null}
+!14 = distinct !{!14, !5, !6}
+!15 = distinct !{null}
+!16 = distinct !{!16, !5, !6}
+!17 = distinct !{null}
+!18 = distinct !{!18, !5, !6}
 !19 = distinct !{!19, !5, !6}
-!20 = distinct !{!20, !5, !6}
-!21 = distinct !{null}
-!22 = distinct !{!22, !5, !6}
+!20 = distinct !{null}
+!21 = distinct !{!21, !5, !6}
 end_hunk_2

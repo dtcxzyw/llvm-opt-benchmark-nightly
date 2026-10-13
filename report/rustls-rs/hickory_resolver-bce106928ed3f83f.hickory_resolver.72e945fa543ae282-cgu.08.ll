@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.i, %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.u
   %.sroa.08.022 = phi i64 [ 0, %bb.m ], [ %i.ao, %bb.u ]
-  %i.ao = add nuw i64 %.sroa.08.022, 1            ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.08.022, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   invoke void @_RNvMs_NtNtNtCs3kA96HWnWrK_4moka3cht3map6bucketINtB4_11BucketArrayINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCsjXdHNeFfodD_13hickory_proto2op5query5QueryEINtNtNtNtBa_6common10concurrent3arc7MiniArcINtB2t_10ValueEntryB1z_NtNtCs9RFwvXNxPyg_16hickory_resolver5cache5EntryEEE11with_lengthB3w_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, i64 noundef 0, i64 noundef %.sroa.06.0)
           to label %bb.o unwind label %.body.thread19.loopexit
@@ -397,7 +397,7 @@ bb.m:                                             ; preds = %bb.i, %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.u
   %.sroa.08.022 = phi i64 [ 0, %bb.m ], [ %i.ao, %bb.u ]
-  %i.ao = add nuw i64 %.sroa.08.022, 1            ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.08.022, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   invoke void @_RNvMs_NtNtNtCs3kA96HWnWrK_4moka3cht3map6bucketINtB4_11BucketArrayINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCsjXdHNeFfodD_13hickory_proto2op5query5QueryEINtNtNtNtBa_6common10concurrent3arc7MiniArcINtNtCs45r4e3XQE14_8lock_api5mutex5MutexNtNtCsbCIQ8H6Y6l3_11parking_lot9raw_mutex8RawMutexuEEE11with_lengthCs9RFwvXNxPyg_16hickory_resolver(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, i64 noundef 0, i64 noundef %.sroa.06.0)
           to label %bb.o unwind label %.body.thread19.loopexit
@@ -590,7 +590,7 @@ bb.m:                                             ; preds = %bb.i, %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.u
   %.sroa.08.022 = phi i64 [ 0, %bb.m ], [ %i.ao, %bb.u ]
-  %i.ao = add nuw i64 %.sroa.08.022, 1            ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.08.022, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   invoke void @_RNvMs_NtNtNtCs3kA96HWnWrK_4moka3cht3map6bucketINtB4_11BucketArrayNtNtCs4wP2HXfJTCR_5alloc6string6StringINtNtNtBa_4sync11invalidator9PredicateNtNtNtCsjXdHNeFfodD_13hickory_proto2op5query5QueryNtNtCs9RFwvXNxPyg_16hickory_resolver5cache5EntryEE11with_lengthB37_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, i64 noundef 0, i64 noundef %.sroa.06.0)
           to label %bb.o unwind label %.body.thread19.loopexit
@@ -783,7 +783,7 @@ bb.m:                                             ; preds = %bb.i, %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.u
   %.sroa.08.022 = phi i64 [ 0, %bb.m ], [ %i.ao, %bb.u ]
-  %i.ao = add nuw i64 %.sroa.08.022, 1            ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.08.022, 1        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   invoke void @_RNvMs_NtNtNtCs3kA96HWnWrK_4moka3cht3map6bucketINtB4_11BucketArrayTINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCsjXdHNeFfodD_13hickory_proto2op5query5QueryENtNtCsj6eKBz9Db1c_4core3any6TypeIdEINtNtNtNtBa_6common10concurrent3arc7MiniArcINtNtCs45r4e3XQE14_8lock_api6rwlock6RwLockNtNtCsbCIQ8H6Y6l3_11parking_lot10raw_rwlock9RawRwLockINtNtNtBa_4sync17value_initializer11WaiterValueNtNtCs9RFwvXNxPyg_16hickory_resolver5cache5EntryEEEE11with_lengthB61_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, i64 noundef 0, i64 noundef %.sroa.06.0)
           to label %bb.o unwind label %.body.thread19.loopexit

@@ -92,21 +92,21 @@ iter.check:                                       ; preds = %.preheader
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.n = sub i64 %i.b, %i.c
-  %diff.check = icmp ugt i64 %i.n, -32
+  %diff.check = icmp ugt i64 %i.n, -16
   %i.o = add i64 %i.a, %i.j
   %i.p = sub i64 %i.c, %i.o
   %i.q = add i64 %i.p, -241
-  %diff.check120 = icmp ult i64 %i.q, 31
+  %diff.check120 = icmp ult i64 %i.q, 15
   %conflict.rdx = or i1 %diff.check, %diff.check120
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check121 = icmp samesign ult i64 %umin, 31
+  %min.iters.check121 = icmp samesign ult i64 %umin, 15
   br i1 %min.iters.check121, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.r = and i64 %i.m, 28
-  %n.vec = and i64 %i.m, 96                       ; 7 uses
+  %i.r = and i64 %i.m, 12
+  %n.vec = and i64 %i.m, 112                      ; 7 uses
   %i.s = add nuw nsw i64 %n.vec, %i.j             ; 2 uses
   %i.t = sub i64 %3, %n.vec                       ; 2 uses
   %i.u = getelementptr i8, ptr %2, i64 %n.vec     ; 2 uses
@@ -118,19 +118,19 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %next.gep = getelementptr i8, ptr %2, i64 %index ; 2 uses
   %next.gep122 = getelementptr i8, ptr %1, i64 %index ; 2 uses
-  %i.w = getelementptr i8, ptr %next.gep, i64 16
-  %wide.load = load <16 x i8>, ptr %next.gep, align 1, !tbaa !8
-  %wide.load123 = load <16 x i8>, ptr %i.w, align 1, !tbaa !8
+  %i.w = getelementptr i8, ptr %next.gep, i64 8
+  %wide.load = load <8 x i8>, ptr %next.gep, align 1, !tbaa !8
+  %wide.load123 = load <8 x i8>, ptr %i.w, align 1, !tbaa !8
   %gep = getelementptr i8, ptr %invariant.gep, i64 %index ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %gep, i64 16
-  %wide.load124 = load <16 x i8>, ptr %gep, align 1, !tbaa !8
-  %wide.load125 = load <16 x i8>, ptr %i.x, align 1, !tbaa !8
-  %4 = xor <16 x i8> %wide.load124, %wide.load
-  %5 = xor <16 x i8> %wide.load125, %wide.load123
-  %i.y = getelementptr i8, ptr %next.gep122, i64 16
-  store <16 x i8> %4, ptr %next.gep122, align 1, !tbaa !8
-  store <16 x i8> %5, ptr %i.y, align 1, !tbaa !8
-  %index.next = add nuw i64 %index, 32            ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %gep, i64 8
+  %wide.load124 = load <8 x i8>, ptr %gep, align 1, !tbaa !8
+  %wide.load125 = load <8 x i8>, ptr %i.x, align 1, !tbaa !8
+  %4 = xor <8 x i8> %wide.load124, %wide.load
+  %5 = xor <8 x i8> %wide.load125, %wide.load123
+  %i.y = getelementptr i8, ptr %next.gep122, i64 8
+  store <8 x i8> %4, ptr %next.gep122, align 1, !tbaa !8
+  store <8 x i8> %5, ptr %i.y, align 1, !tbaa !8
+  %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.z = icmp eq i64 %index.next, %n.vec
   br i1 %i.z, label %middle.block, label %vector.body, !llvm.loop !18
 
@@ -338,7 +338,7 @@ middle.block157:                                  ; preds = %vector.body152
 
 vec.epilog.iter.check162:                         ; preds = %middle.block157
   %min.epilog.iters.check163 = icmp eq i64 %i.by, 0
-  br i1 %min.epilog.iters.check163, label %vec.epilog.scalar.ph161.preheader, label %vec.epilog.ph164, !prof !30
+  br i1 %min.epilog.iters.check163, label %vec.epilog.scalar.ph161.preheader, label %vec.epilog.ph164, !prof !29
 
 vec.epilog.ph164:                                 ; preds = %vector.main.loop.iter.check148, %vec.epilog.iter.check162
   %vec.epilog.resume.val159 = phi i64 [ %n.vec151, %vec.epilog.iter.check162 ], [ 0, %vector.main.loop.iter.check148 ]
@@ -499,12 +499,11 @@ attributes #6 = { nounwind }
 !21 = distinct !{!21, !26}
 !22 = distinct !{!22, !26, !27, !28}
 !23 = distinct !{!23, !26, !27, !28}
-!24 = distinct !{!24, !31}
+!24 = distinct !{!24, !30}
 !25 = distinct !{!25, !26, !27}
 !26 = !{!"llvm.loop.mustprogress"}
 !27 = !{!"llvm.loop.isvectorized", i32 1}
 !28 = !{!"llvm.loop.unroll.runtime.disable"}
-!29 = !{!"branch_weights", i32 4, i32 28}
-!30 = !{!"branch_weights", i32 4, i32 12}
-!31 = !{!"llvm.loop.unroll.disable"}
+!29 = !{!"branch_weights", i32 4, i32 12}
+!30 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

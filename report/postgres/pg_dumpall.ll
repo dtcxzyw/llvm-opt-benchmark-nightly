@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.u, label %.lr.ph269, label %.loopexit175
 
 .lr.ph269:                                        ; preds = %bb.e, %._crit_edge240
-  %.0134267 = phi i32 [ %.0133.lcssa, %._crit_edge240 ], [ 0, %bb.e ] ; 10 uses
+  %.0134267 = phi i32 [ %.0133.lcssa, %._crit_edge240 ], [ 0, %bb.e ] ; 9 uses
   %i.v = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %.0134267, i32 noundef %i.g) #14 ; 4 uses
   %i.w = tail call i32 @PQgetisnull(ptr noundef %i.f, i32 noundef %.0134267, i32 noundef %i.g) #14
   %.not = icmp eq i32 %i.w, 0
@@ -301,7 +301,7 @@ rolename_create.exit:                             ; preds = %rolename_compute_si
   br i1 %i.bm, label %.lr.ph239.split.us.preheader, label %.split.us
 
 .lr.ph239.split.us.preheader:                     ; preds = %.lr.ph239
-  %i.bo = sext i32 %.0134267 to i64
+  %i.bo = sext i32 %.0134267 to i64               ; 2 uses
   %wide.trip.count = sext i32 %.0133.lcssa to i64
   br label %.lr.ph239.split.us
 
@@ -312,39 +312,38 @@ rolename_create.exit:                             ; preds = %rolename_compute_si
   br i1 %i.bp, label %.split.us, label %.preheader.us
 
 .preheader.us:                                    ; preds = %.lr.ph239.split.us, %rolename_lookup.exit.thread.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %rolename_lookup.exit.thread.us ], [ %i.bo, %.lr.ph239.split.us ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %rolename_lookup.exit.thread.us ], [ %i.bo, %.lr.ph239.split.us ] ; 3 uses
   %.1131234.us = phi i32 [ %.2.us, %rolename_lookup.exit.thread.us ], [ %.0130237.us, %.lr.ph239.split.us ] ; 5 uses
-  %1 = trunc nsw i64 %indvars.iv to i32           ; 11 uses
-  %2 = sub i32 %1, %.0134267
-  %3 = sext i32 %2 to i64
-  %i.bq = getelementptr inbounds i8, ptr %i.ae, i64 %3 ; 3 uses
+  %1 = sub nsw i64 %indvars.iv, %i.bo
+  %i.bq = getelementptr inbounds i8, ptr %i.ae, i64 %1 ; 3 uses
   %i.br = load i8, ptr %i.bq, align 1, !range !22, !noundef !23
   %i.bs = trunc nuw i8 %i.br to i1
   br i1 %i.bs, label %rolename_lookup.exit.thread.us, label %bb.i
 
 bb.i:                                             ; preds = %.preheader.us
-  %i.bt = tail call i32 @PQgetisnull(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.h) #14
+  %2 = trunc nsw i64 %indvars.iv to i32           ; 10 uses
+  %i.bt = tail call i32 @PQgetisnull(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.h) #14
   %.not138.us = icmp eq i32 %i.bt, 0
   br i1 %.not138.us, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bu = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.k) #14
+  %i.bu = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.k) #14
   tail call void (i32, i32, ptr, ...) @pg_log_generic(i32 noundef 3, i32 noundef 0, ptr noundef nonnull @.str.282, ptr noundef %i.bu) #14
   store i8 1, ptr %i.bq, align 1
   %i.bv = add i32 %.1131234.us, -1
   br label %rolename_lookup.exit.thread.us
 
 bb.k:                                             ; preds = %bb.i
-  %i.bw = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.h) #14 ; 6 uses
-  %i.bx = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.l) #14 ; 2 uses
+  %i.bw = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.h) #14 ; 6 uses
+  %i.bx = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.l) #14 ; 2 uses
   br i1 %i.d, label %bb.l, label %.thread160.us
 
 .thread160.us:                                    ; preds = %bb.k
-  %i.by = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.m) #14
+  %i.by = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.m) #14
   br label %rolename_lookup.exit.us
 
 bb.l:                                             ; preds = %bb.k
-  %i.bz = tail call i32 @PQgetisnull(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.i) #14
+  %i.bz = tail call i32 @PQgetisnull(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.i) #14
   %.not139.us = icmp eq i32 %i.bz, 0              ; 2 uses
   br i1 %.not139.us, label %bb.n, label %bb.m
 
@@ -354,13 +353,13 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
-  %i.ca = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.i) #14
+  %i.ca = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.i) #14
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.0127.ph.us = phi ptr [ %i.ca, %bb.n ], [ null, %bb.m ] ; 5 uses
-  %i.cb = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.m) #14 ; 3 uses
-  %i.cc = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.o) #14 ; 3 uses
+  %i.cb = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.m) #14 ; 3 uses
+  %i.cc = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.o) #14 ; 3 uses
   br i1 %.not139.us, label %bb.p, label %rolename_lookup.exit.us
 
 bb.p:                                             ; preds = %bb.o
@@ -713,7 +712,7 @@ bb.am:                                            ; preds = %bb.al
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
-  %i.hw = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %1, i32 noundef %i.n) #14
+  %i.hw = tail call ptr @PQgetvalue(ptr noundef %i.f, i32 noundef %2, i32 noundef %i.n) #14
   %i.hx = load i8, ptr %i.hw, align 1
   %i.hy = icmp eq i8 %i.hx, 116
   %i.hz = select i1 %i.hy, ptr @.str.290, ptr @.str.291

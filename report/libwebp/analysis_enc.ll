@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libwebp/original/analysis_enc?download=true
 inline.NumInlined: 21
 inline.NumDeleted: 15
-loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumCompletelyUnrolled: 8
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 12
+loop-unroll.NumUnrolled: 11
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -22,7 +22,7 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden i32 @VP8EncAnalyze(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [4 x i32], align 16               ; 15 uses
-  %i.b = alloca [4 x i32], align 16               ; 27 uses
+  %i.b = alloca [4 x i32], align 16               ; 21 uses
   %i.c = alloca [256 x i32], align 16             ; 5 uses
   %i.d = alloca [4 x i32], align 16               ; 9 uses
   %i.e = alloca [4 x i32], align 16               ; 9 uses
@@ -389,7 +389,7 @@ pred.store.if130:                                 ; preds = %pred.store.continue
   %i.fi = zext i32 %i.fh to i64
   %i.fj = shl nuw nsw i64 %i.fi, 2
   %i.fk = add nuw nsw i64 %i.fj, 4                ; 2 uses
-  %i.fl = sext i32 %spec.select.i to i64          ; 6 uses
+  %i.fl = sext i32 %spec.select.i to i64          ; 3 uses
   %i.fm = zext nneg i32 %.0103.lcssa198.i to i64  ; 2 uses
   %smax179.i = call i32 @llvm.smax.i32(i32 %.1104.lcssa.i, i32 %.0103.lcssa198.i)
   %i.fn = add nuw nsw i32 %smax179.i, 1
@@ -624,79 +624,21 @@ bb.q:                                             ; preds = %.lr.ph146.i.us.3
 
 .lr.ph141.i:                                      ; preds = %.preheader124.i, %bb.r
   %indvars.iv176.i = phi i64 [ %indvars.iv.next177.i, %bb.r ], [ %i.fm, %.preheader124.i ] ; 4 uses
-  %.4139.i = phi i32 [ %.6.i, %bb.r ], [ 0, %.preheader124.i ] ; 3 uses
+  %.4139.i = phi i32 [ %.6.i, %bb.r ], [ 0, %.preheader124.i ] ; 2 uses
   %i.js = getelementptr inbounds nuw [4 x i8], ptr %i.dj, i64 %indvars.iv176.i
   %i.jt = load i32, ptr %i.js, align 4, !tbaa !35 ; 3 uses
   %.not114.i = icmp eq i32 %i.jt, 0
-  br i1 %.not114.i, label %bb.r, label %.preheader.preheader.i
+  br i1 %.not114.i, label %bb.r, label %.critedge4.i
 
-.preheader.preheader.i:                           ; preds = %.lr.ph141.i
-  %3 = zext nneg i32 %.4139.i to i64              ; 5 uses
-  %4 = add nuw nsw i32 %.4139.i, 1
-  %smax.i = call i32 @llvm.smax.i32(i32 %spec.select.i, i32 %4)
-  %5 = add nsw i32 %smax.i, -1                    ; 4 uses
-  %6 = trunc nuw nsw i64 %indvars.iv176.i to i32  ; 7 uses
-  %indvars.iv.next174.i100 = add nuw nsw i64 %3, 1 ; 4 uses
-  %7 = icmp slt i64 %indvars.iv.next174.i100, %i.fl
-  br i1 %7, label %.lr.ph, label %.critedge4.i
-
-.preheader.i:                                     ; preds = %.lr.ph
-  %indvars.iv.next174.i = add nuw nsw i64 %3, 2   ; 4 uses
-  %8 = icmp slt i64 %indvars.iv.next174.i, %i.fl
-  br i1 %8, label %.lr.ph.1, label %.critedge4.i
-
-.lr.ph.1:                                         ; preds = %.preheader.i
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next174.i
-  %10 = load i32, ptr %9, align 4, !tbaa !35
-  %11 = sub nsw i32 %6, %10
-  %12 = call i32 @llvm.abs.i32(i32 %11, i1 true)
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next174.i100
-  %14 = load i32, ptr %13, align 4, !tbaa !35
-  %15 = sub nsw i32 %6, %14
-  %16 = call i32 @llvm.abs.i32(i32 %15, i1 true)
-  %17 = icmp samesign ult i32 %12, %16
-  br i1 %17, label %.preheader.i.1, label %.critedge4.loopexit.i, !llvm.loop !43
-
-.preheader.i.1:                                   ; preds = %.lr.ph.1
-  %indvars.iv.next174.i.1 = add nuw nsw i64 %3, 3 ; 2 uses
-  %18 = icmp slt i64 %indvars.iv.next174.i.1, %i.fl
-  br i1 %18, label %.lr.ph.2, label %.critedge4.i
-
-.lr.ph.2:                                         ; preds = %.preheader.i.1
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next174.i.1
-  %20 = load i32, ptr %19, align 4, !tbaa !35
-  %21 = sub nsw i32 %6, %20
-  %22 = call i32 @llvm.abs.i32(i32 %21, i1 true)
-  %23 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next174.i
-  %24 = load i32, ptr %23, align 4, !tbaa !35
-  %25 = sub nsw i32 %6, %24
-  %26 = call i32 @llvm.abs.i32(i32 %25, i1 true)
-  %27 = icmp samesign ult i32 %22, %26
-  br i1 %27, label %.critedge4.i, label %.critedge4.loopexit.i, !llvm.loop !43
-
-.lr.ph:                                           ; preds = %.preheader.preheader.i
-  %28 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next174.i100
-  %29 = load i32, ptr %28, align 4, !tbaa !35
-  %30 = sub nsw i32 %6, %29
-  %31 = call i32 @llvm.abs.i32(i32 %30, i1 true)
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %3
-  %33 = load i32, ptr %32, align 4, !tbaa !35
-  %34 = sub nsw i32 %6, %33
-  %35 = call i32 @llvm.abs.i32(i32 %34, i1 true)
-  %36 = icmp samesign ult i32 %31, %35
-  br i1 %36, label %.preheader.i, label %.critedge4.loopexit.i, !llvm.loop !43
-
-.critedge4.loopexit.i:                            ; preds = %.lr.ph.2, %.lr.ph.1, %.lr.ph
-  %indvars.iv173.i101.lcssa = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next174.i100, %.lr.ph.1 ], [ %indvars.iv.next174.i, %.lr.ph.2 ]
-  %37 = trunc nuw nsw i64 %indvars.iv173.i101.lcssa to i32
-  br label %.critedge4.i
-
-.critedge4.i:                                     ; preds = %.preheader.i, %.preheader.i.1, %.lr.ph.2, %.preheader.preheader.i, %.critedge4.loopexit.i
-  %.5.lcssa.i = phi i32 [ %37, %.critedge4.loopexit.i ], [ %5, %.preheader.preheader.i ], [ %5, %.lr.ph.2 ], [ %5, %.preheader.i.1 ], [ %5, %.preheader.i ] ; 3 uses
+.critedge4.i:                                     ; preds = %.lr.ph141.i
+  %3 = add nuw nsw i32 %.4139.i, 1
+  %smax.i = call i32 @llvm.smax.i32(i32 %spec.select.i, i32 %3)
+  %4 = add nsw i32 %smax.i, -1                    ; 3 uses
+  %5 = trunc nuw nsw i64 %indvars.iv176.i to i32
   %i.ju = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv176.i
-  store i32 %.5.lcssa.i, ptr %i.ju, align 4, !tbaa !35
-  %i.jv = mul nsw i32 %i.jt, %6
-  %i.jw = zext nneg i32 %.5.lcssa.i to i64        ; 2 uses
+  store i32 %4, ptr %i.ju, align 4, !tbaa !35
+  %i.jv = mul nsw i32 %i.jt, %5
+  %i.jw = zext nneg i32 %4 to i64                 ; 2 uses
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %i.jw ; 2 uses
   %i.jy = load i32, ptr %i.jx, align 4, !tbaa !35
   %i.jz = add nsw i32 %i.jy, %i.jv
@@ -708,7 +650,7 @@ bb.q:                                             ; preds = %.lr.ph146.i.us.3
   br label %bb.r
 
 bb.r:                                             ; preds = %.critedge4.i, %.lr.ph141.i
-  %.6.i = phi i32 [ %.5.lcssa.i, %.critedge4.i ], [ %.4139.i, %.lr.ph141.i ]
+  %.6.i = phi i32 [ %4, %.critedge4.i ], [ %.4139.i, %.lr.ph141.i ]
   %indvars.iv.next177.i = add nuw nsw i64 %indvars.iv176.i, 1 ; 2 uses
   %exitcond181.not.i = icmp eq i64 %indvars.iv.next177.i, %wide.trip.count180.i
   br i1 %exitcond181.not.i, label %._crit_edge.thread.i, label %.lr.ph141.i, !llvm.loop !44

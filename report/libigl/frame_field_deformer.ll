@@ -205,7 +205,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.g = add nsw i32 %4, %2
-  %i.h = sext i32 %3 to i64
+  %i.h = sext i32 %3 to i64                       ; 2 uses
   %i.i = sext i32 %i.b to i64
   br label %bb.b
 
@@ -255,8 +255,9 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS
   br i1 %i.y, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
-  %i.z = trunc nsw i64 %indvars.iv to i32
-  %10 = sub i32 %i.z, %3                          ; 2 uses
+  %10 = sub nsw i64 %indvars.iv, %i.h             ; 2 uses
+  %i.z = trunc nuw nsw i64 %10 to i32
+  %11 = trunc nuw nsw i64 %10 to i32
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE9push_backEOS2_.exit, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIdLi0EiEEE13InnerIteratorC2ERKS3_l.exit
@@ -289,7 +290,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   store i32 %i.ae, ptr %.sroa.941.163, align 8, !tbaa !100
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.941.163, i64 4
-  store i32 %10, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !100
+  store i32 %i.z, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !100
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.941.163, i64 8
   store double %i.ag, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !93
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.941.163, i64 16
@@ -326,7 +327,7 @@ _ZNKSt6vectorIN5Eigen7TripletIdiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; pred
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ak ; 3 uses
   store i32 %i.ae, ptr %i.at, align 8, !tbaa !100
   %.sroa.6.0..sroa_idx25 = getelementptr inbounds nuw i8, ptr %i.at, i64 4
-  store i32 %10, ptr %.sroa.6.0..sroa_idx25, align 4, !tbaa !100
+  store i32 %11, ptr %.sroa.6.0..sroa_idx25, align 4, !tbaa !100
   %.sroa.7.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   store double %i.ag, ptr %.sroa.7.0..sroa_idx27, align 8, !tbaa !93
   %.not10.i.i.i.i.i.i = icmp eq ptr %.sroa.037.162, %.sroa.14.164

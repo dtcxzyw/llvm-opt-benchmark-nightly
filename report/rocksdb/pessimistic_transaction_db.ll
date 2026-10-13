@@ -205,7 +205,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %vec.ind95 = phi <4 x i64> [ %induction, %vec.epilog.ph ], [ %vec.ind.next102, %vec.epilog.vector.body ] ; 4 uses
   %i.cl = shl i64 %index94, 3
   %next.gep96 = getelementptr i8, ptr %i.x, i64 %i.cl
-  %i.cm = icmp ult <4 x i64> %vec.ind95, splat (i64 8)
+  %i.cm = icmp samesign ult <4 x i64> %vec.ind95, splat (i64 8)
   %wide.gep97 = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, <4 x i64> %vec.ind95
   %wide.gep98 = getelementptr [8 x i8], ptr %.fr107, <4 x i64> %vec.ind95
   %wide.gep99 = getelementptr i8, <4 x ptr> %wide.gep98, i64 -64
@@ -213,7 +213,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %wide.masked.gather100 = call <4 x i64> @llvm.masked.gather.v4i64.v4p0(<4 x ptr> align 8 %i.cn, <4 x i1> splat (i1 true), <4 x i64> poison), !tbaa !241
   store <4 x i64> %wide.masked.gather100, ptr %next.gep96, align 8, !tbaa !241
   %index.next101 = add nuw i64 %index94, 4        ; 2 uses
-  %vec.ind.next102 = add nuw <4 x i64> %vec.ind95, splat (i64 4)
+  %vec.ind.next102 = add nuw nsw <4 x i64> %vec.ind95, splat (i64 4)
   %i.co = icmp eq i64 %index.next101, %n.vec93
   br i1 %i.co, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !989
 
@@ -234,14 +234,14 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %.sroa.2.0.i.i.i.i.prol = phi i64 [ %i.cw, %vec.epilog.scalar.ph.prol ], [ %.sroa.2.0.i.i.i.i.ph, %vec.epilog.scalar.ph.preheader ] ; 4 uses
   %.045.i.i.i.i.i.prol = phi ptr [ %i.cx, %vec.epilog.scalar.ph.prol ], [ %.045.i.i.i.i.i.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %vec.epilog.scalar.ph.prol ], [ 0, %vec.epilog.scalar.ph.preheader ]
-  %i.cr = icmp ult i64 %.sroa.2.0.i.i.i.i.prol, 8
+  %i.cr = icmp samesign ult i64 %.sroa.2.0.i.i.i.i.prol, 8
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %.sroa.2.0.i.i.i.i.prol
   %i.ct = getelementptr [8 x i8], ptr %.fr107, i64 %.sroa.2.0.i.i.i.i.prol
   %i.cu = getelementptr i8, ptr %i.ct, i64 -64
   %.0.i.i.i.i.i.i.i.prol = select i1 %i.cr, ptr %i.cs, ptr %i.cu
   %i.cv = load i64, ptr %.0.i.i.i.i.i.i.i.prol, align 8, !tbaa !241
   store i64 %i.cv, ptr %.045.i.i.i.i.i.prol, align 8, !tbaa !241
-  %i.cw = add nuw i64 %.sroa.2.0.i.i.i.i.prol, 1  ; 2 uses
+  %i.cw = add nuw nsw i64 %.sroa.2.0.i.i.i.i.prol, 1 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i.prol, i64 8 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
@@ -257,14 +257,14 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %.sroa.2.0.i.i.i.i = phi i64 [ %i.fc, %vec.epilog.scalar.ph ], [ %.sroa.2.0.i.i.i.i.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 18 uses
   %.045.i.i.i.i.i = phi ptr [ %i.fd, %vec.epilog.scalar.ph ], [ %.045.i.i.i.i.i.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 9 uses
-  %i.da = icmp ult i64 %.sroa.2.0.i.i.i.i, 8
+  %i.da = icmp samesign ult i64 %.sroa.2.0.i.i.i.i, 8
   %i.db = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %.sroa.2.0.i.i.i.i
   %i.dc = getelementptr [8 x i8], ptr %.fr107, i64 %.sroa.2.0.i.i.i.i
   %i.dd = getelementptr i8, ptr %i.dc, i64 -64
   %.0.i.i.i.i.i.i.i = select i1 %i.da, ptr %i.db, ptr %i.dd
   %i.de = load i64, ptr %.0.i.i.i.i.i.i.i, align 8, !tbaa !241
   store i64 %i.de, ptr %.045.i.i.i.i.i, align 8, !tbaa !241
-  %i.df = add nuw i64 %.sroa.2.0.i.i.i.i, 1       ; 2 uses
+  %i.df = add nuw nsw i64 %.sroa.2.0.i.i.i.i, 1   ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i, i64 8
   %i.dh = icmp ult i64 %.sroa.2.0.i.i.i.i, 7
   %i.di = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %i.df
@@ -273,7 +273,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.0.i.i.i.i.i.i.i.1 = select i1 %i.dh, ptr %i.di, ptr %i.dk
   %i.dl = load i64, ptr %.0.i.i.i.i.i.i.i.1, align 8, !tbaa !241
   store i64 %i.dl, ptr %i.dg, align 8, !tbaa !241
-  %i.dm = add nuw i64 %.sroa.2.0.i.i.i.i, 2       ; 2 uses
+  %i.dm = add nuw nsw i64 %.sroa.2.0.i.i.i.i, 2   ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i, i64 16
   %i.do = icmp ult i64 %.sroa.2.0.i.i.i.i, 6
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %i.dm
@@ -282,7 +282,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.0.i.i.i.i.i.i.i.2 = select i1 %i.do, ptr %i.dp, ptr %i.dr
   %i.ds = load i64, ptr %.0.i.i.i.i.i.i.i.2, align 8, !tbaa !241
   store i64 %i.ds, ptr %i.dn, align 8, !tbaa !241
-  %i.dt = add nuw i64 %.sroa.2.0.i.i.i.i, 3       ; 2 uses
+  %i.dt = add nuw nsw i64 %.sroa.2.0.i.i.i.i, 3   ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i, i64 24
   %i.dv = icmp ult i64 %.sroa.2.0.i.i.i.i, 5
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %i.dt
@@ -291,7 +291,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.0.i.i.i.i.i.i.i.3 = select i1 %i.dv, ptr %i.dw, ptr %i.dy
   %i.dz = load i64, ptr %.0.i.i.i.i.i.i.i.3, align 8, !tbaa !241
   store i64 %i.dz, ptr %i.du, align 8, !tbaa !241
-  %i.ea = add nuw i64 %.sroa.2.0.i.i.i.i, 4       ; 2 uses
+  %i.ea = add nuw nsw i64 %.sroa.2.0.i.i.i.i, 4   ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i, i64 32
   %i.ec = icmp ult i64 %.sroa.2.0.i.i.i.i, 4
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %i.ea
@@ -300,7 +300,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.0.i.i.i.i.i.i.i.4 = select i1 %i.ec, ptr %i.ed, ptr %i.ef
   %i.eg = load i64, ptr %.0.i.i.i.i.i.i.i.4, align 8, !tbaa !241
   store i64 %i.eg, ptr %i.eb, align 8, !tbaa !241
-  %i.eh = add nuw i64 %.sroa.2.0.i.i.i.i, 5       ; 2 uses
+  %i.eh = add nuw nsw i64 %.sroa.2.0.i.i.i.i, 5   ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i, i64 40
   %i.ej = icmp ult i64 %.sroa.2.0.i.i.i.i, 3
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %i.eh
@@ -309,7 +309,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.0.i.i.i.i.i.i.i.5 = select i1 %i.ej, ptr %i.ek, ptr %i.em
   %i.en = load i64, ptr %.0.i.i.i.i.i.i.i.5, align 8, !tbaa !241
   store i64 %i.en, ptr %i.ei, align 8, !tbaa !241
-  %i.eo = add nuw i64 %.sroa.2.0.i.i.i.i, 6       ; 2 uses
+  %i.eo = add nuw nsw i64 %.sroa.2.0.i.i.i.i, 6   ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i, i64 48
   %i.eq = icmp ult i64 %.sroa.2.0.i.i.i.i, 2
   %i.er = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %i.eo
@@ -318,7 +318,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.0.i.i.i.i.i.i.i.6 = select i1 %i.eq, ptr %i.er, ptr %i.et
   %i.eu = load i64, ptr %.0.i.i.i.i.i.i.i.6, align 8, !tbaa !241
   store i64 %i.eu, ptr %i.ep, align 8, !tbaa !241
-  %i.ev = add nuw i64 %.sroa.2.0.i.i.i.i, 7       ; 2 uses
+  %i.ev = add nuw nsw i64 %.sroa.2.0.i.i.i.i, 7   ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i, i64 56
   %i.ex = icmp eq i64 %.sroa.2.0.i.i.i.i, 0
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %.pre.fr, i64 %i.ev
@@ -327,7 +327,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.0.i.i.i.i.i.i.i.7 = select i1 %i.ex, ptr %i.ey, ptr %i.fa
   %i.fb = load i64, ptr %.0.i.i.i.i.i.i.i.7, align 8, !tbaa !241
   store i64 %i.fb, ptr %i.ew, align 8, !tbaa !241
-  %i.fc = add nuw i64 %.sroa.2.0.i.i.i.i, 8       ; 2 uses
+  %i.fc = add nuw nsw i64 %.sroa.2.0.i.i.i.i, 8   ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %.045.i.i.i.i.i, i64 64
   %exitcond.not.7 = icmp eq i64 %i.fc, %i.br
   br i1 %exitcond.not.7, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !991

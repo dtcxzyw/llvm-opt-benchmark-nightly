@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   %i.av = add i32 %.038.i, 1
   %i.aw = sext i32 %.038.i to i64
   %i.ax = getelementptr inbounds [2 x i8], ptr %i.a, i64 %i.aw
-  %i.ay = trunc nuw i64 %indvars.iv.i to i16
+  %i.ay = trunc nuw nsw i64 %indvars.iv.i to i16
   store i16 %i.ay, ptr %i.ax, align 2
   br label %bb.j
 
@@ -221,7 +221,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bd = add i32 %.1.i, 1
   %i.be = sext i32 %.1.i to i64
   %i.bf = getelementptr inbounds [2 x i8], ptr %i.a, i64 %i.be
-  %i.bg = trunc nuw i64 %indvars.iv.next.i to i16
+  %i.bg = trunc nuw nsw i64 %indvars.iv.next.i to i16
   store i16 %i.bg, ptr %i.bf, align 2
   br label %bb.l
 
@@ -251,7 +251,7 @@ bb.m:                                             ; preds = %.epil.preheader
   %i.bl = add i32 %.038.i.epil.init, 1
   %i.bm = sext i32 %.038.i.epil.init to i64
   %i.bn = getelementptr inbounds [2 x i8], ptr %i.a, i64 %i.bm
-  %i.bo = trunc nuw i64 %indvars.iv.i.epil.init to i16
+  %i.bo = trunc nuw nsw i64 %indvars.iv.i.epil.init to i16
   store i16 %i.bo, ptr %i.bn, align 2
   br label %._crit_edge.i
 

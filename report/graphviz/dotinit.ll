@@ -204,7 +204,7 @@ bb.a:
   %i.r = load ptr, ptr %i.b, align 8, !tbaa !13   ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 236
   store i32 %i.q, ptr %i.s, align 4, !tbaa !65
-  %i.t = add i32 %i.q, 1                          ; 3 uses
+  %i.t = add nsw i32 %i.q, 1                      ; 3 uses
   %i.u = sext i32 %i.t to i64                     ; 3 uses
   %.not.i = icmp eq i32 %i.t, 0
   br i1 %.not.i, label %gv_calloc.exit.thread, label %bb.b
@@ -244,7 +244,7 @@ gv_calloc.exit:                                   ; preds = %bb.d
   br i1 %.not24, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %gv_calloc.exit
-  %wide.trip.count = zext i32 %i.t to i64
+  %wide.trip.count = zext nneg i32 %i.t to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph

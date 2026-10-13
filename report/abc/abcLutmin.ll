@@ -205,7 +205,12 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.b
   %.val59 = load i32, ptr %i.p, align 4, !tbaa !71 ; 3 uses
   %i.q = add i32 %.val59, -1                      ; 4 uses
   %i.r = icmp sgt i32 %.val59, 1
-  br i1 %i.r, label %.lr.ph79, label %._crit_edge
+  br i1 %i.r, label %.lr.ph79.preheader, label %._crit_edge
+
+.lr.ph79.preheader:                               ; preds = %.critedge2
+  %wide.trip.count95 = zext nneg i32 %.val59 to i64
+  %wide.trip.count = zext i32 %i.q to i64
+  br label %.lr.ph79
 
 .loopexit61:                                      ; preds = %.loopexit, %.lr.ph79
   %.1.lcssa = phi i32 [ %.04577, %.lr.ph79 ], [ %.2.lcssa, %.loopexit ]
@@ -216,10 +221,10 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.b
 ._crit_edge:                                      ; preds = %.loopexit61, %.critedge2
   ret void
 
-.lr.ph79:                                         ; preds = %.critedge2, %.loopexit61
-  %indvars.iv84 = phi i64 [ %indvars.iv.next85, %.loopexit61 ], [ 2, %.critedge2 ] ; 2 uses
-  %.04478 = phi i32 [ %i.s, %.loopexit61 ], [ 0, %.critedge2 ] ; 2 uses
-  %.04577 = phi i32 [ %.1.lcssa, %.loopexit61 ], [ 0, %.critedge2 ] ; 2 uses
+.lr.ph79:                                         ; preds = %.lr.ph79.preheader, %.loopexit61
+  %indvars.iv84 = phi i64 [ 2, %.lr.ph79.preheader ], [ %indvars.iv.next85, %.loopexit61 ] ; 2 uses
+  %.04478 = phi i32 [ 0, %.lr.ph79.preheader ], [ %i.s, %.loopexit61 ] ; 2 uses
+  %.04577 = phi i32 [ 0, %.lr.ph79.preheader ], [ %.1.lcssa, %.loopexit61 ] ; 2 uses
   %i.s = add nuw nsw i32 %.04478, 1               ; 4 uses
   %i.t = icmp slt i32 %i.s, %i.q
   br i1 %i.t, label %.lr.ph75, label %.loopexit61
@@ -235,8 +240,7 @@ bb.b:                                             ; preds = %.lr.ph66, %bb.b
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.c
   %.2.lcssa = phi i32 [ %.173, %bb.c ], [ %i.v, %.loopexit.loopexit ] ; 2 uses
   %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1 ; 2 uses
-  %lftr.wideiv95 = trunc i64 %indvars.iv.next87 to i32
-  %exitcond96.not = icmp eq i32 %.val59, %lftr.wideiv95
+  %exitcond96.not = icmp eq i64 %indvars.iv.next87, %wide.trip.count95
   br i1 %exitcond96.not, label %.loopexit61, label %bb.c, !llvm.loop !160
 
 bb.c:                                             ; preds = %.lr.ph75, %.loopexit
@@ -296,8 +300,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 .critedge4:                                       ; preds = %bb.h, %bb.d
   %putchar51 = tail call i32 @putchar(i32 10)     ; 0 uses
   %indvars.iv.next89 = add nuw nsw i64 %indvars.iv88, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next89 to i32
-  %exitcond.not = icmp eq i32 %i.q, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next89, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit.loopexit, label %bb.d, !llvm.loop !162
 }
 

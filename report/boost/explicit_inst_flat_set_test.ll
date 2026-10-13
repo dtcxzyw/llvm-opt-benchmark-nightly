@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.critedge.i, %.lr.p
   br i1 %.not26.i, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEEPS7_EEvT0_SE_T_.exit, label %.lr.ph38.i, !llvm.loop !35
 
 _ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEEPS7_EEvT0_SE_T_.exit: ; preds = %bb.d
-  %i.r = add i64 %.04460, 16                      ; 3 uses
+  %i.r = add nuw i64 %.04460, 16                  ; 3 uses
   %i.s = sub i64 %i.d, %i.r
   %i.t = icmp ugt i64 %i.s, 16
   br i1 %i.t, label %.lr.ph, label %._crit_edge, !llvm.loop !1760
@@ -607,7 +607,7 @@ bb.a:
   %7 = alloca %"class.boost::container::stable_vector_iterator", align 8 ; 8 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !277    ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !275
-  %i.c = load ptr, ptr %0, align 8, !tbaa !277    ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !277    ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !275  ; 3 uses
   %i.e = ptrtoint ptr %i.b to i64
   %i.f = ptrtoint ptr %i.d to i64
@@ -694,22 +694,18 @@ bb.f:                                             ; preds = %.critedge.i, %.lr.p
   br i1 %.not20.i, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_22stable_vector_iteratorIPS7_Lb0EEEEEvT0_SG_T_.exit, label %.lr.ph31.i, !llvm.loop !123
 
 _ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_22stable_vector_iteratorIPS7_Lb0EEEEEvT0_SG_T_.exit: ; preds = %bb.f, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit36, %bb.c
-  %i.ai = add i64 %.033100, 16                    ; 4 uses
+  %i.ai = add nuw i64 %.033100, 16                ; 3 uses
   %i.aj = sub i64 %i.h, %i.ai
   %i.ak = icmp ugt i64 %i.aj, 16
-  br i1 %i.ak, label %.lr.ph, label %._crit_edge, !llvm.loop !5001
+  br i1 %i.ak, label %.lr.ph, label %bb.g, !llvm.loop !5001
 
-._crit_edge:                                      ; preds = %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_22stable_vector_iteratorIPS7_Lb0EEEEEvT0_SG_T_.exit
-  %.not.i.i37 = icmp eq i64 %i.ai, 0
-  br i1 %.not.i.i37, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit38, label %bb.g
-
-bb.g:                                             ; preds = %._crit_edge
+bb.g:                                             ; preds = %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_22stable_vector_iteratorIPS7_Lb0EEEEEvT0_SG_T_.exit
   %i.al = getelementptr inbounds [8 x i8], ptr %i.d, i64 %i.ai
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !271, !noalias !5021
   br label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit38
 
-_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit38: ; preds = %bb.a, %._crit_edge, %bb.g
-  %.sroa.081.0 = phi ptr [ %i.c, %._crit_edge ], [ %i.am, %bb.g ], [ %i.c, %bb.a ] ; 4 uses
+_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit38: ; preds = %bb.a, %bb.g
+  %.sroa.081.0 = phi ptr [ %i.am, %bb.g ], [ %i.c, %bb.a ] ; 4 uses
   %.not.i39 = icmp eq ptr %.sroa.081.0, %i.a
   br i1 %.not.i39, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_22stable_vector_iteratorIPS7_Lb0EEEEEvT0_SG_T_.exit55, label %bb.h
 
@@ -1112,7 +1108,7 @@ bb.a:
   %6 = alloca %"class.boost::container::deque_iterator", align 8 ; 5 uses
   %7 = alloca %"class.boost::container::deque_iterator", align 8 ; 5 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !289    ; 5 uses
-  %i.b = load ptr, ptr %0, align 8, !tbaa !289    ; 11 uses
+  %i.b = load ptr, ptr %0, align 8, !tbaa !289    ; 10 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %._crit_edge.thread, label %_ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEmiERKS5_.exit
 
@@ -1136,7 +1132,7 @@ _ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = sub i64 %i.s, %i.t
   %i.v = ashr exact i64 %i.u, 2
-  %i.w = sub i64 %i.q, %i.v                       ; 6 uses
+  %i.w = sub i64 %i.q, %i.v                       ; 5 uses
   %i.x = icmp ugt i64 %i.w, 16
   br i1 %i.x, label %.lr.ph, label %._crit_edge.thread
 
@@ -1148,7 +1144,7 @@ _ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj
 
 .lr.ph:                                           ; preds = %_ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEmiERKS5_.exit
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.z = load ptr, ptr %i.y, align 8, !tbaa !290, !noalias !10526 ; 11 uses
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !290, !noalias !10526 ; 10 uses
   %i.aa = ptrtoint ptr %i.b to i64
   %.pre = load ptr, ptr %i.z, align 8, !tbaa !250, !noalias !322 ; 5 uses
   %i.ab = ptrtoint ptr %.pre to i64
@@ -1364,16 +1360,12 @@ _ZN5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0
   br i1 %.not29.i, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_14deque_iteratorIPS7_Lb0ELj0ELj0EmEEEEvT0_SG_T_.exit, label %.lr.ph41.i, !llvm.loop !183
 
 _ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_14deque_iteratorIPS7_Lb0ELj0ELj0EmEEEEvT0_SG_T_.exit: ; preds = %_ZN5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEppEv.exit5.i, %_ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEplEl.exit43, %_ZN5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEppEv.exit.i
-  %i.dg = add i64 %.033180, 16                    ; 5 uses
+  %i.dg = add nuw i64 %.033180, 16                ; 4 uses
   %i.dh = sub i64 %i.w, %i.dg
   %i.di = icmp ugt i64 %i.dh, 16
-  br i1 %i.di, label %bb.b, label %._crit_edge, !llvm.loop !10505
+  br i1 %i.di, label %bb.b, label %bb.u, !llvm.loop !10505
 
-._crit_edge:                                      ; preds = %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_14deque_iteratorIPS7_Lb0ELj0ELj0EmEEEEvT0_SG_T_.exit
-  %.not.i.i44 = icmp eq i64 %i.dg, 0
-  br i1 %.not.i.i44, label %_ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEplEl.exit48, label %bb.u
-
-bb.u:                                             ; preds = %._crit_edge
+bb.u:                                             ; preds = %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_14deque_iteratorIPS7_Lb0ELj0ELj0EmEEEEvT0_SG_T_.exit
   %i.dj = load ptr, ptr %i.z, align 8, !tbaa !250, !noalias !10525
   %i.dk = ptrtoint ptr %i.b to i64
   %i.dl = ptrtoint ptr %i.dj to i64
@@ -1399,11 +1391,11 @@ bb.w:                                             ; preds = %bb.u
   %i.dy = getelementptr inbounds [4 x i8], ptr %i.dv, i64 %i.dx
   br label %_ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEplEl.exit48
 
-_ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEplEl.exit48: ; preds = %._crit_edge.thread, %._crit_edge, %bb.v, %bb.w
-  %.0.i219229 = phi i64 [ %i.w, %._crit_edge ], [ %i.w, %bb.v ], [ %i.w, %bb.w ], [ %.0.i220, %._crit_edge.thread ] ; 6 uses
-  %8 = phi i1 [ true, %._crit_edge ], [ true, %bb.v ], [ true, %bb.w ], [ false, %._crit_edge.thread ]
-  %.sroa.6.1.i46 = phi ptr [ %i.z, %._crit_edge ], [ %i.z, %bb.v ], [ %i.du, %bb.w ], [ %.pre191, %._crit_edge.thread ] ; 3 uses
-  %.sroa.0.0.i47 = phi ptr [ %i.b, %._crit_edge ], [ %i.dp, %bb.v ], [ %i.dy, %bb.w ], [ %i.b, %._crit_edge.thread ] ; 4 uses
+_ZNK5boost9container14deque_iteratorIPNS0_4test24movable_and_copyable_intELb0ELj0ELj0EmEplEl.exit48: ; preds = %._crit_edge.thread, %bb.v, %bb.w
+  %.0.i219229 = phi i64 [ %.0.i220, %._crit_edge.thread ], [ %i.w, %bb.v ], [ %i.w, %bb.w ] ; 6 uses
+  %8 = phi i1 [ false, %._crit_edge.thread ], [ true, %bb.v ], [ true, %bb.w ]
+  %.sroa.6.1.i46 = phi ptr [ %.pre191, %._crit_edge.thread ], [ %i.z, %bb.v ], [ %i.du, %bb.w ] ; 3 uses
+  %.sroa.0.0.i47 = phi ptr [ %i.b, %._crit_edge.thread ], [ %i.dp, %bb.v ], [ %i.dy, %bb.w ] ; 4 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.not.i49 = icmp eq ptr %.sroa.0.0.i47, %i.a

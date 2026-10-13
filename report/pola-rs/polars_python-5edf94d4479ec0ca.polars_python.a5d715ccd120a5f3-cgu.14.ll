@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %_RNvXs0_NtNtNtCscgR
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.3, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.i, i64 24, i1 false), !dbg !25273
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i), !dbg !25274
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i), !dbg !25274
-  %i.br = add i64 %i.ag, 1, !dbg !25243           ; 2 uses
+  %i.br = add nuw i64 %i.ag, 1, !dbg !25243       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.sroa.0.i), !dbg !25275
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %.sroa.4.sroa.0.8..sroa_idx.i, ptr noundef nonnull align 16 dereferenceable(112) %.sroa.036.i, i64 112, i1 false), !dbg !25275, !noalias !25206
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.036.i), !dbg !25276

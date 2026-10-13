@@ -204,7 +204,7 @@ _ZN8simdjson8internal12_GLOBAL__N_14trimERNS0_7decimalE.exit: ; preds = %bb.r, %
 define dso_local void @_ZN8simdjson8internal19decimal_right_shiftERNS0_7decimalEj(ptr nofree noundef nonnull align 4 captures(none) dereferenceable(780) %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = zext i32 %1 to i64                       ; 8 uses
-  %i.b = load i32, ptr %0, align 4, !tbaa !43     ; 7 uses
+  %i.b = load i32, ptr %0, align 4, !tbaa !43     ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 9 uses
   %i.d = zext i32 %i.b to i64
   %exitcond.not103 = icmp eq i32 %i.b, 0
@@ -252,7 +252,7 @@ bb.b:                                             ; preds = %.lr.ph107
 
 .loopexit:                                        ; preds = %.lr.ph, %.loopexit.loopexit73, %.preheader52
   %.246 = phi i64 [ %i.i, %.loopexit.loopexit73 ], [ %.04457.lcssa, %.preheader52 ], [ %i.o, %.lr.ph ] ; 3 uses
-  %.2 = phi i32 [ %i.s, %.loopexit.loopexit73 ], [ %i.b, %.preheader52 ], [ %i.p, %.lr.ph ] ; 5 uses
+  %.2 = phi i32 [ %i.s, %.loopexit.loopexit73 ], [ %i.b, %.preheader52 ], [ %i.p, %.lr.ph ] ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !44
   %reass.sub = sub i32 %i.u, %.2
@@ -274,17 +274,17 @@ bb.d:                                             ; preds = %.loopexit
 .lr.ph65:                                         ; preds = %bb.d
   %i.z = zext i32 %.2 to i64                      ; 2 uses
   %i.aa = sub nuw i32 %i.b, %.2                   ; 5 uses
-  %.neg = add i32 %.2, 1
-  %xtraiter = and i32 %i.aa, 1
-  %i.ab = icmp eq i32 %i.b, %.neg
+  %wide.trip.count89 = zext i32 %i.aa to i64      ; 2 uses
+  %xtraiter = and i64 %wide.trip.count89, 1
+  %i.ab = icmp eq i32 %i.aa, 1
   br i1 %i.ab, label %.epil.preheader, label %.lr.ph65.new
 
 .lr.ph65.new:                                     ; preds = %.lr.ph65
-  %unroll_iter = and i32 %i.aa, -2
+  %unroll_iter = and i64 %wide.trip.count89, 4294967294
   br label %bb.e
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %bb.e
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.preheader.loopexit.unr-lcssa, %.lr.ph65
@@ -319,7 +319,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph65.new
   %indvars.iv84 = phi i64 [ 0, %.lr.ph65.new ], [ %indvars.iv.next85.1, %bb.e ] ; 3 uses
   %indvars.iv82 = phi i64 [ %i.z, %.lr.ph65.new ], [ %indvars.iv.next83.1, %bb.e ] ; 3 uses
   %.34763 = phi i64 [ %.246, %.lr.ph65.new ], [ %i.bd, %bb.e ] ; 2 uses
-  %niter = phi i32 [ 0, %.lr.ph65.new ], [ %niter.next.1, %bb.e ]
+  %niter = phi i64 [ 0, %.lr.ph65.new ], [ %niter.next.1, %bb.e ]
   %i.am = lshr i64 %.34763, %i.a
   %i.an = trunc i64 %i.am to i8
   %i.ao = and i64 %.34763, %i.x
@@ -344,8 +344,8 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph65.new
   %i.be = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv84
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 1
   store i8 %i.aw, ptr %i.bf, align 1, !tbaa !36
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.e, !llvm.loop !195
 
 bb.f:                                             ; preds = %.lr.ph71, %bb.j

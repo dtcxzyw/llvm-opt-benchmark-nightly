@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RINvXNtCsloFShupyl5J_6comemo5inputNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles10StyleChainNtB3_5Input3keyNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECs9gmjTwvRRSu_10typst_html(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(72) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 12 uses
+  %i.a = alloca [16 x i8], align 16               ; 11 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4732)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
@@ -385,12 +385,12 @@ bb.i:                                             ; preds = %bb.j, %_RINvXs1_NtC
   %i.cd = phi i64 [ %i.ar, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECs9gmjTwvRRSu_10typst_html.exit.i.i ], [ %i.cw, %bb.j ] ; 4 uses
   %.lcssa214 = phi i64 [ %.lcssa211, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECs9gmjTwvRRSu_10typst_html.exit.i.i ], [ %i.cy, %bb.j ] ; 2 uses
   %i.ce = phi i64 [ %i.as, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECs9gmjTwvRRSu_10typst_html.exit.i.i ], [ %i.ct, %bb.j ] ; 2 uses
-  %.sroa.0.0.i = phi i64 [ 0, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECs9gmjTwvRRSu_10typst_html.exit.i.i ], [ %i.bg, %bb.j ] ; 8 uses
+  %.sroa.0.0.i = phi i64 [ 0, %_RINvXs1_NtCs6xpQEr8gLsQ_11typst_utils4hashINtB6_8LazyHashNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles5StyleENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNtCs83m0le5ggt2_9siphasher6sip12811SipHasher13ECs9gmjTwvRRSu_10typst_html.exit.i.i ], [ %i.bg, %bb.j ] ; 7 uses
   %i.cf = sub nuw nsw i64 16, %.sroa.0.0.i        ; 2 uses
   %i.cg = and i64 %i.cf, 7                        ; 4 uses
-  %i.ch = and i64 %i.cf, 24                       ; 4 uses
+  %i.ch = and i64 %i.cf, 24                       ; 3 uses
   %i.ci = icmp samesign ult i64 %.sroa.0.0.i, %i.ch
-  br i1 %i.ci, label %.lr.ph.i, label %bb.l
+  br i1 %i.ci, label %.lr.ph.i.1.a, label %bb.l
 
 bb.j:                                             ; preds = %_RNvNtCs83m0le5ggt2_9siphasher6sip1289u8to64_le.exit.i
   %i.cj = xor i64 %i.as, %i.ca                    ; 3 uses
@@ -419,12 +419,12 @@ bb.k:                                             ; preds = %_RNvNtCs83m0le5ggt2
   %i.cz = add i64 %i.au, 16
   br label %_RNvXsb_NtCs83m0le5ggt2_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCs9gmjTwvRRSu_10typst_html.exit
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i.3, %.lr.ph.i.2.a, %.lr.ph.i.1.a, %.lr.ph.i
-  %.lcssa91 = phi i64 [ %13, %.lr.ph.i ], [ %i.ej, %.lr.ph.i.1.a ], [ %i.fc, %.lr.ph.i.2.a ], [ %i.fv, %.lr.ph.i.3 ] ; 3 uses
-  %.lcssa90 = phi i64 [ %16, %.lr.ph.i ], [ %i.em, %.lr.ph.i.1.a ], [ %i.ff, %.lr.ph.i.2.a ], [ %i.fy, %.lr.ph.i.3 ] ; 3 uses
-  %.lcssa89 = phi i64 [ %17, %.lr.ph.i ], [ %i.en, %.lr.ph.i.1.a ], [ %i.fg, %.lr.ph.i.2.a ], [ %i.fz, %.lr.ph.i.3 ] ; 3 uses
-  %.lcssa88 = phi i64 [ %18, %.lr.ph.i ], [ %i.eo, %.lr.ph.i.1.a ], [ %i.fh, %.lr.ph.i.2.a ], [ %i.ga, %.lr.ph.i.3 ] ; 3 uses
-  %.lcssa = phi i64 [ %19, %.lr.ph.i ], [ %i.ep, %.lr.ph.i.1.a ], [ %i.fi, %.lr.ph.i.2.a ], [ %21, %.lr.ph.i.3 ]
+._crit_edge.i:                                    ; preds = %.lr.ph.i.3, %.lr.ph.i.2.a, %.lr.ph.i.1.a
+  %.lcssa91 = phi i64 [ %i.ej, %.lr.ph.i.1.a ], [ %i.fc, %.lr.ph.i.2.a ], [ %i.fv, %.lr.ph.i.3 ] ; 3 uses
+  %.lcssa90 = phi i64 [ %i.em, %.lr.ph.i.1.a ], [ %i.ff, %.lr.ph.i.2.a ], [ %i.fy, %.lr.ph.i.3 ] ; 3 uses
+  %.lcssa89 = phi i64 [ %i.en, %.lr.ph.i.1.a ], [ %i.fg, %.lr.ph.i.2.a ], [ %i.fz, %.lr.ph.i.3 ] ; 3 uses
+  %.lcssa88 = phi i64 [ %i.eo, %.lr.ph.i.1.a ], [ %i.fh, %.lr.ph.i.2.a ], [ %i.ga, %.lr.ph.i.3 ] ; 3 uses
+  %.lcssa = phi i64 [ %i.ep, %.lr.ph.i.1.a ], [ %i.fi, %.lr.ph.i.2.a ], [ %2, %.lr.ph.i.3 ]
   store i64 %.lcssa91, ptr %i.e, align 8, !alias.scope !4738, !noalias !4740
   store i64 %.lcssa90, ptr %i.f, align 8, !alias.scope !4744, !noalias !4740
   store i64 %.lcssa89, ptr %i.g, align 8, !alias.scope !4744, !noalias !4740
@@ -491,38 +491,15 @@ _RNvNtCs83m0le5ggt2_9siphasher6sip1289u8to64_le.exit17.i: ; preds = %bb.q, %bb.p
   store i64 %.sroa.0.2.i14.i, ptr %i.d, align 8, !alias.scope !4738, !noalias !4740
   br label %_RNvXsb_NtCs83m0le5ggt2_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCs9gmjTwvRRSu_10typst_html.exit
 
-.lr.ph.i:                                         ; preds = %bb.i
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.0.0.i
-  %.sroa.07.0.copyload.i = load i64, ptr %2, align 1, !alias.scope !4739, !noalias !4742 ; 2 uses
-  %3 = xor i64 %.sroa.07.0.copyload.i, %i.ce      ; 3 uses
-  %4 = add i64 %.lcssa214, %i.cd                  ; 3 uses
-  %5 = tail call noundef i64 @llvm.fshl.i64(i64 %i.cd, i64 %i.cd, i64 13)
-  %6 = xor i64 %4, %5                             ; 3 uses
-  %7 = tail call noundef i64 @llvm.fshl.i64(i64 %4, i64 %4, i64 32)
-  %8 = add i64 %3, %i.cc                          ; 2 uses
-  %9 = tail call noundef i64 @llvm.fshl.i64(i64 %3, i64 %3, i64 16)
-  %10 = xor i64 %8, %9                            ; 3 uses
-  %11 = add i64 %10, %7                           ; 2 uses
-  %12 = tail call noundef i64 @llvm.fshl.i64(i64 %10, i64 %10, i64 21)
-  %13 = xor i64 %12, %11                          ; 2 uses
-  %14 = add i64 %8, %6                            ; 3 uses
-  %15 = tail call noundef i64 @llvm.fshl.i64(i64 %6, i64 %6, i64 17)
-  %16 = xor i64 %14, %15                          ; 4 uses
-  %17 = tail call noundef i64 @llvm.fshl.i64(i64 %14, i64 %14, i64 32) ; 2 uses
-  %18 = xor i64 %11, %.sroa.07.0.copyload.i       ; 2 uses
-  %19 = add nuw nsw i64 %.sroa.0.0.i, 8           ; 3 uses
-  %20 = icmp samesign ult i64 %19, %i.ch
-  br i1 %20, label %.lr.ph.i.1.a, label %._crit_edge.i
-
-.lr.ph.i.1.a:                                     ; preds = %.lr.ph.i
-  %i.dy = getelementptr inbounds nuw i8, ptr %i.a, i64 %19
+.lr.ph.i.1.a:                                     ; preds = %bb.i
+  %i.dy = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.0.0.i
   %.sroa.07.0.copyload.i.1.a = load i64, ptr %i.dy, align 1, !alias.scope !4739, !noalias !4742 ; 2 uses
-  %i.dz = xor i64 %.sroa.07.0.copyload.i.1.a, %13 ; 3 uses
-  %i.ea = add i64 %18, %16                        ; 3 uses
-  %i.eb = tail call noundef i64 @llvm.fshl.i64(i64 %16, i64 %16, i64 13)
+  %i.dz = xor i64 %.sroa.07.0.copyload.i.1.a, %i.ce ; 3 uses
+  %i.ea = add i64 %.lcssa214, %i.cd               ; 3 uses
+  %i.eb = tail call noundef i64 @llvm.fshl.i64(i64 %i.cd, i64 %i.cd, i64 13)
   %i.ec = xor i64 %i.ea, %i.eb                    ; 3 uses
   %i.ed = tail call noundef i64 @llvm.fshl.i64(i64 %i.ea, i64 %i.ea, i64 32)
-  %i.ee = add i64 %i.dz, %17                      ; 2 uses
+  %i.ee = add i64 %i.dz, %i.cc                    ; 2 uses
   %i.ef = tail call noundef i64 @llvm.fshl.i64(i64 %i.dz, i64 %i.dz, i64 16)
   %i.eg = xor i64 %i.ee, %i.ef                    ; 3 uses
   %i.eh = add i64 %i.eg, %i.ed                    ; 2 uses
@@ -533,7 +510,7 @@ _RNvNtCs83m0le5ggt2_9siphasher6sip1289u8to64_le.exit17.i: ; preds = %bb.q, %bb.p
   %i.em = xor i64 %i.ek, %i.el                    ; 4 uses
   %i.en = tail call noundef i64 @llvm.fshl.i64(i64 %i.ek, i64 %i.ek, i64 32) ; 2 uses
   %i.eo = xor i64 %i.eh, %.sroa.07.0.copyload.i.1.a ; 2 uses
-  %i.ep = add nuw nsw i64 %.sroa.0.0.i, 16        ; 3 uses
+  %i.ep = add nuw nsw i64 %.sroa.0.0.i, 8         ; 3 uses
   %i.eq = icmp samesign ult i64 %i.ep, %i.ch
   br i1 %i.eq, label %.lr.ph.i.2.a, label %._crit_edge.i
 
@@ -556,7 +533,7 @@ _RNvNtCs83m0le5ggt2_9siphasher6sip1289u8to64_le.exit17.i: ; preds = %bb.q, %bb.p
   %i.ff = xor i64 %i.fd, %i.fe                    ; 4 uses
   %i.fg = tail call noundef i64 @llvm.fshl.i64(i64 %i.fd, i64 %i.fd, i64 32) ; 2 uses
   %i.fh = xor i64 %i.fa, %.sroa.07.0.copyload.i.2.a ; 2 uses
-  %i.fi = add nuw nsw i64 %.sroa.0.0.i, 24        ; 3 uses
+  %i.fi = add nuw nsw i64 %.sroa.0.0.i, 16        ; 3 uses
   %i.fj = icmp samesign ult i64 %i.fi, %i.ch
   br i1 %i.fj, label %.lr.ph.i.3, label %._crit_edge.i
 
@@ -579,7 +556,7 @@ _RNvNtCs83m0le5ggt2_9siphasher6sip1289u8to64_le.exit17.i: ; preds = %bb.q, %bb.p
   %i.fy = xor i64 %i.fw, %i.fx
   %i.fz = tail call noundef i64 @llvm.fshl.i64(i64 %i.fw, i64 %i.fw, i64 32)
   %i.ga = xor i64 %i.ft, %.sroa.07.0.copyload.i.3
-  %21 = or disjoint i64 %.sroa.0.0.i, 32
+  %2 = add nuw nsw i64 %.sroa.0.0.i, 24
   br label %._crit_edge.i
 
 _RNvXsb_NtCs83m0le5ggt2_9siphasher6sip128INtB5_6HasherNtB5_11Sip13RoundsENtNtCs3oUPovFnLWP_4core4hash6Hasher5writeCs9gmjTwvRRSu_10typst_html.exit: ; preds = %bb.k, %_RNvNtCs83m0le5ggt2_9siphasher6sip1289u8to64_le.exit17.i

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph77.i:                                       ; preds = %.lr.ph84.i.preheader, %._crit_edge78.i
   %.163.in82.i80 = phi i64 [ %.16383.i79, %._crit_edge78.i ], [ %i.i, %.lr.ph84.i.preheader ]
   %.16383.i79 = phi i64 [ %.163.i, %._crit_edge78.i ], [ %.pre.i, %.lr.ph84.i.preheader ] ; 3 uses
-  %i.an = add i64 %.163.in82.i80, -2
+  %i.an = add nsw i64 %.163.in82.i80, -2
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.i, %.lr.ph77.i
@@ -250,9 +250,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bg, label %bb.f, label %._crit_edge78.i, !llvm.loop !18
 
 ._crit_edge78.i:                                  ; preds = %bb.i, %bb.h
-  %.163.i = add i64 %.16383.i79, -1               ; 3 uses
+  %.163.i = add nsw i64 %.16383.i79, -1           ; 3 uses
   %.val9.i68 = load i64, ptr %i.l, align 1, !tbaa !414
-  %i.bh = shl i64 %.163.i, 3
+  %i.bh = shl nsw i64 %.163.i, 3
   %i.bi = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.bh ; 2 uses
   %.val.i69 = load i64, ptr %i.bi, align 1, !tbaa !414
   store i64 %.val.i69, ptr %i.l, align 1, !tbaa !414

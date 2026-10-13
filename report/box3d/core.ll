@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.b
   br i1 %i.x, label %.preheader, label %.thread
 
 .preheader:                                       ; preds = %bb.h, %.preheader
-  %.0122.i = phi i64 [ %i.cq, %.preheader ], [ %i.b, %bb.h ]
+  %.0122.i = phi i64 [ %i.cq, %.preheader ], [ %i.b, %bb.h ] ; 2 uses
   %.0120.i = phi ptr [ %i.cp, %.preheader ], [ %0, %bb.h ] ; 15 uses
   %.0119.i = phi i64 [ %i.ag, %.preheader ], [ 4766890152743124950, %bb.h ]
   %.0118.i = phi i64 [ %i.aq, %.preheader ], [ 4766890152743124950, %bb.h ]
@@ -295,7 +295,7 @@ bb.h:                                             ; preds = %bb.b
   %i.cn = xor i128 %i.cm, %i.cl
   %i.co = trunc i128 %i.cn to i64                 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.0120.i, i64 112 ; 3 uses
-  %i.cq = add i64 %.0122.i, -112                  ; 5 uses
+  %i.cq = add nsw i64 %.0122.i, -112              ; 4 uses
   %i.cr = icmp ugt i64 %i.cq, 112
   br i1 %i.cr, label %.preheader, label %bb.i, !llvm.loop !15
 
@@ -306,7 +306,7 @@ bb.i:                                             ; preds = %.preheader
   %i.cv = xor i64 %i.cu, %i.bu
   %i.cw = xor i64 %i.cv, %i.ce
   %i.cx = xor i64 %i.cw, %i.co                    ; 2 uses
-  %i.cy = icmp samesign ugt i64 %i.cq, 16
+  %i.cy = icmp samesign ugt i64 %.0122.i, 128
   br i1 %i.cy, label %.thread, label %bb.o
 
 .thread:                                          ; preds = %bb.h, %bb.i

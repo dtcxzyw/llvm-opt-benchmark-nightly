@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph127, %_ZN2OT1
   br i1 %i.l, label %.lr.ph120, label %.critedge.i.loopexit, !llvm.loop !1457
 
 .lr.ph120:                                        ; preds = %.lr.ph.i
-  %i.m = add i32 %i.i, 1                          ; 2 uses
+  %i.m = add nuw i32 %i.i, 1                      ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.m, %i.h
   br i1 %exitcond.not.i, label %.lr.ph120...critedge.i_crit_edge_crit_edge, label %.lr.ph.i, !llvm.loop !1457
 
@@ -223,31 +223,28 @@ bb.b:                                             ; preds = %.lr.ph127, %_ZN2OT1
   %.3 = phi i32 [ %.sroa.6.8.extract.trunc, %..critedge.i_crit_edge ], [ %i.n, %.critedge.i.loopexit ] ; 2 uses
   %.013.lcssa.i = phi i32 [ %i.h, %..critedge.i_crit_edge ], [ %i.i, %.critedge.i.loopexit ] ; 4 uses
   %i.o = icmp ugt i32 %.013.lcssa.i, 63
-  br i1 %i.o, label %.lr.ph23.preheader.i, label %._crit_edge.i
+  br i1 %i.o, label %.lr.ph23.preheader.i, label %bb.c
 
 .lr.ph23.preheader.i:                             ; preds = %.critedge.i
   %i.p = add i32 %.013.lcssa.i, -64
   %i.q = lshr i32 %i.p, 6
-  %narrow.i = add nuw nsw i32 %i.q, 1             ; 2 uses
+  %narrow.i = add nuw nsw i32 %i.q, 1             ; 3 uses
   %i.r = zext nneg i32 %narrow.i to i64           ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.g, i8 -65, i64 %i.r, i1 false), !tbaa !277
   %scevgep.i = getelementptr i8, ptr %i.g, i64 %i.r
-  %i.s = and i32 %.013.lcssa.i, 63
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %.lr.ph23.preheader.i, %.critedge.i
-  %.015.lcssa.i = phi ptr [ %i.g, %.critedge.i ], [ %scevgep.i, %.lr.ph23.preheader.i ]
-  %.114.lcssa.i = phi i32 [ %.013.lcssa.i, %.critedge.i ], [ %i.s, %.lr.ph23.preheader.i ] ; 2 uses
-  %.0.lcssa.i = phi i32 [ 0, %.critedge.i ], [ %narrow.i, %.lr.ph23.preheader.i ] ; 2 uses
-  %.not.i = icmp eq i32 %.114.lcssa.i, 0
+  %i.s = and i32 %.013.lcssa.i, 63                ; 2 uses
+  %.not.i = icmp eq i32 %i.s, 0
   br i1 %.not.i, label %_ZN2OT11TupleValues26encode_value_run_as_zeroesERjPh10hb_array_tIKiE.exit, label %bb.c
 
-bb.c:                                             ; preds = %._crit_edge.i
-  %i.t = trunc nuw nsw i32 %.114.lcssa.i to i8
+bb.c:                                             ; preds = %.critedge.i, %.lr.ph23.preheader.i
+  %.0.lcssa.i178 = phi i32 [ %narrow.i, %.lr.ph23.preheader.i ], [ 0, %.critedge.i ]
+  %.114.lcssa.i177 = phi i32 [ %i.s, %.lr.ph23.preheader.i ], [ %.013.lcssa.i, %.critedge.i ]
+  %.015.lcssa.i176 = phi ptr [ %scevgep.i, %.lr.ph23.preheader.i ], [ %i.g, %.critedge.i ]
+  %i.t = trunc nuw nsw i32 %.114.lcssa.i177 to i8
   %i.u = add nuw i8 %i.t, 127
   %i.v = or i8 %i.u, -128
-  store i8 %i.v, ptr %.015.lcssa.i, align 1, !tbaa !277
-  %i.w = add nuw nsw i32 %.0.lcssa.i, 1
+  store i8 %i.v, ptr %.015.lcssa.i176, align 1, !tbaa !277
+  %i.w = add nuw nsw i32 %.0.lcssa.i178, 1
   br label %_ZN2OT11TupleValues26encode_value_run_as_zeroesERjPh10hb_array_tIKiE.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -650,9 +647,9 @@ bb.l:                                             ; preds = %._crit_edge.i66
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next84.i.1, %i.qx
   br i1 %exitcond.not.1, label %_ZN2OT11TupleValues26encode_value_run_as_zeroesERjPh10hb_array_tIKiE.exit, label %.lr.ph72.i, !llvm.loop !1482
 
-_ZN2OT11TupleValues26encode_value_run_as_zeroesERjPh10hb_array_tIKiE.exit: ; preds = %.lr.ph72.i.prol.loopexit, %.lr.ph72.i, %.lr.ph77.i.prol.loopexit, %.lr.ph77.i, %middle.block279, %bb.l, %._crit_edge.i66, %bb.i, %._crit_edge.i56, %.loopexit307, %._crit_edge.i48, %bb.c, %._crit_edge.i
-  %.184 = phi i32 [ %.7, %middle.block279 ], [ %.3, %bb.c ], [ %.5.ph, %.loopexit307 ], [ %.3, %._crit_edge.i ], [ %.5.ph, %._crit_edge.i48 ], [ %.7, %._crit_edge.i56 ], [ %.7, %bb.i ], [ %.lcssa, %._crit_edge.i66 ], [ %.lcssa, %bb.l ], [ %.7, %.lr.ph77.i.prol.loopexit ], [ %.7, %.lr.ph77.i ], [ %.lcssa, %.lr.ph72.i ], [ %.lcssa, %.lr.ph72.i.prol.loopexit ] ; 2 uses
-  %.pn = phi i32 [ %i.ne, %middle.block279 ], [ %i.w, %bb.c ], [ %i.fv, %.loopexit307 ], [ %.0.lcssa.i, %._crit_edge.i ], [ %.044.lcssa.i, %._crit_edge.i48 ], [ %.050.lcssa.i, %._crit_edge.i56 ], [ %i.mg, %bb.i ], [ %.049.lcssa.i, %._crit_edge.i66 ], [ %i.qt, %bb.l ], [ %i.ov, %.lr.ph77.i ], [ %.lcssa327.unr, %.lr.ph77.i.prol.loopexit ], [ %.lcssa315.unr, %.lr.ph72.i.prol.loopexit ], [ %i.sq, %.lr.ph72.i ]
+_ZN2OT11TupleValues26encode_value_run_as_zeroesERjPh10hb_array_tIKiE.exit: ; preds = %.lr.ph72.i.prol.loopexit, %.lr.ph72.i, %.lr.ph77.i.prol.loopexit, %.lr.ph77.i, %middle.block279, %bb.l, %._crit_edge.i66, %bb.i, %._crit_edge.i56, %.loopexit307, %._crit_edge.i48, %bb.c, %.lr.ph23.preheader.i
+  %.184 = phi i32 [ %.7, %middle.block279 ], [ %.3, %bb.c ], [ %.5.ph, %.loopexit307 ], [ %.3, %.lr.ph23.preheader.i ], [ %.5.ph, %._crit_edge.i48 ], [ %.7, %._crit_edge.i56 ], [ %.7, %bb.i ], [ %.lcssa, %._crit_edge.i66 ], [ %.lcssa, %bb.l ], [ %.7, %.lr.ph77.i.prol.loopexit ], [ %.7, %.lr.ph77.i ], [ %.lcssa, %.lr.ph72.i ], [ %.lcssa, %.lr.ph72.i.prol.loopexit ] ; 2 uses
+  %.pn = phi i32 [ %i.ne, %middle.block279 ], [ %i.w, %bb.c ], [ %i.fv, %.loopexit307 ], [ %narrow.i, %.lr.ph23.preheader.i ], [ %.044.lcssa.i, %._crit_edge.i48 ], [ %.050.lcssa.i, %._crit_edge.i56 ], [ %i.mg, %bb.i ], [ %.049.lcssa.i, %._crit_edge.i66 ], [ %i.qt, %bb.l ], [ %i.ov, %.lr.ph77.i ], [ %.lcssa327.unr, %.lr.ph77.i.prol.loopexit ], [ %.lcssa315.unr, %.lr.ph72.i.prol.loopexit ], [ %i.sq, %.lr.ph72.i ]
   %.1 = add i32 %.pn, %.0126                      ; 2 uses
   %i.sr = icmp ult i32 %.184, %.sroa.6.8.extract.trunc
   br i1 %i.sr, label %bb.b, label %._crit_edge, !llvm.loop !1483

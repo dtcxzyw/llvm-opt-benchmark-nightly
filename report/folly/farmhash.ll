@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/folly/original/farmhash?download=true
 inline.NumInlined: 387
 inline.NumDeleted: 54
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZN5folly8external8farmhash10farmhashcc14Hash32WithSeedEPKcmj:bb.a
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val34.i21 = load i32, ptr %i.ep, align 1      ; 2 uses
@@ -204,56 +204,176 @@ bb.j:                                             ; preds = %bb.b
   %i.ch = lshr i64 %i.cg, 47
   %i.ci = xor i64 %i.ch, %i.cg
   %i.cj = mul i64 %i.ci, -7070675565921424023     ; 2 uses
-  %i.ck = add i64 %1, %i.d
   %3 = getelementptr inbounds i8, ptr %i.by, i64 -16
   %.val51.i = load i64, ptr %3, align 1
-  %i.cl = add i64 %i.cj, %.val51.i                ; 2 uses
-  %4 = xor i64 %i.cl, %i.ck
-  %i.cm = mul i64 %4, -7070675565921424023        ; 2 uses
+  %4 = add i64 %i.cj, %.val51.i                   ; 2 uses
+  %i.ck = add i64 %1, %i.d
+  %5 = xor i64 %4, %i.ck
+  %6 = mul i64 %5, -7070675565921424023           ; 2 uses
+  %7 = lshr i64 %6, 47
+  %8 = xor i64 %4, %7
+  %9 = xor i64 %8, %6
+  %10 = mul i64 %9, -7070675565921424023          ; 2 uses
+  %11 = lshr i64 %10, 47
+  %12 = xor i64 %11, %10
+  %13 = mul i64 %12, -7070675565921424023         ; 2 uses
+  %i.cl = add i64 %13, %i.b
+  %.049.val.i = load i64, ptr %0, align 1
+  %i.cm = mul i64 %.049.val.i, -5435081209227447693 ; 2 uses
   %i.cn = lshr i64 %i.cm, 47
-  %i.co = xor i64 %i.cl, %i.cn
-  %i.cp = xor i64 %i.co, %i.cm
-  %i.cq = mul i64 %i.cp, -7070675565921424023     ; 2 uses
+  %14 = xor i64 %i.cn, %i.cm
+  %15 = mul i64 %14, -5435081209227447693
+  %i.co = xor i64 %15, %i.cl
+  %16 = mul i64 %i.co, -5435081209227447693       ; 3 uses
+  %i.cp = xor i64 %16, %i.d                       ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.val.i = load i64, ptr %17, align 1
+  %i.cq = mul i64 %.val.i, -5435081209227447693   ; 2 uses
   %i.cr = lshr i64 %i.cq, 47
-  %i.cs = xor i64 %i.cr, %i.cq
-  %i.ct = mul i64 %i.cs, -7070675565921424023     ; 2 uses
-  %5 = add i64 %i.ct, %i.b
-  br label %bb.k
+  %18 = xor i64 %i.cr, %i.cq
+  %19 = mul i64 %18, -5435081209227447693
+  %i.cs = xor i64 %19, %i.cj
+  %i.ct = mul i64 %i.cs, -5435081209227447693     ; 3 uses
+  %20 = xor i64 %i.ct, %13                        ; 2 uses
+  %21 = icmp samesign ugt i64 %1, 32
+  br i1 %21, label %22, label %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit
 
-bb.k:                                             ; preds = %bb.k, %bb.j
-  %.049.i = phi ptr [ %0, %bb.j ], [ %6, %bb.k ]  ; 3 uses
-  %.047.i = phi i64 [ %5, %bb.j ], [ %i.cz, %bb.k ]
-  %.045.i = phi i64 [ %i.d, %bb.j ], [ %i.da, %bb.k ]
-  %.043.i = phi i64 [ %i.cj, %bb.j ], [ %i.dh, %bb.k ]
-  %.042.i = phi i64 [ %i.ct, %bb.j ], [ %i.di, %bb.k ]
-  %.0.in.i = phi i64 [ %1, %bb.j ], [ %.0.i, %bb.k ] ; 2 uses
-  %.0.i = add nsw i64 %.0.in.i, -16
-  %.049.val.i.a = load i64, ptr %.049.i, align 1
+22:                                               ; preds = %bb.j
+  %23 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.049.val.i.1 = load i64, ptr %23, align 1
+  %24 = mul i64 %.049.val.i.1, -5435081209227447693 ; 2 uses
+  %25 = lshr i64 %24, 47
+  %26 = xor i64 %25, %24
+  %27 = mul i64 %26, -5435081209227447693
+  %28 = xor i64 %27, %16
+  %29 = mul i64 %28, -5435081209227447693         ; 3 uses
+  %30 = xor i64 %29, %i.cp                        ; 2 uses
+  %31 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %.val.i.1 = load i64, ptr %31, align 1
+  %32 = mul i64 %.val.i.1, -5435081209227447693   ; 2 uses
+  %33 = lshr i64 %32, 47
+  %34 = xor i64 %33, %32
+  %35 = mul i64 %34, -5435081209227447693
+  %36 = xor i64 %35, %i.ct
+  %37 = mul i64 %36, -5435081209227447693         ; 3 uses
+  %38 = xor i64 %37, %20                          ; 2 uses
+  %39 = icmp sgt i64 %1, 48
+  br i1 %39, label %40, label %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit
+
+40:                                               ; preds = %22
+  %41 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %.049.val.i.2 = load i64, ptr %41, align 1
+  %42 = mul i64 %.049.val.i.2, -5435081209227447693 ; 2 uses
+  %43 = lshr i64 %42, 47
+  %44 = xor i64 %43, %42
+  %45 = mul i64 %44, -5435081209227447693
+  %46 = xor i64 %45, %29
+  %47 = mul i64 %46, -5435081209227447693         ; 3 uses
+  %48 = xor i64 %47, %30                          ; 2 uses
+  %49 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %.val.i.2 = load i64, ptr %49, align 1
+  %50 = mul i64 %.val.i.2, -5435081209227447693   ; 2 uses
+  %51 = lshr i64 %50, 47
+  %52 = xor i64 %51, %50
+  %53 = mul i64 %52, -5435081209227447693
+  %54 = xor i64 %53, %37
+  %55 = mul i64 %54, -5435081209227447693         ; 3 uses
+  %56 = xor i64 %55, %38                          ; 2 uses
+  %57 = icmp sgt i64 %1, 64
+  br i1 %57, label %58, label %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit
+
+58:                                               ; preds = %40
+  %59 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %.049.val.i.3 = load i64, ptr %59, align 1
+  %60 = mul i64 %.049.val.i.3, -5435081209227447693 ; 2 uses
+  %61 = lshr i64 %60, 47
+  %62 = xor i64 %61, %60
+  %63 = mul i64 %62, -5435081209227447693
+  %64 = xor i64 %63, %47
+  %65 = mul i64 %64, -5435081209227447693         ; 3 uses
+  %66 = xor i64 %65, %48                          ; 2 uses
+  %67 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %.val.i.3 = load i64, ptr %67, align 1
+  %68 = mul i64 %.val.i.3, -5435081209227447693   ; 2 uses
+  %69 = lshr i64 %68, 47
+  %70 = xor i64 %69, %68
+  %71 = mul i64 %70, -5435081209227447693
+  %72 = xor i64 %71, %55
+  %73 = mul i64 %72, -5435081209227447693         ; 3 uses
+  %74 = xor i64 %73, %56                          ; 2 uses
+  %75 = icmp sgt i64 %1, 80
+  br i1 %75, label %76, label %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit
+
+76:                                               ; preds = %58
+  %77 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %.049.val.i.4 = load i64, ptr %77, align 1
+  %78 = mul i64 %.049.val.i.4, -5435081209227447693 ; 2 uses
+  %79 = lshr i64 %78, 47
+  %80 = xor i64 %79, %78
+  %81 = mul i64 %80, -5435081209227447693
+  %82 = xor i64 %81, %65
+  %83 = mul i64 %82, -5435081209227447693         ; 3 uses
+  %84 = xor i64 %83, %66                          ; 2 uses
+  %85 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %.val.i.4 = load i64, ptr %85, align 1
+  %86 = mul i64 %.val.i.4, -5435081209227447693   ; 2 uses
+  %87 = lshr i64 %86, 47
+  %88 = xor i64 %87, %86
+  %89 = mul i64 %88, -5435081209227447693
+  %90 = xor i64 %89, %73
+  %91 = mul i64 %90, -5435081209227447693         ; 3 uses
+  %92 = xor i64 %91, %74                          ; 2 uses
+  %93 = icmp sgt i64 %1, 96
+  br i1 %93, label %bb.k, label %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit
+
+bb.k:                                             ; preds = %76
+  %94 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %.049.val.i.a = load i64, ptr %94, align 1
   %i.cu = mul i64 %.049.val.i.a, -5435081209227447693 ; 2 uses
   %i.cv = lshr i64 %i.cu, 47
   %i.cw = xor i64 %i.cv, %i.cu
   %i.cx = mul i64 %i.cw, -5435081209227447693
-  %i.cy = xor i64 %i.cx, %.047.i
+  %i.cy = xor i64 %i.cx, %83
   %i.cz = mul i64 %i.cy, -5435081209227447693     ; 3 uses
-  %i.da = xor i64 %i.cz, %.045.i                  ; 2 uses
-  %i.db = getelementptr inbounds nuw i8, ptr %.049.i, i64 8
+  %i.da = xor i64 %i.cz, %84                      ; 2 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.val.i.a = load i64, ptr %i.db, align 1
   %i.dc = mul i64 %.val.i.a, -5435081209227447693 ; 2 uses
   %i.dd = lshr i64 %i.dc, 47
   %i.de = xor i64 %i.dd, %i.dc
   %i.df = mul i64 %i.de, -5435081209227447693
-  %i.dg = xor i64 %i.df, %.043.i
+  %i.dg = xor i64 %i.df, %91
   %i.dh = mul i64 %i.dg, -5435081209227447693     ; 3 uses
-  %i.di = xor i64 %i.dh, %.042.i                  ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.049.i, i64 16
-  %7 = icmp samesign ugt i64 %.0.in.i, 32
-  br i1 %7, label %bb.k, label %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit, !llvm.loop !22
+  %i.di = xor i64 %i.dh, %92                      ; 2 uses
+  %95 = icmp sgt i64 %1, 112
+  br i1 %95, label %96, label %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit
 
-_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit: ; preds = %bb.k, %bb.i
-  %.148.i = phi i64 [ %i.i, %bb.i ], [ %i.cz, %bb.k ]
-  %.146.i = phi i64 [ %i.d, %bb.i ], [ %i.da, %bb.k ] ; 2 uses
-  %.144.i = phi i64 [ %i.bt, %bb.i ], [ %i.dh, %bb.k ] ; 2 uses
-  %.1.i = phi i64 [ %i.bx, %bb.i ], [ %i.di, %bb.k ]
+96:                                               ; preds = %bb.k
+  %97 = getelementptr inbounds nuw i8, ptr %0, i64 96
+  %.049.val.i.6 = load i64, ptr %97, align 1
+  %98 = mul i64 %.049.val.i.6, -5435081209227447693 ; 2 uses
+  %99 = lshr i64 %98, 47
+  %100 = xor i64 %99, %98
+  %101 = mul i64 %100, -5435081209227447693
+  %102 = xor i64 %101, %i.cz
+  %103 = mul i64 %102, -5435081209227447693       ; 2 uses
+  %104 = xor i64 %103, %i.da
+  %105 = getelementptr inbounds nuw i8, ptr %0, i64 104
+  %.val.i.6 = load i64, ptr %105, align 1
+  %106 = mul i64 %.val.i.6, -5435081209227447693  ; 2 uses
+  %107 = lshr i64 %106, 47
+  %108 = xor i64 %107, %106
+  %109 = mul i64 %108, -5435081209227447693
+  %110 = xor i64 %109, %i.dh
+  %111 = mul i64 %110, -5435081209227447693       ; 2 uses
+  %112 = xor i64 %111, %i.di
+  br label %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit
+
+_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit: ; preds = %bb.j, %22, %40, %58, %76, %bb.k, %96, %bb.i
+  %.148.i = phi i64 [ %i.i, %bb.i ], [ %16, %bb.j ], [ %29, %22 ], [ %47, %40 ], [ %65, %58 ], [ %83, %76 ], [ %i.cz, %bb.k ], [ %103, %96 ]
+  %.146.i = phi i64 [ %i.d, %bb.i ], [ %i.cp, %bb.j ], [ %30, %22 ], [ %48, %40 ], [ %66, %58 ], [ %84, %76 ], [ %i.da, %bb.k ], [ %104, %96 ] ; 2 uses
+  %.144.i = phi i64 [ %i.bt, %bb.i ], [ %i.ct, %bb.j ], [ %37, %22 ], [ %55, %40 ], [ %73, %58 ], [ %91, %76 ], [ %i.dh, %bb.k ], [ %111, %96 ] ; 2 uses
+  %.1.i = phi i64 [ %i.bx, %bb.i ], [ %20, %bb.j ], [ %38, %22 ], [ %56, %40 ], [ %74, %58 ], [ %92, %76 ], [ %i.di, %bb.k ], [ %112, %96 ]
   %i.dj = xor i64 %.144.i, %.148.i
   %i.dk = mul i64 %i.dj, -7070675565921424023     ; 2 uses
   %i.dl = lshr i64 %i.dk, 47
@@ -420,7 +540,7 @@ bb.m:                                             ; preds = %bb.m, %bb.l
   %i.ii = getelementptr inbounds nuw i8, ptr %.056, i64 128
   %i.ij = add i64 %.055, -128                     ; 4 uses
   %i.ik = icmp ugt i64 %i.ij, 127
-  br i1 %i.ik, label %bb.m, label %bb.n, !prof !25, !llvm.loop !23
+  br i1 %i.ik, label %bb.m, label %bb.n, !prof !24, !llvm.loop !22
 
 bb.n:                                             ; preds = %bb.m
   %i.il = add i64 %i.hr, %i.gz                    ; 2 uses
@@ -530,7 +650,7 @@ bb.o:                                             ; preds = %.lr.ph, %bb.o
   %i.lg = add i64 %i.lf, %i.la                    ; 2 uses
   %storemerge = mul i64 %i.le, -4348849565147123417 ; 2 uses
   %i.lh = icmp samesign ult i64 %i.kg, %i.ij
-  br i1 %i.lh, label %bb.o, label %._crit_edge, !llvm.loop !24
+  br i1 %i.lh, label %bb.o, label %._crit_edge, !llvm.loop !23
 
 bb.p:                                             ; preds = %._crit_edge, %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit
   %.sink252 = phi i64 [ %i.kf, %._crit_edge ], [ %i.eb, %_ZN5folly8external8farmhash10farmhashccL10CityMurmurEPKcmo.exit ]
@@ -764,6 +884,5 @@ attributes #4 = { noreturn nounwind }
 !21 = distinct !{!21, !13}
 !22 = distinct !{!22, !13}
 !23 = distinct !{!23, !13}
-!24 = distinct !{!24, !13}
-!25 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!24 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 end_hunk_0

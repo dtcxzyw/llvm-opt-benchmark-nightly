@@ -205,15 +205,16 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader17.us27.preheader:                      ; preds = %.preheader17.lr.ph.split
   %.pre48.pre51 = load i32, ptr %0, align 4, !tbaa !7
+  %.pre51 = load double, ptr @init_value, align 8, !tbaa !20
   br label %._crit_edge.us32
 
 ._crit_edge.us32:                                 ; preds = %.preheader17.us27.preheader, %_Z9check_sumIiEvT_.exit.us35
-  %.pre48.a = phi i32 [ %.pre4852, %_Z9check_sumIiEvT_.exit.us35 ], [ %.pre48.pre51, %.preheader17.us27.preheader ] ; 2 uses
-  %3 = phi i32 [ %i.cc, %_Z9check_sumIiEvT_.exit.us35 ], [ %i.b, %.preheader17.us27.preheader ]
-  %.01225.us28.a = phi i32 [ %i.cd, %_Z9check_sumIiEvT_.exit.us35 ], [ 0, %.preheader17.us27.preheader ]
-  %4 = mul i32 %.pre48.a, 269850533
-  %5 = load double, ptr @init_value, align 8, !tbaa !20
-  %i.bw = fptosi double %5 to i32
+  %.pre48.a = phi i32 [ %.pre4852, %_Z9check_sumIiEvT_.exit.us35 ], [ %i.b, %.preheader17.us27.preheader ]
+  %3 = phi double [ %5, %_Z9check_sumIiEvT_.exit.us35 ], [ %.pre51, %.preheader17.us27.preheader ] ; 2 uses
+  %.01225.us28.a = phi i32 [ %i.cc, %_Z9check_sumIiEvT_.exit.us35 ], [ %.pre48.pre51, %.preheader17.us27.preheader ] ; 2 uses
+  %.01225.us28 = phi i32 [ %i.cd, %_Z9check_sumIiEvT_.exit.us35 ], [ 0, %.preheader17.us27.preheader ]
+  %4 = mul i32 %.01225.us28.a, 269850533
+  %i.bw = fptosi double %3 to i32
   %i.bx = mul i32 %i.bw, -1564285888
   %i.by = add i32 %i.bx, -131519416
   %i.bz = icmp eq i32 %4, %i.by
@@ -222,15 +223,17 @@ middle.block:                                     ; preds = %vector.body
 bb.c:                                             ; preds = %._crit_edge.us32
   %i.ca = load i32, ptr @current_test, align 4, !tbaa !7
   %i.cb = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.19, i32 noundef %i.ca) ; 0 uses
-  %.pre49 = load i32, ptr @iterations, align 4, !tbaa !7
-  %.pre48.pre = load i32, ptr %0, align 4, !tbaa !7
+  %.pre49 = load i32, ptr %0, align 4, !tbaa !7
+  %.pre50 = load double, ptr @init_value, align 8, !tbaa !20
+  %.pre48.pre = load i32, ptr @iterations, align 4, !tbaa !7
   br label %_Z9check_sumIiEvT_.exit.us35
 
 _Z9check_sumIiEvT_.exit.us35:                     ; preds = %bb.c, %._crit_edge.us32
-  %.pre4852 = phi i32 [ %.pre48.pre, %bb.c ], [ %.pre48.a, %._crit_edge.us32 ]
-  %i.cc = phi i32 [ %.pre49, %bb.c ], [ %3, %._crit_edge.us32 ] ; 2 uses
-  %i.cd = add nuw nsw i32 %.01225.us28.a, 1       ; 2 uses
-  %i.ce = icmp slt i32 %i.cd, %i.cc
+  %.pre4852 = phi i32 [ %.pre48.pre, %bb.c ], [ %.pre48.a, %._crit_edge.us32 ] ; 2 uses
+  %5 = phi double [ %.pre50, %bb.c ], [ %3, %._crit_edge.us32 ]
+  %i.cc = phi i32 [ %.pre49, %bb.c ], [ %.01225.us28.a, %._crit_edge.us32 ]
+  %i.cd = add nuw nsw i32 %.01225.us28, 1         ; 2 uses
+  %i.ce = icmp slt i32 %i.cd, %.pre4852
   br i1 %i.ce, label %._crit_edge.us32, label %._crit_edge26, !llvm.loop !190
 
 .preheader17:                                     ; preds = %.preheader17.preheader, %_Z9check_sumIiEvT_.exit
@@ -633,15 +636,16 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader17.us27.preheader:                      ; preds = %.preheader17.lr.ph.split
   %.pre48.pre51 = load i32, ptr %0, align 4, !tbaa !7
+  %.pre51 = load double, ptr @init_value, align 8, !tbaa !20
   br label %._crit_edge.us32
 
 ._crit_edge.us32:                                 ; preds = %.preheader17.us27.preheader, %_Z9check_sumIiEvT_.exit.us35
-  %.pre48.a = phi i32 [ %.pre4852, %_Z9check_sumIiEvT_.exit.us35 ], [ %.pre48.pre51, %.preheader17.us27.preheader ] ; 2 uses
-  %3 = phi i32 [ %i.cc, %_Z9check_sumIiEvT_.exit.us35 ], [ %i.b, %.preheader17.us27.preheader ]
-  %.01225.us28.a = phi i32 [ %i.cd, %_Z9check_sumIiEvT_.exit.us35 ], [ 0, %.preheader17.us27.preheader ]
-  %4 = mul i32 %.pre48.a, 269850533
-  %5 = load double, ptr @init_value, align 8, !tbaa !20
-  %i.bw = fptosi double %5 to i32
+  %.pre48.a = phi i32 [ %.pre4852, %_Z9check_sumIiEvT_.exit.us35 ], [ %i.b, %.preheader17.us27.preheader ]
+  %3 = phi double [ %5, %_Z9check_sumIiEvT_.exit.us35 ], [ %.pre51, %.preheader17.us27.preheader ] ; 2 uses
+  %.01225.us28.a = phi i32 [ %i.cc, %_Z9check_sumIiEvT_.exit.us35 ], [ %.pre48.pre51, %.preheader17.us27.preheader ] ; 2 uses
+  %.01225.us28 = phi i32 [ %i.cd, %_Z9check_sumIiEvT_.exit.us35 ], [ 0, %.preheader17.us27.preheader ]
+  %4 = mul i32 %.01225.us28.a, 269850533
+  %i.bw = fptosi double %3 to i32
   %i.bx = mul i32 %i.bw, -1564285888
   %i.by = add i32 %i.bx, -131519416
   %i.bz = icmp eq i32 %4, %i.by
@@ -650,15 +654,17 @@ middle.block:                                     ; preds = %vector.body
 bb.c:                                             ; preds = %._crit_edge.us32
   %i.ca = load i32, ptr @current_test, align 4, !tbaa !7
   %i.cb = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.19, i32 noundef %i.ca) ; 0 uses
-  %.pre49 = load i32, ptr @iterations, align 4, !tbaa !7
-  %.pre48.pre = load i32, ptr %0, align 4, !tbaa !7
+  %.pre49 = load i32, ptr %0, align 4, !tbaa !7
+  %.pre50 = load double, ptr @init_value, align 8, !tbaa !20
+  %.pre48.pre = load i32, ptr @iterations, align 4, !tbaa !7
   br label %_Z9check_sumIiEvT_.exit.us35
 
 _Z9check_sumIiEvT_.exit.us35:                     ; preds = %bb.c, %._crit_edge.us32
-  %.pre4852 = phi i32 [ %.pre48.pre, %bb.c ], [ %.pre48.a, %._crit_edge.us32 ]
-  %i.cc = phi i32 [ %.pre49, %bb.c ], [ %3, %._crit_edge.us32 ] ; 2 uses
-  %i.cd = add nuw nsw i32 %.01225.us28.a, 1       ; 2 uses
-  %i.ce = icmp slt i32 %i.cd, %i.cc
+  %.pre4852 = phi i32 [ %.pre48.pre, %bb.c ], [ %.pre48.a, %._crit_edge.us32 ] ; 2 uses
+  %5 = phi double [ %.pre50, %bb.c ], [ %3, %._crit_edge.us32 ]
+  %i.cc = phi i32 [ %.pre49, %bb.c ], [ %.01225.us28.a, %._crit_edge.us32 ]
+  %i.cd = add nuw nsw i32 %.01225.us28, 1         ; 2 uses
+  %i.ce = icmp slt i32 %i.cd, %.pre4852
   br i1 %i.ce, label %._crit_edge.us32, label %._crit_edge26, !llvm.loop !348
 
 .preheader17:                                     ; preds = %.preheader17.preheader, %_Z9check_sumIiEvT_.exit

@@ -205,7 +205,7 @@ bb.bv:                                            ; preds = %bb.bu
   %.val.i.i = load i16, ptr %i.cv, align 2
   %.val.fr.i.i = freeze i16 %.val.i.i
   %i.cw = add i16 %.val.fr.i.i, -4                ; 2 uses
-  %i.cx = lshr i16 %i.cw, 3                       ; 2 uses
+  %i.cx = lshr i16 %i.cw, 3                       ; 3 uses
   %i.cy = getelementptr i8, ptr %i.cv, i64 4      ; 4 uses
   %.not.i.i32 = icmp eq i16 %i.cx, 0
   br i1 %.not.i.i32, label %rtm_to_nh_config_rtnl.exit, label %.lr.ph.i.i
@@ -216,17 +216,20 @@ bb.bv:                                            ; preds = %bb.bu
   %.not33.i.i = icmp eq ptr %.88.val.fr.i.i, null
   %i.cz = getelementptr i8, ptr %.val, i64 872    ; 4 uses
   %i.da = icmp ugt i16 %i.cw, 15                  ; 2 uses
-  %wide.trip.count84.i.i = zext nneg i16 %i.cx to i64 ; 2 uses
   br i1 %.not33.i.i, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i
-  br i1 %i.da, label %.lr.ph.split.us.split.i.i, label %.lr.ph.split.us.split.us.i.preheader.i
+  br i1 %i.da, label %.lr.ph.split.us.split.preheader.i.i, label %.lr.ph.split.us.split.us.i.preheader.i
 
 .lr.ph.split.us.split.us.i.preheader.i:           ; preds = %.lr.ph.split.us.i.i
   %i.db = load i32, ptr %i.cy, align 4            ; 2 uses
   %i.dc = load volatile ptr, ptr %i.cz, align 8   ; 2 uses
   %.not32.i.us.us.i.i = icmp eq ptr %i.dc, null
   br i1 %.not32.i.us.us.i.i, label %.loopexit.i.i, label %.lr.ph.i.us.us.i.i
+
+.lr.ph.split.us.split.preheader.i.i:              ; preds = %.lr.ph.split.us.i.i
+  %wide.trip.count78.i.i = zext nneg i16 %i.cx to i64
+  br label %.lr.ph.split.us.split.i.i
 
 .lr.ph.i.us.us.i.i:                               ; preds = %.lr.ph.split.us.split.us.i.preheader.i, %bb.bx
   %i.dd = phi ptr [ %i.dj, %bb.bx ], [ %i.dc, %.lr.ph.split.us.split.us.i.preheader.i ] ; 4 uses
@@ -273,8 +276,8 @@ valid_group_nh.exit.us.us.i.i:                    ; preds = %bb.bz, %nexthop_fin
   %i.dw = trunc nuw i8 %.0.us.us.i.i to i1
   br i1 %i.dw, label %.split25.us.i.i, label %rtm_to_nh_config_rtnl.exit
 
-.lr.ph.split.us.split.i.i:                        ; preds = %.lr.ph.split.us.i.i, %nh_check_attr_fdb_group.exit.thread12.us.i.i
-  %indvars.iv81.i.i = phi i64 [ %indvars.iv.next82.i.i, %nh_check_attr_fdb_group.exit.thread12.us.i.i ], [ 0, %.lr.ph.split.us.i.i ] ; 2 uses
+.lr.ph.split.us.split.i.i:                        ; preds = %nh_check_attr_fdb_group.exit.thread12.us.i.i, %.lr.ph.split.us.split.preheader.i.i
+  %indvars.iv81.i.i = phi i64 [ 0, %.lr.ph.split.us.split.preheader.i.i ], [ %indvars.iv.next82.i.i, %nh_check_attr_fdb_group.exit.thread12.us.i.i ] ; 2 uses
   %i.dx = getelementptr [8 x i8], ptr %i.cy, i64 %indvars.iv81.i.i
   %i.dy = load i32, ptr %i.dx, align 4            ; 2 uses
   %i.dz = load volatile ptr, ptr %i.cz, align 8   ; 2 uses
@@ -334,17 +337,21 @@ valid_group_nh.exit.us.i.i:                       ; preds = %bb.ce, %bb.cc
 
 nh_check_attr_fdb_group.exit.thread12.us.i.i:     ; preds = %valid_group_nh.exit.us.i.i
   %indvars.iv.next82.i.i = add nuw nsw i64 %indvars.iv81.i.i, 1 ; 2 uses
-  %exitcond85.not.i.i = icmp eq i64 %indvars.iv.next82.i.i, %wide.trip.count84.i.i
+  %exitcond85.not.i.i = icmp eq i64 %indvars.iv.next82.i.i, %wide.trip.count78.i.i
   br i1 %exitcond85.not.i.i, label %rtm_to_nh_config_rtnl.exit, label %.lr.ph.split.us.split.i.i, !llvm.loop !131
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i
-  br i1 %i.da, label %.lr.ph.split.split.i.i, label %.lr.ph.split.split.us.i.preheader.i
+  br i1 %i.da, label %.lr.ph.split.split.preheader.i.i, label %.lr.ph.split.split.us.i.preheader.i
 
 .lr.ph.split.split.us.i.preheader.i:              ; preds = %.lr.ph.split.i.i
   %i.ex = load i32, ptr %i.cy, align 4            ; 2 uses
   %i.ey = load volatile ptr, ptr %i.cz, align 8   ; 2 uses
   %.not32.i.us28.i.i = icmp eq ptr %i.ey, null
   br i1 %.not32.i.us28.i.i, label %.loopexit.i.i, label %.lr.ph.i.us30.i.i
+
+.lr.ph.split.split.preheader.i.i:                 ; preds = %.lr.ph.split.i.i
+  %wide.trip.count.i.i = zext nneg i16 %i.cx to i64
+  br label %.lr.ph.split.split.i.i
 
 .lr.ph.i.us30.i.i:                                ; preds = %.lr.ph.split.split.us.i.preheader.i, %bb.cg
   %i.ez = phi ptr [ %i.ff, %bb.cg ], [ %i.ey, %.lr.ph.split.split.us.i.preheader.i ] ; 4 uses
@@ -390,9 +397,9 @@ valid_group_nh.exit.us36.i.i:                     ; preds = %bb.ci, %nexthop_fin
   %i.ft = trunc nuw i8 %i.fs to i1
   br i1 %i.ft, label %rtm_to_nh_config_rtnl.exit, label %.split40.us.i.i
 
-.lr.ph.split.split.i.i:                           ; preds = %.lr.ph.split.i.i, %nh_check_attr_fdb_group.exit.thread12.i.i
-  %indvars.iv72.i.i = phi i64 [ %indvars.iv.next73.i.i, %nh_check_attr_fdb_group.exit.thread12.i.i ], [ 0, %.lr.ph.split.i.i ] ; 2 uses
-  %.0218.i.i = phi i8 [ %.2315.i.i, %nh_check_attr_fdb_group.exit.thread12.i.i ], [ 0, %.lr.ph.split.i.i ] ; 3 uses
+.lr.ph.split.split.i.i:                           ; preds = %nh_check_attr_fdb_group.exit.thread12.i.i, %.lr.ph.split.split.preheader.i.i
+  %indvars.iv72.i.i = phi i64 [ 0, %.lr.ph.split.split.preheader.i.i ], [ %indvars.iv.next73.i.i, %nh_check_attr_fdb_group.exit.thread12.i.i ] ; 2 uses
+  %.0218.i.i = phi i8 [ 0, %.lr.ph.split.split.preheader.i.i ], [ %.2315.i.i, %nh_check_attr_fdb_group.exit.thread12.i.i ] ; 3 uses
   %i.fu = getelementptr [8 x i8], ptr %i.cy, i64 %indvars.iv72.i.i
   %i.fv = load i32, ptr %i.fu, align 4            ; 2 uses
   %i.fw = load volatile ptr, ptr %i.cz, align 8   ; 2 uses
@@ -497,7 +504,7 @@ bb.cp:                                            ; preds = %bb.co
 nh_check_attr_fdb_group.exit.thread12.i.i:        ; preds = %bb.cp, %bb.co
   %.2315.i.i = phi i8 [ %i.gx, %bb.co ], [ %.0218.i.i, %bb.cp ]
   %indvars.iv.next73.i.i = add nuw nsw i64 %indvars.iv72.i.i, 1 ; 2 uses
-  %exitcond75.not.i.i = icmp eq i64 %indvars.iv.next73.i.i, %wide.trip.count84.i.i
+  %exitcond75.not.i.i = icmp eq i64 %indvars.iv.next73.i.i, %wide.trip.count.i.i
   br i1 %exitcond75.not.i.i, label %rtm_to_nh_config_rtnl.exit, label %.lr.ph.split.split.i.i, !llvm.loop !131
 
 bb.cq:                                            ; preds = %bb.bu

@@ -202,7 +202,7 @@ __se_compat_sys_sched_setaffinity.exit:           ; preds = %bb.a, %.thread.i.i.
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local range(i64 -2147483648, 2147483648) i64 @__ia32_compat_sys_sched_getaffinity(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
-  %1 = alloca [1 x %struct.cpumask], align 8      ; 6 uses
+  %1 = alloca [1 x %struct.cpumask], align 8      ; 7 uses
   %i.a = getelementptr i8, ptr %0, i64 40
   %i.b = load i64, ptr %i.a, align 8
   %i.c = getelementptr i8, ptr %0, i64 88
@@ -212,7 +212,7 @@ bb.a:
   %i.g = load i64, ptr %i.f, align 8
   %i.h = and i64 %i.g, 4294967295                 ; 2 uses
   %i.i = trunc i64 %i.d to i32                    ; 3 uses
-  %i.j = inttoptr i64 %i.h to ptr                 ; 2 uses
+  %i.j = inttoptr i64 %i.h to ptr                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
   %i.k = shl i32 %i.i, 3
   %i.l = load i32, ptr @nr_cpu_ids, align 4
@@ -244,28 +244,24 @@ user_access_begin.exit.i.i.i:                     ; preds = %.split.i.i.i
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
-.lr.ph.i.i.i:                                     ; preds = %user_access_begin.exit.i.i.i, %bb.d
-  %.02138.i.i.i = phi i64 [ %2, %bb.d ], [ %i.v, %user_access_begin.exit.i.i.i ]
-  %.02337.i.i.i = phi ptr [ %i.w, %bb.d ], [ %1, %user_access_begin.exit.i.i.i ] ; 2 uses
-  %.02436.i.i.i = phi ptr [ %i.ac, %bb.d ], [ %i.j, %user_access_begin.exit.i.i.i ] ; 3 uses
-  %i.w = getelementptr i8, ptr %.02337.i.i.i, i64 8 ; 2 uses
-  %i.x = load i64, ptr %.02337.i.i.i, align 8     ; 2 uses
+.lr.ph.i.i.i:                                     ; preds = %user_access_begin.exit.i.i.i
+  %2 = add nsw i64 %i.v, -2
+  %i.w = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.x = load i64, ptr %1, align 8                ; 2 uses
   %i.y = trunc i64 %i.x to i32
-  callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %i.y, ptr elementtype(%struct.__large_struct) %.02436.i.i.i) #7
+  callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %i.y, ptr elementtype(%struct.__large_struct) %i.j) #7
           to label %bb.c [label %.thread.i.i.i], !srcloc !20
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
-  %i.z = getelementptr i8, ptr %.02436.i.i.i, i64 4
+  %i.z = getelementptr i8, ptr %i.j, i64 4
   %i.aa = lshr i64 %i.x, 32
   %i.ab = trunc nuw i64 %i.aa to i32
   callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %i.ab, ptr elementtype(%struct.__large_struct) %i.z) #7
           to label %bb.d [label %.thread.i.i.i], !srcloc !21
 
 bb.d:                                             ; preds = %bb.c
-  %i.ac = getelementptr i8, ptr %.02436.i.i.i, i64 8 ; 2 uses
-  %2 = add nsw i64 %.02138.i.i.i, -2              ; 3 uses
-  %3 = icmp ugt i64 %2, 1
-  br i1 %3, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
+  %i.ac = getelementptr i8, ptr %i.j, i64 8
+  br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %bb.d, %user_access_begin.exit.i.i.i
   %.024.lcssa.i.i.i = phi ptr [ %i.j, %user_access_begin.exit.i.i.i ], [ %i.ac, %bb.d ]
@@ -280,7 +276,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i
   callbr void asm sideeffect "\0A1:\09movl $0,$1\0A .pushsection __ex_table, \22aM\22, @progbits, 12\0A .balign 4\0A .long (1b) - .\0A .long (${2:l}) - .\0A .long 3 \0A .popsection\0A", "ir,*m,!i,~{dirflag},~{fpsr},~{flags}"(i32 %i.ae, ptr elementtype(%struct.__large_struct) %.024.lcssa.i.i.i) #7
           to label %bb.f [label %.thread.i.i.i], !srcloc !22
 
-.thread.i.i.i:                                    ; preds = %bb.c, %.lr.ph.i.i.i, %bb.e
+.thread.i.i.i:                                    ; preds = %bb.e, %bb.c, %.lr.ph.i.i.i
   call void asm sideeffect "# ALT: oldinstr\0A771:\0A\09\0A772:\0A# ALT: padding\0A.skip -(((775f-774f)-(772b-771b)) > 0) * ((775f-774f)-(772b-771b)),0x90\0A773:\0A.pushsection .altinstructions, \22aM\22, @progbits, 14\0A .long 771b - .\0A .long 774f - .\0A .4byte ( 9*32+20)\0A .byte 773b-771b\0A .byte 775f-774f\0A.popsection\0A.pushsection .altinstr_replacement, \22ax\22\0A912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A# ALT: replacement\0A774:\0A\09clac\0A775:\0A.popsection\0A", "~{memory},~{dirflag},~{fpsr},~{flags}"() #7, !srcloc !19
   br label %compat_put_bitmap.exit.thread.i.i
 

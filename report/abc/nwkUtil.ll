@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/nwkUtil?download=true
 inline.NumInlined: 137
 inline.NumDeleted: 27
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@Nwk_ObjPrint:bb.a
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -204,7 +205,7 @@ Abc_Base10Log.exit:                               ; preds = %.lr.ph.i164, %bb.d
   %.09.i = phi i32 [ %.val157.val, %bb.d ], [ %i.ae, %.lr.ph.i164 ] ; 6 uses
   %i.af = tail call noalias ptr @fopen(ptr noundef %1, ptr noundef nonnull @.str.10) ; 23 uses
   %fwrite = tail call i64 @fwrite(ptr nonnull @.str.11, i64 51, i64 1, ptr %i.af) ; 0 uses
-  %i.ag = load ptr, ptr %0, align 8, !tbaa !70
+  %i.ag = load ptr, ptr %0, align 8, !tbaa !69
   %i.ah = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.af, ptr noundef nonnull @.str.12, ptr noundef %i.ag) #18 ; 0 uses
   %fwrite119 = tail call i64 @fwrite(ptr nonnull @.str.13, i64 7, i64 1, ptr %i.af) ; 0 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -348,7 +349,7 @@ bb.f:                                             ; preds = %bb.e
   %i.cz = inttoptr i64 %i.cy to ptr
   %i.da = getelementptr i8, ptr %i.cr, i64 60     ; 5 uses
   %.val156 = load i32, ptr %i.da, align 4, !tbaa !31
-  %i.db = tail call ptr @Hop_ManConvertAigToTruth(ptr noundef %i.cu, ptr noundef %i.cz, i32 noundef %.val156, ptr noundef nonnull %i.cc, i32 noundef 0) #18 ; 5 uses
+  %i.db = tail call ptr @Hop_ManConvertAigToTruth(ptr noundef %i.cu, ptr noundef %i.cz, i32 noundef %.val156, ptr noundef nonnull %i.cc, i32 noundef 0) #18 ; 10 uses
   %i.dc = load ptr, ptr %i.cv, align 8, !tbaa !36
   %i.dd = ptrtoint ptr %i.dc to i64
   %i.de = and i64 %i.dd, 1
@@ -360,14 +361,14 @@ bb.g:                                             ; preds = %bb.f
   %i.df = icmp slt i32 %.val154.pre239, 6
   %i.dg = add nsw i32 %.val154.pre239, -5
   %i.dh = shl nuw i32 1, %i.dg
-  %spec.select.i = select i1 %i.df, i32 1, i32 %i.dh ; 3 uses
+  %spec.select.i = select i1 %i.df, i32 1, i32 %i.dh ; 6 uses
   %i.di = icmp sgt i32 %spec.select.i, 0
   br i1 %i.di, label %select.unfold.preheader.i, label %Kit_TruthNot.exit
 
 select.unfold.preheader.i:                        ; preds = %bb.g
-  %i.dj = zext nneg i32 %spec.select.i to i64     ; 3 uses
+  %i.dj = zext nneg i32 %spec.select.i to i64     ; 8 uses
   %min.iters.check = icmp ult i32 %spec.select.i, 8
-  br i1 %min.iters.check, label %select.unfold.i.a, label %vector.ph
+  br i1 %min.iters.check, label %select.unfold.i, label %vector.ph
 
 vector.ph:                                        ; preds = %select.unfold.preheader.i
   %n.vec = and i64 %i.dj, 2147483640
@@ -390,17 +391,52 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dp = icmp eq i64 %index.next, %n.vec
   br i1 %i.dp, label %Kit_TruthNot.exit.loopexit, label %vector.body, !llvm.loop !63
 
-select.unfold.i.a:                                ; preds = %select.unfold.preheader.i, %select.unfold.i.a
-  %indvars.iv.i165 = phi i64 [ %indvars.iv.next.i166, %select.unfold.i.a ], [ %i.dj, %select.unfold.preheader.i ] ; 2 uses
-  %indvars.iv.next.i166 = add nsw i64 %indvars.iv.i165, -1 ; 2 uses
-  %i.dq = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %indvars.iv.next.i166 ; 2 uses
-  %i.dr = load i32, ptr %i.dq, align 4, !tbaa !49
-  %i.ds = xor i32 %i.dr, -1
-  store i32 %i.ds, ptr %i.dq, align 4, !tbaa !49
-  %i.dt = icmp samesign ugt i64 %indvars.iv.i165, 1
-  br i1 %i.dt, label %select.unfold.i.a, label %Kit_TruthNot.exit.loopexit, !llvm.loop !64
+select.unfold.i:                                  ; preds = %select.unfold.preheader.i
+  %4 = getelementptr [4 x i8], ptr %i.db, i64 %i.dj
+  %5 = getelementptr i8, ptr %4, i64 -4           ; 2 uses
+  %6 = load i32, ptr %5, align 4, !tbaa !49
+  %7 = xor i32 %6, -1
+  store i32 %7, ptr %5, align 4, !tbaa !49
+  %.not274 = icmp eq i32 %spec.select.i, 1
+  br i1 %.not274, label %Kit_TruthNot.exit.loopexit, label %select.unfold.i.1
 
-Kit_TruthNot.exit.loopexit:                       ; preds = %vector.body, %select.unfold.i.a
+select.unfold.i.1:                                ; preds = %select.unfold.i
+  %8 = getelementptr [4 x i8], ptr %i.db, i64 %i.dj
+  %9 = getelementptr i8, ptr %8, i64 -8           ; 2 uses
+  %10 = load i32, ptr %9, align 4, !tbaa !49
+  %11 = xor i32 %10, -1
+  store i32 %11, ptr %9, align 4, !tbaa !49
+  %12 = icmp ugt i32 %spec.select.i, 2
+  br i1 %12, label %select.unfold.i.a, label %Kit_TruthNot.exit.loopexit
+
+select.unfold.i.a:                                ; preds = %select.unfold.i.1
+  %13 = getelementptr [4 x i8], ptr %i.db, i64 %i.dj
+  %14 = getelementptr i8, ptr %13, i64 -12        ; 2 uses
+  %15 = load i32, ptr %14, align 4, !tbaa !49
+  %16 = xor i32 %15, -1
+  store i32 %16, ptr %14, align 4, !tbaa !49
+  %i.dq = getelementptr [4 x i8], ptr %i.db, i64 %i.dj
+  %17 = getelementptr i8, ptr %i.dq, i64 -16      ; 2 uses
+  %i.dr = load i32, ptr %17, align 4, !tbaa !49
+  %i.ds = xor i32 %i.dr, -1
+  store i32 %i.ds, ptr %17, align 4, !tbaa !49
+  %i.dt = icmp ugt i32 %spec.select.i, 4
+  br i1 %i.dt, label %select.unfold.i.4, label %Kit_TruthNot.exit.loopexit
+
+select.unfold.i.4:                                ; preds = %select.unfold.i.a
+  %18 = getelementptr [4 x i8], ptr %i.db, i64 %i.dj
+  %19 = getelementptr i8, ptr %18, i64 -20        ; 2 uses
+  %20 = load i32, ptr %19, align 4, !tbaa !49
+  %21 = xor i32 %20, -1
+  store i32 %21, ptr %19, align 4, !tbaa !49
+  %22 = getelementptr [4 x i8], ptr %i.db, i64 %i.dj
+  %23 = getelementptr i8, ptr %22, i64 -24        ; 2 uses
+  %24 = load i32, ptr %23, align 4, !tbaa !49
+  %25 = xor i32 %24, -1
+  store i32 %25, ptr %23, align 4, !tbaa !49
+  br label %Kit_TruthNot.exit.loopexit
+
+Kit_TruthNot.exit.loopexit:                       ; preds = %vector.body, %select.unfold.i, %select.unfold.i.1, %select.unfold.i.a, %select.unfold.i.4
   %.val154.pre = load i32, ptr %i.da, align 4, !tbaa !31
   br label %Kit_TruthNot.exit
 
@@ -420,7 +456,7 @@ Kit_TruthNot.exit:                                ; preds = %Kit_TruthNot.exit.l
 select.unfold.i168:                               ; preds = %.lr.ph264
   %i.ea = trunc nuw i64 %i.ec to i32
   %i.eb = icmp sgt i32 %i.ea, 0
-  br i1 %i.eb, label %.lr.ph264, label %.critedge6, !llvm.loop !65
+  br i1 %i.eb, label %.lr.ph264, label %.critedge6, !llvm.loop !64
 
 .lr.ph264:                                        ; preds = %Kit_TruthNot.exit, %select.unfold.i168
   %indvars.iv.i169263 = phi i64 [ %i.ec, %select.unfold.i168 ], [ %i.dy, %Kit_TruthNot.exit ]
@@ -428,12 +464,12 @@ select.unfold.i168:                               ; preds = %.lr.ph264
   %i.ed = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %i.ec
   %i.ee = load i32, ptr %i.ed, align 4, !tbaa !49
   %.not.i170 = icmp eq i32 %i.ee, 0
-  br i1 %.not.i170, label %select.unfold.i168, label %.lr.ph266, !llvm.loop !65
+  br i1 %.not.i170, label %select.unfold.i168, label %.lr.ph266, !llvm.loop !64
 
 select.unfold.i172:                               ; preds = %.lr.ph266
   %i.ef = trunc nuw i64 %i.eh to i32
   %i.eg = icmp sgt i32 %i.ef, 0
-  br i1 %i.eg, label %.lr.ph266, label %.critedge6, !llvm.loop !66
+  br i1 %i.eg, label %.lr.ph266, label %.critedge6, !llvm.loop !65
 
 .lr.ph266:                                        ; preds = %.lr.ph264, %select.unfold.i172
   %indvars.iv.i173265 = phi i64 [ %i.eh, %select.unfold.i172 ], [ %i.dy, %.lr.ph264 ]
@@ -441,7 +477,7 @@ select.unfold.i172:                               ; preds = %.lr.ph266
   %i.ei = getelementptr inbounds nuw [4 x i8], ptr %i.db, i64 %i.eh
   %i.ej = load i32, ptr %i.ei, align 4, !tbaa !49
   %.not.i175 = icmp eq i32 %i.ej, -1
-  br i1 %.not.i175, label %select.unfold.i172, label %Kit_TruthIsConst1.exit.preheader, !llvm.loop !66
+  br i1 %.not.i175, label %select.unfold.i172, label %Kit_TruthIsConst1.exit.preheader, !llvm.loop !65
 
 Kit_TruthIsConst1.exit.preheader:                 ; preds = %.lr.ph266
   %i.ek = getelementptr inbounds nuw i8, ptr %i.cr, i64 72
@@ -504,7 +540,7 @@ Kit_TruthIsConst1.exit:                           ; preds = %Nwk_ObjIsPi.exit.th
   %i.ff = load i32, ptr %i.da, align 4, !tbaa !31
   %i.fg = sext i32 %i.ff to i64
   %i.fh = icmp slt i64 %indvars.iv.next231, %i.fg
-  br i1 %i.fh, label %.lr.ph208, label %.critedge6, !llvm.loop !67
+  br i1 %i.fh, label %.lr.ph208, label %.critedge6, !llvm.loop !66
 
 .critedge6:                                       ; preds = %select.unfold.i168, %select.unfold.i172, %Kit_TruthIsConst1.exit, %.lr.ph208, %Kit_TruthNot.exit, %Kit_TruthIsConst1.exit.preheader
   %i.fi = getelementptr inbounds nuw i8, ptr %i.cr, i64 36
@@ -519,7 +555,7 @@ bb.k:                                             ; preds = %bb.e, %.critedge6
   %indvars.iv.next234 = add nuw nsw i64 %indvars.iv233, 1 ; 2 uses
   %i.fl = sext i32 %.val139 to i64
   %i.fm = icmp slt i64 %indvars.iv.next234, %i.fl
-  br i1 %i.fm, label %bb.e, label %.critedge4, !llvm.loop !68
+  br i1 %i.fm, label %bb.e, label %.critedge4, !llvm.loop !67
 
 .critedge4:                                       ; preds = %bb.k, %.critedge2
   %i.fn = load ptr, ptr %i.cj, align 8, !tbaa !47 ; 2 uses
@@ -659,7 +695,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.val = load i32, ptr %i.hh, align 4, !tbaa !22
   %i.hi = sext i32 %.val to i64
   %i.hj = icmp slt i64 %indvars.iv.next237, %i.hi
-  br i1 %i.hj, label %bb.o, label %.critedge8, !llvm.loop !69
+  br i1 %i.hj, label %bb.o, label %.critedge8, !llvm.loop !68
 
 .critedge8:                                       ; preds = %bb.u, %Vec_PtrFree.exit
   %fwrite124 = tail call i64 @fwrite(ptr nonnull @.str.22, i64 6, i64 1, ptr %i.af) ; 0 uses
@@ -735,7 +771,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %i.s = phi <2 x i32> [ %i.h, %bb.b ], [ %i.q, %bb.d ], [ %i.h, %bb.c ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !73
+  br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !72
 
 .critedge:                                        ; preds = %bb.e
   %i.t = sitofp <2 x i32> %i.r to <2 x double>    ; 2 uses
@@ -1061,7 +1097,7 @@ bb.al:                                            ; preds = %bb.i, %bb.h, %bb.aa
   %.val = load i32, ptr %i.d, align 4, !tbaa !22
   %i.fa = sext i32 %.val to i64
   %i.fb = icmp slt i64 %indvars.iv.next198, %i.fa
-  br i1 %i.fb, label %bb.h, label %.critedge2, !llvm.loop !74
+  br i1 %i.fb, label %bb.h, label %.critedge2, !llvm.loop !73
 
 .critedge2:                                       ; preds = %bb.al, %Vec_IntStart.exit160
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
@@ -1147,7 +1183,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
 bb.ay:                                            ; preds = %bb.an, %bb.ax
   %indvars.iv.next201 = add nuw nsw i64 %indvars.iv200, 1 ; 2 uses
   %exitcond204.not = icmp eq i64 %indvars.iv.next201, %wide.trip.count203
-  br i1 %exitcond204.not, label %._crit_edge.thread, label %bb.am, !llvm.loop !75
+  br i1 %exitcond204.not, label %._crit_edge.thread, label %bb.am, !llvm.loop !74
 
 ._crit_edge:                                      ; preds = %.critedge2
   %.not.i161 = icmp eq ptr %i.ba, null
@@ -1223,7 +1259,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   %.val = load i32, ptr %i.n, align 4, !tbaa !22
   %i.o = sext i32 %.val to i64
   %i.p = icmp slt i64 %indvars.iv.next, %i.o
-  br i1 %i.p, label %.lr.ph, label %.critedge, !llvm.loop !76
+  br i1 %i.p, label %.lr.ph, label %.critedge, !llvm.loop !75
 
 .critedge:                                        ; preds = %bb.c, %bb.a
   ret void
@@ -1376,7 +1412,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.p
   %.val = load i32, ptr %i.s, align 4, !tbaa !22
   %i.t = sext i32 %.val to i64
   %i.u = icmp slt i64 %indvars.iv.next, %i.t
-  br i1 %i.u, label %.lr.ph, label %.critedge, !llvm.loop !77
+  br i1 %i.u, label %.lr.ph, label %.critedge, !llvm.loop !76
 
 .critedge:                                        ; preds = %bb.d
   %i.v = icmp ne i32 %1, 0
@@ -1414,10 +1450,10 @@ bb.a:
   br i1 %i.b, label %Abc_Clock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i64, ptr %3, align 8, !tbaa !81
+  %i.c = load i64, ptr %3, align 8, !tbaa !80
   %.neg5 = mul i64 %i.c, -1000000
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !82
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !81
   %.neg = sdiv i64 %i.e, -1000
   %.neg6 = add i64 %.neg, %.neg5
   br label %Abc_Clock.exit
@@ -1430,7 +1466,7 @@ Abc_Clock.exit:                                   ; preds = %bb.a, %bb.b
 bb.c:                                             ; preds = %bb.c, %Abc_Clock.exit
   %i.f = call i32 @Nwk_ManMinimumBaseInt(ptr noundef %0, i32 noundef %1)
   %.not = icmp eq i32 %i.f, 0
-  br i1 %.not, label %bb.d, label %bb.c, !llvm.loop !78
+  br i1 %.not, label %bb.d, label %bb.c, !llvm.loop !77
 
 bb.d:                                             ; preds = %bb.c
   call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.34, ptr noundef nonnull @.str.35)
@@ -1440,10 +1476,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.h, label %Abc_Clock.exit4, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = load i64, ptr %2, align 8, !tbaa !81
+  %i.i = load i64, ptr %2, align 8, !tbaa !80
   %i.j = mul nsw i64 %i.i, 1000000
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !82
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !81
   %i.m = sdiv i64 %i.l, 1000
   %i.n = add nsw i64 %i.m, %i.j
   br label %Abc_Clock.exit4
@@ -1476,7 +1512,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = call ptr @vnsprintf(ptr noundef %1, ptr noundef nonnull %2) #18 ; 3 uses
-  %i.e = load ptr, ptr @stdout, align 8, !tbaa !87
+  %i.e = load ptr, ptr @stdout, align 8, !tbaa !86
   %i.f = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #20
   %i.g = trunc i64 %i.f to i32
   %i.h = call i32 @Gia_ManToBridgeText(ptr noundef %i.e, i32 noundef %i.g, ptr noundef nonnull %i.d) #18 ; 0 uses
@@ -1484,8 +1520,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.i = load ptr, ptr @stdout, align 8, !tbaa !87, !noalias !88
-  %i.j = call i32 @vfprintf(ptr noundef %i.i, ptr noundef %1, ptr noundef nonnull %2) #18, !inline_history !85 ; 0 uses
+  %i.i = load ptr, ptr @stdout, align 8, !tbaa !86, !noalias !87
+  %i.j = call i32 @vfprintf(ptr noundef %i.i, ptr noundef %1, ptr noundef nonnull %2) #18, !inline_history !84 ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1546,7 +1582,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %.lr.p
   %.val = load i32, ptr %i.s, align 4, !tbaa !22
   %i.t = sext i32 %.val to i64
   %i.u = icmp slt i64 %indvars.iv.next, %i.t
-  br i1 %i.u, label %.lr.ph, label %.critedge, !llvm.loop !89
+  br i1 %i.u, label %.lr.ph, label %.critedge, !llvm.loop !88
 
 .critedge:                                        ; preds = %bb.d
   %i.v = icmp ne i32 %1, 0
@@ -1644,7 +1680,7 @@ bb.c:                                             ; preds = %bb.b
 .critedge39.loopexit:                             ; preds = %bb.m, %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond67.not = icmp eq i64 %indvars.iv.next64, %wide.trip.count66
-  br i1 %exitcond67.not, label %Nwk_ManMinimumBaseNode.exit, label %bb.d, !llvm.loop !90
+  br i1 %exitcond67.not, label %Nwk_ManMinimumBaseNode.exit, label %bb.d, !llvm.loop !89
 
 bb.d:                                             ; preds = %.lr.ph52, %.critedge39.loopexit
   %indvars.iv63 = phi i64 [ 0, %.lr.ph52 ], [ %indvars.iv.next64, %.critedge39.loopexit ] ; 3 uses
@@ -1754,7 +1790,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 bb.m:                                             ; preds = %bb.e
   %indvars.iv.next61 = add nuw nsw i64 %indvars.iv60, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next61, %wide.trip.count66
-  br i1 %exitcond.not, label %.critedge39.loopexit, label %bb.e, !llvm.loop !91
+  br i1 %exitcond.not, label %.critedge39.loopexit, label %bb.e, !llvm.loop !90
 
 Nwk_ManMinimumBaseNode.exit:                      ; preds = %.critedge39.loopexit, %.critedge39.preheader, %.critedge.i, %bb.h, %bb.c, %bb.b
   %indvars.iv.next69 = add nuw nsw i64 %indvars.iv68, 1 ; 2 uses
@@ -1763,7 +1799,7 @@ Nwk_ManMinimumBaseNode.exit:                      ; preds = %.critedge39.loopexi
   %.val = load i32, ptr %i.bt, align 4, !tbaa !22
   %i.bu = sext i32 %.val to i64
   %i.bv = icmp slt i64 %indvars.iv.next69, %i.bu
-  br i1 %i.bv, label %bb.b, label %.critedge.loopexit, !llvm.loop !92
+  br i1 %i.bv, label %bb.b, label %.critedge.loopexit, !llvm.loop !91
 
 .critedge.loopexit:                               ; preds = %Nwk_ManMinimumBaseNode.exit
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !47
@@ -1933,34 +1969,33 @@ attributes #20 = { nounwind willreturn memory(read) }
 !60 = distinct !{!60, !30}
 !61 = distinct !{!61, !30}
 !62 = distinct !{!62, !30}
-!63 = distinct !{!63, !30, !71, !72}
-!64 = distinct !{!64, !30, !72, !71}
+!63 = distinct !{!63, !30, !70, !71}
+!64 = distinct !{!64, !30}
 !65 = distinct !{!65, !30}
 !66 = distinct !{!66, !30}
 !67 = distinct !{!67, !30}
 !68 = distinct !{!68, !30}
-!69 = distinct !{!69, !30}
-!70 = !{!18, !12, i64 0}
-!71 = !{!"llvm.loop.isvectorized", i32 1}
-!72 = !{!"llvm.loop.unroll.runtime.disable"}
+!69 = !{!18, !12, i64 0}
+!70 = !{!"llvm.loop.isvectorized", i32 1}
+!71 = !{!"llvm.loop.unroll.runtime.disable"}
+!72 = distinct !{!72, !30}
 !73 = distinct !{!73, !30}
 !74 = distinct !{!74, !30}
 !75 = distinct !{!75, !30}
 !76 = distinct !{!76, !30}
 !77 = distinct !{!77, !30}
-!78 = distinct !{!78, !30}
-!79 = !{!"long", !7, i64 0}
-!80 = !{!"timespec", !79, i64 0, !79, i64 8}
-!81 = !{!80, !79, i64 0}
-!82 = !{!80, !79, i64 8}
-!83 = distinct !{!83, i1 false, !"vprintf"}
-!84 = distinct !{!84, !83, !"vprintf: argument 0"}
-!85 = distinct !{null}
-!86 = !{!"p1 _ZTS8_IO_FILE", !11, i64 0}
-!87 = !{!86, !86, i64 0}
-!88 = !{!84}
+!78 = !{!"long", !7, i64 0}
+!79 = !{!"timespec", !78, i64 0, !78, i64 8}
+!80 = !{!79, !78, i64 0}
+!81 = !{!79, !78, i64 8}
+!82 = distinct !{!82, i1 false, !"vprintf"}
+!83 = distinct !{!83, !82, !"vprintf: argument 0"}
+!84 = distinct !{null}
+!85 = !{!"p1 _ZTS8_IO_FILE", !11, i64 0}
+!86 = !{!85, !85, i64 0}
+!87 = !{!83}
+!88 = distinct !{!88, !30}
 !89 = distinct !{!89, !30}
 !90 = distinct !{!90, !30}
 !91 = distinct !{!91, !30}
-!92 = distinct !{!92, !30}
 end_hunk_0

@@ -108,7 +108,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not.i23, label %.preheader.i.i.preheader, label %bb.o
 
 .preheader.i.i.preheader:                         ; preds = %bb.n
-  %i.af = add nsw i32 %1, 1                       ; 2 uses
+  %i.af = add nsw i32 %1, 1
   %i.ag = icmp slt i32 %i.af, %2
   br i1 %i.ag, label %.lr.ph, label %ddWindow2.exit
 
@@ -137,17 +137,11 @@ bb.r:                                             ; preds = %bb.q
   %spec.select.i.i = zext i1 %i.aq to i32
   br label %ddWindow2.exit, !llvm.loop !33
 
-.preheader.i.i:                                   ; preds = %.lr.ph
-  %4 = add nsw i32 %6, 1                          ; 2 uses
-  %5 = icmp slt i32 %4, %2
-  br i1 %5, label %.lr.ph, label %ddWindow2.exit, !llvm.loop !34
-
-.lr.ph:                                           ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %6 = phi i32 [ %4, %.preheader.i.i ], [ %i.af, %.preheader.i.i.preheader ] ; 2 uses
-  %.0.i.i113 = phi i32 [ %6, %.preheader.i.i ], [ %1, %.preheader.i.i.preheader ]
-  %7 = tail call fastcc i32 @ddPermuteWindow3(ptr noundef %0, i32 noundef %.0.i.i113)
-  %8 = icmp eq i32 %7, 0
-  br i1 %8, label %.ddWindow2.exit.loopexit107_crit_edge, label %.preheader.i.i, !llvm.loop !34
+.lr.ph:                                           ; preds = %.preheader.i.i.preheader
+  %4 = tail call fastcc i32 @ddPermuteWindow3(ptr noundef %0, i32 noundef %1)
+  %5 = icmp ne i32 %4, 0
+  %. = zext i1 %5 to i32
+  br label %ddWindow2.exit, !llvm.loop !34
 
 bb.s:                                             ; preds = %.lr.ph.i
   %i.ar = add nsw i32 %.015.i, 1
@@ -550,11 +544,11 @@ bb.dk:                                            ; preds = %.thread.us.i, %.pee
   tail call void @free(ptr noundef nonnull %i.be) #4
   br label %ddWindow2.exit
 
-.ddWindow2.exit.loopexit107_crit_edge:            ; preds = %.lr.ph, %.lr.ph116
+.ddWindow2.exit.loopexit107_crit_edge:            ; preds = %.lr.ph116
   br label %ddWindow2.exit, !llvm.loop !34
 
-ddWindow2.exit:                                   ; preds = %.lr.ph.i, %bb.s, %.preheader.i.i, %.preheader.i, %bb.g, %bb.f, %bb.d, %.preheader.i.i.preheader, %.ddWindow2.exit.loopexit107_crit_edge, %.preheader.i.preheader, %.split141.us.i, %.split.us.i, %bb.y, %bb.w, %bb.r, %bb.q, %bb.p, %bb.o, %bb.l, %bb.k, %bb.j, %bb.i, %bb.b, %bb.t, %bb.u, %bb.a
-  %.020 = phi i32 [ 0, %bb.a ], [ 1, %.preheader.i.i ], [ 0, %bb.y ], [ %i.ba, %bb.w ], [ %i.aw, %bb.t ], [ %i.ax, %bb.u ], [ 0, %bb.b ], [ 0, %.split.us.i ], [ 1, %.split141.us.i ], [ 0, %bb.i ], [ 1, %bb.k ], [ %spec.select.i, %bb.l ], [ 0, %bb.j ], [ 0, %bb.f ], [ 0, %bb.p ], [ 1, %.preheader.i.i.preheader ], [ 0, %bb.o ], [ 1, %bb.q ], [ %spec.select.i.i, %bb.r ], [ 0, %.ddWindow2.exit.loopexit107_crit_edge ], [ 1, %.preheader.i ], [ 1, %.preheader.i.preheader ], [ 0, %bb.d ], [ 1, %bb.g ], [ 1, %bb.s ], [ 0, %.lr.ph.i ]
+ddWindow2.exit:                                   ; preds = %.lr.ph.i, %bb.s, %.preheader.i, %bb.g, %bb.f, %bb.d, %.preheader.i.i.preheader, %.lr.ph, %.preheader.i.preheader, %.ddWindow2.exit.loopexit107_crit_edge, %.split141.us.i, %.split.us.i, %bb.y, %bb.w, %bb.r, %bb.q, %bb.p, %bb.o, %bb.l, %bb.k, %bb.j, %bb.i, %bb.b, %bb.t, %bb.u, %bb.a
+  %.020 = phi i32 [ 0, %bb.a ], [ 1, %.preheader.i ], [ 0, %bb.y ], [ %i.ba, %bb.w ], [ %i.aw, %bb.t ], [ %i.ax, %bb.u ], [ 0, %bb.b ], [ 0, %.split.us.i ], [ 1, %.split141.us.i ], [ 0, %bb.i ], [ 1, %bb.k ], [ %spec.select.i, %bb.l ], [ 0, %bb.j ], [ 1, %.preheader.i.i.preheader ], [ 0, %bb.p ], [ %., %.lr.ph ], [ 0, %bb.o ], [ 1, %bb.q ], [ %spec.select.i.i, %bb.r ], [ 0, %.ddWindow2.exit.loopexit107_crit_edge ], [ 0, %bb.f ], [ 1, %.preheader.i.preheader ], [ 0, %bb.d ], [ 1, %bb.g ], [ 1, %bb.s ], [ 0, %.lr.ph.i ]
   ret i32 %.020
 }
 
