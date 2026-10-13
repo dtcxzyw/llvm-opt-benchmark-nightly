@@ -204,21 +204,21 @@ define void @DrawLineBezier(<2 x float> %0, <2 x float> %1, float noundef %2, i3
   %i.o = tail call float @llvm.fmuladd.f32(float %i.m, float %i.m, float %i.n)
   %sqrt.peel = tail call float @llvm.sqrt.f32(float %i.o)
   %i.p = fneg float %i.m
-  %5 = fneg float %i.l
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %7 = fdiv float %i.e, %sqrt.peel
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %6 = fdiv float %i.e, %sqrt.peel
+  %7 = fneg float %i.l
   %i.q = insertelement <4 x float> poison, float %i.l, i64 0
   %i.r = insertelement <4 x float> %i.q, float %i.p, i64 1
-  %i.s = insertelement <4 x float> %i.r, float %7, i64 2 ; 2 uses
+  %i.s = insertelement <4 x float> %i.r, float %6, i64 2 ; 2 uses
   %i.t = insertelement <4 x float> %i.s, float %i.m, i64 3 ; 2 uses
   %i.u = shufflevector <4 x float> %i.s, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %i.v = insertelement <2 x float> %i.u, float %5, i64 1
+  %i.v = insertelement <2 x float> %i.u, float %7, i64 1
   %i.w = shufflevector <2 x float> %i.v, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0> ; 2 uses
   %i.x = insertelement <4 x float> poison, float %i.k, i64 0
   %i.y = insertelement <4 x float> %i.x, float %i.j, i64 1
   %i.z = shufflevector <4 x float> %i.y, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.aa = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.t, <4 x float> %i.w, <4 x float> %i.z)
-  store <4 x float> %i.aa, ptr %6, align 16
+  store <4 x float> %i.aa, ptr %5, align 16
   br label %bb.a
 
 .loopexit:                                        ; preds = %bb.d
@@ -260,17 +260,17 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.ar = fmul float %i.ap, %i.ap
   %i.as = tail call float @llvm.fmuladd.f32(float %i.aq, float %i.aq, float %i.ar)
   %sqrt = tail call float @llvm.sqrt.f32(float %i.as)
-  %.pre66 = fneg float %i.aq
-  %.pre64.a = fneg float %i.ap
+  %.pre64.a = fneg float %i.aq
   %.idx = shl nuw nsw i64 %indvars.iv, 4
   %i.at = getelementptr inbounds nuw i8, ptr %4, i64 %.idx
   %i.au = fdiv float %i.e, %sqrt
+  %.pre64 = fneg float %i.ap
   %i.av = insertelement <4 x float> poison, float %i.ap, i64 0
-  %i.aw = insertelement <4 x float> %i.av, float %.pre66, i64 1
+  %i.aw = insertelement <4 x float> %i.av, float %.pre64.a, i64 1
   %i.ax = insertelement <4 x float> %i.aw, float %i.au, i64 2 ; 2 uses
   %i.ay = insertelement <4 x float> %i.ax, float %i.aq, i64 3
   %i.az = shufflevector <4 x float> %i.ax, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %i.ba = insertelement <2 x float> %i.az, float %.pre64.a, i64 1
+  %i.ba = insertelement <2 x float> %i.az, float %.pre64, i64 1
   %i.bb = shufflevector <2 x float> %i.ba, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
   %i.bc = insertelement <4 x float> poison, float %i.ao, i64 0
   %i.bd = insertelement <4 x float> %i.bc, float %.0.i, i64 1

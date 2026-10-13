@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.l = and i64 %.sroa.24.0, -4294967296
   %.sroa.0106.4.insert.mask137 = and i64 %.sroa.0106.0, 4294967295
-  %6 = and i64 %.sroa.0106.0, -4294967296
   %.sroa.0106.4.insert.shift136 = add i64 %i.l, 4294967296
   %.sroa.0106.4.insert.insert138 = or disjoint i64 %.sroa.0106.4.insert.shift136, %.sroa.0106.4.insert.mask137
+  %6 = and i64 %.sroa.0106.0, -4294967296
   %i.m = or i64 %.sroa.24.0, -4294967296
   %.sroa.24.12.insert.insert179 = add i64 %6, %i.m
   br label %bb.e

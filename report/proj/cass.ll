@@ -200,10 +200,10 @@ bb.a:
   %i.s = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.q, <2 x double> %i.r, <2 x double> splat (double 1.000000e+00)) ; 2 uses
   %i.t = extractelement <2 x double> %i.s, i64 0
   %i.u = fdiv double 1.000000e+00, %i.t           ; 2 uses
-  %3 = tail call double @sqrt(double noundef %i.u) #8 ; 3 uses
-  %4 = fmul double %i.m, %i.u
-  %i.v = fmul double %3, %4
-  %i.w = fdiv double %0, %3                       ; 3 uses
+  %3 = fmul double %i.m, %i.u
+  %4 = tail call double @sqrt(double noundef %i.u) #8 ; 3 uses
+  %i.v = fmul double %4, %3
+  %i.w = fdiv double %0, %4                       ; 3 uses
   %i.x = fmul double %i.w, %i.w                   ; 3 uses
   %i.y = extractelement <2 x double> %i.s, i64 1
   %i.z = fmul double %i.y, %i.x                   ; 2 uses
@@ -211,7 +211,6 @@ bb.a:
   %i.ab = fneg double %i.x
   %i.ac = extractelement <2 x double> %i.q, i64 1
   %i.ad = fmul double %i.ac, %i.x
-  %5 = tail call double @cos(double noundef %i.g) #8
   %i.ae = insertelement <2 x double> poison, double %i.aa, i64 0
   %i.af = insertelement <2 x double> %i.ae, double %i.z, i64 1
   %i.ag = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.af, <2 x double> <double f0x3FA5555555555555, double f0x3FB1111111111111>, <2 x double> <double 5.000000e-01, double f0xBFD5555555555555>) ; 2 uses
@@ -219,9 +218,10 @@ bb.a:
   %i.ai = tail call double @llvm.fmuladd.f64(double %i.ad, double %i.ah, double 1.000000e+00)
   %i.aj = insertelement <2 x double> poison, double %i.h, i64 0
   %i.ak = insertelement <2 x double> %i.aj, double %i.w, i64 1
-  %i.al = insertelement <2 x double> poison, double %3, i64 0
+  %i.al = insertelement <2 x double> poison, double %4, i64 0
   %i.am = insertelement <2 x double> %i.al, double %i.ai, i64 1
   %i.an = fmul <2 x double> %i.ak, %i.am
+  %5 = tail call double @cos(double noundef %i.g) #8
   %i.ao = insertelement <2 x double> poison, double %i.v, i64 0
   %i.ap = insertelement <2 x double> %i.ao, double %5, i64 1
   %i.aq = fdiv <2 x double> %i.an, %i.ap          ; 2 uses

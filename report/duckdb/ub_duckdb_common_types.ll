@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not107, label %._crit_edge, label %.lr.ph103.preheader
 
 .lr.ph103.preheader:                              ; preds = %bb.h
-  %min.iters.check = icmp ult i64 %4, 768
+  %min.iters.check = icmp ult i64 %4, 640
   br i1 %min.iters.check, label %.lr.ph103.preheader134, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph103.preheader

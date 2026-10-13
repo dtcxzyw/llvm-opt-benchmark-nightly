@@ -205,7 +205,7 @@ APPEND_LIST.exit46:                               ; preds = %ISEQ_COMPILE_DATA.e
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc range(i32 0, 2) i32 @compile_massign0(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef nonnull %2, ptr nofree noundef nonnull captures(none) %3, ptr nofree noundef captures(none) %4, ptr nofree noundef readonly captures(address_is_null) %5, ptr nofree noundef captures(address_is_null) %6, i32 noundef %7) unnamed_addr #1 {
+define internal fastcc range(i32 0, 2) i32 @compile_massign0(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2, ptr nofree noundef nonnull captures(none) %3, ptr nofree noundef captures(none) %4, ptr nofree noundef readonly captures(address_is_null) %5, ptr nofree noundef captures(address_is_null) %6, i32 noundef %7) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %5, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !544  ; 2 uses
@@ -440,7 +440,7 @@ nd_line.exit105:                                  ; preds = %bb.o, %bb.p
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #23
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc range(i32 0, 2) i32 @compile_massign_opt_lhs(ptr noundef %0, ptr noundef captures(none) %1, ptr nofree noundef readonly captures(address_is_null) %2) unnamed_addr #1 {
+define internal fastcc range(i32 0, 2) i32 @compile_massign_opt_lhs(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(address_is_null) %2) unnamed_addr #1 {
 bb.a:
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %bb.d, label %bb.b
@@ -468,7 +468,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc range(i32 0, 2) i32 @compile_massign_lhs(ptr noundef %0, ptr noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr noundef %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6) unnamed_addr #1 {
+define internal fastcc range(i32 0, 2) i32 @compile_massign_lhs(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3, ptr noundef %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6) unnamed_addr #1 {
 bb.a:
   %7 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 8 uses
   %8 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 8 uses
@@ -871,7 +871,7 @@ parse_float.exit:                                 ; preds = %bb.ap, %bb.ao, %bb.
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @pm_compile_hash_elements(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i16 noundef zeroext range(i16 0, 29) %3, i64 noundef %4, i1 noundef zeroext %5, ptr noundef nonnull captures(none) %6, ptr noundef %7) unnamed_addr #1 {
+define internal fastcc void @pm_compile_hash_elements(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i16 noundef zeroext range(i16 0, 29) %3, i64 noundef %4, i1 noundef zeroext %5, ptr noundef nonnull %6, ptr noundef %7) unnamed_addr #1 {
 bb.a:
   %8 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 12 uses
   %i.a = alloca [2 x i64], align 16               ; 5 uses
@@ -1274,7 +1274,7 @@ bb.w:                                             ; preds = %pm_constant_id_look
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @pm_compile_multi_target_node(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef nonnull captures(none) %2, ptr nofree noundef nonnull captures(none) %3, ptr nofree noundef nonnull captures(none) %4, ptr noundef captures(none) %5, ptr nofree noundef captures(address_is_null) %6) unnamed_addr #1 {
+define internal fastcc void @pm_compile_multi_target_node(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef nonnull %2, ptr nofree noundef nonnull captures(none) %3, ptr nofree noundef nonnull captures(none) %4, ptr noundef %5, ptr nofree noundef captures(address_is_null) %6) unnamed_addr #1 {
 bb.a:
   %7 = alloca %struct.pm_multi_target_state_t, align 8 ; 5 uses
   %i.a = getelementptr i8, ptr %5, i64 80
@@ -1677,7 +1677,7 @@ bb.g:                                             ; preds = %bb.f, %.critedge
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @pm_compile_shareable_constant_value(ptr noundef %0, ptr noundef %1, i16 noundef zeroext range(i16 0, 29) %2, i64 noundef %3, ptr noundef nonnull captures(none) %4, ptr noundef %5, i1 noundef zeroext %6) unnamed_addr #1 {
+define internal fastcc void @pm_compile_shareable_constant_value(ptr noundef %0, ptr noundef %1, i16 noundef zeroext range(i16 0, 29) %2, i64 noundef %3, ptr noundef nonnull %4, ptr noundef %5, i1 noundef zeroext %6) unnamed_addr #1 {
 bb.a:
   %7 = alloca [1 x %struct.iseq_link_anchor], align 16 ; 11 uses
   %i.a = tail call fastcc i64 @pm_compile_shareable_constant_literal(ptr noundef %0, ptr noundef %1, ptr noundef %5) ; 2 uses
@@ -2080,7 +2080,7 @@ new_label_body.exit:                              ; preds = %bb.a, %._crit_edge.
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc void @pm_compile_target_node(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef nonnull captures(none) %2, ptr nofree noundef nonnull captures(none) %3, ptr nofree noundef nonnull captures(none) %4, ptr noundef captures(none) %5, ptr nofree noundef captures(address_is_null) %6) unnamed_addr #1 {
+define internal fastcc void @pm_compile_target_node(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef nonnull %2, ptr nofree noundef nonnull captures(none) %3, ptr nofree noundef nonnull captures(none) %4, ptr noundef %5, ptr nofree noundef captures(address_is_null) %6) unnamed_addr #1 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses

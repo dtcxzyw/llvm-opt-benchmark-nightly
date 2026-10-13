@@ -202,12 +202,11 @@ bb.h:                                             ; preds = %_ZL2RNddd.exit
   br label %bb.j
 
 bb.i:                                             ; preds = %_ZL2RNddd.exit
-  %3 = fneg double %i.j                           ; 2 uses
-  %4 = fmul double %i.h, %3
   %i.az = fmul double %i.h, %i.m
   %i.ba = fneg double %i.d
   %i.bb = fmul double %i.i, %i.j
   %i.bc = fmul double %i.i, %i.m
+  %3 = fneg double %i.j                           ; 2 uses
   %i.bd = insertelement <2 x double> poison, double %i.e, i64 0
   %i.be = insertelement <2 x double> %i.bd, double %i.d, i64 1 ; 2 uses
   %i.bf = insertelement <2 x double> poison, double %i.m, i64 0
@@ -221,6 +220,7 @@ bb.i:                                             ; preds = %_ZL2RNddd.exit
   %i.bn = tail call double @llvm.fmuladd.f64(double %i.n, double %i.h, double %i.bm)
   %i.bo = extractelement <2 x double> %i.p, i64 0
   %i.bp = fsub double %i.bn, %i.bo
+  %4 = fmul double %i.h, %3
   %i.bq = insertelement <2 x double> %i.p, double %i.az, i64 1
   %i.br = insertelement <2 x double> poison, double %i.t, i64 0
   %i.bs = insertelement <2 x double> %i.br, double %i.ba, i64 1

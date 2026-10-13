@@ -205,16 +205,16 @@ begin_hunk_0_@LossyDctDecoder_execute:bb.a
   br label %.lr.ph382.split.us.preheader
 
 .thread:                                          ; preds = %bb.aj
-  %i.pt = load float, ptr %i.gm, align 4, !tbaa !103 ; 3 uses
-  %i.pu = load float, ptr %i.gn, align 4, !tbaa !103 ; 2 uses
-  %i.pv = load float, ptr %i.go, align 4, !tbaa !103 ; 2 uses
-  %i.pw = tail call float @llvm.fmuladd.f32(float %i.pv, float 1.574700e+00, float %i.pt)
+  %i.pt = load float, ptr %i.gn, align 4, !tbaa !103 ; 2 uses
+  %i.pu = load float, ptr %i.go, align 4, !tbaa !103 ; 2 uses
+  %i.pv = load float, ptr %i.gm, align 4, !tbaa !103 ; 3 uses
+  %i.pw = tail call float @llvm.fmuladd.f32(float %i.pu, float 1.574700e+00, float %i.pv)
   store float %i.pw, ptr %i.gm, align 4, !tbaa !103
-  %i.px = tail call float @llvm.fmuladd.f32(float %i.pu, float -1.873000e-01, float %i.pt)
-  %i.py = insertelement <2 x float> poison, float %i.pv, i64 0
-  %i.pz = insertelement <2 x float> %i.py, float %i.pu, i64 1
+  %i.px = tail call float @llvm.fmuladd.f32(float %i.pt, float -1.873000e-01, float %i.pv)
+  %i.py = insertelement <2 x float> poison, float %i.pu, i64 0
+  %i.pz = insertelement <2 x float> %i.py, float %i.pt, i64 1
   %i.qa = insertelement <2 x float> poison, float %i.px, i64 0
-  %i.qb = insertelement <2 x float> %i.qa, float %i.pt, i64 1
+  %i.qb = insertelement <2 x float> %i.qa, float %i.pv, i64 1
   %i.qc = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.pz, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %i.qb) ; 2 uses
   %i.qd = extractelement <2 x float> %i.qc, i64 0
   store float %i.qd, ptr %i.gn, align 4, !tbaa !103

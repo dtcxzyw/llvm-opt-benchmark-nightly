@@ -56,57 +56,57 @@ define void @_ZN7rocksdb15EncodeSessionIdB5cxx11Emm(ptr dead_on_unwind noalias w
   store i64 20, ptr %i.c, align 8, !tbaa !17
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 20
   store i8 0, ptr %i.d, align 1, !tbaa !16
-  %3 = tail call i64 @llvm.fshl.i64(i64 %1, i64 %2, i64 2) ; 8 uses
-  %4 = urem i64 %3, 36
-  %i.e = getelementptr inbounds nuw i8, ptr @.str.14, i64 %4
-  %5 = load i8, ptr %i.e, align 1, !tbaa !16
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 7
-  store i8 %5, ptr %i.f, align 1, !tbaa !16
-  %6 = udiv i64 %3, 36
-  %7 = urem i64 %6, 36
-  %i.g = getelementptr inbounds nuw i8, ptr @.str.14, i64 %7
-  %8 = load i8, ptr %i.g, align 1, !tbaa !16
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 6
-  store i8 %8, ptr %i.h, align 1, !tbaa !16
-  %9 = udiv i64 %3, 1296
-  %10 = urem i64 %9, 36
-  %i.i = getelementptr inbounds nuw i8, ptr @.str.14, i64 %10
-  %11 = load i8, ptr %i.i, align 1, !tbaa !16
-  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  store i8 %11, ptr %i.j, align 1, !tbaa !16
-  %i.k = udiv i64 %3, 46656
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 7
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 6
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 5
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 3
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 19
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 18
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 17
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 15
+  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 14
+  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 13
+  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  %13 = tail call i64 @llvm.fshl.i64(i64 %1, i64 %2, i64 2) ; 8 uses
+  %14 = urem i64 %13, 36
+  %i.j = getelementptr inbounds nuw i8, ptr @.str.14, i64 %14
+  %15 = load i8, ptr %i.j, align 1, !tbaa !16
+  store i8 %15, ptr %3, align 1, !tbaa !16
+  %i.k = udiv i64 %13, 36
   %i.l = urem i64 %i.k, 36
   %i.m = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.l
   %i.n = load i8, ptr %i.m, align 1, !tbaa !16
-  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i8 %i.n, ptr %12, align 1, !tbaa !16
-  %i.o = udiv i64 %3, 1679616
+  store i8 %i.n, ptr %4, align 1, !tbaa !16
+  %i.o = udiv i64 %13, 1296
   %i.p = urem i64 %i.o, 36
   %i.q = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.p
   %i.r = load i8, ptr %i.q, align 1, !tbaa !16
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  store i8 %i.r, ptr %13, align 1, !tbaa !16
-  %i.s = udiv i64 %3, 60466176
+  store i8 %i.r, ptr %i.e, align 1, !tbaa !16
+  %i.s = udiv i64 %13, 46656
   %i.t = urem i64 %i.s, 36
   %i.u = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1, !tbaa !16
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i8 %i.v, ptr %14, align 1, !tbaa !16
-  %i.w = udiv i64 %3, 2176782336
+  store i8 %i.v, ptr %5, align 1, !tbaa !16
+  %i.w = udiv i64 %13, 1679616
   %i.x = urem i64 %i.w, 36
   %i.y = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.x
   %i.z = load i8, ptr %i.y, align 1, !tbaa !16
-  %15 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %i.z, ptr %15, align 1, !tbaa !16
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 19
-  %16 = getelementptr inbounds nuw i8, ptr %i.b, i64 18
-  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 17
-  %18 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %19 = getelementptr inbounds nuw i8, ptr %i.b, i64 15
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 14
-  %20 = getelementptr inbounds nuw i8, ptr %i.b, i64 13
-  %21 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  %i.ac = udiv i64 %3, 78364164096
+  store i8 %i.z, ptr %i.f, align 1, !tbaa !16
+  %16 = udiv i64 %13, 60466176
+  %17 = urem i64 %16, 36
+  %i.aa = getelementptr inbounds nuw i8, ptr @.str.14, i64 %17
+  %18 = load i8, ptr %i.aa, align 1, !tbaa !16
+  store i8 %18, ptr %6, align 1, !tbaa !16
+  %19 = udiv i64 %13, 2176782336
+  %20 = urem i64 %19, 36
+  %i.ab = getelementptr inbounds nuw i8, ptr @.str.14, i64 %20
+  %21 = load i8, ptr %i.ab, align 1, !tbaa !16
+  store i8 %21, ptr %7, align 1, !tbaa !16
+  %i.ac = udiv i64 %13, 78364164096
   %.lhs.trunc = trunc nuw nsw i64 %i.ac to i32
   %i.ad = and i64 %2, 4611686018427387903         ; 12 uses
   %i.ae = udiv i64 %i.ad, 2176782336
@@ -128,42 +128,42 @@ define void @_ZN7rocksdb15EncodeSessionIdB5cxx11Emm(ptr dead_on_unwind noalias w
   %i.ap = urem i64 %i.ad, 36
   %i.aq = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.ap
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !16
-  store i8 %i.ar, ptr %i.aa, align 1, !tbaa !16
+  store i8 %i.ar, ptr %8, align 1, !tbaa !16
   %i.as = udiv i64 %i.ad, 36
   %i.at = urem i64 %i.as, 36
   %i.au = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.at
   %i.av = load i8, ptr %i.au, align 1, !tbaa !16
-  store i8 %i.av, ptr %16, align 1, !tbaa !16
+  store i8 %i.av, ptr %i.g, align 1, !tbaa !16
   %i.aw = udiv i64 %i.ad, 1296
   %i.ax = urem i64 %i.aw, 36
   %i.ay = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.ax
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !16
-  store i8 %i.az, ptr %17, align 1, !tbaa !16
+  store i8 %i.az, ptr %9, align 1, !tbaa !16
   %i.ba = udiv i64 %i.ad, 46656
   %i.bb = urem i64 %i.ba, 36
   %i.bc = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.bb
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !16
-  store i8 %i.bd, ptr %18, align 1, !tbaa !16
+  store i8 %i.bd, ptr %i.h, align 1, !tbaa !16
   %i.be = udiv i64 %i.ad, 1679616
   %i.bf = urem i64 %i.be, 36
   %i.bg = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.bf
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !16
-  store i8 %i.bh, ptr %19, align 1, !tbaa !16
+  store i8 %i.bh, ptr %10, align 1, !tbaa !16
   %i.bi = udiv i64 %i.ad, 60466176
   %i.bj = urem i64 %i.bi, 36
   %i.bk = getelementptr inbounds nuw i8, ptr @.str.14, i64 %i.bj
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !16
-  store i8 %i.bl, ptr %i.ab, align 1, !tbaa !16
+  store i8 %i.bl, ptr %11, align 1, !tbaa !16
   %i.bm = extractelement <4 x i32> %i.al, i64 1
   %.zext16 = zext nneg i32 %i.bm to i64
   %i.bn = getelementptr inbounds nuw i8, ptr @.str.14, i64 %.zext16
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !16
-  store i8 %i.bo, ptr %20, align 1, !tbaa !16
+  store i8 %i.bo, ptr %12, align 1, !tbaa !16
   %i.bp = extractelement <4 x i32> %i.al, i64 2
   %.zext18 = zext nneg i32 %i.bp to i64
   %i.bq = getelementptr inbounds nuw i8, ptr @.str.14, i64 %.zext18
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !16
-  store i8 %i.br, ptr %21, align 1, !tbaa !16
+  store i8 %i.br, ptr %i.i, align 1, !tbaa !16
   %i.bs = extractelement <4 x i32> %i.al, i64 3
   %.zext20 = zext nneg i32 %i.bs to i64
   %i.bt = getelementptr inbounds nuw i8, ptr @.str.14, i64 %.zext20

@@ -204,14 +204,14 @@ bb.o:                                             ; preds = %bb.n
   br label %format_octal.exit
 
 format_octal.exit:                                ; preds = %bb.n, %bb.o
-  %4 = tail call i32 @archive_entry_mode(ptr noundef %2) #11 ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 103
-  %i.ae = trunc i32 %4 to i8
-  %i.af = trunc i32 %4 to i8
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 103
+  %5 = tail call i32 @archive_entry_mode(ptr noundef %2) #11 ; 4 uses
+  %i.ae = trunc i32 %5 to i8
+  %i.af = trunc i32 %5 to i8
   %i.ag = lshr i8 %i.af, 3
-  %i.ah = lshr i32 %4, 6
+  %i.ah = lshr i32 %5, 6
   %i.ai = trunc i32 %i.ah to i8
-  %i.aj = lshr i32 %4, 9
+  %i.aj = lshr i32 %5, 9
   %i.ak = trunc i32 %i.aj to i8
   %i.al = insertelement <4 x i8> poison, i8 %i.ak, i64 0
   %i.am = insertelement <4 x i8> %i.al, i8 %i.ai, i64 1
@@ -219,7 +219,7 @@ format_octal.exit:                                ; preds = %bb.n, %bb.o
   %i.ao = insertelement <4 x i8> %i.an, i8 %i.ae, i64 3
   %i.ap = and <4 x i8> %i.ao, splat (i8 7)
   %i.aq = or disjoint <4 x i8> %i.ap, splat (i8 48)
-  store <4 x i8> %i.aq, ptr %5, align 1, !tbaa !20
+  store <4 x i8> %i.aq, ptr %4, align 1, !tbaa !20
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 102
   store i8 48, ptr %i.ar, align 1, !tbaa !20
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 101

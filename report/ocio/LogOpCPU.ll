@@ -204,16 +204,16 @@ bb.a:
   store <4 x float> %i.ax, ptr %i.ag, align 8, !tbaa !35
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.az = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %2 = load double, ptr %i.az, align 8, !tbaa !34
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %i.bb = load double, ptr %i.ba, align 8, !tbaa !34
-  %3 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %i.bc = load double, ptr %i.w, align 8, !tbaa !34
-  %4 = fdiv double %i.bc, %i.am
-  %i.bd = load double, ptr %3, align 8, !tbaa !34
-  %i.be = insertelement <4 x double> poison, double %4, i64 0
-  %i.bf = insertelement <4 x double> %i.be, double %2, i64 1
-  %i.bg = insertelement <4 x double> %i.bf, double %i.bb, i64 2
+  %2 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.w, i64 8
+  %i.bb = load double, ptr %i.w, align 8, !tbaa !34
+  %3 = fdiv double %i.bb, %i.am
+  %i.bc = load double, ptr %i.az, align 8, !tbaa !34
+  %4 = load double, ptr %2, align 8, !tbaa !34
+  %i.bd = load double, ptr %i.ba, align 8, !tbaa !34
+  %i.be = insertelement <4 x double> poison, double %3, i64 0
+  %i.bf = insertelement <4 x double> %i.be, double %i.bc, i64 1
+  %i.bg = insertelement <4 x double> %i.bf, double %4, i64 2
   %i.bh = insertelement <4 x double> %i.bg, double %i.bd, i64 3
   %i.bi = fptrunc <4 x double> %i.bh to <4 x float>
   store <4 x float> %i.bi, ptr %i.ay, align 8, !tbaa !35
@@ -616,16 +616,16 @@ bb.b:                                             ; preds = %bb.a
   store <4 x float> %i.al, ptr %i.u, align 8, !tbaa !35
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %2 = load double, ptr %i.an, align 8, !tbaa !34
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.ap = load double, ptr %i.ao, align 8, !tbaa !34
-  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  %i.aq = load double, ptr %i.k, align 8, !tbaa !34
-  %4 = fdiv double %i.aq, %i.aa
-  %i.ar = load double, ptr %3, align 8, !tbaa !34
-  %i.as = insertelement <4 x double> poison, double %4, i64 0
-  %i.at = insertelement <4 x double> %i.as, double %2, i64 1
-  %i.au = insertelement <4 x double> %i.at, double %i.ap, i64 2
+  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  %i.ap = load double, ptr %i.k, align 8, !tbaa !34
+  %3 = fdiv double %i.ap, %i.aa
+  %i.aq = load double, ptr %i.an, align 8, !tbaa !34
+  %4 = load double, ptr %2, align 8, !tbaa !34
+  %i.ar = load double, ptr %i.ao, align 8, !tbaa !34
+  %i.as = insertelement <4 x double> poison, double %3, i64 0
+  %i.at = insertelement <4 x double> %i.as, double %i.aq, i64 1
+  %i.au = insertelement <4 x double> %i.at, double %4, i64 2
   %i.av = insertelement <4 x double> %i.au, double %i.ar, i64 3
   %i.aw = fptrunc <4 x double> %i.av to <4 x float>
   store <4 x float> %i.aw, ptr %i.am, align 8, !tbaa !35
@@ -697,16 +697,16 @@ bb.a:
   store <4 x float> %i.ak, ptr %i.t, align 8, !tbaa !35
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %2 = load double, ptr %i.am, align 8, !tbaa !34
-  %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.ao = load double, ptr %i.an, align 8, !tbaa !34
-  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %i.ap = load double, ptr %i.j, align 8, !tbaa !34
-  %4 = fdiv double %i.ap, %i.z
-  %i.aq = load double, ptr %3, align 8, !tbaa !34
-  %i.ar = insertelement <4 x double> poison, double %4, i64 0
-  %i.as = insertelement <4 x double> %i.ar, double %2, i64 1
-  %i.at = insertelement <4 x double> %i.as, double %i.ao, i64 2
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %i.an = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  %i.ao = load double, ptr %i.j, align 8, !tbaa !34
+  %3 = fdiv double %i.ao, %i.z
+  %i.ap = load double, ptr %i.am, align 8, !tbaa !34
+  %4 = load double, ptr %2, align 8, !tbaa !34
+  %i.aq = load double, ptr %i.an, align 8, !tbaa !34
+  %i.ar = insertelement <4 x double> poison, double %3, i64 0
+  %i.as = insertelement <4 x double> %i.ar, double %i.ap, i64 1
+  %i.at = insertelement <4 x double> %i.as, double %4, i64 2
   %i.au = insertelement <4 x double> %i.at, double %i.aq, i64 3
   %i.av = fptrunc <4 x double> %i.au to <4 x float>
   store <4 x float> %i.av, ptr %i.al, align 8, !tbaa !35

@@ -202,14 +202,14 @@ bb.a:
   %i.f = load ptr, ptr %1, align 8, !tbaa !15
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !19   ; 3 uses
-  %4 = load double, ptr %i.h, align 8, !tbaa !11  ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.j = load double, ptr %i.i, align 8, !tbaa !11
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %5 = fmul double %4, %i.j                       ; 2 uses
   %i.l = load ptr, ptr %2, align 8, !tbaa !15
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !19   ; 2 uses
+  %4 = load double, ptr %i.h, align 8, !tbaa !11  ; 3 uses
+  %5 = fmul double %4, %i.j                       ; 2 uses
   %i.o = fneg double %4
   %i.p = fmul double %5, %i.o
   %i.q = insertelement <2 x double> poison, double %5, i64 0

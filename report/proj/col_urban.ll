@@ -152,7 +152,6 @@ bb.a:
   %i.i = tail call double @llvm.fmuladd.f64(double %i.h, double %i.d, double 1.000000e+00)
   %i.j = tail call double @sqrt(double noundef %i.i) #7
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %3 = load double, ptr %i.k, align 8, !tbaa !55
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 448
   %i.m = load double, ptr %i.l, align 8, !tbaa !38 ; 2 uses
   %i.n = fadd double %1, %i.m
@@ -166,7 +165,8 @@ bb.a:
   %i.v = fdiv double %i.q, %i.u
   %i.w = fsub double %1, %i.m
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.y = load double, ptr %i.x, align 8, !tbaa !42
+  %3 = load double, ptr %i.x, align 8, !tbaa !42
+  %i.y = load double, ptr %i.k, align 8, !tbaa !55
   %i.z = load <2 x double>, ptr %i.b, align 8, !tbaa !40 ; 2 uses
   %i.aa = shufflevector <2 x double> %i.z, <2 x double> <double 1.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
   %i.ab = insertelement <2 x double> poison, double %i.j, i64 0
@@ -178,9 +178,9 @@ bb.a:
   %i.ah = insertelement <2 x double> %i.z, double %i.c, i64 0
   %i.ai = fmul <2 x double> %i.ah, %i.ag          ; 2 uses
   %i.aj = extractelement <2 x double> %i.ai, i64 0 ; 2 uses
-  %i.ak = fmul double %i.aj, %i.y
+  %i.ak = fmul double %i.aj, %3
   %i.al = tail call double @llvm.fmuladd.f64(double %i.ak, double %i.aj, double %i.w)
-  %i.am = insertelement <2 x double> poison, double %3, i64 0
+  %i.am = insertelement <2 x double> poison, double %i.y, i64 0
   %i.an = insertelement <2 x double> %i.am, double %i.al, i64 1
   %i.ao = fmul <2 x double> %i.an, %i.ai          ; 2 uses
   %vec2struct.slot.sroa.0.0.vec.extract = extractelement <2 x double> %i.ao, i64 0

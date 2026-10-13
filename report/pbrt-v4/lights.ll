@@ -205,45 +205,45 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85: ; preds = %bb.
   %i.am = fmul float %i.ai, %i.ai
   %i.an = fadd float %i.am, %i.al
   %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %i.an) ; 3 uses
-  %18 = extractelement <2 x float> %i.aj, i64 0
-  %19 = fdiv float %18, %sqrt.i.i                 ; 5 uses
-  %i.ao = extractelement <2 x float> %i.aj, i64 1
+  %i.ao = extractelement <2 x float> %i.aj, i64 0
   %i.ap = fdiv float %i.ao, %sqrt.i.i             ; 5 uses
   %i.aq = fdiv float %i.ai, %sqrt.i.i             ; 3 uses
   %i.ar = call noundef float @llvm.copysign.f32(float 1.000000e+00, float %i.aq) ; 5 uses
   %i.as = fadd float %i.aq, %i.ar
   %i.at = fdiv float -1.000000e+00, %i.as         ; 3 uses
-  %i.au = fmul float %19, %i.ap
-  %i.av = fmul float %i.au, %i.at                 ; 2 uses
-  %i.aw = fmul float %19, %19
-  %20 = fmul float %i.ar, %i.aw
-  %21 = fmul float %20, %i.at
-  %22 = fadd float %21, 1.000000e+00
-  %23 = fmul float %i.ar, %i.av
-  %24 = fneg float %i.ar
-  %25 = fmul float %i.ap, %i.ap
-  %26 = fmul float %25, %i.at
-  %27 = fadd float %i.ar, %26
-  %28 = fneg float %i.ap
+  %i.au = fmul float %i.ap, %i.ap
+  %i.av = fmul float %i.ar, %i.au
+  %i.aw = fmul float %i.av, %i.at
+  %18 = fadd float %i.aw, 1.000000e+00
+  %19 = fneg float %i.ar
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #37
-  store float %22, ptr %7, align 4, !tbaa !77
-  %29 = getelementptr inbounds nuw i8, ptr %7, i64 4
-  store float %i.av, ptr %29, align 4, !tbaa !77
-  %30 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store float %19, ptr %30, align 4, !tbaa !77
-  %31 = getelementptr inbounds nuw i8, ptr %7, i64 12
-  store float 0.000000e+00, ptr %31, align 4, !tbaa !77
-  %32 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  store float %23, ptr %32, align 4, !tbaa !77
-  %33 = getelementptr inbounds nuw i8, ptr %7, i64 20
-  %34 = fmul float %19, %24
-  %i.ax = insertelement <4 x float> <float poison, float poison, float 0.000000e+00, float poison>, float %27, i64 0
-  %i.ay = insertelement <4 x float> %i.ax, float %i.ap, i64 1
-  %i.az = insertelement <4 x float> %i.ay, float %34, i64 3
-  store <4 x float> %i.az, ptr %33, align 4, !tbaa !77
+  store float %18, ptr %7, align 4, !tbaa !77
+  %20 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %21 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store float %i.ap, ptr %21, align 4, !tbaa !77
+  %22 = getelementptr inbounds nuw i8, ptr %7, i64 12
+  store float 0.000000e+00, ptr %22, align 4, !tbaa !77
+  %23 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %24 = getelementptr inbounds nuw i8, ptr %7, i64 20
+  %25 = extractelement <2 x float> %i.aj, i64 1
+  %26 = fdiv float %25, %sqrt.i.i                 ; 5 uses
+  %27 = fmul float %i.ap, %26
+  %28 = fmul float %27, %i.at                     ; 2 uses
+  %29 = fmul float %i.ar, %28
+  %30 = fmul float %i.ap, %19
+  %31 = fmul float %26, %26
+  %32 = fmul float %31, %i.at
+  %33 = fadd float %i.ar, %32
+  %34 = fneg float %26
+  store float %28, ptr %20, align 4, !tbaa !77
+  store float %29, ptr %23, align 4, !tbaa !77
+  %i.ax = insertelement <4 x float> <float poison, float poison, float 0.000000e+00, float poison>, float %33, i64 0
+  %i.ay = insertelement <4 x float> %i.ax, float %26, i64 1
+  %i.az = insertelement <4 x float> %i.ay, float %30, i64 3
+  store <4 x float> %i.az, ptr %24, align 4, !tbaa !77
   %i.ba = getelementptr inbounds nuw i8, ptr %7, i64 36
-  store float %28, ptr %i.ba, align 4, !tbaa !77
+  store float %34, ptr %i.ba, align 4, !tbaa !77
   %i.bb = getelementptr inbounds nuw i8, ptr %7, i64 40
   store float %i.aq, ptr %i.bb, align 4, !tbaa !77
   %i.bc = getelementptr inbounds nuw i8, ptr %7, i64 44

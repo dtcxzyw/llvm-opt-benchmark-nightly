@@ -205,9 +205,9 @@ vec.epilog.ph1434:                                ; preds = %vector.main.loop.it
   %vec.epilog.resume.val1427 = phi i64 [ %n.vec1401, %vec.epilog.iter.check1432 ], [ 0, %vector.main.loop.iter.check1398 ]
   %bc.merge.rdx1428 = phi i32 [ %i.bnx, %vec.epilog.iter.check1432 ], [ %.0141258.i, %vector.main.loop.iter.check1398 ]
   %bc.merge.rdx1429 = phi i1 [ %i.bnz, %vec.epilog.iter.check1432 ], [ false, %vector.main.loop.iter.check1398 ]
+  %52 = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx1428, i64 0
   %broadcast.splatinsert1436 = insertelement <8 x i1> poison, i1 %bc.merge.rdx1429, i64 0
   %broadcast.splat1437 = shufflevector <8 x i1> %broadcast.splatinsert1436, <8 x i1> poison, <8 x i32> zeroinitializer
-  %52 = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx1428, i64 0
   %broadcast.splatinsert1438 = insertelement <8 x i64> poison, i64 %indvars.iv302.i, i64 0
   %broadcast.splat1439 = shufflevector <8 x i64> %broadcast.splatinsert1438, <8 x i64> poison, <8 x i32> zeroinitializer
   br label %vec.epilog.vector.body1440

@@ -205,11 +205,11 @@ bb.b:                                             ; preds = %bb.a
   %i.o = insertelement <2 x float> %i.n, float %i.m, i64 1
   %i.p = fmul nnan <2 x float> %i.o, splat (float f0x3B808081)
   %i.q = lshr i32 %1, 16
-  %3 = lshr i32 %1, 24
-  %4 = and i32 %i.q, 255
-  %5 = uitofp nneg i32 %4 to float
-  %i.r = uitofp nneg i32 %3 to float
-  %i.s = insertelement <2 x float> poison, float %5, i64 0
+  %3 = and i32 %i.q, 255
+  %4 = uitofp nneg i32 %3 to float
+  %5 = lshr i32 %1, 24
+  %i.r = uitofp nneg i32 %5 to float
+  %i.s = insertelement <2 x float> poison, float %4, i64 0
   %i.t = insertelement <2 x float> %i.s, float %i.r, i64 1
   %i.u = fmul nnan <2 x float> %i.t, splat (float f0x3B808081)
   store <2 x float> %i.p, ptr %i.e, align 4, !tbaa !75

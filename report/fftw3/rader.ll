@@ -140,12 +140,12 @@ mkP.exit:                                         ; preds = %bb.f
   %i.bm = fadd double %i.bl, %i.bj
   store double %i.bm, ptr %i.bk, align 8, !tbaa !42
   %i.bn = shl nsw i64 %i.ag, 1
-  %3 = shl nsw i64 %i.ag, 2
-  %4 = add nsw i64 %i.bn, 4
-  %5 = sitofp i64 %4 to double
-  %i.bo = sitofp i64 %3 to double
+  %3 = add nsw i64 %i.bn, 4
+  %4 = sitofp i64 %3 to double
+  %5 = shl nsw i64 %i.ag, 2
+  %i.bo = sitofp i64 %5 to double
   %i.bp = load <2 x double>, ptr %i.bg, align 8, !tbaa !23
-  %i.bq = insertelement <2 x double> poison, double %5, i64 0
+  %i.bq = insertelement <2 x double> poison, double %4, i64 0
   %i.br = insertelement <2 x double> %i.bq, double %i.bo, i64 1
   %i.bs = fadd <2 x double> %i.bp, %i.br
   store <2 x double> %i.bs, ptr %i.bg, align 8, !tbaa !23

@@ -204,7 +204,6 @@ define internal fastcc void @TransformOne_C(ptr noalias nofree noundef readonly 
   %i.bi = mul nsw i32 %i.bf, 35468
   %i.bj = mul nsw i32 %i.ac, 35468
   %i.bk = ashr i32 %i.bc, 16
-  %2 = add nsw i32 %i.af, %i.bk                   ; 2 uses
   %i.bl = ashr i32 %i.am, 16
   %i.bm = add nsw i32 %i.aq, %i.ao
   %i.bn = sub nsw i32 %i.bl, %i.bm                ; 2 uses
@@ -231,7 +230,6 @@ define internal fastcc void @TransformOne_C(ptr noalias nofree noundef readonly 
   %i.ci = sext i16 %i.ch to i32                   ; 2 uses
   %i.cj = load i16, ptr %i.q, align 2, !tbaa !13
   %i.ck = sext i16 %i.cj to i32                   ; 2 uses
-  %3 = sub nsw i32 %i.ci, %i.ck                   ; 2 uses
   %i.cl = load i16, ptr %i.u, align 2, !tbaa !13
   %i.cm = sext i16 %i.cl to i32                   ; 2 uses
   %i.cn = load i16, ptr %i.v, align 2, !tbaa !13
@@ -249,9 +247,10 @@ define internal fastcc void @TransformOne_C(ptr noalias nofree noundef readonly 
   %i.cz = add nsw i32 %i.cb, %i.cy                ; 2 uses
   %i.da = add nsw i32 %i.cz, %i.cx                ; 3 uses
   %i.db = sub nsw i32 %i.cx, %i.cz                ; 3 uses
-  %i.dc = add nsw i32 %i.ck, %i.ci                ; 2 uses
-  %i.dd = add nsw i32 %2, %i.dc                   ; 2 uses
-  %i.de = sub nsw i32 %i.dc, %2                   ; 2 uses
+  %2 = add nsw i32 %i.ck, %i.ci                   ; 2 uses
+  %i.dc = add nsw i32 %i.af, %i.bk                ; 2 uses
+  %i.dd = add nsw i32 %i.dc, %2                   ; 2 uses
+  %i.de = sub nsw i32 %2, %i.dc                   ; 2 uses
   %i.df = sext i16 %i.cn to i32                   ; 2 uses
   %i.dg = add nsw i32 %i.df, %i.cm                ; 2 uses
   %i.dh = ashr i32 %i.bi, 16
@@ -287,6 +286,7 @@ define internal fastcc void @TransformOne_C(ptr noalias nofree noundef readonly 
   %i.el = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %i.ek, <4 x i32> splat (i32 255))
   %i.em = trunc nuw <4 x i32> %i.el to <4 x i8>
   store <4 x i8> %i.em, ptr %1, align 1, !tbaa !14
+  %3 = sub nsw i32 %i.ci, %i.ck                   ; 2 uses
   %i.en = sub nsw i32 %i.ce, %i.cp                ; 2 uses
   %i.eo = add nsw i32 %i.bn, %i.en
   %i.ep = sub nsw i32 %i.en, %i.bn

@@ -205,30 +205,30 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.w = getelementptr i8, ptr %i.c, i64 -148     ; 2 uses
   %i.x = getelementptr i8, ptr %i.c, i64 -2704    ; 3 uses
   %i.y = getelementptr i8, ptr %i.c, i64 -2680
-  %6 = load i32, ptr %i.y, align 8, !tbaa !382
   %i.z = getelementptr i8, ptr %i.c, i64 -2536
-  %7 = load i32, ptr %i.z, align 8, !tbaa !382
   %i.aa = getelementptr i8, ptr %i.c, i64 -784
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !76
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !187 ; 2 uses
-  %i.ae = getelementptr i8, ptr %i.c, i64 -840
-  %.val101 = load i32, ptr %i.ae, align 8, !tbaa !188
-  %8 = getelementptr i8, ptr %i.c, i64 -832
-  %.val102.a = load i32, ptr %8, align 8, !tbaa !189
+  %6 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
+  %i.ac = getelementptr i8, ptr %i.c, i64 -840
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !187
+  %i.ae = getelementptr i8, ptr %i.c, i64 -832
+  %.val102 = load i32, ptr %i.ae, align 8, !tbaa !188
+  %.val101 = load i32, ptr %i.y, align 8, !tbaa !382
+  %7 = load i32, ptr %i.z, align 8, !tbaa !382
+  %.val102.a = load i32, ptr %6, align 8, !tbaa !189 ; 2 uses
   %i.af = load <4 x i32>, ptr %i.w, align 4, !tbaa !72
-  %i.ag = add i32 %.val101, %i.ad
-  %i.ah = sub i32 %.val102.a, %i.ag
-  %i.ai = insertelement <4 x i32> poison, i32 %6, i64 0
+  %i.ag = add i32 %i.ad, %.val102.a
+  %i.ah = sub i32 %.val102, %i.ag
+  %i.ai = insertelement <4 x i32> poison, i32 %.val101, i64 0
   %i.aj = insertelement <4 x i32> %i.ai, i32 %7, i64 1
-  %i.ak = insertelement <4 x i32> %i.aj, i32 %i.ad, i64 2
+  %i.ak = insertelement <4 x i32> %i.aj, i32 %.val102.a, i64 2
   %i.al = insertelement <4 x i32> %i.ak, i32 %i.ah, i64 3
   %i.am = call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.af, <4 x i32> %i.al)
   store <4 x i32> %i.am, ptr %i.w, align 4, !tbaa !72
   %i.an = getelementptr i8, ptr %i.c, i64 -720
-  %.val = load i32, ptr %i.an, align 8, !tbaa !188
+  %.val = load i32, ptr %i.an, align 8, !tbaa !187
   %i.ao = getelementptr i8, ptr %i.c, i64 -712
-  %.val100 = load i32, ptr %i.ao, align 8, !tbaa !189
+  %.val100 = load i32, ptr %i.ao, align 8, !tbaa !188
   %i.ap = sub nsw i32 %.val100, %.val
   %i.aq = getelementptr i8, ptr %i.c, i64 -132    ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !383
@@ -538,7 +538,7 @@ middle.block:                                     ; preds = %vector.body
   %i.hb = getelementptr inbounds nuw i8, ptr %4, i64 120 ; 2 uses
   store ptr %i.gf, ptr %i.hb, align 8, !tbaa !212
   %i.hc = getelementptr i8, ptr %i.dd, i64 2032
-  %.val.i = load i32, ptr %i.hc, align 8, !tbaa !189
+  %.val.i = load i32, ptr %i.hc, align 8, !tbaa !188
   %i.hd = getelementptr inbounds nuw i8, ptr %i.dd, i64 2656 ; 4 uses
   %i.he = load i32, ptr %i.hd, align 8, !tbaa !150
   %i.hf = icmp sgt i32 %i.he, 0
@@ -941,19 +941,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr i8, ptr %i.e, i64 -832
-  %.val260 = load i32, ptr %i.j, align 8, !tbaa !189
+  %.val260 = load i32, ptr %i.j, align 8, !tbaa !188
   %i.k = getelementptr i8, ptr %i.e, i64 -368     ; 2 uses
   tail call void @b2SetBitCountAndClear(ptr noundef nonnull %i.k, i32 noundef %.val260) #23
   %i.l = getelementptr i8, ptr %i.e, i64 -752
-  %.val259 = load i32, ptr %i.l, align 8, !tbaa !189
+  %.val259 = load i32, ptr %i.l, align 8, !tbaa !188
   %i.m = getelementptr i8, ptr %i.e, i64 -352     ; 3 uses
   tail call void @b2SetBitCountAndClear(ptr noundef nonnull %i.m, i32 noundef %.val259) #23
   %i.n = getelementptr i8, ptr %i.e, i64 -712
-  %.val258 = load i32, ptr %i.n, align 8, !tbaa !189
+  %.val258 = load i32, ptr %i.n, align 8, !tbaa !188
   %i.o = getelementptr i8, ptr %i.e, i64 -336     ; 3 uses
   tail call void @b2SetBitCountAndClear(ptr noundef nonnull %i.o, i32 noundef %.val258) #23
   %i.p = getelementptr i8, ptr %i.e, i64 -672
-  %.val = load i32, ptr %i.p, align 8, !tbaa !189
+  %.val = load i32, ptr %i.p, align 8, !tbaa !188
   %i.q = getelementptr i8, ptr %i.e, i64 -320     ; 3 uses
   tail call void @b2SetBitCountAndClear(ptr noundef nonnull %i.q, i32 noundef %.val) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
@@ -1356,7 +1356,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = load ptr, ptr %i.p, align 8, !tbaa !76
   %i.u = getelementptr inbounds nuw [88 x i8], ptr %i.t, i64 %indvars.iv
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  %i.w = load i32, ptr %i.v, align 8, !tbaa !187
+  %i.w = load i32, ptr %i.v, align 8, !tbaa !189
   %i.x = icmp sgt i32 %i.w, 0
   br i1 %i.x, label %bb.g, label %bb.h
 
@@ -1452,7 +1452,7 @@ bb.a:
   %i.d = getelementptr i8, ptr %i.c, i64 -784
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !76
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 184
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !187
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !189
   ret i32 %i.g
 }
 
@@ -1796,37 +1796,37 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.e, i8 0, i64 80, i1 false)
   %i.f = getelementptr i8, ptr %i.c, i64 -840
-  %.val34 = load i32, ptr %i.f, align 8, !tbaa !188
+  %.val34 = load i32, ptr %i.f, align 8, !tbaa !187
   %i.g = getelementptr i8, ptr %i.c, i64 -832
-  %.val35 = load i32, ptr %i.g, align 8, !tbaa !189
+  %.val35 = load i32, ptr %i.g, align 8, !tbaa !188
   %i.h = sub nsw i32 %.val35, %.val34
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.h, ptr %i.i, align 8, !tbaa !473
   %i.j = getelementptr i8, ptr %i.c, i64 -640
-  %.val32 = load i32, ptr %i.j, align 8, !tbaa !188
+  %.val32 = load i32, ptr %i.j, align 8, !tbaa !187
   %i.k = getelementptr i8, ptr %i.c, i64 -632
-  %.val33 = load i32, ptr %i.k, align 8, !tbaa !189
+  %.val33 = load i32, ptr %i.k, align 8, !tbaa !188
   %i.l = sub nsw i32 %.val33, %.val32
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.l, ptr %i.m, align 4, !tbaa !474
   %i.n = getelementptr i8, ptr %i.c, i64 -720
-  %.val30 = load i32, ptr %i.n, align 8, !tbaa !188
+  %.val30 = load i32, ptr %i.n, align 8, !tbaa !187
   %i.o = getelementptr i8, ptr %i.c, i64 -712
-  %.val31 = load i32, ptr %i.o, align 8, !tbaa !189
+  %.val31 = load i32, ptr %i.o, align 8, !tbaa !188
   %i.p = sub nsw i32 %.val31, %.val30
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %i.p, ptr %i.q, align 8, !tbaa !475
   %i.r = getelementptr i8, ptr %i.c, i64 -760
-  %.val28 = load i32, ptr %i.r, align 8, !tbaa !188
+  %.val28 = load i32, ptr %i.r, align 8, !tbaa !187
   %i.s = getelementptr i8, ptr %i.c, i64 -752
-  %.val29 = load i32, ptr %i.s, align 8, !tbaa !189
+  %.val29 = load i32, ptr %i.s, align 8, !tbaa !188
   %i.t = sub nsw i32 %.val29, %.val28
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 %i.t, ptr %i.u, align 4, !tbaa !476
   %i.v = getelementptr i8, ptr %i.c, i64 -680
-  %.val = load i32, ptr %i.v, align 8, !tbaa !188
+  %.val = load i32, ptr %i.v, align 8, !tbaa !187
   %i.w = getelementptr i8, ptr %i.c, i64 -672
-  %.val27 = load i32, ptr %i.w, align 8, !tbaa !189
+  %.val27 = load i32, ptr %i.w, align 8, !tbaa !188
   %i.x = sub nsw i32 %.val27, %.val
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.x, ptr %i.y, align 8, !tbaa !477
@@ -2229,9 +2229,9 @@ attributes #23 = { nounwind }
 !184 = !{!89, !6, i64 80}
 !185 = !{!59, !59, i64 0}
 !186 = !{!"b2WorldId", !59, i64 0, !59, i64 2}
-!187 = !{!89, !6, i64 8}
-!188 = !{!23, !6, i64 8}
-!189 = !{!23, !6, i64 16}
+!187 = !{!23, !6, i64 8}
+!188 = !{!23, !6, i64 16}
+!189 = !{!89, !6, i64 8}
 !190 = !{!"b2Softness", !57, i64 0, !57, i64 4, !57, i64 8}
 !191 = !{!"p1 _ZTS7b2World", !9, i64 0}
 !192 = !{!"p1 _ZTS17b2ConstraintGraph", !9, i64 0}

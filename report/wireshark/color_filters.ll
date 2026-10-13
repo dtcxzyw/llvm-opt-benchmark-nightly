@@ -204,39 +204,39 @@ color_filter_new.exit.i:                          ; preds = %color_filter_new.ex
   %i.o = mul nuw i16 %i.n, 257
   %i.p = getelementptr [8 x i8], ptr %i.d, i64 %i.g
   %i.q = load ptr, ptr %i.p, align 8
-  %3 = tail call i64 @strtoul(ptr noundef captures(none) %i.q, ptr noundef null, i32 noundef 16) #13 ; 2 uses
-  %4 = tail call noalias dereferenceable_or_null(40) ptr @g_malloc0(i64 noundef 40) #11 ; 7 uses
-  %5 = tail call noalias ptr @g_strdup(ptr noundef %i.f)
-  store ptr %5, ptr %4, align 8
-  %6 = getelementptr i8, ptr %4, i64 8            ; 2 uses
-  store ptr null, ptr %6, align 8
-  %7 = getelementptr i8, ptr %4, i64 16
-  %8 = lshr i64 %i.j, 16
-  %9 = trunc i64 %8 to i16
-  %i.r = and i16 %9, 255
-  %10 = lshr i64 %3, 16
-  %11 = trunc i64 %10 to i16
-  %12 = and i16 %11, 255
-  %13 = trunc i64 %3 to i16                       ; 2 uses
-  %14 = lshr i16 %13, 8
-  %15 = and i16 %13, 255
-  %16 = insertelement <4 x i16> poison, i16 %12, i64 0
-  %17 = insertelement <4 x i16> %16, i16 %14, i64 1
-  %18 = insertelement <4 x i16> %17, i16 %15, i64 2
-  %19 = insertelement <4 x i16> %18, i16 %i.r, i64 3
-  %20 = mul nuw <4 x i16> %19, splat (i16 257)
-  store <4 x i16> %20, ptr %7, align 8
-  %.sroa.4.0..sroa_idx.i = getelementptr i8, ptr %4, i64 24
+  %3 = lshr i64 %i.j, 16
+  %4 = trunc i64 %3 to i16
+  %5 = and i16 %4, 255
+  %6 = tail call i64 @strtoul(ptr noundef captures(none) %i.q, ptr noundef null, i32 noundef 16) #13 ; 2 uses
+  %7 = lshr i64 %6, 16
+  %8 = trunc i64 %7 to i16
+  %9 = and i16 %8, 255
+  %10 = trunc i64 %6 to i16                       ; 2 uses
+  %11 = lshr i16 %10, 8
+  %i.r = and i16 %10, 255
+  %12 = insertelement <4 x i16> poison, i16 %9, i64 0
+  %13 = insertelement <4 x i16> %12, i16 %11, i64 1
+  %14 = insertelement <4 x i16> %13, i16 %i.r, i64 2
+  %15 = insertelement <4 x i16> %14, i16 %5, i64 3
+  %16 = mul nuw <4 x i16> %15, splat (i16 257)
+  %17 = tail call noalias dereferenceable_or_null(40) ptr @g_malloc0(i64 noundef 40) #11 ; 7 uses
+  %18 = tail call noalias ptr @g_strdup(ptr noundef %i.f)
+  store ptr %18, ptr %17, align 8
+  %19 = getelementptr i8, ptr %17, i64 8          ; 2 uses
+  store ptr null, ptr %19, align 8
+  %20 = getelementptr i8, ptr %17, i64 16
+  store <4 x i16> %16, ptr %20, align 8
+  %.sroa.4.0..sroa_idx.i = getelementptr i8, ptr %17, i64 24
   store i16 %i.m, ptr %.sroa.4.0..sroa_idx.i, align 8
-  %.sroa.5.0..sroa_idx.i = getelementptr i8, ptr %4, i64 26
+  %.sroa.5.0..sroa_idx.i = getelementptr i8, ptr %17, i64 26
   store i16 %i.o, ptr %.sroa.5.0..sroa_idx.i, align 2
-  %i.s = getelementptr i8, ptr %4, i64 28
+  %i.s = getelementptr i8, ptr %17, i64 28
   store i8 1, ptr %i.s, align 4
   %i.t = tail call noalias dereferenceable_or_null(6) ptr @g_malloc(i64 noundef 6) #11 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 dereferenceable(6) %i.t, ptr noundef nonnull align 1 dereferenceable(6) @.str.2, i64 noundef 6, i1 noundef false) #13
-  store ptr %i.t, ptr %6, align 8
+  store ptr %i.t, ptr %19, align 8
   %i.u = load ptr, ptr @color_filter_list, align 8
-  %i.v = tail call ptr @g_slist_append(ptr noundef %i.u, ptr noundef %4)
+  %i.v = tail call ptr @g_slist_append(ptr noundef %i.u, ptr noundef %17)
   store ptr %i.v, ptr @color_filter_list, align 8
   tail call void @g_free(ptr noundef %i.f)
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses

@@ -20,7 +20,6 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_8(ptr nofre
   %i.i = shufflevector <4 x float> %i.d, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.j = fpext <4 x float> %i.i to <4 x double>   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 56
-  %4 = load double, ptr %i.k, align 8, !tbaa !11
   %i.l = load <4 x float>, ptr %0, align 4, !tbaa !9
   %i.m = shufflevector <4 x float> %i.l, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %i.n = fpext <4 x float> %i.m to <4 x double>   ; 6 uses
@@ -41,7 +40,6 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_8(ptr nofre
   %i.ac = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.f, double %i.f, double %i.y)
   %i.ad = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.f, double %i.x, double %i.z)
   %i.ae = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.f, double %i.t, double %i.aa)
-  %5 = fmul reassoc nsz arcp double %i.f, %i.o
   %i.af = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.g, double %i.g, double %i.ac)
   %i.ag = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.g, double %i.f, double %i.ad)
   %i.ah = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.g, double %i.x, double %i.ae)
@@ -50,8 +48,9 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_8(ptr nofre
   %i.ak = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.h, double %i.g, double %i.ag)
   %i.al = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.h, double %i.f, double %i.ah)
   %i.am = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.f, double %i.q, double %i.ab)
+  %4 = fmul reassoc nsz arcp double %i.f, %i.o
   %i.an = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.g, double %i.t, double %i.am)
-  %i.ao = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.g, double %i.q, double %5)
+  %i.ao = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.g, double %i.q, double %4)
   %i.ap = shufflevector <4 x float> %i.d, <4 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.aq = fpext <2 x float> %i.ap to <2 x double>
   %i.ar = shufflevector <4 x double> %i.n, <4 x double> poison, <2 x i32> <i32 0, i32 1>
@@ -67,10 +66,11 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_8(ptr nofre
   %i.bb = tail call reassoc nsz arcp <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.j, <4 x double> %i.e, <4 x double> %i.ba) ; 6 uses
   %i.bc = shufflevector <4 x double> %i.bb, <4 x double> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   store <4 x double> %i.bc, ptr %3, align 8, !tbaa !11
+  %5 = load double, ptr %i.k, align 8, !tbaa !11
   %i.bd = shufflevector <2 x double> %i.au, <2 x double> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %i.be = insertelement <4 x double> %i.bd, double %i.av, i64 1
   %i.bf = insertelement <4 x double> %i.be, double %i.aw, i64 2
-  %i.bg = insertelement <4 x double> %i.bf, double %4, i64 3
+  %i.bg = insertelement <4 x double> %i.bf, double %5, i64 3
   %i.bh = tail call reassoc nsz arcp <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.j, <4 x double> %i.n, <4 x double> %i.bg) ; 6 uses
   store <4 x double> %i.bh, ptr %i.c, align 8, !tbaa !11
   %i.bi = icmp sgt i32 %1, 8
@@ -222,7 +222,6 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(ptr nofr
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 56
-  %4 = load double, ptr %i.i, align 8, !tbaa !11
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.k = load float, ptr %i.b, align 4, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 3 uses
@@ -244,11 +243,11 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(ptr nofr
   %i.ab = extractelement <2 x double> %i.y, i64 0 ; 6 uses
   %foldExtExtBinop = fmul reassoc nsz arcp <2 x double> %i.y, %i.y
   %i.ac = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.ad = fmul reassoc nsz arcp double %i.aa, %i.ab
-  %5 = fmul reassoc nsz arcp double %i.t, %i.ab
-  %6 = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.aa, double %i.aa, double %i.ac)
-  %i.ae = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.t, double %i.t, double %6)
-  %i.af = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.t, double %i.aa, double %i.ad)
+  %i.ad = fmul reassoc nsz arcp double %i.t, %i.ab
+  %4 = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.aa, double %i.aa, double %i.ac)
+  %5 = fmul reassoc nsz arcp double %i.aa, %i.ab
+  %i.ae = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.t, double %i.t, double %4)
+  %i.af = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.t, double %i.aa, double %5)
   %i.ag = shufflevector <4 x float> %i.p, <4 x float> poison, <2 x i32> zeroinitializer
   %i.ah = fpext <2 x float> %i.ag to <2 x double> ; 2 uses
   %i.ai = shufflevector <4 x float> %i.o, <4 x float> %i.p, <2 x i32> <i32 0, i32 4>
@@ -256,7 +255,7 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(ptr nofr
   %i.ak = insertelement <2 x double> poison, double %i.af, i64 0
   %i.al = insertelement <2 x double> %i.ak, double %i.ae, i64 1
   %i.am = tail call reassoc nsz arcp <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ah, <2 x double> %i.aj, <2 x double> %i.al)
-  %i.an = insertelement <2 x double> <double -0.000000e+00, double poison>, double %5, i64 1
+  %i.an = insertelement <2 x double> <double -0.000000e+00, double poison>, double %i.ad, i64 1
   %i.ao = tail call reassoc nsz arcp <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ah, <2 x double> %i.y, <2 x double> %i.an)
   %i.ap = load <4 x float>, ptr %i.h, align 4, !tbaa !9 ; 2 uses
   %i.aq = fpext <4 x float> %i.q to <4 x double>  ; 3 uses
@@ -283,7 +282,6 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(ptr nofr
   %i.bl = fpext <4 x float> %i.bk to <4 x double>
   %i.bm = tail call reassoc nsz arcp <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.bl, <4 x double> %i.v, <4 x double> %i.bf)
   %i.bn = extractelement <4 x double> %i.bj, i64 0 ; 3 uses
-  %7 = fmul reassoc nsz arcp double %i.bn, %i.ab
   %i.bo = fpext <4 x float> %i.ap to <4 x double> ; 2 uses
   %i.bp = shufflevector <4 x float> %i.ap, <4 x float> poison, <4 x i32> zeroinitializer
   %i.bq = fpext <4 x float> %i.bp to <4 x double>
@@ -306,15 +304,17 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(ptr nofr
   %i.ch = tail call reassoc nsz arcp <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.cg, <4 x double> %i.bt, <4 x double> %i.ce) ; 6 uses
   %i.ci = shufflevector <4 x double> %i.ch, <4 x double> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   store <4 x double> %i.ci, ptr %3, align 8, !tbaa !11
+  %6 = load double, ptr %i.i, align 8, !tbaa !11
   %i.cj = load <4 x float>, ptr %i.c, align 4, !tbaa !9
   %i.ck = load <4 x float>, ptr %i.d, align 4, !tbaa !9
   %i.cl = fpext <4 x float> %i.cj to <4 x double> ; 3 uses
   %i.cm = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bn, double %i.t, double %i.bh)
   %i.cn = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bn, double %i.aa, double %i.bi)
+  %7 = fmul reassoc nsz arcp double %i.bn, %i.ab
   %i.co = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bs, double %i.w, double %i.cm)
   %i.cp = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bs, double %i.t, double %i.cn)
   %i.cq = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bs, double %i.aa, double %7)
-  %i.cr = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bs, double %i.ab, double %4)
+  %i.cr = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bs, double %i.ab, double %6)
   %i.cs = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bx, double %i.az, double %i.co)
   %i.ct = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.bx, double %i.w, double %i.cp)
   %i.cu = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.cb, double %i.bg, double %i.cs)
@@ -332,7 +332,7 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(ptr nofr
   %i.dg = fpext <2 x float> %i.df to <2 x double> ; 2 uses
   %i.dh = insertelement <2 x double> %i.dg, double -0.000000e+00, i64 1
   %i.di = insertelement <2 x double> %i.da, double 0.000000e+00, i64 1
-  %i.dj = tail call reassoc nsz arcp <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dh, <2 x double> %i.di, <2 x double> %i.de)
+  %i.dj = tail call reassoc arcp <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dh, <2 x double> %i.di, <2 x double> %i.de)
   %i.dk = shufflevector <4 x float> %i.bb, <4 x float> poison, <2 x i32> <i32 3, i32 3>
   %i.dl = fpext <2 x float> %i.dk to <2 x double> ; 2 uses
   %i.dm = tail call reassoc nsz arcp <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dl, <2 x double> %i.db, <2 x double> %i.dj) ; 4 uses
@@ -343,7 +343,7 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_12(ptr nofr
   %i.dr = shufflevector <4 x double> %i.bt, <4 x double> poison, <2 x i32> <i32 0, i32 poison>
   %i.ds = insertelement <2 x double> %i.dr, double 0.000000e+00, i64 1
   %i.dt = insertelement <2 x double> %i.da, double -0.000000e+00, i64 1
-  %i.du = tail call reassoc nsz arcp <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ds, <2 x double> %i.dt, <2 x double> %i.dn)
+  %i.du = tail call reassoc arcp <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ds, <2 x double> %i.dt, <2 x double> %i.dn)
   %i.dv = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.cb, double %i.do, double %i.dd)
   %i.dw = shufflevector <4 x float> %i.bb, <4 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.dx = fpext <2 x float> %i.dw to <2 x double>
@@ -611,7 +611,6 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_16(ptr nofr
   %i.ap = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.ao, double %i.ao, double %i.an)
   %i.aq = fmul reassoc nsz arcp double %i.ao, %i.am
   %i.ar = insertelement <2 x double> poison, double %i.n, i64 0
-  %4 = fmul reassoc nsz arcp double %i.af, %i.am
   %i.as = load float, ptr %i.d, align 4, !tbaa !9
   %i.at = fpext reassoc nsz arcp float %i.as to double ; 9 uses
   %i.au = load <2 x float>, ptr %i.f, align 4, !tbaa !9
@@ -645,6 +644,7 @@ define hidden void @FLAC__lpc_compute_autocorrelation_intrin_fma_lag_16(ptr nofr
   %i.bv = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.af, double %i.bd, double %i.bl)
   %i.bw = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.af, double %i.at, double %i.bm)
   %i.bx = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.af, double %i.ao, double %i.bn)
+  %4 = fmul reassoc nsz arcp double %i.af, %i.am
   %i.by = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.ax, double %i.ax, double %i.bt)
   %i.bz = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.ax, double %i.af, double %i.bu)
   %i.ca = tail call reassoc nsz arcp double @llvm.fmuladd.f64(double %i.ax, double %i.bi, double %i.bv)

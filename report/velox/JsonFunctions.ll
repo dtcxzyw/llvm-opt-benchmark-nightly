@@ -205,7 +205,7 @@ declare i32 @llvm.x86.avx.ptestz.256(<4 x i64>, <4 x i64>) #30
 declare noundef i64 @_ZN8facebook5velox21normalizeForJsonParseEPKcmPc(ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc noundef i32 @_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl22generateViewsFromArrayILb1EEEN8simdjson10error_codeENS5_8fallback8ondemand5arrayE(ptr noundef nonnull align 8 captures(none) dereferenceable(400) %0, ptr nofree noundef readonly byval(%"class.simdjson::fallback::ondemand::array") align 8 captures(none) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef i32 @_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl22generateViewsFromArrayILb1EEEN8simdjson10error_codeENS5_8fallback8ondemand5arrayE(ptr noundef nonnull align 8 dereferenceable(400) %0, ptr nofree noundef readonly byval(%"class.simdjson::fallback::ondemand::array") align 8 captures(none) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.simdjson::fallback::ondemand::value", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
@@ -608,7 +608,7 @@ _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE9push_backERKS3_.
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc noundef i32 @_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb1EN8simdjson8fallback8ondemand5valueEEENS5_10error_codeET0_(ptr noundef nonnull align 8 captures(none) dereferenceable(400) %0, ptr nofree noundef readonly byval(%"class.simdjson::fallback::ondemand::value") align 8 captures(none) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef i32 @_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb1EN8simdjson8fallback8ondemand5valueEEENS5_10error_codeET0_(ptr noundef nonnull align 8 dereferenceable(400) %0, ptr nofree noundef readonly byval(%"class.simdjson::fallback::ondemand::value") align 8 captures(none) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.simdjson::fallback::ondemand::array", align 8 ; 5 uses
   %3 = alloca %"class.simdjson::fallback::ondemand::object", align 8 ; 5 uses
@@ -1011,7 +1011,7 @@ declare ptr @llvm.invariant.start.p0(i64 immarg, ptr captures(none)) #1
 declare void @__cxa_guard_release(ptr) local_unnamed_addr #41
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc noundef i32 @_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl22generateViewsFromArrayILb0EEEN8simdjson10error_codeENS5_8fallback8ondemand5arrayE(ptr noundef nonnull align 8 captures(none) dereferenceable(400) %0, ptr nofree noundef readonly byval(%"class.simdjson::fallback::ondemand::array") align 8 captures(none) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef i32 @_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl22generateViewsFromArrayILb0EEEN8simdjson10error_codeENS5_8fallback8ondemand5arrayE(ptr noundef nonnull align 8 dereferenceable(400) %0, ptr nofree noundef readonly byval(%"class.simdjson::fallback::ondemand::array") align 8 captures(none) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.simdjson::fallback::ondemand::value", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
@@ -1414,7 +1414,7 @@ _ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl10sortFieldsILb0EEEvPK
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc noundef i32 @_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb0EN8simdjson8fallback8ondemand5valueEEENS5_10error_codeET0_(ptr noundef nonnull align 8 captures(none) dereferenceable(400) %0, ptr nofree noundef readonly byval(%"class.simdjson::fallback::ondemand::value") align 8 captures(none) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef i32 @_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb0EN8simdjson8fallback8ondemand5valueEEENS5_10error_codeET0_(ptr noundef nonnull align 8 dereferenceable(400) %0, ptr nofree noundef readonly byval(%"class.simdjson::fallback::ondemand::value") align 8 captures(none) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.simdjson::fallback::ondemand::array", align 8 ; 5 uses
   %3 = alloca %"class.simdjson::fallback::ondemand::object", align 8 ; 5 uses
