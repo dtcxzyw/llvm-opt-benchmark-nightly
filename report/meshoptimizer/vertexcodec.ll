@@ -25,7 +25,7 @@ bb.a:
   %i.b = alloca [256 x i8], align 16              ; 15 uses
   %i.c = alloca [256 x i8], align 16              ; 8 uses
   %i.d = alloca [3 x i64], align 16               ; 7 uses
-  %i.e = alloca [8 x i64], align 16               ; 15 uses
+  %i.e = alloca [8 x i64], align 16               ; 14 uses
   %i.f = alloca [256 x i8], align 16              ; 6 uses
   %i.g = alloca [256 x i8], align 16              ; 9 uses
   %i.h = alloca [64 x i8], align 16               ; 6 uses
@@ -82,7 +82,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.ak = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.al = getelementptr inbounds nuw i8, ptr %i.e, i64 40
-  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.am = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.an = mul nsw i64 %i.z, -3
   %i.ao = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -95,7 +94,6 @@ bb.e:                                             ; preds = %.preheader, %_ZN7me
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.am, i8 0, i64 16, i1 false)
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 %.091171 ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 1
   br label %.preheader53.i
@@ -270,7 +268,7 @@ _ZN7meshoptL14estimateRotateEPKhmmmm.exit:        ; preds = %.critedge.preheader
   %i.ey = extractelement <8 x i64> %i.ea, i64 2   ; 2 uses
   store i64 %i.ey, ptr %i.al, align 8, !tbaa !36
   %i.ez = extractelement <8 x i64> %i.ea, i64 1   ; 2 uses
-  store i64 %i.ez, ptr %7, align 16, !tbaa !36
+  store i64 %i.ez, ptr %i.am, align 16, !tbaa !36
   %i.fa = icmp ult i64 %i.eu, %i.et
   %i.fb = zext i1 %i.fa to i32
   %i.fc = tail call i64 @llvm.umin.i64(i64 %i.eu, i64 %i.et)

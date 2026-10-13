@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %_RNvMsc_Cs2efQY0w7v
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMsc_Cs2efQY0w7vw4_8smallvecINtB5_8SmallVecAINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEj4_E6insertB1m_(ptr noalias nofree noundef align 8 dereferenceable(48) %0, i64 noundef %1, ptr noundef nonnull %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [8 x i8], align 8                 ; 3 uses
+  %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %2, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !52, !noalias !53, !noundef !5 ; 3 uses
@@ -267,8 +267,7 @@ bb.i:                                             ; preds = %bb.f
 bb.j:                                             ; preds = %bb.k, %bb.h
   %i.s = add i64 %i.m, 1
   store i64 %i.s, ptr %.sroa.04.0, align 8
-  %3 = load ptr, ptr %i.a, align 8, !nonnull !5, !noundef !5
-  store ptr %3, ptr %i.q, align 8
+  store ptr %2, ptr %i.q, align 8
   ret void
 
 bb.k:                                             ; preds = %bb.h

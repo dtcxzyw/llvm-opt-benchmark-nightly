@@ -204,7 +204,7 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 define dso_local void @_ZN6bParse4bDNA4initEPcib(ptr noundef nonnull align 8 dereferenceable(420) %0, ptr noundef %1, i32 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca i32, align 4                      ; 16 uses
+  %i.b = alloca i32, align 4                      ; 12 uses
   %4 = alloca %"struct.bParse::bNameInfo", align 8 ; 7 uses
   %5 = alloca %class.b3HashInt, align 4           ; 4 uses
   %6 = alloca %struct.b3HashString, align 8       ; 14 uses
@@ -383,7 +383,6 @@ bb.k:                                             ; preds = %._crit_edge
 bb.l:                                             ; preds = %bb.k, %._crit_edge
   %i.bo = phi i32 [ %i.bn, %bb.k ], [ %.pre143, %._crit_edge ] ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bl, i64 8 ; 2 uses
-  store i32 0, ptr %i.b, align 4, !tbaa !84
   %i.bq = icmp sgt i32 %i.bo, 0
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 6 uses
   br i1 %i.bq, label %.lr.ph117, label %.._crit_edge118_crit_edge
@@ -576,7 +575,6 @@ _ZN20b3AlignedObjectArrayIPcE9push_backERKS0_.exit: ; preds = %bb.m, %bb.n, %_ZN
   %i.dw = and i64 %i.dv, -4
   %i.dx = inttoptr i64 %i.dw to ptr
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 4 ; 2 uses
-  store i32 0, ptr %i.b, align 4, !tbaa !84
   %i.dz = icmp sgt i32 %i.dt, 0
   br i1 %i.dz, label %.lr.ph122, label %._crit_edge123
 
@@ -807,7 +805,6 @@ bb.w:                                             ; preds = %._crit_edge123
 
 bb.x:                                             ; preds = %bb.w, %._crit_edge123
   %i.gm = phi i32 [ %i.gl, %bb.w ], [ %.pre151, %._crit_edge123 ] ; 2 uses
-  store i32 0, ptr %i.b, align 4, !tbaa !84
   %i.gn = icmp sgt i32 %i.gm, 0
   br i1 %i.gn, label %.lr.ph134, label %.preheader
 
@@ -1040,8 +1037,7 @@ bb.ad:                                            ; preds = %_ZN20b3AlignedObjec
 
 .loopexit:                                        ; preds = %.lr.ph130, %bb.ac, %bb.ad
   %.3109 = phi ptr [ %i.js, %bb.ad ], [ %storemerge49125, %bb.ac ], [ %storemerge49, %.lr.ph130 ]
-  %i.jt = add nuw nsw i32 %i.hf, 1                ; 3 uses
-  store i32 %i.jt, ptr %i.b, align 4, !tbaa !84
+  %i.jt = add nuw nsw i32 %i.hf, 1                ; 2 uses
   %i.ju = icmp slt i32 %i.jt, %i.gm
   br i1 %i.ju, label %bb.y, label %.preheader, !llvm.loop !119
 

@@ -204,7 +204,7 @@ declare ptr @_glfw_calloc(i64 noundef, i64 noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @parseMapping(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 12 uses
+  %i.a = alloca ptr, align 8                      ; 11 uses
   %2 = alloca [22 x %struct.anon.29], align 16    ; 47 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store ptr %1, ptr %i.a, align 8
@@ -355,8 +355,7 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %.loopexit, %bb.g
-  %storemerge = phi ptr [ %i.bw, %bb.g ], [ %i.du, %.loopexit ] ; 6 uses
-  store ptr %storemerge, ptr %i.a, align 8
+  %storemerge = phi ptr [ %i.bw, %bb.g ], [ %i.du, %.loopexit ] ; 5 uses
   %i.bx = load i8, ptr %storemerge, align 1
   switch i8 %i.bx, label %.preheader94 [
     i8 0, label %.preheader.preheader

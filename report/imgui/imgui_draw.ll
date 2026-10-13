@@ -205,8 +205,8 @@ _ZN11ImFontBaked19FindGlyphNoFallbackEt.exit.thread: ; preds = %_ZN11ImFontBaked
   %i.dc = sext i32 %i.cz to i64
   %i.dd = getelementptr inbounds [8 x i8], ptr %i.db, i64 %i.dc ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #38
-  %i.de = getelementptr inbounds nuw i8, ptr %3, i64 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.de, i8 0, i64 36, i1 false)
+  %i.de = getelementptr inbounds nuw i8, ptr %3, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.de, i8 0, i64 16, i1 false)
   %i.df = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.dg = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
   %i.dh = load i16, ptr %i.dg, align 8, !tbaa !483
@@ -609,7 +609,7 @@ define internal fastcc noundef i32 @_ZL19stbtt_GetGlyphShapePK14stbtt_fontinfoiP
 bb.a:
   %3 = alloca %struct.stbtt__csctx, align 8       ; 6 uses
   %4 = alloca %struct.stbtt__csctx, align 8       ; 6 uses
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.c = load i32, ptr %i.b, align 4, !tbaa !536
   %.not = icmp eq i32 %i.c, 0
@@ -1012,7 +1012,6 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bz
   %.0278.i37 = phi ptr [ null, %bb.bg ], [ %.1279.i, %bb.bz ] ; 6 uses
   %.6.i36 = phi i32 [ 0, %bb.bg ], [ %.7.i, %bb.bz ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #38
-  store ptr null, ptr %i.a, align 8, !tbaa !427
   %i.kn = getelementptr i8, ptr %.0273.i38, i64 1
   %.0273.val392.i = load i8, ptr %i.kn, align 1, !tbaa !50 ; 2 uses
   %i.ko = zext i8 %.0273.val392.i to i32          ; 5 uses

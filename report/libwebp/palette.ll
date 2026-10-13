@@ -204,7 +204,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define hidden range(i32 0, 2) i32 @PaletteSort(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, ptr nofree noundef captures(none) %4) local_unnamed_addr #6 {
 bb.a:
   %i.a = alloca [256 x i32], align 16             ; 7 uses
-  %i.b = alloca [256 x i32], align 16             ; 11 uses
+  %i.b = alloca [256 x i32], align 16             ; 9 uses
   %i.c = alloca [256 x i8], align 16              ; 9 uses
   %5 = alloca [256 x %struct.Sum], align 16       ; 12 uses
   switch i32 %0, label %PaletteSortMinimizeDeltas.exit [
@@ -492,7 +492,7 @@ bb.o:                                             ; preds = %bb.n
   %i.fc = shl nuw nsw i64 %i.fb, 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, ptr noundef nonnull readonly align 4 dereferenceable(1) %2, i64 %i.fc, i1 false)
   call void @qsort(ptr noundef nonnull %i.b, i64 noundef %i.fb, i64 noundef 4, ptr noundef nonnull @PaletteCompareColorsForQsort) #10
-  %i.fd = load i32, ptr %i.b, align 16, !tbaa !9
+  %i.fd = load i32, ptr %i.b, align 16, !tbaa !9  ; 3 uses
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %SearchColorNoIdx.exit.i.i.i, %bb.o
@@ -568,8 +568,7 @@ PrepareMapToPalette.exit.preheader.i.i:           ; preds = %SearchColorNoIdx.ex
   br i1 %.not.us.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph.split.us.i.i
-  %6 = load i32, ptr %i.b, align 16, !tbaa !9
-  %i.gc = icmp eq i32 %6, %i.gb
+  %i.gc = icmp eq i32 %i.fd, %i.gb
   br i1 %i.gc, label %SearchColorNoIdx.exit.us.i.i, label %.preheader.i.us.i.i
 
 .preheader.i.us.i.i:                              ; preds = %bb.p, %.preheader.i.us.i.i
@@ -640,8 +639,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   br i1 %.not.i.i29, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph.split.i.i
-  %7 = load i32, ptr %i.b, align 16, !tbaa !9
-  %i.hf = icmp eq i32 %7, %i.he
+  %i.hf = icmp eq i32 %i.fd, %i.he
   br i1 %i.hf, label %SearchColorNoIdx.exit.i.i, label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.u, %.preheader.i.i.i

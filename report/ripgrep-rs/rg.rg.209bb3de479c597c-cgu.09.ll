@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %_RNvYINtNtCsexYYUdY
 bb.f:                                             ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterINtNtB9_6borrow3CowShEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs2NzvFoTxuAy_2rg.exit.i.i.i
   %.sroa.6.0..sroa_idx2.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8, !dbg !8939
   store i64 %.sroa.0.0.copyload1.i.i.i, ptr %1, align 8, !dbg !8946, !alias.scope !8887, !noalias !8890
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx2.i.i.i, i64 16, i1 false), !dbg !8946
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx2.i.i.i, i64 16, i1 false), !dbg !8946
   %i.m = icmp ne i64 %.sroa.0.0.copyload1.i.i.i, -3, !dbg !8947
   call void @llvm.assume(i1 %i.m), !dbg !8948
   %.val9 = load i64, ptr %i.e, align 8, !dbg !8949, !alias.scope !8900, !noalias !8901, !noundef !294 ; 2 uses
@@ -604,9 +604,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #17
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #11
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
