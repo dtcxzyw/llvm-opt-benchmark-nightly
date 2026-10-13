@@ -204,12 +204,12 @@ bb.a:
   %i.i = ptrtoaddr ptr %i.h to i64
   %i.j = ptrtoaddr ptr %2 to i64
   %i.k = sub i64 %i.j, %i.i
-  %scevgep.i.i = getelementptr i8, ptr %i.h, i64 %i.k
+  %scevgep.i.i = getelementptr i8, ptr %i.h, i64 %i.k ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
   %.0.i.i = phi ptr [ %i.h, %bb.a ], [ %i.m, %bb.d ] ; 4 uses
-  %i.l = load i8, ptr %.0.i.i, align 1
+  %i.l = load i8, ptr %.0.i.i, align 1            ; 2 uses
   switch i8 %i.l, label %.critedge.i.i [
     i8 32, label %bb.c
     i8 9, label %bb.c
@@ -217,16 +217,20 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.b
   %.not.i.i = icmp eq ptr %.0.i.i, %2
-  br i1 %.not.i.i, label %.critedge.i.i, label %bb.d
+  br i1 %.not.i.i, label %..critedge.i.i_crit_edge, label %bb.d
+
+..critedge.i.i_crit_edge:                         ; preds = %bb.c
+  %.pre = load i8, ptr %scevgep.i.i, align 1
+  br label %.critedge.i.i
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 1
   br label %bb.b, !llvm.loop !1
 
-.critedge.i.i:                                    ; preds = %bb.c, %bb.b
-  %.0.lcssa.i.i = phi ptr [ %.0.i.i, %bb.b ], [ %scevgep.i.i, %bb.c ] ; 11 uses
+.critedge.i.i:                                    ; preds = %bb.b, %..critedge.i.i_crit_edge
+  %19 = phi i8 [ %.pre, %..critedge.i.i_crit_edge ], [ %i.l, %bb.b ] ; 7 uses
+  %.0.lcssa.i.i = phi ptr [ %scevgep.i.i, %..critedge.i.i_crit_edge ], [ %.0.i.i, %bb.b ] ; 10 uses
   store ptr %.0.lcssa.i.i, ptr %i.f, align 8
-  %19 = load i8, ptr %.0.lcssa.i.i, align 1       ; 7 uses
   switch i8 %19, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit [
     i8 44, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.thread
     i8 32, label %_ZN6Assimp16IsSpaceOrNewLineIcEEbT_.exit.thread

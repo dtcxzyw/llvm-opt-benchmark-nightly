@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN6hermes3sem17SemanticValidator10doFunctionEPNS_6ESTree4NodeEb(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, i1 noundef zeroext %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %3 = alloca %"class.hermes::sem::FunctionContext", align 8 ; 20 uses
+  %3 = alloca %"class.hermes::sem::FunctionContext", align 8 ; 21 uses
   %4 = alloca %"class.llvh::SmallVector", align 8 ; 8 uses
   %5 = alloca %"class.llvh::SmallVector.81", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
@@ -282,10 +282,11 @@ _ZN6hermes3sem15FunctionContextC2EPNS0_17SemanticValidatorEbPNS_6ESTree16Functio
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.am = getelementptr inbounds i8, ptr %i.aj, i64 -208
   store ptr %i.am, ptr %i.al, align 8, !tbaa !135
-  %i.an = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 80
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.an, i8 0, i64 32, i1 false)
-  store i8 %i.a, ptr %i.ao, align 8, !tbaa !136
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 48
+  %i.an = getelementptr inbounds nuw i8, ptr %3, i64 80
+  %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 64
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ao, i8 0, i64 16, i1 false)
+  store i8 %i.a, ptr %i.an, align 8, !tbaa !136
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 84
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 112
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %i.ap, i8 0, i64 24, i1 false)
@@ -320,7 +321,7 @@ _ZN6hermes3sem15FunctionContextC2EPNS0_17SemanticValidatorEbPNS_6ESTree16Functio
   store i32 0, ptr %i.be, align 8, !tbaa !128
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 12
   store i32 4, ptr %i.bf, align 4, !tbaa !129
-  store ptr %5, ptr %i.an, align 8, !tbaa !141
+  store ptr %5, ptr %6, align 8, !tbaa !141
   %i.bg = call { ptr, i8 } @_ZN6hermes6ESTree24RecursiveVisitorDispatchINS_3sem17SemanticValidatorELb1EE5visitERS3_PNS0_4NodeES7_(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, ptr noundef null), !inline_history !0 ; 0 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !91, !nonnull !85, !align !86

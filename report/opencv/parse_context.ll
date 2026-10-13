@@ -204,7 +204,8 @@ _ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIiLb0EEEP
 
 bb.l:                                             ; preds = %_ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIiLb0EEEPKcPvS5_PNS1_12ParseContextEEUlmE_EES5_S5_S5_T_.exit.thread74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(26) %i.d, i8 0, i64 26, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(10) %3, i8 0, i64 10, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 1 dereferenceable(16) %i.bn, i64 16, i1 false)
   %i.bt = sext i32 %i.br to i64                   ; 3 uses
   %i.bu = getelementptr inbounds i8, ptr %i.d, i64 %i.bt ; 2 uses
@@ -518,7 +519,8 @@ _ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIjLb0EEEP
 
 bb.l:                                             ; preds = %_ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIjLb0EEEPKcPvS5_PNS1_12ParseContextEEUlmE_EES5_S5_S5_T_.exit.thread74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(26) %i.d, i8 0, i64 26, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(10) %3, i8 0, i64 10, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 1 dereferenceable(16) %i.bn, i64 16, i1 false)
   %i.bt = sext i32 %i.br to i64                   ; 3 uses
   %i.bu = getelementptr inbounds i8, ptr %i.d, i64 %i.bt ; 2 uses
@@ -828,7 +830,8 @@ _ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIlLb0EEEP
 
 bb.l:                                             ; preds = %_ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIlLb0EEEPKcPvS5_PNS1_12ParseContextEEUlmE_EES5_S5_S5_T_.exit.thread74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(26) %i.d, i8 0, i64 26, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(10) %3, i8 0, i64 10, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 1 dereferenceable(16) %i.bm, i64 16, i1 false)
   %i.bs = sext i32 %i.bq to i64                   ; 3 uses
   %i.bt = getelementptr inbounds i8, ptr %i.d, i64 %i.bs ; 2 uses
@@ -1136,7 +1139,8 @@ _ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserImLb0EEEP
 
 bb.l:                                             ; preds = %_ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserImLb0EEEPKcPvS5_PNS1_12ParseContextEEUlmE_EES5_S5_S5_T_.exit.thread74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(26) %i.d, i8 0, i64 26, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(10) %3, i8 0, i64 10, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 1 dereferenceable(16) %i.bm, i64 16, i1 false)
   %i.bs = sext i32 %i.bq to i64                   ; 3 uses
   %i.bt = getelementptr inbounds i8, ptr %i.d, i64 %i.bs ; 2 uses
@@ -1449,7 +1453,8 @@ _ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIiLb1EEEP
 
 bb.l:                                             ; preds = %_ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIiLb1EEEPKcPvS5_PNS1_12ParseContextEEUlmE_EES5_S5_S5_T_.exit.thread74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(26) %i.d, i8 0, i64 26, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(10) %3, i8 0, i64 10, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 1 dereferenceable(16) %i.br, i64 16, i1 false)
   %i.bx = sext i32 %i.bv to i64                   ; 3 uses
   %i.by = getelementptr inbounds i8, ptr %i.d, i64 %i.bx ; 2 uses
@@ -1769,7 +1774,8 @@ _ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIlLb1EEEP
 
 bb.l:                                             ; preds = %_ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIlLb1EEEPKcPvS5_PNS1_12ParseContextEEUlmE_EES5_S5_S5_T_.exit.thread74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(26) %i.d, i8 0, i64 26, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(10) %3, i8 0, i64 10, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 1 dereferenceable(16) %i.bq, i64 16, i1 false)
   %i.bw = sext i32 %i.bu to i64                   ; 3 uses
   %i.bx = getelementptr inbounds i8, ptr %i.d, i64 %i.bw ; 2 uses
@@ -2085,7 +2091,8 @@ _ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIbLb0EEEP
 
 bb.l:                                             ; preds = %_ZN6google8protobuf8internal21ReadPackedVarintArrayIZNS1_12VarintParserIbLb0EEEPKcPvS5_PNS1_12ParseContextEEUlmE_EES5_S5_S5_T_.exit.thread74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(26) %i.d, i8 0, i64 26, i1 false)
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(10) %3, i8 0, i64 10, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, ptr noundef nonnull align 1 dereferenceable(16) %i.bo, i64 16, i1 false)
   %i.bu = sext i32 %i.bs to i64                   ; 3 uses
   %i.bv = getelementptr inbounds i8, ptr %i.d, i64 %i.bu ; 2 uses

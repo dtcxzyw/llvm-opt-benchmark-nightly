@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %.03859, i64 1 ; 7 uses
-  %i.u = load i8, ptr %i.t, align 1, !tbaa !11
+  %i.u = load i8, ptr %i.t, align 1, !tbaa !11    ; 2 uses
   %i.v = icmp eq i8 %i.u, 37
   br i1 %i.v, label %bb.g, label %bb.j
 
@@ -235,10 +235,11 @@ bb.j:                                             ; preds = %bb.f
 
 bb.k:                                             ; preds = %bb.j
   %i.ae = call i32 @luaL_argerror(ptr noundef %0, i32 noundef %i.ad, ptr noundef nonnull @.str.28) #10 ; 0 uses
+  %.pre62 = load i8, ptr %i.t, align 1, !tbaa !11
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %2 = load i8, ptr %i.t, align 1, !tbaa !11      ; 2 uses
+  %2 = phi i8 [ %.pre62, %bb.k ], [ %i.u, %bb.j ] ; 2 uses
   %.not41.i = icmp eq i8 %2, 0
   br i1 %.not41.i, label %.critedge.i, label %.lr.ph.i
 
@@ -318,7 +319,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %i.br = phi i8 [ %i.bd, %bb.o ], [ %.pre45.i, %bb.p ]
+  %i.br = phi i8 [ %i.bd, %bb.o ], [ %.pre45.i, %bb.p ] ; 2 uses
   %.4.i = phi ptr [ %.2.i, %bb.o ], [ %spec.select38.i, %bb.p ] ; 3 uses
   %i.bs = zext i8 %i.br to i64
   %i.bt = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %i.bs
@@ -329,9 +330,11 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.bw = call i32 (ptr, ptr, ...) @luaL_error(ptr noundef %0, ptr noundef nonnull @.str.32) #10 ; 0 uses
+  %.pre63 = load i8, ptr %.4.i, align 1, !tbaa !11
   br label %scanformat.exit
 
 scanformat.exit:                                  ; preds = %bb.q, %bb.r
+  %3 = phi i8 [ %i.br, %bb.q ], [ %.pre63, %bb.r ] ; 2 uses
   store i8 37, ptr %i.c, align 16, !tbaa !11
   %i.bx = ptrtoint ptr %.4.i to i64
   %i.by = sub i64 %i.bx, %i.an
@@ -340,7 +343,6 @@ scanformat.exit:                                  ; preds = %bb.q, %bb.r
   %i.cb = getelementptr inbounds i8, ptr %i.k, i64 %i.bz
   store i8 0, ptr %i.cb, align 1, !tbaa !11
   %i.cc = getelementptr inbounds nuw i8, ptr %.4.i, i64 1 ; 2 uses
-  %3 = load i8, ptr %.4.i, align 1, !tbaa !11     ; 2 uses
   switch i8 %3, label %.thread52 [
     i8 99, label %bb.s
     i8 100, label %bb.t

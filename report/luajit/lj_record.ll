@@ -205,7 +205,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 160 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !42   ; 3 uses
   %i.i = zext i32 %i.f to i64                     ; 2 uses
-  %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.i ; 7 uses
+  %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %i.i ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   %.not97 = icmp ugt i32 %i.d, %i.f
   br i1 %.not97, label %._crit_edge, label %.lr.ph
@@ -365,7 +365,7 @@ bb.l:                                             ; preds = %bb.k
   store i16 22404, ptr %i.cd, align 4, !tbaa !9
   store i16 %i.cl, ptr %i.cc, align 8, !tbaa !9
   store i16 %i.cm, ptr %i.ce, align 2, !tbaa !9
-  %i.cn = tail call i32 @lj_opt_fold(ptr noundef nonnull %i.b) #8 ; 2 uses
+  %i.cn = tail call i32 @lj_opt_fold(ptr noundef nonnull %i.b) #8 ; 3 uses
   %i.co = load ptr, ptr %i.g, align 8, !tbaa !42
   %i.cp = ptrtoint ptr %i.by to i64
   %i.cq = ptrtoint ptr %i.co to i64
@@ -411,12 +411,14 @@ bb.n:                                             ; preds = %bb.e, %._crit_edge
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %i.i
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !9
   store i64 %i.dn, ptr %i.dj, align 8, !tbaa !9
+  %.pre108 = load i32, ptr %i.j, align 4, !tbaa !37
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %bb.n
   %.pre-phi = phi i32 [ %i.cv, %bb.m ], [ %i.df, %bb.n ]
+  %4 = phi i32 [ %i.cn, %bb.m ], [ %.pre108, %bb.n ]
   %i.do = phi ptr [ %.pre107, %bb.m ], [ %i.dl, %bb.n ]
-  %.180 = phi ptr [ %i.by, %bb.m ], [ %i.j, %bb.n ] ; 2 uses
+  %.180 = phi ptr [ %i.by, %bb.m ], [ %i.j, %bb.n ]
   %i.dp = zext i32 %.pre-phi to i64
   %i.dq = getelementptr inbounds nuw [8 x i8], ptr %i.do, i64 %i.dp
   %i.dr = load i64, ptr %i.dq, align 8, !tbaa !9
@@ -425,7 +427,6 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !37
   %i.du = getelementptr inbounds nuw i8, ptr %3, i64 48
   store i32 %i.dt, ptr %i.du, align 8, !tbaa !49
-  %4 = load i32, ptr %.180, align 4, !tbaa !37
   %i.dv = getelementptr inbounds nuw i8, ptr %3, i64 52
   store i32 %4, ptr %i.dv, align 4, !tbaa !74
   call fastcc void @rec_mm_arith(ptr noundef nonnull %i.b, ptr noundef %3, i32 noundef 8)

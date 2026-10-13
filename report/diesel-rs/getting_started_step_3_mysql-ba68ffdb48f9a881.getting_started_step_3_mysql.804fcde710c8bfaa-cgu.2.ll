@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_RNvXs0_NtCsjRvGck3
 
 _RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13QueryMetadataNtNtB7_9sql_types4TextE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit1.i: ; preds = %bb.d, %_RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13QueryMetadataNtNtB7_9sql_types4TextE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit.i
   %i.p = phi i64 [ %i.k, %_RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13QueryMetadataNtNtB7_9sql_types4TextE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit.i ], [ %.pre, %bb.d ]
-  %i.q = phi ptr [ %i.l, %_RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13QueryMetadataNtNtB7_9sql_types4TextE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit.i ], [ %.pre3.i, %bb.d ]
+  %i.q = phi ptr [ %i.l, %_RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13QueryMetadataNtNtB7_9sql_types4TextE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit.i ], [ %.pre3.i, %bb.d ] ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.n
   store i8 15, ptr %i.r, align 1, !noalias !333
   %i.s = add i64 %i.b, 3                          ; 3 uses
@@ -214,10 +214,11 @@ _RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13
 
 bb.e:                                             ; preds = %_RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13QueryMetadataNtNtB7_9sql_types4TextE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit1.i
   tail call void @_RNvMs3_NtCs40k4W9msRzi_5alloc7raw_vecINtB5_6RawVecINtNtCscI6d9CVNmLh_4core6option6OptionNtNtNtCsjRvGck33osM_6diesel5mysql7backend9MysqlTypeEE8grow_oneCsb101nepifEY_28getting_started_step_3_mysql(ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
+  %.pre5.i = load ptr, ptr %i.f, align 8, !alias.scope !336
   br label %_RNvXs9x_NtNtCsjRvGck33osM_6diesel10type_impls6tuplesNtNtNtBa_5mysql7backend5MysqlINtNtBa_10expression13QueryMetadataTNtNtBa_9sql_types7IntegerNtB1T_4TextB2g_NtB1T_4BoolEE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit
 
 _RNvXs9x_NtNtCsjRvGck33osM_6diesel10type_impls6tuplesNtNtNtBa_5mysql7backend5MysqlINtNtBa_10expression13QueryMetadataTNtNtBa_9sql_types7IntegerNtB1T_4TextB2g_NtB1T_4BoolEE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit: ; preds = %_RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13QueryMetadataNtNtB7_9sql_types4TextE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit1.i, %bb.e
-  %2 = load ptr, ptr %i.f, align 8, !alias.scope !336, !nonnull !4, !noundef !4
+  %2 = phi ptr [ %i.q, %_RNvXs0_NtCsjRvGck33osM_6diesel10expressionNtNtNtB7_5mysql7backend5MysqlINtB5_13QueryMetadataNtNtB7_9sql_types4TextE12row_metadataCsb101nepifEY_28getting_started_step_3_mysql.exit1.i ], [ %.pre5.i, %bb.e ]
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 %i.s
   store i8 0, ptr %i.u, align 1, !noalias !336
   %i.v = add i64 %i.b, 4

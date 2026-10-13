@@ -205,7 +205,7 @@ bb.do:                                            ; preds = %bb.dn
 bb.dp:                                            ; preds = %bb.dn
   %i.sf = getelementptr inbounds nuw [1040 x i8], ptr %.sroa.026.0252.i.i, i64 %.sroa.09.3170.i.i
   %i.sg = getelementptr inbounds nuw [1040 x i8], ptr %i.kg, i64 %.sroa.09.3170.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1040) %i.sg, ptr noundef nonnull align 8 dereferenceable(1040) %i.sf, i64 1040, i1 false), !noalias !631
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1040) %i.sg, ptr noundef nonnull align 8 dereferenceable(1040) %i.sf, i64 1040, i1 false), !noalias !631
   %i.sh = add nuw nsw i64 %.sroa.09.3170.i.i, 1   ; 2 uses
   %exitcond199.not.i.i = icmp eq i64 %i.sh, %i.sc
   br i1 %exitcond199.not.i.i, label %._crit_edge172.i.i, label %.lr.ph171.i.i
@@ -608,7 +608,7 @@ bb.gr:                                            ; preds = %bb.gq
 bb.gs:                                            ; preds = %bb.gq
   %i.aec = getelementptr inbounds nuw [2192 x i8], ptr %.sroa.026.0252.i.i262, i64 %.sroa.09.3170.i.i269
   %i.aed = getelementptr inbounds nuw [2192 x i8], ptr %i.wc, i64 %.sroa.09.3170.i.i269
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2192) %i.aed, ptr noundef nonnull align 8 dereferenceable(2192) %i.aec, i64 2192, i1 false), !noalias !684
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2192) %i.aed, ptr noundef nonnull align 8 dereferenceable(2192) %i.aec, i64 2192, i1 false), !noalias !684
   %i.aee = add nuw nsw i64 %.sroa.09.3170.i.i269, 1 ; 2 uses
   %exitcond199.not.i.i272 = icmp eq i64 %i.aee, %i.adz
   br i1 %exitcond199.not.i.i272, label %._crit_edge172.i.i273, label %.lr.ph171.i.i268
@@ -1011,6 +1011,8 @@ bb.z:                                             ; preds = %bb.ab, %bb.x
 
 .lr.ph.i:                                         ; preds = %bb.z
   %.val31.i = load ptr, ptr %i.ff, align 8, !alias.scope !1124, !noalias !1125 ; 5 uses
+  %.val32.i = load ptr, ptr %i.fh, align 8, !alias.scope !1124, !noalias !1125 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.val32.i, i64 24
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.aa, %.lr.ph.i
@@ -1019,15 +1021,13 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph.i
   %.sroa.43.129.i = phi ptr [ %.sroa.43.0.i, %.lr.ph.i ], [ %i.hs, %bb.aa ] ; 4 uses
   %.val29.i = load ptr, ptr %.sroa.9.131.i, align 8, !alias.scope !1124, !noalias !1125, !nonnull !10, !noundef !10
   %i.fw = getelementptr i8, ptr %.sroa.9.131.i, i64 8
-  %.val30.i = load ptr, ptr %i.fw, align 8, !alias.scope !1124, !noalias !1125, !nonnull !10, !align !14, !noundef !10
-  %.val32.i.a = load ptr, ptr %i.fh, align 8, !alias.scope !1124, !noalias !1125 ; 2 uses
-  %i.fx = getelementptr inbounds nuw i8, ptr %.val30.i, i64 24
+  %.val32.i.a = load ptr, ptr %i.fw, align 8, !alias.scope !1124, !noalias !1125, !nonnull !10, !align !14, !noundef !10
+  %i.fx = getelementptr inbounds nuw i8, ptr %.val32.i.a, i64 24
   %i.fy = load ptr, ptr %i.fx, align 8, !invariant.load !10, !noalias !1126, !nonnull !10
   %i.fz = call noundef i16 %i.fy(ptr noundef nonnull %.val29.i) #26, !noalias !1126, !inline_history !1080
   %i.ga = sub i16 0, %i.fz
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val31.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i.a) ]
-  %7 = getelementptr inbounds nuw i8, ptr %.val32.i.a, i64 24
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i) ]
   %i.gb = load ptr, ptr %7, align 8, !invariant.load !10, !noalias !1126, !nonnull !10 ; 4 uses
   %i.gc = call noundef i16 %i.gb(ptr noundef nonnull %.val31.i) #26, !noalias !1126, !inline_history !1080
   %i.gd = sub i16 0, %i.gc
@@ -1099,7 +1099,13 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph.i
   %.sroa.9.1.lcssa.i = phi ptr [ %.sroa.9.0.i, %bb.z ], [ %i.hw, %bb.aa ] ; 3 uses
   %i.hy = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph145, i64 %.sroa.0.0.i40 ; 2 uses
   %i.hz = icmp ult ptr %.sroa.9.1.lcssa.i, %i.hy
-  br i1 %i.hz, label %.lr.ph38.i.a, label %._crit_edge39.i
+  br i1 %i.hz, label %.lr.ph38.i, label %._crit_edge39.i
+
+.lr.ph38.i:                                       ; preds = %._crit_edge.i
+  %.val15.i = load ptr, ptr %i.ff, align 8, !alias.scope !1124, !noalias !1125 ; 2 uses
+  %.val16.i = load ptr, ptr %i.fh, align 8, !alias.scope !1124, !noalias !1125 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.val16.i, i64 24
+  br label %.lr.ph38.i.a
 
 ._crit_edge39.i:                                  ; preds = %.lr.ph38.i.a, %._crit_edge.i
   %.sroa.43.2.lcssa.i = phi ptr [ %.sroa.43.1.lcssa.i, %._crit_edge.i ], [ %i.ik, %.lr.ph38.i.a ]
@@ -1108,22 +1114,19 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph.i
   %i.ia = icmp eq i64 %.sroa.0.0.i40, %.sroa.16.0138342
   br i1 %i.ia, label %bb.ac, label %bb.ab
 
-.lr.ph38.i.a:                                     ; preds = %._crit_edge.i, %.lr.ph38.i.a
-  %.sroa.9.236.i = phi ptr [ %i.io, %.lr.ph38.i.a ], [ %.sroa.9.1.lcssa.i, %._crit_edge.i ] ; 4 uses
-  %.sroa.27.235.i = phi i64 [ %i.in, %.lr.ph38.i.a ], [ %.sroa.27.1.lcssa.i, %._crit_edge.i ] ; 2 uses
-  %.sroa.43.234.i = phi ptr [ %i.ik, %.lr.ph38.i.a ], [ %.sroa.43.1.lcssa.i, %._crit_edge.i ]
+.lr.ph38.i.a:                                     ; preds = %.lr.ph38.i.a, %.lr.ph38.i
+  %.sroa.9.236.i = phi ptr [ %.sroa.9.1.lcssa.i, %.lr.ph38.i ], [ %i.io, %.lr.ph38.i.a ] ; 4 uses
+  %.sroa.27.235.i = phi i64 [ %.sroa.27.1.lcssa.i, %.lr.ph38.i ], [ %i.in, %.lr.ph38.i.a ] ; 2 uses
+  %.sroa.43.234.i = phi ptr [ %.sroa.43.1.lcssa.i, %.lr.ph38.i ], [ %i.ik, %.lr.ph38.i.a ]
   %.val.i = load ptr, ptr %.sroa.9.236.i, align 8, !alias.scope !1124, !noalias !1125, !nonnull !10, !noundef !10
   %i.ib = getelementptr i8, ptr %.sroa.9.236.i, i64 8
-  %.val14.i = load ptr, ptr %i.ib, align 8, !alias.scope !1124, !noalias !1125, !nonnull !10, !align !14, !noundef !10
-  %.val15.i = load ptr, ptr %i.ff, align 8, !alias.scope !1124, !noalias !1125 ; 2 uses
-  %.val16.i.a = load ptr, ptr %i.fh, align 8, !alias.scope !1124, !noalias !1125 ; 2 uses
-  %i.ic = getelementptr inbounds nuw i8, ptr %.val14.i, i64 24
+  %.val16.i.a = load ptr, ptr %i.ib, align 8, !alias.scope !1124, !noalias !1125, !nonnull !10, !align !14, !noundef !10
+  %i.ic = getelementptr inbounds nuw i8, ptr %.val16.i.a, i64 24
   %i.id = load ptr, ptr %i.ic, align 8, !invariant.load !10, !noalias !1126, !nonnull !10
   %i.ie = call noundef i16 %i.id(ptr noundef nonnull %.val.i) #26, !noalias !1126, !inline_history !1080
   %i.if = sub i16 0, %i.ie
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val15.i) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16.i.a) ]
-  %8 = getelementptr inbounds nuw i8, ptr %.val16.i.a, i64 24
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16.i) ]
   %i.ig = load ptr, ptr %8, align 8, !invariant.load !10, !noalias !1126, !nonnull !10
   %i.ih = call noundef i16 %i.ig(ptr noundef nonnull %.val15.i) #26, !noalias !1126, !inline_history !1080
   %i.ii = sub i16 0, %i.ih
@@ -1240,25 +1243,25 @@ bb.ai:                                            ; preds = %bb.ak, %bb.ag
 
 .lr.ph.i70:                                       ; preds = %bb.ai
   %.val31.i71 = load ptr, ptr %i.ff, align 8, !alias.scope !1134, !noalias !1135, !nonnull !10, !noundef !10 ; 4 uses
+  %.val32.i72 = load ptr, ptr %i.fh, align 8, !alias.scope !1134, !noalias !1135, !nonnull !10, !align !14, !noundef !10
+  %9 = getelementptr inbounds nuw i8, ptr %.val32.i72, i64 24
+  %10 = load ptr, ptr %9, align 8, !invariant.load !10, !noalias !1136, !nonnull !10 ; 4 uses
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.aj, %.lr.ph.i70
   %.sroa.9.131.i72 = phi ptr [ %.sroa.9.0.i47, %.lr.ph.i70 ], [ %i.lp, %bb.aj ] ; 10 uses
   %.sroa.27.130.i73 = phi i64 [ %.sroa.27.0.i46, %.lr.ph.i70 ], [ %i.lo, %bb.aj ] ; 2 uses
   %.sroa.43.129.i74 = phi ptr [ %.sroa.43.0.i45, %.lr.ph.i70 ], [ %i.ll, %bb.aj ] ; 4 uses
-  %.val29.i75 = load ptr, ptr %.sroa.9.131.i72, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
-  %9 = getelementptr i8, ptr %.sroa.9.131.i72, i64 8
-  %.val30.i76 = load ptr, ptr %9, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
-  %.val32.i77 = load ptr, ptr %i.fh, align 8, !alias.scope !1134, !noalias !1135, !nonnull !10, !align !14, !noundef !10
-  %i.jp = getelementptr inbounds nuw i8, ptr %.val32.i77, i64 24
-  %i.jq = load ptr, ptr %i.jp, align 8, !invariant.load !10, !noalias !1136, !nonnull !10 ; 4 uses
-  %i.jr = call noundef i16 %i.jq(ptr noundef nonnull %.val31.i71) #26, !noalias !1136, !inline_history !1099
+  %.val32.i77 = load ptr, ptr %.sroa.9.131.i72, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
+  %i.jp = getelementptr i8, ptr %.sroa.9.131.i72, i64 8
+  %i.jq = load ptr, ptr %i.jp, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
+  %i.jr = call noundef i16 %10(ptr noundef nonnull %.val31.i71) #26, !noalias !1136, !inline_history !1099
   %i.js = sub i16 0, %i.jr
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val29.i75) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val30.i76) ]
-  %i.jt = getelementptr inbounds nuw i8, ptr %.val30.i76, i64 24
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val32.i77) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
+  %i.jt = getelementptr inbounds nuw i8, ptr %i.jq, i64 24
   %i.ju = load ptr, ptr %i.jt, align 8, !invariant.load !10, !noalias !1136, !nonnull !10
-  %i.jv = call noundef i16 %i.ju(ptr noundef nonnull %.val29.i75) #26, !noalias !1136, !inline_history !1099
+  %i.jv = call noundef i16 %i.ju(ptr noundef nonnull %.val32.i77) #26, !noalias !1136, !inline_history !1099
   %i.jw = sub i16 0, %i.jv
   %i.jx = icmp sge i16 %i.js, %i.jw               ; 2 uses
   %i.jy = getelementptr inbounds i8, ptr %.sroa.43.129.i74, i64 -16
@@ -1271,7 +1274,7 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph.i70
   %.val25.i79 = load ptr, ptr %i.kc, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
   %i.kd = getelementptr i8, ptr %.sroa.9.131.i72, i64 24
   %.val26.i80 = load ptr, ptr %i.kd, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
-  %i.ke = call noundef i16 %i.jq(ptr noundef nonnull %.val31.i71) #26, !noalias !1136, !inline_history !1099
+  %i.ke = call noundef i16 %10(ptr noundef nonnull %.val31.i71) #26, !noalias !1136, !inline_history !1099
   %i.kf = sub i16 0, %i.ke
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val25.i79) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val26.i80) ]
@@ -1290,7 +1293,7 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph.i70
   %.val21.i82 = load ptr, ptr %i.kp, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
   %i.kq = getelementptr i8, ptr %.sroa.9.131.i72, i64 40
   %.val22.i83 = load ptr, ptr %i.kq, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
-  %i.kr = call noundef i16 %i.jq(ptr noundef nonnull %.val31.i71) #26, !noalias !1136, !inline_history !1099
+  %i.kr = call noundef i16 %10(ptr noundef nonnull %.val31.i71) #26, !noalias !1136, !inline_history !1099
   %i.ks = sub i16 0, %i.kr
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val21.i82) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val22.i83) ]
@@ -1309,7 +1312,7 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph.i70
   %.val17.i85 = load ptr, ptr %i.lc, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
   %i.ld = getelementptr i8, ptr %.sroa.9.131.i72, i64 56
   %.val18.i86 = load ptr, ptr %i.ld, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
-  %i.le = call noundef i16 %i.jq(ptr noundef nonnull %.val31.i71) #26, !noalias !1136, !inline_history !1099
+  %i.le = call noundef i16 %10(ptr noundef nonnull %.val31.i71) #26, !noalias !1136, !inline_history !1099
   %i.lf = sub i16 0, %i.le
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val17.i85) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val18.i86) ]
@@ -1334,7 +1337,14 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph.i70
   %.sroa.9.1.lcssa.i52 = phi ptr [ %.sroa.9.0.i47, %bb.ai ], [ %i.lp, %bb.aj ] ; 3 uses
   %i.lr = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph145, i64 %.sroa.0.0.i48 ; 2 uses
   %i.ls = icmp ult ptr %.sroa.9.1.lcssa.i52, %i.lr
-  br i1 %i.ls, label %.lr.ph38.i61.a, label %._crit_edge39.i53
+  br i1 %i.ls, label %.lr.ph38.i61, label %._crit_edge39.i53
+
+.lr.ph38.i61:                                     ; preds = %._crit_edge.i49
+  %.val15.i62 = load ptr, ptr %i.ff, align 8, !alias.scope !1134, !noalias !1135, !nonnull !10, !noundef !10
+  %.val16.i63 = load ptr, ptr %i.fh, align 8, !alias.scope !1134, !noalias !1135, !nonnull !10, !align !14, !noundef !10
+  %11 = getelementptr inbounds nuw i8, ptr %.val16.i63, i64 24
+  %12 = load ptr, ptr %11, align 8, !invariant.load !10, !noalias !1136, !nonnull !10
+  br label %.lr.ph38.i61.a
 
 ._crit_edge39.i53:                                ; preds = %.lr.ph38.i61.a, %._crit_edge.i49
   %.sroa.43.2.lcssa.i54 = phi ptr [ %.sroa.43.1.lcssa.i50, %._crit_edge.i49 ], [ %i.md, %.lr.ph38.i61.a ]
@@ -1343,24 +1353,20 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph.i70
   %i.lt = icmp eq i64 %.sroa.0.0.i48, %.sroa.16.0138342
   br i1 %i.lt, label %bb.al, label %bb.ak
 
-.lr.ph38.i61.a:                                   ; preds = %._crit_edge.i49, %.lr.ph38.i61.a
-  %.sroa.9.236.i62 = phi ptr [ %i.mh, %.lr.ph38.i61.a ], [ %.sroa.9.1.lcssa.i52, %._crit_edge.i49 ] ; 4 uses
-  %.sroa.27.235.i63 = phi i64 [ %i.mg, %.lr.ph38.i61.a ], [ %.sroa.27.1.lcssa.i51, %._crit_edge.i49 ] ; 2 uses
-  %.sroa.43.234.i64 = phi ptr [ %i.md, %.lr.ph38.i61.a ], [ %.sroa.43.1.lcssa.i50, %._crit_edge.i49 ]
-  %.val.i65 = load ptr, ptr %.sroa.9.236.i62, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
-  %10 = getelementptr i8, ptr %.sroa.9.236.i62, i64 8
-  %.val14.i66 = load ptr, ptr %10, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
-  %.val15.i67 = load ptr, ptr %i.ff, align 8, !alias.scope !1134, !noalias !1135, !nonnull !10, !noundef !10
-  %.val16.i68 = load ptr, ptr %i.fh, align 8, !alias.scope !1134, !noalias !1135, !nonnull !10, !align !14, !noundef !10
-  %i.lu = getelementptr inbounds nuw i8, ptr %.val16.i68, i64 24
-  %i.lv = load ptr, ptr %i.lu, align 8, !invariant.load !10, !noalias !1136, !nonnull !10
-  %i.lw = call noundef i16 %i.lv(ptr noundef nonnull %.val15.i67) #26, !noalias !1136, !inline_history !1099
+.lr.ph38.i61.a:                                   ; preds = %.lr.ph38.i61.a, %.lr.ph38.i61
+  %.sroa.9.236.i62 = phi ptr [ %.sroa.9.1.lcssa.i52, %.lr.ph38.i61 ], [ %i.mh, %.lr.ph38.i61.a ] ; 4 uses
+  %.sroa.27.235.i63 = phi i64 [ %.sroa.27.1.lcssa.i51, %.lr.ph38.i61 ], [ %i.mg, %.lr.ph38.i61.a ] ; 2 uses
+  %.sroa.43.234.i64 = phi ptr [ %.sroa.43.1.lcssa.i50, %.lr.ph38.i61 ], [ %i.md, %.lr.ph38.i61.a ]
+  %.val16.i68 = load ptr, ptr %.sroa.9.236.i62, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
+  %i.lu = getelementptr i8, ptr %.sroa.9.236.i62, i64 8
+  %i.lv = load ptr, ptr %i.lu, align 8, !alias.scope !1134, !noalias !1135 ; 2 uses
+  %i.lw = call noundef i16 %12(ptr noundef nonnull %.val15.i62) #26, !noalias !1136, !inline_history !1099
   %i.lx = sub i16 0, %i.lw
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i65) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val14.i66) ]
-  %i.ly = getelementptr inbounds nuw i8, ptr %.val14.i66, i64 24
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val16.i68) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.lv) ]
+  %i.ly = getelementptr inbounds nuw i8, ptr %i.lv, i64 24
   %i.lz = load ptr, ptr %i.ly, align 8, !invariant.load !10, !noalias !1136, !nonnull !10
-  %i.ma = call noundef i16 %i.lz(ptr noundef nonnull %.val.i65) #26, !noalias !1136, !inline_history !1099
+  %i.ma = call noundef i16 %i.lz(ptr noundef nonnull %.val16.i68) #26, !noalias !1136, !inline_history !1099
   %i.mb = sub i16 0, %i.ma
   %i.mc = icmp sge i16 %i.lx, %i.mb               ; 2 uses
   %i.md = getelementptr inbounds i8, ptr %.sroa.43.234.i64, i64 -16 ; 3 uses

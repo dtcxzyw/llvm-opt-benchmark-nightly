@@ -201,15 +201,14 @@ bb.g:                                             ; preds = %bb.e
 define range(i32 0, 2) i32 @stb_c_lexer_get_token(ptr nofree noundef %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = alloca ptr, align 8                      ; 6 uses
+  %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = alloca ptr, align 8                      ; 7 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
   %i.f = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 36 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !16   ; 3 uses
-  store ptr %i.h, ptr %i.b, align 8, !tbaa !24
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !16   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !15   ; 27 uses
   %i.k = ptrtoaddr ptr %i.j to i64
@@ -226,7 +225,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %stb__clex_iswhite.exit.thread
   %i.m = phi ptr [ %.lcssa269278284, %.lr.ph ], [ %i.o, %stb__clex_iswhite.exit.thread ] ; 101 uses
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !19
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !19    ; 2 uses
   switch i8 %i.n, label %.thread209.thread.a [
     i8 32, label %stb__clex_iswhite.exit.thread
     i8 13, label %stb__clex_iswhite.exit.thread
@@ -245,7 +244,7 @@ stb__clex_iswhite.exit.thread:                    ; preds = %bb.b, %bb.b, %bb.b,
 bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 1
   %i.q = load i8, ptr %i.p, align 1, !tbaa !19
-  switch i8 %i.q, label %.thread209.thread.a [
+  switch i8 %i.q, label %.thread209.thread [
     i8 47, label %.preheader
     i8 42, label %bb.e
   ]
@@ -271,6 +270,10 @@ bb.d:                                             ; preds = %.lr.ph271
   %.lcssa269279 = phi ptr [ %i.ad, %bb.g ], [ %scevgep323, %bb.d ], [ %i.m, %.preheader ], [ %i.m, %.preheader221 ], [ %i.r, %.lr.ph271 ], [ %i.r, %.lr.ph271 ], [ %i.ae, %.lr.ph249 ], [ %i.ae, %.lr.ph249 ], [ %scevgep323, %bb.h ] ; 2 uses
   %.not243 = icmp eq ptr %.lcssa269279, %i.j
   br i1 %.not243, label %._crit_edge, label %.lr.ph
+
+.thread209.thread:                                ; preds = %bb.c
+  %.pr = load i8, ptr %i.m, align 1, !tbaa !19
+  br label %.thread209.thread.a
 
 bb.e:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 2 ; 3 uses
@@ -332,9 +335,9 @@ bb.h:                                             ; preds = %.lr.ph249
   store i64 256, ptr %i.ah, align 8, !tbaa !21
   br label %stb__clex_parse_string.exit
 
-.thread209.thread.a:                              ; preds = %bb.c, %bb.b
+.thread209.thread.a:                              ; preds = %bb.b, %.thread209.thread
+  %1 = phi i8 [ %.pr, %.thread209.thread ], [ %i.n, %bb.b ] ; 7 uses
   store ptr %i.m, ptr %i.b, align 8
-  %1 = load i8, ptr %i.m, align 1, !tbaa !19      ; 7 uses
   switch i8 %1, label %bb.i [
     i8 43, label %bb.n
     i8 45, label %bb.r

@@ -205,7 +205,12 @@ bb.l:                                             ; preds = %bb.m, %bb.j
   %.sroa.0.0.i39 = phi i64 [ %.sroa.0.0.i, %bb.j ], [ %.sroa.16.095223, %bb.m ] ; 2 uses
   %i.ax = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph102, i64 %.sroa.0.0.i39 ; 2 uses
   %i.ay = icmp ult ptr %.sroa.5.0.i, %i.ax
-  br i1 %i.ay, label %.lr.ph.i.a, label %._crit_edge.i
+  br i1 %i.ay, label %.lr.ph.i, label %._crit_edge.i
+
+.lr.ph.i:                                         ; preds = %bb.l
+  %.val13.i40 = load ptr, ptr %i.av, align 8, !alias.scope !146, !noalias !147 ; 2 uses
+  %.val14.i = load i64, ptr %i.aw, align 8, !alias.scope !146, !noalias !147
+  br label %.lr.ph.i.a
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.a, %bb.l
   %.sroa.19.1.lcssa.i = phi ptr [ %.sroa.19.0.i, %bb.l ], [ %i.be, %.lr.ph.i.a ]
@@ -214,21 +219,19 @@ bb.l:                                             ; preds = %bb.m, %bb.j
   %i.az = icmp eq i64 %.sroa.0.0.i39, %.sroa.16.095223
   br i1 %i.az, label %bb.n, label %bb.m
 
-.lr.ph.i.a:                                       ; preds = %bb.l, %.lr.ph.i.a
-  %.sroa.5.111.i = phi ptr [ %i.bi, %.lr.ph.i.a ], [ %.sroa.5.0.i, %bb.l ] ; 4 uses
-  %.sroa.11.110.i = phi i64 [ %i.bh, %.lr.ph.i.a ], [ %.sroa.11.0.i, %bb.l ] ; 2 uses
-  %.sroa.19.19.i = phi ptr [ %i.be, %.lr.ph.i.a ], [ %.sroa.19.0.i, %bb.l ]
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.i
+  %.sroa.5.111.i = phi ptr [ %.sroa.5.0.i, %.lr.ph.i ], [ %i.bi, %.lr.ph.i.a ] ; 4 uses
+  %.sroa.11.110.i = phi i64 [ %.sroa.11.0.i, %.lr.ph.i ], [ %i.bh, %.lr.ph.i.a ] ; 2 uses
+  %.sroa.19.19.i = phi ptr [ %.sroa.19.0.i, %.lr.ph.i ], [ %i.be, %.lr.ph.i.a ]
   %i.ba = getelementptr i8, ptr %.sroa.5.111.i, i64 8
   %.val.i = load ptr, ptr %i.ba, align 8, !alias.scope !146, !noalias !147, !nonnull !4, !noundef !4
   %i.bb = getelementptr i8, ptr %.sroa.5.111.i, i64 16
-  %.val12.i40 = load i64, ptr %i.bb, align 8, !alias.scope !146, !noalias !147, !noundef !4
-  %.val13.i41 = load ptr, ptr %i.av, align 8, !alias.scope !146, !noalias !147 ; 2 uses
-  %.val14.i.a = load i64, ptr %i.aw, align 8, !alias.scope !146, !noalias !147
+  %.val14.i.a = load i64, ptr %i.bb, align 8, !alias.scope !146, !noalias !147, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !149
-  call void @_RNvMs16_NtCsigunbJSLHCW_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i, i64 noundef %.val12.i40) #20, !noalias !149
+  call void @_RNvMs16_NtCsigunbJSLHCW_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.d, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i, i64 noundef %.val14.i.a) #20, !noalias !149
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !149
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i41) ]
-  call void @_RNvMs16_NtCsigunbJSLHCW_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val13.i41, i64 noundef %.val14.i.a) #20, !noalias !149
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val13.i40) ]
+  call void @_RNvMs16_NtCsigunbJSLHCW_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val13.i40, i64 noundef %.val14.i) #20, !noalias !149
   %i.bc = call noundef range(i8 -1, 2) i8 @_RNvNtCsigunbJSLHCW_3std4path18compare_components(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(64) %i.d, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(64) %i.c) #20, !noalias !149 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !149
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !149
@@ -343,7 +346,12 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %.sroa.0.0.i48 = phi i64 [ %.sroa.0.0.i, %bb.r ], [ %.sroa.16.095223, %bb.u ] ; 2 uses
   %i.ci = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph102, i64 %.sroa.0.0.i48 ; 2 uses
   %i.cj = icmp ult ptr %.sroa.5.0.i47, %i.ci
-  br i1 %i.cj, label %.lr.ph.i57.a, label %._crit_edge.i49
+  br i1 %i.cj, label %.lr.ph.i57, label %._crit_edge.i49
+
+.lr.ph.i57:                                       ; preds = %bb.t
+  %.val13.i58 = load ptr, ptr %i.cg, align 8, !alias.scope !153, !noalias !154, !nonnull !4, !noundef !4
+  %.val14.i59 = load i64, ptr %i.ch, align 8, !alias.scope !153, !noalias !154, !noundef !4
+  br label %.lr.ph.i57.a
 
 ._crit_edge.i49:                                  ; preds = %.lr.ph.i57.a, %bb.t
   %.sroa.19.1.lcssa.i50 = phi ptr [ %.sroa.19.0.i45, %bb.t ], [ %i.cp, %.lr.ph.i57.a ]
@@ -352,21 +360,19 @@ bb.t:                                             ; preds = %bb.u, %bb.r
   %i.ck = icmp eq i64 %.sroa.0.0.i48, %.sroa.16.095223
   br i1 %i.ck, label %bb.v, label %bb.u
 
-.lr.ph.i57.a:                                     ; preds = %bb.t, %.lr.ph.i57.a
-  %.sroa.5.111.i58 = phi ptr [ %i.ct, %.lr.ph.i57.a ], [ %.sroa.5.0.i47, %bb.t ] ; 4 uses
-  %.sroa.11.110.i59 = phi i64 [ %i.cs, %.lr.ph.i57.a ], [ %.sroa.11.0.i46, %bb.t ] ; 2 uses
-  %.sroa.19.19.i60 = phi ptr [ %i.cp, %.lr.ph.i57.a ], [ %.sroa.19.0.i45, %bb.t ]
+.lr.ph.i57.a:                                     ; preds = %.lr.ph.i57.a, %.lr.ph.i57
+  %.sroa.5.111.i58 = phi ptr [ %.sroa.5.0.i47, %.lr.ph.i57 ], [ %i.ct, %.lr.ph.i57.a ] ; 4 uses
+  %.sroa.11.110.i59 = phi i64 [ %.sroa.11.0.i46, %.lr.ph.i57 ], [ %i.cs, %.lr.ph.i57.a ] ; 2 uses
+  %.sroa.19.19.i60 = phi ptr [ %.sroa.19.0.i45, %.lr.ph.i57 ], [ %i.cp, %.lr.ph.i57.a ]
   %i.cl = getelementptr i8, ptr %.sroa.5.111.i58, i64 8
   %.val.i61 = load ptr, ptr %i.cl, align 8, !alias.scope !153, !noalias !154 ; 2 uses
   %i.cm = getelementptr i8, ptr %.sroa.5.111.i58, i64 16
-  %.val12.i62 = load i64, ptr %i.cm, align 8, !alias.scope !153, !noalias !154
-  %.val13.i63 = load ptr, ptr %i.cg, align 8, !alias.scope !153, !noalias !154, !nonnull !4, !noundef !4
-  %.val14.i64 = load i64, ptr %i.ch, align 8, !alias.scope !153, !noalias !154, !noundef !4
+  %.val14.i64 = load i64, ptr %i.cm, align 8, !alias.scope !153, !noalias !154
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !155
-  call void @_RNvMs16_NtCsigunbJSLHCW_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val13.i63, i64 noundef %.val14.i64) #20, !noalias !155
+  call void @_RNvMs16_NtCsigunbJSLHCW_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val13.i58, i64 noundef %.val14.i59) #20, !noalias !155
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !155
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i61) ]
-  call void @_RNvMs16_NtCsigunbJSLHCW_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i61, i64 noundef %.val12.i62) #20, !noalias !155
+  call void @_RNvMs16_NtCsigunbJSLHCW_3std4pathNtB6_4Path10components(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val.i61, i64 noundef %.val14.i64) #20, !noalias !155
   %i.cn = call noundef range(i8 -1, 2) i8 @_RNvNtCsigunbJSLHCW_3std4path18compare_components(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(64) %i.b, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(64) %i.a) #20, !noalias !155
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !155
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !155

@@ -202,8 +202,8 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8Capfvp
   %i.k = getelementptr inbounds nuw [24 x i8], ptr %i.h, i64 %i.e
   %i.l = sub nuw nsw i64 %i.f, %i.e               ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 7 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 6 uses
-  %i.o = load i64, ptr %i.n, align 8, !alias.scope !256, !noundef !3 ; 5 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 5 uses
+  %i.o = load i64, ptr %i.n, align 8, !alias.scope !256, !noundef !3 ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 5 uses
   %i.q = load i64, ptr %i.p, align 8, !alias.scope !256, !noundef !3 ; 3 uses
   %i.r = add i64 %i.q, %i.o
@@ -291,12 +291,13 @@ _RNvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB5_8RawTablejE5clearCsC8CapfvpQ1_5salsa
 bb.m:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !260)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !261)
+  %3 = load ptr, ptr %i.m, align 8, !alias.scope !262, !noalias !263, !nonnull !3, !noundef !3 ; 6 uses
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %4 = load i64, ptr %i.av, align 8, !alias.scope !262, !noalias !263, !noundef !3
   %i.aw = icmp eq i64 %i.o, 0
   br i1 %i.aw, label %_RNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB4_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indicesBO_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.m
-  %3 = load ptr, ptr %i.m, align 8, !alias.scope !262, !noalias !263, !nonnull !3, !noundef !3 ; 6 uses
   %.val24.i.i.i = load <16 x i8>, ptr %3, align 16, !noalias !264
   %i.ax = icmp sgt <16 x i8> %.val24.i.i.i, splat (i8 -1)
   %i.ay = bitcast <16 x i1> %i.ax to i16
@@ -305,11 +306,12 @@ bb.m:                                             ; preds = %bb.e
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.q, %.lr.ph.i.i
-  %i.bb = phi i64 [ %i.q, %.lr.ph.i.i ], [ %i.ck, %bb.q ] ; 4 uses
+  %i.bb = phi i64 [ %i.q, %.lr.ph.i.i ], [ %6, %bb.q ] ; 4 uses
   %.sroa.14.015.i.i = phi i64 [ %i.o, %.lr.ph.i.i ], [ %i.bn, %bb.q ]
   %.sroa.10.014.i.i = phi i16 [ %i.ay, %.lr.ph.i.i ], [ %i.bk, %bb.q ] ; 2 uses
   %.sroa.6.013.i.i = phi ptr [ %i.az, %.lr.ph.i.i ], [ %.sroa.6.1.i.i, %bb.q ] ; 2 uses
   %.sroa.07.012.i.i = phi ptr [ %3, %.lr.ph.i.i ], [ %.sroa.07.1.i.i, %bb.q ] ; 2 uses
+  %5 = phi i64 [ %i.o, %.lr.ph.i.i ], [ %i.ck, %bb.q ] ; 3 uses
   %.not11.i.i.i = icmp eq i16 %.sroa.10.014.i.i, 0
   br i1 %.not11.i.i.i, label %.lr.ph.i.i.i, label %_RINvMsh_NtCsgMW4BsFgQdt_9hashbrown3rawINtB6_12RawIterRangejE9next_implKb0_ECsC8CapfvpQ1_5salsa.exit.i.i
 
@@ -357,14 +359,13 @@ bb.o:                                             ; preds = %_RNCNvMs_NtCsffXo9N
   %i.bu = ashr exact i64 %i.bt, 3                 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !269)
   %i.bv = add nsw i64 %i.bu, -16
-  %4 = load i64, ptr %i.av, align 8, !alias.scope !270, !noalias !271, !noundef !3
-  %i.bw = and i64 %4, %i.bv
+  %i.bw = and i64 %i.bv, %4
   %i.bx = getelementptr inbounds nuw i8, ptr %3, i64 %i.bw ; 2 uses
-  %.sroa.0.0.copyload.i25.i.i.i.i = load <16 x i8>, ptr %i.bx, align 1, !noalias !272
+  %.sroa.0.0.copyload.i25.i.i.i.i = load <16 x i8>, ptr %i.bx, align 1, !noalias !270
   %i.by = icmp eq <16 x i8> %.sroa.0.0.copyload.i25.i.i.i.i, splat (i8 -1)
   %i.bz = bitcast <16 x i1> %i.by to i16
   %i.ca = getelementptr inbounds nuw i8, ptr %3, i64 %i.bu ; 2 uses
-  %.sroa.0.0.copyload.i926.i.i.i.i = load <16 x i8>, ptr %i.ca, align 1, !noalias !273
+  %.sroa.0.0.copyload.i926.i.i.i.i = load <16 x i8>, ptr %i.ca, align 1, !noalias !271
   %i.cb = icmp eq <16 x i8> %.sroa.0.0.copyload.i926.i.i.i.i, splat (i8 -1)
   %i.cc = bitcast <16 x i1> %i.cb to i16
   %i.cd = tail call range(i16 0, 17) i16 @llvm.ctlz.i16(i16 %i.bz, i1 false)
@@ -375,7 +376,7 @@ bb.o:                                             ; preds = %_RNCNvMs_NtCsffXo9N
 
 bb.p:                                             ; preds = %bb.o
   %i.cg = add i64 %i.bb, 1                        ; 2 uses
-  store i64 %i.cg, ptr %i.p, align 8, !alias.scope !270, !noalias !271
+  store i64 %i.cg, ptr %i.p, align 8, !alias.scope !272, !noalias !273
   br label %_RNvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsC8CapfvpQ1_5salsa.exit.i.i
 
 _RNvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsC8CapfvpQ1_5salsa.exit.i.i: ; preds = %bb.p, %bb.o
@@ -384,13 +385,13 @@ _RNvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsC8Capfvp
   store i8 %.sroa.0.0.i.i.i.i, ptr %i.ca, align 1, !noalias !274
   %i.ci = getelementptr i8, ptr %i.bx, i64 16
   store i8 %.sroa.0.0.i.i.i.i, ptr %i.ci, align 1, !noalias !274
-  %5 = load i64, ptr %i.n, align 8, !alias.scope !270, !noalias !271, !noundef !3
-  %i.cj = add i64 %5, -1
-  store i64 %i.cj, ptr %i.n, align 8, !alias.scope !270, !noalias !271
+  %i.cj = add i64 %5, -1                          ; 2 uses
+  store i64 %i.cj, ptr %i.n, align 8, !alias.scope !272, !noalias !273
   br label %bb.q
 
 bb.q:                                             ; preds = %_RNvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsC8CapfvpQ1_5salsa.exit.i.i, %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.i.i, %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.thread.i.i
-  %i.ck = phi i64 [ %i.ch, %_RNvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsC8CapfvpQ1_5salsa.exit.i.i ], [ %i.bb, %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.i.i ], [ %i.bb, %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.thread.i.i ]
+  %6 = phi i64 [ %i.bb, %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.thread.i.i ], [ %i.bb, %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.i.i ], [ %i.ch, %_RNvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsC8CapfvpQ1_5salsa.exit.i.i ]
+  %i.ck = phi i64 [ %5, %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.thread.i.i ], [ %5, %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.i.i ], [ %i.cj, %_RNvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsC8CapfvpQ1_5salsa.exit.i.i ]
   %i.cl = icmp eq i64 %i.bn, 0
   br i1 %i.cl, label %_RNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB4_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indicesBO_.exit, label %bb.n
 
@@ -793,10 +794,10 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !267 = !{!218, !209, !212, !199}
 !268 = !{!220}
 !269 = !{!222}
-!270 = !{!222, !220, !209, !199}
-!271 = !{!212}
-!272 = !{!224, !222, !220, !209, !212, !199}
-!273 = !{!226, !222, !220, !209, !212, !199}
+!270 = !{!224, !222, !220, !209, !212, !199}
+!271 = !{!226, !222, !220, !209, !212, !199}
+!272 = !{!222, !220, !209, !199}
+!273 = !{!212}
 !274 = !{!222, !220, !209, !212, !199}
 !275 = !{!232, !230, !228, !199}
 !276 = !{!233}

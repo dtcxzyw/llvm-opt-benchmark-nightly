@@ -202,8 +202,8 @@ Vec_PtrPush.exit579:                              ; preds = %Vec_PtrPush.exit571
   %i.wm = getelementptr inbounds nuw i8, ptr %i.wl, i64 4 ; 3 uses
   store i32 0, ptr %i.wm, align 4, !tbaa !12
   store i32 10, ptr %i.wl, align 8, !tbaa !50
-  %i.wn = tail call noalias dereferenceable_or_null(80) ptr @malloc(i64 noundef 80) #17
-  %i.wo = getelementptr inbounds nuw i8, ptr %i.wl, i64 8 ; 6 uses
+  %i.wn = tail call noalias dereferenceable_or_null(80) ptr @malloc(i64 noundef 80) #17 ; 2 uses
+  %i.wo = getelementptr inbounds nuw i8, ptr %i.wl, i64 8 ; 5 uses
   store ptr %i.wn, ptr %i.wo, align 8, !tbaa !13
   %i.wp = getelementptr i8, ptr %.1, i64 4        ; 2 uses
   %.1.val710 = load i32, ptr %i.wp, align 4, !tbaa !12
@@ -216,6 +216,7 @@ Vec_PtrPush.exit579:                              ; preds = %Vec_PtrPush.exit571
   br label %bb.eo
 
 bb.eo:                                            ; preds = %.lr.ph716, %Vec_VecFree.exit
+  %.val421776 = phi ptr [ %i.wn, %.lr.ph716 ], [ %.val421777, %Vec_VecFree.exit ] ; 2 uses
   %i.wt = phi ptr [ %i.wk, %.lr.ph716 ], [ %i.acn, %Vec_VecFree.exit ] ; 2 uses
   %i.wu = phi i32 [ 10, %.lr.ph716 ], [ %i.aco, %Vec_VecFree.exit ] ; 2 uses
   %i.wv = phi i32 [ 0, %.lr.ph716 ], [ %i.acp, %Vec_VecFree.exit ] ; 2 uses
@@ -249,6 +250,7 @@ bb.eo:                                            ; preds = %.lr.ph716, %Vec_Vec
   br i1 %i.xj, label %.lr.ph705, label %.critedge41
 
 .lr.ph705:                                        ; preds = %bb.eo, %.critedge43
+  %.val421 = phi ptr [ %.val421779, %.critedge43 ], [ %.val421776, %bb.eo ] ; 2 uses
   %i.xk = phi ptr [ %i.abs, %.critedge43 ], [ %i.wt, %bb.eo ] ; 5 uses
   %i.xl = phi i32 [ %i.abt, %.critedge43 ], [ %i.wu, %bb.eo ] ; 3 uses
   %i.xm = phi i32 [ %i.abu, %.critedge43 ], [ %i.wv, %bb.eo ] ; 3 uses
@@ -397,7 +399,7 @@ Vec_PtrGrow.exit12.sink.split.i591:               ; preds = %bb.ff, %bb.fg, %bb.
   br label %Vec_PtrPush.exit595
 
 Vec_PtrPush.exit595:                              ; preds = %Vec_PtrPush.exit587.Vec_PtrPush.exit595_crit_edge, %bb.fd, %Vec_PtrGrow.exit12.sink.split.i591
-  %i.zf = phi ptr [ %.pre772, %Vec_PtrPush.exit587.Vec_PtrPush.exit595_crit_edge ], [ %.pre773, %bb.fd ], [ %storemerge642, %Vec_PtrGrow.exit12.sink.split.i591 ]
+  %i.zf = phi ptr [ %.pre772, %Vec_PtrPush.exit587.Vec_PtrPush.exit595_crit_edge ], [ %.pre773, %bb.fd ], [ %storemerge642, %Vec_PtrGrow.exit12.sink.split.i591 ] ; 2 uses
   %i.zg = phi i32 [ %i.yn, %Vec_PtrPush.exit587.Vec_PtrPush.exit595_crit_edge ], [ %i.yn, %bb.fd ], [ %spec.select.sink.i592, %Vec_PtrGrow.exit12.sink.split.i591 ]
   %i.zh = add nsw i32 %i.yo, 1                    ; 2 uses
   store i32 %i.zh, ptr %i.wm, align 4, !tbaa !12
@@ -570,12 +572,12 @@ bb.fz:                                            ; preds = %.lr.ph.i613
 
 Vec_PtrFind.exit619:                              ; preds = %.lr.ph.i613, %bb.fz
   %.07.i612 = phi i64 [ -1, %bb.fz ], [ %indvars.iv.i615, %.lr.ph.i613 ]
-  %.val421 = load ptr, ptr %i.wo, align 8, !tbaa !13
   %i.abq = getelementptr inbounds [8 x i8], ptr %.val421, i64 %.07.i612
   %i.abr = load ptr, ptr %i.abq, align 8, !tbaa !14
   br label %bb.ga
 
 bb.ga:                                            ; preds = %Vec_PtrFind.exit619, %Vec_PtrPush.exit611
+  %.val421779 = phi ptr [ %i.zf, %Vec_PtrPush.exit611 ], [ %.val421, %Vec_PtrFind.exit619 ] ; 2 uses
   %i.abs = phi ptr [ %i.ym, %Vec_PtrPush.exit611 ], [ %i.xk, %Vec_PtrFind.exit619 ] ; 2 uses
   %i.abt = phi i32 [ %i.zg, %Vec_PtrPush.exit611 ], [ %i.xl, %Vec_PtrFind.exit619 ] ; 2 uses
   %i.abu = phi i32 [ %i.zh, %Vec_PtrPush.exit611 ], [ %i.xm, %Vec_PtrFind.exit619 ] ; 2 uses
@@ -618,6 +620,7 @@ bb.ga:                                            ; preds = %Vec_PtrFind.exit619
   br i1 %i.acm, label %.lr.ph705, label %.critedge41, !llvm.loop !130
 
 .critedge41:                                      ; preds = %.critedge43, %bb.eo
+  %.val421777 = phi ptr [ %.val421776, %bb.eo ], [ %.val421779, %.critedge43 ]
   %i.acn = phi ptr [ %i.wt, %bb.eo ], [ %i.abs, %.critedge43 ]
   %i.aco = phi i32 [ %i.wu, %bb.eo ], [ %i.abt, %.critedge43 ]
   %i.acp = phi i32 [ %i.wv, %bb.eo ], [ %i.abu, %.critedge43 ]

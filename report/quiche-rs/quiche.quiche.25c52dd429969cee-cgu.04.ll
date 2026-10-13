@@ -205,7 +205,11 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i55
     #dbg_value(i64 %.sroa.27.1.lcssa.i, !8383, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7836)
     #dbg_value(ptr %.sroa.43.1.lcssa.i, !8383, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !7836)
   %i.fz = icmp ult ptr %.sroa.9.1.lcssa.i, %i.fy, !dbg !8805
-  br i1 %i.fz, label %.lr.ph38.i.a, label %._crit_edge39.i, !dbg !8805
+  br i1 %i.fz, label %.lr.ph38.i, label %._crit_edge39.i, !dbg !8805
+
+.lr.ph38.i:                                       ; preds = %._crit_edge.i
+  %.val43.i = load i64, ptr %i.er, align 8, !alias.scope !8433, !noalias !8362, !noundef !584
+  br label %.lr.ph38.i.a, !dbg !8805
 
 ._crit_edge39.i:                                  ; preds = %.lr.ph38.i.a, %._crit_edge.i
   %.sroa.43.2.lcssa.i = phi ptr [ %.sroa.43.1.lcssa.i, %._crit_edge.i ], [ %i.gc, %.lr.ph38.i.a ], !dbg !8764
@@ -214,20 +218,19 @@ bb.z:                                             ; preds = %bb.z, %.lr.ph.i55
   %i.ga = icmp eq i64 %.sroa.0.0.i53, %.sroa.16.0135308, !dbg !8806
   br i1 %i.ga, label %bb.ab, label %bb.aa, !dbg !8806
 
-.lr.ph38.i.a:                                     ; preds = %._crit_edge.i, %.lr.ph38.i.a
-  %.sroa.9.236.i = phi ptr [ %i.gg, %.lr.ph38.i.a ], [ %.sroa.9.1.lcssa.i, %._crit_edge.i ] ; 3 uses
-  %.sroa.27.235.i = phi i64 [ %i.gf, %.lr.ph38.i.a ], [ %.sroa.27.1.lcssa.i, %._crit_edge.i ] ; 2 uses
-  %.sroa.43.234.i = phi ptr [ %i.gc, %.lr.ph38.i.a ], [ %.sroa.43.1.lcssa.i, %._crit_edge.i ]
+.lr.ph38.i.a:                                     ; preds = %.lr.ph38.i.a, %.lr.ph38.i
+  %.sroa.9.236.i = phi ptr [ %.sroa.9.1.lcssa.i, %.lr.ph38.i ], [ %i.gg, %.lr.ph38.i.a ] ; 3 uses
+  %.sroa.27.235.i = phi i64 [ %.sroa.27.1.lcssa.i, %.lr.ph38.i ], [ %i.gf, %.lr.ph38.i.a ] ; 2 uses
+  %.sroa.43.234.i = phi ptr [ %.sroa.43.1.lcssa.i, %.lr.ph38.i ], [ %i.gc, %.lr.ph38.i.a ]
     #dbg_value(ptr %.sroa.9.236.i, !8383, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7836)
     #dbg_value(i64 %.sroa.27.235.i, !8383, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7836)
     #dbg_value(ptr %.sroa.43.234.i, !8383, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !7836)
-  %.val.i = load i64, ptr %.sroa.9.236.i, align 8, !dbg !8807, !alias.scope !8433, !noalias !8362, !noundef !584
-  %.val43.i.a = load i64, ptr %i.er, align 8, !dbg !8807, !alias.scope !8433, !noalias !8362, !noundef !584
+  %.val43.i.a = load i64, ptr %.sroa.9.236.i, align 8, !dbg !8807, !alias.scope !8433, !noalias !8362, !noundef !584
     #dbg_value(ptr poison, !1898, !DIExpression(), !7914)
     #dbg_value(ptr poison, !1901, !DIExpression(), !7914)
     #dbg_value(ptr poison, !1907, !DIExpression(), !7916)
     #dbg_value(ptr poison, !1911, !DIExpression(), !7917)
-  %i.gb = icmp ult i64 %.val.i, %.val43.i.a, !dbg !8808 ; 2 uses
+  %i.gb = icmp ult i64 %.val43.i.a, %.val43.i, !dbg !8808 ; 2 uses
     #dbg_value(ptr undef, !8398, !DIExpression(), !7793)
     #dbg_value(i1 %i.gb, !8402, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7793)
     #dbg_value(i64 1, !8434, !DIExpression(), !7919)
@@ -630,7 +633,11 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph.i82
     #dbg_value(i64 %.sroa.27.1.lcssa.i65, !8514, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8049)
     #dbg_value(ptr %.sroa.43.1.lcssa.i64, !8514, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !8049)
   %i.ih = icmp ult ptr %.sroa.9.1.lcssa.i66, %i.ig, !dbg !8882
-  br i1 %i.ih, label %.lr.ph38.i75.a, label %._crit_edge39.i67, !dbg !8882
+  br i1 %i.ih, label %.lr.ph38.i75, label %._crit_edge39.i67, !dbg !8882
+
+.lr.ph38.i75:                                     ; preds = %._crit_edge.i63
+  %.val43.i76 = load i64, ptr %i.er, align 8, !alias.scope !8549, !noalias !8489, !noundef !584
+  br label %.lr.ph38.i75.a, !dbg !8882
 
 ._crit_edge39.i67:                                ; preds = %.lr.ph38.i75.a, %._crit_edge.i63
   %.sroa.43.2.lcssa.i68 = phi ptr [ %.sroa.43.1.lcssa.i64, %._crit_edge.i63 ], [ %i.ik, %.lr.ph38.i75.a ], !dbg !8841
@@ -639,15 +646,14 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph.i82
   %i.ii = icmp eq i64 %.sroa.0.0.i62, %.sroa.16.0135308, !dbg !8883
   br i1 %i.ii, label %bb.ak, label %bb.aj, !dbg !8883
 
-.lr.ph38.i75.a:                                   ; preds = %._crit_edge.i63, %.lr.ph38.i75.a
-  %.sroa.9.236.i76 = phi ptr [ %i.io, %.lr.ph38.i75.a ], [ %.sroa.9.1.lcssa.i66, %._crit_edge.i63 ] ; 3 uses
-  %.sroa.27.235.i77 = phi i64 [ %i.in, %.lr.ph38.i75.a ], [ %.sroa.27.1.lcssa.i65, %._crit_edge.i63 ] ; 2 uses
-  %.sroa.43.234.i78 = phi ptr [ %i.ik, %.lr.ph38.i75.a ], [ %.sroa.43.1.lcssa.i64, %._crit_edge.i63 ]
+.lr.ph38.i75.a:                                   ; preds = %.lr.ph38.i75.a, %.lr.ph38.i75
+  %.sroa.9.236.i76 = phi ptr [ %.sroa.9.1.lcssa.i66, %.lr.ph38.i75 ], [ %i.io, %.lr.ph38.i75.a ] ; 3 uses
+  %.sroa.27.235.i77 = phi i64 [ %.sroa.27.1.lcssa.i65, %.lr.ph38.i75 ], [ %i.in, %.lr.ph38.i75.a ] ; 2 uses
+  %.sroa.43.234.i78 = phi ptr [ %.sroa.43.1.lcssa.i64, %.lr.ph38.i75 ], [ %i.ik, %.lr.ph38.i75.a ]
     #dbg_value(ptr %.sroa.9.236.i76, !8514, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8049)
     #dbg_value(i64 %.sroa.27.235.i77, !8514, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8049)
     #dbg_value(ptr %.sroa.43.234.i78, !8514, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !8049)
-  %.val.i79 = load i64, ptr %.sroa.9.236.i76, align 8, !dbg !8884, !alias.scope !8549, !noalias !8489, !noundef !584
-  %.val43.i80 = load i64, ptr %i.er, align 8, !dbg !8884, !alias.scope !8549, !noalias !8489, !noundef !584
+  %.val43.i80 = load i64, ptr %.sroa.9.236.i76, align 8, !dbg !8884, !alias.scope !8549, !noalias !8489, !noundef !584
     #dbg_value(ptr poison, !8550, !DIExpression(DW_OP_deref, DW_OP_deref), !8132)
     #dbg_value(ptr poison, !8553, !DIExpression(), !8132)
     #dbg_value(ptr poison, !8554, !DIExpression(), !8132)
@@ -655,7 +661,7 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph.i82
     #dbg_value(ptr poison, !1901, !DIExpression(), !8134)
     #dbg_value(ptr poison, !1907, !DIExpression(), !8136)
     #dbg_value(ptr poison, !1911, !DIExpression(), !8137)
-  %i.ij = icmp uge i64 %.val43.i80, %.val.i79, !dbg !8885 ; 2 uses
+  %i.ij = icmp uge i64 %.val43.i76, %.val43.i80, !dbg !8885 ; 2 uses
     #dbg_value(ptr undef, !8398, !DIExpression(), !8006)
     #dbg_value(i1 %i.ij, !8402, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !8006)
     #dbg_value(i64 1, !8434, !DIExpression(), !8139)

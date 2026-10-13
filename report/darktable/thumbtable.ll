@@ -202,7 +202,7 @@ define void @dt_thumbtable_zoom_changed(ptr nofree noundef captures(none) %0, i3
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 6 uses
-  %i.c = alloca ptr, align 8                      ; 7 uses
+  %i.c = alloca ptr, align 8                      ; 6 uses
   %i.d = alloca i32, align 4                      ; 8 uses
   %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = icmp eq i32 %1, %2
@@ -591,8 +591,9 @@ bb.y:                                             ; preds = %bb.x, %_pos_compute
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.ae, %.lr.ph186.i
-  %.1184.i = phi ptr [ %i.gj, %.lr.ph186.i ], [ %.2.i14, %bb.ae ] ; 4 uses
-  %i.gl = load ptr, ptr %.1184.i, align 8, !tbaa !26 ; 3 uses
+  %.1185.i = phi ptr [ %i.gj, %.lr.ph186.i ], [ %.2.i14, %bb.ae ] ; 4 uses
+  %.1184.i = phi ptr [ null, %.lr.ph186.i ], [ %3, %bb.ae ] ; 2 uses
+  %i.gl = load ptr, ptr %.1185.i, align 8, !tbaa !26 ; 3 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 20
   %i.gn = load i32, ptr %i.gm, align 4, !tbaa !38 ; 2 uses
   %i.go = load i32, ptr %i.dm, align 8, !tbaa !85
@@ -606,13 +607,11 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.gs, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
-  %3 = load ptr, ptr %i.c, align 8, !tbaa !23
-  %i.gt = call ptr @g_list_prepend(ptr noundef %3, ptr noundef nonnull %i.gl) #15
-  store ptr %i.gt, ptr %i.c, align 8, !tbaa !23
-  %i.gu = getelementptr inbounds nuw i8, ptr %.1184.i, i64 8
+  %i.gt = call ptr @g_list_prepend(ptr noundef %.1184.i, ptr noundef nonnull %i.gl) #15 ; 2 uses
+  %i.gu = getelementptr inbounds nuw i8, ptr %.1185.i, i64 8
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !87 ; 2 uses
   %i.gw = load ptr, ptr %i.g, align 8, !tbaa !34
-  %i.gx = call ptr @g_list_delete_link(ptr noundef %i.gw, ptr noundef nonnull %.1184.i) #15
+  %i.gx = call ptr @g_list_delete_link(ptr noundef %i.gw, ptr noundef nonnull %.1185.i) #15
   store ptr %i.gx, ptr %i.g, align 8, !tbaa !34
   %i.gy = load ptr, ptr %i.gk, align 8, !tbaa !89
   %i.gz = icmp eq ptr %i.gy, %i.gl
@@ -623,16 +622,19 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.aa
-  %i.ha = getelementptr inbounds nuw i8, ptr %.1184.i, i64 8
+  %i.ha = getelementptr inbounds nuw i8, ptr %.1185.i, i64 8
   %i.hb = load ptr, ptr %i.ha, align 8, !tbaa !87
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.ab
+  %3 = phi ptr [ %.1184.i, %bb.ad ], [ %i.gt, %bb.ac ], [ %i.gt, %bb.ab ] ; 2 uses
   %.2.i14 = phi ptr [ %i.hb, %bb.ad ], [ %i.gv, %bb.ac ], [ %i.gv, %bb.ab ] ; 2 uses
   %.not139.i = icmp eq ptr %.2.i14, null
   br i1 %.not139.i, label %._crit_edge187.i, label %bb.z
 
 ._crit_edge187.i:                                 ; preds = %bb.ae, %bb.y
+  %.lcssa183.i = phi ptr [ null, %bb.y ], [ %3, %bb.ae ]
+  store ptr %.lcssa183.i, ptr %i.c, align 8
   %i.hc = call fastcc i32 @_thumbs_load_needed(ptr noundef nonnull %0, ptr noundef %i.c, ptr noundef %.0129.lcssa205.i, ptr noundef %.0128.lcssa207.i)
   %.0121.i.i = load ptr, ptr %i.c, align 8, !tbaa !23 ; 3 uses
   %.not2.i.i = icmp eq ptr %.0121.i.i, null
@@ -1035,7 +1037,7 @@ bb.f:                                             ; preds = %bb.a, %bb.b, %bb.c,
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @_move(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef range(i32 0, 2) %3) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !34   ; 4 uses
   %.not = icmp eq ptr %i.c, null
@@ -1164,7 +1166,6 @@ bb.l:                                             ; preds = %bb.c, %bb.i, %bb.j,
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  store ptr null, ptr %i.a, align 8, !tbaa !23
   %i.cf = load ptr, ptr %i.b, align 8, !tbaa !34  ; 2 uses
   %.not189209 = icmp eq ptr %i.cf, null
   br i1 %.not189209, label %._crit_edge, label %.lr.ph
@@ -1216,8 +1217,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.dc, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.o, %bb.n
-  %i.dd = tail call ptr @g_list_prepend(ptr noundef %i.cl, ptr noundef nonnull %i.cm) #15 ; 3 uses
-  store ptr %i.dd, ptr %i.a, align 8, !tbaa !23
+  %i.dd = tail call ptr @g_list_prepend(ptr noundef %i.cl, ptr noundef nonnull %i.cm) #15 ; 2 uses
   %i.de = getelementptr inbounds nuw i8, ptr %.0164211, i64 8
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !87 ; 2 uses
   %i.dg = load ptr, ptr %i.b, align 8, !tbaa !34
@@ -1242,14 +1242,16 @@ bb.u:                                             ; preds = %bb.r, %bb.p
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.s, %bb.t, %bb.u
-  %i.dq = phi ptr [ %i.cl, %bb.u ], [ %i.dd, %bb.t ], [ %i.dd, %bb.s ]
+  %i.dq = phi ptr [ %i.cl, %bb.u ], [ %i.dd, %bb.t ], [ %i.dd, %bb.s ] ; 2 uses
   %.1165 = phi ptr [ %i.dp, %bb.u ], [ %i.df, %bb.t ], [ %i.df, %bb.s ] ; 2 uses
   %.not189 = icmp eq ptr %.1165, null
   br i1 %.not189, label %._crit_edge, label %bb.n
 
 ._crit_edge:                                      ; preds = %bb.v, %bb.m
+  %.lcssa209 = phi ptr [ null, %bb.m ], [ %i.dq, %bb.v ]
   %.0167.lcssa = phi ptr [ null, %bb.m ], [ %spec.select192, %bb.v ]
   %.0166.lcssa = phi ptr [ null, %bb.m ], [ %i.cm, %bb.v ]
+  store ptr %.lcssa209, ptr %i.a, align 8
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 2 uses
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !92

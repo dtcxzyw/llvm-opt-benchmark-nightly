@@ -202,7 +202,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2B8ne180100ILi0E
   %.018.i.i12 = phi ptr [ %i.o, %bb.e ], [ %.017.i.i11, %bb.f ]
   %i.p = getelementptr inbounds nuw i8, ptr %.018.i.i12, i64 %i.b
   store i8 0, ptr %i.p, align 1, !tbaa !9
-  %i.q = load i8, ptr %0, align 8                 ; 2 uses
+  %i.q = load i8, ptr %0, align 8                 ; 4 uses
   %i.r = trunc i8 %i.q to i1                      ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.t = load ptr, ptr %i.s, align 8
@@ -329,6 +329,7 @@ bb.q:                                             ; preds = %bb.o
   store i64 %i.bk, ptr %2, align 8, !alias.scope !84
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %.sroa.speculated.i.i, ptr %i.bl, align 8, !tbaa !9, !alias.scope !84
+  %.pre.pre = load i8, ptr %0, align 8
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.q
@@ -340,15 +341,16 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not.i.i.i.i.i.i.i.i.i.i.i.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %.noexc16
+  %.pre = phi i8 [ %.pre.pre, %.noexc16 ], [ %i.q, %bb.r ]
   %.017.i.i.i = phi ptr [ %i.bi, %.noexc16 ], [ %i.bo, %bb.r ] ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.017.i.i.i, ptr align 1 %i.ba, i64 %.sroa.speculated.i.i, i1 false)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
+  %3 = phi i8 [ %i.q, %bb.r ], [ %.pre, %bb.s ]
   %.018.i.i.i = phi ptr [ %i.bo, %bb.r ], [ %.017.i.i.i, %bb.s ]
   %i.bp = getelementptr inbounds nuw i8, ptr %.018.i.i.i, i64 %.sroa.speculated.i.i
   store i8 0, ptr %i.bp, align 1, !tbaa !9
-  %3 = load i8, ptr %0, align 8
   %i.bq = trunc i8 %3 to i1
   br i1 %i.bq, label %bb.u, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit
 

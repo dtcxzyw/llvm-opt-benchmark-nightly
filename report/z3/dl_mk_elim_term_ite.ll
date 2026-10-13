@@ -204,7 +204,7 @@ bb.a:
   %6 = alloca %class.params_ref, align 8          ; 7 uses
   %7 = alloca %class.ref_vector, align 8          ; 16 uses
   %8 = alloca %class.obj_ref, align 8             ; 7 uses
-  %9 = alloca %class.obj_ref, align 8             ; 9 uses
+  %9 = alloca %class.obj_ref, align 8             ; 8 uses
   %10 = alloca %class.obj_ref, align 8            ; 21 uses
   %11 = alloca %class.ref_vector.4, align 8       ; 7 uses
   %12 = alloca %class.obj_ref.11, align 8         ; 6 uses
@@ -607,7 +607,7 @@ bb.ct:                                            ; preds = %_ZN7obj_refI4expr11
 bb.cu:                                            ; preds = %bb.ct
   %i.lj = load ptr, ptr %21, align 8, !tbaa !231
   %i.lk = invoke noundef ptr @_ZN11ast_manager6mk_appEiiP4exprS1_(ptr noundef nonnull align 8 dereferenceable(952) %i.lf, i32 noundef 0, i32 noundef 9, ptr noundef %i.lg, ptr noundef %i.lj)
-          to label %_ZN11ast_manager10mk_impliesEP4exprS1_.exit unwind label %bb.dc ; 10 uses
+          to label %_ZN11ast_manager10mk_impliesEP4exprS1_.exit unwind label %bb.dc ; 11 uses
 
 _ZN11ast_manager10mk_impliesEP4exprS1_.exit:      ; preds = %bb.cu
   %.not.i194 = icmp eq ptr %i.lk, null            ; 2 uses
@@ -1010,7 +1010,7 @@ bb.fs:                                            ; preds = %bb.fr
   unreachable
 
 _ZN7obj_refI4expr11ast_managerED2Ev.exit208:      ; preds = %bb.fr, %bb.fq, %bb.fp
-  %i.ys = load ptr, ptr %23, align 8, !tbaa !231  ; 2 uses
+  %i.ys = load ptr, ptr %23, align 8, !tbaa !231  ; 3 uses
   store ptr %i.ys, ptr %9, align 8, !tbaa !231
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #18
@@ -1133,6 +1133,7 @@ bb.gb:                                            ; preds = %bb.fv, %_ZN7obj_ref
   br label %bb.go
 
 bb.gc:                                            ; preds = %bb.cz, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEED2Ev.exit222
+  %25 = phi ptr [ %i.lk, %bb.cz ], [ %i.ys, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEED2Ev.exit222 ]
   %.074 = xor i1 %i.lx, true
   %i.aaf = load ptr, ptr %18, align 8, !tbaa !261 ; 3 uses
   %i.aag = load i32, ptr %i.hp, align 8, !tbaa !262 ; 2 uses
@@ -1272,6 +1273,7 @@ bb.gq:                                            ; preds = %bb.gp, %bb.bp
   br label %bb.hf
 
 bb.gr:                                            ; preds = %bb.r, %_ZN3refI6tacticED2Ev.exit, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEED2Ev.exit
+  %26 = phi ptr [ %25, %_ZN3refI6tacticED2Ev.exit ], [ null, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEED2Ev.exit ], [ null, %bb.r ] ; 3 uses
   %.175 = phi i1 [ %.074, %_ZN3refI6tacticED2Ev.exit ], [ true, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEED2Ev.exit ], [ false, %bb.r ]
   %i.abm = load ptr, ptr %10, align 8, !tbaa !231 ; 3 uses
   %.not.i.i231 = icmp eq ptr %i.abm, null
@@ -1299,13 +1301,12 @@ bb.gu:                                            ; preds = %bb.gt
 
 _ZN7obj_refI4expr11ast_managerED2Ev.exit232:      ; preds = %bb.gr, %bb.gs, %bb.gt
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #18
-  %25 = load ptr, ptr %9, align 8, !tbaa !231     ; 3 uses
-  %.not.i.i233 = icmp eq ptr %25, null
+  %.not.i.i233 = icmp eq ptr %26, null
   br i1 %.not.i.i233, label %_ZN7obj_refI4expr11ast_managerED2Ev.exit234, label %bb.gv
 
 bb.gv:                                            ; preds = %_ZN7obj_refI4expr11ast_managerED2Ev.exit232
   %i.abu = load ptr, ptr %i.be, align 8, !tbaa !232, !nonnull !214, !align !215
-  %i.abv = getelementptr inbounds nuw i8, ptr %25, i64 8 ; 2 uses
+  %i.abv = getelementptr inbounds nuw i8, ptr %26, i64 8 ; 2 uses
   %i.abw = load i32, ptr %i.abv, align 4, !tbaa !229
   %i.abx = add i32 %i.abw, -1                     ; 2 uses
   store i32 %i.abx, ptr %i.abv, align 4, !tbaa !229
@@ -1313,7 +1314,7 @@ bb.gv:                                            ; preds = %_ZN7obj_refI4expr11
   br i1 %i.aby, label %bb.gw, label %_ZN7obj_refI4expr11ast_managerED2Ev.exit234
 
 bb.gw:                                            ; preds = %bb.gv
-  invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %i.abu, ptr noundef nonnull %25)
+  invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %i.abu, ptr noundef nonnull %26)
           to label %_ZN7obj_refI4expr11ast_managerED2Ev.exit234 unwind label %bb.gx
 
 bb.gx:                                            ; preds = %bb.gw

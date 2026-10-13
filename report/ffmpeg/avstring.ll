@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a, %.critedge
 define ptr @av_strireplace(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #7 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %3 = alloca %struct.AVBPrint, align 8           ; 9 uses
+  %3 = alloca %struct.AVBPrint, align 8           ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   store ptr null, ptr %i.a, align 8, !tbaa !17
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #16
@@ -277,12 +277,22 @@ av_stristr.exit.thread:                           ; preds = %av_stristr.exit, %b
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 12
   %.val15 = load i32, ptr %i.ab, align 4, !tbaa !20
   %.not18 = icmp ult i32 %.val, %.val15
-  %. = select i1 %.not18, ptr %i.a, ptr null
-  %4 = call i32 @av_bprint_finalize(ptr noundef nonnull %3, ptr noundef %.) #17 ; 0 uses
-  %5 = load ptr, ptr %i.a, align 8, !tbaa !17
+  br i1 %.not18, label %6, label %4
+
+4:                                                ; preds = %av_stristr.exit.thread
+  %5 = call i32 @av_bprint_finalize(ptr noundef nonnull %3, ptr noundef null) #17 ; 0 uses
+  br label %8
+
+6:                                                ; preds = %av_stristr.exit.thread
+  %7 = call i32 @av_bprint_finalize(ptr noundef nonnull %3, ptr noundef nonnull %i.a) #17 ; 0 uses
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !17
+  br label %8
+
+8:                                                ; preds = %6, %4
+  %9 = phi ptr [ %.pre, %6 ], [ null, %4 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
-  ret ptr %5
+  ret ptr %9
 }
 
 declare void @av_bprint_init(ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #8

@@ -205,10 +205,14 @@ bb.k:                                             ; preds = %bb.j
   %i.z = and i32 %i.y, 1
   %i.aa = shl nuw i32 %i.z, %.0119144.i
   %i.ab = or i32 %i.aa, %i.w                      ; 2 uses
-  store i32 %i.ab, ptr %i.a, align 8, !tbaa !39
   br i1 %exitcond153.not.i, label %bb.m, label %bb.l
 
-.preheader.i:                                     ; preds = %bb.m, %.preheader137.i
+.preheader.i.loopexit:                            ; preds = %bb.m
+  store i32 %i.ab, ptr %i.a, align 8, !tbaa !39
+  store i32 %i.aj, ptr %i.i, align 4
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.loopexit, %.preheader137.i
   %i.ac = zext nneg i32 %.0121..i.lcssa to i64
   %i.ad = trunc i32 %.0121..i.lcssa to i8         ; 2 uses
   br label %bb.n
@@ -218,15 +222,14 @@ bb.l:                                             ; preds = %.preheader136.i
   %i.af = load i32, ptr %i.x, align 4, !tbaa !39
   %i.ag = and i32 %i.af, 1
   %i.ah = shl nuw i32 %i.ag, %.0119144.i
-  %i.ai = or i32 %i.ah, %i.v                      ; 2 uses
-  store i32 %i.ai, ptr %i.i, align 4, !tbaa !39
+  %i.ai = or i32 %i.ah, %i.v
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %.preheader136.i
-  %i.aj = phi i32 [ %i.v, %.preheader136.i ], [ %i.ai, %bb.l ]
+  %i.aj = phi i32 [ %i.v, %.preheader136.i ], [ %i.ai, %bb.l ] ; 2 uses
   %.lcssa = phi ptr [ %i.x, %.preheader136.i ], [ %i.ae, %bb.l ]
   %i.ak = icmp samesign ugt i32 %.0119144.in.i, 1
-  br i1 %i.ak, label %.preheader136.i, label %.preheader.i, !llvm.loop !120
+  br i1 %i.ak, label %.preheader136.i, label %.preheader.i.loopexit, !llvm.loop !120
 
 bb.n:                                             ; preds = %bb.ah, %.preheader.i
   %.072 = phi i32 [ 0, %.preheader.i ], [ %.173, %bb.ah ] ; 6 uses

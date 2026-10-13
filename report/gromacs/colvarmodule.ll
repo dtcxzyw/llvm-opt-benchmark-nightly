@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseIN12colvarmodule7rvectorESaIS1_EEC2EmRKS2_.exit.thread.i: ; p
 _ZNSt12_Vector_baseIN12colvarmodule7rvectorESaIS1_EEC2EmRKS2_.exit.i: ; preds = %_ZNSt6vectorIN12colvarmodule7rvectorESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
   %i.y = mul nuw nsw i64 %i.v, 24                 ; 3 uses
   %i.z = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #30
-          to label %.noexc51 unwind label %bb.m   ; 5 uses
+          to label %.noexc51 unwind label %bb.m   ; 6 uses
 
 .noexc51:                                         ; preds = %_ZNSt12_Vector_baseIN12colvarmodule7rvectorESaIS1_EEC2EmRKS2_.exit.i
   store ptr %i.z, ptr %6, align 8, !tbaa !269
@@ -218,6 +218,7 @@ _ZNSt12_Vector_baseIN12colvarmodule7rvectorESaIS1_EEC2EmRKS2_.exit.i: ; preds = 
   br label %.loopexit85
 
 .loopexit85:                                      ; preds = %.noexc51, %_ZNSt12_Vector_baseIN12colvarmodule7rvectorESaIS1_EEC2EmRKS2_.exit.thread.i
+  %10 = phi ptr [ null, %_ZNSt12_Vector_baseIN12colvarmodule7rvectorESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %i.z, %.noexc51 ] ; 2 uses
   %i.ad = phi ptr [ %i.x, %_ZNSt12_Vector_baseIN12colvarmodule7rvectorESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %i.aa, %.noexc51 ]
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIN12colvarmodule7rvectorESaIS1_EEC2EmRKS2_.exit.thread.i ], [ %scevgep, %.noexc51 ]
   store ptr %.0.lcssa.i.i.i.i.i.i, ptr %i.ad, align 8, !tbaa !270
@@ -396,6 +397,7 @@ _ZN12colvarmodule4mainEv.exit:                    ; preds = %bb.j
 bb.p:                                             ; preds = %bb.q, %_ZN12colvarmodule4mainEv.exit
   %i.cj = landingpad { ptr, i32 }
           cleanup
+  %.pre89 = load ptr, ptr %6, align 8, !tbaa !269
   br label %bb.u
 
 bb.q:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit58
@@ -466,18 +468,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75: ; preds = %_ZN
   ret i32 %.037
 
 bb.u:                                             ; preds = %bb.p, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit71, %.body
+  %11 = phi ptr [ %10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit71 ], [ %.pre89, %bb.p ], [ %10, %.body ] ; 3 uses
   %.pn43.pn = phi { ptr, i32 } [ %.pn43, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit71 ], [ %i.cj, %bb.p ], [ %i.as, %.body ] ; 2 uses
-  %10 = load ptr, ptr %6, align 8, !tbaa !269     ; 3 uses
-  %.not.i.i.i76 = icmp eq ptr %10, null
+  %.not.i.i.i76 = icmp eq ptr %11, null
   br i1 %.not.i.i.i76, label %_ZNSt6vectorIN12colvarmodule7rvectorESaIS1_EED2Ev.exit77, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.dn = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !1104
   %i.dp = ptrtoint ptr %i.do to i64
-  %i.dq = ptrtoint ptr %10 to i64
+  %i.dq = ptrtoint ptr %11 to i64
   %i.dr = sub i64 %i.dp, %i.dq
-  call void @_ZdlPvm(ptr noundef nonnull %10, i64 noundef %i.dr) #31
+  call void @_ZdlPvm(ptr noundef nonnull %11, i64 noundef %i.dr) #31
   br label %_ZNSt6vectorIN12colvarmodule7rvectorESaIS1_EED2Ev.exit77
 
 _ZNSt6vectorIN12colvarmodule7rvectorESaIS1_EED2Ev.exit77: ; preds = %bb.v, %bb.u, %bb.m

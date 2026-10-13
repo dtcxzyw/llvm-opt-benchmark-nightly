@@ -204,14 +204,14 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 %1
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %2 to i64
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %invariant.op = sub i64 1, %3
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.o
-  %i.h = phi ptr [ %i.aq, %bb.o ], [ null, %.preheader ] ; 9 uses
-  %i.i = phi ptr [ %i.ar, %bb.o ], [ null, %.preheader ] ; 8 uses
+  %i.h = phi ptr [ %i.aq, %bb.o ], [ null, %.preheader ] ; 12 uses
+  %i.i = phi ptr [ %5, %bb.o ], [ null, %.preheader ] ; 11 uses
   %i.j = phi ptr [ %i.as, %bb.o ], [ null, %.preheader ] ; 14 uses
   %.09 = phi i64 [ %i.at, %bb.o ], [ 0, %.preheader ] ; 14 uses
   br i1 %i.b, label %bb.c, label %bb.d
@@ -274,6 +274,8 @@ bb.i:                                             ; preds = %_ZNKSt17basic_strin
   br i1 %i.x, label %bb.j, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
 
 bb.j:                                             ; preds = %bb.i
+  store ptr %i.i, ptr %i.f, align 8
+  store ptr %i.h, ptr %i.g, align 8
   store ptr %i.j, ptr %0, align 8
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.103, ptr noundef nonnull @.str.102, i64 noundef %.09, i64 noundef %1) #31
   unreachable
@@ -290,8 +292,6 @@ bb.k:                                             ; preds = %_ZNKSt17basic_strin
   store i64 %.sroa.speculated.i, ptr %i.i, align 8, !tbaa !19
   %.sroa.534.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store ptr %i.aa, ptr %.sroa.534.0..sroa_idx, align 8, !tbaa !32
-  %5 = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
-  store ptr %5, ptr %i.f, align 8, !tbaa !159
   br label %bb.o
 
 bb.l:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
@@ -302,6 +302,8 @@ bb.l:                                             ; preds = %_ZNKSt17basic_strin
   br i1 %i.ae, label %bb.m, label %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.m:                                             ; preds = %bb.l
+  store ptr %i.i, ptr %i.f, align 8
+  store ptr %i.h, ptr %i.g, align 8
   store ptr %i.j, ptr %0, align 8
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.101) #31
   unreachable
@@ -327,7 +329,7 @@ _ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEm
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i, %.lr.ph.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.ao, %.lr.ph.i.i.i.i.i ], [ %i.al, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
   %.0911.i.i.i.i.i = phi ptr [ %i.an, %.lr.ph.i.i.i.i.i ], [ %i.j, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !160, !alias.scope !161
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !159, !alias.scope !160
   %i.an = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i, i64 16 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.an, %i.h
@@ -335,7 +337,6 @@ _ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEm
 
 _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i
   %.0.lcssa.i.i.i.i.i = phi ptr [ %i.al, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i ], [ %i.ao, %.lr.ph.i.i.i.i.i ]
-  %6 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i, i64 16 ; 2 uses
   %.not.i23.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i23.i.i, label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.n
 
@@ -344,19 +345,20 @@ bb.n:                                             ; preds = %_ZNSt6vectorISt17ba
   br label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.n, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i
-  store ptr %6, ptr %i.f, align 8, !tbaa !159
-  %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.aj ; 2 uses
-  store ptr %i.ap, ptr %i.g, align 8, !tbaa !30
+  %i.ap = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %i.aj
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, %bb.k
   %i.aq = phi ptr [ %i.ap, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.h, %bb.k ]
-  %i.ar = phi ptr [ %6, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %5, %bb.k ]
+  %i.ar = phi ptr [ %.0.lcssa.i.i.i.i.i, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.i, %bb.k ]
   %i.as = phi ptr [ %i.al, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i ], [ %i.j, %bb.k ]
+  %5 = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   %i.at = add i64 %.1.i.i, %3
   br label %bb.b
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread: ; preds = %bb.c, %bb.e, %bb.d, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit, %bb.f, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %bb.h
+  store ptr %i.i, ptr %i.f, align 8
+  store ptr %i.h, ptr %i.g, align 8
   store ptr %i.j, ptr %0, align 8
   %i.au = icmp ugt i64 %.09, %1
   br i1 %i.au, label %bb.p, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit13
@@ -376,7 +378,7 @@ bb.q:                                             ; preds = %_ZNKSt17basic_strin
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store ptr %i.aw, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !32
   %i.ax = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  store ptr %i.ax, ptr %i.f, align 8, !tbaa !159
+  store ptr %i.ax, ptr %i.f, align 8, !tbaa !161
   br label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit27
 
 bb.r:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit13
@@ -411,7 +413,7 @@ _ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEm
 .lr.ph.i.i.i.i.i19:                               ; preds = %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i15, %.lr.ph.i.i.i.i.i19
   %.012.i.i.i.i.i20 = phi ptr [ %i.bl, %.lr.ph.i.i.i.i.i19 ], [ %i.bi, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i15 ] ; 2 uses
   %.0911.i.i.i.i.i21 = phi ptr [ %i.bk, %.lr.ph.i.i.i.i.i19 ], [ %i.j, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit.i.i15 ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i20, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i21, i64 16, i1 false), !tbaa.struct !160, !alias.scope !162
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.012.i.i.i.i.i20, ptr noundef nonnull align 8 dereferenceable(16) %.0911.i.i.i.i.i21, i64 16, i1 false), !tbaa.struct !159, !alias.scope !162
   %i.bk = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i21, i64 16 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i20, i64 16 ; 2 uses
   %.not.i.i.i.i.i22 = icmp eq ptr %i.bk, %i.h
@@ -429,7 +431,7 @@ bb.t:                                             ; preds = %_ZNSt6vectorISt17ba
 
 _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i26: ; preds = %bb.t, %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i23
   store ptr %i.bi, ptr %0, align 8, !tbaa !29
-  store ptr %i.bm, ptr %i.f, align 8, !tbaa !159
+  store ptr %i.bm, ptr %i.f, align 8, !tbaa !161
   %i.bn = getelementptr inbounds nuw [16 x i8], ptr %i.bi, i64 %i.bg
   store ptr %i.bn, ptr %i.g, align 8, !tbaa !30
   br label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit27
@@ -832,9 +834,9 @@ attributes #31 = { noreturn nounwind }
 !156 = distinct !{!156, i1 false, !"_ZSt19__relocate_object_aISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_EEvPT_PT0_RT1_"}
 !157 = distinct !{!157, !156, !"_ZSt19__relocate_object_aISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
 !158 = distinct !{!158, !156, !"_ZSt19__relocate_object_aISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!159 = !{!28, !27, i64 8}
-!160 = !{i64 0, i64 8, !19, i64 8, i64 8, !32}
-!161 = !{!154, !153}
+!159 = !{i64 0, i64 8, !19, i64 8, i64 8, !32}
+!160 = !{!154, !153}
+!161 = !{!28, !27, i64 8}
 !162 = !{!158, !157}
 !163 = !{!57, !15, i64 0}
 !164 = !{!57, !56, i64 8}

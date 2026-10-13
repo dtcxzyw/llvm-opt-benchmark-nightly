@@ -202,6 +202,9 @@ bb.ae:                                            ; preds = %.thread290
 zng_memread_8.exit:                               ; preds = %.thread290, %bb.ae
   %i.az = load i64, ptr %i.s, align 1, !tbaa !15  ; 4 uses
   %.sroa.0.sroa.0433.0.extract.trunc = trunc i64 %i.az to i16
+  %2 = trunc i64 %i.az to i32
+  %.sroa.0.sroa.6.0.insert.shift = and i32 %2, -65536
+  %.sroa.6.0.extract.shift = and i64 %i.az, -4294967296
   %i.ba = zext i32 %.0186 to i64                  ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.ba
   %i.bc = add i64 %.pre, %i.ba, !nosanitize !13   ; 2 uses
@@ -600,8 +603,13 @@ bb.cr:                                            ; preds = %bb.cq
   br i1 %.not261374, label %.lr.ph382, label %.thread307
 
 .lr.ph382:                                        ; preds = %.thread291
+  %3 = trunc i64 %i.az to i32
+  %.sroa.0.sroa.0433.0.insert.ext = and i32 %3, 65535
+  %.sroa.0.sroa.0433.0.insert.insert = or disjoint i32 %.sroa.0.sroa.6.0.insert.shift, %.sroa.0.sroa.0433.0.insert.ext ; 2 uses
   %i.gi = ptrtoint ptr %i.ae to i64               ; 15 uses
   %i.gj = icmp ne ptr %i.ae, null                 ; 10 uses
+  %.sroa.0.0.insert.ext430 = zext i32 %.sroa.0.sroa.0433.0.insert.insert to i64
+  %.sroa.0.0.insert.insert432 = or disjoint i64 %.sroa.6.0.extract.shift, %.sroa.0.0.insert.ext430
   %i.gk = getelementptr inbounds nuw i8, ptr %i.s, i64 2
   %.not265 = icmp ugt ptr %i.s, inttoptr (i64 -3 to ptr)
   %i.gl = add i64 %.pre, 2
@@ -610,11 +618,6 @@ bb.cr:                                            ; preds = %bb.cq
   %i.go = zext i16 %i.cn to i64
   %i.gp = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 3 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %2 = trunc i64 %i.az to i32
-  %.sroa.0.sroa.6.0.insert.ext = and i32 %2, -65536
-  %3 = trunc i64 %i.az to i32
-  %.sroa.0.sroa.0433.0.insert.ext = and i32 %3, 65535
-  %.sroa.0.sroa.0433.0.insert.insert = or disjoint i32 %.sroa.0.sroa.6.0.insert.ext, %.sroa.0.sroa.0433.0.insert.ext
   br label %bb.cs
 
 bb.cs:                                            ; preds = %.lr.ph382, %.thread296
@@ -825,7 +828,7 @@ bb.dr:                                            ; preds = %bb.dq
 
 zng_memread_8.exit.i284:                          ; preds = %bb.dr, %bb.dq
   %i.jf = load i64, ptr %i.iy, align 1, !tbaa !15
-  %.not340 = icmp eq i64 %i.jf, %i.az
+  %.not340 = icmp eq i64 %i.jf, %.sroa.0.0.insert.insert432
   br i1 %.not340, label %.loopexit, label %bb.ds
 
 bb.ds:                                            ; preds = %zng_memread_8.exit.i284, %zng_memread_8.exit.i

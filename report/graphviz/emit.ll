@@ -205,7 +205,7 @@ define void @emit_graph(ptr noundef initializes((616, 632), (648, 664)) %0, ptr 
 bb.a:
   %2 = alloca %struct.boxf, align 8               ; 5 uses
   %3 = alloca [2 x %struct.pointf_s], align 16    ; 5 uses
-  %i.a = alloca [2 x ptr], align 16               ; 6 uses
+  %i.a = alloca [2 x ptr], align 16               ; 5 uses
   %i.b = alloca double, align 8                   ; 4 uses
   %4 = alloca %struct.agxbuf, align 8             ; 21 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 7 uses
@@ -608,7 +608,6 @@ bb.dr:                                            ; preds = %bb.dq, %.thread.i.i
 
 bb.ds:                                            ; preds = %bb.dr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
   %i.pa = call zeroext i1 @findStopColor(ptr noundef %.12944.i.i, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b)
   br i1 %i.pa, label %bb.dt, label %bb.eb
@@ -1011,7 +1010,7 @@ bb.a:
   %3 = alloca %struct.bezier, align 8             ; 10 uses
   %4 = alloca %struct.bezier, align 8             ; 9 uses
   %5 = alloca %struct.colorsegs_t, align 8        ; 16 uses
-  %6 = alloca %struct.bezier, align 8             ; 38 uses
+  %6 = alloca %struct.bezier, align 8             ; 36 uses
   %7 = alloca %struct.agxbuf, align 8             ; 17 uses
   %8 = alloca %struct.corners_t, align 8          ; 32 uses
   %9 = alloca %struct.anon.12, align 8            ; 18 uses
@@ -1414,6 +1413,7 @@ bb.kg:                                            ; preds = %bb.kf
   br label %bb.ki
 
 ._crit_edge608.i:                                 ; preds = %._crit_edge599.i, %gv_calloc.exit484.thread.i
+  %19 = phi ptr [ undef, %gv_calloc.exit484.thread.i ], [ %20, %._crit_edge599.i ] ; 3 uses
   %i.aiy = phi ptr [ %i.ail, %gv_calloc.exit484.thread.i ], [ %i.aig, %._crit_edge599.i ] ; 3 uses
   %i.aiz = phi ptr [ %i.aim, %gv_calloc.exit484.thread.i ], [ %i.ain, %._crit_edge599.i ] ; 3 uses
   %i.aja = call noalias ptr @strdup(ptr noundef readonly %.0399524.i) #27 ; 3 uses
@@ -1497,7 +1497,7 @@ bb.ko:                                            ; preds = %bb.kn
 
 gv_calloc.exit492.i:                              ; preds = %bb.kn
   store ptr %i.aka, ptr %i.ajn, align 8, !tbaa !199
-  %i.akf = load ptr, ptr %6, align 8, !tbaa !199  ; 3 uses
+  %i.akf = load ptr, ptr %6, align 8, !tbaa !199  ; 4 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.akf, i64 8
   %.sroa.8.0.copyload.i = load double, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !110
   %i.akg = load <2 x double>, ptr %i.akf, align 8, !tbaa !110 ; 2 uses
@@ -1508,7 +1508,7 @@ gv_calloc.exit492.i:                              ; preds = %bb.kn
 
 .lr.ph598.i:                                      ; preds = %gv_calloc.exit492.i, %gv_calloc.exit492.thread.i
   %i.akj = phi i64 [ -1, %gv_calloc.exit492.thread.i ], [ %i.akh, %gv_calloc.exit492.i ]
-  %i.akk = phi ptr [ %i.ajy, %gv_calloc.exit492.thread.i ], [ %i.akf, %gv_calloc.exit492.i ] ; 3 uses
+  %i.akk = phi ptr [ %i.ajy, %gv_calloc.exit492.thread.i ], [ %i.akf, %gv_calloc.exit492.i ] ; 4 uses
   %i.akl = phi ptr [ %i.ajw, %gv_calloc.exit492.thread.i ], [ %i.ajr, %gv_calloc.exit492.i ] ; 7 uses
   %i.akm = phi ptr [ %i.ajx, %gv_calloc.exit492.thread.i ], [ %i.aka, %gv_calloc.exit492.i ] ; 4 uses
   %i.akn = phi <2 x double> [ %i.ajz, %gv_calloc.exit492.thread.i ], [ %i.aki, %gv_calloc.exit492.i ]
@@ -1617,6 +1617,7 @@ computeoffset_qr.exit.i:                          ; preds = %bb.kt, %bb.ks
   br i1 %i.amw, label %bb.kp, label %._crit_edge599.i, !llvm.loop !352
 
 ._crit_edge599.i:                                 ; preds = %computeoffset_qr.exit.i, %gv_calloc.exit492.i
+  %20 = phi ptr [ %i.akf, %gv_calloc.exit492.i ], [ %i.akk, %computeoffset_qr.exit.i ]
   %i.amz = phi ptr [ %i.ajr, %gv_calloc.exit492.i ], [ %i.akl, %computeoffset_qr.exit.i ]
   %i.ana = phi ptr [ %i.aka, %gv_calloc.exit492.i ], [ %i.akm, %computeoffset_qr.exit.i ]
   %.sroa.0210.1.lcssa.i = phi double [ %.sroa.0210.0604.i, %gv_calloc.exit492.i ], [ %i.amx, %computeoffset_qr.exit.i ] ; 2 uses
@@ -1822,22 +1823,24 @@ bb.kz:                                            ; preds = %bb.ky
   call void @gvrender_set_pencolor(ptr noundef %0, ptr noundef nonnull %.0403.lcssa.i) #27
   call void @gvrender_set_fillcolor(ptr noundef %0, ptr noundef nonnull %.0403.lcssa.i) #27
   %.pre678.i = load i32, ptr %i.apo, align 8, !tbaa !394
+  %.pre160 = load ptr, ptr %6, align 8, !tbaa !199
   br label %bb.la
 
 bb.la:                                            ; preds = %bb.kz, %bb.ky, %bb.kx
+  %21 = phi ptr [ %19, %bb.ky ], [ %.pre160, %bb.kz ], [ %19, %bb.kx ] ; 3 uses
   %i.apu = phi i32 [ %i.app, %bb.ky ], [ %.pre678.i, %bb.kz ], [ %i.app, %bb.kx ]
   %i.apv = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %19 = load ptr, ptr %6, align 8, !tbaa !199     ; 2 uses
   %i.apw = load double, ptr %i.apv, align 8
   %i.apx = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.apy = load double, ptr %i.apx, align 8
-  %i.apz = load double, ptr %19, align 8
-  %i.aqa = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %i.apz = load double, ptr %21, align 8
+  %i.aqa = getelementptr inbounds nuw i8, ptr %21, i64 8
   %i.aqb = load double, ptr %i.aqa, align 8
   call void @arrow_gen(ptr noundef %0, i32 noundef 2, double %i.apw, double %i.apy, double %i.apz, double %i.aqb, double noundef %i.aac, double noundef %i.zx, i32 noundef %i.apu) #27
   br label %bb.lb
 
 bb.lb:                                            ; preds = %bb.la, %._crit_edge625.i
+  %22 = phi ptr [ %21, %bb.la ], [ %19, %._crit_edge625.i ] ; 2 uses
   %.3.i100 = phi ptr [ %.0403.lcssa.i, %bb.la ], [ null, %._crit_edge625.i ]
   %i.aqc = getelementptr inbounds nuw i8, ptr %6, i64 20 ; 2 uses
   %i.aqd = load i32, ptr %i.aqc, align 4, !tbaa !395 ; 3 uses
@@ -1860,15 +1863,16 @@ bb.le:                                            ; preds = %bb.ld
   call void @gvrender_set_pencolor(ptr noundef %0, ptr noundef %.0401.lcssa.i) #27
   call void @gvrender_set_fillcolor(ptr noundef %0, ptr noundef %.0401.lcssa.i) #27
   %.pre679.i = load i32, ptr %i.aqc, align 4, !tbaa !395
+  %.pre161 = load ptr, ptr %6, align 8, !tbaa !199
   br label %bb.lf
 
 bb.lf:                                            ; preds = %bb.le, %bb.ld, %bb.lc
+  %23 = phi ptr [ %22, %bb.ld ], [ %.pre161, %bb.le ], [ %22, %bb.lc ]
   %i.aqi = phi i32 [ %i.aqd, %bb.ld ], [ %.pre679.i, %bb.le ], [ %i.aqd, %bb.lc ]
   %i.aqj = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %20 = load ptr, ptr %6, align 8, !tbaa !199
   %i.aqk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.aql = load i64, ptr %i.aqk, align 8, !tbaa !198
-  %i.aqm = getelementptr [16 x i8], ptr %20, i64 %i.aql ; 2 uses
+  %i.aqm = getelementptr [16 x i8], ptr %23, i64 %i.aql ; 2 uses
   %i.aqn = getelementptr i8, ptr %i.aqm, i64 -16
   %i.aqo = load double, ptr %i.aqj, align 8
   %i.aqp = getelementptr inbounds nuw i8, ptr %6, i64 48
@@ -1941,7 +1945,7 @@ bb.ll:                                            ; preds = %.sink.split.i99, %b
 .lr.ph592.i:                                      ; preds = %bb.ll
   %i.arj = fmul nsz double %i.zx, 8.000000e+00
   %i.ark = call nsz double @llvm.maxnum.f64(double %i.arj, double 1.200000e+01)
-  %i.arl = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
+  %i.arl = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.arm = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 15 uses
   %i.arn = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 2 uses
   %i.aro = getelementptr inbounds nuw i8, ptr %9, i64 40 ; 6 uses
@@ -2034,9 +2038,9 @@ bb.ls:                                            ; preds = %bb.lr, %bb.lq, %.lo
 bb.lt:                                            ; preds = %bb.ls
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %8, i8 0, i64 112, i1 false)
-  %i.atb = load i64, ptr %i.arl, align 8, !tbaa !198 ; 8 uses
+  %i.atb = load i64, ptr %i.arl, align 8, !tbaa !198 ; 9 uses
   call void @gv_list_reserve_(ptr noundef nonnull %8, i64 noundef %i.atb, i64 noundef 72) #27
-  %i.atc = load ptr, ptr %6, align 8, !tbaa !199  ; 13 uses
+  %i.atc = load ptr, ptr %6, align 8, !tbaa !199  ; 14 uses
   %.not.i503.i = icmp eq i64 %i.atb, 0
   br i1 %.not.i503.i, label %find_ortho_corners.exit.i, label %.lr.ph.i504.i
 
@@ -2439,22 +2443,23 @@ bb.no:                                            ; preds = %bb.nn, %.lr.ph588.i
   br i1 %i.bby, label %.lr.ph588.i, label %._crit_edge589.i, !llvm.loop !375
 
 bb.np:                                            ; preds = %bb.ls
-  %i.bbz = load ptr, ptr %6, align 8, !tbaa !199
-  %i.bca = load i64, ptr %i.arl, align 8, !tbaa !198
+  %i.bbz = load ptr, ptr %6, align 8, !tbaa !199  ; 2 uses
+  %i.bca = load i64, ptr %i.arl, align 8, !tbaa !198 ; 2 uses
   call void @gvrender_beziercurve(ptr noundef %0, ptr noundef %i.bbz, i64 noundef %i.bca, i32 noundef 0) #27
   br label %bb.nq
 
 bb.nq:                                            ; preds = %bb.np, %._crit_edge589.i
+  %24 = phi i64 [ %i.bca, %bb.np ], [ %i.atb, %._crit_edge589.i ]
+  %25 = phi ptr [ %i.bbz, %bb.np ], [ %i.atc, %._crit_edge589.i ] ; 3 uses
   %i.bcb = load i32, ptr %i.arv, align 8, !tbaa !394 ; 3 uses
   %.not451.not.i = icmp eq i32 %i.bcb, 0
   br i1 %.not451.not.i, label %bb.ns, label %bb.nr
 
 bb.nr:                                            ; preds = %bb.nq
-  %21 = load ptr, ptr %6, align 8, !tbaa !199     ; 2 uses
   %i.bcc = load double, ptr %i.arw, align 8
   %i.bcd = load double, ptr %i.arx, align 8
-  %i.bce = load double, ptr %21, align 8
-  %i.bcf = getelementptr inbounds nuw i8, ptr %21, i64 8
+  %i.bce = load double, ptr %25, align 8
+  %i.bcf = getelementptr inbounds nuw i8, ptr %25, i64 8
   %i.bcg = load double, ptr %i.bcf, align 8
   call void @arrow_gen(ptr noundef %0, i32 noundef 2, double %i.bcc, double %i.bcd, double %i.bce, double %i.bcg, double noundef %i.aac, double noundef %i.zx, i32 noundef %i.bcb) #27
   br label %bb.ns
@@ -2465,9 +2470,7 @@ bb.ns:                                            ; preds = %bb.nr, %bb.nq
   br i1 %.not452.not.i, label %bb.nu, label %bb.nt
 
 bb.nt:                                            ; preds = %bb.ns
-  %22 = load ptr, ptr %6, align 8, !tbaa !199
-  %23 = load i64, ptr %i.arl, align 8, !tbaa !198
-  %i.bci = getelementptr [16 x i8], ptr %22, i64 %23 ; 2 uses
+  %i.bci = getelementptr [16 x i8], ptr %25, i64 %24 ; 2 uses
   %i.bcj = getelementptr i8, ptr %i.bci, i64 -16
   %i.bck = load double, ptr %i.arz, align 8
   %i.bcl = load double, ptr %i.asa, align 8

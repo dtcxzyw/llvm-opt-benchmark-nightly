@@ -202,7 +202,7 @@ bb.a:
   %.sroa.6.i.i.i.i = alloca [24 x i8], align 8    ; 6 uses
   %i.l = alloca [40 x i8], align 8                ; 9 uses
   %i.m = alloca [32 x i8], align 8                ; 5 uses
-  %i.n = alloca [40 x i8], align 8                ; 13 uses
+  %i.n = alloca [40 x i8], align 8                ; 12 uses
   %i.o = alloca [24 x i8], align 8                ; 9 uses
   %i.p = alloca [64 x i8], align 8                ; 4 uses
   %i.q = alloca [64 x i8], align 8                ; 5 uses
@@ -605,7 +605,7 @@ bb.bv:                                            ; preds = %bb.bu
   br i1 %.not.i.i15.i.i.i.i, label %bb.ce, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net4addr6sealed9OneOrMoreECsc044841uM34_23unbuffered_async_client.exit37.i.i.i.i
 
 bb.bw:                                            ; preds = %bb.bu
-  %i.gs = load i32, ptr %i.l, align 8, !range !253, !noalias !250, !noundef !8 ; 3 uses
+  %i.gs = load i32, ptr %i.l, align 8, !range !253, !noalias !250, !noundef !8 ; 4 uses
   %i.gt = icmp eq i32 %i.gs, -1
   br i1 %i.gt, label %bb.bx, label %bb.by
 
@@ -649,6 +649,7 @@ bb.cb:                                            ; preds = %_RINvNtCsj6eKBz9Db1
   br label %bb.cc
 
 bb.cc:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i, %bb.cb
+  %3 = phi i32 [ %12, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i ], [ %i.gs, %bb.cb ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !250
   invoke void @_RNvXs_NtNtNtCskruEhpekJ3V_5tokio3net4addr6sealedNtB4_9OneOrMoreNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([32 x i8]) align 4 captures(address) dereferenceable(32) %i.k, ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.cm)
           to label %bb.ej unwind label %bb.ei, !noalias !251
@@ -690,6 +691,7 @@ bb.cg:                                            ; preds = %bb.bn
   ]
 
 bb.ch:                                            ; preds = %.thread.i.i.i.i, %bb.cg
+  %4 = phi i32 [ %3, %.thread.i.i.i.i ], [ undef, %bb.cg ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !255
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %i.cn, i64 32, i1 false), !noalias !255
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !255
@@ -727,6 +729,7 @@ bb.cj:                                            ; preds = %bb.ch
   br label %bb.du
 
 .body.thread.i.i.i.i:                             ; preds = %.body.i.i.i.i.i, %bb.dq, %bb.ci
+  %5 = phi i32 [ %4, %bb.ci ], [ %10, %bb.dq ], [ %11, %.body.i.i.i.i.i ]
   %.pn4.pn.i.i.i.i.i = phi { ptr, i32 } [ %i.gy, %bb.ci ], [ %i.id, %bb.dq ], [ %.pn.i.i.i.i.i, %.body.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !255
   store i8 2, ptr %.phi.trans.insert.i.i.i.i, align 8, !noalias !255
@@ -763,6 +766,7 @@ bb.cm:                                            ; preds = %bb.cg
   br label %bb.cn
 
 bb.cn:                                            ; preds = %._crit_edge.i.i.i.i, %.thread33.i.i.i.i.i
+  %6 = phi i32 [ %4, %.thread33.i.i.i.i.i ], [ undef, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.hd = phi i32 [ %i.hb, %.thread33.i.i.i.i.i ], [ %.pre76.i.i.i.i, %._crit_edge.i.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !260
   invoke void @_RNvMNtNtNtCskruEhpekJ3V_5tokio3net3tcp6streamNtB2_9TcpStream3new(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.h, i32 noundef %i.hd)
@@ -794,6 +798,7 @@ bb.cr:                                            ; preds = %bb.cp
   br label %.thread25.i.i.i.i.i
 
 .body.i.i.i.i.i.i:                                ; preds = %bb.dl, %bb.dk, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i.i.i.i.i, %bb.co
+  %7 = phi i32 [ %6, %bb.co ], [ %8, %bb.dk ], [ %8, %bb.dl ], [ %8, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i.i.i.i.i ]
   %.pn12.pn.i.i.i.i.i.i = phi { ptr, i32 } [ %i.he, %bb.co ], [ %.pn9.pn.i.i.i.i.i.i, %bb.dk ], [ %i.hz, %bb.dl ], [ %i.ht, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i.i.i.i.i ]
   store i8 2, ptr %.phi.trans.insert.i.i.i.i.i, align 4, !noalias !260
   br label %.body.i.i.i.i.i
@@ -813,6 +818,7 @@ bb.ct:                                            ; preds = %bb.cm
   unreachable
 
 bb.cu:                                            ; preds = %bb.cq, %bb.cm
+  %8 = phi i32 [ %6, %bb.cq ], [ undef, %bb.cm ]  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !260
   invoke void @_RNvXs0_NtNtCsj6eKBz9Db1c_4core6future7poll_fnINtB5_6PollFnNCNCNvMNtNtNtCskruEhpekJ3V_5tokio3net3tcp6streamNtB11_9TcpStream11connect_mio00ENtNtB7_6future6Future4pollCsc044841uM34_23unbuffered_async_client(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.cq, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bf)
           to label %bb.cw unwind label %bb.cv, !noalias !266
@@ -933,6 +939,7 @@ bb.dn:                                            ; preds = %bb.ct, %bb.cs
   br label %.body.i.i.i.i.i
 
 .thread25.i.i.i.i.i:                              ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i.i.i.i, %bb.cr
+  %9 = phi i32 [ %8, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i.i.i.i ], [ %6, %bb.cr ]
   %.sroa.626.0.i.ph.i.i.i.i.i = phi ptr [ %.sroa.626.1.i.i.i.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCskruEhpekJ3V_5tokio2io12poll_evented11PollEventedNtNtNtNtCsUoH6ltOcnV_3mio3net3tcp6stream9TcpStreamEECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i.i.i.i ], [ %i.hh, %bb.cr ]
   store i8 1, ptr %.phi.trans.insert.i.i.i.i.i, align 4, !noalias !260
   br label %bb.dp
@@ -946,6 +953,7 @@ bb.do:                                            ; preds = %bb.dd
   br i1 %i.ic, label %bb.ds, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do, %.thread25.i.i.i.i.i
+  %10 = phi i32 [ %9, %.thread25.i.i.i.i.i ], [ %8, %bb.do ] ; 4 uses
   %.sroa.626.0.i29.i.i.i.i.i = phi ptr [ %.sroa.626.0.i.ph.i.i.i.i.i, %.thread25.i.i.i.i.i ], [ %.sroa.432.0.copyload.i.i.i.i.i.i, %bb.do ] ; 2 uses
   %.sroa.024.0.i28.i.i.i.i.i = phi i64 [ 2, %.thread25.i.i.i.i.i ], [ %.sroa.031.0.copyload.i.i.i.i.i.i, %bb.do ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.517.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.915.i.i.i.i.i, i64 16, i1 false), !noalias !255
@@ -959,6 +967,7 @@ bb.dq:                                            ; preds = %bb.dp
   br label %.body.thread.i.i.i.i
 
 .body.i.i.i.i.i:                                  ; preds = %bb.dn, %.body.i.i.i.i.i.i
+  %11 = phi i32 [ %7, %.body.i.i.i.i.i.i ], [ undef, %bb.dn ]
   %.pn.i.i.i.i.i = phi { ptr, i32 } [ %.pn12.pn.i.i.i.i.i.i, %.body.i.i.i.i.i.i ], [ %i.ib, %bb.dn ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.915.i.i.i.i.i)
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNCNvMNtNtNtCskruEhpekJ3V_5tokio3net3tcp6streamNtBG_9TcpStream11connect_mio0ECsc044841uM34_23unbuffered_async_client(ptr noundef nonnull align 8 %i.bu) #19
@@ -1000,6 +1009,7 @@ bb.dt:                                            ; preds = %bb.dp
   br i1 %i.ig, label %bb.du, label %bb.dy
 
 bb.du:                                            ; preds = %bb.dt, %.thread65.i.i.i.i
+  %12 = phi i32 [ %4, %.thread65.i.i.i.i ], [ %10, %bb.dt ] ; 2 uses
   %.sroa.3.0.i68.i.i.i.i = phi ptr [ %i.hc, %.thread65.i.i.i.i ], [ %.sroa.626.0.i29.i.i.i.i.i, %bb.dt ] ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.3.0.i68.i.i.i.i) ]
   %.val14.i.i.i.i = load ptr, ptr %i.cl, align 8, !noalias !250, !noundef !8 ; 4 uses
@@ -1048,6 +1058,7 @@ bb.dz:                                            ; preds = %bb.dy
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net4addr6sealed9OneOrMoreECsc044841uM34_23unbuffered_async_client.exit.i.i.i.i unwind label %bb.ea, !noalias !251
 
 bb.ea:                                            ; preds = %bb.el, %bb.dz
+  %13 = phi i32 [ %3, %bb.el ], [ %10, %bb.dz ]
   %i.iq = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net4addr6sealed9OneOrMoreECsc044841uM34_23unbuffered_async_client.exit29.i.i.i.i
@@ -1089,12 +1100,12 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsc044841uM34_2
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsc044841uM34_23unbuffered_async_client.exit27.i.i.i.i
 
 bb.ee:                                            ; preds = %bb.ep, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net4addr6sealed9OneOrMoreECsc044841uM34_23unbuffered_async_client.exit29.i.i.i.i, %bb.ef
+  %14 = phi i32 [ %16, %bb.ep ], [ %16, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net4addr6sealed9OneOrMoreECsc044841uM34_23unbuffered_async_client.exit29.i.i.i.i ], [ %10, %bb.ef ]
   %.pn4.pn.pn.pn.pn.i.i.i.i = phi { ptr, i32 } [ %.pn4.pn.pn.pn.i.i.i.i, %bb.ep ], [ %.pn4.pn.pn.pn.i.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net4addr6sealed9OneOrMoreECsc044841uM34_23unbuffered_async_client.exit29.i.i.i.i ], [ %i.jb, %bb.ef ] ; 2 uses
   store i8 0, ptr %i.ck, align 1, !noalias !250
   %i.iy = load i8, ptr %i.cj, align 2, !range !10, !noalias !250, !noundef !8
   %i.iz = trunc nuw i8 %i.iy to i1
-  %3 = load i32, ptr %i.n, align 8, !range !19, !noalias !250
-  %i.ja = icmp ne i32 %3, 0
+  %i.ja = icmp ne i32 %14, 0
   %or.cond.not.i.i.i.i = select i1 %i.iz, i1 %i.ja, i1 false
   br i1 %or.cond.not.i.i.i.i, label %bb.eq, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net4addr6sealed9OneOrMoreECsc044841uM34_23unbuffered_async_client.exit37.i.i.i.i
 
@@ -1121,6 +1132,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error
   br label %bb.cc
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNCNvMNtNtNtCskruEhpekJ3V_5tokio3net3tcp6streamNtBG_9TcpStream12connect_addr0ECsc044841uM34_23unbuffered_async_client.exit35.i.i.i.i: ; preds = %bb.eo, %bb.ei, %bb.eg, %.body.i.i.i.i, %.body.thread.i.i.i.i
+  %15 = phi i32 [ %3, %bb.ei ], [ %12, %bb.eg ], [ undef, %bb.eo ], [ %5, %.body.thread.i.i.i.i ], [ undef, %.body.i.i.i.i ] ; 2 uses
   %.pn4.pn.i.i.i.i = phi { ptr, i32 } [ %i.jf, %bb.ei ], [ %i.jc, %bb.eg ], [ %i.if, %bb.eo ], [ %.pn4.pn.i.i.i.i.i, %.body.thread.i.i.i.i ], [ %i.if, %.body.i.i.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !250
   %i.jd = load i32, ptr %i.cm, align 8, !range !19, !alias.scope !272, !noalias !250, !noundef !8
@@ -1172,6 +1184,7 @@ _RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionNtNtNtB5_2io5error5ErrorE14unwrap
   br label %bb.et
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net4addr6sealed9OneOrMoreECsc044841uM34_23unbuffered_async_client.exit29.i.i.i.i: ; preds = %bb.en, %bb.eh, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNCNvMNtNtNtCskruEhpekJ3V_5tokio3net3tcp6streamNtBG_9TcpStream12connect_addr0ECsc044841uM34_23unbuffered_async_client.exit35.i.i.i.i, %bb.ea
+  %16 = phi i32 [ %3, %bb.en ], [ %15, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNCNvMNtNtNtCskruEhpekJ3V_5tokio3net3tcp6streamNtBG_9TcpStream12connect_addr0ECsc044841uM34_23unbuffered_async_client.exit35.i.i.i.i ], [ %13, %bb.ea ], [ %15, %bb.eh ] ; 2 uses
   %.pn4.pn.pn.pn.i.i.i.i = phi { ptr, i32 } [ %i.jl, %bb.en ], [ %.pn4.pn.i.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNCNvMNtNtNtCskruEhpekJ3V_5tokio3net3tcp6streamNtBG_9TcpStream12connect_addr0ECsc044841uM34_23unbuffered_async_client.exit35.i.i.i.i ], [ %i.iq, %bb.ea ], [ %.pn4.pn.i.i.i.i, %bb.eh ] ; 2 uses
   %i.jm = load i8, ptr %i.ck, align 1, !range !10, !noalias !250, !noundef !8
   %i.jn = trunc nuw i8 %i.jm to i1

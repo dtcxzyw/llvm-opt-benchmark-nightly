@@ -204,7 +204,11 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i
   %.sroa.9.1.lcssa.i = phi ptr [ %.sroa.9.0.i, %bb.j ], [ %i.ay, %bb.k ] ; 3 uses
   %i.ba = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph119, i64 %.sroa.0.0.i37 ; 2 uses
   %i.bb = icmp ult ptr %.sroa.9.1.lcssa.i, %i.ba
-  br i1 %i.bb, label %.lr.ph38.i.a, label %._crit_edge39.i
+  br i1 %i.bb, label %.lr.ph38.i, label %._crit_edge39.i
+
+.lr.ph38.i:                                       ; preds = %._crit_edge.i
+  %.val14.i = load i64, ptr %i.t, align 8, !alias.scope !73, !noalias !71, !noundef !5
+  br label %.lr.ph38.i.a
 
 ._crit_edge39.i:                                  ; preds = %.lr.ph38.i.a, %._crit_edge.i
   %.sroa.43.2.lcssa.i = phi ptr [ %.sroa.43.1.lcssa.i, %._crit_edge.i ], [ %i.be, %.lr.ph38.i.a ]
@@ -213,13 +217,12 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i
   %i.bc = icmp eq i64 %.sroa.0.0.i37, %.sroa.16.0112262
   br i1 %i.bc, label %bb.m, label %bb.l
 
-.lr.ph38.i.a:                                     ; preds = %._crit_edge.i, %.lr.ph38.i.a
-  %.sroa.9.236.i = phi ptr [ %i.bi, %.lr.ph38.i.a ], [ %.sroa.9.1.lcssa.i, %._crit_edge.i ] ; 3 uses
-  %.sroa.27.235.i = phi i64 [ %i.bh, %.lr.ph38.i.a ], [ %.sroa.27.1.lcssa.i, %._crit_edge.i ] ; 2 uses
-  %.sroa.43.234.i = phi ptr [ %i.be, %.lr.ph38.i.a ], [ %.sroa.43.1.lcssa.i, %._crit_edge.i ]
-  %.val.i = load i64, ptr %.sroa.9.236.i, align 8, !alias.scope !73, !noalias !71, !noundef !5
-  %.val14.i.a = load i64, ptr %i.t, align 8, !alias.scope !73, !noalias !71, !noundef !5
-  %i.bd = icmp ult i64 %.val14.i.a, %.val.i       ; 2 uses
+.lr.ph38.i.a:                                     ; preds = %.lr.ph38.i.a, %.lr.ph38.i
+  %.sroa.9.236.i = phi ptr [ %.sroa.9.1.lcssa.i, %.lr.ph38.i ], [ %i.bi, %.lr.ph38.i.a ] ; 3 uses
+  %.sroa.27.235.i = phi i64 [ %.sroa.27.1.lcssa.i, %.lr.ph38.i ], [ %i.bh, %.lr.ph38.i.a ] ; 2 uses
+  %.sroa.43.234.i = phi ptr [ %.sroa.43.1.lcssa.i, %.lr.ph38.i ], [ %i.be, %.lr.ph38.i.a ]
+  %.val14.i.a = load i64, ptr %.sroa.9.236.i, align 8, !alias.scope !73, !noalias !71, !noundef !5
+  %i.bd = icmp ult i64 %.val14.i, %.val14.i.a     ; 2 uses
   %i.be = getelementptr inbounds i8, ptr %.sroa.43.234.i, i64 -16 ; 3 uses
   %.sroa.01.0.i26.i = select i1 %i.bd, ptr %2, ptr %i.be
   %i.bf = getelementptr inbounds nuw [16 x i8], ptr %.sroa.01.0.i26.i, i64 %.sroa.27.235.i
@@ -382,7 +385,11 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i64
   %.sroa.9.1.lcssa.i48 = phi ptr [ %.sroa.9.0.i43, %bb.s ], [ %i.dg, %bb.t ] ; 3 uses
   %i.di = getelementptr inbounds nuw [16 x i8], ptr %.sroa.0.0.ph119, i64 %.sroa.0.0.i44 ; 2 uses
   %i.dj = icmp ult ptr %.sroa.9.1.lcssa.i48, %i.di
-  br i1 %i.dj, label %.lr.ph38.i57.a, label %._crit_edge39.i49
+  br i1 %i.dj, label %.lr.ph38.i57, label %._crit_edge39.i49
+
+.lr.ph38.i57:                                     ; preds = %._crit_edge.i45
+  %.val14.i58 = load i64, ptr %i.t, align 8, !alias.scope !83, !noalias !82, !noundef !5
+  br label %.lr.ph38.i57.a
 
 ._crit_edge39.i49:                                ; preds = %.lr.ph38.i57.a, %._crit_edge.i45
   %.sroa.43.2.lcssa.i50 = phi ptr [ %.sroa.43.1.lcssa.i46, %._crit_edge.i45 ], [ %i.dm, %.lr.ph38.i57.a ]
@@ -391,13 +398,12 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i64
   %i.dk = icmp eq i64 %.sroa.0.0.i44, %.sroa.16.0112262
   br i1 %i.dk, label %bb.v, label %bb.u
 
-.lr.ph38.i57.a:                                   ; preds = %._crit_edge.i45, %.lr.ph38.i57.a
-  %.sroa.9.236.i58 = phi ptr [ %i.dq, %.lr.ph38.i57.a ], [ %.sroa.9.1.lcssa.i48, %._crit_edge.i45 ] ; 3 uses
-  %.sroa.27.235.i59 = phi i64 [ %i.dp, %.lr.ph38.i57.a ], [ %.sroa.27.1.lcssa.i47, %._crit_edge.i45 ] ; 2 uses
-  %.sroa.43.234.i60 = phi ptr [ %i.dm, %.lr.ph38.i57.a ], [ %.sroa.43.1.lcssa.i46, %._crit_edge.i45 ]
-  %.val.i61 = load i64, ptr %.sroa.9.236.i58, align 8, !alias.scope !83, !noalias !82, !noundef !5
-  %.val14.i62 = load i64, ptr %i.t, align 8, !alias.scope !83, !noalias !82, !noundef !5
-  %i.dl = icmp uge i64 %.val.i61, %.val14.i62     ; 2 uses
+.lr.ph38.i57.a:                                   ; preds = %.lr.ph38.i57.a, %.lr.ph38.i57
+  %.sroa.9.236.i58 = phi ptr [ %.sroa.9.1.lcssa.i48, %.lr.ph38.i57 ], [ %i.dq, %.lr.ph38.i57.a ] ; 3 uses
+  %.sroa.27.235.i59 = phi i64 [ %.sroa.27.1.lcssa.i47, %.lr.ph38.i57 ], [ %i.dp, %.lr.ph38.i57.a ] ; 2 uses
+  %.sroa.43.234.i60 = phi ptr [ %.sroa.43.1.lcssa.i46, %.lr.ph38.i57 ], [ %i.dm, %.lr.ph38.i57.a ]
+  %.val14.i62 = load i64, ptr %.sroa.9.236.i58, align 8, !alias.scope !83, !noalias !82, !noundef !5
+  %i.dl = icmp uge i64 %.val14.i62, %.val14.i58   ; 2 uses
   %i.dm = getelementptr inbounds i8, ptr %.sroa.43.234.i60, i64 -16 ; 3 uses
   %.sroa.01.0.i26.i63 = select i1 %i.dl, ptr %2, ptr %i.dm
   %i.dn = getelementptr inbounds nuw [16 x i8], ptr %.sroa.01.0.i26.i63, i64 %.sroa.27.235.i59

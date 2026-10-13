@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %struct.strbuf, align 8             ; 6 uses
   %5 = alloca %struct.strbuf, align 8             ; 8 uses
   %6 = alloca %struct.strbuf, align 8             ; 6 uses
-  %7 = alloca %struct.tree_desc, align 8          ; 10 uses
+  %7 = alloca %struct.tree_desc, align 8          ; 11 uses
   %8 = alloca %struct.strbuf, align 8             ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #15
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 8 dereferenceable(24) @__const.get_tree_entry_follow_symlinks.namebuf, i64 24, i1 false)
@@ -526,7 +526,7 @@ bb.t:                                             ; preds = %bb.q, %bb.r, %bb.s,
 
 bb.u:                                             ; preds = %.lr.ph219, %bb.as
   %indvars.iv264 = phi i64 [ 0, %.lr.ph219 ], [ %indvars.iv.next265, %bb.as ] ; 3 uses
-  %i.dc = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %indvars.iv264 ; 11 uses
+  %i.dc = getelementptr inbounds nuw [56 x i8], ptr %i.n, i64 %indvars.iv264 ; 10 uses
   %i.dd = getelementptr inbounds nuw [88 x i8], ptr %i.p, i64 %indvars.iv264 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 72 ; 4 uses
@@ -545,7 +545,6 @@ bb.u:                                             ; preds = %.lr.ph219, %bb.as
 
 .critedge.i.thread:                               ; preds = %update_tree_entry.exit188, %bb.u
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.dc, i8 0, i64 56, i1 false)
-  %9 = getelementptr inbounds nuw i8, ptr %i.dc, i64 40
   br label %extended_entry_extract.exit174
 
 bb.v:                                             ; preds = %update_tree_entry.exit188, %.lr.ph.i167
@@ -618,9 +617,13 @@ update_tree_entry.exit188:                        ; preds = %bb.aa, %update_tree
   br i1 %.not.i171, label %.critedge.i.thread, label %bb.v
 
 .critedge.i:                                      ; preds = %bb.w
-  %i.em = getelementptr inbounds nuw i8, ptr %i.dc, i64 40 ; 5 uses
+  %i.em = getelementptr inbounds nuw i8, ptr %i.dc, i64 40 ; 2 uses
   %.not33.i = icmp eq ptr %.pre, null
-  br i1 %.not33.i, label %extended_entry_extract.exit174, label %bb.ac
+  br i1 %.not33.i, label %extended_entry_extract.exit174.thread, label %bb.ac
+
+extended_entry_extract.exit174.thread:            ; preds = %.critedge.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
+  br label %bb.as
 
 bb.ac:                                            ; preds = %.critedge.i
   %i.en = getelementptr i8, ptr %i.dc, i64 48     ; 2 uses
@@ -628,7 +631,7 @@ bb.ac:                                            ; preds = %.critedge.i
   %i.eo = sext i32 %.val35.i to i64
   %i.ep = call i32 @name_compare(ptr noundef nonnull %.1118, i64 noundef %i.db, ptr noundef nonnull %.pre, i64 noundef %i.eo) #15 ; 2 uses
   %.not.i.i173 = icmp eq i32 %i.ep, 0
-  br i1 %.not.i.i173, label %extended_entry_extract.exit174, label %bb.ad
+  br i1 %.not.i.i173, label %extended_entry_extract.exit174thread-pre-split, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   %i.eq = icmp sgt i32 %i.ep, 0
@@ -662,7 +665,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.ad
   %i.ex = sext i32 %.val.i to i64
   %i.ey = call i32 @name_compare(ptr noundef nonnull %.1118, i64 noundef %i.db, ptr noundef %i.ew, i64 noundef %i.ex) #15 ; 2 uses
   %.not.i36.i = icmp eq i32 %i.ey, 0
-  br i1 %.not.i36.i, label %extended_entry_extract.exit174, label %bb.ai
+  br i1 %.not.i36.i, label %extended_entry_extract.exit174thread-pre-split, label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph50.i
   %i.ez = icmp sgt i32 %i.ey, 0
@@ -742,20 +745,23 @@ update_tree_entry.exit184:                        ; preds = %update_tree_entry_i
 
 check_entry_match.exit.sink.split.i:              ; preds = %update_tree_entry.exit184, %bb.al, %bb.ak, %bb.aj, %update_tree_entry.exit184.thread, %bb.ah, %bb.ag, %bb.af, %bb.ae
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.dc, i8 0, i64 56, i1 false)
+  br label %extended_entry_extract.exit174thread-pre-split
+
+extended_entry_extract.exit174thread-pre-split:   ; preds = %.lr.ph50.i, %check_entry_match.exit.sink.split.i, %bb.ac
+  %.pr312 = load ptr, ptr %i.em, align 8, !tbaa !72
   br label %extended_entry_extract.exit174
 
-extended_entry_extract.exit174:                   ; preds = %.lr.ph50.i, %.critedge.i.thread, %.critedge.i, %bb.ac, %check_entry_match.exit.sink.split.i
-  %10 = phi ptr [ %9, %.critedge.i.thread ], [ %i.em, %check_entry_match.exit.sink.split.i ], [ %i.em, %.critedge.i ], [ %i.em, %bb.ac ], [ %i.em, %.lr.ph50.i ]
+extended_entry_extract.exit174:                   ; preds = %extended_entry_extract.exit174thread-pre-split, %.critedge.i.thread
+  %9 = phi ptr [ %.pr312, %extended_entry_extract.exit174thread-pre-split ], [ null, %.critedge.i.thread ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
-  %11 = load ptr, ptr %10, align 8, !tbaa !72     ; 2 uses
-  %.not155 = icmp eq ptr %11, null
+  %.not155 = icmp eq ptr %9, null
   br i1 %.not155, label %bb.as, label %bb.aq
 
 bb.aq:                                            ; preds = %extended_entry_extract.exit174
   %i.ga = getelementptr i8, ptr %i.dc, i64 48
   %.val = load i32, ptr %i.ga, align 8, !tbaa !73
   %i.gb = sext i32 %.val to i64
-  %i.gc = call i32 @name_compare(ptr noundef nonnull %11, i64 noundef %i.gb, ptr noundef nonnull %.1118, i64 noundef %i.db) #15
+  %i.gc = call i32 @name_compare(ptr noundef nonnull %9, i64 noundef %i.gb, ptr noundef nonnull %.1118, i64 noundef %i.db) #15
   %.not156 = icmp eq i32 %i.gc, 0
   br i1 %.not156, label %bb.as, label %bb.ar
 
@@ -763,7 +769,7 @@ bb.ar:                                            ; preds = %bb.aq
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.dc, i8 0, i64 56, i1 false)
   br label %bb.as
 
-bb.as:                                            ; preds = %bb.aq, %bb.ar, %extended_entry_extract.exit174
+bb.as:                                            ; preds = %extended_entry_extract.exit174.thread, %bb.aq, %bb.ar, %extended_entry_extract.exit174
   %indvars.iv.next265 = add nuw nsw i64 %indvars.iv264, 1 ; 2 uses
   %exitcond269.not = icmp eq i64 %indvars.iv.next265, %wide.trip.count268
   br i1 %exitcond269.not, label %.lr.ph226.preheader, label %bb.u, !llvm.loop !87

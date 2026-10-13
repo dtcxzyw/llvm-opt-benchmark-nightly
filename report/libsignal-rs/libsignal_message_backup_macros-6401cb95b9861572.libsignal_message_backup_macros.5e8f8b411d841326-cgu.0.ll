@@ -202,7 +202,7 @@ bb.kf:                                            ; preds = %.body.i.i
 bb.kg:                                            ; preds = %.body.i.i
   %i.pw = extractvalue { ptr, ptr } %i.pr, 0      ; 2 uses
   %i.px = extractvalue { ptr, ptr } %i.pr, 1      ; 2 uses
-  %i.py = getelementptr inbounds nuw i8, ptr %i.dy, i64 8 ; 33 uses
+  %i.py = getelementptr inbounds nuw i8, ptr %i.dy, i64 8 ; 34 uses
   store i64 0, ptr %i.py, align 8, !noalias !74
   %.not.i.i = icmp eq ptr %i.pw, null
   br i1 %.not.i.i, label %.thread62.i.i, label %bb.kh
@@ -227,7 +227,11 @@ bb.ki:                                            ; preds = %bb.kh
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dw), !noalias !74
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i.i)
   %.not.i.i.i = icmp eq i64 %.sroa.0.0.copyload.i.i, -1
-  br i1 %.not.i.i.i, label %bb.kl, label %bb.kj
+  br i1 %.not.i.i.i, label %._crit_edge.i.i, label %bb.kj
+
+._crit_edge.i.i:                                  ; preds = %bb.ki
+  %.pre.i.i = load i64, ptr %i.py, align 8, !noalias !74
+  br label %bb.kl
 
 bb.kj:                                            ; preds = %bb.ki
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.dx, i64 12
@@ -265,12 +269,12 @@ bb.kk:                                            ; preds = %bb.kj
   %.pre.i.i.i.i = load i64, ptr %i.py, align 8, !noalias !74
   br label %bb.ku
 
-bb.kl:                                            ; preds = %bb.ki, %.thread62.i.i
-  %.sroa.4.04666.i.i = phi i32 [ %.sroa.4.8.extract.trunc.i.i, %.thread62.i.i ], [ %.sroa.4.0.copyload.i.i, %bb.ki ] ; 2 uses
-  %i.qk = phi ptr [ %i.pz, %.thread62.i.i ], [ %i.py, %bb.ki ] ; 23 uses
+bb.kl:                                            ; preds = %._crit_edge.i.i, %.thread62.i.i
+  %2 = phi i64 [ 0, %.thread62.i.i ], [ %.pre.i.i, %._crit_edge.i.i ] ; 2 uses
+  %.sroa.4.04666.i.i = phi i32 [ %.sroa.4.8.extract.trunc.i.i, %.thread62.i.i ], [ %.sroa.4.0.copyload.i.i, %._crit_edge.i.i ] ; 2 uses
+  %i.qk = phi ptr [ %i.pz, %.thread62.i.i ], [ %i.py, %._crit_edge.i.i ] ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dr), !noalias !74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ds), !noalias !74
-  %2 = load i64, ptr %i.qk, align 8, !noalias !74 ; 2 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %i.dy, i64 16 ; 4 uses
   %i.qm = load i64, ptr %i.ql, align 8, !noalias !74
   %i.qn = icmp eq i64 %2, %i.qm

@@ -205,7 +205,7 @@ bb.ja:                                            ; preds = %bb.iz
   %i.ahm = getelementptr inbounds nuw i8, ptr %i.afj, i64 4 ; 2 uses
   %i.ahn = load i32, ptr %i.ahm, align 4
   %i.aho = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.aew, i64 noundef 1024, ptr noundef nonnull @.str.32, i32 noundef %i.ahi, i32 noundef %i.ahn) #25 ; 0 uses
-  %i.ahp = load i32, ptr %i.afj, align 4
+  %i.ahp = load i32, ptr %i.afj, align 4          ; 2 uses
   %i.ahq = icmp eq i32 %i.ahp, 1
   br i1 %i.ahq, label %bb.jb, label %bb.jh
 
@@ -220,6 +220,7 @@ _ZN10aiMaterial11AddPropertyEPKijPKcjj.exit:      ; preds = %bb.jb
   %endptr217 = getelementptr inbounds i8, ptr %i.aew, i64 %strlen216
   store i32 6255476, ptr %endptr217, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #25
+  %.pre958 = load i32, ptr %i.afj, align 4
   br label %bb.ji
 
 bb.jc:                                            ; preds = %bb.it
@@ -256,7 +257,7 @@ bb.jh:                                            ; preds = %bb.ja
   br label %bb.ji
 
 bb.ji:                                            ; preds = %bb.jh, %_ZN10aiMaterial11AddPropertyEPKijPKcjj.exit
-  %32 = load i32, ptr %i.afj, align 4
+  %32 = phi i32 [ %i.ahp, %bb.jh ], [ %.pre958, %_ZN10aiMaterial11AddPropertyEPKijPKcjj.exit ] ; 2 uses
   %i.ahx = icmp eq i32 %32, 2
   br i1 %i.ahx, label %bb.jj, label %bb.jl
 
@@ -271,6 +272,7 @@ _ZN10aiMaterial11AddPropertyEPKfjPKcjj.exit:      ; preds = %bb.jj
   %endptr221 = getelementptr inbounds i8, ptr %i.aew, i64 %strlen220
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %endptr221, ptr noundef nonnull align 1 dereferenceable(6) @.str.37, i64 6, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #25
+  %.pre959 = load i32, ptr %i.afj, align 4
   br label %bb.jm
 
 bb.jk:                                            ; preds = %bb.jj
@@ -286,7 +288,7 @@ bb.jl:                                            ; preds = %bb.ji
   br label %bb.jm
 
 bb.jm:                                            ; preds = %bb.jl, %_ZN10aiMaterial11AddPropertyEPKfjPKcjj.exit
-  %33 = load i32, ptr %i.afj, align 4
+  %33 = phi i32 [ %32, %bb.jl ], [ %.pre959, %_ZN10aiMaterial11AddPropertyEPKfjPKcjj.exit ]
   %i.aia = icmp eq i32 %33, 8
   br i1 %i.aia, label %bb.jn, label %bb.jo
 

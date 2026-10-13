@@ -204,7 +204,7 @@ bb.r:                                             ; preds = %.lr.ph1141
     #dbg_value(i64 1, !3912, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12663)
     #dbg_value(i64 %i.ed, !3912, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12663)
     #dbg_value(i1 false, !3905, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12654)
-  %i.ge = tail call noundef ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.ed, i64 noundef range(i64 1, -9223372036854775807) 1) #28, !dbg !14982, !noalias !14292 ; 3 uses
+  %i.ge = tail call noundef ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.ed, i64 noundef range(i64 1, -9223372036854775807) 1) #28, !dbg !14982, !noalias !14292 ; 4 uses
     #dbg_value(ptr %i.ge, !4359, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12659)
     #dbg_value(i64 poison, !4359, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12659)
   %i.gf = icmp eq ptr %i.ge, null, !dbg !14983
@@ -354,6 +354,7 @@ bb.ab:                                            ; preds = %bb.aj, %bb.af, %bb.
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ArrayEntryEEB1v_.exit601.thread unwind label %bb.z, !dbg !15009
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ArrayEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit600: ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ArrayEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit600.preheader, %bb.ah
+  %2 = phi ptr [ %4, %bb.ah ], [ %i.ge, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ArrayEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit600.preheader ] ; 2 uses
   %i.gw = phi ptr [ %i.hj, %bb.ah ], [ %i.ge, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ArrayEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit600.preheader ]
   %i.gx = phi i64 [ %i.hk, %bb.ah ], [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ArrayEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit600.preheader ] ; 6 uses
   %i.gy = phi ptr [ %i.hm, %bb.ah ], [ %i.eb, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast10ArrayEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit600.preheader ] ; 3 uses
@@ -428,10 +429,11 @@ bb.af:                                            ; preds = %bb.ae
           to label %._crit_edge unwind label %bb.ab, !dbg !15028
 
 ._crit_edge:                                      ; preds = %bb.af
-  %.pre1112 = load ptr, ptr %i.gs, align 8, !dbg !15029, !alias.scope !14337
+  %.pre1112 = load ptr, ptr %i.gs, align 8, !dbg !15029, !alias.scope !14337 ; 2 uses
   br label %bb.ag, !dbg !15028
 
 bb.ag:                                            ; preds = %._crit_edge, %bb.ae
+  %3 = phi ptr [ %.pre1112, %._crit_edge ], [ %2, %bb.ae ]
   %i.hg = phi ptr [ %.pre1112, %._crit_edge ], [ %i.gw, %bb.ae ], !dbg !15029 ; 2 uses
     #dbg_value(ptr %i.hg, !4404, !DIExpression(), !12717)
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 %i.gx, !dbg !15030
@@ -445,7 +447,8 @@ bb.ag:                                            ; preds = %._crit_edge, %bb.ae
   br label %bb.ah, !dbg !15033
 
 bb.ah:                                            ; preds = %bb.ak, %bb.ag
-  %i.hj = phi ptr [ %2, %bb.ak ], [ %i.hg, %bb.ag ]
+  %4 = phi ptr [ %5, %bb.ak ], [ %3, %bb.ag ]
+  %i.hj = phi ptr [ %5, %bb.ak ], [ %i.hg, %bb.ag ]
   %i.hk = phi i64 [ %i.hr, %bb.ak ], [ %i.hi, %bb.ag ]
     #dbg_value(ptr %i.dj, !14282, !DIExpression(), !12725)
     #dbg_value(i64 1, !14301, !DIExpression(), !12699)
@@ -472,12 +475,16 @@ bb.ai:                                            ; preds = %bb.ac
 
 bb.aj:                                            ; preds = %bb.ai
   invoke void @_RNvMs4_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecbE8grow_oneCs5yXxDE1DkoT_4tera(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.dk) #29
-          to label %bb.ak unwind label %bb.ab, !dbg !15040
+          to label %._crit_edge1113 unwind label %bb.ab, !dbg !15040
 
-bb.ak:                                            ; preds = %bb.ai, %bb.aj
-  %2 = load ptr, ptr %i.gs, align 8, !dbg !15041, !alias.scope !14339, !nonnull !1394, !noundef !1394 ; 2 uses
-    #dbg_value(ptr %2, !4404, !DIExpression(), !12741)
-  %i.hq = getelementptr inbounds nuw i8, ptr %2, i64 %i.gx, !dbg !15042
+._crit_edge1113:                                  ; preds = %bb.aj
+  %.pre1114 = load ptr, ptr %i.gs, align 8, !dbg !15041, !alias.scope !14339
+  br label %bb.ak, !dbg !15040
+
+bb.ak:                                            ; preds = %._crit_edge1113, %bb.ai
+  %5 = phi ptr [ %.pre1114, %._crit_edge1113 ], [ %2, %bb.ai ], !dbg !15041 ; 3 uses
+    #dbg_value(ptr %5, !4404, !DIExpression(), !12741)
+  %i.hq = getelementptr inbounds nuw i8, ptr %5, i64 %i.gx, !dbg !15042
     #dbg_value(ptr %i.hq, !4385, !DIExpression(), !12746)
     #dbg_value(ptr %i.hq, !4419, !DIExpression(), !12748)
     #dbg_value(i1 true, !4422, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12748)
@@ -880,7 +887,7 @@ bb.c:                                             ; preds = %.lr.ph
     #dbg_value(i64 1, !3912, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19132)
     #dbg_value(i64 %i.t, !3912, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19132)
     #dbg_value(i1 false, !3905, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19123)
-  %i.ae = tail call noundef ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.t, i64 noundef range(i64 1, -9223372036854775807) 1) #28, !dbg !19602, !noalias !19532 ; 3 uses
+  %i.ae = tail call noundef ptr @_RNvCsh0WfaQiVYm0_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.t, i64 noundef range(i64 1, -9223372036854775807) 1) #28, !dbg !19602, !noalias !19532 ; 4 uses
     #dbg_value(ptr %i.ae, !4359, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19128)
     #dbg_value(i64 poison, !4359, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19128)
   %i.af = icmp eq ptr %i.ae, null, !dbg !19603
@@ -1076,6 +1083,7 @@ bb.o:                                             ; preds = %bb.aa, %bb.p
   br label %bb.n
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast8MapEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit107: ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast8MapEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit107.lr.ph, %bb.x
+  %3 = phi ptr [ %i.ae, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast8MapEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit107.lr.ph ], [ %5, %bb.x ] ; 2 uses
   %i.be = phi ptr [ %i.ae, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast8MapEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit107.lr.ph ], [ %i.bw, %bb.x ]
   %i.bf = phi i64 [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast8MapEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit107.lr.ph ], [ %i.bx, %bb.x ] ; 6 uses
   %i.bg = phi ptr [ %i.r, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs5yXxDE1DkoT_4tera7parsing3ast8MapEntryENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextB12_.exit107.lr.ph ], [ %i.bz, %bb.x ] ; 4 uses
@@ -1188,10 +1196,11 @@ bb.v:                                             ; preds = %bb.u
           to label %._crit_edge unwind label %.thread159, !dbg !19663
 
 ._crit_edge:                                      ; preds = %bb.v
-  %.pre = load ptr, ptr %i.av, align 8, !dbg !19664, !alias.scope !19582
+  %.pre = load ptr, ptr %i.av, align 8, !dbg !19664, !alias.scope !19582 ; 2 uses
   br label %bb.w, !dbg !19663
 
 bb.w:                                             ; preds = %._crit_edge, %bb.u
+  %4 = phi ptr [ %.pre, %._crit_edge ], [ %3, %bb.u ]
   %i.bt = phi ptr [ %.pre, %._crit_edge ], [ %i.be, %bb.u ], !dbg !19664 ; 2 uses
     #dbg_value(ptr %i.bt, !4404, !DIExpression(), !19186)
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 %i.bf, !dbg !19665
@@ -1205,7 +1214,8 @@ bb.w:                                             ; preds = %._crit_edge, %bb.u
   br label %bb.x, !dbg !19653
 
 bb.x:                                             ; preds = %bb.ab, %bb.w
-  %i.bw = phi ptr [ %3, %bb.ab ], [ %i.bt, %bb.w ]
+  %5 = phi ptr [ %6, %bb.ab ], [ %4, %bb.w ]
+  %i.bw = phi ptr [ %6, %bb.ab ], [ %i.bt, %bb.w ]
   %i.bx = phi i64 [ %i.ce, %bb.ab ], [ %i.bv, %bb.w ]
     #dbg_value(ptr %i.o, !19522, !DIExpression(), !19194)
     #dbg_value(i64 1, !19541, !DIExpression(), !19168)
@@ -1237,12 +1247,16 @@ bb.z:                                             ; preds = %bb.p
 
 bb.aa:                                            ; preds = %bb.z
   invoke void @_RNvMs4_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVecbE8grow_oneCs5yXxDE1DkoT_4tera(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.p) #29
-          to label %bb.ab unwind label %bb.o, !dbg !19673
+          to label %._crit_edge164 unwind label %bb.o, !dbg !19673
 
-bb.ab:                                            ; preds = %bb.z, %bb.aa
-  %3 = load ptr, ptr %i.av, align 8, !dbg !19674, !alias.scope !19584, !nonnull !1394, !noundef !1394 ; 2 uses
-    #dbg_value(ptr %3, !4404, !DIExpression(), !19210)
-  %i.cd = getelementptr inbounds nuw i8, ptr %3, i64 %i.bf, !dbg !19675
+._crit_edge164:                                   ; preds = %bb.aa
+  %.pre165 = load ptr, ptr %i.av, align 8, !dbg !19674, !alias.scope !19584
+  br label %bb.ab, !dbg !19673
+
+bb.ab:                                            ; preds = %._crit_edge164, %bb.z
+  %6 = phi ptr [ %.pre165, %._crit_edge164 ], [ %3, %bb.z ], !dbg !19674 ; 3 uses
+    #dbg_value(ptr %6, !4404, !DIExpression(), !19210)
+  %i.cd = getelementptr inbounds nuw i8, ptr %6, i64 %i.bf, !dbg !19675
     #dbg_value(ptr %i.cd, !4385, !DIExpression(), !19215)
     #dbg_value(ptr %i.cd, !4419, !DIExpression(), !19217)
     #dbg_value(i1 true, !4422, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !19217)

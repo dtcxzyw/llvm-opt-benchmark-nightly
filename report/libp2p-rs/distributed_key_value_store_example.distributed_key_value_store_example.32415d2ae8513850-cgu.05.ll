@@ -202,7 +202,7 @@ bb.a:
   %i.m = alloca [128 x i8], align 8               ; 5 uses
   %i.n = alloca [32 x i8], align 8                ; 5 uses
   %i.o = alloca [112 x i8], align 8               ; 5 uses
-  %.sroa.5 = alloca [80 x i8], align 8            ; 2 uses
+  %.sroa.5 = alloca [80 x i8], align 8            ; 4 uses
   %i.p = alloca [40 x i8], align 8                ; 10 uses
   %i.q = alloca [80 x i8], align 8                ; 15 uses
   %.sroa.3 = alloca ptr, align 8                  ; 6 uses
@@ -514,6 +514,7 @@ bb.t:                                             ; preds = %_RNvXs1_NtNtNtCskKL
   %.sroa.0.0.i2.i.i7.i = phi ptr [ %i.ce, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtB7_5chain5ChainINtNtNtBb_5slice4iter4IterNtNtCskC4O4hr3vz7_10libp2p_kad8protocol7KadPeerEB1m_ENCINvMs0_NtB1Q_9behaviourINtB2M_9BehaviourNtNtNtNtB1Q_6record5store6memory11MemoryStoreE10discoveredB12_E0ENtNtNtB9_6traits8iterator8Iterator4nextCs4jvuubEK18G_35distributed_key_value_store_example.exit.thread4.i ], [ %i.cm, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtB7_5chain5ChainINtNtNtBb_5slice4iter4IterNtNtCskC4O4hr3vz7_10libp2p_kad8protocol7KadPeerEB1m_ENCINvMs0_NtB1Q_9behaviourINtB2M_9BehaviourNtNtNtNtB1Q_6record5store6memory11MemoryStoreE10discoveredB12_E0ENtNtNtB9_6traits8iterator8Iterator4nextCs4jvuubEK18G_35distributed_key_value_store_example.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !325
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i2.i.i7.i, i64 24
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(80) %i.cq, i64 80, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   call void @_RNvXs1_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyINtB5_3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEINtNtCskKLDkoKarTP_4core7convert4FromBV_E4from(ptr noalias nofree noundef nonnull sret([112 x i8]) align 8 captures(none) dereferenceable(112) %i.o, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(80) %.sroa.5)
@@ -597,6 +598,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   br label %bb.n
 }
 

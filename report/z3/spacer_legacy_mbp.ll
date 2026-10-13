@@ -120,7 +120,7 @@ bb.g:                                             ; preds = %bb.f
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 832
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !117
   %i.k = invoke noundef ptr @_ZN11ast_manager11mk_assertedEP4expr(ptr noundef nonnull align 8 dereferenceable(952) %0, ptr noundef %i.j)
-          to label %bb.h unwind label %bb.m       ; 4 uses
+          to label %bb.h unwind label %bb.m       ; 5 uses
 
 bb.h:                                             ; preds = %bb.g
   store ptr %i.k, ptr %12, align 8, !tbaa !21
@@ -161,7 +161,7 @@ _ZN5model23scoped_model_completionC2ERS_b.exit.preheader: ; preds = %.noexc
   br i1 %i.w, label %.critedge, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
 
 _ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit: ; preds = %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader, %_ZN5model23scoped_model_completionC2ERS_b.exit
-  %i.x = phi ptr [ %i.by, %_ZN5model23scoped_model_completionC2ERS_b.exit ], [ %i.k, %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader ] ; 3 uses
+  %i.x = phi ptr [ %i.by, %_ZN5model23scoped_model_completionC2ERS_b.exit ], [ %i.k, %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader ] ; 4 uses
   %i.y = phi ptr [ %i.bz, %_ZN5model23scoped_model_completionC2ERS_b.exit ], [ null, %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader ] ; 5 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN5model23scoped_model_completionC2ERS_b.exit ], [ 0, %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader ] ; 6 uses
   %i.z = phi ptr [ %i.ca, %_ZN5model23scoped_model_completionC2ERS_b.exit ], [ %i.v, %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader ] ; 2 uses
@@ -320,7 +320,7 @@ _ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_
   br label %_ZN5model23scoped_model_completionC2ERS_b.exit
 
 _ZN5model23scoped_model_completionC2ERS_b.exit:   ; preds = %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit, %bb.w
-  %i.by = phi ptr [ %i.x, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %i.az, %bb.w ]
+  %i.by = phi ptr [ %i.x, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %i.az, %bb.w ] ; 2 uses
   %i.bz = phi ptr [ %i.y, %_ZN15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ], [ %i.ba, %bb.w ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.ca = load ptr, ptr %i.a, align 8, !tbaa !13  ; 2 uses
@@ -328,6 +328,7 @@ _ZN5model23scoped_model_completionC2ERS_b.exit:   ; preds = %_ZN15ref_vector_cor
   br i1 %i.cb, label %.critedge, label %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, !llvm.loop !51
 
 .critedge:                                        ; preds = %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit, %_ZN5model23scoped_model_completionC2ERS_b.exit, %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader
+  %18 = phi ptr [ %i.k, %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader ], [ %i.x, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ %i.by, %_ZN5model23scoped_model_completionC2ERS_b.exit ] ; 2 uses
   %i.cc = phi ptr [ null, %_ZN5model23scoped_model_completionC2ERS_b.exit.preheader ], [ %i.y, %_ZNK15ref_vector_coreI3app19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit ], [ %i.bz, %_ZN5model23scoped_model_completionC2ERS_b.exit ] ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %11, i64 20
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !123
@@ -637,7 +638,11 @@ bb.bb:                                            ; preds = %_ZN5model23scoped_m
 
 bb.bc:                                            ; preds = %bb.bb
   invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %i.fo, ptr noundef nonnull %i.cc)
-          to label %_ZN7obj_refI4expr11ast_managerED2Ev.exit73 unwind label %bb.bd
+          to label %._ZN7obj_refI4expr11ast_managerED2Ev.exit73_crit_edge unwind label %bb.bd
+
+._ZN7obj_refI4expr11ast_managerED2Ev.exit73_crit_edge: ; preds = %bb.bc
+  %.pre89 = load ptr, ptr %12, align 8, !tbaa !21
+  br label %_ZN7obj_refI4expr11ast_managerED2Ev.exit73
 
 bb.bd:                                            ; preds = %bb.bc
   %i.ft = landingpad { ptr, i32 }
@@ -646,15 +651,15 @@ bb.bd:                                            ; preds = %bb.bc
   call void @__clang_call_terminate(ptr %i.fu) #15
   unreachable
 
-_ZN7obj_refI4expr11ast_managerED2Ev.exit73:       ; preds = %_ZN5model23scoped_model_completionD2Ev.exit, %bb.bb, %bb.bc
+_ZN7obj_refI4expr11ast_managerED2Ev.exit73:       ; preds = %._ZN7obj_refI4expr11ast_managerED2Ev.exit73_crit_edge, %_ZN5model23scoped_model_completionD2Ev.exit, %bb.bb
+  %19 = phi ptr [ %.pre89, %._ZN7obj_refI4expr11ast_managerED2Ev.exit73_crit_edge ], [ %18, %_ZN5model23scoped_model_completionD2Ev.exit ], [ %18, %bb.bb ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #14
-  %18 = load ptr, ptr %12, align 8, !tbaa !21     ; 3 uses
-  %.not.i.i74 = icmp eq ptr %18, null
+  %.not.i.i74 = icmp eq ptr %19, null
   br i1 %.not.i.i74, label %_ZN7obj_refI3app11ast_managerED2Ev.exit, label %bb.be
 
 bb.be:                                            ; preds = %_ZN7obj_refI4expr11ast_managerED2Ev.exit73
   %i.fv = load ptr, ptr %i.l, align 8, !tbaa !44, !nonnull !32, !align !33
-  %i.fw = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 2 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 2 uses
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !23
   %i.fy = add i32 %i.fx, -1                       ; 2 uses
   store i32 %i.fy, ptr %i.fw, align 4, !tbaa !23
@@ -662,7 +667,7 @@ bb.be:                                            ; preds = %_ZN7obj_refI4expr11
   br i1 %i.fz, label %bb.bf, label %_ZN7obj_refI3app11ast_managerED2Ev.exit
 
 bb.bf:                                            ; preds = %bb.be
-  invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %i.fv, ptr noundef nonnull %18)
+  invoke void @_ZN11ast_manager11delete_nodeEP3ast(ptr noundef nonnull align 8 dereferenceable(952) %i.fv, ptr noundef nonnull %19)
           to label %_ZN7obj_refI3app11ast_managerED2Ev.exit unwind label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf

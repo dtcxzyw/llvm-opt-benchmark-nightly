@@ -205,7 +205,11 @@ bb.p:                                             ; preds = %bb.r, %bb.n
   %.sroa.0.0.i37 = phi i64 [ %.sroa.0.0.i, %bb.n ], [ %.sroa.16.0113306, %bb.r ] ; 2 uses
   %i.y = getelementptr inbounds nuw [48 x i8], ptr %.sroa.0.0.ph120, i64 %.sroa.0.0.i37 ; 2 uses
   %i.z = icmp ult ptr %.sroa.5.0.i, %i.y
-  br i1 %i.z, label %.lr.ph.i.a, label %._crit_edge.i
+  br i1 %i.z, label %.lr.ph.i, label %._crit_edge.i
+
+.lr.ph.i:                                         ; preds = %bb.p
+  %.val12.i = load float, ptr %i.x, align 8, !alias.scope !426, !noalias !427, !noundef !4 ; 2 uses
+  br label %.lr.ph.i.a
 
 ._crit_edge.i:                                    ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39, %bb.p
   %.sroa.19.1.lcssa.i = phi ptr [ %.sroa.19.0.i, %bb.p ], [ %i.ac, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39 ]
@@ -214,14 +218,13 @@ bb.p:                                             ; preds = %bb.r, %bb.n
   %i.aa = icmp eq i64 %.sroa.0.0.i37, %.sroa.16.0113306
   br i1 %i.aa, label %bb.s, label %bb.r
 
-.lr.ph.i.a:                                       ; preds = %bb.p, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39
-  %.sroa.5.114.i = phi ptr [ %i.ag, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39 ], [ %.sroa.5.0.i, %bb.p ] ; 3 uses
-  %.sroa.11.113.i = phi i64 [ %i.af, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39 ], [ %.sroa.11.0.i, %bb.p ] ; 2 uses
-  %.sroa.19.112.i = phi ptr [ %i.ac, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39 ], [ %.sroa.19.0.i, %bb.p ]
+.lr.ph.i.a:                                       ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39, %.lr.ph.i
+  %.sroa.5.114.i = phi ptr [ %.sroa.5.0.i, %.lr.ph.i ], [ %i.ag, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39 ] ; 3 uses
+  %.sroa.11.113.i = phi i64 [ %.sroa.11.0.i, %.lr.ph.i ], [ %i.af, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39 ] ; 2 uses
+  %.sroa.19.112.i = phi ptr [ %.sroa.19.0.i, %.lr.ph.i ], [ %i.ac, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39 ]
   %i.ab = getelementptr i8, ptr %.sroa.5.114.i, i64 40
-  %.val.i = load float, ptr %i.ab, align 8, !alias.scope !426, !noalias !427, !noundef !4 ; 2 uses
-  %.val12.i.a = load float, ptr %i.x, align 8, !alias.scope !426, !noalias !427, !noundef !4 ; 2 uses
-  %brmerge.not.i.i38 = fcmp uno float %.val12.i.a, %.val.i
+  %.val12.i.a = load float, ptr %i.ab, align 8, !alias.scope !426, !noalias !427, !noundef !4 ; 2 uses
+  %brmerge.not.i.i38 = fcmp uno float %.val12.i, %.val12.i.a
   br i1 %brmerge.not.i.i38, label %bb.q, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39, !prof !12
 
 bb.q:                                             ; preds = %.lr.ph.i.a
@@ -229,7 +232,7 @@ bb.q:                                             ; preds = %.lr.ph.i.a
   unreachable
 
 _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4Bbox7sort_byNCNvBA_23non_maximum_suppression0E0BC_.exit.i39: ; preds = %.lr.ph.i.a
-  %.mux.i.i40 = fcmp olt float %.val12.i.a, %.val.i ; 2 uses
+  %.mux.i.i40 = fcmp olt float %.val12.i, %.val12.i.a ; 2 uses
   %i.ac = getelementptr inbounds i8, ptr %.sroa.19.112.i, i64 -48 ; 3 uses
   %.sroa.01.0.i.i = select i1 %.mux.i.i40, ptr %2, ptr %i.ac
   %i.ad = getelementptr inbounds nuw [48 x i8], ptr %.sroa.01.0.i.i, i64 %.sroa.11.113.i
@@ -338,7 +341,11 @@ bb.y:                                             ; preds = %bb.aa, %bb.w
   %.sroa.0.0.i47 = phi i64 [ %.sroa.0.0.i, %bb.w ], [ %.sroa.16.0113306, %bb.aa ] ; 2 uses
   %i.bf = getelementptr inbounds nuw [48 x i8], ptr %.sroa.0.0.ph120, i64 %.sroa.0.0.i47 ; 2 uses
   %i.bg = icmp ult ptr %.sroa.5.0.i46, %i.bf
-  br i1 %i.bg, label %.lr.ph.i56.a, label %._crit_edge.i48
+  br i1 %i.bg, label %.lr.ph.i56, label %._crit_edge.i48
+
+.lr.ph.i56:                                       ; preds = %bb.y
+  %.val12.i57 = load float, ptr %i.be, align 8, !alias.scope !433, !noalias !434, !noundef !4 ; 2 uses
+  br label %.lr.ph.i56.a
 
 ._crit_edge.i48:                                  ; preds = %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i, %bb.y
   %.sroa.19.1.lcssa.i49 = phi ptr [ %.sroa.19.0.i44, %bb.y ], [ %i.bj, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i ]
@@ -347,14 +354,13 @@ bb.y:                                             ; preds = %bb.aa, %bb.w
   %i.bh = icmp eq i64 %.sroa.0.0.i47, %.sroa.16.0113306
   br i1 %i.bh, label %bb.ab, label %bb.aa
 
-.lr.ph.i56.a:                                     ; preds = %bb.y, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i
-  %.sroa.5.114.i57 = phi ptr [ %i.bn, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i ], [ %.sroa.5.0.i46, %bb.y ] ; 3 uses
-  %.sroa.11.113.i58 = phi i64 [ %i.bm, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i ], [ %.sroa.11.0.i45, %bb.y ] ; 2 uses
-  %.sroa.19.112.i59 = phi ptr [ %i.bj, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i ], [ %.sroa.19.0.i44, %bb.y ]
+.lr.ph.i56.a:                                     ; preds = %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i, %.lr.ph.i56
+  %.sroa.5.114.i57 = phi ptr [ %.sroa.5.0.i46, %.lr.ph.i56 ], [ %i.bn, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i ] ; 3 uses
+  %.sroa.11.113.i58 = phi i64 [ %.sroa.11.0.i45, %.lr.ph.i56 ], [ %i.bm, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i ] ; 2 uses
+  %.sroa.19.112.i59 = phi ptr [ %.sroa.19.0.i44, %.lr.ph.i56 ], [ %i.bj, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i ]
   %i.bi = getelementptr i8, ptr %.sroa.5.114.i57, i64 40
-  %.val.i60 = load float, ptr %i.bi, align 8, !alias.scope !433, !noalias !434, !noundef !4 ; 2 uses
-  %.val12.i61 = load float, ptr %i.be, align 8, !alias.scope !433, !noalias !434, !noundef !4 ; 2 uses
-  %brmerge.not.i.i.i = fcmp uno float %.val.i60, %.val12.i61
+  %.val12.i61 = load float, ptr %i.bi, align 8, !alias.scope !433, !noalias !434, !noundef !4 ; 2 uses
+  %brmerge.not.i.i.i = fcmp uno float %.val12.i61, %.val12.i57
   br i1 %brmerge.not.i.i.i, label %bb.z, label %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i, !prof !12
 
 bb.z:                                             ; preds = %.lr.ph.i56.a
@@ -362,7 +368,7 @@ bb.z:                                             ; preds = %.lr.ph.i56.a
   unreachable
 
 _RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCseiMiKruFR5A_24candle_wasm_example_yolo5model4BboxNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvB19_23non_maximum_suppression0E0E0B1b_.exit.i: ; preds = %.lr.ph.i56.a
-  %.mux.i.i.i = fcmp uge float %.val.i60, %.val12.i61 ; 2 uses
+  %.mux.i.i.i = fcmp uge float %.val12.i61, %.val12.i57 ; 2 uses
   %i.bj = getelementptr inbounds i8, ptr %.sroa.19.112.i59, i64 -48 ; 3 uses
   %.sroa.01.0.i.i62 = select i1 %.mux.i.i.i, ptr %2, ptr %i.bj
   %i.bk = getelementptr inbounds nuw [48 x i8], ptr %.sroa.01.0.i.i62, i64 %.sroa.11.113.i58

@@ -205,7 +205,7 @@ bb.cb:                                            ; preds = %.noexc86.i.i
 bb.cc:                                            ; preds = %bb.cw, %.lr.ph209.i.i.i
   %i.oq = phi i32 [ 64, %.lr.ph209.i.i.i ], [ %i.ox, %bb.cw ]
   %.0.i118.i185.i.i = phi i32 [ %.promoted184.i.i, %.lr.ph209.i.i.i ], [ %.0.i118.i186.i.i, %bb.cw ]
-  %i.or = phi ptr [ %i.oe, %.lr.ph209.i.i.i ], [ %i.oy, %bb.cw ] ; 3 uses
+  %i.or = phi ptr [ %i.oe, %.lr.ph209.i.i.i ], [ %i.oy, %bb.cw ] ; 4 uses
   %.0.i118.i182.i.i = phi i32 [ %.promoted184.i.i, %.lr.ph209.i.i.i ], [ %.0.i118.i180.i.i, %bb.cw ] ; 3 uses
   %.sink.i178.i.i = phi i32 [ %.promoted176.i.i, %.lr.ph209.i.i.i ], [ %.sink.i177.i.i, %bb.cw ]
   %.sink312.i175.i.i = phi i32 [ %.promoted.i.i, %.lr.ph209.i.i.i ], [ %.sink312.i174.i.i, %bb.cw ]
@@ -608,7 +608,7 @@ _ZN6icu_7812_GLOBAL__N_120MutableCodePointTrie11compactDataEiPjiiRNS0_11MixedBlo
   br label %bb.fs
 
 _ZN6icu_7812_GLOBAL__N_120MutableCodePointTrie11compactDataEiPjiiRNS0_11MixedBlocksER10UErrorCode.exit.i.i: ; preds = %bb.cw, %bb.cb
-  %.pre.i.i93.ph.i.i = phi ptr [ %i.oe, %bb.cb ], [ %i.oy, %bb.cw ] ; 4 uses
+  %.pre.i.i93.ph.i.i = phi ptr [ %i.oe, %bb.cb ], [ %i.oy, %bb.cw ] ; 5 uses
   %.2.i72.ph.i.i = phi i32 [ 128, %bb.cb ], [ %.6.i.i.i, %bb.cw ] ; 2 uses
   %.pr.i.i = load i32, ptr %3, align 4, !tbaa !17
   %i.yd = icmp slt i32 %.pr.i.i, 1
@@ -620,6 +620,7 @@ _ZN6icu_7812_GLOBAL__N_120MutableCodePointTrie11compactDataEiPjiiRNS0_11MixedBlo
   br label %.body.i.i
 
 .loopexit.split-lp.i.i:                           ; preds = %bb.cx, %.noexc.i.i, %bb.ca
+  %.val247.i.i = phi ptr [ %.pre.i.i93.ph.i.i, %bb.cx ], [ null, %bb.ca ], [ null, %.noexc.i.i ]
   %lpad.loopexit.split-lp.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i
@@ -959,7 +960,7 @@ _ZN6icu_7812_GLOBAL__N_111MixedBlocks4initEii.exit324.i.i.i: ; preds = %.noexc11
 
 bb.dz:                                            ; preds = %bb.dy, %._crit_edge.i319.i.i.i
   %.pre-phi15.i322.i.i.i = phi i64 [ %.pre14.i321.i.i.i, %._crit_edge.i319.i.i.i ], [ %i.aed, %bb.dy ]
-  %i.aeg = phi ptr [ %.pre.i318.i.i.i, %._crit_edge.i319.i.i.i ], [ %i.aee, %bb.dy ]
+  %i.aeg = phi ptr [ %.pre.i318.i.i.i, %._crit_edge.i319.i.i.i ], [ %i.aee, %bb.dy ] ; 2 uses
   store i32 %.0.i317.i.i.i, ptr %i.og, align 4, !tbaa !49
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.aeg, i8 0, i64 %.pre-phi15.i322.i.i.i, i1 false)
   store i32 32, ptr %i.oh, align 8, !tbaa !50
@@ -1362,6 +1363,7 @@ _ZN6icu_7812_GLOBAL__N_120MutableCodePointTrie12compactIndexEiRNS0_11MixedBlocks
 bb.fr:                                            ; preds = %.noexc116.i.i, %bb.dx, %._crit_edge.i95.i.i
   %i.avn = landingpad { ptr, i32 }
           cleanup
+  %.val.pre.i.i = load ptr, ptr %6, align 8, !tbaa !48
   br label %.body.i.i
 
 bb.fs:                                            ; preds = %_ZN6icu_7812_GLOBAL__N_120MutableCodePointTrie12compactIndexEiRNS0_11MixedBlocksER10UErrorCode.exit.i.i, %bb.cz, %_ZN6icu_7812_GLOBAL__N_120MutableCodePointTrie11compactDataEiPjiiRNS0_11MixedBlocksER10UErrorCode.exit.i.i, %_ZN6icu_7812_GLOBAL__N_120MutableCodePointTrie11compactDataEiPjiiRNS0_11MixedBlocksER10UErrorCode.exit.thread.i.i
@@ -1378,8 +1380,8 @@ bb.ft:                                            ; preds = %bb.fs
   unreachable
 
 .body.i.i:                                        ; preds = %bb.fr, %_ZN6icu_7812_GLOBAL__N_111MixedBlocksD2Ev.exit354.i.i.i, %.loopexit.split-lp.i.i, %.loopexit.i.i
+  %.val.i.i = phi ptr [ %i.aeg, %_ZN6icu_7812_GLOBAL__N_111MixedBlocksD2Ev.exit354.i.i.i ], [ %.val.pre.i.i, %bb.fr ], [ %i.or, %.loopexit.i.i ], [ %.val247.i.i, %.loopexit.split-lp.i.i ]
   %.pn.i.i = phi { ptr, i32 } [ %i.aew, %_ZN6icu_7812_GLOBAL__N_111MixedBlocksD2Ev.exit354.i.i.i ], [ %i.avn, %bb.fr ], [ %lpad.loopexit.i.i, %.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ]
-  %.val.i.i = load ptr, ptr %6, align 8, !tbaa !48
   invoke void @uprv_free_78(ptr noundef %.val.i.i)
           to label %_ZN6icu_7812_GLOBAL__N_111MixedBlocksD2Ev.exit118.i.i unwind label %bb.fu
 

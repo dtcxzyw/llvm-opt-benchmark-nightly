@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.c, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   br label %bb.b
 
@@ -213,10 +213,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.n
   %.sroa.0.036 = phi ptr [ %1, %.lr.ph ], [ %.sroa.0.115, %bb.n ] ; 3 uses
   %.sroa.6.035 = phi i64 [ %2, %.lr.ph ], [ %.sroa.6.113, %bb.n ] ; 6 uses
   %i.f = call { i64, ptr } @_RNvXs3_NtNtNtCsaL1QbXo9JQH_3std3sys5stdio4unixNtB5_6StderrNtNtNtCs3oUPovFnLWP_4core2io5write5Write5write(ptr %0, ptr %.sroa.0.036, i64 %.sroa.6.035) ; 2 uses
-  %i.g = extractvalue { i64, ptr } %i.f, 0        ; 2 uses
-  %i.h = extractvalue { i64, ptr } %i.f, 1        ; 12 uses
-  store i64 %i.g, ptr %i.b, align 8
-  store ptr %i.h, ptr %i.d, align 8
+  %i.g = extractvalue { i64, ptr } %i.f, 0
+  %i.h = extractvalue { i64, ptr } %i.f, 1        ; 16 uses
   %i.i = trunc nuw i64 %i.g to i1
   %i.j = ptrtoint ptr %i.h to i64                 ; 8 uses
   br i1 %i.i, label %bb.c, label %bb.g
@@ -242,6 +240,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %bb.e, label %.split21
 
 bb.e:                                             ; preds = %bb.d
+  store ptr %i.h, ptr %i.d, align 8
   call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
   unreachable
 
@@ -259,29 +258,30 @@ bb.f:                                             ; preds = %bb.c
 
 .split21:                                         ; preds = %bb.d
   %i.t = icmp eq i8 %switch.idx.cast.i.i.i, 35
-  br i1 %i.t, label %bb.k, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge
+  br i1 %i.t, label %bb.k, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit
 
 .split22:                                         ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.v = load i8, ptr %i.u, align 8
   %i.w = icmp eq i8 %i.v, 35
-  br i1 %i.w, label %.thread.thread, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge
+  br i1 %i.w, label %.thread.thread, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit
 
 .split:                                           ; preds = %bb.c
   %i.x = getelementptr i8, ptr %i.h, i64 31
   %i.y = load i8, ptr %i.x, align 8
   %i.z = icmp eq i8 %i.y, 35
-  br i1 %i.z, label %bb.m, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge
+  br i1 %i.z, label %bb.m, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit
 
 bb.g:                                             ; preds = %bb.b
   %i.aa = icmp eq ptr %i.h, null
-  br i1 %i.aa, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge, label %bb.h
+  br i1 %i.aa, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ab = icmp ult i64 %.sroa.6.035, %i.j
   br i1 %i.ab, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
+  store ptr %i.h, ptr %i.d, align 8
   call void @_RNvNtNtCs3oUPovFnLWP_4core5slice5index16slice_index_fail(i64 %i.j, i64 %.sroa.6.035, i64 %.sroa.6.035, ptr nonnull align 8 @30) #40
   unreachable
 
@@ -291,10 +291,15 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.n
 
 _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %.noexc
-  br i1 %i.s, label %.thread.thread, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge
+  br i1 %i.s, label %.thread.thread, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit
 
-_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge: ; preds = %bb.n, %bb.g, %.split22, %.split21, %.split, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit, %bb.a
-  %.sroa.07.0 = phi ptr [ null, %bb.a ], [ @29, %bb.g ], [ %i.h, %.split22 ], [ %i.h, %.split21 ], [ %i.h, %.split ], [ %i.h, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ], [ null, %bb.n ]
+_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit: ; preds = %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit, %.split, %.split21, %.split22, %bb.g, %bb.n
+  %.sroa.07.0.ph = phi ptr [ null, %bb.n ], [ @29, %bb.g ], [ %i.h, %.split22 ], [ %i.h, %.split21 ], [ %i.h, %.split ], [ %i.h, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
+  store ptr %i.h, ptr %i.d, align 8
+  br label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge
+
+_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge: ; preds = %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit, %bb.a
+  %.sroa.07.0 = phi ptr [ null, %bb.a ], [ %.sroa.07.0.ph, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit ]
   ret ptr %.sroa.07.0
 
 .thread.thread:                                   ; preds = %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit, %.split22
@@ -310,6 +315,7 @@ bb.k:                                             ; preds = %.split21
   br i1 %.not.i.i.i.i, label %bb.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.l:                                             ; preds = %bb.k
+  store ptr %i.h, ptr %i.d, align 8
   call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
   unreachable
 
@@ -329,11 +335,13 @@ bb.n:                                             ; preds = %bb.j, %_RINvNtCs3oU
   %.sroa.0.115 = phi ptr [ %.sroa.0.036, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ], [ %i.ad, %bb.j ]
   %.sroa.6.113 = phi i64 [ %.sroa.6.035, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ], [ %i.ac, %bb.j ] ; 2 uses
   %i.ah = icmp eq i64 %.sroa.6.113, 0
-  br i1 %i.ah, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge, label %bb.b
+  br i1 %i.ah, label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error14is_interruptedCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit._crit_edge.loopexit, label %bb.b
 
 bb.o:                                             ; preds = %.noexc, %bb.f
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.h, ptr %i.d, align 8
+  store i64 1, ptr %i.b, align 8
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.d) #39
           to label %bb.p unwind label %bb.q
 

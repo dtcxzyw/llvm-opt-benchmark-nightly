@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEE
 
 .noexc15:                                         ; preds = %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i
   %i.c = shl nuw nsw i64 %i.a, 3                  ; 3 uses
-  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 4 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 5 uses
   store ptr %i.d, ptr %0, align 8, !tbaa !413
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -215,6 +215,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEE
   br label %_ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i
 
 _ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %.noexc15, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i
+  %3 = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.d, %.noexc15 ] ; 2 uses
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.g, %.noexc15 ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.h, align 8, !tbaa !415
@@ -366,7 +367,6 @@ bb.l:                                             ; preds = %_ZNSt6vectorIPN3igl
   %i.ba = getelementptr inbounds nuw i8, ptr %i.l, i64 72
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !64
   %i.bc = sext i32 %i.bb to i64
-  %3 = load ptr, ptr %0, align 8, !tbaa !413
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.bc
   store ptr %i.l, ptr %i.bd, align 8, !tbaa !85
   br label %bb.m
@@ -407,11 +407,12 @@ bb.n:                                             ; preds = %.loopexit, %.loopex
   %i.bj = ptrtoint ptr %.sroa.0.1 to i64
   %i.bk = sub i64 %i.bi, %i.bj
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.1, i64 noundef %i.bk) #26
+  %.pre85 = load ptr, ptr %0, align 8, !tbaa !413
   br label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EED2Ev.exit40
 
 _ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EED2Ev.exit40: ; preds = %.thread, %bb.n
+  %4 = phi ptr [ %3, %.thread ], [ %.pre85, %bb.n ] ; 3 uses
   %.pn67 = phi { ptr, i32 } [ %i.m, %.thread ], [ %lpad.phi, %bb.n ]
-  %4 = load ptr, ptr %0, align 8, !tbaa !413      ; 3 uses
   %.not.i.i.i41 = icmp eq ptr %4, null
   br i1 %.not.i.i.i41, label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEESaIS6_EED2Ev.exit42, label %bb.o
 
@@ -814,7 +815,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESa
 
 .noexc15:                                         ; preds = %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i
   %i.c = shl nuw nsw i64 %i.a, 3                  ; 3 uses
-  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 4 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 5 uses
   store ptr %i.d, ptr %0, align 8, !tbaa !428
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -824,6 +825,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESa
   br label %_ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i
 
 _ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %.noexc15, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i
+  %3 = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.d, %.noexc15 ] ; 2 uses
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.g, %.noexc15 ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.h, align 8, !tbaa !430
@@ -975,7 +977,6 @@ bb.l:                                             ; preds = %_ZNSt6vectorIPN3igl
   %i.ba = getelementptr inbounds nuw i8, ptr %i.l, i64 72
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !109
   %i.bc = sext i32 %i.bb to i64
-  %3 = load ptr, ptr %0, align 8, !tbaa !428
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.bc
   store ptr %i.l, ptr %i.bd, align 8, !tbaa !113
   br label %bb.m
@@ -1016,11 +1017,12 @@ bb.n:                                             ; preds = %.loopexit, %.loopex
   %i.bj = ptrtoint ptr %.sroa.0.1 to i64
   %i.bk = sub i64 %i.bi, %i.bj
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.1, i64 noundef %i.bk) #26
+  %.pre85 = load ptr, ptr %0, align 8, !tbaa !428
   br label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EED2Ev.exit40
 
 _ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EED2Ev.exit40: ; preds = %.thread, %bb.n
+  %4 = phi ptr [ %3, %.thread ], [ %.pre85, %bb.n ] ; 3 uses
   %.pn67 = phi { ptr, i32 } [ %i.m, %.thread ], [ %lpad.phi, %bb.n ]
-  %4 = load ptr, ptr %0, align 8, !tbaa !428      ; 3 uses
   %.not.i.i.i41 = icmp eq ptr %4, null
   br i1 %.not.i.i.i41, label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EEESaIS6_EED2Ev.exit42, label %bb.o
 
@@ -1423,7 +1425,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESa
 
 .noexc15:                                         ; preds = %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i
   %i.c = shl nuw nsw i64 %i.a, 3                  ; 3 uses
-  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 4 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 5 uses
   store ptr %i.d, ptr %0, align 8, !tbaa !443
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1433,6 +1435,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESa
   br label %_ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i
 
 _ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %.noexc15, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i
+  %3 = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.d, %.noexc15 ] ; 2 uses
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.g, %.noexc15 ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.h, align 8, !tbaa !445
@@ -1584,7 +1587,6 @@ bb.l:                                             ; preds = %_ZNSt6vectorIPN3igl
   %i.ba = getelementptr inbounds nuw i8, ptr %i.l, i64 72
   %i.bb = load i32, ptr %i.ba, align 8, !tbaa !122
   %i.bc = sext i32 %i.bb to i64
-  %3 = load ptr, ptr %0, align 8, !tbaa !443
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.bc
   store ptr %i.l, ptr %i.bd, align 8, !tbaa !126
   br label %bb.m
@@ -1625,11 +1627,12 @@ bb.n:                                             ; preds = %.loopexit, %.loopex
   %i.bj = ptrtoint ptr %.sroa.0.1 to i64
   %i.bk = sub i64 %i.bi, %i.bj
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.1, i64 noundef %i.bk) #26
+  %.pre85 = load ptr, ptr %0, align 8, !tbaa !443
   br label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EED2Ev.exit40
 
 _ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EED2Ev.exit40: ; preds = %.thread, %bb.n
+  %4 = phi ptr [ %3, %.thread ], [ %.pre85, %bb.n ] ; 3 uses
   %.pn67 = phi { ptr, i32 } [ %i.m, %.thread ], [ %lpad.phi, %bb.n ]
-  %4 = load ptr, ptr %0, align 8, !tbaa !443      ; 3 uses
   %.not.i.i.i41 = icmp eq ptr %4, null
   br i1 %.not.i.i.i41, label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EEESaIS6_EED2Ev.exit42, label %bb.o
 
@@ -2032,7 +2035,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEE
 
 .noexc15:                                         ; preds = %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i
   %i.c = shl nuw nsw i64 %i.a, 3                  ; 3 uses
-  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 4 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 5 uses
   store ptr %i.d, ptr %0, align 8, !tbaa !458
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2042,6 +2045,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEE
   br label %_ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i
 
 _ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %.noexc15, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EEC2EmRKS7_.exit.thread.i
+  %3 = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.d, %.noexc15 ] ; 2 uses
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.g, %.noexc15 ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.h, align 8, !tbaa !460
@@ -2193,7 +2197,6 @@ bb.l:                                             ; preds = %_ZNSt6vectorIPN3igl
   %i.ba = getelementptr inbounds nuw i8, ptr %i.l, i64 64
   %i.bb = load i32, ptr %i.ba, align 16, !tbaa !140
   %i.bc = sext i32 %i.bb to i64
-  %3 = load ptr, ptr %0, align 8, !tbaa !458
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.bc
   store ptr %i.l, ptr %i.bd, align 8, !tbaa !145
   br label %bb.m
@@ -2234,11 +2237,12 @@ bb.n:                                             ; preds = %.loopexit, %.loopex
   %i.bj = ptrtoint ptr %.sroa.0.1 to i64
   %i.bk = sub i64 %i.bi, %i.bj
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.1, i64 noundef %i.bk) #26
+  %.pre85 = load ptr, ptr %0, align 8, !tbaa !458
   br label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EED2Ev.exit40
 
 _ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EED2Ev.exit40: ; preds = %.thread, %bb.n
+  %4 = phi ptr [ %3, %.thread ], [ %.pre85, %bb.n ] ; 3 uses
   %.pn67 = phi { ptr, i32 } [ %i.m, %.thread ], [ %lpad.phi, %bb.n ]
-  %4 = load ptr, ptr %0, align 8, !tbaa !458      ; 3 uses
   %.not.i.i.i41 = icmp eq ptr %4, null
   br i1 %.not.i.i.i41, label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EEESaIS6_EED2Ev.exit42, label %bb.o
 
@@ -2641,7 +2645,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESa
 
 .noexc15:                                         ; preds = %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EE17_S_check_init_lenEmRKS7_.exit.i
   %i.c = shl nuw nsw i64 %i.a, 3                  ; 3 uses
-  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 4 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27 ; 5 uses
   store ptr %i.d, ptr %0, align 8, !tbaa !471
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %i.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -2651,6 +2655,7 @@ _ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESa
   br label %_ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i
 
 _ZNKSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %.noexc15, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EEC2EmRKS7_.exit.thread.i
+  %3 = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.d, %.noexc15 ] ; 2 uses
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EEC2EmRKS7_.exit.thread.i ], [ %i.g, %.noexc15 ]
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.0.i.i.i.i.i.i.i, ptr %i.h, align 8, !tbaa !473
@@ -2802,7 +2807,6 @@ bb.l:                                             ; preds = %_ZNSt6vectorIPN3igl
   %i.ba = getelementptr inbounds nuw i8, ptr %i.l, i64 64
   %i.bb = load i32, ptr %i.ba, align 16, !tbaa !151
   %i.bc = sext i32 %i.bb to i64
-  %3 = load ptr, ptr %0, align 8, !tbaa !471
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.bc
   store ptr %i.l, ptr %i.bd, align 8, !tbaa !155
   br label %bb.m
@@ -2843,11 +2847,12 @@ bb.n:                                             ; preds = %.loopexit, %.loopex
   %i.bj = ptrtoint ptr %.sroa.0.1 to i64
   %i.bk = sub i64 %i.bi, %i.bj
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.1, i64 noundef %i.bk) #26
+  %.pre85 = load ptr, ptr %0, align 8, !tbaa !471
   br label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EED2Ev.exit40
 
 _ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EED2Ev.exit40: ; preds = %.thread, %bb.n
+  %4 = phi ptr [ %3, %.thread ], [ %.pre85, %bb.n ] ; 3 uses
   %.pn67 = phi { ptr, i32 } [ %i.m, %.thread ], [ %lpad.phi, %bb.n ]
-  %4 = load ptr, ptr %0, align 8, !tbaa !471      ; 3 uses
   %.not.i.i.i41 = icmp eq ptr %4, null
   br i1 %.not.i.i.i41, label %_ZNSt6vectorIPN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EEESaIS6_EED2Ev.exit42, label %bb.o
 

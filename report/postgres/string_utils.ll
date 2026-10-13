@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.critedge, %bb.e
   %.043 = phi ptr [ %i.n, %bb.e ], [ %spec.select, %.critedge ] ; 3 uses
   %.041 = phi ptr [ %i.m, %bb.e ], [ %i.aa, %.critedge ] ; 2 uses
   %.0 = phi i32 [ 0, %bb.e ], [ %i.ad, %.critedge ] ; 3 uses
-  %i.o = load i8, ptr %.043, align 1
+  %i.o = load i8, ptr %.043, align 1              ; 2 uses
   switch i8 %i.o, label %bb.g [
     i8 125, label %bb.m
     i8 0, label %.loopexit
@@ -217,9 +217,9 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %.backedge, %bb.g
-  %.144 = phi ptr [ %.043, %bb.g ], [ %.144.be, %.backedge ] ; 5 uses
-  %.1.a = phi ptr [ %.041, %bb.g ], [ %.1.be, %.backedge ] ; 5 uses
-  %3 = load i8, ptr %.144, align 1                ; 2 uses
+  %3 = phi i8 [ %.pr, %.backedge ], [ %i.o, %bb.g ] ; 2 uses
+  %.1.a = phi ptr [ %.144.be, %.backedge ], [ %.043, %bb.g ] ; 4 uses
+  %.1 = phi ptr [ %.1.be, %.backedge ], [ %.041, %bb.g ] ; 5 uses
   switch i8 %3, label %bb.i [
     i8 125, label %.critedge
     i8 44, label %.critedge
@@ -228,14 +228,14 @@ bb.h:                                             ; preds = %.backedge, %bb.g
   ]
 
 bb.i:                                             ; preds = %bb.h
-  %i.r = getelementptr inbounds nuw i8, ptr %.144, i64 1
-  %i.s = getelementptr inbounds nuw i8, ptr %.1.a, i64 1
-  store i8 %3, ptr %.1.a, align 1
+  %i.r = getelementptr inbounds nuw i8, ptr %.1.a, i64 1
+  %i.s = getelementptr inbounds nuw i8, ptr %.1, i64 1
+  store i8 %3, ptr %.1, align 1
   br label %.backedge
 
 .preheader:                                       ; preds = %bb.h, %bb.k
-  %.144.pn = phi ptr [ %.346, %bb.k ], [ %.144, %bb.h ] ; 3 uses
-  %.2 = phi ptr [ %i.y, %bb.k ], [ %.1.a, %bb.h ] ; 3 uses
+  %.144.pn = phi ptr [ %.346, %bb.k ], [ %.1.a, %bb.h ] ; 3 uses
+  %.2 = phi ptr [ %i.y, %bb.k ], [ %.1, %bb.h ]   ; 3 uses
   %.245 = getelementptr inbounds nuw i8, ptr %.144.pn, i64 1 ; 2 uses
   %i.t = load i8, ptr %.245, align 1              ; 2 uses
   switch i8 %i.t, label %bb.k [
@@ -262,17 +262,18 @@ bb.l:                                             ; preds = %.preheader
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.l, %bb.i
-  %.144.be = phi ptr [ %i.r, %bb.i ], [ %i.z, %bb.l ]
+  %.144.be = phi ptr [ %i.r, %bb.i ], [ %i.z, %bb.l ] ; 2 uses
   %.1.be = phi ptr [ %i.s, %bb.i ], [ %.2, %bb.l ]
+  %.pr = load i8, ptr %.144.be, align 1
   br label %bb.h, !llvm.loop !24
 
 .critedge:                                        ; preds = %bb.h, %bb.h
-  %i.aa = getelementptr inbounds nuw i8, ptr %.1.a, i64 1
-  store i8 0, ptr %.1.a, align 1
-  %i.ab = load i8, ptr %.144, align 1
+  %i.aa = getelementptr inbounds nuw i8, ptr %.1, i64 1
+  store i8 0, ptr %.1, align 1
+  %i.ab = load i8, ptr %.1.a, align 1
   %i.ac = icmp eq i8 %i.ab, 44
   %spec.select.idx = zext i1 %i.ac to i64
-  %spec.select = getelementptr inbounds nuw i8, ptr %.144, i64 %spec.select.idx
+  %spec.select = getelementptr inbounds nuw i8, ptr %.1.a, i64 %spec.select.idx
   %i.ad = add i32 %.0, 1
   br label %bb.f, !llvm.loop !25
 

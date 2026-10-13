@@ -205,7 +205,7 @@ define internal fastcc range(i32 -1, 1) i32 @js_os_poll_internal(ptr noundef %0,
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
   %3 = alloca %struct.JSValue, align 8            ; 7 uses
-  %i.b = alloca i32, align 4                      ; 6 uses
+  %i.b = alloca i32, align 4                      ; 5 uses
   %4 = alloca [64 x %struct.pollfd], align 16     ; 4 uses
   %5 = alloca %struct.timespec, align 8           ; 6 uses
   %i.c = tail call ptr @JS_GetRuntime(ptr noundef %0) #34 ; 2 uses
@@ -293,7 +293,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not171, label %bb.bc, label %bb.k
 
 bb.k:                                             ; preds = %bb.h, %bb.j, %bb.i, %.thread
-  %i.ah = phi i32 [ %i.z, %bb.h ], [ %i.z, %bb.j ], [ %i.z, %bb.i ], [ %1, %.thread ] ; 3 uses
+  %i.ah = phi i32 [ %i.z, %bb.h ], [ %i.z, %bb.j ], [ %i.z, %bb.i ], [ %1, %.thread ] ; 4 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
   %.1123203 = load ptr, ptr %i.ai, align 8, !tbaa !30 ; 3 uses
   %.not141204 = icmp eq ptr %.1123203, %i.e
@@ -490,8 +490,7 @@ bb.z:                                             ; preds = %bb.y, %.lr.ph228
 
 .loopexit173:                                     ; preds = %bb.z, %bb.x, %._crit_edge221
   %i.da = sext i32 %.2113 to i64
-  %6 = load i32, ptr %i.b, align 4, !tbaa !16
-  %i.db = call i32 @poll(ptr noundef nonnull %.0117, i64 noundef %i.da, i32 noundef %6) #34 ; 3 uses
+  %i.db = call i32 @poll(ptr noundef nonnull %.0117, i64 noundef %i.da, i32 noundef %i.ah) #34 ; 3 uses
   %i.dc = icmp slt i32 %i.db, 0
   br i1 %i.dc, label %.loopexit172, label %.preheader
 
@@ -894,7 +893,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c
 define internal { i64, i64 } @js_std_urlGet(ptr noundef %0, i64 %1, i64 %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4) #0 {
 bb.a:
   %5 = alloca %struct.DynBuf, align 8             ; 22 uses
-  %6 = alloca %struct.DynBuf, align 8             ; 14 uses
+  %6 = alloca %struct.DynBuf, align 8             ; 13 uses
   %7 = alloca %struct.DynBuf, align 8             ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
@@ -1297,7 +1296,7 @@ bb.aq:                                            ; preds = %bb.ap
   store i64 %i.dw, ptr %i.cx, align 8, !tbaa !63
   %i.dx = tail call i64 @fread(ptr noundef nonnull %i.cf, i64 noundef 1, i64 noundef 4096, ptr noundef nonnull %i.bu) ; 2 uses
   %i.dy = icmp eq i64 %i.dx, 0
-  br i1 %i.dy, label %._crit_edge, label %.lr.ph
+  br i1 %i.dy, label %bb.au, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.aq
   %i.dz = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
@@ -1336,14 +1335,18 @@ dbuf_put.exit:                                    ; preds = %bb.as, %bb.at
   %i.el = icmp eq i64 %i.ek, 0
   br i1 %i.el, label %._crit_edge, label %bb.ar
 
-._crit_edge:                                      ; preds = %dbuf_put.exit, %bb.aq
+._crit_edge:                                      ; preds = %dbuf_put.exit
   %i.em = getelementptr inbounds nuw i8, ptr %6, i64 24
-  %.val = load i8, ptr %i.em, align 8, !tbaa !77, !range !67, !noundef !68
+  %.val = load i8, ptr %i.em, align 8, !tbaa !77, !range !67
   %i.en = trunc nuw i8 %.val to i1
-  br i1 %i.en, label %bb.bf, label %bb.au
+  br i1 %i.en, label %._crit_edge._crit_edge, label %bb.au
 
-bb.au:                                            ; preds = %._crit_edge
-  %i.eo = load ptr, ptr %6, align 8, !tbaa !64    ; 2 uses
+._crit_edge._crit_edge:                           ; preds = %._crit_edge
+  %.pre287 = load ptr, ptr %6, align 8, !tbaa !64
+  br label %bb.bf
+
+bb.au:                                            ; preds = %bb.aq, %._crit_edge
+  %i.eo = load ptr, ptr %6, align 8, !tbaa !64    ; 4 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.eq = load i64, ptr %i.ep, align 8, !tbaa !63 ; 2 uses
   br i1 %.0220, label %bb.av, label %bb.aw
@@ -1368,13 +1371,13 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   br i1 %i.eu, label %bb.bf, label %http_get_header_line.exit.thread
 
 http_get_header_line.exit.thread:                 ; preds = %.split.us.i, %.split.i, %http_get_status.exit, %bb.ax
+  %8 = phi ptr [ %i.eo, %bb.ax ], [ null, %http_get_status.exit ], [ null, %.split.i ], [ null, %.split.us.i ] ; 2 uses
   %.sroa.12.1 = phi i64 [ %.sroa.12.0, %bb.ax ], [ 2, %http_get_status.exit ], [ 2, %.split.i ], [ 2, %.split.us.i ] ; 4 uses
   %.sroa.031.sroa.0.1 = phi i32 [ %.sroa.031.sroa.0.0, %bb.ax ], [ 0, %http_get_status.exit ], [ 0, %.split.i ], [ 0, %.split.us.i ] ; 3 uses
   %.sroa.031.sroa.11.1 = phi i32 [ %.sroa.031.sroa.11.0, %bb.ax ], [ 0, %http_get_status.exit ], [ 0, %.split.i ], [ 0, %.split.us.i ] ; 3 uses
   %.1 = phi i32 [ %.08.i, %bb.ax ], [ %.08.i, %http_get_status.exit ], [ %.08.i, %.split.i ], [ 0, %.split.us.i ]
   tail call void @js_free(ptr noundef %0, ptr noundef nonnull %i.cf) #34
   %i.ev = tail call i32 @pclose(ptr noundef nonnull %i.bu) ; 0 uses
-  %8 = load ptr, ptr %6, align 8, !tbaa !64       ; 2 uses
   %.not.i192 = icmp eq ptr %8, null
   br i1 %.not.i192, label %dbuf_free.exit193, label %bb.ay
 
@@ -1446,13 +1449,13 @@ dbuf_free.exit195:                                ; preds = %bb.bd, %bb.be
   %.sroa.7.0.extract.shift141 = and i64 %.sroa.021.0, -4294967296
   br label %dbuf_free.exit
 
-bb.bf:                                            ; preds = %bb.ap, %._crit_edge, %bb.ax, %bb.ad
-  %.sroa.12.2.ph = phi i64 [ 3, %bb.ad ], [ %.sroa.12.0, %bb.ax ], [ 3, %._crit_edge ], [ 3, %bb.ap ] ; 2 uses
-  %.sroa.031.sroa.0.2.ph = phi i32 [ 0, %bb.ad ], [ %.sroa.031.sroa.0.0, %bb.ax ], [ 0, %._crit_edge ], [ 0, %bb.ap ] ; 2 uses
-  %.sroa.031.sroa.11.2.ph = phi i32 [ 0, %bb.ad ], [ %.sroa.031.sroa.11.0, %bb.ax ], [ 0, %._crit_edge ], [ 0, %bb.ap ] ; 2 uses
+bb.bf:                                            ; preds = %._crit_edge._crit_edge, %bb.ap, %bb.ax, %bb.ad
+  %9 = phi ptr [ null, %bb.ad ], [ %i.eo, %bb.ax ], [ %.pre287, %._crit_edge._crit_edge ], [ null, %bb.ap ] ; 2 uses
+  %.sroa.12.2.ph = phi i64 [ 3, %bb.ad ], [ %.sroa.12.0, %bb.ax ], [ 3, %._crit_edge._crit_edge ], [ 3, %bb.ap ] ; 2 uses
+  %.sroa.031.sroa.0.2.ph = phi i32 [ 0, %bb.ad ], [ %.sroa.031.sroa.0.0, %bb.ax ], [ 0, %._crit_edge._crit_edge ], [ 0, %bb.ap ] ; 2 uses
+  %.sroa.031.sroa.11.2.ph = phi i32 [ 0, %bb.ad ], [ %.sroa.031.sroa.11.0, %bb.ax ], [ 0, %._crit_edge._crit_edge ], [ 0, %bb.ap ] ; 2 uses
   %i.fs = tail call i32 @pclose(ptr noundef nonnull %i.bu) ; 0 uses
   tail call void @js_free(ptr noundef %0, ptr noundef %i.cf) #34
-  %9 = load ptr, ptr %6, align 8, !tbaa !64       ; 2 uses
   %.not.i196 = icmp eq ptr %9, null
   br i1 %.not.i196, label %dbuf_free.exit197, label %bb.bg
 

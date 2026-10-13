@@ -204,7 +204,7 @@ bb.cd:                                            ; preds = %_ZN4cvc58internal12
           to label %bb.ce unwind label %bb.co
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.fp = load ptr, ptr %22, align 8, !tbaa !29
+  %i.fp = load ptr, ptr %22, align 8, !tbaa !29   ; 3 uses
   %.not.i68 = icmp eq ptr %i.fo, %i.fp
   br i1 %.not.i68, label %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit73, label %bb.cf, !prof !16
 
@@ -225,10 +225,14 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.cg
   invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %i.fo)
-          to label %_ZN4cvc58internal4expr9NodeValue3decEv.exit.i70 unwind label %bb.cp
+          to label %._ZN4cvc58internal4expr9NodeValue3decEv.exit.i70_crit_edge unwind label %bb.cp
 
-_ZN4cvc58internal4expr9NodeValue3decEv.exit.i70:  ; preds = %bb.ch, %bb.cg, %bb.cf
-  %24 = load ptr, ptr %22, align 8, !tbaa !29     ; 5 uses
+._ZN4cvc58internal4expr9NodeValue3decEv.exit.i70_crit_edge: ; preds = %bb.ch
+  %.pre88 = load ptr, ptr %22, align 8, !tbaa !29
+  br label %_ZN4cvc58internal4expr9NodeValue3decEv.exit.i70
+
+_ZN4cvc58internal4expr9NodeValue3decEv.exit.i70:  ; preds = %._ZN4cvc58internal4expr9NodeValue3decEv.exit.i70_crit_edge, %bb.cg, %bb.cf
+  %24 = phi ptr [ %.pre88, %._ZN4cvc58internal4expr9NodeValue3decEv.exit.i70_crit_edge ], [ %i.fp, %bb.cg ], [ %i.fp, %bb.cf ] ; 5 uses
   store ptr %24, ptr %0, align 8, !tbaa !29
   %i.fx = load i64, ptr %24, align 8              ; 3 uses
   %i.fy = lshr i64 %i.fx, 40
