@@ -205,12 +205,12 @@ _ZN4ncnn3MatD2Ev.exit948.us.us.us.i:              ; preds = %bb.cu
   %i.azr = insertelement <2 x float> poison, float %i.azn, i64 0
   %i.azs = shufflevector <2 x float> %i.azr, <2 x float> poison, <2 x i32> zeroinitializer
   %i.azt = fmul fast <2 x float> %i.azq, %i.azs
-  %i.azu = fadd fast <2 x float> %i.ayy, %i.azt
+  %i.azu = fadd fast <2 x float> %i.azt, %i.ayy
   %i.azv = shufflevector <4 x float> %i.azp, <4 x float> poison, <2 x i32> <i32 1, i32 3>
   %i.azw = insertelement <2 x float> poison, float %i.azo, i64 0
   %i.azx = shufflevector <2 x float> %i.azw, <2 x float> poison, <2 x i32> zeroinitializer
   %i.azy = fmul fast <2 x float> %i.azv, %i.azx
-  %i.azz = fadd fast <2 x float> %i.azy, %i.azu
+  %i.azz = fadd fast <2 x float> %i.azu, %i.azy
   br label %.loopexit2482.us.us.us.i
 
 .loopexit2482.us.us.us.i:                         ; preds = %_ZN4ncnn3MatD2Ev.exit948.us.us.us.i, %bb.cu, %bb.ct
@@ -613,14 +613,14 @@ _ZN4ncnn3MatD2Ev.exit938.us.us.us.i:              ; preds = %bb.dw
   %i.boq = load float, ptr %gep3078.us.us.us.i, align 4, !tbaa !39
   %i.bor = load float, ptr %i.bok, align 4, !tbaa !39
   %i.bos = fmul fast float %i.bor, %i.boq
-  %i.bot = fadd fast float %.37313081.us.us.us.i, %i.bos
+  %i.bot = fadd fast float %i.bos, %.37313081.us.us.us.i
   %.reass3076.us.us.us.1.i = mul i64 %factor.op.mul3075.us.us.us.i, %i.bnv
   %gep3078.us.us.us.1.i = getelementptr i8, ptr %invariant.gep3077.us.us.us.i, i64 %.reass3076.us.us.us.1.i
   %i.bou = load float, ptr %gep3078.us.us.us.1.i, align 4, !tbaa !39
   %i.bov = getelementptr inbounds nuw i8, ptr %i.bok, i64 4
   %i.bow = load float, ptr %i.bov, align 4, !tbaa !39
   %i.box = fmul fast float %i.bow, %i.bou
-  %i.boy = fadd fast float %i.box, %i.bot
+  %i.boy = fadd fast float %i.bot, %i.box
   br label %.loopexit.us.us.us.i
 
 .loopexit.us.us.us.i:                             ; preds = %_ZN4ncnn3MatD2Ev.exit938.us.us.us.i, %bb.dw, %bb.dv
@@ -1023,7 +1023,7 @@ _ZN4ncnn3MatD2Ev.exit948.us.us.us.i:              ; preds = %bb.bt
   %i.bea = bitcast <2 x i32> %i.bdz to <2 x float>
   %i.beb = shufflevector <2 x float> %i.bea, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bec = fmul fast <2 x float> %i.beb, %i.bdy
-  %i.bed = fadd fast <2 x float> %i.bda, %i.bec
+  %i.bed = fadd fast <2 x float> %i.bec, %i.bda
   %i.bee = zext i16 %i.bdq to i32
   %i.bef = shl nuw i32 %i.bee, 16
   %i.beg = bitcast <2 x i32> %i.bdw to <2 x float>
@@ -1031,7 +1031,7 @@ _ZN4ncnn3MatD2Ev.exit948.us.us.us.i:              ; preds = %bb.bt
   %i.bei = bitcast <2 x i32> %i.beh to <2 x float>
   %i.bej = shufflevector <2 x float> %i.bei, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bek = fmul fast <2 x float> %i.bej, %i.beg
-  %i.bel = fadd fast <2 x float> %i.bek, %i.bed
+  %i.bel = fadd fast <2 x float> %i.bed, %i.bek
   br label %.loopexit2552.us.us.us.i
 
 .loopexit2552.us.us.us.i:                         ; preds = %_ZN4ncnn3MatD2Ev.exit948.us.us.us.i, %bb.bt, %bb.bs
@@ -1434,7 +1434,7 @@ _ZN4ncnn3MatD2Ev.exit938.us.us.us.i:              ; preds = %bb.cv
   %i.bvp = shl nuw i32 %i.bvo, 16
   %i.bvq = bitcast i32 %i.bvp to float
   %i.bvr = fmul fast float %i.bvq, %i.bvm
-  %i.bvs = fadd fast float %.37313151.us.us.us.i, %i.bvr
+  %i.bvs = fadd fast float %i.bvr, %.37313151.us.us.us.i
   %.reass3146.us.us.us.1.i = mul i64 %factor.op.mul3145.us.us.us.i, %i.buo
   %gep3148.us.us.us.1.i = getelementptr i8, ptr %invariant.gep3147.us.us.us.i, i64 %.reass3146.us.us.us.1.i
   %i.bvt = load i16, ptr %gep3148.us.us.us.1.i, align 2, !tbaa !89
@@ -1447,7 +1447,7 @@ _ZN4ncnn3MatD2Ev.exit938.us.us.us.i:              ; preds = %bb.cv
   %i.bwa = shl nuw i32 %i.bvz, 16
   %i.bwb = bitcast i32 %i.bwa to float
   %i.bwc = fmul fast float %i.bwb, %i.bvw
-  %i.bwd = fadd fast float %i.bwc, %i.bvs
+  %i.bwd = fadd fast float %i.bvs, %i.bwc
   br label %.loopexit.us.us.us.i
 
 .loopexit.us.us.us.i:                             ; preds = %_ZN4ncnn3MatD2Ev.exit938.us.us.us.i, %bb.cv, %bb.cu
