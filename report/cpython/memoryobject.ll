@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.critedge
 
 bb.c:                                             ; preds = %.lr.ph, %bb.m
-  %.01940 = phi i64 [ 0, %.lr.ph ], [ %i.bg, %bb.m ] ; 6 uses
+  %.01940 = phi i64 [ 0, %.lr.ph ], [ %i.bg, %bb.m ] ; 10 uses
   %.02039 = phi ptr [ %i.a, %.lr.ph ], [ %phi.call, %bb.m ] ; 2 uses
   %i.n = getelementptr [8 x i8], ptr %i.h, i64 %.01940
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !46
@@ -215,9 +215,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.m
 
 .split:                                           ; preds = %bb.c
   %i.s = load ptr, ptr %i.i, align 8, !tbaa !68
-  %sext = shl i64 %.01940, 32
-  %2 = ashr exact i64 %sext, 32                   ; 3 uses
-  %i.t = getelementptr [8 x i8], ptr %i.s, i64 %2
+  %i.t = getelementptr [8 x i8], ptr %i.s, i64 %.01940
   %i.u = load i64, ptr %i.t, align 8, !tbaa !59   ; 2 uses
   %i.v = icmp slt i64 %i.q, 0
   %i.w = select i1 %i.v, i64 %i.u, i64 0
@@ -236,7 +234,7 @@ bb.d:                                             ; preds = %.split
 
 bb.e:                                             ; preds = %.split
   %i.ac = load ptr, ptr %i.j, align 8, !tbaa !69
-  %i.ad = getelementptr [8 x i8], ptr %i.ac, i64 %2
+  %i.ad = getelementptr [8 x i8], ptr %i.ac, i64 %.01940
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !59
   %i.af = mul i64 %i.ae, %spec.select.i
   %i.ag = getelementptr i8, ptr %.02039, i64 %i.af ; 3 uses
@@ -245,7 +243,7 @@ bb.e:                                             ; preds = %.split
   br i1 %.not25.i, label %lookup_dimension.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ai = getelementptr [8 x i8], ptr %i.ah, i64 %2
+  %i.ai = getelementptr [8 x i8], ptr %i.ah, i64 %.01940
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !59 ; 2 uses
   %i.ak = icmp sgt i64 %i.aj, -1
   br i1 %i.ak, label %bb.g, label %lookup_dimension.exit
@@ -262,9 +260,7 @@ bb.h:                                             ; preds = %bb.c
 
 .split23:                                         ; preds = %bb.h
   %i.ao = load ptr, ptr %i.i, align 8, !tbaa !68
-  %sext35 = shl i64 %.01940, 32
-  %3 = ashr exact i64 %sext35, 32                 ; 3 uses
-  %i.ap = getelementptr [8 x i8], ptr %i.ao, i64 %3
+  %i.ap = getelementptr [8 x i8], ptr %i.ao, i64 %.01940
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !59 ; 2 uses
   %or.cond.i29 = icmp sgt i64 %i.aq, 0
   br i1 %or.cond.i29, label %bb.j, label %bb.i
@@ -279,7 +275,7 @@ bb.i:                                             ; preds = %.split23
 bb.j:                                             ; preds = %.split23
   %spec.select.i27 = add nsw i64 %i.aq, -1
   %i.av = load ptr, ptr %i.j, align 8, !tbaa !69
-  %i.aw = getelementptr [8 x i8], ptr %i.av, i64 %3
+  %i.aw = getelementptr [8 x i8], ptr %i.av, i64 %.01940
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !59
   %i.ay = mul i64 %i.ax, %spec.select.i27
   %i.az = getelementptr i8, ptr %.02039, i64 %i.ay ; 3 uses
@@ -288,7 +284,7 @@ bb.j:                                             ; preds = %.split23
   br i1 %.not25.i31, label %lookup_dimension.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.bb = getelementptr [8 x i8], ptr %i.ba, i64 %3
+  %i.bb = getelementptr [8 x i8], ptr %i.ba, i64 %.01940
   %i.bc = load i64, ptr %i.bb, align 8, !tbaa !59 ; 2 uses
   %i.bd = icmp sgt i64 %i.bc, -1
   br i1 %i.bd, label %bb.l, label %lookup_dimension.exit

@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %bb.n
   br label %bb.ad
 
 bb.ad:                                            ; preds = %._crit_edge, %_ZNK6vectorImLb0EjE4sizeEv.exit
-  %i.ds = phi i32 [ %.150.lcssa, %._crit_edge ], [ %i.af, %_ZNK6vectorImLb0EjE4sizeEv.exit ] ; 4 uses
+  %i.ds = phi i32 [ %.150.lcssa, %._crit_edge ], [ %i.af, %_ZNK6vectorImLb0EjE4sizeEv.exit ] ; 3 uses
   %.153.lcssa = phi i32 [ %.0.i, %._crit_edge ], [ %.052236, %_ZNK6vectorImLb0EjE4sizeEv.exit ]
   br i1 %i.ai, label %.lr.ph114.preheader, label %bb.ae
 
@@ -225,7 +225,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 .lr.ph114:                                        ; preds = %.lr.ph114.preheader, %bb.ai
   %i.ea = phi ptr [ %i.ah, %.lr.ph114.preheader ], [ %i.em, %bb.ai ] ; 3 uses
-  %indvars.iv139 = phi i64 [ 0, %.lr.ph114.preheader ], [ %indvars.iv.next140, %bb.ai ] ; 7 uses
+  %indvars.iv139 = phi i64 [ 0, %.lr.ph114.preheader ], [ %indvars.iv.next140, %bb.ai ] ; 6 uses
   %i.eb = load ptr, ptr %4, align 8, !tbaa !11    ; 8 uses
   %i.ec = getelementptr inbounds nuw [8 x i8], ptr %i.eb, i64 %indvars.iv139 ; 2 uses
   %i.ed = load i64, ptr %i.ec, align 8, !tbaa !14 ; 2 uses
@@ -276,17 +276,13 @@ bb.ai:                                            ; preds = %.noexc80, %bb.af
   br i1 %i.et, label %.lr.ph122, label %._crit_edge123.thread
 
 .lr.ph122:                                        ; preds = %._crit_edge115
-  %i.eu = sub nuw i32 %i.ds, %i.es                ; 3 uses
-  %5 = trunc i64 %indvars.iv139 to i32
-  %6 = xor i32 %5, -1
-  %7 = add i32 %i.ds, %6                          ; 2 uses
-  %i.ev = zext i32 %7 to i64
-  %8 = add nuw nsw i64 %i.ev, 1                   ; 2 uses
-  %min.iters.check = icmp ult i32 %7, 3
+  %i.eu = sub nuw i32 %i.ds, %i.es                ; 4 uses
+  %i.ev = zext i32 %i.eu to i64                   ; 3 uses
+  %min.iters.check = icmp ult i32 %i.eu, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph122
-  %n.vec = and i64 %8, 8589934588                 ; 4 uses
+  %n.vec = and i64 %i.ev, 4294967292              ; 4 uses
   %i.ew = add nuw i64 %indvars.iv139, %n.vec
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %i.eb, i64 %indvars.iv139
   br label %vector.body
@@ -306,7 +302,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.fc, label %middle.block, label %vector.body, !llvm.loop !39
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %8, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %i.ev
   br i1 %cmp.n, label %._crit_edge123.thread, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph122, %middle.block
@@ -323,8 +319,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i64 %i.fe, ptr %i.ff, align 8, !tbaa !14
   %indvars.iv.next147 = add nuw nsw i64 %indvars.iv146, 1
   %indvars.iv.next145 = add nuw nsw i64 %indvars.iv144, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next145 to i32
-  %exitcond151.not = icmp eq i32 %i.eu, %lftr.wideiv
+  %exitcond151.not = icmp eq i64 %indvars.iv.next145, %i.ev
   br i1 %exitcond151.not, label %._crit_edge123.thread, label %scalar.ph, !llvm.loop !40
 
 ._crit_edge123:                                   ; preds = %bb.ai

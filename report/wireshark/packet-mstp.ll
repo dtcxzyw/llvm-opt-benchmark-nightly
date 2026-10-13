@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   br i1 %or.cond, label %bb.e, label %bb.o
 
 bb.e:                                             ; preds = %bb.d
-  %i.em = add i32 %i.el, 2                        ; 3 uses
+  %i.em = add i32 %i.el, 2                        ; 4 uses
   %i.en = load ptr, ptr %i.g, align 8
   %i.eo = zext i32 %i.em to i64                   ; 4 uses
   %i.ep = call ptr @tvb_memdup(ptr noundef %i.en, ptr noundef %0, i32 noundef %i.v, i64 noundef %i.eo) ; 30 uses
@@ -218,19 +218,18 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not66.i, label %cobs_decode.exit.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.f
-  %5 = trunc nuw i64 %i.er to i32                 ; 2 uses
-  %xtraiter = and i32 %5, 1
-  %i.es = icmp eq i64 %i.er, 1
+  %xtraiter = and i64 %i.er, 1
+  %i.es = icmp eq i32 %i.em, 6
   br i1 %i.es, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i32 %5, -2
+  %unroll_iter = and i64 %i.er, -2
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i.new
-  %i.et = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %8, %.lr.ph.i ] ; 3 uses
+  %i.et = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %i.ey, %.lr.ph.i ] ; 3 uses
   %.02562.i = phi i32 [ -1, %.lr.ph.preheader.i.new ], [ %crc.next.i.i.1, %.lr.ph.i ] ; 2 uses
-  %niter = phi i32 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ]
+  %niter = phi i64 [ 0, %.lr.ph.preheader.i.new ], [ %niter.next.1, %.lr.ph.i ]
   %i.eu = getelementptr i8, ptr %i.ep, i64 %i.et
   %i.ev = load i8, ptr %i.eu, align 1
   %crc.le.shift.i.i = lshr i32 %.02562.i, 8
@@ -240,9 +239,8 @@ bb.f:                                             ; preds = %bb.e
   %tbl.ptradd.i.i = getelementptr inbounds nuw [4 x i8], ptr @.crctable, i64 %indexer.ext.i.i
   %tbl.ld.i.i = load i32, ptr %tbl.ptradd.i.i, align 4
   %crc.next.i.i = xor i32 %tbl.ld.i.i, %crc.le.shift.i.i ; 2 uses
-  %6 = add nuw nsw i64 %i.et, 1
-  %7 = and i64 %6, 4294967295
-  %i.ew = getelementptr i8, ptr %i.ep, i64 %7
+  %5 = getelementptr i8, ptr %i.ep, i64 %i.et
+  %i.ew = getelementptr i8, ptr %5, i64 1
   %i.ex = load i8, ptr %i.ew, align 1
   %crc.le.shift.i.i.1 = lshr i32 %crc.next.i.i, 8
   %crc.indexer.cast.i.i.1 = trunc i32 %crc.next.i.i to i8
@@ -251,18 +249,17 @@ bb.f:                                             ; preds = %bb.e
   %tbl.ptradd.i.i.1 = getelementptr inbounds nuw [4 x i8], ptr @.crctable, i64 %indexer.ext.i.i.1
   %tbl.ld.i.i.1 = load i32, ptr %tbl.ptradd.i.i.1, align 4
   %crc.next.i.i.1 = xor i32 %tbl.ld.i.i.1, %crc.le.shift.i.i.1 ; 3 uses
-  %i.ey = add nuw nsw i64 %i.et, 2
-  %8 = and i64 %i.ey, 4294967295                  ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
-  %niter.ncmp.1.not = icmp eq i32 %niter.next.1, %unroll_iter
+  %i.ey = add nuw nsw i64 %i.et, 2                ; 2 uses
+  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1.not, label %.lr.ph38.i.i.preheader.unr-lcssa, label %.lr.ph.i, !llvm.loop !6
 
 .lr.ph38.i.i.preheader.unr-lcssa:                 ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph38.i.i.preheader, label %.lr.ph.i.epil.preheader
 
 .lr.ph.i.epil.preheader:                          ; preds = %.lr.ph38.i.i.preheader.unr-lcssa, %.lr.ph.preheader.i
-  %.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %8, %.lr.ph38.i.i.preheader.unr-lcssa ]
+  %.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.ey, %.lr.ph38.i.i.preheader.unr-lcssa ]
   %.02562.i.epil.init = phi i32 [ -1, %.lr.ph.preheader.i ], [ %crc.next.i.i.1, %.lr.ph38.i.i.preheader.unr-lcssa ] ; 2 uses
   %lcmp.mod177 = trunc i64 %i.er to i1
   call void @llvm.assume(i1 %lcmp.mod177)

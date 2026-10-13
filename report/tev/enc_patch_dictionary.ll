@@ -205,7 +205,7 @@ _ZNSt3__16vectorINS_4pairINS1_IiiEES2_EENS_9allocatorIS3_EEE7reserveEm.exit.i: ;
 bb.z:                                             ; preds = %._crit_edge341.i, %.lr.ph.i
   %i.ij = phi i64 [ %.pre557.i, %.lr.ph.i ], [ %i.pf, %._crit_edge341.i ] ; 2 uses
   %i.ik = phi i64 [ %.pre557.i, %.lr.ph.i ], [ %i.pg, %._crit_edge341.i ] ; 2 uses
-  %.0291344.i = phi i64 [ 1, %.lr.ph.i ], [ %i.ph, %._crit_edge341.i ] ; 6 uses
+  %.0291344.i = phi i64 [ 1, %.lr.ph.i ], [ %i.ph, %._crit_edge341.i ] ; 3 uses
   %i.il = load ptr, ptr %i.ig, align 8, !tbaa !102, !noalias !661
   %i.im = load i64, ptr %i.ih, align 8, !tbaa !101, !noalias !661
   %i.in = mul i64 %i.im, %.0291344.i
@@ -216,28 +216,25 @@ bb.z:                                             ; preds = %._crit_edge341.i, %
   br i1 %i.iq, label %.lr.ph340.split.us.i.preheader, label %._crit_edge341.i
 
 .lr.ph340.split.us.i.preheader:                   ; preds = %bb.z
-  %47 = shl i64 %.0291344.i, 34
-  %.sroa.8161.0.insert.ext.us.i = shl i64 %.0291344.i, 34 ; 3 uses
+  %.sroa.8161.0.insert.ext.us.i = shl i64 %.0291344.i, 34 ; 6 uses
   %i.ir = ashr exact i64 %.sroa.8161.0.insert.ext.us.i, 32
   %i.is = mul i64 %i.ir, %i.hp
   %i.it = getelementptr i8, ptr %i.hn, i64 %i.is
-  %48 = shl i64 %.0291344.i, 34
-  %.sroa.8161.0.insert.ext.us.i.1 = or disjoint i64 %48, 4294967296 ; 3 uses
+  %.sroa.8161.0.insert.ext.us.i.1 = or disjoint i64 %.sroa.8161.0.insert.ext.us.i, 4294967296 ; 3 uses
   %i.iu = ashr exact i64 %.sroa.8161.0.insert.ext.us.i.1, 32
   %i.iv = mul i64 %i.iu, %i.hp
   %i.iw = getelementptr i8, ptr %i.hn, i64 %i.iv
-  %49 = shl i64 %.0291344.i, 34
-  %.sroa.8161.0.insert.ext.us.i.2 = or disjoint i64 %49, 8589934592 ; 3 uses
+  %.sroa.8161.0.insert.ext.us.i.2 = or disjoint i64 %.sroa.8161.0.insert.ext.us.i, 8589934592 ; 3 uses
   %i.ix = ashr exact i64 %.sroa.8161.0.insert.ext.us.i.2, 32
   %i.iy = mul i64 %i.ix, %i.hp
   %i.iz = getelementptr i8, ptr %i.hn, i64 %i.iy
-  %i.ja = or disjoint i64 %47, 12884901888        ; 3 uses
+  %i.ja = or disjoint i64 %.sroa.8161.0.insert.ext.us.i, 12884901888 ; 3 uses
   %i.jb = ashr exact i64 %i.ja, 32
   %i.jc = mul i64 %i.jb, %i.hp
   %i.jd = getelementptr i8, ptr %i.hn, i64 %i.jc
   br label %.lr.ph340.split.us.i
 
-.lr.ph340.split.us.i:                             ; preds = %.lr.ph340.split.us.i.preheader, %..loopexit251_crit_edge.split.us.i
+.lr.ph340.split.us.i:                             ; preds = %..loopexit251_crit_edge.split.us.i, %.lr.ph340.split.us.i.preheader
   %i.je = phi i64 [ %i.ku, %..loopexit251_crit_edge.split.us.i ], [ %i.ij, %.lr.ph340.split.us.i.preheader ] ; 2 uses
   %.0292337.us.i = phi i64 [ %i.kv, %..loopexit251_crit_edge.split.us.i ], [ 1, %.lr.ph340.split.us.i.preheader ] ; 3 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.io, i64 %.0292337.us.i
@@ -640,7 +637,7 @@ bb.ex:                                            ; preds = %bb.ew
   %i.bde = mul i64 %i.bbf, %indvar.next.6
   %scevgep.7 = getelementptr i8, ptr %i.bcv, i64 %i.bde
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep.7, i8 1, i64 %i.bbh, i1 false), !tbaa !72
-  %indvar.next.7 = add i64 %indvar, 8             ; 2 uses
+  %indvar.next.7 = add nuw i64 %indvar, 8         ; 2 uses
   %niter1374.next.7 = add i64 %niter1374, 8       ; 2 uses
   %niter1374.ncmp.7 = icmp eq i64 %niter1374.next.7, %unroll_iter1373
   br i1 %niter1374.ncmp.7, label %._crit_edge567.split.loopexit.unr-lcssa, label %.preheader472, !llvm.loop !608
@@ -661,14 +658,14 @@ bb.ex:                                            ; preds = %bb.ew
   %i.bdf = mul i64 %i.bbf, %indvar.epil
   %scevgep.epil = getelementptr i8, ptr %i.bcv, i64 %i.bdf
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep.epil, i8 1, i64 %i.bbh, i1 false), !tbaa !72
-  %indvar.next.epil = add i64 %indvar.epil, 1
+  %indvar.next.epil = add nuw i64 %indvar.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter1370
   br i1 %epil.iter.cmp.not, label %._crit_edge567.split, label %.preheader472.epil, !llvm.loop !609
 
 ._crit_edge567.split:                             ; preds = %._crit_edge567.split.loopexit.unr-lcssa, %.preheader472.epil, %.thread435.thread, %.thread435
   %.sroa.speculated = call i64 @llvm.umax.i64(i64 %.0400568, i64 %i.bbm) ; 2 uses
-  %i.bdg = add nuw i64 %.0156569, 1               ; 2 uses
+  %i.bdg = add nuw nsw i64 %.0156569, 1           ; 2 uses
   %exitcond694.not = icmp eq i64 %i.bdg, %i.ays
   br i1 %exitcond694.not, label %.thread442, label %.lr.ph, !llvm.loop !610
 

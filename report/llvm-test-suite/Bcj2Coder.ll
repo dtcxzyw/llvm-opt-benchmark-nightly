@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %_ZN9NCompress11NRan
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph396
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit.loopexit, label %.lr.ph396.epil.preheader
+  br i1 %lcmp.mod.not, label %.loopexit.backedge, label %.lr.ph396.epil.preheader
 
 .lr.ph396.epil.preheader:                         ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph396.preheader
   %indvars.iv430.epil.init = phi i64 [ %i.ma, %.lr.ph396.preheader ], [ %indvars.iv.next431.3, %.loopexit.loopexit.unr-lcssa ]
@@ -227,19 +227,15 @@ bb.r:                                             ; preds = %_ZN9NCompress11NRan
   store i8 %i.dd, ptr %i.de, align 1, !tbaa !37
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit.loopexit, label %.lr.ph396.epil, !llvm.loop !60
+  br i1 %epil.iter.cmp.not, label %.loopexit.backedge, label %.lr.ph396.epil, !llvm.loop !60
 
-.loopexit.loopexit:                               ; preds = %.lr.ph396.epil, %.loopexit.loopexit.unr-lcssa
-  %10 = sub i32 %i.dy, %.5200
-  br label %.loopexit.backedge
-
-.loopexit.backedge:                               ; preds = %.loopexit.loopexit, %bb.bi
-  %.0195.be = phi i32 [ %10, %.loopexit.loopexit ], [ 0, %bb.bi ]
+.loopexit.backedge:                               ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph396.epil, %bb.bi
+  %.0.lcssa = phi i32 [ 0, %bb.bi ], [ %narrow, %.lr.ph396.epil ], [ %narrow, %.loopexit.loopexit.unr-lcssa ]
   br label %.loopexit, !llvm.loop !61
 
 .loopexit:                                        ; preds = %.loopexit.backedge, %bb.r
   %.0205 = phi i32 [ 0, %bb.r ], [ %i.lz, %.loopexit.backedge ] ; 2 uses
-  %.0195 = phi i32 [ 0, %bb.r ], [ %.0195.be, %.loopexit.backedge ] ; 5 uses
+  %.0195 = phi i32 [ 0, %bb.r ], [ %.0.lcssa, %.loopexit.backedge ] ; 5 uses
   %.0185 = phi i8 [ 0, %bb.r ], [ %.6191, %.loopexit.backedge ] ; 2 uses
   %.0173 = phi i64 [ 0, %bb.r ], [ %.8181, %.loopexit.backedge ]
   %.0161 = phi i64 [ 0, %bb.r ], [ %.8169, %.loopexit.backedge ]
@@ -301,7 +297,7 @@ bb.x:                                             ; preds = %bb.w
 select.unfold:                                    ; preds = %bb.x, %bb.w, %.loopexit
   %.1148.ph = phi i32 [ 0, %.loopexit ], [ %i.dv, %bb.w ], [ %i.dv, %bb.x ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
-  %i.dy = add i32 %.1148.ph, %.0195               ; 7 uses
+  %i.dy = add i32 %.1148.ph, %.0195               ; 6 uses
   %i.dz = icmp ult i32 %i.dy, 5
   br i1 %i.dz, label %.preheader, label %bb.ah
 
@@ -704,7 +700,7 @@ bb.bd:                                            ; preds = %bb.bc
           to label %_ZN9NCompress11NRangeCoder11CBitEncoderILi5EE6EncodeEPNS0_8CEncoderEj.exit272 unwind label %bb.aw
 
 _ZN9NCompress11NRangeCoder11CBitEncoderILi5EE6EncodeEPNS0_8CEncoderEj.exit272: ; preds = %_ZN10COutBuffer9WriteByteEh.exit270.2, %bb.ba, %bb.bc, %bb.bd, %bb.ak
-  %.5200 = phi i32 [ %i.fw, %bb.ak ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bd ], [ %i.ju, %bb.ba ], [ %i.ju, %_ZN10COutBuffer9WriteByteEh.exit270.2 ] ; 7 uses
+  %.5200 = phi i32 [ %i.fw, %bb.ak ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bd ], [ %i.ju, %bb.ba ], [ %i.ju, %_ZN10COutBuffer9WriteByteEh.exit270.2 ] ; 6 uses
   %.6191 = phi i8 [ %i.fi, %bb.ak ], [ %i.fi, %bb.bc ], [ %i.fi, %bb.bd ], [ %i.gc, %bb.ba ], [ %i.gc, %_ZN10COutBuffer9WriteByteEh.exit270.2 ] ; 2 uses
   %.8181 = phi i64 [ %.1174390, %bb.ak ], [ %.6179295, %bb.bc ], [ %.6179295, %bb.bd ], [ %.6179296, %bb.ba ], [ %.6179296, %_ZN10COutBuffer9WriteByteEh.exit270.2 ] ; 2 uses
   %.8169 = phi i64 [ %.1162391, %bb.ak ], [ %.6167297, %bb.bc ], [ %.6167297, %bb.bd ], [ %.6167298, %bb.ba ], [ %.6167298, %_ZN10COutBuffer9WriteByteEh.exit270.2 ] ; 2 uses
@@ -741,7 +737,7 @@ bb.bi:                                            ; preds = %bb.bg, %bb.be
   br i1 %i.mi, label %.lr.ph396.preheader, label %.loopexit.backedge
 
 .lr.ph396.preheader:                              ; preds = %bb.bi
-  %narrow = sub nuw i32 %i.dy, %.5200             ; 2 uses
+  %narrow = sub nuw i32 %i.dy, %.5200             ; 4 uses
   %i.mj = zext i32 %narrow to i64                 ; 2 uses
   %xtraiter = and i64 %i.mj, 3                    ; 3 uses
   %i.mk = add i32 %narrow, -1

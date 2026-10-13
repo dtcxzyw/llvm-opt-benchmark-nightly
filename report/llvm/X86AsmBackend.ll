@@ -205,11 +205,7 @@ bb.b:                                             ; preds = %bb.f, %bb.a
   %i.m = and i32 %i.l, 255                        ; 2 uses
   %i.n = tail call i32 @llvm.usub.sat.i32(i32 %i.m, i32 10) ; 2 uses
   %.not26 = icmp samesign ult i32 %i.m, 11
-  br i1 %.not26, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %bb.b
-  %4 = trunc nuw i32 %i.n to i8
-  br label %.lr.ph
+  br i1 %.not26, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN4llvm11raw_ostreamlsEc.exit, %bb.b
   %i.o = sub i32 %i.l, %i.n
@@ -217,8 +213,8 @@ bb.b:                                             ; preds = %bb.f, %bb.a
   %.not = icmp eq i32 %i.p, 0
   br i1 %.not, label %bb.f, label %bb.e
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4llvm11raw_ostreamlsEc.exit
-  %.025 = phi i8 [ %5, %_ZN4llvm11raw_ostreamlsEc.exit ], [ 0, %.lr.ph.preheader ]
+.lr.ph:                                           ; preds = %bb.b, %_ZN4llvm11raw_ostreamlsEc.exit
+  %indvars.iv = phi i32 [ %indvars.iv.next, %_ZN4llvm11raw_ostreamlsEc.exit ], [ 0, %bb.b ]
   %i.q = load ptr, ptr %i.j, align 8, !tbaa !210  ; 3 uses
   %i.r = load ptr, ptr %i.k, align 8, !tbaa !209
   %.not.i = icmp ult ptr %i.q, %i.r
@@ -235,9 +231,9 @@ bb.d:                                             ; preds = %.lr.ph
   br label %_ZN4llvm11raw_ostreamlsEc.exit
 
 _ZN4llvm11raw_ostreamlsEc.exit:                   ; preds = %bb.c, %bb.d
-  %5 = add nuw i8 %.025, 1                        ; 2 uses
-  %6 = icmp ult i8 %5, %4
-  br i1 %6, label %.lr.ph, label %._crit_edge, !llvm.loop !314
+  %indvars.iv.next = add nuw nsw i32 %indvars.iv, 1 ; 2 uses
+  %4 = icmp samesign ugt i32 %i.n, %indvars.iv.next
+  br i1 %4, label %.lr.ph, label %._crit_edge, !llvm.loop !314
 
 bb.e:                                             ; preds = %._crit_edge
   %i.u = zext nneg i32 %i.p to i64                ; 2 uses
