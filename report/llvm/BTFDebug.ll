@@ -205,7 +205,7 @@ define dso_local void @_ZN4llvm8BTFDebug14visitArrayTypeEPKNS_15DICompositeTypeE
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
-  %i.c = alloca i32, align 4                      ; 7 uses
+  %i.c = alloca i32, align 4                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
   %i.d = getelementptr inbounds i8, ptr %1, i64 -16 ; 4 uses
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
@@ -432,11 +432,7 @@ _ZNSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE
 bb.m:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   store i32 %i.at, ptr %i.c, align 4, !tbaa !71
-  br i1 %.not.i, label %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26.thread, label %..thread_crit_edge
-
-_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26.thread: ; preds = %bb.m
-  %.promoted175 = load i32, ptr %i.c, align 4
-  br label %._crit_edge
+  br i1 %.not.i, label %._crit_edge, label %..thread_crit_edge
 
 ..thread_crit_edge:                               ; preds = %bb.m
   %.phi.trans.insert = getelementptr inbounds i8, ptr %i.x, i64 -16
@@ -462,7 +458,6 @@ bb.o:                                             ; preds = %.thread
 
 _ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26: ; preds = %bb.n, %bb.o
   %i.cw = phi i32 [ %i.ct, %bb.n ], [ %i.cv, %bb.o ]
-  %.promoted = load i32, ptr %i.c, align 4        ; 2 uses
   %.0140 = add i32 %i.cw, -1                      ; 2 uses
   %i.cx = icmp sgt i32 %.0140, -1
   br i1 %i.cx, label %.lr.ph, label %._crit_edge
@@ -475,19 +470,24 @@ _ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26: ; preds = %bb.n,
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 624 ; 6 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 632
   %i.de = zext nneg i32 %.0140 to i64
+  %.promoted = load i32, ptr %i.c, align 4
   br label %bb.p
 
-._crit_edge:                                      ; preds = %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41, %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41.thread, %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26.thread, %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26
-  %.lcssa137 = phi i32 [ %.promoted, %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26 ], [ %.promoted175, %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26.thread ], [ %i.eu, %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41.thread ], [ %i.id, %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41 ]
-  store i32 %.lcssa137, ptr %2, align 4, !tbaa !71
+._crit_edge.loopexit:                             ; preds = %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41
+  store i32 %i.id, ptr %i.c, align 4
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.m, %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41.thread, %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEE4sizeEv.exit26
+  %3 = load i32, ptr %i.c, align 4, !tbaa !71
+  store i32 %3, ptr %2, align 4, !tbaa !71
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 520 ; 2 uses
   %i.dg = load i32, ptr %i.df, align 8, !tbaa !225
   %.not = icmp eq i32 %i.dg, 0
   br i1 %.not, label %bb.ag, label %bb.al
 
 bb.p:                                             ; preds = %.lr.ph, %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41
+  %4 = phi i32 [ %.promoted, %.lr.ph ], [ %i.id, %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41 ] ; 5 uses
   %indvars.iv = phi i64 [ %i.de, %.lr.ph ], [ %indvars.iv.next, %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41 ] ; 4 uses
-  %3 = phi i32 [ %.promoted, %.lr.ph ], [ %i.id, %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41 ] ; 3 uses
   %i.dh = load i64, ptr %i.cy, align 8            ; 2 uses
   %i.di = and i64 %i.dh, 2
   %.not.i.i.i27 = icmp eq i64 %i.di, 0
@@ -549,11 +549,12 @@ _ZNK4llvm11ConstantInt12getSExtValueEv.exit:      ; preds = %bb.u, %bb.v
   %i.ej = call i64 @llvm.smax.i64(i64 %.0.i.i, i64 0)
   %i.ek = call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #27, !noalias !1081 ; 7 uses
   %i.el = trunc i64 %i.ej to i32
-  call void @_ZN4llvm12BTFTypeArrayC1Ejj(ptr noundef nonnull align 8 dereferenceable(40) %i.ek, i32 noundef %3, i32 noundef %i.el) #24, !noalias !1081
+  call void @_ZN4llvm12BTFTypeArrayC1Ejj(ptr noundef nonnull align 8 dereferenceable(40) %i.ek, i32 noundef %4, i32 noundef %i.el) #24, !noalias !1081
   %i.em = icmp eq i64 %indvars.iv, 0
   br i1 %i.em, label %bb.w, label %bb.ab
 
 bb.w:                                             ; preds = %_ZNK4llvm11ConstantInt12getSExtValueEv.exit
+  store i32 %4, ptr %i.c, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %1, ptr %i.a, align 8, !tbaa !70
   %i.en = load ptr, ptr %i.db, align 8, !tbaa !323
@@ -690,6 +691,7 @@ _ZNSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE
 
 _ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41.thread: ; preds = %bb.x, %_ZNSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit67
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  store i32 %i.eu, ptr %i.c, align 4, !tbaa !71
   br label %._crit_edge
 
 bb.ab:                                            ; preds = %_ZNK4llvm11ConstantInt12getSExtValueEv.exit
@@ -719,6 +721,7 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %i.gw, label %bb.ae, label %_ZNKSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i68
 
 bb.ae:                                            ; preds = %bb.ad
+  store i32 %4, ptr %i.c, align 4
   call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.47) #25
   unreachable
 
@@ -830,10 +833,10 @@ _ZNSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE
   br label %_ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41
 
 _ZNSt10unique_ptrIN4llvm12BTFTypeArrayESt14default_deleteIS1_EED2Ev.exit41: ; preds = %bb.ac, %_ZNSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit86, %bb.s, %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEEixEj.exit
-  %i.id = phi i32 [ %3, %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEEixEj.exit ], [ %i.gr, %bb.ac ], [ %3, %bb.s ], [ %i.gr, %_ZNSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit86 ] ; 2 uses
+  %i.id = phi i32 [ %4, %_ZNK4llvm24MDTupleTypedArrayWrapperINS_6DINodeEEixEj.exit ], [ %4, %bb.s ], [ %i.gr, %_ZNSt6vectorISt10unique_ptrIN4llvm11BTFTypeBaseESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit86 ], [ %i.gr, %bb.ac ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.ie = icmp sgt i64 %indvars.iv, 0
-  br i1 %i.ie, label %bb.p, label %._crit_edge, !llvm.loop !1068
+  br i1 %i.ie, label %bb.p, label %._crit_edge.loopexit, !llvm.loop !1068
 
 bb.ag:                                            ; preds = %._crit_edge
   %i.if = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #27, !noalias !1088 ; 4 uses
@@ -974,7 +977,7 @@ bb.al:                                            ; preds = %_ZNSt10unique_ptrIN
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN4llvm8BTFDebug14visitTypeEntryEPKNS_6DITypeERjbb(ptr noundef nonnull align 8 dereferenceable(1040) %0, ptr noundef %1, ptr noundef nonnull align 4 captures(none) dereferenceable(4) %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #0 align 2 {
+define dso_local void @_ZN4llvm8BTFDebug14visitTypeEntryEPKNS_6DITypeERjbb(ptr noundef nonnull align 8 dereferenceable(1040) %0, ptr noundef %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   %i.b = alloca i32, align 4                      ; 3 uses
@@ -1377,7 +1380,7 @@ bb.g:                                             ; preds = %bb.a, %.critedge15,
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN4llvm8BTFDebug16visitDerivedTypeEPKNS_13DIDerivedTypeERjbb(ptr noundef nonnull align 8 dereferenceable(1040) %0, ptr noundef nonnull %1, ptr noundef nonnull align 4 captures(none) dereferenceable(4) %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #0 align 2 {
+define dso_local void @_ZN4llvm8BTFDebug16visitDerivedTypeEPKNS_13DIDerivedTypeERjbb(ptr noundef nonnull align 8 dereferenceable(1040) %0, ptr noundef nonnull %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
@@ -1780,7 +1783,7 @@ bb.bb:                                            ; preds = %.thread, %_ZNSt10un
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN4llvm8BTFDebug15visitMapDefTypeEPKNS_6DITypeERj(ptr noundef nonnull align 8 dereferenceable(1040) %0, ptr noundef %1, ptr noundef nonnull align 4 captures(none) dereferenceable(4) %2) local_unnamed_addr #0 align 2 {
+define dso_local void @_ZN4llvm8BTFDebug15visitMapDefTypeEPKNS_6DITypeERj(ptr noundef nonnull align 8 dereferenceable(1040) %0, ptr noundef %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
   %i.b = alloca ptr, align 8                      ; 2 uses

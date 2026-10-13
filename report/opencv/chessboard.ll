@@ -205,22 +205,23 @@ bb.as:                                            ; preds = %_ZNK2cv7details7Ell
   br i1 %exitcond.not, label %._crit_edge, label %bb.ae, !llvm.loop !387
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge338
-  %.0104339 = phi i32 [ %i.gp, %._crit_edge338 ], [ 0, %.preheader.preheader ] ; 13 uses
+  %.0104339 = phi i32 [ %i.gp, %._crit_edge338 ], [ 0, %.preheader.preheader ] ; 14 uses
+  %46 = add nuw i32 %.0104339, 1                  ; 2 uses
   %.not.i = icmp eq i32 %.0104339, 0              ; 3 uses
-  %i.gp = add nuw i32 %.0104339, 1                ; 4 uses
+  %i.gp = add nuw nsw i32 %.0104339, 1            ; 2 uses
   %xtraiter = and i32 %.0104339, 3                ; 3 uses
-  %i.gq = icmp ult i32 %.0104339, 4
-  %unroll_iter = and i32 %.0104339, -4
+  %i.gq = icmp samesign ult i32 %.0104339, 4
+  %unroll_iter = and i32 %.0104339, 2147483644
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   %lcmp.mod393 = icmp ne i32 %xtraiter, 0
   %xtraiter401 = and i32 %.0104339, 3             ; 3 uses
-  %i.gr = icmp ult i32 %.0104339, 4
-  %unroll_iter406 = and i32 %.0104339, -4
+  %i.gr = icmp samesign ult i32 %.0104339, 4
+  %unroll_iter406 = and i32 %.0104339, 2147483644
   %lcmp.mod403.not = icmp eq i32 %xtraiter401, 0
   %lcmp.mod405 = icmp ne i32 %xtraiter401, 0
-  %xtraiter415 = and i32 %i.gp, 3                 ; 3 uses
-  %i.gs = icmp ult i32 %.0104339, 3
-  %unroll_iter420 = and i32 %i.gp, -4
+  %xtraiter415 = and i32 %46, 3                   ; 3 uses
+  %i.gs = icmp samesign ult i32 %.0104339, 3
+  %unroll_iter420 = and i32 %46, -4
   %lcmp.mod417.not = icmp eq i32 %xtraiter415, 0
   %lcmp.mod419 = icmp ne i32 %xtraiter415, 0
   br label %bb.at

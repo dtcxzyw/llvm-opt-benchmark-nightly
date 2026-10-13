@@ -204,12 +204,12 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check38 = icmp ult i32 %i.t, 16
+  %min.iters.check38 = icmp ult i32 %i.t, 32
   br i1 %min.iters.check38, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.al = and i32 %i.t, 12
-  %n.vec = and i32 %i.t, -16                      ; 4 uses
+  %i.al = and i32 %i.t, 28
+  %n.vec = and i32 %i.t, -32                      ; 4 uses
   %i.am = add i32 %i.m, %n.vec
   %invariant.op = add i32 %i.m, %i.e
   br label %vector.body
@@ -218,25 +218,43 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %.reass = add i32 %index, %invariant.op
   %i.an = sext i32 %.reass to i64                 ; 3 uses
-  %i.ao = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.an ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 32 ; 2 uses
-  %wide.load.a = load <8 x float>, ptr %i.ao, align 4, !tbaa !57, !alias.scope !85, !noalias !86
+  %i.ao = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.an ; 5 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.ao, i64 32 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.ao, i64 64 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 96 ; 2 uses
+  %wide.load = load <8 x float>, ptr %i.ao, align 4, !tbaa !57, !alias.scope !85, !noalias !86
+  %wide.load39 = load <8 x float>, ptr %7, align 4, !tbaa !57, !alias.scope !85, !noalias !86
+  %wide.load.a = load <8 x float>, ptr %8, align 4, !tbaa !57, !alias.scope !85, !noalias !86
   %wide.load39.a = load <8 x float>, ptr %i.ap, align 4, !tbaa !57, !alias.scope !85, !noalias !86
-  %i.aq = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.an ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
-  %wide.load40 = load <8 x float>, ptr %i.aq, align 4, !tbaa !57, !alias.scope !87
+  %i.aq = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.an ; 4 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
+  %10 = getelementptr inbounds nuw i8, ptr %i.aq, i64 64
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 96
+  %wide.load42 = load <8 x float>, ptr %i.aq, align 4, !tbaa !57, !alias.scope !87
+  %wide.load43 = load <8 x float>, ptr %9, align 4, !tbaa !57, !alias.scope !87
+  %wide.load40 = load <8 x float>, ptr %10, align 4, !tbaa !57, !alias.scope !87
   %wide.load41 = load <8 x float>, ptr %i.ar, align 4, !tbaa !57, !alias.scope !87
+  %11 = fmul fast <8 x float> %wide.load42, %wide.load
+  %12 = fmul fast <8 x float> %wide.load43, %wide.load39
   %i.as = fmul fast <8 x float> %wide.load40, %wide.load.a
   %i.at = fmul fast <8 x float> %wide.load41, %wide.load39.a
-  %i.au = getelementptr inbounds [4 x i8], ptr %i.r, i64 %i.an ; 2 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 32
-  %wide.load42.a = load <8 x float>, ptr %i.au, align 4, !tbaa !57, !alias.scope !88
+  %i.au = getelementptr inbounds [4 x i8], ptr %i.r, i64 %i.an ; 4 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.au, i64 32
+  %14 = getelementptr inbounds nuw i8, ptr %i.au, i64 64
+  %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 96
+  %wide.load46 = load <8 x float>, ptr %i.au, align 4, !tbaa !57, !alias.scope !88
+  %wide.load47 = load <8 x float>, ptr %13, align 4, !tbaa !57, !alias.scope !88
+  %wide.load42.a = load <8 x float>, ptr %14, align 4, !tbaa !57, !alias.scope !88
   %wide.load43.a = load <8 x float>, ptr %i.av, align 4, !tbaa !57, !alias.scope !88
+  %15 = fadd fast <8 x float> %wide.load46, %11
+  %16 = fadd fast <8 x float> %wide.load47, %12
   %i.aw = fadd fast <8 x float> %wide.load42.a, %i.as
   %i.ax = fadd fast <8 x float> %wide.load43.a, %i.at
-  store <8 x float> %i.aw, ptr %i.ao, align 4, !tbaa !57, !alias.scope !85, !noalias !86
+  store <8 x float> %15, ptr %i.ao, align 4, !tbaa !57, !alias.scope !85, !noalias !86
+  store <8 x float> %16, ptr %7, align 4, !tbaa !57, !alias.scope !85, !noalias !86
+  store <8 x float> %i.aw, ptr %8, align 4, !tbaa !57, !alias.scope !85, !noalias !86
   store <8 x float> %i.ax, ptr %i.ap, align 4, !tbaa !57, !alias.scope !85, !noalias !86
-  %index.next = add nuw i32 %index, 16            ; 2 uses
+  %index.next = add nuw i32 %index, 32            ; 2 uses
   %i.ay = icmp eq i32 %index.next, %n.vec
   br i1 %i.ay, label %middle.block, label %vector.body, !llvm.loop !82
 
@@ -246,7 +264,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i32 %i.al, 0
-  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !67
+  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !61
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -649,7 +667,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i32 %i.ai, 0
-  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !68
+  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !67
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i32 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -1052,7 +1070,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.el, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph125.preheader, label %vec.epilog.ph, !prof !68
+  br i1 %min.epilog.iters.check, label %.lr.ph125.preheader, label %vec.epilog.ph, !prof !67
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -1455,7 +1473,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.ek, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph132.preheader, label %vec.epilog.ph, !prof !68
+  br i1 %min.epilog.iters.check, label %.lr.ph132.preheader, label %vec.epilog.ph, !prof !67
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -1740,7 +1758,7 @@ middle.block91:                                   ; preds = %vector.body86
 
 vec.epilog.iter.check97:                          ; preds = %middle.block91
   %min.epilog.iters.check98 = icmp eq i64 %i.cj, 0
-  br i1 %min.epilog.iters.check98, label %.lr.ph63.i.preheader, label %vec.epilog.ph99, !prof !67
+  br i1 %min.epilog.iters.check98, label %.lr.ph63.i.preheader, label %vec.epilog.ph99, !prof !68
 
 vec.epilog.ph99:                                  ; preds = %vector.main.loop.iter.check78, %vec.epilog.iter.check97
   %vec.epilog.resume.val93 = phi i64 [ %n.vec81, %vec.epilog.iter.check97 ], [ 0, %vector.main.loop.iter.check78 ]
@@ -1941,7 +1959,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.gb, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph47.i.preheader, label %vec.epilog.ph, !prof !67
+  br i1 %min.epilog.iters.check, label %.lr.ph47.i.preheader, label %vec.epilog.ph, !prof !68
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -2234,7 +2252,7 @@ middle.block98:                                   ; preds = %vector.body93
 
 vec.epilog.iter.check104:                         ; preds = %middle.block98
   %min.epilog.iters.check105 = icmp eq i64 %i.ci, 0
-  br i1 %min.epilog.iters.check105, label %.lr.ph63.i.preheader, label %vec.epilog.ph106, !prof !67
+  br i1 %min.epilog.iters.check105, label %.lr.ph63.i.preheader, label %vec.epilog.ph106, !prof !68
 
 vec.epilog.ph106:                                 ; preds = %vector.main.loop.iter.check85, %vec.epilog.iter.check104
   %vec.epilog.resume.val100 = phi i64 [ %n.vec88, %vec.epilog.iter.check104 ], [ 0, %vector.main.loop.iter.check85 ]
@@ -2435,7 +2453,7 @@ middle.block:                                     ; preds = %vector.body
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check = icmp eq i64 %i.ga, 0
-  br i1 %min.epilog.iters.check, label %.lr.ph47.i.preheader, label %vec.epilog.ph, !prof !67
+  br i1 %min.epilog.iters.check, label %.lr.ph47.i.preheader, label %vec.epilog.ph, !prof !68
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -2838,8 +2856,8 @@ attributes #17 = { builtin nounwind }
 !64 = !{!10, !10, i64 0}
 !65 = !{i64 2, i64 -1, i64 -1, i1 true}
 !66 = !{!65}
-!67 = !{!"branch_weights", i32 4, i32 12}
-!68 = !{!"branch_weights", i32 8, i32 24}
+!67 = !{!"branch_weights", i32 8, i32 24}
+!68 = !{!"branch_weights", i32 4, i32 12}
 !69 = !{!29, !28, i64 32}
 !70 = !{i8 0, i8 2}
 !71 = !{}

@@ -204,7 +204,7 @@ bb.cf:                                            ; preds = %bb.ce, %_ZN4Luau18R
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef i32 @_ZN4Luau19ConstraintGenerator5visitERKSt10shared_ptrINS_5ScopeEEPNS_20AstStatDeclareGlobalE(ptr noundef nonnull align 8 dereferenceable(888) initializes((800, 801)) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr noundef %2) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef i32 @_ZN4Luau19ConstraintGenerator5visitERKSt10shared_ptrINS_5ScopeEEPNS_20AstStatDeclareGlobalE(ptr noundef nonnull align 8 dereferenceable(888) initializes((800, 801)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
@@ -607,7 +607,7 @@ bb.ec:                                            ; preds = %_ZNSt6vectorIPKN4Lu
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef i32 @_ZN4Luau19ConstraintGenerator5visitERKSt10shared_ptrINS_5ScopeEEPNS_24AstStatDeclareExternTypeE(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef i32 @_ZN4Luau19ConstraintGenerator5visitERKSt10shared_ptrINS_5ScopeEEPNS_24AstStatDeclareExternTypeE(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"struct.Luau::Location", align 16  ; 4 uses
   %4 = alloca %"struct.Luau::Location", align 16  ; 4 uses
@@ -1010,7 +1010,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator11resolveTypeERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEbbNS_8PolarityE(ptr noundef nonnull align 8 dereferenceable(888) initializes((800, 801)) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i8 noundef zeroext %5) local_unnamed_addr #6 align 2 {
+define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator11resolveTypeERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEbbNS_8PolarityE(ptr noundef nonnull align 8 dereferenceable(888) initializes((800, 801)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i8 noundef zeroext %5) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 800
   store i8 %5, ptr %i.a, align 8, !tbaa !247
@@ -1413,7 +1413,7 @@ _ZN4Luau6detail14DenseHashTableIPKNS_7AstStatESt4pairIS4_PKNS_4TypeEES5_IKS4_S8_
 declare noundef ptr @_ZN4Luau15RefinementArena8negationEPNS_7VariantIJNS_8VariadicENS_8NegationENS_11ConjunctionENS_11DisjunctionENS_11EquivalenceENS_11PropositionEEEE(ptr noundef nonnull align 8 dereferenceable(40), ptr noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN4Luau19ConstraintGenerator31resolveGenericDefaultParametersERKSt10shared_ptrINS_5ScopeEEPNS_16AstStatTypeAliasERKNS_7TypeFunE(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(76) %3) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Luau19ConstraintGenerator31resolveGenericDefaultParametersERKSt10shared_ptrINS_5ScopeEEPNS_16AstStatTypeAliasERKNS_7TypeFunE(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(76) %3) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
@@ -1798,7 +1798,7 @@ bb.a:
 declare noundef ptr @_ZN4Luau9asMutableEPKNS_11TypePackVarE(ptr noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator15resolveTypePackERKSt10shared_ptrINS_5ScopeEEPNS_11AstTypePackEbbNS_8PolarityE(ptr noundef nonnull align 8 dereferenceable(888) initializes((800, 801)) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i8 noundef zeroext %5) local_unnamed_addr #6 align 2 {
+define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator15resolveTypePackERKSt10shared_ptrINS_5ScopeEEPNS_11AstTypePackEbbNS_8PolarityE(ptr noundef nonnull align 8 dereferenceable(888) initializes((800, 801)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i8 noundef zeroext %5) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 800
   store i8 %5, ptr %i.a, align 8, !tbaa !247
@@ -2063,7 +2063,7 @@ _ZN4Luau7VariantIJNS_9Unifiable5BoundIPKNS_4TypeEEENS1_5ErrorIS5_EENS_8FreeTypeE
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator15resolveTypePackERKSt10shared_ptrINS_5ScopeEERKNS_11AstTypeListEbbNS_8PolarityE(ptr noundef nonnull align 8 dereferenceable(888) initializes((800, 801)) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i8 noundef zeroext %5) local_unnamed_addr #6 align 2 {
+define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator15resolveTypePackERKSt10shared_ptrINS_5ScopeEERKNS_11AstTypeListEbbNS_8PolarityE(ptr noundef nonnull align 8 dereferenceable(888) initializes((800, 801)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i8 noundef zeroext %5) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 800
   store i8 %5, ptr %i.a, align 8, !tbaa !247
@@ -2466,7 +2466,7 @@ _ZN4Luau7VariantIJNS_9Unifiable5BoundIPKNS_11TypePackVarEEENS1_5ErrorIS5_EENS_12
 declare void @_ZN4Luau15BlockedTypePackC1Ev(ptr noundef nonnull align 8 dereferenceable(16)) unnamed_addr #9
 
 ; Function Attrs: mustprogress uwtable
-define dso_local void @_ZN4Luau19ConstraintGenerator20resolveTypeArgumentsERKSt10shared_ptrINS_5ScopeEERKNS_8AstArrayINS_13AstTypeOrPackEEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.std::pair.908") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(888) %1, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %3) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local void @_ZN4Luau19ConstraintGenerator20resolveTypeArgumentsERKSt10shared_ptrINS_5ScopeEERKNS_8AstArrayINS_13AstTypeOrPackEEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"struct.std::pair.908") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(888) %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %3) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %3, align 8, !tbaa !943    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -2869,7 +2869,7 @@ _ZNSt12_Vector_baseISt8optionalIN4Luau16FunctionArgumentEESaIS3_EED2Ev.exit: ; p
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator20resolveReferenceTypeERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEPNS_16AstTypeReferenceEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, i1 noundef zeroext %4, i1 noundef zeroext %5) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator20resolveReferenceTypeERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEPNS_16AstTypeReferenceEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, i1 noundef zeroext %4, i1 noundef zeroext %5) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %6 = alloca %"struct.Luau::Location", align 16  ; 4 uses
   %i.a = alloca i64, align 8                      ; 6 uses
@@ -3272,7 +3272,7 @@ _ZN4Luau6detail14DenseHashTableIPKNS_7AstTypeESt4pairIS4_PKNS_4TypeEES5_IKS4_S8_
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator12resolveType_ERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator12resolveType_ERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 2 uses
   %5 = alloca %"struct.Luau::UnionType", align 8  ; 6 uses
@@ -3675,7 +3675,7 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit:     ; preds = %bb.bg, %bb.aj, %bb.
 declare void @_ZNK4Luau5Scope18lookupImportedTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_(ptr dead_on_unwind writable sret(%"class.std::optional.856") align 8, ptr noundef nonnull align 8 dereferenceable(1040), ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(32)) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator16resolveTypePack_ERKSt10shared_ptrINS_5ScopeEEPNS_11AstTypePackEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr noundef nonnull %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator16resolveTypePack_ERKSt10shared_ptrINS_5ScopeEEPNS_11AstTypePackEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"struct.Luau::Location", align 16  ; 4 uses
   %i.a = alloca i64, align 8                      ; 6 uses
@@ -4078,7 +4078,7 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit:     ; preds = %_ZNSt6vectorIPKN4Lu
 }
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator16resolveTableTypeERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEPNS_12AstTypeTableEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr nofree readnone captures(none) %2, ptr nofree noundef readonly captures(none) %3, i1 noundef zeroext %4, i1 zeroext %5) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator16resolveTableTypeERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEPNS_12AstTypeTableEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nofree readnone captures(none) %2, ptr nofree noundef readonly captures(none) %3, i1 noundef zeroext %4, i1 zeroext %5) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %6 = alloca %"struct.Luau::Location", align 16  ; 4 uses
   %i.a = alloca i64, align 8                      ; 5 uses
@@ -4481,8 +4481,8 @@ bb.j:                                             ; preds = %_ZNSt8__detail14__t
 define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator19resolveFunctionTypeERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEPNS_15AstTypeFunctionEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nofree readnone captures(none) %2, ptr noundef %3, i1 noundef zeroext %4, i1 noundef zeroext %5) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %6 = alloca %"class.std::shared_ptr.8", align 16 ; 15 uses
-  %7 = alloca %"class.std::shared_ptr.8", align 16 ; 5 uses
+  %6 = alloca %"class.std::shared_ptr.8", align 16 ; 16 uses
+  %7 = alloca %"class.std::shared_ptr.8", align 16 ; 7 uses
   %8 = alloca %"class.std::vector.683", align 8   ; 10 uses
   %9 = alloca %"class.std::vector.691", align 8   ; 10 uses
   %10 = alloca %"class.Luau::AstTypePackExplicit", align 8 ; 5 uses
@@ -4516,19 +4516,120 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.critedge, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #31
   invoke void @_ZN4Luau19ConstraintGenerator10childScopeEPNS_7AstNodeERKSt10shared_ptrINS_5ScopeEE(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.8") align 8 %7, ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull %3, ptr noundef nonnull align 8 dereferenceable(16) %1)
-          to label %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.a unwind label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit144.thread
+          to label %19 unwind label %_ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit144.thread
 
-_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.a: ; preds = %bb.c
-  %19 = load <2 x ptr>, ptr %7, align 16, !tbaa !78
-  store <2 x ptr> %19, ptr %6, align 16, !tbaa !78
-  %.sroa.230.0.copyload.pre = load i64, ptr %i.c, align 8, !tbaa !105
-  %.sroa.029.0.copyload.pre = load ptr, ptr %i.b, align 8, !tbaa !591
+19:                                               ; preds = %bb.c
+  %20 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %21 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %22 = load <2 x ptr>, ptr %7, align 16, !tbaa !78
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %7, i8 0, i64 16, i1 false)
+  %23 = load ptr, ptr %21, align 8, !tbaa !88     ; 8 uses
+  store <2 x ptr> %22, ptr %6, align 16, !tbaa !78
+  %.not.i.i.i.i = icmp eq ptr %23, null
+  br i1 %.not.i.i.i.i, label %_ZNSt10shared_ptrIN4Luau5ScopeEEaSEOS2_.exit, label %24
+
+24:                                               ; preds = %19
+  %25 = getelementptr inbounds nuw i8, ptr %23, i64 8 ; 4 uses
+  %26 = load atomic i64, ptr %25 acquire, align 8 ; 2 uses
+  %27 = icmp eq i64 %26, 4294967297
+  %28 = trunc i64 %26 to i32                      ; 2 uses
+  br i1 %27, label %29, label %37
+
+29:                                               ; preds = %24
+  store i32 0, ptr %25, align 8, !tbaa !94
+  %30 = getelementptr inbounds nuw i8, ptr %23, i64 12
+  store i32 0, ptr %30, align 4, !tbaa !95
+  %31 = load ptr, ptr %23, align 8, !tbaa !97
+  %32 = getelementptr inbounds nuw i8, ptr %31, i64 16
+  %33 = load ptr, ptr %32, align 8
+  call void %33(ptr noundef nonnull align 8 dereferenceable(16) %23) #31, !inline_history !43
+  %34 = load ptr, ptr %23, align 8, !tbaa !97
+  %35 = getelementptr inbounds nuw i8, ptr %34, i64 24
+  %36 = load ptr, ptr %35, align 8
+  call void %36(ptr noundef nonnull align 8 dereferenceable(16) %23) #31, !inline_history !43
+  br label %_ZNSt10shared_ptrIN4Luau5ScopeEEaSEOS2_.exit
+
+37:                                               ; preds = %24
+  %38 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !89
+  %.not.i.i.i.i.i = icmp eq i8 %38, 0
+  br i1 %.not.i.i.i.i.i, label %41, label %39
+
+39:                                               ; preds = %37
+  %40 = add nsw i32 %28, -1
+  store i32 %40, ptr %25, align 8, !tbaa !70
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
+
+41:                                               ; preds = %37
+  %42 = atomicrmw volatile add ptr %25, i32 -1 acq_rel, align 4
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
+
+_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i: ; preds = %41, %39
+  %.0.i.i.i.i.i.i = phi i32 [ %28, %39 ], [ %42, %41 ]
+  %43 = icmp eq i32 %.0.i.i.i.i.i.i, 1
+  br i1 %43, label %44, label %_ZNSt10shared_ptrIN4Luau5ScopeEEaSEOS2_.exit, !prof !81
+
+44:                                               ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %23) #31
+  br label %_ZNSt10shared_ptrIN4Luau5ScopeEEaSEOS2_.exit
+
+_ZNSt10shared_ptrIN4Luau5ScopeEEaSEOS2_.exit:     ; preds = %19, %29, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %44
+  %45 = load ptr, ptr %20, align 8, !tbaa !88     ; 8 uses
+  %.not.i.i = icmp eq ptr %45, null
+  br i1 %.not.i.i, label %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %46
+
+46:                                               ; preds = %_ZNSt10shared_ptrIN4Luau5ScopeEEaSEOS2_.exit
+  %47 = getelementptr inbounds nuw i8, ptr %45, i64 8 ; 4 uses
+  %48 = load atomic i64, ptr %47 acquire, align 8 ; 2 uses
+  %49 = icmp eq i64 %48, 4294967297
+  %50 = trunc i64 %48 to i32                      ; 2 uses
+  br i1 %49, label %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.a, label %57
+
+_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.a: ; preds = %46
+  store i32 0, ptr %47, align 8, !tbaa !94
+  %51 = getelementptr inbounds nuw i8, ptr %45, i64 12
+  store i32 0, ptr %51, align 4, !tbaa !95
+  %52 = load ptr, ptr %45, align 8, !tbaa !97
+  %53 = getelementptr inbounds nuw i8, ptr %52, i64 16
+  %.sroa.029.0.copyload.pre = load ptr, ptr %53, align 8
+  call void %.sroa.029.0.copyload.pre(ptr noundef nonnull align 8 dereferenceable(16) %45) #31, !inline_history !6
+  %54 = load ptr, ptr %45, align 8, !tbaa !97
+  %55 = getelementptr inbounds nuw i8, ptr %54, i64 24
+  %56 = load ptr, ptr %55, align 8
+  call void %56(ptr noundef nonnull align 8 dereferenceable(16) %45) #31, !inline_history !6
+  br label %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+57:                                               ; preds = %46
+  %58 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !89
+  %.not.i.i.i = icmp eq i8 %58, 0
+  br i1 %.not.i.i.i, label %61, label %59
+
+59:                                               ; preds = %57
+  %60 = add nsw i32 %50, -1
+  store i32 %60, ptr %47, align 8, !tbaa !70
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
+
+61:                                               ; preds = %57
+  %62 = atomicrmw volatile add ptr %47, i32 -1 acq_rel, align 4
+  br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
+
+_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i: ; preds = %61, %59
+  %.0.i.i.i.i = phi i32 [ %50, %59 ], [ %62, %61 ]
+  %63 = icmp eq i32 %.0.i.i.i.i, 1
+  br i1 %63, label %64, label %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, !prof !81
+
+64:                                               ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %45) #31
+  br label %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
+
+_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZNSt10shared_ptrIN4Luau5ScopeEEaSEOS2_.exit, %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.a, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %64
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #31
-  invoke void @_ZN4Luau19ConstraintGenerator14createGenericsB5cxx11ERKSt10shared_ptrINS_5ScopeEENS_8AstArrayIPNS_14AstGenericTypeEEEbb(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.683") align 8 %8, ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr %.sroa.029.0.copyload.pre, i64 %.sroa.230.0.copyload.pre, i1 noundef zeroext false, i1 noundef zeroext true)
+  %.sroa.029.0.copyload = load ptr, ptr %i.b, align 8, !tbaa !591
+  %.sroa.230.0.copyload = load i64, ptr %i.c, align 8, !tbaa !105
+  invoke void @_ZN4Luau19ConstraintGenerator14createGenericsB5cxx11ERKSt10shared_ptrINS_5ScopeEENS_8AstArrayIPNS_14AstGenericTypeEEEbb(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.683") align 8 %8, ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr %.sroa.029.0.copyload, i64 %.sroa.230.0.copyload, i1 noundef zeroext false, i1 noundef zeroext true)
           to label %bb.d unwind label %bb.f
 
-bb.d:                                             ; preds = %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.a
+bb.d:                                             ; preds = %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #31
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 64
   %.sroa.027.0.copyload = load ptr, ptr %i.g, align 8, !tbaa !598
@@ -4560,7 +4661,7 @@ _ZNSt6vectorIPKN4Luau11TypePackVarESaIS3_EED2Ev.exit144.thread: ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #31
   br label %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit146
 
-bb.f:                                             ; preds = %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.a
+bb.f:                                             ; preds = %_ZNSt12__shared_ptrIN4Luau5ScopeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.o = landingpad { ptr, i32 }
           cleanup
   br label %bb.v
@@ -4963,7 +5064,7 @@ declare noundef zeroext i1 @_ZNK4Luau15AstTypeFunction17isCheckedFunctionEv(ptr 
 declare noundef ptr @_ZNK4Luau15AstTypeFunction12getAttributeENS_7AstAttr4TypeE(ptr noundef nonnull align 8 dereferenceable(128), i32 noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress uwtable
-define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator16resolveTypePack_ERKSt10shared_ptrINS_5ScopeEERKNS_11AstTypeListEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
+define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator16resolveTypePack_ERKSt10shared_ptrINS_5ScopeEERKNS_11AstTypeListEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, i1 noundef zeroext %3, i1 noundef zeroext %4) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"struct.Luau::TypePack", align 8   ; 11 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !992    ; 2 uses

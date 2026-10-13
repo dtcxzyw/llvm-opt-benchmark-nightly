@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph:                                           ; preds = %bb.q, %bb.x
   %i.ad = phi ptr [ %i.as, %bb.x ], [ %i.ac, %bb.q ]
-  %.051.i84 = phi i64 [ %i.aj, %bb.x ], [ 0, %bb.q ] ; 7 uses
+  %.051.i84 = phi i64 [ %i.aj, %bb.x ], [ 0, %bb.q ] ; 8 uses
   %.052.i83 = phi i64 [ %.1.i, %bb.x ], [ 1, %bb.q ] ; 2 uses
   %.055.i82 = phi ptr [ %.2.i, %bb.x ], [ %i.s, %bb.q ] ; 3 uses
   %storemerge.in = load i32, ptr %i.a, align 8, !tbaa !25
@@ -228,7 +228,7 @@ bb.s:                                             ; preds = %._crit_edge150, %.l
   %i.ai = phi i32 [ %storemerge, %.lr.ph ], [ %.pre, %._crit_edge150 ] ; 2 uses
   %.2.i = phi ptr [ %.055.i82, %.lr.ph ], [ %i.ag, %._crit_edge150 ] ; 11 uses
   %.1.i = phi i64 [ %.052.i83, %.lr.ph ], [ %i.ah, %._crit_edge150 ]
-  %i.aj = add i64 %.051.i84, 1                    ; 5 uses
+  %i.aj = add i64 %.051.i84, 1                    ; 3 uses
   %i.ak = getelementptr [8 x i8], ptr %.2.i, i64 %.051.i84
   store ptr %i.ad, ptr %i.ak, align 8, !tbaa !30
   %i.al = load i32, ptr %i.i, align 8, !tbaa !27
@@ -299,12 +299,13 @@ bb.ab:                                            ; preds = %bb.z
 
 .lr.ph88:                                         ; preds = %.preheader
   %i.ba = getelementptr i8, ptr %i.ay, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.aj, 3                    ; 3 uses
+  %1 = add nuw i64 %.051.i84, 1                   ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.bb = icmp ult i64 %.051.i84, 3
   br i1 %i.bb, label %.epil.preheader, label %.lr.ph88.new
 
 .lr.ph88.new:                                     ; preds = %.lr.ph88
-  %unroll_iter = and i64 %i.aj, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.ac
 
 _loop1_100_rule.exit.thread57:                    ; preds = %bb.ab
@@ -707,7 +708,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -723,7 +724,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -765,12 +766,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -901,7 +903,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -917,7 +919,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -959,12 +961,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -1367,7 +1370,7 @@ bb.l:                                             ; preds = %bb.k
 
 .lr.ph:                                           ; preds = %bb.l, %bb.s
   %i.v = phi ptr [ %i.aj, %bb.s ], [ %i.t, %bb.l ]
-  %.05182 = phi i64 [ %i.ab, %bb.s ], [ 0, %bb.l ] ; 7 uses
+  %.05182 = phi i64 [ %i.ab, %bb.s ], [ 0, %bb.l ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.s ], [ 1, %bb.l ]  ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.s ], [ %i.k, %bb.l ] ; 3 uses
   %storemerge.in = load i32, ptr %i.a, align 8, !tbaa !25
@@ -1391,7 +1394,7 @@ bb.n:                                             ; preds = %._crit_edge139, %.l
   %i.aa = phi i32 [ %storemerge, %.lr.ph ], [ %.pre, %._crit_edge139 ] ; 2 uses
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.y, %._crit_edge139 ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.z, %._crit_edge139 ]
-  %i.ab = add i64 %.05182, 1                      ; 5 uses
+  %i.ab = add i64 %.05182, 1                      ; 3 uses
   %i.ac = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.v, ptr %i.ac, align 8, !tbaa !30
   %i.ad = load i32, ptr %i.i, align 8, !tbaa !27
@@ -1462,12 +1465,13 @@ bb.w:                                             ; preds = %bb.u
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.as = getelementptr i8, ptr %i.aq, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.ab, 3                    ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.at = icmp ult i64 %.05182, 3
   br i1 %i.at, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.ab, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.w
@@ -1870,7 +1874,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -1886,7 +1890,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -1928,12 +1932,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -2336,7 +2341,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -2352,7 +2357,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -2394,12 +2399,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -2642,7 +2648,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -2658,7 +2664,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -2700,12 +2706,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -3108,7 +3115,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -3124,7 +3131,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -3166,12 +3173,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -3574,7 +3582,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -3590,7 +3598,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -3632,12 +3640,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -3822,7 +3831,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -3838,7 +3847,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -3880,12 +3889,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m
@@ -4128,7 +4138,7 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph:                                           ; preds = %.preheader75, %bb.i
   %i.o = phi ptr [ %i.w, %bb.i ], [ %i.n, %.preheader75 ]
-  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 7 uses
+  %.05182 = phi i64 [ %i.t, %bb.i ], [ 0, %.preheader75 ] ; 8 uses
   %.05281 = phi i64 [ %.1, %bb.i ], [ 1, %.preheader75 ] ; 2 uses
   %.05580 = phi ptr [ %.2, %bb.i ], [ %i.k, %.preheader75 ] ; 3 uses
   %i.p = icmp eq i64 %.05182, %.05281
@@ -4144,7 +4154,7 @@ bb.h:                                             ; preds = %.lr.ph
 bb.i:                                             ; preds = %bb.h, %.lr.ph
   %.2 = phi ptr [ %.05580, %.lr.ph ], [ %i.s, %bb.h ] ; 11 uses
   %.1 = phi i64 [ %.05281, %.lr.ph ], [ %i.q, %bb.h ]
-  %i.t = add i64 %.05182, 1                       ; 5 uses
+  %i.t = add i64 %.05182, 1                       ; 3 uses
   %i.u = getelementptr [8 x i8], ptr %.2, i64 %.05182
   store ptr %i.o, ptr %i.u, align 8, !tbaa !30
   %i.v = load i32, ptr %i.i, align 8, !tbaa !27
@@ -4186,12 +4196,13 @@ bb.m:                                             ; preds = %bb.k
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 5 uses
-  %xtraiter = and i64 %i.t, 3                     ; 3 uses
+  %1 = add nuw i64 %.05182, 1                     ; 2 uses
+  %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.af = icmp ult i64 %.05182, 3
   br i1 %i.af, label %.epil.preheader, label %.lr.ph86.new
 
 .lr.ph86.new:                                     ; preds = %.lr.ph86
-  %unroll_iter = and i64 %i.t, -4
+  %unroll_iter = and i64 %1, -4
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.m

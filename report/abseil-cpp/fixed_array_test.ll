@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i: ; preds =
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ 8, %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i ] ; 4 uses
-  %.09.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bg, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.bc, %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i ] ; 2 uses
+  %.09.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bg, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.bc, %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i ] ; 3 uses
   %.sroa.04.08.i.i.i.i.i.i.i.i.i = phi ptr [ %i.bf, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %.sroa.088.0..sroa.088.0..sroa.088.0..sroa.088.0.89.pre, %_ZNSt12_Vector_baseISt4pairIiiESaIS1_EE11_M_allocateEm.exit.i.i.i.i.i ] ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i.i.i.i, i64 8
   %i.be = load i64, ptr %i.bd, align 4, !noalias !811
@@ -220,8 +220,8 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %i.az ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !812)
   %i.bi = ptrtoint ptr %i.bg to i64
-  %i.bj = ptrtoint ptr %i.bc to i64               ; 4 uses
-  %i.bk = sub i64 %i.bi, %i.bj                    ; 6 uses
+  %i.bj = ptrtoint ptr %i.bc to i64               ; 5 uses
+  %i.bk = sub i64 %i.bi, %i.bj                    ; 5 uses
   %i.bl = icmp ugt i64 %i.bk, 9223372036854775800
   br i1 %i.bl, label %.noexc.i.i.i.i46, label %_ZNSt15__new_allocatorISt4pairIiiEE8allocateEmPKv.exit.i.i.i.i.i.i, !prof !106
 
@@ -237,7 +237,10 @@ _ZNSt15__new_allocatorISt4pairIiiEE8allocateEmPKv.exit.i.i.i.i.i.i: ; preds = %b
           to label %.noexc48 unwind label %bb.k   ; 4 uses
 
 .noexc48:                                         ; preds = %_ZNSt15__new_allocatorISt4pairIiiEE8allocateEmPKv.exit.i.i.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.bm, ptr noundef nonnull align 4 dereferenceable(1) %i.bc, i64 %i.bk, i1 false), !noalias !812
+  %6 = ptrtoaddr ptr %.09.i.i.i.i.i.i.i.i.i to i64
+  %reass.sub = sub i64 %6, %i.bj
+  %7 = add i64 %reass.sub, 8
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bm, ptr nonnull align 4 %i.bc, i64 %7, i1 false), !noalias !812
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false), !alias.scope !812
   %i.bn = icmp ugt i64 %indvars.iv, 9223372036854775800
   br i1 %i.bn, label %.noexc.i.i.i.i.i, label %_ZNSt15__new_allocatorISt4pairIiiEE8allocateEmPKv.exit.i.i.i.i.i.i.i, !prof !106

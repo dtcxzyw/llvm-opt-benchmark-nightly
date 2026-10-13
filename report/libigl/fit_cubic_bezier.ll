@@ -205,7 +205,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.g = shl nsw i64 %i.b, 2
   tail call void @_ZN5Eigen12DenseStorageIdLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %i.g, i64 noundef 4, i64 noundef %i.b)
   %i.h = sub nsw i32 %2, %1                       ; 2 uses
-  %i.i = add i32 %i.h, 1                          ; 4 uses
+  %i.i = add i32 %i.h, 1                          ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   %i.j = sext i32 %i.i to i64                     ; 2 uses
   %i.k = icmp slt i32 %i.h, -1
@@ -242,7 +242,9 @@ _ZNSt6vectorIS_IN5Eigen6MatrixIdLi1ELin1ELi1ELi1ELin1EEESaIS2_EESaIS4_EE17_S_che
   %i.z = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %12, i64 24
   %i.ab = getelementptr inbounds nuw i8, ptr %12, i64 32
-  %wide.trip.count = zext i32 %i.i to i64
+  %15 = add nsw i32 %2, 1
+  %16 = sub i32 %15, %1
+  %wide.trip.count = zext i32 %16 to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %12, i64 16
   br label %bb.d
 

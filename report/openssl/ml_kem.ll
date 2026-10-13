@@ -204,7 +204,7 @@ scalar.ph80:                                      ; preds = %scalar.ph80.prehead
   br i1 %i.kc, label %.preheader36, label %vector.memcheck, !llvm.loop !102
 
 vector.memcheck:                                  ; preds = %.loopexit143
-  %scevgep = getelementptr i8, ptr %0, i64 512    ; 3 uses
+  %scevgep = getelementptr i8, ptr %0, i64 512
   %i.kd = getelementptr i8, ptr %.122.3, i64 4
   %i.ke = getelementptr i8, ptr %.122.3, i64 36
   %bound0 = icmp ult ptr %0, %i.ke
@@ -607,10 +607,11 @@ scalar.ph97:                                      ; preds = %vector.memcheck, %s
 
 vector.memcheck113:                               ; preds = %vector.body99, %scalar.ph97
   %.lcssa39 = phi ptr [ %i.anb, %scalar.ph97 ], [ %i.kf, %vector.body99 ] ; 5 uses
+  %1 = getelementptr i8, ptr %0, i64 512
   %i.aoj = getelementptr nuw i8, ptr %.lcssa39, i64 2
   %i.aok = getelementptr i8, ptr %.lcssa39, i64 66
   %bound0114 = icmp ult ptr %0, %i.aok
-  %bound1115 = icmp ult ptr %i.aoj, %scevgep
+  %bound1115 = icmp ult ptr %i.aoj, %1
   %found.conflict116 = and i1 %bound0114, %bound1115
   br i1 %found.conflict116, label %scalar.ph112, label %vector.ph117
 
@@ -972,10 +973,11 @@ scalar.ph112:                                     ; preds = %vector.memcheck113,
 
 vector.memcheck131:                               ; preds = %vector.body118, %scalar.ph112
   %.lcssa = phi ptr [ %i.baa, %scalar.ph112 ], [ %i.aol, %vector.body118 ] ; 4 uses
+  %2 = getelementptr i8, ptr %0, i64 512
   %i.bbi = getelementptr nuw i8, ptr %.lcssa, i64 2
   %i.bbj = getelementptr i8, ptr %.lcssa, i64 130
   %bound0132 = icmp ult ptr %0, %i.bbj
-  %bound1133 = icmp ult ptr %i.bbi, %scevgep
+  %bound1133 = icmp ult ptr %i.bbi, %2
   %found.conflict134 = and i1 %bound0132, %bound1133
   br i1 %found.conflict134, label %scalar.ph130, label %vector.body136
 
@@ -1378,7 +1380,7 @@ scalar_mult.exit._crit_edge:                      ; preds = %scalar_mult_add.exi
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @scalar_inverse_ntt(ptr nofree noundef nonnull captures(address) %0) unnamed_addr #8 {
 vector.memcheck:
-  %i.a = getelementptr i8, ptr %0, i64 512        ; 3 uses
+  %i.a = getelementptr i8, ptr %0, i64 512
   %bound0 = icmp ult ptr %0, getelementptr inbounds nuw (i8, ptr @kInverseNTTRoots, i64 130)
   %bound1 = icmp ugt ptr %i.a, getelementptr inbounds nuw (i8, ptr @kInverseNTTRoots, i64 2)
   %found.conflict = and i1 %bound0, %bound1
@@ -1594,10 +1596,11 @@ scalar.ph:                                        ; preds = %vector.memcheck, %s
 
 vector.memcheck57:                                ; preds = %vector.body, %scalar.ph
   %.lcssa49 = phi ptr [ %i.ey, %scalar.ph ], [ getelementptr inbounds nuw (i8, ptr @kInverseNTTRoots, i64 128), %vector.body ] ; 5 uses
+  %1 = getelementptr i8, ptr %0, i64 512
   %i.gh = getelementptr nuw i8, ptr %.lcssa49, i64 2
   %i.gi = getelementptr nuw i8, ptr %.lcssa49, i64 66
   %bound058 = icmp ult ptr %0, %i.gi
-  %bound159 = icmp ult ptr %i.gh, %i.a
+  %bound159 = icmp ult ptr %i.gh, %1
   %found.conflict60 = and i1 %bound058, %bound159
   br i1 %found.conflict60, label %scalar.ph56, label %vector.ph61
 
@@ -1943,10 +1946,11 @@ scalar.ph56:                                      ; preds = %vector.memcheck57, 
 
 vector.memcheck75:                                ; preds = %vector.body62, %scalar.ph56
   %.lcssa48 = phi ptr [ %i.rp, %scalar.ph56 ], [ %i.gj, %vector.body62 ] ; 5 uses
+  %2 = getelementptr i8, ptr %0, i64 512
   %i.sq = getelementptr nuw i8, ptr %.lcssa48, i64 2
   %i.sr = getelementptr nuw i8, ptr %.lcssa48, i64 34
   %bound076 = icmp ult ptr %0, %i.sr
-  %bound177 = icmp ult ptr %i.sq, %i.a
+  %bound177 = icmp ult ptr %i.sq, %2
   %found.conflict78 = and i1 %bound076, %bound177
   br i1 %found.conflict78, label %scalar.ph74, label %vector.ph79
 
