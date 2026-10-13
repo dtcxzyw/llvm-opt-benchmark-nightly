@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %.not73, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.bj = call ptr @wm8750_dac_buffer(ptr noundef %i.ac, i32 noundef %i.l) #6 ; 6 uses
+  %i.bj = call ptr @wm8750_dac_buffer(ptr noundef %i.ac, i32 noundef %i.l) #6 ; 7 uses
   %.not90 = icmp eq i32 %i.l, 0
   br i1 %.not90, label %.loopexit, label %.lr.ph84.preheader
 
@@ -224,7 +224,7 @@ vector.memcheck116:                               ; preds = %.lr.ph84.preheader
   br i1 %found.conflict119, label %.lr.ph84.preheader133, label %vector.ph120
 
 vector.ph120:                                     ; preds = %vector.memcheck116
-  %n.vec121 = and i64 %i.bk, 8188                 ; 4 uses
+  %n.vec121 = and i64 %i.bk, 8184                 ; 4 uses
   %i.bo = getelementptr i8, ptr %i.a, i64 %n.vec121
   %i.bp = shl nuw nsw i64 %n.vec121, 2
   %i.bq = getelementptr i8, ptr %i.bj, i64 %i.bp
@@ -232,15 +232,23 @@ vector.ph120:                                     ; preds = %vector.memcheck116
 
 vector.body122:                                   ; preds = %vector.body122, %vector.ph120
   %index123 = phi i64 [ 0, %vector.ph120 ], [ %index.next128, %vector.body122 ] ; 3 uses
-  %next.gep124 = getelementptr i8, ptr %i.a, i64 %index123
-  %i.br = shl i64 %index123, 2
-  %next.gep125.a = getelementptr i8, ptr %i.bj, i64 %i.br
-  %wide.load126 = load <4 x i8>, ptr %next.gep124, align 4, !alias.scope !24
+  %next.gep124 = getelementptr i8, ptr %i.a, i64 %index123 ; 2 uses
+  %i.br = shl i64 %index123, 2                    ; 2 uses
+  %next.gep125 = getelementptr i8, ptr %i.bj, i64 %i.br
+  %3 = getelementptr i8, ptr %i.bj, i64 %i.br
+  %next.gep126 = getelementptr i8, ptr %3, i64 16
+  %next.gep125.a = getelementptr i8, ptr %next.gep124, i64 4
+  %wide.load127 = load <4 x i8>, ptr %next.gep124, align 8, !alias.scope !24
+  %wide.load126 = load <4 x i8>, ptr %next.gep125.a, align 4, !alias.scope !24
+  %4 = zext <4 x i8> %wide.load127 to <4 x i16>
   %i.bs = zext <4 x i8> %wide.load126 to <4 x i16>
+  %5 = shl nuw <4 x i16> %4, splat (i16 8)
   %i.bt = shl nuw <4 x i16> %i.bs, splat (i16 8)
+  %interleaved.vec129 = shufflevector <4 x i16> %5, <4 x i16> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x i16> %interleaved.vec129, ptr %next.gep125, align 2, !alias.scope !25, !noalias !24
   %interleaved.vec127 = shufflevector <4 x i16> %i.bt, <4 x i16> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x i16> %interleaved.vec127, ptr %next.gep125.a, align 2, !alias.scope !25, !noalias !24
-  %index.next128 = add nuw i64 %index123, 4       ; 2 uses
+  store <8 x i16> %interleaved.vec127, ptr %next.gep126, align 2, !alias.scope !25, !noalias !24
+  %index.next128 = add nuw i64 %index123, 8       ; 2 uses
   %i.bu = icmp eq i64 %index.next128, %n.vec121
   br i1 %i.bu, label %middle.block129, label %vector.body122, !llvm.loop !15
 

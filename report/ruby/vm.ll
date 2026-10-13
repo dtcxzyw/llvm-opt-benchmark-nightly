@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @vm_call_general(ptr noundef %0, ptr noundef captures(address) %1, ptr noundef %2) #2 {
+define internal i64 @vm_call_general(ptr noundef %0, ptr noundef %1, ptr noundef %2) #2 {
 bb.a:
   %i.a = tail call fastcc i64 @vm_call_method(ptr noundef %0, ptr noundef %1, ptr noundef %2)
   ret i64 %i.a
@@ -608,7 +608,7 @@ vm_search_method_slowpath0.exit:                  ; preds = %bb.a, %bb.b, %bb.c
 }
 
 ; Function Attrs: inlinehint nounwind sspstrong uwtable
-define internal fastcc i64 @vm_call_method(ptr noundef %0, ptr noundef captures(address) %1, ptr noundef %2) unnamed_addr #11 {
+define internal fastcc i64 @vm_call_method(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #11 {
 bb.a:
   %3 = alloca %struct.rb_callcache, align 8       ; 6 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !242
@@ -1011,7 +1011,7 @@ vm_call_bmethod.exit:                             ; preds = %bb.at, %bb.as, %CC_
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @vm_call_method_missing(ptr noundef %0, ptr noundef captures(address) %1, ptr noundef %2) #2 {
+define internal i64 @vm_call_method_missing(ptr noundef %0, ptr noundef %1, ptr noundef %2) #2 {
 bb.a:
   %i.a = load ptr, ptr %2, align 8, !tbaa !242
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !240
@@ -1026,7 +1026,7 @@ bb.a:
 declare i64 @rb_obj_is_kind_of(i64 noundef, i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @vm_call_method_nome(ptr noundef %0, ptr noundef captures(address) %1, ptr noundef %2) unnamed_addr #2 {
+define internal fastcc i64 @vm_call_method_nome(ptr noundef %0, ptr noundef %1, ptr noundef %2) unnamed_addr #2 {
 bb.a:
   %i.a = load ptr, ptr %2, align 8, !tbaa !242
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !240  ; 4 uses
@@ -1429,7 +1429,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 declare void @rb_notimplement() local_unnamed_addr #10
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal i64 @vm_call_super_method(ptr noundef %0, ptr noundef captures(address) %1, ptr noundef %2) #2 {
+define internal i64 @vm_call_super_method(ptr noundef %0, ptr noundef %1, ptr noundef %2) #2 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.b, label %bb.c
@@ -1446,7 +1446,7 @@ bb.c:                                             ; preds = %bb.a
 declare i64 @rb_hash_lookup(i64 noundef, i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nounwind sspstrong uwtable
-define internal fastcc i64 @vm_call_method_missing_body(ptr noundef %0, ptr noundef captures(address) %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) unnamed_addr #2 {
+define internal fastcc i64 @vm_call_method_missing_body(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) unnamed_addr #2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %5 = alloca %struct.rb_forwarding_call_data, align 8 ; 6 uses

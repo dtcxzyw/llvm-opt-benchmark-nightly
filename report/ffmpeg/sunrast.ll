@@ -202,13 +202,13 @@ bb.ba:                                            ; preds = %.critedge
   %i.hu = getelementptr i8, ptr %i.gz, i64 %i.ht
   %scevgep381 = getelementptr i8, ptr %i.hu, i64 %wide.trip.count301
   %i.hv = shl nuw nsw i64 %wide.trip.count301, 3
-  %min.iters.check387 = icmp ult i32 %i.hd, 8
+  %min.iters.check387 = icmp ult i32 %i.hd, 4
   %min.iters.check389 = icmp ult i32 %i.hd, 16
-  %i.hw = and i64 %wide.trip.count301, 8
+  %i.hw = and i64 %wide.trip.count301, 12
   %n.vec391 = and i64 %wide.trip.count301, 536870896 ; 4 uses
   %cmp.n398 = icmp eq i64 %n.vec391, %wide.trip.count301
   %min.epilog.iters.check403.not.not = icmp eq i64 %i.hw, 0
-  %n.vec405 = and i64 %wide.trip.count301, 536870904 ; 3 uses
+  %n.vec405 = and i64 %wide.trip.count301, 536870908 ; 3 uses
   %cmp.n412 = icmp eq i64 %n.vec405, %wide.trip.count301
   br label %iter.check400
 
@@ -268,29 +268,29 @@ vec.epilog.ph404:                                 ; preds = %vector.main.loop.it
 vec.epilog.vector.body406:                        ; preds = %vec.epilog.vector.body406, %vec.epilog.ph404
   %index407 = phi i64 [ %vec.epilog.resume.val399, %vec.epilog.ph404 ], [ %index.next410, %vec.epilog.vector.body406 ] ; 3 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %i.hx, i64 %index407
-  %wide.load408 = load <8 x i8>, ptr %i.ir, align 1, !tbaa !42, !alias.scope !71, !noalias !72 ; 8 uses
-  %4 = lshr <8 x i8> %wide.load408, splat (i8 7)
+  %wide.load408 = load <4 x i8>, ptr %i.ir, align 1, !tbaa !42, !alias.scope !71, !noalias !72 ; 8 uses
+  %4 = lshr <4 x i8> %wide.load408, splat (i8 7)
   %i.is = shl i64 %index407, 3
-  %i.it = and i64 %i.is, 4294967232
+  %i.it = and i64 %i.is, 4294967264
   %i.iu = getelementptr inbounds nuw i8, ptr %.7274.us.us, i64 %i.it
-  %5 = lshr <8 x i8> %wide.load408, splat (i8 6)
-  %6 = and <8 x i8> %5, splat (i8 1)
-  %7 = lshr <8 x i8> %wide.load408, splat (i8 5)
-  %8 = lshr <8 x i8> %wide.load408, splat (i8 4)
-  %9 = lshr <8 x i8> %wide.load408, splat (i8 3)
-  %10 = lshr <8 x i8> %wide.load408, splat (i8 2)
-  %11 = lshr <8 x i8> %wide.load408, splat (i8 1)
-  %12 = shufflevector <8 x i8> %4, <8 x i8> %6, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %13 = shufflevector <8 x i8> %7, <8 x i8> %8, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %14 = and <16 x i8> %13, splat (i8 1)
-  %15 = shufflevector <8 x i8> %9, <8 x i8> %10, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %16 = shufflevector <8 x i8> %11, <8 x i8> %wide.load408, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %17 = shufflevector <16 x i8> %12, <16 x i8> %14, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %18 = shufflevector <16 x i8> %15, <16 x i8> %16, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %19 = and <32 x i8> %18, splat (i8 1)
-  %interleaved.vec409 = shufflevector <32 x i8> %17, <32 x i8> %19, <64 x i32> <i32 0, i32 8, i32 16, i32 24, i32 32, i32 40, i32 48, i32 56, i32 1, i32 9, i32 17, i32 25, i32 33, i32 41, i32 49, i32 57, i32 2, i32 10, i32 18, i32 26, i32 34, i32 42, i32 50, i32 58, i32 3, i32 11, i32 19, i32 27, i32 35, i32 43, i32 51, i32 59, i32 4, i32 12, i32 20, i32 28, i32 36, i32 44, i32 52, i32 60, i32 5, i32 13, i32 21, i32 29, i32 37, i32 45, i32 53, i32 61, i32 6, i32 14, i32 22, i32 30, i32 38, i32 46, i32 54, i32 62, i32 7, i32 15, i32 23, i32 31, i32 39, i32 47, i32 55, i32 63>
-  store <64 x i8> %interleaved.vec409, ptr %i.iu, align 1, !tbaa !42, !alias.scope !72
-  %index.next410 = add nuw i64 %index407, 8       ; 2 uses
+  %5 = lshr <4 x i8> %wide.load408, splat (i8 6)
+  %6 = and <4 x i8> %5, splat (i8 1)
+  %7 = lshr <4 x i8> %wide.load408, splat (i8 5)
+  %8 = lshr <4 x i8> %wide.load408, splat (i8 4)
+  %9 = lshr <4 x i8> %wide.load408, splat (i8 3)
+  %10 = lshr <4 x i8> %wide.load408, splat (i8 2)
+  %11 = lshr <4 x i8> %wide.load408, splat (i8 1)
+  %12 = shufflevector <4 x i8> %4, <4 x i8> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %13 = shufflevector <4 x i8> %7, <4 x i8> %8, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %14 = and <8 x i8> %13, splat (i8 1)
+  %15 = shufflevector <4 x i8> %9, <4 x i8> %10, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %16 = shufflevector <4 x i8> %11, <4 x i8> %wide.load408, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %17 = shufflevector <8 x i8> %12, <8 x i8> %14, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %18 = shufflevector <8 x i8> %15, <8 x i8> %16, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %19 = and <16 x i8> %18, splat (i8 1)
+  %interleaved.vec409 = shufflevector <16 x i8> %17, <16 x i8> %19, <32 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29, i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30, i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
+  store <32 x i8> %interleaved.vec409, ptr %i.iu, align 1, !tbaa !42, !alias.scope !72
+  %index.next410 = add nuw i64 %index407, 4       ; 2 uses
   %i.iv = icmp eq i64 %index.next410, %n.vec405
   br i1 %i.iv, label %vec.epilog.middle.block411, label %vec.epilog.vector.body406, !llvm.loop !23
 
@@ -415,7 +415,7 @@ middle.block371:                                  ; preds = %vector.body365
   br i1 %cmp.n372, label %._crit_edge272.split.us279, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block371
-  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !76
+  br i1 %min.epilog.iters.check, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !73
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec364, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -634,8 +634,7 @@ attributes #6 = { noreturn nounwind }
 !70 = !{!"llvm.loop.unroll.runtime.disable"}
 !71 = !{!20}
 !72 = !{!21}
-!73 = !{!"branch_weights", i32 8, i32 8}
+!73 = !{!"branch_weights", i32 4, i32 12}
 !74 = !{!27}
 !75 = !{!28}
-!76 = !{!"branch_weights", i32 4, i32 12}
 end_hunk_0

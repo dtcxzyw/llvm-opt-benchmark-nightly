@@ -204,7 +204,7 @@ lean_dec_ref.exit17:                              ; preds = %bb.i, %bb.j, %bb.k
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @l_Lean_Meta_CheckAssignment_checkFVar(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef captures(none) %3, ptr noundef %4, ptr noundef captures(none) %5, ptr noundef %6) local_unnamed_addr #1 {
+define ptr @l_Lean_Meta_CheckAssignment_checkFVar(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !15
@@ -607,7 +607,7 @@ declare zeroext i8 @l_Lean_LocalContext_containsFVar(ptr noundef, ptr noundef) l
 declare ptr @l_Lean_LocalContext_findFVar_x3f(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define ptr @l_Lean_Meta_CheckAssignment_check(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef captures(none) %3, ptr noundef %4, ptr noundef captures(none) %5, ptr noundef %6) local_unnamed_addr #1 {
+define ptr @l_Lean_Meta_CheckAssignment_check(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call zeroext i8 @l_Lean_Expr_hasExprMVar(ptr noundef %0) #12
   %i.b = icmp eq i8 %i.a, 0
@@ -1010,7 +1010,7 @@ lean_dec.exit:                                    ; preds = %lean_dec_ref.exit69
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @l___private_Init_Data_Array_Basic_0__Array_mapMUnsafe_map___at___00Lean_Meta_CheckAssignment_checkApp_spec__4(i64 noundef %0, i64 noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr noundef captures(none) %5, ptr noundef %6, ptr noundef captures(none) %7, ptr noundef %8) local_unnamed_addr #1 {
+define ptr @l___private_Init_Data_Array_Basic_0__Array_mapMUnsafe_map___at___00Lean_Meta_CheckAssignment_checkApp_spec__4(i64 noundef %0, i64 noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8) local_unnamed_addr #1 {
 bb.a:
   %.not97 = icmp ult i64 %1, %0
   br i1 %.not97, label %.lr.ph, label %._crit_edge

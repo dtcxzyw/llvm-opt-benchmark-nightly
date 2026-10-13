@@ -204,7 +204,6 @@ bb.i:                                             ; preds = %bb.h
 define internal fastcc i64 @pac_mult(i64 noundef %0) unnamed_addr #9 {
 extract64.exit41:
   %i.a = lshr i64 %0, 32
-  %1 = trunc nuw i64 %i.a to i32
   %i.b = trunc i64 %0 to i32
   %i.c = lshr i64 %0, 48
   %i.d = trunc i64 %0 to i32
@@ -227,6 +226,7 @@ extract64.exit41:
   %i.u = and i32 %i.t, 15
   %i.v = mul nuw nsw i32 %i.s, 17                 ; 2 uses
   %i.w = mul nuw nsw i32 %i.u, 17                 ; 2 uses
+  %1 = trunc nuw i64 %i.a to i32
   %i.x = lshr i32 %i.b, 16
   %i.y = lshr i32 %i.h, 3                         ; 2 uses
   %i.z = lshr i32 %i.o, 20

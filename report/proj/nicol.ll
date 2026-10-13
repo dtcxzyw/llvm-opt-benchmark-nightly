@@ -91,13 +91,13 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %3 = fdiv double f0x3FF921FB54442D18, %0
   %i.r = fdiv double %1, f0x3FF921FB54442D18      ; 3 uses
   %i.s = fneg double %i.r
   %i.t = tail call double @sin(double noundef %1) #6 ; 5 uses
   %i.u = tail call double @cos(double noundef %1) #6
   %i.v = insertelement <2 x double> %i.c, double %0, i64 0
   %i.w = fcmp olt <2 x double> %i.v, zeroinitializer
+  %3 = fdiv double f0x3FF921FB54442D18, %0
   %i.x = fsub double %i.t, %i.r
   %i.y = tail call double @llvm.fmuladd.f64(double %i.s, double %i.r, double 1.000000e+00)
   %i.z = insertelement <2 x double> poison, double %0, i64 0

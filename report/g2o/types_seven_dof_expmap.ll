@@ -205,43 +205,36 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN5Eigen6MatrixIdLi3ELi1ELi0ELi3ELi1EEaSINS_5SolveINS_12PartialPivLUINS0_IdLi3ELi3ELi0ELi3ELi3EEEEES1_EEEERS1_RKNS_9DenseBaseIT_EE.exit
 
 bb.g:                                             ; preds = %bb.e
-  %6 = tail call double @acos(double noundef %i.am) #26 ; 8 uses
   %i.cz = fneg double %i.am
   %i.da = tail call double @llvm.fmuladd.f64(double %i.cz, double %i.am, double 1.000000e+00)
-  %7 = tail call double @sqrt(double noundef %i.da) #26
-  %8 = fmul double %7, 2.000000e+00
   %i.db = fsub double %i.ag, %i.ae
   %.sroa.0209.0.vec.insert = insertelement <2 x double> poison, double %i.db, i64 0
   %i.dc = fsub double %i.aa, %i.af
   %.sroa.0209.8.vec.insert = insertelement <2 x double> %.sroa.0209.0.vec.insert, double %i.dc, i64 1
   %i.dd = fsub double %i.ab, %i.z
-  store double 0.000000e+00, ptr %4, align 16
   %.sroa.4119.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.5120.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.6121.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 24
   %.sroa.7122.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 32
-  store double 0.000000e+00, ptr %.sroa.7122.0..sroa_idx, align 16
   %.sroa.7123.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 40
   %.sroa.9125.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 56
   %.sroa.10126.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 64
-  store double 0.000000e+00, ptr %.sroa.10126.0..sroa_idx, align 16, !tbaa !20
-  %i.de = tail call double @sin(double noundef %6) #26
-  %i.df = fmul double %i.c, %i.de                 ; 2 uses
-  %i.dg = tail call double @cos(double noundef %6) #26
+  %6 = tail call double @acos(double noundef %i.am) #26 ; 8 uses
+  %i.de = tail call double @sqrt(double noundef %i.da) #26
+  %i.df = fmul double %i.de, 2.000000e+00
+  %i.dg = tail call double @sin(double noundef %6) #26
   %i.dh = fmul double %i.c, %i.dg                 ; 2 uses
-  %9 = fadd double %i.dh, -1.000000e+00
-  %10 = fmul double %6, %i.df
-  %i.di = fmul double %6, %6                      ; 2 uses
-  %11 = tail call double @llvm.fmuladd.f64(double %i.d, double %i.d, double %i.di) ; 2 uses
-  %12 = fsub double 1.000000e+00, %i.dh
-  %i.dj = fmul double %6, %12
-  %i.dk = tail call double @llvm.fmuladd.f64(double %i.df, double %i.d, double %i.dj)
-  %13 = fmul double %6, %11
-  %i.dl = tail call double @llvm.fmuladd.f64(double %9, double %i.d, double %10)
+  %7 = tail call double @cos(double noundef %6) #26
+  %i.di = fmul double %i.c, %7                    ; 2 uses
+  %8 = fadd double %i.di, -1.000000e+00
+  %9 = fmul double %6, %i.dh
+  %i.dj = fmul double %6, %6                      ; 2 uses
+  %i.dk = tail call double @llvm.fmuladd.f64(double %i.d, double %i.d, double %i.dj) ; 2 uses
+  %i.dl = tail call double @llvm.fmuladd.f64(double %8, double %i.d, double %9)
   %i.dm = insertelement <2 x double> poison, double %6, i64 0
   %i.dn = insertelement <2 x double> %i.dm, double %i.dl, i64 1
-  %i.do = insertelement <2 x double> poison, double %8, i64 0
-  %i.dp = insertelement <2 x double> %i.do, double %11, i64 1
+  %i.do = insertelement <2 x double> poison, double %i.df, i64 0
+  %i.dp = insertelement <2 x double> %i.do, double %i.dk, i64 1
   %i.dq = fdiv <2 x double> %i.dn, %i.dp          ; 3 uses
   %i.dr = shufflevector <2 x double> %i.dq, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ds = fmul <2 x double> %.sroa.0209.8.vec.insert, %i.dr ; 4 uses
@@ -250,18 +243,25 @@ bb.g:                                             ; preds = %bb.e
   %i.dv = fneg double %i.du
   %.sroa.0.0.vec.extract221 = extractelement <2 x double> %i.ds, i64 0
   %i.dw = fneg <2 x double> %i.ds                 ; 2 uses
+  store double 0.000000e+00, ptr %4, align 16
   store double %i.du, ptr %.sroa.4119.0..sroa_idx, align 8
   %i.dx = extractelement <2 x double> %i.dw, i64 1
   store double %i.dx, ptr %.sroa.5120.0..sroa_idx, align 16
   store double %i.dv, ptr %.sroa.6121.0..sroa_idx, align 8
+  store double 0.000000e+00, ptr %.sroa.7122.0..sroa_idx, align 16
   store <2 x double> %i.ds, ptr %.sroa.7123.0..sroa_idx, align 8
   %i.dy = extractelement <2 x double> %i.dw, i64 0
   store double %i.dy, ptr %.sroa.9125.0..sroa_idx, align 8
+  store double 0.000000e+00, ptr %.sroa.10126.0..sroa_idx, align 16, !tbaa !20
+  %10 = fsub double 1.000000e+00, %i.di
+  %11 = fmul double %6, %10
+  %12 = tail call double @llvm.fmuladd.f64(double %i.dh, double %i.d, double %11)
+  %13 = fmul double %6, %i.dk
   %i.dz = extractelement <2 x double> %i.dq, i64 1
   %i.ea = fsub double %i.cb, %i.dz
   %i.eb = insertelement <2 x double> poison, double %13, i64 0
-  %i.ec = insertelement <2 x double> %i.eb, double %i.di, i64 1
-  %i.ed = insertelement <2 x double> poison, double %i.dk, i64 0
+  %i.ec = insertelement <2 x double> %i.eb, double %i.dj, i64 1
+  %i.ed = insertelement <2 x double> poison, double %12, i64 0
   %i.ee = insertelement <2 x double> %i.ed, double %i.ea, i64 1
   %i.ef = fdiv <2 x double> %i.ee, %i.ec
   br label %_ZN5Eigen6MatrixIdLi3ELi1ELi0ELi3ELi1EEaSINS_5SolveINS_12PartialPivLUINS0_IdLi3ELi3ELi0ELi3ELi3EEEEES1_EEEERS1_RKNS_9DenseBaseIT_EE.exit

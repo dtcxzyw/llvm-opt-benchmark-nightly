@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 .preheader:                                       ; preds = %.lr.ph69.prol.loopexit, %.lr.ph69, %middle.block, %bb.r
   %.050.lcssa = phi ptr [ %i.aj, %bb.r ], [ %i.ay, %middle.block ], [ %.lcssa.unr, %.lr.ph69.prol.loopexit ], [ %i.dd, %.lr.ph69 ] ; 6 uses
   %.0.lcssa = phi i32 [ 0, %bb.r ], [ %.154, %middle.block ], [ %.154, %.lr.ph69 ], [ %.154, %.lr.ph69.prol.loopexit ] ; 5 uses
-  %.157.lcssa = phi ptr [ %.15765, %bb.r ], [ %i.av, %middle.block ], [ %.157.lcssa119.unr, %.lr.ph69.prol.loopexit ], [ %.157.7, %.lr.ph69 ] ; 6 uses
+  %.157.lcssa = phi ptr [ %.15765, %bb.r ], [ %i.av, %middle.block ], [ %.157.lcssa119.unr, %.lr.ph69.prol.loopexit ], [ %.157.7, %.lr.ph69 ] ; 7 uses
   %i.bn = icmp slt i32 %.0.lcssa, %.052
   br i1 %i.bn, label %.lr.ph76.preheader, label %.loopexit
 
@@ -229,7 +229,7 @@ vector.memcheck100:                               ; preds = %.lr.ph76.preheader
   br i1 %found.conflict103, label %.lr.ph76.preheader117, label %vector.ph104
 
 vector.ph104:                                     ; preds = %vector.memcheck100
-  %n.vec105 = and i64 %i.bs, 4294967292           ; 4 uses
+  %n.vec105 = and i64 %i.bs, 4294967288           ; 4 uses
   %i.by = trunc nuw i64 %n.vec105 to i32
   %i.bz = shl i32 %i.by, 1
   %i.ca = add i32 %.0.lcssa, %i.bz
@@ -240,15 +240,23 @@ vector.ph104:                                     ; preds = %vector.memcheck100
 
 vector.body106:                                   ; preds = %vector.body106, %vector.ph104
   %index107 = phi i64 [ 0, %vector.ph104 ], [ %index.next111, %vector.body106 ] ; 2 uses
-  %i.ce = shl i64 %index107, 2                    ; 2 uses
-  %next.gep108.a = getelementptr i8, ptr %.050.lcssa, i64 %i.ce
-  %next.gep109.a = getelementptr i8, ptr %.157.lcssa, i64 %i.ce
-  %wide.load110 = load <4 x i32>, ptr %next.gep108.a, align 4, !alias.scope !52 ; 2 uses
+  %i.ce = shl i64 %index107, 2                    ; 3 uses
+  %next.gep108 = getelementptr i8, ptr %.050.lcssa, i64 %i.ce ; 2 uses
+  %next.gep109 = getelementptr i8, ptr %.157.lcssa, i64 %i.ce
+  %4 = getelementptr i8, ptr %.157.lcssa, i64 %i.ce
+  %next.gep108.a = getelementptr i8, ptr %4, i64 16
+  %next.gep109.a = getelementptr i8, ptr %next.gep108, i64 16
+  %wide.load111 = load <4 x i32>, ptr %next.gep108, align 4, !alias.scope !52 ; 2 uses
+  %wide.load110 = load <4 x i32>, ptr %next.gep109.a, align 4, !alias.scope !52 ; 2 uses
+  %5 = lshr <4 x i32> %wide.load111, splat (i32 16)
   %i.cf = lshr <4 x i32> %wide.load110, splat (i32 16)
+  %6 = shufflevector <4 x i32> %5, <4 x i32> %wide.load111, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec = trunc <8 x i32> %6 to <8 x i16>
+  store <8 x i16> %interleaved.vec, ptr %next.gep109, align 2, !alias.scope !53, !noalias !52
   %i.cg = shufflevector <4 x i32> %i.cf, <4 x i32> %wide.load110, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %interleaved.vec.a = trunc <8 x i32> %i.cg to <8 x i16>
-  store <8 x i16> %interleaved.vec.a, ptr %next.gep109.a, align 2, !alias.scope !53, !noalias !52
-  %index.next111 = add nuw i64 %index107, 4       ; 2 uses
+  store <8 x i16> %interleaved.vec.a, ptr %next.gep108.a, align 2, !alias.scope !53, !noalias !52
+  %index.next111 = add nuw i64 %index107, 8       ; 2 uses
   %i.ch = icmp eq i64 %index.next111, %n.vec105
   br i1 %i.ch, label %middle.block112, label %vector.body106, !llvm.loop !47
 

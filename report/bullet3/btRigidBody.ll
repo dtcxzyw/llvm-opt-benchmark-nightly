@@ -205,7 +205,6 @@ bb.a:
   %i.ak = shufflevector <2 x float> %i.aj, <2 x float> poison, <2 x i32> zeroinitializer
   %i.al = insertelement <2 x float> poison, float %i.j, i64 0
   %i.am = shufflevector <2 x float> %i.al, <2 x float> poison, <2 x i32> zeroinitializer
-  %2 = fneg float %i.ah                           ; 3 uses
   %i.an = load <3 x float>, ptr %i.a, align 8
   %i.ao = shufflevector <3 x float> %i.an, <3 x float> poison, <3 x i32> <i32 2, i32 0, i32 1> ; 2 uses
   %i.ap = fcmp une <3 x float> %i.ao, zeroinitializer
@@ -260,6 +259,7 @@ bb.a:
   %i.cm = extractelement <2 x float> %i.ci, i64 0 ; 2 uses
   %foldExtExtBinop = fmul <2 x float> %i.k, %i.ci
   %i.cn = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %2 = fneg float %i.ah                           ; 3 uses
   %i.co = extractelement <2 x float> %i.bi, i64 1 ; 3 uses
   %i.cp = fmul float %i.co, %2
   %i.cq = extractelement <2 x float> %i.bi, i64 0 ; 3 uses

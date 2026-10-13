@@ -34,8 +34,6 @@ define void @ff_matrix_invert_3x3(ptr nofree noundef readonly captures(none) %0,
   %i.s = shufflevector <2 x double> %i.r, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.t = fmul nsz <2 x double> %i.l, %i.s
   %i.u = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.k, <2 x double> %i.n, <2 x double> %i.t) ; 3 uses
-  %2 = extractelement <2 x double> %i.u, i64 0
-  %3 = fneg nsz double %2
   %i.v = load <2 x double>, ptr %i.g, align 8, !tbaa !10 ; 5 uses
   %i.w = load double, ptr %i.h, align 8, !tbaa !10 ; 2 uses
   %i.x = shufflevector <2 x double> %i.l, <2 x double> %i.v, <2 x i32> <i32 0, i32 2>
@@ -49,6 +47,8 @@ define void @ff_matrix_invert_3x3(ptr nofree noundef readonly captures(none) %0,
   %i.af = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ag = insertelement <2 x double> %i.v, double %i.w, i64 1
   %i.ah = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.af, <2 x double> %i.ag, <2 x double> %i.ae) ; 2 uses
+  %2 = extractelement <2 x double> %i.ah, i64 0
+  %3 = fneg nsz double %2
   %i.ai = shufflevector <2 x double> %i.v, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.aj = insertelement <2 x double> %i.ai, double %i.f, i64 0
   %i.ak = insertelement <2 x double> poison, double %i.j, i64 0
@@ -57,8 +57,8 @@ define void @ff_matrix_invert_3x3(ptr nofree noundef readonly captures(none) %0,
   %i.an = insertelement <2 x double> poison, double %i.w, i64 0
   %i.ao = shufflevector <2 x double> %i.an, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ap = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.l, <2 x double> %i.ao, <2 x double> %i.am) ; 3 uses
-  %i.aq = shufflevector <2 x double> %i.ah, <2 x double> %i.ap, <2 x i32> <i32 0, i32 2>
-  %i.ar = fneg nsz <2 x double> %i.aq
+  %i.aq = shufflevector <2 x double> %i.ap, <2 x double> %i.u, <2 x i32> <i32 0, i32 2>
+  %i.ar = fneg nsz <2 x double> %i.aq             ; 2 uses
   %i.as = shufflevector <2 x double> %i.l, <2 x double> %i.ab, <2 x i32> <i32 1, i32 3>
   %i.at = fneg nsz <2 x double> %i.as             ; 2 uses
   %i.au = insertelement <2 x double> %i.z, double %i.f, i64 0
@@ -75,16 +75,15 @@ define void @ff_matrix_invert_3x3(ptr nofree noundef readonly captures(none) %0,
   %i.bf = shufflevector <2 x double> %i.ap, <2 x double> %i.at, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
   %i.bg = shufflevector <2 x double> %i.u, <2 x double> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
   %i.bh = shufflevector <4 x double> %i.bf, <4 x double> %i.bg, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
-  %4 = shufflevector <2 x double> %i.ar, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
-  %5 = shufflevector <4 x double> %i.bh, <4 x double> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  %4 = shufflevector <2 x double> %i.ar, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %5 = shufflevector <4 x double> %i.bh, <4 x double> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
   %i.bi = fmul nsz <4 x double> %i.be, %5
   store <4 x double> %i.bi, ptr %1, align 8, !tbaa !10
-  %6 = shufflevector <2 x double> %i.ah, <2 x double> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %7 = insertelement <4 x double> %6, double %3, i64 1
+  %6 = shufflevector <2 x double> %i.ah, <2 x double> %i.ar, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
   %i.bj = shufflevector <2 x double> %i.ay, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
-  %i.bk = shufflevector <4 x double> %7, <4 x double> %i.bj, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
-  %8 = shufflevector <4 x double> %i.bk, <4 x double> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
-  %i.bl = fmul nsz <4 x double> %i.be, %8
+  %i.bk = shufflevector <4 x double> %6, <4 x double> %i.bj, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
+  %7 = insertelement <4 x double> %i.bk, double %3, i64 3
+  %i.bl = fmul nsz <4 x double> %i.be, %7
   store <4 x double> %i.bl, ptr %i.o, align 8, !tbaa !10
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.bn = extractelement <2 x double> %i.ab, i64 0

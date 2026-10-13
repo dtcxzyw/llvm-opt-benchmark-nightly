@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.af = phi float [ %i.ae, %bb.c ], [ 0.000000e+00, %bb.b ]
-  %9 = fadd float %i.m, %i.af
   %.sroa.0.4.vec.extract = extractelement <2 x float> %i.r, i64 1 ; 2 uses
   %i.ag = fcmp oge float %i.u, %.sroa.0.4.vec.extract
   %i.ah = select i1 %i.ag, float %i.u, float %.sroa.0.4.vec.extract
   store <2 x i32> %i.s, ptr %6, align 8, !tbaa !190
   %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #41
+  %9 = fadd float %i.m, %i.af
   %i.aj = call float @llvm.fmuladd.f32(float %i.v, float 2.000000e+00, float %i.ah)
   %i.ak = insertelement <2 x float> poison, float %9, i64 0
   %i.al = insertelement <2 x float> %i.ak, float %i.aj, i64 1
@@ -353,11 +353,11 @@ bb.e:                                             ; preds = %bb.d
   %i.al = getelementptr inbounds nuw i8, ptr %i.c, i64 3284 ; 2 uses
   %i.am = load float, ptr %i.al, align 4, !tbaa !206
   %i.an = load float, ptr %i.m, align 8, !tbaa !205 ; 2 uses
-  %4 = fmul float %i.an, 5.000000e-01
-  %5 = call float @llvm.fmuladd.f32(float %i.an, float 5.000000e-01, float %i.am)
+  %4 = call float @llvm.fmuladd.f32(float %i.an, float 5.000000e-01, float %i.am)
+  %5 = fmul float %i.an, 5.000000e-01
   %i.ao = load <2 x float>, ptr %3, align 8, !tbaa !190
-  %i.ap = insertelement <2 x float> poison, float %5, i64 0
-  %i.aq = insertelement <2 x float> %i.ap, float %4, i64 1
+  %i.ap = insertelement <2 x float> poison, float %4, i64 0
+  %i.aq = insertelement <2 x float> %i.ap, float %5, i64 1
   %i.ar = fadd <2 x float> %i.ao, %i.aq
   call void @_ZN5ImGui12RenderBulletEP10ImDrawList6ImVec2j(ptr noundef %i.ak, <2 x float> %i.ar, i32 noundef %i.ai)
   %i.as = load float, ptr %i.m, align 8, !tbaa !205
@@ -760,7 +760,6 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.x = phi float [ %i.w, %bb.c ], [ 0.000000e+00, %bb.b ]
-  %7 = fadd float %i.o, %i.x
   %.sroa.028.4.vec.extract = extractelement <2 x float> %i.n, i64 1
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 3288 ; 2 uses
   %i.z = load float, ptr %i.y, align 8, !tbaa !203 ; 2 uses
@@ -770,6 +769,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #41
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 12
+  %7 = fadd float %i.o, %i.x
   %i.ac = tail call float @llvm.fmuladd.f32(float %i.z, float 2.000000e+00, float %.sroa.028.4.vec.extract)
   %i.ad = insertelement <2 x float> poison, float %7, i64 0
   %i.ae = insertelement <2 x float> %i.ad, float %i.ac, i64 1
@@ -1172,13 +1172,13 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %i.x = phi float [ %i.w, %bb.c ], [ 0.000000e+00, %bb.b ]
-  %7 = fadd float %i.m, %i.x
   %.sroa.016.4.vec.extract = extractelement <2 x float> %i.l, i64 1
   %i.y = getelementptr inbounds nuw i8, ptr %i.c, i64 3288 ; 2 uses
   %i.z = load float, ptr %i.y, align 8, !tbaa !203 ; 2 uses
   store <2 x i32> %i.o, ptr %3, align 8, !tbaa !190
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #41
+  %7 = fadd float %i.m, %i.x
   %i.ab = tail call float @llvm.fmuladd.f32(float %i.z, float 2.000000e+00, float %.sroa.016.4.vec.extract)
   %i.ac = insertelement <2 x float> poison, float %7, i64 0
   %i.ad = insertelement <2 x float> %i.ac, float %i.ab, i64 1
@@ -1579,11 +1579,11 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !202
   %i.ae = load float, ptr %i.m, align 4, !tbaa !206
   %i.af = load float, ptr %i.k, align 8, !tbaa !205
-  %2 = fmul float %i.t, 5.000000e-01
-  %3 = call float @llvm.fmuladd.f32(float %i.af, float 5.000000e-01, float %i.ae)
+  %2 = call float @llvm.fmuladd.f32(float %i.af, float 5.000000e-01, float %i.ae)
+  %3 = fmul float %i.t, 5.000000e-01
   %i.ag = load <2 x float>, ptr %1, align 8, !tbaa !190
-  %i.ah = insertelement <2 x float> poison, float %3, i64 0
-  %i.ai = insertelement <2 x float> %i.ah, float %2, i64 1
+  %i.ah = insertelement <2 x float> poison, float %2, i64 0
+  %i.ai = insertelement <2 x float> %i.ah, float %3, i64 1
   %i.aj = fadd <2 x float> %i.ag, %i.ai
   call void @_ZN5ImGui12RenderBulletEP10ImDrawList6ImVec2j(ptr noundef %i.ad, <2 x float> %i.aj, i32 noundef %i.ab)
   br label %bb.d

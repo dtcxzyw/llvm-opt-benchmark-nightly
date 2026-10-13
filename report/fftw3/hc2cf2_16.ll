@@ -200,8 +200,6 @@ begin_hunk_0_@hc2cf2_16:bb.a
   %i.lc = extractelement <2 x double> %i.ky, i64 1
   %i.ld = fmul <2 x double> %i.ky, <double f0xBFED906BCF328D46, double f0x3FED906BCF328D46>
   %i.le = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.kx, <2 x double> splat (double f0x3FD87DE2A6AEA963), <2 x double> %i.ld) ; 2 uses
-  %9 = extractelement <2 x double> %i.le, i64 0   ; 2 uses
-  %10 = extractelement <2 x double> %i.le, i64 1  ; 2 uses
   %i.lf = insertelement <2 x double> poison, double %i.p, i64 0
   %i.lg = insertelement <2 x double> %i.lf, double %i.q, i64 1
   %i.lh = fsub <2 x double> %i.lg, %i.ig          ; 2 uses
@@ -217,16 +215,18 @@ begin_hunk_0_@hc2cf2_16:bb.a
   %i.lr = fsub <2 x double> %i.lh, %i.lj          ; 2 uses
   %i.ls = fadd <2 x double> %i.lh, %i.lj          ; 2 uses
   %i.lt = shufflevector <2 x double> %i.lr, <2 x double> %i.ls, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %11 = fadd double %10, %9                       ; 2 uses
-  %i.lu = fmul double %i.kz, f0x3FD87DE2A6AEA963
-  %12 = fmul double %i.lb, f0xBFED906BCF328D46
-  %i.lv = fsub double %9, %10                     ; 2 uses
-  %i.lw = tail call double @llvm.fmuladd.f64(double %i.la, double f0x3FED906BCF328D46, double %i.lu) ; 2 uses
-  %i.lx = tail call double @llvm.fmuladd.f64(double %i.lc, double f0x3FD87DE2A6AEA963, double %12) ; 2 uses
+  %9 = fmul double %i.kz, f0x3FD87DE2A6AEA963
+  %i.lu = fmul double %i.lb, f0xBFED906BCF328D46
+  %10 = extractelement <2 x double> %i.le, i64 0  ; 2 uses
+  %11 = extractelement <2 x double> %i.le, i64 1  ; 2 uses
+  %i.lv = fsub double %10, %11                    ; 2 uses
+  %i.lw = tail call double @llvm.fmuladd.f64(double %i.la, double f0x3FED906BCF328D46, double %9) ; 2 uses
+  %i.lx = tail call double @llvm.fmuladd.f64(double %i.lc, double f0x3FD87DE2A6AEA963, double %i.lu) ; 2 uses
   %i.ly = fadd double %i.lx, %i.lw                ; 2 uses
   %i.lz = fsub double %i.lx, %i.lw                ; 2 uses
+  %12 = fadd double %11, %10                      ; 2 uses
   %i.ma = insertelement <2 x double> poison, double %i.ly, i64 0
-  %i.mb = insertelement <2 x double> %i.ma, double %11, i64 1
+  %i.mb = insertelement <2 x double> %i.ma, double %12, i64 1
   %i.mc = insertelement <2 x double> poison, double %i.lv, i64 0
   %i.md = insertelement <2 x double> %i.mc, double %i.lz, i64 1
   %i.me = shufflevector <2 x double> %i.lq, <2 x double> poison, <2 x i32> <i32 1, i32 0>
@@ -237,10 +237,10 @@ begin_hunk_0_@hc2cf2_16:bb.a
   %i.mj = fadd <2 x double> %i.lt, %i.mi          ; 3 uses
   %i.mk = extractelement <2 x double> %i.mj, i64 0
   %i.ml = extractelement <2 x double> %i.mj, i64 1
-  %13 = fsub double %11, %i.ml
   %i.mm = fsub <2 x double> %i.lt, %i.mi          ; 3 uses
   %i.mn = fsub double %i.mk, %i.ly
   store double %i.mn, ptr %i.v, align 8, !tbaa !13
+  %13 = fsub double %12, %i.ml
   store double %13, ptr %i.gl, align 8, !tbaa !13
   %i.mo = fadd <2 x double> %i.mj, %i.mb          ; 2 uses
   %i.mp = extractelement <2 x double> %i.mo, i64 0

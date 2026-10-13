@@ -205,7 +205,7 @@ bb.ah:                                            ; preds = %.preheader1940
   %i.esv = call reassoc nsz arcp contract afn <4 x float> @llvm.fabs.v4f32(<4 x float> %i.esu)
   %i.esw = fcmp reassoc nsz arcp contract afn olt <4 x float> %i.esv, splat (float 2.000000e+00) ; 3 uses
   %i.esx = shufflevector <4 x float> %i.est, <4 x float> <float poison, float poison, float 1.000000e+00, float poison>, <4 x i32> <i32 0, i32 1, i32 6, i32 2>
-  %i.esy = fmul reassoc nsz arcp contract afn <4 x float> %i.esu, %i.esx
+  %i.esy = fmul nsz <4 x float> %i.esu, %i.esx
   %i.esz = fadd reassoc nsz arcp contract afn <4 x float> %i.bvp, %i.esy
   %i.eta = extractelement <4 x i1> %i.esw, i64 2
   %.sroa.9.3 = select nsz i1 %i.eta, float %i.esh, float %.sroa.9.2 ; 3 uses
@@ -608,7 +608,7 @@ bb.aw:                                            ; preds = %bb.au, %._crit_edge
   %.11703 = phi i32 [ %.017022239, %._crit_edge2119.split ], [ 4, %bb.au ] ; 4 uses
   %.11700 = phi i32 [ %.016992241, %._crit_edge2119.split ], [ 2, %bb.au ] ; 6 uses
   %i.fdz = zext i32 %.11703 to i64                ; 58 uses
-  %i.fea = add nsw i64 %i.fdz, -1                 ; 5 uses
+  %i.fea = add nsw i64 %i.fdz, -1                 ; 6 uses
   %.1122132.i = add nuw nsw i64 %i.fdz, 1         ; 2 uses
   %i.feb = shl nuw nsw i64 %i.fdz, 3              ; 2 uses
   %i.fec = add nuw nsw i64 %i.feb, 2048
@@ -628,8 +628,7 @@ bb.aw:                                            ; preds = %bb.au, %._crit_edge
   %i.feo = shl nuw nsw i64 %i.fdz, 3
   %i.fep = shl nuw nsw i64 %i.fdz, 3
   %i.feq = shl nuw nsw i64 %i.fdz, 3
-  %6 = add nsw i64 %i.fdz, -2                     ; 2 uses
-  %i.fer = add nsw i64 %i.fdz, -1                 ; 2 uses
+  %i.fer = add nsw i64 %i.fdz, -2                 ; 2 uses
   %i.fes = getelementptr i8, ptr %i.l, i64 %i.feo
   %i.fet = getelementptr i8, ptr %i.l, i64 %i.feh
   %i.feu = getelementptr i8, ptr %i.fet, i64 2048
@@ -659,7 +658,7 @@ bb.aw:                                            ; preds = %bb.au, %._crit_edge
 .lr.ph.preheader.i:                               ; preds = %.loopexit135.i, %.preheader1961
   %.0121153.i = phi i64 [ %i.ffn, %.loopexit135.i ], [ 0, %.preheader1961 ] ; 26 uses
   %i.ffc = sub i64 %i.fea, %.0121153.i
-  %i.ffd = sub i64 %6, %.0121153.i
+  %i.ffd = sub i64 %i.fer, %.0121153.i
   %i.ffe = mul i64 %i.fep, %.0121153.i
   %scevgep3299 = getelementptr i8, ptr %i.fey, i64 %i.ffe
   %i.fff = shl i64 %.0121153.i, 3
@@ -973,9 +972,8 @@ vec.epilog.middle.block3295:                      ; preds = %vec.epilog.vector.b
 
 vec.epilog.scalar.ph3283.preheader:               ; preds = %iter.check3282, %vec.epilog.iter.check3284, %vec.epilog.middle.block3295
   %.2145.us.i.ph = phi i64 [ %.0121153.i, %iter.check3282 ], [ %i.fin, %vec.epilog.middle.block3295 ], [ %i.fim, %vec.epilog.iter.check3284 ] ; 4 uses
-  %7 = sub i64 %i.fdz, %.2145.us.i.ph
-  %i.fjt = sub i64 %i.fer, %.2145.us.i.ph
-  %xtraiter4384 = and i64 %7, 3                   ; 2 uses
+  %i.fjt = sub i64 %i.fdz, %.2145.us.i.ph
+  %xtraiter4384 = and i64 %i.fjt, 3               ; 2 uses
   %lcmp.mod4385.not = icmp eq i64 %xtraiter4384, 0
   br i1 %lcmp.mod4385.not, label %vec.epilog.scalar.ph3283.prol.loopexit, label %vec.epilog.scalar.ph3283.prol
 
@@ -996,8 +994,9 @@ vec.epilog.scalar.ph3283.prol:                    ; preds = %vec.epilog.scalar.p
 
 vec.epilog.scalar.ph3283.prol.loopexit:           ; preds = %vec.epilog.scalar.ph3283.prol, %vec.epilog.scalar.ph3283.preheader
   %.2145.us.i.unr = phi i64 [ %.2145.us.i.ph, %vec.epilog.scalar.ph3283.preheader ], [ %i.fka, %vec.epilog.scalar.ph3283.prol ]
-  %8 = icmp ult i64 %i.fjt, 3
-  br i1 %8, label %._crit_edge148.us.i, label %vec.epilog.scalar.ph3283
+  %6 = sub i64 %.2145.us.i.ph, %i.fdz
+  %7 = icmp ugt i64 %6, -4
+  br i1 %7, label %._crit_edge148.us.i, label %vec.epilog.scalar.ph3283
 
 vec.epilog.scalar.ph3283:                         ; preds = %vec.epilog.scalar.ph3283.prol.loopexit, %vec.epilog.scalar.ph3283
   %.2145.us.i = phi i64 [ %i.flc, %vec.epilog.scalar.ph3283 ], [ %.2145.us.i.unr, %vec.epilog.scalar.ph3283.prol.loopexit ] ; 6 uses
@@ -1211,8 +1210,8 @@ _LinEqSolve.exit:                                 ; preds = %._crit_edge162.i, %
 
 .lr.ph.preheader.i.1:                             ; preds = %.loopexit135.i.1, %_LinEqSolve.exit
   %.0121153.i.1 = phi i64 [ %i.foe, %.loopexit135.i.1 ], [ 0, %_LinEqSolve.exit ] ; 26 uses
-  %i.fnt = sub i64 %i.fer, %.0121153.i.1
-  %i.fnu = sub i64 %6, %.0121153.i.1
+  %i.fnt = sub i64 %i.fea, %.0121153.i.1
+  %i.fnu = sub i64 %i.fer, %.0121153.i.1
   %i.fnv = mul i64 %i.fei, %.0121153.i.1
   %scevgep3181 = getelementptr i8, ptr %i.fno, i64 %i.fnv
   %i.fnw = shl i64 %.0121153.i.1, 3

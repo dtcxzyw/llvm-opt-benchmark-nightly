@@ -204,7 +204,7 @@ lean_dec.exit197:                                 ; preds = %lean_dec.exit197.si
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @l_Lean_Compiler_LCNF_PullFunDecls_pull(ptr noundef %0, ptr noundef %1, ptr nofree noundef readnone captures(none) %2, ptr noundef captures(none) %3, ptr nofree noundef readnone captures(none) %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #0 {
+define ptr @l_Lean_Compiler_LCNF_PullFunDecls_pull(ptr noundef %0, ptr noundef %1, ptr nofree noundef readnone captures(none) %2, ptr noundef %3, ptr nofree noundef readnone captures(none) %4, ptr nofree noundef readnone captures(none) %5) local_unnamed_addr #0 {
 bb.a:
   br label %.backedge
 
@@ -607,7 +607,7 @@ declare ptr @l___private_Lean_Compiler_LCNF_CompilerM_0__Lean_Compiler_LCNF_upda
 declare ptr @l_Lean_Compiler_LCNF_FunDecl_collectUsed(i8 noundef zeroext, ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define ptr @l___private_Init_Data_Array_BasicAux_0__mapMonoMImp_go___at___00Lean_Compiler_LCNF_PullFunDecls_pull_spec__1(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readnone captures(none) %3, ptr noundef captures(none) %4, ptr nofree noundef readnone captures(none) %5, ptr nofree noundef readnone captures(none) %6) local_unnamed_addr #0 {
+define ptr @l___private_Init_Data_Array_BasicAux_0__mapMonoMImp_go___at___00Lean_Compiler_LCNF_PullFunDecls_pull_spec__1(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readnone captures(none) %3, ptr noundef %4, ptr nofree noundef readnone captures(none) %5, ptr nofree noundef readnone captures(none) %6) local_unnamed_addr #0 {
 bb.a:
   br label %lean_dec.exit167
 

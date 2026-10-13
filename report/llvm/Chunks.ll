@@ -204,12 +204,12 @@ bb.h:                                             ; preds = %bb.g
 
 _ZN3lld4coffL14applyBranch20TEPhi.exit:           ; preds = %bb.g, %bb.h
   %i.t = lshr i32 %i.n, 21
-  %14 = lshr i32 %i.n, 12
   %i.u = lshr i32 %i.n, 6
   %i.v = lshr i32 %i.n, 7
   %i.w = and i32 %i.v, 2048
   %i.x = lshr i32 %i.n, 1
   %i.y = and i32 %i.t, 1024
+  %14 = lshr i32 %i.n, 12
   %i.z = and i32 %14, 63
   %i.aa = or disjoint i32 %i.y, %i.z
   %i.ab = trunc nuw nsw i32 %i.aa to i16

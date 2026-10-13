@@ -202,8 +202,6 @@ bb.a:
   %i.w = shufflevector <2 x float> %.sroa.8164.0.copyload, <2 x float> %.sroa.6162.0.copyload, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.x = fmul <2 x float> %i.v, %i.w
   %i.y = fadd <2 x float> %i.x, %i.u              ; 3 uses
-  %5 = extractelement <2 x float> %i.y, i64 0
-  %6 = fmul float %5, 0.000000e+00                ; 2 uses
   %i.z = extractelement <2 x float> %i.y, i64 1   ; 4 uses
   %i.aa = extractelement <2 x float> %i.y, i64 0  ; 2 uses
   %i.ab = load <2 x float>, ptr %2, align 8
@@ -241,6 +239,8 @@ bb.a:
   %i.bc = fadd float %.sroa.4171.0.copyload, %i.bb
   %i.bd = fadd <2 x float> %i.ab, %i.ba           ; 2 uses
   %i.be = fadd float %.sroa.5161.0.copyload, %i.bc ; 2 uses
+  %5 = extractelement <2 x float> %i.y, i64 0
+  %6 = fmul float %5, 0.000000e+00                ; 2 uses
   %i.bf = fsub float %i.ac, %6
   %i.bg = fsub float %6, %i.z
   %i.bh = fmul float %i.z, 0.000000e+00
@@ -320,8 +320,6 @@ bb.a:
   %i.df = shufflevector <2 x float> %.sroa.8.0.copyload, <2 x float> %.sroa.6148.0.copyload, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.dg = fmul <2 x float> %i.de, %i.df
   %i.dh = fadd <2 x float> %i.dg, %i.dd           ; 3 uses
-  %7 = extractelement <2 x float> %i.dh, i64 0
-  %8 = fmul float %7, 0.000000e+00                ; 2 uses
   %i.di = extractelement <2 x float> %i.dh, i64 1 ; 4 uses
   %i.dj = extractelement <2 x float> %i.dh, i64 0 ; 2 uses
   %i.dk = load <2 x float>, ptr %3, align 8
@@ -359,6 +357,8 @@ bb.a:
   %i.el = fadd float %.sroa.4156.0.copyload, %i.ek
   %i.em = fadd <2 x float> %i.dk, %i.ej           ; 2 uses
   %i.en = fadd float %.sroa.5.0.copyload, %i.el   ; 2 uses
+  %7 = extractelement <2 x float> %i.dh, i64 0
+  %8 = fmul float %7, 0.000000e+00                ; 2 uses
   %i.eo = fsub float %i.dl, %8
   %i.ep = fsub float %8, %i.di
   %i.eq = fmul float %i.di, 0.000000e+00

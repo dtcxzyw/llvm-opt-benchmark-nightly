@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN8PmeSolve10solveLJYZXERK9gmx_pme_tN3gmx8ArrayRefI14PmeAndFftGri
   %indvars.iv.next689.prol = add nsw i64 %i.db, 1
   %i.fv = add nsw i64 %i.dd, -1
   %i.fw = icmp eq i64 %i.fv, %i.db
-  %min.iters.check1552 = icmp ult i64 %i.eb, 4
+  %min.iters.check1552 = icmp ult i64 %i.eb, 8
   %bound01540 = icmp ult ptr %scevgep1483, %scevgep1535
   %bound11541 = icmp ult ptr %scevgep1534, %scevgep1484
   %found.conflict1542 = and i1 %bound01540, %bound11541
@@ -217,18 +217,18 @@ begin_hunk_0_@_ZN8PmeSolve10solveLJYZXERK9gmx_pme_tN3gmx8ArrayRefI14PmeAndFftGri
   %bound11548 = icmp ult ptr %scevgep1538, %scevgep1484
   %found.conflict1549 = and i1 %bound01547, %bound11548
   %conflict.rdx1550 = or i1 %conflict.rdx1546, %found.conflict1549
-  %min.iters.check1554 = icmp ult i64 %i.eb, 16
-  %i.fx = and i64 %i.eb, 12
-  %n.vec1556 = and i64 %i.eb, -16                 ; 4 uses
+  %min.iters.check1554 = icmp ult i64 %i.eb, 32
+  %i.fx = and i64 %i.eb, 24
+  %n.vec1556 = and i64 %i.eb, -32                 ; 4 uses
   %i.fy = add i64 %n.vec1556, %i.da
   %broadcast.splatinsert1557 = insertelement <8 x float> poison, float %i.j, i64 0
-  %broadcast.splat1558 = shufflevector <8 x float> %broadcast.splatinsert1557, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat1558 = shufflevector <8 x float> %broadcast.splatinsert1557, <8 x float> poison, <8 x i32> zeroinitializer ; 4 uses
   %cmp.n1571 = icmp eq i64 %i.eb, %n.vec1556
   %min.epilog.iters.check1577 = icmp eq i64 %i.fx, 0
-  %n.vec1579 = and i64 %i.eb, -4                  ; 3 uses
+  %n.vec1579 = and i64 %i.eb, -8                  ; 3 uses
   %i.fz = add i64 %n.vec1579, %i.da
-  %broadcast.splatinsert1580 = insertelement <4 x float> poison, float %i.j, i64 0
-  %broadcast.splat1581 = shufflevector <4 x float> %broadcast.splatinsert1580, <4 x float> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert1588 = insertelement <8 x float> poison, float %i.j, i64 0
+  %broadcast.splat1589 = shufflevector <8 x float> %broadcast.splatinsert1588, <8 x float> poison, <8 x i32> zeroinitializer
   %cmp.n1590 = icmp eq i64 %i.eb, %n.vec1579
   %min.iters.check1489 = icmp ult i64 %i.eb, 4
   %min.iters.check1491 = icmp ult i64 %i.eb, 16
@@ -631,47 +631,87 @@ vector.main.loop.iter.check1553:                  ; preds = %iter.check1574
 vector.body1559:                                  ; preds = %vector.main.loop.iter.check1553, %vector.body1559
   %index1560 = phi i64 [ %index.next1569, %vector.body1559 ], [ 0, %vector.main.loop.iter.check1553 ] ; 2 uses
   %i.ast = add i64 %index1560, %i.da              ; 4 uses
-  %i.asu = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.ast ; 2 uses
-  %i.asv = getelementptr inbounds nuw i8, ptr %i.asu, i64 32
-  %wide.load1561.a = load <8 x float>, ptr %i.asu, align 4, !tbaa !19, !alias.scope !419
+  %i.asu = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.ast ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.asu, i64 32
+  %9 = getelementptr inbounds nuw i8, ptr %i.asu, i64 64
+  %i.asv = getelementptr inbounds nuw i8, ptr %i.asu, i64 96
+  %wide.load1561 = load <8 x float>, ptr %i.asu, align 4, !tbaa !19, !alias.scope !419
+  %wide.load1562 = load <8 x float>, ptr %8, align 4, !tbaa !19, !alias.scope !419
+  %wide.load1561.a = load <8 x float>, ptr %9, align 4, !tbaa !19, !alias.scope !419
   %wide.load1562.a = load <8 x float>, ptr %i.asv, align 4, !tbaa !19, !alias.scope !419
+  %10 = fmul <8 x float> %wide.load1561, %broadcast.splat1558
+  %11 = fmul <8 x float> %wide.load1562, %broadcast.splat1558
   %i.asw = fmul <8 x float> %wide.load1561.a, %broadcast.splat1558
   %i.asx = fmul <8 x float> %wide.load1562.a, %broadcast.splat1558
+  %12 = fpext <8 x float> %10 to <8 x double>     ; 2 uses
+  %13 = fpext <8 x float> %11 to <8 x double>     ; 2 uses
   %i.asy = fpext <8 x float> %i.asw to <8 x double> ; 2 uses
   %i.asz = fpext <8 x float> %i.asx to <8 x double> ; 2 uses
+  %14 = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %12, <8 x double> splat (double -2.000000e+00), <8 x double> splat (double 1.000000e+00))
+  %15 = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %13, <8 x double> splat (double -2.000000e+00), <8 x double> splat (double 1.000000e+00))
   %i.ata = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %i.asy, <8 x double> splat (double -2.000000e+00), <8 x double> splat (double 1.000000e+00))
   %i.atb = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %i.asz, <8 x double> splat (double -2.000000e+00), <8 x double> splat (double 1.000000e+00))
-  %i.atc = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %i.ast ; 3 uses
-  %i.atd = getelementptr inbounds nuw i8, ptr %i.atc, i64 32 ; 2 uses
-  %wide.load1563 = load <8 x float>, ptr %i.atc, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  %i.atc = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %i.ast ; 5 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.atc, i64 32 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %i.atc, i64 64 ; 2 uses
+  %i.atd = getelementptr inbounds nuw i8, ptr %i.atc, i64 96 ; 2 uses
+  %wide.load1565 = load <8 x float>, ptr %i.atc, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  %wide.load1566 = load <8 x float>, ptr %16, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  %wide.load1563 = load <8 x float>, ptr %17, align 4, !tbaa !19, !alias.scope !420, !noalias !421
   %wide.load1564 = load <8 x float>, ptr %i.atd, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  %18 = fpext <8 x float> %wide.load1565 to <8 x double>
+  %19 = fpext <8 x float> %wide.load1566 to <8 x double>
   %i.ate = fpext <8 x float> %wide.load1563 to <8 x double>
   %i.atf = fpext <8 x float> %wide.load1564 to <8 x double>
+  %20 = fmul <8 x double> %12, splat (double 2.000000e+00)
+  %21 = fmul <8 x double> %13, splat (double 2.000000e+00)
   %i.atg = fmul <8 x double> %i.asy, splat (double 2.000000e+00)
   %i.ath = fmul <8 x double> %i.asz, splat (double 2.000000e+00)
-  %i.ati = getelementptr inbounds [4 x i8], ptr %i.ba, i64 %i.ast ; 2 uses
-  %i.atj = getelementptr inbounds nuw i8, ptr %i.ati, i64 32
-  %wide.load1565.a = load <8 x float>, ptr %i.ati, align 4, !tbaa !19, !alias.scope !422
+  %i.ati = getelementptr inbounds [4 x i8], ptr %i.ba, i64 %i.ast ; 4 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.ati, i64 32
+  %23 = getelementptr inbounds nuw i8, ptr %i.ati, i64 64
+  %i.atj = getelementptr inbounds nuw i8, ptr %i.ati, i64 96
+  %wide.load1569 = load <8 x float>, ptr %i.ati, align 4, !tbaa !19, !alias.scope !422
+  %wide.load1570 = load <8 x float>, ptr %22, align 4, !tbaa !19, !alias.scope !422
+  %wide.load1565.a = load <8 x float>, ptr %23, align 4, !tbaa !19, !alias.scope !422
   %wide.load1566.a = load <8 x float>, ptr %i.atj, align 4, !tbaa !19, !alias.scope !422
+  %24 = fpext <8 x float> %wide.load1569 to <8 x double>
+  %25 = fpext <8 x float> %wide.load1570 to <8 x double>
   %i.atk = fpext <8 x float> %wide.load1565.a to <8 x double>
   %i.atl = fpext <8 x float> %wide.load1566.a to <8 x double>
+  %26 = fmul <8 x double> %20, %24
+  %27 = fmul <8 x double> %21, %25
   %i.atm = fmul <8 x double> %i.atg, %i.atk
   %i.atn = fmul <8 x double> %i.ath, %i.atl
+  %28 = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %14, <8 x double> %18, <8 x double> %26)
+  %29 = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %15, <8 x double> %19, <8 x double> %27)
   %i.ato = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %i.ata, <8 x double> %i.ate, <8 x double> %i.atm)
   %i.atp = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %i.atb, <8 x double> %i.atf, <8 x double> %i.atn)
+  %30 = fptrunc <8 x double> %28 to <8 x float>
+  %31 = fptrunc <8 x double> %29 to <8 x float>
   %i.atq = fptrunc <8 x double> %i.ato to <8 x float>
   %i.atr = fptrunc <8 x double> %i.atp to <8 x float>
+  %32 = fneg <8 x float> %30
+  %33 = fneg <8 x float> %31
   %i.ats = fneg <8 x float> %i.atq
   %i.att = fneg <8 x float> %i.atr
-  %i.atu = getelementptr inbounds [4 x i8], ptr %i.aw, i64 %i.ast ; 2 uses
-  %i.atv = getelementptr inbounds nuw i8, ptr %i.atu, i64 32
-  %wide.load1567 = load <8 x float>, ptr %i.atu, align 4, !tbaa !19, !alias.scope !423
+  %i.atu = getelementptr inbounds [4 x i8], ptr %i.aw, i64 %i.ast ; 4 uses
+  %34 = getelementptr inbounds nuw i8, ptr %i.atu, i64 32
+  %35 = getelementptr inbounds nuw i8, ptr %i.atu, i64 64
+  %i.atv = getelementptr inbounds nuw i8, ptr %i.atu, i64 96
+  %wide.load1573 = load <8 x float>, ptr %i.atu, align 4, !tbaa !19, !alias.scope !423
+  %wide.load1574 = load <8 x float>, ptr %34, align 4, !tbaa !19, !alias.scope !423
+  %wide.load1567 = load <8 x float>, ptr %35, align 4, !tbaa !19, !alias.scope !423
   %wide.load1568 = load <8 x float>, ptr %i.atv, align 4, !tbaa !19, !alias.scope !423
+  %36 = fmul <8 x float> %wide.load1573, %32
+  %37 = fmul <8 x float> %wide.load1574, %33
   %i.atw = fmul <8 x float> %wide.load1567, %i.ats
   %i.atx = fmul <8 x float> %wide.load1568, %i.att
-  store <8 x float> %i.atw, ptr %i.atc, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  store <8 x float> %36, ptr %i.atc, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  store <8 x float> %37, ptr %16, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  store <8 x float> %i.atw, ptr %17, align 4, !tbaa !19, !alias.scope !420, !noalias !421
   store <8 x float> %i.atx, ptr %i.atd, align 4, !tbaa !19, !alias.scope !420, !noalias !421
-  %index.next1569 = add nuw i64 %index1560, 16    ; 2 uses
+  %index.next1569 = add nuw i64 %index1560, 32    ; 2 uses
   %i.aty = icmp eq i64 %index.next1569, %n.vec1556
   br i1 %i.aty, label %middle.block1570, label %vector.body1559, !llvm.loop !346
 
@@ -679,7 +719,7 @@ middle.block1570:                                 ; preds = %vector.body1559
   br i1 %cmp.n1571, label %.lr.ph599.preheader, label %vec.epilog.iter.check1576
 
 vec.epilog.iter.check1576:                        ; preds = %middle.block1570
-  br i1 %min.epilog.iters.check1577, label %.lr.ph594.preheader, label %vec.epilog.ph1578, !prof !38
+  br i1 %min.epilog.iters.check1577, label %.lr.ph594.preheader, label %vec.epilog.ph1578, !prof !22
 
 vec.epilog.ph1578:                                ; preds = %vector.main.loop.iter.check1553, %vec.epilog.iter.check1576
   %vec.epilog.resume.val1572 = phi i64 [ %n.vec1556, %vec.epilog.iter.check1576 ], [ 0, %vector.main.loop.iter.check1553 ]
@@ -689,26 +729,26 @@ vec.epilog.vector.body1582:                       ; preds = %vec.epilog.vector.b
   %index1583 = phi i64 [ %vec.epilog.resume.val1572, %vec.epilog.ph1578 ], [ %index.next1588, %vec.epilog.vector.body1582 ] ; 2 uses
   %i.atz = add i64 %index1583, %i.da              ; 4 uses
   %i.aua = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.atz
-  %wide.load1584 = load <4 x float>, ptr %i.aua, align 4, !tbaa !19, !alias.scope !419
-  %8 = fmul <4 x float> %wide.load1584, %broadcast.splat1581
-  %9 = fpext <4 x float> %8 to <4 x double>       ; 2 uses
-  %10 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %9, <4 x double> splat (double -2.000000e+00), <4 x double> splat (double 1.000000e+00))
+  %wide.load1592 = load <8 x float>, ptr %i.aua, align 4, !tbaa !19, !alias.scope !419
+  %38 = fmul <8 x float> %wide.load1592, %broadcast.splat1589
+  %39 = fpext <8 x float> %38 to <8 x double>     ; 2 uses
+  %40 = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %39, <8 x double> splat (double -2.000000e+00), <8 x double> splat (double 1.000000e+00))
   %i.aub = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %i.atz ; 2 uses
-  %wide.load1585 = load <4 x float>, ptr %i.aub, align 4, !tbaa !19, !alias.scope !420, !noalias !421
-  %11 = fpext <4 x float> %wide.load1585 to <4 x double>
-  %12 = fmul <4 x double> %9, splat (double 2.000000e+00)
+  %wide.load1593 = load <8 x float>, ptr %i.aub, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  %41 = fpext <8 x float> %wide.load1593 to <8 x double>
+  %42 = fmul <8 x double> %39, splat (double 2.000000e+00)
   %i.auc = getelementptr inbounds [4 x i8], ptr %i.ba, i64 %i.atz
-  %wide.load1586 = load <4 x float>, ptr %i.auc, align 4, !tbaa !19, !alias.scope !422
-  %13 = fpext <4 x float> %wide.load1586 to <4 x double>
-  %14 = fmul <4 x double> %12, %13
-  %15 = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %10, <4 x double> %11, <4 x double> %14)
-  %16 = fptrunc <4 x double> %15 to <4 x float>
-  %17 = fneg <4 x float> %16
+  %wide.load1594 = load <8 x float>, ptr %i.auc, align 4, !tbaa !19, !alias.scope !422
+  %43 = fpext <8 x float> %wide.load1594 to <8 x double>
+  %44 = fmul <8 x double> %42, %43
+  %45 = call <8 x double> @llvm.fmuladd.v8f64(<8 x double> %40, <8 x double> %41, <8 x double> %44)
+  %46 = fptrunc <8 x double> %45 to <8 x float>
+  %47 = fneg <8 x float> %46
   %i.aud = getelementptr inbounds [4 x i8], ptr %i.aw, i64 %i.atz
-  %wide.load1587 = load <4 x float>, ptr %i.aud, align 4, !tbaa !19, !alias.scope !423
-  %18 = fmul <4 x float> %wide.load1587, %17
-  store <4 x float> %18, ptr %i.aub, align 4, !tbaa !19, !alias.scope !420, !noalias !421
-  %index.next1588 = add nuw i64 %index1583, 4     ; 2 uses
+  %wide.load1595 = load <8 x float>, ptr %i.aud, align 4, !tbaa !19, !alias.scope !423
+  %48 = fmul <8 x float> %wide.load1595, %47
+  store <8 x float> %48, ptr %i.aub, align 4, !tbaa !19, !alias.scope !420, !noalias !421
+  %index.next1588 = add nuw i64 %index1583, 8     ; 2 uses
   %i.aue = icmp eq i64 %index.next1588, %n.vec1579
   br i1 %i.aue, label %vec.epilog.middle.block1589, label %vec.epilog.vector.body1582, !llvm.loop !347
 
@@ -953,9 +993,6 @@ declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x double> @llvm.fmuladd.v8f64(<8 x double>, <8 x double>, <8 x double>) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #18
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

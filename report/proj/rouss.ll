@@ -156,8 +156,8 @@ bb.e:                                             ; preds = %bb.c
   store <2 x double> %i.cj, ptr %i.v, align 8, !tbaa !47
   %i.ck = shufflevector <2 x double> %i.ch, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.cl = insertelement <2 x double> %i.ck, double %i.at, i64 1
-  %1 = fsub double 2.000000e+00, %i.by
-  %2 = fmul <2 x double> %i.bd, %i.cc
+  %1 = fmul <2 x double> %i.bd, %i.cc
+  %2 = fsub double 2.000000e+00, %i.by
   %i.cm = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ce, <2 x double> <double 2.000000e+00, double 4.000000e+00>, <2 x double> <double 1.000000e+00, double 5.000000e+00>) ; 3 uses
   %i.cn = insertelement <2 x double> %i.cm, double 3.400000e+01, i64 1
   %i.co = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cb, <2 x double> <double -2.000000e+00, double 2.200000e+01>, <2 x double> %i.cn) ; 2 uses
@@ -165,7 +165,7 @@ bb.e:                                             ; preds = %bb.c
   %i.cq = fmul double %i.av, %i.cp
   %i.cr = fmul double %i.cq, 2.500000e-01         ; 2 uses
   store double %i.cr, ptr %i.y, align 8, !tbaa !48
-  %i.cs = insertelement <2 x double> %i.cm, double %1, i64 0
+  %i.cs = insertelement <2 x double> %i.cm, double %2, i64 0
   %i.ct = fmul <2 x double> %i.be, %i.cs
   %i.cu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ce, <2 x double> <double 6.000000e+00, double 1.200000e+01>, <2 x double> <double -5.000000e+00, double 1.900000e+01>)
   %i.cv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ce, <2 x double> %i.cu, <2 x double> <double -2.000000e+00, double 5.000000e+00>)
@@ -184,7 +184,7 @@ bb.e:                                             ; preds = %bb.c
   %i.dh = fmul double %i.bf, %i.dg
   %i.di = fdiv double %i.dh, 2.400000e+01
   store double %i.di, ptr %i.ad, align 8, !tbaa !49
-  %i.dj = fdiv <2 x double> %2, %i.bq             ; 2 uses
+  %i.dj = fdiv <2 x double> %1, %i.bq             ; 2 uses
   %i.dk = extractelement <2 x double> %i.dj, i64 0
   store double %i.dk, ptr %i.u, align 8, !tbaa !61
   store <2 x double> %i.dj, ptr %i.t, align 8, !tbaa !47
@@ -296,7 +296,6 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 112
-  %3 = load double, ptr %i.t, align 8, !tbaa !45
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.w = load <8 x double>, ptr %i.b, align 8, !tbaa !47 ; 6 uses
@@ -317,6 +316,7 @@ bb.a:
   %i.al = extractelement <6 x double> %i.af, i64 4
   %i.am = fdiv double %i.h, %i.n                  ; 2 uses
   %i.an = fmul double %i.p, %i.am
+  %3 = load double, ptr %i.t, align 8, !tbaa !45
   %i.ao = fsub double %i.g, %i.y                  ; 5 uses
   %i.ap = insertelement <2 x double> poison, double %i.am, i64 0
   %i.aq = insertelement <2 x double> %i.ap, double %i.ao, i64 1 ; 2 uses

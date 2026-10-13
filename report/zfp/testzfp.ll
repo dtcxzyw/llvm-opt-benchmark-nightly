@@ -204,10 +204,12 @@ bb.a:
 .preheader80:                                     ; preds = %.preheader80.lr.ph, %bb.b
   %.073133 = phi i64 [ 0, %.preheader80.lr.ph ], [ %i.u, %bb.b ] ; 4 uses
   %i.c = and i64 %.073133, 1
-  %.not = icmp eq i64 %i.c, 0                     ; 7 uses
-  %i.d = lshr i64 %.073133, 1                     ; 9 uses
+  %.not = icmp eq i64 %i.c, 0                     ; 5 uses
+  %i.d = lshr i64 %.073133, 1                     ; 6 uses
   %i.e = add i64 %i.b, %i.d                       ; 6 uses
   %i.f = mul i64 %.073133, %i.a
+  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.d, i64 0
+  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.g = add i64 %2, %i.d
   %i.h = add i64 %i.e, 2
   %i.i = add i64 %i.e, 3
@@ -289,122 +291,128 @@ bb.c:                                             ; preds = %bb.k
   br label %.preheader.split.us.split
 
 .preheader.split.us.split.us:                     ; preds = %.preheader.split.us
-  br i1 %.not75, label %.preheader.split.us.split.us.split.us, label %.preheader.split.us.split.us.split.preheader
-
-.preheader.split.us.split.us.split.preheader:     ; preds = %.preheader.split.us.split.us
-  %3 = urem i64 %i.l, %2
-  %4 = urem i64 %i.o, %2
-  %5 = urem i64 %i.p, %2
-  %6 = urem i64 %i.q, %2
-  br label %.preheader.split.us.split.us.split
+  br i1 %.not75, label %.preheader.split.us.split.us.split.us, label %.split98.us.us.us.us.3
 
 .preheader.split.us.split.us.split.us:            ; preds = %.preheader.split.us.split.us
-  br i1 %.not, label %.split98.us.us.us.us, label %7
+  br i1 %.not, label %.split98.us.us.us.us.1, label %.split98.us.us.us.us
 
-7:                                                ; preds = %.preheader.split.us.split.us.split.us
-  %8 = urem i64 %i.e, %2
-  br label %.split98.us.us.us.us
-
-.split98.us.us.us.us:                             ; preds = %.preheader.split.us.split.us.split.us, %7
-  %9 = phi i64 [ %8, %7 ], [ %i.d, %.preheader.split.us.split.us.split.us ]
-  %10 = mul i64 %9, %2
-  %11 = add i64 %i.k, %10
-  %12 = mul i64 %11, %2
-  %13 = add i64 %i.w, %12
-  %14 = mul i64 %13, %2
-  %gep95.us.us.us.us.us.us.us = getelementptr [4 x i8], ptr %invariant.gep94, i64 %14
-  %15 = load i32, ptr %gep95.us.us.us.us.us.us.us, align 4, !tbaa !39
-  %16 = sext i32 %15 to i64
-  br i1 %.not, label %.split98.us.us.us.us.1, label %17
-
-17:                                               ; preds = %.split98.us.us.us.us
-  %18 = urem i64 %i.g, %2
+.split98.us.us.us.us:                             ; preds = %.preheader.split.us.split.us.split.us
+  %3 = urem i64 %i.e, %2
+  %4 = insertelement <2 x i64> poison, i64 %3, i64 0
+  %5 = urem i64 %i.g, %2
+  %6 = insertelement <2 x i64> %4, i64 %5, i64 1
   br label %.split98.us.us.us.us.1
 
-.split98.us.us.us.us.1:                           ; preds = %17, %.split98.us.us.us.us
-  %19 = phi i64 [ %18, %17 ], [ %i.d, %.split98.us.us.us.us ]
-  %20 = mul i64 %19, %2
-  %21 = add i64 %i.k, %20
-  %i.av = mul i64 %21, %2
-  %22 = add i64 %i.w, %i.av
-  %i.aw = mul i64 %22, %2
-  %gep95.us.us.us.us.us.us.us.1 = getelementptr [4 x i8], ptr %invariant.gep94, i64 %i.aw
-  %23 = load i32, ptr %gep95.us.us.us.us.us.us.us.1, align 4, !tbaa !39
-  %24 = sext i32 %23 to i64                       ; 6 uses
-  %reass.add233.1 = mul nsw i64 %24, 162
-  %25 = shl nsw i64 %16, 12
-  %26 = sub nsw i64 %reass.add233.1, %25
-  %op.rdx315.1 = mul nsw i64 %24, -2430
-  %27 = add nsw i64 %26, %op.rdx315.1
-  %op.rdx310.1 = mul nsw i64 %24, 41634
-  %28 = add nsw i64 %27, %op.rdx310.1
-  %.neg.1 = mul nsw i64 %24, -54
-  %29 = add nsw i64 %.neg.1, %28
-  %op.rdx296.1 = mul nsw i64 %24, -2430
-  %op.rdx297.1 = add nsw i64 %op.rdx296.1, %29
-  %.neg = mul nsw i64 %24, -18
-  %30 = add i64 %.neg, %op.rdx297.1
+.split98.us.us.us.us.1:                           ; preds = %.preheader.split.us.split.us.split.us, %.split98.us.us.us.us
+  %predphi = phi <2 x i64> [ %broadcast.splat, %.preheader.split.us.split.us.split.us ], [ %6, %.split98.us.us.us.us ] ; 2 uses
+  %7 = extractelement <2 x i64> %predphi, i64 0
+  %i.av = mul i64 %7, %2
+  %8 = extractelement <2 x i64> %predphi, i64 1
+  %i.aw = mul i64 %8, %2
+  %9 = add i64 %i.k, %i.av
+  %10 = add i64 %i.k, %i.aw
+  %11 = mul i64 %9, %2
+  %reass.add233.1 = mul i64 %10, %2
+  %12 = add i64 %i.w, %11
+  %13 = add i64 %i.w, %reass.add233.1
+  %op.rdx315.1 = mul i64 %12, %2
+  %14 = mul i64 %13, %2
+  %15 = getelementptr [4 x i8], ptr %invariant.gep94, i64 %op.rdx315.1
+  %16 = getelementptr [4 x i8], ptr %invariant.gep94, i64 %14
+  %17 = load i32, ptr %15, align 4, !tbaa !39
+  %18 = load i32, ptr %16, align 4, !tbaa !39
+  %19 = insertelement <2 x i32> poison, i32 %17, i64 0
+  %20 = insertelement <2 x i32> %19, i32 %18, i64 1
+  %21 = sext <2 x i32> %20 to <2 x i64>
+  %22 = mul nsw <2 x i64> %21, <i64 -4096, i64 36864>
   br i1 %.not, label %.split98.us.us.us.us.2, label %bb.d
 
 bb.d:                                             ; preds = %.split98.us.us.us.us.1
   %i.ax = urem i64 %i.h, %2
+  %23 = insertelement <2 x i64> poison, i64 %i.ax, i64 0
+  %24 = urem i64 %i.i, %2
+  %25 = insertelement <2 x i64> %23, i64 %24, i64 1
   br label %.split98.us.us.us.us.2
 
 .split98.us.us.us.us.2:                           ; preds = %bb.d, %.split98.us.us.us.us.1
-  %31 = phi i64 [ %i.ax, %bb.d ], [ %i.d, %.split98.us.us.us.us.1 ]
-  %i.ay = mul i64 %31, %2
+  %predphi.1 = phi <2 x i64> [ %broadcast.splat, %.split98.us.us.us.us.1 ], [ %25, %bb.d ] ; 2 uses
+  %26 = extractelement <2 x i64> %predphi.1, i64 0
+  %27 = mul i64 %26, %2
+  %28 = extractelement <2 x i64> %predphi.1, i64 1
+  %i.ay = mul i64 %28, %2
+  %29 = add i64 %i.k, %27
   %i.az = add i64 %i.k, %i.ay
+  %30 = mul i64 %29, %2
   %i.ba = mul i64 %i.az, %2
+  %31 = add i64 %i.w, %30
   %i.bb = add i64 %i.w, %i.ba
+  %32 = mul i64 %31, %2
   %i.bc = mul i64 %i.bb, %2
+  %33 = getelementptr [4 x i8], ptr %invariant.gep94, i64 %32
   %gep95.us.us.us.us.us.us.us.2 = getelementptr [4 x i8], ptr %invariant.gep94, i64 %i.bc
+  %34 = load i32, ptr %33, align 4, !tbaa !39
   %i.bd = load i32, ptr %gep95.us.us.us.us.us.us.us.2, align 4, !tbaa !39
-  %32 = sext i32 %i.bd to i64                     ; 6 uses
-  %reass.add233.2 = mul nsw i64 %32, 162
-  %33 = add i64 %30, %reass.add233.2
-  %op.rdx315.2 = mul nsw i64 %32, -2430
-  %34 = add i64 %33, %op.rdx315.2
-  %op.rdx310.2 = mul nsw i64 %32, 41634
-  %35 = add i64 %34, %op.rdx310.2
-  %.neg.2 = mul nsw i64 %32, -54
-  %36 = add i64 %.neg.2, %35
-  %op.rdx296.2 = mul nsw i64 %32, -2430
-  %op.rdx297.2 = add i64 %op.rdx296.2, %36
-  %.neg331 = mul nsw i64 %32, -18
-  %37 = add i64 %.neg331, %op.rdx297.2
-  br i1 %.not, label %.split98.us.us.us.us.3, label %38
-
-38:                                               ; preds = %.split98.us.us.us.us.2
-  %39 = urem i64 %i.i, %2
-  br label %.split98.us.us.us.us.3
-
-.split98.us.us.us.us.3:                           ; preds = %38, %.split98.us.us.us.us.2
-  %40 = phi i64 [ %39, %38 ], [ %i.d, %.split98.us.us.us.us.2 ]
-  %41 = mul i64 %40, %2
-  %42 = add i64 %i.k, %41
-  %43 = mul i64 %42, %2
-  %44 = add i64 %i.w, %43
-  %45 = mul i64 %44, %2
-  %gep95.us.us.us.us.us.us.us.3 = getelementptr [4 x i8], ptr %invariant.gep94, i64 %45
-  %46 = load i32, ptr %gep95.us.us.us.us.us.us.us.3, align 4, !tbaa !39
-  %47 = sext i32 %46 to i64                       ; 6 uses
-  %reass.add233.3 = mul nsw i64 %47, -18
-  %48 = add i64 %37, %reass.add233.3
-  %op.rdx315.3 = mul nsw i64 %47, 270
-  %49 = add i64 %48, %op.rdx315.3
-  %op.rdx310.3 = mul nsw i64 %47, -4626
-  %50 = add i64 %49, %op.rdx310.3
-  %.neg.3 = mul nsw i64 %47, 6
-  %51 = add i64 %.neg.3, %50
-  %op.rdx296.3 = mul nsw i64 %47, 270
-  %op.rdx297.3 = add i64 %op.rdx296.3, %51
-  %.neg332.neg = shl nsw i64 %47, 1
-  %52 = add i64 %.neg332.neg, %op.rdx297.3
+  %35 = insertelement <2 x i32> poison, i32 %34, i64 0
+  %36 = insertelement <2 x i32> %35, i32 %i.bd, i64 1
+  %37 = sext <2 x i32> %36 to <2 x i64>           ; 6 uses
+  %38 = mul nsw <2 x i64> %37, <i64 81, i64 -9>   ; 10 uses
+  %39 = mul nsw <2 x i64> %37, <i64 162, i64 -18> ; 7 uses
+  %40 = add nsw <2 x i64> %22, %39
+  %41 = mul nsw <2 x i64> %37, <i64 18, i64 -2>   ; 4 uses
+  %42 = sub nsw <2 x i64> %40, %41
+  %43 = add nsw <2 x i64> %38, %42
+  %44 = mul nsw <2 x i64> %37, <i64 -1458, i64 162> ; 10 uses
+  %45 = add nsw <2 x i64> %43, %44
+  %46 = add nsw <2 x i64> %45, %39
+  %47 = add <2 x i64> %46, %44
+  %48 = add <2 x i64> %38, %47
+  %49 = add <2 x i64> %48, %39
+  %50 = sub <2 x i64> %49, %41
+  %51 = add <2 x i64> %38, %50
+  %52 = add <2 x i64> %51, %44
+  %53 = add <2 x i64> %38, %52
+  %54 = mul nsw <2 x i64> %37, <i64 -729, i64 81> ; 4 uses
+  %55 = add <2 x i64> %54, %53
+  %56 = mul nsw <2 x i64> %37, <i64 13122, i64 -1458> ; 4 uses
+  %57 = add <2 x i64> %55, %56
+  %58 = add <2 x i64> %57, %44
+  %59 = add <2 x i64> %58, %56
+  %60 = add <2 x i64> %54, %59
+  %61 = add <2 x i64> %38, %60
+  %62 = add <2 x i64> %61, %44
+  %63 = add <2 x i64> %62, %39
+  %64 = add <2 x i64> %63, %44
+  %65 = add <2 x i64> %38, %64
+  %66 = add <2 x i64> %54, %65
+  %67 = add <2 x i64> %66, %56
+  %68 = add <2 x i64> %67, %44
+  %69 = add <2 x i64> %68, %56
+  %70 = add <2 x i64> %54, %69
+  %71 = add <2 x i64> %38, %70
+  %72 = add <2 x i64> %71, %44
+  %73 = add <2 x i64> %38, %72
+  %74 = add <2 x i64> %73, %39
+  %75 = sub <2 x i64> %74, %41
+  %76 = add <2 x i64> %38, %75
+  %77 = add <2 x i64> %76, %44
+  %78 = add <2 x i64> %77, %39
+  %79 = add <2 x i64> %78, %44
+  %80 = add <2 x i64> %38, %79
+  %81 = add <2 x i64> %80, %39
+  %82 = sub <2 x i64> %81, %41
+  %83 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %82)
   br label %.split124.us
 
-.preheader.split.us.split.us.split:               ; preds = %.preheader.split.us.split.us.split.preheader, %.split98.us.us.us
-  %.068115.us.us = phi i64 [ %i.cn, %.split98.us.us.us ], [ 0, %.preheader.split.us.split.us.split.preheader ] ; 3 uses
-  %.069114.us.us = phi i64 [ %op.rdx292, %.split98.us.us.us ], [ 0, %.preheader.split.us.split.us.split.preheader ]
+.split98.us.us.us.us.3:                           ; preds = %.preheader.split.us.split.us
+  %84 = urem i64 %i.l, %2
+  %85 = urem i64 %i.o, %2
+  %86 = urem i64 %i.p, %2
+  %87 = urem i64 %i.q, %2
+  br label %.preheader.split.us.split.us.split
+
+.preheader.split.us.split.us.split:               ; preds = %.split98.us.us.us.us.3, %.split98.us.us.us
+  %.068115.us.us = phi i64 [ %i.cn, %.split98.us.us.us ], [ 0, %.split98.us.us.us.us.3 ] ; 3 uses
+  %.069114.us.us = phi i64 [ %op.rdx292, %.split98.us.us.us ], [ 0, %.split98.us.us.us.us.3 ]
   br i1 %.not, label %.split98.us.us.us, label %bb.e
 
 bb.e:                                             ; preds = %.preheader.split.us.split.us.split
@@ -418,7 +426,7 @@ bb.e:                                             ; preds = %.preheader.split.us
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !40 ; 2 uses
   %i.bj = mul i64 %i.bg, %2                       ; 4 uses
   %factor.op.mul87.us.us.us.us = sub i64 0, %i.bi ; 2 uses
-  %i.bk = add i64 %3, %i.bj
+  %i.bk = add i64 %84, %i.bj
   %i.bl = mul i64 %i.bk, %2
   %i.bm = add i64 %i.w, %i.bl
   %i.bn = mul i64 %i.bm, %2
@@ -432,7 +440,7 @@ bb.e:                                             ; preds = %.preheader.split.us
   %reass.add216 = mul i64 %factor.op.mul.us.us.us.us, 162
   %reass.add217 = mul i64 %factor.op.mul.us.us.us.us, -18
   %factor.op.mul87.us.us.us.us.1 = mul i64 %i.bi, 9 ; 2 uses
-  %i.bq = add i64 %4, %i.bj
+  %i.bq = add i64 %85, %i.bj
   %i.br = mul i64 %i.bq, %2
   %i.bs = add i64 %i.w, %i.br
   %i.bt = mul i64 %i.bs, %2
@@ -445,7 +453,7 @@ bb.e:                                             ; preds = %.preheader.split.us
   %reass.add220 = mul i64 %factor.op.mul.us.us.us.us.1, -18
   %reass.add221 = mul i64 %factor.op.mul.us.us.us.us.1, 162
   %reass.add222 = mul i64 %factor.op.mul.us.us.us.us.1, -18
-  %i.bw = add i64 %5, %i.bj
+  %i.bw = add i64 %86, %i.bj
   %i.bx = mul i64 %i.bw, %2
   %i.by = add i64 %i.w, %i.bx
   %i.bz = mul i64 %i.by, %2
@@ -458,7 +466,7 @@ bb.e:                                             ; preds = %.preheader.split.us
   %reass.add225 = mul i64 %factor.op.mul.us.us.us.us.2, -18
   %reass.add226 = mul i64 %factor.op.mul.us.us.us.us.2, 162
   %reass.add227 = mul i64 %factor.op.mul.us.us.us.us.2, -18
-  %i.cc = add i64 %6, %i.bj
+  %i.cc = add i64 %87, %i.bj
   %i.cd = mul i64 %i.cc, %2
   %i.ce = add i64 %i.w, %i.cd
   %i.cf = mul i64 %i.ce, %2
@@ -726,8 +734,8 @@ bb.k:                                             ; preds = %.split124.us
   %exitcond194.not = icmp eq i64 %i.hh, %i.a
   br i1 %exitcond194.not, label %bb.c, label %.preheader78
 
-.split124.us:                                     ; preds = %.split112, %.split90.us.us.us119.3, %.split98.us.us.us, %.split98.us.us.us.us.3
-  %.us-phi125 = phi i64 [ %i.hf, %.split90.us.us.us119.3 ], [ %52, %.split98.us.us.us.us.3 ], [ %op.rdx292, %.split98.us.us.us ], [ %i.la, %.split112 ]
+.split124.us:                                     ; preds = %.split112, %.split90.us.us.us119.3, %.split98.us.us.us, %.split98.us.us.us.us.2
+  %.us-phi125 = phi i64 [ %83, %.split98.us.us.us.us.2 ], [ %op.rdx292, %.split98.us.us.us ], [ %i.hf, %.split90.us.us.us119.3 ], [ %i.la, %.split112 ]
   %i.hi = sdiv i64 %.us-phi125, 65536
   %i.hj = trunc i64 %i.hi to i32
   %gep129 = getelementptr [4 x i8], ptr %invariant.gep128, i64 %.070130
@@ -1128,6 +1136,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #14

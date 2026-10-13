@@ -203,7 +203,7 @@ bb.a:
   %i.r = shl nuw nsw i64 %i.p, 1
   %i.s = add nuw nsw i64 %i.r, 6                  ; 2 uses
   %i.t = zext i32 %i.g to i64                     ; 2 uses
-  %min.iters.check124 = icmp ult i32 %i.g, 8
+  %min.iters.check124 = icmp ult i32 %i.g, 4
   %n.vec126 = and i64 %i.t, 4294967292            ; 5 uses
   %i.u = shl nuw nsw i64 %n.vec126, 2             ; 2 uses
   %i.v = trunc nuw i64 %n.vec126 to i32
@@ -211,7 +211,7 @@ bb.a:
   %i.x = shl nuw nsw i64 %n.vec126, 1             ; 2 uses
   %cmp.n144 = icmp eq i64 %n.vec126, %i.t
   %i.y = zext i32 %i.g to i64                     ; 2 uses
-  %min.iters.check = icmp ult i32 %i.g, 8
+  %min.iters.check = icmp ult i32 %i.g, 4
   %n.vec = and i64 %i.y, 4294967292               ; 5 uses
   %i.z = shl nuw nsw i64 %n.vec, 2                ; 2 uses
   %i.aa = trunc nuw i64 %n.vec to i32

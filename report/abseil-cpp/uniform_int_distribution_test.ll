@@ -205,10 +205,10 @@ bb.an:                                            ; preds = %.critedge107
   %i.ds = sitofp i8 %.sroa.0.0.extract.trunc.i to double ; 2 uses
   %i.dt = sitofp i8 %i.t to double                ; 2 uses
   %i.du = fsub double %i.dt, %i.ds
-  %i.dv = fadd double %i.du, 1.000000e+00
-  %21 = fadd nnan double %i.ds, %i.dt
-  %22 = fmul nnan double %21, 5.000000e-01
-  %i.dw = insertelement <2 x double> poison, double %i.dv, i64 0
+  %i.dv = fadd nnan double %i.ds, %i.dt
+  %21 = fmul nnan double %i.dv, 5.000000e-01
+  %22 = fadd double %i.du, 1.000000e+00
+  %i.dw = insertelement <2 x double> poison, double %22, i64 0
   %i.dx = shufflevector <2 x double> %i.dw, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> %i.dx, <2 x double> <double -1.000000e+00, double 1.000000e+00>) ; 3 uses
   %i.dz = extractelement <2 x double> %i.dy, i64 1
@@ -224,7 +224,7 @@ bb.an:                                            ; preds = %.critedge107
   %i.ei = load double, ptr %i.g, align 8, !tbaa !207
   %i.ej = extractelement <2 x double> %i.ef, i64 0 ; 3 uses
   %i.ek = fmul double %i.ej, 1.000000e-02
-  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %22, double noundef %i.ei, double noundef %i.ek)
+  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %21, double noundef %i.ei, double noundef %i.ek)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
@@ -627,10 +627,10 @@ bb.an:                                            ; preds = %.critedge107
   %i.ds = uitofp i8 %.sroa.0.0.extract.trunc.i to double ; 2 uses
   %i.dt = uitofp i8 %i.t to double                ; 2 uses
   %i.du = fsub double %i.dt, %i.ds
-  %i.dv = fadd double %i.du, 1.000000e+00
-  %21 = fadd nnan double %i.ds, %i.dt
-  %22 = fmul nnan double %21, 5.000000e-01
-  %i.dw = insertelement <2 x double> poison, double %i.dv, i64 0
+  %i.dv = fadd nnan double %i.ds, %i.dt
+  %21 = fmul nnan double %i.dv, 5.000000e-01
+  %22 = fadd double %i.du, 1.000000e+00
+  %i.dw = insertelement <2 x double> poison, double %22, i64 0
   %i.dx = shufflevector <2 x double> %i.dw, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> %i.dx, <2 x double> <double -1.000000e+00, double 1.000000e+00>) ; 3 uses
   %i.dz = extractelement <2 x double> %i.dy, i64 1
@@ -646,7 +646,7 @@ bb.an:                                            ; preds = %.critedge107
   %i.ei = load double, ptr %i.g, align 8, !tbaa !207
   %i.ej = extractelement <2 x double> %i.ef, i64 0 ; 3 uses
   %i.ek = fmul double %i.ej, 1.000000e-02
-  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %22, double noundef %i.ei, double noundef %i.ek)
+  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %21, double noundef %i.ei, double noundef %i.ek)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
@@ -1049,10 +1049,10 @@ bb.an:                                            ; preds = %.critedge107
   %i.dr = sitofp i16 %.sroa.0.0.extract.trunc.i to double ; 2 uses
   %i.ds = sitofp i16 %i.t to double               ; 2 uses
   %i.dt = fsub double %i.ds, %i.dr
-  %i.du = fadd double %i.dt, 1.000000e+00
-  %21 = fadd nnan double %i.dr, %i.ds
-  %22 = fmul nnan double %21, 5.000000e-01
-  %i.dv = insertelement <2 x double> poison, double %i.du, i64 0
+  %i.du = fadd nnan double %i.dr, %i.ds
+  %21 = fmul nnan double %i.du, 5.000000e-01
+  %22 = fadd double %i.dt, 1.000000e+00
+  %i.dv = insertelement <2 x double> poison, double %22, i64 0
   %i.dw = shufflevector <2 x double> %i.dv, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dx = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dw, <2 x double> %i.dw, <2 x double> <double -1.000000e+00, double 1.000000e+00>) ; 3 uses
   %i.dy = extractelement <2 x double> %i.dx, i64 1
@@ -1068,7 +1068,7 @@ bb.an:                                            ; preds = %.critedge107
   %i.eh = load double, ptr %i.g, align 8, !tbaa !207
   %i.ei = extractelement <2 x double> %i.ee, i64 0 ; 3 uses
   %i.ej = fmul double %i.ei, 1.000000e-02
-  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %22, double noundef %i.eh, double noundef %i.ej)
+  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %21, double noundef %i.eh, double noundef %i.ej)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
@@ -1471,10 +1471,10 @@ bb.an:                                            ; preds = %.critedge107
   %i.dr = uitofp i16 %.sroa.0.0.extract.trunc.i to double ; 2 uses
   %i.ds = uitofp i16 %i.t to double               ; 2 uses
   %i.dt = fsub double %i.ds, %i.dr
-  %i.du = fadd double %i.dt, 1.000000e+00
-  %21 = fadd nnan double %i.dr, %i.ds
-  %22 = fmul nnan double %21, 5.000000e-01
-  %i.dv = insertelement <2 x double> poison, double %i.du, i64 0
+  %i.du = fadd nnan double %i.dr, %i.ds
+  %21 = fmul nnan double %i.du, 5.000000e-01
+  %22 = fadd double %i.dt, 1.000000e+00
+  %i.dv = insertelement <2 x double> poison, double %22, i64 0
   %i.dw = shufflevector <2 x double> %i.dv, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dx = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dw, <2 x double> %i.dw, <2 x double> <double -1.000000e+00, double 1.000000e+00>) ; 3 uses
   %i.dy = extractelement <2 x double> %i.dx, i64 1
@@ -1490,7 +1490,7 @@ bb.an:                                            ; preds = %.critedge107
   %i.eh = load double, ptr %i.g, align 8, !tbaa !207
   %i.ei = extractelement <2 x double> %i.ee, i64 0 ; 3 uses
   %i.ej = fmul double %i.ei, 1.000000e-02
-  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %22, double noundef %i.eh, double noundef %i.ej)
+  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %21, double noundef %i.eh, double noundef %i.ej)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
@@ -1893,10 +1893,10 @@ bb.an:                                            ; preds = %.critedge107
   %i.dn = sitofp i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
   %i.do = sitofp i32 %i.u to double               ; 2 uses
   %i.dp = fsub double %i.do, %i.dn
-  %i.dq = fadd double %i.dp, 1.000000e+00
-  %21 = fadd nnan double %i.dn, %i.do
-  %22 = fmul nnan double %21, 5.000000e-01
-  %i.dr = insertelement <2 x double> poison, double %i.dq, i64 0
+  %i.dq = fadd nnan double %i.dn, %i.do
+  %21 = fmul nnan double %i.dq, 5.000000e-01
+  %22 = fadd double %i.dp, 1.000000e+00
+  %i.dr = insertelement <2 x double> poison, double %22, i64 0
   %i.ds = shufflevector <2 x double> %i.dr, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dt = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ds, <2 x double> %i.ds, <2 x double> <double -1.000000e+00, double 1.000000e+00>) ; 3 uses
   %i.du = extractelement <2 x double> %i.dt, i64 1
@@ -1912,7 +1912,7 @@ bb.an:                                            ; preds = %.critedge107
   %i.ed = load double, ptr %i.g, align 8, !tbaa !207
   %i.ee = extractelement <2 x double> %i.ea, i64 0 ; 3 uses
   %i.ef = fmul double %i.ee, 1.000000e-02
-  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %22, double noundef %i.ed, double noundef %i.ef)
+  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %21, double noundef %i.ed, double noundef %i.ef)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
@@ -2315,10 +2315,10 @@ bb.an:                                            ; preds = %.critedge107
   %i.dn = uitofp i32 %.sroa.0.0.extract.trunc.i to double ; 2 uses
   %i.do = uitofp i32 %i.u to double               ; 2 uses
   %i.dp = fsub double %i.do, %i.dn
-  %i.dq = fadd double %i.dp, 1.000000e+00
-  %21 = fadd nnan double %i.dn, %i.do
-  %22 = fmul nnan double %21, 5.000000e-01
-  %i.dr = insertelement <2 x double> poison, double %i.dq, i64 0
+  %i.dq = fadd nnan double %i.dn, %i.do
+  %21 = fmul nnan double %i.dq, 5.000000e-01
+  %22 = fadd double %i.dp, 1.000000e+00
+  %i.dr = insertelement <2 x double> poison, double %22, i64 0
   %i.ds = shufflevector <2 x double> %i.dr, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dt = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ds, <2 x double> %i.ds, <2 x double> <double -1.000000e+00, double 1.000000e+00>) ; 3 uses
   %i.du = extractelement <2 x double> %i.dt, i64 1
@@ -2334,7 +2334,7 @@ bb.an:                                            ; preds = %.critedge107
   %i.ed = load double, ptr %i.g, align 8, !tbaa !207
   %i.ee = extractelement <2 x double> %i.ea, i64 0 ; 3 uses
   %i.ef = fmul double %i.ee, 1.000000e-02
-  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %22, double noundef %i.ed, double noundef %i.ef)
+  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %21, double noundef %i.ed, double noundef %i.ef)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
@@ -2737,10 +2737,10 @@ bb.an:                                            ; preds = %.critedge107
   %i.ds = sitofp i64 %.sroa.0217.0.copyload to double ; 2 uses
   %i.dt = sitofp i64 %i.w to double               ; 2 uses
   %i.du = fsub double %i.dt, %i.ds
-  %i.dv = fadd double %i.du, 1.000000e+00
-  %21 = fadd nnan double %i.ds, %i.dt
-  %22 = fmul nnan double %21, 5.000000e-01
-  %i.dw = insertelement <2 x double> poison, double %i.dv, i64 0
+  %i.dv = fadd nnan double %i.ds, %i.dt
+  %21 = fmul nnan double %i.dv, 5.000000e-01
+  %22 = fadd double %i.du, 1.000000e+00
+  %i.dw = insertelement <2 x double> poison, double %22, i64 0
   %i.dx = shufflevector <2 x double> %i.dw, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> %i.dx, <2 x double> <double -1.000000e+00, double 1.000000e+00>) ; 3 uses
   %i.dz = extractelement <2 x double> %i.dy, i64 1
@@ -2756,7 +2756,7 @@ bb.an:                                            ; preds = %.critedge107
   %i.ei = load double, ptr %i.j, align 8, !tbaa !207
   %i.ej = extractelement <2 x double> %i.ef, i64 0 ; 3 uses
   %i.ek = fmul double %i.ej, 1.000000e-02
-  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %22, double noundef %i.ei, double noundef %i.ek)
+  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %21, double noundef %i.ei, double noundef %i.ek)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an
@@ -3159,10 +3159,10 @@ bb.an:                                            ; preds = %.critedge107
   %i.ds = uitofp i64 %.sroa.0217.0.copyload to double ; 2 uses
   %i.dt = uitofp i64 %i.w to double               ; 2 uses
   %i.du = fsub double %i.dt, %i.ds
-  %i.dv = fadd double %i.du, 1.000000e+00
-  %21 = fadd nnan double %i.ds, %i.dt
-  %22 = fmul nnan double %21, 5.000000e-01
-  %i.dw = insertelement <2 x double> poison, double %i.dv, i64 0
+  %i.dv = fadd nnan double %i.ds, %i.dt
+  %21 = fmul nnan double %i.dv, 5.000000e-01
+  %22 = fadd double %i.du, 1.000000e+00
+  %i.dw = insertelement <2 x double> poison, double %22, i64 0
   %i.dx = shufflevector <2 x double> %i.dw, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.dy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> %i.dx, <2 x double> <double -1.000000e+00, double 1.000000e+00>) ; 3 uses
   %i.dz = extractelement <2 x double> %i.dy, i64 1
@@ -3178,7 +3178,7 @@ bb.an:                                            ; preds = %.critedge107
   %i.ei = load double, ptr %i.j, align 8, !tbaa !207
   %i.ej = extractelement <2 x double> %i.ef, i64 0 ; 3 uses
   %i.ek = fmul double %i.ej, 1.000000e-02
-  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %22, double noundef %i.ei, double noundef %i.ek)
+  invoke void @_ZN7testing8internal20DoubleNearPredFormatEPKcS2_S2_ddd(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %9, ptr noundef nonnull @.str.97, ptr noundef nonnull @.str.98, ptr noundef nonnull @.str.99, double noundef %21, double noundef %i.ei, double noundef %i.ek)
           to label %bb.ao unwind label %bb.aq
 
 bb.ao:                                            ; preds = %bb.an

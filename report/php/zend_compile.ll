@@ -205,7 +205,7 @@ zend_string_release_ex.exit:                      ; preds = %bb.d, %bb.e, %bb.f
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @zend_compile_expr(ptr noundef %0, ptr noundef captures(none) %1) unnamed_addr #0 {
+define internal fastcc void @zend_compile_expr(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 600), align 8, !tbaa !227
   %i.b = tail call ptr @llvm.frameaddress.p0(i32 0)
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %get_next_op.exit, %
 declare i32 @zend_stack_count(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @zend_delayed_compile_var(ptr noundef %0, ptr noundef captures(none) %1, i32 noundef range(i32 0, 6) %2, i1 noundef zeroext %3) unnamed_addr #0 {
+define internal fastcc ptr @zend_delayed_compile_var(ptr noundef %0, ptr noundef %1, i32 noundef range(i32 0, 6) %2, i1 noundef zeroext %3) unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 600), align 8, !tbaa !227
   %i.b = tail call ptr @llvm.frameaddress.p0(i32 0)
@@ -1011,7 +1011,7 @@ bb.x:                                             ; preds = %bb.w
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.x, %bb.w, %.critedge.loopexit.split.loop.exit, %.critedge.loopexit.split.loop.exit100, %bb.u
-  %.1 = phi i32 [ 0, %bb.u ], [ %i.da, %.critedge.loopexit.split.loop.exit ], [ %i.db, %.critedge.loopexit.split.loop.exit100 ], [ %indvars, %bb.w ], [ 0, %bb.x ] ; 2 uses
+  %.1 = phi i32 [ 0, %bb.u ], [ %i.da, %.critedge.loopexit.split.loop.exit ], [ %i.db, %.critedge.loopexit.split.loop.exit100 ], [ 0, %bb.x ], [ %indvars, %bb.w ] ; 2 uses
   %i.dc = icmp ult i32 %.1, %i.cl
   br i1 %i.dc, label %.lr.ph76.preheader, label %.loopexit
 
@@ -1280,7 +1280,7 @@ declare ptr @llvm.frameaddress.p0(i32 immarg) #22
 declare ptr @zend_stack_base(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @zend_compile_var_inner(ptr noundef %0, ptr noundef captures(none) %1, i32 noundef range(i32 0, 6) %2, i1 noundef zeroext %3) unnamed_addr #0 {
+define internal fastcc ptr @zend_compile_var_inner(ptr noundef %0, ptr noundef %1, i32 noundef range(i32 0, 6) %2, i1 noundef zeroext %3) unnamed_addr #0 {
 zend_ast_get_lineno.exit:
   %i.a = alloca i32, align 4                      ; 4 uses
   %4 = alloca %struct._znode, align 8             ; 5 uses
@@ -1683,7 +1683,7 @@ bb.j:                                             ; preds = %bb.i
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @zend_compile_class_ref(ptr nofree noundef nonnull writeonly captures(address_is_null) %0, ptr noundef captures(none) %1, i32 noundef range(i32 512, 897) %2) unnamed_addr #0 {
+define internal fastcc void @zend_compile_class_ref(ptr nofree noundef nonnull writeonly captures(address_is_null) %0, ptr noundef %1, i32 noundef range(i32 512, 897) %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct._znode, align 8             ; 8 uses
   %i.a = load i16, ptr %1, align 8, !tbaa !223
@@ -2086,7 +2086,7 @@ zend_string_release_ex.exit:                      ; preds = %bb.a, %bb.b, %bb.c
 declare ptr @zend_register_long_constant(ptr noundef, i64 noundef, i64 noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @zend_compile_expr_inner(ptr noundef %0, ptr noundef captures(none) %1) unnamed_addr #0 {
+define internal fastcc void @zend_compile_expr_inner(ptr noundef %0, ptr noundef %1) unnamed_addr #0 {
 zend_ast_get_lineno.exit:
   %i.a = load i16, ptr %1, align 8, !tbaa !223    ; 2 uses
   %i.b = and i16 %i.a, -2

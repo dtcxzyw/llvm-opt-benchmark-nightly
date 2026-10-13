@@ -205,7 +205,7 @@ bb.aw:                                            ; preds = %.loopexit.split-lp,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN101_$LT$nickel_lang_parser..ast..typ..RecordRows$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17h2bb1bbd7daac5441E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(40) %1, ptr noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef readonly align 4 captures(none) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN101_$LT$nickel_lang_parser..ast..typ..RecordRows$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17h2bb1bbd7daac5441E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(40) %1, ptr nofree noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef readonly align 4 captures(none) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -270,7 +270,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @"_ZN101_$LT$nickel_lang_parser..ast..typ..RecordRows$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env6do_fix17h38cdac0f2c0c1964E"(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dead_on_return dereferenceable(12) %5, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(48) %6) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @"_ZN101_$LT$nickel_lang_parser..ast..typ..RecordRows$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env6do_fix17h38cdac0f2c0c1964E"(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr nofree noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dead_on_return dereferenceable(12) %5, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(48) %6) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [12 x i8], align 4                ; 4 uses
   %.sroa.444 = alloca [28 x i8], align 4          ; 2 uses
@@ -673,7 +673,7 @@ bb.l:                                             ; preds = %bb.e, %bb.k
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN140_$LT$nickel_lang_parser..typ..EnumRowF$LT$$RF$nickel_lang_parser..ast..typ..Type$GT$$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17hc9ee1054036982f1E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(32) %1, ptr noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias noundef readonly align 4 captures(none) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN140_$LT$nickel_lang_parser..typ..EnumRowF$LT$$RF$nickel_lang_parser..ast..typ..Type$GT$$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17hc9ee1054036982f1E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(32) %1, ptr nofree noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias noundef readonly align 4 captures(none) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [12 x i8], align 4                ; 4 uses
   %i.b = alloca [104 x i8], align 8               ; 6 uses
@@ -1076,7 +1076,7 @@ bb.g:                                             ; preds = %"_ZN6pretty23DocBui
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN142_$LT$nickel_lang_parser..typ..RecordRowF$LT$$RF$nickel_lang_parser..ast..typ..Type$GT$$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17h43c426800158fc71E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(32) %1, ptr noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias noundef align 4 captures(address) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN142_$LT$nickel_lang_parser..typ..RecordRowF$LT$$RF$nickel_lang_parser..ast..typ..Type$GT$$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17h43c426800158fc71E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(32) %1, ptr nofree noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias noundef align 4 captures(address) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [104 x i8], align 8               ; 7 uses
   %.sroa.67 = alloca [72 x i8], align 8           ; 3 uses
@@ -1479,7 +1479,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN18nickel_lang_parser3ast6pretty127_$LT$impl$u20$pretty..Pretty$LT$nickel_lang_parser..ast..pretty..Allocator$GT$$u20$for$u20$$RF$nickel_lang_parser..ast..Ast$GT$6pretty17hfe702d3e03456e75E"(ptr dead_on_unwind noalias noundef writable sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %1, ptr noundef nonnull align 8 %2) unnamed_addr #0 {
+define void @"_ZN18nickel_lang_parser3ast6pretty127_$LT$impl$u20$pretty..Pretty$LT$nickel_lang_parser..ast..pretty..Allocator$GT$$u20$for$u20$$RF$nickel_lang_parser..ast..Ast$GT$6pretty17hfe702d3e03456e75E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %1, ptr noundef nonnull align 8 %2) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   tail call void @"_ZN18nickel_lang_parser3ast6pretty128_$LT$impl$u20$pretty..Pretty$LT$nickel_lang_parser..ast..pretty..Allocator$GT$$u20$for$u20$$RF$nickel_lang_parser..ast..Node$GT$6pretty17h68994528711b0d65E"(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, ptr noundef nonnull align 8 %2)
@@ -1487,7 +1487,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN18nickel_lang_parser3ast6pretty128_$LT$impl$u20$pretty..Pretty$LT$nickel_lang_parser..ast..pretty..Allocator$GT$$u20$for$u20$$RF$nickel_lang_parser..ast..Node$GT$6pretty17h68994528711b0d65E"(ptr dead_on_unwind noalias noundef writable sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, ptr noundef nonnull align 8 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN18nickel_lang_parser3ast6pretty128_$LT$impl$u20$pretty..Pretty$LT$nickel_lang_parser..ast..pretty..Allocator$GT$$u20$for$u20$$RF$nickel_lang_parser..ast..Node$GT$6pretty17h68994528711b0d65E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, ptr noundef nonnull align 8 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [32 x i8], align 8                ; 7 uses
@@ -1890,7 +1890,7 @@ bb.h:                                             ; preds = %bb.g
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN18nickel_lang_parser3ast6pretty133_$LT$impl$u20$pretty..Pretty$LT$nickel_lang_parser..ast..pretty..Allocator$GT$$u20$for$u20$$RF$nickel_lang_parser..ast..typ..Type$GT$6pretty17he57e6ed83d22ac09E"(ptr dead_on_unwind noalias noundef writable sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %1, ptr noundef nonnull align 8 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN18nickel_lang_parser3ast6pretty133_$LT$impl$u20$pretty..Pretty$LT$nickel_lang_parser..ast..pretty..Allocator$GT$$u20$for$u20$$RF$nickel_lang_parser..ast..typ..Type$GT$6pretty17he57e6ed83d22ac09E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %1, ptr noundef nonnull align 8 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [32 x i8], align 8                ; 7 uses
@@ -2293,7 +2293,7 @@ _ZN18nickel_lang_parser7grammar11__action72217hff6a0f3dd685e9deE.exit: ; preds =
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_ZN18nickel_lang_parser7grammar11__action87317hf97a5ac9a67e5de8E(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(112) initializes((0, 88)) %0, ptr noundef nonnull align 8 captures(none) %1, i32 noundef %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(120) %3) unnamed_addr #0 {
+define internal fastcc void @_ZN18nickel_lang_parser7grammar11__action87317hf97a5ac9a67e5de8E(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(112) initializes((0, 88)) %0, ptr nofree noundef nonnull align 8 captures(none) %1, i32 noundef %2, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(120) %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [12 x i8], align 4                ; 5 uses
   %i.b = alloca [104 x i8], align 8               ; 4 uses
@@ -2696,7 +2696,7 @@ bb.p:                                             ; preds = %bb.o
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_ZN18nickel_lang_parser7uniterm11FixTypeVars13fix_type_vars17h70414adb747f144aE(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(104) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(104) %1, ptr noundef nonnull align 8 captures(none) %2, ptr noalias nofree noundef nonnull readonly align 4 captures(address) dead_on_return dereferenceable(12) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_ZN18nickel_lang_parser7uniterm11FixTypeVars13fix_type_vars17h70414adb747f144aE(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(104) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(104) %1, ptr nofree noundef nonnull align 8 captures(none) %2, ptr noalias nofree noundef nonnull readonly align 4 captures(address) dead_on_return dereferenceable(12) %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.6.sroa.8 = alloca [56 x i8], align 8     ; 3 uses
   %.sroa.4 = alloca [24 x i8], align 8            ; 2 uses
@@ -3099,7 +3099,7 @@ bb.ao:                                            ; preds = %.invoke, %bb.h, %bb
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN95_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17h137341d0f0f948edE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([104 x i8]) align 8 captures(none) dereferenceable(104) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(104) %1, ptr noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef readonly align 4 captures(address) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN95_$LT$nickel_lang_parser..ast..typ..Type$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17h137341d0f0f948edE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([104 x i8]) align 8 captures(none) dereferenceable(104) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(104) %1, ptr nofree noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef readonly align 4 captures(address) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -3502,7 +3502,7 @@ _ZN18nickel_lang_parser3ast5alloc8AstAlloc10alloc_many17h3b32cf942828ed27E.exit:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN99_$LT$nickel_lang_parser..ast..typ..EnumRows$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17hec4a5cdb500ff2dcE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(40) %1, ptr noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef readonly align 4 captures(none) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @"_ZN99_$LT$nickel_lang_parser..ast..typ..EnumRows$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env17hec4a5cdb500ff2dcE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(40) %1, ptr nofree noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef readonly align 4 captures(none) dead_on_return dereferenceable(12) %5) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -3567,7 +3567,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @"_ZN99_$LT$nickel_lang_parser..ast..typ..EnumRows$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env6do_fix17hdbebde7f7f63193eE"(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dead_on_return dereferenceable(12) %5, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(48) %6) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @"_ZN99_$LT$nickel_lang_parser..ast..typ..EnumRows$u20$as$u20$nickel_lang_parser..uniterm..FixTypeVars$GT$17fix_type_vars_env6do_fix17hdbebde7f7f63193eE"(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(72) %0, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1, ptr nofree noundef nonnull align 8 captures(none) %2, ptr noundef nonnull %3, ptr noundef %4, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dead_on_return dereferenceable(12) %5, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(48) %6) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %.sroa.444 = alloca [28 x i8], align 4          ; 2 uses
   %.sroa.5.sroa.5 = alloca [16 x i8], align 4     ; 6 uses

@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph174:                                        ; preds = %.lr.ph174.preheader, %bb.q
   %i.bp = phi i64 [ %i.cd, %bb.q ], [ %i.v, %.lr.ph174.preheader ]
-  %i.bq = phi i64 [ %i.cb, %bb.q ], [ 0, %.lr.ph174.preheader ] ; 4 uses
+  %i.bq = phi i64 [ %i.cb, %bb.q ], [ 0, %.lr.ph174.preheader ] ; 5 uses
   %i.br = phi i64 [ %.val90, %bb.q ], [ %.pre191, %.lr.ph174.preheader ] ; 2 uses
   %i.bs = phi i64 [ %.val, %bb.q ], [ %i.ba, %.lr.ph174.preheader ]
   %i.bt = phi i64 [ %i.ci, %bb.q ], [ %i.bd, %.lr.ph174.preheader ]
@@ -228,7 +228,7 @@ bb.l:                                             ; preds = %.lr.ph174, %bb.k
   store i64 %i.bv, ptr %i.bz, align 8
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   store i64 %.sroa.0.0.i98, ptr %i.ca, align 8
-  %i.cb = add i64 %i.bq, 1                        ; 9 uses
+  %i.cb = add i64 %i.bq, 1                        ; 6 uses
   store i64 %i.cb, ptr %i.bc, align 8, !alias.scope !83898
   %i.cc = add i64 %.sroa.0.0.i98, %.lcssa159
   %.not86 = icmp ult i64 %i.cc, %i.br
@@ -288,11 +288,12 @@ bb.r:                                             ; preds = %._crit_edge175
   br i1 %i.cr, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtNtBb_3ops5range5RangeyEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtB1p_8adapters3map8map_foldRBQ_yyNCNvXsD_NtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitiveNtB2R_37StructuralPrimitiveFieldSchedulingJobNtNtB2X_7decoder23StructuralSchedulingJob13schedule_nexts_0NCINvXsC_NtB1n_5accumyNtB5I_3Sum3sumINtB29_3MapBF_B2J_EE0E0EB2X_.exit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.r
-  %min.iters.check = icmp ult i64 %i.cb, 4
+  %3 = add i64 %i.bq, 1                           ; 3 uses
+  %min.iters.check = icmp ult i64 %3, 4
   br i1 %min.iters.check, label %.preheader.preheader264, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.preheader
-  %n.vec = and i64 %i.cb, -4                      ; 3 uses
+  %n.vec = and i64 %3, -4                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -319,7 +320,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <2 x i64> %i.cy, %i.cx
   %i.da = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %i.cb, %n.vec
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterINtNtNtBb_3ops5range5RangeyEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldyNCINvNtNtB1p_8adapters3map8map_foldRBQ_yyNCNvXsD_NtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitiveNtB2R_37StructuralPrimitiveFieldSchedulingJobNtNtB2X_7decoder23StructuralSchedulingJob13schedule_nexts_0NCINvXsC_NtB1n_5accumyNtB5I_3Sum3sumINtB29_3MapBF_B2J_EE0E0EB2X_.exit, label %.preheader.preheader264
 
 .preheader.preheader264:                          ; preds = %.preheader.preheader, %middle.block
@@ -722,7 +723,7 @@ bb.m:                                             ; preds = %bb.d
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecjE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit
-  %i.aw = phi i64 [ %i.bs, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecjE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %i.aw = phi i64 [ %i.bs, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecjE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit ], [ 0, %.lr.ph.preheader ] ; 5 uses
   %.sroa.0.0144 = phi ptr [ %i.ax, %_RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecjE8push_mutCsjjpCCFGI3ul_14lance_encoding.exit ], [ %i.au, %.lr.ph.preheader ] ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.0.0144, i64 24 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.0.0144, i64 16
@@ -737,11 +738,12 @@ bb.m:                                             ; preds = %bb.d
   br i1 %i.bc, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvXsM_NtBW_5accumjINtB1M_3SumRjE3sumBF_E0ECsjjpCCFGI3ul_14lance_encoding.exit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %._crit_edge
-  %min.iters.check = icmp ult i64 %i.bs, 4
+  %4 = add i64 %i.aw, 1                           ; 3 uses
+  %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %.preheader.preheader314, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader.preheader
-  %n.vec = and i64 %i.bs, -4                      ; 3 uses
+  %n.vec = and i64 %4, -4                         ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -761,7 +763,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <2 x i64> %i.bg, %i.bf
   %i.bi = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %i.bs, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %_RINvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4foldjNCINvXsM_NtBW_5accumjINtB1M_3SumRjE3sumBF_E0ECsjjpCCFGI3ul_14lance_encoding.exit, label %.preheader.preheader314
 
 .preheader.preheader314:                          ; preds = %.preheader.preheader, %middle.block
@@ -798,7 +800,7 @@ _RNvMsF_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecjE8push_mutCsjjpCCFGI3ul_14lance_enc
   %i.bq = load ptr, ptr %i.ar, align 8, !alias.scope !89858, !nonnull !75, !noundef !75
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %i.aw
   store i64 %i.bn, ptr %i.br, align 8
-  %i.bs = add i64 %i.aw, 1                        ; 8 uses
+  %i.bs = add i64 %i.aw, 1                        ; 5 uses
   store i64 %i.bs, ptr %i.as, align 8, !alias.scope !89858
   %i.bt = icmp eq ptr %i.ax, %i.av
   br i1 %i.bt, label %._crit_edge, label %.lr.ph

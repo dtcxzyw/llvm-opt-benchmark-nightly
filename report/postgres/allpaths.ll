@@ -204,7 +204,7 @@ declare ptr @convert_subquery_pathkeys(ptr noundef, ptr noundef, ptr noundef, pt
 declare ptr @create_subqueryscan_path(ptr noundef, ptr noundef, ptr noundef, i1 noundef zeroext, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc zeroext i1 @recurse_pushdown_safe(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull captures(none) %2) unnamed_addr #0 {
+define internal fastcc zeroext i1 @recurse_pushdown_safe(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(address) %1, ptr nofree noundef nonnull captures(none) %2) unnamed_addr #0 {
 bb.a:
   br label %tailrecurse
 

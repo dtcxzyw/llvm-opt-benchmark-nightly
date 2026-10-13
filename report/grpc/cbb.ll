@@ -205,7 +205,7 @@ CBB_len.exit:                                     ; preds = %bb.c, %bb.d
   br i1 %.not4673, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %CBB_len.exit, %bb.f
-  %.04274 = phi i64 [ %i.v, %bb.f ], [ 0, %CBB_len.exit ] ; 4 uses
+  %.04274 = phi i64 [ %i.v, %bb.f ], [ 0, %CBB_len.exit ] ; 5 uses
   %i.u = call i32 @CBS_get_any_asn1_element(ptr noundef nonnull %1, ptr noundef null, ptr noundef null, ptr noundef null) #11
   %.not48 = icmp eq i32 %i.u, 0
   br i1 %.not48, label %bb.e, label %bb.f
@@ -215,7 +215,7 @@ bb.e:                                             ; preds = %.lr.ph
   br label %._crit_edge.thread
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.v = add i64 %.04274, 1                       ; 6 uses
+  %i.v = add i64 %.04274, 1                       ; 4 uses
   %.pr = load i64, ptr %i.t, align 8, !tbaa !29
   %.not46 = icmp eq i64 %.pr, 0
   br i1 %.not46, label %._crit_edge, label %.lr.ph, !llvm.loop !39
@@ -298,11 +298,12 @@ bb.m:                                             ; preds = %bb.l
 
 CBB_data.exit59:                                  ; preds = %bb.l, %bb.m
   %.0.i58 = phi ptr [ %i.be, %bb.m ], [ %i.aw, %bb.l ] ; 3 uses
+  %2 = add i64 %.04274, 1                         ; 2 uses
   %i.bf = icmp eq i64 %.04274, 0
   br i1 %i.bf, label %.epil.preheader, label %CBB_data.exit59.new
 
 CBB_data.exit59.new:                              ; preds = %CBB_data.exit59
-  %unroll_iter = and i64 %i.v, -2
+  %unroll_iter = and i64 %2, -2
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZL14OPENSSL_memcpyPvPKvm.exit.1, %CBB_data.exit59.new
@@ -355,7 +356,7 @@ _ZL14OPENSSL_memcpyPvPKvm.exit.1:                 ; preds = %bb.p, %_ZL14OPENSSL
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %CBB_data.exit59
   %.077.epil.init = phi i64 [ 0, %CBB_data.exit59 ], [ %i.bx, %.loopexit.loopexit.unr-lcssa ]
   %.03976.epil.init = phi i64 [ 0, %CBB_data.exit59 ], [ %i.bw, %.loopexit.loopexit.unr-lcssa ]
-  %lcmp.mod90 = trunc i64 %i.v to i1
+  %lcmp.mod90 = trunc i64 %2 to i1
   call void @llvm.assume(i1 %lcmp.mod90)
   %i.bz = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %.077.epil.init ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 8

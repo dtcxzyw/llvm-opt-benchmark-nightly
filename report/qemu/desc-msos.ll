@@ -73,7 +73,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.z, label %.lr.ph.i.i, label %usb_desc_msos_prop_str.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 36 ; 5 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 36 ; 6 uses
   %wide.trip.count.i.i = zext i32 %i.w to i64     ; 8 uses
   %min.iters.check = icmp ult i32 %i.w, 32
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
@@ -101,22 +101,32 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %wide.trip.count.i.i, 2147483644 ; 3 uses
+  %n.vec = and i64 %wide.trip.count.i.i, 2147483640 ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.am = trunc i64 %index to i32
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %index
-  %wide.load.a = load <4 x i32>, ptr %i.an, align 4, !alias.scope !12, !noalias !13 ; 2 uses
-  %i.ao = shl nuw i32 %i.am, 1
+  %i.am = trunc i64 %index to i32                 ; 2 uses
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %index ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.an, i64 16
+  %wide.load = load <4 x i32>, ptr %i.an, align 4, !alias.scope !12, !noalias !13 ; 2 uses
+  %wide.load.a = load <4 x i32>, ptr %5, align 4, !alias.scope !12, !noalias !13 ; 2 uses
+  %6 = shl nuw i32 %i.am, 1
+  %i.ao = shl i32 %i.am, 1
+  %7 = sext i32 %6 to i64
+  %8 = getelementptr inbounds i8, ptr %i.aa, i64 %7
   %i.ap = sext i32 %i.ao to i64
-  %i.aq = getelementptr inbounds i8, ptr %i.aa, i64 %i.ap
+  %9 = getelementptr i8, ptr %i.aa, i64 %i.ap
+  %i.aq = getelementptr i8, ptr %9, i64 8
+  %10 = lshr <4 x i32> %wide.load, splat (i32 8)
   %i.ar = lshr <4 x i32> %wide.load.a, splat (i32 8)
+  %11 = shufflevector <4 x i32> %wide.load, <4 x i32> %10, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  %interleaved.vec = trunc <8 x i32> %11 to <8 x i8>
+  store <8 x i8> %interleaved.vec, ptr %8, align 1, !alias.scope !13
   %i.as = shufflevector <4 x i32> %wide.load.a, <4 x i32> %i.ar, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %interleaved.vec.a = trunc <8 x i32> %i.as to <8 x i8>
   store <8 x i8> %interleaved.vec.a, ptr %i.aq, align 1, !alias.scope !13
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.at = icmp eq i64 %index.next, %n.vec
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !10
 

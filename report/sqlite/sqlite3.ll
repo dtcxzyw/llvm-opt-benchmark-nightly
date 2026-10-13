@@ -206,7 +206,7 @@ releasePage.exit:                                 ; preds = %bb.br, %bb.bs
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc i32 @sqlite3BtreeNext(ptr noundef captures(none) initializes((70, 72)) %0) unnamed_addr #0 {
+define internal fastcc i32 @sqlite3BtreeNext(ptr noundef initializes((70, 72)) %0) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 70
   store i16 0, ptr %i.a, align 2, !tbaa !1618
@@ -609,7 +609,7 @@ bb.x:                                             ; preds = %bb.l, %bb.p, %bb.v,
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal fastcc i32 @btreeNext(ptr noundef captures(none) %0) unnamed_addr #5 {
+define internal fastcc i32 @btreeNext(ptr noundef %0) unnamed_addr #5 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 7 uses
   %i.b = load i8, ptr %0, align 8, !tbaa !1120    ; 4 uses
@@ -1012,8 +1012,8 @@ bb.ad:                                            ; preds = %bb.q
   %i.fo = add nsw i32 %.4117, -66560
   %or.cond3.i = icmp ult i32 %i.fo, 40
   %i.fp = add nuw nsw i32 %.4117, 40
-  %spec.select44.i = select i1 %or.cond3.i, i32 %i.fp, i32 %.4117 ; 4 uses
   %6 = getelementptr inbounds nuw i8, ptr %.2110, i64 4
+  %spec.select44.i = select i1 %or.cond3.i, i32 %i.fp, i32 %.4117 ; 4 uses
   %i.fq = lshr i32 %spec.select44.i, 18
   %i.fr = trunc i32 %i.fq to i8
   %i.fs = lshr i32 %spec.select44.i, 12

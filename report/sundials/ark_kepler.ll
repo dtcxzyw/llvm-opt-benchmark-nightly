@@ -204,10 +204,10 @@ bb.a:
   %i.av = fcmp ogt double %i.at, %i.au
   %..6 = select i1 %i.av, double %i.at, double %i.au
   store double %..6, ptr %8, align 8, !tbaa !17
-  %10 = load double, ptr %7, align 8, !tbaa !17
   %i.aw = insertelement <2 x double> poison, double %3, i64 0
   %i.ax = insertelement <2 x double> %i.aw, double %5, i64 1
   %i.ay = fneg <2 x double> %i.ax
+  %10 = load double, ptr %7, align 8, !tbaa !17
   %i.az = insertelement <2 x double> poison, double %2, i64 0
   %i.ba = insertelement <2 x double> %i.az, double %3, i64 1
   %i.bb = fmul <2 x double> %i.ba, %i.ay

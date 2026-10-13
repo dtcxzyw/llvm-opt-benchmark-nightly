@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6google8protobuf14FileDescriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(184) %1, ptr noundef nonnull align 1 captures(none) dereferenceable(3) %2) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6google8protobuf14FileDescriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(184) %1, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(3) %2) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i:
   %3 = alloca [1 x %"class.std::basic_string_view"], align 16 ; 9 uses
   %4 = alloca [1 x %"class.std::basic_string_view"], align 16 ; 5 uses
@@ -608,7 +608,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit147: ; preds = %.b
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6google8protobuf10Descriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsEb(ptr noundef nonnull align 8 dereferenceable(160) %0, i32 noundef %1, ptr noundef %2, ptr noundef nonnull align 1 captures(none) dereferenceable(3) %3, i1 noundef zeroext %4) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6google8protobuf10Descriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsEb(ptr noundef nonnull align 8 dereferenceable(160) %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(3) %3, i1 noundef zeroext %4) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca [1 x %"class.std::basic_string_view"], align 16 ; 5 uses
   %6 = alloca [1 x %"class.std::basic_string_view"], align 16 ; 5 uses
@@ -1011,7 +1011,7 @@ bb.ab:                                            ; preds = %bb.aa, %_ZNSt7__cxx
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6google8protobuf15FieldDescriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsE(ptr noundef nonnull align 8 dereferenceable(88) %0, i32 noundef %1, ptr noundef %2, ptr noundef nonnull align 1 captures(none) dereferenceable(3) %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6google8protobuf15FieldDescriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsE(ptr noundef nonnull align 8 dereferenceable(88) %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(3) %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit:
   %4 = alloca [1 x %"class.std::basic_string_view"], align 16 ; 5 uses
   %5 = alloca [5 x %"class.std::basic_string_view"], align 16 ; 13 uses
@@ -1414,7 +1414,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.d, align 8, !tbaa !63, !alias.scope !1383
   store i8 0, ptr %i.c, align 8, !tbaa !62, !alias.scope !1383
-  invoke void @_ZNK6google8protobuf10Descriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsEb(ptr noundef nonnull align 8 dereferenceable(160) %1, i32 noundef 0, ptr noundef nonnull align 8 %0, ptr noundef nonnull align 1 dereferenceable(3) %2, i1 noundef zeroext true)
+  invoke void @_ZNK6google8protobuf10Descriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsEb(ptr noundef nonnull align 8 dereferenceable(160) %1, i32 noundef 0, ptr noundef nonnull align 8 %0, ptr noundef nonnull readonly align 1 dereferenceable(3) %2, i1 noundef zeroext true)
           to label %_ZNK6google8protobuf10Descriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE.exit unwind label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1439,7 +1439,7 @@ _ZNK6google8protobuf10Descriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStr
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6google8protobuf10Descriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(160) %1, ptr noundef nonnull align 1 captures(none) dereferenceable(3) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6google8protobuf10Descriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(160) %1, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(3) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !58
@@ -1470,7 +1470,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6google8protobuf15OneofDescriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsE(ptr noundef nonnull align 8 dereferenceable(56) %0, i32 noundef %1, ptr noundef %2, ptr noundef nonnull align 1 captures(none) dereferenceable(3) %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6google8protobuf15OneofDescriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsE(ptr noundef nonnull align 8 dereferenceable(56) %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(3) %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit:
   %4 = alloca [1 x %"class.std::basic_string_view"], align 16 ; 5 uses
   %5 = alloca [2 x %"class.std::basic_string_view"], align 16 ; 7 uses
@@ -1873,7 +1873,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6google8protobuf15FieldDescriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE(ptr dead_on_unwind noalias nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef nonnull align 1 captures(none) dereferenceable(3) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6google8protobuf15FieldDescriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE(ptr dead_on_unwind noalias nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(88) %1, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(3) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca [1 x %"class.std::basic_string_view"], align 16 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -2181,7 +2181,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.d, align 8, !tbaa !63, !alias.scope !1404
   store i8 0, ptr %i.c, align 8, !tbaa !62, !alias.scope !1404
-  invoke void @_ZNK6google8protobuf15OneofDescriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsE(ptr noundef nonnull align 8 dereferenceable(56) %1, i32 noundef 0, ptr noundef nonnull align 8 %0, ptr noundef nonnull align 1 dereferenceable(3) %2)
+  invoke void @_ZNK6google8protobuf15OneofDescriptor11DebugStringEiPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_18DebugStringOptionsE(ptr noundef nonnull align 8 dereferenceable(56) %1, i32 noundef 0, ptr noundef nonnull align 8 %0, ptr noundef nonnull readonly align 1 dereferenceable(3) %2)
           to label %_ZNK6google8protobuf15OneofDescriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE.exit unwind label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -2206,7 +2206,7 @@ _ZNK6google8protobuf15OneofDescriptor22DebugStringWithOptionsB5cxx11ERKNS0_18Deb
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZNK6google8protobuf15OneofDescriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 1 captures(none) dereferenceable(3) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZNK6google8protobuf15OneofDescriptor22DebugStringWithOptionsB5cxx11ERKNS0_18DebugStringOptionsE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(3) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !58

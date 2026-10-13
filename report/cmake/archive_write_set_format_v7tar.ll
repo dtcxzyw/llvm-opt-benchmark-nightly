@@ -204,13 +204,13 @@ bb.ai:                                            ; preds = %bb.ah, %.thread121.
 format_number.exit.thread.i:                      ; preds = %bb.ai, %bb.ag
   %.071127.i = phi i8 [ %.071126.i, %bb.ai ], [ -1, %bb.ag ]
   %.6.i = phi i32 [ %.5.i, %bb.ai ], [ %.4.ph.i, %bb.ag ]
-  %3 = call i32 @archive_entry_mode(ptr noundef %1) #10 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 102
-  %i.bi = trunc i32 %3 to i8                      ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 102
+  %4 = call i32 @archive_entry_mode(ptr noundef %1) #10 ; 3 uses
+  %i.bi = trunc i32 %4 to i8                      ; 2 uses
   %i.bj = lshr i8 %i.bi, 3
-  %i.bk = lshr i32 %3, 6
+  %i.bk = lshr i32 %4, 6
   %i.bl = trunc i32 %i.bk to i8
-  %i.bm = lshr i32 %3, 9
+  %i.bm = lshr i32 %4, 9
   %i.bn = trunc i32 %i.bm to i8
   %i.bo = insertelement <4 x i8> poison, i8 %i.bn, i64 0
   %i.bp = insertelement <4 x i8> %i.bo, i8 %i.bl, i64 1
@@ -218,7 +218,7 @@ format_number.exit.thread.i:                      ; preds = %bb.ai, %bb.ag
   %i.br = insertelement <4 x i8> %i.bq, i8 %i.bi, i64 3
   %i.bs = and <4 x i8> %i.br, splat (i8 7)
   %i.bt = or disjoint <4 x i8> %i.bs, splat (i8 48)
-  store <4 x i8> %i.bt, ptr %4, align 2, !tbaa !20
+  store <4 x i8> %i.bt, ptr %3, align 2, !tbaa !20
   %i.bu = getelementptr inbounds nuw i8, ptr %i.d, i64 101
   store i8 48, ptr %i.bu, align 1, !tbaa !20
   %i.bv = getelementptr inbounds nuw i8, ptr %i.d, i64 100

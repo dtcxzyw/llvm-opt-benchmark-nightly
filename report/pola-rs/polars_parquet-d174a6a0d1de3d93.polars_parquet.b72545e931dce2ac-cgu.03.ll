@@ -204,8 +204,8 @@ _RNCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding9bitpacked6unpac
   %i.q = and <8 x i16> %i.p, <i16 3, i16 3, i16 3, i16 3, i16 3, i16 3, i16 3, i16 -1>, !dbg !12216
   store <8 x i16> %i.q, ptr %2, align 2, !dbg !12216
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 2, !dbg !12217
-  %.sroa.02.0.copyload.i69 = load i16, ptr %i.r, align 1, !dbg !12218 ; 8 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !12219
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !12218
+  %.sroa.02.0.copyload.i69 = load i16, ptr %i.r, align 1, !dbg !12219 ; 8 uses
   %i.s = lshr i16 %.sroa.02.0.copyload.i69, 2, !dbg !12220
   %i.t = lshr i16 %.sroa.02.0.copyload.i69, 4, !dbg !12221
   %i.u = lshr i16 %.sroa.02.0.copyload.i69, 6, !dbg !12222
@@ -213,16 +213,16 @@ _RNCINvNtNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding9bitpacked6unpac
   %i.w = lshr i16 %.sroa.02.0.copyload.i69, 10, !dbg !12224
   %i.x = lshr i16 %.sroa.02.0.copyload.i69, 12, !dbg !12225
   %i.y = lshr i16 %.sroa.02.0.copyload.i69, 14, !dbg !12226
-  %i.z = insertelement <8 x i16> poison, i16 %.sroa.02.0.copyload.i69, i64 0, !dbg !12219
-  %i.aa = insertelement <8 x i16> %i.z, i16 %i.s, i64 1, !dbg !12219
-  %i.ab = insertelement <8 x i16> %i.aa, i16 %i.t, i64 2, !dbg !12219
-  %i.ac = insertelement <8 x i16> %i.ab, i16 %i.u, i64 3, !dbg !12219
-  %i.ad = insertelement <8 x i16> %i.ac, i16 %i.v, i64 4, !dbg !12219
-  %i.ae = insertelement <8 x i16> %i.ad, i16 %i.w, i64 5, !dbg !12219
-  %i.af = insertelement <8 x i16> %i.ae, i16 %i.x, i64 6, !dbg !12219
-  %i.ag = insertelement <8 x i16> %i.af, i16 %i.y, i64 7, !dbg !12219
-  %i.ah = and <8 x i16> %i.ag, <i16 3, i16 3, i16 3, i16 3, i16 3, i16 3, i16 3, i16 -1>, !dbg !12219
-  store <8 x i16> %i.ah, ptr %3, align 2, !dbg !12219
+  %i.z = insertelement <8 x i16> poison, i16 %.sroa.02.0.copyload.i69, i64 0, !dbg !12218
+  %i.aa = insertelement <8 x i16> %i.z, i16 %i.s, i64 1, !dbg !12218
+  %i.ab = insertelement <8 x i16> %i.aa, i16 %i.t, i64 2, !dbg !12218
+  %i.ac = insertelement <8 x i16> %i.ab, i16 %i.u, i64 3, !dbg !12218
+  %i.ad = insertelement <8 x i16> %i.ac, i16 %i.v, i64 4, !dbg !12218
+  %i.ae = insertelement <8 x i16> %i.ad, i16 %i.w, i64 5, !dbg !12218
+  %i.af = insertelement <8 x i16> %i.ae, i16 %i.x, i64 6, !dbg !12218
+  %i.ag = insertelement <8 x i16> %i.af, i16 %i.y, i64 7, !dbg !12218
+  %i.ah = and <8 x i16> %i.ag, <i16 3, i16 3, i16 3, i16 3, i16 3, i16 3, i16 3, i16 -1>, !dbg !12218
+  store <8 x i16> %i.ah, ptr %3, align 2, !dbg !12218
   ret void, !dbg !12227
 }
 
@@ -625,10 +625,10 @@ begin_hunk_1_@llvm.usub.sat.i64
 !12150 = distinct !DILocation(line: 60, column: 26, scope: !12077, inlinedAt: !12149)
 !12151 = distinct !DILocation(line: 19, column: 15, scope: !12142, inlinedAt: !12150)
 !12152 = distinct !DILocation(line: 441, column: 24, scope: !12141, inlinedAt: !12151)
-!12153 = distinct !DILocation(line: 61, column: 26, scope: !12077, inlinedAt: !12149)
-!12154 = distinct !DILocation(line: 819, column: 9, scope: !12076, inlinedAt: !12153)
-!12155 = distinct !DILocation(line: 259, column: 34, scope: !12075, inlinedAt: !12154)
-!12156 = distinct !DILexicalBlock(scope: !12148, file: !2211, line: 87, column: 21)
+!12153 = distinct !DILexicalBlock(scope: !12148, file: !2211, line: 87, column: 21)
+!12154 = distinct !DILocation(line: 61, column: 26, scope: !12077, inlinedAt: !12149)
+!12155 = distinct !DILocation(line: 819, column: 9, scope: !12076, inlinedAt: !12154)
+!12156 = distinct !DILocation(line: 259, column: 34, scope: !12075, inlinedAt: !12155)
 !12157 = distinct !DILexicalBlock(scope: !12078, file: !2211, line: 72, column: 17)
 !12158 = distinct !DILexicalBlock(scope: !12157, file: !2211, line: 73, column: 17)
 !12159 = distinct !DILexicalBlock(scope: !12158, file: !2211, line: 75, column: 17)
@@ -690,8 +690,8 @@ begin_hunk_1_@llvm.usub.sat.i64
 !12215 = !DILocation(line: 88, column: 33, scope: !12137)
 !12216 = !DILocation(line: 88, column: 21, scope: !12138)
 !12217 = !DILocation(line: 89, column: 24, scope: !12140, inlinedAt: !12152)
-!12218 = !DILocation(line: 1718, column: 17, scope: !12074, inlinedAt: !12155)
-!12219 = !DILocation(line: 88, column: 21, scope: !12156)
+!12218 = !DILocation(line: 88, column: 21, scope: !12153)
+!12219 = !DILocation(line: 1718, column: 17, scope: !12074, inlinedAt: !12156)
 !12220 = !DILocation(line: 88, column: 33, scope: !12163)
 !12221 = !DILocation(line: 88, column: 33, scope: !12170)
 !12222 = !DILocation(line: 88, column: 33, scope: !12177)

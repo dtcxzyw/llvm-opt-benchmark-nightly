@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %bb.b, %bb.e
           to label %bb.e unwind label %bb.f       ; 2 uses
 
 bb.e:                                             ; preds = %.noexc21
-  %4 = extractvalue { i64, i64 } %i.y, 0          ; 3 uses
   %i.z = extractvalue { i64, i64 } %i.y, 1        ; 2 uses
   %.sroa.7.8.extract.trunc.i = trunc i64 %i.z to i32
   %i.aa = load <2 x i32>, ptr %2, align 4, !tbaa !284, !noalias !2605
@@ -218,6 +217,7 @@ bb.e:                                             ; preds = %.noexc21
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 4
   store float %i.r, ptr %i.ad, align 4, !tbaa !362
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
+  %4 = extractvalue { i64, i64 } %i.y, 0          ; 3 uses
   %.sroa.0.0.extract.trunc.i = trunc i64 %4 to i32
   %i.af = insertelement <2 x i64> poison, i64 %i.x, i64 0
   %i.ag = insertelement <2 x i64> %i.af, i64 %4, i64 1

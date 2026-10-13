@@ -205,19 +205,19 @@ bb.j:                                             ; preds = %bb.f
 bb.k:                                             ; preds = %bb.f
   %i.bw = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %indvars.iv.i
   %i.bx = load i16, ptr %i.bw, align 2
-  %2 = zext i16 %i.bx to i32                      ; 4 uses
-  %3 = getelementptr inbounds nuw [16 x i8], ptr %i.q, i64 %indvars.iv.i
-  %i.by = lshr i32 %2, 12
-  %i.bz = lshr i32 %2, 8
-  %i.ca = lshr i32 %2, 4
+  %2 = getelementptr inbounds nuw [16 x i8], ptr %i.q, i64 %indvars.iv.i
+  %3 = zext i16 %i.bx to i32                      ; 4 uses
+  %i.by = lshr i32 %3, 12
+  %i.bz = lshr i32 %3, 8
+  %i.ca = lshr i32 %3, 4
   %i.cb = insertelement <4 x i32> poison, i32 %i.by, i64 0
   %i.cc = insertelement <4 x i32> %i.cb, i32 %i.bz, i64 1
   %i.cd = insertelement <4 x i32> %i.cc, i32 %i.ca, i64 2
-  %i.ce = insertelement <4 x i32> %i.cd, i32 %2, i64 3
+  %i.ce = insertelement <4 x i32> %i.cd, i32 %3, i64 3
   %i.cf = and <4 x i32> %i.ce, <i32 -1, i32 15, i32 15, i32 15>
   %i.cg = uitofp nneg <4 x i32> %i.cf to <4 x float>
   %i.ch = fmul nnan <4 x float> %i.cg, splat (float f0x3D888889)
-  store <4 x float> %i.ch, ptr %3, align 4
+  store <4 x float> %i.ch, ptr %2, align 4
   br label %bb.t
 
 bb.l:                                             ; preds = %bb.f
