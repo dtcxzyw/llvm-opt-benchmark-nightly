@@ -1,0 +1,125 @@
+diff --git a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+index 25ffaee6d298f..41330db347750 100644
+--- a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
++++ b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+@@ -4354,21 +4354,15 @@ LoopVectorizationCostModel::getUniformMemOpCost(Instruction *I,
+            TTI.getShuffleCost(TargetTransformInfo::SK_Broadcast, VectorTy,
+                               VectorTy, Config.CostKind);
+   }
+-  StoreInst *SI = cast<StoreInst>(I);
+ 
+-  bool IsLoopInvariantStoreValue = Legal->isInvariant(SI->getValueOperand());
+   // TODO: We have existing tests that request the cost of extracting element
+   // VF.getKnownMinValue() - 1 from a scalable vector. This does not represent
+   // the actual generated code, which involves extracting the last element of
+   // a scalable vector where the lane to extract is unknown at compile time.
+-  InstructionCost Cost =
+-      TTI.getAddressComputationCost(PtrTy, nullptr, nullptr, Config.CostKind) +
+-      TTI.getMemoryOpCost(Instruction::Store, ValTy, Alignment, AS,
+-                          Config.CostKind);
+-  if (!IsLoopInvariantStoreValue)
+-    Cost += TTI.getIndexedVectorInstrCostFromEnd(Instruction::ExtractElement,
+-                                                 VectorTy, Config.CostKind, 0);
+-  return Cost;
++  return TTI.getAddressComputationCost(PtrTy, nullptr, nullptr,
++                                       Config.CostKind) +
++         TTI.getMemoryOpCost(Instruction::Store, ValTy, Alignment, AS,
++                             Config.CostKind);
+ }
+ 
+ InstructionCost
+@@ -4537,40 +4531,15 @@ void LoopVectorizationCostModel::setCostBasedWideningDecision(ElementCount VF) {
+       LLVM_DEBUG(dbgs() << "LV: Memory widening: calculating best strategy for "
+                         << I << '\n');
+       if (isUniformMemOp(I, VF)) {
+-        auto IsLegalToScalarize = [&]() {
+-          if (!VF.isScalable())
+-            // Scalarization of fixed length vectors "just works".
+-            return true;
+-
+-          // We have dedicated lowering for unpredicated uniform loads and
+-          // stores.  Note that even with tail folding we know that at least
+-          // one lane is active (i.e. generalized predication is not possible
+-          // here), and the logic below depends on this fact.
+-          if (!foldTailByMasking())
+-            return true;
+-
+-          // For scalable vectors, a uniform memop load is always
+-          // uniform-by-parts  and we know how to scalarize that.
+-          if (isa<LoadInst>(I))
+-            return true;
+-
+-          // A uniform store isn't neccessarily uniform-by-part
+-          // and we can't assume scalarization.
+-          auto &SI = cast<StoreInst>(I);
+-          return TheLoop->isLoopInvariant(SI.getValueOperand());
+-        };
+-
+         const InstructionCost GatherScatterCost =
+             isLegalGatherOrScatter(&I, VF) ? getGatherScatterCost(&I, VF)
+                                            : InstructionCost::getInvalid();
+ 
+-        // Load: Scalar load + broadcast
+-        // Store: Scalar store + isLoopInvariantStoreValue ? 0 : extract
+-        // FIXME: This cost is a significant under-estimate for tail folded
+-        // memory ops.
++        // FIXME: We disable this when folding tail by masking, as the costs are
++        // not accurate then.
+         const InstructionCost ScalarizationCost =
+-            IsLegalToScalarize() ? getUniformMemOpCost(&I, VF)
+-                                 : InstructionCost::getInvalid();
++            foldTailByMasking() ? InstructionCost::getInvalid()
++                                : getUniformMemOpCost(&I, VF);
+ 
+         // Choose better solution for the current VF,  Note that Invalid
+         // costs compare as maximumal large.  If both are invalid, we get
+diff --git a/llvm/test/Transforms/LoopVectorize/predicatedinst-loop-invariant.ll b/llvm/test/Transforms/LoopVectorize/predicatedinst-loop-invariant.ll
+index f26d0ddf66ddf..7a88ff1c92295 100644
+--- a/llvm/test/Transforms/LoopVectorize/predicatedinst-loop-invariant.ll
++++ b/llvm/test/Transforms/LoopVectorize/predicatedinst-loop-invariant.ll
+@@ -22,33 +22,39 @@ define void @loop_invariant_store(ptr %p, i64 %a, i8 %b) {
+ ; CHECK-NEXT:    [[TMP4:%.*]] = icmp ule <4 x i32> [[VEC_IND]], splat (i32 8)
+ ; CHECK-NEXT:    [[TMP5:%.*]] = icmp slt <4 x i32> [[VEC_IND]], splat (i32 2)
+ ; CHECK-NEXT:    [[PREDPHI:%.*]] = select <4 x i1> [[TMP5]], <4 x i32> [[TMP3]], <4 x i32> [[TMP2]]
+-; CHECK-NEXT:    [[TMP7:%.*]] = shl <4 x i32> [[PREDPHI]], splat (i32 8)
+-; CHECK-NEXT:    [[TMP8:%.*]] = trunc <4 x i32> [[TMP7]] to <4 x i8>
+ ; CHECK-NEXT:    [[TMP16:%.*]] = extractelement <4 x i1> [[TMP4]], i64 0
+ ; CHECK-NEXT:    br i1 [[TMP16]], label %[[PRED_STORE_IF:.*]], label %[[PRED_STORE_CONTINUE:.*]]
+ ; CHECK:       [[PRED_STORE_IF]]:
+-; CHECK-NEXT:    [[TMP17:%.*]] = extractelement <4 x i8> [[TMP8]], i64 0
++; CHECK-NEXT:    [[TMP7:%.*]] = extractelement <4 x i32> [[PREDPHI]], i64 0
++; CHECK-NEXT:    [[TMP8:%.*]] = shl i32 [[TMP7]], 8
++; CHECK-NEXT:    [[TMP17:%.*]] = trunc i32 [[TMP8]] to i8
+ ; CHECK-NEXT:    store i8 [[TMP17]], ptr [[P]], align 1
+ ; CHECK-NEXT:    br label %[[PRED_STORE_CONTINUE]]
+ ; CHECK:       [[PRED_STORE_CONTINUE]]:
+ ; CHECK-NEXT:    [[TMP11:%.*]] = extractelement <4 x i1> [[TMP4]], i64 1
+ ; CHECK-NEXT:    br i1 [[TMP11]], label %[[PRED_STORE_IF3:.*]], label %[[PRED_STORE_CONTINUE4:.*]]
+ ; CHECK:       [[PRED_STORE_IF3]]:
+-; CHECK-NEXT:    [[TMP12:%.*]] = extractelement <4 x i8> [[TMP8]], i64 1
++; CHECK-NEXT:    [[TMP18:%.*]] = extractelement <4 x i32> [[PREDPHI]], i64 1
++; CHECK-NEXT:    [[TMP21:%.*]] = shl i32 [[TMP18]], 8
++; CHECK-NEXT:    [[TMP12:%.*]] = trunc i32 [[TMP21]] to i8
+ ; CHECK-NEXT:    store i8 [[TMP12]], ptr [[P]], align 1
+ ; CHECK-NEXT:    br label %[[PRED_STORE_CONTINUE4]]
+ ; CHECK:       [[PRED_STORE_CONTINUE4]]:
+ ; CHECK-NEXT:    [[TMP13:%.*]] = extractelement <4 x i1> [[TMP4]], i64 2
+ ; CHECK-NEXT:    br i1 [[TMP13]], label %[[PRED_STORE_IF5:.*]], label %[[PRED_STORE_CONTINUE6:.*]]
+ ; CHECK:       [[PRED_STORE_IF5]]:
+-; CHECK-NEXT:    [[TMP14:%.*]] = extractelement <4 x i8> [[TMP8]], i64 2
++; CHECK-NEXT:    [[TMP22:%.*]] = extractelement <4 x i32> [[PREDPHI]], i64 2
++; CHECK-NEXT:    [[TMP23:%.*]] = shl i32 [[TMP22]], 8
++; CHECK-NEXT:    [[TMP14:%.*]] = trunc i32 [[TMP23]] to i8
+ ; CHECK-NEXT:    store i8 [[TMP14]], ptr [[P]], align 1
+ ; CHECK-NEXT:    br label %[[PRED_STORE_CONTINUE6]]
+ ; CHECK:       [[PRED_STORE_CONTINUE6]]:
+ ; CHECK-NEXT:    [[TMP15:%.*]] = extractelement <4 x i1> [[TMP4]], i64 3
+ ; CHECK-NEXT:    br i1 [[TMP15]], label %[[PRED_STORE_IF7:.*]], label %[[PRED_STORE_CONTINUE8]]
+ ; CHECK:       [[PRED_STORE_IF7]]:
+-; CHECK-NEXT:    [[TMP9:%.*]] = extractelement <4 x i8> [[TMP8]], i64 3
++; CHECK-NEXT:    [[TMP19:%.*]] = extractelement <4 x i32> [[PREDPHI]], i64 3
++; CHECK-NEXT:    [[TMP20:%.*]] = shl i32 [[TMP19]], 8
++; CHECK-NEXT:    [[TMP9:%.*]] = trunc i32 [[TMP20]] to i8
+ ; CHECK-NEXT:    store i8 [[TMP9]], ptr [[P]], align 1
+ ; CHECK-NEXT:    br label %[[PRED_STORE_CONTINUE8]]
+ ; CHECK:       [[PRED_STORE_CONTINUE8]]:
