@@ -204,7 +204,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.an = sext i32 %i.ai to i64                   ; 5 uses
-  %wide.trip.count = zext nneg i32 %i.ag to i64   ; 4 uses
+  %wide.trip.count = zext nneg i32 %i.ag to i64   ; 2 uses
   %xtraiter172 = and i64 %wide.trip.count, 3      ; 3 uses
   %i.ao = icmp ult i32 %i.ag, 4
   br i1 %i.ao, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
@@ -266,11 +266,11 @@ bb.a:
   %i.bf = getelementptr inbounds nuw i8, ptr %i.c, i64 56 ; 2 uses
   %i.bg = sext i32 %i.ac to i64                   ; 2 uses
   %i.bh = zext nneg i32 %i.ag to i64
-  %wide.trip.count151 = zext nneg i32 %i.ag to i64
+  %wide.trip.count151 = zext nneg i32 %i.ag to i64 ; 3 uses
   %wide.trip.count156 = zext nneg i32 %i.ag to i64
-  %xtraiter178 = and i64 %wide.trip.count, 3      ; 3 uses
+  %xtraiter178 = and i64 %wide.trip.count151, 3   ; 3 uses
   %i.bi = icmp ult i32 %i.ag, 4
-  %unroll_iter182 = and i64 %wide.trip.count, 2147483644
+  %unroll_iter182 = and i64 %wide.trip.count151, 2147483644
   %lcmp.mod180.not = icmp eq i64 %xtraiter178, 0
   %lcmp.mod181 = icmp ne i64 %xtraiter178, 0
   %invariant.op = sub i32 1, %i.aa
