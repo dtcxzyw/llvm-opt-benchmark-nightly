@@ -205,8 +205,8 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResulthNtNtNtB4_3num5error15TryFromIntEr
   %i.am = trunc nuw i32 %i.al to i8
   %i.an = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.aj
   store i8 %i.am, ptr %i.an, align 1, !alias.scope !2329, !noalias !2330
-  %i.ao = add nuw i64 %.sroa.01.028.i, 2          ; 2 uses
-  %.not.i = icmp ult i64 %i.ao, %2
+  %i.ao = add nuw nsw i64 %.sroa.01.028.i, 2      ; 2 uses
+  %.not.i = icmp samesign ult i64 %i.ao, %2
   br i1 %.not.i, label %.lr.ph.i, label %.loopexit
 
 bb.h:                                             ; preds = %bb.a

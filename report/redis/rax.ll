@@ -202,10 +202,10 @@ define dso_local void @raxRecursiveShow(i32 noundef %0, i32 noundef %1, ptr noun
 bb.a:
   br label %tailrecurse
 
-tailrecurse:                                      ; preds = %._crit_edge48.loopexit, %bb.a
-  %.tr = phi i32 [ %0, %bb.a ], [ %i.am, %._crit_edge48.loopexit ] ; 2 uses
-  %.tr67 = phi i32 [ %1, %bb.a ], [ %.0, %._crit_edge48.loopexit ] ; 2 uses
-  %.tr68 = phi ptr [ %2, %bb.a ], [ %.0.copyload, %._crit_edge48.loopexit ] ; 5 uses
+tailrecurse:                                      ; preds = %.lr.ph47.split.preheader, %bb.a
+  %.tr = phi i32 [ %0, %bb.a ], [ %i.am, %.lr.ph47.split.preheader ] ; 2 uses
+  %.tr67 = phi i32 [ %1, %bb.a ], [ %.0, %.lr.ph47.split.preheader ] ; 2 uses
+  %.tr68 = phi ptr [ %2, %bb.a ], [ %.0.copyload, %.lr.ph47.split.preheader ] ; 5 uses
   %i.a = load i32, ptr %.tr68, align 4            ; 2 uses
   %i.b = and i32 %i.a, 4
   %.not = icmp eq i32 %i.b, 0                     ; 2 uses
@@ -284,7 +284,12 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 .lr.ph47:                                         ; preds = %bb.f
   %.not50 = icmp eq i32 %spec.select, 1
   %i.am = add nsw i32 %.tr, 1                     ; 3 uses
-  br i1 %.not50, label %._crit_edge48.loopexit, label %.lr.ph47.split.us
+  br i1 %.not50, label %.lr.ph47.split.preheader, label %.lr.ph47.split.us
+
+.lr.ph47.split.preheader:                         ; preds = %.lr.ph47
+  %3 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11) ; 0 uses
+  %.0.copyload = load ptr, ptr %i.al, align 8
+  br label %tailrecurse
 
 .lr.ph47.split.us:                                ; preds = %.lr.ph47
   %i.an = icmp sgt i32 %.0, 0
@@ -333,11 +338,6 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.us.us
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count58
   br i1 %exitcond.not, label %._crit_edge48, label %.lr.ph47.split.us.split, !llvm.loop !60
-
-._crit_edge48.loopexit:                           ; preds = %.lr.ph47
-  %3 = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11) ; 0 uses
-  %.0.copyload = load ptr, ptr %i.al, align 8
-  br label %tailrecurse
 
 ._crit_edge48:                                    ; preds = %.lr.ph47.split.us.split, %._crit_edge.us.us, %bb.f
   ret void
@@ -515,11 +515,6 @@ bb.c:                                             ; preds = %.lr.ph.split.us
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !62
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %.0.copyload = load ptr, ptr %i.u, align 8
-  %1 = add i64 %accumulator.tr, %.024
-  br label %tailrecurse
-
 ._crit_edge:                                      ; preds = %bb.c, %raxGetData.exit
   %.125.lcssa = phi i64 [ %.024, %raxGetData.exit ], [ %i.ad, %bb.c ]
   %accumulator.ret.tr = add i64 %accumulator.tr, %.125.lcssa
@@ -528,6 +523,11 @@ bb.c:                                             ; preds = %.lr.ph.split.us
 .split.us:                                        ; preds = %.lr.ph.split.us
   tail call void @exit(i32 noundef 1) #30
   unreachable
+
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  %.0.copyload = load ptr, ptr %i.u, align 8
+  %1 = add i64 %accumulator.tr, %.024
+  br label %tailrecurse
 }
 
 ; Function Attrs: nofree noreturn nounwind

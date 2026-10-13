@@ -205,6 +205,7 @@ vector.body.preheader:                            ; preds = %vector.body.prehead
 .lr.ph70.preheader:                               ; preds = %middle.block
   %i.cl = zext i32 %i.ai to i64
   %i.cm = sub nuw i32 %1, %i.ai
+  %wide.trip.count86 = zext i32 %i.cm to i64
   %invariant.gep = getelementptr inbounds nuw i8, ptr %0, i64 %i.cl
   br label %.lr.ph70
 
@@ -229,8 +230,7 @@ vector.body.preheader:                            ; preds = %vector.body.prehead
   %i.cy = icmp ugt i16 %i.cx, 324
   %i.cz = zext i1 %i.cy to i32
   %i.da = or i32 %.168, %i.cz                     ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next84 to i32
-  %exitcond86.not = icmp eq i32 %i.cm, %lftr.wideiv
+  %exitcond86.not = icmp eq i64 %indvars.iv.next84, %wide.trip.count86
   br i1 %exitcond86.not, label %._crit_edge, label %.lr.ph70, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %.lr.ph70, %middle.block

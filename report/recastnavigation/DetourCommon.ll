@@ -204,7 +204,27 @@ _ZL11projectPolyPKfS0_iRfS1_.exit.loopexit.us:    ; preds = %.lr.ph.i.us
   %i.be = load float, ptr %i.ba, align 4, !tbaa !12
   %i.bf = fsub float %i.b, %i.be
   %i.bg = fneg float %i.bf                        ; 4 uses
-  br i1 %i.h, label %_ZL11projectPolyPKfS0_iRfS1_.exit.us126, label %_ZL11projectPolyPKfS0_iRfS1_.exit
+  br i1 %i.h, label %_ZL11projectPolyPKfS0_iRfS1_.exit.us126, label %_ZL11projectPolyPKfS0_iRfS1_.exit.preheader
+
+_ZL11projectPolyPKfS0_iRfS1_.exit.preheader:      ; preds = %.lr.ph.split
+  %4 = insertelement <2 x float> poison, float %i.d, i64 0
+  %5 = insertelement <2 x float> %4, float %i.g, i64 1
+  %6 = insertelement <2 x float> poison, float %i.bg, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fmul <2 x float> %5, %7
+  %9 = insertelement <2 x float> poison, float %i.bd, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = insertelement <2 x float> poison, float %i.b, i64 0
+  %12 = insertelement <2 x float> %11, float %i.e, i64 1
+  %13 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %12, <2 x float> %8) ; 2 uses
+  %14 = extractelement <2 x float> %13, i64 0     ; 2 uses
+  %15 = fadd float %14, f0x38D1B717
+  %16 = extractelement <2 x float> %13, i64 1     ; 2 uses
+  %17 = fcmp ule float %15, %16
+  %18 = fadd float %14, f0xB8D1B717
+  %19 = fcmp uge float %18, %16
+  %not..i = and i1 %19, %17
+  br i1 %not..i, label %.critedge, label %.loopexit
 
 _ZL11projectPolyPKfS0_iRfS1_.exit.us126:          ; preds = %.lr.ph.split
   %i.bh = fmul float %i.g, %i.bg
@@ -240,27 +260,7 @@ _ZL11projectPolyPKfS0_iRfS1_.exit64.loopexit.us137: ; preds = %.lr.ph.i59.us130
   %not..i.us143 = and i1 %i.by, %i.bw
   br i1 %not..i.us143, label %.lr.ph148, label %.loopexit
 
-_ZL11projectPolyPKfS0_iRfS1_.exit:                ; preds = %.lr.ph.split
-  %4 = insertelement <2 x float> poison, float %i.d, i64 0
-  %5 = insertelement <2 x float> %4, float %i.g, i64 1
-  %6 = insertelement <2 x float> poison, float %i.bg, i64 0
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
-  %8 = fmul <2 x float> %5, %7
-  %9 = insertelement <2 x float> poison, float %i.bd, i64 0
-  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
-  %11 = insertelement <2 x float> poison, float %i.b, i64 0
-  %12 = insertelement <2 x float> %11, float %i.e, i64 1
-  %13 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %12, <2 x float> %8) ; 2 uses
-  %14 = extractelement <2 x float> %13, i64 0     ; 2 uses
-  %15 = fadd float %14, f0x38D1B717
-  %16 = extractelement <2 x float> %13, i64 1     ; 2 uses
-  %17 = fcmp ule float %15, %16
-  %18 = fadd float %14, f0xB8D1B717
-  %19 = fcmp uge float %18, %16
-  %not..i = and i1 %19, %17
-  br i1 %not..i, label %.critedge, label %.loopexit
-
-.critedge:                                        ; preds = %bb.b, %_ZL11projectPolyPKfS0_iRfS1_.exit, %bb.a
+.critedge:                                        ; preds = %bb.b, %_ZL11projectPolyPKfS0_iRfS1_.exit.preheader, %bb.a
   %.not49145 = icmp slt i32 %3, 1
   br i1 %.not49145, label %.loopexit, label %.lr.ph148
 
@@ -358,8 +358,8 @@ _ZL11projectPolyPKfS0_iRfS1_.exit80:              ; preds = %.lr.ph.i75, %_ZL11p
   %or.cond.not = select i1 %not..i81, i1 %exitcond177.not, i1 false
   br i1 %or.cond.not, label %bb.c, label %.loopexit
 
-.loopexit:                                        ; preds = %_ZL11projectPolyPKfS0_iRfS1_.exit64.us, %_ZL11projectPolyPKfS0_iRfS1_.exit80, %_ZL11projectPolyPKfS0_iRfS1_.exit, %_ZL11projectPolyPKfS0_iRfS1_.exit64.loopexit.us137, %.critedge
-  %.6 = phi i1 [ %not..i81, %_ZL11projectPolyPKfS0_iRfS1_.exit80 ], [ false, %_ZL11projectPolyPKfS0_iRfS1_.exit64.loopexit.us137 ], [ true, %.critedge ], [ false, %_ZL11projectPolyPKfS0_iRfS1_.exit ], [ false, %_ZL11projectPolyPKfS0_iRfS1_.exit64.us ]
+.loopexit:                                        ; preds = %_ZL11projectPolyPKfS0_iRfS1_.exit64.us, %_ZL11projectPolyPKfS0_iRfS1_.exit80, %_ZL11projectPolyPKfS0_iRfS1_.exit.preheader, %_ZL11projectPolyPKfS0_iRfS1_.exit64.loopexit.us137, %.critedge
+  %.6 = phi i1 [ %not..i81, %_ZL11projectPolyPKfS0_iRfS1_.exit80 ], [ false, %_ZL11projectPolyPKfS0_iRfS1_.exit64.loopexit.us137 ], [ true, %.critedge ], [ false, %_ZL11projectPolyPKfS0_iRfS1_.exit.preheader ], [ false, %_ZL11projectPolyPKfS0_iRfS1_.exit64.us ]
   ret i1 %.6
 }
 

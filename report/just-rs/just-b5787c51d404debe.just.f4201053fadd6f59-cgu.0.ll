@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ak
   %.sroa.0.092152 = phi i64 [ %1, %.lr.ph ], [ %i.an, %bb.ak ] ; 3 uses
   %.sroa.8.0151 = phi i64 [ 0, %.lr.ph ], [ %i.ao, %bb.ak ] ; 2 uses
   %i.an = add nuw i64 %.sroa.0.092152, 1
-  %i.ao = add i64 %.sroa.8.0151, 1                ; 2 uses
+  %i.ao = add nuw i64 %.sroa.8.0151, 1            ; 2 uses
   %i.ap = and i64 %.sroa.8.0151, 1023
   %i.aq = icmp eq i64 %i.ap, 0
   br i1 %i.aq, label %bb.w, label %bb.y
@@ -214,7 +214,7 @@ bb.c:                                             ; preds = %.lr.ph155, %_RNvXs_
   %.sroa.071.0154 = phi i64 [ %4, %.lr.ph155 ], [ %i.ar, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_3ops5range5RangejEENtNtNtB8_6traits8iterator8Iterator4nextCskXtk6F4WjxZ_4just.exit ] ; 2 uses
   %.sroa.873.0153 = phi i64 [ 0, %.lr.ph155 ], [ %i.as, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_3ops5range5RangejEENtNtNtB8_6traits8iterator8Iterator4nextCskXtk6F4WjxZ_4just.exit ] ; 2 uses
   %i.ar = add nuw i64 %.sroa.071.0154, 1
-  %i.as = add i64 %.sroa.873.0153, 1              ; 2 uses
+  %i.as = add nuw i64 %.sroa.873.0153, 1          ; 2 uses
   %i.at = and i64 %.sroa.873.0153, 1023
   %i.au = icmp eq i64 %i.at, 0
   br i1 %i.au, label %bb.h, label %bb.j
@@ -617,7 +617,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ak
   %.sroa.0.089149 = phi i64 [ %1, %.lr.ph ], [ %i.an, %bb.ak ] ; 3 uses
   %.sroa.8.0148 = phi i64 [ 0, %.lr.ph ], [ %i.ao, %bb.ak ] ; 2 uses
   %i.an = add nuw i64 %.sroa.0.089149, 1
-  %i.ao = add i64 %.sroa.8.0148, 1                ; 2 uses
+  %i.ao = add nuw i64 %.sroa.8.0148, 1            ; 2 uses
   %i.ap = and i64 %.sroa.8.0148, 1023
   %i.aq = icmp eq i64 %i.ap, 0
   br i1 %i.aq, label %bb.w, label %bb.y
@@ -626,7 +626,7 @@ bb.c:                                             ; preds = %.lr.ph152, %_RNvXs_
   %.sroa.068.0151 = phi i64 [ %4, %.lr.ph152 ], [ %i.ar, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_3ops5range5RangejEENtNtNtB8_6traits8iterator8Iterator4nextCskXtk6F4WjxZ_4just.exit ] ; 2 uses
   %.sroa.870.0150 = phi i64 [ 0, %.lr.ph152 ], [ %i.as, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_3ops5range5RangejEENtNtNtB8_6traits8iterator8Iterator4nextCskXtk6F4WjxZ_4just.exit ] ; 2 uses
   %i.ar = add nuw i64 %.sroa.068.0151, 1
-  %i.as = add i64 %.sroa.870.0150, 1              ; 2 uses
+  %i.as = add nuw i64 %.sroa.870.0150, 1          ; 2 uses
   %i.at = and i64 %.sroa.870.0150, 1023
   %i.au = icmp eq i64 %i.at, 0
   br i1 %i.au, label %bb.h, label %bb.j
@@ -1029,7 +1029,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.au
   %.sroa.0.097154 = phi i64 [ %1, %.lr.ph ], [ %i.an, %bb.au ] ; 5 uses
   %.sroa.8.0153 = phi i64 [ 0, %.lr.ph ], [ %i.ao, %bb.au ] ; 2 uses
   %i.an = add nuw i64 %.sroa.0.097154, 1
-  %i.ao = add i64 %.sroa.8.0153, 1                ; 2 uses
+  %i.ao = add nuw i64 %.sroa.8.0153, 1            ; 2 uses
   %i.ap = and i64 %.sroa.8.0153, 1023
   %i.aq = icmp eq i64 %i.ap, 0
   br i1 %i.aq, label %bb.ac, label %bb.ae
@@ -1038,7 +1038,7 @@ bb.c:                                             ; preds = %.lr.ph157, %_RNvXs_
   %.sroa.076.0156 = phi i64 [ %4, %.lr.ph157 ], [ %i.ar, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_3ops5range5RangejEENtNtNtB8_6traits8iterator8Iterator4nextCskXtk6F4WjxZ_4just.exit ] ; 6 uses
   %.sroa.878.0155 = phi i64 [ 0, %.lr.ph157 ], [ %i.as, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_3ops5range5RangejEENtNtNtB8_6traits8iterator8Iterator4nextCskXtk6F4WjxZ_4just.exit ] ; 2 uses
   %i.ar = add nuw i64 %.sroa.076.0156, 1
-  %i.as = add i64 %.sroa.878.0155, 1              ; 2 uses
+  %i.as = add nuw i64 %.sroa.878.0155, 1          ; 2 uses
   %i.at = and i64 %.sroa.878.0155, 1023
   %i.au = icmp eq i64 %i.at, 0
   br i1 %i.au, label %bb.h, label %bb.j

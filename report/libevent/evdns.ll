@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not73, label %bb.k, label %.sink.split
 
 .sink.split:                                      ; preds = %.lr.ph
-  %i.ao = trunc nuw i64 %indvars.iv to i32
+  %i.ao = trunc nuw nsw i64 %indvars.iv to i32
   %i.ap = lshr i64 %indvars.iv, 3
   %i.aq = and i64 %i.ap, 536870911
   %i.ar = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.aq
@@ -222,7 +222,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split, %.lr.ph
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.i
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !30
 

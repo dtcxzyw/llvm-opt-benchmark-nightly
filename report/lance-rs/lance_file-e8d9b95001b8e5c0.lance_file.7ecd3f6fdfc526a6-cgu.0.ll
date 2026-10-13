@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0B2S_.exit.i: ; preds = %bb.f, %bb.e
   %.sroa.0.1 = phi i64 [ %i.ae, %bb.f ], [ %.sroa.0.0, %bb.e ] ; 3 uses
-  %i.af = add nuw i64 %i.h, 1                     ; 2 uses
+  %i.af = add nuw nsw i64 %i.h, 1                 ; 2 uses
   %exitcond = icmp eq i64 %i.af, %i.d
   br i1 %exitcond, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericBinaryTypexEE11count_nullsxE0E0E0EB3A_.exit, label %bb.b
 
@@ -363,7 +363,7 @@ bb.f:                                             ; preds = %bb.d
 
 _RNCINvNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRSxuNCINvNvB1e_8for_each4callTjB21_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB2K_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0B2S_.exit.i: ; preds = %bb.f, %bb.e
   %.sroa.0.1 = phi i64 [ %i.ae, %bb.f ], [ %.sroa.0.0, %bb.e ] ; 3 uses
-  %i.af = add nuw i64 %i.h, 1                     ; 2 uses
+  %i.af = add nuw nsw i64 %i.h, 1                 ; 2 uses
   %exitcond = icmp eq i64 %i.af, %i.d
   br i1 %exitcond, label %_RINvYINtNtNtCscI6d9CVNmLh_4core5slice4iter7WindowsxENtNtNtNtBa_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBU_8adapters9enumerateINtB1J_9EnumeratepEBO_4fold9enumerateRSxuNCINvNvBO_8for_each4callTjB2K_ENCINvMs0_NtNtNtNtCsaSXGKSfiU2E_10lance_file8versions2v18encoding6binaryINtB3s_13BinaryDecoderINtNtCs4ytUTZt2Gw9_11arrow_array5types17GenericStringTypexEE11count_nullsxE0E0E0EB3A_.exit, label %bb.b
 

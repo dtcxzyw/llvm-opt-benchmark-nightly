@@ -205,7 +205,7 @@ ic_strlen.exit79.lr.ph.split:                     ; preds = %ic_strlen.exit79.lr
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 1
   br label %bb.m
 
-bb.m:                                             ; preds = %ic_strlen.exit79.us127, %.lr.ph.us130.preheader
+bb.m:                                             ; preds = %.lr.ph.us130.preheader, %ic_strlen.exit79.us127
   %.053114.us129172 = phi i64 [ %.4.ph.us136, %ic_strlen.exit79.us127 ], [ 0, %.lr.ph.us130.preheader ] ; 4 uses
   %.052115.us128171 = phi i64 [ %i.bf, %ic_strlen.exit79.us127 ], [ 0, %.lr.ph.us130.preheader ] ; 4 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 %.052115.us128171

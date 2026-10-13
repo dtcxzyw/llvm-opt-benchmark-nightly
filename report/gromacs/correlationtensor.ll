@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.d
 
 _ZNSt6vectorIN3gmx20CorrelationBlockDataESaIS1_EE12emplace_backIJRidEEERS1_DpOT_.exit: ; preds = %bb.f, %.noexc13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  %i.o = shl i32 %.01115, 1
+  %i.o = shl nuw i32 %.01115, 1
   %i.p = add nuw nsw i32 %.016, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.p, %2
   br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !98
