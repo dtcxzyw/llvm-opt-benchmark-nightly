@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZSt4copyIPN6duckdb14OrderModifiersES2_ET0_T_S4_S3_.exit
 
 _ZSt4copyIPN6duckdb14OrderModifiersES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m, %bb.n
-  %i.af = load ptr, ptr %1, align 8, !tbaa !38    ; 2 uses
+  %i.af = load ptr, ptr %1, align 8, !tbaa !38    ; 3 uses
   %i.ag = load ptr, ptr %i.v, align 8, !tbaa !40  ; 6 uses
   %i.ah = load ptr, ptr %0, align 8, !tbaa !38
   %i.ai = ptrtoint ptr %i.ag to i64               ; 2 uses
@@ -217,16 +217,17 @@ _ZSt4copyIPN6duckdb14OrderModifiersES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN6duckdb14OrderModifiersESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZSt4copyIPN6duckdb14OrderModifiersES2_ET0_T_S4_S3_.exit
-  %i.an = ptrtoaddr ptr %i.af to i64              ; 2 uses
-  %i.ao = ptrtoaddr ptr %i.am to i64
-  %i.ap = add i64 %i.ao, %i.aj
+  %i.an = ptrtoaddr ptr %i.am to i64
+  %i.ao = ptrtoaddr ptr %i.af to i64
+  %i.ap = add i64 %i.an, %i.aj
   %i.aq = add i64 %i.ap, -2
-  %i.ar = add i64 %i.ai, %i.an
+  %i.ar = add i64 %i.ai, %i.ao
   %i.as = sub i64 %i.aq, %i.ar                    ; 3 uses
   %i.at = lshr i64 %i.as, 1
   %i.au = add nuw i64 %i.at, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.as, 6
-  %i.av = sub i64 %i.an, %i.aj
+  %2 = ptrtoaddr ptr %i.af to i64
+  %i.av = sub i64 %2, %i.aj
   %diff.check = icmp ugt i64 %i.av, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check

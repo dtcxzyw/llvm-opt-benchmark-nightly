@@ -46,20 +46,20 @@ bb.a:
   br i1 %.not, label %bb.b, label %iter.check
 
 iter.check:                                       ; preds = %.preheader62, %._crit_edge
-  %.0.lcssa89 = phi ptr [ %.05365, %._crit_edge ], [ %4, %.preheader62 ] ; 15 uses
+  %.0.lcssa89 = phi ptr [ %.05365, %._crit_edge ], [ %4, %.preheader62 ] ; 16 uses
   %.051.lcssa88 = phi ptr [ %i.m, %._crit_edge ], [ %0, %.preheader62 ] ; 8 uses
-  %.053.lcssa87 = phi ptr [ %i.n, %._crit_edge ], [ %1, %.preheader62 ] ; 18 uses
+  %.053.lcssa87 = phi ptr [ %i.n, %._crit_edge ], [ %1, %.preheader62 ] ; 19 uses
   %.055.lcssa86 = phi i64 [ %i.l, %._crit_edge ], [ %2, %.preheader62 ] ; 14 uses
-  %.053.lcssa8794 = ptrtoaddr ptr %.053.lcssa87 to i64 ; 3 uses
-  %.0.lcssa8996 = ptrtoaddr ptr %.0.lcssa89 to i64 ; 2 uses
   %min.iters.check = icmp ult i64 %.055.lcssa86, 4
   br i1 %min.iters.check, label %.preheader60.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %6 = ptrtoaddr ptr %.053.lcssa87 to i64         ; 2 uses
   %.051.lcssa8895 = ptrtoaddr ptr %.051.lcssa88 to i64
-  %i.p = sub i64 %.051.lcssa8895, %.053.lcssa8794
+  %i.p = sub i64 %.051.lcssa8895, %6
   %diff.check = icmp ugt i64 %i.p, -32
-  %i.q = sub i64 %.0.lcssa8996, %.053.lcssa8794
+  %7 = ptrtoaddr ptr %.0.lcssa89 to i64
+  %i.q = sub i64 %7, %6
   %diff.check97 = icmp ugt i64 %i.q, -32
   %conflict.rdx = or i1 %diff.check, %diff.check97
   br i1 %conflict.rdx, label %.preheader60.preheader, label %vector.main.loop.iter.check
@@ -175,7 +175,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check124:                                    ; preds = %.preheader60.prol.loopexit, %.preheader60, %vec.epilog.middle.block
   %i.bp = sub nuw nsw i64 16, %.055.lcssa86       ; 2 uses
   %min.iters.check110 = icmp ugt i64 %.055.lcssa86, 8
-  %i.bq = sub i64 %.0.lcssa8996, %.053.lcssa8794
+  %8 = ptrtoaddr ptr %.053.lcssa87 to i64
+  %9 = ptrtoaddr ptr %.0.lcssa89 to i64
+  %i.bq = sub i64 %9, %8
   %diff.check109 = icmp ugt i64 %i.bq, -32
   %or.cond = select i1 %min.iters.check110, i1 true, i1 %diff.check109
   br i1 %or.cond, label %.lr.ph.preheader, label %vec.epilog.ph128
@@ -281,9 +283,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define void @CRYPTO_cbc128_decrypt(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, ptr nofree noundef captures(address) %4, ptr nofree noundef readonly captures(none) %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = ptrtoaddr ptr %4 to i64
-  %7 = alloca %union.anon, align 8                ; 14 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #2
+  %6 = alloca %union.anon, align 8                ; 14 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #2
   %i.a = icmp eq i64 %2, 0
   br i1 %i.a, label %.loopexit, label %bb.b
 
@@ -299,7 +300,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %.lr.ph114.preheader, label %iter.check
 
 .lr.ph114.preheader:                              ; preds = %.preheader99
-  %i.c = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   br label %.lr.ph114
 
@@ -337,9 +338,9 @@ bb.c:                                             ; preds = %._crit_edge
   %.178113 = phi ptr [ %i.ab, %.lr.ph114 ], [ %0, %.lr.ph114.preheader ] ; 4 uses
   %.182112 = phi ptr [ %i.ac, %.lr.ph114 ], [ %1, %.lr.ph114.preheader ] ; 3 uses
   %.187111 = phi i64 [ %i.aa, %.lr.ph114 ], [ %2, %.lr.ph114.preheader ]
-  call void %5(ptr noundef %.178113, ptr noundef nonnull %7, ptr noundef %3) #2
+  call void %5(ptr noundef %.178113, ptr noundef nonnull %6, ptr noundef %3) #2
   %i.q = load i64, ptr %.178113, align 1, !tbaa !9
-  %i.r = load i64, ptr %7, align 8, !tbaa !11
+  %i.r = load i64, ptr %6, align 8, !tbaa !11
   %i.s = load i64, ptr %4, align 1, !tbaa !9
   %i.t = xor i64 %i.s, %i.r
   store i64 %i.t, ptr %.182112, align 1, !tbaa !9
@@ -369,8 +370,7 @@ iter.check:                                       ; preds = %.preheader101, %.pr
   %.279146 = phi ptr [ %.279, %.loopexit100 ], [ %0, %.preheader99 ], [ %0, %.preheader101 ] ; 17 uses
   %.283145 = phi ptr [ %.283, %.loopexit100 ], [ %1, %.preheader99 ], [ %1, %.preheader101 ] ; 9 uses
   %.288144 = phi i64 [ %.288, %.loopexit100 ], [ %2, %.preheader99 ], [ %2, %.preheader101 ] ; 21 uses
-  %.279146207 = ptrtoaddr ptr %.279146 to i64
-  call void %5(ptr noundef %.279146, ptr noundef nonnull %7, ptr noundef %3) #2
+  call void %5(ptr noundef %.279146, ptr noundef nonnull %6, ptr noundef %3) #2
   %i.ae = sub nuw nsw i64 17, %.288144            ; 4 uses
   %min.iters.check = icmp ult i64 %.288144, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
@@ -379,7 +379,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %i.af = getelementptr i8, ptr %.283145, i64 %.288144 ; 3 uses
   %i.ag = getelementptr i8, ptr %4, i64 %.288144  ; 3 uses
   %i.ah = getelementptr i8, ptr %.279146, i64 %.288144 ; 2 uses
-  %i.ai = getelementptr i8, ptr %7, i64 %.288144  ; 2 uses
+  %i.ai = getelementptr i8, ptr %6, i64 %.288144  ; 2 uses
   %bound0 = icmp ult ptr %.283145, %i.ag
   %bound1 = icmp ult ptr %4, %i.af
   %found.conflict = and i1 %bound0, %bound1
@@ -388,7 +388,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %found.conflict177 = and i1 %bound0175, %bound1176
   %conflict.rdx = or i1 %found.conflict, %found.conflict177
   %bound0178 = icmp ult ptr %.283145, %i.ai
-  %bound1179 = icmp ult ptr %7, %i.af
+  %bound1179 = icmp ult ptr %6, %i.af
   %found.conflict180 = and i1 %bound0178, %bound1179
   %conflict.rdx181 = or i1 %conflict.rdx, %found.conflict180
   %bound0182 = icmp ult ptr %4, %i.ah
@@ -396,7 +396,7 @@ vector.memcheck:                                  ; preds = %iter.check
   %found.conflict184 = and i1 %bound0182, %bound1183
   %conflict.rdx185 = or i1 %conflict.rdx181, %found.conflict184
   %bound0186 = icmp ult ptr %4, %i.ai
-  %bound1187 = icmp ult ptr %7, %i.ag
+  %bound1187 = icmp ult ptr %6, %i.ag
   %found.conflict188 = and i1 %bound0186, %bound1187
   %conflict.rdx189 = or i1 %conflict.rdx185, %found.conflict188
   br i1 %conflict.rdx189, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -417,7 +417,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %wide.load = load <16 x i8>, ptr %i.al, align 1, !tbaa !11, !alias.scope !36
   %wide.load191 = load <16 x i8>, ptr %i.am, align 1, !tbaa !11, !alias.scope !36
-  %i.an = getelementptr inbounds nuw i8, ptr %7, i64 %index ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 %index ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %wide.load192 = load <16 x i8>, ptr %i.an, align 8, !tbaa !11, !alias.scope !37
   %wide.load193 = load <16 x i8>, ptr %i.ao, align 8, !tbaa !11, !alias.scope !37
@@ -456,7 +456,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %index197 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next201, %vec.epilog.vector.body ] ; 5 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.279146, i64 %index197
   %wide.load198 = load <4 x i8>, ptr %i.ax, align 1, !tbaa !11, !alias.scope !36
-  %i.ay = getelementptr inbounds nuw i8, ptr %7, i64 %index197
+  %i.ay = getelementptr inbounds nuw i8, ptr %6, i64 %index197
   %wide.load199 = load <4 x i8>, ptr %i.ay, align 4, !tbaa !11, !alias.scope !37
   %i.az = getelementptr inbounds nuw i8, ptr %4, i64 %index197 ; 2 uses
   %wide.load200 = load <4 x i8>, ptr %i.az, align 1, !tbaa !11, !alias.scope !38, !noalias !39
@@ -484,7 +484,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
   %i.bd = getelementptr inbounds nuw i8, ptr %.279146, i64 %.2118.ph
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !11
-  %i.bf = getelementptr inbounds nuw i8, ptr %7, i64 %.2118.ph
+  %i.bf = getelementptr inbounds nuw i8, ptr %6, i64 %.2118.ph
   %i.bg = load i8, ptr %i.bf, align 4, !tbaa !11
   %i.bh = getelementptr inbounds nuw i8, ptr %4, i64 %.2118.ph ; 2 uses
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !11
@@ -510,7 +510,9 @@ iter.check221:                                    ; preds = %iter.check221.loope
   %indvars.iv.lcssa = phi i64 [ %ind.escape202, %vec.epilog.middle.block ], [ %ind.escape, %middle.block ], [ %indvars.iv.ph, %vec.epilog.scalar.ph.prol.loopexit ], [ %indvars.iv.next, %iter.check221.loopexit.unr-lcssa ] ; 3 uses
   %i.bn = sub i64 16, %.288144                    ; 7 uses
   %min.iters.check208 = icmp ult i64 %i.bn, 8
-  %i.bo = sub i64 %.279146207, %6
+  %7 = ptrtoaddr ptr %4 to i64
+  %8 = ptrtoaddr ptr %.279146 to i64
+  %i.bo = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.bo, -32
   %or.cond = or i1 %min.iters.check208, %diff.check
   br i1 %or.cond, label %.lr.ph120.preheader, label %vector.main.loop.iter.check209
@@ -599,7 +601,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %.2118 = phi i64 [ %i.da, %vec.epilog.scalar.ph ], [ %.2118.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 6 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.279146, i64 %.2118
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !11
-  %i.cl = getelementptr inbounds nuw i8, ptr %7, i64 %.2118
+  %i.cl = getelementptr inbounds nuw i8, ptr %6, i64 %.2118
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !11
   %i.cn = getelementptr inbounds nuw i8, ptr %4, i64 %.2118 ; 2 uses
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !11
@@ -610,7 +612,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.cr = add nuw nsw i64 %.2118, 1               ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.279146, i64 %i.cr
   %i.ct = load i8, ptr %i.cs, align 1, !tbaa !11
-  %i.cu = getelementptr inbounds nuw i8, ptr %7, i64 %i.cr
+  %i.cu = getelementptr inbounds nuw i8, ptr %6, i64 %i.cr
   %i.cv = load i8, ptr %i.cu, align 1, !tbaa !11
   %i.cw = getelementptr inbounds nuw i8, ptr %4, i64 %i.cr ; 2 uses
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !11
@@ -649,7 +651,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond128.not.3, label %.loopexit, label %.lr.ph120, !llvm.loop !35
 
 .loopexit:                                        ; preds = %.lr.ph120.prol.loopexit, %.lr.ph120, %middle.block218, %vec.epilog.middle.block231, %.loopexit100, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #2
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #2
   ret void
 }
 

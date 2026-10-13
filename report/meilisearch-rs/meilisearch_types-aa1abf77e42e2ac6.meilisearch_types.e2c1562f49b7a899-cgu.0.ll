@@ -205,7 +205,6 @@ bb.c:                                             ; preds = %bb.b
   %i.t = phi i64 [ %i.p, %bb.b ], [ %.pre.i.i.i, %.noexc ] ; 8 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !alias.scope !17355, !noalias !17352, !nonnull !21, !noundef !21 ; 8 uses
-  %1 = ptrtoaddr ptr %i.v to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17356)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17357)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17358)
@@ -218,6 +217,7 @@ iter.check103:                                    ; preds = %"_ZN5alloc3vec16Vec
   br i1 %min.iters.check88, label %.lr.ph.i.i.i.i.i.i.i.preheader, label %vector.memcheck86
 
 vector.memcheck86:                                ; preds = %iter.check103
+  %1 = ptrtoaddr ptr %i.v to i64
   %i.w = add i64 %i.t, %1
   %i.x = sub i64 %i.m, %i.w
   %diff.check87 = icmp ugt i64 %i.x, -32
@@ -428,11 +428,11 @@ bb.e:                                             ; preds = %.lr.ph, %"_ZN94_$LT
   br i1 %i.ci, label %bb.f, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i, !prof !17381
 
 _ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i: ; preds = %.loopexit.i, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hbf76a5d5bdfeabd6E.exit26.thread.i"
-  %.val.i.i.i.i.i.i41 = phi ptr [ %.val.i.i.i.i.i.i, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hbf76a5d5bdfeabd6E.exit26.thread.i" ], [ %.val.i, %.loopexit.i ] ; 7 uses
+  %.val.i.i.i.i.i.i41 = phi ptr [ %.val.i.i.i.i.i.i, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hbf76a5d5bdfeabd6E.exit26.thread.i" ], [ %.val.i, %.loopexit.i ] ; 8 uses
   %i.cj = phi i64 [ %i.ee, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hbf76a5d5bdfeabd6E.exit26.thread.i" ], [ %.val8.i, %.loopexit.i ] ; 4 uses
   %i.ck = phi i64 [ %i.ch, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hbf76a5d5bdfeabd6E.exit26.thread.i" ], [ %i.cd, %.loopexit.i ]
   %.pre-phi39 = phi i64 [ %.pre-phi, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hbf76a5d5bdfeabd6E.exit26.thread.i" ], [ 0, %.loopexit.i ] ; 4 uses
-  %.val.i.i.i.i.i.i4174 = ptrtoaddr ptr %.val.i.i.i.i.i.i41 to i64 ; 2 uses
+  %.val.i.i.i.i.i.i4174 = ptrtoaddr ptr %.val.i.i.i.i.i.i41 to i64
   %i.cl = icmp eq ptr %.val4.pre.i, %.val.i.i.i.i.i.i41
   br i1 %i.cl, label %.loopexit, label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i.i.i.i.i"
 
@@ -452,7 +452,6 @@ bb.f:                                             ; preds = %"_ZN63_$LT$alloc..a
   unreachable
 
 iter.check:                                       ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i.i.i.i.i.i"
-  %2 = ptrtoaddr ptr %i.cm to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17383)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17384)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17385)
@@ -461,7 +460,9 @@ iter.check:                                       ; preds = %"_ZN63_$LT$alloc..a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17388)
   %i.co = sub i64 %i.ce, %.val.i.i.i.i.i.i4174    ; 7 uses
   %min.iters.check = icmp ult i64 %i.co, 4
-  %i.cp = sub i64 %.val.i.i.i.i.i.i4174, %2
+  %2 = ptrtoaddr ptr %i.cm to i64
+  %3 = ptrtoaddr ptr %.val.i.i.i.i.i.i41 to i64
+  %i.cp = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.cp, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check

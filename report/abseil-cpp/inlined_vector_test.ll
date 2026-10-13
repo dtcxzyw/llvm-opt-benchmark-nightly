@@ -205,7 +205,6 @@ bb.c:                                             ; preds = %bb.b
 _ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterISaIiELb0EE8AllocateERS3_m.exit.i: ; preds = %bb.b
   %i.q = shl nuw nsw i64 %.sroa.speculated.i, 2
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #41 ; 6 uses
-  %4 = ptrtoaddr ptr %i.r to i64
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.i ; 6 uses
   %.not.i.i = icmp eq i64 %3, 0
   br i1 %.not.i.i, label %_ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIiEE9ConstructINS1_20IteratorValueAdapterIS3_St24_Fwd_list_const_iteratorIiEEEEEvPiRT_m.exit, label %.lr.ph.i.i.preheader
@@ -327,7 +326,6 @@ middle.block133:                                  ; preds = %vector.body127
 
 _ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIiEE9ConstructINS1_20IteratorValueAdapterIS3_St13move_iteratorIPiEEEEEvS8_RT_m.exit: ; preds = %.lr.ph.i.i47, %middle.block133, %_ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIiEE9ConstructINS1_20IteratorValueAdapterIS3_St24_Fwd_list_const_iteratorIiEEEEEvPiRT_m.exit
   %.sroa.086.0 = phi ptr [ %.sink2.i, %_ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIiEE9ConstructINS1_20IteratorValueAdapterIS3_St24_Fwd_list_const_iteratorIiEEEEEvPiRT_m.exit ], [ %i.aw, %middle.block133 ], [ %i.bf, %.lr.ph.i.i47 ] ; 5 uses
-  %.sroa.086.0138 = ptrtoaddr ptr %.sroa.086.0 to i64
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.k ; 6 uses
   %i.bi = sub i64 %.sink1.i, %i.j                 ; 4 uses
   %.not.i = icmp eq i64 %.sink1.i, %i.j
@@ -338,9 +336,11 @@ _ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIiEE9
   br i1 %min.iters.check141, label %.lr.ph.i.preheader154, label %vector.memcheck137
 
 vector.memcheck137:                               ; preds = %.lr.ph.i.preheader
+  %4 = ptrtoaddr ptr %i.r to i64
   %i.bj = shl i64 %i.k, 2
+  %5 = ptrtoaddr ptr %.sroa.086.0 to i64
   %i.bk = add i64 %i.bj, %4
-  %i.bl = sub i64 %.sroa.086.0138, %i.bk
+  %i.bl = sub i64 %5, %i.bk
   %diff.check139 = icmp ugt i64 %i.bl, -32
   br i1 %diff.check139, label %.lr.ph.i.preheader154, label %vector.ph142
 
@@ -743,7 +743,6 @@ bb.c:                                             ; preds = %bb.b
 _ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterISaISt4pairIiiEELb0EE8AllocateERS5_m.exit.i: ; preds = %bb.b
   %i.q = shl nuw nsw i64 %.sroa.speculated.i, 3
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #41 ; 6 uses
-  %5 = ptrtoaddr ptr %i.r to i64
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.i ; 4 uses
   %.not.i.i = icmp eq i64 %4, 0
   br i1 %.not.i.i, label %_ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaISt4pairIiiEEE9ConstructINS1_20IteratorValueAdapterIS5_NS0_13base_internal23Cpp20ForwardZipIteratorISt24_Fwd_list_const_iteratorIiEEEEEEEvPS4_RT_m.exit, label %.lr.ph.i.i.preheader
@@ -859,7 +858,6 @@ middle.block134:                                  ; preds = %vector.body128
 
 _ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaISt4pairIiiEEE9ConstructINS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvSA_RT_m.exit: ; preds = %.lr.ph.i.i45, %middle.block134, %_ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaISt4pairIiiEEE9ConstructINS1_20IteratorValueAdapterIS5_NS0_13base_internal23Cpp20ForwardZipIteratorISt24_Fwd_list_const_iteratorIiEEEEEEEvPS4_RT_m.exit
   %.sroa.082.1 = phi ptr [ %.sink2.i, %_ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaISt4pairIiiEEE9ConstructINS1_20IteratorValueAdapterIS5_NS0_13base_internal23Cpp20ForwardZipIteratorISt24_Fwd_list_const_iteratorIiEEEEEEEvPS4_RT_m.exit ], [ %i.av, %middle.block134 ], [ %i.bd, %.lr.ph.i.i45 ] ; 5 uses
-  %.sroa.082.1139 = ptrtoaddr ptr %.sroa.082.1 to i64
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.k ; 6 uses
   %i.bg = sub i64 %.sink1.i, %i.j                 ; 4 uses
   %.not.i = icmp eq i64 %.sink1.i, %i.j
@@ -870,9 +868,11 @@ _ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaISt4p
   br i1 %min.iters.check142, label %.lr.ph.i.preheader155, label %vector.memcheck138
 
 vector.memcheck138:                               ; preds = %.lr.ph.i.preheader
+  %5 = ptrtoaddr ptr %i.r to i64
   %i.bh = shl i64 %i.k, 3
+  %6 = ptrtoaddr ptr %.sroa.082.1 to i64
   %i.bi = add i64 %i.bh, %5
-  %i.bj = sub i64 %.sroa.082.1139, %i.bi
+  %i.bj = sub i64 %6, %i.bi
   %diff.check140 = icmp ugt i64 %i.bj, -32
   br i1 %diff.check140, label %.lr.ph.i.preheader155, label %vector.ph143
 
@@ -1275,7 +1275,6 @@ _ZN7testing8internal11MatcherBaseIRKN4absl12lts_2026052613InlinedVectorIiLm2ESaI
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052623inlined_vector_internal7StorageIiLm2ESaIiEE6AssignINS1_20IteratorValueAdapterIS3_PKiEEEEvT_m(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 noundef %2) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = ptrtoaddr ptr %1 to i64
   %i.a = load i64, ptr %0, align 8, !tbaa !197, !noalias !4727 ; 3 uses
   %i.b = trunc i64 %i.a to i1                     ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -1283,7 +1282,6 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = load i64, ptr %i.e, align 8, !noalias !4727
   %.sink2.i = select i1 %i.b, ptr %i.d, ptr %i.c  ; 8 uses
-  %.sink2.i87 = ptrtoaddr ptr %.sink2.i to i64
   %.sink.i = select i1 %i.b, i64 %i.f, i64 4      ; 2 uses
   %i.g = icmp ugt i64 %2, %.sink.i
   br i1 %i.g, label %bb.b, label %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEE8AllocateEm.exit
@@ -1321,7 +1319,9 @@ _ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEE8Al
 
 .lr.ph.i.preheader:                               ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIiEE8AllocateEm.exit
   %min.iters.check = icmp samesign ult i64 %.sroa.743.0, 8
-  %i.n = sub i64 %3, %.sink2.i87
+  %3 = ptrtoaddr ptr %.sink2.i to i64
+  %4 = ptrtoaddr ptr %1 to i64
+  %i.n = sub i64 %4, %3
   %diff.check = icmp ugt i64 %i.n, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader109, label %vector.ph
@@ -1417,9 +1417,9 @@ _ZN4absl12lts_2026052623inlined_vector_internal14AssignElementsISaIiENS1_20Itera
   %.sroa.10.06979 = phi i64 [ 0, %_ZN4absl12lts_2026052623inlined_vector_internal14AssignElementsISaIiENS1_20IteratorValueAdapterIS3_PKiEEEEvNSt16allocator_traitsIT_E7pointerERT0_NSA_9size_typeE.exit ], [ %.sroa.speculated.i, %_ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterISaIiELb0EE8AllocateERS3_m.exit.i ]
   %.sroa.044.07077 = phi ptr [ null, %_ZN4absl12lts_2026052623inlined_vector_internal14AssignElementsISaIiENS1_20IteratorValueAdapterIS3_PKiEEEEvNSt16allocator_traitsIT_E7pointerERT0_NSA_9size_typeE.exit ], [ %i.l, %_ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterISaIiELb0EE8AllocateERS3_m.exit.i ] ; 2 uses
   %min.iters.check95 = icmp ult i64 %.sroa.741.06782, 8
-  %.sroa.059.08392 = ptrtoaddr ptr %.sroa.059.083 to i64
-  %.sroa.040.0688191 = ptrtoaddr ptr %.sroa.040.06881 to i64
-  %i.at = sub i64 %.sroa.059.08392, %.sroa.040.0688191
+  %.sroa.059.08392 = ptrtoaddr ptr %.sroa.040.06881 to i64
+  %.sroa.040.0688191 = ptrtoaddr ptr %.sroa.059.083 to i64
+  %i.at = sub i64 %.sroa.040.0688191, %.sroa.059.08392
   %diff.check93 = icmp ugt i64 %i.at, -32
   %or.cond108 = select i1 %min.iters.check95, i1 true, i1 %diff.check93
   br i1 %or.cond108, label %scalar.ph94.preheader, label %vector.ph96
@@ -1822,10 +1822,8 @@ _ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterINS0_18container_i
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterINS0_18container_internal17CountingAllocatorIiEELb0EE8AllocateERS5_m.exit, %bb.b
-  %storemerge = phi ptr [ %i.f, %bb.b ], [ %i.q, %_ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterINS0_18container_internal17CountingAllocatorIiEELb0EE8AllocateERS5_m.exit ] ; 7 uses
-  %.0 = phi ptr [ %i.e, %bb.b ], [ %i.j, %_ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterINS0_18container_internal17CountingAllocatorIiEELb0EE8AllocateERS5_m.exit ] ; 13 uses
-  %.014 = ptrtoaddr ptr %.0 to i64                ; 2 uses
-  %storemerge15 = ptrtoaddr ptr %storemerge to i64 ; 2 uses
+  %storemerge = phi ptr [ %i.f, %bb.b ], [ %i.q, %_ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterINS0_18container_internal17CountingAllocatorIiEELb0EE8AllocateERS5_m.exit ] ; 8 uses
+  %.0 = phi ptr [ %i.e, %bb.b ], [ %i.j, %_ZN4absl12lts_2026052623inlined_vector_internal13MallocAdapterINS0_18container_internal17CountingAllocatorIiEELb0EE8AllocateERS5_m.exit ] ; 14 uses
   %.not.i = icmp eq i64 %i.c, 0
   br i1 %.not.i, label %_ZN4absl12lts_2026052623inlined_vector_internal17ConstructElementsINS0_18container_internal17CountingAllocatorIiEENS1_20IteratorValueAdapterIS5_PKiEEEEvRNS0_13type_identityIT_E4typeENSt16allocator_traitsISB_E7pointerERT0_NSG_9size_typeE.exit, label %.lr.ph.i
 
@@ -1837,7 +1835,9 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20260
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i
   %min.iters.check21 = icmp ult i64 %i.b, 16
-  %i.t = sub i64 %storemerge15, %.014
+  %2 = ptrtoaddr ptr %.0 to i64
+  %3 = ptrtoaddr ptr %storemerge to i64
+  %i.t = sub i64 %3, %2
   %diff.check19 = icmp ugt i64 %i.t, -32
   %or.cond = select i1 %min.iters.check21, i1 true, i1 %diff.check19
   br i1 %or.cond, label %.lr.ph.split.us.i.preheader35, label %vector.ph22
@@ -1923,7 +1923,9 @@ middle.block30:                                   ; preds = %vector.body24
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
   %.promoted14.i = load i64, ptr %i.s, align 8, !tbaa !197
   %min.iters.check = icmp ult i64 %i.b, 16
-  %i.az = sub i64 %storemerge15, %.014
+  %4 = ptrtoaddr ptr %.0 to i64
+  %5 = ptrtoaddr ptr %storemerge to i64
+  %i.az = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.az, -32
   %or.cond34 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond34, label %scalar.ph.preheader, label %vector.ph
@@ -2326,8 +2328,7 @@ bb.fb:                                            ; preds = %_ZN7testing15Assert
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.fb, %bb.ez
-  %i.ma = phi ptr [ %i.ik, %bb.ez ], [ %spec.select.i, %bb.fb ] ; 7 uses
-  %121 = ptrtoaddr ptr %i.ma to i64               ; 2 uses
+  %i.ma = phi ptr [ %i.ik, %bb.ez ], [ %spec.select.i, %bb.fb ] ; 8 uses
   %i.mb = lshr i64 %.fr.i, 1                      ; 13 uses
   %i.mc = icmp ugt i64 %.fr.i, 9
   br i1 %i.mc, label %bb.fc, label %bb.ff
@@ -2361,7 +2362,6 @@ _ZNSt16allocator_traitsISaIiEE8allocateERS0_mPKv.exit.i.i.i.i: ; preds = %bb.fc
           to label %.noexc727 unwind label %bb.fg ; 9 uses
 
 .noexc727:                                        ; preds = %_ZNSt16allocator_traitsISaIiEE8allocateERS0_mPKv.exit.i.i.i.i
-  %122 = ptrtoaddr ptr %i.mg to i64
   %i.mh = load ptr, ptr %49, align 8, !tbaa !617  ; 3 uses
   %.not.i.i.i.i723 = icmp eq ptr %i.mh, null
   br i1 %.not.i.i.i.i723, label %.lr.ph.i.i, label %bb.fe
@@ -2393,8 +2393,9 @@ bb.ff:                                            ; preds = %.thread.i
   %.010.i1021 = phi ptr [ %i.mg, %.lr.ph.i.i ], [ %i.mk, %bb.ff ] ; 7 uses
   %i.mp = phi i64 [ %i.mo, %.lr.ph.i.i ], [ 0, %bb.ff ] ; 3 uses
   %min.iters.check1031 = icmp ult i64 %.fr.i, 16
-  %.010.i10211028 = ptrtoaddr ptr %.010.i1021 to i64
-  %i.mq = sub i64 %121, %.010.i10211028
+  %121 = ptrtoaddr ptr %.010.i1021 to i64
+  %.010.i10211028 = ptrtoaddr ptr %i.ma to i64
+  %i.mq = sub i64 %.010.i10211028, %121
   %diff.check1029 = icmp ugt i64 %i.mq, -32
   %or.cond = select i1 %min.iters.check1031, i1 true, i1 %diff.check1029
   br i1 %or.cond, label %.lr.ph.split.us.i.i720.preheader1082, label %vector.ph1032
@@ -2480,7 +2481,9 @@ middle.block1040:                                 ; preds = %vector.body1034
 .lr.ph.split.i.i715:                              ; preds = %.lr.ph.i.i
   %.promoted14.i.i716 = load i64, ptr %.pre815, align 8, !tbaa !197
   %min.iters.check = icmp ult i64 %.fr.i, 16
-  %i.nw = sub i64 %121, %122
+  %122 = ptrtoaddr ptr %i.mg to i64
+  %123 = ptrtoaddr ptr %i.ma to i64
+  %i.nw = sub i64 %123, %122
   %diff.check = icmp ugt i64 %i.nw, -32
   %or.cond1077 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond1077, label %scalar.ph.preheader, label %vector.ph
@@ -2883,8 +2886,7 @@ bb.iy:                                            ; preds = %_ZN7testing15Assert
   br label %.thread.i468
 
 .thread.i468:                                     ; preds = %bb.iy, %bb.iw
-  %i.wy = phi ptr [ %i.st, %bb.iw ], [ %spec.select.i467, %bb.iy ] ; 7 uses
-  %123 = ptrtoaddr ptr %i.wy to i64               ; 2 uses
+  %i.wy = phi ptr [ %i.st, %bb.iw ], [ %spec.select.i467, %bb.iy ] ; 8 uses
   %i.wz = lshr i64 %.fr.i466, 1                   ; 13 uses
   %i.xa = icmp ugt i64 %.fr.i466, 9
   br i1 %i.xa, label %bb.iz, label %bb.jc
@@ -2918,7 +2920,6 @@ _ZNSt16allocator_traitsISaIiEE8allocateERS0_mPKv.exit.i.i.i.i761: ; preds = %bb.
           to label %.noexc768 unwind label %bb.jd ; 9 uses
 
 .noexc768:                                        ; preds = %_ZNSt16allocator_traitsISaIiEE8allocateERS0_mPKv.exit.i.i.i.i761
-  %124 = ptrtoaddr ptr %i.xe to i64
   %i.xf = load ptr, ptr %76, align 8, !tbaa !617  ; 3 uses
   %.not.i.i.i.i762 = icmp eq ptr %i.xf, null
   br i1 %.not.i.i.i.i762, label %.lr.ph.i.i749, label %bb.jb
@@ -2950,8 +2951,9 @@ bb.jc:                                            ; preds = %.thread.i468
   %.010.i7501024 = phi ptr [ %i.xe, %.lr.ph.i.i749 ], [ %i.xi, %bb.jc ] ; 7 uses
   %i.xn = phi i64 [ %i.xm, %.lr.ph.i.i749 ], [ 0, %bb.jc ] ; 3 uses
   %min.iters.check1064 = icmp ult i64 %.fr.i466, 16
-  %.010.i75010241061 = ptrtoaddr ptr %.010.i7501024 to i64
-  %i.xo = sub i64 %123, %.010.i75010241061
+  %124 = ptrtoaddr ptr %.010.i7501024 to i64
+  %.010.i75010241061 = ptrtoaddr ptr %i.wy to i64
+  %i.xo = sub i64 %.010.i75010241061, %124
   %diff.check1062 = icmp ugt i64 %i.xo, -32
   %or.cond1078 = select i1 %min.iters.check1064, i1 true, i1 %diff.check1062
   br i1 %or.cond1078, label %.lr.ph.split.us.i.i757.preheader1080, label %vector.ph1065
@@ -3037,7 +3039,9 @@ middle.block1073:                                 ; preds = %vector.body1067
 .lr.ph.split.i.i752:                              ; preds = %.lr.ph.i.i749
   %.promoted14.i.i753 = load i64, ptr %.pre819, align 8, !tbaa !197
   %min.iters.check1047 = icmp ult i64 %.fr.i466, 16
-  %i.yu = sub i64 %123, %124
+  %125 = ptrtoaddr ptr %i.xe to i64
+  %126 = ptrtoaddr ptr %i.wy to i64
+  %i.yu = sub i64 %126, %125
   %diff.check1045 = icmp ugt i64 %i.yu, -32
   %or.cond1079 = select i1 %min.iters.check1047, i1 true, i1 %diff.check1045
   br i1 %or.cond1079, label %scalar.ph1046.preheader, label %vector.ph1048
@@ -3440,8 +3444,7 @@ define linkonce_odr dso_local void @_ZN4absl12lts_2026052623inlined_vector_inter
 bb.a:
   %1 = alloca %"class.absl::lts_20260526::inlined_vector_internal::AllocationTransaction.1147", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !198  ; 8 uses
-  %2 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !198  ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.d = load i64, ptr %i.c, align 8, !tbaa !197  ; 6 uses
   %i.e = lshr i64 %i.d, 1                         ; 15 uses
@@ -3514,8 +3517,7 @@ bb.h:                                             ; preds = %bb.b
 .lr.ph.i:                                         ; preds = %bb.f, %bb.h
   %i.s = phi i64 [ 0, %bb.h ], [ %i.e, %bb.f ]    ; 4 uses
   %i.t = phi ptr [ null, %bb.h ], [ %i.n, %bb.f ] ; 4 uses
-  %.01936 = phi ptr [ %i.a, %bb.h ], [ %i.n, %bb.f ] ; 13 uses
-  %.0193650 = ptrtoaddr ptr %.01936 to i64        ; 2 uses
+  %.01936 = phi ptr [ %i.a, %bb.h ], [ %i.n, %bb.f ] ; 14 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !618  ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.v, null
@@ -3523,7 +3525,9 @@ bb.h:                                             ; preds = %bb.b
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i
   %min.iters.check56 = icmp ult i64 %i.d, 16
-  %i.w = sub i64 %2, %.0193650
+  %2 = ptrtoaddr ptr %.01936 to i64
+  %3 = ptrtoaddr ptr %i.b to i64
+  %i.w = sub i64 %3, %2
   %diff.check54 = icmp ugt i64 %i.w, -32
   %or.cond = select i1 %min.iters.check56, i1 true, i1 %diff.check54
   br i1 %or.cond, label %.lr.ph.split.us.i.preheader70, label %vector.ph57
@@ -3609,7 +3613,9 @@ middle.block65:                                   ; preds = %vector.body59
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
   %.promoted14.i = load i64, ptr %i.v, align 8, !tbaa !197
   %min.iters.check = icmp ult i64 %i.d, 16
-  %i.bc = sub i64 %2, %.0193650
+  %4 = ptrtoaddr ptr %.01936 to i64
+  %5 = ptrtoaddr ptr %i.b to i64
+  %i.bc = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.bc, -32
   %or.cond69 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond69, label %scalar.ph.preheader, label %vector.ph
@@ -4012,9 +4018,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.d
   %i.i = icmp ugt i64 %i.b, %i.e                  ; 2 uses
   %spec.select.i = select i1 %i.i, ptr %0, ptr %1 ; 4 uses
-  %spec.select.i56 = ptrtoaddr ptr %spec.select.i to i64
   %spec.select23.i = select i1 %i.i, ptr %1, ptr %0 ; 3 uses
-  %spec.select23.i55 = ptrtoaddr ptr %spec.select23.i to i64
   %i.j = getelementptr inbounds nuw i8, ptr %spec.select23.i, i64 16
   %i.k = load i64, ptr %i.j, align 8, !tbaa !197
   %i.l = lshr i64 %i.k, 1                         ; 10 uses
@@ -4104,7 +4108,9 @@ _ZN4absl12lts_2026052623inlined_vector_internal7StorageIiLm4ENS0_18container_int
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !618
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ao, null
   %min.iters.check74 = icmp ult i64 %i.p, 8
-  %i.ap = sub i64 %spec.select.i56, %spec.select23.i55
+  %3 = ptrtoaddr ptr %spec.select23.i to i64
+  %4 = ptrtoaddr ptr %spec.select.i to i64
+  %i.ap = sub i64 %4, %3
   %diff.check72 = icmp ugt i64 %i.ap, -32
   %or.cond121 = or i1 %min.iters.check74, %diff.check72 ; 2 uses
   br i1 %.not.i.i.i.i.i.i, label %.lr.ph.split.us.i.i.preheader, label %.lr.ph.split.i.i.preheader
@@ -4277,10 +4283,8 @@ middle.block83:                                   ; preds = %vector.body77
 
 .thread33:                                        ; preds = %bb.b, %bb.d
   %i.de = phi i64 [ %i.b, %bb.d ], [ %i.e, %bb.b ] ; 3 uses
-  %.032 = phi ptr [ %0, %bb.d ], [ %1, %bb.b ]    ; 6 uses
-  %.0 = phi ptr [ %1, %bb.d ], [ %0, %bb.b ]      ; 3 uses
-  %.088 = ptrtoaddr ptr %.0 to i64                ; 2 uses
-  %.03289 = ptrtoaddr ptr %.032 to i64            ; 2 uses
+  %.032 = phi ptr [ %0, %bb.d ], [ %1, %bb.b ]    ; 7 uses
+  %.0 = phi ptr [ %1, %bb.d ], [ %0, %bb.b ]      ; 4 uses
   %i.df = getelementptr inbounds nuw i8, ptr %.0, i64 24 ; 13 uses
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !198
   %i.dh = getelementptr inbounds nuw i8, ptr %.0, i64 32
@@ -4299,7 +4303,9 @@ middle.block83:                                   ; preds = %vector.body77
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i
   %min.iters.check108 = icmp ult i64 %i.de, 16
-  %i.do = sub i64 %.03289, %.088
+  %5 = ptrtoaddr ptr %.0 to i64
+  %6 = ptrtoaddr ptr %.032 to i64
+  %i.do = sub i64 %6, %5
   %diff.check106 = icmp ugt i64 %i.do, -32
   %or.cond122 = or i1 %min.iters.check108, %diff.check106
   br i1 %or.cond122, label %.lr.ph.split.us.i.preheader124, label %vector.ph109
@@ -4385,7 +4391,9 @@ middle.block117:                                  ; preds = %vector.body111
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
   %.promoted14.i = load i64, ptr %i.dn, align 8, !tbaa !197
   %min.iters.check92 = icmp ult i64 %i.de, 16
-  %i.eu = sub i64 %.03289, %.088
+  %7 = ptrtoaddr ptr %.0 to i64
+  %8 = ptrtoaddr ptr %.032 to i64
+  %i.eu = sub i64 %8, %7
   %diff.check90 = icmp ugt i64 %i.eu, -32
   %or.cond123 = or i1 %min.iters.check92, %diff.check90
   br i1 %or.cond123, label %scalar.ph91.preheader, label %vector.ph93
@@ -4788,10 +4796,9 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt16allocator_traitsISaIiEE8allocateERS0_mPKv.exit.i.i.i.i: ; preds = %bb.d
   %i.u = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #41
-          to label %.noexc13 unwind label %bb.g   ; 11 uses
+          to label %.noexc13 unwind label %bb.g   ; 12 uses
 
 .noexc13:                                         ; preds = %_ZNSt16allocator_traitsISaIiEE8allocateERS0_mPKv.exit.i.i.i.i
-  %3 = ptrtoaddr ptr %i.u to i64                  ; 2 uses
   %i.v = load ptr, ptr %0, align 8, !tbaa !617    ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.v, null
   br i1 %.not.i.i.i.i, label %bb.f, label %bb.e
@@ -4809,8 +4816,7 @@ bb.f:                                             ; preds = %bb.e, %.noexc13
   %i.z = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.s
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !642
-  %i.ab = load ptr, ptr %i.h, align 8, !tbaa !233 ; 11 uses
-  %4 = ptrtoaddr ptr %i.ab to i64                 ; 4 uses
+  %i.ab = load ptr, ptr %i.h, align 8, !tbaa !233 ; 12 uses
   %i.ac = load ptr, ptr %i.n, align 8, !tbaa !233 ; 5 uses
   %.not12.i.i = icmp eq ptr %i.ab, %i.ac
   br i1 %.not12.i.i, label %_ZSt22__uninitialized_move_aIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiN4absl12lts_2026052618container_internal17CountingAllocatorIiEEEEES2_S8_ET0_T_SC_SB_RT1_.exit, label %.lr.ph.i.i
@@ -4823,12 +4829,14 @@ bb.f:                                             ; preds = %bb.e, %.noexc13
 
 _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i.preheader: ; preds = %.lr.ph.i.i
   %i.af = ptrtoaddr ptr %i.ac to i64
+  %3 = ptrtoaddr ptr %i.ab to i64                 ; 2 uses
   %i.ag = add i64 %i.af, -4
-  %i.ah = sub i64 %i.ag, %4                       ; 2 uses
+  %i.ah = sub i64 %i.ag, %3                       ; 2 uses
   %i.ai = lshr i64 %i.ah, 2
   %i.aj = add nuw nsw i64 %i.ai, 1                ; 2 uses
   %min.iters.check39 = icmp ult i64 %i.ah, 44
-  %i.ak = sub i64 %4, %3
+  %4 = ptrtoaddr ptr %i.u to i64
+  %i.ak = sub i64 %3, %4
   %diff.check37 = icmp ugt i64 %i.ak, -32
   %or.cond = or i1 %min.iters.check39, %diff.check37
   br i1 %or.cond, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i.preheader54, label %vector.ph40
@@ -4877,12 +4885,14 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i
   %.promoted.i.i = load i64, ptr %i.ae, align 8, !tbaa !197 ; 2 uses
   %i.av = ptrtoaddr ptr %i.ac to i64
+  %5 = ptrtoaddr ptr %i.ab to i64                 ; 2 uses
   %i.aw = add i64 %i.av, -4
-  %i.ax = sub i64 %i.aw, %4                       ; 2 uses
+  %i.ax = sub i64 %i.aw, %5                       ; 2 uses
   %i.ay = lshr i64 %i.ax, 2
   %i.az = add nuw nsw i64 %i.ay, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ax, 28
-  %i.ba = sub i64 %4, %3
+  %6 = ptrtoaddr ptr %i.u to i64
+  %i.ba = sub i64 %5, %6
   %diff.check = icmp ugt i64 %i.ba, -16
   %or.cond53 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond53, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.i.i.preheader, label %vector.ph
@@ -5185,8 +5195,7 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_N4absl12lts_2026052618container_internal17CountingAllocatorIiEEET0_T_S7_S6_RT1_.exit
 
 _ZSt34__uninitialized_move_if_noexcept_aIPiS0_N4absl12lts_2026052618container_internal17CountingAllocatorIiEEET0_T_S7_S6_RT1_.exit: ; preds = %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i, %middle.block117, %._crit_edge.split.i.i, %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit, %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.thread
-  %.0.lcssa.i.i = phi ptr [ %i.q, %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit ], [ %.lcssa100, %._crit_edge.split.i.i ], [ %i.q, %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.thread ], [ %i.ac, %middle.block117 ], [ %i.bb, %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i ] ; 2 uses
-  %.0.lcssa.i.i121 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 2 uses
+  %.0.lcssa.i.i = phi ptr [ %i.q, %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit ], [ %.lcssa100, %._crit_edge.split.i.i ], [ %i.q, %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.thread ], [ %i.ac, %middle.block117 ], [ %i.bb, %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i ] ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 4 ; 10 uses
   %.not13.i.i28 = icmp eq ptr %1, %i.c
   br i1 %.not13.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_N4absl12lts_2026052618container_internal17CountingAllocatorIiEEET0_T_S7_S6_RT1_.exit43, label %.lr.ph.i.i29
@@ -5203,7 +5212,8 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
   br i1 %min.iters.check144, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i39.preheader158, label %vector.memcheck141
 
 vector.memcheck141:                               ; preds = %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i39.preheader
-  %i.bm = sub i64 %.0.lcssa.i.i121, %i.n
+  %2 = ptrtoaddr ptr %.0.lcssa.i.i to i64
+  %i.bm = sub i64 %2, %i.n
   %i.bn = add i64 %i.bm, 3
   %diff.check142 = icmp ult i64 %i.bn, 31
   br i1 %diff.check142, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.us.i.i39.preheader158, label %vector.ph145
@@ -5259,7 +5269,8 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
   br i1 %min.iters.check123, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.i.i33.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.i.i31
-  %i.cc = sub i64 %.0.lcssa.i.i121, %i.n
+  %3 = ptrtoaddr ptr %.0.lcssa.i.i to i64
+  %i.cc = sub i64 %3, %i.n
   %i.cd = add i64 %i.cc, 3
   %diff.check = icmp ult i64 %i.cd, 15
   br i1 %diff.check, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS7_.exit.i.i33.preheader, label %vector.ph124

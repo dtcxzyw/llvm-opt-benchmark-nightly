@@ -205,7 +205,6 @@ Abc_TtConst0.exit:                                ; preds = %.lr.ph.preheader.i4
 ; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @Dau_DsdToTruth_rec(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef captures(none) %4, i32 noundef %5) local_unnamed_addr #7 {
 bb.a:
-  %6 = ptrtoaddr ptr %4 to i64                    ; 2 uses
   %i.a = alloca [64 x i64], align 16              ; 7 uses
   %i.b = alloca [64 x i64], align 16              ; 7 uses
   %i.c = alloca [3 x [64 x i64]], align 16        ; 13 uses
@@ -250,9 +249,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.x, label %.lr.ph.preheader.i, label %Abc_TtCopy.exit
 
 .lr.ph.preheader.i:                               ; preds = %.preheader14.i
-  %7 = ptrtoaddr ptr %i.w to i64
   %wide.trip.count.i = zext nneg i32 %i.i to i64  ; 3 uses
   %min.iters.check295 = icmp ult i32 %i.i, 6
+  %6 = ptrtoaddr ptr %4 to i64
+  %7 = ptrtoaddr ptr %i.w to i64
   %i.y = sub i64 %7, %6
   %diff.check293 = icmp ugt i64 %i.y, -32
   %or.cond306 = select i1 %min.iters.check295, i1 true, i1 %diff.check293
@@ -288,10 +288,11 @@ vector.body298:                                   ; preds = %vector.body298, %ve
   br i1 %i.ag, label %Abc_TtCopy.exit, label %vector.body298, !llvm.loop !98
 
 .lr.ph18.preheader.i:                             ; preds = %.thread195
-  %8 = ptrtoaddr ptr %i.r to i64
   %wide.trip.count24.i = zext nneg i32 %i.i to i64 ; 3 uses
   %min.iters.check = icmp ult i32 %i.i, 8
-  %i.ah = sub i64 %8, %6
+  %8 = ptrtoaddr ptr %4 to i64
+  %9 = ptrtoaddr ptr %i.r to i64
+  %i.ah = sub i64 %9, %8
   %diff.check = icmp ugt i64 %i.ah, -32
   %or.cond307 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond307, label %.lr.ph18.i.preheader, label %vector.ph
@@ -694,7 +695,6 @@ declare noundef i32 @sprintf(ptr noalias noundef writeonly captures(none), ptr n
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i32 @Dau_DsdPerformReplace(ptr nofree noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef range(i32 -2147483551, -2147483648) %3, ptr nofree noundef nonnull readonly captures(none) %4) unnamed_addr #14 {
 bb.a:
-  %5 = ptrtoaddr ptr %0 to i64
   %i.a = icmp slt i32 %1, %2
   br i1 %i.a, label %.lr.ph37.preheader, label %._crit_edge
 
@@ -757,6 +757,7 @@ iter.check:                                       ; preds = %._crit_edge
   br i1 %min.iters.check, label %.lr.ph41.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %5 = ptrtoaddr ptr %0 to i64
   %i.s = add i64 %5, %i.q
   %i.t = add i64 %i.s, xor (i64 ptrtoaddr (ptr @Dau_DsdPerformReplace.pTemp to i64), i64 -1)
   %diff.check = icmp ult i64 %i.t, 31

@@ -204,19 +204,16 @@ bb.a:
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !47
   %i.u = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.h
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !48   ; 13 uses
-  %4 = ptrtoaddr ptr %i.v to i64
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 96
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !47
   %i.y = getelementptr inbounds [8 x i8], ptr %i.x, i64 %i.h
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !48   ; 7 uses
-  %5 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !71
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 96
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !47
   %i.ae = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %i.h
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !48 ; 23 uses
-  %6 = ptrtoaddr ptr %i.af to i64                 ; 2 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !48 ; 24 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 184
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !68 ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 120
@@ -619,9 +616,11 @@ bb.u:                                             ; preds = %.critedge.thread
   br i1 %min.iters.check265, label %.lr.ph170.preheader326, label %vector.memcheck262
 
 vector.memcheck262:                               ; preds = %.lr.ph170.preheader
+  %4 = ptrtoaddr ptr %i.af to i64
+  %5 = ptrtoaddr ptr %i.v to i64
   %i.vy = shl nsw i64 %i.vx, 3
-  %i.vz = add i64 %i.vy, %4
-  %i.wa = sub i64 %i.vz, %6
+  %i.vz = add i64 %i.vy, %5
+  %i.wa = sub i64 %i.vz, %4
   %diff.check263 = icmp ugt i64 %i.wa, -32
   br i1 %diff.check263, label %.lr.ph170.preheader326, label %vector.ph266
 
@@ -705,7 +704,9 @@ middle.block273:                                  ; preds = %vector.body268
 .lr.ph174.preheader:                              ; preds = %.loopexit
   %wide.trip.count197 = zext nneg i32 %i.wt to i64 ; 5 uses
   %min.iters.check312 = icmp ult i32 %i.wt, 8
-  %i.wv = sub i64 %6, %5
+  %6 = ptrtoaddr ptr %i.z to i64
+  %7 = ptrtoaddr ptr %i.af to i64
+  %i.wv = sub i64 %7, %6
   %diff.check310 = icmp ugt i64 %i.wv, -32
   %or.cond323 = select i1 %min.iters.check312, i1 true, i1 %diff.check310
   br i1 %or.cond323, label %.lr.ph174.preheader324, label %vector.ph313

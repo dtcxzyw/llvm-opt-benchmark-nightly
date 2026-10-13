@@ -204,7 +204,6 @@ _RNvMs_NtCs6i54tJFfzR_5alloc3vecINtB4_3VechE7reserveCs54uEYnqmHDA_13signal_crypt
   %i.z = phi i64 [ %i.v, %_RNvXs0_NtNtNtCsgxBkk5gSRhY_4core4iter6traits8iteratorQINtNtNtB9_8adapters5chain5ChainINtNtNtBb_5array4iter8IntoIterhKj1_EINtNtNtCs6i54tJFfzR_5alloc3vec9into_iter8IntoIterhEENtB5_8Iterator9size_hintCs54uEYnqmHDA_13signal_crypto.exit.thread.i ], [ %.pre.i, %bb.e ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !233, !noalias !234, !nonnull !4, !noundef !4 ; 9 uses
-  %2 = ptrtoaddr ptr %i.ab to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !239)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !240)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !241)
@@ -250,20 +249,22 @@ bb.h:                                             ; preds = %bb.g
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.an = load ptr, ptr %i.am, align 8, !alias.scope !253, !noalias !254, !nonnull !4, !noundef !4 ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %.promoted.i.i.i.i.i.i = load ptr, ptr %i.ao, align 8, !alias.scope !253, !noalias !254 ; 8 uses
-  %.promoted.i.i.i.i.i.i9 = ptrtoaddr ptr %.promoted.i.i.i.i.i.i to i64 ; 2 uses
+  %.promoted.i.i.i.i.i.i = load ptr, ptr %i.ao, align 8, !alias.scope !253, !noalias !254 ; 9 uses
   %.not6.i.i.i.i.i.i = icmp eq ptr %.promoted.i.i.i.i.i.i, %i.an
   br i1 %.not6.i.i.i.i.i.i, label %_RINvMsj_NtCs6i54tJFfzR_5alloc3vecINtB6_3VechE14extend_trustedQINtNtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chain5ChainINtNtNtB17_5array4iter8IntoIterhKj1_EINtNtB6_9into_iter8IntoIterhEEECs54uEYnqmHDA_13signal_crypto.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.h
+  %.promoted.i.i.i.i.i.i10 = ptrtoaddr ptr %.promoted.i.i.i.i.i.i to i64
   %i.ap = ptrtoaddr ptr %i.an to i64              ; 3 uses
-  %i.aq = sub i64 %i.ap, %.promoted.i.i.i.i.i.i9  ; 7 uses
+  %i.aq = sub i64 %i.ap, %.promoted.i.i.i.i.i.i10 ; 7 uses
   %min.iters.check = icmp ult i64 %i.aq, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %2 = ptrtoaddr ptr %i.ab to i64
+  %3 = ptrtoaddr ptr %.promoted.i.i.i.i.i.i to i64
   %i.ar = add i64 %.sroa.4.0.i.i.i.i, %2
-  %i.as = sub i64 %.promoted.i.i.i.i.i.i9, %i.ar
+  %i.as = sub i64 %3, %i.ar
   %diff.check = icmp ugt i64 %i.as, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 

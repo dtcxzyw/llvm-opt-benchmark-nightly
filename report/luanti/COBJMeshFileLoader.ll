@@ -205,8 +205,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nofree norecurse nounwind uwtable
 define noundef ptr @_ZN5scene18COBJMeshFileLoader8readVec3EPKcRN4core8vector3dIfEES2_(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef readonly captures(address, ret: address, provenance) %1, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(12) %2, ptr nofree noundef readnone captures(address) %3) local_unnamed_addr #9 align 2 {
 bb.a:
-  %i.a = alloca [256 x i8], align 16              ; 33 uses
-  %4 = ptrtoaddr ptr %i.a to i64                  ; 3 uses
+  %i.a = alloca [256 x i8], align 16              ; 35 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.b = ptrtoaddr ptr %3 to i64                  ; 6 uses
   %.not11.i.i = icmp eq ptr %1, %3
@@ -264,7 +263,6 @@ _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i: ; preds = %_ZN4core7is
 
 .preheader.i.i.preheader:                         ; preds = %.lr.ph.i.i.i, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i
   %.2.i.i.i94 = phi ptr [ %.2.i.i.i, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i ], [ %.118.i.i.i, %.lr.ph.i.i.i ] ; 10 uses
-  %.2.i.i.i94121 = ptrtoaddr ptr %.2.i.i.i94 to i64
   br label %.preheader.i.i
 
 bb.c:                                             ; preds = %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i
@@ -302,7 +300,9 @@ iter.check:                                       ; preds = %_ZN4core7isspaceEi.
   %.sroa.speculated.i.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 255)
   %wide.trip.count.i.i = zext nneg i32 %.sroa.speculated.i.i to i64 ; 12 uses
   %min.iters.check = icmp ult i32 %storemerge.i.i, 4
-  %i.p = sub i64 %.2.i.i.i94121, %4
+  %4 = ptrtoaddr ptr %i.a to i64
+  %5 = ptrtoaddr ptr %.2.i.i.i94 to i64
+  %i.p = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i9.i.preheader, label %vector.main.loop.iter.check
@@ -473,7 +473,6 @@ _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21: ; preds = %_ZN4core7
 
 .preheader.i.i24.preheader:                       ; preds = %.lr.ph.i.i.i18, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21
   %.2.i.i.i2298 = phi ptr [ %.2.i.i.i22, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21 ], [ %.118.i.i.i19, %.lr.ph.i.i.i18 ] ; 10 uses
-  %.2.i.i.i2298130 = ptrtoaddr ptr %.2.i.i.i2298 to i64
   br label %.preheader.i.i24
 
 bb.f:                                             ; preds = %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21
@@ -511,7 +510,9 @@ iter.check145:                                    ; preds = %_ZN4core7isspaceEi.
   %.sroa.speculated.i.i27 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i25, i32 255)
   %wide.trip.count.i.i30 = zext nneg i32 %.sroa.speculated.i.i27 to i64 ; 12 uses
   %min.iters.check132 = icmp ult i32 %storemerge.i.i25, 4
-  %i.bh = sub i64 %.2.i.i.i2298130, %4
+  %6 = ptrtoaddr ptr %i.a to i64
+  %7 = ptrtoaddr ptr %.2.i.i.i2298 to i64
+  %i.bh = sub i64 %7, %6
   %diff.check131 = icmp ugt i64 %i.bh, -32
   %or.cond187 = or i1 %min.iters.check132, %diff.check131
   br i1 %or.cond187, label %.lr.ph.i9.i31.preheader, label %vector.main.loop.iter.check133
@@ -682,7 +683,6 @@ _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51: ; preds = %_ZN4core7
 
 .preheader.i.i54.preheader:                       ; preds = %.lr.ph.i.i.i48, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51
   %.2.i.i.i52102 = phi ptr [ %.2.i.i.i52, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51 ], [ %.118.i.i.i49, %.lr.ph.i.i.i48 ] ; 10 uses
-  %.2.i.i.i52102159 = ptrtoaddr ptr %.2.i.i.i52102 to i64
   br label %.preheader.i.i54
 
 bb.i:                                             ; preds = %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51
@@ -720,7 +720,9 @@ iter.check174:                                    ; preds = %_ZN4core7isspaceEi.
   %.sroa.speculated.i.i57 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i55, i32 255)
   %wide.trip.count.i.i60 = zext nneg i32 %.sroa.speculated.i.i57 to i64 ; 12 uses
   %min.iters.check161 = icmp ult i32 %storemerge.i.i55, 4
-  %i.cz = sub i64 %.2.i.i.i52102159, %4
+  %8 = ptrtoaddr ptr %i.a to i64
+  %9 = ptrtoaddr ptr %.2.i.i.i52102 to i64
+  %i.cz = sub i64 %9, %8
   %diff.check160 = icmp ugt i64 %i.cz, -32
   %or.cond188 = or i1 %min.iters.check161, %diff.check160
   br i1 %or.cond188, label %.lr.ph.i9.i61.preheader, label %vector.main.loop.iter.check162
@@ -843,8 +845,7 @@ _ZN5scene18COBJMeshFileLoader17goAndCopyNextWordEPcPKcjS3_.exit70: ; preds = %bb
 ; Function Attrs: mustprogress nofree norecurse nounwind uwtable
 define noundef ptr @_ZN5scene18COBJMeshFileLoader6readUVEPKcRN4core8vector2dIfEES2_(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef readonly captures(address, ret: address, provenance) %1, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(8) %2, ptr nofree noundef readnone captures(address) %3) local_unnamed_addr #9 align 2 {
 bb.a:
-  %i.a = alloca [256 x i8], align 16              ; 23 uses
-  %4 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
+  %i.a = alloca [256 x i8], align 16              ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.b = ptrtoaddr ptr %3 to i64                  ; 4 uses
   %.not11.i.i = icmp eq ptr %1, %3
@@ -902,7 +903,6 @@ _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i: ; preds = %_ZN4core7is
 
 .preheader.i.i.preheader:                         ; preds = %.lr.ph.i.i.i, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i
   %.2.i.i.i55 = phi ptr [ %.2.i.i.i, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i ], [ %.118.i.i.i, %.lr.ph.i.i.i ] ; 10 uses
-  %.2.i.i.i5572 = ptrtoaddr ptr %.2.i.i.i55 to i64
   br label %.preheader.i.i
 
 bb.c:                                             ; preds = %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i
@@ -940,7 +940,9 @@ iter.check:                                       ; preds = %_ZN4core7isspaceEi.
   %.sroa.speculated.i.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 255)
   %wide.trip.count.i.i = zext nneg i32 %.sroa.speculated.i.i to i64 ; 12 uses
   %min.iters.check = icmp ult i32 %storemerge.i.i, 4
-  %i.p = sub i64 %.2.i.i.i5572, %4
+  %4 = ptrtoaddr ptr %i.a to i64
+  %5 = ptrtoaddr ptr %.2.i.i.i55 to i64
+  %i.p = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i9.i.preheader, label %vector.main.loop.iter.check
@@ -1110,7 +1112,6 @@ _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i18: ; preds = %_ZN4core7
 
 .preheader.i.i21.preheader:                       ; preds = %.lr.ph.i.i.i15, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i18
   %.2.i.i.i1959 = phi ptr [ %.2.i.i.i19, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i18 ], [ %.118.i.i.i16, %.lr.ph.i.i.i15 ] ; 10 uses
-  %.2.i.i.i195981 = ptrtoaddr ptr %.2.i.i.i1959 to i64
   br label %.preheader.i.i21
 
 bb.f:                                             ; preds = %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i18
@@ -1148,7 +1149,9 @@ iter.check96:                                     ; preds = %_ZN4core7isspaceEi.
   %.sroa.speculated.i.i24 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i22, i32 255)
   %wide.trip.count.i.i27 = zext nneg i32 %.sroa.speculated.i.i24 to i64 ; 12 uses
   %min.iters.check83 = icmp ult i32 %storemerge.i.i22, 4
-  %i.bg = sub i64 %.2.i.i.i195981, %4
+  %6 = ptrtoaddr ptr %i.a to i64
+  %7 = ptrtoaddr ptr %.2.i.i.i1959 to i64
+  %i.bg = sub i64 %7, %6
   %diff.check82 = icmp ugt i64 %i.bg, -32
   %or.cond109 = or i1 %min.iters.check83, %diff.check82
   br i1 %or.cond109, label %.lr.ph.i9.i28.preheader, label %vector.main.loop.iter.check84
@@ -1272,7 +1275,6 @@ _ZN5scene18COBJMeshFileLoader17goAndCopyNextWordEPcPKcjS3_.exit37: ; preds = %bb
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @_ZN5scene18COBJMeshFileLoader17goAndCopyNextWordEPcPKcjS3_(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(address, ret: address, provenance) %2, i32 noundef %3, ptr nofree noundef readnone captures(address) %4) local_unnamed_addr #10 align 2 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64
   %i.a = ptrtoaddr ptr %4 to i64                  ; 2 uses
   %.not11.i = icmp eq ptr %2, %4
   br i1 %.not11.i, label %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit, label %.lr.ph.preheader.i
@@ -1324,7 +1326,6 @@ bb.b:                                             ; preds = %.lr.ph.i.i, %.lr.ph
 
 _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit: ; preds = %_ZN4core7isspaceEi.exit.i, %.lr.ph.i.i, %bb.b, %bb.a
   %.2.i.i = phi ptr [ %2, %bb.a ], [ %scevgep29.i.i, %bb.b ], [ %.118.i.i, %.lr.ph.i.i ], [ %scevgep.i, %_ZN4core7isspaceEi.exit.i ] ; 11 uses
-  %.2.i.i23 = ptrtoaddr ptr %.2.i.i to i64
   %.not.i7 = icmp eq i32 %3, 0
   br i1 %.not.i7, label %_ZN5scene18COBJMeshFileLoader8copyWordEPcPKcjS3_.exit, label %bb.c
 
@@ -1368,7 +1369,9 @@ _ZN4core7isspaceEi.exit.thread.i:                 ; preds = %_ZN4core7isspaceEi.
 iter.check:                                       ; preds = %_ZN4core7isspaceEi.exit.thread.i
   %wide.trip.count.i = zext i32 %.sroa.speculated.i to i64 ; 12 uses
   %min.iters.check = icmp ult i32 %.sroa.speculated.i, 4
-  %i.p = sub i64 %.2.i.i23, %5
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = ptrtoaddr ptr %.2.i.i to i64
+  %i.p = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i9.preheader, label %vector.main.loop.iter.check
@@ -1771,8 +1774,6 @@ _ZN5scene18COBJMeshFileLoader11goFirstWordEPKcS2_b.exit: ; preds = %_ZN4core7iss
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef range(i32 0, -1) i32 @_ZN5scene18COBJMeshFileLoader8copyWordEPcPKcjS3_(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(address) %2, i32 noundef %3, ptr nofree noundef readnone captures(address) %4) local_unnamed_addr #10 align 2 {
 bb.a:
-  %5 = ptrtoaddr ptr %2 to i64
-  %6 = ptrtoaddr ptr %1 to i64
   %.not = icmp eq i32 %3, 0
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -1816,7 +1817,9 @@ _ZN4core7isspaceEi.exit.thread:                   ; preds = %.preheader, %.prehe
 iter.check:                                       ; preds = %_ZN4core7isspaceEi.exit.thread
   %wide.trip.count = zext i32 %.sroa.speculated to i64 ; 12 uses
   %min.iters.check = icmp ult i32 %.sroa.speculated, 4
-  %i.g = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = ptrtoaddr ptr %2 to i64
+  %i.g = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.g, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -2219,8 +2222,7 @@ bb.ab:                                            ; preds = %._crit_edge.thread,
 ; Function Attrs: mustprogress nofree norecurse nounwind uwtable
 define noundef ptr @_ZN5scene18COBJMeshFileLoader9readColorEPKcRN5video6SColorES2_(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef readonly captures(address, ret: address, provenance) %1, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %2, ptr nofree noundef readnone captures(address) %3) local_unnamed_addr #9 align 2 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 30 uses
-  %4 = ptrtoaddr ptr %i.a to i64                  ; 3 uses
+  %i.a = alloca [16 x i8], align 16               ; 32 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.b = ptrtoaddr ptr %3 to i64                  ; 6 uses
   %.not11.i.i = icmp eq ptr %1, %3
@@ -2278,7 +2280,6 @@ _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i: ; preds = %_ZN4core7is
 
 .preheader.i.i.preheader:                         ; preds = %.lr.ph.i.i.i, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i
   %.2.i.i.i94 = phi ptr [ %.2.i.i.i, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i ], [ %.118.i.i.i, %.lr.ph.i.i.i ] ; 9 uses
-  %.2.i.i.i94121 = ptrtoaddr ptr %.2.i.i.i94 to i64
   br label %.preheader.i.i
 
 bb.c:                                             ; preds = %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i
@@ -2316,7 +2317,9 @@ _ZN4core7isspaceEi.exit.thread.i.i:               ; preds = %_ZN4core7isspaceEi.
   %.sroa.speculated.i.i = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 15)
   %wide.trip.count.i.i = zext nneg i32 %.sroa.speculated.i.i to i64 ; 8 uses
   %min.iters.check = icmp ult i32 %storemerge.i.i, 8
-  %i.p = sub i64 %.2.i.i.i94121, %4
+  %4 = ptrtoaddr ptr %i.a to i64
+  %5 = ptrtoaddr ptr %.2.i.i.i94 to i64
+  %i.p = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.p, -8
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i9.i.preheader, label %vector.ph
@@ -2463,7 +2466,6 @@ _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21: ; preds = %_ZN4core7
 
 .preheader.i.i24.preheader:                       ; preds = %.lr.ph.i.i.i18, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21
   %.2.i.i.i2298 = phi ptr [ %.2.i.i.i22, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21 ], [ %.118.i.i.i19, %.lr.ph.i.i.i18 ] ; 9 uses
-  %.2.i.i.i2298123 = ptrtoaddr ptr %.2.i.i.i2298 to i64
   br label %.preheader.i.i24
 
 bb.f:                                             ; preds = %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i21
@@ -2501,7 +2503,9 @@ _ZN4core7isspaceEi.exit.thread.i.i26:             ; preds = %_ZN4core7isspaceEi.
   %.sroa.speculated.i.i27 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i25, i32 15)
   %wide.trip.count.i.i30 = zext nneg i32 %.sroa.speculated.i.i27 to i64 ; 8 uses
   %min.iters.check126 = icmp ult i32 %storemerge.i.i25, 8
-  %i.bj = sub i64 %.2.i.i.i2298123, %4
+  %6 = ptrtoaddr ptr %i.a to i64
+  %7 = ptrtoaddr ptr %.2.i.i.i2298 to i64
+  %i.bj = sub i64 %7, %6
   %diff.check124 = icmp ugt i64 %i.bj, -8
   %or.cond150 = or i1 %min.iters.check126, %diff.check124
   br i1 %or.cond150, label %.lr.ph.i9.i31.preheader, label %vector.ph127
@@ -2648,7 +2652,6 @@ _ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51: ; preds = %_ZN4core7
 
 .preheader.i.i54.preheader:                       ; preds = %.lr.ph.i.i.i48, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51
   %.2.i.i.i52102 = phi ptr [ %.2.i.i.i52, %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51 ], [ %.118.i.i.i49, %.lr.ph.i.i.i48 ] ; 9 uses
-  %.2.i.i.i52102137 = ptrtoaddr ptr %.2.i.i.i52102 to i64
   br label %.preheader.i.i54
 
 bb.i:                                             ; preds = %_ZN5scene18COBJMeshFileLoader10goNextWordEPKcS2_b.exit.i51
@@ -2686,7 +2689,9 @@ _ZN4core7isspaceEi.exit.thread.i.i56:             ; preds = %_ZN4core7isspaceEi.
   %.sroa.speculated.i.i57 = tail call i32 @llvm.umin.i32(i32 %storemerge.i.i55, i32 15)
   %wide.trip.count.i.i60 = zext nneg i32 %.sroa.speculated.i.i57 to i64 ; 8 uses
   %min.iters.check140 = icmp ult i32 %storemerge.i.i55, 8
-  %i.dd = sub i64 %.2.i.i.i52102137, %4
+  %8 = ptrtoaddr ptr %i.a to i64
+  %9 = ptrtoaddr ptr %.2.i.i.i52102 to i64
+  %i.dd = sub i64 %9, %8
   %diff.check138 = icmp ugt i64 %i.dd, -8
   %or.cond151 = or i1 %min.iters.check140, %diff.check138
   br i1 %or.cond151, label %.lr.ph.i9.i61.preheader, label %vector.ph141

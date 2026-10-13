@@ -205,7 +205,6 @@ Rtl_NtkCollectConcatRange.exit:                   ; preds = %.lr.ph, %bb.e, %bb.
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @Rtl_NtkInsertWireRange(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5) local_unnamed_addr #14 {
 bb.a:
-  %6 = ptrtoaddr ptr %4 to i64
   %i.a = getelementptr i8, ptr %0, i64 96
   %.val22 = load ptr, ptr %i.a, align 8, !tbaa !61
   %i.b = getelementptr i8, ptr %.val22, i64 216
@@ -246,6 +245,7 @@ bb.a:
 
 vector.memcheck:                                  ; preds = %.lr.ph
   %.val2133 = ptrtoaddr ptr %.val21 to i64
+  %6 = ptrtoaddr ptr %4 to i64
   %i.y = add nsw i64 %i.u, %i.v
   %i.z = shl nsw i64 %i.y, 2
   %i.aa = add i64 %i.z, %.val2133
@@ -343,7 +343,6 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @Rtl_NtkInsertSliceRange(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) local_unnamed_addr #14 {
 bb.a:
-  %4 = ptrtoaddr ptr %2 to i64
   %i.a = load i32, ptr %1, align 4, !tbaa !63
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !63   ; 2 uses
@@ -389,6 +388,7 @@ bb.a:
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %.val21.i6 = ptrtoaddr ptr %.val21.i to i64
+  %4 = ptrtoaddr ptr %2 to i64
   %i.ac = add nsw i64 %i.z, %i.aa
   %i.ad = shl nsw i64 %i.ac, 2
   %i.ae = add i64 %i.ad, %.val21.i6
@@ -514,7 +514,6 @@ bb.a:
 ; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @Rtl_NtkInsertSignalRange(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3) local_unnamed_addr #19 {
 bb.a:
-  %4 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %i.a = and i32 %1, 3
   switch i32 %i.a, label %.unreachabledefault [
     i32 0, label %bb.b
@@ -558,6 +557,7 @@ bb.b:                                             ; preds = %bb.a
 vector.memcheck41:                                ; preds = %.lr.ph.i
   %.val21.i42 = ptrtoaddr ptr %.val21.i to i64
   %i.s = shl nsw i64 %i.r, 2
+  %4 = ptrtoaddr ptr %2 to i64
   %i.t = add i64 %i.s, %.val21.i42
   %i.u = sub i64 %4, %i.t
   %diff.check43 = icmp ugt i64 %i.u, -32
@@ -685,10 +685,11 @@ bb.c:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i
   %.val21.i.i38 = ptrtoaddr ptr %.val21.i.i to i64
+  %5 = ptrtoaddr ptr %2 to i64
   %i.bt = add nsw i64 %i.bq, %i.br
   %i.bu = shl nsw i64 %i.bt, 2
   %i.bv = add i64 %i.bu, %.val21.i.i38
-  %i.bw = sub i64 %4, %i.bv
+  %i.bw = sub i64 %5, %i.bv
   %diff.check = icmp ugt i64 %i.bw, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 

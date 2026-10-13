@@ -204,7 +204,6 @@ _ZNSt10unique_ptrIN5faiss12_GLOBAL__N_123RaBitQDistanceComputerQILNS0_9SIMDLevel
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN5faiss12_GLOBAL__N_126RaBitQDistanceComputerNotQILNS_9SIMDLevelE0EE9set_queryEPKf(ptr noundef nonnull align 8 dereferenceable(152) initializes((24, 32)) %0, ptr noundef %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %1, ptr %i.a, align 8, !tbaa !67
   %.not = icmp eq ptr %1, null
@@ -287,10 +286,8 @@ _ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %bb.i, %bb.j, %bb.k,
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIfSaIfEE6resizeEm.exit
   %i.ad = load ptr, ptr %i.h, align 8, !tbaa !56  ; 8 uses
-  %3 = ptrtoaddr ptr %i.ad to i64
   %i.ae = icmp eq ptr %i.ad, null
-  %i.af = load ptr, ptr %i.o, align 8, !tbaa !71  ; 13 uses
-  %4 = ptrtoaddr ptr %i.af to i64                 ; 3 uses
+  %i.af = load ptr, ptr %i.o, align 8, !tbaa !71  ; 14 uses
   br i1 %i.ae, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
@@ -298,9 +295,12 @@ _ZNSt6vectorIfSaIfEE6resizeEm.exit:               ; preds = %bb.i, %bb.j, %bb.k,
   br i1 %min.iters.check, label %.lr.ph.split.preheader71, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.preheader
-  %i.ag = sub i64 %2, %4
+  %2 = ptrtoaddr ptr %i.af to i64                 ; 2 uses
+  %3 = ptrtoaddr ptr %1 to i64
+  %i.ag = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.ag, -32
-  %i.ah = sub i64 %3, %4
+  %4 = ptrtoaddr ptr %i.ad to i64
+  %i.ah = sub i64 %4, %2
   %diff.check52 = icmp ugt i64 %i.ah, -32
   %conflict.rdx = or i1 %diff.check, %diff.check52
   br i1 %conflict.rdx, label %.lr.ph.split.preheader71, label %vector.ph
@@ -362,7 +362,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %min.iters.check59 = icmp ult i64 %i.ac, 8
-  %i.ba = sub i64 %2, %4
+  %5 = ptrtoaddr ptr %i.af to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.ba = sub i64 %6, %5
   %diff.check57 = icmp ugt i64 %i.ba, -32
   %or.cond = select i1 %min.iters.check59, i1 true, i1 %diff.check57
   br i1 %or.cond, label %.lr.ph.split.us.preheader70, label %vector.ph60

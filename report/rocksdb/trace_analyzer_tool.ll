@@ -205,21 +205,22 @@ _ZNSt15__new_allocatorISt4pairIiiEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.f
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.ad
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !73
-  %i.ak = load ptr, ptr %i.x, align 8, !tbaa !79  ; 7 uses
+  %i.ak = load ptr, ptr %i.x, align 8, !tbaa !79  ; 8 uses
   %i.al = load ptr, ptr %i.y, align 8, !tbaa !79  ; 3 uses
   %i.am = icmp eq ptr %i.ak, %i.al
   br i1 %i.am, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %.noexc6
-  %2 = ptrtoaddr ptr %i.ak to i64                 ; 2 uses
-  %i.an = ptrtoaddr ptr %i.ag to i64
-  %i.ao = ptrtoaddr ptr %i.al to i64
-  %i.ap = add i64 %i.ao, -8
-  %i.aq = sub i64 %i.ap, %2                       ; 3 uses
+  %i.an = ptrtoaddr ptr %i.al to i64
+  %i.ao = ptrtoaddr ptr %i.ak to i64
+  %i.ap = add i64 %i.an, -8
+  %i.aq = sub i64 %i.ap, %i.ao                    ; 3 uses
   %i.ar = lshr i64 %i.aq, 3
   %i.as = add nuw nsw i64 %i.ar, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.aq, 24
-  %i.at = sub i64 %2, %i.an
+  %2 = ptrtoaddr ptr %i.ag to i64
+  %3 = ptrtoaddr ptr %i.ak to i64
+  %i.at = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.at, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check

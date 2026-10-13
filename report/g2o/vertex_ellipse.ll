@@ -205,8 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !53   ; 10 uses
   %i.c = add nsw i64 %i.b, -1                     ; 4 uses
-  %i.d = load ptr, ptr %0, align 8, !tbaa !52     ; 5 uses
-  %4 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !52     ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 28 uses
   %or.cond = icmp eq i64 %i.b, 1
   br i1 %or.cond, label %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS1_INS1_INS_6MatrixIfLi2ELi2ELi0ELi2ELi2EEELi2ELi1ELb1EEELin1ELi1ELb0EEELin1ELi1ELb0EEEE11squaredNormEv.exit.thread, label %bb.b
@@ -510,6 +509,7 @@ _ZN5Eigen8internal13first_alignedILi16EflEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i:
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader67, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
+  %4 = ptrtoaddr ptr %i.d to i64
   %i.eu = sub i64 %i.ej, %4
   %i.ev = add i64 %i.eu, -5
   %diff.check = icmp ult i64 %i.ev, 31
@@ -615,7 +615,8 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check52, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader66, label %vector.memcheck49
 
 vector.memcheck49:                                ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.gk = sub i64 %i.ej, %4
+  %5 = ptrtoaddr ptr %i.d to i64
+  %i.gk = sub i64 %i.ej, %5
   %i.gl = add i64 %i.gk, -5
   %diff.check50 = icmp ult i64 %i.gl, 31
   br i1 %diff.check50, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader66, label %vector.ph53
@@ -1018,9 +1019,8 @@ bb.a:
   %i.c = alloca float, align 4                    ; 4 uses
   %7 = alloca %"class.Eigen::internal::gemm_blocking_space", align 16 ; 10 uses
   %8 = alloca %"class.Eigen::Matrix.968", align 8 ; 16 uses
-  %9 = alloca %"class.Eigen::Matrix.981", align 16 ; 25 uses
-  %10 = ptrtoaddr ptr %9 to i64                   ; 2 uses
-  %11 = alloca %"class.Eigen::Product.1019", align 8 ; 6 uses
+  %9 = alloca %"class.Eigen::Matrix.981", align 16 ; 26 uses
+  %10 = alloca %"class.Eigen::Product.1019", align 8 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !53   ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
@@ -1224,7 +1224,6 @@ bb.o:                                             ; preds = %.invoke80, %_ZN5Eig
 .noexc:                                           ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELi2EEEE12_set_noaliasINS_7ProductINS_14TriangularViewINS1_IfLin1ELin1ELi1ELin1ELin1EEELj2EEENS1_IfLin1ELin1ELi0ELi2ELi2EEELi0EEEEERS2_RKNS_9DenseBaseIT_EE.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   %i.aw = load ptr, ptr %6, align 8, !tbaa !133   ; 9 uses
-  %12 = ptrtoaddr ptr %i.aw to i64
   %i.ax = load i64, ptr %i.aj, align 8, !tbaa !131 ; 3 uses
   %i.ay = load i64, ptr %i.ak, align 8, !tbaa !132 ; 3 uses
   %i.az = load i64, ptr %i.x, align 16, !tbaa !122
@@ -1253,7 +1252,9 @@ _ZN5Eigen8internal17resize_if_allowedINS_6MatrixIfLin1ELin1ELi0ELi2ELi2EEENS2_If
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %._crit_edge.i.i.i.i.i.i.i.i
   %i.bg = sub i64 %i.bb, %i.bd                    ; 3 uses
   %min.iters.check86 = icmp ult i64 %i.bg, 8
-  %i.bh = sub i64 %12, %10
+  %11 = ptrtoaddr ptr %9 to i64
+  %12 = ptrtoaddr ptr %i.aw to i64
+  %i.bh = sub i64 %12, %11
   %diff.check84 = icmp ugt i64 %i.bh, -32
   %or.cond = select i1 %min.iters.check86, i1 true, i1 %diff.check84
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader98, label %vector.ph87
@@ -1353,17 +1354,16 @@ bb.q:                                             ; preds = %_ZN5Eigen15PlainObj
   br label %.body
 
 bb.r:                                             ; preds = %bb.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #26
-  store ptr %8, ptr %11, align 8
-  %i.cs = getelementptr inbounds nuw i8, ptr %11, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
+  store ptr %8, ptr %10, align 8
+  %i.cs = getelementptr inbounds nuw i8, ptr %10, i64 8
   store ptr %9, ptr %i.cs, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
-  invoke void @_ZN5Eigen6MatrixIfLin1ELin1ELi0ELin1ELi2EEC2INS_7ProductINS_14TriangularViewIKNS_9TransposeIKNS0_IfLin1ELin1ELi1ELin1ELin1EEEEELj1EEENS0_IfLin1ELin1ELi0ELi2ELi2EEELi0EEEEERKT_(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(16) %11)
+  invoke void @_ZN5Eigen6MatrixIfLin1ELin1ELi0ELin1ELi2EEC2INS_7ProductINS_14TriangularViewIKNS_9TransposeIKNS0_IfLin1ELin1ELi1ELin1ELin1EEEEELj1EEENS0_IfLin1ELin1ELi0ELi2ELi2EEELi0EEEEERKT_(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(16) %10)
           to label %.noexc31 unwind label %bb.t
 
 .noexc31:                                         ; preds = %bb.r
   %i.ct = load ptr, ptr %5, align 8, !tbaa !133   ; 9 uses
-  %13 = ptrtoaddr ptr %i.ct to i64
   %i.cu = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !131 ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -1394,7 +1394,9 @@ _ZN5Eigen8internal17resize_if_allowedINS_6MatrixIfLin1ELin1ELi0ELi2ELi2EEENS2_If
 .lr.ph.i.i.i.i.i.i.i.i.i26.preheader:             ; preds = %._crit_edge.i.i.i.i.i.i.i.i25
   %i.df = sub i64 %i.da, %i.dc                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.df, 8
-  %i.dg = sub i64 %13, %10
+  %13 = ptrtoaddr ptr %9 to i64
+  %14 = ptrtoaddr ptr %i.ct to i64
+  %i.dg = sub i64 %14, %13
   %diff.check = icmp ugt i64 %i.dg, -32
   %or.cond97 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond97, label %.lr.ph.i.i.i.i.i.i.i.i.i26.preheader99, label %vector.ph
@@ -1486,13 +1488,13 @@ middle.block:                                     ; preds = %vector.body
 .loopexit63:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i26.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i26, %middle.block, %._crit_edge.i.i.i.i.i.i.i.i25
   call void @free(ptr noundef %i.ct) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.r
   %i.eq = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
   br label %.body
 
 bb.u:                                             ; preds = %.loopexit63, %.loopexit

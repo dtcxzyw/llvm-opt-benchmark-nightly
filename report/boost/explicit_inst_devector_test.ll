@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %_ZN5boost9container
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container54expand_backward_forward_and_insert_alloc_move_backwardIPNS0_4test24movable_and_copyable_intENS0_3dtl18insert_range_proxyINS0_13new_allocatorIS3_EEPKS3_EES8_EEvT_mSC_SC_mT0_RT1_(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, ptr %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #4 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %5 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %5 to i64                  ; 2 uses
   %i.b = getelementptr [4 x i8], ptr %0, i64 %1   ; 27 uses
   %i.c = ptrtoint ptr %3 to i64                   ; 12 uses
   %i.d = ptrtoint ptr %0 to i64                   ; 15 uses
@@ -607,9 +607,10 @@ _ZN5boost9container4moveIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38dis
   br i1 %.not8.i.i244, label %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPKS5_E17copy_n_and_updateIPS5_EEvRS6_T_m.exit, label %.lr.ph.i.i245.preheader
 
 .lr.ph.i.i245.preheader:                          ; preds = %_ZN5boost9container4moveIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit
-  %.0.lcssa.i532 = ptrtoaddr ptr %.0.lcssa.i to i64
   %min.iters.check534 = icmp ult i64 %i.el, 8
-  %i.fm = sub i64 %i.a, %.0.lcssa.i532
+  %.0.lcssa.i532 = ptrtoaddr ptr %.0.lcssa.i to i64
+  %7 = ptrtoaddr ptr %5 to i64
+  %i.fm = sub i64 %7, %.0.lcssa.i532
   %diff.check = icmp ugt i64 %i.fm, -32
   %or.cond694 = select i1 %min.iters.check534, i1 true, i1 %diff.check
   br i1 %or.cond694, label %.lr.ph.i.i245.preheader712, label %vector.ph535
@@ -1012,8 +1013,7 @@ _ZN5boost9container24move_forward_overlappingIPNS0_4test24movable_and_copyable_i
   br i1 %.not.i301, label %_ZN5boost9container3dtl19scoped_destructor_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS5_ED2Ev.exit225, label %.lr.ph.i299, !llvm.loop !16
 
 .critedge:                                        ; preds = %.lr.ph.i.i276.prol.loopexit, %.lr.ph.i.i276, %middle.block628, %bb.k, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPKS5_E17copy_n_and_updateIPS5_EEvRS6_T_m.exit
-  %.sroa.0394.2 = phi ptr [ %.07.lcssa.i.i, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPKS5_E17copy_n_and_updateIPS5_EEvRS6_T_m.exit ], [ %.lcssa707, %bb.k ], [ %i.jh, %middle.block628 ], [ %.lcssa702.unr, %.lr.ph.i.i276.prol.loopexit ], [ %i.kp, %.lr.ph.i.i276 ] ; 8 uses
-  %.sroa.0394.2658 = ptrtoaddr ptr %.sroa.0394.2 to i64 ; 2 uses
+  %.sroa.0394.2 = phi ptr [ %.07.lcssa.i.i, %_ZN5boost9container3dtl18insert_range_proxyINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPKS5_E17copy_n_and_updateIPS5_EEvRS6_T_m.exit ], [ %.lcssa707, %bb.k ], [ %i.jh, %middle.block628 ], [ %.lcssa702.unr, %.lr.ph.i.i276.prol.loopexit ], [ %i.kp, %.lr.ph.i.i276 ] ; 9 uses
   %i.np = sub nuw i64 %4, %i.i                    ; 9 uses
   %i.nq = sub i64 %1, %i.f                        ; 8 uses
   %.not190 = icmp ult i64 %i.nq, %i.np
@@ -1131,7 +1131,8 @@ _ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_
 
 .lr.ph.i.i325.preheader:                          ; preds = %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit
   %min.iters.check661 = icmp ult i64 %i.np, 8
-  %i.pi = sub i64 %.sroa.0394.2658, %i.c
+  %8 = ptrtoaddr ptr %.sroa.0394.2 to i64
+  %i.pi = sub i64 %8, %i.c
   %diff.check659 = icmp ugt i64 %i.pi, -32
   %or.cond695 = select i1 %min.iters.check661, i1 true, i1 %diff.check659
   br i1 %or.cond695, label %.lr.ph.i.i325.preheader698, label %vector.ph662
@@ -1263,7 +1264,8 @@ bb.o:                                             ; preds = %.critedge
 
 .lr.ph.i.i340.preheader:                          ; preds = %.loopexit
   %min.iters.check679 = icmp ult i64 %i.nq, 8
-  %i.rd = sub i64 %.sroa.0394.2658, %i.c
+  %9 = ptrtoaddr ptr %.sroa.0394.2 to i64
+  %i.rd = sub i64 %9, %i.c
   %diff.check677 = icmp ugt i64 %i.rd, -32
   %or.cond696 = select i1 %min.iters.check679, i1 true, i1 %diff.check677
   br i1 %or.cond696, label %.lr.ph.i.i340.preheader697, label %vector.ph680
@@ -1441,8 +1443,6 @@ _ZN5boost9container3dtl19scoped_destructor_nINS0_13new_allocatorINS0_4test24mova
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container53expand_backward_forward_and_insert_alloc_move_forwardINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_NS0_3dtl18insert_range_proxyIS5_PKS4_EEEEvT0_mSC_SC_mT1_RT_(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, ptr %5, ptr noundef nonnull align 1 dereferenceable(1) %6) local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
-  %8 = ptrtoaddr ptr %5 to i64                    ; 2 uses
   %i.a = getelementptr inbounds [4 x i8], ptr %0, i64 %1 ; 28 uses
   %i.b = add i64 %4, %1                           ; 2 uses
   %i.c = getelementptr inbounds [4 x i8], ptr %2, i64 %i.b ; 4 uses
@@ -1820,6 +1820,8 @@ _ZN5boost9container24uninitialized_move_allocINS0_13new_allocatorINS0_4test24mov
   br i1 %min.iters.check390, label %.lr.ph.i.i166.preheader432, label %vector.memcheck387
 
 vector.memcheck387:                               ; preds = %.lr.ph.i.i166.preheader
+  %7 = ptrtoaddr ptr %0 to i64
+  %8 = ptrtoaddr ptr %5 to i64
   %i.ed = sub i64 %1, %i.ea
   %i.ee = shl i64 %i.ed, 2
   %i.ef = add i64 %i.ee, %7
@@ -2000,8 +2002,9 @@ bb.g:                                             ; preds = %_ZN5boost9container
   br i1 %.not8.i.i178, label %_ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit183, label %.lr.ph.i.i179.preheader
 
 .lr.ph.i.i179.preheader:                          ; preds = %bb.g
+  %9 = ptrtoaddr ptr %0 to i64
   %i.gu = add i64 %i.e, -4
-  %i.gv = sub i64 %i.gu, %7                       ; 3 uses
+  %i.gv = sub i64 %i.gu, %9                       ; 3 uses
   %i.gw = lshr i64 %i.gv, 2
   %i.gx = add nuw nsw i64 %i.gw, 1                ; 2 uses
   %min.iters.check411 = icmp ult i64 %i.gv, 124
@@ -2230,7 +2233,6 @@ middle.block342:                                  ; preds = %vector.body335
 
 _ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_intEEET_S5_S5_S5_.exit211: ; preds = %.lr.ph.i.i207, %middle.block342, %bb.h, %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit204
   %i.kg = phi ptr [ %3, %bb.h ], [ %i.a, %_ZN5boost9container26uninitialized_move_alloc_nINS0_13new_allocatorINS0_4test24movable_and_copyable_intEEEPS4_S6_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SA_E4typeERT_S9_mSA_.exit204 ], [ %i.jv, %middle.block342 ], [ %i.ke, %.lr.ph.i.i207 ] ; 3 uses
-  %9 = ptrtoaddr ptr %i.kg to i64
   %i.kh = sub i64 0, %4
   %i.ki = getelementptr [4 x i8], ptr %i.kg, i64 %i.kh ; 11 uses
   %.not8.i.i212 = icmp eq i64 %4, 0
@@ -2241,9 +2243,11 @@ _ZN5boost9container25move_backward_overlappingIPNS0_4test24movable_and_copyable_
   br i1 %min.iters.check348, label %.lr.ph.i.i213.preheader437, label %vector.memcheck346
 
 vector.memcheck346:                               ; preds = %.lr.ph.i.i213.preheader
+  %10 = ptrtoaddr ptr %i.kg to i64
+  %11 = ptrtoaddr ptr %5 to i64
   %i.kj = shl i64 %4, 2
-  %i.kk = add i64 %i.kj, %8
-  %i.kl = sub i64 %i.kk, %9
+  %i.kk = add i64 %i.kj, %11
+  %i.kl = sub i64 %i.kk, %10
   %diff.check = icmp ugt i64 %i.kl, -32
   br i1 %diff.check, label %.lr.ph.i.i213.preheader437, label %vector.ph349
 

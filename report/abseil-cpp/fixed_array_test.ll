@@ -205,8 +205,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.l, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.ag = load ptr, ptr %i.h, align 8, !tbaa !344 ; 8 uses
-  %12 = ptrtoaddr ptr %i.ag to i64                ; 2 uses
+  %i.ag = load ptr, ptr %i.h, align 8, !tbaa !344 ; 9 uses
   %i.ah = load i64, ptr %i.f, align 8, !tbaa !101 ; 5 uses
   %.idx4.i = shl i64 %i.ah, 2                     ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.idx4.i ; 2 uses
@@ -235,7 +234,6 @@ _ZNSt16allocator_traitsISaIiEE8allocateERS0_mPKv.exit.i.i.i.i.i.i: ; preds = %bb
           to label %.noexc33 unwind label %bb.t   ; 6 uses
 
 .noexc33:                                         ; preds = %_ZNSt16allocator_traitsISaIiEE8allocateERS0_mPKv.exit.i.i.i.i.i.i
-  %13 = ptrtoaddr ptr %i.an to i64
   %i.ao = load ptr, ptr %i.ak, align 8, !tbaa !346 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ao, null
   br i1 %.not.i.i.i.i.i.i, label %.lr.ph.i.i.i, label %bb.o
@@ -264,7 +262,9 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
   %i.au = lshr exact i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.at, 44
-  %i.aw = sub i64 %12, %13
+  %12 = ptrtoaddr ptr %i.an to i64
+  %13 = ptrtoaddr ptr %i.ag to i64
+  %i.aw = sub i64 %13, %12
   %diff.check = icmp ugt i64 %i.aw, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJRKiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS9_.exit.us.i.i.i.preheader137, label %vector.ph
@@ -318,8 +318,9 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
   %i.bj = lshr exact i64 %i.bi, 2
   %i.bk = add nuw nsw i64 %i.bj, 1                ; 2 uses
   %min.iters.check121 = icmp ult i64 %i.bi, 44
-  %.0.i.i.i9.i111118 = ptrtoaddr ptr %.0.i.i.i9.i111 to i64
-  %i.bl = sub i64 %12, %.0.i.i.i9.i111118
+  %14 = ptrtoaddr ptr %.0.i.i.i9.i111 to i64
+  %.0.i.i.i9.i111118 = ptrtoaddr ptr %i.ag to i64
+  %i.bl = sub i64 %.0.i.i.i9.i111118, %14
   %diff.check119 = icmp ugt i64 %i.bl, -32
   %or.cond135 = select i1 %min.iters.check121, i1 true, i1 %diff.check119
   br i1 %or.cond135, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJRKiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS9_.exit.i.i.i.preheader, label %vector.ph122
@@ -722,8 +723,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 _ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.m, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
-  %i.ak = load ptr, ptr %i.i, align 8, !tbaa !344 ; 8 uses
-  %12 = ptrtoaddr ptr %i.ak to i64                ; 2 uses
+  %i.ak = load ptr, ptr %i.i, align 8, !tbaa !344 ; 9 uses
   %i.al = load i64, ptr %i.d, align 8, !tbaa !101 ; 5 uses
   %.idx4.i.i = shl i64 %i.al, 2                   ; 6 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 %.idx4.i.i ; 2 uses
@@ -777,8 +777,7 @@ bb.q:                                             ; preds = %_ZN7testing15Assert
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.q, %.thread.i.i
   %i.ay = phi ptr [ %.pre.i, %.thread.i.i ], [ %.sroa.2.0.copyload.i.i.i, %bb.q ] ; 3 uses
-  %.0.i.i.i9.i.i = phi ptr [ %i.as, %.thread.i.i ], [ %5, %bb.q ] ; 7 uses
-  %.0.i.i.i9.i.i117 = ptrtoaddr ptr %.0.i.i.i9.i.i to i64 ; 2 uses
+  %.0.i.i.i9.i.i = phi ptr [ %i.as, %.thread.i.i ], [ %5, %bb.q ] ; 8 uses
   %.not.i.i.i.i7.i.i.i = icmp eq ptr %i.ay, null
   br i1 %.not.i.i.i.i7.i.i.i, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJRKiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS9_.exit.us.i.i.i.i.preheader, label %.lr.ph.split.i.i.i.i
 
@@ -787,7 +786,9 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
   %i.ba = lshr exact i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check124 = icmp ult i64 %i.az, 44
-  %i.bc = sub i64 %12, %.0.i.i.i9.i.i117
+  %12 = ptrtoaddr ptr %.0.i.i.i9.i.i to i64
+  %13 = ptrtoaddr ptr %i.ak to i64
+  %i.bc = sub i64 %13, %12
   %diff.check122 = icmp ugt i64 %i.bc, -32
   %or.cond = select i1 %min.iters.check124, i1 true, i1 %diff.check122
   br i1 %or.cond, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJRKiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS9_.exit.us.i.i.i.i.preheader140, label %vector.ph125
@@ -839,7 +840,9 @@ _ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAlloca
   %i.bo = lshr exact i64 %i.bn, 2
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bn, 44
-  %i.bq = sub i64 %12, %.0.i.i.i9.i.i117
+  %14 = ptrtoaddr ptr %.0.i.i.i9.i.i to i64
+  %15 = ptrtoaddr ptr %i.ak to i64
+  %i.bq = sub i64 %15, %14
   %diff.check = icmp ugt i64 %i.bq, -32
   %or.cond138 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond138, label %_ZNSt16allocator_traitsIN4absl12lts_2026052618container_internal17CountingAllocatorIiEEE9constructIiJRKiEEEDTcl12_S_constructfp_fp0_spclsr3stdE7forwardIT0_Efp1_EEERS4_PT_DpOS9_.exit.i.i.i.i.preheader, label %vector.ph

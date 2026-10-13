@@ -205,7 +205,6 @@ _ZN20b3AlignedObjectArrayI14b3InternalEdgeE8allocateEi.exit.i.i: ; preds = %bb.f
   %i.ao = sext i32 %i.am to i64
   %i.ap = shl nsw i64 %i.ao, 2
   %i.aq = tail call noundef ptr @_Z22b3AlignedAllocInternalmi(i64 noundef %i.ap, i32 noundef 16) ; 12 uses
-  %3 = ptrtoaddr ptr %i.aq to i64
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %.split7.i.i, label %.split.i.i
 
@@ -219,6 +218,7 @@ _ZN20b3AlignedObjectArrayI14b3InternalEdgeE8allocateEi.exit.i.i: ; preds = %bb.f
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !67 ; 7 uses
   %wide.trip.count.i.i.i = zext nneg i32 %i.as to i64 ; 5 uses
   %min.iters.check = icmp ult i32 %i.as, 8
+  %3 = ptrtoaddr ptr %i.aq to i64
   %i.aw = ptrtoaddr ptr %i.av to i64
   %i.ax = sub i64 %i.aw, %3
   %diff.check = icmp ugt i64 %i.ax, -32
@@ -363,7 +363,6 @@ _ZN20b3AlignedObjectArrayI20b3InternalVertexPairE8allocateEi.exit.i.i: ; preds =
   %i.cq = sext i32 %i.co to i64
   %i.cr = shl nsw i64 %i.cq, 2
   %i.cs = tail call noundef ptr @_Z22b3AlignedAllocInternalmi(i64 noundef %i.cr, i32 noundef 16) ; 12 uses
-  %4 = ptrtoaddr ptr %i.cs to i64
   %i.ct = icmp eq ptr %i.cs, null
   br i1 %i.ct, label %.split7.i.i30, label %.split.i.i18
 
@@ -377,6 +376,7 @@ _ZN20b3AlignedObjectArrayI20b3InternalVertexPairE8allocateEi.exit.i.i: ; preds =
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !74 ; 7 uses
   %wide.trip.count.i.i.i26 = zext nneg i32 %i.cu to i64 ; 5 uses
   %min.iters.check56 = icmp ult i32 %i.cu, 8
+  %4 = ptrtoaddr ptr %i.cs to i64
   %i.cy = ptrtoaddr ptr %i.cx to i64
   %i.cz = sub i64 %i.cy, %4
   %diff.check54 = icmp ugt i64 %i.cz, -32
@@ -779,8 +779,7 @@ bb.a:
 _ZN20b3AlignedObjectArrayIiE8allocateEi.exit.i.i: ; preds = %bb.a
   %i.h = zext nneg i32 %i.f to i64
   %i.i = shl nuw nsw i64 %i.h, 2                  ; 2 uses
-  %i.j = tail call noundef ptr @_Z22b3AlignedAllocInternalmi(i64 noundef %i.i, i32 noundef 16) ; 16 uses
-  %2 = ptrtoaddr ptr %i.j to i64                  ; 2 uses
+  %i.j = tail call noundef ptr @_Z22b3AlignedAllocInternalmi(i64 noundef %i.i, i32 noundef 16) ; 17 uses
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %.split7.i.i, label %.split.i.i
 
@@ -791,10 +790,11 @@ _ZN20b3AlignedObjectArrayIiE8allocateEi.exit.i.i: ; preds = %bb.a
   br i1 %i.m, label %.lr.ph.i.i.i, label %_ZNK20b3AlignedObjectArrayIiE4copyEiiPi.exit.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.split.i.i
-  %.pre1018 = ptrtoaddr ptr %.pre10 to i64
   %wide.trip.count.i.i.i = zext nneg i32 %i.l to i64 ; 5 uses
   %min.iters.check = icmp ult i32 %i.l, 8
-  %i.n = sub i64 %.pre1018, %2
+  %2 = ptrtoaddr ptr %i.j to i64
+  %3 = ptrtoaddr ptr %.pre10 to i64
+  %i.n = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.n, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
@@ -909,8 +909,9 @@ _ZN20b3AlignedObjectArrayIiE6resizeEiRKi.exit:    ; preds = %bb.a
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !29 ; 7 uses
   %wide.trip.count = zext nneg i32 %i.f to i64    ; 5 uses
   %min.iters.check23 = icmp ult i32 %i.f, 8
+  %4 = ptrtoaddr ptr %i.j to i64
   %i.aq = ptrtoaddr ptr %i.ap to i64
-  %i.ar = sub i64 %i.aq, %2
+  %i.ar = sub i64 %i.aq, %4
   %diff.check21 = icmp ugt i64 %i.ar, -32
   %or.cond35 = select i1 %min.iters.check23, i1 true, i1 %diff.check21
   br i1 %or.cond35, label %scalar.ph22.preheader, label %vector.ph24
@@ -1141,7 +1142,6 @@ _ZN20b3AlignedObjectArrayIiE8allocateEi.exit.i.i: ; preds = %bb.c
   %i.i = sext i32 %i.b to i64
   %i.j = shl nsw i64 %i.i, 2
   %i.k = tail call noundef ptr @_Z22b3AlignedAllocInternalmi(i64 noundef %i.j, i32 noundef 16) ; 12 uses
-  %2 = ptrtoaddr ptr %i.k to i64
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %.split7.i.i, label %.split.i.i
 
@@ -1155,6 +1155,7 @@ _ZN20b3AlignedObjectArrayIiE8allocateEi.exit.i.i: ; preds = %bb.c
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !29   ; 7 uses
   %wide.trip.count.i.i.i = zext nneg i32 %i.m to i64 ; 5 uses
   %min.iters.check = icmp ult i32 %i.m, 8
+  %2 = ptrtoaddr ptr %i.k to i64
   %i.q = ptrtoaddr ptr %i.p to i64
   %i.r = sub i64 %i.q, %2
   %diff.check = icmp ugt i64 %i.r, -32
@@ -1296,7 +1297,6 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN20b3AlignedObjectArrayIiE8allocateEi.exit.i.i27: ; preds = %bb.g
   %i.bg = tail call noundef ptr @_Z22b3AlignedAllocInternalmi(i64 noundef %i.ay, i32 noundef 16) ; 12 uses
-  %3 = ptrtoaddr ptr %i.bg to i64
   %i.bh = icmp eq ptr %i.bg, null
   br i1 %i.bh, label %.split7.i.i39, label %.split.i.i28
 
@@ -1310,6 +1310,7 @@ _ZN20b3AlignedObjectArrayIiE8allocateEi.exit.i.i27: ; preds = %bb.g
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !29 ; 7 uses
   %wide.trip.count.i.i.i35 = zext nneg i32 %i.bi to i64 ; 5 uses
   %min.iters.check66 = icmp ult i32 %i.bi, 8
+  %3 = ptrtoaddr ptr %i.bg to i64
   %i.bm = ptrtoaddr ptr %i.bl to i64
   %i.bn = sub i64 %i.bm, %3
   %diff.check64 = icmp ugt i64 %i.bn, -32

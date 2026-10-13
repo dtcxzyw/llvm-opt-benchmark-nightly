@@ -26,8 +26,6 @@ bb.a:
 ; Function Attrs: nounwind ssp uwtable
 define dso_local noundef i32 @crypto_hash_sha512_update(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %4 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = alloca [88 x i64], align 16              ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.b = icmp eq i64 %2, 0
@@ -61,8 +59,10 @@ iter.check:                                       ; preds = %bb.b
   br i1 %min.iters.check, label %.preheader51.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.r = add i64 %i.g, %4
-  %i.s = sub i64 %i.r, %3
+  %3 = ptrtoaddr ptr %0 to i64
+  %4 = ptrtoaddr ptr %1 to i64
+  %i.r = add i64 %i.g, %3
+  %i.s = sub i64 %i.r, %4
   %i.t = add i64 %i.s, 79
   %diff.check = icmp ult i64 %i.t, 31
   br i1 %diff.check, label %.preheader51.preheader, label %vector.main.loop.iter.check
@@ -176,8 +176,10 @@ iter.check118:                                    ; preds = %bb.b
   br i1 %min.iters.check105, label %.preheader.preheader, label %vector.memcheck103
 
 vector.memcheck103:                               ; preds = %iter.check118
-  %i.ax = add i64 %i.g, %4
-  %i.ay = sub i64 %i.ax, %3
+  %5 = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.ax = add i64 %i.g, %5
+  %i.ay = sub i64 %i.ax, %6
   %i.az = add i64 %i.ay, 79
   %diff.check104 = icmp ult i64 %i.az, 15
   br i1 %diff.check104, label %.preheader.preheader, label %vector.main.loop.iter.check106
@@ -381,7 +383,6 @@ vec.epilog.middle.block128:                       ; preds = %vec.epilog.vector.b
 .preheader50:                                     ; preds = %.lr.ph, %.loopexit131
   %.046.lcssa = phi ptr [ %i.dx, %.loopexit131 ], [ %i.er, %.lr.ph ] ; 8 uses
   %.045.lcssa = phi i64 [ %i.dy, %.loopexit131 ], [ %i.es, %.lr.ph ] ; 11 uses
-  %.046.lcssa75 = ptrtoaddr ptr %.046.lcssa to i64
   %.not = icmp eq i64 %.045.lcssa, 0
   br i1 %.not, label %._crit_edge, label %iter.check90
 
@@ -390,7 +391,9 @@ iter.check90:                                     ; preds = %.preheader50
   br i1 %min.iters.check77, label %.lr.ph57.preheader, label %vector.memcheck74
 
 vector.memcheck74:                                ; preds = %iter.check90
-  %i.ea = sub i64 %4, %.046.lcssa75
+  %7 = ptrtoaddr ptr %0 to i64
+  %8 = ptrtoaddr ptr %.046.lcssa to i64
+  %i.ea = sub i64 %7, %8
   %i.eb = add i64 %i.ea, 79
   %diff.check76 = icmp ult i64 %i.eb, 31
   br i1 %diff.check76, label %.lr.ph57.preheader, label %vector.main.loop.iter.check78

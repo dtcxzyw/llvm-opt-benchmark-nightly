@@ -204,9 +204,8 @@ bb.t:                                             ; preds = %bb.p, %bb.g
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN5faiss13eden_distance12_GLOBAL__N_129EDENReferenceDistanceComputer9set_queryEPKf(ptr noundef nonnull align 8 dereferenceable(108) initializes((24, 32)) %0, ptr noundef %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %4 = alloca %"class.std::allocator", align 1    ; 5 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
+  %3 = alloca %"class.std::allocator", align 1    ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %1, ptr %i.a, align 8, !tbaa !113
   %.not.i = icmp eq ptr %1, null
@@ -283,10 +282,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.j
   %i.ab = load ptr, ptr %i.t, align 8, !tbaa !67  ; 8 uses
-  %5 = ptrtoaddr ptr %i.ab to i64
   %.not26.i = icmp eq ptr %i.ab, null
-  %i.ac = load ptr, ptr %i.d, align 8, !tbaa !57  ; 13 uses
-  %6 = ptrtoaddr ptr %i.ac to i64                 ; 3 uses
+  %i.ac = load ptr, ptr %i.d, align 8, !tbaa !57  ; 14 uses
   br i1 %.not26.i, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i.preheader
 
 .lr.ph.split.i.preheader:                         ; preds = %.lr.ph.i
@@ -294,9 +291,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %min.iters.check, label %.lr.ph.split.i.preheader35, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.i.preheader
-  %i.ad = sub i64 %2, %6
+  %4 = ptrtoaddr ptr %i.ac to i64                 ; 2 uses
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.ad = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.ad, -32
-  %i.ae = sub i64 %5, %6
+  %6 = ptrtoaddr ptr %i.ab to i64
+  %i.ae = sub i64 %6, %4
   %diff.check16 = icmp ugt i64 %i.ae, -32
   %conflict.rdx = or i1 %diff.check, %diff.check16
   br i1 %conflict.rdx, label %.lr.ph.split.i.preheader35, label %vector.ph
@@ -358,7 +358,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i
   %min.iters.check23 = icmp ult i64 %i.aa, 8
-  %i.ax = sub i64 %2, %6
+  %7 = ptrtoaddr ptr %i.ac to i64
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.ax = sub i64 %8, %7
   %diff.check21 = icmp ugt i64 %i.ax, -32
   %or.cond = select i1 %min.iters.check23, i1 true, i1 %diff.check21
   br i1 %or.cond, label %.lr.ph.split.us.i.preheader34, label %vector.ph24
@@ -495,13 +497,13 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 bb.n:                                             ; preds = %_ZNSt6vectorIfSaIfEE6resizeEm.exit.i
   %i.dj = tail call ptr @__cxa_allocate_exception(i64 40) #18 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
-  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @.str.20, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @.str.20, ptr noundef nonnull align 1 dereferenceable(1) %3)
           to label %bb.o unwind label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i
 
 bb.o:                                             ; preds = %bb.n
-  invoke void @_ZN5faiss14FaissExceptionC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcSA_i(ptr noundef nonnull align 8 dereferenceable(40) %i.dj, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5faiss13eden_distance12_GLOBAL__N_124EDENDistanceComputerBase16set_query_commonEPKf, ptr noundef nonnull @.str.1, i32 noundef 314)
+  invoke void @_ZN5faiss14FaissExceptionC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcSA_i(ptr noundef nonnull align 8 dereferenceable(40) %i.dj, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5faiss13eden_distance12_GLOBAL__N_124EDENDistanceComputerBase16set_query_commonEPKf, ptr noundef nonnull @.str.1, i32 noundef 314)
           to label %bb.p unwind label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -511,16 +513,16 @@ bb.p:                                             ; preds = %bb.o
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i: ; preds = %bb.n
   %i.dk = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.0.i = phi i1 [ false, %bb.p ], [ true, %bb.o ] ; 2 uses
   %i.dl = landingpad { ptr, i32 }
           cleanup                                 ; 4 uses
-  %i.dm = load ptr, ptr %3, align 8, !tbaa !16    ; 2 uses
-  %i.dn = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.dm = load ptr, ptr %2, align 8, !tbaa !16    ; 2 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.do = icmp eq ptr %i.dm, %i.dn
   br i1 %i.do, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
@@ -528,13 +530,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.dp = load i64, ptr %i.dn, align 8, !tbaa !17
   %i.dq = add i64 %i.dp, 1
   call void @_ZdlPvm(ptr noundef %i.dm, i64 noundef %i.dq) #27
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   br i1 %.0.i, label %bb.r, label %bb.s
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.q
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   br i1 %.0.i, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread.i

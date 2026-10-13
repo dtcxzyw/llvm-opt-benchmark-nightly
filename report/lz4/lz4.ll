@@ -204,11 +204,11 @@ bb.ao:                                            ; preds = %read_variable_lengt
 
 .loopexit146:                                     ; preds = %bb.p, %bb.q, %bb.ao
   %.2 = phi ptr [ %.8, %bb.ao ], [ %.1587, %bb.p ], [ %i.bf, %bb.q ] ; 8 uses
-  %.11391.i = phi ptr [ %.10390.i, %bb.ao ], [ %.2382.i, %bb.q ], [ %.2382.i, %bb.p ] ; 11 uses
+  %.11391.i = phi ptr [ %.10390.i, %bb.ao ], [ %.2382.i, %bb.q ], [ %.2382.i, %bb.p ] ; 12 uses
   %.1369.i = phi ptr [ %.0368.i, %bb.ao ], [ %i.bh, %bb.q ], [ %i.bh, %bb.p ] ; 8 uses
   %.1367.i = phi i64 [ %.0366.i, %bb.ao ], [ %i.be, %bb.q ], [ %i.be, %bb.p ] ; 3 uses
   %.13.i = phi i64 [ %i.hs, %bb.ao ], [ %i.bt, %bb.p ], [ %i.by, %bb.q ] ; 3 uses
-  %.11391.i486 = ptrtoaddr ptr %.11391.i to i64   ; 3 uses
+  %.11391.i486 = ptrtoaddr ptr %.11391.i to i64   ; 2 uses
   %i.ht = icmp ult ptr %.1369.i, %1
   br i1 %i.ht, label %LZ4_wildCopy32.exit.thread, label %bb.ap, !prof !43
 
@@ -256,7 +256,6 @@ bb.ar:                                            ; preds = %bb.ap
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
   %.3371.i = phi ptr [ %i.ir, %bb.aq ], [ %i.it, %bb.ar ] ; 6 uses
-  %.3371.i487 = ptrtoaddr ptr %.3371.i to i64
   %i.iu = getelementptr inbounds nuw i8, ptr %.11391.i, i64 8 ; 5 uses
   %i.iv = icmp ugt ptr %i.hu, %i.hv
   br i1 %i.iv, label %bb.at, label %bb.aw, !prof !27
@@ -305,7 +304,9 @@ iter.check:                                       ; preds = %bb.av
   br i1 %min.iters.check489, label %.lr.ph218.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.jo = sub i64 %.11391.i486, %.3371.i487
+  %4 = ptrtoaddr ptr %.11391.i to i64
+  %5 = ptrtoaddr ptr %.3371.i to i64
+  %i.jo = sub i64 %4, %5
   %i.jp = add i64 %i.jo, 7
   %diff.check = icmp ult i64 %i.jp, 31
   br i1 %diff.check, label %.lr.ph218.preheader, label %vector.main.loop.iter.check
@@ -708,7 +709,6 @@ bb.am:                                            ; preds = %read_variable_lengt
   %.1369.i = phi ptr [ %.0368.i, %bb.am ], [ %i.bf, %bb.o ], [ %i.bf, %bb.n ] ; 16 uses
   %.1367.i = phi i64 [ %.0366.i, %bb.am ], [ %i.bc, %bb.o ], [ %i.bc, %bb.n ] ; 3 uses
   %.13.i = phi i64 [ %i.hy, %bb.am ], [ %i.br, %bb.n ], [ %i.bw, %bb.o ] ; 3 uses
-  %.1369.i492 = ptrtoaddr ptr %.1369.i to i64
   %i.hz = icmp ult ptr %.1369.i, %1
   br i1 %i.hz, label %LZ4_wildCopy32.exit.thread, label %bb.an, !prof !43
 
@@ -737,7 +737,8 @@ iter.check:                                       ; preds = %.preheader
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ij, i64 %i.ik)
   %i.il = sub i64 %umax, %i.id                    ; 7 uses
   %min.iters.check494 = icmp ult i64 %i.il, 8
-  %i.im = sub i64 %.1369.i492, %i.id
+  %5 = ptrtoaddr ptr %.1369.i to i64
+  %i.im = sub i64 %5, %i.id
   %diff.check = icmp ugt i64 %i.im, -32
   %or.cond517 = or i1 %min.iters.check494, %diff.check
   br i1 %or.cond517, label %.lr.ph226.preheader, label %vector.main.loop.iter.check
@@ -1140,7 +1141,6 @@ bb.as:                                            ; preds = %bb.aq
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
   %.3371.i = phi ptr [ %i.hz, %bb.ar ], [ %i.ib, %bb.as ] ; 6 uses
-  %.3371.i477 = ptrtoaddr ptr %.3371.i to i64
   %i.ic = getelementptr inbounds nuw i8, ptr %.11391.i.ptr, i64 8 ; 3 uses
   %i.id = add nsw i64 %i.e, -12
   %i.ie = icmp sgt i64 %.11391.i.add, %i.id
@@ -1188,8 +1188,9 @@ iter.check:                                       ; preds = %bb.aw
   br i1 %min.iters.check479, label %.lr.ph235.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %4 = ptrtoaddr ptr %.3371.i to i64
   %i.iv = add i64 %.11391.i.idx, %i.n
-  %i.iw = sub i64 %i.iv, %.3371.i477
+  %i.iw = sub i64 %i.iv, %4
   %i.ix = add i64 %i.iw, 7
   %diff.check = icmp ult i64 %i.ix, 31
   br i1 %diff.check, label %.lr.ph235.preheader, label %vector.main.loop.iter.check
@@ -1592,11 +1593,11 @@ bb.au:                                            ; preds = %read_variable_lengt
 
 .loopexit153:                                     ; preds = %bb.p, %bb.q, %bb.au
   %.2 = phi ptr [ %.8, %bb.au ], [ %.1590, %bb.p ], [ %i.bl, %bb.q ] ; 14 uses
-  %.11391.i = phi ptr [ %.10390.i, %bb.au ], [ %.2382.i, %bb.q ], [ %.2382.i, %bb.p ] ; 14 uses
+  %.11391.i = phi ptr [ %.10390.i, %bb.au ], [ %.2382.i, %bb.q ], [ %.2382.i, %bb.p ] ; 15 uses
   %.1369.i = phi ptr [ %.0368.i, %bb.au ], [ %i.bn, %bb.q ], [ %i.bn, %bb.p ] ; 10 uses
   %.1367.i = phi i64 [ %.0366.i, %bb.au ], [ %i.bk, %bb.q ], [ %i.bk, %bb.p ] ; 3 uses
   %.13.i = phi i64 [ %i.jd, %bb.au ], [ %i.bz, %bb.p ], [ %i.ce, %bb.q ] ; 7 uses
-  %.11391.i547 = ptrtoaddr ptr %.11391.i to i64   ; 6 uses
+  %.11391.i547 = ptrtoaddr ptr %.11391.i to i64   ; 5 uses
   %i.je = getelementptr inbounds nuw i8, ptr %.1369.i, i64 %5
   %i.jf = icmp ult ptr %i.je, %1
   %or.cond463.i = select i1 %i.j, i1 %i.jf, i1 false, !prof !43
@@ -1766,7 +1767,6 @@ bb.bd:                                            ; preds = %bb.bb
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc
   %.3371.i = phi ptr [ %i.lm, %bb.bc ], [ %i.lo, %bb.bd ] ; 6 uses
-  %.3371.i548 = ptrtoaddr ptr %.3371.i to i64
   %i.lp = getelementptr inbounds nuw i8, ptr %.11391.i, i64 8 ; 5 uses
   %i.lq = icmp ugt ptr %i.jh, %i.kq
   br i1 %i.lq, label %bb.bf, label %bb.bi, !prof !27
@@ -1815,7 +1815,9 @@ iter.check569:                                    ; preds = %bb.bh
   br i1 %min.iters.check552, label %.lr.ph229.preheader, label %vector.memcheck546
 
 vector.memcheck546:                               ; preds = %iter.check569
-  %i.mj = sub i64 %.11391.i547, %.3371.i548
+  %6 = ptrtoaddr ptr %.11391.i to i64
+  %7 = ptrtoaddr ptr %.3371.i to i64
+  %i.mj = sub i64 %6, %7
   %i.mk = add i64 %i.mj, 7
   %diff.check549 = icmp ult i64 %i.mk, 31
   br i1 %diff.check549, label %.lr.ph229.preheader, label %vector.main.loop.iter.check553
@@ -2218,8 +2220,7 @@ bb.at:                                            ; preds = %read_variable_lengt
   %.1369.i = phi ptr [ %.0368.i, %bb.at ], [ %i.bl, %bb.o ], [ %i.bl, %bb.n ] ; 18 uses
   %.1367.i = phi i64 [ %.0366.i, %bb.at ], [ %i.bi, %bb.o ], [ %i.bi, %bb.n ] ; 3 uses
   %.13.i = phi i64 [ %i.jp, %bb.at ], [ %i.bx, %bb.n ], [ %i.cc, %bb.o ] ; 5 uses
-  %.11391.i588 = ptrtoaddr ptr %.11391.i to i64   ; 3 uses
-  %.1369.i549 = ptrtoaddr ptr %.1369.i to i64     ; 3 uses
+  %.1369.i549 = ptrtoaddr ptr %.11391.i to i64    ; 3 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %.1369.i, i64 %6
   %i.jr = icmp ult ptr %i.jq, %1
   %or.cond463.i = select i1 %i.k, i1 %i.jr, i1 false, !prof !43
@@ -2243,7 +2244,7 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
   %.14.i = phi i64 [ %i.jy, %bb.aw ], [ %.13.i, %bb.av ] ; 7 uses
-  %i.jz = ptrtoint ptr %.1369.i to i64
+  %i.jz = ptrtoint ptr %.1369.i to i64            ; 3 uses
   %i.ka = sub i64 %i.q, %i.jz                     ; 6 uses
   %.not446.i = icmp ugt i64 %.14.i, %i.ka
   br i1 %.not446.i, label %bb.az, label %bb.ay
@@ -2268,13 +2269,13 @@ bb.az:                                            ; preds = %bb.ax
 
 iter.check608:                                    ; preds = %bb.az
   %i.kl = getelementptr inbounds nuw i8, ptr %.11391.i, i64 %.14.i
-  %i.km = add i64 %.11391.i588, %i.q
+  %i.km = add i64 %.1369.i549, %i.q
   %i.kn = add i64 %i.km, 1
-  %i.ko = sub i64 %i.kn, %.1369.i549
-  %i.kp = add i64 %.14.i, %.11391.i588
+  %i.ko = sub i64 %i.kn, %i.jz
+  %i.kp = add i64 %.14.i, %.1369.i549
   %umax589 = tail call i64 @llvm.umax.i64(i64 %i.ko, i64 %i.kp)
-  %i.kq = add i64 %umax589, %.1369.i549
-  %i.kr = add i64 %.11391.i588, %i.q
+  %i.kq = add i64 %umax589, %i.jz
+  %i.kr = add i64 %.1369.i549, %i.q
   %i.ks = sub i64 %i.kq, %i.kr                    ; 7 uses
   %min.iters.check591 = icmp ult i64 %i.ks, 8
   %i.kt = add i64 %i.kj, -1
@@ -2380,7 +2381,8 @@ iter.check570:                                    ; preds = %.preheader
   %umax551 = tail call i64 @llvm.umax.i64(i64 %i.lq, i64 %i.lr)
   %i.ls = sub i64 %umax551, %i.lk                 ; 7 uses
   %min.iters.check553 = icmp ult i64 %i.ls, 8
-  %i.lt = sub i64 %.1369.i549, %i.lk
+  %7 = ptrtoaddr ptr %.1369.i to i64
+  %i.lt = sub i64 %7, %i.lk
   %diff.check550 = icmp ugt i64 %i.lt, -32
   %or.cond626 = select i1 %min.iters.check553, i1 true, i1 %diff.check550
   br i1 %or.cond626, label %.lr.ph235.preheader, label %vector.main.loop.iter.check554
@@ -2783,11 +2785,11 @@ bb.bc:                                            ; preds = %read_variable_lengt
 
 .loopexit215:                                     ; preds = %bb.x, %bb.y, %bb.bc
   %.2 = phi ptr [ %.8, %bb.bc ], [ %.15151, %bb.x ], [ %i.ch, %bb.y ] ; 14 uses
-  %.11391.i.i = phi ptr [ %.10390.i.i, %bb.bc ], [ %.2382.i.i, %bb.y ], [ %.2382.i.i, %bb.x ] ; 14 uses
+  %.11391.i.i = phi ptr [ %.10390.i.i, %bb.bc ], [ %.2382.i.i, %bb.y ], [ %.2382.i.i, %bb.x ] ; 15 uses
   %.1369.i.i = phi ptr [ %.0368.i.i, %bb.bc ], [ %i.cj, %bb.y ], [ %i.cj, %bb.x ] ; 10 uses
   %.1367.i.i = phi i64 [ %.0366.i.i, %bb.bc ], [ %i.cg, %bb.y ], [ %i.cg, %bb.x ] ; 3 uses
   %.13.i.i = phi i64 [ %i.ka, %bb.bc ], [ %i.cv, %bb.x ], [ %i.da, %bb.y ] ; 7 uses
-  %.11391.i.i619 = ptrtoaddr ptr %.11391.i.i to i64 ; 6 uses
+  %.11391.i.i619 = ptrtoaddr ptr %.11391.i.i to i64 ; 5 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %.1369.i.i, i64 %i.o
   %i.kc = icmp ult ptr %i.kb, %i.s
   %or.cond463.i.i = select i1 %i.ad, i1 %i.kc, i1 false, !prof !43
@@ -2960,7 +2962,6 @@ bb.bl:                                            ; preds = %bb.bj
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %.3371.i.i = phi ptr [ %i.mm, %bb.bk ], [ %i.mo, %bb.bl ] ; 6 uses
-  %.3371.i.i620 = ptrtoaddr ptr %.3371.i.i to i64
   %i.mp = getelementptr inbounds nuw i8, ptr %.11391.i.i, i64 8 ; 5 uses
   %i.mq = icmp ugt ptr %i.ke, %i.lq
   br i1 %i.mq, label %bb.bn, label %bb.bq, !prof !27
@@ -3009,7 +3010,9 @@ iter.check641:                                    ; preds = %bb.bp
   br i1 %min.iters.check624, label %.lr.ph291.preheader, label %vector.memcheck618
 
 vector.memcheck618:                               ; preds = %iter.check641
-  %i.nj = sub i64 %.11391.i.i619, %.3371.i.i620
+  %5 = ptrtoaddr ptr %.11391.i.i to i64
+  %6 = ptrtoaddr ptr %.3371.i.i to i64
+  %i.nj = sub i64 %5, %6
   %i.nk = add i64 %i.nj, 7
   %diff.check621 = icmp ult i64 %i.nk, 31
   br i1 %diff.check621, label %.lr.ph291.preheader, label %vector.main.loop.iter.check625
@@ -3412,11 +3415,11 @@ bb.ao:                                            ; preds = %read_variable_lengt
 
 .loopexit147:                                     ; preds = %bb.p, %bb.q, %bb.ao
   %.2 = phi ptr [ %.8, %bb.ao ], [ %.1588, %bb.p ], [ %i.bh, %bb.q ] ; 8 uses
-  %.11391.i = phi ptr [ %.10390.i, %bb.ao ], [ %.2382.i, %bb.q ], [ %.2382.i, %bb.p ] ; 11 uses
+  %.11391.i = phi ptr [ %.10390.i, %bb.ao ], [ %.2382.i, %bb.q ], [ %.2382.i, %bb.p ] ; 12 uses
   %.1369.i = phi ptr [ %.0368.i, %bb.ao ], [ %i.bj, %bb.q ], [ %i.bj, %bb.p ] ; 8 uses
   %.1367.i = phi i64 [ %.0366.i, %bb.ao ], [ %i.bg, %bb.q ], [ %i.bg, %bb.p ] ; 3 uses
   %.13.i = phi i64 [ %i.hu, %bb.ao ], [ %i.bv, %bb.p ], [ %i.ca, %bb.q ] ; 3 uses
-  %.11391.i487 = ptrtoaddr ptr %.11391.i to i64   ; 3 uses
+  %.11391.i487 = ptrtoaddr ptr %.11391.i to i64   ; 2 uses
   %i.hv = icmp ult ptr %.1369.i, %i.b
   br i1 %i.hv, label %LZ4_wildCopy32.exit.thread, label %bb.ap, !prof !43
 
@@ -3464,7 +3467,6 @@ bb.ar:                                            ; preds = %bb.ap
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
   %.3371.i = phi ptr [ %i.it, %bb.aq ], [ %i.iv, %bb.ar ] ; 6 uses
-  %.3371.i488 = ptrtoaddr ptr %.3371.i to i64
   %i.iw = getelementptr inbounds nuw i8, ptr %.11391.i, i64 8 ; 5 uses
   %i.ix = icmp ugt ptr %i.hw, %i.hx
   br i1 %i.ix, label %bb.at, label %bb.aw, !prof !27
@@ -3513,7 +3515,9 @@ iter.check:                                       ; preds = %bb.av
   br i1 %min.iters.check490, label %.lr.ph219.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.jq = sub i64 %.11391.i487, %.3371.i488
+  %5 = ptrtoaddr ptr %.11391.i to i64
+  %6 = ptrtoaddr ptr %.3371.i to i64
+  %i.jq = sub i64 %5, %6
   %i.jr = add i64 %i.jq, 7
   %diff.check = icmp ult i64 %i.jr, 31
   br i1 %diff.check, label %.lr.ph219.preheader, label %vector.main.loop.iter.check
@@ -3916,7 +3920,6 @@ bb.co:                                            ; preds = %read_variable_lengt
   %.1369.i.i = phi ptr [ %.0368.i.i, %bb.co ], [ %i.mi, %bb.bp ], [ %i.mi, %bb.bq ] ; 16 uses
   %.1367.i.i35 = phi i64 [ %.0366.i.i50, %bb.co ], [ %i.mf, %bb.bp ], [ %i.mf, %bb.bq ] ; 3 uses
   %.13.i.i36 = phi i64 [ %i.tb, %bb.co ], [ %i.mz, %bb.bq ], [ %i.mu, %bb.bp ] ; 3 uses
-  %.1369.i.i727 = ptrtoaddr ptr %.1369.i.i to i64
   %i.tc = icmp ult ptr %.1369.i.i, %i.kd
   br i1 %i.tc, label %LZ4_wildCopy32.exit.thread.i54, label %bb.cp, !prof !43
 
@@ -3945,7 +3948,8 @@ iter.check:                                       ; preds = %.preheader.i72
   %umax = tail call i64 @llvm.umax.i64(i64 %i.tm, i64 %i.tn)
   %i.to = sub i64 %umax, %i.tg                    ; 7 uses
   %min.iters.check729 = icmp ult i64 %i.to, 8
-  %i.tp = sub i64 %.1369.i.i727, %i.tg
+  %7 = ptrtoaddr ptr %.1369.i.i to i64
+  %i.tp = sub i64 %7, %i.tg
   %diff.check = icmp ugt i64 %i.tp, -32
   %or.cond806 = or i1 %min.iters.check729, %diff.check
   br i1 %or.cond806, label %.lr.ph227.i.preheader, label %vector.main.loop.iter.check

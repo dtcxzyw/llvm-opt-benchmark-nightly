@@ -205,7 +205,6 @@ bb.xy:                                            ; preds = %.lr.ph.i3867
   %i.bhi = load i64, ptr %i.ed, align 8, !alias.scope !40447, !noalias !40448, !noundef !55
   %i.bhj = icmp ugt i64 %i.bhi, 3
   %.sink11.i26.i = select i1 %i.bhj, ptr %i.bhg, ptr %i.bev ; 8 uses
-  %.sink11.i26.i7125 = ptrtoaddr ptr %.sink11.i26.i to i64
   %i.bhk = getelementptr inbounds nuw [8 x i8], ptr %.sink11.i26.i, i64 %.sink10.i.i ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !40449)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !40450
@@ -287,7 +286,6 @@ bb.yd:                                            ; preds = %bb.yc
   %i.bic = getelementptr inbounds nuw i8, ptr %i.cn, i64 8 ; 7 uses
   %i.bid = load ptr, ptr %i.bic, align 8, !alias.scope !40455, !noalias !40456, !nonnull !55
   %.sink10.i.i3880 = select i1 %i.bib, ptr %i.bid, ptr %i.bic ; 3 uses
-  %.sink10.i.i38807124 = ptrtoaddr ptr %.sink10.i.i3880 to i64
   %.sink9.idx.i.i3881.sroa.sel = select i1 %i.bib, ptr %.sroa.gep3994, ptr %i.cn ; 3 uses
   %i.bie = load i64, ptr %.sink9.idx.i.i3881.sroa.sel, align 8, !alias.scope !40449, !noalias !40454, !noundef !55 ; 8 uses
   %i.bif = icmp ult i64 %i.bie, %.sink.i.pre-phi.i3879
@@ -303,9 +301,11 @@ bb.yd:                                            ; preds = %bb.yc
   br i1 %min.iters.check, label %.lr.ph.i3891.preheader7467, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i3891.preheader
+  %5 = ptrtoaddr ptr %.sink10.i.i3880 to i64
   %i.bil = shl i64 %i.bie, 3
-  %i.bim = add i64 %i.bil, %.sink10.i.i38807124
-  %i.bin = sub i64 %.sink11.i26.i7125, %i.bim
+  %6 = ptrtoaddr ptr %.sink11.i26.i to i64
+  %i.bim = add i64 %i.bil, %5
+  %i.bin = sub i64 %6, %i.bim
   %diff.check = icmp ugt i64 %i.bin, -32
   br i1 %diff.check, label %.lr.ph.i3891.preheader7467, label %vector.ph
 
@@ -708,7 +708,6 @@ bb.g:                                             ; preds = %bb.f
   store i64 0, ptr %i.c, align 8, !alias.scope !42891, !noalias !42893
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !alias.scope !42891, !noalias !42893, !nonnull !55, !noundef !55 ; 11 uses
-  %4 = ptrtoaddr ptr %i.q to i64
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.sroa.01.0.i ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42894)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42895)
@@ -905,7 +904,6 @@ bb.p:                                             ; preds = %_ZN4core4iter6trait
 "_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h6bb2605d69bea1efE.exit.i": ; preds = %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h6bb2605d69bea1efE.exit_crit_edge.i", %_ZN4core4iter6traits8iterator8Iterator7collect17hd7fd7a46c6d2ef2eE.exit
   %i.aw = phi ptr [ %.pre, %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h6bb2605d69bea1efE.exit_crit_edge.i" ], [ %.sroa.10.0.i.i.i20.i.i2736, %_ZN4core4iter6traits8iterator8Iterator7collect17hd7fd7a46c6d2ef2eE.exit ] ; 4 uses
   %i.ax = phi i64 [ %.pre.i, %"._ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17h6bb2605d69bea1efE.exit_crit_edge.i" ], [ %.val7.i.i.i.i.i.i.i.i2934, %_ZN4core4iter6traits8iterator8Iterator7collect17hd7fd7a46c6d2ef2eE.exit ] ; 8 uses
-  %5 = ptrtoaddr ptr %i.aw to i64
   %.not11.i.i.i.not = icmp ugt i64 %i.m, %3
   br i1 %.not11.i.i.i.not, label %iter.check68, label %.loopexit
 
@@ -914,9 +912,11 @@ iter.check68:                                     ; preds = %"_ZN5alloc3vec16Vec
   br i1 %min.iters.check53, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check68
-  %i.ay = add i64 %i.ax, %5
-  %i.az = add i64 %spec.select.i, %4
-  %i.ba = sub i64 %i.az, %i.ay
+  %4 = ptrtoaddr ptr %i.aw to i64
+  %5 = ptrtoaddr ptr %i.q to i64
+  %i.ay = add i64 %spec.select.i, %5
+  %i.az = add i64 %i.ax, %4
+  %i.ba = sub i64 %i.ay, %i.az
   %diff.check = icmp ugt i64 %i.ba, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check54
 
@@ -1062,8 +1062,8 @@ bb.g:                                             ; preds = %.split.i
   %i.m = add nuw i64 %spec.select.i, %.promoted   ; 11 uses
   %.sroa.031.0.copyload = load i64, ptr %3, align 8 ; 6 uses
   %.sroa.532.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.532.0.copyload = load ptr, ptr %.sroa.532.0..sroa_idx, align 8 ; 17 uses
-  %.sroa.532.0.copyload129 = ptrtoaddr ptr %.sroa.532.0.copyload to i64 ; 7 uses
+  %.sroa.532.0.copyload = load ptr, ptr %.sroa.532.0..sroa_idx, align 8 ; 19 uses
+  %.sroa.532.0.copyload129 = ptrtoaddr ptr %.sroa.532.0.copyload to i64 ; 4 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.7.0.copyload.fr = freeze i64 %.sroa.7.0.copyload ; 19 uses
@@ -1142,8 +1142,7 @@ bb.n:                                             ; preds = %bb.m
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.g
   store i64 %.promoted, ptr %i.a, align 8, !alias.scope !43060, !noalias !43061
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  %i.ae = load ptr, ptr %i.ad, align 8, !alias.scope !43060, !noalias !43061, !nonnull !55, !noundef !55 ; 5 uses
-  %4 = ptrtoaddr ptr %i.ae to i64                 ; 2 uses
+  %i.ae = load ptr, ptr %i.ad, align 8, !alias.scope !43060, !noalias !43061, !nonnull !55, !noundef !55 ; 6 uses
   %i.af = sub nuw nsw i64 %i.b, %i.m              ; 6 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.m
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.532.0.copyload) ]
@@ -1167,8 +1166,10 @@ bb.n:                                             ; preds = %bb.m
   br i1 %min.iters.check, label %scalar.ph, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
+  %4 = ptrtoaddr ptr %i.ae to i64
+  %5 = ptrtoaddr ptr %.sroa.532.0.copyload to i64
   %i.ap = add i64 %.promoted, %4
-  %i.aq = sub i64 %.sroa.532.0.copyload129, %i.ap
+  %i.aq = sub i64 %5, %i.ap
   %diff.check = icmp ugt i64 %i.aq, -4
   br i1 %diff.check, label %scalar.ph, label %vector.ph
 
@@ -1394,8 +1395,8 @@ vec.epilog.middle.block210:                       ; preds = %vec.epilog.vector.b
 "_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hdaf06ff9bd37871eE.exit26.thread.i.i": ; preds = %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$9move_tail17h57ef1d815f8dc8a9E.exit.i.i", %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hdaf06ff9bd37871eE.exit26.thread.loopexit.i.i"
   %.pre-phi.i = phi i64 [ %i.dj, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$9move_tail17h57ef1d815f8dc8a9E.exit.i.i" ], [ %.pre22.i, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hdaf06ff9bd37871eE.exit26.thread.loopexit.i.i" ] ; 5 uses
   %i.dk = phi i64 [ %.promoted59, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$9move_tail17h57ef1d815f8dc8a9E.exit.i.i" ], [ %i.hg, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hdaf06ff9bd37871eE.exit26.thread.loopexit.i.i" ]
-  %.val.i.i.i.i.i.i.i = phi ptr [ %i.dd, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$9move_tail17h57ef1d815f8dc8a9E.exit.i.i" ], [ %i.he, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hdaf06ff9bd37871eE.exit26.thread.loopexit.i.i" ] ; 7 uses
-  %.val.i.i.i.i.i.i.i156 = ptrtoaddr ptr %.val.i.i.i.i.i.i.i to i64 ; 2 uses
+  %.val.i.i.i.i.i.i.i = phi ptr [ %i.dd, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$9move_tail17h57ef1d815f8dc8a9E.exit.i.i" ], [ %i.he, %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$4fill17hdaf06ff9bd37871eE.exit26.thread.loopexit.i.i" ] ; 8 uses
+  %.val.i.i.i.i.i.i.i156 = ptrtoaddr ptr %.val.i.i.i.i.i.i.i to i64
   %i.dl = icmp slt i64 %.pre-phi.i, 0
   br i1 %i.dl, label %bb.r, label %_ZN4core5alloc6layout6Layout6repeat17h29edbb865869b355E.exit.i.i.i.i.i.i.i.i, !prof !43073
 
@@ -1410,14 +1411,15 @@ bb.q:                                             ; preds = %_ZN4core5alloc6layo
   br i1 %i.do, label %bb.r, label %iter.check
 
 iter.check:                                       ; preds = %bb.q
-  %5 = ptrtoaddr ptr %i.dn to i64
   %i.dp = add i64 %.sroa.7.0.copyload.fr, %.sroa.532.0.copyload129
   %i.dq = sub i64 %i.dp, %.val.i.i.i.i.i.i.i156   ; 7 uses
   %min.iters.check159 = icmp ult i64 %i.dq, 4
-  %i.dr = sub i64 %.val.i.i.i.i.i.i.i156, %5
+  %6 = ptrtoaddr ptr %i.dn to i64
+  %7 = ptrtoaddr ptr %.val.i.i.i.i.i.i.i to i64
+  %i.dr = sub i64 %7, %6
   %diff.check157 = icmp ugt i64 %i.dr, -32
-  %or.cond214 = or i1 %min.iters.check159, %diff.check157
-  br i1 %or.cond214, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
+  %or.cond222 = select i1 %min.iters.check159, i1 true, i1 %diff.check157
+  br i1 %or.cond222, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
   %min.iters.check160 = icmp ult i64 %i.dq, 32
@@ -1567,12 +1569,14 @@ bb.t:                                             ; preds = %bb.s
 
 .lr.ph57:                                         ; preds = %"_ZN5alloc3vec6splice55_$LT$impl$u20$alloc..vec..drain..Drain$LT$T$C$A$GT$$GT$9move_tail17h57ef1d815f8dc8a9E.exit.i.i"
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fg, i64 %.promoted59 ; 4 uses
-  %i.fn = add i64 %.sroa.7.0.copyload.fr, %.sroa.532.0.copyload129 ; 2 uses
+  %8 = ptrtoaddr ptr %.sroa.532.0.copyload to i64 ; 2 uses
+  %i.fn = add i64 %.sroa.7.0.copyload.fr, %8      ; 2 uses
   %i.fo = xor i64 %bc.resume.val133135, -1
   %i.fp = add i64 %i.fn, %i.fo
   %i.fq = freeze i64 %i.fp
+  %9 = ptrtoaddr ptr %i.ae to i64
   %i.fr = ptrtoaddr ptr %bc.resume.val to i64
-  %i.fs = add i64 %.promoted, %4
+  %i.fs = add i64 %.promoted, %9
   %i.ft = add i64 %i.fs, %spec.select.i
   %i.fu = xor i64 %i.fr, -1
   %i.fv = add i64 %i.ft, %i.fu
@@ -1582,7 +1586,7 @@ bb.t:                                             ; preds = %bb.s
   %i.fz = sub i64 %i.fx, %i.fy
   %i.ga = freeze i64 %i.fz
   %i.gb = add i64 %.promoted, %.sroa.7.0.copyload.fr
-  %i.gc = add i64 %i.gb, %.sroa.532.0.copyload129
+  %i.gc = add i64 %i.gb, %8
   %i.gd = add i64 %i.gc, %spec.select.i
   %i.ge = add i64 %i.gd, -2
   %i.gf = add i64 %.promoted59, %bc.resume.val133135
@@ -1985,8 +1989,8 @@ bb.i:                                             ; preds = %bb.h
   %i.u = sub nuw nsw i64 %i.f, %spec.select.i     ; 2 uses
   store i64 %i.u, ptr %i.e, align 8, !alias.scope !43163, !noalias !43162
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.w = load ptr, ptr %i.v, align 8, !alias.scope !43163, !noalias !43162, !nonnull !55, !noundef !55 ; 3 uses
-  %i.x = ptrtoaddr ptr %i.w to i64                ; 2 uses
+  %i.w = load ptr, ptr %i.v, align 8, !alias.scope !43163, !noalias !43162, !nonnull !55, !noundef !55 ; 4 uses
+  %i.x = ptrtoaddr ptr %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.u ; 7 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.f ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.c, i64 24
@@ -2023,9 +2027,10 @@ iter.check73:                                     ; preds = %bb.i
 
 vector.memcheck56:                                ; preds = %iter.check73
   %i.af = ptrtoaddr ptr %i.ae to i64
+  %3 = ptrtoaddr ptr %i.w to i64
   %i.ag = add i64 %.pre.i, %i.af
   %i.ah = add i64 %i.ag, %spec.select.i
-  %i.ai = add i64 %i.f, %i.x
+  %i.ai = add i64 %i.f, %3
   %i.aj = sub i64 %i.ai, %i.ah
   %diff.check57 = icmp ugt i64 %i.aj, -32
   br i1 %diff.check57, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check59
@@ -2188,8 +2193,8 @@ bb.m:                                             ; preds = %bb.g
   tail call void @llvm.experimental.noalias.scope.decl(metadata !43173)
   store i64 %.sroa.01.0.i, ptr %i.e, align 8, !alias.scope !43173, !noalias !43172
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.cg = load ptr, ptr %i.cf, align 8, !alias.scope !43173, !noalias !43172, !nonnull !55, !noundef !55 ; 3 uses
-  %i.ch = ptrtoaddr ptr %i.cg to i64              ; 2 uses
+  %i.cg = load ptr, ptr %i.cf, align 8, !alias.scope !43173, !noalias !43172, !nonnull !55, !noundef !55 ; 4 uses
+  %i.ch = ptrtoaddr ptr %i.cg to i64
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 %.sroa.01.0.i ; 7 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.f ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -2213,9 +2218,10 @@ iter.check:                                       ; preds = %bb.m
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.cp = ptrtoaddr ptr %i.co to i64
-  %i.cq = add i64 %.pre.i29, %i.cp
-  %i.cr = add i64 %.sroa.01.0.i, %i.ch
-  %i.cs = sub i64 %i.cr, %i.cq
+  %4 = ptrtoaddr ptr %i.cg to i64
+  %i.cq = add i64 %.sroa.01.0.i, %4
+  %i.cr = add i64 %.pre.i29, %i.cp
+  %i.cs = sub i64 %i.cq, %i.cr
   %diff.check = icmp ugt i64 %i.cs, -32
   br i1 %diff.check, label %.lr.ph.i.i.i22.preheader, label %vector.main.loop.iter.check
 

@@ -204,19 +204,19 @@ _ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EE7reserveEj.exit.i: ; preds = %_ZN4Lu
   br i1 %.not9.i.i.i.i, label %_ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EE7reserveEj.exit.i
-  %4 = ptrtoaddr ptr %i.ao to i64
-  %5 = ptrtoaddr ptr %i.an to i64
-  %i.ar = add nsw i64 %.idx.i, -4                 ; 2 uses
-  %6 = lshr exact i64 %i.ar, 2
-  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
-  %min.iters.check42 = icmp ult i64 %i.ar, 44
-  %i.as = sub i64 %4, %5
+  %4 = add nsw i64 %.idx.i, -4                    ; 2 uses
+  %5 = lshr exact i64 %4, 2
+  %i.ar = add nuw nsw i64 %5, 1                   ; 2 uses
+  %min.iters.check42 = icmp ult i64 %4, 44
+  %6 = ptrtoaddr ptr %i.an to i64
+  %7 = ptrtoaddr ptr %i.ao to i64
+  %i.as = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.as, -32
   %or.cond = select i1 %min.iters.check42, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader74, label %vector.ph43
 
 vector.ph43:                                      ; preds = %.lr.ph.i.i.i.i.preheader
-  %n.vec44 = and i64 %7, 9223372036854775800      ; 3 uses
+  %n.vec44 = and i64 %i.ar, 9223372036854775800   ; 3 uses
   %i.at = shl i64 %n.vec44, 2                     ; 2 uses
   %i.au = getelementptr i8, ptr %i.an, i64 %i.at
   %i.av = getelementptr i8, ptr %i.ao, i64 %i.at
@@ -238,7 +238,7 @@ vector.body45:                                    ; preds = %vector.body45, %vec
   br i1 %i.az, label %middle.block52, label %vector.body45, !llvm.loop !233
 
 middle.block52:                                   ; preds = %vector.body45
-  %cmp.n53 = icmp eq i64 %7, %n.vec44
+  %cmp.n53 = icmp eq i64 %i.ar, %n.vec44
   br i1 %cmp.n53, label %_ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EEC2ERKS3_.exit, label %.lr.ph.i.i.i.i.preheader74
 
 .lr.ph.i.i.i.i.preheader74:                       ; preds = %.lr.ph.i.i.i.i.preheader, %middle.block52
@@ -291,7 +291,6 @@ _ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EEC2ERKS3_.exit: ; preds = %.lr.ph.i.i
   %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 55
   store i32 0, ptr %i.bi, align 1
   %i.bj = load ptr, ptr %i.c, align 8, !tbaa !136 ; 9 uses
-  %8 = ptrtoaddr ptr %i.bj to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !177
   %.not.i.i8 = icmp eq ptr %i.bj, %i.bl
@@ -308,7 +307,6 @@ bb.f:                                             ; preds = %_ZN4Luau11SmallVect
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bj, i64 24 ; 5 uses
   store ptr %i.bq, ptr %i.bn, align 8, !tbaa !172
   %i.br = load ptr, ptr %i.k, align 8, !tbaa !172 ; 8 uses
-  %9 = ptrtoaddr ptr %i.br to i64
   %.not.i.i.i.i9 = icmp eq ptr %i.br, %i.n
   br i1 %.not.i.i.i.i9, label %bb.g, label %bb.h
 
@@ -328,6 +326,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %min.iters.check59, label %.lr.ph.i.i.i.i.i.i.i.i.preheader73, label %vector.memcheck56
 
 vector.memcheck56:                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
+  %8 = ptrtoaddr ptr %i.bj to i64
+  %9 = ptrtoaddr ptr %i.br to i64
   %i.by = sub i64 %8, %9
   %i.bz = add i64 %i.by, 23
   %diff.check57 = icmp ult i64 %i.bz, 31
@@ -730,7 +730,6 @@ common.resume:                                    ; preds = %_ZN4Luau11SmallVect
 
 _ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EEC2ESt16initializer_listIS2_E.exit: ; preds = %.lr.ph.i.i.i.preheader.i, %_ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EE7reserveEj.exit.i
   %i.ap = phi ptr [ %.pre, %.lr.ph.i.i.i.preheader.i ], [ %i.d, %_ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EE7reserveEj.exit.i ] ; 9 uses
-  %5 = ptrtoaddr ptr %i.ap to i64
   store i32 %i.o, ptr %i.l, align 8, !tbaa !170
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
   store i32 0, ptr %i.aq, align 8, !tbaa !175
@@ -756,7 +755,6 @@ bb.f:                                             ; preds = %_ZN4Luau11SmallVect
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ap, i64 24 ; 5 uses
   store ptr %i.ba, ptr %i.ax, align 8, !tbaa !172
   %i.bb = load ptr, ptr %i.k, align 8, !tbaa !172 ; 8 uses
-  %6 = ptrtoaddr ptr %i.bb to i64
   %.not.i.i.i.i10 = icmp eq ptr %i.bb, %i.n
   br i1 %.not.i.i.i.i10, label %bb.g, label %bb.h
 
@@ -776,6 +774,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %min.iters.check43, label %.lr.ph.i.i.i.i.i.i.i.i.preheader57, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
+  %5 = ptrtoaddr ptr %i.ap to i64
+  %6 = ptrtoaddr ptr %i.bb to i64
   %i.bi = sub i64 %5, %6
   %i.bj = add i64 %i.bi, 23
   %diff.check = icmp ult i64 %i.bj, 31
@@ -1178,8 +1178,8 @@ _ZNKSt6vectorIN4Luau7CodeGen6IrInstESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = 
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 6
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18 ; 6 uses
-  %i.q = ptrtoaddr ptr %i.p to i64                ; 2 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18 ; 7 uses
+  %i.q = ptrtoaddr ptr %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 6 uses
   %i.s = load i8, ptr %2, align 8, !tbaa !163
   store i8 %i.s, ptr %i.r, align 8, !tbaa !163
@@ -1192,7 +1192,6 @@ _ZNKSt6vectorIN4Luau7CodeGen6IrInstESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = 
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 24 ; 5 uses
   store ptr %i.x, ptr %i.t, align 8, !tbaa !172
   %i.y = load ptr, ptr %i.u, align 8, !tbaa !172  ; 8 uses
-  %3 = ptrtoaddr ptr %i.y to i64
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %.not.i.i = icmp eq ptr %i.y, %i.z
   br i1 %.not.i.i, label %bb.c, label %bb.d
@@ -1214,8 +1213,10 @@ bb.c:                                             ; preds = %_ZNKSt6vectorIN4Lua
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader104, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.ah = add i64 %i.q, %i.m
-  %i.ai = add i64 %3, %i.e
+  %3 = ptrtoaddr ptr %i.p to i64
+  %4 = ptrtoaddr ptr %i.y to i64
+  %i.ah = add i64 %3, %i.m
+  %i.ai = add i64 %4, %i.e
   %i.aj = sub i64 %i.ah, %i.ai
   %i.ak = add i64 %i.aj, 23
   %diff.check = icmp ult i64 %i.ak, 31

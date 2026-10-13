@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN4llvm23SmallVectorTemplateBaseIN5clang12FunctionType16ExtParameterInfoELb1EE28reserveForParamAndGetAddressERS3_m.exit: ; preds = %bb.d, %bb.e
   %i.t = phi i64 [ %i.g, %bb.d ], [ %.pre48, %bb.e ] ; 9 uses
-  %i.u = phi ptr [ %i.b, %bb.d ], [ %.pre, %bb.e ] ; 4 uses
-  %i.v = ptrtoaddr ptr %i.u to i64                ; 2 uses
+  %i.u = phi ptr [ %i.b, %bb.d ], [ %.pre, %bb.e ] ; 5 uses
+  %i.v = ptrtoaddr ptr %i.u to i64
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.e ; 8 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.t ; 5 uses
   %gepdiff = sub nsw i64 %i.t, %i.e               ; 5 uses
@@ -239,9 +239,10 @@ iter.check:                                       ; preds = %_ZN4llvm15SmallVect
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.ag = ptrtoaddr ptr %i.ae to i64
+  %4 = ptrtoaddr ptr %i.u to i64
   %i.ah = add i64 %i.ad, %2
   %i.ai = add i64 %i.ah, %i.ag
-  %i.aj = add i64 %i.t, %i.v
+  %i.aj = add i64 %i.t, %4
   %i.ak = sub i64 %i.aj, %i.ai
   %diff.check = icmp ugt i64 %i.ak, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check

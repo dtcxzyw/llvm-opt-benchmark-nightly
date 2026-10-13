@@ -206,8 +206,7 @@ define range(i32 -226, 1) i32 @wc_AesGcmEncrypt(ptr nofree noundef readonly capt
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 17 uses
   %i.b = alloca [16 x i8], align 16               ; 4 uses
-  %i.c = alloca [16 x i8], align 16               ; 37 uses
-  %10 = ptrtoaddr ptr %i.c to i64                 ; 7 uses
+  %i.c = alloca [16 x i8], align 16               ; 38 uses
   %i.d = alloca i32, align 4                      ; 6 uses
   %i.e = icmp eq ptr %0, null
   %i.f = icmp eq ptr %4, null
@@ -433,6 +432,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not.i.i.i, label %XorWordsOut.exit.i93.i, label %.lr.ph.i.i99.i.preheader
 
 .lr.ph.i.i99.i.preheader:                         ; preds = %bb.t
+  %10 = ptrtoaddr ptr %i.c to i64                 ; 4 uses
   %i.cj = or disjoint i64 %10, %.idx.i.i.i
   %i.ck = or disjoint i64 %10, 8
   %i.cl = call i64 @llvm.umax.i64(i64 %i.cj, i64 %i.ck)
@@ -605,10 +605,11 @@ bb.w:                                             ; preds = %bb.v
   %i.ex = and i32 %7, 24
   %.idx.i.i109.i = zext nneg i32 %i.ex to i64     ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i.i109.i
-  %i.ez = add i64 %10, %.idx.i.i109.i
-  %i.fa = or disjoint i64 %10, 8
+  %11 = ptrtoaddr ptr %i.c to i64                 ; 3 uses
+  %i.ez = add i64 %11, %.idx.i.i109.i
+  %i.fa = or disjoint i64 %11, 8
   %i.fb = call i64 @llvm.umax.i64(i64 %i.ez, i64 %i.fa)
-  %i.fc = xor i64 %10, -1
+  %i.fc = xor i64 %11, -1
   %i.fd = add i64 %i.fb, %i.fc                    ; 2 uses
   %i.fe = lshr i64 %i.fd, 3
   %i.ff = add nuw nsw i64 %i.fe, 1                ; 2 uses
