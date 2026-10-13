@@ -205,15 +205,15 @@ _ZNSt15__new_allocatorIN4pbrt6Point2IfEEE8allocateEmPKv.exit.i.i.i.i..noexc41_cr
   br i1 %.not7.i.i.i.i.i33, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %.noexc41
-  %i.bu = ptrtoaddr ptr %i.bp to i64              ; 2 uses
-  %i.bv = ptrtoaddr ptr %i.bq to i64
+  %i.bu = ptrtoaddr ptr %i.bq to i64
+  %i.bv = ptrtoaddr ptr %i.bp to i64              ; 2 uses
   %i.bw = ptrtoaddr ptr %i.bo to i64
   %i.bx = add i64 %i.bw, -8
-  %i.by = sub i64 %i.bx, %i.bu                    ; 3 uses
+  %i.by = sub i64 %i.bx, %i.bv                    ; 3 uses
   %i.bz = lshr i64 %i.by, 3
   %i.ca = add nuw nsw i64 %i.bz, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.by, 24
-  %i.cb = sub i64 %i.bu, %i.bv
+  %i.cb = sub i64 %i.bv, %i.bu
   %diff.check = icmp ugt i64 %i.cb, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i34.preheader, label %vector.main.loop.iter.check
@@ -616,15 +616,15 @@ _ZNSt15__new_allocatorIN4pbrt6Point2IfEEE8allocateEmPKv.exit.i.i.i.i..noexc40_cr
   br i1 %.not7.i.i.i.i.i32, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %.noexc40
-  %i.bq = ptrtoaddr ptr %i.bl to i64              ; 2 uses
-  %i.br = ptrtoaddr ptr %i.bm to i64
+  %i.bq = ptrtoaddr ptr %i.bm to i64
+  %i.br = ptrtoaddr ptr %i.bl to i64              ; 2 uses
   %i.bs = ptrtoaddr ptr %i.bk to i64
   %i.bt = add i64 %i.bs, -8
-  %i.bu = sub i64 %i.bt, %i.bq                    ; 3 uses
+  %i.bu = sub i64 %i.bt, %i.br                    ; 3 uses
   %i.bv = lshr i64 %i.bu, 3
   %i.bw = add nuw nsw i64 %i.bv, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.bu, 24
-  %i.bx = sub i64 %i.bq, %i.br
+  %i.bx = sub i64 %i.br, %i.bq
   %diff.check = icmp ugt i64 %i.bx, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i33.preheader, label %vector.main.loop.iter.check

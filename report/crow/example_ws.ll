@@ -205,9 +205,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb
   br i1 %.not11, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit
-  %2 = ptrtoint ptr %i.m to i64                   ; 2 uses
   %i.an = ptrtoaddr ptr %i.am to i64
   %i.ao = ptrtoaddr ptr %i.al to i64
+  %2 = ptrtoint ptr %i.m to i64                   ; 2 uses
   %i.ap = add i64 %i.an, -8
   %i.aq = sub i64 %i.ap, %i.ao                    ; 3 uses
   %i.ar = lshr i64 %i.aq, 3

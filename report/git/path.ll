@@ -204,14 +204,14 @@ bb.a:
   br i1 %i.a, label %iter.check, label %.preheader108
 
 iter.check:                                       ; preds = %bb.a
-  %i.d = ptrtoaddr ptr %0 to i64
-  %i.e = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.f = add i64 %i.e, %i.b
-  %i.g = add i64 %i.e, 1
+  %i.d = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.e = ptrtoaddr ptr %0 to i64
+  %i.f = add i64 %i.d, %i.b
+  %i.g = add i64 %i.d, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.f, i64 %i.g)
-  %i.h = sub i64 %umax, %i.e                      ; 7 uses
+  %i.h = sub i64 %umax, %i.d                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.h, 8
-  %i.i = sub i64 %i.e, %i.d
+  %i.i = sub i64 %i.d, %i.e
   %diff.check = icmp ugt i64 %i.i, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -549,14 +549,14 @@ bb.a:
   br i1 %i.a, label %iter.check, label %.preheader108.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.d = ptrtoaddr ptr %0 to i64
-  %i.e = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.f = add i64 %i.e, %i.b
-  %i.g = add i64 %i.e, 1
+  %i.d = ptrtoaddr ptr %1 to i64                  ; 4 uses
+  %i.e = ptrtoaddr ptr %0 to i64
+  %i.f = add i64 %i.d, %i.b
+  %i.g = add i64 %i.d, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.f, i64 %i.g)
-  %i.h = sub i64 %umax, %i.e                      ; 7 uses
+  %i.h = sub i64 %umax, %i.d                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.h, 8
-  %i.i = sub i64 %i.e, %i.d
+  %i.i = sub i64 %i.d, %i.e
   %diff.check = icmp ugt i64 %i.i, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check

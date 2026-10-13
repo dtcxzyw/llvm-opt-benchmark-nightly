@@ -205,8 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !107409, !nonnull !28, !noundef !28 ; 2 uses
-  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107409 ; 4 uses
   %2 = ptrtoaddr ptr %i.b to i64
+  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107409 ; 4 uses
   %i.c = ptrtoaddr ptr %.promoted.i.i.i to i64
   %i.d = sub i64 %2, %i.c
   %i.e = add i64 %1, -1
@@ -375,8 +375,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !107453, !nonnull !28, !noundef !28 ; 2 uses
-  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107453 ; 4 uses
   %2 = ptrtoaddr ptr %i.b to i64
+  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107453 ; 4 uses
   %i.c = ptrtoaddr ptr %.promoted.i.i.i to i64
   %i.d = sub i64 %2, %i.c
   %i.e = add i64 %1, -1
@@ -533,8 +533,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !107497, !nonnull !28, !noundef !28 ; 2 uses
-  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107497 ; 4 uses
   %2 = ptrtoaddr ptr %i.b to i64
+  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107497 ; 4 uses
   %i.c = ptrtoaddr ptr %.promoted.i.i.i to i64
   %i.d = sub i64 %2, %i.c
   %i.e = add i64 %1, -1
@@ -703,8 +703,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !107541, !nonnull !28, !noundef !28 ; 2 uses
-  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107541 ; 4 uses
   %2 = ptrtoaddr ptr %i.b to i64
+  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107541 ; 4 uses
   %i.c = ptrtoaddr ptr %.promoted.i.i.i to i64
   %i.d = sub i64 %2, %i.c
   %i.e = add i64 %1, -1
@@ -1097,8 +1097,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !107690, !nonnull !28, !noundef !28 ; 2 uses
-  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107690 ; 4 uses
   %2 = ptrtoaddr ptr %i.b to i64
+  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !107690 ; 4 uses
   %i.c = ptrtoaddr ptr %.promoted.i.i.i to i64
   %i.d = sub i64 %2, %i.c
   %i.e = add i64 %1, -1

@@ -10,8 +10,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @rangePackDecode(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4, i64 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 4 uses
   %i.c = icmp eq i64 %3, 8
   %i.d = icmp eq i64 %1, 8                        ; 4 uses
   %or.cond = and i1 %i.d, %i.c
@@ -27,7 +27,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
   %min.iters.check469 = icmp ult i64 %4, 6
-  %i.e = sub i64 %i.a, %i.b
+  %i.e = sub i64 %i.b, %i.a
   %diff.check467 = icmp ugt i64 %i.e, -32
   %or.cond482 = or i1 %min.iters.check469, %diff.check467
   br i1 %or.cond482, label %.lr.ph.i.preheader486, label %vector.ph470
@@ -430,7 +430,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i105.preheader:                            ; preds = %.preheader.i103
   %min.iters.check401 = icmp ult i64 %4, 8
-  %i.er = sub i64 %i.a, %i.b
+  %i.er = sub i64 %i.b, %i.a
   %diff.check399 = icmp ugt i64 %i.er, -32
   %or.cond483 = or i1 %min.iters.check401, %diff.check399
   br i1 %or.cond483, label %.lr.ph.i105.preheader497, label %vector.ph402
@@ -833,7 +833,7 @@ bb.r:                                             ; preds = %bb.q
 
 iter.check314:                                    ; preds = %.preheader.i129
   %min.iters.check299 = icmp ult i64 %4, 4
-  %i.kj = sub i64 %i.a, %i.b
+  %i.kj = sub i64 %i.b, %i.a
   %diff.check298 = icmp ugt i64 %i.kj, -32
   %or.cond484 = or i1 %min.iters.check299, %diff.check298
   br i1 %or.cond484, label %.lr.ph.i131.preheader, label %vector.main.loop.iter.check300
@@ -1236,7 +1236,7 @@ bb.w:                                             ; preds = %bb.v
 
 iter.check:                                       ; preds = %.preheader.i145
   %min.iters.check = icmp ult i64 %4, 4
-  %i.pp = sub i64 %i.a, %i.b
+  %i.pp = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.pp, -32
   %or.cond485 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond485, label %.lr.ph.i147.preheader, label %vector.main.loop.iter.check

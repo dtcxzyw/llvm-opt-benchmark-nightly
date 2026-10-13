@@ -23,8 +23,8 @@ $_ZTS17LibRaw_exceptions = comdat any
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN6LibRaw13hat_transformEPfS0_iii(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(768512) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = icmp sgt i32 %5, 0
   br i1 %i.c, label %iter.check, label %.preheader53
 
@@ -213,16 +213,16 @@ iter.check133:                                    ; preds = %.preheader53
 
 vector.memcheck109:                               ; preds = %iter.check133
   %i.ca = shl nsw i64 %i.bt, 2                    ; 2 uses
-  %6 = add i64 %i.ca, %i.a
-  %i.cb = sub i64 %6, %i.b
+  %6 = sub i64 %i.a, %i.b                         ; 2 uses
+  %i.cb = sub i64 %i.ca, %6
   %diff.check = icmp ugt i64 %i.cb, -64
-  %i.cc = add i64 %i.ca, %i.b
-  %i.cd = sub i64 %i.a, %i.cc
+  %i.cc = add i64 %i.ca, %i.a
+  %i.cd = sub i64 %i.b, %i.cc
   %diff.check110 = icmp ugt i64 %i.cd, -64
   %conflict.rdx111 = or i1 %diff.check, %diff.check110
-  %7 = sub i64 %i.a, %i.b
-  %diff.check112 = icmp ugt i64 %7, -64
-  %conflict.rdx113 = or i1 %conflict.rdx111, %diff.check112
+  %7 = add i64 %6, -1
+  %diff.check118 = icmp ult i64 %7, 63
+  %conflict.rdx113 = or i1 %conflict.rdx111, %diff.check118
   br i1 %conflict.rdx113, label %.lr.ph56.preheader, label %vector.main.loop.iter.check115
 
 vector.main.loop.iter.check115:                   ; preds = %vector.memcheck109

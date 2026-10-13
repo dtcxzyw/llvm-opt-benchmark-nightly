@@ -204,6 +204,8 @@ _ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4fillIPS3_EEvT_S6_S2_RNS0_
   %i.bq = phi ptr [ %i.ba, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4copyIPS3_S5_EET0_T_S7_S6_RNS0_7HadesGCE.exit ], [ %i.bd, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE9setNonPtrES2_RNS0_7HadesGCE.exit.i ] ; 2 uses
   %.idx87105 = phi i64 [ %.idx87, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4copyIPS3_S5_EET0_T_S7_S6_RNS0_7HadesGCE.exit ], [ %.idx87104, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE9setNonPtrES2_RNS0_7HadesGCE.exit.i ]
   %i.br = phi ptr [ %i.ay, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE4copyIPS3_S5_EET0_T_S7_S6_RNS0_7HadesGCE.exit ], [ %i.be, %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE9setNonPtrES2_RNS0_7HadesGCE.exit.i ] ; 3 uses
+  %5 = ptrtoaddr ptr %i.bq to i64
+  %6 = ptrtoaddr ptr %i.br to i64
   %i.bs = add i32 %.sroa.speculated72, %3
   %i.bt = icmp ult i32 %i.bs, %4
   br i1 %i.bt, label %bb.l, label %_ZN6hermes2vm17GCHermesValueBaseINS0_13HermesValue32EE18uninitialized_fillIPS3_EEvT_S6_S2_RNS0_7HadesGCE.exit
@@ -220,11 +222,9 @@ bb.l:                                             ; preds = %_ZN6hermes2vm17GCHe
 
 .lr.ph.i65.preheader:                             ; preds = %bb.l
   %i.by = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.idx88 ; 3 uses
-  %5 = ptrtoaddr ptr %i.br to i64
-  %6 = ptrtoaddr ptr %i.bq to i64
-  %i.bz = add i64 %.idx89, %5
+  %i.bz = add i64 %.idx89, %6
   %i.ca = add i64 %i.bz, -4
-  %i.cb = add i64 %.idx88, %6
+  %i.cb = add i64 %.idx88, %5
   %i.cc = sub i64 %i.ca, %i.cb                    ; 2 uses
   %i.cd = lshr i64 %i.cc, 2
   %i.ce = add nuw nsw i64 %i.cd, 1                ; 2 uses

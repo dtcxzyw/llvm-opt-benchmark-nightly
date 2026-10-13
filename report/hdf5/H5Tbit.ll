@@ -23,8 +23,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @H5T__bit_copy(ptr nofree noundef captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i8, ptr @H5T_init_g, align 1, !tbaa !9, !range !10, !noundef !11
   %i.d = trunc nuw i8 %i.c to i1
   %i.e = load i8, ptr @H5_libterm_g, align 1, !range !10
@@ -125,9 +125,9 @@ iter.check:                                       ; preds = %.lr.ph153
   br i1 %min.iters.check, label %.lr.ph153.split.us.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bf = add i64 %.0.lcssa, %i.b
-  %i.bg = add i64 %.0110.lcssa, %i.a
-  %i.bh = sub i64 %i.bg, %i.bf
+  %i.bf = add i64 %.0110.lcssa, %i.b
+  %i.bg = add i64 %.0.lcssa, %i.a
+  %i.bh = sub i64 %i.bf, %i.bg
   %diff.check = icmp ugt i64 %i.bh, -32
   br i1 %diff.check, label %.lr.ph153.split.us.preheader, label %vector.main.loop.iter.check
 

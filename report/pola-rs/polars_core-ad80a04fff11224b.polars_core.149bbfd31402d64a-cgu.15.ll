@@ -205,6 +205,7 @@ bb.df:                                            ; preds = %bb.de, %_RNCINvNtNt
   %.sroa.43.1.lcssa.i59 = phi ptr [ %.sroa.43.0.i54, %bb.ck ], [ %i.jd, %.lr.ph.i68.us ], [ %i.kv, %bb.df ], !dbg !272513 ; 4 uses
   %.sroa.27.1.lcssa.i60 = phi i64 [ %.sroa.27.0.i55, %bb.ck ], [ %i.jf, %.lr.ph.i68.us ], [ %i.la, %bb.df ], !dbg !272513 ; 5 uses
   %.sroa.9.1.lcssa.i61 = phi ptr [ %.sroa.9.0.i56, %bb.ck ], [ %i.jg, %.lr.ph.i68.us ], [ %i.lb, %bb.df ], !dbg !272513 ; 7 uses
+  %.sroa.9.1.lcssa.i61388 = ptrtoaddr ptr %.sroa.9.1.lcssa.i61 to i64, !dbg !272573
   %i.ld = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph133, i64 %.sroa.0.0.i57, !dbg !272573 ; 3 uses
   %i.le = icmp ult ptr %.sroa.9.1.lcssa.i61, %i.ld, !dbg !272574
   br i1 %i.le, label %.lr.ph54.i.preheader, label %._crit_edge55.i, !dbg !272574
@@ -218,9 +219,8 @@ bb.df:                                            ; preds = %bb.de, %_RNCINvNtNt
 
 .lr.ph54.i.us.preheader:                          ; preds = %.lr.ph54.i.preheader
   %i.li = shl i64 %.sroa.0.0.i57, 3, !dbg !272574
-  %7 = ptrtoaddr ptr %.sroa.9.1.lcssa.i61 to i64, !dbg !272574
   %i.lj = add i64 %i.li, %i.e, !dbg !272574
-  %i.lk = xor i64 %7, -1, !dbg !272574
+  %i.lk = xor i64 %.sroa.9.1.lcssa.i61388, -1, !dbg !272574
   %i.ll = add i64 %i.lj, %i.lk, !dbg !272574      ; 2 uses
   %i.lm = lshr i64 %i.ll, 3, !dbg !272574
   %i.ln = add nuw nsw i64 %i.lm, 1, !dbg !272574  ; 2 uses
@@ -623,6 +623,7 @@ bb.ad:                                            ; preds = %bb.ae, %bb.ab
   %.sroa.43.1.lcssa.i50 = phi ptr [ %.sroa.43.0.i45, %bb.ad ], [ %i.ll, %.lr.ph.i68 ], !dbg !284524 ; 4 uses
   %.sroa.27.1.lcssa.i51 = phi i64 [ %.sroa.27.0.i46, %bb.ad ], [ %i.lp, %.lr.ph.i68 ], !dbg !284524 ; 5 uses
   %.sroa.9.1.lcssa.i52 = phi ptr [ %.sroa.9.0.i47, %bb.ad ], [ %i.lq, %.lr.ph.i68 ], !dbg !284524 ; 7 uses
+  %.sroa.9.1.lcssa.i52339 = ptrtoaddr ptr %.sroa.9.1.lcssa.i52 to i64, !dbg !284568
   %i.ls = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph131, i64 %.sroa.0.0.i48, !dbg !284568 ; 3 uses
   %i.lt = icmp ult ptr %.sroa.9.1.lcssa.i52, %i.ls, !dbg !284569
   br i1 %i.lt, label %.lr.ph38.i61.preheader, label %._crit_edge39.i53, !dbg !284569
@@ -634,9 +635,8 @@ bb.ad:                                            ; preds = %bb.ae, %bb.ab
 
 .lr.ph38.i61.us.preheader:                        ; preds = %.lr.ph38.i61.preheader
   %i.lv = shl i64 %.sroa.0.0.i48, 3, !dbg !284569
-  %7 = ptrtoaddr ptr %.sroa.9.1.lcssa.i52 to i64, !dbg !284569
   %i.lw = add i64 %i.lv, %i.e, !dbg !284569
-  %i.lx = xor i64 %7, -1, !dbg !284569
+  %i.lx = xor i64 %.sroa.9.1.lcssa.i52339, -1, !dbg !284569
   %i.ly = add i64 %i.lw, %i.lx, !dbg !284569      ; 2 uses
   %i.lz = lshr i64 %i.ly, 3, !dbg !284569
   %i.ma = add nuw nsw i64 %i.lz, 1, !dbg !284569  ; 2 uses
@@ -1039,6 +1039,7 @@ bb.ae:                                            ; preds = %bb.ae, %.lr.ph.i68
   %.sroa.43.1.lcssa.i50 = phi ptr [ %.sroa.43.0.i45, %bb.ad ], [ %i.iz, %bb.ae ], !dbg !301261 ; 4 uses
   %.sroa.27.1.lcssa.i51 = phi i64 [ %.sroa.27.0.i46, %bb.ad ], [ %i.jc, %bb.ae ], !dbg !301261 ; 5 uses
   %.sroa.9.1.lcssa.i52 = phi ptr [ %.sroa.9.0.i47, %bb.ad ], [ %i.jd, %bb.ae ], !dbg !301261 ; 7 uses
+  %.sroa.9.1.lcssa.i52331 = ptrtoaddr ptr %.sroa.9.1.lcssa.i52 to i64, !dbg !301305
   %i.jf = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph131, i64 %.sroa.0.0.i48, !dbg !301305 ; 3 uses
   %i.jg = icmp ult ptr %.sroa.9.1.lcssa.i52, %i.jf, !dbg !301306
   br i1 %i.jg, label %.lr.ph38.i61.preheader, label %._crit_edge39.i53, !dbg !301306
@@ -1050,9 +1051,8 @@ bb.ae:                                            ; preds = %bb.ae, %.lr.ph.i68
 
 .lr.ph38.i61.us.preheader:                        ; preds = %.lr.ph38.i61.preheader
   %i.ji = shl i64 %.sroa.0.0.i48, 3, !dbg !301306
-  %7 = ptrtoaddr ptr %.sroa.9.1.lcssa.i52 to i64, !dbg !301306
   %i.jj = add i64 %i.ji, %i.c, !dbg !301306
-  %i.jk = xor i64 %7, -1, !dbg !301306
+  %i.jk = xor i64 %.sroa.9.1.lcssa.i52331, -1, !dbg !301306
   %i.jl = add i64 %i.jj, %i.jk, !dbg !301306      ; 2 uses
   %i.jm = lshr i64 %i.jl, 3, !dbg !301306
   %i.jn = add nuw nsw i64 %i.jm, 1, !dbg !301306  ; 2 uses
@@ -1455,6 +1455,7 @@ bb.ae:                                            ; preds = %bb.ae, %.lr.ph.i68
   %.sroa.43.1.lcssa.i50 = phi ptr [ %.sroa.43.0.i45, %bb.ad ], [ %i.iz, %bb.ae ], !dbg !302349 ; 4 uses
   %.sroa.27.1.lcssa.i51 = phi i64 [ %.sroa.27.0.i46, %bb.ad ], [ %i.jc, %bb.ae ], !dbg !302349 ; 5 uses
   %.sroa.9.1.lcssa.i52 = phi ptr [ %.sroa.9.0.i47, %bb.ad ], [ %i.jd, %bb.ae ], !dbg !302349 ; 7 uses
+  %.sroa.9.1.lcssa.i52331 = ptrtoaddr ptr %.sroa.9.1.lcssa.i52 to i64, !dbg !302393
   %i.jf = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.ph131, i64 %.sroa.0.0.i48, !dbg !302393 ; 3 uses
   %i.jg = icmp ult ptr %.sroa.9.1.lcssa.i52, %i.jf, !dbg !302394
   br i1 %i.jg, label %.lr.ph38.i61.preheader, label %._crit_edge39.i53, !dbg !302394
@@ -1466,9 +1467,8 @@ bb.ae:                                            ; preds = %bb.ae, %.lr.ph.i68
 
 .lr.ph38.i61.us.preheader:                        ; preds = %.lr.ph38.i61.preheader
   %i.ji = shl i64 %.sroa.0.0.i48, 2, !dbg !302394
-  %7 = ptrtoaddr ptr %.sroa.9.1.lcssa.i52 to i64, !dbg !302394
   %i.jj = add i64 %i.ji, %i.c, !dbg !302394
-  %i.jk = xor i64 %7, -1, !dbg !302394
+  %i.jk = xor i64 %.sroa.9.1.lcssa.i52331, -1, !dbg !302394
   %i.jl = add i64 %i.jj, %i.jk, !dbg !302394      ; 2 uses
   %i.jm = lshr i64 %i.jl, 2, !dbg !302394
   %i.jn = add nuw nsw i64 %i.jm, 1, !dbg !302394  ; 2 uses

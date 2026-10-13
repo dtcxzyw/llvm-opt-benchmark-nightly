@@ -205,9 +205,9 @@ iter.check68:                                     ; preds = %"_ZN5alloc3vec16Vec
   br i1 %min.iters.check53, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check68
-  %i.ba = add i64 %i.ay, %i.az
-  %i.bb = add i64 %spec.select.i, %i.r
-  %i.bc = sub i64 %i.bb, %i.ba
+  %i.ba = add i64 %spec.select.i, %i.r
+  %i.bb = add i64 %i.ay, %i.az
+  %i.bc = sub i64 %i.ba, %i.bb
   %diff.check = icmp ugt i64 %i.bc, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check54
 
@@ -500,6 +500,7 @@ scalar.ph:                                        ; preds = %vector.memcheck, %.
   %bc.merge.rdx = phi i64 [ %i.bd, %middle.block ], [ %.promoted, %.lr.ph.preheader ], [ %.promoted, %vector.memcheck ]
   %bc.resume.val = phi ptr [ %i.av, %middle.block ], [ %i.al, %.lr.ph.preheader ], [ %i.al, %vector.memcheck ] ; 2 uses
   %bc.resume.val133 = phi ptr [ %i.aw, %middle.block ], [ %.sroa.532.0.copyload, %.lr.ph.preheader ], [ %.sroa.532.0.copyload, %vector.memcheck ] ; 2 uses
+  %bc.resume.val138 = ptrtoaddr ptr %bc.resume.val to i64
   %bc.resume.val133135 = ptrtoaddr ptr %bc.resume.val133 to i64 ; 4 uses
   br label %.lr.ph
 
@@ -862,10 +863,9 @@ bb.t:                                             ; preds = %bb.s
   %i.fq = xor i64 %bc.resume.val133135, -1
   %i.fr = add i64 %i.fp, %i.fq
   %i.fs = freeze i64 %i.fr
-  %4 = ptrtoaddr ptr %bc.resume.val to i64
   %i.ft = add i64 %.promoted, %i.af
   %i.fu = add i64 %i.ft, %spec.select.i
-  %i.fv = xor i64 %4, -1
+  %i.fv = xor i64 %bc.resume.val138, -1
   %i.fw = add i64 %i.fu, %i.fv
   %i.fx = tail call i64 @llvm.umin.i64(i64 %i.fs, i64 %i.fw) ; 2 uses
   %i.fy = add i64 %i.fp, -2
@@ -1268,9 +1268,9 @@ iter.check:                                       ; preds = %bb.m
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.cp = ptrtoaddr ptr %i.co to i64
-  %i.cq = add i64 %.pre.i29, %i.cp
-  %i.cr = add i64 %.sroa.01.0.i, %i.ch
-  %i.cs = sub i64 %i.cr, %i.cq
+  %i.cq = add i64 %.sroa.01.0.i, %i.ch
+  %i.cr = add i64 %.pre.i29, %i.cp
+  %i.cs = sub i64 %i.cq, %i.cr
   %diff.check = icmp ugt i64 %i.cs, -32
   br i1 %diff.check, label %.lr.ph.i.i.i22.preheader, label %vector.main.loop.iter.check
 

@@ -205,6 +205,7 @@ _ZNK17IReferenceCounted4dropEv.exit:              ; preds = %.split175.us, %bb.b
   %i.hr = phi i64 [ %i.ja, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.hl, %_ZNK17IReferenceCounted4dropEv.exit ] ; 2 uses
   %i.hs = phi i64 [ %i.iz, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.hk, %_ZNK17IReferenceCounted4dropEv.exit ]
   %i.ht = phi ptr [ %i.iw, %_ZNSt6vectorIN5video6SColorESaIS1_EE12emplace_backIJjEEERS1_DpOT_.exit ], [ %i.gu, %_ZNK17IReferenceCounted4dropEv.exit ] ; 3 uses
+  %4 = ptrtoaddr ptr %i.hp to i64
   %i.hu = ptrtoaddr ptr %i.ho to i64              ; 2 uses
   %.not.i112 = icmp eq ptr %i.ht, %i.hp
   br i1 %.not.i112, label %bb.be, label %bb.bd
@@ -241,7 +242,6 @@ _ZNKSt6vectorIN5video6SColorESaIS1_EE12_M_check_lenEmPKc.exit.i.i113: ; preds = 
 
 .lr.ph.i.i.i.i.i117.preheader:                    ; preds = %.noexc123
   %i.ib = ptrtoaddr ptr %i.hz to i64
-  %4 = ptrtoaddr ptr %i.hp to i64
   %i.ic = add i64 %4, -4
   %i.id = sub i64 %i.ic, %i.hu                    ; 2 uses
   %i.ie = lshr i64 %i.id, 2
@@ -576,8 +576,8 @@ _ZSt4copyIPN5video6SColorES2_ET0_T_S4_S3_.exit:   ; preds = %bb.l, %bb.m, %bb.n
   %i.ak = phi ptr [ %.pre26, %bb.l ], [ %i.i, %bb.m ], [ %i.i, %bb.n ] ; 3 uses
   %i.al = phi ptr [ %.pre25, %bb.l ], [ %i.aa, %bb.m ], [ %i.aa, %bb.n ] ; 5 uses
   %i.am = phi ptr [ %.pre, %bb.l ], [ %i.c, %bb.m ], [ %i.c, %bb.n ] ; 2 uses
-  %i.an = ptrtoaddr ptr %i.al to i64
-  %i.ao = ptrtoaddr ptr %i.am to i64              ; 2 uses
+  %i.an = ptrtoaddr ptr %i.am to i64              ; 2 uses
+  %i.ao = ptrtoaddr ptr %i.al to i64
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %.pre-phi33 ; 5 uses
   %.not9.i.i.i.i = icmp eq ptr %i.ap, %i.aj
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN5video6SColorESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %.lr.ph.i.i.i.i.preheader
@@ -585,7 +585,7 @@ _ZSt4copyIPN5video6SColorES2_ET0_T_S4_S3_.exit:   ; preds = %bb.l, %bb.m, %bb.n
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN5video6SColorES2_ET0_T_S4_S3_.exit
   %i.aq = ptrtoaddr ptr %i.aj to i64
   %i.ar = add i64 %i.aq, -4
-  %i.as = add i64 %.pre-phi33, %i.ao
+  %i.as = add i64 %.pre-phi33, %i.an
   %i.at = sub i64 %i.ar, %i.as                    ; 2 uses
   %i.au = lshr i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -593,8 +593,8 @@ _ZSt4copyIPN5video6SColorES2_ET0_T_S4_S3_.exit:   ; preds = %bb.l, %bb.m, %bb.n
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader44, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %i.aw = add nuw i64 %.pre-phi33, %i.ao
-  %i.ax = sub i64 %i.aw, %i.an
+  %i.aw = add nuw i64 %.pre-phi33, %i.an
+  %i.ax = sub i64 %i.aw, %i.ao
   %diff.check = icmp ugt i64 %i.ax, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.preheader44, label %vector.ph
 

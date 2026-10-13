@@ -202,6 +202,8 @@ bb.b:                                             ; preds = %_ZSt6fill_nIPlmlET_
   %i.j = phi ptr [ null, %_ZNSt12_Vector_baseIlSaIlEEC2EmRKS0_.exit.thread.i ], [ %i.d, %.noexc12 ], [ %i.d, %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 2 uses
   %i.k = phi ptr [ null, %_ZNSt12_Vector_baseIlSaIlEEC2EmRKS0_.exit.thread.i ], [ %i.c, %.noexc12 ], [ %i.c, %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 11 uses
   %.0.i.i.i.i.i = phi ptr [ null, %_ZNSt12_Vector_baseIlSaIlEEC2EmRKS0_.exit.thread.i ], [ %i.f, %.noexc12 ], [ %i.i, %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ] ; 4 uses
+  %6 = ptrtoaddr ptr %i.k to i64
+  %.0.i.i.i.i.i42 = ptrtoaddr ptr %.0.i.i.i.i.i to i64
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %.0.i.i.i.i.i, ptr %i.l, align 8, !tbaa !24
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
@@ -249,16 +251,16 @@ bb.e:                                             ; preds = %_ZSt6fill_nIPlmlET_
   %i.v = phi ptr [ null, %_ZNSt12_Vector_baseIlSaIlEEC2EmRKS0_.exit.thread.i18 ], [ %i.p, %.noexc20 ], [ %i.p, %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i15 ] ; 2 uses
   %i.w = phi ptr [ null, %_ZNSt12_Vector_baseIlSaIlEEC2EmRKS0_.exit.thread.i18 ], [ %i.o, %.noexc20 ], [ %i.o, %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i15 ] ; 11 uses
   %.0.i.i.i.i.i17 = phi ptr [ null, %_ZNSt12_Vector_baseIlSaIlEEC2EmRKS0_.exit.thread.i18 ], [ %i.r, %.noexc20 ], [ %i.u, %_ZSt6fill_nIPlmlET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i15 ] ; 4 uses
+  %7 = ptrtoaddr ptr %i.w to i64
+  %.0.i.i.i.i.i1744 = ptrtoaddr ptr %.0.i.i.i.i.i17 to i64
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %.0.i.i.i.i.i17, ptr %i.x, align 8, !tbaa !24
   %i.y = icmp eq ptr %i.k, %.0.i.i.i.i.i
   br i1 %i.y, label %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEEiEvT_S7_T0_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.e
-  %6 = ptrtoaddr ptr %.0.i.i.i.i.i to i64
-  %7 = ptrtoaddr ptr %i.k to i64
-  %i.z = add i64 %6, -8
-  %i.aa = sub i64 %i.z, %7                        ; 2 uses
+  %i.z = add i64 %.0.i.i.i.i.i42, -8
+  %i.aa = sub i64 %i.z, %6                        ; 2 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aa, 24
@@ -307,10 +309,8 @@ _ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEEiEvT_S7_T0_.exit: 
   br i1 %i.ak, label %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEEiEvT_S7_T0_.exit27, label %.lr.ph.i23.preheader
 
 .lr.ph.i23.preheader:                             ; preds = %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPlSt6vectorIlSaIlEEEEiEvT_S7_T0_.exit
-  %8 = ptrtoaddr ptr %.0.i.i.i.i.i17 to i64
-  %9 = ptrtoaddr ptr %i.w to i64
-  %i.al = add i64 %8, -8
-  %i.am = sub i64 %i.al, %9                       ; 2 uses
+  %i.al = add i64 %.0.i.i.i.i.i1744, -8
+  %i.am = sub i64 %i.al, %7                       ; 2 uses
   %i.an = lshr i64 %i.am, 3
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check44 = icmp ult i64 %i.am, 24

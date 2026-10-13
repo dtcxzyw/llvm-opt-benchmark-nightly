@@ -204,8 +204,8 @@ KeccakP1600_AddBytesInLane.exit35:                ; preds = %bb.j, %bb.i
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @KeccakP1600_OverwriteBytesInLane(ptr nofree noundef writeonly captures(none) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #4 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   switch i32 %1, label %bb.c [
     i32 20, label %bb.b
     i32 17, label %bb.b
@@ -237,8 +237,8 @@ vector.scevcheck:                                 ; preds = %iter.check
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.k = zext i32 %i.d to i64
-  %i.l = add i64 %i.b, %i.k
-  %i.m = sub i64 %i.a, %i.l
+  %i.l = add i64 %i.a, %i.k
+  %i.m = sub i64 %i.b, %i.l
   %diff.check = icmp ugt i64 %i.m, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -641,8 +641,8 @@ KeccakP1600_ExtractBytesInLane.exit34:            ; preds = %.lr.ph, %bb.l
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @KeccakP1600_ExtractAndAddBytesInLane(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #4 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %3 to i64
+  %i.a = ptrtoaddr ptr %3 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = alloca [1 x i64], align 8                ; 8 uses
   %i.d = zext i32 %1 to i64
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.d
@@ -679,7 +679,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.k = icmp ult i32 %i.j, %i.i
   %i.l = icmp ugt i64 %i.h, 4294967295
   %i.m = or i1 %i.k, %i.l
-  %i.n = sub i64 %i.a, %i.b
+  %i.n = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.n, -32
   %or.cond = or i1 %i.m, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check

@@ -204,8 +204,8 @@ declare ptr @get_collation_actual_version_libc(ptr noundef) local_unnamed_addr #
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @pg_strlower(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = icmp eq ptr %i.d, null
@@ -233,7 +233,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.o = icmp ugt i32 %i.n, 2147483646
   %i.p = icmp ugt i64 %umin, 4294967295
   %i.q = or i1 %i.o, %i.p
-  %i.r = sub i64 %i.a, %i.b
+  %i.r = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.r, -32
   %or.cond = or i1 %i.q, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -446,8 +446,8 @@ strtitle_c.exit:                                  ; preds = %bb.f, %._crit_edge.
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @pg_strupper(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = icmp eq ptr %i.d, null
@@ -475,7 +475,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.o = icmp ugt i32 %i.n, 2147483646
   %i.p = icmp ugt i64 %umin, 4294967295
   %i.q = or i1 %i.o, %i.p
-  %i.r = sub i64 %i.a, %i.b
+  %i.r = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.r, -32
   %or.cond = or i1 %i.q, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -611,8 +611,8 @@ strupper_c.exit:                                  ; preds = %bb.c, %._crit_edge.
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @pg_strfold(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = icmp eq ptr %i.d, null
@@ -640,7 +640,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.o = icmp ugt i32 %i.n, 2147483646
   %i.p = icmp ugt i64 %umin, 4294967295
   %i.q = or i1 %i.o, %i.p
-  %i.r = sub i64 %i.a, %i.b
+  %i.r = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.r, -32
   %or.cond = or i1 %i.q, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -776,8 +776,8 @@ strlower_c.exit:                                  ; preds = %bb.c, %._crit_edge.
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @pg_downcase_ident(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load ptr, ptr @default_locale, align 8   ; 3 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.d, label %bb.b
@@ -816,7 +816,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   %i.t = icmp ugt i32 %i.s, 2147483646
   %i.u = icmp ugt i64 %umin, 4294967295
   %i.v = or i1 %i.t, %i.u
-  %i.w = sub i64 %i.a, %i.b
+  %i.w = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.w, -32
   %or.cond = or i1 %i.v, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check

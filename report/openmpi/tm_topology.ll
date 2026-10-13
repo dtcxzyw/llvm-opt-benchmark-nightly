@@ -204,10 +204,10 @@ middle.block164:                                  ; preds = %vector.body157
 
 vector.memcheck168:                               ; preds = %.lr.ph107.preheader
   %i.bq = shl nuw nsw i64 %i.bk, 3
-  %4 = add i64 %i.bq, %i.t
   %i.br = add nuw i32 %3, 1
   %i.bs = zext i32 %i.br to i64
   %i.bt = shl nuw nsw i64 %i.bs, 3
+  %4 = add i64 %i.bq, %i.t
   %i.bu = add i64 %i.bt, %.pre122151
   %i.bv = sub i64 %i.bu, %4
   %diff.check169 = icmp ugt i64 %i.bv, -32
@@ -425,10 +425,10 @@ middle.block:                                     ; preds = %vector.body
 
 vector.memcheck134:                               ; preds = %.lr.ph99.preheader
   %i.fh = shl nuw nsw i64 %i.fb, 3
-  %5 = add i64 %i.fh, %i.dk
   %i.fi = add nuw i32 %3, 1
   %i.fj = zext i32 %i.fi to i64
   %i.fk = shl nuw nsw i64 %i.fj, 3
+  %5 = add i64 %i.fh, %i.dk
   %i.fl = add i64 %i.fk, %.pre130
   %i.fm = sub i64 %i.fl, %5
   %diff.check135 = icmp ugt i64 %i.fm, -32

@@ -109,9 +109,9 @@ iter.check:
   %i.d = zext i32 %i.c to i64
   %i.e = add nuw nsw i64 %i.d, 1                  ; 5 uses
   %min.iters.check = icmp ult i32 %i.c, 3
-  %i.f = ptrtoaddr ptr %2 to i64
-  %i.g = ptrtoaddr ptr %1 to i64
-  %i.h = sub i64 %i.g, %i.f
+  %i.f = ptrtoaddr ptr %1 to i64
+  %i.g = ptrtoaddr ptr %2 to i64
+  %i.h = sub i64 %i.f, %i.g
   %diff.check = icmp ugt i64 %i.h, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

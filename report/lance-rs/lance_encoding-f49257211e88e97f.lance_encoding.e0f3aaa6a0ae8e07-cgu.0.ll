@@ -205,9 +205,9 @@ bb.z:                                             ; preds = %_RINvXs2J_NtNtCscI6
 
 vector.memcheck67:                                ; preds = %bb.z
   %i.id = ptrtoaddr ptr %i.ib to i64
-  %2 = add i64 %.idx.i.i.i.i.i.i, %i.id
-  %3 = shl i64 %.sroa.02.0.i.i.i.i.i.i.i, 2
-  %i.ie = add i64 %2, %3
+  %2 = shl i64 %.sroa.02.0.i.i.i.i.i.i.i, 2
+  %3 = add i64 %.idx.i.i.i.i.i.i, %i.id
+  %i.ie = add i64 %3, %2
   %i.if = add i64 %.idx8.i.i.i.i.i.i, %i.ae
   %i.ig = sub i64 %i.if, %i.ie
   %diff.check68 = icmp ugt i64 %i.ig, -32

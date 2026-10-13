@@ -205,14 +205,14 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit.i: ; preds = %bb.q
   %i.bi = phi ptr [ %i.bf, %.noexc134 ], [ %i.bh, %_ZN3fmt3v1119basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit.i ] ; 2 uses
   %i.bj = phi ptr [ %i.be, %.noexc134 ], [ %i.bg, %_ZN3fmt3v1119basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit.i ] ; 5 uses
   %i.bk = ptrtoaddr ptr %i.bj to i64              ; 2 uses
-  %9 = load ptr, ptr %7, align 8, !tbaa !223      ; 4 uses
-  %10 = ptrtoaddr ptr %i.bi to i64
-  %i.bl = add i64 %10, -4
+  %9 = ptrtoaddr ptr %i.bi to i64
+  %10 = load ptr, ptr %7, align 8, !tbaa !223     ; 4 uses
+  %i.bl = add i64 %9, -4
   %i.bm = sub i64 %i.bl, %i.bk                    ; 2 uses
   %i.bn = lshr i64 %i.bm, 2
   %i.bo = add nuw nsw i64 %i.bn, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bm, 44
-  %i.bp = ptrtoaddr ptr %9 to i64
+  %i.bp = ptrtoaddr ptr %10 to i64
   %i.bq = sub i64 %i.bk, %i.bp
   %diff.check = icmp ugt i64 %i.bq, -32
   %or.cond972 = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -221,14 +221,14 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit.i: ; preds = %bb.q
 vector.ph:                                        ; preds = %.lr.ph.i.preheader.i
   %n.vec = and i64 %i.bo, 9223372036854775800     ; 3 uses
   %i.br = shl i64 %n.vec, 2                       ; 2 uses
-  %i.bs = getelementptr i8, ptr %9, i64 %i.br
+  %i.bs = getelementptr i8, ptr %10, i64 %i.br
   %i.bt = getelementptr i8, ptr %i.bj, i64 %i.br
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.bu = shl i64 %index, 2                       ; 2 uses
-  %next.gep = getelementptr i8, ptr %9, i64 %i.bu ; 2 uses
+  %next.gep = getelementptr i8, ptr %10, i64 %i.bu ; 2 uses
   %next.gep951 = getelementptr i8, ptr %i.bj, i64 %i.bu ; 2 uses
   %i.bv = getelementptr i8, ptr %next.gep951, i64 16
   %wide.load = load <4 x i32>, ptr %next.gep951, align 4, !tbaa !112
@@ -245,7 +245,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %.loopexit453.loopexit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i.preheader.i, %middle.block
-  %.08.i.i.ph = phi ptr [ %9, %.lr.ph.i.preheader.i ], [ %i.bs, %middle.block ]
+  %.08.i.i.ph = phi ptr [ %10, %.lr.ph.i.preheader.i ], [ %i.bs, %middle.block ]
   %.057.i.i.ph = phi ptr [ %i.bj, %.lr.ph.i.preheader.i ], [ %i.bt, %middle.block ]
   br label %.lr.ph.i.i
 
@@ -300,14 +300,14 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit.i135: ; preds = %bb.
   %i.cj = phi ptr [ %i.ch, %.noexc147 ], [ %i.ci, %_ZN3fmt3v1119basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit.i135 ] ; 2 uses
   %i.ck = phi ptr [ %i.cg, %.noexc147 ], [ %i.cb, %_ZN3fmt3v1119basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit.i135 ] ; 4 uses
   %i.cl = ptrtoaddr ptr %i.ck to i64              ; 2 uses
-  %11 = load ptr, ptr %8, align 8, !tbaa !223     ; 4 uses
-  %12 = ptrtoaddr ptr %i.cj to i64
-  %i.cm = add i64 %12, -4
+  %11 = ptrtoaddr ptr %i.cj to i64
+  %12 = load ptr, ptr %8, align 8, !tbaa !223     ; 4 uses
+  %i.cm = add i64 %11, -4
   %i.cn = sub i64 %i.cm, %i.cl                    ; 2 uses
   %i.co = lshr i64 %i.cn, 2
   %i.cp = add nuw nsw i64 %i.co, 1                ; 2 uses
   %min.iters.check957 = icmp ult i64 %i.cn, 44
-  %i.cq = ptrtoaddr ptr %11 to i64
+  %i.cq = ptrtoaddr ptr %12 to i64
   %i.cr = sub i64 %i.cl, %i.cq
   %diff.check955 = icmp ugt i64 %i.cr, -32
   %or.cond974 = select i1 %min.iters.check957, i1 true, i1 %diff.check955
@@ -316,14 +316,14 @@ _ZN3fmt3v1119basic_memory_bufferIjLm32ESaIjEE6resizeEm.exit.i135: ; preds = %bb.
 vector.ph958:                                     ; preds = %.lr.ph.i.preheader.i138
   %n.vec959 = and i64 %i.cp, 9223372036854775800  ; 3 uses
   %i.cs = shl i64 %n.vec959, 2                    ; 2 uses
-  %i.ct = getelementptr i8, ptr %11, i64 %i.cs
+  %i.ct = getelementptr i8, ptr %12, i64 %i.cs
   %i.cu = getelementptr i8, ptr %i.ck, i64 %i.cs
   br label %vector.body960
 
 vector.body960:                                   ; preds = %vector.body960, %vector.ph958
   %index961 = phi i64 [ 0, %vector.ph958 ], [ %index.next966, %vector.body960 ] ; 2 uses
   %i.cv = shl i64 %index961, 2                    ; 2 uses
-  %next.gep962 = getelementptr i8, ptr %11, i64 %i.cv ; 2 uses
+  %next.gep962 = getelementptr i8, ptr %12, i64 %i.cv ; 2 uses
   %next.gep963 = getelementptr i8, ptr %i.ck, i64 %i.cv ; 2 uses
   %i.cw = getelementptr i8, ptr %next.gep963, i64 16
   %wide.load964 = load <4 x i32>, ptr %next.gep963, align 4, !tbaa !112
@@ -340,7 +340,7 @@ middle.block967:                                  ; preds = %vector.body960
   br i1 %cmp.n968, label %.loopexit452.loopexit, label %.lr.ph.i.i139.preheader
 
 .lr.ph.i.i139.preheader:                          ; preds = %.lr.ph.i.preheader.i138, %middle.block967
-  %.08.i.i140.ph = phi ptr [ %11, %.lr.ph.i.preheader.i138 ], [ %i.ct, %middle.block967 ]
+  %.08.i.i140.ph = phi ptr [ %12, %.lr.ph.i.preheader.i138 ], [ %i.ct, %middle.block967 ]
   %.057.i.i141.ph = phi ptr [ %i.ck, %.lr.ph.i.preheader.i138 ], [ %i.cu, %middle.block967 ]
   br label %.lr.ph.i.i139
 

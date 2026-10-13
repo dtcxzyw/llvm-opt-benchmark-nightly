@@ -205,10 +205,11 @@ define i32 @wc_PBKDF2_ex(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr nou
 bb.a:
   %i.a = alloca i32, align 4                      ; 10 uses
   %i.b = alloca [64 x i8], align 16               ; 17 uses
-  %10 = alloca [1 x %struct.Hmac], align 16       ; 19 uses
+  %10 = ptrtoaddr ptr %i.b to i64                 ; 3 uses
+  %11 = alloca [1 x %struct.Hmac], align 16       ; 19 uses
   %i.c = alloca i8, align 1                       ; 32 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #8
   %i.d = icmp eq ptr %0, null
   %i.e = or i32 %4, %2
   %i.f = or i32 %i.e, %6
@@ -228,12 +229,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %ForceZero.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = call i32 @wc_HmacInit(ptr noundef nonnull %10, ptr noundef %8, i32 noundef %9) #8 ; 2 uses
+  %i.n = call i32 @wc_HmacInit(ptr noundef nonnull %11, ptr noundef %8, i32 noundef %9) #8 ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.d, label %.preheader16.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.p = call i32 @wc_HmacSetKey(ptr noundef nonnull %10, i32 noundef %7, ptr noundef %1, i32 noundef %2) #8 ; 2 uses
+  %i.p = call i32 @wc_HmacSetKey(ptr noundef nonnull %11, i32 noundef %7, ptr noundef %1, i32 noundef %2) #8 ; 2 uses
   %i.q = icmp eq i32 %i.p, 0
   %i.r = icmp ne i32 %6, 0
   %i.s = and i1 %i.q, %i.r
@@ -244,16 +245,15 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.t, label %.lr.ph117.split.us.preheader, label %.lr.ph117.split.split
 
 .lr.ph117.split.us.preheader:                     ; preds = %.lr.ph117
-  %11 = ptrtoaddr ptr %i.b to i64                 ; 3 uses
-  %i.u = or disjoint i64 %11, 8
-  %i.v = xor i64 %11, -1
+  %i.u = or disjoint i64 %10, 8
+  %i.v = xor i64 %10, -1
   br label %.lr.ph117.split.us
 
 .lr.ph117.split.us:                               ; preds = %.lr.ph117.split.us.preheader, %._crit_edge.us
   %.054115.us = phi i32 [ %i.dr, %._crit_edge.us ], [ 1, %.lr.ph117.split.us.preheader ] ; 5 uses
   %.061114.us = phi ptr [ %i.dp, %._crit_edge.us ], [ %0, %.lr.ph117.split.us.preheader ] ; 7 uses
   %.063113.us = phi i32 [ %i.dq, %._crit_edge.us ], [ %6, %.lr.ph117.split.us.preheader ] ; 3 uses
-  %i.w = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef %3, i32 noundef %4) #8 ; 2 uses
+  %i.w = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef %3, i32 noundef %4) #8 ; 2 uses
   %.not.us = icmp eq i32 %i.w, 0
   br i1 %.not.us, label %.preheader.us.preheader, label %.thread98
 
@@ -262,7 +262,7 @@ bb.d:                                             ; preds = %bb.c
   %i.x = lshr i32 %.054115.us, 24
   %i.y = trunc nuw i32 %i.x to i8
   store i8 %i.y, ptr %i.c, align 1, !tbaa !12
-  %i.z = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
+  %i.z = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
   %.not79.us = icmp eq i32 %i.z, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br i1 %.not79.us, label %.preheader.us.1, label %.thread98
@@ -272,7 +272,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = lshr i32 %.054115.us, 16
   %i.ab = trunc i32 %i.aa to i8
   store i8 %i.ab, ptr %i.c, align 1, !tbaa !12
-  %i.ac = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
+  %i.ac = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
   %.not79.us.1 = icmp eq i32 %i.ac, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br i1 %.not79.us.1, label %.preheader.us.2, label %.thread98
@@ -282,7 +282,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ad = lshr i32 %.054115.us, 8
   %i.ae = trunc i32 %i.ad to i8
   store i8 %i.ae, ptr %i.c, align 1, !tbaa !12
-  %i.af = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
+  %i.af = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
   %.not79.us.2 = icmp eq i32 %i.af, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br i1 %.not79.us.2, label %.preheader.us.3, label %.thread98
@@ -291,13 +291,13 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   %i.ag = trunc i32 %.054115.us to i8
   store i8 %i.ag, ptr %i.c, align 1, !tbaa !12
-  %i.ah = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
+  %i.ah = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
   %.not79.us.3 = icmp eq i32 %i.ah, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br i1 %.not79.us.3, label %bb.e, label %.thread98
 
 bb.e:                                             ; preds = %.preheader.us.3
-  %i.ai = call i32 @wc_HmacFinal(ptr noundef nonnull %10, ptr noundef nonnull %i.b) #8 ; 2 uses
+  %i.ai = call i32 @wc_HmacFinal(ptr noundef nonnull %11, ptr noundef nonnull %i.b) #8 ; 2 uses
   %.not81.us = icmp eq i32 %i.ai, 0
   br i1 %.not81.us, label %.lr.ph.us, label %.thread98
 
@@ -325,7 +325,7 @@ bb.e:                                             ; preds = %.preheader.us.3
   %i.au = and i32 %i.ao, 7                        ; 3 uses
   %brmerge = select i1 %or.cond.i.us, i1 true, i1 %.not.i31.i.us
   %.mux = select i1 %or.cond.i.us, i32 %i.ao, i32 %i.au
-  %i.av = add i64 %11, %.idx.i30.i.us
+  %i.av = add i64 %10, %.idx.i30.i.us
   %i.aw = call i64 @llvm.umax.i64(i64 %i.av, i64 %i.u)
   %i.ax = add i64 %i.aw, %i.v                     ; 2 uses
   %i.ay = lshr i64 %i.ax, 3
@@ -340,12 +340,12 @@ bb.e:                                             ; preds = %.preheader.us.3
 
 bb.f:                                             ; preds = %.lr.ph.us, %xorbuf.exit.us
   %.1112.us = phi i32 [ 1, %.lr.ph.us ], [ %i.do, %xorbuf.exit.us ]
-  %i.bd = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.b, i32 noundef %i.l) #8 ; 2 uses
+  %i.bd = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.b, i32 noundef %i.l) #8 ; 2 uses
   %.not82.us = icmp eq i32 %i.bd, 0
   br i1 %.not82.us, label %bb.g, label %.thread98
 
 bb.g:                                             ; preds = %bb.f
-  %i.be = call i32 @wc_HmacFinal(ptr noundef nonnull %10, ptr noundef nonnull %i.b) #8 ; 2 uses
+  %i.be = call i32 @wc_HmacFinal(ptr noundef nonnull %11, ptr noundef nonnull %i.b) #8 ; 2 uses
   %.not83.us = icmp eq i32 %i.be, 0
   br i1 %.not83.us, label %bb.h, label %.thread98
 
@@ -562,7 +562,7 @@ xorbuf.exit.us:                                   ; preds = %.lr.ph56.i.us.prol.
   %.054115 = phi i32 [ %i.eo, %bb.j ], [ 1, %.lr.ph117 ] ; 5 uses
   %.061114 = phi ptr [ %i.em, %bb.j ], [ %0, %.lr.ph117 ] ; 2 uses
   %.063113 = phi i32 [ %i.en, %bb.j ], [ %6, %.lr.ph117 ] ; 3 uses
-  %i.ds = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef %3, i32 noundef %4) #8 ; 2 uses
+  %i.ds = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef %3, i32 noundef %4) #8 ; 2 uses
   %.not = icmp eq i32 %i.ds, 0
   br i1 %.not, label %.preheader.preheader, label %.thread98
 
@@ -571,7 +571,7 @@ xorbuf.exit.us:                                   ; preds = %.lr.ph56.i.us.prol.
   %i.dt = lshr i32 %.054115, 24
   %i.du = trunc nuw i32 %i.dt to i8
   store i8 %i.du, ptr %i.c, align 1, !tbaa !12
-  %i.dv = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
+  %i.dv = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
   %.not79 = icmp eq i32 %i.dv, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br i1 %.not79, label %.preheader.1, label %.thread98
@@ -581,7 +581,7 @@ xorbuf.exit.us:                                   ; preds = %.lr.ph56.i.us.prol.
   %i.dw = lshr i32 %.054115, 16
   %i.dx = trunc i32 %i.dw to i8
   store i8 %i.dx, ptr %i.c, align 1, !tbaa !12
-  %i.dy = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
+  %i.dy = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
   %.not79.1 = icmp eq i32 %i.dy, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br i1 %.not79.1, label %.preheader.2, label %.thread98
@@ -591,7 +591,7 @@ xorbuf.exit.us:                                   ; preds = %.lr.ph56.i.us.prol.
   %i.dz = lshr i32 %.054115, 8
   %i.ea = trunc i32 %i.dz to i8
   store i8 %i.ea, ptr %i.c, align 1, !tbaa !12
-  %i.eb = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
+  %i.eb = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
   %.not79.2 = icmp eq i32 %i.eb, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br i1 %.not79.2, label %.preheader.3, label %.thread98
@@ -600,13 +600,13 @@ xorbuf.exit.us:                                   ; preds = %.lr.ph56.i.us.prol.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
   %i.ec = trunc i32 %.054115 to i8
   store i8 %i.ec, ptr %i.c, align 1, !tbaa !12
-  %i.ed = call i32 @wc_HmacUpdate(ptr noundef nonnull %10, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
+  %i.ed = call i32 @wc_HmacUpdate(ptr noundef nonnull %11, ptr noundef nonnull %i.c, i32 noundef 1) #8 ; 2 uses
   %.not79.3 = icmp eq i32 %i.ed, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #8
   br i1 %.not79.3, label %bb.i, label %.thread98
 
 bb.i:                                             ; preds = %.preheader.3
-  %i.ee = call i32 @wc_HmacFinal(ptr noundef nonnull %10, ptr noundef nonnull %i.b) #8 ; 2 uses
+  %i.ee = call i32 @wc_HmacFinal(ptr noundef nonnull %11, ptr noundef nonnull %i.b) #8 ; 2 uses
   %.not81 = icmp eq i32 %i.ee, 0
   br i1 %.not81, label %bb.j, label %.thread98
 
@@ -632,7 +632,7 @@ bb.j:                                             ; preds = %bb.i
 
 .thread98:                                        ; preds = %bb.j, %.lr.ph117.split.split, %bb.i, %.preheader.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %._crit_edge.us, %.lr.ph117.split.us, %bb.e, %.preheader.us.preheader, %.preheader.us.1, %.preheader.us.2, %.preheader.us.3, %bb.g, %bb.f, %bb.d
   %.6 = phi i32 [ %i.be, %bb.g ], [ 0, %._crit_edge.us ], [ %i.p, %bb.d ], [ %i.bd, %bb.f ], [ %i.w, %.lr.ph117.split.us ], [ %i.ai, %bb.e ], [ %i.af, %.preheader.us.2 ], [ %i.ac, %.preheader.us.1 ], [ %i.z, %.preheader.us.preheader ], [ %i.ah, %.preheader.us.3 ], [ %i.eb, %.preheader.2 ], [ %i.dy, %.preheader.1 ], [ %i.dv, %.preheader.preheader ], [ %i.ee, %bb.i ], [ %i.ed, %.preheader.3 ], [ 0, %bb.j ], [ %i.ds, %.lr.ph117.split.split ]
-  call void @wc_HmacFree(ptr noundef nonnull %10) #8
+  call void @wc_HmacFree(ptr noundef nonnull %11) #8
   br label %.preheader16.i
 
 .preheader16.i:                                   ; preds = %.thread98, %bb.c
@@ -665,7 +665,7 @@ bb.j:                                             ; preds = %bb.i
 
 ForceZero.exit:                                   ; preds = %._crit_edge.i91, %bb.b, %bb.a
   %.060 = phi i32 [ -173, %bb.b ], [ -173, %bb.a ], [ %.7, %._crit_edge.i91 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   ret i32 %.060
 }

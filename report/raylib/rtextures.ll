@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge,
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @stbiw__encode_png_line(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr nofree noundef nonnull writeonly captures(none) %7) unnamed_addr #15 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 7 uses
-  %i.b = ptrtoaddr ptr %7 to i64                  ; 14 uses
+  %i.a = ptrtoaddr ptr %7 to i64                  ; 14 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 7 uses
   %.not = icmp eq i32 %4, 0
   %i.c = select i1 %.not, ptr @stbiw__encode_png_line.firstmap, ptr @stbiw__encode_png_line.mapping
   %i.d = sext i32 %6 to i64
@@ -328,11 +328,11 @@ iter.check:                                       ; preds = %.preheader158
   br i1 %min.iters.check, label %.lr.ph163.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ay = add i64 %i.b, %i.aw
-  %i.az = add i64 %i.a, %i.l                      ; 2 uses
-  %i.ba = sub i64 %i.az, %i.ay
+  %i.ay = add i64 %i.b, %i.l                      ; 2 uses
+  %i.az = add i64 %i.a, %i.aw
+  %i.ba = sub i64 %i.ay, %i.az
   %diff.check = icmp ugt i64 %i.ba, -32
-  %i.bb = sub i64 %i.az, %i.b
+  %i.bb = sub i64 %i.ay, %i.a
   %diff.check228 = icmp ugt i64 %i.bb, -32
   %conflict.rdx = or i1 %diff.check, %diff.check228
   br i1 %conflict.rdx, label %.lr.ph163.preheader, label %vector.main.loop.iter.check
@@ -438,11 +438,11 @@ iter.check259:                                    ; preds = %.preheader156
   br i1 %min.iters.check244, label %.lr.ph165.preheader, label %vector.memcheck240
 
 vector.memcheck240:                               ; preds = %iter.check259
-  %i.cj = add i64 %i.b, %i.ch
-  %i.ck = add i64 %i.a, %i.l                      ; 2 uses
-  %i.cl = sub i64 %i.ck, %i.cj
+  %i.cj = add i64 %i.b, %i.l                      ; 2 uses
+  %i.ck = add i64 %i.a, %i.ch
+  %i.cl = sub i64 %i.cj, %i.ck
   %diff.check241 = icmp ugt i64 %i.cl, -32
-  %i.cm = sub i64 %i.ck, %i.b
+  %i.cm = sub i64 %i.cj, %i.a
   %diff.check242 = icmp ugt i64 %i.cm, -32
   %conflict.rdx243 = or i1 %diff.check241, %diff.check242
   br i1 %conflict.rdx243, label %.lr.ph165.preheader, label %vector.main.loop.iter.check245
@@ -553,20 +553,20 @@ iter.check296:                                    ; preds = %.preheader154
   br i1 %min.iters.check281, label %.lr.ph167.preheader, label %vector.memcheck273
 
 vector.memcheck273:                               ; preds = %iter.check296
-  %i.dz = add i64 %i.b, %i.dx                     ; 2 uses
+  %i.dz = add i64 %i.a, %i.dx                     ; 2 uses
   %i.ea = add i64 %i.dz, %i.dw
-  %i.eb = add i64 %i.a, %i.l
+  %i.eb = add i64 %i.b, %i.l
   %i.ec = sub i64 %i.eb, %i.ea
   %diff.check274 = icmp ugt i64 %i.ec, -16
-  %i.ed = add i64 %i.a, %i.l                      ; 3 uses
+  %i.ed = add i64 %i.b, %i.l                      ; 3 uses
   %i.ee = sub i64 %i.ed, %i.dz
   %diff.check275 = icmp ugt i64 %i.ee, -16
   %conflict.rdx276 = or i1 %diff.check274, %diff.check275
-  %i.ef = add i64 %i.b, %i.dw
+  %i.ef = add i64 %i.a, %i.dw
   %i.eg = sub i64 %i.ed, %i.ef
   %diff.check277 = icmp ugt i64 %i.eg, -16
   %conflict.rdx278 = or i1 %conflict.rdx276, %diff.check277
-  %i.eh = sub i64 %i.ed, %i.b
+  %i.eh = sub i64 %i.ed, %i.a
   %diff.check279 = icmp ugt i64 %i.eh, -16
   %conflict.rdx280 = or i1 %conflict.rdx278, %diff.check279
   br i1 %conflict.rdx280, label %.lr.ph167.preheader, label %vector.main.loop.iter.check282
@@ -691,15 +691,15 @@ iter.check332:                                    ; preds = %.preheader152
   br i1 %min.iters.check318, label %.lr.ph169.preheader, label %vector.memcheck312
 
 vector.memcheck312:                               ; preds = %iter.check332
-  %i.gs = add i64 %i.b, %i.gq
-  %i.gt = add i64 %i.a, %i.l                      ; 3 uses
-  %i.gu = sub i64 %i.gt, %i.gs
+  %i.gs = add i64 %i.b, %i.l                      ; 3 uses
+  %i.gt = add i64 %i.a, %i.gq
+  %i.gu = sub i64 %i.gs, %i.gt
   %diff.check313 = icmp ugt i64 %i.gu, -16
-  %i.gv = add i64 %i.b, %i.gp
-  %i.gw = sub i64 %i.gt, %i.gv
+  %i.gv = add i64 %i.a, %i.gp
+  %i.gw = sub i64 %i.gs, %i.gv
   %diff.check314 = icmp ugt i64 %i.gw, -16
   %conflict.rdx315 = or i1 %diff.check313, %diff.check314
-  %i.gx = sub i64 %i.gt, %i.b
+  %i.gx = sub i64 %i.gs, %i.a
   %diff.check316 = icmp ugt i64 %i.gx, -16
   %conflict.rdx317 = or i1 %conflict.rdx315, %diff.check316
   br i1 %conflict.rdx317, label %.lr.ph169.preheader, label %vector.main.loop.iter.check319
@@ -823,11 +823,11 @@ iter.check366:                                    ; preds = %.preheader150
   br i1 %min.iters.check351, label %.lr.ph171.preheader, label %vector.memcheck347
 
 vector.memcheck347:                               ; preds = %iter.check366
-  %i.iy = add i64 %i.b, %i.iw
-  %i.iz = add i64 %i.a, %i.l                      ; 2 uses
-  %i.ja = sub i64 %i.iz, %i.iy
+  %i.iy = add i64 %i.b, %i.l                      ; 2 uses
+  %i.iz = add i64 %i.a, %i.iw
+  %i.ja = sub i64 %i.iy, %i.iz
   %diff.check348 = icmp ugt i64 %i.ja, -32
-  %i.jb = sub i64 %i.iz, %i.b
+  %i.jb = sub i64 %i.iy, %i.a
   %diff.check349 = icmp ugt i64 %i.jb, -32
   %conflict.rdx350 = or i1 %diff.check348, %diff.check349
   br i1 %conflict.rdx350, label %.lr.ph171.preheader, label %vector.main.loop.iter.check352
@@ -935,11 +935,11 @@ iter.check399:                                    ; preds = %.preheader
   br i1 %min.iters.check384, label %.lr.ph173.preheader, label %vector.memcheck380
 
 vector.memcheck380:                               ; preds = %iter.check399
-  %i.kl = add i64 %i.b, %i.kj
-  %i.km = add i64 %i.a, %i.l                      ; 2 uses
-  %i.kn = sub i64 %i.km, %i.kl
+  %i.kl = add i64 %i.b, %i.l                      ; 2 uses
+  %i.km = add i64 %i.a, %i.kj
+  %i.kn = sub i64 %i.kl, %i.km
   %diff.check381 = icmp ugt i64 %i.kn, -32
-  %i.ko = sub i64 %i.km, %i.b
+  %i.ko = sub i64 %i.kl, %i.a
   %diff.check382 = icmp ugt i64 %i.ko, -32
   %conflict.rdx383 = or i1 %diff.check381, %diff.check382
   br i1 %conflict.rdx383, label %.lr.ph173.preheader, label %vector.main.loop.iter.check385

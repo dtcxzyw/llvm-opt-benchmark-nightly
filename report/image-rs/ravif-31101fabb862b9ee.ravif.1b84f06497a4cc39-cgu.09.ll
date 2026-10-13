@@ -205,13 +205,13 @@ bb.a:
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i
   %i.b = shl i64 %.sroa.44.0.copyload, 2
-  %2 = add i64 %i.b, %.sroa.65.0.copyload6        ; 2 uses
-  %3 = shl i64 %.sroa.52.0.copyload, 2            ; 2 uses
-  %i.c = add i64 %3, %.sroa.0.0.copyload7
-  %i.d = sub i64 %i.c, %2
+  %2 = shl i64 %.sroa.52.0.copyload, 2            ; 2 uses
+  %3 = add i64 %i.b, %.sroa.65.0.copyload6        ; 2 uses
+  %i.c = add i64 %2, %.sroa.0.0.copyload7
+  %i.d = sub i64 %i.c, %3
   %diff.check = icmp ugt i64 %i.d, -16
-  %i.e = add i64 %3, %.sroa.41.0.copyload8
-  %i.f = sub i64 %i.e, %2
+  %i.e = add i64 %2, %.sroa.41.0.copyload8
+  %i.f = sub i64 %i.e, %3
   %diff.check9 = icmp ugt i64 %i.f, -16
   %conflict.rdx = or i1 %diff.check, %diff.check9
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -314,13 +314,13 @@ bb.a:
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i
   %i.b = shl i64 %.sroa.44.0.copyload, 2
-  %2 = add i64 %i.b, %.sroa.65.0.copyload6        ; 2 uses
-  %3 = shl i64 %.sroa.52.0.copyload, 2            ; 2 uses
-  %i.c = add i64 %3, %.sroa.0.0.copyload7
-  %i.d = sub i64 %i.c, %2
+  %2 = shl i64 %.sroa.52.0.copyload, 2            ; 2 uses
+  %3 = add i64 %i.b, %.sroa.65.0.copyload6        ; 2 uses
+  %i.c = add i64 %2, %.sroa.0.0.copyload7
+  %i.d = sub i64 %i.c, %3
   %diff.check = icmp ugt i64 %i.d, -16
-  %i.e = add i64 %3, %.sroa.41.0.copyload8
-  %i.f = sub i64 %i.e, %2
+  %i.e = add i64 %2, %.sroa.41.0.copyload8
+  %i.f = sub i64 %i.e, %3
   %diff.check9 = icmp ugt i64 %i.f, -16
   %conflict.rdx = or i1 %diff.check, %diff.check9
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph

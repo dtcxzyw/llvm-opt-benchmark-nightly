@@ -205,12 +205,12 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.b = add i64 %.sroa.44.0.copyload, %.sroa.65.0.copyload6 ; 2 uses
-  %i.c = add i64 %.sroa.52.0.copyload, %.sroa.0.0.copyload7
-  %i.d = sub i64 %i.c, %i.b
+  %i.b = add i64 %.sroa.52.0.copyload, %.sroa.0.0.copyload7
+  %i.c = add i64 %.sroa.44.0.copyload, %.sroa.65.0.copyload6 ; 2 uses
+  %i.d = sub i64 %i.b, %i.c
   %diff.check = icmp ugt i64 %i.d, -32
   %i.e = add i64 %.sroa.52.0.copyload, %.sroa.41.0.copyload8
-  %i.f = sub i64 %i.e, %i.b
+  %i.f = sub i64 %i.e, %i.c
   %diff.check9 = icmp ugt i64 %i.f, -32
   %conflict.rdx = or i1 %diff.check, %diff.check9
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

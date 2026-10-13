@@ -204,11 +204,11 @@ bb.h:                                             ; preds = %_ZNSt6vectorIiSaIiE
   br i1 %.not23, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h
-  %7 = sub nsw i32 0, %6                          ; 2 uses
+  %.sroa.0.0.copyload.i2.i.i32 = ptrtoaddr ptr %.sroa.0.0.copyload.i2.i.i to i64
   %i.bb = ptrtoaddr ptr %i.az to i64
-  %8 = ptrtoaddr ptr %.sroa.0.0.copyload.i2.i.i to i64
+  %7 = sub nsw i32 0, %6                          ; 2 uses
   %i.bc = add i64 %i.bb, -8
-  %i.bd = sub i64 %i.bc, %8                       ; 2 uses
+  %i.bd = sub i64 %i.bc, %.sroa.0.0.copyload.i2.i.i32 ; 2 uses
   %i.be = lshr i64 %i.bd, 2
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bd, 28
