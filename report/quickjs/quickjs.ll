@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %bb.f, %bb.h
 
 .thread:                                          ; preds = %bb.e, %bb.i, %bb.k
   %.0.ph7 = phi double [ %.0.ph, %bb.k ], [ %i.u, %bb.e ], [ %i.ac, %bb.i ]
-  %6 = tail call double @llvm.trunc.f64(double %.0.ph7)
-  %i.af = fptosi double %6 to i64
+  %i.af = fptosi double %.0.ph7 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #49
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #49
   %i.ag = sdiv i64 %i.af, 1000
@@ -609,7 +608,7 @@ JS_ToFloat64Free.exit:                            ; preds = %bb.aa, %bb.ac
   br i1 %i.ci, label %JS_ToFloat64Free.exit.thread174, label %JS_ToFloat64Free.exit.thread
 
 JS_ToFloat64Free.exit.thread:                     ; preds = %bb.ad, %bb.z, %JS_ToFloat64Free.exit
-  %.0154173 = phi double [ %.0154, %JS_ToFloat64Free.exit ], [ %i.ch, %bb.ad ], [ %i.bz, %bb.z ] ; 3 uses
+  %.0154173 = phi double [ %.0154, %JS_ToFloat64Free.exit ], [ %i.ch, %bb.ad ], [ %i.bz, %bb.z ] ; 4 uses
   %i.cj = tail call double @llvm.fabs.f64(double %.0154173)
   %i.ck = fcmp one double %i.cj, +inf
   %i.cl = fcmp ogt double %.0154173, f0x433FFFFFFFFFFFFF
@@ -617,14 +616,14 @@ JS_ToFloat64Free.exit.thread:                     ; preds = %bb.ad, %bb.z, %JS_T
   br i1 %or.cond5, label %JS_ToFloat64Free.exit.thread174, label %bb.af
 
 bb.af:                                            ; preds = %JS_ToFloat64Free.exit.thread
-  %i.cm = tail call double @llvm.trunc.f64(double %.0154173) ; 3 uses
+  %i.cm = tail call double @llvm.trunc.f64(double %.0154173) ; 2 uses
   %i.cn = fcmp olt double %i.cm, 0.000000e+00
   br i1 %i.cn, label %JS_ToFloat64Free.exit.thread174, label %.thread179
 
 .thread179:                                       ; preds = %bb.af
   %i.co = tail call double @llvm.fabs.f64(double %i.cm)
   %i.cp = fcmp one double %i.co, +inf
-  %i.cq = fptosi double %i.cm to i64
+  %i.cq = fptosi double %.0154173 to i64
   %i.cr = select i1 %i.cp, i64 %i.cq, i64 9007199254740991
   br label %JS_ToFloat64.exit
 

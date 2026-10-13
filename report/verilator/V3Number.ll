@@ -205,8 +205,7 @@ _ZNK8V3Number8toDoubleEv.exit:                    ; preds = %bb.e
   %.sroa.0.4.insert.shift.i = shl nuw i64 %.sroa.0.4.insert.ext.i, 32
   %.sroa.0.4.insert.insert.i = or disjoint i64 %.sroa.0.4.insert.shift.i, %.sroa.0.0.insert.ext.i
   %i.t = bitcast i64 %.sroa.0.4.insert.insert.i to double
-  %2 = tail call double @llvm.trunc.f64(double %i.t)
-  %i.u = fptosi double %2 to i32
+  %i.u = fptosi double %i.t to i32
   %i.v = tail call noundef nonnull align 8 dereferenceable(56) ptr @_ZN8V3Number8setLongSEi(ptr noundef nonnull align 8 dereferenceable(56) %0, i32 noundef %i.u) ; 0 uses
   ret ptr %0
 }
