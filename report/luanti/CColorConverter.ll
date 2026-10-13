@@ -204,11 +204,11 @@ bb.a:
   br i1 %i.a, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %2 to i64
-  %i.c = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = zext nneg i32 %1 to i64                  ; 5 uses
   %min.iters.check = icmp ult i32 %1, 4
-  %i.e = sub i64 %i.c, %i.b
+  %i.e = sub i64 %i.b, %i.c
   %diff.check = icmp ugt i64 %i.e, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -456,11 +456,11 @@ bb.a:
   br i1 %i.a, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %2 to i64
-  %i.c = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = zext nneg i32 %1 to i64                  ; 5 uses
   %min.iters.check = icmp ult i32 %1, 4
-  %i.e = sub i64 %i.c, %i.b
+  %i.e = sub i64 %i.b, %i.c
   %diff.check = icmp ugt i64 %i.e, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -863,11 +863,11 @@ bb.a:
   br i1 %i.a, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %2 to i64
-  %i.c = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = zext nneg i32 %1 to i64                  ; 5 uses
   %min.iters.check = icmp ult i32 %1, 4
-  %i.e = sub i64 %i.c, %i.b
+  %i.e = sub i64 %i.b, %i.c
   %diff.check = icmp ugt i64 %i.e, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -1044,8 +1044,8 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN5video15CColorConverter17convert_viaFormatEPKvNS_13ECOLOR_FORMATEiPvS3_(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, i32 noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %3 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %3 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
   switch i32 %1, label %_ZN5video15CColorConverter24convert_A1R5G5B5toR5G6B5EPKviPv.exit [
     i32 0, label %bb.b
     i32 1, label %bb.g
@@ -1072,7 +1072,7 @@ bb.d:                                             ; preds = %bb.b
 iter.check308:                                    ; preds = %bb.d
   %i.e = zext nneg i32 %2 to i64                  ; 5 uses
   %min.iters.check290 = icmp ult i32 %2, 4
-  %i.f = sub i64 %i.a, %i.b
+  %i.f = sub i64 %i.b, %i.a
   %diff.check288 = icmp ugt i64 %i.f, -32
   %or.cond = or i1 %min.iters.check290, %diff.check288
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check291
@@ -1368,7 +1368,7 @@ bb.h:                                             ; preds = %bb.g
 iter.check:                                       ; preds = %bb.h
   %i.ep = zext nneg i32 %2 to i64                 ; 5 uses
   %min.iters.check246 = icmp ult i32 %2, 4
-  %i.eq = sub i64 %i.a, %i.b
+  %i.eq = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.eq, -32
   %or.cond325 = or i1 %min.iters.check246, %diff.check
   br i1 %or.cond325, label %.lr.ph.i59.preheader, label %vector.main.loop.iter.check

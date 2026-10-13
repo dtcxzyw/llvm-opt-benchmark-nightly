@@ -205,19 +205,21 @@ bb.s:                                             ; preds = %bb.p
 
 bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !97
-  %.sroa.01.0.copyload.i.i.i = load ptr, ptr %i.j, align 8, !noalias !97, !nonnull !5, !noundef !5 ; 13 uses
-  %.sroa.01.0.copyload.i.i.i126 = ptrtoaddr ptr %.sroa.01.0.copyload.i.i.i to i64 ; 2 uses
+  %.sroa.01.0.copyload.i.i.i = load ptr, ptr %i.j, align 8, !noalias !97, !nonnull !5, !noundef !5 ; 12 uses
+  %.sroa.01.0.copyload.i.i.i126 = ptrtoaddr ptr %.sroa.01.0.copyload.i.i.i to i64 ; 3 uses
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %.sroa.5.0.copyload.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !97, !nonnull !5, !noundef !5 ; 5 uses
-  %.sroa.5.0.copyload.i.i.i125 = ptrtoaddr ptr %.sroa.5.0.copyload.i.i.i to i64 ; 2 uses
+  %.sroa.5.0.copyload.i.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !noalias !97, !nonnull !5, !noundef !5 ; 4 uses
+  %.sroa.5.0.copyload.i.i.i125 = ptrtoaddr ptr %.sroa.5.0.copyload.i.i.i to i64 ; 3 uses
   %.sroa.62.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %.sroa.62.0.copyload.i.i.i = load ptr, ptr %.sroa.62.0..sroa_idx.i.i.i, align 8, !noalias !97 ; 5 uses
   %.sroa.7.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %.sroa.7.0.copyload.i.i.i = load ptr, ptr %.sroa.7.0..sroa_idx.i.i.i, align 8, !noalias !97 ; 4 uses
   %.sroa.8.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %.sroa.8.0.copyload.i.i.i = load ptr, ptr %.sroa.8.0..sroa_idx.i.i.i, align 8, !noalias !97 ; 11 uses
+  %.sroa.8.0.copyload.i.i.i88 = ptrtoaddr ptr %.sroa.8.0.copyload.i.i.i to i64
   %.sroa.11.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 40
   %.sroa.11.0.copyload.i.i.i = load ptr, ptr %.sroa.11.0..sroa_idx.i.i.i, align 8, !noalias !97 ; 7 uses
+  %.sroa.11.0.copyload.i.i.i89 = ptrtoaddr ptr %.sroa.11.0.copyload.i.i.i to i64
   %i.bj = icmp eq ptr %.sroa.01.0.copyload.i.i.i, %.sroa.5.0.copyload.i.i.i
   br i1 %i.bj, label %select.unfold.i.i.i, label %.lr.ph.i.i.i
 
@@ -256,13 +258,9 @@ bb.t:                                             ; preds = %bb.s
 
 .lr.ph.split.us.i.i.i:                            ; preds = %.lr.ph.i.i.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.copyload.i.i.i) ]
-  %3 = ptrtoaddr ptr %.sroa.5.0.copyload.i.i.i to i64
-  %4 = ptrtoaddr ptr %.sroa.01.0.copyload.i.i.i to i64
-  %i.bu = xor i64 %4, -1
-  %i.bv = add i64 %i.bu, %3
-  %5 = ptrtoaddr ptr %.sroa.11.0.copyload.i.i.i to i64
-  %6 = ptrtoaddr ptr %.sroa.8.0.copyload.i.i.i to i64
-  %i.bw = sub i64 %5, %6
+  %i.bu = xor i64 %.sroa.01.0.copyload.i.i.i126, -1
+  %i.bv = add i64 %i.bu, %.sroa.5.0.copyload.i.i.i125
+  %i.bw = sub i64 %.sroa.11.0.copyload.i.i.i89, %.sroa.8.0.copyload.i.i.i88
   %i.bx = call i64 @llvm.umin.i64(i64 %i.bv, i64 %i.bw)
   %i.by = add i64 %i.bx, 1                        ; 5 uses
   %min.iters.check = icmp ult i64 %i.by, 33

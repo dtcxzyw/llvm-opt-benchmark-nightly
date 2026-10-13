@@ -202,6 +202,7 @@ declare void @_ZNK4llvm6object7Archive5Child7getNextEv(ptr dead_on_unwind writab
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt6vectorISt10unique_ptrIN4llvm11logicalview8LVReaderESt14default_deleteIS3_EESaIS6_EE15_M_range_insertISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS6_S8_EEEEEvSE_T_SG_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %.not98 = icmp eq ptr %2, %3
   br i1 %.not98, label %_ZSt4copyISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4llvm11logicalview8LVReaderESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEESE_ET0_T_SH_SG_.exit, label %bb.b
 
@@ -568,7 +569,6 @@ _ZNSt12_Vector_baseISt10unique_ptrIN4llvm11logicalview8LVReaderESt14default_dele
   br i1 %.not7.i.i.i.i.i64, label %_ZSt34__uninitialized_move_if_noexcept_aIPSt10unique_ptrIN4llvm11logicalview8LVReaderESt14default_deleteIS3_EES7_SaIS6_EET0_T_SA_S9_RT1_.exit, label %.lr.ph.i.i.i.i.i65.preheader
 
 .lr.ph.i.i.i.i.i65.preheader:                     ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN4llvm11logicalview8LVReaderESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit
-  %4 = ptrtoaddr ptr %1 to i64
   %i.eg = add i64 %4, -8
   %i.eh = sub i64 %i.eg, %i.du                    ; 2 uses
   %i.ei = lshr i64 %i.eh, 3
@@ -691,9 +691,8 @@ _ZSt22__uninitialized_copy_aISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS
   br i1 %.not7.i.i.i.i.i77, label %_ZSt34__uninitialized_move_if_noexcept_aIPSt10unique_ptrIN4llvm11logicalview8LVReaderESt14default_deleteIS3_EES7_SaIS6_EET0_T_SA_S9_RT1_.exit83, label %.lr.ph.i.i.i.i.i78.preheader
 
 .lr.ph.i.i.i.i.i78.preheader:                     ; preds = %_ZSt22__uninitialized_copy_aISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN4llvm11logicalview8LVReaderESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEESA_S9_ET0_T_SH_SG_RSaIT1_E.exit76
-  %5 = ptrtoaddr ptr %1 to i64
   %i.fo = add i64 %i.j, -8
-  %i.fp = sub i64 %i.fo, %5                       ; 3 uses
+  %i.fp = sub i64 %i.fo, %4                       ; 3 uses
   %i.fq = lshr i64 %i.fp, 3
   %i.fr = add nuw nsw i64 %i.fq, 1                ; 2 uses
   %min.iters.check229 = icmp ult i64 %i.fp, 136

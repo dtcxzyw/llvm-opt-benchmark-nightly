@@ -202,8 +202,8 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @lxb_unicode_normalize_body(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr nofree readonly captures(none) %.0.val, ptr noundef %3, i1 noundef zeroext %4, i1 noundef zeroext %5) unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = alloca [4096 x i32], align 16            ; 7 uses
   %i.d = alloca ptr, align 8                      ; 7 uses
   %i.e = alloca [4096 x i8], align 16             ; 10 uses
@@ -248,10 +248,10 @@ bb.b:                                             ; preds = %bb.a
 
 iter.check:                                       ; preds = %bb.b
   %i.ad = zext i8 %i.u to i64                     ; 8 uses
-  %i.ae = add i64 %.fr127, %i.a
-  %i.af = add i64 %i.a, 1
+  %i.ae = add i64 %.fr127, %i.b
+  %i.af = add i64 %i.b, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %i.af)
-  %i.ag = xor i64 %i.a, -1
+  %i.ag = xor i64 %i.b, -1
   %i.ah = add i64 %umax, %i.ag
   %i.ai = xor i64 %i.ad, -1
   %i.aj = add nsw i64 %i.ai, %i.z
@@ -261,8 +261,8 @@ iter.check:                                       ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.al = add i64 %i.b, %i.ad
-  %i.am = sub i64 %i.al, %i.a
+  %i.al = add i64 %i.a, %i.ad
+  %i.am = sub i64 %i.al, %i.b
   %i.an = add i64 %i.am, 55
   %diff.check = icmp ult i64 %i.an, 31
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -665,8 +665,8 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local noundef zeroext i1 @lxb_unicode_quick_check(ptr noundef %0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = alloca ptr, align 8                      ; 5 uses
   store ptr %1, ptr %i.d, align 8, !tbaa !49
@@ -690,10 +690,10 @@ bb.b:                                             ; preds = %bb.a
 
 iter.check:                                       ; preds = %bb.b
   %i.o = zext i8 %i.g to i64                      ; 8 uses
-  %i.p = add i64 %2, %i.a
-  %i.q = add i64 %i.a, 1
+  %i.p = add i64 %2, %i.b
+  %i.q = add i64 %i.b, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.p, i64 %i.q)
-  %i.r = xor i64 %i.a, -1
+  %i.r = xor i64 %i.b, -1
   %i.s = add i64 %umax, %i.r
   %i.t = xor i64 %i.o, -1
   %i.u = add nsw i64 %i.t, %i.k
@@ -703,8 +703,8 @@ iter.check:                                       ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.w = add i64 %i.b, %i.o
-  %i.x = sub i64 %i.w, %i.a
+  %i.w = add i64 %i.a, %i.o
+  %i.x = sub i64 %i.w, %i.b
   %i.y = add i64 %i.x, 55
   %diff.check = icmp ult i64 %i.y, 31
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check

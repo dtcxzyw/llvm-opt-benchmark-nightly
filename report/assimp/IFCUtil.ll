@@ -205,6 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not8.i, label %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b
+  %2 = ptrtoaddr ptr %i.e to i64
+  %3 = ptrtoaddr ptr %i.c to i64
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -216,8 +218,6 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %2 = ptrtoaddr ptr %i.e to i64
-  %3 = ptrtoaddr ptr %i.c to i64
   %i.q = add i64 %2, -24
   %i.r = sub i64 %i.q, %3                         ; 2 uses
   %i.s = udiv i64 %i.r, 24                        ; 2 uses
@@ -363,6 +363,8 @@ bb.c:                                             ; preds = %_ZN6Assimp3IFC8Temp
   br i1 %.not8.i4, label %_ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit8, label %.lr.ph.i5
 
 .lr.ph.i5:                                        ; preds = %bb.c
+  %4 = ptrtoaddr ptr %i.da to i64
+  %5 = ptrtoaddr ptr %i.cy to i64
   %i.db = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.dc = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -374,8 +376,6 @@ bb.c:                                             ; preds = %_ZN6Assimp3IFC8Temp
   %i.dj = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %4 = ptrtoaddr ptr %i.da to i64
-  %5 = ptrtoaddr ptr %i.cy to i64
   %i.dm = add i64 %4, -24
   %i.dn = sub i64 %i.dm, %5                       ; 2 uses
   %i.do = udiv i64 %i.dn, 24                      ; 2 uses
@@ -557,6 +557,8 @@ bb.a:
   br i1 %.not8, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %2 = ptrtoaddr ptr %i.c to i64
+  %3 = ptrtoaddr ptr %i.a to i64
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -568,8 +570,6 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %2 = ptrtoaddr ptr %i.c to i64
-  %3 = ptrtoaddr ptr %i.a to i64
   %i.o = add i64 %2, -24
   %i.p = sub i64 %i.o, %3                         ; 2 uses
   %i.q = udiv i64 %i.p, 24                        ; 2 uses
@@ -972,6 +972,7 @@ define hidden void @_ZNK6Assimp3IFC8TempMesh21ComputePolygonNormalsERSt6vectorI1
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
+  %4 = ptrtoaddr ptr %i.b to i64
   %i.c = getelementptr inbounds [4 x i8], ptr %i.b, i64 %3 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
@@ -1079,12 +1080,11 @@ _ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_b
   br i1 %.not5.i, label %_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPKjSt6vectorIjSaIjEEEEiET0_T_S9_S8_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EE7reserveEm.exit
-  %i.aw = ptrtoaddr ptr %i.b to i64
+  %i.aw = ptrtoaddr ptr %i.av to i64
   %i.ax = shl nsw i64 %3, 2
-  %4 = ptrtoaddr ptr %i.av to i64
-  %i.ay = add i64 %i.ax, %i.aw
+  %i.ay = add i64 %i.ax, %4
   %i.az = add i64 %i.ay, -4
-  %i.ba = sub i64 %i.az, %4                       ; 2 uses
+  %i.ba = sub i64 %i.az, %i.aw                    ; 2 uses
   %i.bb = lshr i64 %i.ba, 2
   %i.bc = add nuw nsw i64 %i.bb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ba, 28

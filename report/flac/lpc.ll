@@ -204,10 +204,10 @@ vector.memcheck61:                                ; preds = %vector.scevcheck60
   %i.bv = tail call i32 @llvm.umin.i32(i32 %4, i32 %i.bg)
   %umin = zext i32 %i.bv to i64
   %i.bw = shl nuw nsw i64 %umin, 2
-  %6 = add i64 %i.bw, %i.b
-  %7 = shl nuw nsw i64 %i.bi, 2
-  %i.bx = add i64 %7, %i.a
-  %i.by = sub i64 %i.bx, %6
+  %6 = shl nuw nsw i64 %i.bi, 2
+  %7 = add i64 %i.bw, %i.b
+  %i.bx = add i64 %6, %i.a
+  %i.by = sub i64 %i.bx, %7
   %diff.check62 = icmp ugt i64 %i.by, -32
   br i1 %diff.check62, label %.lr.ph45.preheader78, label %vector.ph65
 
@@ -480,10 +480,10 @@ vector.memcheck61:                                ; preds = %vector.scevcheck60
   %i.bv = tail call i32 @llvm.umin.i32(i32 %4, i32 %i.bg)
   %umin = zext i32 %i.bv to i64
   %i.bw = shl nuw nsw i64 %umin, 2
-  %6 = add i64 %i.bw, %i.b
-  %7 = shl nuw nsw i64 %i.bi, 2
-  %i.bx = add i64 %7, %i.a
-  %i.by = sub i64 %i.bx, %6
+  %6 = shl nuw nsw i64 %i.bi, 2
+  %7 = add i64 %i.bw, %i.b
+  %i.bx = add i64 %6, %i.a
+  %i.by = sub i64 %i.bx, %7
   %diff.check62 = icmp ugt i64 %i.by, -16
   br i1 %diff.check62, label %.lr.ph45.preheader78, label %vector.ph65
 

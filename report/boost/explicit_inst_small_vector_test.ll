@@ -204,9 +204,9 @@ _ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test2
   br i1 %.not10.i.i, label %.loopexit, label %.lr.ph.i.i13.preheader
 
 .lr.ph.i.i13.preheader:                           ; preds = %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit
-  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !62 ; 3 uses
   %i.aj = ptrtoaddr ptr %i.ai to i64
   %i.ak = ptrtoaddr ptr %i.ah to i64
+  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !62 ; 3 uses
   %i.al = add i64 %i.aj, -4
   %i.am = sub i64 %i.al, %i.ak                    ; 3 uses
   %i.an = lshr i64 %i.am, 2
@@ -609,6 +609,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %1, align 8, !tbaa !75     ; 7 uses
+  %5 = ptrtoaddr ptr %i.g to i64                  ; 2 uses
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.e ; 19 uses
   %i.i = icmp eq ptr %i.h, %i.a
   %.not15.i.i.i.i = icmp eq i64 %3, 0             ; 2 uses
@@ -734,7 +735,6 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_22small_vector_allocatorINS0
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS3_16simple_allocatorIvEEvEEPS4_S8_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_mSC_.exit.i.i.i
-  %5 = ptrtoaddr ptr %i.g to i64                  ; 2 uses
   %i.ay = shl nuw nsw i64 %i.e, 2
   %i.az = shl i64 %3, 2
   %i.ba = add i64 %i.ay, %5
@@ -1137,6 +1137,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %1, align 8, !tbaa !87     ; 7 uses
+  %5 = ptrtoaddr ptr %i.g to i64                  ; 2 uses
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.e ; 19 uses
   %i.i = icmp eq ptr %i.h, %i.a
   %.not15.i.i.i.i = icmp eq i64 %3, 0             ; 2 uses
@@ -1262,7 +1263,6 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_22small_vector_allocatorINS0
   br i1 %.not8.i.i.i.i, label %_ZN5boost9container13move_backwardIPNS0_4test24movable_and_copyable_intES4_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_S8_E4typeES7_S7_S8_.exit.i.i.i, label %.lr.ph.i40.i.i.i.preheader
 
 .lr.ph.i40.i.i.i.preheader:                       ; preds = %_ZN5boost9container26uninitialized_move_alloc_nINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_9allocatorIvLj2ELj0EEEvEEPS4_S8_EENS0_3dtl41disable_if_memtransfer_copy_constructibleIT0_T1_SC_E4typeERT_SB_mSC_.exit.i.i.i
-  %5 = ptrtoaddr ptr %i.g to i64                  ; 2 uses
   %i.ay = shl nuw nsw i64 %i.e, 2
   %i.az = shl i64 %3, 2
   %i.ba = add i64 %i.ay, %5

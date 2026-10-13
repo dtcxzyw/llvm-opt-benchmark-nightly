@@ -204,9 +204,9 @@ bb.a:
   br i1 %.not2021, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %i.l, i64 28 ; 3 uses
   %i.t = ptrtoaddr ptr %i.s to i64
   %i.u = ptrtoaddr ptr %i.r to i64
+  %1 = getelementptr inbounds nuw i8, ptr %i.l, i64 28 ; 3 uses
   %i.v = add i64 %i.t, -4
   %i.w = sub i64 %i.v, %i.u                       ; 2 uses
   %i.x = lshr i64 %i.w, 2
@@ -520,9 +520,9 @@ _ZN7CaDiCaL11IdrupTracer11reduce_hashEmm.exit:    ; preds = %.lr.ph.i, %bb.c
   br i1 %.not2021.i, label %_ZN7CaDiCaL11IdrupTracer10new_clauseEv.exit, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %_ZN7CaDiCaL11IdrupTracer11reduce_hashEmm.exit
-  %1 = getelementptr inbounds nuw i8, ptr %i.ag, i64 28 ; 3 uses
   %i.an = ptrtoaddr ptr %i.am to i64
   %i.ao = ptrtoaddr ptr %i.al to i64
+  %1 = getelementptr inbounds nuw i8, ptr %i.ag, i64 28 ; 3 uses
   %i.ap = add i64 %i.an, -4
   %i.aq = sub i64 %i.ap, %i.ao                    ; 2 uses
   %i.ar = lshr i64 %i.aq, 2

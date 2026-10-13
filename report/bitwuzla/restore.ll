@@ -202,6 +202,7 @@ bb.s:                                             ; preds = %.critedge.thread, %
   %.sroa.0138.0.lcssa.ptr324 = phi ptr [ %.sroa.0138.0.lcssa.ptr, %bb.r ], [ %.sroa.0138.0.lcssa.ptr, %.critedge ], [ %.sroa.0138.0.lcssa.ptr322, %.critedge.thread ] ; 7 uses
   %.sroa.0138.0.lcssa.idx323 = phi i64 [ %.sroa.0138.0.lcssa.idx.ph, %bb.r ], [ %.sroa.0138.0.lcssa.idx.ph, %.critedge ], [ 16, %.critedge.thread ]
   %i.eg = phi i1 [ %.not96, %bb.r ], [ false, %.critedge ], [ false, %.critedge.thread ] ; 2 uses
+  %.sroa.0138.0.lcssa.ptr324345 = ptrtoaddr ptr %.sroa.0138.0.lcssa.ptr324 to i64
   %or.cond = select i1 %i.eg, i1 true, i1 %.068.lcssa
   br i1 %or.cond, label %bb.u, label %bb.t
 
@@ -217,8 +218,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not213243, label %.loopexit217, label %.lr.ph246.preheader
 
 .lr.ph246.preheader:                              ; preds = %.preheader216
-  %3 = ptrtoaddr ptr %.sroa.0138.0.lcssa.ptr324 to i64
-  %i.ek = add i64 %3, -20
+  %i.ek = add i64 %.sroa.0138.0.lcssa.ptr324345, -20
   %i.el = sub i64 %i.ek, %.sroa.0161.1.lcssa344   ; 2 uses
   %i.em = lshr i64 %i.el, 2
   %i.en = add nuw nsw i64 %i.em, 1                ; 2 uses

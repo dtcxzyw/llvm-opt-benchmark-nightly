@@ -204,6 +204,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define hidden void @VP8LConvertFromBGRA(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #3 {
 bb.a:
+  %4 = ptrtoaddr ptr %0 to i64                    ; 6 uses
   switch i32 %2, label %CopyOrSwap.exit [
     i32 0, label %bb.b
     i32 1, label %bb.c
@@ -264,7 +265,6 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.k, label %.lr.ph.i.preheader, label %CopyOrSwap.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.h
-  %4 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.l = add i64 %.idx.i42, %4
   %i.m = add i64 %4, 4
   %i.n = tail call i64 @llvm.umax.i64(i64 %i.l, i64 %i.m)
@@ -329,11 +329,10 @@ bb.i:                                             ; preds = %bb.a
   br i1 %i.ai, label %.lr.ph.i44.preheader, label %CopyOrSwap.exit47
 
 .lr.ph.i44.preheader:                             ; preds = %bb.i
-  %5 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %i.aj = add i64 %.idx.i43, %5
-  %i.ak = add i64 %5, 4
+  %i.aj = add i64 %.idx.i43, %4
+  %i.ak = add i64 %4, 4
   %i.al = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.ak)
-  %i.am = xor i64 %5, -1
+  %i.am = xor i64 %4, -1
   %i.an = add i64 %i.al, %i.am                    ; 2 uses
   %i.ao = lshr i64 %i.an, 2
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses

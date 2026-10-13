@@ -205,7 +205,7 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.s = ptrtoaddr ptr %i.q to i64
   %i.t = add i64 %i.f, %i.s
-  %i.u = add i64 %i.e, %i.l
+  %i.u = add i64 %i.l, %i.e
   %i.v = sub i64 %i.u, %i.t
   %diff.check = icmp ugt i64 %i.v, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader47, label %vector.ph

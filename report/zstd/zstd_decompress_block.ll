@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %ZSTD_overlapCopy8.e
   %.161 = phi ptr [ %0, %bb.b ], [ %i.at, %ZSTD_overlapCopy8.exit ] ; 13 uses
   %.1 = phi ptr [ %2, %bb.b ], [ %i.as, %ZSTD_overlapCopy8.exit ] ; 11 uses
   %.0 = phi i64 [ %3, %bb.b ], [ %i.au, %ZSTD_overlapCopy8.exit ] ; 2 uses
-  %.16194 = ptrtoaddr ptr %.161 to i64            ; 2 uses
-  %.195 = ptrtoaddr ptr %.1 to i64
+  %.16194 = ptrtoaddr ptr %.1 to i64
+  %.195 = ptrtoaddr ptr %.161 to i64              ; 2 uses
   %.not19 = icmp ugt ptr %i.e, %1
   br i1 %.not19, label %bb.k, label %bb.g
 
@@ -314,10 +314,10 @@ bb.p:                                             ; preds = %ZSTD_wildcopy.exit,
 
 iter.check:                                       ; preds = %bb.p
   %i.cb = add i64 %3, %i.b
-  %umax = tail call i64 @llvm.umax.i64(i64 %.16194, i64 %i.a)
+  %umax = tail call i64 @llvm.umax.i64(i64 %.195, i64 %i.a)
   %i.cc = sub i64 %i.cb, %umax                    ; 7 uses
   %min.iters.check = icmp ult i64 %i.cc, 8
-  %i.cd = sub i64 %.195, %.16194
+  %i.cd = sub i64 %.16194, %.195
   %diff.check = icmp ugt i64 %i.cd, -32
   %or.cond144 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond144, label %.lr.ph.preheader, label %vector.main.loop.iter.check

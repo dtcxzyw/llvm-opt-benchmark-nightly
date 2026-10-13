@@ -9,11 +9,11 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @dlaebz_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readonly captures(none) %6, ptr nofree noundef readonly captures(none) %7, ptr nofree noundef readonly captures(none) %8, ptr nofree noundef readonly captures(none) %9, ptr nofree noundef readnone captures(none) %10, ptr nofree noundef readonly captures(none) %11, ptr nofree noundef captures(none) %12, ptr nofree noundef captures(none) %13, ptr nofree noundef captures(none) %14, ptr nofree noundef captures(none) %15, ptr nofree noundef captures(none) %16, ptr nofree noundef writeonly captures(none) %17, ptr nofree noundef captures(none) %18, ptr nofree noundef captures(none) initializes((0, 4)) %19) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %13 to i64                 ; 3 uses
-  %i.b = ptrtoaddr ptr %14 to i64                 ; 3 uses
+  %i.a = ptrtoaddr ptr %14 to i64                 ; 2 uses
+  %i.b = ptrtoaddr ptr %13 to i64                 ; 2 uses
   %i.c = load i32, ptr %3, align 4, !tbaa !36     ; 10 uses
   %narrow = xor i32 %i.c, -1
-  %i.d = sext i32 %narrow to i64                  ; 7 uses
+  %i.d = sext i32 %narrow to i64                  ; 8 uses
   %i.e = getelementptr inbounds [4 x i8], ptr %16, i64 %i.d ; 27 uses
   %i.f = getelementptr inbounds [8 x i8], ptr %13, i64 %i.d ; 30 uses
   %i.g = getelementptr inbounds i8, ptr %9, i64 -8 ; 10 uses
@@ -306,20 +306,17 @@ iter.check:                                       ; preds = %bb.m
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %20 = shl nsw i64 %i.eh, 3
-  %21 = add i64 %20, %i.a
-  %22 = shl nsw i64 %i.d, 3                       ; 2 uses
-  %i.ek = add i64 %21, %22
-  %i.el = sub i64 %i.b, %i.ek
-  %i.em = add i64 %i.el, -9
-  %diff.check = icmp ult i64 %i.em, 127
-  %23 = shl nsw i64 %i.eg, 3
-  %24 = add i64 %23, %i.a
-  %25 = add i64 %24, %22
-  %26 = sub i64 %i.b, %25
-  %27 = add i64 %26, -9
-  %diff.check774 = icmp ult i64 %27, 127
-  %conflict.rdx = or i1 %diff.check, %diff.check774
+  %i.ek = add i64 %i.a, -8
+  %i.el = sub i64 %i.ek, %i.b                     ; 2 uses
+  %i.em = add nsw i64 %i.eh, %i.d
+  %20 = shl nsw i64 %i.em, 3
+  %21 = sub i64 %20, %i.el
+  %diff.check = icmp ugt i64 %21, -128
+  %22 = or i64 %i.eg, %i.d
+  %23 = shl nsw i64 %22, 3
+  %24 = sub i64 %23, %i.el
+  %diff.check775 = icmp ugt i64 %24, -128
+  %conflict.rdx = or i1 %diff.check, %diff.check775
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
@@ -486,8 +483,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gz = sext i32 %i.gx to i64                   ; 11 uses
   %invariant.gep766 = getelementptr [8 x i8], ptr %i.f, i64 %i.gy ; 7 uses
   %invariant.gep768 = getelementptr [8 x i8], ptr %i.f, i64 %i.gz ; 7 uses
-  %i.ha = add i64 %i.b, -8
-  %i.hb = sub i64 %i.ha, %i.a                     ; 2 uses
+  %i.ha = add i64 %i.a, -8
+  %i.hb = sub i64 %i.ha, %i.b                     ; 2 uses
   %i.hc = add nsw i64 %i.gz, %i.d
   %i.hd = shl nsw i64 %i.hc, 3
   %i.he = or i64 %i.gy, %i.d

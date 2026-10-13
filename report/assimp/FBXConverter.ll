@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not5.i, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP6aiMeshSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
-  %1 = load ptr, ptr %i.k, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.y = load ptr, ptr %2, align 8                ; 6 uses
-  %3 = ptrtoaddr ptr %i.x to i64
-  %4 = ptrtoaddr ptr %i.w to i64
-  %i.z = add i64 %3, -8
-  %i.aa = sub i64 %i.z, %4                        ; 3 uses
+  %1 = ptrtoaddr ptr %i.x to i64
+  %2 = ptrtoaddr ptr %i.w to i64
+  %i.y = load ptr, ptr %i.k, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.y, i64 24
+  %4 = load ptr, ptr %3, align 8                  ; 6 uses
+  %i.z = add i64 %1, -8
+  %i.aa = sub i64 %i.z, %2                        ; 3 uses
   %i.ab = lshr i64 %i.aa, 3
   %i.ac = add nuw nsw i64 %i.ab, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aa, 104
@@ -221,23 +221,23 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.ad = and i64 %i.aa, -8
   %i.ae = add i64 %i.ad, 8                        ; 2 uses
   %i.af = getelementptr i8, ptr %i.w, i64 %i.ae
-  %i.ag = getelementptr i8, ptr %i.y, i64 %i.ae
+  %i.ag = getelementptr i8, ptr %4, i64 %i.ae
   %bound0 = icmp ult ptr %i.w, %i.ag
-  %bound1 = icmp ult ptr %i.y, %i.af
+  %bound1 = icmp ult ptr %4, %i.af
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.lr.ph.i.preheader245, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ac, 4611686018427387900     ; 3 uses
   %i.ah = shl i64 %n.vec, 3                       ; 2 uses
-  %i.ai = getelementptr i8, ptr %i.y, i64 %i.ah
+  %i.ai = getelementptr i8, ptr %4, i64 %i.ah
   %i.aj = getelementptr i8, ptr %i.w, i64 %i.ah
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ak = shl i64 %index, 3                       ; 2 uses
-  %next.gep = getelementptr i8, ptr %i.y, i64 %i.ak ; 3 uses
+  %next.gep = getelementptr i8, ptr %4, i64 %i.ak ; 3 uses
   %next.gep78 = getelementptr i8, ptr %i.w, i64 %i.ak ; 3 uses
   %i.al = getelementptr i8, ptr %next.gep78, i64 16 ; 2 uses
   %wide.load = load <2 x ptr>, ptr %next.gep78, align 8, !alias.scope !81, !noalias !82
@@ -258,7 +258,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP6aiMeshSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i.preheader245
 
 .lr.ph.i.preheader245:                            ; preds = %vector.memcheck, %.lr.ph.i.preheader, %middle.block
-  %.07.i.ph = phi ptr [ %i.y, %vector.memcheck ], [ %i.y, %.lr.ph.i.preheader ], [ %i.ai, %middle.block ]
+  %.07.i.ph = phi ptr [ %4, %vector.memcheck ], [ %4, %.lr.ph.i.preheader ], [ %i.ai, %middle.block ]
   %.sroa.03.06.i.ph = phi ptr [ %i.w, %vector.memcheck ], [ %i.w, %.lr.ph.i.preheader ], [ %i.aj, %middle.block ]
   br label %.lr.ph.i
 
@@ -309,13 +309,13 @@ bb.c:                                             ; preds = %_ZSt11swap_rangesIN
   br i1 %.not5.i14, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP10aiMaterialSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i15.preheader
 
 .lr.ph.i15.preheader:                             ; preds = %bb.c
-  %5 = load ptr, ptr %i.bc, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 40
-  %i.bq = load ptr, ptr %6, align 8               ; 6 uses
-  %7 = ptrtoaddr ptr %i.bp to i64
-  %8 = ptrtoaddr ptr %i.bo to i64
-  %i.br = add i64 %7, -8
-  %i.bs = sub i64 %i.br, %8                       ; 3 uses
+  %5 = ptrtoaddr ptr %i.bp to i64
+  %6 = ptrtoaddr ptr %i.bo to i64
+  %i.bq = load ptr, ptr %i.bc, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.bq, i64 40
+  %8 = load ptr, ptr %7, align 8                  ; 6 uses
+  %i.br = add i64 %5, -8
+  %i.bs = sub i64 %i.br, %6                       ; 3 uses
   %i.bt = lshr i64 %i.bs, 3
   %i.bu = add nuw nsw i64 %i.bt, 1                ; 2 uses
   %min.iters.check89 = icmp ult i64 %i.bs, 104
@@ -325,23 +325,23 @@ vector.memcheck90:                                ; preds = %.lr.ph.i15.preheade
   %i.bv = and i64 %i.bs, -8
   %i.bw = add i64 %i.bv, 8                        ; 2 uses
   %i.bx = getelementptr i8, ptr %i.bo, i64 %i.bw
-  %i.by = getelementptr i8, ptr %i.bq, i64 %i.bw
+  %i.by = getelementptr i8, ptr %8, i64 %i.bw
   %bound091 = icmp ult ptr %i.bo, %i.by
-  %bound192 = icmp ult ptr %i.bq, %i.bx
+  %bound192 = icmp ult ptr %8, %i.bx
   %found.conflict93 = and i1 %bound091, %bound192
   br i1 %found.conflict93, label %.lr.ph.i15.preheader244, label %vector.ph94
 
 vector.ph94:                                      ; preds = %vector.memcheck90
   %n.vec95 = and i64 %i.bu, 4611686018427387900   ; 3 uses
   %i.bz = shl i64 %n.vec95, 3                     ; 2 uses
-  %i.ca = getelementptr i8, ptr %i.bq, i64 %i.bz
+  %i.ca = getelementptr i8, ptr %8, i64 %i.bz
   %i.cb = getelementptr i8, ptr %i.bo, i64 %i.bz
   br label %vector.body96
 
 vector.body96:                                    ; preds = %vector.body96, %vector.ph94
   %index97 = phi i64 [ 0, %vector.ph94 ], [ %index.next104, %vector.body96 ] ; 2 uses
   %i.cc = shl i64 %index97, 3                     ; 2 uses
-  %next.gep98 = getelementptr i8, ptr %i.bq, i64 %i.cc ; 3 uses
+  %next.gep98 = getelementptr i8, ptr %8, i64 %i.cc ; 3 uses
   %next.gep99 = getelementptr i8, ptr %i.bo, i64 %i.cc ; 3 uses
   %i.cd = getelementptr i8, ptr %next.gep99, i64 16 ; 2 uses
   %wide.load100 = load <2 x ptr>, ptr %next.gep99, align 8, !alias.scope !83, !noalias !84
@@ -362,7 +362,7 @@ middle.block105:                                  ; preds = %vector.body96
   br i1 %cmp.n106, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP10aiMaterialSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i15.preheader244
 
 .lr.ph.i15.preheader244:                          ; preds = %vector.memcheck90, %.lr.ph.i15.preheader, %middle.block105
-  %.07.i16.ph = phi ptr [ %i.bq, %vector.memcheck90 ], [ %i.bq, %.lr.ph.i15.preheader ], [ %i.ca, %middle.block105 ]
+  %.07.i16.ph = phi ptr [ %8, %vector.memcheck90 ], [ %8, %.lr.ph.i15.preheader ], [ %i.ca, %middle.block105 ]
   %.sroa.03.06.i17.ph = phi ptr [ %i.bo, %vector.memcheck90 ], [ %i.bo, %.lr.ph.i15.preheader ], [ %i.cb, %middle.block105 ]
   br label %.lr.ph.i15
 
@@ -413,13 +413,13 @@ bb.d:                                             ; preds = %_ZSt11swap_rangesIN
   br i1 %.not5.i20, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP11aiAnimationSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i21.preheader
 
 .lr.ph.i21.preheader:                             ; preds = %bb.d
-  %9 = load ptr, ptr %i.cu, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 56
-  %i.di = load ptr, ptr %10, align 8              ; 6 uses
-  %11 = ptrtoaddr ptr %i.dh to i64
-  %12 = ptrtoaddr ptr %i.dg to i64
-  %i.dj = add i64 %11, -8
-  %i.dk = sub i64 %i.dj, %12                      ; 3 uses
+  %9 = ptrtoaddr ptr %i.dh to i64
+  %10 = ptrtoaddr ptr %i.dg to i64
+  %i.di = load ptr, ptr %i.cu, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %i.di, i64 56
+  %12 = load ptr, ptr %11, align 8                ; 6 uses
+  %i.dj = add i64 %9, -8
+  %i.dk = sub i64 %i.dj, %10                      ; 3 uses
   %i.dl = lshr i64 %i.dk, 3
   %i.dm = add nuw nsw i64 %i.dl, 1                ; 2 uses
   %min.iters.check115 = icmp ult i64 %i.dk, 104
@@ -429,23 +429,23 @@ vector.memcheck116:                               ; preds = %.lr.ph.i21.preheade
   %i.dn = and i64 %i.dk, -8
   %i.do = add i64 %i.dn, 8                        ; 2 uses
   %i.dp = getelementptr i8, ptr %i.dg, i64 %i.do
-  %i.dq = getelementptr i8, ptr %i.di, i64 %i.do
+  %i.dq = getelementptr i8, ptr %12, i64 %i.do
   %bound0117 = icmp ult ptr %i.dg, %i.dq
-  %bound1118 = icmp ult ptr %i.di, %i.dp
+  %bound1118 = icmp ult ptr %12, %i.dp
   %found.conflict119 = and i1 %bound0117, %bound1118
   br i1 %found.conflict119, label %.lr.ph.i21.preheader243, label %vector.ph120
 
 vector.ph120:                                     ; preds = %vector.memcheck116
   %n.vec121 = and i64 %i.dm, 4611686018427387900  ; 3 uses
   %i.dr = shl i64 %n.vec121, 3                    ; 2 uses
-  %i.ds = getelementptr i8, ptr %i.di, i64 %i.dr
+  %i.ds = getelementptr i8, ptr %12, i64 %i.dr
   %i.dt = getelementptr i8, ptr %i.dg, i64 %i.dr
   br label %vector.body122
 
 vector.body122:                                   ; preds = %vector.body122, %vector.ph120
   %index123 = phi i64 [ 0, %vector.ph120 ], [ %index.next130, %vector.body122 ] ; 2 uses
   %i.du = shl i64 %index123, 3                    ; 2 uses
-  %next.gep124 = getelementptr i8, ptr %i.di, i64 %i.du ; 3 uses
+  %next.gep124 = getelementptr i8, ptr %12, i64 %i.du ; 3 uses
   %next.gep125 = getelementptr i8, ptr %i.dg, i64 %i.du ; 3 uses
   %i.dv = getelementptr i8, ptr %next.gep125, i64 16 ; 2 uses
   %wide.load126 = load <2 x ptr>, ptr %next.gep125, align 8, !alias.scope !85, !noalias !86
@@ -466,7 +466,7 @@ middle.block131:                                  ; preds = %vector.body122
   br i1 %cmp.n132, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP11aiAnimationSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i21.preheader243
 
 .lr.ph.i21.preheader243:                          ; preds = %vector.memcheck116, %.lr.ph.i21.preheader, %middle.block131
-  %.07.i22.ph = phi ptr [ %i.di, %vector.memcheck116 ], [ %i.di, %.lr.ph.i21.preheader ], [ %i.ds, %middle.block131 ]
+  %.07.i22.ph = phi ptr [ %12, %vector.memcheck116 ], [ %12, %.lr.ph.i21.preheader ], [ %i.ds, %middle.block131 ]
   %.sroa.03.06.i23.ph = phi ptr [ %i.dg, %vector.memcheck116 ], [ %i.dg, %.lr.ph.i21.preheader ], [ %i.dt, %middle.block131 ]
   br label %.lr.ph.i21
 
@@ -517,13 +517,13 @@ bb.e:                                             ; preds = %_ZSt11swap_rangesIN
   br i1 %.not5.i26, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP7aiLightSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i27.preheader
 
 .lr.ph.i27.preheader:                             ; preds = %bb.e
-  %13 = load ptr, ptr %i.em, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 88
-  %i.fa = load ptr, ptr %14, align 8              ; 6 uses
-  %15 = ptrtoaddr ptr %i.ez to i64
-  %16 = ptrtoaddr ptr %i.ey to i64
-  %i.fb = add i64 %15, -8
-  %i.fc = sub i64 %i.fb, %16                      ; 3 uses
+  %13 = ptrtoaddr ptr %i.ez to i64
+  %14 = ptrtoaddr ptr %i.ey to i64
+  %i.fa = load ptr, ptr %i.em, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %i.fa, i64 88
+  %16 = load ptr, ptr %15, align 8                ; 6 uses
+  %i.fb = add i64 %13, -8
+  %i.fc = sub i64 %i.fb, %14                      ; 3 uses
   %i.fd = lshr i64 %i.fc, 3
   %i.fe = add nuw nsw i64 %i.fd, 1                ; 2 uses
   %min.iters.check141 = icmp ult i64 %i.fc, 104
@@ -533,23 +533,23 @@ vector.memcheck142:                               ; preds = %.lr.ph.i27.preheade
   %i.ff = and i64 %i.fc, -8
   %i.fg = add i64 %i.ff, 8                        ; 2 uses
   %i.fh = getelementptr i8, ptr %i.ey, i64 %i.fg
-  %i.fi = getelementptr i8, ptr %i.fa, i64 %i.fg
+  %i.fi = getelementptr i8, ptr %16, i64 %i.fg
   %bound0143 = icmp ult ptr %i.ey, %i.fi
-  %bound1144 = icmp ult ptr %i.fa, %i.fh
+  %bound1144 = icmp ult ptr %16, %i.fh
   %found.conflict145 = and i1 %bound0143, %bound1144
   br i1 %found.conflict145, label %.lr.ph.i27.preheader242, label %vector.ph146
 
 vector.ph146:                                     ; preds = %vector.memcheck142
   %n.vec147 = and i64 %i.fe, 4611686018427387900  ; 3 uses
   %i.fj = shl i64 %n.vec147, 3                    ; 2 uses
-  %i.fk = getelementptr i8, ptr %i.fa, i64 %i.fj
+  %i.fk = getelementptr i8, ptr %16, i64 %i.fj
   %i.fl = getelementptr i8, ptr %i.ey, i64 %i.fj
   br label %vector.body148
 
 vector.body148:                                   ; preds = %vector.body148, %vector.ph146
   %index149 = phi i64 [ 0, %vector.ph146 ], [ %index.next156, %vector.body148 ] ; 2 uses
   %i.fm = shl i64 %index149, 3                    ; 2 uses
-  %next.gep150 = getelementptr i8, ptr %i.fa, i64 %i.fm ; 3 uses
+  %next.gep150 = getelementptr i8, ptr %16, i64 %i.fm ; 3 uses
   %next.gep151 = getelementptr i8, ptr %i.ey, i64 %i.fm ; 3 uses
   %i.fn = getelementptr i8, ptr %next.gep151, i64 16 ; 2 uses
   %wide.load152 = load <2 x ptr>, ptr %next.gep151, align 8, !alias.scope !87, !noalias !88
@@ -570,7 +570,7 @@ middle.block157:                                  ; preds = %vector.body148
   br i1 %cmp.n158, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP7aiLightSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i27.preheader242
 
 .lr.ph.i27.preheader242:                          ; preds = %vector.memcheck142, %.lr.ph.i27.preheader, %middle.block157
-  %.07.i28.ph = phi ptr [ %i.fa, %vector.memcheck142 ], [ %i.fa, %.lr.ph.i27.preheader ], [ %i.fk, %middle.block157 ]
+  %.07.i28.ph = phi ptr [ %16, %vector.memcheck142 ], [ %16, %.lr.ph.i27.preheader ], [ %i.fk, %middle.block157 ]
   %.sroa.03.06.i29.ph = phi ptr [ %i.ey, %vector.memcheck142 ], [ %i.ey, %.lr.ph.i27.preheader ], [ %i.fl, %middle.block157 ]
   br label %.lr.ph.i27
 
@@ -621,13 +621,13 @@ bb.f:                                             ; preds = %_ZSt11swap_rangesIN
   br i1 %.not5.i32, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP8aiCameraSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i33.preheader
 
 .lr.ph.i33.preheader:                             ; preds = %bb.f
-  %17 = load ptr, ptr %i.ge, align 8
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 104
-  %i.gs = load ptr, ptr %18, align 8              ; 6 uses
-  %19 = ptrtoaddr ptr %i.gr to i64
-  %20 = ptrtoaddr ptr %i.gq to i64
-  %i.gt = add i64 %19, -8
-  %i.gu = sub i64 %i.gt, %20                      ; 3 uses
+  %17 = ptrtoaddr ptr %i.gr to i64
+  %18 = ptrtoaddr ptr %i.gq to i64
+  %i.gs = load ptr, ptr %i.ge, align 8
+  %19 = getelementptr inbounds nuw i8, ptr %i.gs, i64 104
+  %20 = load ptr, ptr %19, align 8                ; 6 uses
+  %i.gt = add i64 %17, -8
+  %i.gu = sub i64 %i.gt, %18                      ; 3 uses
   %i.gv = lshr i64 %i.gu, 3
   %i.gw = add nuw nsw i64 %i.gv, 1                ; 2 uses
   %min.iters.check167 = icmp ult i64 %i.gu, 104
@@ -637,23 +637,23 @@ vector.memcheck168:                               ; preds = %.lr.ph.i33.preheade
   %i.gx = and i64 %i.gu, -8
   %i.gy = add i64 %i.gx, 8                        ; 2 uses
   %i.gz = getelementptr i8, ptr %i.gq, i64 %i.gy
-  %i.ha = getelementptr i8, ptr %i.gs, i64 %i.gy
+  %i.ha = getelementptr i8, ptr %20, i64 %i.gy
   %bound0169 = icmp ult ptr %i.gq, %i.ha
-  %bound1170 = icmp ult ptr %i.gs, %i.gz
+  %bound1170 = icmp ult ptr %20, %i.gz
   %found.conflict171 = and i1 %bound0169, %bound1170
   br i1 %found.conflict171, label %.lr.ph.i33.preheader241, label %vector.ph172
 
 vector.ph172:                                     ; preds = %vector.memcheck168
   %n.vec173 = and i64 %i.gw, 4611686018427387900  ; 3 uses
   %i.hb = shl i64 %n.vec173, 3                    ; 2 uses
-  %i.hc = getelementptr i8, ptr %i.gs, i64 %i.hb
+  %i.hc = getelementptr i8, ptr %20, i64 %i.hb
   %i.hd = getelementptr i8, ptr %i.gq, i64 %i.hb
   br label %vector.body174
 
 vector.body174:                                   ; preds = %vector.body174, %vector.ph172
   %index175 = phi i64 [ 0, %vector.ph172 ], [ %index.next182, %vector.body174 ] ; 2 uses
   %i.he = shl i64 %index175, 3                    ; 2 uses
-  %next.gep176 = getelementptr i8, ptr %i.gs, i64 %i.he ; 3 uses
+  %next.gep176 = getelementptr i8, ptr %20, i64 %i.he ; 3 uses
   %next.gep177 = getelementptr i8, ptr %i.gq, i64 %i.he ; 3 uses
   %i.hf = getelementptr i8, ptr %next.gep177, i64 16 ; 2 uses
   %wide.load178 = load <2 x ptr>, ptr %next.gep177, align 8, !alias.scope !89, !noalias !90
@@ -674,7 +674,7 @@ middle.block183:                                  ; preds = %vector.body174
   br i1 %cmp.n184, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP8aiCameraSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i33.preheader241
 
 .lr.ph.i33.preheader241:                          ; preds = %vector.memcheck168, %.lr.ph.i33.preheader, %middle.block183
-  %.07.i34.ph = phi ptr [ %i.gs, %vector.memcheck168 ], [ %i.gs, %.lr.ph.i33.preheader ], [ %i.hc, %middle.block183 ]
+  %.07.i34.ph = phi ptr [ %20, %vector.memcheck168 ], [ %20, %.lr.ph.i33.preheader ], [ %i.hc, %middle.block183 ]
   %.sroa.03.06.i35.ph = phi ptr [ %i.gq, %vector.memcheck168 ], [ %i.gq, %.lr.ph.i33.preheader ], [ %i.hd, %middle.block183 ]
   br label %.lr.ph.i33
 
@@ -725,13 +725,13 @@ bb.g:                                             ; preds = %_ZSt11swap_rangesIN
   br i1 %.not5.i38, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP9aiTextureSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i39.preheader
 
 .lr.ph.i39.preheader:                             ; preds = %bb.g
-  %21 = load ptr, ptr %i.hw, align 8
-  %22 = getelementptr inbounds nuw i8, ptr %21, i64 72
-  %i.ik = load ptr, ptr %22, align 8              ; 6 uses
-  %23 = ptrtoaddr ptr %i.ij to i64
-  %24 = ptrtoaddr ptr %i.ii to i64
-  %i.il = add i64 %23, -8
-  %i.im = sub i64 %i.il, %24                      ; 3 uses
+  %21 = ptrtoaddr ptr %i.ij to i64
+  %22 = ptrtoaddr ptr %i.ii to i64
+  %i.ik = load ptr, ptr %i.hw, align 8
+  %23 = getelementptr inbounds nuw i8, ptr %i.ik, i64 72
+  %24 = load ptr, ptr %23, align 8                ; 6 uses
+  %i.il = add i64 %21, -8
+  %i.im = sub i64 %i.il, %22                      ; 3 uses
   %i.in = lshr i64 %i.im, 3
   %i.io = add nuw nsw i64 %i.in, 1                ; 2 uses
   %min.iters.check193 = icmp ult i64 %i.im, 104
@@ -741,23 +741,23 @@ vector.memcheck194:                               ; preds = %.lr.ph.i39.preheade
   %i.ip = and i64 %i.im, -8
   %i.iq = add i64 %i.ip, 8                        ; 2 uses
   %i.ir = getelementptr i8, ptr %i.ii, i64 %i.iq
-  %i.is = getelementptr i8, ptr %i.ik, i64 %i.iq
+  %i.is = getelementptr i8, ptr %24, i64 %i.iq
   %bound0195 = icmp ult ptr %i.ii, %i.is
-  %bound1196 = icmp ult ptr %i.ik, %i.ir
+  %bound1196 = icmp ult ptr %24, %i.ir
   %found.conflict197 = and i1 %bound0195, %bound1196
   br i1 %found.conflict197, label %.lr.ph.i39.preheader240, label %vector.ph198
 
 vector.ph198:                                     ; preds = %vector.memcheck194
   %n.vec199 = and i64 %i.io, 4611686018427387900  ; 3 uses
   %i.it = shl i64 %n.vec199, 3                    ; 2 uses
-  %i.iu = getelementptr i8, ptr %i.ik, i64 %i.it
+  %i.iu = getelementptr i8, ptr %24, i64 %i.it
   %i.iv = getelementptr i8, ptr %i.ii, i64 %i.it
   br label %vector.body200
 
 vector.body200:                                   ; preds = %vector.body200, %vector.ph198
   %index201 = phi i64 [ 0, %vector.ph198 ], [ %index.next208, %vector.body200 ] ; 2 uses
   %i.iw = shl i64 %index201, 3                    ; 2 uses
-  %next.gep202 = getelementptr i8, ptr %i.ik, i64 %i.iw ; 3 uses
+  %next.gep202 = getelementptr i8, ptr %24, i64 %i.iw ; 3 uses
   %next.gep203 = getelementptr i8, ptr %i.ii, i64 %i.iw ; 3 uses
   %i.ix = getelementptr i8, ptr %next.gep203, i64 16 ; 2 uses
   %wide.load204 = load <2 x ptr>, ptr %next.gep203, align 8, !alias.scope !91, !noalias !92
@@ -778,7 +778,7 @@ middle.block209:                                  ; preds = %vector.body200
   br i1 %cmp.n210, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP9aiTextureSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i39.preheader240
 
 .lr.ph.i39.preheader240:                          ; preds = %vector.memcheck194, %.lr.ph.i39.preheader, %middle.block209
-  %.07.i40.ph = phi ptr [ %i.ik, %vector.memcheck194 ], [ %i.ik, %.lr.ph.i39.preheader ], [ %i.iu, %middle.block209 ]
+  %.07.i40.ph = phi ptr [ %24, %vector.memcheck194 ], [ %24, %.lr.ph.i39.preheader ], [ %i.iu, %middle.block209 ]
   %.sroa.03.06.i41.ph = phi ptr [ %i.ii, %vector.memcheck194 ], [ %i.ii, %.lr.ph.i39.preheader ], [ %i.iv, %middle.block209 ]
   br label %.lr.ph.i39
 
@@ -828,13 +828,13 @@ bb.h:                                             ; preds = %_ZSt11swap_rangesIN
   br i1 %.not5.i44, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP10aiSkeletonSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i45.preheader
 
 .lr.ph.i45.preheader:                             ; preds = %bb.h
-  %25 = load ptr, ptr %i.jo, align 8
-  %26 = getelementptr inbounds nuw i8, ptr %25, i64 1152
-  %i.kc = load ptr, ptr %26, align 8              ; 6 uses
-  %27 = ptrtoaddr ptr %i.kb to i64
-  %28 = ptrtoaddr ptr %i.ka to i64
-  %i.kd = add i64 %27, -8
-  %i.ke = sub i64 %i.kd, %28                      ; 3 uses
+  %25 = ptrtoaddr ptr %i.kb to i64
+  %26 = ptrtoaddr ptr %i.ka to i64
+  %i.kc = load ptr, ptr %i.jo, align 8
+  %27 = getelementptr inbounds nuw i8, ptr %i.kc, i64 1152
+  %28 = load ptr, ptr %27, align 8                ; 6 uses
+  %i.kd = add i64 %25, -8
+  %i.ke = sub i64 %i.kd, %26                      ; 3 uses
   %i.kf = lshr i64 %i.ke, 3
   %i.kg = add nuw nsw i64 %i.kf, 1                ; 2 uses
   %min.iters.check219 = icmp ult i64 %i.ke, 104
@@ -844,23 +844,23 @@ vector.memcheck220:                               ; preds = %.lr.ph.i45.preheade
   %i.kh = and i64 %i.ke, -8
   %i.ki = add i64 %i.kh, 8                        ; 2 uses
   %i.kj = getelementptr i8, ptr %i.ka, i64 %i.ki
-  %i.kk = getelementptr i8, ptr %i.kc, i64 %i.ki
+  %i.kk = getelementptr i8, ptr %28, i64 %i.ki
   %bound0221 = icmp ult ptr %i.ka, %i.kk
-  %bound1222 = icmp ult ptr %i.kc, %i.kj
+  %bound1222 = icmp ult ptr %28, %i.kj
   %found.conflict223 = and i1 %bound0221, %bound1222
   br i1 %found.conflict223, label %.lr.ph.i45.preheader239, label %vector.ph224
 
 vector.ph224:                                     ; preds = %vector.memcheck220
   %n.vec225 = and i64 %i.kg, 4611686018427387900  ; 3 uses
   %i.kl = shl i64 %n.vec225, 3                    ; 2 uses
-  %i.km = getelementptr i8, ptr %i.kc, i64 %i.kl
+  %i.km = getelementptr i8, ptr %28, i64 %i.kl
   %i.kn = getelementptr i8, ptr %i.ka, i64 %i.kl
   br label %vector.body226
 
 vector.body226:                                   ; preds = %vector.body226, %vector.ph224
   %index227 = phi i64 [ 0, %vector.ph224 ], [ %index.next234, %vector.body226 ] ; 2 uses
   %i.ko = shl i64 %index227, 3                    ; 2 uses
-  %next.gep228 = getelementptr i8, ptr %i.kc, i64 %i.ko ; 3 uses
+  %next.gep228 = getelementptr i8, ptr %28, i64 %i.ko ; 3 uses
   %next.gep229 = getelementptr i8, ptr %i.ka, i64 %i.ko ; 3 uses
   %i.kp = getelementptr i8, ptr %next.gep229, i64 16 ; 2 uses
   %wide.load230 = load <2 x ptr>, ptr %next.gep229, align 8, !alias.scope !93, !noalias !94
@@ -881,7 +881,7 @@ middle.block235:                                  ; preds = %vector.body226
   br i1 %cmp.n236, label %_ZSt11swap_rangesIN9__gnu_cxx17__normal_iteratorIPP10aiSkeletonSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, label %.lr.ph.i45.preheader239
 
 .lr.ph.i45.preheader239:                          ; preds = %vector.memcheck220, %.lr.ph.i45.preheader, %middle.block235
-  %.07.i46.ph = phi ptr [ %i.kc, %vector.memcheck220 ], [ %i.kc, %.lr.ph.i45.preheader ], [ %i.km, %middle.block235 ]
+  %.07.i46.ph = phi ptr [ %28, %vector.memcheck220 ], [ %28, %.lr.ph.i45.preheader ], [ %i.km, %middle.block235 ]
   %.sroa.03.06.i47.ph = phi ptr [ %i.ka, %vector.memcheck220 ], [ %i.ka, %.lr.ph.i45.preheader ], [ %i.kn, %middle.block235 ]
   br label %.lr.ph.i45
 
@@ -1284,6 +1284,8 @@ _ZNSt6vectorIjSaIjEE7reserveEm.exit:              ; preds = %_ZNSt12_Vector_base
   br label %bb.e
 
 ._crit_edge:                                      ; preds = %_ZN6Assimp12LogFunctionsINS_11FBXImporterEE7LogWarnIJRA33_KcRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpOT_.exit
+  %.sroa.0100.2284.le = ptrtoaddr ptr %.sroa.0100.2 to i64
+  %.sroa.17.1285.le = ptrtoaddr ptr %.sroa.17.1 to i64
   %i.v = ptrtoint ptr %.sroa.17.1 to i64
   %i.w = ptrtoint ptr %.sroa.0100.2 to i64        ; 4 uses
   %i.x = sub i64 %i.v, %i.w                       ; 2 uses
@@ -1686,10 +1688,8 @@ bb.aj:                                            ; preds = %bb.ai
   %i.dr = trunc i64 %i.y to i32
   %i.ds = getelementptr inbounds nuw i8, ptr %2, i64 1120
   store i32 %i.dr, ptr %i.ds, align 8
-  %7 = ptrtoaddr ptr %.sroa.17.1 to i64
-  %8 = ptrtoaddr ptr %.sroa.0100.2 to i64
-  %i.dt = add i64 %7, -4
-  %i.du = sub i64 %i.dt, %8                       ; 3 uses
+  %i.dt = add i64 %.sroa.17.1285.le, -4
+  %i.du = sub i64 %i.dt, %.sroa.0100.2284.le      ; 3 uses
   %i.dv = lshr i64 %i.du, 2
   %i.dw = add nuw nsw i64 %i.dv, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.du, 44

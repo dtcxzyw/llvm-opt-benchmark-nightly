@@ -204,8 +204,8 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden noundef i32 @safe_copy_from_slice(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = icmp sgt i64 %4, 0
   br i1 %i.c, label %iter.check, label %._crit_edge
 
@@ -216,8 +216,8 @@ iter.check:                                       ; preds = %bb.a
   br i1 %or.cond, label %vector.memcheck, label %.lr.ph.preheader
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = add i64 %2, %i.b
-  %i.e = sub i64 %i.a, %i.d
+  %i.d = add i64 %2, %i.a
+  %i.e = sub i64 %i.b, %i.d
   %diff.check = icmp ugt i64 %i.e, -32
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
@@ -346,8 +346,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden noundef i32 @safe_copy_to_slice(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = icmp sgt i64 %4, 0
   br i1 %i.c, label %iter.check, label %._crit_edge
 
@@ -358,8 +358,8 @@ iter.check:                                       ; preds = %bb.a
   br i1 %or.cond, label %vector.memcheck, label %.lr.ph.preheader
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = add i64 %2, %i.a
-  %i.e = sub i64 %i.d, %i.b
+  %i.d = add i64 %2, %i.b
+  %i.e = sub i64 %i.d, %i.a
   %diff.check = icmp ugt i64 %i.e, -32
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 

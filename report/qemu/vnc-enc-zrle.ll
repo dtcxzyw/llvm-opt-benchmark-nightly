@@ -205,6 +205,7 @@ declare void @__assert_fail(ptr noundef, ptr noundef, i32 noundef, ptr noundef) 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @zrle_encode_tile16be(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef range(i32 0, 256) %5) unnamed_addr #0 {
 bb.a:
+  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = alloca i16, align 2                      ; 4 uses
   %i.b = alloca i16, align 2                      ; 4 uses
   %i.c = alloca i16, align 2                      ; 4 uses
@@ -607,7 +608,6 @@ bb.ac:                                            ; preds = %.loopexit312.i
   br i1 %i.ym, label %.lr.ph423.i.preheader, label %zywrle_analyze_16be.exit
 
 .lr.ph423.i.preheader:                            ; preds = %bb.ac
-  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.yn = add i64 %.idx432.i, %6
   %i.yo = add i64 %i.yn, 86852
   %i.yp = add i64 %.idx440.i, %6
@@ -1010,6 +1010,7 @@ bb.q:                                             ; preds = %filter_wavelet_squa
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @zrle_encode_tile16le(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef range(i32 0, 256) %5) unnamed_addr #0 {
 bb.a:
+  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = alloca i16, align 2                      ; 4 uses
   %i.b = alloca i16, align 2                      ; 4 uses
   %i.c = alloca i16, align 2                      ; 4 uses
@@ -1412,7 +1413,6 @@ bb.ac:                                            ; preds = %.loopexit312.i
   br i1 %i.ym, label %.lr.ph423.i.preheader, label %zywrle_analyze_16le.exit
 
 .lr.ph423.i.preheader:                            ; preds = %bb.ac
-  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.yn = add i64 %.idx432.i, %6
   %i.yo = add i64 %i.yn, 86852
   %i.yp = add i64 %.idx440.i, %6
@@ -1505,6 +1505,7 @@ bb.ad:                                            ; preds = %.thread145
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @zrle_encode_tile15be(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef range(i32 0, 256) %5) unnamed_addr #0 {
 bb.a:
+  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = alloca i16, align 2                      ; 4 uses
   %i.b = alloca i16, align 2                      ; 4 uses
   %i.c = alloca i16, align 2                      ; 4 uses
@@ -1907,7 +1908,6 @@ bb.ac:                                            ; preds = %.loopexit312.i
   br i1 %i.yt, label %.lr.ph423.i.preheader, label %zywrle_analyze_15be.exit
 
 .lr.ph423.i.preheader:                            ; preds = %bb.ac
-  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.yu = add i64 %.idx432.i, %6
   %i.yv = add i64 %i.yu, 86852
   %i.yw = add i64 %.idx440.i, %6
@@ -1998,6 +1998,7 @@ bb.ad:                                            ; preds = %.thread145
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @zrle_encode_tile15le(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef range(i32 0, 256) %5) unnamed_addr #0 {
 bb.a:
+  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = alloca i16, align 2                      ; 4 uses
   %i.b = alloca i16, align 2                      ; 4 uses
   %i.c = alloca i16, align 2                      ; 4 uses
@@ -2400,7 +2401,6 @@ bb.ac:                                            ; preds = %.loopexit312.i
   br i1 %i.yt, label %.lr.ph423.i.preheader, label %zywrle_analyze_15le.exit
 
 .lr.ph423.i.preheader:                            ; preds = %bb.ac
-  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.yu = add i64 %.idx432.i, %6
   %i.yv = add i64 %i.yu, 86852
   %i.yw = add i64 %.idx440.i, %6

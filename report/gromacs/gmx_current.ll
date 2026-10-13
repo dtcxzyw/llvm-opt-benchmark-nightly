@@ -205,8 +205,8 @@ bb.db:                                            ; preds = %.loopexit.i, %.loop
   br i1 %i.amz, label %bb.ca, label %bb.dc, !llvm.loop !67
 
 bb.dc:                                            ; preds = %.noexc235
-  %.1504.i781.le = ptrtoaddr ptr %.1504.i to i64  ; 2 uses
-  %.1488.i784.le = ptrtoaddr ptr %.1488.i to i64  ; 2 uses
+  %.1504.i781.le = ptrtoaddr ptr %.1488.i to i64  ; 2 uses
+  %.1488.i784.le = ptrtoaddr ptr %.1504.i to i64  ; 2 uses
   invoke void @_Z14gmx_rmpbc_doneP9gmx_rmpbc(ptr noundef %i.qz)
           to label %.noexc236 unwind label %.loopexit.split-lp.loopexit.split-lp
 
@@ -583,20 +583,19 @@ vector.memcheck780:                               ; preds = %iter.check
   %i.aws = sub i64 %i.awn, %i.awr
   %diff.check = icmp ugt i64 %i.aws, -64
   %i.awt = shl nuw nsw i64 %i.avw, 2              ; 4 uses
-  %i.awu = add i64 %i.awt, %.1504.i781.le
+  %i.awu = add i64 %i.awt, %.1488.i784.le
   %i.awv = sub i64 %i.awu, %i.awn
   %diff.check782 = icmp ugt i64 %i.awv, -64
   %conflict.rdx783 = or i1 %diff.check, %diff.check782
-  %31 = sub i64 %.1488.i784.le, %i.awn
-  %i.aww = add i64 %31, %i.awt
-  %32 = add i64 %i.aww, -1
-  %diff.check785 = icmp ult i64 %32, 63
-  %conflict.rdx786 = or i1 %conflict.rdx783, %diff.check785
-  %i.awx = add i64 %i.awt, %.1504.i781.le
+  %i.aww = add i64 %i.awt, %.1504.i781.le
+  %31 = sub i64 %i.awn, %i.aww
+  %diff.check798 = icmp ugt i64 %31, -64
+  %conflict.rdx786 = or i1 %conflict.rdx783, %diff.check798
+  %i.awx = add i64 %i.awt, %.1488.i784.le
   %i.awy = sub i64 %i.awx, %i.awr
   %diff.check787 = icmp ugt i64 %i.awy, -64
   %conflict.rdx788 = or i1 %conflict.rdx786, %diff.check787
-  %i.awz = add i64 %i.awt, %.1488.i784.le
+  %i.awz = add i64 %i.awt, %.1504.i781.le
   %i.axa = sub i64 %i.awz, %i.awr
   %diff.check789 = icmp ugt i64 %i.axa, -64
   %conflict.rdx790 = or i1 %conflict.rdx788, %diff.check789

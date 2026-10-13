@@ -205,8 +205,8 @@ declare void @ff_draw_color(ptr noundef, ptr noundef, ptr noundef) local_unnamed
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal noundef ptr @interpolate_bilinear8(ptr nofree noundef returned writeonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7) #6 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 3 uses
   %i.c = and i32 %4, 65535                        ; 5 uses
   %i.d = icmp sgt i32 %3, 0
   br i1 %i.d, label %iter.check, label %._crit_edge
@@ -233,7 +233,7 @@ iter.check:                                       ; preds = %bb.a
   %i.s = sub nuw nsw i32 65536, %i.m
   %i.t = zext nneg i32 %i.s to i64                ; 3 uses
   %i.u = zext nneg i32 %i.m to i64                ; 3 uses
-  %i.v = sext i32 %i.n to i64                     ; 5 uses
+  %i.v = sext i32 %i.n to i64                     ; 4 uses
   %i.w = sext i32 %i.o to i64                     ; 4 uses
   %i.x = sext i32 %i.q to i64                     ; 4 uses
   %i.y = sext i32 %i.p to i64                     ; 5 uses
@@ -246,23 +246,22 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.z = add i64 %i.a, %i.x
+  %i.z = add i64 %i.b, %i.x
   %i.aa = add i64 %i.z, %i.y
-  %i.ab = sub i64 %i.aa, %i.b
+  %i.ab = sub i64 %i.aa, %i.a
   %diff.check = icmp ugt i64 %i.ab, -16
-  %i.ac = add i64 %i.a, %i.v
+  %i.ac = add i64 %i.b, %i.v                      ; 2 uses
   %i.ad = add i64 %i.ac, %i.x
-  %i.ae = sub i64 %i.ad, %i.b
+  %i.ae = sub i64 %i.ad, %i.a
   %diff.check66 = icmp ugt i64 %i.ae, -16
   %conflict.rdx = or i1 %diff.check, %diff.check66
-  %i.af = add i64 %i.a, %i.w
+  %i.af = add i64 %i.b, %i.w
   %i.ag = add i64 %i.af, %i.y
-  %i.ah = sub i64 %i.ag, %i.b
+  %i.ah = sub i64 %i.ag, %i.a
   %diff.check67 = icmp ugt i64 %i.ah, -16
   %conflict.rdx68 = or i1 %conflict.rdx, %diff.check67
-  %8 = add i64 %i.a, %i.v
-  %i.ai = add i64 %8, %i.w
-  %i.aj = sub i64 %i.ai, %i.b
+  %i.ai = add i64 %i.ac, %i.w
+  %i.aj = sub i64 %i.ai, %i.a
   %diff.check69 = icmp ugt i64 %i.aj, -16
   %conflict.rdx70 = or i1 %conflict.rdx68, %diff.check69
   br i1 %conflict.rdx70, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

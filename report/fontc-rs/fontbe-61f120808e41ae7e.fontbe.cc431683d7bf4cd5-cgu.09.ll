@@ -204,10 +204,10 @@ bb.a:
   br i1 %.not12, label %bb.b, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %i.d = ptrtoaddr ptr %i.b to i64
-  %i.e = ptrtoaddr ptr %.promoted to i64
-  %i.f = add i64 %i.d, -4
-  %i.g = sub i64 %i.f, %i.e                       ; 4 uses
+  %i.d = ptrtoaddr ptr %.promoted to i64
+  %i.e = ptrtoaddr ptr %i.b to i64
+  %i.f = add i64 %i.e, -4
+  %i.g = sub i64 %i.f, %i.d                       ; 4 uses
   %i.h = lshr i64 %i.g, 2
   %i.i = add nuw nsw i64 %i.h, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.g, 144

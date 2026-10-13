@@ -202,8 +202,8 @@ _ZSt4copyIPN5video6SColorES2_ET0_T_S4_S3_.exit:   ; preds = %bb.l, %bb.m, %bb.n
   %i.ak = phi ptr [ %.pre26, %bb.l ], [ %i.i, %bb.m ], [ %i.i, %bb.n ] ; 3 uses
   %i.al = phi ptr [ %.pre25, %bb.l ], [ %i.aa, %bb.m ], [ %i.aa, %bb.n ] ; 5 uses
   %i.am = phi ptr [ %.pre, %bb.l ], [ %i.c, %bb.m ], [ %i.c, %bb.n ] ; 2 uses
-  %i.an = ptrtoaddr ptr %i.al to i64
-  %i.ao = ptrtoaddr ptr %i.am to i64              ; 2 uses
+  %i.an = ptrtoaddr ptr %i.am to i64              ; 2 uses
+  %i.ao = ptrtoaddr ptr %i.al to i64
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %.pre-phi33 ; 5 uses
   %.not9.i.i.i.i = icmp eq ptr %i.ap, %i.aj
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN5video6SColorESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %.lr.ph.i.i.i.i.preheader
@@ -211,7 +211,7 @@ _ZSt4copyIPN5video6SColorES2_ET0_T_S4_S3_.exit:   ; preds = %bb.l, %bb.m, %bb.n
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZSt4copyIPN5video6SColorES2_ET0_T_S4_S3_.exit
   %i.aq = ptrtoaddr ptr %i.aj to i64
   %i.ar = add i64 %i.aq, -4
-  %i.as = add i64 %.pre-phi33, %i.ao
+  %i.as = add i64 %.pre-phi33, %i.an
   %i.at = sub i64 %i.ar, %i.as                    ; 2 uses
   %i.au = lshr i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -219,8 +219,8 @@ _ZSt4copyIPN5video6SColorES2_ET0_T_S4_S3_.exit:   ; preds = %bb.l, %bb.m, %bb.n
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader44, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %i.aw = add nuw i64 %.pre-phi33, %i.ao
-  %i.ax = sub i64 %i.aw, %i.an
+  %i.aw = add nuw i64 %.pre-phi33, %i.an
+  %i.ax = sub i64 %i.aw, %i.ao
   %diff.check = icmp ugt i64 %i.ax, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.preheader44, label %vector.ph
 
@@ -623,7 +623,7 @@ declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_st
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZNSt6vectorIN5video6SColorESaIS1_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEvNS6_IPS1_S3_EET_SC_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
   %.not94 = icmp eq ptr %2, %3
   br i1 %.not94, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN5video6SColorESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %bb.b
 
@@ -912,8 +912,7 @@ _ZNSt12_Vector_baseIN5video6SColorESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNK
   br i1 %.not11.i.i.i.i.i59, label %_ZSt34__uninitialized_move_if_noexcept_aIPN5video6SColorES2_SaIS1_EET0_T_S5_S4_RT1_.exit, label %.lr.ph.i.i.i.i.i60.preheader
 
 .lr.ph.i.i.i.i.i60.preheader:                     ; preds = %_ZNSt12_Vector_baseIN5video6SColorESaIS1_EE11_M_allocateEm.exit
-  %4 = ptrtoaddr ptr %1 to i64
-  %i.cr = add i64 %4, -4
+  %i.cr = add i64 %i.a, -4
   %i.cs = sub i64 %i.cr, %i.cf                    ; 2 uses
   %i.ct = lshr i64 %i.cs, 2
   %i.cu = add nuw nsw i64 %i.ct, 1                ; 2 uses

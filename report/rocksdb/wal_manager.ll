@@ -204,26 +204,24 @@ _ZNSt12_Vector_baseISt10unique_ptrIN7rocksdb7WalFileESt14default_deleteIS2_EESaI
           to label %.noexc53 unwind label %bb.q   ; 11 uses
 
 .noexc53:                                         ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN7rocksdb7WalFileESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
-  %i.cm = load ptr, ptr %2, align 8, !tbaa !97    ; 14 uses
-  %i.cn = load ptr, ptr %i.p, align 8, !tbaa !98  ; 4 uses
+  %i.cm = load ptr, ptr %2, align 8, !tbaa !97    ; 13 uses
+  %11 = ptrtoaddr ptr %i.cm to i64                ; 2 uses
+  %i.cn = load ptr, ptr %i.p, align 8, !tbaa !98  ; 3 uses
+  %12 = ptrtoaddr ptr %i.cn to i64                ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.cm, %i.cn
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN7rocksdb7WalFileESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %iter.check
 
 iter.check:                                       ; preds = %.noexc53
-  %11 = ptrtoaddr ptr %i.cn to i64
-  %12 = ptrtoaddr ptr %i.cm to i64
-  %i.co = add i64 %11, -8
-  %i.cp = sub i64 %i.co, %12                      ; 3 uses
+  %i.co = add i64 %12, -8
+  %i.cp = sub i64 %i.co, %11                      ; 3 uses
   %i.cq = lshr i64 %i.cp, 3
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.cp, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i51.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %13 = ptrtoaddr ptr %i.cn to i64
-  %14 = ptrtoaddr ptr %i.cm to i64
-  %i.cs = add i64 %13, -8
-  %i.ct = sub i64 %i.cs, %14
+  %i.cs = add i64 %12, -8
+  %i.ct = sub i64 %i.cs, %11
   %i.cu = and i64 %i.ct, -8
   %i.cv = add i64 %i.cu, 8                        ; 2 uses
   %i.cw = getelementptr i8, ptr %i.cl, i64 %i.cv
@@ -626,26 +624,24 @@ _ZNSt12_Vector_baseISt10unique_ptrIN7rocksdb7WalFileESt14default_deleteIS2_EESaI
           to label %.noexc73 unwind label %bb.h   ; 12 uses
 
 .noexc73:                                         ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN7rocksdb7WalFileESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i
-  %i.au = load ptr, ptr %3, align 8, !tbaa !97    ; 14 uses
-  %i.av = load ptr, ptr %i.ao, align 8, !tbaa !98 ; 4 uses
+  %i.au = load ptr, ptr %3, align 8, !tbaa !97    ; 13 uses
+  %15 = ptrtoaddr ptr %i.au to i64                ; 2 uses
+  %i.av = load ptr, ptr %i.ao, align 8, !tbaa !98 ; 3 uses
+  %16 = ptrtoaddr ptr %i.av to i64                ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.au, %i.av
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN7rocksdb7WalFileESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %iter.check
 
 iter.check:                                       ; preds = %.noexc73
-  %15 = ptrtoaddr ptr %i.av to i64
-  %16 = ptrtoaddr ptr %i.au to i64
-  %i.aw = add i64 %15, -8
-  %i.ax = sub i64 %i.aw, %16                      ; 3 uses
+  %i.aw = add i64 %16, -8
+  %i.ax = sub i64 %i.aw, %15                      ; 3 uses
   %i.ay = lshr i64 %i.ax, 3
   %i.az = add nuw nsw i64 %i.ay, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.ax, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %17 = ptrtoaddr ptr %i.av to i64
-  %18 = ptrtoaddr ptr %i.au to i64
-  %i.ba = add i64 %17, -8
-  %i.bb = sub i64 %i.ba, %18
+  %i.ba = add i64 %16, -8
+  %i.bb = sub i64 %i.ba, %15
   %i.bc = and i64 %i.bb, -8
   %i.bd = add i64 %i.bc, 8                        ; 2 uses
   %i.be = getelementptr i8, ptr %i.at, i64 %i.bd

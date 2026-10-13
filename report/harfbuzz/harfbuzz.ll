@@ -205,6 +205,7 @@ _ZN21hb_sanitize_context_t8dispatchIN3AAT16LigatureSubtableINS1_13ExtendedTypesE
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ExtendedTypesEvE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -267,16 +268,14 @@ bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 6 uses
   %i.ao = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ap = ptrtoint ptr %i.ai to i64               ; 2 uses
-  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %invariant.op = add i64 %3, %i.ac
   %invariant.op215 = add i64 %invariant.op, 2
   %invariant.op217 = add i64 %3, %i.ac
   %i.aq = xor i64 %3, -1
-  %4 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %invariant.op218 = add i64 %4, %i.ah
+  %invariant.op218 = add i64 %3, %i.ah
   %invariant.op220 = add i64 %invariant.op218, 4
-  %invariant.op222 = add i64 %4, %i.ah
-  %i.ar = xor i64 %4, -1
+  %invariant.op222 = add i64 %3, %i.ah
+  %i.ar = xor i64 %3, -1
   br label %.loopexit156
 
 .loopexit:                                        ; preds = %.lr.ph167, %bb.n
@@ -679,6 +678,7 @@ _ZNK2OT8OffsetToINS_23UnsizedListOfOffset16ToIN3AAT6LookupINS_11HBGlyphID16EEENS
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ExtendedTypesENS_18ContextualSubtableIS1_E9EntryDataEE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -741,7 +741,6 @@ bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 6 uses
   %i.ao = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ap = ptrtoint ptr %i.ai to i64               ; 2 uses
-  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %invariant.op = add i64 %3, %i.ac
   %invariant.op190 = add i64 %invariant.op, 2
   %invariant.op192 = add i64 %3, %i.ac
@@ -1144,6 +1143,7 @@ _ZNK2OT24VarSizedBinSearchArrayOfIN3AAT18LookupSegmentArrayINS_11HBGlyphID16EEEE
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ExtendedTypesENS_13LigatureEntryILb1EE9EntryDataEE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -1206,7 +1206,6 @@ bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 6 uses
   %i.ao = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ap = ptrtoint ptr %i.ai to i64               ; 2 uses
-  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %invariant.op = add i64 %3, %i.ac
   %invariant.op190 = add i64 %invariant.op, 2
   %invariant.op192 = add i64 %3, %i.ac
@@ -1417,6 +1416,7 @@ bb.p:                                             ; preds = %bb.o
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ExtendedTypesENS_17InsertionSubtableIS1_E9EntryDataEE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -1479,7 +1479,6 @@ bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 6 uses
   %i.ao = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ap = ptrtoint ptr %i.ai to i64               ; 2 uses
-  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %invariant.op = add i64 %3, %i.ac
   %invariant.op190 = add i64 %invariant.op, 2
   %invariant.op192 = add i64 %3, %i.ac
@@ -1882,6 +1881,7 @@ _ZN21hb_sanitize_context_t8dispatchIN3AAT16LigatureSubtableINS1_13ObsoleteTypesE
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ObsoleteTypesEvE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(8) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -1985,15 +1985,13 @@ bb.g:                                             ; preds = %_ZNK2OT8OffsetToIN3
   %.not.i.i.i86 = icmp ugt i64 %i.bp, %i.ao
   %i.bq = sub i64 %i.aq, %i.bk
   %i.br = trunc i64 %i.bq to i32
-  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.bs = add i64 %3, %i.az                       ; 2 uses
   %invariant.op = add i64 %i.bs, 1
   %i.bt = add i64 %3, %i.az
-  %4 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %invariant.op238 = add i64 %4, %i.be
+  %invariant.op238 = add i64 %3, %i.be
   %invariant.op240 = add i64 %invariant.op238, 4
-  %invariant.op242 = add i64 %4, %i.be
-  %i.bu = xor i64 %4, -1
+  %invariant.op242 = add i64 %3, %i.be
+  %i.bu = xor i64 %3, -1
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.bl, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert194 = insertelement <4 x i32> poison, i32 %i.bi, i64 0
@@ -2279,6 +2277,7 @@ bb.r:                                             ; preds = %bb.q
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ObsoleteTypesENS_18ContextualSubtableIS1_E9EntryDataEE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(8) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -2382,15 +2381,13 @@ bb.g:                                             ; preds = %_ZNK2OT8OffsetToIN3
   %.not.i.i.i86 = icmp ugt i64 %i.bp, %i.ao
   %i.bq = sub i64 %i.aq, %i.bk
   %i.br = trunc i64 %i.bq to i32
-  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.bs = add i64 %3, %i.az                       ; 2 uses
   %invariant.op = add i64 %i.bs, 1
   %i.bt = add i64 %3, %i.az
-  %4 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %invariant.op241 = add i64 %4, %i.be
+  %invariant.op241 = add i64 %3, %i.be
   %invariant.op243 = add i64 %invariant.op241, 8
-  %invariant.op245 = add i64 %4, %i.be
-  %i.bu = xor i64 %4, -1
+  %invariant.op245 = add i64 %3, %i.be
+  %i.bu = xor i64 %3, -1
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.bl, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert194 = insertelement <4 x i32> poison, i32 %i.bi, i64 0
@@ -2698,6 +2695,7 @@ bb.r:                                             ; preds = %bb.q
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ObsoleteTypesENS_17InsertionSubtableIS1_E9EntryDataEE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(8) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -2801,15 +2799,13 @@ bb.g:                                             ; preds = %_ZNK2OT8OffsetToIN3
   %.not.i.i.i86 = icmp ugt i64 %i.bp, %i.ao
   %i.bq = sub i64 %i.aq, %i.bk
   %i.br = trunc i64 %i.bq to i32
-  %3 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.bs = add i64 %3, %i.az                       ; 2 uses
   %invariant.op = add i64 %i.bs, 1
   %i.bt = add i64 %3, %i.az
-  %4 = ptrtoaddr ptr %0 to i64                    ; 3 uses
-  %invariant.op241 = add i64 %4, %i.be
+  %invariant.op241 = add i64 %3, %i.be
   %invariant.op243 = add i64 %invariant.op241, 8
-  %invariant.op245 = add i64 %4, %i.be
-  %i.bu = xor i64 %4, -1
+  %invariant.op245 = add i64 %3, %i.be
+  %i.bu = xor i64 %3, -1
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.bl, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert194 = insertelement <4 x i32> poison, i32 %i.bi, i64 0
@@ -3212,6 +3208,7 @@ _ZN21hb_sanitize_context_t8dispatchIN3AAT19KerxSubTableFormat0INS1_18KerxSubTabl
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ExtendedTypesENS_12Format1EntryILb1EE9EntryDataEE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -3274,7 +3271,6 @@ bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 6 uses
   %i.ao = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ap = ptrtoint ptr %i.ai to i64               ; 2 uses
-  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %invariant.op = add i64 %3, %i.ac
   %invariant.op190 = add i64 %invariant.op, 2
   %invariant.op192 = add i64 %3, %i.ac
@@ -3485,6 +3481,7 @@ bb.p:                                             ; preds = %bb.o
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZNK3AAT10StateTableINS_13ExtendedTypesENS_19KerxSubTableFormat4INS_18KerxSubTableHeaderEE9EntryDataEE8sanitizeEP21hb_sanitize_context_tPj(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !505
@@ -3547,7 +3544,6 @@ bb.e:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 6 uses
   %i.ao = ptrtoint ptr %i.ad to i64               ; 2 uses
   %i.ap = ptrtoint ptr %i.ai to i64               ; 2 uses
-  %3 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %invariant.op = add i64 %3, %i.ac
   %invariant.op190 = add i64 %invariant.op, 2
   %invariant.op192 = add i64 %3, %i.ac

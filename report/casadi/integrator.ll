@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %._crit_edge
 
 vector.memcheck217:                               ; preds = %.lr.ph.i.preheader
   %i.at = shl i64 %i.aj, 3
-  %2 = add i64 %i.at, %i.ah
-  %3 = shl i64 %i.am, 3
-  %.neg = sub i64 %3, %2
+  %2 = shl i64 %i.am, 3
+  %3 = add i64 %i.at, %i.ah
+  %.neg = sub i64 %2, %3
   %i.au = add i64 %.neg, %i.ar
   %i.av = add i64 %i.au, -1
   %diff.check218 = icmp ult i64 %i.av, 31

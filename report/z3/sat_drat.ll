@@ -205,6 +205,7 @@ bb.a:
   %i.c = zext i32 %1 to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !71   ; 8 uses
+  %2 = ptrtoaddr ptr %i.e to i64
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %_ZN6vectorIjLb0EjE7set_endEPj.exit, label %_ZN6vectorIjLb0EjE3endEv.exit
 
@@ -421,16 +422,15 @@ _ZNK3sat4drat5valueENS_7literalE.exit67.thread:   ; preds = %_ZNK6vectorI5lboolL
   br i1 %.not5498, label %._crit_edge, label %.lr.ph101.preheader
 
 .lr.ph101.preheader:                              ; preds = %.loopexit
-  %.089141 = ptrtoaddr ptr %.089 to i64           ; 2 uses
   %.04891140 = ptrtoaddr ptr %.04891 to i64
-  %i.cl = ptrtoaddr ptr %i.e to i64
-  %i.cm = add i64 %i.j, %i.cl
+  %i.cl = ptrtoaddr ptr %.089 to i64              ; 2 uses
+  %i.cm = add i64 %i.j, %2
   %i.cn = add i64 %i.cm, -4
-  %i.co = sub i64 %i.cn, %.089141                 ; 2 uses
+  %i.co = sub i64 %i.cn, %i.cl                    ; 2 uses
   %i.cp = lshr i64 %i.co, 2
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.co, 44
-  %i.cr = sub i64 %.089141, %.04891140
+  %i.cr = sub i64 %i.cl, %.04891140
   %diff.check = icmp ugt i64 %i.cr, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph101.preheader146, label %vector.ph

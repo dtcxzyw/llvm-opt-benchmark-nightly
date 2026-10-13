@@ -205,8 +205,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8545)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.e = load ptr, ptr %i.d, align 8, !alias.scope !8546, !noalias !8547, !nonnull !12, !noundef !12 ; 6 uses
-  %.promoted.i.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !8546, !noalias !8547 ; 8 uses
+  %i.e = load ptr, ptr %i.d, align 8, !alias.scope !8546, !noalias !8547, !nonnull !12, !noundef !12 ; 5 uses
+  %2 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
+  %.promoted.i.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !8546, !noalias !8547 ; 7 uses
+  %.promoted.i.i.i.i.i33 = ptrtoaddr ptr %.promoted.i.i.i.i.i to i64 ; 2 uses
   %.sroa.4.0..sroa_idx.i3.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %.sroa.411.0..sroa.4.0..sroa_idx.i3.sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.512.0..sroa.4.0..sroa_idx.i3.sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -228,10 +230,8 @@ bb.a:
   br i1 %i.i, label %.lr.ph.preheader.i.i.i.split.us.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.lr.ph.preheader.i.i.i.i
-  %2 = ptrtoaddr ptr %i.e to i64
-  %3 = ptrtoaddr ptr %.promoted.i.i.i.i.i to i64
   %i.j = add i64 %2, -16
-  %i.k = sub i64 %i.j, %3                         ; 2 uses
+  %i.k = sub i64 %i.j, %.promoted.i.i.i.i.i33     ; 2 uses
   %i.l = lshr i64 %i.k, 4
   %i.m = add nuw nsw i64 %i.l, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.k, 48
@@ -273,10 +273,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.us.us.i.preheader, label %.lr.ph.i.i.i.us.i
 
 .lr.ph.i.i.i.us.us.i.preheader:                   ; preds = %.lr.ph.preheader.i.i.i.split.us.i
-  %4 = ptrtoaddr ptr %i.e to i64
-  %5 = ptrtoaddr ptr %.promoted.i.i.i.i.i to i64
-  %i.u = add i64 %4, -16
-  %i.v = sub i64 %i.u, %5                         ; 2 uses
+  %i.u = add i64 %2, -16
+  %i.v = sub i64 %i.u, %.promoted.i.i.i.i.i33     ; 2 uses
   %i.w = lshr i64 %i.v, 4
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check35 = icmp ult i64 %i.v, 48

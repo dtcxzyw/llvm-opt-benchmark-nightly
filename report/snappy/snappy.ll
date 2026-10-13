@@ -205,6 +205,7 @@ declare void @__cxa_guard_release(ptr) local_unnamed_addr #17
 define internal fastcc noundef ptr @_ZN6snappy12_GLOBAL__N_115IncrementalCopyEPKcPcS3_S3_(ptr noundef %0, ptr noundef %1, ptr nofree noundef readnone returned captures(address, ret: address, provenance) %2, ptr nofree noundef readnone captures(address) %3) unnamed_addr #18 {
 bb.a:
   %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %4 = ptrtoaddr ptr %3 to i64
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = ptrtoint ptr %0 to i64
   %i.d = sub i64 %i.b, %i.c                       ; 3 uses
@@ -309,6 +310,7 @@ vec.epilog.middle.block172:                       ; preds = %vec.epilog.vector.b
 
 bb.d:                                             ; preds = %._crit_edge, %bb.a
   %.157 = phi ptr [ %i.g, %._crit_edge ], [ %1, %bb.a ] ; 16 uses
+  %.157112 = ptrtoaddr ptr %.157 to i64
   %i.w = getelementptr inbounds i8, ptr %3, i64 -15
   %.not68 = icmp ugt ptr %2, %i.w
   br i1 %.not68, label %bb.k, label %bb.e, !prof !29
@@ -370,10 +372,8 @@ bb.k:                                             ; preds = %bb.d
   br i1 %i.ap, label %.lr.ph90.preheader, label %._crit_edge91
 
 .lr.ph90.preheader:                               ; preds = %bb.k
-  %4 = ptrtoaddr ptr %3 to i64
-  %5 = ptrtoaddr ptr %.157 to i64
   %i.aq = add i64 %4, -17
-  %i.ar = sub i64 %i.aq, %5                       ; 4 uses
+  %i.ar = sub i64 %i.aq, %.157112                 ; 4 uses
   %i.as = lshr i64 %i.ar, 4
   %min.iters.check = icmp ult i64 %i.ar, 208
   br i1 %min.iters.check, label %.lr.ph90.preheader178, label %vector.memcheck
@@ -448,11 +448,11 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.bl, label %iter.check, label %_ZN6snappy12_GLOBAL__N_119IncrementalCopySlowEPKcPcS3_.exit
 
 iter.check:                                       ; preds = %bb.n
-  %.155116 = ptrtoaddr ptr %.155 to i64
-  %.3115 = ptrtoaddr ptr %.3 to i64               ; 2 uses
-  %i.bm = sub i64 %i.a, %.3115                    ; 7 uses
+  %.155116 = ptrtoaddr ptr %.3 to i64             ; 2 uses
+  %.3115 = ptrtoaddr ptr %.155 to i64
+  %i.bm = sub i64 %i.a, %.155116                  ; 7 uses
   %min.iters.check118 = icmp ult i64 %i.bm, 4
-  %i.bn = sub i64 %.155116, %.3115
+  %i.bn = sub i64 %.3115, %.155116
   %diff.check = icmp ugt i64 %i.bn, -16
   %or.cond176 = select i1 %min.iters.check118, i1 true, i1 %diff.check
   br i1 %or.cond176, label %.lr.ph.i79.preheader, label %vector.main.loop.iter.check

@@ -204,10 +204,10 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not3424.i, label %opal_datatype_unpack_predefined_element.exit.thread, label %iter.check3033
 
 iter.check3033:                                   ; preds = %.loopexit.i
-  %.83306.i3012 = ptrtoaddr ptr %.83306.i to i64
-  %.83295.i3011 = ptrtoaddr ptr %.83295.i to i64
+  %.83306.i3012 = ptrtoaddr ptr %.83295.i to i64
+  %.83295.i3011 = ptrtoaddr ptr %.83306.i to i64
   %min.iters.check3015 = icmp ult i64 %.83285.i, 4
-  %i.ig = sub i64 %.83306.i3012, %.83295.i3011
+  %i.ig = sub i64 %.83295.i3011, %.83306.i3012
   %diff.check3013 = icmp ugt i64 %i.ig, -32
   %or.cond3050 = select i1 %min.iters.check3015, i1 true, i1 %diff.check3013
   br i1 %or.cond3050, label %.preheader.i.preheader, label %vector.main.loop.iter.check3016
@@ -610,10 +610,10 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not3422.i, label %opal_datatype_unpack_predefined_element.exit.thread, label %iter.check2993
 
 iter.check2993:                                   ; preds = %.loopexit3577.i
-  %.83274.i2972 = ptrtoaddr ptr %.83274.i to i64
-  %.83263.i2971 = ptrtoaddr ptr %.83263.i to i64
+  %.83274.i2972 = ptrtoaddr ptr %.83263.i to i64
+  %.83263.i2971 = ptrtoaddr ptr %.83274.i to i64
   %min.iters.check2975 = icmp ult i64 %.83253.i, 4
-  %i.sl = sub i64 %.83274.i2972, %.83263.i2971
+  %i.sl = sub i64 %.83263.i2971, %.83274.i2972
   %diff.check2973 = icmp ugt i64 %i.sl, -32
   %or.cond3051 = select i1 %min.iters.check2975, i1 true, i1 %diff.check2973
   br i1 %or.cond3051, label %.preheader3574.i.preheader, label %vector.main.loop.iter.check2976
@@ -1016,10 +1016,10 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not3407.i, label %opal_datatype_unpack_predefined_element.exit.thread, label %iter.check2893
 
 iter.check2893:                                   ; preds = %.loopexit3649.i
-  %.83178.i2872 = ptrtoaddr ptr %.83178.i to i64
-  %.83167.i2871 = ptrtoaddr ptr %.83167.i to i64
+  %.83178.i2872 = ptrtoaddr ptr %.83167.i to i64
+  %.83167.i2871 = ptrtoaddr ptr %.83178.i to i64
   %min.iters.check2875 = icmp ult i64 %.83157.i, 4
-  %i.awu = sub i64 %.83178.i2872, %.83167.i2871
+  %i.awu = sub i64 %.83167.i2871, %.83178.i2872
   %diff.check2873 = icmp ugt i64 %i.awu, -32
   %or.cond3054 = select i1 %min.iters.check2875, i1 true, i1 %diff.check2873
   br i1 %or.cond3054, label %.preheader3646.i.preheader, label %vector.main.loop.iter.check2876
@@ -1422,10 +1422,10 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not3405.i, label %opal_datatype_unpack_predefined_element.exit.thread, label %iter.check2853
 
 iter.check2853:                                   ; preds = %.loopexit3667.i
-  %.83146.i2832 = ptrtoaddr ptr %.83146.i to i64
-  %.83135.i2831 = ptrtoaddr ptr %.83135.i to i64
+  %.83146.i2832 = ptrtoaddr ptr %.83135.i to i64
+  %.83135.i2831 = ptrtoaddr ptr %.83146.i to i64
   %min.iters.check2835 = icmp ult i64 %.83125.i, 4
-  %i.bgz = sub i64 %.83146.i2832, %.83135.i2831
+  %i.bgz = sub i64 %.83135.i2831, %.83146.i2832
   %diff.check2833 = icmp ugt i64 %i.bgz, -32
   %or.cond3055 = select i1 %min.iters.check2835, i1 true, i1 %diff.check2833
   br i1 %or.cond3055, label %.preheader3664.i.preheader, label %vector.main.loop.iter.check2836
@@ -1828,10 +1828,10 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not3390.i, label %opal_datatype_unpack_predefined_element.exit.thread, label %iter.check
 
 iter.check:                                       ; preds = %.loopexit3739.i
-  %.83050.i2721 = ptrtoaddr ptr %.83050.i to i64
-  %.83039.i2720 = ptrtoaddr ptr %.83039.i to i64
+  %.83050.i2721 = ptrtoaddr ptr %.83039.i to i64
+  %.83039.i2720 = ptrtoaddr ptr %.83050.i to i64
   %min.iters.check2724 = icmp ult i64 %.83029.i, 8
-  %i.clo = sub i64 %.83050.i2721, %.83039.i2720
+  %i.clo = sub i64 %.83039.i2720, %.83050.i2721
   %diff.check2722 = icmp ugt i64 %i.clo, -32
   %or.cond3058 = select i1 %min.iters.check2724, i1 true, i1 %diff.check2722
   br i1 %or.cond3058, label %.preheader3736.i.preheader, label %vector.main.loop.iter.check
@@ -2234,10 +2234,10 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %.not3350.i, label %opal_datatype_unpack_predefined_element.exit.thread, label %iter.check2773
 
 iter.check2773:                                   ; preds = %.loopexit3721.i
-  %.82794.i2752 = ptrtoaddr ptr %.82794.i to i64
-  %.82783.i2751 = ptrtoaddr ptr %.82783.i to i64
+  %.82794.i2752 = ptrtoaddr ptr %.82783.i to i64
+  %.82783.i2751 = ptrtoaddr ptr %.82794.i to i64
   %min.iters.check2755 = icmp ult i64 %.82773.i, 4
-  %i.foh = sub i64 %.82794.i2752, %.82783.i2751
+  %i.foh = sub i64 %.82783.i2751, %.82794.i2752
   %diff.check2753 = icmp ugt i64 %i.foh, -32
   %or.cond3062 = select i1 %min.iters.check2755, i1 true, i1 %diff.check2753
   br i1 %or.cond3062, label %.preheader3718.i.preheader, label %vector.main.loop.iter.check2756

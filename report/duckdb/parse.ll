@@ -204,9 +204,9 @@ bb.g:                                             ; preds = %bb.f, %bb.x, %bb.w,
   br i1 %i.bp, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader112
-  %6 = sext i32 %.065142 to i64                   ; 5 uses
   %i.bq = ptrtoaddr ptr %i.bm to i64
   %i.br = ptrtoaddr ptr %i.bk to i64
+  %6 = sext i32 %.065142 to i64                   ; 5 uses
   %i.bs = shl nsw i64 %i.bn, 3
   %i.bt = xor i64 %i.br, -1
   %i.bu = add i64 %i.bt, %i.bq

@@ -204,6 +204,7 @@ _ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
 .noexc9:                                          ; preds = %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i
   %i.i = shl nuw nsw i64 %i.f, 3
   %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.i) #23 ; 8 uses
+  %5 = ptrtoaddr ptr %i.j to i64
   store ptr %i.j, ptr %0, align 8, !tbaa !31
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.f
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -224,10 +225,9 @@ bb.b:                                             ; preds = %.noexc9
   %.sink = phi ptr [ %i.p, %bb.b ], [ %i.m, %.noexc9 ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sink, ptr %i.q, align 8, !tbaa !30
-  %5 = ptrtoaddr ptr %.sink to i64
-  %i.r = ptrtoaddr ptr %i.j to i64
-  %i.s = add i64 %5, -8
-  %i.t = sub i64 %i.s, %i.r                       ; 2 uses
+  %i.r = ptrtoaddr ptr %.sink to i64
+  %i.s = add i64 %i.r, -8
+  %i.t = sub i64 %i.s, %5                         ; 2 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.t, 24
@@ -355,6 +355,7 @@ _ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.a
 .noexc9.i:                                        ; preds = %_ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i.i
   %i.c = shl nuw nsw i64 %1, 3
   %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #23, !noalias !126 ; 8 uses
+  %2 = ptrtoaddr ptr %i.d to i64
   store ptr %i.d, ptr %0, align 8, !tbaa !31, !alias.scope !126
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -373,9 +374,8 @@ bb.b:                                             ; preds = %.noexc9.i
 
 .lr.ph.preheader.i:                               ; preds = %.noexc9.i, %bb.b
   %storemerge = phi ptr [ %i.j, %bb.b ], [ %i.g, %.noexc9.i ] ; 3 uses
-  store ptr %storemerge, ptr %i.b, align 8, !tbaa !30, !alias.scope !126
   %i.k = ptrtoaddr ptr %storemerge to i64
-  %2 = ptrtoaddr ptr %i.d to i64
+  store ptr %storemerge, ptr %i.b, align 8, !tbaa !30, !alias.scope !126
   %i.l = add i64 %i.k, -8
   %i.m = sub i64 %i.l, %2                         ; 2 uses
   %i.n = lshr i64 %i.m, 3
@@ -778,6 +778,7 @@ bb.d:                                             ; preds = %bb.c
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.aw = shl nuw nsw i64 %.lcssa386, 3
   %i.ax = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aw) #23, !noalias !173 ; 8 uses
+  %3 = ptrtoaddr ptr %i.ax to i64
   store ptr %i.ax, ptr %0, align 8, !tbaa !31, !alias.scope !173
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %.lcssa386
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -796,9 +797,8 @@ bb.e:                                             ; preds = %.noexc9.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.e, %.noexc9.i.i
   %storemerge.i = phi ptr [ %i.bd, %bb.e ], [ %i.ba, %.noexc9.i.i ] ; 3 uses
-  store ptr %storemerge.i, ptr %i.av, align 8, !tbaa !30, !alias.scope !173
   %i.be = ptrtoaddr ptr %storemerge.i to i64
-  %3 = ptrtoaddr ptr %i.ax to i64
+  store ptr %storemerge.i, ptr %i.av, align 8, !tbaa !30, !alias.scope !173
   %i.bf = add i64 %i.be, -8
   %i.bg = sub i64 %i.bf, %3                       ; 2 uses
   %i.bh = lshr i64 %i.bg, 3

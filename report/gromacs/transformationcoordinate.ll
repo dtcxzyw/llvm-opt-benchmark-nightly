@@ -121,14 +121,14 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #6
 ; Function Attrs: mustprogress uwtable
 define noundef double @_ZN3gmx36getTransformationPullCoordinateValueEP17pull_coord_work_tNS_8ArrayRefIKS0_EEd(ptr noundef %0, ptr nofree readonly captures(address) %1, ptr nofree readnone captures(address) %2, double noundef %3) local_unnamed_addr #7 {
 bb.a:
+  %4 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %.not13 = icmp eq ptr %1, %2
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 464
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !12 ; 6 uses
   br i1 %.not13, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %4 = ptrtoaddr ptr %2 to i64
-  %5 = ptrtoaddr ptr %1 to i64
   %i.a = add i64 %4, -488
   %i.b = sub i64 %i.a, %5                         ; 3 uses
   %i.c = udiv i64 %i.b, 488
@@ -137,10 +137,8 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %6 = ptrtoaddr ptr %2 to i64
-  %7 = ptrtoaddr ptr %1 to i64
-  %i.e = add i64 %6, -488
-  %i.f = sub i64 %i.e, %7
+  %i.e = add i64 %4, -488
+  %i.f = sub i64 %i.e, %5
   %i.g = udiv i64 %i.f, 488                       ; 2 uses
   %i.h = shl nuw nsw i64 %i.g, 3
   %i.i = getelementptr i8, ptr %.pre, i64 %i.h

@@ -205,9 +205,9 @@ vector.scevcheck144:                              ; preds = %iter.check175
 
 vector.memcheck147:                               ; preds = %vector.scevcheck144
   %i.cf = shl nuw nsw i64 %i.ar, 2
-  %i.cg = add i64 %i.cf, %i.ac
-  %i.ch = add i64 %i.bh, %i.ba
-  %i.ci = sub i64 %i.ch, %i.cg
+  %i.cg = add i64 %i.bh, %i.ba
+  %i.ch = add i64 %i.cf, %i.ac
+  %i.ci = sub i64 %i.cg, %i.ch
   %diff.check148 = icmp ugt i64 %i.ci, -128
   br i1 %diff.check148, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.preheader, label %vector.main.loop.iter.check150
 
@@ -610,9 +610,9 @@ vector.scevcheck:                                 ; preds = %iter.check
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.ki = shl nuw nsw i64 %i.iu, 1
-  %i.kj = add i64 %i.ki, %i.if
-  %i.kk = add i64 %i.jk, %i.jd
-  %i.kl = sub i64 %i.kk, %i.kj
+  %i.kj = add i64 %i.jk, %i.jd
+  %i.kk = add i64 %i.ki, %i.if
+  %i.kl = sub i64 %i.kj, %i.kk
   %diff.check = icmp ugt i64 %i.kl, -128
   br i1 %diff.check, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.preheader, label %vector.main.loop.iter.check
 

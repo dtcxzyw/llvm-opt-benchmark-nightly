@@ -205,8 +205,8 @@ ctr64_inc.exit:                                   ; preds = %bb.l, %bb.k, %bb.j,
   %.086.lcssa = phi ptr [ %1, %.preheader93 ], [ %i.bx, %ctr64_inc.exit ] ; 15 uses
   %.085.lcssa = phi ptr [ %2, %.preheader93 ], [ %i.by, %ctr64_inc.exit ] ; 7 uses
   %.084.lcssa = phi i64 [ %3, %.preheader93 ], [ %i.bz, %ctr64_inc.exit ] ; 15 uses
-  %.085.lcssa146 = ptrtoaddr ptr %.085.lcssa to i64 ; 2 uses
-  %.086.lcssa147 = ptrtoaddr ptr %.086.lcssa to i64
+  %.085.lcssa146 = ptrtoaddr ptr %.086.lcssa to i64
+  %.086.lcssa147 = ptrtoaddr ptr %.085.lcssa to i64 ; 2 uses
   %.not92 = icmp eq i64 %.084.lcssa, 0
   br i1 %.not92, label %._crit_edge109, label %iter.check
 
@@ -310,9 +310,9 @@ iter.check164:                                    ; preds = %vec.epilog.scalar.p
   br i1 %min.iters.check149, label %vec.epilog.scalar.ph165.preheader, label %vector.memcheck145
 
 vector.memcheck145:                               ; preds = %iter.check164
-  %i.dk = sub i64 %i.a, %.085.lcssa146
+  %i.dk = sub i64 %i.a, %.086.lcssa147
   %diff.check = icmp ugt i64 %i.dk, -32
-  %i.dl = sub i64 %.086.lcssa147, %.085.lcssa146
+  %i.dl = sub i64 %.085.lcssa146, %.086.lcssa147
   %diff.check148 = icmp ugt i64 %i.dl, -32
   %conflict.rdx = or i1 %diff.check, %diff.check148
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph165.preheader, label %vec.epilog.ph168
@@ -715,8 +715,8 @@ iter.check:                                       ; preds = %.thread123, %bb.g
   %.083130 = phi i64 [ %i.ai, %.thread123 ], [ %3, %bb.g ] ; 15 uses
   %.084129 = phi ptr [ %i.ak, %.thread123 ], [ %2, %bb.g ] ; 8 uses
   %.085128 = phi ptr [ %i.al, %.thread123 ], [ %1, %bb.g ] ; 13 uses
-  %.084129144 = ptrtoaddr ptr %.084129 to i64
-  %.085128145 = ptrtoaddr ptr %.085128 to i64
+  %.084129144 = ptrtoaddr ptr %.085128 to i64
+  %.085128145 = ptrtoaddr ptr %.084129 to i64
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
   %min.iters.check = icmp ult i64 %.083130, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
@@ -800,7 +800,7 @@ iter.check161:                                    ; preds = %vec.epilog.scalar.p
   tail call void %i.c(ptr noundef nonnull %i.am, ptr noundef nonnull %i.am, ptr noundef %i.e) #6
   call void %i.c(ptr noundef nonnull %0, ptr noundef nonnull %5, ptr noundef %i.e) #6
   %min.iters.check146 = icmp ult i64 %.083130, 4
-  %i.bm = sub i64 %.085128145, %.084129144
+  %i.bm = sub i64 %.084129144, %.085128145
   %diff.check = icmp ugt i64 %i.bm, -32
   %or.cond = select i1 %min.iters.check146, i1 true, i1 %diff.check
   br i1 %or.cond, label %vec.epilog.scalar.ph162.preheader, label %vector.main.loop.iter.check147

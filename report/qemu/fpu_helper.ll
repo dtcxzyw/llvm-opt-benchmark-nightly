@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_psrldq_xmm(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #16 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = load i32, ptr %3, align 8                ; 2 uses
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16) ; 16 uses
   %i.d = sub i32 16, %spec.store.select           ; 6 uses
@@ -243,8 +243,8 @@ vector.scevcheck:                                 ; preds = %.split.us
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.o = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16)
   %smin = sext i32 %i.o to i64
-  %i.p = add i64 %i.a, %smin
-  %i.q = sub i64 %i.p, %i.b
+  %i.p = add i64 %i.b, %smin
+  %i.q = sub i64 %i.p, %i.a
   %diff.check = icmp ugt i64 %i.q, -32
   br i1 %diff.check, label %.preheader21.us.preheader, label %vector.main.loop.iter.check
 
@@ -448,8 +448,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_pslldq_xmm(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #16 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = load i32, ptr %3, align 8                ; 3 uses
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16) ; 14 uses
   %.not21 = icmp sgt i32 %i.c, 15
@@ -474,8 +474,8 @@ iter.check:                                       ; preds = %.split
 vector.memcheck:                                  ; preds = %iter.check
   %i.n = sub i32 15, %spec.store.select
   %i.o = sext i32 %i.n to i64
-  %i.p = add i64 %i.b, %i.o
-  %i.q = sub i64 %i.p, %i.a
+  %i.p = add i64 %i.a, %i.o
+  %i.q = sub i64 %i.p, %i.b
   %i.r = add i64 %i.q, -16
   %diff.check = icmp ult i64 %i.r, 31
   br i1 %diff.check, label %.preheader20.preheader, label %vector.main.loop.iter.check
@@ -878,8 +878,8 @@ bb.a:
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_psrldq_ymm(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #16 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = load i32, ptr %3, align 8                ; 3 uses
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16) ; 30 uses
   %i.d = sub i32 16, %spec.store.select           ; 8 uses
@@ -989,8 +989,8 @@ vector.scevcheck68:                               ; preds = %.split.us
 vector.memcheck:                                  ; preds = %vector.scevcheck68
   %i.aw = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16)
   %smin = sext i32 %i.aw to i64
-  %i.ax = add i64 %i.a, %smin
-  %i.ay = sub i64 %i.ax, %i.b
+  %i.ax = add i64 %i.b, %smin
+  %i.ay = sub i64 %i.ax, %i.a
   %diff.check = icmp ugt i64 %i.ay, -32
   br i1 %diff.check, label %.preheader21.us.preheader.preheader, label %vector.main.loop.iter.check69
 
@@ -1322,8 +1322,8 @@ vector.scevcheck92:                               ; preds = %.preheader21.us.pre
 vector.memcheck93:                                ; preds = %vector.scevcheck92
   %i.gd = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16)
   %smin94 = sext i32 %i.gd to i64
-  %i.ge = add i64 %i.a, %smin94
-  %i.gf = sub i64 %i.ge, %i.b
+  %i.ge = add i64 %i.b, %smin94
+  %i.gf = sub i64 %i.ge, %i.a
   %diff.check95 = icmp ugt i64 %i.gf, -32
   br i1 %diff.check95, label %..preheader_crit_edge.us.preheader, label %vector.main.loop.iter.check97
 
@@ -1455,8 +1455,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_pslldq_ymm(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #16 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = load i32, ptr %3, align 8                ; 4 uses
   %spec.store.select = tail call i32 @llvm.smin.i32(i32 %i.c, i32 16) ; 23 uses
   %.not21 = icmp sgt i32 %i.c, 15
@@ -1489,8 +1489,8 @@ iter.check:                                       ; preds = %.split
 vector.memcheck:                                  ; preds = %iter.check
   %i.r = sub i32 15, %spec.store.select
   %i.s = sext i32 %i.r to i64
-  %i.t = add i64 %i.b, %i.s
-  %i.u = sub i64 %i.t, %i.a
+  %i.t = add i64 %i.a, %i.s
+  %i.u = sub i64 %i.t, %i.b
   %i.v = add i64 %i.u, -16
   %diff.check = icmp ult i64 %i.v, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1743,8 +1743,8 @@ vector.scevcheck60:                               ; preds = %iter.check76
 vector.memcheck61:                                ; preds = %vector.scevcheck60
   %i.dt = sub i32 31, %spec.store.select
   %i.du = sext i32 %i.dt to i64
-  %i.dv = add i64 %i.b, %i.du
-  %i.dw = sub i64 %i.dv, %i.a
+  %i.dv = add i64 %i.a, %i.du
+  %i.dw = sub i64 %i.dv, %i.b
   %i.dx = add i64 %i.dw, -32
   %diff.check62 = icmp ult i64 %i.dx, 31
   br i1 %diff.check62, label %..preheader_crit_edge.preheader, label %vector.main.loop.iter.check64

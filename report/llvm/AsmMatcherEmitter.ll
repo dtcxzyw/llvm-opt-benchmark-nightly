@@ -205,6 +205,8 @@ _ZNSt10unique_ptrIN4llvm16CodeGenInstAliasESt14default_deleteIS1_EED2Ev.exit: ; 
   br i1 %.not709, label %._crit_edge689, label %.lr.ph688
 
 ._crit_edge701:                                   ; preds = %_ZNSt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS1_EED2Ev.exit345
+  %.sroa.0444.11760.le = ptrtoaddr ptr %.sroa.0444.1 to i64 ; 2 uses
+  %.sroa.9.11761.le = ptrtoaddr ptr %.sroa.9.1 to i64 ; 2 uses
   %i.cfq = ptrtoint ptr %.sroa.15.1 to i64        ; 3 uses
   %i.cfr = icmp eq ptr %.sroa.0444.1, %.sroa.9.1
   br i1 %i.cfr, label %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE6insertISt13move_iteratorIN9__gnu_cxx17__normal_iteratorIPS5_S7_EEEvEESD_NSB_IPKS5_S7_EET_SI_.exit, label %bb.ts
@@ -607,8 +609,8 @@ _ZN12_GLOBAL__N_113MatchableInfo24buildAliasResultOperandsEb.exit: ; preds = %._
   br label %_ZNSt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS1_EED2Ev.exit345
 
 _ZNSt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS1_EED2Ev.exit345: ; preds = %_ZN12_GLOBAL__N_113MatchableInfo30buildInstructionResultOperandsEv.exit, %bb.sc, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i342, %_ZN12_GLOBAL__N_113MatchableInfo24buildAliasResultOperandsEb.exit
-  %.sroa.0444.1 = phi ptr [ %.sroa.0444.0697, %bb.sc ], [ %i.dav, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i342 ], [ %.sroa.0444.0697, %_ZN12_GLOBAL__N_113MatchableInfo24buildAliasResultOperandsEb.exit ], [ %.sroa.0444.0697, %_ZN12_GLOBAL__N_113MatchableInfo30buildInstructionResultOperandsEv.exit ] ; 20 uses
-  %.sroa.9.1 = phi ptr [ %i.dak, %bb.sc ], [ %i.dbp, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i342 ], [ %.sroa.9.0698, %_ZN12_GLOBAL__N_113MatchableInfo24buildAliasResultOperandsEb.exit ], [ %.sroa.9.0698, %_ZN12_GLOBAL__N_113MatchableInfo30buildInstructionResultOperandsEv.exit ] ; 10 uses
+  %.sroa.0444.1 = phi ptr [ %.sroa.0444.0697, %bb.sc ], [ %i.dav, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i342 ], [ %.sroa.0444.0697, %_ZN12_GLOBAL__N_113MatchableInfo24buildAliasResultOperandsEb.exit ], [ %.sroa.0444.0697, %_ZN12_GLOBAL__N_113MatchableInfo30buildInstructionResultOperandsEv.exit ] ; 19 uses
+  %.sroa.9.1 = phi ptr [ %i.dak, %bb.sc ], [ %i.dbp, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i342 ], [ %.sroa.9.0698, %_ZN12_GLOBAL__N_113MatchableInfo24buildAliasResultOperandsEb.exit ], [ %.sroa.9.0698, %_ZN12_GLOBAL__N_113MatchableInfo30buildInstructionResultOperandsEv.exit ] ; 9 uses
   %.sroa.15.1 = phi ptr [ %.sroa.15.0699, %bb.sc ], [ %i.dbq, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i342 ], [ %.sroa.15.0699, %_ZN12_GLOBAL__N_113MatchableInfo24buildAliasResultOperandsEb.exit ], [ %.sroa.15.0699, %_ZN12_GLOBAL__N_113MatchableInfo30buildInstructionResultOperandsEv.exit ] ; 2 uses
   %i.dmy = getelementptr inbounds nuw i8, ptr %.sroa.0443.0700, i64 8 ; 2 uses
   %.not514 = icmp eq ptr %i.dmy, %.val137
@@ -631,10 +633,8 @@ bb.ts:                                            ; preds = %._crit_edge701
   br i1 %.not.i.i390, label %bb.tt, label %.lr.ph.i.i.i.i.i.i391.preheader
 
 .lr.ph.i.i.i.i.i.i391.preheader:                  ; preds = %bb.ts
-  %100 = ptrtoaddr ptr %.sroa.9.1 to i64
-  %101 = ptrtoaddr ptr %.sroa.0444.1 to i64
-  %i.dnj = add i64 %100, -8
-  %i.dnk = sub i64 %i.dnj, %101                   ; 3 uses
+  %i.dnj = add i64 %.sroa.9.11761.le, -8
+  %i.dnk = sub i64 %i.dnj, %.sroa.0444.11760.le   ; 3 uses
   %i.dnl = lshr i64 %i.dnk, 3
   %i.dnm = add nuw nsw i64 %i.dnl, 1              ; 2 uses
   %min.iters.check1761 = icmp ult i64 %i.dnk, 120
@@ -785,10 +785,8 @@ middle.block1790:                                 ; preds = %vector.body1783
 
 _ZSt34__uninitialized_move_if_noexcept_aIPSt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EES6_SaIS5_EET0_T_S9_S8_RT1_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i72.i.i, %middle.block1790, %_ZNSt12_Vector_baseISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i.i
   %.0.lcssa.i.i.i.i.i77.i.i = phi ptr [ %i.dom, %_ZNSt12_Vector_baseISt10unique_ptrIN12_GLOBAL__N_113MatchableInfoESt14default_deleteIS2_EESaIS5_EE11_M_allocateEm.exit.i.i ], [ %i.dos, %middle.block1790 ], [ %i.dpa, %.lr.ph.i.i.i.i.i72.i.i ] ; 6 uses
-  %102 = ptrtoaddr ptr %.sroa.9.1 to i64
-  %103 = ptrtoaddr ptr %.sroa.0444.1 to i64
-  %i.dpb = add i64 %102, -8
-  %i.dpc = sub i64 %i.dpb, %103                   ; 3 uses
+  %i.dpb = add i64 %.sroa.9.11761.le, -8
+  %i.dpc = sub i64 %i.dpb, %.sroa.0444.11760.le   ; 3 uses
   %i.dpd = lshr i64 %i.dpc, 3
   %i.dpe = add nuw nsw i64 %i.dpd, 1              ; 2 uses
   %min.iters.check1805 = icmp ult i64 %i.dpc, 120

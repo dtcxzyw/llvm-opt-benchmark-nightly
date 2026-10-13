@@ -205,7 +205,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.bk = phi i64 [ %.pre, %bb.f ], [ %i.ao, %bb.e ] ; 2 uses
-  %i.bl = load ptr, ptr %i.k, align 8, !tbaa !442 ; 12 uses
+  %i.bl = load ptr, ptr %i.k, align 8, !tbaa !442 ; 11 uses
+  %1 = ptrtoaddr ptr %i.bl to i64                 ; 8 uses
   %i.bm = shl nuw nsw i32 %i.ab, 4
   %.idx = zext nneg i32 %i.bm to i64
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 %.idx ; 2 uses
@@ -235,7 +236,6 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not108, label %.lr.ph125.preheader, label %.lr.ph.preheader
 
 .lr.ph125.preheader:                              ; preds = %bb.i
-  %1 = ptrtoaddr ptr %i.bl to i64                 ; 3 uses
   %i.cb = zext i16 %i.f to i64
   %i.cc = shl nuw nsw i64 %i.cb, 4
   %i.cd = add i64 %i.cc, %1
@@ -269,14 +269,13 @@ vector.body148:                                   ; preds = %vector.body148, %ve
   br i1 %i.cs, label %.loopexit, label %vector.body148, !llvm.loop !852
 
 .lr.ph.preheader:                                 ; preds = %bb.h, %bb.i
-  %2 = ptrtoaddr ptr %i.bl to i64                 ; 5 uses
   %i.ct = zext i16 %i.f to i64                    ; 2 uses
   %i.cu = shl nuw nsw i64 %i.ct, 4
-  %i.cv = add i64 %i.cu, %2
+  %i.cv = add i64 %i.cu, %1
   %i.cw = add i64 %i.cv, 64
-  %i.cx = add i64 %2, 16                          ; 2 uses
+  %i.cx = add i64 %1, 16                          ; 2 uses
   %i.cy = call i64 @llvm.umax.i64(i64 %i.cw, i64 %i.cx)
-  %i.cz = xor i64 %2, -1
+  %i.cz = xor i64 %1, -1
   %i.da = add i64 %i.cy, %i.cz                    ; 2 uses
   %i.db = lshr i64 %i.da, 4
   %min.iters.check = icmp ult i64 %i.da, 144
@@ -287,10 +286,10 @@ vector.body148:                                   ; preds = %vector.body148, %ve
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.dc = shl nuw nsw i64 %i.ct, 4
-  %i.dd = add i64 %i.dc, %2
+  %i.dd = add i64 %i.dc, %1
   %i.de = add i64 %i.dd, 64
   %i.df = call i64 @llvm.umax.i64(i64 %i.de, i64 %i.cx)
-  %i.dg = xor i64 %2, -1
+  %i.dg = xor i64 %1, -1
   %i.dh = add i64 %i.df, %i.dg
   %i.di = and i64 %i.dh, -16                      ; 2 uses
   %i.dj = or disjoint i64 %i.di, 8                ; 2 uses

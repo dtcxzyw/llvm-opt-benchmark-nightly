@@ -6,8 +6,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ff_bwdif_filter_intra_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 %7, i32 noundef %8) #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = icmp sgt i32 %2, 0
   br i1 %i.c, label %iter.check, label %._crit_edge
 
@@ -21,19 +21,19 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.i = add i64 %i.a, %i.g
-  %i.j = sub i64 %i.i, %i.b
+  %i.i = add i64 %i.b, %i.g
+  %i.j = sub i64 %i.i, %i.a
   %diff.check = icmp ugt i64 %i.j, -16
-  %i.k = add i64 %i.a, %i.f
-  %i.l = sub i64 %i.k, %i.b
+  %i.k = add i64 %i.b, %i.f
+  %i.l = sub i64 %i.k, %i.a
   %diff.check22 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check22
-  %i.m = add i64 %i.a, %i.e
-  %i.n = sub i64 %i.m, %i.b
+  %i.m = add i64 %i.b, %i.e
+  %i.n = sub i64 %i.m, %i.a
   %diff.check23 = icmp ugt i64 %i.n, -16
   %conflict.rdx24 = or i1 %conflict.rdx, %diff.check23
-  %i.o = add i64 %i.a, %i.d
-  %i.p = sub i64 %i.o, %i.b
+  %i.o = add i64 %i.b, %i.d
+  %i.p = sub i64 %i.o, %i.a
   %diff.check25 = icmp ugt i64 %i.p, -16
   %conflict.rdx26 = or i1 %conflict.rdx24, %diff.check25
   br i1 %conflict.rdx26, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -436,8 +436,8 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @filter_intra_16bit(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 %7, i32 noundef %8) #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   %i.c = icmp sgt i32 %2, 0
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
@@ -451,21 +451,20 @@ bb.a:
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %9 = sub i64 %i.b, %i.a                         ; 2 uses
-  %10 = shl nsw i64 %i.g, 1
-  %i.i = sub i64 %10, %9
+  %9 = shl nsw i64 %i.g, 1
+  %10 = sub i64 %i.b, %i.a                        ; 4 uses
+  %i.i = sub i64 %9, %10
   %diff.check = icmp ugt i64 %i.i, -16
   %i.j = shl nsw i64 %i.f, 1
-  %i.k = sub i64 %i.j, %9
+  %i.k = sub i64 %i.j, %10
   %diff.check22 = icmp ugt i64 %i.k, -16
   %conflict.rdx = or i1 %diff.check, %diff.check22
-  %11 = sub i64 %i.b, %i.a                        ; 2 uses
   %i.l = shl nsw i64 %i.e, 1
-  %i.m = sub i64 %i.l, %11
+  %i.m = sub i64 %i.l, %10
   %diff.check23 = icmp ugt i64 %i.m, -16
   %conflict.rdx24 = or i1 %conflict.rdx, %diff.check23
   %i.n = shl nsw i64 %i.d, 1
-  %i.o = sub i64 %i.n, %11
+  %i.o = sub i64 %i.n, %10
   %diff.check25 = icmp ugt i64 %i.o, -16
   %conflict.rdx26 = or i1 %conflict.rdx24, %diff.check25
   br i1 %conflict.rdx26, label %scalar.ph.preheader, label %vector.ph

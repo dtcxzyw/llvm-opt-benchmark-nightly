@@ -205,7 +205,8 @@ Vec_IntSetEntry.exit93:                           ; preds = %Vec_IntSetEntry.exi
   br label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge, %.preheader
-  %.val59 = phi ptr [ %storemerge101125, %._crit_edge ], [ %.promoted122, %.preheader ] ; 10 uses
+  %.val59 = phi ptr [ %storemerge101125, %._crit_edge ], [ %.promoted122, %.preheader ] ; 9 uses
+  %.val59169 = ptrtoaddr ptr %.val59 to i64       ; 6 uses
   %i.dn = getelementptr inbounds i8, ptr %.val59, i64 %i.g ; 2 uses
   %i.do = load i32, ptr %.val59, align 4, !tbaa !15 ; 3 uses
   %i.dp = icmp sgt i32 %0, 1
@@ -213,12 +214,11 @@ bb.o:                                             ; preds = %._crit_edge, %.preh
 
 .lr.ph.preheader.i:                               ; preds = %bb.o
   %i.dq = getelementptr inbounds nuw i8, ptr %.val59, i64 4 ; 3 uses
-  %3 = ptrtoaddr ptr %.val59 to i64               ; 3 uses
-  %i.dr = add i64 %i.g, %3
-  %i.ds = add i64 %3, 8
+  %i.dr = add i64 %i.g, %.val59169
+  %i.ds = add i64 %.val59169, 8
   %i.dt = tail call i64 @llvm.umax.i64(i64 %i.dr, i64 %i.ds)
   %i.du = add i64 %i.dt, -5
-  %i.dv = sub i64 %i.du, %3                       ; 2 uses
+  %i.dv = sub i64 %i.du, %.val59169               ; 2 uses
   %i.dw = lshr i64 %i.dv, 2
   %i.dx = add nuw nsw i64 %i.dw, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dv, 28
@@ -273,11 +273,10 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph30.preheader.i:                             ; preds = %.lr.ph.i, %middle.block, %._crit_edge.i
   %.0.lcssa36.i = phi i32 [ %i.do, %._crit_edge.i ], [ %i.ef, %middle.block ], [ %spec.select.i94, %.lr.ph.i ] ; 2 uses
-  %4 = ptrtoaddr ptr %.val59 to i64               ; 3 uses
-  %i.el = add i64 %i.g, %4
-  %i.em = add i64 %4, 4
+  %i.el = add i64 %i.g, %.val59169
+  %i.em = add i64 %.val59169, 4
   %i.en = tail call i64 @llvm.umax.i64(i64 %i.el, i64 %i.em)
-  %i.eo = xor i64 %4, -1
+  %i.eo = xor i64 %.val59169, -1
   %i.ep = add i64 %i.en, %i.eo                    ; 2 uses
   %i.eq = lshr i64 %i.ep, 2
   %i.er = add nuw nsw i64 %i.eq, 1                ; 2 uses
@@ -680,6 +679,7 @@ Ses_ManClean.exit:                                ; preds = %bb.as, %bb.at
 ; Function Attrs: inlinehint nounwind uwtable
 define internal fastcc noalias noundef ptr @Ses_ManAlloc(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7) unnamed_addr #6 {
 bb.a:
+  %8 = ptrtoaddr ptr %4 to i64                    ; 6 uses
   %i.a = alloca [4 x i64], align 16               ; 4 uses
   %i.b = tail call noalias dereferenceable_or_null(1160) ptr @calloc(i64 noundef 1, i64 noundef 1160) #27 ; 23 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -763,7 +763,6 @@ bb.c:                                             ; preds = %._crit_edge
 
 .lr.ph.preheader.i:                               ; preds = %bb.c
   %i.as = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
-  %8 = ptrtoaddr ptr %4 to i64                    ; 3 uses
   %i.at = add i64 %.idx.i, %8
   %i.au = add i64 %8, 8
   %i.av = tail call i64 @llvm.umax.i64(i64 %i.at, i64 %i.au)
@@ -828,11 +827,10 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph30.preheader.i:                             ; preds = %._crit_edge.i, %._crit_edge.thread.i
   %.0.lcssa36.i = phi i32 [ %spec.select.i.lcssa, %._crit_edge.thread.i ], [ %i.aq, %._crit_edge.i ] ; 3 uses
-  %9 = ptrtoaddr ptr %4 to i64                    ; 3 uses
-  %i.bn = add i64 %.idx.i, %9
-  %i.bo = add i64 %9, 4
+  %i.bn = add i64 %.idx.i, %8
+  %i.bo = add i64 %8, 4
   %i.bp = tail call i64 @llvm.umax.i64(i64 %i.bn, i64 %i.bo)
-  %i.bq = xor i64 %9, -1
+  %i.bq = xor i64 %8, -1
   %i.br = add i64 %i.bp, %i.bq                    ; 2 uses
   %i.bs = lshr i64 %i.br, 2
   %i.bt = add nuw nsw i64 %i.bs, 1                ; 2 uses
@@ -1235,6 +1233,7 @@ bb.a:
   %12 = alloca %struct.timespec, align 8          ; 5 uses
   %i.b = alloca ptr, align 8                      ; 8 uses
   %i.c = alloca [8 x i32], align 16               ; 21 uses
+  %13 = ptrtoaddr ptr %i.c to i64                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   store ptr null, ptr %i.b, align 8, !tbaa !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
@@ -1359,7 +1358,6 @@ Abc_Clock.exit132:                                ; preds = %bb.g, %bb.h
   %i.bf = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i222 ; 2 uses
   %i.bg = load i32, ptr %i.c, align 16, !tbaa !15 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 3 uses
-  %13 = ptrtoaddr ptr %i.c to i64                 ; 5 uses
   %i.bi = add i64 %.idx.i222, %13                 ; 2 uses
   %i.bj = or disjoint i64 %13, 8
   %i.bk = call i64 @llvm.umax.i64(i64 %i.bi, i64 %i.bj)
@@ -1762,6 +1760,7 @@ bb.a:
   %7 = alloca %struct.timespec, align 8           ; 5 uses
   %8 = alloca %struct.timespec, align 8           ; 5 uses
   %i.a = alloca [8 x i32], align 16               ; 10 uses
+  %9 = ptrtoaddr ptr %i.a to i64                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
   %i.b = call i32 @clock_gettime(i32 noundef 1, ptr noundef nonnull %8) #30
@@ -1873,7 +1872,6 @@ bb.j:                                             ; preds = %Abc_Clock.exit74
   %.idx.i83 = shl nuw nsw i64 %i.as, 2            ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx.i83 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
-  %9 = ptrtoaddr ptr %i.a to i64                  ; 5 uses
   %i.av = add i64 %.idx.i83, %9                   ; 2 uses
   %i.aw = or disjoint i64 %9, 8
   %i.ax = call i64 @llvm.umax.i64(i64 %i.av, i64 %i.aw)

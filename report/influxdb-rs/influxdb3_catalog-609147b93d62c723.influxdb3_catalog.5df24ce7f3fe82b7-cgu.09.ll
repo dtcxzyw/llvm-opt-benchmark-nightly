@@ -204,9 +204,9 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %3 = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.promoted = load ptr, ptr %i.c, align 8, !alias.scope !3655, !noalias !3656 ; 4 uses
-  %3 = ptrtoaddr ptr %2 to i64
   %i.d = add i64 %3, -4
   %i.e = sub i64 %i.d, %i.b                       ; 2 uses
   %i.f = lshr i64 %i.e, 2
@@ -391,12 +391,12 @@ bb.a:
   br i1 %i.a, label %bb.b, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.promoted = load ptr, ptr %3, align 8, !alias.scope !3676, !noalias !3677 ; 6 uses
+  %3 = ptrtoaddr ptr %1 to i64
   %4 = ptrtoaddr ptr %2 to i64
-  %5 = ptrtoaddr ptr %1 to i64
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %.promoted = load ptr, ptr %5, align 8, !alias.scope !3676, !noalias !3677 ; 6 uses
   %i.b = add i64 %4, -32
-  %i.c = sub i64 %i.b, %5                         ; 4 uses
+  %i.c = sub i64 %i.b, %3                         ; 4 uses
   %i.d = lshr i64 %i.c, 5
   %i.e = add nuw nsw i64 %i.d, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.c, 1504
@@ -492,7 +492,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block
   %.lcssa = phi ptr [ %i.o, %middle.block ], [ %i.bd, %scalar.ph ]
-  store ptr %.lcssa, ptr %3, align 8, !alias.scope !3676, !noalias !3677
+  store ptr %.lcssa, ptr %5, align 8, !alias.scope !3676, !noalias !3677
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a

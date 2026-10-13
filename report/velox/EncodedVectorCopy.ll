@@ -205,26 +205,24 @@ _ZNSt12_Vector_baseIN5boost13intrusive_ptrIN8facebook5velox6BufferEEESaIS5_EE11_
           to label %.noexc69 unwind label %bb.bq  ; 11 uses
 
 .noexc69:                                         ; preds = %_ZNSt12_Vector_baseIN5boost13intrusive_ptrIN8facebook5velox6BufferEEESaIS5_EE11_M_allocateEm.exit.i
-  %i.fx = load ptr, ptr %20, align 8, !tbaa !181  ; 14 uses
-  %i.fy = load ptr, ptr %i.fu, align 8, !tbaa !182 ; 4 uses
+  %i.fx = load ptr, ptr %20, align 8, !tbaa !181  ; 13 uses
+  %23 = ptrtoaddr ptr %i.fx to i64                ; 2 uses
+  %i.fy = load ptr, ptr %i.fu, align 8, !tbaa !182 ; 3 uses
+  %24 = ptrtoaddr ptr %i.fy to i64                ; 2 uses
   %.not10.i.i.i.i62 = icmp eq ptr %i.fx, %i.fy
   br i1 %.not10.i.i.i.i62, label %_ZNSt6vectorIN5boost13intrusive_ptrIN8facebook5velox6BufferEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit.i, label %iter.check407
 
 iter.check407:                                    ; preds = %.noexc69
-  %23 = ptrtoaddr ptr %i.fy to i64
-  %24 = ptrtoaddr ptr %i.fx to i64
-  %i.fz = add i64 %23, -8
-  %i.ga = sub i64 %i.fz, %24                      ; 3 uses
+  %i.fz = add i64 %24, -8
+  %i.ga = sub i64 %i.fz, %23                      ; 3 uses
   %i.gb = lshr i64 %i.ga, 3
   %i.gc = add nuw nsw i64 %i.gb, 1                ; 5 uses
   %min.iters.check385 = icmp ult i64 %i.ga, 24
   br i1 %min.iters.check385, label %.lr.ph.i.i.i.i63.preheader, label %vector.memcheck386
 
 vector.memcheck386:                               ; preds = %iter.check407
-  %25 = ptrtoaddr ptr %i.fy to i64
-  %26 = ptrtoaddr ptr %i.fx to i64
-  %i.gd = add i64 %25, -8
-  %i.ge = sub i64 %i.gd, %26
+  %i.gd = add i64 %24, -8
+  %i.ge = sub i64 %i.gd, %23
   %i.gf = and i64 %i.ge, -8
   %i.gg = add i64 %i.gf, 8                        ; 2 uses
   %i.gh = getelementptr i8, ptr %i.fw, i64 %i.gg

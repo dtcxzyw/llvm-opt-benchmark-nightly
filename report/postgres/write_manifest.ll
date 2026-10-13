@@ -76,6 +76,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define dso_local void @add_file_to_manifest(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i32 noundef %4, i32 noundef %5, ptr nofree noundef readonly captures(address) %6) local_unnamed_addr #0 {
 bb.a:
+  %7 = ptrtoaddr ptr %6 to i64                    ; 4 uses
+  %8 = ptrtoaddr ptr %1 to i64                    ; 4 uses
   %i.a = alloca i64, align 8                      ; 2 uses
   store i64 %3, ptr %i.a, align 8
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #9 ; 2 uses
@@ -256,17 +258,16 @@ bb.x:                                             ; preds = %bb.d
   %i.be = load ptr, ptr %i.j, align 8             ; 2 uses
   %i.bf = sext i32 %i.bc to i64                   ; 2 uses
   %i.bg = getelementptr i8, ptr %i.be, i64 %i.bf  ; 5 uses
-  %7 = ptrtoaddr ptr %1 to i64                    ; 4 uses
-  %i.bh = add i64 %i.ba, %7
-  %i.bi = add i64 %7, 1
+  %i.bh = add i64 %i.ba, %8
+  %i.bi = add i64 %8, 1
   %i.bj = tail call i64 @llvm.umax.i64(i64 %i.bh, i64 %i.bi) ; 2 uses
-  %i.bk = sub i64 %i.bj, %7                       ; 4 uses
+  %i.bk = sub i64 %i.bj, %8                       ; 4 uses
   %min.iters.check = icmp ult i64 %i.bk, 8
   br i1 %min.iters.check, label %.lr.ph.i46.preheader85, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i46.preheader
   %i.bl = shl i64 %i.bj, 1
-  %i.bm = shl i64 %7, 1
+  %i.bm = shl i64 %8, 1
   %i.bn = add i64 %i.bl, %i.bf
   %i.bo = sub i64 %i.bn, %i.bm
   %i.bp = getelementptr i8, ptr %i.be, i64 %i.bo
@@ -390,17 +391,16 @@ bb.aa:                                            ; preds = %bb.z
   %i.ds = sext i32 %i.dr to i64                   ; 2 uses
   %i.dt = getelementptr i8, ptr %i.dq, i64 %i.ds  ; 5 uses
   %i.du = getelementptr inbounds nuw i8, ptr %6, i64 %i.dp
-  %8 = ptrtoaddr ptr %6 to i64                    ; 4 uses
-  %i.dv = add i64 %8, %i.dp
-  %i.dw = add i64 %8, 1
+  %i.dv = add i64 %7, %i.dp
+  %i.dw = add i64 %7, 1
   %i.dx = call i64 @llvm.umax.i64(i64 %i.dv, i64 %i.dw) ; 2 uses
-  %i.dy = sub i64 %i.dx, %8                       ; 4 uses
+  %i.dy = sub i64 %i.dx, %7                       ; 4 uses
   %min.iters.check67 = icmp ult i64 %i.dy, 8
   br i1 %min.iters.check67, label %.lr.ph.i49.preheader, label %vector.memcheck68
 
 vector.memcheck68:                                ; preds = %bb.aa
   %i.dz = shl i64 %i.dx, 1
-  %i.ea = shl i64 %8, 1
+  %i.ea = shl i64 %7, 1
   %i.eb = add i64 %i.dz, %i.ds
   %i.ec = sub i64 %i.eb, %i.ea
   %i.ed = getelementptr i8, ptr %i.dq, i64 %i.ec
@@ -591,6 +591,7 @@ declare ptr @pg_checksum_type_name(i32 noundef) local_unnamed_addr #2
 define dso_local void @finalize_manifest(ptr noundef %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 11 uses
+  %2 = ptrtoaddr ptr %i.a to i64                  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1032 ; 8 uses
   tail call void @appendStringInfoString(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.12) #8
@@ -639,7 +640,6 @@ bb.a:
   %i.y = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.z = sext i32 %i.w to i64                     ; 2 uses
   %i.aa = getelementptr i8, ptr %i.y, i64 %i.z    ; 5 uses
-  %2 = ptrtoaddr ptr %i.a to i64                  ; 4 uses
   %i.ab = add i64 %2, %i.u
   %i.ac = or disjoint i64 %2, 1
   %i.ad = call i64 @llvm.umax.i64(i64 %i.ab, i64 %i.ac) ; 3 uses

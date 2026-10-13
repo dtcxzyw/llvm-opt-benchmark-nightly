@@ -205,8 +205,8 @@ bb.w:                                             ; preds = %bb.v, %nk_buffer_al
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc noundef ptr @nk_memcopy(ptr noundef returned %0, ptr noundef %1, i64 noundef %2) unnamed_addr #7 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.c = icmp eq i64 %2, 0
   %i.d = icmp eq ptr %0, %1
   %or.cond102 = or i1 %i.d, %i.c
@@ -234,7 +234,7 @@ iter.check206:                                    ; preds = %bb.c
   %i.o = sub nuw nsw i64 4, %i.n
   %.074 = select i1 %or.cond, i64 %2, i64 %i.o    ; 11 uses
   %min.iters.check188 = icmp ult i64 %.074, 4
-  %i.p = sub i64 %i.b, %i.a
+  %i.p = sub i64 %i.a, %i.b
   %diff.check186 = icmp ugt i64 %i.p, -32
   %or.cond243 = or i1 %min.iters.check188, %diff.check186
   br i1 %or.cond243, label %vec.epilog.scalar.ph207.preheader, label %vector.main.loop.iter.check189
@@ -536,7 +536,7 @@ iter.check:                                       ; preds = %bb.d
   %i.do = and i64 %i.dg, 3
   %.478 = select i1 %or.cond3, i64 %2, i64 %i.do  ; 11 uses
   %min.iters.check = icmp ult i64 %.478, 8
-  %i.dp = sub i64 %i.a, %i.b
+  %i.dp = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.dp, -32
   %or.cond245 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond245, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

@@ -205,10 +205,10 @@ bb.a:
   br i1 %or.cond13, label %iter.check, label %.loopexit
 
 iter.check:                                       ; preds = %bb.a
-  %i.d = ptrtoaddr ptr %0 to i64
-  %i.e = ptrtoaddr ptr %1 to i64
+  %i.d = ptrtoaddr ptr %1 to i64
+  %i.e = ptrtoaddr ptr %0 to i64
   %min.iters.check = icmp ult i64 %2, 4
-  %i.f = sub i64 %i.e, %i.d
+  %i.f = sub i64 %i.d, %i.e
   %diff.check = icmp ugt i64 %i.f, -16
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -611,10 +611,10 @@ bb.a:
   br i1 %or.cond13.i, label %iter.check, label %ma_copy_and_apply_volume_factor_u8.exit
 
 iter.check:                                       ; preds = %bb.a
-  %i.f = ptrtoaddr ptr %0 to i64
-  %i.g = ptrtoaddr ptr %1 to i64
+  %i.f = ptrtoaddr ptr %1 to i64
+  %i.g = ptrtoaddr ptr %0 to i64
   %min.iters.check = icmp ult i64 %i.b, 4
-  %i.h = sub i64 %i.g, %i.f
+  %i.h = sub i64 %i.f, %i.g
   %diff.check = icmp ugt i64 %i.h, -16
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check

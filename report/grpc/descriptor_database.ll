@@ -204,7 +204,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4less
   br i1 %.not13.i, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE10transfer_nEmmmPS8_PS6_.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE19transfer_n_backwardEmmmPS8_PS6_.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -212,13 +212,12 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4less
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70

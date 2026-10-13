@@ -205,7 +205,7 @@ bb.bz:                                            ; preds = %_ZNSt7__cxx1112basi
 define hidden void @_ZN2cv3dnn14dnn5_v2026060516deconvInferShapeERKNS_8MatShapeES4_RKSt6vectorIiSaIiEEiS9_S9_S9_S9_NS1_11AutoPaddingE(ptr dead_on_unwind noalias writable sret(%"struct.cv::MatShape") align 4 %0, ptr noundef nonnull align 4 dereferenceable(52) %1, ptr noundef nonnull align 4 dereferenceable(52) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3, i32 noundef %4, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %5, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %6, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %7, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %8, i32 noundef %9) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 7 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 6 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %11 = alloca %"class.std::allocator", align 1   ; 3 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -608,16 +608,15 @@ _ZN2cv8MatShapeixEm.exit153.us164:                ; preds = %bb.bi
   br label %.lr.ph159.split.split.split
 
 vector.memcheck:                                  ; preds = %.lr.ph159.split.split.split.preheader
-  %32 = sub i64 %i.b, %i.cf
-  %33 = add i64 %32, 19
-  %diff.check = icmp ult i64 %33, 31
+  %32 = add i64 %i.b, 20                          ; 2 uses
+  %33 = sub i64 %i.cf, %32
+  %diff.check = icmp ugt i64 %33, -32
   %i.gn = sub i64 %i.a, %i.b
   %diff.check313 = icmp ugt i64 %i.gn, -32
   %conflict.rdx = or i1 %diff.check, %diff.check313
-  %i.go = sub i64 %i.b, %i.eg
-  %34 = add i64 %i.go, 19
-  %diff.check314 = icmp ult i64 %34, 31
-  %conflict.rdx315 = or i1 %conflict.rdx, %diff.check314
+  %i.go = sub i64 %i.eg, %32
+  %diff.check319 = icmp ugt i64 %i.go, -32
+  %conflict.rdx315 = or i1 %conflict.rdx, %diff.check319
   br i1 %conflict.rdx315, label %.lr.ph159.split.split.split.preheader373, label %vector.ph318
 
 vector.ph318:                                     ; preds = %vector.memcheck

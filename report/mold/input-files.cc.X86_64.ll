@@ -205,6 +205,8 @@ _ZNSt12_Vector_baseIN4mold9FdeRecordINS0_6X86_64EEESaIS3_EE13_M_deallocateEPS3_m
 ; Function Attrs: mustprogress nounwind
 define linkonce_odr dso_local noundef ptr @_ZNSt6vectorIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS5_EEE20_M_allocate_and_copyIPKS5_EEPS5_mT_SD_(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #2 comdat align 2 {
 bb.a:
+  %4 = ptrtoaddr ptr %3 to i64
+  %5 = ptrtoaddr ptr %2 to i64
   %.not.i = icmp eq i64 %1, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS5_EEE11_M_allocateEm.exit, label %bb.b
 
@@ -231,8 +233,6 @@ _ZNSt12_Vector_baseIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAlloc
   br i1 %.not10.i, label %_ZSt22__uninitialized_copy_aIPKN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEEPS5_NS0_14ArenaAllocatorIS5_EEET0_T_SC_SB_RT1_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt12_Vector_baseIN4mold8ArenaPtrINS0_6SymbolINS0_6X86_64EEEEENS0_14ArenaAllocatorIS5_EEE11_M_allocateEm.exit
-  %4 = ptrtoaddr ptr %3 to i64
-  %5 = ptrtoaddr ptr %2 to i64
   %i.i = add i64 %4, -4
   %i.j = sub i64 %i.i, %5                         ; 3 uses
   %i.k = lshr i64 %i.j, 2

@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.d
   %.033.lcssa.i.i = phi ptr [ %1, %.preheader.i.i ], [ %i.bo, %.lr.ph.i.i ] ; 6 uses
   %.030.lcssa.i.i = phi ptr [ %2, %.preheader.i.i ], [ %i.bj, %.lr.ph.i.i ] ; 7 uses
   %.0.lcssa.i.i = phi ptr [ %i.q, %.preheader.i.i ], [ %i.bl, %.lr.ph.i.i ] ; 6 uses
-  %.033.lcssa.i.i85 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
-  %.030.lcssa.i.i86 = ptrtoaddr ptr %.030.lcssa.i.i to i64 ; 4 uses
+  %.033.lcssa.i.i85 = ptrtoaddr ptr %.030.lcssa.i.i to i64 ; 4 uses
+  %.030.lcssa.i.i86 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
   %.0.lcssa.i.i87 = ptrtoaddr ptr %.0.lcssa.i.i to i64
   %i.bv = and i32 %.036.lcssa.i.i, -8
   %.idx.i48.i.i = zext i32 %i.bv to i64           ; 2 uses
@@ -215,10 +215,10 @@ bb.f:                                             ; preds = %bb.d
   br i1 %.not.i49.i.i, label %XorWordsOut.exit51.i.i, label %.lr.ph.i50.i.i.preheader
 
 .lr.ph.i50.i.i.preheader:                         ; preds = %._crit_edge.i.i
-  %i.bx = add i64 %.030.lcssa.i.i86, %.idx.i48.i.i
-  %i.by = add i64 %.030.lcssa.i.i86, 8
+  %i.bx = add i64 %.033.lcssa.i.i85, %.idx.i48.i.i
+  %i.by = add i64 %.033.lcssa.i.i85, 8
   %i.bz = call i64 @llvm.umax.i64(i64 %i.bx, i64 %i.by)
-  %i.ca = xor i64 %.030.lcssa.i.i86, -1
+  %i.ca = xor i64 %.033.lcssa.i.i85, -1
   %i.cb = add i64 %i.bz, %i.ca                    ; 2 uses
   %i.cc = lshr i64 %i.cb, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
@@ -226,9 +226,9 @@ bb.f:                                             ; preds = %bb.d
   br i1 %min.iters.check, label %.lr.ph.i50.i.i.preheader261, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i50.i.i.preheader
-  %i.ce = sub i64 %.030.lcssa.i.i86, %.033.lcssa.i.i85
+  %i.ce = sub i64 %.033.lcssa.i.i85, %.030.lcssa.i.i86
   %diff.check = icmp ugt i64 %i.ce, -32
-  %i.cf = sub i64 %.0.lcssa.i.i87, %.033.lcssa.i.i85
+  %i.cf = sub i64 %.0.lcssa.i.i87, %.030.lcssa.i.i86
   %diff.check88 = icmp ugt i64 %i.cf, -32
   %conflict.rdx = or i1 %diff.check, %diff.check88
   br i1 %conflict.rdx, label %.lr.ph.i50.i.i.preheader261, label %vector.ph
@@ -298,9 +298,9 @@ bb.g:                                             ; preds = %XorWordsOut.exit51.
   %.134.i.i = phi ptr [ %.sroa.061.1.i.i, %XorWordsOut.exit.i.i ], [ %.sroa.061.3.i.i, %XorWordsOut.exit51.i.i ], [ %1, %bb.f ] ; 7 uses
   %.131.i.i = phi ptr [ %.sroa.055.0.i.i, %XorWordsOut.exit.i.i ], [ %.sroa.055.1.i.i, %XorWordsOut.exit51.i.i ], [ %2, %bb.f ] ; 7 uses
   %.1.i.i = phi ptr [ %.sroa.0.1.i.i, %XorWordsOut.exit.i.i ], [ %.sroa.0.3.i.i, %XorWordsOut.exit51.i.i ], [ %i.q, %bb.f ] ; 7 uses
-  %.134.i.i118 = ptrtoaddr ptr %.134.i.i to i64   ; 2 uses
-  %.131.i.i119 = ptrtoaddr ptr %.131.i.i to i64
-  %.1.i.i121 = ptrtoaddr ptr %.1.i.i to i64
+  %.134.i.i118 = ptrtoaddr ptr %.1.i.i to i64
+  %.131.i.i119 = ptrtoaddr ptr %.134.i.i to i64   ; 2 uses
+  %.1.i.i121 = ptrtoaddr ptr %.131.i.i to i64
   %.not77.i.i = icmp eq i32 %.137.i.i, 0
   br i1 %.not77.i.i, label %xorbufout.exit.i, label %iter.check
 
@@ -310,9 +310,9 @@ iter.check:                                       ; preds = %bb.g
   br i1 %min.iters.check125, label %.lr.ph83.i.i.preheader, label %vector.memcheck117
 
 vector.memcheck117:                               ; preds = %iter.check
-  %i.db = sub i64 %.131.i.i119, %.134.i.i118
+  %i.db = sub i64 %.1.i.i121, %.131.i.i119
   %diff.check120 = icmp ugt i64 %i.db, -32
-  %i.dc = sub i64 %.1.i.i121, %.134.i.i118
+  %i.dc = sub i64 %.134.i.i118, %.131.i.i119
   %diff.check122 = icmp ugt i64 %i.dc, -32
   %conflict.rdx123 = or i1 %diff.check120, %diff.check122
   br i1 %conflict.rdx123, label %.lr.ph83.i.i.preheader, label %vector.main.loop.iter.check
@@ -715,12 +715,12 @@ iter.check228:                                    ; preds = %.loopexit.i, %bb.l
   br i1 %min.iters.check206, label %.lr.ph83.i92.i.preheader, label %vector.memcheck198
 
 vector.memcheck198:                               ; preds = %iter.check228
-  %.1.i90208.i202 = ptrtoaddr ptr %.1.i90208.i to i64
-  %.131.i89207.i200 = ptrtoaddr ptr %.131.i89207.i to i64
-  %.134.i88206.i199 = ptrtoaddr ptr %.134.i88206.i to i64 ; 2 uses
-  %i.kg = sub i64 %.131.i89207.i200, %.134.i88206.i199
+  %.1.i90208.i202 = ptrtoaddr ptr %.131.i89207.i to i64
+  %.131.i89207.i200 = ptrtoaddr ptr %.134.i88206.i to i64 ; 2 uses
+  %.134.i88206.i199 = ptrtoaddr ptr %.1.i90208.i to i64
+  %i.kg = sub i64 %.1.i90208.i202, %.131.i89207.i200
   %diff.check201 = icmp ugt i64 %i.kg, -32
-  %i.kh = sub i64 %.1.i90208.i202, %.134.i88206.i199
+  %i.kh = sub i64 %.134.i88206.i199, %.131.i89207.i200
   %diff.check203 = icmp ugt i64 %i.kh, -32
   %conflict.rdx204 = or i1 %diff.check201, %diff.check203
   br i1 %conflict.rdx204, label %.lr.ph83.i92.i.preheader, label %vector.main.loop.iter.check207
