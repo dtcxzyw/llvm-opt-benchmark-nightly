@@ -204,6 +204,8 @@ $_ZTVN4llvm2cl11OptionValueIjEE = comdat any
 @.str.73 = private unnamed_addr constant [10 x i8] c" --help'\0A\00", align 1
 @.str.74 = private unnamed_addr constant [17 x i8] c": Did you mean '\00", align 1
 @.str.75 = private unnamed_addr constant [4 x i8] c"'?\0A\00", align 1
+@_ZL13ArgPrefixLong = internal unnamed_addr constant %"class.llvm::StringRef" { ptr @.str.76, i64 2 }, align 8
+@_ZL9ArgPrefix = internal unnamed_addr constant %"class.llvm::StringRef" { ptr @.str.54, i64 1 }, align 8
 @.str.76 = private unnamed_addr constant [3 x i8] c"--\00", align 1
 @.str.77 = private unnamed_addr constant [4 x i8] c" - \00", align 1
 @.str.78 = private unnamed_addr constant [45 x i8] c"' value invalid for floating point argument!\00", align 1
@@ -606,6 +608,7 @@ bb.a:
   %.sroa.22.0.copyload = load i64, ptr %.sroa.22.0..sroa_idx, align 8, !tbaa !54
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !59   ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !619)
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   store ptr %i.c, ptr %2, align 8, !tbaa !167, !alias.scope !619
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 8 uses
@@ -623,39 +626,32 @@ bb.a:
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.a
   %i.f = phi i64 [ %.pre5.i, %._crit_edge.loopexit.i ], [ 8, %bb.a ]
   %i.g = phi i64 [ %.pre.i, %._crit_edge.loopexit.i ], [ 0, %bb.a ] ; 2 uses
-  %i.h = icmp ugt i64 %.sroa.22.0.copyload, 1     ; 2 uses
-  %.sroa.0.0.copyload.i.a = select i1 %i.h, ptr @.str.76, ptr @.str.54
-  %.sroa.2.0.copyload.i = select i1 %i.h, i64 2, i64 1 ; 3 uses
+  %i.h = icmp ugt i64 %.sroa.22.0.copyload, 1
+  %.sroa.0.0.copyload.i.a = select i1 %i.h, ptr @_ZL13ArgPrefixLong, ptr @_ZL9ArgPrefix ; 2 uses
+  %.sroa.0.0.copyload.i = load ptr, ptr %.sroa.0.0.copyload.i.a, align 8, !tbaa !57, !noalias !619
+  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.a, i64 8
+  %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !54, !noalias !619 ; 4 uses
   %i.i = add i64 %.sroa.2.0.copyload.i, %i.g      ; 2 uses
   %i.j = icmp ult i64 %i.f, %i.i
-  br i1 %i.j, label %bb.b, label %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a
+  br i1 %i.j, label %bb.b, label %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i
 
 bb.b:                                             ; preds = %._crit_edge.i
   call void @_ZN4llvm15SmallVectorBaseImE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull %i.c, i64 noundef %i.i, i64 noundef 1) #25
   %.pre8.pre.i.i.i = load i64, ptr %i.d, align 8, !tbaa !168, !alias.scope !619
-  br label %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a
+  br label %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i
 
-_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a: ; preds = %._crit_edge.i, %bb.b
-  %.pre8.i.i.i = phi i64 [ %i.g, %._crit_edge.i ], [ %.pre8.pre.i.i.i, %bb.b ]
-  %.pre8 = load ptr, ptr %2, align 8, !tbaa !167
+_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i: ; preds = %bb.b, %._crit_edge.i
+  %.pre8.i.i.i = phi i64 [ %i.g, %._crit_edge.i ], [ %.pre8.pre.i.i.i, %bb.b ] ; 2 uses
+  %.not.i.i.i.i = icmp samesign eq i64 %.sroa.2.0.copyload.i, 0
+  %.pre8 = load ptr, ptr %2, align 8, !tbaa !167  ; 2 uses
+  br i1 %.not.i.i.i.i, label %_ZL9argPrefixN4llvm9StringRefEm.exit, label %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a
+
+_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a: ; preds = %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i
   %i.k = getelementptr inbounds nuw i8, ptr %.pre8, i64 %.pre8.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.0.0.copyload.i.a, i64 %.sroa.2.0.copyload.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.k, ptr align 1 %.sroa.0.0.copyload.i, i64 %.sroa.2.0.copyload.i, i1 false)
   %.pre.i.i.i = load i64, ptr %i.d, align 8, !tbaa !168, !alias.scope !619
-  %.pre = load ptr, ptr %2, align 8, !tbaa !167
-  %3 = add i64 %.pre.i.i.i, %.sroa.2.0.copyload.i ; 2 uses
-  store i64 %3, ptr %i.d, align 8, !tbaa !168, !alias.scope !619
-  %4 = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %.pre, i64 noundef %3) #25 ; 3 uses
-  %.sroa.0.0.copyload = load ptr, ptr %1, align 8, !tbaa !57 ; 2 uses
-  %.sroa.2.0.copyload = load i64, ptr %.sroa.22.0..sroa_idx, align 8, !tbaa !54 ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %6 = load ptr, ptr %5, align 8, !tbaa !63
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
-  %i.l = load ptr, ptr %7, align 8, !tbaa !64     ; 2 uses
-  %8 = ptrtoint ptr %6 to i64
-  %9 = ptrtoint ptr %i.l to i64
-  %10 = sub i64 %8, %9
-  %11 = icmp ugt i64 %.sroa.2.0.copyload, %10
-  br i1 %11, label %bb.e, label %bb.f
+  %i.l = load ptr, ptr %2, align 8, !tbaa !167
+  br label %_ZL9argPrefixN4llvm9StringRefEm.exit
 
 .lr.ph.i:                                         ; preds = %bb.a, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit.i
   %.04.i = phi i64 [ %i.s, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit.i ], [ 0, %bb.a ]
@@ -682,19 +678,37 @@ _ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit.i: ; preds = %bb.d, %b
   %exitcond.not.i = icmp eq i64 %i.s, %i.b
   br i1 %exitcond.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !618
 
-bb.e:                                             ; preds = %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a
-  %i.t = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef %.sroa.0.0.copyload, i64 noundef %.sroa.2.0.copyload) #25 ; 0 uses
+_ZL9argPrefixN4llvm9StringRefEm.exit:             ; preds = %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a
+  %3 = phi ptr [ %.pre8, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i ], [ %i.l, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a ]
+  %4 = phi i64 [ %.pre8.i.i.i, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i ], [ %.pre.i.i.i, %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a ]
+  %5 = add i64 %4, %.sroa.2.0.copyload.i          ; 2 uses
+  store i64 %5, ptr %i.d, align 8, !tbaa !168, !alias.scope !619
+  %6 = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef %3, i64 noundef %5) #25 ; 3 uses
+  %.sroa.0.0.copyload = load ptr, ptr %1, align 8, !tbaa !57 ; 2 uses
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.22.0..sroa_idx, align 8, !tbaa !54 ; 5 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %8 = load ptr, ptr %7, align 8, !tbaa !63
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 32 ; 3 uses
+  %10 = load ptr, ptr %9, align 8, !tbaa !64      ; 2 uses
+  %11 = ptrtoint ptr %8 to i64
+  %12 = ptrtoint ptr %10 to i64
+  %13 = sub i64 %11, %12
+  %14 = icmp ugt i64 %.sroa.2.0.copyload, %13
+  br i1 %14, label %bb.e, label %bb.f
+
+bb.e:                                             ; preds = %_ZL9argPrefixN4llvm9StringRefEm.exit
+  %i.t = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef %.sroa.0.0.copyload, i64 noundef %.sroa.2.0.copyload) #25 ; 0 uses
   br label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit
 
-bb.f:                                             ; preds = %_ZN4llvm15SmallVectorImplIcE7reserveEm.exit.i.i.i.a
+bb.f:                                             ; preds = %_ZL9argPrefixN4llvm9StringRefEm.exit
   %.not.i7 = icmp eq i64 %.sroa.2.0.copyload, 0
   br i1 %.not.i7, label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.l, ptr align 1 %.sroa.0.0.copyload, i64 %.sroa.2.0.copyload, i1 false)
-  %i.u = load ptr, ptr %7, align 8, !tbaa !64
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %10, ptr align 1 %.sroa.0.0.copyload, i64 %.sroa.2.0.copyload, i1 false)
+  %i.u = load ptr, ptr %9, align 8, !tbaa !64
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.sroa.2.0.copyload
-  store ptr %i.v, ptr %7, align 8, !tbaa !64
+  store ptr %i.v, ptr %9, align 8, !tbaa !64
   br label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit
 
 _ZN4llvm11raw_ostreamlsENS_9StringRefE.exit:      ; preds = %bb.e, %bb.f, %bb.g

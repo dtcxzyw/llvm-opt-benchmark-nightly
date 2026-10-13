@@ -202,8 +202,8 @@ _ZNK10union_findIN3nla7var_eqsINS0_7emonicsEEEE12get_num_varsEv.exit.i.i: ; pred
 _ZNK3nla7var_eqsINS_7emonicsEE4findEj.exit:       ; preds = %.preheader.i.i, %bb.c, %_ZNK10union_findIN3nla7var_eqsINS0_7emonicsEEEE12get_num_varsEv.exit.i.i
   %.sroa.03.0.i.i = phi i32 [ %i.ad, %_ZNK10union_findIN3nla7var_eqsINS0_7emonicsEEEE12get_num_varsEv.exit.i.i ], [ %i.ad, %bb.c ], [ %.07.i.i.i, %.preheader.i.i ]
   call void @llvm.experimental.noalias.scope.decl(metadata !421)
-  %i.al = trunc i32 %.sroa.03.0.i.i to i1         ; 4 uses
-  %spec.select.i = select i1 %i.al, ptr @_ZN8rational11m_minus_oneE, ptr @_ZN8rational5m_oneE ; 2 uses
+  %i.al = trunc i32 %.sroa.03.0.i.i to i1
+  %spec.select.i = select i1 %i.al, ptr @_ZN8rational11m_minus_oneE, ptr @_ZN8rational5m_oneE ; 5 uses
   store i32 0, ptr %9, align 8, !tbaa !269, !alias.scope !421
   %i.am = load i8, ptr %i.v, align 4, !alias.scope !421
   %i.an = and i8 %i.am, -4                        ; 2 uses
@@ -215,10 +215,9 @@ _ZNK3nla7var_eqsINS_7emonicsEE4findEj.exit:       ; preds = %.preheader.i.i, %bb
   store i8 %i.ap, ptr %i.y, align 4, !alias.scope !421
   store ptr null, ptr %i.z, align 8, !tbaa !270, !alias.scope !421
   %i.aq = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !252, !noalias !421 ; 2 uses
-  %.val.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 4), align 4, !noalias !421
-  %.val1.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 4), align 4, !noalias !421
-  %11 = select i1 %i.al, i8 %.val.i, i8 %.val1.i
-  %i.ar = and i8 %11, 1
+  %11 = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 4
+  %.val1.i = load i8, ptr %11, align 4, !noalias !421
+  %i.ar = and i8 %.val1.i, 1
   %i.as = icmp eq i8 %i.ar, 0
   br i1 %i.as, label %bb.d, label %bb.e
 
@@ -233,11 +232,10 @@ bb.e:                                             ; preds = %_ZNK3nla7var_eqsINS
   br label %_ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i.i
 
 _ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i.i: ; preds = %bb.e, %bb.d
-  %12 = select i1 %i.al, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 16) ; 2 uses
-  %.val2.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 20), align 4, !noalias !421
-  %.val3.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 20), align 4, !noalias !421
-  %13 = select i1 %i.al, i8 %.val2.i, i8 %.val3.i
-  %i.au = and i8 %13, 1
+  %12 = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 16 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 20
+  %.val3.i = load i8, ptr %13, align 4, !noalias !421
+  %i.au = and i8 %.val3.i, 1
   %i.av = icmp eq i8 %i.au, 0
   br i1 %i.av, label %bb.f, label %bb.g
 
@@ -345,8 +343,8 @@ _ZNK10union_findIN3nla7var_eqsINS0_7emonicsEEEE12get_num_varsEv.exit.i.i33: ; pr
 _ZNK3nla7var_eqsINS_7emonicsEE4findEj.exit39:     ; preds = %.preheader.i.i36, %_ZNK3nla4core12is_monic_varEj.exit.thread, %_ZNK10union_findIN3nla7var_eqsINS0_7emonicsEEEE12get_num_varsEv.exit.i.i33
   %.sroa.03.0.i.i35 = phi i32 [ %i.bt, %_ZNK10union_findIN3nla7var_eqsINS0_7emonicsEEEE12get_num_varsEv.exit.i.i33 ], [ %i.bt, %_ZNK3nla4core12is_monic_varEj.exit.thread ], [ %.07.i.i.i37, %.preheader.i.i36 ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !422)
-  %i.cc = trunc i32 %.sroa.03.0.i.i35 to i1       ; 4 uses
-  %spec.select.i40 = select i1 %i.cc, ptr @_ZN8rational11m_minus_oneE, ptr @_ZN8rational5m_oneE ; 2 uses
+  %i.cc = trunc i32 %.sroa.03.0.i.i35 to i1
+  %spec.select.i40 = select i1 %i.cc, ptr @_ZN8rational11m_minus_oneE, ptr @_ZN8rational5m_oneE ; 5 uses
   store i32 0, ptr %10, align 8, !tbaa !269, !alias.scope !422
   %i.cd = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 3 uses
   %i.ce = load i8, ptr %i.cd, align 4, !alias.scope !422
@@ -363,10 +361,9 @@ _ZNK3nla7var_eqsINS_7emonicsEE4findEj.exit39:     ; preds = %.preheader.i.i36, %
   %i.cl = getelementptr inbounds nuw i8, ptr %10, i64 24
   store ptr null, ptr %i.cl, align 8, !tbaa !270, !alias.scope !422
   %i.cm = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !252, !noalias !422 ; 2 uses
-  %.val.i41 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 4), align 4, !noalias !422
-  %.val1.i42 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 4), align 4, !noalias !422
-  %14 = select i1 %i.cc, i8 %.val.i41, i8 %.val1.i42
-  %i.cn = and i8 %14, 1
+  %14 = getelementptr inbounds nuw i8, ptr %spec.select.i40, i64 4
+  %.val1.i42 = load i8, ptr %14, align 4, !noalias !422
+  %i.cn = and i8 %.val1.i42, 1
   %i.co = icmp eq i8 %i.cn, 0
   br i1 %i.co, label %bb.m, label %bb.n
 
@@ -381,11 +378,10 @@ bb.n:                                             ; preds = %_ZNK3nla7var_eqsINS
   br label %_ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i.i43
 
 _ZN11mpq_managerILb1EE3setER3mpzRKS1_.exit.i.i.i43: ; preds = %bb.n, %bb.m
-  %15 = select i1 %i.cc, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 16) ; 2 uses
-  %.val2.i44 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational11m_minus_oneE, i64 20), align 4, !noalias !422
-  %.val3.i45 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8rational5m_oneE, i64 20), align 4, !noalias !422
-  %16 = select i1 %i.cc, i8 %.val2.i44, i8 %.val3.i45
-  %i.cq = and i8 %16, 1
+  %15 = getelementptr inbounds nuw i8, ptr %spec.select.i40, i64 16 ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %spec.select.i40, i64 20
+  %.val3.i45 = load i8, ptr %16, align 4, !noalias !422
+  %i.cq = and i8 %.val3.i45, 1
   %i.cr = icmp eq i8 %i.cq, 0
   br i1 %i.cr, label %bb.o, label %bb.p
 

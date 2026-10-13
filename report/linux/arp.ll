@@ -204,8 +204,8 @@ arp_mc_map.exit:                                  ; preds = %bb.o, %ip_ipgre_mc_
   %i.di = load ptr, ptr %i.ac, align 16
   %i.dj = getelementptr i8, ptr %i.di, i64 16
   %i.dk = load ptr, ptr %i.dj, align 8
-  %.not48 = icmp eq ptr %i.dk, null               ; 2 uses
-  %spec.select = select i1 %.not48, ptr @arp_generic_ops, ptr @arp_hh_ops
+  %.not48 = icmp eq ptr %i.dk, null
+  %spec.select = select i1 %.not48, ptr @arp_generic_ops, ptr @arp_hh_ops ; 3 uses
   %i.dl = getelementptr i8, ptr %0, i64 328
   store ptr %spec.select, ptr %i.dl, align 8
   %i.dm = getelementptr i8, ptr %0, i64 156
@@ -216,12 +216,15 @@ arp_mc_map.exit:                                  ; preds = %bb.o, %ip_ipgre_mc_
   br i1 %.not49, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %arp_mc_map.exit
-  %1 = select i1 %.not48, ptr @neigh_connected_output, ptr @neigh_resolve_output
-  store ptr %1, ptr %i.dp, align 8
+  %1 = getelementptr i8, ptr %spec.select, i64 32
+  %2 = load ptr, ptr %1, align 8
+  store ptr %2, ptr %i.dp, align 8
   br label %bb.v
 
 bb.u:                                             ; preds = %arp_mc_map.exit
-  store ptr @neigh_resolve_output, ptr %i.dp, align 8
+  %3 = getelementptr i8, ptr %spec.select, i64 24
+  %4 = load ptr, ptr %3, align 8
+  store ptr %4, ptr %i.dp, align 8
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.h, %bb.u, %bb.t, %bb.d

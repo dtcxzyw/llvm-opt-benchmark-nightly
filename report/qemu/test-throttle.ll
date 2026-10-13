@@ -107,6 +107,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.65 = private unnamed_addr constant [51 x i8] c"do_test_accounting(true, 2 * 512, 150, 0, 2, 1, 1)\00", align 1
 @.str.66 = private unnamed_addr constant [93 x i8] c"do_test_accounting(true, 64 * 512, 150, 13 * 512, (64.0 * 2) / 13, (64.0 / 13), (64.0 / 13))\00", align 1
 @.str.67 = private unnamed_addr constant [93 x i8] c"do_test_accounting(true, 64 * 512, 300, 13 * 512, (64.0 * 2) / 13, (64.0 / 13), (64.0 / 13))\00", align 1
+@__const.do_test_accounting.to_test = private unnamed_addr constant [2 x [3 x i32]] [[3 x i32] [i32 0, i32 1, i32 2], [3 x i32] [i32 3, i32 4, i32 5]], align 16
 @__func__.test_groups = private unnamed_addr constant [12 x i8] c"test_groups\00", align 1
 @.str.68 = private unnamed_addr constant [29 x i8] c"tgm1->throttle_state == NULL\00", align 1
 @.str.69 = private unnamed_addr constant [29 x i8] c"tgm2->throttle_state == NULL\00", align 1
@@ -509,15 +510,21 @@ declare void @throttle_get_config(ptr noundef, ptr noundef) local_unnamed_addr #
 define internal fastcc noundef zeroext i1 @do_test_accounting(i1 noundef zeroext %0, i32 noundef range(i32 512, 32769) %1, double noundef nofpclass(nan inf zero sub nnorm) %2, i64 noundef range(i64 0, 6657) %3, double noundef nofpclass(nan inf zero sub nnorm) %4, double noundef nofpclass(nan inf zero sub nnorm) %5, double noundef nofpclass(nan inf zero sub nnorm) %6) unnamed_addr #2 {
 bb.a:
   tail call void @throttle_config_init(ptr noundef nonnull @cfg) #10
+  %.sroa.sel = select i1 %0, ptr getelementptr inbounds nuw (i8, ptr @__const.do_test_accounting.to_test, i64 12), ptr @__const.do_test_accounting.to_test ; 3 uses
   %i.a = fptoui double %2 to i64                  ; 3 uses
-  %7 = select i1 %0, i64 3, i64 0
-  %i.b = getelementptr inbounds nuw [40 x i8], ptr @cfg, i64 %7
+  %7 = load i32, ptr %.sroa.sel, align 4
+  %8 = zext i32 %7 to i64
+  %i.b = getelementptr inbounds nuw [40 x i8], ptr @cfg, i64 %8
   store i64 %i.a, ptr %i.b, align 8
-  %8 = select i1 %0, i64 4, i64 1
-  %i.c = getelementptr inbounds nuw [40 x i8], ptr @cfg, i64 %8
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.sel, i64 4
+  %10 = load i32, ptr %9, align 4
+  %11 = zext i32 %10 to i64
+  %i.c = getelementptr inbounds nuw [40 x i8], ptr @cfg, i64 %11
   store i64 %i.a, ptr %i.c, align 8
-  %9 = select i1 %0, i64 5, i64 2
-  %i.d = getelementptr inbounds nuw [40 x i8], ptr @cfg, i64 %9
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.sel, i64 8
+  %13 = load i32, ptr %12, align 4
+  %14 = zext i32 %13 to i64
+  %i.d = getelementptr inbounds nuw [40 x i8], ptr @cfg, i64 %14
   store i64 %i.a, ptr %i.d, align 8
   store i64 %3, ptr getelementptr inbounds nuw (i8, ptr @cfg, i64 240), align 8
   tail call void @throttle_init(ptr noundef nonnull @ts) #10

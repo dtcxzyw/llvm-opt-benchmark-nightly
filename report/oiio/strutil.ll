@@ -205,8 +205,8 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   br label %.backedge2424
 
 bb.ax:                                            ; preds = %bb.ai, %bb.ai
-  %i.hs = icmp eq i8 %i.ff, 65                    ; 2 uses
-  %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex = select i1 %i.hs, ptr @_ZZ21oiio_stbsp_vsprintfcbE4hexu, ptr @_ZZ21oiio_stbsp_vsprintfcbE3hex ; 6 uses
+  %i.hs = icmp eq i8 %i.ff, 65
+  %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex = select i1 %i.hs, ptr @_ZZ21oiio_stbsp_vsprintfcbE4hexu, ptr @_ZZ21oiio_stbsp_vsprintfcbE3hex ; 7 uses
   %i.ht = load i32, ptr %i.n, align 4             ; 3 uses
   %i.hu = icmp ult i32 %i.ht, 161
   br i1 %i.hu, label %bb.ay, label %bb.az
@@ -373,8 +373,9 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd
   %spec.select11852126 = phi i32 [ 0, %.thread2121 ], [ %spec.select1185.a, %.lr.ph1680 ], [ %spec.select1185.a, %.lr.ph1680.prol.loopexit ]
   %.07422125 = phi ptr [ %i.q, %.thread2121 ], [ %i.r, %.lr.ph1680 ], [ %i.r, %.lr.ph1680.prol.loopexit ]
   %.1743.lcssa = phi ptr [ %i.q, %.thread2121 ], [ %.lcssa2464.unr, %.lr.ph1680.prol.loopexit ], [ %i.ki, %.lr.ph1680 ]
-  %5 = select i1 %i.hs, i8 80, i8 112
-  store i8 %5, ptr %i.s, align 1, !tbaa !54
+  %5 = getelementptr inbounds nuw i8, ptr %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex, i64 17
+  %6 = load i8, ptr %5, align 1, !tbaa !54
+  store i8 %6, ptr %i.s, align 1, !tbaa !54
   %i.kj = icmp slt i32 %i.ir, 0
   br i1 %i.kj, label %bb.bg, label %bb.bh
 
@@ -777,8 +778,8 @@ bb.eg:                                            ; preds = %.loopexit1473, %bb.
   br label %bb.gg
 
 bb.eh:                                            ; preds = %bb.ai, %bb.ai
-  %i.zd = icmp eq i8 %i.ff, 66                    ; 2 uses
-  %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex29 = select i1 %i.zd, ptr @_ZZ21oiio_stbsp_vsprintfcbE4hexu, ptr @_ZZ21oiio_stbsp_vsprintfcbE3hex
+  %i.zd = icmp eq i8 %i.ff, 66
+  %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex29 = select i1 %i.zd, ptr @_ZZ21oiio_stbsp_vsprintfcbE4hexu, ptr @_ZZ21oiio_stbsp_vsprintfcbE3hex ; 2 uses
   store i8 0, ptr %i.c, align 1, !tbaa !54
   %i.ze = and i32 %.3785, 8
   %.not1098.a = icmp eq i32 %i.ze, 0
@@ -787,8 +788,9 @@ bb.eh:                                            ; preds = %bb.ai, %bb.ai
 bb.ei:                                            ; preds = %bb.eh
   store i8 2, ptr %i.c, align 1, !tbaa !54
   store i8 48, ptr %i.j, align 1, !tbaa !54
-  %6 = select i1 %i.zd, i8 66, i8 98
-  store i8 %6, ptr %i.k, align 1, !tbaa !54
+  %7 = getelementptr inbounds nuw i8, ptr %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex29, i64 11
+  %8 = load i8, ptr %7, align 1, !tbaa !54
+  store i8 %8, ptr %i.k, align 1, !tbaa !54
   br label %bb.ej
 
 bb.ej:                                            ; preds = %bb.ei, %bb.eh
@@ -818,8 +820,8 @@ bb.en:                                            ; preds = %bb.ai
 bb.eo:                                            ; preds = %bb.en, %bb.ai, %bb.ai
   %.8814 = phi i32 [ 16, %bb.en ], [ %.1807, %bb.ai ], [ %.1807, %bb.ai ] ; 2 uses
   %.12794 = phi i32 [ %i.zh, %bb.en ], [ %.3785, %bb.ai ], [ %.3785, %bb.ai ] ; 3 uses
-  %i.zi = icmp eq i8 %i.ff, 88                    ; 2 uses
-  %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex30 = select i1 %i.zi, ptr @_ZZ21oiio_stbsp_vsprintfcbE4hexu, ptr @_ZZ21oiio_stbsp_vsprintfcbE3hex ; 2 uses
+  %i.zi = icmp eq i8 %i.ff, 88
+  %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex30 = select i1 %i.zi, ptr @_ZZ21oiio_stbsp_vsprintfcbE4hexu, ptr @_ZZ21oiio_stbsp_vsprintfcbE3hex ; 3 uses
   store i32 1088, ptr %i.e, align 4, !tbaa !53
   store i8 0, ptr %i.c, align 1, !tbaa !54
   %i.zj = and i32 %.12794, 8
@@ -829,8 +831,9 @@ bb.eo:                                            ; preds = %bb.en, %bb.ai, %bb.
 bb.ep:                                            ; preds = %bb.eo
   store i8 2, ptr %i.c, align 1, !tbaa !54
   store i8 48, ptr %i.j, align 1, !tbaa !54
-  %7 = select i1 %i.zi, i8 88, i8 120
-  store i8 %7, ptr %i.k, align 1, !tbaa !54
+  %9 = getelementptr inbounds nuw i8, ptr %_ZZ21oiio_stbsp_vsprintfcbE4hexu._ZZ21oiio_stbsp_vsprintfcbE3hex30, i64 16
+  %10 = load i8, ptr %9, align 16, !tbaa !54
+  store i8 %10, ptr %i.k, align 1, !tbaa !54
   br label %bb.eq
 
 bb.eq:                                            ; preds = %bb.eo, %bb.ep, %bb.em, %bb.ej

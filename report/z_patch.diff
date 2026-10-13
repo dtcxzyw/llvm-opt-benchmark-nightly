@@ -1,0 +1,41 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 6986fb324bfee..0b0c6c56a9d4a 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -2789,7 +2789,7 @@ static Instruction *foldSelectGEP(GetElementPtrInst &GEP,
+   Instruction *Sel;
+   Value *Cond;
+   Constant *TrueC, *FalseC;
+-  if (!match(GEP.getPointerOperand(), m_Instruction(Sel)) ||
++  if (!match(GEP.getPointerOperand(), m_OneUse(m_Instruction(Sel))) ||
+       !match(Sel,
+              m_Select(m_Value(Cond), m_Constant(TrueC), m_Constant(FalseC))))
+     return nullptr;
+diff --git a/llvm/test/Transforms/InstCombine/getelementptr.ll b/llvm/test/Transforms/InstCombine/getelementptr.ll
+index da3ae69d41a8e..10c04ed16af82 100644
+--- a/llvm/test/Transforms/InstCombine/getelementptr.ll
++++ b/llvm/test/Transforms/InstCombine/getelementptr.ll
+@@ -1757,6 +1757,23 @@ define ptr @gep_sel_const_nuw(i1 %c) {
+   ret ptr %gep
+ }
+ 
++; Threading the geps through a shared select would replace one select with one
++; select per user, inflating register pressure.
++define ptr @gep_sel_const_multi_use(i1 %c) {
++; CHECK-LABEL: @gep_sel_const_multi_use(
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[C:%.*]], ptr @A, ptr @B
++; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr nuw i8, ptr [[SEL]], i64 5
++; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr nuw i8, ptr [[SEL]], i64 9
++; CHECK-NEXT:    call void @use(ptr nonnull [[GEP1]])
++; CHECK-NEXT:    ret ptr [[GEP2]]
++;
++  %sel = select i1 %c, ptr @A, ptr @B
++  %gep1 = getelementptr nuw i8, ptr %sel, i64 5
++  %gep2 = getelementptr nuw i8, ptr %sel, i64 9
++  call void @use(ptr %gep1)
++  ret ptr %gep2
++}
++
+ define ptr @gep_of_udiv(ptr %p, i64 %x) {
+ ; CHECK-LABEL: @gep_of_udiv(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = udiv exact i64 [[X:%.*]], 3

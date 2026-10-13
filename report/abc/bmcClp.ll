@@ -205,6 +205,8 @@ bb.ah:                                            ; preds = %.lr.ph364, %.crited
 
 .lr.ph.i:                                         ; preds = %bb.ah
   %.not141 = icmp eq i32 %i.di, %6
+  %7 = select i1 %.not141, ptr @.str.13, ptr @.str.12 ; 3 uses
+  %8 = load i8, ptr %7, align 1, !tbaa !52
   %i.do = load i32, ptr %i.ao, align 4, !tbaa !57 ; 7 uses
   %i.dp = load i32, ptr %i.an, align 8, !tbaa !70
   %i.dq = icmp eq i32 %i.do, %i.dp
@@ -265,8 +267,9 @@ Vec_StrPush.exit.i:                               ; preds = %Vec_StrGrow.exit11.
   store i32 %i.ec, ptr %i.ao, align 4, !tbaa !57
   %i.ed = sext i32 %i.do to i64
   %i.ee = getelementptr inbounds i8, ptr %i.eb, i64 %i.ed
-  store i8 32, ptr %i.ee, align 1, !tbaa !52
-  %7 = select i1 %.not141, i8 48, i8 49
+  store i8 %8, ptr %i.ee, align 1, !tbaa !52
+  %9 = getelementptr inbounds nuw i8, ptr %7, i64 1
+  %10 = load i8, ptr %9, align 1, !tbaa !52
   %i.ef = load i32, ptr %i.ao, align 4, !tbaa !57 ; 7 uses
   %i.eg = load i32, ptr %i.an, align 8, !tbaa !70
   %i.eh = icmp eq i32 %i.ef, %i.eg
@@ -327,7 +330,9 @@ Vec_StrPush.exit.i.1:                             ; preds = %Vec_StrGrow.exit11.
   store i32 %i.et, ptr %i.ao, align 4, !tbaa !57
   %i.eu = sext i32 %i.ef to i64
   %i.ev = getelementptr inbounds i8, ptr %i.es, i64 %i.eu
-  store i8 %7, ptr %i.ev, align 1, !tbaa !52
+  store i8 %10, ptr %i.ev, align 1, !tbaa !52
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 2
+  %12 = load i8, ptr %11, align 1, !tbaa !52
   %i.ew = load i32, ptr %i.ao, align 4, !tbaa !57 ; 7 uses
   %i.ex = load i32, ptr %i.an, align 8, !tbaa !70
   %i.ey = icmp eq i32 %i.ew, %i.ex
@@ -388,7 +393,7 @@ Vec_StrPush.exit.i.2:                             ; preds = %Vec_StrGrow.exit11.
   store i32 %i.fk, ptr %i.ao, align 4, !tbaa !57
   %i.fl = sext i32 %i.ew to i64
   %i.fm = getelementptr inbounds i8, ptr %i.fj, i64 %i.fl
-  store i8 10, ptr %i.fm, align 1, !tbaa !52
+  store i8 %12, ptr %i.fm, align 1, !tbaa !52
   %i.fn = load i32, ptr %i.ao, align 4, !tbaa !57 ; 7 uses
   %i.fo = load i32, ptr %i.an, align 8, !tbaa !70
   %i.fp = icmp eq i32 %i.fn, %i.fo
@@ -477,6 +482,8 @@ bb.br:                                            ; preds = %.thread.i, %bb.bq
 
 .lr.ph.i205:                                      ; preds = %bb.bo
   %.not140 = icmp eq i32 %i.di, %6
+  %13 = select i1 %.not140, ptr @.str.13, ptr @.str.12 ; 3 uses
+  %14 = load i8, ptr %13, align 1, !tbaa !52
   %i.gf = load i32, ptr %i.ao, align 4, !tbaa !57 ; 7 uses
   %i.gg = load i32, ptr %i.an, align 8, !tbaa !70
   %i.gh = icmp eq i32 %i.gf, %i.gg
@@ -537,8 +544,9 @@ Vec_StrPush.exit.i210:                            ; preds = %Vec_StrGrow.exit11.
   store i32 %i.gt, ptr %i.ao, align 4, !tbaa !57
   %i.gu = sext i32 %i.gf to i64
   %i.gv = getelementptr inbounds i8, ptr %i.gs, i64 %i.gu
-  store i8 32, ptr %i.gv, align 1, !tbaa !52
-  %8 = select i1 %.not140, i8 48, i8 49
+  store i8 %14, ptr %i.gv, align 1, !tbaa !52
+  %15 = getelementptr inbounds nuw i8, ptr %13, i64 1
+  %16 = load i8, ptr %15, align 1, !tbaa !52
   %i.gw = load i32, ptr %i.ao, align 4, !tbaa !57 ; 7 uses
   %i.gx = load i32, ptr %i.an, align 8, !tbaa !70
   %i.gy = icmp eq i32 %i.gw, %i.gx
@@ -599,7 +607,9 @@ Vec_StrPush.exit.i210.1:                          ; preds = %Vec_StrGrow.exit11.
   store i32 %i.hk, ptr %i.ao, align 4, !tbaa !57
   %i.hl = sext i32 %i.gw to i64
   %i.hm = getelementptr inbounds i8, ptr %i.hj, i64 %i.hl
-  store i8 %8, ptr %i.hm, align 1, !tbaa !52
+  store i8 %16, ptr %i.hm, align 1, !tbaa !52
+  %17 = getelementptr inbounds nuw i8, ptr %13, i64 2
+  %18 = load i8, ptr %17, align 1, !tbaa !52
   %i.hn = load i32, ptr %i.ao, align 4, !tbaa !57 ; 7 uses
   %i.ho = load i32, ptr %i.an, align 8, !tbaa !70
   %i.hp = icmp eq i32 %i.hn, %i.ho
@@ -660,7 +670,7 @@ Vec_StrPush.exit.i210.2:                          ; preds = %Vec_StrGrow.exit11.
   store i32 %i.ib, ptr %i.ao, align 4, !tbaa !57
   %i.ic = sext i32 %i.hn to i64
   %i.id = getelementptr inbounds i8, ptr %i.ia, i64 %i.ic
-  store i8 10, ptr %i.id, align 1, !tbaa !52
+  store i8 %18, ptr %i.id, align 1, !tbaa !52
   %i.ie = load i32, ptr %i.ao, align 4, !tbaa !57 ; 7 uses
   %i.if = load i32, ptr %i.an, align 8, !tbaa !70
   %i.ig = icmp eq i32 %i.ie, %i.if

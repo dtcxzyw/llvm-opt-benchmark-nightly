@@ -205,6 +205,7 @@ bb.a:
   %3 = alloca %"class.v8::base::SmallVector.950", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 5
   %i.b = load i8, ptr %i.a, align 1
+  %4 = icmp eq i8 %i.b, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
   store ptr %i.c, ptr %3, align 8
@@ -213,6 +214,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 56
   store ptr %i.f, ptr %i.e, align 8
+  %5 = select i1 %4, ptr @_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE0ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE1ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2000 ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %0, i64 -32 ; 2 uses
   %i.i = load ptr, ptr %i.g, align 8
@@ -237,8 +239,7 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
   ret i32 %.sroa.03.0.i.i
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit: ; preds = %bb.a
-  %4 = icmp ne i8 %i.b, 0
-  %.sroa.01.0.copyload = zext i1 %4 to i8
+  %.sroa.01.0.copyload = load i8, ptr %5, align 1
   %i.s = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 0, i8 %.sroa.01.0.copyload), !inline_history !33 ; 2 uses
   %.pre = load ptr, ptr %i.d, align 8             ; 2 uses
   %.pre17 = load ptr, ptr %i.e, align 8
@@ -261,7 +262,9 @@ _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS
   br i1 %i.x, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1, label %bb.d, !prof !39
 
 bb.d:                                             ; preds = %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS7_EE9push_backES7_.exit
-  %i.y = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 1, i8 0), !inline_history !33
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %.sroa.01.0.copyload.1 = load i8, ptr %6, align 1
+  %i.y = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 1, i8 %.sroa.01.0.copyload.1), !inline_history !33
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1: ; preds = %bb.d, %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS7_EE9push_backES7_.exit
@@ -664,6 +667,7 @@ bb.a:
   %3 = alloca %"class.v8::base::SmallVector.950", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 5
   %i.b = load i8, ptr %i.a, align 1
+  %4 = icmp eq i8 %i.b, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
   store ptr %i.c, ptr %3, align 8
@@ -672,6 +676,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 56
   store ptr %i.f, ptr %i.e, align 8
+  %5 = select i1 %4, ptr @_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE0ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE1ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2000 ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %0, i64 -32 ; 2 uses
   %i.i = load ptr, ptr %i.g, align 8
@@ -696,8 +701,7 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
   ret i32 %.sroa.03.0.i.i
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit: ; preds = %bb.a
-  %4 = icmp ne i8 %i.b, 0
-  %.sroa.01.0.copyload = zext i1 %4 to i8
+  %.sroa.01.0.copyload = load i8, ptr %5, align 1
   %i.s = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 0, i8 %.sroa.01.0.copyload), !inline_history !33 ; 2 uses
   %.pre = load ptr, ptr %i.d, align 8             ; 2 uses
   %.pre17 = load ptr, ptr %i.e, align 8
@@ -720,7 +724,9 @@ _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS
   br i1 %i.x, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1, label %bb.d, !prof !39
 
 bb.d:                                             ; preds = %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS7_EE9push_backES7_.exit
-  %i.y = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 1, i8 0), !inline_history !33
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %.sroa.01.0.copyload.1 = load i8, ptr %6, align 1
+  %i.y = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 1, i8 %.sroa.01.0.copyload.1), !inline_history !33
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1: ; preds = %bb.d, %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS7_EE9push_backES7_.exit
@@ -1123,6 +1129,7 @@ bb.a:
   %3 = alloca %"class.v8::base::SmallVector.950", align 8 ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 6
   %i.b = load i8, ptr %i.a, align 2
+  %4 = icmp eq i8 %i.b, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
   store ptr %i.c, ptr %3, align 8
@@ -1131,6 +1138,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 56
   store ptr %i.f, ptr %i.e, align 8
+  %5 = select i1 %4, ptr @_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE0ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft9RepVectorIJLNS2_22RegisterRepresentation4EnumE1ELS5_0EEEENS_4base6VectorIKS4_EEvE9rep_array ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2000 ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %0, i64 -32 ; 2 uses
   %i.i = load ptr, ptr %i.g, align 8
@@ -1155,8 +1163,7 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
   ret i32 %.sroa.03.0.i.i
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit: ; preds = %bb.a
-  %4 = icmp ne i8 %i.b, 0
-  %.sroa.01.0.copyload = zext i1 %4 to i8
+  %.sroa.01.0.copyload = load i8, ptr %5, align 1
   %i.s = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 0, i8 %.sroa.01.0.copyload), !inline_history !33 ; 2 uses
   %.pre = load ptr, ptr %i.d, align 8             ; 2 uses
   %.pre17 = load ptr, ptr %i.e, align 8
@@ -1179,7 +1186,9 @@ _ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS
   br i1 %i.x, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1, label %bb.d, !prof !39
 
 bb.d:                                             ; preds = %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS7_EE9push_backES7_.exit
-  %i.y = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 1, i8 0), !inline_history !33
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %.sroa.01.0.copyload.1 = load i8, ptr %6, align 1
+  %i.y = call i32 @_ZN2v88internal8compiler10turboshaft9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEE16ReduceProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE(ptr noundef nonnull align 8 dereferenceable(2056) %i.h, i32 %2, i16 noundef zeroext 1, i8 %.sroa.01.0.copyload.1), !inline_history !33
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18AssertTypesReducerENS2_21ValueNumberingReducerENS2_20TypeInferenceReducerENS2_13TSReducerBaseEEEEEEE10ProjectionENS2_1VINS2_3AnyEEEtNS2_22RegisterRepresentationE.exit.1: ; preds = %bb.d, %_ZN2v84base11SmallVectorINS_8internal8compiler10turboshaft1VINS4_3AnyEEELm8ESaIS7_EE9push_backES7_.exit

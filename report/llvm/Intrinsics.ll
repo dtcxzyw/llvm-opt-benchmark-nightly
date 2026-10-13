@@ -204,8 +204,8 @@ _ZNK4llvm9StringRef11starts_withES0_.exit.thread3: ; preds = %bb.a, %_ZNK4llvm9S
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef i32 @_ZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES1_(ptr nofree readonly captures(none) %0, i64 %1, ptr nofree readonly captures(none) %2, i64 %3) local_unnamed_addr #5 {
 bb.a:
-  %i.a = icmp eq i64 %1, 0                        ; 2 uses
-  br i1 %i.a, label %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i, label %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.peel.i.i
+  %i.a = icmp eq i64 %1, 0
+  br i1 %i.a, label %_ZN4llvm11lower_boundIRA2_KZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES2_E11TargetEntryRS2_EEDaOT_OT0_.exit, label %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.peel.i.i
 
 _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.peel.i.i: ; preds = %bb.a
   %.sroa.speculated.i.i.i.i.i.peel.i.i = tail call i64 @llvm.umin.i64(i64 %1, i64 3)
@@ -227,40 +227,37 @@ _ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i: ; preds = %_ZNK9__
   %i.d = tail call i32 @memcmp(ptr noundef nonnull readonly @.str, ptr noundef readonly %0, i64 noundef %.sroa.speculated.i.i.i.i.i.i.i) #22
   %.fr.i.i.i.i.i.i.i = freeze i32 %i.d            ; 2 uses
   %.not.not.i.i.i.i.i.i.i = icmp eq i32 %.fr.i.i.i.i.i.i.i, 0
-  br i1 %.not.not.i.i.i.i.i.i.i, label %.thread.i.i.i.i.i.i.i, label %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.i.i
+  br i1 %.not.not.i.i.i.i.i.i.i, label %.thread.i.i.i.i.i.i.i, label %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i
 
 .thread.i.i.i.i.i.i.i:                            ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i
-  %4 = icmp ult i64 %1, 8
-  br i1 %4, label %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i, label %bb.b
+  %4 = icmp ugt i64 %1, 7
+  br i1 %4, label %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.i.i, label %bb.b
 
-_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i: ; preds = %.thread.i.i.i.i.i.i.i, %bb.a
-  br label %bb.b
-
-_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.i.i: ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i
+_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i: ; preds = %_ZN4llvm9StringRef13compareMemoryEPKcS2_m.exit.i.i.i.i.i.i.i
   %5 = icmp slt i32 %.fr.i.i.i.i.i.i.i, 0
-  %spec.select.i.i = select i1 %5, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES1_E11TargetTable, i64 48), ptr @_ZZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES1_E11TargetTable
+  br i1 %5, label %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.i.i, label %bb.b
+
+_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.i.i: ; preds = %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i, %.thread.i.i.i.i.i.i.i
   br label %bb.b
 
 bb.b:                                             ; preds = %.thread.i.i.i.i.i.i.i, %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i, %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.i.i
-  %.112.i.lcssa.i.i.ph = phi ptr [ %spec.select.i.i, %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.i.i ], [ @_ZZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES1_E11TargetTable, %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i ], [ getelementptr inbounds nuw (i8, ptr @_ZZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES1_E11TargetTable, i64 48), %.thread.i.i.i.i.i.i.i ] ; 6 uses
-  %.sroa.07.0.copyload = load ptr, ptr %.112.i.lcssa.i.i.ph, align 8, !tbaa !162
-  %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.112.i.lcssa.i.i.ph, i64 8
+  %6 = phi i64 [ 48, %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.i.i ], [ 0, %_ZSt13__lower_boundIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS0_9StringRefES2_E11TargetEntryS2_N9__gnu_cxx5__ops14_Iter_less_valEET_S9_S9_RKT0_T1_.exit.loopexit.thread.i.i ], [ 0, %.thread.i.i.i.i.i.i.i ]
+  %.112.i.i.i = getelementptr inbounds nuw i8, ptr @_ZZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES1_E11TargetTable, i64 %6 ; 6 uses
+  %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.112.i.i.i, i64 8
   %.sroa.28.0.copyload = load i64, ptr %.sroa.28.0..sroa_idx, align 8, !tbaa !19
   %.not.i.i = icmp eq i64 %.sroa.28.0.copyload, %1
-  br i1 %.not.i.i, label %6, label %_ZN4llvm11lower_boundIRA2_KZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES2_E11TargetEntryRS2_EEDaOT_OT0_.exit
+  br i1 %.not.i.i, label %_ZN4llvmneENS_9StringRefES0_.exit, label %_ZN4llvm11lower_boundIRA2_KZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES2_E11TargetEntryRS2_EEDaOT_OT0_.exit
 
-6:                                                ; preds = %bb.b
-  br i1 %i.a, label %_ZN4llvmneENS_9StringRefES0_.exit.thread38, label %_ZN4llvmneENS_9StringRefES0_.exit
-
-_ZN4llvmneENS_9StringRefES0_.exit:                ; preds = %6
+_ZN4llvmneENS_9StringRefES0_.exit:                ; preds = %bb.b
+  %.sroa.07.0.copyload = load ptr, ptr %.112.i.i.i, align 16, !tbaa !162
   %bcmp.i.i = tail call i32 @bcmp(ptr %.sroa.07.0.copyload, ptr %0, i64 %1)
   %.not = icmp eq i32 %bcmp.i.i, 0
   br i1 %.not, label %_ZN4llvmneENS_9StringRefES0_.exit.thread38, label %_ZN4llvm11lower_boundIRA2_KZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES2_E11TargetEntryRS2_EEDaOT_OT0_.exit
 
-_ZN4llvmneENS_9StringRefES0_.exit.thread38:       ; preds = %6, %_ZN4llvmneENS_9StringRefES0_.exit
-  %i.e = getelementptr inbounds nuw i8, ptr %.112.i.lcssa.i.i.ph, i64 32
-  %.sroa.03.0.copyload = load ptr, ptr %i.e, align 8, !tbaa !162
-  %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.112.i.lcssa.i.i.ph, i64 40
+_ZN4llvmneENS_9StringRefES0_.exit.thread38:       ; preds = %_ZN4llvmneENS_9StringRefES0_.exit
+  %i.e = getelementptr inbounds nuw i8, ptr %.112.i.i.i, i64 32
+  %.sroa.03.0.copyload = load ptr, ptr %i.e, align 16, !tbaa !162
+  %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.112.i.i.i, i64 40
   %.sroa.24.0.copyload = load i64, ptr %.sroa.24.0..sroa_idx, align 8, !tbaa !19 ; 6 uses
   %.not.i.i24 = icmp ult i64 %3, %.sroa.24.0.copyload
   br i1 %.not.i.i24, label %_ZN4llvm11lower_boundIRA2_KZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES2_E11TargetEntryRS2_EEDaOT_OT0_.exit, label %bb.c
@@ -277,9 +274,9 @@ _ZNK4llvm9StringRef11starts_withES0_.exit.i:      ; preds = %bb.c
 bb.d:                                             ; preds = %_ZNK4llvm9StringRef11starts_withES0_.exit.i, %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.24.0.copyload ; 2 uses
   %i.i = sub nuw i64 %3, %.sroa.24.0.copyload     ; 3 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %.112.i.lcssa.i.i.ph, i64 16
-  %.val20 = load ptr, ptr %i.j, align 8, !tbaa !263 ; 3 uses
-  %i.k = getelementptr i8, ptr %.112.i.lcssa.i.i.ph, i64 24
+  %i.j = getelementptr inbounds nuw i8, ptr %.112.i.i.i, i64 16
+  %.val20 = load ptr, ptr %i.j, align 16, !tbaa !263 ; 3 uses
+  %i.k = getelementptr i8, ptr %.112.i.i.i, i64 24
   %.val21 = load i64, ptr %i.k, align 8, !tbaa !264 ; 3 uses
   %i.l = icmp sgt i64 %.val21, 0
   br i1 %i.l, label %.lr.ph.i.i.i, label %_ZN4llvm11lower_boundIRKNS_8ArrayRefIZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES3_E12BuiltinEntryEERS3_EEDaOT_OT0_.exit
@@ -331,8 +328,8 @@ _ZN4llvmneENS_9StringRefES0_.exit29.thread43:     ; preds = %bb.f, %_ZN4llvmneEN
   %i.ae = load i32, ptr %.011.lcssa.i.i.i, align 4, !tbaa !267
   br label %_ZN4llvm11lower_boundIRA2_KZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES2_E11TargetEntryRS2_EEDaOT_OT0_.exit
 
-_ZN4llvm11lower_boundIRA2_KZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES2_E11TargetEntryRS2_EEDaOT_OT0_.exit: ; preds = %bb.e, %_ZN4llvmneENS_9StringRefES0_.exit.thread38, %_ZNK4llvm9StringRef11starts_withES0_.exit.i, %bb.b, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS3_9StringRefES5_E11TargetEntryKS5_EEbT_RT0_.exit.i.peel.i.i, %.thread.i.i.i.i.i.peel.i.i, %_ZN4llvmneENS_9StringRefES0_.exit29.thread43, %_ZN4llvmneENS_9StringRefES0_.exit29, %_ZN4llvm11lower_boundIRKNS_8ArrayRefIZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES3_E12BuiltinEntryEERS3_EEDaOT_OT0_.exit, %_ZN4llvmneENS_9StringRefES0_.exit
-  %.1 = phi i32 [ 0, %_ZN4llvm11lower_boundIRKNS_8ArrayRefIZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES3_E12BuiltinEntryEERS3_EEDaOT_OT0_.exit ], [ 0, %bb.b ], [ 0, %_ZN4llvmneENS_9StringRefES0_.exit ], [ %i.ae, %_ZN4llvmneENS_9StringRefES0_.exit29.thread43 ], [ 0, %_ZN4llvmneENS_9StringRefES0_.exit29 ], [ 0, %.thread.i.i.i.i.i.peel.i.i ], [ 0, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS3_9StringRefES5_E11TargetEntryKS5_EEbT_RT0_.exit.i.peel.i.i ], [ 0, %_ZN4llvmneENS_9StringRefES0_.exit.thread38 ], [ 0, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ 0, %bb.e ]
+_ZN4llvm11lower_boundIRA2_KZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES2_E11TargetEntryRS2_EEDaOT_OT0_.exit: ; preds = %bb.a, %bb.e, %_ZN4llvmneENS_9StringRefES0_.exit.thread38, %_ZNK4llvm9StringRef11starts_withES0_.exit.i, %bb.b, %.thread.i.i.i.i.i.peel.i.i, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS3_9StringRefES5_E11TargetEntryKS5_EEbT_RT0_.exit.i.peel.i.i, %_ZN4llvmneENS_9StringRefES0_.exit29.thread43, %_ZN4llvmneENS_9StringRefES0_.exit29, %_ZN4llvm11lower_boundIRKNS_8ArrayRefIZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES3_E12BuiltinEntryEERS3_EEDaOT_OT0_.exit, %_ZN4llvmneENS_9StringRefES0_.exit
+  %.1 = phi i32 [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %_ZN4llvmneENS_9StringRefES0_.exit ], [ %i.ae, %_ZN4llvmneENS_9StringRefES0_.exit29.thread43 ], [ 0, %_ZN4llvmneENS_9StringRefES0_.exit29 ], [ 0, %_ZN4llvm11lower_boundIRKNS_8ArrayRefIZNS_9Intrinsic24getIntrinsicForMSBuiltinENS_9StringRefES3_E12BuiltinEntryEERS3_EEDaOT_OT0_.exit ], [ 0, %_ZN4llvmneENS_9StringRefES0_.exit.thread38 ], [ 0, %.thread.i.i.i.i.i.peel.i.i ], [ 0, %_ZNK9__gnu_cxx5__ops14_Iter_less_valclIPKZN4llvm9Intrinsic24getIntrinsicForMSBuiltinENS3_9StringRefES5_E11TargetEntryKS5_EEbT_RT0_.exit.i.peel.i.i ], [ 0, %_ZNK4llvm9StringRef11starts_withES0_.exit.i ], [ 0, %bb.a ]
   ret i32 %.1
 }
 

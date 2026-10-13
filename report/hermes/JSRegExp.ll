@@ -205,6 +205,16 @@ $_ZGVZN4llvh7hashing6detail18get_execution_seedEvE4seed = comdat any
 @_ZN6hermes2vm8JSRegExp2vtE = hidden constant { i64, i32, i32, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr } { i64 -47381121442796770, i32 62, i32 48, ptr @_ZN6hermes2vm8JSRegExp13_finalizeImplEPNS0_6GCCellERNS0_7HadesGCE, ptr @_ZN6hermes2vm8JSRegExp15_mallocSizeImplEPNS0_6GCCellE, ptr null, ptr @_ZN6hermes2vm8JSObject23_getOwnIndexedRangeImplEPS1_RNS0_7RuntimeE, ptr @_ZN6hermes2vm8JSObject19_haveOwnIndexedImplEPS1_RNS0_7RuntimeEj, ptr @_ZN6hermes2vm8JSObject31_getOwnIndexedPropertyFlagsImplEPS1_RNS0_7RuntimeEj, ptr @_ZN6hermes2vm8JSObject18_getOwnIndexedImplENS0_12PseudoHandleIS1_EERNS0_7RuntimeEj, ptr @_ZN6hermes2vm8JSObject18_setOwnIndexedImplENS0_6HandleIS1_EERNS0_7RuntimeEjNS2_INS0_11HermesValueEEE, ptr @_ZN6hermes2vm8JSObject21_deleteOwnIndexedImplENS0_6HandleIS1_EERNS0_7RuntimeEj, ptr @_ZN6hermes2vm8JSObject23_checkAllOwnIndexedImplEPS1_RNS0_7RuntimeENS0_12ObjectVTable22CheckAllOwnIndexedModeE }, align 8
 @.str = private unnamed_addr constant [30 x i8] c"Invalid RegExp: Invalid flags\00", align 1
 @.str.1 = private unnamed_addr constant [17 x i8] c"Invalid RegExp: \00", align 1
+@.str.2 = private unnamed_addr constant [2 x i8] c"/\00", align 1
+@.str.3 = private unnamed_addr constant [3 x i8] c"\\/\00", align 1
+@.str.4 = private unnamed_addr constant [2 x i8] c"n\00", align 1
+@.str.5 = private unnamed_addr constant [3 x i8] c"\\n\00", align 1
+@.str.6 = private unnamed_addr constant [2 x i8] c"r\00", align 1
+@.str.7 = private unnamed_addr constant [3 x i8] c"\\r\00", align 1
+@.str.8 = private unnamed_addr constant [6 x i8] c"u2028\00", align 1
+@.str.9 = private unnamed_addr constant [7 x i8] c"\\u2028\00", align 1
+@.str.10 = private unnamed_addr constant [6 x i8] c"u2029\00", align 1
+@.str.11 = private unnamed_addr constant [7 x i8] c"\\u2029\00", align 1
 @_ZN6hermes2vm15HandleRootOwner10zeroValue_E = external global %"class.hermes::vm::PinnedHermesValue", align 8
 @.str.13 = private unnamed_addr constant [24 x i8] c"Escaped value too large\00", align 1
 @.str.14 = private unnamed_addr constant [18 x i8] c"Incomplete escape\00", align 1
@@ -607,7 +617,7 @@ _ZNK6hermes2vm10StringView3endEv.exit:            ; preds = %_ZNK6hermes2vm10Str
 bb.ac:                                            ; preds = %_ZN6hermes2vm10StringView14const_iteratorppEv.exit, %_ZNK6hermes2vm10StringView3endEv.exit
   %.sroa.086.0 = phi ptr [ %.sroa.0.0.i100, %_ZNK6hermes2vm10StringView3endEv.exit ], [ %.sroa.086.0.be, %_ZN6hermes2vm10StringView14const_iteratorppEv.exit ] ; 4 uses
   %.sroa.7.0 = phi ptr [ %.sroa.3.0.i98, %_ZNK6hermes2vm10StringView3endEv.exit ], [ %.sroa.7.1, %_ZN6hermes2vm10StringView14const_iteratorppEv.exit ] ; 3 uses
-  %.0 = phi i1 [ false, %_ZNK6hermes2vm10StringView3endEv.exit ], [ %i.fs, %_ZN6hermes2vm10StringView14const_iteratorppEv.exit ] ; 24 uses
+  %.0 = phi i1 [ false, %_ZNK6hermes2vm10StringView3endEv.exit ], [ %i.fs, %_ZN6hermes2vm10StringView14const_iteratorppEv.exit ] ; 16 uses
   %.not.i.i29 = icmp eq ptr %.sroa.086.0, null    ; 3 uses
   br i1 %.not.i.i29, label %_ZNK6hermes2vm10StringView14const_iteratorneERKS2_.exit, label %_ZNK6hermes2vm10StringView14const_iteratorneERKS2_.exit.thread
 
@@ -644,6 +654,7 @@ _ZNK6hermes2vm10StringView14const_iteratordeEv.exit: ; preds = %.thread107, %bb.
   ]
 
 bb.af:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit
+  %7 = select i1 %.0, ptr @.str.2, ptr @.str.3    ; 2 uses
   %i.ci = select i1 %.0, i64 1, i64 2             ; 3 uses
   %i.cj = load i32, ptr %i.c, align 4, !tbaa !43
   %i.ck = zext i32 %i.cj to i64
@@ -665,13 +676,17 @@ bb.ag:                                            ; preds = %bb.af
   %i.cq = phi i32 [ %.pre.i.i, %bb.ag ], [ %i.cl, %bb.af ]
   %i.cr = load ptr, ptr %3, align 8, !tbaa !41
   %i.cs = getelementptr inbounds nuw [2 x i8], ptr %i.cr, i64 %.pre-phi.i.i ; 2 uses
-  %7 = select i1 %.0, i16 47, i16 92
-  store i16 %7, ptr %i.cs, align 2, !tbaa !45
+  %8 = load i8, ptr %7, align 1, !tbaa !39
+  %9 = zext i8 %8 to i16
+  store i16 %9, ptr %i.cs, align 2, !tbaa !45
   br i1 %.0, label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.1
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.1:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 2
-  store i16 47, ptr %i.ct, align 2, !tbaa !45
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 1
+  %11 = load i8, ptr %10, align 1, !tbaa !39
+  %12 = zext i8 %11 to i16
+  store i16 %12, ptr %i.ct, align 2, !tbaa !45
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit
 
 _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -680,6 +695,7 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit: ; preds = %.
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit
 
 bb.ah:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit
+  %13 = select i1 %.0, ptr @.str.4, ptr @.str.5   ; 2 uses
   %i.cw = select i1 %.0, i64 1, i64 2             ; 3 uses
   %i.cx = load i32, ptr %i.c, align 4, !tbaa !43
   %i.cy = zext i32 %i.cx to i64
@@ -701,13 +717,17 @@ bb.ai:                                            ; preds = %bb.ah
   %i.de = phi i32 [ %.pre.i.i37, %bb.ai ], [ %i.cz, %bb.ah ]
   %i.df = load ptr, ptr %3, align 8, !tbaa !41
   %i.dg = getelementptr inbounds nuw [2 x i8], ptr %i.df, i64 %.pre-phi.i.i31 ; 2 uses
-  %8 = select i1 %.0, i16 110, i16 92
-  store i16 %8, ptr %i.dg, align 2, !tbaa !45
+  %14 = load i8, ptr %13, align 1, !tbaa !39
+  %15 = zext i8 %14 to i16
+  store i16 %15, ptr %i.dg, align 2, !tbaa !45
   br i1 %.0, label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit39, label %.lr.ph.i.i.i.i.i.i.i.i.i.i33.1
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i33.1:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i33
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 2
-  store i16 110, ptr %i.dh, align 2, !tbaa !45
+  %16 = getelementptr inbounds nuw i8, ptr %13, i64 1
+  %17 = load i8, ptr %16, align 1, !tbaa !39
+  %18 = zext i8 %17 to i16
+  store i16 %18, ptr %i.dh, align 2, !tbaa !45
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit39
 
 _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit39: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i33.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i33
@@ -716,6 +736,7 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit39: ; preds = 
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit
 
 bb.aj:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit
+  %19 = select i1 %.0, ptr @.str.6, ptr @.str.7   ; 2 uses
   %i.dk = select i1 %.0, i64 1, i64 2             ; 3 uses
   %i.dl = load i32, ptr %i.c, align 4, !tbaa !43
   %i.dm = zext i32 %i.dl to i64
@@ -737,13 +758,17 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ds = phi i32 [ %.pre.i.i46, %bb.ak ], [ %i.dn, %bb.aj ]
   %i.dt = load ptr, ptr %3, align 8, !tbaa !41
   %i.du = getelementptr inbounds nuw [2 x i8], ptr %i.dt, i64 %.pre-phi.i.i40 ; 2 uses
-  %9 = select i1 %.0, i16 114, i16 92
-  store i16 %9, ptr %i.du, align 2, !tbaa !45
+  %20 = load i8, ptr %19, align 1, !tbaa !39
+  %21 = zext i8 %20 to i16
+  store i16 %21, ptr %i.du, align 2, !tbaa !45
   br i1 %.0, label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit48, label %.lr.ph.i.i.i.i.i.i.i.i.i.i42.1
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i42.1:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i42
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 2
-  store i16 114, ptr %i.dv, align 2, !tbaa !45
+  %22 = getelementptr inbounds nuw i8, ptr %19, i64 1
+  %23 = load i8, ptr %22, align 1, !tbaa !39
+  %24 = zext i8 %23 to i16
+  store i16 %24, ptr %i.dv, align 2, !tbaa !45
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit48
 
 _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit48: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i42.1, %.lr.ph.i.i.i.i.i.i.i.i.i.i42
@@ -752,6 +777,7 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit48: ; preds = 
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit
 
 bb.al:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit
+  %25 = select i1 %.0, ptr @.str.8, ptr @.str.9   ; 6 uses
   %i.dy = select i1 %.0, i64 5, i64 6             ; 3 uses
   %i.dz = load i32, ptr %i.c, align 4, !tbaa !43
   %i.ea = zext i32 %i.dz to i64
@@ -773,25 +799,37 @@ bb.am:                                            ; preds = %bb.al
   %i.eg = phi i32 [ %.pre.i.i55, %bb.am ], [ %i.eb, %bb.al ]
   %i.eh = load ptr, ptr %3, align 8, !tbaa !41
   %i.ei = getelementptr inbounds nuw [2 x i8], ptr %i.eh, i64 %.pre-phi.i.i49 ; 6 uses
-  %10 = select i1 %.0, i16 117, i16 92
-  store i16 %10, ptr %i.ei, align 2, !tbaa !45
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 2
-  %11 = select i1 %.0, i16 50, i16 117
-  store i16 %11, ptr %i.ej, align 2, !tbaa !45
-  %i.ek = getelementptr inbounds nuw i8, ptr %i.ei, i64 4
-  %12 = select i1 %.0, i16 48, i16 50
-  store i16 %12, ptr %i.ek, align 2, !tbaa !45
-  %i.el = getelementptr inbounds nuw i8, ptr %i.ei, i64 6
-  %13 = select i1 %.0, i16 50, i16 48
-  store i16 %13, ptr %i.el, align 2, !tbaa !45
-  %i.em = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
-  %14 = select i1 %.0, i16 56, i16 50
-  store i16 %14, ptr %i.em, align 2, !tbaa !45
+  %26 = load i8, ptr %25, align 1, !tbaa !39
+  %27 = zext i8 %26 to i16
+  store i16 %27, ptr %i.ei, align 2, !tbaa !45
+  %28 = getelementptr inbounds nuw i8, ptr %i.ei, i64 2
+  %i.ej = getelementptr inbounds nuw i8, ptr %25, i64 1
+  %29 = load i8, ptr %i.ej, align 1, !tbaa !39
+  %30 = zext i8 %29 to i16
+  store i16 %30, ptr %28, align 2, !tbaa !45
+  %31 = getelementptr inbounds nuw i8, ptr %i.ei, i64 4
+  %i.ek = getelementptr inbounds nuw i8, ptr %25, i64 2
+  %32 = load i8, ptr %i.ek, align 1, !tbaa !39
+  %33 = zext i8 %32 to i16
+  store i16 %33, ptr %31, align 2, !tbaa !45
+  %34 = getelementptr inbounds nuw i8, ptr %i.ei, i64 6
+  %i.el = getelementptr inbounds nuw i8, ptr %25, i64 3
+  %35 = load i8, ptr %i.el, align 1, !tbaa !39
+  %36 = zext i8 %35 to i16
+  store i16 %36, ptr %34, align 2, !tbaa !45
+  %37 = getelementptr inbounds nuw i8, ptr %i.ei, i64 8
+  %i.em = getelementptr inbounds nuw i8, ptr %25, i64 4
+  %38 = load i8, ptr %i.em, align 1, !tbaa !39
+  %39 = zext i8 %38 to i16
+  store i16 %39, ptr %37, align 2, !tbaa !45
   br i1 %.0, label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit57, label %.lr.ph.i.i.i.i.i.i.i.i.i.i51.5
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i51.5:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i51
   %i.en = getelementptr inbounds nuw i8, ptr %i.ei, i64 10
-  store i16 56, ptr %i.en, align 2, !tbaa !45
+  %40 = getelementptr inbounds nuw i8, ptr %25, i64 5
+  %41 = load i8, ptr %40, align 1, !tbaa !39
+  %42 = zext i8 %41 to i16
+  store i16 %42, ptr %i.en, align 2, !tbaa !45
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit57
 
 _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit57: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i51.5, %.lr.ph.i.i.i.i.i.i.i.i.i.i51
@@ -800,6 +838,7 @@ _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit57: ; preds = 
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit
 
 bb.an:                                            ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit
+  %43 = select i1 %.0, ptr @.str.10, ptr @.str.11 ; 6 uses
   %i.eq = select i1 %.0, i64 5, i64 6             ; 3 uses
   %i.er = load i32, ptr %i.c, align 4, !tbaa !43
   %i.es = zext i32 %i.er to i64
@@ -821,25 +860,37 @@ bb.ao:                                            ; preds = %bb.an
   %i.ey = phi i32 [ %.pre.i.i64, %bb.ao ], [ %i.et, %bb.an ]
   %i.ez = load ptr, ptr %3, align 8, !tbaa !41
   %i.fa = getelementptr inbounds nuw [2 x i8], ptr %i.ez, i64 %.pre-phi.i.i58 ; 6 uses
-  %15 = select i1 %.0, i16 117, i16 92
-  store i16 %15, ptr %i.fa, align 2, !tbaa !45
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 2
-  %16 = select i1 %.0, i16 50, i16 117
-  store i16 %16, ptr %i.fb, align 2, !tbaa !45
-  %i.fc = getelementptr inbounds nuw i8, ptr %i.fa, i64 4
-  %17 = select i1 %.0, i16 48, i16 50
-  store i16 %17, ptr %i.fc, align 2, !tbaa !45
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.fa, i64 6
-  %18 = select i1 %.0, i16 50, i16 48
-  store i16 %18, ptr %i.fd, align 2, !tbaa !45
-  %i.fe = getelementptr inbounds nuw i8, ptr %i.fa, i64 8
-  %19 = select i1 %.0, i16 57, i16 50
-  store i16 %19, ptr %i.fe, align 2, !tbaa !45
+  %44 = load i8, ptr %43, align 1, !tbaa !39
+  %45 = zext i8 %44 to i16
+  store i16 %45, ptr %i.fa, align 2, !tbaa !45
+  %46 = getelementptr inbounds nuw i8, ptr %i.fa, i64 2
+  %i.fb = getelementptr inbounds nuw i8, ptr %43, i64 1
+  %47 = load i8, ptr %i.fb, align 1, !tbaa !39
+  %48 = zext i8 %47 to i16
+  store i16 %48, ptr %46, align 2, !tbaa !45
+  %49 = getelementptr inbounds nuw i8, ptr %i.fa, i64 4
+  %i.fc = getelementptr inbounds nuw i8, ptr %43, i64 2
+  %50 = load i8, ptr %i.fc, align 1, !tbaa !39
+  %51 = zext i8 %50 to i16
+  store i16 %51, ptr %49, align 2, !tbaa !45
+  %52 = getelementptr inbounds nuw i8, ptr %i.fa, i64 6
+  %i.fd = getelementptr inbounds nuw i8, ptr %43, i64 3
+  %53 = load i8, ptr %i.fd, align 1, !tbaa !39
+  %54 = zext i8 %53 to i16
+  store i16 %54, ptr %52, align 2, !tbaa !45
+  %55 = getelementptr inbounds nuw i8, ptr %i.fa, i64 8
+  %i.fe = getelementptr inbounds nuw i8, ptr %43, i64 4
+  %56 = load i8, ptr %i.fe, align 1, !tbaa !39
+  %57 = zext i8 %56 to i16
+  store i16 %57, ptr %55, align 2, !tbaa !45
   br i1 %.0, label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit66, label %.lr.ph.i.i.i.i.i.i.i.i.i.i60.5
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i60.5:                   ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i60
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fa, i64 10
-  store i16 57, ptr %i.ff, align 2, !tbaa !45
+  %58 = getelementptr inbounds nuw i8, ptr %43, i64 5
+  %59 = load i8, ptr %58, align 1, !tbaa !39
+  %60 = zext i8 %59 to i16
+  store i16 %60, ptr %i.ff, align 2, !tbaa !45
   br label %_ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit66
 
 _ZN6hermes2vm12SmallXStringIDsLj32EE6appendEN4llvh9StringRefE.exit66: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i60.5, %.lr.ph.i.i.i.i.i.i.i.i.i.i60

@@ -204,11 +204,11 @@ bb.a:
   %i.dq = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   %i.dr = getelementptr inbounds nuw i8, ptr %i.au, i64 24
   %i.ds = icmp ugt i32 %.sroa.10.0.copyload.i.i, 43199 ; 2 uses
-  %.146.i.i = select i1 %i.ds, ptr @962, ptr @961 ; 2 uses
-  %2 = select i1 %i.ds, ptr getelementptr inbounds nuw (i8, ptr @962, i64 2), ptr getelementptr inbounds nuw (i8, ptr @961, i64 2) ; 2 uses
+  %.146.i.i = select i1 %i.ds, ptr @962, ptr @961 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.146.i.i, i64 2
   %.sroa.076.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 40 ; 2 uses
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 80 ; 11 uses
-  %.sroa.377.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 88 ; 2 uses
+  %.sroa.377.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.aw, i64 88 ; 3 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.dv = getelementptr inbounds nuw i8, ptr %i.n, i64 4
@@ -408,8 +408,7 @@ bb.a:
   %i.jz = sext i32 %narrow.i.i to i64
   %i.ka = mul nsw i64 %i.jz, 86400
   %i.kb = add nsw i64 %i.hq, %i.ka
-  %3 = insertelement <2 x ptr> poison, ptr %.146.i.i, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %2, i64 1
+  %.285.i = select i1 %i.ds, ptr getelementptr inbounds nuw (i8, ptr @962, i64 2), ptr getelementptr inbounds nuw (i8, ptr @961, i64 2)
   %i.kc = shl nuw nsw i16 %i.eb, 3
   %switch.shiftamt = zext nneg i16 %i.kc to i56
   %switch.downshift = lshr i56 13570401019048497, %switch.shiftamt
@@ -812,7 +811,7 @@ bb.ch:                                            ; preds = %bb.cg
 
 .invoke282.i:                                     ; preds = %bb.by, %bb.cm, %bb.cl, %bb.ck, %bb.ch
   %i.aaf = phi ptr [ %i.aad, %bb.ch ], [ %i.aap, %bb.ck ], [ %i.aat, %bb.cl ], [ %i.aav, %bb.cm ], [ %.146.i.i, %bb.by ]
-  %i.aag = phi ptr [ %i.aae, %bb.ch ], [ %i.aas, %bb.ck ], [ %i.aau, %bb.cl ], [ %i.aax, %bb.cm ], [ %2, %bb.by ]
+  %i.aag = phi ptr [ %i.aae, %bb.ch ], [ %i.aas, %bb.ck ], [ %i.aau, %bb.cl ], [ %i.aax, %bb.cm ], [ %.285.i, %bb.by ]
   invoke void @"_ZN132_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$$RF$T$C$core..slice..iter..Iter$LT$T$GT$$GT$$GT$11spec_extend17h705086954de2a2beE"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ba, ptr noundef nonnull readonly align 1 %i.aaf, ptr noundef nonnull readonly %i.aag)
           to label %"_ZN6chrono6format10formatting22DelayedFormat$LT$I$GT$12format_fixed17h613322555a4b9faeE.exit.thread.i" unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.i
 
@@ -852,7 +851,8 @@ bb.cn:                                            ; preds = %bb.bx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !8703
   store i64 0, ptr %i.aw, align 8, !noalias !8703
   store i64 0, ptr %.sroa.076.sroa.3.0..sroa_idx.i.i, align 8, !noalias !8703
-  store <2 x ptr> %4, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !noalias !8703
+  store ptr %.146.i.i, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !noalias !8703
+  store ptr %2, ptr %.sroa.377.0..sroa_idx.i.i, align 8, !noalias !8703
   br label %.peel.begin.i.i
 
 .peel.begin.i.i:                                  ; preds = %"_ZN58_$LT$alloc..string..String$u20$as$u20$core..fmt..Write$GT$10write_char17h5a9d960cd3ba5c32E.exit.i66.i", %bb.cn

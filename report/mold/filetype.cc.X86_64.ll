@@ -30,11 +30,47 @@ $_ZNKSt17basic_string_viewIcSt11char_traitsIcEE11starts_withEPKc = comdat any
 
 $_ZN4mold16get_machine_typeINS_6X86_64EEESt17basic_string_viewIcSt11char_traitsIcEERNS_7ContextIT_EERNS_13ReaderContextEPNS_10MappedFileE = comdat any
 
+$_ZN4mold7ARM32LE4nameE = comdat any
+
+$_ZN4mold7ARM32BE4nameE = comdat any
+
+$_ZN4mold7ARM64LE4nameE = comdat any
+
+$_ZN4mold7ARM64BE4nameE = comdat any
+
+$_ZN4mold6RV64LE4nameE = comdat any
+
+$_ZN4mold6RV32LE4nameE = comdat any
+
+$_ZN4mold6RV64BE4nameE = comdat any
+
+$_ZN4mold6RV32BE4nameE = comdat any
+
+$_ZN4mold5SH4LE4nameE = comdat any
+
+$_ZN4mold5SH4BE4nameE = comdat any
+
+$_ZN4mold11LOONGARCH644nameE = comdat any
+
+$_ZN4mold11LOONGARCH324nameE = comdat any
+
 @_ZN4mold7Counter9instancesE = linkonce_odr dso_local global { { ptr, ptr, ptr } } zeroinitializer, comdat, align 8
 @_ZGVN4mold7Counter9instancesE = linkonce_odr dso_local global i64 0, comdat($_ZN4mold7Counter9instancesE), align 8
 @__dso_handle = external hidden global i8
 @.str.5 = private unnamed_addr constant [5 x i8] c"BC\C0\DE\00", align 1
 @.str.6 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@_ZN4mold7ARM32LE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 5, ptr @.str.11 }, comdat, align 8
+@_ZN4mold7ARM32BE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 7, ptr @.str.12 }, comdat, align 8
+@_ZN4mold7ARM64LE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 5, ptr @.str.13 }, comdat, align 8
+@_ZN4mold7ARM64BE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 7, ptr @.str.14 }, comdat, align 8
+@_ZN4mold6RV64LE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 7, ptr @.str.15 }, comdat, align 8
+@_ZN4mold6RV32LE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 7, ptr @.str.16 }, comdat, align 8
+@_ZN4mold6RV64BE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 9, ptr @.str.17 }, comdat, align 8
+@_ZN4mold6RV32BE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 9, ptr @.str.18 }, comdat, align 8
+@_ZN4mold5SH4LE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 3, ptr @.str.25 }, comdat, align 8
+@_ZN4mold5SH4BE4nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 5, ptr @.str.26 }, comdat, align 8
+@_ZN4mold11LOONGARCH644nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 11, ptr @.str.27 }, comdat, align 8
+@_ZN4mold11LOONGARCH324nameE = linkonce_odr dso_local local_unnamed_addr constant %"class.std::basic_string_view" { i64 11, ptr @.str.28 }, comdat, align 8
 @.str.9 = private unnamed_addr constant [5 x i8] c"i386\00", align 1
 @.str.10 = private unnamed_addr constant [7 x i8] c"x86_64\00", align 1
 @.str.11 = private unnamed_addr constant [6 x i8] c"arm32\00", align 1
@@ -437,7 +473,7 @@ define internal fastcc { i64, ptr } @_ZN4moldL12get_elf_typeEPh(ptr nofree nound
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 5
   %i.b = load i8, ptr %i.a, align 1, !tbaa !18
-  %i.c = icmp eq i8 %i.b, 1                       ; 9 uses
+  %i.c = icmp eq i8 %i.b, 1                       ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.e = load i8, ptr %i.d, align 1, !tbaa !18
   %i.f = icmp eq i8 %i.e, 2                       ; 3 uses
@@ -464,24 +500,34 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.q
 
 bb.c:                                             ; preds = %bb.a
-  %.sroa.0.0.copyload35 = select i1 %i.c, i64 5, i64 7
-  %.sroa.17.0.copyload48 = select i1 %i.c, ptr @.str.11, ptr @.str.12
+  %_ZN4mold7ARM32LE4nameE._ZN4mold7ARM32BE4nameE = select i1 %i.c, ptr @_ZN4mold7ARM32LE4nameE, ptr @_ZN4mold7ARM32BE4nameE ; 2 uses
+  %.sroa.0.0.copyload35 = load i64, ptr %_ZN4mold7ARM32LE4nameE._ZN4mold7ARM32BE4nameE, align 8, !tbaa !56
+  %.sroa.17.0._ZN4mold7ARM32LE4nameE._ZN4mold7ARM32BE4nameE.sroa_idx = getelementptr inbounds nuw i8, ptr %_ZN4mold7ARM32LE4nameE._ZN4mold7ARM32BE4nameE, i64 8
+  %.sroa.17.0.copyload48 = load ptr, ptr %.sroa.17.0._ZN4mold7ARM32LE4nameE._ZN4mold7ARM32BE4nameE.sroa_idx, align 8, !tbaa !57
   br label %bb.q
 
 bb.d:                                             ; preds = %bb.a
-  %.sroa.0.0.copyload36 = select i1 %i.c, i64 5, i64 7
-  %.sroa.17.0.copyload49 = select i1 %i.c, ptr @.str.13, ptr @.str.14
+  %_ZN4mold7ARM64LE4nameE._ZN4mold7ARM64BE4nameE = select i1 %i.c, ptr @_ZN4mold7ARM64LE4nameE, ptr @_ZN4mold7ARM64BE4nameE ; 2 uses
+  %.sroa.0.0.copyload36 = load i64, ptr %_ZN4mold7ARM64LE4nameE._ZN4mold7ARM64BE4nameE, align 8, !tbaa !56
+  %.sroa.17.0._ZN4mold7ARM64LE4nameE._ZN4mold7ARM64BE4nameE.sroa_idx = getelementptr inbounds nuw i8, ptr %_ZN4mold7ARM64LE4nameE._ZN4mold7ARM64BE4nameE, i64 8
+  %.sroa.17.0.copyload49 = load ptr, ptr %.sroa.17.0._ZN4mold7ARM64LE4nameE._ZN4mold7ARM64BE4nameE.sroa_idx, align 8, !tbaa !57
   br label %bb.q
 
 bb.e:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %.sroa.17.0.copyload50.a = select i1 %i.f, ptr @.str.15, ptr @.str.16
+  %.sroa.17.0.copyload50.a = select i1 %i.f, ptr @_ZN4mold6RV64LE4nameE, ptr @_ZN4mold6RV32LE4nameE ; 2 uses
+  %.sroa.0.0.copyload37 = load i64, ptr %.sroa.17.0.copyload50.a, align 8, !tbaa !56
+  %.sroa.17.0._ZN4mold6RV64LE4nameE._ZN4mold6RV32LE4nameE.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.17.0.copyload50.a, i64 8
+  %.sroa.17.0.copyload50 = load ptr, ptr %.sroa.17.0._ZN4mold6RV64LE4nameE._ZN4mold6RV32LE4nameE.sroa_idx, align 8, !tbaa !57
   br label %bb.q
 
 bb.g:                                             ; preds = %bb.e
-  %.sroa.17.0.copyload51.a = select i1 %i.f, ptr @.str.17, ptr @.str.18
+  %.sroa.17.0.copyload51.a = select i1 %i.f, ptr @_ZN4mold6RV64BE4nameE, ptr @_ZN4mold6RV32BE4nameE ; 2 uses
+  %.sroa.0.0.copyload38 = load i64, ptr %.sroa.17.0.copyload51.a, align 8, !tbaa !56
+  %.sroa.17.0._ZN4mold6RV64BE4nameE._ZN4mold6RV32BE4nameE.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.17.0.copyload51.a, i64 8
+  %.sroa.17.0.copyload51 = load ptr, ptr %.sroa.17.0._ZN4mold6RV64BE4nameE._ZN4mold6RV32BE4nameE.sroa_idx, align 8, !tbaa !57
   br label %bb.q
 
 bb.h:                                             ; preds = %bb.a
@@ -512,20 +558,25 @@ bb.m:                                             ; preds = %bb.a
   br label %bb.q
 
 bb.n:                                             ; preds = %bb.a
-  %.sroa.0.0.copyload45 = select i1 %i.c, i64 3, i64 5
-  %.sroa.17.0.copyload58 = select i1 %i.c, ptr @.str.25, ptr @.str.26
+  %_ZN4mold5SH4LE4nameE._ZN4mold5SH4BE4nameE = select i1 %i.c, ptr @_ZN4mold5SH4LE4nameE, ptr @_ZN4mold5SH4BE4nameE ; 2 uses
+  %.sroa.0.0.copyload45 = load i64, ptr %_ZN4mold5SH4LE4nameE._ZN4mold5SH4BE4nameE, align 8, !tbaa !56
+  %.sroa.17.0._ZN4mold5SH4LE4nameE._ZN4mold5SH4BE4nameE.sroa_idx = getelementptr inbounds nuw i8, ptr %_ZN4mold5SH4LE4nameE._ZN4mold5SH4BE4nameE, i64 8
+  %.sroa.17.0.copyload58 = load ptr, ptr %.sroa.17.0._ZN4mold5SH4LE4nameE._ZN4mold5SH4BE4nameE.sroa_idx, align 8, !tbaa !57
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.a
-  %.sroa.17.0.copyload59.a = select i1 %i.f, ptr @.str.27, ptr @.str.28
+  %.sroa.17.0.copyload59.a = select i1 %i.f, ptr @_ZN4mold11LOONGARCH644nameE, ptr @_ZN4mold11LOONGARCH324nameE ; 2 uses
+  %.sroa.0.0.copyload46 = load i64, ptr %.sroa.17.0.copyload59.a, align 8, !tbaa !56
+  %.sroa.17.0._ZN4mold11LOONGARCH644nameE._ZN4mold11LOONGARCH324nameE.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.17.0.copyload59.a, i64 8
+  %.sroa.17.0.copyload59 = load ptr, ptr %.sroa.17.0._ZN4mold11LOONGARCH644nameE._ZN4mold11LOONGARCH324nameE.sroa_idx, align 8, !tbaa !57
   br label %bb.q
 
 bb.p:                                             ; preds = %.critedge28, %bb.j, %bb.a
   br label %bb.q
 
 bb.q:                                             ; preds = %.critedge28, %bb.j, %bb.a, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c, %bb.b
-  %.sroa.17.0 = phi ptr [ @.str.6, %bb.p ], [ %.sroa.17.0.copyload59.a, %bb.o ], [ @.str.10, %bb.b ], [ %.sroa.17.0.copyload48, %bb.c ], [ %.sroa.17.0.copyload49, %bb.d ], [ %.sroa.17.0.copyload50.a, %bb.f ], [ %.sroa.17.0.copyload51.a, %bb.g ], [ @.str.19, %bb.h ], [ @.str.20, %bb.j ], [ @.str.21, %.critedge28 ], [ @.str.9, %bb.a ], [ @.str.22, %bb.k ], [ @.str.23, %bb.l ], [ @.str.24, %bb.m ], [ %.sroa.17.0.copyload58, %bb.n ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.p ], [ 11, %bb.o ], [ 6, %bb.b ], [ %.sroa.0.0.copyload35, %bb.c ], [ %.sroa.0.0.copyload36, %bb.d ], [ 7, %bb.f ], [ 9, %bb.g ], [ 5, %bb.h ], [ 7, %bb.j ], [ 7, %.critedge28 ], [ 4, %bb.a ], [ 5, %bb.k ], [ 7, %bb.l ], [ 4, %bb.m ], [ %.sroa.0.0.copyload45, %bb.n ]
+  %.sroa.17.0 = phi ptr [ @.str.6, %bb.p ], [ %.sroa.17.0.copyload59, %bb.o ], [ @.str.10, %bb.b ], [ %.sroa.17.0.copyload48, %bb.c ], [ %.sroa.17.0.copyload49, %bb.d ], [ %.sroa.17.0.copyload50, %bb.f ], [ %.sroa.17.0.copyload51, %bb.g ], [ @.str.19, %bb.h ], [ @.str.20, %bb.j ], [ @.str.21, %.critedge28 ], [ @.str.9, %bb.a ], [ @.str.22, %bb.k ], [ @.str.23, %bb.l ], [ @.str.24, %bb.m ], [ %.sroa.17.0.copyload58, %bb.n ]
+  %.sroa.0.0 = phi i64 [ 0, %bb.p ], [ %.sroa.0.0.copyload46, %bb.o ], [ 6, %bb.b ], [ %.sroa.0.0.copyload35, %bb.c ], [ %.sroa.0.0.copyload36, %bb.d ], [ %.sroa.0.0.copyload37, %bb.f ], [ %.sroa.0.0.copyload38, %bb.g ], [ 5, %bb.h ], [ 7, %bb.j ], [ 7, %.critedge28 ], [ 4, %bb.a ], [ 5, %bb.k ], [ 7, %bb.l ], [ 4, %bb.m ], [ %.sroa.0.0.copyload45, %bb.n ]
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %.sroa.17.0, 1
   ret { i64, ptr } %.fca.1.insert
@@ -643,4 +694,6 @@ attributes #14 = { nounwind willreturn memory(read) }
 !53 = !{!45, !5, i64 0}
 !54 = !{!47, !46, i64 0}
 !55 = !{!47, !46, i64 16}
+!56 = !{!12, !12, i64 0}
+!57 = !{!10, !10, i64 0}
 end_hunk_1

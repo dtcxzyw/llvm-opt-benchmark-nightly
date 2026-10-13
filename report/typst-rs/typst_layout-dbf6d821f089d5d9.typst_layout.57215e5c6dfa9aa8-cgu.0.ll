@@ -205,9 +205,7 @@ _RNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0B7_.exit.i: ; 
   %i.eq = trunc nuw i8 %i.ep to i1
   %i.er = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift27DEFAULT_SUPERSCRIPT_METRICS, i64 16), align 8
   %i.es = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift25DEFAULT_SUBSCRIPT_METRICS, i64 16), align 8
-  %3 = insertelement <2 x i1> poison, i1 %i.eq, i64 0
-  %4 = shufflevector <2 x i1> %3, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.et = select <2 x i1> %4, <2 x double> %i.er, <2 x double> %i.es
+  %i.et = select i1 %i.eq, <2 x double> %i.er, <2 x double> %i.es
   br label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtNtCsdaEETE4DqmE_13typst_library4text4font12FontInstanceE6map_orNtNtBK_7metrics13ScriptMetricsNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0EB2p_.exit
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtNtCsdaEETE4DqmE_13typst_library4text4font12FontInstanceE6map_orNtNtBK_7metrics13ScriptMetricsNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0EB2p_.exit: ; preds = %.loopexit110, %_RNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0B7_.exit.i

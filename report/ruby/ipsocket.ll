@@ -63,6 +63,8 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.32 = private unnamed_addr constant [16 x i8] c"CLOCK_MONOTONIC\00", align 1
 @current_clocktime.rbimpl_id.33 = internal unnamed_addr global i64 0, align 8
 @.str.34 = private unnamed_addr constant [14 x i8] c"clock_gettime\00", align 1
+@__const.pick_addrinfo.priority_on_v6 = private unnamed_addr constant [2 x i32] [i32 10, i32 2], align 4
+@__const.pick_addrinfo.priority_on_v4 = private unnamed_addr constant [2 x i32] [i32 2, i32 10], align 4
 @.str.35 = private unnamed_addr constant [11 x i8] c"realloc(3)\00", align 1
 @.str.36 = private unnamed_addr constant [10 x i8] c"listen(2)\00", align 1
 @.str.37 = private unnamed_addr constant [3 x i8] c", \00", align 1
@@ -465,7 +467,7 @@ any_addrinfos.exit:                               ; preds = %any_addrinfos.exit.
   %.1519 = phi ptr [ %.0518, %bb.aj ], [ %.5523, %any_addrinfos.exit.backedge ] ; 12 uses
   %.0511 = phi ptr [ null, %bb.aj ], [ %.6517, %any_addrinfos.exit.backedge ] ; 2 uses
   %.0502 = phi ptr [ null, %bb.aj ], [ %.7509, %any_addrinfos.exit.backedge ] ; 7 uses
-  %.0497 = phi i32 [ 10, %bb.aj ], [ %.45018581031, %any_addrinfos.exit.backedge ] ; 11 uses
+  %.0497 = phi i32 [ 10, %bb.aj ], [ %.45018581031, %any_addrinfos.exit.backedge ] ; 13 uses
   %.0492 = phi i32 [ 0, %bb.aj ], [ %.44968591025, %any_addrinfos.exit.backedge ] ; 2 uses
   %.0462 = phi ptr [ null, %bb.aj ], [ %.17, %any_addrinfos.exit.backedge ] ; 2 uses
   %.sroa.18.0 = phi i32 [ 0, %bb.aj ], [ %.sroa.18.22, %any_addrinfos.exit.backedge ] ; 2 uses
@@ -486,21 +488,24 @@ any_addrinfos.exit:                               ; preds = %any_addrinfos.exit.
   br label %any_addrinfos.exit649.thread
 
 any_addrinfos.exit649.thread:                     ; preds = %any_addrinfos.exit649.thread.backedge, %.preheader1113
-  %.sroa.38.3 = phi ptr [ %.sroa.38.2, %.preheader1113 ], [ %.sroa.38.12, %any_addrinfos.exit649.thread.backedge ] ; 5 uses
-  %.sroa.0.3 = phi ptr [ %.sroa.0.2, %.preheader1113 ], [ %.sroa.0.3.be, %any_addrinfos.exit649.thread.backedge ] ; 5 uses
-  %.1525 = phi ptr [ %.0524, %.preheader1113 ], [ %.1525.be, %any_addrinfos.exit649.thread.backedge ] ; 17 uses
-  %.1493 = phi i32 [ %.0492, %.preheader1113 ], [ %.1493.be, %any_addrinfos.exit649.thread.backedge ] ; 12 uses
-  %.1463 = phi ptr [ %.0462, %.preheader1113 ], [ %.1463.be, %any_addrinfos.exit649.thread.backedge ] ; 6 uses
-  %.sroa.18.1 = phi i32 [ %.sroa.18.0, %.preheader1113 ], [ %.sroa.18.1.be, %any_addrinfos.exit649.thread.backedge ] ; 9 uses
-  %.sroa.0233.1 = phi i32 [ %.sroa.0233.0, %.preheader1113 ], [ %.sroa.0233.1.be, %any_addrinfos.exit649.thread.backedge ] ; 9 uses
-  %.1456 = phi i32 [ %.0455, %.preheader1113 ], [ %.1456.be, %any_addrinfos.exit649.thread.backedge ] ; 10 uses
-  %.1 = phi i64 [ %.0442, %.preheader1113 ], [ %.1.be, %any_addrinfos.exit649.thread.backedge ] ; 12 uses
-  %.not27.i = icmp eq i32 %.1493, 10
-  br i1 %.not27.i, label %bb.am, label %bb.ak
+  %.sroa.38.3 = phi ptr [ %.sroa.38.2, %.preheader1113 ], [ %.sroa.38.12, %any_addrinfos.exit649.thread.backedge ] ; 6 uses
+  %.sroa.0.3 = phi ptr [ %.sroa.0.2, %.preheader1113 ], [ %.sroa.0.3.be, %any_addrinfos.exit649.thread.backedge ] ; 6 uses
+  %.1525 = phi ptr [ %.0524, %.preheader1113 ], [ %.1525.be, %any_addrinfos.exit649.thread.backedge ] ; 19 uses
+  %.1493 = phi i32 [ %.0492, %.preheader1113 ], [ %.1493.be, %any_addrinfos.exit649.thread.backedge ] ; 15 uses
+  %.1463 = phi ptr [ %.0462, %.preheader1113 ], [ %.1463.be, %any_addrinfos.exit649.thread.backedge ] ; 8 uses
+  %.sroa.18.1 = phi i32 [ %.sroa.18.0, %.preheader1113 ], [ %.sroa.18.1.be, %any_addrinfos.exit649.thread.backedge ] ; 11 uses
+  %.sroa.0233.1 = phi i32 [ %.sroa.0233.0, %.preheader1113 ], [ %.sroa.0233.1.be, %any_addrinfos.exit649.thread.backedge ] ; 11 uses
+  %.1456 = phi i32 [ %.0455, %.preheader1113 ], [ %.1456.be, %any_addrinfos.exit649.thread.backedge ] ; 12 uses
+  %.1 = phi i64 [ %.0442, %.preheader1113 ], [ %.1.be, %any_addrinfos.exit649.thread.backedge ] ; 14 uses
+  %10 = icmp eq i32 %.1493, 10
+  %11 = select i1 %10, ptr @__const.pick_addrinfo.priority_on_v4, ptr @__const.pick_addrinfo.priority_on_v6 ; 3 uses
+  %12 = load i32, ptr %11, align 4, !tbaa !10
+  %.not27.i = icmp eq i32 %12, 10
+  br i1 %.not27.i, label %bb.ak, label %bb.am
 
 bb.ak:                                            ; preds = %any_addrinfos.exit649.thread
   %.not18.i = icmp eq ptr %.sroa.0.3, null
-  br i1 %.not18.i, label %bb.ao, label %bb.al
+  br i1 %.not18.i, label %13, label %bb.al
 
 bb.al:                                            ; preds = %.thread.a, %bb.ak
   %i.gr = getelementptr inbounds nuw i8, ptr %.sroa.0.3, i64 40
@@ -509,18 +514,30 @@ bb.al:                                            ; preds = %.thread.a, %bb.ak
 
 bb.am:                                            ; preds = %any_addrinfos.exit649.thread
   %.not.i647 = icmp eq ptr %.sroa.38.3, null
-  br i1 %.not.i647, label %.thread.a, label %bb.an
+  br i1 %.not.i647, label %.thread, label %bb.an
 
 bb.an:                                            ; preds = %bb.ao, %bb.am
   %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.38.3, i64 40
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !74
   br label %pick_addrinfo.exit
 
-bb.ao:                                            ; preds = %bb.ak
+13:                                               ; preds = %bb.ak
+  %14 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %15 = load i32, ptr %14, align 4, !tbaa !10
+  %16 = icmp eq i32 %15, 10
+  br i1 %16, label %.thread841, label %bb.ao
+
+.thread:                                          ; preds = %bb.am
+  %17 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %18 = load i32, ptr %17, align 4, !tbaa !10
+  %19 = icmp eq i32 %18, 10
+  br i1 %19, label %.thread.a, label %.thread841
+
+bb.ao:                                            ; preds = %13
   %.not.1.i = icmp eq ptr %.sroa.38.3, null
   br i1 %.not.1.i, label %.thread841, label %bb.an
 
-.thread.a:                                        ; preds = %bb.am
+.thread.a:                                        ; preds = %.thread
   %.not18.1.i = icmp eq ptr %.sroa.0.3, null
   br i1 %.not18.1.i, label %.thread841, label %bb.al
 
@@ -923,18 +940,18 @@ bb.ce:                                            ; preds = %bb.cd
   call void @rsock_syserr_fail_host_port(i32 noundef %i.ma, ptr noundef nonnull @.str.28, i64 noundef %.2478, i64 noundef %.2484) #17
   unreachable
 
-.thread841:                                       ; preds = %bb.ao, %.thread.a, %bb.au, %add_ts_to_tv.exit677, %bb.bb, %bb.bw, %bb.cd, %bb.ar, %any_addrinfos.exit
-  %.4864 = phi i64 [ %.2, %bb.cd ], [ %.0442, %any_addrinfos.exit ], [ %.1, %bb.ar ], [ %.1, %bb.au ], [ %.2, %add_ts_to_tv.exit677 ], [ %.1, %bb.bb ], [ %.2, %bb.bw ], [ %.1, %.thread.a ], [ %.1, %bb.ao ] ; 9 uses
-  %.4459863 = phi i32 [ %.2457, %bb.cd ], [ %.0455, %any_addrinfos.exit ], [ %.1456, %bb.ar ], [ %.1456, %bb.au ], [ %.2457, %add_ts_to_tv.exit677 ], [ %i.id, %bb.bb ], [ %.2457, %bb.bw ], [ %.1456, %.thread.a ], [ %.1456, %bb.ao ] ; 9 uses
-  %.sroa.0233.3862 = phi i32 [ 1, %bb.cd ], [ %.sroa.0233.0, %any_addrinfos.exit ], [ %.sroa.0233.1, %bb.ar ], [ 1, %bb.au ], [ %.sroa.0233.1, %add_ts_to_tv.exit677 ], [ 1, %bb.bb ], [ %.sroa.0233.1, %bb.bw ], [ %.sroa.0233.1, %.thread.a ], [ %.sroa.0233.1, %bb.ao ] ; 9 uses
-  %.sroa.18.3861 = phi i32 [ %i.ma, %bb.cd ], [ %.sroa.18.0, %any_addrinfos.exit ], [ %.sroa.18.1, %bb.ar ], [ %i.hr, %bb.au ], [ %.sroa.18.1, %add_ts_to_tv.exit677 ], [ %i.ig, %bb.bb ], [ %.sroa.18.1, %bb.bw ], [ %.sroa.18.1, %.thread.a ], [ %.sroa.18.1, %bb.ao ] ; 9 uses
-  %.3465860 = phi ptr [ @.str.28, %bb.cd ], [ %.0462, %any_addrinfos.exit ], [ %.1463, %bb.ar ], [ @.str.25, %bb.au ], [ @.str.28, %add_ts_to_tv.exit677 ], [ @.str.27, %bb.bb ], [ @.str.28, %bb.bw ], [ %.1463, %.thread.a ], [ %.1463, %bb.ao ] ; 9 uses
-  %.4496859 = phi i32 [ %.2494, %bb.cd ], [ %.0492, %any_addrinfos.exit ], [ %.1493, %bb.ar ], [ %.1493, %bb.au ], [ %.2494, %add_ts_to_tv.exit677 ], [ %.1493, %bb.bb ], [ %.2494, %bb.bw ], [ %.1493, %bb.ao ], [ 10, %.thread.a ] ; 9 uses
-  %.4501858 = phi i32 [ %.0497, %bb.cd ], [ %.0497, %any_addrinfos.exit ], [ %.0497, %bb.ar ], [ %.0497, %bb.au ], [ %.2499, %add_ts_to_tv.exit677 ], [ %.0497, %bb.bb ], [ %.2499, %bb.bw ], [ %.0497, %.thread.a ], [ %.0497, %bb.ao ] ; 9 uses
-  %.3514857 = phi ptr [ null, %bb.cd ], [ %.0511, %any_addrinfos.exit ], [ null, %bb.ar ], [ null, %bb.au ], [ %5, %add_ts_to_tv.exit677 ], [ null, %bb.bb ], [ %5, %bb.bw ], [ null, %.thread.a ], [ null, %bb.ao ] ; 9 uses
-  %.7531856 = phi ptr [ %.4528, %bb.cd ], [ %.0524, %any_addrinfos.exit ], [ %.1525, %bb.ar ], [ %.1525, %bb.au ], [ %7, %add_ts_to_tv.exit677 ], [ %.1525, %bb.bb ], [ %7, %bb.bw ], [ %.1525, %.thread.a ], [ %.1525, %bb.ao ] ; 14 uses
-  %.sroa.0.4855 = phi ptr [ null, %bb.cd ], [ %.sroa.0.2, %any_addrinfos.exit ], [ null, %bb.ar ], [ null, %bb.au ], [ null, %add_ts_to_tv.exit677 ], [ null, %bb.bb ], [ null, %bb.bw ], [ null, %.thread.a ], [ null, %bb.ao ] ; 2 uses
-  %.sroa.38.4854 = phi ptr [ null, %bb.cd ], [ %.sroa.38.2, %any_addrinfos.exit ], [ null, %bb.ar ], [ null, %bb.au ], [ null, %add_ts_to_tv.exit677 ], [ null, %bb.bb ], [ null, %bb.bw ], [ null, %.thread.a ], [ null, %bb.ao ] ; 2 uses
+.thread841:                                       ; preds = %.thread, %13, %bb.ao, %.thread.a, %bb.au, %add_ts_to_tv.exit677, %bb.bb, %bb.bw, %bb.cd, %bb.ar, %any_addrinfos.exit
+  %.4864 = phi i64 [ %.2, %bb.bw ], [ %.0442, %any_addrinfos.exit ], [ %.1, %bb.bb ], [ %.2, %bb.cd ], [ %.1, %bb.ar ], [ %.1, %bb.au ], [ %.2, %add_ts_to_tv.exit677 ], [ %.1, %.thread.a ], [ %.1, %bb.ao ], [ %.1, %13 ], [ %.1, %.thread ] ; 9 uses
+  %.4459863 = phi i32 [ %.2457, %bb.bw ], [ %.0455, %any_addrinfos.exit ], [ %i.id, %bb.bb ], [ %.2457, %bb.cd ], [ %.1456, %bb.ar ], [ %.1456, %bb.au ], [ %.2457, %add_ts_to_tv.exit677 ], [ %.1456, %.thread.a ], [ %.1456, %bb.ao ], [ %.1456, %13 ], [ %.1456, %.thread ] ; 9 uses
+  %.sroa.0233.3862 = phi i32 [ %.sroa.0233.1, %bb.bw ], [ %.sroa.0233.0, %any_addrinfos.exit ], [ 1, %bb.bb ], [ 1, %bb.cd ], [ %.sroa.0233.1, %bb.ar ], [ 1, %bb.au ], [ %.sroa.0233.1, %add_ts_to_tv.exit677 ], [ %.sroa.0233.1, %.thread.a ], [ %.sroa.0233.1, %bb.ao ], [ %.sroa.0233.1, %13 ], [ %.sroa.0233.1, %.thread ] ; 9 uses
+  %.sroa.18.3861 = phi i32 [ %.sroa.18.1, %bb.bw ], [ %.sroa.18.0, %any_addrinfos.exit ], [ %i.ig, %bb.bb ], [ %i.ma, %bb.cd ], [ %.sroa.18.1, %bb.ar ], [ %i.hr, %bb.au ], [ %.sroa.18.1, %add_ts_to_tv.exit677 ], [ %.sroa.18.1, %.thread.a ], [ %.sroa.18.1, %bb.ao ], [ %.sroa.18.1, %13 ], [ %.sroa.18.1, %.thread ] ; 9 uses
+  %.3465860 = phi ptr [ @.str.28, %bb.bw ], [ %.0462, %any_addrinfos.exit ], [ @.str.27, %bb.bb ], [ @.str.28, %bb.cd ], [ %.1463, %bb.ar ], [ @.str.25, %bb.au ], [ @.str.28, %add_ts_to_tv.exit677 ], [ %.1463, %.thread.a ], [ %.1463, %bb.ao ], [ %.1463, %13 ], [ %.1463, %.thread ] ; 9 uses
+  %.4496859 = phi i32 [ %.2494, %bb.bw ], [ %.0492, %any_addrinfos.exit ], [ %.1493, %bb.bb ], [ %.2494, %bb.cd ], [ %.1493, %bb.ar ], [ %.1493, %bb.au ], [ %.2494, %add_ts_to_tv.exit677 ], [ %.1493, %.thread.a ], [ %.1493, %bb.ao ], [ %.1493, %13 ], [ %.1493, %.thread ] ; 9 uses
+  %.4501858 = phi i32 [ %.2499, %bb.bw ], [ %.0497, %any_addrinfos.exit ], [ %.0497, %bb.bb ], [ %.0497, %bb.cd ], [ %.0497, %bb.ar ], [ %.0497, %bb.au ], [ %.2499, %add_ts_to_tv.exit677 ], [ %.0497, %.thread.a ], [ %.0497, %bb.ao ], [ %.0497, %13 ], [ %.0497, %.thread ] ; 9 uses
+  %.3514857 = phi ptr [ %5, %bb.bw ], [ %.0511, %any_addrinfos.exit ], [ null, %bb.bb ], [ null, %bb.cd ], [ null, %bb.ar ], [ null, %bb.au ], [ %5, %add_ts_to_tv.exit677 ], [ null, %.thread.a ], [ null, %bb.ao ], [ null, %13 ], [ null, %.thread ] ; 9 uses
+  %.7531856 = phi ptr [ %7, %bb.bw ], [ %.0524, %any_addrinfos.exit ], [ %.1525, %bb.bb ], [ %.4528, %bb.cd ], [ %.1525, %bb.ar ], [ %.1525, %bb.au ], [ %7, %add_ts_to_tv.exit677 ], [ %.1525, %.thread.a ], [ %.1525, %bb.ao ], [ %.1525, %13 ], [ %.1525, %.thread ] ; 14 uses
+  %.sroa.0.4855 = phi ptr [ null, %bb.bw ], [ %.sroa.0.2, %any_addrinfos.exit ], [ null, %bb.bb ], [ null, %bb.cd ], [ null, %bb.ar ], [ null, %bb.au ], [ null, %add_ts_to_tv.exit677 ], [ %.sroa.0.3, %.thread ], [ null, %13 ], [ null, %bb.ao ], [ null, %.thread.a ] ; 2 uses
+  %.sroa.38.4854 = phi ptr [ null, %bb.bw ], [ %.sroa.38.2, %any_addrinfos.exit ], [ null, %bb.bb ], [ null, %bb.cd ], [ null, %bb.ar ], [ null, %bb.au ], [ null, %add_ts_to_tv.exit677 ], [ null, %.thread ], [ %.sroa.38.3, %13 ], [ null, %bb.ao ], [ null, %.thread.a ] ; 2 uses
   %.not.i.i680 = icmp eq ptr %.sroa.0.4855, null  ; 2 uses
   %.not2.i = icmp eq ptr %.sroa.38.4854, null
   %or.cond.i = select i1 %.not.i.i680, i1 %.not2.i, i1 false

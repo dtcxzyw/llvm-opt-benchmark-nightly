@@ -205,9 +205,9 @@ bb.gb:                                            ; preds = %bb.fw, %bb.ga
   %.sroa.11.0.i = phi i32 [ %.val150.i, %bb.fw ], [ %i.qe, %bb.ga ] ; 3 uses
   %i.qg = and i16 %i.ia, 2
   %.not.i.i273.i = icmp ne i16 %i.qg, 0           ; 8 uses
-  %.not.i2.i.i = trunc i16 %i.ia to i1            ; 6 uses
+  %.not.i2.i.i = trunc i16 %i.ia to i1            ; 2 uses
   %..i.i = select i1 %.not.i2.i.i, ptr @643, ptr @642
-  %.1.i.i = select i1 %.not.i2.i.i, ptr @641, ptr @640 ; 2 uses
+  %.1.i.i = select i1 %.not.i2.i.i, ptr @641, ptr @640 ; 6 uses
   %.sroa.5.0.i.i.neg = select i1 %.not.i.i273.i, i64 -3, i64 -1
   %.sroa.5.0.i.i = select i1 %.not.i.i273.i, i64 3, i64 1 ; 10 uses
   %.sroa.0.0.i274.i = select i1 %.not.i.i273.i, ptr %.1.i.i, ptr %..i.i ; 9 uses
@@ -442,18 +442,21 @@ bb.gr:                                            ; preds = %bb.gq
   br i1 %.not.i.i273.i, label %.peel.next.i.i.i.i.i, label %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.thread.i.i.i.i
 
 .peel.next.i.i.i.i.i:                             ; preds = %bb.gr
-  %.sroa.5.0.peel.i.i.i.i.i = select i1 %.not.i2.i.i, i8 34, i8 39 ; 4 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 1
+  %.sroa.5.0.peel.i.i.i.i.i = load i8, ptr %3, align 1, !alias.scope !716, !noalias !717, !noundef !15 ; 4 uses
+  %4 = zext i8 %.sroa.5.0.peel.i.i.i.i.i to i32
+  %5 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 2
   %i.tb = shl nuw nsw i32 %i.sz, 2
-  %3 = shl nuw nsw i8 %.sroa.5.0.peel.i.i.i.i.i, 1
-  %4 = zext nneg i8 %3 to i32
-  %5 = add nuw nsw i32 %i.tb, %4
-  %6 = select i1 %.not.i2.i.i, i32 34, i32 39
-  %i.tc = add nuw nsw i32 %5, %6                  ; 2 uses
+  %6 = shl nuw nsw i32 %4, 1
+  %7 = add nuw nsw i32 %6, %i.tb
+  %.sroa.5.0.i.i.i.i.i = load i8, ptr %5, align 1, !alias.scope !716, !noalias !717, !noundef !15
+  %8 = zext i8 %.sroa.5.0.i.i.i.i.i to i32
+  %i.tc = add nuw nsw i32 %7, %8                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !718
   store i8 0, ptr %i.j, align 1, !noalias !718
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !718
   store i8 1, ptr %i.i, align 1, !noalias !718
-  %i.td = zext nneg i8 %.sroa.5.0.peel.i.i.i.i.i to i64
+  %i.td = zext i8 %.sroa.5.0.peel.i.i.i.i.i to i64
   %i.te = getelementptr inbounds nuw i8, ptr @383, i64 %i.td
   %i.tf = load i8, ptr %i.te, align 1, !noalias !718, !noundef !15
   %i.tg = zext i8 %i.sy to i64
@@ -675,11 +678,16 @@ bb.hj:                                            ; preds = %bb.gq
   br i1 %.not.i.i273.i, label %.peel.next.i.i.i, label %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i
 
 .peel.next.i.i.i:                                 ; preds = %bb.hj
-  %7 = select i1 %.not.i2.i.i, i32 68, i32 78
+  %9 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 1
+  %.sroa.5.0.peel.i.i.i = load i8, ptr %9, align 1, !alias.scope !727, !noalias !728, !noundef !15
+  %10 = zext i8 %.sroa.5.0.peel.i.i.i to i32
+  %11 = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 2
   %i.vr = shl nuw nsw i32 %i.vq, 2
-  %i.vs = add nuw nsw i32 %7, %i.vr
-  %8 = select i1 %.not.i2.i.i, i32 34, i32 39
-  %i.vt = add nuw nsw i32 %i.vs, %8
+  %12 = shl nuw nsw i32 %10, 1
+  %i.vs = add nuw nsw i32 %12, %i.vr
+  %.sroa.5.0.i.i.i = load i8, ptr %11, align 1, !alias.scope !727, !noalias !728, !noundef !15
+  %13 = zext i8 %.sroa.5.0.i.i.i to i32
+  %i.vt = add nuw nsw i32 %i.vs, %13
   br label %_RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i
 
 _RNvMNtNtNtCsiVHPhtDv1FH_6memchr4arch3all9rabinkarpNtB2_6Finder3new.exit.i.i: ; preds = %.peel.next.i.i.i, %bb.hj

@@ -205,6 +205,8 @@ begin_hunk_0
 @_ZZN3fmt3v126detail15do_count_digitsEmE20zero_or_powers_of_10 = linkonce_odr hidden local_unnamed_addr constant [21 x i64] [i64 0, i64 0, i64 10, i64 100, i64 1000, i64 10000, i64 100000, i64 1000000, i64 10000000, i64 100000000, i64 1000000000, i64 10000000000, i64 100000000000, i64 1000000000000, i64 10000000000000, i64 100000000000000, i64 1000000000000000, i64 10000000000000000, i64 100000000000000000, i64 1000000000000000000, i64 -8446744073709551616], comdat, align 16
 @_ZNSt7__cxx118numpunctIwE2idE = external global %"class.std::locale::id", align 8
 @__const._ZN3fmt3v126detail18make_write_int_argIoEENS1_13write_int_argINSt11conditionalIXaalecl8num_bitsIT_EELi32EntLi0EEjNS4_IXlecl8num_bitsIS5_EELi64EEmoE4typeEE4typeEEES5_NS0_4signE.prefixes = private unnamed_addr constant [4 x i32] [i32 0, i32 0, i32 16777259, i32 16777248], align 16
+@.str.400 = private unnamed_addr constant [3 x i8] c"e+\00", align 1
+@.str.401 = private unnamed_addr constant [3 x i8] c"e-\00", align 1
 @.str.402 = private unnamed_addr constant [4 x i8] c"NAN\00", align 1
 @.str.403 = private unnamed_addr constant [4 x i8] c"nan\00", align 1
 @.str.404 = private unnamed_addr constant [4 x i8] c"INF\00", align 1
@@ -607,6 +609,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ag = icmp slt i32 %i.z, 1                    ; 2 uses
   %i.ah = sub nsw i32 1, %i.z
   %spec.select = select i1 %i.ag, i32 %i.ah, i32 %i.aa ; 4 uses
+  %spec.select68 = select i1 %i.ag, ptr @.str.401, ptr @.str.400 ; 2 uses
   %.not = icmp ne i64 %i.v, 1                     ; 3 uses
   %i.ai = add nsw i32 %.lobit, %i.w
   %i.aj = zext i1 %.not to i32
@@ -732,11 +735,15 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.k, %_ZN3fmt3v126detail17do_format_decimalIwjEEPT_S4_T0_i.exit
   %.162 = phi ptr [ %i.co, %_ZN3fmt3v126detail17do_format_decimalIwjEEPT_S4_T0_i.exit ], [ %i.cs, %bb.k ] ; 4 uses
+  %6 = load i8, ptr %spec.select68, align 1, !tbaa !134
+  %7 = sext i8 %6 to i32
   %i.ct = getelementptr inbounds nuw i8, ptr %.162, i64 4
-  store i32 101, ptr %.162, align 4, !tbaa !192
-  %6 = select i1 %i.ag, i32 45, i32 43
+  store i32 %7, ptr %.162, align 4, !tbaa !192
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select68, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !134
+  %10 = sext i8 %9 to i32
   %i.cu = getelementptr inbounds nuw i8, ptr %.162, i64 8 ; 2 uses
-  store i32 %6, ptr %i.ct, align 4, !tbaa !192
+  store i32 %10, ptr %i.ct, align 4, !tbaa !192
   br i1 %i.al, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -1139,6 +1146,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ai = icmp slt i32 %i.ab, 1                   ; 2 uses
   %i.aj = sub nsw i32 1, %i.ab
   %spec.select = select i1 %i.ai, i32 %i.aj, i32 %i.ac ; 4 uses
+  %spec.select68 = select i1 %i.ai, ptr @.str.401, ptr @.str.400 ; 2 uses
   %.not = icmp ne i32 %i.aa, 1                    ; 3 uses
   %i.ak = add nsw i32 %i.aa, %i.d
   %i.al = zext i1 %.not to i32
@@ -1258,11 +1266,15 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.k, %_ZN3fmt3v126detail17do_format_decimalIwmEEPT_S4_T0_i.exit
   %.162 = phi ptr [ %i.cj, %_ZN3fmt3v126detail17do_format_decimalIwmEEPT_S4_T0_i.exit ], [ %i.co, %bb.k ] ; 4 uses
+  %6 = load i8, ptr %spec.select68, align 1, !tbaa !134
+  %7 = sext i8 %6 to i32
   %i.cp = getelementptr inbounds nuw i8, ptr %.162, i64 4
-  store i32 101, ptr %.162, align 4, !tbaa !192
-  %6 = select i1 %i.ai, i32 45, i32 43
+  store i32 %7, ptr %.162, align 4, !tbaa !192
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select68, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !134
+  %10 = sext i8 %9 to i32
   %i.cq = getelementptr inbounds nuw i8, ptr %.162, i64 8 ; 2 uses
-  store i32 %6, ptr %i.cp, align 4, !tbaa !192
+  store i32 %10, ptr %i.cp, align 4, !tbaa !192
   br i1 %i.an, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -1665,6 +1677,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ag = icmp slt i32 %i.z, 1                    ; 2 uses
   %i.ah = sub nsw i32 1, %i.z
   %spec.select = select i1 %i.ag, i32 %i.ah, i32 %i.aa ; 4 uses
+  %spec.select68 = select i1 %i.ag, ptr @.str.401, ptr @.str.400 ; 2 uses
   %.not = icmp ne i64 %i.v, 1                     ; 3 uses
   %i.ai = add nsw i32 %.lobit, %i.w
   %i.aj = zext i1 %.not to i32
@@ -1792,11 +1805,15 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.k, %_ZN3fmt3v126detail17do_format_decimalIDsjEEPT_S4_T0_i.exit
   %.162 = phi ptr [ %i.cp, %_ZN3fmt3v126detail17do_format_decimalIDsjEEPT_S4_T0_i.exit ], [ %i.cu, %bb.k ] ; 4 uses
+  %6 = load i8, ptr %spec.select68, align 1, !tbaa !134
+  %7 = sext i8 %6 to i16
   %i.cv = getelementptr inbounds nuw i8, ptr %.162, i64 2
-  store i16 101, ptr %.162, align 2, !tbaa !217
-  %6 = select i1 %i.ag, i16 45, i16 43
+  store i16 %7, ptr %.162, align 2, !tbaa !217
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select68, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !134
+  %10 = sext i8 %9 to i16
   %i.cw = getelementptr inbounds nuw i8, ptr %.162, i64 4 ; 2 uses
-  store i16 %6, ptr %i.cv, align 2, !tbaa !217
+  store i16 %10, ptr %i.cv, align 2, !tbaa !217
   br i1 %i.al, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -2199,6 +2216,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ai = icmp slt i32 %i.ab, 1                   ; 2 uses
   %i.aj = sub nsw i32 1, %i.ab
   %spec.select = select i1 %i.ai, i32 %i.aj, i32 %i.ac ; 4 uses
+  %spec.select68 = select i1 %i.ai, ptr @.str.401, ptr @.str.400 ; 2 uses
   %.not = icmp ne i32 %i.aa, 1                    ; 3 uses
   %i.ak = add nsw i32 %i.aa, %i.d
   %i.al = zext i1 %.not to i32
@@ -2318,11 +2336,15 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.k, %_ZN3fmt3v126detail17do_format_decimalIDsmEEPT_S4_T0_i.exit
   %.162 = phi ptr [ %i.cj, %_ZN3fmt3v126detail17do_format_decimalIDsmEEPT_S4_T0_i.exit ], [ %i.co, %bb.k ] ; 4 uses
+  %6 = load i8, ptr %spec.select68, align 1, !tbaa !134
+  %7 = sext i8 %6 to i16
   %i.cp = getelementptr inbounds nuw i8, ptr %.162, i64 2
-  store i16 101, ptr %.162, align 2, !tbaa !217
-  %6 = select i1 %i.ai, i16 45, i16 43
+  store i16 %7, ptr %.162, align 2, !tbaa !217
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select68, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !134
+  %10 = sext i8 %9 to i16
   %i.cq = getelementptr inbounds nuw i8, ptr %.162, i64 4 ; 2 uses
-  store i16 %6, ptr %i.cp, align 2, !tbaa !217
+  store i16 %10, ptr %i.cp, align 2, !tbaa !217
   br i1 %i.an, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -2725,6 +2747,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ag = icmp slt i32 %i.z, 1                    ; 2 uses
   %i.ah = sub nsw i32 1, %i.z
   %spec.select = select i1 %i.ag, i32 %i.ah, i32 %i.aa ; 4 uses
+  %spec.select68 = select i1 %i.ag, ptr @.str.401, ptr @.str.400 ; 2 uses
   %.not = icmp ne i64 %i.v, 1                     ; 3 uses
   %i.ai = add nsw i32 %.lobit, %i.w
   %i.aj = zext i1 %.not to i32
@@ -2850,11 +2873,15 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.k, %_ZN3fmt3v126detail17do_format_decimalIDijEEPT_S4_T0_i.exit
   %.162 = phi ptr [ %i.co, %_ZN3fmt3v126detail17do_format_decimalIDijEEPT_S4_T0_i.exit ], [ %i.cs, %bb.k ] ; 4 uses
+  %6 = load i8, ptr %spec.select68, align 1, !tbaa !134
+  %7 = sext i8 %6 to i32
   %i.ct = getelementptr inbounds nuw i8, ptr %.162, i64 4
-  store i32 101, ptr %.162, align 4, !tbaa !229
-  %6 = select i1 %i.ag, i32 45, i32 43
+  store i32 %7, ptr %.162, align 4, !tbaa !229
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select68, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !134
+  %10 = sext i8 %9 to i32
   %i.cu = getelementptr inbounds nuw i8, ptr %.162, i64 8 ; 2 uses
-  store i32 %6, ptr %i.ct, align 4, !tbaa !229
+  store i32 %10, ptr %i.ct, align 4, !tbaa !229
   br i1 %i.al, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -3257,6 +3284,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ai = icmp slt i32 %i.ab, 1                   ; 2 uses
   %i.aj = sub nsw i32 1, %i.ab
   %spec.select = select i1 %i.ai, i32 %i.aj, i32 %i.ac ; 4 uses
+  %spec.select68 = select i1 %i.ai, ptr @.str.401, ptr @.str.400 ; 2 uses
   %.not = icmp ne i32 %i.aa, 1                    ; 3 uses
   %i.ak = add nsw i32 %i.aa, %i.d
   %i.al = zext i1 %.not to i32
@@ -3376,11 +3404,15 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.k, %_ZN3fmt3v126detail17do_format_decimalIDimEEPT_S4_T0_i.exit
   %.162 = phi ptr [ %i.cj, %_ZN3fmt3v126detail17do_format_decimalIDimEEPT_S4_T0_i.exit ], [ %i.co, %bb.k ] ; 4 uses
+  %6 = load i8, ptr %spec.select68, align 1, !tbaa !134
+  %7 = sext i8 %6 to i32
   %i.cp = getelementptr inbounds nuw i8, ptr %.162, i64 4
-  store i32 101, ptr %.162, align 4, !tbaa !229
-  %6 = select i1 %i.ai, i32 45, i32 43
+  store i32 %7, ptr %.162, align 4, !tbaa !229
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select68, i64 1
+  %9 = load i8, ptr %8, align 1, !tbaa !134
+  %10 = sext i8 %9 to i32
   %i.cq = getelementptr inbounds nuw i8, ptr %.162, i64 8 ; 2 uses
-  store i32 %6, ptr %i.cp, align 4, !tbaa !229
+  store i32 %10, ptr %i.cp, align 4, !tbaa !229
   br i1 %i.an, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l

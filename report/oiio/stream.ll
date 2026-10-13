@@ -17,6 +17,7 @@ module asm
 @_ZN4YAMLL17s_introFinalStateE = internal unnamed_addr constant [19 x i8] c"\00\00\00\00\01\01\00\00\00\00\01\01\00\00\00\00\00\01\01", align 16
 @_ZN4YAMLL18s_introTransitionsE = internal unnamed_addr constant [18 x [8 x i32]] [[8 x i32] [i32 1, i32 17, i32 17, i32 15, i32 6, i32 7, i32 12, i32 17], [8 x i32] [i32 2, i32 17, i32 17, i32 17, i32 17, i32 17, i32 5, i32 17], [8 x i32] [i32 4, i32 17, i32 17, i32 17, i32 3, i32 17, i32 17, i32 17], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 17, i32 4, i32 17, i32 17], [8 x i32] [i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4], [8 x i32] [i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 17, i32 5, i32 17, i32 17], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 8, i32 17, i32 17, i32 17], [8 x i32] [i32 9, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 11, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 11, i32 11, i32 11, i32 11, i32 11, i32 11, i32 11, i32 11], [8 x i32] [i32 13, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17], [8 x i32] [i32 14, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 11, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 17, i32 16, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17]], align 16
 @_ZN4YAMLL17s_introUngetCountE = internal unnamed_addr constant [18 x [8 x i8]] [[8 x i8] c"\00\01\01\00\00\00\00\01", [8 x i8] c"\00\02\02\02\02\02\02\02", [8 x i8] c"\03\03\03\03\00\03\03\03", [8 x i8] c"\04\04\04\04\04\00\04\04", [8 x i8] c"\01\01\01\01\01\01\01\01", [8 x i8] c"\01\01\01\01\01\01\01\01", [8 x i8] c"\02\02\02\02\02\00\02\02", [8 x i8] c"\02\02\02\02\00\02\02\02", [8 x i8] c"\00\01\01\01\01\01\01\01", [8 x i8] c"\00\02\02\02\02\02\02\02", [8 x i8] c"\01\01\01\01\01\01\01\01", [8 x i8] c"\01\01\01\01\01\01\01\01", [8 x i8] c"\00\02\02\02\02\02\02\02", [8 x i8] c"\00\03\03\03\03\03\03\03", [8 x i8] c"\04\04\04\04\04\04\04\04", [8 x i8] c"\02\00\02\02\02\02\02\02", [8 x i8] c"\03\03\00\03\03\03\03\03", [8 x i8] c"\01\01\01\01\01\01\01\01"], align 16
+@_ZZNK4YAML6Stream13StreamInUtf32EvE7indexes = internal unnamed_addr constant [2 x [4 x i32]] [[4 x i32] [i32 3, i32 2, i32 1, i32 0], [4 x i32] [i32 0, i32 1, i32 2, i32 3]], align 16
 @.str = private unnamed_addr constant [48 x i8] c"cannot create std::deque larger than max_size()\00", align 1
 @switch.table._ZN4YAML6StreamC2ERSi = private unnamed_addr constant [8 x i8] c"\04\02\00\00\00\00\01\03", align 4
 
@@ -419,9 +420,12 @@ bb.r:                                             ; preds = %.thread, %_ZNK4YAML
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK4YAML6Stream13StreamInUtf32Ev(ptr noundef nonnull align 8 dereferenceable(128) %0) local_unnamed_addr #0 align 2 {
 bb.a:
+  %1 = alloca [4 x i8], align 1                   ; 13 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.b = load i32, ptr %i.a, align 4, !tbaa !39
-  %i.c = icmp eq i32 %i.b, 4                      ; 4 uses
+  %i.c = icmp eq i32 %i.b, 4
+  %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes = select i1 %i.c, ptr getelementptr inbounds nuw (i8, ptr @_ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, i64 16), ptr @_ZZNK4YAML6Stream13StreamInUtf32EvE7indexes ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 13 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !54   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 9 uses
@@ -461,7 +465,11 @@ bb.c:                                             ; preds = %bb.b
   %.pre.i = load i64, ptr %i.f, align 8, !tbaa !55 ; 2 uses
   %i.ac = icmp eq i64 %.pre.i, 0
   %.pre = load i64, ptr %i.d, align 8, !tbaa !54
-  br i1 %i.ac, label %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a, label %_ZNK4YAML6Stream11GetNextByteEv.exit
+  br i1 %i.ac, label %_ZNK4YAML6Stream11GetNextByteEv.exit.thread, label %_ZNK4YAML6Stream11GetNextByteEv.exit
+
+_ZNK4YAML6Stream11GetNextByteEv.exit.thread:      ; preds = %bb.c
+  store i8 0, ptr %1, align 1, !tbaa !35
+  br label %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a
 
 _ZNK4YAML6Stream11GetNextByteEv.exit:             ; preds = %bb.a, %bb.c, %bb.b
   %i.ad = phi i64 [ %i.g, %bb.a ], [ %i.t, %bb.b ], [ %.pre.i, %bb.c ] ; 2 uses
@@ -471,12 +479,12 @@ _ZNK4YAML6Stream11GetNextByteEv.exit:             ; preds = %bb.a, %bb.c, %bb.b
   %i.ah = add i64 %i.ae, 1                        ; 3 uses
   store i64 %i.ah, ptr %i.d, align 8, !tbaa !54
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.ae
-  %i.aj = load i8, ptr %i.ai, align 1, !tbaa !35  ; 2 uses
+  %i.aj = load i8, ptr %i.ai, align 1, !tbaa !35
+  store i8 %i.aj, ptr %1, align 1, !tbaa !35
   %.not.i8 = icmp ult i64 %i.ah, %i.ad
   br i1 %.not.i8, label %_ZNK4YAML6Stream11GetNextByteEv.exit14, label %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a
 
-_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a:    ; preds = %bb.c, %_ZNK4YAML6Stream11GetNextByteEv.exit
-  %.sroa.0.0 = phi i8 [ %i.aj, %_ZNK4YAML6Stream11GetNextByteEv.exit ], [ 0, %bb.c ] ; 3 uses
+_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a:    ; preds = %_ZNK4YAML6Stream11GetNextByteEv.exit.thread, %_ZNK4YAML6Stream11GetNextByteEv.exit
   %i.ak = load ptr, ptr %0, align 8, !tbaa !48, !nonnull !38, !align !49 ; 2 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !25
   %i.am = getelementptr i8, ptr %i.al, i64 -24
@@ -508,24 +516,28 @@ bb.d:                                             ; preds = %_ZNK4YAML6Stream11G
   %.pre.i13 = load i64, ptr %i.f, align 8, !tbaa !55 ; 2 uses
   %i.bf = icmp eq i64 %.pre.i13, 0
   %.pre34 = load i64, ptr %i.d, align 8, !tbaa !54
-  br i1 %i.bf, label %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a, label %_ZNK4YAML6Stream11GetNextByteEv.exit14
+  br i1 %i.bf, label %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread, label %_ZNK4YAML6Stream11GetNextByteEv.exit14
+
+_ZNK4YAML6Stream11GetNextByteEv.exit14.thread:    ; preds = %bb.d
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  store i8 0, ptr %2, align 1, !tbaa !35
+  br label %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a
 
 _ZNK4YAML6Stream11GetNextByteEv.exit14:           ; preds = %_ZNK4YAML6Stream11GetNextByteEv.exit, %bb.d, %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a
-  %.sroa.0.1 = phi i8 [ %i.aj, %_ZNK4YAML6Stream11GetNextByteEv.exit ], [ %.sroa.0.0, %bb.d ], [ %.sroa.0.0, %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a ] ; 2 uses
-  %i.bg = phi i64 [ %i.ad, %_ZNK4YAML6Stream11GetNextByteEv.exit ], [ %.pre.i13, %bb.d ], [ %i.aw, %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a ] ; 2 uses
-  %i.bh = phi i64 [ %i.ah, %_ZNK4YAML6Stream11GetNextByteEv.exit ], [ %.pre34, %bb.d ], [ 0, %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a ] ; 2 uses
+  %i.bg = phi i64 [ %i.ad, %_ZNK4YAML6Stream11GetNextByteEv.exit ], [ %i.aw, %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a ], [ %.pre.i13, %bb.d ] ; 2 uses
+  %i.bh = phi i64 [ %i.ah, %_ZNK4YAML6Stream11GetNextByteEv.exit ], [ 0, %_ZNK4YAML6Stream11GetNextByteEv.exit.thread.a ], [ %.pre34, %bb.d ] ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !23
   %i.bk = add i64 %i.bh, 1                        ; 3 uses
   store i64 %i.bk, ptr %i.d, align 8, !tbaa !54
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bh
-  %i.bm = load i8, ptr %i.bl, align 1, !tbaa !35  ; 2 uses
+  %i.bm = load i8, ptr %i.bl, align 1, !tbaa !35
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  store i8 %i.bm, ptr %3, align 1, !tbaa !35
   %.not.i15 = icmp ult i64 %i.bk, %i.bg
   br i1 %.not.i15, label %_ZNK4YAML6Stream11GetNextByteEv.exit21, label %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a
 
-_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a:  ; preds = %bb.d, %_ZNK4YAML6Stream11GetNextByteEv.exit14
-  %.sroa.0.2 = phi i8 [ %.sroa.0.1, %_ZNK4YAML6Stream11GetNextByteEv.exit14 ], [ %.sroa.0.0, %bb.d ] ; 3 uses
-  %.sroa.6.0 = phi i8 [ %i.bm, %_ZNK4YAML6Stream11GetNextByteEv.exit14 ], [ 0, %bb.d ] ; 3 uses
+_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a:  ; preds = %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread, %_ZNK4YAML6Stream11GetNextByteEv.exit14
   %i.bn = load ptr, ptr %0, align 8, !tbaa !48, !nonnull !38, !align !49 ; 2 uses
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !25
   %i.bp = getelementptr i8, ptr %i.bo, i64 -24
@@ -557,26 +569,28 @@ bb.e:                                             ; preds = %_ZNK4YAML6Stream11G
   %.pre.i20 = load i64, ptr %i.f, align 8, !tbaa !55 ; 2 uses
   %i.ci = icmp eq i64 %.pre.i20, 0
   %.pre36 = load i64, ptr %i.d, align 8, !tbaa !54
-  br i1 %i.ci, label %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a, label %_ZNK4YAML6Stream11GetNextByteEv.exit21
+  br i1 %i.ci, label %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread, label %_ZNK4YAML6Stream11GetNextByteEv.exit21
+
+_ZNK4YAML6Stream11GetNextByteEv.exit21.thread:    ; preds = %bb.e
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  store i8 0, ptr %4, align 1, !tbaa !35
+  br label %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a
 
 _ZNK4YAML6Stream11GetNextByteEv.exit21:           ; preds = %_ZNK4YAML6Stream11GetNextByteEv.exit14, %bb.e, %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a
-  %.sroa.0.3 = phi i8 [ %.sroa.0.1, %_ZNK4YAML6Stream11GetNextByteEv.exit14 ], [ %.sroa.0.2, %bb.e ], [ %.sroa.0.2, %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a ] ; 2 uses
-  %.sroa.6.1 = phi i8 [ %i.bm, %_ZNK4YAML6Stream11GetNextByteEv.exit14 ], [ %.sroa.6.0, %bb.e ], [ %.sroa.6.0, %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a ] ; 2 uses
-  %i.cj = phi i64 [ %i.bg, %_ZNK4YAML6Stream11GetNextByteEv.exit14 ], [ %.pre.i20, %bb.e ], [ %i.bz, %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a ]
-  %i.ck = phi i64 [ %i.bk, %_ZNK4YAML6Stream11GetNextByteEv.exit14 ], [ %.pre36, %bb.e ], [ 0, %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a ] ; 2 uses
+  %i.cj = phi i64 [ %i.bg, %_ZNK4YAML6Stream11GetNextByteEv.exit14 ], [ %i.bz, %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a ], [ %.pre.i20, %bb.e ]
+  %i.ck = phi i64 [ %i.bk, %_ZNK4YAML6Stream11GetNextByteEv.exit14 ], [ 0, %_ZNK4YAML6Stream11GetNextByteEv.exit14.thread.a ], [ %.pre36, %bb.e ] ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !23
   %i.cn = add i64 %i.ck, 1                        ; 3 uses
   store i64 %i.cn, ptr %i.d, align 8, !tbaa !54
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.ck
-  %i.cp = load i8, ptr %i.co, align 1, !tbaa !35  ; 2 uses
+  %i.cp = load i8, ptr %i.co, align 1, !tbaa !35
   %i.cq = icmp ult i64 %i.cn, %i.cj
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  store i8 %i.cp, ptr %5, align 1, !tbaa !35
   br i1 %i.cq, label %._crit_edge.i24, label %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a
 
-_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a:  ; preds = %bb.e, %_ZNK4YAML6Stream11GetNextByteEv.exit21
-  %.sroa.0.4 = phi i8 [ %.sroa.0.3, %_ZNK4YAML6Stream11GetNextByteEv.exit21 ], [ %.sroa.0.2, %bb.e ] ; 3 uses
-  %.sroa.6.2 = phi i8 [ %.sroa.6.1, %_ZNK4YAML6Stream11GetNextByteEv.exit21 ], [ %.sroa.6.0, %bb.e ] ; 3 uses
-  %.sroa.10.0 = phi i8 [ %i.cp, %_ZNK4YAML6Stream11GetNextByteEv.exit21 ], [ 0, %bb.e ] ; 3 uses
+_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a:  ; preds = %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread, %_ZNK4YAML6Stream11GetNextByteEv.exit21
   %i.cr = load ptr, ptr %0, align 8, !tbaa !48, !nonnull !38, !align !49 ; 2 uses
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !25
   %i.ct = getelementptr i8, ptr %i.cs, i64 -24
@@ -614,9 +628,6 @@ bb.f:                                             ; preds = %_ZNK4YAML6Stream11G
   br label %._crit_edge.i24
 
 ._crit_edge.i24:                                  ; preds = %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a, %.._crit_edge.i24_crit_edge, %_ZNK4YAML6Stream11GetNextByteEv.exit21
-  %.sroa.0.5 = phi i8 [ %.sroa.0.3, %_ZNK4YAML6Stream11GetNextByteEv.exit21 ], [ %.sroa.0.4, %.._crit_edge.i24_crit_edge ], [ %.sroa.0.4, %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a ]
-  %.sroa.6.3 = phi i8 [ %.sroa.6.1, %_ZNK4YAML6Stream11GetNextByteEv.exit21 ], [ %.sroa.6.2, %.._crit_edge.i24_crit_edge ], [ %.sroa.6.2, %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a ]
-  %.sroa.10.1 = phi i8 [ %i.cp, %_ZNK4YAML6Stream11GetNextByteEv.exit21 ], [ %.sroa.10.0, %.._crit_edge.i24_crit_edge ], [ %.sroa.10.0, %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a ]
   %i.dn = phi i64 [ %i.cn, %_ZNK4YAML6Stream11GetNextByteEv.exit21 ], [ %.pre6.i25.pre, %.._crit_edge.i24_crit_edge ], [ 0, %_ZNK4YAML6Stream11GetNextByteEv.exit21.thread.a ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !23
@@ -627,10 +638,9 @@ bb.f:                                             ; preds = %_ZNK4YAML6Stream11G
   br label %_ZNK4YAML6Stream11GetNextByteEv.exit28
 
 _ZNK4YAML6Stream11GetNextByteEv.exit28:           ; preds = %bb.f, %._crit_edge.i24
-  %.sroa.0.6 = phi i8 [ %.sroa.0.5, %._crit_edge.i24 ], [ %.sroa.0.4, %bb.f ] ; 2 uses
-  %.sroa.6.4 = phi i8 [ %.sroa.6.3, %._crit_edge.i24 ], [ %.sroa.6.2, %bb.f ] ; 2 uses
-  %.sroa.10.2 = phi i8 [ %.sroa.10.1, %._crit_edge.i24 ], [ %.sroa.10.0, %bb.f ] ; 2 uses
-  %.1.i26 = phi i8 [ %i.ds, %._crit_edge.i24 ], [ 0, %bb.f ] ; 2 uses
+  %.sroa.6.4 = phi i8 [ %i.ds, %._crit_edge.i24 ], [ 0, %bb.f ]
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 3
+  store i8 %.sroa.6.4, ptr %6, align 1, !tbaa !35
   %i.dt = load ptr, ptr %0, align 8, !tbaa !48, !nonnull !38, !align !49 ; 2 uses
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !25
   %i.dv = getelementptr i8, ptr %i.du, i64 -24
@@ -642,25 +652,41 @@ _ZNK4YAML6Stream11GetNextByteEv.exit28:           ; preds = %bb.f, %._crit_edge.
   br i1 %i.ea, label %.preheader.preheader, label %bb.g
 
 .preheader.preheader:                             ; preds = %_ZNK4YAML6Stream11GetNextByteEv.exit28
-  %.sroa.speculated74 = select i1 %i.c, i8 %.sroa.0.6, i8 %.1.i26
-  %i.eb = zext i8 %.sroa.speculated74 to i64
-  %.sroa.speculated68 = select i1 %i.c, i8 %.sroa.6.4, i8 %.sroa.10.2
-  %i.ec = zext i8 %.sroa.speculated68 to i64
+  %7 = load i32, ptr %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, align 16, !tbaa !8
+  %8 = sext i32 %7 to i64
+  %9 = getelementptr inbounds i8, ptr %1, i64 %8
+  %10 = load i8, ptr %9, align 1, !tbaa !35
+  %i.eb = zext i8 %10 to i64
+  %11 = getelementptr inbounds nuw i8, ptr %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, i64 4
+  %12 = load i32, ptr %11, align 4, !tbaa !8
+  %13 = sext i32 %12 to i64
+  %14 = getelementptr inbounds i8, ptr %1, i64 %13
+  %15 = load i8, ptr %14, align 1, !tbaa !35
+  %i.ec = zext i8 %15 to i64
   %i.ed = shl nuw nsw i64 %i.eb, 16
   %i.ee = shl nuw nsw i64 %i.ec, 8
   %i.ef = or disjoint i64 %i.ed, %i.ee
-  %.sroa.speculated = select i1 %i.c, i8 %.sroa.10.2, i8 %.sroa.6.4
-  %i.eg = zext i8 %.sroa.speculated to i64
+  %16 = getelementptr inbounds nuw i8, ptr %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, i64 8
+  %17 = load i32, ptr %16, align 8, !tbaa !8
+  %18 = sext i32 %17 to i64
+  %19 = getelementptr inbounds i8, ptr %1, i64 %18
+  %20 = load i8, ptr %19, align 1, !tbaa !35
+  %i.eg = zext i8 %20 to i64
   %i.eh = or disjoint i64 %i.ef, %i.eg
   %i.ei = shl nuw nsw i64 %i.eh, 8
-  %.sroa.speculated71 = select i1 %i.c, i8 %.1.i26, i8 %.sroa.0.6
-  %i.ej = zext i8 %.sroa.speculated71 to i64
+  %21 = getelementptr inbounds nuw i8, ptr %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, i64 12
+  %22 = load i32, ptr %21, align 4, !tbaa !8
+  %23 = sext i32 %22 to i64
+  %24 = getelementptr inbounds i8, ptr %1, i64 %23
+  %25 = load i8, ptr %24, align 1, !tbaa !35
+  %i.ej = zext i8 %25 to i64
   %i.ek = or disjoint i64 %i.ei, %i.ej
   %i.el = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @_ZN4YAML21QueueUnicodeCodepointERSt5dequeIcSaIcEEm(ptr noundef nonnull align 8 dereferenceable(80) %i.el, i64 noundef %i.ek)
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNK4YAML6Stream11GetNextByteEv.exit28, %.preheader.preheader
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
   ret void
 }
 

@@ -205,22 +205,18 @@ Vec_StrPrintStr.exit1049:                         ; preds = %Vec_StrPush.exit.i1
   br i1 %i.ft, label %.lr.ph, label %.critedge2
 
 .lr.ph:                                           ; preds = %Vec_StrPrintStr.exit1049
-  %.val846 = load i32, ptr %i.da, align 4, !tbaa !23 ; 2 uses
+  %.val846 = load i32, ptr %i.da, align 4, !tbaa !23
   %i.fu = getelementptr i8, ptr %0, i64 64
   br label %bb.az
 
-thread-pre-split:                                 ; preds = %Vec_StrPrintStr.exit1100
-  %.val845.pre3116.pr = load i32, ptr %i.da, align 4, !tbaa !23
-  br label %bb.az
-
-bb.az:                                            ; preds = %thread-pre-split, %.lr.ph
-  %.val845.pre3116 = phi i32 [ %.val845.pre3116.pr, %thread-pre-split ], [ %.val846, %.lr.ph ] ; 8 uses
-  %indvars.iv3074 = phi i64 [ %indvars.iv.next3075, %thread-pre-split ], [ 0, %.lr.ph ] ; 3 uses
-  %.07733017 = phi i32 [ %.1774, %thread-pre-split ], [ %.val846, %.lr.ph ] ; 2 uses
+bb.az:                                            ; preds = %.lr.ph, %Vec_StrPrintStr.exit1100
+  %indvars.iv3074 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next3075, %Vec_StrPrintStr.exit1100 ] ; 3 uses
+  %.07733017 = phi i32 [ %.val846, %.lr.ph ], [ %.1774, %Vec_StrPrintStr.exit1100 ] ; 2 uses
   %.val953 = load ptr, ptr %i.fu, align 8, !tbaa !27
   %i.fv = getelementptr inbounds nuw [4 x i8], ptr %.val953, i64 %indvars.iv3074
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !28
   %.not831 = icmp eq i64 %indvars.iv3074, 0
+  %.val845.pre3116 = load i32, ptr %i.da, align 4, !tbaa !23 ; 8 uses
   br i1 %.not831, label %Vec_StrPrintStr.exit1066, label %.lr.ph.i1050.preheader
 
 .lr.ph.i1050.preheader:                           ; preds = %bb.az
@@ -623,7 +619,7 @@ Vec_StrPrintStr.exit1100:                         ; preds = %Vec_StrPush.exit.i1
   %.val951 = load i32, ptr %i.fs, align 4, !tbaa !26
   %i.ls = sext i32 %.val951 to i64
   %i.lt = icmp slt i64 %indvars.iv.next3075, %i.ls
-  br i1 %i.lt, label %thread-pre-split, label %.critedge2, !llvm.loop !72
+  br i1 %i.lt, label %bb.az, label %.critedge2, !llvm.loop !72
 
 .critedge2:                                       ; preds = %Vec_StrPrintStr.exit1100, %Vec_StrPrintStr.exit1049
   %i.lu = select i1 %i.j, ptr @.str.76, ptr @.str.77

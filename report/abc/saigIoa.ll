@@ -202,8 +202,7 @@ bb.q:                                             ; preds = %.lr.ph301.preheader
   %i.bp = icmp eq i32 %i.bm, 1
   %Saig_ManReadToken.Buffer..i221.peel = select i1 %i.bp, ptr @Saig_ManReadToken.Buffer, ptr null
   %i.bq = tail call ptr @Saig_ManReadNode(ptr noundef nonnull %i.f, ptr noundef null, ptr noundef %Saig_ManReadToken.Buffer..i221.peel) ; 4 uses
-  %i.br = tail call i32 (ptr, ptr, ...) @__isoc99_fscanf(ptr noundef %i.a, ptr noundef nonnull @.str.23, ptr noundef nonnull @Saig_ManReadToken.Buffer) #12
-  %1 = icmp eq i32 %i.br, 1                       ; 2 uses
+  %i.br = tail call i32 (ptr, ptr, ...) @__isoc99_fscanf(ptr noundef %i.a, ptr noundef nonnull @.str.23, ptr noundef nonnull @Saig_ManReadToken.Buffer) #12 ; 0 uses
   %i.bs = load i8, ptr @Saig_ManReadToken.Buffer, align 16, !tbaa !28
   switch i8 %i.bs, label %bb.w [
     i8 112, label %bb.s
@@ -211,14 +210,12 @@ bb.q:                                             ; preds = %.lr.ph301.preheader
   ]
 
 bb.r:                                             ; preds = %bb.q
-  %2 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @Saig_ManReadToken.Buffer, i64 1), ptr inttoptr (i64 1 to ptr)
-  %i.bt = load i8, ptr %2, align 1, !tbaa !28
+  %i.bt = load i8, ptr getelementptr inbounds nuw (i8, ptr @Saig_ManReadToken.Buffer, i64 1), align 1, !tbaa !28
   %i.bu = icmp eq i8 %i.bt, 105
   br i1 %i.bu, label %bb.t, label %bb.w
 
 bb.s:                                             ; preds = %bb.q
-  %3 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @Saig_ManReadToken.Buffer, i64 1), ptr inttoptr (i64 1 to ptr)
-  %i.bv = load i8, ptr %3, align 1, !tbaa !28
+  %i.bv = load i8, ptr getelementptr inbounds nuw (i8, ptr @Saig_ManReadToken.Buffer, i64 1), align 1, !tbaa !28
   %i.bw = icmp eq i8 %i.bv, 111
   br i1 %i.bw, label %bb.t, label %bb.w
 
@@ -345,8 +342,7 @@ bb.af:                                            ; preds = %bb.ac
   %i.dw = icmp eq i32 %i.dv, 1
   %Saig_ManReadToken.Buffer..i221 = select i1 %i.dw, ptr @Saig_ManReadToken.Buffer, ptr null
   %i.dx = tail call ptr @Saig_ManReadNode(ptr noundef nonnull %i.f, ptr noundef %.0140299, ptr noundef %Saig_ManReadToken.Buffer..i221) ; 4 uses
-  %i.dy = tail call i32 (ptr, ptr, ...) @__isoc99_fscanf(ptr noundef %i.a, ptr noundef nonnull @.str.23, ptr noundef nonnull @Saig_ManReadToken.Buffer) #12
-  %4 = icmp eq i32 %i.dy, 1                       ; 2 uses
+  %i.dy = tail call i32 (ptr, ptr, ...) @__isoc99_fscanf(ptr noundef %i.a, ptr noundef nonnull @.str.23, ptr noundef nonnull @Saig_ManReadToken.Buffer) #12 ; 0 uses
   %i.dz = load i8, ptr @Saig_ManReadToken.Buffer, align 16, !tbaa !28
   switch i8 %i.dz, label %.thread [
     i8 112, label %bb.ag
@@ -354,14 +350,12 @@ bb.af:                                            ; preds = %bb.ac
   ]
 
 bb.ag:                                            ; preds = %.lr.ph301.peel.next
-  %5 = select i1 %4, ptr getelementptr inbounds nuw (i8, ptr @Saig_ManReadToken.Buffer, i64 1), ptr inttoptr (i64 1 to ptr)
-  %i.ea = load i8, ptr %5, align 1, !tbaa !28
+  %i.ea = load i8, ptr getelementptr inbounds nuw (i8, ptr @Saig_ManReadToken.Buffer, i64 1), align 1, !tbaa !28
   %i.eb = icmp eq i8 %i.ea, 111
   br i1 %i.eb, label %bb.ai, label %.thread
 
 bb.ah:                                            ; preds = %.lr.ph301.peel.next
-  %6 = select i1 %4, ptr getelementptr inbounds nuw (i8, ptr @Saig_ManReadToken.Buffer, i64 1), ptr inttoptr (i64 1 to ptr)
-  %i.ec = load i8, ptr %6, align 1, !tbaa !28
+  %i.ec = load i8, ptr getelementptr inbounds nuw (i8, ptr @Saig_ManReadToken.Buffer, i64 1), align 1, !tbaa !28
   %i.ed = icmp eq i8 %i.ec, 105
   br i1 %i.ed, label %bb.ai, label %.thread
 

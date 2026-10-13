@@ -205,8 +205,8 @@ _ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit21.th
 _ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit: ; preds = %_ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit21.thread.i, %_ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit.i
   %.sroa.07.2.i = phi i32 [ %.sroa.013.2.i.i, %_ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit.i ], [ %.sroa.07.1.i, %_ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit21.thread.i ]
   %i.bm = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL23EnableStackOVFSanitizer, i64 120), align 8, !tbaa !320, !range !42, !noundef !43
-  %i.bn = trunc nuw i8 %i.bm to i1                ; 7 uses
-  %..sroa.sel.i = select i1 %i.bn, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryStkchkFunctions, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryFunctions
+  %i.bn = trunc nuw i8 %i.bm to i1                ; 2 uses
+  %..sroa.sel.i = select i1 %i.bn, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryStkchkFunctions, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryFunctions ; 6 uses
   switch i32 %.sroa.07.2.i, label %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit.thread [
     i32 135, label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
     i32 137, label %bb.h
@@ -217,23 +217,23 @@ _ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetReg
   ]
 
 bb.h:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %7 = select i1 %i.bn, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryStkchkFunctions, i64 8), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryFunctions, i64 8)
+  %7 = getelementptr inbounds nuw i8, ptr %..sroa.sel.i, i64 8
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 bb.i:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %8 = select i1 %i.bn, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryStkchkFunctions, i64 16), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryFunctions, i64 16)
+  %8 = getelementptr inbounds nuw i8, ptr %..sroa.sel.i, i64 16
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 bb.j:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %9 = select i1 %i.bn, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryStkchkFunctions, i64 24), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryFunctions, i64 24)
+  %9 = getelementptr inbounds nuw i8, ptr %..sroa.sel.i, i64 24
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 bb.k:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %10 = select i1 %i.bn, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryStkchkFunctions, i64 32), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryFunctions, i64 32)
+  %10 = getelementptr inbounds nuw i8, ptr %..sroa.sel.i, i64 32
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 bb.l:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %11 = select i1 %i.bn, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryStkchkFunctions, i64 40), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillToMemoryFunctions, i64 40)
+  %11 = getelementptr inbounds nuw i8, ptr %..sroa.sel.i, i64 40
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 _ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit.thread: ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
@@ -636,7 +636,7 @@ _ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEppEv.exit.i: ; pred
   br i1 %.not.not.i, label %_ZL9hasReturnRKN4llvm17MachineBasicBlockE.exit, label %.lr.ph.i
 
 _ZL9hasReturnRKN4llvm17MachineBasicBlockE.exit:   ; preds = %_ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEppEv.exit.i, %_ZNK4llvm12MachineInstr8isReturnENS0_9QueryTypeE.exit.i, %.split.i, %_ZL11hasTailCallRKN4llvm17MachineBasicBlockE.exit.thread, %_ZL11hasTailCallRKN4llvm17MachineBasicBlockE.exit
-  %i.as = phi i1 [ true, %_ZL11hasTailCallRKN4llvm17MachineBasicBlockE.exit ], [ true, %_ZL11hasTailCallRKN4llvm17MachineBasicBlockE.exit.thread ], [ true, %_ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEppEv.exit.i ], [ false, %_ZNK4llvm12MachineInstr8isReturnENS0_9QueryTypeE.exit.i ], [ false, %.split.i ] ; 7 uses
+  %i.as = phi i1 [ true, %_ZL11hasTailCallRKN4llvm17MachineBasicBlockE.exit ], [ true, %_ZL11hasTailCallRKN4llvm17MachineBasicBlockE.exit.thread ], [ true, %_ZN4llvm26MachineInstrBundleIteratorIKNS_12MachineInstrELb0EEppEv.exit.i ], [ false, %_ZNK4llvm12MachineInstr8isReturnENS0_9QueryTypeE.exit.i ], [ false, %.split.i ] ; 2 uses
   %i.at = load ptr, ptr %2, align 8, !tbaa !497   ; 4 uses
   %i.au = load ptr, ptr %i.b, align 8, !tbaa !498 ; 2 uses
   %i.av = ptrtoint ptr %i.au to i64
@@ -744,7 +744,7 @@ _ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit21.th
 
 _ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit: ; preds = %_ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit21.thread.i, %_ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit.i
   %.sroa.07.2.i = phi i32 [ %.sroa.013.2.i.i, %_ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit.i ], [ %.sroa.07.1.i, %_ZL22getMax32BitSubRegisterN4llvm8RegisterERKNS_18TargetRegisterInfoEb.exit21.thread.i ]
-  %spec.select = select i1 %i.as, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryTailcallFunctions, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryFunctions
+  %spec.select = select i1 %i.as, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryTailcallFunctions, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryFunctions ; 6 uses
   switch i32 %.sroa.07.2.i, label %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit.thread [
     i32 135, label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
     i32 137, label %bb.g
@@ -755,23 +755,23 @@ _ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetReg
   ]
 
 bb.g:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %7 = select i1 %i.as, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryTailcallFunctions, i64 8), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryFunctions, i64 8)
+  %7 = getelementptr inbounds nuw i8, ptr %spec.select, i64 8
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 bb.h:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %8 = select i1 %i.as, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryTailcallFunctions, i64 16), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryFunctions, i64 16)
+  %8 = getelementptr inbounds nuw i8, ptr %spec.select, i64 16
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 bb.i:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %9 = select i1 %i.as, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryTailcallFunctions, i64 24), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryFunctions, i64 24)
+  %9 = getelementptr inbounds nuw i8, ptr %spec.select, i64 24
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 bb.j:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %10 = select i1 %i.as, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryTailcallFunctions, i64 32), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryFunctions, i64 32)
+  %10 = getelementptr inbounds nuw i8, ptr %spec.select, i64 32
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 bb.k:                                             ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit
-  %11 = select i1 %i.as, ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryTailcallFunctions, i64 40), ptr getelementptr inbounds nuw (i8, ptr @__const._ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.V4SpillFromMemoryFunctions, i64 40)
+  %11 = getelementptr inbounds nuw i8, ptr %spec.select, i64 40
   br label %_ZL19getSpillFunctionForN4llvm8RegisterE9SpillKindb.exit
 
 _ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit.thread: ; preds = %_ZL20getMaxCalleeSavedRegN4llvm8ArrayRefINS_15CalleeSavedInfoEEERKNS_18TargetRegisterInfoE.exit

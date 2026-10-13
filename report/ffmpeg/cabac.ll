@@ -204,29 +204,19 @@ vvc_get_cabac.exit:                               ; preds = %bb.a, %bb.b, %bb.c
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define zeroext i1 @ff_vvc_run_copy_flag(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #2 {
-  %5 = xor i32 %2, -1
-  %6 = add i32 %3, %5                             ; 2 uses
-  %7 = icmp eq i32 %1, 1                          ; 2 uses
-  %8 = icmp slt i32 %6, 5
-  br i1 %8, label %9, label %14
-
-9:                                                ; preds = %4
-  %10 = select i1 %7, ptr @__const.ff_vvc_run_copy_flag.run_top_lut, ptr @__const.ff_vvc_run_copy_flag.run_left_lut
-  %11 = sext i32 %6 to i64
-  %12 = getelementptr inbounds i8, ptr %10, i64 %11
-  %13 = load i8, ptr %12, align 1, !tbaa !109
-  br label %bb.a
-
-14:                                               ; preds = %4
-  %15 = select i1 %7, i8 7, i8 4
-  br label %bb.a
-
-bb.a:                                             ; preds = %14, %9
-  %16 = phi i8 [ %13, %9 ], [ %15, %14 ]
+bb.a:
+  %4 = xor i32 %2, -1
+  %5 = add i32 %3, %4
+  %6 = icmp eq i32 %1, 1
+  %7 = select i1 %6, ptr @__const.ff_vvc_run_copy_flag.run_top_lut, ptr @__const.ff_vvc_run_copy_flag.run_left_lut
+  %narrow = tail call i32 @llvm.smin.i32(i32 %5, i32 4)
+  %.in.in.v = sext i32 %narrow to i64
+  %.in.in = getelementptr inbounds i8, ptr %7, i64 %.in.in.v
+  %.in = load i8, ptr %.in.in, align 1, !tbaa !109
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !82  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
-  %i.d = zext i8 %16 to i64
+  %i.d = zext i8 %.in to i64
   %i.e = getelementptr i8, ptr %i.b, i64 728
   %i.f = getelementptr [6 x i8], ptr %i.e, i64 %i.d ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 28 ; 2 uses

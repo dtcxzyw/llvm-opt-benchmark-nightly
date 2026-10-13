@@ -155,6 +155,10 @@ $__clang_call_terminate = comdat any
 @__func__._ZN2cv27cvtColorTwoPlaneYUV2BGRpairERKNS_11_InputArrayES2_RKNS_12_OutputArrayENS_13AlgorithmHintEibi = private unnamed_addr constant [28 x i8] c"cvtColorTwoPlaneYUV2BGRpair\00", align 1
 @.str.40 = private unnamed_addr constant [15 x i8] c"depth == CV_8U\00", align 1
 @.str.41 = private unnamed_addr constant [59 x i8] c"ysz.width == uvs.width * 2 && ysz.height == uvs.height * 2\00", align 1
+@_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC1EiibE10coeffs_crb = internal unnamed_addr constant [5 x i32] [i32 4899, i32 9617, i32 1868, i32 11682, i32 9241], align 16
+@_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC1EiibE10coeffs_yuv = internal unnamed_addr constant [5 x i32] [i32 4899, i32 9617, i32 1868, i32 14369, i32 8061], align 16
+@_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEC1EiibE10coeffs_crb = internal unnamed_addr constant [5 x float] [float 2.990000e-01, float 5.870000e-01, float 1.140000e-01, float f0x3F36872B, float 5.640000e-01], align 16
+@_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEC1EiibE10coeffs_yuv = internal unnamed_addr constant [5 x float] [float 2.990000e-01, float 5.870000e-01, float 1.140000e-01, float f0x3F608312, float 4.920000e-01], align 16
 @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111YCrCb2RGB_iItEC1EiibE10coeffs_crb = internal unnamed_addr constant [4 x i32] [i32 22987, i32 -11698, i32 -5636, i32 29049], align 16
 @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111YCrCb2RGB_iItEC1EiibE10coeffs_yuv = internal unnamed_addr constant [4 x i32] [i32 18678, i32 -9519, i32 -6472, i32 33292], align 16
 @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111YCrCb2RGB_fIfEC1EiibE10coeffs_cbr = internal unnamed_addr constant [4 x float] [float 1.403000e+00, float -7.140000e-01, float -3.440000e-01, float 1.773000e+00], align 16
@@ -363,8 +367,8 @@ bb.a:
   %14 = alloca %"class.cv::Range", align 4        ; 6 uses
   %15 = alloca %"class.cv::impl::(anonymous namespace)::CvtColorLoop_Invoker", align 8 ; 13 uses
   %16 = alloca %"class.cv::utils::trace::details::Region", align 8 ; 7 uses
-  %17 = alloca %"struct.cv::hal::cpu_baseline::(anonymous namespace)::RGB2YCrCb_i", align 4 ; 12 uses
-  %18 = alloca %"struct.cv::hal::cpu_baseline::(anonymous namespace)::RGB2YCrCb_i.0", align 4 ; 12 uses
+  %17 = alloca %"struct.cv::hal::cpu_baseline::(anonymous namespace)::RGB2YCrCb_i", align 4 ; 10 uses
+  %18 = alloca %"struct.cv::hal::cpu_baseline::(anonymous namespace)::RGB2YCrCb_i.0", align 4 ; 10 uses
   %19 = alloca %"struct.cv::hal::cpu_baseline::(anonymous namespace)::RGB2YCrCb_f", align 4 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #13
   call void @_ZN2cv5utils5trace7details6RegionC1ERKNS3_21LocationStaticStorageE(ptr noundef nonnull align 8 dereferenceable(12) %16, ptr noundef nonnull align 8 dereferenceable(32) @_ZZN2cv3hal12cpu_baseline11cvtBGRtoYUVEPKhmPhmiiiibbE26__cv_trace_location_fn1981)
@@ -382,23 +386,22 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.a, ptr %i.c, align 4, !tbaa !35
   %i.d = getelementptr inbounds nuw i8, ptr %17, i64 28
   store i8 %i.b, ptr %i.d, align 4, !tbaa !36
-  %20 = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 2 uses
-  store i32 4899, ptr %20, align 4, !tbaa !37
-  %i.e = getelementptr inbounds nuw i8, ptr %17, i64 12
-  store i32 9617, ptr %i.e, align 4, !tbaa !37
-  %21 = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
-  store i32 1868, ptr %21, align 4, !tbaa !37
-  %22 = select i1 %9, i32 11682, i32 14369
-  %i.f = getelementptr inbounds nuw i8, ptr %17, i64 20
-  store i32 %22, ptr %i.f, align 4, !tbaa !37
-  %23 = select i1 %9, i32 9241, i32 8061
+  %.in.v.i = select i1 %9, ptr @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC1EiibE10coeffs_crb, ptr @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC1EiibE10coeffs_yuv ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 2 uses
+  %20 = load <4 x i32>, ptr %.in.v.i, align 16, !tbaa !37 ; 3 uses
+  store <4 x i32> %20, ptr %i.e, align 4, !tbaa !37
+  %i.f = getelementptr inbounds nuw i8, ptr %.in.v.i, i64 16
+  %21 = load i32, ptr %i.f, align 16, !tbaa !37
   %i.g = getelementptr inbounds nuw i8, ptr %17, i64 24
-  store i32 %23, ptr %i.g, align 4, !tbaa !37
+  store i32 %21, ptr %i.g, align 4, !tbaa !37
   br i1 %8, label %_ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iIhEC2Eiib.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i32 1868, ptr %20, align 4, !tbaa !37
-  store i32 4899, ptr %21, align 4, !tbaa !37
+  %22 = getelementptr inbounds nuw i8, ptr %17, i64 16
+  %23 = extractelement <4 x i32> %20, i64 2
+  store i32 %23, ptr %i.e, align 4, !tbaa !37
+  %24 = extractelement <4 x i32> %20, i64 0
+  store i32 %24, ptr %22, align 4, !tbaa !37
   br label %_ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iIhEC2Eiib.exit
 
 _ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iIhEC2Eiib.exit: ; preds = %bb.b, %bb.c
@@ -449,23 +452,22 @@ bb.e:                                             ; preds = %bb.a
   store i32 %i.a, ptr %i.s, align 4, !tbaa !56
   %i.t = getelementptr inbounds nuw i8, ptr %18, i64 8
   store i8 %i.b, ptr %i.t, align 4, !tbaa !57
-  %24 = getelementptr inbounds nuw i8, ptr %18, i64 12 ; 2 uses
-  store i32 4899, ptr %24, align 4, !tbaa !37
-  %i.u = getelementptr inbounds nuw i8, ptr %18, i64 16
-  store i32 9617, ptr %i.u, align 4, !tbaa !37
-  %25 = getelementptr inbounds nuw i8, ptr %18, i64 20 ; 2 uses
-  store i32 1868, ptr %25, align 4, !tbaa !37
-  %26 = select i1 %9, i32 11682, i32 14369
-  %i.v = getelementptr inbounds nuw i8, ptr %18, i64 24
-  store i32 %26, ptr %i.v, align 4, !tbaa !37
-  %27 = select i1 %9, i32 9241, i32 8061
+  %.in.v.i34 = select i1 %9, ptr @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC1EiibE10coeffs_crb, ptr @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC1EiibE10coeffs_yuv ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %18, i64 12 ; 2 uses
+  %25 = load <4 x i32>, ptr %.in.v.i34, align 16, !tbaa !37 ; 3 uses
+  store <4 x i32> %25, ptr %i.u, align 4, !tbaa !37
+  %i.v = getelementptr inbounds nuw i8, ptr %.in.v.i34, i64 16
+  %26 = load i32, ptr %i.v, align 16, !tbaa !37
   %i.w = getelementptr inbounds nuw i8, ptr %18, i64 28
-  store i32 %27, ptr %i.w, align 4, !tbaa !37
+  store i32 %26, ptr %i.w, align 4, !tbaa !37
   br i1 %8, label %_ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC2Eiib.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  store i32 1868, ptr %24, align 4, !tbaa !37
-  store i32 4899, ptr %25, align 4, !tbaa !37
+  %27 = getelementptr inbounds nuw i8, ptr %18, i64 20
+  %28 = extractelement <4 x i32> %25, i64 2
+  store i32 %28, ptr %i.u, align 4, !tbaa !37
+  %29 = extractelement <4 x i32> %25, i64 0
+  store i32 %29, ptr %27, align 4, !tbaa !37
   br label %_ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC2Eiib.exit
 
 _ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_iItEC2Eiib.exit: ; preds = %bb.e, %bb.f
@@ -516,20 +518,22 @@ bb.h:                                             ; preds = %bb.a
   store i32 %i.a, ptr %i.ai, align 4, !tbaa !67
   %i.aj = getelementptr inbounds nuw i8, ptr %19, i64 8
   store i8 %i.b, ptr %i.aj, align 4, !tbaa !68
-  %28 = getelementptr inbounds nuw i8, ptr %19, i64 12 ; 2 uses
-  store <2 x float> <float 2.990000e-01, float 5.870000e-01>, ptr %28, align 4, !tbaa !70
-  %i.ak = getelementptr inbounds nuw i8, ptr %19, i64 20 ; 2 uses
-  store float 1.140000e-01, ptr %i.ak, align 4, !tbaa !70
-  %29 = insertelement <2 x i1> poison, i1 %9, i64 0
-  %30 = shufflevector <2 x i1> %29, <2 x i1> poison, <2 x i32> zeroinitializer
-  %31 = select <2 x i1> %30, <2 x float> <float f0x3F36872B, float 5.640000e-01>, <2 x float> <float f0x3F608312, float 4.920000e-01>
-  %i.al = getelementptr inbounds nuw i8, ptr %19, i64 24
-  store <2 x float> %31, ptr %i.al, align 4, !tbaa !70
+  %.in.v.i41 = select i1 %9, ptr @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEC1EiibE10coeffs_crb, ptr @_ZZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEC1EiibE10coeffs_yuv ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %19, i64 12 ; 2 uses
+  %30 = load <4 x float>, ptr %.in.v.i41, align 16, !tbaa !70 ; 3 uses
+  store <4 x float> %30, ptr %i.ak, align 4, !tbaa !70
+  %.in.4.i45 = getelementptr inbounds nuw i8, ptr %.in.v.i41, i64 16
+  %31 = load float, ptr %.in.4.i45, align 16, !tbaa !70
+  %i.al = getelementptr inbounds nuw i8, ptr %19, i64 28
+  store float %31, ptr %i.al, align 4, !tbaa !70
   br i1 %8, label %_ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEC2Eiib.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  store float 1.140000e-01, ptr %28, align 4, !tbaa !70
-  store float 2.990000e-01, ptr %i.ak, align 4, !tbaa !70
+  %32 = getelementptr inbounds nuw i8, ptr %19, i64 20
+  %33 = extractelement <4 x float> %30, i64 2
+  store float %33, ptr %i.ak, align 4, !tbaa !70
+  %34 = extractelement <4 x float> %30, i64 0
+  store float %34, ptr %32, align 4, !tbaa !70
   br label %_ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEC2Eiib.exit
 
 _ZN2cv3hal12cpu_baseline12_GLOBAL__N_111RGB2YCrCb_fIfEC2Eiib.exit: ; preds = %bb.h, %bb.i

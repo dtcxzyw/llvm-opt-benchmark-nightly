@@ -5,8 +5,10 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@hsw_clear_kernel = internal unnamed_addr constant [208 x i32] [i32 1, i32 637665576, i32 36, i32 0, i32 64, i32 539495457, i32 40, i32 1, i32 16777232, i32 536874016, i32 44, i32 0, i32 66080, i32 872422400, i32 5120, i32 352, i32 6291457, i32 543162465, i32 0, i32 0, i32 8, i32 543169669, i32 3584, i32 12, i32 5, i32 543169701, i32 96, i32 1, i32 8, i32 543431813, i32 3584, i32 13, i32 5, i32 543431845, i32 100, i32 3, i32 65, i32 544482469, i32 100, i32 52, i32 64, i32 543167653, i32 96, i32 116, i32 8, i32 543693957, i32 3584, i32 8, i32 5, i32 543693989, i32 104, i32 15, i32 65, i32 544218277, i32 96, i32 16, i32 64, i32 543691941, i32 104, i32 112, i32 6291457, i32 547356769, i32 0, i32 0, i32 5, i32 543956101, i32 3584, i32 7, i32 65, i32 543956133, i32 108, i32 4, i32 6291457, i32 545259553, i32 9240576, i32 0, i32 1, i32 545259553, i32 108, i32 0, i32 1, i32 545521697, i32 104, i32 0, i32 1, i32 545783905, i32 0, i32 3, i32 5, i32 546049313, i32 134, i32 -1, i32 90177586, i32 547360673, i32 9240704, i32 35192833, i32 64, i32 547364005, i32 160, i32 1, i32 90177586, i32 547360673, i32 9240704, i32 67796993, i32 33554496, i32 539499553, i32 40, i32 -1, i32 66080, i32 872422400, i32 5120, i32 -32, i32 1, i32 637665576, i32 36, i32 0, i32 1, i32 570429668, i32 0, i32 0, i32 1, i32 570962412, i32 0, i32 8323199, i32 6291457, i32 541065249, i32 9240576, i32 0, i32 6291457, i32 803209249, i32 9240576, i32 0, i32 2097153, i32 541065505, i32 4522016, i32 0, i32 1, i32 541589601, i32 0, i32 983055, i32 5, i32 541855009, i32 70, i32 -17, i32 8388609, i32 543162465, i32 0, i32 0, i32 8388609, i32 545259617, i32 0, i32 0, i32 8388609, i32 547356769, i32 0, i32 0, i32 8388609, i32 549453921, i32 0, i32 0, i32 8388609, i32 551551073, i32 0, i32 0, i32 8388609, i32 553648225, i32 0, i32 0, i32 8388609, i32 555745377, i32 0, i32 0, i32 8388609, i32 557842529, i32 0, i32 0, i32 90177586, i32 536874912, i32 9240640, i32 302678016, i32 64, i32 541076769, i32 32, i32 1048592, i32 90177586, i32 536874912, i32 9240640, i32 302678016, i32 33554496, i32 570965388, i32 520, i32 -1, i32 8388609, i32 -1610612471, i32 1538, i32 0, i32 64, i32 570432644, i32 512, i32 32, i32 66080, i32 872422400, i32 5120, i32 -64, i32 123732018, i32 536874912, i32 9244640, i32 -2113929200], align 16
-@ivb_clear_kernel = internal unnamed_addr constant [208 x i32] [i32 1, i32 637665576, i32 36, i32 0, i32 64, i32 539495457, i32 40, i32 1, i32 16777232, i32 536874016, i32 44, i32 0, i32 66080, i32 872422400, i32 5120, i32 44, i32 6291457, i32 543162465, i32 0, i32 0, i32 8, i32 543169669, i32 3584, i32 12, i32 5, i32 543169701, i32 96, i32 1, i32 8, i32 543431813, i32 3584, i32 13, i32 5, i32 543431845, i32 100, i32 3, i32 65, i32 544482469, i32 100, i32 52, i32 64, i32 543167653, i32 96, i32 116, i32 8, i32 543693957, i32 3584, i32 8, i32 5, i32 543693989, i32 104, i32 15, i32 65, i32 544218277, i32 96, i32 16, i32 64, i32 543691941, i32 104, i32 112, i32 6291457, i32 547356769, i32 0, i32 0, i32 5, i32 543956101, i32 3584, i32 7, i32 65, i32 543956133, i32 108, i32 4, i32 6291457, i32 545259553, i32 9240576, i32 0, i32 1, i32 545259553, i32 108, i32 0, i32 1, i32 545521697, i32 104, i32 0, i32 1, i32 545783905, i32 0, i32 3, i32 5, i32 546049313, i32 134, i32 -1, i32 90177586, i32 547360673, i32 9240704, i32 35192833, i32 64, i32 547364005, i32 160, i32 1, i32 90177586, i32 547360673, i32 9240704, i32 67796993, i32 33554496, i32 539499553, i32 40, i32 -1, i32 66080, i32 872422400, i32 5120, i32 -4, i32 1, i32 637665576, i32 36, i32 0, i32 1, i32 570429668, i32 0, i32 0, i32 1, i32 570962412, i32 0, i32 8323199, i32 6291457, i32 541065249, i32 9240576, i32 0, i32 6291457, i32 803209249, i32 9240576, i32 0, i32 2097153, i32 541065505, i32 4522016, i32 0, i32 1, i32 541589601, i32 0, i32 983055, i32 5, i32 541855009, i32 70, i32 -17, i32 8388609, i32 543162465, i32 0, i32 0, i32 8388609, i32 545259617, i32 0, i32 0, i32 8388609, i32 547356769, i32 0, i32 0, i32 8388609, i32 549453921, i32 0, i32 0, i32 8388609, i32 551551073, i32 0, i32 0, i32 8388609, i32 553648225, i32 0, i32 0, i32 8388609, i32 555745377, i32 0, i32 0, i32 8388609, i32 557842529, i32 0, i32 0, i32 90177586, i32 536874912, i32 9240640, i32 302678016, i32 64, i32 541076769, i32 32, i32 1048592, i32 90177586, i32 536874912, i32 9240640, i32 302678016, i32 33554496, i32 570965388, i32 520, i32 -1, i32 8388609, i32 -1610612471, i32 1538, i32 0, i32 64, i32 570432644, i32 512, i32 32, i32 66080, i32 872422400, i32 5120, i32 -8, i32 123732018, i32 536874912, i32 9244640, i32 -2113929200], align 16
+@hsw_clear_kernel = internal constant [208 x i32] [i32 1, i32 637665576, i32 36, i32 0, i32 64, i32 539495457, i32 40, i32 1, i32 16777232, i32 536874016, i32 44, i32 0, i32 66080, i32 872422400, i32 5120, i32 352, i32 6291457, i32 543162465, i32 0, i32 0, i32 8, i32 543169669, i32 3584, i32 12, i32 5, i32 543169701, i32 96, i32 1, i32 8, i32 543431813, i32 3584, i32 13, i32 5, i32 543431845, i32 100, i32 3, i32 65, i32 544482469, i32 100, i32 52, i32 64, i32 543167653, i32 96, i32 116, i32 8, i32 543693957, i32 3584, i32 8, i32 5, i32 543693989, i32 104, i32 15, i32 65, i32 544218277, i32 96, i32 16, i32 64, i32 543691941, i32 104, i32 112, i32 6291457, i32 547356769, i32 0, i32 0, i32 5, i32 543956101, i32 3584, i32 7, i32 65, i32 543956133, i32 108, i32 4, i32 6291457, i32 545259553, i32 9240576, i32 0, i32 1, i32 545259553, i32 108, i32 0, i32 1, i32 545521697, i32 104, i32 0, i32 1, i32 545783905, i32 0, i32 3, i32 5, i32 546049313, i32 134, i32 -1, i32 90177586, i32 547360673, i32 9240704, i32 35192833, i32 64, i32 547364005, i32 160, i32 1, i32 90177586, i32 547360673, i32 9240704, i32 67796993, i32 33554496, i32 539499553, i32 40, i32 -1, i32 66080, i32 872422400, i32 5120, i32 -32, i32 1, i32 637665576, i32 36, i32 0, i32 1, i32 570429668, i32 0, i32 0, i32 1, i32 570962412, i32 0, i32 8323199, i32 6291457, i32 541065249, i32 9240576, i32 0, i32 6291457, i32 803209249, i32 9240576, i32 0, i32 2097153, i32 541065505, i32 4522016, i32 0, i32 1, i32 541589601, i32 0, i32 983055, i32 5, i32 541855009, i32 70, i32 -17, i32 8388609, i32 543162465, i32 0, i32 0, i32 8388609, i32 545259617, i32 0, i32 0, i32 8388609, i32 547356769, i32 0, i32 0, i32 8388609, i32 549453921, i32 0, i32 0, i32 8388609, i32 551551073, i32 0, i32 0, i32 8388609, i32 553648225, i32 0, i32 0, i32 8388609, i32 555745377, i32 0, i32 0, i32 8388609, i32 557842529, i32 0, i32 0, i32 90177586, i32 536874912, i32 9240640, i32 302678016, i32 64, i32 541076769, i32 32, i32 1048592, i32 90177586, i32 536874912, i32 9240640, i32 302678016, i32 33554496, i32 570965388, i32 520, i32 -1, i32 8388609, i32 -1610612471, i32 1538, i32 0, i32 64, i32 570432644, i32 512, i32 32, i32 66080, i32 872422400, i32 5120, i32 -64, i32 123732018, i32 536874912, i32 9244640, i32 -2113929200], align 16
+@cb_kernel_hsw = internal unnamed_addr constant { ptr, i32, [4 x i8] } { ptr @hsw_clear_kernel, i32 832, [4 x i8] zeroinitializer }, align 8
+@ivb_clear_kernel = internal constant [208 x i32] [i32 1, i32 637665576, i32 36, i32 0, i32 64, i32 539495457, i32 40, i32 1, i32 16777232, i32 536874016, i32 44, i32 0, i32 66080, i32 872422400, i32 5120, i32 44, i32 6291457, i32 543162465, i32 0, i32 0, i32 8, i32 543169669, i32 3584, i32 12, i32 5, i32 543169701, i32 96, i32 1, i32 8, i32 543431813, i32 3584, i32 13, i32 5, i32 543431845, i32 100, i32 3, i32 65, i32 544482469, i32 100, i32 52, i32 64, i32 543167653, i32 96, i32 116, i32 8, i32 543693957, i32 3584, i32 8, i32 5, i32 543693989, i32 104, i32 15, i32 65, i32 544218277, i32 96, i32 16, i32 64, i32 543691941, i32 104, i32 112, i32 6291457, i32 547356769, i32 0, i32 0, i32 5, i32 543956101, i32 3584, i32 7, i32 65, i32 543956133, i32 108, i32 4, i32 6291457, i32 545259553, i32 9240576, i32 0, i32 1, i32 545259553, i32 108, i32 0, i32 1, i32 545521697, i32 104, i32 0, i32 1, i32 545783905, i32 0, i32 3, i32 5, i32 546049313, i32 134, i32 -1, i32 90177586, i32 547360673, i32 9240704, i32 35192833, i32 64, i32 547364005, i32 160, i32 1, i32 90177586, i32 547360673, i32 9240704, i32 67796993, i32 33554496, i32 539499553, i32 40, i32 -1, i32 66080, i32 872422400, i32 5120, i32 -4, i32 1, i32 637665576, i32 36, i32 0, i32 1, i32 570429668, i32 0, i32 0, i32 1, i32 570962412, i32 0, i32 8323199, i32 6291457, i32 541065249, i32 9240576, i32 0, i32 6291457, i32 803209249, i32 9240576, i32 0, i32 2097153, i32 541065505, i32 4522016, i32 0, i32 1, i32 541589601, i32 0, i32 983055, i32 5, i32 541855009, i32 70, i32 -17, i32 8388609, i32 543162465, i32 0, i32 0, i32 8388609, i32 545259617, i32 0, i32 0, i32 8388609, i32 547356769, i32 0, i32 0, i32 8388609, i32 549453921, i32 0, i32 0, i32 8388609, i32 551551073, i32 0, i32 0, i32 8388609, i32 553648225, i32 0, i32 0, i32 8388609, i32 555745377, i32 0, i32 0, i32 8388609, i32 557842529, i32 0, i32 0, i32 90177586, i32 536874912, i32 9240640, i32 302678016, i32 64, i32 541076769, i32 32, i32 1048592, i32 90177586, i32 536874912, i32 9240640, i32 302678016, i32 33554496, i32 570965388, i32 520, i32 -1, i32 8388609, i32 -1610612471, i32 1538, i32 0, i32 64, i32 570432644, i32 512, i32 32, i32 66080, i32 872422400, i32 5120, i32 -8, i32 123732018, i32 536874912, i32 9244640, i32 -2113929200], align 16
+@cb_kernel_ivb = internal unnamed_addr constant { ptr, i32, [4 x i8] } { ptr @ivb_clear_kernel, i32 832, [4 x i8] zeroinitializer }, align 8
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local i32 @gen7_setup_clear_gpr_bb(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 align 16 prefalign(16) {
@@ -79,25 +81,36 @@ bb.h:                                             ; preds = %bb.f
   %i.ae = load i32, ptr %i.ad, align 4
   %i.af = and i32 %i.ae, 8388608
   %.not.i10 = icmp eq i32 %i.af, 0
-  %.val19.i.a = select i1 %.not.i10, ptr @ivb_clear_kernel, ptr @hsw_clear_kernel
+  %.val19.i.a = select i1 %.not.i10, ptr @cb_kernel_ivb, ptr @cb_kernel_hsw ; 2 uses
+  %.val19.i = load ptr, ptr %.val19.i.a, align 8
+  %2 = getelementptr i8, ptr %.val19.i.a, i64 8
+  %.val20.i = load i32, ptr %2, align 8           ; 2 uses
+  %3 = lshr i32 %.val20.i, 2
   %i.ag = ptrtoint ptr %i.ac to i64               ; 5 uses
   %i.ah = add i64 %i.ag, 63
   %i.ai = and i64 %i.ah, -64                      ; 2 uses
-  %i.aj = inttoptr i64 %i.ai to ptr               ; 17 uses
+  %i.aj = inttoptr i64 %i.ai to ptr               ; 2 uses
   %i.ak = sub i64 %i.ai, %i.ag                    ; 2 uses
   %i.al = ashr exact i64 %i.ak, 2
   %i.am = tail call { ptr, i64 } asm sideeffect "rep stosl", "={di},={cx},{ax},0,1,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 0, ptr %i.ac, i64 range(i64 -2305843009213693952, 2305843009213693952) %i.al) #5, !srcloc !11 ; 0 uses
-  %2 = getelementptr i8, ptr %i.aj, i64 832       ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 64 dereferenceable(832) %i.aj, ptr noundef nonnull readonly align 16 dereferenceable(832) %.val19.i.a, i64 832, i1 false)
+  %4 = zext nneg i32 %3 to i64
+  %5 = getelementptr [4 x i8], ptr %i.aj, i64 %4  ; 2 uses
+  %6 = zext i32 %.val20.i to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 64 %i.aj, ptr readonly align 4 %.val19.i, i64 %6, i1 false)
   %i.an = trunc i64 %i.ak to i32
   %i.ao = add i32 %i.m, %i.an
-  %i.ap = ptrtoint ptr %2 to i64
-  %i.aq = tail call { ptr, i64 } asm sideeffect "rep stosl", "={di},={cx},{ax},0,1,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 0, ptr %2, i64 range(i64 -2305843009213693952, 2305843009213693952) 0) #5, !srcloc !11 ; 0 uses
-  %i.ar = getelementptr i8, ptr %i.aj, i64 864    ; 3 uses
-  %i.as = sub i64 %i.ap, %i.ag
+  %i.ap = ptrtoint ptr %5 to i64                  ; 2 uses
+  %7 = add i64 %i.ap, 28
+  %8 = and i64 %7, -32                            ; 3 uses
+  %9 = inttoptr i64 %8 to ptr                     ; 16 uses
+  %10 = sub i64 %8, %i.ap
+  %11 = ashr exact i64 %10, 2
+  %i.aq = tail call { ptr, i64 } asm sideeffect "rep stosl", "={di},={cx},{ax},0,1,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 0, ptr %5, i64 range(i64 -2305843009213693952, 2305843009213693952) %11) #5, !srcloc !11 ; 0 uses
+  %i.ar = getelementptr i8, ptr %9, i64 32        ; 3 uses
+  %i.as = sub i64 %8, %i.ag
   %i.at = trunc i64 %i.as to i32
-  %i.au = getelementptr i8, ptr %i.aj, i64 836
-  store i32 587202816, ptr %2, align 64
+  %i.au = getelementptr i8, ptr %9, i64 4
+  store i32 587202816, ptr %9, align 32
   %i.av = getelementptr i8, ptr %1, i64 8         ; 6 uses
   %.val19.val.i.i.i.i = load i64, ptr %i.av, align 8
   %i.aw = getelementptr i8, ptr %1, i64 248       ; 6 uses
@@ -105,44 +118,44 @@ bb.h:                                             ; preds = %bb.f
   %i.ax = trunc i64 %.val19.val.i.i.i.i to i32
   %i.ay = add i32 %i.n, %i.ax
   %i.az = add i32 %i.ay, %.val19.val20.i.i.i.i
-  %i.ba = getelementptr i8, ptr %i.aj, i64 840
+  %i.ba = getelementptr i8, ptr %9, i64 8
   store i32 %i.az, ptr %i.au, align 4
   %i.bb = lshr exact i32 %.sink22.i, 2
   %i.bc = add nsw i32 %i.bb, -1
   %i.bd = or i32 %i.bc, %.sink24.i
-  %i.be = getelementptr i8, ptr %i.aj, i64 844
+  %i.be = getelementptr i8, ptr %9, i64 12
   store i32 %i.bd, ptr %i.ba, align 8
-  %i.bf = getelementptr i8, ptr %i.aj, i64 848
+  %i.bf = getelementptr i8, ptr %9, i64 16
   store i32 %.sink22.i, ptr %i.be, align 4
-  %i.bg = getelementptr i8, ptr %i.aj, i64 852
+  %i.bg = getelementptr i8, ptr %9, i64 20
   store i32 0, ptr %i.bf, align 16
-  %i.bh = getelementptr i8, ptr %i.aj, i64 856
+  %i.bh = getelementptr i8, ptr %9, i64 24
   store i32 0, ptr %i.bg, align 4
-  %i.bi = getelementptr i8, ptr %i.aj, i64 860
+  %i.bi = getelementptr i8, ptr %9, i64 28
   store i32 0, ptr %i.bh, align 8
   store i32 158793728, ptr %i.bi, align 4
   %i.bj = ptrtoint ptr %i.ar to i64
   %i.bk = tail call { ptr, i64 } asm sideeffect "rep stosl", "={di},={cx},{ax},0,1,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 0, ptr %i.ar, i64 range(i64 -2305843009213693952, 2305843009213693952) 0) #5, !srcloc !11 ; 0 uses
-  %i.bl = getelementptr i8, ptr %i.aj, i64 896    ; 3 uses
+  %i.bl = getelementptr i8, ptr %9, i64 64        ; 3 uses
   %i.bm = sub i64 %i.bj, %i.ag
   %i.bn = trunc i64 %i.bm to i32
-  %i.bo = getelementptr i8, ptr %i.aj, i64 868
+  %i.bo = getelementptr i8, ptr %9, i64 36
   store i32 %i.at, ptr %i.ar, align 32
   tail call void @llvm.memset.p0.i64(ptr noundef align 4 dereferenceable(28) %i.bo, i8 0, i64 28, i1 false)
   %i.bp = ptrtoint ptr %i.bl to i64
   %i.bq = tail call { ptr, i64 } asm sideeffect "rep stosl", "={di},={cx},{ax},0,1,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 0, ptr %i.bl, i64 range(i64 -2305843009213693952, 2305843009213693952) 0) #5, !srcloc !11 ; 0 uses
-  %i.br = getelementptr i8, ptr %i.aj, i64 928
+  %i.br = getelementptr i8, ptr %9, i64 96
   %i.bs = sub i64 %i.bp, %i.ag
   %i.bt = trunc i64 %i.bs to i32
   %i.bu = add i32 %i.m, %i.bt                     ; 2 uses
-  %i.bv = getelementptr i8, ptr %i.aj, i64 900
-  store i32 %i.ao, ptr %i.bl, align 64
-  %i.bw = getelementptr i8, ptr %i.aj, i64 904
+  %i.bv = getelementptr i8, ptr %9, i64 68
+  store i32 %i.ao, ptr %i.bl, align 32
+  %i.bw = getelementptr i8, ptr %9, i64 72
   store i32 8320, ptr %i.bv, align 4
-  %i.bx = getelementptr i8, ptr %i.aj, i64 908
+  %i.bx = getelementptr i8, ptr %9, i64 76
   store i32 0, ptr %i.bw, align 8
   %i.by = or i32 %i.bn, 1
-  %i.bz = getelementptr i8, ptr %i.aj, i64 912
+  %i.bz = getelementptr i8, ptr %9, i64 80
   store i32 %i.by, ptr %i.bx, align 4
   tail call void @llvm.memset.p0.i64(ptr noundef align 16 dereferenceable(16) %i.bz, i8 0, i64 16, i1 false)
   %i.ca = tail call { ptr, i64 } asm sideeffect "rep stosl", "={di},={cx},{ax},0,1,~{memory},~{dirflag},~{fpsr},~{flags}"(i32 0, ptr %i.br, i64 0) #5, !srcloc !11 ; 0 uses

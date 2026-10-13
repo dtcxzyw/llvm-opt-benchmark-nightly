@@ -45,6 +45,7 @@ $_ZNSt5dequeIcSaIcEE17_M_reallocate_mapEmb = comdat any
 @_ZN4YAMLL18s_introTransitionsE = internal unnamed_addr constant [18 x [8 x i32]] [[8 x i32] [i32 1, i32 17, i32 17, i32 15, i32 6, i32 7, i32 12, i32 17], [8 x i32] [i32 2, i32 17, i32 17, i32 17, i32 17, i32 17, i32 5, i32 17], [8 x i32] [i32 4, i32 17, i32 17, i32 17, i32 3, i32 17, i32 17, i32 17], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 17, i32 4, i32 17, i32 17], [8 x i32] [i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4], [8 x i32] [i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5, i32 5], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 17, i32 5, i32 17, i32 17], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 8, i32 17, i32 17, i32 17], [8 x i32] [i32 9, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 11, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 11, i32 11, i32 11, i32 11, i32 11, i32 11, i32 11, i32 11], [8 x i32] [i32 13, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17], [8 x i32] [i32 14, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 11, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10, i32 10], [8 x i32] [i32 17, i32 16, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17], [8 x i32] [i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17, i32 17]], align 16
 @_ZN4YAMLL17s_introUngetCountE = internal unnamed_addr constant [18 x [8 x i8]] [[8 x i8] c"\00\01\01\00\00\00\00\01", [8 x i8] c"\00\02\02\02\02\02\02\02", [8 x i8] c"\03\03\03\03\00\03\03\03", [8 x i8] c"\04\04\04\04\04\00\04\04", [8 x i8] c"\01\01\01\01\01\01\01\01", [8 x i8] c"\01\01\01\01\01\01\01\01", [8 x i8] c"\02\02\02\02\02\00\02\02", [8 x i8] c"\02\02\02\02\00\02\02\02", [8 x i8] c"\00\01\01\01\01\01\01\01", [8 x i8] c"\00\02\02\02\02\02\02\02", [8 x i8] c"\01\01\01\01\01\01\01\01", [8 x i8] c"\01\01\01\01\01\01\01\01", [8 x i8] c"\00\02\02\02\02\02\02\02", [8 x i8] c"\00\03\03\03\03\03\03\03", [8 x i8] c"\04\04\04\04\04\04\04\04", [8 x i8] c"\02\00\02\02\02\02\02\02", [8 x i8] c"\03\03\00\03\03\03\03\03", [8 x i8] c"\01\01\01\01\01\01\01\01"], align 16
 @_ZTINSt8ios_base7failureB5cxx11E = external constant ptr
+@_ZZNK4YAML6Stream13StreamInUtf32EvE7indexes = internal unnamed_addr constant [2 x [4 x i32]] [[4 x i32] [i32 3, i32 2, i32 1, i32 0], [4 x i32] [i32 0, i32 1, i32 2, i32 3]], align 16
 @.str = private unnamed_addr constant [11 x i8] c"bad stream\00", align 1
 @_ZTVN4YAML9BadStreamE = external constant { [5 x ptr] }, align 8
 @_ZTVN4YAML9ExceptionE = external constant { [5 x ptr] }, align 8
@@ -447,12 +448,21 @@ bb.j:                                             ; preds = %.thread, %bb.a, %bb
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK4YAML6Stream13StreamInUtf32Ev(ptr noundef nonnull align 8 dereferenceable(136) %0) local_unnamed_addr #0 align 2 {
 bb.a:
+  %1 = alloca [4 x i8], align 1                   ; 10 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.b = load i32, ptr %i.a, align 4, !tbaa !46
-  %i.c = tail call noundef zeroext i8 @_ZNK4YAML6Stream11GetNextByteEv(ptr noundef nonnull align 8 dereferenceable(136) %0) ; 2 uses
-  %i.d = tail call noundef zeroext i8 @_ZNK4YAML6Stream11GetNextByteEv(ptr noundef nonnull align 8 dereferenceable(136) %0) ; 2 uses
-  %i.e = tail call noundef zeroext i8 @_ZNK4YAML6Stream11GetNextByteEv(ptr noundef nonnull align 8 dereferenceable(136) %0) ; 2 uses
-  %i.f = tail call noundef zeroext i8 @_ZNK4YAML6Stream11GetNextByteEv(ptr noundef nonnull align 8 dereferenceable(136) %0) ; 2 uses
+  %i.c = tail call noundef zeroext i8 @_ZNK4YAML6Stream11GetNextByteEv(ptr noundef nonnull align 8 dereferenceable(136) %0)
+  store i8 %i.c, ptr %1, align 1, !tbaa !26
+  %i.d = tail call noundef zeroext i8 @_ZNK4YAML6Stream11GetNextByteEv(ptr noundef nonnull align 8 dereferenceable(136) %0)
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  store i8 %i.d, ptr %2, align 1, !tbaa !26
+  %i.e = tail call noundef zeroext i8 @_ZNK4YAML6Stream11GetNextByteEv(ptr noundef nonnull align 8 dereferenceable(136) %0)
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  store i8 %i.e, ptr %3, align 1, !tbaa !26
+  %i.f = tail call noundef zeroext i8 @_ZNK4YAML6Stream11GetNextByteEv(ptr noundef nonnull align 8 dereferenceable(136) %0)
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 3
+  store i8 %i.f, ptr %4, align 1, !tbaa !26
   %i.g = load ptr, ptr %0, align 8, !tbaa !59, !nonnull !29, !align !60 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !14
   %i.i = getelementptr i8, ptr %i.h, i64 -24
@@ -464,26 +474,43 @@ bb.a:
   br i1 %i.n, label %.preheader.preheader, label %bb.b
 
 .preheader.preheader:                             ; preds = %bb.a
-  %i.o = icmp eq i32 %i.b, 4                      ; 4 uses
-  %.sroa.speculated32 = select i1 %i.o, i8 %i.c, i8 %i.f
-  %i.p = zext i8 %.sroa.speculated32 to i64
-  %.sroa.speculated26 = select i1 %i.o, i8 %i.d, i8 %i.e
-  %i.q = zext i8 %.sroa.speculated26 to i64
+  %i.o = icmp eq i32 %i.b, 4
+  %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes = select i1 %i.o, ptr getelementptr inbounds nuw (i8, ptr @_ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, i64 16), ptr @_ZZNK4YAML6Stream13StreamInUtf32EvE7indexes ; 4 uses
+  %5 = load i32, ptr %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, align 16, !tbaa !25
+  %6 = sext i32 %5 to i64
+  %7 = getelementptr inbounds i8, ptr %1, i64 %6
+  %8 = load i8, ptr %7, align 1, !tbaa !26
+  %i.p = zext i8 %8 to i64
+  %9 = getelementptr inbounds nuw i8, ptr %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, i64 4
+  %10 = load i32, ptr %9, align 4, !tbaa !25
+  %11 = sext i32 %10 to i64
+  %12 = getelementptr inbounds i8, ptr %1, i64 %11
+  %13 = load i8, ptr %12, align 1, !tbaa !26
+  %i.q = zext i8 %13 to i64
   %i.r = shl nuw nsw i64 %i.p, 16
   %i.s = shl nuw nsw i64 %i.q, 8
   %i.t = or disjoint i64 %i.r, %i.s
-  %.sroa.speculated = select i1 %i.o, i8 %i.e, i8 %i.d
-  %i.u = zext i8 %.sroa.speculated to i64
+  %14 = getelementptr inbounds nuw i8, ptr %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, i64 8
+  %15 = load i32, ptr %14, align 8, !tbaa !25
+  %16 = sext i32 %15 to i64
+  %17 = getelementptr inbounds i8, ptr %1, i64 %16
+  %18 = load i8, ptr %17, align 1, !tbaa !26
+  %i.u = zext i8 %18 to i64
   %i.v = or disjoint i64 %i.t, %i.u
   %i.w = shl nuw nsw i64 %i.v, 8
-  %.sroa.speculated29 = select i1 %i.o, i8 %i.f, i8 %i.c
-  %i.x = zext i8 %.sroa.speculated29 to i64
+  %19 = getelementptr inbounds nuw i8, ptr %._ZZNK4YAML6Stream13StreamInUtf32EvE7indexes, i64 12
+  %20 = load i32, ptr %19, align 4, !tbaa !25
+  %21 = sext i32 %20 to i64
+  %22 = getelementptr inbounds i8, ptr %1, i64 %21
+  %23 = load i8, ptr %22, align 1, !tbaa !26
+  %i.x = zext i8 %23 to i64
   %i.y = or disjoint i64 %i.w, %i.x
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @_ZN4YAML21QueueUnicodeCodepointERSt5dequeIcSaIcEEm(ptr noundef nonnull align 8 dereferenceable(80) %i.z, i64 noundef %i.y)
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %.preheader.preheader
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   ret void
 }
 

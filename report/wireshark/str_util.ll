@@ -48,7 +48,7 @@ target triple = "x86_64-pc-linux-gnu"
 @hex = internal unnamed_addr constant [16 x i8] c"0123456789ABCDEF", align 16
 @EBCDIC_translate_ASCII = internal unnamed_addr constant [256 x i8] c"\00\01\02\03\04\05\06\07\08\09\0A\0B\0C\0D\0E\0F\10\11\12\13\14\15\16\17\18\19\1A\1B\1C\1D\1E\1F !\22#$%&'()*+,-./..23456789:;<=.? ...........<(+|&.........!$*);^-/........|,%_>?..........:#@'=\22.abcdefghi.......jklmnopqr.......~stuvwxyz...[...............]..{ABCDEFGHI......}JKLMNOPQR......\\.STUVWXYZ......0123456789......", align 16
 @hex_dump_buffer.binhex = internal unnamed_addr constant [16 x i8] c"0123456789abcdef", align 16
-@prefix_parameters_for_flags.si_prefixes = internal unnamed_addr constant [13 x ptr] [ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38, ptr @.str.39, ptr @.str.40], align 16
+@prefix_parameters_for_flags.si_prefixes = internal constant [13 x ptr] [ptr @.str.28, ptr @.str.29, ptr @.str.30, ptr @.str.31, ptr @.str.32, ptr @.str.33, ptr @.str.34, ptr @.str.35, ptr @.str.36, ptr @.str.37, ptr @.str.38, ptr @.str.39, ptr @.str.40], align 16
 @.str.28 = private unnamed_addr constant [3 x i8] c" a\00", align 1
 @.str.29 = private unnamed_addr constant [3 x i8] c" f\00", align 1
 @.str.30 = private unnamed_addr constant [3 x i8] c" p\00", align 1
@@ -62,13 +62,15 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.38 = private unnamed_addr constant [3 x i8] c" T\00", align 1
 @.str.39 = private unnamed_addr constant [3 x i8] c" P\00", align 1
 @.str.40 = private unnamed_addr constant [3 x i8] c" E\00", align 1
-@prefix_parameters_for_flags.iec_prefixes = internal unnamed_addr constant [7 x ptr] [ptr @.str.34, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr @.str.46], align 16
+@prefix_parameters_for_flags.si_parameters = internal unnamed_addr constant { ptr, i32, i32, i32, [4 x i8] } { ptr @prefix_parameters_for_flags.si_prefixes, i32 13, i32 1000, i32 6, [4 x i8] zeroinitializer }, align 8
+@prefix_parameters_for_flags.iec_prefixes = internal constant [7 x ptr] [ptr @.str.34, ptr @.str.41, ptr @.str.42, ptr @.str.43, ptr @.str.44, ptr @.str.45, ptr @.str.46], align 16
 @.str.41 = private unnamed_addr constant [4 x i8] c" Ki\00", align 1
 @.str.42 = private unnamed_addr constant [4 x i8] c" Mi\00", align 1
 @.str.43 = private unnamed_addr constant [4 x i8] c" Gi\00", align 1
 @.str.44 = private unnamed_addr constant [4 x i8] c" Ti\00", align 1
 @.str.45 = private unnamed_addr constant [4 x i8] c" Pi\00", align 1
 @.str.46 = private unnamed_addr constant [4 x i8] c" Ei\00", align 1
+@prefix_parameters_for_flags.iec_parameters = internal unnamed_addr constant { ptr, i32, i32, i32, [4 x i8] } { ptr @prefix_parameters_for_flags.iec_prefixes, i32 7, i32 1024, i32 0, [4 x i8] zeroinitializer }, align 8
 @.str.47 = private unnamed_addr constant [4 x i8] c"%'d\00", align 1
 @.str.48 = private unnamed_addr constant [3 x i8] c"22\00", align 1
 @.str.49 = private unnamed_addr constant [5 x i8] c"%'ld\00", align 1
@@ -471,8 +473,10 @@ bb.a:
   %i.a = tail call ptr @wmem_strbuf_new(ptr noundef %0, ptr noundef null) ; 7 uses
   %i.b = tail call double @llvm.fabs.f64(double %1) ; 6 uses
   %i.c = and i16 %3, 2
-  %.not.i.not = icmp eq i16 %i.c, 0               ; 5 uses
-  %5 = select i1 %.not.i.not, i32 6, i32 0        ; 6 uses
+  %.not.i.not = icmp eq i16 %i.c, 0
+  %5 = select i1 %.not.i.not, ptr @prefix_parameters_for_flags.si_parameters, ptr @prefix_parameters_for_flags.iec_parameters ; 4 uses
+  %6 = getelementptr i8, ptr %5, i64 16
+  %7 = load i32, ptr %6, align 8                  ; 8 uses
   %i.d = load ptr, ptr @thousands_grouping_fmt, align 8
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.b, label %bb.c
@@ -498,20 +502,26 @@ bb.d:                                             ; preds = %bb.c
   %i.j = icmp eq i32 %4, 0
   %i.k = select i1 %i.j, double 1.000000e+01, double 1.000000e+00 ; 2 uses
   %i.l = fcmp olt double %i.b, 1.000000e+00
-  %6 = select i1 %.not.i.not, double 1.000000e+03, double 1.024000e+03 ; 3 uses
+  %8 = getelementptr i8, ptr %5, i64 12
+  %9 = load i32, ptr %8, align 4
+  %10 = sitofp i32 %9 to double                   ; 3 uses
   br i1 %i.l, label %.preheader.preheader, label %.preheader85
 
 .preheader.preheader:                             ; preds = %bb.d
-  br i1 %.not.i.not, label %.lr.ph128, label %.loopexit84
+  %11 = icmp eq i32 %7, 0
+  br i1 %11, label %.loopexit84, label %.lr.ph128
 
 .preheader85:                                     ; preds = %bb.d
-  %i.m = fmul nnan double %i.k, %6                ; 2 uses
+  %i.m = fmul nnan double %i.k, %10               ; 2 uses
   %i.n = fcmp ult double %i.b, %i.m
   br i1 %i.n, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader85
-  %7 = select i1 %.not.i.not, i32 12, i32 6
-  br label %bb.f
+  %12 = getelementptr i8, ptr %5, i64 8
+  %13 = load i32, ptr %12, align 8
+  %14 = add i32 %13, -1                           ; 2 uses
+  %15 = icmp eq i32 %7, %14
+  br i1 %15, label %.loopexit84, label %bb.f
 
 .preheader:                                       ; preds = %.lr.ph128
   %i.o = icmp eq i32 %i.q, 0
@@ -519,33 +529,33 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph128:                                        ; preds = %.preheader.preheader, %.preheader
   %.06495127 = phi double [ %i.p, %.preheader ], [ %i.b, %.preheader.preheader ]
-  %.096126 = phi i32 [ %i.q, %.preheader ], [ %5, %.preheader.preheader ]
-  %i.p = fmul double %6, %.06495127               ; 3 uses
-  %i.q = add nsw i32 %.096126, -1                 ; 3 uses
+  %.096126 = phi i32 [ %i.q, %.preheader ], [ %7, %.preheader.preheader ]
+  %i.p = fmul double %.06495127, %10              ; 3 uses
+  %i.q = add i32 %.096126, -1                     ; 3 uses
   %i.r = fcmp olt double %i.p, %i.k
   br i1 %i.r, label %.preheader, label %.loopexit, !llvm.loop !24
 
 bb.e:                                             ; preds = %bb.f
-  %i.s = icmp eq i32 %i.u, %7
+  %i.s = icmp eq i32 %i.u, %14
   br i1 %i.s, label %.loopexit84, label %bb.f, !llvm.loop !25
 
 bb.f:                                             ; preds = %.lr.ph, %bb.e
-  %.16592125 = phi double [ %i.b, %.lr.ph ], [ %i.t, %bb.e ]
-  %.193124 = phi i32 [ %5, %.lr.ph ], [ %i.u, %bb.e ]
-  %i.t = fdiv double %.16592125, %6               ; 3 uses
+  %.16592125 = phi double [ %i.t, %bb.e ], [ %i.b, %.lr.ph ]
+  %.193124 = phi i32 [ %i.u, %bb.e ], [ %7, %.lr.ph ]
+  %i.t = fdiv double %.16592125, %10              ; 3 uses
   %i.u = add i32 %.193124, 1                      ; 3 uses
   %i.v = fcmp ult double %i.t, %i.m
   br i1 %i.v, label %.loopexit, label %bb.e, !llvm.loop !25
 
-.loopexit84:                                      ; preds = %bb.e, %.preheader, %.preheader.preheader
+.loopexit84:                                      ; preds = %bb.e, %.preheader, %.lr.ph, %.preheader.preheader
   %i.w = add i32 %4, 1
   tail call void (ptr, ptr, ...) @wmem_strbuf_append_printf(ptr noundef %i.a, ptr noundef nonnull @.str.2, i32 noundef %i.w, double noundef %1)
   br label %truncate_numeric_strbuf.exit
 
 .loopexit:                                        ; preds = %bb.f, %.lr.ph128, %.preheader85, %bb.c
   %.367.ph = phi double [ %i.b, %bb.c ], [ %i.p, %.lr.ph128 ], [ %i.b, %.preheader85 ], [ %i.t, %bb.f ]
-  %.3.ph = phi i32 [ %5, %bb.c ], [ %i.q, %.lr.ph128 ], [ %5, %.preheader85 ], [ %i.u, %bb.f ] ; 3 uses
-  %i.x = icmp eq i32 %.3.ph, %5                   ; 2 uses
+  %.3.ph = phi i32 [ %7, %bb.c ], [ %i.q, %.lr.ph128 ], [ %7, %.preheader85 ], [ %i.u, %bb.f ] ; 3 uses
+  %i.x = icmp eq i32 %.3.ph, %7                   ; 2 uses
   %i.y = tail call double @llvm.copysign.f64(double %.367.ph, double %1)
   %i.z = load ptr, ptr @thousands_grouping_fmt_flt, align 8
   tail call void (ptr, ptr, ...) @wmem_strbuf_append_printf(ptr noundef %i.a, ptr noundef %i.z, i32 noundef %4, double noundef %i.y)
@@ -613,10 +623,10 @@ bb.j:                                             ; preds = %._crit_edge.i
 
 truncate_numeric_strbuf.exit:                     ; preds = %bb.j, %bb.h, %.loopexit84
   %.171 = phi i1 [ false, %.loopexit84 ], [ %i.x, %bb.h ], [ %i.x, %bb.j ] ; 11 uses
-  %.4 = phi i32 [ %5, %.loopexit84 ], [ %.3.ph, %bb.h ], [ %.3.ph, %bb.j ]
-  %8 = select i1 %.not.i.not, ptr @prefix_parameters_for_flags.si_prefixes, ptr @prefix_parameters_for_flags.iec_prefixes
+  %.4 = phi i32 [ %7, %.loopexit84 ], [ %.3.ph, %bb.h ], [ %.3.ph, %bb.j ]
+  %16 = load ptr, ptr %5, align 8
   %i.av = sext i32 %.4 to i64
-  %i.aw = getelementptr [8 x i8], ptr %8, i64 %i.av
+  %i.aw = getelementptr [8 x i8], ptr %16, i64 %i.av
   %i.ax = load ptr, ptr %i.aw, align 8
   tail call void @wmem_strbuf_append(ptr noundef %i.a, ptr noundef %i.ax)
   switch i32 %2, label %bb.v [
@@ -725,7 +735,8 @@ define ptr @format_size_wmem(ptr noundef %0, i64 noundef %1, i32 noundef %2, i16
 bb.a:
   %i.a = tail call ptr @wmem_strbuf_new(ptr noundef %0, ptr noundef null) ; 4 uses
   %i.b = and i16 %3, 2
-  %.not.i = icmp eq i16 %i.b, 0                   ; 4 uses
+  %.not.i = icmp eq i16 %i.b, 0
+  %4 = select i1 %.not.i, ptr @prefix_parameters_for_flags.si_parameters, ptr @prefix_parameters_for_flags.iec_parameters ; 4 uses
   %i.c = load ptr, ptr @thousands_grouping_fmt, align 8
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.b, label %bb.c
@@ -744,35 +755,40 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %4 = select i1 %.not.i, i32 6, i32 0            ; 3 uses
-  %5 = select i1 %.not.i, i32 1000, i32 1024      ; 2 uses
-  %i.i = mul nuw nsw i32 %5, 10
-  %6 = zext nneg i32 %i.i to i64
-  %7 = zext nneg i32 %5 to i64
-  %8 = select i1 %.not.i, i32 13, i32 7           ; 3 uses
-  %i.j = add nsw i32 %8, -1                       ; 2 uses
-  %9 = or disjoint i32 %4, 1                      ; 2 uses
-  %10 = icmp samesign ult i32 %9, %8
-  br i1 %10, label %.lr.ph.preheader, label %.critedge
+  %5 = getelementptr i8, ptr %4, i64 16
+  %6 = load i32, ptr %5, align 8                  ; 4 uses
+  %7 = getelementptr i8, ptr %4, i64 12
+  %8 = getelementptr i8, ptr %4, i64 8
+  %9 = load i32, ptr %8, align 8                  ; 3 uses
+  %10 = load i32, ptr %7, align 4                 ; 2 uses
+  %i.i = mul i32 %10, 10
+  %11 = sext i32 %i.i to i64
+  %12 = sext i32 %10 to i64
+  %13 = add i32 %6, 1
+  %smax = tail call i32 @llvm.smax.i32(i32 %9, i32 %13)
+  %i.j = add i32 %smax, -1                        ; 2 uses
+  %14 = add i32 %6, 1                             ; 2 uses
+  %15 = icmp slt i32 %14, %9
+  br i1 %15, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %11 = udiv i64 9223372036854775807, %6
+  %16 = sdiv i64 9223372036854775807, %11
   br label %.lr.ph
 
 bb.d:                                             ; preds = %bb.e
-  %i.k = add nuw nsw i32 %i.l, 1                  ; 2 uses
-  %12 = icmp samesign ult i32 %i.k, %8
-  br i1 %12, label %.lr.ph, label %.critedge, !llvm.loop !28
+  %i.k = add i32 %i.l, 1                          ; 2 uses
+  %17 = icmp slt i32 %i.k, %9
+  br i1 %17, label %.lr.ph, label %.critedge, !llvm.loop !28
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %i.l = phi i32 [ %i.k, %bb.d ], [ %9, %.lr.ph.preheader ] ; 2 uses
+  %i.l = phi i32 [ %i.k, %bb.d ], [ %14, %.lr.ph.preheader ] ; 2 uses
   %.052 = phi i64 [ %i.n, %bb.d ], [ 1, %.lr.ph.preheader ] ; 4 uses
-  %.04551 = phi i32 [ %i.l, %bb.d ], [ %4, %.lr.ph.preheader ] ; 2 uses
-  %i.m = icmp slt i64 %.052, %11
+  %.04551 = phi i32 [ %i.l, %bb.d ], [ %6, %.lr.ph.preheader ] ; 2 uses
+  %i.m = icmp slt i64 %.052, %16
   br i1 %i.m, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.n = mul i64 %.052, %7                        ; 3 uses
+  %i.n = mul i64 %.052, %12                       ; 3 uses
   %i.o = mul i64 %i.n, 10
   %.not = icmp slt i64 %1, %i.o
   br i1 %.not, label %..critedge_crit_edge57, label %bb.d, !llvm.loop !28
@@ -786,12 +802,12 @@ bb.e:                                             ; preds = %.lr.ph
   %i.p = load ptr, ptr @thousands_grouping_fmt, align 8
   %i.q = sdiv i64 %1, %.0.lcssa
   tail call void (ptr, ptr, ...) @wmem_strbuf_append_printf(ptr noundef %i.a, ptr noundef %i.p, i64 noundef %i.q)
-  %13 = select i1 %.not.i, ptr @prefix_parameters_for_flags.si_prefixes, ptr @prefix_parameters_for_flags.iec_prefixes
+  %18 = load ptr, ptr %4, align 8
   %i.r = sext i32 %.045.lcssa to i64
-  %i.s = getelementptr [8 x i8], ptr %13, i64 %i.r
+  %i.s = getelementptr [8 x i8], ptr %18, i64 %i.r
   %i.t = load ptr, ptr %i.s, align 8
   tail call void @wmem_strbuf_append(ptr noundef %i.a, ptr noundef %i.t)
-  %i.u = icmp eq i32 %.045.lcssa, %4              ; 11 uses
+  %i.u = icmp eq i32 %.045.lcssa, %6              ; 11 uses
   switch i32 %2, label %bb.q [
     i32 0, label %bb.r
     i32 1, label %bb.f
@@ -1193,6 +1209,9 @@ declare ptr @__memset_chk(ptr noundef writeonly, i32 noundef, i64 noundef, i64 n
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #23

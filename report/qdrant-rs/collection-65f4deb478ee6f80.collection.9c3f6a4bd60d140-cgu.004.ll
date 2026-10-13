@@ -205,9 +205,10 @@ bb.c:                                             ; preds = %_RNCINvNtNtNtCskKLD
   call void @llvm.experimental.noalias.scope.decl(metadata !5115)
   %i.n = load i64, ptr %i.m, align 8, !range !8, !alias.scope !5116, !noalias !5117, !noundef !7
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %i.p = trunc nuw i64 %i.n to i1                 ; 2 uses
-  %.pn.i.i.i = load ptr, ptr %i.o, align 8, !alias.scope !5116, !noalias !5117, !nonnull !7, !noundef !7 ; 2 uses
-  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 16 ; 6 uses
+  %i.p = trunc nuw i64 %i.n to i1
+  %..i.i.i = select i1 %i.p, ptr @21, ptr @19     ; 3 uses
+  %.pn.i.i.i = load ptr, ptr %i.o, align 8, !alias.scope !5116, !noalias !5117, !nonnull !7, !noundef !7
+  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 16 ; 7 uses
   %i.q = load atomic i64, ptr %.sroa.0.0.i.i.i monotonic, align 8, !noalias !5118 ; 4 uses
   %i.r = and i64 %i.q, 8
   %i.s = icmp ne i64 %i.r, 0
@@ -231,9 +232,15 @@ _RNvXNtCs27TyLBeV75a_11parking_lot10raw_rwlockNtB2_9RawRwLockNtNtCsbO4BqjCww8C_8
   %i.z = or disjoint i64 %i.y, 1
   call void @_RNvNtNtCsawlvgPhpsYW_16parking_lot_core11parking_lot13deadlock_impl16acquire_resource(i64 noundef %i.z), !noalias !5118
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !5119
-  %i.aa = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 24
-  %3 = select i1 %i.p, ptr @_RNvXs_NtNtCs5QaNqjAn6vc_5shard13proxy_segment13segment_entryNtB6_12ProxySegmentNtNtNtCs607s0NAIaWN_7segment5entry11entry_point16ReadSegmentEntry12vector_names, ptr @_RNvXNtNtCs607s0NAIaWN_7segment7segment5entryNtB4_7SegmentNtNtNtB6_5entry11entry_point16ReadSegmentEntry12vector_names
-  invoke void %3(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.c, ptr noundef nonnull %i.aa)
+  %3 = getelementptr inbounds nuw i8, ptr %..i.i.i, i64 16
+  %4 = load i64, ptr %3, align 8, !range !19, !invariant.load !7, !noalias !5119
+  %5 = add nsw i64 %4, -1
+  %6 = and i64 %5, -8
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 %6
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.aa = getelementptr inbounds nuw i8, ptr %..i.i.i, i64 168
+  %9 = load ptr, ptr %i.aa, align 8, !invariant.load !7, !noalias !5119, !nonnull !7
+  invoke void %9(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.c, ptr noundef nonnull %8)
           to label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldRNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentINtNtB6_10filter_map9FilterMapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtB2p_6string6StringENCNCNvNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard12indexed_only31get_index_only_excluded_vectors00EuNCB3x_0NCINvNvMsg_NtB6_7flattenINtB5v_13FlattenCompatppE9iter_fold7flattenB1O_uNCINvNvXsi_B5v_B5I_NtNtNtB8_6traits8iterator8Iterator4fold7flattenB1O_uNCINvNvB6N_8for_each4callTB36_INtNtBa_6option6OptionjEjENCB3x_s_0E0E0E0E0B3F_.exit.i unwind label %bb.d, !noalias !5118
 
 bb.d:                                             ; preds = %_RNvXNtCs27TyLBeV75a_11parking_lot10raw_rwlockNtB2_9RawRwLockNtNtCsbO4BqjCww8C_8lock_api6rwlock9RawRwLock11lock_shared.exit.i.i.i
@@ -252,7 +259,6 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.ab
 
 _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldRNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentINtNtB6_10filter_map9FilterMapINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtB2p_6string6StringENCNCNvNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard12indexed_only31get_index_only_excluded_vectors00EuNCB3x_0NCINvNvMsg_NtB6_7flattenINtB5v_13FlattenCompatppE9iter_fold7flattenB1O_uNCINvNvXsi_B5v_B5I_NtNtNtB8_6traits8iterator8Iterator4fold7flattenB1O_uNCINvNvB6N_8for_each4callTB36_INtNtBa_6option6OptionjEjENCB3x_s_0E0E0E0E0B3F_.exit.i: ; preds = %_RNvXNtCs27TyLBeV75a_11parking_lot10raw_rwlockNtB2_9RawRwLockNtNtCsbO4BqjCww8C_8lock_api6rwlock9RawRwLock11lock_shared.exit.i.i.i
-  %..i.i.i = select i1 %i.p, ptr @21, ptr @19
   %i.ad = load ptr, ptr %i.i, align 8, !noalias !5119, !nonnull !7, !noundef !7 ; 3 uses
   %i.ae = load i64, ptr %i.c, align 8, !range !10, !noalias !5119, !noundef !7
   %i.af = load i64, ptr %i.j, align 8, !noalias !5119, !noundef !7 ; 2 uses
@@ -655,8 +661,9 @@ bb.a:
   %i.b = load i64, ptr %2, align 8, !range !8, !alias.scope !8474, !noundef !7
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = trunc nuw i64 %i.b to i1
-  %.pn.i.i.i = load ptr, ptr %i.c, align 8, !alias.scope !8474, !nonnull !7, !noundef !7 ; 2 uses
-  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 16 ; 7 uses
+  %..i.i.i = select i1 %i.d, ptr @21, ptr @19     ; 2 uses
+  %.pn.i.i.i = load ptr, ptr %i.c, align 8, !alias.scope !8474, !nonnull !7, !noundef !7
+  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 16 ; 8 uses
   %i.e = load atomic i64, ptr %.sroa.0.0.i.i.i monotonic, align 8, !noalias !8474 ; 4 uses
   %i.f = and i64 %i.e, 8
   %i.g = icmp ne i64 %i.f, 0
@@ -679,9 +686,15 @@ _RNvXNtCs27TyLBeV75a_11parking_lot10raw_rwlockNtB2_9RawRwLockNtNtCsbO4BqjCww8C_8
   tail call void @_RNvNtNtCsawlvgPhpsYW_16parking_lot_core11parking_lot13deadlock_impl16acquire_resource(i64 noundef %i.m), !noalias !8474
   %i.n = or disjoint i64 %i.m, 1                  ; 2 uses
   tail call void @_RNvNtNtCsawlvgPhpsYW_16parking_lot_core11parking_lot13deadlock_impl16acquire_resource(i64 noundef %i.n), !noalias !8474
-  %i.o = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 24
-  %3 = select i1 %i.d, ptr @_RNvXs_NtNtCs5QaNqjAn6vc_5shard13proxy_segment13segment_entryNtB6_12ProxySegmentNtNtNtCs607s0NAIaWN_7segment5entry11entry_point16ReadSegmentEntry9size_info, ptr @_RNvXNtNtCs607s0NAIaWN_7segment7segment5entryNtB4_7SegmentNtNtNtB6_5entry11entry_point16ReadSegmentEntry9size_info
-  invoke void %3(ptr noalias nofree noundef nonnull sret([224 x i8]) align 8 captures(address) dereferenceable(224) %i.a, ptr noundef nonnull %i.o)
+  %3 = getelementptr inbounds nuw i8, ptr %..i.i.i, i64 16
+  %4 = load i64, ptr %3, align 8, !range !19, !invariant.load !7, !noalias !8474
+  %5 = add nsw i64 %4, -1
+  %6 = and i64 %5, -8
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 %6
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.o = getelementptr inbounds nuw i8, ptr %..i.i.i, i64 248
+  %9 = load ptr, ptr %i.o, align 8, !invariant.load !7, !noalias !8474, !nonnull !7
+  invoke void %9(ptr noalias nofree noundef nonnull sret([224 x i8]) align 8 captures(address) dereferenceable(224) %i.a, ptr noundef nonnull %8)
           to label %bb.c unwind label %bb.b, !noalias !8474
 
 bb.b:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapNtNtCs607s0NAIaWN_7segment9json_path8JsonPathNtNtB1z_5types16PayloadIndexInfoEECsPYQCUnoTxQ_10collection.exit.i.i.i.i, %_RNvXNtCs27TyLBeV75a_11parking_lot10raw_rwlockNtB2_9RawRwLockNtNtCsbO4BqjCww8C_8lock_api6rwlock9RawRwLock11lock_shared.exit.i.i.i
@@ -755,8 +768,9 @@ bb.a:
   %i.a = load i64, ptr %2, align 8, !range !8, !alias.scope !8484, !noundef !7
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = trunc nuw i64 %i.a to i1
-  %.pn.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !8484, !nonnull !7, !noundef !7 ; 2 uses
-  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 16 ; 7 uses
+  %..i.i.i = select i1 %i.c, ptr @21, ptr @19     ; 2 uses
+  %.pn.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !8484, !nonnull !7, !noundef !7
+  %.sroa.0.0.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 16 ; 8 uses
   %i.d = load atomic i64, ptr %.sroa.0.0.i.i.i monotonic, align 8, !noalias !8484 ; 4 uses
   %i.e = and i64 %i.d, 8
   %i.f = icmp ne i64 %i.e, 0
@@ -779,9 +793,15 @@ _RNvXNtCs27TyLBeV75a_11parking_lot10raw_rwlockNtB2_9RawRwLockNtNtCsbO4BqjCww8C_8
   tail call void @_RNvNtNtCsawlvgPhpsYW_16parking_lot_core11parking_lot13deadlock_impl16acquire_resource(i64 noundef %i.l), !noalias !8484
   %i.m = or disjoint i64 %i.l, 1                  ; 2 uses
   tail call void @_RNvNtNtCsawlvgPhpsYW_16parking_lot_core11parking_lot13deadlock_impl16acquire_resource(i64 noundef %i.m), !noalias !8484
-  %i.n = getelementptr inbounds nuw i8, ptr %.pn.i.i.i, i64 24
-  %3 = select i1 %i.c, ptr @_RNvXs_NtNtCs5QaNqjAn6vc_5shard13proxy_segment13segment_entryNtB6_12ProxySegmentNtNtNtCs607s0NAIaWN_7segment5entry11entry_point16ReadSegmentEntry19has_deferred_points, ptr @_RNvXNtNtCs607s0NAIaWN_7segment7segment5entryNtB4_7SegmentNtNtNtB6_5entry11entry_point16ReadSegmentEntry19has_deferred_points
-  %i.o = invoke noundef zeroext i1 %3(ptr noundef nonnull %i.n)
+  %3 = getelementptr inbounds nuw i8, ptr %..i.i.i, i64 16
+  %4 = load i64, ptr %3, align 8, !range !19, !invariant.load !7, !noalias !8484
+  %5 = add nsw i64 %4, -1
+  %6 = and i64 %5, -8
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 %6
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.n = getelementptr inbounds nuw i8, ptr %..i.i.i, i64 320
+  %9 = load ptr, ptr %i.n, align 8, !invariant.load !7, !noalias !8484, !nonnull !7
+  %i.o = invoke noundef zeroext i1 %9(ptr noundef nonnull %8)
           to label %bb.c unwind label %bb.b, !noalias !8484
 
 bb.b:                                             ; preds = %_RNvXNtCs27TyLBeV75a_11parking_lot10raw_rwlockNtB2_9RawRwLockNtNtCsbO4BqjCww8C_8lock_api6rwlock9RawRwLock11lock_shared.exit.i.i.i
