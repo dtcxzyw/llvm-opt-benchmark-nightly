@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %.preheader.i.i
   br label %rbimpl_check_typeddata.exit.i
 
 rbimpl_check_typeddata.exit.i:                    ; preds = %bb.d, %.critedge.i.i, %RTYPEDDATA_GET_DATA.exit.i.i
-  %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 4 uses
-  %i.u = load i64, ptr %.1.i.i, align 8, !tbaa !43
+  %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 3 uses
+  %i.u = load i64, ptr %.1.i.i, align 8, !tbaa !43 ; 2 uses
   %i.v = and i64 %i.u, 1
   %.not.i = icmp eq i64 %i.v, 0
   br i1 %.not.i, label %bb.e, label %get_zstream.exit
@@ -229,8 +229,7 @@ get_zstream.exit:                                 ; preds = %rbimpl_check_typedd
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   store i32 0, ptr %i.ab, align 8, !tbaa !60
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %2 = load i64, ptr %.1.i.i, align 8, !tbaa !43
-  %i.ad = and i64 %2, 16
+  %i.ad = and i64 %i.u, 16
   %.not.i2 = icmp eq i64 %i.ad, 0
   br i1 %.not.i2, label %bb.f, label %bb.g
 
@@ -633,7 +632,7 @@ bb.d:                                             ; preds = %.preheader.i.i
 
 rbimpl_check_typeddata.exit.i:                    ; preds = %bb.d, %.critedge.i.i, %RTYPEDDATA_GET_DATA.exit.i.i
   %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 4 uses
-  %i.u = load i64, ptr %.1.i.i, align 8, !tbaa !43
+  %i.u = load i64, ptr %.1.i.i, align 8, !tbaa !43 ; 3 uses
   %i.v = and i64 %i.u, 1
   %.not.i6 = icmp eq i64 %i.v, 0
   br i1 %.not.i6, label %bb.e, label %bb.f
@@ -668,10 +667,15 @@ bb.h:                                             ; preds = %rb_scan_args_set.ex
   %i.ab = tail call i64 @rb_fix2int(i64 noundef %i.y) #17
   %i.ac = trunc i64 %i.ab to i32                  ; 2 uses
   %.not = icmp eq i32 %i.ac, 0
-  br i1 %.not, label %bb.l, label %.thread
+  br i1 %.not, label %bb.l, label %..thread_crit_edge
 
-.thread:                                          ; preds = %.preheader.split.split, %rb_scan_args_set.exit, %bb.h
-  %i.ad = phi i32 [ %i.ac, %bb.h ], [ 2, %rb_scan_args_set.exit ], [ 2, %.preheader.split.split ]
+..thread_crit_edge:                               ; preds = %bb.h
+  %.pre = load i64, ptr %.1.i.i, align 8, !tbaa !43
+  br label %.thread
+
+.thread:                                          ; preds = %.preheader.split.split, %..thread_crit_edge, %rb_scan_args_set.exit
+  %4 = phi i64 [ %.pre, %..thread_crit_edge ], [ %i.u, %rb_scan_args_set.exit ], [ %i.u, %.preheader.split.split ]
+  %i.ad = phi i32 [ %i.ac, %..thread_crit_edge ], [ 2, %rb_scan_args_set.exit ], [ 2, %.preheader.split.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   store ptr %.1.i.i, ptr %3, align 8, !tbaa !55
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -685,7 +689,6 @@ bb.h:                                             ; preds = %rb_scan_args_set.ex
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   store i32 0, ptr %i.ai, align 8, !tbaa !60
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 36
-  %4 = load i64, ptr %.1.i.i, align 8, !tbaa !43
   %i.ak = and i64 %4, 16
   %.not.i7 = icmp eq i64 %i.ak, 0
   br i1 %.not.i7, label %bb.i, label %bb.j
@@ -1088,11 +1091,11 @@ bb.c:                                             ; preds = %.preheader
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader.thread, %.preheader, %bb.c
-  %.0 = phi i64 [ %i.k, %.preheader ], [ %i.k, %bb.c ], [ %i.c, %.preheader.thread ] ; 2 uses
-  %.0194654 = phi i32 [ 1, %.preheader ], [ %spec.select, %bb.c ], [ 1, %.preheader.thread ] ; 3 uses
-  %.04852 = phi i64 [ %i.h, %.preheader ], [ %i.h, %bb.c ], [ 4, %.preheader.thread ] ; 4 uses
-  %i.n = phi i64 [ 4, %.preheader ], [ %i.m, %bb.c ], [ 4, %.preheader.thread ] ; 2 uses
-  %.286.i = phi i32 [ 1, %.preheader ], [ 2, %bb.c ], [ 1, %.preheader.thread ] ; 4 uses
+  %.0 = phi i64 [ %i.k, %bb.c ], [ %i.c, %.preheader.thread ], [ %i.k, %.preheader ] ; 2 uses
+  %.0194654 = phi i32 [ %spec.select, %bb.c ], [ 1, %.preheader.thread ], [ 1, %.preheader ] ; 3 uses
+  %.04852 = phi i64 [ %i.h, %bb.c ], [ 4, %.preheader.thread ], [ %i.h, %.preheader ] ; 4 uses
+  %i.n = phi i64 [ %i.m, %bb.c ], [ 4, %.preheader.thread ], [ 4, %.preheader ] ; 2 uses
+  %.286.i = phi i32 [ 2, %bb.c ], [ 1, %.preheader.thread ], [ 1, %.preheader ] ; 4 uses
   %i.o = icmp samesign ult i32 %.286.i, %.0194654
   br i1 %i.o, label %bb.e, label %bb.f
 
@@ -1307,7 +1310,7 @@ bb.d:                                             ; preds = %.preheader.i.i
 
 rbimpl_check_typeddata.exit.i:                    ; preds = %bb.d, %.critedge.i.i, %RTYPEDDATA_GET_DATA.exit.i.i
   %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 8 uses
-  %i.u = load i64, ptr %.1.i.i, align 8, !tbaa !80
+  %i.u = load i64, ptr %.1.i.i, align 8, !tbaa !80 ; 3 uses
   %i.v = and i64 %i.u, 1
   %.not.i10 = icmp eq i64 %i.v, 0
   br i1 %.not.i10, label %bb.e, label %bb.f
@@ -1342,10 +1345,15 @@ bb.h:                                             ; preds = %rb_scan_args_set.ex
   %i.ab = tail call i64 @rb_fix2int(i64 noundef %i.y) #17
   %i.ac = trunc i64 %i.ab to i32                  ; 2 uses
   %.not = icmp eq i32 %i.ac, 0
-  br i1 %.not, label %bb.l, label %.thread
+  br i1 %.not, label %bb.l, label %..thread_crit_edge
 
-.thread:                                          ; preds = %.preheader.split.split, %rb_scan_args_set.exit, %bb.h
-  %i.ad = phi i32 [ %i.ac, %bb.h ], [ 2, %rb_scan_args_set.exit ], [ 2, %.preheader.split.split ]
+..thread_crit_edge:                               ; preds = %bb.h
+  %.pre = load i64, ptr %.1.i.i, align 8, !tbaa !43
+  br label %.thread
+
+.thread:                                          ; preds = %.preheader.split.split, %..thread_crit_edge, %rb_scan_args_set.exit
+  %4 = phi i64 [ %.pre, %..thread_crit_edge ], [ %i.u, %rb_scan_args_set.exit ], [ %i.u, %.preheader.split.split ]
+  %i.ad = phi i32 [ %i.ac, %..thread_crit_edge ], [ 2, %rb_scan_args_set.exit ], [ 2, %.preheader.split.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   store ptr %.1.i.i, ptr %3, align 8, !tbaa !55
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -1359,7 +1367,6 @@ bb.h:                                             ; preds = %rb_scan_args_set.ex
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   store i32 0, ptr %i.ai, align 8, !tbaa !60
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 36
-  %4 = load i64, ptr %.1.i.i, align 8, !tbaa !43
   %i.ak = and i64 %4, 16
   %.not.i11 = icmp eq i64 %i.ak, 0
   br i1 %.not.i11, label %bb.i, label %bb.j

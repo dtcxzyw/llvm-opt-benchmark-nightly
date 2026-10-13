@@ -202,12 +202,13 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag
   %i.el = load ptr, ptr %i.t, align 8, !tbaa !17
   %i.em = call i32 @mz_stream_read_uint64(ptr noundef %i.el, ptr noundef nonnull %i.n) #23
+  %.pre199.i = load i64, ptr %i.n, align 8, !tbaa !20
   br label %.thread173.i
 
 .thread173.i:                                     ; preds = %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z
+  %4 = phi i64 [ %.pre199.i, %bb.ah ], [ 0, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.ae ], [ 0, %bb.ad ], [ 0, %bb.ac ], [ 0, %bb.ab ], [ 0, %bb.aa ], [ 0, %bb.z ]
   %.15.i = phi i32 [ %i.em, %bb.ah ], [ %i.ej, %bb.ag ], [ %i.eg, %bb.af ], [ %i.ed, %bb.ae ], [ %i.ea, %bb.ad ], [ %i.dx, %bb.ac ], [ %i.dt, %bb.ab ], [ %i.dq, %bb.aa ], [ %i.dn, %bb.z ]
   %i.en = load i64, ptr %i.bf, align 8, !tbaa !24
-  %4 = load i64, ptr %i.n, align 8, !tbaa !20
   %.not123.i = icmp eq i64 %i.en, %4
   %spec.select129.i = select i1 %.not123.i, i32 %.15.i, i32 -103 ; 2 uses
   %i.eo = icmp eq i32 %spec.select129.i, 0

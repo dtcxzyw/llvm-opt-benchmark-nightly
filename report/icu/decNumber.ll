@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %bb.at, %bb.ar
   %i.gg = call fastcc noundef ptr @_ZL8decAddOpP9decNumberPKS_S2_P10decContexthPj(ptr noundef nonnull %.0170, ptr noundef nonnull %.0170, ptr noundef nonnull %.0176, ptr noundef nonnull %4, i8 noundef zeroext 0, ptr noundef %3) ; 0 uses
   %i.gh = call fastcc noundef ptr @_ZL13decMultiplyOpP9decNumberPKS_S2_P10decContextPj(ptr noundef nonnull %.0176, ptr noundef nonnull %.0176, ptr noundef nonnull %.1188, ptr noundef nonnull %5, ptr noundef %i.c) ; 0 uses
   %i.gi = call fastcc noundef ptr @_ZL11decDivideOpP9decNumberPKS_S2_P10decContexthPj(ptr noundef nonnull %.0176, ptr noundef nonnull %.0176, ptr noundef nonnull %10, ptr noundef nonnull %5, i8 noundef zeroext -128, ptr noundef %i.c) ; 0 uses
-  %i.gj = load i32, ptr %.0170, align 4, !tbaa !18 ; 2 uses
+  %i.gj = load i32, ptr %.0170, align 4, !tbaa !18 ; 3 uses
   %i.gk = load i32, ptr %i.fy, align 4, !tbaa !17
   %i.gl = add nsw i32 %i.gk, %i.gj
   %i.gm = load i32, ptr %.0176, align 4, !tbaa !18
@@ -228,10 +228,10 @@ bb.au:                                            ; preds = %bb.as
 .thread242:                                       ; preds = %bb.ab, %bb.aa, %bb.au
   %.1169259 = phi i32 [ %spec.select, %bb.au ], [ 8, %bb.aa ], [ 8, %bb.ab ]
   %.2258 = phi ptr [ %.0170, %bb.au ], [ %9, %bb.aa ], [ %9, %bb.ab ]
-  %.2174257 = phi ptr [ %.0172, %bb.au ], [ null, %bb.aa ], [ null, %bb.ab ] ; 4 uses
-  %.2178255 = phi ptr [ %.0176, %bb.au ], [ %8, %bb.aa ], [ %8, %bb.ab ] ; 14 uses
-  %.2181254 = phi ptr [ %.0179, %bb.au ], [ null, %bb.aa ], [ null, %bb.ab ] ; 4 uses
-  %.4252 = phi ptr [ %.2185, %bb.au ], [ null, %bb.aa ], [ null, %bb.ab ] ; 4 uses
+  %.2174257 = phi ptr [ %.0172, %bb.au ], [ null, %bb.aa ], [ null, %bb.ab ]
+  %.2178255 = phi ptr [ %.0176, %bb.au ], [ %8, %bb.aa ], [ %8, %bb.ab ] ; 12 uses
+  %.2181254 = phi ptr [ %.0179, %bb.au ], [ null, %bb.aa ], [ null, %bb.ab ]
+  %.4252 = phi ptr [ %.2185, %bb.au ], [ null, %bb.aa ], [ null, %bb.ab ]
   %.1190250 = phi i32 [ %i.et, %bb.au ], [ 9, %bb.aa ], [ 9, %bb.ab ]
   %i.gr = zext nneg i32 %.1169259 to i64
   %i.gs = getelementptr inbounds nuw [4 x i8], ptr @_ZL9DECPOWERS, i64 %i.gr
@@ -259,7 +259,7 @@ bb.av:                                            ; preds = %bb.bd, %.thread242
 bb.aw:                                            ; preds = %bb.av
   %i.ha = and i32 %i.gy, 512
   %.not219 = icmp eq i32 %i.ha, 0
-  br i1 %.not219, label %bb.ax, label %.loopexit
+  br i1 %.not219, label %bb.ax, label %.loopexit.loopexit
 
 bb.ax:                                            ; preds = %bb.aw
   %i.hb = load i8, ptr %i.gx, align 1, !tbaa !19
@@ -275,7 +275,7 @@ bb.az:                                            ; preds = %bb.ay
   %i.hf = load i8, ptr %i.gv, align 4, !tbaa !16
   %i.hg = and i8 %i.hf, 112
   %i.hh = icmp eq i8 %i.hg, 0
-  br i1 %i.hh, label %.loopexit, label %bb.ba
+  br i1 %i.hh, label %.loopexit.loopexit, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.ax, %bb.ay, %bb.az, %bb.av
   %i.hi = shl i32 %.0, 1                          ; 2 uses
@@ -284,12 +284,12 @@ bb.ba:                                            ; preds = %bb.ax, %bb.ay, %bb.
 
 bb.bb:                                            ; preds = %bb.ba
   %i.hk = icmp eq i32 %.0162, 31
-  br i1 %i.hk, label %.loopexit, label %bb.bc
+  br i1 %i.hk, label %.loopexit.loopexit, label %bb.bc
 
 .thread260:                                       ; preds = %bb.ba
   %i.hl = call fastcc noundef ptr @_ZL13decMultiplyOpP9decNumberPKS_S2_P10decContextPj(ptr noundef nonnull %.2178255, ptr noundef nonnull %.2178255, ptr noundef nonnull %.2258, ptr noundef nonnull %4, ptr noundef %3) ; 0 uses
   %i.hm = icmp eq i32 %.0162, 31
-  br i1 %i.hm, label %.loopexit, label %.thread263
+  br i1 %i.hm, label %.loopexit.loopexit, label %.thread263
 
 bb.bc:                                            ; preds = %bb.bb
   %.not220 = icmp eq i32 %.0163, 0
@@ -304,17 +304,21 @@ bb.bd:                                            ; preds = %bb.bc, %.thread263
   %i.ho = add nuw nsw i32 %.0162, 1
   br label %bb.av, !llvm.loop !91
 
-.loopexit:                                        ; preds = %.thread260, %bb.az, %bb.aw, %bb.bb, %bb.au
-  %.2174256 = phi ptr [ %.0172, %bb.au ], [ %.2174257, %bb.bb ], [ %.2174257, %bb.aw ], [ %.2174257, %bb.az ], [ %.2174257, %.thread260 ]
-  %.2181253 = phi ptr [ %.0179, %bb.au ], [ %.2181254, %bb.bb ], [ %.2181254, %bb.aw ], [ %.2181254, %bb.az ], [ %.2181254, %.thread260 ]
-  %.4251 = phi ptr [ %.2185, %bb.au ], [ %.4252, %bb.bb ], [ %.4252, %bb.aw ], [ %.4252, %bb.az ], [ %.4252, %.thread260 ]
-  %.3 = phi ptr [ %.0170, %bb.au ], [ %.2178255, %bb.bb ], [ %.2178255, %bb.aw ], [ %.2178255, %bb.az ], [ %.2178255, %.thread260 ] ; 6 uses
+.loopexit.loopexit:                               ; preds = %bb.bb, %bb.aw, %bb.az, %.thread260
+  %.pre302.pre = load i32, ptr %.2178255, align 4, !tbaa !18
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.au
+  %.pre302 = phi i32 [ %i.gj, %bb.au ], [ %.pre302.pre, %.loopexit.loopexit ] ; 2 uses
+  %.2174256 = phi ptr [ %.0172, %bb.au ], [ %.2174257, %.loopexit.loopexit ]
+  %.2181253 = phi ptr [ %.0179, %bb.au ], [ %.2181254, %.loopexit.loopexit ]
+  %.4251 = phi ptr [ %.2185, %bb.au ], [ %.4252, %.loopexit.loopexit ]
+  %.3 = phi ptr [ %.0170, %bb.au ], [ %.2178255, %.loopexit.loopexit ] ; 4 uses
   store i32 1, ptr %i.d, align 4, !tbaa !21
   %i.hp = getelementptr inbounds nuw i8, ptr %.3, i64 9 ; 2 uses
   %i.hq = load i8, ptr %i.hp, align 1, !tbaa !19
   %i.hr = icmp eq i8 %i.hq, 0
-  %.pre303 = load i32, ptr %.3, align 4, !tbaa !18 ; 2 uses
-  %i.hs = icmp eq i32 %.pre303, 1
+  %i.hs = icmp eq i32 %.pre302, 1
   %or.cond324 = select i1 %i.hr, i1 %i.hs, i1 false
   br i1 %or.cond324, label %bb.be, label %bb.bg
 
@@ -327,11 +331,9 @@ bb.be:                                            ; preds = %.loopexit
 
 bb.bf:                                            ; preds = %bb.be
   store i32 0, ptr %i.d, align 4, !tbaa !21
-  %.pre302 = load i32, ptr %.3, align 4, !tbaa !18
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be, %.loopexit
-  %12 = phi i32 [ %.pre302, %bb.bf ], [ 1, %bb.be ], [ %.pre303, %.loopexit ]
   %i.hx = load i32, ptr %2, align 4, !tbaa !26
   store i32 %i.hx, ptr %4, align 4, !tbaa !26
   %i.hy = getelementptr inbounds nuw i8, ptr %.3, i64 8
@@ -342,7 +344,7 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be, %.lo
   %i.ic = load i32, ptr %i.ib, align 4, !tbaa !17
   %i.id = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.ic, ptr %i.id, align 4, !tbaa !17
-  call fastcc void @_ZL11decSetCoeffP9decNumberP10decContextPKhiPiPj(ptr noundef %0, ptr noundef nonnull readonly %4, ptr noundef nonnull readonly %i.hp, i32 noundef %12, ptr noundef nonnull %i.d, ptr noundef nonnull %3)
+  call fastcc void @_ZL11decSetCoeffP9decNumberP10decContextPKhiPiPj(ptr noundef %0, ptr noundef nonnull readonly %4, ptr noundef nonnull readonly %i.hp, i32 noundef %.pre302, ptr noundef nonnull %i.d, ptr noundef nonnull %3)
   call fastcc void @_ZL11decFinalizeP9decNumberP10decContextPiPj(ptr noundef %0, ptr noundef nonnull %2, ptr noundef %i.d, ptr noundef %3)
   br label %uprv_decNumberCopy_78.exit
 

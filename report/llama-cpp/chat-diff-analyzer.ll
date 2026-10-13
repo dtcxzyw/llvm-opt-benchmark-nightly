@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.q
   %.sroa.0.024 = phi ptr [ %.sroa.0.021, %.lr.ph ], [ %.sroa.0.0, %bb.q ] ; 6 uses
-  %.pn23 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.024, %bb.q ] ; 7 uses
+  %.pn23 = phi ptr [ %0, %.lr.ph ], [ %.sroa.0.024, %bb.q ] ; 8 uses
   %i.i = load i64, ptr %.sroa.0.024, align 8, !tbaa !155 ; 4 uses
   %i.j = load i64, ptr %0, align 8, !tbaa !155    ; 2 uses
   %i.k = icmp ult i64 %i.i, %i.j
@@ -254,7 +254,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImNSt7__c
 
 bb.e:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt6vectorISB_SaISB_EEEESG_EEbT_T0_.exit.thread
   %i.aa = getelementptr inbounds nuw i8, ptr %.pn23, i64 56
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !25 ; 2 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !25 ; 3 uses
   %i.ac = icmp ult i64 %i.ab, 16
   call void @llvm.assume(i1 %i.ac)
   %i.ad = add nuw nsw i64 %i.ab, 1
@@ -265,14 +265,16 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   store ptr %i.x, ptr %i.d, align 8, !tbaa !23
   %i.ae = load i64, ptr %i.y, align 8, !tbaa !24
   store i64 %i.ae, ptr %i.e, align 8, !tbaa !24
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pn23, i64 56
+  %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !25
   br label %_ZNSt4pairImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2EOS6_.exit
 
 _ZNSt4pairImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2EOS6_.exit: ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %3 = getelementptr inbounds nuw i8, ptr %.pn23, i64 56 ; 2 uses
-  %4 = load i64, ptr %3, align 8, !tbaa !25
-  store i64 %4, ptr %i.f, align 8, !tbaa !25
+  %3 = phi i64 [ %i.ab, %bb.e ], [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
+  %4 = getelementptr inbounds nuw i8, ptr %.pn23, i64 56
+  store i64 %3, ptr %i.f, align 8, !tbaa !25
   store ptr %i.y, ptr %i.w, align 8, !tbaa !23
-  store i64 0, ptr %3, align 8, !tbaa !25
+  store i64 0, ptr %4, align 8, !tbaa !25
   store i8 0, ptr %i.y, align 8, !tbaa !24
   %i.af = ptrtoint ptr %.sroa.0.024 to i64
   %i.ag = sub i64 %i.af, %i.g                     ; 2 uses

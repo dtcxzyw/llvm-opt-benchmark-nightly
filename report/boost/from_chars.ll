@@ -205,9 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.2.0.extract.trunc.i = trunc i64 %.sroa.2.0.extract.shift.i to i8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i8 0, i64 32, i1 false)
-  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 25
-  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 26
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(27) %5, i8 0, i64 27, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 25
+  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 26
+  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.f, i8 0, i64 3, i1 false)
   %i.g = load i8, ptr %0, align 1, !tbaa !35, !noalias !65
   %i.h = icmp eq i8 %i.g, 45                      ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -456,7 +457,7 @@ bb.w:                                             ; preds = %.thread, %bb.v, %bb
   %.5.i = phi i64 [ 0, %bb.u ], [ 0, %bb.v ], [ %spec.select172.i, %.thread ]
   %i.cv = getelementptr inbounds nuw i8, ptr %5, i64 16
   store ptr %.9.i, ptr %i.cv, align 8, !tbaa !47, !alias.scope !65
-  store i8 1, ptr %i.e, align 1, !tbaa !48, !alias.scope !65
+  store i8 1, ptr %6, align 1, !tbaa !48, !alias.scope !65
   %i.cw = icmp sgt i64 %.0140.i, 19
   br i1 %i.cw, label %.preheader, label %bb.aa
 
@@ -482,7 +483,7 @@ bb.w:                                             ; preds = %.thread, %bb.v, %bb
   br i1 %i.dc, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %.critedge8.i
-  store i8 1, ptr %i.f, align 2, !tbaa !49, !alias.scope !65
+  store i8 1, ptr %i.e, align 2, !tbaa !49, !alias.scope !65
   %i.dd = getelementptr inbounds nuw i8, ptr %.0127.i, i64 %i.bt
   %.not265 = icmp samesign eq i64 %i.bt, 0
   br i1 %.not265, label %._crit_edge.thread, label %.lr.ph255
@@ -885,9 +886,10 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.2.0.extract.trunc.i = trunc i64 %.sroa.2.0.extract.shift.i to i8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.d, i8 0, i64 32, i1 false)
-  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 25
-  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 26
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(27) %5, i8 0, i64 27, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 25
+  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 26
+  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.f, i8 0, i64 3, i1 false)
   %i.g = load i8, ptr %0, align 1, !tbaa !35, !noalias !106
   %i.h = icmp eq i8 %i.g, 45                      ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -1136,7 +1138,7 @@ bb.w:                                             ; preds = %.thread, %bb.v, %bb
   %.5.i = phi i64 [ 0, %bb.u ], [ 0, %bb.v ], [ %spec.select172.i, %.thread ]
   %i.cv = getelementptr inbounds nuw i8, ptr %5, i64 16
   store ptr %.9.i, ptr %i.cv, align 8, !tbaa !47, !alias.scope !106
-  store i8 1, ptr %i.e, align 1, !tbaa !48, !alias.scope !106
+  store i8 1, ptr %6, align 1, !tbaa !48, !alias.scope !106
   %i.cw = icmp sgt i64 %.0140.i, 19
   br i1 %i.cw, label %.preheader, label %bb.aa
 
@@ -1162,7 +1164,7 @@ bb.w:                                             ; preds = %.thread, %bb.v, %bb
   br i1 %i.dc, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %.critedge8.i
-  store i8 1, ptr %i.f, align 2, !tbaa !49, !alias.scope !106
+  store i8 1, ptr %i.e, align 2, !tbaa !49, !alias.scope !106
   %i.dd = getelementptr inbounds nuw i8, ptr %.0127.i, i64 %i.bt
   %.not256 = icmp samesign eq i64 %i.bt, 0
   br i1 %.not256, label %._crit_edge.thread, label %.lr.ph246

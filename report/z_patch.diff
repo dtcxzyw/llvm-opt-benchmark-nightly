@@ -1,0 +1,912 @@
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index 7a79b0d6e24f11..53705fbc1afb99 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -1554,6 +1554,70 @@ static bool isArgumentOrArgumentLike(const Value *V) {
+   return E && isa<Argument>(E->getOperand(0));
+ }
+ 
++/// Return true if pointers based on the distinct underlying objects \p O1 and
++/// \p O2 cannot alias.
++static bool areDistinctObjectsNoAlias(const Value *O1, const Value *O2,
++                                      AAQueryInfo &AAQI) {
++  assert(O1 != O2 && "Expected distinct objects");
++  // Two different identified objects cannot alias.
++  if (isIdentifiedObject(O1) && isIdentifiedObject(O2))
++    return true;
++
++  // Function arguments can't alias with things that are known to be
++  // unambigously identified at the function level.
++  if ((isArgumentOrArgumentLike(O1) && isIdentifiedFunctionLocal(O2)) ||
++      (isArgumentOrArgumentLike(O2) && isIdentifiedFunctionLocal(O1)))
++    return true;
++
++  // If one pointer is the result of a call/invoke or load and the other is a
++  // non-escaping local object within the same function, then we know the
++  // object couldn't escape to a point where the call could return it.
++  //
++  // Note that if the pointers are in different functions, there are a
++  // variety of complications. A call with a nocapture argument may still
++  // temporary store the nocapture argument's value in a temporary memory
++  // location if that memory location doesn't escape. Or it may pass a
++  // nocapture value to other functions as long as they don't capture it.
++  if (isEscapeSource(O1) && capturesNothing(AAQI.CA->getCapturesBefore(
++                                O2, dyn_cast<Instruction>(O1), /*OrAt=*/true,
++                                /*ReturnCaptures=*/false)))
++    return true;
++  if (isEscapeSource(O2) && capturesNothing(AAQI.CA->getCapturesBefore(
++                                O1, dyn_cast<Instruction>(O2), /*OrAt=*/true,
++                                /*ReturnCaptures=*/false)))
++    return true;
++  return false;
++}
++
++/// Return true if no pointer based on \p V can alias a pointer based on the
++/// identified function-local object \p Local. \p V is looked through phis and
++/// selects, and each underlying object reached must be distinct from \p Local
++/// and known not to alias it. Gives up after visiting a small number of values.
++static bool allUnderlyingObjectsNoAlias(const Value *V, const Value *Local,
++                                        AAQueryInfo &AAQI) {
++  const unsigned MaxVisited = 8;
++  SmallPtrSet<const Value *, 8> Visited;
++  SmallVector<const Value *, 8> Worklist({V});
++  do {
++    const Value *P = getUnderlyingObject(Worklist.pop_back_val());
++    if (!Visited.insert(P).second)
++      continue;
++    if (Visited.size() > MaxVisited)
++      return false;
++    if (const auto *SI = dyn_cast<SelectInst>(P)) {
++      Worklist.append({SI->getTrueValue(), SI->getFalseValue()});
++      continue;
++    }
++    if (const auto *PN = dyn_cast<PHINode>(P)) {
++      append_range(Worklist, PN->incoming_values());
++      continue;
++    }
++    if (P == Local || !areDistinctObjectsNoAlias(P, Local, AAQI))
++      return false;
++  } while (!Worklist.empty());
++  return true;
++}
++
+ /// Provides a bunch of ad-hoc rules to disambiguate in common cases, such as
+ /// array references.
+ AliasResult BasicAAResult::aliasCheck(const Value *V1, LocationSize V1Size,
+@@ -1597,32 +1661,16 @@ AliasResult BasicAAResult::aliasCheck(const Value *V1, LocationSize V1Size,
+       return AliasResult::NoAlias;
+ 
+   if (O1 != O2) {
+-    // If V1/V2 point to two different objects, we know that we have no alias.
+-    if (isIdentifiedObject(O1) && isIdentifiedObject(O2))
+-      return AliasResult::NoAlias;
+-
+-    // Function arguments can't alias with things that are known to be
+-    // unambigously identified at the function level.
+-    if ((isArgumentOrArgumentLike(O1) && isIdentifiedFunctionLocal(O2)) ||
+-        (isArgumentOrArgumentLike(O2) && isIdentifiedFunctionLocal(O1)))
++    if (areDistinctObjectsNoAlias(O1, O2, AAQI))
+       return AliasResult::NoAlias;
+ 
+-    // If one pointer is the result of a call/invoke or load and the other is a
+-    // non-escaping local object within the same function, then we know the
+-    // object couldn't escape to a point where the call could return it.
+-    //
+-    // Note that if the pointers are in different functions, there are a
+-    // variety of complications. A call with a nocapture argument may still
+-    // temporary store the nocapture argument's value in a temporary memory
+-    // location if that memory location doesn't escape. Or it may pass a
+-    // nocapture value to other functions as long as they don't capture it.
+-    if (isEscapeSource(O1) && capturesNothing(AAQI.CA->getCapturesBefore(
+-                                  O2, dyn_cast<Instruction>(O1), /*OrAt=*/true,
+-                                  /*ReturnCaptures=*/false)))
+-      return AliasResult::NoAlias;
+-    if (isEscapeSource(O2) && capturesNothing(AAQI.CA->getCapturesBefore(
+-                                  O1, dyn_cast<Instruction>(O2), /*OrAt=*/true,
+-                                  /*ReturnCaptures=*/false)))
++    // If one side is an identified function-local object and the other side is
++    // a phi or select, check all underlying objects of the latter, e.g. for
++    // pointers carried through nested loop phis.
++    if ((isa<PHINode, SelectInst>(O1) && isIdentifiedFunctionLocal(O2) &&
++         allUnderlyingObjectsNoAlias(O1, O2, AAQI)) ||
++        (isa<PHINode, SelectInst>(O2) && isIdentifiedFunctionLocal(O1) &&
++         allUnderlyingObjectsNoAlias(O2, O1, AAQI)))
+       return AliasResult::NoAlias;
+   }
+ 
+diff --git a/llvm/test/Analysis/BasicAA/phi-underlying-objects-local.ll b/llvm/test/Analysis/BasicAA/phi-underlying-objects-local.ll
+new file mode 100644
+index 00000000000000..8922ec159548c3
+--- /dev/null
++++ b/llvm/test/Analysis/BasicAA/phi-underlying-objects-local.ll
+@@ -0,0 +1,505 @@
++; RUN: opt -aa-pipeline=basic-aa -passes=aa-eval -print-all-alias-modref-info -disable-output %s 2>&1 | FileCheck %s
++
++; Pointers carried through nested-loop phis (including LCSSA phis) whose
++; underlying objects are all known not to alias a non-escaping local object.
++
++declare void @escape(ptr)
++
++; %data.inner is based on %data through an inner-loop phi, an outer-loop phi and
++; an LCSSA phi, so it cannot alias the non-escaping alloca %buf.
++; CHECK-LABEL: Function: nested_loop_arg:
++; CHECK:         NoAlias:  i8* %buf.gep, i8* %data.inner
++define void @nested_loop_arg(ptr %data, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %data, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; The pointer is loaded from memory, but %buf is never captured.
++; CHECK-LABEL: Function: nested_loop_load_not_captured:
++; CHECK:         NoAlias:  i8* %buf.gep, i8* %data.inner
++define void @nested_loop_load_not_captured(ptr %pp, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  %init = load ptr, ptr %pp
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; All underlying objects are reached through a select of arguments.
++; CHECK-LABEL: Function: nested_loop_select_of_args:
++; CHECK:         NoAlias:  i8* %buf.gep, i8* %data.inner
++define void @nested_loop_select_of_args(ptr %a, ptr %b, i1 %c, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  %init = select i1 %c, ptr %a, ptr %b
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; The inner-loop start value is a select of the outer-loop phi and an argument.
++; CHECK-LABEL: Function: nested_loop_select_of_phis:
++; CHECK:         NoAlias:  i8* %buf.gep, i8* %data.inner
++define void @nested_loop_select_of_phis(ptr %data, ptr %other, i1 %c, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %data, %entry ], [ %data.next.lcssa, %outer.latch ]
++  %start = select i1 %c, ptr %data.outer, ptr %other
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %start, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; 7 values are visited when looking through the phis and selects, which is
++; below the limit of 8.
++; CHECK-LABEL: Function: nested_loop_select_chain_below_limit:
++; CHECK:         NoAlias:  i8* %buf.gep, i8* %data.inner
++define void @nested_loop_select_chain_below_limit(ptr %a0, ptr %a1, ptr %a2, i1 %c, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  %s1 = select i1 %c, ptr %a0, ptr %a1
++  %init = select i1 %c, ptr %s1, ptr %a2
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; %init is 10 GEPs away from %data, which getUnderlyingObject can still see
++; through.
++; CHECK-LABEL: Function: gep_chain_at_lookup_limit:
++; CHECK:         NoAlias:  i8* %buf.gep, i8* %data.inner
++define void @gep_chain_at_lookup_limit(ptr %data, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  %g0 = getelementptr i8, ptr %data, i64 1
++  %g1 = getelementptr i8, ptr %g0, i64 1
++  %g2 = getelementptr i8, ptr %g1, i64 1
++  %g3 = getelementptr i8, ptr %g2, i64 1
++  %g4 = getelementptr i8, ptr %g3, i64 1
++  %g5 = getelementptr i8, ptr %g4, i64 1
++  %g6 = getelementptr i8, ptr %g5, i64 1
++  %g7 = getelementptr i8, ptr %g6, i64 1
++  %g8 = getelementptr i8, ptr %g7, i64 1
++  %init = getelementptr i8, ptr %g8, i64 1
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; One incoming value of the phi chain is based on %buf.
++; CHECK-LABEL: Function: neg_incoming_gep_of_alloca:
++; CHECK:         MayAlias:  i8* %buf.gep, i8* %data.inner
++define void @neg_incoming_gep_of_alloca(ptr %data, i1 %c, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  %buf.4 = getelementptr inbounds i8, ptr %buf, i64 4
++  br i1 %c, label %ph, label %other
++
++other:
++  br label %ph
++
++ph:
++  %init = phi ptr [ %data, %entry ], [ %buf.4, %other ]
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %ph ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %ph ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; One incoming value of the phi chain is %buf itself.
++; CHECK-LABEL: Function: neg_incoming_alloca:
++; CHECK:         MayAlias:  i8* %buf.gep, i8* %data.inner
++define void @neg_incoming_alloca(ptr %data, i1 %c, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  br i1 %c, label %ph, label %other
++
++other:
++  br label %ph
++
++ph:
++  %init = phi ptr [ %data, %entry ], [ %buf, %other ]
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %ph ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %ph ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; One arm of the select feeding the phi chain is based on %buf.
++; CHECK-LABEL: Function: neg_select_of_alloca:
++; CHECK:         MayAlias:  i8* %buf.gep, i8* %data.inner
++define void @neg_select_of_alloca(ptr %data, i1 %c, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  %buf.4 = getelementptr inbounds i8, ptr %buf, i64 4
++  %init = select i1 %c, ptr %data, ptr %buf.4
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; %buf escapes before the load, so the loaded pointer may be based on it.
++; CHECK-LABEL: Function: neg_load_escape_before_loop:
++; CHECK:         MayAlias:  i8* %buf.gep, i8* %data.inner
++define void @neg_load_escape_before_loop(ptr %pp, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  store ptr %buf, ptr %pp
++  %init = load ptr, ptr %pp
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; %buf escapes inside the outer loop, before the load in the next iteration.
++; CHECK-LABEL: Function: neg_load_escape_in_loop:
++; CHECK:         MayAlias:  i8* %buf.gep, i8* %data.inner
++define void @neg_load_escape_in_loop(ptr %data, ptr %pp, i1 %c, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %data, %entry ], [ %data.next.lcssa, %outer.latch ]
++  %p = load ptr, ptr %pp
++  %start = select i1 %c, ptr %data.outer, ptr %p
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %start, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  call void @escape(ptr %buf)
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; 9 values need to be visited when looking through the phis and selects, which
++; exceeds the limit of 8.
++; CHECK-LABEL: Function: neg_select_chain_over_limit:
++; CHECK:         MayAlias:  i8* %buf.gep, i8* %data.inner
++define void @neg_select_chain_over_limit(ptr %a0, ptr %a1, ptr %a2, ptr %a3, i1 %c, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  %s1 = select i1 %c, ptr %a0, ptr %a1
++  %s2 = select i1 %c, ptr %s1, ptr %a2
++  %init = select i1 %c, ptr %s2, ptr %a3
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; %init is 11 GEPs away from %data, which exceeds the getUnderlyingObject lookup
++; limit.
++; CHECK-LABEL: Function: neg_gep_chain_over_lookup_limit:
++; CHECK:         MayAlias:  i8* %buf.gep, i8* %data.inner
++define void @neg_gep_chain_over_lookup_limit(ptr %data, i64 %n) {
++entry:
++  %buf = alloca [16 x i8]
++  %g0 = getelementptr i8, ptr %data, i64 1
++  %g1 = getelementptr i8, ptr %g0, i64 1
++  %g2 = getelementptr i8, ptr %g1, i64 1
++  %g3 = getelementptr i8, ptr %g2, i64 1
++  %g4 = getelementptr i8, ptr %g3, i64 1
++  %g5 = getelementptr i8, ptr %g4, i64 1
++  %g6 = getelementptr i8, ptr %g5, i64 1
++  %g7 = getelementptr i8, ptr %g6, i64 1
++  %g8 = getelementptr i8, ptr %g7, i64 1
++  %g9 = getelementptr i8, ptr %g8, i64 1
++  %init = getelementptr i8, ptr %g9, i64 1
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %init, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  %l = load i8, ptr %buf.gep
++  store i8 %l, ptr %data.inner
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/nested-loop-phi-noalias-local.ll b/llvm/test/Analysis/LoopAccessAnalysis/nested-loop-phi-noalias-local.ll
+new file mode 100644
+index 00000000000000..4dc956cf7d711e
+--- /dev/null
++++ b/llvm/test/Analysis/LoopAccessAnalysis/nested-loop-phi-noalias-local.ll
+@@ -0,0 +1,130 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='print<access-info>' -disable-output %s 2>&1 | FileCheck %s
++
++; The inner loop accesses %data through an inner-loop phi, an outer-loop phi and
++; an LCSSA phi, and the non-escaping alloca %buf. No runtime checks are needed
++; between them.
++define void @nested_loop_arg_vs_local(ptr %data, i64 %n) {
++; CHECK-LABEL: 'nested_loop_arg_vs_local'
++; CHECK-NEXT:    inner:
++; CHECK-NEXT:      Memory dependences are safe
++; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:      Run-time memory checks:
++; CHECK-NEXT:      Grouped accesses:
++; CHECK-EMPTY:
++; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
++; CHECK-NEXT:      SCEV assumptions:
++; CHECK-EMPTY:
++; CHECK-NEXT:      Expressions re-written:
++; CHECK-NEXT:    outer:
++; CHECK-NEXT:      Report: loop is not the innermost loop
++; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:      Run-time memory checks:
++; CHECK-NEXT:      Grouped accesses:
++; CHECK-EMPTY:
++; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
++; CHECK-NEXT:      SCEV assumptions:
++; CHECK-EMPTY:
++; CHECK-NEXT:      Expressions re-written:
++;
++entry:
++  %buf = alloca [16 x i8]
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %data, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds nuw i8, ptr %buf, i64 %iv
++  %b = load i8, ptr %buf.gep
++  %d = load i8, ptr %data.inner
++  %xor = xor i8 %d, %b
++  store i8 %xor, ptr %data.inner
++  %data.next = getelementptr inbounds nuw i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
++
++; %buf escapes before %data is loaded, so %data may point into %buf and a
++; runtime check is needed.
++define void @nested_loop_load_vs_escaped_local(ptr %pp, i64 %n) {
++; CHECK-LABEL: 'nested_loop_load_vs_escaped_local'
++; CHECK-NEXT:    inner:
++; CHECK-NEXT:      Memory dependences are safe with run-time checks
++; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:      Run-time memory checks:
++; CHECK-NEXT:      Check 0:
++; CHECK-NEXT:        Comparing group GRP0:
++; CHECK-NEXT:          %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++; CHECK-NEXT:        Against group GRP1:
++; CHECK-NEXT:          %buf.gep = getelementptr inbounds nuw i8, ptr %buf, i64 %iv
++; CHECK-NEXT:      Grouped accesses:
++; CHECK-NEXT:        Group GRP0:
++; CHECK-NEXT:          (Low: %data.outer High: (16 + %data.outer))
++; CHECK-NEXT:            Member: {%data.outer,+,1}<nuw><%inner>
++; CHECK-NEXT:        Group GRP1:
++; CHECK-NEXT:          (Low: %buf High: (16 + %buf)<nuw>)
++; CHECK-NEXT:            Member: {%buf,+,1}<nuw><%inner>
++; CHECK-EMPTY:
++; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
++; CHECK-NEXT:      SCEV assumptions:
++; CHECK-EMPTY:
++; CHECK-NEXT:      Expressions re-written:
++; CHECK-NEXT:    outer:
++; CHECK-NEXT:      Report: loop is not the innermost loop
++; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:      Run-time memory checks:
++; CHECK-NEXT:      Grouped accesses:
++; CHECK-EMPTY:
++; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
++; CHECK-NEXT:      SCEV assumptions:
++; CHECK-EMPTY:
++; CHECK-NEXT:      Expressions re-written:
++;
++entry:
++  %buf = alloca [16 x i8]
++  store ptr %buf, ptr %pp
++  %data = load ptr, ptr %pp
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %data, %entry ], [ %data.next.lcssa, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %data.outer, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds nuw i8, ptr %buf, i64 %iv
++  %b = load i8, ptr %buf.gep
++  %d = load i8, ptr %data.inner
++  %xor = xor i8 %d, %b
++  store i8 %xor, ptr %data.inner
++  %data.next = getelementptr inbounds nuw i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/DeadStoreElimination/captures-before-nested-loop-phi.ll b/llvm/test/Transforms/DeadStoreElimination/captures-before-nested-loop-phi.ll
+new file mode 100644
+index 00000000000000..d2db16daecf6a3
+--- /dev/null
++++ b/llvm/test/Transforms/DeadStoreElimination/captures-before-nested-loop-phi.ll
+@@ -0,0 +1,143 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=dse -S %s | FileCheck %s
++
++; The pointer read in the inner loop is based on either %data or a pointer
++; loaded in the outer loop, through nested loop phis. The first store to
++; %buf.gep is dead if that read cannot alias %buf, which depends on whether %buf
++; may have been captured before the load of %p.
++
++declare void @escape(ptr)
++
++; %buf only escapes after the loops, so the loaded pointer cannot be based on it.
++define void @load_escape_after_loop(ptr %data, ptr %pp, i1 %c, i64 %n) {
++; CHECK-LABEL: define void @load_escape_after_loop(
++; CHECK-SAME: ptr [[DATA:%.*]], ptr [[PP:%.*]], i1 [[C:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[BUF:%.*]] = alloca [16 x i8], align 1
++; CHECK-NEXT:    br label %[[OUTER:.*]]
++; CHECK:       [[OUTER]]:
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[OUTER_IV_NEXT:%.*]], %[[OUTER_LATCH:.*]] ]
++; CHECK-NEXT:    [[DATA_OUTER:%.*]] = phi ptr [ [[DATA]], %[[ENTRY]] ], [ [[DATA_NEXT_LCSSA:%.*]], %[[OUTER_LATCH]] ]
++; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr [[PP]], align 8
++; CHECK-NEXT:    [[START:%.*]] = select i1 [[C]], ptr [[DATA_OUTER]], ptr [[P]]
++; CHECK-NEXT:    br label %[[INNER:.*]]
++; CHECK:       [[INNER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[OUTER]] ], [ [[IV_NEXT:%.*]], %[[INNER]] ]
++; CHECK-NEXT:    [[DATA_INNER:%.*]] = phi ptr [ [[START]], %[[OUTER]] ], [ [[DATA_NEXT:%.*]], %[[INNER]] ]
++; CHECK-NEXT:    [[BUF_GEP:%.*]] = getelementptr inbounds i8, ptr [[BUF]], i64 [[IV]]
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[DATA_INNER]], align 1
++; CHECK-NEXT:    store i8 [[L]], ptr [[BUF_GEP]], align 1
++; CHECK-NEXT:    [[DATA_NEXT]] = getelementptr inbounds i8, ptr [[DATA_INNER]], i64 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], 16
++; CHECK-NEXT:    br i1 [[EC]], label %[[OUTER_LATCH]], label %[[INNER]]
++; CHECK:       [[OUTER_LATCH]]:
++; CHECK-NEXT:    [[DATA_NEXT_LCSSA]] = phi ptr [ [[DATA_NEXT]], %[[INNER]] ]
++; CHECK-NEXT:    [[OUTER_IV_NEXT]] = add nuw i64 [[OUTER_IV]], 1
++; CHECK-NEXT:    [[OUTER_EC:%.*]] = icmp eq i64 [[OUTER_IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[OUTER_EC]], label %[[EXIT:.*]], label %[[OUTER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    call void @escape(ptr [[BUF]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %buf = alloca [16 x i8]
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %data, %entry ], [ %data.next.lcssa, %outer.latch ]
++  %p = load ptr, ptr %pp
++  %start = select i1 %c, ptr %data.outer, ptr %p
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %start, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  store i8 0, ptr %buf.gep
++  %l = load i8, ptr %data.inner
++  store i8 %l, ptr %buf.gep
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  call void @escape(ptr %buf)
++  ret void
++}
++
++; %buf escapes in the outer loop latch, which reaches the load of %p in the next
++; iteration.
++define void @load_escape_in_loop(ptr %data, ptr %pp, i1 %c, i64 %n) {
++; CHECK-LABEL: define void @load_escape_in_loop(
++; CHECK-SAME: ptr [[DATA:%.*]], ptr [[PP:%.*]], i1 [[C:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[BUF:%.*]] = alloca [16 x i8], align 1
++; CHECK-NEXT:    br label %[[OUTER:.*]]
++; CHECK:       [[OUTER]]:
++; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[OUTER_IV_NEXT:%.*]], %[[OUTER_LATCH:.*]] ]
++; CHECK-NEXT:    [[DATA_OUTER:%.*]] = phi ptr [ [[DATA]], %[[ENTRY]] ], [ [[DATA_NEXT_LCSSA:%.*]], %[[OUTER_LATCH]] ]
++; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr [[PP]], align 8
++; CHECK-NEXT:    [[START:%.*]] = select i1 [[C]], ptr [[DATA_OUTER]], ptr [[P]]
++; CHECK-NEXT:    br label %[[INNER:.*]]
++; CHECK:       [[INNER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[OUTER]] ], [ [[IV_NEXT:%.*]], %[[INNER]] ]
++; CHECK-NEXT:    [[DATA_INNER:%.*]] = phi ptr [ [[START]], %[[OUTER]] ], [ [[DATA_NEXT:%.*]], %[[INNER]] ]
++; CHECK-NEXT:    [[BUF_GEP:%.*]] = getelementptr inbounds i8, ptr [[BUF]], i64 [[IV]]
++; CHECK-NEXT:    store i8 0, ptr [[BUF_GEP]], align 1
++; CHECK-NEXT:    [[L:%.*]] = load i8, ptr [[DATA_INNER]], align 1
++; CHECK-NEXT:    store i8 [[L]], ptr [[BUF_GEP]], align 1
++; CHECK-NEXT:    [[DATA_NEXT]] = getelementptr inbounds i8, ptr [[DATA_INNER]], i64 1
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], 16
++; CHECK-NEXT:    br i1 [[EC]], label %[[OUTER_LATCH]], label %[[INNER]]
++; CHECK:       [[OUTER_LATCH]]:
++; CHECK-NEXT:    [[DATA_NEXT_LCSSA]] = phi ptr [ [[DATA_NEXT]], %[[INNER]] ]
++; CHECK-NEXT:    call void @escape(ptr [[BUF]])
++; CHECK-NEXT:    [[OUTER_IV_NEXT]] = add nuw i64 [[OUTER_IV]], 1
++; CHECK-NEXT:    [[OUTER_EC:%.*]] = icmp eq i64 [[OUTER_IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[OUTER_EC]], label %[[EXIT:.*]], label %[[OUTER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %buf = alloca [16 x i8]
++  br label %outer
++
++outer:
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  %data.outer = phi ptr [ %data, %entry ], [ %data.next.lcssa, %outer.latch ]
++  %p = load ptr, ptr %pp
++  %start = select i1 %c, ptr %data.outer, ptr %p
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %data.inner = phi ptr [ %start, %outer ], [ %data.next, %inner ]
++  %buf.gep = getelementptr inbounds i8, ptr %buf, i64 %iv
++  store i8 0, ptr %buf.gep
++  %l = load i8, ptr %data.inner
++  store i8 %l, ptr %buf.gep
++  %data.next = getelementptr inbounds i8, ptr %data.inner, i64 1
++  %iv.next = add nuw nsw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 16
++  br i1 %ec, label %outer.latch, label %inner
++
++outer.latch:
++  %data.next.lcssa = phi ptr [ %data.next, %inner ]
++  call void @escape(ptr %buf)
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %outer.ec = icmp eq i64 %outer.iv.next, %n
++  br i1 %outer.ec, label %exit, label %outer
++
++exit:
++  ret void
++}

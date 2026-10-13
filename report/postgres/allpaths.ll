@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca i8, align 1                       ; 5 uses
   %3 = alloca %struct.AppendPathInput, align 8    ; 14 uses
   %4 = alloca %struct.AppendPathInput, align 8    ; 14 uses
-  %5 = alloca %struct.AppendPathInput, align 8    ; 11 uses
+  %5 = alloca %struct.AppendPathInput, align 8    ; 9 uses
   %6 = alloca %struct.AppendPathInput, align 8    ; 6 uses
   %7 = alloca %struct.AppendPathInput, align 8    ; 6 uses
   %8 = alloca %struct.AppendPathInput, align 8    ; 7 uses
@@ -607,6 +607,7 @@ list_length.exit135.thread197.i:                  ; preds = %.critedge132.i
   br label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %accumulate_append_subpath.exit157.us.i, %.lr.ph.split.us.preheader.i
+  %12 = phi ptr [ %13, %accumulate_append_subpath.exit157.us.i ], [ null, %.lr.ph.split.us.preheader.i ] ; 2 uses
   %.0103164.us.i = phi i32 [ %i.la, %accumulate_append_subpath.exit157.us.i ], [ %.0105205212.i, %.lr.ph.split.us.preheader.i ] ; 2 uses
   %.0108163.us.i = phi i1 [ %.2.us.i, %accumulate_append_subpath.exit157.us.i ], [ false, %.lr.ph.split.us.preheader.i ] ; 3 uses
   %.0110162.us.i = phi i1 [ %spec.select133.us.i, %accumulate_append_subpath.exit157.us.i ], [ false, %.lr.ph.split.us.preheader.i ]
@@ -826,15 +827,15 @@ list_length.exit.i154.us.i:                       ; preds = %bb.bf
 
 get_singleton_append_subpath.exit155.us.i:        ; preds = %.thread.sink.split.i149.us.i, %list_length.exit.i154.us.i, %bb.bf, %list_length.exit28.i147.us.i, %bb.be, %bb.bd
   %.2.i148.us.i = phi ptr [ %.1.us.i, %list_length.exit28.i147.us.i ], [ %.1.us.i, %bb.be ], [ %.1.us.i, %bb.bf ], [ %.1.us.i, %bb.bd ], [ %.1.us.i, %list_length.exit.i154.us.i ], [ %i.ky, %.thread.sink.split.i149.us.i ]
-  %12 = load ptr, ptr %5, align 8
-  %i.kz = call ptr @lappend(ptr noundef %12, ptr noundef %.2.i148.us.i) #11
+  %i.kz = call ptr @lappend(ptr noundef %12, ptr noundef %.2.i148.us.i) #11 ; 2 uses
   store ptr %i.kz, ptr %5, align 8
   br label %accumulate_append_subpath.exit157.us.i
 
 accumulate_append_subpath.exit157.us.i:           ; preds = %get_singleton_append_subpath.exit155.us.i, %get_singleton_append_subpath.exit145.us.i
+  %13 = phi ptr [ %i.kz, %get_singleton_append_subpath.exit155.us.i ], [ %12, %get_singleton_append_subpath.exit145.us.i ] ; 2 uses
   %i.la = add i32 %.0103164.us.i, %.0104206211.i  ; 2 uses
   %.not124.us.i = icmp eq i32 %i.la, %.0106204213.i
-  br i1 %.not124.us.i, label %._crit_edge.thread.i, label %.lr.ph.split.us.i, !llvm.loop !16
+  br i1 %.not124.us.i, label %._crit_edge.thread.i.loopexit, label %.lr.ph.split.us.i, !llvm.loop !16
 
 ._crit_edge.i:                                    ; preds = %list_length.exit135.i
   br i1 %i.hi, label %._crit_edge.thread.i, label %._crit_edge.i.thread312
@@ -1086,12 +1087,17 @@ accumulate_append_subpath.exit157.i:              ; preds = %bb.cc, %bb.cb, %bb.
   %.not124.i = icmp eq i32 %i.pw, %i.hj
   br i1 %.not124.i, label %._crit_edge.i.thread312.loopexit, label %.lr.ph.split.i, !llvm.loop !16
 
-._crit_edge.thread.i:                             ; preds = %accumulate_append_subpath.exit157.us.i, %._crit_edge.i, %list_length.exit135.thread197.i, %list_length.exit135.thread.i, %.critedge132.i
-  %.0108.lcssa219.i = phi i1 [ false, %list_length.exit135.thread197.i ], [ false, %._crit_edge.i ], [ false, %list_length.exit135.thread.i ], [ false, %.critedge132.i ], [ %.2.us.i, %accumulate_append_subpath.exit157.us.i ]
-  %.0110.lcssa218.i = phi i1 [ false, %list_length.exit135.thread197.i ], [ false, %._crit_edge.i ], [ false, %list_length.exit135.thread.i ], [ false, %.critedge132.i ], [ %spec.select133.us.i, %accumulate_append_subpath.exit157.us.i ]
+._crit_edge.thread.i.loopexit:                    ; preds = %accumulate_append_subpath.exit157.us.i
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %14, i1 %.2.us.i, i1 false
+  br label %._crit_edge.thread.i
+
+._crit_edge.thread.i:                             ; preds = %._crit_edge.thread.i.loopexit, %._crit_edge.i, %list_length.exit135.thread197.i, %list_length.exit135.thread.i, %.critedge132.i
+  %.0108.lcssa219.i = phi i1 [ false, %list_length.exit135.thread197.i ], [ false, %._crit_edge.i ], [ false, %list_length.exit135.thread.i ], [ false, %.critedge132.i ], [ %spec.select133.us.i, %._crit_edge.thread.i.loopexit ]
+  %.0110.lcssa218.i = phi i1 [ false, %list_length.exit135.thread197.i ], [ false, %._crit_edge.i ], [ false, %list_length.exit135.thread.i ], [ false, %.critedge132.i ], [ %15, %._crit_edge.thread.i.loopexit ]
   %i.px = call ptr @create_append_path(ptr noundef %0, ptr noundef %1, ptr noundef nonnull byval(%struct.AppendPathInput) align 8 %3, ptr noundef %i.gz, ptr noundef null, i32 noundef 0, i1 noundef zeroext false, double noundef -1.000000e+00) #11
   call void @add_path(ptr noundef %1, ptr noundef %i.px) #11
-  br i1 %.0110.lcssa218.i, label %bb.cd, label %bb.ce
+  br i1 %.0108.lcssa219.i, label %bb.cd, label %bb.ce
 
 bb.cd:                                            ; preds = %._crit_edge.thread.i
   %i.py = call ptr @create_append_path(ptr noundef %0, ptr noundef %1, ptr noundef nonnull byval(%struct.AppendPathInput) align 8 %4, ptr noundef %i.gz, ptr noundef null, i32 noundef 0, i1 noundef zeroext false, double noundef -1.000000e+00) #11
@@ -1099,10 +1105,7 @@ bb.cd:                                            ; preds = %._crit_edge.thread.
   br label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd, %._crit_edge.thread.i
-  %13 = load ptr, ptr %5, align 8
-  %14 = icmp ne ptr %13, null
-  %or.cond3.i = select i1 %14, i1 %.0108.lcssa219.i, i1 false
-  br i1 %or.cond3.i, label %bb.cf, label %bb.cj
+  br i1 %.0110.lcssa218.i, label %bb.cf, label %bb.cj
 
 bb.cf:                                            ; preds = %bb.ce
   %i.pz = call ptr @create_append_path(ptr noundef %0, ptr noundef %1, ptr noundef nonnull byval(%struct.AppendPathInput) align 8 %5, ptr noundef %i.gz, ptr noundef null, i32 noundef 0, i1 noundef zeroext false, double noundef -1.000000e+00) #11
@@ -1114,11 +1117,11 @@ bb.cf:                                            ; preds = %bb.ce
   br label %._crit_edge.i.thread312
 
 ._crit_edge.i.thread312:                          ; preds = %._crit_edge.i.thread312.loopexit, %._crit_edge.i, %list_length.exit135.thread.i
-  %15 = phi ptr [ null, %list_length.exit135.thread.i ], [ null, %._crit_edge.i ], [ %i.pv, %._crit_edge.i.thread312.loopexit ] ; 2 uses
   %i.qa = phi ptr [ null, %list_length.exit135.thread.i ], [ null, %._crit_edge.i ], [ %.pre427, %._crit_edge.i.thread312.loopexit ]
   %i.qb = phi ptr [ null, %list_length.exit135.thread.i ], [ null, %._crit_edge.i ], [ %.pre, %._crit_edge.i.thread312.loopexit ]
   %.0108.lcssa221.i = phi i1 [ false, %list_length.exit135.thread.i ], [ false, %._crit_edge.i ], [ %.2.i, %._crit_edge.i.thread312.loopexit ]
   %.0110.lcssa220.i = phi i1 [ false, %list_length.exit135.thread.i ], [ false, %._crit_edge.i ], [ %spec.select133.i, %._crit_edge.i.thread312.loopexit ]
+  %16 = phi ptr [ null, %list_length.exit135.thread.i ], [ null, %._crit_edge.i ], [ %i.pv, %._crit_edge.i.thread312.loopexit ] ; 2 uses
   %i.qc = call ptr @create_merge_append_path(ptr noundef %0, ptr noundef %1, ptr noundef %i.qb, ptr noundef %i.qa, ptr noundef %i.gz, ptr noundef null) #11
   call void @add_path(ptr noundef %1, ptr noundef %i.qc) #11
   br i1 %.0110.lcssa220.i, label %bb.cg, label %bb.ch
@@ -1131,13 +1134,13 @@ bb.cg:                                            ; preds = %._crit_edge.i.threa
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg, %._crit_edge.i.thread312
-  %i.qg = icmp ne ptr %15, null
+  %i.qg = icmp ne ptr %16, null
   %or.cond5.i = select i1 %i.qg, i1 %.0108.lcssa221.i, i1 false
   br i1 %or.cond5.i, label %bb.ci, label %bb.cj
 
 bb.ci:                                            ; preds = %bb.ch
   %i.qh = load ptr, ptr %i.gu, align 8
-  %i.qi = call ptr @create_merge_append_path(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %15, ptr noundef %i.qh, ptr noundef %i.gz, ptr noundef null) #11
+  %i.qi = call ptr @create_merge_append_path(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %16, ptr noundef %i.qh, ptr noundef %i.gz, ptr noundef null) #11
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.ci, %bb.cf

@@ -205,9 +205,11 @@ Vec_PtrDup.exit:                                  ; preds = %bb.q, %bb.e
 
 .lr.ph80.preheader:                               ; preds = %Vec_PtrDup.exit
   %i.bn = sext i32 %.val50.val to i64
+  %.promoted = load i32, ptr %i.bd, align 4
   br label %.lr.ph80
 
 .lr.ph80:                                         ; preds = %.lr.ph80.preheader, %Vec_PtrPush.exit66
+  %.pre87103 = phi i32 [ %.promoted, %.lr.ph80.preheader ], [ %i.ch, %Vec_PtrPush.exit66 ]
   %i.bo = phi ptr [ %i.bg, %.lr.ph80.preheader ], [ %i.cf, %Vec_PtrPush.exit66 ] ; 6 uses
   %i.bp = phi i32 [ %i.ba, %.lr.ph80.preheader ], [ %i.cg, %Vec_PtrPush.exit66 ] ; 8 uses
   %i.bq = phi i32 [ %i.bb, %.lr.ph80.preheader ], [ %i.ch, %Vec_PtrPush.exit66 ] ; 2 uses
@@ -262,14 +264,13 @@ Vec_PtrGrow.exit12.sink.split.i62:                ; preds = %bb.x, %bb.y, %bb.t,
   %spec.select.sink.i63 = phi i32 [ 16, %bb.u ], [ 16, %bb.t ], [ %spec.select.i59, %bb.x ], [ %spec.select.i59, %bb.y ] ; 2 uses
   store ptr %storemerge, ptr %i.bh, align 8, !tbaa !31
   store i32 %spec.select.sink.i63, ptr %i.bc, align 8, !tbaa !30
-  %.pre87 = load i32, ptr %i.bd, align 4, !tbaa !29
   br label %Vec_PtrPush.exit66
 
 Vec_PtrPush.exit66:                               ; preds = %.lr.ph80, %bb.v, %Vec_PtrGrow.exit12.sink.split.i62
-  %i.ce = phi i32 [ %i.bq, %.lr.ph80 ], [ %i.bp, %bb.v ], [ %.pre87, %Vec_PtrGrow.exit12.sink.split.i62 ] ; 2 uses
+  %i.ce = phi i32 [ %i.bq, %.lr.ph80 ], [ %i.bp, %bb.v ], [ %.pre87103, %Vec_PtrGrow.exit12.sink.split.i62 ] ; 2 uses
   %i.cf = phi ptr [ %i.bo, %.lr.ph80 ], [ %i.bo, %bb.v ], [ %storemerge, %Vec_PtrGrow.exit12.sink.split.i62 ] ; 2 uses
   %i.cg = phi i32 [ %i.bp, %.lr.ph80 ], [ %i.bp, %bb.v ], [ %spec.select.sink.i63, %Vec_PtrGrow.exit12.sink.split.i62 ]
-  %i.ch = add nsw i32 %i.ce, 1                    ; 2 uses
+  %i.ch = add nsw i32 %i.ce, 1                    ; 3 uses
   store i32 %i.ch, ptr %i.bd, align 4, !tbaa !29
   %i.ci = sext i32 %i.ce to i64
   %i.cj = getelementptr inbounds [8 x i8], ptr %i.cf, i64 %i.ci

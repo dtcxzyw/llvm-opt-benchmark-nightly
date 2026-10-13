@@ -204,7 +204,7 @@ define void @_ZN6casadi13ShellCompiler4initERKSt3mapINSt7__cxx1112basic_stringIc
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %4 = alloca %"class.std::vector.16", align 16   ; 12 uses
-  %5 = alloca %"class.std::vector.16", align 16   ; 12 uses
+  %5 = alloca %"class.std::vector.16", align 16   ; 11 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
@@ -218,7 +218,7 @@ define void @_ZN6casadi13ShellCompiler4initERKSt3mapINSt7__cxx1112basic_stringIc
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %18 = alloca %"class.std::vector.16", align 16  ; 10 uses
-  %19 = alloca %"class.std::vector.16", align 16  ; 10 uses
+  %19 = alloca %"class.std::vector.16", align 16  ; 11 uses
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %22 = alloca %"class.std::vector.16", align 8   ; 6 uses
@@ -393,6 +393,7 @@ define void @_ZN6casadi13ShellCompiler4initERKSt3mapINSt7__cxx1112basic_stringIc
   br i1 %.147, label %.critedge, label %bb.bv
 
 bb.a:                                             ; preds = %.lr.ph, %_ZNK6casadi11GenericTypecvbEv.exit317
+  %71 = phi ptr [ null, %.lr.ph ], [ %73, %_ZNK6casadi11GenericTypecvbEv.exit317 ] ; 18 uses
   %.046933 = phi i1 [ true, %.lr.ph ], [ %.147, %_ZNK6casadi11GenericTypecvbEv.exit317 ] ; 13 uses
   %.sroa.0855.0925 = phi ptr [ %i.ak, %.lr.ph ], [ %i.jw, %_ZNK6casadi11GenericTypecvbEv.exit317 ] ; 16 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0855.0925, i64 32 ; 12 uses
@@ -795,10 +796,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
           to label %_ZNK6casadi11GenericTypecvSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEEv.exit272 unwind label %bb.aq
 
 _ZNK6casadi11GenericTypecvSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEEv.exit272: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit270.thread
-  %71 = load ptr, ptr %5, align 16, !tbaa !56     ; 5 uses
   %i.hd = load ptr, ptr %i.ap, align 8, !tbaa !57 ; 2 uses
   %i.he = load ptr, ptr %i.aq, align 16, !tbaa !59
   %i.hf = load <2 x ptr>, ptr %19, align 16, !tbaa !55
+  %72 = load ptr, ptr %19, align 16, !tbaa !56
   store <2 x ptr> %i.hf, ptr %5, align 16, !tbaa !55
   %i.hg = load ptr, ptr %i.as, align 16, !tbaa !59
   store ptr %i.hg, ptr %i.aq, align 16, !tbaa !59
@@ -1092,6 +1093,7 @@ bb.bl:                                            ; preds = %bb.bk
           to label %_ZNK6casadi11GenericTypecvbEv.exit317 unwind label %bb.h
 
 _ZNK6casadi11GenericTypecvbEv.exit317:            ; preds = %bb.bl, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit247, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit263, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit294, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit312, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit315, %bb.bk, %bb.bc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit307, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit, %_ZNK6casadi11GenericTypecvbEv.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit234, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %73 = phi ptr [ %71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ], [ %71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit234 ], [ %71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit247 ], [ %71, %_ZNK6casadi11GenericTypecvbEv.exit ], [ %71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit263 ], [ %71, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ], [ %72, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit294 ], [ %71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit307 ], [ %71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit312 ], [ %71, %bb.bc ], [ %71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit315 ], [ %71, %bb.bk ], [ %71, %bb.bl ]
   %.147 = phi i1 [ %.046933, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.046933, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit221 ], [ %.046933, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit234 ], [ %.046933, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit247 ], [ %.046933, %_ZNK6casadi11GenericTypecvbEv.exit ], [ %.046933, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit263 ], [ %.046933, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit ], [ %.046933, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit294 ], [ %.046933, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit307 ], [ %.046933, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit312 ], [ %.046933, %bb.bc ], [ %.046933, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit315 ], [ %.046933, %bb.bk ], [ %i.jv, %bb.bl ] ; 2 uses
   %i.jw = call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.0855.0925) #30 ; 2 uses
   %.not906 = icmp eq ptr %i.jw, %i.al

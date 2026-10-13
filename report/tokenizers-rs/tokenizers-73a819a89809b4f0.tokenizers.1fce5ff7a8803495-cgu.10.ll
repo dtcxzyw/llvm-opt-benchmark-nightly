@@ -205,7 +205,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [48 x i8], align 8                ; 8 uses
   %i.c = alloca [48 x i8], align 8                ; 6 uses
-  %.sroa.7 = alloca [40 x i8], align 8            ; 6 uses
   %i.d = alloca [32 x i8], align 8                ; 8 uses
   %i.e = alloca [40 x i8], align 8                ; 8 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
@@ -509,7 +508,6 @@ bb.q:                                             ; preds = %bb.p
   store ptr %i.cr, ptr %.sroa.417.0..sroa_idx, align 8
   store i64 %i.cq, ptr %.sroa.518.0..sroa_idx, align 8
   store ptr %i.cu, ptr %.sroa.619.0..sroa_idx, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %i.cv = icmp eq i64 %i.cs, 0
   br i1 %i.cv, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit.thread, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit
 
@@ -529,15 +527,14 @@ _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 48 ; 2 uses
   store ptr %i.cy, ptr %.sroa.417.0..sroa_idx, align 8, !alias.scope !1473, !noalias !1474
   %.sroa.071.0.copyload72 = load i64, ptr %i.cx, align 8, !noalias !1473 ; 2 uses
-  %.sroa.7.0..sroa_idx74 = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx74, i64 40, i1 false), !noalias !1473
   %.not39 = icmp eq i64 %.sroa.071.0.copyload72, -1
   br i1 %.not39, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit
+  %.sroa.7.0..sroa_idx74 = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i64 %.sroa.071.0.copyload72, ptr %i.c, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx73, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7, i64 40, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx73, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.7.0..sroa_idx74, i64 40, i1 false)
   %i.cz = load i64, ptr %i.ag, align 8, !alias.scope !1475, !noalias !1476, !noundef !5 ; 3 uses
   %i.da = load i64, ptr %i.j, align 8, !range !16, !alias.scope !1475, !noalias !1476, !noundef !5
   %i.db = icmp eq i64 %i.cz, %i.da
@@ -565,7 +562,6 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit.thread: ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit, %bb.y, %bb.q
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   invoke void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropBZ_(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.d)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenEEB1s_.exit50 unwind label %.thread91.loopexit.split-lp.loopexit
 
@@ -614,8 +610,6 @@ bb.y:                                             ; preds = %._crit_edge, %bb.s
   %i.dq = add i64 %i.cz, 1
   store i64 %i.dq, ptr %i.ag, align 8, !alias.scope !1475, !noalias !1476
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %i.dr = icmp eq ptr %i.dm, %i.dn
   br i1 %i.dr, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit.thread, label %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer5TokenENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextBZ_.exit
 

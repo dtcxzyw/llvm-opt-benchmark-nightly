@@ -204,7 +204,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit123.2: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit120.2, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i121.2
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #26
-  %i.ge = load ptr, ptr %18, align 8, !tbaa !1558 ; 3 uses
+  %i.ge = load ptr, ptr %18, align 8, !tbaa !1558 ; 5 uses
   %i.gf = load ptr, ptr %i.ah, align 8, !tbaa !1558 ; 2 uses
   %i.gg = icmp eq ptr %i.ge, %i.gf
   br i1 %i.gg, label %.thread, label %bb.al
@@ -607,12 +607,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
+  %.pre259 = load ptr, ptr %18, align 8, !tbaa !465
   br label %bb.cx
 
 bb.cx:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i135, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i58.i, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE2atEm.exit
+  %24 = phi ptr [ %i.ge, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i135 ], [ %.pre259, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i58.i ], [ %i.ge, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE2atEm.exit ] ; 3 uses
   %.sroa.0165.2 = phi i64 [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i135 ], [ %.sroa.02.0.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i58.i ], [ %.sroa.0165.1.in, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE2atEm.exit ]
   %.sroa.6169.sroa.0.2 = phi i64 [ %.sroa.6169.sroa.0.1189, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i135 ], [ %.sroa.6.0.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i58.i ], [ %.sroa.6169.sroa.0.1.in, %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EE2atEm.exit ]
-  %24 = load ptr, ptr %18, align 8, !tbaa !465    ; 3 uses
   %.not.i.i.i = icmp eq ptr %24, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN11cmQtAutoGen14IntegerVersionESaIS1_EED2Ev.exit, label %bb.cy
 

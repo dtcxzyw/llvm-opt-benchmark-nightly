@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.p, %.lr.ph132.ne
 define internal fastcc i32 @DwaCompressor_compress(ptr nofree noundef nonnull captures(none) initializes((72, 88)) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [3 x ptr], align 16               ; 6 uses
-  %i.b = alloca i64, align 8                      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 5 uses
   %1 = alloca %struct._LossyDctEncoder, align 8   ; 9 uses
   %2 = alloca %struct._LossyDctEncoder, align 8   ; 7 uses
   %i.c = alloca i64, align 8                      ; 5 uses
@@ -227,7 +227,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 168
-  %i.o = load i64, ptr %i.b, align 8, !tbaa !50   ; 3 uses
+  %i.o = load i64, ptr %i.b, align 8, !tbaa !50   ; 4 uses
   %i.p = tail call i32 @internal_encode_alloc_buffer(ptr noundef nonnull %i.j, i32 noundef 3, ptr noundef nonnull %i.n, ptr noundef nonnull %i.k, i64 noundef %i.o) #21 ; 2 uses
   %.not = icmp eq i32 %i.p, 0
   br i1 %.not, label %bb.c, label %DwaCompressor_writeRelevantChannelRules.exit.thread
@@ -630,18 +630,17 @@ bb.ai:                                            ; preds = %bb.ah
   ]
 
 bb.aj:                                            ; preds = %bb.ai
-  %3 = load i64, ptr %i.b, align 8, !tbaa !50
   %i.pv = ptrtoint ptr %.1294 to i64
   %i.pw = ptrtoint ptr %i.s to i64
-  %.neg = sub i64 %i.pw, %i.pv
-  %4 = add i64 %.neg, %3
+  %.neg = add i64 %i.o, %i.pw
+  %3 = sub i64 %.neg, %i.pv
   %i.px = load ptr, ptr %i.cp, align 8, !tbaa !63
   %i.py = load ptr, ptr %0, align 8, !tbaa !27    ; 2 uses
   %i.pz = getelementptr inbounds nuw i8, ptr %i.py, i64 192
   %i.qa = load ptr, ptr %i.pz, align 8, !tbaa !162
   %i.qb = getelementptr inbounds nuw i8, ptr %i.py, i64 200
   %i.qc = load i64, ptr %i.qb, align 8, !tbaa !163
-  %i.qd = call i32 @internal_huf_compress(ptr noundef nonnull %i.x, ptr noundef %.1294, i64 noundef %4, ptr noundef %i.px, i64 noundef %i.pt, ptr noundef %i.qa, i64 noundef %i.qc) #21 ; 2 uses
+  %i.qd = call i32 @internal_huf_compress(ptr noundef nonnull %i.x, ptr noundef %.1294, i64 noundef %3, ptr noundef %i.px, i64 noundef %i.pt, ptr noundef %i.qa, i64 noundef %i.qc) #21 ; 2 uses
   switch i32 %i.qd, label %DwaCompressor_writeRelevantChannelRules.exit.thread [
     i32 0, label %._crit_edge562
     i32 4, label %bb.ak
@@ -1044,7 +1043,7 @@ bb.f:                                             ; preds = %bb.b, %bb.e
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @LossyDctEncoder_execute(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull captures(none) initializes((8, 24)) %2) unnamed_addr #12 {
 bb.a:
-  %i.a = alloca [3 x ptr], align 16               ; 16 uses
+  %i.a = alloca [3 x ptr], align 16               ; 15 uses
   %i.b = alloca [64 x i16], align 16              ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.d = load i32, ptr %i.c, align 8, !tbaa !84   ; 10 uses
@@ -1439,7 +1438,7 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
   br i1 %epil.iter415.cmp.not, label %.preheader163, label %bb.p, !llvm.loop !225
 
 .preheader163:                                    ; preds = %.preheader163.loopexit.unr-lcssa, %bb.p, %._crit_edge196.thread, %._crit_edge196
-  %i.fp = phi ptr [ %i.x, %._crit_edge196.thread ], [ %i.bs, %._crit_edge196 ], [ %i.bs, %bb.p ], [ %i.bs, %.preheader163.loopexit.unr-lcssa ] ; 5 uses
+  %i.fp = phi ptr [ %i.x, %._crit_edge196.thread ], [ %i.bs, %._crit_edge196 ], [ %i.bs, %bb.p ], [ %i.bs, %.preheader163.loopexit.unr-lcssa ] ; 4 uses
   %.0130377380 = phi ptr [ null, %._crit_edge196.thread ], [ %.0130.ph, %._crit_edge196 ], [ %.0130.ph, %bb.p ], [ %.0130.ph, %.preheader163.loopexit.unr-lcssa ] ; 2 uses
   %i.fq = icmp sgt i32 %i.p, 0
   br i1 %i.fq, label %.preheader162.lr.ph, label %._crit_edge220.split
@@ -1448,7 +1447,9 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
   %i.fr = icmp sgt i32 %i.j, 0
   %i.fs = icmp eq i32 %i.d, 3
   %i.ft = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %3 = load <2 x ptr>, ptr %i.ft, align 8         ; 4 uses
+  %4 = extractelement <2 x ptr> %3, i64 1         ; 4 uses
+  %5 = extractelement <2 x ptr> %3, i64 0         ; 4 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.fv = getelementptr inbounds nuw i8, ptr %2, i64 336
   %i.fw = getelementptr inbounds nuw i8, ptr %2, i64 464
@@ -1461,7 +1462,23 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
   %wide.trip.count278 = zext nneg i32 %i.d to i64
   %wide.trip.count291 = zext nneg i32 %i.d to i64
   %wide.trip.count296 = zext nneg i32 %i.d to i64
-  %scevgep = getelementptr i8, ptr %i.fp, i64 256 ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.fp, i64 256
+  %scevgep389 = getelementptr i8, ptr %5, i64 256
+  %6 = getelementptr i8, <2 x ptr> %3, i64 256
+  %scevgep390 = getelementptr i8, ptr %4, i64 256
+  %7 = insertelement <2 x ptr> poison, ptr %i.fp, i64 0
+  %8 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %9 = insertelement <2 x ptr> poison, ptr %scevgep, i64 0
+  %10 = shufflevector <2 x ptr> %9, <2 x ptr> poison, <2 x i32> zeroinitializer
+  %11 = icmp ult <2 x ptr> %8, %6
+  %12 = icmp ult <2 x ptr> %3, %10
+  %13 = and <2 x i1> %11, %12
+  %14 = bitcast <2 x i1> %13 to i2
+  %15 = icmp ne i2 %14, 0
+  %bound0394 = icmp ult ptr %5, %scevgep390
+  %bound1395 = icmp ult ptr %4, %scevgep389
+  %found.conflict396 = and i1 %bound0394, %bound1395
+  %conflict.rdx397 = or i1 %15, %found.conflict396
   br label %.preheader162
 
 bb.q:                                             ; preds = %bb.q, %.lr.ph199.new
@@ -1503,21 +1520,6 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph199.ne
   %indvars.iv303 = phi i64 [ 0, %.preheader162.preheader ], [ %indvars.iv.next304, %._crit_edge216 ] ; 2 uses
   %.0157218 = phi ptr [ %i.r, %.preheader162.preheader ], [ %.2159.lcssa, %._crit_edge216 ]
   %i.gv = shl nuw nsw i64 %indvars.iv303, 3       ; 2 uses
-  %4 = load ptr, ptr %i.ft, align 8               ; 5 uses
-  %5 = load ptr, ptr %3, align 16                 ; 5 uses
-  %scevgep389 = getelementptr i8, ptr %4, i64 256 ; 2 uses
-  %scevgep390 = getelementptr i8, ptr %5, i64 256 ; 2 uses
-  %bound0 = icmp ult ptr %i.fp, %scevgep389
-  %bound1 = icmp ult ptr %4, %scevgep
-  %found.conflict = and i1 %bound0, %bound1
-  %bound0391 = icmp ult ptr %i.fp, %scevgep390
-  %bound1392 = icmp ult ptr %5, %scevgep
-  %found.conflict393 = and i1 %bound0391, %bound1392
-  %conflict.rdx = or i1 %found.conflict, %found.conflict393
-  %bound0394 = icmp ult ptr %4, %scevgep390
-  %bound1395 = icmp ult ptr %5, %scevgep389
-  %found.conflict396 = and i1 %bound0394, %bound1395
-  %conflict.rdx397 = or i1 %conflict.rdx, %found.conflict396
   br label %.preheader161
 
 ._crit_edge220.split:                             ; preds = %._crit_edge216, %.preheader162.lr.ph, %.preheader163
@@ -1920,9 +1922,9 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 4 uses
   %i.pg = getelementptr inbounds nuw [4 x i8], ptr %i.fp, i64 %index ; 2 uses
   %wide.load = load <4 x float>, ptr %i.pg, align 4, !tbaa !103, !alias.scope !247, !noalias !248 ; 3 uses
-  %i.ph = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %index ; 2 uses
+  %i.ph = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %index ; 2 uses
   %wide.load398 = load <4 x float>, ptr %i.ph, align 4, !tbaa !103, !alias.scope !249, !noalias !250 ; 3 uses
-  %i.pi = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %index ; 2 uses
+  %i.pi = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %index ; 2 uses
   %wide.load399 = load <4 x float>, ptr %i.pi, align 4, !tbaa !103, !alias.scope !250 ; 3 uses
   %i.pj = fmul <4 x float> %wide.load398, splat (float 7.152000e-01)
   %i.pk = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load, <4 x float> splat (float 2.126000e-01), <4 x float> %i.pj)
@@ -2325,9 +2327,9 @@ half_to_float.exit.7:                             ; preds = %bb.cs, %bb.cr, %bb.
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.preheader221 ], [ 0, %vector.memcheck ] ; 4 uses
   %i.xd = getelementptr inbounds nuw [4 x i8], ptr %i.fp, i64 %indvars.iv.i ; 2 uses
   %i.xe = load float, ptr %i.xd, align 4, !tbaa !103 ; 3 uses
-  %i.xf = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.i ; 2 uses
+  %i.xf = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv.i ; 2 uses
   %i.xg = load float, ptr %i.xf, align 4, !tbaa !103 ; 3 uses
-  %i.xh = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv.i ; 2 uses
+  %i.xh = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.i ; 2 uses
   %i.xi = load float, ptr %i.xh, align 4, !tbaa !103 ; 3 uses
   %i.xj = fmul float %i.xg, 7.152000e-01
   %i.xk = tail call float @llvm.fmuladd.f32(float %i.xe, float 2.126000e-01, float %i.xj)

@@ -202,6 +202,9 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZN2v88internallsERSoNS0
 
 declare noundef nonnull align 8 dereferenceable(8) ptr @_ZN2v88internallsERSoRKNS0_5BriefE(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #4
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
+
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext range(i8 0, 3) i8 @_ZN2v88internal8compiler28DeoptimizerParameterCountForENS1_26ContinuationFrameStateModeE(i32 noundef %0) local_unnamed_addr #1 {
 bb.a:
@@ -403,7 +406,7 @@ _ZNKSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i:
   br i1 %i.x, label %bb.g, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i
 
 bb.g:                                             ; preds = %_ZNKSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.v, ptr align 8 %.sroa.0.0.lcssa, i64 %i.n, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.v, ptr align 8 %.sroa.0.0.lcssa, i64 %i.n, i1 false)
   br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i
 
 _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i: ; preds = %bb.g, %_ZNKSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i

@@ -148,7 +148,7 @@ bb.a:
 define dso_local noundef ptr @kwsincr(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [12 x ptr], align 16              ; 6 uses
-  %i.b = alloca [12 x i32], align 16              ; 7 uses
+  %i.b = alloca [12 x i32], align 16              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -159,13 +159,13 @@ bb.a:
 .lr.ph278:                                        ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %2
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2432
+  store i32 0, ptr %i.b, align 16, !tbaa !52
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store i32 0, ptr %i.b, align 16, !tbaa !52
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph278, %.critedge232
@@ -204,10 +204,9 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 bb.e:                                             ; preds = %.lr.ph
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   store ptr %.0207269, ptr %i.w, align 8, !tbaa !36
-  %3 = icmp ult i8 %i.r, %i.v                     ; 3 uses
-  %not. = xor i1 %3, true
-  %spec.select = zext i1 %not. to i32
-  %spec.select351.idx = select i1 %3, i64 0, i64 8
+  %3 = icmp uge i8 %i.r, %i.v                     ; 2 uses
+  %spec.select = zext i1 %3 to i32
+  %spec.select351.idx = select i1 %3, i64 8, i64 0
   %spec.select351 = getelementptr inbounds nuw i8, ptr %.0207269, i64 %spec.select351.idx
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv
   store i32 %spec.select, ptr %i.x, align 4, !tbaa !52
@@ -222,7 +221,6 @@ bb.e:                                             ; preds = %.lr.ph
 
 .critedge231:                                     ; preds = %.critedge231.loopexit, %bb.d
   %i.z = phi ptr [ %i.s, %bb.d ], [ %.0207269, %.critedge231.loopexit ] ; 2 uses
-  %4 = phi i1 [ true, %bb.d ], [ %3, %.critedge231.loopexit ]
   %.0205.lcssa = phi i32 [ 0, %bb.d ], [ %i.y, %.critedge231.loopexit ] ; 2 uses
   %i.aa = load ptr, ptr %i.f, align 8, !tbaa !20
   %i.ab = load ptr, ptr %i.g, align 8, !tbaa !21  ; 2 uses
@@ -356,8 +354,11 @@ bb.r:                                             ; preds = %bb.n
   store i8 %i.r, ptr %i.ck, align 8, !tbaa !38
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ai, i64 25
   store i8 0, ptr %i.cl, align 1, !tbaa !53
-  %i.cm = zext nneg i32 %.0205.lcssa to i64
-  br i1 %4, label %bb.s, label %bb.t
+  %i.cm = zext nneg i32 %.0205.lcssa to i64       ; 2 uses
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.cm
+  %5 = load i32, ptr %4, align 4, !tbaa !52
+  %6 = icmp eq i32 %5, 0
+  br i1 %6, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   store ptr %i.ai, ptr %i.z, align 8, !tbaa !44

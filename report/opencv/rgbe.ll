@@ -204,6 +204,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.i: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   br label %common.resume
 
+.preheader:                                       ; preds = %_ZL10float2rgbePhfff.exit
+  store i8 %.sink30.i, ptr %i.t, align 1
+  store i8 %.sink29.i, ptr %i.r, align 1
+  store i8 %.sink28.i, ptr %i.o, align 1
+  store i8 %.sink.i, ptr %i.f, align 1
+  br label %.preheader.a
+
 .lr.ph:                                           ; preds = %bb.e, %_ZL10float2rgbePhfff.exit
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZL10float2rgbePhfff.exit ], [ 0, %bb.e ] ; 5 uses
   %.14955 = phi ptr [ %i.br, %_ZL10float2rgbePhfff.exit ], [ %.04858, %bb.e ] ; 4 uses
@@ -243,10 +250,6 @@ _ZL10float2rgbePhfff.exit:                        ; preds = %.lr.ph, %bb.j
   %.sink29.i = phi i8 [ %i.bn, %bb.j ], [ 0, %.lr.ph ] ; 2 uses
   %.sink28.i = phi i8 [ %i.bl, %bb.j ], [ 0, %.lr.ph ] ; 2 uses
   %.sink.i = phi i8 [ %i.bj, %bb.j ], [ 0, %.lr.ph ] ; 2 uses
-  store i8 %.sink30.i, ptr %i.t, align 1, !tbaa !19
-  store i8 %.sink29.i, ptr %i.r, align 1, !tbaa !19
-  store i8 %.sink28.i, ptr %i.o, align 1, !tbaa !19
-  store i8 %.sink.i, ptr %i.f, align 1, !tbaa !19
   %i.bq = getelementptr inbounds nuw i8, ptr %i.l, i64 %indvars.iv
   store i8 %.sink.i, ptr %i.bq, align 1, !tbaa !19
   %gep = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %indvars.iv
@@ -258,10 +261,10 @@ _ZL10float2rgbePhfff.exit:                        ; preds = %.lr.ph, %bb.j
   %i.br = getelementptr inbounds nuw i8, ptr %.14955, i64 12 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.x
-  br i1 %exitcond.not, label %.preheader.a, label %.lr.ph, !llvm.loop !35
+  br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !35
 
-.preheader.a:                                     ; preds = %_ZL10float2rgbePhfff.exit, %_ZL19RGBE_WriteBytes_RLEP8_IO_FILEPhi.exit
-  %indvars.iv63 = phi i64 [ %indvars.iv.next64, %_ZL19RGBE_WriteBytes_RLEP8_IO_FILEPhi.exit ], [ 0, %_ZL10float2rgbePhfff.exit ] ; 2 uses
+.preheader.a:                                     ; preds = %.preheader, %_ZL19RGBE_WriteBytes_RLEP8_IO_FILEPhi.exit
+  %indvars.iv63 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next64, %_ZL19RGBE_WriteBytes_RLEP8_IO_FILEPhi.exit ] ; 2 uses
   %i.bs = mul nuw nsw i64 %indvars.iv63, %i.x
   %i.bt = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.bs ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #16

@@ -202,7 +202,7 @@ col_set_str_conditional.exit.i:                   ; preds = %bb.m, %bb.l
 
 bb.n:                                             ; preds = %bb.bm, %.lr.ph.i38.i
   %.072.i.i = phi i1 [ true, %.lr.ph.i38.i ], [ false, %bb.bm ]
-  %.04371.i.i = phi ptr [ null, %.lr.ph.i38.i ], [ %.1.i40.i.a, %bb.bm ] ; 2 uses
+  %.04371.i.i = phi ptr [ null, %.lr.ph.i38.i ], [ %.1.i40.i, %bb.bm ] ; 2 uses
   %.04570.i.i = phi i32 [ %i.ax, %.lr.ph.i38.i ], [ %.0.i.i.i, %bb.bm ] ; 6 uses
   %i.cc = call i32 @tvb_get_ntohl(ptr noundef %0, i32 noundef %.04570.i.i) ; 5 uses
   %i.cd = add i32 %i.cc, 4                        ; 2 uses
@@ -605,7 +605,7 @@ dissect_dcm_pdv_fragmented.exitthread-pre-split.i.i: ; preds = %bb.bi, %bb.bh, %
   br label %dissect_dcm_pdv_fragmented.exit.i.i
 
 dissect_dcm_pdv_fragmented.exit.i.i:              ; preds = %dissect_dcm_pdv_fragmented.exitthread-pre-split.i.i, %bb.bg
-  %i.jj = phi ptr [ %.pr.i.i, %dissect_dcm_pdv_fragmented.exitthread-pre-split.i.i ], [ %.sink.i.i.i, %bb.bg ] ; 3 uses
+  %i.jj = phi ptr [ %.pr.i.i, %dissect_dcm_pdv_fragmented.exitthread-pre-split.i.i ], [ %.sink.i.i.i, %bb.bg ] ; 4 uses
   %.0.i.i.i = phi i32 [ %.0.i.ph.i.i, %dissect_dcm_pdv_fragmented.exitthread-pre-split.i.i ], [ %i.jd, %bb.bg ] ; 5 uses
   %.not50.i.i = icmp eq ptr %i.jj, null
   br i1 %.not50.i.i, label %bb.bm, label %bb.bj
@@ -620,13 +620,14 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bj
   %i.jm = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %i.jk, ptr noundef nonnull @.str.223, ptr noundef %.04371.i.i, ptr noundef nonnull %i.jj)
+  %.pre.i.i = load ptr, ptr %i.g, align 8
   br label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bk, %dissect_dcm_pdv_fragmented.exit.i.i
-  %.1.i40.i.a = phi ptr [ %i.jl, %bb.bk ], [ %i.jm, %bb.bl ], [ %.04371.i.i, %dissect_dcm_pdv_fragmented.exit.i.i ] ; 5 uses
-  %4 = load ptr, ptr %i.f, align 8
-  %i.jn = load ptr, ptr %i.g, align 8
-  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %4, ptr noundef nonnull @.str.218, ptr noundef %i.jn)
+  %.1.i40.i.a = phi ptr [ %i.jj, %bb.bk ], [ %.pre.i.i, %bb.bl ], [ null, %dissect_dcm_pdv_fragmented.exit.i.i ]
+  %.1.i40.i = phi ptr [ %i.jl, %bb.bk ], [ %i.jm, %bb.bl ], [ %.04371.i.i, %dissect_dcm_pdv_fragmented.exit.i.i ] ; 5 uses
+  %i.jn = load ptr, ptr %i.f, align 8
+  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.jn, ptr noundef nonnull @.str.218, ptr noundef %.1.i40.i.a)
   %i.jo = icmp ult i32 %.0.i.i.i, %i.by
   br i1 %i.jo, label %bb.n, label %dissect_dcm_pdu_data.exit.i, !llvm.loop !17
 
@@ -644,23 +645,23 @@ dissect_dcm_pdu_data.exit.thread.i:               ; preds = %dissect_dcm_pdu_dat
 dissect_dcm_pdu_data.exit.i:                      ; preds = %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
-  %.not.i = icmp eq ptr %.1.i40.i.a, null
+  %.not.i = icmp eq ptr %.1.i40.i, null
   br i1 %.not.i, label %dissect_dcm_pdu.exit, label %bb.bn
 
 bb.bn:                                            ; preds = %dissect_dcm_pdu_data.exit.i
-  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.ap, ptr noundef nonnull @.str.218, ptr noundef nonnull %.1.i40.i.a)
+  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.ap, ptr noundef nonnull @.str.218, ptr noundef nonnull %.1.i40.i)
   %i.jq = load ptr, ptr %i.s, align 8             ; 2 uses
   %i.jr = call ptr @col_get_text(ptr noundef %i.jq, i32 noundef 25) ; 2 uses
   %i.js = icmp eq ptr %i.jr, null
   br i1 %i.js, label %bb.bp, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %i.jt = call ptr @g_strrstr(ptr noundef nonnull %i.jr, ptr noundef nonnull %.1.i40.i.a)
+  %i.jt = call ptr @g_strrstr(ptr noundef nonnull %i.jr, ptr noundef nonnull %.1.i40.i)
   %.not.i42.i = icmp eq ptr %i.jt, null
   br i1 %.not.i42.i, label %bb.bp, label %dissect_dcm_pdu.exit
 
 bb.bp:                                            ; preds = %bb.bo, %bb.bn
-  call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %i.jq, i32 noundef 25, ptr noundef nonnull @.str.218, ptr noundef nonnull %.1.i40.i.a)
+  call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %i.jq, i32 noundef 25, ptr noundef nonnull @.str.218, ptr noundef nonnull %.1.i40.i)
   br label %dissect_dcm_pdu.exit
 
 bb.bq:                                            ; preds = %dcm_state_assoc_get.exit.thread.i

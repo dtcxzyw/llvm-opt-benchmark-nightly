@@ -202,8 +202,8 @@ bb.h:                                             ; preds = %._crit_edge
   %i.cv = shufflevector <2 x double> %i.cu, <2 x double> poison, <4 x i32> zeroinitializer
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.i, %bb.h
-  %indvars.iv.i360 = phi i64 [ 0, %bb.h ], [ %indvars.iv.next.i361, %bb.i ] ; 4 uses
+bb.i:                                             ; preds = %bb.h, %bb.i
+  %indvars.iv.i360 = phi i64 [ %indvars.iv.next.i361, %bb.i ], [ 0, %bb.h ] ; 4 uses
   %i.cw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.lcssa, i64 %indvars.iv.i360
   %i.cx = load <4 x double>, ptr %i.cw, align 1, !tbaa !34
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %.sroa.12.0.lcssa, i64 %indvars.iv.i360
@@ -232,9 +232,16 @@ bb.k:                                             ; preds = %bb.j
   call fastcc void @dgemv_kernel_4x1(i64 noundef %.mux, ptr noundef %.1323, ptr noundef %.1319, ptr noundef %.1314, ptr noundef %i.a)
   br label %.loopexit408
 
-.preheader407:                                    ; preds = %dgemv_kernel_4x4.exit370, %.preheader409
-  %.2324.lcssa = phi ptr [ %.0346434, %.preheader409 ], [ %indvars.iv, %dgemv_kernel_4x4.exit370 ]
-  %.2320.lcssa = phi ptr [ %6, %.preheader409 ], [ %i.dp, %dgemv_kernel_4x4.exit370 ]
+..preheader407_crit_edge:                         ; preds = %dgemv_kernel_4x4.exit370
+  store double %i.di, ptr %i.b, align 16, !tbaa !9
+  store double %i.dk, ptr %i.m, align 8, !tbaa !9
+  store double %i.dm, ptr %i.n, align 16, !tbaa !9
+  store double %i.do, ptr %i.o, align 8, !tbaa !9
+  br label %.preheader407
+
+.preheader407:                                    ; preds = %..preheader407_crit_edge, %.preheader409
+  %.2324.lcssa = phi ptr [ %indvars.iv, %..preheader407_crit_edge ], [ %.0346434, %.preheader409 ]
+  %.2320.lcssa = phi ptr [ %i.dp, %..preheader407_crit_edge ], [ %6, %.preheader409 ]
   br i1 %.not517, label %.loopexit408, label %.lr.ph421
 
 bb.l:                                             ; preds = %.lr.ph, %dgemv_kernel_4x4.exit370
@@ -245,16 +252,12 @@ bb.l:                                             ; preds = %.lr.ph, %dgemv_kern
   %.sroa.22.1411 = phi ptr [ %i.w, %.lr.ph ], [ %i.fl, %dgemv_kernel_4x4.exit370 ] ; 3 uses
   %.sroa.31.1410 = phi ptr [ %i.x, %.lr.ph ], [ %i.fm, %dgemv_kernel_4x4.exit370 ] ; 3 uses
   %i.di = load double, ptr %.2320416, align 8, !tbaa !9 ; 2 uses
-  store double %i.di, ptr %i.b, align 16, !tbaa !9
   %i.dj = getelementptr inbounds [8 x i8], ptr %.2320416, i64 %7 ; 2 uses
   %i.dk = load double, ptr %i.dj, align 8, !tbaa !9 ; 2 uses
-  store double %i.dk, ptr %i.m, align 8, !tbaa !9
   %i.dl = getelementptr inbounds [8 x i8], ptr %i.dj, i64 %7 ; 2 uses
   %i.dm = load double, ptr %i.dl, align 8, !tbaa !9 ; 2 uses
-  store double %i.dm, ptr %i.n, align 16, !tbaa !9
   %i.dn = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %7 ; 2 uses
   %i.do = load double, ptr %i.dn, align 8, !tbaa !9 ; 2 uses
-  store double %i.do, ptr %i.o, align 8, !tbaa !9
   %i.dp = getelementptr inbounds [8 x i8], ptr %i.dn, i64 %7 ; 2 uses
   %i.dq = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.di, i64 0 ; 2 uses
   %i.dr = shufflevector <2 x double> %i.dq, <2 x double> poison, <4 x i32> zeroinitializer
@@ -326,7 +329,7 @@ dgemv_kernel_4x4.exit370:                         ; preds = %.lr.ph3.i364, %.pre
   %i.fm = getelementptr inbounds [8 x i8], ptr %.sroa.31.1410, i64 %i.c
   %i.fn = add nuw nsw i64 %.1334414, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.fn, %i.f
-  br i1 %exitcond.not, label %.preheader407, label %bb.l, !llvm.loop !16
+  br i1 %exitcond.not, label %..preheader407_crit_edge, label %bb.l, !llvm.loop !16
 
 .lr.ph421:                                        ; preds = %.preheader407, %.lr.ph421
   %.3321420 = phi ptr [ %i.fp, %.lr.ph421 ], [ %.2320.lcssa, %.preheader407 ] ; 2 uses

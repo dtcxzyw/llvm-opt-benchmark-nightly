@@ -204,7 +204,7 @@ _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i.i775.i.i: ; preds = %"_ZZN
 
 .noexc33:                                         ; preds = %.noexc31.i776.i.i
   store ptr %i.cnx, ptr %2, align 8, !tbaa !16
-  %i.cny = getelementptr inbounds nuw [4 x i8], ptr %i.cnx, i64 %i.cnt
+  %i.cny = getelementptr inbounds nuw [4 x i8], ptr %i.cnx, i64 %i.cnt ; 4 uses
   %i.cnz = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %i.cny, ptr %i.cnz, align 8, !tbaa !235
   store i32 0, ptr %i.cnx, align 4, !tbaa !17
@@ -607,16 +607,17 @@ bb.hi:                                            ; preds = %._crit_edge55.i820.
   br i1 %.not.i.i.i42.i822.i.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit43.i790.i.i, label %..thread90.i788_crit_edge.i.i
 
 ..thread90.i788_crit_edge.i.i:                    ; preds = %bb.hi
+  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.pre.i.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !tbaa !235
   %.pre.i.i.a = ptrtoint ptr %.pre62.i821.i.i to i64
   br label %.thread90.i788.i.i
 
 .thread90.i788.i.i:                               ; preds = %..thread90.i788_crit_edge.i.i, %.loopexit.split-lp.i830.i.i, %.loopexit.i826.i.i, %bb.gz
   %.pre-phi.i.i = phi i64 [ %.pre.i.i.a, %..thread90.i788_crit_edge.i.i ], [ %i.cps, %.loopexit.split-lp.i830.i.i ], [ %i.cps, %.loopexit.i826.i.i ], [ %i.cps, %bb.gz ]
+  %18 = phi ptr [ %.pre.i.i, %..thread90.i788_crit_edge.i.i ], [ %i.cny, %.loopexit.split-lp.i830.i.i ], [ %i.cny, %.loopexit.i826.i.i ], [ %i.cny, %bb.gz ]
   %.pn27.pn93.i789.i.i = phi { ptr, i32 } [ %i.cth, %..thread90.i788_crit_edge.i.i ], [ %lpad.loopexit.split-lp.i831.i.i, %.loopexit.split-lp.i830.i.i ], [ %lpad.loopexit.i827.i.i, %.loopexit.i826.i.i ], [ %i.crr, %bb.gz ]
   %i.cti = phi ptr [ %.pre62.i821.i.i, %..thread90.i788_crit_edge.i.i ], [ %i.cnx, %.loopexit.split-lp.i830.i.i ], [ %i.cnx, %.loopexit.i826.i.i ], [ %i.cnx, %bb.gz ]
-  %18 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %19 = load ptr, ptr %18, align 8, !tbaa !235
-  %i.ctj = ptrtoint ptr %19 to i64
+  %i.ctj = ptrtoint ptr %18 to i64
   %i.ctk = sub i64 %i.ctj, %.pre-phi.i.i
   call void @_ZdlPvm(ptr noundef nonnull %i.cti, i64 noundef %i.ctk) #16
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit43.i790.i.i

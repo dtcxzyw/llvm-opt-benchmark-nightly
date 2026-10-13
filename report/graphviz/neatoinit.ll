@@ -204,7 +204,7 @@ bitarray_new.exit.i.i:                            ; preds = %bb.af, %bb.ae
   store ptr %.sroa.0.0.i.i.i, ptr %6, align 8, !noalias !184
   %i.ff = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   store i64 %i.eu, ptr %i.ff, align 8, !noalias !184
-  %i.fg = call i32 @agnnodes(ptr noundef %1) #21, !noalias !184 ; 2 uses
+  %i.fg = call i32 @agnnodes(ptr noundef %1) #21, !noalias !184 ; 4 uses
   %i.fh = call ptr @agfstsubg(ptr noundef %0) #21, !noalias !184 ; 2 uses
   %.not78.i.i = icmp eq ptr %i.fh, null
   br i1 %.not78.i.i, label %.thread.i57.i.i, label %.lr.ph.i.i25
@@ -220,7 +220,7 @@ bitarray_new.exit.i.i:                            ; preds = %bb.af, %bb.ae
   br i1 %.not.i112.i, label %._crit_edge.i.i26, label %.lr.ph.i.i25, !llvm.loop !172
 
 ._crit_edge.i.i26:                                ; preds = %.lr.ph.i.i25
-  %i.fl = zext nneg i32 %spec.select.i.i to i64   ; 4 uses
+  %i.fl = zext nneg i32 %spec.select.i.i to i64   ; 5 uses
   %.not.i.i.i = icmp eq i32 %spec.select.i.i, 0
   br i1 %.not.i.i.i, label %.thread.i57.i.i, label %bb.ah
 
@@ -254,16 +254,20 @@ bb.ak:                                            ; preds = %bb.aj
   unreachable
 
 gv_calloc.exit58.i.i:                             ; preds = %bb.aj, %.thread.i57.i.i
-  %.sroa.9.1.i = phi i32 [ 0, %.thread.i57.i.i ], [ %spec.select.i.i, %bb.aj ] ; 4 uses
+  %.sroa.9.1.i = phi i32 [ 0, %.thread.i57.i.i ], [ %spec.select.i.i, %bb.aj ] ; 2 uses
   %.sroa.15.0.i = phi ptr [ %i.fr, %.thread.i57.i.i ], [ %i.fm, %bb.aj ] ; 4 uses
+  %.not.i123.i.i = phi i1 [ true, %.thread.i57.i.i ], [ false, %bb.aj ]
+  %9 = phi i64 [ 0, %.thread.i57.i.i ], [ %i.fl, %bb.aj ] ; 2 uses
   %i.fy = phi ptr [ %i.fs, %.thread.i57.i.i ], [ %i.ft, %bb.aj ] ; 3 uses
   %i.fz = call ptr @agfstsubg(ptr noundef %0) #21, !noalias !184 ; 2 uses
   %.not5193.i.i = icmp eq ptr %i.fz, null
   br i1 %.not5193.i.i, label %._crit_edge99.i.i, label %.lr.ph98.i.i
 
 .lr.ph98.i.i:                                     ; preds = %gv_calloc.exit58.i.i, %.loopexit.i.i
-  %.sroa.0.1.i.a = phi i32 [ %.sroa.0.2.i.a, %.loopexit.i.i ], [ 0, %gv_calloc.exit58.i.i ] ; 2 uses
-  %.sroa.17.0.i = phi i32 [ %.sroa.17.1.i, %.loopexit.i.i ], [ %i.fg, %gv_calloc.exit58.i.i ] ; 3 uses
+  %.sroa.0.1.i = phi i32 [ %.sroa.0.2.i, %.loopexit.i.i ], [ 0, %gv_calloc.exit58.i.i ]
+  %.sroa.13.0.i = phi i32 [ %.sroa.13.1.i, %.loopexit.i.i ], [ %i.fg, %gv_calloc.exit58.i.i ] ; 2 uses
+  %.sroa.0.1.i.a = phi i32 [ %.sroa.0.2.i.a, %.loopexit.i.i ], [ %i.fg, %gv_calloc.exit58.i.i ] ; 3 uses
+  %.sroa.17.0.i = phi i32 [ %.sroa.17.1.i, %.loopexit.i.i ], [ 0, %gv_calloc.exit58.i.i ] ; 2 uses
   %.04497.i.i = phi ptr [ %.145.i.i, %.loopexit.i.i ], [ %i.fy, %gv_calloc.exit58.i.i ] ; 3 uses
   %.04696.i.i = phi ptr [ %.147.i.i, %.loopexit.i.i ], [ %.sroa.15.0.i, %gv_calloc.exit58.i.i ] ; 3 uses
   %.15094.i.i = phi ptr [ %i.hk, %.loopexit.i.i ], [ %i.fz, %gv_calloc.exit58.i.i ] ; 5 uses
@@ -273,7 +277,7 @@ gv_calloc.exit58.i.i:                             ; preds = %bb.aj, %.thread.i57
 bb.al:                                            ; preds = %.lr.ph98.i.i
   %i.gb = call i32 @agnnodes(ptr noundef nonnull %.15094.i.i) #21, !noalias !184 ; 5 uses
   store i32 %i.gb, ptr %.04497.i.i, align 4, !tbaa !55, !noalias !184
-  %i.gc = add nsw i32 %i.gb, %.sroa.0.1.i.a       ; 2 uses
+  %i.gc = add nsw i32 %i.gb, %.sroa.17.0.i        ; 4 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %.04497.i.i, i64 4 ; 2 uses
   %i.ge = sext i32 %i.gb to i64                   ; 3 uses
   %.not.i59.i.i = icmp eq i32 %i.gb, 0
@@ -314,7 +318,7 @@ gv_calloc.exit63.i.i:                             ; preds = %bb.ao, %.thread.i62
   br i1 %.not5289.i.i, label %.loopexit.i.i, label %.lr.ph92.i.i
 
 .lr.ph92.i.i:                                     ; preds = %gv_calloc.exit63.i.i, %bitarray_set.exit.i.i
-  %.sroa.17.3.i = phi i32 [ %i.hi, %bitarray_set.exit.i.i ], [ %.sroa.17.0.i, %gv_calloc.exit63.i.i ]
+  %.sroa.17.3.i = phi i32 [ %i.hi, %bitarray_set.exit.i.i ], [ %.sroa.0.1.i.a, %gv_calloc.exit63.i.i ]
   %.03991.i.i = phi ptr [ %i.gw, %bitarray_set.exit.i.i ], [ %i.gn, %gv_calloc.exit63.i.i ] ; 2 uses
   %.04890.i.i = phi ptr [ %i.hj, %bitarray_set.exit.i.i ], [ %i.gp, %gv_calloc.exit63.i.i ] ; 2 uses
   %i.gq = call ptr @agfstnode(ptr noundef %1) #21, !noalias !184 ; 2 uses
@@ -353,14 +357,16 @@ bitarray_set.exit.i.i:                            ; preds = %bb.aq, %.lr.ph85.i.
   %i.hg = load i8, ptr %i.hf, align 1, !tbaa !45, !noalias !184
   %i.hh = or i8 %i.hg, %i.hc
   store i8 %i.hh, ptr %i.hf, align 1, !tbaa !45, !noalias !184
-  %i.hi = add nsw i32 %.sroa.17.3.i, -1           ; 2 uses
+  %i.hi = add nsw i32 %.sroa.17.3.i, -1           ; 3 uses
   %i.hj = call ptr @agnxtnode(ptr noundef nonnull %.15094.i.i, ptr noundef nonnull %.04890.i.i) #21, !noalias !184 ; 2 uses
   %.not52.i.i = icmp eq ptr %i.hj, null
   br i1 %.not52.i.i, label %.loopexit.i.i, label %.lr.ph92.i.i, !llvm.loop !174
 
 .loopexit.i.i:                                    ; preds = %bitarray_set.exit.i.i, %gv_calloc.exit63.i.i, %.lr.ph98.i.i
-  %.sroa.0.2.i.a = phi i32 [ %i.gc, %gv_calloc.exit63.i.i ], [ %.sroa.0.1.i.a, %.lr.ph98.i.i ], [ %i.gc, %bitarray_set.exit.i.i ] ; 2 uses
-  %.sroa.17.1.i = phi i32 [ %.sroa.17.0.i, %gv_calloc.exit63.i.i ], [ %.sroa.17.0.i, %.lr.ph98.i.i ], [ %i.hi, %bitarray_set.exit.i.i ] ; 2 uses
+  %.sroa.0.2.i = phi i32 [ %i.gc, %gv_calloc.exit63.i.i ], [ %.sroa.0.1.i, %.lr.ph98.i.i ], [ %i.gc, %bitarray_set.exit.i.i ] ; 2 uses
+  %.sroa.13.1.i = phi i32 [ %.sroa.13.0.i, %gv_calloc.exit63.i.i ], [ %.sroa.13.0.i, %.lr.ph98.i.i ], [ %i.hi, %bitarray_set.exit.i.i ] ; 2 uses
+  %.sroa.0.2.i.a = phi i32 [ %.sroa.0.1.i.a, %gv_calloc.exit63.i.i ], [ %.sroa.0.1.i.a, %.lr.ph98.i.i ], [ %i.hi, %bitarray_set.exit.i.i ] ; 2 uses
+  %.sroa.17.1.i = phi i32 [ %i.gc, %gv_calloc.exit63.i.i ], [ %.sroa.17.0.i, %.lr.ph98.i.i ], [ %i.gc, %bitarray_set.exit.i.i ]
   %.147.i.i = phi ptr [ %i.go, %gv_calloc.exit63.i.i ], [ %.04696.i.i, %.lr.ph98.i.i ], [ %i.go, %bitarray_set.exit.i.i ]
   %.145.i.i = phi ptr [ %i.gd, %gv_calloc.exit63.i.i ], [ %.04497.i.i, %.lr.ph98.i.i ], [ %i.gd, %bitarray_set.exit.i.i ]
   %i.hk = call ptr @agnxtsubg(ptr noundef nonnull %.15094.i.i) #21, !noalias !184 ; 2 uses
@@ -368,11 +374,10 @@ bitarray_set.exit.i.i:                            ; preds = %bb.aq, %.lr.ph85.i.
   br i1 %.not51.i.i, label %._crit_edge99.i.i, label %.lr.ph98.i.i, !llvm.loop !175
 
 ._crit_edge99.i.i:                                ; preds = %.loopexit.i.i, %gv_calloc.exit58.i.i
-  %.sroa.0.3.i = phi i32 [ 0, %gv_calloc.exit58.i.i ], [ %.sroa.0.2.i.a, %.loopexit.i.i ]
-  %.sroa.17.2.i = phi i32 [ %i.fg, %gv_calloc.exit58.i.i ], [ %.sroa.17.1.i, %.loopexit.i.i ] ; 4 uses
-  %9 = sext i32 %.sroa.9.1.i to i64               ; 2 uses
-  %.not.i64.i.i = icmp eq i32 %.sroa.9.1.i, 0
-  br i1 %.not.i64.i.i, label %.thread.i67.i.i, label %bb.ar
+  %.sroa.0.3.i = phi i32 [ 0, %gv_calloc.exit58.i.i ], [ %.sroa.0.2.i, %.loopexit.i.i ]
+  %.sroa.17.2.i = phi i32 [ %i.fg, %gv_calloc.exit58.i.i ], [ %.sroa.13.1.i, %.loopexit.i.i ]
+  %10 = phi i32 [ %i.fg, %gv_calloc.exit58.i.i ], [ %.sroa.0.2.i.a, %.loopexit.i.i ] ; 3 uses
+  br i1 %.not.i123.i.i, label %.thread.i67.i.i, label %bb.ar
 
 .thread.i67.i.i:                                  ; preds = %._crit_edge99.i.i
   %i.hl = call noalias ptr @calloc(i64 noundef 0, i64 noundef 32) #22, !noalias !184
@@ -392,8 +397,8 @@ bb.as:                                            ; preds = %bb.ar
 
 gv_calloc.exit68.i.i:                             ; preds = %bb.ar, %.thread.i67.i.i
   %i.hr = phi ptr [ %i.hl, %.thread.i67.i.i ], [ %i.hm, %bb.ar ] ; 2 uses
-  %i.hs = sext i32 %.sroa.17.2.i to i64           ; 3 uses
-  %.not.i69.i.i = icmp eq i32 %.sroa.17.2.i, 0
+  %i.hs = sext i32 %10 to i64                     ; 3 uses
+  %.not.i69.i.i = icmp eq i32 %10, 0
   br i1 %.not.i69.i.i, label %.thread.i72.i.i, label %bb.at
 
 .thread.i72.i.i:                                  ; preds = %gv_calloc.exit68.i.i
@@ -401,7 +406,7 @@ gv_calloc.exit68.i.i:                             ; preds = %bb.ar, %.thread.i67
   br label %gv_calloc.exit73.i.i
 
 bb.at:                                            ; preds = %gv_calloc.exit68.i.i
-  %mul.ov.i71.i.i = icmp slt i32 %.sroa.17.2.i, 0
+  %mul.ov.i71.i.i = icmp slt i32 %10, 0
   br i1 %mul.ov.i71.i.i, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at

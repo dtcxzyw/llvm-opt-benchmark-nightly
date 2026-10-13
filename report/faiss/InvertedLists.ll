@@ -204,8 +204,9 @@ _ZNSt6vectorIN5faiss16MaybeOwnedVectorIlEESaIS2_EE17_S_check_init_lenEmRKS3_.exi
 
 .loopexit.thread:                                 ; preds = %_ZNSt6vectorIN5faiss16MaybeOwnedVectorIlEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i, %_ZNSt6vectorIN5faiss16MaybeOwnedVectorIlEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.thread
   %i.af = phi ptr [ %i.d, %_ZNSt6vectorIN5faiss16MaybeOwnedVectorIlEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i.thread ], [ %i.ad, %_ZNSt6vectorIN5faiss16MaybeOwnedVectorIlEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
+  store i64 0, ptr %i.ag, align 8
   br label %._crit_edge
 
 _ZNSt12_Vector_baseIN5faiss16MaybeOwnedVectorIlEESaIS2_EEC2EmRKS3_.exit.i: ; preds = %_ZNSt6vectorIN5faiss16MaybeOwnedVectorIlEESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
@@ -302,7 +303,7 @@ _ZNSt12_Vector_baseIN5faiss16MaybeOwnedVectorIlEESaIS2_EEC2EmRKS3_.exit.i: ; pre
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.loopexit.thread, %._crit_edge.loopexit, %.loopexit
-  %i.bm = phi ptr [ %i.bg, %._crit_edge.loopexit ], [ %i.bg, %.loopexit ], [ %i.ag, %.loopexit.thread ]
+  %i.bm = phi ptr [ %i.bg, %._crit_edge.loopexit ], [ %i.bg, %.loopexit ], [ %5, %.loopexit.thread ]
   %i.bn = phi ptr [ %i.ad, %._crit_edge.loopexit ], [ %i.ad, %.loopexit ], [ %i.af, %.loopexit.thread ] ; 2 uses
   %i.bo = phi ptr [ %.pre42, %._crit_edge.loopexit ], [ %i.ai, %.loopexit ], [ null, %.loopexit.thread ]
   %i.bp = phi <2 x ptr> [ %i.bl, %._crit_edge.loopexit ], [ %i.bi, %.loopexit ], [ splat (ptr null), %.loopexit.thread ]

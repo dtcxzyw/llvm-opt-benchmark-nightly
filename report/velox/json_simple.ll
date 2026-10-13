@@ -205,15 +205,18 @@ bb.q:                                             ; preds = %_ZNK5arrow9rapidjso
   %.sroa.phi90 = phi ptr [ %.sroa.phi90.ph, %.thread.ithread-pre-split ], [ %i.y, %.split.i ]
   %i.hn = phi ptr [ %.ph95, %.thread.ithread-pre-split ], [ %3, %.split.i ]
   %.not34.i = icmp eq i64 %i.hl, 0
-  br i1 %.not34.i, label %_ZNK5arrow9rapidjson8internal10BigInteger10DifferenceERKS2_PS2_.exit, label %.lr.ph.i83
+  br i1 %.not34.i, label %_ZNK5arrow9rapidjson8internal10BigInteger10DifferenceERKS2_PS2_.exit, label %.lr.ph.i83.preheader
 
-.lr.ph.i83:                                       ; preds = %.thread.i, %._crit_edge36.i
-  %.02533.i = phi i64 [ %.pre.i, %._crit_edge36.i ], [ 0, %.thread.i ] ; 5 uses
-  %.02632.i = phi i64 [ %i.hw, %._crit_edge36.i ], [ 0, %.thread.i ]
+.lr.ph.i83.preheader:                             ; preds = %.thread.i
+  %7 = load i64, ptr %.sroa.phi90, align 8, !tbaa !679
+  br label %.lr.ph.i83
+
+.lr.ph.i83:                                       ; preds = %.lr.ph.i83.preheader, %._crit_edge36.i
+  %.02533.i = phi i64 [ %.pre.i, %._crit_edge36.i ], [ 0, %.lr.ph.i83.preheader ] ; 5 uses
+  %.02632.i = phi i64 [ %i.hw, %._crit_edge36.i ], [ 0, %.lr.ph.i83.preheader ]
   %i.ho = getelementptr inbounds nuw [8 x i8], ptr %i.hm, i64 %.02533.i
   %i.hp = load i64, ptr %i.ho, align 8, !tbaa !101 ; 2 uses
   %i.hq = sub i64 %i.hp, %.02632.i                ; 2 uses
-  %7 = load i64, ptr %.sroa.phi90, align 8, !tbaa !679
   %i.hr = icmp ult i64 %.02533.i, %7
   br i1 %i.hr, label %bb.r, label %bb.s
 

@@ -202,13 +202,16 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !17
   store i8 %i.aa, ptr %.065, align 1, !tbaa !17
   %i.ab = lshr i64 %i.x, 5                        ; 2 uses
-  store i64 %i.ab, ptr %i.b, align 8, !tbaa !32
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 1 ; 2 uses
   %i.ad = icmp ult ptr %i.ac, %i.s
-  br i1 %i.ad, label %.lr.ph, label %._crit_edge, !llvm.loop !28
+  br i1 %i.ad, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !28
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.h
-  %.0.lcssa = phi ptr [ %i.r, %bb.h ], [ %i.w, %.lr.ph ]
+._crit_edge.loopexit:                             ; preds = %.lr.ph
+  store i64 %i.ab, ptr %i.b, align 8, !tbaa !32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h
+  %.0.lcssa = phi ptr [ %i.r, %bb.h ], [ %i.w, %._crit_edge.loopexit ]
   store i8 0, ptr %.0.lcssa, align 1, !tbaa !17
   %i.ae = load ptr, ptr %3, align 8, !tbaa !30    ; 2 uses
   %i.af = load i64, ptr %i.h, align 8, !tbaa !31

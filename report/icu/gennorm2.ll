@@ -85,8 +85,8 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr noundef %1) local_unnamed
 bb.a:
   %2 = alloca %"class.icu_78::IcuToolErrorCode", align 8 ; 10 uses
   %3 = alloca %"class.icu_78::LocalPointer", align 8 ; 7 uses
-  %4 = alloca %"class.icu_78::LocalPointer", align 8 ; 10 uses
-  %5 = alloca %"class.icu_78::LocalPointer", align 8 ; 9 uses
+  %4 = alloca %"class.icu_78::LocalPointer", align 8 ; 7 uses
+  %5 = alloca %"class.icu_78::LocalPointer", align 8 ; 10 uses
   %6 = alloca %"class.icu_78::CharString", align 8 ; 18 uses
   %7 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %8 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
@@ -266,6 +266,8 @@ bb.v:                                             ; preds = %bb.s
   br i1 %i.bc, label %bb.bg, label %bb.bi
 
 bb.w:                                             ; preds = %.lr.ph, %bb.be
+  %10 = phi ptr [ null, %.lr.ph ], [ %13, %bb.be ] ; 2 uses
+  %11 = phi ptr [ null, %.lr.ph ], [ %14, %bb.be ] ; 4 uses
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.be ] ; 2 uses
   %.03896 = phi i8 [ 0, %.lr.ph ], [ %.1, %bb.be ] ; 2 uses
   %.04095 = phi ptr [ %i.y, %.lr.ph ], [ %.141, %bb.be ] ; 3 uses
@@ -294,7 +296,7 @@ bb.z:                                             ; preds = %bb.au, %bb.at, %bb.
 
 bb.aa:                                            ; preds = %bb.x
   %i.bm = invoke noalias noundef nonnull dereferenceable(872) ptr @_Znwm(i64 noundef 872) #18
-          to label %bb.ab unwind label %bb.z      ; 5 uses
+          to label %bb.ab unwind label %bb.z      ; 6 uses
 
 bb.ab:                                            ; preds = %bb.aa
   invoke void @_ZN6icu_7822Normalizer2DataBuilderC1ER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(868) %i.bm, ptr noundef nonnull align 4 dereferenceable(4) %i.w)
@@ -306,13 +308,12 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.bo, label %bb.ag, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %10 = load ptr, ptr %4, align 8, !tbaa !24      ; 3 uses
-  %i.bp = icmp eq ptr %10, null
+  %i.bp = icmp eq ptr %11, null
   br i1 %i.bp, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  call void @_ZN6icu_7822Normalizer2DataBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(868) dereferenceable(868) %10) #17
-  call void @_ZdlPvm(ptr noundef nonnull %10, i64 noundef 872) #19
+  call void @_ZN6icu_7822Normalizer2DataBuilderD1Ev(ptr noundef nonnull align 8 dead_on_return(868) dereferenceable(868) %11) #17
+  call void @_ZdlPvm(ptr noundef nonnull %11, i64 noundef 872) #19
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
@@ -325,6 +326,7 @@ bb.ag:                                            ; preds = %bb.ac
   br label %_ZN6icu_7812LocalPointerINS_22Normalizer2DataBuilderEE29adoptInsteadAndCheckErrorCodeEPS1_R10UErrorCode.exit
 
 _ZN6icu_7812LocalPointerINS_22Normalizer2DataBuilderEE29adoptInsteadAndCheckErrorCodeEPS1_R10UErrorCode.exit: ; preds = %bb.ag, %bb.af
+  %12 = phi ptr [ %10, %bb.ag ], [ %i.bm, %bb.af ] ; 8 uses
   %i.bq = invoke noalias noundef nonnull dereferenceable(872) ptr @_Znwm(i64 noundef 872) #18
           to label %bb.ah unwind label %bb.z      ; 5 uses
 
@@ -361,14 +363,13 @@ _ZN6icu_7812LocalPointerINS_22Normalizer2DataBuilderEE29adoptInsteadAndCheckErro
           to label %bb.an unwind label %bb.z
 
 bb.an:                                            ; preds = %_ZN6icu_7812LocalPointerINS_22Normalizer2DataBuilderEE29adoptInsteadAndCheckErrorCodeEPS1_R10UErrorCode.exit75
-  %11 = load ptr, ptr %4, align 8, !tbaa !24      ; 4 uses
   %i.bv = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_78L7optionsE, i64 274), align 2, !tbaa !44
   %.not63 = icmp eq i8 %i.bv, 0
   br i1 %.not63, label %bb.ar, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.bw = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_78L7optionsE, i64 248), align 8, !tbaa !43
-  invoke void @_ZN6icu_7822Normalizer2DataBuilder17setUnicodeVersionEPKc(ptr noundef nonnull align 8 dereferenceable(868) %11, ptr noundef %i.bw)
+  invoke void @_ZN6icu_7822Normalizer2DataBuilder17setUnicodeVersionEPKc(ptr noundef nonnull align 8 dereferenceable(868) %12, ptr noundef %i.bw)
           to label %bb.ar unwind label %bb.z
 
 bb.ap:                                            ; preds = %bb.ab
@@ -389,7 +390,7 @@ bb.ar:                                            ; preds = %bb.ao, %bb.an
   br i1 %.not71, label %bb.be, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %i.ca = getelementptr inbounds nuw i8, ptr %11, i64 432
+  %i.ca = getelementptr inbounds nuw i8, ptr %12, i64 432
   store i32 1, ptr %i.ca, align 8, !tbaa !62
   br label %bb.be
 
@@ -456,7 +457,9 @@ bb.bd:                                            ; preds = %bb.bc
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.ar, %bb.as, %bb.bd
-  %.141 = phi ptr [ %.04095, %bb.bd ], [ %11, %bb.as ], [ %11, %bb.ar ] ; 4 uses
+  %13 = phi ptr [ %10, %bb.bd ], [ %12, %bb.as ], [ %12, %bb.ar ] ; 2 uses
+  %14 = phi ptr [ %11, %bb.bd ], [ %12, %bb.as ], [ %12, %bb.ar ]
+  %.141 = phi ptr [ %.04095, %bb.bd ], [ %12, %bb.as ], [ %12, %bb.ar ] ; 4 uses
   %.1 = phi i8 [ %.03896, %bb.bd ], [ 1, %bb.as ], [ 1, %bb.ar ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -468,11 +471,14 @@ bb.bf:                                            ; preds = %bb.az, %bb.ay
   br label %bb.bs
 
 bb.bg:                                            ; preds = %._crit_edge
-  %12 = load ptr, ptr %3, align 8, !tbaa !24
-  %i.cs = load ptr, ptr %4, align 8, !tbaa !24
-  %i.ct = load ptr, ptr %5, align 8, !tbaa !24    ; 2 uses
-  invoke void @_ZN6icu_7822Normalizer2DataBuilder11computeDiffERKS0_S2_RS0_(ptr noundef nonnull align 8 dereferenceable(868) %12, ptr noundef nonnull align 8 dereferenceable(868) %i.cs, ptr noundef nonnull align 8 dereferenceable(868) %i.ct)
-          to label %.invoke unwind label %bb.bh
+  %i.cs = load ptr, ptr %3, align 8, !tbaa !24
+  %i.ct = load ptr, ptr %5, align 8, !tbaa !24
+  invoke void @_ZN6icu_7822Normalizer2DataBuilder11computeDiffERKS0_S2_RS0_(ptr noundef nonnull align 8 dereferenceable(868) %i.cs, ptr noundef nonnull align 8 dereferenceable(868) %13, ptr noundef nonnull align 8 dereferenceable(868) %i.ct)
+          to label %15 unwind label %bb.bh
+
+15:                                               ; preds = %bb.bg
+  %16 = load ptr, ptr %5, align 8, !tbaa !24
+  br label %.invoke
 
 bb.bh:                                            ; preds = %.invoke, %bb.bl, %bb.bk, %bb.bg
   %i.cu = landingpad { ptr, i32 }
@@ -484,8 +490,8 @@ bb.bi:                                            ; preds = %._crit_edge
   %.not60 = icmp eq i8 %i.cv, 0
   br i1 %.not60, label %bb.bj, label %.invoke
 
-.invoke:                                          ; preds = %bb.bi, %bb.bg
-  %i.cw = phi ptr [ %i.ct, %bb.bg ], [ %.141, %bb.bi ]
+.invoke:                                          ; preds = %bb.bi, %15
+  %i.cw = phi ptr [ %16, %15 ], [ %.141, %bb.bi ]
   %i.cx = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN6icu_78L7optionsE, i64 208), align 16, !tbaa !43
   invoke void @_ZNK6icu_7822Normalizer2DataBuilder13writeDataFileEPKcb(ptr noundef nonnull align 8 dereferenceable(868) %i.cw, ptr noundef %i.cx, i1 noundef zeroext %i.bc)
           to label %bb.bm unwind label %bb.bh

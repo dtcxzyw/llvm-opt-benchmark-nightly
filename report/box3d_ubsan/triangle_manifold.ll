@@ -204,8 +204,8 @@ bb.q:                                             ; preds = %bb.o
 
 b3GetHullPoints.exit:                             ; preds = %b3GetHullPlanes.exit, %bb.q
   %.0.i195 = phi ptr [ %i.am, %bb.q ], [ null, %b3GetHullPlanes.exit ] ; 4 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 2 uses
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !39 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 20
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !39 ; 3 uses
   %i.ap = sext i32 %i.ao to i64                   ; 4 uses
   %i.aq = getelementptr inbounds [16 x i8], ptr %.0.i194, i64 %i.ap ; 3 uses
   %i.ar = shl nsw i64 %i.ap, 4
@@ -608,8 +608,7 @@ bb.bh:                                            ; preds = %bb.bf
   %i.ij = trunc i32 %i.ii to i8
   store i8 %i.ij, ptr %i.ig, align 1, !tbaa !55
   %i.ik = getelementptr inbounds nuw i8, ptr %5, i64 6
-  %9 = load i32, ptr %i.an, align 4, !tbaa !39
-  %i.il = trunc i32 %9 to i8
+  %i.il = trunc i32 %i.ao to i8
   store i8 %i.il, ptr %i.ik, align 2, !tbaa !56
   br label %bb.bi
 

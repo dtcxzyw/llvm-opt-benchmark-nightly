@@ -206,7 +206,7 @@ _ZNSt10unique_ptrIN7rocksdb12WritableFileESt14default_deleteIS1_EED2Ev.exit31: ;
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN7rocksdb3Env25GetChildrenFileAttributesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSt6vectorINS0_14FileAttributesESaISA_EE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.rocksdb::Status") align 8 captures(address) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef %3) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN7rocksdb3Env25GetChildrenFileAttributesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPSt6vectorINS0_14FileAttributesESaISA_EE(ptr dead_on_unwind noalias nofree writable sret(%"class.rocksdb::Status") align 8 captures(address) %0, ptr noundef nonnull align 8 dereferenceable(72) %1, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef %3) unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.std::allocator", align 1    ; 3 uses
   %5 = alloca %"class.std::vector.35", align 8    ; 16 uses
@@ -348,10 +348,11 @@ _ZNSt6vectorIN7rocksdb3Env14FileAttributesESaIS2_EE6resizeEm.exit: ; preds = %bb
   %i.bg = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %.not.i.i57 = icmp eq ptr %0, %6
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %.promoted = load ptr, ptr %i.bj, align 8       ; 6 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64.jt0
@@ -379,6 +380,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bv, label %bb.m, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i
 
 bb.m:                                             ; preds = %bb.l
+  store ptr %.promoted, ptr %i.bj, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.68) #39
           to label %.noexc44 unwind label %.loopexit.split-lp
 
@@ -532,11 +534,13 @@ _ZN7rocksdb6StatusD2Ev.exit50:                    ; preds = %bb.w, %_ZNKSt14defa
 bb.x:                                             ; preds = %bb.k
   %i.di = landingpad { ptr, i32 }
           cleanup
+  store ptr %.promoted, ptr %i.bj, align 8
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53
 
 .loopexit:                                        ; preds = %bb.r
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
+  store ptr %.promoted, ptr %i.bj, align 8
   br label %bb.y
 
 .loopexit.split-lp:                               ; preds = %bb.m
@@ -564,17 +568,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53: ; preds = %bb.
 bb.z:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.dn = landingpad { ptr, i32 }
           cleanup
+  store ptr %.promoted, ptr %i.bj, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #37
   br label %bb.ak
 
 bb.aa:                                            ; preds = %bb.v
   %i.do = landingpad { ptr, i32 }
           cleanup
+  store ptr %.promoted, ptr %i.bj, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #37
   br label %bb.ak
 
 bb.ab:                                            ; preds = %_ZN7rocksdb6StatusD2Ev.exit50
-  store ptr null, ptr %i.bj, align 8, !tbaa !147
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false)
   br i1 %.not.i.i57, label %_ZN7rocksdb6StatusC2EOS0_.exit60.jt1, label %bb.ac
 
@@ -590,7 +595,6 @@ bb.ac:                                            ; preds = %bb.ab
   store i8 0, ptr %i.bf, align 1, !tbaa !146
   %i.ds = load ptr, ptr %i.bh, align 8, !tbaa !148
   store ptr null, ptr %i.bh, align 8, !tbaa !148
-  store ptr %i.ds, ptr %i.bj, align 8, !tbaa !148
   br label %_ZN7rocksdb6StatusC2EOS0_.exit60.jt1
 
 bb.ad:                                            ; preds = %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i, %.thread, %_ZN7rocksdb6StatusD2Ev.exit
@@ -685,6 +689,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb
   br label %_ZN7rocksdb6StatusC2EOS0_.exit60.jt0
 
 _ZN7rocksdb6StatusC2EOS0_.exit60.jt1:             ; preds = %bb.ab, %bb.ac
+  %11 = phi ptr [ null, %bb.ab ], [ %i.ds, %bb.ac ]
   %i.ex = load ptr, ptr %7, align 8, !tbaa !53    ; 2 uses
   %i.ey = icmp eq ptr %i.ex, %i.ba
   br i1 %i.ey, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64.jt1, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i62.jt1
@@ -709,6 +714,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i62
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64.jt1: ; preds = %_ZN7rocksdb6StatusC2EOS0_.exit60.jt1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i62.jt1
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #37
+  store ptr %11, ptr %i.bj, align 8
   br label %_ZN7rocksdb6StatusC2EOS0_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64.jt0: ; preds = %_ZN7rocksdb6StatusC2EOS0_.exit60.jt0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i62.jt0
@@ -741,6 +747,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67: ; preds = %bb.
   br label %bb.aq
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64.jt0
+  store ptr %.promoted, ptr %i.bj, align 8
   %i.fq = load ptr, ptr %i.y, align 8, !tbaa !194 ; 2 uses
   %i.fr = load ptr, ptr %3, align 8, !tbaa !195   ; 2 uses
   %i.fs = ptrtoint ptr %i.fq to i64

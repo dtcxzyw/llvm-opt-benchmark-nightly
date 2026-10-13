@@ -204,7 +204,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: inlinehint nounwind uwtable
 define internal fastcc range(i32 0, 4) i32 @uriNormalizeSyntaxEngineA(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(address_is_null) %2, ptr noundef %3) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 18 uses
+  %i.a = alloca i32, align 4                      ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 0, ptr %i.a, align 4, !tbaa !40
   %i.b = icmp eq ptr %0, null
@@ -607,7 +607,7 @@ uriLowercaseMallocA.exit:                         ; preds = %._crit_edge.i, %bb.
   br label %uriLowercaseInplaceA.exit
 
 uriLowercaseInplaceA.exit:                        ; preds = %bb.t, %middle.block, %vec.epilog.middle.block, %bb.r, %uriLowercaseMallocA.exit, %bb.p, %bb.o
-  %i.gk = phi i32 [ 0, %bb.o ], [ 0, %bb.r ], [ 1, %uriLowercaseMallocA.exit ], [ 0, %bb.p ], [ 0, %middle.block ], [ 0, %vec.epilog.middle.block ], [ 0, %bb.t ] ; 4 uses
+  %i.gk = phi i32 [ 0, %bb.o ], [ 0, %bb.r ], [ 1, %uriLowercaseMallocA.exit ], [ 0, %bb.p ], [ 0, %middle.block ], [ 0, %vec.epilog.middle.block ], [ 0, %bb.t ] ; 10 uses
   %i.gl = and i32 %1, 4
   %.not191 = icmp eq i32 %i.gl, 0
   br i1 %.not191, label %uriContainsUglyPercentEncodingA.exit, label %bb.y
@@ -1010,7 +1010,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ad
 uriLowercaseMallocA.exit258:                      ; preds = %._crit_edge.i256, %bb.ae
   %i.mf = phi ptr [ %i.me, %._crit_edge.i256 ], [ %i.gt, %bb.ae ]
   %i.mg = phi ptr [ %i.lg, %._crit_edge.i256 ], [ %i.go, %bb.ae ]
-  %i.mh = or disjoint i32 %i.gk, 4
+  %i.mh = or disjoint i32 %i.gk, 4                ; 2 uses
   store i32 %i.mh, ptr %i.a, align 4, !tbaa !40
   br label %uriLowercaseInplaceA.exit250
 
@@ -1020,6 +1020,7 @@ uriLowercaseInplaceA.exit250.loopexit:            ; preds = %bb.ac, %vec.epilog.
   br label %uriLowercaseInplaceA.exit250
 
 uriLowercaseInplaceA.exit250:                     ; preds = %uriLowercaseInplaceA.exit250.loopexit, %bb.aa, %uriLowercaseMallocA.exit258
+  %4 = phi i32 [ %i.gk, %uriLowercaseInplaceA.exit250.loopexit ], [ %i.gk, %bb.aa ], [ %i.mh, %uriLowercaseMallocA.exit258 ]
   %i.mi = phi ptr [ %.pre390, %uriLowercaseInplaceA.exit250.loopexit ], [ %i.gt, %bb.aa ], [ %i.mf, %uriLowercaseMallocA.exit258 ]
   %i.mj = phi ptr [ %.pre, %uriLowercaseInplaceA.exit250.loopexit ], [ %i.go, %bb.aa ], [ %i.mg, %uriLowercaseMallocA.exit258 ]
   %i.mk = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -1060,11 +1061,12 @@ bb.am:                                            ; preds = %bb.al
   br label %bb.dz
 
 bb.an:                                            ; preds = %bb.al
-  %i.mu = or disjoint i32 %i.gk, 4
+  %i.mu = or disjoint i32 %i.gk, 4                ; 2 uses
   store i32 %i.mu, ptr %i.a, align 4, !tbaa !40
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.ak
+  %5 = phi i32 [ %i.mu, %bb.an ], [ %i.gk, %bb.ak ] ; 3 uses
   %i.mv = load ptr, ptr %i.mm, align 8, !tbaa !28 ; 3 uses
   %i.mw = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.mx = load ptr, ptr %i.mw, align 8, !tbaa !29 ; 3 uses
@@ -1105,6 +1107,7 @@ bb.at:                                            ; preds = %bb.as, %bb.aq, %bb.
   br i1 %i.nh, label %.preheader.i259, label %uriContainsUglyPercentEncodingA.exit, !llvm.loop !86
 
 uriContainsUglyPercentEncodingA.exit:             ; preds = %bb.m, %bb.at, %bb.ar, %bb.ao, %bb.i, %uriLowercaseInplaceA.exit, %bb.ah, %bb.ai, %uriLowercaseInplaceA.exit250
+  %6 = phi i32 [ %5, %bb.at ], [ %4, %uriLowercaseInplaceA.exit250 ], [ %5, %bb.ao ], [ 0, %bb.i ], [ %i.gk, %uriLowercaseInplaceA.exit ], [ %i.gk, %bb.ah ], [ %i.gk, %bb.ai ], [ %5, %bb.ar ], [ 0, %bb.m ] ; 7 uses
   br i1 %.not231, label %bb.ax, label %uriContainsUglyPercentEncodingA.exit.thread348
 
 uriContainsUglyPercentEncodingA.exit.thread348.sink.split: ; preds = %bb.h, %bb.n
@@ -1113,6 +1116,7 @@ uriContainsUglyPercentEncodingA.exit.thread348.sink.split: ; preds = %bb.h, %bb.
   br label %uriContainsUglyPercentEncodingA.exit.thread348
 
 uriContainsUglyPercentEncodingA.exit.thread348:   ; preds = %uriContainsUglyPercentEncodingA.exit.thread348.sink.split, %uriContainsUglyPercentEncodingA.exit
+  %7 = phi i32 [ %6, %uriContainsUglyPercentEncodingA.exit ], [ 0, %uriContainsUglyPercentEncodingA.exit.thread348.sink.split ] ; 3 uses
   %i.ni = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.nj = load ptr, ptr %i.ni, align 8, !tbaa !103 ; 3 uses
   %.not204 = icmp eq ptr %i.nj, null
@@ -1473,22 +1477,23 @@ uriFixPercentEncodingEngineA.exit.i:              ; preds = %.lr.ph49.i.i, %midd
 bb.bv:                                            ; preds = %bb.bn
   %i.sh = tail call fastcc i32 @uriFixPercentEncodingMallocA(ptr noundef %i.qb, ptr noundef %i.qf, ptr noundef %3)
   %.not208 = icmp eq i32 %i.sh, 0
-  %4 = load i32, ptr %i.a, align 4, !tbaa !40     ; 2 uses
   br i1 %.not208, label %bb.bw, label %bb.bx
 
 bb.bw:                                            ; preds = %bb.bv
-  tail call void @uriPreventLeakageA(ptr noundef nonnull %0, i32 noundef %4, ptr noundef %3)
+  tail call void @uriPreventLeakageA(ptr noundef nonnull %0, i32 noundef %6, ptr noundef %3)
   br label %bb.dz
 
 bb.bx:                                            ; preds = %bb.bv
-  %i.si = or i32 %4, 2
+  %i.si = or i32 %6, 2                            ; 2 uses
   store i32 %i.si, ptr %i.a, align 4, !tbaa !40
   br label %uriContainsUglyPercentEncodingA.exit279.thread354
 
 uriContainsUglyPercentEncodingA.exit279:          ; preds = %bb.bk, %uriFixPercentEncodingEngineA.exit.i
+  %8 = phi i32 [ %6, %uriFixPercentEncodingEngineA.exit.i ], [ %7, %bb.bk ] ; 2 uses
   br i1 %.not231, label %uriContainsUglyPercentEncodingA.exit279.thread354, label %uriContainsUglyPercentEncodingA.exit279.thread356
 
 uriContainsUglyPercentEncodingA.exit279.thread356: ; preds = %bb.bl, %uriDropLeadingZerosInplaceA.exit.thread350, %uriContainsUglyPercentEncodingA.exit279
+  %9 = phi i32 [ %7, %bb.bl ], [ %7, %uriDropLeadingZerosInplaceA.exit.thread350 ], [ %8, %uriContainsUglyPercentEncodingA.exit279 ]
   %i.sj = getelementptr inbounds nuw i8, ptr %0, i64 96
   %.0168374 = load ptr, ptr %i.sj, align 8, !tbaa !105 ; 2 uses
   %.not217375 = icmp eq ptr %.0168374, null
@@ -1585,6 +1590,7 @@ bb.cg:                                            ; preds = %bb.cf, %.lr.ph.i285
   br i1 %.not217, label %.loopexit366, label %.lr.ph
 
 uriContainsUglyPercentEncodingA.exit279.thread354: ; preds = %bb.bx, %bb.bm, %uriDropLeadingZerosInplaceA.exit.thread, %bb.bo, %uriContainsUglyPercentEncodingA.exit279
+  %10 = phi i32 [ %i.si, %bb.bx ], [ %6, %bb.bm ], [ %6, %uriDropLeadingZerosInplaceA.exit.thread ], [ %6, %bb.bo ], [ %8, %uriContainsUglyPercentEncodingA.exit279 ] ; 5 uses
   %i.tx = and i32 %1, 8
   %.not210 = icmp eq i32 %i.tx, 0
   br i1 %.not210, label %.thread362, label %bb.ch
@@ -1635,8 +1641,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.ch
   br i1 %.not214, label %bb.ck, label %bb.cl
 
 bb.ck:                                            ; preds = %.lr.ph382
-  %5 = load i32, ptr %i.a, align 4, !tbaa !40
-  tail call void @uriPreventLeakageA(ptr noundef %0, i32 noundef %5, ptr noundef %3)
+  tail call void @uriPreventLeakageA(ptr noundef %0, i32 noundef %10, ptr noundef %3)
   br label %bb.dz
 
 bb.cl:                                            ; preds = %.lr.ph382
@@ -1646,16 +1651,15 @@ bb.cl:                                            ; preds = %.lr.ph382
   br i1 %.not213, label %._crit_edge, label %.lr.ph382, !llvm.loop !92
 
 ._crit_edge:                                      ; preds = %bb.cl, %.preheader
-  %6 = load i32, ptr %i.a, align 4, !tbaa !40
-  %i.uq = or i32 %6, 8
+  %i.uq = or i32 %10, 8                           ; 2 uses
   store i32 %i.uq, ptr %i.a, align 4, !tbaa !40
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph379, %.preheader364, %._crit_edge
+  %11 = phi i32 [ %i.uq, %._crit_edge ], [ %10, %.preheader364 ], [ %10, %.lr.ph379 ] ; 3 uses
   %i.ur = load i32, ptr %i.ug, align 4, !tbaa !42
   %i.us = icmp eq i32 %i.ur, 1
-  %7 = load i32, ptr %i.a, align 4                ; 2 uses
-  %i.ut = and i32 %7, 8
+  %i.ut = and i32 %11, 8
   %i.uu = icmp ne i32 %i.ut, 0
   %i.uv = select i1 %i.us, i1 true, i1 %i.uu
   %i.uw = zext i1 %i.uv to i32
@@ -1664,7 +1668,7 @@ bb.cl:                                            ; preds = %.lr.ph382
   br i1 %.not216, label %bb.cm, label %.critedge
 
 bb.cm:                                            ; preds = %.loopexit
-  tail call void @uriPreventLeakageA(ptr noundef nonnull %0, i32 noundef %7, ptr noundef %3)
+  tail call void @uriPreventLeakageA(ptr noundef nonnull %0, i32 noundef %11, ptr noundef %3)
   br label %bb.dz
 
 .critedge:                                        ; preds = %.loopexit
@@ -1672,6 +1676,7 @@ bb.cm:                                            ; preds = %.loopexit
   br label %.loopexit366
 
 .loopexit366:                                     ; preds = %.loopexit365, %.critedge
+  %12 = phi i32 [ %11, %.critedge ], [ %9, %.loopexit365 ]
   br i1 %.not231, label %.thread362, label %.loopexit366.thread
 
 .loopexit366.thread:                              ; preds = %uriContainsUglyPercentEncodingA.exit279.thread356, %.thread363, %.loopexit366
@@ -1797,6 +1802,7 @@ uriFixPercentEncodingInplaceA.exit340.thread:     ; preds = %bb.cw
   br label %bb.dz
 
 .thread362:                                       ; preds = %uriContainsUglyPercentEncodingA.exit279.thread354, %.loopexit366
+  %13 = phi i32 [ %10, %uriContainsUglyPercentEncodingA.exit279.thread354 ], [ %12, %.loopexit366 ] ; 6 uses
   %i.xe = and i32 %1, 16
   %.not219 = icmp eq i32 %i.xe, 0
   br i1 %.not219, label %uriFixPercentEncodingInplaceA.exit324, label %bb.cx
@@ -1978,19 +1984,19 @@ uriFixPercentEncodingEngineA.exit.i312:           ; preds = %.lr.ph49.i.i314, %m
 bb.dg:                                            ; preds = %bb.cy
   %i.zl = tail call fastcc i32 @uriFixPercentEncodingMallocA(ptr noundef %i.xf, ptr noundef %i.xj, ptr noundef %3)
   %.not222 = icmp eq i32 %i.zl, 0
-  %8 = load i32, ptr %i.a, align 4, !tbaa !40     ; 2 uses
   br i1 %.not222, label %bb.dh, label %bb.di
 
 bb.dh:                                            ; preds = %bb.dg
-  tail call void @uriPreventLeakageA(ptr noundef nonnull %0, i32 noundef %8, ptr noundef %3)
+  tail call void @uriPreventLeakageA(ptr noundef nonnull %0, i32 noundef %13, ptr noundef %3)
   br label %bb.dz
 
 bb.di:                                            ; preds = %bb.dg
-  %i.zm = or i32 %8, 16
+  %i.zm = or i32 %13, 16                          ; 2 uses
   store i32 %i.zm, ptr %i.a, align 4, !tbaa !40
   br label %uriFixPercentEncodingInplaceA.exit324
 
 uriFixPercentEncodingInplaceA.exit324:            ; preds = %uriFixPercentEncodingEngineA.exit.i312, %bb.cz, %bb.di, %bb.cx, %.thread362
+  %14 = phi i32 [ %13, %uriFixPercentEncodingEngineA.exit.i312 ], [ %13, %bb.cz ], [ %i.zm, %bb.di ], [ %13, %bb.cx ], [ %13, %.thread362 ] ; 2 uses
   %i.zn = and i32 %1, 32
   %.not223 = icmp eq i32 %i.zn, 0
   br i1 %.not223, label %uriFixPercentEncodingInplaceA.exit340, label %bb.dj
@@ -2172,15 +2178,14 @@ uriFixPercentEncodingEngineA.exit.i328:           ; preds = %.lr.ph49.i.i330, %m
 bb.ds:                                            ; preds = %bb.dk
   %i.abu = tail call fastcc i32 @uriFixPercentEncodingMallocA(ptr noundef %i.zo, ptr noundef %i.zs, ptr noundef %3)
   %.not226 = icmp eq i32 %i.abu, 0
-  %9 = load i32, ptr %i.a, align 4, !tbaa !40     ; 2 uses
   br i1 %.not226, label %bb.dt, label %bb.du
 
 bb.dt:                                            ; preds = %bb.ds
-  tail call void @uriPreventLeakageA(ptr noundef nonnull %0, i32 noundef %9, ptr noundef %3)
+  tail call void @uriPreventLeakageA(ptr noundef nonnull %0, i32 noundef %14, ptr noundef %3)
   br label %bb.dz
 
 bb.du:                                            ; preds = %bb.ds
-  %i.abv = or i32 %9, 32
+  %i.abv = or i32 %14, 32
   store i32 %i.abv, ptr %i.a, align 4, !tbaa !40
   br label %uriFixPercentEncodingInplaceA.exit340
 

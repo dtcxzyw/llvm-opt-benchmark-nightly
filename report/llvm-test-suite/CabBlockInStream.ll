@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i32 0, ptr %i.bl, align 8, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   store i32 0, ptr %4, align 4, !tbaa !23
-  %i.bm = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 9 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 7 uses
   store i32 0, ptr %i.bm, align 4, !tbaa !24
   %i.bn = load i32, ptr %1, align 4, !tbaa !8     ; 4 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 49
@@ -427,9 +427,8 @@ middle.block:                                     ; preds = %vector.body
   store i8 %i.et, ptr %i.cv, align 4, !tbaa !25
   %i.eu = add nsw i32 %.promoted, 1
   %i.ev = and i32 %i.eu, 3                        ; 2 uses
-  store i32 %i.ev, ptr %i.bm, align 4, !tbaa !24
   %.not35.i = icmp eq i32 %i.es, 1
-  br i1 %.not35.i, label %.loopexit, label %bb.p
+  br i1 %.not35.i, label %.loopexit.loopexit, label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph59.i
   %i.ew = getelementptr inbounds nuw i8, ptr %.128.lcssa.i, i64 1
@@ -439,9 +438,8 @@ bb.p:                                             ; preds = %.lr.ph59.i
   store i8 %i.ex, ptr %i.ez, align 1, !tbaa !25
   %i.fa = and i32 %.promoted, 3
   %i.fb = xor i32 %i.fa, 2                        ; 3 uses
-  store i32 %i.fb, ptr %i.bm, align 4, !tbaa !24
   %.not35.i.1 = icmp eq i32 %i.es, 2
-  br i1 %.not35.i.1, label %.loopexit, label %bb.q
+  br i1 %.not35.i.1, label %.loopexit.loopexit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.fc = getelementptr inbounds nuw i8, ptr %.128.lcssa.i, i64 2
@@ -451,10 +449,14 @@ bb.q:                                             ; preds = %bb.p
   store i8 %i.fd, ptr %i.ff, align 1, !tbaa !25
   %i.fg = add nuw nsw i32 %i.fb, 1
   %i.fh = and i32 %i.fg, 3
-  store i32 %i.fh, ptr %i.bm, align 4, !tbaa !24
+  br label %.loopexit.loopexit
+
+.loopexit.loopexit:                               ; preds = %bb.q, %bb.p, %.lr.ph59.i
+  %.lcssa123 = phi i32 [ %i.ev, %.lr.ph59.i ], [ %i.fb, %bb.p ], [ %i.fh, %bb.q ]
+  store i32 %.lcssa123, ptr %i.bm, align 4, !tbaa !24
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph59.i, %bb.p, %bb.q, %._crit_edge.i, %._crit_edge.thread.i
+.loopexit:                                        ; preds = %.loopexit.loopexit, %._crit_edge.i, %._crit_edge.thread.i
   %i.fi = add i32 %i.co, %i.cq                    ; 2 uses
   store i32 %i.fi, ptr %i.cd, align 4, !tbaa !30
   %.not58 = icmp eq i64 %i.cp, %i.ch

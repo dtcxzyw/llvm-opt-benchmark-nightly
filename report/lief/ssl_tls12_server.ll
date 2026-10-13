@@ -202,7 +202,7 @@ mbedtls_ssl_ciphersuite_uses_ecdhe.exit.i.i:      ; preds = %bb.ep, %bb.ep, %bb.
 .preheader153.i.i:                                ; preds = %mbedtls_ssl_ciphersuite_uses_ecdhe.exit.i.i
   %i.wi = load i16, ptr %i.wf, align 2, !tbaa !63 ; 2 uses
   %.not109158.i.i = icmp eq i16 %i.wi, 0
-  %.pr.pre.i.i = load i16, ptr %i.wc, align 2, !tbaa !63 ; 2 uses
+  %.pr.pre.i.i = load i16, ptr %i.wc, align 2, !tbaa !63 ; 3 uses
   %i.wj = icmp eq i16 %.pr.pre.i.i, 0             ; 2 uses
   br i1 %.not109158.i.i, label %._crit_edge160.i.i, label %.preheader.lr.ph.i.i
 
@@ -216,9 +216,9 @@ mbedtls_ssl_ciphersuite_uses_ecdhe.exit.i.i:      ; preds = %bb.ep, %bb.ep, %bb.
 
 bb.eq:                                            ; preds = %bb.er, %.preheader.i.i
   %i.wl = phi i16 [ %.pr.pre.i.i, %.preheader.i.i ], [ %i.wo, %bb.er ]
-  %.195157.i.i = phi ptr [ %i.wc, %.preheader.i.i ], [ %i.wn, %bb.er ] ; 2 uses
+  %.195157.i.i = phi ptr [ %i.wc, %.preheader.i.i ], [ %i.wn, %bb.er ] ; 3 uses
   %i.wm = icmp eq i16 %i.wl, %i.wk
-  br i1 %i.wm, label %.thread.i.i, label %bb.er
+  br i1 %i.wm, label %.thread.i.loopexit.i, label %bb.er
 
 bb.er:                                            ; preds = %bb.eq
   %i.wn = getelementptr inbounds nuw i8, ptr %.195157.i.i, i64 2 ; 2 uses
@@ -235,13 +235,17 @@ bb.er:                                            ; preds = %bb.eq
 ._crit_edge160.i.i:                               ; preds = %.preheader153.i.i
   br i1 %i.wj, label %.thread127.i.i, label %.thread.i.i
 
-.thread.i.i:                                      ; preds = %bb.eq, %._crit_edge160.i.i
-  %.296126.i.i = phi ptr [ %i.wc, %._crit_edge160.i.i ], [ %.195157.i.i, %bb.eq ] ; 2 uses
+.thread.i.loopexit.i:                             ; preds = %bb.eq
+  %.pre.i27 = load i16, ptr %.195157.i.i, align 2, !tbaa !63
+  br label %.thread.i.i
+
+.thread.i.i:                                      ; preds = %.thread.i.loopexit.i, %._crit_edge160.i.i
+  %3 = phi i16 [ %.pr.pre.i.i, %._crit_edge160.i.i ], [ %.pre.i27, %.thread.i.loopexit.i ]
+  %.296126.i.i = phi ptr [ %i.wc, %._crit_edge160.i.i ], [ %.195157.i.i, %.thread.i.loopexit.i ]
   %i.wr = load ptr, ptr %i.vn, align 8, !tbaa !121
   %i.ws = load i64, ptr %i.vt, align 8, !tbaa !123
   store i16 0, ptr %i.h, align 2, !tbaa !63
   store i64 0, ptr %i.i, align 8, !tbaa !129
-  %3 = load i16, ptr %.296126.i.i, align 2, !tbaa !63
   %i.wt = call i32 @mbedtls_ssl_get_psa_curve_info_from_tls_id(i16 noundef zeroext %3, ptr noundef nonnull %i.h, ptr noundef nonnull %i.i) #10
   %i.wu = icmp eq i32 %i.wt, -134
   br i1 %i.wu, label %.thread127.i.i, label %bb.es

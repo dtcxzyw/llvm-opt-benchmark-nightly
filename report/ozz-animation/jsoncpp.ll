@@ -204,7 +204,7 @@ define dso_local noundef zeroext i1 @_ZN4Json6Reader12decodeStringERNS0_5TokenER
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
-  %i.c = alloca ptr, align 8                      ; 7 uses
+  %i.c = alloca ptr, align 8                      ; 6 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.d = alloca i32, align 4                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -235,8 +235,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %.critedge53
   %i.u = phi ptr [ %i.n, %.lr.ph ], [ %i.gc, %.critedge53 ] ; 3 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1 ; 5 uses
-  store ptr %i.v, ptr %i.c, align 8, !tbaa !117
+  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1 ; 4 uses
   %i.w = load i8, ptr %i.u, align 1, !tbaa !50    ; 2 uses
   switch i8 %i.w, label %bb.ae [
     i8 34, label %.critedge53.thread117
@@ -639,7 +638,7 @@ define dso_local noundef zeroext i1 @_ZN4Json9OurReader12decodeStringERNS0_5Toke
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
-  %i.c = alloca ptr, align 8                      ; 7 uses
+  %i.c = alloca ptr, align 8                      ; 6 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.d = alloca i32, align 4                      ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -670,8 +669,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %.critedge53
   %i.u = phi ptr [ %i.n, %.lr.ph ], [ %i.gc, %.critedge53 ] ; 3 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1 ; 5 uses
-  store ptr %i.v, ptr %i.c, align 8, !tbaa !117
+  %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 1 ; 4 uses
   %i.w = load i8, ptr %i.u, align 1, !tbaa !50    ; 2 uses
   switch i8 %i.w, label %bb.ae [
     i8 34, label %.critedge53.thread117

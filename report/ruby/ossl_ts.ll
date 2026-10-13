@@ -204,20 +204,24 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load i64, ptr %i.d, align 8, !tbaa !14
   %.not83 = icmp eq i32 %0, 2
-  br i1 %.not83, label %rb_scan_args_set.exit, label %bb.b
+  br i1 %.not83, label %3, label %bb.b
 
 bb.b:                                             ; preds = %.preheader58
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = load i64, ptr %i.f, align 8, !tbaa !14
   %i.h = icmp eq i32 %0, 3
-  br i1 %i.h, label %rb_scan_args_set.exit, label %bb.c
+  br label %3
 
-bb.c:                                             ; preds = %bb.b, %bb.a
+3:                                                ; preds = %.preheader58, %bb.b
+  %4 = phi i64 [ %i.g, %bb.b ], [ 4, %.preheader58 ] ; 2 uses
+  %.185.i.lcssa = phi i1 [ %i.h, %bb.b ], [ true, %.preheader58 ]
+  br i1 %.185.i.lcssa, label %rb_scan_args_set.exit, label %bb.c
+
+bb.c:                                             ; preds = %3, %bb.a
   tail call void @rb_error_arity(i32 noundef %0, i32 noundef 2, i32 noundef 3) #8
   unreachable
 
-rb_scan_args_set.exit:                            ; preds = %.preheader58, %bb.b
-  %.0 = phi i64 [ %i.g, %bb.b ], [ 4, %.preheader58 ] ; 2 uses
+rb_scan_args_set.exit:                            ; preds = %3
   %i.i = icmp eq i64 %2, 0
   %i.j = and i64 %2, 7
   %i.k = icmp ne i64 %i.j, 0
@@ -343,11 +347,11 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 bb.o:                                             ; preds = %bb.m
-  %i.bb = icmp eq i64 %.0, 4
+  %i.bb = icmp eq i64 %4, 4
   br i1 %i.bb, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bc = call ptr @ossl_protect_x509_ary2sk(i64 noundef %.0, ptr noundef nonnull %i.a) #7
+  %i.bc = call ptr @ossl_protect_x509_ary2sk(i64 noundef %4, ptr noundef nonnull %i.a) #7
   %i.bd = load i32, ptr %i.a, align 4, !tbaa !12
   %.not41 = icmp eq i32 %i.bd, 0
   br i1 %.not41, label %bb.t, label %bb.q

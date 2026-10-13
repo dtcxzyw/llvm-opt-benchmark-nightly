@@ -204,12 +204,16 @@ _ZNSt6vectorIP9PlayerSAOSaIS1_EE7reserveEm.exit:  ; preds = %.noexc199, %bb.i
   br i1 %.not451479, label %._crit_edge.a, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIP9PlayerSAOSaIS1_EE7reserveEm.exit
-  %i.cq = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
+  %i.cq = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 3 uses
   br label %bb.q
 
-._crit_edge.a:                                    ; preds = %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE7reserveEm.exit
-  %i.cr = phi ptr [ %.promoted475, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE7reserveEm.exit ], [ %i.eo, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit ] ; 7 uses
-  %i.cs = phi ptr [ %.promoted, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE7reserveEm.exit ], [ %i.ep, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit ] ; 5 uses
+._crit_edge:                                      ; preds = %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit
+  store ptr %i.en, ptr %i.cq, align 8
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE7reserveEm.exit
+  %i.cr = phi ptr [ %i.eo, %._crit_edge ], [ %.promoted475, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE7reserveEm.exit ] ; 7 uses
+  %i.cs = phi ptr [ %i.ep, %._crit_edge ], [ %.promoted, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE7reserveEm.exit ] ; 5 uses
   store ptr %i.cs, ptr %i.ck, align 8
   store ptr %i.cr, ptr %14, align 8
   %.b131 = load i1, ptr @_ZGVZN17ServerEnvironment4stepEfE19active_object_range, align 1
@@ -297,7 +301,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit208: ; preds = %bb
   br label %_ZNSt6vectorIP9PlayerSAOSaIS1_EED2Ev.exit232
 
 bb.q:                                             ; preds = %.lr.ph, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit
-  %i.do = phi ptr [ %.promoted475, %.lr.ph ], [ %i.en, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit ] ; 7 uses
+  %i.do = phi ptr [ %.promoted475, %.lr.ph ], [ %i.en, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit ] ; 9 uses
   %.sroa.0443.0480 = phi ptr [ %i.cp, %.lr.ph ], [ %i.eq, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit ] ; 2 uses
   %i.dp = phi ptr [ %.promoted, %.lr.ph ], [ %i.ep, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit ] ; 5 uses
   %i.dq = phi ptr [ %.promoted475, %.lr.ph ], [ %i.eo, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit ] ; 10 uses
@@ -315,8 +319,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   store ptr %i.dw, ptr %i.do, align 8, !tbaa !66
-  %i.dx = getelementptr inbounds nuw i8, ptr %i.do, i64 8 ; 2 uses
-  store ptr %i.dx, ptr %i.cq, align 8, !tbaa !796
+  %i.dx = getelementptr inbounds nuw i8, ptr %i.do, i64 8
   br label %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit
 
 bb.t:                                             ; preds = %bb.r
@@ -327,6 +330,7 @@ bb.t:                                             ; preds = %bb.r
   br i1 %i.eb, label %bb.u, label %_ZNKSt6vectorIP9PlayerSAOSaIS1_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.u:                                             ; preds = %bb.t
+  store ptr %i.do, ptr %i.cq, align 8
   store ptr %i.dp, ptr %i.ck, align 8
   store ptr %i.dq, ptr %14, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.150) #36
@@ -359,7 +363,7 @@ bb.v:                                             ; preds = %.noexc210
   br label %_ZNSt6vectorIP9PlayerSAOSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
 
 _ZNSt6vectorIP9PlayerSAOSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i: ; preds = %bb.v, %.noexc210
-  %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 8 ; 2 uses
+  %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
   %.not.i17.i.i = icmp eq ptr %i.dq, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIP9PlayerSAOSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, label %bb.w
 
@@ -368,21 +372,21 @@ bb.w:                                             ; preds = %_ZNSt6vectorIP9Play
   br label %_ZNSt6vectorIP9PlayerSAOSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
 
 _ZNSt6vectorIP9PlayerSAOSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.w, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
-  store ptr %i.el, ptr %i.cq, align 8, !tbaa !796
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %i.eg
   br label %_ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit
 
 _ZNSt6vectorIP9PlayerSAOSaIS1_EE9push_backERKS1_.exit: ; preds = %bb.s, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.q
-  %i.en = phi ptr [ %i.dx, %bb.s ], [ %i.el, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.do, %bb.q ]
+  %i.en = phi ptr [ %i.dx, %bb.s ], [ %i.el, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.do, %bb.q ] ; 2 uses
   %i.eo = phi ptr [ %i.dq, %bb.s ], [ %i.ei, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.dq, %bb.q ] ; 2 uses
   %i.ep = phi ptr [ %i.dp, %bb.s ], [ %i.em, %_ZNSt6vectorIP9PlayerSAOSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.dp, %bb.q ] ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.sroa.0443.0480, i64 8 ; 2 uses
   %.not451 = icmp eq ptr %i.eq, %i.co
-  br i1 %.not451, label %._crit_edge.a, label %bb.q
+  br i1 %.not451, label %._crit_edge, label %bb.q
 
 .loopexit464:                                     ; preds = %_ZNKSt6vectorIP9PlayerSAOSaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit466 = landingpad { ptr, i32 }
           cleanup
+  store ptr %i.do, ptr %i.cq, align 8
   store ptr %i.dp, ptr %i.ck, align 8
   store ptr %i.dq, ptr %14, align 8
   br label %bb.bs

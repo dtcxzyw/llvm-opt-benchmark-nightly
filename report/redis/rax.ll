@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %raxGetData.exit, %b
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !20
   %i.ah = add i64 %i.ag, -1
   store i64 %i.ah, ptr %i.af, align 8, !tbaa !20
-  %i.ai = load i32, ptr %i.k, align 4
+  %i.ai = load i32, ptr %i.k, align 4             ; 2 uses
   %i.aj = lshr i32 %i.ai, 3
   switch i32 %i.aj, label %.critedge [
     i32 0, label %.preheader210
@@ -313,12 +313,13 @@ raxFindParentLink.exit:                           ; preds = %bb.o, %bb.m, %raxSt
   br label %bb.p
 
 bb.p:                                             ; preds = %raxFindParentLink.exit, %.loopexit
-  %i.bu = load i32, ptr %i.bd, align 4
+  %i.bu = load i32, ptr %i.bd, align 4            ; 2 uses
   %i.bv = and i32 %i.bu, -7
   %or.cond162 = icmp eq i32 %i.bv, 8
   br i1 %or.cond162, label %bb.q, label %.critedge
 
 bb.q:                                             ; preds = %bb.p, %bb.h
+  %5 = phi i32 [ %i.ai, %bb.h ], [ %i.bu, %bb.p ]
   %.promoted222 = phi ptr [ %i.k, %bb.h ], [ %i.bd, %bb.p ] ; 3 uses
   %i.bw = load i32, ptr %i.i, align 8
   %.not204 = icmp eq i32 %i.bw, 0
@@ -336,11 +337,11 @@ raxStackPop.exit178.lr.ph:                        ; preds = %.preheader
   %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %i.bz
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !29 ; 2 uses
   %.not119299 = icmp eq ptr %i.cb, null
-  br i1 %.not119299, label %raxStackPop.exit178.thread, label %.lr.ph300
+  br i1 %.not119299, label %raxStackPop.exit178.thread.loopexit, label %.lr.ph300
 
 bb.r:                                             ; preds = %bb.s
   %i.cc = icmp eq i64 %i.ch, 0
-  br i1 %i.cc, label %raxStackPop.exit178.thread, label %raxStackPop.exit178
+  br i1 %i.cc, label %raxStackPop.exit178.thread.loopexit, label %raxStackPop.exit178
 
 raxStackPop.exit178:                              ; preds = %bb.r
   %i.cd = add i64 %i.ch, -1                       ; 3 uses
@@ -348,7 +349,7 @@ raxStackPop.exit178:                              ; preds = %bb.r
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %i.cd
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !29 ; 2 uses
   %.not119 = icmp eq ptr %i.cf, null
-  br i1 %.not119, label %raxStackPop.exit178.thread, label %.lr.ph300
+  br i1 %.not119, label %raxStackPop.exit178.thread.loopexit, label %.lr.ph300
 
 .lr.ph300:                                        ; preds = %raxStackPop.exit178.lr.ph, %raxStackPop.exit178
   %i.cg = phi ptr [ %i.cf, %raxStackPop.exit178 ], [ %i.cb, %raxStackPop.exit178.lr.ph ] ; 6 uses
@@ -357,7 +358,7 @@ raxStackPop.exit178:                              ; preds = %bb.r
   %i.cj = load i32, ptr %i.cg, align 4            ; 3 uses
   %i.ck = and i32 %i.cj, 1
   %.not120 = icmp eq i32 %i.ck, 0
-  br i1 %.not120, label %bb.s, label %raxStackPop.exit178.thread
+  br i1 %.not120, label %bb.s, label %raxStackPop.exit178.thread.loopexit
 
 bb.s:                                             ; preds = %.lr.ph300
   %i.cl = and i32 %i.cj, 4
@@ -365,15 +366,22 @@ bb.s:                                             ; preds = %.lr.ph300
   %.mask123 = and i32 %i.cj, -8
   %.not122 = icmp eq i32 %.mask123, 8
   %or.cond163 = or i1 %.not121, %.not122
-  br i1 %or.cond163, label %bb.r, label %raxStackPop.exit178.thread
+  br i1 %or.cond163, label %bb.r, label %raxStackPop.exit178.thread.loopexit
 
-raxStackPop.exit178.thread:                       ; preds = %bb.r, %bb.s, %raxStackPop.exit178, %.lr.ph300, %raxStackPop.exit178.lr.ph, %.preheader
-  %.lcssa = phi ptr [ %.promoted222, %.preheader ], [ %.promoted222, %raxStackPop.exit178.lr.ph ], [ %i.ci, %.lr.ph300 ], [ %i.cg, %bb.r ], [ %i.ci, %bb.s ], [ %i.cg, %raxStackPop.exit178 ] ; 8 uses
-  %.not119195 = phi i1 [ true, %.preheader ], [ true, %raxStackPop.exit178.lr.ph ], [ false, %.lr.ph300 ], [ true, %bb.r ], [ false, %bb.s ], [ true, %raxStackPop.exit178 ]
-  %.0.i177194 = phi ptr [ null, %.preheader ], [ null, %raxStackPop.exit178.lr.ph ], [ %i.cg, %.lr.ph300 ], [ null, %bb.r ], [ %i.cg, %bb.s ], [ null, %raxStackPop.exit178 ] ; 2 uses
+raxStackPop.exit178.thread.loopexit:              ; preds = %.lr.ph300, %raxStackPop.exit178, %bb.s, %bb.r, %raxStackPop.exit178.lr.ph
+  %.lcssa.ph = phi ptr [ %.promoted222, %raxStackPop.exit178.lr.ph ], [ %i.ci, %.lr.ph300 ], [ %i.cg, %bb.r ], [ %i.ci, %bb.s ], [ %i.cg, %raxStackPop.exit178 ] ; 2 uses
+  %.not119195.ph = phi i1 [ true, %raxStackPop.exit178.lr.ph ], [ false, %.lr.ph300 ], [ true, %bb.r ], [ false, %bb.s ], [ true, %raxStackPop.exit178 ]
+  %.0.i177194.ph = phi ptr [ null, %raxStackPop.exit178.lr.ph ], [ %i.cg, %.lr.ph300 ], [ null, %bb.r ], [ %i.cg, %bb.s ], [ null, %raxStackPop.exit178 ]
+  %.pre257 = load i32, ptr %.lcssa.ph, align 4
+  br label %raxStackPop.exit178.thread
+
+raxStackPop.exit178.thread:                       ; preds = %raxStackPop.exit178.thread.loopexit, %.preheader
+  %6 = phi i32 [ %5, %.preheader ], [ %.pre257, %raxStackPop.exit178.thread.loopexit ] ; 2 uses
+  %.lcssa = phi ptr [ %.promoted222, %.preheader ], [ %.lcssa.ph, %raxStackPop.exit178.thread.loopexit ] ; 7 uses
+  %.not119195 = phi i1 [ true, %.preheader ], [ %.not119195.ph, %raxStackPop.exit178.thread.loopexit ]
+  %.0.i177194 = phi ptr [ null, %.preheader ], [ %.0.i177194.ph, %raxStackPop.exit178.thread.loopexit ] ; 2 uses
   store ptr %.lcssa, ptr %i.c, align 8
-  %5 = load i32, ptr %.lcssa, align 4             ; 2 uses
-  %i.cm = lshr i32 %5, 3                          ; 3 uses
+  %i.cm = lshr i32 %6, 3                          ; 3 uses
   %.not124237 = icmp eq i32 %i.cm, 0
   br i1 %.not124237, label %.critedge, label %.lr.ph240.preheader
 
@@ -383,7 +391,7 @@ raxStackPop.exit178.thread:                       ; preds = %bb.r, %bb.s, %raxSt
 
 .lr.ph240:                                        ; preds = %.lr.ph240.preheader, %bb.v
   %i.co = phi i32 [ %i.dn, %bb.v ], [ %i.cm, %.lr.ph240.preheader ] ; 2 uses
-  %i.cp = phi i32 [ %i.dk, %bb.v ], [ %5, %.lr.ph240.preheader ] ; 4 uses
+  %i.cp = phi i32 [ %i.dk, %bb.v ], [ %6, %.lr.ph240.preheader ] ; 4 uses
   %i.cq = phi ptr [ %.cast, %bb.v ], [ %.lcssa, %.lr.ph240.preheader ]
   %.081239 = phi i32 [ %i.dr, %bb.v ], [ 1, %.lr.ph240.preheader ] ; 2 uses
   %.084238 = phi i64 [ %i.dp, %bb.v ], [ %i.cn, %.lr.ph240.preheader ] ; 2 uses

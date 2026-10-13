@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   store i32 0, ptr %10, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 2 uses
   store i8 0, ptr %i.t, align 4
-  %i.u = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 4 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 3 uses
   store i32 0, ptr %i.u, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %10, i64 12 ; 2 uses
   store i32 0, ptr %i.v, align 4
@@ -214,8 +214,8 @@ bb.c:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
   store ptr %i.x, ptr %i.y, align 8
   %i.z = load ptr, ptr %i.f, align 8
-  %i.aa = tail call ptr @wmem_list_new(ptr noundef %i.z)
-  %i.ab = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 3 uses
+  %i.aa = tail call ptr @wmem_list_new(ptr noundef %i.z) ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 2 uses
   store ptr %i.aa, ptr %i.ab, align 8
   %i.ac = load ptr, ptr %i.f, align 8
   %i.ad = tail call ptr @wmem_list_new(ptr noundef %i.ac)
@@ -400,10 +400,11 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %.lr.ph, %bb.aa
   %i.dk = phi i32 [ %i.di, %.lr.ph ], [ %i.dz, %bb.aa ] ; 3 uses
   %.0236283 = phi ptr [ @.str.543, %.lr.ph ], [ %.1237, %bb.aa ] ; 2 uses
-  %.3282.a = phi i32 [ %i.cw, %.lr.ph ], [ %i.dk, %bb.aa ]
+  %.3282 = phi i32 [ %i.cw, %.lr.ph ], [ %i.dk, %bb.aa ]
+  %.3282.a = phi i32 [ 0, %.lr.ph ], [ %11, %bb.aa ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #29
   %i.dl = load i32, ptr %i.dj, align 4
-  %i.dm = call ptr @proto_tree_add_item_ret_uint(ptr noundef %i.dh, i32 noundef %i.dl, ptr noundef %i.r, i32 noundef %.3282.a, i32 noundef 2, i32 noundef 0, ptr noundef nonnull %i.e) ; 0 uses
+  %i.dm = call ptr @proto_tree_add_item_ret_uint(ptr noundef %i.dh, i32 noundef %i.dl, ptr noundef %i.r, i32 noundef %.3282, i32 noundef 2, i32 noundef 0, ptr noundef nonnull %i.e) ; 0 uses
   %i.dn = load i32, ptr %i.e, align 4             ; 4 uses
   %i.do = and i32 %i.dn, 3855
   %i.dp = icmp eq i32 %i.do, 2570
@@ -418,17 +419,15 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y, %bb.x
   call void (ptr, ptr, ...) @wmem_strbuf_append_printf(ptr noundef %i.h, ptr noundef nonnull @.str.768, ptr noundef %.0236283, i32 noundef %i.dn)
-  %11 = load i32, ptr %i.u, align 8
-  %i.du = add i32 %11, 1
-  store i32 %i.du, ptr %i.u, align 8
-  %12 = load ptr, ptr %i.ab, align 8
+  %i.du = add i32 %.3282.a, 1
   %i.dv = load i32, ptr %i.e, align 4
   %i.dw = zext i32 %i.dv to i64
   %i.dx = inttoptr i64 %i.dw to ptr
-  %i.dy = call ptr @wmem_list_insert_sorted(ptr noundef %12, ptr noundef %i.dx, ptr noundef nonnull @wmem_compare_uint) ; 0 uses
+  %i.dy = call ptr @wmem_list_insert_sorted(ptr noundef %i.aa, ptr noundef %i.dx, ptr noundef nonnull @wmem_compare_uint) ; 0 uses
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
+  %11 = phi i32 [ %.3282.a, %bb.y ], [ %i.du, %bb.z ] ; 2 uses
   %.1237 = phi ptr [ %.0236283, %bb.y ], [ @.str.727, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #29
   %i.dz = add i32 %i.dk, 2                        ; 2 uses
@@ -436,7 +435,9 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %.not258, label %._crit_edge, label %bb.x, !llvm.loop !130
 
 ._crit_edge:                                      ; preds = %bb.aa, %bb.w
+  %.lcssa = phi i32 [ 0, %bb.w ], [ %11, %bb.aa ]
   %.3.lcssa = phi i32 [ %i.cw, %bb.w ], [ %i.dk, %bb.aa ] ; 6 uses
+  store i32 %.lcssa, ptr %i.u, align 8
   call void @wmem_strbuf_append_c(ptr noundef %i.h, i8 noundef signext 44)
   %i.ea = icmp ult i32 %.3.lcssa, %i.cy
   br i1 %i.ea, label %bb.ab, label %bb.ac

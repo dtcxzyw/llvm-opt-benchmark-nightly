@@ -204,7 +204,7 @@ bb.ee:                                            ; preds = %bb.ec
   br label %.body784
 
 bb.ef:                                            ; preds = %bb.ed, %bb.eb, %bb.ea
-  %i.ps = load ptr, ptr @_ZZN4cvc58internal4expr9NodeValue4nullEvE6s_null, align 8, !tbaa !51 ; 6 uses
+  %i.ps = load ptr, ptr @_ZZN4cvc58internal4expr9NodeValue4nullEvE6s_null, align 8, !tbaa !51 ; 7 uses
   store ptr %i.ps, ptr %131, align 8, !tbaa !52
   call void @llvm.lifetime.start.p0(ptr nonnull %132) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %132, i8 0, i64 24, i1 false)
@@ -607,7 +607,7 @@ bb.fw:                                            ; preds = %bb.fv
           to label %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit unwind label %bb.gw
 
 _ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit: ; preds = %bb.fv, %bb.fu, %_ZNK4cvc58internal4expr9NodeValue8iteratorINS0_12NodeTemplateILb1EEEEdeEv.exit807, %bb.fw
-  %i.wi = phi ptr [ %i.vc, %bb.fv ], [ %i.vc, %bb.fu ], [ %i.ps, %_ZNK4cvc58internal4expr9NodeValue8iteratorINS0_12NodeTemplateILb1EEEEdeEv.exit807 ], [ %i.vc, %bb.fw ] ; 7 uses
+  %i.wi = phi ptr [ %i.vc, %bb.fv ], [ %i.vc, %bb.fu ], [ %i.ps, %_ZNK4cvc58internal4expr9NodeValue8iteratorINS0_12NodeTemplateILb1EEEEdeEv.exit807 ], [ %i.vc, %bb.fw ] ; 8 uses
   %i.wj = load i64, ptr %i.vc, align 8            ; 3 uses
   %i.wk = and i64 %i.wj, 1152920405095219200
   %.not.i.i811 = icmp eq i64 %i.wk, 1152920405095219200
@@ -1010,6 +1010,7 @@ bb.ib:                                            ; preds = %bb.ia, %bb.hz
   br label %bb.mh
 
 .noexc.i841:                                      ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit825
+  %301 = phi ptr [ %i.wi, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit825 ], [ %i.ps, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit799 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %140) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %141) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %142) #26
@@ -1041,7 +1042,6 @@ bb.ic:                                            ; preds = %.noexc842
 
 bb.id:                                            ; preds = %bb.ic
   %i.adt = getelementptr inbounds nuw i8, ptr %141, i64 8 ; 3 uses
-  %301 = load ptr, ptr %131, align 8, !tbaa !52   ; 8 uses
   store ptr %301, ptr %i.adt, align 8, !tbaa !52
   %i.adu = load i64, ptr %301, align 8            ; 3 uses
   %i.adv = lshr i64 %i.adu, 40
@@ -1444,7 +1444,8 @@ bb.lz:                                            ; preds = %_ZSt8_DestroyIPN4cv
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit966: ; preds = %_ZSt8_DestroyIPN4cvc58internal12NodeTemplateILb1EEES3_EvT_S5_RSaIT0_E.exit.i963, %bb.lz
   call void @llvm.lifetime.end.p0(ptr nonnull %132) #26
-  %i.arj = load i64, ptr %301, align 8            ; 3 uses
+  %302 = load ptr, ptr %131, align 8, !tbaa !52   ; 3 uses
+  %i.arj = load i64, ptr %302, align 8            ; 3 uses
   %i.ark = and i64 %i.arj, 1152920405095219200
   %.not.i.i967 = icmp eq i64 %i.ark, 1152920405095219200
   br i1 %.not.i.i967, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit969, label %bb.ma, !prof !53
@@ -1454,12 +1455,12 @@ bb.ma:                                            ; preds = %_ZNSt6vectorIN4cvc5
   %i.arm = and i64 %i.arl, 1152920405095219200    ; 2 uses
   %i.arn = and i64 %i.arj, -1152920405095219201
   %i.aro = or disjoint i64 %i.arm, %i.arn
-  store i64 %i.aro, ptr %301, align 8
+  store i64 %i.aro, ptr %302, align 8
   %i.arp = icmp eq i64 %i.arm, 0
   br i1 %i.arp, label %bb.mb, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit969, !prof !53
 
 bb.mb:                                            ; preds = %bb.ma
-  invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %301)
+  invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %302)
           to label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit969 unwind label %bb.mc
 
 bb.mc:                                            ; preds = %bb.mb

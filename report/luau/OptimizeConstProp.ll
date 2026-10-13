@@ -205,7 +205,7 @@ _ZNSt6vectorIhSaIhEE7reserveEm.exit.i.i:          ; preds = %bb.aa
 
 .noexc35:                                         ; preds = %_ZNSt6vectorIhSaIhEE7reserveEm.exit.i.i
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 %i.dm ; 2 uses
-  %.pre.i.i = load i32, ptr %i.al, align 8, !tbaa !136
+  %.pre.i.i = load i32, ptr %i.al, align 8, !tbaa !136 ; 2 uses
   %.not49.i.i = icmp slt i32 %.pre.i.i, 0
   br i1 %.not49.i.i, label %._crit_edge.i.i, label %.lr.ph.i61.i
 
@@ -238,6 +238,7 @@ bb.ab:                                            ; preds = %._crit_edge.i.i
   br label %_ZN4Luau7CodeGenL18saveBlockExitStateERNS0_10IrFunctionERKNS0_7IrBlockERNS0_14ConstPropStateE.exit.i
 
 .lr.ph.i61.i:                                     ; preds = %.noexc35, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i
+  %2 = phi i32 [ %3, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i ], [ %.pre.i.i, %.noexc35 ]
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i ], [ 0, %.noexc35 ] ; 3 uses
   %.sroa.21.052.i.i = phi ptr [ %.sroa.21.3.i.i, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i ], [ %i.dp, %.noexc35 ] ; 3 uses
   %.sroa.13.051.i.i = phi ptr [ %.sroa.13.2.i.i, %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i ], [ %i.do, %.noexc35 ] ; 3 uses
@@ -290,16 +291,17 @@ bb.af:                                            ; preds = %.noexc17.i.i
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i: ; preds = %bb.af, %.noexc17.i.i
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.050.i.i, i64 noundef %i.ei) #26
   %i.es = getelementptr inbounds nuw i8, ptr %i.eo, i64 %i.en
+  %.pre69 = load i32, ptr %i.al, align 8, !tbaa !136
   br label %_ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i
 
 _ZNSt6vectorIhSaIhEE12emplace_backIJRhEEES3_DpOT_.exit.i.i: ; preds = %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i, %bb.ac
+  %3 = phi i32 [ %.pre69, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %2, %bb.ac ] ; 2 uses
   %.sroa.0.3.i.i = phi ptr [ %i.eo, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.0.050.i.i, %bb.ac ] ; 2 uses
   %.pn.i.i = phi ptr [ %i.ep, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.13.051.i.i, %bb.ac ]
   %.sroa.21.3.i.i = phi ptr [ %i.es, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i ], [ %.sroa.21.052.i.i, %bb.ac ] ; 2 uses
   %.sroa.13.2.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 1 ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
-  %2 = load i32, ptr %i.al, align 8, !tbaa !136
-  %i.et = sext i32 %2 to i64
+  %i.et = sext i32 %3 to i64
   %.not.not.i.i = icmp slt i64 %indvars.iv.i.i, %i.et
   br i1 %.not.not.i.i, label %.lr.ph.i61.i, label %._crit_edge.i.i, !llvm.loop !331
 

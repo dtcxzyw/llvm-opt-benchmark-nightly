@@ -205,7 +205,11 @@ bb.af:                                            ; preds = %bb.ah, %bb.ad
   %.sroa.0.0.i38 = phi i64 [ %.sroa.0.0.i37, %bb.ad ], [ %.sroa.16.0133381, %bb.ah ] ; 2 uses
   %i.ci = getelementptr inbounds nuw [72 x i8], ptr %.sroa.0.0.ph140, i64 %.sroa.0.0.i38 ; 2 uses
   %i.cj = icmp ult ptr %.sroa.5.0.i, %i.ci
-  br i1 %i.cj, label %.lr.ph.i40.a, label %._crit_edge.i
+  br i1 %i.cj, label %.lr.ph.i40, label %._crit_edge.i
+
+.lr.ph.i40:                                       ; preds = %bb.af
+  %.val12.i = load double, ptr %i.ch, align 8, !alias.scope !434, !noalias !435, !noundef !4 ; 2 uses
+  br label %.lr.ph.i40.a
 
 ._crit_edge.i:                                    ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42, %bb.af
   %.sroa.19.1.lcssa.i = phi ptr [ %.sroa.19.0.i, %bb.af ], [ %i.cm, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42 ]
@@ -214,14 +218,13 @@ bb.af:                                            ; preds = %bb.ah, %bb.ad
   %i.ck = icmp eq i64 %.sroa.0.0.i38, %.sroa.16.0133381
   br i1 %i.ck, label %bb.ai, label %bb.ah
 
-.lr.ph.i40.a:                                     ; preds = %bb.af, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42
-  %.sroa.5.114.i = phi ptr [ %i.cq, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42 ], [ %.sroa.5.0.i, %bb.af ] ; 3 uses
-  %.sroa.11.113.i = phi i64 [ %i.cp, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42 ], [ %.sroa.11.0.i, %bb.af ] ; 2 uses
-  %.sroa.19.112.i = phi ptr [ %i.cm, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42 ], [ %.sroa.19.0.i, %bb.af ]
+.lr.ph.i40.a:                                     ; preds = %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42, %.lr.ph.i40
+  %.sroa.5.114.i = phi ptr [ %.sroa.5.0.i, %.lr.ph.i40 ], [ %i.cq, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42 ] ; 3 uses
+  %.sroa.11.113.i = phi i64 [ %.sroa.11.0.i, %.lr.ph.i40 ], [ %i.cp, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42 ] ; 2 uses
+  %.sroa.19.112.i = phi ptr [ %.sroa.19.0.i, %.lr.ph.i40 ], [ %i.cm, %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42 ]
   %i.cl = getelementptr i8, ptr %.sroa.5.114.i, i64 32
-  %.val.i = load double, ptr %i.cl, align 8, !alias.scope !434, !noalias !435, !noundef !4 ; 2 uses
-  %.val12.i.a = load double, ptr %i.ch, align 8, !alias.scope !434, !noalias !435, !noundef !4 ; 2 uses
-  %brmerge.not.i.i41 = fcmp uno double %.val12.i.a, %.val.i
+  %.val12.i.a = load double, ptr %i.cl, align 8, !alias.scope !434, !noalias !435, !noundef !4 ; 2 uses
+  %brmerge.not.i.i41 = fcmp uno double %.val12.i, %.val12.i.a
   br i1 %brmerge.not.i.i41, label %bb.ag, label %_RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42, !prof !15
 
 bb.ag:                                            ; preds = %.lr.ph.i40.a
@@ -229,7 +232,7 @@ bb.ag:                                            ; preds = %.lr.ph.i40.a
   unreachable
 
 _RNCINvMNtCsgCecv3eZDcN_5alloc5sliceSNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntry7sort_byNCNvMBA_NtBA_8Profiler11get_entriess_0E0BC_.exit.i42: ; preds = %.lr.ph.i40.a
-  %.mux.i.i43 = fcmp olt double %.val12.i.a, %.val.i ; 2 uses
+  %.mux.i.i43 = fcmp olt double %.val12.i, %.val12.i.a ; 2 uses
   %i.cm = getelementptr inbounds i8, ptr %.sroa.19.112.i, i64 -72 ; 3 uses
   %.sroa.01.0.i.i = select i1 %.mux.i.i43, ptr %2, ptr %i.cm
   %i.cn = getelementptr inbounds nuw [72 x i8], ptr %.sroa.01.0.i.i, i64 %.sroa.11.113.i
@@ -338,7 +341,11 @@ bb.ao:                                            ; preds = %bb.aq, %bb.am
   %.sroa.0.0.i50 = phi i64 [ %.sroa.0.0.i37, %bb.am ], [ %.sroa.16.0133381, %bb.aq ] ; 2 uses
   %i.dp = getelementptr inbounds nuw [72 x i8], ptr %.sroa.0.0.ph140, i64 %.sroa.0.0.i50 ; 2 uses
   %i.dq = icmp ult ptr %.sroa.5.0.i49, %i.dp
-  br i1 %i.dq, label %.lr.ph.i59.a, label %._crit_edge.i51
+  br i1 %i.dq, label %.lr.ph.i59, label %._crit_edge.i51
+
+.lr.ph.i59:                                       ; preds = %bb.ao
+  %.val12.i60 = load double, ptr %i.do, align 8, !alias.scope !440, !noalias !441, !noundef !4 ; 2 uses
+  br label %.lr.ph.i59.a
 
 ._crit_edge.i51:                                  ; preds = %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i, %bb.ao
   %.sroa.19.1.lcssa.i52 = phi ptr [ %.sroa.19.0.i47, %bb.ao ], [ %i.dt, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i ]
@@ -347,14 +354,13 @@ bb.ao:                                            ; preds = %bb.aq, %bb.am
   %i.dr = icmp eq i64 %.sroa.0.0.i50, %.sroa.16.0133381
   br i1 %i.dr, label %bb.ar, label %bb.aq
 
-.lr.ph.i59.a:                                     ; preds = %bb.ao, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i
-  %.sroa.5.114.i60 = phi ptr [ %i.dx, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i ], [ %.sroa.5.0.i49, %bb.ao ] ; 3 uses
-  %.sroa.11.113.i61 = phi i64 [ %i.dw, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i ], [ %.sroa.11.0.i48, %bb.ao ] ; 2 uses
-  %.sroa.19.112.i62 = phi ptr [ %i.dt, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i ], [ %.sroa.19.0.i47, %bb.ao ]
+.lr.ph.i59.a:                                     ; preds = %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i, %.lr.ph.i59
+  %.sroa.5.114.i60 = phi ptr [ %.sroa.5.0.i49, %.lr.ph.i59 ], [ %i.dx, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i ] ; 3 uses
+  %.sroa.11.113.i61 = phi i64 [ %.sroa.11.0.i48, %.lr.ph.i59 ], [ %i.dw, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i ] ; 2 uses
+  %.sroa.19.112.i62 = phi ptr [ %.sroa.19.0.i47, %.lr.ph.i59 ], [ %i.dt, %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i ]
   %i.ds = getelementptr i8, ptr %.sroa.5.114.i60, i64 32
-  %.val.i63 = load double, ptr %i.ds, align 8, !alias.scope !440, !noalias !441, !noundef !4 ; 2 uses
-  %.val12.i64 = load double, ptr %i.do, align 8, !alias.scope !440, !noalias !441, !noundef !4 ; 2 uses
-  %brmerge.not.i.i.i65 = fcmp uno double %.val.i63, %.val12.i64
+  %.val12.i64 = load double, ptr %i.ds, align 8, !alias.scope !440, !noalias !441, !noundef !4 ; 2 uses
+  %brmerge.not.i.i.i65 = fcmp uno double %.val12.i64, %.val12.i60
   br i1 %brmerge.not.i.i.i65, label %bb.ap, label %_RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i, !prof !15
 
 bb.ap:                                            ; preds = %.lr.ph.i59.a
@@ -362,7 +368,7 @@ bb.ap:                                            ; preds = %.lr.ph.i59.a
   unreachable
 
 _RNCINvNtNtNtNtCsf3Ta7LF998c_4core5slice4sort6stable9quicksort9quicksortNtNtCs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen38profiler12ProfileEntryNCINvMNtCsgCecv3eZDcN_5alloc5sliceSB17_7sort_byNCNvMB19_NtB19_8Profiler11get_entriess_0E0E0B1b_.exit.i: ; preds = %.lr.ph.i59.a
-  %.mux.i.i.i66 = fcmp uge double %.val.i63, %.val12.i64 ; 2 uses
+  %.mux.i.i.i66 = fcmp uge double %.val12.i64, %.val12.i60 ; 2 uses
   %i.dt = getelementptr inbounds i8, ptr %.sroa.19.112.i62, i64 -72 ; 3 uses
   %.sroa.01.0.i.i67 = select i1 %.mux.i.i.i66, ptr %2, ptr %i.dt
   %i.du = getelementptr inbounds nuw [72 x i8], ptr %.sroa.01.0.i.i67, i64 %.sroa.11.113.i61

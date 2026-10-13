@@ -205,11 +205,11 @@ bb.ct:                                            ; preds = %bb.cr
 
 bb.cu:                                            ; preds = %_ZN4toml2v34impl7impl_ex6parser38consume_variable_length_digit_sequenceIjEEmPT_m.exit, %bb.cq
   %.0.lcssa.i132135139 = phi i64 [ 64, %bb.cq ], [ %.09.i162, %_ZN4toml2v34impl7impl_ex6parser38consume_variable_length_digit_sequenceIjEEmPT_m.exit ] ; 2 uses
-  %i.fg = phi ptr [ %i.en, %bb.cq ], [ %i.eh, %_ZN4toml2v34impl7impl_ex6parser38consume_variable_length_digit_sequenceIjEEmPT_m.exit ] ; 4 uses
+  %i.fg = phi ptr [ %i.en, %bb.cq ], [ %i.eh, %_ZN4toml2v34impl7impl_ex6parser38consume_variable_length_digit_sequenceIjEEmPT_m.exit ] ; 3 uses
   br i1 %1, label %.thread208, label %bb.cv
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.fh = load i32, ptr %i.fg, align 4, !tbaa !242
+  %i.fh = load i32, ptr %i.fg, align 4, !tbaa !242 ; 4 uses
   %i.fi = tail call noundef zeroext i1 @_ZN4toml2v34impl19is_value_terminatorEDi(i32 noundef zeroext %i.fh) #56
   br i1 %i.fi, label %.thread208, label %bb.cw
 
@@ -219,12 +219,11 @@ bb.cw:                                            ; preds = %bb.cv
   %i.fj = getelementptr inbounds nuw i8, ptr %35, i64 8
   store ptr @.str.100, ptr %i.fj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #50
-  %38 = load i32, ptr %i.fg, align 8, !tbaa !335  ; 3 uses
-  %i.fk = icmp ult i32 %38, 32
+  %i.fk = icmp ult i32 %i.fh, 32
   br i1 %i.fk, label %bb.cx, label %bb.cy
 
 bb.cx:                                            ; preds = %bb.cw
-  %i.fl = zext nneg i32 %38 to i64
+  %i.fl = zext nneg i32 %i.fh to i64
   %i.fm = getelementptr inbounds nuw [16 x i8], ptr @_ZN4toml2v34impl20control_char_escapesE, i64 %i.fl ; 2 uses
   %.sroa.0.0.copyload.i115 = load i64, ptr %i.fm, align 16, !tbaa !124
   %.sroa.4.0..sroa_idx.i116 = getelementptr inbounds nuw i8, ptr %i.fm, i64 8
@@ -232,7 +231,7 @@ bb.cx:                                            ; preds = %bb.cw
   br label %_ZN12_GLOBAL__N_15to_svERKNS_14utf8_codepointE.exit118
 
 bb.cy:                                            ; preds = %bb.cw
-  %i.fn = icmp eq i32 %38, 127
+  %i.fn = icmp eq i32 %i.fh, 127
   br i1 %i.fn, label %_ZN12_GLOBAL__N_15to_svERKNS_14utf8_codepointE.exit118, label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cy

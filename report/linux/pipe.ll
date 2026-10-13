@@ -205,6 +205,7 @@ bb.l:                                             ; preds = %pipe_buf_confirm.ex
 
 .lr.ph:                                           ; preds = %bb.i, %bb.h, %bb.g, %.thread
   %.2116257 = phi i64 [ %i.bf, %.thread ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.i ]
+  %.promoted = load i32, ptr %i.f, align 8
   %i.bl = getelementptr i8, ptr %i.c, i64 80      ; 4 uses
   %i.bm = getelementptr i8, ptr %i.a, i64 40      ; 2 uses
   %i.bn = getelementptr i8, ptr %0, i64 32
@@ -242,6 +243,7 @@ bb.o:                                             ; preds = %.lr.ph, %.backedge
   %.0109217 = phi i1 [ false, %.lr.ph ], [ %.0109.be, %.backedge ] ; 6 uses
   %.0112216 = phi i8 [ %i.ae, %.lr.ph ], [ %.0112.be, %.backedge ] ; 7 uses
   %.3215 = phi i64 [ %.2116257, %.lr.ph ], [ %.3.be, %.backedge ] ; 10 uses
+  %4 = phi i32 [ %.promoted, %.lr.ph ], [ %7, %.backedge ] ; 3 uses
   %i.cc = load i32, ptr %i.aa, align 8            ; 3 uses
   %i.cd = load i32, ptr %i.ac, align 4
   %i.ce = load i32, ptr %i.bl, align 8
@@ -250,12 +252,11 @@ bb.o:                                             ; preds = %.lr.ph, %.backedge
   br i1 %.not193, label %bb.p, label %bb.v
 
 bb.p:                                             ; preds = %bb.o
-  %4 = load i32, ptr %i.f, align 8                ; 2 uses
   %.not.i.i = icmp eq i32 %4, 0
   br i1 %.not.i.i, label %.preheader.i, label %anon_pipe_prealloc_pop.exit.i
 
 anon_pipe_prealloc_pop.exit.i:                    ; preds = %bb.p
-  %i.cg = add i32 %4, -1                          ; 2 uses
+  %i.cg = add i32 %4, -1                          ; 4 uses
   store i32 %i.cg, ptr %i.f, align 8
   %i.ch = zext i32 %i.cg to i64
   %i.ci = getelementptr [8 x i8], ptr %2, i64 %i.ch
@@ -264,6 +265,7 @@ anon_pipe_prealloc_pop.exit.i:                    ; preds = %bb.p
   br i1 %.not.i152, label %.preheader.i, label %anon_pipe_get_page.exit.thread
 
 .preheader.i:                                     ; preds = %anon_pipe_prealloc_pop.exit.i, %bb.p
+  %5 = phi i32 [ %i.cg, %anon_pipe_prealloc_pop.exit.i ], [ 0, %bb.p ] ; 2 uses
   %i.ck = load ptr, ptr %i.br, align 8            ; 2 uses
   %.not22.i = icmp eq ptr %i.ck, null
   br i1 %.not22.i, label %bb.q, label %bb.r
@@ -291,6 +293,7 @@ bb.s:                                             ; preds = %anon_pipe_get_page.
   br label %select.unfold
 
 anon_pipe_get_page.exit.thread:                   ; preds = %anon_pipe_prealloc_pop.exit.i, %bb.r, %anon_pipe_get_page.exit
+  %6 = phi i32 [ %5, %anon_pipe_get_page.exit ], [ %i.cg, %anon_pipe_prealloc_pop.exit.i ], [ %5, %bb.r ]
   %.1.i179 = phi ptr [ %i.cn, %anon_pipe_get_page.exit ], [ %i.cj, %anon_pipe_prealloc_pop.exit.i ], [ %.lcssa.i, %bb.r ] ; 3 uses
   %i.co = call i64 @copy_page_from_iter(ptr noundef nonnull %.1.i179, i64 noundef 0, i64 noundef 4096, ptr noundef %1) #14 ; 2 uses
   %i.cp = trunc i64 %i.co to i32
@@ -459,6 +462,7 @@ pipe_writable.exit.thread:                        ; preds = %bb.aa, %.thread191,
   br label %.backedge
 
 .backedge:                                        ; preds = %pipe_writable.exit.thread, %.critedge
+  %7 = phi i32 [ %4, %pipe_writable.exit.thread ], [ %6, %.critedge ]
   %.3.be = phi i64 [ %.3215, %pipe_writable.exit.thread ], [ %i.dc, %.critedge ] ; 2 uses
   %.0112.be = phi i8 [ %i.ec, %pipe_writable.exit.thread ], [ %.0112216, %.critedge ] ; 2 uses
   %.0109.be = phi i1 [ true, %pipe_writable.exit.thread ], [ %.0109217, %.critedge ] ; 2 uses

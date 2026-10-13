@@ -202,13 +202,13 @@ bb.av:                                            ; preds = %bb.at
 bb.aw:                                            ; preds = %bb.av
   %i.ld = load ptr, ptr %i.ai, align 8, !tbaa !52 ; 4 uses
   %i.le = getelementptr inbounds nuw i8, ptr %i.ld, i64 40
-  %i.lf = load i32, ptr %i.le, align 8, !tbaa !288 ; 2 uses
+  %i.lf = load i32, ptr %i.le, align 8, !tbaa !288 ; 3 uses
   %i.lg = icmp sgt i32 %i.lf, 65534
   br i1 %i.lg, label %bb.ax, label %.preheader
 
 .preheader:                                       ; preds = %bb.aw
   %i.lh = getelementptr inbounds nuw i8, ptr %i.ld, i64 44
-  %i.li = load i32, ptr %i.lh, align 4, !tbaa !289
+  %i.li = load i32, ptr %i.lh, align 4, !tbaa !289 ; 2 uses
   %i.lj = icmp sgt i32 %i.li, 0
   br i1 %i.lj, label %.lr.ph88, label %._crit_edge89
 
@@ -217,17 +217,22 @@ bb.ax:                                            ; preds = %bb.aw
   call void (ptr, i32, ptr, ...) @_ZN9rcContext3logE13rcLogCategoryPKcz(ptr noundef nonnull align 8 dereferenceable(10) %i.lk, i32 noundef 3, ptr noundef nonnull @.str.59, i32 noundef %i.lf, i32 noundef 65535) #11
   br label %bb.bf
 
-._crit_edge89:                                    ; preds = %bb.ba, %.preheader
-  %.lcssa86 = phi ptr [ %i.ld, %.preheader ], [ %i.or, %bb.ba ] ; 12 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.lcssa86, i64 44
+._crit_edge89.loopexit:                           ; preds = %bb.ba
+  %.phi.trans.insert99 = getelementptr inbounds nuw i8, ptr %i.or, i64 40
+  %.pre100 = load i32, ptr %.phi.trans.insert99, align 8, !tbaa !288
+  br label %._crit_edge89
+
+._crit_edge89:                                    ; preds = %._crit_edge89.loopexit, %.preheader
+  %8 = phi i32 [ %i.li, %.preheader ], [ %i.oy, %._crit_edge89.loopexit ]
+  %9 = phi i32 [ %i.lf, %.preheader ], [ %.pre100, %._crit_edge89.loopexit ]
+  %.lcssa86 = phi ptr [ %i.ld, %.preheader ], [ %i.or, %._crit_edge89.loopexit ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %7, i8 0, i64 208, i1 false)
-  %9 = load ptr, ptr %.lcssa86, align 8, !tbaa !290
-  store ptr %9, ptr %7, align 8, !tbaa !292
-  %10 = getelementptr inbounds nuw i8, ptr %.lcssa86, i64 40
-  %11 = load i32, ptr %10, align 8, !tbaa !288
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(200) %10, i8 0, i64 200, i1 false)
+  %11 = load ptr, ptr %.lcssa86, align 8, !tbaa !290
+  store ptr %11, ptr %7, align 8, !tbaa !292
   %i.ll = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i32 %11, ptr %i.ll, align 8, !tbaa !293
+  store i32 %9, ptr %i.ll, align 8, !tbaa !293
   %i.lm = getelementptr inbounds nuw i8, ptr %.lcssa86, i64 8
   %i.ln = load ptr, ptr %i.lm, align 8, !tbaa !294
   %i.lo = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -236,9 +241,8 @@ bb.ax:                                            ; preds = %bb.aw
   %i.lq = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.lr = load <2 x ptr>, ptr %i.lp, align 8, !tbaa !296
   store <2 x ptr> %i.lr, ptr %i.lq, align 8, !tbaa !296
-  %12 = load i32, ptr %8, align 4, !tbaa !289
   %i.ls = getelementptr inbounds nuw i8, ptr %7, i64 40
-  store i32 %12, ptr %i.ls, align 8, !tbaa !297
+  store i32 %8, ptr %i.ls, align 8, !tbaa !297
   %i.lt = getelementptr inbounds nuw i8, ptr %.lcssa86, i64 52
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !298
   %i.lv = getelementptr inbounds nuw i8, ptr %7, i64 44
@@ -355,7 +359,7 @@ bb.ay:                                            ; preds = %.lr.ph88
 
 bb.az:                                            ; preds = %bb.ay, %.lr.ph88
   %i.oq = phi i8 [ %.pre98, %bb.ay ], [ %i.oo, %.lr.ph88 ] ; 2 uses
-  %i.or = phi ptr [ %.pre94, %bb.ay ], [ %i.ok, %.lr.ph88 ] ; 4 uses
+  %i.or = phi ptr [ %.pre94, %bb.ay ], [ %i.ok, %.lr.ph88 ] ; 5 uses
   %i.os = icmp ult i8 %i.oq, 5
   br i1 %i.os, label %switch.lookup, label %bb.ba
 
@@ -373,10 +377,10 @@ switch.lookup:                                    ; preds = %bb.az
 bb.ba:                                            ; preds = %bb.az, %switch.lookup
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ox = getelementptr inbounds nuw i8, ptr %i.or, i64 44
-  %i.oy = load i32, ptr %i.ox, align 4, !tbaa !289
+  %i.oy = load i32, ptr %i.ox, align 4, !tbaa !289 ; 2 uses
   %i.oz = sext i32 %i.oy to i64
   %i.pa = icmp slt i64 %indvars.iv.next, %i.oz
-  br i1 %i.pa, label %.lr.ph88, label %._crit_edge89, !llvm.loop !244
+  br i1 %i.pa, label %.lr.ph88, label %._crit_edge89.loopexit, !llvm.loop !244
 
 bb.bb:                                            ; preds = %._crit_edge89
   %i.pb = load ptr, ptr %i.eq, align 8, !tbaa !170
