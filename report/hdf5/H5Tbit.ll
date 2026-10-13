@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hdf5/original/H5Tbit?download=true
 inline.NumInlined: 3
-loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 8
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@H5T__bit_find:bb.a
   %i.bc = icmp ne i64 %i.ba, 0
   %i.bd = and i1 %i.bb, %i.bc
@@ -204,7 +204,7 @@ bb.ah:                                            ; preds = %bb.b
   %i.ec = add i64 %2, %1                          ; 2 uses
   %i.ed = add i64 %i.ec, -1                       ; 2 uses
   %i.ee = lshr i64 %i.ed, 3                       ; 3 uses
-  %i.ef = and i64 %1, 7                           ; 3 uses
+  %i.ef = and i64 %1, 7                           ; 8 uses
   %i.eg = sub nuw nsw i64 8, %i.ef
   %i.eh = icmp ule i64 %2, %i.eg
   %i.ei = and i64 %i.ec, 7                        ; 9 uses
@@ -392,33 +392,98 @@ bb.ay:                                            ; preds = %.preheader115.7, %.
   br i1 %.not107, label %.loopexit, label %bb.az
 
 bb.az:                                            ; preds = %._crit_edge
-  %i.hh = add nuw nsw i64 %.5.lcssa, %i.ef
+  %i.hh = add nuw nsw i64 %.5.lcssa, %i.ef        ; 7 uses
   %i.hi = getelementptr inbounds i8, ptr %0, i64 %.3.lcssa
   %i.hj = load i8, ptr %i.hi, align 1, !tbaa !13
-  %i.hk = zext i8 %i.hj to i32
-  br label %bb.bb
+  %i.hk = zext i8 %i.hj to i32                    ; 7 uses
+  %5 = add nsw i64 %i.hh, -1                      ; 3 uses
+  %6 = trunc nuw nsw i64 %5 to i32
+  %7 = lshr i32 %i.hk, %6
+  %8 = trunc i32 %7 to i1
+  %9 = xor i1 %4, %8
+  br i1 %9, label %10, label %bb.bc, !llvm.loop !33
 
-bb.ba:                                            ; preds = %bb.bb
-  %i.hl = icmp ugt i64 %i.hm, %i.ef
-  br i1 %i.hl, label %bb.bb, label %.loopexit, !llvm.loop !33
+10:                                               ; preds = %bb.az
+  %11 = icmp ugt i64 %5, %i.ef
+  br i1 %11, label %12, label %.loopexit
 
-bb.bb:                                            ; preds = %bb.az, %bb.ba
-  %.2200 = phi i64 [ %i.hh, %bb.az ], [ %i.hm, %bb.ba ]
-  %i.hm = add nsw i64 %.2200, -1                  ; 4 uses
+12:                                               ; preds = %10
+  %13 = add nsw i64 %i.hh, -2                     ; 3 uses
+  %14 = trunc nuw nsw i64 %13 to i32
+  %15 = lshr i32 %i.hk, %14
+  %16 = trunc i32 %15 to i1
+  %17 = xor i1 %4, %16
+  br i1 %17, label %18, label %bb.bc, !llvm.loop !33
+
+18:                                               ; preds = %12
+  %19 = icmp ugt i64 %13, %i.ef
+  br i1 %19, label %20, label %.loopexit
+
+20:                                               ; preds = %18
+  %21 = add nsw i64 %i.hh, -3                     ; 3 uses
+  %22 = trunc nuw nsw i64 %21 to i32
+  %23 = lshr i32 %i.hk, %22
+  %24 = trunc i32 %23 to i1
+  %25 = xor i1 %4, %24
+  br i1 %25, label %26, label %bb.bc, !llvm.loop !33
+
+26:                                               ; preds = %20
+  %27 = icmp ugt i64 %21, %i.ef
+  br i1 %27, label %28, label %.loopexit
+
+28:                                               ; preds = %26
+  %29 = add nsw i64 %i.hh, -4                     ; 3 uses
+  %30 = trunc nuw nsw i64 %29 to i32
+  %31 = lshr i32 %i.hk, %30
+  %32 = trunc i32 %31 to i1
+  %33 = xor i1 %4, %32
+  br i1 %33, label %34, label %bb.bc, !llvm.loop !33
+
+34:                                               ; preds = %28
+  %35 = icmp ugt i64 %29, %i.ef
+  br i1 %35, label %36, label %.loopexit
+
+36:                                               ; preds = %34
+  %37 = add nsw i64 %i.hh, -5                     ; 3 uses
+  %38 = trunc nuw nsw i64 %37 to i32
+  %39 = lshr i32 %i.hk, %38
+  %40 = trunc i32 %39 to i1
+  %41 = xor i1 %4, %40
+  br i1 %41, label %42, label %bb.bc, !llvm.loop !33
+
+42:                                               ; preds = %36
+  %43 = icmp ugt i64 %37, %i.ef
+  br i1 %43, label %44, label %.loopexit
+
+44:                                               ; preds = %42
+  %45 = add nsw i64 %i.hh, -6                     ; 3 uses
+  %46 = trunc nuw nsw i64 %45 to i32
+  %47 = lshr i32 %i.hk, %46
+  %48 = trunc i32 %47 to i1
+  %49 = xor i1 %4, %48
+  br i1 %49, label %bb.ba, label %bb.bc, !llvm.loop !33
+
+bb.ba:                                            ; preds = %44
+  %i.hl = icmp ugt i64 %45, %i.ef
+  br i1 %i.hl, label %bb.bb, label %.loopexit
+
+bb.bb:                                            ; preds = %bb.ba
+  %i.hm = add nsw i64 %i.hh, -7                   ; 2 uses
   %i.hn = trunc nuw nsw i64 %i.hm to i32
   %i.ho = lshr i32 %i.hk, %i.hn
   %i.hp = trunc i32 %i.ho to i1
   %i.hq = xor i1 %4, %i.hp
-  br i1 %i.hq, label %bb.ba, label %bb.bc, !llvm.loop !33
+  br i1 %i.hq, label %.loopexit, label %bb.bc, !llvm.loop !33
 
-bb.bc:                                            ; preds = %bb.bb
+bb.bc:                                            ; preds = %bb.bb, %44, %36, %28, %20, %12, %bb.az
+  %.lcssa206 = phi i64 [ %5, %bb.az ], [ %13, %12 ], [ %21, %20 ], [ %29, %28 ], [ %37, %36 ], [ %45, %44 ], [ %i.hm, %bb.bb ]
   %i.hr = shl nsw i64 %.3.lcssa, 3
   %i.hs = sub i64 %i.hr, %1
-  %i.ht = add i64 %i.hs, %i.hm
+  %i.ht = add i64 %i.hs, %.lcssa206
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.ba, %bb.v, %bb.x, %bb.z, %bb.ab, %bb.ad, %bb.af, %bb.ag, %.preheader, %bb.d, %bb.t, %bb.u, %bb.ai, %bb.ay, %bb.bc, %bb.b, %._crit_edge, %bb.a
-  %.0 = phi i64 [ -1, %bb.b ], [ %i.p, %bb.d ], [ %i.cj, %bb.t ], [ %i.dj, %bb.u ], [ -1, %bb.a ], [ %i.eu, %bb.ai ], [ %i.gj, %bb.ay ], [ %i.ht, %bb.bc ], [ -1, %.preheader ], [ -1, %._crit_edge ], [ -1, %bb.v ], [ -1, %bb.ag ], [ -1, %bb.af ], [ -1, %bb.ad ], [ -1, %bb.ab ], [ -1, %bb.z ], [ -1, %bb.x ], [ -1, %bb.ba ]
+.loopexit:                                        ; preds = %10, %18, %26, %34, %42, %bb.ba, %bb.bb, %bb.v, %bb.x, %bb.z, %bb.ab, %bb.ad, %bb.af, %bb.ag, %.preheader, %bb.d, %bb.t, %bb.u, %bb.ai, %bb.ay, %bb.bc, %bb.b, %._crit_edge, %bb.a
+  %.0 = phi i64 [ -1, %bb.b ], [ %i.p, %bb.d ], [ %i.cj, %bb.t ], [ %i.dj, %bb.u ], [ -1, %bb.a ], [ %i.eu, %bb.ai ], [ %i.gj, %bb.ay ], [ %i.ht, %bb.bc ], [ -1, %.preheader ], [ -1, %._crit_edge ], [ -1, %bb.v ], [ -1, %bb.ag ], [ -1, %bb.af ], [ -1, %bb.ad ], [ -1, %bb.ab ], [ -1, %bb.z ], [ -1, %bb.x ], [ -1, %bb.bb ], [ -1, %bb.ba ], [ -1, %42 ], [ -1, %34 ], [ -1, %26 ], [ -1, %18 ], [ -1, %10 ]
   ret i64 %.0
 }
 

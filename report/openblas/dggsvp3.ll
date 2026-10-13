@@ -202,11 +202,11 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 
 .loopexit600:                                     ; preds = %.lr.ph622, %bb.aq
   %.not550.not = icmp slt i32 %.1488625, %i.gs
-  %indvar.next = add i32 %indvar, 1
+  %indvars.iv.next686 = add nuw nsw i64 %indvars.iv685, 1
   br i1 %.not550.not, label %bb.aq, label %.loopexit601, !llvm.loop !12
 
 bb.aq:                                            ; preds = %.lr.ph627, %.loopexit600
-  %indvar = phi i32 [ 0, %.lr.ph627 ], [ %indvar.next, %.loopexit600 ] ; 3 uses
+  %indvars.iv685 = phi i64 [ 0, %.lr.ph627 ], [ %indvars.iv.next686, %.loopexit600 ] ; 3 uses
   %.1488625.in = phi i32 [ %i.gu, %.lr.ph627 ], [ %.1488625, %.loopexit600 ]
   %.1488625 = add nsw i32 %.1488625.in, 1         ; 3 uses
   %i.hd = add i32 %i.gv, %.1488625
@@ -214,11 +214,13 @@ bb.aq:                                            ; preds = %.lr.ph627, %.loopex
   br i1 %.not564.not619, label %.lr.ph622, label %.loopexit600
 
 .lr.ph622:                                        ; preds = %bb.aq
-  %i.he = sub i32 %i.hc, %indvar
+  %25 = trunc i64 %indvars.iv685 to i32
+  %i.he = sub i32 %i.hc, %25
   %i.hf = zext i32 %i.he to i64
   %i.hg = shl nuw nsw i64 %i.hf, 3
   %i.hh = add nuw nsw i64 %i.hg, 8
-  %i.hi = mul i32 %i.hb, %indvar
+  %26 = trunc nuw nsw i64 %indvars.iv685 to i32
+  %i.hi = mul i32 %i.hb, %26
   %i.hj = add i32 %i.ha, %i.hi
   %i.hk = sext i32 %i.hj to i64
   %i.hl = shl nsw i64 %i.hk, 3
@@ -621,11 +623,11 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
 
 .loopexit:                                        ; preds = %.lr.ph659, %bb.bs
   %.not560.not = icmp slt i32 %.4662, %i.qs
-  %indvar.next719 = add i32 %indvar718, 1
+  %indvars.iv.next726 = add nuw nsw i64 %indvars.iv725, 1
   br i1 %.not560.not, label %bb.bs, label %.loopexit596, !llvm.loop !18
 
 bb.bs:                                            ; preds = %.lr.ph664, %.loopexit
-  %indvar718 = phi i32 [ 0, %.lr.ph664 ], [ %indvar.next719, %.loopexit ] ; 3 uses
+  %indvars.iv725 = phi i64 [ 0, %.lr.ph664 ], [ %indvars.iv.next726, %.loopexit ] ; 3 uses
   %.4662.in = phi i32 [ %i.qu, %.lr.ph664 ], [ %.4662, %.loopexit ]
   %.4662 = add nsw i32 %.4662.in, 1               ; 3 uses
   %.reass = add i32 %.4662, %invariant.op
@@ -633,12 +635,14 @@ bb.bs:                                            ; preds = %.lr.ph664, %.loopex
   br i1 %.not561.not656, label %.lr.ph659, label %.loopexit
 
 .lr.ph659:                                        ; preds = %bb.bs
-  %i.rg = add i32 %i.qw, %indvar718
+  %27 = trunc i64 %indvars.iv725 to i32
+  %i.rg = add i32 %i.qw, %27
   %i.rh = sub i32 %i.rf, %i.rg
   %i.ri = zext i32 %i.rh to i64
   %i.rj = shl nuw nsw i64 %i.ri, 3
   %i.rk = add nuw nsw i64 %i.rj, 8
-  %i.rl = mul i32 %i.re, %indvar718
+  %28 = trunc nuw nsw i64 %indvars.iv725 to i32
+  %i.rl = mul i32 %i.re, %28
   %i.rm = add i32 %i.rd, %i.rl
   %i.rn = sext i32 %i.rm to i64
   %i.ro = shl nsw i64 %i.rn, 3

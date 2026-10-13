@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lightgbm/original/objective_function?download=true
 inline.NumInlined: 4075
 inline.NumDeleted: 1027
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 62
-loop-unroll.NumUnrolled: 62
+loop-unroll.NumUnrolled: 63
 begin_hunk_0_@_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_:bb.a
   %i.as = getelementptr inbounds nuw i8, ptr %.012.i.i.i18, i64 16 ; 3 uses
   store ptr %i.as, ptr %.012.i.i.i18, align 8, !tbaa !91, !alias.scope !859, !noalias !860
@@ -204,18 +205,18 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   br i1 %or.cond182, label %.lr.ph285, label %.critedge4, !llvm.loop !865
 
 .critedge4:                                       ; preds = %.lr.ph285
-  %spec.store.select = tail call i32 @llvm.umin.i32(i32 %i.ak, i32 308) ; 2 uses
+  %spec.store.select = tail call i32 @llvm.umin.i32(i32 %i.ak, i32 308) ; 7 uses
   %i.ao = icmp ugt i32 %i.ak, 49
-  br i1 %i.ao, label %.lr.ph290.a, label %.preheader257
+  br i1 %i.ao, label %.lr.ph290, label %.preheader257
 
-.preheader257:                                    ; preds = %.lr.ph290.a, %.critedge4
-  %.0149.lcssa = phi double [ 1.000000e+00, %.critedge4 ], [ %10, %.lr.ph290.a ] ; 3 uses
-  %.1144.lcssa = phi i32 [ %spec.store.select, %.critedge4 ], [ %i.aw, %.lr.ph290.a ] ; 5 uses
+.preheader257:                                    ; preds = %.lr.ph290, %.lr.ph290.1, %.lr.ph290.2, %.lr.ph290.3, %.lr.ph290.a, %.lr.ph290.5, %.critedge4
+  %.0149.lcssa = phi double [ 1.000000e+00, %.critedge4 ], [ 1.000000e+50, %.lr.ph290 ], [ f0x54B249AD2594C37E, %.lr.ph290.1 ], [ f0x5F138D352E5096B1, %.lr.ph290.2 ], [ f0x6974E718D7D7625D, %.lr.ph290.3 ], [ f0x73D658E3AB795208, %.lr.ph290.a ], [ f0x7E37E43C880075A0, %.lr.ph290.5 ] ; 3 uses
+  %.1144.lcssa = phi i32 [ %spec.store.select, %.critedge4 ], [ %10, %.lr.ph290 ], [ %12, %.lr.ph290.1 ], [ %14, %.lr.ph290.2 ], [ %16, %.lr.ph290.3 ], [ %i.aw, %.lr.ph290.a ], [ %18, %.lr.ph290.5 ] ; 5 uses
   %i.ap = icmp samesign ugt i32 %.1144.lcssa, 7
   br i1 %i.ap, label %.lr.ph295.preheader, label %.preheader
 
 .lr.ph295.preheader:                              ; preds = %.preheader257
-  %i.aq = add nsw i32 %.1144.lcssa, -8            ; 2 uses
+  %i.aq = add i32 %.1144.lcssa, -8                ; 2 uses
   %i.ar = lshr i32 %i.aq, 3
   %i.as = add nuw nsw i32 %i.ar, 1
   %xtraiter = and i32 %i.as, 7                    ; 2 uses
@@ -240,13 +241,34 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   %i.av = icmp ult i32 %i.aq, 56
   br i1 %i.av, label %.preheader, label %.lr.ph295
 
-.lr.ph290.a:                                      ; preds = %.critedge4, %.lr.ph290.a
-  %.1144289 = phi i32 [ %i.aw, %.lr.ph290.a ], [ %spec.store.select, %.critedge4 ]
-  %.0149288 = phi double [ %10, %.lr.ph290.a ], [ 1.000000e+00, %.critedge4 ]
-  %10 = fmul double %.0149288, 1.000000e+50       ; 2 uses
-  %i.aw = add i32 %.1144289, -50                  ; 3 uses
+.lr.ph290:                                        ; preds = %.critedge4
+  %10 = add nsw i32 %spec.store.select, -50       ; 2 uses
+  %11 = icmp ugt i32 %10, 49
+  br i1 %11, label %.lr.ph290.1, label %.preheader257
+
+.lr.ph290.1:                                      ; preds = %.lr.ph290
+  %12 = add nsw i32 %spec.store.select, -100      ; 2 uses
+  %13 = icmp ugt i32 %12, 49
+  br i1 %13, label %.lr.ph290.2, label %.preheader257
+
+.lr.ph290.2:                                      ; preds = %.lr.ph290.1
+  %14 = add nsw i32 %spec.store.select, -150      ; 2 uses
+  %15 = icmp ugt i32 %14, 49
+  br i1 %15, label %.lr.ph290.3, label %.preheader257
+
+.lr.ph290.3:                                      ; preds = %.lr.ph290.2
+  %16 = add nsw i32 %spec.store.select, -200      ; 2 uses
+  %17 = icmp ugt i32 %16, 49
+  br i1 %17, label %.lr.ph290.a, label %.preheader257
+
+.lr.ph290.a:                                      ; preds = %.lr.ph290.3
+  %i.aw = add nsw i32 %spec.store.select, -250    ; 2 uses
   %i.ax = icmp ugt i32 %i.aw, 49
-  br i1 %i.ax, label %.lr.ph290.a, label %.preheader257, !llvm.loop !867
+  br i1 %i.ax, label %.lr.ph290.5, label %.preheader257
+
+.lr.ph290.5:                                      ; preds = %.lr.ph290.a
+  %18 = add nsw i32 %spec.store.select, -300
+  br label %.preheader257
 
 .preheader:                                       ; preds = %.lr.ph295.prol.loopexit, %.lr.ph295, %.preheader257
   %.1150.lcssa = phi double [ %.0149.lcssa, %.preheader257 ], [ %.lcssa24.unr, %.lr.ph295.prol.loopexit ], [ %i.bi, %.lr.ph295 ] ; 3 uses
@@ -267,7 +289,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   %i.az = add nsw i32 %.3146300.prol, -1          ; 2 uses
   %prol.iter43.next = add i32 %prol.iter43, 1     ; 2 uses
   %prol.iter43.cmp.not = icmp eq i32 %prol.iter43.next, %xtraiter41
-  br i1 %prol.iter43.cmp.not, label %.lr.ph301.prol.loopexit, label %.lr.ph301.prol, !llvm.loop !868
+  br i1 %prol.iter43.cmp.not, label %.lr.ph301.prol.loopexit, label %.lr.ph301.prol, !llvm.loop !867
 
 .lr.ph301.prol.loopexit:                          ; preds = %.lr.ph301.prol, %.lr.ph301.preheader
   %.lcssa22.unr = phi double [ poison, %.lr.ph301.preheader ], [ %i.ay, %.lr.ph301.prol ]
@@ -289,7 +311,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   %i.bi = fmul double %i.bh, 1.000000e+08         ; 2 uses
   %i.bj = add nsw i32 %.2145294, -64              ; 3 uses
   %i.bk = icmp ugt i32 %i.bj, 7
-  br i1 %i.bk, label %.lr.ph295, label %.preheader, !llvm.loop !869
+  br i1 %i.bk, label %.lr.ph295, label %.preheader, !llvm.loop !868
 
 .lr.ph301:                                        ; preds = %.lr.ph301.prol.loopexit, %.lr.ph301
   %.3146300 = phi i32 [ %i.bt, %.lr.ph301 ], [ %.3146300.unr, %.lr.ph301.prol.loopexit ]
@@ -304,7 +326,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   %i.bs = fmul double %i.br, 1.000000e+01         ; 2 uses
   %i.bt = add nsw i32 %.3146300, -8               ; 2 uses
   %.not176.7 = icmp eq i32 %i.bt, 0
-  br i1 %.not176.7, label %._crit_edge, label %.lr.ph301, !llvm.loop !870
+  br i1 %.not176.7, label %._crit_edge, label %.lr.ph301, !llvm.loop !869
 
 ._crit_edge:                                      ; preds = %.lr.ph301.prol.loopexit, %.lr.ph301, %bb.f, %.preheader
   %.2151.lcssa = phi double [ %.1150.lcssa, %.preheader ], [ 1.000000e+00, %bb.f ], [ %.lcssa22.unr, %.lr.ph301.prol.loopexit ], [ %i.bs, %.lr.ph301 ] ; 2 uses
@@ -338,7 +360,7 @@ bb.h:                                             ; preds = %.preheader259
   %i.bz = add i64 %.0142, 1                       ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.1, i64 %i.bz
   %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !95
-  br label %.preheader259, !llvm.loop !871
+  br label %.preheader259, !llvm.loop !870
 
 .critedge6:                                       ; preds = %.preheader259, %.preheader259, %.preheader259, %.preheader259, %.preheader259, %.preheader259, %.preheader259
   %.not168 = icmp eq i64 %.0142, 0
@@ -408,7 +430,7 @@ _ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11c
   store i8 %i.ct, ptr %.sroa.0.08.i, align 1, !tbaa !95
   %i.cu = getelementptr i8, ptr %.sroa.0.08.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.cu, %i.cm
-  br i1 %.not.i, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN8LightGBM6CommonL4AtofEPKcPdEUlhE_ET0_T_SH_SG_T1_.exit, label %.lr.ph.i, !llvm.loop !872
+  br i1 %.not.i, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN8LightGBM6CommonL4AtofEPKcPdEUlhE_ET0_T_SH_SG_T1_.exit, label %.lr.ph.i, !llvm.loop !871
 
 _ZSt9transformIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES9_ZN8LightGBM6CommonL4AtofEPKcPdEUlhE_ET0_T_SH_SG_T1_.exit: ; preds = %.lr.ph.i
   %.pre323 = load i64, ptr %i.ch, align 8, !tbaa !94 ; 2 uses
@@ -811,10 +833,9 @@ begin_hunk_1_@llvm.fmuladd.v2f64
 !864 = distinct !{!864, !210}
 !865 = distinct !{!865, !210}
 !866 = distinct !{!866, !239}
-!867 = distinct !{!867, !210}
-!868 = distinct !{!868, !239}
+!867 = distinct !{!867, !239}
+!868 = distinct !{!868, !210}
 !869 = distinct !{!869, !210}
 !870 = distinct !{!870, !210}
 !871 = distinct !{!871, !210}
-!872 = distinct !{!872, !210}
 end_hunk_1

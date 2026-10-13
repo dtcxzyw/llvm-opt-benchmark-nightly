@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/ioWriteBench?download=true
 inline.NumInlined: 80
 inline.NumDeleted: 31
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@Io_WriteBenchLut:bb.a
   %.not21.i = icmp eq ptr %i.m, null
   br i1 %.not21.i, label %.critedge2.i, label %.lr.ph.i
@@ -202,11 +204,11 @@ bb.g:                                             ; preds = %.lr.ph81.i
 .critedge4.i:                                     ; preds = %.critedge2.i14, %.critedge2.preheader.i
   %i.cy = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #7 ; 5 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 4
-  store i32 0, ptr %i.cz, align 4, !tbaa !63
-  store i32 10000, ptr %i.cy, align 8, !tbaa !64
+  store i32 0, ptr %i.cz, align 4, !tbaa !62
+  store i32 10000, ptr %i.cy, align 8, !tbaa !63
   %i.da = tail call noalias dereferenceable_or_null(40000) ptr @malloc(i64 noundef 40000) #7
   %i.db = getelementptr inbounds nuw i8, ptr %i.cy, i64 8 ; 2 uses
-  store ptr %i.da, ptr %i.db, align 8, !tbaa !65
+  store ptr %i.da, ptr %i.db, align 8, !tbaa !64
   %i.dc = load ptr, ptr @stdout, align 8, !tbaa !37
   %.val65.i = load ptr, ptr %i.a, align 8, !tbaa !27
   %i.dd = getelementptr i8, ptr %.val65.i, i64 4
@@ -258,13 +260,13 @@ Extra_ProgressBarUpdate.exit.i:                   ; preds = %bb.l, %bb.k
   %.val54.i.i = load i32, ptr %i.dt, align 4, !tbaa !48 ; 8 uses
   %i.du = load ptr, ptr %i.dl, align 8, !tbaa !43
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 256
-  %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !66
+  %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !65
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dl, i64 64 ; 2 uses
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !34
   %i.dz = ptrtoint ptr %i.dy to i64
   %i.ea = and i64 %i.dz, -2
   %i.eb = inttoptr i64 %i.ea to ptr
-  %i.ec = tail call ptr @Hop_ManConvertAigToTruth(ptr noundef %i.dw, ptr noundef %i.eb, i32 noundef %.val54.i.i, ptr noundef nonnull %i.cy, i32 noundef 0) #6 ; 5 uses
+  %i.ec = tail call ptr @Hop_ManConvertAigToTruth(ptr noundef %i.dw, ptr noundef %i.eb, i32 noundef %.val54.i.i, ptr noundef nonnull %i.cy, i32 noundef 0) #6 ; 10 uses
   %i.ed = load ptr, ptr %i.dx, align 8, !tbaa !34
   %i.ee = ptrtoint ptr %i.ed to i64
   %i.ef = and i64 %i.ee, 1
@@ -279,15 +281,15 @@ Extra_ProgressBarUpdate.exit.i:                   ; preds = %bb.l, %bb.k
 bb.m:                                             ; preds = %Extra_ProgressBarUpdate.exit.i
   %i.eg = icmp slt i32 %.val54.i.i, 6
   %i.eh = add nsw i32 %.val54.i.i, -5
-  %i.ei = shl nuw i32 1, %i.eh                    ; 4 uses
-  %spec.select.i.i.i = select i1 %i.eg, i32 1, i32 %i.ei ; 3 uses
+  %i.ei = shl nuw i32 1, %i.eh                    ; 7 uses
+  %spec.select.i.i.i = select i1 %i.eg, i32 1, i32 %i.ei ; 6 uses
   %i.ej = icmp sgt i32 %spec.select.i.i.i, 0
   br i1 %i.ej, label %select.unfold.preheader.i.i.i, label %Extra_TruthNot.exit.i.i
 
 select.unfold.preheader.i.i.i:                    ; preds = %bb.m
-  %i.ek = zext nneg i32 %spec.select.i.i.i to i64 ; 3 uses
+  %i.ek = zext nneg i32 %spec.select.i.i.i to i64 ; 8 uses
   %min.iters.check = icmp ult i32 %spec.select.i.i.i, 8
-  br i1 %min.iters.check, label %select.unfold.i.i.i.a, label %vector.ph
+  br i1 %min.iters.check, label %select.unfold.i.i.i, label %vector.ph
 
 vector.ph:                                        ; preds = %select.unfold.preheader.i.i.i
   %n.vec = and i64 %i.ek, 2147483640
@@ -310,18 +312,53 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.eq = icmp eq i64 %index.next, %n.vec
   br i1 %i.eq, label %Extra_TruthNot.exit.i.i, label %vector.body, !llvm.loop !57
 
-select.unfold.i.i.i.a:                            ; preds = %select.unfold.preheader.i.i.i, %select.unfold.i.i.i.a
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %select.unfold.i.i.i.a ], [ %i.ek, %select.unfold.preheader.i.i.i ] ; 2 uses
-  %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i, -1 ; 2 uses
-  %i.er = getelementptr inbounds nuw [4 x i8], ptr %i.ec, i64 %indvars.iv.next.i.i.i ; 2 uses
-  %i.es = load i32, ptr %i.er, align 4, !tbaa !45
-  %i.et = xor i32 %i.es, -1
-  store i32 %i.et, ptr %i.er, align 4, !tbaa !45
-  %i.eu = icmp samesign ugt i64 %indvars.iv.i.i.i, 1
-  br i1 %i.eu, label %select.unfold.i.i.i.a, label %Extra_TruthNot.exit.i.i, !llvm.loop !58
+select.unfold.i.i.i:                              ; preds = %select.unfold.preheader.i.i.i
+  %2 = getelementptr [4 x i8], ptr %i.ec, i64 %i.ek
+  %3 = getelementptr i8, ptr %2, i64 -4           ; 2 uses
+  %4 = load i32, ptr %3, align 4, !tbaa !45
+  %5 = xor i32 %4, -1
+  store i32 %5, ptr %3, align 4, !tbaa !45
+  %.not = icmp eq i32 %spec.select.i.i.i, 1
+  br i1 %.not, label %Extra_TruthNot.exit.i.i, label %select.unfold.i.i.i.1
 
-Extra_TruthNot.exit.i.i:                          ; preds = %vector.body, %select.unfold.i.i.i.a, %bb.m, %.Extra_TruthNot.exit_crit_edge.i.i
-  %.pre-phi73.i.i = phi i32 [ %.pre72.i.i, %.Extra_TruthNot.exit_crit_edge.i.i ], [ %i.ei, %bb.m ], [ %i.ei, %select.unfold.i.i.i.a ], [ %i.ei, %vector.body ]
+select.unfold.i.i.i.1:                            ; preds = %select.unfold.i.i.i
+  %6 = getelementptr [4 x i8], ptr %i.ec, i64 %i.ek
+  %7 = getelementptr i8, ptr %6, i64 -8           ; 2 uses
+  %8 = load i32, ptr %7, align 4, !tbaa !45
+  %9 = xor i32 %8, -1
+  store i32 %9, ptr %7, align 4, !tbaa !45
+  %10 = icmp ugt i32 %spec.select.i.i.i, 2
+  br i1 %10, label %select.unfold.i.i.i.a, label %Extra_TruthNot.exit.i.i
+
+select.unfold.i.i.i.a:                            ; preds = %select.unfold.i.i.i.1
+  %11 = getelementptr [4 x i8], ptr %i.ec, i64 %i.ek
+  %12 = getelementptr i8, ptr %11, i64 -12        ; 2 uses
+  %13 = load i32, ptr %12, align 4, !tbaa !45
+  %14 = xor i32 %13, -1
+  store i32 %14, ptr %12, align 4, !tbaa !45
+  %i.er = getelementptr [4 x i8], ptr %i.ec, i64 %i.ek
+  %15 = getelementptr i8, ptr %i.er, i64 -16      ; 2 uses
+  %i.es = load i32, ptr %15, align 4, !tbaa !45
+  %i.et = xor i32 %i.es, -1
+  store i32 %i.et, ptr %15, align 4, !tbaa !45
+  %i.eu = icmp ugt i32 %spec.select.i.i.i, 4
+  br i1 %i.eu, label %select.unfold.i.i.i.4, label %Extra_TruthNot.exit.i.i
+
+select.unfold.i.i.i.4:                            ; preds = %select.unfold.i.i.i.a
+  %16 = getelementptr [4 x i8], ptr %i.ec, i64 %i.ek
+  %17 = getelementptr i8, ptr %16, i64 -20        ; 2 uses
+  %18 = load i32, ptr %17, align 4, !tbaa !45
+  %19 = xor i32 %18, -1
+  store i32 %19, ptr %17, align 4, !tbaa !45
+  %20 = getelementptr [4 x i8], ptr %i.ec, i64 %i.ek
+  %21 = getelementptr i8, ptr %20, i64 -24        ; 2 uses
+  %22 = load i32, ptr %21, align 4, !tbaa !45
+  %23 = xor i32 %22, -1
+  store i32 %23, ptr %21, align 4, !tbaa !45
+  br label %Extra_TruthNot.exit.i.i
+
+Extra_TruthNot.exit.i.i:                          ; preds = %vector.body, %select.unfold.i.i.i, %select.unfold.i.i.i.1, %select.unfold.i.i.i.a, %select.unfold.i.i.i.4, %bb.m, %.Extra_TruthNot.exit_crit_edge.i.i
+  %.pre-phi73.i.i = phi i32 [ %.pre72.i.i, %.Extra_TruthNot.exit_crit_edge.i.i ], [ %i.ei, %bb.m ], [ %i.ei, %select.unfold.i.i.i ], [ %i.ei, %select.unfold.i.i.i.4 ], [ %i.ei, %select.unfold.i.i.i.a ], [ %i.ei, %select.unfold.i.i.i.1 ], [ %i.ei, %vector.body ]
   %i.ev = icmp slt i32 %.val54.i.i, 6
   %spec.select.i57.i.i = select i1 %i.ev, i32 1, i32 %.pre-phi73.i.i ; 2 uses
   %i.ew = zext i32 %spec.select.i57.i.i to i64    ; 2 uses
@@ -331,7 +368,7 @@ Extra_TruthNot.exit.i.i:                          ; preds = %vector.body, %selec
 select.unfold.i58.i.i:                            ; preds = %.lr.ph
   %i.ey = trunc nuw i64 %i.fa to i32
   %i.ez = icmp sgt i32 %i.ey, 0
-  br i1 %i.ez, label %.lr.ph, label %Extra_TruthIsConst0.exit.i.i, !llvm.loop !59
+  br i1 %i.ez, label %.lr.ph, label %Extra_TruthIsConst0.exit.i.i, !llvm.loop !58
 
 .lr.ph:                                           ; preds = %Extra_TruthNot.exit.i.i, %select.unfold.i58.i.i
   %indvars.iv.i59.i.i25 = phi i64 [ %i.fa, %select.unfold.i58.i.i ], [ %i.ew, %Extra_TruthNot.exit.i.i ]
@@ -339,7 +376,7 @@ select.unfold.i58.i.i:                            ; preds = %.lr.ph
   %i.fb = getelementptr inbounds nuw [4 x i8], ptr %i.ec, i64 %i.fa
   %i.fc = load i32, ptr %i.fb, align 4, !tbaa !45
   %.not.i.i.i = icmp eq i32 %i.fc, 0
-  br i1 %.not.i.i.i, label %select.unfold.i58.i.i, label %.lr.ph27, !llvm.loop !59
+  br i1 %.not.i.i.i, label %select.unfold.i58.i.i, label %.lr.ph27, !llvm.loop !58
 
 Extra_TruthIsConst0.exit.i.i:                     ; preds = %select.unfold.i58.i.i, %Extra_TruthNot.exit.i.i
   %.val49.i.i = load ptr, ptr %i.dl, align 8, !tbaa !43
@@ -360,7 +397,7 @@ Extra_TruthIsConst0.exit.i.i:                     ; preds = %select.unfold.i58.i
 select.unfold.i61.i.i:                            ; preds = %.lr.ph27
   %i.fl = trunc nuw i64 %i.fn to i32
   %i.fm = icmp sgt i32 %i.fl, 0
-  br i1 %i.fm, label %.lr.ph27, label %Extra_TruthIsConst1.exit.i.i, !llvm.loop !60
+  br i1 %i.fm, label %.lr.ph27, label %Extra_TruthIsConst1.exit.i.i, !llvm.loop !59
 
 .lr.ph27:                                         ; preds = %.lr.ph, %select.unfold.i61.i.i
   %indvars.iv.i62.i.i26 = phi i64 [ %i.fn, %select.unfold.i61.i.i ], [ %i.ew, %.lr.ph ]
@@ -368,7 +405,7 @@ select.unfold.i61.i.i:                            ; preds = %.lr.ph27
   %i.fo = getelementptr inbounds nuw [4 x i8], ptr %i.ec, i64 %i.fn
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !45
   %.not.i64.i.i = icmp eq i32 %i.fp, -1
-  br i1 %.not.i64.i.i, label %select.unfold.i61.i.i, label %bb.n, !llvm.loop !60
+  br i1 %.not.i64.i.i, label %select.unfold.i61.i.i, label %bb.n, !llvm.loop !59
 
 Extra_TruthIsConst1.exit.i.i:                     ; preds = %select.unfold.i61.i.i
   %.val47.i.i = load ptr, ptr %i.dl, align 8, !tbaa !43
@@ -456,7 +493,7 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.i.i
   %.val53.i.i = load i32, ptr %i.dt, align 4, !tbaa !48
   %i.hg = sext i32 %.val53.i.i to i64
   %i.hh = icmp slt i64 %indvars.iv.next.i.i, %i.hg
-  br i1 %i.hh, label %bb.q, label %.critedge.i.i, !llvm.loop !61
+  br i1 %i.hh, label %bb.q, label %.critedge.i.i, !llvm.loop !60
 
 .critedge.i.i:                                    ; preds = %bb.q, %bb.p
   %fwrite42.i.i = tail call i64 @fwrite(ptr nonnull @.str.24, i64 3, i64 1, ptr nonnull %i.u) ; 0 uses
@@ -469,11 +506,11 @@ Io_WriteBenchLutOneNode.exit.i:                   ; preds = %.critedge.i.i, %bb.
   %.val.i13 = load i32, ptr %i.hj, align 4, !tbaa !30
   %i.hk = sext i32 %.val.i13 to i64
   %i.hl = icmp slt i64 %indvars.iv.next95.i, %i.hk
-  br i1 %i.hl, label %bb.h, label %.critedge6.i, !llvm.loop !62
+  br i1 %i.hl, label %bb.h, label %.critedge6.i, !llvm.loop !61
 
 .critedge6.i:                                     ; preds = %Io_WriteBenchLutOneNode.exit.i, %.critedge4.i
   tail call void @Extra_ProgressBarStop(ptr noundef %i.de) #6
-  %i.hm = load ptr, ptr %i.db, align 8, !tbaa !65 ; 2 uses
+  %i.hm = load ptr, ptr %i.db, align 8, !tbaa !64 ; 2 uses
   %.not.i68.i = icmp eq ptr %i.hm, null
   br i1 %.not.i68.i, label %Io_WriteBenchLutOne.exit, label %bb.r
 
@@ -599,16 +636,15 @@ attributes #7 = { nounwind allocsize(0) }
 !54 = distinct !{!54, !35}
 !55 = distinct !{!55, !35}
 !56 = distinct !{!56, !35}
-!57 = distinct !{!57, !35, !67, !68}
-!58 = distinct !{!58, !35, !68, !67}
+!57 = distinct !{!57, !35, !66, !67}
+!58 = distinct !{!58, !35}
 !59 = distinct !{!59, !35}
 !60 = distinct !{!60, !35}
 !61 = distinct !{!61, !35}
-!62 = distinct !{!62, !35}
-!63 = !{!18, !7, i64 4}
-!64 = !{!18, !7, i64 0}
-!65 = !{!18, !17, i64 8}
-!66 = !{!26, !10, i64 256}
-!67 = !{!"llvm.loop.isvectorized", i32 1}
-!68 = !{!"llvm.loop.unroll.runtime.disable"}
+!62 = !{!18, !7, i64 4}
+!63 = !{!18, !7, i64 0}
+!64 = !{!18, !17, i64 8}
+!65 = !{!26, !10, i64 256}
+!66 = !{!"llvm.loop.isvectorized", i32 1}
+!67 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0
