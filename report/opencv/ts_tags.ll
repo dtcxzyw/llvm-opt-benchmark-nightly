@@ -202,8 +202,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   br label %bb.af
 
 bb.g:                                             ; preds = %bb.a
-  %_ZN6cvtestL21currentDirectTestTagsB5cxx11E._ZN6cvtestL22currentImpliedTestTagsB5cxx11E = select i1 %1, ptr @_ZN6cvtestL21currentDirectTestTagsB5cxx11E, ptr @_ZN6cvtestL22currentImpliedTestTagsB5cxx11E ; 2 uses
-  %14 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @_ZN6cvtestL21currentDirectTestTagsB5cxx11E, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZN6cvtestL22currentImpliedTestTagsB5cxx11E, i64 8) ; 3 uses
+  %_ZN6cvtestL21currentDirectTestTagsB5cxx11E._ZN6cvtestL22currentImpliedTestTagsB5cxx11E = select i1 %1, ptr @_ZN6cvtestL21currentDirectTestTagsB5cxx11E, ptr @_ZN6cvtestL22currentImpliedTestTagsB5cxx11E ; 4 uses
+  %14 = getelementptr inbounds nuw i8, ptr %_ZN6cvtestL21currentDirectTestTagsB5cxx11E._ZN6cvtestL22currentImpliedTestTagsB5cxx11E, i64 8 ; 3 uses
   %i.l = load ptr, ptr %14, align 8, !tbaa !17    ; 10 uses
   %i.m = load ptr, ptr %_ZN6cvtestL21currentDirectTestTagsB5cxx11E._ZN6cvtestL22currentImpliedTestTagsB5cxx11E, align 8, !tbaa !16 ; 3 uses
   %.not209 = icmp eq ptr %i.l, %i.m
@@ -237,10 +237,9 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !144
 
 .critedge:                                        ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %bb.g
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN6cvtestL21currentDirectTestTagsB5cxx11E, i64 16), align 8
-  %.val203 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN6cvtestL22currentImpliedTestTagsB5cxx11E, i64 16), align 8
-  %15 = select i1 %1, ptr %.val, ptr %.val203
-  %.not.i = icmp eq ptr %i.l, %15
+  %15 = getelementptr inbounds nuw i8, ptr %_ZN6cvtestL21currentDirectTestTagsB5cxx11E._ZN6cvtestL22currentImpliedTestTagsB5cxx11E, i64 16
+  %.val203 = load ptr, ptr %15, align 8, !tbaa !25
+  %.not.i = icmp eq ptr %i.l, %.val203
   br i1 %.not.i, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %.critedge

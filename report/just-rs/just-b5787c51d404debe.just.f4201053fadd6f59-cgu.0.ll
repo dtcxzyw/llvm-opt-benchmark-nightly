@@ -205,12 +205,12 @@ bb.a:
   %.sroa.490.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.bo = udiv i32 %i.bc, 1000000
   %.sroa.486.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %i.bp = icmp ugt i32 %.sroa.10.0.copyload.i, 43199 ; 3 uses
-  %.146.i = select i1 %i.bp, ptr @81, ptr @80
-  %2 = select i1 %i.bp, ptr getelementptr inbounds nuw (i8, ptr @81, i64 2), ptr getelementptr inbounds nuw (i8, ptr @80, i64 2)
+  %i.bp = icmp ugt i32 %.sroa.10.0.copyload.i, 43199 ; 2 uses
+  %.146.i = select i1 %i.bp, ptr @81, ptr @80     ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.146.i, i64 2
   %.sroa.078.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 40 ; 2 uses
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 80 ; 11 uses
-  %.sroa.379.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 88 ; 2 uses
+  %.sroa.379.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 88 ; 3 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.ai, i64 8 ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.j, i64 4
@@ -426,8 +426,6 @@ bb.a:
   %i.hw = sext i32 %narrow.i to i64
   %i.hx = mul nsw i64 %i.hw, 86400
   %i.hy = add nsw i64 %i.eo, %i.hx
-  %3 = insertelement <2 x ptr> poison, ptr %.146.i, i64 0
-  %4 = insertelement <2 x ptr> %3, ptr %2, i64 1
   %i.hz = shl nuw nsw i16 %i.gp, 3
   %switch.shiftamt = zext nneg i16 %i.hz to i56
   %switch.downshift = lshr i56 13570401019048497, %switch.shiftamt
@@ -830,7 +828,8 @@ bb.bz:                                            ; preds = %bb.be
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !noalias !1215
   store i64 0, ptr %i.ai, align 8, !noalias !1215
   store i64 0, ptr %.sroa.078.sroa.3.0..sroa_idx.i, align 8, !noalias !1215
-  store <2 x ptr> %4, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !1215
+  store ptr %.146.i, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !1215
+  store ptr %2, ptr %.sroa.379.0..sroa_idx.i, align 8, !noalias !1215
   br label %.peel.begin.i
 
 .peel.begin.i:                                    ; preds = %_RNvXsZ_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core3fmt5Write10write_char.exit.i16, %bb.bz

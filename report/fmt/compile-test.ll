@@ -205,8 +205,8 @@ bb.o:                                             ; preds = %._crit_edge.i.i.i
   br label %_ZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsE.exit
 
 bb.p:                                             ; preds = %bb.a, %bb.a
-  %i.cs = select i1 %1, ptr @.str.16, ptr @.str.174 ; 2 uses
-  %i.ct = select i1 %1, i64 4, i64 5              ; 2 uses
+  %i.cs = select i1 %1, ptr @.str.16, ptr @.str.174 ; 5 uses
+  %i.ct = select i1 %1, i64 4, i64 5
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.cv = load i32, ptr %i.cu, align 4, !tbaa !168
   %i.cw = zext i32 %i.cv to i64
@@ -227,48 +227,34 @@ bb.q:                                             ; preds = %bb.p
   %i.dh = tail call noundef ptr @_ZN3fmt3v126detail4fillIcPcEET0_S4_mRKNS0_11basic_specsE(ptr noundef %0, i64 noundef %i.df, ptr noundef nonnull align 4 dereferenceable(16) %2)
   br label %.lr.ph.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %bb.q, %bb.p
+.lr.ph.i.i.i.i.i:                                 ; preds = %bb.p, %bb.q
   %.0.i.i.i = phi ptr [ %i.dh, %bb.q ], [ %0, %bb.p ] ; 6 uses
-  %i.di = getelementptr inbounds nuw i8, ptr %i.cs, i64 %i.ct ; 4 uses
-  %5 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @.str.16, i64 1), ptr getelementptr inbounds nuw (i8, ptr @.str.174, i64 1) ; 2 uses
-  %i.dj = load i8, ptr %i.cs, align 1, !tbaa !76
-  %i.dk = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1 ; 2 uses
-  store i8 %i.dj, ptr %.0.i.i.i, align 1, !tbaa !76
-  %.not.i.i.i.i.i = icmp eq ptr %5, %i.di
-  br i1 %.not.i.i.i.i.i, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.1
+  %5 = load i8, ptr %i.cs, align 1, !tbaa !76
+  store i8 %5, ptr %.0.i.i.i, align 1, !tbaa !76
+  %i.di = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
+  %6 = getelementptr inbounds nuw i8, ptr %i.cs, i64 1
+  %i.dj = load i8, ptr %6, align 1, !tbaa !76
+  store i8 %i.dj, ptr %i.di, align 1, !tbaa !76
+  %7 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 2
+  %i.dk = getelementptr inbounds nuw i8, ptr %i.cs, i64 2
+  %8 = load i8, ptr %i.dk, align 1, !tbaa !76
+  store i8 %8, ptr %7, align 1, !tbaa !76
+  %9 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 3
+  %10 = getelementptr inbounds nuw i8, ptr %i.cs, i64 3
+  %11 = load i8, ptr %10, align 1, !tbaa !76
+  %12 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 4 ; 2 uses
+  store i8 %11, ptr %9, align 1, !tbaa !76
+  br i1 %1, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.3
 
-.lr.ph.i.i.i.i.i.1:                               ; preds = %.lr.ph.i.i.i.i.i
-  %6 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @.str.16, i64 2), ptr getelementptr inbounds nuw (i8, ptr @.str.174, i64 2) ; 2 uses
-  %7 = load i8, ptr %5, align 1, !tbaa !76
-  %8 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 2 ; 2 uses
-  store i8 %7, ptr %i.dk, align 1, !tbaa !76
-  %.not.i.i.i.i.i.1 = icmp eq ptr %6, %i.di
-  br i1 %.not.i.i.i.i.i.1, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.2
-
-.lr.ph.i.i.i.i.i.2:                               ; preds = %.lr.ph.i.i.i.i.i.1
-  %9 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @.str.16, i64 3), ptr getelementptr inbounds nuw (i8, ptr @.str.174, i64 3) ; 2 uses
-  %10 = load i8, ptr %6, align 1, !tbaa !76
-  %11 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 3 ; 2 uses
-  store i8 %10, ptr %8, align 1, !tbaa !76
-  %.not.i.i.i.i.i.2 = icmp eq ptr %9, %i.di
-  br i1 %.not.i.i.i.i.i.2, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.3
-
-.lr.ph.i.i.i.i.i.3:                               ; preds = %.lr.ph.i.i.i.i.i.2
-  %12 = select i1 %1, ptr getelementptr inbounds nuw (i8, ptr @.str.16, i64 4), ptr getelementptr inbounds nuw (i8, ptr @.str.174, i64 4) ; 2 uses
-  %i.dl = load i8, ptr %9, align 1, !tbaa !76
-  %i.dm = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 4 ; 2 uses
-  store i8 %i.dl, ptr %11, align 1, !tbaa !76
-  %.not.i.i.i.i.i.3 = icmp eq ptr %12, %i.di
-  br i1 %.not.i.i.i.i.i.3, label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i, label %.lr.ph.i.i.i.i.i.4
-
-.lr.ph.i.i.i.i.i.4:                               ; preds = %.lr.ph.i.i.i.i.i.3
-  %13 = load i8, ptr %12, align 1, !tbaa !76
-  %14 = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 5
-  store i8 %13, ptr %i.dm, align 1, !tbaa !76
+.lr.ph.i.i.i.i.i.3:                               ; preds = %.lr.ph.i.i.i.i.i
+  %13 = getelementptr inbounds nuw i8, ptr %i.cs, i64 4
+  %i.dl = load i8, ptr %13, align 1, !tbaa !76
+  %i.dm = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 5
+  store i8 %i.dl, ptr %12, align 1, !tbaa !76
   br label %_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i
 
-_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.4, %.lr.ph.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i
-  %.lcssa69 = phi ptr [ %i.dk, %.lr.ph.i.i.i.i.i ], [ %8, %.lr.ph.i.i.i.i.i.1 ], [ %11, %.lr.ph.i.i.i.i.i.2 ], [ %i.dm, %.lr.ph.i.i.i.i.i.3 ], [ %14, %.lr.ph.i.i.i.i.i.4 ] ; 2 uses
+_ZZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsEENKUlS4_E_clES4_.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i
+  %.lcssa69 = phi ptr [ %i.dm, %.lr.ph.i.i.i.i.i.3 ], [ %12, %.lr.ph.i.i.i.i.i ] ; 2 uses
   %.not25.i.i.i = icmp eq i64 %i.cx, %i.df
   br i1 %.not25.i.i.i, label %_ZN3fmt3v126detail11write_bytesIcLNS0_5alignE1EPcEET1_S5_NS0_17basic_string_viewIcEERKNS0_12format_specsE.exit, label %bb.r
 

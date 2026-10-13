@@ -205,82 +205,34 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc void @spr_update_device_location(i32 noundef range(i32 8, 10) %0) unnamed_addr #1 align 16 prefalign(16) {
 _kzalloc_noprof.exit:
-  %i.a = icmp eq i32 %0, 8                        ; 5 uses
+  %i.a = icmp eq i32 %0, 8                        ; 3 uses
   %.040 = select i1 %i.a, i32 9, i32 41           ; 2 uses
-  %.039 = select i1 %i.a, i32 12865, i32 12870    ; 3 uses
+  %.039 = select i1 %i.a, i32 12865, i32 12870    ; 2 uses
+  %.0 = select i1 %i.a, ptr @spr_uncore_upi, ptr @spr_uncore_m3upi ; 3 uses
   %i.b = load ptr, ptr getelementptr inbounds nuw (i8, ptr @kmalloc_caches, i64 24), align 8
-  %i.c = tail call noalias align 8 dereferenceable_or_null(8) ptr @__kmalloc_cache_noprof(ptr noundef %i.b, i32 noundef 3520, i64 noundef range(i64 -103079215104, 103079215057) 8) #25 ; 5 uses
+  %i.c = tail call noalias align 8 dereferenceable_or_null(8) ptr @__kmalloc_cache_noprof(ptr noundef %i.b, i32 noundef 3520, i64 noundef range(i64 -103079215104, 103079215057) 8) #25 ; 4 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %_kzalloc_noprof.exit
-  %1 = select i1 %i.a, ptr getelementptr inbounds nuw (i8, ptr @spr_uncore_upi, i64 12), ptr getelementptr inbounds nuw (i8, ptr @spr_uncore_m3upi, i64 12)
+  %1 = getelementptr i8, ptr %.0, i64 12
   store i32 0, ptr %1, align 4
   br label %bb.e
 
 bb.b:                                             ; preds = %_kzalloc_noprof.exit
   store ptr null, ptr %i.c, align 8
-  %i.d = tail call ptr @pci_get_device(i32 noundef 32902, i32 noundef %.039, ptr noundef null) #23 ; 3 uses
+  %i.d = tail call ptr @pci_get_device(i32 noundef 32902, i32 noundef %.039, ptr noundef null) #23 ; 2 uses
   %.not4552 = icmp eq ptr %i.d, null
-  br i1 %.not4552, label %._crit_edge, label %.lr.ph
+  br i1 %.not4552, label %._crit_edge, label %bb.c
 
-.lr.ph:                                           ; preds = %bb.b
-  %2 = lshr i32 %.040, 3                          ; 2 uses
-  %3 = shl nuw nsw i32 %.040, 12                  ; 2 uses
-  br i1 %i.a, label %.lr.ph.split.us, label %.lr.ph.split
+bb.c:                                             ; preds = %bb.b
+  %i.e = lshr i32 %.040, 3
+  %i.f = shl nuw nsw i32 %.040, 12
+  %i.g = getelementptr i8, ptr %.0, i64 56
+  br label %.lr.ph.split
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph, %.backedge.us
-  %4 = phi ptr [ %28, %.backedge.us ], [ %i.d, %.lr.ph ] ; 3 uses
-  %5 = getelementptr i8, ptr %4, i64 16           ; 2 uses
-  %6 = load ptr, ptr %5, align 8
-  %7 = tail call i32 @uncore_pcibus_to_dieid(ptr noundef %6) #23 ; 2 uses
-  %8 = icmp slt i32 %7, 0
-  br i1 %8, label %.backedge.us, label %_kzalloc_noprof.exit49.us
-
-_kzalloc_noprof.exit49.us:                        ; preds = %.lr.ph.split.us
-  %9 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @kmalloc_caches, i64 48), align 16
-  %10 = tail call noalias align 8 dereferenceable_or_null(48) ptr @__kmalloc_cache_noprof(ptr noundef %9, i32 noundef 3520, i64 noundef range(i64 -103079215104, 103079215057) 48) #25 ; 6 uses
-  %.not46.us = icmp eq ptr %10, null
-  br i1 %.not46.us, label %.backedge.us, label %bb.c
-
-bb.c:                                             ; preds = %_kzalloc_noprof.exit49.us
-  %11 = getelementptr i8, ptr %10, i64 32
-  store i32 %7, ptr %11, align 8
-  %12 = getelementptr i8, ptr %4, i64 56
-  %13 = load i32, ptr %12, align 8
-  %i.e = lshr i32 %13, 3
-  %14 = and i32 %i.e, 31
-  %15 = sub nsw i32 %14, %2                       ; 2 uses
-  %16 = getelementptr i8, ptr %10, i64 28
-  store i32 %15, ptr %16, align 4
-  %17 = load ptr, ptr %5, align 8                 ; 2 uses
-  %18 = getelementptr i8, ptr %17, i64 200
-  %.val.us = load ptr, ptr %18, align 8
-  %.val.val.us = load i32, ptr %.val.us, align 8
-  %19 = shl i32 %.val.val.us, 28
-  %20 = getelementptr i8, ptr %17, i64 216
-  %21 = load i8, ptr %20, align 8
-  %22 = zext i8 %21 to i32
-  %i.f = shl nuw nsw i32 %22, 20
-  %23 = or disjoint i32 %19, %i.f
-  %.val50.us = load i32, ptr getelementptr inbounds nuw (i8, ptr @spr_uncore_upi, i64 56), align 8
-  %24 = or i32 %23, %.val50.us
-  %25 = or i32 %24, %3
-  %26 = zext i32 %25 to i64
-  %27 = getelementptr i8, ptr %10, i64 40
-  store i64 %26, ptr %27, align 8
-  %i.g = getelementptr i8, ptr %10, i64 24
-  store i32 %15, ptr %i.g, align 8
-  tail call void @uncore_find_add_unit(ptr noundef nonnull %10, ptr noundef nonnull %i.c, ptr noundef null) #23
-  br label %.backedge.us
-
-.backedge.us:                                     ; preds = %bb.c, %_kzalloc_noprof.exit49.us, %.lr.ph.split.us
-  %28 = tail call ptr @pci_get_device(i32 noundef 32902, i32 noundef %.039, ptr noundef nonnull %4) #23 ; 2 uses
-  %.not45.us = icmp eq ptr %28, null
-  br i1 %.not45.us, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !58
-
-.lr.ph.split:                                     ; preds = %.lr.ph, %.backedge
-  %i.h = phi ptr [ %i.ah, %.backedge ], [ %i.d, %.lr.ph ] ; 3 uses
+.lr.ph.split:                                     ; preds = %bb.c, %.backedge
+  %i.h = phi ptr [ %i.d, %bb.c ], [ %i.ah, %.backedge ] ; 3 uses
   %i.i = getelementptr i8, ptr %i.h, i64 16       ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = tail call i32 @uncore_pcibus_to_dieid(ptr noundef %i.j) #23 ; 2 uses
@@ -300,7 +252,7 @@ bb.d:                                             ; preds = %_kzalloc_noprof.exi
   %i.q = load i32, ptr %i.p, align 8
   %i.r = lshr i32 %i.q, 3
   %i.s = and i32 %i.r, 31
-  %i.t = sub nsw i32 %i.s, %2                     ; 2 uses
+  %i.t = sub nsw i32 %i.s, %i.e                   ; 2 uses
   %i.u = getelementptr i8, ptr %i.n, i64 28
   store i32 %i.t, ptr %i.u, align 4
   %i.v = load ptr, ptr %i.i, align 8              ; 2 uses
@@ -313,9 +265,9 @@ bb.d:                                             ; preds = %_kzalloc_noprof.exi
   %i.aa = zext i8 %i.z to i32
   %i.ab = shl nuw nsw i32 %i.aa, 20
   %i.ac = or disjoint i32 %i.x, %i.ab
-  %.val51 = load i32, ptr getelementptr inbounds nuw (i8, ptr @spr_uncore_m3upi, i64 56), align 8
-  %29 = or i32 %i.ac, %.val51
-  %i.ad = or i32 %29, %3
+  %2 = or disjoint i32 %i.ac, %i.f
+  %3 = load i32, ptr %i.g, align 8
+  %i.ad = or i32 %2, %3
   %i.ae = zext i32 %i.ad to i64
   %i.af = getelementptr i8, ptr %i.n, i64 40
   store i64 %i.ae, ptr %i.af, align 8
@@ -329,9 +281,9 @@ bb.d:                                             ; preds = %_kzalloc_noprof.exi
   %.not45 = icmp eq ptr %i.ah, null
   br i1 %.not45, label %._crit_edge, label %.lr.ph.split, !llvm.loop !58
 
-._crit_edge:                                      ; preds = %.backedge, %.backedge.us, %bb.b
-  %30 = select i1 %i.a, ptr getelementptr inbounds nuw (i8, ptr @spr_uncore_upi, i64 208), ptr getelementptr inbounds nuw (i8, ptr @spr_uncore_m3upi, i64 208)
-  store ptr %i.c, ptr %30, align 8
+._crit_edge:                                      ; preds = %.backedge, %bb.b
+  %4 = getelementptr i8, ptr %.0, i64 208
+  store ptr %i.c, ptr %4, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge, %bb.a

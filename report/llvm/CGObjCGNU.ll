@@ -205,8 +205,8 @@ $_ZN4llvm12DenseMapBaseINS_8DenseMapIPKN5clang14ObjCMethodDeclEPNS_8FunctionENS_
 @.str.82 = private unnamed_addr constant [20 x i8] c"__objc_ivar_offset_\00", align 1
 @.str.83 = private unnamed_addr constant [18 x i8] c"objc_lookup_class\00", align 1
 @.str.84 = private unnamed_addr constant [22 x i8] c".objcv2_load_function\00", align 1
-@_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE = internal constant [8 x ptr] [ptr @.str.103, ptr @.str.104, ptr @.str.105, ptr @.str.106, ptr @.str.107, ptr @.str.108, ptr @.str.109, ptr @.str.110], align 16
-@_ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE = internal constant [8 x ptr] [ptr @.str.111, ptr @.str.112, ptr @.str.113, ptr @.str.114, ptr @.str.115, ptr @.str.116, ptr @.str.117, ptr @.str.118], align 16
+@_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE = internal unnamed_addr constant [8 x ptr] [ptr @.str.103, ptr @.str.104, ptr @.str.105, ptr @.str.106, ptr @.str.107, ptr @.str.108, ptr @.str.109, ptr @.str.110], align 16
+@_ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE = internal unnamed_addr constant [8 x ptr] [ptr @.str.111, ptr @.str.112, ptr @.str.113, ptr @.str.114, ptr @.str.115, ptr @.str.116, ptr @.str.117, ptr @.str.118], align 16
 @.str.85 = private unnamed_addr constant [11 x i8] c".objc_init\00", align 1
 @.str.86 = private unnamed_addr constant [12 x i8] c"__objc_load\00", align 1
 @.str.87 = private unnamed_addr constant [11 x i8] c".objc_ctor\00", align 1
@@ -609,7 +609,7 @@ _ZN4llvm11GlobalValue13setVisibilityENS0_15VisibilityTypesE.exit:
 
 bb.a:                                             ; preds = %_ZN4llvm11GlobalValue13setVisibilityENS0_15VisibilityTypesE.exit
   call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_8ConstantELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %i.bk, ptr noundef %i.bv)
-  br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase6addIntEPN4llvm11IntegerTypeEmb.exit
+  br label %.lr.ph.a
 
 bb.b:                                             ; preds = %_ZN4llvm11GlobalValue13setVisibilityENS0_15VisibilityTypesE.exit
   %i.by = zext i32 %i.bw to i64
@@ -619,21 +619,16 @@ bb.b:                                             ; preds = %_ZN4llvm11GlobalVal
   %i.cb = load i32, ptr %i.bm, align 8, !tbaa !454
   %i.cc = add i32 %i.cb, 1
   store i32 %i.cc, ptr %i.bm, align 8, !tbaa !454
-  br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase6addIntEPN4llvm11IntegerTypeEmb.exit
+  br label %.lr.ph.a
 
-_ZN5clang7CodeGen28ConstantAggregateBuilderBase6addIntEPN4llvm11IntegerTypeEmb.exit: ; preds = %bb.a, %bb.b
-  %35 = load ptr, ptr %i.al, align 8, !tbaa !447, !nonnull !414, !align !415 ; 2 uses
+.lr.ph.a:                                         ; preds = %bb.a, %bb.b
+  %35 = load ptr, ptr %i.al, align 8, !tbaa !447, !nonnull !414, !align !415
   %36 = getelementptr inbounds nuw i8, ptr %35, i64 216
   %37 = load ptr, ptr %36, align 8, !tbaa !547, !nonnull !414, !align !415
   %38 = getelementptr inbounds nuw i8, ptr %37, i64 268
   %39 = load i32, ptr %38, align 4, !tbaa !555
-  %40 = icmp eq i32 %39, 1                        ; 2 uses
-  %_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE._ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE = select i1 %40, ptr @_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE, ptr @_ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE ; 2 uses
-  %41 = select i1 %40, ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE, i64 64) ; 2 uses
-  %.not334 = icmp eq ptr %_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE._ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE, %41
-  br i1 %.not334, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i, label %.lr.ph.a
-
-.lr.ph.a:                                         ; preds = %_ZN5clang7CodeGen28ConstantAggregateBuilderBase6addIntEPN4llvm11IntegerTypeEmb.exit
+  %40 = icmp eq i32 %39, 1
+  %_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE._ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE = select i1 %40, ptr @_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE, ptr @_ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE
   %i.cd = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %.sroa.23.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -651,17 +646,13 @@ _ZN5clang7CodeGen28ConstantAggregateBuilderBase6addIntEPN4llvm11IntegerTypeEmb.e
   %i.cn = getelementptr inbounds nuw i8, ptr %3, i64 16
   br label %bb.d
 
-_ZN4llvm11GlobalValue13setVisibilityENS0_15VisibilityTypesE.exit121.loopexit: ; preds = %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit126
-  %.pre = load ptr, ptr %i.al, align 8, !tbaa !447
-  br label %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i
-
 bb.c:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i
   call void @free(ptr noundef %i.dt) #24
   br label %_ZN12_GLOBAL__N_114CGObjCGNUstep219CallRuntimeFunctionERN5clang7CodeGen11CGBuilderTyEN4llvm9StringRefENS5_8ArrayRefIPNS5_5ValueEEE.exit
 
-_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i: ; preds = %_ZN4llvm11GlobalValue13setVisibilityENS0_15VisibilityTypesE.exit121.loopexit, %_ZN5clang7CodeGen28ConstantAggregateBuilderBase6addIntEPN4llvm11IntegerTypeEmb.exit
-  %42 = phi ptr [ %.pre, %_ZN4llvm11GlobalValue13setVisibilityENS0_15VisibilityTypesE.exit121.loopexit ], [ %35, %_ZN5clang7CodeGen28ConstantAggregateBuilderBase6addIntEPN4llvm11IntegerTypeEmb.exit ]
-  %i.co = getelementptr inbounds nuw i8, ptr %42, i64 138
+_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i: ; preds = %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit126
+  %41 = load ptr, ptr %i.al, align 8, !tbaa !447, !nonnull !414, !align !415
+  %i.co = getelementptr inbounds nuw i8, ptr %41, i64 138
   %i.cp = load i8, ptr %i.co, align 2, !tbaa !417
   %i.cq = zext i8 %i.cp to i64
   %i.cr = load ptr, ptr %15, align 8, !tbaa !556, !nonnull !414, !align !415
@@ -758,8 +749,9 @@ _ZN12_GLOBAL__N_114CGObjCGNUstep219CallRuntimeFunctionERN5clang7CodeGen11CGBuild
   br i1 %i.eo, label %bb.m, label %bb.n
 
 bb.d:                                             ; preds = %.lr.ph.a, %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit126
-  %.0335 = phi ptr [ %_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE._ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE, %.lr.ph.a ], [ %43, %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit126 ] ; 2 uses
-  %i.ep = load ptr, ptr %.0335, align 8, !tbaa !564 ; 5 uses
+  %.0.idx334 = phi i64 [ 0, %.lr.ph.a ], [ %.0.add, %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit126 ] ; 2 uses
+  %.0.ptr = getelementptr inbounds nuw i8, ptr %_ZN12_GLOBAL__N_114CGObjCGNUstep223PECOFFSectionsBaseNamesE._ZN12_GLOBAL__N_114CGObjCGNUstep217SectionsBaseNamesE, i64 %.0.idx334
+  %i.ep = load ptr, ptr %.0.ptr, align 8, !tbaa !564 ; 5 uses
   %.not.i122 = icmp eq ptr %i.ep, null
   br i1 %.not.i122, label %_ZN4llvm9StringRefC2EPKc.exit, label %bb.e
 
@@ -905,9 +897,9 @@ bb.l:                                             ; preds = %_ZN5clang7CodeGen28
   br label %_ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit126
 
 _ZN5clang7CodeGen28ConstantAggregateBuilderBase3addEPN4llvm8ConstantE.exit126: ; preds = %bb.k, %bb.l
-  %43 = getelementptr inbounds nuw i8, ptr %.0335, i64 8 ; 2 uses
-  %.not = icmp eq ptr %43, %41
-  br i1 %.not, label %_ZN4llvm11GlobalValue13setVisibilityENS0_15VisibilityTypesE.exit121.loopexit, label %bb.d
+  %.0.add = add nuw nsw i64 %.0.idx334, 8         ; 2 uses
+  %.not = icmp eq i64 %.0.add, 64
+  br i1 %.not, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i, label %bb.d
 
 bb.m:                                             ; preds = %_ZN12_GLOBAL__N_114CGObjCGNUstep219CallRuntimeFunctionERN5clang7CodeGen11CGBuilderTyEN4llvm9StringRefENS5_8ArrayRefIPNS5_5ValueEEE.exit
   call void @_ZN4llvm12GlobalObject10setSectionENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(60) %i.ed, ptr nonnull @.str.88, i64 9) #24

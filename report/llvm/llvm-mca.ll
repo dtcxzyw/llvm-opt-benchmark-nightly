@@ -202,16 +202,17 @@ _ZNKSt8functionIFvRKbEEclES1_.exit.i.i41.i:       ; preds = %bb.bs
   br label %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit42.i
 
 _ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit42.i: ; preds = %_ZNKSt8functionIFvRKbEEclES1_.exit.i.i41.i, %bb.bs, %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit37.i, %bb.bl
-  %i.nw = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL14EnableAllViews, i64 12), align 4, !tbaa !104 ; 2 uses
-  %i.nx = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL14EnableAllStats, i64 12), align 4, !tbaa !104 ; 2 uses
-  %i.ny = icmp ult i16 %i.nw, %i.nx               ; 2 uses
-  %i.nz = select i1 %i.ny, ptr getelementptr inbounds nuw (i8, ptr @_ZL14EnableAllStats, i64 12), ptr getelementptr inbounds nuw (i8, ptr @_ZL14EnableAllViews, i64 12) ; 3 uses
-  %101 = call i16 @llvm.umax.i16(i16 %i.nw, i16 %i.nx) ; 3 uses
-  %102 = select i1 %i.ny, ptr getelementptr inbounds nuw (i8, ptr @_ZL14EnableAllStats, i64 120), ptr getelementptr inbounds nuw (i8, ptr @_ZL14EnableAllViews, i64 120) ; 4 uses
+  %i.nw = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL14EnableAllViews, i64 12), align 4, !tbaa !104
+  %i.nx = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL14EnableAllStats, i64 12), align 4, !tbaa !104
+  %i.ny = icmp ult i16 %i.nw, %i.nx
+  %i.nz = select i1 %i.ny, ptr @_ZL14EnableAllStats, ptr @_ZL14EnableAllViews ; 2 uses
+  %101 = getelementptr i8, ptr %i.nz, i64 12      ; 4 uses
+  %_ZL14EnableAllStats._ZL14EnableAllViews.val12.i = load i16, ptr %101, align 4 ; 3 uses
+  %102 = getelementptr i8, ptr %i.nz, i64 120     ; 4 uses
   %i.oa = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL22PrintRegisterFileStats, i64 8), align 8, !tbaa !462
   %.not.i43.i = icmp eq i16 %i.oa, 0
   %i.ob = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL22PrintRegisterFileStats, i64 12), align 4
-  %i.oc = icmp ult i16 %i.ob, %101
+  %i.oc = icmp ult i16 %i.ob, %_ZL14EnableAllStats._ZL14EnableAllViews.val12.i
   %or.cond.i44.i = select i1 %.not.i43.i, i1 true, i1 %i.oc
   br i1 %or.cond.i44.i, label %bb.bt, label %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit47.i
 
@@ -225,11 +226,11 @@ bb.bt:                                            ; preds = %_ZL17processOptionI
 _ZNKSt8functionIFvRKbEEclES1_.exit.i.i46.i:       ; preds = %bb.bt
   %i.oe = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL22PrintRegisterFileStats, i64 176), align 8, !tbaa !464
   call void %i.oe(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL22PrintRegisterFileStats, i64 152), ptr noundef nonnull align 1 dereferenceable(1) getelementptr inbounds nuw (i8, ptr @_ZL22PrintRegisterFileStats, i64 120)) #24, !inline_history !355
-  %_ZL14EnableAllStats._ZL14EnableAllViews.val10.pre.i = load i16, ptr %i.nz, align 4
+  %_ZL14EnableAllStats._ZL14EnableAllViews.val10.pre.i = load i16, ptr %101, align 4
   br label %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit47.i
 
 _ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit47.i: ; preds = %_ZNKSt8functionIFvRKbEEclES1_.exit.i.i46.i, %bb.bt, %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit42.i
-  %_ZL14EnableAllStats._ZL14EnableAllViews.val869.i = phi i16 [ %101, %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit42.i ], [ %101, %bb.bt ], [ %_ZL14EnableAllStats._ZL14EnableAllViews.val10.pre.i, %_ZNKSt8functionIFvRKbEEclES1_.exit.i.i46.i ] ; 3 uses
+  %_ZL14EnableAllStats._ZL14EnableAllViews.val869.i = phi i16 [ %_ZL14EnableAllStats._ZL14EnableAllViews.val12.i, %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit42.i ], [ %_ZL14EnableAllStats._ZL14EnableAllViews.val12.i, %bb.bt ], [ %_ZL14EnableAllStats._ZL14EnableAllViews.val10.pre.i, %_ZNKSt8functionIFvRKbEEclES1_.exit.i.i46.i ] ; 3 uses
   %i.of = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL18PrintDispatchStats, i64 8), align 8, !tbaa !462
   %.not.i48.i = icmp eq i16 %i.of, 0
   %i.og = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL18PrintDispatchStats, i64 12), align 4
@@ -247,7 +248,7 @@ bb.bu:                                            ; preds = %_ZL17processOptionI
 _ZNKSt8functionIFvRKbEEclES1_.exit.i.i51.i:       ; preds = %bb.bu
   %i.oj = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL18PrintDispatchStats, i64 176), align 8, !tbaa !464
   call void %i.oj(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL18PrintDispatchStats, i64 152), ptr noundef nonnull align 1 dereferenceable(1) getelementptr inbounds nuw (i8, ptr @_ZL18PrintDispatchStats, i64 120)) #24, !inline_history !355
-  %_ZL14EnableAllStats._ZL14EnableAllViews.val8.pre.i = load i16, ptr %i.nz, align 4
+  %_ZL14EnableAllStats._ZL14EnableAllViews.val8.pre.i = load i16, ptr %101, align 4
   br label %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit52.i
 
 _ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit52.i: ; preds = %_ZNKSt8functionIFvRKbEEclES1_.exit.i.i51.i, %bb.bu, %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit47.i
@@ -275,7 +276,7 @@ _ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit57.i: ; pre
   br i1 %i.mu, label %bb.bw, label %_ZL18processViewOptionsb.exit
 
 bb.bw:                                            ; preds = %_ZL17processOptionImplRN4llvm2cl3optIbLb0ENS0_6parserIbEEEERKS4_.exit57.i
-  %_ZL14EnableAllStats._ZL14EnableAllViews.val.i = load i16, ptr %i.nz, align 4
+  %_ZL14EnableAllStats._ZL14EnableAllViews.val.i = load i16, ptr %101, align 4
   %i.op = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL16PrintRetireStats, i64 8), align 8, !tbaa !462
   %.not.i58.i = icmp eq i16 %i.op, 0
   %i.oq = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL16PrintRetireStats, i64 12), align 4
@@ -676,9 +677,6 @@ declare i64 @llvm.umax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.umax.i16(i16, i16) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #23

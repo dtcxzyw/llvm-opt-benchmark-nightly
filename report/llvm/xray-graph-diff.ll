@@ -204,18 +204,16 @@ bb.a:
   %i.o = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL18GraphDiffInstrMap1B5cxx11, i64 12), align 4, !tbaa !143, !noalias !662
   %i.p = icmp eq i16 %i.o, 0
   %i.q = icmp eq i16 %_ZL19GraphDiffInstrMap1A.val.i.i.i, 0
-  %or.cond.i15.i.i.i = select i1 %i.p, i1 %i.q, i1 false ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
-  store ptr %16, ptr %i.n, align 8, !tbaa !126, !noalias !662
-  %.val10.i.i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL17GraphDiffInstrMapB5cxx11, i64 120), align 8, !noalias !662
-  %.val11.i.i.i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL18GraphDiffInstrMap1B5cxx11, i64 120), align 8, !noalias !662
-  %17 = select i1 %or.cond.i15.i.i.i, ptr %.val10.i.i.i, ptr %.val11.i.i.i.a ; 2 uses
-  %.val12.i.i.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL17GraphDiffInstrMapB5cxx11, i64 128), align 8, !noalias !662
-  %.val13.i.i.i.a = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL18GraphDiffInstrMap1B5cxx11, i64 128), align 8, !noalias !662
-  %18 = select i1 %or.cond.i15.i.i.i, i64 %.val12.i.i.i, i64 %.val13.i.i.i.a ; 4 uses
+  %or.cond.i15.i.i.i = select i1 %i.p, i1 %i.q, i1 false
+  %16 = select i1 %or.cond.i15.i.i.i, ptr getelementptr inbounds nuw (i8, ptr @_ZL17GraphDiffInstrMapB5cxx11, i64 120), ptr getelementptr inbounds nuw (i8, ptr @_ZL18GraphDiffInstrMap1B5cxx11, i64 120) ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
+  store ptr %17, ptr %i.n, align 8, !tbaa !126, !noalias !662
+  %.val11.i.i.i.a = load ptr, ptr %16, align 8, !tbaa !34, !noalias !662 ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %16, i64 8
+  %.val13.i.i.i.a = load i64, ptr %18, align 8, !tbaa !83, !noalias !662 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21, !noalias !662
-  store i64 %18, ptr %i.d, align 8, !tbaa !64, !noalias !662
-  %i.r = icmp ugt i64 %18, 15
+  store i64 %.val13.i.i.i.a, ptr %i.d, align 8, !tbaa !64, !noalias !662
+  %i.r = icmp ugt i64 %.val13.i.i.i.a, 15
   %indvars.iv.i.sroa.gep1.i.i = getelementptr inbounds nuw i8, ptr %4, i64 208 ; 3 uses
   %indvars.iv.i.sroa.gep4.i.i = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 7 uses
   %indvars.iv.i.sroa.gep7.i.i = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses
@@ -225,23 +223,23 @@ bb.b:                                             ; preds = %bb.a
   %i.s = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(8) %i.d, i64 noundef 0) #21, !noalias !662 ; 2 uses
   store ptr %i.s, ptr %i.n, align 8, !tbaa !34, !noalias !662
   %i.t = load i64, ptr %i.d, align 8, !tbaa !64, !noalias !662
-  store i64 %i.t, ptr %16, align 8, !tbaa !35, !noalias !662
+  store i64 %i.t, ptr %17, align 8, !tbaa !35, !noalias !662
   br label %._crit_edge.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %bb.b, %bb.a
-  %i.u = phi ptr [ %i.s, %bb.b ], [ %16, %bb.a ]  ; 2 uses
-  switch i64 %18, label %bb.d [
+  %i.u = phi ptr [ %i.s, %bb.b ], [ %17, %bb.a ]  ; 2 uses
+  switch i64 %.val13.i.i.i.a, label %bb.d [
     i64 1, label %bb.c
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i
   ]
 
 bb.c:                                             ; preds = %._crit_edge.i.i.i.i.i
-  %i.v = load i8, ptr %17, align 1, !tbaa !35, !noalias !662
+  %i.v = load i8, ptr %.val11.i.i.i.a, align 1, !tbaa !35, !noalias !662
   store i8 %i.v, ptr %i.u, align 1, !tbaa !35, !noalias !662
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i
 
 bb.d:                                             ; preds = %._crit_edge.i.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.u, ptr align 1 %17, i64 %18, i1 false), !noalias !662
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.u, ptr align 1 %.val11.i.i.i.a, i64 %.val13.i.i.i.a, i1 false), !noalias !662
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i: ; preds = %bb.d, %bb.c, %._crit_edge.i.i.i.i.i
@@ -278,41 +276,39 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i: ; pred
   %i.al = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL18GraphDiffInstrMap2B5cxx11, i64 12), align 4, !tbaa !143, !noalias !662
   %i.am = icmp eq i16 %i.al, 0
   %i.an = icmp eq i16 %_ZL19GraphDiffInstrMap2A.val.i.i.i, 0
-  %or.cond.i21.i.i.i = select i1 %i.am, i1 %i.an, i1 false ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 3 uses
-  store ptr %19, ptr %i.ak, align 8, !tbaa !126, !noalias !662
-  %.val18.i.i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL17GraphDiffInstrMapB5cxx11, i64 120), align 8, !noalias !662
-  %.val19.i.i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL18GraphDiffInstrMap2B5cxx11, i64 120), align 8, !noalias !662
-  %20 = select i1 %or.cond.i21.i.i.i, ptr %.val18.i.i.i, ptr %.val19.i.i.i ; 2 uses
-  %.val20.i.i.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL17GraphDiffInstrMapB5cxx11, i64 128), align 8, !noalias !662
-  %.val21.i.i.i = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL18GraphDiffInstrMap2B5cxx11, i64 128), align 8, !noalias !662
-  %21 = select i1 %or.cond.i21.i.i.i, i64 %.val20.i.i.i, i64 %.val21.i.i.i ; 4 uses
+  %or.cond.i21.i.i.i = select i1 %i.am, i1 %i.an, i1 false
+  %19 = select i1 %or.cond.i21.i.i.i, ptr getelementptr inbounds nuw (i8, ptr @_ZL17GraphDiffInstrMapB5cxx11, i64 120), ptr getelementptr inbounds nuw (i8, ptr @_ZL18GraphDiffInstrMap2B5cxx11, i64 120) ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 3 uses
+  store ptr %20, ptr %i.ak, align 8, !tbaa !126, !noalias !662
+  %.val19.i.i.i = load ptr, ptr %19, align 8, !tbaa !34, !noalias !662 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %19, i64 8
+  %.val21.i.i.i = load i64, ptr %21, align 8, !tbaa !83, !noalias !662 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21, !noalias !662
-  store i64 %21, ptr %i.c, align 8, !tbaa !64, !noalias !662
-  %i.ao = icmp ugt i64 %21, 15
+  store i64 %.val21.i.i.i, ptr %i.c, align 8, !tbaa !64, !noalias !662
+  %i.ao = icmp ugt i64 %.val21.i.i.i, 15
   br i1 %i.ao, label %bb.e, label %._crit_edge.i.i23.i.i.i
 
 bb.e:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i
   %i.ap = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %i.ak, ptr noundef nonnull align 8 dereferenceable(8) %i.c, i64 noundef 0) #21, !noalias !662 ; 2 uses
   store ptr %i.ap, ptr %i.ak, align 8, !tbaa !34, !noalias !662
   %i.aq = load i64, ptr %i.c, align 8, !tbaa !64, !noalias !662
-  store i64 %i.aq, ptr %19, align 8, !tbaa !35, !noalias !662
+  store i64 %i.aq, ptr %20, align 8, !tbaa !35, !noalias !662
   br label %._crit_edge.i.i23.i.i.i
 
 ._crit_edge.i.i23.i.i.i:                          ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i
-  %i.ar = phi ptr [ %i.ap, %bb.e ], [ %19, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i ] ; 2 uses
-  switch i64 %21, label %bb.g [
+  %i.ar = phi ptr [ %i.ap, %bb.e ], [ %20, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i.i.i ] ; 2 uses
+  switch i64 %.val21.i.i.i, label %bb.g [
     i64 1, label %bb.f
     i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit24.i.i.i
   ]
 
 bb.f:                                             ; preds = %._crit_edge.i.i23.i.i.i
-  %i.as = load i8, ptr %20, align 1, !tbaa !35, !noalias !662
+  %i.as = load i8, ptr %.val19.i.i.i, align 1, !tbaa !35, !noalias !662
   store i8 %i.as, ptr %i.ar, align 1, !tbaa !35, !noalias !662
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit24.i.i.i
 
 bb.g:                                             ; preds = %._crit_edge.i.i23.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ar, ptr align 1 %20, i64 %21, i1 false), !noalias !662
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ar, ptr align 1 %.val19.i.i.i, i64 %.val21.i.i.i, i1 false), !noalias !662
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit24.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit24.i.i.i: ; preds = %bb.g, %bb.f, %._crit_edge.i.i23.i.i.i
