@@ -205,7 +205,7 @@ tailrecurse._crit_edge:                           ; preds = %tailrecurse, %bb.a
   %i.am = sdiv i32 %i.al, 2                       ; 4 uses
   %i.an = add nuw nsw i32 %i.am, 1
   %wide.trip.count = zext i32 %i.an to i64        ; 4 uses
-  %min.iters.check = icmp ult i32 %i.am, 7
+  %min.iters.check = icmp ult i32 %i.am, 5
   br i1 %min.iters.check, label %.lr.ph106.preheader159, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph106.preheader
@@ -222,23 +222,20 @@ vector.memcheck:                                  ; preds = %.lr.ph106.preheader
   br i1 %found.conflict, label %.lr.ph106.preheader159, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %wide.trip.count, 2147483646   ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
-  %wide.load = load <4 x float>, ptr %i.av, align 4, !tbaa !65, !alias.scope !153 ; 2 uses
+  %wide.load = load <2 x float>, ptr %i.av, align 4, !tbaa !65, !alias.scope !153
   %i.aw = shl nuw nsw i64 %index, 3
   %i.ax = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.aw ; 2 uses
-  %wide.vec = load <8 x float>, ptr %i.ax, align 4, !tbaa !65, !alias.scope !154, !noalias !153 ; 2 uses
-  %strided.vec = shufflevector <8 x float> %wide.vec, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %strided.vec134 = shufflevector <8 x float> %wide.vec, <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %6 = fmul nsz <4 x float> %wide.load, %strided.vec
-  %i.ay = fmul nsz <4 x float> %wide.load, %strided.vec134
-  %interleaved.vec = shufflevector <4 x float> %6, <4 x float> %i.ay, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
-  store <8 x float> %interleaved.vec, ptr %i.ax, align 4, !tbaa !65, !alias.scope !154, !noalias !153
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %wide.vec = load <4 x float>, ptr %i.ax, align 4, !tbaa !65, !alias.scope !154, !noalias !153
+  %6 = shufflevector <2 x float> %wide.load, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %i.ay = fmul nsz <4 x float> %6, %wide.vec
+  store <4 x float> %i.ay, ptr %i.ax, align 4, !tbaa !65, !alias.scope !154, !noalias !153
+  %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.az = icmp eq i64 %index.next, %n.vec
   br i1 %i.az, label %middle.block, label %vector.body, !llvm.loop !144
 

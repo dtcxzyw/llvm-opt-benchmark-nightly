@@ -202,8 +202,8 @@ bb.ci:                                            ; preds = %bb.b
 define internal fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state0(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %1, i64 noundef %2) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 10 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 9 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 11 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.d = load ptr, ptr %1, align 8, !nonnull !5   ; 13 uses
   br label %tailrecurse
 
@@ -239,7 +239,8 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
   br i1 %i.u, label %.loopexit, label %.lr.ph259
 
 .loopexit:                                        ; preds = %.lr.ph, %.lr.ph152, %.lr.ph.preheader, %.preheader, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.m
-  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr95, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1151, %.lr.ph152 ], [ %i.cj, %.lr.ph ] ; 3 uses
+  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr95, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1151, %.lr.ph152 ], [ %i.cj, %.lr.ph ] ; 4 uses
+  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.v = icmp ult i64 %.sroa.0.2, %i.b
   br i1 %i.v, label %.loopexit.thread323, label %.loopexit.thread.a
 
@@ -257,12 +258,16 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
 bb.b:                                             ; preds = %.lr.ph152
   %i.ad = add nuw i64 %.sroa.0.1151, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.ad, %i.b
-  br i1 %exitcond.not, label %.loopexit.thread.a, label %.lr.ph152
+  br i1 %exitcond.not, label %.loopexit.thread, label %.lr.ph152
+
+.loopexit.thread:                                 ; preds = %bb.b
+  store i64 %i.b, ptr %i.c, align 8
+  br label %.loopexit.thread.a
 
 .lr.ph259:                                        ; preds = %.lr.ph.preheader, %.lr.ph
   %i.ae = phi ptr [ %i.o, %.lr.ph ], [ %i.g, %.lr.ph.preheader ] ; 7 uses
   %.sroa.0.0149258 = phi i64 [ %i.cj, %.lr.ph ], [ %.tr95, %.lr.ph.preheader ] ; 8 uses
-  %i.af = phi i64 [ %i.ck, %.lr.ph ], [ %i.e, %.lr.ph.preheader ]
+  %i.af = phi i64 [ %i.ck, %.lr.ph ], [ %i.e, %.lr.ph.preheader ] ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 1
   %i.ah = load i8, ptr %i.ag, align 1, !noundef !5
   %i.ai = zext i8 %i.ah to i64
@@ -354,7 +359,11 @@ bb.n:                                             ; preds = %bb.l
   %i.cg = load i8, ptr %i.cf, align 1, !noundef !5
   %i.ch = and i8 %i.cg, 1
   %i.ci = icmp eq i8 %i.ch, 0
-  br i1 %i.ci, label %.loopexit.thread323, label %bb.o
+  br i1 %i.ci, label %.loopexit.thread310, label %bb.o
+
+.loopexit.thread310:                              ; preds = %bb.n
+  store i64 %i.af, ptr %i.c, align 8
+  br label %.loopexit.thread323
 
 bb.o:                                             ; preds = %bb.n
   %i.cj = add i64 %.sroa.0.0149258, 8             ; 4 uses
@@ -362,8 +371,8 @@ bb.o:                                             ; preds = %bb.n
   %i.cl = icmp ult i64 %i.ck, %i.b
   br i1 %i.cl, label %.lr.ph, label %.preheader
 
-.loopexit.thread323:                              ; preds = %bb.n, %.loopexit
-  %.sroa.0.2325 = phi i64 [ %.sroa.0.2, %.loopexit ], [ %i.af, %bb.n ] ; 17 uses
+.loopexit.thread323:                              ; preds = %.loopexit.thread310, %.loopexit
+  %.sroa.0.2325 = phi i64 [ %i.af, %.loopexit.thread310 ], [ %.sroa.0.2, %.loopexit ] ; 9 uses
   %i.cm = add nuw i64 %.sroa.0.2325, 1            ; 12 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.0.2325
   %i.co = load i8, ptr %i.cn, align 1, !noundef !5
@@ -401,7 +410,6 @@ tailrecurse.backedge:                             ; preds = %bb.w, %bb.t, %bb.q
   br label %tailrecurse
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  store i64 %.sroa.0.2325, ptr %i.c, align 8
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.cx = load i64, ptr %i.cw, align 8, !alias.scope !123, !noalias !124, !noundef !5 ; 2 uses
   %i.cy = sub nuw i64 %.sroa.0.2325, %i.cx
@@ -425,7 +433,6 @@ bb.t:                                             ; preds = %bb.s
   br i1 %or.cond.i43, label %tailrecurse.backedge, label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  store i64 %.sroa.0.2325, ptr %i.c, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.df = load i64, ptr %i.de, align 8, !alias.scope !127, !noalias !128, !noundef !5 ; 2 uses
   %i.dg = sub nuw i64 %.sroa.0.2325, %i.df
@@ -448,7 +455,6 @@ bb.w:                                             ; preds = %bb.v
   br i1 %or.cond.i44, label %tailrecurse.backedge, label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v
-  store i64 %.sroa.0.2325, ptr %i.c, align 8
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dm = load i64, ptr %i.dl, align 8, !alias.scope !131, !noalias !132, !noundef !5 ; 2 uses
   %i.dn = sub nuw i64 %.sroa.0.2325, %i.dm
@@ -461,22 +467,18 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state2.exit
 
 bb.y:                                             ; preds = %.loopexit.thread323
-  store i64 %.sroa.0.2325, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state5(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.cm, i8 noundef 71)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state2.exit
 
 bb.z:                                             ; preds = %.loopexit.thread323
-  store i64 %.sroa.0.2325, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state6(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.cm, i8 noundef 71)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state2.exit
 
 bb.aa:                                            ; preds = %.loopexit.thread323
-  store i64 %.sroa.0.2325, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state7(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.cm, i8 noundef 71)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state2.exit
 
 bb.ab:                                            ; preds = %.loopexit.thread323
-  store i64 %.sroa.0.2325, ptr %i.c, align 8
   %i.dp = icmp ult i64 %i.cm, %i.b
   br i1 %i.dp, label %bb.ac, label %bb.ae
 
@@ -504,13 +506,11 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ab
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state2.exit
 
 bb.af:                                            ; preds = %.loopexit.thread323
-  store i64 %.sroa.0.2325, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state9(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.cm, i8 noundef 71)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex6state2.exit
 
-.loopexit.thread.a:                               ; preds = %.loopexit.thread323, %.loopexit, %bb.b
-  %.sroa.0.2201 = phi i64 [ %i.b, %bb.b ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2325, %.loopexit.thread323 ] ; 2 uses
-  store i64 %.sroa.0.2201, ptr %i.c, align 8
+.loopexit.thread.a:                               ; preds = %.loopexit.thread323, %.loopexit, %.loopexit.thread
+  %.sroa.0.2201 = phi i64 [ %i.b, %.loopexit.thread ], [ %.sroa.0.2325, %.loopexit.thread323 ], [ %.sroa.0.2, %.loopexit ]
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dz = load i64, ptr %i.dy, align 8, !alias.scope !138, !noalias !139, !noundef !5 ; 2 uses
   %i.ea = sub nuw i64 %.sroa.0.2201, %i.dz
@@ -913,8 +913,8 @@ _RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPK
 define internal fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state184(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %1, i64 noundef %2) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 14 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 9 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 15 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.d = load ptr, ptr %1, align 8, !nonnull !5   ; 21 uses
   br label %tailrecurse
 
@@ -950,7 +950,8 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
   br i1 %i.u, label %.loopexit, label %.lr.ph30
 
 .loopexit:                                        ; preds = %bb.n, %.lr.ph, %.lr.ph199, %.lr.ph.preheader, %.preheader, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.m
-  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr142, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1198, %.lr.ph199 ], [ %i.af, %bb.n ], [ %i.cj, %.lr.ph ] ; 27 uses
+  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr142, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1198, %.lr.ph199 ], [ %i.af, %bb.n ], [ %i.cj, %.lr.ph ] ; 20 uses
+  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.v = icmp ult i64 %.sroa.0.2, %i.b
   br i1 %i.v, label %bb.p, label %.loopexit.thread.a
 
@@ -968,7 +969,11 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
 bb.b:                                             ; preds = %.lr.ph199
   %i.ad = add nuw i64 %.sroa.0.1198, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.ad, %i.b
-  br i1 %exitcond.not, label %.loopexit.thread.a, label %.lr.ph199
+  br i1 %exitcond.not, label %.loopexit.thread, label %.lr.ph199
+
+.loopexit.thread:                                 ; preds = %bb.b
+  store i64 %i.b, ptr %i.c, align 8
+  br label %.loopexit.thread.a
 
 .lr.ph30:                                         ; preds = %.lr.ph.preheader, %.lr.ph
   %i.ae = phi ptr [ %i.o, %.lr.ph ], [ %i.g, %.lr.ph.preheader ] ; 7 uses
@@ -1111,7 +1116,6 @@ tailrecurse.backedge:                             ; preds = %bb.x, %bb.u, %bb.r
   br label %tailrecurse
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.cx = load i64, ptr %i.cw, align 8, !alias.scope !4208, !noalias !4209, !noundef !5 ; 2 uses
   %i.cy = sub nuw i64 %.sroa.0.2, %i.cx
@@ -1135,7 +1139,6 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond.i43, label %tailrecurse.backedge, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.df = load i64, ptr %i.de, align 8, !alias.scope !4212, !noalias !4213, !noundef !5 ; 2 uses
   %i.dg = sub nuw i64 %.sroa.0.2, %i.df
@@ -1158,7 +1161,6 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond.i44, label %tailrecurse.backedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dm = load i64, ptr %i.dl, align 8, !alias.scope !4216, !noalias !4217, !noundef !5 ; 2 uses
   %i.dn = sub nuw i64 %.sroa.0.2, %i.dm
@@ -1171,7 +1173,6 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state185.exit
 
 bb.z:                                             ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.dp = icmp ult i64 %i.cm, %i.b
   br i1 %i.dp, label %bb.aa, label %bb.ae
 
@@ -1214,7 +1215,6 @@ bb.ae:                                            ; preds = %bb.aa, %bb.z
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state185.exit
 
 bb.af:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ea = icmp ult i64 %i.cm, %i.b
   br i1 %i.ea, label %bb.ag, label %bb.an
 
@@ -1272,7 +1272,6 @@ bb.an:                                            ; preds = %bb.ag, %bb.af
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state185.exit
 
 bb.ao:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.el = icmp ult i64 %i.cm, %i.b
   br i1 %i.el, label %bb.ap, label %bb.av
 
@@ -1325,7 +1324,6 @@ bb.av:                                            ; preds = %bb.ap, %bb.ao
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state185.exit
 
 bb.aw:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ew = icmp ult i64 %i.cm, %i.b
   br i1 %i.ew, label %bb.ax, label %bb.az
 
@@ -1353,7 +1351,6 @@ bb.az:                                            ; preds = %bb.ax, %bb.aw
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state185.exit
 
 bb.ba:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ff = icmp ult i64 %i.cm, %i.b
   br i1 %i.ff, label %bb.bb, label %bb.bj
 
@@ -1415,9 +1412,8 @@ bb.bj:                                            ; preds = %bb.bb, %bb.ba
   store i64 %i.fo, ptr %.sroa.5140.0..sroa_idx, align 8, !noalias !4238
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state185.exit
 
-.loopexit.thread.a:                               ; preds = %bb.p, %.loopexit, %bb.b
-  %.sroa.0.2248 = phi i64 [ %i.b, %bb.b ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.p ] ; 2 uses
-  store i64 %.sroa.0.2248, ptr %i.c, align 8
+.loopexit.thread.a:                               ; preds = %bb.p, %.loopexit, %.loopexit.thread
+  %.sroa.0.2248 = phi i64 [ %i.b, %.loopexit.thread ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.p ]
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.fr = load i64, ptr %i.fq, align 8, !alias.scope !4239, !noalias !4240, !noundef !5 ; 2 uses
   %i.fs = sub nuw i64 %.sroa.0.2248, %i.fr
@@ -1820,8 +1816,8 @@ bb.o:                                             ; preds = %bb.n
 define internal fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state209(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %1, i64 noundef %2) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 14 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 9 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 15 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.d = load ptr, ptr %1, align 8, !nonnull !5   ; 21 uses
   br label %tailrecurse
 
@@ -1857,7 +1853,8 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
   br i1 %i.u, label %.loopexit, label %.lr.ph30
 
 .loopexit:                                        ; preds = %bb.n, %.lr.ph, %.lr.ph199, %.lr.ph.preheader, %.preheader, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.m
-  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr142, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1198, %.lr.ph199 ], [ %i.af, %bb.n ], [ %i.cj, %.lr.ph ] ; 27 uses
+  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr142, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1198, %.lr.ph199 ], [ %i.af, %bb.n ], [ %i.cj, %.lr.ph ] ; 20 uses
+  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.v = icmp ult i64 %.sroa.0.2, %i.b
   br i1 %i.v, label %bb.p, label %.loopexit.thread.a
 
@@ -1875,7 +1872,11 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
 bb.b:                                             ; preds = %.lr.ph199
   %i.ad = add nuw i64 %.sroa.0.1198, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.ad, %i.b
-  br i1 %exitcond.not, label %.loopexit.thread.a, label %.lr.ph199
+  br i1 %exitcond.not, label %.loopexit.thread, label %.lr.ph199
+
+.loopexit.thread:                                 ; preds = %bb.b
+  store i64 %i.b, ptr %i.c, align 8
+  br label %.loopexit.thread.a
 
 .lr.ph30:                                         ; preds = %.lr.ph.preheader, %.lr.ph
   %i.ae = phi ptr [ %i.o, %.lr.ph ], [ %i.g, %.lr.ph.preheader ] ; 7 uses
@@ -2018,7 +2019,6 @@ tailrecurse.backedge:                             ; preds = %bb.x, %bb.u, %bb.r
   br label %tailrecurse
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.cx = load i64, ptr %i.cw, align 8, !alias.scope !4348, !noalias !4349, !noundef !5 ; 2 uses
   %i.cy = sub nuw i64 %.sroa.0.2, %i.cx
@@ -2042,7 +2042,6 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond.i43, label %tailrecurse.backedge, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.df = load i64, ptr %i.de, align 8, !alias.scope !4352, !noalias !4353, !noundef !5 ; 2 uses
   %i.dg = sub nuw i64 %.sroa.0.2, %i.df
@@ -2065,7 +2064,6 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond.i44, label %tailrecurse.backedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dm = load i64, ptr %i.dl, align 8, !alias.scope !4356, !noalias !4357, !noundef !5 ; 2 uses
   %i.dn = sub nuw i64 %.sroa.0.2, %i.dm
@@ -2078,7 +2076,6 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state210.exit
 
 bb.z:                                             ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.dp = icmp ult i64 %i.cm, %i.b
   br i1 %i.dp, label %bb.aa, label %bb.ae
 
@@ -2121,7 +2118,6 @@ bb.ae:                                            ; preds = %bb.aa, %bb.z
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state210.exit
 
 bb.af:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ea = icmp ult i64 %i.cm, %i.b
   br i1 %i.ea, label %bb.ag, label %bb.an
 
@@ -2179,7 +2175,6 @@ bb.an:                                            ; preds = %bb.ag, %bb.af
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state210.exit
 
 bb.ao:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.el = icmp ult i64 %i.cm, %i.b
   br i1 %i.el, label %bb.ap, label %bb.av
 
@@ -2232,7 +2227,6 @@ bb.av:                                            ; preds = %bb.ap, %bb.ao
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state210.exit
 
 bb.aw:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ew = icmp ult i64 %i.cm, %i.b
   br i1 %i.ew, label %bb.ax, label %bb.az
 
@@ -2260,7 +2254,6 @@ bb.az:                                            ; preds = %bb.ax, %bb.aw
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state210.exit
 
 bb.ba:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ff = icmp ult i64 %i.cm, %i.b
   br i1 %i.ff, label %bb.bb, label %bb.bj
 
@@ -2322,9 +2315,8 @@ bb.bj:                                            ; preds = %bb.bb, %bb.ba
   store i64 %i.fo, ptr %.sroa.5140.0..sroa_idx, align 8, !noalias !4378
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state210.exit
 
-.loopexit.thread.a:                               ; preds = %bb.p, %.loopexit, %bb.b
-  %.sroa.0.2248 = phi i64 [ %i.b, %bb.b ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.p ] ; 2 uses
-  store i64 %.sroa.0.2248, ptr %i.c, align 8
+.loopexit.thread.a:                               ; preds = %bb.p, %.loopexit, %.loopexit.thread
+  %.sroa.0.2248 = phi i64 [ %i.b, %.loopexit.thread ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.p ]
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.fr = load i64, ptr %i.fq, align 8, !alias.scope !4379, !noalias !4380, !noundef !5 ; 2 uses
   %i.fs = sub nuw i64 %.sroa.0.2248, %i.fr
@@ -2460,8 +2452,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 define internal fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state218(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %1, i64 noundef %2) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 14 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 9 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 15 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.d = load ptr, ptr %1, align 8, !nonnull !5   ; 21 uses
   br label %tailrecurse
 
@@ -2497,7 +2489,8 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
   br i1 %i.u, label %.loopexit, label %.lr.ph30
 
 .loopexit:                                        ; preds = %bb.n, %.lr.ph, %.lr.ph199, %.lr.ph.preheader, %.preheader, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.m
-  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr142, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1198, %.lr.ph199 ], [ %i.af, %bb.n ], [ %i.cj, %.lr.ph ] ; 27 uses
+  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr142, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1198, %.lr.ph199 ], [ %i.af, %bb.n ], [ %i.cj, %.lr.ph ] ; 20 uses
+  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.v = icmp ult i64 %.sroa.0.2, %i.b
   br i1 %i.v, label %bb.p, label %.loopexit.thread.a
 
@@ -2515,7 +2508,11 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
 bb.b:                                             ; preds = %.lr.ph199
   %i.ad = add nuw i64 %.sroa.0.1198, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.ad, %i.b
-  br i1 %exitcond.not, label %.loopexit.thread.a, label %.lr.ph199
+  br i1 %exitcond.not, label %.loopexit.thread, label %.lr.ph199
+
+.loopexit.thread:                                 ; preds = %bb.b
+  store i64 %i.b, ptr %i.c, align 8
+  br label %.loopexit.thread.a
 
 .lr.ph30:                                         ; preds = %.lr.ph.preheader, %.lr.ph
   %i.ae = phi ptr [ %i.o, %.lr.ph ], [ %i.g, %.lr.ph.preheader ] ; 7 uses
@@ -2658,7 +2655,6 @@ tailrecurse.backedge:                             ; preds = %bb.x, %bb.u, %bb.r
   br label %tailrecurse
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.cx = load i64, ptr %i.cw, align 8, !alias.scope !4448, !noalias !4449, !noundef !5 ; 2 uses
   %i.cy = sub nuw i64 %.sroa.0.2, %i.cx
@@ -2682,7 +2678,6 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond.i43, label %tailrecurse.backedge, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.df = load i64, ptr %i.de, align 8, !alias.scope !4452, !noalias !4453, !noundef !5 ; 2 uses
   %i.dg = sub nuw i64 %.sroa.0.2, %i.df
@@ -2705,7 +2700,6 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond.i44, label %tailrecurse.backedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dm = load i64, ptr %i.dl, align 8, !alias.scope !4456, !noalias !4457, !noundef !5 ; 2 uses
   %i.dn = sub nuw i64 %.sroa.0.2, %i.dm
@@ -2718,7 +2712,6 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state219.exit
 
 bb.z:                                             ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.dp = icmp ult i64 %i.cm, %i.b
   br i1 %i.dp, label %bb.aa, label %bb.ae
 
@@ -2761,7 +2754,6 @@ bb.ae:                                            ; preds = %bb.aa, %bb.z
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state219.exit
 
 bb.af:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ea = icmp ult i64 %i.cm, %i.b
   br i1 %i.ea, label %bb.ag, label %bb.an
 
@@ -2819,7 +2811,6 @@ bb.an:                                            ; preds = %bb.ag, %bb.af
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state219.exit
 
 bb.ao:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.el = icmp ult i64 %i.cm, %i.b
   br i1 %i.el, label %bb.ap, label %bb.av
 
@@ -2872,7 +2863,6 @@ bb.av:                                            ; preds = %bb.ap, %bb.ao
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state219.exit
 
 bb.aw:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ew = icmp ult i64 %i.cm, %i.b
   br i1 %i.ew, label %bb.ax, label %bb.az
 
@@ -2900,7 +2890,6 @@ bb.az:                                            ; preds = %bb.ax, %bb.aw
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state219.exit
 
 bb.ba:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.ff = icmp ult i64 %i.cm, %i.b
   br i1 %i.ff, label %bb.bb, label %bb.bj
 
@@ -2962,9 +2951,8 @@ bb.bj:                                            ; preds = %bb.bb, %bb.ba
   store i64 %i.fo, ptr %.sroa.5140.0..sroa_idx, align 8, !noalias !4478
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state219.exit
 
-.loopexit.thread.a:                               ; preds = %bb.p, %.loopexit, %bb.b
-  %.sroa.0.2248 = phi i64 [ %i.b, %bb.b ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.p ] ; 2 uses
-  store i64 %.sroa.0.2248, ptr %i.c, align 8
+.loopexit.thread.a:                               ; preds = %bb.p, %.loopexit, %.loopexit.thread
+  %.sroa.0.2248 = phi i64 [ %i.b, %.loopexit.thread ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.p ]
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.fr = load i64, ptr %i.fq, align 8, !alias.scope !4479, !noalias !4480, !noundef !5 ; 2 uses
   %i.fs = sub nuw i64 %.sroa.0.2248, %i.fr
@@ -3100,8 +3088,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 define internal fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state228(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(32) %1, i64 noundef %2) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 10 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 9 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 11 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.d = load ptr, ptr %1, align 8, !nonnull !5   ; 13 uses
   br label %tailrecurse
 
@@ -3137,7 +3125,8 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
   br i1 %i.u, label %.loopexit, label %.lr.ph30
 
 .loopexit:                                        ; preds = %bb.n, %.lr.ph, %.lr.ph152, %.lr.ph.preheader, %.preheader, %bb.c, %bb.e, %bb.g, %bb.i, %bb.k, %bb.m
-  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr95, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1151, %.lr.ph152 ], [ %i.af, %bb.n ], [ %i.cj, %.lr.ph ] ; 19 uses
+  %.sroa.0.2 = phi i64 [ %i.cb, %bb.m ], [ %i.bt, %bb.k ], [ %.tr95, %.lr.ph.preheader ], [ %i.an, %bb.c ], [ %i.av, %bb.e ], [ %i.bd, %bb.g ], [ %i.bl, %bb.i ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.1151, %.lr.ph152 ], [ %i.af, %bb.n ], [ %i.cj, %.lr.ph ] ; 12 uses
+  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.v = icmp ult i64 %.sroa.0.2, %i.b
   br i1 %i.v, label %bb.p, label %.loopexit.thread.a
 
@@ -3155,7 +3144,11 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
 bb.b:                                             ; preds = %.lr.ph152
   %i.ad = add nuw i64 %.sroa.0.1151, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.ad, %i.b
-  br i1 %exitcond.not, label %.loopexit.thread.a, label %.lr.ph152
+  br i1 %exitcond.not, label %.loopexit.thread, label %.lr.ph152
+
+.loopexit.thread:                                 ; preds = %bb.b
+  store i64 %i.b, ptr %i.c, align 8
+  br label %.loopexit.thread.a
 
 .lr.ph30:                                         ; preds = %.lr.ph.preheader, %.lr.ph
   %i.ae = phi ptr [ %i.o, %.lr.ph ], [ %i.g, %.lr.ph.preheader ] ; 7 uses
@@ -3298,7 +3291,6 @@ tailrecurse.backedge:                             ; preds = %bb.x, %bb.u, %bb.r
   br label %tailrecurse
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.cx = load i64, ptr %i.cw, align 8, !alias.scope !4524, !noalias !4525, !noundef !5 ; 2 uses
   %i.cy = sub nuw i64 %.sroa.0.2, %i.cx
@@ -3322,7 +3314,6 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond.i43, label %tailrecurse.backedge, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.df = load i64, ptr %i.de, align 8, !alias.scope !4528, !noalias !4529, !noundef !5 ; 2 uses
   %i.dg = sub nuw i64 %.sroa.0.2, %i.df
@@ -3345,7 +3336,6 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond.i44, label %tailrecurse.backedge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dm = load i64, ptr %i.dl, align 8, !alias.scope !4532, !noalias !4533, !noundef !5 ; 2 uses
   %i.dn = sub nuw i64 %.sroa.0.2, %i.dm
@@ -3358,22 +3348,18 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state230.exit
 
 bb.z:                                             ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state233(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.cm)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state230.exit
 
 bb.aa:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state234(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.cm)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state230.exit
 
 bb.ab:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state235(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.cm)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state230.exit
 
 bb.ac:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.dp = icmp ult i64 %i.cm, %i.b
   br i1 %i.dp, label %bb.ad, label %bb.af
 
@@ -3401,13 +3387,11 @@ bb.af:                                            ; preds = %bb.ad, %bb.ac
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state230.exit
 
 bb.ag:                                            ; preds = %bb.p
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state237(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.cm)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state230.exit
 
-.loopexit.thread.a:                               ; preds = %bb.p, %.loopexit, %bb.b
-  %.sroa.0.2201 = phi i64 [ %i.b, %bb.b ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.p ] ; 2 uses
-  store i64 %.sroa.0.2201, ptr %i.c, align 8
+.loopexit.thread.a:                               ; preds = %bb.p, %.loopexit, %.loopexit.thread
+  %.sroa.0.2201 = phi i64 [ %i.b, %.loopexit.thread ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.p ]
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dz = load i64, ptr %i.dy, align 8, !alias.scope !4539, !noalias !4540, !noundef !5 ; 2 uses
   %i.ea = sub nuw i64 %.sroa.0.2201, %i.dz
@@ -3810,12 +3794,12 @@ define internal fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizer
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i64, ptr %i.a, align 8, !noundef !5 ; 7 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.d = load ptr, ptr %1, align 8, !nonnull !5   ; 4 uses
   br label %tailrecurse
 
-tailrecurse:                                      ; preds = %3, %bb.a
-  %.tr41 = phi i64 [ %2, %bb.a ], [ %4, %3 ]      ; 3 uses
+tailrecurse:                                      ; preds = %bb.s, %bb.a
+  %.tr41 = phi i64 [ %2, %bb.a ], [ %3, %bb.s ]   ; 3 uses
   %i.e = add i64 %.tr41, 7                        ; 2 uses
   %i.f = icmp ult i64 %i.e, %i.b
   br i1 %i.f, label %.lr.ph, label %.preheader
@@ -3836,7 +3820,8 @@ tailrecurse:                                      ; preds = %3, %bb.a
   ]
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.o, %.lr.ph64, %.preheader, %bb.d, %bb.f, %bb.h, %bb.j, %bb.l, %bb.n
-  %.sroa.0.2 = phi i64 [ %i.af, %bb.n ], [ %i.ac, %bb.l ], [ %.sroa.0.163, %.lr.ph64 ], [ %i.q, %bb.d ], [ %i.t, %bb.f ], [ %i.w, %bb.h ], [ %i.z, %bb.j ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.061, %.lr.ph ], [ %i.h, %bb.o ] ; 8 uses
+  %.sroa.0.2 = phi i64 [ %i.af, %bb.n ], [ %i.ac, %bb.l ], [ %.sroa.0.163, %.lr.ph64 ], [ %i.q, %bb.d ], [ %i.t, %bb.f ], [ %i.w, %bb.h ], [ %i.z, %bb.j ], [ %.sroa.0.0.lcssa, %.preheader ], [ %.sroa.0.061, %.lr.ph ], [ %i.h, %bb.o ] ; 5 uses
+  store i64 %.sroa.0.2, ptr %i.c, align 8
   %i.k = icmp ult i64 %.sroa.0.2, %i.b
   br i1 %i.k, label %bb.q, label %.loopexit.thread.a
 
@@ -3852,7 +3837,11 @@ tailrecurse:                                      ; preds = %3, %bb.a
 bb.b:                                             ; preds = %.lr.ph64, %.lr.ph64
   %i.n = add nuw i64 %.sroa.0.163, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.n, %i.b
-  br i1 %exitcond.not, label %.loopexit.thread.a, label %.lr.ph64
+  br i1 %exitcond.not, label %.loopexit.thread, label %.lr.ph64
+
+.loopexit.thread:                                 ; preds = %bb.b
+  store i64 %i.b, ptr %i.c, align 8
+  br label %.loopexit.thread.a
 
 bb.c:                                             ; preds = %.lr.ph, %.lr.ph
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 1
@@ -3964,25 +3953,18 @@ bb.s:                                             ; preds = %bb.r
   %i.as = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.al
   %i.at = load i8, ptr %i.as, align 1, !noalias !4789, !noundef !5
   %i.au = icmp eq i8 %i.at, -96
-  br i1 %i.au, label %3, label %bb.t
-
-3:                                                ; preds = %bb.s
-  %4 = add nuw i64 %.sroa.0.2, 2
-  br label %tailrecurse
+  %3 = add nuw i64 %.sroa.0.2, 2
+  br i1 %i.au, label %tailrecurse, label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   store i64 79, ptr %0, align 8, !noalias !4790
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state240.exit
 
 bb.u:                                             ; preds = %bb.q
-  store i64 %.sroa.0.2, ptr %i.c, align 8
   tail call fastcc void @_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state241(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(32) %1, i64 noundef %i.al, i8 noundef 79)
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state240.exit
 
-.loopexit.thread.a:                               ; preds = %bb.q, %.loopexit, %bb.b
-  %.sroa.0.291 = phi i64 [ %i.b, %bb.b ], [ %.sroa.0.2, %.loopexit ], [ %.sroa.0.2, %bb.q ]
-  store i64 %.sroa.0.291, ptr %i.c, align 8
+.loopexit.thread.a:                               ; preds = %bb.q, %.loopexit, %.loopexit.thread
   store i64 79, ptr %0, align 8
   br label %_RNvNvXs1_NtCsfF8zpZz1lvn_13yara_x_parser9tokenizerNtB7_11NormalTokenNtCscFnjbPKQfKU_5logos5Logos3lex8state240.exit
 
