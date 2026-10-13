@@ -205,8 +205,6 @@ read_code012.exit:                                ; preds = %bb.c, %bb.b, %bb.d
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @populate_ipred(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull captures(none) initializes((104, 362), (364, 380)) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef range(i32 0, 5) %4, i32 noundef range(i32 0, 5) %5, i32 noundef %6, i32 noundef range(i32 0, 2) %7) unnamed_addr #8 {
 bb.a:
-  %8 = ptrtoaddr ptr %2 to i64                    ; 2 uses
-  %9 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %.not = icmp eq i32 %7, 0                       ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = load i32, ptr %i.a, align 4, !tbaa !87   ; 5 uses
@@ -379,8 +377,10 @@ iter.check:                                       ; preds = %bb.h
   br i1 %or.cond, label %vector.memcheck, label %vec.epilog.scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.cf = add i64 %8, %.pn
-  %i.cg = sub i64 %9, %i.cf
+  %8 = ptrtoaddr ptr %1 to i64
+  %9 = ptrtoaddr ptr %2 to i64
+  %i.cf = add i64 %9, %.pn
+  %i.cg = sub i64 %8, %i.cf
   %i.ch = add i64 %i.cg, 234
   %diff.check = icmp ult i64 %i.ch, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -599,8 +599,10 @@ iter.check185:                                    ; preds = %bb.i
   br i1 %or.cond198, label %vector.memcheck169, label %vec.epilog.scalar.ph186.preheader
 
 vector.memcheck169:                               ; preds = %iter.check185
-  %i.fy = add i64 %8, %.pn
-  %i.fz = sub i64 %9, %i.fy
+  %10 = ptrtoaddr ptr %1 to i64
+  %11 = ptrtoaddr ptr %2 to i64
+  %i.fy = add i64 %11, %.pn
+  %i.fz = sub i64 %10, %i.fy
   %i.ga = add i64 %i.fz, 234
   %diff.check170 = icmp ult i64 %i.ga, 31
   br i1 %diff.check170, label %vec.epilog.scalar.ph186.preheader, label %vector.main.loop.iter.check172

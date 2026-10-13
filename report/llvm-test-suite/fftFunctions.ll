@@ -204,10 +204,6 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @zurasu2(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef writeonly captures(none) %5, ptr nofree noundef writeonly captures(none) %6) local_unnamed_addr #13 {
 bb.a:
-  %7 = ptrtoaddr ptr %4 to i64                    ; 2 uses
-  %8 = ptrtoaddr ptr %6 to i64                    ; 2 uses
-  %9 = ptrtoaddr ptr %3 to i64                    ; 2 uses
-  %10 = ptrtoaddr ptr %5 to i64                   ; 2 uses
   %i.a = icmp sgt i32 %0, 0
   %i.b = icmp sgt i32 %1, 0                       ; 2 uses
   br i1 %i.a, label %.preheader32, label %.preheader35
@@ -220,7 +216,9 @@ bb.a:
   %i.d = sub nsw i64 0, %i.c                      ; 7 uses
   %wide.trip.count = zext nneg i32 %1 to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %1, 8
-  %i.e = sub i64 %9, %10
+  %7 = ptrtoaddr ptr %5 to i64
+  %8 = ptrtoaddr ptr %3 to i64
+  %i.e = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.e, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
@@ -280,7 +278,9 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 .lr.ph40.preheader:                               ; preds = %.preheader32
   %wide.trip.count53 = zext nneg i32 %1 to i64    ; 5 uses
   %min.iters.check85 = icmp ult i32 %1, 8
-  %i.q = sub i64 %9, %10
+  %9 = ptrtoaddr ptr %5 to i64
+  %10 = ptrtoaddr ptr %3 to i64
+  %i.q = sub i64 %10, %9
   %diff.check83 = icmp ugt i64 %i.q, -32
   %or.cond112 = or i1 %min.iters.check85, %diff.check83
   br i1 %or.cond112, label %.lr.ph40.preheader115, label %vector.ph86
@@ -339,7 +339,9 @@ middle.block93:                                   ; preds = %vector.body88
   %i.ac = zext nneg i32 %0 to i64                 ; 7 uses
   %wide.trip.count58 = zext nneg i32 %2 to i64    ; 5 uses
   %min.iters.check99 = icmp ult i32 %2, 8
-  %i.ad = sub i64 %7, %8
+  %11 = ptrtoaddr ptr %6 to i64
+  %12 = ptrtoaddr ptr %4 to i64
+  %i.ad = sub i64 %12, %11
   %diff.check97 = icmp ugt i64 %i.ad, -32
   %or.cond113 = or i1 %min.iters.check99, %diff.check97
   br i1 %or.cond113, label %scalar.ph98.preheader, label %vector.ph100
@@ -454,7 +456,9 @@ scalar.ph98:                                      ; preds = %scalar.ph98.prol.lo
 .lr.ph38.preheader:                               ; preds = %.preheader33
   %wide.trip.count48 = zext nneg i32 %2 to i64    ; 5 uses
   %min.iters.check71 = icmp ult i32 %2, 8
-  %i.bs = sub i64 %7, %8
+  %13 = ptrtoaddr ptr %6 to i64
+  %14 = ptrtoaddr ptr %4 to i64
+  %i.bs = sub i64 %14, %13
   %diff.check69 = icmp ugt i64 %i.bs, -32
   %or.cond114 = or i1 %min.iters.check71, %diff.check69
   br i1 %or.cond114, label %.lr.ph38.preheader116, label %vector.ph72

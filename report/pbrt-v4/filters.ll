@@ -204,10 +204,10 @@ _ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i49: ; pr
   br i1 %.not13.i.i51, label %._crit_edge.i.i60, label %iter.check132
 
 iter.check132:                                    ; preds = %.noexc62
-  %.pre.i.i53115 = ptrtoaddr ptr %.pre.i.i53 to i64
-  %i.ei = ptrtoaddr ptr %i.eh to i64
   %min.iters.check117 = icmp ult i64 %.pre.i50, 4
-  %i.ej = sub i64 %.pre.i.i53115, %i.ei
+  %i.ei = ptrtoaddr ptr %i.eh to i64
+  %10 = ptrtoaddr ptr %.pre.i.i53 to i64
+  %i.ej = sub i64 %10, %i.ei
   %diff.check116 = icmp ugt i64 %i.ej, -128
   %or.cond175 = select i1 %min.iters.check117, i1 true, i1 %diff.check116
   br i1 %or.cond175, label %.lr.ph.i.i54.preheader, label %vector.main.loop.iter.check118
@@ -375,9 +375,9 @@ iter.check162:                                    ; preds = %_ZN4pstd6vectorIfNS
   %i.gj = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !71 ; 12 uses
   %min.iters.check147 = icmp ult i64 %i.gh, 4
-  %i.gl = ptrtoaddr ptr %i.gk to i64
-  %i.gm = ptrtoaddr ptr %i.gi to i64
-  %i.gn = sub i64 %i.gl, %i.gm
+  %i.gl = ptrtoaddr ptr %i.gi to i64
+  %i.gm = ptrtoaddr ptr %i.gk to i64
+  %i.gn = sub i64 %i.gm, %i.gl
   %diff.check146 = icmp ugt i64 %i.gn, -128
   %or.cond178 = select i1 %min.iters.check147, i1 true, i1 %diff.check146
   br i1 %or.cond178, label %vec.epilog.scalar.ph163.preheader, label %vector.main.loop.iter.check148
@@ -780,7 +780,6 @@ bb.j:                                             ; preds = %bb.a, %_ZN4pstd3pmr
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4pbrt19PiecewiseConstant1DC2EN4pstd4spanIKfEEffNS1_3pmr21polymorphic_allocatorISt4byteEE(ptr noundef nonnull align 8 dereferenceable(76) %0, ptr %1, i64 %2, float noundef %3, float noundef %4, ptr %5) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64
   %i.a = alloca float, align 4                    ; 5 uses
   %i.b = alloca float, align 4                    ; 5 uses
   %i.c = alloca float, align 4                    ; 5 uses
@@ -809,17 +808,17 @@ _ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i: ; pred
   %i.n = load ptr, ptr %5, align 8, !tbaa !30
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.p = load ptr, ptr %i.o, align 8
-  %i.q = tail call noundef ptr %i.p(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef %.idx54, i64 noundef 4), !inline_history !202 ; 16 uses
-  %7 = ptrtoaddr ptr %i.q to i64                  ; 2 uses
+  %i.q = tail call noundef ptr %i.p(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef %.idx54, i64 noundef 4), !inline_history !202 ; 17 uses
   %i.r = load i64, ptr %i.i, align 8, !tbaa !70   ; 11 uses
   %.not13.i.i = icmp eq i64 %i.r, 0
   %.pre.i.i = load ptr, ptr %i.g, align 8, !tbaa !71 ; 14 uses
   br i1 %.not13.i.i, label %._crit_edge.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i
-  %.pre.i.i81 = ptrtoaddr ptr %.pre.i.i to i64
   %min.iters.check = icmp ult i64 %i.r, 4
-  %i.s = sub i64 %.pre.i.i81, %7
+  %.pre.i.i81 = ptrtoaddr ptr %i.q to i64
+  %6 = ptrtoaddr ptr %.pre.i.i to i64
+  %i.s = sub i64 %6, %.pre.i.i81
   %diff.check = icmp ugt i64 %i.s, -128
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -973,7 +972,9 @@ iter.check109:                                    ; preds = %._crit_edge.thread.
   %i.br = lshr exact i64 %i.bq, 2
   %i.bs = add nuw nsw i64 %i.br, 1                ; 5 uses
   %min.iters.check93 = icmp ult i64 %i.bq, 28
-  %i.bt = sub i64 %6, %7
+  %7 = ptrtoaddr ptr %i.q to i64
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.bt = sub i64 %8, %7
   %diff.check92 = icmp ugt i64 %i.bt, -128
   %or.cond253 = select i1 %min.iters.check93, i1 true, i1 %diff.check92
   br i1 %or.cond253, label %vec.epilog.scalar.ph110.preheader, label %vector.main.loop.iter.check94
@@ -1095,12 +1096,12 @@ _ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i.i: ; pr
   br i1 %.not13.i.i.i, label %._crit_edge.i.i.i, label %iter.check142
 
 iter.check142:                                    ; preds = %.noexc
-  %.pre.i.i.i125 = ptrtoaddr ptr %.pre.i.i.i to i64
+  %min.iters.check129 = icmp ult i64 %.pr.i.i, 4
   %i.dg = ptrtoaddr ptr %i.df to i64
-  %min.iters.check127 = icmp ult i64 %.pr.i.i, 4
-  %i.dh = sub i64 %.pre.i.i.i125, %i.dg
+  %9 = ptrtoaddr ptr %.pre.i.i.i to i64
+  %i.dh = sub i64 %9, %i.dg
   %diff.check126 = icmp ugt i64 %i.dh, -128
-  %or.cond254 = select i1 %min.iters.check127, i1 true, i1 %diff.check126
+  %or.cond254 = select i1 %min.iters.check129, i1 true, i1 %diff.check126
   br i1 %or.cond254, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check128
 
 vector.main.loop.iter.check128:                   ; preds = %iter.check142
@@ -1503,10 +1504,10 @@ _ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i: ; preds 
   br i1 %.not13.i, label %._crit_edge.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i
-  %.pre.i37 = ptrtoaddr ptr %.pre.i to i64
-  %i.ab = ptrtoaddr ptr %i.aa to i64
   %min.iters.check = icmp ult i64 %.pre, 4
-  %i.ac = sub i64 %.pre.i37, %i.ab
+  %i.ab = ptrtoaddr ptr %i.aa to i64
+  %2 = ptrtoaddr ptr %.pre.i to i64
+  %i.ac = sub i64 %2, %i.ab
   %diff.check = icmp ugt i64 %i.ac, -128
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -1678,9 +1679,9 @@ iter.check64:                                     ; preds = %_ZN4pstd6vectorIfNS
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !71 ; 12 uses
   %min.iters.check49 = icmp ult i64 %i.ca, 4
-  %i.cf = ptrtoaddr ptr %i.ce to i64
-  %i.cg = ptrtoaddr ptr %i.cc to i64
-  %i.ch = sub i64 %i.cf, %i.cg
+  %i.cf = ptrtoaddr ptr %i.cc to i64
+  %i.cg = ptrtoaddr ptr %i.ce to i64
+  %i.ch = sub i64 %i.cg, %i.cf
   %diff.check48 = icmp ugt i64 %i.ch, -128
   %or.cond79 = select i1 %min.iters.check49, i1 true, i1 %diff.check48
   br i1 %or.cond79, label %vec.epilog.scalar.ph65.preheader, label %vector.main.loop.iter.check50

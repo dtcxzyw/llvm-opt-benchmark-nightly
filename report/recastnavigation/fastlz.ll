@@ -30,8 +30,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i32 @fastlz1_compress(ptr noundef %0, i32 noundef %1, ptr noundef %2) unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
-  %3 = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.b = alloca [8192 x ptr], align 16            ; 9 uses
   %i.c = sext i32 %1 to i64                       ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c ; 4 uses
@@ -93,7 +92,9 @@ iter.check:                                       ; preds = %bb.c
   %umax = tail call i64 @llvm.umax.i64(i64 %i.x, i64 %i.y)
   %i.z = sub i64 %umax, %i.a                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.z, 8
-  %i.aa = sub i64 %3, %i.a
+  %3 = ptrtoaddr ptr %2 to i64
+  %4 = ptrtoaddr ptr %0 to i64
+  %i.aa = sub i64 %3, %4
   %diff.check = icmp ult i64 %i.aa, 31
   %or.cond270 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond270, label %.lr.ph222.preheader, label %vector.main.loop.iter.check
@@ -496,8 +497,7 @@ bb.ag:                                            ; preds = %bb.b, %bb.af, %._cr
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i32 @fastlz2_compress(ptr noundef %0, i32 noundef %1, ptr noundef %2) unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
-  %3 = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.b = alloca [8192 x ptr], align 16            ; 9 uses
   %i.c = sext i32 %1 to i64                       ; 2 uses
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c ; 4 uses
@@ -559,7 +559,9 @@ iter.check:                                       ; preds = %bb.c
   %umax = tail call i64 @llvm.umax.i64(i64 %i.x, i64 %i.y)
   %i.z = sub i64 %umax, %i.a                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.z, 8
-  %i.aa = sub i64 %3, %i.a
+  %3 = ptrtoaddr ptr %2 to i64
+  %4 = ptrtoaddr ptr %0 to i64
+  %i.aa = sub i64 %3, %4
   %diff.check = icmp ult i64 %i.aa, 31
   %or.cond357 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond357, label %.lr.ph290.preheader, label %vector.main.loop.iter.check

@@ -205,7 +205,6 @@ bb.j:                                             ; preds = %bb.d
 bb.k:                                             ; preds = %.thread
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.val24 = load ptr, ptr %i.aa, align 8, !nonnull !75, !noundef !75 ; 2 uses
-  %.val2462 = ptrtoaddr ptr %.val24 to i64
   %.idx52 = shl i64 %0, 1                         ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.val24, i64 %.idx52 ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !872)
@@ -225,7 +224,6 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VectE7reserveCsjjpCCFGI3ul_14lance_encod
   %i.ah = phi i64 [ %i.ae, %bb.k ], [ %.pre.i, %bb.l ] ; 8 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aj = load ptr, ptr %i.ai, align 8, !alias.scope !872, !nonnull !75, !noundef !75 ; 8 uses
-  %5 = ptrtoaddr ptr %i.aj to i64
   %i.ak = icmp eq i64 %0, %1
   br i1 %i.ak, label %_RINvMsj_NtCs40k4W9msRzi_5alloc3vecINtB6_3VectE14extend_trustedINtNtNtNtCscI6d9CVNmLh_4core4iter8adapters6copied6CopiedINtNtNtB17_5slice4iter4ItertEEECsjjpCCFGI3ul_14lance_encoding.exit, label %iter.check
 
@@ -234,9 +232,11 @@ iter.check:                                       ; preds = %_RNvMs_NtCs40k4W9ms
   br i1 %min.iters.check, label %.preheader.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %5 = ptrtoaddr ptr %i.aj to i64
   %i.al = shl i64 %i.ah, 1
+  %6 = ptrtoaddr ptr %.val24 to i64
   %i.am = add i64 %i.al, %5
-  %i.an = add i64 %.idx52, %.val2462
+  %i.an = add i64 %.idx52, %6
   %i.ao = sub i64 %i.an, %i.am
   %diff.check = icmp ugt i64 %i.ao, -32
   br i1 %diff.check, label %.preheader.i.preheader, label %vector.main.loop.iter.check
@@ -639,7 +639,6 @@ bb.b:                                             ; preds = %bb.a
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !75, !align !95, !noundef !75 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 272
   %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !75, !align !139, !noundef !75 ; 7 uses
-  %3 = ptrtoaddr ptr %i.ab to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 280
   %i.ad = load i64, ptr %i.ac, align 8, !noundef !75 ; 11 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 288
@@ -1042,7 +1041,6 @@ _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array
 bb.bm:                                            ; preds = %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array4iter8IntoItermKj1_EINtNtB6_3map3MapINtNtNtBa_5slice4iter4ItermENCNCNvMs8_NtCsjjpCCFGI3ul_14lance_encoding7decoderNtB2r_20DecodeBatchScheduler7try_new00EENtNtNtB8_6traits8iterator8Iterator9size_hintB2t_.exit.thread.i.i.i.i
   call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #63, !noalias !24152
   %i.gl = call noundef align 4 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.gj, i64 noundef range(i64 1, 17) 4) #63, !noalias !24152 ; 9 uses
-  %4 = ptrtoaddr ptr %i.gl to i64
   %i.gm = icmp eq ptr %i.gl, null
   br i1 %i.gm, label %.noexc.i.i.i.i, label %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array4iter8IntoItermKj1_EINtNtB6_3map3MapINtNtNtBa_5slice4iter4ItermENCNCNvMs8_NtCsjjpCCFGI3ul_14lance_encoding7decoderNtB2r_20DecodeBatchScheduler7try_new00EENtNtNtB8_6traits8iterator8Iterator9size_hintB2t_.exit.thread.i.i.i.i.i.i
 
@@ -1064,7 +1062,9 @@ _RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array
   br i1 %min.iters.check, label %.preheader.preheader490, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.preheader
-  %i.go = sub i64 %4, %3
+  %3 = ptrtoaddr ptr %i.gl to i64
+  %4 = ptrtoaddr ptr %i.ab to i64
+  %i.go = sub i64 %3, %4
   %i.gp = or disjoint i64 %i.go, 3
   %diff.check = icmp ult i64 %i.gp, 31
   br i1 %diff.check, label %.preheader.preheader490, label %vector.ph
@@ -1467,8 +1467,8 @@ bb.k:                                             ; preds = %bb.h, %bb.g, %_RNvM
   %.sroa.5.0.i.i.i.i.i.i.i = phi i64 [ %i.y, %bb.h ], [ %.val.i.i.i.i.i.i.i, %bb.g ], [ 0, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i.i.i.i ] ; 4 uses
   %.sroa.11.0.i.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %i.x, %bb.g ], [ 0, %_RNvMs4_NtCs40k4W9msRzi_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsjjpCCFGI3ul_14lance_encoding.exit.i.i.i.i.i.i ] ; 10 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 8
-  %i.ad = load ptr, ptr %i.ac, align 8, !alias.scope !60621, !noalias !60622, !nonnull !75, !noundef !75 ; 16 uses
-  %i.ae = ptrtoaddr ptr %i.ad to i64              ; 4 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !alias.scope !60621, !noalias !60622, !nonnull !75, !noundef !75 ; 19 uses
+  %i.ae = ptrtoaddr ptr %i.ad to i64
   %.idx8.i.i.i.i.i.i = shl i64 %.sroa.0.0.i.i.i.i.i.i.i, 2 ; 6 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 %.idx8.i.i.i.i.i.i ; 11 uses
   %.idx.i.i.i.i.i.i = shl i64 %.sroa.5.0.i.i.i.i.i.i.i, 2 ; 4 uses
@@ -1541,8 +1541,8 @@ bb.q:                                             ; preds = %_RNvMs3_NtNtCs40k4W
   br i1 %i.bg, label %.loopexit.i.i.i.i.i.i.i.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.bh = load ptr, ptr %i.s, align 8, !alias.scope !60630, !noalias !60631, !nonnull !75 ; 2 uses
-  %i.bi = ptrtoaddr ptr %i.bh to i64              ; 2 uses
+  %i.bh = load ptr, ptr %i.s, align 8, !alias.scope !60630, !noalias !60631, !nonnull !75 ; 3 uses
+  %i.bi = ptrtoaddr ptr %i.bh to i64
   %i.bj = getelementptr [4 x i8], ptr %i.bh, i64 %.sroa.02.0.i.i.i.i.i.i.i ; 4 uses
   %i.bk = sub i64 %.idx.i.i.i.i.i.i, %.idx8.i.i.i.i.i.i
   %i.bl = lshr exact i64 %i.bk, 2
@@ -1556,9 +1556,11 @@ bb.r:                                             ; preds = %bb.q
   br i1 %min.iters.check85, label %scalar.ph84, label %vector.memcheck82
 
 vector.memcheck82:                                ; preds = %bb.r
+  %2 = ptrtoaddr ptr %i.bh to i64
   %i.bs = shl i64 %.sroa.02.0.i.i.i.i.i.i.i, 2
-  %i.bt = add i64 %i.bs, %i.bi
-  %i.bu = add i64 %.idx8.i.i.i.i.i.i, %i.ae
+  %3 = ptrtoaddr ptr %i.ad to i64
+  %i.bt = add i64 %i.bs, %2
+  %i.bu = add i64 %.idx8.i.i.i.i.i.i, %3
   %i.bv = sub i64 %i.bu, %i.bt
   %diff.check83 = icmp ugt i64 %i.bv, -32
   br i1 %diff.check83, label %scalar.ph84, label %vector.ph86
@@ -1900,8 +1902,9 @@ bb.y:                                             ; preds = %bb.x
 vector.memcheck:                                  ; preds = %bb.y
   %i.gw = ptrtoaddr ptr %i.gu to i64
   %i.gx = shl i64 %.sroa.02.0.i.i.i.i.i.i.i, 2
+  %4 = ptrtoaddr ptr %i.ad to i64
   %i.gy = add i64 %i.gx, %i.gw
-  %i.gz = add i64 %.idx8.i.i.i.i.i.i, %i.ae
+  %i.gz = add i64 %.idx8.i.i.i.i.i.i, %4
   %i.ha = sub i64 %i.gz, %i.gy
   %diff.check = icmp ugt i64 %i.ha, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
@@ -1991,10 +1994,11 @@ bb.z:                                             ; preds = %_RINvXs2J_NtNtCscI6
 
 vector.memcheck67:                                ; preds = %bb.z
   %i.id = ptrtoaddr ptr %i.ib to i64
-  %2 = add i64 %.idx.i.i.i.i.i.i, %i.id
-  %3 = shl i64 %.sroa.02.0.i.i.i.i.i.i.i, 2
-  %i.ie = add i64 %2, %3
-  %i.if = add i64 %.idx8.i.i.i.i.i.i, %i.ae
+  %5 = shl i64 %.sroa.02.0.i.i.i.i.i.i.i, 2
+  %6 = ptrtoaddr ptr %i.ad to i64
+  %7 = add i64 %.idx.i.i.i.i.i.i, %i.id
+  %i.ie = add i64 %7, %5
+  %i.if = add i64 %.idx8.i.i.i.i.i.i, %6
   %i.ig = sub i64 %i.if, %i.ie
   %diff.check68 = icmp ugt i64 %i.ig, -32
   br i1 %diff.check68, label %scalar.ph69.preheader, label %vector.ph71
@@ -2397,7 +2401,6 @@ bb.ap:                                            ; preds = %bb.am
 bb.aq:                                            ; preds = %bb.ap
   %i.er = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %i.es = load ptr, ptr %i.er, align 8, !noundef !75 ; 16 uses
-  %4 = ptrtoaddr ptr %i.es to i64
   %i.et = load i64, ptr %i.es, align 8, !noundef !75 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   br i1 %i.ek, label %bb.au, label %bb.av, !prof !65911
@@ -2543,8 +2546,9 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.gs, label %.invoke, label %.preheader.i.i.i72.preheader
 
 .preheader.i.i.i72.preheader:                     ; preds = %bb.aw
-  %i.gt = ptrtoaddr ptr %i.gr to i64
   %min.iters.check = icmp ult i64 %i.eq, 48
+  %i.gt = ptrtoaddr ptr %i.gr to i64
+  %4 = ptrtoaddr ptr %i.es to i64
   %i.gu = sub i64 %4, %i.gt
   %diff.check = icmp ugt i64 %i.gu, -32
   %or.cond = or i1 %min.iters.check, %diff.check

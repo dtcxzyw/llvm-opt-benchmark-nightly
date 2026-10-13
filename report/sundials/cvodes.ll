@@ -205,7 +205,6 @@ bb.w:                                             ; preds = %._crit_edge182, %bb
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @cvAdjustOrder(ptr noundef nonnull %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
-  %2 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 960 ; 10 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !79   ; 13 uses
   %i.c = icmp eq i32 %i.b, 2
@@ -459,6 +458,7 @@ bb.j:                                             ; preds = %bb.j, %.epil.prehea
 
 vector.memcheck114:                               ; preds = %.preheader.i
   %i.df = ptrtoaddr ptr %i.dd to i64
+  %2 = ptrtoaddr ptr %0 to i64
   %i.dg = sub i64 %i.df, %2
   %i.dh = add i64 %i.dg, -1225
   %diff.check115 = icmp ult i64 %i.dh, 31
@@ -861,7 +861,8 @@ middle.block:                                     ; preds = %vector.body
 
 vector.memcheck:                                  ; preds = %._crit_edge81.i.i
   %i.nh = ptrtoaddr ptr %i.nf to i64
-  %i.ni = sub i64 %i.nh, %2
+  %3 = ptrtoaddr ptr %0 to i64
+  %i.ni = sub i64 %i.nh, %3
   %i.nj = add i64 %i.ni, -1225
   %diff.check = icmp ult i64 %i.nj, 31
   br i1 %diff.check, label %scalar.ph32.preheader, label %vector.ph34

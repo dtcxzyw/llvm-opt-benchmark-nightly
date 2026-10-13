@@ -205,12 +205,10 @@ bb.t:                                             ; preds = %bb.r
 
 _PyUnicode_DATA.exit.i:                           ; preds = %bb.t, %bb.s
   %.0.i.i = phi ptr [ %.0.i.i.i, %bb.s ], [ %.val4.i.i, %bb.t ] ; 37 uses
-  %.0.i.i685 = ptrtoaddr ptr %.0.i.i to i64
   %i.ax = lshr i32 %.val.i.i, 2
   %i.ay = and i32 %i.ax, 7
   %i.az = load ptr, ptr %4, align 8, !tbaa !147
   %i.ba = tail call ptr @PyBytesWriter_GrowAndUpdatePointer(ptr noundef nonnull %3, i64 noundef %.val63.i, ptr noundef %i.az) #16 ; 23 uses
-  %5 = ptrtoaddr ptr %i.ba to i64
   store ptr %i.ba, ptr %4, align 8, !tbaa !147
   %i.bb = icmp eq ptr %i.ba, null
   br i1 %i.bb, label %.thread.i, label %.preheader.i
@@ -325,7 +323,9 @@ PyUnicode_READ.exit.us77.i.prol.loopexit:         ; preds = %PyUnicode_READ.exit
 
 iter.check702:                                    ; preds = %.lr.ph.i
   %min.iters.check687 = icmp ult i64 %.val63.i, 4
-  %i.ca = sub i64 %.0.i.i685, %5
+  %5 = ptrtoaddr ptr %i.ba to i64
+  %6 = ptrtoaddr ptr %.0.i.i to i64
+  %i.ca = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.ca, -32
   %or.cond745 = select i1 %min.iters.check687, i1 true, i1 %diff.check
   br i1 %or.cond745, label %PyUnicode_READ.exit.us.i.preheader, label %vector.main.loop.iter.check688
@@ -728,9 +728,8 @@ v_complement.exit.loopexit.unr-lcssa:             ; preds = %.lr.ph.i
   br label %v_complement.exit
 
 v_complement.exit:                                ; preds = %.lr.ph.i.epil.preheader, %v_complement.exit.loopexit.unr-lcssa, %bb.e, %bb.c
-  %.1114 = phi ptr [ %.0113, %bb.c ], [ %i.i, %bb.e ], [ %i.i, %v_complement.exit.loopexit.unr-lcssa ], [ %i.i, %.lr.ph.i.epil.preheader ] ; 6 uses
+  %.1114 = phi ptr [ %.0113, %bb.c ], [ %i.i, %bb.e ], [ %i.i, %v_complement.exit.loopexit.unr-lcssa ], [ %i.i, %.lr.ph.i.epil.preheader ] ; 9 uses
   %.0104 = phi ptr [ null, %bb.c ], [ %i.i, %bb.e ], [ %i.i, %v_complement.exit.loopexit.unr-lcssa ], [ %i.i, %.lr.ph.i.epil.preheader ] ; 12 uses
-  %.1114199 = ptrtoaddr ptr %.1114 to i64         ; 4 uses
   %i.aj = getelementptr i8, ptr %.0110, i64 16
   %.0110.val = load i64, ptr %i.aj, align 8, !tbaa !43
   %i.ak = and i64 %.0110.val, 3
@@ -822,9 +821,8 @@ v_complement.exit129.loopexit.unr-lcssa:          ; preds = %.lr.ph.i125
   br label %v_complement.exit129
 
 v_complement.exit129:                             ; preds = %.lr.ph.i125.epil.preheader, %v_complement.exit129.loopexit.unr-lcssa, %bb.k, %v_complement.exit
-  %.1111 = phi ptr [ %.0110, %v_complement.exit ], [ %i.an, %bb.k ], [ %i.an, %v_complement.exit129.loopexit.unr-lcssa ], [ %i.an, %.lr.ph.i125.epil.preheader ] ; 4 uses
+  %.1111 = phi ptr [ %.0110, %v_complement.exit ], [ %i.an, %bb.k ], [ %i.an, %v_complement.exit129.loopexit.unr-lcssa ], [ %i.an, %.lr.ph.i125.epil.preheader ] ; 6 uses
   %.0 = phi ptr [ null, %v_complement.exit ], [ %i.an, %bb.k ], [ %i.an, %v_complement.exit129.loopexit.unr-lcssa ], [ %i.an, %.lr.ph.i125.epil.preheader ] ; 8 uses
-  %.1111198 = ptrtoaddr ptr %.1111 to i64         ; 3 uses
   switch i8 %1, label %bb.o [
     i8 94, label %bb.l
     i8 38, label %bb.m
@@ -853,8 +851,7 @@ bb.p:                                             ; preds = %bb.n, %bb.m, %bb.l
   %.0106 = phi i64 [ %.0108, %bb.l ], [ %i.bt, %bb.m ], [ %i.bv, %bb.n ] ; 12 uses
   %i.bw = zext nneg i32 %.0109 to i64
   %i.bx = add nuw nsw i64 %.0106, %i.bw
-  %i.by = tail call fastcc ptr @long_alloc(i64 noundef %i.bx) ; 12 uses
-  %3 = ptrtoaddr ptr %i.by to i64                 ; 7 uses
+  %i.by = tail call fastcc ptr @long_alloc(i64 noundef %i.bx) ; 15 uses
   %i.bz = icmp eq ptr %i.by, null
   br i1 %i.bz, label %bb.q, label %bb.x
 
@@ -915,9 +912,12 @@ bb.x:                                             ; preds = %bb.p
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.cj = sub i64 %.1111198, %3
+  %3 = ptrtoaddr ptr %i.by to i64                 ; 2 uses
+  %4 = ptrtoaddr ptr %.1111 to i64
+  %i.cj = sub i64 %4, %3
   %diff.check = icmp ugt i64 %i.cj, -32
-  %i.ck = sub i64 %.1114199, %3
+  %5 = ptrtoaddr ptr %.1114 to i64
+  %i.ck = sub i64 %5, %3
   %diff.check200 = icmp ugt i64 %i.ck, -32
   %conflict.rdx = or i1 %diff.check, %diff.check200
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -988,9 +988,12 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %min.iters.check223, label %scalar.ph222.preheader, label %vector.memcheck218
 
 vector.memcheck218:                               ; preds = %.lr.ph159
-  %i.dg = sub i64 %.1111198, %3
+  %6 = ptrtoaddr ptr %i.by to i64                 ; 2 uses
+  %7 = ptrtoaddr ptr %.1111 to i64
+  %i.dg = sub i64 %7, %6
   %diff.check219 = icmp ugt i64 %i.dg, -32
-  %i.dh = sub i64 %.1114199, %3
+  %8 = ptrtoaddr ptr %.1114 to i64
+  %i.dh = sub i64 %8, %6
   %diff.check220 = icmp ugt i64 %i.dh, -32
   %conflict.rdx221 = or i1 %diff.check219, %diff.check220
   br i1 %conflict.rdx221, label %scalar.ph222.preheader, label %vector.ph224
@@ -1061,9 +1064,12 @@ scalar.ph222.prol.loopexit:                       ; preds = %scalar.ph222.prol, 
   br i1 %min.iters.check241, label %scalar.ph240.preheader, label %vector.memcheck236
 
 vector.memcheck236:                               ; preds = %.lr.ph162
-  %i.ed = sub i64 %.1111198, %3
+  %9 = ptrtoaddr ptr %i.by to i64                 ; 2 uses
+  %10 = ptrtoaddr ptr %.1111 to i64
+  %i.ed = sub i64 %10, %9
   %diff.check237 = icmp ugt i64 %i.ed, -32
-  %i.ee = sub i64 %.1114199, %3
+  %11 = ptrtoaddr ptr %.1114 to i64
+  %i.ee = sub i64 %11, %9
   %diff.check238 = icmp ugt i64 %i.ee, -32
   %conflict.rdx239 = or i1 %diff.check237, %diff.check238
   br i1 %conflict.rdx239, label %scalar.ph240.preheader, label %vector.ph242
@@ -1249,7 +1255,9 @@ bb.y:                                             ; preds = %bb.x
   %i.if = getelementptr i8, ptr %i.by, i64 24     ; 6 uses
   %i.ig = sub nuw nsw i64 %.0106, %.0107          ; 3 uses
   %min.iters.check207 = icmp ult i64 %i.ig, 8
-  %i.ih = sub i64 %.1114199, %3
+  %12 = ptrtoaddr ptr %i.by to i64
+  %13 = ptrtoaddr ptr %.1114 to i64
+  %i.ih = sub i64 %13, %12
   %diff.check205 = icmp ugt i64 %i.ih, -32
   %or.cond = or i1 %min.iters.check207, %diff.check205
   br i1 %or.cond, label %scalar.ph206.preheader, label %vector.ph208
@@ -1652,7 +1660,6 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call fastcc ptr @long_new_impl(ptr noundef nonnull @PyLong_Type, ptr noundef %1, ptr noundef %2), !inline_history !379 ; 10 uses
-  %3 = ptrtoaddr ptr %i.a to i64
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %long_subtype_new.exit, label %bb.c
 
@@ -1683,7 +1690,6 @@ bb.f:                                             ; preds = %bb.e
   br label %long_subtype_new.exit
 
 bb.g:                                             ; preds = %bb.c
-  %4 = ptrtoaddr ptr %i.g to i64
   %i.l = load i64, ptr %i.c, align 8, !tbaa !43
   %i.m = and i64 %i.l, -5
   %i.n = getelementptr i8, ptr %i.g, i64 16
@@ -1691,7 +1697,9 @@ bb.g:                                             ; preds = %bb.c
   %i.o = getelementptr i8, ptr %i.a, i64 24       ; 6 uses
   %i.p = getelementptr i8, ptr %i.g, i64 24       ; 6 uses
   %min.iters.check = icmp ult i64 %.val.i, 64
-  %i.q = sub i64 %3, %4
+  %3 = ptrtoaddr ptr %i.g to i64
+  %4 = ptrtoaddr ptr %i.a to i64
+  %i.q = sub i64 %4, %3
   %diff.check = icmp ugt i64 %i.q, -32
   %or.cond64 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond64, label %scalar.ph.preheader, label %vector.ph

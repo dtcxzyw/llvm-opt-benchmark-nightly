@@ -205,7 +205,6 @@ bb.s:                                             ; preds = %bb.r
   %i.x = trunc i64 %i.w to i32                    ; 12 uses
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !55   ; 8 uses
-  %14 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !62 ; 5 uses
   %.not = icmp sgt i32 %i.ab, %i.x
@@ -438,9 +437,8 @@ bb.av:                                            ; preds = %_ZNSt6vectorIiSaIiE
 
 _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %.noexc345, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
   %.sroa.13.0 = phi i64 [ 0, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.cc, %.noexc345 ] ; 2 uses
-  %.sroa.0439.0 = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.bz, %.noexc345 ] ; 23 uses
+  %.sroa.0439.0 = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.bz, %.noexc345 ] ; 24 uses
   %.0.i.i.i.i.i.i.i = phi ptr [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ], [ %i.cb, %.noexc345 ] ; 3 uses
-  %.sroa.0439.0806 = ptrtoaddr ptr %.sroa.0439.0 to i64 ; 3 uses
   %i.cd = load ptr, ptr %i.as, align 8, !tbaa !60
   %i.ce = load ptr, ptr %6, align 8, !tbaa !61    ; 5 uses
   %i.cf = ptrtoint ptr %i.cd to i64
@@ -457,9 +455,11 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %.noexc345, %_ZNSt6v
   br i1 %min.iters.check, label %.lr.ph506.preheader1055, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph506.preheader
-  %i.cl = sub i64 %i.cg, %.sroa.0439.0806
+  %14 = ptrtoaddr ptr %.sroa.0439.0 to i64        ; 2 uses
+  %i.cl = sub i64 %i.cg, %14
   %diff.check = icmp ugt i64 %i.cl, -32
-  %i.cm = sub i64 %14, %.sroa.0439.0806
+  %15 = ptrtoaddr ptr %i.z to i64
+  %i.cm = sub i64 %15, %14
   %diff.check807 = icmp ugt i64 %i.cm, -32
   %conflict.rdx = or i1 %diff.check, %diff.check807
   br i1 %conflict.rdx, label %.lr.ph506.preheader1055, label %vector.ph
@@ -602,8 +602,9 @@ bb.aw:                                            ; preds = %.lr.ph506.prol
 
 .lr.ph.i.preheader:                               ; preds = %._crit_edge507
   %i.dz = ptrtoaddr ptr %.0.i.i.i.i.i.i.i to i64
+  %16 = ptrtoaddr ptr %.sroa.0439.0 to i64
   %i.ea = add i64 %i.dz, -4
-  %i.eb = sub i64 %i.ea, %.sroa.0439.0806         ; 2 uses
+  %i.eb = sub i64 %i.ea, %16                      ; 2 uses
   %i.ec = lshr i64 %i.eb, 2
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses
   %min.iters.check826 = icmp ult i64 %i.eb, 28

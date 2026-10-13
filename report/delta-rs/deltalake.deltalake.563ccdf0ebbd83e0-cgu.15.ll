@@ -205,17 +205,18 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !23, !noundef !23 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.promoted = load ptr, ptr %i.c, align 8        ; 7 uses
+  %.promoted = load ptr, ptr %i.c, align 8        ; 8 uses
   %.not12 = icmp eq ptr %.promoted, %i.b
   br i1 %.not12, label %bb.b, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %.promoted18 = ptrtoaddr ptr %.promoted to i64  ; 2 uses
-  %5 = ptrtoaddr ptr %2 to i64
+  %.promoted18 = ptrtoaddr ptr %.promoted to i64
   %i.d = ptrtoaddr ptr %i.b to i64                ; 3 uses
   %i.e = sub i64 %i.d, %.promoted18               ; 7 uses
   %min.iters.check = icmp ult i64 %i.e, 8
-  %i.f = sub i64 %.promoted18, %5
+  %5 = ptrtoaddr ptr %2 to i64
+  %6 = ptrtoaddr ptr %.promoted to i64
+  %i.f = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.f, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check

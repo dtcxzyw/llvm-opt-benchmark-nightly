@@ -12,8 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define float @dt_image_distance_transform(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, float noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = ptrtoaddr ptr %0 to i64
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   switch i32 %5, label %bb.b [
     i32 0, label %.loopexit
     i32 1, label %.preheader86
@@ -26,7 +25,9 @@ bb.a:
 
 iter.check:                                       ; preds = %.preheader86
   %min.iters.check = icmp ult i64 %i.b, 4
-  %i.c = sub i64 %6, %i.a
+  %6 = ptrtoaddr ptr %1 to i64
+  %7 = ptrtoaddr ptr %0 to i64
+  %i.c = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.c, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check

@@ -204,29 +204,30 @@ bb.c:                                             ; preds = %bb.a
 _ZNSt12_Vector_baseIcN5folly19reentrant_allocatorIcEEE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = tail call noundef ptr @_ZN5folly6detail24reentrant_allocator_base8allocateEmm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.c, i64 noundef 1) #21 ; 10 uses
-  %i.h = load ptr, ptr %i.b, align 8, !tbaa !31   ; 8 uses
+  %i.h = load ptr, ptr %i.b, align 8, !tbaa !31   ; 9 uses
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !32   ; 3 uses
   %.not10.i.i.i.i = icmp eq ptr %i.h, %i.i
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt12_Vector_baseIcN5folly19reentrant_allocatorIcEEE11_M_allocateEm.exit.i
-  %i.j = ptrtoaddr ptr %i.h to i64                ; 2 uses
-  %4 = ptrtoaddr ptr %i.g to i64
-  %5 = ptrtoaddr ptr %i.i to i64                  ; 3 uses
-  %6 = sub i64 %5, %i.j                           ; 7 uses
-  %min.iters.check = icmp ult i64 %6, 8
-  %i.k = sub i64 %i.j, %4
+  %4 = ptrtoaddr ptr %i.i to i64                  ; 3 uses
+  %i.j = ptrtoaddr ptr %i.h to i64
+  %5 = sub i64 %4, %i.j                           ; 7 uses
+  %min.iters.check = icmp ult i64 %5, 8
+  %6 = ptrtoaddr ptr %i.g to i64
+  %7 = ptrtoaddr ptr %i.h to i64
+  %i.k = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.k, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check14 = icmp ult i64 %6, 32
+  %min.iters.check14 = icmp ult i64 %5, 32
   br i1 %min.iters.check14, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.l = and i64 %6, 24
-  %n.vec = and i64 %6, -32                        ; 5 uses
+  %i.l = and i64 %5, 24
+  %n.vec = and i64 %5, -32                        ; 5 uses
   %i.m = getelementptr i8, ptr %i.g, i64 %n.vec
   %i.n = getelementptr i8, ptr %i.h, i64 %n.vec
   br label %vector.body
@@ -248,7 +249,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.q, label %middle.block, label %vector.body, !llvm.loop !209
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %5, %n.vec
   br i1 %cmp.n, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exitthread-pre-split.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -257,7 +258,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec18 = and i64 %6, -8                       ; 4 uses
+  %n.vec18 = and i64 %5, -8                       ; 4 uses
   %i.r = getelementptr i8, ptr %i.g, i64 %n.vec18
   %i.s = getelementptr i8, ptr %i.h, i64 %n.vec18
   br label %vec.epilog.vector.body
@@ -275,14 +276,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.t, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !210
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n24 = icmp eq i64 %6, %n.vec18
+  %cmp.n24 = icmp eq i64 %5, %n.vec18
   br i1 %cmp.n24, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exitthread-pre-split.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.012.i.i.i.i.ph = phi ptr [ %i.g, %iter.check ], [ %i.m, %vec.epilog.iter.check ], [ %i.r, %vec.epilog.middle.block ] ; 2 uses
   %.0911.i.i.i.i.ph = phi ptr [ %i.h, %iter.check ], [ %i.n, %vec.epilog.iter.check ], [ %i.s, %vec.epilog.middle.block ] ; 3 uses
   %.0911.i.i.i.i.ph27 = ptrtoaddr ptr %.0911.i.i.i.i.ph to i64 ; 2 uses
-  %i.u = sub i64 %5, %.0911.i.i.i.i.ph27
+  %i.u = sub i64 %4, %.0911.i.i.i.i.ph27
   %xtraiter = and i64 %i.u, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
@@ -304,7 +305,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader
   %.012.i.i.i.i.unr = phi ptr [ %.012.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %i.x, %.lr.ph.i.i.i.i.prol ]
   %.0911.i.i.i.i.unr = phi ptr [ %.0911.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %i.w, %.lr.ph.i.i.i.i.prol ]
-  %i.y = sub i64 %.0911.i.i.i.i.ph27, %5
+  %i.y = sub i64 %.0911.i.i.i.i.ph27, %4
   %i.z = icmp ugt i64 %i.y, -8
   br i1 %i.z, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exitthread-pre-split.i, label %.lr.ph.i.i.i.i
 
@@ -707,7 +708,6 @@ _ZSt22__uninitialized_copy_aIPKcPcN5folly19reentrant_allocatorIcEEET0_T_S7_S6_RT
 
 _ZSt22__uninitialized_copy_aIPKcPcN5folly19reentrant_allocatorIcEEET0_T_S7_S6_RT1_.exit: ; preds = %_ZSt22__uninitialized_copy_aIPKcPcN5folly19reentrant_allocatorIcEEET0_T_S7_S6_RT1_.exit.loopexit, %_ZSt9__advanceIPKclEvRT_T0_St26random_access_iterator_tag.exit
   %i.cj = phi ptr [ %.pre, %_ZSt22__uninitialized_copy_aIPKcPcN5folly19reentrant_allocatorIcEEET0_T_S7_S6_RT1_.exit.loopexit ], [ %i.i, %_ZSt9__advanceIPKclEvRT_T0_St26random_access_iterator_tag.exit ] ; 2 uses
-  %4 = ptrtoaddr ptr %i.cj to i64
   %i.ck = sub nuw i64 %i.d, %i.n
   %i.cl = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.ck ; 8 uses
   store ptr %i.cl, ptr %i.h, align 8, !tbaa !32
@@ -719,9 +719,10 @@ iter.check144:                                    ; preds = %_ZSt22__uninitializ
   br i1 %min.iters.check128, label %.lr.ph.i.i55.preheader, label %vector.memcheck126
 
 vector.memcheck126:                               ; preds = %iter.check144
-  %i.cn = add i64 %4, %i.b
-  %i.co = add i64 %i.k, %i.c
-  %i.cp = sub i64 %i.co, %i.cn
+  %4 = ptrtoaddr ptr %i.cj to i64
+  %i.cn = add i64 %i.k, %i.c
+  %i.co = add i64 %4, %i.b
+  %i.cp = sub i64 %i.cn, %i.co
   %diff.check127 = icmp ugt i64 %i.cp, -32
   br i1 %diff.check127, label %.lr.ph.i.i55.preheader, label %vector.main.loop.iter.check129
 
@@ -900,9 +901,9 @@ _ZNSt12_Vector_baseIcN5folly19reentrant_allocatorIcEEE11_M_allocateEm.exit: ; pr
   br i1 %i.eu, label %iter.check245, label %iter.check210
 
 iter.check210:                                    ; preds = %_ZNSt12_Vector_baseIcN5folly19reentrant_allocatorIcEEE11_M_allocateEm.exit
-  %5 = ptrtoaddr ptr %i.et to i64
   %i.ev = sub i64 %i.a, %i.ek                     ; 7 uses
   %min.iters.check194 = icmp ult i64 %i.ev, 8
+  %5 = ptrtoaddr ptr %i.et to i64
   %i.ew = sub i64 %i.ek, %5
   %diff.check193 = icmp ugt i64 %i.ew, -32
   %or.cond296 = or i1 %min.iters.check194, %diff.check193
@@ -1165,10 +1166,10 @@ _ZSt22__uninitialized_copy_aIPKcPcN5folly19reentrant_allocatorIcEEET0_T_S7_S6_RT
   br i1 %i.hz, label %_ZSt34__uninitialized_move_if_noexcept_aIPcS0_N5folly19reentrant_allocatorIcEEET0_T_S5_S4_RT1_.exit77, label %iter.check280
 
 iter.check280:                                    ; preds = %_ZSt22__uninitialized_copy_aIPKcPcN5folly19reentrant_allocatorIcEEET0_T_S7_S6_RT1_.exit72
-  %.lcssa111262 = ptrtoaddr ptr %.lcssa111 to i64
   %i.ia = sub i64 %i.k, %i.a                      ; 7 uses
   %min.iters.check264 = icmp ult i64 %i.ia, 8
-  %i.ib = sub i64 %i.a, %.lcssa111262
+  %6 = ptrtoaddr ptr %.lcssa111 to i64
+  %i.ib = sub i64 %i.a, %6
   %diff.check263 = icmp ugt i64 %i.ib, -32
   %or.cond298 = select i1 %min.iters.check264, i1 true, i1 %diff.check263
   br i1 %or.cond298, label %.lr.ph.i.i73.preheader, label %vector.main.loop.iter.check265
@@ -1415,8 +1416,8 @@ _ZNKSt6vectorIcN5folly19reentrant_allocatorIcEEE12_M_check_lenEmPKc.exit.i: ; pr
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIcN5folly19reentrant_allocatorIcEEE12_M_check_lenEmPKc.exit.i
-  %3 = ptrtoaddr ptr %i.aj to i64
   %min.iters.check = icmp ult i64 %i.e, 8
+  %3 = ptrtoaddr ptr %i.aj to i64
   %i.am = sub i64 %i.d, %3
   %diff.check = icmp ugt i64 %i.am, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1572,10 +1573,10 @@ _ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit.i
   br i1 %.not10.i.i.i16.i, label %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit22.i, label %iter.check54
 
 iter.check54:                                     ; preds = %_ZNSt6vectorIcN5folly19reentrant_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit.i
-  %.0.lcssa.i.i.i.i36 = ptrtoaddr ptr %.0.lcssa.i.i.i.i to i64
   %i.cb = sub i64 %i.ac, %i.c                     ; 7 uses
   %min.iters.check38 = icmp ult i64 %i.cb, 8
-  %i.cc = sub i64 %.0.lcssa.i.i.i.i36, %i.c
+  %4 = ptrtoaddr ptr %.0.lcssa.i.i.i.i to i64
+  %i.cc = sub i64 %4, %i.c
   %diff.check37 = icmp ult i64 %i.cc, 31
   %or.cond70 = select i1 %min.iters.check38, i1 true, i1 %diff.check37
   br i1 %or.cond70, label %.lr.ph.i.i.i17.i.preheader, label %vector.main.loop.iter.check39

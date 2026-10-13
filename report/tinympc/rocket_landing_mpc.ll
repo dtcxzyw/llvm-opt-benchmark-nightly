@@ -205,8 +205,7 @@ bb.bw:                                            ; preds = %_ZN5Eigen5BlockINS_
   %.sroa.9446.0..sroa_idx = getelementptr inbounds nuw i8, ptr %39, i64 64
   store i64 %i.mg, ptr %.sroa.9446.0..sroa_idx, align 8
   %i.mk = getelementptr inbounds nuw i8, ptr %i.hb, i64 112
-  %i.ml = load ptr, ptr %i.mk, align 8, !tbaa !25, !noalias !138 ; 3 uses
-  %41 = ptrtoaddr ptr %i.ml to i64                ; 2 uses
+  %i.ml = load ptr, ptr %i.mk, align 8, !tbaa !25, !noalias !138 ; 4 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %i.hb, i64 120
   %i.mn = load i64, ptr %i.mm, align 8, !tbaa !26, !noalias !138 ; 9 uses
   %.idx642 = mul i64 %i.mn, 72                    ; 3 uses
@@ -229,8 +228,7 @@ _ZN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEC2INS_7ProductINS_12CwiseUnaryOpINS_8in
   %.not.i.i.i.i.i241 = icmp eq ptr %i.ml, null
   %i.mr = select i1 %.not.i.i.i.i.i241, ptr null, ptr %i.mo
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
-  %i.ms = load ptr, ptr %4, align 8, !tbaa !32    ; 14 uses
-  %42 = ptrtoaddr ptr %i.ms to i64                ; 2 uses
+  %i.ms = load ptr, ptr %4, align 8, !tbaa !32    ; 15 uses
   %i.mt = ptrtoint ptr %i.mr to i64               ; 2 uses
   %i.mu = and i64 %i.mt, 7
   %.not.i.i.i.i.i.i.i.i.i.i.i242 = icmp eq i64 %i.mu, 0
@@ -256,6 +254,8 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i2
   br i1 %min.iters.check733, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i251.preheader821, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i251.preheader
+  %41 = ptrtoaddr ptr %i.ml to i64
+  %42 = ptrtoaddr ptr %i.ms to i64
   %i.nd = add i64 %.idx642, %41
   %i.ne = sub i64 %42, %i.nd
   %diff.check = icmp ugt i64 %i.ne, -32
@@ -347,8 +347,10 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check747, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i246.preheader820, label %vector.memcheck744
 
 vector.memcheck744:                               ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i246.preheader
-  %i.ok = add i64 %.idx642, %41
-  %i.ol = sub i64 %42, %i.ok
+  %43 = ptrtoaddr ptr %i.ml to i64
+  %44 = ptrtoaddr ptr %i.ms to i64
+  %i.ok = add i64 %.idx642, %43
+  %i.ol = sub i64 %44, %i.ok
   %diff.check745 = icmp ugt i64 %i.ol, -32
   br i1 %diff.check745, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i246.preheader820, label %vector.ph748
 
