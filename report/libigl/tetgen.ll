@@ -205,11 +205,13 @@ bb.i:                                             ; preds = %.preheader.preheade
   %i.tm = fcmp olt double %i.tl, -1.000000e+00
   %spec.store.select = select i1 %i.tm, double -1.000000e+00, double %i.tl ; 2 uses
   %i.tn = fcmp ogt double %spec.store.select, 1.000000e+00
-  %spec.store.select1.a = select i1 %i.tn, double 1.000000e+00, double %spec.store.select ; 5 uses
-  %i.to = fcmp ogt double %spec.store.select1.a, -1.000000e+00
-  %i.tp = select i1 %i.to, double %spec.store.select1.a, double -1.000000e+00 ; 2 uses
+  %spec.store.select1 = select i1 %i.tn, double 1.000000e+00, double %spec.store.select ; 5 uses
+  %4 = fcmp olt double %spec.store.select1, 1.000000e+00
+  %spec.store.select1.a = select i1 %4, double %spec.store.select1, double 1.000000e+00 ; 2 uses
+  %i.to = fcmp ogt double %spec.store.select1, -1.000000e+00
+  %i.tp = select i1 %i.to, double %spec.store.select1, double -1.000000e+00 ; 2 uses
   %i.tq = load double, ptr %i.th, align 8, !tbaa !418 ; 6 uses
-  %i.tr = fcmp olt double %spec.store.select1.a, %i.tq
+  %i.tr = fcmp olt double %spec.store.select1, %i.tq
   br i1 %i.tr, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
