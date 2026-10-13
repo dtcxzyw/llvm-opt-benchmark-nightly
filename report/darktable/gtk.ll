@@ -204,15 +204,15 @@ bb.s:                                             ; preds = %bb.q
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.h = load double, ptr %i.g, align 8, !tbaa !70
   %i.i = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
-  %i.j = fadd reassoc nsz arcp contract afn double %i.i, %i.h ; 3 uses
+  %i.j = fadd reassoc nsz arcp contract afn double %i.i, %i.h ; 4 uses
   store double %i.j, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.l = load double, ptr %i.k, align 8, !tbaa !71
   %i.m = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.n = fadd reassoc nsz arcp contract afn double %i.m, %i.l ; 3 uses
+  %i.n = fadd reassoc nsz arcp contract afn double %i.m, %i.l ; 4 uses
   store double %i.n, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.o = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.j) ; 3 uses
-  %i.p = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.n) ; 3 uses
+  %i.o = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.j) ; 2 uses
+  %i.p = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.n) ; 2 uses
   %i.q = fcmp reassoc nsz arcp contract afn une double %i.o, 0.000000e+00 ; 2 uses
   %i.r = fcmp reassoc nsz arcp contract afn une double %i.p, 0.000000e+00 ; 2 uses
   %or.cond = select i1 %i.q, i1 true, i1 %i.r
@@ -234,7 +234,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.u, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.w = fptosi double %i.o to i32
+  %i.w = fptosi double %i.j to i32
   store i32 %i.w, ptr %1, align 4, !tbaa !72
   br label %bb.w
 
@@ -242,7 +242,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %i.v, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %i.x = fptosi double %i.p to i32
+  %i.x = fptosi double %i.n to i32
   store i32 %i.x, ptr %2, align 4, !tbaa !72
   br label %bb.y
 
@@ -342,15 +342,15 @@ bb.h:                                             ; preds = %bb.f
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.h = load double, ptr %i.g, align 8, !tbaa !70
   %i.i = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
-  %i.j = fadd reassoc nsz arcp contract afn double %i.i, %i.h ; 3 uses
+  %i.j = fadd reassoc nsz arcp contract afn double %i.i, %i.h ; 4 uses
   store double %i.j, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.l = load double, ptr %i.k, align 8, !tbaa !71
   %i.m = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.n = fadd reassoc nsz arcp contract afn double %i.m, %i.l ; 3 uses
+  %i.n = fadd reassoc nsz arcp contract afn double %i.m, %i.l ; 4 uses
   store double %i.n, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.o = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.j) ; 3 uses
-  %i.p = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.n) ; 3 uses
+  %i.o = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.j) ; 2 uses
+  %i.p = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.n) ; 2 uses
   %i.q = fcmp reassoc nsz arcp contract afn une double %i.o, 0.000000e+00
   %i.r = fcmp reassoc nsz arcp contract afn une double %i.p, 0.000000e+00
   %or.cond.i = select i1 %i.q, i1 true, i1 %i.r
@@ -361,8 +361,8 @@ bb.i:                                             ; preds = %bb.h
   store double %i.s, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.t = fsub reassoc nsz arcp contract afn double %i.n, %i.p
   store double %i.t, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.u = fptosi double %i.o to i32
-  %i.v = fptosi double %i.p to i32
+  %i.u = fptosi double %i.j to i32
+  %i.v = fptosi double %i.n to i32
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.b, %bb.i, %bb.c, %bb.d, %bb.e
@@ -765,15 +765,15 @@ bb.af:                                            ; preds = %bb.ad
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.cp = load double, ptr %i.co, align 8, !tbaa !70
   %i.cq = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
-  %i.cr = fadd reassoc nsz arcp contract afn double %i.cq, %i.cp ; 3 uses
+  %i.cr = fadd reassoc nsz arcp contract afn double %i.cq, %i.cp ; 4 uses
   store double %i.cr, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.ct = load double, ptr %i.cs, align 8, !tbaa !71
   %i.cu = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.cv = fadd reassoc nsz arcp contract afn double %i.cu, %i.ct ; 3 uses
+  %i.cv = fadd reassoc nsz arcp contract afn double %i.cu, %i.ct ; 4 uses
   store double %i.cv, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.cw = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.cr) ; 3 uses
-  %i.cx = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.cv) ; 3 uses
+  %i.cw = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.cr) ; 2 uses
+  %i.cx = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.cv) ; 2 uses
   %i.cy = fcmp reassoc nsz arcp contract afn une double %i.cw, 0.000000e+00
   %i.cz = fcmp reassoc nsz arcp contract afn une double %i.cx, 0.000000e+00
   %or.cond.i.i = select i1 %i.cy, i1 true, i1 %i.cz
@@ -784,8 +784,8 @@ bb.ag:                                            ; preds = %bb.af
   store double %i.da, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.db = fsub reassoc nsz arcp contract afn double %i.cv, %i.cx
   store double %i.db, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.dc = fptosi double %i.cw to i32
-  %i.dd = fptosi double %i.cx to i32
+  %i.dc = fptosi double %i.cr to i32
+  %i.dd = fptosi double %i.cv to i32
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.ac, %bb.ab, %bb.aa, %bb.z
@@ -1188,15 +1188,15 @@ bb.k:                                             ; preds = %bb.i
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.u = load double, ptr %i.t, align 8, !tbaa !70
   %i.v = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
-  %i.w = fadd reassoc nsz arcp contract afn double %i.v, %i.u ; 3 uses
+  %i.w = fadd reassoc nsz arcp contract afn double %i.v, %i.u ; 4 uses
   store double %i.w, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.y = load double, ptr %i.x, align 8, !tbaa !71
   %i.z = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.aa = fadd reassoc nsz arcp contract afn double %i.z, %i.y ; 3 uses
+  %i.aa = fadd reassoc nsz arcp contract afn double %i.z, %i.y ; 4 uses
   store double %i.aa, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.ab = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.w) ; 3 uses
-  %i.ac = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.aa) ; 3 uses
+  %i.ab = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.w) ; 2 uses
+  %i.ac = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.aa) ; 2 uses
   %i.ad = fcmp reassoc nsz arcp contract afn une double %i.ab, 0.000000e+00
   %i.ae = fcmp reassoc nsz arcp contract afn une double %i.ac, 0.000000e+00
   %or.cond.i.i = select i1 %i.ad, i1 true, i1 %i.ae
@@ -1207,8 +1207,8 @@ bb.l:                                             ; preds = %bb.k
   store double %i.af, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.ag = fsub reassoc nsz arcp contract afn double %i.aa, %i.ac
   store double %i.ag, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.ah = fptosi double %i.ab to i32
-  %i.ai = fptosi double %i.ac to i32
+  %i.ah = fptosi double %i.w to i32
+  %i.ai = fptosi double %i.aa to i32
   br label %dt_gui_get_scroll_unit_delta.exit
 
 dt_gui_get_scroll_unit_delta.exit:                ; preds = %bb.e, %bb.f, %bb.g, %bb.h, %bb.l
@@ -1397,15 +1397,15 @@ bb.i:                                             ; preds = %bb.g
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.n = load double, ptr %i.m, align 8, !tbaa !70
   %i.o = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
-  %i.p = fadd reassoc nsz arcp contract afn double %i.o, %i.n ; 3 uses
+  %i.p = fadd reassoc nsz arcp contract afn double %i.o, %i.n ; 4 uses
   store double %i.p, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.r = load double, ptr %i.q, align 8, !tbaa !71
   %i.s = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.t = fadd reassoc nsz arcp contract afn double %i.s, %i.r ; 3 uses
+  %i.t = fadd reassoc nsz arcp contract afn double %i.s, %i.r ; 4 uses
   store double %i.t, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.u = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.p) ; 3 uses
-  %i.v = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.t) ; 3 uses
+  %i.u = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.p) ; 2 uses
+  %i.v = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.t) ; 2 uses
   %i.w = fcmp reassoc nsz arcp contract afn une double %i.u, 0.000000e+00
   %i.x = fcmp reassoc nsz arcp contract afn une double %i.v, 0.000000e+00
   %or.cond.i.i = select i1 %i.w, i1 true, i1 %i.x
@@ -1416,8 +1416,8 @@ bb.j:                                             ; preds = %bb.i
   store double %i.y, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.z = fsub reassoc nsz arcp contract afn double %i.t, %i.v
   store double %i.z, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.aa = fptosi double %i.u to i32
-  %i.ab = fptosi double %i.v to i32
+  %i.aa = fptosi double %i.p to i32
+  %i.ab = fptosi double %i.t to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.f, %bb.e, %bb.d, %bb.c
@@ -1482,15 +1482,15 @@ bb.h:                                             ; preds = %bb.f
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.h = load double, ptr %i.g, align 8, !tbaa !70
   %i.i = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
-  %i.j = fadd reassoc nsz arcp contract afn double %i.i, %i.h ; 3 uses
+  %i.j = fadd reassoc nsz arcp contract afn double %i.i, %i.h ; 4 uses
   store double %i.j, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.l = load double, ptr %i.k, align 8, !tbaa !71
   %i.m = load double, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.n = fadd reassoc nsz arcp contract afn double %i.m, %i.l ; 3 uses
+  %i.n = fadd reassoc nsz arcp contract afn double %i.m, %i.l ; 4 uses
   store double %i.n, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.o = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.j) ; 3 uses
-  %i.p = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.n) ; 3 uses
+  %i.o = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.j) ; 2 uses
+  %i.p = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.n) ; 2 uses
   %i.q = fcmp reassoc nsz arcp contract afn une double %i.o, 0.000000e+00
   %i.r = fcmp reassoc nsz arcp contract afn une double %i.p, 0.000000e+00
   %or.cond.i.i = select i1 %i.q, i1 true, i1 %i.r
@@ -1501,8 +1501,8 @@ bb.i:                                             ; preds = %bb.h
   store double %i.s, ptr @dt_gui_get_scroll_unit_deltas.acc_x, align 8, !tbaa !69
   %i.t = fsub reassoc nsz arcp contract afn double %i.n, %i.p
   store double %i.t, ptr @dt_gui_get_scroll_unit_deltas.acc_y, align 8, !tbaa !69
-  %i.u = fptosi double %i.o to i32
-  %i.v = fptosi double %i.p to i32
+  %i.u = fptosi double %i.j to i32
+  %i.v = fptosi double %i.n to i32
   br label %dt_gui_get_scroll_unit_delta.exit
 
 dt_gui_get_scroll_unit_delta.exit:                ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.i
@@ -1905,8 +1905,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.br, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %5 = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.bn)
-  %i.bs = fptosi double %5 to i32
+  %i.bs = fptosi double %i.bn to i32
   %i.bt = sitofp reassoc nsz arcp contract afn i32 %i.bs to double ; 2 uses
   %i.bu = fsub reassoc nsz arcp contract afn double %i.bn, %i.bt
   store double %i.bu, ptr @_scroll_discrete_dx, align 8, !tbaa !69
@@ -1919,8 +1918,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br i1 %i.bw, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %6 = tail call reassoc nsz arcp contract afn double @llvm.trunc.f64(double %i.bp)
-  %i.bx = fptosi double %6 to i32
+  %i.bx = fptosi double %i.bp to i32
   %i.by = sitofp reassoc nsz arcp contract afn i32 %i.bx to double ; 2 uses
   %i.bz = fsub reassoc nsz arcp contract afn double %i.bp, %i.by
   store double %i.bz, ptr @_scroll_discrete_dy, align 8, !tbaa !69
