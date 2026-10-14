@@ -1,0 +1,1053 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/g729dec?download=true
+inline.NumInlined: 22
+inline.NumDeleted: 13
+loop-unroll.NumCompletelyUnrolled: 14
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 15
+begin_hunk_0
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-pc-linux-gnu"
+
+%union.anon = type { ptr }
+%union.anon.0 = type { %struct.anon.1 }
+%struct.anon.1 = type { ptr, ptr, ptr }
+%struct.G729FormatDescription = type { [2 x i8], i8, i8, i8, i8, i8, i8 }
+
+@.str = private unnamed_addr constant [5 x i8] c"g729\00", align 1
+@.str.1 = private unnamed_addr constant [6 x i8] c"G.729\00", align 1
+@ff_g729_decoder = local_unnamed_addr constant { { ptr, ptr, i32, i32, i32, i8, [3 x i8], ptr, ptr, ptr }, i8, i8, i8, i8, i32, ptr, ptr, ptr, ptr, %union.anon, ptr, ptr, ptr, ptr, ptr, ptr, %union.anon.0 } { { ptr, ptr, i32, i32, i32, i8, [3 x i8], ptr, ptr, ptr } { ptr @.str, ptr @.str.1, i32 1, i32 86069, i32 2, i8 0, [3 x i8] zeroinitializer, ptr null, ptr null, ptr null }, i8 0, i8 0, i8 0, i8 1, i32 32, ptr null, ptr null, ptr null, ptr @decoder_init, %union.anon { ptr @decode_frame }, ptr @decode_close, ptr null, ptr null, ptr null, ptr null, ptr null, %union.anon.0 zeroinitializer }, align 8
+@.str.2 = private unnamed_addr constant [13 x i8] c"acelp.kelvin\00", align 1
+@.str.3 = private unnamed_addr constant [19 x i8] c"Sipro ACELP.KELVIN\00", align 1
+@ff_acelp_kelvin_decoder = local_unnamed_addr constant { { ptr, ptr, i32, i32, i32, i8, [3 x i8], ptr, ptr, ptr }, i8, i8, i8, i8, i32, ptr, ptr, ptr, ptr, %union.anon, ptr, ptr, ptr, ptr, ptr, ptr, %union.anon.0 } { { ptr, ptr, i32, i32, i32, i8, [3 x i8], ptr, ptr, ptr } { ptr @.str.2, ptr @.str.3, i32 1, i32 86106, i32 2, i8 0, [3 x i8] zeroinitializer, ptr null, ptr null, ptr null }, i8 0, i8 0, i8 0, i8 1, i32 32, ptr null, ptr null, ptr null, ptr @decoder_init, %union.anon { ptr @decode_frame }, ptr @decode_close, ptr null, ptr null, ptr null, ptr null, ptr null, %union.anon.0 zeroinitializer }, align 8
+@.str.4 = private unnamed_addr constant [62 x i8] c"Only mono and stereo are supported (requested channels: %d).\0A\00", align 1
+@lsp_init = internal unnamed_addr constant [10 x i16] [i16 30000, i16 26000, i16 21000, i16 15000, i16 8000, i16 0, i16 -8000, i16 -15000, i16 -21000, i16 -26000], align 16
+@format_g729_8k = internal unnamed_addr constant %struct.G729FormatDescription { [2 x i8] c"\08\05", i8 1, i8 3, i8 4, i8 4, i8 13, i8 10 }, align 1
+@.str.5 = private unnamed_addr constant [17 x i8] c"Packet type: %s\0A\00", align 1
+@.str.6 = private unnamed_addr constant [16 x i8] c"G.729 @ 8kbit/s\00", align 1
+@format_g729d_6k4 = internal unnamed_addr constant %struct.G729FormatDescription { [2 x i8] c"\08\04", i8 0, i8 3, i8 3, i8 2, i8 9, i8 8 }, align 1
+@.str.7 = private unnamed_addr constant [19 x i8] c"G.729D @ 6.4kbit/s\00", align 1
+@.str.8 = private unnamed_addr constant [28 x i8] c"Packet size %d is unknown.\0A\00", align 1
+@.str.9 = private unnamed_addr constant [35 x i8] c"First byte value %x for channel %d\00", align 1
+@.str.10 = private unnamed_addr constant [33 x i8] c"pitch_delay_int %d is too large\0A\00", align 1
+@ff_fc_4pulses_8bits_tracks_13 = external constant [16 x i8], align 16
+@ff_fc_4pulses_8bits_track_4 = external constant [32 x i8], align 16
+@ff_fc_2pulses_9bits_track1_gray = external constant [16 x i8], align 16
+@ff_fc_2pulses_9bits_track2_gray = external constant [32 x i8], align 16
+@cb_gain_1st_6k4 = internal unnamed_addr constant [8 x [2 x i16]] [[2 x i16] [i16 5849, i16 0], [2 x i16] [i16 3171, i16 9280], [2 x i16] [i16 3617, i16 6747], [2 x i16] [i16 4987, i16 22294], [2 x i16] [i16 2929, i16 1078], [2 x i16] [i16 6068, i16 6093], [2 x i16] [i16 9425, i16 2731], [2 x i16] [i16 3915, i16 12872]], align 16
+@cb_gain_2nd_6k4 = internal unnamed_addr constant [8 x [2 x i16]] [[2 x i16] [i16 0, i16 4175], [2 x i16] [i16 10828, i16 27602], [2 x i16] [i16 16423, i16 15724], [2 x i16] [i16 4478, i16 7324], [2 x i16] [i16 3988, i16 0], [2 x i16] [i16 10291, i16 11385], [2 x i16] [i16 11956, i16 10735], [2 x i16] [i16 7876, i16 7821]], align 16
+@cb_gain_1st_8k = internal unnamed_addr constant [8 x [2 x i16]] [[2 x i16] [i16 3242, i16 9949], [2 x i16] [i16 1551, i16 2425], [2 x i16] [i16 2678, i16 27162], [2 x i16] [i16 1921, i16 9291], [2 x i16] [i16 1831, i16 5022], [2 x i16] [i16 1, i16 1516], [2 x i16] [i16 356, i16 14756], [2 x i16] [i16 57, i16 5404]], align 16
+@cb_gain_2nd_8k = internal unnamed_addr constant [16 x [2 x i16]] [[2 x i16] [i16 5142, i16 592], [2 x i16] [i16 17299, i16 1861], [2 x i16] [i16 6160, i16 2395], [2 x i16] [i16 16112, i16 3392], [2 x i16] [i16 826, i16 2005], [2 x i16] [i16 18973, i16 5935], [2 x i16] [i16 1994, i16 0], [2 x i16] [i16 15434, i16 237], [2 x i16] [i16 10573, i16 2966], [2 x i16] [i16 15132, i16 4914], [2 x i16] [i16 11569, i16 1196], [2 x i16] [i16 14194, i16 1630], [2 x i16] [i16 8091, i16 4861], [2 x i16] [i16 15161, i16 14276], [2 x i16] [i16 9120, i16 525], [2 x i16] [i16 13260, i16 3256]], align 16
+@ma_prediction_coeff = internal constant [4 x i16] [i16 5571, i16 4751, i16 2785, i16 1556], align 2
+@ff_acelp_interp_filter = external constant [61 x i16], align 16
+@cb_ma_predictor = internal unnamed_addr constant [2 x [4 x [10 x i16]]] [[4 x [10 x i16]] [[10 x i16] [i16 8421, i16 9109, i16 9175, i16 8965, i16 9034, i16 9057, i16 8765, i16 8775, i16 9106, i16 8673], [10 x i16] [i16 7018, i16 7189, i16 7638, i16 7307, i16 7444, i16 7379, i16 7038, i16 6956, i16 6930, i16 6868], [10 x i16] [i16 5472, i16 4990, i16 5134, i16 5177, i16 5246, i16 5141, i16 5206, i16 5095, i16 4830, i16 5147], [10 x i16] [i16 4056, i16 3031, i16 2614, i16 3024, i16 2916, i16 2713, i16 3309, i16 3237, i16 2857, i16 3473]], [4 x [10 x i16]] [[10 x i16] [i16 7733, i16 7880, i16 8188, i16 8175, i16 8247, i16 8490, i16 8637, i16 8601, i16 8359, i16 7569], [10 x i16] [i16 4210, i16 3031, i16 2552, i16 3473, i16 3876, i16 3853, i16 4184, i16 4154, i16 3909, i16 3968], [10 x i16] [i16 3214, i16 1930, i16 1313, i16 2143, i16 2493, i16 2385, i16 2755, i16 2706, i16 2542, i16 2919], [10 x i16] [i16 3024, i16 1592, i16 940, i16 1631, i16 1723, i16 1579, i16 2034, i16 2084, i16 1913, i16 2601]]], align 16
+@cb_ma_predictor_sum_inv = internal unnamed_addr constant [2 x [10 x i16]] [[10 x i16] [i16 17210, i16 15888, i16 16357, i16 16183, i16 16516, i16 15833, i16 15888, i16 15421, i16 14840, i16 15597], [10 x i16] [i16 9202, i16 7320, i16 6788, i16 7738, i16 8170, i16 8154, i16 8856, i16 8818, i16 8366, i16 8544]], align 16
+@cb_lsp_1st = internal unnamed_addr constant [128 x [10 x i16]] [[10 x i16] [i16 1486, i16 2168, i16 3751, i16 9074, i16 12134, i16 13944, i16 17983, i16 19173, i16 21190, i16 21820], [10 x i16] [i16 1730, i16 2640, i16 3450, i16 4870, i16 6126, i16 7876, i16 15644, i16 17817, i16 20294, i16 21902], [10 x i16] [i16 1568, i16 2256, i16 3088, i16 4874, i16 11063, i16 13393, i16 18307, i16 19293, i16 21109, i16 21741], [10 x i16] [i16 1733, i16 2512, i16 3357, i16 4708, i16 6977, i16 10296, i16 17024, i16 17956, i16 19145, i16 20350], [10 x i16] [i16 1744, i16 2436, i16 3308, i16 8731, i16 10432, i16 12007, i16 15614, i16 16639, i16 21359, i16 21913], [10 x i16] [i16 1786, i16 2369, i16 3372, i16 4521, i16 6795, i16 12963, i16 17674, i16 18988, i16 20855, i16 21640], [10 x i16] [i16 1631, i16 2433, i16 3361, i16 6328, i16 10709, i16 12013, i16 13277, i16 13904, i16 19441, i16 21088], [10 x i16] [i16 1489, i16 2364, i16 3291, i16 6250, i16 9227, i16 10403, i16 13843, i16 15278, i16 17721, i16 21451], [10 x i16] [i16 1869, i16 2533, i16 3475, i16 4365, i16 9152, i16 14513, i16 15908, i16 17022, i16 20611, i16 21411], [10 x i16] [i16 2070, i16 3025, i16 4333, i16 5854, i16 7805, i16 9231, i16 10597, i16 16047, i16 20109, i16 21834], [10 x i16] [i16 1910, i16 2673, i16 3419, i16 4261, i16 11168, i16 15111, i16 16577, i16 17591, i16 19310, i16 20265], [10 x i16] [i16 1141, i16 1815, i16 2624, i16 4623, i16 6495, i16 9588, i16 13968, i16 16428, i16 19351, i16 21286], [10 x i16] [i16 2192, i16 3171, i16 4707, i16 5808, i16 10904, i16 12500, i16 14162, i16 15664, i16 21124, i16 21789], [10 x i16] [i16 1286, i16 1907, i16 2548, i16 3453, i16 9574, i16 11964, i16 15978, i16 17344, i16 19691, i16 22495], [10 x i16] [i16 1921, i16 2720, i16 4604, i16 6684, i16 11503, i16 12992, i16 14350, i16 15262, i16 16997, i16 20791], [10 x i16] [i16 2052, i16 2759, i16 3897, i16 5246, i16 6638, i16 10267, i16 15834, i16 16814, i16 18149, i16 21675], [10 x i16] [i16 1798, i16 2497, i16 5617, i16 11449, i16 13189, i16 14711, i16 17050, i16 18195, i16 20307, i16 21182], [10 x i16] [i16 1009, i16 1647, i16 2889, i16 5709, i16 9541, i16 12354, i16 15231, i16 18494, i16 20966, i16 22033], [10 x i16] [i16 3016, i16 3794, i16 5406, i16 7469, i16 12488, i16 13984, i16 15328, i16 16334, i16 19952, i16 20791], [10 x i16] [i16 2203, i16 3040, i16 3796, i16 5442, i16 11987, i16 13512, i16 14931, i16 16370, i16 17856, i16 18803], [10 x i16] [i16 2912, i16 4292, i16 7988, i16 9572, i16 11562, i16 13244, i16 14556, i16 16529, i16 20004, i16 21073], [10 x i16] [i16 2861, i16 3607, i16 5923, i16 7034, i16 9234, i16 12054, i16 13729, i16 18056, i16 20262, i16 20974], [10 x i16] [i16 3069, i16 4311, i16 5967, i16 7367, i16 11482, i16 12699, i16 14309, i16 16233, i16 18333, i16 19172], [10 x i16] [i16 2434, i16 3661, i16 4866, i16 5798, i16 10383, i16 11722, i16 13049, i16 15668, i16 18862, i16 19831], [10 x i16] [i16 2020, i16 2605, i16 3860, i16 9241, i16 13275, i16 14644, i16 16010, i16 17099, i16 19268, i16 20251], [10 x i16] [i16 1877, i16 2809, i16 3590, i16 4707, i16 11056, i16 12441, i16 15622, i16 17168, i16 18761, i16 19907], [10 x i16] [i16 2107, i16 2873, i16 3673, i16 5799, i16 13579, i16 14687, i16 15938, i16 17077, i16 18890, i16 19831], [10 x i16] [i16 1612, i16 2284, i16 2944, i16 3572, i16 8219, i16 13959, i16 15924, i16 17239, i16 18592, i16 20117], [10 x i16] [i16 2420, i16 3156, i16 6542, i16 10215, i16 12061, i16 13534, i16 15305, i16 16452, i16 18717, i16 19880], [10 x i16] [i16 1667, i16 2612, i16 3534, i16 5237, i16 10513, i16 11696, i16 12940, i16 16798, i16 18058, i16 19378], [10 x i16] [i16 2388, i16 3017, i16 4839, i16 9333, i16 11413, i16 12730, i16 15024, i16 16248, i16 17449, i16 18677], [10 x i16] [i16 1875, i16 2786, i16 4231, i16 6320, i16 8694, i16 10149, i16 11785, i16 17013, i16 18608, i16 19960], [10 x i16] [i16 679, i16 1411, i16 4654, i16 8006, i16 11446, i16 13249, i16 15763, i16 18127, i16 20361, i16 21567], [10 x i16] [i16 1838, i16 2596, i16 3578, i16 4608, i16 5650, i16 11274, i16 14355, i16 15886, i16 20579, i16 21754], [10 x i16] [i16 1303, i16 1955, i16 2395, i16 3322, i16 12023, i16 13764, i16 15883, i16 18077, i16 20180, i16 21232], [10 x i16] [i16 1438, i16 2102, i16 2663, i16 3462, i16 8328, i16 10362, i16 13763, i16 17248, i16 19732, i16 22344], [10 x i16] [i16 860, i16 1904, i16 6098, i16 7775, i16 9815, i16 12007, i16 14821, i16 16709, i16 19787, i16 21132], [10 x i16] [i16 1673, i16 2723, i16 3704, i16 6125, i16 7668, i16 9447, i16 13683, i16 14443, i16 20538, i16 21731], [10 x i16] [i16 1246, i16 1849, i16 2902, i16 4508, i16 7221, i16 12710, i16 14835, i16 16314, i16 19335, i16 22720], [10 x i16] [i16 1525, i16 2260, i16 3862, i16 5659, i16 7342, i16 11748, i16 13370, i16 14442, i16 18044, i16 21334], [10 x i16] [i16 1196, i16 1846, i16 3104, i16 7063, i16 10972, i16 12905, i16 14814, i16 17037, i16 19922, i16 22636], [10 x i16] [i16 2147, i16 3106, i16 4475, i16 6511, i16 8227, i16 9765, i16 10984, i16 12161, i16 18971, i16 21300], [10 x i16] [i16 1585, i16 2405, i16 2994, i16 4036, i16 11481, i16 13177, i16 14519, i16 15431, i16 19967, i16 21275], [10 x i16] [i16 1778, i16 2688, i16 3614, i16 4680, i16 9465, i16 11064, i16 12473, i16 16320, i16 19742, i16 20800], [10 x i16] [i16 1862, i16 2586, i16 3492, i16 6719, i16 11708, i16 13012, i16 14364, i16 16128, i16 19610, i16 20425], [10 x i16] [i16 1395, i16 2156, i16 2669, i16 3386, i16 10607, i16 12125, i16 13614, i16 16705, i16 18976, i16 21367], [10 x i16] [i16 1444, i16 2117, i16 3286, i16 6233, i16 9423, i16 12981, i16 14998, i16 15853, i16 17188, i16 21857], [10 x i16] [i16 2004, i16 2895, i16 3783, i16 4897, i16 6168, i16 7297, i16 12609, i16 16445, i16 19297, i16 21465], [10 x i16] [i16 1495, i16 2863, i16 6360, i16 8100, i16 11399, i16 14271, i16 15902, i16 17711, i16 20479, i16 22061], [10 x i16] [i16 2484, i16 3114, i16 5718, i16 7097, i16 8400, i16 12616, i16 14073, i16 14847, i16 20535, i16 21396], [10 x i16] [i16 2424, i16 3277, i16 5296, i16 6284, i16 11290, i16 12903, i16 16022, i16 17508, i16 19333, i16 20283], [10 x i16] [i16 2565, i16 3778, i16 5360, i16 6989, i16 8782, i16 10428, i16 14390, i16 15742, i16 17770, i16 21734], [10 x i16] [i16 2727, i16 3384, i16 6613, i16 9254, i16 10542, i16 12236, i16 14651, i16 15687, i16 20074, i16 21102], [10 x i16] [i16 1916, i16 2953, i16 6274, i16 8088, i16 9710, i16 10925, i16 12392, i16 16434, i16 20010, i16 21183], [10 x i16] [i16 3384, i16 4366, i16 5349, i16 7667, i16 11180, i16 12605, i16 13921, i16 15324, i16 19901, i16 20754], [10 x i16] [i16 3075, i16 4283, i16 5951, i16 7619, i16 9604, i16 11010, i16 12384, i16 14006, i16 20658, i16 21497], [10 x i16] [i16 1751, i16 2455, i16 5147, i16 9966, i16 11621, i16 13176, i16 14739, i16 16470, i16 20788, i16 21756], [10 x i16] [i16 1442, i16 2188, i16 3330, i16 6813, i16 8929, i16 12135, i16 14476, i16 15306, i16 19635, i16 20544], [10 x i16] [i16 2294, i16 2895, i16 4070, i16 8035, i16 12233, i16 13416, i16 14762, i16 17367, i16 18952, i16 19688], [10 x i16] [i16 1937, i16 2659, i16 4602, i16 6697, i16 9071, i16 12863, i16 14197, i16 15230, i16 16047, i16 18877], [10 x i16] [i16 2071, i16 2663, i16 4216, i16 9445, i16 10887, i16 12292, i16 13949, i16 14909, i16 19236, i16 20341], [10 x i16] [i16 1740, i16 2491, i16 3488, i16 8138, i16 9656, i16 11153, i16 13206, i16 14688, i16 20896, i16 21907], [10 x i16] [i16 2199, i16 2881, i16 4675, i16 8527, i16 10051, i16 11408, i16 14435, i16 15463, i16 17190, i16 20597], [10 x i16] [i16 1943, i16 2988, i16 4177, i16 6039, i16 7478, i16 8536, i16 14181, i16 15551, i16 17622, i16 21579], [10 x i16] [i16 1825, i16 3175, i16 7062, i16 9818, i16 12824, i16 15450, i16 18330, i16 19856, i16 21830, i16 22412], [10 x i16] [i16 2464, i16 3046, i16 4822, i16 5977, i16 7696, i16 15398, i16 16730, i16 17646, i16 20588, i16 21320], [10 x i16] [i16 2550, i16 3393, i16 5305, i16 6920, i16 10235, i16 14083, i16 18143, i16 19195, i16 20681, i16 21336], [10 x i16] [i16 3003, i16 3799, i16 5321, i16 6437, i16 7919, i16 11643, i16 15810, i16 16846, i16 18119, i16 18980], [10 x i16] [i16 3455, i16 4157, i16 6838, i16 8199, i16 9877, i16 12314, i16 15905, i16 16826, i16 19949, i16 20892], [10 x i16] [i16 3052, i16 3769, i16 4891, i16 5810, i16 6977, i16 10126, i16 14788, i16 15990, i16 19773, i16 20904], [10 x i16] [i16 3671, i16 4356, i16 5827, i16 6997, i16 8460, i16 12084, i16 14154, i16 14939, i16 19247, i16 20423], [10 x i16] [i16 2716, i16 3684, i16 5246, i16 6686, i16 8463, i16 10001, i16 12394, i16 14131, i16 16150, i16 19776], [10 x i16] [i16 1945, i16 2638, i16 4130, i16 7995, i16 14338, i16 15576, i16 17057, i16 18206, i16 20225, i16 20997], [10 x i16] [i16 2304, i16 2928, i16 4122, i16 4824, i16 5640, i16 13139, i16 15825, i16 16938, i16 20108, i16 21054], [10 x i16] [i16 1800, i16 2516, i16 3350, i16 5219, i16 13406, i16 15948, i16 17618, i16 18540, i16 20531, i16 21252], [10 x i16] [i16 1436, i16 2224, i16 2753, i16 4546, i16 9657, i16 11245, i16 15177, i16 16317, i16 17489, i16 19135], [10 x i16] [i16 2319, i16 2899, i16 4980, i16 6936, i16 8404, i16 13489, i16 15554, i16 16281, i16 20270, i16 20911], [10 x i16] [i16 2187, i16 2919, i16 4610, i16 5875, i16 7390, i16 12556, i16 14033, i16 16794, i16 20998, i16 21769], [10 x i16] [i16 2235, i16 2923, i16 5121, i16 6259, i16 8099, i16 13589, i16 15340, i16 16340, i16 17927, i16 20159], [10 x i16] [i16 1765, i16 2638, i16 3751, i16 5730, i16 7883, i16 10108, i16 13633, i16 15419, i16 16808, i16 18574], [10 x i16] [i16 3460, i16 5741, i16 9596, i16 11742, i16 14413, i16 16080, i16 18173, i16 19090, i16 20845, i16 21601], [10 x i16] [i16 3735, i16 4426, i16 6199, i16 7363, i16 9250, i16 14489, i16 16035, i16 17026, i16 19873, i16 20876], [10 x i16] [i16 3521, i16 4778, i16 6887, i16 8680, i16 12717, i16 14322, i16 15950, i16 18050, i16 20166, i16 21145], [10 x i16] [i16 2141, i16 2968, i16 6865, i16 8051, i16 10010, i16 13159, i16 14813, i16 15861, i16 17528, i16 18655], [10 x i16] [i16 4148, i16 6128, i16 9028, i16 10871, i16 12686, i16 14005, i16 15976, i16 17208, i16 19587, i16 20595], [10 x i16] [i16 4403, i16 5367, i16 6634, i16 8371, i16 10163, i16 11599, i16 14963, i16 16331, i16 17982, i16 18768], [10 x i16] [i16 4091, i16 5386, i16 6852, i16 8770, i16 11563, i16 13290, i16 15728, i16 16930, i16 19056, i16 20102], [10 x i16] [i16 2746, i16 3625, i16 5299, i16 7504, i16 10262, i16 11432, i16 13172, i16 15490, i16 16875, i16 17514], [10 x i16] [i16 2248, i16 3556, i16 8539, i16 10590, i16 12665, i16 14696, i16 16515, i16 17824, i16 20268, i16 21247], [10 x i16] [i16 1279, i16 1960, i16 3920, i16 7793, i16 10153, i16 14753, i16 16646, i16 18139, i16 20679, i16 21466], [10 x i16] [i16 2440, i16 3475, i16 6737, i16 8654, i16 12190, i16 14588, i16 17119, i16 17925, i16 19110, i16 19979], [10 x i16] [i16 1879, i16 2514, i16 4497, i16 7572, i16 10017, i16 14948, i16 16141, i16 16897, i16 18397, i16 19376], [10 x i16] [i16 2804, i16 3688, i16 7490, i16 10086, i16 11218, i16 12711, i16 16307, i16 17470, i16 20077, i16 21126], [10 x i16] [i16 2023, i16 2682, i16 3873, i16 8268, i16 10255, i16 11645, i16 15187, i16 17102, i16 18965, i16 19788], [10 x i16] [i16 2823, i16 3605, i16 5815, i16 8595, i16 10085, i16 11469, i16 16568, i16 17462, i16 18754, i16 19876], [10 x i16] [i16 2851, i16 3681, i16 5280, i16 7648, i16 9173, i16 10338, i16 14961, i16 16148, i16 17559, i16 18474], [10 x i16] [i16 1348, i16 2645, i16 5826, i16 8785, i16 10620, i16 12831, i16 16255, i16 18319, i16 21133, i16 22586], [10 x i16] [i16 2141, i16 3036, i16 4293, i16 6082, i16 7593, i16 10629, i16 17158, i16 18033, i16 21466, i16 22084], [10 x i16] [i16 1608, i16 2375, i16 3384, i16 6878, i16 9970, i16 11227, i16 16928, i16 17650, i16 20185, i16 21120], [10 x i16] [i16 2774, i16 3616, i16 5014, i16 6557, i16 7788, i16 8959, i16 17068, i16 18302, i16 19537, i16 20542], [10 x i16] [i16 1934, i16 4813, i16 6204, i16 7212, i16 8979, i16 11665, i16 15989, i16 17811, i16 20426, i16 21703], [10 x i16] [i16 2288, i16 3507, i16 5037, i16 6841, i16 8278, i16 9638, i16 15066, i16 16481, i16 21653, i16 22214], [10 x i16] [i16 2951, i16 3771, i16 4878, i16 7578, i16 9016, i16 10298, i16 14490, i16 15242, i16 20223, i16 20990], [10 x i16] [i16 3256, i16 4791, i16 6601, i16 7521, i16 8644, i16 9707, i16 13398, i16 16078, i16 19102, i16 20249], [10 x i16] [i16 1827, i16 2614, i16 3486, i16 6039, i16 12149, i16 13823, i16 16191, i16 17282, i16 21423, i16 22041], [10 x i16] [i16 1000, i16 1704, i16 3002, i16 6335, i16 8471, i16 10500, i16 14878, i16 16979, i16 20026, i16 22427], [10 x i16] [i16 1646, i16 2286, i16 3109, i16 7245, i16 11493, i16 12791, i16 16824, i16 17667, i16 18981, i16 20222], [10 x i16] [i16 1708, i16 2501, i16 3315, i16 6737, i16 8729, i16 9924, i16 16089, i16 17097, i16 18374, i16 19917], [10 x i16] [i16 2623, i16 3510, i16 4478, i16 5645, i16 9862, i16 11115, i16 15219, i16 18067, i16 19583, i16 20382], [10 x i16] [i16 2518, i16 3434, i16 4728, i16 6388, i16 8082, i16 9285, i16 13162, i16 18383, i16 19819, i16 20552], [10 x i16] [i16 1726, i16 2383, i16 4090, i16 6303, i16 7805, i16 12845, i16 14612, i16 17608, i16 19269, i16 20181], [10 x i16] [i16 2860, i16 3735, i16 4838, i16 6044, i16 7254, i16 8402, i16 14031, i16 16381, i16 18037, i16 19410], [10 x i16] [i16 4247, i16 5993, i16 7952, i16 9792, i16 12342, i16 14653, i16 17527, i16 18774, i16 20831, i16 21699], [10 x i16] [i16 3502, i16 4051, i16 5680, i16 6805, i16 8146, i16 11945, i16 16649, i16 17444, i16 20390, i16 21564], [10 x i16] [i16 3151, i16 4893, i16 5899, i16 7198, i16 11418, i16 13073, i16 15124, i16 17673, i16 20520, i16 21861], [10 x i16] [i16 3960, i16 4848, i16 5926, i16 7259, i16 8811, i16 10529, i16 15661, i16 16560, i16 18196, i16 20183], [10 x i16] [i16 4499, i16 6604, i16 8036, i16 9251, i16 10804, i16 12627, i16 15880, i16 17512, i16 20020, i16 21046], [10 x i16] [i16 4251, i16 5541, i16 6654, i16 8318, i16 9900, i16 11686, i16 15100, i16 17093, i16 20572, i16 21687], [10 x i16] [i16 3769, i16 5327, i16 7865, i16 9360, i16 10684, i16 11818, i16 13660, i16 15366, i16 18733, i16 19882], [10 x i16] [i16 3083, i16 3969, i16 6248, i16 8121, i16 9798, i16 10994, i16 12393, i16 13686, i16 17888, i16 19105], [10 x i16] [i16 2731, i16 4670, i16 7063, i16 9201, i16 11346, i16 13735, i16 16875, i16 18797, i16 20787, i16 22360], [10 x i16] [i16 1187, i16 2227, i16 4737, i16 7214, i16 9622, i16 12633, i16 15404, i16 17968, i16 20262, i16 23533], [10 x i16] [i16 1911, i16 2477, i16 3915, i16 10098, i16 11616, i16 12955, i16 16223, i16 17138, i16 19270, i16 20729], [10 x i16] [i16 1764, i16 2519, i16 3887, i16 6944, i16 9150, i16 12590, i16 16258, i16 16984, i16 17924, i16 18435], [10 x i16] [i16 1400, i16 3674, i16 7131, i16 8718, i16 10688, i16 12508, i16 15708, i16 17711, i16 19720, i16 21068], [10 x i16] [i16 2322, i16 3073, i16 4287, i16 8108, i16 9407, i16 10628, i16 15862, i16 16693, i16 19714, i16 21474], [10 x i16] [i16 2630, i16 3339, i16 4758, i16 8360, i16 10274, i16 11333, i16 12880, i16 17374, i16 19221, i16 19936], [10 x i16] [i16 1721, i16 2577, i16 5553, i16 7195, i16 8651, i16 10686, i16 15069, i16 16953, i16 18703, i16 19929]], align 16
+@cb_lsp_2nd = internal unnamed_addr constant [32 x [10 x i16]] [[10 x i16] [i16 -435, i16 -815, i16 -742, i16 1033, i16 -518, i16 582, i16 -1201, i16 829, i16 86, i16 385], [10 x i16] [i16 -833, i16 -891, i16 463, i16 -8, i16 -1251, i16 1450, i16 72, i16 -231, i16 864, i16 661], [10 x i16] [i16 -1021, i16 231, i16 -306, i16 321, i16 -220, i16 -163, i16 -526, i16 -754, i16 -1633, i16 267], [10 x i16] [i16 57, i16 -198, i16 -339, i16 -33, i16 -1468, i16 573, i16 796, i16 -169, i16 -631, i16 816], [10 x i16] [i16 171, i16 -350, i16 294, i16 1660, i16 453, i16 519, i16 291, i16 159, i16 -640, i16 -1296], [10 x i16] [i16 -701, i16 -842, i16 -58, i16 950, i16 892, i16 1549, i16 715, i16 527, i16 -714, i16 -193], [10 x i16] [i16 584, i16 31, i16 -289, i16 356, i16 -333, i16 -457, i16 612, i16 -283, i16 -1381, i16 -741], [10 x i16] [i16 -109, i16 -808, i16 231, i16 77, i16 -87, i16 -344, i16 1341, i16 1087, i16 -654, i16 -569], [10 x i16] [i16 -859, i16 1236, i16 550, i16 854, i16 714, i16 -543, i16 -1752, i16 -195, i16 -98, i16 -276], [10 x i16] [i16 -877, i16 -954, i16 -1248, i16 -299, i16 212, i16 -235, i16 -728, i16 949, i16 1517, i16 895], [10 x i16] [i16 -77, i16 344, i16 -620, i16 763, i16 413, i16 502, i16 -362, i16 -960, i16 -483, i16 1386], [10 x i16] [i16 -314, i16 -307, i16 -256, i16 -1260, i16 -429, i16 450, i16 -466, i16 -108, i16 1010, i16 2223], [10 x i16] [i16 711, i16 693, i16 521, i16 650, i16 1305, i16 -28, i16 -378, i16 744, i16 -1005, i16 240], [10 x i16] [i16 -112, i16 -271, i16 -500, i16 946, i16 1733, i16 271, i16 -15, i16 909, i16 -259, i16 1688], [10 x i16] [i16 575, i16 -10, i16 -468, i16 -199, i16 1101, i16 -1011, i16 581, i16 -53, i16 -747, i16 878], [10 x i16] [i16 145, i16 -285, i16 -1280, i16 -398, i16 36, i16 -498, i16 -1377, i16 18, i16 -444, i16 1483], [10 x i16] [i16 -1133, i16 -835, i16 1350, i16 1284, i16 -95, i16 1015, i16 -222, i16 443, i16 372, i16 -354], [10 x i16] [i16 -1459, i16 -1237, i16 416, i16 -213, i16 466, i16 669, i16 659, i16 1640, i16 932, i16 534], [10 x i16] [i16 -15, i16 66, i16 468, i16 1019, i16 -748, i16 1385, i16 -182, i16 -907, i16 -721, i16 -262], [10 x i16] [i16 -338, i16 148, i16 1445, i16 75, i16 -760, i16 569, i16 1247, i16 337, i16 416, i16 -121], [10 x i16] [i16 389, i16 239, i16 1568, i16 981, i16 113, i16 369, i16 -1003, i16 -507, i16 -587, i16 -904], [10 x i16] [i16 -312, i16 -98, i16 949, i16 31, i16 1104, i16 72, i16 -141, i16 1465, i16 63, i16 -785], [10 x i16] [i16 1127, i16 584, i16 835, i16 277, i16 -1159, i16 208, i16 301, i16 -882, i16 117, i16 -404], [10 x i16] [i16 539, i16 -114, i16 856, i16 -493, i16 223, i16 -912, i16 623, i16 -76, i16 276, i16 -440], [10 x i16] [i16 2197, i16 2337, i16 1268, i16 670, i16 304, i16 -267, i16 -525, i16 140, i16 882, i16 -139], [10 x i16] [i16 -1596, i16 550, i16 801, i16 -456, i16 -56, i16 -697, i16 865, i16 1060, i16 413, i16 446], [10 x i16] [i16 1154, i16 593, i16 -77, i16 1237, i16 -31, i16 581, i16 -1037, i16 -895, i16 669, i16 297], [10 x i16] [i16 397, i16 558, i16 203, i16 -797, i16 -919, i16 3, i16 692, i16 -292, i16 1050, i16 782], [10 x i16] [i16 334, i16 1475, i16 632, i16 -80, i16 48, i16 -1061, i16 -484, i16 362, i16 -597, i16 -852], [10 x i16] [i16 -545, i16 -330, i16 -429, i16 -680, i16 1133, i16 -1182, i16 -744, i16 1340, i16 262, i16 63], [10 x i16] [i16 1320, i16 827, i16 -398, i16 -576, i16 341, i16 -774, i16 -483, i16 -1247, i16 -70, i16 98], [10 x i16] [i16 -163, i16 674, i16 -11, i16 -886, i16 531, i16 -1125, i16 -265, i16 -242, i16 724, i16 934]], align 16
+@cb_ma_predictor_sum = internal unnamed_addr constant [2 x [10 x i16]] [[10 x i16] [i16 7798, i16 8447, i16 8205, i16 8293, i16 8126, i16 8477, i16 8447, i16 8703, i16 9043, i16 8604], [10 x i16] [i16 14585, i16 18333, i16 19772, i16 17344, i16 16426, i16 16459, i16 15155, i16 15220, i16 16043, i16 15708]], align 16
+@phase_filter = internal constant <{ [40 x i16], [40 x i16], <{ i16, [39 x i16] }> }> <{ [40 x i16] [i16 14690, i16 11518, i16 1268, i16 -2762, i16 -5672, i16 7514, i16 -36, i16 -2808, i16 -3041, i16 4823, i16 2952, i16 -8425, i16 3785, i16 1455, i16 2179, i16 -8638, i16 8051, i16 -2104, i16 -1455, i16 777, i16 1108, i16 -2386, i16 2254, i16 -364, i16 -675, i16 -2104, i16 6046, i16 -5682, i16 1072, i16 3123, i16 -5059, i16 5312, i16 -2330, i16 -3729, i16 6924, i16 -3890, i16 675, i16 -1776, i16 29, i16 10145], [40 x i16] [i16 30274, i16 3831, i16 -4037, i16 2972, i16 -1049, i16 -1003, i16 2477, i16 -3044, i16 2815, i16 -2232, i16 1753, i16 -1612, i16 1714, i16 -1776, i16 1543, i16 -1009, i16 429, i16 -170, i16 472, i16 -1265, i16 2176, i16 -2707, i16 2523, i16 -1622, i16 344, i16 826, i16 -1530, i16 1724, i16 -1658, i16 1701, i16 -2064, i16 2644, i16 -3061, i16 2897, i16 -1979, i16 557, i16 780, i16 -1370, i16 842, i16 655], <{ i16, [39 x i16] }> <{ i16 32767, [39 x i16] zeroinitializer }> }>, align 16
+
+; Function Attrs: cold nounwind optsize uwtable
+define internal range(i32 -22, 1) i32 @decoder_init(ptr noundef %0) #0 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !28   ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 356
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !29   ; 4 uses
+  %i.e = add i32 %i.d, -3
+  %or.cond = icmp ult i32 %i.e, -2
+  br i1 %or.cond, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.4, i32 noundef %i.d) #9
+  br label %bb.g
+
+bb.c:                                             ; preds = %bb.a
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 348
+  store i32 6, ptr %i.f, align 4, !tbaa !45
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 376
+  store i32 80, ptr %i.g, align 8, !tbaa !46
+  %narrow = mul nuw nsw i32 %i.d, 1368
+  %i.h = zext nneg i32 %narrow to i64
+  %i.i = tail call noalias ptr @av_mallocz(i64 noundef %i.h) #9 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  store ptr %i.i, ptr %i.j, align 8, !tbaa !32
+  %.not = icmp eq ptr %i.i, null
+  br i1 %.not, label %bb.g, label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.c, %vector.ph
+  %.04554 = phi i32 [ %i.af, %vector.ph ], [ 0, %bb.c ]
+  %.04653 = phi ptr [ %i.ae, %vector.ph ], [ %i.i, %bb.c ] ; 13 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %.04653, i64 1340
+  store i32 16384, ptr %i.k, align 4, !tbaa !35
+  %i.l = getelementptr inbounds nuw i8, ptr %.04653, i64 484
+  %i.m = getelementptr inbounds nuw i8, ptr %.04653, i64 584
+  br label %bb.d
+
+bb.d:                                             ; preds = %.lr.ph, %bb.f
+  %indvars.iv56 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next57, %bb.f ] ; 3 uses
+  %i.n = getelementptr inbounds nuw [20 x i8], ptr %i.l, i64 %indvars.iv56 ; 2 uses
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv56
+  store ptr %i.n, ptr %i.o, align 8, !tbaa !36
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.d, %bb.e
+  %indvars.iv = phi i64 [ 1, %bb.d ], [ %indvars.iv.next, %bb.e ] ; 3 uses
+  %i.p = trunc i64 %indvars.iv to i32
+  %i.q = mul i32 %i.p, 18717
+  %i.r = lshr i32 %i.q, 3
+  %i.s = trunc nuw nsw i32 %i.r to i16
+  %i.t = getelementptr [2 x i8], ptr %i.n, i64 %indvars.iv
+  %i.u = getelementptr i8, ptr %i.t, i64 -2
+  store i16 %i.s, ptr %i.u, align 2, !tbaa !37
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 11
+  br i1 %exitcond.not, label %bb.f, label %bb.e, !llvm.loop !42
+
+bb.f:                                             ; preds = %bb.e
+  %indvars.iv.next57 = add nuw nsw i64 %indvars.iv56, 1 ; 2 uses
+  %exitcond59.not = icmp eq i64 %indvars.iv.next57, 5
+  br i1 %exitcond59.not, label %vector.ph, label %bb.d, !llvm.loop !43
+
+vector.ph:                                        ; preds = %bb.f
+  %i.v = getelementptr inbounds nuw i8, ptr %.04653, i64 644 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.04653, i64 688
+  store ptr %i.v, ptr %i.w, align 8, !tbaa !36
+  %i.x = getelementptr inbounds nuw i8, ptr %.04653, i64 664
+  %i.y = getelementptr inbounds nuw i8, ptr %.04653, i64 696
+  store ptr %i.x, ptr %i.y, align 8, !tbaa !36
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.v, ptr noundef nonnull align 16 dereferenceable(20) @lsp_init, i64 20, i1 false)
+  %i.z = getelementptr inbounds nuw i8, ptr %.04653, i64 308
+  %i.aa = getelementptr inbounds nuw i8, ptr %.04653, i64 472
+  store ptr %i.z, ptr %i.aa, align 8, !tbaa !39
+  %i.ab = getelementptr inbounds nuw i8, ptr %.04653, i64 480
+  store i32 20, ptr %i.ab, align 8, !tbaa !40
+  %i.ac = getelementptr inbounds nuw i8, ptr %.04653, i64 1344
+  store i16 21845, ptr %i.ac, align 8, !tbaa !41
+  %i.ad = getelementptr inbounds nuw i8, ptr %.04653, i64 704
+  store <4 x i16> splat (i16 -14336), ptr %i.ad, align 8, !tbaa !37
+  %i.ae = getelementptr inbounds nuw i8, ptr %.04653, i64 1368
+  %i.af = add nuw nsw i32 %.04554, 1              ; 2 uses
+  %exitcond64.not = icmp eq i32 %i.af, %i.d
+  br i1 %exitcond64.not, label %._crit_edge, label %.lr.ph, !llvm.loop !44
+
+._crit_edge:                                      ; preds = %vector.ph
+  tail call void @ff_audiodsp_init(ptr noundef %i.b) #9
+  store ptr @scalarproduct_int16_c, ptr %i.b, align 8, !tbaa !47
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.c, %._crit_edge, %bb.b
+  %.047 = phi i32 [ -22, %bb.b ], [ 0, %._crit_edge ], [ -12, %bb.c ]
+  ret i32 %.047
+}
+
+; Function Attrs: nounwind uwtable
+define internal i32 @decode_frame(ptr noundef %0, ptr noundef initializes((112, 116)) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #1 {
+bb.a:
+  %i.a = alloca [40 x i16], align 16              ; 9 uses
+  %i.b = alloca [2 x [11 x i16]], align 16        ; 6 uses
+  %.sroa.0 = alloca i32, align 4                  ; 4 uses
+  %.sroa.5 = alloca i32, align 4                  ; 3 uses
+  %i.c = alloca [40 x i16], align 16              ; 16 uses
+  %i.d = alloca [50 x i16], align 16              ; 7 uses
+  %i.e = alloca i32, align 4                      ; 5 uses
+  %i.f = alloca [40 x i16], align 16              ; 10 uses
+  %i.g = ptrtoaddr ptr %i.f to i64
+  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !54
+  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !55   ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !28   ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 24
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !32   ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 356 ; 2 uses
+  %i.q = load i32, ptr %i.p, align 4, !tbaa !29   ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112
+  store i32 80, ptr %i.r, align 8, !tbaa !60
+  %i.s = tail call i32 @ff_get_buffer(ptr noundef %0, ptr noundef %1, i32 noundef 0) #9 ; 2 uses
+  %i.t = icmp slt i32 %i.s, 0
+  %indvars.iv532.sroa.gep605 = getelementptr inbounds nuw i8, ptr %i.b, i64 22
+  br i1 %i.t, label %bb.ck, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %.not = icmp eq i32 %i.k, 0
+  br i1 %.not, label %bb.e, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !61
+  %i.w = icmp eq i32 %i.v, 86106
+  %i.x = select i1 %i.w, i32 11, i32 10
+  %i.y = mul nsw i32 %i.x, %i.q
+  %i.z = srem i32 %i.k, %i.y
+  %i.aa = icmp eq i32 %i.z, 0
+  br i1 %i.aa, label %bb.d, label %bb.e
+
+bb.d:                                             ; preds = %bb.c
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.o, i64 1334
+  store i16 0, ptr %i.ab, align 2, !tbaa !62
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.o, i64 1332
+  store i16 2, ptr %i.ac, align 4, !tbaa !63
+  br label %bb.h
+
+bb.e:                                             ; preds = %bb.c, %bb.b
+  %i.ad = shl nsw i32 %i.q, 3
+  %i.ae = icmp eq i32 %i.k, %i.ad
+  br i1 %i.ae, label %bb.f, label %bb.g
+
+bb.f:                                             ; preds = %bb.e
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.ag = load i32, ptr %i.af, align 8, !tbaa !61
+  %.not266 = icmp eq i32 %i.ag, 86106
+  br i1 %.not266, label %bb.g, label %bb.h
+
+bb.g:                                             ; preds = %bb.f, %bb.e
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 16, ptr noundef nonnull @.str.8, i32 noundef %i.k) #9
+  br label %bb.ck
+
+bb.h:                                             ; preds = %bb.f, %bb.d
+  %.str.7.sink = phi ptr [ @.str.6, %bb.d ], [ @.str.7, %bb.f ]
+  %.0251 = phi ptr [ @format_g729_8k, %bb.d ], [ @format_g729d_6k4, %bb.f ] ; 8 uses
+  %i.ah = phi i1 [ false, %bb.d ], [ true, %bb.f ] ; 4 uses
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 48, ptr noundef nonnull @.str.5, ptr noundef nonnull %.str.7.sink) #9
+  %i.ai = icmp sgt i32 %i.q, 0
+  br i1 %i.ai, label %.lr.ph499, label %._crit_edge500
+
+.lr.ph499:                                        ; preds = %bb.h
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.ak = getelementptr inbounds nuw i8, ptr %.0251, i64 7
+  %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 22
+  %i.am = getelementptr inbounds nuw i8, ptr %.0251, i64 6
+  %i.an = getelementptr inbounds nuw i8, ptr %.0251, i64 5
+  %i.ao = getelementptr inbounds nuw i8, ptr %.0251, i64 3
+  %i.ap = getelementptr inbounds nuw i8, ptr %.0251, i64 4
+  %i.aq = getelementptr inbounds nuw i8, ptr %.0251, i64 2
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.d, i64 20 ; 8 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %i.d, i64 80
+  %i.at = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %i.au = getelementptr inbounds nuw i8, ptr %i.d, i64 96
+  %wide.trip.count538 = zext nneg i32 %i.q to i64
+  %i.av = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %i.az = getelementptr inbounds nuw i8, ptr %i.c, i64 32
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.f, i64 48
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 48
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 64
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.c, i64 64
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 64
+  br label %bb.i
+
+bb.i:                                             ; preds = %.lr.ph499, %bb.cj
+  %indvars.iv535 = phi i64 [ 0, %.lr.ph499 ], [ %indvars.iv.next536, %bb.cj ] ; 3 uses
+  %.0246497 = phi ptr [ %i.o, %.lr.ph499 ], [ %i.bdf, %bb.cj ] ; 94 uses
+  %.0252494 = phi ptr [ %i.i, %.lr.ph499 ], [ %i.bde, %bb.cj ] ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
+  store i32 0, ptr %i.e, align 4, !tbaa !64
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv535
+  %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !65
+  %i.bj = load i32, ptr %i.aj, align 8, !tbaa !61
+  %i.bk = icmp eq i32 %i.bj, 86106
+  br i1 %i.bk, label %bb.j, label %bb.m
+
+bb.j:                                             ; preds = %bb.i
+  %i.bl = load i8, ptr %.0252494, align 1, !tbaa !66
+  %i.bm = zext i8 %i.bl to i32                    ; 2 uses
+  %i.bn = load i32, ptr %i.p, align 4, !tbaa !29
+  %i.bo = trunc nuw nsw i64 %indvars.iv535 to i32 ; 2 uses
+  %i.bp = xor i32 %i.bo, -1
+  %i.bq = add i32 %i.bn, %i.bp
+  %i.br = shl nsw i32 %i.bq, 7
+  %i.bs = or disjoint i32 %i.br, 2
+  %.not267 = icmp eq i32 %i.bs, %i.bm
+  br i1 %.not267, label %bb.l, label %bb.k
+
+bb.k:                                             ; preds = %bb.j
+  call void (ptr, ptr, ...) @avpriv_request_sample(ptr noundef nonnull %0, ptr noundef nonnull @.str.9, i32 noundef %i.bm, i32 noundef %i.bo) #9
+  br label %bb.l
+
+bb.l:                                             ; preds = %bb.k, %bb.j
+  %i.bt = getelementptr inbounds nuw i8, ptr %.0252494, i64 1
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.l, %bb.i
+  %.1253 = phi ptr [ %i.bt, %bb.l ], [ %.0252494, %bb.i ] ; 12 uses
+  %i.bu = load i8, ptr %i.ak, align 1, !tbaa !68  ; 5 uses
+  %i.bv = zext i8 %i.bu to i32
+  %.not501 = icmp eq i8 %i.bu, 0
+  br i1 %.not501, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %bb.m
+  %wide.trip.count = zext i8 %i.bu to i64         ; 3 uses
+  %min.iters.check = icmp ult i8 %i.bu, 8
+  br i1 %min.iters.check, label %.lr.ph.preheader596, label %vector.ph584
+
+vector.ph584:                                     ; preds = %.lr.ph.preheader
+  %n.vec = and i64 %wide.trip.count, 248          ; 3 uses
+  br label %vector.body585
+
+vector.body585:                                   ; preds = %vector.body585, %vector.ph584
+  %index586 = phi i64 [ 0, %vector.ph584 ], [ %index.next590, %vector.body585 ] ; 2 uses
+  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph584 ], [ %i.ca, %vector.body585 ]
+  %vec.phi587 = phi <4 x i32> [ zeroinitializer, %vector.ph584 ], [ %i.cb, %vector.body585 ]
+  %i.bw = getelementptr inbounds nuw i8, ptr %.1253, i64 %index586 ; 2 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 4
+  %wide.load588.a = load <4 x i8>, ptr %i.bw, align 1, !tbaa !66
+  %wide.load589.a = load <4 x i8>, ptr %i.bx, align 1, !tbaa !66
+  %i.by = zext <4 x i8> %wide.load588.a to <4 x i32>
+  %i.bz = zext <4 x i8> %wide.load589.a to <4 x i32>
+  %i.ca = or <4 x i32> %vec.phi, %i.by            ; 2 uses
+  %i.cb = or <4 x i32> %vec.phi587, %i.bz         ; 2 uses
+  %index.next590 = add nuw i64 %index586, 8       ; 2 uses
+  %i.cc = icmp eq i64 %index.next590, %n.vec
+  br i1 %i.cc, label %middle.block591, label %vector.body585, !llvm.loop !48
+
+middle.block591:                                  ; preds = %vector.body585
+  %bin.rdx = or <4 x i32> %i.cb, %i.ca
+  %i.cd = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %bin.rdx) ; 2 uses
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  br i1 %cmp.n, label %._crit_edge.loopexit, label %.lr.ph.preheader596
+
+.lr.ph.preheader596:                              ; preds = %.lr.ph.preheader, %middle.block591
+  %indvars.iv.ph = phi i64 [ 0, %.lr.ph.preheader ], [ %n.vec, %middle.block591 ]
+  %.0239483.ph = phi i32 [ 0, %.lr.ph.preheader ], [ %i.cd, %middle.block591 ]
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader596, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader596 ] ; 2 uses
+  %.0239483 = phi i32 [ %i.ch, %.lr.ph ], [ %.0239483.ph, %.lr.ph.preheader596 ]
+  %i.ce = getelementptr inbounds nuw i8, ptr %.1253, i64 %indvars.iv
+  %i.cf = load i8, ptr %i.ce, align 1, !tbaa !66
+  %i.cg = zext i8 %i.cf to i32
+  %i.ch = or i32 %.0239483, %i.cg                 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !49
+
+._crit_edge.loopexit:                             ; preds = %.lr.ph, %middle.block591
+  %.lcssa = phi i32 [ %i.cd, %middle.block591 ], [ %i.ch, %.lr.ph ]
+  %i.ci = icmp eq i32 %.lcssa, 0
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.m
+  %.0239.lcssa = phi i1 [ true, %bb.m ], [ %i.ci, %._crit_edge.loopexit ] ; 8 uses
+  %i.cj = zext i1 %.0239.lcssa to i32
+  %i.ck = shl nuw nsw i32 %i.bv, 3
+  %.not.i.i = icmp eq ptr %.1253, null
+  %i.cl = add nuw nsw i32 %i.ck, 8                ; 7 uses
+  %i.cm = select i1 %.not.i.i, i32 8, i32 %i.cl   ; 2 uses
+  %i.cn = load i32, ptr %.1253, align 1, !tbaa !66
+  %i.co = call i32 @llvm.bswap.i32(i32 %i.cn)     ; 2 uses
+  %i.cp = lshr i32 %i.co, 31                      ; 2 uses
+  %i.cq = call i32 @llvm.umin.i32(i32 %i.cm, i32 13) ; 2 uses
+end_hunk_0
+begin_hunk_1_@decode_frame:bb.a
+  %i.ait = load i16, ptr %gep.1.7.i305, align 2, !tbaa !37
+  %i.aiu = sext i16 %i.ait to i32
+  %i.aiv = mul nsw i32 %i.aiu, %i.ais
+  %i.aiw = add nsw i32 %i.aip, %i.aiv
+  %i.aix = getelementptr inbounds nuw i8, ptr %i.yy, i64 14
+  %i.aiy = load i16, ptr %i.aix, align 2, !tbaa !37
+  %i.aiz = sext i16 %i.aiy to i32
+  %gep.2.7.i306 = getelementptr inbounds nuw i8, ptr %i.yd, i64 54
+  %i.aja = load i16, ptr %gep.2.7.i306, align 2, !tbaa !37
+  %i.ajb = sext i16 %i.aja to i32
+  %i.ajc = mul nsw i32 %i.ajb, %i.aiz
+  %i.ajd = add nsw i32 %i.aiw, %i.ajc
+  %i.aje = getelementptr inbounds nuw i8, ptr %i.zg, i64 14
+  %i.ajf = load i16, ptr %i.aje, align 2, !tbaa !37
+  %i.ajg = sext i16 %i.ajf to i32
+  %gep.3.7.i307 = getelementptr inbounds nuw i8, ptr %i.yd, i64 74
+  %i.ajh = load i16, ptr %gep.3.7.i307, align 2, !tbaa !37
+  %i.aji = sext i16 %i.ajh to i32
+  %i.ajj = mul nsw i32 %i.aji, %i.ajg
+  %i.ajk = add nsw i32 %i.ajd, %i.ajj
+  %i.ajl = lshr i32 %i.ajk, 15
+  %i.ajm = trunc i32 %i.ajl to i16
+  %i.ajn = getelementptr inbounds nuw i8, ptr %.0246497, i64 638
+  store i16 %i.ajm, ptr %i.ajn, align 2, !tbaa !37
+  %i.ajo = load i16, ptr %i.ra, align 2, !tbaa !37
+  %i.ajp = sext i16 %i.ajo to i32
+  %i.ajq = getelementptr inbounds nuw i8, ptr %i.yc, i64 16
+  %i.ajr = load i16, ptr %i.ajq, align 4, !tbaa !37
+  %i.ajs = sext i16 %i.ajr to i32
+  %i.ajt = mul nsw i32 %i.ajs, %i.ajp
+  %invariant.gep.8.i308 = getelementptr inbounds nuw i8, ptr %i.yd, i64 16
+  %i.aju = getelementptr inbounds nuw i8, ptr %i.yi, i64 16
+  %i.ajv = load i16, ptr %i.aju, align 2, !tbaa !37
+  %i.ajw = sext i16 %i.ajv to i32
+  %i.ajx = load i16, ptr %invariant.gep.8.i308, align 16, !tbaa !37
+  %i.ajy = sext i16 %i.ajx to i32
+  %i.ajz = mul nsw i32 %i.ajy, %i.ajw
+  %i.aka = add nsw i32 %i.ajz, %i.ajt
+  %i.akb = getelementptr inbounds nuw i8, ptr %i.yq, i64 16
+  %i.akc = load i16, ptr %i.akb, align 2, !tbaa !37
+  %i.akd = sext i16 %i.akc to i32
+  %gep.1.8.i309 = getelementptr inbounds nuw i8, ptr %i.yd, i64 36
+  %i.ake = load i16, ptr %gep.1.8.i309, align 4, !tbaa !37
+  %i.akf = sext i16 %i.ake to i32
+  %i.akg = mul nsw i32 %i.akf, %i.akd
+  %i.akh = add nsw i32 %i.aka, %i.akg
+  %i.aki = getelementptr inbounds nuw i8, ptr %i.yy, i64 16
+  %i.akj = load i16, ptr %i.aki, align 2, !tbaa !37
+  %i.akk = sext i16 %i.akj to i32
+  %gep.2.8.i310 = getelementptr inbounds nuw i8, ptr %i.yd, i64 56
+  %i.akl = load i16, ptr %gep.2.8.i310, align 8, !tbaa !37
+  %i.akm = sext i16 %i.akl to i32
+  %i.akn = mul nsw i32 %i.akm, %i.akk
+  %i.ako = add nsw i32 %i.akh, %i.akn
+  %i.akp = getelementptr inbounds nuw i8, ptr %i.zg, i64 16
+  %i.akq = load i16, ptr %i.akp, align 2, !tbaa !37
+  %i.akr = sext i16 %i.akq to i32
+  %gep.3.8.i311 = getelementptr inbounds nuw i8, ptr %i.yd, i64 76
+  %i.aks = load i16, ptr %gep.3.8.i311, align 4, !tbaa !37
+  %i.akt = sext i16 %i.aks to i32
+  %i.aku = mul nsw i32 %i.akt, %i.akr
+  %i.akv = add nsw i32 %i.ako, %i.aku
+  %i.akw = lshr i32 %i.akv, 15
+  %i.akx = trunc i32 %i.akw to i16
+  %i.aky = getelementptr inbounds nuw i8, ptr %.0246497, i64 640
+  store i16 %i.akx, ptr %i.aky, align 8, !tbaa !37
+  %i.akz = load i16, ptr %i.rn, align 2, !tbaa !37
+  %i.ala = sext i16 %i.akz to i32
+  %i.alb = getelementptr inbounds nuw i8, ptr %i.yc, i64 18
+  %i.alc = load i16, ptr %i.alb, align 2, !tbaa !37
+  %i.ald = sext i16 %i.alc to i32
+  %i.ale = mul nsw i32 %i.ald, %i.ala
+  %invariant.gep.9.i312 = getelementptr inbounds nuw i8, ptr %i.yd, i64 18
+  %i.alf = getelementptr inbounds nuw i8, ptr %i.yi, i64 18
+  %i.alg = load i16, ptr %i.alf, align 2, !tbaa !37
+  %i.alh = sext i16 %i.alg to i32
+  %i.ali = load i16, ptr %invariant.gep.9.i312, align 2, !tbaa !37
+  %i.alj = sext i16 %i.ali to i32
+  %i.alk = mul nsw i32 %i.alj, %i.alh
+  %i.all = add nsw i32 %i.alk, %i.ale
+  %i.alm = getelementptr inbounds nuw i8, ptr %i.yq, i64 18
+  %i.aln = load i16, ptr %i.alm, align 2, !tbaa !37
+  %i.alo = sext i16 %i.aln to i32
+  %gep.1.9.i313 = getelementptr inbounds nuw i8, ptr %i.yd, i64 38
+  %i.alp = load i16, ptr %gep.1.9.i313, align 2, !tbaa !37
+  %i.alq = sext i16 %i.alp to i32
+  %i.alr = mul nsw i32 %i.alq, %i.alo
+  %i.als = add nsw i32 %i.all, %i.alr
+  %i.alt = getelementptr inbounds nuw i8, ptr %i.yy, i64 18
+  %i.alu = load i16, ptr %i.alt, align 2, !tbaa !37
+  %i.alv = sext i16 %i.alu to i32
+  %gep.2.9.i314 = getelementptr inbounds nuw i8, ptr %i.yd, i64 58
+  %i.alw = load i16, ptr %gep.2.9.i314, align 2, !tbaa !37
+  %i.alx = sext i16 %i.alw to i32
+  %i.aly = mul nsw i32 %i.alx, %i.alv
+  %i.alz = add nsw i32 %i.als, %i.aly
+  %i.ama = getelementptr inbounds nuw i8, ptr %i.zg, i64 18
+  %i.amb = load i16, ptr %i.ama, align 2, !tbaa !37
+  %i.amc = sext i16 %i.amb to i32
+  %gep.3.9.i315 = getelementptr inbounds nuw i8, ptr %i.yd, i64 78
+  %i.amd = load i16, ptr %gep.3.9.i315, align 2, !tbaa !37
+  %i.ame = sext i16 %i.amd to i32
+  %i.amf = mul nsw i32 %i.ame, %i.amc
+  %i.amg = add nsw i32 %i.alz, %i.amf
+  %i.amh = lshr i32 %i.amg, 15
+  %i.ami = trunc i32 %i.amh to i16
+  %i.amj = getelementptr inbounds nuw i8, ptr %.0246497, i64 642
+  store i16 %i.ami, ptr %i.amj, align 2, !tbaa !37
+  call void @ff_acelp_reorder_lsf(ptr noundef nonnull %i.qh, i32 noundef 321, i32 noundef 40, i32 noundef 25681, i32 noundef 10) #9
+  %i.amk = getelementptr inbounds nuw i8, ptr %.0246497, i64 1348
+  store i32 %i.cp, ptr %i.amk, align 4, !tbaa !71
+  br label %bb.ax
+
+bb.ax:                                            ; preds = %lsf_decode.exit, %bb.n
+  %i.aml = getelementptr inbounds nuw i8, ptr %.0246497, i64 584 ; 2 uses
+  %i.amm = getelementptr inbounds nuw i8, ptr %.0246497, i64 616
+  %i.amn = load ptr, ptr %i.amm, align 8, !tbaa !36
+  %i.amo = getelementptr inbounds nuw i8, ptr %.0246497, i64 592
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.amo, ptr noundef nonnull align 8 dereferenceable(32) %i.aml, i64 32, i1 false)
+  store ptr %i.amn, ptr %i.aml, align 8, !tbaa !36
+  %i.amp = getelementptr inbounds nuw i8, ptr %.0246497, i64 688 ; 3 uses
+  %i.amq = getelementptr inbounds nuw i8, ptr %.0246497, i64 696 ; 2 uses
+  %i.amr = load ptr, ptr %i.amq, align 8, !tbaa !36
+  %i.ams = getelementptr inbounds nuw i8, ptr %.0246497, i64 624
+  call void @ff_acelp_lsf2lsp(ptr noundef %i.amr, ptr noundef nonnull %i.ams, i32 noundef 10) #9
+  %i.amt = load ptr, ptr %i.amq, align 8, !tbaa !36
+  %i.amu = load ptr, ptr %i.amp, align 8, !tbaa !36
+  call void @ff_acelp_lp_decode(ptr noundef nonnull %i.b, ptr noundef nonnull %i.al, ptr noundef %i.amt, ptr noundef %i.amu, i32 noundef 10) #9
+  %i.amv = load <2 x ptr>, ptr %i.amp, align 8, !tbaa !36
+  %i.amw = shufflevector <2 x ptr> %i.amv, <2 x ptr> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x ptr> %i.amw, ptr %i.amp, align 8, !tbaa !36
+  %i.amx = load i8, ptr %i.am, align 1, !tbaa !72
+  %i.amy = zext i8 %i.amx to i32                  ; 3 uses
+  %i.amz = sub nsw i32 32, %i.amy
+  %i.ana = load i8, ptr %i.an, align 1, !tbaa !73
+  %i.anb = zext i8 %i.ana to i32                  ; 2 uses
+  %i.anc = sub nsw i32 32, %i.anb
+  %i.and = load i8, ptr %i.ao, align 1, !tbaa !74
+  %i.ane = zext i8 %i.and to i32                  ; 2 uses
+  %i.anf = sub nsw i32 32, %i.ane
+  %i.ang = load i8, ptr %i.ap, align 1, !tbaa !75
+  %i.anh = zext i8 %i.ang to i32                  ; 2 uses
+  %i.ani = sub nsw i32 32, %i.anh
+  %i.anj = getelementptr inbounds nuw i8, ptr %.0246497, i64 480 ; 5 uses
+  %i.ank = getelementptr inbounds nuw i8, ptr %.0246497, i64 1344 ; 2 uses
+  %notmask.i = shl nsw i32 -1, %i.amy
+  %i.anl = xor i32 %notmask.i, -1
+  %i.anm = getelementptr inbounds nuw i8, ptr %.0246497, i64 1316 ; 8 uses
+  %i.ann = getelementptr inbounds nuw i8, ptr %.0246497, i64 1318
+  %i.ano = getelementptr inbounds nuw i8, ptr %.0246497, i64 1328 ; 4 uses
+  %i.anp = getelementptr i8, ptr %.0246497, i64 1330 ; 2 uses
+  %i.anq = getelementptr inbounds nuw i8, ptr %.0246497, i64 704 ; 2 uses
+  %i.anr = getelementptr inbounds nuw i8, ptr %.0246497, i64 472 ; 5 uses
+  %i.ans = getelementptr inbounds nuw i8, ptr %.0246497, i64 1336 ; 2 uses
+  %i.ant = getelementptr inbounds nuw i8, ptr %.0246497, i64 712 ; 2 uses
+  %i.anu = getelementptr inbounds nuw i8, ptr %.0246497, i64 1334 ; 2 uses
+  %i.anv = getelementptr inbounds nuw i8, ptr %.0246497, i64 1332 ; 2 uses
+  %i.anw = getelementptr inbounds nuw i8, ptr %.0246497, i64 1324
+  %i.anx = getelementptr inbounds nuw i8, ptr %.0246497, i64 1326
+  %i.any = getelementptr inbounds nuw i8, ptr %.0246497, i64 1338
+  %i.anz = getelementptr inbounds nuw i8, ptr %.0246497, i64 732
+  %i.aoa = getelementptr inbounds nuw i8, ptr %.0246497, i64 1116
+  %i.aob = getelementptr inbounds nuw i8, ptr %.0246497, i64 1216
+  %i.aoc = getelementptr inbounds nuw i8, ptr %.0246497, i64 1340 ; 2 uses
+  %i.aod = getelementptr inbounds nuw i8, ptr %.0246497, i64 1360 ; 2 uses
+  %i.aoe = getelementptr inbounds nuw i8, ptr %.0246497, i64 1352
+  %i.aof = getelementptr inbounds nuw i8, ptr %.0246497, i64 16 ; 2 uses
+  %i.aog = getelementptr inbounds nuw i8, ptr %.0246497, i64 32 ; 2 uses
+  %i.aoh = getelementptr inbounds nuw i8, ptr %.0246497, i64 48 ; 2 uses
+  %i.aoi = getelementptr inbounds nuw i8, ptr %.0246497, i64 64 ; 2 uses
+  %i.aoj = getelementptr inbounds nuw i8, ptr %.0246497, i64 80 ; 2 uses
+  %i.aok = getelementptr inbounds nuw i8, ptr %.0246497, i64 96 ; 2 uses
+  %i.aol = getelementptr inbounds nuw i8, ptr %.0246497, i64 112 ; 2 uses
+  %i.aom = getelementptr inbounds nuw i8, ptr %.0246497, i64 128 ; 2 uses
+  %i.aon = getelementptr inbounds nuw i8, ptr %.0246497, i64 144 ; 2 uses
+  %i.aoo = getelementptr inbounds nuw i8, ptr %.0246497, i64 160 ; 2 uses
+  %i.aop = getelementptr inbounds nuw i8, ptr %.0246497, i64 176 ; 2 uses
+  %i.aoq = getelementptr inbounds nuw i8, ptr %.0246497, i64 192 ; 2 uses
+  %i.aor = getelementptr inbounds nuw i8, ptr %.0246497, i64 208 ; 2 uses
+  %i.aos = getelementptr inbounds nuw i8, ptr %.0246497, i64 224 ; 2 uses
+  %i.aot = getelementptr inbounds nuw i8, ptr %.0246497, i64 240 ; 2 uses
+  %i.aou = getelementptr inbounds nuw i8, ptr %.0246497, i64 256 ; 2 uses
+  %i.aov = getelementptr inbounds nuw i8, ptr %.0246497, i64 272 ; 2 uses
+  %i.aow = getelementptr inbounds nuw i8, ptr %.0246497, i64 288 ; 2 uses
+  %i.aox = getelementptr inbounds nuw i8, ptr %.0246497, i64 304 ; 2 uses
+  %i.aoy = getelementptr inbounds nuw i8, ptr %.0246497, i64 320 ; 2 uses
+  %i.aoz = getelementptr inbounds nuw i8, ptr %.0246497, i64 336 ; 2 uses
+  %i.apa = getelementptr inbounds nuw i8, ptr %.0246497, i64 352 ; 2 uses
+  %i.apb = getelementptr inbounds nuw i8, ptr %.0246497, i64 368 ; 2 uses
+  %i.apc = getelementptr inbounds nuw i8, ptr %.0246497, i64 384 ; 2 uses
+  %i.apd = getelementptr inbounds nuw i8, ptr %.0246497, i64 400 ; 2 uses
+  %i.ape = getelementptr inbounds nuw i8, ptr %.0246497, i64 416 ; 2 uses
+  %i.apf = getelementptr inbounds nuw i8, ptr %.0246497, i64 432 ; 2 uses
+  %i.apg = getelementptr inbounds nuw i8, ptr %.0246497, i64 448 ; 2 uses
+  %i.aph = getelementptr inbounds nuw i8, ptr %.0246497, i64 464 ; 2 uses
+  %i.api = getelementptr inbounds nuw i8, ptr %.0246497, i64 466 ; 2 uses
+  br label %bb.ay
+
+bb.ay:                                            ; preds = %bb.ax, %bb.ci
+  %.not269 = phi i1 [ true, %bb.ax ], [ false, %bb.ci ] ; 3 uses
+  %indvars.iv532.sroa.phi601 = phi ptr [ %.sroa.0, %bb.ax ], [ %.sroa.5, %bb.ci ] ; 4 uses
+  %indvars.iv532.sroa.phi604 = phi ptr [ %i.b, %bb.ax ], [ %indvars.iv532.sroa.gep605, %bb.ci ] ; 2 uses
+  %indvars.iv532 = phi i64 [ 0, %bb.ax ], [ 1, %bb.ci ] ; 3 uses
+  %.0237493 = phi i32 [ 0, %bb.ax ], [ %.1238, %bb.ci ] ; 2 uses
+  %.sroa.13.0491 = phi i32 [ %i.cs, %bb.ax ], [ %i.asb, %bb.ci ] ; 3 uses
+  %i.apj = getelementptr inbounds nuw i8, ptr %.0251, i64 %indvars.iv532
+  %i.apk = load i8, ptr %i.apj, align 1, !tbaa !66
+  %i.apl = zext i8 %i.apk to i32                  ; 2 uses
+  %i.apm = lshr i32 %.sroa.13.0491, 3
+  %i.apn = zext nneg i32 %i.apm to i64
+  %i.apo = getelementptr inbounds nuw i8, ptr %.1253, i64 %i.apn
+  %i.app = load i32, ptr %i.apo, align 1, !tbaa !66
+  %i.apq = call i32 @llvm.bswap.i32(i32 %i.app)
+  %i.apr = and i32 %.sroa.13.0491, 7
+  %i.aps = shl i32 %i.apq, %i.apr
+  %i.apt = sub nsw i32 32, %i.apl
+  %i.apu = lshr i32 %i.aps, %i.apt                ; 3 uses
+  %i.apv = add nsw i32 %.sroa.13.0491, %i.apl     ; 2 uses
+  %i.apw = call i32 @llvm.umin.i32(i32 %i.cl, i32 %i.apv) ; 5 uses
+  br i1 %.not269, label %bb.az, label %bb.bb
+
+bb.az:                                            ; preds = %bb.ay
+  %i.apx = load i8, ptr %i.aq, align 1, !tbaa !76
+  %.not270 = icmp eq i8 %i.apx, 0
+  br i1 %.not270, label %bb.bb, label %bb.ba
+
+bb.ba:                                            ; preds = %bb.az
+  %i.apy = lshr i32 %i.apu, 2
+  %i.apz = and i32 %i.apy, 63
+  %i.aqa = call range(i32 0, 7) i32 @llvm.ctpop.i32(i32 %i.apz)
+  %i.aqb = lshr i32 %i.apw, 3
+  %i.aqc = zext nneg i32 %i.aqb to i64
+  %i.aqd = getelementptr inbounds nuw i8, ptr %.1253, i64 %i.aqc
+  %i.aqe = load i8, ptr %i.aqd, align 1, !tbaa !66
+  %i.aqf = icmp ult i32 %i.apv, %i.cl
+  %i.aqg = zext i1 %i.aqf to i32
+  %spec.select.i = add nuw nsw i32 %i.apw, %i.aqg
+  %i.aqh = zext i8 %i.aqe to i32
+  %i.aqi = and i32 %i.apw, 7
+  %i.aqj = shl nuw nsw i32 %i.aqh, %i.aqi
+  %i.aqk = lshr i32 %i.aqj, 7
+  %i.aql = xor i32 %i.aqk, %i.aqa
+  %i.aqm = and i32 %i.aql, 1
+  %i.aqn = xor i32 %i.aqm, 1
+  br label %bb.bb
+
+bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.ay
+  %.sroa.13.1 = phi i32 [ %i.apw, %bb.az ], [ %spec.select.i, %bb.ba ], [ %i.apw, %bb.ay ] ; 3 uses
+  %.1238 = phi i32 [ %.0237493, %bb.az ], [ %i.aqn, %bb.ba ], [ %.0237493, %bb.ay ] ; 2 uses
+  %i.aqo = lshr i32 %.sroa.13.1, 3
+  %i.aqp = zext nneg i32 %i.aqo to i64
+  %i.aqq = getelementptr inbounds nuw i8, ptr %.1253, i64 %i.aqp
+  %i.aqr = load i32, ptr %i.aqq, align 1, !tbaa !66
+  %i.aqs = call i32 @llvm.bswap.i32(i32 %i.aqr)
+  %i.aqt = and i32 %.sroa.13.1, 7
+  %i.aqu = shl i32 %i.aqs, %i.aqt
+  %i.aqv = lshr i32 %i.aqu, %i.amz                ; 2 uses
+  %i.aqw = add nsw i32 %.sroa.13.1, %i.amy
+  %i.aqx = call i32 @llvm.umin.i32(i32 %i.cl, i32 %i.aqw) ; 3 uses
+  %i.aqy = lshr i32 %i.aqx, 3
+  %i.aqz = zext nneg i32 %i.aqy to i64
+  %i.ara = getelementptr inbounds nuw i8, ptr %.1253, i64 %i.aqz
+  %i.arb = load i32, ptr %i.ara, align 1, !tbaa !66
+  %i.arc = call i32 @llvm.bswap.i32(i32 %i.arb)
+  %i.ard = and i32 %i.aqx, 7
+  %i.are = shl i32 %i.arc, %i.ard
+  %i.arf = lshr i32 %i.are, %i.anc                ; 2 uses
+  %i.arg = add nuw nsw i32 %i.aqx, %i.anb
+  %i.arh = call i32 @llvm.umin.i32(i32 %i.cl, i32 %i.arg) ; 3 uses
+  %i.ari = lshr i32 %i.arh, 3
+  %i.arj = zext nneg i32 %i.ari to i64
+  %i.ark = getelementptr inbounds nuw i8, ptr %.1253, i64 %i.arj
+  %i.arl = load i32, ptr %i.ark, align 1, !tbaa !66
+  %i.arm = call i32 @llvm.bswap.i32(i32 %i.arl)
+  %i.arn = and i32 %i.arh, 7
+  %i.aro = shl i32 %i.arm, %i.arn
+  %i.arp = lshr i32 %i.aro, %i.anf
+  %i.arq = add nuw nsw i32 %i.arh, %i.ane
+  %i.arr = call i32 @llvm.umin.i32(i32 %i.cl, i32 %i.arq) ; 3 uses
+  %i.ars = lshr i32 %i.arr, 3
+  %i.art = zext nneg i32 %i.ars to i64
+  %i.aru = getelementptr inbounds nuw i8, ptr %.1253, i64 %i.art
+  %i.arv = load i32, ptr %i.aru, align 1, !tbaa !66
+  %i.arw = call i32 @llvm.bswap.i32(i32 %i.arv)
+  %i.arx = and i32 %i.arr, 7
+  %i.ary = shl i32 %i.arw, %i.arx
+  %i.arz = lshr i32 %i.ary, %i.ani
+  %i.asa = add nuw nsw i32 %i.arr, %i.anh
+  %i.asb = call i32 @llvm.umin.i32(i32 %i.cl, i32 %i.asa)
+  br i1 %.0239.lcssa, label %bb.bc, label %bb.bd
+
+bb.bc:                                            ; preds = %bb.bb
+  %i.asc = load i32, ptr %i.anj, align 8, !tbaa !40
+  %i.asd = mul nsw i32 %i.asc, 3
+  br label %ff_acelp_decode_4bit_to_2nd_delay3.exit
+
+bb.bd:                                            ; preds = %bb.bb
+  br i1 %.not269, label %bb.be, label %bb.bh
+
+bb.be:                                            ; preds = %bb.bd
+  %.not271 = icmp eq i32 %.1238, 0
+  br i1 %.not271, label %bb.bg, label %bb.bf
+
+bb.bf:                                            ; preds = %bb.be
+  %i.ase = load i32, ptr %i.anj, align 8, !tbaa !40
+  %i.asf = mul nsw i32 %i.ase, 3
+  br label %ff_acelp_decode_4bit_to_2nd_delay3.exit
+
+bb.bg:                                            ; preds = %bb.be
+  %i.asg = and i32 %i.apu, 255                    ; 2 uses
+  %i.ash = add nuw nsw i32 %i.asg, 58             ; 2 uses
+  %i.asi = icmp samesign ugt i32 %i.asg, 196
+  %i.asj = mul nuw nsw i32 %i.ash, 3
+  %i.ask = add nsw i32 %i.asj, -510
+  %.0.i316 = select i1 %i.asi, i32 %i.ask, i32 %i.ash
+  br label %.thread
+
+bb.bh:                                            ; preds = %bb.bd
+  %i.asl = load i32, ptr %i.anj, align 8, !tbaa !40 ; 2 uses
+  %i.asm = icmp slt i32 %i.asl, 25
+  %i.asn = call i32 @llvm.smin.i32(i32 %i.asl, i32 139)
+  %..i274 = add nsw i32 %i.asn, -5
+  %.0.i275 = select i1 %i.asm, i32 20, i32 %..i274 ; 4 uses
+  %i.aso = and i32 %i.apu, 255                    ; 6 uses
+  br i1 %i.ah, label %bb.bi, label %bb.bn
+
+bb.bi:                                            ; preds = %bb.bh
+  %i.asp = icmp samesign ult i32 %i.aso, 4
+  br i1 %i.asp, label %bb.bj, label %bb.bk
+
+bb.bj:                                            ; preds = %bb.bi
+  %i.asq = add nsw i32 %.0.i275, %i.aso
+  %i.asr = mul nsw i32 %i.asq, 3
+  br label %.thread
+
+bb.bk:                                            ; preds = %bb.bi
+  %i.ass = icmp samesign ult i32 %i.aso, 12
+  br i1 %i.ass, label %bb.bl, label %bb.bm
+
+bb.bl:                                            ; preds = %bb.bk
+  %i.ast = mul nsw i32 %.0.i275, 3
+  %i.asu = add nuw nsw i32 %i.aso, 6
+  %i.asv = add nsw i32 %i.asu, %i.ast
+  br label %.thread
+
+bb.bm:                                            ; preds = %bb.bk
+  %i.asw = add nsw i32 %.0.i275, %i.aso
+  %i.asx = mul nsw i32 %i.asw, 3
+  %i.asy = add nsw i32 %i.asx, -18
+  br label %ff_acelp_decode_4bit_to_2nd_delay3.exit
+
+bb.bn:                                            ; preds = %bb.bh
+  %i.asz = mul nsw i32 %.0.i275, 3
+  %i.ata = add nsw i32 %i.aso, -2
+  %i.atb = add i32 %i.ata, %i.asz
+  br label %ff_acelp_decode_4bit_to_2nd_delay3.exit
+
+.thread:                                          ; preds = %bb.bl, %bb.bj, %bb.bg
+  %.1245.ph = phi i32 [ %i.asv, %bb.bl ], [ %i.asr, %bb.bj ], [ %.0.i316, %bb.bg ] ; 2 uses
+  %i.atc = add nsw i32 %.1245.ph, 1
+  %i.atd = sdiv i32 %i.atc, 3
+  store i32 %i.atd, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64
+  br label %bb.br
+
+ff_acelp_decode_4bit_to_2nd_delay3.exit:          ; preds = %bb.bm, %bb.bn, %bb.bf, %bb.bc
+  %.1245 = phi i32 [ %i.asd, %bb.bc ], [ %i.asy, %bb.bm ], [ %i.asf, %bb.bf ], [ %i.atb, %bb.bn ] ; 4 uses
+  %i.ate = add nsw i32 %.1245, 1
+  %i.atf = sdiv i32 %i.ate, 3                     ; 2 uses
+  store i32 %i.atf, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64
+  %i.atg = icmp sgt i32 %.1245, 430
+  br i1 %i.atg, label %bb.bo, label %bb.bp
+
+bb.bo:                                            ; preds = %ff_acelp_decode_4bit_to_2nd_delay3.exit
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 24, ptr noundef nonnull @.str.10, i32 noundef %i.atf) #9
+  store i32 143, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64
+  br label %bb.bp
+
+bb.bp:                                            ; preds = %bb.bo, %ff_acelp_decode_4bit_to_2nd_delay3.exit
+  br i1 %.0239.lcssa, label %bb.bq, label %bb.br
+
+bb.bq:                                            ; preds = %bb.bp
+  %i.ath = load i16, ptr %i.ank, align 8, !tbaa !41
+  %i.ati = mul i16 %i.ath, 31821
+  %i.atj = add i16 %i.ati, 13849                  ; 2 uses
+  %i.atk = zext i16 %i.atj to i32
+  %i.atl = and i32 %i.atk, %i.anl
+  %i.atm = mul i16 %i.atj, 31821
+  %i.atn = add i16 %i.atm, 13849                  ; 2 uses
+  store i16 %i.atn, ptr %i.ank, align 8, !tbaa !41
+  %4 = zext i16 %i.atn to i32
+  br label %bb.br
+
+bb.br:                                            ; preds = %.thread, %bb.bq, %bb.bp
+  %.1245349351 = phi i32 [ %.1245, %bb.bq ], [ %.1245, %bb.bp ], [ %.1245.ph, %.thread ] ; 2 uses
+  %.0234 = phi i32 [ %4, %bb.bq ], [ %i.arf, %bb.bp ], [ %i.arf, %.thread ]
+  %.0 = phi i32 [ %i.atl, %bb.bq ], [ %i.aqv, %bb.bp ], [ %i.aqv, %.thread ] ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.c, i8 0, i64 80, i1 false)
+  %5 = and i32 %.0234, 255                        ; 2 uses
+  br i1 %i.ah, label %bb.bt, label %bb.bs
+
+bb.bs:                                            ; preds = %bb.br
+  call void @ff_acelp_fc_pulse_per_track(ptr noundef nonnull %i.c, ptr noundef nonnull @ff_fc_4pulses_8bits_tracks_13, ptr noundef nonnull @ff_fc_4pulses_8bits_track_4, i32 noundef %.0, i32 noundef %5, i32 noundef 3, i32 noundef 3) #9
+  br label %bb.bu
+
+bb.bt:                                            ; preds = %bb.br
+  call void @ff_acelp_fc_pulse_per_track(ptr noundef nonnull %i.c, ptr noundef nonnull @ff_fc_2pulses_9bits_track1_gray, ptr noundef nonnull @ff_fc_2pulses_9bits_track2_gray, i32 noundef %.0, i32 noundef %5, i32 noundef 1, i32 noundef 4) #9
+  br label %bb.bu
+
+bb.bu:                                            ; preds = %bb.bt, %bb.bs
+  %i.ato = load i32, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64 ; 4 uses
+  %i.atp = icmp slt i32 %i.ato, 40
+  br i1 %i.atp, label %bb.bv, label %bb.bw
+
+bb.bv:                                            ; preds = %bb.bu
+  %i.atq = sext i32 %i.ato to i64
+  %i.atr = getelementptr inbounds [2 x i8], ptr %i.c, i64 %i.atq ; 2 uses
+  %i.ats = load i16, ptr %i.anm, align 4, !tbaa !37
+  %i.att = call i16 @llvm.smax.i16(i16 %i.ats, i16 3277)
+  %i.atu = call i16 @llvm.umin.i16(i16 %i.att, i16 13017)
+  %i.atv = sub nsw i32 40, %i.ato
+  call void @ff_acelp_weighted_vector_sum(ptr noundef nonnull %i.atr, ptr noundef nonnull %i.atr, ptr noundef nonnull %i.c, i16 noundef signext 16384, i16 noundef signext %i.atu, i16 noundef signext 0, i32 noundef 14, i32 noundef %i.atv) #9
+  br label %bb.bw
+
+bb.bw:                                            ; preds = %bb.bv, %bb.bu
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %i.ann, ptr noundef nonnull align 4 dereferenceable(10) %i.anm, i64 10, i1 false)
+  %i.atw = load i16, ptr %i.ano, align 8, !tbaa !37 ; 2 uses
+  store i16 %i.atw, ptr %i.anp, align 2, !tbaa !37
+  br i1 %.0239.lcssa, label %bb.bx, label %bb.by
+
+bb.bx:                                            ; preds = %bb.bw
+  %i.atx = load i16, ptr %i.anm, align 4, !tbaa !37
+  %i.aty = sext i16 %i.atx to i32
+  %i.atz = mul nsw i32 %i.aty, 29491
+  %i.aua = lshr i32 %i.atz, 15
+  %i.aub = trunc i32 %i.aua to i16
+  store i16 %i.aub, ptr %i.anm, align 4, !tbaa !37
+  %i.auc = sext i16 %i.atw to i32
+  %i.aud = mul nsw i32 %i.auc, 2007
+  %i.aue = lshr i32 %i.aud, 11
+  %i.auf = trunc i32 %i.aue to i16
+  br label %bb.cc
+
+bb.by:                                            ; preds = %bb.bw
+  %i.aug = and i32 %i.arp, 255
+  %i.auh = zext nneg i32 %i.aug to i64            ; 2 uses
+  %i.aui = and i32 %i.arz, 255
+  %i.auj = zext nneg i32 %i.aui to i64            ; 2 uses
+  br i1 %i.ah, label %bb.bz, label %bb.ca
+
+bb.bz:                                            ; preds = %bb.by
+  %i.auk = getelementptr inbounds nuw [4 x i8], ptr @cb_gain_1st_6k4, i64 %i.auh ; 2 uses
+  %i.aul = load i16, ptr %i.auk, align 4, !tbaa !37
+  %i.aum = getelementptr inbounds nuw [4 x i8], ptr @cb_gain_2nd_6k4, i64 %i.auj ; 2 uses
+  %i.aun = load i16, ptr %i.aum, align 4, !tbaa !37
+  %i.auo = add i16 %i.aun, %i.aul
+  %i.aup = getelementptr inbounds nuw i8, ptr %i.auk, i64 2
+  %i.auq = load i16, ptr %i.aup, align 2, !tbaa !37
+  %i.aur = sext i16 %i.auq to i32
+  %i.aus = getelementptr inbounds nuw i8, ptr %i.aum, i64 2
+  %i.aut = load i16, ptr %i.aus, align 2, !tbaa !37
+  %i.auu = sext i16 %i.aut to i32
+  %i.auv = add nsw i32 %i.auu, %i.aur
+  %i.auw = call i32 @llvm.smax.i32(i32 %i.auv, i32 1024)
+  %i.aux = lshr i32 %i.auw, 1
+  br label %bb.cb
+
+bb.ca:                                            ; preds = %bb.by
+  %i.auy = getelementptr inbounds nuw [4 x i8], ptr @cb_gain_1st_8k, i64 %i.auh ; 2 uses
+  %i.auz = load i16, ptr %i.auy, align 4, !tbaa !37
+  %i.ava = getelementptr inbounds nuw [4 x i8], ptr @cb_gain_2nd_8k, i64 %i.auj ; 2 uses
+  %i.avb = load i16, ptr %i.ava, align 4, !tbaa !37
+  %i.avc = add i16 %i.avb, %i.auz
+  %i.avd = getelementptr inbounds nuw i8, ptr %i.auy, i64 2
+  %i.ave = load i16, ptr %i.avd, align 2, !tbaa !37
+  %i.avf = sext i16 %i.ave to i32
+  %i.avg = getelementptr inbounds nuw i8, ptr %i.ava, i64 2
+  %i.avh = load i16, ptr %i.avg, align 2, !tbaa !37
+  %i.avi = sext i16 %i.avh to i32
+  %i.avj = add nsw i32 %i.avi, %i.avf
+  br label %bb.cb
+
+bb.cb:                                            ; preds = %bb.ca, %bb.bz
+  %.sink = phi i16 [ %i.auo, %bb.bz ], [ %i.avc, %bb.ca ]
+  %.0235 = phi i32 [ %i.aux, %bb.bz ], [ %i.avj, %bb.ca ] ; 2 uses
+  store i16 %.sink, ptr %i.anm, align 4, !tbaa !37
+  %i.avk = call signext i16 @ff_acelp_decode_gain_code(ptr noundef %i.m, i32 noundef %.0235, ptr noundef nonnull %i.c, i32 noundef 1018156, ptr noundef nonnull %i.anq, ptr noundef nonnull @ma_prediction_coeff, i32 noundef 40, i32 noundef 4) #9
+  br label %bb.cc
+
+bb.cc:                                            ; preds = %bb.cb, %bb.bx
+  %storemerge = phi i16 [ %i.avk, %bb.cb ], [ %i.auf, %bb.bx ]
+  %.1 = phi i32 [ %.0235, %bb.cb ], [ 0, %bb.bx ]
+  store i16 %storemerge, ptr %i.ano, align 8, !tbaa !37
+  call void @ff_acelp_update_past_gain(ptr noundef nonnull %i.anq, i32 noundef %.1, i32 noundef 2, i32 noundef %i.cj) #9
+  %i.avl = load ptr, ptr %i.anr, align 8, !tbaa !39
+  %i.avm = mul nuw nsw i64 %indvars.iv532, 40     ; 6 uses
+  %i.avn = getelementptr inbounds nuw [2 x i8], ptr %i.avl, i64 %i.avm ; 2 uses
+  %.neg = sdiv i32 %.1245349351, -3
+  %i.avo = sext i32 %.neg to i64
+  %i.avp = getelementptr inbounds [2 x i8], ptr %i.avn, i64 %i.avo
+  %i.avq = srem i32 %.1245349351, 3
+  %i.avr = shl nsw i32 %i.avq, 1
+  call void @ff_acelp_interpolate(ptr noundef %i.avn, ptr noundef %i.avp, ptr noundef nonnull @ff_acelp_interp_filter, i32 noundef 6, i32 noundef %i.avr, i32 noundef 10, i32 noundef 40) #9
+  %i.avs = load ptr, ptr %i.anr, align 8, !tbaa !39
+  %i.avt = getelementptr inbounds nuw [2 x i8], ptr %i.avs, i64 %i.avm ; 2 uses
+  %i.avu = load i16, ptr %i.ans, align 8, !tbaa !77
+  %i.avv = icmp eq i16 %i.avu, 0                  ; 2 uses
+  %or.cond = and i1 %.0239.lcssa, %i.avv
+  br i1 %or.cond, label %.thread352, label %bb.cd
+
+bb.cd:                                            ; preds = %bb.cc
+  %i.avw = load i16, ptr %i.anm, align 4, !tbaa !37 ; 2 uses
+  %.not540 = xor i1 %i.avv, true
+  %or.cond3 = and i1 %.0239.lcssa, %.not540
+  br i1 %or.cond3, label %bb.ce, label %.thread352
+
+.thread352:                                       ; preds = %bb.cc, %bb.cd
+  %i.avx = phi i16 [ %i.avw, %bb.cd ], [ 0, %bb.cc ]
+  %i.avy = load i16, ptr %i.ano, align 8, !tbaa !37
+  br label %bb.ce
+
+bb.ce:                                            ; preds = %bb.cd, %.thread352
+  %i.avz = phi i16 [ %i.avx, %.thread352 ], [ %i.avw, %bb.cd ]
+  %i.awa = phi i16 [ %i.avy, %.thread352 ], [ 0, %bb.cd ]
+  call void @ff_acelp_weighted_vector_sum(ptr noundef %i.avt, ptr noundef %i.avt, ptr noundef nonnull %i.c, i16 noundef signext %i.avz, i16 noundef signext %i.awa, i16 noundef signext 8192, i32 noundef 14, i32 noundef 40) #9
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.d, ptr noundef nonnull align 8 dereferenceable(20) %i.ant, i64 20, i1 false)
+  %i.awb = getelementptr inbounds nuw i8, ptr %indvars.iv532.sroa.phi604, i64 2 ; 3 uses
+  %i.awc = load ptr, ptr %i.anr, align 8, !tbaa !39
+  %i.awd = getelementptr inbounds nuw [2 x i8], ptr %i.awc, i64 %i.avm
+  %i.awe = call i32 @ff_celp_lp_synthesis_filter(ptr noundef nonnull %i.ar, ptr noundef nonnull %i.awb, ptr noundef %i.awd, i32 noundef 40, i32 noundef 10, i32 noundef 1, i32 noundef 0, i32 noundef 2048) #9
+  %.not273 = icmp eq i32 %i.awe, 0
+  br i1 %.not273, label %.loopexit, label %vector.body574
+
+vector.body574:                                   ; preds = %bb.ce
+  %wide.load576 = load <8 x i16>, ptr %.0246497, align 8, !tbaa !37
+  %wide.load577 = load <8 x i16>, ptr %i.aof, align 8, !tbaa !37
+  %i.awf = ashr <8 x i16> %wide.load576, splat (i16 2)
+  %i.awg = ashr <8 x i16> %wide.load577, splat (i16 2)
+  store <8 x i16> %i.awf, ptr %.0246497, align 8, !tbaa !37
+  store <8 x i16> %i.awg, ptr %i.aof, align 8, !tbaa !37
+  %wide.load576.1 = load <8 x i16>, ptr %i.aog, align 8, !tbaa !37
+  %wide.load577.1 = load <8 x i16>, ptr %i.aoh, align 8, !tbaa !37
+  %i.awh = ashr <8 x i16> %wide.load576.1, splat (i16 2)
+  %i.awi = ashr <8 x i16> %wide.load577.1, splat (i16 2)
+  store <8 x i16> %i.awh, ptr %i.aog, align 8, !tbaa !37
+  store <8 x i16> %i.awi, ptr %i.aoh, align 8, !tbaa !37
+  %wide.load576.2 = load <8 x i16>, ptr %i.aoi, align 8, !tbaa !37
+  %wide.load577.2 = load <8 x i16>, ptr %i.aoj, align 8, !tbaa !37
+  %i.awj = ashr <8 x i16> %wide.load576.2, splat (i16 2)
+  %i.awk = ashr <8 x i16> %wide.load577.2, splat (i16 2)
+  store <8 x i16> %i.awj, ptr %i.aoi, align 8, !tbaa !37
+  store <8 x i16> %i.awk, ptr %i.aoj, align 8, !tbaa !37
+  %wide.load576.3 = load <8 x i16>, ptr %i.aok, align 8, !tbaa !37
+  %wide.load577.3 = load <8 x i16>, ptr %i.aol, align 8, !tbaa !37
+  %i.awl = ashr <8 x i16> %wide.load576.3, splat (i16 2)
+  %i.awm = ashr <8 x i16> %wide.load577.3, splat (i16 2)
+  store <8 x i16> %i.awl, ptr %i.aok, align 8, !tbaa !37
+  store <8 x i16> %i.awm, ptr %i.aol, align 8, !tbaa !37
+  %wide.load576.4 = load <8 x i16>, ptr %i.aom, align 8, !tbaa !37
+  %wide.load577.4 = load <8 x i16>, ptr %i.aon, align 8, !tbaa !37
+  %i.awn = ashr <8 x i16> %wide.load576.4, splat (i16 2)
+  %i.awo = ashr <8 x i16> %wide.load577.4, splat (i16 2)
+  store <8 x i16> %i.awn, ptr %i.aom, align 8, !tbaa !37
+  store <8 x i16> %i.awo, ptr %i.aon, align 8, !tbaa !37
+  %wide.load576.5 = load <8 x i16>, ptr %i.aoo, align 8, !tbaa !37
+  %wide.load577.5 = load <8 x i16>, ptr %i.aop, align 8, !tbaa !37
+  %i.awp = ashr <8 x i16> %wide.load576.5, splat (i16 2)
+  %i.awq = ashr <8 x i16> %wide.load577.5, splat (i16 2)
+  store <8 x i16> %i.awp, ptr %i.aoo, align 8, !tbaa !37
+  store <8 x i16> %i.awq, ptr %i.aop, align 8, !tbaa !37
+  %wide.load576.6 = load <8 x i16>, ptr %i.aoq, align 8, !tbaa !37
+  %wide.load577.6 = load <8 x i16>, ptr %i.aor, align 8, !tbaa !37
+  %i.awr = ashr <8 x i16> %wide.load576.6, splat (i16 2)
+  %i.aws = ashr <8 x i16> %wide.load577.6, splat (i16 2)
+  store <8 x i16> %i.awr, ptr %i.aoq, align 8, !tbaa !37
+  store <8 x i16> %i.aws, ptr %i.aor, align 8, !tbaa !37
+  %wide.load576.7 = load <8 x i16>, ptr %i.aos, align 8, !tbaa !37
+  %wide.load577.7 = load <8 x i16>, ptr %i.aot, align 8, !tbaa !37
+  %i.awt = ashr <8 x i16> %wide.load576.7, splat (i16 2)
+  %i.awu = ashr <8 x i16> %wide.load577.7, splat (i16 2)
+  store <8 x i16> %i.awt, ptr %i.aos, align 8, !tbaa !37
+  store <8 x i16> %i.awu, ptr %i.aot, align 8, !tbaa !37
+  %wide.load576.8 = load <8 x i16>, ptr %i.aou, align 8, !tbaa !37
+  %wide.load577.8 = load <8 x i16>, ptr %i.aov, align 8, !tbaa !37
+  %i.awv = ashr <8 x i16> %wide.load576.8, splat (i16 2)
+  %i.aww = ashr <8 x i16> %wide.load577.8, splat (i16 2)
+  store <8 x i16> %i.awv, ptr %i.aou, align 8, !tbaa !37
+  store <8 x i16> %i.aww, ptr %i.aov, align 8, !tbaa !37
+  %wide.load576.9 = load <8 x i16>, ptr %i.aow, align 8, !tbaa !37
+  %wide.load577.9 = load <8 x i16>, ptr %i.aox, align 8, !tbaa !37
+  %i.awx = ashr <8 x i16> %wide.load576.9, splat (i16 2)
+  %i.awy = ashr <8 x i16> %wide.load577.9, splat (i16 2)
+  store <8 x i16> %i.awx, ptr %i.aow, align 8, !tbaa !37
+  store <8 x i16> %i.awy, ptr %i.aox, align 8, !tbaa !37
+  %wide.load576.10 = load <8 x i16>, ptr %i.aoy, align 8, !tbaa !37
+  %wide.load577.10 = load <8 x i16>, ptr %i.aoz, align 8, !tbaa !37
+  %i.awz = ashr <8 x i16> %wide.load576.10, splat (i16 2)
+  %i.axa = ashr <8 x i16> %wide.load577.10, splat (i16 2)
+  store <8 x i16> %i.awz, ptr %i.aoy, align 8, !tbaa !37
+  store <8 x i16> %i.axa, ptr %i.aoz, align 8, !tbaa !37
+  %wide.load576.11 = load <8 x i16>, ptr %i.apa, align 8, !tbaa !37
+  %wide.load577.11 = load <8 x i16>, ptr %i.apb, align 8, !tbaa !37
+  %i.axb = ashr <8 x i16> %wide.load576.11, splat (i16 2)
+  %i.axc = ashr <8 x i16> %wide.load577.11, splat (i16 2)
+  store <8 x i16> %i.axb, ptr %i.apa, align 8, !tbaa !37
+  store <8 x i16> %i.axc, ptr %i.apb, align 8, !tbaa !37
+  %wide.load576.12 = load <8 x i16>, ptr %i.apc, align 8, !tbaa !37
+  %wide.load577.12 = load <8 x i16>, ptr %i.apd, align 8, !tbaa !37
+  %i.axd = ashr <8 x i16> %wide.load576.12, splat (i16 2)
+  %i.axe = ashr <8 x i16> %wide.load577.12, splat (i16 2)
+  store <8 x i16> %i.axd, ptr %i.apc, align 8, !tbaa !37
+  store <8 x i16> %i.axe, ptr %i.apd, align 8, !tbaa !37
+  %wide.load576.13 = load <8 x i16>, ptr %i.ape, align 8, !tbaa !37
+  %wide.load577.13 = load <8 x i16>, ptr %i.apf, align 8, !tbaa !37
+  %i.axf = ashr <8 x i16> %wide.load576.13, splat (i16 2)
+  %i.axg = ashr <8 x i16> %wide.load577.13, splat (i16 2)
+  store <8 x i16> %i.axf, ptr %i.ape, align 8, !tbaa !37
+  store <8 x i16> %i.axg, ptr %i.apf, align 8, !tbaa !37
+  %wide.load581 = load <8 x i16>, ptr %i.apg, align 8, !tbaa !37
+  %i.axh = ashr <8 x i16> %wide.load581, splat (i16 2)
+  store <8 x i16> %i.axh, ptr %i.apg, align 8, !tbaa !37
+  %i.axi = load i16, ptr %i.aph, align 8, !tbaa !37
+  %i.axj = ashr i16 %i.axi, 2
+  store i16 %i.axj, ptr %i.aph, align 8, !tbaa !37
+  %i.axk = load i16, ptr %i.api, align 2, !tbaa !37
+  %i.axl = ashr i16 %i.axk, 2
+  store i16 %i.axl, ptr %i.api, align 2, !tbaa !37
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %vector.body574, %bb.ce
+  br i1 %i.ah, label %vector.memcheck, label %bb.cf
+
+vector.memcheck:                                  ; preds = %.loopexit
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
+  %i.axm = load i16, ptr %i.anu, align 2, !tbaa !62
+  %.val = load i16, ptr %i.ano, align 8, !tbaa !37 ; 2 uses
+  %.val276 = load i16, ptr %i.anp, align 2, !tbaa !37
+  %i.axn = ashr i16 %.val, 1
+  %i.axo = icmp sgt i16 %i.axn, %.val276
+  %i.axp = call i16 @llvm.smax.i16(i16 %i.axm, i16 1)
+  %i.axq = zext nneg i16 %i.axp to i32
+  %i.axr = add nsw i32 %i.axq, -1
+  %.0.i318 = select i1 %i.axo, i32 2, i32 %i.axr  ; 2 uses
+  %i.axs = trunc nuw nsw i32 %.0.i318 to i16
+  store i16 %i.axs, ptr %i.anu, align 2, !tbaa !62
+  %i.axt = load i16, ptr %i.anv, align 4, !tbaa !63
+  %i.axu = sext i16 %i.axt to i32
+  %i.axv = load <4 x i16>, ptr %i.anm, align 4, !tbaa !37
+  %i.axw = load i16, ptr %i.anm, align 4, !tbaa !37 ; 2 uses
+  %i.axx = icmp slt <4 x i16> %i.axv, splat (i16 9830)
+  %i.axy = load i16, ptr %i.anw, align 4, !tbaa !37
+  %i.axz = icmp slt i16 %i.axy, 9830
+  %i.aya = zext i1 %i.axz to i32
+  %i.ayb = load i16, ptr %i.anx, align 2, !tbaa !37
+  %i.ayc = icmp slt i16 %i.ayb, 9830
+  %i.ayd = zext i1 %i.ayc to i32
+  %i.aye = bitcast <4 x i1> %i.axx to i4
+  %i.ayf = call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %i.aye)
+  %i.ayg = zext nneg i4 %i.ayf to i32
+  %op.rdx = add nuw nsw i32 %i.ayg, %i.aya
+  %op.rdx594 = add nuw nsw i32 %op.rdx, %i.ayd
+  %i.ayh = icmp sgt i16 %i.axw, 14744
+  %i.ayi = icmp sgt i16 %i.axw, 9830
+  %..i319 = zext i1 %i.ayi to i32
+  %.0.i320 = select i1 %i.ayh, i32 2, i32 %..i319
+  %i.ayj = icmp samesign ult i32 %op.rdx594, 3
+  %i.ayk = icmp ne i32 %.0.i318, 0                ; 3 uses
+  %or.cond.i = or i1 %i.ayk, %i.ayj
+  %spec.select23.i = select i1 %or.cond.i, i32 %.0.i320, i32 0 ; 2 uses
+  %i.ayl = add nsw i32 %i.axu, 1
+  %i.aym = icmp sgt i32 %spec.select23.i, %i.ayl
+  %not..i = xor i1 %i.ayk, true
+  %or.cond25.not.i = select i1 %not..i, i1 %i.aym, i1 false
+  %i.ayn = sext i1 %or.cond25.not.i to i32
+  %.2.i = add nsw i32 %spec.select23.i, %i.ayn    ; 2 uses
+  %i.ayo = icmp slt i32 %.2.i, 2
+  %or.cond3.i = and i1 %i.ayk, %i.ayo
+  %i.ayp = zext i1 %or.cond3.i to i32
+  %.3.i = add nsw i32 %.2.i, %i.ayp               ; 2 uses
+  %i.ayq = trunc nsw i32 %.3.i to i16
+  store i16 %i.ayq, ptr %i.anv, align 4, !tbaa !63
+  %i.ayr = load ptr, ptr %i.anr, align 8, !tbaa !39 ; 2 uses
+  %i.ays = getelementptr inbounds nuw [2 x i8], ptr %i.ayr, i64 %i.avm ; 6 uses
+  %i.ayt = sext i16 %.val to i32                  ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  %i.ayu = sext i32 %.3.i to i64
+  %i.ayv = getelementptr inbounds [80 x i8], ptr @phase_filter, i64 %i.ayu
+  call void @ff_celp_convolve_circ(ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, ptr noundef nonnull %i.ayv, i32 noundef 40) #9
+  %i.ayw = ptrtoaddr ptr %i.ayr to i64
+  %i.ayx = sub i64 %i.g, %i.ayw
+  %.neg593 = mul nuw nsw i64 %indvars.iv532, -80
+  %i.ayy = add i64 %.neg593, %i.ayx
+  %i.ayz = add i64 %i.ayy, -1
+  %diff.check = icmp ult i64 %i.ayz, 15
+  br i1 %diff.check, label %scalar.ph, label %vector.body
+
+vector.body:                                      ; preds = %vector.memcheck
+  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.ayt, i64 0
+  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 10 uses
+  %wide.load = load <8 x i16>, ptr %i.ays, align 2, !tbaa !37
+  %wide.load570 = load <8 x i16>, ptr %i.c, align 16, !tbaa !37
+end_hunk_1
