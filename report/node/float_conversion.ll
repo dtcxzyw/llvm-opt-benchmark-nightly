@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 657
 inline.NumDeleted: 259
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 9
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@_ZN4absl19str_format_internal12_GLOBAL__N_110StackArray15RunWithCapacityEmNS_11FunctionRefIFvNS_4SpanIjEEEEE:bb.a
 
 bb.c:                                             ; preds = %bb.a
@@ -205,13 +205,44 @@ _ZNK4absl4SpanIjEixEm.exit32.i.i.i.i.i:           ; preds = %_ZNK4absl4SpanIjEix
 
 .preheader.i.i.i.i.i:                             ; preds = %.preheader.i.i.i.i.i.preheader, %_ZNK4absl4SpanIjEixEm.exit39.i.i.i.i.i
   %i.as = phi i64 [ %i.ay, %_ZNK4absl4SpanIjEixEm.exit39.i.i.i.i.i ], [ %i.n, %.preheader.i.i.i.i.i.preheader ] ; 2 uses
-  %.159.i.i.i.i.i = phi i64 [ %spec.select.i.i.i.i.i, %_ZNK4absl4SpanIjEixEm.exit39.i.i.i.i.i ], [ %.159.i.i.i.i.i.ph, %.preheader.i.i.i.i.i.preheader ] ; 3 uses
-  %i.at = add i64 %.159.i.i.i.i.i, -1             ; 3 uses
+  %.159.i.i.i.i.i = phi i64 [ %spec.select.i.i.i.i.i, %_ZNK4absl4SpanIjEixEm.exit39.i.i.i.i.i ], [ %.159.i.i.i.i.i.ph, %.preheader.i.i.i.i.i.preheader ] ; 7 uses
+  %i.at = add i64 %.159.i.i.i.i.i, -1             ; 4 uses
   %.first_iter.i.i.i.i = icmp ult i64 %i.at, %2
-  br i1 %.first_iter.i.i.i.i, label %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i, label %bb.c, !prof !20
+  br i1 %.first_iter.i.i.i.i, label %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader, label %bb.c, !prof !20
 
-_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i:           ; preds = %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i
-  %i.au = trunc nuw nsw i64 %i.bh to i32
+_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader: ; preds = %.preheader.i.i.i.i.i
+  %xtraiter = and i64 %.159.i.i.i.i.i, 1
+  %5 = icmp eq i64 %i.at, 0
+  br i1 %5, label %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.epil.preheader, label %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader.new
+
+_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader.new: ; preds = %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader
+  %unroll_iter = and i64 %.159.i.i.i.i.i, -2
+  br label %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i
+
+_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i.unr-lcssa: ; preds = %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i, label %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.epil.preheader
+
+_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.epil.preheader: ; preds = %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i.unr-lcssa, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader
+  %.02657.i.i.i.i.i.epil.init = phi i64 [ %.159.i.i.i.i.i, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader ], [ %i.az, %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i.unr-lcssa ]
+  %.02756.i.i.i.i.i.epil.init = phi i64 [ 0, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader ], [ %i.bh, %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i.unr-lcssa ]
+  %lcmp.mod33 = trunc i64 %.159.i.i.i.i.i to i1
+  tail call void @llvm.assume(i1 %lcmp.mod33)
+  %6 = getelementptr [4 x i8], ptr %1, i64 %.02657.i.i.i.i.i.epil.init
+  %7 = getelementptr i8, ptr %6, i64 -4           ; 2 uses
+  %8 = load i32, ptr %7, align 4
+  %9 = zext i32 %8 to i64
+  %10 = shl nuw nsw i64 %.02756.i.i.i.i.i.epil.init, 32
+  %11 = or disjoint i64 %10, %9                   ; 2 uses
+  %12 = udiv i64 %11, 1000000000
+  %13 = trunc nuw i64 %12 to i32
+  store i32 %13, ptr %7, align 4
+  %14 = urem i64 %11, 1000000000
+  br label %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i
+
+_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i:           ; preds = %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i.unr-lcssa, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.epil.preheader
+  %.lcssa = phi i64 [ %i.bh, %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i.unr-lcssa ], [ %14, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.epil.preheader ]
+  %i.au = trunc nuw nsw i64 %.lcssa to i32
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.at
   %i.aw = load i32, ptr %i.av, align 4
   %i.ax = icmp eq i32 %i.aw, 0
@@ -220,21 +251,33 @@ _ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i:           ; preds = %_ZNK4absl4SpanIjEix
   %.not31.i.i.i.i.i = icmp eq i64 %i.as, %spec.select.i.i.i.i.i
   br i1 %.not31.i.i.i.i.i, label %bb.d, label %bb.e
 
-_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i:           ; preds = %.preheader.i.i.i.i.i, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i
-  %.02657.i.i.i.i.i.a = phi i64 [ %i.az, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i ], [ %.159.i.i.i.i.i, %.preheader.i.i.i.i.i ]
-  %.02756.i.i.i.i.i = phi i64 [ %i.bh, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i ], [ 0, %.preheader.i.i.i.i.i ]
-  %i.az = add i64 %.02657.i.i.i.i.i.a, -1         ; 3 uses
+_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i:           ; preds = %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader.new
+  %.02657.i.i.i.i.i = phi i64 [ %.159.i.i.i.i.i, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader.new ], [ %i.az, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i ] ; 2 uses
+  %.02657.i.i.i.i.i.a = phi i64 [ 0, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader.new ], [ %i.bh, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i ]
+  %.02756.i.i.i.i.i = phi i64 [ 0, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i.preheader.new ], [ %niter.next.1, %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i ]
+  %15 = getelementptr [4 x i8], ptr %1, i64 %.02657.i.i.i.i.i
+  %16 = getelementptr i8, ptr %15, i64 -4         ; 2 uses
+  %17 = load i32, ptr %16, align 4
+  %18 = zext i32 %17 to i64
+  %19 = shl nuw nsw i64 %.02657.i.i.i.i.i.a, 32
+  %20 = or disjoint i64 %19, %18                  ; 2 uses
+  %21 = udiv i64 %20, 1000000000
+  %22 = trunc nuw i64 %21 to i32
+  store i32 %22, ptr %16, align 4
+  %23 = urem i64 %20, 1000000000
+  %i.az = add i64 %.02657.i.i.i.i.i, -2           ; 3 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.az ; 2 uses
   %i.bb = load i32, ptr %i.ba, align 4
   %i.bc = zext i32 %i.bb to i64
-  %i.bd = shl nuw nsw i64 %.02756.i.i.i.i.i, 32
+  %i.bd = shl nuw nsw i64 %23, 32
   %i.be = or disjoint i64 %i.bd, %i.bc            ; 2 uses
   %i.bf = udiv i64 %i.be, 1000000000
   %i.bg = trunc nuw i64 %i.bf to i32
   store i32 %i.bg, ptr %i.ba, align 4
-  %i.bh = urem i64 %i.be, 1000000000              ; 2 uses
-  %.not30.i.i.i.i.i = icmp eq i64 %i.az, 0
-  br i1 %.not30.i.i.i.i.i, label %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i, label %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i, !llvm.loop !51
+  %i.bh = urem i64 %i.be, 1000000000              ; 3 uses
+  %niter.next.1 = add i64 %.02756.i.i.i.i.i, 2    ; 2 uses
+  %.not30.i.i.i.i.i = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %.not30.i.i.i.i.i, label %_ZNK4absl4SpanIjEixEm.exit36.i.i.i.i.i.unr-lcssa, label %_ZNK4absl4SpanIjEixEm.exit38.i.i.i.i.i, !llvm.loop !51
 
 bb.c:                                             ; preds = %.preheader.i.i.i.i.i
   tail call void @__assert_fail(ptr noundef nonnull @.str.11, ptr noundef nonnull @.str.12, i32 noundef 336, ptr noundef nonnull @__PRETTY_FUNCTION__._ZZNK4absl4SpanIjEixEmENKUlvE_clEv) #19

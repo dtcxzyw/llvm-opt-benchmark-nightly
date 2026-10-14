@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_watermark?download=true
 inline.NumInlined: 43
 inline.NumDeleted: 15
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@cleanup_pipe:bb.a
   store ptr null, ptr %i.a, align 16, !tbaa !32
   ret void
@@ -204,7 +204,7 @@ bb.a:
   %i.c = alloca [2 x ptr], align 8                ; 3 uses
   %i.d = alloca [2 x ptr], align 8                ; 3 uses
   %i.e = alloca [2 x ptr], align 8                ; 3 uses
-  %i.f = tail call ptr @dt_alloc_aligned(i64 noundef 192) #18 ; 22 uses
+  %i.f = tail call ptr @dt_alloc_aligned(i64 noundef 192) #18 ; 30 uses
   %.not.i.i = icmp eq ptr %i.f, null
   br i1 %.not.i.i, label %_iop_gui_alloc.exit, label %bb.b
 
@@ -374,7 +374,7 @@ _iop_gui_alloc.exit:                              ; preds = %bb.a, %bb.b
   store ptr %i.cv, ptr %i.cw, align 8, !tbaa !105
   %i.cx = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.46, i32 noundef 5) #18
   call void @gtk_widget_set_tooltip_text(ptr noundef %i.cv, ptr noundef %i.cx) #18
-  %i.cy = call ptr @gtk_grid_new() #18            ; 5 uses
+  %i.cy = call ptr @gtk_grid_new() #18            ; 13 uses
   %i.cz = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.47, i32 noundef 5) #18
   %i.da = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.db = call ptr @dtgtk_reset_label_new(ptr noundef %i.cz, ptr noundef %0, ptr noundef nonnull %i.da, i32 noundef 4) #18 ; 2 uses
@@ -392,65 +392,95 @@ _iop_gui_alloc.exit:                              ; preds = %bb.a, %bb.b
   %i.dk = fmul reassoc nsz arcp contract afn double %i.dj, 3.000000e+00
   %i.dl = fptoui double %i.dk to i32
   call void @gtk_grid_set_column_spacing(ptr noundef %i.cy, i32 noundef %i.dl) #18
-  %i.dm = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  br label %24
-
-2:                                                ; preds = %24
-  %3 = load ptr, ptr %i.cb, align 8, !tbaa !184
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 2 uses
+  %2 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 16384, ptr noundef null) #18 ; 2 uses
+  store ptr %2, ptr %i.dm, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %2, i32 noundef 1, i32 noundef 0, i32 noundef 1, i32 noundef 1) #18
+  %3 = load ptr, ptr %i.dm, align 8, !tbaa !101
+  %4 = call i64 @g_signal_connect_data(ptr noundef %3, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %5 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 32768, ptr noundef null) #18 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
+  store ptr %5, ptr %6, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %5, i32 noundef 2, i32 noundef 0, i32 noundef 1, i32 noundef 1) #18
+  %7 = load ptr, ptr %6, align 8, !tbaa !101
+  %8 = call i64 @g_signal_connect_data(ptr noundef %7, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %9 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 65536, ptr noundef null) #18 ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 2 uses
+  store ptr %9, ptr %10, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %9, i32 noundef 3, i32 noundef 0, i32 noundef 1, i32 noundef 1) #18
+  %11 = load ptr, ptr %10, align 8, !tbaa !101
+  %12 = call i64 @g_signal_connect_data(ptr noundef %11, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %13 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 131072, ptr noundef null) #18 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
+  store ptr %13, ptr %14, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %13, i32 noundef 1, i32 noundef 1, i32 noundef 1, i32 noundef 1) #18
+  %15 = load ptr, ptr %14, align 8, !tbaa !101
+  %16 = call i64 @g_signal_connect_data(ptr noundef %15, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %17 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 262144, ptr noundef null) #18 ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %i.f, i64 56 ; 2 uses
+  store ptr %17, ptr %18, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %17, i32 noundef 2, i32 noundef 1, i32 noundef 1, i32 noundef 1) #18
+  %19 = load ptr, ptr %18, align 8, !tbaa !101
+  %20 = call i64 @g_signal_connect_data(ptr noundef %19, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %21 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 524288, ptr noundef null) #18 ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.f, i64 64 ; 2 uses
+  store ptr %21, ptr %22, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %21, i32 noundef 3, i32 noundef 1, i32 noundef 1, i32 noundef 1) #18
+  %23 = load ptr, ptr %22, align 8, !tbaa !101
+  %24 = call i64 @g_signal_connect_data(ptr noundef %23, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %25 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 1048576, ptr noundef null) #18 ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %i.f, i64 72 ; 2 uses
+  store ptr %25, ptr %26, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %25, i32 noundef 1, i32 noundef 2, i32 noundef 1, i32 noundef 1) #18
+  %27 = load ptr, ptr %26, align 8, !tbaa !101
+  %28 = call i64 @g_signal_connect_data(ptr noundef %27, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %29 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 2097152, ptr noundef null) #18 ; 2 uses
+  %30 = getelementptr inbounds nuw i8, ptr %i.f, i64 80 ; 2 uses
+  store ptr %29, ptr %30, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %29, i32 noundef 2, i32 noundef 2, i32 noundef 1, i32 noundef 1) #18
+  %31 = load ptr, ptr %30, align 8, !tbaa !101
+  %32 = call i64 @g_signal_connect_data(ptr noundef %31, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %33 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef 4194304, ptr noundef null) #18 ; 2 uses
+  %34 = getelementptr inbounds nuw i8, ptr %i.f, i64 88 ; 2 uses
+  store ptr %33, ptr %34, align 8, !tbaa !101
+  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %33, i32 noundef 3, i32 noundef 2, i32 noundef 1, i32 noundef 1) #18
+  %35 = load ptr, ptr %34, align 8, !tbaa !101
+  %36 = call i64 @g_signal_connect_data(ptr noundef %35, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %37 = load ptr, ptr %i.cb, align 8, !tbaa !184
   store ptr %i.cy, ptr %i.e, align 8, !tbaa !15
-  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store ptr inttoptr (i64 -1 to ptr), ptr %4, align 8, !tbaa !15
-  %5 = call ptr @dt_gui_box_add(ptr noundef nonnull @.str.34, i32 noundef 1525, ptr noundef nonnull @__FUNCTION__.gui_init, ptr noundef %3, ptr noundef nonnull %i.e) #18 ; 0 uses
-  %6 = call ptr @dt_bauhaus_slider_from_params(ptr noundef nonnull %0, ptr noundef nonnull @.str.49) #18 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.f, i64 112
-  store ptr %6, ptr %7, align 8, !tbaa !188
-  call void @dt_bauhaus_slider_set_digits(ptr noundef %6, i32 noundef 3) #18
-  %8 = call ptr @dt_bauhaus_slider_from_params(ptr noundef nonnull %0, ptr noundef nonnull @.str.50) #18 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 120
-  store ptr %8, ptr %9, align 8, !tbaa !189
-  call void @dt_bauhaus_slider_set_digits(ptr noundef %8, i32 noundef 3) #18
-  %10 = load ptr, ptr %i.cd, align 8, !tbaa !185
-  %11 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.51, i32 noundef 5) #18
-  call void @gtk_widget_set_tooltip_text(ptr noundef %10, ptr noundef %11) #18
-  %12 = load ptr, ptr %i.cn, align 8, !tbaa !187
-  %13 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.52, i32 noundef 5) #18
-  call void @gtk_widget_set_tooltip_text(ptr noundef %12, ptr noundef %13) #18
-  %14 = load ptr, ptr %i.ck, align 8, !tbaa !186
-  %15 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.53, i32 noundef 5) #18
-  call void @gtk_widget_set_tooltip_text(ptr noundef %14, ptr noundef %15) #18
+  %38 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  store ptr inttoptr (i64 -1 to ptr), ptr %38, align 8, !tbaa !15
+  %39 = call ptr @dt_gui_box_add(ptr noundef nonnull @.str.34, i32 noundef 1525, ptr noundef nonnull @__FUNCTION__.gui_init, ptr noundef %37, ptr noundef nonnull %i.e) #18 ; 0 uses
+  %40 = call ptr @dt_bauhaus_slider_from_params(ptr noundef nonnull %0, ptr noundef nonnull @.str.49) #18 ; 2 uses
+  %41 = getelementptr inbounds nuw i8, ptr %i.f, i64 112
+  store ptr %40, ptr %41, align 8, !tbaa !188
+  call void @dt_bauhaus_slider_set_digits(ptr noundef %40, i32 noundef 3) #18
+  %42 = call ptr @dt_bauhaus_slider_from_params(ptr noundef nonnull %0, ptr noundef nonnull @.str.50) #18 ; 2 uses
+  %43 = getelementptr inbounds nuw i8, ptr %i.f, i64 120
+  store ptr %42, ptr %43, align 8, !tbaa !189
+  call void @dt_bauhaus_slider_set_digits(ptr noundef %42, i32 noundef 3) #18
+  %44 = load ptr, ptr %i.cd, align 8, !tbaa !185
+  %45 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.51, i32 noundef 5) #18
+  call void @gtk_widget_set_tooltip_text(ptr noundef %44, ptr noundef %45) #18
+  %46 = load ptr, ptr %i.cn, align 8, !tbaa !187
+  %47 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.52, i32 noundef 5) #18
+  call void @gtk_widget_set_tooltip_text(ptr noundef %46, ptr noundef %47) #18
+  %48 = load ptr, ptr %i.ck, align 8, !tbaa !186
+  %49 = call ptr @dcgettext(ptr noundef null, ptr noundef nonnull @.str.53, i32 noundef 5) #18
+  call void @gtk_widget_set_tooltip_text(ptr noundef %48, ptr noundef %49) #18
   call fastcc void @_refresh_watermarks(ptr noundef nonnull %0)
-  %16 = load ptr, ptr %i.f, align 8, !tbaa !108
-  %17 = call i64 @g_signal_connect_data(ptr noundef %16, ptr noundef nonnull @.str.54, ptr noundef nonnull @_watermark_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
-  %18 = load ptr, ptr %i.x, align 8, !tbaa !183
-  %19 = call i64 @g_signal_connect_data(ptr noundef %18, ptr noundef nonnull @.str.55, ptr noundef nonnull @_refresh_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
-  %20 = load ptr, ptr %i.bl, align 8, !tbaa !59
-  %21 = call i64 @g_signal_connect_data(ptr noundef %20, ptr noundef nonnull @.str.56, ptr noundef nonnull @_colorpick_color_set, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
-  %22 = load ptr, ptr %i.ar, align 8, !tbaa !103
-  %23 = call i64 @g_signal_connect_data(ptr noundef %22, ptr noundef nonnull @.str.57, ptr noundef nonnull @_fontsel_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %50 = load ptr, ptr %i.f, align 8, !tbaa !108
+  %51 = call i64 @g_signal_connect_data(ptr noundef %50, ptr noundef nonnull @.str.54, ptr noundef nonnull @_watermark_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %52 = load ptr, ptr %i.x, align 8, !tbaa !183
+  %53 = call i64 @g_signal_connect_data(ptr noundef %52, ptr noundef nonnull @.str.55, ptr noundef nonnull @_refresh_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %54 = load ptr, ptr %i.bl, align 8, !tbaa !59
+  %55 = call i64 @g_signal_connect_data(ptr noundef %54, ptr noundef nonnull @.str.56, ptr noundef nonnull @_colorpick_color_set, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
+  %56 = load ptr, ptr %i.ar, align 8, !tbaa !103
+  %57 = call i64 @g_signal_connect_data(ptr noundef %56, ptr noundef nonnull @.str.57, ptr noundef nonnull @_fontsel_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   ret void
-
-24:                                               ; preds = %_iop_gui_alloc.exit, %24
-  %indvars.iv = phi i64 [ 0, %_iop_gui_alloc.exit ], [ %indvars.iv.next, %24 ] ; 4 uses
-  %25 = trunc nuw nsw i64 %indvars.iv to i32
-  %26 = shl nuw nsw i32 16384, %25
-  %27 = call ptr @dtgtk_togglebutton_new(ptr noundef nonnull @dtgtk_cairo_paint_alignment, i32 noundef %26, ptr noundef null) #18 ; 2 uses
-  %28 = getelementptr inbounds nuw [8 x i8], ptr %i.dm, i64 %indvars.iv ; 2 uses
-  store ptr %27, ptr %28, align 8, !tbaa !101
-  %.lhs.trunc = trunc i64 %indvars.iv to i8       ; 2 uses
-  %29 = urem i8 %.lhs.trunc, 3
-  %narrow = add nuw nsw i8 %29, 1
-  %30 = zext nneg i8 %narrow to i32
-  %31 = udiv i8 %.lhs.trunc, 3
-  %.zext135 = zext nneg i8 %31 to i32
-  call void @gtk_grid_attach(ptr noundef %i.cy, ptr noundef %27, i32 noundef %30, i32 noundef %.zext135, i32 noundef 1, i32 noundef 1) #18
-  %32 = load ptr, ptr %28, align 8, !tbaa !101
-  %33 = call i64 @g_signal_connect_data(ptr noundef %32, ptr noundef nonnull @.str.48, ptr noundef nonnull @_alignment_callback, ptr noundef nonnull %0, ptr noundef null, i32 noundef 0) #18 ; 0 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 9
-  br i1 %exitcond.not, label %2, label %24
 }
 
 declare ptr @gtk_grid_new() local_unnamed_addr #4

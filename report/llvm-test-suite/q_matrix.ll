@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/q_matrix?download=true
 loop-unroll.NumCompletelyUnrolled: 9
-loop-unroll.NumUnrolled: 9
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@PatchMatrix:bb.a
   %or.cond48.40 = icmp ugt i16 %i.ed, 255
   br i1 %or.cond48.40, label %bb.j, label %.preheader.41
@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.l, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.e
-  %i.m = load ptr, ptr @qp_per_matrix, align 8, !tbaa !17 ; 3 uses
-  %i.n = load ptr, ptr @qp_rem_matrix, align 8, !tbaa !17 ; 3 uses
+  %i.m = load ptr, ptr @qp_per_matrix, align 8, !tbaa !17 ; 4 uses
+  %i.n = load ptr, ptr @qp_rem_matrix, align 8, !tbaa !17 ; 4 uses
   %wide.trip.count = zext nneg i32 %i.e to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.e, 8
   %i.o = ptrtoaddr ptr %i.n to i64
@@ -250,16 +250,24 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   %indvars.iv.ph = phi i64 [ 0, %.lr.ph ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
-scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %indvars.iv.next.a, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
-  %i.aa = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
+scalar.ph:                                        ; preds = %scalar.ph, %scalar.ph.preheader
+  %indvars.iv = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.a, %scalar.ph ] ; 5 uses
+  %0 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
+  %1 = udiv i32 %0, 6
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv
+  store i32 %1, ptr %2, align 4, !tbaa !7
+  %3 = urem i32 %0, 6
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv
+  store i32 %3, ptr %4, align 4, !tbaa !7
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 3 uses
+  %i.aa = trunc nuw nsw i64 %indvars.iv.next to i32 ; 2 uses
   %i.ab = udiv i32 %i.aa, 6
-  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv.next
   store i32 %i.ab, ptr %i.ac, align 4, !tbaa !7
   %i.ad = urem i32 %i.aa, 6
-  %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv
+  %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv.next
   store i32 %i.ad, ptr %i.ae, align 4, !tbaa !7
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next.a, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !44
 

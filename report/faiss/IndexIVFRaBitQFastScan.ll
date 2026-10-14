@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 863
 inline.NumDeleted: 409
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZNK5faiss22IndexIVFRaBitQFastScan17compute_LUT_uint8EmPKfRKNS_16IndexIVFFastScan15CoarseQuantizedERNS_12AlignedTableIhLi32EEERNS7_ItLi32EEEPfRKNS_30FastScanDistancePostProcessingE:bb.a
   call void @_ZdlPvm(ptr noundef %i.as, i64 noundef %i.av) #33
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31
@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !60
   %i.ac = sext i32 %i.ab to i64
-  %i.ad = tail call noundef i64 @_ZN5faiss12rabitq_utils31compute_per_vector_storage_sizeEmm(i64 noundef %i.z, i64 noundef %i.ac) ; 2 uses
+  %i.ad = tail call noundef i64 @_ZN5faiss12rabitq_utils31compute_per_vector_storage_sizeEmm(i64 noundef %i.z, i64 noundef %i.ac) ; 6 uses
   %i.ae = load i32, ptr %i.aa, align 8, !tbaa !60
   %i.af = add nsw i32 %i.ae, 7
   %i.ag = sdiv i32 %i.af, 8
@@ -214,29 +214,73 @@ bb.j:                                             ; preds = %bb.b
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !138
   %i.ak = add i64 %i.aj, 1
   %i.al = lshr i64 %i.ak, 1
-  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 276 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 276 ; 4 uses
   %i.an = load i32, ptr %i.am, align 4, !tbaa !147
   %i.ao = sext i32 %i.an to i64
   %i.ap = mul i64 %i.al, %i.ao
-  %i.aq = tail call noundef i64 @_ZNK5faiss16IndexIVFFastScan16get_block_strideEv(ptr noundef nonnull align 8 dereferenceable(352) %0)
-  %invariant.gep = getelementptr i8, ptr %4, i64 %i.ah
-  %invariant.gep30 = getelementptr i8, ptr %i.x, i64 %i.ap
+  %i.aq = tail call noundef i64 @_ZNK5faiss16IndexIVFFastScan16get_block_strideEv(ptr noundef nonnull align 8 dereferenceable(352) %0) ; 3 uses
+  %invariant.gep = getelementptr i8, ptr %4, i64 %i.ah ; 3 uses
+  %invariant.gep30 = getelementptr i8, ptr %i.x, i64 %i.ap ; 3 uses
   %.not33 = icmp eq i64 %3, 0
-  br i1 %.not33, label %._crit_edge, label %.lr.ph.a
+  br i1 %.not33, label %._crit_edge, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.j
-  %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 168
+.lr.ph:                                           ; preds = %bb.j
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
+  %xtraiter = and i64 %3, 1
+  %7 = icmp eq i64 %3, 1
+  br i1 %7, label %.lr.ph.a, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i64 %3, -2
   br label %bb.k
 
-._crit_edge:                                      ; preds = %bb.k, %bb.j
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.k
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
+  %.032.epil.init = phi i64 [ 0, %.lr.ph ], [ %28, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod39 = trunc i64 %3 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod39)
+  %8 = load i64, ptr %6, align 8, !tbaa !59
+  %9 = mul i64 %8, %.032.epil.init
+  %gep.epil = getelementptr i8, ptr %invariant.gep, i64 %9
+  %10 = add i64 %.032.epil.init, %2               ; 2 uses
+  %11 = load i32, ptr %i.am, align 4, !tbaa !147
+  %12 = sext i32 %11 to i64                       ; 2 uses
+  %13 = udiv i64 %10, %12
+  %14 = mul i64 %13, %i.aq
+  %gep31.epil = getelementptr i8, ptr %invariant.gep30, i64 %14
+  %15 = urem i64 %10, %12
+  %16 = mul i64 %15, %i.ad
+  %i.ar = getelementptr inbounds nuw i8, ptr %gep31.epil, i64 %16
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ar, ptr align 1 %gep.epil, i64 %i.ad, i1 false)
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph.a, %._crit_edge.loopexit.unr-lcssa, %bb.j
   ret void
 
-bb.k:                                             ; preds = %.lr.ph.a, %bb.k
-  %.032.a = phi i64 [ 0, %.lr.ph.a ], [ %i.bc, %bb.k ] ; 3 uses
-  %i.as = load i64, ptr %i.ar, align 8, !tbaa !59
-  %i.at = mul i64 %i.as, %.032.a
+bb.k:                                             ; preds = %bb.k, %.lr.ph.new
+  %.032 = phi i64 [ 0, %.lr.ph.new ], [ %28, %bb.k ] ; 4 uses
+  %.032.a = phi i64 [ 0, %.lr.ph.new ], [ %i.bc, %bb.k ]
+  %17 = load i64, ptr %6, align 8, !tbaa !59
+  %18 = mul i64 %17, %.032
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %18
+  %19 = add i64 %.032, %2                         ; 2 uses
+  %20 = load i32, ptr %i.am, align 4, !tbaa !147
+  %21 = sext i32 %20 to i64                       ; 2 uses
+  %22 = udiv i64 %19, %21
+  %23 = mul i64 %22, %i.aq
+  %gep31 = getelementptr i8, ptr %invariant.gep30, i64 %23
+  %24 = urem i64 %19, %21
+  %25 = mul i64 %24, %i.ad
+  %26 = getelementptr inbounds nuw i8, ptr %gep31, i64 %25
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %26, ptr align 1 %gep, i64 %i.ad, i1 false)
+  %27 = or disjoint i64 %.032, 1                  ; 2 uses
+  %i.as = load i64, ptr %6, align 8, !tbaa !59
+  %i.at = mul i64 %i.as, %27
   %gep.a = getelementptr i8, ptr %invariant.gep, i64 %i.at
-  %i.au = add i64 %.032.a, %2                     ; 2 uses
+  %i.au = add i64 %27, %2                         ; 2 uses
   %i.av = load i32, ptr %i.am, align 4, !tbaa !147
   %i.aw = sext i32 %i.av to i64                   ; 2 uses
   %i.ax = udiv i64 %i.au, %i.aw
@@ -246,9 +290,10 @@ bb.k:                                             ; preds = %.lr.ph.a, %bb.k
   %i.ba = mul i64 %i.az, %i.ad
   %i.bb = getelementptr inbounds nuw i8, ptr %gep31.a, i64 %i.ba
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bb, ptr align 1 %gep.a, i64 %i.ad, i1 false)
-  %i.bc = add nuw i64 %.032.a, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bc, %3
-  br i1 %exitcond.not, label %._crit_edge, label %bb.k, !llvm.loop !188
+  %28 = add nuw i64 %.032, 2                      ; 2 uses
+  %i.bc = add nuw i64 %.032.a, 2                  ; 2 uses
+  %exitcond.not = icmp eq i64 %i.bc, %unroll_iter
+  br i1 %exitcond.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.k, !llvm.loop !188
 
 bb.l:                                             ; preds = %bb.g
   unreachable

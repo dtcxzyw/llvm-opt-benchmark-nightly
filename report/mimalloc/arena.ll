@@ -205,19 +205,22 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.bp, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  %.lhs.trunc22.i.i = trunc nuw nsw i64 %.159.i.i to i16 ; 3 uses
+  %.lhs.trunc22.i.i = trunc nuw nsw i64 %.159.i.i to i16 ; 2 uses
   %i.bq = udiv i16 %.lhs.trunc22.i.i, 100
   %i.br = trunc nuw nsw i16 %i.bq to i8
   %i.bs = or disjoint i8 %i.br, 48
   store i8 %i.bs, ptr %i.b, align 16, !tbaa !15
-  %0 = urem i16 %.lhs.trunc22.i.i, 100
-  %.lhs.trunc26.i.i = trunc nuw nsw i16 %0 to i8
+  %0 = insertelement <2 x i16> poison, i16 %.lhs.trunc22.i.i, i64 0
+  %1 = shufflevector <2 x i16> %0, <2 x i16> poison, <2 x i32> zeroinitializer
+  %2 = urem <2 x i16> %1, <i16 100, i16 10>       ; 2 uses
+  %3 = bitcast <2 x i16> %2 to <4 x i8>
+  %.lhs.trunc26.i.i = extractelement <4 x i8> %3, i64 0
   %i.bt = udiv i8 %.lhs.trunc26.i.i, 10
   %i.bu = or disjoint i8 %i.bt, 48
   store i8 %i.bu, ptr %i.h, align 1, !tbaa !15
-  %1 = urem i16 %.lhs.trunc22.i.i, 10
-  %2 = trunc nuw nsw i16 %1 to i8
-  %i.bv = or disjoint i8 %2, 48
+  %4 = bitcast <2 x i16> %2 to <4 x i8>
+  %5 = extractelement <4 x i8> %4, i64 2
+  %i.bv = or disjoint i8 %5, 48
   br label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.o, %bb.m, %bb.k

@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/cuddApa?download=true
 inline.NumInlined: 26
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@Cudd_ApaCompareRatios:bb.a
 .lr.ph.preheader.i34:                             ; preds = %Cudd_ApaIntDivision.exit
   %wide.trip.count.i35 = zext nneg i32 %3 to i64
@@ -203,7 +203,7 @@ bb.a:
   %i.c = fptosi double %i.b to i32                ; 4 uses
   %i.d = sext i32 %1 to i64
   %i.e = shl nsw i64 %i.d, 2
-  %i.f = tail call noalias noundef ptr @malloc(i64 noundef %i.e) #17 ; 6 uses
+  %i.f = tail call noalias noundef ptr @malloc(i64 noundef %i.e) #17 ; 8 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.g, label %bb.b
 
@@ -222,8 +222,13 @@ Cudd_ApaCopy.exit:                                ; preds = %bb.c
   %wide.trip.count.i = zext nneg i32 %1 to i64
   %i.m = shl nuw nsw i64 %wide.trip.count.i, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.f, ptr align 4 %2, i64 %i.m, i1 false), !tbaa !14
-  %wide.trip.count.i45 = zext nneg i32 %1 to i64
+  %wide.trip.count.i45 = zext nneg i32 %1 to i64  ; 2 uses
   %i.n = zext nneg i32 %i.c to i64
+  %xtraiter = and i64 %wide.trip.count.i45, 1
+  %3 = icmp eq i32 %1, 1
+  %unroll_iter = and i64 %wide.trip.count.i45, 2147483646
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod73 = trunc i32 %1 to i1
   br label %.lr.ph.i44.us
 
 Cudd_ApaCopy.exit.thread:                         ; preds = %bb.c
@@ -237,26 +242,57 @@ Cudd_ApaCopy.exit.thread:                         ; preds = %bb.c
 
 .lr.ph.i44.us:                                    ; preds = %Cudd_ApaCopy.exit, %._crit_edge.loopexit.i.us
   %indvars.iv = phi i64 [ %i.n, %Cudd_ApaCopy.exit ], [ %indvars.iv.next, %._crit_edge.loopexit.i.us ] ; 3 uses
-  br label %bb.d
+  br i1 %3, label %.epil.preheader, label %bb.d
 
-bb.d:                                             ; preds = %bb.d, %.lr.ph.i44.us
-  %indvars.iv.i46.us.a = phi i64 [ 0, %.lr.ph.i44.us ], [ %indvars.iv.next.i47.us, %bb.d ] ; 2 uses
-  %.014.i.us = phi i64 [ 0, %.lr.ph.i44.us ], [ %i.x, %bb.d ]
-  %i.q = shl nuw nsw i64 %.014.i.us, 32
-  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i46.us.a ; 2 uses
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !14
+bb.d:                                             ; preds = %.lr.ph.i44.us, %bb.d
+  %indvars.iv.i46.us = phi i64 [ %indvars.iv.next.i47.us.1, %bb.d ], [ 0, %.lr.ph.i44.us ] ; 3 uses
+  %indvars.iv.i46.us.a = phi i64 [ %i.x, %bb.d ], [ 0, %.lr.ph.i44.us ]
+  %.014.i.us = phi i64 [ %indvars.iv.next.i47.us, %bb.d ], [ 0, %.lr.ph.i44.us ]
+  %4 = shl nuw nsw i64 %indvars.iv.i46.us.a, 32
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i46.us ; 2 uses
+  %6 = load i32, ptr %5, align 4, !tbaa !14
+  %7 = zext i32 %6 to i64
+  %8 = or disjoint i64 %4, %7                     ; 2 uses
+  %9 = udiv i64 %8, 10
+  %10 = trunc nuw i64 %9 to i32
+  store i32 %10, ptr %5, align 4, !tbaa !14
+  %11 = urem i64 %8, 10
+  %i.q = shl nuw nsw i64 %11, 32
+  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i46.us
+  %12 = getelementptr inbounds nuw i8, ptr %i.r, i64 4 ; 2 uses
+  %i.s = load i32, ptr %12, align 4, !tbaa !14
   %i.t = zext i32 %i.s to i64
   %i.u = or disjoint i64 %i.q, %i.t               ; 2 uses
   %i.v = udiv i64 %i.u, 10
   %i.w = trunc nuw i64 %i.v to i32
-  store i32 %i.w, ptr %i.r, align 4, !tbaa !14
-  %i.x = urem i64 %i.u, 10                        ; 2 uses
-  %indvars.iv.next.i47.us = add nuw nsw i64 %indvars.iv.i46.us.a, 1 ; 2 uses
-  %exitcond.not.i48.us = icmp eq i64 %indvars.iv.next.i47.us, %wide.trip.count.i45
-  br i1 %exitcond.not.i48.us, label %._crit_edge.loopexit.i.us, label %bb.d, !llvm.loop !1
+  store i32 %i.w, ptr %12, align 4, !tbaa !14
+  %i.x = urem i64 %i.u, 10                        ; 3 uses
+  %indvars.iv.next.i47.us.1 = add nuw nsw i64 %indvars.iv.i46.us, 2 ; 2 uses
+  %indvars.iv.next.i47.us = add i64 %.014.i.us, 2 ; 2 uses
+  %exitcond.not.i48.us = icmp eq i64 %indvars.iv.next.i47.us, %unroll_iter
+  br i1 %exitcond.not.i48.us, label %._crit_edge.loopexit.i.us.unr-lcssa, label %bb.d, !llvm.loop !1
 
-._crit_edge.loopexit.i.us:                        ; preds = %bb.d
-  %i.y = trunc nuw nsw i64 %i.x to i8
+._crit_edge.loopexit.i.us.unr-lcssa:              ; preds = %bb.d
+  br i1 %lcmp.mod.not, label %._crit_edge.loopexit.i.us, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge.loopexit.i.us.unr-lcssa, %.lr.ph.i44.us
+  %indvars.iv.i46.us.epil.init = phi i64 [ 0, %.lr.ph.i44.us ], [ %indvars.iv.next.i47.us.1, %._crit_edge.loopexit.i.us.unr-lcssa ]
+  %.014.i.us.epil.init = phi i64 [ 0, %.lr.ph.i44.us ], [ %i.x, %._crit_edge.loopexit.i.us.unr-lcssa ]
+  tail call void @llvm.assume(i1 %lcmp.mod73)
+  %13 = shl nuw nsw i64 %.014.i.us.epil.init, 32
+  %14 = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i46.us.epil.init ; 2 uses
+  %15 = load i32, ptr %14, align 4, !tbaa !14
+  %16 = zext i32 %15 to i64
+  %17 = or disjoint i64 %13, %16                  ; 2 uses
+  %18 = udiv i64 %17, 10
+  %19 = trunc nuw i64 %18 to i32
+  store i32 %19, ptr %14, align 4, !tbaa !14
+  %20 = urem i64 %17, 10
+  br label %._crit_edge.loopexit.i.us
+
+._crit_edge.loopexit.i.us:                        ; preds = %._crit_edge.loopexit.i.us.unr-lcssa, %.epil.preheader
+  %.lcssa = phi i64 [ %i.x, %._crit_edge.loopexit.i.us.unr-lcssa ], [ %20, %.epil.preheader ]
+  %i.y = trunc nuw nsw i64 %.lcssa to i8
   %i.z = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv
   store i8 %i.y, ptr %i.z, align 1, !tbaa !18
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
@@ -319,7 +355,7 @@ bb.a:
   %i.d = add i32 %i.c, 1                          ; 3 uses
   %i.e = sext i32 %1 to i64
   %i.f = shl nsw i64 %i.e, 2
-  %i.g = tail call noalias noundef ptr @malloc(i64 noundef %i.f) #17 ; 5 uses
+  %i.g = tail call noalias noundef ptr @malloc(i64 noundef %i.f) #17 ; 7 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.i, label %bb.b
 
@@ -341,8 +377,13 @@ Cudd_ApaCopy.exit:                                ; preds = %bb.d
   %wide.trip.count.i = zext nneg i32 %1 to i64
   %i.m = shl nuw nsw i64 %wide.trip.count.i, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.g, ptr align 4 %2, i64 %i.m, i1 false), !tbaa !14
-  %wide.trip.count.i55 = zext nneg i32 %1 to i64
+  %wide.trip.count.i55 = zext nneg i32 %1 to i64  ; 2 uses
   %i.n = zext nneg i32 %i.c to i64
+  %xtraiter = and i64 %wide.trip.count.i55, 1
+  %4 = icmp eq i32 %1, 1
+  %unroll_iter = and i64 %wide.trip.count.i55, 2147483646
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod82 = trunc i32 %1 to i1
   br label %.lr.ph.i54.us
 
 Cudd_ApaCopy.exit.thread:                         ; preds = %bb.d
@@ -357,30 +398,63 @@ Cudd_ApaShortDivision.exit.thread.preheader:      ; preds = %Cudd_ApaCopy.exit.t
 .lr.ph.i54.us:                                    ; preds = %Cudd_ApaCopy.exit, %Cudd_ApaShortDivision.exit.us
   %indvars.iv = phi i64 [ %i.n, %Cudd_ApaCopy.exit ], [ %indvars.iv.next, %Cudd_ApaShortDivision.exit.us ] ; 4 uses
   %.065.us = phi i32 [ %i.c, %Cudd_ApaCopy.exit ], [ %spec.select, %Cudd_ApaShortDivision.exit.us ]
-  br label %bb.e
+  br i1 %4, label %.epil.preheader, label %bb.e
 
-bb.e:                                             ; preds = %bb.e, %.lr.ph.i54.us
-  %indvars.iv.i56.us.a = phi i64 [ 0, %.lr.ph.i54.us ], [ %indvars.iv.next.i57.us, %bb.e ] ; 2 uses
-  %.014.i.us = phi i64 [ 0, %.lr.ph.i54.us ], [ %i.x, %bb.e ]
-  %i.q = shl nuw nsw i64 %.014.i.us, 32
-  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.i56.us.a ; 2 uses
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !14
+bb.e:                                             ; preds = %.lr.ph.i54.us, %bb.e
+  %indvars.iv.i56.us = phi i64 [ %indvars.iv.next.i57.us.1, %bb.e ], [ 0, %.lr.ph.i54.us ] ; 3 uses
+  %indvars.iv.i56.us.a = phi i64 [ %i.x, %bb.e ], [ 0, %.lr.ph.i54.us ]
+  %.014.i.us = phi i64 [ %indvars.iv.next.i57.us, %bb.e ], [ 0, %.lr.ph.i54.us ]
+  %5 = shl nuw nsw i64 %indvars.iv.i56.us.a, 32
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.i56.us ; 2 uses
+  %7 = load i32, ptr %6, align 4, !tbaa !14
+  %8 = zext i32 %7 to i64
+  %9 = or disjoint i64 %5, %8
+  %.fr62.us = freeze i64 %9                       ; 2 uses
+  %10 = udiv i64 %.fr62.us, 10
+  %11 = trunc i64 %10 to i32
+  store i32 %11, ptr %6, align 4, !tbaa !14
+  %12 = urem i64 %.fr62.us, 10
+  %i.q = shl nuw nsw i64 %12, 32
+  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.i56.us
+  %13 = getelementptr inbounds nuw i8, ptr %i.r, i64 4 ; 2 uses
+  %i.s = load i32, ptr %13, align 4, !tbaa !14
   %i.t = zext i32 %i.s to i64
   %i.u = or disjoint i64 %i.q, %i.t
   %.fr62.us.a = freeze i64 %i.u                   ; 2 uses
   %i.v = udiv i64 %.fr62.us.a, 10
   %i.w = trunc i64 %i.v to i32
-  store i32 %i.w, ptr %i.r, align 4, !tbaa !14
+  store i32 %i.w, ptr %13, align 4, !tbaa !14
   %i.x = urem i64 %.fr62.us.a, 10                 ; 3 uses
-  %indvars.iv.next.i57.us = add nuw nsw i64 %indvars.iv.i56.us.a, 1 ; 2 uses
-  %exitcond.not.i58.us = icmp eq i64 %indvars.iv.next.i57.us, %wide.trip.count.i55
-  br i1 %exitcond.not.i58.us, label %Cudd_ApaShortDivision.exit.us, label %bb.e, !llvm.loop !1
+  %indvars.iv.next.i57.us.1 = add nuw nsw i64 %indvars.iv.i56.us, 2 ; 2 uses
+  %indvars.iv.next.i57.us = add i64 %.014.i.us, 2 ; 2 uses
+  %exitcond.not.i58.us = icmp eq i64 %indvars.iv.next.i57.us, %unroll_iter
+  br i1 %exitcond.not.i58.us, label %Cudd_ApaShortDivision.exit.us.unr-lcssa, label %bb.e, !llvm.loop !1
 
-Cudd_ApaShortDivision.exit.us:                    ; preds = %bb.e
-  %i.y = trunc nuw nsw i64 %i.x to i8
+Cudd_ApaShortDivision.exit.us.unr-lcssa:          ; preds = %bb.e
+  br i1 %lcmp.mod.not, label %Cudd_ApaShortDivision.exit.us, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %Cudd_ApaShortDivision.exit.us.unr-lcssa, %.lr.ph.i54.us
+  %indvars.iv.i56.us.epil.init = phi i64 [ 0, %.lr.ph.i54.us ], [ %indvars.iv.next.i57.us.1, %Cudd_ApaShortDivision.exit.us.unr-lcssa ]
+  %.014.i.us.epil.init = phi i64 [ 0, %.lr.ph.i54.us ], [ %i.x, %Cudd_ApaShortDivision.exit.us.unr-lcssa ]
+  tail call void @llvm.assume(i1 %lcmp.mod82)
+  %14 = shl nuw nsw i64 %.014.i.us.epil.init, 32
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.i56.us.epil.init ; 2 uses
+  %16 = load i32, ptr %15, align 4, !tbaa !14
+  %17 = zext i32 %16 to i64
+  %18 = or disjoint i64 %14, %17
+  %.fr62.us.epil = freeze i64 %18                 ; 2 uses
+  %19 = udiv i64 %.fr62.us.epil, 10
+  %20 = trunc i64 %19 to i32
+  store i32 %20, ptr %15, align 4, !tbaa !14
+  %21 = urem i64 %.fr62.us.epil, 10
+  br label %Cudd_ApaShortDivision.exit.us
+
+Cudd_ApaShortDivision.exit.us:                    ; preds = %Cudd_ApaShortDivision.exit.us.unr-lcssa, %.epil.preheader
+  %.lcssa = phi i64 [ %i.x, %Cudd_ApaShortDivision.exit.us.unr-lcssa ], [ %21, %.epil.preheader ] ; 2 uses
+  %i.y = trunc nuw nsw i64 %.lcssa to i8
   %i.z = getelementptr inbounds nuw i8, ptr %i.j, i64 %indvars.iv
   store i8 %i.y, ptr %i.z, align 1, !tbaa !18
-  %.not.us = icmp eq i64 %i.x, 0
+  %.not.us = icmp eq i64 %.lcssa, 0
   %i.aa = trunc nuw nsw i64 %indvars.iv to i32
   %spec.select = select i1 %.not.us, i32 %.065.us, i32 %i.aa ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1

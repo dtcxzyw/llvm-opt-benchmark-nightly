@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 622
 inline.NumDeleted: 240
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 16
-loop-unroll.NumUnrolled: 17
+loop-unroll.NumRuntimeUnrolled: 17
+loop-unroll.NumUnrolled: 18
 begin_hunk_0_@_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_122FormatFNegativeExpSlowENS0_7uint128EiRKNS2_11FormatStateE:bb.a
 ._crit_edge.i56:                                  ; preds = %.peel.next.i63, %bb.t, %bb.r
   %.0.lcssa.i57 = phi i64 [ %i.dp, %bb.r ], [ %i.ee, %bb.t ], [ %i.el, %.peel.next.i63 ] ; 2 uses
@@ -205,7 +205,7 @@ bb.a:
 .preheader39.i.i.i.i.i:                           ; preds = %.lr.ph.i.i.i.i.i, %bb.a
   %.022.lcssa.i.i.i.i.i = phi i64 [ %i.i, %bb.a ], [ %i.aj, %.lr.ph.i.i.i.i.i ] ; 2 uses
   %.not46.i.i.i.i.i = icmp eq i64 %.022.lcssa.i.i.i.i.i, 0
-  br i1 %.not46.i.i.i.i.i, label %.preheader39._crit_edge.i.i.i.i.i, label %.preheader.i.i.i.i.i.a
+  br i1 %.not46.i.i.i.i.i, label %.preheader39._crit_edge.i.i.i.i.i, label %.preheader.i.i.i.i.i
 
 .preheader39._crit_edge.i.i.i.i.i:                ; preds = %.preheader39.i.i.i.i.i
   %.phi.trans.insert.i.i.i.i.i = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.n
@@ -232,43 +232,83 @@ bb.a:
   %.not53.i.i.i.i.i = icmp eq i64 %i.as, 0
   br i1 %.not53.i.i.i.i.i, label %.preheader39.i.i.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !113
 
-.preheader.i.i.i.i.i.a:                           ; preds = %.preheader39.i.i.i.i.i, %bb.b
-  %i.at = phi i64 [ %i.az, %bb.b ], [ %i.n, %.preheader39.i.i.i.i.i ] ; 2 uses
-  %.147.i.i.i.i.i.a = phi i64 [ %spec.select.i.i.i.i.i, %bb.b ], [ %.022.lcssa.i.i.i.i.i, %.preheader39.i.i.i.i.i ] ; 3 uses
+.preheader.i.i.i.i.i:                             ; preds = %.preheader39.i.i.i.i.i, %bb.b
+  %5 = phi i64 [ %i.az, %bb.b ], [ %i.n, %.preheader39.i.i.i.i.i ] ; 2 uses
+  %.147.i.i.i.i.i = phi i64 [ %spec.select.i.i.i.i.i, %bb.b ], [ %.022.lcssa.i.i.i.i.i, %.preheader39.i.i.i.i.i ] ; 8 uses
+  %xtraiter = and i64 %.147.i.i.i.i.i, 1
+  %6 = icmp eq i64 %.147.i.i.i.i.i, 1
+  br i1 %6, label %.preheader.i.i.i.i.i.a, label %.preheader.i.i.i.i.i.new
+
+.preheader.i.i.i.i.i.new:                         ; preds = %.preheader.i.i.i.i.i
+  %unroll_iter = and i64 %.147.i.i.i.i.i, -2
   br label %bb.c
 
-bb.b:                                             ; preds = %bb.c
-  %i.au = trunc nuw nsw i64 %i.bj to i32          ; 2 uses
-  %i.av = add i64 %.147.i.i.i.i.i.a, -1           ; 2 uses
+.unr-lcssa:                                       ; preds = %bb.c
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %bb.b, label %.preheader.i.i.i.i.i.a
+
+.preheader.i.i.i.i.i.a:                           ; preds = %.unr-lcssa, %.preheader.i.i.i.i.i
+  %i.at = phi i64 [ %.147.i.i.i.i.i, %.preheader.i.i.i.i.i ], [ %i.bb, %.unr-lcssa ]
+  %.147.i.i.i.i.i.a = phi i64 [ 0, %.preheader.i.i.i.i.i ], [ %i.bj, %.unr-lcssa ]
+  %lcmp.mod18 = trunc i64 %.147.i.i.i.i.i to i1
+  tail call void @llvm.assume(i1 %lcmp.mod18)
+  %7 = getelementptr [4 x i8], ptr %1, i64 %i.at
+  %8 = getelementptr i8, ptr %7, i64 -4           ; 2 uses
+  %9 = load i32, ptr %8, align 4, !tbaa !19
+  %10 = zext i32 %9 to i64
+  %11 = shl nuw nsw i64 %.147.i.i.i.i.i.a, 32
+  %12 = or disjoint i64 %11, %10                  ; 2 uses
+  %13 = udiv i64 %12, 1000000000
+  %14 = trunc nuw i64 %13 to i32
+  store i32 %14, ptr %8, align 4, !tbaa !19
+  %15 = urem i64 %12, 1000000000
+  br label %bb.b
+
+bb.b:                                             ; preds = %.unr-lcssa, %.preheader.i.i.i.i.i.a
+  %.lcssa = phi i64 [ %i.bj, %.unr-lcssa ], [ %15, %.preheader.i.i.i.i.i.a ]
+  %i.au = trunc nuw nsw i64 %.lcssa to i32        ; 2 uses
+  %i.av = add i64 %.147.i.i.i.i.i, -1             ; 2 uses
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.av
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !19
   %i.ay = icmp eq i32 %i.ax, 0
-  %spec.select.i.i.i.i.i = select i1 %i.ay, i64 %i.av, i64 %.147.i.i.i.i.i.a ; 2 uses
-  %i.az = add i64 %i.at, -1                       ; 2 uses
+  %spec.select.i.i.i.i.i = select i1 %i.ay, i64 %i.av, i64 %.147.i.i.i.i.i ; 2 uses
+  %i.az = add i64 %5, -1                          ; 2 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.az
   store i32 %i.au, ptr %i.ba, align 4, !tbaa !19
   %.not.i.i.i.i.i = icmp eq i64 %spec.select.i.i.i.i.i, 0
-  br i1 %.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.preheader.i.i.i.i.i.a, !llvm.loop !114
+  br i1 %.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.preheader.i.i.i.i.i, !llvm.loop !114
 
-bb.c:                                             ; preds = %bb.c, %.preheader.i.i.i.i.i.a
-  %.02345.i.i.i.i.i.a = phi i64 [ %.147.i.i.i.i.i.a, %.preheader.i.i.i.i.i.a ], [ %i.bb, %bb.c ]
-  %.02444.i.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i.i.a ], [ %i.bj, %bb.c ]
-  %i.bb = add i64 %.02345.i.i.i.i.i.a, -1         ; 3 uses
+bb.c:                                             ; preds = %bb.c, %.preheader.i.i.i.i.i.new
+  %.02345.i.i.i.i.i = phi i64 [ %.147.i.i.i.i.i, %.preheader.i.i.i.i.i.new ], [ %i.bb, %bb.c ] ; 2 uses
+  %.02345.i.i.i.i.i.a = phi i64 [ 0, %.preheader.i.i.i.i.i.new ], [ %i.bj, %bb.c ]
+  %.02444.i.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i.i.new ], [ %niter.next.1, %bb.c ]
+  %16 = getelementptr [4 x i8], ptr %1, i64 %.02345.i.i.i.i.i
+  %17 = getelementptr i8, ptr %16, i64 -4         ; 2 uses
+  %18 = load i32, ptr %17, align 4, !tbaa !19
+  %19 = zext i32 %18 to i64
+  %20 = shl nuw nsw i64 %.02345.i.i.i.i.i.a, 32
+  %21 = or disjoint i64 %20, %19                  ; 2 uses
+  %22 = udiv i64 %21, 1000000000
+  %23 = trunc nuw i64 %22 to i32
+  store i32 %23, ptr %17, align 4, !tbaa !19
+  %24 = urem i64 %21, 1000000000
+  %i.bb = add i64 %.02345.i.i.i.i.i, -2           ; 3 uses
   %i.bc = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.bb ; 2 uses
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !19
   %i.be = zext i32 %i.bd to i64
-  %i.bf = shl nuw nsw i64 %.02444.i.i.i.i.i, 32
+  %i.bf = shl nuw nsw i64 %24, 32
   %i.bg = or disjoint i64 %i.bf, %i.be            ; 2 uses
   %i.bh = udiv i64 %i.bg, 1000000000
   %i.bi = trunc nuw i64 %i.bh to i32
   store i32 %i.bi, ptr %i.bc, align 4, !tbaa !19
-  %i.bj = urem i64 %i.bg, 1000000000              ; 2 uses
-  %.not26.i.i.i.i.i = icmp eq i64 %i.bb, 0
-  br i1 %.not26.i.i.i.i.i, label %bb.b, label %bb.c, !llvm.loop !115
+  %i.bj = urem i64 %i.bg, 1000000000              ; 3 uses
+  %niter.next.1 = add i64 %.02444.i.i.i.i.i, 2    ; 2 uses
+  %.not26.i.i.i.i.i = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %.not26.i.i.i.i.i, label %.unr-lcssa, label %bb.c, !llvm.loop !115
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %bb.b, %.preheader39._crit_edge.i.i.i.i.i
   %i.bk = phi i32 [ %.pre.i.i.i.i.i, %.preheader39._crit_edge.i.i.i.i.i ], [ %i.au, %bb.b ] ; 2 uses
-  %i.bl = phi i64 [ %i.ah, %.preheader39._crit_edge.i.i.i.i.i ], [ %i.at, %bb.b ]
+  %i.bl = phi i64 [ %i.ah, %.preheader39._crit_edge.i.i.i.i.i ], [ %5, %bb.b ]
   store i64 %i.bl, ptr %4, align 8, !tbaa !79
   %.not2548.i.i.i.i.i = icmp eq i32 %i.bk, 0
   br i1 %.not2548.i.i.i.i.i, label %_ZSt6invokeIRKZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115BinaryToDecimal13RunConversionENS1_7uint128EiNS1_11FunctionRefIFvS4_EEEEUlNS1_4SpanIjEEE_JSA_EENSt13invoke_resultIT_JDpT0_EE4typeEOSF_DpOSG_.exit, label %.lr.ph51.i.i.i.i.i

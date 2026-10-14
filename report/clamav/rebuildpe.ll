@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/clamav/original/rebuildpe?download=true
 inline.NumInlined: 3
 inline.NumDeleted: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -65,8 +65,14 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.y, label %.lr.ph, label %.loopexit.thread
 
 .lr.ph:                                           ; preds = %.preheader221
-  %i.z = zext i32 %8 to i64
-  %wide.trip.count = zext nneg i32 %2 to i64
+  %i.z = zext i32 %8 to i64                       ; 3 uses
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 2 uses
+  %xtraiter = and i64 %wide.trip.count, 1
+  %9 = icmp eq i32 %2, 1
+  br i1 %9, label %.epil.preheader, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.lr.ph
+  %unroll_iter = and i64 %wide.trip.count, 2147483646
   br label %bb.e
 
 .preheader:                                       ; preds = %bb.d
@@ -119,11 +125,25 @@ bb.d:                                             ; preds = %bb.c
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter.a
   br i1 %niter.ncmp.3, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph227
 
-bb.e:                                             ; preds = %.lr.ph, %bb.e
-  %indvars.iv.a = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 2 uses
-  %.1189223 = phi i64 [ 0, %.lr.ph ], [ %i.bo, %bb.e ]
-  %i.bd = getelementptr inbounds nuw [36 x i8], ptr %1, i64 %indvars.iv.a
-  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 12
+bb.e:                                             ; preds = %bb.e, %.lr.ph.new
+  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %i.bo, %bb.e ] ; 3 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph.new ], [ %22, %bb.e ]
+  %.1189223 = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next, %bb.e ]
+  %10 = getelementptr inbounds nuw [36 x i8], ptr %1, i64 %indvars.iv
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 12
+  %12 = load i32, ptr %11, align 4, !tbaa !11     ; 2 uses
+  %13 = udiv i32 %12, %8
+  %.zext216 = zext i32 %13 to i64
+  %14 = urem i32 %12, %8
+  %15 = icmp ne i32 %14, 0
+  %16 = zext i1 %15 to i64
+  %17 = add nuw nsw i64 %16, %.zext216
+  %18 = mul nuw i64 %17, %i.z
+  %19 = add nuw i64 %18, 511
+  %20 = and i64 %19, -512
+  %21 = add i64 %20, %indvars.iv.a
+  %i.bd = getelementptr inbounds nuw [36 x i8], ptr %1, i64 %indvars.iv
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 48
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !11 ; 2 uses
   %i.bg = udiv i32 %i.bf, %8
   %.zext216.a = zext i32 %i.bg to i64
@@ -134,10 +154,11 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %i.bl = mul nuw i64 %i.bk, %i.z
   %i.bm = add nuw i64 %i.bl, 511
   %i.bn = and i64 %i.bm, -512
-  %i.bo = add i64 %i.bn, %.1189223                ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.e
+  %22 = add i64 %i.bn, %21                        ; 3 uses
+  %i.bo = add nuw nsw i64 %indvars.iv, 2          ; 2 uses
+  %indvars.iv.next = add i64 %.1189223, 2         ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %unroll_iter
+  br i1 %exitcond.not, label %.loopexit.loopexit270.unr-lcssa, label %bb.e
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph227
   %lcmp.mod.not.a = icmp eq i64 %xtraiter.a, 0
@@ -166,8 +187,32 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter.a
   br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph227.epil, !llvm.loop !8
 
-.loopexit:                                        ; preds = %bb.e, %.loopexit.loopexit.unr-lcssa, %.lr.ph227.epil
-  %.2190 = phi i64 [ %i.bv, %.lr.ph227.epil ], [ %i.bc, %.loopexit.loopexit.unr-lcssa ], [ %i.bo, %bb.e ] ; 2 uses
+.loopexit.loopexit270.unr-lcssa:                  ; preds = %bb.e
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %.loopexit.loopexit270.unr-lcssa, %.lr.ph
+  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.bo, %.loopexit.loopexit270.unr-lcssa ]
+  %.1189223.epil.init = phi i64 [ 0, %.lr.ph ], [ %22, %.loopexit.loopexit270.unr-lcssa ]
+  %lcmp.mod273 = trunc i32 %2 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod273)
+  %23 = getelementptr inbounds nuw [36 x i8], ptr %1, i64 %indvars.iv.epil.init
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 12
+  %25 = load i32, ptr %24, align 4, !tbaa !11     ; 2 uses
+  %26 = udiv i32 %25, %8
+  %.zext216.epil = zext i32 %26 to i64
+  %27 = urem i32 %25, %8
+  %28 = icmp ne i32 %27, 0
+  %29 = zext i1 %28 to i64
+  %30 = add nuw nsw i64 %29, %.zext216.epil
+  %31 = mul nuw i64 %30, %i.z
+  %32 = add nuw i64 %31, 511
+  %33 = and i64 %32, -512
+  %34 = add i64 %33, %.1189223.epil.init
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.epil.preheader, %.loopexit.loopexit270.unr-lcssa, %.loopexit.loopexit.unr-lcssa, %.lr.ph227.epil
+  %.2190 = phi i64 [ %i.bv, %.lr.ph227.epil ], [ %i.bc, %.loopexit.loopexit.unr-lcssa ], [ %22, %.loopexit.loopexit270.unr-lcssa ], [ %34, %.epil.preheader ] ; 2 uses
   %i.bw = icmp ugt i64 %.2190, 1073741824
   br i1 %i.bw, label %bb.n, label %.loopexit.thread
 

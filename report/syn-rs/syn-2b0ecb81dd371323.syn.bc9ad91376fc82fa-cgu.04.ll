@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/syn-rs/original/syn-2b0ecb81dd371323.syn.bc9ad91376fc82fa-cgu.04?download=true
 inline.NumInlined: 577
 inline.NumDeleted: 192
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvXNtNtCsgbWeKYPjk8w_3syn4data7parsingNtB4_7VariantNtNtB6_5parse5Parse5parse:bb.a
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn11restriction10VisibilityEBF_.exit123: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn11restriction13VisRestrictedEBF_.exit.i120, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25IdentECsgbWeKYPjk8w_3syn.exit119, %bb.g
@@ -202,25 +204,58 @@ bb.a:
   %i.m = add nuw i64 %i.i, %i.l
   tail call void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE6resizeCsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.m, i8 noundef 0)
   %i.n = load ptr, ptr %i.d, align 8, !nonnull !6, !noundef !6 ; 2 uses
-  %i.o = load i64, ptr %i.a, align 8, !noundef !6 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.o
+  %i.o = load i64, ptr %i.a, align 8, !noundef !6 ; 5 uses
   %i.p = icmp samesign eq i64 %i.o, 0
-  br i1 %i.p, label %._crit_edge, label %.lr.ph
+  br i1 %i.p, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.sroa.0.04 = phi i8 [ %i.v, %.lr.ph ], [ 0, %bb.a ]
-  %.sroa.01.03 = phi ptr [ %i.q, %.lr.ph ], [ %i.n, %bb.a ] ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.01.03, i64 1 ; 2 uses
-  %i.r = load i8, ptr %.sroa.01.03, align 1, !noundef !6
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %xtraiter = and i64 %i.o, 1
+  %2 = icmp eq i64 %i.o, 1
+  br i1 %2, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+  %unroll_iter = and i64 %i.o, -2
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
+  %.sroa.0.04 = phi i8 [ 0, %.lr.ph.preheader.new ], [ %i.v, %.lr.ph ]
+  %.sroa.01.03 = phi ptr [ %i.n, %.lr.ph.preheader.new ], [ %i.q, %.lr.ph ] ; 4 uses
+  %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.03, i64 1 ; 2 uses
+  %4 = load i8, ptr %.sroa.01.03, align 1, !noundef !6
+  %5 = mul i8 %4, %1
+  %6 = add i8 %5, %.sroa.0.04                     ; 2 uses
+  %7 = urem i8 %6, 10
+  store i8 %7, ptr %.sroa.01.03, align 1
+  %8 = udiv i8 %6, 10
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.01.03, i64 2 ; 2 uses
+  %i.r = load i8, ptr %3, align 1, !noundef !6
   %i.s = mul i8 %i.r, %1
-  %i.t = add i8 %i.s, %.sroa.0.04                 ; 2 uses
+  %i.t = add i8 %i.s, %8                          ; 2 uses
   %i.u = urem i8 %i.t, 10
-  store i8 %i.u, ptr %.sroa.01.03, align 1
-  %i.v = udiv i8 %i.t, 10
-  %i.w = icmp eq ptr %i.q, %2
-  br i1 %i.w, label %._crit_edge, label %.lr.ph
+  store i8 %i.u, ptr %3, align 1
+  %i.v = udiv i8 %i.t, 10                         ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.w = icmp eq i64 %niter.next.1, %unroll_iter
+  br i1 %i.w, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+
+.lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
+  %.sroa.0.04.epil.init = phi i8 [ 0, %.lr.ph.preheader ], [ %i.v, %._crit_edge.loopexit.unr-lcssa ]
+  %.sroa.01.03.epil.init = phi ptr [ %i.n, %.lr.ph.preheader ], [ %i.q, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod5 = trunc i64 %i.o to i1
+  tail call void @llvm.assume(i1 %lcmp.mod5)
+  %9 = load i8, ptr %.sroa.01.03.epil.init, align 1, !noundef !6
+  %10 = mul i8 %9, %1
+  %11 = add i8 %10, %.sroa.0.04.epil.init
+  %12 = urem i8 %11, 10
+  store i8 %12, ptr %.sroa.01.03.epil.init, align 1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.lr.ph.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %bb.a
   ret void
 }
 

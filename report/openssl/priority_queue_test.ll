@@ -88,20 +88,21 @@ declare void @add_all_tests(ptr noundef, ptr noundef, i32 noundef, i32 noundef) 
 define internal range(i32 0, 2) i32 @test_size_t_priority_queue(i32 noundef %0) #0 {
 bb.a:
   %i.a = and i32 %0, 7
-  %i.b = ashr i32 %0, 3                           ; 5 uses
-  %1 = srem i32 %i.b, 3
-  %2 = sdiv i32 %i.b, 3
-  %3 = srem i32 %2, 2
-  %i.c = sdiv i32 %i.b, 6
+  %i.b = ashr i32 %0, 3                           ; 2 uses
+  %1 = insertelement <4 x i32> poison, i32 %i.b, i64 0
+  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <4 x i32> zeroinitializer
+  %3 = sdiv <4 x i32> %2, <i32 1, i32 3, i32 6, i32 12>
+  %4 = srem <4 x i32> %3, <i32 3, i32 2, i32 2, i32 6> ; 4 uses
+  %i.c = sdiv i32 %i.b, 72
   %i.d = srem i32 %i.c, 2
-  %4 = sdiv i32 %i.b, 12
-  %5 = srem i32 %4, 6
-  %6 = sdiv i32 %i.b, 72
-  %7 = srem i32 %6, 2
-  %8 = zext nneg i32 %i.a to i64
-  %9 = getelementptr inbounds nuw [4 x i8], ptr @test_size_t_priority_counts, i64 %8
-  %10 = load i32, ptr %9, align 4, !tbaa !14
-  %i.e = tail call fastcc i32 @test_size_t_priority_queue_int(i32 noundef %i.d, i32 noundef %1, i32 noundef %10, i32 noundef %5, i32 noundef %3, i32 noundef %7)
+  %5 = zext nneg i32 %i.a to i64
+  %6 = getelementptr inbounds nuw [4 x i8], ptr @test_size_t_priority_counts, i64 %5
+  %7 = load i32, ptr %6, align 4, !tbaa !14
+  %8 = extractelement <4 x i32> %4, i64 0
+  %9 = extractelement <4 x i32> %4, i64 1
+  %10 = extractelement <4 x i32> %4, i64 2
+  %11 = extractelement <4 x i32> %4, i64 3
+  %i.e = tail call fastcc i32 @test_size_t_priority_queue_int(i32 noundef %10, i32 noundef %8, i32 noundef %7, i32 noundef %11, i32 noundef %9, i32 noundef %i.d)
   ret i32 %i.e
 }
 

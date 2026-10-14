@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 86
 inline.NumDeleted: 61
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -63,10 +64,14 @@ define hidden { i64, i64 } @_RINvNtCsk7Z1gFMStHv_4bs586encode11encode_intoRShECs
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 2 uses
   %i.b = icmp samesign eq i64 %1, 0
-  br i1 %i.b, label %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswaphECs2iisHxfqoT7_15libp2p_identity.exit, label %.lr.ph65
+  br i1 %i.b, label %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswaphECs2iisHxfqoT7_15libp2p_identity.exit, label %.lr.ph65.preheader
 
-.loopexit:                                        ; preds = %bb.l, %.preheader47.a
-  %.sroa.03.2.lcssa = phi i64 [ %.sroa.03.064, %.preheader47.a ], [ %i.bi, %bb.l ] ; 3 uses
+.lr.ph65.preheader:                               ; preds = %bb.a
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  br label %.lr.ph65
+
+.loopexit:                                        ; preds = %bb.l, %.preheader47
+  %.sroa.03.2.lcssa = phi i64 [ %.sroa.03.064, %.preheader47 ], [ %i.bi, %bb.l ] ; 3 uses
   %i.c = icmp eq ptr %i.d, %i.a
   br i1 %i.c, label %.lr.ph69.preheader, label %.lr.ph65
 
@@ -74,9 +79,9 @@ bb.a:
   %umax89 = tail call i64 @llvm.umax.i64(i64 %.sroa.03.2.lcssa, i64 %3) ; 2 uses
   br label %.lr.ph69
 
-.lr.ph65:                                         ; preds = %bb.a, %.loopexit
-  %.sroa.03.064 = phi i64 [ %.sroa.03.2.lcssa, %.loopexit ], [ 0, %bb.a ] ; 8 uses
-  %.sroa.034.063 = phi ptr [ %i.d, %.loopexit ], [ %0, %bb.a ] ; 2 uses
+.lr.ph65:                                         ; preds = %.lr.ph65.preheader, %.loopexit
+  %.sroa.03.064 = phi i64 [ %.sroa.03.2.lcssa, %.loopexit ], [ 0, %.lr.ph65.preheader ] ; 10 uses
+  %.sroa.034.063 = phi ptr [ %i.d, %.loopexit ], [ %0, %.lr.ph65.preheader ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.034.063, i64 1 ; 2 uses
   %.not31 = icmp ugt i64 %.sroa.03.064, %3
   br i1 %.not31, label %bb.j, label %bb.k, !prof !22
@@ -244,42 +249,74 @@ bb.j:                                             ; preds = %.lr.ph65
 
 bb.k:                                             ; preds = %.lr.ph65
   %i.ap = load i8, ptr %.sroa.034.063, align 1, !noundef !4
-  %i.aq = zext i8 %i.ap to i64                    ; 2 uses
+  %i.aq = zext i8 %i.ap to i64                    ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.03.064
   %i.as = icmp samesign eq i64 %.sroa.03.064, 0
-  br i1 %i.as, label %.preheader47.a, label %.lr.ph
+  br i1 %i.as, label %.preheader47, label %.lr.ph.preheader
 
-.preheader47.a:                                   ; preds = %.lr.ph, %bb.k
-  %.sroa.015.0.lcssa.a = phi i64 [ %i.aq, %bb.k ], [ %i.bb, %.lr.ph ] ; 2 uses
-  %.not3258.a = icmp eq i64 %.sroa.015.0.lcssa.a, 0
-  br i1 %.not3258.a, label %.loopexit, label %.lr.ph61.preheader
+.lr.ph.preheader:                                 ; preds = %bb.k
+  %xtraiter = and i64 %.sroa.03.064, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.preheader47.a, label %.lr.ph.prol
 
-.lr.ph61.preheader:                               ; preds = %.preheader47.a
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
+  %6 = load i8, ptr %2, align 1, !noundef !4
+  %7 = zext i8 %6 to i64
+  %8 = shl nuw nsw i64 %7, 8
+  %9 = or disjoint i64 %8, %i.aq                  ; 2 uses
+  %10 = urem i64 %9, 58
+  %11 = trunc nuw nsw i64 %10 to i8
+  store i8 %11, ptr %2, align 1
+  %12 = udiv i64 %9, 58                           ; 2 uses
+  br label %.preheader47.a
+
+.preheader47.a:                                   ; preds = %.lr.ph.prol, %.lr.ph.preheader
+  %.lcssa139.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %12, %.lr.ph.prol ]
+  %.sroa.015.0.lcssa.a = phi i64 [ %i.aq, %.lr.ph.preheader ], [ %12, %.lr.ph.prol ]
+  %.sroa.021.056.unr = phi ptr [ %2, %.lr.ph.preheader ], [ %5, %.lr.ph.prol ]
+  %.not3258.a = icmp eq i64 %.sroa.03.064, 1
+  br i1 %.not3258.a, label %.preheader47, label %.lr.ph
+
+.preheader47:                                     ; preds = %.preheader47.a, %.lr.ph, %bb.k
+  %.sroa.015.0.lcssa = phi i64 [ %i.aq, %bb.k ], [ %.lcssa139.unr, %.preheader47.a ], [ %i.bb, %.lr.ph ] ; 2 uses
+  %.not3258 = icmp eq i64 %.sroa.015.0.lcssa, 0
+  br i1 %.not3258, label %.loopexit, label %.lr.ph61.preheader
+
+.lr.ph61.preheader:                               ; preds = %.preheader47
   %umax = tail call i64 @llvm.umax.i64(i64 %.sroa.03.064, i64 %3) ; 2 uses
   %i.at = icmp eq i64 %.sroa.03.064, %3
   br i1 %i.at, label %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswaphECs2iisHxfqoT7_15libp2p_identity.exit, label %.lr.ph123
 
-.lr.ph:                                           ; preds = %bb.k, %.lr.ph
-  %.sroa.015.057 = phi i64 [ %i.bb, %.lr.ph ], [ %i.aq, %bb.k ]
-  %.sroa.021.056 = phi ptr [ %i.au, %.lr.ph ], [ %2, %bb.k ] ; 3 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %.sroa.021.056, i64 1 ; 2 uses
-  %i.av = load i8, ptr %.sroa.021.056, align 1, !noundef !4
+.lr.ph:                                           ; preds = %.preheader47.a, %.lr.ph
+  %.sroa.015.057 = phi i64 [ %i.bb, %.lr.ph ], [ %.sroa.015.0.lcssa.a, %.preheader47.a ]
+  %.sroa.021.056 = phi ptr [ %i.au, %.lr.ph ], [ %.sroa.021.056.unr, %.preheader47.a ] ; 4 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.021.056, i64 1 ; 2 uses
+  %14 = load i8, ptr %.sroa.021.056, align 1, !noundef !4
+  %15 = zext i8 %14 to i64
+  %16 = shl nuw nsw i64 %15, 8
+  %17 = add nuw nsw i64 %16, %.sroa.015.057       ; 2 uses
+  %18 = urem i64 %17, 58
+  %19 = trunc nuw nsw i64 %18 to i8
+  store i8 %19, ptr %.sroa.021.056, align 1
+  %20 = udiv i64 %17, 58
+  %i.au = getelementptr inbounds nuw i8, ptr %.sroa.021.056, i64 2 ; 2 uses
+  %i.av = load i8, ptr %13, align 1, !noundef !4
   %i.aw = zext i8 %i.av to i64
   %i.ax = shl nuw nsw i64 %i.aw, 8
-  %i.ay = add nuw nsw i64 %i.ax, %.sroa.015.057   ; 2 uses
+  %i.ay = add nuw nsw i64 %i.ax, %20              ; 2 uses
   %i.az = urem i64 %i.ay, 58
   %i.ba = trunc nuw nsw i64 %i.az to i8
-  store i8 %i.ba, ptr %.sroa.021.056, align 1
+  store i8 %i.ba, ptr %13, align 1
   %i.bb = udiv i64 %i.ay, 58                      ; 2 uses
   %i.bc = icmp eq ptr %i.au, %i.ar
-  br i1 %i.bc, label %.preheader47.a, label %.lr.ph
+  br i1 %i.bc, label %.preheader47, label %.lr.ph
 
 .lr.ph61:                                         ; preds = %bb.l
   %i.bd = icmp eq i64 %i.bi, %3
   br i1 %i.bd, label %_RINvNvMNtCskKLDkoKarTP_4core5sliceSp7reverse7revswaphECs2iisHxfqoT7_15libp2p_identity.exit, label %.lr.ph123
 
 .lr.ph123:                                        ; preds = %.lr.ph61.preheader, %.lr.ph61
-  %.sroa.015.159122 = phi i64 [ %i.bf, %.lr.ph61 ], [ %.sroa.015.0.lcssa.a, %.lr.ph61.preheader ] ; 3 uses
+  %.sroa.015.159122 = phi i64 [ %i.bf, %.lr.ph61 ], [ %.sroa.015.0.lcssa, %.lr.ph61.preheader ] ; 3 uses
   %.sroa.03.260121 = phi i64 [ %i.bi, %.lr.ph61 ], [ %.sroa.03.064, %.lr.ph61.preheader ] ; 3 uses
   %exitcond.not = icmp eq i64 %.sroa.03.260121, %umax
   br i1 %exitcond.not, label %bb.m, label %bb.l

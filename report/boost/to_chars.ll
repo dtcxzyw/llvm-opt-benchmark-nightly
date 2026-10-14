@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 709
 inline.NumDeleted: 199
 loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 17
+loop-unroll.NumRuntimeUnrolled: 10
+loop-unroll.NumUnrolled: 18
 loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_ZN5boost8charconv6detail3ryuL16generic_to_charsENS2_20floating_decimal_128EPclNS0_12chars_formatEi:bb.a
   %i.h = icmp sgt i64 %2, 8
@@ -206,14 +206,14 @@ bb.aa:                                            ; preds = %bb.w
   br i1 %i.bx, label %_ZN5boost8charconv6detail3ryuL16copy_special_strEPclNS2_20floating_decimal_128E.exit, label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader, %bb.y, %bb.z, %bb.aa, %bb.v
-  %.4 = phi i64 [ %.1120, %bb.v ], [ %.2121, %bb.z ], [ %.2121, %bb.y ], [ %.1120, %bb.aa ], [ %.3122, %.preheader ] ; 4 uses
+  %.4 = phi i64 [ %.1120, %bb.v ], [ %.2121, %bb.z ], [ %.2121, %bb.y ], [ %.1120, %bb.aa ], [ %.3122, %.preheader ] ; 6 uses
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 %.4
   store i8 101, ptr %i.by, align 1, !tbaa !20
   %i.bz = add nsw i32 %i.l, %i.b                  ; 3 uses
   %i.ca = icmp slt i32 %i.bz, 1
   %i.cb = getelementptr i8, ptr %1, i64 %.4
   %i.cc = getelementptr i8, ptr %i.cb, i64 1      ; 2 uses
-  %.5185 = add i64 %.4, 2                         ; 2 uses
+  %.5185 = add i64 %.4, 2                         ; 5 uses
   br i1 %i.ca, label %.thread, label %bb.ab
 
 .thread:                                          ; preds = %.loopexit
@@ -228,49 +228,70 @@ bb.ab:                                            ; preds = %.loopexit
   br i1 %.not5.i, label %bb.af, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.thread, %bb.ab
-  %.0113187 = phi i32 [ %i.cd, %.thread ], [ %i.ce, %bb.ab ] ; 2 uses
+  %.0113187 = phi i32 [ %i.cd, %.thread ], [ %i.ce, %bb.ab ] ; 4 uses
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.07.i = phi i32 [ %i.cg, %.lr.ph.i ], [ 0, %.lr.ph.i.preheader ] ; 2 uses
-  %.046.i = phi i32 [ %i.cf, %.lr.ph.i ], [ %.0113187, %.lr.ph.i.preheader ] ; 2 uses
+  %indvar = phi i64 [ 0, %.lr.ph.i.preheader ], [ %indvar.next, %.lr.ph.i ] ; 2 uses
+  %.07.i = phi i32 [ 0, %.lr.ph.i.preheader ], [ %i.cg, %.lr.ph.i ] ; 2 uses
+  %.046.i = phi i32 [ %.0113187, %.lr.ph.i.preheader ], [ %i.cf, %.lr.ph.i ] ; 2 uses
   %i.cf = udiv i32 %.046.i, 10
-  %i.cg = add nuw nsw i32 %.07.i, 1               ; 3 uses
+  %i.cg = add nuw i32 %.07.i, 1                   ; 5 uses
   %i.ch = icmp ult i32 %.046.i, 10
+  %indvar.next = add i64 %indvar, 1
   br i1 %i.ch, label %.lr.ph157, label %.lr.ph.i, !llvm.loop !0
 
 .lr.ph157:                                        ; preds = %.lr.ph.i
   %i.ci = icmp eq i32 %.07.i, 0
-  %i.cj = zext nneg i32 %i.cg to i64              ; 2 uses
+  %i.cj = zext i32 %i.cg to i64                   ; 4 uses
+  br i1 %i.ci, label %bb.ad, label %bb.ac
+
+bb.ac:                                            ; preds = %.lr.ph157
   %invariant.gep = getelementptr i8, ptr %1, i64 %i.cj
-  br label %bb.ac
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %.5185 ; 3 uses
+  %xtraiter = and i64 %i.cj, 1
+  %5 = icmp eq i64 %indvar, 0
+  br i1 %5, label %.epil.preheader, label %.lr.ph157.split.new
 
-bb.ac:                                            ; preds = %.lr.ph157, %bb.ae
-  %indvars.iv167 = phi i64 [ 0, %.lr.ph157 ], [ %indvars.iv.next168, %bb.ae ] ; 3 uses
-  %.1114155 = phi i32 [ %.0113187, %.lr.ph157 ], [ %i.cn, %bb.ae ] ; 2 uses
-  %.6154 = phi i64 [ %.5185, %.lr.ph157 ], [ %.7, %bb.ae ] ; 3 uses
-  br i1 %i.ci, label %bb.ad, label %bb.ae
-
-bb.ad:                                            ; preds = %bb.ac
-  %5 = sub i64 %.6154, %indvars.iv167
-  %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 %5
-  store i8 48, ptr %i.ck, align 1, !tbaa !20
-  %i.cl = add i64 %.6154, 1
+.lr.ph157.split.new:                              ; preds = %bb.ac
+  %unroll_iter = and i64 %i.cj, 4294967294
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %.7 = phi i64 [ %i.cl, %bb.ad ], [ %.6154, %bb.ac ] ; 3 uses
+bb.ad:                                            ; preds = %.lr.ph157
+  %6 = getelementptr i8, ptr %1, i64 %.4
+  %7 = getelementptr i8, ptr %6, i64 %i.cj
+  %scevgep = getelementptr i8, ptr %7, i64 2
+  %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 %.5185
+  store i8 48, ptr %i.ck, align 1, !tbaa !20
+  %8 = urem i32 %.0113187, 10
+  %9 = trunc nuw nsw i32 %8 to i8
+  %10 = or disjoint i8 %9, 48
+  store i8 %10, ptr %scevgep, align 1, !tbaa !20
+  %i.cl = add i64 %.4, 3
+  br label %._crit_edge158
+
+bb.ae:                                            ; preds = %bb.ae, %.lr.ph157.split.new
+  %indvars.iv169 = phi i64 [ 0, %.lr.ph157.split.new ], [ %indvars.iv.next170.1, %bb.ae ] ; 3 uses
+  %.1114155 = phi i32 [ %.0113187, %.lr.ph157.split.new ], [ %12, %bb.ae ] ; 3 uses
+  %.7 = phi i64 [ 0, %.lr.ph157.split.new ], [ %indvars.iv.next168, %bb.ae ]
   %i.cm = urem i32 %.1114155, 10
   %i.cn = udiv i32 %.1114155, 10
   %i.co = trunc nuw nsw i32 %i.cm to i8
   %i.cp = or disjoint i8 %i.co, 48
-  %i.cq = xor i64 %indvars.iv167, -1
-  %gep.a = getelementptr i8, ptr %invariant.gep, i64 %.7
-  %i.cr = getelementptr i8, ptr %gep.a, i64 %i.cq
-  store i8 %i.cp, ptr %i.cr, align 1, !tbaa !20
-  %indvars.iv.next168 = add nuw nsw i64 %indvars.iv167, 1 ; 2 uses
-  %exitcond171.not = icmp eq i64 %indvars.iv.next168, %i.cj
-  br i1 %exitcond171.not, label %._crit_edge158, label %bb.ac, !llvm.loop !36
+  %i.cq = xor i64 %indvars.iv169, -1
+  %gep.a = getelementptr i8, ptr %gep, i64 %i.cq
+  store i8 %i.cp, ptr %gep.a, align 1, !tbaa !20
+  %11 = urem i32 %i.cn, 10
+  %12 = udiv i32 %.1114155, 100                   ; 2 uses
+  %13 = trunc nuw nsw i32 %11 to i8
+  %14 = or disjoint i8 %13, 48
+  %15 = xor i64 %indvars.iv169, -2
+  %i.cr = getelementptr i8, ptr %gep, i64 %15
+  store i8 %14, ptr %i.cr, align 1, !tbaa !20
+  %indvars.iv.next170.1 = add nuw nsw i64 %indvars.iv169, 2 ; 2 uses
+  %indvars.iv.next168 = add i64 %.7, 2            ; 2 uses
+  %exitcond171.not = icmp eq i64 %indvars.iv.next168, %unroll_iter
+  br i1 %exitcond171.not, label %._crit_edge158.thread.loopexit.unr-lcssa, label %bb.ae, !llvm.loop !36
 
 bb.af:                                            ; preds = %bb.ab
   %i.cs = getelementptr inbounds nuw i8, ptr %1, i64 %.5185 ; 2 uses
@@ -280,11 +301,28 @@ bb.af:                                            ; preds = %bb.ab
   store i8 48, ptr %i.cu, align 1, !tbaa !20
   br label %._crit_edge158
 
-._crit_edge158:                                   ; preds = %bb.ae, %bb.af
-  %.0.lcssa.i195200 = phi i32 [ 0, %bb.af ], [ %i.cg, %bb.ae ]
-  %.8 = phi i64 [ %i.ct, %bb.af ], [ %.7, %bb.ae ]
+._crit_edge158.thread.loopexit.unr-lcssa:         ; preds = %bb.ae
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %._crit_edge158, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge158.thread.loopexit.unr-lcssa, %bb.ac
+  %indvars.iv169.epil.init = phi i64 [ 0, %bb.ac ], [ %indvars.iv.next170.1, %._crit_edge158.thread.loopexit.unr-lcssa ]
+  %.1114155.epil.init = phi i32 [ %.0113187, %bb.ac ], [ %12, %._crit_edge158.thread.loopexit.unr-lcssa ]
+  %lcmp.mod218 = trunc i32 %i.cg to i1
+  tail call void @llvm.assume(i1 %lcmp.mod218)
+  %16 = urem i32 %.1114155.epil.init, 10
+  %17 = trunc nuw nsw i32 %16 to i8
+  %18 = or disjoint i8 %17, 48
+  %19 = xor i64 %indvars.iv169.epil.init, -1
+  %20 = getelementptr i8, ptr %gep, i64 %19
+  store i8 %18, ptr %20, align 1, !tbaa !20
+  br label %._crit_edge158
+
+._crit_edge158:                                   ; preds = %.epil.preheader, %._crit_edge158.thread.loopexit.unr-lcssa, %bb.ad, %bb.af
+  %.0.lcssa.i200205 = phi i32 [ 0, %bb.af ], [ 1, %bb.ad ], [ %i.cg, %._crit_edge158.thread.loopexit.unr-lcssa ], [ %i.cg, %.epil.preheader ]
+  %.8 = phi i64 [ %i.ct, %bb.af ], [ %i.cl, %bb.ad ], [ %.5185, %._crit_edge158.thread.loopexit.unr-lcssa ], [ %.5185, %.epil.preheader ]
   %i.cv = trunc i64 %.8 to i32
-  %i.cw = add i32 %.0.lcssa.i195200, %i.cv
+  %i.cw = add i32 %.0.lcssa.i200205, %i.cv
   br label %_ZN5boost8charconv6detail3ryuL16copy_special_strEPclNS2_20floating_decimal_128E.exit
 
 _ZN5boost8charconv6detail3ryuL16copy_special_strEPclNS2_20floating_decimal_128E.exit.loopexit.split.loop.exit204: ; preds = %.lr.ph211

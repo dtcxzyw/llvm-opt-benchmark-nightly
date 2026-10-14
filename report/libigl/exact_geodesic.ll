@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 2805
 inline.NumDeleted: 1107
 loop-unroll.NumCompletelyUnrolled: 15
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 23
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 24
 begin_hunk_0_@_ZN3igl8geodesic22GeodesicAlgorithmExact21update_list_and_queueEPNS0_12IntervalListEPNS0_16IntervalWithStopEj:bb.a
   br label %.lr.ph.i382, !llvm.loop !1
 
@@ -205,7 +205,7 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc112
   br label %_ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.thread.i
 
 _ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc112
-  %i.z = phi ptr [ %i.s, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.s, %.noexc112 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
+  %i.z = phi ptr [ %i.s, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.s, %.noexc112 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 5 uses
   %.0.i.i.i.i.i110 = phi ptr [ %i.y, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.v, %.noexc112 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   store ptr %.0.i.i.i.i.i110, ptr %i.aa, align 8, !tbaa !310
@@ -229,10 +229,15 @@ _ZNSt12_Vector_baseIiSaIiEEC2EmRKS0_.exit.thread.i: ; preds = %_ZNSt6vectorIiSaI
 .lr.ph323:                                        ; preds = %.preheader288
   %i.ai = ptrtoint ptr %.0.i.i.i.i.i110 to i64
   %i.aj = ptrtoint ptr %i.z to i64
-  %i.ak = sub i64 %i.ai, %i.aj
-  %i.al = ashr exact i64 %i.ak, 2
-  %i.am = load ptr, ptr %1, align 8, !tbaa !311
-  %i.an = load i64, ptr %i.l, align 8, !tbaa !307
+  %i.ak = sub i64 %i.ai, %i.aj                    ; 3 uses
+  %i.al = ashr exact i64 %i.ak, 2                 ; 2 uses
+  %i.am = load ptr, ptr %1, align 8, !tbaa !311   ; 3 uses
+  %i.an = load i64, ptr %i.l, align 8, !tbaa !307 ; 3 uses
+  %13 = icmp eq i64 %i.ak, 4
+  br i1 %13, label %.epil.preheader, label %.lr.ph323.new
+
+.lr.ph323.new:                                    ; preds = %.lr.ph323
+  %unroll_iter = and i64 %i.al, -2
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -272,14 +277,49 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ag
   br i1 %exitcond.not, label %.preheader288, label %bb.f, !llvm.loop !279
 
-._crit_edge:                                      ; preds = %bb.j, %.preheader288
+._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.j
+  %14 = and i64 %i.ak, 4
+  %lcmp.mod.not = icmp eq i64 %14, 0
+  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph323
+  %indvars.iv366.epil.init = phi i64 [ 0, %.lr.ph323 ], [ %indvars.iv.next367.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod469 = trunc i64 %i.al to i1
+  tail call void @llvm.assume(i1 %lcmp.mod469)
+  %15 = trunc nuw nsw i64 %indvars.iv366.epil.init to i32 ; 2 uses
+  %16 = udiv i32 %15, 3
+  %17 = zext nneg i32 %16 to i64
+  %18 = urem i32 %15, 3
+  %19 = zext nneg i32 %18 to i64
+  %20 = mul nsw i64 %i.an, %19
+  %21 = getelementptr [4 x i8], ptr %i.am, i64 %17
+  %22 = getelementptr [4 x i8], ptr %21, i64 %20
+  %23 = load i32, ptr %22, align 4, !tbaa !35
+  %24 = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv366.epil.init
+  store i32 %23, ptr %24, align 4, !tbaa !35
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.epil.preheader, %._crit_edge.loopexit.unr-lcssa, %.preheader288
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22
   invoke void @_ZN3igl8geodesic4MeshC2Ev(ptr noundef nonnull align 8 dereferenceable(112) %9)
           to label %bb.k unwind label %bb.p
 
-bb.j:                                             ; preds = %.lr.ph323, %bb.j
-  %indvars.iv366.a = phi i64 [ 0, %.lr.ph323 ], [ %indvars.iv.next367.a, %bb.j ] ; 3 uses
-  %i.bf = trunc nuw nsw i64 %indvars.iv366.a to i32 ; 2 uses
+bb.j:                                             ; preds = %bb.j, %.lr.ph323.new
+  %indvars.iv366 = phi i64 [ 0, %.lr.ph323.new ], [ %indvars.iv.next367.1, %bb.j ] ; 4 uses
+  %indvars.iv366.a = phi i64 [ 0, %.lr.ph323.new ], [ %indvars.iv.next367.a, %bb.j ]
+  %25 = trunc nuw nsw i64 %indvars.iv366 to i32   ; 2 uses
+  %26 = udiv i32 %25, 3
+  %27 = zext nneg i32 %26 to i64
+  %28 = urem i32 %25, 3
+  %29 = zext nneg i32 %28 to i64
+  %30 = mul nsw i64 %i.an, %29
+  %31 = getelementptr [4 x i8], ptr %i.am, i64 %27
+  %32 = getelementptr [4 x i8], ptr %31, i64 %30
+  %33 = load i32, ptr %32, align 4, !tbaa !35
+  %34 = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv366
+  store i32 %33, ptr %34, align 4, !tbaa !35
+  %indvars.iv.next367 = or disjoint i64 %indvars.iv366, 1 ; 2 uses
+  %i.bf = trunc nuw nsw i64 %indvars.iv.next367 to i32 ; 2 uses
   %i.bg = udiv i32 %i.bf, 3
   %i.bh = zext nneg i32 %i.bg to i64
   %i.bi = urem i32 %i.bf, 3
@@ -288,11 +328,12 @@ bb.j:                                             ; preds = %.lr.ph323, %bb.j
   %i.bl = getelementptr [4 x i8], ptr %i.am, i64 %i.bh
   %i.bm = getelementptr [4 x i8], ptr %i.bl, i64 %i.bk
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !35
-  %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv366.a
+  %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv.next367
   store i32 %i.bn, ptr %i.bo, align 4, !tbaa !35
-  %indvars.iv.next367.a = add nuw nsw i64 %indvars.iv366.a, 1 ; 2 uses
-  %exitcond370.not = icmp eq i64 %indvars.iv.next367.a, %i.al
-  br i1 %exitcond370.not, label %._crit_edge, label %bb.j, !llvm.loop !280
+  %indvars.iv.next367.1 = add nuw nsw i64 %indvars.iv366, 2 ; 2 uses
+  %indvars.iv.next367.a = add i64 %indvars.iv366.a, 2 ; 2 uses
+  %exitcond370.not = icmp eq i64 %indvars.iv.next367.a, %unroll_iter
+  br i1 %exitcond370.not, label %._crit_edge.loopexit.unr-lcssa, label %bb.j, !llvm.loop !280
 
 bb.k:                                             ; preds = %._crit_edge
   %i.bp = load ptr, ptr %i.k, align 8, !tbaa !305

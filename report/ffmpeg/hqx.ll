@@ -204,7 +204,7 @@ declare i32 @ff_thread_get_buffer(ptr noundef, ptr noundef, i32 noundef) local_u
 define internal range(i32 -1094995529, 1) i32 @decode_slice_thread(ptr noundef %0, ptr nofree readnone captures(none) %1, i32 noundef %2, i32 %3) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 9 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29   ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 33348
   %i.d = sext i32 %2 to i64                       ; 2 uses
   %i.e = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.d ; 2 uses
@@ -264,19 +264,19 @@ bb.f:                                             ; preds = %bb.e
   %i.ah = add nsw i32 %i.ag, 15
   %i.ai = ashr i32 %i.ah, 4                       ; 4 uses
   %i.aj = add nsw i32 %i.ae, 4
-  %i.ak = sdiv i32 %i.aj, 5                       ; 6 uses
+  %i.ak = sdiv i32 %i.aj, 5                       ; 9 uses
   %i.al = add nsw i32 %i.ai, 4
-  %i.am = sdiv i32 %i.al, 5                       ; 6 uses
+  %i.am = sdiv i32 %i.al, 5                       ; 8 uses
   %i.an = sdiv i32 %i.ae, %i.ak
-  %i.ao = mul nsw i32 %i.ak, %i.an
+  %i.ao = mul nsw i32 %i.ak, %i.an                ; 2 uses
   %i.ap = sdiv i32 %i.ai, %i.am
-  %i.aq = mul nsw i32 %i.am, %i.ap
-  %.recomposed = srem i32 %i.ae, %i.ak
-  %.recomposed34 = srem i32 %i.ai, %i.am
+  %i.aq = mul nsw i32 %i.am, %i.ap                ; 2 uses
+  %.recomposed = srem i32 %i.ae, %i.ak            ; 2 uses
+  %.recomposed34 = srem i32 %i.ai, %i.am          ; 2 uses
   %i.ar = mul nsw i32 %i.ai, %i.ae                ; 4 uses
   %i.as = add nsw i32 %i.ar, 479
-  %i.at = sdiv i32 %i.as, 480                     ; 5 uses
-  %i.au = shl nsw i32 %i.at, 4                    ; 3 uses
+  %i.at = sdiv i32 %i.as, 480                     ; 6 uses
+  %i.au = shl nsw i32 %i.at, 4                    ; 4 uses
   %i.av = sdiv i32 %i.ar, %i.au                   ; 4 uses
   %i.aw = icmp sgt i32 %i.ar, 0
   br i1 %i.aw, label %.lr.ph110.i, label %decode_slice.exit
@@ -286,35 +286,72 @@ bb.f:                                             ; preds = %bb.e
   %factor.op.mul.i = shl nuw nsw i32 %i.av, 4
   %.reass.i = mul i32 %factor.op.mul.i, %i.at
   %i.ay = sub nsw i32 %i.ar, %.reass.i
-  %i.az = mul nsw i32 %i.am, %i.ae                ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 33304
+  %i.az = mul nsw i32 %i.am, %i.ae                ; 4 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 33304 ; 2 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.at, i32 1)
   %i.bb = mul nuw nsw i32 %i.au, %i.av
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge.i, %.lr.ph110.i
-  %.0108.i = phi i32 [ 0, %.lr.ph110.i ], [ %i.bx, %._crit_edge.i ] ; 2 uses
+  %.0108.i = phi i32 [ 0, %.lr.ph110.i ], [ %i.bx, %._crit_edge.i ] ; 3 uses
   %.095107.i = phi i32 [ %i.ax, %.lr.ph110.i ], [ %i.by, %._crit_edge.i ] ; 3 uses
-  %i.bc = icmp slt i32 %.095107.i, %i.ay          ; 2 uses
-  %i.bd = zext i1 %i.bc to i32
-  %spec.select.i = add nuw nsw i32 %i.av, %i.bd   ; 2 uses
+  %i.bc = icmp slt i32 %.095107.i, %i.ay
+  %.fr.i = freeze i1 %i.bc                        ; 2 uses
+  %i.bd = zext i1 %.fr.i to i32
+  %spec.select.i = add nuw nsw i32 %i.av, %i.bd   ; 3 uses
   %i.be = icmp sgt i32 %spec.select.i, 0
-  br i1 %i.be, label %.lr.ph.preheader.i, label %._crit_edge.i
+  br i1 %i.be, label %.lr.ph.i, label %._crit_edge.i
 
-.lr.ph.preheader.i:                               ; preds = %bb.g
+.lr.ph.i:                                         ; preds = %bb.g
+  br i1 %.fr.i, label %.lr.ph.preheader.i, label %.lr.ph.i.a
+
+.lr.ph.preheader.i:                               ; preds = %.lr.ph.i
   %i.bf = add nsw i32 %.095107.i, %i.bb
-  br label %.lr.ph.i.a
+  br label %.lr.ph.split.i
 
-.lr.ph.i.a:                                       ; preds = %bb.i, %.lr.ph.preheader.i
-  %.090106.i.a = phi i32 [ %i.bw, %bb.i ], [ 0, %.lr.ph.preheader.i ] ; 4 uses
-  %4 = icmp eq i32 %i.av, %.090106.i.a
-  %5 = and i1 %i.bc, %4
-  br i1 %5, label %bb.i, label %bb.h
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i, %.lr.ph.i.a
+  %.090106.i.a = phi i32 [ %20, %.lr.ph.i.a ], [ 0, %.lr.ph.i ] ; 3 uses
+  %4 = mul nuw nsw i32 %.090106.i.a, %i.au
+  %5 = add nuw nsw i32 %4, %.0108.i
+  %6 = add nsw i32 %.090106.i.a, %2
+  %7 = and i32 %6, 15
+  %8 = zext nneg i32 %7 to i64
+  %9 = getelementptr inbounds nuw [4 x i8], ptr @shuffle_16, i64 %8
+  %10 = load i32, ptr %9, align 4, !tbaa !42
+  %11 = mul nsw i32 %10, %i.at
+  %12 = add nsw i32 %5, %11                       ; 2 uses
+  %13 = sdiv i32 %12, %i.az
+  %14 = mul nsw i32 %13, %i.am                    ; 2 uses
+  %15 = srem i32 %12, %i.az                       ; 2 uses
+  %.not.us.i = icmp slt i32 %14, %i.aq
+  %..us.i = select i1 %.not.us.i, i32 %i.am, i32 %.recomposed34
+  %.pn97.us.i = mul nsw i32 %..us.i, %i.ak        ; 2 uses
+  %.091.us.i = srem i32 %15, %.pn97.us.i          ; 2 uses
+  %.pn.us.i = sdiv i32 %15, %.pn97.us.i
+  %.093.us.i = mul nsw i32 %.pn.us.i, %i.ak       ; 2 uses
+  %.not100.us.i = icmp slt i32 %.093.us.i, %i.ao
+  %.pn102.us.i = select i1 %.not100.us.i, i32 %i.ak, i32 %.recomposed ; 2 uses
+  %.pn103.us.i = sdiv i32 %.091.us.i, %.pn102.us.i
+  %.092.us.i = add nsw i32 %.pn103.us.i, %14
+  %.pn101.us.i = srem i32 %.091.us.i, %.pn102.us.i
+  %.1.us.i = add nsw i32 %.pn101.us.i, %.093.us.i
+  %16 = load ptr, ptr %i.ba, align 8, !tbaa !46
+  %17 = shl nsw i32 %.1.us.i, 4
+  %18 = shl nsw i32 %.092.us.i, 4
+  %19 = tail call i32 %16(ptr noundef %i.b, i32 noundef %2, i32 noundef %17, i32 noundef %18) #7, !inline_history !77 ; 0 uses
+  %20 = add nuw nsw i32 %.090106.i.a, 1           ; 2 uses
+  %exitcond.not.i = icmp eq i32 %20, %spec.select.i
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i.a, !llvm.loop !78
 
-bb.h:                                             ; preds = %.lr.ph.i.a
-  %i.bg = mul nuw nsw i32 %.090106.i.a, %i.au
+.lr.ph.split.i:                                   ; preds = %bb.i, %.lr.ph.preheader.i
+  %.090106.i = phi i32 [ %i.bw, %bb.i ], [ 0, %.lr.ph.preheader.i ] ; 4 uses
+  %21 = icmp eq i32 %i.av, %.090106.i
+  br i1 %21, label %bb.i, label %bb.h
+
+bb.h:                                             ; preds = %.lr.ph.split.i
+  %i.bg = mul nuw nsw i32 %.090106.i, %i.au
   %i.bh = add nuw nsw i32 %i.bg, %.0108.i
-  %i.bi = add nsw i32 %.090106.i.a, %2
+  %i.bi = add nsw i32 %.090106.i, %2
   %i.bj = and i32 %i.bi, 15
   %i.bk = zext nneg i32 %i.bj to i64
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr @shuffle_16, i64 %i.bk
@@ -323,8 +360,8 @@ bb.h:                                             ; preds = %.lr.ph.i.a
   %i.bo = add nsw i32 %i.bh, %i.bn
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %.lr.ph.i.a
-  %.094.i = phi i32 [ %i.bo, %bb.h ], [ %i.bf, %.lr.ph.i.a ] ; 2 uses
+bb.i:                                             ; preds = %bb.h, %.lr.ph.split.i
+  %.094.i = phi i32 [ %i.bo, %bb.h ], [ %i.bf, %.lr.ph.split.i ] ; 2 uses
   %i.bp = sdiv i32 %.094.i, %i.az
   %i.bq = mul nsw i32 %i.bp, %i.am                ; 2 uses
   %i.br = srem i32 %.094.i, %i.az                 ; 2 uses
@@ -344,11 +381,11 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.i.a
   %i.bt = shl nsw i32 %.1.i, 4
   %i.bu = shl nsw i32 %.092.i, 4
   %i.bv = tail call i32 %i.bs(ptr noundef %i.b, i32 noundef %2, i32 noundef %i.bt, i32 noundef %i.bu) #7, !inline_history !77 ; 0 uses
-  %i.bw = add nuw nsw i32 %.090106.i.a, 1         ; 2 uses
+  %i.bw = add nuw nsw i32 %.090106.i, 1           ; 2 uses
   %exitcond.not.i.a = icmp eq i32 %i.bw, %spec.select.i
-  br i1 %exitcond.not.i.a, label %._crit_edge.i, label %.lr.ph.i.a, !llvm.loop !78
+  br i1 %exitcond.not.i.a, label %._crit_edge.i, label %.lr.ph.split.i, !llvm.loop !78
 
-._crit_edge.i:                                    ; preds = %bb.i, %bb.g
+._crit_edge.i:                                    ; preds = %.lr.ph.i.a, %bb.i, %bb.g
   %i.bx = add nuw nsw i32 %.0108.i, 1             ; 2 uses
   %i.by = add nsw i32 %.095107.i, 1
   %exitcond112.not.i = icmp eq i32 %i.bx, %smax.i

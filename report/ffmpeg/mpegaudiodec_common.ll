@@ -1,6 +1,4 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/mpegaudiodec_common?download=true
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -51,20 +49,29 @@ declare i32 @pthread_once(ptr noundef, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: cold nounwind optsize uwtable
 define internal void @mpegaudiodec_common_init_static() #0 {
-vector.ph.a:
+vector.ph:
   %0 = alloca %struct.VLCInitState, align 8       ; 4 uses
   %1 = alloca [256 x i16], align 16               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @__const.mpegaudiodec_common_init_static.state, i64 16, i1 false)
-  store <8 x i16> <i16 0, i16 1, i16 2, i16 4, i16 5, i16 6, i16 8, i16 9>, ptr @ff_scale_factor_modshift, align 16, !tbaa !20
-  store <8 x i16> <i16 10, i16 12, i16 13, i16 14, i16 16, i16 17, i16 18, i16 20>, ptr getelementptr inbounds nuw (i8, ptr @ff_scale_factor_modshift, i64 16), align 16, !tbaa !20
-  store <8 x i16> <i16 21, i16 22, i16 24, i16 25, i16 26, i16 28, i16 29, i16 30>, ptr getelementptr inbounds nuw (i8, ptr @ff_scale_factor_modshift, i64 32), align 16, !tbaa !20
-  store <8 x i16> <i16 32, i16 33, i16 34, i16 36, i16 37, i16 38, i16 40, i16 41>, ptr getelementptr inbounds nuw (i8, ptr @ff_scale_factor_modshift, i64 48), align 16, !tbaa !20
-  store <8 x i16> <i16 42, i16 44, i16 45, i16 46, i16 48, i16 49, i16 50, i16 52>, ptr getelementptr inbounds nuw (i8, ptr @ff_scale_factor_modshift, i64 64), align 16, !tbaa !20
-  store <8 x i16> <i16 53, i16 54, i16 56, i16 57, i16 58, i16 60, i16 61, i16 62>, ptr getelementptr inbounds nuw (i8, ptr @ff_scale_factor_modshift, i64 80), align 16, !tbaa !20
-  store <8 x i16> <i16 64, i16 65, i16 66, i16 68, i16 69, i16 70, i16 72, i16 73>, ptr getelementptr inbounds nuw (i8, ptr @ff_scale_factor_modshift, i64 96), align 16, !tbaa !20
-  store <8 x i16> <i16 74, i16 76, i16 77, i16 78, i16 80, i16 81, i16 82, i16 84>, ptr getelementptr inbounds nuw (i8, ptr @ff_scale_factor_modshift, i64 112), align 16, !tbaa !20
-  br label %.preheader91
+  br label %vector.ph.a
+
+vector.ph.a:                                      ; preds = %vector.ph.a, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.ph.a ] ; 2 uses
+  %vec.ind = phi <8 x i8> [ <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>, %vector.ph ], [ %vec.ind.next, %vector.ph.a ] ; 2 uses
+  %vec.ind.frozen = freeze <8 x i8> %vec.ind      ; 2 uses
+  %2 = udiv <8 x i8> %vec.ind.frozen, splat (i8 3) ; 2 uses
+  %3 = mul <8 x i8> %2, splat (i8 3)
+  %.decomposed = sub <8 x i8> %vec.ind.frozen, %3
+  %4 = shl nuw nsw <8 x i8> %2, splat (i8 2)
+  %5 = or disjoint <8 x i8> %4, %.decomposed
+  %6 = zext nneg <8 x i8> %5 to <8 x i16>
+  %7 = getelementptr inbounds nuw [2 x i8], ptr @ff_scale_factor_modshift, i64 %index
+  store <8 x i16> %6, ptr %7, align 16, !tbaa !21
+  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %vec.ind.next = add <8 x i8> %vec.ind, splat (i8 8)
+  %8 = icmp eq i64 %index.next, 64
+  br i1 %8, label %.preheader91, label %vector.ph.a, !llvm.loop !12
 
 .preheader91:                                     ; preds = %vector.ph.a, %bb.b
   %indvars.iv111 = phi i64 [ %indvars.iv.next112, %bb.b ], [ 0, %vector.ph.a ] ; 2 uses
@@ -72,7 +79,7 @@ vector.ph.a:
   %.07495 = phi ptr [ %i.u, %bb.b ], [ @mpa_hufflens, %vector.ph.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
   %i.a = getelementptr inbounds nuw i8, ptr @mpa_huff_sizes_minus_one, i64 %indvars.iv111
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !9
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !10
   %i.c = zext i8 %i.b to i32
   %i.d = add nuw nsw i32 %i.c, 1                  ; 2 uses
   %wide.trip.count = zext nneg i32 %i.d to i64    ; 3 uses
@@ -81,7 +88,7 @@ vector.ph.a:
 bb.a:                                             ; preds = %.preheader91, %bb.a
   %indvars.iv107 = phi i64 [ 0, %.preheader91 ], [ %indvars.iv.next108, %bb.a ] ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.096, i64 %indvars.iv107
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !9     ; 2 uses
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !10    ; 2 uses
   %i.g = and i8 %i.f, -16                         ; 2 uses
   %i.h = and i8 %i.f, 15                          ; 2 uses
   %i.i = zext i8 %i.g to i16
@@ -94,21 +101,21 @@ bb.a:                                             ; preds = %.preheader91, %bb.a
   %i.p = or disjoint i16 %i.o, %i.j
   %i.q = or disjoint i16 %i.p, %i.l
   %i.r = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv107
-  store i16 %i.q, ptr %i.r, align 2, !tbaa !20
+  store i16 %i.q, ptr %i.r, align 2, !tbaa !21
   %indvars.iv.next108 = add nuw nsw i64 %indvars.iv107, 1 ; 2 uses
   %exitcond110.not = icmp eq i64 %indvars.iv.next108, %wide.trip.count
-  br i1 %exitcond110.not, label %bb.b, label %bb.a, !llvm.loop !12
+  br i1 %exitcond110.not, label %bb.b, label %bb.a, !llvm.loop !13
 
 bb.b:                                             ; preds = %bb.a
   %i.s = call ptr @ff_vlc_init_tables_from_lengths(ptr noundef nonnull %0, i32 noundef 7, i32 noundef %i.d, ptr noundef %.07495, i32 noundef 1, ptr noundef nonnull %1, i32 noundef 2, i32 noundef 2, i32 noundef 0, i32 noundef 0) #7
   %indvars.iv.next112 = add nuw nsw i64 %indvars.iv111, 1 ; 3 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr @ff_huff_vlc, i64 %indvars.iv.next112
-  store ptr %i.s, ptr %i.t, align 8, !tbaa !23
+  store ptr %i.s, ptr %i.t, align 8, !tbaa !26
   %i.u = getelementptr inbounds nuw i8, ptr %.07495, i64 %wide.trip.count
   %i.v = getelementptr inbounds nuw i8, ptr %.096, i64 %wide.trip.count
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #7
   %exitcond114.not = icmp eq i64 %indvars.iv.next112, 15
-  br i1 %exitcond114.not, label %.preheader90, label %.preheader91, !llvm.loop !13
+  br i1 %exitcond114.not, label %.preheader90, label %.preheader91, !llvm.loop !14
 
 .preheader90:                                     ; preds = %bb.b, %.preheader90
   %i.w = phi i1 [ false, %.preheader90 ], [ true, %bb.b ] ; 2 uses
@@ -119,15 +126,15 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw [4 x i8], ptr @huff_quad_vlc_tables, i64 %i.y
   %i.aa = getelementptr inbounds nuw [24 x i8], ptr @ff_huff_quad_vlc, i64 %indvars.iv115 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store ptr %i.z, ptr %i.ab, align 8, !tbaa !25
+  store ptr %i.z, ptr %i.ab, align 8, !tbaa !28
   %i.ac = shl nuw nsw i32 1, %i.x                 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 20
-  store i32 %i.ac, ptr %i.ad, align 4, !tbaa !26
+  store i32 %i.ac, ptr %i.ad, align 4, !tbaa !29
   %i.ae = add nuw nsw i32 %i.ac, %.07598
   %i.af = getelementptr inbounds nuw [16 x i8], ptr @mpa_quad_bits, i64 %indvars.iv115
   %i.ag = getelementptr inbounds nuw [16 x i8], ptr @mpa_quad_codes, i64 %indvars.iv115
   %i.ah = call i32 @ff_vlc_init_sparse(ptr noundef nonnull %i.aa, i32 noundef %i.x, i32 noundef 16, ptr noundef nonnull %i.af, i32 noundef 1, i32 noundef 1, ptr noundef nonnull %i.ag, i32 noundef 1, i32 noundef 1, ptr noundef null, i32 noundef 0, i32 noundef 0, i32 noundef 1) #7 ; 0 uses
-  br i1 %i.w, label %.preheader90, label %.preheader88, !llvm.loop !14
+  br i1 %i.w, label %.preheader90, label %.preheader88, !llvm.loop !15
 
 .preheader88:                                     ; preds = %.preheader90, %bb.c
   %indvars.iv122 = phi i64 [ %indvars.iv.next123, %bb.c ], [ 0, %.preheader90 ] ; 3 uses
@@ -138,25 +145,25 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.d
   %i.ak = trunc i32 %i.as to i16
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 44
-  store i16 %i.ak, ptr %i.al, align 2, !tbaa !20
+  store i16 %i.ak, ptr %i.al, align 2, !tbaa !21
   %indvars.iv.next123 = add nuw nsw i64 %indvars.iv122, 1 ; 2 uses
   %exitcond125.not = icmp eq i64 %indvars.iv.next123, 9
-  br i1 %exitcond125.not, label %.preheader87, label %.preheader88, !llvm.loop !15
+  br i1 %exitcond125.not, label %.preheader87, label %.preheader88, !llvm.loop !16
 
 bb.d:                                             ; preds = %.preheader88, %bb.d
   %indvars.iv118 = phi i64 [ 0, %.preheader88 ], [ %indvars.iv.next119, %bb.d ] ; 3 uses
   %.08199 = phi i32 [ 0, %.preheader88 ], [ %i.as, %bb.d ] ; 2 uses
   %i.am = trunc i32 %.08199 to i16
   %i.an = getelementptr inbounds nuw [2 x i8], ptr %i.ai, i64 %indvars.iv118
-  store i16 %i.am, ptr %i.an, align 2, !tbaa !20
+  store i16 %i.am, ptr %i.an, align 2, !tbaa !21
   %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 %indvars.iv118
-  %i.ap = load i8, ptr %i.ao, align 1, !tbaa !9
+  %i.ap = load i8, ptr %i.ao, align 1, !tbaa !10
   %i.aq = lshr i8 %i.ap, 1
   %i.ar = zext nneg i8 %i.aq to i32
   %i.as = add nuw nsw i32 %.08199, %i.ar          ; 2 uses
   %indvars.iv.next119 = add nuw nsw i64 %indvars.iv118, 1 ; 2 uses
   %exitcond121.not = icmp eq i64 %indvars.iv.next119, 22
-  br i1 %exitcond121.not, label %bb.c, label %bb.d, !llvm.loop !16
+  br i1 %exitcond121.not, label %bb.c, label %bb.d, !llvm.loop !17
 
 bb.e:                                             ; preds = %.loopexit
   call fastcc void @mpegaudiodec_common_tableinit() #8
@@ -178,7 +185,7 @@ bb.e:                                             ; preds = %.loopexit
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr @ff_mpa_quant_steps, i64 %indvars.iv131
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !11 ; 4 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr @ff_division_tabs, i64 %indvars.iv131
-  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !28
+  %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !31
   %smax = call i32 @llvm.smax.i32(i32 %i.ax, i32 1)
   %wide.trip.count129 = zext nneg i32 %smax to i64
   br label %bb.f
@@ -196,15 +203,15 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.bk = add nsw i32 %i.bi, %i.bj
   %i.bl = trunc i32 %i.bk to i16
   %i.bm = getelementptr inbounds nuw [2 x i8], ptr %i.bb, i64 %indvars.iv126
-  store i16 %i.bl, ptr %i.bm, align 2, !tbaa !20
+  store i16 %i.bl, ptr %i.bm, align 2, !tbaa !21
   %indvars.iv.next127 = add nuw nsw i64 %indvars.iv126, 1 ; 2 uses
   %exitcond130.not = icmp eq i64 %indvars.iv.next127, %wide.trip.count129
-  br i1 %exitcond130.not, label %.loopexit, label %bb.f, !llvm.loop !17
+  br i1 %exitcond130.not, label %.loopexit, label %bb.f, !llvm.loop !18
 
 .loopexit:                                        ; preds = %bb.f, %.preheader87
   %indvars.iv.next132 = add nuw nsw i64 %indvars.iv131, 1 ; 2 uses
   %exitcond134.not = icmp eq i64 %indvars.iv.next132, 4
-  br i1 %exitcond134.not, label %bb.e, label %.preheader87, !llvm.loop !18
+  br i1 %exitcond134.not, label %bb.e, label %.preheader87, !llvm.loop !19
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -250,7 +257,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.1 = phi nsz double [ %i.i, %bb.d ], [ %.01213, %bb.c ] ; 2 uses
   %i.j = and i64 %indvars.iv, 3
   %i.k = getelementptr inbounds nuw [8 x i8], ptr @mpegaudiodec_common_tableinit.exp2_lut, i64 %i.j
-  %i.l = load double, ptr %i.k, align 8, !tbaa !31
+  %i.l = load double, ptr %i.k, align 8, !tbaa !34
   %i.m = fmul nsz double %.1, %i.l
   %i.n = call nsz double @frexp(double noundef %i.m, ptr noundef nonnull %i.a) #7
   %i.o = fmul nsz double %i.n, f0x41E0000000000000
@@ -262,11 +269,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.t = trunc i32 %i.r to i8
   %i.u = sub i8 103, %i.t
   %i.v = getelementptr inbounds nuw i8, ptr @ff_table_4_3_exp, i64 %indvars.iv
-  store i8 %i.u, ptr %i.v, align 1, !tbaa !9
+  store i8 %i.u, ptr %i.v, align 1, !tbaa !10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 32828
-  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !29
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !32
 }
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
@@ -305,27 +312,30 @@ attributes #9 = { nounwind willreturn memory(none) }
 !6 = !{!"int", !5, i64 0}
 !7 = !{!"__libc_errno", !6, i64 0}
 !8 = !{!7, !6, i64 0}
-!9 = !{!5, !5, i64 0}
-!10 = !{!"llvm.loop.mustprogress"}
+!9 = !{!"llvm.loop.mustprogress"}
+!10 = !{!5, !5, i64 0}
 !11 = !{!6, !6, i64 0}
-!12 = distinct !{!12, !10}
-!13 = distinct !{!13, !10}
-!14 = distinct !{!14, !10}
-!15 = distinct !{!15, !10}
-!16 = distinct !{!16, !10}
-!17 = distinct !{!17, !10}
-!18 = distinct !{!18, !10}
-!19 = !{!"short", !5, i64 0}
-!20 = !{!19, !19, i64 0}
-!21 = !{!"any pointer", !5, i64 0}
-!22 = !{!"p1 _ZTS7VLCElem", !21, i64 0}
-!23 = !{!22, !22, i64 0}
-!24 = !{!"VLC", !6, i64 0, !22, i64 8, !6, i64 16, !6, i64 20}
-!25 = !{!24, !22, i64 8}
-!26 = !{!24, !6, i64 20}
-!27 = !{!"p1 short", !21, i64 0}
-!28 = !{!27, !27, i64 0}
-!29 = distinct !{!29, !10}
-!30 = !{!"double", !5, i64 0}
+!12 = distinct !{!12, !9, !22, !23}
+!13 = distinct !{!13, !9}
+!14 = distinct !{!14, !9}
+!15 = distinct !{!15, !9}
+!16 = distinct !{!16, !9}
+!17 = distinct !{!17, !9}
+!18 = distinct !{!18, !9}
+!19 = distinct !{!19, !9}
+!20 = !{!"short", !5, i64 0}
+!21 = !{!20, !20, i64 0}
+!22 = !{!"llvm.loop.isvectorized", i32 1}
+!23 = !{!"llvm.loop.unroll.runtime.disable"}
+!24 = !{!"any pointer", !5, i64 0}
+!25 = !{!"p1 _ZTS7VLCElem", !24, i64 0}
+!26 = !{!25, !25, i64 0}
+!27 = !{!"VLC", !6, i64 0, !25, i64 8, !6, i64 16, !6, i64 20}
+!28 = !{!27, !25, i64 8}
+!29 = !{!27, !6, i64 20}
+!30 = !{!"p1 short", !24, i64 0}
 !31 = !{!30, !30, i64 0}
+!32 = distinct !{!32, !9}
+!33 = !{!"double", !5, i64 0}
+!34 = !{!33, !33, i64 0}
 end_hunk_0

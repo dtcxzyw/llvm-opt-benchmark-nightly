@@ -205,16 +205,19 @@ bb.ah:                                            ; preds = %_ZSteqIcSt11char_tr
 
 bb.ai:                                            ; preds = %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #23
-  %i.eg = load i32, ptr %i.e, align 4, !tbaa !79  ; 3 uses
+  %i.eg = load i32, ptr %i.e, align 4, !tbaa !79  ; 2 uses
   %i.eh = udiv i32 %i.eg, 100000000
   store i32 %i.eh, ptr %i.f, align 4, !tbaa !79
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #23
-  %16 = urem i32 %i.eg, 100000000
-  %17 = udiv i32 %16, 1000000
-  store i32 %17, ptr %i.g, align 4, !tbaa !79
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #23
-  %18 = urem i32 %i.eg, 10000
-  %.lhs.trunc = trunc nuw nsw i32 %18 to i16
+  %16 = insertelement <2 x i32> poison, i32 %i.eg, i64 0
+  %17 = shufflevector <2 x i32> %16, <2 x i32> poison, <2 x i32> zeroinitializer
+  %18 = urem <2 x i32> %17, <i32 100000000, i32 10000> ; 2 uses
+  %19 = extractelement <2 x i32> %18, i64 0
+  %20 = udiv i32 %19, 1000000
+  store i32 %20, ptr %i.g, align 4, !tbaa !79
+  %21 = bitcast <2 x i32> %18 to <4 x i16>
+  %.lhs.trunc = extractelement <4 x i16> %21, i64 2
   %i.ei = udiv i16 %.lhs.trunc, 100
   %.zext = zext nneg i16 %i.ei to i32
   store i32 %.zext, ptr %i.h, align 4, !tbaa !79

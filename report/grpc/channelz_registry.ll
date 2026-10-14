@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.c = ptrtoint ptr %0 to i64                   ; 5 uses
   %i.d = sub i64 %i.b, %i.c                       ; 2 uses
   %mul.ov = icmp ugt i64 %i.d, 34359738360
   %.sroa.018.048 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
@@ -294,7 +294,7 @@ _ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_.exit: ; pr
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_.exit, %bb.g
-  %.sroa.025.0 = phi ptr [ %i.ae, %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_.exit ], [ %.sroa.018.048, %bb.g ] ; 2 uses
+  %.sroa.025.0 = phi ptr [ %i.ae, %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_.exit ], [ %.sroa.018.048, %bb.g ] ; 3 uses
   %.not46 = icmp eq ptr %.sroa.025.0, %1
   br i1 %.not46, label %.loopexit, label %.lr.ph
 
@@ -303,14 +303,14 @@ bb.h:                                             ; preds = %_ZNSt24uniform_int_
   %i.aj = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN9grpc_core12SharedBitGen8bit_gen_E) ; 5 uses
   %i.ak = ptrtoint ptr %i.aj to i64
   %i.al = and i64 %i.ak, 8
-  %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.al ; 3 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 264 ; 4 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 272
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 280
-  br label %bb.i
+  %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.al ; 6 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 264 ; 8 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 272 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.aj, i64 280 ; 2 uses
+  br i1 %.not.i.i.i.i.i, label %bb.i, label %bb.k
 
-bb.i:                                             ; preds = %.lr.ph, %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit
-  %.sroa.025.147.a = phi ptr [ %.sroa.025.0, %.lr.ph ], [ %i.bm, %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit ] ; 5 uses
+bb.i:                                             ; preds = %.lr.ph, %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit.us
+  %.sroa.025.147.a = phi ptr [ %21, %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit.us ], [ %.sroa.025.0, %.lr.ph ] ; 5 uses
   %i.aq = ptrtoint ptr %.sroa.025.147.a to i64
   %i.ar = sub i64 %i.aq, %i.c
   %i.as = ashr exact i64 %i.ar, 3                 ; 2 uses
@@ -318,20 +318,76 @@ bb.i:                                             ; preds = %.lr.ph, %_ZSt22__ge
   %i.au = add nsw i64 %i.as, 2                    ; 3 uses
   %i.av = mul i64 %i.au, %i.at                    ; 2 uses
   %.not.i.i.i.a = icmp eq i64 %i.av, 0
-  br i1 %.not.i.i.i.a, label %bb.k, label %bb.j
+  br i1 %.not.i.i.i.a, label %_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i.us, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.aw = tail call noundef i64 @_ZNSt24uniform_int_distributionImE5_S_ndIoN9grpc_core12SharedBitGenEmEET1_RT0_S4_(ptr noundef nonnull align 1 dereferenceable(1) %2, i64 noundef %i.av)
-  br label %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit
+  br label %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit.us
 
-bb.k:                                             ; preds = %bb.i
-  br i1 %.not.i.i.i.i.i, label %_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i, label %bb.l
+_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i.us: ; preds = %bb.i
+  %3 = load i64, ptr %i.an, align 8, !tbaa !132
+  %4 = icmp ugt i64 %3, 31
+  br i1 %4, label %5, label %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i.us
+
+5:                                                ; preds = %_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i.us
+  store i64 2, ptr %i.an, align 8, !tbaa !132
+  %6 = load i8, ptr %i.ap, align 8, !tbaa !133, !range !134, !noundef !135
+  %7 = trunc nuw i8 %6 to i1
+  %8 = load ptr, ptr %i.ao, align 8, !tbaa !136   ; 2 uses
+  br i1 %7, label %10, label %9
+
+9:                                                ; preds = %5
+  tail call void @_ZN4absl12lts_2025051215random_internal10RandenSlow8GenerateEPKvPv(ptr noundef %8, ptr noundef nonnull %i.am)
+  br label %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i.us
+
+10:                                               ; preds = %5
+  tail call void @_ZN4absl12lts_2025051215random_internal11RandenHwAes8GenerateEPKvPv(ptr noundef %8, ptr noundef nonnull %i.am)
+  br label %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i.us
+
+_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i.us:    ; preds = %10, %9, %_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i.us
+  %11 = load i64, ptr %i.an, align 8, !tbaa !132  ; 2 uses
+  %12 = add i64 %11, 1
+  store i64 %12, ptr %i.an, align 8, !tbaa !132
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %11
+  %14 = load i64, ptr %13, align 8, !tbaa !70
+  br label %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit.us
+
+_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit.us: ; preds = %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i.us, %bb.j
+  %.0.i.i.i.us = phi i64 [ %i.aw, %bb.j ], [ %14, %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i.us ] ; 2 uses
+  %15 = udiv i64 %.0.i.i.i.us, %i.au
+  %16 = urem i64 %.0.i.i.i.us, %i.au
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.025.147.a, i64 8 ; 2 uses
+  %18 = getelementptr inbounds [8 x i8], ptr %0, i64 %15 ; 2 uses
+  %19 = load i64, ptr %.sroa.025.147.a, align 8, !tbaa !70
+  %20 = load i64, ptr %18, align 8, !tbaa !70
+  store i64 %20, ptr %.sroa.025.147.a, align 8, !tbaa !70
+  store i64 %19, ptr %18, align 8, !tbaa !70
+  %21 = getelementptr inbounds nuw i8, ptr %.sroa.025.147.a, i64 16 ; 2 uses
+  %22 = getelementptr inbounds [8 x i8], ptr %0, i64 %16 ; 2 uses
+  %23 = load i64, ptr %17, align 8, !tbaa !70
+  %24 = load i64, ptr %22, align 8, !tbaa !70
+  store i64 %24, ptr %17, align 8, !tbaa !70
+  store i64 %23, ptr %22, align 8, !tbaa !70
+  %.not.us = icmp eq ptr %21, %1
+  br i1 %.not.us, label %.loopexit, label %bb.i, !llvm.loop !279
+
+bb.k:                                             ; preds = %.lr.ph, %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit
+  %.sroa.025.147 = phi ptr [ %i.bm, %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit ], [ %.sroa.025.0, %.lr.ph ] ; 5 uses
+  %25 = ptrtoint ptr %.sroa.025.147 to i64
+  %26 = sub i64 %25, %i.c
+  %27 = ashr exact i64 %26, 3                     ; 2 uses
+  %28 = add nsw i64 %27, 1
+  %29 = add nsw i64 %27, 2                        ; 3 uses
+  %30 = mul i64 %29, %28                          ; 2 uses
+  %.not.i.i.i = icmp eq i64 %30, 0
+  br i1 %.not.i.i.i, label %_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @_ZTHN9grpc_core12SharedBitGen8bit_gen_E()
-  br label %_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i
+  %31 = tail call noundef i64 @_ZNSt24uniform_int_distributionImE5_S_ndIoN9grpc_core12SharedBitGenEmEET1_RT0_S4_(ptr noundef nonnull align 1 dereferenceable(1) %2, i64 noundef %30)
+  br label %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit
 
-_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i: ; preds = %bb.l, %bb.k
+_ZTWN9grpc_core12SharedBitGen8bit_gen_E.exit.i.i.i.i: ; preds = %bb.k
+  tail call void @_ZTHN9grpc_core12SharedBitGen8bit_gen_E()
   %i.ax = load i64, ptr %i.an, align 8, !tbaa !132
   %i.ay = icmp ugt i64 %i.ax, 31
   br i1 %i.ay, label %bb.m, label %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i
@@ -359,24 +415,24 @@ _ZN9grpc_core12SharedBitGenclEv.exit.i.i.i:       ; preds = %bb.o, %bb.n, %_ZTWN
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !70
   br label %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit
 
-_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit: ; preds = %bb.j, %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i
-  %.0.i.i.i = phi i64 [ %i.aw, %bb.j ], [ %i.bf, %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i ] ; 2 uses
-  %i.bg = udiv i64 %.0.i.i.i, %i.au
-  %i.bh = urem i64 %.0.i.i.i, %i.au
-  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.025.147.a, i64 8 ; 2 uses
+_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit: ; preds = %bb.l, %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i
+  %.0.i.i.i = phi i64 [ %31, %bb.l ], [ %i.bf, %_ZN9grpc_core12SharedBitGenclEv.exit.i.i.i ] ; 2 uses
+  %i.bg = udiv i64 %.0.i.i.i, %29
+  %i.bh = urem i64 %.0.i.i.i, %29
+  %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.025.147, i64 8 ; 2 uses
   %i.bj = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bg ; 2 uses
-  %i.bk = load i64, ptr %.sroa.025.147.a, align 8, !tbaa !70
+  %i.bk = load i64, ptr %.sroa.025.147, align 8, !tbaa !70
   %i.bl = load i64, ptr %i.bj, align 8, !tbaa !70
-  store i64 %i.bl, ptr %.sroa.025.147.a, align 8, !tbaa !70
+  store i64 %i.bl, ptr %.sroa.025.147, align 8, !tbaa !70
   store i64 %i.bk, ptr %i.bj, align 8, !tbaa !70
-  %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.025.147.a, i64 16 ; 2 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.025.147, i64 16 ; 2 uses
   %i.bn = getelementptr inbounds [8 x i8], ptr %0, i64 %i.bh ; 2 uses
   %i.bo = load i64, ptr %i.bi, align 8, !tbaa !70
   %i.bp = load i64, ptr %i.bn, align 8, !tbaa !70
   store i64 %i.bp, ptr %i.bi, align 8, !tbaa !70
   store i64 %i.bo, ptr %i.bn, align 8, !tbaa !70
   %.not = icmp eq ptr %i.bm, %1
-  br i1 %.not, label %.loopexit, label %bb.i, !llvm.loop !279
+  br i1 %.not, label %.loopexit, label %bb.k, !llvm.loop !279
 
 .lr.ph51.split:                                   ; preds = %.lr.ph51, %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_RKNS0_10param_typeE.exit
   %.sroa.018.050 = phi ptr [ %.sroa.018.0, %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_RKNS0_10param_typeE.exit ], [ %.sroa.018.048, %.lr.ph51 ] ; 4 uses
@@ -431,7 +487,7 @@ _ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_RKNS0_10par
   %.not44 = icmp eq ptr %.sroa.018.0, %1
   br i1 %.not44, label %.loopexit, label %.lr.ph51.split, !llvm.loop !278
 
-.loopexit:                                        ; preds = %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit, %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_RKNS0_10param_typeE.exit, %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_RKNS0_10param_typeE.exit.us, %bb.h, %.preheader, %bb.a
+.loopexit:                                        ; preds = %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit, %_ZSt22__gen_two_uniform_intsImRN9grpc_core12SharedBitGenEESt4pairIT_S4_ES4_S4_OT0_.exit.us, %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_RKNS0_10param_typeE.exit, %_ZNSt24uniform_int_distributionImEclIN9grpc_core12SharedBitGenEEEmRT_RKNS0_10param_typeE.exit.us, %bb.h, %.preheader, %bb.a
   ret void
 }
 

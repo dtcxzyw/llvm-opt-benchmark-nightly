@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 215
 inline.NumDeleted: 99
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_RNvMs_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc2822NtB4_15DateTimePrinter22print_civil_always_utc:bb.a
 bb.w:                                             ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer9write_str.exit31
   %i.dl = zext i16 %i.dh to i64                   ; 2 uses
@@ -205,36 +205,61 @@ _RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer9write_str.exit55
   tail call void @_RINvNtCs3oUPovFnLWP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsa9sSWSfjDbm_4jiff(ptr noalias nofree noundef nonnull %i.ap, i64 noundef 2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @44, i64 noundef 2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26), !noalias !512
   %i.aq = add i16 %i.ag, 5                        ; 3 uses
   store i16 %i.aq, ptr %i.af, align 8, !alias.scope !512, !noalias !514
-  %.sroa.09.0 = tail call i8 @llvm.abs.i8(i8 %.sroa.3.0.copyload, i1 false) ; 3 uses
+  %.sroa.09.0 = tail call i8 @llvm.abs.i8(i8 %.sroa.3.0.copyload, i1 false) ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !515)
-  %i.ar = icmp ult i8 %.sroa.09.0, 10
+  %i.ar = icmp ult i8 %.sroa.09.0, 10             ; 2 uses
   %i.as = icmp ult i8 %.sroa.09.0, 100
   %spec.select.i = select i1 %i.as, i8 2, i8 3
   %.sroa.0.0.i58 = select i1 %i.ar, i8 1, i8 %spec.select.i ; 2 uses
-  %i.at = zext nneg i8 %.sroa.0.0.i58 to i64      ; 2 uses
+  %i.at = zext nneg i8 %.sroa.0.0.i58 to i64      ; 4 uses
   %i.au = zext i16 %i.aq to i64                   ; 2 uses
   %i.av = sub nuw i64 %i.ae, %i.au
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.au
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.au ; 3 uses
   %.not.i = icmp ult i64 %i.av, %i.at
-  br i1 %.not.i, label %bb.g, label %.preheader, !prof !16
+  br i1 %.not.i, label %bb.g, label %.preheader.preheader, !prof !16
+
+.preheader.preheader:                             ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer9write_str.exit55
+  %xtraiter = and i64 %i.at, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.preheader.prol.loopexit, label %.preheader.prol
+
+.preheader.prol:                                  ; preds = %.preheader.preheader
+  %5 = add nsw i64 %i.at, -1                      ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.aw, i64 %5
+  %7 = urem i8 %.sroa.09.0, 10
+  %8 = or disjoint i8 %7, 48
+  store i8 %8, ptr %6, align 1, !noalias !515
+  %9 = udiv i8 %.sroa.09.0, 10
+  br label %.preheader.prol.loopexit
+
+.preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader
+  %.sroa.0.0.i63.unr = phi i8 [ %.sroa.09.0, %.preheader.preheader ], [ %9, %.preheader.prol ]
+  %.sroa.03.0.i62.unr = phi i64 [ %i.at, %.preheader.preheader ], [ %5, %.preheader.prol ]
+  br i1 %i.ar, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_inthEBa_.exit, label %.preheader
 
 bb.g:                                             ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer9write_str.exit55
   tail call void @_RNvNtCs3oUPovFnLWP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 48, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25, !noalias !515
   unreachable
 
-.preheader:                                       ; preds = %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer9write_str.exit55, %.preheader
-  %.sroa.0.0.i63 = phi i8 [ %i.bb, %.preheader ], [ %.sroa.09.0, %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer9write_str.exit55 ] ; 2 uses
-  %.sroa.03.0.i62 = phi i64 [ %i.ax, %.preheader ], [ %i.at, %_RNvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB5_14BorrowedBuffer9write_str.exit55 ]
-  %i.ax = add nsw i64 %.sroa.03.0.i62, -1         ; 3 uses
+.preheader:                                       ; preds = %.preheader.prol.loopexit, %.preheader
+  %.sroa.0.0.i63 = phi i8 [ %i.bb, %.preheader ], [ %.sroa.0.0.i63.unr, %.preheader.prol.loopexit ] ; 3 uses
+  %.sroa.03.0.i62 = phi i64 [ %i.ax, %.preheader ], [ %.sroa.03.0.i62.unr, %.preheader.prol.loopexit ] ; 2 uses
+  %10 = getelementptr i8, ptr %i.aw, i64 %.sroa.03.0.i62
+  %11 = getelementptr i8, ptr %10, i64 -1
+  %12 = urem i8 %.sroa.0.0.i63, 10
+  %13 = or disjoint i8 %12, 48
+  store i8 %13, ptr %11, align 1, !noalias !515
+  %14 = udiv i8 %.sroa.0.0.i63, 10
+  %i.ax = add nsw i64 %.sroa.03.0.i62, -2         ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.ax
-  %i.az = urem i8 %.sroa.0.0.i63, 10
+  %i.az = urem i8 %14, 10
   %i.ba = or disjoint i8 %i.az, 48
   store i8 %i.ba, ptr %i.ay, align 1, !noalias !515
-  %i.bb = udiv i8 %.sroa.0.0.i63, 10
+  %i.bb = udiv i8 %.sroa.0.0.i63, 100
   %.not8.i = icmp eq i64 %i.ax, 0
   br i1 %.not8.i, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_inthEBa_.exit, label %.preheader
 
-_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_inthEBa_.exit: ; preds = %.preheader
+_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer9write_inthEBa_.exit: ; preds = %.preheader, %.preheader.prol.loopexit
   %i.bc = zext nneg i8 %.sroa.0.0.i58 to i16
   %i.bd = add i16 %i.aq, %i.bc                    ; 16 uses
   store i16 %i.bd, ptr %i.af, align 8, !alias.scope !515

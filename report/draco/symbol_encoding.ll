@@ -204,7 +204,7 @@ define linkonce_odr noundef zeroext i1 @_ZN5draco19EncodeTaggedSymbolsINS_17RAns
 bb.a:
   %i.a = alloca [32 x i64], align 16              ; 10 uses
   %5 = alloca %"class.draco::EncoderBuffer", align 8 ; 14 uses
-  %6 = alloca %"class.draco::RAnsSymbolEncoder", align 8 ; 16 uses
+  %6 = alloca %"class.draco::RAnsSymbolEncoder", align 8 ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -300,7 +300,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %6, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.au, i8 0, i64 32, i1 false)
   %i.av = invoke noundef zeroext i1 @_ZN5draco17RAnsSymbolEncoderILi5EE6CreateEPKmiPNS_13EncoderBufferE(ptr noundef nonnull align 8 dereferenceable(64) %6, ptr noundef nonnull %i.a, i32 noundef 32, ptr noundef %4)
-          to label %bb.b unwind label %bb.e       ; 0 uses
+          to label %bb.b unwind label %17         ; 0 uses
 
 bb.b:                                             ; preds = %._crit_edge
   %i.aw = load i64, ptr %i.au, align 8, !tbaa !97
@@ -318,50 +318,46 @@ bb.b:                                             ; preds = %._crit_edge
   %i.bh = add nuw nsw i64 %i.bg, 8
   %i.bi = add i64 %i.bh, %i.bd
   invoke void @_ZN5draco13EncoderBuffer6ResizeEl(ptr noundef nonnull align 8 dereferenceable(41) %4, i64 noundef %i.bi)
-          to label %bb.c unwind label %bb.e
+          to label %bb.c unwind label %17
 
 bb.c:                                             ; preds = %bb.b
   %i.bj = load ptr, ptr %4, align 8, !tbaa !99
-  %i.bk = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 3 uses
   %i.bl = load i64, ptr %i.be, align 8, !tbaa !100
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bl
   store ptr %i.bm, ptr %i.bk, align 8, !tbaa !101
-  %i.bn = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 3 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 5 uses
   store i32 0, ptr %i.bn, align 8, !tbaa !102
-  %i.bo = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 5 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 9 uses
   store i32 16384, ptr %i.bo, align 4, !tbaa !103
   %i.bp = invoke noundef zeroext i1 @_ZN5draco13EncoderBuffer16StartBitEncodingElb(ptr noundef nonnull align 8 dereferenceable(41) %5, i64 noundef %i.at, i1 noundef zeroext false)
-          to label %bb.d unwind label %bb.e       ; 0 uses
+          to label %bb.d unwind label %17         ; 0 uses
 
 bb.d:                                             ; preds = %bb.c
-  %i.bq = sub nsw i32 %1, %2                      ; 3 uses
+  %i.bq = sub nsw i32 %1, %2                      ; 4 uses
   %i.br = icmp sgt i32 %i.bq, -1
-  br i1 %i.br, label %.lr.ph56, label %._crit_edge57.a
+  br i1 %i.br, label %.lr.ph56, label %._crit_edge57
 
 .lr.ph56:                                         ; preds = %bb.d
   %i.bs = icmp sgt i32 %2, 0
   %i.bt = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %5, i64 24
+  br i1 %i.bs, label %bb.e, label %._crit_edge57.a
+
+._crit_edge57.a:                                  ; preds = %.lr.ph56
+  %.pre = load i32, ptr %i.bo, align 4, !tbaa !103
+  br label %.lr.ph56.split
+
+bb.e:                                             ; preds = %.lr.ph56
   %wide.trip.count = zext nneg i32 %2 to i64
   br label %bb.f
 
-._crit_edge57.a:                                  ; preds = %._crit_edge53, %bb.d
-  invoke void @_ZN5draco17RAnsSymbolEncoderILi5EE11EndEncodingEPNS_13EncoderBufferE(ptr noundef nonnull align 8 dereferenceable(64) %6, ptr noundef nonnull %4)
-          to label %bb.h unwind label %bb.e
-
-bb.e:                                             ; preds = %bb.j, %bb.b, %bb.h, %._crit_edge57.a, %bb.c, %._crit_edge
-  %7 = landingpad { ptr, i32 }
-          cleanup
-  %8 = load ptr, ptr %6, align 8, !tbaa !104      ; 3 uses
-  %.not.i.i.i.i47 = icmp eq ptr %8, null
-  br i1 %.not.i.i.i.i47, label %_ZN5draco17RAnsSymbolEncoderILi5EED2Ev.exit48, label %bb.m
-
-bb.f:                                             ; preds = %.lr.ph56, %._crit_edge53
-  %.03454.a = phi i32 [ %i.bq, %.lr.ph56 ], [ %14, %._crit_edge53 ] ; 3 uses
-  %9 = sdiv i32 %.03454.a, %2
-  %10 = sext i32 %9 to i64
+bb.f:                                             ; preds = %bb.e, %._crit_edge53.us
+  %.03454.a = phi i32 [ %15, %._crit_edge53.us ], [ %i.bq, %bb.e ] ; 3 uses
+  %7 = udiv i32 %.03454.a, %2
+  %8 = zext nneg i32 %7 to i64
   %i.bv = load ptr, ptr %3, align 8, !tbaa !60    ; 2 uses
-  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %10
+  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.bv, i64 %8
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !62
   %i.by = zext i32 %i.bx to i64
   %i.bz = load ptr, ptr %6, align 8, !tbaa !104
@@ -407,56 +403,43 @@ bb.f:                                             ; preds = %.lr.ph56, %._crit_e
   %i.cw = sdiv i32 %i.cv, %2
   %i.cx = sext i32 %i.cw to i64
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.cn, i64 %i.cx
-  %i.cz = load i32, ptr %i.cy, align 4, !tbaa !62 ; 2 uses
-  br i1 %i.bs, label %.lr.ph52, label %._crit_edge53
+  %i.cz = load i32, ptr %i.cy, align 4, !tbaa !62
+  %.fr62 = freeze i32 %i.cz                       ; 2 uses
+  %9 = load i64, ptr %i.bt, align 8, !tbaa !86
+  %10 = icmp sgt i64 %9, 0
+  %11 = icmp sgt i32 %.fr62, 0
+  %or.cond = and i1 %10, %11
+  br i1 %or.cond, label %.lr.ph52.split.preheader, label %._crit_edge53.us
 
-.lr.ph52:                                         ; preds = %.loopexit.a
-  %11 = icmp sgt i32 %i.cz, 0
-  %12 = load i64, ptr %i.bt, align 8, !tbaa !86   ; 2 uses
-  %13 = icmp sgt i64 %12, 0
-  br i1 %13, label %.lr.ph52.split.preheader, label %._crit_edge53
-
-.lr.ph52.split.preheader:                         ; preds = %.lr.ph52
+.lr.ph52.split.preheader:                         ; preds = %.loopexit.a
   %i.da = sext i32 %i.cv to i64
   %invariant.gep = getelementptr [4 x i8], ptr %0, i64 %i.da
   br label %.lr.ph52.split
 
-._crit_edge53:                                    ; preds = %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit, %.lr.ph52, %.loopexit.a
-  %14 = sub nsw i32 %.03454.a, %2                 ; 2 uses
-  %15 = icmp sgt i32 %14, -1
-  br i1 %15, label %bb.f, label %._crit_edge57.a, !llvm.loop !218
+.lr.ph52.split:                                   ; preds = %.lr.ph52.split.preheader, %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit
+  %i.db = phi i64 [ 0, %.lr.ph52.split.preheader ], [ %indvars.iv.next, %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit ] ; 2 uses
+  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.db
+  %12 = load i32, ptr %gep, align 4, !tbaa !62
+  %13 = load i64, ptr %i.bt, align 8, !tbaa !86
+  %i.dc = icmp sgt i64 %13, 0
+  br i1 %i.dc, label %.lr.ph.i.i44, label %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit
 
-.lr.ph52.splitthread-pre-split:                   ; preds = %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit
-  %.pr = load i64, ptr %i.bt, align 8, !tbaa !86
-  br label %.lr.ph52.split
-
-.lr.ph52.split:                                   ; preds = %.lr.ph52.splitthread-pre-split, %.lr.ph52.split.preheader
-  %i.db = phi i64 [ %.pr, %.lr.ph52.splitthread-pre-split ], [ %12, %.lr.ph52.split.preheader ]
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph52.splitthread-pre-split ], [ 0, %.lr.ph52.split.preheader ] ; 2 uses
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %indvars.iv
-  %16 = load i32, ptr %gep, align 4, !tbaa !62
-  %i.dc = icmp sgt i64 %i.db, 0
-  br i1 %i.dc, label %17, label %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit
-
-17:                                               ; preds = %.lr.ph52.split
-  %18 = load ptr, ptr %i.bu, align 8, !tbaa !108  ; 3 uses
-  br i1 %11, label %.lr.ph.i.i44, label %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit
-
-.lr.ph.i.i44:                                     ; preds = %17
-  %i.dd = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 3 uses
+.lr.ph.i.i44:                                     ; preds = %.lr.ph52.split
+  %14 = load ptr, ptr %i.bu, align 8, !tbaa !108  ; 3 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 3 uses
   %.pre.i.i = load i64, ptr %i.dd, align 8, !tbaa !222
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i44
   %i.de = phi i64 [ %.pre.i.i, %.lr.ph.i.i44 ], [ %i.dy, %bb.g ] ; 2 uses
   %.05.i.i = phi i32 [ 0, %.lr.ph.i.i44 ], [ %i.dz, %bb.g ] ; 2 uses
-  %i.df = lshr i32 %16, %.05.i.i
+  %i.df = lshr i32 %12, %.05.i.i
   %i.dg = and i32 %i.df, 1
   %i.dh = lshr i64 %i.de, 3                       ; 2 uses
   %i.di = trunc i64 %i.de to i32
   %i.dj = and i32 %i.di, 7                        ; 2 uses
   %i.dk = shl nuw nsw i32 1, %i.dj
-  %i.dl = load ptr, ptr %18, align 8, !tbaa !223
+  %i.dl = load ptr, ptr %14, align 8, !tbaa !223
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 %i.dh ; 2 uses
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !56
   %i.do = trunc nuw i32 %i.dk to i8
@@ -464,7 +447,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i44
   %i.dq = and i8 %i.dn, %i.dp
   store i8 %i.dq, ptr %i.dm, align 1, !tbaa !56
   %i.dr = shl nuw nsw i32 %i.dg, %i.dj
-  %i.ds = load ptr, ptr %18, align 8, !tbaa !223
+  %i.ds = load ptr, ptr %14, align 8, !tbaa !223
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 %i.dh ; 2 uses
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !56
   %i.dv = trunc nuw i32 %i.dr to i8
@@ -474,17 +457,78 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i44
   %i.dy = add i64 %i.dx, 1                        ; 2 uses
   store i64 %i.dy, ptr %i.dd, align 8, !tbaa !222
   %i.dz = add nuw nsw i32 %.05.i.i, 1             ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.dz, %i.cz
-  br i1 %exitcond.not.i.i, label %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit, label %bb.g, !llvm.loop !219
+  %exitcond.not.i.i = icmp eq i32 %i.dz, %.fr62
+  br i1 %exitcond.not.i.i, label %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit, label %bb.g, !llvm.loop !218
 
-_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit: ; preds = %bb.g, %17, %.lr.ph52.split
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit: ; preds = %bb.g, %.lr.ph52.split
+  %indvars.iv.next = add nuw nsw i64 %i.db, 1     ; 2 uses
   %exitcond60.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond60.not, label %._crit_edge53, label %.lr.ph52.splitthread-pre-split, !llvm.loop !220
+  br i1 %exitcond60.not, label %._crit_edge53.us, label %.lr.ph52.split, !llvm.loop !219
 
-bb.h:                                             ; preds = %._crit_edge57.a
+._crit_edge53.us:                                 ; preds = %_ZN5draco13EncoderBuffer28EncodeLeastSignificantBits32Eij.exit, %.loopexit.a
+  %15 = sub nsw i32 %.03454.a, %2                 ; 2 uses
+  %16 = icmp sgt i32 %15, -1
+  br i1 %16, label %bb.f, label %._crit_edge57, !llvm.loop !220
+
+._crit_edge57:                                    ; preds = %._crit_edge53.us, %bb.d
+  invoke void @_ZN5draco17RAnsSymbolEncoderILi5EE11EndEncodingEPNS_13EncoderBufferE(ptr noundef nonnull align 8 dereferenceable(64) %6, ptr noundef nonnull %4)
+          to label %bb.h unwind label %17
+
+17:                                               ; preds = %bb.j, %bb.b, %bb.h, %._crit_edge57, %bb.c, %._crit_edge
+  %18 = landingpad { ptr, i32 }
+          cleanup
+  %19 = load ptr, ptr %6, align 8, !tbaa !104     ; 3 uses
+  %.not.i.i.i.i47 = icmp eq ptr %19, null
+  br i1 %.not.i.i.i.i47, label %_ZN5draco17RAnsSymbolEncoderILi5EED2Ev.exit48, label %bb.m
+
+.lr.ph56.split:                                   ; preds = %.loopexit, %._crit_edge57.a
+  %20 = phi i32 [ %46, %.loopexit ], [ %.pre, %._crit_edge57.a ] ; 3 uses
+  %.03454 = phi i32 [ %47, %.loopexit ], [ %i.bq, %._crit_edge57.a ] ; 2 uses
+  %21 = sdiv i32 %.03454, %2
+  %22 = sext i32 %21 to i64
+  %23 = load ptr, ptr %3, align 8, !tbaa !60
+  %24 = getelementptr inbounds nuw [4 x i8], ptr %23, i64 %22
+  %25 = load i32, ptr %24, align 4, !tbaa !62
+  %26 = zext i32 %25 to i64
+  %27 = load ptr, ptr %6, align 8, !tbaa !104
+  %28 = getelementptr inbounds nuw [8 x i8], ptr %27, i64 %26 ; 2 uses
+  %29 = load i32, ptr %28, align 4, !tbaa !106    ; 3 uses
+  %30 = shl i32 %29, 10                           ; 2 uses
+  %.not6.i.i = icmp ult i32 %20, %30
+  br i1 %.not6.i.i, label %.loopexit, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %.lr.ph56.split, %.lr.ph.i.i
+  %31 = phi i32 [ %39, %.lr.ph.i.i ], [ %20, %.lr.ph56.split ]
+  %32 = trunc i32 %31 to i8
+  %33 = load ptr, ptr %i.bk, align 8, !tbaa !101
+  %34 = load i32, ptr %i.bn, align 8, !tbaa !102  ; 2 uses
+  %35 = add nsw i32 %34, 1
+  store i32 %35, ptr %i.bn, align 8, !tbaa !102
+  %36 = sext i32 %34 to i64
+  %37 = getelementptr inbounds i8, ptr %33, i64 %36
+  store i8 %32, ptr %37, align 1, !tbaa !56
+  %38 = load i32, ptr %i.bo, align 4, !tbaa !103
+  %39 = lshr i32 %38, 8                           ; 4 uses
+  store i32 %39, ptr %i.bo, align 4, !tbaa !103
+  %.not.i.i = icmp ult i32 %39, %30
+  br i1 %.not.i.i, label %.loopexit, label %.lr.ph.i.i, !llvm.loop !1
+
+.loopexit:                                        ; preds = %.lr.ph.i.i, %.lr.ph56.split
+  %.lcssa.i.i = phi i32 [ %20, %.lr.ph56.split ], [ %39, %.lr.ph.i.i ] ; 2 uses
+  %40 = udiv i32 %.lcssa.i.i, %29
+  %41 = shl i32 %40, 12
+  %42 = urem i32 %.lcssa.i.i, %29
+  %43 = add i32 %41, %42
+  %44 = getelementptr inbounds nuw i8, ptr %28, i64 4
+  %45 = load i32, ptr %44, align 4, !tbaa !107
+  %46 = add i32 %43, %45                          ; 2 uses
+  store i32 %46, ptr %i.bo, align 4, !tbaa !103
+  %47 = sub nsw i32 %.03454, %2
+  br label %.lr.ph56.split
+
+bb.h:                                             ; preds = %._crit_edge57
   invoke void @_ZN5draco13EncoderBuffer14EndBitEncodingEv(ptr noundef nonnull align 8 dereferenceable(41) %5)
-          to label %bb.i unwind label %bb.e
+          to label %bb.i unwind label %17
 
 bb.i:                                             ; preds = %bb.h
   %i.ea = getelementptr inbounds nuw i8, ptr %4, i64 32
@@ -507,7 +551,7 @@ bb.j:                                             ; preds = %bb.i
   %i.eo = sub i64 %i.em, %i.en
   %i.ep = getelementptr inbounds i8, ptr %i.el, i64 %i.eo
   invoke void @_ZNSt6vectorIcSaIcEE15_M_range_insertIPKhEEvN9__gnu_cxx17__normal_iteratorIPcS1_EET_S9_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(41) %4, ptr %i.ep, ptr noundef %i.eg, ptr noundef %i.ek)
-          to label %_ZN5draco13EncoderBuffer6EncodeEPKvm.exit unwind label %bb.e
+          to label %_ZN5draco13EncoderBuffer6EncodeEPKvm.exit unwind label %17
 
 _ZN5draco13EncoderBuffer6EncodeEPKvm.exit:        ; preds = %bb.i, %bb.j
   %i.eq = load ptr, ptr %6, align 8, !tbaa !104   ; 3 uses
@@ -553,21 +597,21 @@ _ZN5draco13EncoderBufferD2Ev.exit:                ; preds = %_ZNSt10unique_ptrIN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   ret i1 true
 
-bb.m:                                             ; preds = %bb.e
+bb.m:                                             ; preds = %17
   %i.fe = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.ff = load ptr, ptr %i.fe, align 8, !tbaa !110
   %i.fg = ptrtoint ptr %i.ff to i64
-  %i.fh = ptrtoint ptr %8 to i64
+  %i.fh = ptrtoint ptr %19 to i64
   %i.fi = sub i64 %i.fg, %i.fh
-  call void @_ZdlPvm(ptr noundef nonnull %8, i64 noundef %i.fi) #16
+  call void @_ZdlPvm(ptr noundef nonnull %19, i64 noundef %i.fi) #16
   br label %_ZN5draco17RAnsSymbolEncoderILi5EED2Ev.exit48
 
-_ZN5draco17RAnsSymbolEncoderILi5EED2Ev.exit48:    ; preds = %bb.m, %bb.e
+_ZN5draco17RAnsSymbolEncoderILi5EED2Ev.exit48:    ; preds = %bb.m, %17
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
   call void @_ZN5draco13EncoderBufferD2Ev(ptr noundef nonnull align 8 dead_on_return(41) dereferenceable(41) %5) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
-  resume { ptr, i32 } %7
+  resume { ptr, i32 } %18
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -970,8 +1014,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i32
 !216 = distinct !{!216, !63}
 !217 = distinct !{!217, !88}
 !218 = distinct !{!218, !63}
-!219 = distinct !{!219, !63}
-!220 = distinct !{!220, !63, !109}
+!219 = distinct !{!219, !63, !109}
+!220 = distinct !{!220, !63}
 !221 = !{!"_ZTSN5draco13EncoderBuffer10BitEncoderE", !49, i64 0, !52, i64 8}
 !222 = !{!221, !52, i64 8}
 !223 = !{!221, !49, i64 0}
