@@ -202,7 +202,8 @@ bb.a:
   %or.cond = select i1 %i.c, i1 %i.f, i1 false
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !84
-  %i.i = load ptr, ptr %4, align 8, !tbaa !85     ; 11 uses
+  %i.i = load ptr, ptr %4, align 8, !tbaa !85     ; 10 uses
+  %6 = ptrtoaddr ptr %i.i to i64                  ; 2 uses
   %i.j = icmp eq ptr %i.h, %i.i                   ; 2 uses
   br i1 %or.cond, label %bb.b, label %bb.e
 
@@ -236,7 +237,6 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.u, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %.lr.ph.i.i.i.i12.i
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %bb.d
-  %6 = ptrtoaddr ptr %i.i to i64
   %i.v = ptrtoaddr ptr %i.t to i64
   %i.w = sub i64 %6, %i.v                         ; 2 uses
   %i.x = lshr i64 %i.w, 2
@@ -322,9 +322,8 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.as, label %.lr.ph.i.i.i.i.i.i.i.i19.preheader, label %.lr.ph.i.i.i.i12.i5
 
 .lr.ph.i.i.i.i.i.i.i.i19.preheader:               ; preds = %bb.g
-  %7 = ptrtoaddr ptr %i.i to i64
   %i.at = ptrtoaddr ptr %i.ar to i64
-  %i.au = sub i64 %7, %i.at                       ; 2 uses
+  %i.au = sub i64 %6, %i.at                       ; 2 uses
   %i.av = lshr i64 %i.au, 2
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.au, 28

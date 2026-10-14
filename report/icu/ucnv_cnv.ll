@@ -30,11 +30,11 @@ bb.a:
 define void @ucnv_fromUWriteBytes_78(ptr nofree noundef writeonly captures(address_is_null) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readnone captures(address) %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6, ptr nofree noundef writeonly captures(none) %7) local_unnamed_addr #1 {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %4 to i64
-  %i.c = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
+  %i.c = ptrtoaddr ptr %4 to i64                  ; 2 uses
   %i.d = load ptr, ptr %3, align 8, !tbaa !42
-  %.fr = freeze ptr %i.d                          ; 18 uses
-  %i.e = ptrtoaddr ptr %.fr to i64                ; 2 uses
+  %.fr = freeze ptr %i.d                          ; 17 uses
+  %i.e = ptrtoaddr ptr %.fr to i64                ; 3 uses
   %i.f = icmp eq ptr %5, null
   br i1 %i.f, label %bb.c, label %bb.b
 
@@ -50,10 +50,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %8 = ptrtoaddr ptr %4 to i64
-  %9 = ptrtoaddr ptr %.fr to i64
-  %i.l = xor i64 %9, -1
-  %i.m = add i64 %i.l, %8
+  %i.l = xor i64 %i.e, -1
+  %i.m = add i64 %i.l, %i.c
   %i.n = add nsw i32 %2, -1
   %i.o = zext i32 %i.n to i64
   %i.p = tail call i64 @llvm.umin.i64(i64 %i.m, i64 %i.o) ; 3 uses
@@ -130,13 +128,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 iter.check:                                       ; preds = %bb.c
   %i.ak = xor i64 %i.e, -1
-  %i.al = add i64 %i.ak, %i.b
+  %i.al = add i64 %i.ak, %i.c
   %i.am = add nsw i32 %2, -1
   %i.an = zext i32 %i.am to i64
   %umin = tail call i64 @llvm.umin.i64(i64 %i.al, i64 %i.an) ; 3 uses
   %i.ao = add nuw nsw i64 %umin, 1                ; 5 uses
   %min.iters.check106 = icmp samesign ult i64 %umin, 3
-  %i.ap = sub i64 %i.c, %i.e
+  %i.ap = sub i64 %i.b, %i.e
   %diff.check = icmp ugt i64 %i.ap, -32
   %or.cond = or i1 %min.iters.check106, %diff.check
   br i1 %or.cond, label %.lr.ph53.preheader, label %vector.main.loop.iter.check

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.j = load i64, ptr %i.i, align 8, !tbaa !43   ; 2 uses
   %i.k = sub nsw i64 %i.h, %i.j
-  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store i64 %i.k, ptr %i.l, align 8, !tbaa !42
   %i.m = icmp eq i64 %i.c, %i.e
   %i.n = icmp eq i64 %i.h, %i.j
@@ -259,11 +259,8 @@ bb.h:                                             ; preds = %bb.f
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 160
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   %i.ag = load <2 x i64>, ptr %2, align 16, !tbaa !46 ; 2 uses
-  %i.ah = sub nsw <2 x i64> zeroinitializer, %i.ag ; 2 uses
-  %4 = extractelement <2 x i64> %i.ah, i64 0
-  store i64 %4, ptr %2, align 16, !tbaa !40
-  %5 = extractelement <2 x i64> %i.ah, i64 1
-  store i64 %5, ptr %i.l, align 8, !tbaa !42
+  %i.ah = sub nsw <2 x i64> zeroinitializer, %i.ag
+  store <2 x i64> %i.ah, ptr %2, align 16, !tbaa !46
   %i.ai = load <2 x i64>, ptr %1, align 8, !tbaa !46
   %i.aj = sub nsw <2 x i64> %i.ai, %i.ag
   store <2 x i64> %i.aj, ptr %3, align 16, !tbaa !46

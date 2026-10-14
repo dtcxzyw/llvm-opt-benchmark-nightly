@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit261: ; preds = %bb
           to label %bb.c unwind label %bb.ci
 
 bb.c:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit261
-  %i.ae = load float, ptr %i.f, align 4, !tbaa !21 ; 4 uses
+  %i.ae = load float, ptr %i.f, align 4, !tbaa !21 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #22
   %i.af = load ptr, ptr %30, align 8, !tbaa !16   ; 2 uses
   %i.ag = icmp eq ptr %i.af, %i.ab
@@ -607,8 +607,9 @@ bb.du:                                            ; preds = %bb.dt
   %i.sy = getelementptr inbounds nuw i8, ptr %63, i64 8
   %i.sz = getelementptr inbounds nuw i8, ptr %63, i64 16
   %i.ta = getelementptr inbounds nuw i8, ptr %56, i64 8 ; 4 uses
-  %93 = fmul float %i.ae, -5.000000e-01           ; 3 uses
-  %94 = fmul float %i.ae, 5.000000e-01            ; 3 uses
+  %93 = insertelement <2 x float> poison, float %i.ae, i64 0
+  %94 = shufflevector <2 x float> %93, <2 x float> poison, <2 x i32> zeroinitializer
+  %95 = fmul <2 x float> %94, <float -5.000000e-01, float 5.000000e-01> ; 4 uses
   %i.tb = getelementptr inbounds nuw i8, ptr %64, i64 24 ; 8 uses
   %i.tc = getelementptr inbounds nuw i8, ptr %65, i64 16
   %i.td = getelementptr inbounds nuw i8, ptr %65, i64 20
@@ -687,10 +688,9 @@ bb.du:                                            ; preds = %bb.dt
   %i.vy = getelementptr inbounds nuw i8, ptr %56, i64 16 ; 2 uses
   %i.vz = getelementptr inbounds nuw i8, ptr %55, i64 16 ; 2 uses
   %i.wa = getelementptr inbounds nuw i8, ptr %91, i64 19
-  %95 = insertelement <2 x float> poison, float %94, i64 0
   %i.wb = shufflevector <2 x float> %95, <2 x float> poison, <2 x i32> zeroinitializer
-  %96 = insertelement <2 x float> poison, float %93, i64 0
-  %97 = shufflevector <2 x float> %96, <2 x float> poison, <2 x i32> zeroinitializer
+  %96 = shufflevector <2 x float> %95, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %97 = shufflevector <2 x float> %95, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   br label %bb.dv
 
 bb.dv:                                            ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit, %.split799
@@ -802,27 +802,23 @@ bb.ee:                                            ; preds = %_ZNKSt6vectorIN2cv3
   br i1 %i.bc, label %.lr.ph796, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.ee
-  %i.wt = load ptr, ptr %i.tb, align 8, !tbaa !136 ; 3 uses
-  store float %93, ptr %i.wt, align 4
-  %.sroa.5601.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wt, i64 4
-  store float %94, ptr %.sroa.5601.0..sroa_idx, align 4
+  %i.wt = load ptr, ptr %i.tb, align 8, !tbaa !136 ; 2 uses
+  store <2 x float> %95, ptr %i.wt, align 4
   %.sroa.6602.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wt, i64 8
   store float 0.000000e+00, ptr %.sroa.6602.0..sroa_idx, align 4
   %i.wu = load ptr, ptr %i.tb, align 8, !tbaa !136 ; 2 uses
   %i.wv = getelementptr inbounds nuw i8, ptr %i.wu, i64 12
-  store <2 x float> %i.wb, ptr %i.wv, align 4
+  store <2 x float> %97, ptr %i.wv, align 4
   %.sroa.6599.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 20
   store float 0.000000e+00, ptr %.sroa.6599.0..sroa_idx, align 4
-  %i.ww = load ptr, ptr %i.tb, align 8, !tbaa !136 ; 3 uses
-  %98 = getelementptr inbounds nuw i8, ptr %i.ww, i64 24
-  store float %94, ptr %98, align 4
-  %.sroa.5595.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ww, i64 28
-  store float %93, ptr %.sroa.5595.0..sroa_idx, align 4
+  %i.ww = load ptr, ptr %i.tb, align 8, !tbaa !136 ; 2 uses
+  %.sroa.5595.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ww, i64 24
+  store <2 x float> %96, ptr %.sroa.5595.0..sroa_idx, align 4
   %.sroa.6596.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ww, i64 32
   store float 0.000000e+00, ptr %.sroa.6596.0..sroa_idx, align 4
   %i.wx = load ptr, ptr %i.tb, align 8, !tbaa !136 ; 2 uses
   %i.wy = getelementptr inbounds nuw i8, ptr %i.wx, i64 36
-  store <2 x float> %97, ptr %i.wy, align 4
+  store <2 x float> %i.wb, ptr %i.wy, align 4
   %.sroa.6593.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wx, i64 44
   store float 0.000000e+00, ptr %.sroa.6593.0..sroa_idx, align 4
   br label %.lr.ph

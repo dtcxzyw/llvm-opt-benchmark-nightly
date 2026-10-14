@@ -205,7 +205,7 @@ declare void @_ZN2cv3MatC1ENS_5Size_IiEEi(ptr noundef nonnull align 8 dereferenc
 define void @_ZN2cv11RQDecomp3x3ERKNS_11_InputArrayERKNS_12_OutputArrayES5_S5_S5_S5_(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.cv::Vec.1") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %6) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %7 = alloca %"class.cv::utils::trace::details::Region", align 8 ; 7 uses
-  %8 = alloca %"class.cv::Matx.0", align 8        ; 16 uses
+  %8 = alloca %"class.cv::Matx.0", align 8        ; 12 uses
   %9 = alloca %"class.cv::Matx.0", align 16       ; 10 uses
   %10 = alloca %"class.cv::Mat", align 8          ; 9 uses
   %11 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
@@ -269,13 +269,9 @@ bb.e:                                             ; preds = %bb.d
   %i.q = getelementptr inbounds nuw i8, ptr %12, i64 64 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
   call void @llvm.experimental.noalias.scope.decl(metadata !207)
-  %20 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %21 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %22 = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
-  %23 = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %i.s = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.r = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 4 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %13, i64 32 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %13, i64 40 ; 3 uses
@@ -318,7 +314,7 @@ bb.e:                                             ; preds = %bb.d
   %i.bd = getelementptr inbounds nuw i8, ptr %14, i64 56 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %14, i64 64
   %i.bf = load <4 x double>, ptr %8, align 8, !tbaa !31, !noalias !207 ; 3 uses
-  %i.bg = load <2 x double>, ptr %i.s, align 8, !tbaa !31, !noalias !207
+  %i.bg = load <2 x double>, ptr %i.t, align 8, !tbaa !31, !noalias !207
   %i.bh = shufflevector <4 x double> %i.bf, <4 x double> poison, <2 x i32> <i32 3, i32 0> ; 2 uses
   %i.bi = fadd <2 x double> %i.bh, zeroinitializer
   %i.bj = shufflevector <2 x double> %i.bg, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
@@ -344,13 +340,13 @@ bb.e:                                             ; preds = %bb.d
   %i.by = shufflevector <2 x double> %i.bx, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bz = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bm, <2 x double> %i.by, <2 x double> %i.bw) ; 5 uses
   %i.ca = extractelement <2 x double> %i.bz, i64 1
-  store double %i.ca, ptr %22, align 8, !tbaa !31, !alias.scope !207
+  store double %i.ca, ptr %i.r, align 8, !tbaa !31, !alias.scope !207
   %i.cb = insertelement <2 x double> poison, double %i.bq, i64 0
   %i.cc = shufflevector <2 x double> %i.cb, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cd = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bk, <2 x double> %i.cc, <2 x double> %i.bt)
   %i.ce = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bm, <2 x double> %i.bv, <2 x double> %i.cd) ; 5 uses
   %i.cf = extractelement <2 x double> %i.ce, i64 1
-  store double %i.cf, ptr %23, align 8, !tbaa !31, !alias.scope !207
+  store double %i.cf, ptr %i.s, align 8, !tbaa !31, !alias.scope !207
   %i.cg = extractelement <2 x double> %i.aq, i64 1
   %i.ch = call double @llvm.fmuladd.f64(double %i.ac, double %i.bq, double %i.cg)
   %i.ci = call double @llvm.fmuladd.f64(double %i.aa, double %i.bp, double %i.ch) ; 4 uses
@@ -409,7 +405,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ea = shufflevector <2 x double> %i.dz, <2 x double> %i.dy, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   store <4 x double> %i.ea, ptr %8, align 8
   %i.eb = shufflevector <2 x double> %i.db, <2 x double> %i.di, <2 x i32> <i32 1, i32 2>
-  store <2 x double> %i.eb, ptr %i.s, align 8
+  store <2 x double> %i.eb, ptr %i.t, align 8
   store double %i.dl, ptr %i.x, align 8
   store <2 x double> %i.ds, ptr %i.i, align 8
   %i.ec = call double @llvm.fabs.f64(double %i.dl)
@@ -531,9 +527,9 @@ bb.m:                                             ; preds = %bb.e
   %i.gl = extractelement <2 x double> %i.gd, i64 1 ; 2 uses
   store double %i.gl, ptr %13, align 8
   %i.gm = extractelement <2 x double> %i.fw, i64 0 ; 2 uses
-  store double %i.gm, ptr %22, align 8
+  store double %i.gm, ptr %i.r, align 8
   %i.gn = extractelement <2 x double> %i.fc, i64 0
-  store double %i.gn, ptr %23, align 8
+  store double %i.gn, ptr %i.s, align 8
   %i.go = extractelement <2 x double> %i.gd, i64 0 ; 2 uses
   store double %i.go, ptr %i.v, align 8
   %i.gp = extractelement <2 x double> %i.fc, i64 1
@@ -607,7 +603,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.hk = fneg double %i.gm
-  store double %i.hk, ptr %22, align 8, !tbaa !31
+  store double %i.hk, ptr %i.r, align 8, !tbaa !31
   %i.hl = fneg double %i.go
   store double %i.hl, ptr %i.v, align 8, !tbaa !31
   store double %i.fp, ptr %i.eq, align 8, !tbaa !31
@@ -624,7 +620,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.u
   %i.hq = fneg <2 x double> %i.fc                 ; 2 uses
   %i.hr = extractelement <2 x double> %i.hq, i64 0
-  store double %i.hr, ptr %23, align 8, !tbaa !31
+  store double %i.hr, ptr %i.s, align 8, !tbaa !31
   %i.hs = extractelement <2 x double> %i.hq, i64 1
   store double %i.hs, ptr %i.w, align 8, !tbaa !31
   %i.ht = fneg double %i.gk
@@ -650,7 +646,7 @@ bb.x:                                             ; preds = %bb.t
 bb.y:                                             ; preds = %bb.x
   %i.ia = shufflevector <2 x double> %i.fw, <2 x double> %i.fc, <2 x i32> <i32 0, i32 2>
   %i.ib = fneg <2 x double> %i.ia
-  store <2 x double> %i.ib, ptr %22, align 8, !tbaa !31
+  store <2 x double> %i.ib, ptr %i.r, align 8, !tbaa !31
   %i.ic = shufflevector <2 x double> %i.gd, <2 x double> %i.fc, <2 x i32> <i32 0, i32 3>
   %i.id = fneg <2 x double> %i.ic
   store <2 x double> %i.id, ptr %i.v, align 8, !tbaa !31
@@ -708,12 +704,6 @@ bb.z:                                             ; preds = %bb.x, %bb.y, %bb.v,
   %i.jk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jj, <2 x double> zeroinitializer, <2 x double> %i.jh) ; 5 uses
   %i.jl = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.im, <2 x double> zeroinitializer, <2 x double> %i.iy)
   %i.jm = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.iu, <2 x double> zeroinitializer, <2 x double> %i.jl) ; 5 uses
-  %24 = extractelement <2 x double> %i.jk, i64 0
-  %25 = extractelement <2 x double> %i.jg, i64 0
-  %26 = extractelement <2 x double> %i.jm, i64 0
-  %27 = extractelement <2 x double> %i.jk, i64 1
-  %28 = extractelement <2 x double> %i.jg, i64 1
-  %29 = extractelement <2 x double> %i.jm, i64 1
   %i.jn = shufflevector <2 x double> %i.jk, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jo = shufflevector <2 x double> %i.jg, <2 x double> poison, <2 x i32> zeroinitializer
   %i.jp = shufflevector <2 x double> %i.jm, <2 x double> poison, <2 x i32> zeroinitializer
@@ -745,12 +735,12 @@ bb.z:                                             ; preds = %bb.x, %bb.y, %bb.v,
   %i.kk = insertelement <2 x double> %i.kj, double %i.jq, i64 0
   %i.kl = shufflevector <4 x double> %i.kf, <4 x double> poison, <2 x i32> <i32 poison, i32 2> ; 2 uses
   %i.km = insertelement <2 x double> %i.kl, double %i.js, i64 0 ; 2 uses
-  store double %24, ptr %8, align 8
-  store double %25, ptr %20, align 8
-  store double %26, ptr %21, align 8
-  store double %27, ptr %i.r, align 8
-  store double %28, ptr %i.s, align 8
-  store double %29, ptr %i.t, align 8
+  %20 = shufflevector <2 x double> %i.jk, <2 x double> %i.jg, <2 x i32> <i32 0, i32 2>
+  %21 = shufflevector <2 x double> %i.jm, <2 x double> %i.jk, <2 x i32> <i32 0, i32 3>
+  %22 = shufflevector <2 x double> %20, <2 x double> %21, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %22, ptr %8, align 8
+  %23 = shufflevector <2 x double> %i.jg, <2 x double> %i.jm, <2 x i32> <i32 1, i32 3>
+  store <2 x double> %23, ptr %i.t, align 8
   %i.kn = load <2 x double>, ptr %i.o, align 8, !tbaa !31, !noalias !208 ; 3 uses
   %i.ko = load <2 x double>, ptr %i.p, align 8, !tbaa !31, !noalias !208 ; 4 uses
   %i.kp = load double, ptr %i.q, align 8, !tbaa !31, !noalias !208

@@ -205,9 +205,9 @@ bb.a:
   %11 = alloca %"class.embree::BSplinePatchT", align 64 ; 4 uses
   %12 = alloca %"class.embree::array_t.74", align 64 ; 106 uses
   %13 = alloca %"struct.embree::BBox.61", align 16 ; 5 uses
-  %14 = alloca %"struct.embree::BBox.61", align 4 ; 8 uses
+  %14 = alloca %"struct.embree::BBox.61", align 16 ; 5 uses
   %15 = alloca %"struct.embree::BBox.61", align 16 ; 5 uses
-  %16 = alloca %"struct.embree::BBox.61", align 4 ; 8 uses
+  %16 = alloca %"struct.embree::BBox.61", align 16 ; 5 uses
   %17 = alloca %"struct.embree::BBox.61", align 16 ; 5 uses
   %18 = alloca %"struct.embree::BBox.61", align 16 ; 5 uses
   %19 = alloca %"struct.embree::BBox.61", align 16 ; 5 uses
@@ -610,38 +610,25 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.jl = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.jm = load <2 x float>, ptr %2, align 4, !noalias !940 ; 7 uses
-  %i.jn = load <2 x float>, ptr %i.jl, align 4, !noalias !940 ; 6 uses
+  %i.jm = load <2 x float>, ptr %2, align 4, !noalias !940 ; 6 uses
+  %i.jn = load <2 x float>, ptr %i.jl, align 4, !noalias !940 ; 5 uses
   %i.jo = fadd <2 x float> %i.jm, %i.jn
-  %i.jp = fmul <2 x float> %i.jo, splat (float 5.000000e-01) ; 8 uses
-  %21 = extractelement <2 x float> %i.jp, i64 1   ; 2 uses
-  %22 = extractelement <2 x float> %i.jp, i64 0   ; 2 uses
+  %i.jp = fmul <2 x float> %i.jo, splat (float 5.000000e-01) ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
-  %23 = extractelement <2 x float> %i.jm, i64 0
-  %24 = extractelement <2 x float> %i.jm, i64 1
   %i.jq = shufflevector <2 x float> %i.jm, <2 x float> %i.jp, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
   store <4 x float> %i.jq, ptr %13, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #19
-  store float %22, ptr %14, align 4
-  %25 = getelementptr inbounds nuw i8, ptr %14, i64 4
-  store float %24, ptr %25, align 4
-  %26 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %27 = extractelement <2 x float> %i.jn, i64 0   ; 2 uses
-  store float %27, ptr %26, align 4
-  %28 = getelementptr inbounds nuw i8, ptr %14, i64 12
-  store float %21, ptr %28, align 4
+  %21 = shufflevector <2 x float> %i.jp, <2 x float> %i.jm, <4 x i32> <i32 0, i32 3, i32 poison, i32 1> ; 3 uses
+  %22 = shufflevector <2 x float> %i.jn, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
+  %23 = shufflevector <4 x float> %21, <4 x float> %22, <4 x i32> <i32 0, i32 1, i32 4, i32 3>
+  store <4 x float> %23, ptr %14, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #19
-  %29 = extractelement <2 x float> %i.jn, i64 1
   %i.jr = shufflevector <2 x float> %i.jp, <2 x float> %i.jn, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 2 uses
   store <4 x float> %i.jr, ptr %15, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #19
-  store float %23, ptr %16, align 4
-  %30 = getelementptr inbounds nuw i8, ptr %16, i64 4
-  store float %21, ptr %30, align 4
-  %31 = getelementptr inbounds nuw i8, ptr %16, i64 8
-  store float %22, ptr %31, align 4
-  %32 = getelementptr inbounds nuw i8, ptr %16, i64 12
-  store float %29, ptr %32, align 4
+  %24 = shufflevector <2 x float> %i.jm, <2 x float> %i.jp, <4 x i32> <i32 0, i32 3, i32 2, i32 poison>
+  %25 = shufflevector <4 x float> %24, <4 x float> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 5>
+  store <4 x float> %25, ptr %16, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #19
   %i.js = load <4 x float>, ptr %3, align 4, !noalias !14 ; 3 uses
   %i.jt = fcmp olt <4 x float> %i.jq, %i.js
@@ -659,13 +646,13 @@ bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #19
   %i.ka = getelementptr inbounds nuw i8, ptr %12, i64 3328 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #19
-  %33 = load <4 x float>, ptr %3, align 4, !noalias !14 ; 3 uses
-  %34 = shufflevector <2 x float> %i.jp, <2 x float> %i.jm, <4 x i32> <i32 0, i32 3, i32 poison, i32 1> ; 2 uses
-  %i.kb = insertelement <4 x float> %34, float %27, i64 2
-  %i.kc = fcmp olt <4 x float> %i.kb, %33
+  %26 = extractelement <2 x float> %i.jn, i64 0
+  %27 = load <4 x float>, ptr %3, align 4, !noalias !14 ; 3 uses
+  %i.kb = insertelement <4 x float> %21, float %26, i64 2
+  %i.kc = fcmp olt <4 x float> %i.kb, %27
   %i.kd = shufflevector <2 x float> %i.jn, <2 x float> %i.jp, <4 x i32> <i32 poison, i32 poison, i32 0, i32 3>
-  %i.ke = shufflevector <4 x float> %33, <4 x float> %i.kd, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.kf = shufflevector <4 x float> %34, <4 x float> %33, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.ke = shufflevector <4 x float> %27, <4 x float> %i.kd, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.kf = shufflevector <4 x float> %21, <4 x float> %27, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.kg = select <4 x i1> %i.kc, <4 x float> %i.ke, <4 x float> %i.kf
   store <4 x float> %i.kg, ptr %18, align 16, !alias.scope !942
   invoke void @_ZN6embree4sse223FeatureAdaptiveEvalGrid4evalERKNS_18CatmullClarkPatchTINS_6Vec3faES3_EERKNS_4BBoxINS_4Vec2IfEEEESC_jPKNS_16CubicBezierCurveIS3_EESG_SG_SG_(ptr noundef nonnull align 8 dereferenceable(104) %0, ptr noundef nonnull align 64 dereferenceable(3328) %i.ka, ptr noundef nonnull align 4 dereferenceable(16) %14, ptr noundef nonnull align 4 dereferenceable(16) %18, i32 noundef %i.jz, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef null)
@@ -677,8 +664,7 @@ bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #19
   %i.ki = load <4 x float>, ptr %3, align 4, !noalias !14 ; 3 uses
   %i.kj = fcmp olt <4 x float> %i.jr, %i.ki
-  %35 = shufflevector <2 x float> %i.jn, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %i.kk = shufflevector <4 x float> %35, <4 x float> %i.ki, <4 x i32> <i32 4, i32 5, i32 0, i32 1>
+  %i.kk = shufflevector <4 x float> %22, <4 x float> %i.ki, <4 x i32> <i32 4, i32 5, i32 0, i32 1>
   %i.kl = shufflevector <4 x float> %i.ju, <4 x float> %i.ki, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.km = select <4 x i1> %i.kj, <4 x float> %i.kk, <4 x float> %i.kl
   store <4 x float> %i.km, ptr %19, align 16, !alias.scope !943
@@ -691,7 +677,7 @@ bb.ae:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #19
   %i.ko = load <4 x float>, ptr %3, align 4, !noalias !14 ; 3 uses
   %i.kp = shufflevector <2 x float> %i.jm, <2 x float> %i.jp, <4 x i32> <i32 0, i32 3, i32 2, i32 poison> ; 2 uses
-  %i.kq = shufflevector <4 x float> %i.kp, <4 x float> %35, <4 x i32> <i32 0, i32 1, i32 2, i32 5> ; 2 uses
+  %i.kq = shufflevector <4 x float> %i.kp, <4 x float> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 5> ; 2 uses
   %i.kr = fcmp olt <4 x float> %i.kq, %i.ko
   %i.ks = shufflevector <4 x float> %i.ko, <4 x float> %i.kq, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.kt = shufflevector <4 x float> %i.kp, <4 x float> %i.ko, <4 x i32> <i32 0, i32 1, i32 6, i32 7>

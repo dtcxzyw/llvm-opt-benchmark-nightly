@@ -205,6 +205,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.0255 = phi ptr [ %i.bd, %bb.n ], [ %i.c, %bb.m ] ; 8 uses
   %.0252 = phi ptr [ %i.bd, %bb.n ], [ null, %bb.m ] ; 2 uses
+  %.0255424 = ptrtoaddr ptr %.0255 to i64         ; 2 uses
   %i.be = icmp samesign ugt i32 %i.as, 90
   br i1 %i.be, label %bb.p, label %bb.q
 
@@ -337,6 +338,7 @@ bb.w:                                             ; preds = %.unr-lcssa, %.epil.
 
 ._crit_edge:                                      ; preds = %bb.w, %bb.u
   %.0245.lcssa = phi ptr [ %.0255, %bb.u ], [ %i.dd, %bb.w ] ; 2 uses
+  %.0245.lcssa425 = ptrtoaddr ptr %.0245.lcssa to i64
   %i.df = getelementptr inbounds i8, ptr %.0245.lcssa, i64 -4 ; 2 uses
   %i.dg = load i32, ptr %spec.select, align 4, !tbaa !18 ; 2 uses
   %i.dh = icmp sgt i32 %i.dg, 0
@@ -453,12 +455,10 @@ bb.y:                                             ; preds = %.unr-lcssa440, %.ep
   %i.fa = ptrtoint ptr %.0251 to i64
   %.not291348 = icmp ugt ptr %.0255, %i.df
   %i.fb = icmp slt i32 %i.az, 1
-  %5 = ptrtoaddr ptr %.0245.lcssa to i64
-  %i.fc = add i64 %5, -3
-  %6 = ptrtoaddr ptr %.0255 to i64                ; 2 uses
-  %i.fd = add i64 %6, 4
+  %i.fc = add i64 %.0245.lcssa425, -3
+  %i.fd = add i64 %.0255424, 4
   %i.fe = call i64 @llvm.umax.i64(i64 %i.fc, i64 %i.fd)
-  %i.ff = xor i64 %6, -1
+  %i.ff = xor i64 %.0255424, -1
   %i.fg = add i64 %i.fe, %i.ff                    ; 2 uses
   %i.fh = lshr i64 %i.fg, 2
   %i.fi = add nuw nsw i64 %i.fh, 1                ; 2 uses
@@ -861,12 +861,12 @@ uprv_decNumberCopy_78.exit:                       ; preds = %.lr.ph.i, %middle.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @uprv_decNumberGetBCD_78(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef returned writeonly captures(address, ret: address, provenance) %1) local_unnamed_addr #0 {
 bb.a:
+  %2 = ptrtoaddr ptr %1 to i64                    ; 5 uses
   %i.a = load i32, ptr %0, align 4, !tbaa !18     ; 2 uses
   %.not13 = icmp slt i32 %i.a, 1
   br i1 %.not13, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.b = zext nneg i32 %i.a to i64                ; 3 uses
   %i.c = getelementptr i8, ptr %1, i64 %i.b       ; 2 uses
   %.01012 = getelementptr i8, ptr %i.c, i64 -1    ; 6 uses
@@ -880,13 +880,12 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %3 = ptrtoaddr ptr %1 to i64                    ; 3 uses
-  %i.j = add i64 %3, %i.b                         ; 2 uses
+  %i.j = add i64 %2, %i.b                         ; 2 uses
   %i.k = add i64 %i.j, -2
-  %i.l = add i64 %3, -1
+  %i.l = add i64 %2, -1
   %i.m = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %i.l) ; 2 uses
   %i.n = add i64 %i.m, 1
-  %i.o = sub i64 %i.n, %3
+  %i.o = sub i64 %i.n, %2
   %i.p = getelementptr i8, ptr %1, i64 %i.o
   %i.q = add i64 %i.j, 8
   %i.r = sub i64 %i.q, %i.m
@@ -981,7 +980,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @uprv_decNumberSetBCD_78(ptr nofree noundef returned captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(address) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 7 uses
   %i.b = load i32, ptr %0, align 4, !tbaa !18     ; 3 uses
   %i.c = icmp slt i32 %i.b, 50
   br i1 %i.c, label %bb.b, label %bb.c
@@ -1012,17 +1011,16 @@ iter.check:                                       ; preds = %bb.c
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %3 = ptrtoaddr ptr %1 to i64                    ; 4 uses
-  %i.q = add i64 %3, %i.i
-  %i.r = add i64 %3, 1
+  %i.q = add i64 %i.a, %i.i
+  %i.r = add i64 %i.a, 1
   %i.s = tail call i64 @llvm.umax.i64(i64 %i.q, i64 %i.r) ; 2 uses
-  %i.t = add i64 %3, %i.k
+  %i.t = add i64 %i.a, %i.k
   %i.u = add i64 %i.t, 9
   %i.v = sub i64 %i.u, %i.s
   %i.w = getelementptr i8, ptr %0, i64 %i.v
   %i.x = getelementptr i8, ptr %0, i64 %i.k
   %i.y = getelementptr i8, ptr %i.x, i64 9
-  %i.z = sub i64 %i.s, %3
+  %i.z = sub i64 %i.s, %i.a
   %i.aa = getelementptr i8, ptr %1, i64 %i.z
   %bound0 = icmp ult ptr %i.w, %i.aa
   %bound1 = icmp ult ptr %1, %i.y

@@ -205,26 +205,24 @@ _ZNSt12_Vector_baseISt10unique_ptrIN8facebook5velox4exec12VectorReaderINS2_5Arra
           to label %.noexc15 unwind label %bb.e   ; 13 uses
 
 .noexc15:                                         ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN8facebook5velox4exec12VectorReaderINS2_5ArrayINS2_7GenericINS2_12TypeVariableILm1EEELb0ELb0EEEEEEESt14default_deleteISB_EESaISE_EE11_M_allocateEm.exit.i
-  %i.o = load ptr, ptr %4, align 8, !tbaa !2260   ; 14 uses
-  %i.p = load ptr, ptr %i.l, align 8, !tbaa !2261 ; 4 uses
+  %i.o = load ptr, ptr %4, align 8, !tbaa !2260   ; 13 uses
+  %6 = ptrtoaddr ptr %i.o to i64                  ; 2 uses
+  %i.p = load ptr, ptr %i.l, align 8, !tbaa !2261 ; 3 uses
+  %7 = ptrtoaddr ptr %i.p to i64                  ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.o, %i.p
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN8facebook5velox4exec12VectorReaderINS2_5ArrayINS2_7GenericINS2_12TypeVariableILm1EEELb0ELb0EEEEEEESt14default_deleteISB_EESaISE_EE11_S_relocateEPSE_SH_SH_RSF_.exit.i, label %iter.check
 
 iter.check:                                       ; preds = %.noexc15
-  %6 = ptrtoaddr ptr %i.p to i64
-  %7 = ptrtoaddr ptr %i.o to i64
-  %i.q = add i64 %6, -8
-  %i.r = sub i64 %i.q, %7                         ; 3 uses
+  %i.q = add i64 %7, -8
+  %i.r = sub i64 %i.q, %6                         ; 3 uses
   %i.s = lshr i64 %i.r, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 5 uses
   %min.iters.check = icmp ult i64 %i.r, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %8 = ptrtoaddr ptr %i.p to i64
-  %9 = ptrtoaddr ptr %i.o to i64
-  %i.u = add i64 %8, -8
-  %i.v = sub i64 %i.u, %9
+  %i.u = add i64 %7, -8
+  %i.v = sub i64 %i.u, %6
   %i.w = and i64 %i.v, -8
   %i.x = add i64 %i.w, 8                          ; 2 uses
   %i.y = getelementptr i8, ptr %i.n, i64 %i.x

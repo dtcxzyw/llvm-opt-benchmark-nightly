@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 680
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !91   ; 8 uses
-  %i.k = load ptr, ptr %i.a, align 16, !tbaa !47  ; 9 uses
+  %i.k = load ptr, ptr %i.a, align 16, !tbaa !47  ; 8 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 516
   %i.n = load float, ptr %i.m, align 4, !tbaa !12
@@ -226,9 +226,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ad = fmul reassoc nsz arcp contract afn float %i.ab, 9.642000e-01
   %i.ae = fmul reassoc nsz arcp contract afn float %i.ab, f0x3FA61CF4
   %i.af = fmul reassoc nsz arcp contract afn float %i.ab, f0x3F066D1A
-  %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 264
-  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.k, i64 268
-  %.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 272
+  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.k, i64 264
+  %.sroa.18.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 268
   %i.ag = getelementptr inbounds nuw i8, ptr %i.k, i64 300
   store i32 1, ptr %i.ag, align 4, !tbaa !15
   %i.ah = getelementptr inbounds nuw i8, ptr %i.j, i64 4
@@ -264,12 +263,9 @@ bb.c:                                             ; preds = %bb.b
   %i.bl = fmul reassoc nsz arcp contract afn <2 x float> %i.bk, <float f0x3C8AC481, float f0x3F7FE762>
   %i.bm = insertelement <2 x float> poison, float %i.bg, i64 0
   %i.bn = insertelement <2 x float> %i.bm, float %i.bi, i64 1
-  %i.bo = fadd reassoc nsz arcp contract afn <2 x float> %i.bn, %i.bl ; 3 uses
-  store float %i.be, ptr %3, align 4, !tbaa !12
-  %4 = extractelement <2 x float> %i.bo, i64 0
-  store float %4, ptr %.sroa.11.0..sroa_idx.i.a, align 4, !tbaa !12
-  %5 = extractelement <2 x float> %i.bo, i64 1
-  store float %5, ptr %.sroa.18.0..sroa_idx.i, align 4, !tbaa !12
+  %i.bo = fadd reassoc nsz arcp contract afn <2 x float> %i.bn, %i.bl ; 2 uses
+  store float %i.be, ptr %.sroa.11.0..sroa_idx.i.a, align 4, !tbaa !12
+  store <2 x float> %i.bo, ptr %.sroa.18.0..sroa_idx.i, align 4, !tbaa !12
   %i.bp = load float, ptr %i.ai, align 4, !tbaa !12
   %i.bq = fsub reassoc nsz arcp contract afn float 2.000000e+00, %i.bp
   %i.br = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.bq
@@ -333,7 +329,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 680
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !91 ; 8 uses
-  %i.dj = load ptr, ptr %i.a, align 16, !tbaa !47 ; 9 uses
+  %i.dj = load ptr, ptr %i.a, align 16, !tbaa !47 ; 8 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 516
   %i.dm = load float, ptr %i.dl, align 4, !tbaa !12
@@ -363,8 +359,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ek = fadd reassoc nsz arcp contract afn float %i.ej, f0xBC911AA6
   %i.el = select reassoc nsz arcp contract afn i1 %i.eg, float %i.ei, float %i.ek ; 2 uses
   %i.em = fmul reassoc nsz arcp contract afn float %i.el, f0x3F7FE762
-  %6 = getelementptr inbounds nuw i8, ptr %i.dj, i64 276
-  %.sroa.11.0..sroa_idx.i30 = getelementptr inbounds nuw i8, ptr %i.dj, i64 280
+  %.sroa.11.0..sroa_idx.i30 = getelementptr inbounds nuw i8, ptr %i.dj, i64 276
   %.sroa.18.0..sroa_idx.i31 = getelementptr inbounds nuw i8, ptr %i.dj, i64 284
   %i.en = getelementptr inbounds nuw i8, ptr %i.dj, i64 304
   store i32 1, ptr %i.en, align 4, !tbaa !15
@@ -387,14 +382,11 @@ bb.f:                                             ; preds = %bb.e
   %i.fe = insertelement <2 x float> poison, float %i.el, i64 0
   %i.ff = shufflevector <2 x float> %i.fe, <2 x float> poison, <2 x i32> zeroinitializer
   %i.fg = fmul reassoc nsz arcp contract afn <2 x float> %i.ff, <float f0xBD2CB230, float f0x3C8AC481>
-  %i.fh = fadd reassoc nsz arcp contract afn <2 x float> %i.fd, %i.fg ; 3 uses
+  %i.fh = fadd reassoc nsz arcp contract afn <2 x float> %i.fd, %i.fg ; 2 uses
   %i.fi = fadd reassoc nsz arcp contract afn float %i.ex, %i.ew
   %i.fj = fmul reassoc nsz arcp contract afn float %i.fi, 0.000000e+00
   %i.fk = fadd reassoc nsz arcp contract afn float %i.fj, %i.em ; 2 uses
-  %7 = extractelement <2 x float> %i.fh, i64 0
-  store float %7, ptr %6, align 4, !tbaa !12
-  %8 = extractelement <2 x float> %i.fh, i64 1
-  store float %8, ptr %.sroa.11.0..sroa_idx.i30, align 4, !tbaa !12
+  store <2 x float> %i.fh, ptr %.sroa.11.0..sroa_idx.i30, align 4, !tbaa !12
   store float %i.fk, ptr %.sroa.18.0..sroa_idx.i31, align 4, !tbaa !12
   %i.fl = tail call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.ew) ; 2 uses
   %i.fm = load <2 x float>, ptr %i.ep, align 4, !tbaa !12
@@ -473,7 +465,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 680
   %i.hs = load ptr, ptr %i.hr, align 8, !tbaa !91 ; 8 uses
-  %i.ht = load ptr, ptr %i.a, align 16, !tbaa !47 ; 9 uses
+  %i.ht = load ptr, ptr %i.a, align 16, !tbaa !47 ; 8 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 512
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 516
   %i.hw = load float, ptr %i.hv, align 4, !tbaa !12
@@ -493,8 +485,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ik = fadd reassoc nsz arcp contract afn float %i.ij, f0xBC911AA6
   %i.il = select reassoc nsz arcp contract afn i1 %i.ig, float %i.ii, float %i.ik ; 2 uses
   %i.im = fmul reassoc nsz arcp contract afn float %i.il, f0x3F7FE762
-  %9 = getelementptr inbounds nuw i8, ptr %i.ht, i64 288
-  %.sroa.11.0..sroa_idx.i33 = getelementptr inbounds nuw i8, ptr %i.ht, i64 292
+  %.sroa.11.0..sroa_idx.i33 = getelementptr inbounds nuw i8, ptr %i.ht, i64 288
   %.sroa.18.0..sroa_idx.i34 = getelementptr inbounds nuw i8, ptr %i.ht, i64 296
   %i.in = getelementptr inbounds nuw i8, ptr %i.ht, i64 308
   store i32 1, ptr %i.in, align 4, !tbaa !15
@@ -522,15 +513,12 @@ bb.i:                                             ; preds = %bb.h
   %i.jj = insertelement <2 x float> poison, float %i.il, i64 0
   %i.jk = shufflevector <2 x float> %i.jj, <2 x float> poison, <2 x i32> zeroinitializer
   %i.jl = fmul reassoc nsz arcp contract afn <2 x float> %i.jk, <float f0xBD2CB230, float f0x3C8AC481>
-  %i.jm = fadd reassoc nsz arcp contract afn <2 x float> %i.ji, %i.jl ; 4 uses
+  %i.jm = fadd reassoc nsz arcp contract afn <2 x float> %i.ji, %i.jl ; 3 uses
   %i.jn = extractelement <2 x float> %i.jc, i64 1 ; 2 uses
   %i.jo = fadd reassoc nsz arcp contract afn float %i.je, %i.jn
   %i.jp = fmul reassoc nsz arcp contract afn float %i.jo, 0.000000e+00
   %i.jq = fadd reassoc nsz arcp contract afn float %i.jp, %i.im ; 3 uses
-  %10 = extractelement <2 x float> %i.jm, i64 0
-  store float %10, ptr %9, align 4, !tbaa !12
-  %11 = extractelement <2 x float> %i.jm, i64 1
-  store float %11, ptr %.sroa.11.0..sroa_idx.i33, align 4, !tbaa !12
+  store <2 x float> %i.jm, ptr %.sroa.11.0..sroa_idx.i33, align 4, !tbaa !12
   store float %i.jq, ptr %.sroa.18.0..sroa_idx.i34, align 4, !tbaa !12
   %i.jr = load <2 x float>, ptr %i.ip, align 4, !tbaa !12
   %i.js = fsub reassoc nsz arcp contract afn <2 x float> splat (float 2.000000e+00), %i.jr

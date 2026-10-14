@@ -204,6 +204,7 @@ define weak_odr hidden void @_ZN5boost9container8flat_mapINS0_4test24movable_and
 bb.a:
   %i.a = load ptr, ptr %2, align 8, !tbaa !262    ; 9 uses
   %i.b = load ptr, ptr %3, align 8, !tbaa !262    ; 9 uses
+  %4 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1567)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1568)
   %.not.i.i = icmp eq ptr %i.a, %i.b
@@ -211,6 +212,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %1, align 8, !tbaa !250, !noalias !1569 ; 2 uses
+  %5 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !259, !noalias !1569 ; 4 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.e ; 4 uses
@@ -218,12 +220,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not8.i.i.i, label %_ZN5boost9container4moveIPSt4pairINS0_4test24movable_and_copyable_intES4_ES6_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SA_E4typeES9_S9_SA_.exit.i.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.b
-  %4 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
   %i.g = shl nuw nsw i64 %i.e, 3
-  %5 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
-  %i.h = add i64 %i.g, %4
+  %i.h = add i64 %i.g, %5
   %i.i = add i64 %i.h, -8
-  %i.j = sub i64 %i.i, %5                         ; 2 uses
+  %i.j = sub i64 %i.i, %4                         ; 2 uses
   %i.k = lshr i64 %i.j, 3
   %i.l = add nuw nsw i64 %i.k, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.j, 104
@@ -231,9 +231,9 @@ bb.b:                                             ; preds = %bb.a
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
   %i.m = shl nuw nsw i64 %i.e, 3
-  %i.n = add i64 %i.m, %4
+  %i.n = add i64 %i.m, %5
   %i.o = add i64 %i.n, -8
-  %i.p = sub i64 %i.o, %5
+  %i.p = sub i64 %i.o, %4
   %i.q = and i64 %i.p, -8
   %i.r = add i64 %i.q, 8                          ; 2 uses
   %i.s = getelementptr i8, ptr %i.a, i64 %i.r
@@ -636,6 +636,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i64 @_ZN5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ENS0_13static_vectorIS6_Lm10EvEEE5eraseERKS5_(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #4 comdat align 2 {
 bb.a:
+  %2 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !319, !noalias !3037 ; 6 uses
   %.not42.i.i = icmp eq i64 %i.b, 0
@@ -730,6 +731,7 @@ bb.g:                                             ; preds = %bb.d, %bb.c
 
 _ZN5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ENS0_13static_vectorIS6_Lm10EvEEE11equal_rangeERKS5_.exit: ; preds = %bb.f, %_ZNK5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ENS0_13static_vectorIS6_Lm10EvEEE16priv_lower_boundINS0_12vec_iteratorIPS6_Lb0EEES5_EET_SI_SI_RKT0_.exit.i.i
   %.sink.i.i = phi ptr [ %i.y, %_ZNK5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ENS0_13static_vectorIS6_Lm10EvEEE16priv_lower_boundINS0_12vec_iteratorIPS6_Lb0EEES5_EET_SI_SI_RKT0_.exit.i.i ], [ %i.ai, %bb.f ] ; 15 uses
+  %.sink.i.i78 = ptrtoaddr ptr %.sink.i.i to i64  ; 2 uses
   %.not = icmp eq ptr %.sink.i.i, %i.x
   br i1 %.not, label %_ZN5boost9container6vectorISt4pairINS0_4test24movable_and_copyable_intES4_ENS0_3dtl24static_storage_allocatorIS5_Lm10ELm0ELb1EEEvE5eraseENS0_12vec_iteratorIPS5_Lb1EEESC_.exit, label %bb.h
 
@@ -739,12 +741,10 @@ bb.h:                                             ; preds = %_ZN5boost9container
   br i1 %.not8.i.i, label %_ZN5boost9container4moveIPSt4pairINS0_4test24movable_and_copyable_intES4_ES6_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SA_E4typeES9_S9_SA_.exit.i, label %.lr.ph.i.i3.preheader
 
 .lr.ph.i.i3.preheader:                            ; preds = %bb.h
-  %2 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.al = shl i64 %i.b, 3
-  %3 = ptrtoaddr ptr %.sink.i.i to i64            ; 2 uses
   %i.am = add i64 %i.al, %2
   %i.an = add i64 %i.am, -8
-  %i.ao = sub i64 %i.an, %3                       ; 2 uses
+  %i.ao = sub i64 %i.an, %.sink.i.i78             ; 2 uses
   %i.ap = lshr i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ao, 344
@@ -754,7 +754,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i3.prehead
   %i.ar = shl i64 %i.b, 3
   %i.as = add i64 %i.ar, %2
   %i.at = add i64 %i.as, -8
-  %i.au = sub i64 %i.at, %3
+  %i.au = sub i64 %i.at, %.sink.i.i78
   %i.av = and i64 %i.au, -8                       ; 2 uses
   %i.aw = or disjoint i64 %i.av, 4                ; 2 uses
   %i.ax = getelementptr i8, ptr %i.x, i64 %i.aw   ; 3 uses
@@ -868,8 +868,10 @@ _ZN5boost9container6vectorISt4pairINS0_4test24movable_and_copyable_intES4_ENS0_3
 ; Function Attrs: inlinehint mustprogress uwtable
 define weak_odr hidden void @_ZN5boost9container13flat_multimapINS0_4test24movable_and_copyable_intES3_St4lessIS3_ENS0_13static_vectorISt4pairIS3_S3_ELm10EvEEE5eraseENS0_12vec_iteratorIPS8_Lb1EEESD_(ptr dead_on_unwind noalias writable sret(%"class.boost::container::vec_iterator.16") align 8 %0, ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef align 8 dead_on_return %2, ptr noundef align 8 dead_on_return %3) local_unnamed_addr #3 comdat align 2 {
 bb.a:
+  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = load ptr, ptr %2, align 8, !tbaa !262    ; 9 uses
   %i.b = load ptr, ptr %3, align 8, !tbaa !262    ; 9 uses
+  %5 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3051)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3052)
   %.not.i.i = icmp eq ptr %i.a, %i.b
@@ -883,9 +885,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not8.i.i.i, label %_ZN5boost9container4moveIPSt4pairINS0_4test24movable_and_copyable_intES4_ES6_EENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SA_E4typeES9_S9_SA_.exit.i.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.b
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.f = shl nuw nsw i64 %i.d, 3
-  %5 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
   %i.g = add i64 %i.f, %4
   %i.h = add i64 %i.g, -8
   %i.i = sub i64 %i.h, %5                         ; 2 uses
@@ -1288,9 +1288,9 @@ bb.c:                                             ; preds = %_ZNSt15__new_alloca
   br i1 %.not11.i.i.i.i.i.i.i, label %_ZN5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ESt6vectorIS6_SaIS6_EEEC2ERKSE_.exit, label %.lr.ph.i.i.i.i.preheader.i.i.i
 
 .lr.ph.i.i.i.i.preheader.i.i.i:                   ; preds = %bb.c
-  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255 ; 3 uses
   %i.o = ptrtoaddr ptr %i.n to i64
   %i.p = ptrtoaddr ptr %i.m to i64
+  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255 ; 3 uses
   %i.q = add i64 %i.o, -8
   %i.r = sub i64 %i.q, %i.p                       ; 3 uses
   %i.s = lshr i64 %i.r, 3
@@ -1432,9 +1432,9 @@ _ZNSt12_Vector_baseISt4pairIN5boost9container4test24movable_and_copyable_intES4_
   br i1 %.not11.i.i.i.i.i.i.i, label %_ZN5boost9container3dtl9flat_treeISt4pairINS0_4test24movable_and_copyable_intES5_ENS1_9select1stIS5_EESt4lessIS5_ESt6vectorIS6_SaIS6_EEEC2ERKSE_RKSC_.exit, label %.lr.ph.i.i.i.i.preheader.i.i.i
 
 .lr.ph.i.i.i.i.preheader.i.i.i:                   ; preds = %_ZNSt12_Vector_baseISt4pairIN5boost9container4test24movable_and_copyable_intES4_ESaIS5_EEC2EmRKS6_.exit.i.i.i
-  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255 ; 3 uses
   %i.o = ptrtoaddr ptr %i.n to i64
   %i.p = ptrtoaddr ptr %i.m to i64
+  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i.i = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255 ; 3 uses
   %i.q = add i64 %i.o, -8
   %i.r = sub i64 %i.q, %i.p                       ; 3 uses
   %i.s = lshr i64 %i.r, 3
@@ -1837,6 +1837,7 @@ bb.ag:                                            ; preds = %_ZN5boost7movelib7m
   %.5227 = phi ptr [ %i.hi, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0222.lcssa, %bb.ac ] ; 2 uses
   %.5221 = phi ptr [ %i.gg, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0216.lcssa, %bb.ac ] ; 3 uses
   %.5 = phi ptr [ %i.ft, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0108.lcssa, %bb.ac ] ; 5 uses
+  %.5643 = ptrtoaddr ptr %.5 to i64
   %.not36.i = icmp eq ptr %.5, %.5221
   br i1 %.not36.i, label %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7move_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit, label %.preheader.i.outer
 
@@ -1887,9 +1888,8 @@ _ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container
   br i1 %.not8.i.i153, label %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit159, label %.lr.ph.i.i154.preheader
 
 .lr.ph.i.i154.preheader:                          ; preds = %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7move_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit
-  %11 = ptrtoaddr ptr %.5 to i64
   %i.hw = ptrtoaddr ptr %.223.i to i64
-  %i.hx = add i64 %11, -8
+  %i.hx = add i64 %.5643, -8
   %i.hy = sub i64 %i.hx, %i.hw                    ; 3 uses
   %i.hz = lshr i64 %i.hy, 3
   %i.ia = add nuw nsw i64 %i.hz, 1                ; 2 uses
@@ -2096,10 +2096,10 @@ _ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_in
   br i1 %.not8.i.i167, label %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit173, label %.lr.ph.i.i168.preheader
 
 .lr.ph.i.i168.preheader:                          ; preds = %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit159
-  %i.kb = ptrtoaddr ptr %i.jy to i64
-  %i.kc = ptrtoaddr ptr %i.ka to i64
-  %i.kd = add i64 %i.kb, -8
-  %i.ke = sub i64 %i.kd, %i.kc                    ; 3 uses
+  %i.kb = ptrtoaddr ptr %i.ka to i64
+  %i.kc = ptrtoaddr ptr %i.jy to i64
+  %i.kd = add i64 %i.kc, -8
+  %i.ke = sub i64 %i.kd, %i.kb                    ; 3 uses
   %i.kf = lshr i64 %i.ke, 3
   %i.kg = add nuw nsw i64 %i.kf, 1                ; 2 uses
   %min.iters.check688 = icmp ult i64 %i.ke, 72
@@ -2502,6 +2502,7 @@ bb.ag:                                            ; preds = %_ZN5boost7movelib7s
   %.5231 = phi ptr [ %i.hm, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0226.lcssa, %bb.ac ] ; 2 uses
   %.5225 = phi ptr [ %i.gi, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0220.lcssa, %bb.ac ] ; 3 uses
   %.5 = phi ptr [ %i.fv, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0108.lcssa, %bb.ac ] ; 5 uses
+  %.5657 = ptrtoaddr ptr %.5 to i64
   %.not36.i = icmp eq ptr %.5, %.5225
   br i1 %.not36.i, label %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7swap_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit, label %.preheader.i.outer
 
@@ -2560,9 +2561,8 @@ _ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container
   br i1 %.not8.i.i154, label %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit161, label %.lr.ph.i.i155.preheader
 
 .lr.ph.i.i155.preheader:                          ; preds = %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7swap_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit
-  %11 = ptrtoaddr ptr %.5 to i64
   %i.if = ptrtoaddr ptr %.223.i to i64
-  %i.ig = add i64 %11, -8
+  %i.ig = add i64 %.5657, -8
   %i.ih = sub i64 %i.ig, %i.if                    ; 3 uses
   %i.ii = lshr i64 %i.ih, 3
   %i.ij = add nuw nsw i64 %i.ii, 1                ; 2 uses
@@ -2965,6 +2965,7 @@ bb.ag:                                            ; preds = %_ZN5boost7movelib7m
   %.5227 = phi ptr [ %i.hi, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0222.lcssa, %bb.ac ] ; 2 uses
   %.5221 = phi ptr [ %i.gg, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0216.lcssa, %bb.ac ] ; 3 uses
   %.5 = phi ptr [ %i.ft, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0108.lcssa, %bb.ac ] ; 5 uses
+  %.5642 = ptrtoaddr ptr %.5 to i64
   %.not36.i = icmp eq ptr %.5, %.5221
   br i1 %.not36.i, label %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7move_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit, label %.preheader.i.outer
 
@@ -3015,9 +3016,8 @@ _ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container
   br i1 %.not8.i.i153, label %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit159, label %.lr.ph.i.i154.preheader
 
 .lr.ph.i.i154.preheader:                          ; preds = %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7move_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit
-  %11 = ptrtoaddr ptr %.5 to i64
   %i.hw = ptrtoaddr ptr %.223.i to i64
-  %i.hx = add i64 %11, -8
+  %i.hx = add i64 %.5642, -8
   %i.hy = sub i64 %i.hx, %i.hw                    ; 3 uses
   %i.hz = lshr i64 %i.hy, 3
   %i.ia = add nuw nsw i64 %i.hz, 1                ; 2 uses
@@ -3224,10 +3224,10 @@ _ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_in
   br i1 %.not8.i.i167, label %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit173, label %.lr.ph.i.i168.preheader
 
 .lr.ph.i.i168.preheader:                          ; preds = %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit159
-  %i.kb = ptrtoaddr ptr %i.jy to i64
-  %i.kc = ptrtoaddr ptr %i.ka to i64
-  %i.kd = add i64 %i.kb, -8
-  %i.ke = sub i64 %i.kd, %i.kc                    ; 3 uses
+  %i.kb = ptrtoaddr ptr %i.ka to i64
+  %i.kc = ptrtoaddr ptr %i.jy to i64
+  %i.kd = add i64 %i.kc, -8
+  %i.ke = sub i64 %i.kd, %i.kb                    ; 3 uses
   %i.kf = lshr i64 %i.ke, 3
   %i.kg = add nuw nsw i64 %i.kf, 1                ; 2 uses
   %min.iters.check687 = icmp ult i64 %i.ke, 72
@@ -3630,6 +3630,7 @@ bb.ag:                                            ; preds = %_ZN5boost7movelib7s
   %.5231 = phi ptr [ %i.hm, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0226.lcssa, %bb.ac ] ; 2 uses
   %.5225 = phi ptr [ %i.gi, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0220.lcssa, %bb.ac ] ; 3 uses
   %.5 = phi ptr [ %i.fv, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0108.lcssa, %bb.ac ] ; 5 uses
+  %.5656 = ptrtoaddr ptr %.5 to i64
   %.not36.i = icmp eq ptr %.5, %.5225
   br i1 %.not36.i, label %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7swap_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit, label %.preheader.i.outer
 
@@ -3688,9 +3689,8 @@ _ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container
   br i1 %.not8.i.i154, label %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit161, label %.lr.ph.i.i155.preheader
 
 .lr.ph.i.i155.preheader:                          ; preds = %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7swap_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit
-  %11 = ptrtoaddr ptr %.5 to i64
   %i.if = ptrtoaddr ptr %.223.i to i64
-  %i.ig = add i64 %11, -8
+  %i.ig = add i64 %.5656, -8
   %i.ih = sub i64 %i.ig, %i.if                    ; 3 uses
   %i.ii = lshr i64 %i.ih, 3
   %i.ij = add nuw nsw i64 %i.ii, 1                ; 2 uses
@@ -4093,6 +4093,7 @@ bb.ag:                                            ; preds = %_ZN5boost7movelib7m
   %.5227 = phi ptr [ %i.hi, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0222.lcssa, %bb.ac ] ; 2 uses
   %.5221 = phi ptr [ %i.gg, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0216.lcssa, %bb.ac ] ; 3 uses
   %.5 = phi ptr [ %i.ft, %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit151 ], [ %.0108.lcssa, %bb.ac ] ; 5 uses
+  %.5643 = ptrtoaddr ptr %.5 to i64
   %.not36.i = icmp eq ptr %.5, %.5221
   br i1 %.not36.i, label %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7move_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit, label %.preheader.i.outer
 
@@ -4143,9 +4144,8 @@ _ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container
   br i1 %.not8.i.i153, label %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit159, label %.lr.ph.i.i154.preheader
 
 .lr.ph.i.i154.preheader:                          ; preds = %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7move_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit
-  %11 = ptrtoaddr ptr %.5 to i64
   %i.hw = ptrtoaddr ptr %.223.i to i64
-  %i.hx = add i64 %11, -8
+  %i.hx = add i64 %.5643, -8
   %i.hy = sub i64 %i.hx, %i.hw                    ; 3 uses
   %i.hz = lshr i64 %i.hy, 3
   %i.ia = add nuw nsw i64 %i.hz, 1                ; 2 uses
@@ -4352,10 +4352,10 @@ _ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_in
   br i1 %.not8.i.i167, label %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit173, label %.lr.ph.i.i168.preheader
 
 .lr.ph.i.i168.preheader:                          ; preds = %_ZN5boost7movelib7move_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit159
-  %i.kb = ptrtoaddr ptr %i.jy to i64
-  %i.kc = ptrtoaddr ptr %i.ka to i64
-  %i.kd = add i64 %i.kb, -8
-  %i.ke = sub i64 %i.kd, %i.kc                    ; 3 uses
+  %i.kb = ptrtoaddr ptr %i.ka to i64
+  %i.kc = ptrtoaddr ptr %i.jy to i64
+  %i.kd = add i64 %i.kc, -8
+  %i.ke = sub i64 %i.kd, %i.kb                    ; 3 uses
   %i.kf = lshr i64 %i.ke, 3
   %i.kg = add nuw nsw i64 %i.kf, 1                ; 2 uses
   %min.iters.check688 = icmp ult i64 %i.ke, 72
@@ -4758,6 +4758,7 @@ bb.ag:                                            ; preds = %_ZN5boost7movelib7s
   %.5231 = phi ptr [ %i.hm, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0226.lcssa, %bb.ac ] ; 2 uses
   %.5225 = phi ptr [ %i.gi, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0220.lcssa, %bb.ac ] ; 3 uses
   %.5 = phi ptr [ %i.fv, %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit152 ], [ %.0108.lcssa, %bb.ac ] ; 5 uses
+  %.5657 = ptrtoaddr ptr %.5 to i64
   %.not36.i = icmp eq ptr %.5, %.5225
   br i1 %.not36.i, label %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7swap_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit, label %.preheader.i.outer
 
@@ -4816,9 +4817,8 @@ _ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container
   br i1 %.not8.i.i154, label %_ZN5boost7movelib7swap_opclIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_EET0_NS0_9forward_tET_SB_S9_.exit161, label %.lr.ph.i.i155.preheader
 
 .lr.ph.i.i155.preheader:                          ; preds = %_ZN5boost7movelib15detail_adaptive21op_partial_merge_implIPSt4pairINS_9container4test24movable_and_copyable_intES6_ES8_S8_NS4_3dtl23flat_tree_value_compareISt4lessIS6_ES7_NS9_9select1stIS6_EEEENS0_7swap_opEEET1_RT_SI_RT0_SK_SH_T2_T3_.exit
-  %11 = ptrtoaddr ptr %.5 to i64
   %i.if = ptrtoaddr ptr %.223.i to i64
-  %i.ig = add i64 %11, -8
+  %i.ig = add i64 %.5657, -8
   %i.ih = sub i64 %i.ig, %i.if                    ; 3 uses
   %i.ii = lshr i64 %i.ih, 3
   %i.ij = add nuw nsw i64 %i.ii, 1                ; 2 uses
@@ -5221,13 +5221,13 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %.neg.i = xor i64 %i.j, -1
   %i.n = add i64 %.018.i, %.neg.i
-  %.114.i = select i1 %.not15.i, ptr %i.m, ptr %.01317.i ; 20 uses
+  %.114.i = select i1 %.not15.i, ptr %i.m, ptr %.01317.i ; 19 uses
   %.1.i = select i1 %.not15.i, i64 %i.n, i64 %i.j ; 2 uses
   %.not.i = icmp eq i64 %.1.i, 0
   br i1 %.not.i, label %_ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit, label %bb.d, !llvm.loop !89
 
 _ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit: ; preds = %bb.d
-  %.114.i180.le = ptrtoaddr ptr %.114.i to i64    ; 2 uses
+  %.114.i180.le = ptrtoaddr ptr %.114.i to i64    ; 3 uses
   %i.o = ptrtoint ptr %.114.i to i64
   %i.p = sub i64 %i.d, %i.o                       ; 3 uses
   %i.q = ashr exact i64 %i.p, 3                   ; 4 uses
@@ -5242,9 +5242,8 @@ bb.e:                                             ; preds = %_ZN5boost7movelib11
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.e
   %i.t = load ptr, ptr %4, align 8, !tbaa !267    ; 6 uses
-  %5 = ptrtoaddr ptr %.114.i to i64
   %i.u = add i64 %i.d, -8
-  %i.v = sub i64 %i.u, %5                         ; 3 uses
+  %i.v = sub i64 %i.u, %.114.i180.le              ; 3 uses
   %i.w = lshr i64 %i.v, 3
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.v, 72
@@ -5550,6 +5549,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i44
   br i1 %.not.i51, label %_ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit, label %bb.k, !llvm.loop !58
 
 _ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit: ; preds = %bb.k
+  %.114.i49214.le = ptrtoaddr ptr %.114.i49 to i64
   %i.dj = ptrtoint ptr %.114.i49 to i64
   %i.dk = sub i64 %i.dj, %i.d                     ; 3 uses
   %i.dl = ashr exact i64 %i.dk, 3                 ; 4 uses
@@ -5564,8 +5564,7 @@ bb.l:                                             ; preds = %_ZN5boost7movelib11
 
 .lr.ph.i.preheader.i55:                           ; preds = %bb.l
   %i.do = load ptr, ptr %4, align 8, !tbaa !267   ; 6 uses
-  %6 = ptrtoaddr ptr %.114.i49 to i64
-  %i.dp = add i64 %6, -8
+  %i.dp = add i64 %.114.i49214.le, -8
   %i.dq = sub i64 %i.dp, %i.d                     ; 3 uses
   %i.dr = lshr i64 %i.dq, 3
   %i.ds = add nuw nsw i64 %i.dr, 1                ; 2 uses
@@ -5968,6 +5967,10 @@ bb.g:                                             ; preds = %bb.f
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN5boost7movelib15rotate_adaptiveIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES7_EET_S8_S8_S8_NS0_9iter_sizeIS8_E4typeESB_T0_SB_(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6) local_unnamed_addr #4 comdat {
 bb.a:
+  %7 = ptrtoaddr ptr %0 to i64
+  %8 = ptrtoaddr ptr %5 to i64                    ; 2 uses
+  %9 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %10 = ptrtoaddr ptr %1 to i64                   ; 3 uses
   %i.a = icmp ule i64 %3, %4
   %.not = icmp ugt i64 %4, %6
   %or.cond = or i1 %i.a, %.not
@@ -5982,10 +5985,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not8.i, label %_ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.c
-  %7 = ptrtoaddr ptr %2 to i64
-  %8 = ptrtoaddr ptr %1 to i64
-  %i.b = add i64 %7, -8
-  %i.c = sub i64 %i.b, %8                         ; 3 uses
+  %i.b = add i64 %9, -8
+  %i.c = sub i64 %i.b, %10                        ; 3 uses
   %i.d = lshr i64 %i.c, 3
   %i.e = add nuw nsw i64 %i.d, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.c, 72
@@ -6047,6 +6048,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit: ; preds = %.lr.ph.i, %middle.block, %bb.c
   %.0.lcssa.i = phi ptr [ %5, %bb.c ], [ %i.k, %middle.block ], [ %i.t, %.lr.ph.i ] ; 3 uses
+  %.0.lcssa.i106 = ptrtoaddr ptr %.0.lcssa.i to i64
   %.not8.i37 = icmp eq ptr %0, %1
   br i1 %.not8.i37, label %_ZN5boost13move_backwardIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit, label %.lr.ph.i38
 
@@ -6071,10 +6073,8 @@ _ZN5boost13move_backwardIPSt4pairINS_9container4test24movable_and_copyable_intES
   br i1 %.not8.i43, label %_ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit49, label %.lr.ph.i44.preheader
 
 .lr.ph.i44.preheader:                             ; preds = %_ZN5boost13move_backwardIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit
-  %9 = ptrtoaddr ptr %.0.lcssa.i to i64
-  %10 = ptrtoaddr ptr %5 to i64
-  %i.aa = add i64 %9, -8
-  %i.ab = sub i64 %i.aa, %10                      ; 3 uses
+  %i.aa = add i64 %.0.lcssa.i106, -8
+  %i.ab = sub i64 %i.aa, %8                       ; 3 uses
   %i.ac = lshr i64 %i.ab, 3
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 2 uses
   %min.iters.check107 = icmp ult i64 %i.ab, 72
@@ -6147,10 +6147,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not8.i50, label %_ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit56, label %.lr.ph.i51.preheader
 
 .lr.ph.i51.preheader:                             ; preds = %bb.f
-  %11 = ptrtoaddr ptr %1 to i64
-  %12 = ptrtoaddr ptr %0 to i64
-  %i.at = add i64 %11, -8
-  %i.au = sub i64 %i.at, %12                      ; 3 uses
+  %i.at = add i64 %10, -8
+  %i.au = sub i64 %i.at, %7                       ; 3 uses
   %i.av = lshr i64 %i.au, 3
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
   %min.iters.check133 = icmp ult i64 %i.au, 72
@@ -6212,14 +6210,13 @@ middle.block149:                                  ; preds = %vector.body140
 
 _ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit56: ; preds = %.lr.ph.i51, %middle.block149, %bb.f
   %.0.lcssa.i55 = phi ptr [ %5, %bb.f ], [ %i.bc, %middle.block149 ], [ %i.bl, %.lr.ph.i51 ] ; 3 uses
+  %.0.lcssa.i55186 = ptrtoaddr ptr %.0.lcssa.i55 to i64
   %.not8.i57 = icmp eq ptr %1, %2
   br i1 %.not8.i57, label %_ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit63, label %.lr.ph.i58.preheader
 
 .lr.ph.i58.preheader:                             ; preds = %_ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit56
-  %13 = ptrtoaddr ptr %2 to i64
-  %14 = ptrtoaddr ptr %1 to i64
-  %i.bm = add i64 %13, -8
-  %i.bn = sub i64 %i.bm, %14                      ; 3 uses
+  %i.bm = add i64 %9, -8
+  %i.bn = sub i64 %i.bm, %10                      ; 3 uses
   %i.bo = lshr i64 %i.bn, 3
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses
   %min.iters.check159 = icmp ult i64 %i.bn, 72
@@ -6285,10 +6282,8 @@ _ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0
   br i1 %.not8.i64, label %_ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit49, label %.lr.ph.i65.preheader
 
 .lr.ph.i65.preheader:                             ; preds = %_ZN5boost4moveIPSt4pairINS_9container4test24movable_and_copyable_intES4_ES6_EET0_T_S8_S7_.exit63
-  %15 = ptrtoaddr ptr %.0.lcssa.i55 to i64
-  %16 = ptrtoaddr ptr %5 to i64
-  %i.cf = add i64 %15, -8
-  %i.cg = sub i64 %i.cf, %16                      ; 3 uses
+  %i.cf = add i64 %.0.lcssa.i55186, -8
+  %i.cg = sub i64 %i.cf, %8                       ; 3 uses
   %i.ch = lshr i64 %i.cg, 3
   %i.ci = add nuw nsw i64 %i.ch, 1                ; 2 uses
   %min.iters.check186 = icmp ult i64 %i.cg, 72
@@ -6401,15 +6396,15 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %.not.i, label %_ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit, label %bb.d, !llvm.loop !89
 
 _ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit: ; preds = %bb.d
+  %.114.i133.le = ptrtoaddr ptr %.114.i to i64    ; 3 uses
   %i.o = load ptr, ptr %4, align 8, !tbaa !355    ; 9 uses
   %i.p = ptrtoaddr ptr %i.o to i64                ; 2 uses
   %.not8.i.i.i = icmp eq ptr %1, %.114.i
   br i1 %.not8.i.i.i, label %_ZN5boost7movelib26op_merge_with_right_placedINS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessINS3_4test24movable_and_copyable_intEESt4pairIS8_S8_ENS4_9select1stIS8_EEEEEEPSB_SG_NS0_7move_opEEEvT0_SI_T1_SJ_SJ_T_T2_.exit.sink.split, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit
-  %5 = ptrtoaddr ptr %.114.i to i64               ; 3 uses
   %i.q = add i64 %i.d, -8
-  %i.r = sub i64 %i.q, %5                         ; 3 uses
+  %i.r = sub i64 %i.q, %.114.i133.le              ; 3 uses
   %i.s = lshr i64 %i.r, 3
   %i.t = add nuw nsw i64 %i.s, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.r, 72
@@ -6489,7 +6484,7 @@ _ZN5boost7movelib10range_xbufIPSt4pairINS_9container4test24movable_and_copyable_
 .lr.ph.i.i.i42.preheader:                         ; preds = %.lr.ph.i39
   %.027.i137.le = ptrtoaddr ptr %.027.i to i64    ; 2 uses
   %i.al = add i64 %i.d, -8
-  %i.am = sub i64 %i.al, %5
+  %i.am = sub i64 %i.al, %.114.i133.le
   %i.an = and i64 %i.am, -8
   %i.ao = add i64 %i.an, %i.p
   %i.ap = sub i64 %i.ao, %.027.i137.le            ; 2 uses
@@ -6503,7 +6498,7 @@ vector.memcheck136:                               ; preds = %.lr.ph.i.i.i42.preh
   %i.at = getelementptr i8, ptr %.114.i, i64 %i.as
   %scevgep = getelementptr i8, ptr %i.at, i64 8
   %i.au = add i64 %i.d, -8
-  %i.av = sub i64 %i.au, %5
+  %i.av = sub i64 %i.au, %.114.i133.le
   %i.aw = and i64 %i.av, -8
   %i.ax = add i64 %i.aw, %i.p
   %i.ay = sub i64 %i.ax, %.027.i137.le
@@ -6675,13 +6670,13 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i47
   br i1 %.not.i54, label %_ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit, label %bb.i, !llvm.loop !58
 
 _ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit: ; preds = %bb.i
+  %.114.i52171.le = ptrtoaddr ptr %.114.i52 to i64
   %i.dd = load ptr, ptr %4, align 8, !tbaa !355   ; 9 uses
   %.not8.i.i.i56 = icmp eq ptr %.114.i52, %1
   br i1 %.not8.i.i.i56, label %_ZN5boost7movelib26op_merge_with_right_placedINS0_10antistableINS_9container3dtl23flat_tree_value_compareISt4lessINS3_4test24movable_and_copyable_intEESt4pairIS8_S8_ENS4_9select1stIS8_EEEEEEPSB_SG_NS0_7move_opEEEvT0_SI_T1_SJ_SJ_T_T2_.exit.sink.split, label %.lr.ph.i.i.i57.preheader
 
 .lr.ph.i.i.i57.preheader:                         ; preds = %_ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS0_10antistableINS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS9_9select1stIS5_EEEEEEEET_SH_SH_RKT0_T1_.exit
-  %6 = ptrtoaddr ptr %.114.i52 to i64
-  %i.de = add i64 %6, -8
+  %i.de = add i64 %.114.i52171.le, -8
   %i.df = sub i64 %i.de, %i.d                     ; 3 uses
   %i.dg = lshr i64 %i.df, 3
   %i.dh = add nuw nsw i64 %i.dg, 1                ; 2 uses
@@ -7084,15 +7079,15 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   br i1 %.not.i, label %_ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit, label %bb.d, !llvm.loop !54
 
 _ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit: ; preds = %bb.d
+  %.114.i127.le = ptrtoaddr ptr %.114.i to i64    ; 3 uses
   %i.q = load ptr, ptr %3, align 8, !tbaa !355    ; 9 uses
   %i.r = ptrtoaddr ptr %i.q to i64                ; 2 uses
   %.not8.i.i.i = icmp eq ptr %1, %.114.i
   br i1 %.not8.i.i.i, label %_ZN5boost7movelib26op_merge_with_right_placedINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEESt4pairIS7_S7_ENS3_9select1stIS7_EEEEPSA_SE_NS0_7move_opEEEvT0_SG_T1_SH_SH_T_T2_.exit.sink.split, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit
-  %4 = ptrtoaddr ptr %.114.i to i64               ; 3 uses
   %i.s = add i64 %i.e, -8
-  %i.t = sub i64 %i.s, %4                         ; 3 uses
+  %i.t = sub i64 %i.s, %.114.i127.le              ; 3 uses
   %i.u = lshr i64 %i.t, 3
   %i.v = add nuw nsw i64 %i.u, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.t, 72
@@ -7172,7 +7167,7 @@ _ZN5boost7movelib10range_xbufIPSt4pairINS_9container4test24movable_and_copyable_
 .lr.ph.i.i.i42.preheader:                         ; preds = %.lr.ph.i39
   %.026.i131.le = ptrtoaddr ptr %.026.i to i64    ; 2 uses
   %i.an = add i64 %i.e, -8
-  %i.ao = sub i64 %i.an, %4
+  %i.ao = sub i64 %i.an, %.114.i127.le
   %i.ap = and i64 %i.ao, -8
   %i.aq = add i64 %i.ap, %i.r
   %i.ar = sub i64 %i.aq, %.026.i131.le            ; 2 uses
@@ -7186,7 +7181,7 @@ vector.memcheck130:                               ; preds = %.lr.ph.i.i.i42.preh
   %i.av = getelementptr i8, ptr %.114.i, i64 %i.au
   %scevgep = getelementptr i8, ptr %i.av, i64 8
   %i.aw = add i64 %i.e, -8
-  %i.ax = sub i64 %i.aw, %4
+  %i.ax = sub i64 %i.aw, %.114.i127.le
   %i.ay = and i64 %i.ax, -8
   %i.az = add i64 %i.ay, %i.r
   %i.ba = sub i64 %i.az, %.026.i131.le
@@ -7358,13 +7353,13 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i47
   br i1 %.not.i53, label %_ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit, label %bb.i, !llvm.loop !50
 
 _ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit: ; preds = %bb.i
+  %.114.i51165.le = ptrtoaddr ptr %.114.i51 to i64
   %i.dh = load ptr, ptr %3, align 8, !tbaa !355   ; 9 uses
   %.not8.i.i.i55 = icmp eq ptr %.114.i51, %1
   br i1 %.not8.i.i.i55, label %_ZN5boost7movelib26op_merge_with_right_placedINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEESt4pairIS7_S7_ENS3_9select1stIS7_EEEEPSA_SE_NS0_7move_opEEEvT0_SG_T1_SH_SH_T_T2_.exit.sink.split, label %.lr.ph.i.i.i56.preheader
 
 .lr.ph.i.i.i56.preheader:                         ; preds = %_ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit
-  %5 = ptrtoaddr ptr %.114.i51 to i64
-  %i.di = add i64 %5, -8
+  %i.di = add i64 %.114.i51165.le, -8
   %i.dj = sub i64 %i.di, %i.e                     ; 3 uses
   %i.dk = lshr i64 %i.dj, 3
   %i.dl = add nuw nsw i64 %i.dk, 1                ; 2 uses
@@ -7533,13 +7528,13 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.neg.i = xor i64 %i.k, -1
   %i.p = add i64 %.017.i, %.neg.i
-  %.114.i = select i1 %i.n, ptr %.01316.i, ptr %i.o ; 20 uses
+  %.114.i = select i1 %i.n, ptr %.01316.i, ptr %i.o ; 19 uses
   %.1.i = select i1 %i.n, i64 %i.k, i64 %i.p      ; 2 uses
   %.not.i = icmp eq i64 %.1.i, 0
   br i1 %.not.i, label %_ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit, label %bb.d, !llvm.loop !54
 
 _ZN5boost7movelib11upper_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit: ; preds = %bb.d
-  %.114.i174.le = ptrtoaddr ptr %.114.i to i64    ; 2 uses
+  %.114.i174.le = ptrtoaddr ptr %.114.i to i64    ; 3 uses
   %i.q = ptrtoint ptr %.114.i to i64
   %i.r = sub i64 %i.e, %i.q                       ; 3 uses
   %i.s = ashr exact i64 %i.r, 3                   ; 4 uses
@@ -7554,9 +7549,8 @@ bb.e:                                             ; preds = %_ZN5boost7movelib11
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.e
   %i.v = load ptr, ptr %3, align 8, !tbaa !267    ; 6 uses
-  %4 = ptrtoaddr ptr %.114.i to i64
   %i.w = add i64 %i.e, -8
-  %i.x = sub i64 %i.w, %4                         ; 3 uses
+  %i.x = sub i64 %i.w, %.114.i174.le              ; 3 uses
   %i.y = lshr i64 %i.x, 3
   %i.z = add nuw nsw i64 %i.y, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.x, 72
@@ -7862,6 +7856,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph.i44
   br i1 %.not.i50, label %_ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit, label %bb.k, !llvm.loop !50
 
 _ZN5boost7movelib11lower_boundIPSt4pairINS_9container4test24movable_and_copyable_intES5_ES6_NS3_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NS8_9select1stIS5_EEEEEET_SF_SF_RKT0_T1_.exit: ; preds = %bb.k
+  %.114.i48208.le = ptrtoaddr ptr %.114.i48 to i64
   %i.dn = ptrtoint ptr %.114.i48 to i64
   %i.do = sub i64 %i.dn, %i.e                     ; 3 uses
   %i.dp = ashr exact i64 %i.do, 3                 ; 4 uses
@@ -7876,8 +7871,7 @@ bb.l:                                             ; preds = %_ZN5boost7movelib11
 
 .lr.ph.i.preheader.i54:                           ; preds = %bb.l
   %i.ds = load ptr, ptr %3, align 8, !tbaa !267   ; 6 uses
-  %5 = ptrtoaddr ptr %.114.i48 to i64
-  %i.dt = add i64 %5, -8
+  %i.dt = add i64 %.114.i48208.le, -8
   %i.du = sub i64 %i.dt, %i.e                     ; 3 uses
   %i.dv = lshr i64 %i.du, 3
   %i.dw = add nuw nsw i64 %i.dv, 1                ; 2 uses
@@ -8280,9 +8274,9 @@ _ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorISt4pairINS
   br i1 %.not10.i.i, label %.loopexit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorISt4pairINS0_4test24movable_and_copyable_intES5_ESaIvEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS6_m.exit
-  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255 ; 3 uses
   %i.x = ptrtoaddr ptr %i.w to i64
   %i.y = ptrtoaddr ptr %i.v to i64
+  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255 ; 3 uses
   %i.z = add i64 %i.x, -8
   %i.aa = sub i64 %i.z, %i.y                      ; 3 uses
   %i.ab = lshr i64 %i.aa, 3
@@ -8685,6 +8679,7 @@ _ZNSt6vectorISt4pairIN5boost9container4test24movable_and_copyable_intES4_ESaIS5_
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorISt4pairIN5boost9container4test24movable_and_copyable_intES4_ESaIS5_EE15_M_range_insertIPKS5_EEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EET_SF_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %4 = ptrtoaddr ptr %1 to i64
   %.not = icmp eq ptr %2, %3
   br i1 %.not, label %_ZSt4copyIPKSt4pairIN5boost9container4test24movable_and_copyable_intES4_EN9__gnu_cxx17__normal_iteratorIPS5_St6vectorIS5_SaIS5_EEEEET0_T_SG_SF_.exit, label %bb.b
 
@@ -9014,7 +9009,6 @@ _ZNSt12_Vector_baseISt4pairIN5boost9container4test24movable_and_copyable_intES4_
 
 .lr.ph.i.i.i.i.i70.preheader:                     ; preds = %_ZNSt12_Vector_baseISt4pairIN5boost9container4test24movable_and_copyable_intES4_ESaIS5_EE11_M_allocateEm.exit
   %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted = load i32, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !255 ; 3 uses
-  %4 = ptrtoaddr ptr %1 to i64
   %i.dq = add i64 %4, -8
   %i.dr = sub i64 %i.dq, %i.de                    ; 3 uses
   %i.ds = lshr i64 %i.dr, 3

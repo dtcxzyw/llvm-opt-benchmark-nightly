@@ -205,18 +205,19 @@ _ZN4llvm15SmallVectorImplIiE6appendIPKivEEvT_S5_.exit: ; preds = %_ZN4llvm15Smal
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc noundef zeroext i1 @_ZL31canonicalizeShuffleVectorByLaneRKN4llvm5SDLocENS_15MutableArrayRefIiEENS_3MVTERNS_7SDValueES7_RNS_12SelectionDAGERKNS_18LoongArchSubtargetE(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr nofree %1, i64 %2, i16 %3, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(12) %4, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(12) %5, ptr noundef nonnull align 8 dereferenceable(920) %6, i16 %.374.val) unnamed_addr #1 {
 bb.a:
-  %7 = alloca %"class.llvm::SDValue", align 8     ; 2 uses
-  %8 = alloca %"class.llvm::SDValue", align 8     ; 3 uses
-  %9 = alloca %"class.llvm::SDValue", align 8     ; 2 uses
-  %10 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
-  %11 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
-  %12 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
-  %13 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
-  %14 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
-  %15 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
-  %16 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
-  %17 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
-  %18 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
+  %7 = ptrtoaddr ptr %1 to i64                    ; 12 uses
+  %8 = alloca %"class.llvm::SDValue", align 8     ; 2 uses
+  %9 = alloca %"class.llvm::SDValue", align 8     ; 3 uses
+  %10 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
+  %11 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
+  %12 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
+  %13 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
+  %14 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
+  %15 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
+  %16 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
+  %17 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
+  %18 = alloca %"class.llvm::SDValue", align 8    ; 2 uses
+  %19 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
   %.fr87 = freeze i64 %2                          ; 3 uses
   %i.a = trunc i64 %.fr87 to i32                  ; 52 uses
   %i.b = lshr i64 %.fr87, 1                       ; 2 uses
@@ -619,14 +620,14 @@ bb.bf:                                            ; preds = %.loopexit169
   %.fca.1.extract213 = extractvalue { ptr, i32 } %i.fg, 1
   store ptr %.fca.0.extract212, ptr %4, align 8, !tbaa !365
   store i32 %.fca.1.extract213, ptr %.sroa.2217.0..sroa_idx, align 8, !tbaa !160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !497
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !497
   %i.fh = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %6, i64 noundef 78, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 %.374.val, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #28 ; 2 uses
   %.fca.0.extract204 = extractvalue { ptr, i32 } %i.fh, 0
   %.fca.1.extract205 = extractvalue { ptr, i32 } %i.fh, 1
-  store ptr %.fca.0.extract204, ptr %8, align 8
-  %.sroa.2207.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 8
+  store ptr %.fca.0.extract204, ptr %9, align 8
+  %.sroa.2207.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i32 %.fca.1.extract205, ptr %.sroa.2207.0..sroa_idx, align 8
-  %i.fi = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %7, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %8) #28 ; 2 uses
+  %i.fi = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %8, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %9) #28 ; 2 uses
   %.fca.0.extract200 = extractvalue { ptr, i32 } %i.fi, 0 ; 2 uses
   %.fca.1.extract201 = extractvalue { ptr, i32 } %i.fi, 1 ; 2 uses
   store ptr %.fca.0.extract200, ptr %4, align 8, !tbaa !365
@@ -651,14 +652,14 @@ bb.bg:                                            ; preds = %bb.bf
   %.fca.1.extract180 = extractvalue { ptr, i32 } %i.fo, 1
   store ptr %.fca.0.extract179, ptr %5, align 8, !tbaa !365
   store i32 %.fca.1.extract180, ptr %.sroa.2184.0..sroa_idx, align 8, !tbaa !160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !497
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !497
   %i.fp = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %6, i64 noundef 78, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 %.374.val, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #28 ; 2 uses
   %.fca.0.extract171 = extractvalue { ptr, i32 } %i.fp, 0
   %.fca.1.extract172 = extractvalue { ptr, i32 } %i.fp, 1
-  store ptr %.fca.0.extract171, ptr %10, align 8
-  %.sroa.2174.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store ptr %.fca.0.extract171, ptr %11, align 8
+  %.sroa.2174.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i32 %.fca.1.extract172, ptr %.sroa.2174.0..sroa_idx, align 8
-  %i.fq = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %9, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %10) #28 ; 2 uses
+  %i.fq = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %10, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %11) #28 ; 2 uses
   %.fca.0.extract167 = extractvalue { ptr, i32 } %i.fq, 0 ; 2 uses
   %.fca.1.extract168 = extractvalue { ptr, i32 } %i.fq, 1 ; 2 uses
   store ptr %.fca.0.extract167, ptr %5, align 8, !tbaa !365
@@ -675,11 +676,10 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
   br i1 %i.fs, label %.lr.ph134.preheader, label %.preheader
 
 .lr.ph134.preheader:                              ; preds = %bb.bh
-  %19 = ptrtoaddr ptr %1 to i64                   ; 3 uses
-  %i.ft = add i64 %i.d, %19
-  %i.fu = add i64 %19, 4
+  %i.ft = add i64 %i.d, %7
+  %i.fu = add i64 %7, 4
   %i.fv = tail call i64 @llvm.umax.i64(i64 %i.ft, i64 %i.fu)
-  %i.fw = xor i64 %19, -1
+  %i.fw = xor i64 %7, -1
   %i.fx = add i64 %i.fv, %i.fw                    ; 2 uses
   %i.fy = lshr i64 %i.fx, 2
   %i.fz = add nuw nsw i64 %i.fy, 1                ; 2 uses
@@ -726,12 +726,11 @@ middle.block233:                                  ; preds = %vector.body227
   br i1 %i.gl, label %.lr.ph136.preheader, label %.loopexit
 
 .lr.ph136.preheader:                              ; preds = %.preheader
-  %20 = ptrtoaddr ptr %1 to i64                   ; 3 uses
-  %i.gm = add i64 %i.d, %20
+  %i.gm = add i64 %i.d, %7
   %i.gn = add i64 %i.gm, 4
-  %i.go = add i64 %.idx, %20
+  %i.go = add i64 %.idx, %7
   %i.gp = tail call i64 @llvm.umax.i64(i64 %i.gn, i64 %i.go)
-  %i.gq = xor i64 %20, -1
+  %i.gq = xor i64 %7, -1
   %i.gr = add i64 %i.gp, %i.gq
   %i.gs = sub i64 %i.gr, %i.d                     ; 2 uses
   %i.gt = lshr i64 %i.gs, 2
@@ -805,14 +804,14 @@ bb.bi:                                            ; preds = %"_ZSt6all_ofIPiZL31
   %.fca.1.extract135 = extractvalue { ptr, i32 } %i.hs, 1
   store ptr %.fca.0.extract134, ptr %4, align 8, !tbaa !365
   store i32 %.fca.1.extract135, ptr %.sroa.2139.0..sroa_idx, align 8, !tbaa !160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !497
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !497
   %i.ht = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %6, i64 noundef 238, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 %.374.val, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #28 ; 2 uses
   %.fca.0.extract126 = extractvalue { ptr, i32 } %i.ht, 0
   %.fca.1.extract127 = extractvalue { ptr, i32 } %i.ht, 1
-  store ptr %.fca.0.extract126, ptr %12, align 8
-  %.sroa.2129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 8
+  store ptr %.fca.0.extract126, ptr %13, align 8
+  %.sroa.2129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %13, i64 8
   store i32 %.fca.1.extract127, ptr %.sroa.2129.0..sroa_idx, align 8
-  %i.hu = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %11, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %12) #28 ; 2 uses
+  %i.hu = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %12, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %13) #28 ; 2 uses
   %.fca.0.extract122 = extractvalue { ptr, i32 } %i.hu, 0 ; 2 uses
   %.fca.1.extract123 = extractvalue { ptr, i32 } %i.hu, 1 ; 2 uses
   store ptr %.fca.0.extract122, ptr %4, align 8, !tbaa !365
@@ -837,14 +836,14 @@ bb.bj:                                            ; preds = %bb.bi
   %.fca.1.extract102 = extractvalue { ptr, i32 } %i.ia, 1
   store ptr %.fca.0.extract101, ptr %5, align 8, !tbaa !365
   store i32 %.fca.1.extract102, ptr %.sroa.2106.0..sroa_idx, align 8, !tbaa !160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !497
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %14, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !497
   %i.ib = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %6, i64 noundef 238, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 %.374.val, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #28 ; 2 uses
   %.fca.0.extract93 = extractvalue { ptr, i32 } %i.ib, 0
   %.fca.1.extract94 = extractvalue { ptr, i32 } %i.ib, 1
-  store ptr %.fca.0.extract93, ptr %14, align 8
-  %.sroa.296.0..sroa_idx = getelementptr inbounds nuw i8, ptr %14, i64 8
+  store ptr %.fca.0.extract93, ptr %15, align 8
+  %.sroa.296.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 8
   store i32 %.fca.1.extract94, ptr %.sroa.296.0..sroa_idx, align 8
-  %i.ic = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %13, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %14) #28 ; 2 uses
+  %i.ic = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %14, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %15) #28 ; 2 uses
   %.fca.0.extract89 = extractvalue { ptr, i32 } %i.ic, 0 ; 2 uses
   %.fca.1.extract90 = extractvalue { ptr, i32 } %i.ic, 1 ; 2 uses
   store ptr %.fca.0.extract89, ptr %5, align 8, !tbaa !365
@@ -861,11 +860,10 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   br i1 %i.ie, label %.lr.ph132.preheader, label %.loopexit
 
 .lr.ph132.preheader:                              ; preds = %bb.bk
-  %21 = ptrtoaddr ptr %1 to i64                   ; 3 uses
-  %i.if = add i64 %i.d, %21
-  %i.ig = add i64 %21, 4
+  %i.if = add i64 %i.d, %7
+  %i.ig = add i64 %7, 4
   %i.ih = tail call i64 @llvm.umax.i64(i64 %i.if, i64 %i.ig)
-  %i.ii = xor i64 %21, -1
+  %i.ii = xor i64 %7, -1
   %i.ij = add i64 %i.ih, %i.ii                    ; 2 uses
   %i.ik = lshr i64 %i.ij, 2
   %i.il = add nuw nsw i64 %i.ik, 1                ; 2 uses
@@ -931,14 +929,14 @@ bb.bm:                                            ; preds = %bb.bl
   %.fca.1.extract63 = extractvalue { ptr, i32 } %i.jd, 1
   store ptr %.fca.0.extract62, ptr %4, align 8, !tbaa !365
   store i32 %.fca.1.extract63, ptr %.sroa.267.0..sroa_idx, align 8, !tbaa !160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %15, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !497
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %16, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !497
   %i.je = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %6, i64 noundef 68, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 %.374.val, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #28 ; 2 uses
   %.fca.0.extract54 = extractvalue { ptr, i32 } %i.je, 0
   %.fca.1.extract55 = extractvalue { ptr, i32 } %i.je, 1
-  store ptr %.fca.0.extract54, ptr %16, align 8
-  %.sroa.257.0..sroa_idx = getelementptr inbounds nuw i8, ptr %16, i64 8
+  store ptr %.fca.0.extract54, ptr %17, align 8
+  %.sroa.257.0..sroa_idx = getelementptr inbounds nuw i8, ptr %17, i64 8
   store i32 %.fca.1.extract55, ptr %.sroa.257.0..sroa_idx, align 8
-  %i.jf = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %15, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %16) #28 ; 2 uses
+  %i.jf = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %16, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %17) #28 ; 2 uses
   %.fca.0.extract50 = extractvalue { ptr, i32 } %i.jf, 0 ; 2 uses
   %.fca.1.extract51 = extractvalue { ptr, i32 } %i.jf, 1 ; 2 uses
   store ptr %.fca.0.extract50, ptr %4, align 8, !tbaa !365
@@ -963,14 +961,14 @@ bb.bn:                                            ; preds = %bb.bm
   %.fca.1.extract30 = extractvalue { ptr, i32 } %i.jl, 1
   store ptr %.fca.0.extract29, ptr %5, align 8, !tbaa !365
   store i32 %.fca.1.extract30, ptr %.sroa.234.0..sroa_idx, align 8, !tbaa !160
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !497
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %18, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !497
   %i.jm = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %6, i64 noundef 68, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 %.374.val, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #28 ; 2 uses
   %.fca.0.extract21 = extractvalue { ptr, i32 } %i.jm, 0
   %.fca.1.extract22 = extractvalue { ptr, i32 } %i.jm, 1
-  store ptr %.fca.0.extract21, ptr %18, align 8
-  %.sroa.224.0..sroa_idx = getelementptr inbounds nuw i8, ptr %18, i64 8
+  store ptr %.fca.0.extract21, ptr %19, align 8
+  %.sroa.224.0..sroa_idx = getelementptr inbounds nuw i8, ptr %19, i64 8
   store i32 %.fca.1.extract22, ptr %.sroa.224.0..sroa_idx, align 8
-  %i.jn = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %17, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %18) #28 ; 2 uses
+  %i.jn = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %6, i32 noundef 652, ptr noundef nonnull align 8 dereferenceable(12) %0, i16 96, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %18, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %19) #28 ; 2 uses
   %.fca.0.extract17 = extractvalue { ptr, i32 } %i.jn, 0 ; 2 uses
   %.fca.1.extract18 = extractvalue { ptr, i32 } %i.jn, 1 ; 2 uses
   store ptr %.fca.0.extract17, ptr %5, align 8, !tbaa !365
@@ -987,12 +985,11 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   br i1 %i.jp, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.bo
-  %22 = ptrtoaddr ptr %1 to i64                   ; 3 uses
-  %i.jq = add i64 %i.d, %22
+  %i.jq = add i64 %i.d, %7
   %i.jr = add i64 %i.jq, 4
-  %i.js = add i64 %.idx, %22
+  %i.js = add i64 %.idx, %7
   %i.jt = tail call i64 @llvm.umax.i64(i64 %i.jr, i64 %i.js)
-  %i.ju = xor i64 %22, -1
+  %i.ju = xor i64 %7, -1
   %i.jv = add i64 %i.jt, %i.ju
   %i.jw = sub i64 %i.jv, %i.d                     ; 2 uses
   %i.jx = lshr i64 %i.jw, 2

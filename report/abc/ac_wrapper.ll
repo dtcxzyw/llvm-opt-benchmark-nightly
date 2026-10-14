@@ -205,8 +205,9 @@ bb.ar:                                            ; preds = %.lr.ph132, %_ZN5kit
   %i.ot = phi i64 [ 0, %.lr.ph132 ], [ %i.tn, %_ZN5kittyaNERNS_19dynamic_truth_tableERKS0_.exit ] ; 4 uses
   %.0131 = phi i32 [ 0, %.lr.ph132 ], [ %i.tm, %_ZN5kittyaNERNS_19dynamic_truth_tableERKS0_.exit ]
   %.sroa.098.0130 = phi ptr [ %i.lj, %.lr.ph132 ], [ %.sroa.098.1, %_ZN5kittyaNERNS_19dynamic_truth_tableERKS0_.exit ] ; 16 uses
-  %.sroa.9102.0129 = phi ptr [ %.0.i.i.i.i.i.i.i.i, %.lr.ph132 ], [ %.sroa.9102.1, %_ZN5kittyaNERNS_19dynamic_truth_tableERKS0_.exit ] ; 7 uses
+  %.sroa.9102.0129 = phi ptr [ %.0.i.i.i.i.i.i.i.i, %.lr.ph132 ], [ %.sroa.9102.1, %_ZN5kittyaNERNS_19dynamic_truth_tableERKS0_.exit ] ; 6 uses
   %.sroa.14.0128 = phi ptr [ %i.lk, %.lr.ph132 ], [ %.sroa.14.1, %_ZN5kittyaNERNS_19dynamic_truth_tableERKS0_.exit ] ; 3 uses
+  %.sroa.9102.0129230 = ptrtoaddr ptr %.sroa.9102.0129 to i64 ; 2 uses
   %.sroa.098.0130226 = ptrtoaddr ptr %.sroa.098.0130 to i64 ; 4 uses
   %i.ou = load ptr, ptr %i.cc, align 8, !tbaa !93
   %i.ov = getelementptr inbounds nuw [8 x i8], ptr %i.ou, i64 %i.ot
@@ -236,8 +237,7 @@ _ZNK5kitty19dynamic_truth_table9constructEv.exit.i.i.i59: ; preds = %_ZSt6fill_n
 
 .lr.ph.i.preheader.i.i.i62:                       ; preds = %_ZNK5kitty19dynamic_truth_table9constructEv.exit.i.i.i59
   %i.pe = load ptr, ptr %i.oy, align 8, !tbaa !159, !noalias !497 ; 5 uses
-  %3 = ptrtoaddr ptr %.sroa.9102.0129 to i64
-  %i.pf = add i64 %3, -8
+  %i.pf = add i64 %.sroa.9102.0129230, -8
   %i.pg = sub i64 %i.pf, %.sroa.098.0130226       ; 2 uses
   %i.ph = lshr i64 %i.pg, 3
   %i.pi = add nuw nsw i64 %i.ph, 1                ; 2 uses
@@ -450,8 +450,7 @@ _ZNK5kitty19dynamic_truth_table9constructEv.exit.i.i.i82: ; preds = %_ZSt6fill_n
   br i1 %.not8.i.i.i.i84, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKmSt6vectorImSaImEEEES7_NS1_IPmS6_EESt7bit_andImEET1_T_SD_T0_SC_T2_.exit.i.i.i91, label %.lr.ph.i.i.i.i86.preheader
 
 .lr.ph.i.i.i.i86.preheader:                       ; preds = %_ZNK5kitty19dynamic_truth_table9constructEv.exit.i.i.i82
-  %4 = ptrtoaddr ptr %.sroa.9102.0129 to i64
-  %i.sj = add i64 %4, -8
+  %i.sj = add i64 %.sroa.9102.0129230, -8
   %i.sk = sub i64 %i.sj, %.sroa.098.0130226       ; 2 uses
   %i.sl = lshr i64 %i.sk, 3
   %i.sm = add nuw nsw i64 %i.sl, 1                ; 2 uses

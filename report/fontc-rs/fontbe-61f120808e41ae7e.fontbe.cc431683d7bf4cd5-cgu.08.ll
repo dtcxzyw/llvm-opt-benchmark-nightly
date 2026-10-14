@@ -205,7 +205,7 @@ bb.a:
   %i.j = alloca [40 x i8], align 8                ; 4 uses
   %i.k = alloca [24 x i8], align 8                ; 9 uses
   %i.l = alloca [32 x i8], align 8                ; 7 uses
-  %i.m = alloca [32 x i8], align 8                ; 10 uses
+  %i.m = alloca [32 x i8], align 8                ; 7 uses
   %i.n = alloca [24 x i8], align 8                ; 5 uses
   %i.o = alloca [40 x i8], align 8                ; 9 uses
   %i.p = alloca [8 x i8], align 8                 ; 8 uses
@@ -608,9 +608,6 @@ bb.di:                                            ; preds = %bb.dh
   %.sroa.8.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 62 ; 2 uses
   %i.oi = getelementptr inbounds nuw i8, ptr %i.q, i64 48 ; 4 uses
   %i.oj = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 3 uses
-  %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 26
-  %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 28
-  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 30
   %i.ok = getelementptr inbounds nuw i8, ptr %i.q, i64 52 ; 2 uses
   %.sroa.6357.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 2 uses
   %.sroa.7362.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 40 ; 2 uses
@@ -904,10 +901,9 @@ _RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4IterNtNtNtNtCs6WnK4nVnpEz_11w
   %i.rh = insertelement <2 x i16> %i.rg, i16 %i.re, i64 1
   %i.ri = call <2 x i16> @llvm.umax.v2i16(<2 x i16> %i.rf, <2 x i16> %i.rh)
   store <2 x i16> %i.ri, ptr %i.oi, align 8, !alias.scope !3079, !noalias !3080
-  store i16 1, ptr %i.oj, align 8, !noalias !3081
-  store i16 %.sroa.0.0.i.i.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 2, !noalias !3081
-  store i16 %i.re, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i, align 4, !noalias !3081
-  store i16 0, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i.i, align 2, !noalias !3081
+  %3 = insertelement <4 x i16> <i16 1, i16 poison, i16 poison, i16 0>, i16 %.sroa.0.0.i.i.i.i.i.i, i64 1
+  %4 = insertelement <4 x i16> %3, i16 %i.re, i64 2
+  store <4 x i16> %4, ptr %i.oj, align 8, !noalias !3081
   store i64 -1, ptr %i.m, align 8, !noalias !3081
   br label %bb.ee
 

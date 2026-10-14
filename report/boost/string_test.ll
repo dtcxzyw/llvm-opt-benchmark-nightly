@@ -205,22 +205,20 @@ bb.j:                                             ; preds = %_ZN5boost9container
   br label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit:           ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE23priv_uninitialized_copyIPcS6_EEmT_S7_T0_.exit, %bb.j
-  %i.bs = load ptr, ptr %2, align 8, !tbaa !69    ; 10 uses
-  %i.bt = load ptr, ptr %3, align 8, !tbaa !69    ; 5 uses
+  %i.bs = load ptr, ptr %2, align 8, !tbaa !69    ; 9 uses
+  %5 = ptrtoaddr ptr %i.bs to i64                 ; 2 uses
+  %i.bt = load ptr, ptr %3, align 8, !tbaa !69    ; 4 uses
+  %6 = ptrtoaddr ptr %i.bt to i64                 ; 4 uses
   %.not2.i = icmp eq ptr %i.bs, %i.bt
   br i1 %.not2.i, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE9priv_copyINS_7movelib16reverse_iteratorIPcEES8_EEvT_SA_T0_.exit, label %iter.check410
 
 iter.check410:                                    ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit
-  %5 = ptrtoaddr ptr %i.bt to i64                 ; 3 uses
-  %6 = ptrtoaddr ptr %i.bs to i64
-  %i.bu = sub i64 %6, %5                          ; 7 uses
+  %i.bu = sub i64 %5, %6                          ; 7 uses
   %min.iters.check388 = icmp ult i64 %i.bu, 8
   br i1 %min.iters.check388, label %.lr.ph.i103.preheader, label %vector.memcheck389
 
 vector.memcheck389:                               ; preds = %iter.check410
-  %7 = ptrtoaddr ptr %i.bs to i64
-  %8 = ptrtoaddr ptr %i.bt to i64
-  %i.bv = sub i64 %7, %8
+  %i.bv = sub i64 %5, %6
   %i.bw = getelementptr i8, ptr %1, i64 %i.bv
   %bound0390 = icmp ult ptr %1, %i.bs
   %bound1391 = icmp ult ptr %i.bt, %i.bw
@@ -294,7 +292,7 @@ vec.epilog.middle.block423:                       ; preds = %vec.epilog.vector.b
   %.sroa.0174.0.ph = phi ptr [ %i.bs, %iter.check410 ], [ %i.bs, %vector.memcheck389 ], [ %i.bz, %vec.epilog.iter.check412 ], [ %i.ch, %vec.epilog.middle.block423 ] ; 3 uses
   %.03.i.ph = phi ptr [ %1, %iter.check410 ], [ %1, %vector.memcheck389 ], [ %i.ca, %vec.epilog.iter.check412 ], [ %i.ci, %vec.epilog.middle.block423 ] ; 2 uses
   %.sroa.0174.0.ph563 = ptrtoaddr ptr %.sroa.0174.0.ph to i64 ; 2 uses
-  %i.cm = sub i64 %.sroa.0174.0.ph563, %5
+  %i.cm = sub i64 %.sroa.0174.0.ph563, %6
   %xtraiter564 = and i64 %i.cm, 7                 ; 2 uses
   %lcmp.mod565.not = icmp eq i64 %xtraiter564, 0
   br i1 %lcmp.mod565.not, label %.lr.ph.i103.prol.loopexit, label %.lr.ph.i103.prol
@@ -314,7 +312,7 @@ vec.epilog.middle.block423:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i103.prol.loopexit:                        ; preds = %.lr.ph.i103.prol, %.lr.ph.i103.preheader
   %.sroa.0174.0.unr = phi ptr [ %.sroa.0174.0.ph, %.lr.ph.i103.preheader ], [ %i.cn, %.lr.ph.i103.prol ]
   %.03.i.unr = phi ptr [ %.03.i.ph, %.lr.ph.i103.preheader ], [ %i.cp, %.lr.ph.i103.prol ]
-  %i.cq = sub i64 %5, %.sroa.0174.0.ph563
+  %i.cq = sub i64 %6, %.sroa.0174.0.ph563
   %i.cr = icmp ugt i64 %i.cq, -8
   br i1 %i.cr, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE9priv_copyINS_7movelib16reverse_iteratorIPcEES8_EEvT_SA_T0_.exit, label %.lr.ph.i103
 
@@ -357,31 +355,29 @@ vec.epilog.middle.block423:                       ; preds = %vec.epilog.vector.b
   br i1 %.not.i104.7, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE9priv_copyINS_7movelib16reverse_iteratorIPcEES8_EEvT_SA_T0_.exit, label %.lr.ph.i103, !llvm.loop !823
 
 bb.k:                                             ; preds = %bb.i
-  %i.dq = load ptr, ptr %2, align 8, !tbaa !69    ; 3 uses
-  %i.dr = ptrtoaddr ptr %i.dq to i64              ; 4 uses
+  %i.dq = load ptr, ptr %2, align 8, !tbaa !69    ; 2 uses
+  %i.dr = ptrtoaddr ptr %i.dq to i64              ; 5 uses
   %i.ds = xor i64 %i.aw, -1
   %i.dt = getelementptr inbounds i8, ptr %i.dq, i64 %i.ds ; 10 uses
-  %i.du = load ptr, ptr %3, align 8, !tbaa !69    ; 5 uses
+  %i.du = load ptr, ptr %3, align 8, !tbaa !69    ; 4 uses
+  %7 = ptrtoaddr ptr %i.du to i64                 ; 4 uses
   %i.dv = getelementptr i8, ptr %i.y, i64 %i.r    ; 2 uses
   %i.dw = getelementptr i8, ptr %i.dv, i64 1      ; 8 uses
   %.not4.i = icmp eq ptr %i.dt, %i.du
   br i1 %.not4.i, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE23priv_uninitialized_copyINS_7movelib16reverse_iteratorIPcEES8_EEmT_SA_T0_.exit, label %iter.check454
 
 iter.check454:                                    ; preds = %bb.k
-  %9 = ptrtoaddr ptr %i.du to i64                 ; 3 uses
   %i.dx = add i64 %i.h, %i.dr
   %i.dy = xor i64 %i.r, -1
   %i.dz = add i64 %i.dx, %i.dy
-  %i.ea = add i64 %i.av, %9
+  %i.ea = add i64 %i.av, %7
   %i.eb = sub i64 %i.dz, %i.ea                    ; 7 uses
   %min.iters.check432 = icmp ult i64 %i.eb, 8
   br i1 %min.iters.check432, label %.lr.ph.i105.preheader, label %vector.memcheck433
 
 vector.memcheck433:                               ; preds = %iter.check454
-  %10 = ptrtoaddr ptr %i.dq to i64
-  %11 = ptrtoaddr ptr %i.du to i64
-  %i.ec = add i64 %i.av, %11
-  %i.ed = add i64 %i.h, %10
+  %i.ec = add i64 %i.av, %7
+  %i.ed = add i64 %i.h, %i.dr
   %i.ee = sub i64 %i.ed, %i.ec
   %i.ef = getelementptr i8, ptr %i.y, i64 %i.ee
   %bound0434 = icmp ult ptr %i.dw, %i.dt
@@ -456,7 +452,7 @@ vec.epilog.middle.block467:                       ; preds = %vec.epilog.vector.b
   %.sroa.0167.0.ph = phi ptr [ %i.dt, %iter.check454 ], [ %i.dt, %vector.memcheck433 ], [ %i.ei, %vec.epilog.iter.check456 ], [ %i.eq, %vec.epilog.middle.block467 ] ; 3 uses
   %.035.i.ph = phi ptr [ %i.dw, %iter.check454 ], [ %i.dw, %vector.memcheck433 ], [ %i.ej, %vec.epilog.iter.check456 ], [ %i.er, %vec.epilog.middle.block467 ] ; 2 uses
   %.sroa.0167.0.ph567 = ptrtoaddr ptr %.sroa.0167.0.ph to i64 ; 2 uses
-  %i.ev = sub i64 %.sroa.0167.0.ph567, %9
+  %i.ev = sub i64 %.sroa.0167.0.ph567, %7
   %xtraiter568 = and i64 %i.ev, 7                 ; 2 uses
   %lcmp.mod569.not = icmp eq i64 %xtraiter568, 0
   br i1 %lcmp.mod569.not, label %.lr.ph.i105.prol.loopexit, label %.lr.ph.i105.prol
@@ -476,7 +472,7 @@ vec.epilog.middle.block467:                       ; preds = %vec.epilog.vector.b
 .lr.ph.i105.prol.loopexit:                        ; preds = %.lr.ph.i105.prol, %.lr.ph.i105.preheader
   %.sroa.0167.0.unr = phi ptr [ %.sroa.0167.0.ph, %.lr.ph.i105.preheader ], [ %i.ew, %.lr.ph.i105.prol ]
   %.035.i.unr = phi ptr [ %.035.i.ph, %.lr.ph.i105.preheader ], [ %i.ey, %.lr.ph.i105.prol ]
-  %i.ez = sub i64 %9, %.sroa.0167.0.ph567
+  %i.ez = sub i64 %7, %.sroa.0167.0.ph567
   %i.fa = icmp ugt i64 %i.ez, -8
   br i1 %i.fa, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE23priv_uninitialized_copyINS_7movelib16reverse_iteratorIPcEES8_EEmT_SA_T0_.exit, label %.lr.ph.i105
 
@@ -684,14 +680,14 @@ vec.epilog.middle.block501:                       ; preds = %vec.epilog.vector.b
   br i1 %.not.i112.7, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE23priv_uninitialized_copyIPKcPcEEmT_S9_T0_.exit, label %.lr.ph.i109, !llvm.loop !834
 
 _ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE23priv_uninitialized_copyIPKcPcEEmT_S9_T0_.exit: ; preds = %.lr.ph.i109.prol.loopexit, %.lr.ph.i109, %middle.block485, %vec.epilog.middle.block501, %_ZN5boost9container3dtl17basic_string_baseINS0_13new_allocatorIcEEvE9priv_sizeEm.exit
-  %i.ii = load ptr, ptr %2, align 8, !tbaa !69    ; 11 uses
+  %i.ii = load ptr, ptr %2, align 8, !tbaa !69    ; 10 uses
+  %8 = ptrtoaddr ptr %i.ii to i64                 ; 3 uses
   %.not2.i115 = icmp eq ptr %i.ii, %i.dt
   br i1 %.not2.i115, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE9priv_copyINS_7movelib16reverse_iteratorIPcEES8_EEvT_SA_T0_.exit, label %iter.check532
 
 iter.check532:                                    ; preds = %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE23priv_uninitialized_copyIPKcPcEEmT_S9_T0_.exit
-  %12 = ptrtoaddr ptr %i.ii to i64
   %i.ij = add i64 %i.r, %i.av
-  %i.ik = add i64 %i.ij, %12
+  %i.ik = add i64 %i.ij, %8
   %i.il = add i64 %i.ik, 1
   %i.im = add i64 %i.h, %i.dr
   %i.in = sub i64 %i.il, %i.im                    ; 7 uses
@@ -699,9 +695,8 @@ iter.check532:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check510, label %.lr.ph.i116.preheader, label %vector.memcheck511
 
 vector.memcheck511:                               ; preds = %iter.check532
-  %13 = ptrtoaddr ptr %i.ii to i64                ; 2 uses
   %i.io = add i64 %i.r, %i.av
-  %i.ip = add i64 %i.io, %13
+  %i.ip = add i64 %i.io, %8
   %i.iq = add i64 %i.ip, 1
   %i.ir = add i64 %i.h, %i.dr
   %i.is = sub i64 %i.iq, %i.ir
@@ -709,7 +704,7 @@ vector.memcheck511:                               ; preds = %iter.check532
   %i.iu = add i64 %i.h, %i.dr
   %i.iv = xor i64 %i.r, -1
   %i.iw = add i64 %i.iu, %i.iv
-  %i.ix = add i64 %i.av, %13
+  %i.ix = add i64 %i.av, %8
   %i.iy = sub i64 %i.iw, %i.ix
   %i.iz = getelementptr i8, ptr %i.ii, i64 %i.iy
   %bound0512 = icmp ult ptr %1, %i.ii
@@ -1112,23 +1107,21 @@ bb.u:                                             ; preds = %_ZNSt11char_traitsI
   br label %_ZNSt11char_traitsIcE4moveEPcPKcm.exit145
 
 _ZNSt11char_traitsIcE4moveEPcPKcm.exit145:        ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit144, %bb.u
-  %i.qu = load ptr, ptr %2, align 8, !tbaa !69    ; 10 uses
-  %i.qv = load ptr, ptr %3, align 8, !tbaa !69    ; 5 uses
+  %i.qu = load ptr, ptr %2, align 8, !tbaa !69    ; 9 uses
+  %9 = ptrtoaddr ptr %i.qu to i64                 ; 2 uses
+  %i.qv = load ptr, ptr %3, align 8, !tbaa !69    ; 4 uses
+  %10 = ptrtoaddr ptr %i.qv to i64                ; 4 uses
   %.not4.i146 = icmp eq ptr %i.qu, %i.qv
   br i1 %.not4.i146, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE23priv_uninitialized_copyINS_7movelib16reverse_iteratorIPcEES8_EEmT_SA_T0_.exit152, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt11char_traitsIcE4moveEPcPKcm.exit145
-  %14 = ptrtoaddr ptr %i.qv to i64                ; 3 uses
-  %15 = ptrtoaddr ptr %i.qu to i64
-  %i.qw = sub i64 %15, %14                        ; 7 uses
+  %i.qw = sub i64 %9, %10                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.qw, 8
   br i1 %min.iters.check, label %.lr.ph.i147.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %16 = ptrtoaddr ptr %i.qu to i64
-  %17 = ptrtoaddr ptr %i.qv to i64
-  %i.qx = add i64 %16, %i.h
-  %i.qy = add i64 %i.qn, %17
+  %i.qx = add i64 %9, %i.h
+  %i.qy = add i64 %i.qn, %10
   %i.qz = sub i64 %i.qx, %i.qy
   %i.ra = getelementptr i8, ptr %i.ar, i64 %i.qz
   %bound0 = icmp ult ptr %i.qq, %i.qu
@@ -1203,7 +1196,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.sroa.0155.0.ph = phi ptr [ %i.qu, %iter.check ], [ %i.qu, %vector.memcheck ], [ %i.rd, %vec.epilog.iter.check ], [ %i.rl, %vec.epilog.middle.block ] ; 3 uses
   %.035.i149.ph = phi ptr [ %i.qq, %iter.check ], [ %i.qq, %vector.memcheck ], [ %i.re, %vec.epilog.iter.check ], [ %i.rm, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.0155.0.ph550 = ptrtoaddr ptr %.sroa.0155.0.ph to i64 ; 2 uses
-  %i.rq = sub i64 %.sroa.0155.0.ph550, %14
+  %i.rq = sub i64 %.sroa.0155.0.ph550, %10
   %xtraiter = and i64 %i.rq, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i147.prol.loopexit, label %.lr.ph.i147.prol
@@ -1223,7 +1216,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i147.prol.loopexit:                        ; preds = %.lr.ph.i147.prol, %.lr.ph.i147.preheader
   %.sroa.0155.0.unr = phi ptr [ %.sroa.0155.0.ph, %.lr.ph.i147.preheader ], [ %i.rr, %.lr.ph.i147.prol ]
   %.035.i149.unr = phi ptr [ %.035.i149.ph, %.lr.ph.i147.preheader ], [ %i.rt, %.lr.ph.i147.prol ]
-  %i.ru = sub i64 %14, %.sroa.0155.0.ph550
+  %i.ru = sub i64 %10, %.sroa.0155.0.ph550
   %i.rv = icmp ugt i64 %i.ru, -8
   br i1 %i.rv, label %_ZN5boost9container12basic_stringIcSt11char_traitsIcEvvE23priv_uninitialized_copyINS_7movelib16reverse_iteratorIPcEES8_EEmT_SA_T0_.exit152, label %.lr.ph.i147
 

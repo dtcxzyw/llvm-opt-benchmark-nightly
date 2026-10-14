@@ -205,7 +205,7 @@ computeoffset_qr.exit.i:                          ; preds = %bb.kt, %bb.ks
   %.sroa.8214.1.lcssa.i = phi double [ %.sroa.8214.0605.i, %gv_calloc.exit492.i ], [ %i.amy, %computeoffset_qr.exit.i ] ; 2 uses
   %.0408.lcssa.i = phi i64 [ 0, %gv_calloc.exit492.i ], [ %i.alr, %computeoffset_qr.exit.i ] ; 2 uses
   %i.anb = phi <2 x double> [ %i.akg, %gv_calloc.exit492.i ], [ %i.alt, %computeoffset_qr.exit.i ] ; 3 uses
-  %i.anc = getelementptr inbounds nuw [16 x i8], ptr %i.amz, i64 %.0408.lcssa.i ; 2 uses
+  %i.anc = getelementptr inbounds nuw [16 x i8], ptr %i.amz, i64 %.0408.lcssa.i
   %i.and = extractelement <2 x double> %i.anb, i64 0
   %i.ane = fsub double %.sroa.0210.1.lcssa.i, %i.and ; 3 uses
   %i.anf = extractelement <2 x double> %i.anb, i64 1
@@ -216,17 +216,13 @@ computeoffset_qr.exit.i:                          ; preds = %bb.kt, %bb.ks
   %sqrt.i500.i = call double @llvm.sqrt.f64(double %i.anj)
   %i.ank = fdiv double 2.000000e+00, %sqrt.i500.i
   %i.anl = fneg double %i.ane
-  %.sroa.494.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.anc, i64 8
   %i.anm = getelementptr inbounds nuw [16 x i8], ptr %i.ana, i64 %.0408.lcssa.i
   %i.ann = insertelement <2 x double> poison, double %i.ank, i64 0
   %i.ano = shufflevector <2 x double> %i.ann, <2 x double> poison, <2 x i32> zeroinitializer
   %i.anp = insertelement <2 x double> poison, double %i.ang, i64 0
   %i.anq = insertelement <2 x double> %i.anp, double %i.anl, i64 1
-  %i.anr = fmul <2 x double> %i.ano, %i.anq       ; 3 uses
-  %19 = extractelement <2 x double> %i.anr, i64 0
-  store double %19, ptr %i.anc, align 8, !tbaa !110
-  %20 = extractelement <2 x double> %i.anr, i64 1
-  store double %20, ptr %.sroa.494.0..sroa_idx.i, align 8, !tbaa !110
+  %i.anr = fmul <2 x double> %i.ano, %i.anq       ; 2 uses
+  store <2 x double> %i.anr, ptr %i.anc, align 8, !tbaa !110
   %i.ans = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aix, <2 x double> %i.anr, <2 x double> %i.anb)
   store <2 x double> %i.ans, ptr %i.anm, align 8, !tbaa !110
   %i.ant = add nuw nsw i64 %.0409606.i, 1         ; 2 uses

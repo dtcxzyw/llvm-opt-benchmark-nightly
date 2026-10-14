@@ -204,8 +204,8 @@ bb.a:
   %i.d = alloca [32 x i8], align 16               ; 4 uses
   %i.e = alloca [5 x i64], align 16               ; 11 uses
   %i.f = alloca [5 x i64], align 16               ; 10 uses
-  %i.g = alloca [5 x i64], align 16               ; 8 uses
-  %i.h = alloca [5 x i64], align 16               ; 8 uses
+  %i.g = alloca [5 x i64], align 16               ; 7 uses
+  %i.h = alloca [5 x i64], align 16               ; 5 uses
   %i.i = alloca [5 x i64], align 16               ; 8 uses
   %i.j = alloca [5 x i64], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
@@ -483,83 +483,68 @@ bb.a:
   %i.iw = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   store i64 %i.ii, ptr %i.iw, align 16
   call fastcc void @fe25519_mul(ptr noundef nonnull %i.f, ptr noundef nonnull %i.f, ptr noundef nonnull %2)
-  %3 = load i64, ptr %1, align 8                  ; 3 uses
-  %i.ix = getelementptr i8, ptr %1, i64 8
+  %i.ix = getelementptr i8, ptr %1, i64 32
   %i.iy = load i64, ptr %i.ix, align 8            ; 2 uses
-  %4 = getelementptr i8, ptr %1, i64 16
-  %i.iz = load i64, ptr %4, align 8               ; 2 uses
-  %5 = getelementptr i8, ptr %1, i64 24
-  %6 = load i64, ptr %5, align 8                  ; 2 uses
-  %i.ja = getelementptr i8, ptr %1, i64 32
-  %7 = load i64, ptr %i.ja, align 8               ; 2 uses
-  %8 = lshr i64 %3, 51
-  %i.jb = add i64 %i.iy, %8                       ; 2 uses
-  %9 = and i64 %3, 2251799813685247
-  %10 = lshr i64 %i.jb, 51
-  %11 = add i64 %10, %i.iz                        ; 2 uses
-  %12 = and i64 %i.jb, 2251799813685247
-  %13 = lshr i64 %11, 51
-  %14 = add i64 %13, %6                           ; 2 uses
-  %15 = and i64 %11, 2251799813685247
-  %16 = lshr i64 %14, 51
-  %i.jc = add i64 %16, %7                         ; 2 uses
-  %i.jd = and i64 %14, 2251799813685247
+  %i.iz = load i64, ptr %i.iw, align 16           ; 3 uses
+  %3 = add i64 %i.iz, 4503599627370494
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 32
+  %i.jb = add i64 %i.iz, %i.iy
+  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 32
+  store i64 %i.jb, ptr %6, align 16
+  %7 = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 2 uses
+  %9 = load <4 x i64>, ptr %1, align 8            ; 5 uses
+  %10 = extractelement <4 x i64> %9, i64 0        ; 2 uses
+  %11 = lshr i64 %10, 51
+  %12 = extractelement <4 x i64> %9, i64 1
+  %i.jc = add i64 %12, %11                        ; 2 uses
+  %i.jd = and i64 %10, 2251799813685247
   %i.je = lshr i64 %i.jc, 51
   %i.jf = and i64 %i.jc, 2251799813685247
-  %.neg39.i = mul nsw i64 %i.je, -19
-  %i.jg = load i64, ptr %i.iw, align 16           ; 3 uses
-  %i.jh = add i64 %i.jg, 4503599627370494
-  %17 = sub i64 %i.jh, %i.jf
-  %18 = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %19 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %20 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
-  %21 = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  store i64 %17, ptr %21, align 16
-  %i.ji = add i64 %i.jg, %7
-  %22 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %23 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %24 = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  %25 = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  store i64 %i.ji, ptr %25, align 16
   call fastcc void @fe25519_mul(ptr noundef nonnull %i.i, ptr noundef nonnull %1, ptr noundef nonnull @sqrtm1)
-  %26 = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
-  %27 = getelementptr inbounds nuw i8, ptr %i.i, i64 32 ; 2 uses
-  %28 = load i64, ptr %27, align 16
-  %29 = add i64 %28, %i.jg
-  %i.jj = load <2 x i64>, ptr %i.f, align 16      ; 3 uses
-  %i.jk = extractelement <2 x i64> %i.jj, i64 0   ; 2 uses
-  %reass.sub = sub i64 %i.jk, %9
-  %i.jl = add i64 %reass.sub, 4503599627370458
-  %30 = add i64 %i.jl, %.neg39.i
-  %i.jm = extractelement <2 x i64> %i.jj, i64 1   ; 2 uses
-  %reass.sub34 = sub i64 %i.jm, %12
-  %i.jn = add i64 %reass.sub34, 4503599627370494
-  store i64 %30, ptr %i.g, align 16
-  store i64 %i.jn, ptr %18, align 8
-  %31 = add i64 %i.jk, %3
-  %i.jo = add i64 %i.jm, %i.iy
-  store i64 %31, ptr %i.h, align 16
-  store i64 %i.jo, ptr %22, align 8
-  %32 = load <2 x i64>, ptr %i.i, align 16
-  %33 = add <2 x i64> %32, %i.jj
-  store <2 x i64> %33, ptr %i.i, align 16
-  %34 = load <2 x i64>, ptr %i.iu, align 16       ; 3 uses
-  %35 = extractelement <2 x i64> %34, i64 0       ; 2 uses
-  %reass.sub35 = sub i64 %35, %15
-  %36 = add i64 %reass.sub35, 4503599627370494
-  %37 = extractelement <2 x i64> %34, i64 1       ; 2 uses
-  %reass.sub36 = sub i64 %37, %i.jd
-  %38 = add i64 %reass.sub36, 4503599627370494
-  store i64 %36, ptr %19, align 16
-  store i64 %38, ptr %20, align 8
-  %39 = add i64 %35, %i.iz
-  %40 = add i64 %37, %6
-  store i64 %39, ptr %23, align 16
-  store i64 %40, ptr %24, align 8
-  %i.jp = load <2 x i64>, ptr %26, align 16
-  %i.jq = add <2 x i64> %i.jp, %34
-  store <2 x i64> %i.jq, ptr %26, align 16
-  store i64 %29, ptr %27, align 16
+  %i.jg = load i64, ptr %8, align 16
+  %i.jh = add i64 %i.jg, %i.iz
+  %13 = load <2 x i64>, ptr %i.f, align 16        ; 4 uses
+  %14 = extractelement <2 x i64> %13, i64 0
+  %reass.sub = sub i64 %14, %i.jd
+  %i.ji = add i64 %reass.sub, 4503599627370458
+  %15 = extractelement <2 x i64> %13, i64 1
+  %reass.sub34 = sub i64 %15, %i.jf
+  %16 = add i64 %reass.sub34, 4503599627370494
+  store i64 %16, ptr %i.ja, align 8
+  %17 = load <2 x i64>, ptr %i.i, align 16
+  %18 = add <2 x i64> %17, %13
+  store <2 x i64> %18, ptr %i.i, align 16
+  %i.jj = load <2 x i64>, ptr %i.iu, align 16     ; 3 uses
+  %i.jk = extractelement <4 x i64> %9, i64 2
+  %i.jl = add i64 %i.je, %i.jk                    ; 2 uses
+  %19 = lshr i64 %i.jl, 51
+  %i.jm = extractelement <4 x i64> %9, i64 3
+  %i.jn = add i64 %19, %i.jm                      ; 2 uses
+  %20 = lshr i64 %i.jn, 51
+  %i.jo = add i64 %20, %i.iy                      ; 2 uses
+  %21 = insertelement <2 x i64> poison, i64 %i.jl, i64 0
+  %22 = insertelement <2 x i64> %21, i64 %i.jn, i64 1
+  %23 = and <2 x i64> %22, splat (i64 2251799813685247)
+  %24 = lshr i64 %i.jo, 51
+  %25 = and i64 %i.jo, 2251799813685247
+  %.neg39.i = mul nsw i64 %24, -19
+  %reass.sub35 = sub i64 %3, %25
+  store i64 %reass.sub35, ptr %5, align 16
+  %26 = add i64 %i.ji, %.neg39.i
+  store i64 %26, ptr %i.g, align 16
+  %27 = sub <2 x i64> %i.jj, %23
+  %28 = add <2 x i64> %27, splat (i64 4503599627370494)
+  store <2 x i64> %28, ptr %4, align 16
+  %29 = shufflevector <2 x i64> %13, <2 x i64> %i.jj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %30 = add <4 x i64> %29, %9
+  store <4 x i64> %30, ptr %i.h, align 16
+  %i.jp = load <2 x i64>, ptr %7, align 16
+  %i.jq = add <2 x i64> %i.jp, %i.jj
+  store <2 x i64> %i.jq, ptr %7, align 16
+  store i64 %i.jh, ptr %8, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
   call void @fe25519_tobytes(ptr noundef nonnull %i.d, ptr noundef nonnull readonly %i.g)
   %i.jr = call i32 @sodium_is_zero(ptr noundef nonnull %i.d, i64 noundef 32) #12
