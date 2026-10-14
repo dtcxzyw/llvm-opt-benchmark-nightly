@@ -204,8 +204,6 @@ bb.t:                                             ; preds = %bb.s
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE23rebalance_right_to_leftEhPS8_PS6_(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %4 = ptrtoaddr ptr %2 to i64
-  %5 = ptrtoaddr ptr %0 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 6 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !58
   %i.c = zext i8 %i.b to i64                      ; 2 uses
@@ -237,9 +235,11 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.i.preheader81, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
+  %4 = ptrtoaddr ptr %0 to i64
   %i.v = shl nuw nsw i64 %i.c, 2
-  %i.w = add i64 %i.v, %5
-  %i.x = sub i64 %i.w, %4
+  %5 = ptrtoaddr ptr %2 to i64
+  %i.w = add i64 %i.v, %4
+  %i.x = sub i64 %i.w, %5
   %i.y = add i64 %i.x, 3
   %diff.check = icmp ult i64 %i.y, 31
   br i1 %diff.check, label %.lr.ph.i.preheader81, label %vector.ph
@@ -480,8 +480,6 @@ bb.c:                                             ; preds = %.lr.ph57, %bb.c
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE23rebalance_left_to_rightEhPS8_PS6_(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %4 = ptrtoaddr ptr %0 to i64
-  %5 = ptrtoaddr ptr %2 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 4 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !58    ; 2 uses
   %i.c = zext i8 %1 to i32                        ; 2 uses
@@ -570,7 +568,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4less
   br i1 %.not13.i, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE10transfer_nEmmmPS8_PS6_.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE19transfer_n_backwardEmmmPS8_PS6_.exit
-  %i.aq = zext i8 %1 to i64
+  %i.aq = zext i8 %1 to i64                       ; 2 uses
   %i.ar = add nuw nsw i64 %i.aq, 4611686018427387902
   %i.as = and i64 %i.ar, 4611686018427387903      ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 1                ; 2 uses
@@ -578,13 +576,14 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4less
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %6 = zext i8 %1 to i64
-  %i.au = shl nuw nsw i64 %6, 2
-  %7 = add i64 %i.au, %5
+  %4 = ptrtoaddr ptr %2 to i64
+  %i.au = shl nuw nsw i64 %i.aq, 2
+  %5 = ptrtoaddr ptr %0 to i64
   %i.av = zext i8 %i.aj to i64
   %i.aw = shl nuw nsw i64 %i.av, 2
-  %i.ax = add i64 %i.aw, %4
-  %i.ay = sub i64 %7, %i.ax
+  %6 = add i64 %i.au, %4
+  %i.ax = add i64 %i.aw, %5
+  %i.ay = sub i64 %6, %i.ax
   %i.az = add i64 %i.ay, -5
   %diff.check = icmp ult i64 %i.az, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -807,8 +806,6 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIiSt4lessIiESaIiELi256ELb0EEEE5splitEiPS8_PS6_(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %4 = ptrtoaddr ptr %0 to i64
-  %5 = ptrtoaddr ptr %2 to i64
   switch i32 %1, label %bb.c [
     i32 0, label %bb.b
     i32 61, label %bb.d
@@ -854,9 +851,11 @@ bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %0 to i64
   %i.v = shl nuw nsw i64 %i.n, 2
-  %i.w = add i64 %i.v, %4
-  %i.x = sub i64 %i.w, %5
+  %i.w = add i64 %i.v, %5
+  %i.x = sub i64 %i.w, %4
   %diff.check = icmp ugt i64 %i.x, -32
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.ph
 
