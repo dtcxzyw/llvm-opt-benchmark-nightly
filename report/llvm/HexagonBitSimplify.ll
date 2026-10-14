@@ -205,8 +205,8 @@ bb.bi:                                            ; preds = %.lr.ph.i143
   br i1 %.not153.i, label %bb.bh, label %"_ZZN12_GLOBAL__N_117BitSimplification11genBitSplitEPN4llvm12MachineInstrENS1_10BitTracker11RegisterRefERKNS4_12RegisterCellERKNS_11RegisterSetEENK3$_0clES8_.exit.i.thread239"
 
 .critedge177.i:                                   ; preds = %bb.bh, %.thread248
-  %i.vh = phi i32 [ %i.uq, %.thread248 ], [ %i.uv, %bb.bh ] ; 3 uses
-  %i.vi = phi i16 [ %i.up, %.thread248 ], [ %i.uu, %bb.bh ]
+  %i.vh = phi i32 [ %i.uq, %.thread248 ], [ %i.uv, %bb.bh ] ; 2 uses
+  %i.vi = phi i16 [ %i.up, %.thread248 ], [ %i.uu, %bb.bh ] ; 2 uses
   %i.vj = phi i32 [ %i.un, %.thread248 ], [ %i.us, %bb.bh ] ; 6 uses
   %i.vk = phi i32 [ 31, %.thread248 ], [ %i.uk, %bb.bh ] ; 4 uses
   %.0.lcssa.i.i124238246251 = phi i32 [ 1, %.thread248 ], [ %.0.lcssa.i.i124.ph, %bb.bh ] ; 3 uses
@@ -521,8 +521,8 @@ bb.bm:                                            ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %bb.bm
   %i.aap = getelementptr inbounds nuw i8, ptr %.val190.i, i64 8
-  %i.aaq = load i16, ptr %i.aap, align 4, !tbaa !309 ; 2 uses
-  %i.aar = zext i16 %i.aaq to i32                 ; 4 uses
+  %i.aaq = load i16, ptr %i.aap, align 4, !tbaa !309 ; 3 uses
+  %i.aar = zext i16 %i.aaq to i32                 ; 3 uses
   %.not159.i = icmp ugt i16 %i.vi, %i.aaq         ; 5 uses
   %.not160.i = icmp eq i32 %.reass.i, %i.aar
   %or.cond112.i = select i1 %.not159.i, i1 true, i1 %.not160.i
@@ -535,9 +535,8 @@ bb.bo:                                            ; preds = %bb.bn
   br i1 %or.cond.not.i, label %_ZNK4llvm10BitTracker3hasEj.exit.thread.i, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
-  %.sroa.speculated38.i = call i32 @llvm.umin.i32(i32 %i.vh, i32 %i.aar) ; 2 uses
-  %trunc.i = trunc nuw i32 %.sroa.speculated38.i to i16
-  switch i16 %trunc.i, label %_ZNK4llvm10BitTracker3hasEj.exit.thread.i [
+  %.sroa.speculated38.i = call i16 @llvm.umin.i16(i16 %i.vi, i16 %i.aaq) ; 2 uses
+  switch i16 %.sroa.speculated38.i, label %_ZNK4llvm10BitTracker3hasEj.exit.thread.i [
     i16 0, label %bb.bq
     i16 32, label %bb.bq
   ]
@@ -618,7 +617,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bv
   %i.abu = getelementptr inbounds nuw i8, ptr %i.abt, i64 20
   %i.abv = load i16, ptr %i.abu, align 4, !tbaa !414
   %i.abw = icmp eq i16 %i.abv, 15
-  %i.abx = icmp eq i32 %.sroa.speculated38.i, 32
+  %i.abx = icmp eq i16 %.sroa.speculated38.i, 32
   %i.aby = select i1 %i.abx, i32 1, i32 2
   %.1136.i = select i1 %i.abw, i32 %i.aby, i32 %.0135105.i ; 4 uses
   %.sroa.223.0.insert.ext.i = zext nneg i32 %.1136.i to i64
@@ -1019,6 +1018,9 @@ declare i64 @llvm.smin.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.ctpop.v2i64(<2 x i64>) #13
