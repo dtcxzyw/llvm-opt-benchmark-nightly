@@ -1,0 +1,244 @@
+diff --git a/clang/include/clang/Lex/HeaderSearchOptions.h b/clang/include/clang/Lex/HeaderSearchOptions.h
+index a27af3278b8cff..941a9e6b8f8011 100644
+--- a/clang/include/clang/Lex/HeaderSearchOptions.h
++++ b/clang/include/clang/Lex/HeaderSearchOptions.h
+@@ -181,11 +181,11 @@ class HeaderSearchOptions {
+   uint64_t BuildSessionTimestamp = 0;
+ 
+   /// The set of macro names that should be ignored by implicitly-built modules.
+-  llvm::SmallSetVector<llvm::CachedHashString, 16> ModulesIgnoreMacros;
++  llvm::SetVector<llvm::CachedHashString> ModulesIgnoreMacros;
+ 
+   /// The set of header search paths that should be ignored by implicitly-built
+   /// modules.
+-  llvm::SmallSetVector<llvm::CachedHashString, 16> ModulesIgnoreSearchPaths;
++  llvm::SetVector<llvm::CachedHashString> ModulesIgnoreSearchPaths;
+ 
+   /// The set of user-provided virtual filesystem overlay files.
+   std::vector<std::string> VFSOverlayFiles;
+diff --git a/clang/include/clang/Serialization/ASTWriter.h b/clang/include/clang/Serialization/ASTWriter.h
+index 576eb863959291..8b9449d5b71b23 100644
+--- a/clang/include/clang/Serialization/ASTWriter.h
++++ b/clang/include/clang/Serialization/ASTWriter.h
+@@ -473,12 +473,12 @@ class ASTWriter : public ASTDeserializationListener,
+   /// if its primary namespace comes from the chain. If it does, we add the
+   /// primary to this set, so that we can write out lexical content updates for
+   /// it.
+-  llvm::SmallSetVector<const DeclContext *, 16> UpdatedDeclContexts;
++  llvm::SetVector<const DeclContext *> UpdatedDeclContexts;
+ 
+   /// Same as UpdatedDeclContexts except that we only apply these updates
+   /// lazily. e.g., if these decl context are touched during the writing
+   /// process. Only meaningful in reduced BMI.
+-  llvm::SmallSetVector<const DeclContext *, 16> UpdatedDeclContextsLazy;
++  llvm::SetVector<const DeclContext *> UpdatedDeclContextsLazy;
+ 
+   /// Keeps track of declarations that we must emit, even though we're
+   /// not guaranteed to be able to find them by walking the AST starting at the
+diff --git a/clang/lib/CodeGen/CGDeclCXX.cpp b/clang/lib/CodeGen/CGDeclCXX.cpp
+index a54809c48037e8..3431294fc37edd 100644
+--- a/clang/lib/CodeGen/CGDeclCXX.cpp
++++ b/clang/lib/CodeGen/CGDeclCXX.cpp
+@@ -704,7 +704,7 @@ void CodeGenModule::EmitCXXModuleInitFunc(Module *Primary) {
+   // Module initializers for imported modules are emitted first.
+ 
+   // Collect all the modules that we import
+-  llvm::SmallSetVector<Module *, 8> AllImports;
++  llvm::SetVector<Module *> AllImports;
+   // Ones that we export
+   for (auto I : Primary->Exports)
+     AllImports.insert(I.first);
+diff --git a/clang/lib/CodeGen/CGObjCMac.cpp b/clang/lib/CodeGen/CGObjCMac.cpp
+index 7bfe0e0249407e..b61f676b1fb1cd 100644
+--- a/clang/lib/CodeGen/CGObjCMac.cpp
++++ b/clang/lib/CodeGen/CGObjCMac.cpp
+@@ -844,7 +844,7 @@ class CGObjCCommonMac : public CodeGen::CGObjCRuntime {
+   llvm::DenseMap<Selector, llvm::GlobalVariable *> MethodVarNames;
+ 
+   /// DefinedCategoryNames - list of category names in form Class_Category.
+-  llvm::SmallSetVector<llvm::CachedHashString, 16> DefinedCategoryNames;
++  llvm::SetVector<llvm::CachedHashString> DefinedCategoryNames;
+ 
+   /// MethodVarTypes - uniqued method type signatures. We have to use
+   /// a StringMap here because have no other unique reference.
+diff --git a/clang/lib/Sema/SemaOverload.cpp b/clang/lib/Sema/SemaOverload.cpp
+index 62b6ad8ffb5644..7e785faff01270 100644
+--- a/clang/lib/Sema/SemaOverload.cpp
++++ b/clang/lib/Sema/SemaOverload.cpp
+@@ -9165,7 +9165,7 @@ namespace {
+ /// enumeration types.
+ class BuiltinCandidateTypeSet  {
+   /// TypeSet - A set of types.
+-  typedef llvm::SmallSetVector<QualType, 8> TypeSet;
++  typedef llvm::SetVector<QualType> TypeSet;
+ 
+   /// PointerTypes - The set of pointer types that will be used in the
+   /// built-in candidates.
+diff --git a/clang/lib/Sema/SemaStmt.cpp b/clang/lib/Sema/SemaStmt.cpp
+index a3e3e403188c72..bff45a866afd53 100644
+--- a/clang/lib/Sema/SemaStmt.cpp
++++ b/clang/lib/Sema/SemaStmt.cpp
+@@ -1938,7 +1938,7 @@ Sema::ActOnDoStmt(SourceLocation DoLoc, Stmt *Body,
+ 
+ namespace {
+   // Use SetVector since the diagnostic cares about the ordering of the Decl's.
+-  using DeclSetVector = llvm::SmallSetVector<VarDecl *, 8>;
++  using DeclSetVector = llvm::SetVector<VarDecl *>;
+ 
+   // This visitor will traverse a conditional statement and store all
+   // the evaluated decls into a vector.  Simple is set to true if none
+diff --git a/lld/ELF/Driver.cpp b/lld/ELF/Driver.cpp
+index 134aae9ef98ad5..65c527c3026222 100644
+--- a/lld/ELF/Driver.cpp
++++ b/lld/ELF/Driver.cpp
+@@ -1121,7 +1121,7 @@ template <class ELFT>
+ static void ltoValidateAllVtablesHaveTypeInfos(Ctx &ctx,
+                                                opt::InputArgList &args) {
+   DenseSet<StringRef> typeInfoSymbols;
+-  SmallSetVector<StringRef, 0> vtableSymbols;
++  SetVector<StringRef> vtableSymbols;
+   auto processVtableAndTypeInfoSymbols = [&](StringRef name) {
+     if (name.consume_front("_ZTI"))
+       typeInfoSymbols.insert(name);
+@@ -1150,7 +1150,7 @@ static void ltoValidateAllVtablesHaveTypeInfos(Ctx &ctx,
+     }
+   }
+ 
+-  SmallSetVector<StringRef, 0> vtableSymbolsWithNoRTTI;
++  SetVector<StringRef> vtableSymbolsWithNoRTTI;
+   for (StringRef s : vtableSymbols)
+     if (!typeInfoSymbols.contains(s))
+       vtableSymbolsWithNoRTTI.insert(s);
+diff --git a/llvm/include/llvm/ADT/GenericUniformityImpl.h b/llvm/include/llvm/ADT/GenericUniformityImpl.h
+index c6f0bba051b609..bb7cfcd62068de 100644
+--- a/llvm/include/llvm/ADT/GenericUniformityImpl.h
++++ b/llvm/include/llvm/ADT/GenericUniformityImpl.h
+@@ -459,7 +459,7 @@ template <typename ContextT> class GenericUniformityAnalysisImpl {
+   const DominatorTreeT &DT;
+ 
+   // Recognized cycles with divergent exits.
+-  SmallSetVector<CycleRef, 8> DivergentExitCycles;
++  SetVector<CycleRef> DivergentExitCycles;
+ 
+   // Cycles assumed to be divergent.
+   //
+diff --git a/llvm/include/llvm/ADT/SetVector.h b/llvm/include/llvm/ADT/SetVector.h
+index bc0ac2583327b3..cb3eb8360d9d39 100644
+--- a/llvm/include/llvm/ADT/SetVector.h
++++ b/llvm/include/llvm/ADT/SetVector.h
+@@ -25,6 +25,7 @@
+ #include "llvm/ADT/DenseSet.h"
+ #include "llvm/ADT/STLExtras.h"
+ #include "llvm/ADT/STLForwardCompat.h"
++#include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/Support/Compiler.h"
+ #include <cassert>
+@@ -342,9 +343,20 @@ class SetVector {
+ /// A SetVector that performs no allocations if smaller than
+ /// a certain size.
+ template <typename T, unsigned N>
+-class SmallSetVector : public SetVector<T, SmallVector<T, N>, DenseSet<T>, N> {
++class SmallSetVector
++    : public SetVector<
++          T, SmallVector<T, N>,
++          std::conditional_t<std::is_pointer_v<T>, SmallPtrSet<T, N>,
++                             SmallDenseSet<T, N>>,
++          N> {
++  static_assert(isPowerOf2_64(N) &&
++                "SmallSetVector is meant to be used with pow-of-2 size-hint");
++
+ public:
+-  using SetVector<T, SmallVector<T, N>, DenseSet<T>, N>::SetVector;
++  using SetVector<T, SmallVector<T, N>,
++                  std::conditional_t<std::is_pointer_v<T>, SmallPtrSet<T, N>,
++                                     SmallDenseSet<T, N>>,
++                  N>::SetVector;
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/include/llvm/ADT/SmallPtrSet.h b/llvm/include/llvm/ADT/SmallPtrSet.h
+index 1a556d6a4145a2..1c59d06977326b 100644
+--- a/llvm/include/llvm/ADT/SmallPtrSet.h
++++ b/llvm/include/llvm/ADT/SmallPtrSet.h
+@@ -385,8 +385,8 @@ template <typename PtrType> class SmallPtrSetImpl : public SmallPtrSetImplBase {
+   /// Returns whether the pointer was in the set. Invalidates iterators if
+   /// true is returned. To remove elements while iterating over the set, use
+   /// remove_if() instead.
+-  bool erase(PtrType Ptr) {
+-    return erase_imp(PtrTraits::getAsVoidPointer(Ptr));
++  bool erase(ConstPtrType Ptr) {
++    return erase_imp(ConstPtrTraits::getAsVoidPointer(Ptr));
+   }
+ 
+   /// Remove elements that match the given predicate.
+diff --git a/mlir/lib/Dialect/SCF/Transforms/ParallelLoopFusion.cpp b/mlir/lib/Dialect/SCF/Transforms/ParallelLoopFusion.cpp
+index 17352933acc295..8c63ad3a25cbb9 100644
+--- a/mlir/lib/Dialect/SCF/Transforms/ParallelLoopFusion.cpp
++++ b/mlir/lib/Dialect/SCF/Transforms/ParallelLoopFusion.cpp
+@@ -839,7 +839,7 @@ computeCandidateInterchangePermutations(ParallelOp &firstPloop,
+ 
+   SmallVector<LoopIV> firstIVs(firstPloop.getNumLoops());
+   SmallVector<LoopIV> secondIVs(secondPloop.getNumLoops());
+-  llvm::SmallSetVector<LoopIV, 6> unique;
++  llvm::SmallSetVector<LoopIV, 8> unique;
+   for (unsigned index : llvm::seq(firstPloop.getNumLoops())) {
+     firstIVs[index].lBound = firstPloop.getLowerBound()[index];
+     firstIVs[index].uBound = firstPloop.getUpperBound()[index];
+diff --git a/offload/plugins-nextgen/common/include/RPC.h b/offload/plugins-nextgen/common/include/RPC.h
+index 3175d377705776..1769686f036b1f 100644
+--- a/offload/plugins-nextgen/common/include/RPC.h
++++ b/offload/plugins-nextgen/common/include/RPC.h
+@@ -90,7 +90,7 @@ struct RPCServerTy {
+   std::mutex BufferMutex{};
+ 
+   /// A list of callbacks the server will attempt to handle.
+-  llvm::SmallSetVector<RPCServerCallbackTy, 0> Callbacks;
++  llvm::SetVector<RPCServerCallbackTy> Callbacks;
+ 
+   /// A helper class for running the user thread that handles the RPC interface.
+   /// Because we only need to check the RPC server while any kernels are
+@@ -114,7 +114,7 @@ struct RPCServerTy {
+     std::mutex &BufferMutex;
+ 
+     /// A reference to the main server's callbacks.
+-    llvm::SmallSetVector<RPCServerCallbackTy, 0> &Callbacks;
++    llvm::SetVector<RPCServerCallbackTy> &Callbacks;
+ 
+     /// A reference to all the RPC interfaces that the server is handling.
+     llvm::ArrayRef<void *> Buffers;
+@@ -129,7 +129,7 @@ struct RPCServerTy {
+     /// Initialize the worker thread to run in the background.
+     ServerThread(void *Buffers[], plugin::GenericDeviceTy *Devices[],
+                  size_t Length, std::mutex &BufferMutex,
+-                 llvm::SmallSetVector<RPCServerCallbackTy, 0> &Callbacks)
++                 llvm::SetVector<RPCServerCallbackTy> &Callbacks)
+         : Running(false), NumUsers(0), CV(), Mutex(), BufferMutex(BufferMutex),
+           Callbacks(Callbacks), Buffers(Buffers, Length),
+           Devices(Devices, Length), SleepFunction([]() {
+diff --git a/offload/plugins-nextgen/common/src/RPC.cpp b/offload/plugins-nextgen/common/src/RPC.cpp
+index ecb7cad412883a..c23b6dfe4710a0 100644
+--- a/offload/plugins-nextgen/common/src/RPC.cpp
++++ b/offload/plugins-nextgen/common/src/RPC.cpp
+@@ -85,7 +85,7 @@ static rpc::RPCStatus handleOffloadOpcodes(plugin::GenericDeviceTy &Device,
+ 
+ static rpc::RPCStatus
+ runServer(plugin::GenericDeviceTy &Device, void *Buffer,
+-          llvm::SmallSetVector<RPCServerTy::RPCServerCallbackTy, 0> &Callbacks,
++          llvm::SetVector<RPCServerTy::RPCServerCallbackTy> &Callbacks,
+           bool &ClientInUse) {
+   const uint64_t NumPorts =
+       std::min(Device.requestedRPCPortCount(), rpc::MAX_PORT_COUNT);
+@@ -114,9 +114,9 @@ runServer(plugin::GenericDeviceTy &Device, void *Buffer,
+   return Status;
+ }
+ 
+-static void flushServer(
+-    plugin::GenericDeviceTy &Device, void *Buffer,
+-    llvm::SmallSetVector<RPCServerTy::RPCServerCallbackTy, 0> Callbacks) {
++static void
++flushServer(plugin::GenericDeviceTy &Device, void *Buffer,
++            llvm::SetVector<RPCServerTy::RPCServerCallbackTy> Callbacks) {
+   bool Pending = true;
+   while (Pending) {
+     Pending = false;
