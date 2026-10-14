@@ -1,0 +1,142 @@
+diff --git a/lld/ELF/Driver.cpp b/lld/ELF/Driver.cpp
+index 134aae9ef98ad5..65c527c3026222 100644
+--- a/lld/ELF/Driver.cpp
++++ b/lld/ELF/Driver.cpp
+@@ -1121,7 +1121,7 @@ template <class ELFT>
+ static void ltoValidateAllVtablesHaveTypeInfos(Ctx &ctx,
+                                                opt::InputArgList &args) {
+   DenseSet<StringRef> typeInfoSymbols;
+-  SmallSetVector<StringRef, 0> vtableSymbols;
++  SetVector<StringRef> vtableSymbols;
+   auto processVtableAndTypeInfoSymbols = [&](StringRef name) {
+     if (name.consume_front("_ZTI"))
+       typeInfoSymbols.insert(name);
+@@ -1150,7 +1150,7 @@ static void ltoValidateAllVtablesHaveTypeInfos(Ctx &ctx,
+     }
+   }
+ 
+-  SmallSetVector<StringRef, 0> vtableSymbolsWithNoRTTI;
++  SetVector<StringRef> vtableSymbolsWithNoRTTI;
+   for (StringRef s : vtableSymbols)
+     if (!typeInfoSymbols.contains(s))
+       vtableSymbolsWithNoRTTI.insert(s);
+diff --git a/llvm/include/llvm/ADT/SetVector.h b/llvm/include/llvm/ADT/SetVector.h
+index bc0ac2583327b3..a82138090f0857 100644
+--- a/llvm/include/llvm/ADT/SetVector.h
++++ b/llvm/include/llvm/ADT/SetVector.h
+@@ -28,9 +28,18 @@
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/Support/Compiler.h"
+ #include <cassert>
++#include <unordered_set>
+ 
+ namespace llvm {
+ 
++namespace detail {
++/// This set is only used when SmallSetVector grows large enough that linear
++/// scanning would be unprofitable.
++template <typename T>
++using Set = std::conditional_t<std::is_integral_v<std::hash<T>>,
++                               std::unordered_set<T>, llvm::DenseSet<T>>;
++} // namespace detail
++
+ /// A vector that has set insertion semantics.
+ ///
+ /// This adapter class provides a way to keep a set of things that also has the
+@@ -53,7 +62,7 @@ namespace llvm {
+ /// for performance. A value of 0 means that this mode of operation is not used,
+ /// and is the default value.
+ template <typename T, typename Vector = SmallVector<T, 0>,
+-          typename Set = DenseSet<T>, unsigned N = 0>
++          typename Set = detail::Set<T>, unsigned N = 0>
+ class SetVector {
+   // Much like in SmallPtrSet, this value should not be too high to prevent
+   // excessively long linear scans from occuring.
+@@ -342,9 +351,13 @@ class SetVector {
+ /// A SetVector that performs no allocations if smaller than
+ /// a certain size.
+ template <typename T, unsigned N>
+-class SmallSetVector : public SetVector<T, SmallVector<T, N>, DenseSet<T>, N> {
++class SmallSetVector
++    : public SetVector<T, SmallVector<T, N>, detail::Set<T>, N> {
++  static_assert(N != 0 && "SmallSetVector is meant to be used with non-zero N; "
++                          "use SetVector instead");
++
+ public:
+-  using SetVector<T, SmallVector<T, N>, DenseSet<T>, N>::SetVector;
++  using SetVector<T, SmallVector<T, N>, detail::Set<T>, N>::SetVector;
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/include/llvm/ADT/SmallPtrSet.h b/llvm/include/llvm/ADT/SmallPtrSet.h
+index 1a556d6a4145a2..1c59d06977326b 100644
+--- a/llvm/include/llvm/ADT/SmallPtrSet.h
++++ b/llvm/include/llvm/ADT/SmallPtrSet.h
+@@ -385,8 +385,8 @@ template <typename PtrType> class SmallPtrSetImpl : public SmallPtrSetImplBase {
+   /// Returns whether the pointer was in the set. Invalidates iterators if
+   /// true is returned. To remove elements while iterating over the set, use
+   /// remove_if() instead.
+-  bool erase(PtrType Ptr) {
+-    return erase_imp(PtrTraits::getAsVoidPointer(Ptr));
++  bool erase(ConstPtrType Ptr) {
++    return erase_imp(ConstPtrTraits::getAsVoidPointer(Ptr));
+   }
+ 
+   /// Remove elements that match the given predicate.
+diff --git a/offload/plugins-nextgen/common/include/RPC.h b/offload/plugins-nextgen/common/include/RPC.h
+index 3175d377705776..1769686f036b1f 100644
+--- a/offload/plugins-nextgen/common/include/RPC.h
++++ b/offload/plugins-nextgen/common/include/RPC.h
+@@ -90,7 +90,7 @@ struct RPCServerTy {
+   std::mutex BufferMutex{};
+ 
+   /// A list of callbacks the server will attempt to handle.
+-  llvm::SmallSetVector<RPCServerCallbackTy, 0> Callbacks;
++  llvm::SetVector<RPCServerCallbackTy> Callbacks;
+ 
+   /// A helper class for running the user thread that handles the RPC interface.
+   /// Because we only need to check the RPC server while any kernels are
+@@ -114,7 +114,7 @@ struct RPCServerTy {
+     std::mutex &BufferMutex;
+ 
+     /// A reference to the main server's callbacks.
+-    llvm::SmallSetVector<RPCServerCallbackTy, 0> &Callbacks;
++    llvm::SetVector<RPCServerCallbackTy> &Callbacks;
+ 
+     /// A reference to all the RPC interfaces that the server is handling.
+     llvm::ArrayRef<void *> Buffers;
+@@ -129,7 +129,7 @@ struct RPCServerTy {
+     /// Initialize the worker thread to run in the background.
+     ServerThread(void *Buffers[], plugin::GenericDeviceTy *Devices[],
+                  size_t Length, std::mutex &BufferMutex,
+-                 llvm::SmallSetVector<RPCServerCallbackTy, 0> &Callbacks)
++                 llvm::SetVector<RPCServerCallbackTy> &Callbacks)
+         : Running(false), NumUsers(0), CV(), Mutex(), BufferMutex(BufferMutex),
+           Callbacks(Callbacks), Buffers(Buffers, Length),
+           Devices(Devices, Length), SleepFunction([]() {
+diff --git a/offload/plugins-nextgen/common/src/RPC.cpp b/offload/plugins-nextgen/common/src/RPC.cpp
+index ecb7cad412883a..c23b6dfe4710a0 100644
+--- a/offload/plugins-nextgen/common/src/RPC.cpp
++++ b/offload/plugins-nextgen/common/src/RPC.cpp
+@@ -85,7 +85,7 @@ static rpc::RPCStatus handleOffloadOpcodes(plugin::GenericDeviceTy &Device,
+ 
+ static rpc::RPCStatus
+ runServer(plugin::GenericDeviceTy &Device, void *Buffer,
+-          llvm::SmallSetVector<RPCServerTy::RPCServerCallbackTy, 0> &Callbacks,
++          llvm::SetVector<RPCServerTy::RPCServerCallbackTy> &Callbacks,
+           bool &ClientInUse) {
+   const uint64_t NumPorts =
+       std::min(Device.requestedRPCPortCount(), rpc::MAX_PORT_COUNT);
+@@ -114,9 +114,9 @@ runServer(plugin::GenericDeviceTy &Device, void *Buffer,
+   return Status;
+ }
+ 
+-static void flushServer(
+-    plugin::GenericDeviceTy &Device, void *Buffer,
+-    llvm::SmallSetVector<RPCServerTy::RPCServerCallbackTy, 0> Callbacks) {
++static void
++flushServer(plugin::GenericDeviceTy &Device, void *Buffer,
++            llvm::SetVector<RPCServerTy::RPCServerCallbackTy> Callbacks) {
+   bool Pending = true;
+   while (Pending) {
+     Pending = false;
