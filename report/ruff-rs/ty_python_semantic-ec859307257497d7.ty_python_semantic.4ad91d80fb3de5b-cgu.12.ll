@@ -205,7 +205,7 @@ _RNvMs_NtNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5infer7builder21annotation
 
 bb.al:                                            ; preds = %.backedge, %.preheader.i
   %.sroa.0.0.i = phi i64 [ 0, %.preheader.i ], [ %.sink.i.i, %.backedge ] ; 3 uses
-  %i.nb = icmp ugt i64 %.sroa.0.0.i, 5
+  %i.nb = icmp samesign ugt i64 %.sroa.0.0.i, 5
   %switch.idx.cast.i.i.i = trunc nuw nsw i64 %.sroa.0.0.i to i8
   %i.nc = call i64 @llvm.umin.i64(i64 %.sroa.0.0.i, i64 5)
   %.sink.i.i = add nuw nsw i64 %i.nc, 1
@@ -608,7 +608,7 @@ bb.vp:                                            ; preds = %bb.vo, %bb.vn
 
 .backedge.i:                                      ; preds = %.backedge.i.backedge, %.preheader.i
   %.sroa.0273.0.i = phi i64 [ 0, %.preheader.i ], [ %.sink.i.i, %.backedge.i.backedge ] ; 3 uses
-  %i.btg = icmp ugt i64 %.sroa.0273.0.i, 5
+  %i.btg = icmp samesign ugt i64 %.sroa.0273.0.i, 5
   %switch.idx.cast.i.i.i = trunc nuw nsw i64 %.sroa.0273.0.i to i8
   %i.bth = call i64 @llvm.umin.i64(i64 %.sroa.0273.0.i, i64 5)
   %.sink.i.i = add nuw nsw i64 %i.bth, 1

@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bd = zext i8 %i.bc to i64
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g
+bb.i:                                             ; preds = %bb.g, %bb.h
   %i.be = phi i64 [ %i.bd, %bb.h ], [ 0, %bb.g ]
   %i.bf = call noundef i64 @_ZN3jxl13ICCANSContextEmmm(i64 noundef %i.ba, i64 noundef %i.be, i64 noundef 0) #13
   %i.bg = load ptr, ptr %i.af, align 8, !tbaa !61, !noalias !109

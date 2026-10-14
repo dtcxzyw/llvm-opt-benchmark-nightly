@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %bb.o
           cleanup
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.l, %bb.s, %bb.k
-  %.pn.pn = phi { ptr, i32 } [ %i.ak, %bb.k ], [ %i.bh, %bb.s ], [ %i.al, %bb.l ]
+bb.t:                                             ; preds = %bb.s, %bb.l, %bb.k
+  %.pn.pn = phi { ptr, i32 } [ %i.ak, %bb.k ], [ %i.al, %bb.l ], [ %i.bh, %bb.s ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #42
   call void @_ZN5folly6detail14ScopeGuardImplIZNS_8readFileINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbiRT_mEUlvE_Lb1EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %3) #42
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #42

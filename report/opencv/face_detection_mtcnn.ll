@@ -205,8 +205,8 @@ _ZN2cvaNIiEERNS_5Rect_IT_EES4_RKS3_.exit.i.i.i:   ; preds = %bb.l, %bb.k, %bb.j,
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %_ZN2cvaNIiEERNS_5Rect_IT_EES4_RKS3_.exit.i.i.i
-  %.sroa.054.sroa.11.0.insert.ext.i.i.i = zext nneg i32 %.sroa.054.sroa.11.0.i.i.i to i64
-  %.sroa.054.sroa.11.0.insert.shift.i.i.i = shl nuw nsw i64 %.sroa.054.sroa.11.0.insert.ext.i.i.i, 32
+  %.sroa.054.sroa.11.0.insert.ext.i.i.i = zext i32 %.sroa.054.sroa.11.0.i.i.i to i64
+  %.sroa.054.sroa.11.0.insert.shift.i.i.i = shl nuw i64 %.sroa.054.sroa.11.0.insert.ext.i.i.i, 32
   %.sroa.054.sroa.0.0.insert.ext.i.i.i = zext nneg i32 %.sroa.054.sroa.0.0.i.i.i to i64
   %.sroa.054.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.054.sroa.11.0.insert.shift.i.i.i, %.sroa.054.sroa.0.0.insert.ext.i.i.i
   store i64 %.sroa.054.sroa.0.0.insert.insert.i.i.i, ptr %i.n, align 4, !tbaa !81
@@ -239,8 +239,8 @@ _ZNKSt6vectorIN2cv5Rect_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i.i.i: ; preds 
   %i.cc = shl nuw nsw i64 %i.cb, 4
   %i.cd = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cc) #37 ; 6 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 %i.bv ; 2 uses
-  %.sroa.054.sroa.11.0.insert.ext77.i.i.i = zext nneg i32 %.sroa.054.sroa.11.0.i.i.i to i64
-  %.sroa.054.sroa.11.0.insert.shift78.i.i.i = shl nuw nsw i64 %.sroa.054.sroa.11.0.insert.ext77.i.i.i, 32
+  %.sroa.054.sroa.11.0.insert.ext77.i.i.i = zext i32 %.sroa.054.sroa.11.0.i.i.i to i64
+  %.sroa.054.sroa.11.0.insert.shift78.i.i.i = shl nuw i64 %.sroa.054.sroa.11.0.insert.ext77.i.i.i, 32
   %.sroa.054.sroa.0.0.insert.ext74.i.i.i = zext nneg i32 %.sroa.054.sroa.0.0.i.i.i to i64
   %.sroa.054.sroa.0.0.insert.insert76.i.i.i = or disjoint i64 %.sroa.054.sroa.11.0.insert.shift78.i.i.i, %.sroa.054.sroa.0.0.insert.ext74.i.i.i
   store i64 %.sroa.054.sroa.0.0.insert.insert76.i.i.i, ptr %i.ce, align 4, !tbaa !81

@@ -204,9 +204,9 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bp = add nuw nsw i32 %i.bl, %i.bj
-  %3 = uitofp nneg i32 %i.bj to double
+  %3 = sitofp i32 %i.bj to double
   %i.bq = fsub double %.0100.i, %3
-  %4 = uitofp nneg i32 %i.bl to double
+  %4 = sitofp i32 %i.bl to double
   %i.br = fsub double %.099.i, %4
   %i.bs = fcmp ogt double %i.bq, %i.br            ; 10 uses
   switch i32 %i.bp, label %_ZN12_GLOBAL__N_120ISEAPlanarProjection14cartesianToGeoERK5PJ_XYPKNS_12pj_isea_dataERNS_8GeoPointE.exit [

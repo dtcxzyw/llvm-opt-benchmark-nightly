@@ -205,8 +205,8 @@ _ZL12getValueTypePN4llvm5ValueEb.exit:            ; preds = %.thread36.i, %.sink
   %i.ds = tail call noundef i32 @_ZN4llvm13slpvectorizer7BoUpSLP20getVectorElementSizeEPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(5088) %3, ptr noundef nonnull %.val162) ; 3 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %3, i64 4900
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !841
-  %i.dv = udiv i32 %i.du, %i.ds
-  %.sroa.speculated.i = tail call noundef i32 @llvm.umax.i32(i32 %i.dv, i32 2) ; 5 uses
+  %i.dv = udiv i32 %i.du, %i.ds                   ; 2 uses
+  %.sroa.speculated.i = tail call noundef i32 @llvm.umax.i32(i32 %i.dv, i32 2) ; 4 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !1837
   %i.dy = trunc i64 %2 to i32                     ; 15 uses
@@ -285,19 +285,20 @@ _ZNK4llvm13slpvectorizer7BoUpSLP12getMaximumVFEjj.exit: ; preds = %bb.p, %bb.q
   %i.fb = phi i32 [ %i.ev, %bb.p ], [ %i.fa, %bb.q ] ; 2 uses
   %.not4.i = icmp eq i32 %i.fb, 0
   %i.fc = tail call i32 @llvm.umin.i32(i32 %.sroa.speculated337, i32 %i.fb)
-  %.sroa.speculated332 = select i1 %.not4.i, i32 %.sroa.speculated337, i32 %i.fc ; 3 uses
+  %.sroa.speculated332 = select i1 %.not4.i, i32 %.sroa.speculated337, i32 %i.fc ; 2 uses
   br i1 %5, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %_ZNK4llvm13slpvectorizer7BoUpSLP12getMaximumVFEjj.exit
   %i.fd = getelementptr inbounds nuw i8, ptr %3, i64 4896
   %i.fe = load i32, ptr %i.fd, align 8, !tbaa !1261
   %i.ff = udiv i32 %i.fe, %i.ds
-  %.sroa.speculated359 = tail call i32 @llvm.umax.i32(i32 %.sroa.speculated.i, i32 %i.ff) ; 2 uses
-  %29 = icmp ult i32 %.sroa.speculated359, %.sroa.speculated332
-  br i1 %29, label %.thread.a, label %bb.s
+  %.sroa.speculated359 = tail call i32 @llvm.umax.i32(i32 %.sroa.speculated.i, i32 %i.ff)
+  %.sroa.speculated346 = tail call i32 @llvm.umin.i32(i32 %.sroa.speculated359, i32 %.sroa.speculated332)
+  br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %_ZNK4llvm13slpvectorizer7BoUpSLP12getMaximumVFEjj.exit
-  %i.fg = icmp ult i32 %.sroa.speculated332, 2
+  %.0 = phi i32 [ %.sroa.speculated346, %bb.r ], [ %.sroa.speculated332, %_ZNK4llvm13slpvectorizer7BoUpSLP12getMaximumVFEjj.exit ] ; 4 uses
+  %i.fg = icmp ult i32 %.0, 2
   br i1 %i.fg, label %bb.t, label %.thread.a
 
 bb.t:                                             ; preds = %bb.s
@@ -485,8 +486,7 @@ _ZN4llvm30DiagnosticInfoOptimizationBaseD2Ev.exit.i200: ; preds = %bb.w, %_ZN4ll
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #31
   br label %"_ZN4llvm25OptimizationRemarkEmitter4emitIZNS_17SLPVectorizerPass18tryToVectorizeListENS_8ArrayRefIPNS_5ValueEEERNS_13slpvectorizer7BoUpSLPEbbE3$_0EEvT_PDTclfL0p_EE.exit"
 
-.thread.a:                                        ; preds = %bb.r, %bb.s
-  %.0384 = phi i32 [ %.sroa.speculated332, %bb.s ], [ %.sroa.speculated359, %bb.r ] ; 3 uses
+.thread.a:                                        ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #31
   %i.hz = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL16SLPCostThreshold, i64 120), align 8, !tbaa !380
   %i.ia = sext i32 %i.hz to i64
@@ -495,8 +495,8 @@ _ZN4llvm30DiagnosticInfoOptimizationBaseD2Ev.exit.i200: ; preds = %bb.w, %_ZN4ll
   %i.ic = shl nsw i64 %i.ia, 2
   store i64 %i.ic, ptr %21, align 8, !tbaa !825
   %i.id = icmp ugt i32 %i.dy, 1
-  %30 = icmp uge i32 %.0384, %.sroa.speculated.i
-  %i.ie = select i1 %i.id, i1 %30, i1 false
+  %29 = icmp ule i32 %i.dv, %.0
+  %i.ie = select i1 %i.id, i1 %29, i1 false
   br i1 %i.ie, label %.lr.ph447, label %.thread560
 
 .lr.ph447:                                        ; preds = %.thread.a
@@ -534,7 +534,7 @@ bb.x:                                             ; preds = %.lr.ph447, %_ZL34ge
   %.0116446 = phi i1 [ false, %.lr.ph447 ], [ %.6122, %_ZL34getFloorFullVectorNumberOfElementsRKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit233 ] ; 2 uses
   %.0123445 = phi i1 [ false, %.lr.ph447 ], [ %.5128, %_ZL34getFloorFullVectorNumberOfElementsRKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit233 ] ; 2 uses
   %.0129444 = phi i32 [ 0, %.lr.ph447 ], [ %.6135, %_ZL34getFloorFullVectorNumberOfElementsRKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit233 ] ; 4 uses
-  %storemerge443 = phi i32 [ %.0384, %.lr.ph447 ], [ %.2.i226, %_ZL34getFloorFullVectorNumberOfElementsRKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit233 ] ; 9 uses
+  %storemerge443 = phi i32 [ %.0, %.lr.ph447 ], [ %.2.i226, %_ZL34getFloorFullVectorNumberOfElementsRKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit233 ] ; 9 uses
   %i.jb = call fastcc noundef ptr @_ZL14getWidenedTypePN4llvm4TypeEj(ptr noundef %.6.i, i32 noundef %storemerge443)
   %i.jc = load ptr, ptr %i.dw, align 8, !tbaa !1837
   %i.jd = call fastcc noundef i32 @_ZL16getNumberOfPartsRKN4llvm19TargetTransformInfoEPNS_4TypeES4_j(ptr noundef nonnull align 8 dereferenceable(8) %i.jc, ptr noundef %i.jb, ptr noundef %.6.i, i32 noundef -1)
@@ -602,8 +602,8 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond575, label %_ZL24hasFullVectorsOrPowerOf2RKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit.thread386, label %.thread400
 
 _ZL24hasFullVectorsOrPowerOf2RKN4llvm19TargetTransformInfoEPNS_4TypeEj.exit.thread386: ; preds = %bb.ad, %_ZN4llvm14has_single_bitIjvEEbT_.exit.i
-  %i.kc = icmp ult i32 %.sroa.speculated, %.0384
-  %or.cond159 = select i1 %4, i1 %i.kc, i1 false
+  %i.kc = icmp ult i32 %.sroa.speculated, %.0
+  %or.cond159 = and i1 %4, %i.kc
   %i.kd = icmp ult i32 %i.ji, %storemerge443
   %or.cond160 = and i1 %i.jg, %i.kd
   %or.cond451 = or i1 %or.cond159, %or.cond160

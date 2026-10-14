@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = extractvalue { i64, i64 } %i.b, 0
   %i.d = trunc i64 %i.c to i32                    ; 2 uses
   %i.e = sub nsw i32 57, %i.d
-  %.not40 = icmp sgt i32 %i.d, 56
-  br i1 %.not40, label %_ZSt10__fill_n_aISt16ostream_iteratorIccSt11char_traitsIcEEicET_S4_T0_RKT1_St19output_iterator_tag.exit, label %.lr.ph.i.us.i.preheader
+  %9 = icmp slt i32 %i.d, 57
+  br i1 %9, label %.lr.ph.i.us.i.preheader, label %_ZSt10__fill_n_aISt16ostream_iteratorIccSt11char_traitsIcEEicET_S4_T0_RKT1_St19output_iterator_tag.exit
 
 .lr.ph.i.us.i.preheader:                          ; preds = %.thread, %bb.b
   %.02.i.us.i.ph = phi i32 [ %i.e, %bb.b ], [ 57, %.thread ]

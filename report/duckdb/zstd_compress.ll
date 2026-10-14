@@ -205,7 +205,7 @@ bb.bo:                                            ; preds = %bb.bn
   br label %_ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i231
 
 _ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i231: ; preds = %bb.bk, %.thread.i.i.i233
-  %i.jx = phi i32 [ %i.jj, %bb.bk ], [ 3, %.thread.i.i.i233 ]
+  %i.jx = phi i32 [ 3, %.thread.i.i.i233 ], [ %i.jj, %bb.bk ]
   %i.jy = load ptr, ptr %i.bx, align 8, !tbaa !280
   %i.jz = sub nuw i64 -32, %.189
   %i.ka = getelementptr inbounds i8, ptr %i.jy, i64 %i.jz ; 5 uses

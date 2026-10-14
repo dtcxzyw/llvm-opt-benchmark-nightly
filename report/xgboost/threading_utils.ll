@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %_ZZN9__gnu_cxx6__st
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef range(i32 -1, -2147483648) i32 @_ZN7xgboost6common16GetCGroupV2CountERKNSt10filesystem7__cxx114pathE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
+define noundef range(i32 1, 0) i32 @_ZN7xgboost6common16GetCGroupV2CountERKNSt10filesystem7__cxx114pathE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
@@ -607,7 +607,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef range(i32 1, -2147483648) i32 @_ZN7xgboost6common16OmpGetNumThreadsEi(i32 noundef %0) local_unnamed_addr #9 personality ptr @__gxx_personality_v0 {
+define noundef i32 @_ZN7xgboost6common16OmpGetNumThreadsEi(i32 noundef %0) local_unnamed_addr #9 personality ptr @__gxx_personality_v0 {
 .lr.ph.i.i:
   ret i32 1
 }

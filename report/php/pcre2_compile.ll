@@ -205,7 +205,17 @@ get_grouplength.exit.thread191:                   ; preds = %bb.ay
 
 bb.az:                                            ; preds = %bb.ay
   %.not43.i = icmp sgt i32 %i.ew, -1
-  br i1 %.not43.i, label %bb.ba, label %get_grouplength.exit
+  br i1 %.not43.i, label %bb.ba, label %get_grouplength.exit.thread231
+
+get_grouplength.exit.thread231:                   ; preds = %bb.az
+  %7 = call fastcc ptr @parsed_skip(ptr noundef nonnull %i.eo, i32 noundef 2), !inline_history !231
+  store ptr %7, ptr %i.c, align 8, !tbaa !68
+  %8 = getelementptr inbounds nuw i8, ptr %i.es, i64 4
+  %9 = load i32, ptr %8, align 4, !tbaa !28       ; 2 uses
+  store i32 %9, ptr %i.b, align 4, !tbaa !28
+  %10 = and i32 %i.ew, 65535
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
+  br label %bb.bl
 
 .sink.split:                                      ; preds = %bb.av, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d
   %.sink468 = phi i64 [ 16, %bb.d ], [ 16, %bb.d ], [ 4, %bb.av ], [ 16, %bb.d ], [ 16, %bb.d ], [ 16, %bb.d ]
@@ -242,7 +252,7 @@ bb.bb:                                            ; preds = %.lr.ph
   br i1 %i.fl, label %._crit_edge, label %.lr.ph
 
 bb.bc:                                            ; preds = %.lr.ph
-  br i1 %i.fa, label %bb.bd, label %get_grouplength.exit.thread188
+  br i1 %i.fa, label %bb.bd, label %get_grouplength.exit
 
 bb.bd:                                            ; preds = %bb.bc
   %i.fm = load i32, ptr %i.fb, align 4, !tbaa !28
@@ -251,12 +261,7 @@ bb.bd:                                            ; preds = %bb.bc
   store i32 %i.fo, ptr %i.fb, align 4, !tbaa !28
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fb, i64 4
   store i32 %.1.i, ptr %i.fp, align 4, !tbaa !28
-  br label %get_grouplength.exit.thread188
-
-get_grouplength.exit.thread188:                   ; preds = %bb.bc, %bb.bd
-  store i32 %.1.i, ptr %i.b, align 4, !tbaa !28
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
-  br label %bb.bl
+  br label %get_grouplength.exit
 
 ._crit_edge:                                      ; preds = %bb.ba, %bb.bb
   br i1 %i.fa, label %bb.be, label %get_grouplength.exit.thread
@@ -271,13 +276,8 @@ get_grouplength.exit.thread:                      ; preds = %bb.be, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   br label %.thread212
 
-get_grouplength.exit:                             ; preds = %bb.az
-  %7 = call fastcc ptr @parsed_skip(ptr noundef nonnull %i.eo, i32 noundef 2), !inline_history !231
-  store ptr %7, ptr %i.c, align 8, !tbaa !68
-  %8 = getelementptr inbounds nuw i8, ptr %i.es, i64 4
-  %9 = load i32, ptr %8, align 4, !tbaa !28       ; 2 uses
-  store i32 %9, ptr %i.b, align 4, !tbaa !28
-  %10 = and i32 %i.ew, 65535
+get_grouplength.exit:                             ; preds = %bb.bc, %bb.bd
+  store i32 %.1.i, ptr %i.b, align 4, !tbaa !28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   br label %bb.bl
 
@@ -342,10 +342,10 @@ bb.bk:                                            ; preds = %.thread, %bb.bi
   store i32 125, ptr %2, align 4, !tbaa !28
   br label %.thread212
 
-bb.bl:                                            ; preds = %get_grouplength.exit.thread188, %get_grouplength.exit, %bb.d, %bb.d, %bb.l, %bb.c, %bb.h, %bb.at, %bb.i, %bb.p, %bb.q, %bb.bk
-  %.2137 = phi i32 [ %.1136404, %bb.bk ], [ %.0135, %bb.i ], [ %.0135, %bb.h ], [ %.0135, %bb.d ], [ %.0135, %bb.at ], [ %.0135, %bb.c ], [ %.0135, %bb.q ], [ %.0135, %bb.p ], [ %.0135, %bb.l ], [ %.0135, %bb.d ], [ %.0135, %get_grouplength.exit ], [ %.0135, %get_grouplength.exit.thread188 ]
-  %.0124 = phi i32 [ %i.gm, %bb.bk ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %bb.d ], [ %i.eg, %bb.at ], [ 1, %bb.c ], [ 1, %bb.q ], [ 1, %bb.p ], [ 2, %bb.l ], [ 1, %bb.d ], [ %10, %get_grouplength.exit ], [ %spec.select.i, %get_grouplength.exit.thread188 ] ; 2 uses
-  %.1 = phi i32 [ %.0123405, %bb.bk ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %bb.d ], [ %i.ek, %bb.at ], [ 1, %bb.c ], [ 1, %bb.q ], [ 1, %bb.p ], [ 1, %bb.l ], [ 1, %bb.d ], [ %9, %get_grouplength.exit ], [ %.1.i, %get_grouplength.exit.thread188 ]
+bb.bl:                                            ; preds = %get_grouplength.exit.thread231, %get_grouplength.exit, %bb.d, %bb.d, %bb.l, %bb.c, %bb.h, %bb.at, %bb.i, %bb.p, %bb.q, %bb.bk
+  %.2137 = phi i32 [ %.1136404, %bb.bk ], [ %.0135, %bb.i ], [ %.0135, %bb.h ], [ %.0135, %bb.d ], [ %.0135, %bb.at ], [ %.0135, %bb.c ], [ %.0135, %bb.q ], [ %.0135, %bb.p ], [ %.0135, %bb.l ], [ %.0135, %bb.d ], [ %.0135, %get_grouplength.exit ], [ %.0135, %get_grouplength.exit.thread231 ]
+  %.0124 = phi i32 [ %i.gm, %bb.bk ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %bb.d ], [ %i.eg, %bb.at ], [ 1, %bb.c ], [ 1, %bb.q ], [ 1, %bb.p ], [ 2, %bb.l ], [ 1, %bb.d ], [ %spec.select.i, %get_grouplength.exit ], [ %10, %get_grouplength.exit.thread231 ] ; 2 uses
+  %.1 = phi i32 [ %.0123405, %bb.bk ], [ 1, %bb.i ], [ 1, %bb.h ], [ 1, %bb.d ], [ %i.ek, %bb.at ], [ 1, %bb.c ], [ 1, %bb.q ], [ 1, %bb.p ], [ 1, %bb.l ], [ 1, %bb.d ], [ %.1.i, %get_grouplength.exit ], [ %9, %get_grouplength.exit.thread231 ]
   %i.gn = sub nsw i32 2147483647, %.0139
   %i.go = icmp slt i32 %i.gn, %.0124
   br i1 %i.go, label %bb.bm, label %.thread201
@@ -363,7 +363,7 @@ bb.bm:                                            ; preds = %.thread201, %bb.bl
   store i32 187, ptr %2, align 4, !tbaa !28
   br label %.thread212
 
-.thread212:                                       ; preds = %bb.l, %bb.r, %bb.v, %bb.bm, %.loopexit, %bb.bh, %bb.o, %.thread174, %bb.ak, %bb.as, %get_grouplength.exit.thread191, %get_grouplength.exit.thread
+.thread212:                                       ; preds = %bb.l, %bb.r, %bb.v, %bb.bm, %.loopexit, %bb.bh, %bb.o, %.thread174, %bb.ak, %bb.as, %get_grouplength.exit.thread, %get_grouplength.exit.thread191
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #17
   br label %bb.bo
 

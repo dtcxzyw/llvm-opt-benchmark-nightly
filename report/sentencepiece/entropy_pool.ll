@@ -155,7 +155,7 @@ _ZN4absl12lts_2026052615random_internal12_GLOBAL__N_115RandenPoolEntry11MaybeRef
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.017.i, ptr nonnull align 4 %i.as, i64 %.sroa.speculated.i, i1 false)
   %i.at = getelementptr inbounds nuw i8, ptr %.017.i, i64 %.sroa.speculated.i
   %i.au = sub nuw i64 %.01416.i, %.sroa.speculated.i ; 2 uses
-  %i.av = add nuw i64 %.sroa.speculated.i, 3
+  %i.av = add i64 %.sroa.speculated.i, 3
   %i.aw = lshr i64 %i.av, 2
   %i.ax = load i64, ptr %i.ai, align 8, !tbaa !20
   %i.ay = add i64 %i.aw, %i.ax                    ; 2 uses

@@ -205,8 +205,8 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.bu = call i32 @llvm.umin.i32(i32 %i.bl, i32 -130875)
-  %.neg93 = mul nsw i32 %i.bu, -26
-  %.nonneg = add nsw i32 %.neg93, -3402672
+  %.neg93 = mul i32 %i.bu, -26
+  %.nonneg = add i32 %.neg93, -3402672
   %i.bv = udiv i32 %.nonneg, 25
   %.neg91 = sub nsw i32 0, %i.bv
   br label %bb.y

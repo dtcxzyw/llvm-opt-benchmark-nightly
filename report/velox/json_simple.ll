@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
   store i64 1, ptr %i.at, align 8, !tbaa !679
   store i64 0, ptr %6, align 8, !tbaa !101
   %i.au = icmp ugt i32 %.2, 18
-  br i1 %i.au, label %.lr.ph.i.i, label %._crit_edge.i.i
+  br i1 %i.au, label %.lr.ph.i.i, label %bb.k
 
 .lr.ph.i.i:                                       ; preds = %bb.j, %.lr.ph.i.i
   %.015.i.i = phi i64 [ %i.ay, %.lr.ph.i.i ], [ 0, %bb.j ] ; 2 uses
@@ -213,20 +213,20 @@ bb.j:                                             ; preds = %bb.i
   %i.av = getelementptr inbounds nuw i8, ptr %.037.lcssa72, i64 %.015.i.i ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 19
   call void @_ZN5arrow9rapidjson8internal10BigInteger15AppendDecimal64IcEEvPKT_S6_(ptr noundef nonnull align 8 dereferenceable(3336) %6, ptr noundef %i.av, ptr noundef nonnull %i.aw)
-  %i.ax = add i64 %.01314.i.i, -19                ; 3 uses
+  %i.ax = add i64 %.01314.i.i, -19                ; 4 uses
   %i.ay = add i64 %.015.i.i, 19                   ; 2 uses
   %i.az = icmp ugt i64 %i.ax, 18
   br i1 %i.az, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !5945
 
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.j
-  %.013.lcssa.i.i = phi i64 [ %i.as, %bb.j ], [ %i.ax, %.lr.ph.i.i ] ; 2 uses
-  %.0.lcssa.i.i = phi i64 [ 0, %bb.j ], [ %i.ay, %.lr.ph.i.i ]
-  %.not.i.i = icmp eq i64 %.013.lcssa.i.i, 0
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
+  %.not.i.i = icmp eq i64 %i.ax, 0
   br i1 %.not.i.i, label %_ZN5arrow9rapidjson8internal10BigIntegerC2IcEEPKT_m.exit.i, label %bb.k
 
-bb.k:                                             ; preds = %._crit_edge.i.i
-  %i.ba = getelementptr inbounds nuw i8, ptr %.037.lcssa72, i64 %.0.lcssa.i.i ; 2 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 %.013.lcssa.i.i
+bb.k:                                             ; preds = %bb.j, %._crit_edge.i.i
+  %.0.lcssa.i.i45 = phi i64 [ %i.ay, %._crit_edge.i.i ], [ 0, %bb.j ]
+  %.013.lcssa.i.i44 = phi i64 [ %i.ax, %._crit_edge.i.i ], [ %i.as, %bb.j ]
+  %i.ba = getelementptr inbounds nuw i8, ptr %.037.lcssa72, i64 %.0.lcssa.i.i45 ; 2 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 %.013.lcssa.i.i44
   call void @_ZN5arrow9rapidjson8internal10BigInteger15AppendDecimal64IcEEvPKT_S6_(ptr noundef nonnull align 8 dereferenceable(3336) %6, ptr noundef %i.ba, ptr noundef nonnull %i.bb)
   br label %_ZN5arrow9rapidjson8internal10BigIntegerC2IcEEPKT_m.exit.i
 

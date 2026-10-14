@@ -204,7 +204,7 @@ bb.bc:                                            ; preds = %bb.bb
   %.idx671 = shl nuw nsw i64 %i.pc, 2             ; 2 uses
   %i.pd = getelementptr inbounds nuw i8, ptr %.0291658, i64 %.idx671 ; 2 uses
   %i.pe = add nuw nsw i64 %.idx, 4
-  %.not17.i.i = icmp samesign eq i64 %i.pe, %.idx671
+  %.not17.i.i = icmp eq i64 %i.pe, %.idx671
   br i1 %.not17.i.i, label %_ZSt11max_elementIPKfET_S2_S2_.exit, label %.lr.ph.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.bc
