@@ -205,10 +205,11 @@ bb.ao:                                            ; preds = %bb.an
 
 _ZN5Eigen6MatrixIdLi3ELi1ELi0ELi3ELi1EEaSINS_7ProductINS_14TranspositionsILi3ELi3EiEENS_3MapIS1_Li0ENS_6StrideILi0ELi0EEEEELi2EEEEERS1_RKNS_9DenseBaseIT_EE.exit.i: ; preds = %bb.ao, %bb.an
   %i.gq = phi double [ %.pre327, %bb.ao ], [ %.pre328, %bb.an ]
-  %10 = load <2 x double>, ptr %8, align 16       ; 2 uses
+  %10 = load <1 x double>, ptr %8, align 16       ; 2 uses
+  %11 = shufflevector <1 x double> %10, <1 x double> poison, <2 x i32> <i32 0, i32 poison>
   %i.gr = load double, ptr %i.n, align 8, !tbaa !101
   %i.gs = load <2 x double>, ptr %i.p, align 8, !tbaa !101
-  %i.gt = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.gt = shufflevector <1 x double> %10, <1 x double> poison, <2 x i32> zeroinitializer
   %i.gu = fmul <2 x double> %i.gt, %i.gs          ; 2 uses
   %i.gv = extractelement <2 x double> %i.gu, i64 0
   %i.gw = fsub double %i.gr, %i.gv                ; 2 uses
@@ -222,7 +223,7 @@ _ZN5Eigen6MatrixIdLi3ELi1ELi0ELi3ELi1EEaSINS_7ProductINS_14TranspositionsILi3ELi
   %i.he = insertelement <2 x double> %i.hc, double %i.hd, i64 1 ; 2 uses
   %i.hf = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.he)
   %i.hg = fcmp ogt <2 x double> %i.hf, splat (double f0x0010000000000000)
-  %i.hh = insertelement <2 x double> %10, double %i.gw, i64 1
+  %i.hh = insertelement <2 x double> %11, double %i.gw, i64 1
   %i.hi = fdiv <2 x double> %i.hh, %i.he
   %i.hj = select <2 x i1> %i.hg, <2 x double> %i.hi, <2 x double> zeroinitializer ; 2 uses
   %i.hk = load double, ptr %.sroa.13.0..sroa_idx208, align 16, !tbaa !101 ; 2 uses

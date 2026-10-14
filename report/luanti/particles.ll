@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 316
-  %10 = load <4 x float>, ptr %i.ay, align 4
-  %i.az = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> zeroinitializer
+  %10 = load <1 x float>, ptr %i.ay, align 4
+  %i.az = shufflevector <1 x float> %10, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ba = fmul nsz <2 x float> %i.az, <float -5.000000e-01, float 5.000000e-01> ; 2 uses
   %i.bb = shufflevector <2 x float> %i.ba, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   store <4 x float> %i.bb, ptr %4, align 16, !tbaa !53
@@ -397,14 +397,14 @@ bb.t:                                             ; preds = %bb.a
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %11 = load <4 x float>, ptr %i.eh, align 8
+  %11 = load <1 x float>, ptr %i.eh, align 8
   %i.ei = load <4 x float>, ptr %i.ee, align 8    ; 2 uses
   %i.ej = insertelement <4 x float> %i.ei, float 1.000000e+00, i64 3
   %i.ek = shufflevector <2 x float> %i.au, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 0> ; 2 uses
   %i.el = insertelement <4 x float> %i.ek, float -0.000000e+00, i64 3
   %i.em = insertelement <4 x float> %i.el, float %i.av, i64 2
   %i.en = load <4 x float>, ptr %i.eg, align 8
-  %i.eo = shufflevector <4 x float> %11, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 poison>
+  %i.eo = shufflevector <1 x float> %11, <1 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 poison>
   %i.ep = shufflevector <4 x float> %i.ek, <4 x float> %i.eo, <4 x i32> <i32 poison, i32 poison, i32 6, i32 3>
   %i.eq = shufflevector <4 x float> %i.en, <4 x float> %i.ep, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.er = load <2 x float>, ptr %i.ef, align 4, !tbaa !53 ; 2 uses
@@ -807,8 +807,7 @@ begin_hunk_1_@_ZN8Particle14updateVerticesEP17ClientEnvironmentN5video6SColorE:b
   %i.ke = fptrunc <2 x double> %i.kd to <2 x float> ; 3 uses
   %i.kf = extractelement <2 x float> %i.ke, i64 0
   store float %i.kf, ptr %.0.i, align 4, !tbaa !201
-  %5 = load <4 x float>, ptr %i.cd, align 8
-  %6 = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %5 = load <2 x float>, ptr %i.cd, align 8
   %i.kg = load <2 x float>, ptr %i.ij, align 4, !tbaa !53
   %i.kh = fmul nsz <2 x float> %i.kg, splat (float 1.000000e+01)
   %i.ki = fsub nsz <2 x float> %i.kh, %i.ip
@@ -818,7 +817,7 @@ begin_hunk_1_@_ZN8Particle14updateVerticesEP17ClientEnvironmentN5video6SColorE:b
   %i.kk = extractelement <2 x float> %i.ke, i64 1
   store float %i.kk, ptr %i.iq, align 4, !tbaa !141
   %i.kl = load float, ptr %i.ce, align 8, !tbaa !141
-  %i.km = insertelement <2 x float> %6, float %i.kl, i64 1
+  %i.km = insertelement <2 x float> %5, float %i.kl, i64 1
   %i.kn = fmul nsz <2 x float> %i.km, splat (float 1.000000e+01)
   %i.ko = insertelement <2 x float> %i.cj, float %i.ck, i64 1
   %i.kp = fsub nsz <2 x float> %i.kn, %i.ko

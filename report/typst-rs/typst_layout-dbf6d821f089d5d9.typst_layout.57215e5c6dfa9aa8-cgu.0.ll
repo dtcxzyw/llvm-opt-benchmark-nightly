@@ -205,13 +205,12 @@ bb.cm:                                            ; preds = %bb.ce
   br i1 %i.ln, label %_RNvMNtNtCsdQl7XGSB5tC_10ttf_parser6tables4glyfNtB2_7Builder7quad_to.exit28.i, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
-  %8 = load <4 x float>, ptr %i.gp, align 8
-  %9 = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %8 = load <2 x float>, ptr %i.gp, align 8
   %i.lo = load float, ptr %i.gt, align 4, !alias.scope !48367, !noundef !41
   %i.lp = load <2 x float>, ptr %i.gs, align 4, !alias.scope !48367 ; 2 uses
   %i.lq = fmul <2 x float> %i.jd, %i.lp
   %i.lr = shufflevector <2 x float> %i.lq, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.ls = insertelement <2 x float> %9, float %i.lo, i64 1 ; 2 uses
+  %i.ls = insertelement <2 x float> %8, float %i.lo, i64 1 ; 2 uses
   %i.lt = fmul <2 x float> %i.jd, %i.ls
   %i.lu = fadd <2 x float> %i.lr, %i.lt
   %i.lv = load <2 x float>, ptr %i.gr, align 8, !alias.scope !48367 ; 2 uses
@@ -420,13 +419,12 @@ bb.cz:                                            ; preds = %bb.cv
   br i1 %i.qm, label %_RNvMNtNtCsdQl7XGSB5tC_10ttf_parser6tables4glyfNtB2_7Builder7quad_to.exit37.i.i, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
-  %10 = load <4 x float>, ptr %i.gp, align 8
-  %11 = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %9 = load <2 x float>, ptr %i.gp, align 8
   %i.qn = load float, ptr %i.gt, align 4, !alias.scope !48378, !noundef !41
   %i.qo = load <2 x float>, ptr %i.gs, align 4, !alias.scope !48378 ; 2 uses
   %i.qp = fmul <2 x float> %i.qk, %i.qo
   %i.qq = shufflevector <2 x float> %i.qp, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.qr = insertelement <2 x float> %11, float %i.qn, i64 1 ; 2 uses
+  %i.qr = insertelement <2 x float> %9, float %i.qn, i64 1 ; 2 uses
   %i.qs = fmul <2 x float> %i.qk, %i.qr
   %i.qt = fadd <2 x float> %i.qq, %i.qs
   %i.qu = load <2 x float>, ptr %i.gr, align 8, !alias.scope !48378 ; 2 uses
@@ -476,13 +474,12 @@ bb.dc:                                            ; preds = %bb.cy
   br i1 %i.rt, label %_RNvMNtNtCsdQl7XGSB5tC_10ttf_parser6tables4glyfNtB2_7Builder7quad_to.exit42.i.i, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  %12 = load <4 x float>, ptr %i.gp, align 8
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %10 = load <2 x float>, ptr %i.gp, align 8
   %i.ru = load float, ptr %i.gt, align 4, !alias.scope !48381, !noundef !41
   %i.rv = load <2 x float>, ptr %i.gs, align 4, !alias.scope !48381 ; 2 uses
   %i.rw = fmul <2 x float> %i.rr, %i.rv
   %i.rx = shufflevector <2 x float> %i.rw, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.ry = insertelement <2 x float> %13, float %i.ru, i64 1 ; 2 uses
+  %i.ry = insertelement <2 x float> %10, float %i.ru, i64 1 ; 2 uses
   %i.rz = fmul <2 x float> %i.rr, %i.ry
   %i.sa = fadd <2 x float> %i.rx, %i.rz
   %i.sb = load <2 x float>, ptr %i.gr, align 8, !alias.scope !48381 ; 2 uses
@@ -885,19 +882,19 @@ define void @_RNvXs_NtNtCs7tN9tvpkfrg_12typst_layout6inline4decoNtB4_14BezPathBu
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %7 = load <2 x double>, ptr %i.b, align 8
+  %7 = load <1 x double>, ptr %i.b, align 8
   %i.c = insertelement <2 x float> poison, float %1, i64 0
   %i.d = insertelement <2 x float> %i.c, float %2, i64 1
   %i.e = fpext <2 x float> %i.d to <2 x double>
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %8 = load <2 x double>, ptr %i.f, align 8
+  %8 = load <1 x double>, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.h = load double, ptr %i.g, align 8, !alias.scope !51189, !noundef !41 ; 3 uses
-  %i.i = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.i = shufflevector <1 x double> %7, <1 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.j = fdiv <2 x double> %i.e, %i.i             ; 2 uses
   %i.k = fcmp ord <2 x double> %i.j, zeroinitializer
   %i.l = select <2 x i1> %i.k, <2 x double> %i.j, <2 x double> zeroinitializer
-  %i.m = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.m = shufflevector <1 x double> %8, <1 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.n = fmul <2 x double> %i.m, %i.l             ; 3 uses
   %i.o = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.n) ; 2 uses
   %i.p = extractelement <2 x double> %i.o, i64 0

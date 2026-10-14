@@ -204,52 +204,52 @@ bb.az:                                            ; preds = %bb.ax
 
 bb.ba:                                            ; preds = %bb.az, %bb.ay
   %i.fv = phi <2 x double> [ %i.fp, %bb.ay ], [ %i.fu, %bb.az ] ; 4 uses
-  %23 = load <2 x double>, ptr %i.dk, align 16
+  %23 = load <1 x double>, ptr %i.dk, align 16
   %i.fw = load <2 x double>, ptr %17, align 16
   %i.fx = load double, ptr %i.dl, align 16, !tbaa !28
   %i.fy = insertelement <2 x double> %i.fw, double %i.fx, i64 1
   %i.fz = fneg <2 x double> %i.fy
-  %i.ga = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ga = shufflevector <1 x double> %23, <1 x double> poison, <2 x i32> zeroinitializer
   %i.gb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fi, <2 x double> %i.ga, <2 x double> %i.fz)
   store <2 x double> %i.gb, ptr %13, align 16, !tbaa !28
-  %24 = load <2 x double>, ptr %i.dm, align 16
+  %24 = load <1 x double>, ptr %i.dm, align 16
   %i.gc = load <2 x double>, ptr %18, align 16
   %i.gd = load double, ptr %i.do, align 16, !tbaa !28
   %i.ge = insertelement <2 x double> %i.gc, double %i.gd, i64 1
   %i.gf = fneg <2 x double> %i.ge
-  %i.gg = shufflevector <2 x double> %24, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.gg = shufflevector <1 x double> %24, <1 x double> poison, <2 x i32> zeroinitializer
   %i.gh = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fv, <2 x double> %i.gg, <2 x double> %i.gf)
   store <2 x double> %i.gh, ptr %i.dn, align 16, !tbaa !28
-  %25 = load <2 x double>, ptr %i.dp, align 8
+  %25 = load <1 x double>, ptr %i.dp, align 8
   %i.gi = load <2 x double>, ptr %i.dq, align 8
   %i.gj = load double, ptr %i.ds, align 8, !tbaa !28
   %i.gk = insertelement <2 x double> %i.gi, double %i.gj, i64 1
   %i.gl = fneg <2 x double> %i.gk
-  %i.gm = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.gm = shufflevector <1 x double> %25, <1 x double> poison, <2 x i32> zeroinitializer
   %i.gn = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fi, <2 x double> %i.gm, <2 x double> %i.gl)
   store <2 x double> %i.gn, ptr %i.dr, align 16, !tbaa !28
-  %26 = load <2 x double>, ptr %i.dt, align 8
+  %26 = load <1 x double>, ptr %i.dt, align 8
   %i.go = load <2 x double>, ptr %i.du, align 8
   %i.gp = load double, ptr %i.dw, align 8, !tbaa !28
   %i.gq = insertelement <2 x double> %i.go, double %i.gp, i64 1
   %i.gr = fneg <2 x double> %i.gq
-  %i.gs = shufflevector <2 x double> %26, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.gs = shufflevector <1 x double> %26, <1 x double> poison, <2 x i32> zeroinitializer
   %i.gt = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fv, <2 x double> %i.gs, <2 x double> %i.gr)
   store <2 x double> %i.gt, ptr %i.dv, align 16, !tbaa !28
-  %27 = load <2 x double>, ptr %i.dx, align 16
+  %27 = load <1 x double>, ptr %i.dx, align 16
   %i.gu = load <2 x double>, ptr %i.dy, align 16
   %i.gv = load double, ptr %i.ea, align 16, !tbaa !28
   %i.gw = insertelement <2 x double> %i.gu, double %i.gv, i64 1
   %i.gx = fneg <2 x double> %i.gw
-  %i.gy = shufflevector <2 x double> %27, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.gy = shufflevector <1 x double> %27, <1 x double> poison, <2 x i32> zeroinitializer
   %i.gz = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fi, <2 x double> %i.gy, <2 x double> %i.gx)
   store <2 x double> %i.gz, ptr %i.dz, align 16, !tbaa !28
-  %28 = load <2 x double>, ptr %i.eb, align 16
+  %28 = load <1 x double>, ptr %i.eb, align 16
   %i.ha = load <2 x double>, ptr %i.ec, align 16
   %i.hb = load double, ptr %i.ee, align 16, !tbaa !28
   %i.hc = insertelement <2 x double> %i.ha, double %i.hb, i64 1
   %i.hd = fneg <2 x double> %i.hc
-  %i.he = shufflevector <2 x double> %28, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.he = shufflevector <1 x double> %28, <1 x double> poison, <2 x i32> zeroinitializer
   %i.hf = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fv, <2 x double> %i.he, <2 x double> %i.hd)
   store <2 x double> %i.hf, ptr %i.ed, align 16, !tbaa !28
   %i.hg = load double, ptr %i.ef, align 8, !tbaa !28
@@ -652,16 +652,15 @@ bb.dc:                                            ; preds = %bb.db
   %i.pz = call double @llvm.fmuladd.f64(double %i.pr, double 0.000000e+00, double %i.py)
   %i.qa = fadd double %i.pp, %i.pz
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #12
-  %i.qb = load <2 x double>, ptr %i.ga, align 8
-  %41 = shufflevector <2 x double> %i.qb, <2 x double> poison, <2 x i32> <i32 0, i32 poison> ; 2 uses
+  %i.qb = load <2 x double>, ptr %i.ga, align 8   ; 2 uses
   %i.qc = load double, ptr %i.gb, align 8, !tbaa !28 ; 2 uses
   %i.qd = insertelement <2 x double> poison, double %i.qc, i64 0
   %i.qe = insertelement <2 x double> %i.qd, double %i.pl, i64 1 ; 2 uses
   %i.qf = fmul <2 x double> %i.qe, %i.qe
-  %i.qg = insertelement <2 x double> %41, double %i.pk, i64 1 ; 2 uses
+  %i.qg = insertelement <2 x double> %i.qb, double %i.pk, i64 1 ; 2 uses
   %i.qh = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.qg, <2 x double> %i.qg, <2 x double> %i.qf)
   %i.qi = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.qh) ; 3 uses
-  %i.qj = insertelement <2 x double> %41, double %i.qc, i64 1
+  %i.qj = insertelement <2 x double> %i.qb, double %i.qc, i64 1
   %i.qk = shufflevector <2 x double> %i.qi, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ql = fdiv <2 x double> %i.qj, %i.qk          ; 2 uses
   %i.qm = load double, ptr %i.gc, align 8, !tbaa !28

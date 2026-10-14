@@ -205,8 +205,8 @@ bb.fu:                                            ; preds = %bb.ft, %bb.fs, %bb.
   %i.alk = trunc i64 %i.alj to i32                ; 3 uses
   %i.all = sdiv i64 %.066.i, %i.alh
   %i.alm = trunc i64 %i.all to i32                ; 2 uses
-  %6 = load <4 x i32>, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8
-  %i.aln = shufflevector <4 x i32> %6, <4 x i32> poison, <2 x i32> zeroinitializer
+  %6 = load <1 x i32>, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8
+  %i.aln = shufflevector <1 x i32> %6, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.alo = and <2 x i32> %i.aln, <i32 41943040, i32 16777216>
   %i.alp = icmp eq <2 x i32> %i.alo, zeroinitializer
   %i.alq = bitcast <2 x i1> %i.alp to i2
@@ -609,9 +609,8 @@ bb.cr:                                            ; preds = %bb.cp
 
 bb.cs:                                            ; preds = %bb.co, %bb.cq, %bb.cr
   %i.tf = phi float [ %i.st, %bb.cq ], [ %i.te, %bb.cr ], [ %i.qc, %bb.co ]
-  %7 = load <4 x float>, ptr %i.c, align 16
-  %8 = shufflevector <4 x float> %7, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %i.tg = insertelement <2 x float> %8, float %i.tf, i64 1
+  %7 = load <2 x float>, ptr %i.c, align 16
+  %i.tg = insertelement <2 x float> %7, float %i.tf, i64 1
   %i.th = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.tg, <2 x float> zeroinitializer)
   store <2 x float> %i.th, ptr %.1330, align 4, !tbaa !12
   %i.ti = load float, ptr %i.oy, align 8, !tbaa !12

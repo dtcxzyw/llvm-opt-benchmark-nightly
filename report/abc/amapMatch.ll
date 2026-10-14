@@ -204,15 +204,13 @@ Amap_CutCompareArea.exit:                         ; preds = %bb.aa, %bb.y, %bb.w
   br i1 %i.he, label %bb.e, label %._crit_edge.loopexit, !llvm.loop !61
 
 ._crit_edge.loopexit:                             ; preds = %.loopexit
-  %7 = load <4 x float>, ptr %.094.sroa.gep103, align 8
-  %8 = shufflevector <4 x float> %7, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %9 = load <4 x float>, ptr %.094.sroa.gep104, align 8
-  %10 = shufflevector <4 x float> %9, <4 x float> poison, <2 x i32> <i32 0, i32 poison> ; 2 uses
+  %7 = load <2 x float>, ptr %.094.sroa.gep103, align 8
+  %8 = load <2 x float>, ptr %.094.sroa.gep104, align 8 ; 2 uses
   %.pre155 = load float, ptr %.094.sroa.gep100, align 8, !tbaa !68 ; 2 uses
   %.pre156 = load float, ptr %.094.sroa.gep101, align 8, !tbaa !68
-  %i.hf = insertelement <2 x float> %10, float %.pre155, i64 1
-  %i.hg = insertelement <2 x float> %8, float %.pre155, i64 1
-  %i.hh = insertelement <2 x float> %10, float %.pre156, i64 1
+  %i.hf = insertelement <2 x float> %8, float %.pre155, i64 1
+  %i.hg = insertelement <2 x float> %7, float %.pre155, i64 1
+  %i.hh = insertelement <2 x float> %8, float %.pre156, i64 1
   %i.hi = fsub <2 x float> %i.hg, %i.hh
   br label %._crit_edge
 

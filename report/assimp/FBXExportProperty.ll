@@ -204,71 +204,63 @@ _ZNK12aiMatrix4x4tIfEixEj.exit.3.3:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %2 = load <4 x float>, ptr %1, align 4
-  %3 = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %2 = load <2 x float>, ptr %1, align 4
   %i.i = load float, ptr %i.h, align 4
-  %i.j = insertelement <2 x float> %3, float %i.i, i64 1
+  %i.j = insertelement <2 x float> %2, float %i.i, i64 1
   %i.k = fpext <2 x float> %i.j to <2 x double>
   store <2 x double> %i.k, ptr %i.b, align 8
-  %4 = load <4 x float>, ptr %i.g, align 4
-  %5 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %3 = load <2 x float>, ptr %i.g, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.m = load float, ptr %i.f, align 4
-  %i.n = insertelement <2 x float> %5, float %i.m, i64 1
+  %i.n = insertelement <2 x float> %3, float %i.m, i64 1
   %i.o = fpext <2 x float> %i.n to <2 x double>
   store <2 x double> %i.o, ptr %i.l, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %6 = load <4 x float>, ptr %i.p, align 4
-  %7 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %4 = load <2 x float>, ptr %i.p, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.s = load float, ptr %i.r, align 4
-  %i.t = insertelement <2 x float> %7, float %i.s, i64 1
+  %i.t = insertelement <2 x float> %4, float %i.s, i64 1
   %i.u = fpext <2 x float> %i.t to <2 x double>
   store <2 x double> %i.u, ptr %i.q, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %8 = load <4 x float>, ptr %i.v, align 4
-  %9 = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %5 = load <2 x float>, ptr %i.v, align 4
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 52
   %i.y = load float, ptr %i.x, align 4
-  %i.z = insertelement <2 x float> %9, float %i.y, i64 1
+  %i.z = insertelement <2 x float> %5, float %i.y, i64 1
   %i.aa = fpext <2 x float> %i.z to <2 x double>
   store <2 x double> %i.aa, ptr %i.w, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %10 = load <4 x float>, ptr %i.ab, align 4
-  %11 = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %6 = load <2 x float>, ptr %i.ab, align 4
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ae = load float, ptr %i.ad, align 4
-  %i.af = insertelement <2 x float> %11, float %i.ae, i64 1
+  %i.af = insertelement <2 x float> %6, float %i.ae, i64 1
   %i.ag = fpext <2 x float> %i.af to <2 x double>
   store <2 x double> %i.ag, ptr %i.ac, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %12 = load <4 x float>, ptr %i.ah, align 4
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %7 = load <2 x float>, ptr %i.ah, align 4
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ak = load float, ptr %i.aj, align 4
-  %i.al = insertelement <2 x float> %13, float %i.ak, i64 1
+  %i.al = insertelement <2 x float> %7, float %i.ak, i64 1
   %i.am = fpext <2 x float> %i.al to <2 x double>
   store <2 x double> %i.am, ptr %i.ai, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %14 = load <4 x float>, ptr %i.an, align 4
-  %15 = shufflevector <4 x float> %14, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %8 = load <2 x float>, ptr %i.an, align 4
   %i.ao = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.aq = load float, ptr %i.ap, align 4
-  %i.ar = insertelement <2 x float> %15, float %i.aq, i64 1
+  %i.ar = insertelement <2 x float> %8, float %i.aq, i64 1
   %i.as = fpext <2 x float> %i.ar to <2 x double>
   store <2 x double> %i.as, ptr %i.ao, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %16 = load <4 x float>, ptr %i.at, align 4
-  %17 = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %9 = load <2 x float>, ptr %i.at, align 4
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.aw = load float, ptr %i.av, align 4
-  %i.ax = insertelement <2 x float> %17, float %i.aw, i64 1
+  %i.ax = insertelement <2 x float> %9, float %i.aw, i64 1
   %i.ay = fpext <2 x float> %i.ax to <2 x double>
   store <2 x double> %i.ay, ptr %i.au, align 8
   ret void

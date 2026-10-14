@@ -205,7 +205,7 @@ bb.a:
   %i.az = tail call noundef float @acosf(float noundef %.0.i.i) #32
   %i.ba = tail call noundef float @atan2f(float noundef %i.ad, float noundef %i.ac) #32 ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
-  %4 = load <4 x float>, ptr %i.bb, align 4
+  %4 = load <2 x float>, ptr %i.bb, align 4
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.bd = load float, ptr %i.bc, align 4, !tbaa !32 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -352,7 +352,6 @@ _ZN4pbrt10AddRoundUpEff.exit.i37.i:               ; preds = %bb.m, %_ZN4pbrt12Su
 
 _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit: ; preds = %bb.j, %_ZN4pbrt10AddRoundUpEff.exit.i37.i
   %.sroa.0.0.i40.i = phi <2 x float> [ %.sroa.0.0.vec.insert.i41.i, %bb.j ], [ %.sroa.0.4.vec.insert10.i39.i, %_ZN4pbrt10AddRoundUpEff.exit.i37.i ]
-  %5 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.cq = trunc nuw i8 %i.av to i1                ; 2 uses
   %i.cr = fmul float %i.ap, %i.ac
   %i.cs = fmul float %i.ad, %i.ar
@@ -392,7 +391,7 @@ _ZN4pbrt8Point3fiC2ENS_6Point3IfEENS_7Vector3IfEE.exit: ; preds = %bb.j, %_ZN4pb
   %i.du = fsub float %i.bf, %i.bd
   %i.dv = insertelement <2 x float> poison, float %spec.select, i64 0
   %i.dw = insertelement <2 x float> %i.dv, float %i.dt, i64 1
-  %i.dx = insertelement <2 x float> %5, float %i.du, i64 1
+  %i.dx = insertelement <2 x float> %4, float %i.du, i64 1
   %i.dy = fdiv <2 x float> %i.dw, %i.dx
   store <2 x float> %.sroa.0.0.i.i, ptr %3, align 8, !tbaa !28
   %i.dz = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -795,26 +794,24 @@ _ZN4pstd5arrayIN4pbrt6Point3IfEELi4EEC2ESt16initializer_listIS3_E.exit: ; preds 
   call void @_ZN4pbrt6LookAtENS_6Point3IfEES1_NS_7Vector3IfEE(ptr dead_on_unwind nonnull writable sret(%"class.pbrt::Transform") align 4 %8, <2 x float> %i.by, float %i.ca, <2 x float> %i.ei, float %i.ej, <2 x float> %.sroa.0247.0, float %.sroa.6249.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #32
   %.sroa.066.0.copyload = load <2 x float>, ptr %7, align 8 ; 2 uses
-  %11 = load <4 x float>, ptr %.sroa.2113.0..sroa_idx, align 8
-  %12 = shufflevector <4 x float> %11, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %11 = load <2 x float>, ptr %.sroa.2113.0..sroa_idx, align 8
   %i.ek = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.el = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.em = getelementptr inbounds nuw i8, ptr %8, i64 24
   %i.en = getelementptr inbounds nuw i8, ptr %8, i64 32
   %i.eo = getelementptr inbounds nuw i8, ptr %8, i64 40
-  %13 = load <4 x float>, ptr %i.eo, align 8
+  %12 = load <1 x float>, ptr %i.eo, align 8
   %i.ep = getelementptr inbounds nuw i8, ptr %8, i64 44
-  %14 = load <4 x float>, ptr %i.ep, align 4
+  %13 = load <1 x float>, ptr %i.ep, align 4
   %i.eq = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.er = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %15 = load <4 x float>, ptr %i.er, align 8
+  %14 = load <1 x float>, ptr %i.er, align 8
   %i.es = getelementptr inbounds nuw i8, ptr %8, i64 60
-  %16 = load <4 x float>, ptr %i.es, align 4
+  %15 = load <1 x float>, ptr %i.es, align 4
   %i.et = getelementptr inbounds nuw i8, ptr %7, i64 12
   %.sroa.058.0.copyload = load <2 x float>, ptr %i.et, align 4 ; 2 uses
   %.sroa.259.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 20
-  %17 = load <4 x float>, ptr %.sroa.259.0..sroa_idx, align 4
-  %18 = shufflevector <4 x float> %17, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %16 = load <2 x float>, ptr %.sroa.259.0..sroa_idx, align 4
   %i.eu = getelementptr inbounds nuw i8, ptr %7, i64 24
   %.sroa.050.0.copyload = load <2 x float>, ptr %i.eu, align 8 ; 2 uses
   %.sroa.251.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 32
@@ -854,11 +851,11 @@ _ZN4pstd5arrayIN4pbrt6Point3IfEELi4EEC2ESt16initializer_listIS3_E.exit: ; preds 
   %i.fr = shufflevector <2 x float> %.sroa.066.0.copyload, <2 x float> %.sroa.050.0.copyload, <2 x i32> <i32 0, i32 3> ; 4 uses
   %i.fs = fmul <2 x float> %i.fr, %i.fn
   %i.ft = fadd <2 x float> %i.fq, %i.fs
-  %i.fu = shufflevector <4 x float> %15, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.fv = insertelement <2 x float> %12, float %.sroa.251.0.copyload, i64 1 ; 4 uses
+  %i.fu = shufflevector <1 x float> %14, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.fv = insertelement <2 x float> %11, float %.sroa.251.0.copyload, i64 1 ; 4 uses
   %i.fw = fmul <2 x float> %i.fu, %i.fv
   %i.fx = fadd <2 x float> %i.ft, %i.fw
-  %i.fy = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.fy = shufflevector <1 x float> %15, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.fz = fadd <2 x float> %i.fy, %i.fx           ; 4 uses
   %i.ga = fcmp oeq <2 x float> %i.fz, splat (float 1.000000e+00) ; 3 uses
   %i.gb = shufflevector <2 x float> %.sroa.058.0.copyload, <2 x float> %.sroa.042.0.copyload, <2 x i32> <i32 1, i32 2> ; 4 uses
@@ -866,7 +863,7 @@ _ZN4pstd5arrayIN4pbrt6Point3IfEELi4EEC2ESt16initializer_listIS3_E.exit: ; preds 
   %i.gd = shufflevector <2 x float> %.sroa.058.0.copyload, <2 x float> %.sroa.042.0.copyload, <2 x i32> <i32 0, i32 3> ; 4 uses
   %i.ge = fmul <2 x float> %i.fn, %i.gd
   %i.gf = fadd <2 x float> %i.gc, %i.ge
-  %i.gg = insertelement <2 x float> %18, float %.sroa.243.0.copyload, i64 1 ; 4 uses
+  %i.gg = insertelement <2 x float> %16, float %.sroa.243.0.copyload, i64 1 ; 4 uses
   %i.gh = fmul <2 x float> %i.fu, %i.gg
   %i.gi = fadd <2 x float> %i.gh, %i.gf
   %i.gj = fadd <2 x float> %i.fy, %i.gi           ; 4 uses
@@ -874,10 +871,10 @@ _ZN4pstd5arrayIN4pbrt6Point3IfEELi4EEC2ESt16initializer_listIS3_E.exit: ; preds 
   %i.gl = fmul <2 x float> %i.fp, %i.fm
   %i.gm = fmul <2 x float> %i.fr, %i.fl
   %i.gn = fadd <2 x float> %i.gl, %i.gm
-  %i.go = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.go = shufflevector <1 x float> %12, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.gp = fmul <2 x float> %i.go, %i.fv
   %i.gq = fadd <2 x float> %i.gn, %i.gp
-  %i.gr = shufflevector <4 x float> %14, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.gr = shufflevector <1 x float> %13, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.gs = fadd <2 x float> %i.gr, %i.gq           ; 2 uses
   %i.gt = fdiv <2 x float> %i.gs, %i.fz
   %i.gu = select <2 x i1> %i.ga, <2 x float> %i.gs, <2 x float> %i.gt ; 6 uses

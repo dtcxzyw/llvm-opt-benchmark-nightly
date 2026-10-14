@@ -205,7 +205,7 @@ _ZN4pbrt3RGBixEi.exit.2:
   %.sroa.speculated.i = select i1 %i.ah, float %i.ac, float 0.000000e+00
   call void @_ZN4pbrt21RGBIlluminantSpectrumC1ERKNS_13RGBColorSpaceENS_3RGBE(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(152) %i.ae, <2 x float> %i.ag, float %.sroa.speculated.i)
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %4 = load <4 x float>, ptr %i.ai, align 8
+  %4 = load <1 x float>, ptr %i.ai, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !494 ; 2 uses
   %.not.i = icmp eq ptr %i.ak, null
@@ -332,7 +332,7 @@ _ZNK4pbrt20RGBSigmoidPolynomialclEf.exit.3.i:     ; preds = %bb.i, %bb.h
 _ZNK4pbrt21RGBIlluminantSpectrum6SampleERKNS_18SampledWavelengthsE.exit: ; preds = %_ZN4pbrt3RGBixEi.exit.2, %_ZNK4pbrt20RGBSigmoidPolynomialclEf.exit.3.i
   %.sroa.06.0.i = phi <2 x float> [ %i.da, %_ZNK4pbrt20RGBSigmoidPolynomialclEf.exit.3.i ], [ zeroinitializer, %_ZN4pbrt3RGBixEi.exit.2 ]
   %.sroa.4.0.i = phi <2 x float> [ %i.dd, %_ZNK4pbrt20RGBSigmoidPolynomialclEf.exit.3.i ], [ zeroinitializer, %_ZN4pbrt3RGBixEi.exit.2 ]
-  %i.de = shufflevector <4 x float> %4, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.de = shufflevector <1 x float> %4, <1 x float> poison, <4 x i32> zeroinitializer
   %i.df = shufflevector <2 x float> %.sroa.06.0.i, <2 x float> %.sroa.4.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.dg = fmul <4 x float> %i.de, %i.df           ; 2 uses
   %i.dh = shufflevector <4 x float> %i.dg, <4 x float> poison, <2 x i32> <i32 0, i32 1>
@@ -735,7 +735,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define linkonce_odr dso_local noundef float @_ZNK4pbrt18CompactLightBounds10ImportanceENS_6Point3IfEENS_7Normal3IfEERKNS_7Bounds3IfEE(ptr noundef nonnull align 4 dereferenceable(24) %0, <2 x float> %1, float %2, <2 x float> %3, float %4, ptr noundef nonnull align 4 dereferenceable(24) %5) local_unnamed_addr #23 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %6 = load <4 x float>, ptr %5, align 4
+  %6 = load <1 x float>, ptr %5, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.c = load float, ptr %i.b, align 4, !tbaa !1198, !noalias !1199
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 14
@@ -747,7 +747,7 @@ bb.a:
   %i.j = uitofp <2 x i16> %i.i to <2 x float>
   %i.k = fdiv <2 x float> %i.j, splat (float 6.553500e+04) ; 2 uses
   %i.l = fsub nnan <2 x float> splat (float 1.000000e+00), %i.k
-  %i.m = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.m = shufflevector <1 x float> %6, <1 x float> poison, <2 x i32> zeroinitializer
   %i.n = fmul <2 x float> %i.m, %i.l
   %i.o = insertelement <2 x float> poison, float %i.c, i64 0
   %i.p = shufflevector <2 x float> %i.o, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1150,13 +1150,13 @@ _ZN4pbrt3RGBixEi.exit.2:                          ; preds = %bb.f
 
 bb.p:                                             ; preds = %bb.f
   %i.hz = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %13 = load <4 x float>, ptr %i.hz, align 8
+  %13 = load <1 x float>, ptr %i.hz, align 8
   %i.ia = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.ib = load ptr, ptr %i.ia, align 8, !tbaa !1238
   %i.ic = call { <2 x float>, <2 x float> } @_ZNK4pbrt22DenselySampledSpectrum6SampleERKNS_18SampledWavelengthsE(ptr noundef nonnull align 8 dereferenceable(40) %i.ib, ptr noundef nonnull align 4 dereferenceable(32) %8) ; 2 uses
   %i.id = extractvalue { <2 x float>, <2 x float> } %i.ic, 0
   %i.ie = extractvalue { <2 x float>, <2 x float> } %i.ic, 1
-  %i.if = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.if = shufflevector <1 x float> %13, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ig = fmul <2 x float> %i.if, %i.id
   %i.ih = fmul <2 x float> %i.if, %i.ie
   br label %bb.q
@@ -1559,8 +1559,7 @@ _ZN4pbrt3RGBixEi.exit.2:
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
   %i.af = load atomic i64, ptr %i.ad seq_cst, align 8
-  %3 = load <4 x float>, ptr %i.ae, align 8
-  %4 = shufflevector <4 x float> %3, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %3 = load <2 x float>, ptr %i.ae, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %i.ah = load atomic i64, ptr %i.ag seq_cst, align 8
   %i.ai = load float, ptr %i.ae, align 8, !tbaa !1288
@@ -1570,7 +1569,7 @@ _ZN4pbrt3RGBixEi.exit.2:
   %i.am = insertelement <2 x double> poison, double %i.ac, i64 0
   %i.an = shufflevector <2 x double> %i.am, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ao = fmul <2 x double> %i.an, %i.al
-  %i.ap = insertelement <2 x float> %4, float %i.ai, i64 1
+  %i.ap = insertelement <2 x float> %3, float %i.ai, i64 1
   %i.aq = fpext <2 x float> %i.ap to <2 x double>
   %i.ar = fdiv <2 x double> %i.ao, %i.aq
   %i.as = fpext <2 x float> %.sroa.0.0 to <2 x double>
@@ -1659,8 +1658,7 @@ _ZN4pbrt3RGBixEi.exit.2:
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 832 ; 3 uses
   %i.af = load atomic i64, ptr %i.ad seq_cst, align 8
-  %3 = load <4 x float>, ptr %i.ae, align 8
-  %4 = shufflevector <4 x float> %3, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %3 = load <2 x float>, ptr %i.ae, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.o, i64 48
   %i.ah = load atomic i64, ptr %i.ag seq_cst, align 8
   %i.ai = load float, ptr %i.ae, align 8, !tbaa !1292
@@ -1670,7 +1668,7 @@ _ZN4pbrt3RGBixEi.exit.2:
   %i.am = insertelement <2 x double> poison, double %i.ac, i64 0
   %i.an = shufflevector <2 x double> %i.am, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ao = fmul <2 x double> %i.an, %i.al
-  %i.ap = insertelement <2 x float> %4, float %i.ai, i64 1
+  %i.ap = insertelement <2 x float> %3, float %i.ai, i64 1
   %i.aq = fpext <2 x float> %i.ap to <2 x double>
   %i.ar = fdiv <2 x double> %i.ao, %i.aq
   %i.as = fpext <2 x float> %.sroa.0.0 to <2 x double>

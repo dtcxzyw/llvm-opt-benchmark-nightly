@@ -202,10 +202,10 @@ bb.ab:                                            ; preds = %bb.aa
 
 .loopexit.1:                                      ; preds = %bb.ab, %bb.aa
   %i.ti = phi double [ %i.ks, %bb.ab ], [ %i.tf, %bb.aa ]
-  %16 = load <2 x double>, ptr %i.lv, align 8
+  %16 = load <1 x double>, ptr %i.lv, align 8
   %i.tj = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %17 = load <2 x double>, ptr %i.nh, align 8
-  %18 = load <2 x double>, ptr %i.nn, align 8
+  %17 = load <1 x double>, ptr %i.nh, align 8
+  %18 = load <1 x double>, ptr %i.nn, align 8
   %i.tk = load <2 x double>, ptr %i.nv, align 16, !tbaa !10
   %i.tl = insertelement <2 x double> poison, double %i.ti, i64 0
   %i.tm = shufflevector <2 x double> %i.tl, <2 x double> poison, <2 x i32> zeroinitializer
@@ -213,15 +213,15 @@ bb.ab:                                            ; preds = %bb.aa
   store <2 x double> %i.tn, ptr %i.nv, align 16, !tbaa !10
   %i.to = fneg <2 x double> %i.tn                 ; 3 uses
   %i.tp = load <2 x double>, ptr %i.tj, align 16, !tbaa !10
-  %i.tq = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.tq = shufflevector <1 x double> %16, <1 x double> poison, <2 x i32> zeroinitializer
   %i.tr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.to, <2 x double> %i.tq, <2 x double> %i.tp)
   store <2 x double> %i.tr, ptr %i.tj, align 16, !tbaa !10
   %i.ts = load <2 x double>, ptr %i.oc, align 16, !tbaa !10
-  %i.tt = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.tt = shufflevector <1 x double> %17, <1 x double> poison, <2 x i32> zeroinitializer
   %i.tu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.to, <2 x double> %i.tt, <2 x double> %i.ts) ; 3 uses
   store <2 x double> %i.tu, ptr %i.oc, align 16, !tbaa !10
   %i.tv = load <2 x double>, ptr %i.oi, align 16, !tbaa !10
-  %i.tw = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.tw = shufflevector <1 x double> %18, <1 x double> poison, <2 x i32> zeroinitializer
   %i.tx = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.to, <2 x double> %i.tw, <2 x double> %i.tv) ; 2 uses
   %i.ty = extractelement <2 x double> %i.tx, i64 0 ; 4 uses
   store double %i.ty, ptr %i.oi, align 16, !tbaa !10

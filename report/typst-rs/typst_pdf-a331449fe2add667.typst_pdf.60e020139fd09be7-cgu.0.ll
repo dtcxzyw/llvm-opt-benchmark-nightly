@@ -205,17 +205,17 @@ bb.a:
   %i.l = alloca [16 x i8], align 8                ; 4 uses
   %i.m = alloca [24 x i8], align 8                ; 8 uses
   %i.n = alloca [24 x i8], align 8                ; 10 uses
-  %i.o = alloca [16 x i8], align 16               ; 7 uses
+  %i.o = alloca [16 x i8], align 8                ; 7 uses
   %i.p = alloca [24 x i8], align 8                ; 10 uses
   %i.q = alloca [80 x i8], align 8                ; 13 uses
   %i.r = alloca [16 x i8], align 8                ; 7 uses
   %i.s = alloca [16 x i8], align 8                ; 4 uses
   %i.t = alloca [24 x i8], align 8                ; 10 uses
   %i.u = alloca [24 x i8], align 8                ; 10 uses
-  %i.v = alloca [16 x i8], align 16               ; 8 uses
+  %i.v = alloca [16 x i8], align 8                ; 8 uses
   %i.w = alloca [24 x i8], align 8                ; 10 uses
   %i.x = alloca [24 x i8], align 8                ; 10 uses
-  %i.y = alloca [16 x i8], align 16               ; 8 uses
+  %i.y = alloca [16 x i8], align 8                ; 8 uses
   %i.z = alloca [24 x i8], align 8                ; 12 uses
   %i.aa = alloca [24 x i8], align 8               ; 12 uses
   %.sroa.0 = alloca i32, align 4                  ; 13 uses
@@ -618,12 +618,12 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library9visu
   br i1 %i.iq, label %.preheader.preheader, label %bb.cu
 
 .preheader.preheader:                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library9visualize5color5ColorECs8jFhWeO2DFb_9typst_pdf.exit272
-  %i.ir = load float, ptr %i.y, align 16, !noundef !10 ; 2 uses
-  %i.is = load float, ptr %i.v, align 16, !noundef !10 ; 2 uses
-  %3 = load <4 x float>, ptr %i.y, align 16
-  %i.it = shufflevector <4 x float> %3, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %4 = load <4 x float>, ptr %i.v, align 16
-  %i.iu = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.ir = load float, ptr %i.y, align 8, !noundef !10 ; 2 uses
+  %i.is = load float, ptr %i.v, align 8, !noundef !10 ; 2 uses
+  %3 = load <2 x float>, ptr %i.y, align 8
+  %i.it = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %4 = load <2 x float>, ptr %i.v, align 8
+  %i.iu = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.iv = load float, ptr %.sroa.5.0.i274.ph.sroa.gep640, align 8, !noundef !10 ; 2 uses
   %i.iw = load float, ptr %.sroa.5.0.i274.ph.sroa.gep643, align 8, !noundef !10 ; 2 uses
   %i.ix = insertelement <2 x float> poison, float %i.ir, i64 0
@@ -1026,11 +1026,10 @@ bb.fu:                                            ; preds = %bb.ft
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library9visualize5color5ColorECs8jFhWeO2DFb_9typst_pdf.exit328: ; preds = %bb.ft, %bb.fs, %bb.fu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
-  %5 = load <4 x float>, ptr %i.o, align 16       ; 2 uses
-  %6 = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %i.rv = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %5 = load <2 x float>, ptr %i.o, align 8        ; 2 uses
+  %i.rv = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.rw = load float, ptr %i.mr, align 8, !noundef !10
-  %i.rx = insertelement <2 x float> %6, float %i.rw, i64 1
+  %i.rx = insertelement <2 x float> %5, float %i.rw, i64 1
   %i.ry = insertelement <2 x float> poison, float %i.nb, i64 0
   %i.rz = shufflevector <2 x float> %i.ry, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.sa = fmul <2 x float> %i.rx, %i.rz
@@ -1433,12 +1432,12 @@ _RNvXsv_NtCsakL8LGkl72C_4ecow6stringNtNtCs1xwejQucwHj_5alloc6string6StringINtNtC
 
 bb.m:                                             ; preds = %bb.l
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 60
-  %2 = load <4 x float>, ptr %i.ar, align 4
+  %2 = load <1 x float>, ptr %i.ar, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !11314
   %.sroa.43.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i8 8, ptr %.sroa.43.0..sroa_idx.i, align 8, !noalias !11314
   %.sroa.2.i.sroa.3.0..sroa.5.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  %i.as = shufflevector <4 x float> %2, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.as = shufflevector <1 x float> %2, <1 x float> poison, <4 x i32> zeroinitializer
   store <4 x float> %i.as, ptr %.sroa.2.i.sroa.3.0..sroa.5.0..sroa_idx.i.sroa_idx, align 4, !noalias !11314
   br label %bb.o
 

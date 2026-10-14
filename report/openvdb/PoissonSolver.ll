@@ -205,8 +205,8 @@ vector.memcheck77:                                ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.ph87:                                      ; preds = %vector.memcheck77
   %n.vec88 = and i64 %wide.trip.count.i.i.i.i.i.i.i, 2147483644 ; 3 uses
-  %6 = load <2 x double>, ptr %i.r, align 8
-  %broadcast.splat94 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %6 = load <1 x double>, ptr %i.r, align 8
+  %broadcast.splat94 = shufflevector <1 x double> %6, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body89
 
 vector.body89:                                    ; preds = %vector.body89, %vector.ph87
@@ -609,8 +609,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count.i.i.i.i.i.i.i22, 2147483644 ; 3 uses
-  %7 = load <2 x double>, ptr %i.bm, align 8
-  %broadcast.splat = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %7 = load <1 x double>, ptr %i.bm, align 8
+  %broadcast.splat = shufflevector <1 x double> %7, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1013,8 +1013,8 @@ vector.memcheck79:                                ; preds = %.lr.ph.i.i.i.i.i.i
 vector.ph83:                                      ; preds = %vector.memcheck79
   %n.vec84 = and i64 %i.p, -4                     ; 3 uses
   %i.v = add nsw i64 %n.vec84, %i.o
-  %6 = load <2 x double>, ptr %i.m, align 8
-  %broadcast.splat90 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %6 = load <1 x double>, ptr %i.m, align 8
+  %broadcast.splat90 = shufflevector <1 x double> %6, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %invariant.gep99 = getelementptr [8 x i8], ptr %i.n, i64 %i.o
   br label %vector.body85
 
@@ -1417,8 +1417,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i1
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.mp, -4                      ; 3 uses
   %i.ms = add nsw i64 %n.vec, %i.mo
-  %7 = load <2 x double>, ptr %i.be, align 8
-  %broadcast.splat = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %7 = load <1 x double>, ptr %i.be, align 8
+  %broadcast.splat = shufflevector <1 x double> %7, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %invariant.gep = getelementptr [8 x i8], ptr %i.mn, i64 %i.mo
   br label %vector.body
 
@@ -1821,8 +1821,8 @@ vector.memcheck173:                               ; preds = %.lr.ph.i.i.i.i.i.i
 vector.ph185:                                     ; preds = %vector.memcheck173
   %n.vec186 = and i64 %i.eh, -4                   ; 3 uses
   %i.eq = add nsw i64 %n.vec186, %i.eg
-  %6 = load <2 x double>, ptr %i.k, align 16
-  %broadcast.splat194 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %6 = load <1 x double>, ptr %i.k, align 16
+  %broadcast.splat194 = shufflevector <1 x double> %6, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body187
 
 vector.body187:                                   ; preds = %vector.body187, %vector.ph185
@@ -2225,8 +2225,8 @@ vector.memcheck125:                               ; preds = %.lr.ph.i.i.i.i.i.i1
 vector.ph141:                                     ; preds = %vector.memcheck125
   %n.vec142 = and i64 %i.wd, -4                   ; 3 uses
   %i.wg = add nsw i64 %n.vec142, %i.wc
-  %7 = load <2 x double>, ptr %i.gc, align 16
-  %broadcast.splat = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %7 = load <1 x double>, ptr %i.gc, align 16
+  %broadcast.splat = shufflevector <1 x double> %7, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body143
 
 vector.body143:                                   ; preds = %vector.body143, %vector.ph141
@@ -2629,8 +2629,8 @@ vector.ph113:                                     ; preds = %_ZN7openvdb5v13_04t
   %i.bd = and <4 x i32> %i.bc, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.bd, ptr %i.ax, align 8, !tbaa !410
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %7 = load <2 x double>, ptr %i.be, align 8
-  %broadcast.splat115 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %7 = load <1 x double>, ptr %i.be, align 8
+  %broadcast.splat115 = shufflevector <1 x double> %7, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body116
 
 vector.body116:                                   ; preds = %vector.body116, %vector.ph113
@@ -3033,8 +3033,8 @@ vector.ph:                                        ; preds = %.lr.ph47, %_ZNSt3ma
   %i.ck = shufflevector <4 x i32> %i.cj, <4 x i32> %i.ci, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.cl = and <4 x i32> %i.ck, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.cl, ptr %i.ch, align 8, !tbaa !410
-  %6 = load <2 x double>, ptr %i.w, align 8
-  %broadcast.splat = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %6 = load <1 x double>, ptr %i.w, align 8
+  %broadcast.splat = shufflevector <1 x double> %6, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3437,8 +3437,8 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4
   store i32 %i.ct, ptr %i.cv, align 8, !tbaa !410
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cr, i64 270348
   store i32 0, ptr %i.cw, align 4, !tbaa !2791
-  %5 = load <2 x double>, ptr %i.r, align 8
-  %broadcast.splat = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %5 = load <1 x double>, ptr %i.r, align 8
+  %broadcast.splat = shufflevector <1 x double> %5, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread

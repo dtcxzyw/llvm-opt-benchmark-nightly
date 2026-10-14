@@ -205,7 +205,7 @@ bb.a:
   %46 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   %i.i = alloca double, align 8                   ; 5 uses
   %47 = alloca %struct.rotation_derivative, align 8 ; 14 uses
-  %48 = alloca %"class.colvarmodule::rvector", align 16 ; 8 uses
+  %48 = alloca %"class.colvarmodule::rvector", align 8 ; 8 uses
   %49 = alloca %"struct.std::array", align 8      ; 17 uses
   %50 = alloca %"struct.std::array.51", align 16  ; 57 uses
   %i.j = alloca [4 x [4 x double]], align 16      ; 32 uses
@@ -608,7 +608,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit461: ; preds = %_Z
   %i.agw = getelementptr inbounds nuw i8, ptr %47, i64 64
   store i64 %5, ptr %i.agw, align 8, !tbaa !212
   call void @llvm.lifetime.start.p0(ptr nonnull %48) #18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %48, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %48, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %49, i8 0, i64 96, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #18
@@ -1011,8 +1011,8 @@ _ZN2NR18diagonalize_matrixEPA4_dPdS1_.exit:       ; preds = %.split751.us._ZN2NR
   ]
 
 _ZN12colvarmodule7rvectorixEi.exit.thread:        ; preds = %_ZN2NR18diagonalize_matrixEPA4_dPdS1_.exit
-  %57 = load <2 x double>, ptr %48, align 16
-  %i.bbg = shufflevector <2 x double> %57, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %57 = load <1 x double>, ptr %48, align 8
+  %i.bbg = shufflevector <1 x double> %57, <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.bbh = load double, ptr @_ZN12colvarmodule25debug_gradients_step_sizeE, align 8, !tbaa !55 ; 2 uses
   %i.bbi = load double, ptr %49, align 8, !tbaa !55
   %i.bbj = load double, ptr %i.aje, align 8, !tbaa !55
@@ -1026,8 +1026,8 @@ _ZN12colvarmodule7rvectorixEi.exit.thread:        ; preds = %_ZN2NR18diagonalize
   br label %_ZN12colvarmodule7rvectorixEi.exit578
 
 _ZN12colvarmodule7rvectorixEi.exit.thread679:     ; preds = %_ZN2NR18diagonalize_matrixEPA4_dPdS1_.exit
-  %58 = load <2 x double>, ptr %i.aiz, align 8
-  %i.bbr = shufflevector <2 x double> %58, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %58 = load <1 x double>, ptr %i.aiz, align 8
+  %i.bbr = shufflevector <1 x double> %58, <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.bbs = load double, ptr @_ZN12colvarmodule25debug_gradients_step_sizeE, align 8, !tbaa !55 ; 2 uses
   %i.bbt = load double, ptr %i.aja, align 8, !tbaa !55
   %i.bbu = load double, ptr %i.ajb, align 8, !tbaa !55
@@ -1044,7 +1044,7 @@ _ZN12colvarmodule7rvectorixEi.exit:               ; preds = %_ZN2NR18diagonalize
   %i.bcc = icmp eq i64 %.038758, 2                ; 5 uses
   %.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = select i1 %i.bcc, i64 16, i64 0
   %.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %48, i64 %.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx
-  %i.bcd = load double, ptr %.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, align 16, !tbaa !55
+  %i.bcd = load double, ptr %.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, align 8, !tbaa !55
   %i.bce = load double, ptr @_ZN12colvarmodule25debug_gradients_step_sizeE, align 8, !tbaa !55 ; 2 uses
   %.idx.i571.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = select i1 %i.bcc, i64 16, i64 0
   %.idx.i571.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %49, i64 %.idx.i571.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx
@@ -1447,8 +1447,8 @@ bb.a:
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.bo = load <2 x double>, ptr %i.bn, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 240
-  %5 = load <2 x double>, ptr %i.bp, align 8
-  %i.bq = shufflevector <2 x double> %5, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %5 = load <1 x double>, ptr %i.bp, align 8
+  %i.bq = shufflevector <1 x double> %5, <1 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 280

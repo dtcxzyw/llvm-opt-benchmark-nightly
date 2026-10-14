@@ -204,7 +204,7 @@ bb.bo:                                            ; preds = %bb.bn
   %i.sl = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 2 uses
   %i.sm = load float, ptr %i.sl, align 4, !tbaa !70 ; 2 uses
   %i.sn = fcmp une float %i.sm, 0.000000e+00
-  %i.so = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
+  %i.so = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   %i.sp = load double, ptr %i.so, align 8, !tbaa !70
   %i.sq = fptrunc double %i.sp to float
   %i.sr = fdiv float %i.sm, %i.sq
@@ -607,15 +607,11 @@ _ZNK4Luau7Compile8Constant10isTruthfulEv.exit627.thread637: ; preds = %bb.dg, %_
 .rtvec681:                                        ; preds = %bb.bp
   %i.afw = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i32 5, ptr %0, align 8, !tbaa !68
-  %6 = load <2 x double>, ptr %i.so, align 8
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %6 = load <1 x double>, ptr %i.so, align 8
   %i.afx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = load double, ptr %i.so, align 8, !tbaa !70 ; 3 uses
   %i.afy = load <4 x float>, ptr %i.afw, align 8, !tbaa !70
-  %9 = insertelement <4 x double> %7, double %8, i64 1
-  %10 = insertelement <4 x double> %9, double %8, i64 2
-  %11 = insertelement <4 x double> %10, double %8, i64 3
-  %i.afz = fptrunc <4 x double> %11 to <4 x float>
+  %7 = shufflevector <1 x double> %6, <1 x double> poison, <4 x i32> zeroinitializer
+  %i.afz = fptrunc <4 x double> %7 to <4 x float>
   %i.aga = fdiv <4 x float> %i.afy, %i.afz
   %i.agb = tail call <4 x float> @llvm.floor.v4f32(<4 x float> %i.aga)
   store <4 x float> %i.agb, ptr %i.afx, align 8, !tbaa !70

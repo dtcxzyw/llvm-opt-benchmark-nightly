@@ -205,7 +205,7 @@ define void @_Z9push_bond9DirectiveRN3gmx16EnumerationArrayI19InteractionFunctio
 bb.a:
   %i.a = alloca [4096 x i8], align 16             ; 7 uses
   %i.b = alloca [13 x double], align 16           ; 39 uses
-  %13 = alloca %"struct.std::array.151", align 16 ; 21 uses
+  %13 = alloca %"struct.std::array.151", align 4  ; 21 uses
   %i.c = alloca i32, align 4                      ; 7 uses
   %i.d = alloca i32, align 4                      ; 6 uses
   %14 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 9 uses
@@ -266,10 +266,10 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 64
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 96
-  store <8 x i32> splat (i32 -409203), ptr %i.l, align 16, !tbaa !63
-  store <8 x i32> splat (i32 -409203), ptr %i.m, align 16, !tbaa !63
-  store <8 x i32> splat (i32 -409203), ptr %i.n, align 16, !tbaa !63
-  store <8 x i32> splat (i32 -409203), ptr %i.o, align 16, !tbaa !63
+  store <8 x i32> splat (i32 -409203), ptr %i.l, align 4, !tbaa !63
+  store <8 x i32> splat (i32 -409203), ptr %i.m, align 4, !tbaa !63
+  store <8 x i32> splat (i32 -409203), ptr %i.n, align 4, !tbaa !63
+  store <8 x i32> splat (i32 -409203), ptr %i.o, align 4, !tbaa !63
   %index.next = add nuw i64 %index, 32            ; 2 uses
   %i.p = icmp eq i64 %index.next, %n.vec
   br i1 %i.p, label %middle.block, label %vector.body, !llvm.loop !367
@@ -290,7 +290,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index851 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next852, %vec.epilog.vector.body ] ; 2 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %index851
-  store <8 x i32> splat (i32 -409203), ptr %i.q, align 16, !tbaa !63
+  store <8 x i32> splat (i32 -409203), ptr %i.q, align 4, !tbaa !63
   %index.next852 = add nuw i64 %index851, 8       ; 2 uses
   %i.r = icmp eq i64 %index.next852, %n.vec850
   br i1 %i.r, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !368
@@ -335,8 +335,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.b:                                             ; preds = %._crit_edge
   %i.ak = load i32, ptr %i.ad, align 4, !tbaa !63
   store i32 %i.ak, ptr %i.af, align 4, !tbaa !63
-  %37 = load <4 x i32>, ptr %13, align 16
-  %i.al = shufflevector <4 x i32> %37, <4 x i32> poison, <2 x i32> zeroinitializer
+  %37 = load <1 x i32>, ptr %13, align 4
+  %i.al = shufflevector <1 x i32> %37, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.am = add nsw <2 x i32> %i.al, <i32 1, i32 2>
   store <2 x i32> %i.am, ptr %i.ad, align 4, !tbaa !63
   br label %bb.c

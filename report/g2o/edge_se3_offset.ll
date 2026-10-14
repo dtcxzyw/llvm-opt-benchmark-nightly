@@ -205,7 +205,7 @@ bb.a:
   %i.bi = fmul <2 x double> %i.i, %i.bh
   %i.bj = load <2 x double>, ptr %i.bd, align 16, !tbaa !29, !noalias !206
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 848
-  %3 = load <2 x double>, ptr %i.bk, align 16
+  %3 = load <1 x double>, ptr %i.bk, align 16
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 888
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !111 ; 12 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 208
@@ -329,7 +329,7 @@ bb.a:
   %i.fz = shufflevector <2 x double> %i.fg, <2 x double> %i.ev, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
   %i.ga = shufflevector <2 x double> %i.fr, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>
   %i.gb = shufflevector <4 x double> %i.fz, <4 x double> %i.ga, <4 x i32> <i32 0, i32 1, i32 poison, i32 7>
-  %i.gc = shufflevector <2 x double> %3, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 poison>
+  %i.gc = shufflevector <1 x double> %3, <1 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 poison>
   %i.gd = shufflevector <4 x double> %i.gb, <4 x double> %i.gc, <4 x i32> <i32 0, i32 1, i32 6, i32 3> ; 2 uses
   %i.ge = fmul <4 x double> %i.gd, %i.et
   %i.gf = fadd <4 x double> %i.gd, %i.et
@@ -732,8 +732,9 @@ bb.a:
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 272
   %i.bd = getelementptr inbounds nuw i8, ptr %i.i, i64 112
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %3 = load <2 x double>, ptr %i.be, align 16     ; 2 uses
-  %i.bf = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = load <1 x double>, ptr %i.be, align 16     ; 2 uses
+  %4 = shufflevector <1 x double> %3, <1 x double> poison, <2 x i32> <i32 0, i32 poison>
+  %i.bf = shufflevector <1 x double> %3, <1 x double> poison, <2 x i32> zeroinitializer
   %i.bg = fmul <2 x double> %i.p, %i.bf
   %i.bh = load <2 x double>, ptr %i.bd, align 8, !tbaa !29, !noalias !300
   %i.bi = getelementptr inbounds nuw i8, ptr %i.i, i64 128
@@ -804,7 +805,7 @@ bb.a:
   %i.dt = load <2 x double>, ptr %i.bc, align 16, !tbaa !12, !noalias !300 ; 4 uses
   %i.du = shufflevector <2 x double> %i.dt, <2 x double> %i.ct, <2 x i32> <i32 1, i32 3>
   %i.dv = fmul <2 x double> %i.du, %i.dm
-  %i.dw = insertelement <2 x double> %3, double %i.r, i64 1
+  %i.dw = insertelement <2 x double> %4, double %i.r, i64 1
   %i.dx = fmul <2 x double> %i.dw, %i.dq
   %i.dy = fadd <2 x double> %i.do, %i.ds
   %i.dz = shufflevector <2 x double> %i.dt, <2 x double> %i.ct, <2 x i32> <i32 0, i32 2>

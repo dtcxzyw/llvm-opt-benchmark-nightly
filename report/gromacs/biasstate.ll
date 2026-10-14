@@ -205,12 +205,14 @@ bb.aw:                                            ; preds = %.loopexit
 
 bb.ax:                                            ; preds = %bb.aw
   %i.sv = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %15 = load <2 x double>, ptr %i.sv, align 8     ; 2 uses
+  %15 = load <1 x double>, ptr %i.sv, align 8
   %i.sw = getelementptr inbounds nuw i8, ptr %4, i64 80
-  %16 = load <2 x double>, ptr %i.sw, align 8
-  %i.sx = fadd <2 x double> %15, %16
-  %i.sy = fdiv <2 x double> %15, %i.sx            ; 2 uses
-  %i.sz = extractelement <2 x double> %i.sy, i64 0
+  %16 = load <1 x double>, ptr %i.sw, align 8
+  %17 = shufflevector <1 x double> %15, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %18 = shufflevector <1 x double> %16, <1 x double> poison, <2 x i32> zeroinitializer
+  %i.sx = fadd <2 x double> %17, %18
+  %i.sy = fdiv <2 x double> %17, %i.sx            ; 2 uses
+  %i.sz = extractelement <2 x double> %i.sy, i64 1
   %i.ta = call double @log(double noundef %i.sz) #32
   %i.tb = extractelement <2 x double> %i.sy, i64 0
   br label %_ZNK3gmx9BiasState37getSkippedUpdateHistogramScaleFactorsERKNS_10BiasParamsEPdS4_.exit

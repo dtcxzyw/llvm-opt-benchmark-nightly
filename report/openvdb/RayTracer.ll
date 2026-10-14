@@ -205,13 +205,12 @@ _ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootN
   store double %i.dc, ptr %.sroa.9.0..sroa_idx, align 8
   store <2 x double> %i.cz, ptr %.sroa.101416.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01413)
-  %23 = load <4 x i32>, ptr %i.s, align 4
-  %24 = shufflevector <4 x i32> %23, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %25 = load <2 x double>, ptr %i.m, align 8
+  %23 = load <2 x i32>, ptr %i.s, align 4
+  %24 = load <1 x double>, ptr %i.m, align 8
   %i.du = load i32, ptr %i.t, align 8, !tbaa !298
-  %i.dv = insertelement <2 x i32> %24, i32 %i.du, i64 1
+  %i.dv = insertelement <2 x i32> %23, i32 %i.du, i64 1
   %i.dw = sitofp <2 x i32> %i.dv to <2 x double>
-  %i.dx = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.dx = shufflevector <1 x double> %24, <1 x double> poison, <2 x i32> zeroinitializer
   %i.dy = fsub <2 x double> %i.dw, %i.dx
   %i.dz = shufflevector <2 x double> %i.db, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ea = fmul <2 x double> %i.dz, %i.dy          ; 4 uses
@@ -232,13 +231,12 @@ _ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootN
   br i1 %i.eo, label %bb.m, label %_ZN7openvdb5v13_05tools16LinearSearchImplINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEELi0EdE11setWorldRayERKNS0_4math3RayIdEE.exit.thread
 
 bb.m:                                             ; preds = %_ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootNodeINS6_12InternalNodeINS9_INS6_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEEEES3_RKT_.exit
-  %26 = load <4 x i32>, ptr %i.u, align 8
-  %27 = shufflevector <4 x i32> %26, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %28 = load <2 x double>, ptr %i.v, align 8
+  %25 = load <2 x i32>, ptr %i.u, align 8
+  %26 = load <1 x double>, ptr %i.v, align 8
   %i.ep = load i32, ptr %i.w, align 4, !tbaa !298
-  %i.eq = insertelement <2 x i32> %27, i32 %i.ep, i64 1
+  %i.eq = insertelement <2 x i32> %25, i32 %i.ep, i64 1
   %i.er = sitofp <2 x i32> %i.eq to <2 x double>
-  %i.es = shufflevector <2 x double> %28, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.es = shufflevector <1 x double> %26, <1 x double> poison, <2 x i32> zeroinitializer
   %i.et = fsub <2 x double> %i.er, %i.es
   %i.eu = shufflevector <2 x double> %i.db, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.ev = fmul <2 x double> %i.eu, %i.et          ; 4 uses
@@ -641,13 +639,12 @@ _ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootN
   store double %i.bbo, ptr %.sroa.9.0..sroa_idx, align 8
   store <2 x double> %i.bbl, ptr %.sroa.101416.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01456)
-  %29 = load <4 x i32>, ptr %i.s, align 4
-  %30 = shufflevector <4 x i32> %29, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %31 = load <2 x double>, ptr %i.m, align 8
+  %27 = load <2 x i32>, ptr %i.s, align 4
+  %28 = load <1 x double>, ptr %i.m, align 8
   %i.bcu = load i32, ptr %i.t, align 8, !tbaa !298
-  %i.bcv = insertelement <2 x i32> %30, i32 %i.bcu, i64 1
+  %i.bcv = insertelement <2 x i32> %27, i32 %i.bcu, i64 1
   %i.bcw = sitofp <2 x i32> %i.bcv to <2 x double>
-  %i.bcx = shufflevector <2 x double> %31, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.bcx = shufflevector <1 x double> %28, <1 x double> poison, <2 x i32> zeroinitializer
   %i.bcy = fsub <2 x double> %i.bcw, %i.bcx
   %i.bcz = shufflevector <2 x double> %i.bbn, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bda = fmul <2 x double> %i.bcz, %i.bcy       ; 4 uses
@@ -668,13 +665,12 @@ _ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootN
   br i1 %i.bdo, label %bb.fj, label %_ZN7openvdb5v13_05tools16LinearSearchImplINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEELi0EdE11setWorldRayERKNS0_4math3RayIdEE.exit71.thread
 
 bb.fj:                                            ; preds = %_ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootNodeINS6_12InternalNodeINS9_INS6_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEEEES3_RKT_.exit135
-  %32 = load <4 x i32>, ptr %i.u, align 8
-  %33 = shufflevector <4 x i32> %32, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %34 = load <2 x double>, ptr %i.v, align 8
+  %29 = load <2 x i32>, ptr %i.u, align 8
+  %30 = load <1 x double>, ptr %i.v, align 8
   %i.bdp = load i32, ptr %i.w, align 4, !tbaa !298
-  %i.bdq = insertelement <2 x i32> %33, i32 %i.bdp, i64 1
+  %i.bdq = insertelement <2 x i32> %29, i32 %i.bdp, i64 1
   %i.bdr = sitofp <2 x i32> %i.bdq to <2 x double>
-  %i.bds = shufflevector <2 x double> %34, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.bds = shufflevector <1 x double> %30, <1 x double> poison, <2 x i32> zeroinitializer
   %i.bdt = fsub <2 x double> %i.bdr, %i.bds
   %i.bdu = shufflevector <2 x double> %i.bbn, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bdv = fmul <2 x double> %i.bdu, %i.bdt       ; 4 uses
@@ -1077,13 +1073,12 @@ _ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootN
   store double %i.de, ptr %.sroa.9.0..sroa_idx, align 8
   store <2 x double> %i.db, ptr %.sroa.101425.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01422)
-  %27 = load <4 x i32>, ptr %i.s, align 8
-  %28 = shufflevector <4 x i32> %27, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %29 = load <2 x double>, ptr %i.m, align 8
+  %27 = load <2 x i32>, ptr %i.s, align 8
+  %28 = load <1 x double>, ptr %i.m, align 8
   %i.dw = load i32, ptr %i.t, align 4, !tbaa !298
-  %i.dx = insertelement <2 x i32> %28, i32 %i.dw, i64 1
+  %i.dx = insertelement <2 x i32> %27, i32 %i.dw, i64 1
   %i.dy = sitofp <2 x i32> %i.dx to <2 x double>
-  %i.dz = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.dz = shufflevector <1 x double> %28, <1 x double> poison, <2 x i32> zeroinitializer
   %i.ea = fsub <2 x double> %i.dy, %i.dz
   %i.eb = shufflevector <2 x double> %i.dd, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ec = fmul <2 x double> %i.eb, %i.ea          ; 4 uses
@@ -1104,13 +1099,12 @@ _ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootN
   br i1 %i.eq, label %bb.m, label %_ZN7openvdb5v13_05tools16LinearSearchImplINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi0EdE11setWorldRayERKNS0_4math3RayIdEE.exit.thread
 
 bb.m:                                             ; preds = %_ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootNodeINS6_12InternalNodeINS9_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEEEES3_RKT_.exit
-  %30 = load <4 x i32>, ptr %i.u, align 4
-  %31 = shufflevector <4 x i32> %30, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %32 = load <2 x double>, ptr %i.v, align 8
+  %29 = load <2 x i32>, ptr %i.u, align 4
+  %30 = load <1 x double>, ptr %i.v, align 8
   %i.er = load i32, ptr %i.w, align 8, !tbaa !298
-  %i.es = insertelement <2 x i32> %31, i32 %i.er, i64 1
+  %i.es = insertelement <2 x i32> %29, i32 %i.er, i64 1
   %i.et = sitofp <2 x i32> %i.es to <2 x double>
-  %i.eu = shufflevector <2 x double> %32, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.eu = shufflevector <1 x double> %30, <1 x double> poison, <2 x i32> zeroinitializer
   %i.ev = fsub <2 x double> %i.et, %i.eu
   %i.ew = shufflevector <2 x double> %i.dd, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.ex = fmul <2 x double> %i.ew, %i.ev          ; 4 uses
@@ -1513,13 +1507,12 @@ _ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootN
   store double %i.bet, ptr %.sroa.9.0..sroa_idx, align 8
   store <2 x double> %i.beq, ptr %.sroa.101425.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01465)
-  %33 = load <4 x i32>, ptr %i.s, align 8
-  %34 = shufflevector <4 x i32> %33, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %35 = load <2 x double>, ptr %i.m, align 8
+  %31 = load <2 x i32>, ptr %i.s, align 8
+  %32 = load <1 x double>, ptr %i.m, align 8
   %i.bfz = load i32, ptr %i.t, align 4, !tbaa !298
-  %i.bga = insertelement <2 x i32> %34, i32 %i.bfz, i64 1
+  %i.bga = insertelement <2 x i32> %31, i32 %i.bfz, i64 1
   %i.bgb = sitofp <2 x i32> %i.bga to <2 x double>
-  %i.bgc = shufflevector <2 x double> %35, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.bgc = shufflevector <1 x double> %32, <1 x double> poison, <2 x i32> zeroinitializer
   %i.bgd = fsub <2 x double> %i.bgb, %i.bgc
   %i.bge = shufflevector <2 x double> %i.bes, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bgf = fmul <2 x double> %i.bge, %i.bgd       ; 4 uses
@@ -1540,13 +1533,12 @@ _ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootN
   br i1 %i.bgt, label %bb.fu, label %_ZN7openvdb5v13_05tools16LinearSearchImplINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi0EdE11setWorldRayERKNS0_4math3RayIdEE.exit64.thread
 
 bb.fu:                                            ; preds = %_ZNK7openvdb5v13_04math3RayIdE12worldToIndexINS0_4GridINS0_4tree4TreeINS6_8RootNodeINS6_12InternalNodeINS9_INS6_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEEEES3_RKT_.exit144
-  %36 = load <4 x i32>, ptr %i.u, align 4
-  %37 = shufflevector <4 x i32> %36, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %38 = load <2 x double>, ptr %i.v, align 8
+  %33 = load <2 x i32>, ptr %i.u, align 4
+  %34 = load <1 x double>, ptr %i.v, align 8
   %i.bgu = load i32, ptr %i.w, align 8, !tbaa !298
-  %i.bgv = insertelement <2 x i32> %37, i32 %i.bgu, i64 1
+  %i.bgv = insertelement <2 x i32> %33, i32 %i.bgu, i64 1
   %i.bgw = sitofp <2 x i32> %i.bgv to <2 x double>
-  %i.bgx = shufflevector <2 x double> %38, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.bgx = shufflevector <1 x double> %34, <1 x double> poison, <2 x i32> zeroinitializer
   %i.bgy = fsub <2 x double> %i.bgw, %i.bgx
   %i.bgz = shufflevector <2 x double> %i.bes, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bha = fmul <2 x double> %i.bgz, %i.bgy       ; 4 uses

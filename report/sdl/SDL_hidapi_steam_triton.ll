@@ -202,10 +202,9 @@ bb.ab:                                            ; preds = %bb.aa
   %i.eu = load i64, ptr %i.et, align 8
   %i.ev = add i64 %i.eu, %i.es                    ; 2 uses
   store i64 %i.ev, ptr %i.et, align 8
-  %1 = load <8 x i16>, ptr %i.bq, align 8
-  %2 = shufflevector <8 x i16> %1, <8 x i16> poison, <2 x i32> <i32 0, i32 poison>
+  %1 = load <2 x i16>, ptr %i.bq, align 8
   %i.ew = load i16, ptr %i.br, align 4
-  %i.ex = insertelement <2 x i16> %2, i16 %i.ew, i64 1
+  %i.ex = insertelement <2 x i16> %1, i16 %i.ew, i64 1
   %i.ey = sitofp <2 x i16> %i.ex to <2 x float>
   %i.ez = fmul nnan <2 x float> %i.ey, splat (float f0x38000000)
   %i.fa = fmul nnan <2 x float> %i.ez, splat (float f0x420BA058)
@@ -218,10 +217,9 @@ bb.ab:                                            ; preds = %bb.aa
   %i.fg = fmul nnan float %i.ff, f0x420BA058
   store float %i.fg, ptr %i.by, align 8
   call void @SDL_SendJoystickSensor(i64 noundef %i.cs, ptr noundef nonnull %.2, i32 noundef 2, i64 noundef %i.ev, ptr noundef nonnull %i.d, i32 noundef 3) #6
-  %3 = load <8 x i16>, ptr %i.bu, align 2
-  %4 = shufflevector <8 x i16> %3, <8 x i16> poison, <2 x i32> <i32 0, i32 poison>
+  %2 = load <2 x i16>, ptr %i.bu, align 2
   %i.fh = load i16, ptr %i.bv, align 2
-  %i.fi = insertelement <2 x i16> %4, i16 %i.fh, i64 1
+  %i.fi = insertelement <2 x i16> %2, i16 %i.fh, i64 1
   %i.fj = sitofp <2 x i16> %i.fi to <2 x float>
   %i.fk = fmul nnan <2 x float> %i.fj, splat (float f0x38000000)
   %i.fl = fmul nnan <2 x float> %i.fk, splat (float 2.000000e+00)
@@ -399,10 +397,9 @@ bb.ap:                                            ; preds = %bb.ao
   %i.il = load i64, ptr %i.ik, align 8
   %i.im = add i64 %i.il, %i.ij                    ; 2 uses
   store i64 %i.im, ptr %i.ik, align 8
-  %5 = load <8 x i16>, ptr %i.bq, align 8
-  %6 = shufflevector <8 x i16> %5, <8 x i16> poison, <2 x i32> <i32 0, i32 poison>
+  %3 = load <2 x i16>, ptr %i.bq, align 8
   %i.in = load i16, ptr %i.br, align 4
-  %i.io = insertelement <2 x i16> %6, i16 %i.in, i64 1
+  %i.io = insertelement <2 x i16> %3, i16 %i.in, i64 1
   %i.ip = sitofp <2 x i16> %i.io to <2 x float>
   %i.iq = fmul nnan <2 x float> %i.ip, splat (float f0x38000000)
   %i.ir = fmul nnan <2 x float> %i.iq, splat (float f0x420BA058)
@@ -415,10 +412,9 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ix = fmul nnan float %i.iw, f0x420BA058
   store float %i.ix, ptr %i.bt, align 8
   call void @SDL_SendJoystickSensor(i64 noundef %i.gg, ptr noundef nonnull %.3, i32 noundef 2, i64 noundef %i.im, ptr noundef nonnull %i.b, i32 noundef 3) #6
-  %7 = load <8 x i16>, ptr %i.bu, align 2
-  %8 = shufflevector <8 x i16> %7, <8 x i16> poison, <2 x i32> <i32 0, i32 poison>
+  %4 = load <2 x i16>, ptr %i.bu, align 2
   %i.iy = load i16, ptr %i.bv, align 2
-  %i.iz = insertelement <2 x i16> %8, i16 %i.iy, i64 1
+  %i.iz = insertelement <2 x i16> %4, i16 %i.iy, i64 1
   %i.ja = sitofp <2 x i16> %i.iz to <2 x float>
   %i.jb = fmul nnan <2 x float> %i.ja, splat (float f0x38000000)
   %i.jc = fmul nnan <2 x float> %i.jb, splat (float 2.000000e+00)

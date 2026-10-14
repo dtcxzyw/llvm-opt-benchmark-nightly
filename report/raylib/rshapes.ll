@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @DrawRectangleLines(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 %4) local_unnamed_addr #6 {
 bb.a:
-  %5 = alloca %struct.Matrix, align 16            ; 5 uses
+  %5 = alloca %struct.Matrix, align 8             ; 5 uses
   %.sroa.0.0.extract.trunc = trunc i32 %4 to i8
   %.sroa.2.0.extract.shift = lshr i32 %4, 8
   %.sroa.2.0.extract.trunc = trunc i32 %.sroa.2.0.extract.shift to i8
@@ -214,11 +214,10 @@ bb.a:
   %.sroa.4.0.extract.trunc = trunc nuw i32 %.sroa.4.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   call void @rlGetMatrixTransform(ptr dead_on_unwind nonnull writable sret(%struct.Matrix) align 4 %5) #14
-  %6 = load <4 x float>, ptr %5, align 16
-  %7 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %6 = load <2 x float>, ptr %5, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 20
   %i.b = load float, ptr %i.a, align 4
-  %i.c = insertelement <2 x float> %7, float %i.b, i64 1
+  %i.c = insertelement <2 x float> %6, float %i.b, i64 1
   %i.d = fdiv <2 x float> splat (float 5.000000e-01), %i.c ; 2 uses
   call void @rlBegin(i32 noundef 1) #14
   call void @rlColor4ub(i8 noundef zeroext %.sroa.0.0.extract.trunc, i8 noundef zeroext %.sroa.2.0.extract.trunc, i8 noundef zeroext %.sroa.3.0.extract.trunc, i8 noundef zeroext %.sroa.4.0.extract.trunc) #14

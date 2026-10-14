@@ -202,9 +202,9 @@ bb.a:
   %i.fp = shufflevector <4 x i32> %i.fk, <4 x i32> %i.fn, <2 x i32> <i32 1, i32 5>
   %i.fq = add <2 x i32> %i.fo, %i.fp
   store <2 x i32> %i.fq, ptr %i.fl, align 4, !tbaa !17
-  %5 = shufflevector <4 x i32> %i.es, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
-  %6 = add <4 x i32> %i.es, %5
-  %7 = shufflevector <4 x i32> %6, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %5 = shufflevector <4 x i32> %i.es, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %6 = shufflevector <4 x i32> %i.es, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
+  %7 = add <2 x i32> %5, %6
   %i.fr = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %7)
   %i.fs = getelementptr inbounds nuw i8, ptr %4, i64 20
   store i32 %i.fr, ptr %i.fs, align 4, !tbaa !19

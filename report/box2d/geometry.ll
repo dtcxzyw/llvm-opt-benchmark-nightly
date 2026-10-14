@@ -204,15 +204,15 @@ bb.a:
   %i.w = select <4 x i1> %i.t, <4 x float> %i.u, <4 x float> %i.v
   %i.x = fpext <4 x float> %i.w to <4 x double>   ; 2 uses
   %i.y = insertelement <4 x double> poison, double %i.i, i64 0 ; 2 uses
-  %3 = shufflevector <4 x double> %i.y, <4 x double> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
-  %4 = fsub <4 x double> %i.x, %3
-  %i.z = shufflevector <4 x double> %4, <4 x double> poison, <2 x i32> <i32 0, i32 1>
-  %5 = fptrunc <2 x double> %i.z to <2 x float>
-  %6 = shufflevector <4 x double> %i.x, <4 x double> poison, <2 x i32> <i32 2, i32 3>
-  %7 = shufflevector <4 x double> %i.y, <4 x double> poison, <2 x i32> zeroinitializer
-  %8 = fadd <2 x double> %6, %7
+  %3 = shufflevector <4 x double> %i.y, <4 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>
+  %4 = fadd <4 x double> %3, %i.x
+  %i.z = shufflevector <4 x double> %i.x, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %5 = shufflevector <4 x double> %i.y, <4 x double> poison, <2 x i32> zeroinitializer
+  %6 = fsub <2 x double> %i.z, %5
+  %7 = fptrunc <2 x double> %6 to <2 x float>
+  %8 = shufflevector <4 x double> %4, <4 x double> poison, <2 x i32> <i32 2, i32 3>
   %i.aa = fptrunc <2 x double> %8 to <2 x float>
-  %.fca.0.insert.i = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %5, 0
+  %.fca.0.insert.i = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %7, 0
   %.fca.1.insert.i = insertvalue { <2 x float>, <2 x float> } %.fca.0.insert.i, <2 x float> %i.aa, 1
   ret { <2 x float>, <2 x float> } %.fca.1.insert.i
 }
@@ -266,20 +266,21 @@ bb.a:
 
 b2ComputePolygonFatAABB.exit:                     ; preds = %.lr.ph.i, %bb.a
   %i.ag = phi <4 x double> [ %i.l, %bb.a ], [ %i.af, %.lr.ph.i ] ; 2 uses
+  %3 = shufflevector <4 x double> %i.ag, <4 x double> poison, <4 x i32> <i32 2, i32 3, i32 poison, i32 poison>
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.ai = load float, ptr %i.ah, align 4, !tbaa !21
   %i.aj = fpext float %i.ai to double
   %i.ak = fadd double %i.aj, 0.000000e+00
   %i.al = insertelement <4 x double> poison, double %i.ak, i64 0 ; 2 uses
   %i.am = shufflevector <4 x double> %i.al, <4 x double> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
-  %3 = fsub <4 x double> %i.ag, %i.am
-  %i.an = shufflevector <4 x double> %3, <4 x double> poison, <2 x i32> <i32 0, i32 1>
-  %4 = fptrunc <2 x double> %i.an to <2 x float>
-  %5 = shufflevector <4 x double> %i.ag, <4 x double> poison, <2 x i32> <i32 2, i32 3>
-  %6 = shufflevector <4 x double> %i.al, <4 x double> poison, <2 x i32> zeroinitializer
-  %7 = fadd <2 x double> %5, %6
-  %i.ao = fptrunc <2 x double> %7 to <2 x float>
-  %.fca.0.insert.i = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %4, 0
+  %4 = fadd <4 x double> %3, %i.am
+  %i.an = shufflevector <4 x double> %i.ag, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %5 = shufflevector <4 x double> %i.al, <4 x double> poison, <2 x i32> zeroinitializer
+  %6 = fsub <2 x double> %i.an, %5
+  %7 = fptrunc <2 x double> %6 to <2 x float>
+  %8 = shufflevector <4 x double> %4, <4 x double> poison, <2 x i32> <i32 0, i32 1>
+  %i.ao = fptrunc <2 x double> %8 to <2 x float>
+  %.fca.0.insert.i = insertvalue { <2 x float>, <2 x float> } poison, <2 x float> %7, 0
   %.fca.1.insert.i = insertvalue { <2 x float>, <2 x float> } %.fca.0.insert.i, <2 x float> %i.ao, 1
   ret { <2 x float>, <2 x float> } %.fca.1.insert.i
 }

@@ -205,8 +205,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 3 uses
   %.sroa.0.0.copyload4.i.i = load <2 x float>, ptr %i.t, align 4 ; 2 uses
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 20
-  %6 = load <4 x float>, ptr %.sroa.6.0..sroa_idx.i.i, align 4
-  %7 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %6 = load <2 x float>, ptr %.sroa.6.0..sroa_idx.i.i, align 4
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %.sroa.0.0.copyload4.i12.i = load <2 x float>, ptr %i.u, align 4 ; 2 uses
   %.sroa.6.0..sroa_idx.i13.i = getelementptr inbounds nuw i8, ptr %i.s, i64 32
@@ -214,13 +213,13 @@ bb.a:
   %i.w = load <2 x float>, ptr %i.s, align 4, !tbaa !1161 ; 3 uses
   %foldExtExtBinop = fsub <2 x float> %.sroa.0.0.copyload4.i.i, %i.w ; 2 uses
   %i.x = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %8 = load <4 x float>, ptr %i.v, align 4
+  %7 = load <1 x float>, ptr %i.v, align 4
   %i.y = shufflevector <2 x float> %.sroa.0.0.copyload4.i12.i, <2 x float> %.sroa.0.0.copyload4.i.i, <2 x i32> <i32 0, i32 3>
   %i.z = fsub <2 x float> %i.y, %i.w              ; 3 uses
   %foldExtExtBinop65 = fsub <2 x float> %.sroa.0.0.copyload4.i12.i, %i.w ; 2 uses
   %i.aa = extractelement <2 x float> %foldExtExtBinop65, i64 1
-  %i.ab = insertelement <2 x float> %7, float %.sroa.6.0.copyload.i14.i, i64 1
-  %i.ac = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.ab = insertelement <2 x float> %6, float %.sroa.6.0.copyload.i14.i, i64 1
+  %i.ac = shufflevector <1 x float> %7, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ad = fsub <2 x float> %i.ab, %i.ac           ; 3 uses
   %i.ae = shufflevector <2 x float> %i.ad, <2 x float> %foldExtExtBinop65, <2 x i32> <i32 3, i32 1>
   %i.af = fneg <2 x float> %i.ae
@@ -623,8 +622,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 328
   %.sroa.0.0.copyload4.i62 = load <2 x float>, ptr %i.bm, align 8 ; 2 uses
   %.sroa.6.0..sroa_idx.i63 = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %2 = load <4 x float>, ptr %.sroa.6.0..sroa_idx.i63, align 8
-  %3 = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %2 = load <2 x float>, ptr %.sroa.6.0..sroa_idx.i63, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 268
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 344
   %.sroa.0.0.copyload4.i80 = load <2 x float>, ptr %i.bo, align 4 ; 2 uses
@@ -648,7 +646,7 @@ bb.b:                                             ; preds = %bb.a
   %i.cf = fmul <2 x float> %i.ce, %i.cd
   %i.cg = shufflevector <2 x float> %.sroa.0.0.copyload4.i62, <2 x float> %.sroa.0.0.copyload4.i80, <2 x i32> <i32 1, i32 3>
   %i.ch = fmul <2 x float> %i.cg, %i.cd
-  %i.ci = insertelement <2 x float> %3, float %.sroa.6.0.copyload.i82, i64 1
+  %i.ci = insertelement <2 x float> %2, float %.sroa.6.0.copyload.i82, i64 1
   %i.cj = fmul <2 x float> %i.ci, %i.cd
   %i.ck = fsub <2 x float> %i.cf, %i.f            ; 2 uses
   %i.cl = fsub <2 x float> %i.ch, %i.l            ; 2 uses
@@ -1051,22 +1049,22 @@ _ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeI
 bb.am:                                            ; preds = %.lr.ph229, %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset25OpenCapsuleWedgeVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKfSN_SN_.exit52
   %storemerge32228 = phi float [ %i.qr, %.lr.ph229 ], [ %i.sp, %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset25OpenCapsuleWedgeVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKfSN_SN_.exit52 ] ; 4 uses
   %i.qu = load float, ptr %i.qt, align 4, !tbaa !2206 ; 2 uses
-  %10 = load <4 x float>, ptr %i.hn, align 8
+  %10 = load <1 x float>, ptr %i.hn, align 8
   %i.qv = load float, ptr %i.c, align 8, !tbaa !2203
   %i.qw = fsub float %storemerge32228, %i.qv
-  %11 = load <4 x float>, ptr %i.e, align 4
+  %11 = load <1 x float>, ptr %i.e, align 4
   %i.qx = load float, ptr %i.hr, align 8, !tbaa !3005 ; 2 uses
   %i.qy = fneg float %i.qx
-  %12 = load <4 x float>, ptr %i.kx, align 4
-  %i.qz = shufflevector <4 x float> %11, <4 x float> poison, <2 x i32> zeroinitializer
+  %12 = load <1 x float>, ptr %i.kx, align 4
+  %i.qz = shufflevector <1 x float> %11, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ra = insertelement <2 x float> poison, float %i.qy, i64 0
   %i.rb = insertelement <2 x float> %i.ra, float %i.qx, i64 1
   %i.rc = fmul <2 x float> %i.qz, %i.rb
-  %i.rd = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.rd = shufflevector <1 x float> %10, <1 x float> poison, <2 x i32> zeroinitializer
   %i.re = insertelement <2 x float> poison, float %i.qw, i64 0
   %i.rf = shufflevector <2 x float> %i.re, <2 x float> poison, <2 x i32> zeroinitializer
   %i.rg = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.rd, <2 x float> %i.rf, <2 x float> %i.rc)
-  %i.rh = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.rh = shufflevector <1 x float> %12, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ri = fdiv <2 x float> %i.rg, %i.rh           ; 2 uses
   %i.rj = extractelement <2 x float> %i.ri, i64 0
   %i.rk = fadd float %i.qu, %i.rj                 ; 3 uses
@@ -1464,7 +1462,7 @@ _ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeI
 
 ._crit_edge239:                                   ; preds = %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset25OpenCapsuleWedgeVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKfSN_SN_.exit87, %.loopexit
   tail call void @_ZN7openvdb5v13_05tools6lvlset25OpenCapsuleWedgeVoxelizerINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS0_4util15NullInterrupterEE20intersectWithXYStripEv(ptr noundef nonnull align 8 dereferenceable(520) %0)
-  %13 = load <4 x float>, ptr %i.e, align 4
+  %13 = load <1 x float>, ptr %i.e, align 4
   %i.aax = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
   %i.aay = load float, ptr %i.aax, align 8, !tbaa !1161 ; 2 uses
   %i.aaz = getelementptr inbounds nuw i8, ptr %0, i64 276
@@ -1493,7 +1491,7 @@ _ZNK7openvdb5v13_04math4Vec3IfE8unitSafeEv.exit.i69: ; preds = %bb.bl, %._crit_e
   %i.abm = getelementptr inbounds nuw i8, ptr %0, i64 260
   %.sroa.0.0.copyload4.i21.i76 = load <2 x float>, ptr %i.abm, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
-  %i.abn = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.abn = shufflevector <1 x float> %13, <1 x float> poison, <2 x i32> zeroinitializer
   %i.abo = fmul <2 x float> %i.abn, %.sroa.0.0.i.i70 ; 2 uses
   %i.abp = fsub <2 x float> %.sroa.0.0.copyload4.i.i73, %i.abo ; 2 uses
   store <2 x float> %i.abp, ptr %2, align 8, !tbaa !1161
@@ -1896,8 +1894,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 3 uses
   %.sroa.0.0.copyload4.i.i = load <2 x float>, ptr %i.t, align 4 ; 2 uses
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 20
-  %6 = load <4 x float>, ptr %.sroa.6.0..sroa_idx.i.i, align 4
-  %7 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %6 = load <2 x float>, ptr %.sroa.6.0..sroa_idx.i.i, align 4
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %.sroa.0.0.copyload4.i12.i = load <2 x float>, ptr %i.u, align 4 ; 2 uses
   %.sroa.6.0..sroa_idx.i13.i = getelementptr inbounds nuw i8, ptr %i.s, i64 32
@@ -1905,13 +1902,13 @@ bb.a:
   %i.w = load <2 x float>, ptr %i.s, align 4, !tbaa !1161 ; 3 uses
   %foldExtExtBinop = fsub <2 x float> %.sroa.0.0.copyload4.i.i, %i.w ; 2 uses
   %i.x = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %8 = load <4 x float>, ptr %i.v, align 4
+  %7 = load <1 x float>, ptr %i.v, align 4
   %i.y = shufflevector <2 x float> %.sroa.0.0.copyload4.i12.i, <2 x float> %.sroa.0.0.copyload4.i.i, <2 x i32> <i32 0, i32 3>
   %i.z = fsub <2 x float> %i.y, %i.w              ; 3 uses
   %foldExtExtBinop65 = fsub <2 x float> %.sroa.0.0.copyload4.i12.i, %i.w ; 2 uses
   %i.aa = extractelement <2 x float> %foldExtExtBinop65, i64 1
-  %i.ab = insertelement <2 x float> %7, float %.sroa.6.0.copyload.i14.i, i64 1
-  %i.ac = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.ab = insertelement <2 x float> %6, float %.sroa.6.0.copyload.i14.i, i64 1
+  %i.ac = shufflevector <1 x float> %7, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ad = fsub <2 x float> %i.ab, %i.ac           ; 3 uses
   %i.ae = shufflevector <2 x float> %i.ad, <2 x float> %foldExtExtBinop65, <2 x i32> <i32 3, i32 1>
   %i.af = fneg <2 x float> %i.ae
@@ -2314,8 +2311,8 @@ vector.ph67:                                      ; preds = %_ZN7openvdb5v13_04t
   %i.bc = shufflevector <4 x i32> %i.bb, <4 x i32> %i.ba, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.bd = and <4 x i32> %i.bc, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.bd, ptr %i.ax, align 8, !tbaa !741
-  %5 = load <2 x double>, ptr %i.as, align 8
-  %broadcast.splat69 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %5 = load <1 x double>, ptr %i.as, align 8
+  %broadcast.splat69 = shufflevector <1 x double> %5, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body70
 
 vector.body70:                                    ; preds = %vector.body70, %vector.ph67
@@ -2718,8 +2715,8 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !741
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %5 = load <2 x double>, ptr %i.ba, align 8
-  %broadcast.splat68 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %5 = load <1 x double>, ptr %i.ba, align 8
+  %broadcast.splat68 = shufflevector <1 x double> %5, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body69
 
 vector.body69:                                    ; preds = %vector.body69, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread
@@ -3122,8 +3119,8 @@ vector.ph113:                                     ; preds = %_ZN7openvdb5v13_04t
   %i.bd = and <4 x i32> %i.bc, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.bd, ptr %i.ax, align 8, !tbaa !741
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %7 = load <2 x double>, ptr %i.be, align 8
-  %broadcast.splat115 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %7 = load <1 x double>, ptr %i.be, align 8
+  %broadcast.splat115 = shufflevector <1 x double> %7, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body116
 
 vector.body116:                                   ; preds = %vector.body116, %vector.ph113
@@ -3526,8 +3523,8 @@ vector.ph:                                        ; preds = %.lr.ph47, %_ZNSt3ma
   %i.ck = shufflevector <4 x i32> %i.cj, <4 x i32> %i.ci, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.cl = and <4 x i32> %i.ck, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.cl, ptr %i.ch, align 8, !tbaa !741
-  %6 = load <2 x double>, ptr %i.w, align 8
-  %broadcast.splat = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %6 = load <1 x double>, ptr %i.w, align 8
+  %broadcast.splat = shufflevector <1 x double> %6, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3930,8 +3927,8 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4
   store i32 %i.ct, ptr %i.cv, align 8, !tbaa !741
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cr, i64 270348
   store i32 0, ptr %i.cw, align 4, !tbaa !3240
-  %5 = load <2 x double>, ptr %i.r, align 8
-  %broadcast.splat = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %5 = load <1 x double>, ptr %i.r, align 8
+  %broadcast.splat = shufflevector <1 x double> %5, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread
@@ -4334,8 +4331,8 @@ vector.ph146:                                     ; preds = %_ZN7openvdb5v13_04t
   %i.bg = getelementptr inbounds nuw i8, ptr %i.aw, i64 270348
   store i32 0, ptr %i.bg, align 4, !tbaa !3240
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %8 = load <2 x double>, ptr %i.bh, align 8
-  %broadcast.splat148 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %8 = load <1 x double>, ptr %i.bh, align 8
+  %broadcast.splat148 = shufflevector <1 x double> %8, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body149
 
 vector.body149:                                   ; preds = %vector.body149, %vector.ph146
@@ -4738,22 +4735,22 @@ _ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeI
 bb.ae:                                            ; preds = %.lr.ph206, %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset25OpenCapsuleWedgeVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKdSN_SN_.exit52
   %storemerge32205 = phi double [ %i.nn, %.lr.ph206 ], [ %i.pl, %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset25OpenCapsuleWedgeVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKdSN_SN_.exit52 ] ; 4 uses
   %i.nq = load double, ptr %i.np, align 8, !tbaa !9627 ; 2 uses
-  %2 = load <2 x double>, ptr %i.el, align 8
+  %2 = load <1 x double>, ptr %i.el, align 8
   %i.nr = load double, ptr %i.c, align 8, !tbaa !3143
   %i.ns = fsub double %storemerge32205, %i.nr
-  %3 = load <2 x double>, ptr %i.e, align 8
+  %3 = load <1 x double>, ptr %i.e, align 8
   %i.nt = load double, ptr %i.ep, align 8, !tbaa !3845 ; 2 uses
   %i.nu = fneg double %i.nt
-  %4 = load <2 x double>, ptr %i.hx, align 8
-  %i.nv = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = load <1 x double>, ptr %i.hx, align 8
+  %i.nv = shufflevector <1 x double> %3, <1 x double> poison, <2 x i32> zeroinitializer
   %i.nw = insertelement <2 x double> poison, double %i.nu, i64 0
   %i.nx = insertelement <2 x double> %i.nw, double %i.nt, i64 1
   %i.ny = fmul <2 x double> %i.nv, %i.nx
-  %i.nz = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.nz = shufflevector <1 x double> %2, <1 x double> poison, <2 x i32> zeroinitializer
   %i.oa = insertelement <2 x double> poison, double %i.ns, i64 0
   %i.ob = shufflevector <2 x double> %i.oa, <2 x double> poison, <2 x i32> zeroinitializer
   %i.oc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nz, <2 x double> %i.ob, <2 x double> %i.ny)
-  %i.od = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.od = shufflevector <1 x double> %4, <1 x double> poison, <2 x i32> zeroinitializer
   %i.oe = fdiv <2 x double> %i.oc, %i.od          ; 2 uses
   %i.of = extractelement <2 x double> %i.oe, i64 0
   %i.og = fadd double %i.nq, %i.of                ; 3 uses
@@ -5156,7 +5153,7 @@ _ZNK7openvdb5v13_04math4Vec3IdE8unitSafeEv.exit:
   %3 = alloca %"class.openvdb::v13_0::math::Vec2.869", align 8 ; 6 uses
   %4 = alloca %"class.openvdb::v13_0::math::Vec2.869", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 392
-  %5 = load <2 x double>, ptr %i.a, align 8
+  %5 = load <1 x double>, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 320
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.d = load double, ptr %i.c, align 8, !tbaa !1192, !noalias !9632 ; 2 uses
@@ -5178,7 +5175,7 @@ _ZNK7openvdb5v13_04math4Vec3IdE8unitSafeEv.exit:
   %i.q = insertelement <2 x i1> poison, i1 %i.m, i64 0
   %i.r = shufflevector <2 x i1> %i.q, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.s = select <2 x i1> %i.r, <2 x double> <double 1.000000e+00, double 0.000000e+00>, <2 x double> %i.p
-  %i.t = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.t = shufflevector <1 x double> %5, <1 x double> poison, <2 x i32> zeroinitializer
   %i.u = fmul <2 x double> %i.t, %i.s             ; 2 uses
   %i.v = load <2 x double>, ptr %i.e, align 8
   %i.w = fsub <2 x double> %i.v, %i.u             ; 2 uses
@@ -5581,22 +5578,22 @@ _ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeI
 bb.ae:                                            ; preds = %.lr.ph206, %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKfSN_SN_.exit52
   %storemerge32205 = phi float [ %i.np, %.lr.ph206 ], [ %i.pn, %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKfSN_SN_.exit52 ] ; 4 uses
   %i.ns = load float, ptr %i.nr, align 4, !tbaa !1908 ; 2 uses
-  %2 = load <4 x float>, ptr %i.ek, align 8
+  %2 = load <1 x float>, ptr %i.ek, align 8
   %i.nt = load float, ptr %i.c, align 8, !tbaa !1907
   %i.nu = fsub float %storemerge32205, %i.nt
-  %3 = load <4 x float>, ptr %i.e, align 4
+  %3 = load <1 x float>, ptr %i.e, align 4
   %i.nv = load float, ptr %i.eo, align 8, !tbaa !1915 ; 2 uses
   %i.nw = fneg float %i.nv
-  %4 = load <4 x float>, ptr %i.hv, align 4
-  %i.nx = shufflevector <4 x float> %3, <4 x float> poison, <2 x i32> zeroinitializer
+  %4 = load <1 x float>, ptr %i.hv, align 4
+  %i.nx = shufflevector <1 x float> %3, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ny = insertelement <2 x float> poison, float %i.nw, i64 0
   %i.nz = insertelement <2 x float> %i.ny, float %i.nv, i64 1
   %i.oa = fmul <2 x float> %i.nx, %i.nz
-  %i.ob = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.ob = shufflevector <1 x float> %2, <1 x float> poison, <2 x i32> zeroinitializer
   %i.oc = insertelement <2 x float> poison, float %i.nu, i64 0
   %i.od = shufflevector <2 x float> %i.oc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.oe = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ob, <2 x float> %i.od, <2 x float> %i.oa)
-  %i.of = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.of = shufflevector <1 x float> %4, <1 x float> poison, <2 x i32> zeroinitializer
   %i.og = fdiv <2 x float> %i.oe, %i.of           ; 2 uses
   %i.oh = extractelement <2 x float> %i.og, i64 0
   %i.oi = fadd float %i.ns, %i.oh                 ; 3 uses
@@ -5999,22 +5996,22 @@ _ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeI
 bb.ae:                                            ; preds = %.lr.ph206, %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKdSN_SN_.exit52
   %storemerge32205 = phi double [ %i.no, %.lr.ph206 ], [ %i.pm, %_ZN7openvdb5v13_05tools15ConvexVoxelizerINS0_4GridINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEENS1_6lvlset16CapsuleVoxelizerISE_NS0_4util15NullInterrupterEEESI_E11XYRangeData12expandYRangeERKdSN_SN_.exit52 ] ; 4 uses
   %i.nr = load double, ptr %i.nq, align 8, !tbaa !5150 ; 2 uses
-  %2 = load <2 x double>, ptr %i.el, align 8
+  %2 = load <1 x double>, ptr %i.el, align 8
   %i.ns = load double, ptr %i.c, align 8, !tbaa !5145
   %i.nt = fsub double %storemerge32205, %i.ns
-  %3 = load <2 x double>, ptr %i.e, align 8
+  %3 = load <1 x double>, ptr %i.e, align 8
   %i.nu = load double, ptr %i.ep, align 8, !tbaa !5154 ; 2 uses
   %i.nv = fneg double %i.nu
-  %4 = load <2 x double>, ptr %i.hy, align 8
-  %i.nw = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = load <1 x double>, ptr %i.hy, align 8
+  %i.nw = shufflevector <1 x double> %3, <1 x double> poison, <2 x i32> zeroinitializer
   %i.nx = insertelement <2 x double> poison, double %i.nv, i64 0
   %i.ny = insertelement <2 x double> %i.nx, double %i.nu, i64 1
   %i.nz = fmul <2 x double> %i.nw, %i.ny
-  %i.oa = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.oa = shufflevector <1 x double> %2, <1 x double> poison, <2 x i32> zeroinitializer
   %i.ob = insertelement <2 x double> poison, double %i.nt, i64 0
   %i.oc = shufflevector <2 x double> %i.ob, <2 x double> poison, <2 x i32> zeroinitializer
   %i.od = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.oa, <2 x double> %i.oc, <2 x double> %i.nz)
-  %i.oe = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.oe = shufflevector <1 x double> %4, <1 x double> poison, <2 x i32> zeroinitializer
   %i.of = fdiv <2 x double> %i.od, %i.oe          ; 2 uses
   %i.og = extractelement <2 x double> %i.of, i64 0
   %i.oh = fadd double %i.nr, %i.og                ; 3 uses
@@ -6417,7 +6414,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.d = load float, ptr %i.c, align 8, !tbaa !1923 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 156
-  %8 = load <4 x float>, ptr %i.e, align 4
+  %8 = load <1 x float>, ptr %i.e, align 4
   %i.f = load float, ptr %4, align 4, !tbaa !1161
   %i.g = load float, ptr %3, align 4, !tbaa !1161
   %i.h = fcmp ugt float %i.f, %i.g                ; 4 uses
@@ -6458,7 +6455,7 @@ bb.a:
   %.pn = select i1 %i.h, float %.val227, float %.val228
   %.sink = fdiv float %.pn, %i.d                  ; 3 uses
   store float %.sink, ptr %i.u, align 8, !tbaa !5214
-  %i.x = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.x = shufflevector <1 x float> %8, <1 x float> poison, <2 x i32> zeroinitializer
   %i.y = insertelement <2 x float> poison, float %i.w, i64 0
   %i.z = insertelement <2 x float> %i.y, float %.sink, i64 1
   %i.aa = fadd <2 x float> %i.x, %i.z             ; 5 uses

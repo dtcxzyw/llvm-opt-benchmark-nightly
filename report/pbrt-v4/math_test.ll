@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.dq = shufflevector <2 x float> %i.at, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 0, i32 0, i32 1, i32 1>
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %2 = load <4 x float>, ptr %i.dr, align 4
-  %3 = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %2 = load <2 x float>, ptr %i.dr, align 4
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 28
   %i.dt = load float, ptr %i.ds, align 4, !tbaa !37
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 44
@@ -216,7 +215,7 @@ bb.c:                                             ; preds = %bb.a
   %i.dz = shufflevector <16 x float> %i.g, <16 x float> poison, <8 x i32> <i32 7, i32 2, i32 15, i32 10, i32 3, i32 6, i32 11, i32 14> ; 2 uses
   %i.ea = shufflevector <8 x float> %i.aj, <8 x float> poison, <8 x i32> <i32 1, i32 0, i32 3, i32 2, i32 5, i32 4, i32 7, i32 6> ; 3 uses
   %i.eb = fmul <8 x float> %i.dz, %i.ea           ; 4 uses
-  %i.ec = insertelement <2 x float> %3, float %i.dv, i64 1
+  %i.ec = insertelement <2 x float> %2, float %i.dv, i64 1
   %i.ed = fneg <2 x float> %i.ec                  ; 2 uses
   %i.ee = shufflevector <2 x float> %i.m, <2 x float> %i.j, <2 x i32> <i32 0, i32 2>
   %i.ef = fneg <2 x float> %i.ee
@@ -369,7 +368,7 @@ bb.a:
   %17 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = alloca i32, align 4                      ; 10 uses
-  %19 = alloca %"class.pbrt::SquareMatrix", align 16 ; 11 uses
+  %19 = alloca %"class.pbrt::SquareMatrix", align 8 ; 11 uses
   %20 = alloca %"class.pstd::optional", align 8   ; 9 uses
   %21 = alloca %"class.pbrt::SquareMatrix", align 8 ; 9 uses
   %22 = alloca %"class.testing::AssertionResult", align 8 ; 6 uses
@@ -516,7 +515,7 @@ bb.b:                                             ; preds = %bb.a, %bb.bv
   %i.cr = select <2 x i1> %i.cq, <2 x float> %i.cp, <2 x float> splat (float f0x3F7FFFFF)
   %i.cs = fmul nnan <2 x float> %i.cr, splat (float 2.000000e+01)
   %i.ct = fadd <2 x float> %i.cs, splat (float -1.000000e+01)
-  store <2 x float> %i.ca, ptr %19, align 16
+  store <2 x float> %i.ca, ptr %19, align 8
   store <2 x float> %i.ct, ptr %i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #25
   call void @_ZN4pbrt7InverseILi2EEEN4pstd8optionalINS_12SquareMatrixIXT_EEEEERKS4_(ptr dead_on_unwind nonnull writable sret(%"class.pstd::optional") align 4 %20, ptr noundef nonnull align 4 dereferenceable(16) %19)
@@ -533,9 +532,9 @@ bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #25
   %i.cx = load <2 x float>, ptr %20, align 8, !tbaa !37 ; 2 uses
   %i.cy = load <2 x float>, ptr %gep.1.i, align 8, !tbaa !37 ; 2 uses
-  %52 = load <4 x float>, ptr %19, align 16
+  %52 = load <1 x float>, ptr %19, align 8
   %i.cz = load float, ptr %i.k, align 4, !tbaa !37
-  %i.da = shufflevector <4 x float> %52, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.da = shufflevector <1 x float> %52, <1 x float> poison, <2 x i32> zeroinitializer
   %i.db = call <2 x float> @llvm.fma.v2f32(<2 x float> %i.da, <2 x float> %i.cx, <2 x float> zeroinitializer)
   %i.dc = insertelement <2 x float> poison, float %i.cz, i64 0
   %i.dd = shufflevector <2 x float> %i.dc, <2 x float> poison, <2 x i32> zeroinitializer
@@ -938,9 +937,9 @@ bb.c:                                             ; preds = %bb.a, %_ZN7testing1
   %i.fk = fpext <4 x float> %i.cu to <4 x double>
   %i.fl = fpext <4 x float> %i.dz to <4 x double>
   %i.fm = fmul <4 x double> %i.fk, %i.fl          ; 4 uses
-  %shift = shufflevector <4 x double> %i.fm, <4 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
-  %foldExtExtBinop = fadd <4 x double> %shift, %i.fm
-  %shift65 = shufflevector <4 x double> %foldExtExtBinop, <4 x double> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
+  %4 = shufflevector <4 x double> %i.fm, <4 x double> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
+  %5 = shufflevector <4 x double> %i.fm, <4 x double> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
+  %shift65 = fadd <4 x double> %4, %5
   %foldExtExtBinop66 = fadd <4 x double> %shift65, %i.fm
   %shift68 = shufflevector <4 x double> %i.fm, <4 x double> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %foldExtExtBinop69 = fadd <4 x double> %foldExtExtBinop66, %shift68

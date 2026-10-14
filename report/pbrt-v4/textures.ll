@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %bb.i
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   %.sroa.3.0.copyload = load <2 x float>, ptr %.sroa.3.0..sroa_idx, align 4 ; 2 uses
   %.sroa.445.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %6 = load <4 x float>, ptr %.sroa.445.0..sroa_idx, align 4
-  %7 = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %6 = load <2 x float>, ptr %.sroa.445.0..sroa_idx, align 4
   %.sroa.546.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.546.0.copyload = load <2 x float>, ptr %.sroa.546.0..sroa_idx, align 8 ; 2 uses
   %.sroa.647.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -259,7 +258,7 @@ bb.k:                                             ; preds = %bb.i
   %i.el = shufflevector <2 x float> %.sroa.3.0.copyload, <2 x float> %.sroa.546.0.copyload, <2 x i32> <i32 0, i32 3> ; 3 uses
   %i.em = fmul <2 x float> %i.el, %i.ed
   %i.en = fadd <2 x float> %i.ek, %i.em
-  %i.eo = insertelement <2 x float> %7, float %.sroa.647.0.copyload, i64 1 ; 3 uses
+  %i.eo = insertelement <2 x float> %6, float %.sroa.647.0.copyload, i64 1 ; 3 uses
   %i.ep = insertelement <2 x float> poison, float %i.db, i64 0
   %i.eq = shufflevector <2 x float> %i.ep, <2 x float> poison, <2 x i32> zeroinitializer
   %i.er = fmul <2 x float> %i.eo, %i.eq
@@ -662,7 +661,7 @@ define linkonce_odr dso_local void @_ZNK4pbrt16SphericalMapping3MapENS_18Texture
 bb.a:
   %.sroa.0108.0.copyload = load <2 x float>, ptr %2, align 8 ; 4 uses
   %.sroa.2109.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %3 = load <4 x float>, ptr %.sroa.2109.0..sroa_idx, align 8
+  %3 = load <1 x float>, ptr %.sroa.2109.0..sroa_idx, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.c = load float, ptr %i.b, align 4, !tbaa !41
@@ -676,8 +675,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 12
   %.sroa.073.0.copyload = load <2 x float>, ptr %i.k, align 4 ; 4 uses
   %.sroa.274.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %4 = load <4 x float>, ptr %.sroa.274.0..sroa_idx, align 4
-  %5 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %4 = load <2 x float>, ptr %.sroa.274.0..sroa_idx, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24
   %.sroa.062.0.copyload = load <2 x float>, ptr %i.l, align 8 ; 4 uses
   %.sroa.263.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -690,7 +688,7 @@ bb.a:
   %i.r = load <2 x float>, ptr %i.h, align 4, !tbaa !41 ; 3 uses
   %i.s = load <2 x float>, ptr %i.i, align 4, !tbaa !41 ; 2 uses
   %i.t = load <2 x float>, ptr %i.j, align 4, !tbaa !41 ; 2 uses
-  %i.u = shufflevector <4 x float> %3, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.u = shufflevector <1 x float> %3, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.v = shufflevector <2 x float> %i.r, <2 x float> %i.t, <2 x i32> <i32 0, i32 2>
   %i.w = fmul <2 x float> %i.u, %i.v
   %i.x = shufflevector <2 x float> %i.p, <2 x float> %i.s, <2 x i32> <i32 0, i32 3>
@@ -715,7 +713,7 @@ bb.a:
   %i.ap = shufflevector <2 x float> %.sroa.073.0.copyload, <2 x float> %.sroa.062.0.copyload, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.aq = fmul <2 x float> %i.ao, %i.ap
   %i.ar = fadd <2 x float> %i.an, %i.aq
-  %i.as = insertelement <2 x float> %5, float %.sroa.263.0.copyload, i64 1 ; 3 uses
+  %i.as = insertelement <2 x float> %4, float %.sroa.263.0.copyload, i64 1 ; 3 uses
   %i.at = shufflevector <2 x float> %i.m, <2 x float> %i.n, <2 x i32> <i32 0, i32 2>
   %i.au = fmul <2 x float> %i.at, %i.am
   %i.av = shufflevector <2 x float> %i.m, <2 x float> %i.n, <2 x i32> <i32 1, i32 3>

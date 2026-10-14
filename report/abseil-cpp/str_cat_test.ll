@@ -204,10 +204,9 @@ bb.b:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.h = load <8 x i16>, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, align 16
-  %11 = shufflevector <8 x i16> %i.h, <8 x i16> poison, <8 x i32> <i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 30
   %i.j = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_2026052616numbers_internal9kHexTableE, i64 510), align 2
-  %i.k = insertelement <8 x i16> %11, i16 %i.j, i64 1 ; 2 uses
+  %i.k = insertelement <8 x i16> %i.h, i16 %i.j, i64 1 ; 2 uses
   %i.l = shufflevector <8 x i16> %i.k, <8 x i16> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1>
   store <8 x i16> %i.l, ptr %i.g, align 16
   invoke void @_ZN4absl12lts_2026052616strings_internal13StringifySink6AppendESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(32) %3, i64 2, ptr nonnull %i.i)

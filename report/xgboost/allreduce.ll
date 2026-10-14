@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIfaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -609,11 +609,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIdaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -1016,11 +1016,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIeaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -1423,11 +1423,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIaaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.f, align 4
+  %9 = load <1 x i32>, ptr %i.f, align 4
   %i.g = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.h = shufflevector <2 x i32> %i.g, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.i = add <2 x i32> %i.h, <i32 -1, i32 1>
-  %i.j = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.j = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.k = add <2 x i32> %i.i, %i.j
   %i.l = srem <2 x i32> %i.k, %i.h                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -1830,11 +1830,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIsaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -2237,11 +2237,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIiaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -2644,11 +2644,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIlaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -3051,11 +3051,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIhaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.f, align 4
+  %9 = load <1 x i32>, ptr %i.f, align 4
   %i.g = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.h = shufflevector <2 x i32> %i.g, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.i = add <2 x i32> %i.h, <i32 -1, i32 1>
-  %i.j = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.j = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.k = add <2 x i32> %i.i, %i.j
   %i.l = srem <2 x i32> %i.k, %i.h                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -3458,11 +3458,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeItaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -3865,11 +3865,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeIjaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
@@ -4272,11 +4272,11 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN7xgboost6common9EraseTypeImaEENS0_4SpanIT0_Lm18446744073709551615EEENS2_IT_Lm18446744073709551615EEE.exit: ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %9 = load <4 x i32>, ptr %i.g, align 4
+  %9 = load <1 x i32>, ptr %i.g, align 4
   %i.h = insertelement <2 x i32> poison, i32 %spec.select.i, i64 0
   %i.i = shufflevector <2 x i32> %i.h, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = add <2 x i32> %i.i, <i32 -1, i32 1>
-  %i.k = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> zeroinitializer
+  %i.k = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
   %i.l = add <2 x i32> %i.j, %i.k
   %i.m = srem <2 x i32> %i.l, %i.i                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9

@@ -205,9 +205,9 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.bme, 9223372036854775800    ; 3 uses
   %i.bmg = shl i64 %n.vec, 2
   %i.bmh = getelementptr i8, ptr %i.bly, i64 %i.bmg
-  %92 = load <4 x i32>, ptr %i.bax, align 8
-  %93 = add <4 x i32> %92, <i32 -1, i32 poison, i32 poison, i32 poison>
-  %94 = shufflevector <4 x i32> %93, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %92 = load <1 x i32>, ptr %i.bax, align 8
+  %93 = shufflevector <1 x i32> %92, <1 x i32> poison, <4 x i32> zeroinitializer
+  %94 = add <4 x i32> %93, splat (i32 -1)         ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

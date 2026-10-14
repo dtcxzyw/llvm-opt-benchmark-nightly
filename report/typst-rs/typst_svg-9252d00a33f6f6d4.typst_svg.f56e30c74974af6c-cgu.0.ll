@@ -205,13 +205,12 @@ bb.cm:                                            ; preds = %bb.ce
   br i1 %i.ln, label %_RNvMNtNtCsdQl7XGSB5tC_10ttf_parser6tables4glyfNtB2_7Builder7quad_to.exit28.i, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
-  %8 = load <4 x float>, ptr %i.gp, align 8
-  %9 = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %8 = load <2 x float>, ptr %i.gp, align 8
   %i.lo = load float, ptr %i.gt, align 4, !alias.scope !8444, !noundef !12
   %i.lp = load <2 x float>, ptr %i.gs, align 4, !alias.scope !8444 ; 2 uses
   %i.lq = fmul <2 x float> %i.jd, %i.lp
   %i.lr = shufflevector <2 x float> %i.lq, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.ls = insertelement <2 x float> %9, float %i.lo, i64 1 ; 2 uses
+  %i.ls = insertelement <2 x float> %8, float %i.lo, i64 1 ; 2 uses
   %i.lt = fmul <2 x float> %i.jd, %i.ls
   %i.lu = fadd <2 x float> %i.lr, %i.lt
   %i.lv = load <2 x float>, ptr %i.gr, align 8, !alias.scope !8444 ; 2 uses
@@ -420,13 +419,12 @@ bb.cz:                                            ; preds = %bb.cv
   br i1 %i.qm, label %_RNvMNtNtCsdQl7XGSB5tC_10ttf_parser6tables4glyfNtB2_7Builder7quad_to.exit37.i.i, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
-  %10 = load <4 x float>, ptr %i.gp, align 8
-  %11 = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %9 = load <2 x float>, ptr %i.gp, align 8
   %i.qn = load float, ptr %i.gt, align 4, !alias.scope !8455, !noundef !12
   %i.qo = load <2 x float>, ptr %i.gs, align 4, !alias.scope !8455 ; 2 uses
   %i.qp = fmul <2 x float> %i.qk, %i.qo
   %i.qq = shufflevector <2 x float> %i.qp, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.qr = insertelement <2 x float> %11, float %i.qn, i64 1 ; 2 uses
+  %i.qr = insertelement <2 x float> %9, float %i.qn, i64 1 ; 2 uses
   %i.qs = fmul <2 x float> %i.qk, %i.qr
   %i.qt = fadd <2 x float> %i.qq, %i.qs
   %i.qu = load <2 x float>, ptr %i.gr, align 8, !alias.scope !8455 ; 2 uses
@@ -476,13 +474,12 @@ bb.dc:                                            ; preds = %bb.cy
   br i1 %i.rt, label %_RNvMNtNtCsdQl7XGSB5tC_10ttf_parser6tables4glyfNtB2_7Builder7quad_to.exit42.i.i, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
-  %12 = load <4 x float>, ptr %i.gp, align 8
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %10 = load <2 x float>, ptr %i.gp, align 8
   %i.ru = load float, ptr %i.gt, align 4, !alias.scope !8458, !noundef !12
   %i.rv = load <2 x float>, ptr %i.gs, align 4, !alias.scope !8458 ; 2 uses
   %i.rw = fmul <2 x float> %i.rr, %i.rv
   %i.rx = shufflevector <2 x float> %i.rw, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.ry = insertelement <2 x float> %13, float %i.ru, i64 1 ; 2 uses
+  %i.ry = insertelement <2 x float> %10, float %i.ru, i64 1 ; 2 uses
   %i.rz = fmul <2 x float> %i.rr, %i.ry
   %i.sa = fadd <2 x float> %i.rx, %i.rz
   %i.sb = load <2 x float>, ptr %i.gr, align 8, !alias.scope !8458 ; 2 uses

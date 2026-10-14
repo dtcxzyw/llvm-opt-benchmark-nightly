@@ -205,8 +205,8 @@ bb.a:
   %i.bk = shufflevector <2 x double> %i.bj, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bl = fmul <2 x double> %i.bi, %i.bk
   %i.bm = fadd <2 x double> %i.bh, %i.bl
-  %2 = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @_ZN3g2o10VertexSCam4KcamE, i64 16), align 8
-  %3 = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @_ZN3g2o10VertexSCam4KcamE, i64 40), align 8
+  %2 = load <1 x double>, ptr getelementptr inbounds nuw (i8, ptr @_ZN3g2o10VertexSCam4KcamE, i64 16), align 8
+  %3 = load <1 x double>, ptr getelementptr inbounds nuw (i8, ptr @_ZN3g2o10VertexSCam4KcamE, i64 40), align 8
   %i.bn = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZN3g2o10VertexSCam4KcamE, i64 64), align 8, !tbaa !32
   %i.bo = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bp = fmul <2 x double> %i.bo, %i.az
@@ -247,12 +247,12 @@ bb.a:
   %i.cu = shufflevector <2 x double> %i.b, <2 x double> %i.h, <2 x i32> <i32 0, i32 2>
   %i.cv = shufflevector <2 x double> %i.n, <2 x double> %i.aj, <2 x i32> <i32 0, i32 2>
   %i.cw = shufflevector <2 x double> %i.cu, <2 x double> %i.cv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.cx = shufflevector <2 x double> %2, <2 x double> poison, <4 x i32> zeroinitializer
+  %i.cx = shufflevector <1 x double> %2, <1 x double> poison, <4 x i32> zeroinitializer
   %i.cy = fmul <4 x double> %i.cw, %i.cx
   %i.cz = shufflevector <2 x double> %i.be, <2 x double> %i.br, <2 x i32> <i32 0, i32 2>
   %i.da = shufflevector <2 x double> %i.cc, <2 x double> %i.cn, <2 x i32> <i32 0, i32 2>
   %i.db = shufflevector <2 x double> %i.cz, <2 x double> %i.da, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.dc = shufflevector <2 x double> %3, <2 x double> poison, <4 x i32> zeroinitializer
+  %i.dc = shufflevector <1 x double> %3, <1 x double> poison, <4 x i32> zeroinitializer
   %i.dd = fmul <4 x double> %i.db, %i.dc
   %i.de = shufflevector <2 x double> %i.bj, <2 x double> %i.bv, <2 x i32> <i32 0, i32 2>
   %i.df = shufflevector <2 x double> %i.cg, <2 x double> %i.cn, <2 x i32> <i32 0, i32 3>

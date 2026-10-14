@@ -205,12 +205,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 153272
   %i.b = load float, ptr %i.a, align 8, !tbaa !12
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 153276
-  %1 = load <4 x float>, ptr %i.c, align 4
+  %1 = load <1 x float>, ptr %i.c, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 153280
-  %2 = load <4 x float>, ptr %i.d, align 8
-  %3 = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %i.e = insertelement <2 x float> %3, float %i.b, i64 1
-  %i.f = shufflevector <4 x float> %1, <4 x float> poison, <2 x i32> zeroinitializer
+  %2 = load <2 x float>, ptr %i.d, align 8
+  %i.e = insertelement <2 x float> %2, float %i.b, i64 1
+  %i.f = shufflevector <1 x float> %1, <1 x float> poison, <2 x i32> zeroinitializer
   %i.g = fdiv <2 x float> %i.e, %i.f              ; 3 uses
   %i.h = extractelement <2 x float> %i.g, i64 1   ; 2 uses
   %i.i = fcmp ogt float %i.h, 1.000000e+00
@@ -613,11 +612,10 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   store <4 x float> <float f0x3B0F6557, float f0x3B21D9FF, float f0x3B05FB37, float f0x3ACCA05E>, ptr %i.ba, align 4, !tbaa !12
   tail call void @_ZN6LibRaw17canon_600_auto_wbEv(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.be = load float, ptr %i.bb, align 8, !tbaa !12
-  %1 = load <4 x float>, ptr %i.bc, align 4
-  %2 = load <4 x float>, ptr %i.bd, align 8
-  %3 = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %i.bf = insertelement <2 x float> %3, float %i.be, i64 1
-  %i.bg = shufflevector <4 x float> %1, <4 x float> poison, <2 x i32> zeroinitializer
+  %1 = load <1 x float>, ptr %i.bc, align 4
+  %2 = load <2 x float>, ptr %i.bd, align 8
+  %i.bf = insertelement <2 x float> %2, float %i.be, i64 1
+  %i.bg = shufflevector <1 x float> %1, <1 x float> poison, <2 x i32> zeroinitializer
   %i.bh = fdiv <2 x float> %i.bf, %i.bg           ; 3 uses
   %i.bi = extractelement <2 x float> %i.bh, i64 1 ; 2 uses
   %i.bj = fcmp ogt float %i.bi, 1.000000e+00

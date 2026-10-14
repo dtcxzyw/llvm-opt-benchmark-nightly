@@ -205,9 +205,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br i1 %.not171178, label %.noexc.i107, label %.lr.ph182
 
 .lr.ph182:                                        ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
-  %5 = load <4 x float>, ptr %i.w, align 8
-  %6 = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %i.aa = insertelement <2 x float> %6, float %.sroa.256.0.copyload, i64 1 ; 2 uses
+  %5 = load <2 x float>, ptr %i.w, align 8
+  %i.aa = insertelement <2 x float> %5, float %.sroa.256.0.copyload, i64 1 ; 2 uses
   %i.ab = fcmp nsz ogt <2 x float> %i.aa, zeroinitializer
   %i.ac = select <2 x i1> %i.ab, <2 x float> splat (float 5.000000e+00), <2 x float> splat (float -5.000000e+00)
   %i.ad = fadd nsz <2 x float> %i.aa, %i.ac
@@ -610,7 +609,7 @@ define dso_local noundef i32 @_ZN9ClientMap23getBackgroundBrightnessEfjiPb(ptr n
   %5 = alloca %class.ScopeProfiler, align 8       ; 8 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %7 = alloca %"class.core::vector3d", align 4    ; 6 uses
-  %8 = alloca %"class.core::CMatrix4", align 16   ; 16 uses
+  %8 = alloca %"class.core::CMatrix4", align 8    ; 16 uses
   %9 = alloca %"class.core::vector3d", align 8    ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #2
   %i.b = load ptr, ptr @g_profiler, align 8, !tbaa !493
@@ -788,7 +787,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorIiSaIiE
   store float 1.000000e+00, ptr %i.bf, align 4, !tbaa !82
   store float 1.000000e+00, ptr %i.bg, align 8, !tbaa !82
   store float 1.000000e+00, ptr %i.bh, align 4, !tbaa !82
-  store float 1.000000e+00, ptr %8, align 16, !tbaa !82
+  store float 1.000000e+00, ptr %8, align 8, !tbaa !82
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #2
   store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %9, align 8, !tbaa !82
   store float 0.000000e+00, ptr %i.bi, align 8, !tbaa !483
@@ -797,12 +796,9 @@ bb.i:                                             ; preds = %_ZNSt6vectorIiSaIiE
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #2
-  %10 = load <4 x float>, ptr %8, align 16
-  %11 = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %12 = load <4 x float>, ptr %i.bl, align 16
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %14 = load <4 x float>, ptr %i.bn, align 16
-  %15 = shufflevector <4 x float> %14, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %10 = load <2 x float>, ptr %8, align 8
+  %11 = load <2 x float>, ptr %i.bl, align 8
+  %12 = load <2 x float>, ptr %i.bn, align 8
   %i.cc = load float, ptr %i.be, align 4, !tbaa !82
   %i.cd = load float, ptr %i.bh, align 4, !tbaa !82
   %i.ce = load float, ptr %i.bo, align 4, !tbaa !82
@@ -817,15 +813,15 @@ bb.j:                                             ; preds = %bb.i
   %i.cn = call nsz float @llvm.fmuladd.f32(float %i.ck, float %i.ce, float %i.cm) ; 4 uses
   %i.co = insertelement <2 x float> poison, float %i.cj, i64 0
   %i.cp = shufflevector <2 x float> %i.co, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cq = insertelement <2 x float> %13, float %i.cg, i64 1
+  %i.cq = insertelement <2 x float> %11, float %i.cg, i64 1
   %i.cr = fmul nsz <2 x float> %i.cp, %i.cq
   %i.cs = insertelement <2 x float> poison, float %i.ci, i64 0
   %i.ct = shufflevector <2 x float> %i.cs, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cu = insertelement <2 x float> %11, float %i.cf, i64 1
+  %i.cu = insertelement <2 x float> %10, float %i.cf, i64 1
   %i.cv = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ct, <2 x float> %i.cu, <2 x float> %i.cr)
   %i.cw = insertelement <2 x float> poison, float %i.ck, i64 0
   %i.cx = shufflevector <2 x float> %i.cw, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.cy = insertelement <2 x float> %15, float %i.ch, i64 1
+  %i.cy = insertelement <2 x float> %12, float %i.ch, i64 1
   %i.cz = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cx, <2 x float> %i.cy, <2 x float> %i.cv) ; 4 uses
   %i.da = getelementptr inbounds nuw [4 x i8], ptr @_ZZN9ClientMap23getBackgroundBrightnessEfjiPbE9z_offsets, i64 %indvars.iv220
   %i.db = load float, ptr %i.da, align 4, !tbaa !82
