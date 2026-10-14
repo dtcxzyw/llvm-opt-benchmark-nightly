@@ -1,0 +1,111 @@
+diff --git a/llvm/include/llvm/ADT/SetVector.h b/llvm/include/llvm/ADT/SetVector.h
+index bc0ac2583327b3..fd88540ac5c47c 100644
+--- a/llvm/include/llvm/ADT/SetVector.h
++++ b/llvm/include/llvm/ADT/SetVector.h
+@@ -25,6 +25,7 @@
+ #include "llvm/ADT/DenseSet.h"
+ #include "llvm/ADT/STLExtras.h"
+ #include "llvm/ADT/STLForwardCompat.h"
++#include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/Support/Compiler.h"
+ #include <cassert>
+@@ -341,10 +342,12 @@ class SetVector {
+ 
+ /// A SetVector that performs no allocations if smaller than
+ /// a certain size.
+-template <typename T, unsigned N>
+-class SmallSetVector : public SetVector<T, SmallVector<T, N>, DenseSet<T>, N> {
++template <typename T, unsigned N, typename V = SmallVector<T, N>,
++          typename S = std::conditional_t<
++              std::is_pointer_v<T>, SmallPtrSet<T, N>, SmallDenseSet<T, N>>>
++class SmallSetVector : public SetVector<T, V, S, N> {
+ public:
+-  using SetVector<T, SmallVector<T, N>, DenseSet<T>, N>::SetVector;
++  using SetVector<T, V, S, N>::SetVector;
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/include/llvm/ADT/SmallPtrSet.h b/llvm/include/llvm/ADT/SmallPtrSet.h
+index 1a556d6a4145a2..1c59d06977326b 100644
+--- a/llvm/include/llvm/ADT/SmallPtrSet.h
++++ b/llvm/include/llvm/ADT/SmallPtrSet.h
+@@ -385,8 +385,8 @@ template <typename PtrType> class SmallPtrSetImpl : public SmallPtrSetImplBase {
+   /// Returns whether the pointer was in the set. Invalidates iterators if
+   /// true is returned. To remove elements while iterating over the set, use
+   /// remove_if() instead.
+-  bool erase(PtrType Ptr) {
+-    return erase_imp(PtrTraits::getAsVoidPointer(Ptr));
++  bool erase(ConstPtrType Ptr) {
++    return erase_imp(ConstPtrTraits::getAsVoidPointer(Ptr));
+   }
+ 
+   /// Remove elements that match the given predicate.
+diff --git a/llvm/include/llvm/Analysis/InstructionSimplify.h b/llvm/include/llvm/Analysis/InstructionSimplify.h
+index 3568422c8348b3..05b6463bcea5ae 100644
+--- a/llvm/include/llvm/Analysis/InstructionSimplify.h
++++ b/llvm/include/llvm/Analysis/InstructionSimplify.h
+@@ -49,7 +49,7 @@ class CmpPredicate;
+ class LoadInst;
+ struct LoopStandardAnalysisResults;
+ class Pass;
+-template <class T, unsigned n> class SmallSetVector;
++template <class T, unsigned N, typename V, typename S> class SmallSetVector;
+ class TargetLibraryInfo;
+ class Type;
+ class Value;
+diff --git a/llvm/include/llvm/Analysis/MemorySSAUpdater.h b/llvm/include/llvm/Analysis/MemorySSAUpdater.h
+index 5b81deee5987f6..c07ed8eb379046 100644
+--- a/llvm/include/llvm/Analysis/MemorySSAUpdater.h
++++ b/llvm/include/llvm/Analysis/MemorySSAUpdater.h
+@@ -46,7 +46,8 @@ class BasicBlock;
+ class DominatorTree;
+ class Instruction;
+ class LoopBlocksRPO;
+-template <typename T, unsigned int N> class SmallSetVector;
++template <typename T, unsigned int N, typename V, typename S>
++class SmallSetVector;
+ 
+ using ValueToValueMapTy = ValueMap<const Value *, WeakTrackingVH>;
+ using PhiToDefMap = SmallDenseMap<MemoryPhi *, MemoryAccess *>;
+diff --git a/llvm/include/llvm/CodeGen/SelectionDAG.h b/llvm/include/llvm/CodeGen/SelectionDAG.h
+index cd4c11dfcacecd..c1d62c60fb5f2c 100644
+--- a/llvm/include/llvm/CodeGen/SelectionDAG.h
++++ b/llvm/include/llvm/CodeGen/SelectionDAG.h
+@@ -62,7 +62,8 @@ class Function;
+ class Pass;
+ class Type;
+ template <class GraphType> struct GraphTraits;
+-template <typename T, unsigned int N> class SmallSetVector;
++template <typename T, unsigned int N, typename V, typename S>
++class SmallSetVector;
+ template <typename T, typename Enable> struct FoldingSetTrait;
+ class BatchAAResults;
+ class BlockAddress;
+diff --git a/llvm/include/llvm/CodeGen/TailDuplicator.h b/llvm/include/llvm/CodeGen/TailDuplicator.h
+index 97182346e64b86..c0a6d300df94e3 100644
+--- a/llvm/include/llvm/CodeGen/TailDuplicator.h
++++ b/llvm/include/llvm/CodeGen/TailDuplicator.h
+@@ -23,7 +23,8 @@
+ 
+ namespace llvm {
+ 
+-template <typename T, unsigned int N> class SmallSetVector;
++template <typename T, unsigned int N, typename V, typename S>
++class SmallSetVector;
+ template <typename Fn> class function_ref;
+ class MBFIWrapper;
+ class MachineBasicBlock;
+diff --git a/llvm/include/llvm/Transforms/Utils/LoopUtils.h b/llvm/include/llvm/Transforms/Utils/LoopUtils.h
+index a68b9289853169..df331029b61e13 100644
+--- a/llvm/include/llvm/Transforms/Utils/LoopUtils.h
++++ b/llvm/include/llvm/Transforms/Utils/LoopUtils.h
+@@ -48,7 +48,7 @@ typedef std::pair<const RuntimeCheckingPtrGroup *,
+                   const RuntimeCheckingPtrGroup *>
+     RuntimePointerCheck;
+ 
+-template <typename T, unsigned N> class SmallSetVector;
++template <typename T, unsigned N, typename V, typename S> class SmallSetVector;
+ template <typename T, unsigned N> class SmallPriorityWorklist;
+ 
+ LLVM_ABI BasicBlock *InsertPreheaderForLoop(Loop *L, DominatorTree *DT,
