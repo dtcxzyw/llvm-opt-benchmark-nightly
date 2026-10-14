@@ -205,21 +205,19 @@ bb.d:                                             ; preds = %bb.c
   %i.bl = sext i32 %i.bk to i64                   ; 2 uses
   %i.bm = add i64 %.093.neg143, %i.au
   %i.bn = select i1 %i.bj, i64 %i.bm, i64 0
-  %.090 = add nsw i64 %i.bn, %i.bl                ; 3 uses
+  %.090 = add nsw i64 %i.bn, %i.bl                ; 2 uses
   %i.bo = add i64 %.093.neg143, %i.at
   %i.bp = add nsw i64 %i.bo, %i.bl
   %i.bq = getelementptr inbounds nuw i8, ptr %i.aw, i64 4 ; 2 uses
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !81
-  %i.bs = sext i32 %i.br to i64                   ; 2 uses
+  %i.bs = sext i32 %i.br to i64
   %spec.select = tail call i64 @llvm.smin.i64(i64 %i.bp, i64 %i.bs) ; 2 uses
-  %i.bt = icmp slt i64 %spec.select, %.090
-  %4 = icmp sgt i64 %.090, %i.bs
-  %or.cond = or i1 %4, %i.bt                      ; 2 uses
+  %i.bt = icmp slt i64 %spec.select, %.090        ; 2 uses
   %i.bu = trunc i64 %.090 to i32
-  %i.bv = select i1 %or.cond, i32 0, i32 %i.bu
+  %i.bv = select i1 %i.bt, i32 0, i32 %i.bu
   store i32 %i.bv, ptr %i.aw, align 8, !tbaa !80
   %i.bw = trunc i64 %spec.select to i32
-  %i.bx = select i1 %or.cond, i32 0, i32 %i.bw
+  %i.bx = select i1 %i.bt, i32 0, i32 %i.bw
   store i32 %i.bx, ptr %i.bq, align 4, !tbaa !81
   br label %.thread134
 

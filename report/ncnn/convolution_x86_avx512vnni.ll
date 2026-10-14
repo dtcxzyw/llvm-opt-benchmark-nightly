@@ -205,12 +205,13 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.speculated52 = tail call i32 @llvm.smax.i32(i32 %i.ay, i32 4) ; 3 uses
   %i.az = add nsw i32 %1, -1                      ; 2 uses
   %i.ba = add nuw i32 %i.az, %.sroa.speculated52
-  %7 = udiv i32 %i.ba, %.sroa.speculated52        ; 2 uses
-  %i.bb = add nuw i32 %i.az, %7
-  %8 = udiv i32 %i.bb, %7
-  %i.bc = add nuw nsw i32 %8, 3
-  %9 = and i32 %i.bc, -4
-  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %9, i32 %.sroa.speculated52)
+  %7 = sdiv i32 %i.ba, %.sroa.speculated52        ; 2 uses
+  %i.bb = add i32 %i.az, %7
+  %8 = sdiv i32 %i.bb, %7
+  %i.bc = add nsw i32 %8, 3
+  %9 = sdiv i32 %i.bc, 4
+  %10 = shl nsw i32 %9, 2
+  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %10, i32 %.sroa.speculated52)
   store i32 %.sroa.speculated, ptr %4, align 4, !tbaa !10
   br label %bb.g
 
@@ -611,9 +612,6 @@ declare i32 @llvm.umax.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v16i32(<16 x i32>) #19

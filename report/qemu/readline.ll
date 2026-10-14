@@ -204,9 +204,7 @@ readline_insert_char.exit101:                     ; preds = %bb.s, %bb.t
 
 .loopexit102:                                     ; preds = %.loopexit102.loopexit, %bb.p, %._crit_edge
   %i.dj = phi i1 [ %i.di, %.loopexit102.loopexit ], [ true, %bb.p ], [ true, %._crit_edge ]
-  %.rhs.trunc = trunc nuw nsw i32 %i.cg to i8
-  %1 = udiv i8 80, %.rhs.trunc
-  %.zext = zext nneg i8 %1 to i32
+  %1 = udiv i32 80, %i.cg
   br i1 %i.dj, label %.lr.ph118, label %._crit_edge119
 
 .lr.ph118:                                        ; preds = %.loopexit102, %bb.w
@@ -218,7 +216,7 @@ readline_insert_char.exit101:                     ; preds = %bb.s, %bb.t
   %i.dn = load ptr, ptr %i.dm, align 8
   tail call void (ptr, ptr, ...) %i.dk(ptr noundef %i.dl, ptr noundef nonnull @.str.2, i32 noundef %i.cg, ptr noundef %i.dn) #14
   %i.do = add i32 %.182116, 1                     ; 2 uses
-  %i.dp = icmp eq i32 %i.do, %.zext
+  %i.dp = icmp eq i32 %i.do, %1
   br i1 %i.dp, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph118

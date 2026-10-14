@@ -202,7 +202,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit91: ; preds = %bb.
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit73, %bb.n
-  %.0121 = phi i64 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit73 ], [ %i.dt, %bb.n ] ; 4 uses
+  %.0121 = phi i64 [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit73 ], [ %i.dt, %bb.n ] ; 3 uses
   %i.cu = uitofp nsz nneg i64 %.0121 to float
   %i.cv = fdiv nsz float %i.cu, 1.500000e+01      ; 5 uses
   %i.cw = fcmp nsz ult float %i.cv, 1.000000e+00
@@ -220,14 +220,7 @@ bb.j:                                             ; preds = %bb.i
   %i.df = call nsz noundef float @llvm.exp.f32(float %i.de)
   %i.dg = call nsz float @llvm.fmuladd.f32(float %.0.i49, float %i.df, float %i.da) ; 3 uses
   %i.dh = fcmp nsz ugt float %i.dg, 0.000000e+00
-  br i1 %i.dh, label %bb.k, label %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit.thread
-
-_ZNK12_GLOBAL__N_110LightCurve3getEf.exit.thread: ; preds = %bb.j
-  %6 = getelementptr inbounds nuw i8, ptr @_ZL9light_LUT, i64 %.0121 ; 3 uses
-  store i8 0, ptr %6, align 1, !tbaa !9
-  %7 = getelementptr i8, ptr %6, i64 -1
-  %8 = load i8, ptr %7, align 1, !tbaa !9
-  br label %bb.m
+  br i1 %i.dh, label %bb.k, label %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.di = fcmp nsz ult float %i.dg, 1.000000e+00
@@ -240,22 +233,21 @@ bb.l:                                             ; preds = %bb.k
   %i.dm = call i32 @llvm.smin.i32(i32 %i.dl, i32 255)
   br label %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit
 
-_ZNK12_GLOBAL__N_110LightCurve3getEf.exit:        ; preds = %bb.i, %bb.k, %bb.l
-  %.1.i = phi i32 [ 255, %bb.i ], [ %i.dm, %bb.l ], [ 255, %bb.k ] ; 2 uses
-  %i.dn = trunc nuw i32 %.1.i to i8
+_ZNK12_GLOBAL__N_110LightCurve3getEf.exit:        ; preds = %bb.i, %bb.j, %bb.k, %bb.l
+  %.1.i = phi i32 [ 255, %bb.i ], [ %i.dm, %bb.l ], [ 0, %bb.j ], [ 255, %bb.k ] ; 2 uses
+  %i.dn = trunc i32 %.1.i to i8
   %i.do = getelementptr inbounds nuw i8, ptr @_ZL9light_LUT, i64 %.0121 ; 3 uses
   store i8 %i.dn, ptr %i.do, align 1, !tbaa !9
+  %6 = and i32 %.1.i, 255
   %i.dp = getelementptr i8, ptr %i.do, i64 -1
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !9   ; 2 uses
   %i.dr = zext i8 %i.dq to i32
-  %.not = icmp samesign ugt i32 %.1.i, %i.dr
+  %.not = icmp samesign ugt i32 %6, %i.dr
   br i1 %.not, label %bb.n, label %bb.m
 
-bb.m:                                             ; preds = %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit.thread, %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit
-  %9 = phi i8 [ %8, %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit.thread ], [ %i.dq, %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit ]
-  %10 = phi ptr [ %6, %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit.thread ], [ %i.do, %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit ]
-  %i.ds = call i8 @llvm.uadd.sat.i8(i8 %9, i8 1)
-  store i8 %i.ds, ptr %10, align 1, !tbaa !9
+bb.m:                                             ; preds = %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit
+  %i.ds = call i8 @llvm.uadd.sat.i8(i8 %i.dq, i8 1)
+  store i8 %i.ds, ptr %i.do, align 1, !tbaa !9
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_ZNK12_GLOBAL__N_110LightCurve3getEf.exit

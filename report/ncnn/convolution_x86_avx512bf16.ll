@@ -205,13 +205,14 @@ _ZN4ncnnL50convolution_im2col_gemm_get_optimal_tile_mnk_bf16sEiiiRiS0_S0_i.exit.
   %.sroa.speculated69.i.i = tail call i32 @llvm.smax.i32(i32 %i.cf, i32 16) ; 3 uses
   %i.cg = add nsw i32 %i.ab, -1                   ; 3 uses
   %i.ch = add nuw i32 %.sroa.speculated69.i.i, %i.cg
-  %16 = udiv i32 %i.ch, %.sroa.speculated69.i.i   ; 2 uses
-  %i.ci = add nuw i32 %16, %i.cg
-  %17 = udiv i32 %i.ci, %16
-  %i.cj = add nuw nsw i32 %17, 15
-  %18 = and i32 %i.cj, -16
-  %.sroa.speculated64.i.i = tail call i32 @llvm.umin.i32(i32 %18, i32 %.sroa.speculated69.i.i)
-  %.sroa.speculated.i.i = tail call i32 @llvm.umax.i32(i32 %.sroa.speculated64.i.i, i32 16) ; 4 uses
+  %16 = sdiv i32 %i.ch, %.sroa.speculated69.i.i   ; 2 uses
+  %i.ci = add i32 %16, %i.cg
+  %17 = sdiv i32 %i.ci, %16
+  %i.cj = add nsw i32 %17, 15
+  %18 = sdiv i32 %i.cj, 16
+  %19 = shl nsw i32 %18, 4
+  %.sroa.speculated64.i.i = tail call i32 @llvm.smin.i32(i32 %19, i32 %.sroa.speculated69.i.i)
+  %.sroa.speculated.i.i = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated64.i.i, i32 16) ; 4 uses
   store i32 %.sroa.speculated.i.i, ptr %i.l, align 4, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #10
   %i.ck = insertelement <2 x i32> poison, i32 %i.by, i64 0
@@ -614,12 +615,13 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.speculated52 = tail call i32 @llvm.smax.i32(i32 %i.ax, i32 16) ; 3 uses
   %i.ay = add nsw i32 %1, -1                      ; 2 uses
   %i.az = add nuw i32 %i.ay, %.sroa.speculated52
-  %7 = udiv i32 %i.az, %.sroa.speculated52        ; 2 uses
-  %i.ba = add nuw i32 %i.ay, %7
-  %8 = udiv i32 %i.ba, %7
-  %i.bb = add nuw nsw i32 %8, 15
-  %9 = and i32 %i.bb, -16
-  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %9, i32 %.sroa.speculated52)
+  %7 = sdiv i32 %i.az, %.sroa.speculated52        ; 2 uses
+  %i.ba = add i32 %i.ay, %7
+  %8 = sdiv i32 %i.ba, %7
+  %i.bb = add nsw i32 %8, 15
+  %9 = sdiv i32 %i.bb, 16
+  %10 = shl nsw i32 %9, 4
+  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %10, i32 %.sroa.speculated52)
   store i32 %.sroa.speculated, ptr %4, align 4, !tbaa !30
   br label %bb.g
 
@@ -1022,12 +1024,6 @@ declare float @llvm.minnum.f32(float, float) #14
 declare i32 @llvm.smax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -1035,6 +1031,9 @@ declare i64 @llvm.smax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #14

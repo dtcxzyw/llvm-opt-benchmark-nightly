@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.aq = icmp sgt i32 %i.ac, %4
-  %5 = icmp samesign ugt i32 %i.ae, %4
-  %or.cond = select i1 %i.aq, i1 true, i1 %5
+  %5 = icmp sgt i32 %i.ae, %4
+  %or.cond = or i1 %i.aq, %5
   br i1 %or.cond, label %.critedge631.i, label %bb.j
 
 .critedge631.i:                                   ; preds = %bb.i
@@ -367,8 +367,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.aw = icmp sgt i32 %i.ai, %4
-  %5 = icmp samesign ugt i32 %i.ak, %4
-  %or.cond = select i1 %i.aw, i1 true, i1 %5
+  %5 = icmp sgt i32 %i.ak, %4
+  %or.cond = or i1 %i.aw, %5
   br i1 %or.cond, label %.critedge631.i, label %bb.j
 
 .critedge631.i:                                   ; preds = %bb.i
@@ -530,11 +530,10 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.at = add nuw nsw i32 %i.f, 1
   %i.au = sub nsw i32 %i.at, %i.l
-  %5 = icmp ult i32 %i.au, 3
-  %i.av = icmp samesign ult i32 %i.ac, 2
-  %or.cond = select i1 %5, i1 %i.av, i1 false
-  %i.aw = icmp samesign ult i32 %i.ae, 2
-  %or.cond13 = select i1 %or.cond, i1 %i.aw, i1 false
+  %i.av = icmp ult i32 %i.au, 3
+  %5 = or i32 %i.ae, %i.ac
+  %i.aw = icmp samesign ult i32 %5, 2
+  %or.cond13 = and i1 %i.av, %i.aw
   br i1 %or.cond13, label %bb.k, label %.thread
 
 bb.k:                                             ; preds = %bb.j
@@ -612,8 +611,8 @@ bb.m:                                             ; preds = %bb.l
 
 .thread:                                          ; preds = %bb.i, %bb.j, %bb.k, %bb.l
   %i.cz = icmp sgt i32 %i.ac, %4
-  %6 = icmp samesign ugt i32 %i.ae, %4
-  %or.cond14 = select i1 %i.cz, i1 true, i1 %6
+  %6 = icmp sgt i32 %i.ae, %4
+  %or.cond14 = or i1 %i.cz, %6
   br i1 %or.cond14, label %.critedge631.i, label %bb.n
 
 .critedge631.i:                                   ; preds = %.thread
@@ -781,11 +780,10 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.az = add nuw nsw i32 %i.l, 1
   %i.ba = sub nsw i32 %i.az, %i.r
-  %5 = icmp ult i32 %i.ba, 3
-  %i.bb = icmp samesign ult i32 %i.ai, 2
-  %or.cond = select i1 %5, i1 %i.bb, i1 false
-  %i.bc = icmp samesign ult i32 %i.ak, 2
-  %or.cond13 = select i1 %or.cond, i1 %i.bc, i1 false
+  %i.bb = icmp ult i32 %i.ba, 3
+  %5 = or i32 %i.ak, %i.ai
+  %i.bc = icmp samesign ult i32 %5, 2
+  %or.cond13 = and i1 %i.bb, %i.bc
   br i1 %or.cond13, label %bb.k, label %.thread
 
 bb.k:                                             ; preds = %bb.j
@@ -863,8 +861,8 @@ bb.m:                                             ; preds = %bb.l
 
 .thread:                                          ; preds = %bb.i, %bb.j, %bb.k, %bb.l
   %i.df = icmp sgt i32 %i.ai, %4
-  %6 = icmp samesign ugt i32 %i.ak, %4
-  %or.cond14 = select i1 %i.df, i1 true, i1 %6
+  %6 = icmp sgt i32 %i.ak, %4
+  %or.cond14 = or i1 %i.df, %6
   br i1 %or.cond14, label %.critedge631.i, label %bb.n
 
 .critedge631.i:                                   ; preds = %.thread
@@ -1099,11 +1097,10 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n,
 bb.r:                                             ; preds = %bb.q
   %i.ch = add nuw nsw i32 %i.f, 1
   %i.ci = sub nsw i32 %i.ch, %i.l
-  %5 = icmp ult i32 %i.ci, 3
-  %i.cj = icmp samesign ult i32 %i.ac, 2
-  %or.cond = select i1 %5, i1 %i.cj, i1 false
-  %i.ck = icmp samesign ult i32 %i.ae, 2
-  %or.cond18 = select i1 %or.cond, i1 %i.ck, i1 false
+  %i.cj = icmp ult i32 %i.ci, 3
+  %5 = or i32 %i.ae, %i.ac
+  %i.ck = icmp samesign ult i32 %5, 2
+  %or.cond18 = and i1 %i.cj, %i.ck
   br i1 %or.cond18, label %bb.s, label %.thread16
 
 bb.s:                                             ; preds = %bb.r
@@ -1390,8 +1387,8 @@ bb.w:                                             ; preds = %bb.v
 
 .thread16:                                        ; preds = %bb.s, %bb.r, %bb.q, %bb.v
   %i.lq = icmp sgt i32 %i.ac, %4
-  %6 = icmp samesign ugt i32 %i.ae, %4
-  %or.cond19 = select i1 %i.lq, i1 true, i1 %6
+  %6 = icmp sgt i32 %i.ae, %4
+  %or.cond19 = or i1 %i.lq, %6
   br i1 %or.cond19, label %.critedge631.i, label %bb.x
 
 .critedge631.i:                                   ; preds = %.thread16
@@ -1640,11 +1637,10 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n,
 bb.r:                                             ; preds = %bb.q
   %i.cv = add nuw nsw i32 %i.t, 1
   %i.cw = sub nsw i32 %i.cv, %i.z
-  %5 = icmp ult i32 %i.cw, 3
-  %i.cx = icmp samesign ult i32 %i.aq, 2
-  %or.cond = select i1 %5, i1 %i.cx, i1 false
-  %i.cy = icmp samesign ult i32 %i.as, 2
-  %or.cond18 = select i1 %or.cond, i1 %i.cy, i1 false
+  %i.cx = icmp ult i32 %i.cw, 3
+  %5 = or i32 %i.as, %i.aq
+  %i.cy = icmp samesign ult i32 %5, 2
+  %or.cond18 = and i1 %i.cx, %i.cy
   br i1 %or.cond18, label %bb.s, label %.thread16
 
 bb.s:                                             ; preds = %bb.r
@@ -1931,8 +1927,8 @@ bb.w:                                             ; preds = %bb.v
 
 .thread16:                                        ; preds = %bb.s, %bb.r, %bb.q, %bb.v
   %i.me = icmp sgt i32 %i.aq, %4
-  %6 = icmp samesign ugt i32 %i.as, %4
-  %or.cond19 = select i1 %i.me, i1 true, i1 %6
+  %6 = icmp sgt i32 %i.as, %4
+  %or.cond19 = or i1 %i.me, %6
   br i1 %or.cond19, label %.critedge631.i, label %bb.x
 
 .critedge631.i:                                   ; preds = %.thread16

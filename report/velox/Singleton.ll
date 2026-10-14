@@ -205,10 +205,10 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8, !tbaa !98
   %i.k = icmp ult i64 %i.a, %i.j
   %.neg.i.i = sext i1 %i.k to i32
-  %i.l = add nsw i32 %.neg.i.i, %i.g              ; 8 uses
-  %i.m = icmp slt i32 %i.l, 3
+  %i.l = add nsw i32 %.neg.i.i, %i.g              ; 7 uses
+  %i.m = icmp slt i32 %i.l, 3                     ; 2 uses
   %i.n = tail call i32 @llvm.smin.i32(i32 %i.l, i32 3)
-  %.sroa.speculated = sub nsw i32 3, %i.n         ; 2 uses
+  %.sroa.speculated = sub i32 3, %i.n             ; 2 uses
   %i.o = icmp slt i32 %2, 0
   br i1 %i.o, label %bb.b, label %bb.f
 
@@ -309,8 +309,7 @@ _ZN3fmt3v1114basic_appenderIcEaSEc.exit70:        ; preds = %bb.g, %bb.h
   %i.ay = tail call i32 @llvm.umin.i32(i32 %.sroa.speculated, i32 %2) ; 2 uses
   %i.az = sub nsw i32 %2, %i.ay                   ; 5 uses
   %.sroa.07.0.copyload = load ptr, ptr %0, align 8, !tbaa !1436 ; 9 uses
-  %.not97 = icmp sgt i32 %i.l, 2
-  br i1 %.not97, label %_ZN3fmt3v116detail6fill_nINS0_14basic_appenderIcEEicEET_S5_T0_RKT1_.exit78, label %.lr.ph.i71
+  br i1 %i.m, label %.lr.ph.i71, label %_ZN3fmt3v116detail6fill_nINS0_14basic_appenderIcEEicEET_S5_T0_RKT1_.exit78
 
 .lr.ph.i71:                                       ; preds = %_ZN3fmt3v1114basic_appenderIcEaSEc.exit70
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload, i64 8 ; 3 uses
@@ -350,15 +349,11 @@ _ZN3fmt3v116detail6fill_nINS0_14basic_appenderIcEEicEET_S5_T0_RKT1_.exit78: ; pr
   br i1 %.not65, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %_ZN3fmt3v116detail6fill_nINS0_14basic_appenderIcEEicEET_S5_T0_RKT1_.exit78
-  %i.bm = sub nsw i32 %i.l, %i.az                 ; 11 uses
-  %3 = icmp eq i32 %i.bm, 0
-  br i1 %3, label %_ZN3fmt3v116detail5pow10Ej.exit, label %iter.check
-
-iter.check:                                       ; preds = %bb.k
+  %i.bm = sub i32 %i.l, %i.az                     ; 10 uses
   %min.iters.check = icmp ult i32 %i.bm, 4
   br i1 %min.iters.check, label %tailrecurse.i.preheader, label %vector.main.loop.iter.check
 
-vector.main.loop.iter.check:                      ; preds = %iter.check
+vector.main.loop.iter.check:                      ; preds = %bb.k
   %min.iters.check118 = icmp ult i32 %i.bm, 16
   br i1 %min.iters.check118, label %vec.epilog.ph, label %vector.ph
 
@@ -406,9 +401,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n128 = icmp eq i32 %i.bm, %n.vec124
   br i1 %cmp.n128, label %_ZN3fmt3v116detail5pow10Ej.exit, label %tailrecurse.i.preheader
 
-tailrecurse.i.preheader:                          ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.tr3.i.ph = phi i32 [ %i.bm, %iter.check ], [ %i.bo, %vec.epilog.iter.check ], [ %i.br, %vec.epilog.middle.block ]
-  %accumulator.tr2.i.ph = phi i64 [ 1, %iter.check ], [ %i.bq, %vec.epilog.iter.check ], [ %i.bv, %vec.epilog.middle.block ]
+tailrecurse.i.preheader:                          ; preds = %bb.k, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %.tr3.i.ph = phi i32 [ %i.bm, %bb.k ], [ %i.bo, %vec.epilog.iter.check ], [ %i.br, %vec.epilog.middle.block ]
+  %accumulator.tr2.i.ph = phi i64 [ 1, %bb.k ], [ %i.bq, %vec.epilog.iter.check ], [ %i.bv, %vec.epilog.middle.block ]
   br label %tailrecurse.i
 
 tailrecurse.i:                                    ; preds = %tailrecurse.i.preheader, %tailrecurse.i
@@ -419,13 +414,13 @@ tailrecurse.i:                                    ; preds = %tailrecurse.i.prehe
   %i.by = icmp eq i32 %i.bw, 0
   br i1 %i.by, label %_ZN3fmt3v116detail5pow10Ej.exit, label %tailrecurse.i, !llvm.loop !3575
 
-_ZN3fmt3v116detail5pow10Ej.exit:                  ; preds = %tailrecurse.i, %middle.block, %vec.epilog.middle.block, %bb.k
-  %accumulator.tr.lcssa.i = phi i64 [ 1, %bb.k ], [ %i.bv, %vec.epilog.middle.block ], [ %i.bq, %middle.block ], [ %i.bx, %tailrecurse.i ] ; 2 uses
-  %.not64 = icmp ugt i64 %accumulator.tr.lcssa.i, %i.a
+_ZN3fmt3v116detail5pow10Ej.exit:                  ; preds = %tailrecurse.i, %vec.epilog.middle.block, %middle.block
+  %.lcssa = phi i64 [ %i.bv, %vec.epilog.middle.block ], [ %i.bq, %middle.block ], [ %i.bx, %tailrecurse.i ] ; 2 uses
+  %.not64 = icmp ugt i64 %.lcssa, %i.a
   br i1 %.not64, label %bb.r, label %bb.l
 
 bb.l:                                             ; preds = %_ZN3fmt3v116detail5pow10Ej.exit
-  %i.bz = udiv i64 %i.a, %accumulator.tr.lcssa.i
+  %i.bz = udiv i64 %i.a, %.lcssa
   %i.ca = tail call ptr @_ZN3fmt3v116detail14format_decimalIcmNS0_14basic_appenderIcEETnNSt9enable_ifIXntsr3std10is_pointerINSt9remove_cvINSt16remove_referenceIT1_E4typeEE4typeEEE5valueEiE4typeELi0EEES8_S8_T0_i(ptr %.sroa.07.0.copyload, i64 noundef %i.bz, i32 noundef %i.az)
   br label %.sink.split
 

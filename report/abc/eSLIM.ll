@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.r
   %i.r = sdiv i64 %i.q, %i.n
   %i.s = srem i64 %i.q, %i.n
   %i.t = icmp slt i64 %i.r, %.06473
-  br i1 %i.t, label %bb.d, label %bb.j
+  br i1 %i.t, label %bb.d, label %bb.k
 
 bb.d:                                             ; preds = %bb.c
   %i.u = load ptr, ptr %i.l, align 8, !tbaa !157  ; 4 uses
@@ -217,7 +217,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.w, ptr %i.u, align 4, !tbaa !35
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   store ptr %i.x, ptr %i.l, align 8, !tbaa !157
-  br label %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit
+  br label %bb.j
 
 bb.f:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %2, align 8, !tbaa !155    ; 4 uses
@@ -269,21 +269,18 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIP
   store ptr %i.an, ptr %i.l, align 8, !tbaa !157
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.ah
   store ptr %i.ar, ptr %i.m, align 8, !tbaa !156
-  br label %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit
-
-_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit: ; preds = %bb.e, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i
-  %8 = add nsw i64 %.06473, -1
   br label %bb.j
 
-bb.j:                                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit, %bb.c
-  %.165 = phi i64 [ %8, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit ], [ %.06473, %bb.c ] ; 4 uses
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.053.072, i64 4 ; 2 uses
-  %i.as = icmp eq i64 %.165, 0
+bb.j:                                             ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i, %bb.e
+  %8 = add nsw i64 %.06473, -1                    ; 2 uses
+  %i.as = icmp eq i64 %8, 0
   br i1 %i.as, label %._crit_edge, label %bb.k
 
-bb.k:                                             ; preds = %bb.j
+bb.k:                                             ; preds = %bb.c, %bb.j
+  %.16569 = phi i64 [ %8, %bb.j ], [ %.06473, %bb.c ] ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.053.072, i64 4 ; 2 uses
   %i.at = add nsw i64 %.06374, -2                 ; 2 uses
-  %i.au = icmp slt i64 %i.s, %.165
+  %i.au = icmp slt i64 %i.s, %.16569
   br i1 %i.au, label %bb.l, label %bb.r
 
 bb.l:                                             ; preds = %bb.k
@@ -352,11 +349,11 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit17
 
 _ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit17: ; preds = %bb.m, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i16
-  %i.bt = add nsw i64 %.165, -1
+  %i.bt = add nsw i64 %.16569, -1
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.k, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit17
-  %.266 = phi i64 [ %i.bt, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit17 ], [ %.165, %bb.k ] ; 3 uses
+  %.266 = phi i64 [ %i.bt, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSERKi.exit17 ], [ %.16569, %bb.k ] ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.053.072, i64 8 ; 2 uses
   %i.bv = icmp ne i64 %.266, 0
   %i.bw = icmp sgt i64 %.06374, 3

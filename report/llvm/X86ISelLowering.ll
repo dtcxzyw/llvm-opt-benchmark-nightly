@@ -205,15 +205,15 @@ _ZN4llvm3MVT11getVectorVTES0_j.exit.i.i:          ; preds = %switch.lookup.i.i, 
   %.fca.1.extract6.i.i = extractvalue { ptr, i32 } %i.ahq, 1 ; 3 uses
   %i.ahr = lshr i32 %.sroa.speculated181.i.i, 6
   switch i32 %i.ahr, label %bb.gz [
+    i32 32, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split147.i.i
     i32 2, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i
     i32 3, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i.a
     i32 4, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split144.i.i
     i32 8, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split145.i.i
     i32 16, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split146.i.i
-    i32 32, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split147.i.i
-    i32 64, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split148.i.i
-    i32 128, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split149.i.i
-    i32 256, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split150.i.i
+    i32 64, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split150.i.i
+    i32 128, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split148.i.i
+    i32 256, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split149.i.i
   ]
 
 bb.gz:                                            ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i
@@ -244,8 +244,8 @@ _ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split150.i.i: ; preds = %_ZN4llvm3MV
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i
 
 _ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i:       ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split150.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split149.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split148.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split147.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split146.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split145.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split144.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i.a, %bb.gz, %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i
-  %.not.i112.i.i.i = phi i1 [ true, %bb.gz ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split148.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split147.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split146.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split145.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split144.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i.a ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split149.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split150.i.i ] ; 6 uses
-  %.sroa.0.0.i101.i.i = phi i16 [ 0, %bb.gz ], [ 100, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split148.i.i ], [ 99, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split147.i.i ], [ 98, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split146.i.i ], [ 97, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split145.i.i ], [ 96, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split144.i.i ], [ 95, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i.a ], [ 101, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split149.i.i ], [ 94, %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i ], [ 102, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split150.i.i ] ; 8 uses
+  %.not.i112.i.i.i = phi i1 [ true, %bb.gz ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split147.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split146.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split145.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split144.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i.a ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split149.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split148.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split150.i.i ] ; 6 uses
+  %.sroa.0.0.i101.i.i = phi i16 [ 0, %bb.gz ], [ 99, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split147.i.i ], [ 94, %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i ], [ 98, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split146.i.i ], [ 97, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split145.i.i ], [ 96, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split144.i.i ], [ 95, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i.a ], [ 102, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split149.i.i ], [ 101, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split148.i.i ], [ 100, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split150.i.i ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %74) #39
   store ptr %.fca.0.extract23.i.i, ptr %74, align 8, !tbaa !465
   %.sroa.429.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %74, i64 8
@@ -648,7 +648,7 @@ bb.kw:                                            ; preds = %bb.kv
   br label %_ZNK4llvm8TypeSizecvmEv.exit96.i.i
 
 _ZNK4llvm8TypeSizecvmEv.exit96.i.i:               ; preds = %bb.kw, %bb.kv, %_ZNK4llvm8TypeSizecvmEv.exit.i.i
-  %.0.i.i649 = phi i32 [ %.sroa.speculated125.i.i, %bb.kv ], [ %.sroa.speculated.i.i868, %bb.kw ], [ %.sroa.speculated125.i.i, %_ZNK4llvm8TypeSizecvmEv.exit.i.i ] ; 3 uses
+  %.0.i.i649 = phi i32 [ %.sroa.speculated125.i.i, %bb.kv ], [ %.sroa.speculated.i.i868, %bb.kw ], [ %.sroa.speculated125.i.i, %_ZNK4llvm8TypeSizecvmEv.exit.i.i ] ; 4 uses
   %.fca.1.extract44.i.i = extractvalue { ptr, i32 } %i.awt, 1
   %.fca.0.extract43.i.i = extractvalue { ptr, i32 } %i.awt, 0
   %i.axe = zext i32 %.0.i.i649 to i64             ; 2 uses
@@ -843,100 +843,86 @@ _ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658:       ; preds = %switch.lookup.i.i85
   %i.ayy = call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_8ArrayRefINS_7SDValueEEE(ptr noundef nonnull align 8 dereferenceable(920) %1, i32 noundef 165, ptr noundef nonnull align 8 dereferenceable(12) %51, i16 %.sroa.0.0.i.i.i, ptr null, ptr noundef nonnull byval(%"class.llvm::ArrayRef.420") align 8 %42) #39 ; 2 uses
   %.fca.0.extract12.i.i = extractvalue { ptr, i32 } %i.ayy, 0 ; 3 uses
   %.fca.1.extract13.i.i = extractvalue { ptr, i32 } %i.ayy, 1 ; 3 uses
-  %i.ayz = lshr i32 %.0.i.i649, 5                 ; 3 uses
-  switch i32 %i.ayz, label %148 [
-    i32 4, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
-    i32 5, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
-    i32 6, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i
-    i32 7, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i
-    i32 8, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i
-    i32 9, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i
-    i32 10, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i
-    i32 11, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i
-    i32 12, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i
-    i32 16, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i
-    i32 24, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i
-    i32 32, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i
-    i32 48, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i
-    i32 64, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i
-  ]
-
-148:                                              ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
-  %149 = call range(i32 0, 28) i32 @llvm.ctpop.i32(i32 %i.ayz)
-  %150 = icmp eq i32 %149, 1
-  br i1 %150, label %.split.i113.i, label %152
-
-.split.i113.i:                                    ; preds = %148
-  %151 = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.ayz, i1 true)
-  switch i32 %151, label %152 [
-    i32 7, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
-    i32 8, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i
-    i32 9, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i
-    i32 10, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i
-    i32 11, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i
-    i32 12, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i
-  ]
-
-152:                                              ; preds = %.split.i113.i, %148
-  br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
+  %i.ayz = lshr i32 %.0.i.i649, 5                 ; 2 uses
+  %148 = icmp ult i32 %.0.i.i649, 256
+  br i1 %148, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
 
 _ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+  switch i32 %i.ayz, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i [
+    i32 8, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
+    i32 9, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i
+    i32 10, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i
+    i32 11, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i
+    i32 12, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i
+    i32 16, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i
+    i32 24, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i
+    i32 32, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i
+    i32 48, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i
+    i32 64, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i
+    i32 128, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i
+    i32 256, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i
+    i32 512, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i
+    i32 1024, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i
+    i32 2048, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i
+    i32 4096, label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i
+  ]
+
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i: ; preds = %.split.i113.i
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i: ; preds = %.split.i113.i
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i: ; preds = %.split.i113.i
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i: ; preds = %.split.i113.i
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i: ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
+  %149 = trunc nuw i32 %i.ayz to i16
+  %switch.offset.i.i858 = add nuw nsw i16 %149, 69
   br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
 
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i: ; preds = %.split.i113.i
-  br label %_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659
-
-_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659:    ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856, %152, %.split.i113.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658
-  %.not.i112.i.i.i660 = phi i1 [ true, %152 ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i ], [ false, %.split.i113.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658 ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856 ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i ] ; 6 uses
-  %.sroa.0.0.i101.i.i661 = phi i16 [ 0, %152 ], [ 86, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i ], [ 88, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i ], [ 89, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i ], [ 90, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i ], [ 91, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i ], [ 84, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i ], [ 87, %.split.i113.i ], [ 85, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i ], [ 73, %_ZN4llvm3MVT11getVectorVTES0_j.exit.i.i658 ], [ 83, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i ], [ 74, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856 ], [ 75, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i ], [ 76, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i ], [ 77, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i ], [ 78, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i ], [ 79, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i ], [ 80, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i ], [ 81, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i ], [ 82, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i ], [ 92, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i ] ; 9 uses
+_ZN4llvm3MVT11getVectorVTES0_j.exit102.i.i659:    ; preds = %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856
+  %.not.i112.i.i.i660 = phi i1 [ true, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856 ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i ], [ false, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i ] ; 6 uses
+  %.sroa.0.0.i101.i.i661 = phi i16 [ 0, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split151.i.i ], [ 87, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split161.i.i ], [ 88, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split162.i.i ], [ 89, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split163.i.i ], [ 90, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split164.i.i ], [ 91, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split165.i.i ], [ 84, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split158.i.i ], [ 86, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split160.i.i ], [ 92, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split166.i.i ], [ 85, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split159.i.i ], [ 83, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split157.i.i ], [ %switch.offset.i.i858, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split167.i.i ], [ 82, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split156.i.i ], [ 77, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split.i.i856 ], [ 81, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split155.i.i ], [ 78, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split152.i.i ], [ 79, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split153.i.i ], [ 80, %_ZN4llvm3MVT11getVectorVTES0_j.exit102.fold.split154.i.i ] ; 9 uses
   %i.aza = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %1, i64 noundef 0, ptr noundef nonnull align 8 dereferenceable(12) %51, i16 %.sroa.0.0.i101.i.i661, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #39 ; 2 uses
   %.fca.0.extract4.i.i = extractvalue { ptr, i32 } %i.aza, 0 ; 4 uses
   %.fca.1.extract5.i.i = extractvalue { ptr, i32 } %i.aza, 1 ; 4 uses

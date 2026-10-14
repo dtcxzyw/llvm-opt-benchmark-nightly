@@ -182,7 +182,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.bq = load i32, ptr %i.bp, align 8, !tbaa !29
   %i.br = sext i32 %i.bq to i64                   ; 2 uses
-  %i.bs = load i32, ptr %i.bo, align 8, !tbaa !58 ; 2 uses
+  %i.bs = load i32, ptr %i.bo, align 8, !tbaa !58
   %.not152 = icmp eq i32 %i.bs, 0
   br i1 %.not152, label %.loopexit177, label %av_video_enc_params_block.exit.lr.ph
 
@@ -194,7 +194,6 @@ av_video_enc_params_block.exit.lr.ph:             ; preds = %bb.h
   br label %av_video_enc_params_block.exit
 
 av_video_enc_params_block.exit:                   ; preds = %av_video_enc_params_block.exit.lr.ph, %draw_block_rectangle.exit
-  %2 = phi i32 [ %i.bs, %av_video_enc_params_block.exit.lr.ph ], [ %3, %draw_block_rectangle.exit ]
   %indvars.iv193 = phi i64 [ 0, %av_video_enc_params_block.exit.lr.ph ], [ %indvars.iv.next194, %draw_block_rectangle.exit ] ; 2 uses
   %i.bx = load i64, ptr %i.bt, align 8, !tbaa !59
   %i.by = getelementptr inbounds nuw i8, ptr %i.bo, i64 %i.bx
@@ -261,16 +260,12 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.prehe
   %i.dq = getelementptr inbounds i8, ptr %.02225.i, i64 %i.br
   %i.dr = add nuw nsw i32 %.026.i, 1              ; 2 uses
   %i.ds = icmp slt i32 %i.dr, %i.dl
-  br i1 %i.ds, label %bb.i, label %draw_block_rectangle.exit.loopexit, !llvm.loop !34
+  br i1 %i.ds, label %bb.i, label %draw_block_rectangle.exit, !llvm.loop !34
 
-draw_block_rectangle.exit.loopexit:               ; preds = %bb.i
-  %.pre = load i32, ptr %i.bo, align 8, !tbaa !58
-  br label %draw_block_rectangle.exit
-
-draw_block_rectangle.exit:                        ; preds = %draw_block_rectangle.exit.loopexit, %av_video_enc_params_block.exit
-  %3 = phi i32 [ %.pre, %draw_block_rectangle.exit.loopexit ], [ %2, %av_video_enc_params_block.exit ] ; 2 uses
+draw_block_rectangle.exit:                        ; preds = %bb.i, %av_video_enc_params_block.exit
   %indvars.iv.next194 = add nuw nsw i64 %indvars.iv193, 1 ; 2 uses
-  %i.dt = zext i32 %3 to i64
+  %2 = load i32, ptr %i.bo, align 8, !tbaa !58
+  %i.dt = zext i32 %2 to i64
   %i.du = icmp samesign ult i64 %indvars.iv.next194, %i.dt
   br i1 %i.du, label %av_video_enc_params_block.exit, label %.loopexit177, !llvm.loop !35
 
