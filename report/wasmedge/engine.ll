@@ -205,7 +205,7 @@ bb.iy:                                            ; preds = %bb.a
   %i.bek = load ptr, ptr %i.bej, align 8, !tbaa !125
   %i.bel = getelementptr inbounds i8, ptr %i.bek, i64 -16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1116)
-  %i.bem = load float, ptr %i.bel, align 4, !tbaa !135, !noalias !1116 ; 4 uses
+  %i.bem = load float, ptr %i.bel, align 4, !tbaa !135, !noalias !1116 ; 5 uses
   %i.ben = fcmp uno float %i.bem, 0.000000e+00
   br i1 %i.ben, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.iz
 
@@ -220,13 +220,13 @@ bb.ja:                                            ; preds = %bb.iz
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 bb.jb:                                            ; preds = %bb.iz
-  %i.ber = tail call noundef float @llvm.trunc.f32(float %i.bem) ; 3 uses
+  %i.ber = tail call noundef float @llvm.trunc.f32(float %i.bem) ; 2 uses
   %i.bes = fcmp olt float %i.ber, f0xCF000000
   br i1 %i.bes, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jc
 
 bb.jc:                                            ; preds = %bb.jb
   %i.bet = fcmp ult float %i.ber, f0x4F000000
-  %i.beu = fptosi float %i.ber to i32
+  %i.beu = fptosi float %i.bem to i32
   %spec.select.i575 = select i1 %i.bet, i32 %i.beu, i32 2147483647
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
@@ -243,7 +243,7 @@ bb.jd:                                            ; preds = %bb.a
   %i.bey = load ptr, ptr %i.bex, align 8, !tbaa !125
   %i.bez = getelementptr inbounds i8, ptr %i.bey, i64 -16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1117)
-  %i.bfa = load float, ptr %i.bez, align 4, !tbaa !135, !noalias !1117 ; 4 uses
+  %i.bfa = load float, ptr %i.bez, align 4, !tbaa !135, !noalias !1117 ; 5 uses
   %i.bfb = fcmp uno float %i.bfa, 0.000000e+00
   br i1 %i.bfb, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.je
 
@@ -258,13 +258,13 @@ bb.jf:                                            ; preds = %bb.je
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 bb.jg:                                            ; preds = %bb.je
-  %i.bff = tail call noundef float @llvm.trunc.f32(float %i.bfa) ; 3 uses
+  %i.bff = tail call noundef float @llvm.trunc.f32(float %i.bfa) ; 2 uses
   %i.bfg = fcmp olt float %i.bff, 0.000000e+00
   br i1 %i.bfg, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jh
 
 bb.jh:                                            ; preds = %bb.jg
   %i.bfh = fcmp ult float %i.bff, f0x4F800000
-  %i.bfi = fptoui float %i.bff to i32
+  %i.bfi = fptoui float %i.bfa to i32
   %spec.select.i576 = select i1 %i.bfh, i32 %i.bfi, i32 -1
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
@@ -281,7 +281,7 @@ bb.ji:                                            ; preds = %bb.a
   %i.bfm = load ptr, ptr %i.bfl, align 8, !tbaa !125
   %i.bfn = getelementptr inbounds i8, ptr %i.bfm, i64 -16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1118)
-  %i.bfo = load double, ptr %i.bfn, align 8, !tbaa !137, !noalias !1118 ; 4 uses
+  %i.bfo = load double, ptr %i.bfn, align 8, !tbaa !137, !noalias !1118 ; 5 uses
   %i.bfp = fcmp uno double %i.bfo, 0.000000e+00
   br i1 %i.bfp, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jj
 
@@ -296,14 +296,14 @@ bb.jk:                                            ; preds = %bb.jj
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 bb.jl:                                            ; preds = %bb.jj
-  %i.bft = tail call double @llvm.trunc.f64(double %i.bfo) ; 3 uses
+  %i.bft = tail call double @llvm.trunc.f64(double %i.bfo) ; 2 uses
   %i.bfu = fcmp olt double %i.bft, f0xC1E0000000000000
   br i1 %i.bfu, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jm
 
 bb.jm:                                            ; preds = %bb.jl
-  %.inv.i = fcmp oge double %i.bft, f0x41DFFFFFFFC00000
-  %spec.select22.i = select i1 %.inv.i, double f0x41DFFFFFFFC00000, double %i.bft
-  %spec.select.i579 = fptosi double %spec.select22.i to i32
+  %32 = fcmp ogt double %i.bft, f0x41DFFFFFFFC00000
+  %33 = fptosi double %i.bfo to i32
+  %spec.select.i579 = select i1 %32, i32 2147483647, i32 %33
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 _ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdiEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit: ; preds = %bb.ji, %bb.jk, %bb.jl, %bb.jm
@@ -319,7 +319,7 @@ bb.jn:                                            ; preds = %bb.a
   %i.bfy = load ptr, ptr %i.bfx, align 8, !tbaa !125
   %i.bfz = getelementptr inbounds i8, ptr %i.bfy, i64 -16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1119)
-  %i.bga = load double, ptr %i.bfz, align 8, !tbaa !137, !noalias !1119 ; 4 uses
+  %i.bga = load double, ptr %i.bfz, align 8, !tbaa !137, !noalias !1119 ; 5 uses
   %i.bgb = fcmp uno double %i.bga, 0.000000e+00
   br i1 %i.bgb, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jo
 
@@ -334,18 +334,18 @@ bb.jp:                                            ; preds = %bb.jo
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 bb.jq:                                            ; preds = %bb.jo
-  %i.bgf = tail call double @llvm.trunc.f64(double %i.bga) ; 3 uses
+  %i.bgf = tail call double @llvm.trunc.f64(double %i.bga) ; 2 uses
   %i.bgg = fcmp olt double %i.bgf, 0.000000e+00
   br i1 %i.bgg, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jr
 
 bb.jr:                                            ; preds = %bb.jq
-  %.inv.i582 = fcmp oge double %i.bgf, f0x41EFFFFFFFE00000
-  %spec.select22.i583 = select i1 %.inv.i582, double f0x41EFFFFFFFE00000, double %i.bgf
-  %spec.select.i584 = fptoui double %spec.select22.i583 to i32
+  %34 = fcmp ogt double %i.bgf, f0x41EFFFFFFFE00000
+  %35 = fptoui double %i.bga to i32
+  %spec.select.i582 = select i1 %34, i32 -1, i32 %35
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 _ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdjEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit: ; preds = %bb.jn, %bb.jp, %bb.jq, %bb.jr
-  %.sink.i585 = phi i32 [ %..i586, %bb.jp ], [ %spec.select.i584, %bb.jr ], [ 0, %bb.jq ], [ 0, %bb.jn ]
+  %.sink.i585 = phi i32 [ %..i586, %bb.jp ], [ %spec.select.i582, %bb.jr ], [ 0, %bb.jq ], [ 0, %bb.jn ]
   store i32 %.sink.i585, ptr %i.bfz, align 16, !tbaa !98, !noalias !1119
   store i64 1, ptr %0, align 4, !alias.scope !1119
   br label %bb.ye
@@ -357,7 +357,7 @@ bb.js:                                            ; preds = %bb.a
   %i.bgk = load ptr, ptr %i.bgj, align 8, !tbaa !125
   %i.bgl = getelementptr inbounds i8, ptr %i.bgk, i64 -16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1120)
-  %i.bgm = load float, ptr %i.bgl, align 4, !tbaa !135, !noalias !1120 ; 4 uses
+  %i.bgm = load float, ptr %i.bgl, align 4, !tbaa !135, !noalias !1120 ; 5 uses
   %i.bgn = fcmp uno float %i.bgm, 0.000000e+00
   br i1 %i.bgn, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIflEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jt
 
@@ -372,13 +372,13 @@ bb.ju:                                            ; preds = %bb.jt
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIflEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 bb.jv:                                            ; preds = %bb.jt
-  %i.bgr = tail call noundef float @llvm.trunc.f32(float %i.bgm) ; 3 uses
+  %i.bgr = tail call noundef float @llvm.trunc.f32(float %i.bgm) ; 2 uses
   %i.bgs = fcmp olt float %i.bgr, f0xDF000000
   br i1 %i.bgs, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIflEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jw
 
 bb.jw:                                            ; preds = %bb.jv
   %i.bgt = fcmp ult float %i.bgr, f0x5F000000
-  %i.bgu = fptosi float %i.bgr to i64
+  %i.bgu = fptosi float %i.bgm to i64
   %spec.select.i587 = select i1 %i.bgt, i64 %i.bgu, i64 9223372036854775807
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIflEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
@@ -395,7 +395,7 @@ bb.jx:                                            ; preds = %bb.a
   %i.bgy = load ptr, ptr %i.bgx, align 8, !tbaa !125
   %i.bgz = getelementptr inbounds i8, ptr %i.bgy, i64 -16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1121)
-  %i.bha = load float, ptr %i.bgz, align 4, !tbaa !135, !noalias !1121 ; 4 uses
+  %i.bha = load float, ptr %i.bgz, align 4, !tbaa !135, !noalias !1121 ; 5 uses
   %i.bhb = fcmp uno float %i.bha, 0.000000e+00
   br i1 %i.bhb, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfmEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.jy
 
@@ -410,13 +410,13 @@ bb.jz:                                            ; preds = %bb.jy
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfmEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 bb.ka:                                            ; preds = %bb.jy
-  %i.bhf = tail call noundef float @llvm.trunc.f32(float %i.bha) ; 3 uses
+  %i.bhf = tail call noundef float @llvm.trunc.f32(float %i.bha) ; 2 uses
   %i.bhg = fcmp olt float %i.bhf, 0.000000e+00
   br i1 %i.bhg, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfmEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.kb
 
 bb.kb:                                            ; preds = %bb.ka
   %i.bhh = fcmp ult float %i.bhf, f0x5F800000
-  %i.bhi = fptoui float %i.bhf to i64
+  %i.bhi = fptoui float %i.bha to i64
   %spec.select.i590 = select i1 %i.bhh, i64 %i.bhi, i64 -1
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIfmEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
@@ -433,7 +433,7 @@ bb.kc:                                            ; preds = %bb.a
   %i.bhm = load ptr, ptr %i.bhl, align 8, !tbaa !125
   %i.bhn = getelementptr inbounds i8, ptr %i.bhm, i64 -16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1122)
-  %i.bho = load double, ptr %i.bhn, align 8, !tbaa !137, !noalias !1122 ; 4 uses
+  %i.bho = load double, ptr %i.bhn, align 8, !tbaa !137, !noalias !1122 ; 5 uses
   %i.bhp = fcmp uno double %i.bho, 0.000000e+00
   br i1 %i.bhp, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdlEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.kd
 
@@ -448,13 +448,13 @@ bb.ke:                                            ; preds = %bb.kd
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdlEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 bb.kf:                                            ; preds = %bb.kd
-  %i.bht = tail call double @llvm.trunc.f64(double %i.bho) ; 3 uses
+  %i.bht = tail call double @llvm.trunc.f64(double %i.bho) ; 2 uses
   %i.bhu = fcmp olt double %i.bht, f0xC3E0000000000000
   br i1 %i.bhu, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdlEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.kg
 
 bb.kg:                                            ; preds = %bb.kf
   %i.bhv = fcmp ult double %i.bht, f0x43E0000000000000
-  %i.bhw = fptosi double %i.bht to i64
+  %i.bhw = fptosi double %i.bho to i64
   %spec.select.i593 = select i1 %i.bhv, i64 %i.bhw, i64 9223372036854775807
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdlEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
@@ -471,7 +471,7 @@ bb.kh:                                            ; preds = %bb.a
   %i.bia = load ptr, ptr %i.bhz, align 8, !tbaa !125
   %i.bib = getelementptr inbounds i8, ptr %i.bia, i64 -16 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1123)
-  %i.bic = load double, ptr %i.bib, align 8, !tbaa !137, !noalias !1123 ; 4 uses
+  %i.bic = load double, ptr %i.bib, align 8, !tbaa !137, !noalias !1123 ; 5 uses
   %i.bid = fcmp uno double %i.bic, 0.000000e+00
   br i1 %i.bid, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdmEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.ki
 
@@ -486,13 +486,13 @@ bb.kj:                                            ; preds = %bb.ki
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdmEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
 bb.kk:                                            ; preds = %bb.ki
-  %i.bih = tail call double @llvm.trunc.f64(double %i.bic) ; 3 uses
+  %i.bih = tail call double @llvm.trunc.f64(double %i.bic) ; 2 uses
   %i.bii = fcmp olt double %i.bih, 0.000000e+00
   br i1 %i.bii, label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdmEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit, label %bb.kl
 
 bb.kl:                                            ; preds = %bb.kk
   %i.bij = fcmp ult double %i.bih, f0x43F0000000000000
-  %i.bik = fptoui double %i.bih to i64
+  %i.bik = fptoui double %i.bic to i64
   %spec.select.i596 = select i1 %i.bij, i64 %i.bik, i64 -1
   br label %_ZNK8WasmEdge8Executor8Executor16runTruncateSatOpIdmEENSt9enable_ifIXaa12IsWasmFloatVIT_E10IsWasmIntVIT0_EEN5cxx208expectedIvNS_7ErrCodeEEEE4typeERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE.exit
 
@@ -895,7 +895,7 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %12 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
-  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 3 uses
+  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 4 uses
   %i.e = fcmp uno float %i.d, 0.000000e+00
   br i1 %i.e, label %bb.b, label %bb.i
 
@@ -1141,7 +1141,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.q:                                             ; preds = %bb.i
-  %i.bz = tail call noundef float @llvm.trunc.f32(float %i.d) ; 3 uses
+  %i.bz = tail call noundef float @llvm.trunc.f32(float %i.d) ; 2 uses
   %i.ca = fcmp uge float %i.bz, f0xCF000000
   %i.cb = fcmp ult float %i.bz, f0x4F000000
   %or.cond = and i1 %i.ca, %i.cb
@@ -1266,7 +1266,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.q
-  %i.dl = fptosi float %i.bz to i32
+  %i.dl = fptosi float %i.d to i32
   store i32 %i.dl, ptr %3, align 16, !tbaa !98
   store i64 1, ptr %0, align 4
   br label %bb.z
@@ -1294,7 +1294,7 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %12 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
-  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 3 uses
+  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 4 uses
   %i.e = fcmp uno float %i.d, 0.000000e+00
   br i1 %i.e, label %bb.b, label %bb.i
 
@@ -1540,7 +1540,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.q:                                             ; preds = %bb.i
-  %i.bz = tail call noundef float @llvm.trunc.f32(float %i.d) ; 3 uses
+  %i.bz = tail call noundef float @llvm.trunc.f32(float %i.d) ; 2 uses
   %i.ca = fcmp uge float %i.bz, 0.000000e+00
   %i.cb = fcmp ult float %i.bz, f0x4F800000
   %or.cond = and i1 %i.ca, %i.cb
@@ -1665,7 +1665,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.q
-  %i.dl = fptoui float %i.bz to i32
+  %i.dl = fptoui float %i.d to i32
   store i32 %i.dl, ptr %3, align 16, !tbaa !98
   store i64 1, ptr %0, align 4
   br label %bb.z
@@ -1693,7 +1693,7 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %12 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
-  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 3 uses
+  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 4 uses
   %i.e = fcmp uno double %i.d, 0.000000e+00
   br i1 %i.e, label %bb.b, label %bb.i
 
@@ -1939,7 +1939,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.q:                                             ; preds = %bb.i
-  %i.bz = tail call double @llvm.trunc.f64(double %i.d) ; 3 uses
+  %i.bz = tail call double @llvm.trunc.f64(double %i.d) ; 2 uses
   %i.ca = fcmp olt double %i.bz, f0xC1E0000000000000
   %i.cb = fcmp ogt double %i.bz, f0x41DFFFFFFFC00000
   %or.cond = or i1 %i.ca, %i.cb
@@ -2064,7 +2064,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.q
-  %i.dl = fptosi double %i.bz to i32
+  %i.dl = fptosi double %i.d to i32
   store i32 %i.dl, ptr %3, align 16, !tbaa !98
   store i64 1, ptr %0, align 4
   br label %bb.z
@@ -2092,7 +2092,7 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %12 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
-  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 3 uses
+  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 4 uses
   %i.e = fcmp uno double %i.d, 0.000000e+00
   br i1 %i.e, label %bb.b, label %bb.i
 
@@ -2338,7 +2338,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.q:                                             ; preds = %bb.i
-  %i.bz = tail call double @llvm.trunc.f64(double %i.d) ; 3 uses
+  %i.bz = tail call double @llvm.trunc.f64(double %i.d) ; 2 uses
   %i.ca = fcmp olt double %i.bz, 0.000000e+00
   %i.cb = fcmp ogt double %i.bz, f0x41EFFFFFFFE00000
   %or.cond = or i1 %i.ca, %i.cb
@@ -2463,7 +2463,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.q
-  %i.dl = fptoui double %i.bz to i32
+  %i.dl = fptoui double %i.d to i32
   store i32 %i.dl, ptr %3, align 16, !tbaa !98
   store i64 1, ptr %0, align 4
   br label %bb.z
@@ -2491,7 +2491,7 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %12 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
-  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 3 uses
+  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 4 uses
   %i.e = fcmp uno float %i.d, 0.000000e+00
   br i1 %i.e, label %bb.b, label %bb.i
 
@@ -2737,7 +2737,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.q:                                             ; preds = %bb.i
-  %i.bz = tail call noundef float @llvm.trunc.f32(float %i.d) ; 3 uses
+  %i.bz = tail call noundef float @llvm.trunc.f32(float %i.d) ; 2 uses
   %i.ca = fcmp uge float %i.bz, f0xDF000000
   %i.cb = fcmp ult float %i.bz, f0x5F000000
   %or.cond = and i1 %i.ca, %i.cb
@@ -2862,7 +2862,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.q
-  %i.dl = fptosi float %i.bz to i64
+  %i.dl = fptosi float %i.d to i64
   store i64 %i.dl, ptr %3, align 16, !tbaa !94
   store i64 1, ptr %0, align 4
   br label %bb.z
@@ -2890,7 +2890,7 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %12 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
-  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 3 uses
+  %i.d = load float, ptr %3, align 16, !tbaa !135 ; 4 uses
   %i.e = fcmp uno float %i.d, 0.000000e+00
   br i1 %i.e, label %bb.b, label %bb.i
 
@@ -3136,7 +3136,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.q:                                             ; preds = %bb.i
-  %i.bz = tail call noundef float @llvm.trunc.f32(float %i.d) ; 3 uses
+  %i.bz = tail call noundef float @llvm.trunc.f32(float %i.d) ; 2 uses
   %i.ca = fcmp uge float %i.bz, 0.000000e+00
   %i.cb = fcmp ult float %i.bz, f0x5F800000
   %or.cond = and i1 %i.ca, %i.cb
@@ -3261,7 +3261,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.q
-  %i.dl = fptoui float %i.bz to i64
+  %i.dl = fptoui float %i.d to i64
   store i64 %i.dl, ptr %3, align 16, !tbaa !94
   store i64 1, ptr %0, align 4
   br label %bb.z
@@ -3289,7 +3289,7 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %12 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
-  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 3 uses
+  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 4 uses
   %i.e = fcmp uno double %i.d, 0.000000e+00
   br i1 %i.e, label %bb.b, label %bb.i
 
@@ -3535,7 +3535,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.q:                                             ; preds = %bb.i
-  %i.bz = tail call double @llvm.trunc.f64(double %i.d) ; 3 uses
+  %i.bz = tail call double @llvm.trunc.f64(double %i.d) ; 2 uses
   %i.ca = fcmp uge double %i.bz, f0xC3E0000000000000
   %i.cb = fcmp ult double %i.bz, f0x43E0000000000000
   %or.cond = and i1 %i.ca, %i.cb
@@ -3660,7 +3660,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.q
-  %i.dl = fptosi double %i.bz to i64
+  %i.dl = fptosi double %i.d to i64
   store i64 %i.dl, ptr %3, align 16, !tbaa !94
   store i64 1, ptr %0, align 4
   br label %bb.z
@@ -3688,7 +3688,7 @@ bb.a:
   %11 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %12 = alloca %"struct.WasmEdge::ErrInfo::InfoInstruction", align 8 ; 14 uses
-  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 3 uses
+  %i.d = load double, ptr %3, align 16, !tbaa !137 ; 4 uses
   %i.e = fcmp uno double %i.d, 0.000000e+00
   br i1 %i.e, label %bb.b, label %bb.i
 
@@ -3934,7 +3934,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.q:                                             ; preds = %bb.i
-  %i.bz = tail call double @llvm.trunc.f64(double %i.d) ; 3 uses
+  %i.bz = tail call double @llvm.trunc.f64(double %i.d) ; 2 uses
   %i.ca = fcmp uge double %i.bz, 0.000000e+00
   %i.cb = fcmp ult double %i.bz, f0x43F0000000000000
   %or.cond = and i1 %i.ca, %i.cb
@@ -4059,7 +4059,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN8Wasm
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.q
-  %i.dl = fptoui double %i.bz to i64
+  %i.dl = fptoui double %i.d to i64
   store i64 %i.dl, ptr %3, align 16, !tbaa !94
   store i64 1, ptr %0, align 4
   br label %bb.z
@@ -4462,9 +4462,9 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNK8WasmEdge8Executor8Executor19runVectorTruncSatOpIfiEEN5cxx208expectedIvNS_7ErrCodeEEERNS_7VariantIJjimlfdonDv2_mDv2_lDv4_jDv4_iDv8_tDv8_sDv16_hDv16_aDv4_fDv2_dNS_10RefVariantEEEE(ptr dead_on_unwind noalias writable sret(%"class.cxx20::expected") align 4 %0, ptr noundef nonnull align 8 dereferenceable(328) %1, ptr noundef nonnull align 16 dereferenceable(16) %2) local_unnamed_addr #18 comdat align 2 {
 bb.a:
-  %i.a = load <4 x float>, ptr %2, align 16, !tbaa !93
-  %i.b = tail call <4 x float> @llvm.trunc.v4f32(<4 x float> %i.a) ; 4 uses
-  %i.c = fptosi <4 x float> %i.b to <4 x i32>
+  %i.a = load <4 x float>, ptr %2, align 16, !tbaa !93 ; 2 uses
+  %i.b = tail call <4 x float> @llvm.trunc.v4f32(<4 x float> %i.a) ; 3 uses
+  %i.c = fptosi <4 x float> %i.a to <4 x i32>
   %i.d = fcmp ord <4 x float> %i.b, zeroinitializer
   %i.e = fcmp ugt <4 x float> %i.b, splat (float f0xCF000000)
   %i.f = select <4 x i1> %i.d, <4 x i32> %i.c, <4 x i32> zeroinitializer

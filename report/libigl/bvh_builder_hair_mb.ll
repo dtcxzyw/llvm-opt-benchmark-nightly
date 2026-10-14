@@ -205,34 +205,34 @@ bb.dh:                                            ; preds = %.lr.ph647, %_ZN6emb
   call void %i.ase(ptr dead_on_unwind nonnull writable sret(%"struct.embree::LinearSpace3") align 16 %7, ptr noundef nonnull align 16 dereferenceable(88) %i.asa, i64 noundef %i.asb, <2 x float> %.sroa.0.0.copyload.i), !noalias !604, !inline_history !560
   %i.asf = load <4 x float>, ptr %7, align 16, !noalias !610
   %i.asg = fmul <4 x float> %i.asf, <float 1.260000e+02, float 1.260000e+02, float 1.260000e+02, float poison> ; 3 uses
-  %.sroa.0473.0.vec.extract = extractelement <4 x float> %i.asg, i64 0
-  %i.ash = call float @llvm.trunc.f32(float %.sroa.0473.0.vec.extract) ; 2 uses
-  %.sroa.0473.4.vec.extract = extractelement <4 x float> %i.asg, i64 1
-  %i.asi = call float @llvm.trunc.f32(float %.sroa.0473.4.vec.extract) ; 2 uses
-  %.sroa.0473.8.vec.extract = extractelement <4 x float> %i.asg, i64 2
-  %i.asj = call float @llvm.trunc.f32(float %.sroa.0473.8.vec.extract) ; 2 uses
+  %.sroa.0473.0.vec.extract = extractelement <4 x float> %i.asg, i64 0 ; 2 uses
+  %i.ash = call float @llvm.trunc.f32(float %.sroa.0473.0.vec.extract)
+  %.sroa.0473.4.vec.extract = extractelement <4 x float> %i.asg, i64 1 ; 2 uses
+  %i.asi = call float @llvm.trunc.f32(float %.sroa.0473.4.vec.extract)
+  %.sroa.0473.8.vec.extract = extractelement <4 x float> %i.asg, i64 2 ; 2 uses
+  %i.asj = call float @llvm.trunc.f32(float %.sroa.0473.8.vec.extract)
   %i.ask = insertelement <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, float %i.ash, i64 0
   %i.asl = insertelement <4 x float> %i.ask, float %i.asi, i64 1 ; 2 uses
   %i.asm = insertelement <4 x float> %i.asl, float %i.asj, i64 2 ; 3 uses
   %i.asn = load <4 x float>, ptr %i.aoe, align 16, !noalias !611
-  %i.aso = fmul <4 x float> %i.asn, <float 1.260000e+02, float 1.260000e+02, float 1.260000e+02, float poison> ; 3 uses
-  %.sroa.0471.0.vec.extract = extractelement <4 x float> %i.aso, i64 0
-  %i.asp = call float @llvm.trunc.f32(float %.sroa.0471.0.vec.extract) ; 2 uses
+  %i.aso = fmul <4 x float> %i.asn, <float 1.260000e+02, float 1.260000e+02, float 1.260000e+02, float poison> ; 4 uses
+  %.sroa.0471.0.vec.extract = extractelement <4 x float> %i.aso, i64 0 ; 2 uses
+  %i.asp = call float @llvm.trunc.f32(float %.sroa.0471.0.vec.extract)
   %.sroa.0471.4.vec.extract = extractelement <4 x float> %i.aso, i64 1
-  %i.asq = call float @llvm.trunc.f32(float %.sroa.0471.4.vec.extract) ; 2 uses
+  %i.asq = call float @llvm.trunc.f32(float %.sroa.0471.4.vec.extract)
   %.sroa.0471.8.vec.extract = extractelement <4 x float> %i.aso, i64 2
-  %i.asr = call float @llvm.trunc.f32(float %.sroa.0471.8.vec.extract) ; 2 uses
+  %i.asr = call float @llvm.trunc.f32(float %.sroa.0471.8.vec.extract)
   %i.ass = insertelement <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, float %i.asp, i64 0
   %i.ast = insertelement <4 x float> %i.ass, float %i.asq, i64 1 ; 2 uses
   %i.asu = insertelement <4 x float> %i.ast, float %i.asr, i64 2 ; 3 uses
   %i.asv = load <4 x float>, ptr %i.aof, align 16, !noalias !612
-  %i.asw = fmul <4 x float> %i.asv, <float 1.260000e+02, float 1.260000e+02, float 1.260000e+02, float poison> ; 3 uses
+  %i.asw = fmul <4 x float> %i.asv, <float 1.260000e+02, float 1.260000e+02, float 1.260000e+02, float poison> ; 4 uses
   %.sroa.0469.0.vec.extract = extractelement <4 x float> %i.asw, i64 0
-  %i.asx = call float @llvm.trunc.f32(float %.sroa.0469.0.vec.extract) ; 2 uses
+  %i.asx = call float @llvm.trunc.f32(float %.sroa.0469.0.vec.extract)
   %.sroa.0469.4.vec.extract = extractelement <4 x float> %i.asw, i64 1
-  %i.asy = call float @llvm.trunc.f32(float %.sroa.0469.4.vec.extract) ; 2 uses
-  %.sroa.0469.8.vec.extract = extractelement <4 x float> %i.asw, i64 2
-  %i.asz = call float @llvm.trunc.f32(float %.sroa.0469.8.vec.extract) ; 2 uses
+  %i.asy = call float @llvm.trunc.f32(float %.sroa.0469.4.vec.extract)
+  %.sroa.0469.8.vec.extract = extractelement <4 x float> %i.asw, i64 2 ; 2 uses
+  %i.asz = call float @llvm.trunc.f32(float %.sroa.0469.8.vec.extract)
   %i.ata = insertelement <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, float %i.asx, i64 0
   %i.atb = insertelement <4 x float> %i.ata, float %i.asy, i64 1 ; 2 uses
   %i.atc = insertelement <4 x float> %i.atb, float %i.asz, i64 2 ; 3 uses
@@ -281,7 +281,7 @@ bb.dh:                                            ; preds = %.lr.ph647, %_ZN6emb
   %i.aul = load ptr, ptr %i.auk, align 8, !noalias !604
   call void %i.aul(ptr dead_on_unwind nonnull writable sret(%"struct.embree::LBBox") align 16 %8, ptr noundef nonnull align 16 dereferenceable(88) %i.atf, ptr noundef nonnull align 16 dereferenceable(16) %6, float noundef %.059.i, float noundef %i.aub, ptr noundef nonnull align 16 dereferenceable(48) %9, i64 noundef %i.asb, ptr noundef nonnull align 4 dereferenceable(8) %4), !noalias !604, !inline_history !560
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #11, !noalias !605
-  %i.aum = fptosi float %i.ash to i16
+  %i.aum = fptosi float %.sroa.0473.0.vec.extract to i16
   %i.aun = trunc i16 %i.aum to i8
   %i.auo = load i8, ptr %i.apc, align 1, !noalias !605
   %i.aup = zext i8 %i.auo to i64                  ; 21 uses
@@ -289,13 +289,13 @@ bb.dh:                                            ; preds = %.lr.ph647, %_ZN6emb
   %i.aur = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %i.auq
   %i.aus = getelementptr inbounds nuw i8, ptr %i.aur, i64 %.060.i637
   store i8 %i.aun, ptr %i.aus, align 1, !noalias !604
-  %i.aut = fptosi float %i.asi to i16
+  %i.aut = fptosi float %.sroa.0473.4.vec.extract to i16
   %i.auu = trunc i16 %i.aut to i8
   %i.auv = mul nuw nsw i64 %i.aup, 5
   %i.auw = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %i.auv
   %i.aux = getelementptr inbounds nuw i8, ptr %i.auw, i64 %.060.i637
   store i8 %i.auu, ptr %i.aux, align 1, !noalias !604
-  %i.auy = fptosi float %i.asj to i16
+  %i.auy = fptosi float %.sroa.0473.8.vec.extract to i16
   %i.auz = trunc i16 %i.auy to i8
   %i.ava = mul nuw nsw i64 %i.aup, 6
   %i.avb = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %i.ava
@@ -345,81 +345,80 @@ bb.dh:                                            ; preds = %.lr.ph647, %_ZN6emb
   %i.awp = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %i.awo
   %i.awq = getelementptr inbounds nuw [2 x i8], ptr %i.awp, i64 %.060.i637
   store i16 %i.awn, ptr %i.awq, align 2, !noalias !604
-  %i.awr = fptosi float %i.asp to i16
+  %i.awr = fptosi float %.sroa.0471.0.vec.extract to i16
   %i.aws = trunc i16 %i.awr to i8
   %i.awt = mul nuw nsw i64 %i.aup, 15
   %i.awu = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %i.awt
   %i.awv = getelementptr inbounds nuw i8, ptr %i.awu, i64 %.060.i637
   store i8 %i.aws, ptr %i.awv, align 1, !noalias !604
-  %16 = fptosi float %i.asq to i16
-  %17 = trunc i16 %16 to i8
-  %18 = shl nuw nsw i64 %i.aup, 4
-  %i.aww = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %18
+  %16 = shl nuw nsw i64 %i.aup, 4
+  %17 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %16
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 %.060.i637
+  %19 = mul nuw nsw i64 %i.aup, 17
+  %i.aww = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %19
   %i.awx = getelementptr inbounds nuw i8, ptr %i.aww, i64 %.060.i637
-  store i8 %17, ptr %i.awx, align 1, !noalias !604
-  %19 = fptosi float %i.asr to i16
-  %20 = trunc i16 %19 to i8
-  %i.awy = mul nuw nsw i64 %i.aup, 17
+  %20 = mul nuw nsw i64 %i.aup, 18
+  %21 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %20
+  %22 = getelementptr inbounds nuw [2 x i8], ptr %21, i64 %.060.i637
+  %i.awy = mul nuw nsw i64 %i.aup, 20
   %i.awz = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %i.awy
-  %i.axa = getelementptr inbounds nuw i8, ptr %i.awz, i64 %.060.i637
-  store i8 %20, ptr %i.axa, align 1, !noalias !604
-  %21 = load float, ptr %i.aol, align 4, !noalias !605
-  %22 = call noundef float @llvm.floor.f32(float %21) ; 2 uses
-  %23 = fcmp olt float %22, 3.276700e+04
-  %24 = select i1 %23, float %22, float 3.276700e+04 ; 2 uses
-  %25 = fcmp olt float %24, -3.276700e+04
-  %26 = select i1 %25, float -3.276700e+04, float %24
-  %27 = fptosi float %26 to i16
-  %28 = mul nuw nsw i64 %i.aup, 18
-  %29 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %28
-  %30 = getelementptr inbounds nuw [2 x i8], ptr %29, i64 %.060.i637
-  store i16 %27, ptr %30, align 2, !noalias !604
-  %i.axb = load float, ptr %i.aom, align 4, !noalias !605
-  %i.axc = call noundef float @llvm.ceil.f32(float %i.axb) ; 2 uses
+  %23 = getelementptr inbounds nuw [2 x i8], ptr %i.awz, i64 %.060.i637
+  %24 = mul nuw nsw i64 %i.aup, 22
+  %i.axa = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %24
+  %25 = getelementptr inbounds nuw [2 x i8], ptr %i.axa, i64 %.060.i637
+  %26 = mul nuw nsw i64 %i.aup, 24
+  %27 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %26
+  %28 = getelementptr inbounds nuw [2 x i8], ptr %27, i64 %.060.i637
+  %29 = mul nuw nsw i64 %i.aup, 26
+  %30 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %29
+  %31 = getelementptr inbounds nuw i8, ptr %30, i64 %.060.i637
+  %32 = shufflevector <4 x float> %i.aso, <4 x float> %i.asw, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
+  %33 = fptosi <4 x float> %32 to <4 x i16>
+  %34 = trunc <4 x i16> %33 to <4 x i8>           ; 4 uses
+  %35 = extractelement <4 x i8> %34, i64 0
+  store i8 %35, ptr %18, align 1, !noalias !604
+  %36 = extractelement <4 x i8> %34, i64 1
+  store i8 %36, ptr %i.awx, align 1, !noalias !604
+  %i.axb = load float, ptr %i.aol, align 4, !noalias !605
+  %i.axc = call noundef float @llvm.floor.f32(float %i.axb) ; 2 uses
   %i.axd = fcmp olt float %i.axc, 3.276700e+04
   %i.axe = select i1 %i.axd, float %i.axc, float 3.276700e+04 ; 2 uses
   %i.axf = fcmp olt float %i.axe, -3.276700e+04
   %i.axg = select i1 %i.axf, float -3.276700e+04, float %i.axe
   %i.axh = fptosi float %i.axg to i16
-  %31 = mul nuw nsw i64 %i.aup, 20
-  %32 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %31
-  %33 = getelementptr inbounds nuw [2 x i8], ptr %32, i64 %.060.i637
-  store i16 %i.axh, ptr %33, align 2, !noalias !604
-  %i.axi = load float, ptr %i.aon, align 4, !noalias !605
-  %i.axj = call noundef float @llvm.floor.f32(float %i.axi) ; 2 uses
+  store i16 %i.axh, ptr %22, align 2, !noalias !604
+  %i.axi = load float, ptr %i.aom, align 4, !noalias !605
+  %i.axj = call noundef float @llvm.ceil.f32(float %i.axi) ; 2 uses
   %i.axk = fcmp olt float %i.axj, 3.276700e+04
   %i.axl = select i1 %i.axk, float %i.axj, float 3.276700e+04 ; 2 uses
   %i.axm = fcmp olt float %i.axl, -3.276700e+04
   %i.axn = select i1 %i.axm, float -3.276700e+04, float %i.axl
   %i.axo = fptosi float %i.axn to i16
-  %34 = mul nuw nsw i64 %i.aup, 22
-  %35 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %34
-  %36 = getelementptr inbounds nuw [2 x i8], ptr %35, i64 %.060.i637
-  store i16 %i.axo, ptr %36, align 2, !noalias !604
-  %i.axp = load float, ptr %i.aoo, align 4, !noalias !605
-  %i.axq = call noundef float @llvm.ceil.f32(float %i.axp) ; 2 uses
+  store i16 %i.axo, ptr %23, align 2, !noalias !604
+  %i.axp = load float, ptr %i.aon, align 4, !noalias !605
+  %i.axq = call noundef float @llvm.floor.f32(float %i.axp) ; 2 uses
   %i.axr = fcmp olt float %i.axq, 3.276700e+04
   %i.axs = select i1 %i.axr, float %i.axq, float 3.276700e+04 ; 2 uses
   %i.axt = fcmp olt float %i.axs, -3.276700e+04
   %i.axu = select i1 %i.axt, float -3.276700e+04, float %i.axs
   %i.axv = fptosi float %i.axu to i16
-  %37 = mul nuw nsw i64 %i.aup, 24
-  %38 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %37
-  %39 = getelementptr inbounds nuw [2 x i8], ptr %38, i64 %.060.i637
-  store i16 %i.axv, ptr %39, align 2, !noalias !604
-  %40 = fptosi float %i.asx to i16
-  %41 = trunc i16 %40 to i8
-  %42 = mul nuw nsw i64 %i.aup, 26
-  %43 = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %42
-  %44 = getelementptr inbounds nuw i8, ptr %43, i64 %.060.i637
-  store i8 %41, ptr %44, align 1, !noalias !604
-  %45 = fptosi float %i.asy to i16
-  %46 = trunc i16 %45 to i8
+  store i16 %i.axv, ptr %25, align 2, !noalias !604
+  %37 = load float, ptr %i.aoo, align 4, !noalias !605
+  %38 = call noundef float @llvm.ceil.f32(float %37) ; 2 uses
+  %39 = fcmp olt float %38, 3.276700e+04
+  %40 = select i1 %39, float %38, float 3.276700e+04 ; 2 uses
+  %41 = fcmp olt float %40, -3.276700e+04
+  %42 = select i1 %41, float -3.276700e+04, float %40
+  %43 = fptosi float %42 to i16
+  store i16 %43, ptr %28, align 2, !noalias !604
+  %44 = extractelement <4 x i8> %34, i64 2
+  store i8 %44, ptr %31, align 1, !noalias !604
   %i.axw = mul nuw nsw i64 %i.aup, 27
   %i.axx = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %i.axw
   %i.axy = getelementptr inbounds nuw i8, ptr %i.axx, i64 %.060.i637
-  store i8 %46, ptr %i.axy, align 1, !noalias !604
-  %i.axz = fptosi float %i.asz to i16
+  %45 = extractelement <4 x i8> %34, i64 3
+  store i8 %45, ptr %i.axy, align 1, !noalias !604
+  %i.axz = fptosi float %.sroa.0469.8.vec.extract to i16
   %i.aya = trunc i16 %i.axz to i8
   %i.ayb = mul nuw nsw i64 %i.aup, 28
   %i.ayc = getelementptr inbounds nuw i8, ptr %i.aqf, i64 %i.ayb

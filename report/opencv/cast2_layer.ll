@@ -204,29 +204,25 @@ bb.r:                                             ; preds = %bb.q
   %niter148 = phi i64 [ 0, %.lr.ph23.preheader.i71.new ], [ %niter148.next.3, %.lr.ph23.i73 ]
   %i.kd = getelementptr inbounds nuw [4 x i8], ptr %i.ka, i64 %indvars.iv26.i74
   %i.ke = load float, ptr %i.kd, align 4, !tbaa !87
-  %3 = tail call noundef float @llvm.trunc.f32(float %i.ke)
-  %i.kf = fptosi float %3 to i64
+  %i.kf = fptosi float %i.ke to i64
   %i.kg = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv26.i74
   store i64 %i.kf, ptr %i.kg, align 8, !tbaa !46
   %indvars.iv.next27.i75 = or disjoint i64 %indvars.iv26.i74, 1 ; 2 uses
   %i.kh = getelementptr inbounds nuw [4 x i8], ptr %i.ka, i64 %indvars.iv.next27.i75
   %i.ki = load float, ptr %i.kh, align 4, !tbaa !87
-  %4 = tail call noundef float @llvm.trunc.f32(float %i.ki)
-  %i.kj = fptosi float %4 to i64
+  %i.kj = fptosi float %i.ki to i64
   %i.kk = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.next27.i75
   store i64 %i.kj, ptr %i.kk, align 8, !tbaa !46
   %indvars.iv.next27.i75.1 = or disjoint i64 %indvars.iv26.i74, 2 ; 2 uses
   %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.ka, i64 %indvars.iv.next27.i75.1
   %i.km = load float, ptr %i.kl, align 4, !tbaa !87
-  %5 = tail call noundef float @llvm.trunc.f32(float %i.km)
-  %i.kn = fptosi float %5 to i64
+  %i.kn = fptosi float %i.km to i64
   %i.ko = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.next27.i75.1
   store i64 %i.kn, ptr %i.ko, align 8, !tbaa !46
   %indvars.iv.next27.i75.2 = or disjoint i64 %indvars.iv26.i74, 3 ; 2 uses
   %i.kp = getelementptr inbounds nuw [4 x i8], ptr %i.ka, i64 %indvars.iv.next27.i75.2
   %i.kq = load float, ptr %i.kp, align 4, !tbaa !87
-  %6 = tail call noundef float @llvm.trunc.f32(float %i.kq)
-  %i.kr = fptosi float %6 to i64
+  %i.kr = fptosi float %i.kq to i64
   %i.ks = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.next27.i75.2
   store i64 %i.kr, ptr %i.ks, align 8, !tbaa !46
   %indvars.iv.next27.i75.3 = add nuw nsw i64 %indvars.iv26.i74, 4 ; 2 uses
@@ -252,29 +248,25 @@ bb.s:                                             ; preds = %bb.q
   %niter = phi i64 [ 0, %.lr.ph.preheader.i65.new ], [ %niter.next.3, %.lr.ph.i67 ]
   %i.ku = getelementptr inbounds nuw [8 x i8], ptr %i.ka, i64 %indvars.iv.i68
   %i.kv = load double, ptr %i.ku, align 8, !tbaa !81
-  %7 = tail call double @llvm.trunc.f64(double %i.kv)
-  %i.kw = fptosi double %7 to i64
+  %i.kw = fptosi double %i.kv to i64
   %i.kx = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.i68
   store i64 %i.kw, ptr %i.kx, align 8, !tbaa !46
   %indvars.iv.next.i69 = or disjoint i64 %indvars.iv.i68, 1 ; 2 uses
   %i.ky = getelementptr inbounds nuw [8 x i8], ptr %i.ka, i64 %indvars.iv.next.i69
   %i.kz = load double, ptr %i.ky, align 8, !tbaa !81
-  %8 = tail call double @llvm.trunc.f64(double %i.kz)
-  %i.la = fptosi double %8 to i64
+  %i.la = fptosi double %i.kz to i64
   %i.lb = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.next.i69
   store i64 %i.la, ptr %i.lb, align 8, !tbaa !46
   %indvars.iv.next.i69.1 = or disjoint i64 %indvars.iv.i68, 2 ; 2 uses
   %i.lc = getelementptr inbounds nuw [8 x i8], ptr %i.ka, i64 %indvars.iv.next.i69.1
   %i.ld = load double, ptr %i.lc, align 8, !tbaa !81
-  %9 = tail call double @llvm.trunc.f64(double %i.ld)
-  %i.le = fptosi double %9 to i64
+  %i.le = fptosi double %i.ld to i64
   %i.lf = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.next.i69.1
   store i64 %i.le, ptr %i.lf, align 8, !tbaa !46
   %indvars.iv.next.i69.2 = or disjoint i64 %indvars.iv.i68, 3 ; 2 uses
   %i.lg = getelementptr inbounds nuw [8 x i8], ptr %i.ka, i64 %indvars.iv.next.i69.2
   %i.lh = load double, ptr %i.lg, align 8, !tbaa !81
-  %10 = tail call double @llvm.trunc.f64(double %i.lh)
-  %i.li = fptosi double %10 to i64
+  %i.li = fptosi double %i.lh to i64
   %i.lj = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.next.i69.2
   store i64 %i.li, ptr %i.lj, align 8, !tbaa !46
   %indvars.iv.next.i69.3 = add nuw nsw i64 %indvars.iv.i68, 4 ; 2 uses
@@ -518,8 +510,7 @@ _ZN2cv3dnn12_GLOBAL__N_117truncateToIntImplIhEEvRKNS_3MatERS3_.exit.loopexit140.
   %epil.iter144 = phi i64 [ 0, %.lr.ph23.i73.epil.preheader ], [ %epil.iter144.next, %.lr.ph23.i73.epil ]
   %i.os = getelementptr inbounds nuw [4 x i8], ptr %i.ka, i64 %indvars.iv26.i74.epil
   %i.ot = load float, ptr %i.os, align 4, !tbaa !87
-  %11 = tail call noundef float @llvm.trunc.f32(float %i.ot)
-  %i.ou = fptosi float %11 to i64
+  %i.ou = fptosi float %i.ot to i64
   %i.ov = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv26.i74.epil
   store i64 %i.ou, ptr %i.ov, align 8, !tbaa !46
   %indvars.iv.next27.i75.epil = add nuw nsw i64 %indvars.iv26.i74.epil, 1
@@ -542,8 +533,7 @@ _ZN2cv3dnn12_GLOBAL__N_117truncateToIntImplIhEEvRKNS_3MatERS3_.exit.loopexit141.
   %epil.iter = phi i64 [ 0, %.lr.ph.i67.epil.preheader ], [ %epil.iter.next, %.lr.ph.i67.epil ]
   %i.ow = getelementptr inbounds nuw [8 x i8], ptr %i.ka, i64 %indvars.iv.i68.epil
   %i.ox = load double, ptr %i.ow, align 8, !tbaa !81
-  %12 = tail call double @llvm.trunc.f64(double %i.ox)
-  %i.oy = fptosi double %12 to i64
+  %i.oy = fptosi double %i.ox to i64
   %i.oz = getelementptr inbounds nuw [8 x i8], ptr %i.jw, i64 %indvars.iv.i68.epil
   store i64 %i.oy, ptr %i.oz, align 8, !tbaa !46
   %indvars.iv.next.i69.epil = add nuw nsw i64 %indvars.iv.i68.epil, 1

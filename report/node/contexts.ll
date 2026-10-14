@@ -202,7 +202,7 @@ _ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit139: ; preds = %_ZN
 
 bb.ag:                                            ; preds = %_ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit139
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
-  %.0.copyload.i.i.i.i175 = load double, ptr %i.fh, align 8 ; 7 uses
+  %.0.copyload.i.i.i.i175 = load double, ptr %i.fh, align 8 ; 8 uses
   %i.fi = fcmp oeq double %.0.copyload.i.i.i.i175, 0.000000e+00
   %i.fj = bitcast double %.0.copyload.i.i.i.i175 to i64
   %i.fk = icmp slt i64 %i.fj, 0
@@ -210,16 +210,16 @@ bb.ag:                                            ; preds = %_ZN2v88internal12Is
   br i1 %or.cond12.i, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit.thread, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit
 
 _ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit: ; preds = %bb.ag
-  %14 = call double @llvm.trunc.f64(double %.0.copyload.i.i.i.i175) ; 2 uses
   %i.fl = fcmp ult double %.0.copyload.i.i.i.i175, f0xC1E0000000000000
   %i.fm = fcmp ugt double %.0.copyload.i.i.i.i175, f0x41DFFFFFFFC00000
   %or.cond.i.not603 = or i1 %i.fl, %i.fm
+  %14 = call double @llvm.trunc.f64(double %.0.copyload.i.i.i.i175)
   %i.fn = fcmp une double %.0.copyload.i.i.i.i175, %14
   %or.cond10.i.not = or i1 %or.cond.i.not603, %i.fn
   br i1 %or.cond10.i.not, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit.thread, label %bb.ah
 
 bb.ah:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit
-  %i.fo = fptosi double %14 to i32
+  %i.fo = fptosi double %.0.copyload.i.i.i.i175 to i32
   %i.fp = load i64, ptr %.0.i, align 8
   %i.fq = add i64 %i.fp, -1
   %i.fr = inttoptr i64 %i.fq to ptr
@@ -326,7 +326,7 @@ _ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit138: ; preds = %_ZN
 
 bb.am:                                            ; preds = %_ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit138
   %i.hu = getelementptr inbounds nuw i8, ptr %i.ho, i64 8
-  %.0.copyload.i.i.i.i177 = load double, ptr %i.hu, align 8 ; 7 uses
+  %.0.copyload.i.i.i.i177 = load double, ptr %i.hu, align 8 ; 8 uses
   %i.hv = fcmp oeq double %.0.copyload.i.i.i.i177, 0.000000e+00
   %i.hw = bitcast double %.0.copyload.i.i.i.i177 to i64
   %i.hx = icmp slt i64 %i.hw, 0
@@ -334,16 +334,16 @@ bb.am:                                            ; preds = %_ZN2v88internal12Is
   br i1 %or.cond12.i178, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit182.thread, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit182
 
 _ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit182: ; preds = %bb.am
-  %15 = call double @llvm.trunc.f64(double %.0.copyload.i.i.i.i177) ; 2 uses
   %i.hy = fcmp ult double %.0.copyload.i.i.i.i177, f0xC1E0000000000000
   %i.hz = fcmp ugt double %.0.copyload.i.i.i.i177, f0x41DFFFFFFFC00000
   %or.cond.i179.not599 = or i1 %i.hy, %i.hz
+  %15 = call double @llvm.trunc.f64(double %.0.copyload.i.i.i.i177)
   %i.ia = fcmp une double %.0.copyload.i.i.i.i177, %15
   %or.cond10.i180.not = or i1 %or.cond.i179.not599, %i.ia
   br i1 %or.cond10.i180.not, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit182.thread, label %bb.an
 
 bb.an:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit182
-  %i.ib = fptosi double %15 to i32
+  %i.ib = fptosi double %.0.copyload.i.i.i.i177 to i32
   %i.ic = load i64, ptr %.0.i, align 8
   %i.id = add i64 %i.ic, -1
   %i.ie = inttoptr i64 %i.id to ptr
@@ -416,7 +416,7 @@ _ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit137: ; preds = %bb.
 
 bb.aq:                                            ; preds = %_ZN2v88internal12IsHeapNumberENS0_6TaggedINS0_6ObjectEEE.exit137
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jl, i64 8
-  %.0.copyload.i.i.i.i184 = load double, ptr %i.jr, align 8 ; 7 uses
+  %.0.copyload.i.i.i.i184 = load double, ptr %i.jr, align 8 ; 8 uses
   %i.js = fcmp oeq double %.0.copyload.i.i.i.i184, 0.000000e+00
   %i.jt = bitcast double %.0.copyload.i.i.i.i184 to i64
   %i.ju = icmp slt i64 %i.jt, 0
@@ -424,16 +424,16 @@ bb.aq:                                            ; preds = %_ZN2v88internal12Is
   br i1 %or.cond12.i185, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit189.thread, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit189
 
 _ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit189: ; preds = %bb.aq
-  %16 = tail call double @llvm.trunc.f64(double %.0.copyload.i.i.i.i184) ; 2 uses
   %i.jv = fcmp ult double %.0.copyload.i.i.i.i184, f0xC1E0000000000000
   %i.jw = fcmp ugt double %.0.copyload.i.i.i.i184, f0x41DFFFFFFFC00000
   %or.cond.i186.not595 = or i1 %i.jv, %i.jw
+  %16 = tail call double @llvm.trunc.f64(double %.0.copyload.i.i.i.i184)
   %i.jx = fcmp une double %.0.copyload.i.i.i.i184, %16
   %or.cond10.i187.not = or i1 %or.cond.i186.not595, %i.jx
   br i1 %or.cond10.i187.not, label %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit189.thread, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_117DoubleFitsInInt32Ed.exit189
-  %i.jy = fptosi double %16 to i32
+  %i.jy = fptosi double %.0.copyload.i.i.i.i184 to i32
   %i.jz = load i64, ptr %.0.i, align 8
   %i.ka = add i64 %i.jz, -1
   %i.kb = inttoptr i64 %i.ka to ptr
