@@ -205,10 +205,10 @@ vector.memcheck:                                  ; preds = %.critedge
   %i.cs = ptrtoaddr ptr %i.cl to i64
   %i.ct = ptrtoaddr ptr %i.cb to i64
   %i.cu = shl nsw i64 %i.co, 3
-  %2 = add i64 %i.cu, %i.cs
   %i.cv = add i32 %.1, -1
   %i.cw = zext i32 %i.cv to i64
   %i.cx = shl nuw nsw i64 %i.cw, 3
+  %2 = add i64 %i.cu, %i.cs
   %i.cy = add i64 %i.cx, %i.ct
   %i.cz = sub i64 %2, %i.cy
   %i.da = add i64 %i.cz, -9
@@ -611,10 +611,10 @@ bb.n:                                             ; preds = %.critedge.thread
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.cy = ptrtoaddr ptr %i.cu to i64
   %i.cz = shl nsw i64 %i.cw, 3
-  %1 = add i64 %i.cz, %i.cy
-  %2 = shl nuw nsw i64 %i.cx, 3
-  %i.da = add i64 %2, %i.cj
-  %i.db = sub i64 %i.da, %1
+  %1 = shl nuw nsw i64 %i.cx, 3
+  %2 = add i64 %i.cz, %i.cy
+  %i.da = add i64 %1, %i.cj
+  %i.db = sub i64 %i.da, %2
   %diff.check = icmp ugt i64 %i.db, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -1017,10 +1017,10 @@ bb.w:                                             ; preds = %.critedge.thread
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.fu = ptrtoaddr ptr %i.fq to i64
   %i.fv = shl nsw i64 %i.fs, 3
-  %1 = add i64 %i.fv, %i.fu
-  %2 = shl nuw nsw i64 %i.ft, 3
-  %i.fw = add i64 %2, %i.fl
-  %i.fx = sub i64 %i.fw, %1
+  %1 = shl nuw nsw i64 %i.ft, 3
+  %2 = add i64 %i.fv, %i.fu
+  %i.fw = add i64 %1, %i.fl
+  %i.fx = sub i64 %i.fw, %2
   %diff.check = icmp ugt i64 %i.fx, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 

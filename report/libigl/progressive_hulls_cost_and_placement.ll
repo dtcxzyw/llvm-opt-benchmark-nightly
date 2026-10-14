@@ -205,12 +205,12 @@ bb.r:                                             ; preds = %.noexc5.i, %_ZN5Eig
   br i1 %or.cond, label %vector.memcheck, label %.lr.ph.i.i.i.i.i.i.preheader643
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %31 = sub i64 %i.ja, %i.ih                      ; 2 uses
-  %32 = shl nsw i64 %i.in, 3
-  %i.jc = sub i64 %32, %31
+  %31 = shl nsw i64 %i.in, 3
+  %32 = sub i64 %i.ja, %i.ih                      ; 2 uses
+  %i.jc = sub i64 %31, %32
   %diff.check = icmp ugt i64 %i.jc, -32
   %i.jd = shl nsw i64 %i.if, 3
-  %i.je = sub i64 %i.jd, %31
+  %i.je = sub i64 %i.jd, %32
   %diff.check596 = icmp ugt i64 %i.je, -32
   %conflict.rdx = or i1 %diff.check, %diff.check596
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.i.i.i.preheader643, label %vector.ph

@@ -204,11 +204,11 @@ iter.check:                                       ; preds = %.preheader
 vector.memcheck:                                  ; preds = %iter.check
   %i.at = ptrtoaddr ptr %i.ap to i64
   %i.au = shl nuw nsw i64 %i.ar, 2
-  %i.av = add i64 %i.au, %i.at
-  %4 = add nsw i64 %i.aq, %i.e
-  %5 = shl nsw i64 %4, 2
-  %i.aw = add i64 %5, %i.c
-  %i.ax = sub i64 %i.aw, %i.av
+  %i.av = add nsw i64 %i.aq, %i.e
+  %4 = shl nsw i64 %i.av, 2
+  %5 = add i64 %4, %i.c
+  %i.aw = add i64 %i.au, %i.at
+  %i.ax = sub i64 %5, %i.aw
   %diff.check = icmp ugt i64 %i.ax, -128
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

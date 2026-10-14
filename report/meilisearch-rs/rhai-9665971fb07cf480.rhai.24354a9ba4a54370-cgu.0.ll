@@ -205,9 +205,9 @@ iter.check68:                                     ; preds = %"_ZN5alloc3vec16Vec
   br i1 %min.iters.check53, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check68
-  %i.ba = add i64 %i.ay, %i.az
-  %i.bb = add i64 %spec.select.i, %i.r
-  %i.bc = sub i64 %i.bb, %i.ba
+  %i.ba = add i64 %spec.select.i, %i.r
+  %i.bb = add i64 %i.ay, %i.az
+  %i.bc = sub i64 %i.ba, %i.bb
   %diff.check = icmp ugt i64 %i.bc, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check54
 
@@ -610,9 +610,9 @@ iter.check:                                       ; preds = %bb.m
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.cp = ptrtoaddr ptr %i.co to i64
-  %i.cq = add i64 %.pre.i29, %i.cp
-  %i.cr = add i64 %.sroa.01.0.i, %i.ch
-  %i.cs = sub i64 %i.cr, %i.cq
+  %i.cq = add i64 %.sroa.01.0.i, %i.ch
+  %i.cr = add i64 %.pre.i29, %i.cp
+  %i.cs = sub i64 %i.cq, %i.cr
   %diff.check = icmp ugt i64 %i.cs, -32
   br i1 %diff.check, label %.lr.ph.i.i.i22.preheader, label %vector.main.loop.iter.check
 

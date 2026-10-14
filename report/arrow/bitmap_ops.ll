@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZN5arrow8internal12_GLOBAL__N_114TransferBitmapILNS1_12TransferModeE1EEEvPKhlllPh(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, ptr nofree noundef captures(none) %4) unnamed_addr #4 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %4 to i64
+  %i.a = ptrtoaddr ptr %4 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   %i.c = or i64 %3, %1
   %i.d = and i64 %i.c, 7
   %or.cond.not = icmp eq i64 %i.d, 0
@@ -609,9 +609,9 @@ iter.check:                                       ; preds = %bb.ag
   br i1 %min.iters.check, label %.lr.ph124.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.iq = add i64 %i.ij, %i.b
-  %i.ir = add i64 %i.ih, %i.a
-  %i.is = sub i64 %i.ir, %i.iq
+  %i.iq = add i64 %i.ih, %i.b
+  %i.ir = add i64 %i.ij, %i.a
+  %i.is = sub i64 %i.iq, %i.ir
   %diff.check = icmp ugt i64 %i.is, -32
   br i1 %diff.check, label %.lr.ph124.preheader, label %vector.main.loop.iter.check
 
@@ -1014,8 +1014,8 @@ _ZN5arrow8internal20OptionalBitmapEqualsEPKhlS2_ll.exit: ; preds = %bb.e, %bb.g,
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow8internal9BitmapAndEPNS_10MemoryPoolEPKhlS4_lll(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result") align 8 %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, i64 noundef %6, i64 noundef %7) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %4 to i64
   %8 = alloca %"class.arrow::Result", align 8     ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !115)
   %i.c = add nsw i64 %7, %6
@@ -1093,12 +1093,12 @@ iter.check:                                       ; preds = %bb.g
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.at = add i64 %i.aq, %i.r                     ; 2 uses
-  %i.au = add i64 %i.am, %i.b
-  %i.av = sub i64 %i.au, %i.at
+  %i.at = add i64 %i.am, %i.a
+  %i.au = add i64 %i.aq, %i.r                     ; 2 uses
+  %i.av = sub i64 %i.at, %i.au
   %diff.check = icmp ugt i64 %i.av, -32
-  %i.aw = add i64 %i.ao, %i.a
-  %i.ax = sub i64 %i.aw, %i.at
+  %i.aw = add i64 %i.ao, %i.b
+  %i.ax = sub i64 %i.aw, %i.au
   %diff.check11 = icmp ugt i64 %i.ax, -32
   %conflict.rdx = or i1 %diff.check, %diff.check11
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -1316,9 +1316,9 @@ _ZN5arrow8internal12_GLOBAL__N_18BitmapOpISt7bit_andEENS_6ResultISt10shared_ptrI
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN5arrow8internal9BitmapAndEPKhlS2_lllPh(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #4 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = ptrtoaddr ptr %6 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %6 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = srem i64 %5, 8                           ; 3 uses
   %i.e = srem i64 %1, 8
   %i.f = icmp eq i64 %i.d, %i.e
@@ -1367,12 +1367,12 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ad = add i64 %i.aa, %i.c                     ; 2 uses
-  %i.ae = add i64 %i.w, %i.b
-  %i.af = sub i64 %i.ae, %i.ad
+  %i.ad = add i64 %i.w, %i.a
+  %i.ae = add i64 %i.aa, %i.b                     ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %diff.check = icmp ugt i64 %i.af, -32
-  %i.ag = add i64 %i.y, %i.a
-  %i.ah = sub i64 %i.ag, %i.ad
+  %i.ag = add i64 %i.y, %i.c
+  %i.ah = sub i64 %i.ag, %i.ae
   %diff.check9 = icmp ugt i64 %i.ah, -32
   %conflict.rdx = or i1 %diff.check, %diff.check9
   br i1 %conflict.rdx, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -1512,8 +1512,8 @@ _ZN5arrow8internal12_GLOBAL__N_18BitmapOpISt7bit_andEEvPKhlS5_lllPh.exit: ; pred
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow8internal8BitmapOrEPNS_10MemoryPoolEPKhlS4_lll(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result") align 8 %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, i64 noundef %6, i64 noundef %7) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %4 to i64
   %8 = alloca %"class.arrow::Result", align 8     ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !132)
   %i.c = add nsw i64 %7, %6
@@ -1591,12 +1591,12 @@ iter.check:                                       ; preds = %bb.g
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.at = add i64 %i.aq, %i.r                     ; 2 uses
-  %i.au = add i64 %i.am, %i.b
-  %i.av = sub i64 %i.au, %i.at
+  %i.at = add i64 %i.am, %i.a
+  %i.au = add i64 %i.aq, %i.r                     ; 2 uses
+  %i.av = sub i64 %i.at, %i.au
   %diff.check = icmp ugt i64 %i.av, -32
-  %i.aw = add i64 %i.ao, %i.a
-  %i.ax = sub i64 %i.aw, %i.at
+  %i.aw = add i64 %i.ao, %i.b
+  %i.ax = sub i64 %i.aw, %i.au
   %diff.check11 = icmp ugt i64 %i.ax, -32
   %conflict.rdx = or i1 %diff.check, %diff.check11
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -1814,9 +1814,9 @@ _ZN5arrow8internal12_GLOBAL__N_18BitmapOpISt6bit_orEENS_6ResultISt10shared_ptrIN
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN5arrow8internal8BitmapOrEPKhlS2_lllPh(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #4 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = ptrtoaddr ptr %6 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %6 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = srem i64 %5, 8                           ; 3 uses
   %i.e = srem i64 %1, 8
   %i.f = icmp eq i64 %i.d, %i.e
@@ -1865,12 +1865,12 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ad = add i64 %i.aa, %i.c                     ; 2 uses
-  %i.ae = add i64 %i.w, %i.b
-  %i.af = sub i64 %i.ae, %i.ad
+  %i.ad = add i64 %i.w, %i.a
+  %i.ae = add i64 %i.aa, %i.b                     ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %diff.check = icmp ugt i64 %i.af, -32
-  %i.ag = add i64 %i.y, %i.a
-  %i.ah = sub i64 %i.ag, %i.ad
+  %i.ag = add i64 %i.y, %i.c
+  %i.ah = sub i64 %i.ag, %i.ae
   %diff.check9 = icmp ugt i64 %i.ah, -32
   %conflict.rdx = or i1 %diff.check, %diff.check9
   br i1 %conflict.rdx, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -2010,8 +2010,8 @@ _ZN5arrow8internal12_GLOBAL__N_18BitmapOpISt6bit_orEEvPKhlS5_lllPh.exit: ; preds
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow8internal9BitmapXorEPNS_10MemoryPoolEPKhlS4_lll(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result") align 8 %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4, i64 noundef %5, i64 noundef %6, i64 noundef %7) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %4 to i64
   %8 = alloca %"class.arrow::Result", align 8     ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !149)
   %i.c = add nsw i64 %7, %6
@@ -2089,12 +2089,12 @@ iter.check:                                       ; preds = %bb.g
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.at = add i64 %i.aq, %i.r                     ; 2 uses
-  %i.au = add i64 %i.am, %i.b
-  %i.av = sub i64 %i.au, %i.at
+  %i.at = add i64 %i.am, %i.a
+  %i.au = add i64 %i.aq, %i.r                     ; 2 uses
+  %i.av = sub i64 %i.at, %i.au
   %diff.check = icmp ugt i64 %i.av, -32
-  %i.aw = add i64 %i.ao, %i.a
-  %i.ax = sub i64 %i.aw, %i.at
+  %i.aw = add i64 %i.ao, %i.b
+  %i.ax = sub i64 %i.aw, %i.au
   %diff.check11 = icmp ugt i64 %i.ax, -32
   %conflict.rdx = or i1 %diff.check, %diff.check11
   br i1 %conflict.rdx, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -2312,9 +2312,9 @@ _ZN5arrow8internal12_GLOBAL__N_18BitmapOpISt7bit_xorEENS_6ResultISt10shared_ptrI
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN5arrow8internal9BitmapXorEPKhlS2_lllPh(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #4 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = ptrtoaddr ptr %6 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %6 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = srem i64 %5, 8                           ; 3 uses
   %i.e = srem i64 %1, 8
   %i.f = icmp eq i64 %i.d, %i.e
@@ -2363,12 +2363,12 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ad = add i64 %i.aa, %i.c                     ; 2 uses
-  %i.ae = add i64 %i.w, %i.b
-  %i.af = sub i64 %i.ae, %i.ad
+  %i.ad = add i64 %i.w, %i.a
+  %i.ae = add i64 %i.aa, %i.b                     ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %diff.check = icmp ugt i64 %i.af, -32
-  %i.ag = add i64 %i.y, %i.a
-  %i.ah = sub i64 %i.ag, %i.ad
+  %i.ag = add i64 %i.y, %i.c
+  %i.ah = sub i64 %i.ag, %i.ae
   %diff.check9 = icmp ugt i64 %i.ah, -32
   %conflict.rdx = or i1 %diff.check, %diff.check9
   br i1 %conflict.rdx, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -2628,9 +2628,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZN5arrow8internal12_GLOBAL__N_18BitmapOpINS0_8AndNotOpEEEvPKhlS5_lllPh(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr nofree noundef captures(none) %6) unnamed_addr #4 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = ptrtoaddr ptr %6 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %6 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = srem i64 %5, 8                           ; 3 uses
   %i.e = srem i64 %1, 8
   %i.f = icmp eq i64 %i.d, %i.e
@@ -2679,12 +2679,12 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ad = add i64 %i.aa, %i.c                     ; 2 uses
-  %i.ae = add i64 %i.w, %i.b
-  %i.af = sub i64 %i.ae, %i.ad
+  %i.ad = add i64 %i.w, %i.a
+  %i.ae = add i64 %i.aa, %i.b                     ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %diff.check = icmp ugt i64 %i.af, -32
-  %i.ag = add i64 %i.y, %i.a
-  %i.ah = sub i64 %i.ag, %i.ad
+  %i.ag = add i64 %i.y, %i.c
+  %i.ah = sub i64 %i.ag, %i.ae
   %diff.check39 = icmp ugt i64 %i.ah, -32
   %conflict.rdx = or i1 %diff.check, %diff.check39
   br i1 %conflict.rdx, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -2930,9 +2930,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_ZN5arrow8internal12_GLOBAL__N_18BitmapOpINS0_7OrNotOpEEEvPKhlS5_lllPh(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr nofree noundef captures(none) %6) unnamed_addr #4 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = ptrtoaddr ptr %6 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %6 to i64
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = srem i64 %5, 8                           ; 3 uses
   %i.e = srem i64 %1, 8
   %i.f = icmp eq i64 %i.d, %i.e
@@ -2981,12 +2981,12 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ad = add i64 %i.aa, %i.c                     ; 2 uses
-  %i.ae = add i64 %i.w, %i.b
-  %i.af = sub i64 %i.ae, %i.ad
+  %i.ad = add i64 %i.w, %i.a
+  %i.ae = add i64 %i.aa, %i.b                     ; 2 uses
+  %i.af = sub i64 %i.ad, %i.ae
   %diff.check = icmp ugt i64 %i.af, -32
-  %i.ag = add i64 %i.y, %i.a
-  %i.ah = sub i64 %i.ag, %i.ad
+  %i.ag = add i64 %i.y, %i.c
+  %i.ah = sub i64 %i.ag, %i.ae
   %diff.check39 = icmp ugt i64 %i.ah, -32
   %conflict.rdx = or i1 %diff.check, %diff.check39
   br i1 %conflict.rdx, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check

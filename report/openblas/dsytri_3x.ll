@@ -16,8 +16,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dsytri_3x_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr noundef %6, ptr nofree noundef readonly captures(none) %7, ptr noundef initializes((0, 4)) %8) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %4 to i64
-  %i.b = ptrtoaddr ptr %6 to i64
+  %i.a = ptrtoaddr ptr %6 to i64
+  %i.b = ptrtoaddr ptr %4 to i64
   %i.c = alloca i32, align 4                      ; 29 uses
   %i.d = alloca i32, align 4                      ; 18 uses
   %i.e = alloca i32, align 4                      ; 4 uses
@@ -99,10 +99,10 @@ iter.check:                                       ; preds = %bb.f
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.ah = shl nsw i64 %i.ae, 3
-  %9 = add i64 %i.ah, %i.b
   %i.ai = sext i32 %i.q to i64
   %i.aj = shl nsw i64 %i.ai, 3
-  %i.ak = add i64 %i.aj, %i.a
+  %9 = add i64 %i.ah, %i.a
+  %i.ak = add i64 %i.aj, %i.b
   %i.al = sub i64 %9, %i.ak
   %i.am = add i64 %i.al, -9
   %diff.check = icmp ult i64 %i.am, 127

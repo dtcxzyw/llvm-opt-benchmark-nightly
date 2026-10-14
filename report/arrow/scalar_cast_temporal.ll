@@ -204,10 +204,10 @@ _ZN5arrow7compute10ExecResult18array_span_mutableEv.exit: ; preds = %bb.a
 
 vector.memcheck110:                               ; preds = %.lr.ph47.i.preheader
   %i.ai = shl i64 %i.z, 2
-  %14 = add i64 %i.ai, %i.ac
-  %15 = shl i64 %i.s, 2
-  %i.aj = add i64 %15, %i.w
-  %i.ak = sub i64 %i.aj, %14
+  %14 = shl i64 %i.s, 2
+  %15 = add i64 %i.ai, %i.ac
+  %i.aj = add i64 %14, %i.w
+  %i.ak = sub i64 %i.aj, %15
   %diff.check111 = icmp ugt i64 %i.ak, -32
   br i1 %diff.check111, label %.lr.ph47.i.preheader124, label %vector.ph114
 
@@ -306,10 +306,10 @@ bb.d:                                             ; preds = %bb.c
 
 vector.memcheck:                                  ; preds = %.lr.ph45.i
   %i.bv = shl i64 %i.z, 2
-  %16 = add i64 %i.bv, %i.ac
-  %17 = shl i64 %i.s, 2
-  %i.bw = add i64 %17, %i.w
-  %i.bx = sub i64 %i.bw, %16
+  %16 = shl i64 %i.s, 2
+  %17 = add i64 %i.bv, %i.ac
+  %i.bw = add i64 %16, %i.w
+  %i.bx = sub i64 %i.bw, %17
   %diff.check = icmp ugt i64 %i.bx, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 

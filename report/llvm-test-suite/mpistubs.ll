@@ -113,8 +113,8 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef i32 @hypre_MPI_Allgather(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 3 uses
   switch i32 %2, label %.loopexit [
     i32 1, label %.preheader
     i32 0, label %.preheader27
@@ -128,7 +128,7 @@ bb.a:
 iter.check:                                       ; preds = %.preheader29
   %wide.trip.count = zext nneg i32 %1 to i64      ; 8 uses
   %min.iters.check = icmp ult i32 %1, 4
-  %i.d = sub i64 %i.a, %i.b
+  %i.d = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.d, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -214,7 +214,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph33.preheader:                               ; preds = %.preheader27
   %wide.trip.count42 = zext nneg i32 %1 to i64    ; 5 uses
   %min.iters.check62 = icmp ult i32 %1, 8
-  %i.t = sub i64 %i.a, %i.b
+  %i.t = sub i64 %i.b, %i.a
   %diff.check61 = icmp ugt i64 %i.t, -32
   %or.cond87 = or i1 %min.iters.check62, %diff.check61
   br i1 %or.cond87, label %.lr.ph33.preheader90, label %vector.ph63
@@ -272,7 +272,7 @@ middle.block70:                                   ; preds = %vector.body65
 .lr.ph35.preheader:                               ; preds = %.preheader
   %wide.trip.count47 = zext nneg i32 %1 to i64    ; 5 uses
   %min.iters.check76 = icmp ult i32 %1, 8
-  %i.af = sub i64 %i.a, %i.b
+  %i.af = sub i64 %i.b, %i.a
   %diff.check74 = icmp ugt i64 %i.af, -32
   %or.cond88 = or i1 %min.iters.check76, %diff.check74
   br i1 %or.cond88, label %.lr.ph35.preheader89, label %vector.ph77
@@ -405,8 +405,8 @@ middle.block84:                                   ; preds = %vector.body79
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef i32 @hypre_MPI_Allgatherv(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readnone captures(none) %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 3 uses
   switch i32 %2, label %hypre_MPI_Allgather.exit [
     i32 1, label %.preheader.i
     i32 0, label %.preheader27.i
@@ -420,7 +420,7 @@ bb.a:
 iter.check:                                       ; preds = %.preheader29.i
   %wide.trip.count.i = zext nneg i32 %1 to i64    ; 8 uses
   %min.iters.check = icmp ult i32 %1, 4
-  %i.d = sub i64 %i.a, %i.b
+  %i.d = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.d, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -506,7 +506,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph33.preheader.i:                             ; preds = %.preheader27.i
   %wide.trip.count42.i = zext nneg i32 %1 to i64  ; 5 uses
   %min.iters.check23 = icmp ult i32 %1, 8
-  %i.t = sub i64 %i.a, %i.b
+  %i.t = sub i64 %i.b, %i.a
   %diff.check22 = icmp ugt i64 %i.t, -32
   %or.cond48 = or i1 %min.iters.check23, %diff.check22
   br i1 %or.cond48, label %.lr.ph33.i.preheader, label %vector.ph24
@@ -564,7 +564,7 @@ middle.block31:                                   ; preds = %vector.body26
 .lr.ph35.preheader.i:                             ; preds = %.preheader.i
   %wide.trip.count47.i = zext nneg i32 %1 to i64  ; 5 uses
   %min.iters.check37 = icmp ult i32 %1, 8
-  %i.af = sub i64 %i.a, %i.b
+  %i.af = sub i64 %i.b, %i.a
   %diff.check35 = icmp ugt i64 %i.af, -32
   %or.cond49 = or i1 %min.iters.check37, %diff.check35
   br i1 %or.cond49, label %.lr.ph35.i.preheader, label %vector.ph38
@@ -697,8 +697,8 @@ hypre_MPI_Allgather.exit:                         ; preds = %.lr.ph.i.prol.loope
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef i32 @hypre_MPI_Gather(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 3 uses
   switch i32 %2, label %hypre_MPI_Allgather.exit [
     i32 1, label %.preheader.i
     i32 0, label %.preheader27.i
@@ -712,7 +712,7 @@ bb.a:
 iter.check:                                       ; preds = %.preheader29.i
   %wide.trip.count.i = zext nneg i32 %1 to i64    ; 8 uses
   %min.iters.check = icmp ult i32 %1, 4
-  %i.d = sub i64 %i.a, %i.b
+  %i.d = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.d, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -798,7 +798,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph33.preheader.i:                             ; preds = %.preheader27.i
   %wide.trip.count42.i = zext nneg i32 %1 to i64  ; 5 uses
   %min.iters.check23 = icmp ult i32 %1, 8
-  %i.t = sub i64 %i.a, %i.b
+  %i.t = sub i64 %i.b, %i.a
   %diff.check22 = icmp ugt i64 %i.t, -32
   %or.cond48 = or i1 %min.iters.check23, %diff.check22
   br i1 %or.cond48, label %.lr.ph33.i.preheader, label %vector.ph24
@@ -856,7 +856,7 @@ middle.block31:                                   ; preds = %vector.body26
 .lr.ph35.preheader.i:                             ; preds = %.preheader.i
   %wide.trip.count47.i = zext nneg i32 %1 to i64  ; 5 uses
   %min.iters.check37 = icmp ult i32 %1, 8
-  %i.af = sub i64 %i.a, %i.b
+  %i.af = sub i64 %i.b, %i.a
   %diff.check35 = icmp ugt i64 %i.af, -32
   %or.cond49 = or i1 %min.iters.check37, %diff.check35
   br i1 %or.cond49, label %.lr.ph35.i.preheader, label %vector.ph38
@@ -989,8 +989,8 @@ hypre_MPI_Allgather.exit:                         ; preds = %.lr.ph.i.prol.loope
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef i32 @hypre_MPI_Scatter(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7) local_unnamed_addr #2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 3 uses
   switch i32 %2, label %hypre_MPI_Allgather.exit [
     i32 1, label %.preheader.i
     i32 0, label %.preheader27.i
@@ -1004,7 +1004,7 @@ bb.a:
 iter.check:                                       ; preds = %.preheader29.i
   %wide.trip.count.i = zext nneg i32 %1 to i64    ; 8 uses
   %min.iters.check = icmp ult i32 %1, 4
-  %i.d = sub i64 %i.a, %i.b
+  %i.d = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.d, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -1090,7 +1090,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph33.preheader.i:                             ; preds = %.preheader27.i
   %wide.trip.count42.i = zext nneg i32 %1 to i64  ; 5 uses
   %min.iters.check23 = icmp ult i32 %1, 8
-  %i.t = sub i64 %i.a, %i.b
+  %i.t = sub i64 %i.b, %i.a
   %diff.check22 = icmp ugt i64 %i.t, -32
   %or.cond48 = or i1 %min.iters.check23, %diff.check22
   br i1 %or.cond48, label %.lr.ph33.i.preheader, label %vector.ph24
@@ -1148,7 +1148,7 @@ middle.block31:                                   ; preds = %vector.body26
 .lr.ph35.preheader.i:                             ; preds = %.preheader.i
   %wide.trip.count47.i = zext nneg i32 %1 to i64  ; 5 uses
   %min.iters.check37 = icmp ult i32 %1, 8
-  %i.af = sub i64 %i.a, %i.b
+  %i.af = sub i64 %i.b, %i.a
   %diff.check35 = icmp ugt i64 %i.af, -32
   %or.cond49 = or i1 %min.iters.check37, %diff.check35
   br i1 %or.cond49, label %.lr.ph35.i.preheader, label %vector.ph38

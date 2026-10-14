@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %bb.f, %_ZNKSt3__16v
   %i.u = phi ptr [ %.pre24.i.i, %bb.f ], [ %i.j, %_ZNKSt3__16vectorIhNS_9allocatorIhEEE11__recommendB8ne180100Em.exit.i.i ] ; 6 uses
   %i.v = phi ptr [ %.pre.i.i, %bb.f ], [ %i.e, %_ZNKSt3__16vectorIhNS_9allocatorIhEEE11__recommendB8ne180100Em.exit.i.i ] ; 8 uses
   %storemerge.i.i.i = phi ptr [ %i.t, %bb.f ], [ null, %_ZNKSt3__16vectorIhNS_9allocatorIhEEE11__recommendB8ne180100Em.exit.i.i ] ; 3 uses
-  %i.w = ptrtoaddr ptr %i.v to i64                ; 2 uses
-  %storemerge.i.i.i11 = ptrtoaddr ptr %storemerge.i.i.i to i64
+  %i.w = ptrtoaddr ptr %storemerge.i.i.i to i64
+  %storemerge.i.i.i11 = ptrtoaddr ptr %i.v to i64 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %storemerge.i.i.i, i64 %i.m ; 9 uses
   %i.y = getelementptr inbounds nuw i8, ptr %storemerge.i.i.i, i64 %.0.i.i.i
   store i8 %i.c, ptr %i.x, align 1, !tbaa !111
@@ -215,13 +215,13 @@ bb.g:                                             ; preds = %bb.f, %_ZNKSt3__16v
 
 iter.check:                                       ; preds = %bb.g
   %i.aa = ptrtoaddr ptr %i.u to i64               ; 3 uses
-  %i.ab = sub i64 %i.w, %i.aa                     ; 7 uses
+  %i.ab = sub i64 %storemerge.i.i.i11, %i.aa      ; 7 uses
   %min.iters.check = icmp ult i64 %i.ab, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ac = add i64 %i.w, %i.l
-  %i.ad = add i64 %storemerge.i.i.i11, %i.k
+  %i.ac = add i64 %storemerge.i.i.i11, %i.l
+  %i.ad = add i64 %i.w, %i.k
   %i.ae = sub i64 %i.ad, %i.ac
   %diff.check = icmp ugt i64 %i.ae, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %vector.main.loop.iter.check

@@ -205,9 +205,9 @@ iter.check144:                                    ; preds = %_ZSt22__uninitializ
   br i1 %min.iters.check128, label %.lr.ph.i.i55.preheader, label %vector.memcheck126
 
 vector.memcheck126:                               ; preds = %iter.check144
-  %i.cn = add i64 %i.cj, %i.b
-  %i.co = add i64 %i.j, %i.c
-  %i.cp = sub i64 %i.co, %i.cn
+  %i.cn = add i64 %i.j, %i.c
+  %i.co = add i64 %i.cj, %i.b
+  %i.cp = sub i64 %i.cn, %i.co
   %diff.check127 = icmp ugt i64 %i.cp, -32
   br i1 %diff.check127, label %.lr.ph.i.i55.preheader, label %vector.main.loop.iter.check129
 

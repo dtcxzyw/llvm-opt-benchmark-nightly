@@ -68,7 +68,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = call noalias ptr @malloc(i64 noundef %i.c) #12, !noalias !39 ; 8 uses
-  %i.g = ptrtoaddr ptr %i.f to i64                ; 3 uses
+  %i.g = ptrtoaddr ptr %i.f to i64                ; 2 uses
   %i.h = icmp eq ptr %i.f, null
   br i1 %i.h, label %.noexc.i.i.i.i.i.i.i, label %iter.check
 
@@ -94,17 +94,17 @@ iter.check:                                       ; preds = %bb.d
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.l = ptrtoaddr ptr %i.j to i64                ; 3 uses
-  %10 = add i64 %i.k, %i.l
-  %i.m = sub i64 %10, %i.g
+  %i.l = ptrtoaddr ptr %i.j to i64                ; 2 uses
+  %10 = sub i64 %i.g, %i.l                        ; 2 uses
+  %i.m = sub i64 %i.k, %10
   %diff.check = icmp ugt i64 %i.m, -32
   %i.n = add i64 %i.c, %i.l
   %i.o = sub i64 %i.n, %i.g
   %diff.check30 = icmp ugt i64 %i.o, -32
   %conflict.rdx = or i1 %diff.check, %diff.check30
-  %11 = sub i64 %i.l, %i.g
-  %diff.check31 = icmp ugt i64 %11, -32
-  %conflict.rdx32 = or i1 %conflict.rdx, %diff.check31
+  %11 = add i64 %10, -1
+  %diff.check34 = icmp ult i64 %11, 31
+  %conflict.rdx32 = or i1 %conflict.rdx, %diff.check34
   br i1 %conflict.rdx32, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

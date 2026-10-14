@@ -50,16 +50,16 @@ iter.check:                                       ; preds = %.preheader62, %._cr
   %.051.lcssa88 = phi ptr [ %i.m, %._crit_edge ], [ %0, %.preheader62 ] ; 8 uses
   %.053.lcssa87 = phi ptr [ %i.n, %._crit_edge ], [ %1, %.preheader62 ] ; 18 uses
   %.055.lcssa86 = phi i64 [ %i.l, %._crit_edge ], [ %2, %.preheader62 ] ; 14 uses
-  %.053.lcssa8794 = ptrtoaddr ptr %.053.lcssa87 to i64 ; 3 uses
-  %.0.lcssa8996 = ptrtoaddr ptr %.0.lcssa89 to i64 ; 2 uses
+  %.053.lcssa8794 = ptrtoaddr ptr %.0.lcssa89 to i64 ; 2 uses
+  %.0.lcssa8996 = ptrtoaddr ptr %.053.lcssa87 to i64 ; 3 uses
   %min.iters.check = icmp ult i64 %.055.lcssa86, 4
   br i1 %min.iters.check, label %.preheader60.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %.051.lcssa8895 = ptrtoaddr ptr %.051.lcssa88 to i64
-  %i.p = sub i64 %.051.lcssa8895, %.053.lcssa8794
+  %i.p = sub i64 %.051.lcssa8895, %.0.lcssa8996
   %diff.check = icmp ugt i64 %i.p, -32
-  %i.q = sub i64 %.0.lcssa8996, %.053.lcssa8794
+  %i.q = sub i64 %.053.lcssa8794, %.0.lcssa8996
   %diff.check97 = icmp ugt i64 %i.q, -32
   %conflict.rdx = or i1 %diff.check, %diff.check97
   br i1 %conflict.rdx, label %.preheader60.preheader, label %vector.main.loop.iter.check
@@ -175,7 +175,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check124:                                    ; preds = %.preheader60.prol.loopexit, %.preheader60, %vec.epilog.middle.block
   %i.bp = sub nuw nsw i64 16, %.055.lcssa86       ; 2 uses
   %min.iters.check110 = icmp ugt i64 %.055.lcssa86, 8
-  %i.bq = sub i64 %.0.lcssa8996, %.053.lcssa8794
+  %i.bq = sub i64 %.053.lcssa8794, %.0.lcssa8996
   %diff.check109 = icmp ugt i64 %i.bq, -32
   %or.cond = select i1 %min.iters.check110, i1 true, i1 %diff.check109
   br i1 %or.cond, label %.lr.ph.preheader, label %vec.epilog.ph128

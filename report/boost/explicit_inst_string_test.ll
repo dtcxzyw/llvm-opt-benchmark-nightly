@@ -204,11 +204,11 @@ iter.check405:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check389, label %.lr.ph.i127.preheader, label %vector.memcheck387
 
 vector.memcheck387:                               ; preds = %iter.check405
-  %i.ec = add i64 %i.h, %i.at
-  %i.ed = add i64 %i.ec, %i.i
-  %i.ee = add i64 %i.at, %i.j
-  %i.ef = add i64 %i.ee, %i.h
-  %i.eg = sub i64 %i.ef, %i.ed
+  %i.ec = add i64 %i.at, %i.j
+  %i.ed = add i64 %i.h, %i.at
+  %i.ee = add i64 %i.ed, %i.i
+  %i.ef = add i64 %i.ec, %i.h
+  %i.eg = sub i64 %i.ef, %i.ee
   %diff.check388 = icmp ugt i64 %i.eg, -32
   br i1 %diff.check388, label %.lr.ph.i127.preheader, label %vector.main.loop.iter.check390
 
@@ -611,11 +611,11 @@ iter.check336:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check320, label %.lr.ph.i134.preheader, label %vector.memcheck318
 
 vector.memcheck318:                               ; preds = %iter.check336
-  %i.cl = add i64 %3, %i.h
-  %i.cm = add i64 %i.cl, %i.ar
-  %i.cn = add i64 %5, %i.ar
-  %i.co = add i64 %i.cn, %i.h
-  %i.cp = sub i64 %i.co, %i.cm
+  %i.cl = add i64 %5, %i.ar
+  %i.cm = add i64 %3, %i.h
+  %i.cn = add i64 %i.cm, %i.ar
+  %i.co = add i64 %i.cl, %i.h
+  %i.cp = sub i64 %i.co, %i.cn
   %diff.check319 = icmp ugt i64 %i.cp, -32
   br i1 %diff.check319, label %.lr.ph.i134.preheader, label %vector.main.loop.iter.check321
 
@@ -1018,16 +1018,16 @@ bb.a:
   br i1 %i.d, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.f = ptrtoaddr ptr %3 to i64
+  %i.e = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.g = ptrtoaddr ptr %2 to i64
-  %i.h = xor i64 %i.e, -1
+  %i.h = xor i64 %i.f, -1
   %i.i = add i64 %i.h, %i.g
   %i.j = add i64 %4, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.j)
   %i.k = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.k, 4
-  %i.l = sub i64 %i.f, %i.e
+  %i.l = sub i64 %i.e, %i.f
   %diff.check = icmp ugt i64 %i.l, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -1182,16 +1182,16 @@ bb.a:
   br i1 %i.e, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.g = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %3 to i64
+  %i.g = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.h = ptrtoaddr ptr %2 to i64
-  %i.i = xor i64 %i.f, -1
+  %i.i = xor i64 %i.g, -1
   %i.j = add i64 %i.i, %i.h
   %i.k = add i64 %i.a, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.j, i64 %i.k)
   %i.l = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.l, 4
-  %i.m = sub i64 %i.g, %i.f
+  %i.m = sub i64 %i.f, %i.g
   %diff.check = icmp ugt i64 %i.m, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -1345,16 +1345,16 @@ bb.a:
   br i1 %i.d, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.f = ptrtoaddr ptr %3 to i64
+  %i.e = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.g = ptrtoaddr ptr %2 to i64
-  %i.h = xor i64 %i.e, -1
+  %i.h = xor i64 %i.f, -1
   %i.i = add i64 %i.h, %i.g
   %i.j = add i64 %4, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.j)
   %i.k = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.k, 4
-  %i.l = sub i64 %i.f, %i.e
+  %i.l = sub i64 %i.e, %i.f
   %diff.check = icmp ugt i64 %i.l, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -1757,11 +1757,11 @@ iter.check405:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check389, label %.lr.ph.i127.preheader, label %vector.memcheck387
 
 vector.memcheck387:                               ; preds = %iter.check405
-  %i.ec = add i64 %i.h, %i.at
-  %i.ed = add i64 %i.ec, %i.i
-  %i.ee = add i64 %i.at, %i.j
-  %i.ef = add i64 %i.ee, %i.h
-  %i.eg = sub i64 %i.ef, %i.ed
+  %i.ec = add i64 %i.at, %i.j
+  %i.ed = add i64 %i.h, %i.at
+  %i.ee = add i64 %i.ed, %i.i
+  %i.ef = add i64 %i.ec, %i.h
+  %i.eg = sub i64 %i.ef, %i.ee
   %diff.check388 = icmp ugt i64 %i.eg, -32
   br i1 %diff.check388, label %.lr.ph.i127.preheader, label %vector.main.loop.iter.check390
 
@@ -2164,11 +2164,11 @@ iter.check336:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check320, label %.lr.ph.i134.preheader, label %vector.memcheck318
 
 vector.memcheck318:                               ; preds = %iter.check336
-  %i.cl = add i64 %3, %i.h
-  %i.cm = add i64 %i.cl, %i.ar
-  %i.cn = add i64 %5, %i.ar
-  %i.co = add i64 %i.cn, %i.h
-  %i.cp = sub i64 %i.co, %i.cm
+  %i.cl = add i64 %5, %i.ar
+  %i.cm = add i64 %3, %i.h
+  %i.cn = add i64 %i.cm, %i.ar
+  %i.co = add i64 %i.cl, %i.h
+  %i.cp = sub i64 %i.co, %i.cn
   %diff.check319 = icmp ugt i64 %i.cp, -32
   br i1 %diff.check319, label %.lr.ph.i134.preheader, label %vector.main.loop.iter.check321
 
@@ -2571,16 +2571,16 @@ bb.a:
   br i1 %i.d, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.f = ptrtoaddr ptr %3 to i64
+  %i.e = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.g = ptrtoaddr ptr %2 to i64
-  %i.h = xor i64 %i.e, -1
+  %i.h = xor i64 %i.f, -1
   %i.i = add i64 %i.h, %i.g
   %i.j = add i64 %4, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.j)
   %i.k = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.k, 4
-  %i.l = sub i64 %i.f, %i.e
+  %i.l = sub i64 %i.e, %i.f
   %diff.check = icmp ugt i64 %i.l, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -2735,16 +2735,16 @@ bb.a:
   br i1 %i.e, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.g = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %3 to i64
+  %i.g = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.h = ptrtoaddr ptr %2 to i64
-  %i.i = xor i64 %i.f, -1
+  %i.i = xor i64 %i.g, -1
   %i.j = add i64 %i.i, %i.h
   %i.k = add i64 %i.a, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.j, i64 %i.k)
   %i.l = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.l, 4
-  %i.m = sub i64 %i.g, %i.f
+  %i.m = sub i64 %i.f, %i.g
   %diff.check = icmp ugt i64 %i.m, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -2898,16 +2898,16 @@ bb.a:
   br i1 %i.d, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.f = ptrtoaddr ptr %3 to i64
+  %i.e = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.g = ptrtoaddr ptr %2 to i64
-  %i.h = xor i64 %i.e, -1
+  %i.h = xor i64 %i.f, -1
   %i.i = add i64 %i.h, %i.g
   %i.j = add i64 %4, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.j)
   %i.k = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.k, 4
-  %i.l = sub i64 %i.f, %i.e
+  %i.l = sub i64 %i.e, %i.f
   %diff.check = icmp ugt i64 %i.l, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -3310,11 +3310,11 @@ iter.check405:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check389, label %.lr.ph.i127.preheader, label %vector.memcheck387
 
 vector.memcheck387:                               ; preds = %iter.check405
-  %i.ec = add i64 %i.h, %i.at
-  %i.ed = add i64 %i.ec, %i.i
-  %i.ee = add i64 %i.at, %i.j
-  %i.ef = add i64 %i.ee, %i.h
-  %i.eg = sub i64 %i.ef, %i.ed
+  %i.ec = add i64 %i.at, %i.j
+  %i.ed = add i64 %i.h, %i.at
+  %i.ee = add i64 %i.ed, %i.i
+  %i.ef = add i64 %i.ec, %i.h
+  %i.eg = sub i64 %i.ef, %i.ee
   %diff.check388 = icmp ugt i64 %i.eg, -32
   br i1 %diff.check388, label %.lr.ph.i127.preheader, label %vector.main.loop.iter.check390
 
@@ -3717,11 +3717,11 @@ iter.check336:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check320, label %.lr.ph.i134.preheader, label %vector.memcheck318
 
 vector.memcheck318:                               ; preds = %iter.check336
-  %i.cl = add i64 %3, %i.h
-  %i.cm = add i64 %i.cl, %i.ar
-  %i.cn = add i64 %5, %i.ar
-  %i.co = add i64 %i.cn, %i.h
-  %i.cp = sub i64 %i.co, %i.cm
+  %i.cl = add i64 %5, %i.ar
+  %i.cm = add i64 %3, %i.h
+  %i.cn = add i64 %i.cm, %i.ar
+  %i.co = add i64 %i.cl, %i.h
+  %i.cp = sub i64 %i.co, %i.cn
   %diff.check319 = icmp ugt i64 %i.cp, -32
   br i1 %diff.check319, label %.lr.ph.i134.preheader, label %vector.main.loop.iter.check321
 
@@ -4124,16 +4124,16 @@ bb.a:
   br i1 %i.d, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.f = ptrtoaddr ptr %3 to i64
+  %i.e = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.g = ptrtoaddr ptr %2 to i64
-  %i.h = xor i64 %i.e, -1
+  %i.h = xor i64 %i.f, -1
   %i.i = add i64 %i.h, %i.g
   %i.j = add i64 %4, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.j)
   %i.k = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.k, 4
-  %i.l = sub i64 %i.f, %i.e
+  %i.l = sub i64 %i.e, %i.f
   %diff.check = icmp ugt i64 %i.l, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -4288,16 +4288,16 @@ bb.a:
   br i1 %i.e, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.g = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %3 to i64
+  %i.g = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.h = ptrtoaddr ptr %2 to i64
-  %i.i = xor i64 %i.f, -1
+  %i.i = xor i64 %i.g, -1
   %i.j = add i64 %i.i, %i.h
   %i.k = add i64 %i.a, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.j, i64 %i.k)
   %i.l = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.l, 4
-  %i.m = sub i64 %i.g, %i.f
+  %i.m = sub i64 %i.f, %i.g
   %diff.check = icmp ugt i64 %i.m, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -4451,16 +4451,16 @@ bb.a:
   br i1 %i.d, label %iter.check, label %._crit_edge.i
 
 iter.check:                                       ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.f = ptrtoaddr ptr %3 to i64
+  %i.e = ptrtoaddr ptr %3 to i64
+  %i.f = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.g = ptrtoaddr ptr %2 to i64
-  %i.h = xor i64 %i.e, -1
+  %i.h = xor i64 %i.f, -1
   %i.i = add i64 %i.h, %i.g
   %i.j = add i64 %4, -1
   %umin = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.j)
   %i.k = add i64 %umin, 1                         ; 7 uses
   %min.iters.check = icmp ult i64 %i.k, 4
-  %i.l = sub i64 %i.f, %i.e
+  %i.l = sub i64 %i.e, %i.f
   %diff.check = icmp ugt i64 %i.l, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -4863,11 +4863,11 @@ iter.check449:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check433, label %.lr.ph.i130.preheader, label %vector.memcheck431
 
 vector.memcheck431:                               ; preds = %iter.check449
-  %i.fq = add i64 %i.h, %i.at
-  %i.fr = add i64 %i.fq, %i.i
-  %i.fs = add i64 %i.at, %i.j
-  %i.ft = add i64 %i.fs, %i.h
-  %i.fu = sub i64 %i.ft, %i.fr
+  %i.fq = add i64 %i.at, %i.j
+  %i.fr = add i64 %i.h, %i.at
+  %i.fs = add i64 %i.fr, %i.i
+  %i.ft = add i64 %i.fq, %i.h
+  %i.fu = sub i64 %i.ft, %i.fs
   %diff.check432 = icmp ugt i64 %i.fu, -32
   br i1 %diff.check432, label %.lr.ph.i130.preheader, label %vector.main.loop.iter.check434
 
@@ -5270,11 +5270,11 @@ iter.check449:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check433, label %.lr.ph.i130.preheader, label %vector.memcheck431
 
 vector.memcheck431:                               ; preds = %iter.check449
-  %i.fq = add i64 %i.h, %i.at
-  %i.fr = add i64 %i.fq, %i.i
-  %i.fs = add i64 %i.at, %i.j
-  %i.ft = add i64 %i.fs, %i.h
-  %i.fu = sub i64 %i.ft, %i.fr
+  %i.fq = add i64 %i.at, %i.j
+  %i.fr = add i64 %i.h, %i.at
+  %i.fs = add i64 %i.fr, %i.i
+  %i.ft = add i64 %i.fq, %i.h
+  %i.fu = sub i64 %i.ft, %i.fs
   %diff.check432 = icmp ugt i64 %i.fu, -32
   br i1 %diff.check432, label %.lr.ph.i130.preheader, label %vector.main.loop.iter.check434
 
@@ -5677,11 +5677,11 @@ iter.check449:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check433, label %.lr.ph.i130.preheader, label %vector.memcheck431
 
 vector.memcheck431:                               ; preds = %iter.check449
-  %i.fq = add i64 %i.h, %i.at
-  %i.fr = add i64 %i.fq, %i.i
-  %i.fs = add i64 %i.at, %i.j
-  %i.ft = add i64 %i.fs, %i.h
-  %i.fu = sub i64 %i.ft, %i.fr
+  %i.fq = add i64 %i.at, %i.j
+  %i.fr = add i64 %i.h, %i.at
+  %i.fs = add i64 %i.fr, %i.i
+  %i.ft = add i64 %i.fq, %i.h
+  %i.fu = sub i64 %i.ft, %i.fs
   %diff.check432 = icmp ugt i64 %i.fu, -32
   br i1 %diff.check432, label %.lr.ph.i130.preheader, label %vector.main.loop.iter.check434
 

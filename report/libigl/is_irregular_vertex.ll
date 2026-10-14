@@ -205,10 +205,10 @@ _ZN5Eigen8internal13first_alignedILi16EilEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
   br i1 %min.iters.check378, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader524, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.preheader
+  %11 = shl i64 %i.ec, 2
   %i.ew = select i1 %.not, i64 %i.dp, i64 %i.ei
   %i.ex = shl i64 %i.ew, 2
   %i.ey = add i64 %i.ex, %i.eg
-  %11 = shl i64 %i.ec, 2
   %i.ez = add i64 %11, %i.eb
   %i.fa = sub i64 %i.ez, %i.ey
   %diff.check = icmp ugt i64 %i.fa, -32
@@ -302,10 +302,10 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
 vector.memcheck389:                               ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.preheader
   %i.gg = select i1 %.not, i64 %i.dp, i64 %i.ei
   %i.gh = shl i64 %i.gg, 2
-  %12 = add i64 %i.gh, %i.eg
-  %13 = shl i64 %i.ec, 2
-  %i.gi = add i64 %13, %i.eb
-  %i.gj = sub i64 %i.gi, %12
+  %12 = shl i64 %i.ec, 2
+  %13 = add i64 %i.gh, %i.eg
+  %i.gi = add i64 %12, %i.eb
+  %i.gj = sub i64 %i.gi, %13
   %diff.check390 = icmp ugt i64 %i.gj, -32
   br i1 %diff.check390, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.preheader523, label %vector.ph393
 

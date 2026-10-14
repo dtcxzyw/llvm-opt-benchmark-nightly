@@ -205,16 +205,16 @@ iter.check:                                       ; preds = %.preheader51, %._cr
   %.043.lcssa76 = phi ptr [ %i.i, %._crit_edge ], [ %0, %.preheader51 ] ; 8 uses
   %.045.lcssa75 = phi ptr [ %i.j, %._crit_edge ], [ %1, %.preheader51 ] ; 18 uses
   %.047.lcssa74 = phi i64 [ %i.h, %._crit_edge ], [ %2, %.preheader51 ] ; 14 uses
-  %.045.lcssa7582 = ptrtoaddr ptr %.045.lcssa75 to i64 ; 3 uses
-  %.0.lcssa7784 = ptrtoaddr ptr %.0.lcssa77 to i64 ; 2 uses
+  %.045.lcssa7582 = ptrtoaddr ptr %.0.lcssa77 to i64 ; 2 uses
+  %.0.lcssa7784 = ptrtoaddr ptr %.045.lcssa75 to i64 ; 3 uses
   %min.iters.check = icmp ult i64 %.047.lcssa74, 4
   br i1 %min.iters.check, label %.preheader50.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %.043.lcssa7683 = ptrtoaddr ptr %.043.lcssa76 to i64
-  %i.l = sub i64 %.043.lcssa7683, %.045.lcssa7582
+  %i.l = sub i64 %.043.lcssa7683, %.0.lcssa7784
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %.0.lcssa7784, %.045.lcssa7582
+  %i.m = sub i64 %.045.lcssa7582, %.0.lcssa7784
   %diff.check85 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check85
   br i1 %conflict.rdx, label %.preheader50.preheader, label %vector.main.loop.iter.check
@@ -330,7 +330,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check112:                                    ; preds = %.preheader50.prol.loopexit, %.preheader50, %vec.epilog.middle.block
   %i.bl = sub nuw nsw i64 16, %.047.lcssa74       ; 2 uses
   %min.iters.check98 = icmp ugt i64 %.047.lcssa74, 8
-  %i.bm = sub i64 %.0.lcssa7784, %.045.lcssa7582
+  %i.bm = sub i64 %.045.lcssa7582, %.0.lcssa7784
   %diff.check97 = icmp ugt i64 %i.bm, -32
   %or.cond = select i1 %min.iters.check98, i1 true, i1 %diff.check97
   br i1 %or.cond, label %.lr.ph61.preheader, label %vec.epilog.ph116
@@ -733,8 +733,8 @@ bb.t:                                             ; preds = %bb.d, %bb.f, %bb.h,
 ; Function Attrs: mustprogress nounwind uwtable
 define range(i32 0, 2) i32 @EVP_DecryptFinal_ex(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %2) local_unnamed_addr #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   store i32 0, ptr %2, align 4, !tbaa !82
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.d = load i32, ptr %i.c, align 8, !tbaa !169
@@ -849,7 +849,7 @@ iter.check:                                       ; preds = %bb.q
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.an = sub i64 %i.b, %i.a
+  %i.an = sub i64 %i.a, %i.b
   %i.ao = add i64 %i.an, -113
   %diff.check = icmp ult i64 %i.ao, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -1252,8 +1252,8 @@ _ZL14OPENSSL_memcpyPvPKvm.exit50:                 ; preds = %._crit_edge, %bb.g
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef i32 @CMAC_Final(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !164    ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.e = load i32, ptr %i.d, align 4, !tbaa !182  ; 6 uses
@@ -1299,10 +1299,10 @@ iter.check:                                       ; preds = %_ZL14OPENSSL_memset
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.x = add i64 %i.u, %i.a
-  %i.y = sub i64 %i.x, %i.b
+  %i.x = add i64 %i.u, %i.b
+  %i.y = sub i64 %i.x, %i.a
   %diff.check = icmp ugt i64 %i.y, -32
-  %i.z = sub i64 %i.b, %i.a
+  %i.z = sub i64 %i.a, %i.b
   %i.aa = add i64 %i.z, -185
   %diff.check45 = icmp ult i64 %i.aa, 31
   %conflict.rdx = or i1 %diff.check, %diff.check45
@@ -1705,16 +1705,16 @@ iter.check:                                       ; preds = %._crit_edge.i, %.pr
   %.043.lcssa76.i = phi ptr [ %i.u, %._crit_edge.i ], [ %2, %.preheader51.i ] ; 8 uses
   %.045.lcssa75.i = phi ptr [ %i.v, %._crit_edge.i ], [ %1, %.preheader51.i ] ; 18 uses
   %.047.lcssa74.i = phi i64 [ %i.t, %._crit_edge.i ], [ %3, %.preheader51.i ] ; 14 uses
-  %.045.lcssa75.i33 = ptrtoaddr ptr %.045.lcssa75.i to i64 ; 3 uses
-  %.0.lcssa77.i35 = ptrtoaddr ptr %.0.lcssa77.i to i64 ; 2 uses
+  %.045.lcssa75.i33 = ptrtoaddr ptr %.0.lcssa77.i to i64 ; 2 uses
+  %.0.lcssa77.i35 = ptrtoaddr ptr %.045.lcssa75.i to i64 ; 3 uses
   %min.iters.check = icmp ult i64 %.047.lcssa74.i, 4
   br i1 %min.iters.check, label %.preheader50.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %.043.lcssa76.i34 = ptrtoaddr ptr %.043.lcssa76.i to i64
-  %i.x = sub i64 %.043.lcssa76.i34, %.045.lcssa75.i33
+  %i.x = sub i64 %.043.lcssa76.i34, %.0.lcssa77.i35
   %diff.check = icmp ugt i64 %i.x, -32
-  %i.y = sub i64 %.0.lcssa77.i35, %.045.lcssa75.i33
+  %i.y = sub i64 %.045.lcssa75.i33, %.0.lcssa77.i35
   %diff.check36 = icmp ugt i64 %i.y, -32
   %conflict.rdx = or i1 %diff.check, %diff.check36
   br i1 %conflict.rdx, label %.preheader50.i.preheader, label %vector.main.loop.iter.check
@@ -1830,7 +1830,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check63:                                     ; preds = %.preheader50.i.prol.loopexit, %.preheader50.i, %vec.epilog.middle.block
   %i.bx = sub nuw nsw i64 16, %.047.lcssa74.i     ; 2 uses
   %min.iters.check49 = icmp ugt i64 %.047.lcssa74.i, 8
-  %i.by = sub i64 %.0.lcssa77.i35, %.045.lcssa75.i33
+  %i.by = sub i64 %.045.lcssa75.i33, %.0.lcssa77.i35
   %diff.check48 = icmp ugt i64 %i.by, -32
   %or.cond = select i1 %min.iters.check49, i1 true, i1 %diff.check48
   br i1 %or.cond, label %.lr.ph61.i.preheader, label %vec.epilog.ph67

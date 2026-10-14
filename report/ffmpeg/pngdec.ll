@@ -93,9 +93,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @ff_png_filter_row(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %3 to i64                  ; 5 uses
-  %i.b = ptrtoaddr ptr %4 to i64                  ; 3 uses
-  %i.c = ptrtoaddr ptr %1 to i64                  ; 8 uses
+  %i.a = ptrtoaddr ptr %4 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 8 uses
+  %i.c = ptrtoaddr ptr %3 to i64                  ; 5 uses
   switch i32 %2, label %.loopexit [
     i32 0, label %bb.b
     i32 1, label %.preheader
@@ -114,9 +114,9 @@ iter.check:                                       ; preds = %.preheader335
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.e = sub i64 %i.b, %i.c
+  %i.e = sub i64 %i.a, %i.b
   %diff.check = icmp ugt i64 %i.e, -32
-  %i.f = sub i64 %i.a, %i.c
+  %i.f = sub i64 %i.c, %i.b
   %diff.check505 = icmp ugt i64 %i.f, -32
   %conflict.rdx = or i1 %diff.check, %diff.check505
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -217,9 +217,9 @@ iter.check535:                                    ; preds = %.preheader334
   br i1 %min.iters.check520, label %.lr.ph338.preheader, label %vector.memcheck516
 
 vector.memcheck516:                               ; preds = %iter.check535
-  %i.ae = sub i64 %i.b, %i.c
+  %i.ae = sub i64 %i.a, %i.b
   %diff.check517 = icmp ugt i64 %i.ae, -32
-  %i.af = sub i64 %i.a, %i.c
+  %i.af = sub i64 %i.c, %i.b
   %diff.check518 = icmp ugt i64 %i.af, -32
   %conflict.rdx519 = or i1 %diff.check517, %diff.check518
   br i1 %conflict.rdx519, label %.lr.ph338.preheader, label %vector.main.loop.iter.check521
@@ -317,7 +317,7 @@ vec.epilog.middle.block546:                       ; preds = %vec.epilog.vector.b
 iter.check600:                                    ; preds = %.preheader
   %wide.trip.count446 = zext nneg i32 %6 to i64   ; 8 uses
   %min.iters.check587 = icmp ult i32 %6, 4
-  %i.bi = sub i64 %i.a, %i.c
+  %i.bi = sub i64 %i.c, %i.b
   %diff.check586 = icmp ugt i64 %i.bi, -32
   %or.cond647 = or i1 %min.iters.check587, %diff.check586
   br i1 %or.cond647, label %.lr.ph375.preheader, label %vector.main.loop.iter.check588
@@ -615,7 +615,7 @@ iter.check633:                                    ; preds = %.loopexit326
 vector.memcheck613:                               ; preds = %iter.check633
   %i.fm = add nsw i64 %i.fk, -1
   %diff.check614 = icmp ult i64 %i.fm, 31
-  %i.fn = sub i64 %i.a, %i.c
+  %i.fn = sub i64 %i.c, %i.b
   %diff.check615 = icmp ugt i64 %i.fn, -32
   %conflict.rdx616 = or i1 %diff.check614, %diff.check615
   br i1 %conflict.rdx616, label %.lr.ph405.preheader, label %vector.main.loop.iter.check618
@@ -1018,10 +1018,10 @@ iter.check570:                                    ; preds = %.loopexit330
 vector.memcheck549:                               ; preds = %iter.check570
   %i.nb = add nsw i64 %i.mz, -1
   %diff.check550 = icmp ult i64 %i.nb, 15
-  %i.nc = sub i64 %i.b, %i.c
+  %i.nc = sub i64 %i.a, %i.b
   %diff.check551 = icmp ugt i64 %i.nc, -16
   %conflict.rdx552 = or i1 %diff.check550, %diff.check551
-  %i.nd = sub i64 %i.a, %i.c
+  %i.nd = sub i64 %i.c, %i.b
   %diff.check553 = icmp ugt i64 %i.nd, -16
   %conflict.rdx554 = or i1 %conflict.rdx552, %diff.check553
   br i1 %conflict.rdx554, label %.lr.ph373.preheader, label %vector.main.loop.iter.check556

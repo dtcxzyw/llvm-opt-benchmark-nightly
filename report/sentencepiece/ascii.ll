@@ -24,9 +24,9 @@ bb.a:
   br i1 %i.a, label %bb.b, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = ptrtoaddr ptr %1 to i64
-  %i.d = sub i64 %i.c, %i.b
+  %i.b = ptrtoaddr ptr %1 to i64
+  %i.c = ptrtoaddr ptr %0 to i64
+  %i.d = sub i64 %i.b, %i.c
   %diff.check = icmp ugt i64 %i.d, -32
   br i1 %diff.check, label %.lr.ph.i7.i.preheader, label %vector.main.loop.iter.check
 
@@ -206,9 +206,9 @@ bb.a:
   br i1 %i.a, label %bb.b, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %0 to i64
-  %i.c = ptrtoaddr ptr %1 to i64
-  %i.d = sub i64 %i.c, %i.b
+  %i.b = ptrtoaddr ptr %1 to i64
+  %i.c = ptrtoaddr ptr %0 to i64
+  %i.d = sub i64 %i.b, %i.c
   %diff.check = icmp ugt i64 %i.d, -32
   br i1 %diff.check, label %.lr.ph.i7.i.preheader, label %vector.main.loop.iter.check
 

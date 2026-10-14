@@ -206,8 +206,8 @@ _ZN5boost14static_strings19basic_static_stringILm420EcSt11char_traitsIcEE6insert
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 2 dereferenceable(423) ptr @_ZN5boost14static_strings19basic_static_stringILm420EcSt11char_traitsIcEE6insertEmRKS4_(ptr noundef nonnull align 2 dereferenceable(423) %0, i64 noundef %1, ptr noundef nonnull align 2 dereferenceable(423) %2) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 9 uses
   %i.d = load i16, ptr %2, align 2, !tbaa !25     ; 6 uses
   %i.e = zext i16 %i.d to i64                     ; 13 uses
@@ -256,8 +256,8 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.v = add i64 %1, %i.b
-  %i.w = sub i64 %i.a, %i.v
+  %i.v = add i64 %1, %i.a
+  %i.w = sub i64 %i.b, %i.v
   %diff.check = icmp ugt i64 %i.w, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -318,7 +318,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.09.i.i.i.ph = phi ptr [ %i.j, %iter.check ], [ %i.j, %vector.memcheck ], [ %i.y, %vec.epilog.iter.check ], [ %i.ad, %vec.epilog.middle.block ] ; 2 uses
   %.068.i.i.i.ph = phi ptr [ %i.c, %iter.check ], [ %i.c, %vector.memcheck ], [ %i.z, %vec.epilog.iter.check ], [ %i.ae, %vec.epilog.middle.block ] ; 3 uses
-  %i.ag = add i64 %i.a, %i.e                      ; 2 uses
+  %i.ag = add i64 %i.b, %i.e                      ; 2 uses
   %i.ah = add i64 %i.ag, 2
   %.068.i.i.i.ph21 = ptrtoaddr ptr %.068.i.i.i.ph to i64 ; 2 uses
   %i.ai = sub i64 %i.ah, %.068.i.i.i.ph21
@@ -421,8 +421,8 @@ _ZN5boost14static_strings19basic_static_stringILm420EcSt11char_traitsIcEE6insert
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef nonnull align 2 dereferenceable(423) ptr @_ZN5boost14static_strings19basic_static_stringILm420EcSt11char_traitsIcEE6insertEmRKS4_mm(ptr noundef nonnull align 2 dereferenceable(423) %0, i64 noundef %1, ptr noundef nonnull align 2 dereferenceable(423) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 %3 ; 10 uses
   %i.e = load i16, ptr %2, align 2, !tbaa !25
@@ -482,8 +482,8 @@ iter.check:                                       ; preds = %bb.f
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.y = add i64 %1, %i.b
-  %i.z = add i64 %3, %i.a
+  %i.y = add i64 %1, %i.a
+  %i.z = add i64 %3, %i.b
   %i.aa = sub i64 %i.z, %i.y
   %diff.check = icmp ugt i64 %i.aa, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -886,8 +886,8 @@ bb.o:                                             ; preds = %bb.c, %_ZN5boost14s
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef nonnull align 1 dereferenceable(12) ptr @_ZN5boost14static_strings19basic_static_stringILm10EcSt11char_traitsIcEE6insertEmRKS4_mm(ptr noundef nonnull align 1 dereferenceable(12) %0, i64 noundef %1, ptr noundef nonnull align 1 dereferenceable(12) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 %3 ; 10 uses
   %i.e = load i8, ptr %2, align 1, !tbaa !128
@@ -947,8 +947,8 @@ iter.check:                                       ; preds = %bb.f
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.y = add i64 %1, %i.b
-  %i.z = add i64 %3, %i.a
+  %i.y = add i64 %1, %i.a
+  %i.z = add i64 %3, %i.b
   %i.aa = sub i64 %i.z, %i.y
   %diff.check = icmp ugt i64 %i.aa, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check

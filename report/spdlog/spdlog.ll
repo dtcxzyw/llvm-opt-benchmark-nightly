@@ -205,8 +205,8 @@ _ZN3fmt3v1219basic_memory_bufferIcLm250ENS0_6detail9allocatorIcEEED2Ev.exit: ; p
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN6spdlog7details14log_msg_bufferC2EOS1_(ptr noundef nonnull align 8 dereferenceable(384) initializes((0, 128)) %0, ptr noundef nonnull align 8 dereferenceable(384) %1) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false), !tbaa.struct !95
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
@@ -233,7 +233,7 @@ bb.b:                                             ; preds = %bb.a
 
 iter.check:                                       ; preds = %bb.b
   %min.iters.check = icmp ult i64 %i.i, 8
-  %i.p = sub i64 %i.a, %i.b
+  %i.p = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -295,7 +295,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.08.i.i.i.ph = phi ptr [ %i.n, %iter.check ], [ %i.r, %vec.epilog.iter.check ], [ %i.w, %vec.epilog.middle.block ] ; 2 uses
   %.057.i.i.i.ph = phi ptr [ %i.l, %iter.check ], [ %i.s, %vec.epilog.iter.check ], [ %i.x, %vec.epilog.middle.block ] ; 3 uses
-  %i.z = add i64 %i.i, %i.a
+  %i.z = add i64 %i.i, %i.b
   %.057.i.i.i.ph19 = ptrtoaddr ptr %.057.i.i.i.ph to i64 ; 2 uses
   %i.aa = sub i64 %i.i, %.057.i.i.i.ph19
   %i.ab = add i64 %i.z, 127
@@ -588,8 +588,8 @@ _ZN3fmt3v126detail6bufferIcE6appendIcEEvPKT_S7_.exit: ; preds = %._crit_edge.i, 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef nonnull align 8 dereferenceable(384) ptr @_ZN6spdlog7details14log_msg_bufferaSEOS1_(ptr noundef nonnull returned align 8 dereferenceable(384) initializes((0, 96)) %0, ptr noundef nonnull align 8 dereferenceable(384) %1) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false), !tbaa.struct !95
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 5 uses
@@ -622,7 +622,7 @@ bb.c:                                             ; preds = %_ZN3fmt3v1219basic_
 
 iter.check:                                       ; preds = %bb.c
   %min.iters.check = icmp ult i64 %i.i, 8
-  %i.p = sub i64 %i.a, %i.b
+  %i.p = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -684,7 +684,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.08.i.i.i.ph = phi ptr [ %i.f, %iter.check ], [ %i.r, %vec.epilog.iter.check ], [ %i.w, %vec.epilog.middle.block ] ; 2 uses
   %.057.i.i.i.ph = phi ptr [ %i.l, %iter.check ], [ %i.s, %vec.epilog.iter.check ], [ %i.x, %vec.epilog.middle.block ] ; 3 uses
-  %i.z = add i64 %i.i, %i.a
+  %i.z = add i64 %i.i, %i.b
   %.057.i.i.i.ph20 = ptrtoaddr ptr %.057.i.i.i.ph to i64 ; 2 uses
   %i.aa = sub i64 %i.i, %.057.i.i.i.ph20
   %i.ab = add i64 %i.z, 127

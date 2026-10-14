@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %_ZN4bsslL16dtls1_up
   %i.am = ptrtoaddr ptr %i.al to i64
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 656 ; 9 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 912
-  %i.ap = load i8, ptr %i.ao, align 8, !tbaa !134 ; 4 uses
+  %i.ap = load i8, ptr %i.ao, align 8, !tbaa !134 ; 3 uses
   %i.aq = zext i8 %i.ap to i64                    ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
   %i.ar = getelementptr inbounds nuw i8, ptr %8, i64 256 ; 11 uses
@@ -215,14 +215,14 @@ bb.g:                                             ; preds = %_ZN4bsslL16dtls1_up
 
 .lr.ph.i:                                         ; preds = %bb.g
   %i.au = getelementptr inbounds nuw i8, ptr %i.al, i64 920
-  %i.av = load i8, ptr %i.au, align 8, !tbaa !136 ; 4 uses
+  %i.av = load i8, ptr %i.au, align 8, !tbaa !136 ; 3 uses
   %i.aw = zext i8 %i.av to i64                    ; 9 uses
-  %umin = call i64 @llvm.umin.i64(i64 %i.ak, i64 %i.aq) ; 8 uses
+  %umin = call i64 @llvm.umin.i64(i64 %i.ak, i64 %i.aq) ; 7 uses
   %i.ax = zext i8 %i.av to i64
   %i.ay = zext i8 %i.ap to i64
   %i.az = add nuw nsw i64 %i.ax, %i.ay
   %i.ba = sub nsw i64 %i.az, %umin
-  %i.bb = and i64 %i.ba, 31
+  %i.bb = and i64 %i.ba, 31                       ; 2 uses
   %i.bc = call i64 @llvm.usub.sat.i64(i64 %i.aq, i64 %i.bb)
   %i.bd = add nsw i64 %umin, -1
   %i.be = call i64 @llvm.umin.i64(i64 %i.bc, i64 %i.bd) ; 2 uses
@@ -255,13 +255,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i
   br i1 %i.bt, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %12 = zext i8 %i.av to i64
-  %13 = zext i8 %i.ap to i64
-  %14 = add nuw nsw i64 %12, %13
-  %15 = sub nsw i64 %14, %umin
-  %i.bu = shl nsw i64 %15, 3
-  %16 = and i64 %i.bu, 248
-  %i.bv = add i64 %16, %i.am
+  %i.bu = shl nuw nsw i64 %i.bb, 3
+  %i.bv = add i64 %i.bu, %i.am
   %i.bw = sub i64 %i.b, %i.bv
   %i.bx = add i64 %i.bw, -657
   %diff.check = icmp ult i64 %i.bx, 31

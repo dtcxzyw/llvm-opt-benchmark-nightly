@@ -201,17 +201,17 @@ lj_buf_more.exit:                                 ; preds = %bb.a
 iter.check:                                       ; preds = %lj_buf_more.exit.thread, %lj_buf_more.exit
   %i.q = phi ptr [ %i.n, %lj_buf_more.exit.thread ], [ %i.p, %lj_buf_more.exit ] ; 2 uses
   %.0.i27 = phi ptr [ %i.l, %lj_buf_more.exit.thread ], [ %i.f, %lj_buf_more.exit ] ; 7 uses
-  %i.r = ptrtoaddr ptr %i.q to i64
-  %.0.i2728 = ptrtoaddr ptr %.0.i27 to i64        ; 3 uses
+  %i.r = ptrtoaddr ptr %.0.i27 to i64             ; 3 uses
+  %.0.i2728 = ptrtoaddr ptr %i.q to i64
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
-  %i.t = add nuw i64 %.0.i2728, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.r, i64 %i.t)
-  %i.u = sub i64 %umax, %.0.i2728                 ; 7 uses
+  %i.t = add nuw i64 %i.r, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %.0.i2728, i64 %i.t)
+  %i.u = sub i64 %umax, %i.r                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.u, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.v = sub i64 %.0.i2728, %i.a
+  %i.v = sub i64 %i.r, %i.a
   %i.w = add i64 %i.v, -25
   %diff.check = icmp ult i64 %i.w, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -338,17 +338,17 @@ lj_buf_more.exit:                                 ; preds = %bb.a
 iter.check:                                       ; preds = %lj_buf_more.exit.thread, %lj_buf_more.exit
   %i.q = phi ptr [ %i.n, %lj_buf_more.exit.thread ], [ %i.p, %lj_buf_more.exit ] ; 2 uses
   %.0.i27 = phi ptr [ %i.l, %lj_buf_more.exit.thread ], [ %i.f, %lj_buf_more.exit ] ; 7 uses
-  %i.r = ptrtoaddr ptr %i.q to i64
-  %.0.i2728 = ptrtoaddr ptr %.0.i27 to i64        ; 3 uses
+  %i.r = ptrtoaddr ptr %.0.i27 to i64             ; 3 uses
+  %.0.i2728 = ptrtoaddr ptr %i.q to i64
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
-  %i.t = add nuw i64 %.0.i2728, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.r, i64 %i.t)
-  %i.u = sub i64 %umax, %.0.i2728                 ; 7 uses
+  %i.t = add nuw i64 %i.r, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %.0.i2728, i64 %i.t)
+  %i.u = sub i64 %umax, %i.r                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.u, 8
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.v = sub i64 %.0.i2728, %i.a
+  %i.v = sub i64 %i.r, %i.a
   %i.w = add i64 %i.v, -25
   %diff.check = icmp ult i64 %i.w, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check

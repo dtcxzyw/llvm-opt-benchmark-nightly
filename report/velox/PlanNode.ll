@@ -205,15 +205,15 @@ _ZNSt15__new_allocatorIN8facebook5velox4core9SortOrderEE8allocateEmPKv.exit.i.i.
   br i1 %i.ca, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %.noexc41
-  %i.cb = ptrtoaddr ptr %i.bv to i64              ; 2 uses
-  %i.cc = ptrtoaddr ptr %i.bw to i64
+  %i.cb = ptrtoaddr ptr %i.bw to i64
+  %i.cc = ptrtoaddr ptr %i.bv to i64              ; 2 uses
   %i.cd = ptrtoaddr ptr %i.bu to i64
   %i.ce = add i64 %i.cd, -2
-  %i.cf = sub i64 %i.ce, %i.cb                    ; 3 uses
+  %i.cf = sub i64 %i.ce, %i.cc                    ; 3 uses
   %i.cg = lshr i64 %i.cf, 1
   %i.ch = add nuw i64 %i.cg, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.cf, 14
-  %i.ci = sub i64 %i.cb, %i.cc
+  %i.ci = sub i64 %i.cc, %i.cb
   %diff.check = icmp ugt i64 %i.ci, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i35.preheader, label %vector.main.loop.iter.check
@@ -616,15 +616,15 @@ _ZNSt15__new_allocatorIN8facebook5velox4core9SortOrderEE8allocateEmPKv.exit.i.i.
   br i1 %i.cb, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %.noexc37
-  %i.cc = ptrtoaddr ptr %i.bw to i64              ; 2 uses
-  %i.cd = ptrtoaddr ptr %i.bx to i64
+  %i.cc = ptrtoaddr ptr %i.bx to i64
+  %i.cd = ptrtoaddr ptr %i.bw to i64              ; 2 uses
   %i.ce = ptrtoaddr ptr %i.bv to i64
   %i.cf = add i64 %i.ce, -2
-  %i.cg = sub i64 %i.cf, %i.cc                    ; 3 uses
+  %i.cg = sub i64 %i.cf, %i.cd                    ; 3 uses
   %i.ch = lshr i64 %i.cg, 1
   %i.ci = add nuw i64 %i.ch, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.cg, 14
-  %i.cj = sub i64 %i.cc, %i.cd
+  %i.cj = sub i64 %i.cd, %i.cc
   %diff.check = icmp ugt i64 %i.cj, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i31.preheader, label %vector.main.loop.iter.check

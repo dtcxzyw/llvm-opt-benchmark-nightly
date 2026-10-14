@@ -58,16 +58,16 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 2 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.i = ptrtoaddr ptr %1 to i64
+  %i.h = ptrtoaddr ptr %3 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %3 to i64
-  %i.l = sub i64 %i.i, %i.h
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = sub i64 %i.k, %i.i
   %diff.check = icmp ugt i64 %i.l, -16
-  %i.m = sub i64 %i.j, %i.h
+  %i.m = sub i64 %i.j, %i.i
   %diff.check16 = icmp ugt i64 %i.m, -16
   %conflict.rdx = or i1 %diff.check, %diff.check16
-  %i.n = sub i64 %i.k, %i.h
+  %i.n = sub i64 %i.h, %i.i
   %diff.check17 = icmp ugt i64 %i.n, -16
   %conflict.rdx18 = or i1 %conflict.rdx, %diff.check17
   br i1 %conflict.rdx18, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -188,16 +188,16 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 2 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.i = ptrtoaddr ptr %1 to i64
+  %i.h = ptrtoaddr ptr %3 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %3 to i64
-  %i.l = sub i64 %i.i, %i.h
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = sub i64 %i.k, %i.i
   %diff.check = icmp ugt i64 %i.l, -16
-  %i.m = sub i64 %i.j, %i.h
+  %i.m = sub i64 %i.j, %i.i
   %diff.check16 = icmp ugt i64 %i.m, -16
   %conflict.rdx = or i1 %diff.check, %diff.check16
-  %i.n = sub i64 %i.k, %i.h
+  %i.n = sub i64 %i.h, %i.i
   %diff.check17 = icmp ugt i64 %i.n, -16
   %conflict.rdx18 = or i1 %conflict.rdx, %diff.check17
   br i1 %conflict.rdx18, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -318,12 +318,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 2 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %2 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -16
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check13 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check13
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -436,12 +436,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 2 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %2 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -16
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check13 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check13
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -844,12 +844,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %2 to i64
-  %i.j = ptrtoaddr ptr %3 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %3 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -16
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check29 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check29
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1006,12 +1006,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %3 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %3 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %2 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check27 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check27
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -1321,12 +1321,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %2 to i64
-  %i.j = ptrtoaddr ptr %3 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %3 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -16
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check29 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check29
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1491,12 +1491,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %3 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %3 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %2 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check27 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check27
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -1758,12 +1758,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %2 to i64
-  %i.j = ptrtoaddr ptr %3 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %3 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -16
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check29 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check29
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1920,12 +1920,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %3 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %3 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %2 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check27 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check27
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -2235,12 +2235,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %2 to i64
-  %i.j = ptrtoaddr ptr %3 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %3 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -16
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check29 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check29
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -2405,12 +2405,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %3 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %3 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %2 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check27 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check27
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -2672,12 +2672,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %2 to i64
-  %i.j = ptrtoaddr ptr %3 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %3 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -16
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check29 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check29
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -2838,12 +2838,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %3 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %3 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %2 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check27 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check27
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -3098,12 +3098,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %2 to i64
-  %i.j = ptrtoaddr ptr %3 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %3 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -16
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check29 = icmp ugt i64 %i.l, -16
   %conflict.rdx = or i1 %diff.check, %diff.check29
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -3260,12 +3260,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %3 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %3 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %2 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check27 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check27
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -3668,9 +3668,9 @@ iter.check:
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
   %i.h = ashr i32 %2, 10
   %i.i = add nsw i32 %i.h, -1                     ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -16
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -4073,9 +4073,9 @@ iter.check:
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
   %i.h = ashr i32 %2, 10
   %i.i = add nsw i32 %i.h, -1                     ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -16
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -4478,9 +4478,9 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %1 to i64
+  %i.i = ptrtoaddr ptr %0 to i64
+  %i.j = sub i64 %i.h, %i.i
   %diff.check = icmp ugt i64 %i.j, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -4603,9 +4603,9 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %1 to i64
+  %i.i = ptrtoaddr ptr %0 to i64
+  %i.j = sub i64 %i.h, %i.i
   %diff.check = icmp ugt i64 %i.j, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -4721,9 +4721,9 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %1 to i64
+  %i.i = ptrtoaddr ptr %0 to i64
+  %i.j = sub i64 %i.h, %i.i
   %diff.check = icmp ugt i64 %i.j, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -4846,9 +4846,9 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %1 to i64
+  %i.i = ptrtoaddr ptr %0 to i64
+  %i.j = sub i64 %i.h, %i.i
   %diff.check = icmp ugt i64 %i.j, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -4971,9 +4971,9 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %1 to i64
+  %i.i = ptrtoaddr ptr %0 to i64
+  %i.j = sub i64 %i.h, %i.i
   %diff.check = icmp ugt i64 %i.j, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -5099,9 +5099,9 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -5209,9 +5209,9 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -5315,9 +5315,9 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -5425,9 +5425,9 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -5535,9 +5535,9 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -5642,12 +5642,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %2 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -32
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check29 = icmp ugt i64 %i.l, -32
   %conflict.rdx = or i1 %diff.check, %diff.check29
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -5778,12 +5778,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = ptrtoaddr ptr %2 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %2 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check27 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check27
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -6157,12 +6157,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %2 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -32
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check29 = icmp ugt i64 %i.l, -32
   %conflict.rdx = or i1 %diff.check, %diff.check29
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -6293,12 +6293,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = ptrtoaddr ptr %2 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %2 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check27 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check27
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -6701,12 +6701,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %2 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -32
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check18 = icmp ugt i64 %i.l, -32
   %conflict.rdx = or i1 %diff.check, %diff.check18
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -6822,12 +6822,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = ptrtoaddr ptr %2 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %2 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check16 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check16
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -7152,12 +7152,12 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %2 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = sub i64 %i.j, %i.i
   %diff.check = icmp ugt i64 %i.k, -32
-  %i.l = sub i64 %i.j, %i.h
+  %i.l = sub i64 %i.h, %i.i
   %diff.check18 = icmp ugt i64 %i.l, -32
   %conflict.rdx = or i1 %diff.check, %diff.check18
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -7273,12 +7273,12 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 4 uses
   %i.h = lshr exact i64 %i.g, 1                   ; 4 uses
-  %i.i = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = ptrtoaddr ptr %2 to i64
-  %i.l = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %2 to i64
+  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = sub i64 %i.k, %i.j
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.k, %i.i
+  %i.m = sub i64 %i.i, %i.j
   %diff.check16 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check16
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
@@ -7681,16 +7681,16 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.i = ptrtoaddr ptr %3 to i64
+  %i.h = ptrtoaddr ptr %2 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = ptrtoaddr ptr %2 to i64
-  %i.l = sub i64 %i.i, %i.h
+  %i.k = ptrtoaddr ptr %3 to i64
+  %i.l = sub i64 %i.k, %i.i
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.j, %i.h
+  %i.m = sub i64 %i.j, %i.i
   %diff.check31 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check31
-  %i.n = sub i64 %i.k, %i.h
+  %i.n = sub i64 %i.h, %i.i
   %diff.check32 = icmp ugt i64 %i.n, -32
   %conflict.rdx33 = or i1 %conflict.rdx, %diff.check32
   br i1 %conflict.rdx33, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -7823,16 +7823,16 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.k = ptrtoaddr ptr %3 to i64
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.l = ptrtoaddr ptr %1 to i64
-  %i.m = ptrtoaddr ptr %2 to i64
-  %i.n = sub i64 %i.k, %i.j
+  %i.m = ptrtoaddr ptr %3 to i64
+  %i.n = sub i64 %i.m, %i.k
   %diff.check = icmp ugt i64 %i.n, -32
-  %i.o = sub i64 %i.l, %i.j
+  %i.o = sub i64 %i.l, %i.k
   %diff.check31 = icmp ugt i64 %i.o, -32
   %conflict.rdx = or i1 %diff.check, %diff.check31
-  %i.p = sub i64 %i.m, %i.j
+  %i.p = sub i64 %i.j, %i.k
   %diff.check32 = icmp ugt i64 %i.p, -32
   %conflict.rdx33 = or i1 %conflict.rdx, %diff.check32
   br i1 %conflict.rdx33, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -8170,16 +8170,16 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.i = ptrtoaddr ptr %3 to i64
+  %i.h = ptrtoaddr ptr %2 to i64
+  %i.i = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = ptrtoaddr ptr %2 to i64
-  %i.l = sub i64 %i.i, %i.h
+  %i.k = ptrtoaddr ptr %3 to i64
+  %i.l = sub i64 %i.k, %i.i
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %i.j, %i.h
+  %i.m = sub i64 %i.j, %i.i
   %diff.check31 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check31
-  %i.n = sub i64 %i.k, %i.h
+  %i.n = sub i64 %i.h, %i.i
   %diff.check32 = icmp ugt i64 %i.n, -32
   %conflict.rdx33 = or i1 %conflict.rdx, %diff.check32
   br i1 %conflict.rdx33, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -8312,16 +8312,16 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.k = ptrtoaddr ptr %3 to i64
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.l = ptrtoaddr ptr %1 to i64
-  %i.m = ptrtoaddr ptr %2 to i64
-  %i.n = sub i64 %i.k, %i.j
+  %i.m = ptrtoaddr ptr %3 to i64
+  %i.n = sub i64 %i.m, %i.k
   %diff.check = icmp ugt i64 %i.n, -32
-  %i.o = sub i64 %i.l, %i.j
+  %i.o = sub i64 %i.l, %i.k
   %diff.check31 = icmp ugt i64 %i.o, -32
   %conflict.rdx = or i1 %diff.check, %diff.check31
-  %i.p = sub i64 %i.m, %i.j
+  %i.p = sub i64 %i.j, %i.k
   %diff.check32 = icmp ugt i64 %i.p, -32
   %conflict.rdx33 = or i1 %conflict.rdx, %diff.check32
   br i1 %conflict.rdx33, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -8659,9 +8659,9 @@ iter.check:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 3 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 7 uses
-  %i.h = ptrtoaddr ptr %0 to i64
-  %i.i = ptrtoaddr ptr %1 to i64
-  %i.j = sub i64 %i.i, %i.h
+  %i.h = ptrtoaddr ptr %1 to i64
+  %i.i = ptrtoaddr ptr %0 to i64
+  %i.j = sub i64 %i.h, %i.i
   %diff.check = icmp ugt i64 %i.j, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

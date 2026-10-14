@@ -26,8 +26,8 @@ bb.a:
 ; Function Attrs: nounwind ssp uwtable
 define dso_local noundef i32 @crypto_hash_sha512_update(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = alloca [88 x i64], align 16              ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   %i.d = icmp eq i64 %2, 0
@@ -61,8 +61,8 @@ iter.check:                                       ; preds = %bb.b
   br i1 %min.iters.check, label %.preheader51.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.t = add i64 %i.i, %i.b
-  %i.u = sub i64 %i.t, %i.a
+  %i.t = add i64 %i.i, %i.a
+  %i.u = sub i64 %i.t, %i.b
   %i.v = add i64 %i.u, 79
   %diff.check = icmp ult i64 %i.v, 31
   br i1 %diff.check, label %.preheader51.preheader, label %vector.main.loop.iter.check
@@ -176,8 +176,8 @@ iter.check118:                                    ; preds = %bb.b
   br i1 %min.iters.check105, label %.preheader.preheader, label %vector.memcheck103
 
 vector.memcheck103:                               ; preds = %iter.check118
-  %i.az = add i64 %i.i, %i.b
-  %i.ba = sub i64 %i.az, %i.a
+  %i.az = add i64 %i.i, %i.a
+  %i.ba = sub i64 %i.az, %i.b
   %i.bb = add i64 %i.ba, 79
   %diff.check104 = icmp ult i64 %i.bb, 15
   br i1 %diff.check104, label %.preheader.preheader, label %vector.main.loop.iter.check106
@@ -390,7 +390,7 @@ iter.check90:                                     ; preds = %.preheader50
   br i1 %min.iters.check77, label %.lr.ph57.preheader, label %vector.memcheck74
 
 vector.memcheck74:                                ; preds = %iter.check90
-  %i.ec = sub i64 %i.b, %.046.lcssa75
+  %i.ec = sub i64 %i.a, %.046.lcssa75
   %i.ed = add i64 %i.ec, 79
   %diff.check76 = icmp ult i64 %i.ed, 31
   br i1 %diff.check76, label %.lr.ph57.preheader, label %vector.main.loop.iter.check78

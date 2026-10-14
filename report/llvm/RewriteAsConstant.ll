@@ -202,16 +202,15 @@ _ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i.i.i.i: ; preds = %bb.f, %_ZS
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i.i.i.i
-  %i.bg = ptrtoaddr ptr %i.ax to i64              ; 2 uses
-  %i.bh = shl nuw nsw i64 %i.az, 3                ; 2 uses
-  %i.bi = add i64 %i.bh, %i.bg                    ; 2 uses
+  %i.bg = ptrtoaddr ptr %i.ax to i64
+  %i.bh = shl nuw nsw i64 %i.az, 3
+  %i.bi = add i64 %i.bh, %i.bg                    ; 3 uses
   %i.bj = sub i64 %i.w, %i.bi
   %diff.check = icmp ugt i64 %i.bj, -32
   %i.bk = sub i64 %i.p, %i.bi
   %diff.check13 = icmp ugt i64 %i.bk, -32
   %conflict.rdx = or i1 %diff.check, %diff.check13
-  %14 = add i64 %i.bh, %i.bg
-  %i.bl = sub i64 %i.aj, %14
+  %i.bl = sub i64 %i.aj, %i.bi
   %diff.check14 = icmp ugt i64 %i.bl, -32
   %conflict.rdx15 = or i1 %conflict.rdx, %diff.check14
   br i1 %conflict.rdx15, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.ph
@@ -614,16 +613,15 @@ _ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i.i.i.i: ; preds = %bb.g, %_ZS
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %_ZN4llvm15SmallVectorImplIlE7reserveEm.exit.i.i.i.i.i.i.i
-  %i.bh = ptrtoaddr ptr %i.ay to i64              ; 2 uses
-  %i.bi = shl nuw nsw i64 %i.ba, 3                ; 2 uses
-  %i.bj = add i64 %i.bi, %i.bh                    ; 2 uses
+  %i.bh = ptrtoaddr ptr %i.ay to i64
+  %i.bi = shl nuw nsw i64 %i.ba, 3
+  %i.bj = add i64 %i.bi, %i.bh                    ; 3 uses
   %i.bk = sub i64 %i.w, %i.bj
   %diff.check = icmp ugt i64 %i.bk, -32
   %i.bl = sub i64 %i.p, %i.bj
   %diff.check12 = icmp ugt i64 %i.bl, -32
   %conflict.rdx = or i1 %diff.check, %diff.check12
-  %16 = add i64 %i.bi, %i.bh
-  %i.bm = sub i64 %i.ak, %16
+  %i.bm = sub i64 %i.ak, %i.bj
   %diff.check13 = icmp ugt i64 %i.bm, -32
   %conflict.rdx14 = or i1 %conflict.rdx, %diff.check13
   br i1 %conflict.rdx14, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader, label %vector.ph

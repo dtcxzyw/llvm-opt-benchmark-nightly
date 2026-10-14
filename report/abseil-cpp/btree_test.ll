@@ -205,7 +205,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJE
   br i1 %.not13.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJEEEE10transfer_nEmmmPS5_PSaIiE.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJEEEE19transfer_n_backwardEmmmPS5_PSaIiE.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -213,13 +213,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJE
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -622,7 +621,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %.not13.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiESaIiESt17integral_constantIiLi256EES7_IbLb1EEEEEE10transfer_nEmmmPSB_PS6_.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiESaIiESt17integral_constantIiLi256EES7_IbLb1EEEEEE19transfer_n_backwardEmmmPSB_PS6_.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -630,13 +629,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -1039,7 +1037,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %.not13.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt7greaterIiEEEEE10transfer_nEmmmPS7_PSaIiE.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt7greaterIiEEEEE19transfer_n_backwardEmmmPS7_PSaIiE.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -1047,13 +1045,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -1456,7 +1453,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJN
   br i1 %.not1.i61, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJNS1_12_GLOBAL__N_115IntCompareToCmpEEEEE10transfer_nEmmmPS7_PSaIiE.exit, label %.lr.ph.i63.preheader
 
 .lr.ph.i63.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJNS1_12_GLOBAL__N_115IntCompareToCmpEEEEE19transfer_n_backwardEmmmPS7_PSaIiE.exit
-  %i.am = zext i8 %1 to i64
+  %i.am = zext i8 %1 to i64                       ; 2 uses
   %i.an = add nuw nsw i64 %i.am, 4611686018427387902
   %i.ao = and i64 %i.an, 4611686018427387903      ; 2 uses
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
@@ -1464,13 +1461,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJN
   br i1 %min.iters.check17, label %.lr.ph.i63.preheader31, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i63.preheader
-  %3 = zext i8 %1 to i64
-  %i.aq = shl nuw nsw i64 %3, 2
-  %4 = add i64 %i.aq, %i.b
+  %i.aq = shl nuw nsw i64 %i.am, 2
   %i.ar = zext i8 %.val52 to i64
   %i.as = shl nuw nsw i64 %i.ar, 2
+  %3 = add i64 %i.aq, %i.b
   %i.at = add i64 %i.as, %i.a
-  %i.au = sub i64 %4, %i.at
+  %i.au = sub i64 %3, %i.at
   %i.av = add i64 %i.au, -5
   %diff.check = icmp ult i64 %i.av, 31
   br i1 %diff.check, label %.lr.ph.i63.preheader31, label %vector.ph18
@@ -1873,9 +1869,9 @@ vector.memcheck210:                               ; preds = %.lr.ph.i63.i.prehea
   %i.gs = tail call i8 @llvm.umax.i8(i8 %i.ea, i8 1)
   %i.gt = shl nuw i8 %i.gs, 2
   %i.gu = zext i8 %i.gt to i64
-  %3 = add i64 %i.dv, %i.gu
   %i.gv = zext i8 %.val52.i127 to i64
   %i.gw = shl nuw nsw i64 %i.gv, 2
+  %3 = add i64 %i.dv, %i.gu
   %i.gx = add i64 %i.gw, %i.c
   %i.gy = sub i64 %3, %i.gx
   %i.gz = add i64 %i.gy, -5
@@ -2278,9 +2274,9 @@ vector.memcheck211:                               ; preds = %.lr.ph.i63.i.prehea
   %i.gs = tail call i8 @llvm.umax.i8(i8 %i.ea, i8 1)
   %i.gt = shl nuw i8 %i.gs, 2
   %i.gu = zext i8 %i.gt to i64
-  %3 = add i64 %i.dv, %i.gu
   %i.gv = zext i8 %.val52.i127 to i64
   %i.gw = shl nuw nsw i64 %i.gv, 2
+  %3 = add i64 %i.dv, %i.gu
   %i.gx = add i64 %i.gw, %i.c
   %i.gy = sub i64 %3, %i.gx
   %i.gz = add i64 %i.gy, -5
@@ -2683,9 +2679,9 @@ vector.memcheck211:                               ; preds = %.lr.ph.i63.i.prehea
   %i.gs = tail call i8 @llvm.umax.i8(i8 %i.ea, i8 1)
   %i.gt = shl nuw i8 %i.gs, 2
   %i.gu = zext i8 %i.gt to i64
-  %3 = add i64 %i.dv, %i.gu
   %i.gv = zext i8 %.val52.i127 to i64
   %i.gw = shl nuw nsw i64 %i.gv, 2
+  %3 = add i64 %i.dv, %i.gu
   %i.gx = add i64 %i.gw, %i.c
   %i.gy = sub i64 %3, %i.gx
   %i.gz = add i64 %i.gy, -5
@@ -3088,7 +3084,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %.not13.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiENS1_34CopyAssignPropagatingCountingAllocIiEEEEEE10transfer_nEmmmPS9_PS7_.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiENS1_34CopyAssignPropagatingCountingAllocIiEEEEEE19transfer_n_backwardEmmmPS9_PS7_.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -3096,13 +3092,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -3505,7 +3500,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %.not13.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiENS1_17CountingAllocatorIiEEEEEE10transfer_nEmmmPS9_PS7_.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiENS1_17CountingAllocatorIiEEEEEE19transfer_n_backwardEmmmPS9_PS7_.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -3513,13 +3508,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -3922,7 +3916,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %.not13.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiENS1_34MoveAssignPropagatingCountingAllocIiEEEEEE10transfer_nEmmmPS9_PS7_.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiENS1_34MoveAssignPropagatingCountingAllocIiEEEEEE19transfer_n_backwardEmmmPS9_PS7_.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -3930,13 +3924,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -4339,7 +4332,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %.not13.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiENS1_28SwapPropagatingCountingAllocIiEEEEEE10transfer_nEmmmPS9_PS7_.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJSt4lessIiENS1_28SwapPropagatingCountingAllocIiEEEEEE19transfer_n_backwardEmmmPS9_PS7_.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -4347,13 +4340,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJS
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -4756,8 +4748,8 @@ bb.h:                                             ; preds = %bb.g
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIaJSt4lessIaENS1_21MinimumAlignmentAllocIaEEEEEE23rebalance_right_to_leftEhPS9_PS7_(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 6 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !813
   %i.e = zext i8 %i.d to i64                      ; 2 uses
@@ -4784,8 +4776,8 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.t = add i64 %i.b, %i.e
-  %i.u = sub i64 %i.t, %i.a
+  %i.t = add i64 %i.a, %i.e
+  %i.u = sub i64 %i.t, %i.b
   %diff.check = icmp ult i64 %i.u, 31
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -5073,8 +5065,8 @@ bb.c:                                             ; preds = %.lr.ph56, %bb.c
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIaJSt4lessIaENS1_21MinimumAlignmentAllocIaEEEEEE23rebalance_left_to_rightEhPS9_PS7_(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 4 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !813   ; 4 uses
   %i.e = zext i8 %1 to i32                        ; 2 uses
@@ -5260,10 +5252,10 @@ iter.check93:                                     ; preds = %_ZN4absl12lts_20260
 
 vector.memcheck:                                  ; preds = %iter.check93
   %i.bz = zext i8 %1 to i64
-  %4 = add i64 %i.b, %i.bz
-  %5 = zext i8 %i.bs to i64
-  %i.ca = sub i64 %i.a, %4
-  %i.cb = add i64 %i.ca, %5
+  %4 = zext i8 %i.bs to i64
+  %5 = add i64 %i.a, %i.bz
+  %i.ca = sub i64 %i.b, %5
+  %i.cb = add i64 %i.ca, %4
   %i.cc = add i64 %i.cb, 32
   %diff.check = icmp ult i64 %i.cc, 31
   br i1 %diff.check, label %.lr.ph.i47.preheader, label %vector.main.loop.iter.check78
@@ -5514,8 +5506,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph55.new
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIaJSt4lessIaENS1_21MinimumAlignmentAllocIaEEEEEE5splitEiPS9_PS7_(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   switch i32 %1, label %bb.c [
     i32 0, label %bb.b
     i32 244, label %bb.d
@@ -5557,8 +5549,8 @@ iter.check:                                       ; preds = %bb.d
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.u = add i64 %i.a, %i.p
-  %i.v = sub i64 %i.u, %i.b
+  %i.u = add i64 %i.b, %i.p
+  %i.v = sub i64 %i.u, %i.a
   %diff.check = icmp ugt i64 %i.v, -32
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -5961,8 +5953,8 @@ _ZN4absl12lts_2026052618container_internal5btreeINS1_15set_params_implIaJSt4less
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIaJSt4lessIaENS1_21MinimumAlignmentAllocIaEEEEEE5mergeEPS9_PS7_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 4 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !813   ; 2 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !2128
@@ -5989,8 +5981,8 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.t = add i64 %i.b, %i.k
-  %i.u = sub i64 %i.t, %i.a
+  %i.t = add i64 %i.a, %i.k
+  %i.u = sub i64 %i.t, %i.b
   %diff.check = icmp ult i64 %i.u, 31
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -6117,7 +6109,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.015.i.pn.ph = phi ptr [ %i.m, %iter.check ], [ %i.m, %vector.memcheck ], [ %i.w, %vec.epilog.iter.check ], [ %i.az, %vec.epilog.middle.block ] ; 2 uses
   %.01214.i.ph = phi ptr [ %i.r, %iter.check ], [ %i.r, %vector.memcheck ], [ %i.x, %vec.epilog.iter.check ], [ %i.ba, %vec.epilog.middle.block ] ; 3 uses
-  %i.bd = add i64 %i.a, %i.q                      ; 2 uses
+  %i.bd = add i64 %i.b, %i.q                      ; 2 uses
   %i.be = xor i64 %i.bd, 4
   %.01214.i.ph77 = ptrtoaddr ptr %.01214.i.ph to i64 ; 2 uses
   %i.bf = sub i64 %i.be, %.01214.i.ph77
@@ -6520,9 +6512,9 @@ vector.memcheck211:                               ; preds = %.lr.ph.i63.i.prehea
   %i.gs = tail call i8 @llvm.umax.i8(i8 %i.ea, i8 1)
   %i.gt = shl nuw i8 %i.gs, 2
   %i.gu = zext i8 %i.gt to i64
-  %3 = add i64 %i.dv, %i.gu
   %i.gv = zext i8 %.val52.i127 to i64
   %i.gw = shl nuw nsw i64 %i.gv, 2
+  %3 = add i64 %i.dv, %i.gu
   %i.gx = add i64 %i.gw, %i.c
   %i.gy = sub i64 %3, %i.gx
   %i.gz = add i64 %i.gy, -5
@@ -6925,7 +6917,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJP
   br i1 %.not13.i, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJPFbiiEEEEE10transfer_nEmmmPS7_PSaIiE.exit, label %.lr.ph.i48.preheader
 
 .lr.ph.i48.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJPFbiiEEEEE19transfer_n_backwardEmmmPS7_PSaIiE.exit
-  %i.as = zext i8 %1 to i64
+  %i.as = zext i8 %1 to i64                       ; 2 uses
   %i.at = add nuw nsw i64 %i.as, 4611686018427387902
   %i.au = and i64 %i.at, 4611686018427387903      ; 2 uses
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
@@ -6933,13 +6925,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIiJP
   br i1 %min.iters.check69, label %.lr.ph.i48.preheader83, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i48.preheader
-  %4 = zext i8 %1 to i64
-  %i.aw = shl nuw nsw i64 %4, 2
-  %5 = add i64 %i.aw, %i.b
+  %i.aw = shl nuw nsw i64 %i.as, 2
   %i.ax = zext i8 %i.al to i64
   %i.ay = shl nuw nsw i64 %i.ax, 2
+  %4 = add i64 %i.aw, %i.b
   %i.az = add i64 %i.ay, %i.a
-  %i.ba = sub i64 %5, %i.az
+  %i.ba = sub i64 %4, %i.az
   %i.bb = add i64 %i.ba, -5
   %diff.check = icmp ult i64 %i.bb, 31
   br i1 %diff.check, label %.lr.ph.i48.preheader83, label %vector.ph70
@@ -7342,9 +7333,9 @@ vector.memcheck208:                               ; preds = %.lr.ph.i63.i.prehea
   %i.gr = tail call i8 @llvm.umax.i8(i8 %i.dz, i8 1)
   %i.gs = shl nuw i8 %i.gr, 2
   %i.gt = zext i8 %i.gs to i64
-  %3 = add i64 %i.du, %i.gt
   %i.gu = zext i8 %.val52.i127 to i64
   %i.gv = shl nuw nsw i64 %i.gu, 2
+  %3 = add i64 %i.du, %i.gt
   %i.gw = add i64 %i.gv, %i.c
   %i.gx = sub i64 %3, %i.gw
   %i.gy = add i64 %i.gx, -5
@@ -7747,9 +7738,9 @@ vector.memcheck208:                               ; preds = %.lr.ph.i63.i.prehea
   %i.gr = tail call i8 @llvm.umax.i8(i8 %i.dz, i8 1)
   %i.gs = shl nuw i8 %i.gr, 2
   %i.gt = zext i8 %i.gs to i64
-  %3 = add i64 %i.du, %i.gt
   %i.gu = zext i8 %.val52.i127 to i64
   %i.gv = shl nuw nsw i64 %i.gu, 2
+  %3 = add i64 %i.du, %i.gt
   %i.gw = add i64 %i.gv, %i.c
   %i.gx = sub i64 %3, %i.gw
   %i.gy = add i64 %i.gx, -5
@@ -8152,7 +8143,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1
   br i1 %.not1.i61, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1_12_GLOBAL__N_113NotAssignableEJEEEE10transfer_nEmmmPS7_PSaIS5_E.exit, label %.lr.ph.i63.preheader
 
 .lr.ph.i63.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1_12_GLOBAL__N_113NotAssignableEJEEEE19transfer_n_backwardEmmmPS7_PSaIS5_E.exit
-  %i.am = zext i8 %1 to i64
+  %i.am = zext i8 %1 to i64                       ; 2 uses
   %i.an = add nuw nsw i64 %i.am, 4611686018427387902
   %i.ao = and i64 %i.an, 4611686018427387903      ; 2 uses
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
@@ -8160,13 +8151,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1
   br i1 %min.iters.check17, label %.lr.ph.i63.preheader31, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i63.preheader
-  %3 = zext i8 %1 to i64
-  %i.aq = shl nuw nsw i64 %3, 2
-  %4 = add i64 %i.aq, %i.b
+  %i.aq = shl nuw nsw i64 %i.am, 2
   %i.ar = zext i8 %.val52 to i64
   %i.as = shl nuw nsw i64 %i.ar, 2
+  %3 = add i64 %i.aq, %i.b
   %i.at = add i64 %i.as, %i.a
-  %i.au = sub i64 %4, %i.at
+  %i.au = sub i64 %3, %i.at
   %i.av = add i64 %i.au, -5
   %diff.check = icmp ult i64 %i.av, 31
   br i1 %diff.check, label %.lr.ph.i63.preheader31, label %vector.ph18
@@ -8569,7 +8559,7 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1
   br i1 %.not1.i61, label %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1_12_GLOBAL__N_113NotAssignableEJSt4lessIS5_ESaIS5_ESt17integral_constantIiLi256EES9_IbLb1EEEEEE10transfer_nEmmmPSD_PS8_.exit, label %.lr.ph.i63.preheader
 
 .lr.ph.i63.preheader:                             ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1_12_GLOBAL__N_113NotAssignableEJSt4lessIS5_ESaIS5_ESt17integral_constantIiLi256EES9_IbLb1EEEEEE19transfer_n_backwardEmmmPSD_PS8_.exit
-  %i.am = zext i8 %1 to i64
+  %i.am = zext i8 %1 to i64                       ; 2 uses
   %i.an = add nuw nsw i64 %i.am, 4611686018427387902
   %i.ao = and i64 %i.an, 4611686018427387903      ; 2 uses
   %i.ap = add nuw nsw i64 %i.ao, 1                ; 2 uses
@@ -8577,13 +8567,12 @@ _ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS1
   br i1 %min.iters.check17, label %.lr.ph.i63.preheader31, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i63.preheader
-  %3 = zext i8 %1 to i64
-  %i.aq = shl nuw nsw i64 %3, 2
-  %4 = add i64 %i.aq, %i.b
+  %i.aq = shl nuw nsw i64 %i.am, 2
   %i.ar = zext i8 %.val52 to i64
   %i.as = shl nuw nsw i64 %i.ar, 2
+  %3 = add i64 %i.aq, %i.b
   %i.at = add i64 %i.as, %i.a
-  %i.au = sub i64 %4, %i.at
+  %i.au = sub i64 %3, %i.at
   %i.av = add i64 %i.au, -5
   %diff.check = icmp ult i64 %i.av, 31
   br i1 %diff.check, label %.lr.ph.i63.preheader31, label %vector.ph18
@@ -8986,8 +8975,8 @@ bb.g:                                             ; preds = %bb.f
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIhJEEEE23rebalance_right_to_leftEhPS5_PSaIhE(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 6 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !813
   %i.e = zext i8 %i.d to i64                      ; 2 uses
@@ -9014,8 +9003,8 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.t = add i64 %i.b, %i.e
-  %i.u = sub i64 %i.t, %i.a
+  %i.t = add i64 %i.a, %i.e
+  %i.u = sub i64 %i.t, %i.b
   %diff.check = icmp ult i64 %i.u, 31
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -9303,8 +9292,8 @@ bb.c:                                             ; preds = %.lr.ph56, %bb.c
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIhJEEEE23rebalance_left_to_rightEhPS5_PSaIhE(ptr noundef nonnull align 1 dereferenceable(1) %0, i8 noundef zeroext %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 4 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !813   ; 4 uses
   %i.e = zext i8 %1 to i32                        ; 2 uses
@@ -9490,10 +9479,10 @@ iter.check93:                                     ; preds = %_ZN4absl12lts_20260
 
 vector.memcheck:                                  ; preds = %iter.check93
   %i.bz = zext i8 %1 to i64
-  %4 = add i64 %i.b, %i.bz
-  %5 = zext i8 %i.bs to i64
-  %i.ca = sub i64 %i.a, %4
-  %i.cb = add i64 %i.ca, %5
+  %4 = zext i8 %i.bs to i64
+  %5 = add i64 %i.a, %i.bz
+  %i.ca = sub i64 %i.b, %5
+  %i.cb = add i64 %i.ca, %4
   %i.cc = add i64 %i.cb, 32
   %diff.check = icmp ult i64 %i.cc, 31
   br i1 %diff.check, label %.lr.ph.i47.preheader, label %vector.main.loop.iter.check78
@@ -9744,8 +9733,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph55.new
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIhJEEEE5splitEiPS5_PSaIhE(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   switch i32 %1, label %bb.c [
     i32 0, label %bb.b
     i32 244, label %bb.d
@@ -9787,8 +9776,8 @@ iter.check:                                       ; preds = %bb.d
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.u = add i64 %i.a, %i.p
-  %i.v = sub i64 %i.u, %i.b
+  %i.u = add i64 %i.b, %i.p
+  %i.v = sub i64 %i.u, %i.a
   %diff.check = icmp ugt i64 %i.v, -32
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -10191,8 +10180,8 @@ _ZN4absl12lts_2026052618container_internal5btreeINS1_15set_params_implIhJEEEE11m
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implIhJEEEE5mergeEPS5_PSaIhE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 4 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !813   ; 2 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !2776
@@ -10219,8 +10208,8 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.t = add i64 %i.b, %i.k
-  %i.u = sub i64 %i.t, %i.a
+  %i.t = add i64 %i.a, %i.k
+  %i.u = sub i64 %i.t, %i.b
   %diff.check = icmp ult i64 %i.u, 31
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
@@ -10347,7 +10336,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.preheader:                               ; preds = %iter.check, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.015.i.pn.ph = phi ptr [ %i.m, %iter.check ], [ %i.m, %vector.memcheck ], [ %i.w, %vec.epilog.iter.check ], [ %i.az, %vec.epilog.middle.block ] ; 2 uses
   %.01214.i.ph = phi ptr [ %i.r, %iter.check ], [ %i.r, %vector.memcheck ], [ %i.x, %vec.epilog.iter.check ], [ %i.ba, %vec.epilog.middle.block ] ; 3 uses
-  %i.bd = add i64 %i.a, %i.q                      ; 2 uses
+  %i.bd = add i64 %i.b, %i.q                      ; 2 uses
   %i.be = xor i64 %i.bd, 4
   %.01214.i.ph77 = ptrtoaddr ptr %.01214.i.ph to i64 ; 2 uses
   %i.bf = sub i64 %i.be, %.01214.i.ph77

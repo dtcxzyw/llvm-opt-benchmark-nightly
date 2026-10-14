@@ -16,8 +16,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local range(i32 -1, 1) i32 @qcrypto_afsplit_encode(i32 noundef %0, i64 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %3 to i64
-  %i.b = ptrtoaddr ptr %4 to i64
+  %i.a = ptrtoaddr ptr %4 to i64
+  %i.b = ptrtoaddr ptr %3 to i64
   %i.c = tail call noalias ptr @g_malloc0(i64 noundef %1) #6 ; 13 uses
   %i.d = add i32 %2, -1                           ; 2 uses
   %i.e = zext i32 %i.d to i64                     ; 3 uses
@@ -149,8 +149,8 @@ iter.check84:                                     ; preds = %bb.c, %._crit_edge
   br i1 %min.iters.check69, label %.lr.ph.i36.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check84
-  %i.ak = add i64 %.pn, %i.b
-  %i.al = sub i64 %i.a, %i.ak
+  %i.ak = add i64 %.pn, %i.a
+  %i.al = sub i64 %i.b, %i.ak
   %diff.check = icmp ugt i64 %i.al, -32
   br i1 %diff.check, label %.lr.ph.i36.preheader, label %vector.main.loop.iter.check70
 
@@ -419,8 +419,8 @@ bb.e:                                             ; preds = %bb.d
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local range(i32 -1, 1) i32 @qcrypto_afsplit_decode(i32 noundef %0, i64 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef writeonly captures(none) %4, ptr noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %3 to i64
-  %i.b = ptrtoaddr ptr %4 to i64
+  %i.a = ptrtoaddr ptr %4 to i64
+  %i.b = ptrtoaddr ptr %3 to i64
   %i.c = tail call noalias ptr @g_malloc0(i64 noundef %1) #6 ; 13 uses
   %i.d = add i32 %2, -1                           ; 2 uses
   %i.e = zext i32 %i.d to i64                     ; 3 uses
@@ -542,8 +542,8 @@ iter.check79:                                     ; preds = %bb.c, %._crit_edge
   br i1 %min.iters.check64, label %.lr.ph.i31.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check79
-  %i.ag = add i64 %.pn, %i.a
-  %i.ah = sub i64 %i.ag, %i.b
+  %i.ag = add i64 %.pn, %i.b
+  %i.ah = sub i64 %i.ag, %i.a
   %diff.check = icmp ugt i64 %i.ah, -32
   br i1 %diff.check, label %.lr.ph.i31.preheader, label %vector.main.loop.iter.check65
 

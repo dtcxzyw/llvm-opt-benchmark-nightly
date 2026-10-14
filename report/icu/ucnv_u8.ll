@@ -205,10 +205,10 @@ iter.check647:                                    ; preds = %._crit_edge331
 
 vector.memcheck626:                               ; preds = %iter.check647
   %i.ld = sext i32 %.1202 to i64
-  %3 = add i64 %.2217.lcssa627, %i.ld
-  %4 = zext nneg i8 %.1208 to i64
-  %i.le = add i64 %.2221.lcssa628, %4
-  %i.lf = sub i64 %i.le, %3
+  %3 = zext nneg i8 %.1208 to i64
+  %4 = add i64 %.2217.lcssa627, %i.ld
+  %i.le = add i64 %.2221.lcssa628, %3
+  %i.lf = sub i64 %i.le, %4
   %diff.check629 = icmp ugt i64 %i.lf, -32
   br i1 %diff.check629, label %.lr.ph338.preheader, label %vector.main.loop.iter.check631
 

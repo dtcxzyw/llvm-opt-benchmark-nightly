@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c, %.tail
 .critedge:                                        ; preds = %.tail.thread, %.lr.ph, %.lr.ph, %.lr.ph
   %.045.lcssa = phi ptr [ %.04570, %.lr.ph ], [ %.146, %.tail.thread ], [ %.04570, %.lr.ph ], [ %.04570, %.lr.ph ] ; 4 uses
   %.pn57.lcssa = phi ptr [ %.pn5771, %.lr.ph ], [ %.04372, %.tail.thread ], [ %.pn5771, %.lr.ph ], [ %.pn5771, %.lr.ph ] ; 9 uses
-  %.045.lcssa102 = ptrtoaddr ptr %.045.lcssa to i64 ; 3 uses
-  %.pn57.lcssa101 = ptrtoaddr ptr %.pn57.lcssa to i64 ; 2 uses
+  %.045.lcssa102 = ptrtoaddr ptr %.pn57.lcssa to i64 ; 2 uses
+  %.pn57.lcssa101 = ptrtoaddr ptr %.045.lcssa to i64 ; 3 uses
   %i.r = icmp eq ptr %.pn57.lcssa, %.045.lcssa
   br i1 %i.r, label %.critedge.thread, label %bb.i
 
@@ -269,9 +269,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 iter.check:                                       ; preds = %bb.k
   %.0100 = ptrtoaddr ptr %.0 to i64
-  %i.af = sub i64 %.045.lcssa102, %.pn57.lcssa101 ; 7 uses
+  %i.af = sub i64 %.pn57.lcssa101, %.045.lcssa102 ; 7 uses
   %min.iters.check = icmp ult i64 %i.af, 8
-  %i.ag = sub i64 %.pn57.lcssa101, %.0100
+  %i.ag = sub i64 %.045.lcssa102, %.0100
   %diff.check = icmp ugt i64 %i.ag, -32
   %or.cond116 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond116, label %.lr.ph85.preheader, label %vector.main.loop.iter.check
@@ -361,7 +361,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.184.ph = phi ptr [ %.0, %iter.check ], [ %i.ai, %vec.epilog.iter.check ], [ %i.bf, %vec.epilog.middle.block ] ; 3 uses
   %.14483.ph = phi ptr [ %.pn57.lcssa, %iter.check ], [ %i.aj, %vec.epilog.iter.check ], [ %i.bg, %vec.epilog.middle.block ] ; 4 uses
   %.14483.ph117 = ptrtoaddr ptr %.14483.ph to i64 ; 2 uses
-  %i.br = sub i64 %.045.lcssa102, %.14483.ph117
+  %i.br = sub i64 %.pn57.lcssa101, %.14483.ph117
   %xtraiter = and i64 %i.br, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph85.prol.loopexit, label %.lr.ph85.prol
@@ -386,7 +386,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.lcssa.unr = phi ptr [ poison, %.lr.ph85.preheader ], [ %i.ca, %.lr.ph85.prol ]
   %.184.unr = phi ptr [ %.184.ph, %.lr.ph85.preheader ], [ %i.ca, %.lr.ph85.prol ]
   %.14483.unr = phi ptr [ %.14483.ph, %.lr.ph85.preheader ], [ %i.bs, %.lr.ph85.prol ]
-  %i.cb = add i64 %.045.lcssa102, -1
+  %i.cb = add i64 %.pn57.lcssa101, -1
   %i.cc = icmp eq i64 %i.cb, %.14483.ph117
   br i1 %i.cc, label %sub_065, label %.lr.ph85
 

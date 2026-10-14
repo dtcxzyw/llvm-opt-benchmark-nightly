@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 196 ; 4 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !228  ; 9 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !228  ; 8 uses
   %i.f = icmp ult i32 %i.e, 11
   br i1 %i.f, label %bb.c, label %bb.d
 
@@ -221,8 +221,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = sub i32 %i.e, %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 96 ; 8 uses
   %i.m = zext i32 %i.k to i64                     ; 5 uses
-  %4 = xor i32 %i.j, -1
-  %5 = add i32 %i.e, %4                           ; 2 uses
+  %4 = add nsw i32 %i.e, -1                       ; 2 uses
+  %5 = sub i32 %4, %i.j                           ; 2 uses
   %i.n = zext i32 %5 to i64
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check92 = icmp ult i32 %5, 27
@@ -238,8 +238,7 @@ vector.scevcheck84:                               ; preds = %.lr.ph.i.i.i
   br i1 %i.t, label %scalar.ph91.preheader, label %vector.memcheck85
 
 vector.memcheck85:                                ; preds = %vector.scevcheck84
-  %6 = add nsw i32 %i.e, -1
-  %i.u = zext i32 %6 to i64
+  %i.u = zext i32 %4 to i64
   %i.v = shl nuw nsw i64 %i.u, 3                  ; 3 uses
   %i.w = shl nuw nsw i32 %i.e, 3
   %i.x = zext nneg i32 %i.w to i64                ; 3 uses
@@ -456,7 +455,7 @@ bb.f:                                             ; preds = %_ZN4llvm15IntervalM
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit
-  %i.ec = phi i32 [ %.pre65, %bb.f ], [ %i.dx, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ] ; 8 uses
+  %i.ec = phi i32 [ %.pre65, %bb.f ], [ %i.dx, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ] ; 7 uses
   %.pre-phi = phi i64 [ %.pre63, %bb.f ], [ %.pre-phi67, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ] ; 4 uses
   %i.ed = phi ptr [ %.pre, %bb.f ], [ %i.du, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ]
   %.150 = phi i1 [ %i.dz, %bb.f ], [ %i.c, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ]
@@ -472,11 +471,11 @@ bb.g:                                             ; preds = %bb.f, %_ZN4llvm15In
   %i.ei = sub i32 %i.ec, %i.eh
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ef, i64 96 ; 8 uses
   %i.ek = zext i32 %i.ei to i64                   ; 5 uses
-  %7 = xor i32 %i.eh, -1
-  %8 = add i32 %i.ec, %7                          ; 2 uses
-  %i.el = zext i32 %8 to i64
+  %6 = add i32 %i.ec, -1                          ; 2 uses
+  %7 = sub i32 %6, %i.eh                          ; 2 uses
+  %i.el = zext i32 %7 to i64
   %i.em = add nuw nsw i64 %i.el, 1                ; 2 uses
-  %min.iters.check = icmp ult i32 %8, 27
+  %min.iters.check = icmp ult i32 %7, 27
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i55
@@ -489,8 +488,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i55
   br i1 %i.er, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %9 = add i32 %i.ec, -1
-  %i.es = zext i32 %9 to i64
+  %i.es = zext i32 %6 to i64
   %i.et = shl nuw nsw i64 %i.es, 3                ; 3 uses
   %i.eu = zext i32 %i.ec to i64
   %i.ev = shl nuw nsw i64 %i.eu, 3                ; 3 uses
@@ -893,9 +891,9 @@ _ZN4llvm15SmallVectorImplINS_8RegisterEE7reserveEm.exit.i46: ; preds = %bb.h, %b
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader.i
   %i.ba = ptrtoaddr ptr %i.au to i64
-  %4 = add i64 %i.ba, %i.j
-  %5 = shl nuw nsw i64 %.pre-phi.i, 2
-  %i.bb = add i64 %4, %5
+  %4 = shl nuw nsw i64 %.pre-phi.i, 2
+  %5 = add i64 %i.ba, %i.j
+  %i.bb = add i64 %5, %4
   %i.bc = add i64 %i.aj, %i.k
   %i.bd = add i64 %i.bc, %.idx
   %i.be = sub i64 %i.bd, %i.bb

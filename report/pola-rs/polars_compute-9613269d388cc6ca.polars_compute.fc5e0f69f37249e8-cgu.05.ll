@@ -205,10 +205,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !60766
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !60778
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !60778
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !60778
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !60778
   %min.iters.check = icmp ult i64 %2, 4, !dbg !60766
-  %i.c = sub i64 %i.b, %i.a, !dbg !60766
+  %i.c = sub i64 %i.a, %i.b, !dbg !60766
   %diff.check = icmp ugt i64 %i.c, -32, !dbg !60766
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !60766
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !60766
@@ -592,10 +592,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !61322
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61332
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61332
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61332
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61332
   %min.iters.check = icmp ult i64 %2, 4, !dbg !61322
-  %i.c = sub i64 %i.b, %i.a, !dbg !61322
+  %i.c = sub i64 %i.a, %i.b, !dbg !61322
   %diff.check = icmp ugt i64 %i.c, -32, !dbg !61322
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !61322
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !61322
@@ -702,10 +702,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !61369
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61379
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61379
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61379
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61379
   %min.iters.check = icmp ult i64 %2, 4, !dbg !61369
-  %i.c = sub i64 %i.b, %i.a, !dbg !61369
+  %i.c = sub i64 %i.a, %i.b, !dbg !61369
   %diff.check = icmp ugt i64 %i.c, -32, !dbg !61369
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !61369
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !61369
@@ -828,11 +828,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !61414
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61424
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61424
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61424
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61424
   %i.c = load i8, ptr %3, align 1, !noundef !403  ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !61414
-  %i.d = sub i64 %i.b, %i.a, !dbg !61414
+  %i.d = sub i64 %i.a, %i.b, !dbg !61414
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !61414
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !61414
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !61414
@@ -1031,13 +1031,13 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !61532
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61541
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61541
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61541
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61541
   %i.c = load i32, ptr %3, align 4, !noundef !403
   %i.d = trunc i32 %i.c to i8
   %i.e = and i8 %i.d, 7                           ; 7 uses
   %min.iters.check = icmp ult i64 %2, 8, !dbg !61532
-  %i.f = sub i64 %i.b, %i.a, !dbg !61532
+  %i.f = sub i64 %i.a, %i.b, !dbg !61532
   %diff.check = icmp ugt i64 %i.f, -32, !dbg !61532
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !61532
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !61532
@@ -1164,11 +1164,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !61576
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61585
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61585
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61585
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61585
   %i.c = load i8, ptr %3, align 1, !noundef !403  ; 7 uses
   %min.iters.check = icmp ult i64 %2, 8, !dbg !61576
-  %i.d = sub i64 %i.b, %i.a, !dbg !61576
+  %i.d = sub i64 %i.a, %i.b, !dbg !61576
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !61576
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !61576
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !61576
@@ -1295,13 +1295,13 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !61622
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61631
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61631
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61631
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61631
   %i.c = load i32, ptr %3, align 4, !noundef !403
   %i.d = trunc i32 %i.c to i8
   %i.e = and i8 %i.d, 7                           ; 7 uses
   %min.iters.check = icmp ult i64 %2, 8, !dbg !61622
-  %i.f = sub i64 %i.b, %i.a, !dbg !61622
+  %i.f = sub i64 %i.a, %i.b, !dbg !61622
   %diff.check = icmp ugt i64 %i.f, -32, !dbg !61622
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !61622
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !61622
@@ -1436,11 +1436,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !61667
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61677
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61677
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61677
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61677
   %i.c = load i8, ptr %3, align 1, !noundef !403  ; 4 uses
   %min.iters.check = icmp ult i64 %2, 8, !dbg !61667
-  %i.d = sub i64 %i.b, %i.a, !dbg !61667
+  %i.d = sub i64 %i.a, %i.b, !dbg !61667
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !61667
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !61667
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !61667
@@ -1558,11 +1558,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !61716
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61726
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61726
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61726
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61726
   %i.c = load i8, ptr %3, align 1, !noundef !403  ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !61716
-  %i.d = sub i64 %i.b, %i.a, !dbg !61716
+  %i.d = sub i64 %i.a, %i.b, !dbg !61716
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !61716
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !61716
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !61716
@@ -1685,8 +1685,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity22ptr_apply_unary_kernelaaNCNvXNtNtB4_10arithmetic6signedaNtB1b_29PrimitiveArithmeticKernelImpl30prim_wrapping_floor_div_scalar0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i64 noundef %2, ptr noalias noundef readonly align 2 captures(none) dereferenceable(4) %3, ptr noalias noundef readonly captures(none) dereferenceable(1) %4) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !61734 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61791     ; 2 uses
-  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61791     ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61791     ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61791     ; 2 uses
   %.not = icmp eq i64 %2, 0, !dbg !61791
   br i1 %.not, label %._crit_edge, label %.lr.ph, !dbg !61780
 
@@ -1705,7 +1705,7 @@ bb.a:
 
 iter.check56:                                     ; preds = %.lr.ph
   %min.iters.check38 = icmp ult i64 %2, 4, !dbg !61780
-  %i.m = sub i64 %i.a, %i.b, !dbg !61780
+  %i.m = sub i64 %i.b, %i.a, !dbg !61780
   %diff.check37 = icmp ugt i64 %i.m, -16, !dbg !61780
   %or.cond = or i1 %min.iters.check38, %diff.check37, !dbg !61780
   br i1 %or.cond, label %_RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedaNtB6_29PrimitiveArithmeticKernelImpl30prim_wrapping_floor_div_scalar0B8_.exit.us.preheader, label %vector.main.loop.iter.check39, !dbg !61780
@@ -1797,7 +1797,7 @@ _RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedaNtB6_29PrimitiveAri
 iter.check:                                       ; preds = %.lr.ph
   %i.aq = zext i8 %i.e to i16                     ; 3 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !61780
-  %i.ar = sub i64 %i.a, %i.b, !dbg !61780
+  %i.ar = sub i64 %i.b, %i.a, !dbg !61780
   %diff.check = icmp ugt i64 %i.ar, -16, !dbg !61780
   %or.cond75 = or i1 %min.iters.check, %diff.check, !dbg !61780
   br i1 %or.cond75, label %_RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedaNtB6_29PrimitiveArithmeticKernelImpl30prim_wrapping_floor_div_scalar0B8_.exit.preheader, label %vector.main.loop.iter.check, !dbg !61780
@@ -1962,8 +1962,8 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph, !dbg !61846
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61856
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61856
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61856
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61856
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 3 uses
   %i.d = icmp eq i16 %i.c, 0
   %i.e = lshr i16 %i.c, 8                         ; 3 uses
@@ -1973,7 +1973,7 @@ bb.a:
   %i.i = tail call range(i8 0, 9) i8 @llvm.cttz.i8(i8 %i.h, i1 false)
   %i.j = zext nneg i8 %i.i to i16                 ; 3 uses
   %i.k = load i8, ptr %4, align 1, !noundef !403  ; 6 uses
-  %i.l = sub i64 %i.b, %i.a, !dbg !61846          ; 2 uses
+  %i.l = sub i64 %i.a, %i.b, !dbg !61846          ; 2 uses
   br i1 %i.d, label %iter.check46, label %iter.check
 
 iter.check:                                       ; preds = %.lr.ph
@@ -2211,12 +2211,12 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph, !dbg !61906
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61916
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61916
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61916
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61916
   %i.c = load i8, ptr %3, align 1, !noundef !403  ; 6 uses
   %i.d = icmp eq i8 %i.c, -128
   %min.iters.check27 = icmp ult i64 %2, 8, !dbg !61917
-  %i.e = sub i64 %i.b, %i.a, !dbg !61917
+  %i.e = sub i64 %i.a, %i.b, !dbg !61917
   %diff.check26 = icmp ugt i64 %i.e, -16, !dbg !61917
   %or.cond57 = or i1 %min.iters.check27, %diff.check26, !dbg !61917 ; 2 uses
   br i1 %i.d, label %iter.check41, label %iter.check
@@ -2452,13 +2452,13 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph, !dbg !61960
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !61970
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !61970
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !61970
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !61970
   %i.c = load i8, ptr %3, align 1
   %.fr6 = freeze i8 %i.c                          ; 6 uses
   %i.d = icmp eq i8 %.fr6, -128
   %min.iters.check25 = icmp ult i64 %2, 8, !dbg !61971
-  %i.e = sub i64 %i.b, %i.a, !dbg !61971
+  %i.e = sub i64 %i.a, %i.b, !dbg !61971
   %diff.check24 = icmp ugt i64 %i.e, -16, !dbg !61971
   %or.cond54 = or i1 %min.iters.check25, %diff.check24, !dbg !61971 ; 2 uses
   br i1 %i.d, label %iter.check39, label %iter.check
@@ -2861,10 +2861,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !63277
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63287
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63287
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63287
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63287
   %min.iters.check = icmp ult i64 %2, 4, !dbg !63277
-  %i.c = sub i64 %i.b, %i.a, !dbg !63277
+  %i.c = sub i64 %i.a, %i.b, !dbg !63277
   %diff.check = icmp ugt i64 %i.c, -32, !dbg !63277
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !63277
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !63277
@@ -2987,11 +2987,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !63322
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63332
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63332
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63332
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63332
   %i.c = load i8, ptr %3, align 1, !noundef !403  ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !63322
-  %i.d = sub i64 %i.b, %i.a, !dbg !63322
+  %i.d = sub i64 %i.a, %i.b, !dbg !63322
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !63322
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !63322
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !63322
@@ -3118,8 +3118,8 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph, !dbg !63375
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63385
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63385
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63385
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63385
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 2
   %i.e = load i8, ptr %i.d, align 2, !noundef !403 ; 2 uses
@@ -3127,7 +3127,7 @@ bb.a:
   %i.g = zext i8 %i.e to i32                      ; 5 uses
   %i.h = add i8 %i.e, -1                          ; 7 uses
   %min.iters.check25 = icmp ult i64 %2, 4, !dbg !63375 ; 2 uses
-  %i.i = sub i64 %i.b, %i.a, !dbg !63375          ; 2 uses
+  %i.i = sub i64 %i.a, %i.b, !dbg !63375          ; 2 uses
   br i1 %i.f, label %iter.check40, label %iter.check
 
 iter.check:                                       ; preds = %.lr.ph
@@ -3381,13 +3381,13 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !63423
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63432
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63432
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63432
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63432
   %i.c = load i32, ptr %3, align 4, !noundef !403
   %i.d = trunc i32 %i.c to i8
   %i.e = and i8 %i.d, 7                           ; 7 uses
   %min.iters.check = icmp ult i64 %2, 8, !dbg !63423
-  %i.f = sub i64 %i.b, %i.a, !dbg !63423
+  %i.f = sub i64 %i.a, %i.b, !dbg !63423
   %diff.check = icmp ugt i64 %i.f, -32, !dbg !63423
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !63423
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !63423
@@ -3514,11 +3514,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !63467
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63476
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63476
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63476
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63476
   %i.c = load i8, ptr %3, align 1, !noundef !403  ; 7 uses
   %min.iters.check = icmp ult i64 %2, 8, !dbg !63467
-  %i.d = sub i64 %i.b, %i.a, !dbg !63467
+  %i.d = sub i64 %i.a, %i.b, !dbg !63467
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !63467
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !63467
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !63467
@@ -3645,11 +3645,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !63508
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63518
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63518
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63518
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63518
   %i.c = load i8, ptr %3, align 1                 ; 5 uses
   %min.iters.check = icmp ult i64 %2, 8, !dbg !63508
-  %i.d = sub i64 %i.b, %i.a, !dbg !63508
+  %i.d = sub i64 %i.a, %i.b, !dbg !63508
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !63508
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !63508
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !63508
@@ -3783,11 +3783,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !63556
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63566
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63566
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63566
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63566
   %i.c = load i8, ptr %3, align 1, !noundef !403  ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !63556
-  %i.d = sub i64 %i.b, %i.a, !dbg !63556
+  %i.d = sub i64 %i.a, %i.b, !dbg !63556
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !63556
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !63556
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !63556
@@ -3914,8 +3914,8 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph, !dbg !63607
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63617
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63617
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63617
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63617
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 3 uses
   %i.d = icmp eq i16 %i.c, 0
   %i.e = lshr i16 %i.c, 8                         ; 5 uses
@@ -3925,7 +3925,7 @@ bb.a:
   %i.i = tail call range(i8 0, 9) i8 @llvm.cttz.i8(i8 %i.h, i1 false)
   %i.j = zext nneg i8 %i.i to i16                 ; 7 uses
   %min.iters.check25 = icmp ult i64 %2, 8, !dbg !63607
-  %i.k = sub i64 %i.b, %i.a, !dbg !63607
+  %i.k = sub i64 %i.a, %i.b, !dbg !63607
   %diff.check24 = icmp ugt i64 %i.k, -32, !dbg !63607
   %or.cond55 = or i1 %min.iters.check25, %diff.check24, !dbg !63607 ; 2 uses
   br i1 %i.d, label %iter.check40, label %iter.check
@@ -4209,11 +4209,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !63656
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !63666
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !63666
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !63666
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !63666
   %i.c = load i8, ptr %3, align 1                 ; 5 uses
   %min.iters.check = icmp ult i64 %2, 8, !dbg !63656
-  %i.d = sub i64 %i.b, %i.a, !dbg !63656
+  %i.d = sub i64 %i.a, %i.b, !dbg !63656
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !63656
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !63656
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !63656
@@ -4616,10 +4616,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !66197
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !66207
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !66207
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !66207
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !66207
   %min.iters.check = icmp ult i64 %2, 4, !dbg !66197
-  %i.c = sub i64 %i.b, %i.a, !dbg !66197
+  %i.c = sub i64 %i.a, %i.b, !dbg !66197
   %diff.check = icmp ugt i64 %i.c, -32, !dbg !66197
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !66197
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !66197
@@ -4726,10 +4726,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !66244
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !66254
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !66254
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !66254
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !66254
   %min.iters.check = icmp ult i64 %2, 4, !dbg !66244
-  %i.c = sub i64 %i.b, %i.a, !dbg !66244
+  %i.c = sub i64 %i.a, %i.b, !dbg !66244
   %diff.check = icmp ugt i64 %i.c, -32, !dbg !66244
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !66244
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !66244
@@ -4852,11 +4852,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !66289
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !66299
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !66299
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !66299
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !66299
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !66289
-  %i.d = sub i64 %i.b, %i.a, !dbg !66289
+  %i.d = sub i64 %i.a, %i.b, !dbg !66289
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !66289
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !66289
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !66289
@@ -5059,13 +5059,13 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !66411
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !66420
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !66420
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !66420
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !66420
   %i.c = load i32, ptr %3, align 4, !noundef !403
   %i.d = trunc i32 %i.c to i16
   %i.e = and i16 %i.d, 15                         ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !66411
-  %i.f = sub i64 %i.b, %i.a, !dbg !66411
+  %i.f = sub i64 %i.a, %i.b, !dbg !66411
   %diff.check = icmp ugt i64 %i.f, -32, !dbg !66411
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !66411
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !66411
@@ -5192,11 +5192,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !66455
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !66464
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !66464
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !66464
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !66464
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !66455
-  %i.d = sub i64 %i.b, %i.a, !dbg !66455
+  %i.d = sub i64 %i.a, %i.b, !dbg !66455
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !66455
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !66455
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !66455
@@ -5323,13 +5323,13 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !66501
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !66510
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !66510
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !66510
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !66510
   %i.c = load i32, ptr %3, align 4, !noundef !403
   %i.d = trunc i32 %i.c to i16
   %i.e = and i16 %i.d, 15                         ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !66501
-  %i.f = sub i64 %i.b, %i.a, !dbg !66501
+  %i.f = sub i64 %i.a, %i.b, !dbg !66501
   %diff.check = icmp ugt i64 %i.f, -32, !dbg !66501
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !66501
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !66501
@@ -5546,11 +5546,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !66594
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !66604
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !66604
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !66604
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !66604
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !66594
-  %i.d = sub i64 %i.b, %i.a, !dbg !66594
+  %i.d = sub i64 %i.a, %i.b, !dbg !66594
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !66594
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !66594
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !66594
@@ -5953,10 +5953,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !66965
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !66975
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !66975
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !66975
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !66975
   %min.iters.check = icmp ult i64 %2, 4, !dbg !66965
-  %i.c = sub i64 %i.b, %i.a, !dbg !66965
+  %i.c = sub i64 %i.a, %i.b, !dbg !66965
   %diff.check = icmp ugt i64 %i.c, -32, !dbg !66965
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !66965
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !66965
@@ -6079,11 +6079,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !67010
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !67020
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !67020
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !67020
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !67020
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !67010
-  %i.d = sub i64 %i.b, %i.a, !dbg !67010
+  %i.d = sub i64 %i.a, %i.b, !dbg !67010
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !67010
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !67010
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !67010
@@ -6451,13 +6451,13 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !67113
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !67122
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !67122
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !67122
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !67122
   %i.c = load i32, ptr %3, align 4, !noundef !403
   %i.d = trunc i32 %i.c to i16
   %i.e = and i16 %i.d, 15                         ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !67113
-  %i.f = sub i64 %i.b, %i.a, !dbg !67113
+  %i.f = sub i64 %i.a, %i.b, !dbg !67113
   %diff.check = icmp ugt i64 %i.f, -32, !dbg !67113
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !67113
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !67113
@@ -6584,11 +6584,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !67157
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !67166
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !67166
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !67166
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !67166
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !67157
-  %i.d = sub i64 %i.b, %i.a, !dbg !67157
+  %i.d = sub i64 %i.a, %i.b, !dbg !67157
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !67157
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !67157
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !67157
@@ -6820,11 +6820,11 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !67245
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !67255
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !67255
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !67255
+  %i.b = ptrtoaddr ptr %1 to i64, !dbg !67255
   %i.c = load i16, ptr %3, align 2, !noundef !403 ; 7 uses
   %min.iters.check = icmp ult i64 %2, 4, !dbg !67245
-  %i.d = sub i64 %i.b, %i.a, !dbg !67245
+  %i.d = sub i64 %i.a, %i.b, !dbg !67245
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !67245
   %or.cond = or i1 %min.iters.check, %diff.check, !dbg !67245
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check, !dbg !67245
@@ -7227,9 +7227,9 @@ bb.a:
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_add0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !68981 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !69022
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69022
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !69022     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69022
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69022     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !69022
   %.not = icmp eq i64 %3, 0, !dbg !69022
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69008
 
@@ -7238,9 +7238,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69008
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !69008
+  %i.d = sub i64 %i.a, %i.b, !dbg !69008
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !69008
-  %i.e = sub i64 %i.a, %i.c, !dbg !69008
+  %i.e = sub i64 %i.c, %i.b, !dbg !69008
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !69008
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !69008
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69023
@@ -7375,9 +7375,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_mod0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !69032 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !69073
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69073
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !69073     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69073
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69073     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !69073
   %.not = icmp eq i64 %3, 0, !dbg !69073
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69059
 
@@ -7386,9 +7386,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69074
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !69074
+  %i.d = sub i64 %i.a, %i.b, !dbg !69074
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !69074
-  %i.e = sub i64 %i.a, %i.c, !dbg !69074
+  %i.e = sub i64 %i.c, %i.b, !dbg !69074
   %diff.check8 = icmp ugt i64 %i.e, -16, !dbg !69074
   %conflict.rdx = or i1 %diff.check, %diff.check8, !dbg !69074
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69075
@@ -7504,9 +7504,9 @@ _RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedaNtB6_29PrimitiveAri
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_mul0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !69087 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !69128
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69128
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !69128     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69128
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69128     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !69128
   %.not = icmp eq i64 %3, 0, !dbg !69128
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69114
 
@@ -7515,9 +7515,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69114
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !69114
+  %i.d = sub i64 %i.a, %i.b, !dbg !69114
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !69114
-  %i.e = sub i64 %i.a, %i.c, !dbg !69114
+  %i.e = sub i64 %i.c, %i.b, !dbg !69114
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !69114
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !69114
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69129
@@ -7652,9 +7652,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_sub0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !69138 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !69179
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69179
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !69179     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69179
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69179     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !69179
   %.not = icmp eq i64 %3, 0, !dbg !69179
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69165
 
@@ -7663,9 +7663,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69165
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !69165
+  %i.d = sub i64 %i.a, %i.b, !dbg !69165
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !69165
-  %i.e = sub i64 %i.a, %i.c, !dbg !69165
+  %i.e = sub i64 %i.c, %i.b, !dbg !69165
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !69165
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !69165
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69180
@@ -7800,9 +7800,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl23prim_wrapping_floor_div0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !69189 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !69234
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69234
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !69234     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69234
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69234     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !69234
   %.not = icmp eq i64 %3, 0, !dbg !69234
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69220
 
@@ -7811,9 +7811,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69235
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !69235
+  %i.d = sub i64 %i.a, %i.b, !dbg !69235
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !69235
-  %i.e = sub i64 %i.a, %i.c, !dbg !69235
+  %i.e = sub i64 %i.c, %i.b, !dbg !69235
   %diff.check8 = icmp ugt i64 %i.e, -16, !dbg !69235
   %conflict.rdx = or i1 %diff.check, %diff.check8, !dbg !69235
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69236
@@ -7956,9 +7956,9 @@ _RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedaNtB6_29PrimitiveAri
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelaaaNCNvXNtNtB4_10arithmetic6signedaNtB1d_29PrimitiveArithmeticKernelImpl23prim_wrapping_trunc_div0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !69252 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !69294
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !69294
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !69294     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !69294
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !69294     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !69294
   %.not = icmp eq i64 %3, 0, !dbg !69294
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !69280
 
@@ -7967,9 +7967,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !69295
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !69295
+  %i.d = sub i64 %i.a, %i.b, !dbg !69295
   %diff.check = icmp ugt i64 %i.d, -16, !dbg !69295
-  %i.e = sub i64 %i.a, %i.c, !dbg !69295
+  %i.e = sub i64 %i.c, %i.b, !dbg !69295
   %diff.check8 = icmp ugt i64 %i.e, -16, !dbg !69295
   %conflict.rdx = or i1 %diff.check, %diff.check8, !dbg !69295
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !69296
@@ -8372,9 +8372,9 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelhhhNCNvXNtNtB4_10arithmetic8unsignedhNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_add0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !70122 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !70163
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !70163
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !70163     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !70163
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !70163     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !70163
   %.not = icmp eq i64 %3, 0, !dbg !70163
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !70149
 
@@ -8383,9 +8383,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !70149
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !70149
+  %i.d = sub i64 %i.a, %i.b, !dbg !70149
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !70149
-  %i.e = sub i64 %i.a, %i.c, !dbg !70149
+  %i.e = sub i64 %i.c, %i.b, !dbg !70149
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !70149
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !70149
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !70164
@@ -8603,9 +8603,9 @@ _RNCNvXNtNtCslFlrwjHoTci_14polars_compute10arithmetic8unsignedhNtB6_29PrimitiveA
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelhhhNCNvXNtNtB4_10arithmetic8unsignedhNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_mul0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !70221 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !70262
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !70262
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !70262     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !70262
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !70262     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !70262
   %.not = icmp eq i64 %3, 0, !dbg !70262
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !70248
 
@@ -8614,9 +8614,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !70248
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !70248
+  %i.d = sub i64 %i.a, %i.b, !dbg !70248
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !70248
-  %i.e = sub i64 %i.a, %i.c, !dbg !70248
+  %i.e = sub i64 %i.c, %i.b, !dbg !70248
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !70248
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !70248
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !70263
@@ -8751,9 +8751,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelhhhNCNvXNtNtB4_10arithmetic8unsignedhNtB1d_29PrimitiveArithmeticKernelImpl17prim_wrapping_sub0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !70272 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !70313
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !70313
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !70313     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !70313
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !70313     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !70313
   %.not = icmp eq i64 %3, 0, !dbg !70313
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !70299
 
@@ -8762,9 +8762,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !70299
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !70299
+  %i.d = sub i64 %i.a, %i.b, !dbg !70299
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !70299
-  %i.e = sub i64 %i.a, %i.c, !dbg !70299
+  %i.e = sub i64 %i.c, %i.b, !dbg !70299
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !70299
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !70299
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !70314
@@ -9167,9 +9167,9 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelsssNCNvXs_NtNtB4_10arithmetic6signedsNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_add0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !71745 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !71786
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !71786
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !71786     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !71786
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !71786     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !71786
   %.not = icmp eq i64 %3, 0, !dbg !71786
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !71772
 
@@ -9178,9 +9178,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !71772
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !71772
+  %i.d = sub i64 %i.a, %i.b, !dbg !71772
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !71772
-  %i.e = sub i64 %i.a, %i.c, !dbg !71772
+  %i.e = sub i64 %i.c, %i.b, !dbg !71772
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !71772
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !71772
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !71787
@@ -9404,9 +9404,9 @@ _RNCNvXs_NtNtCslFlrwjHoTci_14polars_compute10arithmetic6signedsNtB8_29PrimitiveA
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelsssNCNvXs_NtNtB4_10arithmetic6signedsNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_mul0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !71850 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !71891
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !71891
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !71891     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !71891
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !71891     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !71891
   %.not = icmp eq i64 %3, 0, !dbg !71891
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !71877
 
@@ -9415,9 +9415,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !71877
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !71877
+  %i.d = sub i64 %i.a, %i.b, !dbg !71877
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !71877
-  %i.e = sub i64 %i.a, %i.c, !dbg !71877
+  %i.e = sub i64 %i.c, %i.b, !dbg !71877
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !71877
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !71877
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !71892
@@ -9552,9 +9552,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kernelsssNCNvXs_NtNtB4_10arithmetic6signedsNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_sub0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !71901 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !71942
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !71942
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !71942     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !71942
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !71942     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !71942
   %.not = icmp eq i64 %3, 0, !dbg !71942
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !71928
 
@@ -9563,9 +9563,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !71928
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !71928
+  %i.d = sub i64 %i.a, %i.b, !dbg !71928
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !71928
-  %i.e = sub i64 %i.a, %i.c, !dbg !71928
+  %i.e = sub i64 %i.c, %i.b, !dbg !71928
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !71928
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !71928
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !71943
@@ -9968,9 +9968,9 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kerneltttNCNvXs_NtNtB4_10arithmetic8unsignedtNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_add0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !72127 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !72168
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !72168
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !72168     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !72168
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !72168     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !72168
   %.not = icmp eq i64 %3, 0, !dbg !72168
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !72154
 
@@ -9979,9 +9979,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !72154
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !72154
+  %i.d = sub i64 %i.a, %i.b, !dbg !72154
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !72154
-  %i.e = sub i64 %i.a, %i.c, !dbg !72154
+  %i.e = sub i64 %i.c, %i.b, !dbg !72154
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !72154
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !72154
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !72169
@@ -10199,9 +10199,9 @@ _RNCNvXs_NtNtCslFlrwjHoTci_14polars_compute10arithmetic8unsignedtNtB8_29Primitiv
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kerneltttNCNvXs_NtNtB4_10arithmetic8unsignedtNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_mul0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !72226 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !72267
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !72267
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !72267     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !72267
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !72267     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !72267
   %.not = icmp eq i64 %3, 0, !dbg !72267
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !72253
 
@@ -10210,9 +10210,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !72253
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !72253
+  %i.d = sub i64 %i.a, %i.b, !dbg !72253
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !72253
-  %i.e = sub i64 %i.a, %i.c, !dbg !72253
+  %i.e = sub i64 %i.c, %i.b, !dbg !72253
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !72253
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !72253
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !72268
@@ -10347,9 +10347,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree noinline norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvNtCslFlrwjHoTci_14polars_compute5arity23ptr_apply_binary_kerneltttNCNvXs_NtNtB4_10arithmetic8unsignedtNtB1f_29PrimitiveArithmeticKernelImpl17prim_wrapping_sub0EB4_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i64 noundef %3) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !72277 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64, !dbg !72318
-  %i.b = ptrtoaddr ptr %0 to i64, !dbg !72318
-  %i.c = ptrtoaddr ptr %2 to i64, !dbg !72318     ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64, !dbg !72318
+  %i.b = ptrtoaddr ptr %2 to i64, !dbg !72318     ; 2 uses
+  %i.c = ptrtoaddr ptr %1 to i64, !dbg !72318
   %.not = icmp eq i64 %3, 0, !dbg !72318
   br i1 %.not, label %._crit_edge, label %iter.check, !dbg !72304
 
@@ -10358,9 +10358,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck, !dbg !72304
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.d = sub i64 %i.b, %i.c, !dbg !72304
+  %i.d = sub i64 %i.a, %i.b, !dbg !72304
   %diff.check = icmp ugt i64 %i.d, -32, !dbg !72304
-  %i.e = sub i64 %i.a, %i.c, !dbg !72304
+  %i.e = sub i64 %i.c, %i.b, !dbg !72304
   %diff.check6 = icmp ugt i64 %i.e, -32, !dbg !72304
   %conflict.rdx = or i1 %diff.check, %diff.check6, !dbg !72304
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check, !dbg !72319

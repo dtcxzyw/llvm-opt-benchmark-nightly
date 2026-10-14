@@ -205,9 +205,9 @@ middle.block254:                                  ; preds = %vector.body247
 
 vector.memcheck259:                               ; preds = %.lr.ph.i.i45.preheader
   %i.iz = shl i64 %i.m, 4
-  %9 = add i64 %i.iz, %i.a
-  %10 = shl i64 %i.e, 3
-  %i.ja = add i64 %9, %10
+  %9 = shl i64 %i.e, 3
+  %10 = add i64 %i.iz, %i.a
+  %i.ja = add i64 %10, %9
   %i.jb = sub i64 %i.ir, %i.ja
   %diff.check260 = icmp ugt i64 %i.jb, -32
   br i1 %diff.check260, label %.lr.ph.i.i45.preheader374, label %vector.ph263
@@ -341,9 +341,9 @@ bb.c:                                             ; preds = %.lr.ph.i19.preheade
 
 vector.memcheck277:                               ; preds = %.lr.ph.i24.i.preheader
   %i.ku = mul i64 %i.m, 24
-  %11 = add i64 %i.ku, %i.a
-  %12 = shl i64 %i.e, 3
-  %i.kv = add i64 %11, %12
+  %11 = shl i64 %i.e, 3
+  %12 = add i64 %i.ku, %i.a
+  %i.kv = add i64 %12, %11
   %i.kw = sub i64 %i.iu, %i.kv
   %diff.check278 = icmp ugt i64 %i.kw, -32
   br i1 %diff.check278, label %.lr.ph.i24.i.preheader373, label %vector.ph281

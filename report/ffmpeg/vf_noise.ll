@@ -73,9 +73,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ff_line_noise_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4) #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
-  %i.c = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = sext i32 %4 to i64                       ; 2 uses
   %i.e = getelementptr inbounds i8, ptr %2, i64 %i.d ; 5 uses
   %i.f = icmp sgt i32 %3, 0
@@ -87,10 +87,10 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.g = sub i64 %i.b, %i.c
+  %i.g = sub i64 %i.a, %i.b
   %diff.check = icmp ugt i64 %i.g, -16
-  %i.h = add i64 %i.a, %i.d
-  %i.i = sub i64 %i.h, %i.c
+  %i.h = add i64 %i.c, %i.d
+  %i.i = sub i64 %i.h, %i.b
   %diff.check14 = icmp ugt i64 %i.i, -16
   %conflict.rdx = or i1 %diff.check, %diff.check14
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check

@@ -204,10 +204,10 @@ iter.check:                                       ; preds = %.preheader
 vector.memcheck:                                  ; preds = %iter.check
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = shl nsw i64 %i.an, 1
-  %4 = add i64 %i.ap, %i.ao
-  %5 = shl i64 %i.j, 1
-  %i.aq = add i64 %5, %i.i
-  %i.ar = sub i64 %i.aq, %4
+  %4 = shl i64 %i.j, 1
+  %5 = add i64 %i.ap, %i.ao
+  %i.aq = add i64 %4, %i.i
+  %i.ar = sub i64 %i.aq, %5
   %diff.check = icmp ugt i64 %i.ar, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -499,10 +499,10 @@ iter.check:                                       ; preds = %.preheader
 vector.memcheck:                                  ; preds = %iter.check
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = shl nsw i64 %i.an, 1
-  %4 = add i64 %i.ap, %i.ao
-  %5 = shl i64 %i.j, 1
-  %i.aq = add i64 %5, %i.i
-  %i.ar = sub i64 %i.aq, %4
+  %4 = shl i64 %i.j, 1
+  %5 = add i64 %i.ap, %i.ao
+  %i.aq = add i64 %4, %i.i
+  %i.ar = sub i64 %i.aq, %5
   %diff.check = icmp ugt i64 %i.ar, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -905,10 +905,10 @@ iter.check:                                       ; preds = %.preheader
 vector.memcheck:                                  ; preds = %iter.check
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = shl nsw i64 %i.an, 1
-  %4 = add i64 %i.ap, %i.ao
-  %5 = shl i64 %i.j, 1
-  %i.aq = add i64 %5, %i.i
-  %i.ar = sub i64 %i.aq, %4
+  %4 = shl i64 %i.j, 1
+  %5 = add i64 %i.ap, %i.ao
+  %i.aq = add i64 %4, %i.i
+  %i.ar = sub i64 %i.aq, %5
   %diff.check = icmp ugt i64 %i.ar, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -1311,10 +1311,10 @@ iter.check:                                       ; preds = %.preheader
 vector.memcheck:                                  ; preds = %iter.check
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = shl nsw i64 %i.an, 1
-  %4 = add i64 %i.ap, %i.ao
-  %5 = shl i64 %i.j, 1
-  %i.aq = add i64 %5, %i.i
-  %i.ar = sub i64 %i.aq, %4
+  %4 = shl i64 %i.j, 1
+  %5 = add i64 %i.ap, %i.ao
+  %i.aq = add i64 %4, %i.i
+  %i.ar = sub i64 %i.aq, %5
   %diff.check = icmp ugt i64 %i.ar, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -1606,10 +1606,10 @@ iter.check:                                       ; preds = %.preheader
 vector.memcheck:                                  ; preds = %iter.check
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = shl nsw i64 %i.an, 1
-  %4 = add i64 %i.ap, %i.ao
-  %5 = shl i64 %i.j, 1
-  %i.aq = add i64 %5, %i.i
-  %i.ar = sub i64 %i.aq, %4
+  %4 = shl i64 %i.j, 1
+  %5 = add i64 %i.ap, %i.ao
+  %i.aq = add i64 %4, %i.i
+  %i.ar = sub i64 %i.aq, %5
   %diff.check = icmp ugt i64 %i.ar, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -2012,10 +2012,10 @@ iter.check:                                       ; preds = %.preheader
 vector.memcheck:                                  ; preds = %iter.check
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = shl nsw i64 %i.an, 1
-  %4 = add i64 %i.ap, %i.ao
-  %5 = shl i64 %i.j, 1
-  %i.aq = add i64 %5, %i.i
-  %i.ar = sub i64 %i.aq, %4
+  %4 = shl i64 %i.j, 1
+  %5 = add i64 %i.ap, %i.ao
+  %i.aq = add i64 %4, %i.i
+  %i.ar = sub i64 %i.aq, %5
   %diff.check = icmp ugt i64 %i.ar, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -2418,10 +2418,10 @@ _ZN5arrow9ArraySpanD2Ev.exit:                     ; preds = %_ZSt8_DestroyIPN5ar
 vector.memcheck:                                  ; preds = %.lr.ph18
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = shl nsw i64 %i.an, 2
-  %4 = add i64 %i.ap, %i.ao
-  %5 = shl i64 %i.j, 2
-  %i.aq = add i64 %5, %i.i
-  %i.ar = sub i64 %i.aq, %4
+  %4 = shl i64 %i.j, 2
+  %5 = add i64 %i.ap, %i.ao
+  %i.aq = add i64 %4, %i.i
+  %i.ar = sub i64 %i.aq, %5
   %diff.check = icmp ugt i64 %i.ar, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -2824,10 +2824,10 @@ _ZN5arrow9ArraySpanD2Ev.exit:                     ; preds = %_ZSt8_DestroyIPN5ar
 vector.memcheck:                                  ; preds = %.lr.ph18
   %i.ao = ptrtoaddr ptr %i.ah to i64
   %i.ap = shl nsw i64 %i.an, 3
-  %4 = add i64 %i.ap, %i.ao
-  %5 = shl i64 %i.j, 3
-  %i.aq = add i64 %5, %i.i
-  %i.ar = sub i64 %i.aq, %4
+  %4 = shl i64 %i.j, 3
+  %5 = add i64 %i.ap, %i.ao
+  %i.aq = add i64 %4, %i.i
+  %i.ar = sub i64 %i.aq, %5
   %diff.check = icmp ugt i64 %i.ar, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 

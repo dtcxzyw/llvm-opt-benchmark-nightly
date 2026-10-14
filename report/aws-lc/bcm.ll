@@ -205,16 +205,16 @@ iter.check:                                       ; preds = %._crit_edge.i, %.pr
   %.039.lcssa69.i = phi ptr [ %i.o, %._crit_edge.i ], [ %0, %.preheader44.i ] ; 8 uses
   %.040.lcssa68.i = phi ptr [ %i.p, %._crit_edge.i ], [ %1, %.preheader44.i ] ; 24 uses
   %.041.lcssa67.i = phi i64 [ %i.n, %._crit_edge.i ], [ %2, %.preheader44.i ] ; 14 uses
-  %.040.lcssa68.i39 = ptrtoaddr ptr %.040.lcssa68.i to i64 ; 3 uses
-  %.0.lcssa70.i41 = ptrtoaddr ptr %.0.lcssa70.i to i64 ; 2 uses
+  %.040.lcssa68.i39 = ptrtoaddr ptr %.0.lcssa70.i to i64 ; 2 uses
+  %.0.lcssa70.i41 = ptrtoaddr ptr %.040.lcssa68.i to i64 ; 3 uses
   %min.iters.check = icmp ult i64 %.041.lcssa67.i, 4
   br i1 %min.iters.check, label %.preheader43.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %.039.lcssa69.i40 = ptrtoaddr ptr %.039.lcssa69.i to i64
-  %i.r = sub i64 %.039.lcssa69.i40, %.040.lcssa68.i39
+  %i.r = sub i64 %.039.lcssa69.i40, %.0.lcssa70.i41
   %diff.check = icmp ugt i64 %i.r, -32
-  %i.s = sub i64 %.0.lcssa70.i41, %.040.lcssa68.i39
+  %i.s = sub i64 %.040.lcssa68.i39, %.0.lcssa70.i41
   %diff.check42 = icmp ugt i64 %i.s, -32
   %conflict.rdx = or i1 %diff.check, %diff.check42
   br i1 %conflict.rdx, label %.preheader43.i.preheader, label %vector.main.loop.iter.check
@@ -330,7 +330,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check69:                                     ; preds = %.preheader43.i.prol.loopexit, %.preheader43.i, %vec.epilog.middle.block
   %i.br = sub nuw nsw i64 16, %.041.lcssa67.i     ; 2 uses
   %min.iters.check55 = icmp ugt i64 %.041.lcssa67.i, 8
-  %i.bs = sub i64 %.0.lcssa70.i41, %.040.lcssa68.i39
+  %i.bs = sub i64 %.040.lcssa68.i39, %.0.lcssa70.i41
   %diff.check54 = icmp ugt i64 %i.bs, -32
   %or.cond = select i1 %min.iters.check55, i1 true, i1 %diff.check54
   br i1 %or.cond, label %.lr.ph54.i.preheader, label %vec.epilog.ph73
@@ -487,16 +487,16 @@ iter.check:                                       ; preds = %.preheader44, %._cr
   %.039.lcssa69 = phi ptr [ %i.i, %._crit_edge ], [ %0, %.preheader44 ] ; 8 uses
   %.040.lcssa68 = phi ptr [ %i.j, %._crit_edge ], [ %1, %.preheader44 ] ; 18 uses
   %.041.lcssa67 = phi i64 [ %i.h, %._crit_edge ], [ %2, %.preheader44 ] ; 14 uses
-  %.040.lcssa6875 = ptrtoaddr ptr %.040.lcssa68 to i64 ; 3 uses
-  %.0.lcssa7077 = ptrtoaddr ptr %.0.lcssa70 to i64 ; 2 uses
+  %.040.lcssa6875 = ptrtoaddr ptr %.0.lcssa70 to i64 ; 2 uses
+  %.0.lcssa7077 = ptrtoaddr ptr %.040.lcssa68 to i64 ; 3 uses
   %min.iters.check = icmp ult i64 %.041.lcssa67, 4
   br i1 %min.iters.check, label %.preheader43.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %.039.lcssa6976 = ptrtoaddr ptr %.039.lcssa69 to i64
-  %i.l = sub i64 %.039.lcssa6976, %.040.lcssa6875
+  %i.l = sub i64 %.039.lcssa6976, %.0.lcssa7077
   %diff.check = icmp ugt i64 %i.l, -32
-  %i.m = sub i64 %.0.lcssa7077, %.040.lcssa6875
+  %i.m = sub i64 %.040.lcssa6875, %.0.lcssa7077
   %diff.check78 = icmp ugt i64 %i.m, -32
   %conflict.rdx = or i1 %diff.check, %diff.check78
   br i1 %conflict.rdx, label %.preheader43.preheader, label %vector.main.loop.iter.check
@@ -612,7 +612,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check105:                                    ; preds = %.preheader43.prol.loopexit, %.preheader43, %vec.epilog.middle.block
   %i.bl = sub nuw nsw i64 16, %.041.lcssa67       ; 2 uses
   %min.iters.check91 = icmp ugt i64 %.041.lcssa67, 8
-  %i.bm = sub i64 %.0.lcssa7077, %.040.lcssa6875
+  %i.bm = sub i64 %.040.lcssa6875, %.0.lcssa7077
   %diff.check90 = icmp ugt i64 %i.bm, -32
   %or.cond = select i1 %min.iters.check91, i1 true, i1 %diff.check90
   br i1 %or.cond, label %.lr.ph54.preheader, label %vec.epilog.ph109
@@ -1015,8 +1015,8 @@ bb.ad:                                            ; preds = %bb.h, %bb.j, %bb.l,
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @EVP_DecryptFinal_ex(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %0 to i64
   store i32 0, ptr %2, align 4, !tbaa !73
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.b, label %bb.c
@@ -1147,7 +1147,7 @@ iter.check:                                       ; preds = %bb.u
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.an = sub i64 %i.b, %i.a
+  %i.an = sub i64 %i.a, %i.b
   %i.ao = add i64 %i.an, -113
   %diff.check = icmp ult i64 %i.ao, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -1550,8 +1550,8 @@ OPENSSL_memcpy.exit54:                            ; preds = %._crit_edge, %bb.f
 ; Function Attrs: nounwind uwtable
 define i32 @CMAC_Final(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !163    ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.e = load i32, ptr %i.d, align 4, !tbaa !180  ; 6 uses
@@ -1597,10 +1597,10 @@ iter.check:                                       ; preds = %OPENSSL_memset.exit
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.x = add i64 %i.u, %i.a
-  %i.y = sub i64 %i.x, %i.b
+  %i.x = add i64 %i.u, %i.b
+  %i.y = sub i64 %i.x, %i.a
   %diff.check = icmp ugt i64 %i.y, -32
-  %i.z = sub i64 %i.b, %i.a
+  %i.z = sub i64 %i.a, %i.b
   %i.aa = add i64 %i.z, -185
   %diff.check51 = icmp ult i64 %i.aa, 31
   %conflict.rdx = or i1 %diff.check, %diff.check51
@@ -2003,16 +2003,16 @@ iter.check:                                       ; preds = %._crit_edge.i, %.pr
   %.039.lcssa69.i = phi ptr [ %i.u, %._crit_edge.i ], [ %2, %.preheader44.i ] ; 8 uses
   %.040.lcssa68.i = phi ptr [ %i.v, %._crit_edge.i ], [ %1, %.preheader44.i ] ; 18 uses
   %.041.lcssa67.i = phi i64 [ %i.t, %._crit_edge.i ], [ %3, %.preheader44.i ] ; 14 uses
-  %.040.lcssa68.i33 = ptrtoaddr ptr %.040.lcssa68.i to i64 ; 3 uses
-  %.0.lcssa70.i35 = ptrtoaddr ptr %.0.lcssa70.i to i64 ; 2 uses
+  %.040.lcssa68.i33 = ptrtoaddr ptr %.0.lcssa70.i to i64 ; 2 uses
+  %.0.lcssa70.i35 = ptrtoaddr ptr %.040.lcssa68.i to i64 ; 3 uses
   %min.iters.check = icmp ult i64 %.041.lcssa67.i, 4
   br i1 %min.iters.check, label %.preheader43.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %.039.lcssa69.i34 = ptrtoaddr ptr %.039.lcssa69.i to i64
-  %i.x = sub i64 %.039.lcssa69.i34, %.040.lcssa68.i33
+  %i.x = sub i64 %.039.lcssa69.i34, %.0.lcssa70.i35
   %diff.check = icmp ugt i64 %i.x, -32
-  %i.y = sub i64 %.0.lcssa70.i35, %.040.lcssa68.i33
+  %i.y = sub i64 %.040.lcssa68.i33, %.0.lcssa70.i35
   %diff.check36 = icmp ugt i64 %i.y, -32
   %conflict.rdx = or i1 %diff.check, %diff.check36
   br i1 %conflict.rdx, label %.preheader43.i.preheader, label %vector.main.loop.iter.check
@@ -2128,7 +2128,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 iter.check63:                                     ; preds = %.preheader43.i.prol.loopexit, %.preheader43.i, %vec.epilog.middle.block
   %i.bx = sub nuw nsw i64 16, %.041.lcssa67.i     ; 2 uses
   %min.iters.check49 = icmp ugt i64 %.041.lcssa67.i, 8
-  %i.by = sub i64 %.0.lcssa70.i35, %.040.lcssa68.i33
+  %i.by = sub i64 %.040.lcssa68.i33, %.0.lcssa70.i35
   %diff.check48 = icmp ugt i64 %i.by, -32
   %or.cond = select i1 %min.iters.check49, i1 true, i1 %diff.check48
   br i1 %or.cond, label %.lr.ph54.i.preheader, label %vec.epilog.ph67

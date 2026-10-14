@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %.loopexit415
   br i1 %min.iters.check, label %.lr.ph.i.i216.preheader692, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i216.preheader
-  %7 = add i64 %i.h, %i.c
-  %8 = shl i64 %i.j, 2
-  %.neg666 = sub i64 %8, %7
+  %7 = shl i64 %i.j, 2
+  %8 = add i64 %i.h, %i.c
+  %.neg666 = sub i64 %7, %8
   %i.cg = add i64 %.neg666, %i.d
   %i.ch = add i64 %i.cg, -1
   %diff.check = icmp ult i64 %i.ch, 31
@@ -610,10 +610,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_4test25expand_bwd_test_alloc
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i138.preheader
   %i.cj = shl i64 %i.bb, 2
-  %7 = add i64 %i.cj, %i.h
-  %8 = shl nsw i64 %1, 2
-  %i.ck = add i64 %8, %i.c
-  %i.cl = sub i64 %i.ck, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.cj, %i.h
+  %i.ck = add i64 %7, %i.c
+  %i.cl = sub i64 %i.ck, %8
   %diff.check = icmp ugt i64 %i.cl, -32
   br i1 %diff.check, label %.lr.ph.i.i138.preheader424, label %vector.ph
 
@@ -953,9 +953,9 @@ bb.g:                                             ; preds = %_ZN5boost9container
 
 vector.memcheck392:                               ; preds = %.lr.ph.i.i178.preheader
   %i.gz = shl nsw i64 %1, 2
+  %.neg = shl i64 %i.eb, 2
   %9 = add i64 %i.gz, %i.c
   %10 = sub i64 %i.h, %9
-  %.neg = shl i64 %i.eb, 2
   %i.ha = add i64 %.neg, %10
   %i.hb = add i64 %i.ha, -1
   %diff.check393 = icmp ult i64 %i.hb, 31
@@ -1358,9 +1358,9 @@ bb.h:                                             ; preds = %.loopexit442
   br i1 %min.iters.check, label %.lr.ph.i.i216.preheader679, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i216.preheader
-  %7 = add i64 %i.g, %i.b
-  %8 = shl i64 %i.i, 2
-  %.neg656 = sub i64 %8, %7
+  %7 = shl i64 %i.i, 2
+  %8 = add i64 %i.g, %i.b
+  %.neg656 = sub i64 %7, %8
   %i.cx = add i64 %.neg656, %i.c
   %i.cy = add i64 %i.cx, -1
   %diff.check = icmp ult i64 %i.cy, 31
@@ -1763,10 +1763,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i138.preheader
   %i.da = shl i64 %i.bs, 2
-  %7 = add i64 %i.da, %i.g
-  %8 = shl nsw i64 %1, 2
-  %i.db = add i64 %8, %i.b
-  %i.dc = sub i64 %i.db, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.da, %i.g
+  %i.db = add i64 %7, %i.b
+  %i.dc = sub i64 %i.db, %8
   %diff.check = icmp ugt i64 %i.dc, -32
   br i1 %diff.check, label %.lr.ph.i.i138.preheader427, label %vector.ph
 
@@ -2128,9 +2128,9 @@ bb.p:                                             ; preds = %.loopexit
 
 vector.memcheck399:                               ; preds = %.lr.ph.i.i187.preheader
   %i.ib = shl nsw i64 %1, 2
+  %.neg = shl i64 %i.es, 2
   %9 = add i64 %i.ib, %i.b
   %10 = sub i64 %i.g, %9
-  %.neg = shl i64 %i.es, 2
   %i.ic = add i64 %.neg, %10
   %i.id = add i64 %i.ic, -1
   %diff.check400 = icmp ult i64 %i.id, 31
@@ -2533,9 +2533,9 @@ bb.e:                                             ; preds = %.loopexit404
   br i1 %min.iters.check, label %.lr.ph.i.i216.preheader565, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i216.preheader
-  %6 = add i64 %i.g, %i.b
-  %7 = shl i64 %i.i, 2
-  %.neg550 = sub i64 %7, %6
+  %6 = shl i64 %i.i, 2
+  %7 = add i64 %i.g, %i.b
+  %.neg550 = sub i64 %6, %7
   %i.bv = add i64 %.neg550, %i.c
   %i.bw = add i64 %i.bv, -1
   %diff.check = icmp ult i64 %i.bw, 31
@@ -2938,10 +2938,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i138.preheader
   %i.by = shl i64 %i.aq, 2
-  %6 = add i64 %i.by, %i.g
-  %7 = shl nsw i64 %1, 2
-  %i.bz = add i64 %7, %i.b
-  %i.ca = sub i64 %i.bz, %6
+  %6 = shl nsw i64 %1, 2
+  %7 = add i64 %i.by, %i.g
+  %i.bz = add i64 %6, %i.b
+  %i.ca = sub i64 %i.bz, %7
   %diff.check = icmp ugt i64 %i.ca, -32
   br i1 %diff.check, label %.lr.ph.i.i138.preheader371, label %vector.ph
 
@@ -3212,9 +3212,9 @@ bb.g:                                             ; preds = %_ZNK5boost9containe
 
 vector.memcheck345:                               ; preds = %.lr.ph.i.i173.preheader
   %i.fe = shl nsw i64 %1, 2
+  %.neg = shl i64 %i.dq, 2
   %8 = add i64 %i.fe, %i.b
   %9 = sub i64 %i.g, %8
-  %.neg = shl i64 %i.dq, 2
   %i.ff = add i64 %.neg, %9
   %i.fg = add i64 %i.ff, -1
   %diff.check346 = icmp ult i64 %i.fg, 31
@@ -3617,9 +3617,9 @@ bb.e:                                             ; preds = %.loopexit354
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader501, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %7 = add i64 %i.g, %i.b
-  %8 = shl i64 %i.i, 2
-  %.neg489 = sub i64 %8, %7
+  %7 = shl i64 %i.i, 2
+  %8 = add i64 %i.g, %i.b
+  %.neg489 = sub i64 %7, %8
   %i.bj = add i64 %.neg489, %i.c
   %i.bk = add i64 %i.bj, -1
   %diff.check = icmp ult i64 %i.bk, 31
@@ -4022,10 +4022,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.bo = shl i64 %i.ag, 2
-  %7 = add i64 %i.bo, %i.h
-  %8 = shl nsw i64 %1, 2
-  %i.bp = add i64 %8, %i.b
-  %i.bq = sub i64 %i.bp, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.bo, %i.h
+  %i.bp = add i64 %7, %i.b
+  %i.bq = sub i64 %i.bp, %8
   %diff.check = icmp ugt i64 %i.bq, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader352, label %vector.ph
 
@@ -4192,11 +4192,11 @@ bb.g:                                             ; preds = %.loopexit
 
 vector.memcheck327:                               ; preds = %.lr.ph.i.i161.preheader
   %i.dm = shl i64 %i.o, 2
-  %9 = add i64 %i.dm, %i.h
-  %i.dn = add i64 %i.m, %i.b
-  %10 = shl nsw i64 %1, 2
-  %i.do = add i64 %i.dn, %10
-  %i.dp = sub i64 %i.do, %9
+  %9 = shl nsw i64 %1, 2
+  %i.dn = add i64 %i.dm, %i.h
+  %10 = add i64 %i.m, %i.b
+  %i.do = add i64 %10, %9
+  %i.dp = sub i64 %i.do, %i.dn
   %diff.check328 = icmp ugt i64 %i.dp, -32
   br i1 %diff.check328, label %.lr.ph.i.i161.preheader345, label %vector.ph331
 
@@ -4599,9 +4599,9 @@ bb.e:                                             ; preds = %.loopexit415
   br i1 %min.iters.check, label %.lr.ph.i.i216.preheader692, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i216.preheader
-  %7 = add i64 %i.h, %i.c
-  %8 = shl i64 %i.j, 2
-  %.neg666 = sub i64 %8, %7
+  %7 = shl i64 %i.j, 2
+  %8 = add i64 %i.h, %i.c
+  %.neg666 = sub i64 %7, %8
   %i.cg = add i64 %.neg666, %i.d
   %i.ch = add i64 %i.cg, -1
   %diff.check = icmp ult i64 %i.ch, 31
@@ -5004,10 +5004,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i138.preheader
   %i.cj = shl i64 %i.bb, 2
-  %7 = add i64 %i.cj, %i.h
-  %8 = shl nsw i64 %1, 2
-  %i.ck = add i64 %8, %i.c
-  %i.cl = sub i64 %i.ck, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.cj, %i.h
+  %i.ck = add i64 %7, %i.c
+  %i.cl = sub i64 %i.ck, %8
   %diff.check = icmp ugt i64 %i.cl, -32
   br i1 %diff.check, label %.lr.ph.i.i138.preheader424, label %vector.ph
 
@@ -5350,9 +5350,9 @@ bb.g:                                             ; preds = %_ZN5boost9container
 
 vector.memcheck392:                               ; preds = %.lr.ph.i.i178.preheader
   %i.gz = shl nsw i64 %1, 2
+  %.neg = shl i64 %i.eb, 2
   %9 = add i64 %i.gz, %i.c
   %10 = sub i64 %i.h, %9
-  %.neg = shl i64 %i.eb, 2
   %i.ha = add i64 %.neg, %10
   %i.hb = add i64 %i.ha, -1
   %diff.check393 = icmp ult i64 %i.hb, 31
@@ -5755,9 +5755,9 @@ bb.e:                                             ; preds = %.loopexit400
   br i1 %min.iters.check, label %.lr.ph.i.i211.preheader626, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i211.preheader
-  %7 = add i64 %i.g, %i.b
-  %8 = shl i64 %i.i, 2
-  %.neg612 = sub i64 %8, %7
+  %7 = shl i64 %i.i, 2
+  %8 = add i64 %i.g, %i.b
+  %.neg612 = sub i64 %7, %8
   %i.ca = add i64 %.neg612, %i.c
   %i.cb = add i64 %i.ca, -1
   %diff.check = icmp ult i64 %i.cb, 31
@@ -6160,10 +6160,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i136.preheader
   %i.cd = shl i64 %i.av, 2
-  %7 = add i64 %i.cd, %i.g
-  %8 = shl nsw i64 %1, 2
-  %i.ce = add i64 %8, %i.b
-  %i.cf = sub i64 %i.ce, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.cd, %i.g
+  %i.ce = add i64 %7, %i.b
+  %i.cf = sub i64 %i.ce, %8
   %diff.check = icmp ugt i64 %i.cf, -32
   br i1 %diff.check, label %.lr.ph.i.i136.preheader398, label %vector.ph
 
@@ -6430,9 +6430,9 @@ bb.g:                                             ; preds = %_ZNK5boost9containe
 
 vector.memcheck372:                               ; preds = %.lr.ph.i.i171.preheader
   %i.ff = shl nsw i64 %1, 2
+  %.neg = shl i64 %i.dv, 2
   %9 = add i64 %i.ff, %i.b
   %10 = sub i64 %i.g, %9
-  %.neg = shl i64 %i.dv, 2
   %i.fg = add i64 %.neg, %10
   %i.fh = add i64 %i.fg, -1
   %diff.check373 = icmp ult i64 %i.fh, 31
@@ -6835,9 +6835,9 @@ bb.e:                                             ; preds = %.loopexit354
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader501, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %7 = add i64 %i.g, %i.b
-  %8 = shl i64 %i.i, 2
-  %.neg489 = sub i64 %8, %7
+  %7 = shl i64 %i.i, 2
+  %8 = add i64 %i.g, %i.b
+  %.neg489 = sub i64 %7, %8
   %i.bj = add i64 %.neg489, %i.c
   %i.bk = add i64 %i.bj, -1
   %diff.check = icmp ult i64 %i.bk, 31
@@ -7240,10 +7240,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.bo = shl i64 %i.ag, 2
-  %7 = add i64 %i.bo, %i.h
-  %8 = shl nsw i64 %1, 2
-  %i.bp = add i64 %8, %i.b
-  %i.bq = sub i64 %i.bp, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.bo, %i.h
+  %i.bp = add i64 %7, %i.b
+  %i.bq = sub i64 %i.bp, %8
   %diff.check = icmp ugt i64 %i.bq, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader352, label %vector.ph
 
@@ -7410,11 +7410,11 @@ bb.g:                                             ; preds = %.loopexit
 
 vector.memcheck327:                               ; preds = %.lr.ph.i.i161.preheader
   %i.dm = shl i64 %i.o, 2
-  %9 = add i64 %i.dm, %i.h
-  %i.dn = add i64 %i.m, %i.b
-  %10 = shl nsw i64 %1, 2
-  %i.do = add i64 %i.dn, %10
-  %i.dp = sub i64 %i.do, %9
+  %9 = shl nsw i64 %1, 2
+  %i.dn = add i64 %i.dm, %i.h
+  %10 = add i64 %i.m, %i.b
+  %i.do = add i64 %10, %9
+  %i.dp = sub i64 %i.do, %i.dn
   %diff.check328 = icmp ugt i64 %i.dp, -32
   br i1 %diff.check328, label %.lr.ph.i.i161.preheader345, label %vector.ph331
 
@@ -7817,9 +7817,9 @@ bb.e:                                             ; preds = %.loopexit354
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader501, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %7 = add i64 %i.g, %i.b
-  %8 = shl i64 %i.i, 2
-  %.neg489 = sub i64 %8, %7
+  %7 = shl i64 %i.i, 2
+  %8 = add i64 %i.g, %i.b
+  %.neg489 = sub i64 %7, %8
   %i.bj = add i64 %.neg489, %i.c
   %i.bk = add i64 %i.bj, -1
   %diff.check = icmp ult i64 %i.bk, 31
@@ -8222,10 +8222,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.bo = shl i64 %i.ag, 2
-  %7 = add i64 %i.bo, %i.h
-  %8 = shl nsw i64 %1, 2
-  %i.bp = add i64 %8, %i.b
-  %i.bq = sub i64 %i.bp, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.bo, %i.h
+  %i.bp = add i64 %7, %i.b
+  %i.bq = sub i64 %i.bp, %8
   %diff.check = icmp ugt i64 %i.bq, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader352, label %vector.ph
 
@@ -8392,11 +8392,11 @@ bb.g:                                             ; preds = %.loopexit
 
 vector.memcheck327:                               ; preds = %.lr.ph.i.i161.preheader
   %i.dm = shl i64 %i.o, 2
-  %9 = add i64 %i.dm, %i.h
-  %i.dn = add i64 %i.m, %i.b
-  %10 = shl nsw i64 %1, 2
-  %i.do = add i64 %i.dn, %10
-  %i.dp = sub i64 %i.do, %9
+  %9 = shl nsw i64 %1, 2
+  %i.dn = add i64 %i.dm, %i.h
+  %10 = add i64 %i.m, %i.b
+  %i.do = add i64 %10, %9
+  %i.dp = sub i64 %i.do, %i.dn
   %diff.check328 = icmp ugt i64 %i.dp, -32
   br i1 %diff.check328, label %.lr.ph.i.i161.preheader345, label %vector.ph331
 
@@ -8799,9 +8799,9 @@ bb.e:                                             ; preds = %.loopexit415
   br i1 %min.iters.check, label %.lr.ph.i.i216.preheader593, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i216.preheader
-  %7 = add i64 %i.g, %i.b
-  %8 = shl i64 %i.i, 2
-  %.neg575 = sub i64 %8, %7
+  %7 = shl i64 %i.i, 2
+  %8 = add i64 %i.g, %i.b
+  %.neg575 = sub i64 %7, %8
   %i.ca = add i64 %.neg575, %i.c
   %i.cb = add i64 %i.ca, -1
   %diff.check = icmp ult i64 %i.cb, 31
@@ -9204,10 +9204,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i138.preheader
   %i.cd = shl i64 %i.av, 2
-  %7 = add i64 %i.cd, %i.g
-  %8 = shl nsw i64 %1, 2
-  %i.ce = add i64 %8, %i.b
-  %i.cf = sub i64 %i.ce, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.cd, %i.g
+  %i.ce = add i64 %7, %i.b
+  %i.cf = sub i64 %i.ce, %8
   %diff.check = icmp ugt i64 %i.cf, -32
   br i1 %diff.check, label %.lr.ph.i.i138.preheader383, label %vector.ph
 
@@ -9483,9 +9483,9 @@ bb.g:                                             ; preds = %_ZN5boost9container
 
 vector.memcheck356:                               ; preds = %.lr.ph.i.i178.preheader
   %i.fv = shl nsw i64 %1, 2
+  %.neg = shl i64 %i.dv, 2
   %9 = add i64 %i.fv, %i.b
   %10 = sub i64 %i.g, %9
-  %.neg = shl i64 %i.dv, 2
   %i.fw = add i64 %.neg, %10
   %i.fx = add i64 %i.fw, -1
   %diff.check357 = icmp ult i64 %i.fx, 31
@@ -9888,9 +9888,9 @@ bb.e:                                             ; preds = %.loopexit374
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader529, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
-  %7 = add i64 %i.g, %i.b
-  %8 = shl i64 %i.i, 2
-  %.neg515 = sub i64 %8, %7
+  %7 = shl i64 %i.i, 2
+  %8 = add i64 %i.g, %i.b
+  %.neg515 = sub i64 %7, %8
   %i.bj = add i64 %.neg515, %i.c
   %i.bk = add i64 %i.bj, -1
   %diff.check = icmp ult i64 %i.bk, 31
@@ -10293,10 +10293,10 @@ _ZN5boost9container26uninitialized_move_alloc_nINS0_9allocatorINS0_4test12copyab
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.preheader
   %i.bo = shl i64 %i.ag, 2
-  %7 = add i64 %i.bo, %i.h
-  %8 = shl nsw i64 %1, 2
-  %i.bp = add i64 %8, %i.b
-  %i.bq = sub i64 %i.bp, %7
+  %7 = shl nsw i64 %1, 2
+  %8 = add i64 %i.bo, %i.h
+  %i.bp = add i64 %7, %i.b
+  %i.bq = sub i64 %i.bp, %8
   %diff.check = icmp ugt i64 %i.bq, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader364, label %vector.ph
 
@@ -10474,11 +10474,11 @@ bb.g:                                             ; preds = %.loopexit
 
 vector.memcheck338:                               ; preds = %.lr.ph.i.i165.preheader
   %i.dr = shl i64 %i.o, 2
-  %9 = add i64 %i.dr, %i.h
-  %i.ds = add i64 %i.m, %i.b
-  %10 = shl nsw i64 %1, 2
-  %i.dt = add i64 %i.ds, %10
-  %i.du = sub i64 %i.dt, %9
+  %9 = shl nsw i64 %1, 2
+  %i.ds = add i64 %i.dr, %i.h
+  %10 = add i64 %i.m, %i.b
+  %i.dt = add i64 %10, %9
+  %i.du = sub i64 %i.dt, %i.ds
   %diff.check339 = icmp ugt i64 %i.du, -32
   br i1 %diff.check339, label %.lr.ph.i.i165.preheader356, label %vector.ph342
 

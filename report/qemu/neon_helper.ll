@@ -204,8 +204,8 @@ clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_uqshli_b(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = lshr i32 %3, 8
   %i.d = and i32 %i.c, 3                          ; 2 uses
   %i.e = shl nuw nsw i32 %i.d, 3
@@ -232,7 +232,7 @@ do_uqrshl_bhs.exit.preheader:                     ; preds = %bb.a
   br i1 %i.o, label %vector.memcheck122, label %.split.us.split
 
 vector.memcheck122:                               ; preds = %.split.us
-  %i.p = sub i64 %i.a, %i.b
+  %i.p = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.p, -16
   br i1 %diff.check, label %do_uqrshl_bhs.exit.us.us.preheader, label %vector.main.loop.iter.check
 
@@ -635,8 +635,8 @@ clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_uqshli_h(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = lshr i32 %3, 8
   %i.d = and i32 %i.c, 3                          ; 2 uses
   %i.e = shl nuw nsw i32 %i.d, 3
@@ -664,7 +664,7 @@ do_uqrshl_bhs.exit.preheader:                     ; preds = %bb.a
   br i1 %i.p, label %vector.memcheck121, label %.split.us.split
 
 vector.memcheck121:                               ; preds = %.split.us
-  %i.q = sub i64 %i.a, %i.b
+  %i.q = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.q, -32
   br i1 %diff.check, label %do_uqrshl_bhs.exit.us.us.preheader.new, label %vector.main.loop.iter.check
 
@@ -1067,8 +1067,8 @@ clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_sqshli_b(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = lshr i32 %3, 8
   %i.d = and i32 %i.c, 3                          ; 2 uses
   %i.e = shl nuw nsw i32 %i.d, 3
@@ -1087,7 +1087,7 @@ bb.a:
   br i1 %.not.i, label %.split.us, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %i.o = sub i64 %i.a, %i.b
+  %i.o = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.o, -32
   br i1 %diff.check, label %do_sqrshl_bhs.exit.preheader, label %vector.main.loop.iter.check
 
@@ -1148,7 +1148,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ab, label %vector.memcheck135, label %.split.us.split
 
 vector.memcheck135:                               ; preds = %.split.us
-  %i.ac = sub i64 %i.a, %i.b
+  %i.ac = sub i64 %i.b, %i.a
   %diff.check136 = icmp ugt i64 %i.ac, -16
   br i1 %diff.check136, label %do_sqrshl_bhs.exit.us.us.preheader, label %vector.main.loop.iter.check138
 
@@ -1551,8 +1551,8 @@ clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_sqshli_h(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = lshr i32 %3, 8
   %i.d = and i32 %i.c, 3                          ; 2 uses
   %i.e = shl nuw nsw i32 %i.d, 3
@@ -1572,7 +1572,7 @@ bb.a:
   br i1 %.not.i, label %.split.us, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %i.p = sub i64 %i.a, %i.b
+  %i.p = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.p, -32
   br i1 %diff.check, label %do_sqrshl_bhs.exit.preheader.new, label %vector.main.loop.iter.check
 
@@ -1633,7 +1633,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ac, label %vector.memcheck134, label %.split.us.split
 
 vector.memcheck134:                               ; preds = %.split.us
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check135 = icmp ugt i64 %i.ad, -32
   br i1 %diff.check135, label %do_sqrshl_bhs.exit.us.us.preheader.new, label %vector.main.loop.iter.check137
 
