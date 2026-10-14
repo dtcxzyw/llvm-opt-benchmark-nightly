@@ -1,0 +1,269 @@
+diff --git a/llvm/lib/Transforms/Vectorize/VPlan.h b/llvm/lib/Transforms/Vectorize/VPlan.h
+index 837dd5feda615..e59cc87dc7a19 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlan.h
++++ b/llvm/lib/Transforms/Vectorize/VPlan.h
+@@ -2613,8 +2613,6 @@ class VPWidenInductionRecipe : public VPHeaderPHIRecipe {
+ /// converted to concrete recipes before executing.
+ class VPWidenIntOrFpInductionRecipe : public VPWidenInductionRecipe,
+                                       public VPIRFlags {
+-  TruncInst *Trunc;
+-
+   // If this recipe is unrolled it will have 2 additional operands.
+   bool isUnrolled() const { return getNumOperands() == 5; }
+ 
+@@ -2625,23 +2623,18 @@ class VPWidenIntOrFpInductionRecipe : public VPWidenInductionRecipe,
+       : VPWidenInductionRecipe(VPRecipeBase::VPWidenIntOrFpInductionSC, IV,
+                                Start, Step, IndDesc, Start->getScalarType(),
+                                DL),
+-        VPIRFlags(Flags), Trunc(nullptr) {
++        VPIRFlags(Flags) {
+     addOperand(VF);
+   }
+ 
+   VPWidenIntOrFpInductionRecipe(PHINode *IV, VPValue *Start, VPValue *Step,
+                                 VPValue *VF, const InductionDescriptor &IndDesc,
+-                                TruncInst *Trunc, const VPIRFlags &Flags,
++                                Type *ResultTy, const VPIRFlags &Flags,
+                                 DebugLoc DL)
+-      : VPWidenInductionRecipe(
+-            VPRecipeBase::VPWidenIntOrFpInductionSC, IV, Start, Step, IndDesc,
+-            Trunc ? Trunc->getType() : Start->getScalarType(), DL),
+-        VPIRFlags(Flags), Trunc(Trunc) {
++      : VPWidenInductionRecipe(VPRecipeBase::VPWidenIntOrFpInductionSC, IV,
++                               Start, Step, IndDesc, ResultTy, DL),
++        VPIRFlags(Flags) {
+     addOperand(VF);
+-    SmallVector<std::pair<unsigned, MDNode *>> Metadata;
+-    if (Trunc)
+-      getMetadataToPropagate(Trunc, Metadata);
+-    assert(Metadata.empty() && "unexpected metadata on Trunc");
+   }
+ 
+   ~VPWidenIntOrFpInductionRecipe() override = default;
+@@ -2649,7 +2642,7 @@ class VPWidenIntOrFpInductionRecipe : public VPWidenInductionRecipe,
+   VPWidenIntOrFpInductionRecipe *clone() override {
+     return new VPWidenIntOrFpInductionRecipe(
+         getPHINode(), getStartValue(), getStepValue(), getVFValue(),
+-        getInductionDescriptor(), Trunc, *this, getDebugLoc());
++        getInductionDescriptor(), getScalarType(), *this, getDebugLoc());
+   }
+ 
+   VP_CLASSOF_IMPL(VPRecipeBase::VPWidenIntOrFpInductionSC)
+@@ -2672,8 +2665,11 @@ class VPWidenIntOrFpInductionRecipe : public VPWidenInductionRecipe,
+ 
+   /// Returns the first defined value as TruncInst, if it is one or nullptr
+   /// otherwise.
+-  TruncInst *getTruncInst() { return Trunc; }
+-  const TruncInst *getTruncInst() const { return Trunc; }
++  bool isTruncated() const {
++    return getStartValue() && getScalarType()->isIntegerTy() &&
++           getScalarType()->getPrimitiveSizeInBits() <
++               getStartValue()->getScalarType()->getPrimitiveSizeInBits();
++  }
+ 
+   /// Return the cost of this VPWidenIntOrFpInductionRecipe.
+   InstructionCost computeCost(ElementCount VF,
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp b/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
+index eb4baddcb8cac..115879911e81e 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanLowering.cpp
+@@ -58,7 +58,7 @@ void VPlanTransforms::replaceWideCanonicalIVWithWideIV(
+     VPBuilder Builder(WideCanIV);
+     WideCanIV->replaceAllUsesWith(vputils::createScalarIVSteps(
+         Plan, InductionDescriptor::IK_IntInduction, Instruction::Add, nullptr,
+-        nullptr, Plan.getZero(CanIVTy), Plan.getConstantInt(CanIVTy, 1),
++        CanIVTy, Plan.getZero(CanIVTy), Plan.getConstantInt(CanIVTy, 1),
+         WideCanIV->getDebugLoc(), Builder,
+         WideCanIV->getNoWrapFlags().withoutNoSignedWrap()));
+     WideCanIV->eraseFromParent();
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanRecipes.cpp b/llvm/lib/Transforms/Vectorize/VPlanRecipes.cpp
+index 42f48c60c7143..fa77baf81e4c7 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanRecipes.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanRecipes.cpp
+@@ -3109,8 +3109,8 @@ void VPWidenIntOrFpInductionRecipe::printRecipe(
+   printFlags(O);
+   printOperands(O, SlotTracker);
+ 
+-  if (auto *TI = getTruncInst())
+-    O << " (truncated to " << *TI->getType() << ")";
++  if (isTruncated())
++    O << " (truncated to " << *getScalarType() << ")";
+ }
+ #endif
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+index 936897e49b019..ff0ddcd0a0777 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+@@ -712,7 +712,7 @@ static void removeRedundantInductionCasts(VPlan &Plan) {
+   for (VPWidenIntOrFpInductionRecipe &IV :
+        make_isa_range<VPWidenIntOrFpInductionRecipe>(
+            Plan.getVectorLoopRegion()->getEntryBasicBlock()->phis())) {
+-    if (IV.getTruncInst())
++    if (IV.isTruncated())
+       continue;
+ 
+     // A sequence of IR Casts has potentially been recorded for IV, which
+@@ -887,8 +887,8 @@ static void legalizeAndOptimizeInductions(VPlan &Plan) {
+     VPScalarIVStepsRecipe *Steps = vputils::createScalarIVSteps(
+         Plan, ID.getKind(), ID.getInductionOpcode(),
+         dyn_cast_or_null<FPMathOperator>(ID.getInductionBinOp()),
+-        WideIV->getTruncInst(), WideIV->getStartValue(), WideIV->getStepValue(),
+-        WideIV->getDebugLoc(), Builder, WrapFlags);
++        WideIV->getScalarType(), WideIV->getStartValue(),
++        WideIV->getStepValue(), WideIV->getDebugLoc(), Builder, WrapFlags);
+ 
+     // Update scalar users of IV to use Step instead.
+     if (!HasOnlyVectorVFs) {
+@@ -916,7 +916,7 @@ getOptimizableIVOf(VPValue *VPV, PredicatedScalarEvolution &PSE) {
+     // VPV itself is a wide induction, separately compute the end value for exit
+     // users if it is not a truncated IV.
+     auto *IntOrFpIV = dyn_cast<VPWidenIntOrFpInductionRecipe>(WideIV);
+-    return (IntOrFpIV && IntOrFpIV->getTruncInst()) ? nullptr : WideIV;
++    return (IntOrFpIV && IntOrFpIV->isTruncated()) ? nullptr : WideIV;
+   }
+ 
+   // Check if VPV is an optimizable induction increment.
+@@ -1019,7 +1019,7 @@ static VPValue *tryToComputeEndValueForInduction(VPWidenInductionRecipe *WideIV,
+   auto *WideIntOrFp = dyn_cast<VPWidenIntOrFpInductionRecipe>(WideIV);
+   // Truncated wide inductions resume from the last lane of their vector value
+   // in the last vector iteration which is handled elsewhere.
+-  if (WideIntOrFp && WideIntOrFp->getTruncInst())
++  if (WideIntOrFp && WideIntOrFp->isTruncated())
+     return nullptr;
+ 
+   VPValue *Start = WideIV->getStartValue();
+@@ -2114,7 +2114,7 @@ static bool optimizeVectorInductionWidthForTCAndVFUF(VPlan &Plan,
+       continue;
+ 
+     // Update IV operands and comparison bound to use new narrower type.
+-    assert(!WideIV->getTruncInst() &&
++    assert(!WideIV->isTruncated() &&
+            "canonical IV is not expected to have a truncation");
+     auto *NewWideIV = new VPWidenIntOrFpInductionRecipe(
+         WideIV->getPHINode(), Plan.getZero(NewIVTy),
+@@ -6259,11 +6259,6 @@ void VPlanTransforms::narrowInductionTruncates(VPlan &Plan, VFRange &Range,
+       if (VPI.getOpcode() != Instruction::Trunc)
+         continue;
+ 
+-      // Underlying Trunc is necessary to create VPWidenIntOrFpInductionRecipe.
+-      auto *Trunc = cast_or_null<TruncInst>(VPI.getUnderlyingValue());
+-      if (!Trunc)
+-        continue;
+-
+       // A truncate that is not widened is left to the scalarization decisions
+       // made earlier.
+       if (vputils::onlyFirstLaneUsed(&VPI))
+@@ -6297,8 +6292,9 @@ void VPlanTransforms::narrowInductionTruncates(VPlan &Plan, VFRange &Range,
+       // type, so do not propagate them.
+       auto *NarrowIV = new VPWidenIntOrFpInductionRecipe(
+           WideIV->getPHINode(), WideIV->getStartValue(), WideIV->getStepValue(),
+-          WideIV->getVFValue(), WideIV->getInductionDescriptor(), Trunc,
+-          VPIRFlags::WrapFlagsTy(false, false), VPI.getDebugLoc());
++          WideIV->getVFValue(), WideIV->getInductionDescriptor(),
++          VPI.getScalarType(), VPIRFlags::WrapFlagsTy(false, false),
++          VPI.getDebugLoc());
+       NarrowIV->insertBefore(*HeaderVPBB, HeaderVPBB->getFirstNonPhi());
+       VPI.replaceAllUsesWith(NarrowIV);
+       VPI.eraseFromParent();
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+index 1f2bfc066f044..851143545ed6a 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+@@ -324,7 +324,7 @@ const SCEV *vputils::getSCEVExprForVPValue(const VPValue *V,
+                 getSCEVExprForVPValue(R->getStartValue(), PSE, L);
+             const SCEV *AddRec =
+                 SE.getAddRecExpr(Start, Step, L, SCEV::FlagNone);
+-            if (R->getTruncInst())
++            if (R->isTruncated())
+               return SE.getTruncateExpr(AddRec, R->getScalarType());
+             return AddRec;
+           })
+@@ -629,36 +629,32 @@ vputils::getEarlyExits(const VPlan &Plan, const VPBlockBase *MiddleVPBB) {
+ VPScalarIVStepsRecipe *vputils::createScalarIVSteps(
+     VPlan &Plan, InductionDescriptor::InductionKind Kind,
+     Instruction::BinaryOps InductionOpcode, FPMathOperator *FPBinOp,
+-    Instruction *TruncI, VPValue *StartV, VPValue *Step, DebugLoc DL,
++    Type *ResultTy, VPValue *StartV, VPValue *Step, DebugLoc DL,
+     VPBuilder &Builder, const VPIRFlags::WrapFlagsTy &Flags) {
+   VPRegionBlock *LoopRegion = Plan.getVectorLoopRegion();
+   VPBasicBlock *HeaderVPBB = LoopRegion->getEntryBasicBlock();
+   VPValue *CanonicalIV = LoopRegion->getCanonicalIV();
+-  VPSingleDefRecipe *BaseIV =
++  VPValue *BaseIV =
+       Builder.createDerivedIV(Kind, FPBinOp, StartV, CanonicalIV, Step, Flags);
+ 
+-  // Truncate base induction if needed.
+-  Type *ResultTy = BaseIV->getScalarType();
+-  if (TruncI) {
+-    Type *TruncTy = TruncI->getType();
+-    assert(ResultTy->getScalarSizeInBits() > TruncTy->getScalarSizeInBits() &&
+-           "Not truncating.");
+-    assert(ResultTy->isIntegerTy() && "Truncation requires an integer type");
+-    BaseIV = Builder.createScalarCast(Instruction::Trunc, BaseIV, TruncTy, DL);
+-    ResultTy = TruncTy;
+-  }
+-
+-  // Truncate step if needed.
+-  Type *StepTy = Step->getScalarType();
+-  if (ResultTy != StepTy) {
+-    assert(StepTy->getScalarSizeInBits() > ResultTy->getScalarSizeInBits() &&
+-           "Not truncating.");
+-    assert(StepTy->isIntegerTy() && "Truncation requires an integer type");
++  // Truncate BaseIV and Step to ResultTy.
++  if (ResultTy->isIntegerTy()) {
++    Type *BaseIVTy = BaseIV->getScalarType();
++    assert(BaseIVTy->isIntegerTy() && "Integral BaseIV type expected");
++    assert(BaseIVTy->getPrimitiveSizeInBits() >=
++               ResultTy->getPrimitiveSizeInBits() &&
++           "BaseIV's type must be at least as large as ResultTy");
++    BaseIV = Builder.createScalarZExtOrTrunc(BaseIV, ResultTy, DL);
++    Type *StepTy = Step->getScalarType();
++    assert(StepTy->isIntegerTy() && "Integral Step type expected");
++    assert(StepTy->getPrimitiveSizeInBits() >=
++               ResultTy->getPrimitiveSizeInBits() &&
++           "Step's type must be at least as large as ResultTy");
+     auto *VecPreheader =
+         cast<VPBasicBlock>(HeaderVPBB->getSingleHierarchicalPredecessor());
+     VPBuilder::InsertPointGuard Guard(Builder);
+     Builder.setInsertPoint(VecPreheader);
+-    Step = Builder.createScalarCast(Instruction::Trunc, Step, ResultTy, DL);
++    Step = Builder.createScalarZExtOrTrunc(Step, ResultTy, DL);
+   }
+   return Builder.createScalarIVSteps(InductionOpcode, FPBinOp, BaseIV, Step,
+                                      &Plan.getVF(), DL);
+@@ -672,7 +668,7 @@ vputils::scalarizeVPWidenPointerInduction(VPWidenPointerInductionRecipe *PtrIV,
+   VPValue *StepV = PtrIV->getOperand(1);
+   VPScalarIVStepsRecipe *Steps = createScalarIVSteps(
+       Plan, InductionDescriptor::IK_IntInduction, Instruction::Add, nullptr,
+-      nullptr, StartV, StepV, PtrIV->getDebugLoc(), Builder);
++      StartV->getScalarType(), StartV, StepV, PtrIV->getDebugLoc(), Builder);
+ 
+   return Builder.createPtrAdd(PtrIV->getStartValue(), Steps,
+                               PtrIV->getDebugLoc(), "next.gep");
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.h b/llvm/lib/Transforms/Vectorize/VPlanUtils.h
+index 4cb3609f4f98a..015d2be37b514 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.h
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.h
+@@ -186,13 +186,14 @@ getEarlyExits(const VPlan &Plan, const VPBlockBase *MiddleVPBB);
+ 
+ /// Create a scalar-iv-steps recipe over \p Plan's canonical IV for an
+ /// induction of \p Kind with \p InductionOpcode / \p FPBinOp, start value \p
+-/// StartV and step \p Step, truncated to \p TruncI's type if \p TruncI is
+-/// non-null, inserting recipes via \p Builder.
+-VPScalarIVStepsRecipe *createScalarIVSteps(
+-    VPlan &Plan, InductionDescriptor::InductionKind Kind,
+-    Instruction::BinaryOps InductionOpcode, FPMathOperator *FPBinOp,
+-    Instruction *TruncI, VPValue *StartV, VPValue *Step, DebugLoc DL,
+-    VPBuilder &Builder, const VPIRFlags::WrapFlagsTy &Flags = {});
++/// StartV and step \p Step, truncated to \p ResultTy, inserting recipes via \p
++/// Builder.
++VPScalarIVStepsRecipe *
++createScalarIVSteps(VPlan &Plan, InductionDescriptor::InductionKind Kind,
++                    Instruction::BinaryOps InductionOpcode,
++                    FPMathOperator *FPBinOp, Type *ResultTy, VPValue *StartV,
++                    VPValue *Step, DebugLoc DL, VPBuilder &Builder,
++                    const VPIRFlags::WrapFlagsTy &Flags = {});
+ 
+ /// Scalarize a VPWidenPointerInductionRecipe by replacing it with a PtrAdd
+ /// (IndStart, ScalarIVSteps (0, Step)). This is used when the recipe only
