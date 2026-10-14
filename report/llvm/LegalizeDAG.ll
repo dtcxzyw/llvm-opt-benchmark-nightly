@@ -205,7 +205,7 @@ bb.a:
   %13 = alloca %"struct.llvm::AAMDNodes", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.b = load i32, ptr %i.a, align 8, !tbaa !153
-  %i.c = icmp eq i32 %i.b, 68                     ; 8 uses
+  %i.c = icmp eq i32 %i.b, 68                     ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !155  ; 2 uses
   %.sroa.0.0.copyload.i.i = load i16, ptr %i.e, align 8, !tbaa !157 ; 2 uses
@@ -262,17 +262,22 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   %.idx = mul nuw nsw i64 %i.v, 40
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 %.idx
   %.not220 = icmp eq i16 %i.u, 0
-  br i1 %.not220, label %._crit_edge, label %.lr.ph
+  br i1 %.not220, label %.._crit_edge_crit_edge, label %.lr.ph
+
+.._crit_edge_crit_edge:                           ; preds = %bb.h
+  %.pre232 = select i1 %i.c, i16 1, i16 2
+  br label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.h
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.y = select i1 %i.c, i16 1, i16 2             ; 2 uses
+  %i.y = select i1 %i.c, i16 1, i16 2             ; 3 uses
   br label %bb.m
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118, %bb.h
-  %.sroa.19.0.lcssa = phi ptr [ null, %bb.h ], [ %.sroa.19.3, %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118 ] ; 5 uses
-  %.sroa.10.0.lcssa = phi ptr [ null, %bb.h ], [ %.sroa.10.2, %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118 ] ; 10 uses
-  %.sroa.0200.0.lcssa = phi ptr [ null, %bb.h ], [ %.sroa.0200.3, %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118 ] ; 6 uses
+._crit_edge:                                      ; preds = %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118, %.._crit_edge_crit_edge
+  %.pre-phi = phi i16 [ %.pre232, %.._crit_edge_crit_edge ], [ %i.y, %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118 ] ; 3 uses
+  %.sroa.19.0.lcssa = phi ptr [ null, %.._crit_edge_crit_edge ], [ %.sroa.19.3, %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118 ] ; 5 uses
+  %.sroa.10.0.lcssa = phi ptr [ null, %.._crit_edge_crit_edge ], [ %.sroa.10.2, %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118 ] ; 10 uses
+  %.sroa.0200.0.lcssa = phi ptr [ null, %.._crit_edge_crit_edge ], [ %.sroa.0200.3, %_ZNSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE9push_backERKS2_.exit118 ] ; 6 uses
   %i.z = load ptr, ptr %i.k, align 8, !tbaa !154, !nonnull !137, !align !138
   %.sroa.053.0.copyload = load i16, ptr %4, align 8, !tbaa !157
   %.sroa.255.0.copyload = load ptr, ptr %i.n, align 8, !tbaa !159
@@ -281,9 +286,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   %.fca.1.extract50 = extractvalue { ptr, i32 } %i.aa, 1 ; 3 uses
   %i.ab = load ptr, ptr %i.q, align 8, !tbaa !824, !nonnull !137, !align !138
   %i.ac = call noundef ptr @_ZN4llvm11PointerType3getERNS_11LLVMContextEj(ptr noundef nonnull align 8 dereferenceable(8) %i.ab, i32 noundef 0) #18 ; 4 uses
-  %14 = zext i1 %i.c to i16                       ; 2 uses
-  %15 = select i1 %i.c, i16 0, i16 2              ; 2 uses
-  %16 = or disjoint i16 %15, %14                  ; 2 uses
   %.not.i = icmp eq ptr %.sroa.10.0.lcssa, %.sroa.19.0.lcssa
   br i1 %.not.i, label %bb.j, label %bb.i
 
@@ -298,7 +300,7 @@ bb.i:                                             ; preds = %._crit_edge
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.10.0.lcssa, i64 32
   store ptr %i.ac, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.10.0.lcssa, i64 40
-  store i16 %16, ptr %.sroa.9.0..sroa_idx, align 8
+  store i16 %.pre-phi, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.13151.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.10.0.lcssa, i64 43
   store i8 0, ptr %.sroa.13151.0..sroa_idx, align 1
   %.sroa.14156.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.10.0.lcssa, i64 48
@@ -338,7 +340,7 @@ _ZNKSt6vectorIN4llvm18TargetLoweringBase12ArgListEntryESaIS2_EE12_M_check_lenEmP
   %.sroa.8.0..sroa_idx144 = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
   store ptr %i.ac, ptr %.sroa.8.0..sroa_idx144, align 8
   %.sroa.9.0..sroa_idx146 = getelementptr inbounds nuw i8, ptr %i.ao, i64 40
-  store i16 %16, ptr %.sroa.9.0..sroa_idx146, align 8
+  store i16 %.pre-phi, ptr %.sroa.9.0..sroa_idx146, align 8
   %.sroa.13151.0..sroa_idx152 = getelementptr inbounds nuw i8, ptr %i.ao, i64 43
   store i8 0, ptr %.sroa.13151.0..sroa_idx152, align 1
   %.sroa.14156.0..sroa_idx157 = getelementptr inbounds nuw i8, ptr %i.ao, i64 48
@@ -703,8 +705,7 @@ _ZN4llvm14TargetLowering16CallLoweringInfo12setLibCalleeEjPNS_4TypeENS_7SDValueE
   call void %i.fw(ptr noundef nonnull align 8 dereferenceable(518435) %i.fr, ptr noundef nonnull %i.ft, i32 noundef %i.fh, ptr noundef nonnull align 8 dereferenceable(24) %i.ee) #18, !inline_history !10
   %i.fx = load i16, ptr %i.du, align 8
   %i.fy = and i16 %i.fx, -4
-  %17 = or disjoint i16 %i.fy, %14
-  %i.fz = or disjoint i16 %17, %15
+  %i.fz = or disjoint i16 %.pre-phi, %i.fy
   store i16 %i.fz, ptr %i.du, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #18
   %i.ga = load ptr, ptr %i.dc, align 8, !tbaa !160, !nonnull !137, !align !138
