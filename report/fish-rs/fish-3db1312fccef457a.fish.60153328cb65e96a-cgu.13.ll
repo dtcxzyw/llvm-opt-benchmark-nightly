@@ -205,24 +205,25 @@ bb.a:
   %.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !633, !noalias !634 ; 8 uses
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.6.0.copyload.i.i = load ptr, ptr %.sroa.6.0..sroa_idx.i.i, align 8, !alias.scope !633, !noalias !634 ; 8 uses
-  %.sroa.6.0.copyload.i.i6 = ptrtoaddr ptr %.sroa.6.0.copyload.i.i to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !635)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !636, !noalias !637, !nonnull !12, !noundef !12 ; 3 uses
-  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !636, !noalias !637 ; 8 uses
-  %.promoted.i.i.i7 = ptrtoaddr ptr %.promoted.i.i.i to i64 ; 2 uses
+  %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !636, !noalias !637 ; 9 uses
   %i.c = icmp eq ptr %.promoted.i.i.i, %i.b
   br i1 %i.c, label %_RINvXs2_NtNtNtCs3oUPovFnLWP_4core4iter6traits8iteratorQINtNtNtBa_8adapters6copied6CopiedINtNtNtBc_5slice4iter4IterhEENtB6_15IteratorRefSpec9spec_folduNCINvNvNtB6_8Iterator8for_each4callhNCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB37_3VechE14extend_trustedBQ_E0E0ECs8frGy5WneL6_4fish.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
+  %.promoted.i.i.i8 = ptrtoaddr ptr %.promoted.i.i.i to i64
   %i.d = ptrtoaddr ptr %i.b to i64                ; 3 uses
-  %i.e = sub i64 %i.d, %.promoted.i.i.i7          ; 7 uses
+  %i.e = sub i64 %i.d, %.promoted.i.i.i8          ; 7 uses
   %min.iters.check = icmp ult i64 %i.e, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.f = add i64 %.sroa.4.0.copyload.i.i, %.sroa.6.0.copyload.i.i6
-  %i.g = sub i64 %.promoted.i.i.i7, %i.f
+  %2 = ptrtoaddr ptr %.sroa.6.0.copyload.i.i to i64
+  %3 = ptrtoaddr ptr %.promoted.i.i.i to i64
+  %i.f = add i64 %.sroa.4.0.copyload.i.i, %2
+  %i.g = sub i64 %3, %i.f
   %diff.check = icmp ugt i64 %i.g, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -429,28 +430,28 @@ bb.a:
   %.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !686, !noalias !687 ; 6 uses
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.6.0.copyload.i.i = load ptr, ptr %.sroa.6.0..sroa_idx.i.i, align 8, !alias.scope !686, !noalias !687 ; 3 uses
-  %.sroa.6.0.copyload.i.i6 = ptrtoaddr ptr %.sroa.6.0.copyload.i.i to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !688)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !689, !noalias !690, !nonnull !12, !noundef !12 ; 3 uses
   %.promoted.i.i.i = load ptr, ptr %0, align 8, !alias.scope !689, !noalias !690 ; 6 uses
-  %.promoted.i.i.i7 = ptrtoaddr ptr %.promoted.i.i.i to i64 ; 2 uses
   %i.c = icmp eq ptr %.promoted.i.i.i, %i.b
   br i1 %i.c, label %_RINvXs2_NtNtNtCs3oUPovFnLWP_4core4iter6traits8iteratorQINtNtNtBa_8adapters6copied6CopiedINtNtNtBc_5slice4iter4ItermEENtB6_15IteratorRefSpec9spec_folduNCINvNvNtB6_8Iterator8for_each4callmNCINvMsk_NtCs1xwejQucwHj_5alloc3vecINtB37_3VecmE14extend_trustedBQ_E0E0ECs8frGy5WneL6_4fish.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.a
   %i.d = ptrtoaddr ptr %i.b to i64
+  %2 = ptrtoaddr ptr %.promoted.i.i.i to i64      ; 2 uses
   %i.e = add i64 %i.d, -4
-  %i.f = sub i64 %i.e, %.promoted.i.i.i7          ; 2 uses
+  %i.f = sub i64 %i.e, %2                         ; 2 uses
   %i.g = lshr i64 %i.f, 2
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.f, 60
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader10, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.preheader
+  %3 = ptrtoaddr ptr %.sroa.6.0.copyload.i.i to i64
   %i.i = shl i64 %.sroa.4.0.copyload.i.i, 2
-  %i.j = add i64 %i.i, %.sroa.6.0.copyload.i.i6
-  %i.k = sub i64 %.promoted.i.i.i7, %i.j
+  %i.j = add i64 %i.i, %3
+  %i.k = sub i64 %2, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.preheader10, label %vector.ph
 

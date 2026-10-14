@@ -204,10 +204,10 @@ _ZN6vectorIjLb0EjE9push_backEOj.exit53:           ; preds = %bb.p, %bb.q
 
 .lr.ph.i:                                         ; preds = %.critedge
   %i.dc = load ptr, ptr %i.az, align 8, !tbaa !161 ; 7 uses
-  %i.dd = load ptr, ptr %i.ba, align 8, !tbaa !161 ; 13 uses
-  %2 = ptrtoaddr ptr %i.dd to i64                 ; 2 uses
+  %i.dd = load ptr, ptr %i.ba, align 8, !tbaa !161 ; 14 uses
   %wide.trip.count.i = zext i32 %i.db to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %i.db, 8
+  %2 = ptrtoaddr ptr %i.dd to i64
   %i.de = ptrtoaddr ptr %i.dc to i64
   %i.df = sub i64 %i.de, %2
   %diff.check = icmp ugt i64 %i.df, -32
@@ -294,8 +294,9 @@ _ZNK3sls5bvect7copy_toEjRS0_.exit:                ; preds = %scalar.ph.prol.loop
   %i.ec = load ptr, ptr %i.bb, align 8, !tbaa !161 ; 7 uses
   %wide.trip.count.i56 = zext i32 %.pr to i64     ; 5 uses
   %min.iters.check234 = icmp ult i32 %.pr, 8
-  %i.ed = ptrtoaddr ptr %i.ec to i64
-  %i.ee = sub i64 %2, %i.ed
+  %3 = ptrtoaddr ptr %i.ec to i64
+  %i.ed = ptrtoaddr ptr %i.dd to i64
+  %i.ee = sub i64 %i.ed, %3
   %diff.check232 = icmp ugt i64 %i.ee, -32
   %or.cond361 = select i1 %min.iters.check234, i1 true, i1 %diff.check232
   br i1 %or.cond361, label %scalar.ph233.preheader, label %vector.ph235
@@ -690,12 +691,12 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not.i71, label %.lr.ph.i78.preheader, label %.lr.ph.i72
 
 .lr.ph.i72:                                       ; preds = %bb.y
-  %.pre165274 = ptrtoaddr ptr %.pre165 to i64
   %i.kh = load ptr, ptr %i.ba, align 8, !tbaa !161 ; 7 uses
   %wide.trip.count.i73 = zext i32 %i.kg to i64    ; 5 uses
   %min.iters.check277 = icmp ult i32 %i.kg, 8
+  %4 = ptrtoaddr ptr %.pre165 to i64
   %i.ki = ptrtoaddr ptr %i.kh to i64
-  %i.kj = sub i64 %i.ki, %.pre165274
+  %i.kj = sub i64 %i.ki, %4
   %diff.check275 = icmp ugt i64 %i.kj, -32
   %or.cond369 = select i1 %min.iters.check277, i1 true, i1 %diff.check275
   br i1 %or.cond369, label %scalar.ph276.preheader, label %vector.ph278
@@ -1098,12 +1099,12 @@ _ZN3sls12bv_lookahead7try_setEP4exprRKNS_5bvectE.exit104: ; preds = %scalar.ph31
   br i1 %.not.i105, label %._crit_edge144, label %.lr.ph.i106
 
 .lr.ph.i106:                                      ; preds = %_ZN3sls12bv_lookahead7try_setEP4exprRKNS_5bvectE.exit104
-  %.pre167.pre331 = ptrtoaddr ptr %.pre167.pre to i64
   %i.qp = load ptr, ptr %i.ba, align 8, !tbaa !161 ; 7 uses
   %wide.trip.count.i107 = zext i32 %i.qo to i64   ; 5 uses
   %min.iters.check334 = icmp ult i32 %i.qo, 8
+  %5 = ptrtoaddr ptr %.pre167.pre to i64
   %i.qq = ptrtoaddr ptr %i.qp to i64
-  %i.qr = sub i64 %i.qq, %.pre167.pre331
+  %i.qr = sub i64 %i.qq, %5
   %diff.check332 = icmp ugt i64 %i.qr, -32
   %or.cond380 = select i1 %min.iters.check334, i1 true, i1 %diff.check332
   br i1 %or.cond380, label %scalar.ph333.preheader, label %vector.ph335
@@ -1506,12 +1507,12 @@ _ZNK3sls5bvect7copy_toEjRS0_.exit:                ; preds = %scalar.ph.prol.loop
   br i1 %.not.i163, label %_ZNK3sls5bvect7copy_toEjRS0_.exit169, label %.lr.ph.i164
 
 .lr.ph.i164:                                      ; preds = %_ZNK3sls5bvect7copy_toEjRS0_.exit
-  %.pre290 = ptrtoaddr ptr %.pre to i64
   %i.jg = load ptr, ptr %i.hn, align 8, !tbaa !161 ; 7 uses
   %wide.trip.count.i165 = zext i32 %i.je to i64   ; 5 uses
   %min.iters.check293 = icmp ult i32 %i.je, 8
+  %3 = ptrtoaddr ptr %.pre to i64
   %i.jh = ptrtoaddr ptr %i.jg to i64
-  %i.ji = sub i64 %i.jh, %.pre290
+  %i.ji = sub i64 %i.jh, %3
   %diff.check291 = icmp ugt i64 %i.ji, -32
   %or.cond308 = select i1 %min.iters.check293, i1 true, i1 %diff.check291
   br i1 %or.cond308, label %scalar.ph292.preheader, label %vector.ph294

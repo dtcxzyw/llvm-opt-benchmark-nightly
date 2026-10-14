@@ -204,10 +204,10 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not52, label %.loopexit48, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.i
-  %3 = ptrtoaddr ptr %i.ac to i64
   %i.af = load ptr, ptr %i.z, align 8, !tbaa !31  ; 7 uses
   %wide.trip.count = zext i32 %i.ae to i64        ; 5 uses
   %min.iters.check = icmp ult i32 %i.ae, 8
+  %3 = ptrtoaddr ptr %i.ac to i64
   %i.ag = ptrtoaddr ptr %i.af to i64
   %i.ah = sub i64 %i.ag, %3
   %diff.check = icmp ugt i64 %i.ah, -32
@@ -310,10 +310,10 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not53, label %.loopexit, label %.lr.ph51
 
 .lr.ph51:                                         ; preds = %bb.l
-  %4 = ptrtoaddr ptr %i.bj to i64
   %i.bm = load ptr, ptr %i.bg, align 8, !tbaa !32 ; 7 uses
   %wide.trip.count58 = zext i32 %i.bl to i64      ; 5 uses
   %min.iters.check68 = icmp ult i32 %i.bl, 8
+  %4 = ptrtoaddr ptr %i.bj to i64
   %i.bn = ptrtoaddr ptr %i.bm to i64
   %i.bo = sub i64 %i.bn, %4
   %diff.check66 = icmp ugt i64 %i.bo, -32
@@ -716,8 +716,6 @@ bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e,
 ; Function Attrs: nounwind uwtable
 define i32 @H5S_extent_get_dims(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(address_is_null) %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = ptrtoaddr ptr %1 to i64                    ; 6 uses
-  %4 = ptrtoaddr ptr %2 to i64                    ; 7 uses
   %i.a = load i8, ptr @H5S_init_g, align 1, !tbaa !11, !range !12, !noundef !13
   %i.b = trunc nuw i8 %i.a to i1                  ; 2 uses
   %i.c = load i8, ptr @H5_libterm_g, align 1, !range !12
@@ -780,6 +778,7 @@ bb.f:                                             ; preds = %bb.e
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !31   ; 7 uses
   %wide.trip.count55 = zext nneg i32 %i.p to i64  ; 5 uses
   %min.iters.check133 = icmp ult i32 %i.p, 8
+  %3 = ptrtoaddr ptr %1 to i64
   %i.t = ptrtoaddr ptr %i.s to i64
   %i.u = sub i64 %i.t, %3
   %diff.check131 = icmp ugt i64 %i.u, -32
@@ -859,14 +858,12 @@ scalar.ph132:                                     ; preds = %scalar.ph132.prol.l
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !32 ; 12 uses
-  %5 = ptrtoaddr ptr %i.as to i64                 ; 3 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !tbaa !32 ; 13 uses
   %.not28 = icmp eq ptr %i.as, null
   br i1 %.not28, label %.lr.ph.split.split.us, label %.lr.ph.split.split
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
-  %i.at = load ptr, ptr %i.r, align 8, !tbaa !31  ; 13 uses
-  %6 = ptrtoaddr ptr %i.at to i64                 ; 3 uses
+  %i.at = load ptr, ptr %i.r, align 8, !tbaa !31  ; 14 uses
   %wide.trip.count50 = zext nneg i32 %i.p to i64  ; 10 uses
   br i1 %.not, label %.lr.ph.split.split.us.split.us.preheader, label %.lr.ph.split.split.us.split.preheader
 
@@ -875,9 +872,12 @@ scalar.ph132:                                     ; preds = %scalar.ph132.prol.l
   br i1 %min.iters.check105, label %.lr.ph.split.split.us.split.preheader149, label %vector.memcheck98
 
 vector.memcheck98:                                ; preds = %.lr.ph.split.split.us.split.preheader
-  %i.au = sub i64 %3, %4
+  %4 = ptrtoaddr ptr %2 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %i.au = sub i64 %5, %4
   %diff.check99 = icmp ugt i64 %i.au, -32
-  %i.av = sub i64 %6, %3
+  %6 = ptrtoaddr ptr %i.at to i64                 ; 2 uses
+  %i.av = sub i64 %6, %5
   %diff.check100 = icmp ugt i64 %i.av, -32
   %conflict.rdx101 = or i1 %diff.check99, %diff.check100
   %i.aw = sub i64 %6, %4
@@ -939,7 +939,9 @@ middle.block113:                                  ; preds = %vector.body108
 
 .lr.ph.split.split.us.split.us.preheader:         ; preds = %.lr.ph.split.split.us
   %min.iters.check119 = icmp ult i32 %i.p, 8
-  %i.bk = sub i64 %6, %4
+  %7 = ptrtoaddr ptr %2 to i64
+  %8 = ptrtoaddr ptr %i.at to i64
+  %i.bk = sub i64 %8, %7
   %diff.check117 = icmp ugt i64 %i.bk, -32
   %or.cond145 = select i1 %min.iters.check119, i1 true, i1 %diff.check117
   br i1 %or.cond145, label %.lr.ph.split.split.us.split.us.preheader147, label %vector.ph120
@@ -1054,7 +1056,9 @@ middle.block127:                                  ; preds = %vector.body122
 .lr.ph.split.split.split.us.preheader:            ; preds = %.lr.ph.split.split
   %wide.trip.count40 = zext nneg i32 %i.p to i64  ; 5 uses
   %min.iters.check87 = icmp ult i32 %i.p, 8
-  %i.cx = sub i64 %5, %4
+  %9 = ptrtoaddr ptr %2 to i64
+  %10 = ptrtoaddr ptr %i.as to i64
+  %i.cx = sub i64 %10, %9
   %diff.check85 = icmp ugt i64 %i.cx, -32
   %or.cond146 = or i1 %min.iters.check87, %diff.check85
   br i1 %or.cond146, label %.lr.ph.split.split.split.us.preheader151, label %vector.ph88
@@ -1137,19 +1141,22 @@ middle.block95:                                   ; preds = %vector.body90
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.split.split
-  %i.dv = ptrtoaddr ptr %i.du to i64              ; 2 uses
-  %i.dw = sub i64 %3, %4
+  %11 = ptrtoaddr ptr %2 to i64                   ; 3 uses
+  %i.dv = ptrtoaddr ptr %1 to i64                 ; 3 uses
+  %i.dw = sub i64 %i.dv, %11
   %diff.check = icmp ugt i64 %i.dw, -32
-  %i.dx = sub i64 %i.dv, %3
+  %12 = ptrtoaddr ptr %i.du to i64                ; 2 uses
+  %i.dx = sub i64 %12, %i.dv
   %diff.check74 = icmp ugt i64 %i.dx, -32
   %conflict.rdx = or i1 %diff.check, %diff.check74
-  %i.dy = sub i64 %3, %5
+  %13 = ptrtoaddr ptr %i.as to i64                ; 2 uses
+  %i.dy = sub i64 %i.dv, %13
   %diff.check75 = icmp ugt i64 %i.dy, -32
   %conflict.rdx76 = or i1 %conflict.rdx, %diff.check75
-  %i.dz = sub i64 %i.dv, %4
+  %i.dz = sub i64 %12, %11
   %diff.check77 = icmp ugt i64 %i.dz, -32
   %conflict.rdx78 = or i1 %conflict.rdx76, %diff.check77
-  %i.ea = sub i64 %5, %4
+  %i.ea = sub i64 %13, %11
   %diff.check79 = icmp ugt i64 %i.ea, -32
   %conflict.rdx80 = or i1 %conflict.rdx78, %diff.check79
   br i1 %conflict.rdx80, label %scalar.ph.preheader, label %vector.ph
@@ -1552,7 +1559,6 @@ bb.k:                                             ; preds = %bb.j
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, 1) i32 @H5S_set_extent_real(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = ptrtoaddr ptr %1 to i64
   %i.a = load i8, ptr @H5S_init_g, align 1, !tbaa !11, !range !12, !noundef !13
   %i.b = trunc nuw i8 %i.a to i1                  ; 2 uses
   %i.c = load i8, ptr @H5_libterm_g, align 1, !range !12
@@ -1598,8 +1604,9 @@ bb.d:                                             ; preds = %._crit_edge23, %bb.
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !48   ; 7 uses
   %wide.trip.count = zext i32 %i.n to i64         ; 5 uses
   %min.iters.check = icmp ult i32 %i.n, 8
-  %i.q = ptrtoaddr ptr %i.p to i64
-  %i.r = sub i64 %2, %i.q
+  %2 = ptrtoaddr ptr %i.p to i64
+  %i.q = ptrtoaddr ptr %1 to i64
+  %i.r = sub i64 %i.q, %2
   %diff.check = icmp ugt i64 %i.r, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph

@@ -205,7 +205,6 @@ bb.e:                                             ; preds = %_ZN5Eigen15PlainObj
   %i.v = phi i64 [ %.pre21.i.i.i.i.i.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i ], [ %i.k, %bb.b ]
   %i.w = phi i64 [ %.pre.i.i.i.i.i.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i ], [ %i.j, %bb.b ]
   %i.x = load ptr, ptr %0, align 8, !tbaa !212    ; 8 uses
-  %3 = ptrtoaddr ptr %i.x to i64
   %i.y = mul nsw i64 %i.w, %i.v                   ; 7 uses
   %i.z = sdiv i64 %i.y, 2
   %i.aa = shl nsw i64 %i.z, 1                     ; 6 uses
@@ -219,6 +218,7 @@ bb.e:                                             ; preds = %_ZN5Eigen15PlainObj
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %._crit_edge.i.i.i.i.i.i.i.i
   %i.ad = sub i64 %i.y, %i.aa                     ; 3 uses
   %min.iters.check99 = icmp ult i64 %i.ad, 8
+  %3 = ptrtoaddr ptr %i.x to i64
   %i.ae = sub i64 %i.h, %3
   %diff.check97 = icmp ugt i64 %i.ae, -32
   %or.cond = select i1 %min.iters.check99, i1 true, i1 %diff.check97
@@ -621,8 +621,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !208  ; 7 uses
   %i.c = add nsw i64 %i.b, -1                     ; 4 uses
-  %i.d = load ptr, ptr %0, align 8, !tbaa !238    ; 5 uses
-  %4 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !238    ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 23 uses
   %or.cond = icmp eq i64 %i.b, 1
   br i1 %or.cond, label %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS1_INS1_INS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEELin1ELi1ELb0EEELin1ELi1ELb0EEEE11squaredNormEv.exit.thread, label %bb.b
@@ -859,6 +858,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i:
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader58, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
+  %4 = ptrtoaddr ptr %i.d to i64
   %i.do = sub i64 %i.de, %4
   %i.dp = add i64 %i.do, -9
   %diff.check = icmp ult i64 %i.dp, 15
@@ -959,7 +959,8 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check44, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader57, label %vector.memcheck41
 
 vector.memcheck41:                                ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.fb = sub i64 %i.de, %4
+  %5 = ptrtoaddr ptr %i.d to i64
+  %i.fb = sub i64 %i.de, %5
   %i.fc = add i64 %i.fb, -9
   %diff.check42 = icmp ult i64 %i.fc, 15
   br i1 %diff.check42, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader57, label %vector.ph45
@@ -1362,7 +1363,6 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #42
   call void @_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2INS_7ProductINS_14TriangularViewINS0_IdLin1ELin1ELi1ELin1ELin1EEELj2EEES1_Li0EEEEERKT_(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(16) %1)
   %i.a = load ptr, ptr %4, align 8, !tbaa !212    ; 8 uses
-  %5 = ptrtoaddr ptr %i.a to i64
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !214  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -1410,7 +1410,6 @@ bb.d:                                             ; preds = %.noexc4, %bb.a
   %i.p = phi i64 [ %.pre20.i.i.i, %.noexc4 ], [ %i.e, %bb.a ]
   %i.q = phi i64 [ %.pre.i.i.i, %.noexc4 ], [ %i.c, %bb.a ]
   %i.r = load ptr, ptr %0, align 8, !tbaa !212    ; 8 uses
-  %6 = ptrtoaddr ptr %i.r to i64
   %i.s = mul nsw i64 %i.q, %i.p                   ; 7 uses
   %i.t = sdiv i64 %i.s, 2
   %i.u = shl nsw i64 %i.t, 1                      ; 6 uses
@@ -1424,7 +1423,9 @@ bb.d:                                             ; preds = %.noexc4, %bb.a
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %._crit_edge.i.i.i.i
   %i.x = sub i64 %i.s, %i.u                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.x, 8
-  %i.y = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %i.r to i64
+  %6 = ptrtoaddr ptr %i.a to i64
+  %i.y = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.y, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader11, label %vector.ph
@@ -1827,7 +1828,6 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #42
   call void @_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2INS_7ProductINS_14TriangularViewIKNS_9TransposeIKNS0_IdLin1ELin1ELi1ELin1ELin1EEEEELj1EEES1_Li0EEEEERKT_(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(16) %1)
   %i.a = load ptr, ptr %4, align 8, !tbaa !212    ; 8 uses
-  %5 = ptrtoaddr ptr %i.a to i64
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !214  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -1875,7 +1875,6 @@ bb.d:                                             ; preds = %.noexc4, %bb.a
   %i.p = phi i64 [ %.pre20.i.i.i, %.noexc4 ], [ %i.e, %bb.a ]
   %i.q = phi i64 [ %.pre.i.i.i, %.noexc4 ], [ %i.c, %bb.a ]
   %i.r = load ptr, ptr %0, align 8, !tbaa !212    ; 8 uses
-  %6 = ptrtoaddr ptr %i.r to i64
   %i.s = mul nsw i64 %i.q, %i.p                   ; 7 uses
   %i.t = sdiv i64 %i.s, 2
   %i.u = shl nsw i64 %i.t, 1                      ; 6 uses
@@ -1889,7 +1888,9 @@ bb.d:                                             ; preds = %.noexc4, %bb.a
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %._crit_edge.i.i.i.i
   %i.x = sub i64 %i.s, %i.u                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.x, 8
-  %i.y = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %i.r to i64
+  %6 = ptrtoaddr ptr %i.a to i64
+  %i.y = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.y, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader11, label %vector.ph

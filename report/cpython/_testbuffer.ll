@@ -205,13 +205,11 @@ bb.q:                                             ; preds = %bb.m
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !32
   %i.bd = sext i32 %i.bc to i64
   %i.be = shl nsw i64 %i.bd, 3
-  %i.bf = tail call ptr @PyMem_Malloc(i64 noundef %i.be) #15 ; 13 uses
-  %2 = ptrtoaddr ptr %i.bf to i64                 ; 8 uses
+  %i.bf = tail call ptr @PyMem_Malloc(i64 noundef %i.be) #15 ; 14 uses
   %i.bg = load i32, ptr %i.bb, align 4, !tbaa !32
   %i.bh = sext i32 %i.bg to i64
   %i.bi = shl nsw i64 %i.bh, 3
-  %i.bj = tail call ptr @PyMem_Malloc(i64 noundef %i.bi) #15 ; 12 uses
-  %3 = ptrtoaddr ptr %i.bj to i64                 ; 8 uses
+  %i.bj = tail call ptr @PyMem_Malloc(i64 noundef %i.bi) #15 ; 13 uses
   %i.bk = icmp eq ptr %i.bf, null                 ; 2 uses
   %i.bl = icmp eq ptr %i.bj, null                 ; 2 uses
   %or.cond.i = select i1 %i.bk, i1 true, i1 %i.bl
@@ -228,7 +226,6 @@ bb.s:                                             ; preds = %bb.r
   %i.bp = sext i32 %i.bo to i64
   %i.bq = shl nsw i64 %i.bp, 3
   %i.br = tail call ptr @PyMem_Malloc(i64 noundef %i.bq) #15 ; 10 uses
-  %4 = ptrtoaddr ptr %i.br to i64                 ; 5 uses
   %i.bs = icmp eq ptr %i.br, null
   br i1 %i.bs, label %.thread.i, label %bb.t
 
@@ -256,20 +253,22 @@ bb.t:                                             ; preds = %bb.s
   br i1 %min.iters.check174, label %.lr.ph.split.us.i.preheader, label %vector.memcheck163
 
 vector.memcheck163:                               ; preds = %.lr.ph.split.us.preheader.i
-  %i.cd = ptrtoaddr ptr %i.cc to i64              ; 2 uses
-  %i.ce = ptrtoaddr ptr %i.ca to i64              ; 2 uses
-  %i.cf = sub i64 %2, %3
+  %i.cd = ptrtoaddr ptr %i.bj to i64              ; 3 uses
+  %i.ce = ptrtoaddr ptr %i.bf to i64              ; 3 uses
+  %i.cf = sub i64 %i.ce, %i.cd
   %diff.check164 = icmp ugt i64 %i.cf, -32
-  %i.cg = sub i64 %i.ce, %2
+  %2 = ptrtoaddr ptr %i.ca to i64                 ; 2 uses
+  %i.cg = sub i64 %2, %i.ce
   %diff.check165.a = icmp ugt i64 %i.cg, -32
   %conflict.rdx166.a = or i1 %diff.check164, %diff.check165.a
-  %i.ch = sub i64 %2, %i.cd
+  %3 = ptrtoaddr ptr %i.cc to i64                 ; 2 uses
+  %i.ch = sub i64 %i.ce, %3
   %diff.check167.a = icmp ugt i64 %i.ch, -32
   %conflict.rdx168.a = or i1 %conflict.rdx166.a, %diff.check167.a
-  %i.ci = sub i64 %i.ce, %3
+  %i.ci = sub i64 %2, %i.cd
   %diff.check169.a = icmp ugt i64 %i.ci, -32
   %conflict.rdx170.a = or i1 %conflict.rdx168.a, %diff.check169.a
-  %i.cj = sub i64 %i.cd, %3
+  %i.cj = sub i64 %3, %i.cd
   %diff.check171.a = icmp ugt i64 %i.cj, -32
   %conflict.rdx172.a = or i1 %conflict.rdx170.a, %diff.check171.a
   br i1 %conflict.rdx172.a, label %.lr.ph.split.us.i.preheader, label %vector.ph175
@@ -361,42 +360,45 @@ middle.block184:                                  ; preds = %vector.body177
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.i
-  %i.dv = ptrtoaddr ptr %i.du to i64              ; 3 uses
-  %i.dw = ptrtoaddr ptr %i.dt to i64              ; 3 uses
-  %5 = ptrtoaddr ptr %i.dr to i64                 ; 3 uses
-  %6 = sub i64 %2, %3
-  %diff.check = icmp ugt i64 %6, -32
-  %i.dx = sub i64 %2, %4
+  %i.dv = ptrtoaddr ptr %i.bj to i64              ; 5 uses
+  %i.dw = ptrtoaddr ptr %i.bf to i64              ; 5 uses
+  %4 = sub i64 %i.dw, %i.dv
+  %diff.check = icmp ugt i64 %4, -32
+  %5 = ptrtoaddr ptr %i.br to i64                 ; 5 uses
+  %i.dx = sub i64 %i.dw, %5
   %diff.check137 = icmp ugt i64 %i.dx, -32
   %conflict.rdx = or i1 %diff.check, %diff.check137
-  %i.dy = sub i64 %5, %2
+  %6 = ptrtoaddr ptr %i.dr to i64                 ; 3 uses
+  %i.dy = sub i64 %6, %i.dw
   %diff.check138 = icmp ugt i64 %i.dy, -32
   %conflict.rdx139 = or i1 %conflict.rdx, %diff.check138
-  %i.dz = sub i64 %2, %i.dw
+  %7 = ptrtoaddr ptr %i.dt to i64                 ; 3 uses
+  %i.dz = sub i64 %i.dw, %7
   %diff.check140 = icmp ugt i64 %i.dz, -32
   %conflict.rdx141 = or i1 %conflict.rdx139, %diff.check140
-  %i.ea = sub i64 %2, %i.dv
+  %8 = ptrtoaddr ptr %i.du to i64                 ; 3 uses
+  %i.ea = sub i64 %i.dw, %8
   %diff.check142 = icmp ugt i64 %i.ea, -32
   %conflict.rdx143 = or i1 %conflict.rdx141, %diff.check142
-  %i.eb = sub i64 %3, %4
+  %i.eb = sub i64 %i.dv, %5
   %diff.check144 = icmp ugt i64 %i.eb, -32
   %conflict.rdx145 = or i1 %conflict.rdx143, %diff.check144
-  %i.ec = sub i64 %5, %3
+  %i.ec = sub i64 %6, %i.dv
   %diff.check146 = icmp ugt i64 %i.ec, -32
   %conflict.rdx147 = or i1 %conflict.rdx145, %diff.check146
-  %i.ed = sub i64 %i.dw, %3
+  %i.ed = sub i64 %7, %i.dv
   %diff.check148 = icmp ugt i64 %i.ed, -32
   %conflict.rdx149 = or i1 %conflict.rdx147, %diff.check148
-  %i.ee = sub i64 %3, %i.dv
+  %i.ee = sub i64 %i.dv, %8
   %diff.check150 = icmp ugt i64 %i.ee, -32
   %conflict.rdx151 = or i1 %conflict.rdx149, %diff.check150
-  %i.ef = sub i64 %5, %4
+  %i.ef = sub i64 %6, %5
   %diff.check152 = icmp ugt i64 %i.ef, -32
   %conflict.rdx153 = or i1 %conflict.rdx151, %diff.check152
-  %i.eg = sub i64 %i.dw, %4
+  %i.eg = sub i64 %7, %5
   %diff.check154 = icmp ugt i64 %i.eg, -32
   %conflict.rdx155 = or i1 %conflict.rdx153, %diff.check154
-  %i.eh = sub i64 %i.dv, %4
+  %i.eh = sub i64 %8, %5
   %diff.check156 = icmp ugt i64 %i.eh, -32
   %conflict.rdx157 = or i1 %conflict.rdx155, %diff.check156
   br i1 %conflict.rdx157, label %scalar.ph.preheader, label %vector.ph
@@ -799,7 +801,6 @@ declare i32 @PyIndex_Check(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @pack_single(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %2, i64 noundef %3) unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64
   %i.a = icmp eq ptr %2, null
   %spec.store.select = select i1 %i.a, ptr @.str.16, ptr %2
   %i.b = tail call ptr @PyUnicode_FromString(ptr noundef nonnull %spec.store.select) #15 ; 5 uses
@@ -831,8 +832,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.n = add i64 %.val88, 2                       ; 3 uses
-  %i.o = tail call ptr @PyTuple_New(i64 noundef %i.n) #15 ; 9 uses
-  %5 = ptrtoaddr ptr %i.o to i64                  ; 2 uses
+  %i.o = tail call ptr @PyTuple_New(i64 noundef %i.n) #15 ; 10 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %Py_XDECREF.exit.thread118, label %bb.g
 
@@ -908,7 +908,9 @@ bb.m:                                             ; preds = %bb.l
   br i1 %min.iters.check211, label %.lr.ph.split.us.preheader222, label %vector.memcheck208
 
 vector.memcheck208:                               ; preds = %.lr.ph.split.us.preheader
-  %i.ah = sub i64 %5, %4
+  %4 = ptrtoaddr ptr %i.o to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.ah = sub i64 %4, %5
   %i.ai = add i64 %i.ah, 15
   %diff.check209 = icmp ult i64 %i.ai, 31
   br i1 %diff.check209, label %.lr.ph.split.us.preheader222, label %vector.ph212
@@ -1022,8 +1024,9 @@ middle.block219:                                  ; preds = %vector.body214
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split
+  %6 = ptrtoaddr ptr %i.o to i64
   %i.ce = ptrtoaddr ptr %i.cd to i64
-  %i.cf = sub i64 %5, %i.ce
+  %i.cf = sub i64 %6, %i.ce
   %i.cg = add i64 %i.cf, 47
   %diff.check = icmp ult i64 %i.cg, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph

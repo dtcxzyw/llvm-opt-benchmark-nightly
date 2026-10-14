@@ -204,8 +204,6 @@ clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_uqshli_b(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64
-  %5 = ptrtoaddr ptr %0 to i64
   %i.a = lshr i32 %3, 8
   %i.b = and i32 %i.a, 3                          ; 2 uses
   %i.c = shl nuw nsw i32 %i.b, 3
@@ -232,7 +230,9 @@ do_uqrshl_bhs.exit.preheader:                     ; preds = %bb.a
   br i1 %i.m, label %vector.memcheck122, label %.split.us.split
 
 vector.memcheck122:                               ; preds = %.split.us
-  %i.n = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.n = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.n, -16
   br i1 %diff.check, label %do_uqrshl_bhs.exit.us.us.preheader, label %vector.main.loop.iter.check
 
@@ -635,8 +635,6 @@ clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_uqshli_h(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64
-  %5 = ptrtoaddr ptr %0 to i64
   %i.a = lshr i32 %3, 8
   %i.b = and i32 %i.a, 3                          ; 2 uses
   %i.c = shl nuw nsw i32 %i.b, 3
@@ -664,7 +662,9 @@ do_uqrshl_bhs.exit.preheader:                     ; preds = %bb.a
   br i1 %i.n, label %vector.memcheck121, label %.split.us.split
 
 vector.memcheck121:                               ; preds = %.split.us
-  %i.o = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.o = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.o, -32
   br i1 %diff.check, label %do_uqrshl_bhs.exit.us.us.preheader.new, label %vector.main.loop.iter.check
 
@@ -1067,8 +1067,6 @@ clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_uqshli_s(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64
-  %5 = ptrtoaddr ptr %0 to i64
   %i.a = lshr i32 %3, 8
   %i.b = and i32 %i.a, 3                          ; 2 uses
   %i.c = shl nuw nsw i32 %i.b, 3
@@ -1097,7 +1095,9 @@ do_uqrshl_bhs.exit.preheader:                     ; preds = %bb.a
 
 do_uqrshl_bhs.exit.us.us.preheader:               ; preds = %.split.us
   %min.iters.check123 = icmp samesign ult i32 %.v.v.i, 24
-  %i.o = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.o = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.o, -32
   %or.cond = or i1 %min.iters.check123, %diff.check
   br i1 %or.cond, label %do_uqrshl_bhs.exit.us.us.preheader137, label %vector.ph124
@@ -1486,8 +1486,6 @@ clear_tail.exit:                                  ; preds = %bb.i, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_uqshli_d(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64
-  %5 = ptrtoaddr ptr %0 to i64
   %i.a = lshr i32 %3, 8
   %i.b = and i32 %i.a, 3                          ; 2 uses
   %i.c = shl nuw nsw i32 %i.b, 3
@@ -1518,7 +1516,9 @@ do_uqrshl_d.exit.preheader:                       ; preds = %bb.a
 
 do_uqrshl_d.exit.us.us.preheader:                 ; preds = %.split.us
   %min.iters.check = icmp samesign ult i32 %.v.v.i, 40
-  %i.p = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.p = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.p, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %do_uqrshl_d.exit.us.us.preheader34, label %vector.ph
@@ -1921,8 +1921,6 @@ clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_sqshli_b(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = lshr i32 %3, 8
   %i.b = and i32 %i.a, 3                          ; 2 uses
   %i.c = shl nuw nsw i32 %i.b, 3
@@ -1941,7 +1939,9 @@ bb.a:
   br i1 %.not.i, label %.split.us, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %i.m = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.m = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.m, -32
   br i1 %diff.check, label %do_sqrshl_bhs.exit.preheader, label %vector.main.loop.iter.check
 
@@ -2002,7 +2002,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.z, label %vector.memcheck135, label %.split.us.split
 
 vector.memcheck135:                               ; preds = %.split.us
-  %i.aa = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.aa = sub i64 %7, %6
   %diff.check136 = icmp ugt i64 %i.aa, -16
   br i1 %diff.check136, label %do_sqrshl_bhs.exit.us.us.preheader, label %vector.main.loop.iter.check138
 
@@ -2405,8 +2407,6 @@ clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_sqshli_h(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = lshr i32 %3, 8
   %i.b = and i32 %i.a, 3                          ; 2 uses
   %i.c = shl nuw nsw i32 %i.b, 3
@@ -2426,7 +2426,9 @@ bb.a:
   br i1 %.not.i, label %.split.us, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %i.n = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.n = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.n, -32
   br i1 %diff.check, label %do_sqrshl_bhs.exit.preheader.new, label %vector.main.loop.iter.check
 
@@ -2487,7 +2489,9 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.aa, label %vector.memcheck134, label %.split.us.split
 
 vector.memcheck134:                               ; preds = %.split.us
-  %i.ab = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.ab = sub i64 %7, %6
   %diff.check135 = icmp ugt i64 %i.ab, -32
   br i1 %diff.check135, label %do_sqrshl_bhs.exit.us.us.preheader.new, label %vector.main.loop.iter.check137
 
@@ -2890,8 +2894,6 @@ clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_sqshli_s(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = lshr i32 %3, 8
   %i.b = and i32 %i.a, 3                          ; 2 uses
   %i.c = shl nuw nsw i32 %i.b, 3
@@ -2912,7 +2914,9 @@ bb.a:
 
 do_sqrshl_bhs.exit.preheader:                     ; preds = %bb.a
   %min.iters.check = icmp samesign ult i32 %.v.v.i, 24
-  %i.n = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.n = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.n, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %do_sqrshl_bhs.exit.preheader163, label %vector.ph
@@ -2972,7 +2976,9 @@ do_sqrshl_bhs.exit.prol.loopexit:                 ; preds = %do_sqrshl_bhs.exit.
 
 do_sqrshl_bhs.exit.us.us.preheader:               ; preds = %.split.us
   %min.iters.check143 = icmp samesign ult i32 %.v.v.i, 24
-  %i.ad = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.ad = sub i64 %7, %6
   %diff.check141 = icmp ugt i64 %i.ad, -32
   %or.cond156 = or i1 %min.iters.check143, %diff.check141
   br i1 %or.cond156, label %do_sqrshl_bhs.exit.us.us.preheader158, label %vector.ph144
@@ -3375,8 +3381,6 @@ clear_tail.exit:                                  ; preds = %bb.j, %.lr.ph.prehe
 ; Function Attrs: nofree noinline norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define dso_local void @helper_neon_sqshli_d(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = lshr i32 %3, 8
   %i.b = and i32 %i.a, 3                          ; 2 uses
   %i.c = shl nuw nsw i32 %i.b, 3
@@ -3399,7 +3403,9 @@ bb.a:
 
 do_sqrshl_d.exit.us.preheader:                    ; preds = %bb.a
   %min.iters.check45 = icmp samesign ult i32 %.v.v.i, 40
-  %i.p = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.p = sub i64 %5, %4
   %diff.check43 = icmp ugt i64 %i.p, -32
   %or.cond = or i1 %min.iters.check45, %diff.check43
   br i1 %or.cond, label %do_sqrshl_d.exit.us.preheader57, label %vector.ph46
@@ -3488,7 +3494,9 @@ do_sqrshl_d.exit.us:                              ; preds = %do_sqrshl_d.exit.us
 
 do_sqrshl_d.exit.us19.preheader:                  ; preds = %.split
   %min.iters.check = icmp samesign ult i32 %.v.v.i, 56
-  %i.az = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.az = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.az, -32
   %or.cond56 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond56, label %do_sqrshl_d.exit.us19.preheader58, label %vector.ph

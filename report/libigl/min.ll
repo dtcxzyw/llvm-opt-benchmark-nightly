@@ -71,11 +71,9 @@ _ZN5Eigen15PlainObjectBaseINS_5ArrayIbLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit: 
 
 .lr.ph:                                           ; preds = %_ZN5Eigen15PlainObjectBaseINS_5ArrayIbLin1ELi1ELi0ELin1ELi1EEEE6resizeEll.exit
   %i.p = load ptr, ptr %2, align 8, !tbaa !36     ; 9 uses
-  %4 = ptrtoaddr ptr %i.p to i64
   %i.q = load ptr, ptr %3, align 8, !tbaa !15     ; 8 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.s = load ptr, ptr %0, align 8, !tbaa !37, !noalias !38 ; 7 uses
-  %5 = ptrtoaddr ptr %i.s to i64
   %i.t = load i64, ptr %i.r, align 8, !tbaa !33   ; 11 uses
   br i1 %i.a, label %.lr.ph.split.us, label %.lr.ph.split
 
@@ -143,6 +141,8 @@ _ZNK5Eigen9DenseBaseINS_5BlockIKNS_5ArrayIbLin1ELi3ELi0ELin1ELi3EEELi1ELi3ELb0EE
   %min.iters.check = icmp ult i32 %i.g, 8
   %ident.check.not = icmp ne i64 %i.t, 1
   %or.cond.not77 = select i1 %min.iters.check, i1 true, i1 %ident.check.not
+  %4 = ptrtoaddr ptr %i.p to i64
+  %5 = ptrtoaddr ptr %i.s to i64
   %i.ag = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.ag, -8
   %or.cond76 = select i1 %or.cond.not77, i1 true, i1 %diff.check
@@ -423,14 +423,12 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.g = load ptr, ptr %2, align 8, !tbaa !23     ; 17 uses
-  %4 = ptrtoaddr ptr %i.g to i64                  ; 2 uses
+  %i.g = load ptr, ptr %2, align 8, !tbaa !23     ; 18 uses
   %i.h = load ptr, ptr %3, align 8, !tbaa !15     ; 16 uses
   br i1 %i.a, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.i = load ptr, ptr %0, align 8, !tbaa !61, !noalias !62 ; 6 uses
-  %5 = ptrtoaddr ptr %i.i to i64
   %i.j = load i64, ptr %i.f, align 8, !tbaa !63, !noalias !62 ; 9 uses
   %i.k = icmp eq i64 %i.j, 0
   br i1 %i.k, label %_ZNK5Eigen9DenseBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEE8minCoeffIlEEdPT_S9_.exit.us.us.preheader, label %.lr.ph.split.us.split
@@ -494,6 +492,8 @@ _ZNK5Eigen9DenseBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1EL
   %min.iters.check105 = icmp samesign ult i64 %wide.trip.count72, 8
   %ident.check.not = icmp ne i64 %i.j, 1
   %or.cond.not128 = or i1 %min.iters.check105, %ident.check.not
+  %4 = ptrtoaddr ptr %i.g to i64
+  %5 = ptrtoaddr ptr %i.i to i64
   %i.v = sub i64 %5, %4
   %diff.check103 = icmp ugt i64 %i.v, -32
   %or.cond126 = select i1 %or.cond.not128, i1 true, i1 %diff.check103
@@ -631,7 +631,6 @@ _ZNK5Eigen9DenseBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1EL
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bo = load ptr, ptr %0, align 8, !tbaa !61, !noalias !66 ; 8 uses
-  %6 = ptrtoaddr ptr %i.bo to i64
   %i.bp = load i64, ptr %i.bn, align 8, !tbaa !67, !noalias !66 ; 4 uses
   %i.bq = icmp eq i64 %i.bp, 0
   br i1 %i.bq, label %_ZNK5Eigen9DenseBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEE8minCoeffIlEEdPT_S9_.exit.us37.preheader, label %.lr.ph.split.split
@@ -694,7 +693,9 @@ _ZNK5Eigen9DenseBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1EL
 
 _ZNK5Eigen9DenseBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEE8minCoeffIlEEdPT_S9_.exit.preheader: ; preds = %.lr.ph.split.split
   %min.iters.check = icmp samesign ult i64 %wide.trip.count57, 6
-  %i.cc = sub i64 %6, %4
+  %6 = ptrtoaddr ptr %i.g to i64
+  %7 = ptrtoaddr ptr %i.bo to i64
+  %i.cc = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.cc, -32
   %or.cond127 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond127, label %_ZNK5Eigen9DenseBaseINS_5BlockIKNS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEE8minCoeffIlEEdPT_S9_.exit.preheader136, label %vector.ph

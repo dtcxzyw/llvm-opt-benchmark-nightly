@@ -204,21 +204,22 @@ _ZNSt12_Vector_baseIfN3ozz12StdAllocatorIfEEEC2EmRKS2_.exit.i.i91: ; preds = %.c
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 %i.co
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.ct, ptr %i.cu, align 8, !tbaa !48
-  %i.cv = load ptr, ptr %3, align 8, !tbaa !38    ; 7 uses
+  %i.cv = load ptr, ptr %3, align 8, !tbaa !38    ; 8 uses
   %i.cw = load ptr, ptr %i.cp, align 8, !tbaa !38 ; 3 uses
   %.not13.i.i.i92 = icmp eq ptr %i.cv, %i.cw
   br i1 %.not13.i.i.i92, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt12_Vector_baseIfN3ozz12StdAllocatorIfEEEC2EmRKS2_.exit.i.i91
-  %4 = ptrtoaddr ptr %i.cv to i64                 ; 2 uses
-  %i.cx = ptrtoaddr ptr %i.cr to i64
-  %i.cy = ptrtoaddr ptr %i.cw to i64
-  %i.cz = add i64 %i.cy, -4
-  %i.da = sub i64 %i.cz, %4                       ; 3 uses
+  %i.cx = ptrtoaddr ptr %i.cw to i64
+  %i.cy = ptrtoaddr ptr %i.cv to i64
+  %i.cz = add i64 %i.cx, -4
+  %i.da = sub i64 %i.cz, %i.cy                    ; 3 uses
   %i.db = lshr i64 %i.da, 2
   %i.dc = add nuw nsw i64 %i.db, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.da, 28
-  %i.dd = sub i64 %4, %i.cx
+  %4 = ptrtoaddr ptr %i.cr to i64
+  %5 = ptrtoaddr ptr %i.cv to i64
+  %i.dd = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.dd, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i93.preheader, label %vector.main.loop.iter.check
@@ -621,12 +622,12 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not13.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPsS0_N3ozz12StdAllocatorIsEEET0_T_S5_S4_RT1_.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.e
-  %3 = ptrtoaddr ptr %i.t to i64
   %i.y = add i64 %i.m, -2
   %i.z = sub i64 %i.y, %i.e                       ; 3 uses
   %i.aa = lshr i64 %i.z, 1
   %i.ab = add nuw i64 %i.aa, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.z, 14
+  %3 = ptrtoaddr ptr %i.t to i64
   %i.ac = sub i64 %i.e, %3
   %diff.check = icmp ugt i64 %i.ac, -128
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -715,7 +716,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _ZSt34__uninitialized_move_if_noexcept_aIPsS0_N3ozz12StdAllocatorIsEEET0_T_S5_S4_RT1_.exit: ; preds = %.lr.ph.i.i, %middle.block, %vec.epilog.middle.block, %bb.e
   %.0.lcssa.i.i = phi ptr [ %i.t, %bb.e ], [ %i.aq, %vec.epilog.middle.block ], [ %i.af, %middle.block ], [ %i.aw, %.lr.ph.i.i ] ; 2 uses
-  %.0.lcssa.i.i63 = ptrtoaddr ptr %.0.lcssa.i.i to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 2 ; 7 uses
   %.not13.i.i28 = icmp eq ptr %1, %i.b
   br i1 %.not13.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPsS0_N3ozz12StdAllocatorIsEEET0_T_S5_S4_RT1_.exit34, label %iter.check83
@@ -729,7 +729,8 @@ iter.check83:                                     ; preds = %_ZSt34__uninitializ
   br i1 %min.iters.check65, label %.lr.ph.i.i29.preheader, label %vector.memcheck62
 
 vector.memcheck62:                                ; preds = %iter.check83
-  %i.bc = sub i64 %.0.lcssa.i.i63, %i.m
+  %4 = ptrtoaddr ptr %.0.lcssa.i.i to i64
+  %i.bc = sub i64 %4, %i.m
   %i.bd = add i64 %i.bc, 1
   %diff.check64 = icmp ult i64 %i.bd, 127
   br i1 %diff.check64, label %.lr.ph.i.i29.preheader, label %vector.main.loop.iter.check66
@@ -1010,12 +1011,12 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not13.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPfS0_N3ozz12StdAllocatorIfEEET0_T_S5_S4_RT1_.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.e
-  %3 = ptrtoaddr ptr %i.t to i64
   %i.y = add i64 %i.m, -4
   %i.z = sub i64 %i.y, %i.e                       ; 3 uses
   %i.aa = lshr i64 %i.z, 2
   %i.ab = add nuw nsw i64 %i.aa, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.z, 28
+  %3 = ptrtoaddr ptr %i.t to i64
   %i.ac = sub i64 %i.e, %3
   %diff.check = icmp ugt i64 %i.ac, -128
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1104,7 +1105,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _ZSt34__uninitialized_move_if_noexcept_aIPfS0_N3ozz12StdAllocatorIfEEET0_T_S5_S4_RT1_.exit: ; preds = %.lr.ph.i.i, %middle.block, %vec.epilog.middle.block, %bb.e
   %.0.lcssa.i.i = phi ptr [ %i.t, %bb.e ], [ %i.aq, %vec.epilog.middle.block ], [ %i.af, %middle.block ], [ %i.aw, %.lr.ph.i.i ] ; 2 uses
-  %.0.lcssa.i.i63 = ptrtoaddr ptr %.0.lcssa.i.i to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 4 ; 7 uses
   %.not13.i.i28 = icmp eq ptr %1, %i.b
   br i1 %.not13.i.i28, label %_ZSt34__uninitialized_move_if_noexcept_aIPfS0_N3ozz12StdAllocatorIfEEET0_T_S5_S4_RT1_.exit34, label %iter.check83
@@ -1118,7 +1118,8 @@ iter.check83:                                     ; preds = %_ZSt34__uninitializ
   br i1 %min.iters.check65, label %.lr.ph.i.i29.preheader, label %vector.memcheck62
 
 vector.memcheck62:                                ; preds = %iter.check83
-  %i.bc = sub i64 %.0.lcssa.i.i63, %i.m
+  %4 = ptrtoaddr ptr %.0.lcssa.i.i to i64
+  %i.bc = sub i64 %4, %i.m
   %i.bd = add i64 %i.bc, 3
   %diff.check64 = icmp ult i64 %i.bd, 127
   br i1 %diff.check64, label %.lr.ph.i.i29.preheader, label %vector.main.loop.iter.check66

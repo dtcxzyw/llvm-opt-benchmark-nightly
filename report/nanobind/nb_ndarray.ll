@@ -205,10 +205,8 @@ bb.a:
   %.sroa.035.0.copyload = load ptr, ptr %1, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8 ; 13 uses
-  %.sroa.5.0.copyload119 = ptrtoaddr ptr %.sroa.5.0.copyload to i64
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8 ; 8 uses
-  %.sroa.8.0.copyload122 = ptrtoaddr ptr %.sroa.8.0.copyload to i64
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.10.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8 ; 4 uses
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -237,8 +235,7 @@ bb.c:                                             ; preds = %bb.a
   %spec.select = tail call i32 @llvm.umax.i32(i32 %.sroa.2248.0.copyload, i32 1)
   %i.d = shl nuw nsw i64 %i.b, 4
   %i.e = add nuw nsw i64 %i.d, 80                 ; 2 uses
-  %i.f = tail call ptr @PyMem_Malloc(i64 noundef %i.e) ; 18 uses
-  %2 = ptrtoaddr ptr %i.f to i64                  ; 2 uses
+  %i.f = tail call ptr @PyMem_Malloc(i64 noundef %i.e) ; 19 uses
   %.not.i = icmp eq ptr %i.f, null
   br i1 %.not.i, label %bb.d, label %_ZN8nanobind6detail15scoped_pymallocINS0_26managed_dltensor_versionedEEC2Emm.exit, !prof !3
 
@@ -259,7 +256,9 @@ _ZN8nanobind6detail15scoped_pymallocINS0_26managed_dltensor_versionedEEC2Emm.exi
   br i1 %min.iters.check, label %.lr.ph.preheader140, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.i = sub i64 %2, %.sroa.5.0.copyload119
+  %2 = ptrtoaddr ptr %i.f to i64
+  %3 = ptrtoaddr ptr %.sroa.5.0.copyload to i64
+  %i.i = sub i64 %2, %3
   %i.j = add i64 %i.i, 79
   %diff.check = icmp ult i64 %i.j, 31
   br i1 %diff.check, label %.lr.ph.preheader140, label %vector.ph
@@ -344,9 +343,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check125, label %.preheader99.preheader138, label %vector.memcheck121
 
 vector.memcheck121:                               ; preds = %.preheader99.preheader
+  %4 = ptrtoaddr ptr %i.f to i64
   %i.al = shl nuw nsw i64 %i.b, 3
-  %i.am = add i64 %i.al, %2
-  %i.an = sub i64 %i.am, %.sroa.8.0.copyload122
+  %5 = ptrtoaddr ptr %.sroa.8.0.copyload to i64
+  %i.am = add i64 %i.al, %4
+  %i.an = sub i64 %i.am, %5
   %i.ao = add i64 %i.an, 79
   %diff.check123 = icmp ult i64 %i.ao, 31
   br i1 %diff.check123, label %.preheader99.preheader138, label %vector.ph126

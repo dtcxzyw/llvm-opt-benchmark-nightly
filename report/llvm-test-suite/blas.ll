@@ -204,8 +204,6 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @scopy(i32 noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #1 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64
-  %6 = ptrtoaddr ptr %3 to i64
   %i.a = icmp slt i32 %0, 1
   br i1 %i.a, label %.loopexit, label %bb.b
 
@@ -220,7 +218,9 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph59.preheader:                               ; preds = %bb.c
   %i.d = zext nneg i32 %0 to i64                  ; 2 uses
   %min.iters.check = icmp ult i32 %0, 8
-  %i.e = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %3 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.e = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.e, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph59.preheader73, label %vector.ph
@@ -623,9 +623,6 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @vexopy(i32 noundef %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4) local_unnamed_addr #1 {
 bb.a:
-  %5 = ptrtoaddr ptr %3 to i64                    ; 2 uses
-  %6 = ptrtoaddr ptr %2 to i64                    ; 2 uses
-  %7 = ptrtoaddr ptr %1 to i64                    ; 4 uses
   %i.a = icmp slt i32 %0, 1
   br i1 %i.a, label %.loopexit, label %bb.b
 
@@ -639,9 +636,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check55, label %.lr.ph.preheader75, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.d = sub i64 %6, %7
+  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %6 = ptrtoaddr ptr %2 to i64
+  %i.d = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.d, -32
-  %i.e = sub i64 %5, %7
+  %7 = ptrtoaddr ptr %3 to i64
+  %i.e = sub i64 %7, %5
   %diff.check41 = icmp ugt i64 %i.e, -32
   %conflict.rdx = or i1 %diff.check, %diff.check41
   br i1 %conflict.rdx, label %.lr.ph.preheader75, label %vector.ph
@@ -721,9 +721,12 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check55, label %.lr.ph36.preheader74, label %vector.memcheck50
 
 vector.memcheck50:                                ; preds = %.lr.ph36.preheader
-  %i.ab = sub i64 %6, %7
+  %8 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %9 = ptrtoaddr ptr %2 to i64
+  %i.ab = sub i64 %9, %8
   %diff.check51 = icmp ugt i64 %i.ab, -32
-  %i.ac = sub i64 %5, %7
+  %10 = ptrtoaddr ptr %3 to i64
+  %i.ac = sub i64 %10, %8
   %diff.check52 = icmp ugt i64 %i.ac, -32
   %conflict.rdx53 = or i1 %diff.check51, %diff.check52
   br i1 %conflict.rdx53, label %.lr.ph36.preheader74, label %vector.ph56

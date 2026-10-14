@@ -204,12 +204,10 @@ middle.block113:                                  ; preds = %vector.body108
   br label %.thread
 
 .thread:                                          ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i22, %middle.block113, %.thread.sink.split
-  %i.an = phi ptr [ null, %.thread.sink.split ], [ %i.i, %middle.block113 ], [ %i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i22 ] ; 2 uses
-  %6 = ptrtoaddr ptr %i.an to i64                 ; 2 uses
+  %i.an = phi ptr [ null, %.thread.sink.split ], [ %i.i, %middle.block113 ], [ %i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i22 ] ; 3 uses
   %.idx = shl nsw i64 %i.b, 4                     ; 3 uses
   %i.ao = getelementptr inbounds i8, ptr %i.an, i64 %.idx ; 14 uses
-  %i.ap = load ptr, ptr %4, align 8, !tbaa !62    ; 14 uses
-  %7 = ptrtoaddr ptr %i.ap to i64                 ; 2 uses
+  %i.ap = load ptr, ptr %4, align 8, !tbaa !62    ; 15 uses
   %i.aq = ptrtoint ptr %i.ao to i64               ; 2 uses
   %i.ar = and i64 %i.aq, 7
   %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ar, 0
@@ -235,6 +233,8 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i:
   br i1 %min.iters.check117, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader202, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
+  %6 = ptrtoaddr ptr %i.an to i64
+  %7 = ptrtoaddr ptr %i.ap to i64
   %i.ba = add i64 %.idx, %6
   %i.bb = sub i64 %7, %i.ba
   %diff.check = icmp ugt i64 %i.bb, -32
@@ -326,8 +326,10 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check131, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader201, label %vector.memcheck128
 
 vector.memcheck128:                               ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.ch = add i64 %.idx, %6
-  %i.ci = sub i64 %7, %i.ch
+  %8 = ptrtoaddr ptr %i.an to i64
+  %9 = ptrtoaddr ptr %i.ap to i64
+  %i.ch = add i64 %.idx, %8
+  %i.ci = sub i64 %9, %i.ch
   %diff.check129 = icmp ugt i64 %i.ci, -32
   br i1 %diff.check129, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader201, label %vector.ph132
 
