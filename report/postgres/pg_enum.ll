@@ -204,68 +204,63 @@ bb.h:                                             ; preds = %bb.c
   %i.v = tail call ptr @table_open(i32 noundef 3501, i32 noundef 3) #9 ; 6 uses
   %i.w = icmp eq ptr %2, null                     ; 2 uses
   %.091.v = select i1 %3, i32 1, i32 -1
-  %i.x = tail call ptr @SearchSysCacheList(i32 noundef 24, i32 noundef 1, i64 noundef %i.m, i64 noundef 0, i64 noundef 0) #9 ; 7 uses
+  %i.x = tail call ptr @SearchSysCacheList(i32 noundef 24, i32 noundef 1, i64 noundef %i.m, i64 noundef 0, i64 noundef 0) #9 ; 6 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.x, i64 64
+  %8 = load i32, ptr %7, align 8                  ; 8 uses
+  %9 = sext i32 %8 to i64                         ; 5 uses
+  %10 = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %9) #9 ; 14 uses
+  %11 = icmp sgt i32 %8, 0                        ; 2 uses
   br i1 %i.w, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.h
-  %7 = getelementptr inbounds nuw i8, ptr %i.x, i64 64
-  %8 = load i32, ptr %7, align 8                  ; 3 uses
-  %9 = sext i32 %8 to i64                         ; 3 uses
-  %10 = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %9) #9 ; 2 uses
-  %11 = icmp sgt i32 %8, 0
   br i1 %11, label %.lr.ph, label %.preheader138._crit_edge.loopexit176
 
 .split.us:                                        ; preds = %bb.h
-  %12 = ptrtoaddr ptr %i.x to i64
-  %13 = getelementptr inbounds nuw i8, ptr %i.x, i64 64
-  %14 = load i32, ptr %13, align 8                ; 7 uses
-  %15 = sext i32 %14 to i64                       ; 3 uses
-  %16 = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %15) #9 ; 12 uses
-  %17 = ptrtoaddr ptr %16 to i64
-  %18 = icmp sgt i32 %14, 0
-  br i1 %18, label %.lr.ph.us, label %._crit_edge.us
+  br i1 %11, label %.lr.ph.us, label %._crit_edge.us
 
 scalar.ph277:                                     ; preds = %scalar.ph277.prol.loopexit, %scalar.ph277
   %indvars.iv202 = phi i64 [ %indvars.iv.next203.3, %scalar.ph277 ], [ %indvars.iv202.unr, %scalar.ph277.prol.loopexit ] ; 6 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv202
   %i.z = load ptr, ptr %i.y, align 8
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 64
-  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %indvars.iv202
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv202
   store ptr %i.aa, ptr %i.ab, align 8
   %indvars.iv.next203 = add nuw nsw i64 %indvars.iv202, 1 ; 2 uses
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next203
   %i.ad = load ptr, ptr %i.ac, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 64
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %indvars.iv.next203
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv.next203
   store ptr %i.ae, ptr %i.af, align 8
   %indvars.iv.next203.1 = add nuw nsw i64 %indvars.iv202, 2 ; 2 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next203.1
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 64
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %indvars.iv.next203.1
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv.next203.1
   store ptr %i.ai, ptr %i.aj, align 8
   %indvars.iv.next203.2 = add nuw nsw i64 %indvars.iv202, 3 ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next203.2
   %i.al = load ptr, ptr %i.ak, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 64
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %indvars.iv.next203.2
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv.next203.2
   store ptr %i.am, ptr %i.an, align 8
   %indvars.iv.next203.3 = add nuw nsw i64 %indvars.iv202, 4 ; 2 uses
   %exitcond206.not.3 = icmp eq i64 %indvars.iv.next203.3, %wide.trip.count205
   br i1 %exitcond206.not.3, label %.loopexit, label %scalar.ph277, !llvm.loop !14
 
 ._crit_edge.us:                                   ; preds = %.split.us
-  tail call void @pg_qsort(ptr noundef %16, i64 noundef %15, i64 noundef 8, ptr noundef nonnull @sort_order_cmp) #9
+  tail call void @pg_qsort(ptr noundef %10, i64 noundef %9, i64 noundef 8, ptr noundef nonnull @sort_order_cmp) #9
   br label %.thread125
 
 .lr.ph.us:                                        ; preds = %.split.us
   %i.ao = getelementptr inbounds nuw i8, ptr %i.x, i64 80 ; 6 uses
-  %wide.trip.count205 = zext nneg i32 %14 to i64  ; 5 uses
-  %min.iters.check278 = icmp ult i32 %14, 10
+  %wide.trip.count205 = zext nneg i32 %8 to i64   ; 5 uses
+  %min.iters.check278 = icmp ult i32 %8, 10
   br i1 %min.iters.check278, label %scalar.ph277.preheader, label %vector.memcheck275
 
 vector.memcheck275:                               ; preds = %.lr.ph.us
-  %i.ap = sub i64 %17, %12
+  %12 = ptrtoaddr ptr %10 to i64
+  %13 = ptrtoaddr ptr %i.x to i64
+  %i.ap = sub i64 %12, %13
   %i.aq = add i64 %i.ap, -81
   %diff.check276 = icmp ult i64 %i.aq, 31
   br i1 %diff.check276, label %scalar.ph277.preheader, label %vector.ph279
@@ -282,7 +277,7 @@ vector.body281:                                   ; preds = %vector.body281, %ve
   %wide.load284 = load <2 x ptr>, ptr %i.as, align 8
   %wide.gep285 = getelementptr inbounds nuw i8, <2 x ptr> %wide.load283, i64 64
   %wide.gep286 = getelementptr inbounds nuw i8, <2 x ptr> %wide.load284, i64 64
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %index282 ; 2 uses
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %index282 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   store <2 x ptr> %wide.gep285, ptr %i.at, align 8
   store <2 x ptr> %wide.gep286, ptr %i.au, align 8
@@ -306,7 +301,7 @@ scalar.ph277.prol:                                ; preds = %scalar.ph277.prehea
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv202.prol
   %i.ax = load ptr, ptr %i.aw, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 64
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %indvars.iv202.prol
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv202.prol
   store ptr %i.ay, ptr %i.az, align 8
   %indvars.iv.next203.prol = add nuw nsw i64 %indvars.iv202.prol, 1 ; 2 uses
   %prol.iter318.next = add i64 %prol.iter318, 1   ; 2 uses
@@ -421,9 +416,9 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br label %.lr.ph164
 
 .loopexit:                                        ; preds = %scalar.ph277.prol.loopexit, %scalar.ph277, %middle.block288
-  tail call void @pg_qsort(ptr noundef nonnull %16, i64 noundef %15, i64 noundef 8, ptr noundef nonnull @sort_order_cmp) #9
-  %i.cm = zext nneg i32 %14 to i64
-  %i.cn = getelementptr [8 x i8], ptr %16, i64 %i.cm
+  tail call void @pg_qsort(ptr noundef nonnull %10, i64 noundef %9, i64 noundef 8, ptr noundef nonnull @sort_order_cmp) #9
+  %i.cm = zext nneg i32 %8 to i64
+  %i.cn = getelementptr [8 x i8], ptr %10, i64 %i.cm
   %i.co = getelementptr i8, ptr %i.cn, i64 -8
   %i.cp = load ptr, ptr %i.co, align 8
   %i.cq = getelementptr i8, ptr %i.cp, i64 16
@@ -572,8 +567,8 @@ bb.s:                                             ; preds = %bb.o
 
 .thread125:                                       ; preds = %._crit_edge.us, %bb.s, %bb.m, %bb.k, %.loopexit
   %i.fe = phi ptr [ %i.x, %.loopexit ], [ %i.x, %._crit_edge.us ], [ %i.bf, %bb.s ], [ %i.bf, %bb.k ], [ %i.bf, %bb.m ]
-  %i.ff = phi i32 [ %14, %.loopexit ], [ %14, %._crit_edge.us ], [ %i.be, %bb.s ], [ %i.be, %bb.k ], [ %i.be, %bb.m ]
-  %i.fg = phi ptr [ %16, %.loopexit ], [ %16, %._crit_edge.us ], [ %i.bc, %bb.s ], [ %i.bc, %bb.k ], [ %i.bc, %bb.m ] ; 2 uses
+  %i.ff = phi i32 [ %8, %.loopexit ], [ %8, %._crit_edge.us ], [ %i.be, %bb.s ], [ %i.be, %bb.k ], [ %i.be, %bb.m ]
+  %i.fg = phi ptr [ %10, %.loopexit ], [ %10, %._crit_edge.us ], [ %i.bc, %bb.s ], [ %i.bc, %bb.k ], [ %i.bc, %bb.m ] ; 2 uses
   %.4102 = phi float [ %i.cx, %.loopexit ], [ 1.000000e+00, %._crit_edge.us ], [ %.0..0..0..0.8, %bb.s ], [ %i.dp, %bb.k ], [ %i.ds, %bb.m ] ; 2 uses
   %.fr175 = freeze i32 %i.ff                      ; 2 uses
   %i.fh = load i8, ptr @IsBinaryUpgrade, align 1, !range !5, !noundef !6
