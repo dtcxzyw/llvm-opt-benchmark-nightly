@@ -205,7 +205,6 @@ _ZN5boost9container10deque_implINS0_4test12copyable_intEvLb1ENS0_9deque_optILm0E
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container10deque_implINS0_4test12copyable_intEvLb1ENS0_9deque_optILm0ELm0EvLb1EEEE27priv_insert_middle_aux_implINS0_3dtl18insert_range_proxyINS0_13new_allocatorIS3_EENS_13move_iteratorIPS3_EEEEEENS0_14deque_iteratorISD_Lb0ELj0ELj0EmEEmmT_(ptr dead_on_unwind noalias writable sret(%"class.boost::container::deque_iterator.90") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %2, i64 noundef %3, ptr %4) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %5 = ptrtoaddr ptr %4 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !456  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -608,6 +607,7 @@ bb.af:                                            ; preds = %_ZN5boost9container
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.af
   %min.iters.check = icmp ult i64 %i.hn, 8
+  %5 = ptrtoaddr ptr %4 to i64
   %i.ho = sub i64 %5, %i.hi
   %diff.check = icmp ugt i64 %i.ho, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -1010,7 +1010,8 @@ _ZN5boost9container10deque_implINS0_4test12copyable_intEvLb1ENS0_9deque_optILm0E
 
 .lr.ph.i.i.i92.preheader:                         ; preds = %_ZN5boost9container10deque_implINS0_4test12copyable_intEvLb1ENS0_9deque_optILm0ELm0EvLb1EEEE41priv_segmented_uninitialized_move_alloc_nENS0_14deque_iteratorIPS3_Lb0ELj0ELj0EmEEmS9_.exit
   %min.iters.check326 = icmp ult i64 %i.mb, 8
-  %i.ph = sub i64 %5, %i.lw
+  %6 = ptrtoaddr ptr %4 to i64
+  %i.ph = sub i64 %6, %i.lw
   %diff.check324 = icmp ugt i64 %i.ph, -32
   %or.cond362 = select i1 %min.iters.check326, i1 true, i1 %diff.check324
   br i1 %or.cond362, label %.lr.ph.i.i.i92.preheader367, label %vector.ph327
@@ -1413,7 +1414,6 @@ _ZN5boost9container10deque_implINS0_4test12copyable_intESaIS3_ELb1ENS0_9deque_op
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container10deque_implINS0_4test12copyable_intESaIS3_ELb1ENS0_9deque_optILm0ELm0EvLb0EEEE27priv_insert_middle_aux_implINS0_3dtl18insert_range_proxyIS4_NS_13move_iteratorIPS3_EEEEEENS0_14deque_iteratorISC_Lb0ELj0ELj0EmEEmmT_(ptr dead_on_unwind noalias writable sret(%"class.boost::container::deque_iterator.90") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %2, i64 noundef %3, ptr %4) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %5 = ptrtoaddr ptr %4 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !557  ; 4 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !556
@@ -1816,6 +1816,7 @@ bb.af:                                            ; preds = %_ZN5boost9container
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.af
   %min.iters.check = icmp ult i64 %i.hk, 8
+  %5 = ptrtoaddr ptr %4 to i64
   %i.hl = sub i64 %5, %i.hf
   %diff.check = icmp ugt i64 %i.hl, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -2218,7 +2219,8 @@ _ZN5boost9container10deque_implINS0_4test12copyable_intESaIS3_ELb1ENS0_9deque_op
 
 .lr.ph.i.i.i95.preheader:                         ; preds = %_ZN5boost9container10deque_implINS0_4test12copyable_intESaIS3_ELb1ENS0_9deque_optILm0ELm0EvLb0EEEE41priv_segmented_uninitialized_move_alloc_nENS0_14deque_iteratorIPS3_Lb0ELj0ELj0EmEEmSA_.exit
   %min.iters.check331 = icmp ult i64 %i.ly, 8
-  %i.pe = sub i64 %5, %i.lt
+  %6 = ptrtoaddr ptr %4 to i64
+  %i.pe = sub i64 %6, %i.lt
   %diff.check329 = icmp ugt i64 %i.pe, -32
   %or.cond367 = select i1 %min.iters.check331, i1 true, i1 %diff.check329
   br i1 %or.cond367, label %.lr.ph.i.i.i95.preheader372, label %vector.ph332
@@ -2621,7 +2623,6 @@ _ZN5boost9container10deque_implINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost9container10deque_implINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj0EEELb1ENS0_9deque_optILm0ELm0EvLb1EEEE27priv_insert_middle_aux_implINS0_3dtl18insert_range_proxyIS5_NS_13move_iteratorIPS3_EEEEEENS0_14deque_iteratorISD_Lb0ELj0ELj0EmEEmmT_(ptr dead_on_unwind noalias writable sret(%"class.boost::container::deque_iterator.90") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %2, i64 noundef %3, ptr %4) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %5 = ptrtoaddr ptr %4 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !628  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -3024,6 +3025,7 @@ bb.af:                                            ; preds = %_ZN5boost9container
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.af
   %min.iters.check = icmp ult i64 %i.hn, 8
+  %5 = ptrtoaddr ptr %4 to i64
   %i.ho = sub i64 %5, %i.hi
   %diff.check = icmp ugt i64 %i.ho, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -3426,7 +3428,8 @@ _ZN5boost9container10deque_implINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj
 
 .lr.ph.i.i.i92.preheader:                         ; preds = %_ZN5boost9container10deque_implINS0_4test12copyable_intENS0_9allocatorIS3_Lj2ELj0EEELb1ENS0_9deque_optILm0ELm0EvLb1EEEE41priv_segmented_uninitialized_move_alloc_nENS0_14deque_iteratorIPS3_Lb0ELj0ELj0EmEEmSB_.exit
   %min.iters.check326 = icmp ult i64 %i.mb, 8
-  %i.ph = sub i64 %5, %i.lw
+  %6 = ptrtoaddr ptr %4 to i64
+  %i.ph = sub i64 %6, %i.lw
   %diff.check324 = icmp ugt i64 %i.ph, -32
   %or.cond362 = select i1 %min.iters.check326, i1 true, i1 %diff.check324
   br i1 %or.cond362, label %.lr.ph.i.i.i92.preheader367, label %vector.ph327

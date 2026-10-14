@@ -18,9 +18,6 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dsbtrd_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, ptr nofree noundef readonly captures(none) %5, ptr noundef %6, ptr nofree noundef writeonly captures(none) %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr nofree noundef captures(none) initializes((0, 4)) %11) local_unnamed_addr #0 {
 bb.a:
-  %12 = ptrtoaddr ptr %6 to i64                   ; 2 uses
-  %13 = ptrtoaddr ptr %4 to i64                   ; 4 uses
-  %14 = ptrtoaddr ptr %7 to i64                   ; 2 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 27 uses
   %i.c = alloca i32, align 4                      ; 30 uses
@@ -423,9 +420,11 @@ iter.check:                                       ; preds = %.loopexit733.thread
   br i1 %or.cond1071, label %vector.memcheck, label %.lr.ph777.preheader
 
 vector.memcheck:                                  ; preds = %iter.check
+  %12 = ptrtoaddr ptr %7 to i64
+  %13 = ptrtoaddr ptr %4 to i64
   %i.mg = shl nuw nsw i64 %i.me, 3
   %i.mh = add i64 %i.mg, %13
-  %i.mi = sub i64 %i.mh, %14
+  %i.mi = sub i64 %i.mh, %12
   %diff.check = icmp ugt i64 %i.mi, -128
   br i1 %diff.check, label %.lr.ph777.preheader, label %vector.main.loop.iter.check
 
@@ -602,9 +601,11 @@ iter.check994:                                    ; preds = %.lr.ph777.prol.loop
   br i1 %or.cond1072, label %vector.memcheck977, label %vec.epilog.scalar.ph995.preheader
 
 vector.memcheck977:                               ; preds = %iter.check994
+  %14 = ptrtoaddr ptr %6 to i64
+  %15 = ptrtoaddr ptr %4 to i64
   %i.op = shl nsw i64 %i.om, 3
-  %i.oq = add i64 %i.op, %13
-  %i.or = sub i64 %12, %i.oq
+  %i.oq = add i64 %i.op, %15
+  %i.or = sub i64 %14, %i.oq
   %i.os = add i64 %i.or, 7
   %diff.check978 = icmp ult i64 %i.os, 127
   br i1 %diff.check978, label %vec.epilog.scalar.ph995.preheader, label %vector.main.loop.iter.check980
@@ -1007,7 +1008,9 @@ iter.check1026:                                   ; preds = %.loopexit723.thread
   br i1 %or.cond1073, label %vector.memcheck1009, label %.lr.ph829.preheader
 
 vector.memcheck1009:                              ; preds = %iter.check1026
-  %i.abg = sub i64 %14, %13
+  %16 = ptrtoaddr ptr %7 to i64
+  %17 = ptrtoaddr ptr %4 to i64
+  %i.abg = sub i64 %16, %17
   %i.abh = add i64 %i.abg, -9
   %diff.check1010 = icmp ult i64 %i.abh, 127
   br i1 %diff.check1010, label %.lr.ph829.preheader, label %vector.main.loop.iter.check1012
@@ -1187,7 +1190,9 @@ iter.check1058:                                   ; preds = %.lr.ph829.prol.loop
   %min.iters.check1043 = icmp ult i32 %i.adz, 4
   %ident.check1040.not = icmp ne i32 %i.n, 1
   %or.cond1074.not1076 = select i1 %min.iters.check1043, i1 true, i1 %ident.check1040.not
-  %i.aed = sub i64 %13, %12
+  %18 = ptrtoaddr ptr %6 to i64
+  %19 = ptrtoaddr ptr %4 to i64
+  %i.aed = sub i64 %19, %18
   %diff.check1042 = icmp ugt i64 %i.aed, -128
   %or.cond1075 = or i1 %or.cond1074.not1076, %diff.check1042
   br i1 %or.cond1075, label %.lr.ph832.preheader, label %vector.main.loop.iter.check1044

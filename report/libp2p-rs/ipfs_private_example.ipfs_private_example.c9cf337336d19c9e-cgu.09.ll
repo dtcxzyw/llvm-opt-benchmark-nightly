@@ -205,10 +205,8 @@ _RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperI
   %i.ai = zext nneg i8 %i.t to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.ai ; 12 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.al = load ptr, ptr %i.ak, align 8, !alias.scope !4282, !noalias !4281, !noundef !7 ; 14 uses
-  %2 = ptrtoaddr ptr %i.al to i64                 ; 2 uses
-  %i.am = load ptr, ptr %1, align 8, !alias.scope !4282, !noalias !4281, !noundef !7 ; 14 uses
-  %3 = ptrtoaddr ptr %i.am to i64                 ; 2 uses
+  %i.al = load ptr, ptr %i.ak, align 8, !alias.scope !4282, !noalias !4281, !noundef !7 ; 15 uses
+  %i.am = load ptr, ptr %1, align 8, !alias.scope !4282, !noalias !4281, !noundef !7 ; 15 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %..i.i ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 %..i.i ; 2 uses
   %i.ap = sub i64 %i.r, %..i.i                    ; 7 uses
@@ -223,6 +221,8 @@ _RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperI
 
 iter.check:                                       ; preds = %_RNvXs1_NtNtCs4WSCZBoZJWV_6cipher6stream7wrapperINtB5_23StreamCipherCoreWrapperINtNtCs5sEvUJpJda_7salsa206xsalsa10XSalsaCoreINtNtCs6n3aXIo7Vge_7typenum4uint4UIntIB1Y_IB1Y_IB1Y_NtB20_5UTermNtNtB22_3bit2B1ENtB31_2B0EB2Z_EB3f_EEENtB7_12StreamCipher15check_remainingCshke30g4Hb4g_20ipfs_private_example.exit.thread
   %min.iters.check = icmp samesign ult i64 %..i.i, 4
+  %2 = ptrtoaddr ptr %i.al to i64
+  %3 = ptrtoaddr ptr %i.am to i64
   %i.av = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.av, -16
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -625,7 +625,9 @@ iter.check217:                                    ; preds = %.noexc7.i, %.noexc6
   call void @llvm.experimental.noalias.scope.decl(metadata !4332)
   call void @llvm.experimental.noalias.scope.decl(metadata !4333)
   %min.iters.check204 = icmp samesign ult i64 %i.as, 4
-  %i.tg = sub i64 %3, %2
+  %4 = ptrtoaddr ptr %i.al to i64
+  %5 = ptrtoaddr ptr %i.am to i64
+  %i.tg = sub i64 %5, %4
   %diff.check202 = icmp ugt i64 %i.tg, -16
   %or.cond231 = or i1 %min.iters.check204, %diff.check202
   br i1 %or.cond231, label %vec.epilog.scalar.ph218.preheader, label %vector.main.loop.iter.check205

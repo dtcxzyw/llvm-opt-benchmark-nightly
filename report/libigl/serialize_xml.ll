@@ -205,12 +205,11 @@ _ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.d
 _ZNSt6vectorIcSaIcEE6resizeEm.exit:               ; preds = %._ZNSt6vectorIcSaIcEE6resizeEm.exit_crit_edge, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i, %bb.d, %bb.c
   %i.az = phi i64 [ %.pre70, %._ZNSt6vectorIcSaIcEE6resizeEm.exit_crit_edge ], [ %i.ak, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i ], [ %i.ak, %bb.d ], [ %i.ak, %bb.c ]
   %i.ba = phi ptr [ %.pre69, %._ZNSt6vectorIcSaIcEE6resizeEm.exit_crit_edge ], [ %i.ao, %_ZSt8_DestroyIPccEvT_S1_RSaIT0_E.exit.i.i ], [ %i.ao, %bb.d ], [ %i.ao, %bb.c ] ; 2 uses
-  %4 = ptrtoaddr ptr %i.ba to i64
   %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 %i.ar ; 2 uses
   store i64 %i.az, ptr %i.bb, align 1
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8 ; 7 uses
-  %i.bd = load ptr, ptr %1, align 8, !tbaa !35    ; 8 uses
-  %i.be = ptrtoaddr ptr %i.bd to i64              ; 2 uses
+  %i.bd = load ptr, ptr %1, align 8, !tbaa !35    ; 9 uses
+  %i.be = ptrtoaddr ptr %i.bd to i64
   %i.bf = load i64, ptr %i.aj, align 8, !tbaa !39 ; 10 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.bf
   %.not14.i35 = icmp samesign eq i64 %i.bf, 0
@@ -221,8 +220,10 @@ iter.check:                                       ; preds = %_ZNSt6vectorIcSaIcE
   br i1 %min.iters.check, label %.lr.ph.i36.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %4 = ptrtoaddr ptr %i.ba to i64
+  %5 = ptrtoaddr ptr %i.bd to i64
   %i.bh = add i64 %4, %i.ap
-  %i.bi = add i64 %i.aq, %i.be
+  %i.bi = add i64 %i.aq, %5
   %i.bj = sub i64 %i.bh, %i.bi
   %i.bk = add i64 %i.bj, 7
   %diff.check = icmp ult i64 %i.bk, 31
@@ -352,12 +353,11 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _ZN3igl13serialization9serializeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERSt6vectorIcS5_ERN9__gnu_cxx17__normal_iteratorIPcSA_EE.exit: ; preds = %.lr.ph.i36.prol.loopexit, %.lr.ph.i36, %middle.block, %vec.epilog.middle.block, %_ZNSt6vectorIcSaIcEE6resizeEm.exit
   %.sroa.052.0 = phi ptr [ %i.bc, %_ZNSt6vectorIcSaIcEE6resizeEm.exit ], [ %i.br, %vec.epilog.middle.block ], [ %i.bm, %middle.block ], [ %.lcssa133.unr, %.lr.ph.i36.prol.loopexit ], [ %i.cx, %.lr.ph.i36 ] ; 3 uses
-  %.sroa.052.099 = ptrtoaddr ptr %.sroa.052.0 to i64
   %i.cz = load i64, ptr %i.ag, align 8, !tbaa !39
   store i64 %i.cz, ptr %.sroa.052.0, align 1
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.052.0, i64 8 ; 7 uses
-  %i.db = load ptr, ptr %3, align 8, !tbaa !35    ; 8 uses
-  %i.dc = ptrtoaddr ptr %i.db to i64              ; 2 uses
+  %i.db = load ptr, ptr %3, align 8, !tbaa !35    ; 9 uses
+  %i.dc = ptrtoaddr ptr %i.db to i64
   %i.dd = load i64, ptr %i.ag, align 8, !tbaa !39 ; 10 uses
   %i.de = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.dd
   %.not14.i41 = icmp samesign eq i64 %i.dd, 0
@@ -368,7 +368,9 @@ iter.check117:                                    ; preds = %_ZN3igl13serializat
   br i1 %min.iters.check101, label %.lr.ph.i42.preheader, label %vector.memcheck98
 
 vector.memcheck98:                                ; preds = %iter.check117
-  %i.df = sub i64 %.sroa.052.099, %i.dc
+  %6 = ptrtoaddr ptr %.sroa.052.0 to i64
+  %7 = ptrtoaddr ptr %i.db to i64
+  %i.df = sub i64 %6, %7
   %i.dg = add i64 %i.df, 7
   %diff.check100 = icmp ult i64 %i.dg, 31
   br i1 %diff.check100, label %.lr.ph.i42.preheader, label %vector.main.loop.iter.check102

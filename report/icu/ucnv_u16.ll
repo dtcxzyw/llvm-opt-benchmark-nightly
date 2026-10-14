@@ -204,7 +204,6 @@ define internal noundef range(i32 -9, 10559488) i32 @_ZL20_UTF16BEGetNextUCharP2
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 8 uses
-  %2 = ptrtoaddr ptr %i.b to i64
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 76
   %i.d = load i32, ptr %i.c, align 4, !tbaa !14
   %i.e = icmp slt i32 %i.d, 8
@@ -281,6 +280,7 @@ iter.check:                                       ; preds = %bb.h
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %2 = ptrtoaddr ptr %i.b to i64
   %i.am = sub i64 %2, %i.ai
   %i.an = add i64 %i.am, 64
   %diff.check = icmp ult i64 %i.an, 31
@@ -683,7 +683,6 @@ define internal noundef range(i32 -9, 10559488) i32 @_ZL20_UTF16LEGetNextUCharP2
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 8 uses
-  %2 = ptrtoaddr ptr %i.b to i64
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 76
   %i.d = load i32, ptr %i.c, align 4, !tbaa !14
   %i.e = icmp slt i32 %i.d, 8
@@ -760,6 +759,7 @@ iter.check:                                       ; preds = %bb.h
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %2 = ptrtoaddr ptr %i.b to i64
   %i.am = sub i64 %2, %i.ai
   %i.an = add i64 %i.am, 64
   %diff.check = icmp ult i64 %i.an, 31
@@ -1000,8 +1000,7 @@ bb.c:                                             ; preds = %.thread, %bb.b
 define internal noundef range(i32 -9, 10559488) i32 @_ZL18_UTF16GetNextUCharP23UConverterToUnicodeArgsP10UErrorCode(ptr nofree noundef captures(none) %0, ptr nofree noundef writeonly captures(none) %1) #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 14 uses
-  %2 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !23   ; 15 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 76
   %i.d = load i32, ptr %i.c, align 4, !tbaa !14
   switch i32 %i.d, label %_ZL20_UTF16BEGetNextUCharP23UConverterToUnicodeArgsP10UErrorCode.exit [
@@ -1079,6 +1078,7 @@ iter.check55:                                     ; preds = %bb.h
   br i1 %min.iters.check39, label %vec.epilog.scalar.ph56.preheader, label %vector.memcheck37
 
 vector.memcheck37:                                ; preds = %iter.check55
+  %2 = ptrtoaddr ptr %i.b to i64
   %i.al = sub i64 %2, %i.ah
   %i.am = add i64 %i.al, 64
   %diff.check38 = icmp ult i64 %i.am, 31
@@ -1308,7 +1308,8 @@ iter.check:                                       ; preds = %bb.r
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.du = sub i64 %2, %i.dq
+  %3 = ptrtoaddr ptr %i.b to i64
+  %i.du = sub i64 %3, %i.dq
   %i.dv = add i64 %i.du, 64
   %diff.check = icmp ult i64 %i.dv, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

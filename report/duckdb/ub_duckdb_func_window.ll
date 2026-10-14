@@ -205,7 +205,6 @@ bb.a:
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIlEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %3)
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !343  ; 7 uses
-  %7 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   %i.g = load i8, ptr %i.f, align 8, !tbaa !810, !range !114, !noundef !115
   %i.h = trunc nuw i8 %i.g to i1
@@ -217,7 +216,6 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKmEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.j)
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !343  ; 6 uses
-  %8 = ptrtoaddr ptr %i.l to i64
   %i.m = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef 7) ; 2 uses
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKmEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.m)
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
@@ -252,7 +250,6 @@ bb.c:                                             ; preds = %bb.b
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKmEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.aa)
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !343 ; 5 uses
-  %9 = ptrtoaddr ptr %i.ac to i64
   %.not67 = icmp eq i64 %4, 0
   br i1 %.not67, label %.loopexit, label %.lr.ph64.preheader
 
@@ -261,8 +258,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph64.preheader81, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph64.preheader
+  %7 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
+  %8 = ptrtoaddr ptr %i.l to i64
   %i.ad = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.ad, -32
+  %9 = ptrtoaddr ptr %i.ac to i64
   %i.ae = sub i64 %9, %7
   %diff.check77 = icmp ugt i64 %i.ae, -32
   %conflict.rdx = or i1 %diff.check, %diff.check77
@@ -665,8 +665,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !273, !nonnull !115, !align !265
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIlEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %3)
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !343  ; 14 uses
-  %7 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !343  ; 15 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   %i.g = load i8, ptr %i.f, align 8, !tbaa !818, !range !114, !noundef !115
   %i.h = trunc nuw i8 %i.g to i1
@@ -678,7 +677,6 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKmEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.j)
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !343  ; 8 uses
-  %8 = ptrtoaddr ptr %i.l to i64
   %i.m = tail call noundef nonnull align 8 dereferenceable(104) ptr @_ZN6duckdb6vectorINS_6VectorELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 noundef 7) ; 2 uses
   tail call void @_ZN6duckdb14ConstantVector16VerifyVectorTypeIKmEEvRKNS_6VectorE(ptr noundef nonnull align 8 dereferenceable(104) %i.m)
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
@@ -697,6 +695,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph51.preheader:                               ; preds = %.preheader
   %min.iters.check68 = icmp ult i64 %4, 6
+  %7 = ptrtoaddr ptr %i.e to i64
+  %8 = ptrtoaddr ptr %i.l to i64
   %i.r = sub i64 %8, %7
   %diff.check66 = icmp ugt i64 %i.r, -32
   %or.cond = select i1 %min.iters.check68, i1 true, i1 %diff.check66
@@ -822,9 +822,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not52, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %i.bu = ptrtoaddr ptr %i.bt to i64
   %min.iters.check = icmp ult i64 %4, 6
-  %i.bv = sub i64 %i.bu, %7
+  %i.bu = ptrtoaddr ptr %i.e to i64
+  %9 = ptrtoaddr ptr %i.bt to i64
+  %i.bv = sub i64 %9, %i.bu
   %diff.check = icmp ugt i64 %i.bv, -32
   %or.cond86 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond86, label %.lr.ph.preheader89, label %vector.ph

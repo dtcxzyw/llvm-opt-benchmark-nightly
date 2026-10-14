@@ -204,17 +204,17 @@ bb.c:                                             ; preds = %bb.b
   %i.p = load i32, ptr %2, align 4, !tbaa !13
   %i.q = sext i32 %i.p to i64
   %i.r = shl nsw i64 %i.q, 3
-  %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #27 ; 10 uses
-  %4 = ptrtoaddr ptr %i.s to i64                  ; 2 uses
+  %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #27 ; 11 uses
   store ptr %i.s, ptr %i.b, align 8, !tbaa !60
   %.not109 = icmp eq i32 %3, 0
-  %.pre122 = load ptr, ptr %1, align 8, !tbaa !60 ; 8 uses
-  %.pre122151 = ptrtoaddr ptr %.pre122 to i64     ; 2 uses
+  %.pre122 = load ptr, ptr %1, align 8, !tbaa !60 ; 9 uses
   br i1 %.not109, label %._crit_edge104, label %.lr.ph103.preheader
 
 .lr.ph103.preheader:                              ; preds = %bb.c
   %min.iters.check154 = icmp ult i32 %3, 6
-  %i.t = sub i64 %.pre122151, %4
+  %4 = ptrtoaddr ptr %i.s to i64
+  %5 = ptrtoaddr ptr %.pre122 to i64
+  %i.t = sub i64 %5, %4
   %diff.check152 = icmp ugt i64 %i.t, -32
   %or.cond186 = select i1 %min.iters.check154, i1 true, i1 %diff.check152
   br i1 %or.cond186, label %.lr.ph103.preheader191, label %vector.ph155
@@ -328,13 +328,15 @@ middle.block164:                                  ; preds = %vector.body157
   br i1 %or.cond187, label %vector.memcheck168, label %.lr.ph107.preheader190
 
 vector.memcheck168:                               ; preds = %.lr.ph107.preheader
+  %6 = ptrtoaddr ptr %i.s to i64
   %i.bp = shl nuw nsw i64 %i.bj, 3
-  %5 = add i64 %i.bp, %4
+  %7 = ptrtoaddr ptr %.pre122 to i64
   %i.bq = add nuw i32 %3, 1
   %i.br = zext i32 %i.bq to i64
   %i.bs = shl nuw nsw i64 %i.br, 3
-  %i.bt = add i64 %i.bs, %.pre122151
-  %i.bu = sub i64 %i.bt, %5
+  %8 = add i64 %i.bp, %6
+  %i.bt = add i64 %i.bs, %7
+  %i.bu = sub i64 %i.bt, %8
   %diff.check169 = icmp ugt i64 %i.bu, -32
   br i1 %diff.check169, label %.lr.ph107.preheader190, label %vector.ph172
 
@@ -425,17 +427,17 @@ bb.e:                                             ; preds = %bb.d
   %i.df = load i32, ptr %2, align 4, !tbaa !13
   %i.dg = sext i32 %i.df to i64
   %i.dh = shl nsw i64 %i.dg, 3
-  %i.di = tail call noalias ptr @malloc(i64 noundef %i.dh) #27 ; 10 uses
-  %6 = ptrtoaddr ptr %i.di to i64                 ; 2 uses
+  %i.di = tail call noalias ptr @malloc(i64 noundef %i.dh) #27 ; 11 uses
   store ptr %i.di, ptr %i.b, align 8, !tbaa !60
   %.not = icmp eq i32 %3, 0
-  %.pre = load ptr, ptr %1, align 8, !tbaa !60    ; 8 uses
-  %.pre130 = ptrtoaddr ptr %.pre to i64           ; 2 uses
+  %.pre = load ptr, ptr %1, align 8, !tbaa !60    ; 9 uses
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.e
   %min.iters.check = icmp ult i32 %3, 6
-  %i.dj = sub i64 %.pre130, %6
+  %9 = ptrtoaddr ptr %i.di to i64
+  %10 = ptrtoaddr ptr %.pre to i64
+  %i.dj = sub i64 %10, %9
   %diff.check = icmp ugt i64 %i.dj, -32
   %or.cond188 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond188, label %.lr.ph.preheader193, label %vector.ph
@@ -549,13 +551,15 @@ middle.block:                                     ; preds = %vector.body
   br i1 %or.cond189, label %vector.memcheck134, label %.lr.ph99.preheader192
 
 vector.memcheck134:                               ; preds = %.lr.ph99.preheader
+  %11 = ptrtoaddr ptr %i.di to i64
   %i.ff = shl nuw nsw i64 %i.ez, 3
-  %7 = add i64 %i.ff, %6
+  %12 = ptrtoaddr ptr %.pre to i64
   %i.fg = add nuw i32 %3, 1
   %i.fh = zext i32 %i.fg to i64
   %i.fi = shl nuw nsw i64 %i.fh, 3
-  %i.fj = add i64 %i.fi, %.pre130
-  %i.fk = sub i64 %i.fj, %7
+  %13 = add i64 %i.ff, %11
+  %i.fj = add i64 %i.fi, %12
+  %i.fk = sub i64 %i.fj, %13
   %diff.check135 = icmp ugt i64 %i.fk, -32
   br i1 %diff.check135, label %.lr.ph99.preheader192, label %vector.ph138
 

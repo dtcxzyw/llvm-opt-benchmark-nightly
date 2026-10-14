@@ -75,7 +75,6 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = alloca [32 x i8], align 16               ; 4 uses
   %i.e = alloca [32 x i8], align 16               ; 15 uses
-  %4 = ptrtoaddr ptr %i.e to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   %i.f = call ptr @dtoa_alloc_init(ptr noundef nonnull align 8 dereferenceable(1208) %3, i32 noundef 1200) #7 ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 1200 ; 3 uses
@@ -126,8 +125,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.089 = phi ptr [ %i.n, %bb.j ], [ %1, %bb.i ]  ; 23 uses
-  %.089199 = ptrtoaddr ptr %.089 to i64           ; 3 uses
+  %.089 = phi ptr [ %i.n, %bb.j ], [ %1, %bb.i ]  ; 25 uses
   %i.o = load ptr, ptr %i.c, align 8, !tbaa !34
   %i.p = ptrtoint ptr %i.o to i64                 ; 3 uses
   %i.q = ptrtoint ptr %i.l to i64                 ; 8 uses
@@ -146,7 +144,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 iter.check342:                                    ; preds = %.preheader94
   %wide.trip.count178 = and i64 %i.r, 2147483647  ; 6 uses
   %min.iters.check327 = icmp samesign ult i64 %wide.trip.count178, 4
-  %i.x = sub i64 %i.q, %.089199
+  %4 = ptrtoaddr ptr %.089 to i64
+  %i.x = sub i64 %i.q, %4
   %diff.check325 = icmp ugt i64 %i.x, -32
   %or.cond357 = select i1 %min.iters.check327, i1 true, i1 %diff.check325
   br i1 %or.cond357, label %.lr.ph135.preheader, label %vector.main.loop.iter.check328
@@ -305,7 +304,8 @@ bb.l:                                             ; preds = %bb.k
 .lr.ph124.preheader:                              ; preds = %bb.l
   %wide.trip.count169 = zext nneg i32 %i.t to i64 ; 6 uses
   %min.iters.check277 = icmp ult i32 %i.t, 8
-  %i.cd = sub i64 %i.q, %.089199
+  %5 = ptrtoaddr ptr %.089 to i64
+  %i.cd = sub i64 %i.q, %5
   %diff.check276 = icmp ugt i64 %i.cd, -8
   %or.cond358 = select i1 %min.iters.check277, i1 true, i1 %diff.check276
   br i1 %or.cond358, label %.lr.ph124.preheader361, label %vector.ph278
@@ -374,7 +374,6 @@ middle.block286:                                  ; preds = %vector.body280.1, %
 ._crit_edge125:                                   ; preds = %._crit_edge125.loopexit.unr-lcssa, %.lr.ph124.prol.loopexit, %middle.block286
   %.3122.lcssa = phi ptr [ %ind.escape, %middle.block286 ], [ %.3122.lcssa363.unr, %.lr.ph124.prol.loopexit ], [ %i.cq, %._crit_edge125.loopexit.unr-lcssa ] ; 2 uses
   %.lcssa195 = phi ptr [ %i.ce, %middle.block286 ], [ %.lcssa362.unr, %.lr.ph124.prol.loopexit ], [ %i.ep, %._crit_edge125.loopexit.unr-lcssa ]
-  %.3122.lcssa290 = ptrtoaddr ptr %.3122.lcssa to i64
   store i8 46, ptr %.lcssa195, align 1, !tbaa !32
   %.4127 = getelementptr inbounds nuw i8, ptr %.3122.lcssa, i64 2 ; 7 uses
   br i1 %i.u, label %.loopexit, label %iter.check309
@@ -392,8 +391,9 @@ iter.check309:                                    ; preds = %._crit_edge125
   br i1 %min.iters.check293, label %.lr.ph131.preheader, label %vector.memcheck289
 
 vector.memcheck289:                               ; preds = %iter.check309
+  %6 = ptrtoaddr ptr %.3122.lcssa to i64
   %i.cz = add i64 %i.q, %wide.trip.count169
-  %i.da = sub i64 %.3122.lcssa290, %i.cz
+  %i.da = sub i64 %6, %i.cz
   %i.db = add i64 %i.da, 1
   %diff.check291 = icmp ult i64 %i.db, 31
   br i1 %diff.check291, label %.lr.ph131.preheader, label %vector.main.loop.iter.check294
@@ -544,10 +544,10 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.fb, label %iter.check260, label %.loopexit
 
 iter.check260:                                    ; preds = %.preheader97
-  %.5.lcssa244 = ptrtoaddr ptr %.5.lcssa to i64
   %wide.trip.count164 = and i64 %i.r, 2147483647  ; 6 uses
   %min.iters.check246 = icmp samesign ult i64 %wide.trip.count164, 4
-  %i.fc = sub i64 %i.q, %.5.lcssa244
+  %7 = ptrtoaddr ptr %.5.lcssa to i64
+  %i.fc = sub i64 %i.q, %7
   %diff.check245 = icmp ugt i64 %i.fc, -32
   %or.cond359 = select i1 %min.iters.check246, i1 true, i1 %diff.check245
   br i1 %or.cond359, label %.lr.ph120.preheader, label %vector.main.loop.iter.check247
@@ -726,7 +726,8 @@ iter.check:                                       ; preds = %bb.q
   %wide.trip.count = and i64 %i.r, 2147483647     ; 3 uses
   %i.hn = add nsw i64 %wide.trip.count, -1        ; 7 uses
   %min.iters.check = icmp ult i64 %i.hn, 8
-  %i.ho = sub i64 %.089199, %i.q
+  %8 = ptrtoaddr ptr %.089 to i64
+  %i.ho = sub i64 %8, %i.q
   %diff.check = icmp ult i64 %i.ho, 31
   %or.cond360 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond360, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -818,7 +819,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.q
   %.8.lcssa = phi ptr [ %i.ha, %bb.q ], [ %i.hy, %vec.epilog.middle.block ], [ %i.hr, %middle.block ], [ %.lcssa367.unr, %.lr.ph.prol.loopexit ], [ %i.kj, %.lr.ph ] ; 4 uses
-  %.8.lcssa212 = ptrtoaddr ptr %.8.lcssa to i64
   %i.ii = getelementptr inbounds nuw i8, ptr %.8.lcssa, i64 1
   store i8 101, ptr %.8.lcssa, align 1, !tbaa !32
   %i.ij = load i32, ptr %i.a, align 4, !tbaa !6
@@ -835,7 +835,9 @@ iter.check228:                                    ; preds = %._crit_edge
   br i1 %min.iters.check214, label %.lr.ph104.preheader, label %vector.memcheck211
 
 vector.memcheck211:                               ; preds = %iter.check228
-  %i.io = sub i64 %.8.lcssa212, %4
+  %9 = ptrtoaddr ptr %.8.lcssa to i64
+  %10 = ptrtoaddr ptr %i.e to i64
+  %i.io = sub i64 %9, %10
   %i.ip = add i64 %i.io, 1
   %diff.check213 = icmp ult i64 %i.ip, 31
   br i1 %diff.check213, label %.lr.ph104.preheader, label %vector.main.loop.iter.check215

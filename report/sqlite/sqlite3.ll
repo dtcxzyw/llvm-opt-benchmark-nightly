@@ -206,8 +206,7 @@ bb.a:
   %i.a = alloca [28 x i8], align 16               ; 6 uses
   %i.b = alloca ptr, align 8                      ; 61 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !2694 ; 5 uses
-  %6 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !2694 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -331,8 +330,7 @@ bb.g:                                             ; preds = %sqlite3_realloc64.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.e
-  %i.ay = phi ptr [ %i.ax, %bb.g ], [ %.pre, %bb.e ] ; 24 uses
-  %7 = ptrtoaddr ptr %i.ay to i64                 ; 2 uses
+  %i.ay = phi ptr [ %i.ax, %bb.g ], [ %.pre, %bb.e ] ; 25 uses
   %i.az = getelementptr inbounds i8, ptr %i.d, i64 %indvars.iv.lcssa ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #57
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #57
@@ -346,8 +344,10 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   br i1 %min.iters.check972, label %.lr.ph.i.i.preheader1026, label %vector.memcheck969
 
 vector.memcheck969:                               ; preds = %.lr.ph.i.i.preheader
-  %i.bb = add i64 %indvars.iv.lcssa, %6
-  %i.bc = sub i64 %i.bb, %7
+  %6 = ptrtoaddr ptr %i.ay to i64
+  %7 = ptrtoaddr ptr %i.d to i64
+  %i.bb = add i64 %indvars.iv.lcssa, %7
+  %i.bc = sub i64 %i.bb, %6
   %diff.check970 = icmp ugt i64 %i.bc, -8
   br i1 %diff.check970, label %.lr.ph.i.i.preheader1026, label %vector.ph973
 
@@ -578,8 +578,10 @@ bb.j:                                             ; preds = %.lr.ph.i
   br i1 %min.iters.check, label %.lr.ph.i111.i.preheader1081, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i111.i.preheader
-  %i.dy = add i64 %indvars.iv.lcssa, %6
-  %i.dz = sub i64 %i.dy, %7
+  %8 = ptrtoaddr ptr %i.ay to i64
+  %9 = ptrtoaddr ptr %i.d to i64
+  %i.dy = add i64 %indvars.iv.lcssa, %9
+  %i.dz = sub i64 %i.dy, %8
   %diff.check = icmp ugt i64 %i.dz, -8
   br i1 %diff.check, label %.lr.ph.i111.i.preheader1081, label %vector.ph
 

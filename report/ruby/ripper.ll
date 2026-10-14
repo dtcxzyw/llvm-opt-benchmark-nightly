@@ -205,8 +205,7 @@ vtable_size.exit31.i:                             ; preds = %bb.c, %vtable_size.
 bb.d:                                             ; preds = %vtable_size.exit31.i
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !124
-  %i.p = tail call ptr @rb_ast_new_local_table(ptr noundef %i.o, i32 noundef %i.l) #29 ; 3 uses
-  %5 = ptrtoaddr ptr %i.p to i64                  ; 2 uses
+  %i.p = tail call ptr @rb_ast_new_local_table(ptr noundef %i.o, i32 noundef %i.l) #29 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 14 uses
   %i.r = load ptr, ptr %i.a, align 8, !tbaa !95
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !184
@@ -236,8 +235,7 @@ ruby_nonempty_memcpy.exit.i:                      ; preds = %bb.f, %rbimpl_size_
   %i.y = load ptr, ptr %i.a, align 8, !tbaa !95   ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !140
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !183 ; 14 uses
-  %6 = ptrtoaddr ptr %i.ab to i64                 ; 2 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !183 ; 15 uses
   %i.ac = load ptr, ptr %i.y, align 8, !tbaa !184 ; 3 uses
   %i.ad = icmp ult ptr %i.ac, inttoptr (i64 2 to ptr)
   br i1 %i.ad, label %vtable_included.exit.thread.us.preheader.i, label %.lr.ph.split.i
@@ -249,7 +247,9 @@ vtable_included.exit.thread.us.preheader.i:       ; preds = %.lr.ph.i
   br i1 %min.iters.check21, label %vtable_included.exit.thread.us.i.preheader, label %vector.memcheck18
 
 vector.memcheck18:                                ; preds = %vtable_included.exit.thread.us.preheader.i
+  %5 = ptrtoaddr ptr %i.p to i64
   %i.af = shl nuw nsw i64 %i.ae, 3
+  %6 = ptrtoaddr ptr %i.ab to i64
   %i.ag = add i64 %i.af, %5
   %i.ah = sub i64 %i.ag, %6
   %i.ai = add i64 %i.ah, 7
@@ -353,9 +353,11 @@ vtable_included.exit.thread.us.i:                 ; preds = %vtable_included.exi
   br i1 %min.iters.check, label %.preheader.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader.i.preheader.i
+  %7 = ptrtoaddr ptr %i.p to i64
   %i.bp = shl nuw nsw i64 %i.bo, 3
-  %i.bq = add i64 %i.bp, %5
-  %i.br = sub i64 %i.bq, %6
+  %8 = ptrtoaddr ptr %i.ab to i64
+  %i.bq = add i64 %i.bp, %7
+  %i.br = sub i64 %i.bq, %8
   %i.bs = add i64 %i.br, 7
   %diff.check = icmp ult i64 %i.bs, 31
   br i1 %diff.check, label %.preheader.i.i.preheader, label %vector.ph

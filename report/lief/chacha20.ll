@@ -107,9 +107,6 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define hidden noundef i32 @mbedtls_chacha20_update(ptr nofree noundef captures(none) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef writeonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %2 to i64                    ; 2 uses
-  %6 = ptrtoaddr ptr %3 to i64                    ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 4 uses
   %.not45 = icmp eq i64 %1, 0
   br i1 %.not45, label %._crit_edge.thread, label %.lr.ph
@@ -244,10 +241,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph63.preheader122, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph63.preheader
-  %i.bk = sub i64 %5, %6
+  %4 = ptrtoaddr ptr %3 to i64                    ; 2 uses
+  %5 = ptrtoaddr ptr %2 to i64
+  %i.bk = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.bk, -32
-  %i.bl = add i64 %.1.lcssa82, %6
-  %i.bm = sub i64 %i.bl, %4
+  %6 = ptrtoaddr ptr %0 to i64
+  %i.bl = add i64 %.1.lcssa82, %4
+  %i.bm = sub i64 %i.bl, %6
   %i.bn = add i64 %i.bm, -65
   %diff.check91 = icmp ult i64 %i.bn, 31
   %conflict.rdx = or i1 %diff.check, %diff.check91
@@ -300,10 +300,13 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check101, label %.lr.ph66.preheader, label %vector.memcheck96
 
 vector.memcheck96:                                ; preds = %iter.check
-  %i.cc = sub i64 %5, %6
+  %7 = ptrtoaddr ptr %3 to i64                    ; 2 uses
+  %8 = ptrtoaddr ptr %2 to i64
+  %i.cc = sub i64 %8, %7
   %diff.check97 = icmp ugt i64 %i.cc, -32
-  %i.cd = add i64 %.1.lcssa82, %6
-  %i.ce = sub i64 %i.cd, %4
+  %9 = ptrtoaddr ptr %0 to i64
+  %i.cd = add i64 %.1.lcssa82, %7
+  %i.ce = sub i64 %i.cd, %9
   %i.cf = add i64 %i.ce, -65
   %diff.check98 = icmp ult i64 %i.cf, 31
   %conflict.rdx99 = or i1 %diff.check97, %diff.check98

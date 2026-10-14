@@ -204,8 +204,6 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIxEERSoT_
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i32 @_ZN6casadi24casadi_lsqr_single_solveIdEEiPKT_PS1_xPKxS4_(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #1 comdat {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %6 = ptrtoaddr ptr %4 to i64
   %i.a = load i64, ptr %3, align 8, !tbaa !47     ; 35 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !47   ; 70 uses
@@ -228,7 +226,9 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.preheader:                               ; preds = %.preheader16.i
   %min.iters.check = icmp ult i64 %i.a, 8
-  %i.h = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %4 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.h = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.h, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader725, label %vector.ph
@@ -356,7 +356,6 @@ _ZN6casadi12casadi_clearIdEEvPT_x.exit280:        ; preds = %_ZN6casadi11casadi_
   %or.cond.i516519521 = phi i1 [ true, %.lr.ph.preheader.i279 ], [ false, %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit.thread ], [ false, %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit ]
   %i.bb = phi i1 [ true, %.lr.ph.preheader.i279 ], [ %i.f, %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit.thread ], [ false, %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit ] ; 5 uses
   %i.bc = phi ptr [ %i.aw, %.lr.ph.preheader.i279 ], [ %i.e, %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit.thread ], [ %i.aw, %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit ] ; 3 uses
-  %7 = ptrtoaddr ptr %i.bc to i64
   %i.bd = getelementptr [8 x i8], ptr %i.d, i64 %i.c ; 2 uses
   %i.be = getelementptr [8 x i8], ptr %i.bd, i64 %i.c ; 17 uses
   %i.bf = getelementptr [8 x i8], ptr %i.be, i64 %i.c ; 6 uses
@@ -759,7 +758,9 @@ bb.n:                                             ; preds = %split
 
 .lr.ph.i385.preheader:                            ; preds = %.preheader16.i383
   %min.iters.check697 = icmp ult i64 %i.a, 8
-  %i.yb = sub i64 %7, %5
+  %7 = ptrtoaddr ptr %1 to i64
+  %8 = ptrtoaddr ptr %i.bc to i64
+  %i.yb = sub i64 %8, %7
   %diff.check695 = icmp ugt i64 %i.yb, -32
   %or.cond712 = select i1 %min.iters.check697, i1 true, i1 %diff.check695
   br i1 %or.cond712, label %.lr.ph.i385.preheader713, label %vector.ph698
