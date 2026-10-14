@@ -23,16 +23,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dlarrd_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readonly captures(none) %6, ptr nofree noundef readonly captures(none) %7, ptr nofree noundef readonly captures(none) %8, ptr noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef %12, ptr nofree noundef readonly captures(none) %13, ptr nofree noundef readonly captures(none) %14, ptr nofree noundef captures(none) %15, ptr noundef %16, ptr nofree noundef captures(none) %17, ptr nofree noundef captures(none) %18, ptr nofree noundef captures(none) %19, ptr noundef %20, ptr nofree noundef captures(none) %21, ptr noundef %22, ptr noundef %23, ptr nofree noundef captures(none) initializes((0, 4)) %24) local_unnamed_addr #0 {
 bb.a:
-  %25 = insertelement <2 x ptr> poison, ptr %16, i64 0
-  %26 = insertelement <2 x ptr> %25, ptr %21, i64 1
-  %27 = ptrtoaddr <2 x ptr> %26 to <2 x i64>      ; 3 uses
-  %i.a = ptrtoaddr ptr %21 to i64
-  %28 = insertelement <2 x ptr> poison, ptr %17, i64 0
-  %29 = insertelement <2 x ptr> %28, ptr %20, i64 1
-  %30 = ptrtoaddr <2 x ptr> %29 to <2 x i64>      ; 3 uses
-  %i.b = ptrtoaddr ptr %20 to i64
-  %i.c = ptrtoaddr ptr %16 to i64
-  %i.d = ptrtoaddr ptr %17 to i64
+  %i.a = ptrtoaddr ptr %21 to i64                 ; 4 uses
+  %i.b = ptrtoaddr ptr %20 to i64                 ; 4 uses
+  %i.c = ptrtoaddr ptr %16 to i64                 ; 4 uses
+  %i.d = ptrtoaddr ptr %17 to i64                 ; 4 uses
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca i32, align 4                      ; 8 uses
   %i.g = alloca double, align 8                   ; 6 uses
@@ -435,7 +429,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
   br i1 %.not686804, label %._crit_edge809, label %.lr.ph808.preheader
 
 .lr.ph808.preheader:                              ; preds = %._crit_edge802
-  %i.uv = sext i32 %.lcssa1052 to i64             ; 5 uses
+  %i.uv = sext i32 %.lcssa1052 to i64             ; 6 uses
   %i.uw = add i32 %.pre, 1
   %i.ux = sub i32 %i.uw, %.lcssa1052              ; 2 uses
   %wide.trip.count892 = zext i32 %i.ux to i64     ; 5 uses
@@ -443,21 +437,29 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
   br i1 %min.iters.check1037, label %.lr.ph808.preheader1051, label %vector.memcheck1021
 
 vector.memcheck1021:                              ; preds = %.lr.ph808.preheader
-  %31 = sub <2 x i64> %27, %30
-  %32 = insertelement <2 x i64> poison, i64 %i.uv, i64 0
-  %33 = shufflevector <2 x i64> %32, <2 x i64> poison, <2 x i32> zeroinitializer
-  %34 = shl nsw <2 x i64> %33, <i64 3, i64 2>     ; 3 uses
-  %35 = add <2 x i64> %30, <i64 -8, i64 -4>
-  %i.uy = icmp ugt <2 x i64> %31, <i64 -32, i64 -16>
-  %36 = sub <2 x i64> %35, %27
-  %37 = add <2 x i64> %36, %34
-  %38 = add <2 x i64> %34, %27
-  %39 = sub <2 x i64> %30, %38
-  %40 = shufflevector <2 x i64> %39, <2 x i64> %37, <6 x i32> <i32 poison, i32 poison, i32 2, i32 3, i32 0, i32 1>
-  %41 = shufflevector <2 x i64> %34, <2 x i64> poison, <6 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison>
-  %42 = shufflevector <6 x i64> %40, <6 x i64> %41, <6 x i32> <i32 6, i32 2, i32 4, i32 7, i32 3, i32 5>
-  %i.uz = add <6 x i64> %42, <i64 23, i64 -1, i64 7, i64 11, i64 -1, i64 3>
-  %i.va = icmp ult <6 x i64> %i.uz, <i64 31, i64 31, i64 31, i64 15, i64 15, i64 15>
+  %25 = sub i64 %i.c, %i.d
+  %26 = shl nsw i64 %i.uv, 3                      ; 3 uses
+  %27 = add i64 %26, %i.d
+  %28 = add i64 %26, %i.c
+  %29 = sub i64 %i.a, %i.b
+  %30 = shl nsw i64 %i.uv, 2                      ; 3 uses
+  %31 = add i64 %30, %i.b
+  %32 = add i64 %30, %i.a
+  %33 = sub i64 %27, %i.c
+  %34 = sub i64 %i.d, %28
+  %35 = insertelement <2 x i64> poison, i64 %25, i64 0
+  %36 = insertelement <2 x i64> %35, i64 %29, i64 1
+  %i.uy = icmp ugt <2 x i64> %36, <i64 -32, i64 -16>
+  %37 = sub i64 %31, %i.a
+  %38 = sub i64 %i.b, %32
+  %39 = insertelement <6 x i64> poison, i64 %26, i64 0
+  %40 = insertelement <6 x i64> %39, i64 %30, i64 1
+  %41 = insertelement <6 x i64> %40, i64 %33, i64 2
+  %42 = insertelement <6 x i64> %41, i64 %34, i64 3
+  %43 = insertelement <6 x i64> %42, i64 %37, i64 4
+  %44 = insertelement <6 x i64> %43, i64 %38, i64 5
+  %i.uz = add <6 x i64> %44, <i64 23, i64 11, i64 -9, i64 7, i64 -5, i64 3>
+  %i.va = icmp ult <6 x i64> %i.uz, <i64 31, i64 15, i64 31, i64 31, i64 15, i64 15>
   %i.vb = shufflevector <6 x i1> %i.va, <6 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 poison, i32 poison>
   %i.vc = shufflevector <2 x i1> %i.uy, <2 x i1> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.vd = shufflevector <8 x i1> %i.vb, <8 x i1> %i.vc, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
