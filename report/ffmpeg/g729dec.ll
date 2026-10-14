@@ -145,9 +145,9 @@ define internal i32 @decode_frame(ptr noundef %0, ptr noundef initializes((112, 
 bb.a:
   %i.a = alloca [40 x i16], align 16              ; 9 uses
   %i.b = alloca [2 x [11 x i16]], align 16        ; 6 uses
-  %.sroa.0 = alloca i32, align 4                  ; 4 uses
+  %.sroa.0 = alloca i32, align 4                  ; 6 uses
   %.sroa.5 = alloca i32, align 4                  ; 3 uses
-  %i.c = alloca [40 x i16], align 16              ; 16 uses
+  %i.c = alloca [40 x i16], align 16              ; 17 uses
   %i.d = alloca [50 x i16], align 16              ; 7 uses
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca [40 x i16], align 16              ; 10 uses
@@ -550,7 +550,7 @@ bb.ax:                                            ; preds = %lsf_decode.exit, %b
 
 bb.ay:                                            ; preds = %bb.ax, %bb.ci
   %.not269 = phi i1 [ true, %bb.ax ], [ false, %bb.ci ] ; 3 uses
-  %indvars.iv532.sroa.phi601 = phi ptr [ %.sroa.0, %bb.ax ], [ %.sroa.5, %bb.ci ] ; 4 uses
+  %indvars.iv532.sroa.phi601 = phi ptr [ %.sroa.0, %bb.ax ], [ %.sroa.5, %bb.ci ] ; 6 uses
   %indvars.iv532.sroa.phi604 = phi ptr [ %i.b, %bb.ax ], [ %indvars.iv532.sroa.gep605, %bb.ci ] ; 2 uses
   %indvars.iv532 = phi i64 [ 0, %bb.ax ], [ 1, %bb.ci ] ; 3 uses
   %.0237493 = phi i32 [ 0, %bb.ax ], [ %.1238, %bb.ci ] ; 2 uses
@@ -606,7 +606,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.
   %i.aqs = call i32 @llvm.bswap.i32(i32 %i.aqr)
   %i.aqt = and i32 %.sroa.13.1, 7
   %i.aqu = shl i32 %i.aqs, %i.aqt
-  %i.aqv = lshr i32 %i.aqu, %i.amz                ; 2 uses
+  %i.aqv = lshr i32 %i.aqu, %i.amz                ; 3 uses
   %i.aqw = add nsw i32 %.sroa.13.1, %i.amy
   %i.aqx = call i32 @llvm.umin.i32(i32 %i.cl, i32 %i.aqw) ; 3 uses
   %i.aqy = lshr i32 %i.aqx, 3
@@ -616,9 +616,10 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.
   %i.arc = call i32 @llvm.bswap.i32(i32 %i.arb)
   %i.ard = and i32 %i.aqx, 7
   %i.are = shl i32 %i.arc, %i.ard
-  %i.arf = lshr i32 %i.are, %i.anc                ; 2 uses
+  %i.arf = lshr i32 %i.are, %i.anc
   %i.arg = add nuw nsw i32 %i.aqx, %i.anb
   %i.arh = call i32 @llvm.umin.i32(i32 %i.cl, i32 %i.arg) ; 3 uses
+  %4 = trunc i32 %i.arf to i8                     ; 3 uses
   %i.ari = lshr i32 %i.arh, 3
   %i.arj = zext nneg i32 %i.ari to i64
   %i.ark = getelementptr inbounds nuw i8, ptr %.1253, i64 %i.arj
@@ -664,8 +665,13 @@ bb.bg:                                            ; preds = %bb.be
   %i.asi = icmp samesign ugt i32 %i.asg, 196
   %i.asj = mul nuw nsw i32 %i.ash, 3
   %i.ask = add nsw i32 %i.asj, -510
-  %.0.i316 = select i1 %i.asi, i32 %i.ask, i32 %i.ash
-  br label %.thread
+  %.0.i316 = select i1 %i.asi, i32 %i.ask, i32 %i.ash ; 2 uses
+  %5 = trunc nsw i32 %.0.i316 to i16
+  %.lhs.trunc = add nsw i16 %5, 1
+  %6 = sdiv i16 %.lhs.trunc, 3
+  %.sext = sext i16 %6 to i32
+  store i32 %.sext, ptr %.sroa.0, align 4, !tbaa !64
+  br label %bb.br
 
 bb.bh:                                            ; preds = %bb.bd
   %i.asl = load i32, ptr %i.anj, align 8, !tbaa !40 ; 2 uses
@@ -707,12 +713,13 @@ bb.bn:                                            ; preds = %bb.bh
   %i.atb = add i32 %i.ata, %i.asz
   br label %ff_acelp_decode_4bit_to_2nd_delay3.exit
 
-.thread:                                          ; preds = %bb.bl, %bb.bj, %bb.bg
-  %.1245.ph = phi i32 [ %i.asv, %bb.bl ], [ %i.asr, %bb.bj ], [ %.0.i316, %bb.bg ] ; 2 uses
+.thread:                                          ; preds = %bb.bj, %bb.bl
+  %.1245.ph = phi i32 [ %i.asv, %bb.bl ], [ %i.asr, %bb.bj ] ; 2 uses
   %i.atc = add nsw i32 %.1245.ph, 1
   %i.atd = sdiv i32 %i.atc, 3
   store i32 %i.atd, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64
-  br label %bb.br
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.c, i8 0, i64 80, i1 false)
+  br label %bb.bt
 
 ff_acelp_decode_4bit_to_2nd_delay3.exit:          ; preds = %bb.bm, %bb.bn, %bb.bf, %bb.bc
   %.1245 = phi i32 [ %i.asd, %bb.bc ], [ %i.asy, %bb.bm ], [ %i.asf, %bb.bf ], [ %i.atb, %bb.bn ] ; 4 uses
@@ -739,27 +746,35 @@ bb.bq:                                            ; preds = %bb.bp
   %i.atm = mul i16 %i.atj, 31821
   %i.atn = add i16 %i.atm, 13849                  ; 2 uses
   store i16 %i.atn, ptr %i.ank, align 8, !tbaa !41
-  %4 = zext i16 %i.atn to i32
+  %7 = trunc i16 %i.atn to i8
   br label %bb.br
 
-bb.br:                                            ; preds = %.thread, %bb.bq, %bb.bp
-  %.1245349351 = phi i32 [ %.1245, %bb.bq ], [ %.1245, %bb.bp ], [ %.1245.ph, %.thread ] ; 2 uses
-  %.0234 = phi i32 [ %4, %bb.bq ], [ %i.arf, %bb.bp ], [ %i.arf, %.thread ]
-  %.0 = phi i32 [ %i.atl, %bb.bq ], [ %i.aqv, %bb.bp ], [ %i.aqv, %.thread ] ; 2 uses
+bb.br:                                            ; preds = %bb.bg, %bb.bq, %bb.bp
+  %.1245349351 = phi i32 [ %.1245, %bb.bq ], [ %.1245, %bb.bp ], [ %.0.i316, %bb.bg ] ; 2 uses
+  %8 = phi ptr [ %indvars.iv532.sroa.phi601, %bb.bq ], [ %indvars.iv532.sroa.phi601, %bb.bp ], [ %.sroa.0, %bb.bg ] ; 2 uses
+  %.0234 = phi i8 [ %7, %bb.bq ], [ %4, %bb.bp ], [ %4, %bb.bg ] ; 2 uses
+  %.0 = phi i32 [ %i.atl, %bb.bq ], [ %i.aqv, %bb.bp ], [ %i.aqv, %bb.bg ] ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.c, i8 0, i64 80, i1 false)
-  %5 = and i32 %.0234, 255                        ; 2 uses
   br i1 %i.ah, label %bb.bt, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
-  call void @ff_acelp_fc_pulse_per_track(ptr noundef nonnull %i.c, ptr noundef nonnull @ff_fc_4pulses_8bits_tracks_13, ptr noundef nonnull @ff_fc_4pulses_8bits_track_4, i32 noundef %.0, i32 noundef %5, i32 noundef 3, i32 noundef 3) #9
+  %9 = zext i8 %.0234 to i32
+  call void @ff_acelp_fc_pulse_per_track(ptr noundef nonnull %i.c, ptr noundef nonnull @ff_fc_4pulses_8bits_tracks_13, ptr noundef nonnull @ff_fc_4pulses_8bits_track_4, i32 noundef %.0, i32 noundef %9, i32 noundef 3, i32 noundef 3) #9
   br label %bb.bu
 
-bb.bt:                                            ; preds = %bb.br
-  call void @ff_acelp_fc_pulse_per_track(ptr noundef nonnull %i.c, ptr noundef nonnull @ff_fc_2pulses_9bits_track1_gray, ptr noundef nonnull @ff_fc_2pulses_9bits_track2_gray, i32 noundef %.0, i32 noundef %5, i32 noundef 1, i32 noundef 4) #9
+bb.bt:                                            ; preds = %.thread, %bb.br
+  %.0578 = phi i32 [ %i.aqv, %.thread ], [ %.0, %bb.br ]
+  %.0234577 = phi i8 [ %4, %.thread ], [ %.0234, %bb.br ]
+  %10 = phi ptr [ %indvars.iv532.sroa.phi601, %.thread ], [ %8, %bb.br ]
+  %.1245349351576 = phi i32 [ %.1245.ph, %.thread ], [ %.1245349351, %bb.br ]
+  %11 = zext i8 %.0234577 to i32
+  call void @ff_acelp_fc_pulse_per_track(ptr noundef nonnull %i.c, ptr noundef nonnull @ff_fc_2pulses_9bits_track1_gray, ptr noundef nonnull @ff_fc_2pulses_9bits_track2_gray, i32 noundef %.0578, i32 noundef %11, i32 noundef 1, i32 noundef 4) #9
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
-  %i.ato = load i32, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64 ; 4 uses
+  %12 = phi ptr [ %10, %bb.bt ], [ %8, %bb.bs ]
+  %.1245349351575 = phi i32 [ %.1245349351576, %bb.bt ], [ %.1245349351, %bb.bs ] ; 2 uses
+  %i.ato = load i32, ptr %12, align 4, !tbaa !64  ; 4 uses
   %i.atp = icmp slt i32 %i.ato, 40
   br i1 %i.atp, label %bb.bv, label %bb.bw
 
@@ -846,10 +861,10 @@ bb.cc:                                            ; preds = %bb.cb, %bb.bx
   %i.avl = load ptr, ptr %i.anr, align 8, !tbaa !39
   %i.avm = mul nuw nsw i64 %indvars.iv532, 40     ; 6 uses
   %i.avn = getelementptr inbounds nuw [2 x i8], ptr %i.avl, i64 %i.avm ; 2 uses
-  %.neg = sdiv i32 %.1245349351, -3
+  %.neg = sdiv i32 %.1245349351575, -3
   %i.avo = sext i32 %.neg to i64
   %i.avp = getelementptr inbounds [2 x i8], ptr %i.avn, i64 %i.avo
-  %i.avq = srem i32 %.1245349351, 3
+  %i.avq = srem i32 %.1245349351575, 3
   %i.avr = shl nsw i32 %i.avq, 1
   call void @ff_acelp_interpolate(ptr noundef %i.avn, ptr noundef %i.avp, ptr noundef nonnull @ff_acelp_interp_filter, i32 noundef 6, i32 noundef %i.avr, i32 noundef 10, i32 noundef 40) #9
   %i.avs = load ptr, ptr %i.anr, align 8, !tbaa !39

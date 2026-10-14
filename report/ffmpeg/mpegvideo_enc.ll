@@ -205,16 +205,18 @@ vector.body570:                                   ; preds = %vector.ph, %vector.
   %i.gj = add nuw <4 x i16> %i.gh, splat (i16 144) ; 2 uses
   %i.gk = lshr <4 x i16> %i.gi, splat (i16 1)
   %i.gl = lshr <4 x i16> %i.gj, splat (i16 1)
-  %i.gm = add nuw nsw <4 x i16> %i.gk, splat (i16 6912)
-  %i.gn = add nuw nsw <4 x i16> %i.gl, splat (i16 6912)
+  %i.gm = add nuw <4 x i16> %i.gk, splat (i16 6912)
+  %i.gn = add nuw <4 x i16> %i.gl, splat (i16 6912)
   %i.go = udiv <4 x i16> %i.gm, %i.gi
   %i.gp = udiv <4 x i16> %i.gn, %i.gj
-  %6 = add nuw nsw <4 x i16> %i.go, splat (i16 15) ; 2 uses
-  %7 = add nuw nsw <4 x i16> %i.gp, splat (i16 15) ; 2 uses
-  %8 = zext nneg <4 x i16> %6 to <4 x i32>        ; 2 uses
-  %9 = zext nneg <4 x i16> %7 to <4 x i32>        ; 2 uses
-  store <4 x i16> %6, ptr %i.ge, align 2, !tbaa !53
-  store <4 x i16> %7, ptr %i.gf, align 2, !tbaa !53
+  %6 = zext <4 x i16> %i.go to <4 x i32>
+  %7 = zext <4 x i16> %i.gp to <4 x i32>
+  %8 = add nuw nsw <4 x i32> %6, splat (i32 15)   ; 3 uses
+  %9 = add nuw nsw <4 x i32> %7, splat (i32 15)   ; 3 uses
+  %10 = trunc nuw nsw <4 x i32> %8 to <4 x i16>
+  %11 = trunc nuw nsw <4 x i32> %9 to <4 x i16>
+  store <4 x i16> %10, ptr %i.ge, align 2, !tbaa !53
+  store <4 x i16> %11, ptr %i.gf, align 2, !tbaa !53
   %i.gq = mul nuw nsw <4 x i32> %8, %8
   %i.gr = mul nuw nsw <4 x i32> %9, %9
   %i.gs = add <4 x i32> %i.gq, %vec.phi           ; 2 uses

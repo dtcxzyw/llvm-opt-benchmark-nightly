@@ -205,12 +205,13 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.speculated52 = tail call i32 @llvm.smax.i32(i32 %i.ay, i32 4) ; 3 uses
   %i.az = add nsw i32 %1, -1                      ; 2 uses
   %i.ba = add nuw i32 %i.az, %.sroa.speculated52
-  %7 = udiv i32 %i.ba, %.sroa.speculated52        ; 2 uses
-  %i.bb = add nuw i32 %i.az, %7
-  %8 = udiv i32 %i.bb, %7
-  %i.bc = add nuw nsw i32 %8, 3
-  %9 = and i32 %i.bc, -4
-  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %9, i32 %.sroa.speculated52)
+  %7 = sdiv i32 %i.ba, %.sroa.speculated52        ; 2 uses
+  %i.bb = add i32 %i.az, %7
+  %8 = sdiv i32 %i.bb, %7
+  %i.bc = add nsw i32 %8, 3
+  %9 = sdiv i32 %i.bc, 4
+  %10 = shl nsw i32 %9, 2
+  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %10, i32 %.sroa.speculated52)
   store i32 %.sroa.speculated, ptr %4, align 4, !tbaa !81
   br label %bb.g
 
@@ -613,12 +614,13 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.speculated61 = tail call i32 @llvm.smax.i32(i32 %i.at, i32 8) ; 3 uses
   %i.au = add nsw i32 %1, -1                      ; 2 uses
   %i.av = add nuw i32 %i.au, %.sroa.speculated61
-  %7 = udiv i32 %i.av, %.sroa.speculated61        ; 2 uses
-  %i.aw = add nuw i32 %i.au, %7
-  %8 = udiv i32 %i.aw, %7
-  %i.ax = add nuw nsw i32 %8, 7
-  %9 = and i32 %i.ax, -8
-  %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %9, i32 %.sroa.speculated61)
+  %7 = sdiv i32 %i.av, %.sroa.speculated61        ; 2 uses
+  %i.aw = add i32 %i.au, %7
+  %8 = sdiv i32 %i.aw, %7
+  %i.ax = add nsw i32 %8, 7
+  %9 = sdiv i32 %i.ax, 8
+  %10 = shl nsw i32 %9, 3
+  %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %10, i32 %.sroa.speculated61)
   store i32 %.sroa.speculated, ptr %4, align 4, !tbaa !81
   br label %bb.g
 
@@ -1021,13 +1023,14 @@ bb.f:                                             ; preds = %bb.e
   %.sroa.speculated69 = tail call i32 @llvm.smax.i32(i32 %i.at, i32 4) ; 3 uses
   %i.au = add nsw i32 %1, -1                      ; 2 uses
   %i.av = add nuw i32 %i.au, %.sroa.speculated69
-  %7 = udiv i32 %i.av, %.sroa.speculated69        ; 2 uses
-  %i.aw = add nuw i32 %i.au, %7
-  %8 = udiv i32 %i.aw, %7
-  %i.ax = add nuw nsw i32 %8, 3
-  %9 = and i32 %i.ax, -4
-  %.sroa.speculated64 = tail call i32 @llvm.umin.i32(i32 %9, i32 %.sroa.speculated69)
-  %.sroa.speculated = tail call i32 @llvm.umax.i32(i32 %.sroa.speculated64, i32 4)
+  %7 = sdiv i32 %i.av, %.sroa.speculated69        ; 2 uses
+  %i.aw = add i32 %i.au, %7
+  %8 = sdiv i32 %i.aw, %7
+  %i.ax = add nsw i32 %8, 3
+  %9 = sdiv i32 %i.ax, 4
+  %10 = shl nsw i32 %9, 2
+  %.sroa.speculated64 = tail call i32 @llvm.smin.i32(i32 %10, i32 %.sroa.speculated69)
+  %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated64, i32 4)
   store i32 %.sroa.speculated, ptr %4, align 4, !tbaa !81
   br label %bb.g
 

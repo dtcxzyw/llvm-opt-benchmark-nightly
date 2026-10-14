@@ -205,13 +205,13 @@ bb.a:
 
 .peel.next.i.i.i:                                 ; preds = %.peel.next.i.i.i, %.lr.ph.i.i.i
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %.peel.next.i.i.i ], [ 1, %.lr.ph.i.i.i ] ; 3 uses
-  %i.cp = trunc nuw nsw i64 %indvars.iv.i.i.i to i32
+  %i.cp = trunc nuw nsw i64 %indvars.iv.i.i.i to i32 ; 2 uses
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 4 uses
   %i.cq = trunc nuw nsw i64 %indvars.iv.next.i.i.i to i32
   %.sroa.speculated.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.w, i32 %i.cq)
   %.not.i.i.i = icmp samesign ult i64 %indvars.iv.next.i.i.i, %i.aa
   %i.cr = select i1 %.not.i.i.i, float 5.000000e-01, float 2.500000e-01
-  %i.cs = shl nuw nsw i64 %indvars.iv.i.i.i, 1    ; 4 uses
+  %i.cs = shl nuw nsw i64 %indvars.iv.i.i.i, 1    ; 3 uses
   %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.cs ; 2 uses
   %i.cu = load float, ptr %i.ct, align 4, !tbaa !140
   %i.cv = add i32 %i.by, %i.cp
@@ -223,9 +223,10 @@ bb.a:
   %i.da = sext i32 %i.cz to i64
   %i.db = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %i.da
   %i.dc = load float, ptr %i.db, align 4, !tbaa !140
-  %2 = add nuw nsw i64 %i.cs, 4294967294
-  %3 = and i64 %2, 4294967294
-  %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %3
+  %.sroa.speculated4.i.i.i = shl nuw i32 %i.cp, 1
+  %2 = add i32 %.sroa.speculated4.i.i.i, -2
+  %3 = sext i32 %2 to i64
+  %i.dd = getelementptr inbounds [4 x i8], ptr %i.bj, i64 %3
   %i.de = load float, ptr %i.dd, align 4, !tbaa !140
   %i.df = fsub float %i.dc, %i.de
   %i.dg = fmul float %i.cr, %i.df

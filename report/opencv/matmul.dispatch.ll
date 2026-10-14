@@ -205,13 +205,13 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bu
   %i.adr = sdiv i32 16384, %.sroa.speculated1209
   %i.ads = sdiv i32 16384, %.sroa.speculated1212
   %.sroa.speculated1143 = call i32 @llvm.smin.i32(i32 %i.ads, i32 %i.adr) ; 2 uses
-  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %.01252, i32 %.sroa.speculated1143) ; 8 uses
+  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %.01252, i32 %.sroa.speculated1143) ; 9 uses
   %i.adt = mul nsw i32 %.sroa.speculated, %.sroa.speculated1209
   %i.adu = icmp sgt i32 %i.adt, 16384
   br i1 %i.adu, label %bb.by, label %bb.bz
 
 bb.by:                                            ; preds = %bb.bx
-  %.rhs.trunc = trunc nsw i32 %.sroa.speculated to i16
+  %.rhs.trunc = trunc i32 %.sroa.speculated to i16
   %i.adv = sdiv i16 16384, %.rhs.trunc
   %.sext = sext i16 %i.adv to i32
   br label %bb.bz
@@ -220,21 +220,22 @@ bb.bz:                                            ; preds = %bb.by, %bb.bx
   %.0897 = phi i32 [ %.sext, %bb.by ], [ %.sroa.speculated1209, %bb.bx ] ; 5 uses
   %i.adw = mul nsw i32 %.sroa.speculated, %.sroa.speculated1212
   %i.adx = icmp sgt i32 %i.adw, 16384
-  %.rhs.trunc1256 = trunc nsw i32 %.sroa.speculated to i16 ; 2 uses
   br i1 %i.adx, label %bb.ca, label %._crit_edge
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.ady = sdiv i16 16384, %.rhs.trunc1256
+  %.rhs.trunc1463 = trunc i32 %.sroa.speculated to i16
+  %i.ady = sdiv i16 16384, %.rhs.trunc1463
   %.sext1257 = sext i16 %i.ady to i32
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.bz, %bb.ca
+._crit_edge:                                      ; preds = %bb.ca, %bb.bz
   %.0896 = phi i32 [ %.sext1257, %bb.ca ], [ %.sroa.speculated1212, %bb.bz ] ; 5 uses
   %i.adz = sdiv i32 %.0896, 8
   %i.aea = add i32 %i.adz, %.0896
   %i.aeb = and i32 %i.aea, -2
   %i.aec = add i32 %i.aeb, 2
-  %i.aed = sdiv i16 %.rhs.trunc1256, 8
+  %.lhs.trunc = trunc i32 %.sroa.speculated to i16
+  %i.aed = sdiv i16 %.lhs.trunc, 8
   %.sext1258 = sext i16 %i.aed to i32
   %i.aee = add i32 %.sroa.speculated, %.sext1258  ; 2 uses
   %i.aef = add i32 %i.aee, 1

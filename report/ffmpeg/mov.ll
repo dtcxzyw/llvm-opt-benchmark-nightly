@@ -205,7 +205,7 @@ bb.dl:                                            ; preds = %bb.dk, %bb.dj
   %.0375670 = phi i32 [ %i.sn, %bb.dw ], [ %i.re, %.lr.ph672.preheader ] ; 3 uses
   %.2404669 = phi i64 [ %i.sl, %bb.dw ], [ %i.qr, %.lr.ph672.preheader ] ; 3 uses
   %.7668 = phi i64 [ %i.sm, %bb.dw ], [ %.6454675, %.lr.ph672.preheader ] ; 4 uses
-  %i.rg = load i32, ptr %i.qk, align 4, !tbaa !107 ; 5 uses
+  %i.rg = load i32, ptr %i.qk, align 4, !tbaa !107 ; 6 uses
   %i.rh = icmp ugt i32 %i.rg, 1
   br i1 %i.rh, label %bb.dm, label %bb.dq
 
@@ -224,13 +224,14 @@ bb.do:                                            ; preds = %bb.dm
   br i1 %i.rk, label %bb.dr, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do
-  %.rhs.trunc580 = trunc nuw nsw i32 %i.rg to i16 ; 2 uses
+  %.rhs.trunc580 = trunc nuw nsw i32 %i.rg to i16
   %i.rl = urem i16 1024, %.rhs.trunc580
   %narrow = sub nuw nsw i16 1024, %i.rl
   %i.rm = zext nneg i16 %narrow to i32
   %.0375. = tail call i32 @llvm.umin.i32(i32 %.0375670, i32 %i.rm) ; 2 uses
-  %.lhs.trunc.a = trunc nuw nsw i32 %.0375. to i16
-  %i.rn = udiv i16 %.lhs.trunc.a, %.rhs.trunc580
+  %.lhs.trunc = trunc nuw nsw i32 %.0375. to i16
+  %.lhs.trunc.a = trunc nuw i32 %i.rg to i16
+  %i.rn = udiv i16 %.lhs.trunc, %.lhs.trunc.a
   %.zext583 = zext nneg i16 %i.rn to i32
   %i.ro = mul i32 %i.ri, %.zext583
   br label %bb.dr
