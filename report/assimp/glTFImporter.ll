@@ -205,8 +205,6 @@ bb.a:
   %15 = alloca %"class.o3dgc::Adaptive_Data_Model", align 8 ; 7 uses
   %16 = alloca %"class.o3dgc::Adaptive_Data_Model", align 8 ; 9 uses
   %17 = alloca %"class.o3dgc::Adaptive_Data_Model", align 8 ; 7 uses
-  %18 = alloca [2 x float], align 8               ; 9 uses
-  %19 = alloca [2 x float], align 8               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #28
   call void @_ZN5o3dgc16Arithmetic_CodecC1Ev(ptr noundef nonnull align 8 dereferenceable(44) %12)
@@ -609,7 +607,7 @@ bb.an:                                            ; preds = %bb.am, %bb.af
           to label %bb.ao unwind label %bb.x      ; 0 uses
 
 bb.ao:                                            ; preds = %.loopexit518, %bb.q
-  %.0251 = phi i64 [ %3, %bb.q ], [ 2, %.loopexit518 ] ; 27 uses
+  %.0251 = phi i64 [ %3, %bb.q ], [ 2, %.loopexit518 ] ; 26 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 4576 ; 2 uses
   %i.ec = load i64, ptr %i.eb, align 8
   %i.ed = icmp ult i64 %i.ec, %i.e
@@ -657,8 +655,9 @@ bb.at:                                            ; preds = %bb.as, %bb.ao
   %.1.lcssa = phi i64 [ %.0463, %bb.at ], [ %.3, %.loopexit512 ]
   store i64 %.1.lcssa, ptr %0, align 8
   %i.er = load i32, ptr %9, align 4
-  %i.es = icmp eq i32 %i.er, 6
-  br i1 %i.es, label %bb.co, label %bb.cs
+  %18 = icmp eq i32 %i.er, 6
+  %i.es = icmp eq i64 %.0251, 0                   ; 2 uses
+  br i1 %18, label %bb.co, label %bb.cs
 
 bb.au:                                            ; preds = %.lr.ph594, %.loopexit512
   %.0226590 = phi i64 [ 0, %.lr.ph594 ], [ %i.ti, %.loopexit512 ] ; 17 uses
@@ -1061,42 +1060,32 @@ _ZNK5o3dgc12BinaryStream13ReadUIntASCIIERm.exit:  ; preds = %.preheader.i393, %_
   br i1 %exitcond636.not, label %._crit_edge595, label %bb.au, !llvm.loop !820
 
 bb.co:                                            ; preds = %._crit_edge595
-  call void @llvm.lifetime.start.p0(ptr nonnull %18) #28
-  store i64 -4611686015206162432, ptr %18, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %19) #28
-  store i64 4611686019501129728, ptr %19, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
-  %.not.i414 = icmp eq i64 %.0251, 0
-  br i1 %.not.i414, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit, label %.lr.ph.i415
+  br i1 %i.es, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit, label %.lr.ph.i415
 
 .lr.ph.i415:                                      ; preds = %bb.co
   %i.tj = trunc i64 %7 to i32
   %i.tk = add i32 %i.tj, 1
   %notmask.i = shl nsw i32 -1, %i.tk
   %i.tl = xor i32 %notmask.i, -1
-  %i.tm = uitofp nneg i32 %i.tl to float          ; 2 uses
-  %min.iters.check784 = icmp ult i64 %.0251, 4
+  %i.tm = uitofp nneg i32 %i.tl to float
+  %19 = fdiv float 4.000000e+00, %i.tm            ; 2 uses
+  %min.iters.check784 = icmp ult i64 %.0251, 8
   br i1 %min.iters.check784, label %scalar.ph783.preheader, label %vector.ph785
 
 vector.ph785:                                     ; preds = %.lr.ph.i415
-  %n.vec786 = and i64 %.0251, -4                  ; 3 uses
-  %broadcast.splatinsert787 = insertelement <4 x float> poison, float %i.tm, i64 0
-  %broadcast.splat788 = shufflevector <4 x float> %broadcast.splatinsert787, <4 x float> poison, <4 x i32> zeroinitializer
+  %n.vec786 = and i64 %.0251, -8                  ; 3 uses
+  %broadcast.splatinsert787 = insertelement <4 x float> poison, float %19, i64 0
+  %broadcast.splat788 = shufflevector <4 x float> %broadcast.splatinsert787, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body789
 
 vector.body789:                                   ; preds = %vector.body789, %vector.ph785
-  %index790 = phi i64 [ 0, %vector.ph785 ], [ %index.next793, %vector.body789 ] ; 4 uses
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %index790
-  %wide.load791 = load <4 x float>, ptr %20, align 8
-  %i.tn = getelementptr inbounds nuw [4 x i8], ptr %18, i64 %index790
-  %wide.load792 = load <4 x float>, ptr %i.tn, align 8
-  %21 = fsub <4 x float> %wide.load791, %wide.load792 ; 2 uses
-  %22 = fcmp ogt <4 x float> %21, zeroinitializer
-  %23 = fdiv <4 x float> %21, %broadcast.splat788
-  %24 = select <4 x i1> %22, <4 x float> %23, <4 x float> splat (float 1.000000e+00)
-  %25 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %index790
-  store <4 x float> %24, ptr %25, align 16
-  %index.next793 = add nuw i64 %index790, 4       ; 2 uses
+  %index790 = phi i64 [ 0, %vector.ph785 ], [ %index.next793, %vector.body789 ] ; 2 uses
+  %i.tn = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %index790 ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.tn, i64 16
+  store <4 x float> %broadcast.splat788, ptr %i.tn, align 16
+  store <4 x float> %broadcast.splat788, ptr %20, align 16
+  %index.next793 = add nuw i64 %index790, 8       ; 2 uses
   %i.to = icmp eq i64 %index.next793, %n.vec786
   br i1 %i.to, label %middle.block794, label %vector.body789, !llvm.loop !821
 
@@ -1114,7 +1103,7 @@ scalar.ph783.preheader:                           ; preds = %.lr.ph.i415, %middl
 
 _ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit.thread: ; preds = %.preheader32.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
-  br label %._crit_edge599
+  br label %bb.ct
 
 .preheader.preheader.i:                           ; preds = %.preheader32.i
   %i.tp = getelementptr inbounds nuw i8, ptr %0, i64 4568 ; 3 uses
@@ -1126,17 +1115,9 @@ _ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit.thread: ; pre
   br label %.preheader.i417
 
 scalar.ph783:                                     ; preds = %scalar.ph783.preheader, %scalar.ph783
-  %.02933.i = phi i64 [ %i.ts, %scalar.ph783 ], [ %.02933.i.ph, %scalar.ph783.preheader ] ; 4 uses
-  %26 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %.02933.i
-  %27 = load float, ptr %26, align 4
-  %28 = getelementptr inbounds nuw [4 x i8], ptr %18, i64 %.02933.i
-  %29 = load float, ptr %28, align 4
-  %30 = fsub float %27, %29                       ; 2 uses
-  %31 = fcmp ogt float %30, 0.000000e+00
-  %32 = fdiv float %30, %i.tm
-  %.sink.i = select i1 %31, float %32, float 1.000000e+00
+  %.02933.i = phi i64 [ %i.ts, %scalar.ph783 ], [ %.02933.i.ph, %scalar.ph783.preheader ] ; 2 uses
   %i.tr = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.02933.i
-  store float %.sink.i, ptr %i.tr, align 4
+  store float %19, ptr %i.tr, align 4
   %i.ts = add nuw nsw i64 %.02933.i, 1            ; 2 uses
   %exitcond.not.i416 = icmp eq i64 %i.ts, %.0251
   br i1 %exitcond.not.i416, label %.preheader32.i, label %scalar.ph783, !llvm.loop !822
@@ -1150,18 +1131,16 @@ scalar.ph783:                                     ; preds = %scalar.ph783.prehea
   br i1 %lcmp.mod826.not, label %._crit_edge.i418, label %.epil.preheader824
 
 .epil.preheader824:                               ; preds = %._crit_edge.i418.unr-lcssa, %.preheader.i417
-  %.034.i.epil.init = phi i64 [ 0, %.preheader.i417 ], [ %i.ux, %._crit_edge.i418.unr-lcssa ] ; 3 uses
+  %.034.i.epil.init = phi i64 [ 0, %.preheader.i417 ], [ %i.ux, %._crit_edge.i418.unr-lcssa ] ; 2 uses
   call void @llvm.assume(i1 %lcmp.mod827)
   %i.tu = load ptr, ptr %i.tp, align 8
   %i.tv = add i64 %.034.i.epil.init, %i.tt        ; 2 uses
   %i.tw = getelementptr inbounds nuw [8 x i8], ptr %i.tu, i64 %i.tv
   %i.tx = load i64, ptr %i.tw, align 8
   %i.ty = sitofp i64 %i.tx to float
-  %33 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.034.i.epil.init
-  %34 = load float, ptr %33, align 4
-  %i.tz = getelementptr inbounds nuw [4 x i8], ptr %18, i64 %.034.i.epil.init
+  %i.tz = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.034.i.epil.init
   %i.ua = load float, ptr %i.tz, align 4
-  %i.ub = call float @llvm.fmuladd.f32(float %i.ty, float %34, float %i.ua)
+  %i.ub = call float @llvm.fmuladd.f32(float %i.ty, float %i.ua, float -2.000000e+00)
   %i.uc = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.tv
   store float %i.ub, ptr %i.uc, align 4
   br label %._crit_edge.i418
@@ -1172,31 +1151,27 @@ scalar.ph783:                                     ; preds = %scalar.ph783.prehea
   br i1 %exitcond41.not.i, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit, label %.preheader.i417, !llvm.loop !823
 
 .preheader.i417.new:                              ; preds = %.preheader.i417, %.preheader.i417.new
-  %.034.i = phi i64 [ %i.ux, %.preheader.i417.new ], [ 0, %.preheader.i417 ] ; 5 uses
+  %.034.i = phi i64 [ %i.ux, %.preheader.i417.new ], [ 0, %.preheader.i417 ] ; 4 uses
   %niter829 = phi i64 [ %niter829.next.1, %.preheader.i417.new ], [ 0, %.preheader.i417 ]
   %i.ue = load ptr, ptr %i.tp, align 8
   %i.uf = add i64 %.034.i, %i.tt                  ; 2 uses
   %i.ug = getelementptr inbounds nuw [8 x i8], ptr %i.ue, i64 %i.uf
   %i.uh = load i64, ptr %i.ug, align 8
   %i.ui = sitofp i64 %i.uh to float
-  %35 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.034.i
-  %36 = load float, ptr %35, align 8
-  %i.uj = getelementptr inbounds nuw [4 x i8], ptr %18, i64 %.034.i
+  %i.uj = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %.034.i
   %i.uk = load float, ptr %i.uj, align 8
-  %i.ul = call float @llvm.fmuladd.f32(float %i.ui, float %36, float %i.uk)
+  %i.ul = call float @llvm.fmuladd.f32(float %i.ui, float %i.uk, float -2.000000e+00)
   %i.um = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.uf
   store float %i.ul, ptr %i.um, align 4
-  %i.un = or disjoint i64 %.034.i, 1              ; 3 uses
+  %i.un = or disjoint i64 %.034.i, 1              ; 2 uses
   %i.uo = load ptr, ptr %i.tp, align 8
   %i.up = add i64 %i.un, %i.tt                    ; 2 uses
   %i.uq = getelementptr inbounds nuw [8 x i8], ptr %i.uo, i64 %i.up
   %i.ur = load i64, ptr %i.uq, align 8
   %i.us = sitofp i64 %i.ur to float
-  %37 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.un
-  %38 = load float, ptr %37, align 4
-  %i.ut = getelementptr inbounds nuw [4 x i8], ptr %18, i64 %i.un
+  %i.ut = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.un
   %i.uu = load float, ptr %i.ut, align 4
-  %i.uv = call float @llvm.fmuladd.f32(float %i.us, float %38, float %i.uu)
+  %i.uv = call float @llvm.fmuladd.f32(float %i.us, float %i.uu, float -2.000000e+00)
   %i.uw = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.up
   store float %i.uv, ptr %i.uw, align 4
   %i.ux = add nuw nsw i64 %.034.i, 2              ; 2 uses
@@ -1206,17 +1181,12 @@ scalar.ph783:                                     ; preds = %scalar.ph783.prehea
 
 _ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit: ; preds = %._crit_edge.i418, %bb.co
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #28
-  br i1 %i.el, label %.lr.ph598, label %._crit_edge599
+  br i1 %i.el, label %.lr.ph598, label %bb.ct
 
 .lr.ph598:                                        ; preds = %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit
   %i.uy = getelementptr inbounds nuw i8, ptr %0, i64 4608
   %i.uz = getelementptr inbounds nuw i8, ptr %0, i64 4584
   br label %bb.cp
-
-._crit_edge599:                                   ; preds = %bb.cq, %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit.thread, %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %19) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %18) #28
-  br label %bb.ct
 
 bb.cp:                                            ; preds = %.lr.ph598, %bb.cq
   %.0597 = phi i64 [ 0, %.lr.ph598 ], [ %i.vo, %bb.cq ] ; 4 uses
@@ -1241,19 +1211,16 @@ bb.cp:                                            ; preds = %.lr.ph598, %bb.cq
 bb.cq:                                            ; preds = %bb.cp
   %i.vo = add nuw nsw i64 %.0597, 1               ; 2 uses
   %exitcond637.not = icmp eq i64 %i.vo, %2
-  br i1 %exitcond637.not, label %._crit_edge599, label %bb.cp, !llvm.loop !825
+  br i1 %exitcond637.not, label %bb.ct, label %bb.cp, !llvm.loop !825
 
 bb.cr:                                            ; preds = %bb.cp
   %i.vp = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %19) #28
-  call void @llvm.lifetime.end.p0(ptr nonnull %18) #28
   br label %.loopexit.split-lp504
 
 bb.cs:                                            ; preds = %._crit_edge595
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
-  %.not.i419 = icmp eq i64 %.0251, 0
-  br i1 %.not.i419, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit434, label %.lr.ph.i420
+  br i1 %i.es, label %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit434, label %.lr.ph.i420
 
 .lr.ph.i420:                                      ; preds = %bb.cs
   %i.vq = trunc i64 %7 to i32
@@ -1389,7 +1356,7 @@ _ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit434: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   br label %bb.ct
 
-bb.ct:                                            ; preds = %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit434, %._crit_edge599
+bb.ct:                                            ; preds = %bb.cq, %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit.thread, %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit, %_ZN5o3dgc13SC3DMCDecoderItE19IQuantizeFloatArrayEPfmmmPKfS4_m.exit434
   call void @_ZN5o3dgc19Adaptive_Data_ModelD1Ev(ptr noundef nonnull align 8 dead_on_return(52) dereferenceable(52) %16) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #28
   br label %bb.cv

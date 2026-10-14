@@ -69,7 +69,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.42 = private unnamed_addr constant [48 x i8] c"Parsing cpu stat from %s failed, see \22man proc\22\00", align 1
 @.str.43 = private unnamed_addr constant [16 x i8] c"/proc/net/route\00", align 1
 @.str.44 = private unnamed_addr constant [21 x i8] c"/proc/net/ipv6_route\00", align 1
-@__const.qmp_guest_network_get_route.route_files = private unnamed_addr constant [2 x ptr] [ptr @.str.43, ptr @.str.44], align 16
 @__func__.qmp_guest_network_get_route = private unnamed_addr constant [28 x i8] c"qmp_guest_network_get_route\00", align 1
 @.str.45 = private unnamed_addr constant [36 x i8] c"%32s %x %32s %x %32s %x %x %x %x %s\00", align 1
 @.str.46 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
@@ -472,13 +471,11 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.m
-  %i.x = phi i1 [ false, %bb.a ], [ true, %bb.m ] ; 2 uses
+  %.03677 = phi ptr [ %i.a, %bb.a ], [ %.3, %bb.m ] ; 3 uses
+  %i.x = phi i1 [ false, %bb.a ], [ true, %bb.m ] ; 3 uses
   %i.y = phi i1 [ true, %bb.a ], [ false, %bb.m ]
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ 1, %bb.m ]
-  %.03071 = phi ptr [ %i.a, %bb.a ], [ %.3, %bb.m ] ; 3 uses
-  %1 = getelementptr inbounds nuw [8 x i8], ptr @__const.qmp_guest_network_get_route.route_files, i64 %indvars.iv
-  %2 = load ptr, ptr %1, align 8                  ; 2 uses
-  %i.z = call noalias ptr @fopen64(ptr noundef %2, ptr noundef nonnull @.str.1) ; 4 uses
+  %.sroa.speculated = select i1 %i.x, ptr @.str.44, ptr @.str.43 ; 2 uses
+  %i.z = call noalias ptr @fopen64(ptr noundef nonnull %.sroa.speculated, ptr noundef nonnull @.str.1) ; 4 uses
   %i.aa = icmp eq ptr %i.z, null
   br i1 %i.aa, label %bb.c, label %.preheader
 
@@ -490,11 +487,11 @@ bb.b:                                             ; preds = %bb.a, %bb.m
 bb.c:                                             ; preds = %bb.b
   %i.ac = tail call ptr @__errno_location() #16
   %i.ad = load i32, ptr %i.ac, align 4
-  call void (ptr, ptr, i32, ptr, i32, ptr, ...) @error_setg_errno_internal(ptr noundef %0, ptr noundef nonnull @.str.6, i32 noundef 2170, ptr noundef nonnull @__func__.qmp_guest_network_get_route, i32 noundef %i.ad, ptr noundef nonnull @.str.37, ptr noundef %2) #14
+  call void (ptr, ptr, i32, ptr, i32, ptr, ...) @error_setg_errno_internal(ptr noundef %0, ptr noundef nonnull @.str.6, i32 noundef 2170, ptr noundef nonnull @__func__.qmp_guest_network_get_route, i32 noundef %i.ad, ptr noundef nonnull @.str.37, ptr noundef nonnull %.sroa.speculated) #14
   br label %bb.m
 
 .lr.ph:                                           ; preds = %.preheader, %.backedge
-  %.13169 = phi ptr [ %.131.be, %.backedge ], [ %.03071, %.preheader ] ; 5 uses
+  %.13169 = phi ptr [ %.131.be, %.backedge ], [ %.03677, %.preheader ] ; 5 uses
   %.03468 = phi i32 [ %.034.be, %.backedge ], [ 1, %.preheader ] ; 4 uses
   %i.ae = icmp eq i32 %.03468, 0
   %or.cond = or i1 %i.x, %i.ae
@@ -753,12 +750,12 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %.backedge, %.preheader
-  %.131.lcssa = phi ptr [ %.03071, %.preheader ], [ %.131.be, %.backedge ]
+  %.131.lcssa = phi ptr [ %.03677, %.preheader ], [ %.131.be, %.backedge ]
   %i.dx = call i32 @fclose(ptr noundef nonnull %i.z) ; 0 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge, %bb.c
-  %.3 = phi ptr [ %.03071, %bb.c ], [ %.131.lcssa, %._crit_edge ]
+  %.3 = phi ptr [ %.03677, %bb.c ], [ %.131.lcssa, %._crit_edge ]
   br i1 %i.y, label %bb.b, label %bb.n, !llvm.loop !32
 
 bb.n:                                             ; preds = %bb.m

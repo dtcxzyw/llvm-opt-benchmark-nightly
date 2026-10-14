@@ -204,7 +204,6 @@ bb.ay:                                            ; preds = %.loopexit, %bb.c, %
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i64 @meshopt_encodeIndexSequence(ptr noundef %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3) local_unnamed_addr #6 {
 bb.a:
-  %4 = alloca [2 x i32], align 8                  ; 4 uses
   %i.a = add i64 %3, 5
   %i.b = icmp ult i64 %1, %i.a
   br i1 %i.b, label %bb.e, label %bb.b
@@ -214,8 +213,6 @@ bb.b:                                             ; preds = %bb.a
   %i.d = trunc i32 %i.c to i8
   %i.e = or i8 %i.d, -48
   store i8 %i.e, ptr %0, align 1, !tbaa !11
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  store i64 0, ptr %4, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.h = getelementptr inbounds i8, ptr %i.g, i64 -4 ; 2 uses
@@ -223,25 +220,27 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not3747.not, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %_ZN7meshoptL11encodeVByteERPhj.exit
-  %i.i = phi i32 [ %i.k, %_ZN7meshoptL11encodeVByteERPhj.exit ], [ 0, %bb.b ]
-  %.03350 = phi i32 [ %i.o, %_ZN7meshoptL11encodeVByteERPhj.exit ], [ 0, %bb.b ]
-  %.03549 = phi i64 [ %i.ab, %_ZN7meshoptL11encodeVByteERPhj.exit ], [ 0, %bb.b ] ; 2 uses
+  %.04463 = phi i64 [ %i.ab, %_ZN7meshoptL11encodeVByteERPhj.exit ], [ 0, %bb.b ] ; 2 uses
+  %i.i = phi i32 [ %i.o, %_ZN7meshoptL11encodeVByteERPhj.exit ], [ 0, %bb.b ] ; 2 uses
+  %.03350 = phi i32 [ %..sroa.6.0, %_ZN7meshoptL11encodeVByteERPhj.exit ], [ 0, %bb.b ] ; 3 uses
+  %.sroa.0.060 = phi i32 [ %.sroa.0.0., %_ZN7meshoptL11encodeVByteERPhj.exit ], [ 0, %bb.b ] ; 3 uses
   %.04348 = phi ptr [ %i.z, %_ZN7meshoptL11encodeVByteERPhj.exit ], [ %i.f, %bb.b ] ; 2 uses
   %.not = icmp ult ptr %.04348, %i.h
-  br i1 %.not, label %bb.c, label %.loopexit
+  br i1 %.not, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.j = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.03549
+  %i.j = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.04463
   %i.k = load i32, ptr %i.j, align 4, !tbaa !10   ; 4 uses
-  %5 = add i32 %i.k, -30
-  %i.l = sub i32 %5, %i.i
-  %i.m = icmp ult i32 %i.l, -59
+  %.sroa.idx = icmp eq i32 %i.i, 1
+  %.sroa.speculated = select i1 %.sroa.idx, i32 %.03350, i32 %.sroa.0.060
+  %i.l = sub i32 %i.k, %.sroa.speculated
+  %4 = add i32 %i.l, -30
+  %i.m = icmp ult i32 %4, -59
   %i.n = zext i1 %i.m to i32
-  %i.o = xor i32 %.03350, %i.n                    ; 3 uses
-  %6 = zext nneg i32 %i.o to i64
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %6 ; 2 uses
-  %8 = load i32, ptr %7, align 4, !tbaa !10
-  %i.p = sub i32 %i.k, %8                         ; 2 uses
+  %i.o = xor i32 %i.i, %i.n                       ; 3 uses
+  %.sroa.idx21 = icmp eq i32 %i.o, 1              ; 3 uses
+  %.sroa.speculated26 = select i1 %.sroa.idx21, i32 %.03350, i32 %.sroa.0.060
+  %i.p = sub i32 %i.k, %.sroa.speculated26        ; 2 uses
   %i.q = shl i32 %i.p, 2
   %i.r = ashr i32 %i.p, 30
   %i.s = and i32 %i.r, -2
@@ -264,15 +263,16 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br i1 %.not.i, label %_ZN7meshoptL11encodeVByteERPhj.exit, label %bb.d, !llvm.loop !0
 
 _ZN7meshoptL11encodeVByteERPhj.exit:              ; preds = %bb.d
-  store i32 %i.k, ptr %7, align 4, !tbaa !10
-  %i.ab = add nuw i64 %.03549, 1                  ; 2 uses
+  %.sroa.0.0. = select i1 %.sroa.idx21, i32 %.sroa.0.060, i32 %i.k
+  %..sroa.6.0 = select i1 %.sroa.idx21, i32 %i.k, i32 %.03350
+  %i.ab = add nuw i64 %.04463, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %3
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !18
 
 .critedge:                                        ; preds = %_ZN7meshoptL11encodeVByteERPhj.exit, %bb.b
   %.043.lcssa = phi ptr [ %i.f, %bb.b ], [ %i.z, %_ZN7meshoptL11encodeVByteERPhj.exit ] ; 3 uses
   %.old38 = icmp ugt ptr %.043.lcssa, %i.h
-  br i1 %.old38, label %.loopexit, label %.preheader.preheader
+  br i1 %.old38, label %bb.e, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.critedge
   store i32 0, ptr %.043.lcssa, align 1
@@ -280,15 +280,10 @@ _ZN7meshoptL11encodeVByteERPhj.exit:              ; preds = %bb.d
   %i.ac = ptrtoint ptr %scevgep to i64
   %i.ad = ptrtoint ptr %0 to i64
   %i.ae = sub i64 %i.ac, %i.ad
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.lr.ph, %.critedge, %.preheader.preheader
-  %.1 = phi i64 [ 0, %.critedge ], [ %i.ae, %.preheader.preheader ], [ 0, %.lr.ph ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.a, %.loopexit
-  %.2 = phi i64 [ %.1, %.loopexit ], [ 0, %bb.a ]
+bb.e:                                             ; preds = %.lr.ph, %.preheader.preheader, %.critedge, %bb.a
+  %.2 = phi i64 [ 0, %bb.a ], [ 0, %.critedge ], [ %i.ae, %.preheader.preheader ], [ 0, %.lr.ph ]
   ret i64 %.2
 }
 
@@ -319,7 +314,6 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local range(i32 -3, 1) i32 @meshopt_decodeIndexSequence(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(address) %3, i64 noundef %4) local_unnamed_addr #7 {
 bb.a:
-  %5 = alloca [2 x i32], align 8                  ; 5 uses
   %i.a = add i64 %1, 5
   %i.b = icmp ult i64 %4, %i.a
   br i1 %i.b, label %bb.m, label %bb.b
@@ -334,8 +328,6 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 %4
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 -4 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  store i64 0, ptr %5, align 8
   %.not3441.not = icmp eq i64 %1, 0
   br i1 %.not3441.not, label %.critedge, label %.lr.ph
 
@@ -345,9 +337,11 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN7meshoptL11decodeVByteERPKh.exit.us
   %.043.us = phi i64 [ %i.ai, %_ZN7meshoptL11decodeVByteERPKh.exit.us ], [ 0, %.lr.ph ] ; 2 uses
-  %.03842.us = phi ptr [ %.139.us, %_ZN7meshoptL11decodeVByteERPKh.exit.us ], [ %i.e, %.lr.ph ] ; 7 uses
+  %.sroa.5.047.us = phi i32 [ %.sroa.5.0..us, %_ZN7meshoptL11decodeVByteERPKh.exit.us ], [ 0, %.lr.ph ] ; 2 uses
+  %.sroa.0.046.us = phi i32 [ %..sroa.0.0.us, %_ZN7meshoptL11decodeVByteERPKh.exit.us ], [ 0, %.lr.ph ] ; 2 uses
+  %.03842.us = phi ptr [ %.142.us, %_ZN7meshoptL11decodeVByteERPKh.exit.us ], [ %i.e, %.lr.ph ] ; 6 uses
   %.not33.us = icmp ult ptr %.03842.us, %i.g
-  br i1 %.not33.us, label %bb.d, label %.loopexit
+  br i1 %.not33.us, label %bb.d, label %bb.m
 
 bb.d:                                             ; preds = %.lr.ph.split.us
   %i.i = getelementptr inbounds nuw i8, ptr %.03842.us, i64 1 ; 2 uses
@@ -365,50 +359,38 @@ bb.e:                                             ; preds = %bb.d
   %i.r = shl nuw nsw i32 %i.q, 7
   %i.s = or disjoint i32 %i.r, %i.m               ; 2 uses
   %i.t = icmp slt i8 %i.o, 0
-  br i1 %i.t, label %6, label %_ZN7meshoptL11decodeVByteERPKh.exit.us
+  br i1 %i.t, label %bb.f, label %_ZN7meshoptL11decodeVByteERPKh.exit.us
 
-6:                                                ; preds = %bb.e
-  %7 = getelementptr inbounds nuw i8, ptr %.03842.us, i64 3 ; 2 uses
-  %8 = load i8, ptr %i.n, align 1, !tbaa !11      ; 2 uses
-  %9 = and i8 %8, 127
-  %10 = zext nneg i8 %9 to i32
-  %11 = shl nuw nsw i32 %10, 14
-  %12 = or disjoint i32 %11, %i.s                 ; 2 uses
-  %13 = icmp slt i8 %8, 0
-  br i1 %13, label %bb.f, label %_ZN7meshoptL11decodeVByteERPKh.exit.us
-
-bb.f:                                             ; preds = %6
-  %i.u = getelementptr inbounds nuw i8, ptr %.03842.us, i64 4 ; 2 uses
-  %i.v = load i8, ptr %7, align 1, !tbaa !11      ; 2 uses
-  %14 = and i8 %i.v, 127
-  %i.w = zext nneg i8 %14 to i32
-  %i.x = shl nuw nsw i32 %i.w, 21
-  %i.y = or disjoint i32 %i.x, %12                ; 2 uses
+bb.f:                                             ; preds = %bb.e
+  %i.u = getelementptr inbounds nuw i8, ptr %.03842.us, i64 3 ; 2 uses
+  %i.v = load i8, ptr %i.n, align 1, !tbaa !11    ; 2 uses
+  %i.w = zext i8 %i.v to i32
+  %i.x = shl nuw nsw i32 %i.w, 14
+  %i.y = or disjoint i32 %i.x, %i.s               ; 2 uses
   %i.z = icmp slt i8 %i.v, 0
   br i1 %i.z, label %bb.g, label %_ZN7meshoptL11decodeVByteERPKh.exit.us
 
 bb.g:                                             ; preds = %bb.f
-  %15 = getelementptr inbounds nuw i8, ptr %.03842.us, i64 5
   %i.aa = load i8, ptr %i.u, align 1, !tbaa !11
-  %16 = zext i8 %i.aa to i32
-  %17 = shl i32 %16, 28
-  %18 = or disjoint i32 %17, %i.y
+  %5 = icmp slt i8 %i.aa, 0
+  %spec.select.v = select i1 %5, i64 5, i64 4
+  %spec.select = getelementptr inbounds nuw i8, ptr %.03842.us, i64 %spec.select.v
   br label %_ZN7meshoptL11decodeVByteERPKh.exit.us
 
-_ZN7meshoptL11decodeVByteERPKh.exit.us:           ; preds = %bb.g, %bb.f, %6, %bb.e, %bb.d
-  %.139.us = phi ptr [ %i.i, %bb.d ], [ %15, %bb.g ], [ %i.u, %bb.f ], [ %7, %6 ], [ %i.n, %bb.e ] ; 2 uses
-  %.017.i.us = phi i32 [ %i.k, %bb.d ], [ %18, %bb.g ], [ %i.y, %bb.f ], [ %12, %6 ], [ %i.s, %bb.e ] ; 3 uses
+_ZN7meshoptL11decodeVByteERPKh.exit.us:           ; preds = %bb.g, %bb.f, %bb.e, %bb.d
+  %.142.us = phi ptr [ %i.i, %bb.d ], [ %i.n, %bb.e ], [ %spec.select, %bb.g ], [ %i.u, %bb.f ] ; 2 uses
+  %.017.i.us = phi i32 [ %i.k, %bb.d ], [ %i.s, %bb.e ], [ %i.y, %bb.g ], [ %i.y, %bb.f ] ; 3 uses
   %i.ab = and i32 %.017.i.us, 1
   %i.ac = lshr i32 %.017.i.us, 2
   %i.ad = shl i32 %.017.i.us, 30
   %i.ae = ashr i32 %i.ad, 31
   %i.af = xor i32 %i.ae, %i.ac
-  %19 = zext nneg i32 %i.ab to i64
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %19 ; 2 uses
-  %21 = load i32, ptr %20, align 4, !tbaa !10
-  %22 = add i32 %i.af, %21                        ; 2 uses
-  store i32 %22, ptr %20, align 4, !tbaa !10
-  %i.ag = trunc i32 %22 to i16
+  %.sroa.idx.not.us = icmp eq i32 %i.ab, 0        ; 3 uses
+  %.sroa.speculated.us = select i1 %.sroa.idx.not.us, i32 %.sroa.0.046.us, i32 %.sroa.5.047.us
+  %6 = add i32 %.sroa.speculated.us, %i.af        ; 3 uses
+  %..sroa.0.0.us = select i1 %.sroa.idx.not.us, i32 %6, i32 %.sroa.0.046.us
+  %.sroa.5.0..us = select i1 %.sroa.idx.not.us, i32 %.sroa.5.047.us, i32 %6
+  %i.ag = trunc i32 %6 to i16
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.043.us
   store i16 %i.ag, ptr %i.ah, align 2, !tbaa !14
   %i.ai = add nuw i64 %.043.us, 1                 ; 2 uses
@@ -417,9 +399,11 @@ _ZN7meshoptL11decodeVByteERPKh.exit.us:           ; preds = %bb.g, %bb.f, %6, %b
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN7meshoptL11decodeVByteERPKh.exit
   %.043 = phi i64 [ %i.bu, %_ZN7meshoptL11decodeVByteERPKh.exit ], [ 0, %.lr.ph ] ; 2 uses
+  %.sroa.5.047 = phi i32 [ %.sroa.5.0., %_ZN7meshoptL11decodeVByteERPKh.exit ], [ 0, %.lr.ph ] ; 2 uses
+  %.sroa.0.046 = phi i32 [ %..sroa.0.0, %_ZN7meshoptL11decodeVByteERPKh.exit ], [ 0, %.lr.ph ] ; 2 uses
   %.03842 = phi ptr [ %.139, %_ZN7meshoptL11decodeVByteERPKh.exit ], [ %i.e, %.lr.ph ] ; 7 uses
   %.not33 = icmp ult ptr %.03842, %i.g
-  br i1 %.not33, label %bb.h, label %.loopexit
+  br i1 %.not33, label %bb.h, label %bb.m
 
 bb.h:                                             ; preds = %.lr.ph.split
   %i.aj = getelementptr inbounds nuw i8, ptr %.03842, i64 1 ; 2 uses
@@ -475,30 +459,25 @@ _ZN7meshoptL11decodeVByteERPKh.exit:              ; preds = %bb.h, %bb.i, %bb.j,
   %i.bq = shl i32 %.017.i, 30
   %i.br = ashr i32 %i.bq, 31
   %i.bs = xor i32 %i.br, %i.bp
-  %23 = zext nneg i32 %i.bo to i64
-  %24 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %23 ; 2 uses
-  %25 = load i32, ptr %24, align 4, !tbaa !10
-  %26 = add i32 %i.bs, %25                        ; 2 uses
-  store i32 %26, ptr %24, align 4, !tbaa !10
+  %.sroa.idx.not = icmp eq i32 %i.bo, 0           ; 3 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, i32 %.sroa.0.046, i32 %.sroa.5.047
+  %7 = add i32 %.sroa.speculated, %i.bs           ; 3 uses
+  %..sroa.0.0 = select i1 %.sroa.idx.not, i32 %7, i32 %.sroa.0.046
+  %.sroa.5.0. = select i1 %.sroa.idx.not, i32 %.sroa.5.047, i32 %7
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.043
-  store i32 %26, ptr %i.bt, align 4, !tbaa !10
+  store i32 %7, ptr %i.bt, align 4, !tbaa !10
   %i.bu = add nuw i64 %.043, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.bu, %1
   br i1 %exitcond.not, label %.critedge, label %.lr.ph.split, !llvm.loop !20
 
 .critedge:                                        ; preds = %_ZN7meshoptL11decodeVByteERPKh.exit, %_ZN7meshoptL11decodeVByteERPKh.exit.us, %bb.c
-  %.038.lcssa = phi ptr [ %i.e, %bb.c ], [ %.139.us, %_ZN7meshoptL11decodeVByteERPKh.exit.us ], [ %.139, %_ZN7meshoptL11decodeVByteERPKh.exit ]
+  %.038.lcssa = phi ptr [ %i.e, %bb.c ], [ %.142.us, %_ZN7meshoptL11decodeVByteERPKh.exit.us ], [ %.139, %_ZN7meshoptL11decodeVByteERPKh.exit ]
   %.not35 = icmp eq ptr %.038.lcssa, %i.g
   %. = select i1 %.not35, i32 0, i32 -3
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us, %.critedge
-  %.1 = phi i32 [ %., %.critedge ], [ -2, %.lr.ph.split.us ], [ -2, %.lr.ph.split ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   br label %bb.m
 
-bb.m:                                             ; preds = %.loopexit, %bb.b, %bb.a
-  %.3 = phi i32 [ -1, %bb.b ], [ -2, %bb.a ], [ %.1, %.loopexit ]
+bb.m:                                             ; preds = %.lr.ph.split, %.lr.ph.split.us, %.critedge, %bb.b, %bb.a
+  %.3 = phi i32 [ -1, %bb.b ], [ -2, %bb.a ], [ %., %.critedge ], [ -2, %.lr.ph.split.us ], [ -2, %.lr.ph.split ]
   ret i32 %.3
 }
 

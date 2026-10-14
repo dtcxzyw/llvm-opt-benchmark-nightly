@@ -205,13 +205,12 @@ unicode_find_name.exit.thread:                    ; preds = %bb.h, %unicode_find
 define internal fastcc range(i32 -2147483648, 1) i32 @unicode_sequence_prop1(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr nofree noundef captures(none) %3) unnamed_addr #7 {
 bb.a:
   %i.a = alloca [16 x i32], align 16              ; 53 uses
-  %4 = alloca [2 x i32], align 4                  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
   switch i32 %0, label %.loopexit [
     i32 0, label %bb.b
     i32 2, label %bb.e
     i32 3, label %bb.g
-    i32 5, label %5
+    i32 5, label %bb.i
     i32 4, label %.preheader200
     i32 1, label %bb.t
     i32 6, label %.preheader204.preheader
@@ -445,18 +444,17 @@ bb.h:                                             ; preds = %.lr.ph265, %._crit_
   %i.ct = icmp sgt i32 %i.cq, %i.cs
   br i1 %i.ct, label %bb.h, label %.loopexit, !llvm.loop !100
 
-5:                                                ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  br label %bb.i
-
 .loopexit199:                                     ; preds = %.preheader198.us251.us, %.split.split.us.us.split, %.split.split.us.us.split.us.us, %.preheader198.us, %.preheader198.us.us, %.preheader198.us251
+  %.sroa.5.1.lcssa397416 = phi i32 [ %.sroa.5.2, %.split.split.us.us.split ], [ %.sroa.5.2, %.split.split.us.us.split.us.us ], [ %.sroa.5.2, %.preheader198.us ], [ %.sroa.5.1.lcssa397.ph445, %.preheader198.us251 ], [ %.sroa.5.2, %.preheader198.us.us ], [ %.sroa.5.2, %.preheader198.us251.us ]
+  %.sroa.0.1.lcssa399414 = phi i32 [ %.sroa.0.2, %.split.split.us.us.split ], [ %.sroa.0.2, %.split.split.us.us.split.us.us ], [ %.sroa.0.2, %.preheader198.us ], [ %.sroa.0.1.lcssa399.ph444, %.preheader198.us251 ], [ %.sroa.0.2, %.preheader198.us.us ], [ %.sroa.0.2, %.preheader198.us251.us ]
   %.5.lcssa387394 = phi i32 [ %i.ee, %.split.split.us.us.split ], [ %i.ee, %.split.split.us.us.split.us.us ], [ %i.ee, %.preheader198.us ], [ %.5.lcssa387.ph415, %.preheader198.us251 ], [ %i.ee, %.preheader198.us.us ], [ %i.ee, %.preheader198.us251.us ] ; 2 uses
   %i.cu = icmp ult i32 %.5.lcssa387394, 2392
-  br i1 %i.cu, label %bb.i, label %12, !llvm.loop !101
+  br i1 %i.cu, label %bb.i, label %.loopexit, !llvm.loop !101
 
-bb.i:                                             ; preds = %5, %.loopexit199
-  %.4259 = phi i32 [ 0, %5 ], [ %.5.lcssa387394, %.loopexit199 ] ; 3 uses
+bb.i:                                             ; preds = %bb.a, %.loopexit199
+  %.sroa.0.0268 = phi i32 [ %.sroa.0.1.lcssa399414, %.loopexit199 ], [ undef, %bb.a ] ; 2 uses
+  %.sroa.5.0267 = phi i32 [ %.sroa.5.1.lcssa397416, %.loopexit199 ], [ undef, %bb.a ] ; 2 uses
+  %.4259 = phi i32 [ %.5.lcssa387394, %.loopexit199 ], [ 0, %bb.a ] ; 3 uses
   %i.cv = zext nneg i32 %.4259 to i64             ; 3 uses
   %i.cw = getelementptr inbounds nuw i8, ptr @unicode_rgi_emoji_zwj_sequence, i64 %i.cv
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !16  ; 2 uses
@@ -473,7 +471,9 @@ bb.i:                                             ; preds = %5, %.loopexit199
 bb.j:                                             ; preds = %.lr.ph226, %bb.p
   %indvars.iv308 = phi i64 [ %i.cv, %.lr.ph226 ], [ %indvars.iv.next309, %bb.p ]
   %indvars.iv306 = phi i64 [ %i.da, %.lr.ph226 ], [ %indvars.iv.next307, %bb.p ] ; 2 uses
-  %.0152223 = phi i32 [ -1, %.lr.ph226 ], [ %.1, %bb.p ]
+  %.0153228 = phi i32 [ -1, %.lr.ph226 ], [ %.1, %bb.p ]
+  %.sroa.0.1227 = phi i32 [ %.sroa.0.0268, %.lr.ph226 ], [ %.sroa.0.2, %bb.p ] ; 2 uses
+  %.0152223 = phi i32 [ %.sroa.5.0267, %.lr.ph226 ], [ %.sroa.5.2, %bb.p ] ; 2 uses
   %.0153222 = phi i32 [ 0, %.lr.ph226 ], [ %.1154, %bb.p ] ; 3 uses
   %.0155221 = phi i32 [ 0, %.lr.ph226 ], [ %.1156, %bb.p ]
   %.0157220 = phi i32 [ 0, %.lr.ph226 ], [ %.3, %bb.p ] ; 4 uses
@@ -494,8 +494,8 @@ bb.j:                                             ; preds = %.lr.ph226, %bb.p
   %i.dl = or disjoint i32 %.4174.v, %i.dd
   %.4174 = or disjoint i32 %i.dl, %.masked        ; 2 uses
   %i.dm = icmp eq i32 %.4174, 129456
-  %.1 = select i1 %i.dm, i32 %.0157220, i32 %.0152223 ; 7 uses
-  %i.dn = add nsw i32 %.0157220, 1                ; 3 uses
+  %.1 = select i1 %i.dm, i32 %.0157220, i32 %.0153228 ; 7 uses
+  %i.dn = add nsw i32 %.0157220, 1                ; 4 uses
   %i.do = sext i32 %.0157220 to i64
   %i.dp = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.do
   store i32 %.4174, ptr %i.dp, align 4, !tbaa !14
@@ -504,9 +504,9 @@ bb.j:                                             ; preds = %.lr.ph226, %bb.p
 
 bb.k:                                             ; preds = %bb.j
   %i.dq = add nsw i32 %.0153222, 1
-  %7 = sext i32 %.0153222 to i64
-  %8 = getelementptr inbounds [4 x i8], ptr %4, i64 %7
-  store i32 %i.dn, ptr %8, align 4, !tbaa !14
+  %.sroa.idx = icmp eq i32 %.0153222, 1           ; 2 uses
+  %..sroa.5.1 = select i1 %.sroa.idx, i32 %i.dn, i32 %.0152223
+  %.sroa.0.1. = select i1 %.sroa.idx, i32 %.sroa.0.1227, i32 %i.dn
   %i.dr = add nsw i32 %.0157220, 2
   %i.ds = sext i32 %i.dn to i64
   %i.dt = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ds
@@ -517,6 +517,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.1158 = phi i32 [ %i.dr, %bb.k ], [ %i.dn, %bb.j ] ; 3 uses
   %.1156 = phi i32 [ %i.dj, %bb.k ], [ %.0155221, %bb.j ] ; 3 uses
   %.1154 = phi i32 [ %i.dq, %bb.k ], [ %.0153222, %bb.j ]
+  %.sroa.5.2 = phi i32 [ %..sroa.5.1, %bb.k ], [ %.0152223, %bb.j ] ; 8 uses
+  %.sroa.0.2 = phi i32 [ %.sroa.0.1., %bb.k ], [ %.sroa.0.1227, %bb.j ] ; 9 uses
   %.not187 = icmp sgt i8 %i.df, -1
   br i1 %.not187, label %bb.n, label %bb.m
 
@@ -568,8 +570,7 @@ default.unreachable:                              ; preds = %._crit_edge227
   %. = select i1 %i.ef, i32 4, i32 1              ; 2 uses
   %i.eg = zext nneg i32 %.1 to i64
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.eg ; 5 uses
-  %9 = load i32, ptr %4, align 4
-  %i.ei = sext i32 %9 to i64
+  %i.ei = sext i32 %.sroa.0.2 to i64
   %i.ej = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.ei ; 10 uses
   br i1 %i.ef, label %.preheader198.us.us, label %.preheader198.us
 
@@ -618,11 +619,9 @@ default.unreachable:                              ; preds = %._crit_edge227
   %i.eo = zext nneg i32 %.1 to i64
   %i.ep = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.eo
   %i.eq = icmp eq i32 %.1156, 3                   ; 2 uses
-  %10 = load i32, ptr %4, align 4
-  %i.er = sext i32 %10 to i64
+  %i.er = sext i32 %.sroa.0.2 to i64
   %i.es = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.er ; 2 uses
-  %11 = load i32, ptr %6, align 4
-  %i.et = sext i32 %11 to i64
+  %i.et = sext i32 %.sroa.5.2 to i64
   %i.eu = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.et ; 2 uses
   br i1 %i.en, label %.preheader198.us247.us, label %.preheader198.us247
 
@@ -698,13 +697,11 @@ bb.s:                                             ; preds = %bb.s, %.preheader19
 
 .preheader198.us251:                              ; preds = %bb.i, %.split241.us250
   %.0157.lcssa381.ph416 = phi i32 [ %.3, %.split241.us250 ], [ 0, %bb.i ]
+  %.sroa.5.1.lcssa397.ph445 = phi i32 [ %.sroa.5.2, %.split241.us250 ], [ %.sroa.5.0267, %bb.i ]
+  %.sroa.0.1.lcssa399.ph444 = phi i32 [ %.sroa.0.2, %.split241.us250 ], [ %.sroa.0.0268, %bb.i ]
   %.5.lcssa387.ph415 = phi i32 [ %i.ee, %.split241.us250 ], [ %.5217, %bb.i ]
   call void %1(ptr noundef %2, ptr noundef nonnull %i.a, i32 noundef %.0157.lcssa381.ph416) #21
   br label %.loopexit199
-
-12:                                               ; preds = %.loopexit199
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
-  br label %.loopexit
 
 .preheader200:                                    ; preds = %bb.a, %._crit_edge214
   %.6216 = phi i32 [ %.lcssa, %._crit_edge214 ], [ 0, %bb.a ] ; 2 uses
@@ -841,8 +838,8 @@ bb.v:                                             ; preds = %.preheader204.5
   store i32 0, ptr %3, align 8, !tbaa !26
   br label %.loopexit
 
-.loopexit:                                        ; preds = %._crit_edge, %._crit_edge214, %._crit_edge263, %._crit_edge268, %._crit_edge281, %.preheader204.preheader, %.preheader204.1, %.preheader204.2, %.preheader204.3, %.preheader204.4, %.preheader204.5, %bb.v, %.preheader202, %.preheader196, %.preheader194.a, %.preheader, %12, %bb.a, %bb.t, %bb.g, %bb.e, %._crit_edge277.a, %bb.b
-  %.2161 = phi i32 [ -1, %bb.t ], [ 0, %12 ], [ -1, %bb.b ], [ -2, %bb.a ], [ -1, %._crit_edge277.a ], [ -1, %bb.e ], [ -1, %bb.g ], [ 0, %._crit_edge214 ], [ 0, %.preheader196 ], [ 0, %.preheader194.a ], [ 0, %.preheader ], [ 0, %.preheader202 ], [ 0, %._crit_edge268 ], [ 0, %._crit_edge263 ], [ %i.hk, %.preheader204.3 ], [ 0, %._crit_edge281 ], [ %i.b, %.preheader204.preheader ], [ 0, %bb.v ], [ %i.hg, %.preheader204.1 ], [ %i.ho, %.preheader204.5 ], [ %i.hi, %.preheader204.2 ], [ %i.hm, %.preheader204.4 ], [ 0, %._crit_edge ]
+.loopexit:                                        ; preds = %._crit_edge, %._crit_edge214, %.loopexit199, %._crit_edge263, %._crit_edge268, %._crit_edge281, %.preheader204.preheader, %.preheader204.1, %.preheader204.2, %.preheader204.3, %.preheader204.4, %.preheader204.5, %bb.v, %.preheader202, %.preheader196, %.preheader194.a, %.preheader, %bb.a, %bb.t, %bb.g, %bb.e, %._crit_edge277.a, %bb.b
+  %.2161 = phi i32 [ -1, %bb.t ], [ 0, %.preheader202 ], [ -1, %bb.b ], [ -2, %bb.a ], [ -1, %._crit_edge277.a ], [ -1, %bb.e ], [ -1, %bb.g ], [ 0, %.preheader194.a ], [ 0, %._crit_edge268 ], [ 0, %._crit_edge281 ], [ 0, %.preheader196 ], [ 0, %.preheader ], [ 0, %.loopexit199 ], [ 0, %._crit_edge214 ], [ %i.hk, %.preheader204.3 ], [ 0, %._crit_edge263 ], [ 0, %bb.v ], [ %i.b, %.preheader204.preheader ], [ %i.hg, %.preheader204.1 ], [ %i.ho, %.preheader204.5 ], [ %i.hi, %.preheader204.2 ], [ %i.hm, %.preheader204.4 ], [ 0, %._crit_edge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret i32 %.2161
 }

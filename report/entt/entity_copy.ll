@@ -26,7 +26,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"struct.std::_Tuple_impl.170" = type { %"struct.std::_Head_base.173" }
 %"struct.std::_Head_base.173" = type { ptr }
 %"struct.std::piecewise_construct_t" = type { i8 }
-%"struct.std::array" = type { [2 x ptr] }
 %"class.std::basic_ostream" = type { ptr, %"class.std::basic_ios" }
 %"class.std::basic_ios" = type { %"class.std::ios_base", ptr, i8, i8, ptr, ptr, ptr, ptr }
 %"class.std::ios_base" = type { ptr, i64, i64, i32, i32, i32, ptr, %"struct.std::ios_base::_Words", [8 x %"struct.std::ios_base::_Words"], i32, ptr, %"class.std::locale" }
@@ -429,7 +428,6 @@ $_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedEvEERKNS0_14meta_type_node
 @_ZZN4entt10type_indexIN10EntityCopy10meta_mixinINS_13basic_storageIiNS1_9my_entityESaIiEEEEEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
 @_ZGVZN4entt10type_indexIN10EntityCopy10meta_mixinINS_13basic_storageIiNS1_9my_entityESaIiEEEEEE5valueEvE5value = linkonce_odr hidden global i64 0, comdat, align 8
 @.str.37 = private unnamed_addr constant [127 x i8] c"const char *entt::internal::pretty_function() [Type = EntityCopy::meta_mixin<entt::basic_storage<int, EntityCopy::my_entity>>]\00", align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJRNS_14basic_registryIN10EntityCopy9my_entityESaIS4_EEEjEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryIN10EntityCopy9my_entityESaIS4_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEjEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryIN10EntityCopy9my_entityESaIS4_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global %"struct.entt::internal::meta_type_node" zeroinitializer, comdat, align 8
 @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryIN10EntityCopy9my_entityESaIS4_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZZN4entt7type_idINS_14basic_registryIN10EntityCopy9my_entityESaIS3_EEEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global %"struct.entt::type_info" zeroinitializer, comdat, align 8
@@ -456,7 +454,6 @@ $_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedEvEERKNS0_14meta_type_node
 @_ZZN4entt10type_indexIN10EntityCopy10meta_mixinINS_13basic_storageIiNS1_12other_entityESaIiEEEEEE5valueEvE5value = linkonce_odr hidden global i32 0, comdat, align 4
 @_ZGVZN4entt10type_indexIN10EntityCopy10meta_mixinINS_13basic_storageIiNS1_12other_entityESaIiEEEEEE5valueEvE5value = linkonce_odr hidden global i64 0, comdat, align 8
 @.str.40 = private unnamed_addr constant [130 x i8] c"const char *entt::internal::pretty_function() [Type = EntityCopy::meta_mixin<entt::basic_storage<int, EntityCopy::other_entity>>]\00", align 1
-@__const._ZN4entt8internal13meta_arg_nodeIJRNS_14basic_registryIN10EntityCopy12other_entityESaIS4_EEEjEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list = private unnamed_addr constant %"struct.std::array" { [2 x ptr] [ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryIN10EntityCopy12other_entityESaIS4_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEjEERKNS0_14meta_type_nodeERKNS0_12meta_contextE] }, align 8
 @_ZZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryIN10EntityCopy12other_entityESaIS4_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global %"struct.entt::internal::meta_type_node" zeroinitializer, comdat, align 8
 @_ZGVZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryIN10EntityCopy12other_entityESaIS4_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextEE4node = linkonce_odr hidden global i64 0, comdat, align 8
 @_ZZN4entt7type_idINS_14basic_registryIN10EntityCopy12other_entityESaIS3_EEEEERKNS_9type_infoEvE8instance = linkonce_odr hidden global %"struct.entt::type_info" zeroinitializer, comdat, align 8
@@ -859,9 +856,9 @@ bb.i:                                             ; preds = %_ZNK4entt9dense_map
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, ptr } @_ZN4entt8meta_argINS_9type_listIJRNS_14basic_registryIN10EntityCopy9my_entityESaIS4_EEEjEEEEENS_9meta_typeERKNS_8meta_ctxEm(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #7 comdat {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJRNS_14basic_registryIN10EntityCopy9my_entityESaIS4_EEEjEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !87
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #23, !inline_history !514
+  %.sroa.idx.i = icmp eq i64 %1, 1
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEjEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryIN10EntityCopy9my_entityESaIS4_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #23, !inline_history !514
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %i.a, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %0, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -1264,9 +1261,9 @@ bb.i:                                             ; preds = %_ZNK4entt9dense_map
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { ptr, ptr } @_ZN4entt8meta_argINS_9type_listIJRNS_14basic_registryIN10EntityCopy12other_entityESaIS4_EEEjEEEEENS_9meta_typeERKNS_8meta_ctxEm(ptr noundef nonnull align 8 dereferenceable(56) %0, i64 noundef %1) #7 comdat {
 bb.a:
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN4entt8internal13meta_arg_nodeIJRNS_14basic_registryIN10EntityCopy12other_entityESaIS4_EEEjEEERKNS0_14meta_type_nodeERKNS0_12meta_contextENS_9type_listIJDpT_EEEm.list, i64 %1
-  %3 = load ptr, ptr %2, align 8, !tbaa !87
-  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %3(ptr noundef nonnull align 8 dereferenceable(56) %0) #23, !inline_history !583
+  %.sroa.idx.i = icmp eq i64 %1, 1
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedEjEERKNS0_14meta_type_nodeERKNS0_12meta_contextE, ptr @_ZN4entt8internal7resolveITkNS_17cvref_unqualifiedENS_14basic_registryIN10EntityCopy12other_entityESaIS4_EEEEERKNS0_14meta_type_nodeERKNS0_12meta_contextE
+  %i.a = tail call noundef nonnull align 8 dereferenceable(128) ptr %.sroa.speculated.i(ptr noundef nonnull align 8 dereferenceable(56) %0) #23, !inline_history !583
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %i.a, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %0, 1
   ret { ptr, ptr } %.fca.1.insert

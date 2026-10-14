@@ -206,7 +206,6 @@ begin_hunk_0
 @.str.214 = private unnamed_addr constant [16 x i8] c"SELECT json(?1)\00", align 1
 @.str.215 = private unnamed_addr constant [31 x i8] c"\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\E2\94\80\00", align 1
 @.str.216 = private unnamed_addr constant [31 x i8] c"\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\E2\95\90\00", align 1
-@__const.qrfBoxLine.azDash = private unnamed_addr constant [2 x ptr] [ptr @.str.215, ptr @.str.216], align 16
 @.str.217 = private unnamed_addr constant [35 x i8] c"Failed to write %d bytes of output\00", align 1
 @.str.218 = private unnamed_addr constant [5 x i8] c"Next\00", align 1
 @.str.219 = private unnamed_addr constant [5 x i8] c"Prev\00", align 1
@@ -609,7 +608,6 @@ begin_hunk_1
 @.str.1974 = private unnamed_addr constant [27 x i8] c"DROP TABLE IF EXISTS sqlar\00", align 1
 @.str.1975 = private unnamed_addr constant [279 x i8] c"REPLACE INTO %s(name,mode,mtime,sz,data)\0A  SELECT\0A    %s,\0A    mode,\0A    mtime,\0A    CASE substr(lsmode(mode),1,1)\0A      WHEN '-' THEN length(data)\0A      WHEN 'd' THEN 0\0A      ELSE -1 END,\0A    sqlar_compress(data)\0A  FROM fsdir(%Q,%Q) AS disk\0A  WHERE lsmode(mode) NOT LIKE '?%%'%s;\00", align 1
 @.str.1976 = private unnamed_addr constant [152 x i8] c"REPLACE INTO %s(name,mode,mtime,data)\0A  SELECT\0A    %s,\0A    mode,\0A    mtime,\0A    data\0A  FROM fsdir(%Q,%Q) AS disk\0A  WHERE lsmode(mode) NOT LIKE '?%%'%s;\00", align 1
-@__const.arCreateOrUpdateCommand.zInsertFmt = private unnamed_addr constant [2 x ptr] [ptr @.str.1975, ptr @.str.1976], align 16
 @.str.1977 = private unnamed_addr constant [21 x i8] c"PRAGMA page_size=512\00", align 1
 @.str.1978 = private unnamed_addr constant [14 x i8] c"SAVEPOINT ar;\00", align 1
 @.str.1979 = private unnamed_addr constant [11 x i8] c"zip%016llx\00", align 1
@@ -622,7 +620,6 @@ begin_hunk_1
 @.str.1986 = private unnamed_addr constant [589 x i8] c"WITH dest(dpath,dlen) AS (\0A  SELECT realpath($dir) || '/',\0A  1+length(realpath($dir))\0A)\0ASELECT\0A    ($dir || name),\0A    CASE $dryrun\0A      WHEN 0 THEN writefile($dir||name, %s, mode, mtime)\0A      WHEN 1 THEN 0\0A      ELSE shell_putsnl(format('writefile(%%Q,%%s,%%0o,%%d)',$dir||name,quote(%s),mode,mtime)) IS NULL\0A      END\0A  FROM dest CROSS JOIN %s\0A WHERE (%s)\0A   AND (CASE $pass WHEN 0 THEN (mode&0xf000)<>0xa000\0A                   WHEN 1 THEN (mode&0xf000)=0xa000\0A                   ELSE data IS NULL END)\0A   AND dpath=substr(realpath($dir||name),1,dlen)\0A   AND name NOT GLOB '*..[/\\]*'\0A\00", align 1
 @.str.1987 = private unnamed_addr constant [27 x i8] c"sqlar_uncompress(data, sz)\00", align 1
 @.str.1988 = private unnamed_addr constant [5 x i8] c"data\00", align 1
-@__const.arExtractCommand.azExtraArg = private unnamed_addr constant [2 x ptr] [ptr @.str.1987, ptr @.str.1988], align 16
 @.str.1989 = private unnamed_addr constant [5 x i8] c"$dir\00", align 1
 @.str.1990 = private unnamed_addr constant [8 x i8] c"$dryrun\00", align 1
 @.str.1991 = private unnamed_addr constant [23 x i8] c"*** BEGIN PASS %d ***\0A\00", align 1
@@ -641,7 +638,6 @@ begin_hunk_1
 @.str.2004 = private unnamed_addr constant [38 x i8] c"(%s%s OR (name GLOB '*/*' AND (%s))) \00", align 1
 @.str.2005 = private unnamed_addr constant [27 x i8] c"SELECT %s FROM %s WHERE %s\00", align 1
 @.str.2006 = private unnamed_addr constant [53 x i8] c"lsmode(mode), sz, datetime(mtime, 'unixepoch'), name\00", align 1
-@__const.arListCommand.azCols = private unnamed_addr constant [2 x ptr] [ptr @.str.1953, ptr @.str.2006], align 16
 @.str.2007 = private unnamed_addr constant [18 x i8] c"%s % 10d  %s  %s\0A\00", align 1
 @.str.2008 = private unnamed_addr constant [25 x i8] c"DELETE FROM %s WHERE %s;\00", align 1
 @.str.2009 = private unnamed_addr constant [69 x i8] c"%s: Input nesting limit (%d) reached at line %lld. Check recursion.\0A\00", align 1
@@ -1044,12 +1040,11 @@ bb.df:                                            ; preds = %bb.de, %bb.dd, %bb.
   %.1.i = phi ptr [ null, %bb.de ], [ %.032.i, %bb.dd ], [ null, %bb.cz ] ; 2 uses
   %i.hg = load ptr, ptr %i.er, align 8, !tbaa !473
   %i.hh = load i8, ptr %i.gm, align 2, !tbaa !475
-  %6 = zext i8 %i.hh to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr @__const.arExtractCommand.azExtraArg, i64 %6
-  %8 = load ptr, ptr %7, align 8, !tbaa !88       ; 2 uses
+  %.sroa.idx.i = icmp eq i8 %i.hh, 1
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, ptr @.str.1988, ptr @.str.1987 ; 2 uses
   %i.hi = load ptr, ptr %i.gj, align 8, !tbaa !474
   %i.hj = load ptr, ptr %i.i, align 8, !tbaa !88
-  call void (ptr, ptr, ptr, ptr, ...) @shellPreparePrintf(ptr noundef %i.hg, ptr noundef %i.h, ptr noundef %i.g, ptr noundef nonnull @.str.1986, ptr noundef %8, ptr noundef %8, ptr noundef %i.hi, ptr noundef %i.hj)
+  call void (ptr, ptr, ptr, ptr, ...) @shellPreparePrintf(ptr noundef %i.hg, ptr noundef %i.h, ptr noundef %i.g, ptr noundef nonnull @.str.1986, ptr noundef nonnull %.sroa.speculated.i, ptr noundef nonnull %.sroa.speculated.i, ptr noundef %i.hi, ptr noundef %i.hj)
   %i.hk = load i32, ptr %i.h, align 4, !tbaa !53
   %i.hl = icmp eq i32 %i.hk, 0
   br i1 %i.hl, label %bb.dg, label %arExtractCommand.exit
@@ -1312,12 +1307,11 @@ bb.eh:                                            ; preds = %bb.cx
   %i.lc = load ptr, ptr %i.er, align 8, !tbaa !473
   %i.ld = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
   %i.le = load i8, ptr %i.ld, align 1, !tbaa !467
-  %9 = zext i8 %i.le to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr @__const.arListCommand.azCols, i64 %9
-  %11 = load ptr, ptr %10, align 8, !tbaa !88
+  %.sroa.idx.i62 = icmp eq i8 %i.le, 1
+  %.sroa.speculated.i63 = select i1 %.sroa.idx.i62, ptr @.str.2006, ptr @.str.1953
   %i.lf = load ptr, ptr %i.gj, align 8, !tbaa !474
   %i.lg = load ptr, ptr %i.d, align 8, !tbaa !88  ; 2 uses
-  call void (ptr, ptr, ptr, ptr, ...) @shellPreparePrintf(ptr noundef %i.lc, ptr noundef %i.f, ptr noundef %i.e, ptr noundef nonnull @.str.2005, ptr noundef %11, ptr noundef %i.lf, ptr noundef %i.lg)
+  call void (ptr, ptr, ptr, ptr, ...) @shellPreparePrintf(ptr noundef %i.lc, ptr noundef %i.f, ptr noundef %i.e, ptr noundef nonnull @.str.2005, ptr noundef nonnull %.sroa.speculated.i63, ptr noundef %i.lf, ptr noundef %i.lg)
   %i.lh = getelementptr inbounds nuw i8, ptr %5, i64 3
   %i.li = load i8, ptr %i.lh, align 1, !tbaa !465
   %.not.i62 = icmp eq i8 %i.li, 0
@@ -1720,21 +1714,25 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.n = add nsw i32 %i.j, %i.m                   ; 2 uses
   %i.o = mul nsw i32 %i.n, 3                      ; 2 uses
   %i.p = icmp sgt i32 %i.n, 10
-  %6 = zext nneg i32 %5 to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr @__const.qrfBoxLine.azDash, i64 %6
-  %8 = load ptr, ptr %7, align 8, !tbaa !88       ; 4 uses
-  br i1 %i.p, label %.lr.ph.i.a, label %qrfBoxLine.exit
+  br i1 %i.p, label %.lr.ph.i, label %qrfBoxLine.exit
 
-.lr.ph.i.a:                                       ; preds = %bb.d, %.lr.ph.i.a
-  %.07.i = phi i32 [ %i.q, %.lr.ph.i.a ], [ %i.o, %bb.d ] ; 2 uses
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %8, i32 noundef 30) #45
+.lr.ph.i:                                         ; preds = %bb.d
+  %.sroa.idx.not.i = icmp eq i32 %5, 0
+  %.sroa.speculated.i = select i1 %.sroa.idx.not.i, ptr @.str.215, ptr @.str.216
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.i
+  %.07.i = phi i32 [ %i.o, %.lr.ph.i ], [ %i.q, %.lr.ph.i.a ] ; 2 uses
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef nonnull %.sroa.speculated.i, i32 noundef 30) #45
   %i.q = add nsw i32 %.07.i, -30                  ; 2 uses
   %i.r = icmp sgt i32 %.07.i, 60
   br i1 %i.r, label %.lr.ph.i.a, label %qrfBoxLine.exit, !llvm.loop !1041
 
 qrfBoxLine.exit:                                  ; preds = %.lr.ph.i.a, %bb.d
   %.0.lcssa.i = phi i32 [ %i.o, %bb.d ], [ %i.q, %.lr.ph.i.a ]
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %8, i32 noundef %.0.lcssa.i) #45
+  %.sroa.idx1.not.i = icmp eq i32 %5, 0
+  %.sroa.speculated6.i = select i1 %.sroa.idx1.not.i, ptr @.str.215, ptr @.str.216 ; 3 uses
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef nonnull %.sroa.speculated6.i, i32 noundef %.0.lcssa.i) #45
   %i.s = load i32, ptr %i.a, align 8, !tbaa !84
   %i.t = icmp sgt i32 %i.s, 1
   br i1 %i.t, label %.lr.ph, label %._crit_edge
@@ -1755,14 +1753,14 @@ qrfBoxLine.exit:                                  ; preds = %.lr.ph.i.a, %bb.d
 
 .lr.ph.i23:                                       ; preds = %.lr.ph, %.lr.ph.i23
   %.07.i24 = phi i32 [ %i.ad, %.lr.ph.i23 ], [ %i.ab, %.lr.ph ] ; 2 uses
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %8, i32 noundef 30) #45
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef nonnull %.sroa.speculated6.i, i32 noundef 30) #45
   %i.ad = add nsw i32 %.07.i24, -30               ; 2 uses
   %i.ae = icmp sgt i32 %.07.i24, 60
   br i1 %i.ae, label %.lr.ph.i23, label %qrfBoxLine.exit25, !llvm.loop !1041
 
 qrfBoxLine.exit25:                                ; preds = %.lr.ph.i23, %.lr.ph
   %.0.lcssa.i22 = phi i32 [ %i.ab, %.lr.ph ], [ %i.ad, %.lr.ph.i23 ]
-  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef %8, i32 noundef %.0.lcssa.i22) #45
+  tail call void @sqlite3_str_append(ptr noundef %0, ptr noundef nonnull %.sroa.speculated6.i, i32 noundef %.0.lcssa.i22) #45
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.af = load i32, ptr %i.a, align 8, !tbaa !84
   %i.ag = sext i32 %i.af to i64
@@ -2165,9 +2163,8 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 bb.aa:                                            ; preds = %.lr.ph, %arExecSql.exit79
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %arExecSql.exit79 ] ; 2 uses
   %i.ca = load i8, ptr %i.ad, align 2, !tbaa !475
-  %3 = zext i8 %i.ca to i64
-  %4 = getelementptr inbounds nuw [8 x i8], ptr @__const.arCreateOrUpdateCommand.zInsertFmt, i64 %3
-  %5 = load ptr, ptr %4, align 8, !tbaa !88
+  %.sroa.idx = icmp eq i8 %i.ca, 1
+  %.sroa.speculated = select i1 %.sroa.idx, ptr @.str.1976, ptr @.str.1975
   %i.cb = load i8, ptr %i.bv, align 1, !tbaa !467
   %.not59 = icmp eq i8 %i.cb, 0
   %i.cc = select i1 %.not59, ptr @.str.1953, ptr @.str.1982
@@ -2175,7 +2172,7 @@ bb.aa:                                            ; preds = %.lr.ph, %arExecSql.
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.cd, i64 %indvars.iv
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !88
   %i.cg = load ptr, ptr %i.bx, align 8, !tbaa !469
-  %i.ch = call ptr (ptr, ...) @sqlite3_mprintf(ptr noundef %5, ptr noundef nonnull %.045, ptr noundef nonnull %i.cc, ptr noundef %i.cf, ptr noundef %i.cg, ptr noundef %.044) #45 ; 3 uses
+  %i.ch = call ptr (ptr, ...) @sqlite3_mprintf(ptr noundef nonnull %.sroa.speculated, ptr noundef nonnull %.045, ptr noundef nonnull %i.cc, ptr noundef %i.cf, ptr noundef %i.cg, ptr noundef %.044) #45 ; 3 uses
   %i.ci = load i8, ptr %i.k, align 1, !tbaa !465
   %.not.i76 = icmp eq i8 %i.ci, 0
   br i1 %.not.i76, label %bb.ac, label %bb.ab

@@ -205,33 +205,26 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local { <2 x float>, float } @_ZNK4pbrt14TriangleFilter6SampleENS_6Point2IfEE(ptr noundef nonnull align 4 dereferenceable(8) %0, <2 x float> %1) local_unnamed_addr #18 comdat align 2 {
 bb.a:
-  %2 = alloca [2 x float], align 8                ; 4 uses
-  %3 = alloca [2 x float], align 8                ; 4 uses
   %.sroa.0.0.vec.extract = extractelement <2 x float> %1, i64 0 ; 2 uses
   %i.a = load float, ptr %0, align 4, !tbaa !346  ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
-  store <2 x float> splat (float 5.000000e-01), ptr %3, align 8, !tbaa !136
   %i.b = fcmp oeq float %.sroa.0.0.vec.extract, 1.000000e+00
   %spec.select.i = select i1 %i.b, float f0x3F7FFFFF, float %.sroa.0.0.vec.extract ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ 0, %bb.a ] ; 3 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.0.i.i = phi float [ %i.c, %bb.b ], [ 0.000000e+00, %bb.a ] ; 2 uses
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.i.i
-  %5 = load float, ptr %4, align 4, !tbaa !136    ; 2 uses
-  %i.c = fadd float %.0.i.i, %5                   ; 2 uses
+  %i.c = fadd float %.0.i.i, 5.000000e-01         ; 2 uses
   %i.d = fcmp ugt float %i.c, %spec.select.i
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
   br i1 %i.d, label %_ZN4pbrt14SampleDiscreteEN4pstd4spanIKfEEfPfS4_.exit.i, label %bb.b, !llvm.loop !344
 
 _ZN4pbrt14SampleDiscreteEN4pstd4spanIKfEEfPfS4_.exit.i: ; preds = %bb.b
   %i.e = fsub float %spec.select.i, %.0.i.i
-  %6 = fdiv float %i.e, %5                        ; 2 uses
-  %i.f = fcmp ogt float %6, f0x3F7FFFFF
-  %.sroa.speculated.i.i = select i1 %i.f, float f0x3F7FFFFF, float %6 ; 7 uses
+  %2 = fmul float %i.e, 2.000000e+00              ; 2 uses
+  %i.f = fcmp ogt float %2, f0x3F7FFFFF
+  %.sroa.speculated.i.i = select i1 %i.f, float f0x3F7FFFFF, float %2 ; 7 uses
   %i.g = icmp eq i64 %indvars.iv.i.i, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   br i1 %i.g, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %_ZN4pbrt14SampleDiscreteEN4pstd4spanIKfEEfPfS4_.exit.i
@@ -272,29 +265,24 @@ _ZN4pbrt10SampleTentEff.exit:                     ; preds = %_ZN4pbrt12SampleLin
   %.sroa.0.4.vec.extract = extractelement <2 x float> %1, i64 1 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.aa = load float, ptr %i.z, align 4, !tbaa !347 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
-  store <2 x float> splat (float 5.000000e-01), ptr %2, align 8, !tbaa !136
   %i.ab = fcmp oeq float %.sroa.0.4.vec.extract, 1.000000e+00
   %spec.select.i1 = select i1 %i.ab, float f0x3F7FFFFF, float %.sroa.0.4.vec.extract ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %_ZN4pbrt10SampleTentEff.exit
-  %indvars.iv.i.i2 = phi i64 [ %indvars.iv.next.i.i4, %bb.f ], [ 0, %_ZN4pbrt10SampleTentEff.exit ] ; 3 uses
+  %indvars.iv.i.i2 = phi i64 [ %indvars.iv.next.i.i4, %bb.f ], [ 0, %_ZN4pbrt10SampleTentEff.exit ] ; 2 uses
   %.0.i.i3 = phi float [ %i.ac, %bb.f ], [ 0.000000e+00, %_ZN4pbrt10SampleTentEff.exit ] ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv.i.i2
-  %8 = load float, ptr %7, align 4, !tbaa !136    ; 2 uses
-  %i.ac = fadd float %.0.i.i3, %8                 ; 2 uses
+  %i.ac = fadd float %.0.i.i3, 5.000000e-01       ; 2 uses
   %i.ad = fcmp ugt float %i.ac, %spec.select.i1
   %indvars.iv.next.i.i4 = add nuw nsw i64 %indvars.iv.i.i2, 1
   br i1 %i.ad, label %_ZN4pbrt14SampleDiscreteEN4pstd4spanIKfEEfPfS4_.exit.i5, label %bb.f, !llvm.loop !344
 
 _ZN4pbrt14SampleDiscreteEN4pstd4spanIKfEEfPfS4_.exit.i5: ; preds = %bb.f
   %i.ae = fsub float %spec.select.i1, %.0.i.i3
-  %9 = fdiv float %i.ae, %8                       ; 2 uses
-  %i.af = fcmp ogt float %9, f0x3F7FFFFF
-  %.sroa.speculated.i.i6 = select i1 %i.af, float f0x3F7FFFFF, float %9 ; 7 uses
+  %3 = fmul float %i.ae, 2.000000e+00             ; 2 uses
+  %i.af = fcmp ogt float %3, f0x3F7FFFFF
+  %.sroa.speculated.i.i6 = select i1 %i.af, float f0x3F7FFFFF, float %3 ; 7 uses
   %i.ag = icmp eq i64 %indvars.iv.i.i2, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   br i1 %i.ag, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %_ZN4pbrt14SampleDiscreteEN4pstd4spanIKfEEfPfS4_.exit.i5

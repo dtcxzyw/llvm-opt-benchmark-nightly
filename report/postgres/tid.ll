@@ -30,19 +30,19 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noundef i64 @tidin(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca [2 x ptr], align 16                 ; 5 uses
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load i64, ptr %i.b, align 8
   %i.d = inttoptr i64 %i.c to ptr                 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8              ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   br label %switch.early.test
 
 switch.early.test:                                ; preds = %bb.a, %bb.d
   %.061 = phi i32 [ 0, %bb.a ], [ %.1, %bb.d ]    ; 4 uses
+  %.sroa.0.062 = phi ptr [ undef, %bb.a ], [ %.sroa.0.1, %bb.d ] ; 2 uses
+  %.sroa.4.061 = phi ptr [ undef, %bb.a ], [ %.sroa.4.1, %bb.d ] ; 2 uses
   %.04560 = phi ptr [ %i.d, %bb.a ], [ %i.l, %bb.d ] ; 3 uses
   %i.g = load i8, ptr %.04560, align 1            ; 2 uses
   switch i8 %i.g, label %bb.b [
@@ -58,14 +58,16 @@ bb.b:                                             ; preds = %switch.early.test
   br i1 %or.cond3, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %switch.early.test, %bb.b
-  %i.j = getelementptr inbounds nuw i8, ptr %.04560, i64 1
+  %i.j = getelementptr inbounds nuw i8, ptr %.04560, i64 1 ; 2 uses
   %i.k = add nuw nsw i32 %.061, 1
-  %2 = zext nneg i32 %.061 to i64
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %2
-  store ptr %i.j, ptr %3, align 8
+  %.sroa.idx = icmp eq i32 %.061, 1               ; 2 uses
+  %..sroa.4.0 = select i1 %.sroa.idx, ptr %i.j, ptr %.sroa.4.061
+  %.sroa.0.0. = select i1 %.sroa.idx, ptr %.sroa.0.062, ptr %i.j
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
+  %.sroa.4.1 = phi ptr [ %..sroa.4.0, %bb.c ], [ %.sroa.4.061, %bb.b ] ; 2 uses
+  %.sroa.0.1 = phi ptr [ %.sroa.0.0., %bb.c ], [ %.sroa.0.062, %bb.b ] ; 2 uses
   %.1 = phi i32 [ %i.k, %bb.c ], [ %.061, %bb.b ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.04560, i64 1
   %i.m = icmp sgt i32 %.1, 1
@@ -84,8 +86,7 @@ bb.e:                                             ; preds = %.critedge
 bb.f:                                             ; preds = %bb.d
   %i.q = tail call ptr @__errno_location() #11    ; 3 uses
   store i32 0, ptr %i.q, align 4
-  %4 = load ptr, ptr %1, align 16
-  %i.r = call i64 @__isoc23_strtoul(ptr noundef %4, ptr noundef nonnull %i.a, i32 noundef 10) #10 ; 3 uses
+  %i.r = call i64 @__isoc23_strtoul(ptr noundef %.sroa.0.1, ptr noundef nonnull %i.a, i32 noundef 10) #10 ; 3 uses
   %i.s = load i32, ptr %i.q, align 4
   %.not50 = icmp eq i32 %i.s, 0
   br i1 %.not50, label %bb.g, label %bb.h
@@ -122,9 +123,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.r
 
 bb.m:                                             ; preds = %bb.j
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load ptr, ptr %5, align 8
-  %i.ac = call i64 @__isoc23_strtoul(ptr noundef %6, ptr noundef nonnull %i.a, i32 noundef 10) #10 ; 2 uses
+  %i.ac = call i64 @__isoc23_strtoul(ptr noundef %.sroa.4.1, ptr noundef nonnull %i.a, i32 noundef 10) #10 ; 2 uses
   %i.ad = load i32, ptr %i.q, align 4
   %.not54 = icmp eq i32 %i.ad, 0
   br i1 %.not54, label %bb.n, label %bb.o
@@ -164,7 +163,6 @@ bb.q:                                             ; preds = %bb.n
 bb.r:                                             ; preds = %bb.o, %bb.p, %bb.k, %bb.l, %bb.h, %bb.i, %.critedge, %bb.e, %bb.q
   %.046 = phi i64 [ %i.as, %bb.q ], [ 0, %.critedge ], [ 0, %bb.h ], [ 0, %bb.k ], [ 0, %bb.e ], [ 0, %bb.i ], [ 0, %bb.l ], [ 0, %bb.p ], [ 0, %bb.o ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
   ret i64 %.046
 }
 

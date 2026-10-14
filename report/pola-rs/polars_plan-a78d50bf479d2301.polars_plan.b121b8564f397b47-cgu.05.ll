@@ -205,7 +205,7 @@ begin_hunk_0_@_RNvMs_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans9optimizer19projecti
   %i.my = alloca [16 x i8], align 8               ; 5 uses
   %i.mz = alloca [24 x i8], align 8               ; 5 uses
   %i.na = alloca [8 x i8], align 8                ; 8 uses
-  %i.nb = alloca [24 x i8], align 8               ; 7 uses
+  %i.nb = alloca [24 x i8], align 8               ; 6 uses
   %i.nc = alloca [72 x i8], align 8               ; 4 uses
   %i.nd = alloca [16 x i8], align 8               ; 5 uses
   %i.ne = alloca [24 x i8], align 8               ; 7 uses
@@ -608,7 +608,6 @@ bb.sk:                                            ; preds = %bb.sj
   %i.bep = getelementptr inbounds nuw i8, ptr %i.bei, i64 48
   %i.beq = getelementptr inbounds nuw i8, ptr %i.nb, i64 8 ; 3 uses
   %.sroa.2.0..sroa_idx.i1374 = getelementptr inbounds nuw i8, ptr %i.nb, i64 16
-  %.sroa.3.0..sroa_idx.i1375 = getelementptr inbounds nuw i8, ptr %i.nb, i64 20
   br label %bb.sl, !dbg !131859
 
 bb.sl:                                            ; preds = %.lr.ph2945, %bb.te
@@ -680,8 +679,7 @@ bb.sr:                                            ; preds = %bb.sq
   %i.bfe = load ptr, ptr %i.beo, align 8, !dbg !131886, !nonnull !3394, !align !3446, !noundef !3394
   %.sroa.019.0.val936 = load i64, ptr %i.bes, align 16, !dbg !131887, !noundef !3394
   store i64 %.sroa.019.0.val936, ptr %i.beq, align 8, !dbg !131888, !alias.scope !127522, !noalias !127523
-  store i32 1, ptr %.sroa.2.0..sroa_idx.i1374, align 8, !dbg !131888, !alias.scope !127522, !noalias !127523
-  store i32 1, ptr %.sroa.3.0..sroa_idx.i1375, align 4, !dbg !131888, !alias.scope !127522, !noalias !127523
+  store i64 4294967297, ptr %.sroa.2.0..sroa_idx.i1374, align 8, !dbg !131888, !alias.scope !127522, !noalias !127523
   store ptr %i.bfe, ptr %i.nb, align 8, !dbg !131888, !alias.scope !127522, !noalias !127523
   br label %bb.ss, !dbg !131889
 
@@ -1084,7 +1082,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [368 x i8], align 16              ; 4 uses
-  %i.d = alloca [24 x i8], align 8                ; 5 uses
+  %i.d = alloca [24 x i8], align 8                ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %i.f = alloca [368 x i8], align 16              ; 8 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses
@@ -1487,9 +1485,7 @@ bb.ce:                                            ; preds = %bb.cd
   %.sroa.4128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !140915
   store i64 %0, ptr %.sroa.4128.0..sroa_idx, align 8, !dbg !140915
   %.sroa.5129.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16, !dbg !140915
-  store i32 1, ptr %.sroa.5129.0..sroa_idx, align 8, !dbg !140915
-  %.sroa.6130.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 20, !dbg !140915
-  store i32 1, ptr %.sroa.6130.0..sroa_idx, align 4, !dbg !140915
+  store i64 4294967297, ptr %.sroa.5129.0..sroa_idx, align 8, !dbg !140915
   invoke void @_RNvXNtNtCsgZ49sUHp3tW_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtCs2mZqlW55729_12polars_utils5arena4NodeEINtB2_18SpecFromIterNestedB11_INtNtNtNtCscgRAwXFJnXP_4core4iter8adapters10filter_map9FilterMapNtNtNtCsfcROwRM8ZtH_11polars_plan5plans8iterator7AlpIterNCNvNtNtB3j_9optimizer19projection_pushdown19projection_pushdowns_0EE9from_iterB3l_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.e, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.d)
           to label %bb.cf unwind label %bb.bx, !dbg !140916
 

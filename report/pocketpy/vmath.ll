@@ -204,14 +204,14 @@ bb.a:
   %.not = icmp eq i32 %0, 3
   br i1 %.not, label %bb.b, label %2
 
-2:                                                ; preds = %bb.a
-  %3 = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.76, i32 noundef 3, i32 noundef %0) #16
-  br label %.loopexit
-
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.b = tail call zeroext i1 @py_checktype(ptr noundef nonnull %i.a, i16 noundef signext 3) #16
   br i1 %i.b, label %bb.c, label %.loopexit
+
+2:                                                ; preds = %bb.a
+  %3 = tail call zeroext i1 (i16, ptr, ...) @py_exception(i16 noundef signext 45, ptr noundef nonnull @.str.76, i32 noundef 3, i32 noundef %0) #16
+  br label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
   %i.c = tail call i64 @py_toint(ptr noundef nonnull %i.a) #16
@@ -232,7 +232,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %.sroa.0.0.insert.insert, ptr %i.i, align 8, !tbaa !13
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.critedge, %bb.c, %bb.b, %2
+.loopexit:                                        ; preds = %bb.b, %bb.c, %.critedge, %2
   %.2 = phi i1 [ %3, %2 ], [ true, %.critedge ], [ false, %bb.c ], [ false, %bb.b ]
   ret i1 %.2
 }
@@ -290,11 +290,11 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.0.0.copyload.i = load i64, ptr %i.e, align 8, !tbaa !13 ; 2 uses
-  %.sroa.419.0.extract.shift = and i64 %.sroa.0.0.copyload.i, -4294967296
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.0.0.copyload.i13 = load i64, ptr %i.f, align 8, !tbaa !13 ; 2 uses
-  %i.g = add i64 %.sroa.0.0.copyload.i13, %.sroa.0.0.copyload.i
-  %i.h = add i64 %.sroa.0.0.copyload.i13, %.sroa.419.0.extract.shift
+  %.sroa.47.0.extract.shift = and i64 %.sroa.0.0.copyload.i13, -4294967296
+  %i.g = add i64 %.sroa.0.0.copyload.i, %.sroa.0.0.copyload.i13
+  %i.h = add i64 %.sroa.0.0.copyload.i, %.sroa.47.0.extract.shift
   %i.i = tail call ptr (...) @py_retval() #16     ; 3 uses
   %.sroa.4.0.insert.ext = and i64 %i.h, -4294967296
   %.sroa.0.0.insert.ext = and i64 %i.g, 4294967295
@@ -381,8 +381,8 @@ bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.0.0.copyload.i20 = load i64, ptr %i.e, align 8, !tbaa !13 ; 2 uses
   %.sroa.427.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i20, 32
-  %i.f = mul i64 %.sroa.0.0.copyload.i20, %.sroa.0.0.copyload.i
-  %i.g = mul nuw i64 %.sroa.427.0.extract.shift, %.sroa.429.0.extract.shift
+  %i.f = mul i64 %.sroa.0.0.copyload.i, %.sroa.0.0.copyload.i20
+  %i.g = mul nuw i64 %.sroa.429.0.extract.shift, %.sroa.427.0.extract.shift
   %i.h = tail call ptr (...) @py_retval() #16     ; 3 uses
   %.sroa.6.0.insert.ext = shl i64 %i.g, 32
   %.sroa.030.0.insert.ext = and i64 %i.f, 4294967295
@@ -760,14 +760,13 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.419.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i, 32
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.0.0.copyload.i14 = load i64, ptr %i.e, align 8, !tbaa !13 ; 2 uses
-  %.sroa.4.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i14, 32
-  %2 = mul i64 %.sroa.0.0.copyload.i14, %.sroa.0.0.copyload.i
-  %sext = shl i64 %2, 32
+  %.sroa.4.0.extract.shift = and i64 %.sroa.0.0.copyload.i14, -4294967296
+  %2 = shl i64 %.sroa.0.0.copyload.i14, 32
+  %sext = mul i64 %2, %.sroa.0.0.copyload.i
   %i.f = ashr exact i64 %sext, 32
-  %i.g = mul nuw i64 %.sroa.4.0.extract.shift, %.sroa.419.0.extract.shift
-  %sext20 = shl i64 %i.g, 32
-  %i.h = ashr exact i64 %sext20, 32
-  %i.i = add nsw i64 %i.f, %i.h
+  %i.g = mul i64 %.sroa.4.0.extract.shift, %.sroa.419.0.extract.shift
+  %i.h = ashr exact i64 %i.g, 32
+  %i.i = add nsw i64 %i.h, %i.f
   %i.j = tail call ptr (...) @py_retval() #16
   tail call void @py_newint(ptr noundef %i.j, i64 noundef %i.i) #16
   br label %bb.e
