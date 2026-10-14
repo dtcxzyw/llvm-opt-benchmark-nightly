@@ -205,8 +205,8 @@ bb.ac:                                            ; preds = %bb.ab
   br label %.critedge5
 
 bb.ad:                                            ; preds = %bb.y
-  %i.ck = bitcast i64 %i.cb to double
-  %i.cl = tail call double @llvm.trunc.f64(double %i.ck) ; 6 uses
+  %i.ck = bitcast i64 %i.cb to double             ; 3 uses
+  %i.cl = tail call double @llvm.trunc.f64(double %i.ck) ; 4 uses
   switch i8 %5, label %_ZNK2v88internal8compiler10turboshaft16OperationMatcher25MatchIntegralWordConstantENS2_1VINS2_3AnyEEENS2_18WordRepresentationEPmPl.exit.thread [
     i8 1, label %bb.ae
     i8 0, label %bb.af
@@ -216,7 +216,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.cm = fcmp oge double %i.cl, f0xC3E0000000000000
   %i.cn = fcmp ole double %i.cl, f0x43DFFFFFFFFFFFFF
   %or.cond = and i1 %i.cm, %i.cn
-  %i.co = fptosi double %i.cl to i64
+  %i.co = fptosi double %i.ck to i64
   %spec.select = select i1 %or.cond, i64 %i.co, i64 -9223372036854775808
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 744
   %i.cq = tail call i32 @_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_26BlockOriginTrackingReducerENS2_28TurbolevEarlyLoweringReducerENS2_26MachineOptimizationReducerENS2_15VariableReducerENS2_27RequiredOptimizationReducerENS2_21ValueNumberingReducerENS2_13TSReducerBaseEEEEEEE14Word64ConstantEl(ptr noundef nonnull align 8 dereferenceable(136) %i.cp, i64 noundef %spec.select)
@@ -225,7 +225,7 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ad
   %i.cr = fcmp ult double %i.cl, f0xC1E0000000000000
   %i.cs = fcmp ugt double %i.cl, f0x41DFFFFFFFC00000
-  %i.ct = fptosi double %i.cl to i32
+  %i.ct = fptosi double %i.ck to i32
   %i.cu = or i1 %i.cr, %i.cs
   %.0125 = select i1 %i.cu, i32 -2147483648, i32 %i.ct
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 744
