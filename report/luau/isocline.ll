@@ -205,10 +205,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !78
   %i.t = load ptr, ptr %0, align 8, !tbaa !81
-  %4 = add nuw nsw i64 %spec.select34.i, 1
-  %5 = getelementptr i8, ptr %i.s, i64 8
-  %.val.i = load ptr, ptr %5, align 8, !tbaa !74
-  %i.u = tail call ptr %.val.i(ptr noundef %i.t, i64 noundef %4) #28, !inline_history !31 ; 3 uses
+  %4 = getelementptr i8, ptr %i.s, i64 8
+  %.val.i = load ptr, ptr %4, align 8, !tbaa !74
+  %5 = add nuw nsw i64 %spec.select34.i, 1
+  %i.u = tail call ptr %.val.i(ptr noundef %i.t, i64 noundef %5) #28, !inline_history !31 ; 3 uses
   %.not36.i = icmp eq ptr %i.u, null
   br i1 %.not36.i, label %sbuf_ensure_extra.exit, label %bb.i
 
@@ -611,10 +611,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !78
   %i.p = load ptr, ptr %0, align 8, !tbaa !81
-  %4 = add nuw nsw i64 %spec.select34.i, 1
-  %5 = getelementptr i8, ptr %i.o, i64 8
-  %.val.i = load ptr, ptr %5, align 8, !tbaa !74
-  %i.q = tail call ptr %.val.i(ptr noundef %i.p, i64 noundef %4) #28, !inline_history !31 ; 3 uses
+  %4 = getelementptr i8, ptr %i.o, i64 8
+  %.val.i = load ptr, ptr %4, align 8, !tbaa !74
+  %5 = add nuw nsw i64 %spec.select34.i, 1
+  %i.q = tail call ptr %.val.i(ptr noundef %i.p, i64 noundef %5) #28, !inline_history !31 ; 3 uses
   %.not36.i = icmp eq ptr %i.q, null
   br i1 %.not36.i, label %sbuf_ensure_extra.exit, label %bb.g
 
@@ -679,10 +679,10 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !78
   %i.ar = load ptr, ptr %0, align 8, !tbaa !81
-  %6 = add nuw nsw i64 %spec.select34.i43, 1
-  %7 = getelementptr i8, ptr %i.aq, i64 8
-  %.val.i44 = load ptr, ptr %7, align 8, !tbaa !74
-  %i.as = call ptr %.val.i44(ptr noundef %i.ar, i64 noundef %6) #28, !inline_history !31 ; 3 uses
+  %6 = getelementptr i8, ptr %i.aq, i64 8
+  %.val.i44 = load ptr, ptr %6, align 8, !tbaa !74
+  %7 = add nuw nsw i64 %spec.select34.i43, 1
+  %i.as = call ptr %.val.i44(ptr noundef %i.ar, i64 noundef %7) #28, !inline_history !31 ; 3 uses
   %.not36.i45 = icmp eq ptr %i.as, null
   br i1 %.not36.i45, label %sbuf_ensure_extra.exit47, label %bb.n
 
@@ -1085,10 +1085,10 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.nt = getelementptr inbounds nuw i8, ptr %i.nd, i64 24
   %i.nu = load ptr, ptr %i.nt, align 8, !tbaa !78
   %i.nv = load ptr, ptr %i.nd, align 8, !tbaa !81
-  %5 = add nuw nsw i64 %spec.select34.i.i.i, 1
-  %6 = getelementptr i8, ptr %i.nu, i64 8
-  %.val.i.i.i = load ptr, ptr %6, align 8, !tbaa !74
-  %i.nw = call ptr %.val.i.i.i(ptr noundef %i.nv, i64 noundef %5) #28, !inline_history !421 ; 3 uses
+  %5 = getelementptr i8, ptr %i.nu, i64 8
+  %.val.i.i.i = load ptr, ptr %5, align 8, !tbaa !74
+  %6 = add nuw nsw i64 %spec.select34.i.i.i, 1
+  %i.nw = call ptr %.val.i.i.i(ptr noundef %i.nv, i64 noundef %6) #28, !inline_history !421 ; 3 uses
   %.not36.i.i.i = icmp eq ptr %i.nw, null
   br i1 %.not36.i.i.i, label %sbuf_insert_at_n.exit.i, label %bb.bv
 
@@ -1181,10 +1181,10 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
   %i.pf = getelementptr inbounds nuw i8, ptr %i.op, i64 24
   %i.pg = load ptr, ptr %i.pf, align 8, !tbaa !78
   %i.ph = load ptr, ptr %i.op, align 8, !tbaa !81
-  %7 = add nuw nsw i64 %spec.select34.i.i322.i, 1
-  %8 = getelementptr i8, ptr %i.pg, i64 8
-  %.val.i.i323.i = load ptr, ptr %8, align 8, !tbaa !74
-  %i.pi = call ptr %.val.i.i323.i(ptr noundef %i.ph, i64 noundef %7) #28, !inline_history !421 ; 3 uses
+  %7 = getelementptr i8, ptr %i.pg, i64 8
+  %.val.i.i323.i = load ptr, ptr %7, align 8, !tbaa !74
+  %8 = add nuw nsw i64 %spec.select34.i.i322.i, 1
+  %i.pi = call ptr %.val.i.i323.i(ptr noundef %i.ph, i64 noundef %8) #28, !inline_history !421 ; 3 uses
   %.not36.i.i324.i = icmp eq ptr %i.pi, null
   br i1 %.not36.i.i324.i, label %sbuf_insert_at_n.exit327.i, label %bb.cc
 
@@ -1275,10 +1275,10 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
   %i.qp = getelementptr inbounds nuw i8, ptr %i.pz, i64 24
   %i.qq = load ptr, ptr %i.qp, align 8, !tbaa !78
   %i.qr = load ptr, ptr %i.pz, align 8, !tbaa !81
-  %9 = add nuw nsw i64 %spec.select34.i.i303.i, 1
-  %10 = getelementptr i8, ptr %i.qq, i64 8
-  %.val.i.i304.i = load ptr, ptr %10, align 8, !tbaa !74
-  %i.qs = call ptr %.val.i.i304.i(ptr noundef %i.qr, i64 noundef %9) #28, !inline_history !421 ; 3 uses
+  %9 = getelementptr i8, ptr %i.qq, i64 8
+  %.val.i.i304.i = load ptr, ptr %9, align 8, !tbaa !74
+  %10 = add nuw nsw i64 %spec.select34.i.i303.i, 1
+  %i.qs = call ptr %.val.i.i304.i(ptr noundef %i.qr, i64 noundef %10) #28, !inline_history !421 ; 3 uses
   %.not36.i.i305.i = icmp eq ptr %i.qs, null
   br i1 %.not36.i.i305.i, label %sbuf_insert_at_n.exit308.i, label %bb.cj
 
@@ -1681,10 +1681,10 @@ bb.ee:                                            ; preds = %bb.ed, %bb.ec
   %i.aaa = getelementptr inbounds nuw i8, ptr %i.zk, i64 24
   %i.aab = load ptr, ptr %i.aaa, align 8, !tbaa !78
   %i.aac = load ptr, ptr %i.zk, align 8, !tbaa !81
-  %11 = add nuw nsw i64 %spec.select34.i.i405.peel.i, 1
-  %12 = getelementptr i8, ptr %i.aab, i64 8
-  %.val.i.i406.peel.i = load ptr, ptr %12, align 8, !tbaa !74
-  %i.aad = call ptr %.val.i.i406.peel.i(ptr noundef %i.aac, i64 noundef %11) #28, !inline_history !421 ; 3 uses
+  %11 = getelementptr i8, ptr %i.aab, i64 8
+  %.val.i.i406.peel.i = load ptr, ptr %11, align 8, !tbaa !74
+  %12 = add nuw nsw i64 %spec.select34.i.i405.peel.i, 1
+  %i.aad = call ptr %.val.i.i406.peel.i(ptr noundef %i.aac, i64 noundef %12) #28, !inline_history !421 ; 3 uses
   %.not36.i.i407.peel.i = icmp eq ptr %i.aad, null
   br i1 %.not36.i.i407.peel.i, label %.peel.next.i, label %bb.ef
 
@@ -1779,10 +1779,10 @@ bb.em:                                            ; preds = %bb.el, %bb.ek
   %i.abk = getelementptr inbounds nuw i8, ptr %i.aau, i64 24
   %i.abl = load ptr, ptr %i.abk, align 8, !tbaa !78
   %i.abm = load ptr, ptr %i.aau, align 8, !tbaa !81
-  %13 = add nuw nsw i64 %spec.select34.i.i386.i, 1
-  %14 = getelementptr i8, ptr %i.abl, i64 8
-  %.val.i.i387.i = load ptr, ptr %14, align 8, !tbaa !74
-  %i.abn = call ptr %.val.i.i387.i(ptr noundef %i.abm, i64 noundef %13) #28, !inline_history !421 ; 3 uses
+  %13 = getelementptr i8, ptr %i.abl, i64 8
+  %.val.i.i387.i = load ptr, ptr %13, align 8, !tbaa !74
+  %14 = add nuw nsw i64 %spec.select34.i.i386.i, 1
+  %i.abn = call ptr %.val.i.i387.i(ptr noundef %i.abm, i64 noundef %14) #28, !inline_history !421 ; 3 uses
   %.not36.i.i388.i = icmp eq ptr %i.abn, null
   br i1 %.not36.i.i388.i, label %sbuf_insert_at_n.exit391.i, label %bb.en
 
@@ -1874,10 +1874,10 @@ bb.et:                                            ; preds = %bb.es, %bb.er
   %i.acv = getelementptr inbounds nuw i8, ptr %i.acf, i64 24
   %i.acw = load ptr, ptr %i.acv, align 8, !tbaa !78
   %i.acx = load ptr, ptr %i.acf, align 8, !tbaa !81
-  %15 = add nuw nsw i64 %spec.select34.i.i405.i, 1
-  %16 = getelementptr i8, ptr %i.acw, i64 8
-  %.val.i.i406.i = load ptr, ptr %16, align 8, !tbaa !74
-  %i.acy = call ptr %.val.i.i406.i(ptr noundef %i.acx, i64 noundef %15) #28, !inline_history !421 ; 3 uses
+  %15 = getelementptr i8, ptr %i.acw, i64 8
+  %.val.i.i406.i = load ptr, ptr %15, align 8, !tbaa !74
+  %16 = add nuw nsw i64 %spec.select34.i.i405.i, 1
+  %i.acy = call ptr %.val.i.i406.i(ptr noundef %i.acx, i64 noundef %16) #28, !inline_history !421 ; 3 uses
   %.not36.i.i407.i = icmp eq ptr %i.acy, null
   br i1 %.not36.i.i407.i, label %sbuf_insert_at_n.exit410.i, label %bb.eu
 
@@ -1985,10 +1985,10 @@ bb.fa:                                            ; preds = %bb.ez, %bb.ey
   %i.aeh = getelementptr inbounds nuw i8, ptr %i.adr, i64 24
   %i.aei = load ptr, ptr %i.aeh, align 8, !tbaa !78
   %i.aej = load ptr, ptr %i.adr, align 8, !tbaa !81
-  %17 = add nuw nsw i64 %spec.select34.i.i424.i, 1
-  %18 = getelementptr i8, ptr %i.aei, i64 8
-  %.val.i.i425.i = load ptr, ptr %18, align 8, !tbaa !74
-  %i.aek = call ptr %.val.i.i425.i(ptr noundef %i.aej, i64 noundef %17) #28, !inline_history !421 ; 3 uses
+  %17 = getelementptr i8, ptr %i.aei, i64 8
+  %.val.i.i425.i = load ptr, ptr %17, align 8, !tbaa !74
+  %18 = add nuw nsw i64 %spec.select34.i.i424.i, 1
+  %i.aek = call ptr %.val.i.i425.i(ptr noundef %i.aej, i64 noundef %18) #28, !inline_history !421 ; 3 uses
   %.not36.i.i426.i = icmp eq ptr %i.aek, null
   br i1 %.not36.i.i426.i, label %sbuf_insert_at_n.exit429.i, label %bb.fb
 

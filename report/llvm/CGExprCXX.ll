@@ -205,11 +205,11 @@ _ZNK5clang10TargetInfo11getNewAlignEv.exit:       ; preds = %bb.ef, %bb.eg
   %.not.i193 = icmp eq i64 %.sroa.speculated275, 0
   %i.aap = call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.sroa.speculated275, i1 true)
   %i.aaq = lshr exact i64 -9223372036854775808, %i.aap
-  %.0.i194 = select i1 %.not.i193, i64 0, i64 %i.aaq
   %i.aar = load ptr, ptr %i.j, align 8, !tbaa !263, !nonnull !264, !align !265
   %i.aas = getelementptr inbounds nuw i8, ptr %i.aar, i64 144
   %i.aat = load ptr, ptr %i.aas, align 8, !tbaa !655, !nonnull !264, !align !265
-  %i.aau = call i64 @_ZNK5clang10ASTContext19toCharUnitsFromBitsEl(ptr noundef nonnull align 8 dereferenceable(23904) %i.aat, i64 noundef %.0.i194) #16
+  %84 = select i1 %.not.i193, i64 0, i64 %i.aaq
+  %i.aau = call i64 @_ZNK5clang10ASTContext19toCharUnitsFromBitsEl(ptr noundef nonnull align 8 dereferenceable(23904) %i.aat, i64 noundef %84) #16
   %.sroa.speculated = call i64 @llvm.smax.i64(i64 %.sroa.0462.0, i64 %i.aau)
   br label %_ZNK5clang12FunctionDecl37isReplaceableGlobalAllocationFunctionEPNS_16OptionalUnsignedIjEEPb.exit.thread
 

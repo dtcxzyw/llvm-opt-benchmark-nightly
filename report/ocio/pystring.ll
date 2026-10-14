@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.m = sub nsw i32 %.037.i, %i.d
-  %4 = zext nneg i32 %i.m to i64
-  %i.n = getelementptr inbounds nuw i8, ptr %.val, i64 %4
+  %4 = sext i32 %i.m to i64
+  %i.n = getelementptr inbounds i8, ptr %.val, i64 %4
   %sext.i = shl i64 %.val6, 32
   %i.o = ashr exact i64 %sext.i, 32
   %bcmp.i = tail call i32 @bcmp(ptr readonly %i.n, ptr readonly %.val5, i64 %i.o)

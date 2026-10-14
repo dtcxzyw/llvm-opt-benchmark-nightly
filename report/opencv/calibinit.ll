@@ -205,7 +205,7 @@ _ZNSt6vectorIN2cv6Point_IiEESaIS2_EED2Ev.exit233: ; preds = %.loopexit, %.loopex
   br label %bb.cl
 
 _ZN2cv10AutoBufferINS_14ChessBoardQuadELm19EE8allocateEm.exit: ; preds = %bb.t, %_ZN2cv10AutoBufferINS_14ChessBoardQuadELm19EE10deallocateEv.exit.i, %bb.m
-  %i.jj = shl i64 %.sroa.speculated259, 2         ; 5 uses
+  %i.jj = shl nsw i64 %.sroa.speculated259, 2     ; 5 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %0, i64 1912 ; 3 uses
   %i.jl = load i64, ptr %i.jk, align 8, !tbaa !183
   %.not.i234 = icmp ugt i64 %i.jj, %i.jl

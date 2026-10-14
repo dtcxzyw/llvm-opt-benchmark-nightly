@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l, %_ZN5folly3f1
   %i.dn = sub i64 %i.dm, %.pre-phi
   %i.do = sdiv exact i64 %i.dn, 24
   %.sroa.speculated.i = call i64 @llvm.umax.i64(i64 %i.do, i64 1)
-  %i.dp = shl i64 %.sroa.speculated.i, 2
+  %i.dp = shl nsw i64 %.sroa.speculated.i, 2
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !68 ; 2 uses
   %i.ds = ptrtoint ptr %i.dr to i64
@@ -252,7 +252,7 @@ bb.a:
   %i.f = sub i64 %i.d, %i.e
   %i.g = sdiv exact i64 %i.f, 24
   %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.g, i64 1)
-  %i.h = shl i64 %.sroa.speculated, 2
+  %i.h = shl nsw i64 %.sroa.speculated, 2
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !68
   %i.k = ptrtoint ptr %i.j to i64

@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.ak
 
 bb.d:                                             ; preds = %bb.b
-  %4 = zext nneg i32 %.032 to i64                 ; 3 uses
+  %4 = sext i32 %.032 to i64                      ; 3 uses
   %i.p = load i64, ptr %i.c, align 8
   %i.q = add i64 %i.p, %4
   store i64 %i.q, ptr %i.c, align 8

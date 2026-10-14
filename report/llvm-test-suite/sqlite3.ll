@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o, %._crit_edge
 bb.q:                                             ; preds = %bb.n
   %spec.store.select = tail call i64 @llvm.smax.i64(i64 %spec.select77, i64 0)
   %i.dg = getelementptr inbounds nuw i8, ptr %.059, i64 %.051 ; 2 uses
-  %i.dh = trunc nuw i64 %spec.store.select to i32 ; 2 uses
+  %i.dh = trunc i64 %spec.store.select to i32     ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.dj = icmp sgt i32 %i.dh, -1
   br i1 %i.dj, label %bb.r, label %.preheader63.i.i

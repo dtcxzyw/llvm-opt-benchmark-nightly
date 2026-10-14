@@ -205,15 +205,16 @@ bb.ak:                                            ; preds = %_ZN12_GLOBAL__N_119
   %.sroa.speculated = call i8 @llvm.umin.i8(i8 %.sroa.0.0.copyload.i457, i8 3)
   %i.hm = add i32 %.0381.lcssa, %.0383.lcssa
   %i.hn = add i32 %i.hm, %i.hj
-  %52 = zext nneg i8 %.sroa.speculated to i32
-  %notmask = shl nsw i32 -1, %52
-  %53 = xor i32 %notmask, -1
-  %54 = select i1 %.not408, i32 3, i32 %53
-  %55 = and i32 %i.hn, %54                        ; 7 uses
-  %56 = sub nsw i32 0, %55                        ; 2 uses
-  %.zext = zext nneg i32 %55 to i64               ; 2 uses
+  %52 = zext i32 %i.hn to i64
+  %53 = zext nneg i8 %.sroa.speculated to i64
+  %notmask = shl nsw i64 -1, %53
+  %54 = xor i64 %notmask, -1
+  %55 = select i1 %.not408, i64 3, i64 %54
+  %56 = and i64 %55, %52                          ; 4 uses
+  %57 = trunc nuw nsw i64 %56 to i32              ; 5 uses
+  %58 = sub nsw i32 0, %57                        ; 2 uses
   %i.ho = add i32 %.0383.lcssa, %.0385.lcssa
-  %i.hp = add i32 %i.ho, %55
+  %i.hp = add i32 %i.ho, %57
   %i.hq = sub i32 %i.hl, %i.hp                    ; 2 uses
   br i1 %i.bq, label %bb.al, label %bb.am
 
@@ -406,7 +407,7 @@ bb.at:                                            ; preds = %_ZN4llvm26MachineIn
 
 _ZN12_GLOBAL__N_119StackAdjustingInsts7addInstEN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEjb.exit561: ; preds = %bb.at, %bb.as, %bb.aq
   %.sroa.0986.5 = phi ptr [ %.sroa.0986.4, %bb.aq ], [ %.sroa.0.0.copyload.i546, %bb.as ], [ %.sroa.0.0.copyload.i546, %bb.at ] ; 12 uses
-  %.not412 = icmp eq i32 %55, 0
+  %.not412 = icmp eq i64 %56, 0
   br i1 %.not412, label %_ZN12_GLOBAL__N_119StackAdjustingInsts7addInstEN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEjb.exit587, label %bb.au
 
 bb.au:                                            ; preds = %_ZN12_GLOBAL__N_119StackAdjustingInsts7addInstEN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEjb.exit561
@@ -415,7 +416,7 @@ bb.au:                                            ; preds = %_ZN12_GLOBAL__N_119
 
 bb.av:                                            ; preds = %bb.au
   %i.kd = load ptr, ptr %i.i, align 8, !tbaa !186, !nonnull !30, !align !155
-  %i.ke = call noundef zeroext i1 @_ZN4llvm26tryFoldSPUpdateIntoPushPopERKNS_12ARMSubtargetERNS_15MachineFunctionEPNS_12MachineInstrEj(ptr noundef nonnull align 8 dereferenceable(519368) %i.kd, ptr noundef nonnull align 8 dereferenceable(1065) %1, ptr noundef nonnull %.sroa.0986.5, i32 noundef %55) #22
+  %i.ke = call noundef zeroext i1 @_ZN4llvm26tryFoldSPUpdateIntoPushPopERKNS_12ARMSubtargetERNS_15MachineFunctionEPNS_12MachineInstrEj(ptr noundef nonnull align 8 dereferenceable(519368) %i.kd, ptr noundef nonnull align 8 dereferenceable(1065) %1, ptr noundef nonnull %.sroa.0986.5, i32 noundef %57) #22
   br i1 %i.ke, label %bb.aw, label %.critedge3
 
 bb.aw:                                            ; preds = %bb.av
@@ -521,7 +522,7 @@ _ZN12_GLOBAL__N_119StackAdjustingInsts13addExtraBytesEN4llvm26MachineInstrBundle
   %.028.i.i.i.i.i = phi ptr [ %.1.i.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i.i ], [ %i.kg, %bb.bf ], [ %.2.i.i.i.i.i, %._crit_edge._crit_edge57.i.i.i.i.i ], [ %.029.lcssa.i.i.i.i.i, %bb.bc ], [ %i.lb, %_ZN12_GLOBAL__N_119StackAdjustingInsts13addExtraBytesEN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEj.exit.loopexit.split.loop.exit1250 ], [ %i.la, %_ZN12_GLOBAL__N_119StackAdjustingInsts13addExtraBytesEN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEj.exit.loopexit.split.loop.exit1248 ], [ %i.kz, %_ZN12_GLOBAL__N_119StackAdjustingInsts13addExtraBytesEN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEj.exit.loopexit.split.loop.exit ], [ %.02950.i.i.i.i.i, %bb.ax ]
   %i.lc = getelementptr inbounds nuw i8, ptr %.028.i.i.i.i.i, i64 8 ; 2 uses
   %i.ld = load i32, ptr %i.lc, align 8, !tbaa !323
-  %i.le = add i32 %i.ld, %55
+  %i.le = add i32 %i.ld, %57
   store i32 %i.le, ptr %i.lc, align 8, !tbaa !323
   br label %_ZN12_GLOBAL__N_119StackAdjustingInsts7addInstEN4llvm26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEEjb.exit587
 
@@ -529,11 +530,11 @@ _ZN12_GLOBAL__N_119StackAdjustingInsts13addExtraBytesEN4llvm26MachineInstrBundle
   br i1 %i.v, label %bb.bh, label %bb.bg
 
 bb.bg:                                            ; preds = %.critedge3
-  call void @_ZN4llvm23emitARMRegPlusImmediateERNS_17MachineBasicBlockERNS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocENS_8RegisterES9_iNS_5ARMCC9CondCodesES9_RKNS_16ARMBaseInstrInfoEj(ptr noundef nonnull align 8 dereferenceable(360) %2, ptr noundef nonnull align 8 dereferenceable(8) %23, ptr noundef nonnull align 8 dereferenceable(8) %24, i32 17, i32 17, i32 noundef %56, i32 noundef 14, i32 0, ptr noundef nonnull align 8 dereferenceable(272) %i.s, i32 noundef range(i32 0, 3) 1) #22
+  call void @_ZN4llvm23emitARMRegPlusImmediateERNS_17MachineBasicBlockERNS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocENS_8RegisterES9_iNS_5ARMCC9CondCodesES9_RKNS_16ARMBaseInstrInfoEj(ptr noundef nonnull align 8 dereferenceable(360) %2, ptr noundef nonnull align 8 dereferenceable(8) %23, ptr noundef nonnull align 8 dereferenceable(8) %24, i32 17, i32 17, i32 noundef %58, i32 noundef 14, i32 0, ptr noundef nonnull align 8 dereferenceable(272) %i.s, i32 noundef range(i32 0, 3) 1) #22
   br label %_ZL12emitSPUpdatebRN4llvm17MachineBasicBlockERNS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocERKNS_16ARMBaseInstrInfoEijNS_5ARMCC9CondCodesEj.exit563
 
 bb.bh:                                            ; preds = %.critedge3
-  call void @_ZN4llvm22emitT2RegPlusImmediateERNS_17MachineBasicBlockERNS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocENS_8RegisterES9_iNS_5ARMCC9CondCodesES9_RKNS_16ARMBaseInstrInfoEj(ptr noundef nonnull align 8 dereferenceable(360) %2, ptr noundef nonnull align 8 dereferenceable(8) %23, ptr noundef nonnull align 8 dereferenceable(8) %24, i32 17, i32 17, i32 noundef %56, i32 noundef 14, i32 0, ptr noundef nonnull align 8 dereferenceable(272) %i.s, i32 noundef range(i32 0, 3) 1) #22
+  call void @_ZN4llvm22emitT2RegPlusImmediateERNS_17MachineBasicBlockERNS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocENS_8RegisterES9_iNS_5ARMCC9CondCodesES9_RKNS_16ARMBaseInstrInfoEj(ptr noundef nonnull align 8 dereferenceable(360) %2, ptr noundef nonnull align 8 dereferenceable(8) %23, ptr noundef nonnull align 8 dereferenceable(8) %24, i32 17, i32 17, i32 noundef %58, i32 noundef 14, i32 0, ptr noundef nonnull align 8 dereferenceable(272) %i.s, i32 noundef range(i32 0, 3) 1) #22
   br label %_ZL12emitSPUpdatebRN4llvm17MachineBasicBlockERNS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocERKNS_16ARMBaseInstrInfoEijNS_5ARMCC9CondCodesEj.exit563
 
 _ZL12emitSPUpdatebRN4llvm17MachineBasicBlockERNS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocERKNS_16ARMBaseInstrInfoEijNS_5ARMCC9CondCodesEj.exit563: ; preds = %bb.bg, %bb.bh
@@ -569,7 +570,7 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEmmEv.exit.i571: ; pr
   %.sroa.0.1.i.i.i9.i572 = phi ptr [ %i.lg, %_ZL12emitSPUpdatebRN4llvm17MachineBasicBlockERNS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_8DebugLocERKNS_16ARMBaseInstrInfoEijNS_5ARMCC9CondCodesEj.exit563 ], [ %i.lg, %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EE5isEndEv.exit.preheader.i.i.i10.i574 ], [ %i.lm, %_ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EE5isEndEv.exit.i.i.i11.i576 ] ; 2 uses
   %i.lq = zext nneg i8 %.1399 to i64
   %.sroa.4.12.insert.shift.i582 = shl nuw nsw i64 %i.lq, 32
-  %.sroa.4.12.insert.insert.i583 = or disjoint i64 %.sroa.4.12.insert.shift.i582, %.zext ; 2 uses
+  %.sroa.4.12.insert.insert.i583 = or disjoint i64 %.sroa.4.12.insert.shift.i582, %56 ; 2 uses
   %i.lr = load i32, ptr %i.bj, align 8, !tbaa !230 ; 2 uses
   %i.ls = load i32, ptr %i.bk, align 4, !tbaa !231
   %.not.i.i584 = icmp ult i32 %i.lr, %i.ls
@@ -972,7 +973,7 @@ _ZL18sizeOfSPAdjustmentRKN4llvm12MachineInstrE.exit732: ; preds = %bb.cz, %bb.cz
   %i.abp = add nuw nsw i64 %i.abo, %i.abf
   %i.abq = add nuw nsw i64 %i.abp, %i.abd
   %i.abr = add nsw i64 %i.abq, %i.aam
-  %i.abs = add nsw i64 %i.abr, %.zext
+  %i.abs = add nsw i64 %i.abr, %56
   br label %bb.dd
 
 bb.dc:                                            ; preds = %bb.cs
@@ -1375,7 +1376,7 @@ _ZNK4llvm19TargetFrameLowering5hasFPERKNS_15MachineFunctionE.exit827.thread: ; p
   %i.alo = getelementptr inbounds nuw i8, ptr %i.f, i64 56
   store i32 %.0383.lcssa, ptr %i.alo, align 8, !tbaa !369
   %i.alp = getelementptr inbounds nuw i8, ptr %i.f, i64 60
-  store i32 %55, ptr %i.alp, align 4, !tbaa !370
+  store i32 %57, ptr %i.alp, align 4, !tbaa !370
   %i.alq = getelementptr inbounds nuw i8, ptr %i.f, i64 64
   store i32 %.0385.lcssa, ptr %i.alq, align 8, !tbaa !371
   %i.alr = getelementptr inbounds nuw i8, ptr %i.f, i64 68

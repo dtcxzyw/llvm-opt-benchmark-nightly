@@ -204,13 +204,13 @@ bb.be:                                            ; preds = %_ZNK2cv11_InputArra
   %i.dg = add nuw nsw i64 %i.de, %i.df
   %i.dh = mul nuw nsw i64 %.sroa.speculated, %i.dg
   %i.di = shl nuw nsw i32 %i.cc, 3
-  %23 = zext nneg i32 %i.di to i64
-  %24 = add nuw nsw i64 %i.dh, %23                ; 2 uses
-  %i.dj = add nuw nsw i64 %24, 128                ; 2 uses
+  %narrow = add nuw nsw i32 %i.di, 128
+  %23 = zext nneg i32 %narrow to i64
+  %i.dj = add nuw nsw i64 %i.dh, %23              ; 3 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 4 uses
   store ptr %i.dk, ptr %18, align 8, !tbaa !31
   %i.dl = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %.not.i.i = icmp samesign ugt i64 %24, 904
+  %.not.i.i = icmp samesign ugt i64 %i.dj, 1032
   store i64 %i.dj, ptr %i.dl, align 8, !tbaa !32
   br i1 %.not.i.i, label %bb.bf, label %_ZN2cv10AutoBufferIhLm1032EEC2Em.exit
 

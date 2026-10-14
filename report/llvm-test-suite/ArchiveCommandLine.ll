@@ -204,7 +204,7 @@ _ZN11CStringBaseIwE6DeleteEii.exit.a:             ; preds = %bb.iy
   store i32 %i.aus, ptr %i.aui, align 8, !tbaa !42
   br label %bb.iz
 
-bb.iz:                                            ; preds = %_ZN11CStringBaseIwEaSERKS0_.exit396, %_ZN11CStringBaseIwE6DeleteEii.exit.a, %bb.iy, %.thread638
+bb.iz:                                            ; preds = %_ZN11CStringBaseIwE6DeleteEii.exit.a, %_ZN11CStringBaseIwEaSERKS0_.exit396, %bb.iy, %.thread638
   %i.aut = getelementptr inbounds nuw i8, ptr %1, i64 6
   %i.auu = load i8, ptr %i.aut, align 2, !tbaa !39, !range !36, !noundef !37 ; 2 uses
   %i.auv = getelementptr inbounds nuw i8, ptr %1, i64 472

@@ -205,18 +205,14 @@ bb.k:                                             ; preds = %_ZNK4llvm18TargetLo
   %i.be = zext i1 %i.ay to i32
   %spec.select81 = lshr i32 %i.x, %i.be           ; 2 uses
   %i.bf = icmp samesign ugt i32 %spec.select81, 1
-  br i1 %i.bf, label %_ZN4llvm3MVT12getIntegerVTEj.exit.preheader, label %._crit_edge
-
-_ZN4llvm3MVT12getIntegerVTEj.exit.preheader:      ; preds = %bb.k
-  %.lhs.trunc = trunc nuw nsw i32 %spec.select to i16
-  br label %_ZN4llvm3MVT12getIntegerVTEj.exit
+  br i1 %i.bf, label %_ZN4llvm3MVT12getIntegerVTEj.exit, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZN4llvm3MVT12getIntegerVTEj.exit, %bb.k
   br i1 %i.ay, label %bb.l, label %bb.m
 
-_ZN4llvm3MVT12getIntegerVTEj.exit:                ; preds = %_ZN4llvm3MVT12getIntegerVTEj.exit.preheader, %_ZN4llvm3MVT12getIntegerVTEj.exit
-  %.080119 = phi i32 [ %i.bl, %_ZN4llvm3MVT12getIntegerVTEj.exit ], [ 1, %_ZN4llvm3MVT12getIntegerVTEj.exit.preheader ]
-  %.0118 = phi i32 [ %.sroa.speculated, %_ZN4llvm3MVT12getIntegerVTEj.exit ], [ %i.ae, %_ZN4llvm3MVT12getIntegerVTEj.exit.preheader ]
+_ZN4llvm3MVT12getIntegerVTEj.exit:                ; preds = %bb.k, %_ZN4llvm3MVT12getIntegerVTEj.exit
+  %.080119 = phi i32 [ %i.bl, %_ZN4llvm3MVT12getIntegerVTEj.exit ], [ 1, %bb.k ]
+  %.0118 = phi i32 [ %.sroa.speculated, %_ZN4llvm3MVT12getIntegerVTEj.exit ], [ %i.ae, %bb.k ]
   %storemerge = shl i32 %.0118, 1
   %.sroa.speculated = call i32 @llvm.umin.i32(i32 %storemerge, i32 64) ; 4 uses
   %i.bg = call range(i32 1, 7) i32 @llvm.ctpop.i32(i32 %.sroa.speculated)
@@ -225,10 +221,8 @@ _ZN4llvm3MVT12getIntegerVTEj.exit:                ; preds = %_ZN4llvm3MVT12getIn
   %switch.idx.cast.i = trunc nuw nsw i32 %i.bi to i16
   %switch.offset.i = add nuw nsw i16 %switch.idx.cast.i, 2
   %.sroa.0.0.i = select i1 %i.bh, i16 %switch.offset.i, i16 0
-  %.rhs.trunc = trunc nuw nsw i32 %.sroa.speculated to i16
-  %12 = udiv i16 %.lhs.trunc, %.rhs.trunc
-  %.zext = zext nneg i16 %12 to i32
-  %i.bj = call i16 @_ZN4llvm3MVT11getVectorVTES0_j(i16 %.sroa.0.0.i, i32 noundef %.zext)
+  %12 = udiv i32 %spec.select, %.sroa.speculated
+  %i.bj = call i16 @_ZN4llvm3MVT11getVectorVTES0_j(i16 %.sroa.0.0.i, i32 noundef %12)
   %i.bk = call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %3, i32 noundef 616, ptr noundef nonnull align 8 dereferenceable(12) %5, i16 %i.bj, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %6, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %6) #28 ; 2 uses
   %.fca.0.extract35 = extractvalue { ptr, i32 } %i.bk, 0
   %.fca.1.extract36 = extractvalue { ptr, i32 } %i.bk, 1

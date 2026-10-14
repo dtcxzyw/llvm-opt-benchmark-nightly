@@ -206,8 +206,8 @@ bb.t:                                             ; preds = %bb.s
 
 mi_option_get_clamp.exit:                         ; preds = %bb.s, %bb.t
   %i.bu = phi i64 [ %i.br, %bb.s ], [ %.pre, %bb.t ] ; 2 uses
-  %i.bv = call i64 @llvm.smin.i64(i64 %i.bu, i64 131072) ; 2 uses
-  %i.bw = call i64 @llvm.smax.i64(i64 %i.bv, i64 0) ; 5 uses
+  %i.bv = call i64 @llvm.smax.i64(i64 %i.bu, i64 0)
+  %i.bw = call i64 @llvm.umin.i64(i64 %i.bv, i64 131072) ; 6 uses
   %i.bx = load i32, ptr getelementptr inbounds nuw (i8, ptr @options, i64 264), align 8, !tbaa !133
   %i.by = icmp eq i32 %i.bx, 0
   br i1 %i.by, label %bb.u, label %mi_option_get.exit, !prof !61
@@ -251,7 +251,7 @@ _mi_os_numa_node_count.exit.i:                    ; preds = %bb.y, %bb.x
 
 bb.z:                                             ; preds = %bb.aa, %_mi_os_numa_node_count.exit.i
   %.03349.i = phi i64 [ 0, %_mi_os_numa_node_count.exit.i ], [ %i.cp, %bb.aa ] ; 3 uses
-  %.03648.i = phi i64 [ %i.bv, %_mi_os_numa_node_count.exit.i ], [ %.137.i, %bb.aa ] ; 2 uses
+  %.03648.i = phi i64 [ %i.bw, %_mi_os_numa_node_count.exit.i ], [ %.137.i, %bb.aa ] ; 2 uses
   %i.cl = icmp ult i64 %.03349.i, %i.ci
   %i.cm = zext i1 %i.cl to i64
   %spec.select.i = add nuw nsw i64 %i.ch, %i.cm   ; 3 uses

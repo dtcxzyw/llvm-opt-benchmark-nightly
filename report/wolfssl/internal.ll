@@ -205,7 +205,7 @@ cipherExtraData.exit:                             ; preds = %bb.m, %bb.n
   %i.bp = add nuw nsw i32 %.0.i110, %i.az
   br label %IsEncryptionOn.exit.thread
 
-IsEncryptionOn.exit.thread:                       ; preds = %bb.k, %IsEncryptionOn.exit, %cipherExtraData.exit
+IsEncryptionOn.exit.thread:                       ; preds = %IsEncryptionOn.exit, %cipherExtraData.exit, %bb.k
   %.078 = phi i32 [ %i.bp, %cipherExtraData.exit ], [ %i.az, %IsEncryptionOn.exit ], [ %i.az, %bb.k ] ; 5 uses
   %i.bq = load i32, ptr %i.am, align 8, !tbaa !144
   %i.br = load i32, ptr %i.an, align 16, !tbaa !188 ; 3 uses
@@ -362,7 +362,7 @@ bb.ab:                                            ; preds = %bb.j
   br label %HashRaw.exit.thread
 
 HashRaw.exit.thread:                              ; preds = %bb.p, %bb.o, %bb.v, %bb.x, %CheckAvailableSize.exit, %bb.i, %bb.h, %IsAtLeastTLSv1_2.exit.i, %bb.e, %bb.c, %bb.a, %bb.ab
-  %.488 = phi i32 [ -173, %bb.c ], [ -173, %bb.a ], [ -173, %bb.e ], [ %i.x, %IsAtLeastTLSv1_2.exit.i ], [ 0, %bb.ab ], [ %i.ad, %bb.i ], [ %i.aa, %bb.h ], [ %i.cw, %bb.x ], [ -125, %bb.v ], [ -125, %bb.o ], [ -125, %bb.p ], [ %.4, %CheckAvailableSize.exit ]
+  %.488 = phi i32 [ -173, %bb.c ], [ -173, %bb.a ], [ -173, %bb.e ], [ %i.x, %IsAtLeastTLSv1_2.exit.i ], [ 0, %bb.ab ], [ %i.ad, %bb.i ], [ %i.aa, %bb.h ], [ -125, %bb.o ], [ -125, %bb.p ], [ -125, %bb.v ], [ %i.cw, %bb.x ], [ %.4, %CheckAvailableSize.exit ]
   ret i32 %.488
 }
 

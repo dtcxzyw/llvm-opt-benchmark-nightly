@@ -205,7 +205,7 @@ bb.dk:                                            ; preds = %bb.dj
   %i.gy = load i32, ptr %i.df, align 8, !tbaa !44
   %i.gz = load i32, ptr %i.bz, align 4, !tbaa !45 ; 3 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %37, i64 12
-  %i.hb = load i32, ptr %i.ha, align 4, !tbaa !59 ; 6 uses
+  %i.hb = load i32, ptr %i.ha, align 4, !tbaa !59 ; 7 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %37, i64 8
   %i.hd = load i32, ptr %i.hc, align 8, !tbaa !60 ; 4 uses
   %i.he = add i32 %i.gy, -1
@@ -401,7 +401,7 @@ bb.ej:                                            ; preds = %bb.eg, %bb.dx
   %i.jv = fptosi double %i.ju to i32              ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #19
   %i.jw = sext i32 %i.jv to i64
-  %i.jx = zext nneg i32 %i.hb to i64              ; 2 uses
+  %i.jx = zext nneg i32 %i.hb to i64
   %i.jy = sext i32 %i.hd to i64
   invoke void @_ZN2cv8BufferBMC2EmmmRKNS_14StereoBMParamsE(ptr noundef nonnull align 8 dereferenceable(464) %44, i64 noundef %i.jw, i64 noundef %i.jx, i64 noundef %i.jy, ptr noundef nonnull align 4 dereferenceable(80) %i.aj)
           to label %bb.ek unwind label %bb.ex
@@ -432,9 +432,10 @@ bb.el:                                            ; preds = %bb.ek
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %46) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %46) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #19
+  %.sroa.9.8.insert.ext = zext nneg i32 %i.hb to i64
   %.sroa.9.12.insert.ext = zext i32 %i.hd to i64
   %.sroa.9.12.insert.shift = shl nuw i64 %.sroa.9.12.insert.ext, 32
-  %.sroa.9.12.insert.insert = or disjoint i64 %.sroa.9.12.insert.shift, %i.jx ; 2 uses
+  %.sroa.9.12.insert.insert = or disjoint i64 %.sroa.9.12.insert.shift, %.sroa.9.8.insert.ext ; 2 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.sroa.0262.0.copyload = load i64, ptr %i.kg, align 8, !tbaa !8
   %.sroa.5263.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56

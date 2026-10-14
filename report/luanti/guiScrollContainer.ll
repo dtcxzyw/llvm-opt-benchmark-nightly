@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %i.ae, i32 0)
   tail call void @_ZN3gui13CGUIScrollBar6setMinEi(ptr noundef nonnull align 8 dereferenceable(420) %1, i32 noundef 0)
   %i.af = load ptr, ptr %i.a, align 8, !tbaa !52
-  %i.ag = uitofp nneg i32 %.sroa.speculated to float
+  %i.ag = uitofp nsz nneg i32 %.sroa.speculated to float
   %i.ah = load float, ptr %i.f, align 4, !tbaa !53
   %i.ai = tail call nsz noundef float @llvm.fabs.f32(float %i.ah)
   %i.aj = fdiv nsz float %i.ag, %i.ai

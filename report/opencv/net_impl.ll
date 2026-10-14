@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ba, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.bb = sub nuw i64 %.sroa.speculated, %i.az
+  %i.bb = sub nuw nsw i64 %.sroa.speculated, %i.az
   invoke void @_ZNSt6vectorIN2cv3MatESaIS1_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %i.bb)
           to label %_ZNSt6vectorIN2cv3MatESaIS1_EE6resizeEm.exit unwind label %bb.m
 

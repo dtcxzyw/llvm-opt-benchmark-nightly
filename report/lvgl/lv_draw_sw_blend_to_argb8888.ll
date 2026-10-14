@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al, %bb.
   %.sroa.11.0.insert.shift.i.i = and i32 %.sroa.11.0.insert.ext.i.i, 16711680
   %.sroa.7.0.insert.ext.i.i = shl nuw nsw i32 %.sroa.7.0.i.i, 8
   %.sroa.7.0.insert.shift.i.i = and i32 %.sroa.7.0.insert.ext.i.i, 65280
-  %i.mp = or i32 %.sroa.11.0.insert.shift.i.i, %.sroa.01.0.i.i
+  %i.mp = or i32 %.sroa.01.0.i.i, %.sroa.11.0.insert.shift.i.i
   %i.mq = or i32 %i.mp, %.sroa.7.0.insert.shift.i.i ; 3 uses
   %.sroa.01.0.insert.insert.i.i = or i32 %i.mq, %.sroa.6.0.insert.shift.i ; 6 uses
   %i.mr = load i32, ptr %i.kd, align 1            ; 7 uses
@@ -607,7 +607,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.ch, %bb.
   %.sroa.11.0.insert.shift.i.i29 = and i32 %.sroa.11.0.insert.ext.i.i28, 16711680
   %.sroa.7.0.insert.ext.i.i30 = shl nuw nsw i32 %.sroa.7.0.i.i26, 8
   %.sroa.7.0.insert.shift.i.i31 = and i32 %.sroa.7.0.insert.ext.i.i30, 65280
-  %i.abs = or i32 %.sroa.11.0.insert.shift.i.i29, %.sroa.01.0.i.i27
+  %i.abs = or i32 %.sroa.01.0.i.i27, %.sroa.11.0.insert.shift.i.i29
   %i.abt = or i32 %i.abs, %.sroa.7.0.insert.shift.i.i31 ; 3 uses
   %.sroa.01.0.insert.insert.i.i32 = or i32 %i.abt, %.sroa.6.0.insert.shift.i18 ; 6 uses
   %i.abu = load i32, ptr %i.zg, align 1           ; 7 uses
@@ -1010,23 +1010,23 @@ bb.fg:                                            ; preds = %bb.ff, %bb.fe, %bb.
   %.sroa.01.0.i.i87 = phi i32 [ %i.aow, %bb.fc ], [ %i.apj, %bb.fd ], [ %i.apx, %bb.fe ], [ %i.aql, %bb.ff ]
   %.sroa.11.0.insert.ext.i.i88 = shl nuw nsw i32 %.sroa.11.0.i.i85, 16
   %.sroa.11.0.insert.shift.i.i89 = and i32 %.sroa.11.0.insert.ext.i.i88, 16711680
-  %.sroa.11.0.insert.insert.i.i = or disjoint i32 %.sroa.11.0.insert.shift.i.i89, %.sroa.42.0.insert.ext180.i
   %.sroa.7.0.insert.ext.i.i90 = shl nuw nsw i32 %.sroa.7.0.i.i86, 8
   %.sroa.7.0.insert.shift.i.i91 = and i32 %.sroa.7.0.insert.ext.i.i90, 65280
-  %.sroa.7.0.insert.insert.i.i.a = add nuw nsw i32 %.sroa.11.0.insert.insert.i.i, %.sroa.01.0.i.i87 ; 4 uses
-  %.sroa.01.0.insert.insert.i.i92 = or disjoint i32 %.sroa.7.0.insert.insert.i.i.a, %.sroa.7.0.insert.shift.i.i91 ; 5 uses
+  %.sroa.7.0.insert.insert.i.i = or disjoint i32 %.sroa.11.0.insert.shift.i.i89, %.sroa.42.0.insert.ext180.i
+  %.sroa.7.0.insert.insert.i.i.a = add nuw nsw i32 %.sroa.7.0.insert.insert.i.i, %.sroa.01.0.i.i87
+  %.sroa.01.0.insert.insert.i.i92 = add nuw nsw i32 %.sroa.7.0.insert.insert.i.i.a, %.sroa.7.0.insert.shift.i.i91 ; 8 uses
   %i.aqm = load i32, ptr %i.aoi, align 1          ; 7 uses
   %.sroa.045.0.extract.trunc.i392.i = trunc i32 %.sroa.01.0.insert.insert.i.i92 to i24
-  %.sroa.654.0.extract.shift.i393.i = lshr i32 %.sroa.7.0.insert.insert.i.i.a, 24 ; 4 uses
+  %.sroa.654.0.extract.shift.i393.i = lshr i32 %.sroa.01.0.insert.insert.i.i92, 24 ; 4 uses
   %.sroa.6.0.extract.shift.i394.i = lshr i32 %i.aqm, 24 ; 4 uses
-  %i.aqn = icmp ugt i32 %.sroa.7.0.insert.insert.i.i.a, -50331649
+  %i.aqn = icmp ugt i32 %.sroa.01.0.insert.insert.i.i92, -50331649
   %i.aqo = icmp ult i32 %i.aqm, 50331648
   %or.cond.i395.i = select i1 %i.aqn, i1 true, i1 %i.aqo
   br i1 %or.cond.i395.i, label %lv_color_32_32_mix.exit419.i, label %bb.fh
 
 bb.fh:                                            ; preds = %bb.fg
   %.sroa.018.0.extract.trunc.i396.i = trunc i32 %i.aqm to i24
-  %i.aqp = icmp ult i32 %.sroa.7.0.insert.insert.i.i.a, 50331648
+  %i.aqp = icmp ult i32 %.sroa.01.0.insert.insert.i.i92, 50331648
   br i1 %i.aqp, label %lv_color_32_32_mix.exit419.i, label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh
@@ -1429,7 +1429,7 @@ bb.hr:                                            ; preds = %bb.hq, %bb.hp, %bb.
   %.sroa.11.0.insert.shift.i.i133 = and i32 %.sroa.11.0.insert.ext.i.i132, 16711680
   %.sroa.7.0.insert.ext.i.i134 = shl nuw nsw i32 %.sroa.7.0.i.i130, 8
   %.sroa.7.0.insert.shift.i.i135 = and i32 %.sroa.7.0.insert.ext.i.i134, 65280
-  %i.bcz = or i32 %.sroa.11.0.insert.shift.i.i133, %.sroa.01.0.i.i131
+  %i.bcz = or i32 %.sroa.01.0.i.i131, %.sroa.11.0.insert.shift.i.i133
   %i.bda = or i32 %i.bcz, %.sroa.7.0.insert.shift.i.i135 ; 3 uses
   %.sroa.01.0.insert.insert.i.i136 = or i32 %i.bda, %.sroa.10.0.insert.shift82.i ; 6 uses
   %i.bdb = load i32, ptr %i.baj, align 1          ; 7 uses
@@ -1832,23 +1832,23 @@ bb.iw:                                            ; preds = %bb.iv, %bb.iu, %bb.
   %.sroa.01.0.i.i183 = phi i32 [ %i.bmj, %bb.is ], [ %i.bmw, %bb.it ], [ %i.bnk, %bb.iu ], [ %i.bny, %bb.iv ]
   %.sroa.11.0.insert.ext.i.i184 = shl nuw nsw i32 %.sroa.11.0.i.i181, 16
   %.sroa.11.0.insert.shift.i.i185 = and i32 %.sroa.11.0.insert.ext.i.i184, 16711680
-  %.sroa.11.0.insert.insert.i.i186 = or disjoint i32 %.sroa.11.0.insert.shift.i.i185, %.sroa.6.0.insert.shift.i179
   %.sroa.7.0.insert.ext.i.i187 = shl nuw nsw i32 %.sroa.7.0.i.i182, 8
   %.sroa.7.0.insert.shift.i.i188 = and i32 %.sroa.7.0.insert.ext.i.i187, 65280
-  %.sroa.7.0.insert.insert.i.i189.a = add nuw nsw i32 %.sroa.11.0.insert.insert.i.i186, %.sroa.01.0.i.i183 ; 4 uses
-  %.sroa.01.0.insert.insert.i.i190 = or disjoint i32 %.sroa.7.0.insert.insert.i.i189.a, %.sroa.7.0.insert.shift.i.i188 ; 5 uses
+  %.sroa.7.0.insert.insert.i.i189 = or disjoint i32 %.sroa.11.0.insert.shift.i.i185, %.sroa.6.0.insert.shift.i179
+  %.sroa.7.0.insert.insert.i.i189.a = add nuw nsw i32 %.sroa.7.0.insert.insert.i.i189, %.sroa.01.0.i.i183
+  %.sroa.01.0.insert.insert.i.i190 = add nuw nsw i32 %.sroa.7.0.insert.insert.i.i189.a, %.sroa.7.0.insert.shift.i.i188 ; 8 uses
   %i.bnz = load i32, ptr %i.blv, align 1          ; 7 uses
   %.sroa.045.0.extract.trunc.i.i191 = trunc i32 %.sroa.01.0.insert.insert.i.i190 to i24
-  %.sroa.654.0.extract.shift.i.i192 = lshr i32 %.sroa.7.0.insert.insert.i.i189.a, 24 ; 4 uses
+  %.sroa.654.0.extract.shift.i.i192 = lshr i32 %.sroa.01.0.insert.insert.i.i190, 24 ; 4 uses
   %.sroa.6.0.extract.shift.i.i193 = lshr i32 %i.bnz, 24 ; 4 uses
-  %i.boa = icmp ugt i32 %.sroa.7.0.insert.insert.i.i189.a, -50331649
+  %i.boa = icmp ugt i32 %.sroa.01.0.insert.insert.i.i190, -50331649
   %i.bob = icmp ult i32 %i.bnz, 50331648
   %or.cond.i.i194 = select i1 %i.boa, i1 true, i1 %i.bob
   br i1 %or.cond.i.i194, label %lv_color_32_32_mix.exit.i206, label %bb.ix
 
 bb.ix:                                            ; preds = %bb.iw
   %.sroa.018.0.extract.trunc.i.i195 = trunc i32 %i.bnz to i24
-  %i.boc = icmp ult i32 %.sroa.7.0.insert.insert.i.i189.a, 50331648
+  %i.boc = icmp ult i32 %.sroa.01.0.insert.insert.i.i190, 50331648
   br i1 %i.boc, label %lv_color_32_32_mix.exit.i206, label %bb.iy
 
 bb.iy:                                            ; preds = %bb.ix
@@ -2251,23 +2251,23 @@ bb.kk:                                            ; preds = %bb.kj, %bb.ki, %bb.
   %.sroa.01.0.i.i238 = phi i32 [ %i.byr, %bb.kg ], [ %i.bze, %bb.kh ], [ %i.bzs, %bb.ki ], [ %i.cag, %bb.kj ]
   %.sroa.11.0.insert.ext.i.i239 = shl nuw nsw i32 %.sroa.11.0.i.i236, 16
   %.sroa.11.0.insert.shift.i.i240 = and i32 %.sroa.11.0.insert.ext.i.i239, 16711680
-  %.sroa.11.0.insert.insert.i.i241 = or disjoint i32 %.sroa.11.0.insert.shift.i.i240, %.sroa.6.0.insert.shift.i234
   %.sroa.7.0.insert.ext.i.i242 = shl nuw nsw i32 %.sroa.7.0.i.i237, 8
   %.sroa.7.0.insert.shift.i.i243 = and i32 %.sroa.7.0.insert.ext.i.i242, 65280
-  %.sroa.7.0.insert.insert.i.i244.a = add nuw nsw i32 %.sroa.11.0.insert.insert.i.i241, %.sroa.01.0.i.i238 ; 4 uses
-  %.sroa.01.0.insert.insert.i.i245 = or disjoint i32 %.sroa.7.0.insert.insert.i.i244.a, %.sroa.7.0.insert.shift.i.i243 ; 5 uses
+  %.sroa.7.0.insert.insert.i.i244 = or disjoint i32 %.sroa.11.0.insert.shift.i.i240, %.sroa.6.0.insert.shift.i234
+  %.sroa.7.0.insert.insert.i.i244.a = add nuw nsw i32 %.sroa.7.0.insert.insert.i.i244, %.sroa.01.0.i.i238
+  %.sroa.01.0.insert.insert.i.i245 = add nuw nsw i32 %.sroa.7.0.insert.insert.i.i244.a, %.sroa.7.0.insert.shift.i.i243 ; 8 uses
   %i.cah = load i32, ptr %i.byd, align 1          ; 7 uses
   %.sroa.045.0.extract.trunc.i.i246 = trunc i32 %.sroa.01.0.insert.insert.i.i245 to i24
-  %.sroa.654.0.extract.shift.i.i247 = lshr i32 %.sroa.7.0.insert.insert.i.i244.a, 24 ; 4 uses
+  %.sroa.654.0.extract.shift.i.i247 = lshr i32 %.sroa.01.0.insert.insert.i.i245, 24 ; 4 uses
   %.sroa.6.0.extract.shift.i.i248 = lshr i32 %i.cah, 24 ; 4 uses
-  %i.cai = icmp ugt i32 %.sroa.7.0.insert.insert.i.i244.a, -50331649
+  %i.cai = icmp ugt i32 %.sroa.01.0.insert.insert.i.i245, -50331649
   %i.caj = icmp ult i32 %i.cah, 50331648
   %or.cond.i.i249 = select i1 %i.cai, i1 true, i1 %i.caj
   br i1 %or.cond.i.i249, label %lv_color_32_32_mix.exit.i261, label %bb.kl
 
 bb.kl:                                            ; preds = %bb.kk
   %.sroa.018.0.extract.trunc.i.i250 = trunc i32 %i.cah to i24
-  %i.cak = icmp ult i32 %.sroa.7.0.insert.insert.i.i244.a, 50331648
+  %i.cak = icmp ult i32 %.sroa.01.0.insert.insert.i.i245, 50331648
   br i1 %i.cak, label %lv_color_32_32_mix.exit.i261, label %bb.km
 
 bb.km:                                            ; preds = %bb.kl
@@ -2670,23 +2670,23 @@ bb.lp:                                            ; preds = %bb.lo, %bb.ln, %bb.
   %.sroa.01.0.i.i301 = phi i32 [ %i.cky, %bb.ll ], [ %i.cll, %bb.lm ], [ %i.clz, %bb.ln ], [ %i.cmn, %bb.lo ]
   %.sroa.11.0.insert.ext.i.i302 = shl nuw nsw i32 %.sroa.11.0.i.i299, 16
   %.sroa.11.0.insert.shift.i.i303 = and i32 %.sroa.11.0.insert.ext.i.i302, 16711680
-  %.sroa.11.0.insert.insert.i.i304 = or disjoint i32 %.sroa.11.0.insert.shift.i.i303, %.sroa.8.0.insert.shift.i
   %.sroa.7.0.insert.ext.i.i305 = shl nuw nsw i32 %.sroa.7.0.i.i300, 8
   %.sroa.7.0.insert.shift.i.i306 = and i32 %.sroa.7.0.insert.ext.i.i305, 65280
-  %.sroa.7.0.insert.insert.i.i307.a = add nuw nsw i32 %.sroa.11.0.insert.insert.i.i304, %.sroa.01.0.i.i301 ; 4 uses
-  %.sroa.01.0.insert.insert.i.i308 = or disjoint i32 %.sroa.7.0.insert.insert.i.i307.a, %.sroa.7.0.insert.shift.i.i306 ; 5 uses
+  %.sroa.7.0.insert.insert.i.i307 = or disjoint i32 %.sroa.11.0.insert.shift.i.i303, %.sroa.8.0.insert.shift.i
+  %.sroa.7.0.insert.insert.i.i307.a = add nuw nsw i32 %.sroa.7.0.insert.insert.i.i307, %.sroa.01.0.i.i301
+  %.sroa.01.0.insert.insert.i.i308 = add nuw nsw i32 %.sroa.7.0.insert.insert.i.i307.a, %.sroa.7.0.insert.shift.i.i306 ; 8 uses
   %i.cmo = load i32, ptr %i.ckh, align 1          ; 7 uses
   %.sroa.045.0.extract.trunc.i.i309 = trunc i32 %.sroa.01.0.insert.insert.i.i308 to i24
-  %.sroa.654.0.extract.shift.i.i310 = lshr i32 %.sroa.7.0.insert.insert.i.i307.a, 24 ; 4 uses
+  %.sroa.654.0.extract.shift.i.i310 = lshr i32 %.sroa.01.0.insert.insert.i.i308, 24 ; 4 uses
   %.sroa.6.0.extract.shift.i.i311 = lshr i32 %i.cmo, 24 ; 4 uses
-  %i.cmp = icmp ugt i32 %.sroa.7.0.insert.insert.i.i307.a, -50331649
+  %i.cmp = icmp ugt i32 %.sroa.01.0.insert.insert.i.i308, -50331649
   %i.cmq = icmp ult i32 %i.cmo, 50331648
   %or.cond.i.i312 = select i1 %i.cmp, i1 true, i1 %i.cmq
   br i1 %or.cond.i.i312, label %lv_color_32_32_mix.exit.i324, label %bb.lq
 
 bb.lq:                                            ; preds = %bb.lp
   %.sroa.018.0.extract.trunc.i.i313 = trunc i32 %i.cmo to i24
-  %i.cmr = icmp ult i32 %.sroa.7.0.insert.insert.i.i307.a, 50331648
+  %i.cmr = icmp ult i32 %.sroa.01.0.insert.insert.i.i308, 50331648
   br i1 %i.cmr, label %lv_color_32_32_mix.exit.i324, label %bb.lr
 
 bb.lr:                                            ; preds = %bb.lq
@@ -3089,20 +3089,20 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an, %bb.
   %.sroa.11.0.insert.insert.i = or disjoint i32 %.sroa.11.0.insert.shift.i, %.sroa.6.0.insert.shift
   %.sroa.7.0.insert.ext.i = shl nuw nsw i32 %.sroa.7.0.i, 8
   %.sroa.7.0.insert.shift.i = and i32 %.sroa.7.0.insert.ext.i, 65280
-  %.sroa.7.0.insert.insert.i = add nuw nsw i32 %.sroa.11.0.insert.insert.i, %.sroa.01.0.i ; 4 uses
-  %.sroa.01.0.insert.insert.i = or disjoint i32 %.sroa.7.0.insert.insert.i, %.sroa.7.0.insert.shift.i ; 5 uses
+  %.sroa.7.0.insert.insert.i = or disjoint i32 %.sroa.11.0.insert.insert.i, %.sroa.7.0.insert.shift.i
+  %.sroa.01.0.insert.insert.i = add nuw nsw i32 %.sroa.7.0.insert.insert.i, %.sroa.01.0.i ; 8 uses
   %i.la = load i32, ptr %i.iw, align 1            ; 7 uses
   %.sroa.045.0.extract.trunc.i303 = trunc i32 %.sroa.01.0.insert.insert.i to i24
-  %.sroa.654.0.extract.shift.i304 = lshr i32 %.sroa.7.0.insert.insert.i, 24 ; 4 uses
+  %.sroa.654.0.extract.shift.i304 = lshr i32 %.sroa.01.0.insert.insert.i, 24 ; 4 uses
   %.sroa.6.0.extract.shift.i305 = lshr i32 %i.la, 24 ; 4 uses
-  %i.lb = icmp ugt i32 %.sroa.7.0.insert.insert.i, -50331649
+  %i.lb = icmp ugt i32 %.sroa.01.0.insert.insert.i, -50331649
   %i.lc = icmp ult i32 %i.la, 50331648
   %or.cond.i306 = select i1 %i.lb, i1 true, i1 %i.lc
   br i1 %or.cond.i306, label %lv_color_32_32_mix.exit330, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   %.sroa.018.0.extract.trunc.i307 = trunc i32 %i.la to i24
-  %i.ld = icmp ult i32 %.sroa.7.0.insert.insert.i, 50331648
+  %i.ld = icmp ult i32 %.sroa.01.0.insert.insert.i, 50331648
   br i1 %i.ld, label %lv_color_32_32_mix.exit330, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq

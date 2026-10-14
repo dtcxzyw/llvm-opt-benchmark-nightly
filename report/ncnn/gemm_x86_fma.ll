@@ -205,26 +205,29 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.l = add nsw i32 %2, -1                       ; 2 uses
   %i.m = add nuw i32 %i.l, %.sroa.speculated115
-  %10 = udiv i32 %i.m, %.sroa.speculated115       ; 3 uses
-  %i.n = add nuw i32 %i.l, %10
-  %11 = udiv i32 %i.n, %10
-  %i.o = add nuw nsw i32 %11, 7
-  %12 = and i32 %i.o, -8
-  %.sroa.speculated99 = tail call i32 @llvm.umin.i32(i32 %12, i32 %.sroa.speculated115) ; 2 uses
+  %10 = sdiv i32 %i.m, %.sroa.speculated115       ; 3 uses
+  %i.n = add i32 %i.l, %10
+  %11 = sdiv i32 %i.n, %10
+  %i.o = add nsw i32 %11, 7
+  %12 = sdiv i32 %i.o, 8
+  %13 = shl nsw i32 %12, 3
+  %.sroa.speculated99 = tail call i32 @llvm.smin.i32(i32 %13, i32 %.sroa.speculated115) ; 2 uses
   store i32 %.sroa.speculated99, ptr %8, align 4, !tbaa !50
   %i.p = icmp eq i32 %10, 1
   br i1 %i.p, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.q = fmul fast float %i.e, 1.250000e-01
-  %13 = uitofp nneg i32 %.sroa.speculated99 to float
-  %i.r = fdiv fast float %i.q, %13
+  %14 = sitofp fast i32 %.sroa.speculated99 to float
+  %i.r = fdiv fast float %i.q, %14
   %i.s = fptosi float %i.r to i32                 ; 2 uses
-  %14 = and i32 %i.s, 2147483640
-  %.sroa.speculated93 = tail call i32 @llvm.umax.i32(i32 %14, i32 8)
+  %15 = sdiv i32 %i.s, 8
+  %16 = shl nsw i32 %15, 3
+  %.sroa.speculated93 = tail call i32 @llvm.smax.i32(i32 %16, i32 8)
   store i32 %.sroa.speculated93, ptr %6, align 4, !tbaa !50
-  %15 = and i32 %i.s, 2147483644
-  %.sroa.speculated87 = tail call i32 @llvm.umax.i32(i32 %15, i32 4)
+  %17 = sdiv i32 %i.s, 4
+  %18 = shl nsw i32 %17, 2
+  %.sroa.speculated87 = tail call i32 @llvm.smax.i32(i32 %18, i32 4)
   store i32 %.sroa.speculated87, ptr %7, align 4, !tbaa !50
   br label %bb.f
 
@@ -627,23 +630,25 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.k = add nsw i32 %2, -1                       ; 2 uses
   %i.l = add nuw i32 %i.k, %.sroa.speculated115
-  %10 = udiv i32 %i.l, %.sroa.speculated115       ; 3 uses
-  %i.m = add nuw i32 %i.k, %10
-  %11 = udiv i32 %i.m, %10
-  %i.n = add nuw nsw i32 %11, 7
-  %12 = and i32 %i.n, -8
-  %.sroa.speculated99 = tail call i32 @llvm.umin.i32(i32 %12, i32 %.sroa.speculated115) ; 2 uses
+  %10 = sdiv i32 %i.l, %.sroa.speculated115       ; 3 uses
+  %i.m = add i32 %i.k, %10
+  %11 = sdiv i32 %i.m, %10
+  %i.n = add nsw i32 %11, 7
+  %12 = sdiv i32 %i.n, 8
+  %13 = shl nsw i32 %12, 3
+  %.sroa.speculated99 = tail call i32 @llvm.smin.i32(i32 %13, i32 %.sroa.speculated115) ; 2 uses
   store i32 %.sroa.speculated99, ptr %8, align 4, !tbaa !50
   %i.o = icmp eq i32 %10, 1
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.p = fmul fast float %i.e, 2.500000e-01
-  %13 = uitofp nneg i32 %.sroa.speculated99 to float
-  %i.q = fdiv fast float %i.p, %13
+  %14 = sitofp fast i32 %.sroa.speculated99 to float
+  %i.q = fdiv fast float %i.p, %14
   %i.r = fptosi float %i.q to i32
-  %14 = and i32 %i.r, 2147483640
-  %.sroa.speculated93 = tail call i32 @llvm.umax.i32(i32 %14, i32 8) ; 2 uses
+  %15 = sdiv i32 %i.r, 8
+  %16 = shl nsw i32 %15, 3
+  %.sroa.speculated93 = tail call i32 @llvm.smax.i32(i32 %16, i32 8) ; 2 uses
   store i32 %.sroa.speculated93, ptr %6, align 4, !tbaa !50
   store i32 %.sroa.speculated93, ptr %7, align 4, !tbaa !50
   br label %bb.f

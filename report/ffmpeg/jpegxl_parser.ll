@@ -205,8 +205,8 @@ bb.dd:                                            ; preds = %bb.db
   %i.auy = zext i8 %i.aux to i32                  ; 4 uses
   %i.auz = add nsw i32 %i.auy, -14
   %i.ava = ashr i32 %i.auz, 1
-  %i.avb = add nsw i32 %i.ava, %i.aqj             ; 3 uses
-  %spec.select166.peel.i = call i32 @llvm.smax.i32(i32 %i.avb, i32 0)
+  %i.avb = add nsw i32 %i.ava, %i.aqj             ; 2 uses
+  %spec.select166.peel.i = call i32 @llvm.smax.i32(i32 %i.avb, i32 0) ; 2 uses
   %.not160.peel.i = icmp samesign ult i32 %spec.select166.peel.i, %i.auy
   %i.avc = add nsw i32 %i.auy, -1                 ; 3 uses
   %i.avd = shl nuw i32 1, %i.avc
@@ -217,7 +217,7 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %.not.i.peel.i, label %get_bitsz.exit.peel.i, label %.thread209.peel.i
 
 .thread209.peel.i:                                ; preds = %bb.de, %bb.dd
-  %i.ave = phi i32 [ %i.avb, %bb.de ], [ %i.avc, %bb.dd ] ; 3 uses
+  %i.ave = phi i32 [ %spec.select166.peel.i, %bb.de ], [ %i.avc, %bb.dd ] ; 3 uses
   %i.avf = lshr i32 %i.aui, 3
   %i.avg = zext nneg i32 %i.avf to i64
   %i.avh = getelementptr inbounds nuw i8, ptr %.pre368, i64 %i.avg
@@ -299,8 +299,8 @@ bb.dl:                                            ; preds = %bb.dj
   %i.awj = zext i8 %i.awh to i32                  ; 4 uses
   %i.awk = add nsw i32 %i.awj, -14
   %i.awl = ashr i32 %i.awk, 1
-  %i.awm = add nsw i32 %i.awl, %i.aqj             ; 3 uses
-  %spec.select166.i = call i32 @llvm.smax.i32(i32 %i.awm, i32 0)
+  %i.awm = add nsw i32 %i.awl, %i.aqj             ; 2 uses
+  %spec.select166.i = call i32 @llvm.smax.i32(i32 %i.awm, i32 0) ; 2 uses
   %.not160.i = icmp samesign ult i32 %spec.select166.i, %i.awj
   %i.awn = add nsw i32 %i.awj, -1                 ; 3 uses
   %i.awo = shl nuw i32 1, %i.awn
@@ -311,7 +311,7 @@ bb.dm:                                            ; preds = %bb.dl
   br i1 %.not.i.i175, label %get_bitsz.exit.i174, label %.thread209.i
 
 .thread209.i:                                     ; preds = %bb.dm, %bb.dl
-  %i.awp = phi i32 [ %i.awm, %bb.dm ], [ %i.awn, %bb.dl ] ; 3 uses
+  %i.awp = phi i32 [ %spec.select166.i, %bb.dm ], [ %i.awn, %bb.dl ] ; 3 uses
   %i.awq = load i32, ptr %i.s, align 8, !tbaa !21 ; 3 uses
   %i.awr = load i32, ptr %i.z, align 8, !tbaa !20
   %i.aws = lshr i32 %i.awq, 3

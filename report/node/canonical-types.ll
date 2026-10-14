@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   %i.an = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %0) #12
   br label %_ZN2v88internal14WeakFixedArray3NewINS0_7IsolateEEENS0_6HandleIS1_EEPT_iNS0_14AllocationTypeENS0_17MaybeDirectHandleINS0_6ObjectEEE.exit
 
-_ZN2v88internal14WeakFixedArray3NewINS0_7IsolateEEENS0_6HandleIS1_EEPT_iNS0_14AllocationTypeENS0_17MaybeDirectHandleINS0_6ObjectEEE.exit: ; preds = %bb.h, %bb.i
+_ZN2v88internal14WeakFixedArray3NewINS0_7IsolateEEENS0_6HandleIS1_EEPT_iNS0_14AllocationTypeENS0_17MaybeDirectHandleINS0_6ObjectEEE.exit: ; preds = %bb.i, %bb.h
   %.0.i.i.i.i = phi ptr [ %i.an, %bb.i ], [ %i.ak, %bb.h ] ; 5 uses
   %i.ao = ptrtoint ptr %.0.i.i.i.i to i64
   %i.ap = add i64 %i.ao, 8
