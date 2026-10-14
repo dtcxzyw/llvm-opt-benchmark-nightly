@@ -204,7 +204,6 @@ bb.e:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN3re214CoalesceWalker9PostVisitEPNS_6RegexpES2_S2_PS2_i(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree readnone captures(none) %2, ptr nofree readnone captures(none) %3, ptr nofree noundef captures(none) %4, i32 %5) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoaddr ptr %4 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 6 ; 12 uses
   %i.b = load i16, ptr %i.a, align 2, !tbaa !48   ; 4 uses
   %i.c = icmp eq i16 %i.b, 0
@@ -297,10 +296,11 @@ _ZN3re26Regexp8AllocSubEi.exit:                   ; preds = %._ZN3re26Regexp8All
   br i1 %.not150, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN3re26Regexp8AllocSubEi.exit
-  %.0.i200 = ptrtoaddr ptr %.0.i to i64
   %wide.trip.count = zext i16 %i.ae to i64        ; 5 uses
   %min.iters.check = icmp ult i16 %i.ae, 8
-  %i.aj = sub i64 %6, %.0.i200
+  %6 = ptrtoaddr ptr %.0.i to i64
+  %7 = ptrtoaddr ptr %4 to i64
+  %i.aj = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.aj, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.preheader221, label %vector.ph
@@ -511,10 +511,11 @@ _ZN3re26Regexp8AllocSubEi.exit127:                ; preds = %._ZN3re26Regexp8All
   br i1 %.not152, label %.loopexit, label %.lr.ph139.preheader
 
 .lr.ph139.preheader:                              ; preds = %_ZN3re26Regexp8AllocSubEi.exit127
-  %.0.i128203 = ptrtoaddr ptr %.0.i128 to i64
   %wide.trip.count176 = zext i16 %i.cy to i64     ; 5 uses
   %min.iters.check206 = icmp ult i16 %i.cy, 8
-  %i.dd = sub i64 %6, %.0.i128203
+  %8 = ptrtoaddr ptr %.0.i128 to i64
+  %9 = ptrtoaddr ptr %4 to i64
+  %i.dd = sub i64 %9, %8
   %diff.check204 = icmp ugt i64 %i.dd, -32
   %or.cond217 = select i1 %min.iters.check206, i1 true, i1 %diff.check204
   br i1 %or.cond217, label %.lr.ph139.preheader218, label %vector.ph207
@@ -917,8 +918,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN3re214SimplifyWalker9PostVisitEPNS_6RegexpES2_S2_PS2_i(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree readnone captures(none) %2, ptr nofree readnone captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 %5) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoaddr ptr %4 to i64
-  %7 = alloca %class.LogMessage, align 8          ; 13 uses
+  %6 = alloca %class.LogMessage, align 8          ; 13 uses
   %i.a = load i8, ptr %1, align 8, !tbaa !47      ; 2 uses
   switch i8 %i.a, label %bb.y [
     i8 1, label %bb.b
@@ -1036,10 +1036,11 @@ _ZN3re26Regexp8AllocSubEi.exit:                   ; preds = %._ZN3re26Regexp8All
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN3re26Regexp8AllocSubEi.exit
-  %.0.i95 = ptrtoaddr ptr %.0.i to i64
   %wide.trip.count = zext i16 %i.af to i64        ; 5 uses
   %min.iters.check = icmp ult i16 %i.af, 8
-  %i.ak = sub i64 %6, %.0.i95
+  %7 = ptrtoaddr ptr %.0.i to i64
+  %8 = ptrtoaddr ptr %4 to i64
+  %i.ak = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.ak, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.preheader97, label %vector.ph
@@ -1260,9 +1261,9 @@ bb.x:                                             ; preds = %bb.a
   br label %bb.ae
 
 bb.y:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
-  call void @_ZN10LogMessageC2EPKci(ptr noundef nonnull align 8 dereferenceable(384) %7, ptr noundef nonnull @.str, i32 noundef 567)
-  %i.du = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #18
+  call void @_ZN10LogMessageC2EPKci(ptr noundef nonnull align 8 dereferenceable(384) %6, ptr noundef nonnull @.str, i32 noundef 567)
+  %i.du = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   %i.dv = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.du, ptr noundef nonnull @.str.6, i64 noundef 27)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.ad ; 0 uses
 
@@ -1273,12 +1274,12 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.y
           to label %bb.z unwind label %bb.ad      ; 0 uses
 
 bb.z:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
-  %i.dz = load i8, ptr %7, align 8, !tbaa !68, !range !35, !noundef !36
+  %i.dz = load i8, ptr %6, align 8, !tbaa !68, !range !35, !noundef !36
   %i.ea = trunc nuw i8 %i.dz to i1
   br i1 %i.ea, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  invoke void @_ZN10LogMessage5FlushEv(ptr noundef nonnull align 8 dereferenceable(384) %7)
+  invoke void @_ZN10LogMessage5FlushEv(ptr noundef nonnull align 8 dereferenceable(384) %6)
           to label %bb.ab unwind label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z
@@ -1289,11 +1290,11 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.ee = load i64, ptr %i.ed, align 8
   %i.ef = getelementptr inbounds i8, ptr %i.du, i64 %i.ee
   store ptr %i.ec, ptr %i.ef, align 8, !tbaa !21
-  %i.eg = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.eg = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVNSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEEE, i64 16), ptr %i.eg, align 8, !tbaa !21
-  %i.eh = getelementptr inbounds nuw i8, ptr %7, i64 88
+  %i.eh = getelementptr inbounds nuw i8, ptr %6, i64 88
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !16 ; 2 uses
-  %i.ej = getelementptr inbounds nuw i8, ptr %7, i64 104 ; 2 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %6, i64 104 ; 2 uses
   %i.ek = icmp eq ptr %i.ei, %i.ej
   br i1 %i.ek, label %_ZN10LogMessageD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
 
@@ -1312,19 +1313,19 @@ bb.ac:                                            ; preds = %bb.aa
 
 _ZN10LogMessageD2Ev.exit:                         ; preds = %bb.ab, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.eg, align 8, !tbaa !21
-  %i.ep = getelementptr inbounds nuw i8, ptr %7, i64 72
+  %i.ep = getelementptr inbounds nuw i8, ptr %6, i64 72
   call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.ep) #18
-  %i.eq = getelementptr inbounds nuw i8, ptr %7, i64 120
+  %i.eq = getelementptr inbounds nuw i8, ptr %6, i64 120
   call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dead_on_return(264) dereferenceable(264) %i.eq) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   %i.er = call noundef ptr @_ZN3re26Regexp6IncrefEv(ptr noundef nonnull align 8 dereferenceable(40) %1)
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.y, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.es = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN10LogMessageD2Ev(ptr noundef nonnull align 8 dead_on_return(384) dereferenceable(384) %7) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
+  call void @_ZN10LogMessageD2Ev(ptr noundef nonnull align 8 dead_on_return(384) dereferenceable(384) %6) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   br label %bb.af
 
 bb.ae:                                            ; preds = %bb.w, %bb.v, %bb.p, %bb.t, %bb.n, %bb.r, %bb.j, %bb.l, %_ZN10LogMessageD2Ev.exit, %bb.x, %._crit_edge, %.loopexit, %bb.b

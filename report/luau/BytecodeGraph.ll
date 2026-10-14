@@ -204,19 +204,19 @@ _ZN4Luau11SmallVectorINS_8Bytecode4BcOpELj4EE7reserveEj.exit: ; preds = %_ZN4Lua
   br i1 %.not9.i.i.i, label %_ZSt18uninitialized_copyIPKN4Luau8Bytecode4BcOpEPS2_ET0_T_S7_S6_.exit, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_ZN4Luau11SmallVectorINS_8Bytecode4BcOpELj4EE7reserveEj.exit
-  %2 = ptrtoaddr ptr %i.ae to i64
-  %3 = ptrtoaddr ptr %i.ac to i64
-  %i.ah = add nsw i64 %.idx, -4                   ; 2 uses
-  %4 = lshr exact i64 %i.ah, 2
-  %5 = add nuw nsw i64 %4, 1                      ; 2 uses
-  %min.iters.check13 = icmp ult i64 %i.ah, 44
-  %i.ai = sub i64 %2, %3
+  %2 = add nsw i64 %.idx, -4                      ; 2 uses
+  %3 = lshr exact i64 %2, 2
+  %i.ah = add nuw nsw i64 %3, 1                   ; 2 uses
+  %min.iters.check13 = icmp ult i64 %2, 44
+  %4 = ptrtoaddr ptr %i.ac to i64
+  %5 = ptrtoaddr ptr %i.ae to i64
+  %i.ai = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.ai, -32
   %or.cond = select i1 %min.iters.check13, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader27, label %vector.ph14
 
 vector.ph14:                                      ; preds = %.lr.ph.i.i.i.preheader
-  %n.vec15 = and i64 %5, 9223372036854775800      ; 3 uses
+  %n.vec15 = and i64 %i.ah, 9223372036854775800   ; 3 uses
   %i.aj = shl i64 %n.vec15, 2                     ; 2 uses
   %i.ak = getelementptr i8, ptr %i.ac, i64 %i.aj
   %i.al = getelementptr i8, ptr %i.ae, i64 %i.aj
@@ -238,7 +238,7 @@ vector.body16:                                    ; preds = %vector.body16, %vec
   br i1 %i.ap, label %middle.block23, label %vector.body16, !llvm.loop !561
 
 middle.block23:                                   ; preds = %vector.body16
-  %cmp.n24 = icmp eq i64 %5, %n.vec15
+  %cmp.n24 = icmp eq i64 %i.ah, %n.vec15
   br i1 %cmp.n24, label %_ZSt18uninitialized_copyIPKN4Luau8Bytecode4BcOpEPS2_ET0_T_S7_S6_.exit.loopexit, label %.lr.ph.i.i.i.preheader27
 
 .lr.ph.i.i.i.preheader27:                         ; preds = %.lr.ph.i.i.i.preheader, %middle.block23
@@ -641,7 +641,6 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.g, i8 0, i64 36, i1 false)
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !268  ; 11 uses
-  %2 = ptrtoaddr ptr %i.j to i64
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !269
   %.not.i = icmp eq ptr %i.j, %i.l
@@ -658,7 +657,6 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 24 ; 5 uses
   store ptr %i.q, ptr %i.n, align 8, !tbaa !241
   %i.r = load ptr, ptr %i.c, align 8, !tbaa !241  ; 8 uses
-  %3 = ptrtoaddr ptr %i.r to i64
   %.not.i.i.i = icmp eq ptr %i.r, %i.f
   br i1 %.not.i.i.i, label %bb.c, label %bb.d
 
@@ -678,6 +676,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader11, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
+  %2 = ptrtoaddr ptr %i.j to i64
+  %3 = ptrtoaddr ptr %i.r to i64
   %i.y = sub i64 %2, %3
   %i.z = add i64 %i.y, 23
   %diff.check = icmp ult i64 %i.z, 31
@@ -1080,12 +1080,12 @@ _ZNKSt6vectorIN4Luau8Bytecode4BcOpESaIS2_EE12_M_check_lenEmPKc.exit.i.i21: ; pre
   br i1 %.not10.i.i.i.i.i24, label %_ZNSt6vectorIN4Luau8Bytecode4BcOpESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i29, label %.lr.ph.i.i.i.i.i25.preheader
 
 .lr.ph.i.i.i.i.i25.preheader:                     ; preds = %.noexc34
-  %4 = ptrtoaddr ptr %i.ci to i64
   %i.cl = add i64 %i.by, -4
   %i.cm = sub i64 %i.cl, %i.bz                    ; 2 uses
   %i.cn = lshr i64 %i.cm, 2
   %i.co = add nuw nsw i64 %i.cn, 1                ; 2 uses
   %min.iters.check108 = icmp ult i64 %i.cm, 44
+  %4 = ptrtoaddr ptr %i.ci to i64
   %i.cp = sub i64 %i.bz, %4
   %diff.check106 = icmp ugt i64 %i.cp, -32
   %or.cond122 = or i1 %min.iters.check108, %diff.check106
@@ -1488,7 +1488,6 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !264  ; 10 uses
-  %2 = ptrtoaddr ptr %i.g to i64
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !265
   %.not.i = icmp eq ptr %i.g, %i.i
@@ -1502,7 +1501,6 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 5 uses
   store ptr %i.l, ptr %i.g, align 8, !tbaa !241
   %i.m = load ptr, ptr %1, align 8, !tbaa !241    ; 8 uses
-  %3 = ptrtoaddr ptr %i.m to i64
   %.not.i.i.i = icmp eq ptr %i.m, %i.d
   br i1 %.not.i.i.i, label %bb.c, label %bb.d
 
@@ -1522,6 +1520,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader11, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader
+  %2 = ptrtoaddr ptr %i.g to i64
+  %3 = ptrtoaddr ptr %i.m to i64
   %i.t = sub i64 %2, %3
   %i.u = add i64 %i.t, 15
   %diff.check = icmp ult i64 %i.u, 31
@@ -1690,8 +1690,8 @@ _ZNKSt6vectorIN4Luau8Bytecode5BcPhiESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = 
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 56
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #20 ; 6 uses
-  %i.q = ptrtoaddr ptr %i.p to i64                ; 2 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #20 ; 7 uses
+  %i.q = ptrtoaddr ptr %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 7 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 3 uses
   store i32 0, ptr %i.s, align 8, !tbaa !239
@@ -1700,7 +1700,6 @@ _ZNKSt6vectorIN4Luau8Bytecode5BcPhiESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = 
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 5 uses
   store ptr %i.u, ptr %i.r, align 8, !tbaa !241
   %i.v = load ptr, ptr %2, align 8, !tbaa !241    ; 8 uses
-  %3 = ptrtoaddr ptr %i.v to i64
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %.not.i.i = icmp eq ptr %i.v, %i.w
   br i1 %.not.i.i, label %bb.c, label %bb.d
@@ -1722,8 +1721,10 @@ bb.c:                                             ; preds = %_ZNKSt6vectorIN4Lua
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader107, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.ae = add i64 %i.q, %i.m
-  %i.af = add i64 %3, %i.e
+  %3 = ptrtoaddr ptr %i.p to i64
+  %4 = ptrtoaddr ptr %i.v to i64
+  %i.ae = add i64 %3, %i.m
+  %i.af = add i64 %4, %i.e
   %i.ag = sub i64 %i.ae, %i.af
   %i.ah = add i64 %i.ag, 15
   %diff.check = icmp ult i64 %i.ah, 31
@@ -2126,8 +2127,8 @@ _ZNKSt6vectorIN4Luau8Bytecode6BcInstESaIS2_EE12_M_check_lenEmPKc.exit: ; preds =
   %.not.i = icmp ne i64 %i.l, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 80
-  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #20 ; 6 uses
-  %i.q = ptrtoaddr ptr %i.p to i64                ; 2 uses
+  %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #20 ; 7 uses
+  %i.q = ptrtoaddr ptr %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 8 uses
   %i.s = load i64, ptr %2, align 8
   store i64 %i.s, ptr %i.r, align 8
@@ -2140,7 +2141,6 @@ _ZNKSt6vectorIN4Luau8Bytecode6BcInstESaIS2_EE12_M_check_lenEmPKc.exit: ; preds =
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 24 ; 5 uses
   store ptr %i.x, ptr %i.t, align 8, !tbaa !241
   %i.y = load ptr, ptr %i.u, align 8, !tbaa !241  ; 8 uses
-  %3 = ptrtoaddr ptr %i.y to i64
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %.not.i.i = icmp eq ptr %i.y, %i.z
   br i1 %.not.i.i, label %bb.c, label %bb.d
@@ -2162,8 +2162,10 @@ bb.c:                                             ; preds = %_ZNKSt6vectorIN4Lua
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.preheader107, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %i.ah = add i64 %i.q, %i.m
-  %i.ai = add i64 %3, %i.e
+  %3 = ptrtoaddr ptr %i.p to i64
+  %4 = ptrtoaddr ptr %i.y to i64
+  %i.ah = add i64 %3, %i.m
+  %i.ai = add i64 %4, %i.e
   %i.aj = sub i64 %i.ah, %i.ai
   %i.ak = add i64 %i.aj, 23
   %diff.check = icmp ult i64 %i.ak, 31
@@ -2566,19 +2568,19 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not11.i.i.i.i.i.i, label %_ZSt18uninitialized_moveIPN4Luau8Bytecode4BcOpES3_ET0_T_S5_S4_.exit.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.d
-  %3 = ptrtoaddr ptr %i.x to i64
-  %4 = ptrtoaddr ptr %i.w to i64
-  %i.ab = add nsw i64 %.idx.i.i, -4               ; 2 uses
-  %5 = lshr exact i64 %i.ab, 2
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ab, 44
-  %i.ac = sub i64 %3, %4
+  %3 = add nsw i64 %.idx.i.i, -4                  ; 2 uses
+  %4 = lshr exact i64 %3, 2
+  %i.ab = add nuw nsw i64 %4, 1                   ; 2 uses
+  %min.iters.check = icmp ult i64 %3, 44
+  %5 = ptrtoaddr ptr %i.w to i64
+  %6 = ptrtoaddr ptr %i.x to i64
+  %i.ac = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.ac, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader199, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.preheader
-  %n.vec = and i64 %6, 9223372036854775800        ; 3 uses
+  %n.vec = and i64 %i.ab, 9223372036854775800     ; 3 uses
   %i.ad = shl i64 %n.vec, 2                       ; 2 uses
   %i.ae = getelementptr i8, ptr %i.w, i64 %i.ad
   %i.af = getelementptr i8, ptr %i.x, i64 %i.ad
@@ -2600,7 +2602,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !758
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %i.ab, %n.vec
   br i1 %cmp.n, label %_ZSt18uninitialized_moveIPN4Luau8Bytecode4BcOpES3_ET0_T_S5_S4_.exit.i.i, label %.lr.ph.i.i.i.i.i.i.preheader199
 
 .lr.ph.i.i.i.i.i.i.preheader199:                  ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %middle.block

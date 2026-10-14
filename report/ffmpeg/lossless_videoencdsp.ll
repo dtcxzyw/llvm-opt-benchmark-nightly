@@ -21,7 +21,6 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @diff_bytes_c(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %0 to i64                    ; 4 uses
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.b = ptrtoint ptr %2 to i64                   ; 3 uses
   %i.c = or i64 %i.b, %i.a
@@ -45,6 +44,7 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph81.preheader122, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph81.preheader
+  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.i = sub i64 %i.a, %4
   %diff.check = icmp ugt i64 %i.i, -32
   %i.j = sub i64 %i.b, %4
@@ -198,9 +198,10 @@ iter.check:                                       ; preds = %.loopexit
   br i1 %min.iters.check101, label %.lr.ph84.preheader, label %vector.memcheck96
 
 vector.memcheck96:                                ; preds = %iter.check
-  %i.dc = sub i64 %i.a, %4
+  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %i.dc = sub i64 %i.a, %5
   %diff.check97 = icmp ugt i64 %i.dc, -32
-  %i.dd = sub i64 %i.b, %4
+  %i.dd = sub i64 %i.b, %5
   %diff.check98 = icmp ugt i64 %i.dd, -32
   %conflict.rdx99 = or i1 %diff.check97, %diff.check98
   br i1 %conflict.rdx99, label %.lr.ph84.preheader, label %vector.main.loop.iter.check
@@ -340,9 +341,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @sub_median_pred_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i64 noundef %3, ptr nofree noundef captures(none) %4, ptr nofree noundef captures(none) %5) #1 {
 bb.a:
-  %6 = ptrtoaddr ptr %2 to i64
-  %7 = ptrtoaddr ptr %1 to i64
-  %8 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = load i32, ptr %4, align 4, !tbaa !29
   %i.b = trunc i32 %i.a to i8                     ; 4 uses
   %i.c = load i32, ptr %5, align 4, !tbaa !29
@@ -355,9 +353,12 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.preheader41, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.f = sub i64 %7, %8
+  %6 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.f = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.f, -32
-  %i.g = sub i64 %6, %8
+  %8 = ptrtoaddr ptr %2 to i64
+  %i.g = sub i64 %8, %6
   %diff.check33 = icmp ugt i64 %i.g, -32
   %conflict.rdx = or i1 %diff.check, %diff.check33
   br i1 %conflict.rdx, label %.lr.ph.preheader41, label %vector.ph

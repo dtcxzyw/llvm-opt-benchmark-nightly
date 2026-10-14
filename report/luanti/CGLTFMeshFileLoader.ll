@@ -205,7 +205,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorIfSaIfE
           to label %.noexc47 unwind label %bb.k   ; 28 uses
 
 .noexc47:                                         ; preds = %bb.j
-  %7 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.w ; 9 uses
   store float 0.000000e+00, ptr %i.z, align 4, !tbaa !412
   %i.ab = getelementptr i8, ptr %i.z, i64 4       ; 3 uses
@@ -229,7 +228,6 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPfmfET_
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ag = load i8, ptr %i.af, align 8, !tbaa !481 ; 2 uses
   %i.ah = load ptr, ptr %3, align 8               ; 22 uses
-  %8 = ptrtoaddr ptr %i.ah to i64
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 6 uses
   %switch = icmp ult i8 %i.ag, 3
@@ -243,6 +241,8 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPfmfET_
 
 _ZSt3getISt6vectorIfSaIfEEJN5scene19CGLTFMeshFileLoader8AccessorIfE12BufferSourceES2_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.preheader: ; preds = %.lr.ph.split
   %min.iters.check = icmp ult i64 %.pr, 8
+  %7 = ptrtoaddr ptr %i.z to i64
+  %8 = ptrtoaddr ptr %i.ah to i64
   %i.ai = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.ai, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -645,7 +645,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorISt5arr
           to label %.noexc48 unwind label %bb.l   ; 22 uses
 
 .noexc48:                                         ; preds = %bb.j
-  %7 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.w ; 8 uses
   store i32 0, ptr %i.z, align 1
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 4 ; 5 uses
@@ -708,7 +707,6 @@ _ZNSt6vectorISt5arrayIhLm4EESaIS1_EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i.
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = load i8, ptr %i.aq, align 8, !tbaa !312 ; 2 uses
   %i.as = load ptr, ptr %3, align 8               ; 14 uses
-  %8 = ptrtoaddr ptr %i.as to i64
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 2 uses
   %switch = icmp ult i8 %i.ar, 3
@@ -722,6 +720,8 @@ _ZNSt6vectorISt5arrayIhLm4EESaIS1_EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i.
 
 _ZSt3getISt6vectorISt5arrayIhLm4EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.preheader: ; preds = %.lr.ph.split
   %min.iters.check188 = icmp ult i64 %.pr, 8
+  %7 = ptrtoaddr ptr %i.z to i64
+  %8 = ptrtoaddr ptr %i.as to i64
   %i.at = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.at, -32
   %or.cond = select i1 %min.iters.check188, i1 true, i1 %diff.check
@@ -1124,7 +1124,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorISt5arr
           to label %.noexc48 unwind label %bb.l   ; 23 uses
 
 .noexc48:                                         ; preds = %bb.j
-  %7 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.w ; 8 uses
   store i64 0, ptr %i.z, align 2
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 5 uses
@@ -1187,7 +1186,6 @@ _ZNSt6vectorISt5arrayItLm4EESaIS1_EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i.
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = load i8, ptr %i.aq, align 8, !tbaa !323 ; 2 uses
   %i.as = load ptr, ptr %3, align 8               ; 8 uses
-  %8 = ptrtoaddr ptr %i.as to i64
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 5 uses
   %switch = icmp ult i8 %i.ar, 3
@@ -1210,6 +1208,8 @@ _ZSt3getIN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEE12BufferSourceEJS
 
 _ZSt3getISt6vectorISt5arrayItLm4EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.preheader: ; preds = %.lr.ph.split
   %min.iters.check188 = icmp ult i64 %.pr, 8
+  %7 = ptrtoaddr ptr %i.z to i64
+  %8 = ptrtoaddr ptr %i.as to i64
   %i.au = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.au, -32
   %or.cond = select i1 %min.iters.check188, i1 true, i1 %diff.check
@@ -1612,10 +1612,9 @@ _ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.h
 
 bb.j:                                             ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i
   %i.y = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #32
-          to label %.noexc47 unwind label %bb.l   ; 24 uses
+          to label %.noexc47 unwind label %bb.l   ; 25 uses
 
 .noexc47:                                         ; preds = %bb.j
-  %7 = ptrtoaddr ptr %i.y to i64                  ; 2 uses
   %i.z = getelementptr i8, ptr %i.y, i64 %i.w     ; 12 uses
   store i8 0, ptr %i.y, align 1, !tbaa !60
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 1 ; 2 uses
@@ -1636,8 +1635,7 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.k, %.noexc47
 .lr.ph:                                           ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !346 ; 2 uses
-  %i.af = load ptr, ptr %3, align 8               ; 7 uses
-  %8 = ptrtoaddr ptr %i.af to i64                 ; 2 uses
+  %i.af = load ptr, ptr %3, align 8               ; 8 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 2 uses
   %switch = icmp ult i8 %i.ae, 3
@@ -1651,6 +1649,8 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.k, %.noexc47
 
 iter.check:                                       ; preds = %.lr.ph.split
   %min.iters.check = icmp ult i64 %.pr, 4
+  %7 = ptrtoaddr ptr %i.y to i64
+  %8 = ptrtoaddr ptr %i.af to i64
   %i.ag = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.ag, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -1714,7 +1714,9 @@ iter.check206:                                    ; preds = %.lr.ph.split
   %min.iters.check193 = icmp ult i64 %.pr, 4
   %ident.check.not = icmp ne i64 %.sroa.4.0.copyload.i, 1
   %or.cond242.not244 = select i1 %min.iters.check193, i1 true, i1 %ident.check.not
-  %i.aq = sub i64 %8, %7
+  %9 = ptrtoaddr ptr %i.y to i64
+  %10 = ptrtoaddr ptr %i.af to i64
+  %i.aq = sub i64 %10, %9
   %diff.check192 = icmp ugt i64 %i.aq, -32
   %or.cond243 = select i1 %or.cond242.not244, i1 true, i1 %diff.check192
   br i1 %or.cond243, label %_ZSt3getIN5scene19CGLTFMeshFileLoader8AccessorIhE12BufferSourceEJS4_St6vectorIhSaIhEESt5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.preheader, label %vector.main.loop.iter.check194
@@ -2117,7 +2119,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorItSaItE
           to label %.noexc47 unwind label %bb.k   ; 30 uses
 
 .noexc47:                                         ; preds = %bb.j
-  %7 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %i.w ; 10 uses
   store i16 0, ptr %i.z, align 2, !tbaa !242
   %i.ab = getelementptr i8, ptr %i.z, i64 2       ; 3 uses
@@ -2141,7 +2142,6 @@ _ZNSt6vectorItSaItEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPtmtET_
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ag = load i8, ptr %i.af, align 8, !tbaa !360 ; 2 uses
   %i.ah = load ptr, ptr %3, align 8               ; 23 uses
-  %8 = ptrtoaddr ptr %i.ah to i64
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 6 uses
   %switch = icmp ult i8 %i.ag, 3
@@ -2155,6 +2155,8 @@ _ZNSt6vectorItSaItEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPtmtET_
 
 iter.check:                                       ; preds = %.lr.ph.split
   %min.iters.check = icmp ult i64 %.pr, 4
+  %7 = ptrtoaddr ptr %i.z to i64
+  %8 = ptrtoaddr ptr %i.ah to i64
   %i.ai = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.ai, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -2557,7 +2559,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorIjSaIjE
           to label %.noexc47 unwind label %bb.k   ; 28 uses
 
 .noexc47:                                         ; preds = %bb.j
-  %7 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.w ; 9 uses
   store i32 0, ptr %i.z, align 4, !tbaa !273
   %i.ab = getelementptr i8, ptr %i.z, i64 4       ; 3 uses
@@ -2581,7 +2582,6 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPjmjET_
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ag = load i8, ptr %i.af, align 8, !tbaa !371 ; 2 uses
   %i.ah = load ptr, ptr %3, align 8               ; 22 uses
-  %8 = ptrtoaddr ptr %i.ah to i64
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 6 uses
   %switch = icmp ult i8 %i.ag, 3
@@ -2595,6 +2595,8 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPjmjET_
 
 _ZSt3getISt6vectorIjSaIjEEJN5scene19CGLTFMeshFileLoader8AccessorIjE12BufferSourceES2_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.preheader: ; preds = %.lr.ph.split
   %min.iters.check = icmp ult i64 %.pr, 8
+  %7 = ptrtoaddr ptr %i.z to i64
+  %8 = ptrtoaddr ptr %i.ah to i64
   %i.ai = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.ai, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -2997,7 +2999,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorISt5arr
           to label %.noexc48 unwind label %bb.k   ; 27 uses
 
 .noexc48:                                         ; preds = %bb.j
-  %7 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw [2 x i8], ptr %i.z, i64 %i.w ; 10 uses
   store i16 0, ptr %i.z, align 1
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 2 ; 7 uses
@@ -3092,7 +3093,6 @@ _ZNSt6vectorISt5arrayIhLm2EESaIS1_EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i.
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ax = load i8, ptr %i.aw, align 8, !tbaa !536 ; 2 uses
   %i.ay = load ptr, ptr %3, align 8               ; 15 uses
-  %8 = ptrtoaddr ptr %i.ay to i64
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 2 uses
   %switch = icmp ult i8 %i.ax, 3
@@ -3106,6 +3106,8 @@ _ZNSt6vectorISt5arrayIhLm2EESaIS1_EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i.
 
 iter.check208:                                    ; preds = %.lr.ph.split
   %min.iters.check196 = icmp ult i64 %.pr, 4
+  %7 = ptrtoaddr ptr %i.z to i64
+  %8 = ptrtoaddr ptr %i.ay to i64
   %i.az = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.az, -32
   %or.cond = select i1 %min.iters.check196, i1 true, i1 %diff.check
@@ -3508,7 +3510,6 @@ bb.j:                                             ; preds = %_ZNSt6vectorISt5arr
           to label %.noexc48 unwind label %bb.l   ; 22 uses
 
 .noexc48:                                         ; preds = %bb.j
-  %7 = ptrtoaddr ptr %i.z to i64
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.w ; 8 uses
   store i32 0, ptr %i.z, align 2
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 4 ; 5 uses
@@ -3571,7 +3572,6 @@ _ZNSt6vectorISt5arrayItLm2EESaIS1_EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i.
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = load i8, ptr %i.aq, align 8, !tbaa !552 ; 2 uses
   %i.as = load ptr, ptr %3, align 8               ; 14 uses
-  %8 = ptrtoaddr ptr %i.as to i64
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8 ; 2 uses
   %switch = icmp ult i8 %i.ar, 3
@@ -3585,6 +3585,8 @@ _ZNSt6vectorISt5arrayItLm2EESaIS1_EEC2EmRKS2_.exit: ; preds = %.lr.ph.i.i.i.i.i.
 
 _ZSt3getISt6vectorISt5arrayItLm2EESaIS2_EEJN5scene19CGLTFMeshFileLoader8AccessorIS2_E12BufferSourceES4_St5tupleIJEEEERKT_RKSt7variantIJDpT0_EE.exit.i.us.preheader: ; preds = %.lr.ph.split
   %min.iters.check188 = icmp ult i64 %.pr, 8
+  %7 = ptrtoaddr ptr %i.z to i64
+  %8 = ptrtoaddr ptr %i.as to i64
   %i.at = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.at, -32
   %or.cond = select i1 %min.iters.check188, i1 true, i1 %diff.check

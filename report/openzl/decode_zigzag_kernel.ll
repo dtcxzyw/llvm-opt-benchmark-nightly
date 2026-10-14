@@ -13,9 +13,9 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 4
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 4
   %i.c = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -109,9 +109,9 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 8
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 8
   %i.c = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -205,9 +205,9 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 4
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 4
   %i.c = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -333,9 +333,9 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 4
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 4
   %i.c = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -457,8 +457,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ZL_zigzagDecode(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 4 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 4 uses
   %i.a = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %3)
   %i.b = icmp eq i64 %i.a, 1
   br i1 %i.b, label %.split, label %ZL_zigzagDecode8.exit
@@ -478,7 +476,9 @@ bb.b:                                             ; preds = %.split
 
 iter.check87:                                     ; preds = %bb.b
   %min.iters.check74 = icmp ult i64 %2, 4
-  %i.d = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.d = sub i64 %5, %4
   %diff.check72 = icmp ugt i64 %i.d, -32
   %or.cond = or i1 %min.iters.check74, %diff.check72
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check75
@@ -598,7 +598,9 @@ bb.c:                                             ; preds = %.split
 
 iter.check:                                       ; preds = %bb.c
   %min.iters.check54 = icmp ult i64 %2, 4
-  %i.ay = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.ay = sub i64 %7, %6
   %diff.check52 = icmp ugt i64 %i.ay, -32
   %or.cond100 = or i1 %min.iters.check54, %diff.check52
   br i1 %or.cond100, label %.lr.ph.i13.preheader, label %vector.main.loop.iter.check
@@ -718,7 +720,9 @@ bb.d:                                             ; preds = %.split
 
 .lr.ph.i17.preheader:                             ; preds = %bb.d
   %min.iters.check40 = icmp ult i64 %2, 8
-  %i.ct = sub i64 %4, %5
+  %8 = ptrtoaddr ptr %0 to i64
+  %9 = ptrtoaddr ptr %1 to i64
+  %i.ct = sub i64 %9, %8
   %diff.check38 = icmp ugt i64 %i.ct, -32
   %or.cond101 = or i1 %min.iters.check40, %diff.check38
   br i1 %or.cond101, label %.lr.ph.i17.preheader104, label %vector.ph41
@@ -806,7 +810,9 @@ bb.e:                                             ; preds = %.split
 
 .lr.ph.i21.preheader:                             ; preds = %bb.e
   %min.iters.check = icmp ult i64 %2, 4
-  %i.eg = sub i64 %4, %5
+  %10 = ptrtoaddr ptr %0 to i64
+  %11 = ptrtoaddr ptr %1 to i64
+  %i.eg = sub i64 %11, %10
   %diff.check = icmp ugt i64 %i.eg, -32
   %or.cond102 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond102, label %.lr.ph.i21.preheader106, label %vector.ph

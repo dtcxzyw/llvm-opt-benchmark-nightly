@@ -204,10 +204,10 @@ define internal fastcc ptr @compl_cube(ptr nofree noundef readonly captures(none
 bb.a:
   %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 80), align 8, !tbaa !26
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !10   ; 9 uses
-  %i.d = ptrtoaddr ptr %i.c to i64                ; 3 uses
-  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 88), align 8, !tbaa !15 ; 6 uses
-  %i.f = ptrtoaddr ptr %i.e to i64                ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !10   ; 10 uses
+  %i.d = ptrtoaddr ptr %i.c to i64
+  %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 88), align 8, !tbaa !15 ; 7 uses
+  %i.f = ptrtoaddr ptr %i.e to i64
   %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 4), align 4, !tbaa !72
   %i.h = load i32, ptr @cube, align 8, !tbaa !14
   %i.i = tail call ptr (i32, i32, ...) @sf_new(i32 noundef %i.g, i32 noundef %i.h) #8 ; 4 uses
@@ -227,10 +227,12 @@ bb.a:
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.a
-  %i.t = ptrtoaddr ptr %0 to i64
-  %i.u = sub i64 %i.d, %i.f
+  %1 = ptrtoaddr ptr %i.e to i64
+  %i.t = ptrtoaddr ptr %i.c to i64                ; 2 uses
+  %i.u = sub i64 %i.t, %1
   %diff.check = icmp ugt i64 %i.u, -32
-  %i.v = sub i64 %i.d, %i.t
+  %2 = ptrtoaddr ptr %0 to i64
+  %i.v = sub i64 %i.t, %2
   %diff.check44 = icmp ugt i64 %i.v, -32
   %conflict.rdx = or i1 %diff.check, %diff.check44
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph

@@ -205,9 +205,8 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330: ; preds = %.noexc335
 
 _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit336:            ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330, %.noexc335, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328
   %.sroa.17.0 = phi ptr [ %i.va, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330 ], [ %i.va, %.noexc335 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328 ] ; 2 uses
-  %.sroa.0890.0 = phi ptr [ %i.uz, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330 ], [ %i.uz, %.noexc335 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328 ] ; 26 uses
+  %.sroa.0890.0 = phi ptr [ %i.uz, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330 ], [ %i.uz, %.noexc335 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328 ] ; 28 uses
   %.0.i.i.i.i.i332 = phi ptr [ %i.ve, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i330 ], [ %i.vb, %.noexc335 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i328 ] ; 3 uses
-  %.sroa.0890.01443 = ptrtoaddr ptr %.sroa.0890.0 to i64 ; 3 uses
   %i.vf = mul nsw i32 %i.pt, 3                    ; 2 uses
   %i.vg = sext i32 %i.vf to i64                   ; 2 uses
   %i.vh = icmp slt i32 %i.pt, 0
@@ -326,8 +325,9 @@ bb.ce:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.wj = load ptr, ptr %i.sb, align 8, !tbaa !19 ; 7 uses
   %wide.trip.count = zext nneg i32 %i.wh to i64   ; 5 uses
   %min.iters.check1445 = icmp ult i32 %i.wh, 8
+  %6 = ptrtoaddr ptr %.sroa.0890.0 to i64
   %i.wk = ptrtoaddr ptr %i.wj to i64
-  %i.wl = sub i64 %i.wk, %.sroa.0890.01443
+  %i.wl = sub i64 %i.wk, %6
   %diff.check = icmp ugt i64 %i.wl, -32
   %or.cond = select i1 %min.iters.check1445, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph1444.preheader, label %vector.ph1446
@@ -730,8 +730,9 @@ bb.di:                                            ; preds = %_ZNSt6vectorIiSaIiE
   %i.aeu = load ptr, ptr %i.sd, align 8, !tbaa !19 ; 7 uses
   %wide.trip.count1154 = zext nneg i32 %i.aes to i64 ; 5 uses
   %min.iters.check1459 = icmp ult i32 %i.aes, 8
+  %7 = ptrtoaddr ptr %.sroa.0890.0 to i64
   %i.aev = ptrtoaddr ptr %i.aeu to i64
-  %i.aew = sub i64 %i.aev, %.sroa.0890.01443
+  %i.aew = sub i64 %i.aev, %7
   %diff.check1457 = icmp ugt i64 %i.aew, -32
   %or.cond1491 = select i1 %min.iters.check1459, i1 true, i1 %diff.check1457
   br i1 %or.cond1491, label %scalar.ph1458.preheader, label %vector.ph1460
@@ -1134,8 +1135,9 @@ bb.ev:                                            ; preds = %bb.eu
   %.not5.i442 = icmp ne ptr %.sroa.0890.0, %.0.i.i.i.i.i332
   call void @llvm.assume(i1 %.not5.i442)
   %i.api = ptrtoaddr ptr %.0.i.i.i.i.i332 to i64
+  %8 = ptrtoaddr ptr %.sroa.0890.0 to i64
   %i.apj = add i64 %i.api, -4
-  %i.apk = sub i64 %i.apj, %.sroa.0890.01443      ; 2 uses
+  %i.apk = sub i64 %i.apj, %8                     ; 2 uses
   %i.apl = lshr i64 %i.apk, 2
   %i.apm = add nuw nsw i64 %i.apl, 1              ; 2 uses
   %min.iters.check1471 = icmp ult i64 %i.apk, 28

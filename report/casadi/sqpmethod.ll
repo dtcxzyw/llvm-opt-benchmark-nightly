@@ -205,9 +205,6 @@ declare void @_ZN6casadi12ScopedTimingC1ERNS_6FStatsE(ptr noundef nonnull align 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i32 @_ZN6casadi14convexify_evalIdEEiPKNS_23casadi_convexify_configIT_EEPKS2_PS2_PxS8_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #1 comdat {
 bb.a:
-  %5 = ptrtoaddr ptr %2 to i64
-  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %7 = ptrtoaddr ptr %4 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !592  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -245,7 +242,9 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.preheader:                               ; preds = %.preheader16.i
   %min.iters.check = icmp ult i64 %i.g, 8
-  %i.r = sub i64 %6, %7
+  %5 = ptrtoaddr ptr %4 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.r = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.r, -32
   %or.cond460 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond460, label %.lr.ph.i.preheader470, label %vector.ph
@@ -648,7 +647,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i257.preheader:                            ; preds = %.preheader16.i255
   %min.iters.check445 = icmp ult i64 %i.n, 8
-  %i.jm = sub i64 %6, %5
+  %7 = ptrtoaddr ptr %2 to i64
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.jm = sub i64 %8, %7
   %diff.check443 = icmp ugt i64 %i.jm, -32
   %or.cond461 = or i1 %min.iters.check445, %diff.check443
   br i1 %or.cond461, label %.lr.ph.i257.preheader468, label %vector.ph446
@@ -1051,8 +1052,6 @@ declare void @_ZN6casadi12ScopedTimingD1Ev(ptr noundef nonnull align 8 dead_on_r
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN6casadi11casadi_bfgsIdEEvPKxPT_PKS3_S6_S6_S4_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #1 comdat {
 bb.a:
-  %6 = ptrtoaddr ptr %3 to i64
-  %7 = ptrtoaddr ptr %5 to i64
   %i.a = load i64, ptr %0, align 8, !tbaa !177    ; 39 uses
   %i.b = getelementptr inbounds [8 x i8], ptr %5, i64 %i.a ; 17 uses
   %.not.i = icmp ne ptr %5, null                  ; 4 uses
@@ -1068,7 +1067,9 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.preheader:                               ; preds = %.preheader16.i
   %min.iters.check = icmp ult i64 %i.a, 8
-  %i.d = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %5 to i64
+  %7 = ptrtoaddr ptr %3 to i64
+  %i.d = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.d, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader251, label %vector.ph
@@ -1471,8 +1472,7 @@ middle.block509:                                  ; preds = %vector.body505
 
 _ZN6casadi11casadi_fillIdEEvPT_xS1_.exit234:      ; preds = %.lr.ph.i230, %middle.block509, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit224
   %i.jk = getelementptr inbounds nuw i8, ptr %1, i64 488 ; 3 uses
-  %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !216 ; 9 uses
-  %34 = ptrtoaddr ptr %i.jl to i64                ; 2 uses
+  %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !216 ; 10 uses
   %i.jm = mul nsw i64 %i.iy, 3
   %i.jn = add nsw i64 %i.jm, %i.ix                ; 2 uses
   %.not.i235 = icmp ne ptr %i.jl, null            ; 2 uses
@@ -1490,8 +1490,7 @@ _ZN6casadi12casadi_clearIdEEvPT_x.exit238:        ; preds = %_ZN6casadi11casadi_
 
 bb.ap:                                            ; preds = %_ZN6casadi12casadi_clearIdEEvPT_x.exit238.thread, %_ZN6casadi12casadi_clearIdEEvPT_x.exit238
   %.in = getelementptr inbounds nuw i8, ptr %1, i64 200
-  %i.jq = load ptr, ptr %.in, align 8, !tbaa !227 ; 6 uses
-  %35 = ptrtoaddr ptr %i.jq to i64                ; 2 uses
+  %i.jq = load ptr, ptr %.in, align 8, !tbaa !227 ; 7 uses
   %.not15.i240 = icmp eq ptr %i.jq, null
   %i.jr = icmp sgt i64 %i.ix, 0                   ; 2 uses
   br i1 %.not15.i240, label %.preheader.i247, label %.preheader16.i241
@@ -1501,6 +1500,8 @@ bb.ap:                                            ; preds = %_ZN6casadi12casadi_
 
 .lr.ph.i242.preheader:                            ; preds = %.preheader16.i241
   %min.iters.check516 = icmp ult i64 %i.ix, 8
+  %34 = ptrtoaddr ptr %i.jl to i64
+  %35 = ptrtoaddr ptr %i.jq to i64
   %i.js = sub i64 %35, %34
   %diff.check514 = icmp ugt i64 %i.js, -32
   %or.cond569 = or i1 %min.iters.check516, %diff.check514
@@ -1623,8 +1624,10 @@ middle.block526:                                  ; preds = %vector.body519
   br i1 %min.iters.check534, label %.lr.ph.i253.preheader572, label %vector.memcheck531
 
 vector.memcheck531:                               ; preds = %.lr.ph.i253.preheader
-  %i.lk = add i64 %.idx138436, %34
-  %i.ll = sub i64 %35, %i.lk
+  %36 = ptrtoaddr ptr %i.jl to i64
+  %37 = ptrtoaddr ptr %i.jq to i64
+  %i.lk = add i64 %.idx138436, %36
+  %i.ll = sub i64 %37, %i.lk
   %diff.check532 = icmp ugt i64 %i.ll, -32
   br i1 %diff.check532, label %.lr.ph.i253.preheader572, label %vector.ph535
 

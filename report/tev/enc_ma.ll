@@ -205,20 +205,19 @@ bb.q:                                             ; preds = %_ZNKSt3__16vectorIt
 _ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorItEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i.i.i: ; preds = %_ZNKSt3__16vectorItNS_9allocatorItEEE11__recommendB8nn180100Em.exit.i.i
   %i.gs = shl nuw i64 %.0.i.i.i44, 1
   %i.gt = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gs) #35 ; 3 uses
-  %4 = ptrtoaddr ptr %i.gt to i64
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 %i.gk ; 9 uses
   %i.gv = getelementptr inbounds nuw [2 x i8], ptr %i.gt, i64 %.0.i.i.i44
   store i16 1, ptr %i.gu, align 2, !tbaa !45
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gu, i64 2 ; 3 uses
-  %i.gx = load ptr, ptr %i.gb, align 8, !tbaa !53 ; 8 uses
-  %5 = ptrtoaddr ptr %i.gx to i64                 ; 2 uses
+  %i.gx = load ptr, ptr %i.gb, align 8, !tbaa !53 ; 9 uses
   %i.gy = load ptr, ptr %i.ga, align 8, !tbaa !54 ; 6 uses
   %.not4.i.i.i.i.i.i.i.i.i45 = icmp eq ptr %i.gx, %i.gy
   br i1 %.not4.i.i.i.i.i.i.i.i.i45, label %_ZNSt3__114__split_bufferItRNS_9allocatorItEEE5clearB8nn180100Ev.exit.i.i.i, label %iter.check301
 
 iter.check301:                                    ; preds = %_ZNSt3__119__allocate_at_leastB8nn180100INS_9allocatorItEEEENS_19__allocation_resultINS_16allocator_traitsIT_E7pointerEEERS5_m.exit.i.i.i
   %i.gz = ptrtoaddr ptr %i.gy to i64
-  %i.ha = add i64 %5, -2
+  %4 = ptrtoaddr ptr %i.gx to i64
+  %i.ha = add i64 %4, -2
   %i.hb = sub i64 %i.ha, %i.gz                    ; 3 uses
   %i.hc = lshr i64 %i.hb, 1
   %i.hd = add nuw i64 %i.hc, 1                    ; 5 uses
@@ -226,8 +225,10 @@ iter.check301:                                    ; preds = %_ZNSt3__119__alloca
   br i1 %min.iters.check284, label %.lr.ph.i.i.i.i.i.i.i.i.i46.preheader, label %vector.memcheck281
 
 vector.memcheck281:                               ; preds = %iter.check301
+  %5 = ptrtoaddr ptr %i.gx to i64
+  %6 = ptrtoaddr ptr %i.gt to i64
   %i.he = add i64 %i.gj, %5
-  %i.hf = add i64 %4, %i.gi
+  %i.hf = add i64 %6, %i.gi
   %i.hg = sub i64 %i.hf, %i.he
   %diff.check282 = icmp ugt i64 %i.hg, -32
   br i1 %diff.check282, label %.lr.ph.i.i.i.i.i.i.i.i.i46.preheader, label %vector.main.loop.iter.check285

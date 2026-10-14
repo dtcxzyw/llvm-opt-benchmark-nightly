@@ -204,8 +204,7 @@ define internal fastcc void @_ZN8rawspeed12_GLOBAL__N_122getPanasonicTiffVectorI
 bb.a:
   %i.a = tail call noundef ptr @_ZNK8rawspeed7TiffIFD8getEntryENS_7TiffTagE(ptr noundef nonnull align 8 dereferenceable(104) %0, i16 noundef zeroext %1) ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.09.0.copyload = load ptr, ptr %i.b, align 8 ; 6 uses
-  %.sroa.09.0.copyload45 = ptrtoaddr ptr %.sroa.09.0.copyload to i64 ; 2 uses
+  %.sroa.09.0.copyload = load ptr, ptr %i.b, align 8 ; 7 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   %.sroa.913.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -307,7 +306,8 @@ vector.scevcheck:                                 ; preds = %_ZN8rawspeed10ByteS
   br i1 %ident.check.not, label %vector.memcheck, label %_ZN8rawspeed10ByteStream3getIjEET_v.exit.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.ao = add i64 %.sroa.09.0.copyload45, %i.ac
+  %3 = ptrtoaddr ptr %.sroa.09.0.copyload to i64
+  %i.ao = add i64 %3, %i.ac
   %i.ap = sub i64 %i.ao, %i.aa
   %diff.check = icmp ugt i64 %i.ap, -128
   br i1 %diff.check, label %_ZN8rawspeed10ByteStream3getIjEET_v.exit.preheader, label %vector.ph
@@ -373,7 +373,8 @@ vector.scevcheck51:                               ; preds = %_ZN8rawspeed10ByteS
   br i1 %ident.check52.not, label %vector.memcheck53, label %_ZN8rawspeed10ByteStream3getIjEET_v.exit.us.preheader
 
 vector.memcheck53:                                ; preds = %vector.scevcheck51
-  %i.bt = add i64 %.sroa.09.0.copyload45, %i.ac
+  %4 = ptrtoaddr ptr %.sroa.09.0.copyload to i64
+  %i.bt = add i64 %4, %i.ac
   %i.bu = sub i64 %i.bt, %i.aa
   %diff.check54 = icmp ugt i64 %i.bu, -128
   br i1 %diff.check54, label %_ZN8rawspeed10ByteStream3getIjEET_v.exit.us.preheader, label %vector.ph57
@@ -465,8 +466,7 @@ define internal fastcc void @_ZN8rawspeed12_GLOBAL__N_122getPanasonicTiffVectorI
 bb.a:
   %i.a = tail call noundef ptr @_ZNK8rawspeed7TiffIFD8getEntryENS_7TiffTagE(ptr noundef nonnull align 8 dereferenceable(104) %0, i16 noundef zeroext %1) ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.09.0.copyload = load ptr, ptr %i.b, align 8 ; 6 uses
-  %.sroa.09.0.copyload45 = ptrtoaddr ptr %.sroa.09.0.copyload to i64 ; 2 uses
+  %.sroa.09.0.copyload = load ptr, ptr %i.b, align 8 ; 7 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8 ; 3 uses
   %.sroa.913.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -565,7 +565,8 @@ _ZN8rawspeed10ByteStream3getItEET_v.exit.preheader: ; preds = %vector.body, %vec
   br label %_ZN8rawspeed10ByteStream3getItEET_v.exit
 
 vector.memcheck:                                  ; preds = %_ZN8rawspeed10ByteStream3getItEET_v.exit.lr.ph
-  %i.ao = add i64 %.sroa.09.0.copyload45, %i.ac
+  %3 = ptrtoaddr ptr %.sroa.09.0.copyload to i64
+  %i.ao = add i64 %3, %i.ac
   %i.ap = sub i64 %i.ao, %i.aa
   %diff.check = icmp ugt i64 %i.ap, -128
   br i1 %diff.check, label %_ZN8rawspeed10ByteStream3getItEET_v.exit.preheader, label %vector.ph
@@ -628,7 +629,8 @@ _ZN8rawspeed10ByteStream3getItEET_v.exit.us.lr.ph: ; preds = %.lr.ph.split.us.pr
   br i1 %or.cond72, label %_ZN8rawspeed10ByteStream3getItEET_v.exit.us.preheader, label %vector.memcheck52
 
 vector.memcheck52:                                ; preds = %_ZN8rawspeed10ByteStream3getItEET_v.exit.us.lr.ph
-  %i.bt = add i64 %.sroa.09.0.copyload45, %i.ac
+  %4 = ptrtoaddr ptr %.sroa.09.0.copyload to i64
+  %i.bt = add i64 %4, %i.ac
   %i.bu = sub i64 %i.bt, %i.aa
   %diff.check53 = icmp ugt i64 %i.bu, -128
   br i1 %diff.check53, label %_ZN8rawspeed10ByteStream3getItEET_v.exit.us.preheader, label %vector.ph56

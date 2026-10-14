@@ -205,8 +205,7 @@ _ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge: ; pred
   %.pre-phi = phi i64 [ %.pre569, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ %i.ia, %bb.co ] ; 5 uses
   %.not = phi i1 [ %i.if, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ true, %bb.co ] ; 2 uses
   %i.ig = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ %i.hz, %bb.co ] ; 2 uses
-  %i.ih = phi ptr [ %i.ie, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ null, %bb.co ] ; 22 uses
-  %53 = ptrtoaddr ptr %i.ih to i64                ; 2 uses
+  %i.ih = phi ptr [ %i.ie, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc289_crit_edge ], [ null, %bb.co ] ; 23 uses
   %i.ii = sub i64 %.pre-phi, %.pre-phi571         ; 20 uses
   %i.ij = icmp sgt i64 %i.ii, 1
   br i1 %i.ij, label %bb.cq, label %bb.cr, !prof !61
@@ -609,6 +608,7 @@ bb.ez:                                            ; preds = %_ZNKSt14default_del
 iter.check:                                       ; preds = %bb.ez
   %i.nw = load ptr, ptr %i.gd, align 8, !tbaa !57 ; 8 uses
   %min.iters.check = icmp ult i64 %i.ii, 4
+  %53 = ptrtoaddr ptr %i.ih to i64
   %i.nx = ptrtoaddr ptr %i.nw to i64
   %i.ny = sub i64 %i.nx, %53
   %diff.check = icmp ugt i64 %i.ny, -32
@@ -1011,8 +1011,9 @@ bb.gk:                                            ; preds = %_ZNKSt14default_del
 iter.check758:                                    ; preds = %bb.gk
   %i.th = load ptr, ptr %i.fz, align 8, !tbaa !57 ; 8 uses
   %min.iters.check745 = icmp ult i64 %i.ii, 4
+  %54 = ptrtoaddr ptr %i.ih to i64
   %i.ti = ptrtoaddr ptr %i.th to i64
-  %i.tj = sub i64 %i.ti, %53
+  %i.tj = sub i64 %i.ti, %54
   %diff.check744 = icmp ugt i64 %i.tj, -32
   %or.cond773 = select i1 %min.iters.check745, i1 true, i1 %diff.check744
   br i1 %or.cond773, label %vec.epilog.scalar.ph759.preheader, label %vector.main.loop.iter.check746
@@ -1415,8 +1416,7 @@ _ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge: ; pred
   %.pre-phi = phi i64 [ %.pre587, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ %i.kf, %bb.cy ] ; 5 uses
   %.not = phi i1 [ %i.kk, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ true, %bb.cy ] ; 2 uses
   %i.kl = phi ptr [ %.pre, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ %i.ke, %bb.cy ] ; 2 uses
-  %i.km = phi ptr [ %i.kj, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ null, %bb.cy ] ; 22 uses
-  %58 = ptrtoaddr ptr %i.km to i64                ; 2 uses
+  %i.km = phi ptr [ %i.kj, %_ZNSt15__new_allocatorIhE8allocateEmPKv.exit.i.i.i.i..noexc301_crit_edge ], [ null, %bb.cy ] ; 23 uses
   %i.kn = sub i64 %.pre-phi, %.pre-phi589         ; 20 uses
   %i.ko = icmp sgt i64 %i.kn, 1
   br i1 %i.ko, label %bb.da, label %bb.db, !prof !61
@@ -1819,6 +1819,7 @@ bb.fi:                                            ; preds = %_ZNKSt14default_del
 iter.check:                                       ; preds = %bb.fi
   %i.pw = load ptr, ptr %i.ii, align 8, !tbaa !57 ; 8 uses
   %min.iters.check = icmp ult i64 %i.kn, 4
+  %58 = ptrtoaddr ptr %i.km to i64
   %i.px = ptrtoaddr ptr %i.pw to i64
   %i.py = sub i64 %i.px, %58
   %diff.check = icmp ugt i64 %i.py, -32
@@ -2221,8 +2222,9 @@ bb.gs:                                            ; preds = %_ZNKSt14default_del
 iter.check770:                                    ; preds = %bb.gs
   %i.vc = load ptr, ptr %i.ie, align 8, !tbaa !57 ; 8 uses
   %min.iters.check757 = icmp ult i64 %i.kn, 4
+  %59 = ptrtoaddr ptr %i.km to i64
   %i.vd = ptrtoaddr ptr %i.vc to i64
-  %i.ve = sub i64 %i.vd, %58
+  %i.ve = sub i64 %i.vd, %59
   %diff.check756 = icmp ugt i64 %i.ve, -32
   %or.cond789 = select i1 %min.iters.check757, i1 true, i1 %diff.check756
   br i1 %or.cond789, label %vec.epilog.scalar.ph771.preheader, label %vector.main.loop.iter.check758

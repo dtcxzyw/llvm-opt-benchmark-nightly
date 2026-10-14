@@ -205,8 +205,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !37   ; 12 uses
-  %3 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !37   ; 13 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !66   ; 7 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
@@ -587,7 +586,6 @@ bb.ae:                                            ; preds = %_ZN6icu_784UTF812is
   %.us-phi336 = phi i8 [ %i.er, %.lr.ph.split.us ], [ %.1217, %.lr.ph.split.us.preheader ], [ %.1217, %.lr.ph.split.preheader ], [ %i.ft, %.lr.ph.split ] ; 3 uses
   %.us-phi337 = phi i32 [ %i.eu, %.lr.ph.split.us ], [ %.2211, %.lr.ph.split.us.preheader ], [ %.2211, %.lr.ph.split.preheader ], [ %i.fw, %.lr.ph.split ]
   %.us-phi338 = phi i32 [ %i.ev, %.lr.ph.split.us ], [ %i.eg, %.lr.ph.split.us.preheader ], [ %i.eg, %.lr.ph.split.preheader ], [ %i.fx, %.lr.ph.split ] ; 2 uses
-  %.us-phi641 = ptrtoaddr ptr %.us-phi to i64
   %i.fz = zext nneg i8 %.1221 to i32
   %.neg257 = sub nsw i32 %i.fz, %.us-phi338
   %i.ga = sext i32 %.neg257 to i64
@@ -604,9 +602,11 @@ iter.check:                                       ; preds = %.split.us
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %3 = ptrtoaddr ptr %i.d to i64
   %i.gg = sext i32 %.us-phi338 to i64
+  %4 = ptrtoaddr ptr %.us-phi to i64
   %i.gh = add i64 %3, %i.gg
-  %i.gi = sub i64 %i.gh, %.us-phi641
+  %i.gi = sub i64 %i.gh, %4
   %i.gj = add i64 %i.gi, 64
   %diff.check = icmp ult i64 %i.gj, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -739,7 +739,6 @@ _ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge: ; preds = %bb.ae, %_ZN6icu_7
   %.2218.lcssa = phi i8 [ %.1217, %.thread274 ], [ %.2218327.us631, %_ZN6icu_784UTF812isValidTrailEihii.exit.us ], [ %i.er, %bb.z ], [ %.2218327624, %_ZN6icu_784UTF812isValidTrailEihii.exit ], [ %i.ft, %bb.ae ] ; 5 uses
   %.3212.lcssa = phi i32 [ %.2211, %.thread274 ], [ %.3212328.us630, %_ZN6icu_784UTF812isValidTrailEihii.exit.us ], [ %i.eu, %bb.z ], [ %.3212328623, %_ZN6icu_784UTF812isValidTrailEihii.exit ], [ %i.fw, %bb.ae ]
   %.lcssa321 = phi i32 [ %i.eg, %.thread274 ], [ %i.en, %_ZN6icu_784UTF812isValidTrailEihii.exit.us ], [ %i.ev, %bb.z ], [ %i.ey, %_ZN6icu_784UTF812isValidTrailEihii.exit ], [ %i.fx, %bb.ae ] ; 3 uses
-  %.3237.lcssa654 = ptrtoaddr ptr %.3237.lcssa to i64
   %i.hr = icmp eq i32 %.1215.fr, %.lcssa321
   br i1 %i.hr, label %bb.af, label %bb.ag
 
@@ -770,9 +769,11 @@ iter.check671:                                    ; preds = %bb.ag
   br i1 %min.iters.check656, label %vec.epilog.scalar.ph672.preheader, label %vector.memcheck653
 
 vector.memcheck653:                               ; preds = %iter.check671
+  %5 = ptrtoaddr ptr %i.d to i64
   %i.ie = sext i32 %.lcssa321 to i64
-  %i.if = add i64 %3, %i.ie
-  %i.ig = sub i64 %i.if, %.3237.lcssa654
+  %6 = ptrtoaddr ptr %.3237.lcssa to i64
+  %i.if = add i64 %5, %i.ie
+  %i.ig = sub i64 %i.if, %6
   %i.ih = add i64 %i.ig, 64
   %diff.check655 = icmp ult i64 %i.ih, 31
   br i1 %diff.check655, label %vec.epilog.scalar.ph672.preheader, label %vector.main.loop.iter.check657
@@ -1121,8 +1122,7 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !37   ; 12 uses
-  %3 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !37   ; 13 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !66   ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
@@ -1477,7 +1477,6 @@ bb.ae:                                            ; preds = %_ZN6icu_784UTF812is
   %.us-phi314 = phi i8 [ %i.ex, %.lr.ph.split.us ], [ %.1225, %.lr.ph.split.us.preheader ], [ %.1225, %.lr.ph.split.preheader ], [ %i.fz, %.lr.ph.split ] ; 3 uses
   %.us-phi315 = phi i32 [ %i.fa, %.lr.ph.split.us ], [ %.2219, %.lr.ph.split.us.preheader ], [ %.2219, %.lr.ph.split.preheader ], [ %i.gc, %.lr.ph.split ]
   %.us-phi316 = phi i32 [ %i.fb, %.lr.ph.split.us ], [ %i.em, %.lr.ph.split.us.preheader ], [ %i.em, %.lr.ph.split.preheader ], [ %i.gd, %.lr.ph.split ] ; 2 uses
-  %.us-phi512 = ptrtoaddr ptr %.us-phi to i64
   %i.gf = zext nneg i8 %.1229 to i32
   %.neg264 = sub nsw i32 %i.gf, %.us-phi316
   %i.gg = sext i32 %.neg264 to i64
@@ -1494,9 +1493,11 @@ iter.check:                                       ; preds = %.split.us
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %3 = ptrtoaddr ptr %i.d to i64
   %i.gm = sext i32 %.us-phi316 to i64
+  %4 = ptrtoaddr ptr %.us-phi to i64
   %i.gn = add i64 %3, %i.gm
-  %i.go = sub i64 %i.gn, %.us-phi512
+  %i.go = sub i64 %i.gn, %4
   %i.gp = add i64 %i.go, 64
   %diff.check = icmp ult i64 %i.gp, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1629,7 +1630,6 @@ _ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge: ; preds = %bb.ae, %_ZN6icu_7
   %.2226.lcssa = phi i8 [ %.1225, %.thread283 ], [ %.2226305.us506, %_ZN6icu_784UTF812isValidTrailEihii.exit.us ], [ %i.ex, %bb.z ], [ %.2226305499, %_ZN6icu_784UTF812isValidTrailEihii.exit ], [ %i.fz, %bb.ae ] ; 5 uses
   %.3220.lcssa = phi i32 [ %.2219, %.thread283 ], [ %.3220306.us505, %_ZN6icu_784UTF812isValidTrailEihii.exit.us ], [ %i.fa, %bb.z ], [ %.3220306498, %_ZN6icu_784UTF812isValidTrailEihii.exit ], [ %i.gc, %bb.ae ]
   %.lcssa299 = phi i32 [ %i.em, %.thread283 ], [ %i.et, %_ZN6icu_784UTF812isValidTrailEihii.exit.us ], [ %i.fb, %bb.z ], [ %i.fe, %_ZN6icu_784UTF812isValidTrailEihii.exit ], [ %i.gd, %bb.ae ] ; 3 uses
-  %.3245.lcssa525 = ptrtoaddr ptr %.3245.lcssa to i64
   %i.hx = icmp eq i32 %.1223.fr, %.lcssa299
   br i1 %i.hx, label %bb.af, label %bb.ag
 
@@ -1660,9 +1660,11 @@ iter.check542:                                    ; preds = %bb.ag
   br i1 %min.iters.check527, label %vec.epilog.scalar.ph543.preheader, label %vector.memcheck524
 
 vector.memcheck524:                               ; preds = %iter.check542
+  %5 = ptrtoaddr ptr %i.d to i64
   %i.ik = sext i32 %.lcssa299 to i64
-  %i.il = add i64 %3, %i.ik
-  %i.im = sub i64 %i.il, %.3245.lcssa525
+  %6 = ptrtoaddr ptr %.3245.lcssa to i64
+  %i.il = add i64 %5, %i.ik
+  %i.im = sub i64 %i.il, %6
   %i.in = add i64 %i.im, 64
   %diff.check526 = icmp ult i64 %i.in, 31
   br i1 %diff.check526, label %vec.epilog.scalar.ph543.preheader, label %vector.main.loop.iter.check528

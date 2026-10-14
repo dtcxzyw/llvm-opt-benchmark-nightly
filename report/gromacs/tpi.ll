@@ -205,21 +205,22 @@ _ZNSt12_Vector_baseIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEEC2EmRKS3_
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 %i.by
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 136
   store ptr %i.ce, ptr %i.cf, align 8, !tbaa !470
-  %i.cg = load ptr, ptr %i.bs, align 8, !tbaa !468 ; 7 uses
+  %i.cg = load ptr, ptr %i.bs, align 8, !tbaa !468 ; 8 uses
   %i.ch = load ptr, ptr %i.bt, align 8, !tbaa !468 ; 3 uses
   %.not8.i.i.i = icmp eq ptr %i.cg, %i.ch
   br i1 %.not8.i.i.i, label %.loopexit231, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt12_Vector_baseIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEEC2EmRKS3_.exit.i.i
-  %2 = ptrtoaddr ptr %i.cg to i64                 ; 2 uses
-  %i.ci = ptrtoaddr ptr %i.cc to i64
-  %i.cj = ptrtoaddr ptr %i.ch to i64
-  %i.ck = add i64 %i.cj, -4
-  %i.cl = sub i64 %i.ck, %2                       ; 3 uses
+  %i.ci = ptrtoaddr ptr %i.ch to i64
+  %i.cj = ptrtoaddr ptr %i.cg to i64
+  %i.ck = add i64 %i.ci, -4
+  %i.cl = sub i64 %i.ck, %i.cj                    ; 3 uses
   %i.cm = lshr i64 %i.cl, 2
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.cl, 28
-  %i.co = sub i64 %2, %i.ci
+  %2 = ptrtoaddr ptr %i.cc to i64
+  %3 = ptrtoaddr ptr %i.cg to i64
+  %i.co = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.co, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -622,18 +623,19 @@ _ZNSt15__new_allocatorIN3gmx8BoolTypeEE8allocateEmPKv.exit.i.i.i.i: ; preds = %b
   %i.kg = getelementptr inbounds nuw i8, ptr %i.ke, i64 %i.kb
   %i.kh = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 2 uses
   store ptr %i.kg, ptr %i.kh, align 8, !tbaa !282
-  %i.ki = load ptr, ptr %i.jv, align 8, !tbaa !473 ; 7 uses
+  %i.ki = load ptr, ptr %i.jv, align 8, !tbaa !473 ; 8 uses
   %i.kj = load ptr, ptr %i.jw, align 8, !tbaa !473 ; 3 uses
   %.not7.i.i.i.i.i125 = icmp eq ptr %i.ki, %i.kj
   br i1 %.not7.i.i.i.i.i125, label %.loopexit, label %iter.check362
 
 iter.check362:                                    ; preds = %.noexc133
-  %i.kk = ptrtoaddr ptr %i.ki to i64              ; 2 uses
-  %3 = ptrtoaddr ptr %i.ke to i64
   %4 = ptrtoaddr ptr %i.kj to i64                 ; 3 uses
+  %i.kk = ptrtoaddr ptr %i.ki to i64
   %5 = sub i64 %4, %i.kk                          ; 7 uses
   %min.iters.check344 = icmp ult i64 %5, 16
-  %i.kl = sub i64 %i.kk, %3
+  %6 = ptrtoaddr ptr %i.ke to i64
+  %7 = ptrtoaddr ptr %i.ki to i64
+  %i.kl = sub i64 %7, %6
   %diff.check343 = icmp ugt i64 %i.kl, -128
   %or.cond378 = or i1 %min.iters.check344, %diff.check343
   br i1 %or.cond378, label %.lr.ph.i.i.i.i.i126.preheader, label %vector.main.loop.iter.check345

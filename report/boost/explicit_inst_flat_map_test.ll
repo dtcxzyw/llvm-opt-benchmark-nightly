@@ -204,7 +204,7 @@ _ZN5boost9container6vectorISt4pairI5emptyS3_EvvE40priv_insert_forward_range_new_
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost7movelib15detail_adaptive19adaptive_merge_implIPSt4pairI5emptyS4_ENS_9container3dtl23flat_tree_value_compareISt4lessIS4_ES5_NS8_9select1stIS4_EEEENS0_13adaptive_xbufIS5_S6_mEEEEvT_NS0_9iter_sizeISH_E4typeESK_T0_RT1_(ptr noundef %0, i64 noundef %1, i64 noundef %2, ptr noundef nonnull align 8 dereferenceable(24) %3) local_unnamed_addr #4 comdat {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !247  ; 5 uses
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %1, i64 %2)
@@ -240,8 +240,9 @@ iter.check:                                       ; preds = %bb.d
   %i.m = lshr exact i64 %i.l, 1
   %i.n = add nuw i64 %i.m, 1                      ; 5 uses
   %min.iters.check = icmp ult i64 %i.l, 6
-  %i.o = ptrtoaddr ptr %i.i to i64
-  %i.p = sub i64 %i.a, %i.o
+  %4 = ptrtoaddr ptr %i.i to i64
+  %i.o = ptrtoaddr ptr %0 to i64
+  %i.p = sub i64 %i.o, %4
   %diff.check = icmp ugt i64 %i.p, -32
   %or.cond180 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond180, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -361,7 +362,8 @@ iter.check163:                                    ; preds = %_ZN5boost7movelib11
 
 vector.memcheck144:                               ; preds = %iter.check163
   %i.az = ptrtoaddr ptr %i.aq to i64
-  %i.ba = add i64 %.idx, %i.a
+  %5 = ptrtoaddr ptr %0 to i64
+  %i.ba = add i64 %.idx, %5
   %i.bb = sub i64 %i.ba, %i.az
   %diff.check145 = icmp ugt i64 %i.bb, -32
   br i1 %diff.check145, label %.lr.ph.i.i42.i.i.preheader, label %vector.main.loop.iter.check148
@@ -764,7 +766,6 @@ _ZN5boost7movelib10merge_sortIPSt4pairI5emptyS3_ES5_NS_9container3dtl23flat_tree
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i64 @_ZN5boost7movelib15detail_adaptive26adaptive_sort_build_blocksIPSt4pairI5emptyS4_ENS_9container3dtl23flat_tree_value_compareISt4lessIS4_ES5_NS8_9select1stIS4_EEEENS0_13adaptive_xbufIS5_S6_mEEEENS0_9iter_sizeIT_E4typeESI_SK_SK_SK_RT1_T0_(ptr noundef %0, i64 noundef %1, i64 noundef %2, i64 noundef %3, ptr noundef nonnull align 8 dereferenceable(24) %4) local_unnamed_addr #4 comdat {
 bb.a:
-  %5 = ptrtoaddr ptr %0 to i64
   %.idx = shl i64 %3, 1                           ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -799,6 +800,7 @@ iter.check:                                       ; preds = %bb.b
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.q = ptrtoaddr ptr %i.j to i64
+  %5 = ptrtoaddr ptr %0 to i64
   %i.r = add i64 %.idx20.i, %i.q
   %i.s = add i64 %.idx, %5
   %i.t = sub i64 %i.s, %i.r
@@ -901,7 +903,6 @@ _ZN5boost7movelib13adaptive_xbufISt4pairI5emptyS3_EPS4_mE5clearEv.exit: ; preds 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN5boost7movelib15detail_adaptive32adaptive_sort_combine_all_blocksIPSt4pairI5emptyS4_ENS_9container3dtl23flat_tree_value_compareISt4lessIS4_ES5_NS8_9select1stIS4_EEEENS0_13adaptive_xbufIS5_S6_mEEEEbT_RNS0_9iter_sizeISH_E4typeESH_SK_SK_SL_RT1_T0_(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(24) %6) local_unnamed_addr #4 comdat {
 bb.a:
-  %7 = ptrtoaddr ptr %2 to i64
   %i.a = alloca [256 x i8], align 16              ; 3 uses
   %i.b = load i64, ptr %5, align 8, !tbaa !226    ; 8 uses
   %i.c = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.b ; 3 uses
@@ -934,8 +935,9 @@ iter.check:                                       ; preds = %bb.b
   %i.r = lshr exact i64 %i.q, 1
   %i.s = add nuw i64 %i.r, 1                      ; 5 uses
   %min.iters.check = icmp ult i64 %i.q, 6
-  %i.t = ptrtoaddr ptr %i.m to i64
-  %i.u = sub i64 %7, %i.t
+  %7 = ptrtoaddr ptr %i.m to i64
+  %i.t = ptrtoaddr ptr %2 to i64
+  %i.u = sub i64 %i.t, %7
   %diff.check = icmp ugt i64 %i.u, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -1120,7 +1122,7 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN5boost7movelib15detail_adaptive25adaptive_sort_final_mergeIPSt4pairI5emptyS4_ENS_9container3dtl23flat_tree_value_compareISt4lessIS4_ES5_NS8_9select1stIS4_EEEENS0_13adaptive_xbufIS5_S6_mEEEEvbT_NS0_9iter_sizeISH_E4typeESK_SK_RT1_T0_(i1 noundef zeroext %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noundef nonnull align 8 dereferenceable(24) %5) local_unnamed_addr #4 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %1 to i64
   %6 = alloca %"struct.boost::movelib::antistable", align 8 ; 4 uses
   %7 = alloca %"struct.boost::movelib::antistable", align 8 ; 4 uses
   %8 = alloca %"class.boost::container::dtl::flat_tree_value_compare", align 1 ; 2 uses
@@ -1309,8 +1311,9 @@ iter.check:                                       ; preds = %bb.k
   %i.an = lshr exact i64 %i.am, 1
   %i.ao = add nuw i64 %i.an, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.am, 6
-  %i.ap = ptrtoaddr ptr %i.aj to i64
-  %i.aq = sub i64 %i.a, %i.ap
+  %9 = ptrtoaddr ptr %i.aj to i64
+  %i.ap = ptrtoaddr ptr %1 to i64
+  %i.aq = sub i64 %i.ap, %9
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -1433,7 +1436,8 @@ iter.check119:                                    ; preds = %_ZN5boost7movelib11
 
 vector.memcheck100:                               ; preds = %iter.check119
   %i.ca = ptrtoaddr ptr %i.br to i64
-  %i.cb = add i64 %.idx, %i.a
+  %10 = ptrtoaddr ptr %1 to i64
+  %i.cb = add i64 %.idx, %10
   %i.cc = sub i64 %i.cb, %i.ca
   %diff.check101 = icmp ugt i64 %i.cc, -32
   br i1 %diff.check101, label %.lr.ph.i.i42.i.i.preheader, label %vector.main.loop.iter.check104

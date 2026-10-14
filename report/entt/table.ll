@@ -204,15 +204,15 @@ _ZNSt12_Vector_baseIiN4test18throwing_allocatorIiEEE11_M_allocateEm.exit.i: ; pr
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIiN4test18throwing_allocatorIiEEE11_S_relocateEPiS4_S4_RS2_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %_ZNSt12_Vector_baseIiN4test18throwing_allocatorIiEEE11_M_allocateEm.exit.i
-  %2 = ptrtoaddr ptr %i.q to i64                  ; 2 uses
-  %i.s = ptrtoaddr ptr %i.p to i64
-  %i.t = ptrtoaddr ptr %i.r to i64
-  %i.u = add i64 %i.t, -4
-  %i.v = sub i64 %i.u, %2                         ; 2 uses
+  %i.s = ptrtoaddr ptr %i.r to i64
+  %i.t = ptrtoaddr ptr %i.q to i64                ; 2 uses
+  %i.u = add i64 %i.s, -4
+  %i.v = sub i64 %i.u, %i.t                       ; 2 uses
   %i.w = lshr i64 %i.v, 2
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.v, 44
-  %i.y = sub i64 %2, %i.s
+  %2 = ptrtoaddr ptr %i.p to i64
+  %i.y = sub i64 %i.t, %2
   %diff.check = icmp ugt i64 %i.y, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader45, label %vector.ph
@@ -299,29 +299,30 @@ _ZNSt12_Vector_baseIcN4test18throwing_allocatorIcEEE11_M_allocateEm.exit.i: ; pr
   %i.az = ptrtoint ptr %i.ay to i64
   %i.ba = sub i64 %i.az, %i.au
   %i.bb = tail call noundef ptr @_ZN4test18throwing_allocatorIcE8allocateEm(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 noundef %1) ; 9 uses
-  %i.bc = load ptr, ptr %i.ap, align 8, !tbaa !148 ; 8 uses
+  %i.bc = load ptr, ptr %i.ap, align 8, !tbaa !148 ; 9 uses
   %i.bd = load ptr, ptr %i.ax, align 8, !tbaa !149 ; 3 uses
   %.not10.i.i.i.i2 = icmp eq ptr %i.bc, %i.bd
   br i1 %.not10.i.i.i.i2, label %_ZNSt6vectorIcN4test18throwing_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt12_Vector_baseIcN4test18throwing_allocatorIcEEE11_M_allocateEm.exit.i
-  %i.be = ptrtoaddr ptr %i.bc to i64              ; 2 uses
-  %3 = ptrtoaddr ptr %i.bb to i64
-  %4 = ptrtoaddr ptr %i.bd to i64                 ; 3 uses
-  %5 = sub i64 %4, %i.be                          ; 7 uses
-  %min.iters.check20 = icmp ult i64 %5, 8
-  %i.bf = sub i64 %i.be, %3
+  %3 = ptrtoaddr ptr %i.bd to i64                 ; 3 uses
+  %i.be = ptrtoaddr ptr %i.bc to i64
+  %4 = sub i64 %3, %i.be                          ; 7 uses
+  %min.iters.check20 = icmp ult i64 %4, 8
+  %5 = ptrtoaddr ptr %i.bb to i64
+  %6 = ptrtoaddr ptr %i.bc to i64
+  %i.bf = sub i64 %6, %5
   %diff.check18 = icmp ugt i64 %i.bf, -32
   %or.cond44 = or i1 %min.iters.check20, %diff.check18
   br i1 %or.cond44, label %.lr.ph.i.i.i.i3.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check21 = icmp ult i64 %5, 32
+  %min.iters.check21 = icmp ult i64 %4, 32
   br i1 %min.iters.check21, label %vec.epilog.ph, label %vector.ph22
 
 vector.ph22:                                      ; preds = %vector.main.loop.iter.check
-  %i.bg = and i64 %5, 24
-  %n.vec23 = and i64 %5, -32                      ; 5 uses
+  %i.bg = and i64 %4, 24
+  %n.vec23 = and i64 %4, -32                      ; 5 uses
   %i.bh = getelementptr i8, ptr %i.bb, i64 %n.vec23
   %i.bi = getelementptr i8, ptr %i.bc, i64 %n.vec23
   br label %vector.body24
@@ -343,7 +344,7 @@ vector.body24:                                    ; preds = %vector.ph22, %vecto
   br i1 %i.bl, label %middle.block31, label %vector.body24, !llvm.loop !1284
 
 middle.block31:                                   ; preds = %vector.body24
-  %cmp.n32 = icmp eq i64 %5, %n.vec23
+  %cmp.n32 = icmp eq i64 %4, %n.vec23
   br i1 %cmp.n32, label %_ZNSt6vectorIcN4test18throwing_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exitthread-pre-split.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block31
@@ -352,7 +353,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block31
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec23, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec35 = and i64 %5, -8                       ; 4 uses
+  %n.vec35 = and i64 %4, -8                       ; 4 uses
   %i.bm = getelementptr i8, ptr %i.bb, i64 %n.vec35
   %i.bn = getelementptr i8, ptr %i.bc, i64 %n.vec35
   br label %vec.epilog.vector.body
@@ -370,14 +371,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.bo, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !1285
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n41 = icmp eq i64 %5, %n.vec35
+  %cmp.n41 = icmp eq i64 %4, %n.vec35
   br i1 %cmp.n41, label %_ZNSt6vectorIcN4test18throwing_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exitthread-pre-split.i, label %.lr.ph.i.i.i.i3.preheader
 
 .lr.ph.i.i.i.i3.preheader:                        ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.012.i.i.i.i4.ph = phi ptr [ %i.bb, %iter.check ], [ %i.bh, %vec.epilog.iter.check ], [ %i.bm, %vec.epilog.middle.block ] ; 2 uses
   %.0911.i.i.i.i5.ph = phi ptr [ %i.bc, %iter.check ], [ %i.bi, %vec.epilog.iter.check ], [ %i.bn, %vec.epilog.middle.block ] ; 3 uses
   %.0911.i.i.i.i5.ph46 = ptrtoaddr ptr %.0911.i.i.i.i5.ph to i64 ; 2 uses
-  %i.bp = sub i64 %4, %.0911.i.i.i.i5.ph46
+  %i.bp = sub i64 %3, %.0911.i.i.i.i5.ph46
   %xtraiter = and i64 %i.bp, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i3.prol.loopexit, label %.lr.ph.i.i.i.i3.prol
@@ -399,7 +400,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i3.prol.loopexit:                    ; preds = %.lr.ph.i.i.i.i3.prol, %.lr.ph.i.i.i.i3.preheader
   %.012.i.i.i.i4.unr = phi ptr [ %.012.i.i.i.i4.ph, %.lr.ph.i.i.i.i3.preheader ], [ %i.bs, %.lr.ph.i.i.i.i3.prol ]
   %.0911.i.i.i.i5.unr = phi ptr [ %.0911.i.i.i.i5.ph, %.lr.ph.i.i.i.i3.preheader ], [ %i.br, %.lr.ph.i.i.i.i3.prol ]
-  %i.bt = sub i64 %.0911.i.i.i.i5.ph46, %4
+  %i.bt = sub i64 %.0911.i.i.i.i5.ph46, %3
   %i.bu = icmp ugt i64 %i.bt, -8
   br i1 %i.bu, label %_ZNSt6vectorIcN4test18throwing_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exitthread-pre-split.i, label %.lr.ph.i.i.i.i3
 
@@ -534,12 +535,12 @@ _ZNKSt6vectorIiN4test18throwing_allocatorIiEEE12_M_check_lenEmPKc.exit.i.i: ; pr
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIiN4test18throwing_allocatorIiEEE11_S_relocateEPiS4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIiN4test18throwing_allocatorIiEEE12_M_check_lenEmPKc.exit.i.i
-  %4 = ptrtoaddr ptr %i.s to i64
   %i.v = add i64 %i.j, -4
   %i.w = sub i64 %i.v, %i.k                       ; 2 uses
   %i.x = lshr i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.w, 44
+  %4 = ptrtoaddr ptr %i.s to i64
   %i.z = sub i64 %i.k, %4
   %diff.check = icmp ugt i64 %i.z, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -656,8 +657,8 @@ _ZNKSt6vectorIcN4test18throwing_allocatorIcEEE12_M_check_lenEmPKc.exit.i.i: ; pr
   br i1 %.not10.i.i.i.i.i6, label %_ZNSt6vectorIcN4test18throwing_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit22.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIcN4test18throwing_allocatorIcEEE12_M_check_lenEmPKc.exit.i.i
-  %5 = ptrtoaddr ptr %i.bh to i64
   %min.iters.check30 = icmp ult i64 %i.bb, 8
+  %5 = ptrtoaddr ptr %i.bh to i64
   %i.bk = sub i64 %i.ba, %5
   %diff.check28 = icmp ugt i64 %i.bk, -32
   %or.cond54 = or i1 %min.iters.check30, %diff.check28
@@ -1060,12 +1061,12 @@ _ZNKSt6vectorIiN4test18throwing_allocatorIiEEE12_M_check_lenEmPKc.exit.i.i: ; pr
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorIiN4test18throwing_allocatorIiEEE11_S_relocateEPiS4_S4_RS2_.exit21.i.i, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %_ZNKSt6vectorIiN4test18throwing_allocatorIiEEE12_M_check_lenEmPKc.exit.i.i
-  %2 = ptrtoaddr ptr %i.r to i64
   %i.t = add i64 %i.i, -4
   %i.u = sub i64 %i.t, %i.j                       ; 2 uses
   %i.v = lshr i64 %i.u, 2
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.u, 44
+  %2 = ptrtoaddr ptr %i.r to i64
   %i.x = sub i64 %i.j, %2
   %diff.check = icmp ugt i64 %i.x, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1180,8 +1181,8 @@ _ZNKSt6vectorIcN4test18throwing_allocatorIcEEE12_M_check_lenEmPKc.exit.i.i: ; pr
   br i1 %.not10.i.i.i.i.i4, label %_ZNSt6vectorIcN4test18throwing_allocatorIcEEE11_S_relocateEPcS4_S4_RS2_.exit21.i.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNKSt6vectorIcN4test18throwing_allocatorIcEEE12_M_check_lenEmPKc.exit.i.i
-  %3 = ptrtoaddr ptr %i.be to i64
   %min.iters.check28 = icmp ult i64 %i.ay, 8
+  %3 = ptrtoaddr ptr %i.be to i64
   %i.bg = sub i64 %i.ax, %3
   %diff.check26 = icmp ugt i64 %i.bg, -32
   %or.cond52 = or i1 %min.iters.check28, %diff.check26

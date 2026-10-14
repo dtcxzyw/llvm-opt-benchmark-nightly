@@ -204,9 +204,6 @@ bb.t:                                             ; preds = %bb.j
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i32 @_ZN6casadi14convexify_evalIdEEiPKNS_23casadi_convexify_configIT_EEPKS2_PS2_PxS8_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #2 comdat {
 bb.a:
-  %5 = ptrtoaddr ptr %2 to i64
-  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %7 = ptrtoaddr ptr %4 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !225  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -244,7 +241,9 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.preheader:                               ; preds = %.preheader16.i
   %min.iters.check = icmp ult i64 %i.g, 8
-  %i.r = sub i64 %6, %7
+  %5 = ptrtoaddr ptr %4 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.r = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.r, -32
   %or.cond460 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond460, label %.lr.ph.i.preheader470, label %vector.ph
@@ -647,7 +646,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i257.preheader:                            ; preds = %.preheader16.i255
   %min.iters.check445 = icmp ult i64 %i.n, 8
-  %i.jm = sub i64 %6, %5
+  %7 = ptrtoaddr ptr %2 to i64
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.jm = sub i64 %8, %7
   %diff.check443 = icmp ugt i64 %i.jm, -32
   %or.cond461 = or i1 %min.iters.check445, %diff.check443
   br i1 %or.cond461, label %.lr.ph.i257.preheader468, label %vector.ph446

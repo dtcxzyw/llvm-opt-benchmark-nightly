@@ -204,11 +204,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !25
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %1 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !24   ; 15 uses
-  %5 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !24   ; 16 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !27   ; 3 uses
-  %6 = ptrtoaddr ptr %i.f to i64                  ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !27   ; 4 uses
   %i.g = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %4 ; 15 uses
   %i.h = icmp ugt i32 %2, %3
   br i1 %i.h, label %.preheader, label %.preheader32
@@ -223,9 +221,11 @@ iter.check:                                       ; preds = %.preheader32
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %5 = ptrtoaddr ptr %i.f to i64
   %i.i = shl i64 %4, 1
-  %i.j = add i64 %i.i, %6
-  %i.k = sub i64 %5, %i.j
+  %6 = ptrtoaddr ptr %i.d to i64
+  %i.j = add i64 %i.i, %5
+  %i.k = sub i64 %6, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 
@@ -313,9 +313,11 @@ iter.check72:                                     ; preds = %.preheader
   br i1 %min.iters.check59, label %.lr.ph37.preheader, label %vector.memcheck57
 
 vector.memcheck57:                                ; preds = %iter.check72
+  %7 = ptrtoaddr ptr %i.f to i64
   %i.z = shl i64 %4, 1
-  %i.aa = add i64 %i.z, %6
-  %i.ab = sub i64 %5, %i.aa
+  %8 = ptrtoaddr ptr %i.d to i64
+  %i.aa = add i64 %i.z, %7
+  %i.ab = sub i64 %8, %i.aa
   %diff.check58 = icmp ugt i64 %i.ab, -32
   br i1 %diff.check58, label %.lr.ph37.preheader, label %vector.main.loop.iter.check60
 
@@ -718,11 +720,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !55
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %1 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !54   ; 13 uses
-  %5 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !54   ; 14 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !56   ; 3 uses
-  %6 = ptrtoaddr ptr %i.f to i64                  ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !56   ; 4 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %4 ; 13 uses
   %i.h = icmp ugt i32 %2, %3
   br i1 %i.h, label %.preheader, label %.preheader32
@@ -737,9 +737,11 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.preheader66, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
+  %5 = ptrtoaddr ptr %i.f to i64
   %i.i = shl i64 %4, 2
-  %i.j = add i64 %i.i, %6
-  %i.k = sub i64 %5, %i.j
+  %6 = ptrtoaddr ptr %i.d to i64
+  %i.j = add i64 %i.i, %5
+  %i.k = sub i64 %6, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %.lr.ph.preheader66, label %vector.ph
 
@@ -799,9 +801,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check54, label %.lr.ph37.preheader65, label %vector.memcheck51
 
 vector.memcheck51:                                ; preds = %.lr.ph37.preheader
+  %7 = ptrtoaddr ptr %i.f to i64
   %i.v = shl i64 %4, 2
-  %i.w = add i64 %i.v, %6
-  %i.x = sub i64 %5, %i.w
+  %8 = ptrtoaddr ptr %i.d to i64
+  %i.w = add i64 %i.v, %7
+  %i.x = sub i64 %8, %i.w
   %diff.check52 = icmp ugt i64 %i.x, -32
   br i1 %diff.check52, label %.lr.ph37.preheader65, label %vector.ph55
 
@@ -1204,11 +1208,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !63
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %1 ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !62   ; 13 uses
-  %5 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !62   ; 14 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !64   ; 3 uses
-  %6 = ptrtoaddr ptr %i.f to i64                  ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !64   ; 4 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %4 ; 13 uses
   %i.h = icmp ugt i32 %2, %3
   br i1 %i.h, label %.preheader, label %.preheader32
@@ -1223,9 +1225,11 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.preheader66, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
+  %5 = ptrtoaddr ptr %i.f to i64
   %i.i = shl i64 %4, 2
-  %i.j = add i64 %i.i, %6
-  %i.k = sub i64 %5, %i.j
+  %6 = ptrtoaddr ptr %i.d to i64
+  %i.j = add i64 %i.i, %5
+  %i.k = sub i64 %6, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %.lr.ph.preheader66, label %vector.ph
 
@@ -1285,9 +1289,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check54, label %.lr.ph37.preheader65, label %vector.memcheck51
 
 vector.memcheck51:                                ; preds = %.lr.ph37.preheader
+  %7 = ptrtoaddr ptr %i.f to i64
   %i.v = shl i64 %4, 2
-  %i.w = add i64 %i.v, %6
-  %i.x = sub i64 %5, %i.w
+  %8 = ptrtoaddr ptr %i.d to i64
+  %i.w = add i64 %i.v, %7
+  %i.x = sub i64 %8, %i.w
   %diff.check52 = icmp ugt i64 %i.x, -32
   br i1 %diff.check52, label %.lr.ph37.preheader65, label %vector.ph55
 

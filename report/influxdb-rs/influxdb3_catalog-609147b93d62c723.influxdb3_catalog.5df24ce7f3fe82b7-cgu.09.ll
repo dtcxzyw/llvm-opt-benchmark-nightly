@@ -204,14 +204,15 @@ bb.a:
   br i1 %i.a, label %bb.b, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.c = ptrtoaddr ptr %2 to i64                  ; 3 uses
+  %i.b = ptrtoaddr ptr %2 to i64                  ; 3 uses
+  %i.c = ptrtoaddr ptr %1 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.promoted = load ptr, ptr %i.d, align 8, !alias.scope !3624, !noalias !3625 ; 6 uses
-  %i.e = sub i64 %i.c, %i.b                       ; 7 uses
+  %i.e = sub i64 %i.b, %i.c                       ; 7 uses
   %min.iters.check = icmp ult i64 %i.e, 8
-  %.promoted8 = ptrtoaddr ptr %.promoted to i64
-  %i.f = sub i64 %i.b, %.promoted8
+  %3 = ptrtoaddr ptr %.promoted to i64
+  %.promoted8 = ptrtoaddr ptr %1 to i64
+  %i.f = sub i64 %.promoted8, %3
   %diff.check = icmp ugt i64 %i.f, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -278,7 +279,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   %.ph = phi ptr [ %.promoted, %iter.check ], [ %i.h, %vec.epilog.iter.check ], [ %i.m, %vec.epilog.middle.block ] ; 2 uses
   %.sroa.0.06.ph = phi ptr [ %1, %iter.check ], [ %i.i, %vec.epilog.iter.check ], [ %i.n, %vec.epilog.middle.block ] ; 3 uses
   %.sroa.0.06.ph23 = ptrtoaddr ptr %.sroa.0.06.ph to i64 ; 2 uses
-  %i.p = sub i64 %i.c, %.sroa.0.06.ph23
+  %i.p = sub i64 %i.b, %.sroa.0.06.ph23
   %xtraiter = and i64 %i.p, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
@@ -301,7 +302,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %.lcssa22.unr = phi ptr [ poison, %vec.epilog.scalar.ph.preheader ], [ %i.t, %vec.epilog.scalar.ph.prol ]
   %.unr = phi ptr [ %.ph, %vec.epilog.scalar.ph.preheader ], [ %i.t, %vec.epilog.scalar.ph.prol ]
   %.sroa.0.06.unr = phi ptr [ %.sroa.0.06.ph, %vec.epilog.scalar.ph.preheader ], [ %i.r, %vec.epilog.scalar.ph.prol ]
-  %i.u = sub i64 %.sroa.0.06.ph23, %i.c
+  %i.u = sub i64 %.sroa.0.06.ph23, %i.b
   %i.v = icmp ugt i64 %i.u, -8
   br i1 %i.v, label %._crit_edge, label %vec.epilog.scalar.ph
 
@@ -369,10 +370,10 @@ bb.a:
   br i1 %i.a, label %bb.b, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.promoted = load ptr, ptr %i.b, align 8, !alias.scope !3655, !noalias !3656 ; 4 uses
   %i.c = ptrtoaddr ptr %2 to i64
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.d = add i64 %i.c, -4
   %i.e = sub i64 %i.d, %3                         ; 2 uses
   %i.f = lshr i64 %i.e, 2
@@ -446,17 +447,18 @@ bb.a:
   br i1 %i.a, label %bb.b, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.c = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
+  %i.c = ptrtoaddr ptr %1 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.promoted = load ptr, ptr %i.d, align 8, !alias.scope !3664, !noalias !3665 ; 6 uses
-  %i.e = add i64 %i.c, -2
-  %i.f = sub i64 %i.e, %i.b                       ; 3 uses
+  %i.e = add i64 %i.b, -2
+  %i.f = sub i64 %i.e, %i.c                       ; 3 uses
   %i.g = lshr i64 %i.f, 1
   %i.h = add nuw i64 %i.g, 1                      ; 5 uses
   %min.iters.check = icmp ult i64 %i.f, 6
-  %.promoted8 = ptrtoaddr ptr %.promoted to i64
-  %i.i = sub i64 %i.b, %.promoted8
+  %3 = ptrtoaddr ptr %.promoted to i64
+  %.promoted8 = ptrtoaddr ptr %1 to i64
+  %i.i = sub i64 %.promoted8, %3
   %diff.check = icmp ugt i64 %i.i, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

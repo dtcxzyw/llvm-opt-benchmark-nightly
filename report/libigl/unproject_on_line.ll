@@ -205,8 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !67   ; 7 uses
   %i.c = add nsw i64 %i.b, -1                     ; 4 uses
-  %i.d = load ptr, ptr %0, align 8, !tbaa !90     ; 5 uses
-  %4 = ptrtoaddr ptr %i.d to i64                  ; 2 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !90     ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 23 uses
   %or.cond = icmp eq i64 %i.b, 1
   br i1 %or.cond, label %_ZNK5Eigen10MatrixBaseINS_5BlockIKNS1_INS1_INS_6MatrixIdLi2ELi1ELi0ELi2ELi1EEELi2ELi1ELb1EEELin1ELi1ELb0EEELin1ELi1ELb0EEEE11squaredNormEv.exit.thread, label %bb.b
@@ -441,6 +440,7 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i:
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader56, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
+  %4 = ptrtoaddr ptr %i.d to i64
   %i.do = sub i64 %i.de, %4
   %i.dp = add i64 %i.do, -9
   %diff.check = icmp ult i64 %i.dp, 15
@@ -541,7 +541,8 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   br i1 %min.iters.check43, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader55, label %vector.memcheck40
 
 vector.memcheck40:                                ; preds = %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader
-  %i.fb = sub i64 %i.de, %4
+  %5 = ptrtoaddr ptr %i.d to i64
+  %i.fb = sub i64 %i.de, %5
   %i.fc = add i64 %i.fb, -9
   %diff.check41 = icmp ult i64 %i.fc, 15
   br i1 %diff.check41, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.preheader55, label %vector.ph44

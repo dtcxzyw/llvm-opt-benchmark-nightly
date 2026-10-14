@@ -205,10 +205,10 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.aka, label %.lr.ph270.preheader, label %._crit_edge271
 
 .lr.ph270.preheader:                              ; preds = %bb.bc
-  %8 = ptrtoaddr ptr %i.ajt to i64
-  %9 = ptrtoaddr ptr %i.ajs to i64
   %wide.trip.count302 = zext nneg i32 %i.aju to i64 ; 5 uses
   %min.iters.check467 = icmp ult i32 %i.aju, 6
+  %8 = ptrtoaddr ptr %i.ajt to i64
+  %9 = ptrtoaddr ptr %i.ajs to i64
   %i.akb = sub i64 %9, %8
   %diff.check465 = icmp ugt i64 %i.akb, -32
   %or.cond478 = select i1 %min.iters.check467, i1 true, i1 %diff.check465
@@ -611,7 +611,6 @@ bb.n:                                             ; preds = %bb.l
 define linkonce_odr noundef nonnull align 8 dereferenceable(66) ptr @_ZN5Eigen12PartialPivLUINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE7computeIS2_EERS3_RKNS_9EigenBaseIT_EE(ptr noundef nonnull align 8 dereferenceable(66) %0, ptr noundef nonnull align 1 dereferenceable(1) %1) local_unnamed_addr #13 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !358    ; 8 uses
-  %2 = ptrtoaddr ptr %i.a to i64
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !368  ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -653,7 +652,6 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   %i.p = phi i64 [ %.pre20.i.i.i.i.i.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i ], [ %i.e, %bb.a ]
   %i.q = phi i64 [ %.pre.i.i.i.i.i.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i ], [ %i.c, %bb.a ]
   %i.r = load ptr, ptr %0, align 8, !tbaa !358    ; 8 uses
-  %3 = ptrtoaddr ptr %i.r to i64
   %i.s = mul nsw i64 %i.q, %i.p                   ; 7 uses
   %i.t = sdiv i64 %i.s, 2
   %i.u = shl nsw i64 %i.t, 1                      ; 6 uses
@@ -667,7 +665,9 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %._crit_edge.i.i.i.i.i.i.i.i
   %i.x = sub i64 %i.s, %i.u                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.x, 8
-  %i.y = sub i64 %2, %3
+  %2 = ptrtoaddr ptr %i.r to i64
+  %3 = ptrtoaddr ptr %i.a to i64
+  %i.y = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.y, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader8, label %vector.ph
@@ -1070,7 +1070,6 @@ middle.block:                                     ; preds = %vector.body
   %i.az = phi ptr [ %i.o, %bb.e ], [ %i.p, %middle.block ], [ %i.p, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.p, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ]
   %i.ba = phi i1 [ false, %bb.e ], [ %i.h, %middle.block ], [ %i.h, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.h, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ] ; 2 uses
   %i.bb = phi ptr [ %i.n, %bb.e ], [ %i.q, %middle.block ], [ %i.q, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.q, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ] ; 10 uses
-  %6 = ptrtoaddr ptr %i.bb to i64
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !368 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -1101,11 +1100,12 @@ bb.f:                                             ; preds = %.loopexit
   br i1 %i.bq, label %.lr.ph.i.i.i.i.i.i.i.i26.preheader, label %_ZN5Eigen9TransposeINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEEaSINS_3MapINS2_IdLin1ELi1ELi0ELin1ELi1EEELi2ENS_6StrideILi0ELi0EEEEEEERS5_RKNS_9DenseBaseIT_EE.exit
 
 .lr.ph.i.i.i.i.i.i.i.i26.preheader:               ; preds = %bb.f
-  %7 = ptrtoaddr ptr %i.bl to i64
   %min.iters.check55 = icmp ult i64 %i.bp, 10
   %ident.check53.not = icmp ne i64 %i.bo, 1
   %or.cond66.not68 = select i1 %min.iters.check55, i1 true, i1 %ident.check53.not
-  %i.br = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %i.bl to i64
+  %7 = ptrtoaddr ptr %i.bb to i64
+  %i.br = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.br, -32
   %or.cond67 = select i1 %or.cond66.not68, i1 true, i1 %diff.check
   br i1 %or.cond67, label %.lr.ph.i.i.i.i.i.i.i.i26.preheader69, label %vector.ph56
@@ -1508,7 +1508,6 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !368  ; 17 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !358    ; 8 uses
-  %2 = ptrtoaddr ptr %i.c to i64
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load i64, ptr %i.d, align 8, !tbaa !369  ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -1548,7 +1547,6 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
   %i.p = phi i64 [ %.pre20.i.i.i.i.i.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i ], [ %i.e, %bb.a ]
   %i.q = phi i64 [ %.pre.i.i.i.i.i.i.i, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i.i.i.i.i.i.i ], [ %i.b, %bb.a ]
   %i.r = load ptr, ptr %0, align 8, !tbaa !358    ; 8 uses
-  %3 = ptrtoaddr ptr %i.r to i64
   %i.s = mul nsw i64 %i.q, %i.p                   ; 7 uses
   %i.t = sdiv i64 %i.s, 2
   %i.u = shl nsw i64 %i.t, 1                      ; 6 uses
@@ -1562,7 +1560,9 @@ bb.d:                                             ; preds = %_ZN5Eigen15PlainObj
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %._crit_edge.i.i.i.i.i.i.i.i
   %i.x = sub i64 %i.s, %i.u                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.x, 8
-  %i.y = sub i64 %2, %3
+  %2 = ptrtoaddr ptr %i.r to i64
+  %3 = ptrtoaddr ptr %i.c to i64
+  %i.y = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.y, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader78, label %vector.ph
@@ -1965,8 +1965,7 @@ define linkonce_odr void @_ZNK5Eigen4LDLTINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEE
 bb.a:
   %3 = alloca %"class.Eigen::TriangularView.1684", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %.sroa.446.8.copyload = load ptr, ptr %1, align 8 ; 15 uses
-  %.sroa.446.8.copyload59 = ptrtoaddr ptr %.sroa.446.8.copyload to i64 ; 2 uses
+  %.sroa.446.8.copyload = load ptr, ptr %1, align 8 ; 16 uses
   %.sroa.647.8..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.647.8.copyload = load i64, ptr %.sroa.647.8..sroa_idx, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -2002,7 +2001,8 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader: ; preds = %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %min.iters.check = icmp ult i64 %.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 8
-  %i.t = sub i64 %.sroa.446.8.copyload59, %i.j
+  %4 = ptrtoaddr ptr %.sroa.446.8.copyload to i64
+  %i.t = sub i64 %4, %i.j
   %diff.check = icmp ugt i64 %i.t, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader77, label %vector.ph
@@ -2090,7 +2090,8 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
   %i.ax = add i64 %.0.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %i.q
   %i.ay = sub i64 %i.e, %i.ax                     ; 3 uses
   %min.iters.check64 = icmp ult i64 %i.ay, 8
-  %i.az = sub i64 %.sroa.446.8.copyload59, %i.j
+  %5 = ptrtoaddr ptr %.sroa.446.8.copyload to i64
+  %i.az = sub i64 %5, %i.j
   %diff.check62 = icmp ugt i64 %i.az, -32
   %or.cond75 = or i1 %min.iters.check64, %diff.check62
   br i1 %or.cond75, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader76, label %vector.ph65
@@ -2493,10 +2494,10 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.ql, label %.lr.ph156.preheader, label %._crit_edge157
 
 .lr.ph156.preheader:                              ; preds = %bb.u
-  %1 = ptrtoaddr ptr %i.qe to i64
-  %2 = ptrtoaddr ptr %i.qd to i64
   %wide.trip.count170 = zext nneg i32 %i.qf to i64 ; 5 uses
   %min.iters.check228 = icmp ult i32 %i.qf, 6
+  %1 = ptrtoaddr ptr %i.qe to i64
+  %2 = ptrtoaddr ptr %i.qd to i64
   %i.qm = sub i64 %2, %1
   %diff.check = icmp ugt i64 %i.qm, -32
   %or.cond = select i1 %min.iters.check228, i1 true, i1 %diff.check
@@ -2899,10 +2900,10 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.afz, label %.lr.ph152.preheader, label %._crit_edge153
 
 .lr.ph152.preheader:                              ; preds = %bb.u
-  %1 = ptrtoaddr ptr %i.afs to i64
-  %2 = ptrtoaddr ptr %i.afr to i64
   %wide.trip.count166 = zext nneg i32 %i.aft to i64 ; 5 uses
   %min.iters.check237 = icmp ult i32 %i.aft, 6
+  %1 = ptrtoaddr ptr %i.afs to i64
+  %2 = ptrtoaddr ptr %i.afr to i64
   %i.aga = sub i64 %2, %1
   %diff.check = icmp ugt i64 %i.aga, -32
   %or.cond = select i1 %min.iters.check237, i1 true, i1 %diff.check
@@ -3305,10 +3306,10 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.yc, label %.lr.ph190.preheader, label %._crit_edge191
 
 .lr.ph190.preheader:                              ; preds = %bb.v
-  %1 = ptrtoaddr ptr %i.xv to i64
-  %2 = ptrtoaddr ptr %i.xu to i64
   %wide.trip.count203 = zext nneg i32 %i.xw to i64 ; 5 uses
   %min.iters.check265 = icmp ult i32 %i.xw, 6
+  %1 = ptrtoaddr ptr %i.xv to i64
+  %2 = ptrtoaddr ptr %i.xu to i64
   %i.yd = sub i64 %2, %1
   %diff.check = icmp ugt i64 %i.yd, -32
   %or.cond = select i1 %min.iters.check265, i1 true, i1 %diff.check

@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %bb.c
   %i.o = ptrtoint ptr %i.j to i64
   %i.p = sub i64 %i.n, %i.o                       ; 2 uses
   %i.q = tail call noundef ptr @_ZNK3gmx20HostAllocationPolicy6mallocEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.p) #15 ; 11 uses
-  %3 = ptrtoaddr ptr %i.q to i64
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %bb.e, label %bb.f
 
@@ -225,20 +224,22 @@ bb.f:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.p
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.u, ptr %i.v, align 8, !tbaa !59
-  %i.w = load ptr, ptr %i.e, align 8, !tbaa !60   ; 9 uses
+  %i.w = load ptr, ptr %i.e, align 8, !tbaa !60   ; 10 uses
   %i.x = load ptr, ptr %i.k, align 8, !tbaa !60   ; 3 uses
   %.not12.i.i = icmp eq ptr %i.w, %i.x
   br i1 %.not12.i.i, label %_ZSt22__uninitialized_move_aIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiN3gmx9AllocatorIiNS4_20HostAllocationPolicyEEEEEES2_S7_ET0_T_SB_SA_RT1_.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.f
-  %i.y = ptrtoaddr ptr %i.w to i64                ; 2 uses
-  %i.z = ptrtoaddr ptr %i.x to i64
-  %i.aa = add i64 %i.z, -4
-  %i.ab = sub i64 %i.aa, %i.y                     ; 3 uses
+  %i.y = ptrtoaddr ptr %i.x to i64
+  %i.z = ptrtoaddr ptr %i.w to i64
+  %i.aa = add i64 %i.y, -4
+  %i.ab = sub i64 %i.aa, %i.z                     ; 3 uses
   %i.ac = lshr i64 %i.ab, 2
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.ab, 28
-  %i.ae = sub i64 %i.y, %3
+  %3 = ptrtoaddr ptr %i.q to i64
+  %4 = ptrtoaddr ptr %i.w to i64
+  %i.ae = sub i64 %4, %3
   %diff.check = icmp ugt i64 %i.ae, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -641,7 +642,6 @@ _ZNKSt6vectorIiN3gmx9AllocatorIiNS0_20HostAllocationPolicyEEEE12_M_check_lenEmPK
   %i.t = tail call i64 @llvm.umin.i64(i64 %i.s, i64 2305843009213693951) ; 2 uses
   %i.u = shl nuw nsw i64 %i.t, 2
   %i.v = tail call noundef ptr @_ZNK3gmx20HostAllocationPolicy6mallocEm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.u) #15 ; 10 uses
-  %2 = ptrtoaddr ptr %i.v to i64
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %bb.e, label %_ZSt27__uninitialized_default_n_aIPimN3gmx9AllocatorIiNS1_20HostAllocationPolicyEEEET_S5_T0_RT1_.exit28
 
@@ -664,6 +664,7 @@ iter.check:                                       ; preds = %_ZSt27__uninitializ
   %i.ac = lshr i64 %i.ab, 2
   %i.ad = add nuw nsw i64 %i.ac, 1                ; 5 uses
   %min.iters.check = icmp ult i64 %i.ab, 28
+  %2 = ptrtoaddr ptr %i.v to i64
   %i.ae = sub i64 %i.f, %2
   %diff.check = icmp ugt i64 %i.ae, -128
   %or.cond = or i1 %min.iters.check, %diff.check

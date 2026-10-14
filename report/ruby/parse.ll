@@ -205,8 +205,7 @@ vtable_size.exit31.i:                             ; preds = %bb.c, %vtable_size.
 bb.d:                                             ; preds = %vtable_size.exit31.i
   %i.n = getelementptr i8, ptr %0, i64 288        ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !138
-  %i.p = tail call ptr @rb_ast_new_local_table(ptr noundef %i.o, i32 noundef %i.l) #31 ; 3 uses
-  %5 = ptrtoaddr ptr %i.p to i64                  ; 2 uses
+  %i.p = tail call ptr @rb_ast_new_local_table(ptr noundef %i.o, i32 noundef %i.l) #31 ; 4 uses
   %i.q = getelementptr i8, ptr %i.p, i64 8        ; 14 uses
   %i.r = load ptr, ptr %i.a, align 8, !tbaa !110
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !201
@@ -236,8 +235,7 @@ ruby_nonempty_memcpy.exit.i:                      ; preds = %bb.f, %rbimpl_size_
   %i.y = load ptr, ptr %i.a, align 8, !tbaa !110  ; 2 uses
   %i.z = getelementptr i8, ptr %i.y, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !154
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !200 ; 14 uses
-  %6 = ptrtoaddr ptr %i.ab to i64                 ; 2 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !200 ; 15 uses
   %i.ac = load ptr, ptr %i.y, align 8, !tbaa !201 ; 3 uses
   %i.ad = icmp ult ptr %i.ac, inttoptr (i64 2 to ptr)
   br i1 %i.ad, label %vtable_included.exit.thread.us.preheader.i, label %.lr.ph.split.i
@@ -257,8 +255,10 @@ vector.scevcheck30:                               ; preds = %vtable_included.exi
   br i1 %i.aj, label %vtable_included.exit.thread.us.i.preheader, label %vector.memcheck31
 
 vector.memcheck31:                                ; preds = %vector.scevcheck30
+  %5 = ptrtoaddr ptr %i.p to i64
   %i.ak = zext nneg i32 %.0.i.i to i64
   %i.al = shl nuw nsw i64 %i.ak, 3
+  %6 = ptrtoaddr ptr %i.ab to i64
   %i.am = add i64 %i.al, %5
   %i.an = sub i64 %i.am, %6
   %i.ao = add i64 %i.an, 7
@@ -378,10 +378,12 @@ vector.scevcheck:                                 ; preds = %.preheader.i.prehea
   br i1 %i.cl, label %.preheader.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
+  %7 = ptrtoaddr ptr %i.p to i64
   %i.cm = zext nneg i32 %.0.i.i to i64
   %i.cn = shl nuw nsw i64 %i.cm, 3
-  %i.co = add i64 %i.cn, %5
-  %i.cp = sub i64 %i.co, %6
+  %8 = ptrtoaddr ptr %i.ab to i64
+  %i.co = add i64 %i.cn, %7
+  %i.cp = sub i64 %i.co, %8
   %i.cq = add i64 %i.cp, 7
   %diff.check = icmp ult i64 %i.cq, 31
   br i1 %diff.check, label %.preheader.i.i.preheader, label %vector.ph
@@ -784,21 +786,21 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.cy, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %.thread
-  %5 = ptrtoaddr ptr %i.cx to i64
-  %6 = call i64 @llvm.usub.sat.i64(i64 %.0130211, i64 %i.cp) ; 7 uses
-  %min.iters.check = icmp ult i64 %6, 8
-  %i.cz = sub i64 %i.cp, %5
+  %5 = tail call i64 @llvm.usub.sat.i64(i64 %.0130211, i64 %i.cp) ; 7 uses
+  %min.iters.check = icmp ult i64 %5, 8
+  %6 = ptrtoaddr ptr %i.cx to i64
+  %i.cz = sub i64 %i.cp, %6
   %diff.check = icmp ugt i64 %i.cz, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph188.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check212 = icmp ult i64 %6, 32
+  %min.iters.check212 = icmp ult i64 %5, 32
   br i1 %min.iters.check212, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.da = and i64 %6, 24
-  %n.vec = and i64 %6, -32                        ; 5 uses
+  %i.da = and i64 %5, 24
+  %n.vec = and i64 %5, -32                        ; 5 uses
   %i.db = getelementptr i8, ptr %i.cx, i64 %n.vec ; 2 uses
   %i.dc = getelementptr i8, ptr %.2137, i64 %n.vec ; 2 uses
   br label %vector.body
@@ -822,7 +824,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.dj, label %middle.block, label %vector.body, !llvm.loop !548
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %5, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -831,7 +833,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec216 = and i64 %6, -8                      ; 4 uses
+  %n.vec216 = and i64 %5, -8                      ; 4 uses
   %i.dk = getelementptr i8, ptr %i.cx, i64 %n.vec216 ; 2 uses
   %i.dl = getelementptr i8, ptr %.2137, i64 %n.vec216 ; 2 uses
   br label %vec.epilog.vector.body
@@ -849,7 +851,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.do, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !549
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n222 = icmp eq i64 %6, %n.vec216
+  %cmp.n222 = icmp eq i64 %5, %n.vec216
   br i1 %cmp.n222, label %._crit_edge, label %.lr.ph188.preheader
 
 .lr.ph188.preheader:                              ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block

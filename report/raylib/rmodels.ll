@@ -205,8 +205,8 @@ cgltf_buffer_view_data.exit43.thread:             ; preds = %bb.d, %._crit_edge,
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc range(i32 0, 2) i32 @cgltf_element_read_float(ptr nofree noundef nonnull readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, ptr nofree noundef writeonly captures(none) %4, i64 noundef %5) unnamed_addr #13 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 13 uses
-  %i.b = ptrtoaddr ptr %4 to i64                  ; 13 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 12 uses
+  %i.b = ptrtoaddr ptr %4 to i64                  ; 12 uses
   switch i32 %1, label %bb.f [
     i32 2, label %cgltf_num_components.exit
     i32 3, label %bb.b
@@ -249,7 +249,9 @@ bb.g:                                             ; preds = %cgltf_num_component
   ]
 
 cgltf_component_read_float.exit226.us.preheader:  ; preds = %bb.g
-  %i.d = sub i64 %i.a, %i.b
+  %6 = ptrtoaddr ptr %4 to i64
+  %7 = ptrtoaddr ptr %0 to i64
+  %i.d = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.d, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %cgltf_component_read_float.exit226.us.preheader802, label %vector.ph
