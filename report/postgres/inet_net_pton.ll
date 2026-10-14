@@ -204,6 +204,7 @@ bb.ak:                                            ; preds = %bb.aj
   %.3109.i = phi ptr [ %i.cz, %bb.ac ], [ %.0106.lcssa.ph.i, %.critedge.i19 ], [ %i.dx, %bb.aj ], [ %i.dx, %bb.aj ] ; 8 uses
   %.3104.i = phi i64 [ %i.cy, %bb.ac ], [ %.0101.lcssa.ph.i, %.critedge.i19 ], [ %i.du, %bb.aj ], [ %i.du, %bb.aj ] ; 3 uses
   %.298.i = phi i32 [ %i.ct, %bb.ac ], [ %i.ct, %.critedge.i19 ], [ %i.dp, %bb.aj ], [ %i.dp, %bb.aj ] ; 2 uses
+  %.3109.i143 = ptrtoaddr ptr %.3109.i to i64     ; 2 uses
   %i.ef = icmp eq i32 %.298.i, 47
   br i1 %i.ef, label %bb.al, label %.thread154.i
 
@@ -316,13 +317,12 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %._c
   br i1 %i.fo, label %.lr.ph222.i.preheader, label %inet_net_pton_ipv4.exit
 
 .lr.ph222.i.preheader:                            ; preds = %bb.av
-  %4 = ptrtoaddr ptr %.3109.i to i64              ; 2 uses
-  %i.fp = add i64 %4, 1
+  %i.fp = add i64 %.3109.i143, 1
   %i.fq = sub i64 %i.fp, %.pre-phi.i
   %i.fr = shl i64 %i.fq, 3
   %i.fs = tail call i64 @llvm.smax.i64(i64 %i.fr, i64 %i.fn)
   %i.ft = shl i64 %.pre-phi.i, 3
-  %i.fu = shl i64 %4, 3
+  %i.fu = shl i64 %.3109.i143, 3
   %i.fv = add i64 %i.fs, %i.ft
   %i.fw = xor i64 %i.fu, -1
   %i.fx = add i64 %i.fv, %i.fw

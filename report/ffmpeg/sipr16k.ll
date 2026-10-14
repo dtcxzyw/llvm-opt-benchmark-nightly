@@ -28,7 +28,7 @@ bb.a:
   %i.a = alloca [46 x float], align 16            ; 4 uses
   %i.b = alloca [16 x double], align 16           ; 11 uses
   %i.c = alloca [16 x float], align 16            ; 12 uses
-  %i.d = alloca [16 x double], align 16           ; 20 uses
+  %i.d = alloca [16 x double], align 16           ; 12 uses
   %i.e = alloca [2 x [16 x float]], align 16      ; 5 uses
   %i.f = alloca [80 x float], align 16            ; 12 uses
   %3 = alloca %struct.AMRFixed, align 4           ; 10 uses
@@ -146,31 +146,20 @@ bb.a:
   store <4 x float> %i.cl, ptr %i.ba, align 16, !tbaa !22
   store <4 x float> %i.ch, ptr %i.az, align 4
   call void @ff_set_min_dist_lsf(ptr noundef nonnull %i.c, double noundef f0x3F941B2F769CF0E0, i32 noundef 16) #6
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 56
-  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  %i.cm = getelementptr inbounds nuw i8, ptr %i.d, i64 72
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.d, i64 80
-  %i.co = getelementptr inbounds nuw i8, ptr %i.d, i64 88
-  %i.cp = getelementptr inbounds nuw i8, ptr %i.d, i64 96
-  %i.cq = getelementptr inbounds nuw i8, ptr %i.d, i64 104
-  %i.cr = getelementptr inbounds nuw i8, ptr %i.d, i64 112
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.d, i64 120
+  %i.cm = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.d, i64 32
+  %i.co = getelementptr inbounds nuw i8, ptr %i.d, i64 48
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.d, i64 64
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.d, i64 80
+  %i.cr = getelementptr inbounds nuw i8, ptr %i.d, i64 96
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.d, i64 112
   %i.ct = getelementptr inbounds nuw i8, ptr %i.e, i64 64 ; 3 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 5568 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.cv = load <2 x float>, ptr %i.c, align 16, !tbaa !22
   %i.cw = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.cv)
-  %i.cx = fpext <2 x float> %i.cw to <2 x double> ; 3 uses
-  %12 = extractelement <2 x double> %i.cx, i64 0
-  store double %12, ptr %i.d, align 16, !tbaa !11
-  %13 = extractelement <2 x double> %i.cx, i64 1
-  store double %13, ptr %4, align 8, !tbaa !11
+  %i.cx = fpext <2 x float> %i.cw to <2 x double> ; 2 uses
+  store <2 x double> %i.cx, ptr %i.d, align 16, !tbaa !11
   %i.cy = load <2 x double>, ptr %i.cu, align 8, !tbaa !11
   %i.cz = fadd nsz <2 x double> %i.cy, %i.cx
   %i.da = fmul nsz <2 x double> %i.cz, splat (double 5.000000e-01)
@@ -179,11 +168,8 @@ bb.a:
   %i.dc = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.dd = load <2 x float>, ptr %i.ao, align 8, !tbaa !22
   %i.de = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.dd)
-  %i.df = fpext <2 x float> %i.de to <2 x double> ; 3 uses
-  %14 = extractelement <2 x double> %i.df, i64 0
-  store double %14, ptr %5, align 16, !tbaa !11
-  %15 = extractelement <2 x double> %i.df, i64 1
-  store double %15, ptr %6, align 8, !tbaa !11
+  %i.df = fpext <2 x float> %i.de to <2 x double> ; 2 uses
+  store <2 x double> %i.df, ptr %i.cm, align 16, !tbaa !11
   %i.dg = load <2 x double>, ptr %i.db, align 8, !tbaa !11
   %i.dh = fadd nsz <2 x double> %i.dg, %i.df
   %i.di = fmul nsz <2 x double> %i.dh, splat (double 5.000000e-01)
@@ -192,11 +178,8 @@ bb.a:
   %i.dk = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.dl = load <2 x float>, ptr %i.aq, align 16, !tbaa !22
   %i.dm = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.dl)
-  %i.dn = fpext <2 x float> %i.dm to <2 x double> ; 3 uses
-  %16 = extractelement <2 x double> %i.dn, i64 0
-  store double %16, ptr %7, align 16, !tbaa !11
-  %17 = extractelement <2 x double> %i.dn, i64 1
-  store double %17, ptr %8, align 8, !tbaa !11
+  %i.dn = fpext <2 x float> %i.dm to <2 x double> ; 2 uses
+  store <2 x double> %i.dn, ptr %i.cn, align 16, !tbaa !11
   %i.do = load <2 x double>, ptr %i.dj, align 8, !tbaa !11
   %i.dp = fadd nsz <2 x double> %i.do, %i.dn
   %i.dq = fmul nsz <2 x double> %i.dp, splat (double 5.000000e-01)
@@ -205,11 +188,8 @@ bb.a:
   %i.ds = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.dt = load <2 x float>, ptr %i.at, align 8, !tbaa !22
   %i.du = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.dt)
-  %i.dv = fpext <2 x float> %i.du to <2 x double> ; 3 uses
-  %18 = extractelement <2 x double> %i.dv, i64 0
-  store double %18, ptr %9, align 16, !tbaa !11
-  %19 = extractelement <2 x double> %i.dv, i64 1
-  store double %19, ptr %10, align 8, !tbaa !11
+  %i.dv = fpext <2 x float> %i.du to <2 x double> ; 2 uses
+  store <2 x double> %i.dv, ptr %i.co, align 16, !tbaa !11
   %i.dw = load <2 x double>, ptr %i.dr, align 8, !tbaa !11
   %i.dx = fadd nsz <2 x double> %i.dw, %i.dv
   %i.dy = fmul nsz <2 x double> %i.dx, splat (double 5.000000e-01)
@@ -218,11 +198,8 @@ bb.a:
   %i.ea = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.eb = load <2 x float>, ptr %i.aw, align 16, !tbaa !22
   %i.ec = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.eb)
-  %i.ed = fpext <2 x float> %i.ec to <2 x double> ; 3 uses
-  %20 = extractelement <2 x double> %i.ed, i64 0
-  store double %20, ptr %11, align 16, !tbaa !11
-  %21 = extractelement <2 x double> %i.ed, i64 1
-  store double %21, ptr %i.cm, align 8, !tbaa !11
+  %i.ed = fpext <2 x float> %i.ec to <2 x double> ; 2 uses
+  store <2 x double> %i.ed, ptr %i.cp, align 16, !tbaa !11
   %i.ee = load <2 x double>, ptr %i.dz, align 8, !tbaa !11
   %i.ef = fadd nsz <2 x double> %i.ee, %i.ed
   %i.eg = fmul nsz <2 x double> %i.ef, splat (double 5.000000e-01)
@@ -231,11 +208,8 @@ bb.a:
   %i.ei = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   %i.ej = load <2 x float>, ptr %i.ax, align 8, !tbaa !22
   %i.ek = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.ej)
-  %i.el = fpext <2 x float> %i.ek to <2 x double> ; 3 uses
-  %22 = extractelement <2 x double> %i.el, i64 0
-  store double %22, ptr %i.cn, align 16, !tbaa !11
-  %23 = extractelement <2 x double> %i.el, i64 1
-  store double %23, ptr %i.co, align 8, !tbaa !11
+  %i.el = fpext <2 x float> %i.ek to <2 x double> ; 2 uses
+  store <2 x double> %i.el, ptr %i.cq, align 16, !tbaa !11
   %i.em = load <2 x double>, ptr %i.eh, align 8, !tbaa !11
   %i.en = fadd nsz <2 x double> %i.em, %i.el
   %i.eo = fmul nsz <2 x double> %i.en, splat (double 5.000000e-01)
@@ -244,11 +218,8 @@ bb.a:
   %i.eq = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.er = load <2 x float>, ptr %i.ba, align 16, !tbaa !22
   %i.es = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.er)
-  %i.et = fpext <2 x float> %i.es to <2 x double> ; 3 uses
-  %24 = extractelement <2 x double> %i.et, i64 0
-  store double %24, ptr %i.cp, align 16, !tbaa !11
-  %25 = extractelement <2 x double> %i.et, i64 1
-  store double %25, ptr %i.cq, align 8, !tbaa !11
+  %i.et = fpext <2 x float> %i.es to <2 x double> ; 2 uses
+  store <2 x double> %i.et, ptr %i.cr, align 16, !tbaa !11
   %i.eu = load <2 x double>, ptr %i.ep, align 8, !tbaa !11
   %i.ev = fadd nsz <2 x double> %i.eu, %i.et
   %i.ew = fmul nsz <2 x double> %i.ev, splat (double 5.000000e-01)
@@ -257,11 +228,8 @@ bb.a:
   %i.ey = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.ez = load <2 x float>, ptr %i.bb, align 8, !tbaa !22
   %i.fa = call nsz <2 x float> @llvm.cos.v2f32(<2 x float> %i.ez)
-  %i.fb = fpext <2 x float> %i.fa to <2 x double> ; 3 uses
-  %26 = extractelement <2 x double> %i.fb, i64 0
-  store double %26, ptr %i.cr, align 16, !tbaa !11
-  %27 = extractelement <2 x double> %i.fb, i64 1
-  store double %27, ptr %i.cs, align 8, !tbaa !11
+  %i.fb = fpext <2 x float> %i.fa to <2 x double> ; 2 uses
+  store <2 x double> %i.fb, ptr %i.cs, align 16, !tbaa !11
   %i.fc = load <2 x double>, ptr %i.ex, align 8, !tbaa !11
   %i.fd = fadd nsz <2 x double> %i.fc, %i.fb
   %i.fe = fmul nsz <2 x double> %i.fd, splat (double 5.000000e-01)

@@ -204,14 +204,14 @@ bb.a:
   br i1 %.not.not24, label %bb.b, label %.lr.ph, !dbg !6219
 
 .lr.ph:                                           ; preds = %bb.a
+  %.promoted32 = ptrtoaddr ptr %.promoted to i64, !dbg !6306
+  %2 = ptrtoaddr ptr %i.c to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !6228, !noundef !671 ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.promoted25 = load i64, ptr %i.g, align 8, !alias.scope !6228 ; 5 uses
-  %2 = ptrtoaddr ptr %i.c to i64, !dbg !6219
-  %3 = ptrtoaddr ptr %.promoted to i64, !dbg !6219
   %i.h = add i64 %2, -4, !dbg !6219
-  %i.i = sub i64 %i.h, %3, !dbg !6219             ; 4 uses
+  %i.i = sub i64 %i.h, %.promoted32, !dbg !6219   ; 4 uses
   %i.j = lshr i64 %i.i, 2, !dbg !6219
   %i.k = add nuw nsw i64 %i.j, 1, !dbg !6219      ; 2 uses
   %min.iters.check = icmp ult i64 %i.i, 92, !dbg !6219
@@ -374,19 +374,19 @@ bb.a:
     #dbg_declare(ptr poison, !6452, !DIExpression(), !6459)
     #dbg_value(i64 1, !6460, !DIExpression(), !6467)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.c = load ptr, ptr %i.b, align 8, !nonnull !671, !noundef !671 ; 5 uses
+  %i.c = load ptr, ptr %i.b, align 8, !nonnull !671, !noundef !671 ; 4 uses
+  %2 = ptrtoaddr ptr %i.c to i64                  ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.promoted = load ptr, ptr %i.d, align 8        ; 10 uses
+  %.promoted = load ptr, ptr %i.d, align 8        ; 9 uses
     #dbg_value(ptr %0, !6469, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !6478)
     #dbg_value(ptr %0, !6479, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !6483)
     #dbg_value(ptr poison, !6472, !DIExpression(), !6484)
     #dbg_value(ptr poison, !6480, !DIExpression(), !6485)
+  %.promoted32 = ptrtoaddr ptr %.promoted to i64, !dbg !6568 ; 2 uses
   %.not.not24 = icmp eq ptr %.promoted, %i.c, !dbg !6568
   br i1 %.not.not24, label %bb.b, label %iter.check, !dbg !6477
 
 iter.check:                                       ; preds = %bb.a
-  %.promoted32 = ptrtoaddr ptr %.promoted to i64, !dbg !6568
-  %2 = ptrtoaddr ptr %i.c to i64                  ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !6486, !noundef !671 ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -398,10 +398,8 @@ iter.check:                                       ; preds = %bb.a
 vector.memcheck:                                  ; preds = %iter.check
   %i.i = shl i64 %.promoted25, 1, !dbg !6477
   %i.j = getelementptr nuw i8, ptr %i.f, i64 %i.i, !dbg !6477
-  %3 = ptrtoaddr ptr %i.c to i64, !dbg !6477
-  %i.k = add i64 %.promoted25, %3, !dbg !6477
-  %4 = ptrtoaddr ptr %.promoted to i64, !dbg !6477
-  %i.l = sub i64 %i.k, %4, !dbg !6477
+  %i.k = add i64 %.promoted25, %2, !dbg !6477
+  %i.l = sub i64 %i.k, %.promoted32, !dbg !6477
   %i.m = shl i64 %i.l, 1, !dbg !6477
   %i.n = getelementptr i8, ptr %i.f, i64 %i.m, !dbg !6477
   %bound0 = icmp ult ptr %i.j, %i.c, !dbg !6477

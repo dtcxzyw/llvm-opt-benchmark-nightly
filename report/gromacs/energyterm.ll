@@ -202,15 +202,15 @@ _ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19:          ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %.not32, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit19
-  %3 = load ptr, ptr %1, align 8, !tbaa !39       ; 3 uses
-  %4 = load ptr, ptr %2, align 8, !tbaa !39       ; 3 uses
-  %5 = ptrtoaddr ptr %i.v to i64
-  %6 = ptrtoaddr ptr %i.w to i64
-  %i.x = add i64 %5, -48
-  %i.y = sub i64 %i.x, %6                         ; 2 uses
+  %3 = ptrtoaddr ptr %i.v to i64
+  %4 = ptrtoaddr ptr %i.w to i64
+  %5 = load ptr, ptr %1, align 8, !tbaa !39       ; 3 uses
+  %6 = load ptr, ptr %2, align 8, !tbaa !39       ; 3 uses
+  %i.x = add i64 %3, -48
+  %i.y = sub i64 %i.x, %4                         ; 2 uses
   %min.iters.check = icmp ult i64 %i.y, 384
-  %i.z = ptrtoaddr ptr %4 to i64
-  %i.aa = ptrtoaddr ptr %3 to i64
+  %i.z = ptrtoaddr ptr %6 to i64
+  %i.aa = ptrtoaddr ptr %5 to i64
   %i.ab = sub i64 %i.aa, %i.z
   %diff.check = icmp ugt i64 %i.ab, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -241,7 +241,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.masked.gather47 = call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %step.add52, <4 x i1> splat (i1 true), <4 x double> poison), !tbaa !30
   %i.aj = fptrunc <4 x double> %wide.masked.gather to <4 x float>
   %i.ak = fptrunc <4 x double> %wide.masked.gather47 to <4 x float>
-  %i.al = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %index ; 2 uses
+  %i.al = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %index ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   store <4 x float> %i.aj, ptr %i.al, align 4, !tbaa !36
   store <4 x float> %i.ak, ptr %i.am, align 4, !tbaa !36
@@ -251,7 +251,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.masked.gather50 = call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep48, <4 x i1> splat (i1 true), <4 x double> poison), !tbaa !31
   %i.an = fptrunc <4 x double> %wide.masked.gather49 to <4 x float>
   %i.ao = fptrunc <4 x double> %wide.masked.gather50 to <4 x float>
-  %i.ap = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %index ; 2 uses
+  %i.ap = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %index ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   store <4 x float> %i.an, ptr %i.ap, align 4, !tbaa !36
   store <4 x float> %i.ao, ptr %i.aq, align 4, !tbaa !36
@@ -291,12 +291,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.sroa.028.033 = phi ptr [ %i.bi, %scalar.ph ], [ %.sroa.028.033.ph, %scalar.ph.preheader ] ; 3 uses
   %i.bb = load double, ptr %.sroa.028.033, align 8, !tbaa !30
   %i.bc = fptrunc double %i.bb to float
-  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv
+  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv
   store float %i.bc, ptr %i.bd, align 4, !tbaa !36
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.028.033, i64 16
   %i.bf = load double, ptr %i.be, align 8, !tbaa !31
   %i.bg = fptrunc double %i.bf to float
-  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv
+  %i.bh = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv
   store float %i.bg, ptr %i.bh, align 4, !tbaa !36
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.028.033, i64 48 ; 2 uses

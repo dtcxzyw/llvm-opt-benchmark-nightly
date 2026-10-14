@@ -204,8 +204,8 @@ yae_load_data.exit:                               ; preds = %bb.m, %bb.v, %bb.w,
 define internal fastcc void @yae_downmix(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !79   ; 30 uses
-  %i.c = ptrtoaddr ptr %i.b to i64                ; 14 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !79   ; 29 uses
+  %i.c = ptrtoaddr ptr %i.b to i64                ; 17 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 6 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !60
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 68
@@ -608,11 +608,10 @@ bb.j:                                             ; preds = %bb.a
   br i1 %.not312, label %.loopexit, label %.lr.ph247.preheader
 
 .lr.ph247.preheader:                              ; preds = %.preheader232
-  %2 = ptrtoaddr ptr %i.b to i64                  ; 3 uses
-  %i.hn = add i64 %i.hf, %2
-  %i.ho = add i64 %2, 8
+  %i.hn = add i64 %i.hf, %i.c
+  %i.ho = add i64 %i.c, 8
   %i.hp = tail call i64 @llvm.umax.i64(i64 %i.hn, i64 %i.ho)
-  %i.hq = xor i64 %2, -1
+  %i.hq = xor i64 %i.c, -1
   %i.hr = add i64 %i.hp, %i.hq                    ; 2 uses
   %i.hs = lshr i64 %i.hr, 3
   %i.ht = add nuw nsw i64 %i.hs, 1                ; 2 uses

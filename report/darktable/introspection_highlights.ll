@@ -205,7 +205,7 @@ define internal fastcc void @wavelets_process(ptr noalias noundef %0, ptr noalia
 bb.a:
   %i.a = alloca [4 x float], align 16             ; 9 uses
   %i.b = alloca [9 x [4 x float]], align 16       ; 13 uses
-  %i.c = alloca [4 x float], align 16             ; 7 uses
+  %i.c = alloca [4 x float], align 16             ; 4 uses
   %i.d = alloca [4 x float], align 16             ; 4 uses
   %i.e = alloca [64 x i8], align 16               ; 6 uses
   %i.f = shl nuw i64 %3, 2                        ; 5 uses
@@ -237,9 +237,6 @@ bb.a:
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 112 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 3 uses
   %i.ac = icmp ne i32 %11, 0
-  %13 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %14 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %15 = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   %i.ad = shl i64 %3, 4
   %min.iters.check162 = icmp samesign ult i64 %3, 4
   %n.vec164 = and i64 %3, 4611686018427387900     ; 3 uses
@@ -642,7 +639,7 @@ bb.o:                                             ; preds = %.thread290.i, %.lr.
   %i.kh = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %i.kd ; 2 uses
   %i.ki = or disjoint i64 %i.kd, 1                ; 2 uses
   %i.kj = or disjoint i64 %i.kd, 2                ; 3 uses
-  %i.kk = load <4 x float>, ptr %i.kh, align 16, !tbaa !12, !alias.scope !631, !noalias !637 ; 7 uses
+  %i.kk = load <4 x float>, ptr %i.kh, align 16, !tbaa !12, !alias.scope !631, !noalias !637 ; 10 uses
   store <4 x float> %i.kk, ptr %i.a, align 16, !tbaa !12, !noalias !636
   %i.kl = fcmp reassoc nsz arcp contract afn ogt float %i.kg, 0.000000e+00 ; 2 uses
   br i1 %i.kl, label %.preheader294.i, label %bb.p
@@ -731,14 +728,7 @@ bb.o:                                             ; preds = %.thread290.i, %.lr.
   %i.mt = fadd reassoc nsz arcp contract afn <4 x float> %i.mr, %i.ms
   %i.mu = fadd reassoc nsz arcp contract afn <4 x float> %i.mt, %i.lq
   %i.mv = fmul reassoc nsz arcp contract afn <4 x float> %i.mu, splat (float f0x3DE38E39) ; 14 uses
-  %16 = extractelement <4 x float> %i.mv, i64 0
-  store float %16, ptr %i.c, align 16, !tbaa !12, !noalias !636
-  %17 = extractelement <4 x float> %i.mv, i64 1   ; 2 uses
-  store float %17, ptr %13, align 4, !tbaa !12, !noalias !636
-  %18 = extractelement <4 x float> %i.mv, i64 2   ; 2 uses
-  store float %18, ptr %14, align 8, !tbaa !12, !noalias !636
-  %19 = extractelement <4 x float> %i.mv, i64 3   ; 2 uses
-  store float %19, ptr %15, align 4, !tbaa !12, !noalias !636
+  store <4 x float> %i.mv, ptr %i.c, align 16, !tbaa !12, !noalias !636
   %i.mw = fsub reassoc nsz arcp contract afn <4 x float> %i.li, %i.mv ; 3 uses
   %i.mx = fmul reassoc nsz arcp contract afn <4 x float> %i.mw, %i.mw
   %i.my = fsub reassoc nsz arcp contract afn <4 x float> %i.lj, %i.mv ; 3 uses
@@ -865,10 +855,12 @@ bb.o:                                             ; preds = %.thread290.i, %.lr.
   %i.qz = extractelement <4 x float> %i.kk, i64 0
   %foldExtExtBinop = fsub reassoc nsz arcp contract afn <4 x float> %i.mv, %i.kk
   %.neg292.i = extractelement <4 x float> %foldExtExtBinop, i64 0
-  %i.ra = extractelement <4 x float> %i.kk, i64 1 ; 2 uses
-  %.neg292.1.i = fsub reassoc nsz arcp contract afn float %17, %i.ra
-  %i.rb = extractelement <4 x float> %i.kk, i64 2 ; 2 uses
-  %.neg292.2.i = fsub reassoc nsz arcp contract afn float %18, %i.rb
+  %i.ra = extractelement <4 x float> %i.kk, i64 1
+  %foldExtExtBinop198 = fsub reassoc nsz arcp contract afn <4 x float> %i.mv, %i.kk
+  %.neg292.1.i = extractelement <4 x float> %foldExtExtBinop198, i64 1
+  %i.rb = extractelement <4 x float> %i.kk, i64 2
+  %foldExtExtBinop200 = fsub reassoc nsz arcp contract afn <4 x float> %i.mv, %i.kk
+  %.neg292.2.i = extractelement <4 x float> %foldExtExtBinop200, i64 2
   %i.rc = insertelement <4 x float> poison, float %i.qw, i64 0
   %i.rd = shufflevector <4 x float> %i.rc, <4 x float> poison, <4 x i32> zeroinitializer
   %i.re = fdiv reassoc nsz arcp contract afn <4 x float> %i.qo, %i.rd
@@ -878,8 +870,9 @@ bb.o:                                             ; preds = %.thread290.i, %.lr.
   %i.rh = fadd reassoc nsz arcp contract afn float %.neg292.i, %reass.mul.i
   %i.ri = fmul reassoc nsz arcp contract afn float %i.rh, %i.qq
   %i.rj = fmul reassoc nsz arcp contract afn float %i.ri, %i.ix
-  %i.rk = extractelement <4 x float> %i.kk, i64 3 ; 2 uses
-  %.neg292.3.i = fsub reassoc nsz arcp contract afn float %19, %i.rk
+  %i.rk = extractelement <4 x float> %i.kk, i64 3
+  %foldExtExtBinop202 = fsub reassoc nsz arcp contract afn <4 x float> %i.mv, %i.kk
+  %.neg292.3.i = extractelement <4 x float> %foldExtExtBinop202, i64 3
   %i.rl = fadd reassoc nsz arcp contract afn float %i.rj, %i.qz ; 2 uses
   store float %i.rl, ptr %i.a, align 16, !tbaa !12, !noalias !636
   %i.rm = load float, ptr %i.qx, align 4, !tbaa !12, !noalias !636

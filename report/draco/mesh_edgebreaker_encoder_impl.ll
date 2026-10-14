@@ -205,14 +205,14 @@ bb.cb:                                            ; preds = %_ZNSt7__cxx1112basi
 
 .lr.ph.i.i.preheader:                             ; preds = %.critedge69
   %i.vf = ptrtoaddr ptr %i.vc to i64
-  %17 = add i64 %i.vf, -8
-  %18 = ptrtoaddr ptr %i.vb to i64                ; 3 uses
-  %i.vg = add i64 %18, 4
-  %i.vh = call i64 @llvm.umax.i64(i64 %17, i64 %i.vg)
+  %17 = ptrtoaddr ptr %i.vb to i64                ; 3 uses
+  %18 = add i64 %i.vf, -8
+  %i.vg = add i64 %17, 4
+  %i.vh = call i64 @llvm.umax.i64(i64 %18, i64 %i.vg)
   %i.vi = add i64 %i.vh, -4                       ; 2 uses
-  %i.vj = icmp ne i64 %i.vi, %18
+  %i.vj = icmp ne i64 %i.vi, %17
   %i.vk = zext i1 %i.vj to i64                    ; 3 uses
-  %i.vl = add i64 %18, %i.vk
+  %i.vl = add i64 %17, %i.vk
   %i.vm = sub i64 %i.vi, %i.vl                    ; 2 uses
   %i.vn = lshr i64 %i.vm, 3
   %i.vo = add nuw nsw i64 %i.vn, %i.vk            ; 2 uses
@@ -615,14 +615,14 @@ bb.ce:                                            ; preds = %_ZNSt7__cxx1112basi
 
 .lr.ph.i.i.preheader:                             ; preds = %.critedge69
   %i.wv = ptrtoaddr ptr %i.ws to i64
-  %18 = add i64 %i.wv, -8
-  %19 = ptrtoaddr ptr %i.wr to i64                ; 3 uses
-  %i.ww = add i64 %19, 4
-  %i.wx = call i64 @llvm.umax.i64(i64 %18, i64 %i.ww)
+  %18 = ptrtoaddr ptr %i.wr to i64                ; 3 uses
+  %19 = add i64 %i.wv, -8
+  %i.ww = add i64 %18, 4
+  %i.wx = call i64 @llvm.umax.i64(i64 %19, i64 %i.ww)
   %i.wy = add i64 %i.wx, -4                       ; 2 uses
-  %i.wz = icmp ne i64 %i.wy, %19
+  %i.wz = icmp ne i64 %i.wy, %18
   %i.xa = zext i1 %i.wz to i64                    ; 3 uses
-  %i.xb = add i64 %19, %i.xa
+  %i.xb = add i64 %18, %i.xa
   %i.xc = sub i64 %i.wy, %i.xb                    ; 2 uses
   %i.xd = lshr i64 %i.xc, 3
   %i.xe = add nuw nsw i64 %i.xd, %i.xa            ; 2 uses
@@ -1025,14 +1025,14 @@ bb.cb:                                            ; preds = %_ZNSt7__cxx1112basi
 
 .lr.ph.i.i.preheader:                             ; preds = %.critedge69
   %i.vg = ptrtoaddr ptr %i.vd to i64
-  %17 = add i64 %i.vg, -8
-  %18 = ptrtoaddr ptr %i.vc to i64                ; 3 uses
-  %i.vh = add i64 %18, 4
-  %i.vi = call i64 @llvm.umax.i64(i64 %17, i64 %i.vh)
+  %17 = ptrtoaddr ptr %i.vc to i64                ; 3 uses
+  %18 = add i64 %i.vg, -8
+  %i.vh = add i64 %17, 4
+  %i.vi = call i64 @llvm.umax.i64(i64 %18, i64 %i.vh)
   %i.vj = add i64 %i.vi, -4                       ; 2 uses
-  %i.vk = icmp ne i64 %i.vj, %18
+  %i.vk = icmp ne i64 %i.vj, %17
   %i.vl = zext i1 %i.vk to i64                    ; 3 uses
-  %i.vm = add i64 %18, %i.vl
+  %i.vm = add i64 %17, %i.vl
   %i.vn = sub i64 %i.vj, %i.vm                    ; 2 uses
   %i.vo = lshr i64 %i.vn, 3
   %i.vp = add nuw nsw i64 %i.vo, %i.vl            ; 2 uses
@@ -1435,7 +1435,7 @@ bb.an:                                            ; preds = %.sink.split, %bb.a
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPS3_S5_EEEEvSA_T_SB_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 3 uses
   %.not98 = icmp eq ptr %2, %3
   br i1 %.not98, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPN5draco9IndexTypeIjNS2_21CornerIndex_tag_type_EEESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit, label %bb.b
 
@@ -1838,8 +1838,7 @@ _ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE11_
   br i1 %.not13.i.i.i.i.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEES4_SaIS3_EET0_T_S7_S6_RT1_.exit, label %.lr.ph.i.i.i.i.i66.preheader
 
 .lr.ph.i.i.i.i.i66.preheader:                     ; preds = %_ZNSt12_Vector_baseIN5draco9IndexTypeIjNS0_21CornerIndex_tag_type_EEESaIS3_EE11_M_allocateEm.exit
-  %4 = ptrtoaddr ptr %1 to i64
-  %i.ea = add i64 %4, -4
+  %i.ea = add i64 %i.a, -4
   %i.eb = sub i64 %i.ea, %i.do                    ; 2 uses
   %i.ec = lshr i64 %i.eb, 2
   %i.ed = add nuw nsw i64 %i.ec, 1                ; 2 uses

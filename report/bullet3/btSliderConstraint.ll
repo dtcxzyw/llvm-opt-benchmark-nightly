@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %_Z13btPlaneS
   %.sroa.01139.1 = phi <2 x float> [ %.sroa.01139.0, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit ], [ %.sroa.0.4.vec.insert.i479, %bb.e ] ; 8 uses
   %.sroa.20.0 = phi <2 x float> [ %.sroa.20.8.vec.insert, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit ], [ %.sroa.3.12.vec.insert.i485, %bb.e ] ; 5 uses
   %.sroa.01104.1 = phi <2 x float> [ %.sroa.01104.0, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit ], [ %.sroa.0.4.vec.insert.i484, %bb.e ] ; 8 uses
-  %.sroa.0822.0 = phi <2 x float> [ %.sroa.0822.4.vec.insert, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit ], [ %.sroa.0.4.vec.insert.i449, %bb.e ] ; 13 uses
+  %.sroa.0822.0 = phi <2 x float> [ %.sroa.0822.4.vec.insert, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit ], [ %.sroa.0.4.vec.insert.i449, %bb.e ] ; 14 uses
   %.sroa.49.0 = phi <2 x float> [ %.sroa.49.8.vec.insert, %_Z13btPlaneSpace1I9btVector3EvRKT_RS1_S4_.exit ], [ %.sroa.3.12.vec.insert.i450, %bb.e ] ; 6 uses
   %.sroa.01139.0.vec.extract = extractelement <2 x float> %.sroa.01139.1, i64 0
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
@@ -607,17 +607,13 @@ bb.av:                                            ; preds = %.thread985, %bb.au
   %.1420990 = phi float [ %i.ws, %.thread985 ], [ 0.000000e+00, %bb.au ]
   %.1422989 = phi i1 [ %i.wt, %.thread985 ], [ false, %bb.au ] ; 3 uses
   %i.xb = load i32, ptr %i.c, align 8, !tbaa !81
-  %i.xc = mul nsw i32 %i.xb, %.0418               ; 3 uses
-  %.sroa.0822.0.vec.extract859 = extractelement <2 x float> %.sroa.0822.0, i64 0 ; 3 uses
-  %i.xd = load ptr, ptr %i.cg, align 8, !tbaa !82 ; 3 uses
+  %i.xc = mul nsw i32 %i.xb, %.0418               ; 2 uses
+  %.sroa.0822.0.vec.extract859 = extractelement <2 x float> %.sroa.0822.0, i64 0 ; 2 uses
+  %i.xd = load ptr, ptr %i.cg, align 8, !tbaa !82 ; 2 uses
   %i.xe = sext i32 %i.xc to i64                   ; 10 uses
   %i.xf = getelementptr inbounds [4 x i8], ptr %i.xd, i64 %i.xe
-  store float %.sroa.0822.0.vec.extract859, ptr %i.xf, align 4, !tbaa !10
-  %.sroa.0822.4.vec.extract900 = extractelement <2 x float> %.sroa.0822.0, i64 1 ; 3 uses
-  %8 = sext i32 %i.xc to i64
-  %9 = getelementptr [4 x i8], ptr %i.xd, i64 %8
-  %10 = getelementptr i8, ptr %9, i64 4
-  store float %.sroa.0822.4.vec.extract900, ptr %10, align 4, !tbaa !10
+  %.sroa.0822.4.vec.extract900 = extractelement <2 x float> %.sroa.0822.0, i64 1 ; 2 uses
+  store <2 x float> %.sroa.0822.0, ptr %i.xf, align 4, !tbaa !10
   %.sroa.49.8.vec.extract943 = extractelement <2 x float> %.sroa.49.0, i64 0 ; 4 uses
   %i.xg = add nsw i32 %i.xc, 2
   %i.xh = sext i32 %i.xg to i64                   ; 2 uses

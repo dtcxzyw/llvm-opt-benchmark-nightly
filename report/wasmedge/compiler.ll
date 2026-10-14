@@ -205,6 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = zext nneg i32 %i.l to i64                ; 3 uses
   %i.n = shl nuw nsw i64 %i.m, 2
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #20 ; 8 uses
+  %5 = ptrtoaddr ptr %i.o to i64
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.m
   store i32 0, ptr %i.o, align 4, !tbaa !63
   %i.q = getelementptr i8, ptr %i.o, i64 4        ; 3 uses
@@ -220,11 +221,10 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit:               ; preds = %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit, %bb.b
   %.0.i.i.i.i.i45 = phi ptr [ %i.t, %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit ], [ %i.q, %bb.b ] ; 3 uses
-  %5 = select i1 %3, i32 0, i32 %i.l              ; 3 uses
   %i.u = ptrtoaddr ptr %.0.i.i.i.i.i45 to i64
-  %6 = ptrtoaddr ptr %i.o to i64
+  %6 = select i1 %3, i32 0, i32 %i.l              ; 3 uses
   %i.v = add i64 %i.u, -4
-  %i.w = sub i64 %i.v, %6                         ; 2 uses
+  %i.w = sub i64 %i.v, %5                         ; 2 uses
   %i.x = lshr i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.w, 28
@@ -233,10 +233,10 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit:               ; preds = %bb.b
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %i.y, 9223372036854775800      ; 4 uses
   %i.z = trunc i64 %n.vec to i32
-  %i.aa = add i32 %5, %i.z
+  %i.aa = add i32 %6, %i.z
   %i.ab = shl i64 %n.vec, 2
   %i.ac = getelementptr i8, ptr %i.o, i64 %i.ab
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %5, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %6, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction = add nuw <4 x i32> %broadcast.splat, <i32 0, i32 1, i32 2, i32 3>
   br label %vector.body
@@ -260,7 +260,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEjEvT_S7_T0_.exit.loopexit, label %.lr.ph.i.preheader47
 
 .lr.ph.i.preheader47:                             ; preds = %.lr.ph.i.preheader, %middle.block
-  %.07.i.ph = phi i32 [ %5, %.lr.ph.i.preheader ], [ %i.aa, %middle.block ]
+  %.07.i.ph = phi i32 [ %6, %.lr.ph.i.preheader ], [ %i.aa, %middle.block ]
   %.sroa.02.06.i.ph = phi ptr [ %i.o, %.lr.ph.i.preheader ], [ %i.ac, %middle.block ]
   br label %.lr.ph.i
 
@@ -507,6 +507,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = zext nneg i32 %i.l to i64                ; 3 uses
   %i.n = shl nuw nsw i64 %i.m, 2
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #20 ; 8 uses
+  %6 = ptrtoaddr ptr %i.o to i64
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.m
   store i32 0, ptr %i.o, align 4, !tbaa !63
   %i.q = getelementptr i8, ptr %i.o, i64 4        ; 3 uses
@@ -522,11 +523,10 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit:               ; preds = %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit, %bb.b
   %.0.i.i.i.i.i53 = phi ptr [ %i.t, %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit ], [ %i.q, %bb.b ] ; 3 uses
-  %6 = select i1 %3, i32 0, i32 %i.l              ; 3 uses
   %i.u = ptrtoaddr ptr %.0.i.i.i.i.i53 to i64
-  %7 = ptrtoaddr ptr %i.o to i64
+  %7 = select i1 %3, i32 0, i32 %i.l              ; 3 uses
   %i.v = add i64 %i.u, -4
-  %i.w = sub i64 %i.v, %7                         ; 2 uses
+  %i.w = sub i64 %i.v, %6                         ; 2 uses
   %i.x = lshr i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.w, 28
@@ -535,10 +535,10 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit:               ; preds = %bb.b
 vector.ph:                                        ; preds = %.lr.ph.i.preheader
   %n.vec = and i64 %i.y, 9223372036854775800      ; 4 uses
   %i.z = trunc i64 %n.vec to i32
-  %i.aa = add i32 %6, %i.z
+  %i.aa = add i32 %7, %i.z
   %i.ab = shl i64 %n.vec, 2
   %i.ac = getelementptr i8, ptr %i.o, i64 %i.ab
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %6, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %7, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction = add nuw <4 x i32> %broadcast.splat, <i32 0, i32 1, i32 2, i32 3>
   br label %vector.body
@@ -562,7 +562,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %_ZSt4iotaIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEjEvT_S7_T0_.exit.loopexit, label %.lr.ph.i.preheader70
 
 .lr.ph.i.preheader70:                             ; preds = %.lr.ph.i.preheader, %middle.block
-  %.07.i.ph = phi i32 [ %6, %.lr.ph.i.preheader ], [ %i.aa, %middle.block ]
+  %.07.i.ph = phi i32 [ %7, %.lr.ph.i.preheader ], [ %i.aa, %middle.block ]
   %.sroa.02.06.i.ph = phi ptr [ %i.o, %.lr.ph.i.preheader ], [ %i.ac, %middle.block ]
   br label %.lr.ph.i
 
@@ -965,6 +965,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = zext nneg i32 %i.k to i64                ; 3 uses
   %i.m = shl nuw nsw i64 %i.l, 2
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #20, !noalias !7672 ; 8 uses
+  %3 = ptrtoaddr ptr %i.n to i64
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.l
   store i32 0, ptr %i.n, align 4, !tbaa !63, !noalias !7672
   %i.p = getelementptr i8, ptr %i.n, i64 4        ; 3 uses
@@ -980,10 +981,9 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit.i.i:           ; preds = %bb.c
 
 .lr.ph.i.preheader.i.i:                           ; preds = %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit.i.i, %bb.c
   %.0.i.i.i.i.i24.i.i = phi ptr [ %i.s, %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit.i.i ], [ %i.p, %bb.c ] ; 3 uses
-  %3 = ptrtoaddr ptr %.0.i.i.i.i.i24.i.i to i64
-  %i.t = ptrtoaddr ptr %i.n to i64
-  %i.u = add i64 %3, -4
-  %i.v = sub i64 %i.u, %i.t                       ; 2 uses
+  %i.t = ptrtoaddr ptr %.0.i.i.i.i.i24.i.i to i64
+  %i.u = add i64 %i.t, -4
+  %i.v = sub i64 %i.u, %3                         ; 2 uses
   %i.w = lshr i64 %i.v, 2
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.v, 28
@@ -1098,6 +1098,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = zext nneg i32 %i.k to i64                ; 3 uses
   %i.m = shl nuw nsw i64 %i.l, 2
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #20, !noalias !7692 ; 8 uses
+  %3 = ptrtoaddr ptr %i.n to i64
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %i.l
   store i32 0, ptr %i.n, align 4, !tbaa !63, !noalias !7692
   %i.p = getelementptr i8, ptr %i.n, i64 4        ; 3 uses
@@ -1113,10 +1114,9 @@ _ZNSt6vectorIjSaIjEEC2EmRKS0_.exit.i.i:           ; preds = %bb.c
 
 .lr.ph.i.preheader.i.i:                           ; preds = %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit.i.i, %bb.c
   %.0.i.i.i.i.i24.i.i = phi ptr [ %i.s, %_ZNSt6vectorIjSaIjEEC2EmRKS0_.exit.i.i ], [ %i.p, %bb.c ] ; 3 uses
-  %3 = ptrtoaddr ptr %.0.i.i.i.i.i24.i.i to i64
-  %i.t = ptrtoaddr ptr %i.n to i64
-  %i.u = add i64 %3, -4
-  %i.v = sub i64 %i.u, %i.t                       ; 2 uses
+  %i.t = ptrtoaddr ptr %.0.i.i.i.i.i24.i.i to i64
+  %i.u = add i64 %i.t, -4
+  %i.v = sub i64 %i.u, %3                         ; 2 uses
   %i.w = lshr i64 %i.v, 2
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.v, 28

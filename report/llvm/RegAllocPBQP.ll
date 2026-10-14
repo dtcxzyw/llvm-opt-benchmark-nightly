@@ -204,8 +204,8 @@ _ZNSt12_Vector_baseIN4llvm8RegisterESaIS1_EE11_M_allocateEm.exit.i.i.i: ; preds 
 bb.ac:                                            ; preds = %bb.cb, %.lr.ph225.i
   %.sroa.16.0 = phi ptr [ %i.oy, %.lr.ph225.i ], [ %.sroa.16.2, %bb.cb ] ; 6 uses
   %.sroa.0345.0 = phi ptr [ %i.ot, %.lr.ph225.i ], [ %.sroa.0345.2, %bb.cb ] ; 12 uses
-  %i.pd = phi ptr [ %i.ox, %.lr.ph225.i ], [ %.sroa.9.1, %bb.cb ] ; 3 uses
-  %i.pe = ptrtoaddr ptr %i.pd to i64
+  %i.pd = phi ptr [ %i.ox, %.lr.ph225.i ], [ %.sroa.9.1, %bb.cb ] ; 2 uses
+  %i.pe = ptrtoaddr ptr %i.pd to i64              ; 2 uses
   %i.pf = getelementptr inbounds i8, ptr %i.pd, i64 -4 ; 13 uses
   %i.pg = load i32, ptr %i.pf, align 4, !tbaa !128 ; 18 uses
   %i.ph = and i32 %i.pg, 2147483647               ; 6 uses
@@ -608,8 +608,7 @@ _ZNSt12_Vector_baseIN4llvm8RegisterESaIS1_EE11_M_allocateEm.exit.i: ; preds = %b
 
 .lr.ph.i.i.i.i.i56.i.preheader:                   ; preds = %_ZNSt12_Vector_baseIN4llvm8RegisterESaIS1_EE11_M_allocateEm.exit.i
   %i.xf = ptrtoaddr ptr %i.xe to i64
-  %19 = ptrtoaddr ptr %i.pd to i64
-  %i.xg = add i64 %19, -8
+  %i.xg = add i64 %i.pe, -8
   %i.xh = sub i64 %i.xg, %i.wb                    ; 2 uses
   %i.xi = lshr i64 %i.xh, 2
   %i.xj = add nuw nsw i64 %i.xi, 1                ; 2 uses

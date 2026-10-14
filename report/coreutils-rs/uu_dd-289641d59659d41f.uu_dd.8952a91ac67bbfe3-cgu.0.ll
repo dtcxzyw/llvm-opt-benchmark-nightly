@@ -205,8 +205,8 @@ bb.by:                                            ; preds = %bb.bu, %bb.bt
   unreachable
 
 _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbMXVmEvvZJf_5uu_dd.exit.i.i.i: ; preds = %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsbMXVmEvvZJf_5uu_dd.exit.i.i.i, %bb.bu
-  %.sroa.5.0.i.i = phi ptr [ %i.lm, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsbMXVmEvvZJf_5uu_dd.exit.i.i.i ], [ %i.lk, %bb.bu ] ; 17 uses
-  %.sroa.5.0.i.i1059 = ptrtoaddr ptr %.sroa.5.0.i.i to i64 ; 2 uses
+  %.sroa.5.0.i.i = phi ptr [ %i.lm, %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsbMXVmEvvZJf_5uu_dd.exit.i.i.i ], [ %i.lk, %bb.bu ] ; 16 uses
+  %.sroa.5.0.i.i1059 = ptrtoaddr ptr %.sroa.5.0.i.i to i64 ; 4 uses
   %i.lo = add i64 %.sroa.04.0104.i.i, %i.ld       ; 14 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2297)
   call void @llvm.experimental.noalias.scope.decl(metadata !2298)
@@ -521,15 +521,14 @@ _RNvMs2_NtNtCs7tKScEop1B6_5alloc3vec6spliceINtNtB7_5drain5DrainhE9move_tailCsbMX
   br i1 %.not6.i31.i.i.i.i, label %.lr.ph100.i.i.preheader, label %_RINvMs2_NtNtCs7tKScEop1B6_5alloc3vec6spliceINtNtB8_5drain5DrainhE4fillINtNtB8_9into_iter8IntoIterhEECsbMXVmEvvZJf_5uu_dd.exit38.thread.i.i.i.i
 
 .lr.ph100.i.i.preheader:                          ; preds = %_RNvMs2_NtNtCs7tKScEop1B6_5alloc3vec6spliceINtNtB7_5drain5DrainhE9move_tailCsbMXVmEvvZJf_5uu_dd.exit.i.i.i.i
-  %2 = ptrtoaddr ptr %.sroa.5.0.i.i to i64        ; 2 uses
   %i.pb = shl i64 %..i.i.i106, 1
-  %i.pc = add i64 %i.pb, %2
+  %i.pc = add i64 %i.pb, %.sroa.5.0.i.i1059
   %i.pd = xor i64 %.promoted97.i.i, -1
   %i.pe = add i64 %i.pc, %i.pd
   %i.pf = add i64 %.sroa.04.0104.i.i, %i.ld
   %i.pg = add i64 %i.pf, %i.ok
   %i.ph = sub i64 %i.pe, %i.pg
-  %i.pi = add i64 %..i.i.i106, %2
+  %i.pi = add i64 %..i.i.i106, %.sroa.5.0.i.i1059
   %i.pj = xor i64 %.sroa.04.0104.i.i, -1
   %i.pk = add i64 %i.pi, %i.pj
   %i.pl = add i64 %i.ld, %i.ok

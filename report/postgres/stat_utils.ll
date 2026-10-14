@@ -205,41 +205,17 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i64 %i.i, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store i64 0, ptr %i.k, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i64 0, ptr %6, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 40
-  store i64 0, ptr %7, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 48
-  store i64 0, ptr %8, align 8
+  store <4 x i64> zeroinitializer, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 88
-  store i64 0, ptr %i.l, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 128
-  store i64 0, ptr %9, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 56
-  store i64 0, ptr %i.n, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %3, i64 96
-  store i64 0, ptr %10, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 136
-  store i64 0, ptr %11, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 64
-  store i64 0, ptr %12, align 8
-  %13 = getelementptr inbounds nuw i8, ptr %3, i64 104
-  store i64 0, ptr %13, align 8
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 144
-  store i64 0, ptr %14, align 8
-  %15 = getelementptr inbounds nuw i8, ptr %3, i64 72
-  store i64 0, ptr %15, align 8
-  %16 = getelementptr inbounds nuw i8, ptr %3, i64 112
-  store i64 0, ptr %16, align 8
+  store <4 x i64> zeroinitializer, ptr %i.l, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 152
   store i64 0, ptr %i.o, align 8
   store <4 x i8> zeroinitializer, ptr %i.m, align 1
-  %17 = getelementptr inbounds nuw i8, ptr %3, i64 80
-  store i64 0, ptr %17, align 8
+  store <4 x i64> zeroinitializer, ptr %i.n, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 120
-  store i64 0, ptr %i.p, align 8
+  store <4 x i64> zeroinitializer, ptr %i.p, align 8
   store <16 x i8> zeroinitializer, ptr %4, align 1
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 160
   store i64 0, ptr %i.q, align 8

@@ -204,6 +204,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorIjSaIjE
           to label %.noexc8.i unwind label %bb.j  ; 9 uses
 
 .noexc8.i:                                        ; preds = %bb.i
+  %5 = ptrtoaddr ptr %i.ab to i64
   store i32 0, ptr %i.ab, align 4, !tbaa !104
   %i.ac = getelementptr i8, ptr %i.ab, i64 4      ; 3 uses
   %i.ad = add nsw i64 %i.y, -1                    ; 2 uses
@@ -218,6 +219,7 @@ _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc8.i
 
 .lr.ph.i.preheader.i:                             ; preds = %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc8.i
   %.0.i.i.i.i.i.ph.i = phi ptr [ %i.ac, %.noexc8.i ], [ %i.af, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ] ; 3 uses
+  %.0.i.i.i.i.i.ph.i73 = ptrtoaddr ptr %.0.i.i.i.i.i.ph.i to i64
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.preheader.i
@@ -238,10 +240,8 @@ _ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11c
   br i1 %.not5.i.i, label %.loopexit.i, label %.lr.ph.i9.i.preheader
 
 .lr.ph.i9.i.preheader:                            ; preds = %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS1_IPjSA_IjSaIjEEEEZN8WasmEdge4Host12_GLOBAL__N_119calculateBufferSizeISC_EEjRKT_EUlSO_E_ET0_SM_SM_SQ_T1_.exit.i
-  %5 = ptrtoaddr ptr %.0.i.i.i.i.i.ph.i to i64
-  %6 = ptrtoaddr ptr %i.ab to i64
-  %i.al = add i64 %5, -4
-  %i.am = sub i64 %i.al, %6                       ; 2 uses
+  %i.al = add i64 %.0.i.i.i.i.i.ph.i73, -4
+  %i.am = sub i64 %i.al, %5                       ; 2 uses
   %i.an = lshr i64 %i.am, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.am, 28
@@ -644,6 +644,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorIjSaIjE
           to label %.noexc8.i unwind label %bb.j  ; 9 uses
 
 .noexc8.i:                                        ; preds = %bb.i
+  %5 = ptrtoaddr ptr %i.ab to i64
   store i32 0, ptr %i.ab, align 4, !tbaa !104
   %i.ac = getelementptr i8, ptr %i.ab, i64 4      ; 3 uses
   %i.ad = add nsw i64 %i.y, -1                    ; 2 uses
@@ -658,6 +659,7 @@ _ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i: ; preds = %.noexc8.i
 
 .lr.ph.i.preheader.i:                             ; preds = %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i, %.noexc8.i
   %.0.i.i.i.i.i.ph.i = phi ptr [ %i.ac, %.noexc8.i ], [ %i.af, %_ZSt6fill_nIPjmjET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i.i ] ; 3 uses
+  %.0.i.i.i.i.i.ph.i73 = ptrtoaddr ptr %.0.i.i.i.i.i.ph.i to i64
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.preheader.i
@@ -678,10 +680,8 @@ _ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11c
   br i1 %.not5.i.i, label %.loopexit.i, label %.lr.ph.i9.i.preheader
 
 .lr.ph.i9.i.preheader:                            ; preds = %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS1_IPjSA_IjSaIjEEEEZN8WasmEdge4Host12_GLOBAL__N_119calculateBufferSizeISC_EEjRKT_EUlSO_E_ET0_SM_SM_SQ_T1_.exit.i
-  %5 = ptrtoaddr ptr %.0.i.i.i.i.i.ph.i to i64
-  %6 = ptrtoaddr ptr %i.ab to i64
-  %i.al = add i64 %5, -4
-  %i.am = sub i64 %i.al, %6                       ; 2 uses
+  %i.al = add i64 %.0.i.i.i.i.i.ph.i73, -4
+  %i.am = sub i64 %i.al, %5                       ; 2 uses
   %i.an = lshr i64 %i.am, 2
   %i.ao = add nuw nsw i64 %i.an, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.am, 28

@@ -204,6 +204,7 @@ bb.o:                                             ; preds = %bb.e
 
 bb.p:                                             ; preds = %bb.o
   %i.av = load ptr, ptr %0, align 8, !tbaa !55    ; 15 uses
+  %4 = ptrtoaddr ptr %i.av to i64
   %.not188 = icmp eq ptr %i.av, null
   br i1 %.not188, label %uriLowercaseInplaceW.exit, label %bb.q
 
@@ -213,6 +214,7 @@ bb.q:                                             ; preds = %bb.p
   %.not189 = icmp eq i32 %i.ax, 0
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !71 ; 6 uses
+  %5 = ptrtoaddr ptr %i.az to i64
   br i1 %.not189, label %bb.u, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -220,10 +222,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ba, label %.preheader.i239.preheader, label %uriLowercaseInplaceW.exit
 
 .preheader.i239.preheader:                        ; preds = %bb.r
-  %4 = ptrtoaddr ptr %i.az to i64
-  %5 = ptrtoaddr ptr %i.av to i64
-  %i.bb = xor i64 %5, -1
-  %i.bc = add i64 %i.bb, %4                       ; 2 uses
+  %i.bb = xor i64 %4, -1
+  %i.bc = add i64 %i.bb, %5                       ; 2 uses
   %i.bd = lshr i64 %i.bc, 2
   %i.be = add nuw nsw i64 %i.bd, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bc, 28
@@ -502,6 +502,7 @@ bb.z:                                             ; preds = %uriLowercaseInplace
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !58 ; 19 uses
+  %6 = ptrtoaddr ptr %i.ey to i64
   %.not192 = icmp eq ptr %i.ey, null
   br i1 %.not192, label %bb.aj, label %bb.aa
 
@@ -511,6 +512,7 @@ bb.aa:                                            ; preds = %bb.z
   %.not196 = icmp eq i32 %i.fa, 0
   %i.fb = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.fc = load ptr, ptr %i.fb, align 8, !tbaa !71 ; 10 uses
+  %7 = ptrtoaddr ptr %i.fc to i64
   br i1 %.not196, label %bb.ae, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -518,10 +520,8 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.fd, label %.preheader.i243.preheader, label %uriLowercaseInplaceW.exit246
 
 .preheader.i243.preheader:                        ; preds = %bb.ab
-  %6 = ptrtoaddr ptr %i.fc to i64
-  %7 = ptrtoaddr ptr %i.ey to i64
-  %i.fe = xor i64 %7, -1
-  %i.ff = add i64 %i.fe, %6                       ; 2 uses
+  %i.fe = xor i64 %6, -1
+  %i.ff = add i64 %i.fe, %7                       ; 2 uses
   %i.fg = lshr i64 %i.ff, 2
   %i.fh = add nuw nsw i64 %i.fg, 1                ; 2 uses
   %min.iters.check519 = icmp ult i64 %i.ff, 28

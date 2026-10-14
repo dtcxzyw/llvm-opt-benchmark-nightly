@@ -205,8 +205,10 @@ Vec_IntGrow.exit.i122:                            ; preds = %bb.y, %bb.u
   %.val7.i = phi i32 [ %.val7.pre.i, %bb.y ], [ %.val6.i, %bb.u ] ; 2 uses
   %i.en = getelementptr i8, ptr %i.du, i64 8
   %.val8.i = load ptr, ptr %i.en, align 8, !tbaa !48 ; 4 uses
+  %.val8.i290 = ptrtoaddr ptr %.val8.i to i64
   %i.eo = getelementptr i8, ptr %i.dz, i64 8
   %.val10.i = load ptr, ptr %i.eo, align 8, !tbaa !48 ; 4 uses
+  %.val10.i282 = ptrtoaddr ptr %.val10.i to i64
   %i.ep = sext i32 %.val7.i to i64
   %.idx.i.i = shl nsw i64 %i.ep, 2                ; 2 uses
   %i.eq = getelementptr inbounds i8, ptr %.val8.i, i64 %.idx.i.i ; 3 uses
@@ -229,8 +231,7 @@ Vec_IntGrow.exit.i122:                            ; preds = %bb.y, %bb.u
 .lr.ph13.i.i.preheader:                           ; preds = %.preheader5.i.i
   %.033.lcssa.i.i287 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
   %.036.lcssa.i.i286 = ptrtoaddr ptr %.036.lcssa.i.i to i64
-  %3 = ptrtoaddr ptr %.val8.i to i64
-  %i.ex = add i64 %.idx.i.i, %3
+  %i.ex = add i64 %.idx.i.i, %.val8.i290
   %i.ey = xor i64 %.033.lcssa.i.i287, -1
   %i.ez = add i64 %i.ex, %i.ey                    ; 2 uses
   %i.fa = lshr i64 %i.ez, 2
@@ -317,8 +318,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.
 
 .lr.ph17.i.i.preheader:                           ; preds = %.preheader.i.i
   %.238.lcssa.i.i280 = ptrtoaddr ptr %.238.lcssa.i.i to i64
-  %4 = ptrtoaddr ptr %.val10.i to i64
-  %i.fw = add i64 %.idx19.i.i, %4
+  %i.fw = add i64 %.idx19.i.i, %.val10.i282
   %i.fx = xor i64 %.0.lcssa.i.i281, -1
   %i.fy = add i64 %i.fw, %i.fx                    ; 2 uses
   %i.fz = lshr i64 %i.fy, 2
@@ -721,6 +721,8 @@ declare i32 @Sbd_StoObjBestCut(ptr noundef, i32 noundef, i32 noundef, ptr nounde
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define i32 @Sbd_CutMergeSimple(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(address) %1, ptr nofree noundef readonly captures(address) %2, ptr noundef %3) local_unnamed_addr #14 {
 bb.a:
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %1 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.c = load i32, ptr %1, align 4, !tbaa !14     ; 2 uses
@@ -748,8 +750,7 @@ bb.a:
 .lr.ph51.preheader:                               ; preds = %.preheader42
   %.033.lcssa69 = ptrtoaddr ptr %.033.lcssa to i64 ; 2 uses
   %.036.lcssa68 = ptrtoaddr ptr %.036.lcssa to i64
-  %4 = ptrtoaddr ptr %1 to i64
-  %i.m = add i64 %.idx, %4
+  %i.m = add i64 %.idx, %5
   %i.n = add i64 %i.m, 3
   %i.o = sub i64 %i.n, %.033.lcssa69              ; 2 uses
   %i.p = lshr i64 %i.o, 2
@@ -836,8 +837,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
 
 .lr.ph55.preheader:                               ; preds = %.preheader
   %.238.lcssa74 = ptrtoaddr ptr %.238.lcssa to i64
-  %5 = ptrtoaddr ptr %2 to i64
-  %i.al = add i64 %.idx57, %5
+  %i.al = add i64 %.idx57, %4
   %i.am = add i64 %i.al, 3
   %i.an = sub i64 %i.am, %.0.lcssa75              ; 2 uses
   %i.ao = lshr i64 %i.an, 2
@@ -918,8 +918,10 @@ bb.a:
   %i.b = alloca [13 x i32], align 16              ; 7 uses
   %i.c = alloca [13 x i32], align 16              ; 7 uses
   %i.d = alloca [13 x i32], align 16              ; 6 uses
-  %i.e = alloca [2 x i32], align 4                ; 8 uses
-  %i.f = alloca [2 x i32], align 4                ; 8 uses
+  %i.e = alloca [2 x i32], align 4                ; 7 uses
+  %2 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
+  %i.f = alloca [2 x i32], align 4                ; 7 uses
+  %3 = ptrtoaddr ptr %i.f to i64                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #33
@@ -955,7 +957,8 @@ bb.a:
   %.val95 = load ptr, ptr %i.ac, align 8, !tbaa !69
   %.val94.val = load i32, ptr %.val94, align 4, !tbaa !68
   %i.ad = getelementptr i8, ptr %.val95, i64 8
-  %.val95.val = load ptr, ptr %i.ad, align 8, !tbaa !48 ; 7 uses
+  %.val95.val = load ptr, ptr %i.ad, align 8, !tbaa !48 ; 4 uses
+  %.val95.val229 = ptrtoaddr ptr %.val95.val to i64 ; 4 uses
   %i.ae = add nsw i32 %.val94.val, 1              ; 2 uses
   %i.af = mul nsw i32 %i.ae, %i.n
   %i.ag = sext i32 %i.af to i64                   ; 3 uses
@@ -998,9 +1001,8 @@ bb.a:
 .lr.ph51.i.preheader:                             ; preds = %.preheader42.i
   %.033.lcssa.i228 = ptrtoaddr ptr %.033.lcssa.i to i64 ; 2 uses
   %.036.lcssa.i227 = ptrtoaddr ptr %.036.lcssa.i to i64
-  %2 = ptrtoaddr ptr %.val95.val to i64
   %i.az = shl nsw i64 %i.ag, 2
-  %i.ba = add i64 %.idx.i, %2
+  %i.ba = add i64 %.idx.i, %.val95.val229
   %i.bb = add i64 %i.ba, %i.az
   %i.bc = add i64 %i.bb, 3
   %i.bd = sub i64 %i.bc, %.033.lcssa.i228         ; 2 uses
@@ -1088,9 +1090,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
 
 .lr.ph55.i.preheader:                             ; preds = %.preheader.i
   %.238.lcssa.i233 = ptrtoaddr ptr %.238.lcssa.i to i64
-  %3 = ptrtoaddr ptr %.val95.val to i64
   %i.ca = shl nsw i64 %i.aj, 2
-  %i.cb = add i64 %.idx57.i, %3
+  %i.cb = add i64 %.idx57.i, %.val95.val229
   %i.cc = add i64 %i.cb, %i.ca
   %i.cd = add i64 %i.cc, 3
   %i.ce = sub i64 %i.cd, %.0.lcssa.i234           ; 2 uses
@@ -1194,8 +1195,7 @@ Sbd_CutMergeSimple.exit:                          ; preds = %Sbd_CutMergeSimple.
 .lr.ph51.i109.preheader:                          ; preds = %.preheader42.i99
   %.033.lcssa.i100253 = ptrtoaddr ptr %.033.lcssa.i100 to i64 ; 2 uses
   %.036.lcssa.i102252 = ptrtoaddr ptr %.036.lcssa.i102 to i64
-  %4 = ptrtoaddr ptr %i.e to i64
-  %i.dm = add i64 %.idx.i96, %4
+  %i.dm = add i64 %.idx.i96, %2
   %i.dn = or disjoint i64 %i.dm, 3
   %i.do = sub i64 %i.dn, %.033.lcssa.i100253      ; 2 uses
   %i.dp = lshr i64 %i.do, 2
@@ -1282,9 +1282,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.g
 
 .lr.ph55.i106.preheader:                          ; preds = %.preheader.i103
   %.238.lcssa.i104271 = ptrtoaddr ptr %.238.lcssa.i104 to i64
-  %5 = ptrtoaddr ptr %.val95.val to i64
   %i.el = shl nsw i64 %i.aj, 2
-  %i.em = add i64 %.idx57.i97.pre-phi, %5
+  %i.em = add i64 %.idx57.i97.pre-phi, %.val95.val229
   %i.en = add i64 %i.em, %i.el
   %i.eo = add i64 %i.en, 3
   %i.ep = sub i64 %i.eo, %.0.lcssa.i101272        ; 2 uses
@@ -1381,9 +1380,8 @@ Sbd_CutMergeSimple.exit119:                       ; preds = %.lr.ph55.i106, %mid
 .lr.ph51.i133.preheader:                          ; preds = %.preheader42.i123
   %.033.lcssa.i124291 = ptrtoaddr ptr %.033.lcssa.i124 to i64 ; 2 uses
   %.036.lcssa.i126290 = ptrtoaddr ptr %.036.lcssa.i126 to i64
-  %6 = ptrtoaddr ptr %.val95.val to i64
   %i.fy = shl nsw i64 %i.ag, 2
-  %i.fz = add i64 %.idx.i120, %6
+  %i.fz = add i64 %.idx.i120, %.val95.val229
   %i.ga = add i64 %i.fz, %i.fy
   %i.gb = add i64 %i.ga, 3
   %i.gc = sub i64 %i.gb, %.033.lcssa.i124291      ; 2 uses
@@ -1471,8 +1469,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.l
 
 .lr.ph55.i130.preheader:                          ; preds = %.preheader.i127
   %.238.lcssa.i128309 = ptrtoaddr ptr %.238.lcssa.i128 to i64
-  %7 = ptrtoaddr ptr %i.f to i64
-  %i.gz = add i64 %.idx57.i121, %7
+  %i.gz = add i64 %.idx57.i121, %3
   %i.ha = or disjoint i64 %i.gz, 3
   %i.hb = sub i64 %i.ha, %.0.lcssa.i125310        ; 2 uses
   %i.hc = lshr i64 %i.hb, 2
@@ -1574,8 +1571,7 @@ Sbd_CutMergeSimple.exit143:                       ; preds = %Sbd_CutMergeSimple.
 .lr.ph51.i157.preheader:                          ; preds = %.preheader42.i147
   %.033.lcssa.i148329 = ptrtoaddr ptr %.033.lcssa.i148 to i64 ; 2 uses
   %.036.lcssa.i150328 = ptrtoaddr ptr %.036.lcssa.i150 to i64
-  %8 = ptrtoaddr ptr %i.e to i64
-  %i.ij = add i64 %.idx.i144, %8
+  %i.ij = add i64 %.idx.i144, %2
   %i.ik = or disjoint i64 %i.ij, 3
   %i.il = sub i64 %i.ik, %.033.lcssa.i148329      ; 2 uses
   %i.im = lshr i64 %i.il, 2
@@ -1662,8 +1658,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.q
 
 .lr.ph55.i154.preheader:                          ; preds = %.preheader.i151
   %.238.lcssa.i152347 = ptrtoaddr ptr %.238.lcssa.i152 to i64
-  %9 = ptrtoaddr ptr %i.f to i64
-  %i.ji = add i64 %.idx57.i145.pre-phi, %9
+  %i.ji = add i64 %.idx57.i145.pre-phi, %3
   %i.jj = or disjoint i64 %i.ji, 3
   %i.jk = sub i64 %i.jj, %.0.lcssa.i149348        ; 2 uses
   %i.jl = lshr i64 %i.jk, 2

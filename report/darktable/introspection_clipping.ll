@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %4, ptr noundef nonnull align 4 dereferenceable(20) %3, i64 20, i1 false), !tbaa.struct !87
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load ptr, ptr %i.a, align 16, !tbaa !62  ; 38 uses
+  %i.b = load ptr, ptr %i.a, align 16, !tbaa !62  ; 37 uses
   %i.c = load float, ptr %i.b, align 4, !tbaa !83 ; 2 uses
   %sincos = tail call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.c) ; 2 uses
   %sin = extractvalue { float, float } %sincos, 0 ; 2 uses
@@ -607,7 +607,6 @@ bb.as:                                            ; preds = %bb.ar
   %i.ps = getelementptr inbounds nuw i8, ptr %i.b, i64 64
   %i.pt = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.pu = getelementptr inbounds nuw i8, ptr %i.b, i64 180
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 184
   %i.pv = load <2 x float>, ptr %i.ps, align 4, !tbaa !13 ; 2 uses
   %i.pw = insertelement <2 x float> poison, float %i.pr, i64 0
   %i.px = insertelement <2 x float> %i.pw, float %.pre-phi, i64 1 ; 2 uses
@@ -619,11 +618,8 @@ bb.as:                                            ; preds = %bb.ar
   %i.qd = fsub reassoc nsz arcp contract afn <2 x float> %i.qc, %i.pv
   %i.qe = fmul reassoc nsz arcp contract afn <2 x float> %i.qd, %i.px
   %i.qf = fneg reassoc nsz arcp contract afn <2 x float> %i.qb
-  %i.qg = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.qf, <2 x float> zeroinitializer) ; 2 uses
-  %6 = extractelement <2 x float> %i.qg, i64 0
-  store float %6, ptr %i.pu, align 4, !tbaa !73
-  %7 = extractelement <2 x float> %i.qg, i64 1
-  store float %7, ptr %5, align 4, !tbaa !75
+  %i.qg = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.qf, <2 x float> zeroinitializer)
+  store <2 x float> %i.qg, ptr %i.pu, align 4, !tbaa !13
   %i.qh = shufflevector <2 x float> %i.qe, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
   %i.qi = tail call reassoc nsz arcp contract afn <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.qb, <2 x float> zeroinitializer)
   %i.qj = shufflevector <2 x float> %i.qi, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>

@@ -204,9 +204,9 @@ define hidden noundef i64 @_RINvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB6_
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !7, !noundef !7 ; 2 uses
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.promoted = load ptr, ptr %i.c, align 8        ; 4 uses
-  %3 = ptrtoaddr ptr %i.b to i64
   %i.d = ptrtoaddr ptr %.promoted to i64
   %i.e = sub i64 %3, %i.d
   %i.f = add i64 %1, -1
@@ -272,16 +272,16 @@ bb.a:
   br i1 %.not.not10, label %bb.b, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %.promoted22 = ptrtoaddr ptr %.promoted to i64
+  %2 = ptrtoaddr ptr %i.c to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.val.i = load ptr, ptr %i.e, align 8, !alias.scope !5269, !nonnull !7, !align !14, !noundef !7 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !alias.scope !5270, !noundef !7 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.promoted11 = load i64, ptr %i.h, align 8, !alias.scope !5270 ; 5 uses
-  %2 = ptrtoaddr ptr %i.c to i64
-  %3 = ptrtoaddr ptr %.promoted to i64
   %i.i = add i64 %2, -8
-  %i.j = sub i64 %i.i, %3                         ; 4 uses
+  %i.j = sub i64 %i.i, %.promoted22               ; 4 uses
   %i.k = lshr i64 %i.j, 3
   %i.l = add nuw nsw i64 %i.k, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.j, 152

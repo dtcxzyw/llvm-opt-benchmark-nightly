@@ -204,6 +204,7 @@ bb.a:
   %4 = alloca %struct.TOrigin_, align 8           ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !25   ; 9 uses
+  %5 = ptrtoaddr ptr %i.b to i64
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -216,6 +217,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.g = phi ptr [ %i.f, %bb.b ], [ null, %bb.a ] ; 4 uses
+  %6 = ptrtoaddr ptr %i.g to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 4
@@ -261,10 +263,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.ae, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %5 = ptrtoaddr ptr %i.g to i64
-  %6 = ptrtoaddr ptr %i.b to i64
-  %i.af = xor i64 %6, -1
-  %i.ag = add i64 %i.af, %5                       ; 2 uses
+  %i.af = xor i64 %5, -1
+  %i.ag = add i64 %i.af, %6                       ; 2 uses
   %i.ah = lshr i64 %i.ag, 4
   %i.ai = add nuw nsw i64 %i.ah, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ag, 48

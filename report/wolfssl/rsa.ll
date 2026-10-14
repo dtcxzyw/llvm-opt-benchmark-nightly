@@ -204,9 +204,11 @@ RsaPad.exit:                                      ; preds = %.thread96.i, %bb.ad
 ; Function Attrs: nounwind uwtable
 define i32 @wc_RsaUnPad_ex(ptr noundef %0, i32 noundef %1, ptr nofree noundef writeonly captures(address_is_null) %2, i8 noundef zeroext %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10, ptr noundef %11) local_unnamed_addr #0 {
 bb.a:
+  %12 = ptrtoaddr ptr %0 to i64                   ; 3 uses
   %i.a = alloca [64 x i8], align 16               ; 5 uses
   %i.b = alloca i32, align 4                      ; 12 uses
   %i.c = alloca [520 x i8], align 16              ; 18 uses
+  %13 = ptrtoaddr ptr %i.c to i64                 ; 3 uses
   %i.d = alloca i32, align 4                      ; 8 uses
   %i.e = alloca i16, align 2                      ; 13 uses
   %i.f = alloca i8, align 1                       ; 5 uses
@@ -353,7 +355,7 @@ bb.h:                                             ; preds = %bb.c
   %indvars.iv.i.epil.init = phi i64 [ 2, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
   %.265.i.epil.init = phi i32 [ 0, %.lr.ph.preheader.i ], [ %i.ay, %._crit_edge.i.loopexit.unr-lcssa ]
   %lcmp.mod279 = trunc i32 %1 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod279)
+  call void @llvm.assume(i1 %lcmp.mod279)
   %.0..0..0..0..0..0.12.i.epil = load volatile i16, ptr %i.e, align 2, !tbaa !69
   %i.ba = xor i16 %.0..0..0..0..0..0.12.i.epil, -1
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.i.epil.init
@@ -472,7 +474,6 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not.i.i.i, label %XorWords.exit.i.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.n
-  %12 = ptrtoaddr ptr %0 to i64                   ; 3 uses
   %i.do = add i64 %12, %.idx.i.i.i
   %i.dp = add i64 %i.do, 1
   %i.dq = add i64 %12, 9
@@ -737,7 +738,6 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not.i.i111.i, label %XorWords.exit.i114.i, label %.lr.ph.i.i112.i.preheader
 
 .lr.ph.i.i112.i.preheader:                        ; preds = %bb.q
-  %13 = ptrtoaddr ptr %i.c to i64                 ; 3 uses
   %i.gy = add i64 %13, %.idx.i.i110.i
   %i.gz = add i64 %i.gy, %i.gk
   %i.ha = add i64 %13, %i.gk

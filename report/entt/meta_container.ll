@@ -205,6 +205,7 @@ _ZNSt5dequeIiSaIiEE27_M_reserve_elements_at_backEm.exit: ; preds = %bb.f, %bb.i
   %.sroa.9.0 = phi ptr [ %i.l, %bb.f ], [ %i.ad, %bb.i ]
   %.sroa.12.0 = phi ptr [ %i.q, %bb.f ], [ %i.ab, %bb.i ] ; 4 uses
   %storemerge.i.i.i = phi ptr [ %i.x, %bb.f ], [ %i.ag, %bb.i ] ; 6 uses
+  %.sroa.6.016 = ptrtoaddr ptr %.sroa.6.0 to i64
   %i.ah = icmp eq ptr %i.m, %storemerge.i.i.i
   br i1 %i.ah, label %_ZSt25__uninitialized_default_aISt15_Deque_iteratorIiRiPiEiEvT_S4_RSaIT0_E.exit, label %bb.j
 
@@ -265,9 +266,8 @@ _ZSt9__fill_a1IPiiEN9__gnu_cxx11__enable_ifIXsr11__is_scalarIT0_EE7__valueEvE6__
   br i1 %.not5.i18.i.i.i.i.i.i, label %_ZSt25__uninitialized_default_aISt15_Deque_iteratorIiRiPiEiEvT_S4_RSaIT0_E.exit, label %.lr.ph.i19.i.i.i.i.i.i.preheader
 
 .lr.ph.i19.i.i.i.i.i.i.preheader:                 ; preds = %._crit_edge.i.i.i.i.i.i
-  %2 = ptrtoaddr ptr %.sroa.6.0 to i64
   %i.bd = add i64 %i.aq, -4
-  %i.be = sub i64 %i.bd, %2                       ; 2 uses
+  %i.be = sub i64 %i.bd, %.sroa.6.016             ; 2 uses
   %i.bf = lshr i64 %i.be, 2
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.be, 28

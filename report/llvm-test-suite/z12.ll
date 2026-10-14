@@ -202,7 +202,7 @@ select.unfold.jt4:                                ; preds = %bb.ul
   %i.djm = insertelement <4 x float> %i.djl, float %i.dji, i64 1
   %i.djn = insertelement <4 x float> %i.djm, float %i.djj, i64 2
   %i.djo = insertelement <4 x float> %i.djn, float %i.djk, i64 3
-  %i.djp = fptosi <4 x float> %i.djo to <4 x i32> ; 5 uses
+  %i.djp = fptosi <4 x float> %i.djo to <4 x i32> ; 3 uses
   %i.djq = load ptr, ptr %i.dix, align 8, !tbaa !8
   br label %bb.uq
 
@@ -326,29 +326,18 @@ bb.uq:                                            ; preds = %bb.uq, %select.unfo
 bb.ur:                                            ; preds = %bb.uq
   %i.dlu = getelementptr inbounds nuw i8, ptr %.37, i64 48
   store <4 x i32> %i.djp, ptr %i.dlu, align 8, !tbaa !8
-  %shift = shufflevector <4 x i32> %i.djp, <4 x i32> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = sub nsw <4 x i32> %shift, %i.djp
-  %4 = extractelement <4 x i32> %foldExtExtBinop, i64 0
-  %5 = mul nsw i32 %4, 20
-  %6 = call i32 @llvm.smax.i32(i32 %5, i32 0)
-  %7 = call i32 @llvm.umin.i32(i32 %6, i32 8388607)
-  %8 = lshr i32 %7, 1                             ; 2 uses
   %i.dlv = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i32 %8, ptr %9, align 8, !tbaa !8
-  store i32 %8, ptr %i.dlv, align 8, !tbaa !8
-  %shift2560 = shufflevector <4 x i32> %i.djp, <4 x i32> poison, <4 x i32> <i32 poison, i32 3, i32 poison, i32 poison>
-  %foldExtExtBinop2561 = sub nsw <4 x i32> %shift2560, %i.djp
-  %10 = extractelement <4 x i32> %foldExtExtBinop2561, i64 1
-  %11 = mul nsw i32 %10, 20
-  %12 = call i32 @llvm.smax.i32(i32 %11, i32 0)
-  %13 = call i32 @llvm.umin.i32(i32 %12, i32 8388607) ; 2 uses
-  store i32 %13, ptr %i.b, align 4, !tbaa !7
-  %14 = lshr i32 %13, 1                           ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  store i32 %14, ptr %15, align 4, !tbaa !8
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i32 %14, ptr %16, align 4, !tbaa !8
+  %4 = shufflevector <4 x i32> %i.djp, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
+  %5 = shufflevector <4 x i32> %i.djp, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
+  %6 = sub nsw <2 x i32> %4, %5
+  %7 = mul nsw <2 x i32> %6, splat (i32 20)
+  %8 = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %7, <2 x i32> zeroinitializer)
+  %9 = call <2 x i32> @llvm.umin.v2i32(<2 x i32> %8, <2 x i32> splat (i32 8388607)) ; 2 uses
+  %10 = extractelement <2 x i32> %9, i64 1
+  store i32 %10, ptr %i.b, align 4, !tbaa !7
+  %11 = lshr <2 x i32> %9, splat (i32 1)
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  store <4 x i32> %12, ptr %i.dlv, align 8, !tbaa !8
   %i.dlw = getelementptr inbounds nuw i8, ptr %0, i64 41
   store i8 1, ptr %i.dlw, align 1, !tbaa !8
   %i.dlx = call i32 @fclose(ptr noundef nonnull %i.dje) ; 0 uses
@@ -534,6 +523,12 @@ declare i8 @llvm.umax.i8(i8, i8) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.smax.v2i32(<2 x i32>, <2 x i32>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

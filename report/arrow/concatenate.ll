@@ -204,9 +204,9 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.da, label %.thread76.loopexit, label %bb.o, !prof !65
 
 bb.o:                                             ; preds = %bb.n
-  %8 = sub i32 %.03682, %i.cs                     ; 2 uses
-  %9 = ptrtoaddr ptr %i.cq to i64
-  %i.db = add i64 %i.ci, %9
+  %8 = ptrtoaddr ptr %i.cq to i64
+  %9 = sub i32 %.03682, %i.cs                     ; 2 uses
+  %i.db = add i64 %i.ci, %8
   %i.dc = add i64 %i.db, -4
   %i.dd = sub i64 %i.dc, %i.cp                    ; 2 uses
   %i.de = lshr i64 %i.dd, 2
@@ -226,7 +226,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.dj = shl i64 %n.vec, 2                       ; 2 uses
   %i.dk = getelementptr i8, ptr %i.cf, i64 %i.dj
   %i.dl = getelementptr i8, ptr %i.co, i64 %i.dj
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %8, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %9, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
@@ -260,7 +260,7 @@ middle.block:                                     ; preds = %vector.body
   %.010.i.i = phi ptr [ %i.dv, %.lr.ph.i.i ], [ %.010.i.i.ph, %.lr.ph.i.i.preheader ] ; 2 uses
   %.079.i.i = phi ptr [ %i.du, %.lr.ph.i.i ], [ %.079.i.i.ph, %.lr.ph.i.i.preheader ] ; 2 uses
   %i.ds = load i32, ptr %.079.i.i, align 4, !tbaa !35, !noalias !959
-  %i.dt = add i32 %8, %i.ds
+  %i.dt = add i32 %9, %i.ds
   store i32 %i.dt, ptr %.010.i.i, align 4, !tbaa !35, !noalias !959
   %i.du = getelementptr inbounds nuw i8, ptr %.079.i.i, i64 4 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %.010.i.i, i64 4
@@ -663,9 +663,9 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.cw, label %.thread76.loopexit, label %bb.o, !prof !65
 
 bb.o:                                             ; preds = %bb.n
+  %8 = ptrtoaddr ptr %i.cp to i64
   %i.cx = load i64, ptr %i.cn, align 8, !tbaa !161, !noalias !1000
   %i.cy = sub i64 %.03682, %i.cx                  ; 2 uses
-  %8 = ptrtoaddr ptr %i.cp to i64
   %i.cz = add i64 %i.ch, %8
   %i.da = add i64 %i.cz, -8
   %i.db = sub i64 %i.da, %i.co                    ; 2 uses

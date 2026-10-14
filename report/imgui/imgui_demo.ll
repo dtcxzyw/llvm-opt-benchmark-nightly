@@ -205,12 +205,12 @@ bb.a:
   %153 = alloca %struct.ImVec2, align 8           ; 4 uses
   %154 = alloca %struct.ImVec2, align 8           ; 4 uses
   %155 = alloca %struct.ImVec2, align 8           ; 5 uses
-  %156 = alloca %struct.ImVec2, align 4           ; 5 uses
+  %156 = alloca %struct.ImVec2, align 8           ; 4 uses
   %157 = alloca %struct.ImVec2, align 8           ; 4 uses
   %158 = alloca %struct.ImVec2, align 8           ; 4 uses
   %159 = alloca %struct.ImVec2, align 8           ; 4 uses
   %160 = alloca %struct.ImVec2, align 8           ; 4 uses
-  %161 = alloca %struct.ImVec2, align 4           ; 5 uses
+  %161 = alloca %struct.ImVec2, align 8           ; 4 uses
   %162 = alloca %struct.ImVec2, align 8           ; 4 uses
   %163 = alloca %struct.ImVec2, align 8           ; 4 uses
   %164 = alloca %struct.ImVec2, align 8           ; 4 uses
@@ -613,13 +613,9 @@ bb.fs:                                            ; preds = %bb.fr
   %i.ahy = call noundef ptr @_ZN5ImGui17GetWindowDrawListEv() ; 9 uses
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.2293)
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.2294)
-  %i.ahz = call <2 x float> @_ZN5ImGui18GetCursorScreenPosEv() ; 5 uses
+  %i.ahz = call <2 x float> @_ZN5ImGui18GetCursorScreenPosEv() ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %156) #30
-  %.sroa.020.0.vec.extract.i = extractelement <2 x float> %i.ahz, i64 0
-  %.sroa.020.4.vec.extract.i = extractelement <2 x float> %i.ahz, i64 1
-  store float %.sroa.020.0.vec.extract.i, ptr %156, align 4, !tbaa !44
-  %173 = getelementptr inbounds nuw i8, ptr %156, i64 4
-  store float %.sroa.020.4.vec.extract.i, ptr %173, align 4, !tbaa !45
+  store <2 x float> %i.ahz, ptr %156, align 8, !tbaa !46
   call void @llvm.lifetime.start.p0(ptr nonnull %157) #30
   %i.aia = fadd <2 x float> %i.ahz, splat (float 5.000000e+01)
   store <2 x float> %i.aia, ptr %157, align 8, !tbaa !46
@@ -642,16 +638,12 @@ bb.fs:                                            ; preds = %bb.fr
   call void @_ZN5ImGui9SeparatorEv()
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.2295)
   call void (ptr, ...) @_ZN5ImGui4TextEPKcz(ptr noundef nonnull @.str.2296)
-  %i.aid = call <2 x float> @_ZN5ImGui18GetCursorScreenPosEv() ; 5 uses
+  %i.aid = call <2 x float> @_ZN5ImGui18GetCursorScreenPosEv() ; 4 uses
   %i.aie = getelementptr inbounds nuw i8, ptr %i.ahy, i64 136 ; 4 uses
   call void @_ZN18ImDrawListSplitter5SplitEP10ImDrawListi(ptr noundef nonnull align 8 dereferenceable(24) %i.aie, ptr noundef nonnull align 8 dereferenceable(224) %i.ahy, i32 noundef 2)
   call void @_ZN18ImDrawListSplitter17SetCurrentChannelEP10ImDrawListi(ptr noundef nonnull align 8 dereferenceable(24) %i.aie, ptr noundef nonnull align 8 dereferenceable(224) %i.ahy, i32 noundef 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %161) #30
-  %.sroa.0.0.vec.extract.i = extractelement <2 x float> %i.aid, i64 0
-  %.sroa.0.4.vec.extract.i = extractelement <2 x float> %i.aid, i64 1
-  store float %.sroa.0.0.vec.extract.i, ptr %161, align 4, !tbaa !44
-  %174 = getelementptr inbounds nuw i8, ptr %161, i64 4
-  store float %.sroa.0.4.vec.extract.i, ptr %174, align 4, !tbaa !45
+  store <2 x float> %i.aid, ptr %161, align 8, !tbaa !46
   call void @llvm.lifetime.start.p0(ptr nonnull %162) #30
   %i.aif = fadd <2 x float> %i.aid, splat (float 5.000000e+01)
   store <2 x float> %i.aif, ptr %162, align 8, !tbaa !46

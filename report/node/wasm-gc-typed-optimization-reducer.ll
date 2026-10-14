@@ -202,18 +202,18 @@ _ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.
 
 ._crit_edge.i.i.i.i:                              ; preds = %_ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.exit.i.i, %_ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.exit.thread.i.i
   %.pn.i.i = phi ptr [ %i.bl, %_ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.exit.i.i ], [ %i.cr, %_ZN2v88internal10ZoneVectorINS0_4wasm9ValueTypeEE19PrepareForInsertionEPKS3_mPm.exit.thread.i.i ] ; 2 uses
+  %.pn.i.i39 = ptrtoaddr ptr %.pn.i.i to i64      ; 2 uses
   %.0.lcssa.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 %i.bo ; 4 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 %.idx.i.i
   %.pre20.i.i.i.i = load i32, ptr %i.ah, align 4  ; 2 uses
-  %6 = ptrtoaddr ptr %.pn.i.i to i64              ; 2 uses
-  %i.cv = add i64 %6, %i.bm                       ; 2 uses
+  %i.cv = add i64 %.pn.i.i39, %i.bm               ; 2 uses
   %i.cw = add i64 %i.cv, %.idx.i.i
   %i.cx = sub i64 %i.cw, %i.bn
   %i.cy = add i64 %i.cv, 4
   %i.cz = sub i64 %i.cy, %i.bn
   %i.da = call i64 @llvm.umax.i64(i64 %i.cx, i64 %i.cz)
   %i.db = add i64 %i.da, %i.bn
-  %i.dc = xor i64 %6, -1
+  %i.dc = xor i64 %.pn.i.i39, -1
   %i.dd = add i64 %i.db, %i.dc
   %i.de = sub i64 %i.dd, %i.bm                    ; 2 uses
   %i.df = lshr i64 %i.de, 2
@@ -616,8 +616,10 @@ bb.q:                                             ; preds = %bb.g, %_ZNSt7__cxx1
   br i1 %i.fe, label %.lr.ph.i.i, label %_ZSt7reverseIPN2v88internal8compiler10turboshaft13SnapshotTableINS1_4wasm9ValueTypeENS3_9NoKeyDataEE8SnapshotEEvT_SB_.exit, !llvm.loop !36
 
 _ZSt7reverseIPN2v88internal8compiler10turboshaft13SnapshotTableINS1_4wasm9ValueTypeENS3_9NoKeyDataEE8SnapshotEEvT_SB_.exit: ; preds = %.lr.ph.i.i, %bb.q
-  %i.ff = load ptr, ptr %3, align 8               ; 13 uses
-  %i.fg = load ptr, ptr %i.g, align 8             ; 7 uses
+  %i.ff = load ptr, ptr %3, align 8               ; 12 uses
+  %6 = ptrtoaddr ptr %i.ff to i64                 ; 4 uses
+  %i.fg = load ptr, ptr %i.g, align 8             ; 6 uses
+  %7 = ptrtoaddr ptr %i.fg to i64                 ; 2 uses
   %i.fh = icmp ne ptr %i.ff, %i.fg
   %.012.i.i31 = getelementptr inbounds i8, ptr %i.fg, i64 -1 ; 7 uses
   %i.fi = icmp ult ptr %i.ff, %.012.i.i31
@@ -625,12 +627,10 @@ _ZSt7reverseIPN2v88internal8compiler10turboshaft13SnapshotTableINS1_4wasm9ValueT
   br i1 %or.cond.i.i32, label %iter.check, label %_ZSt7reverseIPbEvT_S1_.exit
 
 iter.check:                                       ; preds = %_ZSt7reverseIPN2v88internal8compiler10turboshaft13SnapshotTableINS1_4wasm9ValueTypeENS3_9NoKeyDataEE8SnapshotEEvT_SB_.exit
-  %6 = ptrtoaddr ptr %i.fg to i64
-  %7 = ptrtoaddr ptr %i.ff to i64                 ; 2 uses
-  %i.fj = add i64 %6, -2
-  %i.fk = add i64 %7, 1
+  %i.fj = add i64 %7, -2
+  %i.fk = add i64 %6, 1
   %umax = call i64 @llvm.umax.i64(i64 %i.fj, i64 %i.fk)
-  %i.fl = xor i64 %7, -1
+  %i.fl = xor i64 %6, -1
   %i.fm = add i64 %umax, %i.fl                    ; 2 uses
   %i.fn = icmp ne i64 %i.fm, 0
   %umin = zext i1 %i.fn to i64                    ; 2 uses
@@ -642,12 +642,10 @@ iter.check:                                       ; preds = %_ZSt7reverseIPN2v88
   br i1 %min.iters.check, label %.lr.ph.i.i33.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %8 = ptrtoaddr ptr %i.fg to i64
-  %i.fs = add i64 %8, -2
-  %9 = ptrtoaddr ptr %i.ff to i64                 ; 2 uses
-  %i.ft = add i64 %9, 1
+  %i.fs = add i64 %7, -2
+  %i.ft = add i64 %6, 1
   %i.fu = call i64 @llvm.umax.i64(i64 %i.fs, i64 %i.ft)
-  %i.fv = xor i64 %9, -1
+  %i.fv = xor i64 %6, -1
   %i.fw = add i64 %i.fu, %i.fv                    ; 2 uses
   %i.fx = icmp ne i64 %i.fw, 0
   %i.fy = zext i1 %i.fx to i64                    ; 2 uses

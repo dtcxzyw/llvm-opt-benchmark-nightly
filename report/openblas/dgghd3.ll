@@ -202,16 +202,15 @@ bb.ak:                                            ; preds = %.lr.ph1065, %bb.al
 
 .lr.ph1059.preheader:                             ; preds = %bb.ak
   %i.jq = mul i32 %indvar1965, %i.iu
-  %i.jr = add i32 %i.jc, %i.jq                    ; 2 uses
+  %i.jr = add i32 %i.jc, %i.jq
   %i.js = trunc nsw i64 %indvars.iv1301 to i32
   %i.jt = add nsw i32 %.01063, %i.js
   %i.ju = sext i32 %.01063 to i64                 ; 4 uses
   %i.jv = sext i32 %i.jt to i64                   ; 2 uses
-  %i.jw = sext i32 %i.jr to i64
+  %i.jw = sext i32 %i.jr to i64                   ; 2 uses
   %i.jx = add nsw i64 %i.jw, 1
   %i.jy = call i64 @llvm.smax.i64(i64 %i.jx, i64 %i.jv)
-  %16 = sext i32 %i.jr to i64
-  %i.jz = sub i64 %i.jy, %16                      ; 3 uses
+  %i.jz = sub i64 %i.jy, %i.jw                    ; 3 uses
   %min.iters.check1979 = icmp ult i64 %i.jz, 8
   br i1 %min.iters.check1979, label %.lr.ph1059.preheader2015, label %vector.memcheck1962
 
@@ -410,14 +409,13 @@ bb.an:                                            ; preds = %.lr.ph1096, %bb.ap
 
 .lr.ph1074.preheader:                             ; preds = %.lr.ph1083
   %i.nj = mul i32 %indvar1929, %i.lq
-  %i.nk = add i32 %i.mo, %i.nj                    ; 2 uses
+  %i.nk = add i32 %i.mo, %i.nj
   %i.nl = sext i32 %.11080 to i64                 ; 4 uses
   %i.nm = sext i32 %i.ni to i64                   ; 2 uses
-  %i.nn = sext i32 %i.nk to i64
+  %i.nn = sext i32 %i.nk to i64                   ; 2 uses
   %i.no = add nsw i64 %i.nn, 1
   %i.np = call i64 @llvm.smax.i64(i64 %i.no, i64 %i.nm)
-  %17 = sext i32 %i.nk to i64
-  %i.nq = sub i64 %i.np, %17                      ; 3 uses
+  %i.nq = sub i64 %i.np, %i.nn                    ; 3 uses
   %min.iters.check1943 = icmp ult i64 %i.nq, 8
   br i1 %min.iters.check1943, label %.lr.ph1074.preheader2013, label %vector.memcheck1924
 
@@ -820,14 +818,12 @@ bb.bp:                                            ; preds = %.lr.ph1197, %bb.bq
 
 .lr.ph1189.preheader:                             ; preds = %bb.bp
   %i.aon = mul i32 %indvar1645, %i.amp
-  %i.aoo = add i32 %i.ann, %i.aon                 ; 3 uses
-  %i.aop = sext i32 %i.aoo to i64
+  %i.aoo = add i32 %i.ann, %i.aon
+  %i.aop = sext i32 %i.aoo to i64                 ; 3 uses
   %i.aoq = add i64 %indvars.iv1404, %i.aop
-  %18 = sext i32 %i.aoo to i64
-  %i.aor = add nsw i64 %18, 1
+  %i.aor = add nsw i64 %i.aop, 1
   %i.aos = call i64 @llvm.smax.i64(i64 %i.aoq, i64 %i.aor)
-  %19 = sext i32 %i.aoo to i64
-  %i.aot = sub i64 %i.aos, %19                    ; 3 uses
+  %i.aot = sub i64 %i.aos, %i.aop                 ; 3 uses
   %min.iters.check1659 = icmp ult i64 %i.aot, 8
   br i1 %min.iters.check1659, label %.lr.ph1189.preheader2014, label %vector.memcheck1642
 
