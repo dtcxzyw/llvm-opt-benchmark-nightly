@@ -205,8 +205,7 @@ bb.cz:                                            ; preds = %bb.cz, %.preheader.
   %i.anw = getelementptr inbounds nuw [4 x i8], ptr %i.anv, i64 %i.anp
   store float %i.anu, ptr %i.anw, align 4, !tbaa !107, !noalias !661
   %i.anx = fdiv float %i.anu, %.sink5.i.i
-  %47 = call noundef float @llvm.trunc.f32(float %i.anx)
-  %i.any = fptosi float %47 to i32                ; 2 uses
+  %i.any = fptosi float %i.anx to i32             ; 2 uses
   %i.anz = trunc i32 %i.any to i8
   %i.aoa = load ptr, ptr %i.ane, align 8, !tbaa !229, !noalias !661
   %i.aob = getelementptr inbounds nuw i8, ptr %i.aoa, i64 %i.anp
@@ -250,8 +249,7 @@ bb.da:                                            ; preds = %bb.da, %.preheader.
   %i.aot = getelementptr inbounds nuw [4 x i8], ptr %i.aos, i64 %i.aom
   store float %i.aor, ptr %i.aot, align 4, !tbaa !107, !noalias !661
   %i.aou = fdiv float %i.aor, %.sink3.i.i
-  %48 = call noundef float @llvm.trunc.f32(float %i.aou)
-  %i.aov = fptosi float %48 to i32                ; 2 uses
+  %i.aov = fptosi float %i.aou to i32             ; 2 uses
   %i.aow = trunc i32 %i.aov to i8
   %i.aox = load ptr, ptr %i.aog, align 8, !tbaa !229, !noalias !661
   %i.aoy = getelementptr inbounds nuw i8, ptr %i.aox, i64 %i.aom
@@ -288,8 +286,7 @@ bb.db:                                            ; preds = %bb.db, %.preheader.
   %i.apn = getelementptr inbounds nuw [4 x i8], ptr %i.apm, i64 %i.apg
   store float %i.apl, ptr %i.apn, align 4, !tbaa !107, !noalias !661
   %i.apo = fdiv float %i.apl, %.sink4.i.i
-  %49 = call noundef float @llvm.trunc.f32(float %i.apo)
-  %i.app = fptosi float %49 to i32                ; 2 uses
+  %i.app = fptosi float %i.apo to i32             ; 2 uses
   %i.apq = trunc i32 %i.app to i8
   %i.apr = load ptr, ptr %i.ang, align 8, !tbaa !229, !noalias !661
   %i.aps = getelementptr inbounds nuw i8, ptr %i.apr, i64 %i.apg
@@ -691,9 +688,6 @@ _ZNSt3__16vectorIN3jxl13PatchPositionENS_9allocatorIS2_EEED2B8nn180100Ev.exit: ;
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.trunc.f32(float) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18
