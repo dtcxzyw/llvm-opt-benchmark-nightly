@@ -204,7 +204,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %0 to i64                  ; 4 uses
-  %i.d = ptrtoaddr ptr %3 to i64                  ; 4 uses
+  %i.d = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.f = load i64, ptr %i.e, align 4
   %i.g = trunc i64 %i.f to i32                    ; 2 uses
@@ -413,20 +413,19 @@ bb.l:                                             ; preds = %._crit_edge188, %bb
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph150
-  %i.cz = shl nuw nsw i64 %i.cw, 2                ; 2 uses
-  %4 = add i64 %i.cz, %i.d
-  %5 = shl nsw i64 %i.cx, 2                       ; 2 uses
-  %i.da = add i64 %5, %i.c
-  %i.db = sub i64 %4, %i.da
+  %i.cz = shl nuw nsw i64 %i.cw, 2
+  %4 = shl nsw i64 %i.cx, 2                       ; 2 uses
+  %5 = add i64 %i.cz, %i.d                        ; 2 uses
+  %i.da = add i64 %4, %i.c
+  %i.db = sub i64 %5, %i.da
   %i.dc = add i64 %i.db, -141
   %diff.check = icmp ult i64 %i.dc, 31
   %i.dd = sub i64 %i.b, %i.c
   %i.de = add i64 %i.dd, -141
   %diff.check227 = icmp ult i64 %i.de, 31
   %conflict.rdx = or i1 %diff.check, %diff.check227
-  %6 = add i64 %i.cz, %i.d
-  %i.df = add i64 %5, %i.b
-  %i.dg = sub i64 %i.df, %6
+  %i.df = add i64 %4, %i.b
+  %i.dg = sub i64 %i.df, %5
   %diff.check228 = icmp ugt i64 %i.dg, -32
   %conflict.rdx229 = or i1 %conflict.rdx, %diff.check228
   br i1 %conflict.rdx229, label %scalar.ph.preheader, label %vector.ph
@@ -574,10 +573,10 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %min.iters.check239, label %scalar.ph238.preheader, label %vector.memcheck232
 
 vector.memcheck232:                               ; preds = %.lr.ph153
-  %i.fh = shl nuw nsw i64 %i.fe, 2                ; 2 uses
-  %7 = add i64 %i.fh, %i.d
-  %8 = shl nsw i64 %i.ff, 2                       ; 2 uses
-  %i.fi = add i64 %8, %i.c
+  %i.fh = shl nuw nsw i64 %i.fe, 2
+  %6 = shl nsw i64 %i.ff, 2                       ; 2 uses
+  %7 = add i64 %i.fh, %i.d                        ; 2 uses
+  %i.fi = add i64 %6, %i.c
   %i.fj = sub i64 %7, %i.fi
   %i.fk = add i64 %i.fj, -269
   %diff.check233 = icmp ult i64 %i.fk, 31
@@ -585,9 +584,8 @@ vector.memcheck232:                               ; preds = %.lr.ph153
   %i.fm = add i64 %i.fl, -269
   %diff.check234 = icmp ult i64 %i.fm, 31
   %conflict.rdx235 = or i1 %diff.check233, %diff.check234
-  %9 = add i64 %i.fh, %i.d
-  %i.fn = add i64 %8, %i.a
-  %i.fo = sub i64 %i.fn, %9
+  %i.fn = add i64 %6, %i.a
+  %i.fo = sub i64 %i.fn, %7
   %diff.check236 = icmp ugt i64 %i.fo, -32
   %conflict.rdx237 = or i1 %conflict.rdx235, %diff.check236
   br i1 %conflict.rdx237, label %scalar.ph238.preheader, label %vector.ph240
@@ -863,10 +861,10 @@ bb.l:                                             ; preds = %._crit_edge158, %bb
 
 vector.memcheck:                                  ; preds = %.lr.ph118
   %i.bi = shl nuw nsw i64 %i.bf, 2
-  %4 = add i64 %i.bi, %i.c
-  %5 = shl nsw i64 %i.bg, 2
-  %i.bj = add i64 %5, %i.b
-  %i.bk = sub i64 %i.bj, %4
+  %4 = shl nsw i64 %i.bg, 2
+  %5 = add i64 %i.bi, %i.c
+  %i.bj = add i64 %4, %i.b
+  %i.bk = sub i64 %i.bj, %5
   %diff.check = icmp ugt i64 %i.bk, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -994,10 +992,10 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 vector.memcheck209:                               ; preds = %.lr.ph121
   %i.da = shl nuw nsw i64 %i.cx, 2
-  %6 = add i64 %i.da, %i.c
-  %7 = shl nsw i64 %i.cy, 2
-  %i.db = add i64 %7, %i.a
-  %i.dc = sub i64 %i.db, %6
+  %6 = shl nsw i64 %i.cy, 2
+  %7 = add i64 %i.da, %i.c
+  %i.db = add i64 %6, %i.a
+  %i.dc = sub i64 %i.db, %7
   %diff.check210 = icmp ugt i64 %i.dc, -32
   br i1 %diff.check210, label %scalar.ph211.preheader, label %vector.ph213
 
@@ -1121,7 +1119,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   %i.b = ptrtoaddr ptr %2 to i64                  ; 2 uses
   %i.c = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.d = ptrtoaddr ptr %3 to i64                  ; 3 uses
+  %i.d = ptrtoaddr ptr %3 to i64                  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.f = load i64, ptr %i.e, align 4              ; 2 uses
   %i.g = trunc i64 %i.f to i32                    ; 3 uses
@@ -1166,8 +1164,8 @@ bb.a:
   br label %.preheader47
 
 vector.memcheck:                                  ; preds = %.preheader47.preheader
-  %i.z = shl nuw nsw i64 %i.t, 2                  ; 2 uses
-  %i.aa = add i64 %i.z, %i.d
+  %i.z = shl nuw nsw i64 %i.t, 2
+  %i.aa = add i64 %i.z, %i.d                      ; 2 uses
   %i.ab = sub i64 %i.aa, %i.c
   %i.ac = add i64 %i.ab, -269
   %diff.check = icmp ult i64 %i.ac, 31
@@ -1175,8 +1173,7 @@ vector.memcheck:                                  ; preds = %.preheader47.prehea
   %i.ae = add i64 %i.ad, -269
   %diff.check84 = icmp ult i64 %i.ae, 31
   %conflict.rdx = or i1 %diff.check, %diff.check84
-  %4 = add i64 %i.z, %i.d
-  %i.af = sub i64 %i.b, %4
+  %i.af = sub i64 %i.b, %i.aa
   %diff.check85 = icmp ugt i64 %i.af, -32
   %conflict.rdx86 = or i1 %conflict.rdx, %diff.check85
   br i1 %conflict.rdx86, label %.preheader47.preheader103, label %vector.ph

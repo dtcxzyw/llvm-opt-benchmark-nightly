@@ -132,7 +132,7 @@ bb.a:
   %8 = alloca %"class.std::allocator", align 1    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   call void @_ZN2cv5utils5trace7details6RegionC1ERKNS3_21LocationStaticStorageE(ptr noundef nonnull align 8 dereferenceable(12) %4, ptr noundef nonnull align 8 dereferenceable(32) @_ZZN2cv15scalarToRawDataERKNS_7Scalar_IdEEPviiE24__cv_trace_location_fn68)
-  %i.a = lshr i32 %2, 5                           ; 21 uses
+  %i.a = lshr i32 %2, 5                           ; 15 uses
   %i.b = and i32 %i.a, 127                        ; 15 uses
   %i.c = add nuw nsw i32 %i.b, 1                  ; 52 uses
   %i.d = icmp samesign ult i32 %i.b, 4
@@ -535,7 +535,7 @@ bb.az:                                            ; preds = %bb.g
 .lr.ph.preheader.i138:                            ; preds = %.preheader.i137
   %i.pm = zext nneg i32 %3 to i64                 ; 2 uses
   %i.pn = and i32 %i.a, 127
-  %i.po = zext nneg i32 %i.pn to i64              ; 2 uses
+  %i.po = zext nneg i32 %i.pn to i64              ; 3 uses
   %i.pp = add nuw nsw i64 %i.po, 2
   %i.pq = call i64 @llvm.umax.i64(i64 %i.pp, i64 %i.pm)
   %i.pr = xor i64 %i.po, -1
@@ -544,10 +544,9 @@ bb.az:                                            ; preds = %bb.g
   br i1 %min.iters.check315, label %.lr.ph.i139.preheader, label %vector.memcheck312
 
 vector.memcheck312:                               ; preds = %.lr.ph.preheader.i138
-  %9 = shl nuw nsw i32 %i.a, 2
-  %10 = and i32 %9, 508
-  %11 = or disjoint i32 %10, 3
-  %diff.check313 = icmp samesign ult i32 %11, 31
+  %9 = shl nuw nsw i64 %i.po, 2
+  %10 = or disjoint i64 %9, 3
+  %diff.check313 = icmp samesign ult i64 %10, 31
   br i1 %diff.check313, label %.lr.ph.i139.preheader, label %vector.ph316
 
 vector.ph316:                                     ; preds = %vector.memcheck312
@@ -641,7 +640,7 @@ bb.bd:                                            ; preds = %bb.g
 .lr.ph.preheader.i149:                            ; preds = %.preheader.i148
   %i.rc = zext nneg i32 %3 to i64                 ; 2 uses
   %i.rd = and i32 %i.a, 127
-  %i.re = zext nneg i32 %i.rd to i64              ; 2 uses
+  %i.re = zext nneg i32 %i.rd to i64              ; 3 uses
   %i.rf = add nuw nsw i64 %i.re, 2
   %i.rg = call i64 @llvm.umax.i64(i64 %i.rf, i64 %i.rc)
   %i.rh = xor i64 %i.re, -1
@@ -650,10 +649,9 @@ bb.bd:                                            ; preds = %bb.g
   br i1 %min.iters.check301, label %.lr.ph.i150.preheader, label %vector.memcheck298
 
 vector.memcheck298:                               ; preds = %.lr.ph.preheader.i149
-  %12 = shl nuw nsw i32 %i.a, 2
-  %13 = and i32 %12, 508
-  %14 = or disjoint i32 %13, 3
-  %diff.check299 = icmp samesign ult i32 %14, 31
+  %11 = shl nuw nsw i64 %i.re, 2
+  %12 = or disjoint i64 %11, 3
+  %diff.check299 = icmp samesign ult i64 %12, 31
   br i1 %diff.check299, label %.lr.ph.i150.preheader, label %vector.ph302
 
 vector.ph302:                                     ; preds = %vector.memcheck298
@@ -740,7 +738,7 @@ bb.bh:                                            ; preds = %bb.g
 .lr.ph.preheader.i160:                            ; preds = %.preheader.i159
   %i.so = zext nneg i32 %3 to i64                 ; 2 uses
   %i.sp = and i32 %i.a, 127
-  %i.sq = zext nneg i32 %i.sp to i64              ; 2 uses
+  %i.sq = zext nneg i32 %i.sp to i64              ; 3 uses
   %i.sr = add nuw nsw i64 %i.sq, 2
   %i.ss = call i64 @llvm.umax.i64(i64 %i.sr, i64 %i.so)
   %i.st = xor i64 %i.sq, -1
@@ -749,10 +747,9 @@ bb.bh:                                            ; preds = %bb.g
   br i1 %min.iters.check287, label %.lr.ph.i161.preheader, label %vector.memcheck284
 
 vector.memcheck284:                               ; preds = %.lr.ph.preheader.i160
-  %15 = shl nuw nsw i32 %i.a, 2
-  %16 = and i32 %15, 508
-  %17 = or disjoint i32 %16, 3
-  %diff.check285 = icmp samesign ult i32 %17, 31
+  %13 = shl nuw nsw i64 %i.sq, 2
+  %14 = or disjoint i64 %13, 3
+  %diff.check285 = icmp samesign ult i64 %14, 31
   br i1 %diff.check285, label %.lr.ph.i161.preheader, label %vector.ph288
 
 vector.ph288:                                     ; preds = %vector.memcheck284
@@ -839,7 +836,7 @@ bb.bl:                                            ; preds = %bb.g
 .lr.ph.preheader.i172:                            ; preds = %.preheader.i171
   %i.tz = zext nneg i32 %3 to i64                 ; 2 uses
   %i.ua = and i32 %i.a, 127
-  %i.ub = zext nneg i32 %i.ua to i64              ; 2 uses
+  %i.ub = zext nneg i32 %i.ua to i64              ; 3 uses
   %i.uc = add nuw nsw i64 %i.ub, 2
   %i.ud = call i64 @llvm.umax.i64(i64 %i.uc, i64 %i.tz)
   %i.ue = xor i64 %i.ub, -1
@@ -848,10 +845,9 @@ bb.bl:                                            ; preds = %bb.g
   br i1 %min.iters.check273, label %.lr.ph.i173.preheader, label %vector.memcheck270
 
 vector.memcheck270:                               ; preds = %.lr.ph.preheader.i172
-  %18 = shl nuw nsw i32 %i.a, 3
-  %19 = and i32 %18, 1016
-  %20 = or disjoint i32 %19, 7
-  %diff.check271 = icmp samesign ult i32 %20, 31
+  %15 = shl nuw nsw i64 %i.ub, 3
+  %16 = or disjoint i64 %15, 7
+  %diff.check271 = icmp samesign ult i64 %16, 31
   br i1 %diff.check271, label %.lr.ph.i173.preheader, label %vector.ph274
 
 vector.ph274:                                     ; preds = %vector.memcheck270
@@ -944,7 +940,7 @@ bb.bp:                                            ; preds = %bb.g
 .lr.ph.preheader.i183:                            ; preds = %.preheader.i182
   %i.vm = zext nneg i32 %3 to i64                 ; 2 uses
   %i.vn = and i32 %i.a, 127
-  %i.vo = zext nneg i32 %i.vn to i64              ; 2 uses
+  %i.vo = zext nneg i32 %i.vn to i64              ; 3 uses
   %i.vp = add nuw nsw i64 %i.vo, 2
   %i.vq = call i64 @llvm.umax.i64(i64 %i.vp, i64 %i.vm)
   %i.vr = xor i64 %i.vo, -1
@@ -953,10 +949,9 @@ bb.bp:                                            ; preds = %bb.g
   br i1 %min.iters.check259, label %.lr.ph.i184.preheader, label %vector.memcheck256
 
 vector.memcheck256:                               ; preds = %.lr.ph.preheader.i183
-  %21 = shl nuw nsw i32 %i.a, 3
-  %22 = and i32 %21, 1016
-  %23 = or disjoint i32 %22, 7
-  %diff.check257 = icmp samesign ult i32 %23, 31
+  %17 = shl nuw nsw i64 %i.vo, 3
+  %18 = or disjoint i64 %17, 7
+  %diff.check257 = icmp samesign ult i64 %18, 31
   br i1 %diff.check257, label %.lr.ph.i184.preheader, label %vector.ph260
 
 vector.ph260:                                     ; preds = %vector.memcheck256
@@ -1041,7 +1036,7 @@ bb.bt:                                            ; preds = %bb.g
 .lr.ph.preheader.i194:                            ; preds = %.preheader.i193
   %i.wu = zext nneg i32 %3 to i64                 ; 2 uses
   %i.wv = and i32 %i.a, 127
-  %i.ww = zext nneg i32 %i.wv to i64              ; 2 uses
+  %i.ww = zext nneg i32 %i.wv to i64              ; 3 uses
   %i.wx = add nuw nsw i64 %i.ww, 2
   %i.wy = call i64 @llvm.umax.i64(i64 %i.wx, i64 %i.wu)
   %i.wz = xor i64 %i.ww, -1
@@ -1050,10 +1045,9 @@ bb.bt:                                            ; preds = %bb.g
   br i1 %min.iters.check, label %.lr.ph.i195.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader.i194
-  %24 = shl nuw nsw i32 %i.a, 3
-  %25 = and i32 %24, 1016
-  %26 = or disjoint i32 %25, 7
-  %diff.check = icmp samesign ult i32 %26, 31
+  %19 = shl nuw nsw i64 %i.ww, 3
+  %20 = or disjoint i64 %19, 7
+  %diff.check = icmp samesign ult i64 %20, 31
   br i1 %diff.check, label %.lr.ph.i195.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck

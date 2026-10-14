@@ -205,8 +205,8 @@ vec.epilog.middle.block632:                       ; preds = %vec.epilog.vector.b
   %.0.lcssa.i = phi i64 [ 0, %bb.d ], [ %i.ar, %middle.block615 ], [ %i.ar, %vec.epilog.middle.block632 ], [ %i.ar, %.lr.ph.i ], [ %i.ar, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %.020.lcssa.i = phi ptr [ %.0201.i, %bb.d ], [ %i.av, %middle.block615 ], [ %i.ay, %vec.epilog.middle.block632 ], [ %.020.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.020.i.7, %.lr.ph.i ] ; 7 uses
   %.022.lcssa.i = phi ptr [ %.0222.i, %bb.d ], [ %i.au, %middle.block615 ], [ %i.ax, %vec.epilog.middle.block632 ], [ %.022.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.022.i.7, %.lr.ph.i ] ; 7 uses
-  %.020.lcssa.i638 = ptrtoaddr ptr %.020.lcssa.i to i64 ; 2 uses
-  %.022.lcssa.i640 = ptrtoaddr ptr %.022.lcssa.i to i64
+  %.020.lcssa.i638 = ptrtoaddr ptr %.022.lcssa.i to i64
+  %.022.lcssa.i640 = ptrtoaddr ptr %.020.lcssa.i to i64 ; 2 uses
   %i.bf = icmp ult i64 %.0.lcssa.i, %i.e
   br i1 %i.bf, label %iter.check666, label %.thread214.thread
 
@@ -216,10 +216,10 @@ iter.check666:                                    ; preds = %.preheader.i
   br i1 %min.iters.check644, label %.lr.ph12.i.preheader, label %vector.memcheck637
 
 vector.memcheck637:                               ; preds = %iter.check666
-  %i.bh = sub i64 %.020.lcssa.i638, %i.m
+  %i.bh = sub i64 %.022.lcssa.i640, %i.m
   %i.bi = add i64 %i.bh, -2
   %diff.check639 = icmp ult i64 %i.bi, 31
-  %i.bj = sub i64 %.022.lcssa.i640, %.020.lcssa.i638
+  %i.bj = sub i64 %.020.lcssa.i638, %.022.lcssa.i640
   %diff.check641 = icmp ugt i64 %i.bj, -32
   %conflict.rdx642 = or i1 %diff.check639, %diff.check641
   br i1 %conflict.rdx642, label %.lr.ph12.i.preheader, label %vector.main.loop.iter.check645
@@ -622,9 +622,9 @@ vec.epilog.middle.block489:                       ; preds = %vec.epilog.vector.b
   %.020.lcssa.i155 = phi ptr [ %.02029.i, %bb.p ], [ %i.mg, %vec.epilog.middle.block489 ], [ %i.lx, %middle.block468 ], [ %.020.i151.lcssa.unr, %.lr.ph.i149.prol.loopexit ], [ %.020.i151.3, %.lr.ph.i149 ] ; 8 uses
   %.018.lcssa.i = phi ptr [ %.01830.i, %bb.p ], [ %i.mf, %vec.epilog.middle.block489 ], [ %i.lw, %middle.block468 ], [ %.018.i.lcssa.unr, %.lr.ph.i149.prol.loopexit ], [ %.018.i.3, %.lr.ph.i149 ] ; 8 uses
   %.022.lcssa.i156 = phi ptr [ %.02231.i, %bb.p ], [ %i.me, %vec.epilog.middle.block489 ], [ %i.lv, %middle.block468 ], [ %.022.i152.lcssa.unr, %.lr.ph.i149.prol.loopexit ], [ %.022.i152.3, %.lr.ph.i149 ] ; 8 uses
-  %.020.lcssa.i155496 = ptrtoaddr ptr %.020.lcssa.i155 to i64 ; 3 uses
-  %.022.lcssa.i156498 = ptrtoaddr ptr %.022.lcssa.i156 to i64
-  %.018.lcssa.i501 = ptrtoaddr ptr %.018.lcssa.i to i64
+  %.020.lcssa.i155496 = ptrtoaddr ptr %.018.lcssa.i to i64
+  %.022.lcssa.i156498 = ptrtoaddr ptr %.020.lcssa.i155 to i64 ; 3 uses
+  %.018.lcssa.i501 = ptrtoaddr ptr %.022.lcssa.i156 to i64
   %i.ms = zext nneg i32 %i.j to i64               ; 3 uses
   %i.mt = icmp ugt i64 %i.e, %i.ms
   br i1 %i.mt, label %iter.check531, label %.thread214.thread
@@ -645,13 +645,13 @@ vector.scevcheck:                                 ; preds = %iter.check531
   br i1 %i.nb, label %.lr.ph44.i.preheader, label %vector.memcheck495
 
 vector.memcheck495:                               ; preds = %vector.scevcheck
-  %i.nc = sub i64 %.020.lcssa.i155496, %i.m
+  %i.nc = sub i64 %.022.lcssa.i156498, %i.m
   %i.nd = add i64 %i.nc, -2
   %diff.check497 = icmp ult i64 %i.nd, 31
-  %i.ne = sub i64 %.022.lcssa.i156498, %.020.lcssa.i155496
+  %i.ne = sub i64 %.018.lcssa.i501, %.022.lcssa.i156498
   %diff.check499 = icmp ugt i64 %i.ne, -32
   %conflict.rdx500 = or i1 %diff.check497, %diff.check499
-  %i.nf = sub i64 %.018.lcssa.i501, %.020.lcssa.i155496
+  %i.nf = sub i64 %.020.lcssa.i155496, %.022.lcssa.i156498
   %diff.check502 = icmp ugt i64 %i.nf, -32
   %conflict.rdx503 = or i1 %conflict.rdx500, %diff.check502
   br i1 %conflict.rdx503, label %.lr.ph44.i.preheader, label %vector.main.loop.iter.check506
@@ -1054,9 +1054,9 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.049.lcssa.i = phi ptr [ %.04964.i, %bb.u ], [ %i.yg, %middle.block368 ], [ %i.ym, %vec.epilog.middle.block ], [ %.049.i.lcssa.unr, %.lr.ph.i172.prol.loopexit ], [ %.049.i.3, %.lr.ph.i172 ] ; 7 uses
   %.047.lcssa.i = phi ptr [ %.04765.i, %bb.u ], [ %i.yf, %middle.block368 ], [ %i.yl, %vec.epilog.middle.block ], [ %.047.i.lcssa.unr, %.lr.ph.i172.prol.loopexit ], [ %.047.i.3, %.lr.ph.i172 ] ; 7 uses
   %.051.lcssa.i = phi ptr [ %.05166.i, %bb.u ], [ %i.ye, %middle.block368 ], [ %i.yk, %vec.epilog.middle.block ], [ %.051.i.lcssa.unr, %.lr.ph.i172.prol.loopexit ], [ %.051.i.3, %.lr.ph.i172 ] ; 7 uses
-  %.049.lcssa.i387 = ptrtoaddr ptr %.049.lcssa.i to i64 ; 4 uses
-  %.047.lcssa.i389 = ptrtoaddr ptr %.047.lcssa.i to i64
-  %.051.lcssa.i392 = ptrtoaddr ptr %.051.lcssa.i to i64
+  %.049.lcssa.i387 = ptrtoaddr ptr %.049.lcssa.i to i64 ; 3 uses
+  %.047.lcssa.i389 = ptrtoaddr ptr %.051.lcssa.i to i64
+  %.051.lcssa.i392 = ptrtoaddr ptr %.047.lcssa.i to i64
   %i.yu = icmp ult i64 %.0.lcssa.i175, %i.e
   br i1 %i.yu, label %iter.check424, label %.thread214.thread
 
@@ -1066,19 +1066,18 @@ iter.check424:                                    ; preds = %.preheader.i174
   br i1 %min.iters.check398, label %.lr.ph80.i.preheader, label %vector.memcheck386
 
 vector.memcheck386:                               ; preds = %iter.check424
-  %2 = sub i64 %.049.lcssa.i387, %i.xz
-  %3 = add i64 %2, -2
-  %diff.check388 = icmp ult i64 %3, 15
-  %i.yw = sub i64 %.047.lcssa.i389, %.049.lcssa.i387
+  %2 = add i64 %.049.lcssa.i387, -1               ; 2 uses
+  %3 = sub i64 %i.xz, %2
+  %diff.check415 = icmp ugt i64 %3, -16
+  %i.yw = sub i64 %.051.lcssa.i392, %.049.lcssa.i387
   %diff.check390 = icmp ugt i64 %i.yw, -16
-  %conflict.rdx391 = or i1 %diff.check388, %diff.check390
-  %i.yx = sub i64 %.051.lcssa.i392, %.049.lcssa.i387
+  %conflict.rdx391 = or i1 %diff.check415, %diff.check390
+  %i.yx = sub i64 %.047.lcssa.i389, %.049.lcssa.i387
   %diff.check393 = icmp ugt i64 %i.yx, -16
   %conflict.rdx394 = or i1 %conflict.rdx391, %diff.check393
-  %i.yy = sub i64 %.049.lcssa.i387, %i.m
-  %4 = add i64 %i.yy, -2
-  %diff.check395 = icmp ult i64 %4, 15
-  %conflict.rdx396 = or i1 %conflict.rdx394, %diff.check395
+  %i.yy = sub i64 %i.m, %2
+  %diff.check420 = icmp ugt i64 %i.yy, -16
+  %conflict.rdx396 = or i1 %conflict.rdx394, %diff.check420
   br i1 %conflict.rdx396, label %.lr.ph80.i.preheader, label %vector.main.loop.iter.check399
 
 vector.main.loop.iter.check399:                   ; preds = %vector.memcheck386

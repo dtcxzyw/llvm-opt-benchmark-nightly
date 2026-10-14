@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 196 ; 4 uses
   %i.h = load i32, ptr %i.g, align 4, !tbaa !288
-  %.fr.i = freeze i32 %i.h                        ; 15 uses
+  %.fr.i = freeze i32 %i.h                        ; 14 uses
   %i.i = icmp ult i32 %.fr.i, 11
   br i1 %i.i, label %bb.c, label %.preheader26.split.i
 
@@ -221,8 +221,8 @@ bb.c:                                             ; preds = %bb.b
   %i.n = sub i32 %.fr.i, %i.m
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 96 ; 8 uses
   %i.p = zext i32 %i.n to i64                     ; 5 uses
-  %4 = xor i32 %i.m, -1
-  %5 = add i32 %.fr.i, %4                         ; 2 uses
+  %4 = add nsw i32 %.fr.i, -1                     ; 2 uses
+  %5 = sub i32 %4, %i.m                           ; 2 uses
   %i.q = zext i32 %5 to i64
   %i.r = add nuw nsw i64 %i.q, 1                  ; 2 uses
   %min.iters.check354 = icmp ult i32 %5, 27
@@ -238,8 +238,7 @@ vector.scevcheck346:                              ; preds = %.lr.ph.i.i.i
   br i1 %i.w, label %scalar.ph353.preheader, label %vector.memcheck347
 
 vector.memcheck347:                               ; preds = %vector.scevcheck346
-  %6 = add nsw i32 %.fr.i, -1
-  %i.x = zext i32 %6 to i64
+  %i.x = zext i32 %4 to i64
   %i.y = shl nuw nsw i64 %i.x, 3                  ; 3 uses
   %i.z = shl nuw nsw i32 %.fr.i, 3
   %i.aa = zext nneg i32 %i.z to i64               ; 3 uses
@@ -642,7 +641,7 @@ _ZN4llvm11IntervalMapIPKcPKN12_GLOBAL__N_114PDLIndexSymbolELj8ENS_23IntervalMapH
   br label %bb.ac
 
 bb.ac:                                            ; preds = %_ZN4llvm11IntervalMapIPKcPKN12_GLOBAL__N_114PDLIndexSymbolELj8ENS_23IntervalMapHalfOpenInfoIS2_EEE8iterator8overflowINS_15IntervalMapImpl10BranchNodeIS2_S6_Lj12ES8_EEEEbj.exit, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit
-  %i.adp = phi i32 [ %.pre100, %_ZN4llvm11IntervalMapIPKcPKN12_GLOBAL__N_114PDLIndexSymbolELj8ENS_23IntervalMapHalfOpenInfoIS2_EEE8iterator8overflowINS_15IntervalMapImpl10BranchNodeIS2_S6_Lj12ES8_EEEEbj.exit ], [ %i.gj, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ] ; 8 uses
+  %i.adp = phi i32 [ %.pre100, %_ZN4llvm11IntervalMapIPKcPKN12_GLOBAL__N_114PDLIndexSymbolELj8ENS_23IntervalMapHalfOpenInfoIS2_EEE8iterator8overflowINS_15IntervalMapImpl10BranchNodeIS2_S6_Lj12ES8_EEEEbj.exit ], [ %i.gj, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ] ; 7 uses
   %.pre-phi = phi i64 [ %.pre, %_ZN4llvm11IntervalMapIPKcPKN12_GLOBAL__N_114PDLIndexSymbolELj8ENS_23IntervalMapHalfOpenInfoIS2_EEE8iterator8overflowINS_15IntervalMapImpl10BranchNodeIS2_S6_Lj12ES8_EEEEbj.exit ], [ %.pre-phi102, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ] ; 4 uses
   %.val = phi ptr [ %i.adj, %_ZN4llvm11IntervalMapIPKcPKN12_GLOBAL__N_114PDLIndexSymbolELj8ENS_23IntervalMapHalfOpenInfoIS2_EEE8iterator8overflowINS_15IntervalMapImpl10BranchNodeIS2_S6_Lj12ES8_EEEEbj.exit ], [ %i.gg, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ]
   %.150 = phi i1 [ %i.adm, %_ZN4llvm11IntervalMapIPKcPKN12_GLOBAL__N_114PDLIndexSymbolELj8ENS_23IntervalMapHalfOpenInfoIS2_EEE8iterator8overflowINS_15IntervalMapImpl10BranchNodeIS2_S6_Lj12ES8_EEEEbj.exit ], [ %i.f, %_ZN4llvm15IntervalMapImpl4Path17legalizeForInsertEj.exit ]
@@ -658,11 +657,11 @@ bb.ac:                                            ; preds = %_ZN4llvm11IntervalM
   %i.adu = sub i32 %i.adp, %i.adt
   %i.adv = getelementptr inbounds nuw i8, ptr %i.adr, i64 96 ; 8 uses
   %i.adw = zext i32 %i.adu to i64                 ; 5 uses
-  %7 = xor i32 %i.adt, -1
-  %8 = add i32 %i.adp, %7                         ; 2 uses
-  %i.adx = zext i32 %8 to i64
+  %6 = add i32 %i.adp, -1                         ; 2 uses
+  %7 = sub i32 %6, %i.adt                         ; 2 uses
+  %i.adx = zext i32 %7 to i64
   %i.ady = add nuw nsw i64 %i.adx, 1              ; 2 uses
-  %min.iters.check333 = icmp ult i32 %8, 27
+  %min.iters.check333 = icmp ult i32 %7, 27
   br i1 %min.iters.check333, label %scalar.ph332.preheader, label %vector.scevcheck325
 
 vector.scevcheck325:                              ; preds = %.lr.ph.i.i.i56
@@ -675,8 +674,7 @@ vector.scevcheck325:                              ; preds = %.lr.ph.i.i.i56
   br i1 %i.aed, label %scalar.ph332.preheader, label %vector.memcheck326
 
 vector.memcheck326:                               ; preds = %vector.scevcheck325
-  %9 = add i32 %i.adp, -1
-  %i.aee = zext i32 %9 to i64
+  %i.aee = zext i32 %6 to i64
   %i.aef = shl nuw nsw i64 %i.aee, 3              ; 3 uses
   %i.aeg = zext i32 %i.adp to i64
   %i.aeh = shl nuw nsw i64 %i.aeg, 3              ; 3 uses

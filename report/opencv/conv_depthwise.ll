@@ -202,8 +202,8 @@ declare float @llvm.fmuladd.f32(float, float, float) #6
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @_ZN2cv3dnn20depthWiseBlockConv1DEPKfiiiiS2_S2_S2_iPfiib(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readonly captures(address_is_null) %6, ptr nofree noundef readonly captures(none) %7, i32 noundef %8, ptr nofree noundef captures(none) %9, i32 noundef %10, i32 noundef %11, i1 noundef zeroext %12) local_unnamed_addr #5 {
 bb.a:
-  %i.a = ptrtoaddr ptr %7 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %9 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %7 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %9 to i64                  ; 2 uses
   %i.c = load float, ptr %0, align 4, !tbaa !50   ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.e = load float, ptr %i.d, align 4, !tbaa !50 ; 10 uses
@@ -289,20 +289,19 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge1
   br i1 %or.cond, label %vector.memcheck248, label %.lr.ph.split.us.split.preheader334
 
 vector.memcheck248:                               ; preds = %.lr.ph.split.us.split.preheader
-  %i.ak = shl nsw i64 %i.ag, 2                    ; 2 uses
-  %13 = add i64 %i.ak, %i.b
-  %14 = sub i64 %13, %i.a                         ; 2 uses
-  %15 = shl nsw i64 %i.ai, 2
-  %i.al = sub i64 %15, %14
+  %i.ak = shl nsw i64 %i.ag, 2
+  %13 = shl nsw i64 %i.ai, 2
+  %14 = add i64 %i.ak, %i.b
+  %15 = sub i64 %14, %i.a                         ; 3 uses
+  %i.al = sub i64 %13, %15
   %diff.check249 = icmp ugt i64 %i.al, -16
   %i.am = shl nsw i64 %i.ah, 2
-  %i.an = sub i64 %i.am, %14
+  %i.an = sub i64 %i.am, %15
   %diff.check250 = icmp ugt i64 %i.an, -16
   %conflict.rdx251 = or i1 %diff.check249, %diff.check250
-  %i.ao = add i64 %i.ak, %i.b
-  %16 = sub i64 %i.a, %i.ao
-  %diff.check252 = icmp ugt i64 %16, -16
-  %conflict.rdx253 = or i1 %conflict.rdx251, %diff.check252
+  %i.ao = add i64 %15, -1
+  %diff.check263 = icmp ult i64 %i.ao, 15
+  %conflict.rdx253 = or i1 %conflict.rdx251, %diff.check263
   br i1 %conflict.rdx253, label %.lr.ph.split.us.split.preheader334, label %vector.ph256
 
 vector.ph256:                                     ; preds = %vector.memcheck248
@@ -484,20 +483,19 @@ middle.block327:                                  ; preds = %vector.body320
   br i1 %or.cond331, label %vector.memcheck, label %.lr.ph.split.split.preheader338
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.split.preheader
-  %i.dl = shl nsw i64 %i.ag, 2                    ; 2 uses
+  %i.dl = shl nsw i64 %i.ag, 2
+  %16 = shl nsw i64 %i.ai, 2
   %17 = add i64 %i.dl, %i.b
-  %18 = sub i64 %17, %i.a                         ; 2 uses
-  %19 = shl nsw i64 %i.ai, 2
-  %i.dm = sub i64 %19, %18
+  %18 = sub i64 %17, %i.a                         ; 3 uses
+  %i.dm = sub i64 %16, %18
   %diff.check = icmp ugt i64 %i.dm, -16
   %i.dn = shl nsw i64 %i.ah, 2
   %i.do = sub i64 %i.dn, %18
   %diff.check182 = icmp ugt i64 %i.do, -16
   %conflict.rdx = or i1 %diff.check, %diff.check182
-  %i.dp = add i64 %i.dl, %i.b
-  %20 = sub i64 %i.a, %i.dp
-  %diff.check183 = icmp ugt i64 %20, -16
-  %conflict.rdx184 = or i1 %conflict.rdx, %diff.check183
+  %i.dp = add i64 %18, -1
+  %diff.check186 = icmp ult i64 %i.dp, 15
+  %conflict.rdx184 = or i1 %conflict.rdx, %diff.check186
   br i1 %conflict.rdx184, label %.lr.ph.split.split.preheader338, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
