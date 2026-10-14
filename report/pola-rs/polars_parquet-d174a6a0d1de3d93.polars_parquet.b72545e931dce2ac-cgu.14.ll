@@ -205,7 +205,7 @@ bb.a:
 .lr.ph.preheader:                                 ; preds = %bb.a
   %.promoted21 = ptrtoaddr ptr %.promoted to i64, !dbg !25599 ; 2 uses
   %i.d = ptrtoaddr ptr %2 to i64
-  %i.e = ptrtoaddr ptr %i.b to i64, !dbg !25589
+  %i.e = ptrtoaddr ptr %i.b to i64
   %i.f = add i64 %i.e, -8, !dbg !25589
   %i.g = sub i64 %i.f, %.promoted21, !dbg !25589  ; 2 uses
   %i.h = lshr i64 %i.g, 3, !dbg !25589

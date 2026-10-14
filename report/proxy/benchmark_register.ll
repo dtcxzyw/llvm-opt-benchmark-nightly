@@ -205,16 +205,16 @@ _ZN9benchmark8internal18GetNullLogInstanceEv.exit16: ; preds = %_ZN9benchmark8in
   %i.m = sub nsw i32 0, %1
   %i.n = sub nsw i32 0, %2
   %i.o = tail call ptr @_ZN9benchmark8internal9AddPowersIiEENSt6vectorIT_SaIS3_EE8iteratorEPS5_S3_S3_i(ptr noundef %0, i32 noundef %i.n, i32 noundef %i.m, i32 noundef %3) ; 12 uses
+  %4 = ptrtoaddr ptr %i.o to i64                  ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !98   ; 6 uses
+  %5 = ptrtoaddr ptr %i.q to i64                  ; 2 uses
   %.not4.i.not = icmp eq ptr %i.o, %i.q
   br i1 %.not4.i.not, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit16
-  %4 = ptrtoaddr ptr %i.q to i64                  ; 2 uses
-  %5 = ptrtoaddr ptr %i.o to i64                  ; 4 uses
-  %i.r = add i64 %4, -4
-  %i.s = sub i64 %i.r, %5                         ; 2 uses
+  %i.r = add i64 %5, -4
+  %i.s = sub i64 %i.r, %4                         ; 2 uses
   %i.t = lshr i64 %i.s, 2
   %i.u = add nuw nsw i64 %i.t, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.s, 28
@@ -264,13 +264,13 @@ _ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8i
   br i1 %i.af, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEZN9benchmark8internal16AddNegatedPowersIiEEvPS3_IT_SaISA_EESA_SA_iEUlRiE_ET0_SA_SA_SG_.exit
-  %i.ag = add i64 %4, -8
-  %i.ah = add i64 %5, 4
+  %i.ag = add i64 %5, -8
+  %i.ah = add i64 %4, 4
   %i.ai = tail call i64 @llvm.umax.i64(i64 %i.ag, i64 %i.ah)
   %i.aj = add i64 %i.ai, -4                       ; 2 uses
-  %i.ak = icmp ne i64 %i.aj, %5
+  %i.ak = icmp ne i64 %i.aj, %4
   %i.al = zext i1 %i.ak to i64                    ; 3 uses
-  %i.am = add i64 %5, %i.al
+  %i.am = add i64 %4, %i.al
   %i.an = sub i64 %i.aj, %i.am                    ; 2 uses
   %i.ao = lshr i64 %i.an, 3
   %i.ap = add nuw nsw i64 %i.ao, %i.al            ; 2 uses

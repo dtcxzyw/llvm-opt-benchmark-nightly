@@ -205,9 +205,9 @@ _ZNSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iter
   br i1 %.not350426, label %._crit_edge429, label %.lr.ph428
 
 .lr.ph428:                                        ; preds = %_ZNSt6vectorIS_IN2cv6Point_IiEESaIS2_EESaIS4_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS4_S6_EESB_.exit
-  %13 = trunc i64 %i.dw to i32                    ; 2 uses
   %i.oz = ptrtoaddr ptr %i.oy to i64
   %i.pa = ptrtoaddr ptr %i.ow to i64
+  %13 = trunc i64 %i.dw to i32                    ; 2 uses
   %i.pb = add i64 %i.oz, -4
   %i.pc = sub i64 %i.pb, %i.pa                    ; 2 uses
   %i.pd = lshr i64 %i.pc, 2

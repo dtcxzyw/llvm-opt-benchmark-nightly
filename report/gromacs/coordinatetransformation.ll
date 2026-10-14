@@ -48,12 +48,12 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %5 = ptrtoaddr ptr %2 to i64
-  %6 = ptrtoaddr ptr %1 to i64
-  %i.a = add i64 %5, -12
-  %i.b = sub i64 %i.a, %6                         ; 2 uses
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.a = add i64 %4, -12
+  %i.b = sub i64 %i.a, %3                         ; 2 uses
   %i.c = udiv i64 %i.b, 12                        ; 2 uses
   %i.d = add nuw nsw i64 %i.c, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.b, 180
@@ -75,9 +75,9 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.j = getelementptr i8, ptr %1, i64 %i.i
   %i.k = load float, ptr %0, align 4, !tbaa !12, !alias.scope !35
   %broadcast.splatinsert = insertelement <8 x float> poison, float %i.k, i64 0
-  %i.l = load float, ptr %3, align 4, !tbaa !12, !alias.scope !35
+  %i.l = load float, ptr %5, align 4, !tbaa !12, !alias.scope !35
   %broadcast.splatinsert17 = insertelement <8 x float> poison, float %i.l, i64 0
-  %i.m = load float, ptr %4, align 4, !tbaa !12, !alias.scope !35
+  %i.m = load float, ptr %6, align 4, !tbaa !12, !alias.scope !35
   %broadcast.splatinsert19 = insertelement <8 x float> poison, float %i.m, i64 0
   %i.n = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> %broadcast.splatinsert17, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8>
   %i.o = shufflevector <8 x float> %broadcast.splatinsert19, <8 x float> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -115,12 +115,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.w = load float, ptr %.sroa.0.012, align 4, !tbaa !12
   %i.x = fmul float %i.v, %i.w
   store float %i.x, ptr %.sroa.0.012, align 4, !tbaa !12
-  %i.y = load float, ptr %3, align 4, !tbaa !12
+  %i.y = load float, ptr %5, align 4, !tbaa !12
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0.012, i64 4 ; 2 uses
   %i.aa = load float, ptr %i.z, align 4, !tbaa !12
   %i.ab = fmul float %i.y, %i.aa
   store float %i.ab, ptr %i.z, align 4, !tbaa !12
-  %i.ac = load float, ptr %4, align 4, !tbaa !12
+  %i.ac = load float, ptr %6, align 4, !tbaa !12
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0.012, i64 8 ; 2 uses
   %i.ae = load float, ptr %i.ad, align 4, !tbaa !12
   %i.af = fmul float %i.ac, %i.ae
@@ -146,10 +146,10 @@ define void @_ZNK3gmx16ScaleCoordinates4Impl24inverseIgnoringZeroScaleENS_8Array
   br i1 %.not16, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %i.i = ptrtoaddr ptr %2 to i64
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = add i64 %i.i, -12
-  %i.l = sub i64 %i.k, %i.j                       ; 2 uses
+  %i.i = ptrtoaddr ptr %1 to i64
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = add i64 %i.j, -12
+  %i.l = sub i64 %i.k, %i.i                       ; 2 uses
   %i.m = udiv i64 %i.l, 12
   %i.n = add nuw nsw i64 %i.m, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.l, 84
@@ -242,12 +242,12 @@ bb.a:
   br i1 %.not11.i, label %_ZNK3gmx16ScaleCoordinates4Impl5scaleENS_8ArrayRefINS_11BasicVectorIfEEEE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %5 = ptrtoaddr ptr %2 to i64
-  %6 = ptrtoaddr ptr %1 to i64
-  %i.b = add i64 %5, -12
-  %i.c = sub i64 %i.b, %6                         ; 2 uses
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.b = add i64 %4, -12
+  %i.c = sub i64 %i.b, %3                         ; 2 uses
   %i.d = udiv i64 %i.c, 12                        ; 2 uses
   %i.e = add nuw nsw i64 %i.d, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.c, 180
@@ -269,9 +269,9 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.k = getelementptr i8, ptr %1, i64 %i.j
   %i.l = load float, ptr %i.a, align 4, !tbaa !12, !alias.scope !44
   %broadcast.splatinsert = insertelement <8 x float> poison, float %i.l, i64 0
-  %i.m = load float, ptr %3, align 4, !tbaa !12, !alias.scope !44
+  %i.m = load float, ptr %5, align 4, !tbaa !12, !alias.scope !44
   %broadcast.splatinsert7 = insertelement <8 x float> poison, float %i.m, i64 0
-  %i.n = load float, ptr %4, align 4, !tbaa !12, !alias.scope !44
+  %i.n = load float, ptr %6, align 4, !tbaa !12, !alias.scope !44
   %broadcast.splatinsert9 = insertelement <8 x float> poison, float %i.n, i64 0
   %i.o = shufflevector <8 x float> %broadcast.splatinsert, <8 x float> %broadcast.splatinsert7, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8, i32 8>
   %i.p = shufflevector <8 x float> %broadcast.splatinsert9, <8 x float> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -306,12 +306,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.x = load float, ptr %.sroa.0.012.i, align 4, !tbaa !12
   %i.y = fmul float %i.w, %i.x
   store float %i.y, ptr %.sroa.0.012.i, align 4, !tbaa !12
-  %i.z = load float, ptr %3, align 4, !tbaa !12
+  %i.z = load float, ptr %5, align 4, !tbaa !12
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0.012.i, i64 4 ; 2 uses
   %i.ab = load float, ptr %i.aa, align 4, !tbaa !12
   %i.ac = fmul float %i.z, %i.ab
   store float %i.ac, ptr %i.aa, align 4, !tbaa !12
-  %i.ad = load float, ptr %4, align 4, !tbaa !12
+  %i.ad = load float, ptr %6, align 4, !tbaa !12
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.0.012.i, i64 8 ; 2 uses
   %i.af = load float, ptr %i.ae, align 4, !tbaa !12
   %i.ag = fmul float %i.ad, %i.af
@@ -364,10 +364,10 @@ bb.a:
   br i1 %.not16.i, label %_ZNK3gmx16ScaleCoordinates4Impl24inverseIgnoringZeroScaleENS_8ArrayRefINS_11BasicVectorIfEEEE.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
-  %i.j = ptrtoaddr ptr %2 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = add i64 %i.j, -12
-  %i.m = sub i64 %i.l, %i.k                       ; 2 uses
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %2 to i64
+  %i.l = add i64 %i.k, -12
+  %i.m = sub i64 %i.l, %i.j                       ; 2 uses
   %i.n = udiv i64 %i.m, 12
   %i.o = add nuw nsw i64 %i.n, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.m, 84

@@ -205,10 +205,10 @@ bb.a:
   br i1 %i.d, label %.loopexit, label %.preheader.preheader, !prof !156
 
 .preheader.preheader:                             ; preds = %bb.a
-  %i.e = ptrtoaddr ptr %2 to i64
-  %i.f = ptrtoaddr ptr %1 to i64
-  %i.g = add i64 %i.e, -8
-  %i.h = sub i64 %i.g, %i.f                       ; 2 uses
+  %i.e = ptrtoaddr ptr %1 to i64
+  %i.f = ptrtoaddr ptr %2 to i64
+  %i.g = add i64 %i.f, -8
+  %i.h = sub i64 %i.g, %i.e                       ; 2 uses
   %i.i = lshr i64 %i.h, 3
   %i.j = add nuw nsw i64 %i.i, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.h, 24

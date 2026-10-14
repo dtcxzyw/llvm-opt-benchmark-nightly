@@ -205,6 +205,7 @@ _RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortINtNtBc_
   %.sroa.43.1.lcssa.i58 = phi ptr [ %.sroa.43.0.i53, %bb.bh ], [ %i.hb, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB17_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1w_NtB1w_10Parameters17iter_source_order0E0E0B1y_.exit49.i ] ; 4 uses
   %.sroa.27.1.lcssa.i59 = phi i64 [ %.sroa.27.0.i54, %bb.bh ], [ %i.he, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB17_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1w_NtB1w_10Parameters17iter_source_order0E0E0B1y_.exit49.i ] ; 5 uses
   %.sroa.9.1.lcssa.i60 = phi ptr [ %.sroa.9.0.i55, %bb.bh ], [ %i.hf, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionRNtNtCskLngH8kgpZI_15ruff_python_ast5nodes9ParameterENCINvMNtCscdodAO9FK5_5alloc5sliceSB17_11sort_by_keyNtNtCs2MoD74u7shA_14ruff_text_size4size8TextSizeNCNvMs1N_B1w_NtB1w_10Parameters17iter_source_order0E0E0B1y_.exit49.i ] ; 7 uses
+  %.sroa.9.1.lcssa.i60372 = ptrtoaddr ptr %.sroa.9.1.lcssa.i60 to i64
   %i.hh = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph149, i64 %.sroa.0.0.i56 ; 3 uses
   %i.hi = icmp ult ptr %.sroa.9.1.lcssa.i60, %i.hh
   br i1 %i.hi, label %.lr.ph38.i69.preheader, label %._crit_edge39.i61
@@ -216,9 +217,8 @@ _RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortINtNtBc_
 
 .lr.ph38.i69.us.preheader:                        ; preds = %.lr.ph38.i69.preheader
   %i.hj = shl i64 %.sroa.0.0.i56, 3
-  %7 = ptrtoaddr ptr %.sroa.9.1.lcssa.i60 to i64
   %i.hk = add i64 %i.hj, %i.c
-  %i.hl = xor i64 %7, -1
+  %i.hl = xor i64 %.sroa.9.1.lcssa.i60372, -1
   %i.hm = add i64 %i.hk, %i.hl                    ; 2 uses
   %i.hn = lshr i64 %i.hm, 3
   %i.ho = add nuw nsw i64 %i.hn, 1                ; 2 uses

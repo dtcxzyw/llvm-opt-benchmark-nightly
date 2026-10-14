@@ -205,14 +205,14 @@ bb.a:
   br i1 %.not.not12, label %bb.b, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
+  %.promoted21 = ptrtoaddr ptr %.promoted to i64
+  %2 = ptrtoaddr ptr %i.b to i64
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !alias.scope !6586, !noundef !4 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.promoted13 = load i64, ptr %i.f, align 8, !alias.scope !6586 ; 5 uses
-  %2 = ptrtoaddr ptr %i.b to i64
-  %3 = ptrtoaddr ptr %.promoted to i64
   %i.g = add i64 %2, -4
-  %i.h = sub i64 %i.g, %3                         ; 4 uses
+  %i.h = sub i64 %i.g, %.promoted21               ; 4 uses
   %i.i = lshr i64 %i.h, 2
   %i.j = add nuw nsw i64 %i.i, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.h, 116

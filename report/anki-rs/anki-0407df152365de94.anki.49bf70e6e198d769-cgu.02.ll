@@ -205,14 +205,14 @@ bb.a:
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
+  %.promoted20 = ptrtoaddr ptr %.promoted to i64
+  %2 = ptrtoaddr ptr %i.c to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !451, !noundef !14 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.promoted11 = load i64, ptr %i.g, align 8, !alias.scope !451 ; 5 uses
-  %2 = ptrtoaddr ptr %i.c to i64
-  %3 = ptrtoaddr ptr %.promoted to i64
   %i.h = add i64 %2, -4
-  %i.i = sub i64 %i.h, %3                         ; 4 uses
+  %i.i = sub i64 %i.h, %.promoted20               ; 4 uses
   %i.j = lshr i64 %i.i, 2
   %i.k = add nuw nsw i64 %i.j, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.i, 124
@@ -615,14 +615,14 @@ bb.a:
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
+  %.promoted20 = ptrtoaddr ptr %.promoted to i64
+  %2 = ptrtoaddr ptr %i.c to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !alias.scope !689, !noundef !14 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.promoted11 = load i64, ptr %i.g, align 8, !alias.scope !689 ; 5 uses
-  %2 = ptrtoaddr ptr %i.c to i64
-  %3 = ptrtoaddr ptr %.promoted to i64
   %i.h = add i64 %2, -2
-  %i.i = sub i64 %i.h, %3                         ; 4 uses
+  %i.i = sub i64 %i.h, %.promoted20               ; 4 uses
   %i.j = lshr i64 %i.i, 1
   %i.k = add nuw i64 %i.j, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.i, 62

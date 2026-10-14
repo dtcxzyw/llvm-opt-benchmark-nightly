@@ -205,6 +205,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.0250 = phi ptr [ %i.bd, %bb.n ], [ %i.c, %bb.m ] ; 8 uses
   %.0247 = phi ptr [ %i.bd, %bb.n ], [ null, %bb.m ] ; 2 uses
+  %.0250447 = ptrtoaddr ptr %.0250 to i64         ; 2 uses
   %i.be = icmp samesign ugt i32 %i.as, 90
   br i1 %i.be, label %bb.p, label %bb.q
 
@@ -298,6 +299,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %.lr.p
 
 .lr.ph342.preheader:                              ; preds = %bb.x, %bb.u
   %.0240.lcssa = phi ptr [ %.0250, %bb.u ], [ %i.cr, %bb.x ] ; 2 uses
+  %.0240.lcssa448 = ptrtoaddr ptr %.0240.lcssa to i64
   %i.cs = getelementptr inbounds i8, ptr %.0240.lcssa, i64 -4 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %spec.select, i64 10
   %i.cu = load i32, ptr @DECPOWERS, align 16, !tbaa !23
@@ -372,12 +374,10 @@ bb.z:                                             ; preds = %bb.y
   %i.eb = ptrtoint ptr %.0246 to i64
   %.not287349 = icmp ugt ptr %.0250, %i.cs
   %i.ec = icmp slt i32 %i.az, 1
-  %5 = ptrtoaddr ptr %.0240.lcssa to i64
-  %i.ed = add i64 %5, -3
-  %6 = ptrtoaddr ptr %.0250 to i64                ; 2 uses
-  %i.ee = add i64 %6, 4
+  %i.ed = add i64 %.0240.lcssa448, -3
+  %i.ee = add i64 %.0250447, 4
   %i.ef = call i64 @llvm.umax.i64(i64 %i.ed, i64 %i.ee)
-  %i.eg = xor i64 %6, -1
+  %i.eg = xor i64 %.0250447, -1
   %i.eh = add i64 %i.ef, %i.eg                    ; 2 uses
   %i.ei = lshr i64 %i.eh, 2
   %i.ej = add nuw nsw i64 %i.ei, 1                ; 2 uses

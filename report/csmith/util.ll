@@ -204,19 +204,19 @@ bb.e:                                             ; preds = %_ZSt9__reverseIN9__
   br i1 %i.y, label %bb.f, label %_ZSt9__reverseIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEvT_S7_St26random_access_iterator_tag.exit.i.i, !llvm.loop !72
 
 bb.f:                                             ; preds = %bb.e
+  %2 = ptrtoaddr ptr %i.o to i64                  ; 3 uses
+  %3 = ptrtoaddr ptr %i.n to i64
   %.not11.i13.i.i = icmp ult ptr %i.o, %.ptr35.i.i
   br i1 %.not11.i13.i.i, label %.lr.ph.i15.i.i.preheader, label %_ZSt16next_permutationIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEbT_S7_.exit.thread
 
 .lr.ph.i15.i.i.preheader:                         ; preds = %bb.f
-  %2 = ptrtoaddr ptr %i.n to i64
-  %i.z = add i64 %2, -8
-  %3 = ptrtoaddr ptr %i.o to i64                  ; 3 uses
-  %i.aa = add i64 %3, 4
+  %i.z = add i64 %3, -8
+  %i.aa = add i64 %2, 4
   %i.ab = tail call i64 @llvm.umax.i64(i64 %i.z, i64 %i.aa)
   %i.ac = add i64 %i.ab, -4                       ; 2 uses
-  %i.ad = icmp ne i64 %i.ac, %3
+  %i.ad = icmp ne i64 %i.ac, %2
   %i.ae = zext i1 %i.ad to i64                    ; 3 uses
-  %i.af = add i64 %3, %i.ae
+  %i.af = add i64 %2, %i.ae
   %i.ag = sub i64 %i.ac, %i.af                    ; 2 uses
   %i.ah = lshr i64 %i.ag, 3
   %i.ai = add nuw nsw i64 %i.ah, %i.ae            ; 2 uses

@@ -205,11 +205,11 @@ _ZNSt6vectorItN8LightGBM6Common18AlignmentAllocatorItLm32EEEE6resizeEm.exit: ; p
   br i1 %.not3337, label %.loopexit, label %.lr.ph39
 
 .lr.ph39:                                         ; preds = %_ZNSt6vectorItN8LightGBM6Common18AlignmentAllocatorItLm32EEEE6resizeEm.exit
+  %4 = ptrtoaddr ptr %i.ag to i64
+  %5 = ptrtoaddr ptr %i.ah to i64
   %i.ai = load ptr, ptr %i.n, align 8, !tbaa !331 ; 2 uses
   %i.aj = load ptr, ptr %i.r, align 8, !tbaa !111 ; 2 uses
   %.promoted40 = load i64, ptr %i.ai, align 8, !tbaa !91 ; 3 uses
-  %4 = ptrtoaddr ptr %i.ag to i64
-  %5 = ptrtoaddr ptr %i.ah to i64
   %i.ak = add i64 %4, -4
   %i.al = sub i64 %i.ak, %5                       ; 2 uses
   %i.am = lshr i64 %i.al, 2
@@ -317,14 +317,14 @@ _ZNSt6vectorItN8LightGBM6Common18AlignmentAllocatorItLm32EEEE6resizeEm.exit25: ;
   br i1 %.not35, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorItN8LightGBM6Common18AlignmentAllocatorItLm32EEEE6resizeEm.exit25
+  %6 = ptrtoaddr ptr %i.cd to i64
+  %7 = ptrtoaddr ptr %i.ce to i64
   %i.cf = load ptr, ptr %i.bk, align 8, !tbaa !372
   %i.cg = getelementptr inbounds nuw [24 x i8], ptr %i.cf, i64 %i.bm
   %i.ch = load ptr, ptr %i.n, align 8, !tbaa !331
   %i.ci = getelementptr inbounds nuw [8 x i8], ptr %i.ch, i64 %i.bf ; 2 uses
   %i.cj = load ptr, ptr %i.cg, align 8, !tbaa !111 ; 2 uses
   %.promoted = load i64, ptr %i.ci, align 8, !tbaa !91 ; 3 uses
-  %6 = ptrtoaddr ptr %i.cd to i64
-  %7 = ptrtoaddr ptr %i.ce to i64
   %i.ck = add i64 %6, -4
   %i.cl = sub i64 %i.ck, %7                       ; 2 uses
   %i.cm = lshr i64 %i.cl, 2
@@ -727,10 +727,10 @@ _ZNSt6vectorIjN8LightGBM6Common18AlignmentAllocatorIjLm32EEEE6resizeEm.exit: ; p
   br i1 %.not3337, label %.loopexit, label %.lr.ph39
 
 .lr.ph39:                                         ; preds = %_ZNSt6vectorIjN8LightGBM6Common18AlignmentAllocatorIjLm32EEEE6resizeEm.exit
+  %4 = ptrtoaddr ptr %i.ai to i64
   %i.aj = load ptr, ptr %i.n, align 8, !tbaa !331 ; 2 uses
   %i.ak = load ptr, ptr %i.r, align 8, !tbaa !127 ; 3 uses
   %.promoted40 = load i64, ptr %i.aj, align 8, !tbaa !91 ; 5 uses
-  %4 = ptrtoaddr ptr %i.ai to i64
   %i.al = add i64 %4, -4
   %i.am = sub i64 %i.al, %i.ah                    ; 2 uses
   %i.an = lshr i64 %i.am, 2
@@ -842,13 +842,13 @@ _ZNSt6vectorIjN8LightGBM6Common18AlignmentAllocatorIjLm32EEEE6resizeEm.exit25: ;
   br i1 %.not35, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIjN8LightGBM6Common18AlignmentAllocatorIjLm32EEEE6resizeEm.exit25
+  %5 = ptrtoaddr ptr %i.ch to i64
   %i.ci = load ptr, ptr %i.bm, align 8, !tbaa !383
   %i.cj = getelementptr inbounds nuw [24 x i8], ptr %i.ci, i64 %i.bo
   %i.ck = load ptr, ptr %i.n, align 8, !tbaa !331
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.ck, i64 %i.bh ; 2 uses
   %i.cm = load ptr, ptr %i.cj, align 8, !tbaa !127 ; 3 uses
   %.promoted = load i64, ptr %i.cl, align 8, !tbaa !91 ; 5 uses
-  %5 = ptrtoaddr ptr %i.ch to i64
   %i.cn = add i64 %5, -4
   %i.co = sub i64 %i.cn, %i.cg                    ; 2 uses
   %i.cp = lshr i64 %i.co, 2

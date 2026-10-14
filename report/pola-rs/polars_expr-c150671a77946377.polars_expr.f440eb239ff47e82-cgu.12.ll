@@ -205,6 +205,7 @@ bb.ch:                                            ; preds = %bb.cg, %_RNCINvNtNt
   %.sroa.43.1.lcssa.i54 = phi ptr [ %.sroa.43.0.i49, %bb.bm ], [ %i.fn, %.lr.ph.i63.us ], [ %i.he, %bb.ch ], !dbg !56832 ; 4 uses
   %.sroa.27.1.lcssa.i55 = phi i64 [ %.sroa.27.0.i50, %bb.bm ], [ %i.fp, %.lr.ph.i63.us ], [ %i.hj, %bb.ch ], !dbg !56832 ; 5 uses
   %.sroa.9.1.lcssa.i56 = phi ptr [ %.sroa.9.0.i51, %bb.bm ], [ %i.fq, %.lr.ph.i63.us ], [ %i.hk, %bb.ch ], !dbg !56832 ; 7 uses
+  %.sroa.9.1.lcssa.i56340 = ptrtoaddr ptr %.sroa.9.1.lcssa.i56 to i64, !dbg !56892
   %i.hm = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph117, i64 %.sroa.0.0.i52, !dbg !56892 ; 3 uses
   %i.hn = icmp ult ptr %.sroa.9.1.lcssa.i56, %i.hm, !dbg !56893
   br i1 %i.hn, label %.lr.ph54.i.preheader, label %._crit_edge55.i, !dbg !56893
@@ -218,9 +219,8 @@ bb.ch:                                            ; preds = %bb.cg, %_RNCINvNtNt
 
 .lr.ph54.i.us.preheader:                          ; preds = %.lr.ph54.i.preheader
   %i.hr = shl i64 %.sroa.0.0.i52, 3, !dbg !56893
-  %7 = ptrtoaddr ptr %.sroa.9.1.lcssa.i56 to i64, !dbg !56893
   %i.hs = add i64 %i.hr, %i.d, !dbg !56893
-  %i.ht = xor i64 %7, -1, !dbg !56893
+  %i.ht = xor i64 %.sroa.9.1.lcssa.i56340, -1, !dbg !56893
   %i.hu = add i64 %i.hs, %i.ht, !dbg !56893       ; 2 uses
   %i.hv = lshr i64 %i.hu, 3, !dbg !56893
   %i.hw = add nuw nsw i64 %i.hv, 1, !dbg !56893   ; 2 uses
@@ -623,6 +623,7 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i65
   %.sroa.43.1.lcssa.i47 = phi ptr [ %.sroa.43.0.i42, %bb.s ], [ %i.dw, %bb.t ], !dbg !58050 ; 4 uses
   %.sroa.27.1.lcssa.i48 = phi i64 [ %.sroa.27.0.i43, %bb.s ], [ %i.ea, %bb.t ], !dbg !58050 ; 5 uses
   %.sroa.9.1.lcssa.i49 = phi ptr [ %.sroa.9.0.i44, %bb.s ], [ %i.eb, %bb.t ], !dbg !58050 ; 7 uses
+  %.sroa.9.1.lcssa.i49288 = ptrtoaddr ptr %.sroa.9.1.lcssa.i49 to i64, !dbg !58094
   %i.ed = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph122, i64 %.sroa.0.0.i45, !dbg !58094 ; 3 uses
   %i.ee = icmp ult ptr %.sroa.9.1.lcssa.i49, %i.ed, !dbg !58095
   br i1 %i.ee, label %.lr.ph38.i58.preheader, label %._crit_edge39.i50, !dbg !58095
@@ -634,9 +635,8 @@ bb.t:                                             ; preds = %bb.t, %.lr.ph.i65
 
 .lr.ph38.i58.us.preheader:                        ; preds = %.lr.ph38.i58.preheader
   %i.eg = shl i64 %.sroa.0.0.i45, 3, !dbg !58095
-  %7 = ptrtoaddr ptr %.sroa.9.1.lcssa.i49 to i64, !dbg !58095
   %i.eh = add i64 %i.eg, %i.d, !dbg !58095
-  %i.ei = xor i64 %7, -1, !dbg !58095
+  %i.ei = xor i64 %.sroa.9.1.lcssa.i49288, -1, !dbg !58095
   %i.ej = add i64 %i.eh, %i.ei, !dbg !58095       ; 2 uses
   %i.ek = lshr i64 %i.ej, 3, !dbg !58095
   %i.el = add nuw nsw i64 %i.ek, 1, !dbg !58095   ; 2 uses

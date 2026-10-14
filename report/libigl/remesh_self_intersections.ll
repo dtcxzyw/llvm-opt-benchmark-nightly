@@ -205,11 +205,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -612,11 +612,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -1019,11 +1019,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -1426,11 +1426,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -1833,11 +1833,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -2240,11 +2240,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -2647,11 +2647,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -3054,11 +3054,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -3461,11 +3461,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -3868,11 +3868,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -4275,11 +4275,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -4682,11 +4682,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -5089,11 +5089,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -5496,11 +5496,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -5903,11 +5903,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -6310,11 +6310,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -6717,11 +6717,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -7124,11 +7124,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -7531,11 +7531,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -7938,11 +7938,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -8345,11 +8345,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -8752,11 +8752,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -9159,11 +9159,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.du to i64
+  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dv = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.du to i64
-  %13 = ptrtoaddr ptr %i.dt to i64
   %i.dy = add i64 %12, -16
   %i.dz = sub i64 %i.dy, %13                      ; 2 uses
   %i.ea = lshr i64 %i.dz, 4
@@ -9566,11 +9566,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -9973,11 +9973,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4
@@ -10380,11 +10380,11 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.not121142, label %._crit_edge146, label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
+  %12 = ptrtoaddr ptr %i.fi to i64
+  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fj = load ptr, ptr %6, align 8, !tbaa !164   ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fl = load i64, ptr %i.fk, align 8, !tbaa !165 ; 3 uses
-  %12 = ptrtoaddr ptr %i.fi to i64
-  %13 = ptrtoaddr ptr %i.fh to i64
   %i.fm = add i64 %12, -16
   %i.fn = sub i64 %i.fm, %13                      ; 2 uses
   %i.fo = lshr i64 %i.fn, 4

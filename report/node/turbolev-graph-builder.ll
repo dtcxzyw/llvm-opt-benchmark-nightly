@@ -205,18 +205,18 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInser
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit, %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread
   %.pn = phi ptr [ %i.bj, %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit ], [ %i.cp, %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE19PrepareForInsertionEPKS4_mPm.exit.thread ] ; 2 uses
+  %.pn94 = ptrtoaddr ptr %.pn to i64              ; 2 uses
   %.0.lcssa.i.i = getelementptr inbounds nuw i8, ptr %.pn, i64 %i.bm ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 %.idx
   %.pre20.i.i = load i32, ptr %i.bi, align 8      ; 2 uses
-  %5 = ptrtoaddr ptr %.pn to i64                  ; 2 uses
-  %i.ct = add i64 %5, %i.bk                       ; 2 uses
+  %i.ct = add i64 %.pn94, %i.bk                   ; 2 uses
   %i.cu = add i64 %i.ct, %.idx
   %i.cv = sub i64 %i.cu, %i.bl
   %i.cw = add i64 %i.ct, 4
   %i.cx = sub i64 %i.cw, %i.bl
   %i.cy = tail call i64 @llvm.umax.i64(i64 %i.cv, i64 %i.cx)
   %i.cz = add i64 %i.cy, %i.bl
-  %i.da = xor i64 %5, -1
+  %i.da = xor i64 %.pn94, -1
   %i.db = add i64 %i.cz, %i.da
   %i.dc = sub i64 %i.db, %i.bk                    ; 2 uses
   %i.dd = lshr i64 %i.dc, 2

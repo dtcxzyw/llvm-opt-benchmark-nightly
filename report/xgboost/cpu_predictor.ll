@@ -205,10 +205,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i.i264
   br i1 %.not6.i.i.i.i.i.i.i.i.i267.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i.i271.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i268.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.i268.i.i.preheader:        ; preds = %.lr.ph.i.i.i265.i.i
-  %i.aay = ptrtoaddr ptr %i.aaw to i64
-  %i.aaz = ptrtoaddr ptr %i.aax to i64
-  %i.aba = add i64 %i.aay, -4
-  %i.abb = sub i64 %i.aba, %i.aaz                 ; 2 uses
+  %i.aay = ptrtoaddr ptr %i.aax to i64
+  %i.aaz = ptrtoaddr ptr %i.aaw to i64
+  %i.aba = add i64 %i.aaz, -4
+  %i.abb = sub i64 %i.aba, %i.aay                 ; 2 uses
   %i.abc = lshr i64 %i.abb, 2
   %i.abd = add nuw nsw i64 %i.abc, 1              ; 2 uses
   %min.iters.check826 = icmp ult i64 %i.abb, 28
@@ -444,10 +444,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i.i.i.
   br i1 %.not6.i.i.i.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.preheader:           ; preds = %.lr.ph.i.i.i.i.i
-  %i.add = ptrtoaddr ptr %i.adb to i64
-  %i.ade = ptrtoaddr ptr %i.adc to i64
-  %i.adf = add i64 %i.add, -4
-  %i.adg = sub i64 %i.adf, %i.ade                 ; 2 uses
+  %i.add = ptrtoaddr ptr %i.adc to i64
+  %i.ade = ptrtoaddr ptr %i.adb to i64
+  %i.adf = add i64 %i.ade, -4
+  %i.adg = sub i64 %i.adf, %i.add                 ; 2 uses
   %i.adh = lshr i64 %i.adg, 2
   %i.adi = add nuw nsw i64 %i.adh, 1              ; 2 uses
   %min.iters.check837 = icmp ult i64 %i.adg, 28
@@ -850,10 +850,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm1EE12ThreadBufferEm.exit.i.i157.
   br i1 %.not6.i.i.i.i.i.i.i.i.i160.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i.i164.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i161.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.i161.i.i.preheader:        ; preds = %.lr.ph.i.i.i158.i.i
-  %i.bva = ptrtoaddr ptr %i.buy to i64
-  %i.bvb = ptrtoaddr ptr %i.buz to i64
-  %i.bvc = add i64 %i.bva, -4
-  %i.bvd = sub i64 %i.bvc, %i.bvb                 ; 2 uses
+  %i.bva = ptrtoaddr ptr %i.buz to i64
+  %i.bvb = ptrtoaddr ptr %i.buy to i64
+  %i.bvc = add i64 %i.bvb, -4
+  %i.bvd = sub i64 %i.bvc, %i.bva                 ; 2 uses
   %i.bve = lshr i64 %i.bvd, 2
   %i.bvf = add nuw nsw i64 %i.bve, 1              ; 2 uses
   %min.iters.check = icmp ult i64 %i.bvd, 28
@@ -1088,10 +1088,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm1EE12ThreadBufferEm.exit.i.i.i.i
   br i1 %.not6.i.i.i.i.i.i.i.i.i.i.i469, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i.i.i.i473, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i470.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i470.preheader:        ; preds = %.lr.ph.i.i.i.i.i467
-  %i.bxe = ptrtoaddr ptr %i.bxc to i64
-  %i.bxf = ptrtoaddr ptr %i.bxd to i64
-  %i.bxg = add i64 %i.bxe, -4
-  %i.bxh = sub i64 %i.bxg, %i.bxf                 ; 2 uses
+  %i.bxe = ptrtoaddr ptr %i.bxd to i64
+  %i.bxf = ptrtoaddr ptr %i.bxc to i64
+  %i.bxg = add i64 %i.bxf, -4
+  %i.bxh = sub i64 %i.bxg, %i.bxe                 ; 2 uses
   %i.bxi = lshr i64 %i.bxh, 2
   %i.bxj = add nuw nsw i64 %i.bxi, 1              ; 2 uses
   %min.iters.check815 = icmp ult i64 %i.bxh, 28
@@ -1494,10 +1494,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_11CatAccesso
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i14.i
-  %i.cm = ptrtoaddr ptr %i.ck to i64
-  %i.cn = ptrtoaddr ptr %i.cl to i64
-  %i.co = add i64 %i.cm, -4
-  %i.cp = sub i64 %i.co, %i.cn                    ; 2 uses
+  %i.cm = ptrtoaddr ptr %i.cl to i64
+  %i.cn = ptrtoaddr ptr %i.ck to i64
+  %i.co = add i64 %i.cn, -4
+  %i.cp = sub i64 %i.co, %i.cm                    ; 2 uses
   %i.cq = lshr i64 %i.cp, 2
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
   %min.iters.check23 = icmp ult i64 %i.cp, 28
@@ -1900,10 +1900,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_12NoOpAccess
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i14.i
-  %i.cm = ptrtoaddr ptr %i.ck to i64
-  %i.cn = ptrtoaddr ptr %i.cl to i64
-  %i.co = add i64 %i.cm, -4
-  %i.cp = sub i64 %i.co, %i.cn                    ; 2 uses
+  %i.cm = ptrtoaddr ptr %i.cl to i64
+  %i.cn = ptrtoaddr ptr %i.ck to i64
+  %i.co = add i64 %i.cn, -4
+  %i.cp = sub i64 %i.co, %i.cm                    ; 2 uses
   %i.cq = lshr i64 %i.cp, 2
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
   %min.iters.check23 = icmp ult i64 %i.cp, 28
@@ -2306,10 +2306,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_14SparsePageViewINS_12NoOpAccessorEEEE
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.eg = ptrtoaddr ptr %i.ee to i64
-  %i.eh = ptrtoaddr ptr %i.ef to i64
-  %i.ei = add i64 %i.eg, -4
-  %i.ej = sub i64 %i.ei, %i.eh                    ; 2 uses
+  %i.eg = ptrtoaddr ptr %i.ef to i64
+  %i.eh = ptrtoaddr ptr %i.ee to i64
+  %i.ei = add i64 %i.eh, -4
+  %i.ej = sub i64 %i.ei, %i.eg                    ; 2 uses
   %i.ek = lshr i64 %i.ej, 2
   %i.el = add nuw nsw i64 %i.ek, 1                ; 2 uses
   %min.iters.check26 = icmp ult i64 %i.ej, 28
@@ -2603,10 +2603,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_11CatAccesso
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i14.i
-  %i.cl = ptrtoaddr ptr %i.cj to i64
-  %i.cm = ptrtoaddr ptr %i.ck to i64
-  %i.cn = add i64 %i.cl, -4
-  %i.co = sub i64 %i.cn, %i.cm                    ; 2 uses
+  %i.cl = ptrtoaddr ptr %i.ck to i64
+  %i.cm = ptrtoaddr ptr %i.cj to i64
+  %i.cn = add i64 %i.cm, -4
+  %i.co = sub i64 %i.cn, %i.cl                    ; 2 uses
   %i.cp = lshr i64 %i.co, 2
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
   %min.iters.check23 = icmp ult i64 %i.co, 28
@@ -2849,10 +2849,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_12NoOpAccess
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i14.i
-  %i.cl = ptrtoaddr ptr %i.cj to i64
-  %i.cm = ptrtoaddr ptr %i.ck to i64
-  %i.cn = add i64 %i.cl, -4
-  %i.co = sub i64 %i.cn, %i.cm                    ; 2 uses
+  %i.cl = ptrtoaddr ptr %i.ck to i64
+  %i.cm = ptrtoaddr ptr %i.cj to i64
+  %i.cn = add i64 %i.cm, -4
+  %i.co = sub i64 %i.cn, %i.cl                    ; 2 uses
   %i.cp = lshr i64 %i.co, 2
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
   %min.iters.check23 = icmp ult i64 %i.co, 28
@@ -3189,10 +3189,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_14SparsePageViewINS_12NoOpAccessorEEEE
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.ef = ptrtoaddr ptr %i.ed to i64
-  %i.eg = ptrtoaddr ptr %i.ee to i64
-  %i.eh = add i64 %i.ef, -4
-  %i.ei = sub i64 %i.eh, %i.eg                    ; 2 uses
+  %i.ef = ptrtoaddr ptr %i.ee to i64
+  %i.eg = ptrtoaddr ptr %i.ed to i64
+  %i.eh = add i64 %i.eg, -4
+  %i.ei = sub i64 %i.eh, %i.ef                    ; 2 uses
   %i.ej = lshr i64 %i.ei, 2
   %i.ek = add nuw nsw i64 %i.ej, 1                ; 2 uses
   %min.iters.check26 = icmp ult i64 %i.ei, 28
@@ -3595,10 +3595,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i: ; p
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.aq = ptrtoaddr ptr %i.ao to i64
-  %i.ar = ptrtoaddr ptr %i.ap to i64
-  %i.as = add i64 %i.aq, -4
-  %i.at = sub i64 %i.as, %i.ar                    ; 2 uses
+  %i.aq = ptrtoaddr ptr %i.ap to i64
+  %i.ar = ptrtoaddr ptr %i.ao to i64
+  %i.as = add i64 %i.ar, -4
+  %i.at = sub i64 %i.as, %i.aq                    ; 2 uses
   %i.au = lshr i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.at, 28
@@ -4001,10 +4001,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i: ; p
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.aq = ptrtoaddr ptr %i.ao to i64
-  %i.ar = ptrtoaddr ptr %i.ap to i64
-  %i.as = add i64 %i.aq, -4
-  %i.at = sub i64 %i.as, %i.ar                    ; 2 uses
+  %i.aq = ptrtoaddr ptr %i.ap to i64
+  %i.ar = ptrtoaddr ptr %i.ao to i64
+  %i.as = add i64 %i.ar, -4
+  %i.at = sub i64 %i.as, %i.aq                    ; 2 uses
   %i.au = lshr i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.at, 28
@@ -4407,10 +4407,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_11AdapterViewINS_4data15CSRArrayAdapte
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i14.i
-  %i.ci = ptrtoaddr ptr %i.cg to i64
-  %i.cj = ptrtoaddr ptr %i.ch to i64
-  %i.ck = add i64 %i.ci, -4
-  %i.cl = sub i64 %i.ck, %i.cj                    ; 2 uses
+  %i.ci = ptrtoaddr ptr %i.ch to i64
+  %i.cj = ptrtoaddr ptr %i.cg to i64
+  %i.ck = add i64 %i.cj, -4
+  %i.cl = sub i64 %i.ck, %i.ci                    ; 2 uses
   %i.cm = lshr i64 %i.cl, 2
   %i.cn = add nuw nsw i64 %i.cm, 1                ; 2 uses
   %min.iters.check23 = icmp ult i64 %i.cl, 28
@@ -4813,10 +4813,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i: ; p
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.aq = ptrtoaddr ptr %i.ao to i64
-  %i.ar = ptrtoaddr ptr %i.ap to i64
-  %i.as = add i64 %i.aq, -4
-  %i.at = sub i64 %i.as, %i.ar                    ; 2 uses
+  %i.aq = ptrtoaddr ptr %i.ap to i64
+  %i.ar = ptrtoaddr ptr %i.ao to i64
+  %i.as = add i64 %i.ar, -4
+  %i.at = sub i64 %i.as, %i.aq                    ; 2 uses
   %i.au = lshr i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.at, 28
@@ -5219,10 +5219,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm64EE12ThreadBufferEm.exit.i: ; p
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.aq = ptrtoaddr ptr %i.ao to i64
-  %i.ar = ptrtoaddr ptr %i.ap to i64
-  %i.as = add i64 %i.aq, -4
-  %i.at = sub i64 %i.as, %i.ar                    ; 2 uses
+  %i.aq = ptrtoaddr ptr %i.ap to i64
+  %i.ar = ptrtoaddr ptr %i.ao to i64
+  %i.as = add i64 %i.ar, -4
+  %i.at = sub i64 %i.as, %i.aq                    ; 2 uses
   %i.au = lshr i64 %i.at, 2
   %i.av = add nuw nsw i64 %i.au, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.at, 28
@@ -5625,10 +5625,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_11CatAccesso
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i16.i
-  %i.co = ptrtoaddr ptr %i.cm to i64
-  %i.cp = ptrtoaddr ptr %i.cn to i64
-  %i.cq = add i64 %i.co, -4
-  %i.cr = sub i64 %i.cq, %i.cp                    ; 2 uses
+  %i.co = ptrtoaddr ptr %i.cn to i64
+  %i.cp = ptrtoaddr ptr %i.cm to i64
+  %i.cq = add i64 %i.cp, -4
+  %i.cr = sub i64 %i.cq, %i.co                    ; 2 uses
   %i.cs = lshr i64 %i.cr, 2
   %i.ct = add nuw nsw i64 %i.cs, 1                ; 2 uses
   %min.iters.check38 = icmp ult i64 %i.cr, 28
@@ -6031,10 +6031,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm1EE12ThreadBufferEm.exit.i: ; pr
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.au = ptrtoaddr ptr %i.as to i64
-  %i.av = ptrtoaddr ptr %i.at to i64
-  %i.aw = add i64 %i.au, -4
-  %i.ax = sub i64 %i.aw, %i.av                    ; 2 uses
+  %i.au = ptrtoaddr ptr %i.at to i64
+  %i.av = ptrtoaddr ptr %i.as to i64
+  %i.aw = add i64 %i.av, -4
+  %i.ax = sub i64 %i.aw, %i.au                    ; 2 uses
   %i.ay = lshr i64 %i.ax, 2
   %i.az = add nuw nsw i64 %i.ay, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ax, 28
@@ -6437,10 +6437,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_12NoOpAccess
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i16.i
-  %i.co = ptrtoaddr ptr %i.cm to i64
-  %i.cp = ptrtoaddr ptr %i.cn to i64
-  %i.cq = add i64 %i.co, -4
-  %i.cr = sub i64 %i.cq, %i.cp                    ; 2 uses
+  %i.co = ptrtoaddr ptr %i.cn to i64
+  %i.cp = ptrtoaddr ptr %i.cm to i64
+  %i.cq = add i64 %i.cp, -4
+  %i.cr = sub i64 %i.cq, %i.co                    ; 2 uses
   %i.cs = lshr i64 %i.cr, 2
   %i.ct = add nuw nsw i64 %i.cs, 1                ; 2 uses
   %min.iters.check38 = icmp ult i64 %i.cr, 28
@@ -6843,10 +6843,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_14SparsePageViewINS_12NoOpAccessorEEEE
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.ej = ptrtoaddr ptr %i.eh to i64
-  %i.ek = ptrtoaddr ptr %i.ei to i64
-  %i.el = add i64 %i.ej, -4
-  %i.em = sub i64 %i.el, %i.ek                    ; 2 uses
+  %i.ej = ptrtoaddr ptr %i.ei to i64
+  %i.ek = ptrtoaddr ptr %i.eh to i64
+  %i.el = add i64 %i.ek, -4
+  %i.em = sub i64 %i.el, %i.ej                    ; 2 uses
   %i.en = lshr i64 %i.em, 2
   %i.eo = add nuw nsw i64 %i.en, 1                ; 2 uses
   %min.iters.check39 = icmp ult i64 %i.em, 28
@@ -7249,10 +7249,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_11CatAccesso
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i16.i
-  %i.co = ptrtoaddr ptr %i.cm to i64
-  %i.cp = ptrtoaddr ptr %i.cn to i64
-  %i.cq = add i64 %i.co, -4
-  %i.cr = sub i64 %i.cq, %i.cp                    ; 2 uses
+  %i.co = ptrtoaddr ptr %i.cn to i64
+  %i.cp = ptrtoaddr ptr %i.cm to i64
+  %i.cq = add i64 %i.cp, -4
+  %i.cr = sub i64 %i.cq, %i.co                    ; 2 uses
   %i.cs = lshr i64 %i.cr, 2
   %i.ct = add nuw nsw i64 %i.cs, 1                ; 2 uses
   %min.iters.check38 = icmp ult i64 %i.cr, 28
@@ -7655,10 +7655,10 @@ _ZN7xgboost9predictor12_GLOBAL__N_19ThreadTmpILm1EE12ThreadBufferEm.exit.i: ; pr
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.au = ptrtoaddr ptr %i.as to i64
-  %i.av = ptrtoaddr ptr %i.at to i64
-  %i.aw = add i64 %i.au, -4
-  %i.ax = sub i64 %i.aw, %i.av                    ; 2 uses
+  %i.au = ptrtoaddr ptr %i.at to i64
+  %i.av = ptrtoaddr ptr %i.as to i64
+  %i.aw = add i64 %i.av, -4
+  %i.ax = sub i64 %i.aw, %i.au                    ; 2 uses
   %i.ay = lshr i64 %i.ax, 2
   %i.az = add nuw nsw i64 %i.ay, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ax, 28
@@ -8061,10 +8061,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_20GHistIndexMatrixViewINS_12NoOpAccess
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i16.i
-  %i.co = ptrtoaddr ptr %i.cm to i64
-  %i.cp = ptrtoaddr ptr %i.cn to i64
-  %i.cq = add i64 %i.co, -4
-  %i.cr = sub i64 %i.cq, %i.cp                    ; 2 uses
+  %i.co = ptrtoaddr ptr %i.cn to i64
+  %i.cp = ptrtoaddr ptr %i.cm to i64
+  %i.cq = add i64 %i.cp, -4
+  %i.cr = sub i64 %i.cq, %i.co                    ; 2 uses
   %i.cs = lshr i64 %i.cr, 2
   %i.ct = add nuw nsw i64 %i.cs, 1                ; 2 uses
   %min.iters.check38 = icmp ult i64 %i.cr, 28
@@ -8467,10 +8467,10 @@ _ZNK7xgboost9predictor13DataToFeatVecINS0_14SparsePageViewINS_12NoOpAccessorEEEE
   br i1 %.not6.i.i.i.i.i.i.i.i, label %_ZN7xgboost7RegTree4FVec4DropEv.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.i.i
-  %i.ej = ptrtoaddr ptr %i.eh to i64
-  %i.ek = ptrtoaddr ptr %i.ei to i64
-  %i.el = add i64 %i.ej, -4
-  %i.em = sub i64 %i.el, %i.ek                    ; 2 uses
+  %i.ej = ptrtoaddr ptr %i.ei to i64
+  %i.ek = ptrtoaddr ptr %i.eh to i64
+  %i.el = add i64 %i.ek, -4
+  %i.em = sub i64 %i.el, %i.ej                    ; 2 uses
   %i.en = lshr i64 %i.em, 2
   %i.eo = add nuw nsw i64 %i.en, 1                ; 2 uses
   %min.iters.check39 = icmp ult i64 %i.em, 28
