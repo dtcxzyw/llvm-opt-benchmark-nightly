@@ -206,8 +206,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN4llvm15SmallVectorImplIPNS_8MetadataEE7reserveEm.exit: ; preds = %bb.d, %bb.e
   %.pre-phi = phi i64 [ %i.g, %bb.d ], [ %.pre66, %bb.e ] ; 3 uses
   %i.ai = phi i32 [ %i.f, %bb.d ], [ %.pre62, %bb.e ] ; 2 uses
-  %i.aj = phi ptr [ %i.a, %bb.d ], [ %.pre, %bb.e ] ; 5 uses
-  %4 = ptrtoaddr ptr %i.aj to i64                 ; 2 uses
+  %i.aj = phi ptr [ %i.a, %bb.d ], [ %.pre, %bb.e ] ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.d ; 16 uses
   %.idx = shl nuw nsw i64 %.pre-phi, 3            ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 %.idx ; 4 uses
@@ -290,6 +289,7 @@ _ZSt13move_backwardIPPN4llvm8MetadataES3_ET0_T_S5_S4_.exit: ; preds = %bb.k, %bb
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i49.preheader103, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i49.preheader
+  %4 = ptrtoaddr ptr %i.aj to i64
   %i.bl = add i64 %4, %i.b
   %i.bm = add i64 %i.c, %i.k
   %i.bn = sub i64 %i.bm, %i.bl
@@ -358,7 +358,8 @@ bb.n:                                             ; preds = %_ZN4llvm15SmallVect
   br i1 %min.iters.check87, label %.lr.ph.preheader102, label %vector.memcheck84
 
 vector.memcheck84:                                ; preds = %.lr.ph.preheader
-  %i.ch = add i64 %4, %i.b
+  %5 = ptrtoaddr ptr %i.aj to i64
+  %i.ch = add i64 %5, %i.b
   %i.ci = add i64 %i.c, %i.k
   %i.cj = sub i64 %i.ci, %i.ch
   %diff.check85 = icmp ugt i64 %i.cj, -32
@@ -560,7 +561,6 @@ _ZN4llvm15SmallVectorImplIPNS_8MetadataEE7reserveEm.exit: ; preds = %bb.e, %bb.f
   %.pre-phi = phi i64 [ %i.g, %bb.e ], [ %.pre64, %bb.f ] ; 3 uses
   %i.ah = phi i32 [ %i.f, %bb.e ], [ %.pre59, %bb.f ] ; 2 uses
   %i.ai = phi ptr [ %i.a, %bb.e ], [ %.pre, %bb.f ] ; 5 uses
-  %4 = ptrtoaddr ptr %i.ai to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.d ; 14 uses
   %.idx = shl nuw nsw i64 %.pre-phi, 3            ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.idx ; 4 uses
@@ -667,6 +667,7 @@ bb.r:                                             ; preds = %_ZN4llvm15SmallVect
   br i1 %min.iters.check, label %.lr.ph.preheader78, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
+  %4 = ptrtoaddr ptr %i.ai to i64
   %i.br = add i64 %4, %i.b
   %i.bs = add i64 %i.c, %i.k
   %i.bt = sub i64 %i.bs, %i.br

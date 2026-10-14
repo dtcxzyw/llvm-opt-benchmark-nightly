@@ -204,10 +204,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
-  %.0583 = phi ptr [ null, %bb.b ], [ %i.i, %bb.d ], [ %i.i, %bb.c ] ; 259 uses
+  %.0583 = phi ptr [ null, %bb.b ], [ %i.i, %bb.d ], [ %i.i, %bb.c ] ; 269 uses
   %.0582 = phi i1 [ false, %bb.b ], [ true, %bb.d ], [ false, %bb.c ] ; 4 uses
   %.1581 = phi double [ 0.000000e+00, %bb.b ], [ %i.n, %bb.d ], [ 0.000000e+00, %bb.c ]
-  %.05831267 = ptrtoaddr ptr %.0583 to i64        ; 11 uses
   %i.o = fcmp oeq double %3, 0.000000e+00         ; 17 uses
   br i1 %i.o, label %bb.h, label %bb.f
 
@@ -225,10 +224,9 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %bb.e
-  %.0579 = phi ptr [ null, %bb.e ], [ %i.q, %bb.g ], [ %i.q, %bb.f ] ; 259 uses
+  %.0579 = phi ptr [ null, %bb.e ], [ %i.q, %bb.g ], [ %i.q, %bb.f ] ; 269 uses
   %.0578 = phi i1 [ false, %bb.e ], [ true, %bb.g ], [ false, %bb.f ] ; 4 uses
   %.1 = phi double [ 0.000000e+00, %bb.e ], [ %i.v, %bb.g ], [ 0.000000e+00, %bb.f ]
-  %.05791268 = ptrtoaddr ptr %.0579 to i64        ; 11 uses
   %i.w = fcmp une double %5, 0.000000e+00
   br i1 %i.w, label %bb.i, label %bb.j
 
@@ -293,8 +291,7 @@ _ZNK5Ipopt16DenseVectorSpace23AllocateInternalStorageEv.exit.i: ; preds = %bb.p,
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZNK5Ipopt16DenseVectorSpace23AllocateInternalStorageEv.exit.i, %bb.n
-  %i.au = phi ptr [ %.0.i.i, %_ZNK5Ipopt16DenseVectorSpace23AllocateInternalStorageEv.exit.i ], [ %i.ak, %bb.n ] ; 69 uses
-  %6 = ptrtoaddr ptr %i.au to i64                 ; 22 uses
+  %i.au = phi ptr [ %.0.i.i, %_ZNK5Ipopt16DenseVectorSpace23AllocateInternalStorageEv.exit.i ], [ %i.ak, %bb.n ] ; 81 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 233
   store i8 0, ptr %i.av, align 1, !tbaa !39
   %or.cond7 = or i1 %.0582, %.0578
@@ -340,9 +337,12 @@ bb.v:                                             ; preds = %bb.t
   br i1 %min.iters.check1474, label %scalar.ph1473.preheader, label %vector.memcheck1469
 
 vector.memcheck1469:                              ; preds = %.lr.ph809
-  %i.bf = sub i64 %.05831267, %6
+  %6 = ptrtoaddr ptr %i.au to i64                 ; 2 uses
+  %7 = ptrtoaddr ptr %.0583 to i64
+  %i.bf = sub i64 %7, %6
   %diff.check1470 = icmp ugt i64 %i.bf, -32
-  %i.bg = sub i64 %.05791268, %6
+  %8 = ptrtoaddr ptr %.0579 to i64
+  %i.bg = sub i64 %8, %6
   %diff.check1471 = icmp ugt i64 %i.bg, -32
   %conflict.rdx1472 = or i1 %diff.check1470, %diff.check1471
   br i1 %conflict.rdx1472, label %scalar.ph1473.preheader, label %vector.ph1475
@@ -456,9 +456,12 @@ bb.w:                                             ; preds = %bb.v
   br i1 %min.iters.check1436, label %scalar.ph1435.preheader, label %vector.memcheck1431
 
 vector.memcheck1431:                              ; preds = %.lr.ph805
-  %i.db = sub i64 %.05831267, %6
+  %9 = ptrtoaddr ptr %i.au to i64                 ; 2 uses
+  %10 = ptrtoaddr ptr %.0583 to i64
+  %i.db = sub i64 %10, %9
   %diff.check1432 = icmp ugt i64 %i.db, -32
-  %i.dc = sub i64 %.05791268, %6
+  %11 = ptrtoaddr ptr %.0579 to i64
+  %i.dc = sub i64 %11, %9
   %diff.check1433 = icmp ugt i64 %i.dc, -32
   %conflict.rdx1434 = or i1 %diff.check1432, %diff.check1433
   br i1 %conflict.rdx1434, label %scalar.ph1435.preheader, label %vector.ph1437
@@ -525,9 +528,12 @@ scalar.ph1435.prol.loopexit:                      ; preds = %scalar.ph1435.prol,
   br i1 %min.iters.check1456, label %scalar.ph1455.preheader, label %vector.memcheck1451
 
 vector.memcheck1451:                              ; preds = %.lr.ph807
-  %i.du = sub i64 %.05831267, %6
+  %12 = ptrtoaddr ptr %i.au to i64                ; 2 uses
+  %13 = ptrtoaddr ptr %.0583 to i64
+  %i.du = sub i64 %13, %12
   %diff.check1452 = icmp ugt i64 %i.du, -32
-  %i.dv = sub i64 %.05791268, %6
+  %14 = ptrtoaddr ptr %.0579 to i64
+  %i.dv = sub i64 %14, %12
   %diff.check1453 = icmp ugt i64 %i.dv, -32
   %conflict.rdx1454 = or i1 %diff.check1452, %diff.check1453
   br i1 %conflict.rdx1454, label %scalar.ph1455.preheader, label %vector.ph1457
@@ -662,7 +668,9 @@ bb.y:                                             ; preds = %bb.x
 .lr.ph803:                                        ; preds = %.preheader601
   %wide.trip.count1102 = zext nneg i32 %i.ga to i64 ; 5 uses
   %min.iters.check1420 = icmp ult i32 %i.ga, 6
-  %i.gc = sub i64 %.05831267, %6
+  %15 = ptrtoaddr ptr %i.au to i64
+  %16 = ptrtoaddr ptr %.0583 to i64
+  %i.gc = sub i64 %16, %15
   %diff.check1418.a = icmp ugt i64 %i.gc, -32
   %or.cond2749 = select i1 %min.iters.check1420, i1 true, i1 %diff.check1418.a
   br i1 %or.cond2749, label %scalar.ph1419.preheader, label %vector.ph1421.a
@@ -762,9 +770,12 @@ bb.z:                                             ; preds = %bb.y
   br i1 %min.iters.check1404, label %scalar.ph1403.preheader, label %vector.memcheck1399
 
 vector.memcheck1399:                              ; preds = %.lr.ph801
-  %i.hl = sub i64 %.05831267, %6
+  %17 = ptrtoaddr ptr %i.au to i64                ; 2 uses
+  %18 = ptrtoaddr ptr %.0583 to i64
+  %i.hl = sub i64 %18, %17
   %diff.check1400 = icmp ugt i64 %i.hl, -32
-  %i.hm = sub i64 %.05791268, %6
+  %19 = ptrtoaddr ptr %.0579 to i64
+  %i.hm = sub i64 %19, %17
   %diff.check1401 = icmp ugt i64 %i.hm, -32
   %conflict.rdx1402 = or i1 %diff.check1400, %diff.check1401
   br i1 %conflict.rdx1402, label %scalar.ph1403.preheader, label %vector.ph1405
@@ -878,9 +889,12 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %min.iters.check1366, label %scalar.ph1365.preheader, label %vector.memcheck1361
 
 vector.memcheck1361:                              ; preds = %.lr.ph797
-  %i.jh = sub i64 %.05831267, %6
+  %20 = ptrtoaddr ptr %i.au to i64                ; 2 uses
+  %21 = ptrtoaddr ptr %.0583 to i64
+  %i.jh = sub i64 %21, %20
   %diff.check1362 = icmp ugt i64 %i.jh, -32
-  %i.ji = sub i64 %.05791268, %6
+  %22 = ptrtoaddr ptr %.0579 to i64
+  %i.ji = sub i64 %22, %20
   %diff.check1363 = icmp ugt i64 %i.ji, -32
   %conflict.rdx1364 = or i1 %diff.check1362, %diff.check1363
   br i1 %conflict.rdx1364, label %scalar.ph1365.preheader, label %vector.ph1367
@@ -950,9 +964,12 @@ scalar.ph1365.prol.loopexit:                      ; preds = %scalar.ph1365.prol,
   br i1 %min.iters.check1386, label %scalar.ph1385.preheader, label %vector.memcheck1381
 
 vector.memcheck1381:                              ; preds = %.lr.ph799
-  %i.kd = sub i64 %.05831267, %6
+  %23 = ptrtoaddr ptr %i.au to i64                ; 2 uses
+  %24 = ptrtoaddr ptr %.0583 to i64
+  %i.kd = sub i64 %24, %23
   %diff.check1382 = icmp ugt i64 %i.kd, -32
-  %i.ke = sub i64 %.05791268, %6
+  %25 = ptrtoaddr ptr %.0579 to i64
+  %i.ke = sub i64 %25, %23
   %diff.check1383 = icmp ugt i64 %i.ke, -32
   %conflict.rdx1384 = or i1 %diff.check1382, %diff.check1383
   br i1 %conflict.rdx1384, label %scalar.ph1385.preheader, label %vector.ph1387
@@ -1110,7 +1127,9 @@ bb.af:                                            ; preds = %bb.ae
 .lr.ph791:                                        ; preds = %.preheader613
   %wide.trip.count1077 = zext nneg i32 %i.mt to i64 ; 5 uses
   %min.iters.check1334 = icmp ult i32 %i.mt, 6
-  %i.mv = sub i64 %.05791268, %6
+  %26 = ptrtoaddr ptr %i.au to i64
+  %27 = ptrtoaddr ptr %.0579 to i64
+  %i.mv = sub i64 %27, %26
   %diff.check1332 = icmp ugt i64 %i.mv, -32
   %or.cond2750 = select i1 %min.iters.check1334, i1 true, i1 %diff.check1332
   br i1 %or.cond2750, label %scalar.ph1333.preheader, label %vector.ph1335.a
@@ -1172,7 +1191,9 @@ scalar.ph1333.prol.loopexit:                      ; preds = %scalar.ph1333.prol,
 .lr.ph793:                                        ; preds = %.preheader611
   %wide.trip.count1082 = zext nneg i32 %i.mt to i64 ; 5 uses
   %min.iters.check1350 = icmp ult i32 %i.mt, 6
-  %i.nj = sub i64 %.05791268, %6
+  %28 = ptrtoaddr ptr %i.au to i64
+  %29 = ptrtoaddr ptr %.0579 to i64
+  %i.nj = sub i64 %29, %28
   %diff.check1348 = icmp ugt i64 %i.nj, -32
   %or.cond2751 = select i1 %min.iters.check1350, i1 true, i1 %diff.check1348
   br i1 %or.cond2751, label %scalar.ph1349.preheader, label %vector.ph1351
@@ -1297,7 +1318,9 @@ bb.ag:                                            ; preds = %bb.ab
 .lr.ph789:                                        ; preds = %.preheader615
   %wide.trip.count1072 = zext nneg i32 %i.pf to i64 ; 5 uses
   %min.iters.check1318 = icmp ult i32 %i.pf, 6
-  %i.ph = sub i64 %.05831267, %6
+  %30 = ptrtoaddr ptr %i.au to i64
+  %31 = ptrtoaddr ptr %.0583 to i64
+  %i.ph = sub i64 %31, %30
   %diff.check1316 = icmp ugt i64 %i.ph, -32
   %or.cond2752 = select i1 %min.iters.check1318, i1 true, i1 %diff.check1316
   br i1 %or.cond2752, label %scalar.ph1317.preheader, label %vector.ph1319
@@ -1399,9 +1422,12 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %min.iters.check1300, label %scalar.ph1299.preheader, label %vector.memcheck1295
 
 vector.memcheck1295:                              ; preds = %.lr.ph787
-  %i.qq = sub i64 %.05831267, %6
+  %32 = ptrtoaddr ptr %i.au to i64                ; 2 uses
+  %33 = ptrtoaddr ptr %.0583 to i64
+  %i.qq = sub i64 %33, %32
   %diff.check1296 = icmp ugt i64 %i.qq, -32
-  %i.qr = sub i64 %.05791268, %6
+  %34 = ptrtoaddr ptr %.0579 to i64
+  %i.qr = sub i64 %34, %32
   %diff.check1297 = icmp ugt i64 %i.qr, -32
   %conflict.rdx1298 = or i1 %diff.check1296, %diff.check1297
   br i1 %conflict.rdx1298, label %scalar.ph1299.preheader, label %vector.ph1301
@@ -1497,9 +1523,12 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph783
-  %i.sa = sub i64 %.05831267, %6
+  %35 = ptrtoaddr ptr %i.au to i64                ; 2 uses
+  %36 = ptrtoaddr ptr %.0583 to i64
+  %i.sa = sub i64 %36, %35
   %diff.check = icmp ugt i64 %i.sa, -32
-  %i.sb = sub i64 %.05791268, %6
+  %37 = ptrtoaddr ptr %.0579 to i64
+  %i.sb = sub i64 %37, %35
   %diff.check1269 = icmp ugt i64 %i.sb, -32
   %conflict.rdx = or i1 %diff.check, %diff.check1269
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
@@ -1571,9 +1600,12 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %min.iters.check1280, label %scalar.ph1279.preheader, label %vector.memcheck1275
 
 vector.memcheck1275:                              ; preds = %.lr.ph785
-  %i.sw = sub i64 %.05831267, %6
+  %38 = ptrtoaddr ptr %i.au to i64                ; 2 uses
+  %39 = ptrtoaddr ptr %.0583 to i64
+  %i.sw = sub i64 %39, %38
   %diff.check1276 = icmp ugt i64 %i.sw, -32
-  %i.sx = sub i64 %.05791268, %6
+  %40 = ptrtoaddr ptr %.0579 to i64
+  %i.sx = sub i64 %40, %38
   %diff.check1277 = icmp ugt i64 %i.sx, -32
   %conflict.rdx1278 = or i1 %diff.check1276, %diff.check1277
   br i1 %conflict.rdx1278, label %scalar.ph1279.preheader, label %vector.ph1281
@@ -1976,14 +2008,11 @@ _ZNK5Ipopt16DenseVectorSpace23AllocateInternalStorageEv.exit.i: ; preds = %bb.j,
   br label %_ZN5Ipopt11DenseVector16values_allocatedEv.exit
 
 _ZN5Ipopt11DenseVector16values_allocatedEv.exit:  ; preds = %bb.h, %_ZNK5Ipopt16DenseVectorSpace23AllocateInternalStorageEv.exit.i
-  %i.av = phi ptr [ %i.al, %bb.h ], [ %.0.i.i, %_ZNK5Ipopt16DenseVectorSpace23AllocateInternalStorageEv.exit.i ] ; 65 uses
-  %5 = ptrtoaddr ptr %i.av to i64                 ; 4 uses
+  %i.av = phi ptr [ %i.al, %bb.h ], [ %.0.i.i, %_ZNK5Ipopt16DenseVectorSpace23AllocateInternalStorageEv.exit.i ] ; 66 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 216
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !41 ; 33 uses
-  %6 = ptrtoaddr ptr %i.ax to i64                 ; 2 uses
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !41 ; 34 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %3, i64 216
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !41 ; 33 uses
-  %7 = ptrtoaddr ptr %i.az to i64                 ; 2 uses
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !41 ; 34 uses
   br i1 %i.l, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %_ZN5Ipopt11DenseVector16values_allocatedEv.exit
@@ -2095,8 +2124,11 @@ bb.l:                                             ; preds = %bb.k
   br i1 %min.iters.check458, label %scalar.ph457.preheader, label %vector.memcheck453
 
 vector.memcheck453:                               ; preds = %.lr.ph159
+  %5 = ptrtoaddr ptr %i.av to i64                 ; 2 uses
+  %6 = ptrtoaddr ptr %i.ax to i64
   %i.cj = sub i64 %6, %5
   %diff.check454 = icmp ugt i64 %i.cj, -16
+  %7 = ptrtoaddr ptr %i.az to i64
   %i.ck = sub i64 %7, %5
   %diff.check455 = icmp ugt i64 %i.ck, -16
   %conflict.rdx456 = or i1 %diff.check454, %diff.check455
@@ -2389,9 +2421,12 @@ bb.o:                                             ; preds = %bb.n
   br i1 %min.iters.check370, label %scalar.ph369.preheader, label %vector.memcheck366
 
 vector.memcheck366:                               ; preds = %.lr.ph153
-  %i.gm = sub i64 %6, %5
+  %8 = ptrtoaddr ptr %i.av to i64                 ; 2 uses
+  %9 = ptrtoaddr ptr %i.ax to i64
+  %i.gm = sub i64 %9, %8
   %diff.check = icmp ugt i64 %i.gm, -16
-  %i.gn = sub i64 %7, %5
+  %10 = ptrtoaddr ptr %i.az to i64
+  %i.gn = sub i64 %10, %8
   %diff.check367 = icmp ugt i64 %i.gn, -16
   %conflict.rdx368 = or i1 %diff.check, %diff.check367
   br i1 %conflict.rdx368, label %scalar.ph369.preheader, label %vector.ph371

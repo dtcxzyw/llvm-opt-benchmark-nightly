@@ -205,17 +205,16 @@ _ZSt4copyIPN5nblib10PairLJTypeES2_ET0_T_S4_S3_.exit: ; preds = %bb.l, %bb.m, %bb
   %i.aj = phi ptr [ %.pre27, %bb.l ], [ %i.b, %bb.m ], [ %i.b, %bb.n ] ; 3 uses
   %i.ak = phi ptr [ %.pre26, %bb.l ], [ %i.i, %bb.m ], [ %i.i, %bb.n ] ; 4 uses
   %i.al = phi ptr [ %.pre25, %bb.l ], [ %i.aa, %bb.m ], [ %i.aa, %bb.n ] ; 7 uses
-  %i.am = phi ptr [ %.pre, %bb.l ], [ %i.c, %bb.m ], [ %i.c, %bb.n ] ; 2 uses
-  %2 = ptrtoaddr ptr %i.al to i64
-  %3 = ptrtoaddr ptr %i.am to i64                 ; 2 uses
+  %i.am = phi ptr [ %.pre, %bb.l ], [ %i.c, %bb.m ], [ %i.c, %bb.n ] ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %.pre-phi33 ; 7 uses
   %.not9.i.i.i.i = icmp eq ptr %i.an, %i.aj
   br i1 %.not9.i.i.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKN5nblib10PairLJTypeESt6vectorIS3_SaIS3_EEEENS1_IPS3_S8_EEET0_T_SD_SC_.exit, label %iter.check
 
 iter.check:                                       ; preds = %_ZSt4copyIPN5nblib10PairLJTypeES2_ET0_T_S4_S3_.exit
+  %2 = ptrtoaddr ptr %i.am to i64
   %i.ao = ptrtoaddr ptr %i.aj to i64
   %i.ap = add i64 %i.ao, -8
-  %i.aq = add i64 %.pre-phi33, %3
+  %i.aq = add i64 %.pre-phi33, %2
   %i.ar = sub i64 %i.ap, %i.aq                    ; 3 uses
   %i.as = lshr i64 %i.ar, 3
   %i.at = add nuw nsw i64 %i.as, 1                ; 5 uses
@@ -223,8 +222,10 @@ iter.check:                                       ; preds = %_ZSt4copyIPN5nblib1
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.au = add nuw i64 %.pre-phi33, %3
-  %i.av = sub i64 %i.au, %2
+  %3 = ptrtoaddr ptr %i.al to i64
+  %4 = ptrtoaddr ptr %i.am to i64
+  %i.au = add nuw i64 %.pre-phi33, %4
+  %i.av = sub i64 %i.au, %3
   %diff.check = icmp ugt i64 %i.av, -128
   br i1 %diff.check, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 

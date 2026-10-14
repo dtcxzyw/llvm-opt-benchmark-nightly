@@ -205,29 +205,30 @@ bb.c:                                             ; preds = %bb.a
 
 _ZNSt12_Vector_baseI9VAttrTypeSaIS0_EE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #28 ; 10 uses
-  %i.u = load ptr, ptr %0, align 8, !tbaa !254    ; 10 uses
+  %i.u = load ptr, ptr %0, align 8, !tbaa !254    ; 11 uses
   %i.v = load ptr, ptr %i.a, align 8, !tbaa !250  ; 3 uses
   %.not10.i.i.i.i = icmp eq ptr %i.u, %i.v
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorI9VAttrTypeSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i, label %iter.check
 
 iter.check:                                       ; preds = %_ZNSt12_Vector_baseI9VAttrTypeSaIS0_EE11_M_allocateEm.exit.i
-  %i.w = ptrtoaddr ptr %i.u to i64                ; 2 uses
-  %2 = ptrtoaddr ptr %i.t to i64
-  %3 = ptrtoaddr ptr %i.v to i64                  ; 3 uses
-  %4 = sub i64 %3, %i.w                           ; 7 uses
-  %min.iters.check = icmp ult i64 %4, 8
-  %i.x = sub i64 %i.w, %2
+  %2 = ptrtoaddr ptr %i.v to i64                  ; 3 uses
+  %i.w = ptrtoaddr ptr %i.u to i64
+  %3 = sub i64 %2, %i.w                           ; 7 uses
+  %min.iters.check = icmp ult i64 %3, 8
+  %4 = ptrtoaddr ptr %i.t to i64
+  %5 = ptrtoaddr ptr %i.u to i64
+  %i.x = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.x, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check15 = icmp ult i64 %4, 32
+  %min.iters.check15 = icmp ult i64 %3, 32
   br i1 %min.iters.check15, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.y = and i64 %4, 24
-  %n.vec = and i64 %4, -32                        ; 5 uses
+  %i.y = and i64 %3, 24
+  %n.vec = and i64 %3, -32                        ; 5 uses
   %i.z = getelementptr i8, ptr %i.t, i64 %n.vec
   %i.aa = getelementptr i8, ptr %i.u, i64 %n.vec
   br label %vector.body
@@ -249,7 +250,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   br i1 %i.ad, label %middle.block, label %vector.body, !llvm.loop !797
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %4, %n.vec
+  %cmp.n = icmp eq i64 %3, %n.vec
   br i1 %cmp.n, label %_ZNSt6vectorI9VAttrTypeSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
@@ -258,7 +259,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec19 = and i64 %4, -8                       ; 4 uses
+  %n.vec19 = and i64 %3, -8                       ; 4 uses
   %i.ae = getelementptr i8, ptr %i.t, i64 %n.vec19
   %i.af = getelementptr i8, ptr %i.u, i64 %n.vec19
   br label %vec.epilog.vector.body
@@ -276,14 +277,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   br i1 %i.ag, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !798
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %cmp.n25 = icmp eq i64 %4, %n.vec19
+  %cmp.n25 = icmp eq i64 %3, %n.vec19
   br i1 %cmp.n25, label %_ZNSt6vectorI9VAttrTypeSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.012.i.i.i.i.ph = phi ptr [ %i.t, %iter.check ], [ %i.z, %vec.epilog.iter.check ], [ %i.ae, %vec.epilog.middle.block ] ; 2 uses
   %.0911.i.i.i.i.ph = phi ptr [ %i.u, %iter.check ], [ %i.aa, %vec.epilog.iter.check ], [ %i.af, %vec.epilog.middle.block ] ; 3 uses
   %.0911.i.i.i.i.ph28 = ptrtoaddr ptr %.0911.i.i.i.i.ph to i64 ; 2 uses
-  %i.ah = sub i64 %3, %.0911.i.i.i.i.ph28
+  %i.ah = sub i64 %2, %.0911.i.i.i.i.ph28
   %xtraiter = and i64 %i.ah, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.prol
@@ -305,7 +306,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.i.preheader
   %.012.i.i.i.i.unr = phi ptr [ %.012.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %i.ak, %.lr.ph.i.i.i.i.prol ]
   %.0911.i.i.i.i.unr = phi ptr [ %.0911.i.i.i.i.ph, %.lr.ph.i.i.i.i.preheader ], [ %i.aj, %.lr.ph.i.i.i.i.prol ]
-  %i.al = sub i64 %.0911.i.i.i.i.ph28, %3
+  %i.al = sub i64 %.0911.i.i.i.i.ph28, %2
   %i.am = icmp ugt i64 %i.al, -8
   br i1 %i.am, label %_ZNSt6vectorI9VAttrTypeSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i, label %.lr.ph.i.i.i.i
 
@@ -708,10 +709,10 @@ _ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK9VAttrTypeSt6vecto
   br i1 %.not11.i.i.i.i.i72, label %_ZSt34__uninitialized_move_if_noexcept_aIP9VAttrTypeS1_SaIS0_EET0_T_S4_S3_RT1_.exit78, label %iter.check283
 
 iter.check283:                                    ; preds = %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPK9VAttrTypeSt6vectorIS2_SaIS2_EEEEPS2_S2_ET0_T_SB_SA_RSaIT1_E.exit71
-  %.lcssa116265 = ptrtoaddr ptr %.lcssa116 to i64
   %i.gl = sub i64 %i.j, %i.a                      ; 7 uses
   %min.iters.check267 = icmp ult i64 %i.gl, 8
-  %i.gm = sub i64 %i.a, %.lcssa116265
+  %4 = ptrtoaddr ptr %.lcssa116 to i64
+  %i.gm = sub i64 %i.a, %4
   %diff.check266 = icmp ugt i64 %i.gm, -32
   %or.cond301 = select i1 %min.iters.check267, i1 true, i1 %diff.check266
   br i1 %or.cond301, label %.lr.ph.i.i.i.i.i73.preheader, label %vector.main.loop.iter.check268

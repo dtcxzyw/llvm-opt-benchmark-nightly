@@ -123,8 +123,6 @@ bb.c:                                             ; preds = %.lr.ph
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @_Z4copySt4spanIKjLm18446744073709551615EES_IjLm18446744073709551615EE(ptr nofree readonly captures(none) %0, i64 %1, ptr nofree writeonly captures(none) %2, i64 %3) local_unnamed_addr #3 {
 bb.a:
-  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %.not = icmp ult i64 %3, %1
   br i1 %.not, label %.preheader, label %.preheader27
 
@@ -134,7 +132,9 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.preheader27
   %min.iters.check = icmp ult i64 %1, 8
-  %i.a = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %0 to i64
+  %i.a = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.a, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.preheader55, label %vector.ph
@@ -199,7 +199,9 @@ vector.scevcheck:                                 ; preds = %.lr.ph32.preheader
   %i.o = icmp eq i64 %i.n, 4294967295
   %i.p = icmp ugt i64 %i.m, 4294967295
   %i.q = or i1 %i.o, %i.p
-  %i.r = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %2 to i64
+  %7 = ptrtoaddr ptr %0 to i64
+  %i.r = sub i64 %7, %6
   %diff.check40 = icmp ugt i64 %i.r, -32
   %or.cond53 = select i1 %i.q, i1 true, i1 %diff.check40
   br i1 %or.cond53, label %.lr.ph32.preheader54, label %vector.ph43
@@ -361,8 +363,6 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @_Z3shlSt4spanIKjLm18446744073709551615EEjS_IjLm18446744073709551615EE(ptr nofree readonly captures(none) %0, i64 %1, i32 noundef %2, ptr nofree captures(none) %3, i64 %4) local_unnamed_addr #3 {
 bb.a:
-  %5 = ptrtoaddr ptr %3 to i64                    ; 3 uses
-  %6 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = lshr i32 %2, 5                           ; 6 uses
   %i.b = and i32 %2, 31                           ; 10 uses
   %.not = icmp eq i32 %i.a, 0
@@ -402,10 +402,12 @@ bb.d:                                             ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph.preheader236, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
+  %5 = ptrtoaddr ptr %0 to i64
   %i.k = shl i64 %.193, 2
-  %7 = add i64 %i.k, %6
+  %6 = ptrtoaddr ptr %3 to i64
   %i.l = shl i64 %.090, 2
-  %i.m = add i64 %i.l, %5
+  %7 = add i64 %i.k, %5
+  %i.m = add i64 %i.l, %6
   %i.n = sub i64 %i.m, %7
   %diff.check = icmp ugt i64 %i.n, -32
   br i1 %diff.check, label %.lr.ph.preheader236, label %vector.ph
@@ -603,7 +605,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph157.preheader:                              ; preds = %bb.g
   %min.iters.check219 = icmp ult i64 %spec.select, 8
-  %i.cj = sub i64 %6, %5
+  %8 = ptrtoaddr ptr %3 to i64
+  %9 = ptrtoaddr ptr %0 to i64
+  %i.cj = sub i64 %9, %8
   %diff.check217 = icmp ugt i64 %i.cj, -32
   %or.cond = select i1 %min.iters.check219, i1 true, i1 %diff.check217
   br i1 %or.cond, label %.lr.ph157.preheader231, label %vector.ph220
@@ -697,7 +701,9 @@ bb.h:                                             ; preds = %bb.f
 
 .lr.ph148.preheader:                              ; preds = %bb.h
   %min.iters.check198 = icmp ult i64 %spec.select112, 8
-  %i.do = sub i64 %6, %5
+  %10 = ptrtoaddr ptr %3 to i64
+  %11 = ptrtoaddr ptr %0 to i64
+  %i.do = sub i64 %11, %10
   %diff.check196 = icmp ugt i64 %i.do, -32
   %or.cond230 = select i1 %min.iters.check198, i1 true, i1 %diff.check196
   br i1 %or.cond230, label %.lr.ph148.preheader232, label %vector.ph199
@@ -820,8 +826,6 @@ bb.i:                                             ; preds = %._crit_edge149
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @_Z3shrSt4spanIKjLm18446744073709551615EEjS_IjLm18446744073709551615EE(ptr nofree readonly captures(none) %0, i64 %1, i32 noundef %2, ptr nofree writeonly captures(none) %3, i64 %4) local_unnamed_addr #3 {
 bb.a:
-  %5 = ptrtoaddr ptr %0 to i64                    ; 4 uses
-  %6 = ptrtoaddr ptr %3 to i64                    ; 4 uses
   %i.a = icmp eq i64 %1, %4
   br i1 %i.a, label %bb.b, label %bb.g
 
@@ -896,9 +900,11 @@ vector.scevcheck461:                              ; preds = %.lr.ph270.preheader
   br i1 %i.s, label %.lr.ph270.preheader522, label %vector.memcheck462
 
 vector.memcheck462:                               ; preds = %vector.scevcheck461
+  %5 = ptrtoaddr ptr %3 to i64
+  %6 = ptrtoaddr ptr %0 to i64
   %i.t = shl nuw nsw i64 %i.c, 2
-  %i.u = add i64 %i.t, %5
-  %i.v = sub i64 %i.u, %6
+  %i.u = add i64 %i.t, %6
+  %i.v = sub i64 %i.u, %5
   %diff.check463 = icmp ugt i64 %i.v, -32
   br i1 %diff.check463, label %.lr.ph270.preheader522, label %vector.ph466
 
@@ -1114,7 +1120,9 @@ bb.f:                                             ; preds = %bb.d
 
 .preheader.preheader:                             ; preds = %bb.f
   %min.iters.check507 = icmp ult i64 %1, 8
-  %i.dp = sub i64 %5, %6
+  %7 = ptrtoaddr ptr %3 to i64
+  %8 = ptrtoaddr ptr %0 to i64
+  %i.dp = sub i64 %8, %7
   %diff.check505 = icmp ugt i64 %i.dp, -32
   %or.cond = select i1 %min.iters.check507, i1 true, i1 %diff.check505
   br i1 %or.cond, label %.preheader.preheader519, label %vector.ph508
@@ -1468,9 +1476,11 @@ vector.scevcheck366:                              ; preds = %.lr.ph249.preheader
   br i1 %i.in, label %.lr.ph249.preheader530, label %vector.memcheck367
 
 vector.memcheck367:                               ; preds = %vector.scevcheck366
+  %9 = ptrtoaddr ptr %3 to i64
+  %10 = ptrtoaddr ptr %0 to i64
   %i.io = shl nuw nsw i64 %i.ga, 2
-  %i.ip = add i64 %i.io, %5
-  %i.iq = sub i64 %i.ip, %6
+  %i.ip = add i64 %i.io, %10
+  %i.iq = sub i64 %i.ip, %9
   %diff.check = icmp ugt i64 %i.iq, -32
   br i1 %diff.check, label %.lr.ph249.preheader530, label %vector.ph370
 
@@ -1526,7 +1536,9 @@ bb.o:                                             ; preds = %bb.n
 
 .lr.ph258.preheader:                              ; preds = %bb.o
   %min.iters.check411 = icmp ult i64 %.sroa.speculated, 8
-  %i.je = sub i64 %5, %6
+  %11 = ptrtoaddr ptr %3 to i64
+  %12 = ptrtoaddr ptr %0 to i64
+  %i.je = sub i64 %12, %11
   %diff.check409 = icmp ugt i64 %i.je, -32
   %or.cond518 = select i1 %min.iters.check411, i1 true, i1 %diff.check409
   br i1 %or.cond518, label %.lr.ph258.preheader527, label %vector.ph412

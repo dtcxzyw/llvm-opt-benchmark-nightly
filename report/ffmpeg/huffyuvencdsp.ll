@@ -19,8 +19,6 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @diff_int16_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, i32 noundef %3, i32 noundef %4) #1 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %6 = ptrtoaddr ptr %0 to i64                    ; 4 uses
   %i.a = ptrtoint ptr %2 to i64                   ; 3 uses
   %i.b = and i64 %i.a, 3
   %.not = icmp eq i64 %i.b, 0
@@ -104,9 +102,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph66.preheader113, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph66.preheader
-  %i.be = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.be = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.be, -32
-  %i.bf = sub i64 %i.a, %6
+  %i.bf = sub i64 %i.a, %5
   %diff.check77 = icmp ugt i64 %i.bf, -32
   %conflict.rdx = or i1 %diff.check, %diff.check77
   br i1 %conflict.rdx, label %.lr.ph66.preheader113, label %vector.ph
@@ -192,9 +192,11 @@ iter.check:                                       ; preds = %.loopexit
   br i1 %min.iters.check88, label %.lr.ph69.preheader, label %vector.memcheck83
 
 vector.memcheck83:                                ; preds = %iter.check
-  %i.ct = sub i64 %5, %6
+  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.ct = sub i64 %8, %7
   %diff.check84 = icmp ugt i64 %i.ct, -32
-  %i.cu = sub i64 %i.a, %6
+  %i.cu = sub i64 %i.a, %7
   %diff.check85 = icmp ugt i64 %i.cu, -32
   %conflict.rdx86 = or i1 %diff.check84, %diff.check85
   br i1 %conflict.rdx86, label %.lr.ph69.preheader, label %vector.main.loop.iter.check
@@ -342,9 +344,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @sub_hfyu_median_pred_int16_c(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4, ptr nofree noundef captures(none) %5, ptr nofree noundef captures(none) %6) #1 {
 bb.a:
-  %7 = ptrtoaddr ptr %2 to i64
-  %8 = ptrtoaddr ptr %1 to i64
-  %9 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = load i32, ptr %5, align 4, !tbaa !28     ; 2 uses
   %i.b = load i32, ptr %6, align 4, !tbaa !28     ; 2 uses
   %i.c = icmp sgt i32 %4, 0
@@ -363,9 +362,12 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.preheader42, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.f = sub i64 %8, %9
+  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.f = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.f, -16
-  %i.g = sub i64 %7, %9
+  %9 = ptrtoaddr ptr %2 to i64
+  %i.g = sub i64 %9, %7
   %diff.check36 = icmp ugt i64 %i.g, -16
   %conflict.rdx = or i1 %diff.check, %diff.check36
   br i1 %conflict.rdx, label %.lr.ph.preheader42, label %vector.ph

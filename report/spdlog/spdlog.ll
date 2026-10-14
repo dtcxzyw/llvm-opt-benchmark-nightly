@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %_ZNSt10lock_guardIS
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr dso_local void @_ZN6spdlog7details10circular_qINS0_14log_msg_bufferEE9push_backEOS2_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(384) %1) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64
   %i.b = load i64, ptr %0, align 8, !tbaa !91
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %bb.i, label %bb.b
@@ -215,7 +215,6 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !92   ; 2 uses
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !75   ; 2 uses
-  %2 = ptrtoaddr ptr %i.f to i64
   %i.g = getelementptr inbounds nuw [384 x i8], ptr %i.f, i64 %i.e ; 9 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(384) %i.g, ptr noundef nonnull align 8 dereferenceable(384) %1, i64 96, i1 false), !tbaa.struct !95
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
@@ -252,9 +251,11 @@ iter.check:                                       ; preds = %bb.d
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %2 = ptrtoaddr ptr %i.f to i64
   %i.u = mul nuw nsw i64 %i.e, 384
+  %3 = ptrtoaddr ptr %1 to i64
   %i.v = add i64 %i.u, %2
-  %i.w = sub i64 %i.a, %i.v
+  %i.w = sub i64 %3, %i.v
   %diff.check = icmp ugt i64 %i.w, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -657,8 +658,6 @@ _ZN3fmt3v1219basic_memory_bufferIcLm250ENS0_6detail9allocatorIcEEED2Ev.exit: ; p
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN6spdlog7details14log_msg_bufferC2EOS1_(ptr noundef nonnull align 8 dereferenceable(384) initializes((0, 128)) %0, ptr noundef nonnull align 8 dereferenceable(384) %1) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %3 = ptrtoaddr ptr %0 to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false), !tbaa.struct !95
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
@@ -685,7 +684,9 @@ bb.b:                                             ; preds = %bb.a
 
 iter.check:                                       ; preds = %bb.b
   %min.iters.check = icmp ult i64 %i.g, 8
-  %i.n = sub i64 %2, %3
+  %2 = ptrtoaddr ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %i.n = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.n, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -747,7 +748,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.08.i.i.i.ph = phi ptr [ %i.l, %iter.check ], [ %i.p, %vec.epilog.iter.check ], [ %i.u, %vec.epilog.middle.block ] ; 2 uses
   %.057.i.i.i.ph = phi ptr [ %i.j, %iter.check ], [ %i.q, %vec.epilog.iter.check ], [ %i.v, %vec.epilog.middle.block ] ; 3 uses
-  %i.x = add i64 %i.g, %2
+  %i.x = add i64 %i.g, %3
   %.057.i.i.i.ph19 = ptrtoaddr ptr %.057.i.i.i.ph to i64 ; 2 uses
   %i.y = sub i64 %i.g, %.057.i.i.i.ph19
   %i.z = add i64 %i.x, 127
@@ -1040,8 +1041,6 @@ _ZN3fmt3v126detail6bufferIcE6appendIcEEvPKT_S7_.exit: ; preds = %._crit_edge.i, 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noundef nonnull align 8 dereferenceable(384) ptr @_ZN6spdlog7details14log_msg_bufferaSEOS1_(ptr noundef nonnull returned align 8 dereferenceable(384) initializes((0, 96)) %0, ptr noundef nonnull align 8 dereferenceable(384) %1) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %3 = ptrtoaddr ptr %0 to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false), !tbaa.struct !95
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 5 uses
@@ -1074,7 +1073,9 @@ bb.c:                                             ; preds = %_ZN3fmt3v1219basic_
 
 iter.check:                                       ; preds = %bb.c
   %min.iters.check = icmp ult i64 %i.g, 8
-  %i.n = sub i64 %2, %3
+  %2 = ptrtoaddr ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %i.n = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.n, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -1136,7 +1137,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.08.i.i.i.ph = phi ptr [ %i.d, %iter.check ], [ %i.p, %vec.epilog.iter.check ], [ %i.u, %vec.epilog.middle.block ] ; 2 uses
   %.057.i.i.i.ph = phi ptr [ %i.j, %iter.check ], [ %i.q, %vec.epilog.iter.check ], [ %i.v, %vec.epilog.middle.block ] ; 3 uses
-  %i.x = add i64 %i.g, %2
+  %i.x = add i64 %i.g, %3
   %.057.i.i.i.ph20 = ptrtoaddr ptr %.057.i.i.i.ph to i64 ; 2 uses
   %i.y = sub i64 %i.g, %.057.i.i.i.ph20
   %i.z = add i64 %i.x, 127

@@ -205,7 +205,6 @@ declare i32 @gtk_accelerator_get_default_mod_mask() local_unnamed_addr #7
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @simplex(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull captures(none) %1, i32 noundef %2, double noundef nofpclass(nan inf zero sub nnorm) %3, double noundef nofpclass(nan inf zero sub nnorm) %4, i32 noundef range(i32 100, 401) %5, ptr nofree noundef readonly captures(address_is_null) %6, ptr noundef nonnull %7) unnamed_addr #5 {
 bb.a:
-  %8 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = add i32 %2, 1                            ; 21 uses
   %i.b = sext i32 %i.a to i64
   %i.c = shl nsw i64 %i.b, 3                      ; 2 uses
@@ -258,8 +257,9 @@ iter.check:                                       ; preds = %._crit_edge
   %i.af = load ptr, ptr %i.d, align 8, !tbaa !13  ; 12 uses
   %wide.trip.count530 = zext nneg i32 %2 to i64   ; 10 uses
   %min.iters.check = icmp ult i32 %2, 4
-  %i.ag = ptrtoaddr ptr %i.af to i64
-  %i.ah = sub i64 %8, %i.ag
+  %8 = ptrtoaddr ptr %i.af to i64
+  %i.ag = ptrtoaddr ptr %1 to i64
+  %i.ah = sub i64 %i.ag, %8
   %diff.check = icmp ugt i64 %i.ah, -128
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -662,8 +662,9 @@ iter.check1161:                                   ; preds = %.preheader
   %i.ahm = load ptr, ptr %i.ahl, align 8, !tbaa !13 ; 12 uses
   %wide.trip.count641 = zext nneg i32 %2 to i64
   %min.iters.check1146 = icmp ult i32 %2, 4
+  %9 = ptrtoaddr ptr %1 to i64
   %i.ahn = ptrtoaddr ptr %i.ahm to i64
-  %i.aho = sub i64 %i.ahn, %8
+  %i.aho = sub i64 %i.ahn, %9
   %diff.check1145 = icmp ugt i64 %i.aho, -128
   %or.cond1188 = select i1 %min.iters.check1146, i1 true, i1 %diff.check1145
   br i1 %or.cond1188, label %vec.epilog.scalar.ph1162.preheader, label %vector.main.loop.iter.check1147

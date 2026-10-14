@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !337  ; 5 uses
-  %3 = ptrtoaddr ptr %i.p to i64
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1632
   %i.r = load i64, ptr %i.q, align 8, !tbaa !126  ; 8 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 400
@@ -213,7 +212,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !170
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !172  ; 6 uses
-  %4 = ptrtoaddr ptr %i.w to i64
   %.not.i = icmp eq ptr %i.w, null
   br i1 %.not.i, label %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit, label %bb.d
 
@@ -227,7 +225,9 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.preheader:                               ; preds = %.preheader16.i
   %min.iters.check = icmp ult i64 %i.r, 8
-  %i.y = sub i64 %3, %4
+  %3 = ptrtoaddr ptr %i.w to i64
+  %4 = ptrtoaddr ptr %i.p to i64
+  %i.y = sub i64 %4, %3
   %diff.check = icmp ugt i64 %i.y, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader85, label %vector.ph
@@ -340,15 +340,13 @@ middle.block:                                     ; preds = %vector.body
 _ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit:       ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %middle.block, %bb.c, %.preheader16.i, %.preheader.i, %.lr.ph23.preheader.i
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !338 ; 5 uses
-  %5 = ptrtoaddr ptr %i.bo to i64
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 1616
   %i.bq = load i64, ptr %i.bp, align 8, !tbaa !132 ; 10 uses
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 384
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !161
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !170
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !172 ; 7 uses
-  %6 = ptrtoaddr ptr %i.bv to i64                 ; 2 uses
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !172 ; 8 uses
   %.not.i11 = icmp eq ptr %i.bv, null
   br i1 %.not.i11, label %_ZN6casadi11casadi_copyIdEEvPKT_xPS1_.exit32, label %bb.e
 
@@ -362,7 +360,9 @@ bb.e:                                             ; preds = %_ZN6casadi11casadi_
 
 .lr.ph.i14.preheader:                             ; preds = %.preheader16.i13
   %min.iters.check49 = icmp ult i64 %i.bq, 8
-  %i.bx = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %i.bv to i64
+  %6 = ptrtoaddr ptr %i.bo to i64
+  %i.bx = sub i64 %6, %5
   %diff.check47 = icmp ugt i64 %i.bx, -32
   %or.cond82 = select i1 %min.iters.check49, i1 true, i1 %diff.check47
   br i1 %or.cond82, label %.lr.ph.i14.preheader84, label %vector.ph50
@@ -475,7 +475,6 @@ middle.block59:                                   ; preds = %vector.body52
 .loopexit:                                        ; preds = %.lr.ph.i14.prol.loopexit, %.lr.ph.i14, %middle.block59, %.preheader16.i13, %.preheader.i19, %.lr.ph23.preheader.i20
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 176
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !339 ; 6 uses
-  %7 = ptrtoaddr ptr %i.dn to i64
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 1624
   %i.dp = load i64, ptr %i.do, align 8, !tbaa !125 ; 8 uses
   %i.dq = getelementptr inbounds [8 x i8], ptr %i.bv, i64 %i.bq ; 5 uses
@@ -491,9 +490,11 @@ middle.block59:                                   ; preds = %vector.body52
   br i1 %min.iters.check67, label %.lr.ph.i25.preheader83, label %vector.memcheck64
 
 vector.memcheck64:                                ; preds = %.lr.ph.i25.preheader
+  %7 = ptrtoaddr ptr %i.bv to i64
   %i.ds = shl i64 %i.bq, 3
-  %i.dt = add i64 %i.ds, %6
-  %i.du = sub i64 %7, %i.dt
+  %8 = ptrtoaddr ptr %i.dn to i64
+  %i.dt = add i64 %i.ds, %7
+  %i.du = sub i64 %8, %i.dt
   %diff.check65 = icmp ugt i64 %i.du, -32
   br i1 %diff.check65, label %.lr.ph.i25.preheader83, label %vector.ph68
 

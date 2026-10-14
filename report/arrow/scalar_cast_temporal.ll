@@ -204,14 +204,12 @@ _ZN5arrow7compute10ExecResult18array_span_mutableEv.exit: ; preds = %bb.a
   %i.s = load i64, ptr %i.r, align 8, !tbaa !120, !noalias !743 ; 7 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !123, !noalias !743 ; 2 uses
-  %14 = ptrtoaddr ptr %i.v to i64                 ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !123, !noalias !743 ; 3 uses
   %i.w = getelementptr inbounds [4 x i8], ptr %i.v, i64 %i.s ; 24 uses
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.y = load i64, ptr %i.x, align 8, !tbaa !120, !noalias !743 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 56
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !123, !noalias !743 ; 2 uses
-  %15 = ptrtoaddr ptr %i.aa to i64                ; 2 uses
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !123, !noalias !743 ; 3 uses
   %i.ab = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %i.y ; 21 uses
   %i.ac = icmp eq i64 %i.p, 1
   br i1 %i.ac, label %.preheader.i, label %bb.c
@@ -227,10 +225,12 @@ _ZN5arrow7compute10ExecResult18array_span_mutableEv.exit: ; preds = %bb.a
   br i1 %min.iters.check113, label %.lr.ph47.i.preheader124, label %vector.memcheck110
 
 vector.memcheck110:                               ; preds = %.lr.ph47.i.preheader
+  %14 = ptrtoaddr ptr %i.aa to i64
   %i.ag = shl i64 %i.y, 2
-  %16 = add i64 %i.ag, %15
+  %15 = ptrtoaddr ptr %i.v to i64
   %i.ah = shl i64 %i.s, 2
-  %i.ai = add i64 %i.ah, %14
+  %16 = add i64 %i.ag, %14
+  %i.ai = add i64 %i.ah, %15
   %i.aj = sub i64 %i.ai, %16
   %diff.check111 = icmp ugt i64 %i.aj, -32
   br i1 %diff.check111, label %.lr.ph47.i.preheader124, label %vector.ph114
@@ -329,11 +329,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph45.i
+  %17 = ptrtoaddr ptr %i.aa to i64
   %i.bu = shl i64 %i.y, 2
-  %17 = add i64 %i.bu, %15
+  %18 = ptrtoaddr ptr %i.v to i64
   %i.bv = shl i64 %i.s, 2
-  %i.bw = add i64 %i.bv, %14
-  %i.bx = sub i64 %i.bw, %17
+  %19 = add i64 %i.bu, %17
+  %i.bw = add i64 %i.bv, %18
+  %i.bx = sub i64 %i.bw, %19
   %diff.check = icmp ugt i64 %i.bx, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 

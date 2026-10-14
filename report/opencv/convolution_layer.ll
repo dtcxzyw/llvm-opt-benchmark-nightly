@@ -204,18 +204,18 @@ bb.aq:                                            ; preds = %_ZNSt6vectorIfSaIfE
   %i.cg = getelementptr inbounds nuw i8, ptr %19, i64 12
   %i.ch = load i32, ptr %i.cg, align 4            ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %19, i64 24
-  %i.cj = load ptr, ptr %i.ci, align 8            ; 21 uses
-  %20 = ptrtoaddr ptr %i.cj to i64                ; 2 uses
+  %i.cj = load ptr, ptr %i.ci, align 8            ; 22 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %19, i64 128
   %i.cl = load i64, ptr %i.ck, align 8            ; 4 uses
-  %i.cm = load ptr, ptr %i.bh, align 8, !tbaa !75 ; 17 uses
-  %21 = ptrtoaddr ptr %i.cm to i64                ; 2 uses
+  %i.cm = load ptr, ptr %i.bh, align 8, !tbaa !75 ; 18 uses
   br i1 %i.cb, label %_ZN2cv3Mat2atIfEERT_i.exit.us.preheader, label %.lr.ph.split
 
 _ZN2cv3Mat2atIfEERT_i.exit.us.preheader:          ; preds = %.lr.ph
   %wide.trip.count93 = zext nneg i32 %i.bx to i64 ; 5 uses
   %min.iters.check125 = icmp ult i32 %i.bx, 8
-  %i.cn = sub i64 %20, %21
+  %20 = ptrtoaddr ptr %i.cm to i64
+  %21 = ptrtoaddr ptr %i.cj to i64
+  %i.cn = sub i64 %21, %20
   %diff.check123 = icmp ugt i64 %i.cn, -32
   %or.cond = select i1 %min.iters.check125, i1 true, i1 %diff.check123
   br i1 %or.cond, label %_ZN2cv3Mat2atIfEERT_i.exit.us.preheader137, label %vector.ph126
@@ -301,7 +301,9 @@ _ZN2cv3Mat2atIfEERT_i.exit.us:                    ; preds = %_ZN2cv3Mat2atIfEERT
 
 _ZN2cv3Mat2atIfEERT_i.exit.us64.preheader:        ; preds = %.lr.ph.split
   %min.iters.check = icmp ult i32 %i.bx, 8
-  %i.dm = sub i64 %20, %21
+  %22 = ptrtoaddr ptr %i.cm to i64
+  %23 = ptrtoaddr ptr %i.cj to i64
+  %i.dm = sub i64 %23, %22
   %diff.check = icmp ugt i64 %i.dm, -32
   %or.cond136 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond136, label %_ZN2cv3Mat2atIfEERT_i.exit.us64.preheader140, label %vector.ph

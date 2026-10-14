@@ -205,7 +205,6 @@ define internal noundef range(i32 -12582912, 1572864) i32 @_ZL22ucnv_getNextUCha
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !34   ; 7 uses
-  %2 = ptrtoaddr ptr %i.b to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 8 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !35   ; 17 uses
   %i.e = ptrtoaddr ptr %i.d to i64                ; 5 uses
@@ -475,6 +474,7 @@ vector.scevcheck:                                 ; preds = %iter.check
   br i1 %.not228, label %vector.memcheck, label %vec.epilog.scalar.ph.preheader
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
+  %2 = ptrtoaddr ptr %i.b to i64
   %i.dx = sub i64 %2, %i.e
   %i.dy = add i64 %i.dx, 64
   %diff.check = icmp ult i64 %i.dy, 31
@@ -573,8 +573,7 @@ declare void @ucnv_getNonSurrogateUnicodeSet_78(ptr noundef, ptr noundef, i32 no
 define internal void @_ZL17ucnv_UTF8FromUTF8P25UConverterFromUnicodeArgsP23UConverterToUnicodeArgsP10UErrorCode(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !34   ; 26 uses
-  %3 = ptrtoaddr ptr %i.b to i64                  ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !34   ; 28 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !35   ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -839,7 +838,6 @@ bb.ad:                                            ; preds = %bb.w
   %.1204 = phi i8 [ %.0203, %bb.t ], [ 1, %.thread ] ; 4 uses
   %.1202 = phi i32 [ %.0201, %bb.t ], [ %i.dm, %.thread ] ; 9 uses
   %.1198 = phi i32 [ %.0197, %bb.t ], [ %i.ch, %.thread ] ; 2 uses
-  %.1216595 = ptrtoaddr ptr %.1216 to i64
   %i.dn = zext nneg i8 %.1204 to i32              ; 4 uses
   %i.do = icmp sgt i32 %.1202, %i.dn
   br i1 %i.do, label %.lr.ph308, label %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge
@@ -915,7 +913,6 @@ bb.aj:                                            ; preds = %_ZN6icu_784UTF812is
   %indvars.iv.lcssa = phi i32 [ %i.dn, %.lr.ph308 ], [ %indvars.iv.next, %bb.ae ] ; 3 uses
   %.2199307.lcssa = phi i32 [ %.1198, %.lr.ph308 ], [ %i.du, %bb.ae ]
   %.2221305.lcssa = phi ptr [ %.1220, %.lr.ph308 ], [ %i.ep, %bb.ae ] ; 2 uses
-  %.2221305.lcssa550 = ptrtoaddr ptr %.2221305.lcssa to i64
   %i.es = trunc nuw nsw i32 %indvars.iv.lcssa to i8 ; 2 uses
   %i.et = zext nneg i8 %.1208 to i32
   %.neg = sub nsw i32 %i.et, %indvars.iv.lcssa
@@ -933,9 +930,11 @@ iter.check:                                       ; preds = %._crit_edge546
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.fa = sext i32 %indvars.iv.lcssa to i64
+  %4 = ptrtoaddr ptr %.2221305.lcssa to i64
   %i.fb = add i64 %3, %i.fa
-  %i.fc = sub i64 %i.fb, %.2221305.lcssa550
+  %i.fc = sub i64 %i.fb, %4
   %i.fd = add i64 %i.fc, 64
   %diff.check = icmp ult i64 %i.fd, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -1073,7 +1072,6 @@ _ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge: ; preds = %_ZN6icu_784UTF812
   %.2221.lcssa = phi ptr [ %.1220, %.thread260 ], [ %.2221.lcssa.ph, %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit ] ; 3 uses
   %.2205.lcssa = phi i8 [ %.1204, %.thread260 ], [ %.2205.lcssa.ph, %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit ] ; 8 uses
   %.lcssa = phi i32 [ %i.dn, %.thread260 ], [ %.lcssa.ph, %_ZN6icu_784UTF812isValidTrailEihii.exit._crit_edge.loopexit ] ; 2 uses
-  %.2221.lcssa628 = ptrtoaddr ptr %.2221.lcssa to i64
   %.not248 = icmp eq i32 %.1202, %.lcssa
   br i1 %.not248, label %.preheader, label %bb.ak
 
@@ -1088,7 +1086,9 @@ iter.check611:                                    ; preds = %.preheader
   br i1 %min.iters.check597, label %vec.epilog.scalar.ph612.preheader, label %vector.memcheck594
 
 vector.memcheck594:                               ; preds = %iter.check611
-  %i.gm = sub i64 %.1216595, %3
+  %5 = ptrtoaddr ptr %.1216 to i64
+  %6 = ptrtoaddr ptr %i.b to i64
+  %i.gm = sub i64 %5, %6
   %i.gn = add i64 %i.gm, -66
   %diff.check596 = icmp ult i64 %i.gn, 15
   br i1 %diff.check596, label %vec.epilog.scalar.ph612.preheader, label %vector.main.loop.iter.check598
@@ -1259,8 +1259,9 @@ iter.check579:                                    ; preds = %bb.aa, %bb.ad, %bb.
   br i1 %min.iters.check564, label %vec.epilog.scalar.ph580.preheader, label %vector.memcheck562
 
 vector.memcheck562:                               ; preds = %iter.check579
+  %7 = ptrtoaddr ptr %i.b to i64
   %i.ih = ptrtoaddr ptr %i.id to i64
-  %i.ii = add i64 %3, %i.if
+  %i.ii = add i64 %7, %i.if
   %i.ij = sub i64 %i.ii, %i.ih
   %i.ik = add i64 %i.ij, 64
   %diff.check563 = icmp ult i64 %i.ik, 31
@@ -1436,7 +1437,6 @@ vec.epilog.scalar.ph612:                          ; preds = %vec.epilog.scalar.p
 ._crit_edge331:                                   ; preds = %vec.epilog.scalar.ph612.prol.loopexit, %vec.epilog.scalar.ph612, %middle.block608, %vec.epilog.middle.block622, %.preheader
   %.2217.lcssa = phi ptr [ %.1216, %.preheader ], [ %i.hq, %vec.epilog.middle.block622 ], [ %i.gp, %middle.block608 ], [ %.lcssa673.unr, %vec.epilog.scalar.ph612.prol.loopexit ], [ %i.kt, %vec.epilog.scalar.ph612 ] ; 23 uses
   %.0.lcssa = phi i8 [ 0, %.preheader ], [ %.1208, %vec.epilog.middle.block622 ], [ %.1208, %middle.block608 ], [ %.1208, %vec.epilog.scalar.ph612 ], [ %.1208, %vec.epilog.scalar.ph612.prol.loopexit ] ; 5 uses
-  %.2217.lcssa627 = ptrtoaddr ptr %.2217.lcssa to i64
   %i.ku = zext nneg i8 %.1208 to i32
   %.neg249 = sub nsw i32 %i.ku, %.1202
   %i.kv = sext i32 %.neg249 to i64
@@ -1453,11 +1453,13 @@ iter.check647:                                    ; preds = %._crit_edge331
   br i1 %min.iters.check630, label %.lr.ph338.preheader, label %vector.memcheck626
 
 vector.memcheck626:                               ; preds = %iter.check647
+  %8 = ptrtoaddr ptr %.2217.lcssa to i64
   %i.lc = sext i32 %.1202 to i64
-  %4 = add i64 %.2217.lcssa627, %i.lc
+  %9 = ptrtoaddr ptr %.2221.lcssa to i64
   %i.ld = zext nneg i8 %.1208 to i64
-  %i.le = add i64 %.2221.lcssa628, %i.ld
-  %i.lf = sub i64 %i.le, %4
+  %10 = add i64 %8, %i.lc
+  %i.le = add i64 %9, %i.ld
+  %i.lf = sub i64 %i.le, %10
   %diff.check629 = icmp ugt i64 %i.lf, -32
   br i1 %diff.check629, label %.lr.ph338.preheader, label %vector.main.loop.iter.check631
 

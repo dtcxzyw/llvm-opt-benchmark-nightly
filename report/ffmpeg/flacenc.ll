@@ -205,10 +205,10 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = ptrtoaddr ptr %0 to i64
-  %5 = ptrtoaddr ptr %1 to i64
   %wide.trip.count = zext nneg i32 %3 to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %3, 8
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
   %i.b = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.b, -32
   %or.cond212 = or i1 %min.iters.check, %diff.check
@@ -452,15 +452,15 @@ bb.f:                                             ; preds = %.lr.ph155
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @encode_residual_fixed(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef range(i32 5, -2147483648) %2, i32 noundef %3) unnamed_addr #7 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = icmp sgt i32 %3, 0
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %3 to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %3, 8
-  %i.b = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.b = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.b, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader250, label %vector.ph
@@ -621,7 +621,9 @@ middle.block224:                                  ; preds = %vector.body217
 .preheader.preheader:                             ; preds = %._crit_edge
   %wide.trip.count192 = zext nneg i32 %2 to i64   ; 5 uses
   %min.iters.check230 = icmp samesign ult i32 %2, 8
-  %i.ax = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.ax = sub i64 %7, %6
   %diff.check228 = icmp ugt i64 %i.ax, -32
   %or.cond242 = or i1 %min.iters.check230, %diff.check228
   br i1 %or.cond242, label %.preheader.preheader244, label %vector.ph231
@@ -1024,8 +1026,6 @@ declare i32 @ff_lpc_calc_coefs(ptr noundef, ptr noundef, i32 noundef, i32 nounde
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @lpc_encode_choose_datapath(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4, i32 noundef range(i32 5, -2147483648) %5, i32 noundef %6, ptr noundef %7, i32 noundef %8) unnamed_addr #1 {
 bb.a:
-  %9 = ptrtoaddr ptr %3 to i64
-  %10 = ptrtoaddr ptr %2 to i64
   %i.a = add nsw i32 %1, -1                       ; 2 uses
   %i.b = zext nneg i32 %i.a to i64                ; 3 uses
   %i.c = shl nuw i64 1, %i.b
@@ -1319,7 +1319,9 @@ bb.d:                                             ; preds = %._crit_edge
 .lr.ph.preheader.i62:                             ; preds = %bb.d
   %wide.trip.count.i63 = zext nneg i32 %6 to i64  ; 7 uses
   %min.iters.check132 = icmp ult i32 %6, 8
-  %i.dj = sub i64 %9, %10
+  %9 = ptrtoaddr ptr %2 to i64
+  %10 = ptrtoaddr ptr %3 to i64
+  %i.dj = sub i64 %10, %9
   %diff.check = icmp ugt i64 %i.dj, -32
   %or.cond = or i1 %min.iters.check132, %diff.check
   br i1 %or.cond, label %.lr.ph.i64.preheader, label %vector.ph133

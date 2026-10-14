@@ -18,11 +18,9 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden noundef ptr @_ZN17duckdb_libpgquery19downcase_identifierEPKcibb(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i1 zeroext %2, i1 zeroext %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = add nsw i32 %1, 1
   %i.b = sext i32 %i.a to i64
-  %i.c = tail call noundef ptr @_ZN17duckdb_libpgquery6pallocEm(i64 noundef %i.b) ; 16 uses
-  %5 = ptrtoaddr ptr %i.c to i64                  ; 2 uses
+  %i.c = tail call noundef ptr @_ZN17duckdb_libpgquery6pallocEm(i64 noundef %i.b) ; 17 uses
   %i.d = tail call noundef i32 @_ZN17duckdb_libpgquery31pg_database_encoding_max_lengthEv()
   %.not29 = icmp eq i32 %i.d, 1
   %i.e = icmp sgt i32 %1, 0
@@ -37,7 +35,9 @@ bb.a:
 
 iter.check73:                                     ; preds = %.lr.ph
   %min.iters.check60 = icmp ult i32 %1, 4
-  %i.i = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %i.c to i64
+  %5 = ptrtoaddr ptr %0 to i64
+  %i.i = sub i64 %5, %4
   %diff.check59 = icmp ugt i64 %i.i, -32
   %or.cond86 = or i1 %min.iters.check60, %diff.check59
   br i1 %or.cond86, label %.lr.ph.split.us.preheader, label %vector.main.loop.iter.check61
@@ -146,7 +146,9 @@ vec.epilog.middle.block83:                        ; preds = %vec.epilog.vector.b
 
 iter.check:                                       ; preds = %.lr.ph.split
   %min.iters.check = icmp ult i32 %1, 8
-  %i.aj = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %i.c to i64
+  %7 = ptrtoaddr ptr %0 to i64
+  %i.aj = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.aj, -32
   %or.cond87 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond87, label %.lr.ph.split.split.us.preheader, label %vector.main.loop.iter.check

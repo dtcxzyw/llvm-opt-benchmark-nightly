@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN6BufferIhEC2Em.exit
 
 _ZN6BufferIhEC2Em.exit:                           ; preds = %bb.a, %bb.b
-  %storemerge.i = phi ptr [ %i.s, %bb.b ], [ null, %bb.a ] ; 37 uses
-  %storemerge.i732 = ptrtoaddr ptr %storemerge.i to i64 ; 3 uses
+  %storemerge.i = phi ptr [ %i.s, %bb.b ], [ null, %bb.a ] ; 39 uses
   switch i8 %2, label %bb.r [
     i8 6, label %bb.c
     i8 5, label %bb.c
@@ -482,9 +481,10 @@ _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; pred
 
 .preheader574:                                    ; preds = %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit
   %i.cm = load ptr, ptr %11, align 8, !tbaa !94   ; 11 uses
-  %i.cn = ptrtoaddr ptr %i.cm to i64
   %ident.check.not = icmp ne i32 %i.p, 1
-  %i.co = sub i64 %i.cn, %storemerge.i732
+  %i.cn = ptrtoaddr ptr %storemerge.i to i64
+  %41 = ptrtoaddr ptr %i.cm to i64
+  %i.co = sub i64 %41, %i.cn
   %diff.check = icmp ugt i64 %i.co, -32
   %or.cond = select i1 %ident.check.not, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph, label %vector.body
@@ -752,9 +752,10 @@ _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit300: ; p
 
 .preheader573:                                    ; preds = %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit300
   %i.gj = load ptr, ptr %16, align 8, !tbaa !94   ; 11 uses
-  %i.gk = ptrtoaddr ptr %i.gj to i64
   %ident.check735.not = icmp ne i32 %i.p, 1
-  %i.gl = sub i64 %storemerge.i732, %i.gk
+  %i.gk = ptrtoaddr ptr %storemerge.i to i64
+  %42 = ptrtoaddr ptr %i.gj to i64
+  %i.gl = sub i64 %i.gk, %42
   %diff.check737 = icmp ult i64 %i.gl, 31
   %or.cond760 = select i1 %ident.check735.not, i1 true, i1 %diff.check737
   br i1 %or.cond760, label %scalar.ph738, label %vector.body740
@@ -1062,8 +1063,9 @@ scalar.ph751.preheader:                           ; preds = %vector.memcheck749,
   br label %scalar.ph751
 
 vector.memcheck749:                               ; preds = %.preheader
+  %43 = ptrtoaddr ptr %storemerge.i to i64
   %i.kq = ptrtoaddr ptr %i.kp to i64
-  %i.kr = sub i64 %storemerge.i732, %i.kq
+  %i.kr = sub i64 %43, %i.kq
   %i.ks = add i64 %i.kr, 1
   %diff.check750 = icmp ult i64 %i.ks, 31
   br i1 %diff.check750, label %scalar.ph751.preheader, label %vector.body753

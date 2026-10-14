@@ -205,10 +205,6 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @_ZN2v88internal8compiler11InstructionC2EjmPNS1_18InstructionOperandEmS4_mS4_(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(48) initializes((0, 48)) %0, i32 noundef %1, i64 noundef %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4, ptr nofree noundef readonly captures(none) %5, i64 noundef %6, ptr nofree noundef readonly captures(none) %7) unnamed_addr #9 align 2 {
 bb.a:
-  %8 = ptrtoaddr ptr %7 to i64
-  %9 = ptrtoaddr ptr %5 to i64
-  %10 = ptrtoaddr ptr %3 to i64
-  %11 = ptrtoaddr ptr %0 to i64                   ; 3 uses
   store i32 %1, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = trunc i64 %2 to i32
@@ -230,7 +226,9 @@ bb.a:
   br i1 %min.iters.check, label %.lr.ph.preheader77, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.j = sub i64 %11, %10
+  %8 = ptrtoaddr ptr %0 to i64
+  %9 = ptrtoaddr ptr %3 to i64
+  %i.j = sub i64 %8, %9
   %i.k = add i64 %i.j, 39
   %diff.check = icmp ult i64 %i.k, 31
   br i1 %diff.check, label %.lr.ph.preheader77, label %vector.ph
@@ -290,9 +288,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check48, label %.lr.ph32.preheader76, label %vector.memcheck45
 
 vector.memcheck45:                                ; preds = %.lr.ph32.preheader
+  %10 = ptrtoaddr ptr %0 to i64
   %i.w = shl i64 %2, 3
-  %i.x = add i64 %i.w, %11
-  %i.y = sub i64 %i.x, %9
+  %11 = ptrtoaddr ptr %5 to i64
+  %i.x = add i64 %i.w, %10
+  %i.y = sub i64 %i.x, %11
   %i.z = add i64 %i.y, 39
   %diff.check46 = icmp ult i64 %i.z, 31
   br i1 %diff.check46, label %.lr.ph32.preheader76, label %vector.ph49
@@ -385,9 +385,11 @@ middle.block56:                                   ; preds = %vector.body51
   br i1 %min.iters.check63, label %.lr.ph36.preheader75, label %vector.memcheck60
 
 vector.memcheck60:                                ; preds = %.lr.ph36.preheader
+  %12 = ptrtoaddr ptr %0 to i64
   %i.be = shl i64 %.1.lcssa, 3
-  %i.bf = add i64 %i.be, %11
-  %i.bg = sub i64 %i.bf, %8
+  %13 = ptrtoaddr ptr %7 to i64
+  %i.bf = add i64 %i.be, %12
+  %i.bg = sub i64 %i.bf, %13
   %i.bh = add i64 %i.bg, 39
   %diff.check61 = icmp ult i64 %i.bh, 31
   br i1 %diff.check61, label %.lr.ph36.preheader75, label %vector.ph64
