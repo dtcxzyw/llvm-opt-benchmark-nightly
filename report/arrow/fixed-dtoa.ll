@@ -135,12 +135,13 @@ _ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit: ;
   %i.be = insertelement <2 x i16> poison, i16 %.lhs.trunc, i64 0
   %i.bf = shufflevector <2 x i16> %i.be, <2 x i16> poison, <2 x i32> zeroinitializer
   %i.bg = udiv <2 x i16> %i.bf, <i16 10, i16 100>
-  %i.bh = urem <2 x i16> %i.bg, splat (i16 10)
-  %6 = trunc nuw nsw <2 x i16> %i.bh to <2 x i8>  ; 2 uses
-  %i.bi = extractelement <2 x i8> %6, i64 0
+  %i.bh = urem <2 x i16> %i.bg, splat (i16 10)    ; 2 uses
+  %6 = bitcast <2 x i16> %i.bh to <4 x i8>
+  %i.bi = extractelement <4 x i8> %6, i64 0
   %i.bj = or disjoint i8 %i.bi, 48
   store i8 %i.bj, ptr %i.bd, align 1, !tbaa !9
-  %i.bk = extractelement <2 x i8> %6, i64 1
+  %7 = bitcast <2 x i16> %i.bh to <4 x i8>
+  %i.bk = extractelement <4 x i8> %7, i64 2
   %i.bl = or disjoint i8 %i.bk, 48
   %i.bm = load i32, ptr %4, align 4, !tbaa !8
   %i.bn = sext i32 %i.bm to i64
@@ -155,50 +156,47 @@ _ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit: ;
   %i.bu = getelementptr i8, ptr %i.bt, i64 9
   %i.bv = urem i64 %i.bp, 10000000
   %i.bw = trunc nuw nsw i64 %i.bv to i32          ; 5 uses
-  %7 = udiv i32 %i.bw, 10
-  %8 = udiv i32 %i.bw, 100
-  %9 = urem i64 %.094, 10000000
-  %10 = trunc nuw nsw i64 %9 to i32               ; 6 uses
-  %11 = insertelement <4 x i32> poison, i32 %i.bw, i64 0 ; 2 uses
-  %12 = insertelement <4 x i32> %11, i32 %7, i64 1
-  %13 = insertelement <4 x i32> %12, i32 %8, i64 2
-  %14 = insertelement <4 x i32> %13, i32 %10, i64 3
-  %15 = urem <4 x i32> %14, splat (i32 10)        ; 4 uses
-  %16 = bitcast <4 x i32> %15 to <16 x i8>
-  %17 = extractelement <16 x i8> %16, i64 0
-  %18 = or disjoint i8 %17, 48
-  store i8 %18, ptr %i.bu, align 1, !tbaa !9
-  %19 = bitcast <4 x i32> %15 to <16 x i8>
-  %20 = extractelement <16 x i8> %19, i64 4
-  %21 = or disjoint i8 %20, 48
-  %22 = load i32, ptr %4, align 4, !tbaa !8
-  %23 = sext i32 %22 to i64
-  %24 = getelementptr i8, ptr %2, i64 %23
-  %25 = getelementptr i8, ptr %24, i64 5
-  store i8 %21, ptr %25, align 1, !tbaa !9
-  %26 = bitcast <4 x i32> %15 to <16 x i8>
-  %i.bx = extractelement <16 x i8> %26, i64 8
+  %8 = urem i32 %i.bw, 10
+  %9 = trunc nuw nsw i32 %8 to i8
+  %10 = or disjoint i8 %9, 48
+  store i8 %10, ptr %i.bu, align 1, !tbaa !9
+  %11 = udiv i32 %i.bw, 10
+  %12 = urem i32 %11, 10
+  %13 = trunc nuw nsw i32 %12 to i8
+  %14 = or disjoint i8 %13, 48
+  %15 = load i32, ptr %4, align 4, !tbaa !8
+  %16 = sext i32 %15 to i64
+  %17 = getelementptr i8, ptr %2, i64 %16
+  %18 = getelementptr i8, ptr %17, i64 5
+  store i8 %14, ptr %18, align 1, !tbaa !9
+  %19 = urem i64 %.094, 10000000
+  %20 = trunc nuw nsw i64 %19 to i32              ; 3 uses
+  %21 = insertelement <4 x i32> poison, i32 %i.bw, i64 0
+  %22 = insertelement <4 x i32> %21, i32 %20, i64 1 ; 2 uses
+  %23 = shufflevector <4 x i32> %22, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %24 = udiv <4 x i32> %23, <i32 100, i32 1, i32 10, i32 100>
+  %25 = urem <4 x i32> %24, splat (i32 10)
+  %26 = trunc nuw nsw <4 x i32> %25 to <4 x i8>   ; 4 uses
+  %i.bx = extractelement <4 x i8> %26, i64 0
   %i.by = or disjoint i8 %i.bx, 48
   %i.bz = load i32, ptr %4, align 4, !tbaa !8
   %i.ca = sext i32 %i.bz to i64
   %i.cb = getelementptr i8, ptr %2, i64 %i.ca
   %i.cc = getelementptr i8, ptr %i.cb, i64 4
   store i8 %i.by, ptr %i.cc, align 1, !tbaa !9
-  %27 = insertelement <4 x i32> %11, i32 %10, i64 1
-  %i.cd = shufflevector <4 x i32> %27, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.cd = shufflevector <4 x i32> %22, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.ce = udiv <4 x i32> %i.cd, <i32 1000, i32 1000, i32 10000, i32 10000>
   %i.cf = trunc nuw nsw <4 x i32> %i.ce to <4 x i16>
-  %i.cg = urem <4 x i16> %i.cf, splat (i16 10)    ; 4 uses
-  %28 = bitcast <4 x i16> %i.cg to <8 x i8>
-  %i.ch = extractelement <8 x i8> %28, i64 0
+  %i.cg = urem <4 x i16> %i.cf, splat (i16 10)
+  %27 = trunc nuw nsw <4 x i16> %i.cg to <4 x i8> ; 4 uses
+  %i.ch = extractelement <4 x i8> %27, i64 0
   %i.ci = or disjoint i8 %i.ch, 48
   %i.cj = load i32, ptr %4, align 4, !tbaa !8
   %i.ck = sext i32 %i.cj to i64
   %i.cl = getelementptr i8, ptr %2, i64 %i.ck
   %i.cm = getelementptr i8, ptr %i.cl, i64 3
   store i8 %i.ci, ptr %i.cm, align 1, !tbaa !9
-  %29 = bitcast <4 x i16> %i.cg to <8 x i8>
-  %i.cn = extractelement <8 x i8> %29, i64 4
+  %i.cn = extractelement <4 x i8> %27, i64 2
   %i.co = or disjoint i8 %i.cn, 48
   %i.cp = load i32, ptr %4, align 4, !tbaa !8
   %i.cq = sext i32 %i.cp to i64
@@ -224,51 +222,41 @@ _ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit: ;
   %i.dg = load i32, ptr %4, align 4, !tbaa !8     ; 2 uses
   %i.dh = add nsw i32 %i.dg, 7
   store i32 %i.dh, ptr %4, align 4, !tbaa !8
-  %30 = bitcast <4 x i32> %15 to <16 x i8>
-  %i.di = extractelement <16 x i8> %30, i64 12
+  %i.di = extractelement <4 x i8> %26, i64 1
   %i.dj = or disjoint i8 %i.di, 48
   %i.dk = sext i32 %i.dg to i64
   %i.dl = getelementptr i8, ptr %2, i64 %i.dk
   %i.dm = getelementptr i8, ptr %i.dl, i64 13
   store i8 %i.dj, ptr %i.dm, align 1, !tbaa !9
+  %28 = extractelement <4 x i8> %26, i64 2
+  %29 = or disjoint i8 %28, 48
   %i.dn = load i32, ptr %4, align 4, !tbaa !8
   %i.do = sext i32 %i.dn to i64
   %i.dp = getelementptr i8, ptr %2, i64 %i.do
   %i.dq = getelementptr i8, ptr %i.dp, i64 5
-  %31 = udiv i32 %10, 10
-  %32 = udiv i32 %10, 100
-  %33 = insertelement <2 x i32> poison, i32 %31, i64 0
-  %34 = insertelement <2 x i32> %33, i32 %32, i64 1
-  %35 = urem <2 x i32> %34, splat (i32 10)        ; 2 uses
-  %36 = bitcast <2 x i32> %35 to <8 x i8>
-  %37 = extractelement <8 x i8> %36, i64 0
-  %38 = or disjoint i8 %37, 48
-  store i8 %38, ptr %i.dq, align 1, !tbaa !9
-  %39 = bitcast <2 x i32> %35 to <8 x i8>
-  %i.dr = extractelement <8 x i8> %39, i64 4
+  store i8 %29, ptr %i.dq, align 1, !tbaa !9
+  %i.dr = extractelement <4 x i8> %26, i64 3
   %i.ds = or disjoint i8 %i.dr, 48
   %i.dt = load i32, ptr %4, align 4, !tbaa !8
   %i.du = sext i32 %i.dt to i64
   %i.dv = getelementptr i8, ptr %2, i64 %i.du
   %i.dw = getelementptr i8, ptr %i.dv, i64 4
   store i8 %i.ds, ptr %i.dw, align 1, !tbaa !9
-  %40 = bitcast <4 x i16> %i.cg to <8 x i8>
-  %i.dx = extractelement <8 x i8> %40, i64 2
+  %i.dx = extractelement <4 x i8> %27, i64 1
   %i.dy = or disjoint i8 %i.dx, 48
   %i.dz = load i32, ptr %4, align 4, !tbaa !8
   %i.ea = sext i32 %i.dz to i64
   %i.eb = getelementptr i8, ptr %2, i64 %i.ea
   %i.ec = getelementptr i8, ptr %i.eb, i64 3
   store i8 %i.dy, ptr %i.ec, align 1, !tbaa !9
-  %41 = bitcast <4 x i16> %i.cg to <8 x i8>
-  %i.ed = extractelement <8 x i8> %41, i64 6
+  %i.ed = extractelement <4 x i8> %27, i64 3
   %i.ee = or disjoint i8 %i.ed, 48
   %i.ef = load i32, ptr %4, align 4, !tbaa !8
   %i.eg = sext i32 %i.ef to i64
   %i.eh = getelementptr i8, ptr %2, i64 %i.eg
   %i.ei = getelementptr i8, ptr %i.eh, i64 2
   store i8 %i.ee, ptr %i.ei, align 1, !tbaa !9
-  %i.ej = udiv i32 %10, 100000
+  %i.ej = udiv i32 %20, 100000
   %.lhs.trunc40.i = trunc nuw nsw i32 %i.ej to i8
   %i.ek = urem i8 %.lhs.trunc40.i, 10
   %i.el = or disjoint i8 %i.ek, 48
@@ -277,7 +265,7 @@ _ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit: ;
   %i.eo = getelementptr i8, ptr %2, i64 %i.en
   %i.ep = getelementptr i8, ptr %i.eo, i64 1
   store i8 %i.el, ptr %i.ep, align 1, !tbaa !9
-  %i.eq = udiv i32 %10, 1000000
+  %i.eq = udiv i32 %20, 1000000
   %i.er = trunc nuw nsw i32 %i.eq to i8
   %i.es = or disjoint i8 %i.er, 48
   %i.et = load i32, ptr %4, align 4, !tbaa !8

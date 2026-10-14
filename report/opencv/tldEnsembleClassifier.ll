@@ -205,7 +205,7 @@ bb.a:
   %i.t = lshr exact i64 %i.s, 2
   %i.u = trunc i64 %i.t to i32                    ; 2 uses
   %i.v = icmp sgt i32 %i.u, 0
-  br i1 %i.v, label %.lr.ph.i, label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33
+  br i1 %i.v, label %.lr.ph.i, label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47
 
 .lr.ph.i:                                         ; preds = %._crit_edge
   %i.w = xor i32 %i.m, -1
@@ -274,7 +274,7 @@ _ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3Vec
   %.pre62 = lshr exact i64 %i.az, 2
   %.pre64 = trunc i64 %.pre62 to i32              ; 2 uses
   %i.bd = icmp sgt i32 %.pre64, 0
-  br i1 %i.bd, label %.lr.ph.i27, label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33
+  br i1 %i.bd, label %.lr.ph.i27, label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47
 
 .lr.ph.i27:                                       ; preds = %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit
   %i.be = xor i32 %i.m, -1
@@ -331,30 +331,25 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l,
   store i8 %.sink.i29, ptr %i.bp, align 1, !tbaa !35
   %indvars.iv.next.i30 = add nuw nsw i64 %indvars.iv.i28, 1 ; 2 uses
   %i.ce = load ptr, ptr %i.q, align 8, !tbaa !34
-  %i.cf = load ptr, ptr %4, align 8, !tbaa !32    ; 3 uses
+  %i.cf = load ptr, ptr %4, align 8, !tbaa !32    ; 4 uses
   %i.cg = ptrtoint ptr %i.ce to i64
   %i.ch = ptrtoint ptr %i.cf to i64
   %i.ci = sub i64 %i.cg, %i.ch                    ; 2 uses
   %i.cj = shl i64 %i.ci, 30
   %i.ck = ashr i64 %i.cj, 32
   %i.cl = icmp slt i64 %indvars.iv.next.i30, %i.ck
-  br i1 %i.cl, label %bb.i, label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33.loopexit, !llvm.loop !0
+  br i1 %i.cl, label %bb.i, label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33, !llvm.loop !0
 
-_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33.loopexit: ; preds = %bb.o
+_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33: ; preds = %bb.o
   %.pre69 = lshr exact i64 %i.ci, 2
-  %.pre71 = trunc i64 %.pre69 to i32
-  br label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33
-
-_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33: ; preds = %._crit_edge, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33.loopexit, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit
-  %.pre-phi72 = phi i32 [ %.pre71, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33.loopexit ], [ %.pre64, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit ], [ %i.u, %._crit_edge ] ; 2 uses
-  %7 = phi ptr [ %i.cf, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33.loopexit ], [ %i.aw, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit ], [ %i.i, %._crit_edge ] ; 2 uses
+  %.pre71 = trunc i64 %.pre69 to i32              ; 2 uses
   %i.cm = sub nsw i32 %.sroa.3.0.extract.trunc, %2 ; 2 uses
   %i.cn = sdiv i32 %i.cm, %i.k                    ; 5 uses
   %i.co = srem i32 %i.cm, %i.k                    ; 4 uses
   %i.cp = add nsw i32 %i.cn, 1                    ; 6 uses
   %i.cq = sdiv i32 %i.co, 2                       ; 7 uses
   %i.cr = sub nsw i32 %i.co, %i.cq                ; 2 uses
-  %i.cs = icmp sgt i32 %.pre-phi72, 0
+  %i.cs = icmp sgt i32 %.pre71, 0
   br i1 %i.cs, label %.lr.ph.i34, label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47
 
 .lr.ph.i34:                                       ; preds = %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33
@@ -371,7 +366,7 @@ _ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3Vec
 
 bb.p:                                             ; preds = %bb.v, %.lr.ph.i34
   %indvars.iv.i35 = phi i64 [ 0, %.lr.ph.i34 ], [ %indvars.iv.next.i37, %bb.v ] ; 2 uses
-  %i.dc = phi ptr [ %7, %.lr.ph.i34 ], [ %i.du, %bb.v ]
+  %i.dc = phi ptr [ %i.cf, %.lr.ph.i34 ], [ %i.du, %bb.v ]
   %i.dd = getelementptr inbounds nuw [4 x i8], ptr %i.dc, i64 %indvars.iv.i35
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 2 ; 2 uses
   %i.df = load i8, ptr %i.de, align 1, !tbaa !35  ; 4 uses
@@ -496,9 +491,9 @@ _ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3Vec
   %.pre85 = trunc i64 %.pre83 to i32
   br label %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47
 
-_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47: ; preds = %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47.loopexit, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit40
-  %.pre-phi86 = phi i32 [ %.pre85, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47.loopexit ], [ %.pre78, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit40 ], [ %.pre-phi72, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33 ]
-  %8 = phi ptr [ %i.fd, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47.loopexit ], [ %i.du, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit40 ], [ %7, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33 ]
+_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47: ; preds = %._crit_edge, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47.loopexit, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit40
+  %.pre-phi86 = phi i32 [ %.pre85, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47.loopexit ], [ %.pre78, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit40 ], [ %.pre71, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33 ], [ %.pre64, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit ], [ %i.u, %._crit_edge ]
+  %7 = phi ptr [ %i.fd, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47.loopexit ], [ %i.du, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit40 ], [ %i.cf, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit33 ], [ %i.aw, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit ], [ %i.i, %._crit_edge ]
   %i.fk = sdiv i32 %.pre-phi86, %1                ; 2 uses
   %i.fl = icmp sgt i32 %i.fk, 0
   br i1 %i.fl, label %.lr.ph53, label %._crit_edge54
@@ -577,7 +572,7 @@ bb.ag:                                            ; preds = %bb.af
   br label %._crit_edge54
 
 ._crit_edge54:                                    ; preds = %._crit_edge54.loopexit, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47
-  %i.gt = phi ptr [ %.pre59, %._crit_edge54.loopexit ], [ %8, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47 ] ; 3 uses
+  %i.gt = phi ptr [ %.pre59, %._crit_edge54.loopexit ], [ %7, %_ZN2cv8tracking4impl3tld21TLDEnsembleClassifier12stepPrefSuffERSt6vectorINS_3VecIhLi4EEESaIS6_EEiii.exit47 ] ; 3 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !39
   %i.gw = load ptr, ptr %3, align 8, !tbaa !40

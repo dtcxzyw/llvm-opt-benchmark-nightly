@@ -205,24 +205,23 @@ _ZN6ImPlot14GetDateTimeFmtEPK18ImPlotDateTimeSpeci.exit222: ; preds = %_ZN6ImPlo
   %i.bb = fmul <2 x double> %i.ba, splat (double -1.000000e+06)
   %i.bc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.at, <2 x double> splat (double 1.000000e+06), <2 x double> %i.bb)
   %i.bd = fptosi double %i.ax to i64
-  %i.be = fptosi <2 x double> %i.bc to <2 x i32>
-  %.frozen = freeze <2 x i32> %i.be               ; 2 uses
-  %i.bf = sdiv <2 x i32> %.frozen, splat (i32 1000000) ; 3 uses
+  %i.be = fptosi <2 x double> %i.bc to <2 x i32>  ; 3 uses
+  %i.bf = sdiv <2 x i32> %i.be, splat (i32 1000000) ; 2 uses
   %i.bg = extractelement <2 x i32> %i.bf, i64 0
   %i.bh = sext i32 %i.bg to i64
   %i.bi = add nsw i64 %i.bh, %i.av
+  %16 = extractelement <2 x i32> %i.be, i64 0
+  %17 = srem i32 %16, 1000000
   store i64 %i.bi, ptr %9, align 8
-  %16 = extractelement <2 x i32> %i.bf, i64 1
-  %17 = sext i32 %16 to i64
-  %18 = add nsw i64 %17, %i.bd
-  %19 = mul <2 x i32> %i.bf, splat (i32 1000000)
-  %.decomposed = sub <2 x i32> %.frozen, %19      ; 2 uses
-  %i.bj = extractelement <2 x i32> %.decomposed, i64 0
-  store i32 %i.bj, ptr %.sroa.298.0..sroa_idx, align 8
-  store i64 %18, ptr %10, align 8
+  store i32 %17, ptr %.sroa.298.0..sroa_idx, align 8
+  %18 = extractelement <2 x i32> %i.bf, i64 1
+  %19 = sext i32 %18 to i64
+  %20 = add nsw i64 %19, %i.bd
+  %i.bj = extractelement <2 x i32> %i.be, i64 1
+  %21 = srem i32 %i.bj, 1000000
+  store i64 %20, ptr %10, align 8
   %.sroa.294.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 7 uses
-  %20 = extractelement <2 x i32> %.decomposed, i64 1
-  store i32 %20, ptr %.sroa.294.0..sroa_idx, align 8
+  store i32 %21, ptr %.sroa.294.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #32
   store i64 0, ptr %11, align 8, !tbaa !288
   %i.bk = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
@@ -625,24 +624,23 @@ bb.c:                                             ; preds = %._crit_edge
   %i.bc = insertelement <2 x double> %i.bb, double %i.ba, i64 1
   %i.bd = fmul <2 x double> %i.bc, splat (double -1.000000e+06)
   %i.be = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.am, <2 x double> splat (double 1.000000e+06), <2 x double> %i.bd)
-  %i.bf = fptosi <2 x double> %i.be to <2 x i32>
-  %.frozen = freeze <2 x i32> %i.bf               ; 2 uses
-  %i.bg = sdiv <2 x i32> %.frozen, splat (i32 1000000) ; 3 uses
+  %i.bf = fptosi <2 x double> %i.be to <2 x i32>  ; 3 uses
+  %i.bg = sdiv <2 x i32> %i.bf, splat (i32 1000000) ; 2 uses
   %i.bh = extractelement <2 x i32> %i.bg, i64 0
   %i.bi = sext i32 %i.bh to i64
   %i.bj = add nsw i64 %i.bi, %i.ax
+  %5 = extractelement <2 x i32> %i.bf, i64 0
+  %6 = srem i32 %5, 1000000
   store i64 %i.bj, ptr %3, align 8
-  %5 = extractelement <2 x i32> %i.bg, i64 1
-  %6 = sext i32 %5 to i64
-  %7 = add nsw i64 %6, %i.az
-  %8 = mul <2 x i32> %i.bg, splat (i32 1000000)
-  %.decomposed = sub <2 x i32> %.frozen, %8       ; 2 uses
-  %i.bk = extractelement <2 x i32> %.decomposed, i64 0
-  store i32 %i.bk, ptr %.sroa.244.0..sroa_idx, align 8
-  store i64 %7, ptr %4, align 8
+  store i32 %6, ptr %.sroa.244.0..sroa_idx, align 8
+  %7 = extractelement <2 x i32> %i.bg, i64 1
+  %8 = sext i32 %7 to i64
+  %9 = add nsw i64 %8, %i.az
+  %i.bk = extractelement <2 x i32> %i.bf, i64 1
+  %10 = srem i32 %i.bk, 1000000
+  store i64 %9, ptr %4, align 8
   %.sroa.240.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 7 uses
-  %9 = extractelement <2 x i32> %.decomposed, i64 1
-  store i32 %9, ptr %.sroa.240.0..sroa_idx, align 8
+  store i32 %10, ptr %.sroa.240.0..sroa_idx, align 8
   br i1 %i.t, label %bb.d, label %_ZN6ImPlot21BeginDisabledControlsEb.exit
 
 _ZN6ImPlot21BeginDisabledControlsEb.exit:         ; preds = %bb.c
@@ -1045,25 +1043,24 @@ _ZN10ImPlotAxis9ConstrainEv.exit:                 ; preds = %bb.i, %bb.j
   %i.bc = insertelement <2 x double> poison, double %i.ap, i64 0
   %i.bd = insertelement <2 x double> %i.bc, double %i.at, i64 1
   %i.be = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bd, <2 x double> splat (double 1.000000e+06), <2 x double> %i.bb)
-  %i.bf = fptosi <2 x double> %i.be to <2 x i32>
-  %.frozen = freeze <2 x i32> %i.bf               ; 2 uses
-  %i.bg = sdiv <2 x i32> %.frozen, splat (i32 1000000) ; 3 uses
+  %i.bf = fptosi <2 x double> %i.be to <2 x i32>  ; 3 uses
+  %i.bg = sdiv <2 x i32> %i.bf, splat (i32 1000000) ; 2 uses
   %i.bh = extractelement <2 x i32> %i.bg, i64 0
   %i.bi = sext i32 %i.bh to i64
   %i.bj = add nsw i64 %i.bi, %i.au
+  %3 = extractelement <2 x i32> %i.bf, i64 0
+  %4 = srem i32 %3, 1000000
   store i64 %i.bj, ptr %i.aw, align 8, !tbaa !285
-  %3 = extractelement <2 x i32> %i.bg, i64 1
-  %4 = sext i32 %3 to i64
-  %5 = add nsw i64 %4, %i.ax
-  %6 = mul <2 x i32> %i.bg, splat (i32 1000000)
-  %.decomposed = sub <2 x i32> %.frozen, %6       ; 2 uses
-  %i.bk = extractelement <2 x i32> %.decomposed, i64 0
-  store i32 %i.bk, ptr %.sroa.47.0..sroa_idx, align 8, !tbaa !29
+  store i32 %4, ptr %.sroa.47.0..sroa_idx, align 8, !tbaa !29
+  %5 = extractelement <2 x i32> %i.bg, i64 1
+  %6 = sext i32 %5 to i64
+  %7 = add nsw i64 %6, %i.ax
+  %i.bk = extractelement <2 x i32> %i.bf, i64 1
+  %8 = srem i32 %i.bk, 1000000
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 232
-  store i64 %5, ptr %i.bl, align 8, !tbaa !285
+  store i64 %7, ptr %i.bl, align 8, !tbaa !285
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 240
-  %7 = extractelement <2 x i32> %.decomposed, i64 1
-  store i32 %7, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !29
+  store i32 %8, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !29
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 276
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !306
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 272

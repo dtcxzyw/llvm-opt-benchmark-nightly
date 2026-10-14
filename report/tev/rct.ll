@@ -204,7 +204,7 @@ bb.a:
   call void @llvm.assume(i1 true) [ "align"(ptr %i.y, i64 64) ]
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !53, !nonnull !48, !align !54
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !24 ; 4 uses
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !24 ; 5 uses
   %i.ac = srem i32 %i.ab, 3
   %i.ad = sext i32 %i.ac to i64
   %i.ae = getelementptr [88 x i8], ptr %i.g, i64 %i.ad ; 2 uses
@@ -215,17 +215,11 @@ bb.a:
   %i.aj = mul i64 %i.ai, %i.a
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aj ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ak, i64 64) ]
-  %2 = sdiv i32 %i.ab, 3
-  %3 = insertelement <2 x i32> poison, i32 %i.ab, i64 0
-  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
-  %5 = add nsw <2 x i32> %4, <i32 1, i32 2>
-  %.neg.a = sdiv i32 %i.ab, -3
-  %6 = insertelement <2 x i32> poison, i32 %2, i64 0
-  %7 = insertelement <2 x i32> %6, i32 %.neg.a, i64 1
-  %8 = add <2 x i32> %5, %7
-  %9 = srem <2 x i32> %8, splat (i32 3)           ; 2 uses
-  %10 = extractelement <2 x i32> %9, i64 0
-  %i.al = sext i32 %10 to i64
+  %2 = add nsw i32 %i.ab, 1
+  %.neg.a = sdiv i32 %i.ab, 3
+  %3 = add nsw i32 %2, %.neg.a
+  %4 = srem i32 %3, 3
+  %i.al = sext i32 %4 to i64
   %i.am = getelementptr [88 x i8], ptr %i.g, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 40
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !36
@@ -234,8 +228,11 @@ bb.a:
   %i.ar = mul i64 %i.aq, %i.a
   %i.as = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ar ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.as, i64 64) ]
-  %11 = extractelement <2 x i32> %9, i64 1
-  %i.at = sext i32 %11 to i64
+  %5 = add nsw i32 %i.ab, 2
+  %.neg = sdiv i32 %i.ab, -3
+  %6 = add i32 %5, %.neg
+  %7 = srem i32 %6, 3
+  %i.at = sext i32 %7 to i64
   %i.au = getelementptr [88 x i8], ptr %i.g, i64 %i.at ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 40
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !36
@@ -322,7 +319,7 @@ bb.a:
   call void @llvm.assume(i1 true) [ "align"(ptr %i.y, i64 64) ]
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !65, !nonnull !48, !align !54
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !24 ; 4 uses
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !24 ; 5 uses
   %i.ac = srem i32 %i.ab, 3
   %i.ad = sext i32 %i.ac to i64
   %i.ae = getelementptr [88 x i8], ptr %i.g, i64 %i.ad ; 2 uses
@@ -333,17 +330,11 @@ bb.a:
   %i.aj = mul i64 %i.ai, %i.a
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.aj ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ak, i64 64) ]
-  %2 = sdiv i32 %i.ab, 3
-  %3 = insertelement <2 x i32> poison, i32 %i.ab, i64 0
-  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
-  %5 = add nsw <2 x i32> %4, <i32 1, i32 2>
-  %.neg.a = sdiv i32 %i.ab, -3
-  %6 = insertelement <2 x i32> poison, i32 %2, i64 0
-  %7 = insertelement <2 x i32> %6, i32 %.neg.a, i64 1
-  %8 = add <2 x i32> %5, %7
-  %9 = srem <2 x i32> %8, splat (i32 3)           ; 2 uses
-  %10 = extractelement <2 x i32> %9, i64 0
-  %i.al = sext i32 %10 to i64
+  %2 = add nsw i32 %i.ab, 1
+  %.neg.a = sdiv i32 %i.ab, 3
+  %3 = add nsw i32 %2, %.neg.a
+  %4 = srem i32 %3, 3
+  %i.al = sext i32 %4 to i64
   %i.am = getelementptr [88 x i8], ptr %i.g, i64 %i.al ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 40
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !36
@@ -352,8 +343,11 @@ bb.a:
   %i.ar = mul i64 %i.aq, %i.a
   %i.as = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ar ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.as, i64 64) ]
-  %11 = extractelement <2 x i32> %9, i64 1
-  %i.at = sext i32 %11 to i64
+  %5 = add nsw i32 %i.ab, 2
+  %.neg = sdiv i32 %i.ab, -3
+  %6 = add i32 %5, %.neg
+  %7 = srem i32 %6, 3
+  %i.at = sext i32 %7 to i64
   %i.au = getelementptr [88 x i8], ptr %i.g, i64 %i.at ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 40
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !36

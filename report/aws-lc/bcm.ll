@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/aws-lc/original/bcm?download=true
 inline.NumInlined: 6923
 inline.NumDeleted: 1212
-loop-unroll.NumCompletelyUnrolled: 331
+loop-unroll.NumCompletelyUnrolled: 332
 loop-unroll.NumRuntimeUnrolled: 163
-loop-unroll.NumUnrolled: 550
+loop-unroll.NumUnrolled: 551
 begin_hunk_0_@mlkem_poly_tomsg:vector.memcheck
   %i.fo = getelementptr inbounds nuw i8, ptr %i.q, i64 122
   %i.fp = load i16, ptr %i.fh, align 2, !tbaa !131, !alias.scope !2823
@@ -205,7 +205,7 @@ define internal fastcc void @mlkem768_gen_matrix(ptr noundef nonnull %0, ptr nof
 .preheader52:
   %3 = alloca %struct.keccak_ctx_st, align 8      ; 11 uses
   %i.a = alloca [504 x i8], align 32              ; 10 uses
-  %i.b = alloca [4 x [64 x i8]], align 32         ; 28 uses
+  %i.b = alloca [4 x [64 x i8]], align 32         ; 22 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #46
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(32) %i.b, ptr noundef nonnull readonly align 1 dereferenceable(32) %1, i64 32, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 64
@@ -214,37 +214,18 @@ define internal fastcc void @mlkem768_gen_matrix(ptr noundef nonnull %0, ptr nof
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(32) %i.d, ptr noundef nonnull readonly align 1 dereferenceable(32) %1, i64 32, i1 false)
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 192
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(32) %i.e, ptr noundef nonnull readonly align 1 dereferenceable(32) %1, i64 32, i1 false)
-  %.not47 = icmp eq i32 %2, 0                     ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 33 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 97 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 160 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 161 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 224 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.b, i64 225 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 33 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 97 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 160 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 161 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 224 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 225 ; 2 uses
-  br i1 %.not47, label %.preheader51.split.us.preheader, label %.preheader51.split.preheader
+  %.not47 = icmp eq i32 %2, 0
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 33 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 97 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 160 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 161 ; 4 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 224 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 225 ; 4 uses
+  br i1 %.not47, label %.preheader51.split.preheader.1, label %.preheader51.split.us.preheader.1
 
-.preheader51.split.preheader:                     ; preds = %.preheader52
-  store i8 0, ptr %4, align 32, !tbaa !76
-  store i8 0, ptr %5, align 1, !tbaa !76
-  store i8 0, ptr %6, align 32, !tbaa !76
-  store i8 1, ptr %7, align 1, !tbaa !76
-  store i8 0, ptr %8, align 32, !tbaa !76
-  store i8 2, ptr %9, align 1, !tbaa !76
-  store i8 1, ptr %10, align 32, !tbaa !76
-  store i8 0, ptr %11, align 1, !tbaa !76
-  br label %.split.us
-
-.preheader51.split.us.preheader:                  ; preds = %.preheader52
+.preheader51.split.preheader.1:                   ; preds = %.preheader52
   store i8 0, ptr %i.f, align 32, !tbaa !76
   store i8 0, ptr %i.g, align 1, !tbaa !76
   store i8 1, ptr %i.h, align 32, !tbaa !76
@@ -253,27 +234,10 @@ define internal fastcc void @mlkem768_gen_matrix(ptr noundef nonnull %0, ptr nof
   store i8 0, ptr %i.k, align 1, !tbaa !76
   store i8 0, ptr %i.l, align 32, !tbaa !76
   store i8 1, ptr %i.m, align 1, !tbaa !76
-  br label %.split.us
-
-.split.us:                                        ; preds = %.preheader51.split.preheader, %.preheader51.split.us.preheader
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 512
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 1024
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 1536
-  call fastcc void @mlkem_poly_rej_uniform_x4(ptr noundef %0, ptr noundef %12, ptr noundef %13, ptr noundef %14, ptr noundef %i.b)
-  br i1 %.not47, label %.preheader51.split.us.preheader.1, label %.preheader51.split.preheader.1
-
-.preheader51.split.preheader.1:                   ; preds = %.split.us
-  store i8 1, ptr %4, align 32, !tbaa !76
-  store i8 1, ptr %5, align 1, !tbaa !76
-  store i8 1, ptr %6, align 32, !tbaa !76
-  store i8 2, ptr %7, align 1, !tbaa !76
-  store i8 2, ptr %8, align 32, !tbaa !76
-  store i8 0, ptr %9, align 1, !tbaa !76
-  store i8 2, ptr %10, align 32, !tbaa !76
-  store i8 1, ptr %11, align 1, !tbaa !76
-  br label %.split.us.1
-
-.preheader51.split.us.preheader.1:                ; preds = %.split.us
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 512
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 1024
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1536
+  call fastcc void @mlkem_poly_rej_uniform_x4(ptr noundef %0, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %i.b)
   store i8 1, ptr %i.f, align 32, !tbaa !76
   store i8 1, ptr %i.g, align 1, !tbaa !76
   store i8 2, ptr %i.h, align 32, !tbaa !76
@@ -282,14 +246,42 @@ define internal fastcc void @mlkem768_gen_matrix(ptr noundef nonnull %0, ptr nof
   store i8 2, ptr %i.k, align 1, !tbaa !76
   store i8 1, ptr %i.l, align 32, !tbaa !76
   store i8 2, ptr %i.m, align 1, !tbaa !76
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 2048
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 2560
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 3072
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 3584
+  call fastcc void @mlkem_poly_rej_uniform_x4(ptr noundef %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr noundef %i.b)
+  br label %.split.us.1
+
+.preheader51.split.us.preheader.1:                ; preds = %.preheader52
+  store i8 0, ptr %i.f, align 32, !tbaa !76
+  store i8 0, ptr %i.g, align 1, !tbaa !76
+  store i8 0, ptr %i.h, align 32, !tbaa !76
+  store i8 1, ptr %i.i, align 1, !tbaa !76
+  store i8 0, ptr %i.j, align 32, !tbaa !76
+  store i8 2, ptr %i.k, align 1, !tbaa !76
+  store i8 1, ptr %i.l, align 32, !tbaa !76
+  store i8 0, ptr %i.m, align 1, !tbaa !76
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 512
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 1024
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 1536
+  call fastcc void @mlkem_poly_rej_uniform_x4(ptr noundef %0, ptr noundef %11, ptr noundef %12, ptr noundef %13, ptr noundef %i.b)
+  store i8 1, ptr %i.f, align 32, !tbaa !76
+  store i8 1, ptr %i.g, align 1, !tbaa !76
+  store i8 1, ptr %i.h, align 32, !tbaa !76
+  store i8 2, ptr %i.i, align 1, !tbaa !76
+  store i8 2, ptr %i.j, align 32, !tbaa !76
+  store i8 0, ptr %i.k, align 1, !tbaa !76
+  store i8 2, ptr %i.l, align 32, !tbaa !76
+  store i8 1, ptr %i.m, align 1, !tbaa !76
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 2048
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 2560
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 3072
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 3584
+  call fastcc void @mlkem_poly_rej_uniform_x4(ptr noundef %14, ptr noundef %15, ptr noundef %16, ptr noundef %17, ptr noundef %i.b)
   br label %.split.us.1
 
 .split.us.1:                                      ; preds = %.preheader51.split.us.preheader.1, %.preheader51.split.preheader.1
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 2048
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 2560
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 3072
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 3584
-  call fastcc void @mlkem_poly_rej_uniform_x4(ptr noundef %15, ptr noundef %16, ptr noundef %17, ptr noundef %18, ptr noundef %i.b)
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 33
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 4096 ; 8 uses

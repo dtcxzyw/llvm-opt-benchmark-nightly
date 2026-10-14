@@ -205,24 +205,22 @@ _ZN10actix_http7helpers17write_status_line17h3a28769db8f12ee3E.exit: ; preds = %
   %i.be = udiv <2 x i16> %i.bd, <i16 100, i16 10> ; 2 uses
   %i.bf = bitcast <2 x i16> %i.be to <4 x i8>
   %i.bg = extractelement <4 x i8> %i.bf, i64 0
-  %2 = shufflevector <2 x i16> %i.be, <2 x i16> poison, <2 x i32> <i32 1, i32 poison>
-  %3 = insertelement <2 x i16> %2, i16 %i.az, i64 1
-  %4 = urem <2 x i16> %3, splat (i16 10)          ; 2 uses
-  %5 = bitcast <2 x i16> %4 to <4 x i8>
-  %6 = extractelement <4 x i8> %5, i64 0
-  %7 = bitcast <2 x i16> %4 to <4 x i8>
-  %8 = extractelement <4 x i8> %7, i64 2
+  %2 = extractelement <2 x i16> %i.be, i64 1
+  %3 = urem i16 %2, 10
+  %4 = trunc nuw nsw i16 %3 to i8
+  %5 = urem i16 %i.az, 10
+  %6 = trunc nuw nsw i16 %5 to i8
   %i.bh = add i8 %i.bg, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !3265
   store i8 %i.bh, ptr %i.d, align 1, !noalias !3265
   call void @"_ZN74_$LT$bytes..bytes_mut..BytesMut$u20$as$u20$bytes..buf..buf_mut..BufMut$GT$9put_slice17he91f65def23323d7E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.d, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !3265
-  %i.bi = or disjoint i8 %6, 48
+  %i.bi = or disjoint i8 %4, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3266
   store i8 %i.bi, ptr %i.c, align 1, !noalias !3266
   call void @"_ZN74_$LT$bytes..bytes_mut..BytesMut$u20$as$u20$bytes..buf..buf_mut..BufMut$GT$9put_slice17he91f65def23323d7E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.c, i64 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3266
-  %i.bj = or disjoint i8 %8, 48
+  %i.bj = or disjoint i8 %6, 48
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !3267
   store i8 %i.bj, ptr %i.b, align 1, !noalias !3267
   call void @"_ZN74_$LT$bytes..bytes_mut..BytesMut$u20$as$u20$bytes..buf..buf_mut..BufMut$GT$9put_slice17he91f65def23323d7E"(ptr noalias noundef nonnull align 8 dereferenceable(32) %1, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %i.b, i64 noundef 1)

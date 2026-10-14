@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %bb.a, %_ZNK3fmt3v12
 define linkonce_odr hidden noundef ptr @_ZN3fmt3v126detail19parse_chrono_formatIcRNS1_18duration_formatterIclSt5ratioILl1ELl1EEEEEEPKT_SA_SA_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(49) %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %struct.tm, align 8                 ; 5 uses
-  %4 = alloca %struct.tm, align 8                 ; 6 uses
-  %5 = alloca %struct.tm, align 8                 ; 6 uses
+  %4 = alloca %struct.tm, align 8                 ; 5 uses
+  %5 = alloca %struct.tm, align 8                 ; 5 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE7on_textEPKcS7_.exit215, label %bb.b
 
@@ -219,10 +219,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 9 uses
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -625,19 +623,18 @@ bb.ad:                                            ; preds = %bb.v
 bb.ae:                                            ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   call void @llvm.experimental.noalias.scope.decl(metadata !832)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.d, i8 0, i64 48, i1 false), !alias.scope !832
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.e, i8 0, i64 48, i1 false), !alias.scope !832
   %i.eb = load i64, ptr %i.c, align 8, !tbaa !275, !noalias !832 ; 3 uses
   %i.ec = udiv i64 %i.eb, 3600
   %i.ed = urem i64 %i.ec, 24
   %i.ee = trunc nuw nsw i64 %i.ed to i32
-  store i32 %i.ee, ptr %i.d, align 8, !tbaa !277, !alias.scope !832
+  store i32 %i.ee, ptr %i.e, align 8, !tbaa !277, !alias.scope !832
   %i.ef = udiv i64 %i.eb, 60
-  %8 = urem i64 %i.ef, 60
-  %9 = trunc nuw nsw i64 %8 to i32
-  store i32 %9, ptr %i.e, align 4, !tbaa !278, !alias.scope !832
-  %10 = urem i64 %i.eb, 60
-  %11 = trunc nuw nsw i64 %10 to i32
-  store i32 %11, ptr %5, align 8, !tbaa !279, !alias.scope !832
+  %6 = insertelement <2 x i64> poison, i64 %i.eb, i64 0
+  %7 = insertelement <2 x i64> %6, i64 %i.ef, i64 1
+  %8 = urem <2 x i64> %7, splat (i64 60)
+  %9 = trunc nuw nsw <2 x i64> %8 to <2 x i32>
+  store <2 x i32> %9, ptr %5, align 8, !tbaa !148, !alias.scope !832
   call void @_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlS4_EEEEFvvEJEEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %2, ptr noundef nonnull align 8 dereferenceable(56) %5, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE15on_12_hour_timeEv to i64), i64 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE7on_textEPKcS7_.exit167
@@ -684,19 +681,18 @@ bb.ah:                                            ; preds = %bb.v
 bb.ai:                                            ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.experimental.noalias.scope.decl(metadata !833)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, i8 0, i64 48, i1 false), !alias.scope !833
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.d, i8 0, i64 48, i1 false), !alias.scope !833
   %i.ex = load i64, ptr %i.c, align 8, !tbaa !275, !noalias !833 ; 3 uses
   %i.ey = udiv i64 %i.ex, 3600
   %i.ez = urem i64 %i.ey, 24
   %i.fa = trunc nuw nsw i64 %i.ez to i32
-  store i32 %i.fa, ptr %6, align 8, !tbaa !277, !alias.scope !833
+  store i32 %i.fa, ptr %i.d, align 8, !tbaa !277, !alias.scope !833
   %i.fb = udiv i64 %i.ex, 60
-  %12 = urem i64 %i.fb, 60
-  %13 = trunc nuw nsw i64 %12 to i32
-  store i32 %13, ptr %7, align 4, !tbaa !278, !alias.scope !833
-  %14 = urem i64 %i.ex, 60
-  %15 = trunc nuw nsw i64 %14 to i32
-  store i32 %15, ptr %4, align 8, !tbaa !279, !alias.scope !833
+  %10 = insertelement <2 x i64> poison, i64 %i.ex, i64 0
+  %11 = insertelement <2 x i64> %10, i64 %i.fb, i64 1
+  %12 = urem <2 x i64> %11, splat (i64 60)
+  %13 = trunc nuw nsw <2 x i64> %12 to <2 x i32>
+  store <2 x i32> %13, ptr %4, align 8, !tbaa !148, !alias.scope !833
   call void @_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlS4_EEEEFvvEJEEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %2, ptr noundef nonnull align 8 dereferenceable(56) %4, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE8on_am_pmEv to i64), i64 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   br label %_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE7on_textEPKcS7_.exit167
@@ -844,7 +840,7 @@ bb.bc:                                            ; preds = %bb.ay
   %i.gb = load i64, ptr %i.c, align 8, !tbaa !275
   %i.gc = urem i64 %i.gb, 60
   %i.gd = trunc nuw nsw i64 %i.gc to i32
-  store i32 %i.gd, ptr %3, align 8, !tbaa !279
+  store i32 %i.gd, ptr %3, align 8, !tbaa !278
   call void @_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlS4_EEEEFvNS1_14numeric_systemENS1_8pad_typeEEJSE_SF_EEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %2, ptr noundef nonnull align 8 dereferenceable(56) %3, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE9on_secondENS1_14numeric_systemENS1_8pad_typeE to i64), i64 0, i32 noundef 1, i32 noundef %.0128)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   br label %_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE7on_textEPKcS7_.exit167
@@ -1247,21 +1243,21 @@ bb.k:                                             ; preds = %.thread, %bb.j
   store i64 %.sink, ptr %i.d, align 8, !tbaa !97
   store ptr %i.a, ptr %5, align 8, !tbaa !212
   %i.cd = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %i.c, ptr %i.cd, align 8, !tbaa !281
+  store ptr %i.c, ptr %i.cd, align 8, !tbaa !280
   %i.ce = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store ptr %i.b, ptr %i.ce, align 8, !tbaa !281
+  store ptr %i.b, ptr %i.ce, align 8, !tbaa !280
   %i.cf = getelementptr inbounds nuw i8, ptr %5, i64 24
-  store ptr %i.d, ptr %i.cf, align 8, !tbaa !281
+  store ptr %i.d, ptr %i.cf, align 8, !tbaa !280
   %i.cg = getelementptr inbounds nuw i8, ptr %5, i64 32
-  store ptr %4, ptr %i.cg, align 8, !tbaa !283
+  store ptr %4, ptr %i.cg, align 8, !tbaa !282
   call void @_ZN3fmt3v126detail18for_each_codepointIZNS1_5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_SA_NS0_17basic_string_viewIS7_EERKNS0_12format_specsEEUljNSB_IcEEE_EEvSG_S7_(ptr %1, i64 %2, ptr noundef nonnull byval(%class.anon.151) align 8 %5)
   %i.ch = load i64, ptr %i.d, align 8, !tbaa !97  ; 2 uses
   %i.ci = load i64, ptr %i.c, align 8, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #25
   %i.cj = load i8, ptr %i.a, align 1, !tbaa !210, !range !186, !noundef !134
-  store i8 %i.cj, ptr %6, align 8, !tbaa !285
+  store i8 %i.cj, ptr %6, align 8, !tbaa !284
   %i.ck = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store i64 %i.ch, ptr %i.ck, align 8, !tbaa !286
+  store i64 %i.ch, ptr %i.ck, align 8, !tbaa !285
   %i.cl = getelementptr inbounds nuw i8, ptr %6, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cl, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !838
   %i.cm = call ptr @_ZN3fmt3v126detail12write_paddedIcLNS0_5alignE1ENS0_14basic_appenderIcEEZNS1_5writeIcS5_TnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_SB_NS0_17basic_string_viewIS8_EERKNS0_12format_specsEEUlS5_E_EET1_SI_SG_mmOT2_(ptr %0, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 noundef %i.ch, i64 noundef %i.ci, ptr noundef nonnull align 8 dereferenceable(32) %6)
@@ -1526,7 +1522,7 @@ bb.c:                                             ; preds = %bb.a
   %i.i = urem i64 %i.h, 60
   %i.j = trunc nuw nsw i64 %i.i to i32
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %i.j, ptr %i.k, align 4, !tbaa !278
+  store i32 %i.j, ptr %i.k, align 4, !tbaa !286
   call void @_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlS4_EEEEFvNS1_14numeric_systemENS1_8pad_typeEEJSE_SF_EEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %0, ptr noundef nonnull align 8 dereferenceable(56) %3, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE9on_minuteENS1_14numeric_systemENS1_8pad_typeE to i64), i64 0, i32 noundef %1, i32 noundef %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   br label %bb.d
@@ -1630,7 +1626,7 @@ bb.h:                                             ; preds = %bb.a
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !275
   %i.ah = urem i64 %i.ag, 60
   %i.ai = trunc nuw nsw i64 %i.ah to i32
-  store i32 %i.ai, ptr %3, align 8, !tbaa !279
+  store i32 %i.ai, ptr %3, align 8, !tbaa !278
   call void @_ZN3fmt3v126detail18duration_formatterIclSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlS4_EEEEFvNS1_14numeric_systemENS1_8pad_typeEEJSE_SF_EEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %0, ptr noundef nonnull align 8 dereferenceable(56) %3, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE9on_secondENS1_14numeric_systemENS1_8pad_typeE to i64), i64 0, i32 noundef %1, i32 noundef %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   br label %_ZN3fmt3v126detail24write_fractional_secondsIcNS0_14basic_appenderIcEENSt6chrono8durationImSt5ratioILl1ELl1EEEEEEvRT0_T1_i.exit
@@ -2033,7 +2029,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !298, !nonnull !134, !align !135
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !278
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !286
   tail call void @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE6write2EiNS1_8pad_typeE(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %i.h, i32 noundef %2)
   br label %bb.i
 
@@ -2108,7 +2104,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !298, !nonnull !134, !align !135
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !279
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !278
   tail call void @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIcEEcNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE6write2EiNS1_8pad_typeE(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %i.g, i32 noundef %2)
   br label %bb.i
 
@@ -2349,8 +2345,8 @@ bb.b:                                             ; preds = %bb.a
   %i.l = icmp eq i32 %i.k, 0
   %i.m = select i1 %i.l, i32 12, i32 %i.k
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !278
-  %i.p = load i32, ptr %i.f, align 8, !tbaa !279
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !286
+  %i.p = load i32, ptr %i.f, align 8, !tbaa !278
   %i.q = shl i32 %i.o, 24
   %i.r = or i32 %i.m, %i.q
   %i.s = zext i32 %i.r to i64
@@ -2753,13 +2749,13 @@ bb.c:                                             ; preds = %_ZN3fmt3v126detail7
 
 bb.d:                                             ; preds = %bb.c, %_ZN3fmt3v126detail7reserveIcEENS0_14basic_appenderIT_EES5_m.exit
   %.sroa.09.0 = phi ptr [ %i.ab, %bb.c ], [ %0, %_ZN3fmt3v126detail7reserveIcEENS0_14basic_appenderIT_EES5_m.exit ] ; 8 uses
-  %i.ac = load i8, ptr %4, align 8, !tbaa !285, !range !186, !noundef !134
+  %i.ac = load i8, ptr %4, align 8, !tbaa !284, !range !186, !noundef !134
   %i.ad = trunc nuw i8 %i.ac to i1
   br i1 %i.ad, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.af = load i64, ptr %i.ae, align 8, !tbaa !286
+  %i.af = load i64, ptr %i.ae, align 8, !tbaa !285
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.01.0.copyload.i = load ptr, ptr %i.ag, align 8, !tbaa !123
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 24
@@ -2772,7 +2768,7 @@ bb.f:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !197 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.am = load i64, ptr %i.al, align 8, !tbaa !286 ; 2 uses
+  %i.am = load i64, ptr %i.al, align 8, !tbaa !285 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.am ; 2 uses
   %.not31.i.i.i = icmp samesign eq i64 %i.am, 0
   br i1 %.not31.i.i.i, label %_ZZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEENKUlS4_E_clES4_.exit, label %.lr.ph34.i.i.i
@@ -3175,8 +3171,8 @@ _ZNK3fmt3v126detail21chrono_format_checker17on_duration_valueEv.exit.thread: ; p
 define linkonce_odr hidden noundef ptr @_ZN3fmt3v126detail19parse_chrono_formatIwRNS1_18duration_formatterIwlSt5ratioILl1ELl1EEEEEEPKT_SA_SA_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(49) %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %struct.tm, align 8                 ; 5 uses
-  %4 = alloca %struct.tm, align 8                 ; 6 uses
-  %5 = alloca %struct.tm, align 8                 ; 6 uses
+  %4 = alloca %struct.tm, align 8                 ; 5 uses
+  %5 = alloca %struct.tm, align 8                 ; 5 uses
   %i.a = alloca [1 x i32], align 4                ; 4 uses
   %i.b = alloca [1 x i32], align 4                ; 4 uses
   %i.c = icmp eq ptr %0, %1
@@ -3193,10 +3189,8 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 9 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -3599,19 +3593,18 @@ bb.am:                                            ; preds = %bb.v
 bb.an:                                            ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   call void @llvm.experimental.noalias.scope.decl(metadata !941)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, i8 0, i64 48, i1 false), !alias.scope !941
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.i, i8 0, i64 48, i1 false), !alias.scope !941
   %i.gb = load i64, ptr %i.e, align 8, !tbaa !275, !noalias !941 ; 3 uses
   %i.gc = udiv i64 %i.gb, 3600
   %i.gd = urem i64 %i.gc, 24
   %i.ge = trunc nuw nsw i64 %i.gd to i32
-  store i32 %i.ge, ptr %i.h, align 8, !tbaa !277, !alias.scope !941
+  store i32 %i.ge, ptr %i.i, align 8, !tbaa !277, !alias.scope !941
   %i.gf = udiv i64 %i.gb, 60
-  %8 = urem i64 %i.gf, 60
-  %9 = trunc nuw nsw i64 %8 to i32
-  store i32 %9, ptr %i.i, align 4, !tbaa !278, !alias.scope !941
-  %10 = urem i64 %i.gb, 60
-  %11 = trunc nuw nsw i64 %10 to i32
-  store i32 %11, ptr %5, align 8, !tbaa !279, !alias.scope !941
+  %6 = insertelement <2 x i64> poison, i64 %i.gb, i64 0
+  %7 = insertelement <2 x i64> %6, i64 %i.gf, i64 1
+  %8 = urem <2 x i64> %7, splat (i64 60)
+  %9 = trunc nuw nsw <2 x i64> %8 to <2 x i32>
+  store <2 x i32> %9, ptr %5, align 8, !tbaa !148, !alias.scope !941
   call void @_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlS4_EEEEFvvEJEEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %2, ptr noundef nonnull align 8 dereferenceable(56) %5, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE15on_12_hour_timeEv to i64), i64 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE7on_textEPKwS7_.exit165
@@ -3658,19 +3651,18 @@ bb.aq:                                            ; preds = %bb.v
 bb.ar:                                            ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.experimental.noalias.scope.decl(metadata !942)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, i8 0, i64 48, i1 false), !alias.scope !942
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, i8 0, i64 48, i1 false), !alias.scope !942
   %i.gx = load i64, ptr %i.e, align 8, !tbaa !275, !noalias !942 ; 3 uses
   %i.gy = udiv i64 %i.gx, 3600
   %i.gz = urem i64 %i.gy, 24
   %i.ha = trunc nuw nsw i64 %i.gz to i32
-  store i32 %i.ha, ptr %6, align 8, !tbaa !277, !alias.scope !942
+  store i32 %i.ha, ptr %i.h, align 8, !tbaa !277, !alias.scope !942
   %i.hb = udiv i64 %i.gx, 60
-  %12 = urem i64 %i.hb, 60
-  %13 = trunc nuw nsw i64 %12 to i32
-  store i32 %13, ptr %7, align 4, !tbaa !278, !alias.scope !942
-  %14 = urem i64 %i.gx, 60
-  %15 = trunc nuw nsw i64 %14 to i32
-  store i32 %15, ptr %4, align 8, !tbaa !279, !alias.scope !942
+  %10 = insertelement <2 x i64> poison, i64 %i.gx, i64 0
+  %11 = insertelement <2 x i64> %10, i64 %i.hb, i64 1
+  %12 = urem <2 x i64> %11, splat (i64 60)
+  %13 = trunc nuw nsw <2 x i64> %12 to <2 x i32>
+  store <2 x i32> %13, ptr %4, align 8, !tbaa !148, !alias.scope !942
   call void @_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlS4_EEEEFvvEJEEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %2, ptr noundef nonnull align 8 dereferenceable(56) %4, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE8on_am_pmEv to i64), i64 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   br label %_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE7on_textEPKwS7_.exit165
@@ -3827,7 +3819,7 @@ bb.bm:                                            ; preds = %bb.bi
   %i.ie = load i64, ptr %i.e, align 8, !tbaa !275
   %i.if = urem i64 %i.ie, 60
   %i.ig = trunc nuw nsw i64 %i.if to i32
-  store i32 %i.ig, ptr %3, align 8, !tbaa !279
+  store i32 %i.ig, ptr %3, align 8, !tbaa !278
   call void @_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlS4_EEEEFvNS1_14numeric_systemENS1_8pad_typeEEJSE_SF_EEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %2, ptr noundef nonnull align 8 dereferenceable(56) %3, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE9on_secondENS1_14numeric_systemENS1_8pad_typeE to i64), i64 0, i32 noundef 1, i32 noundef %.0128)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   br label %_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE7on_textEPKwS7_.exit165
@@ -4230,7 +4222,7 @@ bb.c:                                             ; preds = %bb.a
   %i.i = urem i64 %i.h, 60
   %i.j = trunc nuw nsw i64 %i.i to i32
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %i.j, ptr %i.k, align 4, !tbaa !278
+  store i32 %i.j, ptr %i.k, align 4, !tbaa !286
   call void @_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlS4_EEEEFvNS1_14numeric_systemENS1_8pad_typeEEJSE_SF_EEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %0, ptr noundef nonnull align 8 dereferenceable(56) %3, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE9on_minuteENS1_14numeric_systemENS1_8pad_typeE to i64), i64 0, i32 noundef %1, i32 noundef %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   br label %bb.d
@@ -4336,7 +4328,7 @@ bb.h:                                             ; preds = %bb.a
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !275
   %i.ah = urem i64 %i.ag, 60
   %i.ai = trunc nuw nsw i64 %i.ah to i32
-  store i32 %i.ai, ptr %3, align 8, !tbaa !279
+  store i32 %i.ai, ptr %3, align 8, !tbaa !278
   call void @_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlS4_EEEEFvNS1_14numeric_systemENS1_8pad_typeEEJSE_SF_EEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %0, ptr noundef nonnull align 8 dereferenceable(56) %3, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE9on_secondENS1_14numeric_systemENS1_8pad_typeE to i64), i64 0, i32 noundef %1, i32 noundef %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   br label %_ZN3fmt3v126detail24write_fractional_secondsIwNS0_14basic_appenderIwEENSt6chrono8durationImSt5ratioILl1ELl1EEEEEEvRT0_T1_i.exit
@@ -4739,7 +4731,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !324, !nonnull !134, !align !135
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %i.h = load i32, ptr %i.g, align 4, !tbaa !278
+  %i.h = load i32, ptr %i.g, align 4, !tbaa !286
   tail call void @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE6write2EiNS1_8pad_typeE(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %i.h, i32 noundef %2)
   br label %bb.d
 
@@ -4770,7 +4762,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !324, !nonnull !134, !align !135
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !279
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !278
   tail call void @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE6write2EiNS1_8pad_typeE(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %i.g, i32 noundef %2)
   br label %bb.d
 
@@ -4967,8 +4959,8 @@ bb.b:                                             ; preds = %bb.a
   %i.l = icmp eq i32 %i.k, 0
   %i.m = select i1 %i.l, i32 12, i32 %i.k
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !278
-  %i.p = load i32, ptr %i.f, align 8, !tbaa !279
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !286
+  %i.p = load i32, ptr %i.f, align 8, !tbaa !278
   %i.q = shl i32 %i.o, 24
   %i.r = or i32 %i.m, %i.q
   %i.s = zext i32 %i.r to i64
@@ -5371,15 +5363,15 @@ begin_hunk_9_@bcmp
 !275 = !{!265, !69, i64 0}
 !276 = !{!"_ZTS2tm", !62, i64 0, !62, i64 4, !62, i64 8, !62, i64 12, !62, i64 16, !62, i64 20, !62, i64 24, !62, i64 28, !62, i64 32, !69, i64 40, !67, i64 48}
 !277 = !{!276, !62, i64 8}
-!278 = !{!276, !62, i64 4}
-!279 = !{!276, !62, i64 0}
-!280 = !{!"p1 long", !66, i64 0}
-!281 = !{!280, !280, i64 0}
-!282 = !{!"p1 _ZTSN3fmt3v1217basic_string_viewIcEE", !66, i64 0}
-!283 = !{!282, !282, i64 0}
-!284 = !{!"_ZTSZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEEUlS4_E_", !152, i64 0, !69, i64 8, !196, i64 16}
-!285 = !{!284, !152, i64 0}
-!286 = !{!284, !69, i64 8}
+!278 = !{!276, !62, i64 0}
+!279 = !{!"p1 long", !66, i64 0}
+!280 = !{!279, !279, i64 0}
+!281 = !{!"p1 _ZTSN3fmt3v1217basic_string_viewIcEE", !66, i64 0}
+!282 = !{!281, !281, i64 0}
+!283 = !{!"_ZTSZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEEUlS4_E_", !152, i64 0, !69, i64 8, !196, i64 16}
+!284 = !{!283, !152, i64 0}
+!285 = !{!283, !69, i64 8}
+!286 = !{!276, !62, i64 4}
 !287 = !{!"_ZTSN3fmt3v126detail10get_localeE", !61, i64 0, !152, i64 8}
 !288 = !{!287, !152, i64 8}
 !289 = !{!"branch_weights", i32 1, i32 1048575}
@@ -5782,7 +5774,7 @@ begin_hunk_10_@bcmp
 !888 = distinct !{!888, !133}
 !889 = distinct !{!889, !124, !131}
 !890 = distinct !{!890, !124}
-!891 = !{i64 0, i64 8, !212, i64 8, i64 8, !281, i64 16, i64 8, !281, i64 24, i64 8, !281, i64 32, i64 8, !283}
+!891 = !{i64 0, i64 8, !212, i64 8, i64 8, !280, i64 16, i64 8, !280, i64 24, i64 8, !280, i64 32, i64 8, !282}
 !892 = distinct !{null, null, null}
 !893 = distinct !{!893, !124, !131, !132}
 !894 = distinct !{!894, !124, !131, !132}
@@ -5794,12 +5786,12 @@ begin_hunk_10_@bcmp
 !900 = distinct !{!900, !133}
 !901 = distinct !{!901, !124, !131}
 !902 = distinct !{!902, !124}
-!903 = !{!"_ZTSZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEEUljNSA_IcEEE_", !211, i64 0, !280, i64 8, !280, i64 16, !280, i64 24, !282, i64 32}
+!903 = !{!"_ZTSZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEETnNSt9enable_ifIXsr3std7is_sameIT_cEE5valueEiE4typeELi0EEET0_S9_NS0_17basic_string_viewIS6_EERKNS0_12format_specsEEUljNSA_IcEEE_", !211, i64 0, !279, i64 8, !279, i64 16, !279, i64 24, !281, i64 32}
 !904 = !{!903, !211, i64 0}
-!905 = !{!903, !280, i64 8}
-!906 = !{!903, !280, i64 16}
-!907 = !{!903, !280, i64 24}
-!908 = !{!903, !282, i64 32}
+!905 = !{!903, !279, i64 8}
+!906 = !{!903, !279, i64 16}
+!907 = !{!903, !279, i64 24}
+!908 = !{!903, !281, i64 32}
 !909 = distinct !{null, null, null, null}
 !910 = distinct !{!910, !124}
 !911 = distinct !{!911, !124, !131, !132}

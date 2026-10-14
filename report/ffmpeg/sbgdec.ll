@@ -204,13 +204,11 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.bv = insertelement <2 x i32> poison, i32 %.lhs.trunc.i.i, i64 0
   %i.bw = shufflevector <2 x i32> %i.bv, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.bx = sdiv <2 x i32> %i.bw, <i32 3600, i32 60> ; 2 uses
-  %8 = shufflevector <2 x i32> %i.bx, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %9 = insertelement <2 x i32> %8, i32 %.lhs.trunc.i.i, i64 1
-  %10 = srem <2 x i32> %9, splat (i32 60)         ; 2 uses
-  %11 = extractelement <2 x i32> %i.bx, i64 0
-  %12 = extractelement <2 x i32> %10, i64 0
-  %i.by = extractelement <2 x i32> %10, i64 1
-  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 32, ptr noundef nonnull @.str.39, i32 noundef %11, i32 noundef %12, i32 noundef %i.by) #14
+  %8 = extractelement <2 x i32> %i.bx, i64 1
+  %9 = srem i32 %8, 60
+  %10 = srem i32 %.lhs.trunc.i.i, 60
+  %i.by = extractelement <2 x i32> %i.bx, i64 0
+  call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 32, ptr noundef nonnull @.str.39, i32 noundef %i.by, i32 noundef %9, i32 noundef %10) #14
   %i.bz = mul nsw i64 %i.bu, 1000000              ; 2 uses
   %i.ca = load i32, ptr %i.ag, align 4, !tbaa !137 ; 2 uses
   %i.cb = icmp sgt i32 %i.ca, 0
