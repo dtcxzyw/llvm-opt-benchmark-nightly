@@ -205,15 +205,18 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aw, label %.preheader171.lr.ph, label %.loopexit
 
 .preheader171.lr.ph:                              ; preds = %.thread151
-  %i.ax = icmp sgt i64 %i.g, 3
-  %8 = icmp slt i64 %.0137, 1
-  %9 = icmp slt i64 %.0136164, 1
-  %10 = icmp slt i64 %.0135147163, 1              ; 2 uses
-  %brmerge231 = or i1 %8, %9                      ; 2 uses
-  br i1 %i.ax, label %.preheader171.lr.ph.split.us, label %.preheader171.lr.ph.split
+  %i.ax = icmp sgt i64 %.0137, 0
+  %8 = icmp sgt i64 %.0135147163, 0               ; 2 uses
+  %9 = icmp sgt i64 %.0136164, 0
+  %or.cond = and i1 %i.ax, %9
+  br i1 %or.cond, label %.preheader171.lr.ph.split.us.split.us, label %.loopexit
 
-.preheader171.lr.ph.split.us:                     ; preds = %.preheader171.lr.ph
-  br i1 %brmerge231, label %.loopexit, label %.preheader171.us.us.us.preheader
+.preheader171.lr.ph.split.us.split.us:            ; preds = %.preheader171.lr.ph
+  %10 = icmp sgt i64 %i.g, 3
+  br i1 %10, label %.preheader171.lr.ph.split.us, label %.preheader171.lr.ph.split
+
+.preheader171.lr.ph.split.us:                     ; preds = %.preheader171.lr.ph.split.us.split.us
+  br i1 %8, label %.preheader171.us.us.us.preheader, label %.loopexit
 
 .preheader171.us.us.us.preheader:                 ; preds = %.preheader171.lr.ph.split.us
   %i.ay = add nsw i64 %i.g, -3                    ; 3 uses
@@ -309,7 +312,7 @@ bb.e:                                             ; preds = %bb.d
   %.lcssa236 = phi ptr [ %i.by, %..preheader170_crit_edge.us.us.us.unr-lcssa ], [ %i.cp, %.epil.preheader239 ]
   %.lcssa235 = phi ptr [ %i.cc, %..preheader170_crit_edge.us.us.us.unr-lcssa ], [ %i.ct, %.epil.preheader239 ]
   %.lcssa = phi ptr [ %i.cg, %..preheader170_crit_edge.us.us.us.unr-lcssa ], [ %i.cx, %.epil.preheader239 ]
-  br i1 %10, label %._crit_edge196.split197.us.us.us, label %.preheader169.us.us.us
+  br label %.preheader169.us.us.us
 
 .preheader169.us.us.us:                           ; preds = %..preheader170_crit_edge.us.us.us, %._crit_edge188.us.us.us
   %.0116195.us.us.us = phi i64 [ %i.dx, %._crit_edge188.us.us.us ], [ 0, %..preheader170_crit_edge.us.us.us ]
@@ -381,14 +384,13 @@ bb.e:                                             ; preds = %bb.d
   %exitcond216.not = icmp eq i64 %i.dx, %.0137
   br i1 %exitcond216.not, label %._crit_edge196.split197.us.us.us, label %.preheader169.us.us.us, !llvm.loop !233
 
-._crit_edge196.split197.us.us.us:                 ; preds = %._crit_edge188.us.us.us, %..preheader170_crit_edge.us.us.us
+._crit_edge196.split197.us.us.us:                 ; preds = %._crit_edge188.us.us.us
   %i.dy = add nuw nsw i64 %.0125198.us.us.us, 1   ; 2 uses
   %exitcond217.not = icmp eq i64 %i.dy, %i.av
   br i1 %exitcond217.not, label %.loopexit, label %.preheader171.us.us.us, !llvm.loop !234
 
-.preheader171.lr.ph.split:                        ; preds = %.preheader171.lr.ph
-  %brmerge204 = or i1 %brmerge231, %10
-  br i1 %brmerge204, label %.loopexit, label %.preheader171.preheader
+.preheader171.lr.ph.split:                        ; preds = %.preheader171.lr.ph.split.us.split.us
+  br i1 %8, label %.preheader171.preheader, label %.loopexit
 
 .preheader171.preheader:                          ; preds = %.preheader171.lr.ph.split
   %xtraiter = and i64 %.0135147163, 1
@@ -398,44 +400,56 @@ bb.e:                                             ; preds = %bb.d
   %lcmp.mod238 = trunc i64 %.0135147163 to i1
   br label %.preheader171
 
-.preheader171:                                    ; preds = %.preheader171.preheader, %._crit_edge196
-  %.0125198 = phi i64 [ %11, %._crit_edge196 ], [ 0, %.preheader171.preheader ]
+.preheader171:                                    ; preds = %.preheader171.preheader, %._crit_edge196.us.us
+  %.0125198 = phi i64 [ %22, %._crit_edge196.us.us ], [ 0, %.preheader171.preheader ]
   br label %.preheader169
 
-.preheader169:                                    ; preds = %.preheader171, %._crit_edge188
-  %.0116195 = phi i64 [ 0, %.preheader171 ], [ %i.ed, %._crit_edge188 ]
-  %.0117193 = phi ptr [ %i.as, %.preheader171 ], [ %i.ec, %._crit_edge188 ] ; 2 uses
-  %.0118191 = phi ptr [ %i.aq, %.preheader171 ], [ %i.eb, %._crit_edge188 ] ; 2 uses
-  %.0119189 = phi ptr [ %i.ao, %.preheader171 ], [ %i.ea, %._crit_edge188 ] ; 2 uses
+.preheader169:                                    ; preds = %.preheader.new, %.preheader171
+  %.0116195 = phi i64 [ 0, %.preheader171 ], [ %niter.next.1, %.preheader.new ]
+  %.0117193 = phi ptr [ %i.as, %.preheader171 ], [ %i.eo, %.preheader.new ] ; 2 uses
+  %.0118191 = phi ptr [ %i.aq, %.preheader171 ], [ %i.en, %.preheader.new ] ; 2 uses
+  %.0119189 = phi ptr [ %i.ao, %.preheader171 ], [ %i.em, %.preheader.new ] ; 2 uses
   br label %.preheader
 
-._crit_edge196:                                   ; preds = %._crit_edge188
-  %11 = add nuw nsw i64 %.0125198, 1              ; 2 uses
-  %exitcond212.not = icmp eq i64 %11, %i.av
-  br i1 %exitcond212.not, label %.loopexit, label %.preheader171, !llvm.loop !234
-
-.preheader:                                       ; preds = %.preheader169, %._crit_edge
+.preheader:                                       ; preds = %._crit_edge, %.preheader169
   %.0112187 = phi i64 [ 0, %.preheader169 ], [ %i.el, %._crit_edge ]
   %.0113186 = phi ptr [ %.0117193, %.preheader169 ], [ %i.ek, %._crit_edge ] ; 3 uses
   %.0114185 = phi ptr [ %.0118191, %.preheader169 ], [ %i.ej, %._crit_edge ] ; 3 uses
   %.0115184 = phi ptr [ %.0119189, %.preheader169 ], [ %i.ei, %._crit_edge ] ; 3 uses
-  br i1 %i.dz, label %.epil.preheader, label %.preheader.new
+  br i1 %i.dz, label %.epil.preheader, label %._crit_edge188
 
-._crit_edge188:                                   ; preds = %._crit_edge
-  %i.ea = getelementptr inbounds [8 x i8], ptr %.0119189, i64 %.0134
-  %i.eb = getelementptr inbounds [8 x i8], ptr %.0118191, i64 %.0133
-  %i.ec = getelementptr inbounds [8 x i8], ptr %.0117193, i64 %.0132
-  %i.ed = add nuw nsw i64 %.0116195, 1            ; 2 uses
-  %exitcond211.not = icmp eq i64 %i.ed, %.0137
-  br i1 %exitcond211.not, label %._crit_edge196, label %.preheader169, !llvm.loop !233
+._crit_edge188:                                   ; preds = %.preheader, %._crit_edge188
+  %.0109181.us.us = phi ptr [ %i.ec, %._crit_edge188 ], [ %.0113186, %.preheader ] ; 3 uses
+  %.0110180.us.us = phi ptr [ %i.eb, %._crit_edge188 ], [ %.0114185, %.preheader ] ; 2 uses
+  %.0111179.us.us = phi ptr [ %i.ea, %._crit_edge188 ], [ %.0115184, %.preheader ] ; 2 uses
+  %niter = phi i64 [ %i.ed, %._crit_edge188 ], [ 0, %.preheader ]
+  %11 = load double, ptr %.0111179.us.us, align 8, !tbaa !75
+  %12 = load double, ptr %.0110180.us.us, align 8, !tbaa !75
+  %13 = load double, ptr %.0109181.us.us, align 8, !tbaa !75
+  %14 = tail call double @llvm.fmuladd.f64(double %11, double %12, double %13)
+  store double %14, ptr %.0109181.us.us, align 8, !tbaa !75
+  %15 = getelementptr inbounds [8 x i8], ptr %.0111179.us.us, i64 %.0128148162 ; 2 uses
+  %16 = getelementptr inbounds [8 x i8], ptr %.0110180.us.us, i64 %.0127149161 ; 2 uses
+  %17 = getelementptr inbounds [8 x i8], ptr %.0109181.us.us, i64 %.0126150160 ; 3 uses
+  %18 = load double, ptr %15, align 8, !tbaa !75
+  %19 = load double, ptr %16, align 8, !tbaa !75
+  %20 = load double, ptr %17, align 8, !tbaa !75
+  %21 = tail call double @llvm.fmuladd.f64(double %18, double %19, double %20)
+  store double %21, ptr %17, align 8, !tbaa !75
+  %i.ea = getelementptr inbounds [8 x i8], ptr %15, i64 %.0128148162 ; 2 uses
+  %i.eb = getelementptr inbounds [8 x i8], ptr %16, i64 %.0127149161 ; 2 uses
+  %i.ec = getelementptr inbounds [8 x i8], ptr %17, i64 %.0126150160 ; 2 uses
+  %i.ed = add nuw nsw i64 %niter, 2               ; 2 uses
+  %exitcond211.not = icmp eq i64 %i.ed, %unroll_iter
+  br i1 %exitcond211.not, label %._crit_edge.unr-lcssa, label %._crit_edge188, !llvm.loop !231
 
-._crit_edge.unr-lcssa:                            ; preds = %.preheader.new
+._crit_edge.unr-lcssa:                            ; preds = %._crit_edge188
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.preheader
-  %.0109181.epil.init = phi ptr [ %.0113186, %.preheader ], [ %i.eo, %._crit_edge.unr-lcssa ] ; 2 uses
-  %.0110180.epil.init = phi ptr [ %.0114185, %.preheader ], [ %i.en, %._crit_edge.unr-lcssa ]
-  %.0111179.epil.init = phi ptr [ %.0115184, %.preheader ], [ %i.em, %._crit_edge.unr-lcssa ]
+  %.0109181.epil.init = phi ptr [ %.0113186, %.preheader ], [ %i.ec, %._crit_edge.unr-lcssa ] ; 2 uses
+  %.0110180.epil.init = phi ptr [ %.0114185, %.preheader ], [ %i.eb, %._crit_edge.unr-lcssa ]
+  %.0111179.epil.init = phi ptr [ %.0115184, %.preheader ], [ %i.ea, %._crit_edge.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod238)
   %i.ee = load double, ptr %.0111179.epil.init, align 8, !tbaa !75
   %i.ef = load double, ptr %.0110180.epil.init, align 8, !tbaa !75
@@ -450,34 +464,22 @@ bb.e:                                             ; preds = %bb.d
   %i.ek = getelementptr inbounds [8 x i8], ptr %.0113186, i64 %.0129167
   %i.el = add nuw nsw i64 %.0112187, 1            ; 2 uses
   %exitcond210.not = icmp eq i64 %i.el, %.0136164
-  br i1 %exitcond210.not, label %._crit_edge188, label %.preheader, !llvm.loop !232
+  br i1 %exitcond210.not, label %.preheader.new, label %.preheader, !llvm.loop !232
 
-.preheader.new:                                   ; preds = %.preheader, %.preheader.new
-  %.0109181 = phi ptr [ %i.eo, %.preheader.new ], [ %.0113186, %.preheader ] ; 3 uses
-  %.0110180 = phi ptr [ %i.en, %.preheader.new ], [ %.0114185, %.preheader ] ; 2 uses
-  %.0111179 = phi ptr [ %i.em, %.preheader.new ], [ %.0115184, %.preheader ] ; 2 uses
-  %niter = phi i64 [ %niter.next.1, %.preheader.new ], [ 0, %.preheader ]
-  %12 = load double, ptr %.0111179, align 8, !tbaa !75
-  %13 = load double, ptr %.0110180, align 8, !tbaa !75
-  %14 = load double, ptr %.0109181, align 8, !tbaa !75
-  %15 = tail call double @llvm.fmuladd.f64(double %12, double %13, double %14)
-  store double %15, ptr %.0109181, align 8, !tbaa !75
-  %16 = getelementptr inbounds [8 x i8], ptr %.0111179, i64 %.0128148162 ; 2 uses
-  %17 = getelementptr inbounds [8 x i8], ptr %.0110180, i64 %.0127149161 ; 2 uses
-  %18 = getelementptr inbounds [8 x i8], ptr %.0109181, i64 %.0126150160 ; 3 uses
-  %19 = load double, ptr %16, align 8, !tbaa !75
-  %20 = load double, ptr %17, align 8, !tbaa !75
-  %21 = load double, ptr %18, align 8, !tbaa !75
-  %22 = tail call double @llvm.fmuladd.f64(double %19, double %20, double %21)
-  store double %22, ptr %18, align 8, !tbaa !75
-  %i.em = getelementptr inbounds [8 x i8], ptr %16, i64 %.0128148162 ; 2 uses
-  %i.en = getelementptr inbounds [8 x i8], ptr %17, i64 %.0127149161 ; 2 uses
-  %i.eo = getelementptr inbounds [8 x i8], ptr %18, i64 %.0126150160 ; 2 uses
-  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !231
+.preheader.new:                                   ; preds = %._crit_edge
+  %i.em = getelementptr inbounds [8 x i8], ptr %.0119189, i64 %.0134
+  %i.en = getelementptr inbounds [8 x i8], ptr %.0118191, i64 %.0133
+  %i.eo = getelementptr inbounds [8 x i8], ptr %.0117193, i64 %.0132
+  %niter.next.1 = add nuw nsw i64 %.0116195, 1    ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %.0137
+  br i1 %niter.ncmp.1, label %._crit_edge196.us.us, label %.preheader169, !llvm.loop !233
 
-.loopexit:                                        ; preds = %._crit_edge196, %._crit_edge196.split197.us.us.us, %.preheader171.lr.ph.split.us, %.preheader171.lr.ph.split, %.thread151, %bb.a
+._crit_edge196.us.us:                             ; preds = %.preheader.new
+  %22 = add nuw nsw i64 %.0125198, 1              ; 2 uses
+  %exitcond207.not = icmp eq i64 %22, %i.av
+  br i1 %exitcond207.not, label %.loopexit, label %.preheader171, !llvm.loop !234
+
+.loopexit:                                        ; preds = %._crit_edge196.us.us, %._crit_edge196.split197.us.us.us, %.preheader171.lr.ph, %.preheader171.lr.ph.split.us, %.thread151, %.preheader171.lr.ph.split, %bb.a
   ret void
 }
 
@@ -855,15 +857,18 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aw, label %.preheader171.lr.ph, label %.loopexit
 
 .preheader171.lr.ph:                              ; preds = %.thread151
-  %i.ax = icmp sgt i64 %i.g, 3
-  %8 = icmp slt i64 %.0137, 1
-  %9 = icmp slt i64 %.0136164, 1
-  %10 = icmp slt i64 %.0135147163, 1              ; 2 uses
-  %brmerge231 = or i1 %8, %9                      ; 2 uses
-  br i1 %i.ax, label %.preheader171.lr.ph.split.us, label %.preheader171.lr.ph.split
+  %i.ax = icmp sgt i64 %.0137, 0
+  %8 = icmp sgt i64 %.0135147163, 0               ; 2 uses
+  %9 = icmp sgt i64 %.0136164, 0
+  %or.cond = and i1 %i.ax, %9
+  br i1 %or.cond, label %.preheader171.lr.ph.split.us.split.us, label %.loopexit
 
-.preheader171.lr.ph.split.us:                     ; preds = %.preheader171.lr.ph
-  br i1 %brmerge231, label %.loopexit, label %.preheader171.us.us.us.preheader
+.preheader171.lr.ph.split.us.split.us:            ; preds = %.preheader171.lr.ph
+  %10 = icmp sgt i64 %i.g, 3
+  br i1 %10, label %.preheader171.lr.ph.split.us, label %.preheader171.lr.ph.split
+
+.preheader171.lr.ph.split.us:                     ; preds = %.preheader171.lr.ph.split.us.split.us
+  br i1 %8, label %.preheader171.us.us.us.preheader, label %.loopexit
 
 .preheader171.us.us.us.preheader:                 ; preds = %.preheader171.lr.ph.split.us
   %i.ay = add nsw i64 %i.g, -3                    ; 3 uses
@@ -959,7 +964,7 @@ bb.e:                                             ; preds = %bb.d
   %.lcssa236 = phi ptr [ %i.by, %..preheader170_crit_edge.us.us.us.unr-lcssa ], [ %i.cp, %.epil.preheader239 ]
   %.lcssa235 = phi ptr [ %i.cc, %..preheader170_crit_edge.us.us.us.unr-lcssa ], [ %i.ct, %.epil.preheader239 ]
   %.lcssa = phi ptr [ %i.cg, %..preheader170_crit_edge.us.us.us.unr-lcssa ], [ %i.cx, %.epil.preheader239 ]
-  br i1 %10, label %._crit_edge196.split197.us.us.us, label %.preheader169.us.us.us
+  br label %.preheader169.us.us.us
 
 .preheader169.us.us.us:                           ; preds = %..preheader170_crit_edge.us.us.us, %._crit_edge188.us.us.us
   %.0116195.us.us.us = phi i64 [ %i.ea, %._crit_edge188.us.us.us ], [ 0, %..preheader170_crit_edge.us.us.us ]
@@ -1034,14 +1039,13 @@ bb.e:                                             ; preds = %bb.d
   %exitcond216.not = icmp eq i64 %i.ea, %.0137
   br i1 %exitcond216.not, label %._crit_edge196.split197.us.us.us, label %.preheader169.us.us.us, !llvm.loop !243
 
-._crit_edge196.split197.us.us.us:                 ; preds = %._crit_edge188.us.us.us, %..preheader170_crit_edge.us.us.us
+._crit_edge196.split197.us.us.us:                 ; preds = %._crit_edge188.us.us.us
   %i.eb = add nuw nsw i64 %.0125198.us.us.us, 1   ; 2 uses
   %exitcond217.not = icmp eq i64 %i.eb, %i.av
   br i1 %exitcond217.not, label %.loopexit, label %.preheader171.us.us.us, !llvm.loop !244
 
-.preheader171.lr.ph.split:                        ; preds = %.preheader171.lr.ph
-  %brmerge204 = or i1 %brmerge231, %10
-  br i1 %brmerge204, label %.loopexit, label %.preheader171.preheader
+.preheader171.lr.ph.split:                        ; preds = %.preheader171.lr.ph.split.us.split.us
+  br i1 %8, label %.preheader171.preheader, label %.loopexit
 
 .preheader171.preheader:                          ; preds = %.preheader171.lr.ph.split
   %xtraiter = and i64 %.0135147163, 1
@@ -1051,44 +1055,58 @@ bb.e:                                             ; preds = %bb.d
   %lcmp.mod238 = trunc i64 %.0135147163 to i1
   br label %.preheader171
 
-.preheader171:                                    ; preds = %.preheader171.preheader, %._crit_edge196
-  %.0125198 = phi i64 [ %11, %._crit_edge196 ], [ 0, %.preheader171.preheader ]
+.preheader171:                                    ; preds = %.preheader171.preheader, %._crit_edge196.us.us
+  %.0125198 = phi i64 [ %24, %._crit_edge196.us.us ], [ 0, %.preheader171.preheader ]
   br label %.preheader169
 
-.preheader169:                                    ; preds = %.preheader171, %._crit_edge188
-  %.0116195 = phi i64 [ 0, %.preheader171 ], [ %i.eg, %._crit_edge188 ]
-  %.0117193 = phi ptr [ %i.as, %.preheader171 ], [ %i.ef, %._crit_edge188 ] ; 2 uses
-  %.0118191 = phi ptr [ %i.aq, %.preheader171 ], [ %i.ee, %._crit_edge188 ] ; 2 uses
-  %.0119189 = phi ptr [ %i.ao, %.preheader171 ], [ %i.ed, %._crit_edge188 ] ; 2 uses
+.preheader169:                                    ; preds = %.preheader.new, %.preheader171
+  %.0116195 = phi i64 [ 0, %.preheader171 ], [ %niter.next.1, %.preheader.new ]
+  %.0117193 = phi ptr [ %i.as, %.preheader171 ], [ %i.es, %.preheader.new ] ; 2 uses
+  %.0118191 = phi ptr [ %i.aq, %.preheader171 ], [ %i.er, %.preheader.new ] ; 2 uses
+  %.0119189 = phi ptr [ %i.ao, %.preheader171 ], [ %i.eq, %.preheader.new ] ; 2 uses
   br label %.preheader
 
-._crit_edge196:                                   ; preds = %._crit_edge188
-  %11 = add nuw nsw i64 %.0125198, 1              ; 2 uses
-  %exitcond212.not = icmp eq i64 %11, %i.av
-  br i1 %exitcond212.not, label %.loopexit, label %.preheader171, !llvm.loop !244
-
-.preheader:                                       ; preds = %.preheader169, %._crit_edge
+.preheader:                                       ; preds = %._crit_edge, %.preheader169
   %.0112187 = phi i64 [ 0, %.preheader169 ], [ %i.ep, %._crit_edge ]
   %.0113186 = phi ptr [ %.0117193, %.preheader169 ], [ %i.eo, %._crit_edge ] ; 3 uses
   %.0114185 = phi ptr [ %.0118191, %.preheader169 ], [ %i.en, %._crit_edge ] ; 3 uses
   %.0115184 = phi ptr [ %.0119189, %.preheader169 ], [ %i.em, %._crit_edge ] ; 3 uses
-  br i1 %i.ec, label %.epil.preheader, label %.preheader.new
+  br i1 %i.ec, label %.epil.preheader, label %._crit_edge188
 
-._crit_edge188:                                   ; preds = %._crit_edge
-  %i.ed = getelementptr inbounds [8 x i8], ptr %.0119189, i64 %.0134
-  %i.ee = getelementptr inbounds [8 x i8], ptr %.0118191, i64 %.0133
-  %i.ef = getelementptr inbounds [8 x i8], ptr %.0117193, i64 %.0132
-  %i.eg = add nuw nsw i64 %.0116195, 1            ; 2 uses
-  %exitcond211.not = icmp eq i64 %i.eg, %.0137
-  br i1 %exitcond211.not, label %._crit_edge196, label %.preheader169, !llvm.loop !243
+._crit_edge188:                                   ; preds = %.preheader, %._crit_edge188
+  %.0109181.us.us = phi ptr [ %i.ef, %._crit_edge188 ], [ %.0113186, %.preheader ] ; 3 uses
+  %.0110180.us.us = phi ptr [ %i.ee, %._crit_edge188 ], [ %.0114185, %.preheader ] ; 2 uses
+  %.0111179.us.us = phi ptr [ %i.ed, %._crit_edge188 ], [ %.0115184, %.preheader ] ; 2 uses
+  %niter = phi i64 [ %i.eg, %._crit_edge188 ], [ 0, %.preheader ]
+  %11 = load i64, ptr %.0111179.us.us, align 8, !tbaa !23
+  %12 = load i64, ptr %.0110180.us.us, align 8, !tbaa !23
+  %13 = or i64 %12, %11
+  %14 = load i64, ptr %.0109181.us.us, align 8, !tbaa !23
+  %15 = or i64 %13, %14
+  store i64 %15, ptr %.0109181.us.us, align 8, !tbaa !23
+  %16 = getelementptr inbounds [8 x i8], ptr %.0111179.us.us, i64 %.0128148162 ; 2 uses
+  %17 = getelementptr inbounds [8 x i8], ptr %.0110180.us.us, i64 %.0127149161 ; 2 uses
+  %18 = getelementptr inbounds [8 x i8], ptr %.0109181.us.us, i64 %.0126150160 ; 3 uses
+  %19 = load i64, ptr %16, align 8, !tbaa !23
+  %20 = load i64, ptr %17, align 8, !tbaa !23
+  %21 = or i64 %20, %19
+  %22 = load i64, ptr %18, align 8, !tbaa !23
+  %23 = or i64 %21, %22
+  store i64 %23, ptr %18, align 8, !tbaa !23
+  %i.ed = getelementptr inbounds [8 x i8], ptr %16, i64 %.0128148162 ; 2 uses
+  %i.ee = getelementptr inbounds [8 x i8], ptr %17, i64 %.0127149161 ; 2 uses
+  %i.ef = getelementptr inbounds [8 x i8], ptr %18, i64 %.0126150160 ; 2 uses
+  %i.eg = add nuw nsw i64 %niter, 2               ; 2 uses
+  %exitcond211.not = icmp eq i64 %i.eg, %unroll_iter
+  br i1 %exitcond211.not, label %._crit_edge.unr-lcssa, label %._crit_edge188, !llvm.loop !241
 
-._crit_edge.unr-lcssa:                            ; preds = %.preheader.new
+._crit_edge.unr-lcssa:                            ; preds = %._crit_edge188
   br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.preheader
-  %.0109181.epil.init = phi ptr [ %.0113186, %.preheader ], [ %i.es, %._crit_edge.unr-lcssa ] ; 2 uses
-  %.0110180.epil.init = phi ptr [ %.0114185, %.preheader ], [ %i.er, %._crit_edge.unr-lcssa ]
-  %.0111179.epil.init = phi ptr [ %.0115184, %.preheader ], [ %i.eq, %._crit_edge.unr-lcssa ]
+  %.0109181.epil.init = phi ptr [ %.0113186, %.preheader ], [ %i.ef, %._crit_edge.unr-lcssa ] ; 2 uses
+  %.0110180.epil.init = phi ptr [ %.0114185, %.preheader ], [ %i.ee, %._crit_edge.unr-lcssa ]
+  %.0111179.epil.init = phi ptr [ %.0115184, %.preheader ], [ %i.ed, %._crit_edge.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod238)
   %i.eh = load i64, ptr %.0111179.epil.init, align 8, !tbaa !23
   %i.ei = load i64, ptr %.0110180.epil.init, align 8, !tbaa !23
@@ -1104,36 +1122,22 @@ bb.e:                                             ; preds = %bb.d
   %i.eo = getelementptr inbounds [8 x i8], ptr %.0113186, i64 %.0129167
   %i.ep = add nuw nsw i64 %.0112187, 1            ; 2 uses
   %exitcond210.not = icmp eq i64 %i.ep, %.0136164
-  br i1 %exitcond210.not, label %._crit_edge188, label %.preheader, !llvm.loop !242
+  br i1 %exitcond210.not, label %.preheader.new, label %.preheader, !llvm.loop !242
 
-.preheader.new:                                   ; preds = %.preheader, %.preheader.new
-  %.0109181 = phi ptr [ %i.es, %.preheader.new ], [ %.0113186, %.preheader ] ; 3 uses
-  %.0110180 = phi ptr [ %i.er, %.preheader.new ], [ %.0114185, %.preheader ] ; 2 uses
-  %.0111179 = phi ptr [ %i.eq, %.preheader.new ], [ %.0115184, %.preheader ] ; 2 uses
-  %niter = phi i64 [ %niter.next.1, %.preheader.new ], [ 0, %.preheader ]
-  %12 = load i64, ptr %.0111179, align 8, !tbaa !23
-  %13 = load i64, ptr %.0110180, align 8, !tbaa !23
-  %14 = or i64 %13, %12
-  %15 = load i64, ptr %.0109181, align 8, !tbaa !23
-  %16 = or i64 %14, %15
-  store i64 %16, ptr %.0109181, align 8, !tbaa !23
-  %17 = getelementptr inbounds [8 x i8], ptr %.0111179, i64 %.0128148162 ; 2 uses
-  %18 = getelementptr inbounds [8 x i8], ptr %.0110180, i64 %.0127149161 ; 2 uses
-  %19 = getelementptr inbounds [8 x i8], ptr %.0109181, i64 %.0126150160 ; 3 uses
-  %20 = load i64, ptr %17, align 8, !tbaa !23
-  %21 = load i64, ptr %18, align 8, !tbaa !23
-  %22 = or i64 %21, %20
-  %23 = load i64, ptr %19, align 8, !tbaa !23
-  %24 = or i64 %22, %23
-  store i64 %24, ptr %19, align 8, !tbaa !23
-  %i.eq = getelementptr inbounds [8 x i8], ptr %17, i64 %.0128148162 ; 2 uses
-  %i.er = getelementptr inbounds [8 x i8], ptr %18, i64 %.0127149161 ; 2 uses
-  %i.es = getelementptr inbounds [8 x i8], ptr %19, i64 %.0126150160 ; 2 uses
-  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !241
+.preheader.new:                                   ; preds = %._crit_edge
+  %i.eq = getelementptr inbounds [8 x i8], ptr %.0119189, i64 %.0134
+  %i.er = getelementptr inbounds [8 x i8], ptr %.0118191, i64 %.0133
+  %i.es = getelementptr inbounds [8 x i8], ptr %.0117193, i64 %.0132
+  %niter.next.1 = add nuw nsw i64 %.0116195, 1    ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %.0137
+  br i1 %niter.ncmp.1, label %._crit_edge196.us.us, label %.preheader169, !llvm.loop !243
 
-.loopexit:                                        ; preds = %._crit_edge196, %._crit_edge196.split197.us.us.us, %.preheader171.lr.ph.split.us, %.preheader171.lr.ph.split, %.thread151, %bb.a
+._crit_edge196.us.us:                             ; preds = %.preheader.new
+  %24 = add nuw nsw i64 %.0125198, 1              ; 2 uses
+  %exitcond207.not = icmp eq i64 %24, %i.av
+  br i1 %exitcond207.not, label %.loopexit, label %.preheader171, !llvm.loop !244
+
+.loopexit:                                        ; preds = %._crit_edge196.us.us, %._crit_edge196.split197.us.us.us, %.preheader171.lr.ph, %.preheader171.lr.ph.split.us, %.thread151, %.preheader171.lr.ph.split, %bb.a
   ret void
 }
 

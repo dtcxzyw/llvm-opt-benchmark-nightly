@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 2905
 inline.NumDeleted: 1295
 loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZN5folly6detail18ToAppendStrImplAllISt16integer_sequenceImJLm0ELm1ELm2EEEE4callIJchPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvDpRKT_:bb.a
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i: ; preds = %bb.a
   %i.j = icmp ult i64 %i.e, 16
@@ -204,15 +205,43 @@ _ZN5folly6detail19to_ascii_size_arrayILm10EEEmm.exit: ; preds = %bb.s
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.s, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %_ZN5folly6detail19to_ascii_size_arrayILm10EEEmm.exit
-  %.ph = phi i64 [ 19, %_ZN5folly6detail19to_ascii_size_arrayILm10EEEmm.exit ], [ 18, %bb.r ], [ 17, %bb.q ], [ 16, %bb.p ], [ 15, %bb.o ], [ 14, %bb.n ], [ 13, %bb.m ], [ 12, %bb.l ], [ 11, %bb.k ], [ 10, %bb.j ], [ 9, %bb.i ], [ 8, %bb.h ], [ 7, %bb.g ], [ 6, %bb.f ], [ 5, %bb.e ], [ 4, %bb.d ], [ 3, %bb.c ], [ 20, %bb.s ] ; 3 uses
-  br label %.lr.ph
+  %.ph = phi i64 [ 19, %_ZN5folly6detail19to_ascii_size_arrayILm10EEEmm.exit ], [ 18, %bb.r ], [ 17, %bb.q ], [ 16, %bb.p ], [ 15, %bb.o ], [ 14, %bb.n ], [ 13, %bb.m ], [ 12, %bb.l ], [ 11, %bb.k ], [ 10, %bb.j ], [ 9, %bb.i ], [ 8, %bb.h ], [ 7, %bb.g ], [ 6, %bb.f ], [ 5, %bb.e ], [ 4, %bb.d ], [ 3, %bb.c ], [ 20, %bb.s ] ; 5 uses
+  %2 = add nsw i64 %.ph, -3                       ; 2 uses
+  %3 = and i64 %2, 2
+  %lcmp.mod.not.not = icmp eq i64 %3, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.0.i7 = phi i64 [ %i.ar, %.lr.ph ], [ %1, %.lr.ph.preheader ] ; 2 uses
-  %.014.i6 = phi i64 [ %i.aq, %.lr.ph ], [ %.ph, %.lr.ph.preheader ]
-  %i.aq = add i64 %.014.i6, -2                    ; 4 uses
-  %i.ar = udiv i64 %.0.i7, 100                    ; 2 uses
-  %i.as = urem i64 %.0.i7, 100
+.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
+  %4 = add nsw i64 %.ph, -2                       ; 3 uses
+  %5 = udiv i64 %1, 100                           ; 2 uses
+  %6 = urem i64 %1, 100
+  %7 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %6
+  %8 = load i16, ptr %7, align 2, !tbaa !11125
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 %4
+  store i16 %8, ptr %9, align 1
+  br label %.lr.ph.prol.loopexit
+
+.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
+  %.0.i7.unr = phi i64 [ %1, %.lr.ph.preheader ], [ %5, %.lr.ph.prol ]
+  %.014.i6.unr = phi i64 [ %.ph, %.lr.ph.preheader ], [ %4, %.lr.ph.prol ]
+  %.lcssa21.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %4, %.lr.ph.prol ]
+  %.lcssa.unr = phi i64 [ poison, %.lr.ph.preheader ], [ %5, %.lr.ph.prol ]
+  %10 = icmp ult i64 %2, 2
+  br i1 %10, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
+  %.0.i7 = phi i64 [ %i.ar, %.lr.ph ], [ %.0.i7.unr, %.lr.ph.prol.loopexit ] ; 3 uses
+  %.014.i6 = phi i64 [ %i.aq, %.lr.ph ], [ %.014.i6.unr, %.lr.ph.prol.loopexit ] ; 2 uses
+  %11 = udiv i64 %.0.i7, 100
+  %12 = urem i64 %.0.i7, 100
+  %13 = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %12
+  %14 = load i16, ptr %13, align 2, !tbaa !11125
+  %15 = getelementptr i8, ptr %0, i64 %.014.i6
+  %16 = getelementptr i8, ptr %15, i64 -2
+  store i16 %14, ptr %16, align 1
+  %i.aq = add i64 %.014.i6, -4                    ; 4 uses
+  %i.ar = udiv i64 %.0.i7, 10000                  ; 2 uses
+  %i.as = urem i64 %11, 100
   %i.at = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %i.as
   %i.au = load i16, ptr %i.at, align 2, !tbaa !11125
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 %i.aq
@@ -225,10 +254,12 @@ _ZN5folly6detail19to_ascii_size_arrayILm10EEEmm.exit: ; preds = %bb.s
   %i.ay = load i16, ptr %i.ax, align 2, !tbaa !11125
   br label %bb.u
 
-._crit_edge:                                      ; preds = %.lr.ph
-  %i.az = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %i.ar
+._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.prol.loopexit
+  %.lcssa21 = phi i64 [ %.lcssa21.unr, %.lr.ph.prol.loopexit ], [ %i.aq, %.lr.ph ]
+  %.lcssa = phi i64 [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.ar, %.lr.ph ]
+  %i.az = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %.lcssa
   %i.ba = load i16, ptr %i.az, align 2, !tbaa !11125 ; 2 uses
-  %i.bb = icmp eq i64 %i.aq, 2
+  %i.bb = icmp eq i64 %.lcssa21, 2
   br i1 %i.bb, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %._crit_edge.thread15, %._crit_edge

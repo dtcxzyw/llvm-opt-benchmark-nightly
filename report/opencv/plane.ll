@@ -205,23 +205,19 @@ bb.a:
   %i.t = insertelement <2 x i32> poison, i32 %2, i64 0
   %i.u = shufflevector <2 x i32> %i.t, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
   %.frozen = freeze <2 x i32> %i.s                ; 2 uses
-  %i.v = sdiv <2 x i32> %.frozen, %i.u            ; 3 uses
+  %i.v = sdiv <2 x i32> %.frozen, %i.u            ; 2 uses
   %i.w = mul <2 x i32> %i.v, %i.u
   %.decomposed = sub <2 x i32> %.frozen, %i.w
-  %i.x = icmp ne <2 x i32> %.decomposed, zeroinitializer ; 2 uses
-  %6 = extractelement <2 x i1> %i.x, i64 0
-  %7 = zext i1 %6 to i32
-  %i.y = extractelement <2 x i32> %i.v, i64 0
-  %spec.select = add nsw i32 %i.y, %7             ; 5 uses
-  %8 = extractelement <2 x i1> %i.x, i64 1
-  %9 = zext i1 %8 to i32
-  %i.z = extractelement <2 x i32> %i.v, i64 1
-  %.094 = add nsw i32 %i.z, %9                    ; 6 uses
-  invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.a, i32 noundef %spec.select, i32 noundef %.094, i32 noundef 69)
+  %i.x = icmp ne <2 x i32> %.decomposed, zeroinitializer
+  %6 = zext <2 x i1> %i.x to <2 x i32>
+  %7 = add nsw <2 x i32> %i.v, %6                 ; 2 uses
+  %i.y = extractelement <2 x i32> %7, i64 0       ; 5 uses
+  %i.z = extractelement <2 x i32> %7, i64 1       ; 6 uses
+  invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.a, i32 noundef %i.y, i32 noundef %i.z, i32 noundef 69)
           to label %_ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit unwind label %bb.b
 
 _ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit:      ; preds = %bb.a
-  invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.e, i32 noundef %spec.select, i32 noundef %.094, i32 noundef 69)
+  invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.e, i32 noundef %i.y, i32 noundef %i.z, i32 noundef 69)
           to label %_ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit133 unwind label %bb.b
 
 _ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit133:   ; preds = %_ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit
@@ -231,15 +227,15 @@ _ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit133:   ; preds = %_ZN2cv4Mat_INS_3Vec
           to label %_ZN2cv4Mat_INS_3VecIfLi9EEEE6createEii.exit unwind label %bb.b
 
 _ZN2cv4Mat_INS_3VecIfLi9EEEE6createEii.exit:      ; preds = %_ZN2cv4Mat_INS_3VecIfLi3EEEE6createEii.exit133
-  invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.m, i32 noundef %spec.select, i32 noundef %.094, i32 noundef 5)
+  invoke void @_ZN2cv3Mat6createEiii(ptr noundef nonnull align 8 dereferenceable(208) %i.m, i32 noundef %i.y, i32 noundef %i.z, i32 noundef 5)
           to label %_ZN2cv4Mat_IfE6createEii.exit.preheader unwind label %bb.b
 
 _ZN2cv4Mat_IfE6createEii.exit.preheader:          ; preds = %_ZN2cv4Mat_INS_3VecIfLi9EEEE6createEii.exit
-  %i.ac = icmp sgt i32 %spec.select, 0
+  %i.ac = icmp sgt i32 %i.y, 0
   br i1 %i.ac, label %.preheader.lr.ph, label %_ZN2cv4Mat_IfE6createEii.exit._crit_edge.split
 
 .preheader.lr.ph:                                 ; preds = %_ZN2cv4Mat_IfE6createEii.exit.preheader
-  %i.ad = icmp sgt i32 %.094, 0
+  %i.ad = icmp sgt i32 %i.z, 0
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 128
@@ -276,10 +272,10 @@ _ZN2cv4Mat_IfE6createEii.exit.preheader:          ; preds = %_ZN2cv4Mat_INS_3Vec
   br i1 %i.ad, label %.preheader.preheader, label %_ZN2cv4Mat_IfE6createEii.exit._crit_edge.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.bl = add nsw i32 %.094, -1
+  %i.bl = add nsw i32 %i.z, -1
   %i.bm = zext nneg i32 %i.bl to i64
-  %wide.trip.count258 = zext nneg i32 %spec.select to i64
-  %wide.trip.count = zext nneg i32 %.094 to i64
+  %wide.trip.count258 = zext nneg i32 %i.z to i64
+  %wide.trip.count = zext nneg i32 %i.y to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge247
@@ -301,7 +297,7 @@ bb.b:                                             ; preds = %_ZN2cv4Mat_INS_3Vec
 
 ._crit_edge247:                                   ; preds = %bb.v
   %indvars.iv.next = add nsw i64 %indvars.iv, %i.am
-  %exitcond259.not = icmp eq i64 %indvars.iv.next256, %wide.trip.count258
+  %exitcond259.not = icmp eq i64 %indvars.iv.next256, %wide.trip.count
   br i1 %exitcond259.not, label %_ZN2cv4Mat_IfE6createEii.exit._crit_edge.split, label %.preheader, !llvm.loop !142
 
 bb.c:                                             ; preds = %.preheader, %bb.v
@@ -659,7 +655,7 @@ _ZN2cv3Mat2atIfEERT_i.exit:                       ; preds = %bb.u, %bb.t, %bb.r,
 
 bb.v:                                             ; preds = %_ZN2cv3Mat2atIfEERT_i.exit, %._crit_edge231.thread
   %indvars.iv.next253 = add nuw nsw i64 %indvars.iv252, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next253, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next253, %wide.trip.count258
   br i1 %exitcond.not, label %._crit_edge247, label %bb.c, !llvm.loop !147
 
 bb.w:                                             ; preds = %.body, %bb.b

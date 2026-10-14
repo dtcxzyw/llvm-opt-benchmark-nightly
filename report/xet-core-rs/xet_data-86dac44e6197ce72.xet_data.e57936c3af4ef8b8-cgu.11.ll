@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xet-core-rs/original/xet_data-86dac44e6197ce72.xet_data.e57936c3af4ef8b8-cgu.11?download=true
 inline.NumInlined: 660
 inline.NumDeleted: 396
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 18
-loop-unroll.NumUnrolled: 20
+loop-unroll.NumUnrolled: 21
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -77,17 +77,16 @@ target triple = "x86_64-unknown-linux-gnu"
 @65 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00T\00\00\00\09\00\00\00" }>, align 8
 @66 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00b\00\00\00\1B\00\00\00" }>, align 8
 @67 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00b\00\00\00\08\00\00\00" }>, align 8
-@68 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00^\00\00\00\09\00\00\00" }>, align 8
-@69 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00\A8\00\00\00\07\00\00\00" }>, align 8
-@70 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00\9F\00\00\00\0F\00\00\00" }>, align 8
-@71 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00\9F\00\00\008\00\00\00" }>, align 8
-@72 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00\9C\00\00\009\00\00\00" }>, align 8
-@73 = private unnamed_addr constant [79 x i8] c"/rustc/bff8e12ff5e6bcd53dfb1dbccdcec80a60a856ed/library/core/src/slice/iter.rs\00", align 1
-@74 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @73, [16 x i8] c"N\00\00\00\00\00\00\00\0B\08\00\00\11\00\00\00" }>, align 8
-@75 = private unnamed_addr constant [21 x i8] c"called after complete", align 1
-@76 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @35, [16 x i8] c"e\00\00\00\00\00\00\00\09\05\00\00\0D\00\00\00" }>, align 8
-@77 = private unnamed_addr constant [11 x i8] c"PoisonError", align 1
-@78 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @10, [16 x i8] c"_\00\00\00\00\00\00\00\A1\00\00\00$\00\00\00" }>, align 8
+@68 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00\A8\00\00\00\07\00\00\00" }>, align 8
+@69 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00\9F\00\00\00\0F\00\00\00" }>, align 8
+@70 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00\9F\00\00\008\00\00\00" }>, align 8
+@71 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @44, [16 x i8] c"7\00\00\00\00\00\00\00\9C\00\00\009\00\00\00" }>, align 8
+@72 = private unnamed_addr constant [79 x i8] c"/rustc/bff8e12ff5e6bcd53dfb1dbccdcec80a60a856ed/library/core/src/slice/iter.rs\00", align 1
+@73 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @72, [16 x i8] c"N\00\00\00\00\00\00\00\0B\08\00\00\11\00\00\00" }>, align 8
+@74 = private unnamed_addr constant [21 x i8] c"called after complete", align 1
+@75 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @35, [16 x i8] c"e\00\00\00\00\00\00\00\09\05\00\00\0D\00\00\00" }>, align 8
+@76 = private unnamed_addr constant [11 x i8] c"PoisonError", align 1
+@77 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @10, [16 x i8] c"_\00\00\00\00\00\00\00\A1\00\00\00$\00\00\00" }>, align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvCschSS5BelOxo_7heapify13pop_heap_withINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEECsjHtSR7YjKD4_8xet_data(ptr noalias nofree noundef nonnull align 8 captures(address, read_provenance) %0, i64 noundef range(i64 0, 1152921504606846976) %1, ptr nofree noundef nonnull readonly captures(none) %2) unnamed_addr #0 {
@@ -490,7 +489,7 @@ bb.q:                                             ; preds = %bb.g
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMNtNtCsjHtSR7YjKD4_8xet_data13deduplication18file_deduplicationINtB2_11FileDeduperNtNtNtB6_10processing23deduplication_interface24UploadSessionDataManagerE8finalizeB6_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([240 x i8]) align 8 captures(none) dereferenceable(240) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(384) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(56) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [20 x i8], align 1                ; 5 uses
+  %i.a = alloca [20 x i8], align 1                ; 24 uses
   %i.b = alloca [8 x i8], align 8                 ; 9 uses
   %i.c = alloca [792 x i8], align 1               ; 12 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
@@ -554,6 +553,25 @@ bb.d:                                             ; preds = %.noexc
   br i1 %.not.i, label %._crit_edge144.thread.i.i, label %.preheader.lr.ph.i.i
 
 .preheader.lr.ph.i.i:                             ; preds = %bb.d
+  %.lcssa20.sroa.gep22.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 18 ; 2 uses
+  %.lcssa20.sroa.gep23.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 17 ; 2 uses
+  %.lcssa20.sroa.gep24.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %.lcssa20.sroa.gep25.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 15 ; 2 uses
+  %.lcssa20.sroa.gep26.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 14 ; 2 uses
+  %.lcssa20.sroa.gep27.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 13 ; 2 uses
+  %.lcssa20.sroa.gep28.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
+  %.lcssa20.sroa.gep29.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 11 ; 2 uses
+  %.lcssa20.sroa.gep30.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 10 ; 2 uses
+  %.lcssa20.sroa.gep31.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 9 ; 2 uses
+  %.lcssa20.sroa.gep32.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %.lcssa20.sroa.gep33.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 7 ; 2 uses
+  %.lcssa20.sroa.gep34.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 6 ; 2 uses
+  %.lcssa20.sroa.gep35.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 5 ; 2 uses
+  %.lcssa20.sroa.gep36.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
+  %.lcssa20.sroa.gep37.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 2 uses
+  %.lcssa20.sroa.gep38.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %.lcssa20.sroa.gep39.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
+  %.lcssa20.sroa.gep.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 19 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   br label %.lr.ph.i.i
 
@@ -586,14 +604,14 @@ bb.f:                                             ; preds = %bb.e
 .invoke.i.i:                                      ; preds = %bb.ak, %._crit_edge144.i.i
   %i.an = phi i64 [ 0, %._crit_edge144.i.i ], [ %.sroa.0.0143.i.i, %bb.ak ]
   %i.ao = phi i64 [ 0, %._crit_edge144.i.i ], [ %i.cx, %bb.ak ]
-  %i.ap = phi ptr [ @69, %._crit_edge144.i.i ], [ @70, %bb.ak ]
+  %i.ap = phi ptr [ @68, %._crit_edge144.i.i ], [ @69, %bb.ak ]
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.an, i64 noundef %i.ao, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ap) #28
           to label %.cont.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.i, !noalias !843
 
 .cont.i.i:                                        ; preds = %.invoke.i.i
   unreachable
 
-.loopexit.i.i:                                    ; preds = %.lr.ph.i.i.i, %.noexc.i.i, %.noexc29.i.i, %.noexc30.i.i, %bb.ai
+.loopexit.i.i:                                    ; preds = %.lr.ph.i.i.i, %.noexc.i.i, %.noexc29.i.i, %.noexc30.i.i, %10
   %lpad.loopexit.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.i.i
@@ -608,7 +626,7 @@ bb.f:                                             ; preds = %bb.e
           cleanup
   br label %.loopexit.split-lp.i.i
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.i: ; preds = %bb.ah, %.invoke331.i.i, %.invoke329.i.i, %.invoke.i.i
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.i: ; preds = %9, %.invoke331.i.i, %.invoke329.i.i, %.invoke.i.i
   %lpad.loopexit.split-lp.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.i.i
@@ -664,7 +682,7 @@ bb.k:                                             ; preds = %.lr.ph.i.i
 
 .invoke329.i.i:                                   ; preds = %.loopexit41.i.i, %.lr.ph.i.i
   %i.ba = phi i64 [ %i.as, %.lr.ph.i.i ], [ %i.bq, %.loopexit41.i.i ]
-  %i.bb = phi ptr [ @72, %.lr.ph.i.i ], [ @71, %.loopexit41.i.i ]
+  %i.bb = phi ptr [ @71, %.lr.ph.i.i ], [ @70, %.loopexit41.i.i ]
   invoke void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %.sroa.03.0142.i.i, i64 noundef %i.ba, i64 noundef %i.as, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bb) #28
           to label %.cont330.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.i, !noalias !843
 
@@ -765,11 +783,11 @@ bb.y:                                             ; preds = %.loopexit41.i.i
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes16write_hash_entry.exit.i.i.i, %bb.y
-  %.sroa.0.038.i.i.i = phi ptr [ %i.bs, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes16write_hash_entry.exit.i.i.i ], [ %i.ay, %bb.y ] ; 6 uses
-  %.sroa.0.0437.i.i.i = phi i64 [ %i.cv, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes16write_hash_entry.exit.i.i.i ], [ 0, %bb.y ]
+  %.sroa.0.038.i.i.i = phi ptr [ %i.ay, %bb.y ], [ %i.bs, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes16write_hash_entry.exit.i.i.i ] ; 6 uses
+  %.sroa.0.0437.i.i.i = phi i64 [ 0, %bb.y ], [ %i.cv, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes16write_hash_entry.exit.i.i.i ]
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.038.i.i.i, i64 40 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.0.038.i.i.i, i64 32
-  %i.bu = load i64, ptr %i.bt, align 8, !alias.scope !847, !noalias !849, !noundef !7 ; 3 uses
+  %i.bu = load i64, ptr %i.bt, align 8, !alias.scope !847, !noalias !849, !noundef !7 ; 40 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !850)
   call void @llvm.experimental.noalias.scope.decl(metadata !851)
   call void @llvm.experimental.noalias.scope.decl(metadata !852)
@@ -806,11 +824,10 @@ bb.z:                                             ; preds = %.noexc31.i.i
   %.not.i.i.i.i = icmp eq i64 %i.cc, 791
   br i1 %.not.i.i.i.i, label %.invoke331.i.i, label %bb.aa
 
-.invoke331.i.i:                                   ; preds = %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i, %bb.ac, %bb.aa, %bb.z, %.noexc31.i.i, %bb.ag
-  %3 = phi i64 [ -1, %bb.ag ], [ %i.cc, %.noexc31.i.i ], [ 792, %bb.z ], [ 792, %bb.ac ], [ 792, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i ], [ 792, %bb.aa ]
-  %4 = phi i64 [ 20, %bb.ag ], [ 792, %.noexc31.i.i ], [ 792, %bb.z ], [ 792, %bb.aa ], [ 792, %bb.ac ], [ 792, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i ]
-  %5 = phi ptr [ @68, %bb.ag ], [ @61, %.noexc31.i.i ], [ @62, %bb.z ], [ @65, %bb.ac ], [ @64, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i ], [ @63, %bb.aa ]
-  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %5) #27
+.invoke331.i.i:                                   ; preds = %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i, %bb.ac, %bb.aa, %bb.z, %.noexc31.i.i
+  %3 = phi i64 [ 792, %bb.aa ], [ %i.cc, %.noexc31.i.i ], [ 792, %bb.z ], [ 792, %bb.ac ], [ 792, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i ]
+  %4 = phi ptr [ @63, %bb.aa ], [ @61, %.noexc31.i.i ], [ @62, %bb.z ], [ @65, %bb.ac ], [ @64, %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i ]
+  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef 792, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %4) #27
           to label %.cont332.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.i, !noalias !843
 
 .cont332.i.i:                                     ; preds = %.invoke331.i.i
@@ -836,8 +853,14 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !858
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.a, i8 0, i64 20, i1 false), !noalias !858
-  br label %bb.aj
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.a, i8 0, i64 19, i1 false), !noalias !858
+  %5 = urem i64 %i.bu, 10
+  %6 = udiv i64 %i.bu, 10
+  %7 = trunc nuw nsw i64 %5 to i8
+  %8 = or disjoint i8 %7, 48
+  store i8 %8, ptr %.lcssa20.sroa.gep.i.i.i.i.i, align 1, !noalias !858
+  %.not.i.i.i.i.i = icmp ult i64 %i.bu, 10
+  br i1 %.not.i.i.i.i.i, label %bb.af, label %12
 
 bb.ae:                                            ; preds = %bb.ac
   %i.ck = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ci
@@ -845,49 +868,204 @@ bb.ae:                                            ; preds = %bb.ac
   %i.cl = add nuw nsw i64 %i.cc, 4
   br label %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i
 
-bb.af:                                            ; preds = %bb.aj
-  %6 = sub nuw nsw i64 21, %.sroa.04.018.i.i.i.i.i177 ; 3 uses
-  %i.cm = add nuw nsw i64 %6, %i.ci               ; 3 uses
-  %i.cn = icmp ult i64 %i.cm, 793
-  br i1 %i.cn, label %bb.ai, label %bb.ah, !prof !8
+bb.af:                                            ; preds = %92, %87, %83, %bb.aj, %.noexc36.i.i.a, %bb.ai, %.noexc35.i.i.a, %bb.ah, %bb.ag, %56, %51, %46, %41, %36, %31, %26, %21, %16, %12, %bb.ad
+  %.sroa.04.018.lcssa21.neg.i.i.i.i.i = phi i64 [ 1, %bb.ad ], [ 2, %12 ], [ 3, %16 ], [ 4, %21 ], [ 5, %26 ], [ 6, %31 ], [ 7, %36 ], [ 8, %41 ], [ 9, %46 ], [ 10, %51 ], [ 11, %56 ], [ 12, %bb.ag ], [ 13, %bb.ah ], [ 14, %.noexc35.i.i.a ], [ 15, %bb.ai ], [ 16, %.noexc36.i.i.a ], [ 17, %bb.aj ], [ 18, %83 ], [ 19, %87 ], [ 20, %92 ] ; 3 uses
+  %.lcssa20.sroa.phi.i.i.i.i.i = phi ptr [ %.lcssa20.sroa.gep.i.i.i.i.i, %bb.ad ], [ %.lcssa20.sroa.gep22.i.i.i.i.i, %12 ], [ %.lcssa20.sroa.gep23.i.i.i.i.i, %16 ], [ %.lcssa20.sroa.gep24.i.i.i.i.i, %21 ], [ %.lcssa20.sroa.gep25.i.i.i.i.i, %26 ], [ %.lcssa20.sroa.gep26.i.i.i.i.i, %31 ], [ %.lcssa20.sroa.gep27.i.i.i.i.i, %36 ], [ %.lcssa20.sroa.gep28.i.i.i.i.i, %41 ], [ %.lcssa20.sroa.gep29.i.i.i.i.i, %46 ], [ %.lcssa20.sroa.gep30.i.i.i.i.i, %51 ], [ %.lcssa20.sroa.gep31.i.i.i.i.i, %56 ], [ %.lcssa20.sroa.gep32.i.i.i.i.i, %bb.ag ], [ %.lcssa20.sroa.gep33.i.i.i.i.i, %bb.ah ], [ %.lcssa20.sroa.gep34.i.i.i.i.i, %.noexc35.i.i.a ], [ %.lcssa20.sroa.gep35.i.i.i.i.i, %bb.ai ], [ %.lcssa20.sroa.gep36.i.i.i.i.i, %.noexc36.i.i.a ], [ %.lcssa20.sroa.gep37.i.i.i.i.i, %bb.aj ], [ %.lcssa20.sroa.gep38.i.i.i.i.i, %83 ], [ %.lcssa20.sroa.gep39.i.i.i.i.i, %87 ], [ %i.a, %92 ]
+  %i.cm = add nuw nsw i64 %.sroa.04.018.lcssa21.neg.i.i.i.i.i, %i.ci ; 3 uses
+  %i.cn = icmp samesign ult i64 %i.cm, 793
+  br i1 %i.cn, label %10, label %9, !prof !8
 
-bb.ag:                                            ; preds = %bb.aj
-  %7 = add nsw i64 %10, -1                        ; 2 uses
-  %i.co = icmp ult i64 %7, 20
-  br i1 %i.co, label %bb.aj, label %.invoke331.i.i
-
-bb.ah:                                            ; preds = %bb.af
+9:                                                ; preds = %bb.af
   invoke void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.ci, i64 noundef %i.cm, i64 noundef 792, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @67) #27
-          to label %.noexc35.i.i.a unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.i, !noalias !843
+          to label %.noexc35.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.i, !noalias !843
 
-.noexc35.i.i.a:                                   ; preds = %bb.ah
+.noexc35.i.i:                                     ; preds = %9
   unreachable
 
-bb.ai:                                            ; preds = %bb.af
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 %10
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ci
-  invoke void @_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsjHtSR7YjKD4_8xet_data(ptr noalias nofree noundef nonnull %9, i64 noundef %6, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %8, i64 noundef %6, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66)
-          to label %.noexc36.i.i.a unwind label %.loopexit.i.i, !noalias !843
+10:                                               ; preds = %bb.af
+  %11 = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ci
+  invoke void @_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECsjHtSR7YjKD4_8xet_data(ptr noalias nofree noundef nonnull %11, i64 noundef %.sroa.04.018.lcssa21.neg.i.i.i.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.lcssa20.sroa.phi.i.i.i.i.i, i64 noundef %.sroa.04.018.lcssa21.neg.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @66)
+          to label %.noexc36.i.i unwind label %.loopexit.i.i, !noalias !843
 
-.noexc36.i.i.a:                                   ; preds = %bb.ai
+.noexc36.i.i:                                     ; preds = %10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !858
   br label %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i
 
-bb.aj:                                            ; preds = %bb.ad, %bb.ag
-  %10 = phi i64 [ 19, %bb.ad ], [ %7, %bb.ag ]    ; 4 uses
-  %.sroa.04.018.i.i.i.i.i177 = phi i64 [ 20, %bb.ad ], [ %10, %bb.ag ]
-  %.sroa.0.019.i.i.i.i.i176 = phi i64 [ %i.bu, %bb.ad ], [ %12, %bb.ag ] ; 3 uses
-  %11 = urem i64 %.sroa.0.019.i.i.i.i.i176, 10
-  %12 = udiv i64 %.sroa.0.019.i.i.i.i.i176, 10
-  %i.cp = trunc nuw nsw i64 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 %10
-  %i.cq = or disjoint i8 %i.cp, 48
-  store i8 %i.cq, ptr %13, align 1, !noalias !858
-  %.not.i.i.i.i.i.a = icmp ult i64 %.sroa.0.019.i.i.i.i.i176, 10
-  br i1 %.not.i.i.i.i.i.a, label %bb.af, label %bb.ag
+12:                                               ; preds = %bb.ad
+  %13 = urem i64 %6, 10
+  %14 = trunc nuw nsw i64 %13 to i8
+  %15 = or disjoint i8 %14, 48
+  store i8 %15, ptr %.lcssa20.sroa.gep22.i.i.i.i.i, align 1, !noalias !858
+  %.not.1.i.i.i.i.i = icmp ult i64 %i.bu, 100
+  br i1 %.not.1.i.i.i.i.i, label %bb.af, label %16
 
-_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i: ; preds = %.noexc36.i.i.a, %bb.ae
-  %i.cr = phi i64 [ %i.cl, %bb.ae ], [ %i.cm, %.noexc36.i.i.a ] ; 3 uses
+16:                                               ; preds = %12
+  %17 = udiv i64 %i.bu, 100
+  %18 = urem i64 %17, 10
+  %19 = trunc nuw nsw i64 %18 to i8
+  %20 = or disjoint i8 %19, 48
+  store i8 %20, ptr %.lcssa20.sroa.gep23.i.i.i.i.i, align 1, !noalias !858
+  %.not.2.i.i.i.i.i = icmp ult i64 %i.bu, 1000
+  br i1 %.not.2.i.i.i.i.i, label %bb.af, label %21
+
+21:                                               ; preds = %16
+  %22 = udiv i64 %i.bu, 1000
+  %23 = urem i64 %22, 10
+  %24 = trunc nuw nsw i64 %23 to i8
+  %25 = or disjoint i8 %24, 48
+  store i8 %25, ptr %.lcssa20.sroa.gep24.i.i.i.i.i, align 1, !noalias !858
+  %.not.3.i.i.i.i.i = icmp ult i64 %i.bu, 10000
+  br i1 %.not.3.i.i.i.i.i, label %bb.af, label %26
+
+26:                                               ; preds = %21
+  %27 = udiv i64 %i.bu, 10000
+  %28 = urem i64 %27, 10
+  %29 = trunc nuw nsw i64 %28 to i8
+  %30 = or disjoint i8 %29, 48
+  store i8 %30, ptr %.lcssa20.sroa.gep25.i.i.i.i.i, align 1, !noalias !858
+  %.not.4.i.i.i.i.i = icmp ult i64 %i.bu, 100000
+  br i1 %.not.4.i.i.i.i.i, label %bb.af, label %31
+
+31:                                               ; preds = %26
+  %32 = udiv i64 %i.bu, 100000
+  %33 = urem i64 %32, 10
+  %34 = trunc nuw nsw i64 %33 to i8
+  %35 = or disjoint i8 %34, 48
+  store i8 %35, ptr %.lcssa20.sroa.gep26.i.i.i.i.i, align 1, !noalias !858
+  %.not.5.i.i.i.i.i = icmp ult i64 %i.bu, 1000000
+  br i1 %.not.5.i.i.i.i.i, label %bb.af, label %36
+
+36:                                               ; preds = %31
+  %37 = udiv i64 %i.bu, 1000000
+  %38 = urem i64 %37, 10
+  %39 = trunc nuw nsw i64 %38 to i8
+  %40 = or disjoint i8 %39, 48
+  store i8 %40, ptr %.lcssa20.sroa.gep27.i.i.i.i.i, align 1, !noalias !858
+  %.not.6.i.i.i.i.i = icmp ult i64 %i.bu, 10000000
+  br i1 %.not.6.i.i.i.i.i, label %bb.af, label %41
+
+41:                                               ; preds = %36
+  %42 = udiv i64 %i.bu, 10000000
+  %43 = urem i64 %42, 10
+  %44 = trunc nuw nsw i64 %43 to i8
+  %45 = or disjoint i8 %44, 48
+  store i8 %45, ptr %.lcssa20.sroa.gep28.i.i.i.i.i, align 1, !noalias !858
+  %.not.7.i.i.i.i.i = icmp ult i64 %i.bu, 100000000
+  br i1 %.not.7.i.i.i.i.i, label %bb.af, label %46
+
+46:                                               ; preds = %41
+  %47 = udiv i64 %i.bu, 100000000
+  %48 = urem i64 %47, 10
+  %49 = trunc nuw nsw i64 %48 to i8
+  %50 = or disjoint i8 %49, 48
+  store i8 %50, ptr %.lcssa20.sroa.gep29.i.i.i.i.i, align 1, !noalias !858
+  %.not.8.i.i.i.i.i = icmp ult i64 %i.bu, 1000000000
+  br i1 %.not.8.i.i.i.i.i, label %bb.af, label %51
+
+51:                                               ; preds = %46
+  %52 = udiv i64 %i.bu, 1000000000
+  %53 = urem i64 %52, 10
+  %54 = trunc nuw nsw i64 %53 to i8
+  %55 = or disjoint i8 %54, 48
+  store i8 %55, ptr %.lcssa20.sroa.gep30.i.i.i.i.i, align 1, !noalias !858
+  %.not.9.i.i.i.i.i = icmp ult i64 %i.bu, 10000000000
+  br i1 %.not.9.i.i.i.i.i, label %bb.af, label %56
+
+56:                                               ; preds = %51
+  %57 = udiv i64 %i.bu, 10000000000
+  %.lhs.trunc.i.i.i.i.i = trunc nuw nsw i64 %57 to i32
+  %58 = urem i32 %.lhs.trunc.i.i.i.i.i, 10
+  %59 = trunc nuw nsw i32 %58 to i8
+  %60 = or disjoint i8 %59, 48
+  store i8 %60, ptr %.lcssa20.sroa.gep31.i.i.i.i.i, align 1, !noalias !858
+  %.not.10.i.i.i.i.i = icmp ult i64 %i.bu, 100000000000
+  br i1 %.not.10.i.i.i.i.i, label %bb.af, label %bb.ag
+
+bb.ag:                                            ; preds = %56
+  %61 = udiv i64 %i.bu, 100000000000
+  %.lhs.trunc45.i.i.i.i.i = trunc nuw nsw i64 %61 to i32
+  %62 = urem i32 %.lhs.trunc45.i.i.i.i.i, 10
+  %63 = trunc nuw nsw i32 %62 to i8
+  %64 = or disjoint i8 %63, 48
+  store i8 %64, ptr %.lcssa20.sroa.gep32.i.i.i.i.i, align 1, !noalias !858
+  %i.co = icmp ult i64 %i.bu, 1000000000000
+  br i1 %i.co, label %bb.af, label %bb.ah
+
+bb.ah:                                            ; preds = %bb.ag
+  %65 = udiv i64 %i.bu, 1000000000000
+  %.lhs.trunc47.i.i.i.i.i = trunc nuw nsw i64 %65 to i32
+  %66 = urem i32 %.lhs.trunc47.i.i.i.i.i, 10
+  %67 = trunc nuw nsw i32 %66 to i8
+  %68 = or disjoint i8 %67, 48
+  store i8 %68, ptr %.lcssa20.sroa.gep33.i.i.i.i.i, align 1, !noalias !858
+  %.not.12.i.i.i.i.i = icmp ult i64 %i.bu, 10000000000000
+  br i1 %.not.12.i.i.i.i.i, label %bb.af, label %.noexc35.i.i.a
+
+.noexc35.i.i.a:                                   ; preds = %bb.ah
+  %69 = udiv i64 %i.bu, 10000000000000
+  %.lhs.trunc49.i.i.i.i.i = trunc nuw nsw i64 %69 to i32
+  %70 = urem i32 %.lhs.trunc49.i.i.i.i.i, 10
+  %71 = trunc nuw nsw i32 %70 to i8
+  %72 = or disjoint i8 %71, 48
+  store i8 %72, ptr %.lcssa20.sroa.gep34.i.i.i.i.i, align 1, !noalias !858
+  %.not.13.i.i.i.i.i = icmp ult i64 %i.bu, 100000000000000
+  br i1 %.not.13.i.i.i.i.i, label %bb.af, label %bb.ai
+
+bb.ai:                                            ; preds = %.noexc35.i.i.a
+  %73 = udiv i64 %i.bu, 100000000000000
+  %.lhs.trunc51.i.i.i.i.i = trunc nuw nsw i64 %73 to i32
+  %74 = urem i32 %.lhs.trunc51.i.i.i.i.i, 10
+  %75 = trunc nuw nsw i32 %74 to i8
+  %76 = or disjoint i8 %75, 48
+  store i8 %76, ptr %.lcssa20.sroa.gep35.i.i.i.i.i, align 1, !noalias !858
+  %.not.14.i.i.i.i.i = icmp ult i64 %i.bu, 1000000000000000
+  br i1 %.not.14.i.i.i.i.i, label %bb.af, label %.noexc36.i.i.a
+
+.noexc36.i.i.a:                                   ; preds = %bb.ai
+  %77 = udiv i64 %i.bu, 1000000000000000
+  %.lhs.trunc53.i.i.i.i.i = trunc nuw nsw i64 %77 to i16
+  %78 = urem i16 %.lhs.trunc53.i.i.i.i.i, 10
+  %79 = trunc nuw nsw i16 %78 to i8
+  %80 = or disjoint i8 %79, 48
+  store i8 %80, ptr %.lcssa20.sroa.gep36.i.i.i.i.i, align 1, !noalias !858
+  %.not.15.i.i.i.i.i = icmp ult i64 %i.bu, 10000000000000000
+  br i1 %.not.15.i.i.i.i.i, label %bb.af, label %bb.aj
+
+bb.aj:                                            ; preds = %.noexc36.i.i.a
+  %81 = udiv i64 %i.bu, 10000000000000000
+  %.lhs.trunc55.i.i.i.i.i = trunc nuw nsw i64 %81 to i16
+  %82 = urem i16 %.lhs.trunc55.i.i.i.i.i, 10
+  %i.cp = trunc nuw nsw i16 %82 to i8
+  %i.cq = or disjoint i8 %i.cp, 48
+  store i8 %i.cq, ptr %.lcssa20.sroa.gep37.i.i.i.i.i, align 1, !noalias !858
+  %.not.i.i.i.i.i.a = icmp ult i64 %i.bu, 100000000000000000
+  br i1 %.not.i.i.i.i.i.a, label %bb.af, label %83
+
+83:                                               ; preds = %bb.aj
+  %84 = udiv i64 %i.bu, 100000000000000000
+  %.lhs.trunc57.i.i.i.i.i = trunc nuw i64 %84 to i8
+  %85 = urem i8 %.lhs.trunc57.i.i.i.i.i, 10
+  %86 = or disjoint i8 %85, 48
+  store i8 %86, ptr %.lcssa20.sroa.gep38.i.i.i.i.i, align 1, !noalias !858
+  %.not.17.i.i.i.i.i = icmp ult i64 %i.bu, 1000000000000000000
+  br i1 %.not.17.i.i.i.i.i, label %bb.af, label %87
+
+87:                                               ; preds = %83
+  %88 = udiv i64 %i.bu, 1000000000000000000       ; 2 uses
+  %.urem.i.i.i.i.i = add nuw nsw i64 %88, 246
+  %.cmp.i.i.i.i.i = icmp ult i64 %i.bu, -8446744073709551616 ; 2 uses
+  %89 = select i1 %.cmp.i.i.i.i.i, i64 %88, i64 %.urem.i.i.i.i.i
+  %90 = trunc i64 %89 to i8
+  %91 = or disjoint i8 %90, 48
+  store i8 %91, ptr %.lcssa20.sroa.gep39.i.i.i.i.i, align 1, !noalias !858
+  br i1 %.cmp.i.i.i.i.i, label %bb.af, label %92
+
+92:                                               ; preds = %87
+  store i8 49, ptr %i.a, align 1, !noalias !858
+  br label %bb.af
+
+_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes17write_decimal_u64.exit.i.i.i.i: ; preds = %.noexc36.i.i, %bb.ae
+  %i.cr = phi i64 [ %i.cl, %bb.ae ], [ %i.cm, %.noexc36.i.i ] ; 3 uses
   %i.cs = icmp samesign ult i64 %i.cr, 792
   br i1 %i.cs, label %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash17aggregated_hashes16write_hash_entry.exit.i.i.i, label %.invoke331.i.i
 
@@ -1290,7 +1468,7 @@ _RNvMs4_NtNtCsUrhh0HcRih_5tokio4sync7oneshotINtB5_5InnerNtNtCslc8SwK8fohf_5bytes
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.a
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @75, ptr noundef nonnull inttoptr (i64 43 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @76) #27
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @74, ptr noundef nonnull inttoptr (i64 43 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @75) #27
   unreachable
 
 bb.w:                                             ; preds = %_RNvMs4_NtNtCsUrhh0HcRih_5tokio4sync7oneshotINtB5_5InnerNtNtCslc8SwK8fohf_5bytes5bytes5BytesE9poll_recvCsjHtSR7YjKD4_8xet_data.exit, %_RNvMs4_NtNtCsUrhh0HcRih_5tokio4sync7oneshotINtB5_5InnerNtNtCslc8SwK8fohf_5bytes5bytes5BytesE9poll_recvCsjHtSR7YjKD4_8xet_data.exit.thread
@@ -1550,7 +1728,7 @@ _RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mem7replaceINtNtB4_4node6Hand
   br label %_RNvXsk_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_4IterNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB19_14metadata_shard12file_structs11MDBFileInfoENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data.exit
 
 bb.j:                                             ; preds = %bb.b
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #27
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #27
   unreachable
 
 _RNvXsk_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_4IterNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB19_14metadata_shard12file_structs11MDBFileInfoENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsjHtSR7YjKD4_8xet_data.exit: ; preds = %bb.a, %_RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashNtNtNtB1X_14metadata_shard12file_structs11MDBFileInfoNtB1y_4LeafENtB1y_4EdgeETRB1R_RB31_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0ECsjHtSR7YjKD4_8xet_data.exit.i
@@ -1563,7 +1741,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1574,7 +1752,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1585,7 +1763,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1596,7 +1774,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1607,7 +1785,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1618,7 +1796,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1629,7 +1807,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1640,7 +1818,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1651,7 +1829,7 @@ define hidden noundef zeroext i1 @_RNvXs_NtNtCsG258MDvU3F_3std4sync6poisonINtB4_
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @77, i64 noundef 11)
+  call void @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter12debug_struct(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 11)
   %i.b = call noundef zeroext i1 @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct21finish_non_exhaustive(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
@@ -1800,7 +1978,7 @@ _RINvNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mem7replaceINtNtB4_4node6Hand
   br label %bb.c
 
 bb.k:                                             ; preds = %bb.b
-  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @78) #27
+  tail call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @77) #27
   unreachable
 }
 
@@ -1836,7 +2014,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_RNvXs1y_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator9size_hintCsjHtSR7YjKD4_8xet_data.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtNtCskKLDkoKarTP_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @74) #27, !noalias !1357
+  tail call void @_RNvNtNtCskKLDkoKarTP_4core9panicking11panic_const23panic_const_div_by_zero(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @73) #27, !noalias !1357
   unreachable
 
 _RNvXs1y_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator9size_hintCsjHtSR7YjKD4_8xet_data.exit: ; preds = %bb.a

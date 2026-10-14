@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 95
 inline.NumDeleted: 32
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 17
-loop-unroll.NumUnrolled: 20
+loop-unroll.NumRuntimeUnrolled: 18
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@js_dtoa:bb.a
   %i.ka = zext nneg i32 %i.jy to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.jx, i8 48, i64 %i.ka, i1 false), !tbaa !15
@@ -205,31 +205,56 @@ bb.c:                                             ; preds = %.lr.ph.i59.us
   br i1 %i.be, label %.lr.ph.i59.us, label %mpb_renorm.exit.us, !llvm.loop !4
 
 mpb_renorm.exit.us:                               ; preds = %.lr.ph.i59.us, %bb.c, %mp_div1.exit.us, %.lr.ph.split.us
-  %.012.lcssa.i64.us = phi i32 [ 0, %.lr.ph.split.us ], [ %i.aw, %mp_div1.exit.us ], [ %i.aw, %bb.c ], [ %i.aw, %.lr.ph.i59.us ]
+  %.012.lcssa.i64.us = phi i32 [ 0, %.lr.ph.split.us ], [ %i.aw, %mp_div1.exit.us ], [ %i.aw, %bb.c ], [ %i.aw, %.lr.ph.i59.us ] ; 3 uses
   %i.bf = zext nneg i32 %i.p to i64
-  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %i.bf
-  %.08.i.i.us = add i32 %..i54.us, -1             ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %i.bf ; 3 uses
+  %.08.i.i.us = add i32 %..i54.us, -1             ; 3 uses
   %i.bh = icmp sgt i32 %.08.i.i.us, -1
-  br i1 %i.bh, label %.lr.ph.preheader.i.i.us.a, label %limb_to_a.exit.us
+  br i1 %i.bh, label %.lr.ph.preheader.i.i.us, label %limb_to_a.exit.us
 
-.lr.ph.preheader.i.i.us.a:                        ; preds = %mpb_renorm.exit.us
-  %5 = zext nneg i32 %.08.i.i.us to i64
-  br label %.lr.ph.i.i.us
+.lr.ph.preheader.i.i.us:                          ; preds = %mpb_renorm.exit.us
+  %5 = zext nneg i32 %.08.i.i.us to i64           ; 4 uses
+  %6 = and i64 %5, 1
+  %lcmp.mod106.not.not = icmp eq i64 %6, 0
+  br i1 %lcmp.mod106.not.not, label %.lr.ph.preheader.i.i.us.a, label %.lr.ph.i.i.us.prol.loopexit
 
-.lr.ph.i.i.us:                                    ; preds = %.lr.ph.i.i.us, %.lr.ph.preheader.i.i.us.a
-  %indvars.iv.i.i.us = phi i64 [ %5, %.lr.ph.preheader.i.i.us.a ], [ %indvars.iv.next.i.i.us.a, %.lr.ph.i.i.us ] ; 3 uses
-  %.079.i.i.us = phi i32 [ %.012.lcssa.i64.us, %.lr.ph.preheader.i.i.us.a ], [ %i.bj, %.lr.ph.i.i.us ] ; 2 uses
-  %i.bi = urem i32 %.079.i.i.us, 10
-  %i.bj = udiv i32 %.079.i.i.us, 10
+.lr.ph.preheader.i.i.us.a:                        ; preds = %.lr.ph.preheader.i.i.us
+  %7 = urem i32 %.012.lcssa.i64.us, 10
+  %8 = udiv i32 %.012.lcssa.i64.us, 10
+  %9 = trunc nuw nsw i32 %7 to i8
+  %10 = or disjoint i8 %9, 48
+  %11 = getelementptr inbounds nuw i8, ptr %i.bg, i64 %5
+  store i8 %10, ptr %11, align 1, !tbaa !15
+  %indvars.iv.next.i.i.us.prol = add nsw i64 %5, -1
+  br label %.lr.ph.i.i.us.prol.loopexit
+
+.lr.ph.i.i.us.prol.loopexit:                      ; preds = %.lr.ph.preheader.i.i.us.a, %.lr.ph.preheader.i.i.us
+  %indvars.iv.i.i.us.unr = phi i64 [ %5, %.lr.ph.preheader.i.i.us ], [ %indvars.iv.next.i.i.us.prol, %.lr.ph.preheader.i.i.us.a ]
+  %.079.i.i.us.unr = phi i32 [ %.012.lcssa.i64.us, %.lr.ph.preheader.i.i.us ], [ %8, %.lr.ph.preheader.i.i.us.a ]
+  %12 = icmp eq i32 %.08.i.i.us, 0
+  br i1 %12, label %limb_to_a.exit.us, label %.lr.ph.i.i.us
+
+.lr.ph.i.i.us:                                    ; preds = %.lr.ph.i.i.us.prol.loopexit, %.lr.ph.i.i.us
+  %indvars.iv.i.i.us = phi i64 [ %indvars.iv.next.i.i.us.a, %.lr.ph.i.i.us ], [ %indvars.iv.i.i.us.unr, %.lr.ph.i.i.us.prol.loopexit ] ; 3 uses
+  %.079.i.i.us = phi i32 [ %i.bj, %.lr.ph.i.i.us ], [ %.079.i.i.us.unr, %.lr.ph.i.i.us.prol.loopexit ] ; 3 uses
+  %13 = urem i32 %.079.i.i.us, 10
+  %14 = udiv i32 %.079.i.i.us, 10
+  %15 = trunc nuw nsw i32 %13 to i8
+  %16 = or disjoint i8 %15, 48
+  %17 = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.i.i.us
+  store i8 %16, ptr %17, align 1, !tbaa !15
+  %indvars.iv.next.i.i.us = add nsw i64 %indvars.iv.i.i.us, -1 ; 2 uses
+  %i.bi = urem i32 %14, 10
+  %i.bj = udiv i32 %.079.i.i.us, 100
   %i.bk = trunc nuw nsw i32 %i.bi to i8
   %i.bl = or disjoint i8 %i.bk, 48
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.i.i.us
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.next.i.i.us
   store i8 %i.bl, ptr %i.bm, align 1, !tbaa !15
-  %indvars.iv.next.i.i.us.a = add nsw i64 %indvars.iv.i.i.us, -1
-  %.not.i.i.us = icmp eq i64 %indvars.iv.i.i.us, 0
+  %indvars.iv.next.i.i.us.a = add nsw i64 %indvars.iv.i.i.us, -2
+  %.not.i.i.us = icmp eq i64 %indvars.iv.next.i.i.us, 0
   br i1 %.not.i.i.us, label %limb_to_a.exit.us, label %.lr.ph.i.i.us, !llvm.loop !22
 
-limb_to_a.exit.us:                                ; preds = %.lr.ph.i.i.us, %mpb_renorm.exit.us
+limb_to_a.exit.us:                                ; preds = %.lr.ph.i.i.us.prol.loopexit, %.lr.ph.i.i.us, %mpb_renorm.exit.us
   %.not52.us = icmp eq i32 %i.p, 0
   br i1 %.not52.us, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !23
 

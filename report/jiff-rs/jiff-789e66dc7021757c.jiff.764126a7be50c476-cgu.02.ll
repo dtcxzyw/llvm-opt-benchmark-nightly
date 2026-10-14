@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 431
 inline.NumDeleted: 215
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvMs4_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly7printerNtB5_16DesignatorWriter25write_fractional_duration:bb.a
   %.pre16 = load i16, ptr %.phi.trans.insert, align 8, !alias.scope !525, !noalias !526
   br label %_RNvMs5_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly7printerNtB5_17FractionalPrinter9is_plural.exit.thread
@@ -204,8 +205,8 @@ _RNvNtNtNtCs3oUPovFnLWP_4core3num3imp9int_log108u64_impl.exit: ; preds = %bb.l, 
 
 _RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit: ; preds = %_RNvMs4_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly7printerNtB5_16DesignatorWriter16finish_preceding.exit, %bb.i, %bb.j, %bb.k, %_RNvNtNtNtCs3oUPovFnLWP_4core3num3imp9int_log108u64_impl.exit
   %.sroa.0.0.i3 = phi i8 [ %i.be, %_RNvNtNtNtCs3oUPovFnLWP_4core3num3imp9int_log108u64_impl.exit ], [ 1, %_RNvMs4_NtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly7printerNtB5_16DesignatorWriter16finish_preceding.exit ], [ 2, %bb.i ], [ 3, %bb.j ], [ 4, %bb.k ]
-  %..i5 = tail call noundef range(i8 1, 0) i8 @llvm.umax.i8(i8 range(i8 1, 21) %.sroa.0.0.i3, i8 %..i) ; 2 uses
-  %i.bf = zext nneg i8 %..i5 to i64               ; 2 uses
+  %..i5 = tail call noundef range(i8 1, 0) i8 @llvm.umax.i8(i8 range(i8 1, 21) %.sroa.0.0.i3, i8 %..i) ; 3 uses
+  %i.bf = zext nneg i8 %..i5 to i64               ; 4 uses
   %i.bg = load ptr, ptr %i.ag, align 8, !alias.scope !550, !nonnull !4, !noundef !4
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ag, i64 8 ; 3 uses
   %i.bi = load i64, ptr %i.bh, align 8, !alias.scope !550, !noundef !4
@@ -213,28 +214,56 @@ _RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit: ; preds = %_RNvMs4_NtNtNtCsa
   %i.bk = load i16, ptr %i.bj, align 8, !alias.scope !550, !noundef !4 ; 2 uses
   %i.bl = zext i16 %i.bk to i64                   ; 2 uses
   %i.bm = sub nuw i64 %i.bi, %i.bl
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bl
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bl ; 3 uses
   %.not.i = icmp ult i64 %i.bm, %i.bf
-  br i1 %.not.i, label %bb.n, label %.preheader, !prof !11
+  br i1 %.not.i, label %bb.n, label %.preheader.preheader, !prof !11
+
+.preheader.preheader:                             ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit
+  %xtraiter = and i64 %i.bf, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.preheader.prol.loopexit, label %.preheader.prol
+
+.preheader.prol:                                  ; preds = %.preheader.preheader
+  %3 = add nsw i64 %i.bf, -1                      ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.bn, i64 %3
+  %5 = urem i64 %2, 10
+  %6 = trunc nuw nsw i64 %5 to i8
+  %7 = or disjoint i8 %6, 48
+  store i8 %7, ptr %4, align 1, !noalias !550
+  %8 = udiv i64 %2, 10
+  br label %.preheader.prol.loopexit
+
+.preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader
+  %.sroa.0.0.i8.unr = phi i64 [ %2, %.preheader.preheader ], [ %8, %.preheader.prol ]
+  %.sroa.03.0.i7.unr = phi i64 [ %i.bf, %.preheader.preheader ], [ %3, %.preheader.prol ]
+  %9 = icmp eq i8 %..i5, 1
+  br i1 %9, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer14write_int_pad0yEBa_.exit, label %.preheader
 
 bb.n:                                             ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit
   tail call void @_RNvNtCs3oUPovFnLWP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 48, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #24, !noalias !550
   unreachable
 
-.preheader:                                       ; preds = %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit, %.preheader
-  %.sroa.0.0.i8 = phi i64 [ %i.bt, %.preheader ], [ %2, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ] ; 2 uses
-  %.sroa.03.0.i7 = phi i64 [ %i.bo, %.preheader ], [ %i.bf, %_RNvNtNtCsa9sSWSfjDbm_4jiff3fmt6buffer6digits.exit ]
-  %i.bo = add nsw i64 %.sroa.03.0.i7, -1          ; 3 uses
+.preheader:                                       ; preds = %.preheader.prol.loopexit, %.preheader
+  %.sroa.0.0.i8 = phi i64 [ %i.bt, %.preheader ], [ %.sroa.0.0.i8.unr, %.preheader.prol.loopexit ] ; 3 uses
+  %.sroa.03.0.i7 = phi i64 [ %i.bo, %.preheader ], [ %.sroa.03.0.i7.unr, %.preheader.prol.loopexit ] ; 2 uses
+  %10 = getelementptr i8, ptr %i.bn, i64 %.sroa.03.0.i7
+  %11 = getelementptr i8, ptr %10, i64 -1
+  %12 = urem i64 %.sroa.0.0.i8, 10
+  %13 = trunc nuw nsw i64 %12 to i8
+  %14 = or disjoint i8 %13, 48
+  store i8 %14, ptr %11, align 1, !noalias !550
+  %15 = udiv i64 %.sroa.0.0.i8, 10
+  %i.bo = add nsw i64 %.sroa.03.0.i7, -2          ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bo
-  %i.bq = urem i64 %.sroa.0.0.i8, 10
+  %i.bq = urem i64 %15, 10
   %i.br = trunc nuw nsw i64 %i.bq to i8
   %i.bs = or disjoint i8 %i.br, 48
   store i8 %i.bs, ptr %i.bp, align 1, !noalias !550
-  %i.bt = udiv i64 %.sroa.0.0.i8, 10
+  %i.bt = udiv i64 %.sroa.0.0.i8, 100
   %.not8.i = icmp eq i64 %i.bo, 0
   br i1 %.not8.i, label %_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer14write_int_pad0yEBa_.exit, label %.preheader
 
-_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer14write_int_pad0yEBa_.exit: ; preds = %.preheader
+_RINvMs0_NtNtCsa9sSWSfjDbm_4jiff3fmt6bufferNtB6_14BorrowedBuffer14write_int_pad0yEBa_.exit: ; preds = %.preheader, %.preheader.prol.loopexit
   %i.bu = zext nneg i8 %..i5 to i16
   %i.bv = add i16 %i.bk, %i.bu                    ; 4 uses
   store i16 %i.bv, ptr %i.bj, align 8, !alias.scope !550

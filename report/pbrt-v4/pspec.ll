@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1853
 inline.NumDeleted: 656
 loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN4pbrt6detail8DispatchIRZNS_7Sampler16StartPixelSampleENS_6Point2IiEEiiEUlT_E_vNS_14PMJ02BNSamplerENS_18IndependentSamplerENS_17StratifiedSamplerENS_13HaltonSamplerENS_18PaddedSobolSamplerENS_12SobolSamplerENS_13ZSobolSamplerENS_10MLTSamplerEJNS_15DebugMLTSamplerEEvEET0_OS5_Pvi:bb.a
   %i.em = and i64 %.sroa.0.0.copyload.i.i, 4294967295 ; 2 uses
   %i.en = shl nuw nsw i64 %i.em, 16
@@ -205,22 +205,31 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.sroa.2.0.extract.shift = lshr i64 %1, 32
   %i.g = and i64 %1, 127                          ; 4 uses
-  %i.h = and i64 %.sroa.2.0.extract.shift, 127    ; 2 uses
+  %i.h = and i64 %.sroa.2.0.extract.shift, 127    ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.k = load i32, ptr %i.j, align 4
-  %.fr54 = freeze i32 %i.k                        ; 3 uses
+  %.fr54 = freeze i32 %i.k                        ; 9 uses
   %i.l = icmp sgt i32 %.fr54, 0
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.n = load i32, ptr %i.m, align 8
   %.fr = freeze i32 %i.n                          ; 7 uses
   %i.o = icmp sgt i32 %.fr, 0                     ; 2 uses
-  br i1 %i.l, label %.split33.us.a, label %.split33
+  br i1 %i.l, label %.split33.us, label %.split33
 
-.split33.us.a:                                    ; preds = %bb.b
-  br i1 %i.o, label %.lr.ph.i.us.us.preheader, label %.lr.ph.i19.us.1
+.split33.us:                                      ; preds = %bb.b
+  br i1 %i.o, label %.lr.ph.i.us.us.preheader, label %.split33.us.a
 
-.lr.ph.i.us.us.preheader:                         ; preds = %.split33.us.a
+.split33.us.a:                                    ; preds = %.split33.us
+  %xtraiter79 = and i32 %.fr54, 1
+  %4 = icmp eq i32 %.fr54, 1
+  br i1 %4, label %.lr.ph.i19.us.1.epil.preheader, label %.lr.ph.i19.us.1.preheader.new
+
+.lr.ph.i19.us.1.preheader.new:                    ; preds = %.split33.us.a
+  %unroll_iter84 = and i32 %.fr54, 2147483646
+  br label %.lr.ph.i19.us.1
+
+.lr.ph.i.us.us.preheader:                         ; preds = %.split33.us
   %xtraiter79.a = and i32 %.fr, 3                 ; 3 uses
   %i.p = icmp ult i32 %.fr, 4
   br i1 %i.p, label %.lr.ph.i.us.us.epil.preheader, label %.lr.ph.i.us.us.preheader.new
@@ -281,23 +290,48 @@ bb.b:                                             ; preds = %bb.a
   %i.ak = load i32, ptr %i.i, align 8, !tbaa !29
   %i.al = sext i32 %i.ak to i64
   %i.am = mul i64 %i.aj, %i.al
+  %xtraiter93 = and i32 %.fr54, 1
+  %5 = icmp eq i32 %.fr54, 1
+  br i1 %5, label %.lr.ph.i19.us.us.1.epil.preheader, label %.lr.ph.i19.us.us.preheader.1.new
+
+.lr.ph.i19.us.us.preheader.1.new:                 ; preds = %.lr.ph.i19.us.us.preheader.1
+  %unroll_iter98 = and i32 %.fr54, 2147483646
   br label %.lr.ph.i19.us.us.1
 
-.lr.ph.i19.us.us.1:                               ; preds = %.lr.ph.i19.us.us.1, %.lr.ph.i19.us.us.preheader.1
-  %.015.i20.us.us.1.a = phi i64 [ %i.ao, %.lr.ph.i19.us.us.1 ], [ %i.h, %.lr.ph.i19.us.us.preheader.1 ] ; 2 uses
-  %.01114.i21.us.us.1 = phi i32 [ %i.ar, %.lr.ph.i19.us.us.1 ], [ 0, %.lr.ph.i19.us.us.preheader.1 ]
-  %.01213.i22.us.us.1 = phi i64 [ %i.aq, %.lr.ph.i19.us.us.1 ], [ 0, %.lr.ph.i19.us.us.preheader.1 ]
-  %i.an = urem i64 %.015.i20.us.us.1.a, 3
-  %i.ao = udiv i64 %.015.i20.us.us.1.a, 3
-  %i.ap = mul i64 %.01213.i22.us.us.1, 3
-  %i.aq = add i64 %i.ap, %i.an                    ; 2 uses
-  %i.ar = add nuw nsw i32 %.01114.i21.us.us.1, 1  ; 2 uses
-  %exitcond.not.i23.us.us.1 = icmp eq i32 %i.ar, %.fr54
-  br i1 %exitcond.not.i23.us.us.1, label %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1, label %.lr.ph.i19.us.us.1, !llvm.loop !525
+.lr.ph.i19.us.us.1:                               ; preds = %.lr.ph.i19.us.us.1, %.lr.ph.i19.us.us.preheader.1.new
+  %.015.i20.us.us.1 = phi i64 [ %i.h, %.lr.ph.i19.us.us.preheader.1.new ], [ %i.ao, %.lr.ph.i19.us.us.1 ] ; 3 uses
+  %.015.i20.us.us.1.a = phi i64 [ 0, %.lr.ph.i19.us.us.preheader.1.new ], [ %i.aq, %.lr.ph.i19.us.us.1 ]
+  %.01114.i21.us.us.1 = phi i32 [ 0, %.lr.ph.i19.us.us.preheader.1.new ], [ %i.ar, %.lr.ph.i19.us.us.1 ]
+  %6 = urem i64 %.015.i20.us.us.1, 3
+  %7 = udiv i64 %.015.i20.us.us.1, 3
+  %8 = mul i64 %.015.i20.us.us.1.a, 3
+  %9 = add i64 %8, %6
+  %i.an = urem i64 %7, 3
+  %i.ao = udiv i64 %.015.i20.us.us.1, 9           ; 2 uses
+  %i.ap = mul i64 %9, 3
+  %i.aq = add i64 %i.ap, %i.an                    ; 3 uses
+  %i.ar = add i32 %.01114.i21.us.us.1, 2          ; 2 uses
+  %exitcond.not.i23.us.us.1 = icmp eq i32 %i.ar, %unroll_iter98
+  br i1 %exitcond.not.i23.us.us.1, label %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1.unr-lcssa, label %.lr.ph.i19.us.us.1, !llvm.loop !525
 
-_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1: ; preds = %.lr.ph.i19.us.us.1
+_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1.unr-lcssa: ; preds = %.lr.ph.i19.us.us.1
+  %lcmp.mod95.not = icmp eq i32 %xtraiter93, 0
+  br i1 %lcmp.mod95.not, label %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1, label %.lr.ph.i19.us.us.1.epil.preheader
+
+.lr.ph.i19.us.us.1.epil.preheader:                ; preds = %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1.unr-lcssa, %.lr.ph.i19.us.us.preheader.1
+  %.015.i20.us.us.1.epil.init = phi i64 [ %i.h, %.lr.ph.i19.us.us.preheader.1 ], [ %i.ao, %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1.unr-lcssa ]
+  %.01213.i22.us.us.1.epil.init = phi i64 [ 0, %.lr.ph.i19.us.us.preheader.1 ], [ %i.aq, %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1.unr-lcssa ]
+  %lcmp.mod97 = trunc i32 %.fr54 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod97)
+  %10 = urem i64 %.015.i20.us.us.1.epil.init, 3
+  %11 = mul i64 %.01213.i22.us.us.1.epil.init, 3
+  %12 = add i64 %11, %10
+  br label %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1
+
+_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1: ; preds = %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1.unr-lcssa, %.lr.ph.i19.us.us.1.epil.preheader
+  %.lcssa = phi i64 [ %i.aq, %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1.unr-lcssa ], [ %12, %.lr.ph.i19.us.us.1.epil.preheader ]
   %i.as = sext i32 %i.b to i64
-  %i.at = mul i64 %i.aq, %i.as
+  %i.at = mul i64 %.lcssa, %i.as
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.av = load i32, ptr %i.au, align 4, !tbaa !29
   %i.aw = sext i32 %i.av to i64
@@ -305,21 +339,40 @@ _ZN4pbrt21InverseRadicalInverseEmii.exit.us.us.1: ; preds = %.lr.ph.i19.us.us.1
   %i.ay = add i64 %i.ax, %i.am
   br label %.split35.us
 
-.lr.ph.i19.us.1:                                  ; preds = %.split33.us.a, %.lr.ph.i19.us.1
-  %.015.i20.us.1.a = phi i64 [ %i.ba, %.lr.ph.i19.us.1 ], [ %i.h, %.split33.us.a ] ; 2 uses
-  %.01114.i21.us.1 = phi i32 [ %i.bd, %.lr.ph.i19.us.1 ], [ 0, %.split33.us.a ]
-  %.01213.i22.us.1 = phi i64 [ %i.bc, %.lr.ph.i19.us.1 ], [ 0, %.split33.us.a ]
-  %i.az = urem i64 %.015.i20.us.1.a, 3
-  %i.ba = udiv i64 %.015.i20.us.1.a, 3
-  %i.bb = mul i64 %.01213.i22.us.1, 3
-  %i.bc = add i64 %i.bb, %i.az                    ; 2 uses
-  %i.bd = add nuw nsw i32 %.01114.i21.us.1, 1     ; 2 uses
-  %exitcond.not.i23.us.1 = icmp eq i32 %i.bd, %.fr54
-  br i1 %exitcond.not.i23.us.1, label %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1, label %.lr.ph.i19.us.1, !llvm.loop !525
+.lr.ph.i19.us.1:                                  ; preds = %.lr.ph.i19.us.1, %.lr.ph.i19.us.1.preheader.new
+  %.015.i20.us.1 = phi i64 [ %i.h, %.lr.ph.i19.us.1.preheader.new ], [ %i.ba, %.lr.ph.i19.us.1 ] ; 3 uses
+  %.015.i20.us.1.a = phi i64 [ 0, %.lr.ph.i19.us.1.preheader.new ], [ %i.bc, %.lr.ph.i19.us.1 ]
+  %.01114.i21.us.1 = phi i32 [ 0, %.lr.ph.i19.us.1.preheader.new ], [ %i.bd, %.lr.ph.i19.us.1 ]
+  %13 = urem i64 %.015.i20.us.1, 3
+  %14 = udiv i64 %.015.i20.us.1, 3
+  %15 = mul i64 %.015.i20.us.1.a, 3
+  %16 = add i64 %15, %13
+  %i.az = urem i64 %14, 3
+  %i.ba = udiv i64 %.015.i20.us.1, 9              ; 2 uses
+  %i.bb = mul i64 %16, 3
+  %i.bc = add i64 %i.bb, %i.az                    ; 3 uses
+  %i.bd = add nuw nsw i32 %.01114.i21.us.1, 2     ; 2 uses
+  %exitcond.not.i23.us.1 = icmp eq i32 %i.bd, %unroll_iter84
+  br i1 %exitcond.not.i23.us.1, label %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1.unr-lcssa, label %.lr.ph.i19.us.1, !llvm.loop !525
 
-_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1:    ; preds = %.lr.ph.i19.us.1
+_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1.unr-lcssa: ; preds = %.lr.ph.i19.us.1
+  %lcmp.mod81.not = icmp eq i32 %xtraiter79, 0
+  br i1 %lcmp.mod81.not, label %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1, label %.lr.ph.i19.us.1.epil.preheader
+
+.lr.ph.i19.us.1.epil.preheader:                   ; preds = %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1.unr-lcssa, %.split33.us.a
+  %.015.i20.us.1.epil.init = phi i64 [ %i.h, %.split33.us.a ], [ %i.ba, %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1.unr-lcssa ]
+  %.01213.i22.us.1.epil.init = phi i64 [ 0, %.split33.us.a ], [ %i.bc, %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1.unr-lcssa ]
+  %lcmp.mod83 = trunc i32 %.fr54 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod83)
+  %17 = urem i64 %.015.i20.us.1.epil.init, 3
+  %18 = mul i64 %.01213.i22.us.1.epil.init, 3
+  %19 = add i64 %18, %17
+  br label %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1
+
+_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1:    ; preds = %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1.unr-lcssa, %.lr.ph.i19.us.1.epil.preheader
+  %.lcssa75 = phi i64 [ %i.bc, %_ZN4pbrt21InverseRadicalInverseEmii.exit.us.1.unr-lcssa ], [ %19, %.lr.ph.i19.us.1.epil.preheader ]
   %i.be = sext i32 %i.b to i64
-  %i.bf = mul i64 %i.bc, %i.be
+  %i.bf = mul i64 %.lcssa75, %i.be
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !29
   %i.bi = sext i32 %i.bh to i64

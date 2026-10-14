@@ -204,7 +204,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   %.068105.i = phi i64 [ %i.ef, %select.unfold.i ], [ 0, %bb.ax ] ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dl, i64 %.068105.i
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !13
-  %.fr104.i = freeze i8 %i.dq                     ; 9 uses
+  %.fr104.i = freeze i8 %i.dq                     ; 8 uses
   %i.dr = and i8 %.fr104.i, -33
   %i.ds = add i8 %i.dr, -65
   %i.dt = icmp ult i8 %i.ds, 26
@@ -234,12 +234,15 @@ bb.az:                                            ; preds = %bb.ay
   %i.dx = udiv i8 %.fr104.i, 100
   %i.dy = or disjoint i8 %i.dx, 48
   store i8 %i.dy, ptr %i.j, align 1, !tbaa !13
-  %3 = urem i8 %.fr104.i, 100
-  %i.dz = udiv i8 %3, 10
+  %3 = insertelement <2 x i8> poison, i8 %.fr104.i, i64 0
+  %4 = shufflevector <2 x i8> %3, <2 x i8> poison, <2 x i32> zeroinitializer
+  %5 = urem <2 x i8> %4, <i8 100, i8 10>          ; 2 uses
+  %6 = extractelement <2 x i8> %5, i64 0
+  %i.dz = udiv i8 %6, 10
   %i.ea = or disjoint i8 %i.dz, 48
   store i8 %i.ea, ptr %i.k, align 1, !tbaa !13
-  %4 = urem i8 %.fr104.i, 10
-  %i.eb = or disjoint i8 %4, 48
+  %7 = extractelement <2 x i8> %5, i64 1
+  %i.eb = or disjoint i8 %7, 48
   store i8 %i.eb, ptr %i.l, align 1, !tbaa !13
   %i.ec = call i32 @ares_buf_append(ptr noundef nonnull %.040.fr, ptr noundef nonnull %i.b, i64 noundef 4) #3 ; 2 uses
   %.not80.i = icmp eq i32 %i.ec, 0

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1124
 inline.NumDeleted: 425
 loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 23
-loop-unroll.NumUnrolled: 25
+loop-unroll.NumRuntimeUnrolled: 26
+loop-unroll.NumUnrolled: 28
 begin_hunk_0_@_ZN3fmt3v126detail11write_fixedIcNS1_14digit_groupingIcEENS0_14basic_appenderIcEENS1_9dragonbox10decimal_fpIdEEEET1_SA_RKT2_iT_RKNS0_12format_specsENS0_4signENS0_10locale_refE:bb.a
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i70
 
@@ -205,7 +205,7 @@ _ZN3fmt3v1214basic_appenderIcEaSEc.exit:          ; preds = %bb.b, %bb.c
 
 bb.d:                                             ; preds = %_ZN3fmt3v1214basic_appenderIcEaSEc.exit, %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.r = load i64, ptr %i.q, align 8, !tbaa !207  ; 5 uses
+  %i.r = load i64, ptr %i.q, align 8, !tbaa !207  ; 7 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.t = load i32, ptr %i.s, align 8, !tbaa !80   ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 28
@@ -265,50 +265,79 @@ _ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i: ; preds = %bb.g, 
 
 bb.h:                                             ; preds = %bb.d
   %i.au = sext i32 %i.t to i64
-  %i.av = getelementptr i8, ptr %i.a, i64 %i.au
+  %i.av = getelementptr i8, ptr %i.a, i64 %i.au   ; 2 uses
   %i.aw = getelementptr i8, ptr %i.av, i64 1      ; 4 uses
-  %i.ax = add nsw i32 %i.t, -1                    ; 2 uses
+  %i.ax = add i32 %i.t, -1                        ; 3 uses
   %i.ay = icmp sgt i32 %i.t, 2
-  br i1 %i.ay, label %.lr.ph.preheader.i.i.a, label %._crit_edge.i.i.a
+  br i1 %i.ay, label %.lr.ph.preheader.i.i, label %._crit_edge.i.i
 
-.lr.ph.preheader.i.i.a:                           ; preds = %bb.h
-  %2 = lshr i32 %i.ax, 1
-  br label %.lr.ph.i.i
+.lr.ph.preheader.i.i:                             ; preds = %bb.h
+  %2 = lshr i32 %i.ax, 1                          ; 3 uses
+  %3 = and i32 %i.ax, 2
+  %lcmp.mod.not = icmp eq i32 %3, 0
+  br i1 %lcmp.mod.not, label %._crit_edge.i.i.a, label %.lr.ph.preheader.i.i.a
 
-._crit_edge.i.i.a:                                ; preds = %.lr.ph.i.i, %bb.h
-  %.029.lcssa.i.i.a = phi i64 [ %i.r, %bb.h ], [ %i.be, %.lr.ph.i.i ] ; 3 uses
-  %.028.lcssa.i.i.a = phi ptr [ %i.aw, %bb.h ], [ %i.az, %.lr.ph.i.i ] ; 2 uses
-  %3 = and i32 %i.ax, 1
-  %.not32.i.i.a = icmp eq i32 %3, 0
-  br i1 %.not32.i.i.a, label %bb.j, label %bb.i
+.lr.ph.preheader.i.i.a:                           ; preds = %.lr.ph.preheader.i.i
+  %4 = getelementptr i8, ptr %i.av, i64 -1        ; 3 uses
+  %5 = urem i64 %i.r, 100
+  %6 = shl nuw nsw i64 %5, 1
+  %7 = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %6
+  %8 = load i16, ptr %7, align 2
+  store i16 %8, ptr %4, align 1
+  %9 = udiv i64 %i.r, 100                         ; 2 uses
+  %10 = add nsw i32 %2, -1
+  br label %._crit_edge.i.i.a
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i.a
-  %.046.i.i = phi i32 [ %i.bf, %.lr.ph.i.i ], [ %2, %.lr.ph.preheader.i.i.a ] ; 2 uses
-  %.02845.i.i = phi ptr [ %i.az, %.lr.ph.i.i ], [ %i.aw, %.lr.ph.preheader.i.i.a ]
-  %.02944.i.i = phi i64 [ %i.be, %.lr.ph.i.i ], [ %i.r, %.lr.ph.preheader.i.i.a ] ; 2 uses
-  %i.az = getelementptr inbounds i8, ptr %.02845.i.i, i64 -2 ; 3 uses
-  %i.ba = urem i64 %.02944.i.i, 100
+._crit_edge.i.i.a:                                ; preds = %.lr.ph.preheader.i.i.a, %.lr.ph.preheader.i.i
+  %.046.i.i.unr = phi i32 [ %2, %.lr.ph.preheader.i.i ], [ %10, %.lr.ph.preheader.i.i.a ]
+  %.02845.i.i.unr = phi ptr [ %i.aw, %.lr.ph.preheader.i.i ], [ %4, %.lr.ph.preheader.i.i.a ]
+  %.029.lcssa.i.i.a = phi i64 [ %i.r, %.lr.ph.preheader.i.i ], [ %9, %.lr.ph.preheader.i.i.a ]
+  %.028.lcssa.i.i.a = phi ptr [ poison, %.lr.ph.preheader.i.i ], [ %4, %.lr.ph.preheader.i.i.a ]
+  %.lcssa47.unr = phi i64 [ poison, %.lr.ph.preheader.i.i ], [ %9, %.lr.ph.preheader.i.i.a ]
+  %.not32.i.i.a = icmp eq i32 %2, 1
+  br i1 %.not32.i.i.a, label %._crit_edge.i.i, label %.lr.ph.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.a, %.lr.ph.i.i, %bb.h
+  %.029.lcssa.i.i = phi i64 [ %i.r, %bb.h ], [ %.lcssa47.unr, %._crit_edge.i.i.a ], [ %i.be, %.lr.ph.i.i ] ; 3 uses
+  %.028.lcssa.i.i = phi ptr [ %i.aw, %bb.h ], [ %.028.lcssa.i.i.a, %._crit_edge.i.i.a ], [ %i.az, %.lr.ph.i.i ] ; 2 uses
+  %11 = and i32 %i.ax, 1
+  %.not32.i.i = icmp eq i32 %11, 0
+  br i1 %.not32.i.i, label %bb.j, label %bb.i
+
+.lr.ph.i.i:                                       ; preds = %._crit_edge.i.i.a, %.lr.ph.i.i
+  %.046.i.i = phi i32 [ %i.bf, %.lr.ph.i.i ], [ %.046.i.i.unr, %._crit_edge.i.i.a ] ; 2 uses
+  %.02845.i.i = phi ptr [ %i.az, %.lr.ph.i.i ], [ %.02845.i.i.unr, %._crit_edge.i.i.a ] ; 2 uses
+  %.02944.i.i = phi i64 [ %i.be, %.lr.ph.i.i ], [ %.029.lcssa.i.i.a, %._crit_edge.i.i.a ] ; 3 uses
+  %12 = getelementptr inbounds i8, ptr %.02845.i.i, i64 -2
+  %13 = urem i64 %.02944.i.i, 100
+  %14 = shl nuw nsw i64 %13, 1
+  %15 = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %14
+  %16 = load i16, ptr %15, align 2
+  store i16 %16, ptr %12, align 1
+  %17 = udiv i64 %.02944.i.i, 100
+  %i.az = getelementptr inbounds i8, ptr %.02845.i.i, i64 -4 ; 3 uses
+  %i.ba = urem i64 %17, 100
   %i.bb = shl nuw nsw i64 %i.ba, 1
   %i.bc = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %i.bb
   %i.bd = load i16, ptr %i.bc, align 2
   store i16 %i.bd, ptr %i.az, align 1
-  %i.be = udiv i64 %.02944.i.i, 100               ; 2 uses
-  %i.bf = add nsw i32 %.046.i.i, -1
-  %4 = icmp samesign ugt i32 %.046.i.i, 1
-  br i1 %4, label %.lr.ph.i.i, label %._crit_edge.i.i.a, !llvm.loop !8
+  %i.be = udiv i64 %.02944.i.i, 10000             ; 2 uses
+  %i.bf = add nsw i32 %.046.i.i, -2
+  %18 = icmp sgt i32 %.046.i.i, 2
+  br i1 %18, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !8
 
-bb.i:                                             ; preds = %._crit_edge.i.i.a
-  %i.bg = urem i64 %.029.lcssa.i.i.a, 10
+bb.i:                                             ; preds = %._crit_edge.i.i
+  %i.bg = urem i64 %.029.lcssa.i.i, 10
   %i.bh = trunc nuw nsw i64 %i.bg to i8
   %i.bi = or disjoint i8 %i.bh, 48
-  %i.bj = getelementptr inbounds i8, ptr %.028.lcssa.i.i.a, i64 -1 ; 2 uses
+  %i.bj = getelementptr inbounds i8, ptr %.028.lcssa.i.i, i64 -1 ; 2 uses
   store i8 %i.bi, ptr %i.bj, align 1, !tbaa !28
-  %i.bk = udiv i64 %.029.lcssa.i.i.a, 10
+  %i.bk = udiv i64 %.029.lcssa.i.i, 10
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %._crit_edge.i.i.a
-  %.130.i.i = phi i64 [ %i.bk, %bb.i ], [ %.029.lcssa.i.i.a, %._crit_edge.i.i.a ] ; 3 uses
-  %.1.i.i = phi ptr [ %i.bj, %bb.i ], [ %.028.lcssa.i.i.a, %._crit_edge.i.i.a ] ; 2 uses
+bb.j:                                             ; preds = %bb.i, %._crit_edge.i.i
+  %.130.i.i = phi i64 [ %i.bk, %bb.i ], [ %.029.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+  %.1.i.i = phi ptr [ %i.bj, %bb.i ], [ %.028.lcssa.i.i, %._crit_edge.i.i ] ; 2 uses
   %i.bl = getelementptr inbounds i8, ptr %.1.i.i, i64 -1
   store i8 %i.v, ptr %i.bl, align 1, !tbaa !28
   %i.bm = getelementptr inbounds i8, ptr %.1.i.i, i64 -2 ; 3 uses
@@ -711,50 +740,79 @@ _ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i: ; preds = %bb.e, 
 
 bb.f:                                             ; preds = %bb.b
   %i.ac = sext i32 %2 to i64
-  %i.ad = getelementptr i8, ptr %i.b, i64 %i.ac
+  %i.ad = getelementptr i8, ptr %i.b, i64 %i.ac   ; 2 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 1      ; 4 uses
-  %i.af = sub nsw i32 %2, %3                      ; 3 uses
+  %i.af = sub nsw i32 %2, %3                      ; 4 uses
   %i.ag = icmp sgt i32 %i.af, 1
-  br i1 %i.ag, label %.lr.ph.preheader.i.i.a, label %._crit_edge.i.i.a
+  br i1 %i.ag, label %.lr.ph.preheader.i.i, label %._crit_edge.i.i
 
-.lr.ph.preheader.i.i.a:                           ; preds = %bb.f
-  %7 = lshr i32 %i.af, 1
-  br label %.lr.ph.i.i
+.lr.ph.preheader.i.i:                             ; preds = %bb.f
+  %7 = lshr i32 %i.af, 1                          ; 3 uses
+  %8 = and i32 %i.af, 2
+  %lcmp.mod113.not = icmp eq i32 %8, 0
+  br i1 %lcmp.mod113.not, label %._crit_edge.i.i.a, label %.lr.ph.preheader.i.i.a
 
-._crit_edge.i.i.a:                                ; preds = %.lr.ph.i.i, %bb.f
-  %.029.lcssa.i.i.a = phi i64 [ %1, %bb.f ], [ %i.am, %.lr.ph.i.i ] ; 3 uses
-  %.028.lcssa.i.i.a = phi ptr [ %i.ae, %bb.f ], [ %i.ah, %.lr.ph.i.i ] ; 2 uses
-  %8 = and i32 %i.af, 1
-  %.not32.i.i.a = icmp eq i32 %8, 0
-  br i1 %.not32.i.i.a, label %bb.h, label %bb.g
+.lr.ph.preheader.i.i.a:                           ; preds = %.lr.ph.preheader.i.i
+  %9 = getelementptr i8, ptr %i.ad, i64 -1        ; 3 uses
+  %10 = urem i64 %1, 100
+  %11 = shl nuw nsw i64 %10, 1
+  %12 = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %11
+  %13 = load i16, ptr %12, align 2
+  store i16 %13, ptr %9, align 1
+  %14 = udiv i64 %1, 100                          ; 2 uses
+  %15 = add nsw i32 %7, -1
+  br label %._crit_edge.i.i.a
 
-.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i.a
-  %.046.i.i = phi i32 [ %i.an, %.lr.ph.i.i ], [ %7, %.lr.ph.preheader.i.i.a ] ; 2 uses
-  %.02845.i.i = phi ptr [ %i.ah, %.lr.ph.i.i ], [ %i.ae, %.lr.ph.preheader.i.i.a ]
-  %.02944.i.i = phi i64 [ %i.am, %.lr.ph.i.i ], [ %1, %.lr.ph.preheader.i.i.a ] ; 2 uses
-  %i.ah = getelementptr inbounds i8, ptr %.02845.i.i, i64 -2 ; 3 uses
-  %i.ai = urem i64 %.02944.i.i, 100
+._crit_edge.i.i.a:                                ; preds = %.lr.ph.preheader.i.i.a, %.lr.ph.preheader.i.i
+  %.046.i.i.unr = phi i32 [ %7, %.lr.ph.preheader.i.i ], [ %15, %.lr.ph.preheader.i.i.a ]
+  %.02845.i.i.unr = phi ptr [ %i.ae, %.lr.ph.preheader.i.i ], [ %9, %.lr.ph.preheader.i.i.a ]
+  %.029.lcssa.i.i.a = phi i64 [ %1, %.lr.ph.preheader.i.i ], [ %14, %.lr.ph.preheader.i.i.a ]
+  %.028.lcssa.i.i.a = phi ptr [ poison, %.lr.ph.preheader.i.i ], [ %9, %.lr.ph.preheader.i.i.a ]
+  %.lcssa104.unr = phi i64 [ poison, %.lr.ph.preheader.i.i ], [ %14, %.lr.ph.preheader.i.i.a ]
+  %.not32.i.i.a = icmp eq i32 %7, 1
+  br i1 %.not32.i.i.a, label %._crit_edge.i.i, label %.lr.ph.i.i
+
+._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.a, %.lr.ph.i.i, %bb.f
+  %.029.lcssa.i.i = phi i64 [ %1, %bb.f ], [ %.lcssa104.unr, %._crit_edge.i.i.a ], [ %i.am, %.lr.ph.i.i ] ; 3 uses
+  %.028.lcssa.i.i = phi ptr [ %i.ae, %bb.f ], [ %.028.lcssa.i.i.a, %._crit_edge.i.i.a ], [ %i.ah, %.lr.ph.i.i ] ; 2 uses
+  %16 = and i32 %i.af, 1
+  %.not32.i.i = icmp eq i32 %16, 0
+  br i1 %.not32.i.i, label %bb.h, label %bb.g
+
+.lr.ph.i.i:                                       ; preds = %._crit_edge.i.i.a, %.lr.ph.i.i
+  %.046.i.i = phi i32 [ %i.an, %.lr.ph.i.i ], [ %.046.i.i.unr, %._crit_edge.i.i.a ] ; 2 uses
+  %.02845.i.i = phi ptr [ %i.ah, %.lr.ph.i.i ], [ %.02845.i.i.unr, %._crit_edge.i.i.a ] ; 2 uses
+  %.02944.i.i = phi i64 [ %i.am, %.lr.ph.i.i ], [ %.029.lcssa.i.i.a, %._crit_edge.i.i.a ] ; 3 uses
+  %17 = getelementptr inbounds i8, ptr %.02845.i.i, i64 -2
+  %18 = urem i64 %.02944.i.i, 100
+  %19 = shl nuw nsw i64 %18, 1
+  %20 = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %19
+  %21 = load i16, ptr %20, align 2
+  store i16 %21, ptr %17, align 1
+  %22 = udiv i64 %.02944.i.i, 100
+  %i.ah = getelementptr inbounds i8, ptr %.02845.i.i, i64 -4 ; 3 uses
+  %i.ai = urem i64 %22, 100
   %i.aj = shl nuw nsw i64 %i.ai, 1
   %i.ak = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %i.aj
   %i.al = load i16, ptr %i.ak, align 2
   store i16 %i.al, ptr %i.ah, align 1
-  %i.am = udiv i64 %.02944.i.i, 100               ; 2 uses
-  %i.an = add nsw i32 %.046.i.i, -1
-  %9 = icmp samesign ugt i32 %.046.i.i, 1
-  br i1 %9, label %.lr.ph.i.i, label %._crit_edge.i.i.a, !llvm.loop !8
+  %i.am = udiv i64 %.02944.i.i, 10000             ; 2 uses
+  %i.an = add nsw i32 %.046.i.i, -2
+  %23 = icmp sgt i32 %.046.i.i, 2
+  br i1 %23, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !8
 
-bb.g:                                             ; preds = %._crit_edge.i.i.a
-  %i.ao = urem i64 %.029.lcssa.i.i.a, 10
+bb.g:                                             ; preds = %._crit_edge.i.i
+  %i.ao = urem i64 %.029.lcssa.i.i, 10
   %i.ap = trunc nuw nsw i64 %i.ao to i8
   %i.aq = or disjoint i8 %i.ap, 48
-  %i.ar = getelementptr inbounds i8, ptr %.028.lcssa.i.i.a, i64 -1 ; 2 uses
+  %i.ar = getelementptr inbounds i8, ptr %.028.lcssa.i.i, i64 -1 ; 2 uses
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !28
-  %i.as = udiv i64 %.029.lcssa.i.i.a, 10
+  %i.as = udiv i64 %.029.lcssa.i.i, 10
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %._crit_edge.i.i.a
-  %.130.i.i = phi i64 [ %i.as, %bb.g ], [ %.029.lcssa.i.i.a, %._crit_edge.i.i.a ] ; 3 uses
-  %.1.i.i = phi ptr [ %i.ar, %bb.g ], [ %.028.lcssa.i.i.a, %._crit_edge.i.i.a ]
+bb.h:                                             ; preds = %bb.g, %._crit_edge.i.i
+  %.130.i.i = phi i64 [ %i.as, %bb.g ], [ %.029.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+  %.1.i.i = phi ptr [ %i.ar, %bb.g ], [ %.028.lcssa.i.i, %._crit_edge.i.i ]
   %i.at = getelementptr inbounds i8, ptr %.1.i.i, i64 -1 ; 2 uses
   store i8 %4, ptr %i.at, align 1, !tbaa !28
   %i.au = sext i32 %3 to i64
@@ -874,50 +932,79 @@ _ZN3fmt3v126detail17do_format_decimalIcmEEPT_S4_T0_i.exit.i.i41: ; preds = %bb.n
 
 bb.o:                                             ; preds = %bb.k
   %i.cw = sext i32 %2 to i64
-  %i.cx = getelementptr i8, ptr %i.a, i64 %i.cw
+  %i.cx = getelementptr i8, ptr %i.a, i64 %i.cw   ; 2 uses
   %i.cy = getelementptr i8, ptr %i.cx, i64 1      ; 4 uses
-  %i.cz = sub nsw i32 %2, %3                      ; 3 uses
+  %i.cz = sub nsw i32 %2, %3                      ; 4 uses
   %i.da = icmp sgt i32 %i.cz, 1
-  br i1 %i.da, label %.lr.ph.preheader.i.i33.a, label %._crit_edge.i.i20.a
+  br i1 %i.da, label %.lr.ph.preheader.i.i33, label %._crit_edge.i.i20
 
-.lr.ph.preheader.i.i33.a:                         ; preds = %bb.o
-  %10 = lshr i32 %i.cz, 1
-  br label %.lr.ph.i.i34
+.lr.ph.preheader.i.i33:                           ; preds = %bb.o
+  %24 = lshr i32 %i.cz, 1                         ; 3 uses
+  %25 = and i32 %i.cz, 2
+  %lcmp.mod.not = icmp eq i32 %25, 0
+  br i1 %lcmp.mod.not, label %._crit_edge.i.i20.a, label %.lr.ph.preheader.i.i33.a
 
-._crit_edge.i.i20.a:                              ; preds = %.lr.ph.i.i34, %bb.o
-  %.029.lcssa.i.i21.a = phi i64 [ %1, %bb.o ], [ %i.dg, %.lr.ph.i.i34 ] ; 3 uses
-  %.028.lcssa.i.i22.a = phi ptr [ %i.cy, %bb.o ], [ %i.db, %.lr.ph.i.i34 ] ; 2 uses
-  %11 = and i32 %i.cz, 1
-  %.not32.i.i23.a = icmp eq i32 %11, 0
-  br i1 %.not32.i.i23.a, label %bb.q, label %bb.p
+.lr.ph.preheader.i.i33.a:                         ; preds = %.lr.ph.preheader.i.i33
+  %26 = getelementptr i8, ptr %i.cx, i64 -1       ; 3 uses
+  %27 = urem i64 %1, 100
+  %28 = shl nuw nsw i64 %27, 1
+  %29 = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %28
+  %30 = load i16, ptr %29, align 2
+  store i16 %30, ptr %26, align 1
+  %31 = udiv i64 %1, 100                          ; 2 uses
+  %32 = add nsw i32 %24, -1
+  br label %._crit_edge.i.i20.a
 
-.lr.ph.i.i34:                                     ; preds = %.lr.ph.i.i34, %.lr.ph.preheader.i.i33.a
-  %.046.i.i35 = phi i32 [ %i.dh, %.lr.ph.i.i34 ], [ %10, %.lr.ph.preheader.i.i33.a ] ; 2 uses
-  %.02845.i.i36 = phi ptr [ %i.db, %.lr.ph.i.i34 ], [ %i.cy, %.lr.ph.preheader.i.i33.a ]
-  %.02944.i.i37 = phi i64 [ %i.dg, %.lr.ph.i.i34 ], [ %1, %.lr.ph.preheader.i.i33.a ] ; 2 uses
-  %i.db = getelementptr inbounds i8, ptr %.02845.i.i36, i64 -2 ; 3 uses
-  %i.dc = urem i64 %.02944.i.i37, 100
+._crit_edge.i.i20.a:                              ; preds = %.lr.ph.preheader.i.i33.a, %.lr.ph.preheader.i.i33
+  %.046.i.i35.unr = phi i32 [ %24, %.lr.ph.preheader.i.i33 ], [ %32, %.lr.ph.preheader.i.i33.a ]
+  %.02845.i.i36.unr = phi ptr [ %i.cy, %.lr.ph.preheader.i.i33 ], [ %26, %.lr.ph.preheader.i.i33.a ]
+  %.029.lcssa.i.i21.a = phi i64 [ %1, %.lr.ph.preheader.i.i33 ], [ %31, %.lr.ph.preheader.i.i33.a ]
+  %.028.lcssa.i.i22.a = phi ptr [ poison, %.lr.ph.preheader.i.i33 ], [ %26, %.lr.ph.preheader.i.i33.a ]
+  %.lcssa110.unr = phi i64 [ poison, %.lr.ph.preheader.i.i33 ], [ %31, %.lr.ph.preheader.i.i33.a ]
+  %.not32.i.i23.a = icmp eq i32 %24, 1
+  br i1 %.not32.i.i23.a, label %._crit_edge.i.i20, label %.lr.ph.i.i34
+
+._crit_edge.i.i20:                                ; preds = %._crit_edge.i.i20.a, %.lr.ph.i.i34, %bb.o
+  %.029.lcssa.i.i21 = phi i64 [ %1, %bb.o ], [ %.lcssa110.unr, %._crit_edge.i.i20.a ], [ %i.dg, %.lr.ph.i.i34 ] ; 3 uses
+  %.028.lcssa.i.i22 = phi ptr [ %i.cy, %bb.o ], [ %.028.lcssa.i.i22.a, %._crit_edge.i.i20.a ], [ %i.db, %.lr.ph.i.i34 ] ; 2 uses
+  %33 = and i32 %i.cz, 1
+  %.not32.i.i23 = icmp eq i32 %33, 0
+  br i1 %.not32.i.i23, label %bb.q, label %bb.p
+
+.lr.ph.i.i34:                                     ; preds = %._crit_edge.i.i20.a, %.lr.ph.i.i34
+  %.046.i.i35 = phi i32 [ %i.dh, %.lr.ph.i.i34 ], [ %.046.i.i35.unr, %._crit_edge.i.i20.a ] ; 2 uses
+  %.02845.i.i36 = phi ptr [ %i.db, %.lr.ph.i.i34 ], [ %.02845.i.i36.unr, %._crit_edge.i.i20.a ] ; 2 uses
+  %.02944.i.i37 = phi i64 [ %i.dg, %.lr.ph.i.i34 ], [ %.029.lcssa.i.i21.a, %._crit_edge.i.i20.a ] ; 3 uses
+  %34 = getelementptr inbounds i8, ptr %.02845.i.i36, i64 -2
+  %35 = urem i64 %.02944.i.i37, 100
+  %36 = shl nuw nsw i64 %35, 1
+  %37 = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %36
+  %38 = load i16, ptr %37, align 2
+  store i16 %38, ptr %34, align 1
+  %39 = udiv i64 %.02944.i.i37, 100
+  %i.db = getelementptr inbounds i8, ptr %.02845.i.i36, i64 -4 ; 3 uses
+  %i.dc = urem i64 %39, 100
   %i.dd = shl nuw nsw i64 %i.dc, 1
   %i.de = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail7digits2EmE4data, i64 %i.dd
   %i.df = load i16, ptr %i.de, align 2
   store i16 %i.df, ptr %i.db, align 1
-  %i.dg = udiv i64 %.02944.i.i37, 100             ; 2 uses
-  %i.dh = add nsw i32 %.046.i.i35, -1
-  %12 = icmp samesign ugt i32 %.046.i.i35, 1
-  br i1 %12, label %.lr.ph.i.i34, label %._crit_edge.i.i20.a, !llvm.loop !8
+  %i.dg = udiv i64 %.02944.i.i37, 10000           ; 2 uses
+  %i.dh = add nsw i32 %.046.i.i35, -2
+  %40 = icmp sgt i32 %.046.i.i35, 2
+  br i1 %40, label %.lr.ph.i.i34, label %._crit_edge.i.i20, !llvm.loop !8
 
-bb.p:                                             ; preds = %._crit_edge.i.i20.a
-  %i.di = urem i64 %.029.lcssa.i.i21.a, 10
+bb.p:                                             ; preds = %._crit_edge.i.i20
+  %i.di = urem i64 %.029.lcssa.i.i21, 10
   %i.dj = trunc nuw nsw i64 %i.di to i8
   %i.dk = or disjoint i8 %i.dj, 48
-  %i.dl = getelementptr inbounds i8, ptr %.028.lcssa.i.i22.a, i64 -1 ; 2 uses
+  %i.dl = getelementptr inbounds i8, ptr %.028.lcssa.i.i22, i64 -1 ; 2 uses
   store i8 %i.dk, ptr %i.dl, align 1, !tbaa !28
-  %i.dm = udiv i64 %.029.lcssa.i.i21.a, 10
+  %i.dm = udiv i64 %.029.lcssa.i.i21, 10
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %._crit_edge.i.i20.a
-  %.130.i.i24 = phi i64 [ %i.dm, %bb.p ], [ %.029.lcssa.i.i21.a, %._crit_edge.i.i20.a ] ; 3 uses
-  %.1.i.i25 = phi ptr [ %i.dl, %bb.p ], [ %.028.lcssa.i.i22.a, %._crit_edge.i.i20.a ]
+bb.q:                                             ; preds = %bb.p, %._crit_edge.i.i20
+  %.130.i.i24 = phi i64 [ %i.dm, %bb.p ], [ %.029.lcssa.i.i21, %._crit_edge.i.i20 ] ; 3 uses
+  %.1.i.i25 = phi ptr [ %i.dl, %bb.p ], [ %.028.lcssa.i.i22, %._crit_edge.i.i20 ]
   %i.dn = getelementptr inbounds i8, ptr %.1.i.i25, i64 -1 ; 2 uses
   store i8 %4, ptr %i.dn, align 1, !tbaa !28
   %i.do = sext i32 %3 to i64

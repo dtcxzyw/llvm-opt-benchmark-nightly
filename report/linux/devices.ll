@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.095 = phi ptr [ %i.ai, %bb.l ], [ %i.r, %bb.k ] ; 4 uses
-  %i.aj = getelementptr i8, ptr %i.e, i64 7936    ; 25 uses
+  %i.aj = getelementptr i8, ptr %i.e, i64 7936    ; 26 uses
   %i.ak = getelementptr i8, ptr %4, i64 948
   %i.al = load i16, ptr %i.ak, align 4
   %i.am = icmp ugt ptr %.095, %i.aj
@@ -607,44 +607,106 @@ class_decode.exit.i.i:                            ; preds = %.fold.split26.i.i.i
   br label %usb_dump_interface_descriptor.exit.i.i.i
 
 usb_dump_interface_descriptor.exit.i.i.i:         ; preds = %class_decode.exit.i.i, %bb.bg
-  %.023.i.i.i.i = phi ptr [ %i.to, %class_decode.exit.i.i ], [ %.250.i.i, %bb.bg ] ; 2 uses
-  %i.tp = getelementptr i8, ptr %i.sl, i64 4      ; 2 uses
-  %i.tq = load i8, ptr %i.tp, align 4             ; 2 uses
+  %.023.i.i.i.i = phi ptr [ %i.to, %class_decode.exit.i.i ], [ %.250.i.i, %bb.bg ] ; 3 uses
+  %i.tp = getelementptr i8, ptr %i.sl, i64 4      ; 3 uses
+  %i.tq = load i8, ptr %i.tp, align 4             ; 3 uses
   %.not.i45.i.i = icmp eq i8 %i.tq, 0
   br i1 %.not.i45.i.i, label %usb_dump_interface.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %usb_dump_interface_descriptor.exit.i.i.i
-  %i.tr = getelementptr i8, ptr %i.sl, i64 24
-  br label %bb.bn
+  %i.tr = getelementptr i8, ptr %i.sl, i64 24     ; 2 uses
+  br i1 %i.sa, label %bb.bn, label %.lr.ph.split.i.i.i
 
-bb.bn:                                            ; preds = %usb_dump_endpoint_descriptor.exit.i.i.i, %.lr.ph.i.i.i
-  %i.ts = phi i8 [ %i.tq, %.lr.ph.i.i.i ], [ %i.up, %usb_dump_endpoint_descriptor.exit.i.i.i ]
-  %indvars.iv.i.i.i.a = phi i64 [ 0, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %usb_dump_endpoint_descriptor.exit.i.i.i ] ; 2 uses
-  %.01521.i.i.i.a = phi ptr [ %.023.i.i.i.i, %.lr.ph.i.i.i ], [ %.027.i.i.i.i, %usb_dump_endpoint_descriptor.exit.i.i.i ] ; 4 uses
+bb.bn:                                            ; preds = %.lr.ph.i.i.i, %usb_dump_endpoint_descriptor.exit.us.i.i.i
+  %i.ts = phi i8 [ %27, %usb_dump_endpoint_descriptor.exit.us.i.i.i ], [ %i.tq, %.lr.ph.i.i.i ]
+  %indvars.iv.i.i.i.a = phi i64 [ %indvars.iv.next27.i.i.i, %usb_dump_endpoint_descriptor.exit.us.i.i.i ], [ 0, %.lr.ph.i.i.i ] ; 2 uses
+  %.01521.i.i.i.a = phi ptr [ %.027.i.us.i.i.i, %usb_dump_endpoint_descriptor.exit.us.i.i.i ], [ %.023.i.i.i.i, %.lr.ph.i.i.i ] ; 4 uses
   %i.tt = load ptr, ptr %i.tr, align 8
-  %i.tu = getelementptr [88 x i8], ptr %i.tt, i64 %indvars.iv.i.i.i.a ; 5 uses
+  %i.tu = getelementptr [88 x i8], ptr %i.tt, i64 %indvars.iv.i.i.i.a ; 4 uses
   %i.tv = icmp ugt ptr %.01521.i.i.i.a, %i.aj
-  br i1 %i.tv, label %usb_dump_endpoint_descriptor.exit.i.i.i, label %bb.bo
+  br i1 %i.tv, label %usb_dump_endpoint_descriptor.exit.us.i.i.i, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
   %i.tw = getelementptr i8, ptr %i.tu, i64 2      ; 2 uses
   %.val.i.i.i.i.a = load i8, ptr %i.tw, align 1
   %.not.i16.i.i.i.a = icmp sgt i8 %.val.i.i.i.i.a, -1
   %i.tx = select i1 %.not.i16.i.i.i.a, i32 79, i32 73 ; 3 uses
-  br i1 %i.sa, label %bb.bp, label %bb.bq
+  %9 = getelementptr i8, ptr %i.tu, i64 4         ; 2 uses
+  %.val30.i.us.i.i.i = load i16, ptr %9, align 1
+  %10 = lshr i16 %.val30.i.us.i.i.i, 11
+  %11 = and i16 %10, 3
+  %narrow.i.i.us.i.i.i = add nuw nsw i16 %11, 1
+  %12 = getelementptr i8, ptr %i.tu, i64 3        ; 2 uses
+  %.val31.i.us.i.i.i = load i8, ptr %12, align 1
+  %13 = and i8 %.val31.i.us.i.i.i, 3
+  switch i8 %13, label %.unreachabledefault [
+    i8 0, label %bb.bp
+    i8 1, label %16
+    i8 2, label %15
+    i8 3, label %14
+  ]
 
-bb.bp:                                            ; preds = %bb.bo
-  %9 = getelementptr i8, ptr %i.tu, i64 4
-  %.val30.i.i.i.i = load i16, ptr %9, align 1
-  %10 = lshr i16 %.val30.i.i.i.i, 11
-  %i.ty = and i16 %10, 3
-  %narrow.i.i.i.i.i = add nuw nsw i16 %i.ty, 1
-  %i.tz = zext nneg i16 %narrow.i.i.i.i.i to i32
-  br label %bb.bq
+14:                                               ; preds = %bb.bo
+  br label %bb.bp
 
-bb.bq:                                            ; preds = %bb.bp, %bb.bo
-  %.0.i17.i.i.i = phi i32 [ %i.tz, %bb.bp ], [ 1, %bb.bo ]
-  %i.ua = getelementptr i8, ptr %i.tu, i64 3      ; 2 uses
+15:                                               ; preds = %bb.bo
+  br label %bb.bp
+
+16:                                               ; preds = %bb.bo
+  br label %bb.bp
+
+bb.bp:                                            ; preds = %16, %15, %14, %bb.bo
+  %.026.i.us.i.i.i = phi i32 [ %i.tx, %14 ], [ %i.tx, %16 ], [ %i.tx, %15 ], [ 66, %bb.bo ]
+  %.024.i.us.i.i.i = phi ptr [ @.str.36, %14 ], [ @.str.34, %16 ], [ @.str.35, %15 ], [ @.str.33, %bb.bo ]
+  %17 = tail call i32 @usb_decode_interval(ptr noundef %i.tu, i32 noundef 3) #6 ; 3 uses
+  %18 = urem i32 %17, 1000
+  %.not29.i18.us.i.i.i = icmp eq i32 %18, 0       ; 2 uses
+  %19 = udiv i32 %17, 1000
+  %.025.i.us.i.i.i = select i1 %.not29.i18.us.i.i.i, i32 109, i32 117
+  %.023.i19.us.i.i.i = select i1 %.not29.i18.us.i.i.i, i32 %19, i32 %17
+  %20 = load i8, ptr %i.tw, align 1
+  %21 = zext i8 %20 to i32
+  %22 = load i8, ptr %12, align 1
+  %23 = zext i8 %22 to i32
+  %.val32.i.us.i.i.i = load i16, ptr %9, align 1
+  %i.ty = and i16 %.val32.i.us.i.i.i, 2047
+  %narrow.i.i.i = mul nuw nsw i16 %i.ty, %narrow.i.i.us.i.i.i
+  %i.tz = zext nneg i16 %narrow.i.i.i to i32
+  %24 = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef %.01521.i.i.i.a, ptr noundef nonnull dereferenceable(1) @format_endpt, i32 noundef %21, i32 noundef %.026.i.us.i.i.i, i32 noundef %23, ptr noundef nonnull %.024.i.us.i.i.i, i32 noundef %i.tz, i32 noundef %.023.i19.us.i.i.i, i32 noundef %.025.i.us.i.i.i) #6
+  %25 = sext i32 %24 to i64
+  %26 = getelementptr i8, ptr %.01521.i.i.i.a, i64 %25
+  %.pre29.i.i.i = load i8, ptr %i.tp, align 4
+  br label %usb_dump_endpoint_descriptor.exit.us.i.i.i
+
+usb_dump_endpoint_descriptor.exit.us.i.i.i:       ; preds = %bb.bp, %bb.bn
+  %27 = phi i8 [ %.pre29.i.i.i, %bb.bp ], [ %i.ts, %bb.bn ] ; 2 uses
+  %.027.i.us.i.i.i = phi ptr [ %26, %bb.bp ], [ %.01521.i.i.i.a, %bb.bn ] ; 2 uses
+  %indvars.iv.next27.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.a, 1 ; 2 uses
+  %28 = zext i8 %27 to i64
+  %29 = icmp samesign ult i64 %indvars.iv.next27.i.i.i, %28
+  br i1 %29, label %bb.bn, label %usb_dump_interface.exit.i.i, !llvm.loop !13
+
+.unreachabledefault:                              ; preds = %bb.bo
+  unreachable
+
+default.unreachable:                              ; preds = %bb.bq
+  unreachable
+
+.lr.ph.split.i.i.i:                               ; preds = %.lr.ph.i.i.i, %usb_dump_endpoint_descriptor.exit.i.i.i
+  %30 = phi i8 [ %i.up, %usb_dump_endpoint_descriptor.exit.i.i.i ], [ %i.tq, %.lr.ph.i.i.i ]
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %usb_dump_endpoint_descriptor.exit.i.i.i ], [ 0, %.lr.ph.i.i.i ] ; 2 uses
+  %.01521.i.i.i = phi ptr [ %.027.i.i.i.i, %usb_dump_endpoint_descriptor.exit.i.i.i ], [ %.023.i.i.i.i, %.lr.ph.i.i.i ] ; 4 uses
+  %31 = load ptr, ptr %i.tr, align 8
+  %32 = getelementptr [88 x i8], ptr %31, i64 %indvars.iv.i.i.i ; 4 uses
+  %33 = icmp ugt ptr %.01521.i.i.i, %i.aj
+  br i1 %33, label %usb_dump_endpoint_descriptor.exit.i.i.i, label %bb.bq
+
+bb.bq:                                            ; preds = %.lr.ph.split.i.i.i
+  %34 = getelementptr i8, ptr %32, i64 2          ; 2 uses
+  %.val.i.i.i.i = load i8, ptr %34, align 1
+  %.not.i16.i.i.i = icmp sgt i8 %.val.i.i.i.i, -1
+  %35 = select i1 %.not.i16.i.i.i, i32 79, i32 73 ; 3 uses
+  %i.ua = getelementptr i8, ptr %32, i64 3        ; 2 uses
   %.val31.i.i.i.i = load i8, ptr %i.ua, align 1
   %i.ub = and i8 %.val31.i.i.i.i, 3
   switch i8 %i.ub, label %default.unreachable [
@@ -663,43 +725,39 @@ bb.bs:                                            ; preds = %bb.bq
 bb.bt:                                            ; preds = %bb.bq
   br label %bb.bu
 
-default.unreachable:                              ; preds = %bb.bq
-  unreachable
-
 bb.bu:                                            ; preds = %bb.bt, %bb.bs, %bb.br, %bb.bq
-  %.026.i.i.i.i = phi i32 [ %i.tx, %bb.bt ], [ %i.tx, %bb.br ], [ %i.tx, %bb.bs ], [ 66, %bb.bq ]
+  %.026.i.i.i.i = phi i32 [ %35, %bb.bt ], [ %35, %bb.br ], [ %35, %bb.bs ], [ 66, %bb.bq ]
   %.024.i.i.i.i = phi ptr [ @.str.36, %bb.bt ], [ @.str.34, %bb.br ], [ @.str.35, %bb.bs ], [ @.str.33, %bb.bq ]
-  %i.uc = tail call i32 @usb_decode_interval(ptr noundef %i.tu, i32 noundef %i.cu) #6 ; 3 uses
+  %i.uc = tail call i32 @usb_decode_interval(ptr noundef %32, i32 noundef %i.cu) #6 ; 3 uses
   %i.ud = urem i32 %i.uc, 1000
   %.not29.i18.i.i.i = icmp eq i32 %i.ud, 0        ; 2 uses
   %i.ue = udiv i32 %i.uc, 1000
   %.025.i.i.i.i = select i1 %.not29.i18.i.i.i, i32 109, i32 117
   %.023.i19.i.i.i = select i1 %.not29.i18.i.i.i, i32 %i.ue, i32 %i.uc
-  %i.uf = load i8, ptr %i.tw, align 1
+  %i.uf = load i8, ptr %34, align 1
   %i.ug = zext i8 %i.uf to i32
   %i.uh = load i8, ptr %i.ua, align 1
   %i.ui = zext i8 %i.uh to i32
-  %i.uj = getelementptr i8, ptr %i.tu, i64 4
+  %i.uj = getelementptr i8, ptr %32, i64 4
   %.val32.i.i.i.i = load i16, ptr %i.uj, align 1
   %i.uk = and i16 %.val32.i.i.i.i, 2047
   %i.ul = zext nneg i16 %i.uk to i32
-  %11 = mul nuw nsw i32 %.0.i17.i.i.i, %i.ul
-  %i.um = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef %.01521.i.i.i.a, ptr noundef nonnull dereferenceable(1) @format_endpt, i32 noundef %i.ug, i32 noundef %.026.i.i.i.i, i32 noundef %i.ui, ptr noundef nonnull %.024.i.i.i.i, i32 noundef %11, i32 noundef %.023.i19.i.i.i, i32 noundef %.025.i.i.i.i) #6
+  %i.um = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef %.01521.i.i.i, ptr noundef nonnull dereferenceable(1) @format_endpt, i32 noundef %i.ug, i32 noundef %.026.i.i.i.i, i32 noundef %i.ui, ptr noundef nonnull %.024.i.i.i.i, i32 noundef %i.ul, i32 noundef %.023.i19.i.i.i, i32 noundef %.025.i.i.i.i) #6
   %i.un = sext i32 %i.um to i64
-  %i.uo = getelementptr i8, ptr %.01521.i.i.i.a, i64 %i.un
+  %i.uo = getelementptr i8, ptr %.01521.i.i.i, i64 %i.un
   %.pre.i.i.i = load i8, ptr %i.tp, align 4
   br label %usb_dump_endpoint_descriptor.exit.i.i.i
 
-usb_dump_endpoint_descriptor.exit.i.i.i:          ; preds = %bb.bu, %bb.bn
-  %i.up = phi i8 [ %.pre.i.i.i, %bb.bu ], [ %i.ts, %bb.bn ] ; 2 uses
-  %.027.i.i.i.i = phi ptr [ %i.uo, %bb.bu ], [ %.01521.i.i.i.a, %bb.bn ] ; 2 uses
-  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.a, 1 ; 2 uses
+usb_dump_endpoint_descriptor.exit.i.i.i:          ; preds = %bb.bu, %.lr.ph.split.i.i.i
+  %i.up = phi i8 [ %.pre.i.i.i, %bb.bu ], [ %30, %.lr.ph.split.i.i.i ] ; 2 uses
+  %.027.i.i.i.i = phi ptr [ %i.uo, %bb.bu ], [ %.01521.i.i.i, %.lr.ph.split.i.i.i ] ; 2 uses
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
   %i.uq = zext i8 %i.up to i64
   %i.ur = icmp samesign ult i64 %indvars.iv.next.i.i.i, %i.uq
-  br i1 %i.ur, label %bb.bn, label %usb_dump_interface.exit.i.i, !llvm.loop !13
+  br i1 %i.ur, label %.lr.ph.split.i.i.i, label %usb_dump_interface.exit.i.i, !llvm.loop !13
 
-usb_dump_interface.exit.i.i:                      ; preds = %usb_dump_endpoint_descriptor.exit.i.i.i, %usb_dump_interface_descriptor.exit.i.i.i
-  %.015.lcssa.i.i.i = phi ptr [ %.023.i.i.i.i, %usb_dump_interface_descriptor.exit.i.i.i ], [ %.027.i.i.i.i, %usb_dump_endpoint_descriptor.exit.i.i.i ] ; 2 uses
+usb_dump_interface.exit.i.i:                      ; preds = %usb_dump_endpoint_descriptor.exit.i.i.i, %usb_dump_endpoint_descriptor.exit.us.i.i.i, %usb_dump_interface_descriptor.exit.i.i.i
+  %.015.lcssa.i.i.i = phi ptr [ %.023.i.i.i.i, %usb_dump_interface_descriptor.exit.i.i.i ], [ %.027.i.us.i.i.i, %usb_dump_endpoint_descriptor.exit.us.i.i.i ], [ %.027.i.i.i.i, %usb_dump_endpoint_descriptor.exit.i.i.i ] ; 2 uses
   %i.us = add nuw i32 %.051.i.i, 1                ; 2 uses
   %i.ut = load i32, ptr %i.sd, align 8
   %i.uu = icmp ult i32 %i.us, %i.ut

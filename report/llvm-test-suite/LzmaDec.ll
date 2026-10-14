@@ -205,18 +205,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = urem i8 %i.e, 9
-  %4 = zext nneg i8 %3 to i32
-  store i32 %4, ptr %0, align 4, !tbaa !71
   %i.g = udiv i8 %i.e, 9
   %i.h = udiv i8 %i.e, 45
   %.zext = zext nneg i8 %i.h to i32
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.zext, ptr %i.i, align 4, !tbaa !72
-  %5 = urem i8 %i.g, 5
-  %.zext19 = zext nneg i8 %5 to i32
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.zext19, ptr %6, align 4, !tbaa !73
+  store i32 %.zext, ptr %i.i, align 4, !tbaa !71
+  %3 = insertelement <2 x i8> poison, i8 %i.e, i64 0
+  %4 = insertelement <2 x i8> %3, i8 %i.g, i64 1
+  %5 = urem <2 x i8> %4, <i8 9, i8 5>
+  %6 = zext nneg <2 x i8> %5 to <2 x i32>
+  store <2 x i32> %6, ptr %0, align 4, !tbaa !11
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
@@ -239,15 +237,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %LzmaProps_Decode.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = urem i8 %i.d, 9
-  %i.f = zext nneg i8 %4 to i32                   ; 2 uses
-  %5 = udiv i8 %i.d, 9
-  %6 = udiv i8 %i.d, 45
-  %.zext.i = zext nneg i8 %6 to i32
-  %7 = urem i8 %5, 5
-  %.zext19.i = zext nneg i8 %7 to i32             ; 2 uses
-  %8 = add nuw nsw i32 %.zext19.i, %i.f
-  %i.g = shl nuw nsw i32 768, %8
+  %4 = udiv i8 %i.d, 9
+  %5 = udiv i8 %i.d, 45
+  %i.f = zext nneg i8 %5 to i32
+  %6 = insertelement <2 x i8> poison, i8 %i.d, i64 0
+  %7 = insertelement <2 x i8> %6, i8 %4, i64 1
+  %8 = urem <2 x i8> %7, <i8 9, i8 5>             ; 3 uses
+  %9 = extractelement <2 x i8> %8, i64 0
+  %10 = extractelement <2 x i8> %8, i64 1
+  %narrow = add nuw nsw i8 %10, %9
+  %11 = zext nneg i8 %narrow to i32
+  %i.g = shl nuw nsw i32 768, %11
   %i.h = add nuw nsw i32 %i.g, 1846               ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !35   ; 2 uses
@@ -276,11 +276,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.u, label %LzmaProps_Decode.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  store i32 %i.f, ptr %0, align 8, !tbaa !11
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.zext19.i, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !11
+  %12 = zext nneg <2 x i8> %8 to <2 x i32>
+  store <2 x i32> %12, ptr %0, align 8, !tbaa !11
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.zext.i, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !11
+  store i32 %i.f, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !11
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %spec.store.select.i, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !11
   br label %LzmaProps_Decode.exit.thread
@@ -305,15 +304,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %LzmaProps_Decode.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = urem i8 %i.d, 9
-  %i.f = zext nneg i8 %4 to i32                   ; 2 uses
-  %5 = udiv i8 %i.d, 9
-  %6 = udiv i8 %i.d, 45
-  %.zext.i = zext nneg i8 %6 to i32
-  %7 = urem i8 %5, 5
-  %.zext19.i = zext nneg i8 %7 to i32             ; 2 uses
-  %8 = add nuw nsw i32 %.zext19.i, %i.f
-  %i.g = shl nuw nsw i32 768, %8
+  %4 = udiv i8 %i.d, 9
+  %5 = udiv i8 %i.d, 45
+  %i.f = zext nneg i8 %5 to i32
+  %6 = insertelement <2 x i8> poison, i8 %i.d, i64 0
+  %7 = insertelement <2 x i8> %6, i8 %4, i64 1
+  %8 = urem <2 x i8> %7, <i8 9, i8 5>             ; 3 uses
+  %9 = extractelement <2 x i8> %8, i64 0
+  %10 = extractelement <2 x i8> %8, i64 1
+  %narrow = add nuw nsw i8 %10, %9
+  %11 = zext nneg i8 %narrow to i32
+  %i.g = shl nuw nsw i32 768, %11
   %i.h = add nuw nsw i32 %i.g, 1846               ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !35   ; 2 uses
@@ -375,11 +376,10 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h, %bb.g
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %i.v, ptr %i.ai, align 8, !tbaa !27
-  store i32 %i.f, ptr %0, align 8, !tbaa !11
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.zext19.i, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !11
+  %12 = zext nneg <2 x i8> %8 to <2 x i32>
+  store <2 x i32> %12, ptr %0, align 8, !tbaa !11
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.zext.i, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !11
+  store i32 %i.f, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !11
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %spec.store.select.i, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !11
   br label %LzmaProps_Decode.exit.thread
@@ -392,7 +392,7 @@ LzmaProps_Decode.exit.thread:                     ; preds = %bb.e, %bb.b, %bb.a,
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 7) i32 @LzmaDecode(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 noundef %5, i32 noundef %6, ptr nofree noundef captures(none) %7, ptr noundef %8) local_unnamed_addr #4 {
 bb.a:
-  %9 = alloca %struct.CLzmaDec, align 8           ; 18 uses
+  %9 = alloca %struct.CLzmaDec, align 8           ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #7
   %i.a = load i64, ptr %3, align 8, !tbaa !25     ; 2 uses
   %i.b = load i64, ptr %1, align 8, !tbaa !25     ; 2 uses
@@ -416,21 +416,23 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.j, label %LzmaDec_AllocateProbs.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %10 = urem i8 %i.i, 9
-  %11 = zext nneg i8 %10 to i32                   ; 2 uses
-  %12 = udiv i8 %i.i, 9
-  %13 = urem i8 %12, 5
-  %.zext19.i.i = zext nneg i8 %13 to i32          ; 2 uses
-  %14 = add nuw nsw i32 %.zext19.i.i, %11
-  %i.k = shl nuw nsw i32 768, %14
+  %10 = udiv i8 %i.i, 9
+  %11 = insertelement <2 x i8> poison, i8 %i.i, i64 0
+  %12 = insertelement <2 x i8> %11, i8 %10, i64 1
+  %13 = urem <2 x i8> %12, <i8 9, i8 5>           ; 3 uses
+  %14 = extractelement <2 x i8> %13, i64 0
+  %15 = extractelement <2 x i8> %13, i64 1
+  %narrow = add nuw nsw i8 %15, %14
+  %16 = zext nneg i8 %narrow to i32
+  %i.k = shl nuw nsw i32 768, %16
   %i.l = add nuw nsw i32 %i.k, 1846               ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !44
-  tail call void %i.n(ptr noundef %8, ptr noundef null) #7, !inline_history !74
+  tail call void %i.n(ptr noundef %8, ptr noundef null) #7, !inline_history !72
   %i.o = load ptr, ptr %8, align 8, !tbaa !47
   %i.p = shl nuw nsw i32 %i.l, 1
   %i.q = zext nneg i32 %i.p to i64
-  %i.r = tail call ptr %i.o(ptr noundef nonnull %8, i64 noundef %i.q) #7, !inline_history !75 ; 2 uses
+  %i.r = tail call ptr %i.o(ptr noundef nonnull %8, i64 noundef %i.q) #7, !inline_history !73 ; 2 uses
   store ptr %i.r, ptr %i.e, align 8, !tbaa !35
   %i.s = getelementptr inbounds nuw i8, ptr %9, i64 104
   store i32 %i.l, ptr %i.s, align 8, !tbaa !46
@@ -440,9 +442,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.u = udiv i8 %i.i, 45
   %.zext.i.i = zext nneg i8 %i.u to i32
-  store i32 %11, ptr %9, align 8, !tbaa !11
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %9, i64 4
-  store i32 %.zext19.i.i, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !11
+  %17 = zext nneg <2 x i8> %13 to <2 x i32>
+  store <2 x i32> %17, ptr %9, align 8, !tbaa !11
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i32 %.zext.i.i, ptr %.sroa.7.0..sroa_idx.i, align 8, !tbaa !11
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %9, i64 12
@@ -586,9 +587,7 @@ attributes #7 = { nounwind }
 !68 = !{!"branch_weights", i32 8, i32 24}
 !69 = !{!"llvm.loop.unroll.disable"}
 !70 = !{!12, !10, i64 12}
-!71 = !{!12, !10, i64 0}
-!72 = !{!12, !10, i64 8}
-!73 = !{!12, !10, i64 4}
-!74 = distinct !{ptr @LzmaDec_AllocateProbs, null, ptr @LzmaDec_FreeProbs}
-!75 = distinct !{ptr @LzmaDec_AllocateProbs, null}
+!71 = !{!12, !10, i64 8}
+!72 = distinct !{ptr @LzmaDec_AllocateProbs, null, ptr @LzmaDec_FreeProbs}
+!73 = distinct !{ptr @LzmaDec_AllocateProbs, null}
 end_hunk_0

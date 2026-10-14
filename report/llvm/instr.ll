@@ -205,11 +205,18 @@ define internal fastcc noundef nonnull align 8 dereferenceable(16) ptr @_ZN12_GL
 bb.a:
   %i.a = alloca [32768 x i8], align 16            ; 50 uses
   %i.b = alloca [32768 x i8], align 16            ; 36 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !35     ; 2 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !35     ; 3 uses
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %bb.g, label %tailrecurse.i.preheader
+  br i1 %.not, label %bb.g, label %3
 
-tailrecurse.i.preheader:                          ; preds = %bb.a
+3:                                                ; preds = %bb.a
+  %4 = urem i64 %1, 7
+  %5 = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %4 ; 3 uses
+  %6 = load i64, ptr %5, align 8, !tbaa !71       ; 2 uses
+  %7 = icmp eq i64 %6, %1
+  br i1 %7, label %_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit, label %tailrecurse.i.preheader
+
+tailrecurse.i.preheader:                          ; preds = %3
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 3
@@ -259,48 +266,47 @@ tailrecurse.i.preheader:                          ; preds = %bb.a
   br label %tailrecurse.i
 
 tailrecurse.i:                                    ; preds = %tailrecurse.i.preheader, %tailrecurse.backedge.i
-  %.tr.i = phi ptr [ %.tr.be.i, %tailrecurse.backedge.i ], [ %i.c, %tailrecurse.i.preheader ] ; 2 uses
-  %.tr2.i = phi i64 [ %4, %tailrecurse.backedge.i ], [ %1, %tailrecurse.i.preheader ] ; 2 uses
-  %.tr4.i = phi i32 [ %.tr4.be.i, %tailrecurse.backedge.i ], [ 0, %tailrecurse.i.preheader ] ; 4 uses
-  %3 = add i32 %.tr4.i, 1                         ; 2 uses
-  %4 = udiv i64 %.tr2.i, 7
-  %5 = urem i64 %.tr2.i, 7
-  %6 = getelementptr inbounds nuw [16 x i8], ptr %.tr.i, i64 %5 ; 7 uses
-  %7 = load i64, ptr %6, align 8, !tbaa !71       ; 4 uses
-  %i.ax = icmp eq i64 %7, %1
-  br i1 %i.ax, label %_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit, label %8
+  %.tr2.i = phi i64 [ %13, %tailrecurse.backedge.i ], [ %6, %tailrecurse.i.preheader ] ; 3 uses
+  %8 = phi ptr [ %12, %tailrecurse.backedge.i ], [ %5, %tailrecurse.i.preheader ] ; 5 uses
+  %.in.i = phi i64 [ %10, %tailrecurse.backedge.i ], [ %1, %tailrecurse.i.preheader ]
+  %.tr47.i = phi i32 [ %.tr4.be.i, %tailrecurse.backedge.i ], [ 0, %tailrecurse.i.preheader ] ; 4 uses
+  %.tr6.i = phi ptr [ %.tr.be.i, %tailrecurse.backedge.i ], [ %i.c, %tailrecurse.i.preheader ]
+  %9 = add i32 %.tr47.i, 1                        ; 2 uses
+  %10 = udiv i64 %.in.i, 7                        ; 2 uses
+  %i.ax = icmp eq i64 %.tr2.i, 0
+  br i1 %i.ax, label %bb.b, label %bb.c
 
-8:                                                ; preds = %tailrecurse.i
-  %9 = icmp eq i64 %7, 0
-  br i1 %9, label %bb.b, label %bb.c
-
-bb.b:                                             ; preds = %8
-  store i64 %1, ptr %6, align 8, !tbaa !71
+bb.b:                                             ; preds = %tailrecurse.i
+  store i64 %1, ptr %8, align 8, !tbaa !71
   br label %_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit
 
-bb.c:                                             ; preds = %8
-  %i.ay = icmp slt i64 %7, 0
+bb.c:                                             ; preds = %tailrecurse.i
+  %i.ay = icmp slt i64 %.tr2.i, 0
   br i1 %i.ay, label %bb.d, label %.lr.ph.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.az = and i64 %7, 9223372036854775807
+  %i.az = and i64 %.tr2.i, 9223372036854775807
   %i.ba = inttoptr i64 %i.az to ptr
   br label %tailrecurse.backedge.i
 
 tailrecurse.backedge.i:                           ; preds = %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i16, %bb.f, %bb.d
-  %.tr.be.i = phi ptr [ %i.ba, %bb.d ], [ %i.bb, %bb.f ], [ %i.bb, %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i16 ]
-  %.tr4.be.i = add nuw i32 %.tr4.i, 1
-  br label %tailrecurse.i
+  %.tr.be.i = phi ptr [ %i.ba, %bb.d ], [ %i.bb, %bb.f ], [ %i.bb, %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i16 ] ; 2 uses
+  %.tr4.be.i = add nuw i32 %.tr47.i, 1
+  %11 = urem i64 %10, 7
+  %12 = getelementptr inbounds nuw [16 x i8], ptr %.tr.be.i, i64 %11 ; 3 uses
+  %13 = load i64, ptr %12, align 8, !tbaa !71     ; 2 uses
+  %14 = icmp eq i64 %13, %1
+  br i1 %14, label %_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit, label %tailrecurse.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c
   %i.bb = call fastcc noundef ptr @_ZN12_GLOBAL__N_116BumpPtrAllocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(26) %2, i64 noundef 112) #14, !inline_history !243 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(112) %i.bb, i8 0, i64 112, i1 false)
-  %i.bc = load i64, ptr %6, align 8, !tbaa !71    ; 2 uses
-  %i.bd = icmp eq i32 %.tr4.i, 0
+  %i.bc = load i64, ptr %8, align 8, !tbaa !71    ; 2 uses
+  %i.bd = icmp eq i32 %.tr47.i, 0
   br i1 %i.bd, label %.epil.preheader, label %.lr.ph.i.i.i.new
 
 .lr.ph.i.i.i.new:                                 ; preds = %.lr.ph.i.i.i
-  %unroll_iter = and i32 %3, -2
+  %unroll_iter = and i32 %9, -2
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %.lr.ph.i.i.i.new
@@ -312,13 +318,13 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i.i.i
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.e, !llvm.loop !244
 
 .unr-lcssa:                                       ; preds = %bb.e
-  %i.be = and i32 %.tr4.i, 1
+  %i.be = and i32 %.tr47.i, 1
   %lcmp.mod.not.not = icmp eq i32 %i.be, 0
   br i1 %lcmp.mod.not.not, label %.epil.preheader, label %bb.f
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.lr.ph.i.i.i
   %.041.in.i.epil.init = phi i64 [ %i.bc, %.lr.ph.i.i.i ], [ %.041.i.1, %.unr-lcssa ]
-  %lcmp.mod33 = trunc i32 %3 to i1
+  %lcmp.mod33 = trunc i32 %9 to i1
   call void @llvm.assume(i1 %lcmp.mod33)
   %.041.i.epil = udiv i64 %.041.in.i.epil.init, 7
   br label %bb.f
@@ -327,13 +333,13 @@ bb.f:                                             ; preds = %.unr-lcssa, %.epil.
   %.041.i.lcssa = phi i64 [ %.041.i.1, %.unr-lcssa ], [ %.041.i.epil, %.epil.preheader ]
   %i.bf = urem i64 %.041.i.lcssa, 7
   %i.bg = getelementptr inbounds nuw [16 x i8], ptr %i.bb, i64 %i.bf ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bg, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !245
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bg, ptr noundef nonnull align 8 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !245
   %i.bh = ptrtoint ptr %i.bb to i64
   %i.bi = or i64 %i.bh, -9223372036854775808
-  store i64 %i.bi, ptr %6, align 8, !tbaa !71
+  store i64 %i.bi, ptr %8, align 8, !tbaa !71
   %i.bj = load i64, ptr %i.bg, align 8, !tbaa !71
   %i.bk = and i64 %i.bj, 9223372036854775807
-  %i.bl = ptrtoint ptr %.tr.i to i64
+  %i.bl = ptrtoint ptr %.tr6.i to i64
   %.not19 = icmp eq i64 %i.bk, %i.bl
   br i1 %.not19, label %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i16, label %tailrecurse.backedge.i
 
@@ -391,7 +397,8 @@ _ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i16:      ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %tailrecurse.backedge.i
 
-_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit: ; preds = %tailrecurse.i, %bb.b
+_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit: ; preds = %tailrecurse.backedge.i, %3, %bb.b
+  %15 = phi ptr [ %5, %3 ], [ %8, %bb.b ], [ %12, %tailrecurse.backedge.i ] ; 2 uses
   %.not9 = icmp sgt i64 %1, -1
   br i1 %.not9, label %_ZN12_GLOBAL__N_16assertEbPKc.exit, label %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i
 
@@ -477,7 +484,7 @@ bb.g:                                             ; preds = %bb.a
   br label %_ZN12_GLOBAL__N_16assertEbPKc.exit
 
 _ZN12_GLOBAL__N_16assertEbPKc.exit:               ; preds = %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i, %_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit, %bb.g
-  %.0 = phi ptr [ %i.cy, %bb.g ], [ %6, %_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit ], [ %6, %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i ]
+  %.0 = phi ptr [ %i.cy, %bb.g ], [ %15, %_ZN12_GLOBAL__N_115SimpleHashTableINS_24SimpleHashTableEntryBaseELj7ELj7EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit ], [ %15, %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i ]
   ret ptr %.0
 }
 

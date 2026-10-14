@@ -122,7 +122,6 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
   %i.f = icmp eq i32 %4, 0
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 6 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 148 ; 4 uses
@@ -250,21 +249,22 @@ bb.s:                                             ; preds = %bb.h
   br i1 %i.bb, label %Lzma2Dec_UpdateState.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %7 = urem i8 %i.z, 9
-  %8 = zext nneg i8 %7 to i32                     ; 2 uses
   %i.bc = udiv i8 %i.z, 9
   %i.bd = udiv i8 %i.z, 45
   %.zext.i = zext nneg i8 %i.bd to i32
   store i32 %.zext.i, ptr %i.g, align 8, !tbaa !28
-  %9 = urem i8 %i.bc, 5
-  %.zext39.i = zext nneg i8 %9 to i32             ; 2 uses
-  %10 = add nuw nsw i32 %.zext39.i, %8
-  %i.be = icmp samesign ugt i32 %10, 4
+  %6 = insertelement <2 x i8> poison, i8 %i.z, i64 0
+  %7 = insertelement <2 x i8> %6, i8 %i.bc, i64 1
+  %8 = urem <2 x i8> %7, <i8 9, i8 5>             ; 3 uses
+  %9 = extractelement <2 x i8> %8, i64 0
+  %10 = extractelement <2 x i8> %8, i64 1
+  %narrow = add nuw nsw i8 %10, %9
+  %i.be = icmp samesign ugt i8 %narrow, 4
   br i1 %i.be, label %Lzma2Dec_UpdateState.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  store i32 %8, ptr %0, align 8, !tbaa !29
-  store i32 %.zext39.i, ptr %6, align 4, !tbaa !30
+  %11 = zext nneg <2 x i8> %8 to <2 x i32>
+  store <2 x i32> %11, ptr %0, align 8, !tbaa !7
   store i32 0, ptr %i.h, align 8, !tbaa !19
   br label %Lzma2Dec_UpdateState.exit
 
@@ -336,38 +336,38 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   br i1 %i.bu, label %.loopexit, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.bv = load ptr, ptr %i.n, align 8, !tbaa !32
-  %i.bw = load i64, ptr %i.e, align 8, !tbaa !33
+  %i.bv = load ptr, ptr %i.n, align 8, !tbaa !30
+  %i.bw = load i64, ptr %i.e, align 8, !tbaa !31
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.bw
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bx, ptr noundef nonnull readonly align 1 dereferenceable(1) %.0111159, i64 range(i64 1, 0) %i.bt, i1 false)
-  %i.by = load i64, ptr %i.e, align 8, !tbaa !33
+  %i.by = load i64, ptr %i.e, align 8, !tbaa !31
   %i.bz = add i64 %i.by, %i.bt
-  store i64 %i.bz, ptr %i.e, align 8, !tbaa !33
-  %i.ca = load i32, ptr %i.o, align 4, !tbaa !34
+  store i64 %i.bz, ptr %i.e, align 8, !tbaa !31
+  %i.ca = load i32, ptr %i.o, align 4, !tbaa !32
   %i.cb = icmp eq i32 %i.ca, 0
   br i1 %i.cb, label %bb.ag, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.af
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !35
+  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !33
   br label %LzmaDec_UpdateWithUncompressed.exit
 
 bb.ag:                                            ; preds = %bb.af
-  %i.cc = load i32, ptr %i.p, align 4, !tbaa !36  ; 2 uses
-  %i.cd = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !35 ; 3 uses
+  %i.cc = load i32, ptr %i.p, align 4, !tbaa !34  ; 2 uses
+  %i.cd = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !33 ; 3 uses
   %i.ce = sub i32 %i.cc, %i.cd
   %i.cf = zext i32 %i.ce to i64
   %.not.i136 = icmp samesign ult i64 %i.bt, %i.cf
   br i1 %.not.i136, label %LzmaDec_UpdateWithUncompressed.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  store i32 %i.cc, ptr %i.o, align 4, !tbaa !34
+  store i32 %i.cc, ptr %i.o, align 4, !tbaa !32
   br label %LzmaDec_UpdateWithUncompressed.exit
 
 LzmaDec_UpdateWithUncompressed.exit:              ; preds = %._crit_edge.i, %bb.ag, %bb.ah
   %i.cg = phi i32 [ %.pre.i, %._crit_edge.i ], [ %i.cd, %bb.ah ], [ %i.cd, %bb.ag ]
   %i.ch = trunc nuw i64 %i.bt to i32
   %i.ci = add i32 %i.cg, %i.ch
-  store i32 %i.ci, ptr %.phi.trans.insert.i, align 8, !tbaa !35
+  store i32 %i.ci, ptr %.phi.trans.insert.i, align 8, !tbaa !33
   %i.cj = load i64, ptr %i.a, align 8, !tbaa !20  ; 3 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.0111159, i64 %i.cj
   %i.cl = load i64, ptr %3, align 8, !tbaa !20
@@ -693,17 +693,15 @@ attributes #4 = { nounwind }
 !21 = !{!15, !13, i64 48}
 !22 = !{!15, !13, i64 56}
 !23 = !{!15, !12, i64 24}
-!24 = distinct !{!24, !31}
+!24 = distinct !{!24, !29}
 !25 = !{!15, !5, i64 148}
 !26 = !{!15, !6, i64 140}
 !27 = !{!15, !6, i64 136}
 !28 = !{!15, !6, i64 8}
-!29 = !{!15, !6, i64 0}
-!30 = !{!15, !6, i64 4}
-!31 = !{!"llvm.loop.mustprogress"}
-!32 = !{!14, !12, i64 24}
-!33 = !{!14, !13, i64 48}
-!34 = !{!14, !6, i64 68}
-!35 = !{!14, !6, i64 64}
-!36 = !{!14, !6, i64 12}
+!29 = !{!"llvm.loop.mustprogress"}
+!30 = !{!14, !12, i64 24}
+!31 = !{!14, !13, i64 48}
+!32 = !{!14, !6, i64 68}
+!33 = !{!14, !6, i64 64}
+!34 = !{!14, !6, i64 12}
 end_hunk_0

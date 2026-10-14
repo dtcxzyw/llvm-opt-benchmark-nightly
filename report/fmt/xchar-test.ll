@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a
 define linkonce_odr hidden noundef ptr @_ZN3fmt3v126detail19parse_chrono_formatIwRNS1_18duration_formatterIwlSt5ratioILl1ELl1EEEEEEPKT_SA_SA_OT0_(ptr noundef %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(49) %2) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %struct.tm, align 8                 ; 5 uses
-  %4 = alloca %struct.tm, align 8                 ; 6 uses
-  %5 = alloca %struct.tm, align 8                 ; 6 uses
+  %4 = alloca %struct.tm, align 8                 ; 5 uses
+  %5 = alloca %struct.tm, align 8                 ; 5 uses
   %i.a = alloca [1 x i32], align 4                ; 4 uses
   %i.b = alloca [1 x i32], align 4                ; 4 uses
   %i.c = icmp eq ptr %0, %1
@@ -223,10 +223,8 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 9 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.b
@@ -629,19 +627,18 @@ bb.am:                                            ; preds = %bb.v
 bb.an:                                            ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #29
   call void @llvm.experimental.noalias.scope.decl(metadata !3049)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, i8 0, i64 48, i1 false), !alias.scope !3049
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.i, i8 0, i64 48, i1 false), !alias.scope !3049
   %i.gb = load i64, ptr %i.e, align 8, !tbaa !644, !noalias !3049 ; 3 uses
   %i.gc = udiv i64 %i.gb, 3600
   %i.gd = urem i64 %i.gc, 24
   %i.ge = trunc nuw nsw i64 %i.gd to i32
-  store i32 %i.ge, ptr %i.h, align 8, !tbaa !619, !alias.scope !3049
+  store i32 %i.ge, ptr %i.i, align 8, !tbaa !619, !alias.scope !3049
   %i.gf = udiv i64 %i.gb, 60
-  %8 = urem i64 %i.gf, 60
-  %9 = trunc nuw nsw i64 %8 to i32
-  store i32 %9, ptr %i.i, align 4, !tbaa !620, !alias.scope !3049
-  %10 = urem i64 %i.gb, 60
-  %11 = trunc nuw nsw i64 %10 to i32
-  store i32 %11, ptr %5, align 8, !tbaa !621, !alias.scope !3049
+  %6 = insertelement <2 x i64> poison, i64 %i.gb, i64 0
+  %7 = insertelement <2 x i64> %6, i64 %i.gf, i64 1
+  %8 = urem <2 x i64> %7, splat (i64 60)
+  %9 = trunc nuw nsw <2 x i64> %8 to <2 x i32>
+  store <2 x i32> %9, ptr %5, align 8, !tbaa !174, !alias.scope !3049
   call void @_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlS4_EEEEFvvEJEEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %2, ptr noundef nonnull align 8 dereferenceable(56) %5, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE15on_12_hour_timeEv to i64), i64 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #29
   br label %_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE7on_textEPKwS7_.exit165
@@ -688,19 +685,18 @@ bb.aq:                                            ; preds = %bb.v
 bb.ar:                                            ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   call void @llvm.experimental.noalias.scope.decl(metadata !3050)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, i8 0, i64 48, i1 false), !alias.scope !3050
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, i8 0, i64 48, i1 false), !alias.scope !3050
   %i.gx = load i64, ptr %i.e, align 8, !tbaa !644, !noalias !3050 ; 3 uses
   %i.gy = udiv i64 %i.gx, 3600
   %i.gz = urem i64 %i.gy, 24
   %i.ha = trunc nuw nsw i64 %i.gz to i32
-  store i32 %i.ha, ptr %6, align 8, !tbaa !619, !alias.scope !3050
+  store i32 %i.ha, ptr %i.h, align 8, !tbaa !619, !alias.scope !3050
   %i.hb = udiv i64 %i.gx, 60
-  %12 = urem i64 %i.hb, 60
-  %13 = trunc nuw nsw i64 %12 to i32
-  store i32 %13, ptr %7, align 4, !tbaa !620, !alias.scope !3050
-  %14 = urem i64 %i.gx, 60
-  %15 = trunc nuw nsw i64 %14 to i32
-  store i32 %15, ptr %4, align 8, !tbaa !621, !alias.scope !3050
+  %10 = insertelement <2 x i64> poison, i64 %i.gx, i64 0
+  %11 = insertelement <2 x i64> %10, i64 %i.hb, i64 1
+  %12 = urem <2 x i64> %11, splat (i64 60)
+  %13 = trunc nuw nsw <2 x i64> %12 to <2 x i32>
+  store <2 x i32> %13, ptr %4, align 8, !tbaa !174, !alias.scope !3050
   call void @_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE9format_tmIMNS1_9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlS4_EEEEFvvEJEEEvRK2tmT_DpT0_(ptr noundef nonnull align 8 dereferenceable(49) %2, ptr noundef nonnull align 8 dereferenceable(56) %4, i64 ptrtoint (ptr @_ZN3fmt3v126detail9tm_writerINS0_14basic_appenderIwEEwNSt6chrono8durationIlSt5ratioILl1ELl1EEEEE8on_am_pmEv to i64), i64 0)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
   br label %_ZN3fmt3v126detail18duration_formatterIwlSt5ratioILl1ELl1EEE7on_textEPKwS7_.exit165

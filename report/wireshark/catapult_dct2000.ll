@@ -205,18 +205,19 @@ bb.j:                                             ; preds = %bb.i
   %i.ap = trunc nuw nsw i32 %i.ao to i8
   %i.aq = or disjoint i8 %i.ap, 48
   store i8 %i.aq, ptr %0, align 1
-  %3 = urem i32 %1, 10000
-  %.lhs.trunc114 = trunc nuw nsw i32 %3 to i16
-  %4 = udiv i16 %.lhs.trunc114, 1000
-  %5 = trunc nuw nsw i16 %4 to i8
-  %6 = add nuw nsw i8 %5, 48
-  %7 = getelementptr i8, ptr %0, i64 1
-  store i8 %6, ptr %7, align 1
-  %8 = urem i32 %1, 1000
-  %.lhs.trunc116 = trunc nuw nsw i32 %8 to i16
-  %9 = udiv i16 %.lhs.trunc116, 100
-  %10 = trunc nuw nsw i16 %9 to i8
-  %i.ar = or disjoint i8 %10, 48
+  %3 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
+  %5 = urem <2 x i32> %4, <i32 10000, i32 1000>
+  %6 = getelementptr i8, ptr %0, i64 1
+  %7 = trunc nuw nsw <2 x i32> %5 to <2 x i16>
+  %8 = udiv <2 x i16> %7, <i16 1000, i16 100>     ; 2 uses
+  %9 = bitcast <2 x i16> %8 to <4 x i8>
+  %10 = extractelement <4 x i8> %9, i64 0
+  %11 = add nuw nsw i8 %10, 48
+  store i8 %11, ptr %6, align 1
+  %12 = bitcast <2 x i16> %8 to <4 x i8>
+  %13 = extractelement <4 x i8> %12, i64 2
+  %i.ar = or disjoint i8 %13, 48
   %i.as = getelementptr i8, ptr %0, i64 2
   store i8 %i.ar, ptr %i.as, align 1
   %i.at = urem i32 %1, 100

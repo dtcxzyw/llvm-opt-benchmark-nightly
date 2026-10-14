@@ -205,7 +205,9 @@ bb.am:                                            ; preds = %bb.al
   %i.pp = getelementptr inbounds nuw i8, ptr @ma_dr_mp3_L3_decode_scalefactors.g_scfc_decode, i64 %i.po
   %i.pq = load i8, ptr %i.pp, align 1, !tbaa !119 ; 2 uses
   %i.pr = lshr i8 %i.pq, 2                        ; 2 uses
-  %i.ps = and i8 %i.pq, 3                         ; 2 uses
+  %i.ps = and i8 %i.pq, 3
+  %7 = insertelement <2 x i8> poison, i8 %i.ps, i64 0
+  %8 = shufflevector <2 x i8> %7, <2 x i8> poison, <2 x i32> zeroinitializer
   br label %bb.ap
 
 bb.an:                                            ; preds = %bb.al
@@ -225,14 +227,13 @@ bb.an:                                            ; preds = %bb.al
 .preheader88.i.i:                                 ; preds = %.preheader88.i.i, %bb.an
   %indvars.iv.i.i = phi i64 [ %i.qd, %bb.an ], [ %indvars.iv.next.i.i, %.preheader88.i.i ] ; 2 uses
   %.0105.i.i = phi i32 [ %i.qc, %bb.an ], [ %i.qo, %.preheader88.i.i ] ; 5 uses
-  %i.qe = getelementptr inbounds nuw i8, ptr @ma_dr_mp3_L3_decode_scalefactors.g_mod, i64 %indvars.iv.i.i ; 4 uses
-  %i.qf = getelementptr inbounds nuw i8, ptr %i.qe, i64 3
-  %7 = load i8, ptr %i.qf, align 1, !tbaa !119
-  %8 = zext i8 %7 to i32                          ; 3 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.qe, i64 2
-  %10 = load i8, ptr %9, align 2, !tbaa !119
-  %11 = zext i8 %10 to i32                        ; 2 uses
-  %i.qg = mul nuw nsw i32 %11, %8                 ; 2 uses
+  %i.qe = getelementptr inbounds nuw i8, ptr @ma_dr_mp3_L3_decode_scalefactors.g_mod, i64 %indvars.iv.i.i ; 3 uses
+  %i.qf = getelementptr inbounds nuw i8, ptr %i.qe, i64 2
+  %9 = load <2 x i8>, ptr %i.qf, align 2, !tbaa !119
+  %10 = zext <2 x i8> %9 to <2 x i32>             ; 3 uses
+  %11 = extractelement <2 x i32> %10, i64 0
+  %12 = extractelement <2 x i32> %10, i64 1       ; 2 uses
+  %i.qg = mul nuw nsw i32 %11, %12                ; 2 uses
   %i.qh = getelementptr inbounds nuw i8, ptr %i.qe, i64 1
   %i.qi = load i8, ptr %i.qh, align 1, !tbaa !119
   %i.qj = zext i8 %i.qi to i32                    ; 2 uses
@@ -252,21 +253,20 @@ bb.ao:                                            ; preds = %.preheader88.i.i
   %i.qt = udiv i32 %.0105.i.i, %i.qg
   %i.qu = urem i32 %i.qt, %i.qj
   %i.qv = trunc nuw i32 %i.qu to i8
-  %i.qw = udiv i32 %.0105.i.i, %8
-  %12 = urem i32 %i.qw, %11
-  %13 = trunc nuw i32 %12 to i8
-  %14 = urem i32 %.0105.i.i, %8
-  %15 = trunc nuw i32 %14 to i8
+  %i.qw = udiv i32 %.0105.i.i, %12
+  %13 = insertelement <2 x i32> poison, i32 %i.qw, i64 0
+  %14 = insertelement <2 x i32> %13, i32 %.0105.i.i, i64 1
+  %15 = urem <2 x i32> %14, %10
+  %16 = trunc nuw <2 x i32> %15 to <2 x i8>
   %i.qx = getelementptr inbounds nuw i8, ptr %i.pc, i64 %indvars.iv.next.i.i
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.am
-  %.sroa.11.0.i.i = phi i8 [ %15, %bb.ao ], [ %i.ps, %bb.am ] ; 2 uses
-  %.sroa.8.0.i.i = phi i8 [ %13, %bb.ao ], [ %i.ps, %bb.am ] ; 2 uses
   %.sroa.5.0.i.i = phi i8 [ %i.qv, %bb.ao ], [ %i.pr, %bb.am ] ; 2 uses
   %.sroa.0.0.i.i = phi i8 [ %i.qs, %bb.ao ], [ %i.pr, %bb.am ] ; 2 uses
   %.076.i.i = phi i32 [ -16, %bb.ao ], [ %i.pl, %bb.am ] ; 8 uses
   %.075.i.i = phi ptr [ %i.qx, %bb.ao ], [ %i.pc, %bb.am ] ; 4 uses
+  %17 = phi <2 x i8> [ %16, %bb.ao ], [ %8, %bb.am ] ; 2 uses
   %i.qy = load i8, ptr %.075.i.i, align 1, !tbaa !119 ; 4 uses
   %.not.i.i.i153 = icmp eq i8 %i.qy, 0
   br i1 %.not.i.i.i153, label %ma_dr_mp3_L3_read_scalefactors.exit.i.i, label %bb.aq
@@ -476,8 +476,9 @@ bb.bf:                                            ; preds = %bb.be
   br label %.loopexit.2.i.i.i
 
 bb.bg:                                            ; preds = %bb.be
-  %i.tz = zext i8 %.sroa.8.0.i.i to i32           ; 3 uses
-  %.not46.2.i.i.i = icmp eq i8 %.sroa.8.0.i.i, 0
+  %18 = extractelement <2 x i8> %17, i64 0        ; 2 uses
+  %i.tz = zext i8 %18 to i32                      ; 3 uses
+  %.not46.2.i.i.i = icmp eq i8 %18, 0
   br i1 %.not46.2.i.i.i, label %bb.bk, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
@@ -574,8 +575,9 @@ bb.bm:                                            ; preds = %bb.bl
   br label %.loopexit.3.i.i.i
 
 bb.bn:                                            ; preds = %bb.bl
-  %i.vl = zext i8 %.sroa.11.0.i.i to i32          ; 3 uses
-  %.not46.3.i.i.i = icmp eq i8 %.sroa.11.0.i.i, 0
+  %19 = extractelement <2 x i8> %17, i64 1        ; 2 uses
+  %i.vl = zext i8 %19 to i32                      ; 3 uses
+  %.not46.3.i.i.i = icmp eq i8 %19, 0
   br i1 %.not46.3.i.i.i, label %bb.br, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn

@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/conv?download=true
 inline.NumInlined: 1
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -26,7 +26,7 @@ bb.a:
   br i1 %.not.i, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.lobit.i = lshr i64 %0, 63                     ; 7 uses
+  %.lobit.i = lshr i64 %0, 63                     ; 9 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
@@ -85,8 +85,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not44.i.1, label %.loopexit48.i, label %.lr.ph.i, !llvm.loop !1
 
 .loopexit48.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.g, %bb.f
-  %.239.i = phi i64 [ %spec.select.i, %bb.f ], [ %spec.select.i, %bb.g ], [ %.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %i.l, %.lr.ph.i ]
-  %.2.i = phi i64 [ %i.a, %bb.f ], [ %2, %bb.g ], [ %2, %.lr.ph.i ], [ %2, %.lr.ph.i.prol.loopexit ] ; 4 uses
+  %.239.i = phi i64 [ %spec.select.i, %bb.f ], [ %spec.select.i, %bb.g ], [ %.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %i.l, %.lr.ph.i ] ; 3 uses
+  %.2.i = phi i64 [ %i.a, %bb.f ], [ %2, %bb.g ], [ %2, %.lr.ph.i ], [ %2, %.lr.ph.i.prol.loopexit ] ; 8 uses
   br i1 %i.c, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.loopexit48.i
@@ -97,23 +97,53 @@ bb.i:                                             ; preds = %bb.h, %.loopexit48.
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %.2.i
   store i8 0, ptr %i.m, align 1, !tbaa !16
   %.not4654.i = icmp eq i64 %.2.i, %.lobit.i
-  br i1 %.not4654.i, label %lexbor_conv_int64_to_data.exit, label %.lr.ph57.i
+  br i1 %.not4654.i, label %lexbor_conv_int64_to_data.exit, label %.lr.ph57.i.preheader
 
-.lr.ph57.i:                                       ; preds = %bb.i, %.lr.ph57.i
-  %.13356.i = phi i64 [ %i.n, %.lr.ph57.i ], [ %.2.i, %bb.i ]
-  %.355.i = phi i64 [ %i.s, %.lr.ph57.i ], [ %.239.i, %bb.i ] ; 2 uses
-  %i.n = add i64 %.13356.i, -1                    ; 3 uses
-  %i.o = urem i64 %.355.i, 10
+.lr.ph57.i.preheader:                             ; preds = %bb.i
+  %3 = sub i64 %.2.i, %.lobit.i
+  %.neg = add nuw nsw i64 %.lobit.i, 1
+  %xtraiter10 = and i64 %3, 1
+  %lcmp.mod11.not = icmp eq i64 %xtraiter10, 0
+  br i1 %lcmp.mod11.not, label %.lr.ph57.i.prol.loopexit, label %.lr.ph57.i.prol
+
+.lr.ph57.i.prol:                                  ; preds = %.lr.ph57.i.preheader
+  %4 = add i64 %.2.i, -1                          ; 2 uses
+  %5 = urem i64 %.239.i, 10
+  %6 = getelementptr inbounds nuw i8, ptr @.str, i64 %5
+  %7 = load i8, ptr %6, align 1, !tbaa !16
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %4
+  store i8 %7, ptr %8, align 1, !tbaa !16
+  %9 = udiv i64 %.239.i, 10
+  br label %.lr.ph57.i.prol.loopexit
+
+.lr.ph57.i.prol.loopexit:                         ; preds = %.lr.ph57.i.prol, %.lr.ph57.i.preheader
+  %.13356.i.unr = phi i64 [ %.2.i, %.lr.ph57.i.preheader ], [ %4, %.lr.ph57.i.prol ]
+  %.355.i.unr = phi i64 [ %.239.i, %.lr.ph57.i.preheader ], [ %9, %.lr.ph57.i.prol ]
+  %10 = icmp eq i64 %.2.i, %.neg
+  br i1 %10, label %lexbor_conv_int64_to_data.exit, label %.lr.ph57.i
+
+.lr.ph57.i:                                       ; preds = %.lr.ph57.i.prol.loopexit, %.lr.ph57.i
+  %.13356.i = phi i64 [ %i.n, %.lr.ph57.i ], [ %.13356.i.unr, %.lr.ph57.i.prol.loopexit ] ; 2 uses
+  %.355.i = phi i64 [ %i.s, %.lr.ph57.i ], [ %.355.i.unr, %.lr.ph57.i.prol.loopexit ] ; 3 uses
+  %11 = urem i64 %.355.i, 10
+  %12 = getelementptr inbounds nuw i8, ptr @.str, i64 %11
+  %13 = load i8, ptr %12, align 1, !tbaa !16
+  %14 = getelementptr i8, ptr %1, i64 %.13356.i
+  %15 = getelementptr i8, ptr %14, i64 -1
+  store i8 %13, ptr %15, align 1, !tbaa !16
+  %16 = udiv i64 %.355.i, 10
+  %i.n = add i64 %.13356.i, -2                    ; 3 uses
+  %i.o = urem i64 %16, 10
   %i.p = getelementptr inbounds nuw i8, ptr @.str, i64 %i.o
   %i.q = load i8, ptr %i.p, align 1, !tbaa !16
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %i.n
   store i8 %i.q, ptr %i.r, align 1, !tbaa !16
-  %i.s = udiv i64 %.355.i, 10
+  %i.s = udiv i64 %.355.i, 100
   %.not46.i = icmp eq i64 %i.n, %.lobit.i
   br i1 %.not46.i, label %lexbor_conv_int64_to_data.exit, label %.lr.ph57.i, !llvm.loop !2
 
-lexbor_conv_int64_to_data.exit:                   ; preds = %.lr.ph57.i, %bb.d, %bb.e, %bb.i
-  %.036.i = phi i64 [ 0, %bb.d ], [ 1, %bb.e ], [ %.lobit.i, %bb.i ], [ %.2.i, %.lr.ph57.i ]
+lexbor_conv_int64_to_data.exit:                   ; preds = %.lr.ph57.i.prol.loopexit, %.lr.ph57.i, %bb.d, %bb.e, %bb.i
+  %.036.i = phi i64 [ 0, %bb.d ], [ 1, %bb.e ], [ %.lobit.i, %bb.i ], [ %.2.i, %.lr.ph57.i ], [ %.2.i, %.lr.ph57.i.prol.loopexit ]
   ret i64 %.036.i
 }
 
@@ -124,7 +154,7 @@ bb.a:
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.lobit = lshr i64 %0, 63                       ; 7 uses
+  %.lobit = lshr i64 %0, 63                       ; 9 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.c
@@ -183,8 +213,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not44.1, label %.loopexit48, label %.lr.ph, !llvm.loop !1
 
 .loopexit48:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.g, %bb.f
-  %.239 = phi i64 [ %spec.select, %bb.f ], [ %spec.select, %bb.g ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.l, %.lr.ph ]
-  %.2 = phi i64 [ %i.a, %bb.f ], [ %2, %bb.g ], [ %2, %.lr.ph ], [ %2, %.lr.ph.prol.loopexit ] ; 4 uses
+  %.239 = phi i64 [ %spec.select, %bb.f ], [ %spec.select, %bb.g ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.l, %.lr.ph ] ; 3 uses
+  %.2 = phi i64 [ %i.a, %bb.f ], [ %2, %bb.g ], [ %2, %.lr.ph ], [ %2, %.lr.ph.prol.loopexit ] ; 8 uses
   br i1 %i.c, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.loopexit48
@@ -195,23 +225,53 @@ bb.i:                                             ; preds = %bb.h, %.loopexit48
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %.2
   store i8 0, ptr %i.m, align 1, !tbaa !16
   %.not4654 = icmp eq i64 %.2, %.lobit
-  br i1 %.not4654, label %.loopexit, label %.lr.ph57
+  br i1 %.not4654, label %.loopexit, label %.lr.ph57.preheader
 
-.lr.ph57:                                         ; preds = %bb.i, %.lr.ph57
-  %.13356 = phi i64 [ %i.n, %.lr.ph57 ], [ %.2, %bb.i ]
-  %.355 = phi i64 [ %i.s, %.lr.ph57 ], [ %.239, %bb.i ] ; 2 uses
-  %i.n = add i64 %.13356, -1                      ; 3 uses
-  %i.o = urem i64 %.355, 10
+.lr.ph57.preheader:                               ; preds = %bb.i
+  %3 = sub i64 %.2, %.lobit
+  %.neg = add nuw nsw i64 %.lobit, 1
+  %xtraiter65 = and i64 %3, 1
+  %lcmp.mod66.not = icmp eq i64 %xtraiter65, 0
+  br i1 %lcmp.mod66.not, label %.lr.ph57.prol.loopexit, label %.lr.ph57.prol
+
+.lr.ph57.prol:                                    ; preds = %.lr.ph57.preheader
+  %4 = add i64 %.2, -1                            ; 2 uses
+  %5 = urem i64 %.239, 10
+  %6 = getelementptr inbounds nuw i8, ptr @.str, i64 %5
+  %7 = load i8, ptr %6, align 1, !tbaa !16
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 %4
+  store i8 %7, ptr %8, align 1, !tbaa !16
+  %9 = udiv i64 %.239, 10
+  br label %.lr.ph57.prol.loopexit
+
+.lr.ph57.prol.loopexit:                           ; preds = %.lr.ph57.prol, %.lr.ph57.preheader
+  %.13356.unr = phi i64 [ %.2, %.lr.ph57.preheader ], [ %4, %.lr.ph57.prol ]
+  %.355.unr = phi i64 [ %.239, %.lr.ph57.preheader ], [ %9, %.lr.ph57.prol ]
+  %10 = icmp eq i64 %.2, %.neg
+  br i1 %10, label %.loopexit, label %.lr.ph57
+
+.lr.ph57:                                         ; preds = %.lr.ph57.prol.loopexit, %.lr.ph57
+  %.13356 = phi i64 [ %i.n, %.lr.ph57 ], [ %.13356.unr, %.lr.ph57.prol.loopexit ] ; 2 uses
+  %.355 = phi i64 [ %i.s, %.lr.ph57 ], [ %.355.unr, %.lr.ph57.prol.loopexit ] ; 3 uses
+  %11 = urem i64 %.355, 10
+  %12 = getelementptr inbounds nuw i8, ptr @.str, i64 %11
+  %13 = load i8, ptr %12, align 1, !tbaa !16
+  %14 = getelementptr i8, ptr %1, i64 %.13356
+  %15 = getelementptr i8, ptr %14, i64 -1
+  store i8 %13, ptr %15, align 1, !tbaa !16
+  %16 = udiv i64 %.355, 10
+  %i.n = add i64 %.13356, -2                      ; 3 uses
+  %i.o = urem i64 %16, 10
   %i.p = getelementptr inbounds nuw i8, ptr @.str, i64 %i.o
   %i.q = load i8, ptr %i.p, align 1, !tbaa !16
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %i.n
   store i8 %i.q, ptr %i.r, align 1, !tbaa !16
-  %i.s = udiv i64 %.355, 10
+  %i.s = udiv i64 %.355, 100
   %.not46 = icmp eq i64 %i.n, %.lobit
   br i1 %.not46, label %.loopexit, label %.lr.ph57, !llvm.loop !2
 
-.loopexit:                                        ; preds = %.lr.ph57, %bb.i, %bb.d, %bb.e
-  %.036 = phi i64 [ 0, %bb.d ], [ 1, %bb.e ], [ %.lobit, %bb.i ], [ %.2, %.lr.ph57 ]
+.loopexit:                                        ; preds = %.lr.ph57.prol.loopexit, %.lr.ph57, %bb.i, %bb.d, %bb.e
+  %.036 = phi i64 [ 0, %bb.d ], [ 1, %bb.e ], [ %.lobit, %bb.i ], [ %.2, %.lr.ph57 ], [ %.2, %.lr.ph57.prol.loopexit ]
   ret i64 %.036
 }
 

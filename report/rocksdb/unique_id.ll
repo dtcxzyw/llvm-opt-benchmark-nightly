@@ -72,23 +72,28 @@ define void @_ZN7rocksdb15EncodeSessionIdB5cxx11Emm(ptr dead_on_unwind noalias w
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 13
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.t = tail call i64 @llvm.fshl.i64(i64 %1, i64 %2, i64 2) ; 8 uses
-  %3 = urem i64 %i.t, 36
-  %4 = getelementptr inbounds nuw i8, ptr @.str.14, i64 %3
-  %5 = load i8, ptr %4, align 1, !tbaa !16
-  store i8 %5, ptr %i.e, align 1, !tbaa !16
-  %6 = udiv i64 %i.t, 36
-  %7 = urem i64 %6, 36
-  %i.u = getelementptr inbounds nuw i8, ptr @.str.14, i64 %7
+  %3 = udiv i64 %i.t, 36
+  %4 = udiv i64 %i.t, 1296
+  %5 = udiv i64 %i.t, 46656
+  %6 = insertelement <4 x i64> poison, i64 %i.t, i64 0
+  %7 = insertelement <4 x i64> %6, i64 %3, i64 1
+  %8 = insertelement <4 x i64> %7, i64 %4, i64 2
+  %9 = insertelement <4 x i64> %8, i64 %5, i64 3
+  %10 = urem <4 x i64> %9, splat (i64 36)         ; 4 uses
+  %11 = extractelement <4 x i64> %10, i64 0
+  %i.u = getelementptr inbounds nuw i8, ptr @.str.14, i64 %11
   %i.v = load i8, ptr %i.u, align 1, !tbaa !16
-  store i8 %i.v, ptr %i.f, align 1, !tbaa !16
-  %8 = udiv i64 %i.t, 1296
-  %9 = urem i64 %8, 36
-  %i.w = getelementptr inbounds nuw i8, ptr @.str.14, i64 %9
+  store i8 %i.v, ptr %i.e, align 1, !tbaa !16
+  %12 = extractelement <4 x i64> %10, i64 1
+  %i.w = getelementptr inbounds nuw i8, ptr @.str.14, i64 %12
   %i.x = load i8, ptr %i.w, align 1, !tbaa !16
-  store i8 %i.x, ptr %i.g, align 1, !tbaa !16
-  %10 = udiv i64 %i.t, 46656
-  %11 = urem i64 %10, 36
-  %i.y = getelementptr inbounds nuw i8, ptr @.str.14, i64 %11
+  store i8 %i.x, ptr %i.f, align 1, !tbaa !16
+  %13 = extractelement <4 x i64> %10, i64 2
+  %14 = getelementptr inbounds nuw i8, ptr @.str.14, i64 %13
+  %15 = load i8, ptr %14, align 1, !tbaa !16
+  store i8 %15, ptr %i.g, align 1, !tbaa !16
+  %16 = extractelement <4 x i64> %10, i64 3
+  %i.y = getelementptr inbounds nuw i8, ptr @.str.14, i64 %16
   %i.z = load i8, ptr %i.y, align 1, !tbaa !16
   store i8 %i.z, ptr %i.h, align 1, !tbaa !16
   %i.aa = udiv i64 %i.t, 1679616
@@ -108,6 +113,7 @@ define void @_ZN7rocksdb15EncodeSessionIdB5cxx11Emm(ptr dead_on_unwind noalias w
   store i8 %i.al, ptr %i.k, align 1, !tbaa !16
   %i.am = udiv i64 %i.t, 78364164096
   %.lhs.trunc = trunc nuw nsw i64 %i.am to i32
+  %17 = insertelement <4 x i32> poison, i32 %.lhs.trunc, i64 0
   %i.an = and i64 %2, 4611686018427387903         ; 12 uses
   %i.ao = udiv i64 %i.an, 2176782336
   %.lhs.trunc15 = trunc nuw nsw i64 %i.ao to i32
@@ -115,8 +121,7 @@ define void @_ZN7rocksdb15EncodeSessionIdB5cxx11Emm(ptr dead_on_unwind noalias w
   %.lhs.trunc17 = trunc nuw nsw i64 %i.ap to i32
   %i.aq = udiv i64 %i.an, 2821109907456
   %.lhs.trunc19 = trunc nuw nsw i64 %i.aq to i32
-  %12 = insertelement <4 x i32> poison, i32 %.lhs.trunc, i64 0
-  %i.ar = insertelement <4 x i32> %12, i32 %.lhs.trunc15, i64 1
+  %i.ar = insertelement <4 x i32> %17, i32 %.lhs.trunc15, i64 1
   %i.as = insertelement <4 x i32> %i.ar, i32 %.lhs.trunc17, i64 2
   %i.at = insertelement <4 x i32> %i.as, i32 %.lhs.trunc19, i64 3
   %i.au = urem <4 x i32> %i.at, splat (i32 36)    ; 4 uses
@@ -125,23 +130,28 @@ define void @_ZN7rocksdb15EncodeSessionIdB5cxx11Emm(ptr dead_on_unwind noalias w
   %i.aw = getelementptr inbounds nuw i8, ptr @.str.14, i64 %.zext
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !16
   store i8 %i.ax, ptr %i.b, align 1, !tbaa !16
-  %13 = urem i64 %i.an, 36
-  %14 = getelementptr inbounds nuw i8, ptr @.str.14, i64 %13
-  %15 = load i8, ptr %14, align 1, !tbaa !16
-  store i8 %15, ptr %i.l, align 1, !tbaa !16
-  %16 = udiv i64 %i.an, 36
-  %17 = urem i64 %16, 36
-  %i.ay = getelementptr inbounds nuw i8, ptr @.str.14, i64 %17
-  %i.az = load i8, ptr %i.ay, align 1, !tbaa !16
-  store i8 %i.az, ptr %i.m, align 1, !tbaa !16
-  %18 = udiv i64 %i.an, 1296
-  %19 = urem i64 %18, 36
-  %i.ba = getelementptr inbounds nuw i8, ptr @.str.14, i64 %19
-  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !16
-  store i8 %i.bb, ptr %i.n, align 1, !tbaa !16
+  %18 = udiv i64 %i.an, 36
+  %19 = udiv i64 %i.an, 1296
   %20 = udiv i64 %i.an, 46656
-  %21 = urem i64 %20, 36
-  %i.bc = getelementptr inbounds nuw i8, ptr @.str.14, i64 %21
+  %21 = insertelement <4 x i64> poison, i64 %i.an, i64 0
+  %22 = insertelement <4 x i64> %21, i64 %18, i64 1
+  %23 = insertelement <4 x i64> %22, i64 %19, i64 2
+  %24 = insertelement <4 x i64> %23, i64 %20, i64 3
+  %25 = urem <4 x i64> %24, splat (i64 36)        ; 4 uses
+  %26 = extractelement <4 x i64> %25, i64 0
+  %i.ay = getelementptr inbounds nuw i8, ptr @.str.14, i64 %26
+  %i.az = load i8, ptr %i.ay, align 1, !tbaa !16
+  store i8 %i.az, ptr %i.l, align 1, !tbaa !16
+  %27 = extractelement <4 x i64> %25, i64 1
+  %i.ba = getelementptr inbounds nuw i8, ptr @.str.14, i64 %27
+  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !16
+  store i8 %i.bb, ptr %i.m, align 1, !tbaa !16
+  %28 = extractelement <4 x i64> %25, i64 2
+  %29 = getelementptr inbounds nuw i8, ptr @.str.14, i64 %28
+  %30 = load i8, ptr %29, align 1, !tbaa !16
+  store i8 %30, ptr %i.n, align 1, !tbaa !16
+  %31 = extractelement <4 x i64> %25, i64 3
+  %i.bc = getelementptr inbounds nuw i8, ptr @.str.14, i64 %31
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !16
   store i8 %i.bd, ptr %i.o, align 1, !tbaa !16
   %i.be = udiv i64 %i.an, 1679616

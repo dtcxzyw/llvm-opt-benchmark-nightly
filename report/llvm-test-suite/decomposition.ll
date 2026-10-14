@@ -10,15 +10,16 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 {
 .preheader:
-  %i.a = tail call noalias noundef dereferenceable_or_null(168) ptr @malloc(i64 noundef 168) #7 ; 15 uses
+  %i.a = tail call noalias noundef dereferenceable_or_null(168) ptr @malloc(i64 noundef 168) #7 ; 16 uses
   store i32 %0, ptr %i.a, align 8, !tbaa !7
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 %1, ptr %i.b, align 4, !tbaa !7
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i32 %2, ptr %i.c, align 8, !tbaa !7
-  %i.d = tail call i32 @getMyRank() #8            ; 2 uses
+  %i.d = tail call i32 @getMyRank() #8            ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.f = sdiv i32 %i.d, %0                        ; 2 uses
+  %i.f = sdiv i32 %i.d, %0                        ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.g = sdiv i32 %i.f, %1                        ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   store i32 %i.g, ptr %i.h, align 4, !tbaa !7
@@ -33,14 +34,16 @@ define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noun
   %i.n = insertelement <2 x i32> poison, i32 %0, i64 0
   %i.o = insertelement <2 x i32> %i.n, i32 %1, i64 1 ; 2 uses
   %i.p = sitofp <2 x i32> %i.o to <2 x double>
+  %5 = srem i32 %i.f, %1                          ; 2 uses
   %i.q = insertelement <2 x i32> poison, i32 %i.d, i64 0
   %i.r = insertelement <2 x i32> %i.q, i32 %i.f, i64 1
-  %i.s = srem <2 x i32> %i.r, %i.o                ; 4 uses
-  %4 = extractelement <2 x i32> %i.s, i64 0
-  store <2 x i32> %i.s, ptr %i.e, align 4, !tbaa !7
+  %i.s = srem <2 x i32> %i.r, %i.o
+  %6 = srem i32 %i.d, %0                          ; 2 uses
+  store i32 %6, ptr %i.e, align 4, !tbaa !7
+  store i32 %5, ptr %4, align 8, !tbaa !7
   %i.t = load <2 x double>, ptr %i.k, align 8, !tbaa !9
   %i.u = fdiv <2 x double> %i.t, %i.p             ; 3 uses
-  %i.v = add nsw i32 %4, 1
+  %i.v = add nsw i32 %6, 1
   store <2 x double> %i.u, ptr %i.l, align 8, !tbaa !9
   %i.w = sitofp <2 x i32> %i.s to <2 x double>
   %i.x = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.w, <2 x double> %i.u, <2 x double> zeroinitializer)
@@ -60,8 +63,8 @@ define dso_local noalias noundef ptr @initDecomposition(i32 noundef %0, i32 noun
   %i.aj = insertelement <2 x double> %i.ai, double %i.ae, i64 0
   %i.ak = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ah, <2 x double> %i.aj, <2 x double> zeroinitializer)
   store <2 x double> %i.ak, ptr %i.ad, align 8, !tbaa !9
-  %5 = shufflevector <2 x i32> %i.s, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %i.al = insertelement <2 x i32> %5, i32 %i.g, i64 1
+  %7 = insertelement <2 x i32> poison, i32 %5, i64 0
+  %i.al = insertelement <2 x i32> %7, i32 %i.g, i64 1
   %i.am = add nsw <2 x i32> %i.al, splat (i32 1)
   %i.an = sitofp <2 x i32> %i.am to <2 x double>
   %i.ao = insertelement <2 x double> %i.ai, double %i.ae, i64 1

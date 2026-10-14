@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 54009
 inline.NumDeleted: 7556
 loop-unroll.NumCompletelyUnrolled: 253
-loop-unroll.NumRuntimeUnrolled: 78
-loop-unroll.NumUnrolled: 337
+loop-unroll.NumRuntimeUnrolled: 79
+loop-unroll.NumUnrolled: 338
 begin_hunk_0_@_ZL18getFauxShuffleMaskN4llvm7SDValueERKNS_5APIntERNS_15SmallVectorImplIiEERNS4_IS0_EERKNS_12SelectionDAGEjb:bb.a
   %i.nx = call noundef zeroext i1 @_ZNK4llvm3EVT16isExtendedVectorEv(ptr noundef nonnull align 8 dereferenceable(16) %35) #40
   br i1 %i.nx, label %bb.bo, label %bb.ci
@@ -205,9 +205,9 @@ bb.ca:                                            ; preds = %bb.bx
   br label %bb.cb
 
 bb.cb:                                            ; preds = %_ZN4llvm11SmallVectorIiLj64EED2Ev.exit863, %bb.ca, %bb.bw
-  %.0 = phi i32 [ %i.m, %bb.bw ], [ %i.m, %_ZN4llvm11SmallVectorIiLj64EED2Ev.exit863 ], [ %i.ql, %bb.ca ] ; 4 uses
+  %.0 = phi i32 [ %i.m, %bb.bw ], [ %i.m, %_ZN4llvm11SmallVectorIiLj64EED2Ev.exit863 ], [ %i.ql, %bb.ca ] ; 6 uses
   %.0658 = phi i64 [ %.0.i.i.i.i.i, %bb.bw ], [ %.0.i.i.i.i.i, %_ZN4llvm11SmallVectorIiLj64EED2Ev.exit863 ], [ %i.qn, %bb.ca ]
-  %.0657 = phi i32 [ %i.in, %bb.bw ], [ %i.in, %_ZN4llvm11SmallVectorIiLj64EED2Ev.exit863 ], [ %i.py, %bb.ca ] ; 4 uses
+  %.0657 = phi i32 [ %i.in, %bb.bw ], [ %i.in, %_ZN4llvm11SmallVectorIiLj64EED2Ev.exit863 ], [ %i.py, %bb.ca ] ; 10 uses
   call void @_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr %.sroa.01188.0.copyload, i32 %.sroa.16.0.copyload)
   %i.qo = load ptr, ptr %34, align 8, !tbaa !83   ; 2 uses
   %i.qp = load i32, ptr %i.no, align 8, !tbaa !633
@@ -238,37 +238,90 @@ bb.cc:                                            ; preds = %bb.cb
   br i1 %.not7461482, label %.loopexit1379, label %.lr.ph1485
 
 .lr.ph1485:                                       ; preds = %.loopexit1381
-  %i.qv = load ptr, ptr %33, align 8, !tbaa !83
+  %i.qv = load ptr, ptr %33, align 8, !tbaa !83   ; 3 uses
   %i.qw = load ptr, ptr %3, align 8, !tbaa !83
-  %i.qx = getelementptr [4 x i8], ptr %i.qw, i64 %.0658
-  %i.qy = zext i32 %.0657 to i64
+  %i.qx = getelementptr [4 x i8], ptr %i.qw, i64 %.0658 ; 3 uses
+  %i.qy = zext i32 %.0657 to i64                  ; 2 uses
+  %xtraiter1851 = and i64 %i.qy, 1
+  %53 = icmp eq i32 %.0657, 1
+  br i1 %53, label %.epil.preheader, label %.lr.ph1485.new
+
+.lr.ph1485.new:                                   ; preds = %.lr.ph1485
+  %unroll_iter = and i64 %i.qy, 4294967294
   br label %bb.cd
 
-bb.cd:                                            ; preds = %.lr.ph1485, %bb.cf
-  %indvars.iv1530.a = phi i64 [ 0, %.lr.ph1485 ], [ %indvars.iv.next1531.a, %bb.cf ] ; 3 uses
-  %i.qz = getelementptr inbounds nuw [4 x i8], ptr %i.qv, i64 %indvars.iv1530.a
+bb.cd:                                            ; preds = %bb.cf, %.lr.ph1485.new
+  %indvars.iv1530 = phi i64 [ 0, %.lr.ph1485.new ], [ %indvars.iv.next1531.1, %bb.cf ] ; 4 uses
+  %indvars.iv1530.a = phi i64 [ 0, %.lr.ph1485.new ], [ %indvars.iv.next1531.a, %bb.cf ]
+  %i.qz = getelementptr inbounds nuw [4 x i8], ptr %i.qv, i64 %indvars.iv1530
   %i.ra = load i32, ptr %i.qz, align 4, !tbaa !240 ; 4 uses
   %i.rb = icmp sgt i32 %i.ra, -1
-  br i1 %i.rb, label %bb.ce, label %bb.cf
+  br i1 %i.rb, label %54, label %60
 
-bb.ce:                                            ; preds = %bb.cd
-  %i.rc = udiv i32 %i.ra, %.0657
+54:                                               ; preds = %bb.cd
+  %55 = udiv i32 %i.ra, %.0657
+  %56 = add nuw nsw i32 %55, 1
+  %57 = mul i32 %56, %.0
+  %58 = urem i32 %i.ra, %.0657
+  %59 = add i32 %57, %58
+  br label %60
+
+60:                                               ; preds = %54, %bb.cd
+  %.0667 = phi i32 [ %59, %54 ], [ %i.ra, %bb.cd ]
+  %61 = getelementptr [4 x i8], ptr %i.qx, i64 %indvars.iv1530
+  store i32 %.0667, ptr %61, align 4, !tbaa !240
+  %indvars.iv.next1531 = or disjoint i64 %indvars.iv1530, 1 ; 2 uses
+  %62 = getelementptr inbounds nuw [4 x i8], ptr %i.qv, i64 %indvars.iv.next1531
+  %63 = load i32, ptr %62, align 4, !tbaa !240    ; 4 uses
+  %64 = icmp sgt i32 %63, -1
+  br i1 %64, label %bb.ce, label %bb.cf
+
+bb.ce:                                            ; preds = %60
+  %i.rc = udiv i32 %63, %.0657
   %i.rd = add nuw nsw i32 %i.rc, 1
   %i.re = mul i32 %i.rd, %.0
-  %i.rf = urem i32 %i.ra, %.0657
+  %i.rf = urem i32 %63, %.0657
   %i.rg = add i32 %i.re, %i.rf
   br label %bb.cf
 
-bb.cf:                                            ; preds = %bb.ce, %bb.cd
-  %.0667.a = phi i32 [ %i.rg, %bb.ce ], [ %i.ra, %bb.cd ]
-  %i.rh = getelementptr [4 x i8], ptr %i.qx, i64 %indvars.iv1530.a
+bb.cf:                                            ; preds = %bb.ce, %60
+  %.0667.a = phi i32 [ %i.rg, %bb.ce ], [ %63, %60 ]
+  %i.rh = getelementptr [4 x i8], ptr %i.qx, i64 %indvars.iv.next1531
   store i32 %.0667.a, ptr %i.rh, align 4, !tbaa !240
-  %indvars.iv.next1531.a = add nuw nsw i64 %indvars.iv1530.a, 1 ; 2 uses
-  %.not746 = icmp eq i64 %indvars.iv.next1531.a, %i.qy
-  br i1 %.not746, label %.loopexit1379, label %bb.cd, !llvm.loop !4934
+  %indvars.iv.next1531.1 = add nuw nsw i64 %indvars.iv1530, 2 ; 2 uses
+  %indvars.iv.next1531.a = add i64 %indvars.iv1530.a, 2 ; 2 uses
+  %.not746 = icmp eq i64 %indvars.iv.next1531.a, %unroll_iter
+  br i1 %.not746, label %.loopexit1379.loopexit.unr-lcssa, label %bb.cd, !llvm.loop !4934
 
-.loopexit1379:                                    ; preds = %bb.cf, %.loopexit1381, %bb.bv, %.critedge13
-  %.10 = phi i1 [ false, %.critedge13 ], [ false, %bb.bv ], [ true, %.loopexit1381 ], [ true, %bb.cf ]
+.loopexit1379.loopexit.unr-lcssa:                 ; preds = %bb.cf
+  %lcmp.mod1852.not = icmp eq i64 %xtraiter1851, 0
+  br i1 %lcmp.mod1852.not, label %.loopexit1379, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %.loopexit1379.loopexit.unr-lcssa, %.lr.ph1485
+  %indvars.iv1530.epil.init = phi i64 [ 0, %.lr.ph1485 ], [ %indvars.iv.next1531.1, %.loopexit1379.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod1853 = trunc i32 %.0657 to i1
+  call void @llvm.assume(i1 %lcmp.mod1853)
+  %65 = getelementptr inbounds nuw [4 x i8], ptr %i.qv, i64 %indvars.iv1530.epil.init
+  %66 = load i32, ptr %65, align 4, !tbaa !240    ; 4 uses
+  %67 = icmp sgt i32 %66, -1
+  br i1 %67, label %68, label %.loopexit1379.loopexit.epilog-lcssa
+
+68:                                               ; preds = %.epil.preheader
+  %69 = udiv i32 %66, %.0657
+  %70 = add nuw nsw i32 %69, 1
+  %71 = mul i32 %70, %.0
+  %72 = urem i32 %66, %.0657
+  %73 = add i32 %71, %72
+  br label %.loopexit1379.loopexit.epilog-lcssa
+
+.loopexit1379.loopexit.epilog-lcssa:              ; preds = %68, %.epil.preheader
+  %.0667.epil = phi i32 [ %73, %68 ], [ %66, %.epil.preheader ]
+  %74 = getelementptr [4 x i8], ptr %i.qx, i64 %indvars.iv1530.epil.init
+  store i32 %.0667.epil, ptr %74, align 4, !tbaa !240
+  br label %.loopexit1379
+
+.loopexit1379:                                    ; preds = %.loopexit1379.loopexit.epilog-lcssa, %.loopexit1379.loopexit.unr-lcssa, %.loopexit1381, %bb.bv, %.critedge13
+  %.10 = phi i1 [ false, %.critedge13 ], [ false, %bb.bv ], [ true, %.loopexit1381 ], [ true, %.loopexit1379.loopexit.unr-lcssa ], [ true, %.loopexit1379.loopexit.epilog-lcssa ]
   %i.ri = getelementptr inbounds nuw i8, ptr %37, i64 8
   %i.rj = load i32, ptr %i.ri, align 8, !tbaa !643
   %i.rk = icmp ugt i32 %i.rj, 64

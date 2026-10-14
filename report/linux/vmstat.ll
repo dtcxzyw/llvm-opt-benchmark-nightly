@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/vmstat?download=true
 inline.NumInlined: 217
 inline.NumDeleted: 75
-loop-unroll.NumCompletelyUnrolled: 26
-loop-unroll.NumUnrolled: 40
+loop-unroll.NumCompletelyUnrolled: 27
+loop-unroll.NumUnrolled: 41
 begin_hunk_0_@invalid_numa_statistics:bb.a
 bb.h:                                             ; preds = %find_next_bit.exit.2.i.i
   %i.ax = load ptr, ptr %i.d, align 16
@@ -204,27 +204,201 @@ bb.b:                                             ; preds = %.split4, %bb.a
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal void @unusable_show_print(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) #0 align 16 prefalign(16) {
 bb.a:
-  %3 = alloca %struct.contig_page_info, align 8   ; 5 uses
+  %3 = alloca %struct.contig_page_info, align 8   ; 25 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   %i.a = getelementptr i8, ptr %1, i64 13632
   %i.b = load i32, ptr %i.a, align 64
   %i.c = getelementptr i8, ptr %2, i64 168
   %i.d = load ptr, ptr %i.c, align 8
   tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.174, i32 noundef %i.b, ptr noundef %i.d) #18
-  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 11 uses
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 0, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val = load i64, ptr %3, align 8               ; 3 uses
+  %4 = icmp eq i64 %.val, 0
+  br i1 %4, label %unusable_free_index.exit, label %5
+
+5:                                                ; preds = %bb.a
+  %.val11 = load i64, ptr %i.e, align 8
+  %6 = sub i64 %.val, %.val11
+  %7 = mul i64 %6, 1000
+  %8 = and i64 %.val, 4294967295
+  %9 = udiv i64 %7, %8
+  %10 = trunc i64 %9 to i32
+  br label %unusable_free_index.exit
+
+unusable_free_index.exit:                         ; preds = %bb.a, %5
+  %.0.i = phi i32 [ %10, %5 ], [ 1000, %bb.a ]    ; 2 uses
+  %11 = sdiv i32 %.0.i, 1000
+  %12 = srem i32 %.0.i, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %11, i32 noundef %12) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 1, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.1 = load i64, ptr %3, align 8             ; 3 uses
+  %13 = icmp eq i64 %.val.1, 0
+  br i1 %13, label %unusable_free_index.exit.1, label %14
+
+14:                                               ; preds = %unusable_free_index.exit
+  %.val11.1 = load i64, ptr %i.e, align 8
+  %15 = shl i64 %.val11.1, 1
+  %16 = sub i64 %.val.1, %15
+  %17 = mul i64 %16, 1000
+  %18 = and i64 %.val.1, 4294967295
+  %19 = udiv i64 %17, %18
+  %20 = trunc i64 %19 to i32
+  br label %unusable_free_index.exit.1
+
+unusable_free_index.exit.1:                       ; preds = %14, %unusable_free_index.exit
+  %.0.i.1 = phi i32 [ %20, %14 ], [ 1000, %unusable_free_index.exit ] ; 2 uses
+  %21 = sdiv i32 %.0.i.1, 1000
+  %22 = srem i32 %.0.i.1, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %21, i32 noundef %22) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 2, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.2 = load i64, ptr %3, align 8             ; 3 uses
+  %23 = icmp eq i64 %.val.2, 0
+  br i1 %23, label %unusable_free_index.exit.2, label %24
+
+24:                                               ; preds = %unusable_free_index.exit.1
+  %.val11.2 = load i64, ptr %i.e, align 8
+  %25 = shl i64 %.val11.2, 2
+  %26 = sub i64 %.val.2, %25
+  %27 = mul i64 %26, 1000
+  %28 = and i64 %.val.2, 4294967295
+  %29 = udiv i64 %27, %28
+  %30 = trunc i64 %29 to i32
+  br label %unusable_free_index.exit.2
+
+unusable_free_index.exit.2:                       ; preds = %24, %unusable_free_index.exit.1
+  %.0.i.2 = phi i32 [ %30, %24 ], [ 1000, %unusable_free_index.exit.1 ] ; 2 uses
+  %31 = sdiv i32 %.0.i.2, 1000
+  %32 = srem i32 %.0.i.2, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %31, i32 noundef %32) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 3, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.3 = load i64, ptr %3, align 8             ; 3 uses
+  %33 = icmp eq i64 %.val.3, 0
+  br i1 %33, label %unusable_free_index.exit.3, label %34
+
+34:                                               ; preds = %unusable_free_index.exit.2
+  %.val11.3 = load i64, ptr %i.e, align 8
+  %35 = shl i64 %.val11.3, 3
+  %36 = sub i64 %.val.3, %35
+  %37 = mul i64 %36, 1000
+  %38 = and i64 %.val.3, 4294967295
+  %39 = udiv i64 %37, %38
+  %40 = trunc i64 %39 to i32
+  br label %unusable_free_index.exit.3
+
+unusable_free_index.exit.3:                       ; preds = %34, %unusable_free_index.exit.2
+  %.0.i.3 = phi i32 [ %40, %34 ], [ 1000, %unusable_free_index.exit.2 ] ; 2 uses
+  %41 = sdiv i32 %.0.i.3, 1000
+  %42 = srem i32 %.0.i.3, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %41, i32 noundef %42) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 4, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.4 = load i64, ptr %3, align 8             ; 3 uses
+  %43 = icmp eq i64 %.val.4, 0
+  br i1 %43, label %unusable_free_index.exit.4, label %44
+
+44:                                               ; preds = %unusable_free_index.exit.3
+  %.val11.4 = load i64, ptr %i.e, align 8
+  %45 = shl i64 %.val11.4, 4
+  %46 = sub i64 %.val.4, %45
+  %47 = mul i64 %46, 1000
+  %48 = and i64 %.val.4, 4294967295
+  %49 = udiv i64 %47, %48
+  %50 = trunc i64 %49 to i32
+  br label %unusable_free_index.exit.4
+
+unusable_free_index.exit.4:                       ; preds = %44, %unusable_free_index.exit.3
+  %.0.i.4 = phi i32 [ %50, %44 ], [ 1000, %unusable_free_index.exit.3 ] ; 2 uses
+  %51 = sdiv i32 %.0.i.4, 1000
+  %52 = srem i32 %.0.i.4, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %51, i32 noundef %52) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 5, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.5 = load i64, ptr %3, align 8             ; 3 uses
+  %53 = icmp eq i64 %.val.5, 0
+  br i1 %53, label %unusable_free_index.exit.5, label %54
+
+54:                                               ; preds = %unusable_free_index.exit.4
+  %.val11.5 = load i64, ptr %i.e, align 8
+  %55 = shl i64 %.val11.5, 5
+  %56 = sub i64 %.val.5, %55
+  %57 = mul i64 %56, 1000
+  %58 = and i64 %.val.5, 4294967295
+  %59 = udiv i64 %57, %58
+  %60 = trunc i64 %59 to i32
+  br label %unusable_free_index.exit.5
+
+unusable_free_index.exit.5:                       ; preds = %54, %unusable_free_index.exit.4
+  %.0.i.5 = phi i32 [ %60, %54 ], [ 1000, %unusable_free_index.exit.4 ] ; 2 uses
+  %61 = sdiv i32 %.0.i.5, 1000
+  %62 = srem i32 %.0.i.5, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %61, i32 noundef %62) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 6, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.6 = load i64, ptr %3, align 8             ; 3 uses
+  %63 = icmp eq i64 %.val.6, 0
+  br i1 %63, label %unusable_free_index.exit.6, label %64
+
+64:                                               ; preds = %unusable_free_index.exit.5
+  %.val11.6 = load i64, ptr %i.e, align 8
+  %65 = shl i64 %.val11.6, 6
+  %66 = sub i64 %.val.6, %65
+  %67 = mul i64 %66, 1000
+  %68 = and i64 %.val.6, 4294967295
+  %69 = udiv i64 %67, %68
+  %70 = trunc i64 %69 to i32
+  br label %unusable_free_index.exit.6
+
+unusable_free_index.exit.6:                       ; preds = %64, %unusable_free_index.exit.5
+  %.0.i.6 = phi i32 [ %70, %64 ], [ 1000, %unusable_free_index.exit.5 ] ; 2 uses
+  %71 = sdiv i32 %.0.i.6, 1000
+  %72 = srem i32 %.0.i.6, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %71, i32 noundef %72) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 7, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.7 = load i64, ptr %3, align 8             ; 3 uses
+  %73 = icmp eq i64 %.val.7, 0
+  br i1 %73, label %unusable_free_index.exit.7, label %74
+
+74:                                               ; preds = %unusable_free_index.exit.6
+  %.val11.7 = load i64, ptr %i.e, align 8
+  %75 = shl i64 %.val11.7, 7
+  %76 = sub i64 %.val.7, %75
+  %77 = mul i64 %76, 1000
+  %78 = and i64 %.val.7, 4294967295
+  %79 = udiv i64 %77, %78
+  %80 = trunc i64 %79 to i32
+  br label %unusable_free_index.exit.7
+
+unusable_free_index.exit.7:                       ; preds = %74, %unusable_free_index.exit.6
+  %.0.i.7 = phi i32 [ %80, %74 ], [ 1000, %unusable_free_index.exit.6 ] ; 2 uses
+  %81 = sdiv i32 %.0.i.7, 1000
+  %82 = srem i32 %.0.i.7, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %81, i32 noundef %82) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 8, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.8 = load i64, ptr %3, align 8             ; 3 uses
+  %83 = icmp eq i64 %.val.8, 0
+  br i1 %83, label %bb.b, label %84
+
+84:                                               ; preds = %unusable_free_index.exit.7
+  %.val11.8 = load i64, ptr %i.e, align 8
+  %85 = shl i64 %.val11.8, 8
+  %86 = sub i64 %.val.8, %85
+  %87 = mul i64 %86, 1000
+  %88 = and i64 %.val.8, 4294967295
+  %89 = udiv i64 %87, %88
+  %90 = trunc i64 %89 to i32
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.a, %unusable_free_index.exit.a
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %unusable_free_index.exit.a ] ; 3 uses
-  %4 = trunc nuw nsw i64 %indvars.iv to i32
-  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef %4, ptr noundef nonnull %3) #21, !srcloc !124
+bb.b:                                             ; preds = %84, %unusable_free_index.exit.7
+  %.0.i.8 = phi i32 [ %90, %84 ], [ 1000, %unusable_free_index.exit.7 ] ; 2 uses
+  %91 = sdiv i32 %.0.i.8, 1000
+  %92 = srem i32 %.0.i.8, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %91, i32 noundef %92) #18
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 9, ptr noundef nonnull %3) #21, !srcloc !123
   %.val.a = load i64, ptr %3, align 8             ; 3 uses
   %i.f = icmp eq i64 %.val.a, 0
   br i1 %i.f, label %unusable_free_index.exit.a, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.val11.a = load i64, ptr %i.e, align 8
-  %i.g = shl i64 %.val11.a, %indvars.iv
+  %i.g = shl i64 %.val11.a, 9
   %i.h = sub i64 %.val.a, %i.g
   %i.i = mul i64 %i.h, 1000
   %i.j = and i64 %.val.a, 4294967295
@@ -232,16 +406,31 @@ bb.c:                                             ; preds = %bb.b
   %i.l = trunc i64 %i.k to i32
   br label %unusable_free_index.exit.a
 
-unusable_free_index.exit.a:                       ; preds = %bb.b, %bb.c
+unusable_free_index.exit.a:                       ; preds = %bb.c, %bb.b
   %.0.i.a = phi i32 [ %i.l, %bb.c ], [ 1000, %bb.b ] ; 2 uses
   %i.m = sdiv i32 %.0.i.a, 1000
   %i.n = srem i32 %.0.i.a, 1000
   tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %i.m, i32 noundef %i.n) #18
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 11
-  br i1 %exitcond.not, label %bb.d, label %bb.b, !llvm.loop !123
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef 10, ptr noundef nonnull %3) #21, !srcloc !123
+  %.val.10 = load i64, ptr %3, align 8            ; 3 uses
+  %exitcond.not = icmp eq i64 %.val.10, 0
+  br i1 %exitcond.not, label %bb.d, label %93
 
-bb.d:                                             ; preds = %unusable_free_index.exit.a
+93:                                               ; preds = %unusable_free_index.exit.a
+  %.val11.10 = load i64, ptr %i.e, align 8
+  %94 = shl i64 %.val11.10, 10
+  %95 = sub i64 %.val.10, %94
+  %96 = mul i64 %95, 1000
+  %97 = and i64 %.val.10, 4294967295
+  %98 = udiv i64 %96, %97
+  %99 = trunc i64 %98 to i32
+  br label %bb.d
+
+bb.d:                                             ; preds = %93, %unusable_free_index.exit.a
+  %.0.i.10 = phi i32 [ %99, %93 ], [ 1000, %unusable_free_index.exit.a ] ; 2 uses
+  %100 = sdiv i32 %.0.i.10, 1000
+  %101 = srem i32 %.0.i.10, 1000
+  tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.212, i32 noundef %100, i32 noundef %101) #18
   tail call void @seq_putc(ptr noundef %0, i8 noundef zeroext 10) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   ret void
@@ -295,7 +484,7 @@ bb.a:
 .critedge.i:                                      ; preds = %bb.a, %__fragmentation_index.exit
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %__fragmentation_index.exit ] ; 3 uses
   %i.g = trunc nuw nsw i64 %indvars.iv to i32
-  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef %i.g, ptr noundef nonnull %3) #21, !srcloc !126
+  call fastcc void @fill_contig_page_info(ptr noundef %2, i32 noundef %i.g, ptr noundef nonnull %3) #21, !srcloc !125
   %i.h = load i64, ptr %i.e, align 8              ; 2 uses
   %.not.i = icmp eq i64 %i.h, 0
   br i1 %.not.i, label %__fragmentation_index.exit, label %bb.b
@@ -323,7 +512,7 @@ __fragmentation_index.exit:                       ; preds = %.critedge.i, %bb.b,
   tail call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.214, i32 noundef %i.r, i32 noundef %i.s) #18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 11
-  br i1 %exitcond.not, label %bb.d, label %.critedge.i, !llvm.loop !125
+  br i1 %exitcond.not, label %bb.d, label %.critedge.i, !llvm.loop !124
 
 bb.d:                                             ; preds = %__fragmentation_index.exit
   tail call void @seq_putc(ptr noundef %0, i8 noundef zeroext 10) #18
@@ -503,8 +692,7 @@ attributes #25 = { noredzone nounwind allocsize(2) "no-builtin-wcslen" }
 !120 = !{i64 54427}
 !121 = distinct !{!121, !19}
 !122 = distinct !{!122, !19}
-!123 = distinct !{!123, !19}
-!124 = !{i64 63460}
-!125 = distinct !{!125, !19}
-!126 = !{i64 64830}
+!123 = !{i64 63460}
+!124 = distinct !{!124, !19}
+!125 = !{i64 64830}
 end_hunk_0

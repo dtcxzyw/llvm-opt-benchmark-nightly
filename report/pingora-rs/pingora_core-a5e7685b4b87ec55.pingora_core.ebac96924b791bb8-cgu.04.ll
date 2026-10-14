@@ -204,13 +204,19 @@ _RINvMs5_NtCsff3niNi8lqe_6chrono8datetimeINtB6_8DateTimeNtNtNtB8_6offset3utc3Utc
   %i.et = udiv i32 %i.cb, 60
   %i.eu = urem i32 %i.et, 60                      ; 2 uses
   %i.ev = udiv i8 %i.ep, 10                       ; 2 uses
-  %i.ew = or disjoint i8 %i.ev, 48                ; 2 uses
+  %2 = or disjoint i8 %i.ev, 48                   ; 2 uses
+  %3 = urem i8 %i.ep, 10
+  %i.ew = or disjoint i8 %3, 48                   ; 3 uses
   %i.ex = trunc nuw nsw i32 %i.eu to i8           ; 2 uses
   %i.ey = udiv i8 %i.ex, 10
-  %i.ez = or disjoint i8 %i.ey, 48                ; 3 uses
+  %4 = or disjoint i8 %i.ey, 48                   ; 3 uses
+  %5 = urem i8 %i.ex, 10
+  %i.ez = or disjoint i8 %5, 48                   ; 3 uses
   %i.fa = trunc nuw nsw i32 %.sroa.04.0.i.i.i.i to i8 ; 2 uses
   %i.fb = udiv i8 %i.fa, 10
-  %i.fc = or disjoint i8 %i.fb, 48
+  %6 = or disjoint i8 %i.fb, 48
+  %7 = urem i8 %i.fa, 10
+  %i.fc = or disjoint i8 %7, 48
   %i.fd = icmp eq i32 %storemerge.i.i.i.i, 0
   %i.fe = urem i32 %storemerge.i.i.i.i, 1000000
   %i.ff = icmp eq i32 %i.fe, 0
@@ -225,7 +231,9 @@ _RINvMs5_NtCsff3niNi8lqe_6chrono8datetimeINtB6_8DateTimeNtNtNtB8_6offset3utc3Utc
   %i.fl = add nuw nsw i32 %i.fk, %i.er            ; 2 uses
   %i.fm = trunc nuw nsw i32 %i.fl to i8           ; 2 uses
   %i.fn = udiv i8 %i.fm, 10
-  %i.fo = or disjoint i8 %i.fn, 48                ; 2 uses
+  %8 = or disjoint i8 %i.fn, 48                   ; 2 uses
+  %9 = urem i8 %i.fm, 10
+  %i.fo = or disjoint i8 %9, 48                   ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.v, i64 3
   %i.fq = getelementptr inbounds nuw i8, ptr %i.v, i64 1
   %i.fr = getelementptr inbounds nuw i8, ptr %i.v, i64 2
@@ -291,6 +299,8 @@ _RINvMs5_NtCsff3niNi8lqe_6chrono8datetimeINtB6_8DateTimeNtNtNtB8_6offset3utc3Utc
   %i.he = udiv i8 %i.hd, 10
   %i.hf = icmp samesign ult i16 %.lhs.trunc1.i142.i.i.i.i, 70
   %i.hg = add nuw nsw i8 %i.he, 48
+  %10 = urem i8 %i.hd, 10
+  %11 = or disjoint i8 %10, 48
   %spec.select.i131.i.i.i.i = zext nneg i16 %i.dn to i32 ; 2 uses
   %i.hh = add nuw nsw i32 %spec.select.i131.i.i.i.i, 7
   %.pn.i.i.i.i.i = select i1 %i.do, i32 %i.hh, i32 %spec.select.i131.i.i.i.i
@@ -299,18 +309,22 @@ _RINvMs5_NtCsff3niNi8lqe_6chrono8datetimeINtB6_8DateTimeNtNtNtB8_6offset3utc3Utc
   %i.hj = trunc nsw i32 %i.hi to i16
   %.lhs.trunc1.i.i.i.i.i = add nsw i16 %i.hj, 6
   %i.hk = sdiv i16 %.lhs.trunc1.i.i.i.i.i, 7      ; 2 uses
-  %i.hl = trunc nsw i16 %i.hk to i8               ; 2 uses
+  %i.hl = trunc nuw nsw i16 %i.hk to i8           ; 2 uses
   %i.hm = udiv i8 %i.hl, 10
   %i.hn = icmp samesign ult i16 %i.hk, 10
   %i.ho = add nuw nsw i8 %i.hm, 48
+  %12 = urem i8 %i.hl, 10
+  %13 = or disjoint i8 %12, 48
   %i.hp = srem i32 %i.dy, 100                     ; 4 uses
   %i.hq = icmp slt i32 %i.hp, 0
   %i.hr = add nsw i32 %i.hp, 100
   %spec.select.i.i.i.i.i = select i1 %i.hq, i32 %i.hr, i32 %i.hp ; 2 uses
-  %i.hs = trunc nsw i32 %spec.select.i.i.i.i.i to i8 ; 2 uses
+  %i.hs = trunc nuw nsw i32 %spec.select.i.i.i.i.i to i8 ; 2 uses
   %i.ht = udiv i8 %i.hs, 10
   %i.hu = icmp samesign ult i32 %spec.select.i.i.i.i.i, 10
   %i.hv = add nuw nsw i8 %i.ht, 48
+  %14 = urem i8 %i.hs, 10
+  %15 = or disjoint i8 %14, 48
   %i.hw = sdiv i32 %i.dy, 100
   %.lobit.i.i.i.i.i = ashr i32 %i.hp, 31
   %.sroa.0.0.i.i.i.i.i = add nsw i32 %.lobit.i.i.i.i.i, %i.hw
@@ -318,25 +332,8 @@ _RINvMs5_NtCsff3niNi8lqe_6chrono8datetimeINtB6_8DateTimeNtNtNtB8_6offset3utc3Utc
   %i.hy = udiv i8 %i.hx, 10
   %i.hz = icmp ult i8 %i.hx, 10
   %i.ia = add nuw nsw i8 %i.hy, 48
-  %2 = insertelement <8 x i8> poison, i8 %i.ep, i64 0
-  %3 = insertelement <8 x i8> %2, i8 %i.ex, i64 1
-  %4 = insertelement <8 x i8> %3, i8 %i.fa, i64 2
-  %5 = insertelement <8 x i8> %4, i8 %i.fm, i64 3
-  %6 = insertelement <8 x i8> %5, i8 %i.hd, i64 4
-  %7 = insertelement <8 x i8> %6, i8 %i.hl, i64 5
-  %8 = insertelement <8 x i8> %7, i8 %i.hs, i64 6
-  %9 = insertelement <8 x i8> %8, i8 %i.hx, i64 7
-  %10 = urem <8 x i8> %9, splat (i8 10)           ; 5 uses
-  %11 = extractelement <8 x i8> %10, i64 0
-  %12 = or disjoint i8 %11, 48                    ; 3 uses
-  %13 = extractelement <8 x i8> %10, i64 1
-  %14 = or disjoint i8 %13, 48                    ; 3 uses
-  %15 = extractelement <8 x i8> %10, i64 2
-  %16 = or disjoint i8 %15, 48
-  %17 = extractelement <8 x i8> %10, i64 3
-  %i.ib = or disjoint i8 %17, 48                  ; 2 uses
-  %18 = shufflevector <8 x i8> %10, <8 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  %19 = or disjoint <4 x i8> %18, splat (i8 48)   ; 4 uses
+  %16 = urem i8 %i.hx, 10
+  %i.ib = or disjoint i8 %16, 48
   %.sroa.03.0.i.i.i = getelementptr inbounds nuw i8, ptr %i.bd, i64 8 ; 3 uses
   %i.ic = getelementptr inbounds nuw i8, ptr %i.bd, i64 16 ; 4 uses
   %spec.select.i.i.i = select i1 %i.fx, i32 %.neg.i.i.i.i, i32 0
@@ -369,10 +366,6 @@ _RINvMs5_NtCsff3niNi8lqe_6chrono8datetimeINtB6_8DateTimeNtNtNtB8_6offset3utc3Utc
   %.sroa.411.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.is = insertelement <2 x ptr> poison, ptr %.146.i.i.i.i, i64 0
   %i.it = insertelement <2 x ptr> %i.is, ptr %i.de, i64 1
-  %20 = extractelement <4 x i8> %19, i64 0
-  %21 = extractelement <4 x i8> %19, i64 1
-  %22 = extractelement <4 x i8> %19, i64 2
-  %23 = extractelement <4 x i8> %19, i64 3
   %i.iu = shl nuw nsw i16 %i.dn, 3
   %switch.shiftamt = zext nneg i16 %i.iu to i56
   %switch.downshift = lshr i56 13570401019048497, %switch.shiftamt
@@ -665,7 +658,7 @@ _RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14for
 .noexc8.i.i.i:                                    ; preds = %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit.i.i.i.i
   %i.ks = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2235, !noalias !2236, !nonnull !5, !noundef !5
   %i.kt = getelementptr inbounds nuw i8, ptr %i.ks, i64 %i.kq
-  store i8 %23, ptr %i.kt, align 1, !noalias !2238
+  store i8 %i.ib, ptr %i.kt, align 1, !noalias !2238
   %i.ku = add nuw i64 %i.kq, 1
   store i64 %i.ku, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2235, !noalias !2236
   br label %.critedge.i.i.i
@@ -724,7 +717,7 @@ _RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14for
 .noexc11.i.i.i:                                   ; preds = %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit103.i.i.i.i
   %i.lh = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2240, !noalias !2236, !nonnull !5, !noundef !5
   %i.li = getelementptr inbounds nuw i8, ptr %i.lh, i64 %i.lf
-  store i8 %22, ptr %i.li, align 1, !noalias !2238
+  store i8 %15, ptr %i.li, align 1, !noalias !2238
   %i.lj = add nuw i64 %i.lf, 1
   store i64 %i.lj, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2240, !noalias !2236
   br label %.critedge.i.i.i
@@ -1127,7 +1120,7 @@ _RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14for
 .noexc35.i.i.i:                                   ; preds = %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit137.i.i.i.i
   %i.qt = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2257, !noalias !2236, !nonnull !5, !noundef !5
   %i.qu = getelementptr inbounds nuw i8, ptr %i.qt, i64 %i.qr
-  store i8 %21, ptr %i.qu, align 1, !noalias !2238
+  store i8 %13, ptr %i.qu, align 1, !noalias !2238
   %i.qv = add nuw i64 %i.qr, 1
   store i64 %i.qv, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2257, !noalias !2236
   br label %.critedge.i.i.i
@@ -1186,7 +1179,7 @@ _RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14for
 .noexc38.i.i.i:                                   ; preds = %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit149.i.i.i.i
   %i.ri = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2260, !noalias !2236, !nonnull !5, !noundef !5
   %i.rj = getelementptr inbounds nuw i8, ptr %i.ri, i64 %i.rg
-  store i8 %20, ptr %i.rj, align 1, !noalias !2238
+  store i8 %11, ptr %i.rj, align 1, !noalias !2238
   %i.rk = add nuw i64 %i.rg, 1
   store i64 %i.rk, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2260, !noalias !2236
   br label %.critedge.i.i.i
@@ -1395,7 +1388,7 @@ _RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14for
 .noexc50.i.i.i:                                   ; preds = %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit163.i.i.i.i
   %i.ti = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2269, !noalias !2236, !nonnull !5, !noundef !5
   %i.tj = getelementptr inbounds nuw i8, ptr %i.ti, i64 %i.tg
-  store i8 %12, ptr %i.tj, align 1, !noalias !2238
+  store i8 %i.ew, ptr %i.tj, align 1, !noalias !2238
   %i.tk = add nuw i64 %i.tg, 1
   store i64 %i.tk, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2269, !noalias !2236
   br label %.critedge.i.i.i
@@ -1483,7 +1476,7 @@ _RNvXsZ_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt5Wri
 .noexc54.i.i.i:                                   ; preds = %_RNvXsZ_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt5Write10write_char.exit.i170.i.i.i.i
   %i.uc = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2276, !noalias !2236, !nonnull !5, !noundef !5
   %i.ud = getelementptr inbounds nuw i8, ptr %i.uc, i64 %i.ua
-  store i8 %i.ez, ptr %i.ud, align 1, !noalias !2238
+  store i8 %4, ptr %i.ud, align 1, !noalias !2238
   %i.ue = add nuw i64 %i.ua, 1                    ; 2 uses
   store i64 %i.ue, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2276, !noalias !2236
   br label %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit175.i.i.i.i
@@ -1513,7 +1506,7 @@ _RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14for
 .noexc56.i.i.i:                                   ; preds = %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit175.i.i.i.i
   %i.um = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2275, !noalias !2236, !nonnull !5, !noundef !5
   %i.un = getelementptr inbounds nuw i8, ptr %i.um, i64 %i.uk
-  store i8 %14, ptr %i.un, align 1, !noalias !2238
+  store i8 %i.ez, ptr %i.un, align 1, !noalias !2238
   %i.uo = add nuw i64 %i.uk, 1
   store i64 %i.uo, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2275, !noalias !2236
   br label %.critedge.i.i.i
@@ -1542,7 +1535,7 @@ _RNvXsZ_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt5Wri
 .noexc57.i.i.i:                                   ; preds = %_RNvXsZ_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt5Write10write_char.exit.i176.i.i.i.i
   %i.ur = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2279, !noalias !2236, !nonnull !5, !noundef !5
   %i.us = getelementptr inbounds nuw i8, ptr %i.ur, i64 %i.up
-  store i8 %i.fo, ptr %i.us, align 1, !noalias !2238
+  store i8 %8, ptr %i.us, align 1, !noalias !2238
   %i.ut = add nuw i64 %i.up, 1                    ; 2 uses
   store i64 %i.ut, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2279, !noalias !2236
   br label %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit181.i.i.i.i
@@ -1572,7 +1565,7 @@ _RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14for
 .noexc59.i.i.i:                                   ; preds = %_RINvNvMNtNtCsff3niNi8lqe_6chrono6format10formattingINtB5_13DelayedFormatpE14format_numeric9write_twoNtNtCsexYYUdYSQU6_5alloc6string6StringECskeugdADtBsi_12pingora_core.exit181.i.i.i.i
   %i.vb = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2278, !noalias !2236, !nonnull !5, !noundef !5
   %i.vc = getelementptr inbounds nuw i8, ptr %i.vb, i64 %i.uz
-  store i8 %i.ib, ptr %i.vc, align 1, !noalias !2238
+  store i8 %i.fo, ptr %i.vc, align 1, !noalias !2238
   %i.vd = add nuw i64 %i.uz, 1
   store i64 %i.vd, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2278, !noalias !2236
   br label %.critedge.i.i.i
@@ -1975,7 +1968,7 @@ bb.cr:                                            ; preds = %.noexc172.i.i.i
 .noexc174.i.i.i:                                  ; preds = %bb.cr
   %i.afu = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2362, !noalias !2349, !nonnull !5, !noundef !5
   %i.afv = getelementptr inbounds nuw i8, ptr %i.afu, i64 %i.afs
-  store i8 %i.ew, ptr %i.afv, align 1, !noalias !2345
+  store i8 %2, ptr %i.afv, align 1, !noalias !2345
   %i.afw = add i64 %.pre.i.i.i14.i.i.i.i, 10      ; 2 uses
   store i64 %i.afw, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2362, !noalias !2349
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -1984,7 +1977,7 @@ bb.cr:                                            ; preds = %.noexc172.i.i.i
 .noexc175.i.i.i:                                  ; preds = %.noexc174.i.i.i
   %i.afx = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2363, !noalias !2349, !nonnull !5, !noundef !5
   %i.afy = getelementptr inbounds nuw i8, ptr %i.afx, i64 %i.afw
-  store i8 %12, ptr %i.afy, align 1, !noalias !2345
+  store i8 %i.ew, ptr %i.afy, align 1, !noalias !2345
   %i.afz = add nsw i64 %.pre.i.i.i14.i.i.i.i, 11  ; 2 uses
   store i64 %i.afz, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2363, !noalias !2349
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2002,7 +1995,7 @@ bb.cr:                                            ; preds = %.noexc172.i.i.i
 .noexc177.i.i.i:                                  ; preds = %.noexc176.i.i.i
   %i.agd = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2365, !noalias !2349, !nonnull !5, !noundef !5
   %i.age = getelementptr inbounds nuw i8, ptr %i.agd, i64 %i.agc
-  store i8 %i.ez, ptr %i.age, align 1, !noalias !2345
+  store i8 %4, ptr %i.age, align 1, !noalias !2345
   %i.agf = add i64 %.pre.i.i.i14.i.i.i.i, 13      ; 2 uses
   store i64 %i.agf, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2365, !noalias !2349
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2011,7 +2004,7 @@ bb.cr:                                            ; preds = %.noexc172.i.i.i
 .noexc178.i.i.i:                                  ; preds = %.noexc177.i.i.i
   %i.agg = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2366, !noalias !2349, !nonnull !5, !noundef !5
   %i.agh = getelementptr inbounds nuw i8, ptr %i.agg, i64 %i.agf
-  store i8 %14, ptr %i.agh, align 1, !noalias !2345
+  store i8 %i.ez, ptr %i.agh, align 1, !noalias !2345
   %i.agi = add nsw i64 %.pre.i.i.i14.i.i.i.i, 14  ; 2 uses
   store i64 %i.agi, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2366, !noalias !2349
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2029,7 +2022,7 @@ bb.cr:                                            ; preds = %.noexc172.i.i.i
 .noexc180.i.i.i:                                  ; preds = %.noexc179.i.i.i
   %i.agm = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2368, !noalias !2349, !nonnull !5, !noundef !5
   %i.agn = getelementptr inbounds nuw i8, ptr %i.agm, i64 %i.agl
-  store i8 %i.fo, ptr %i.agn, align 1, !noalias !2345
+  store i8 %8, ptr %i.agn, align 1, !noalias !2345
   %i.ago = add i64 %.pre.i.i.i14.i.i.i.i, 16      ; 2 uses
   store i64 %i.ago, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2368, !noalias !2349
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2038,7 +2031,7 @@ bb.cr:                                            ; preds = %.noexc172.i.i.i
 .noexc181.i.i.i:                                  ; preds = %.noexc180.i.i.i
   %i.agp = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2369, !noalias !2349, !nonnull !5, !noundef !5
   %i.agq = getelementptr inbounds nuw i8, ptr %i.agp, i64 %i.ago
-  store i8 %i.ib, ptr %i.agq, align 1, !noalias !2345
+  store i8 %i.fo, ptr %i.agq, align 1, !noalias !2345
   %i.agr = add nsw i64 %.pre.i.i.i14.i.i.i.i, 17  ; 2 uses
   store i64 %i.agr, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2369, !noalias !2349
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2220,7 +2213,7 @@ bb.cw:                                            ; preds = %.noexc138.i.i.i
 .noexc140.i.i.i:                                  ; preds = %bb.cw
   %i.aja = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2386, !noalias !2374, !nonnull !5, !noundef !5
   %i.ajb = getelementptr inbounds nuw i8, ptr %i.aja, i64 %i.aiy
-  store i8 %i.ew, ptr %i.ajb, align 1, !noalias !2375
+  store i8 %2, ptr %i.ajb, align 1, !noalias !2375
   %i.ajc = add nuw i64 %i.agx, 8                  ; 2 uses
   store i64 %i.ajc, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2386, !noalias !2374
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2229,7 +2222,7 @@ bb.cw:                                            ; preds = %.noexc138.i.i.i
 .noexc141.i.i.i:                                  ; preds = %.noexc140.i.i.i
   %i.ajd = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2387, !noalias !2374, !nonnull !5, !noundef !5
   %i.aje = getelementptr inbounds nuw i8, ptr %i.ajd, i64 %i.ajc
-  store i8 %12, ptr %i.aje, align 1, !noalias !2375
+  store i8 %i.ew, ptr %i.aje, align 1, !noalias !2375
   %i.ajf = add nuw nsw i64 %i.agx, 9              ; 2 uses
   store i64 %i.ajf, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2387, !noalias !2374
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2247,7 +2240,7 @@ bb.cw:                                            ; preds = %.noexc138.i.i.i
 .noexc143.i.i.i:                                  ; preds = %.noexc142.i.i.i
   %i.ajj = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2389, !noalias !2374, !nonnull !5, !noundef !5
   %i.ajk = getelementptr inbounds nuw i8, ptr %i.ajj, i64 %i.aji
-  store i8 %i.ez, ptr %i.ajk, align 1, !noalias !2375
+  store i8 %4, ptr %i.ajk, align 1, !noalias !2375
   %i.ajl = add nuw i64 %i.agx, 11                 ; 2 uses
   store i64 %i.ajl, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2389, !noalias !2374
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2256,7 +2249,7 @@ bb.cw:                                            ; preds = %.noexc138.i.i.i
 .noexc144.i.i.i:                                  ; preds = %.noexc143.i.i.i
   %i.ajm = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2390, !noalias !2374, !nonnull !5, !noundef !5
   %i.ajn = getelementptr inbounds nuw i8, ptr %i.ajm, i64 %i.ajl
-  store i8 %14, ptr %i.ajn, align 1, !noalias !2375
+  store i8 %i.ez, ptr %i.ajn, align 1, !noalias !2375
   %i.ajo = add nuw nsw i64 %i.agx, 12             ; 2 uses
   store i64 %i.ajo, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2390, !noalias !2374
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2274,7 +2267,7 @@ bb.cw:                                            ; preds = %.noexc138.i.i.i
 .noexc146.i.i.i:                                  ; preds = %.noexc145.i.i.i
   %i.ajs = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2392, !noalias !2374, !nonnull !5, !noundef !5
   %i.ajt = getelementptr inbounds nuw i8, ptr %i.ajs, i64 %i.ajr
-  store i8 %i.fc, ptr %i.ajt, align 1, !noalias !2375
+  store i8 %6, ptr %i.ajt, align 1, !noalias !2375
   %i.aju = add nuw i64 %i.agx, 14                 ; 2 uses
   store i64 %i.aju, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2392, !noalias !2374
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bg, i64 noundef 1)
@@ -2283,7 +2276,7 @@ bb.cw:                                            ; preds = %.noexc138.i.i.i
 .noexc147.i.i.i:                                  ; preds = %.noexc146.i.i.i
   %i.ajv = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !alias.scope !2393, !noalias !2374, !nonnull !5, !noundef !5
   %i.ajw = getelementptr inbounds nuw i8, ptr %i.ajv, i64 %i.aju
-  store i8 %16, ptr %i.ajw, align 1, !noalias !2375
+  store i8 %i.fc, ptr %i.ajw, align 1, !noalias !2375
   %i.ajx = add nuw i64 %i.agx, 15
   store i64 %i.ajx, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !alias.scope !2393, !noalias !2374
   br i1 %i.fd, label %bb.cx, label %bb.cy

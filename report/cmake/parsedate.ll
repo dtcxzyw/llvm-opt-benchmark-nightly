@@ -204,7 +204,7 @@ bb.aj:                                            ; preds = %match_time.exit.thr
   %i.ei = sub i64 %i.eg, %i.eh
   %i.ej = trunc i64 %i.ei to i32                  ; 2 uses
   %i.ek = load i64, ptr %i.a, align 8, !tbaa !10  ; 2 uses
-  %i.el = trunc i64 %i.ek to i32                  ; 9 uses
+  %i.el = trunc i64 %i.ek to i32                  ; 8 uses
   %i.em = icmp eq i32 %.sroa.39.0140, -1
   %i.en = icmp eq i32 %i.ej, 4
   %or.cond.i21 = select i1 %i.em, i1 %i.en, i1 false
@@ -247,12 +247,15 @@ bb.am:                                            ; preds = %bb.aj
 
 bb.an:                                            ; preds = %bb.am
   %i.fd = udiv i32 %i.el, 10000
-  %3 = urem i32 %i.el, 10000
-  %.lhs.trunc106.i = trunc nuw nsw i32 %3 to i16
+  %3 = insertelement <2 x i32> poison, i32 %i.el, i64 0
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <2 x i32> zeroinitializer
+  %5 = urem <2 x i32> %4, <i32 10000, i32 100>    ; 2 uses
+  %6 = bitcast <2 x i32> %5 to <4 x i16>
+  %.lhs.trunc106.i = extractelement <4 x i16> %6, i64 0
   %i.fe = udiv i16 %.lhs.trunc106.i, 100
   %.zext107.i = zext nneg i16 %i.fe to i32
   %i.ff = add nsw i32 %.zext107.i, -1
-  %4 = urem i32 %i.el, 100
+  %7 = extractelement <2 x i32> %5, i64 1
   br label %.thread101.i
 
 .thread.i:                                        ; preds = %bb.am, %bb.ak
@@ -284,7 +287,7 @@ bb.ap:                                            ; preds = %bb.ao
 
 .thread101.i:                                     ; preds = %bb.ap, %.thread96.i, %bb.an, %bb.al
   %.sroa.6.5 = phi i32 [ %i.ff, %bb.an ], [ %.sroa.6.0134, %.thread96.i ], [ %.sroa.6.0134, %bb.al ], [ %.sroa.6.0134, %bb.ap ]
-  %.sroa.13.2 = phi i32 [ %4, %bb.an ], [ %.sroa.13.0135, %.thread96.i ], [ %.sroa.13.0135, %bb.al ], [ %i.el, %bb.ap ]
+  %.sroa.13.2 = phi i32 [ %7, %bb.an ], [ %.sroa.13.0135, %.thread96.i ], [ %.sroa.13.0135, %bb.al ], [ %i.el, %bb.ap ]
   %.sroa.33.2 = phi i32 [ %i.fd, %bb.an ], [ %storemerge.i, %.thread96.i ], [ %.sroa.33.0139, %bb.al ], [ %.sroa.33.0139, %bb.ap ]
   %.sroa.39.4 = phi i32 [ %.sroa.39.0140, %bb.an ], [ %.sroa.39.0140, %.thread96.i ], [ %i.ey, %bb.al ], [ %.sroa.39.0140, %bb.ap ]
   %.16699.i = phi i32 [ %.0132, %bb.an ], [ %spec.select.i, %.thread96.i ], [ %.0132, %bb.al ], [ 1, %bb.ap ]

@@ -205,28 +205,33 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.010.i = phi i64 [ %i.s, %bb.f ], [ 0, %bb.e ] ; 12 uses
-  %5 = urem i64 %.010.i, 10
-  %6 = trunc nuw nsw i64 %5 to i8
-  %7 = or disjoint i8 %6, 48
-  store i8 %7, ptr %i.n, align 1, !tbaa !50
-  %i.t = udiv i64 %.010.i, 10
-  %8 = getelementptr inbounds nuw i8, ptr %i.m, i64 10
-  %9 = urem i64 %i.t, 10
-  %10 = trunc nuw nsw i64 %9 to i8
-  %i.u = or disjoint i8 %10, 48
-  store i8 %i.u, ptr %8, align 1, !tbaa !50
-  %11 = udiv i64 %.010.i, 100
-  %12 = getelementptr inbounds nuw i8, ptr %i.m, i64 9
-  %13 = urem i64 %11, 10
-  %14 = trunc nuw nsw i64 %13 to i8
-  %15 = or disjoint i8 %14, 48
-  store i8 %15, ptr %12, align 1, !tbaa !50
-  %16 = udiv i64 %.010.i, 1000
-  %17 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %18 = urem i64 %16, 10
-  %19 = trunc nuw nsw i64 %18 to i8
-  %i.v = or disjoint i8 %19, 48
-  store i8 %i.v, ptr %17, align 1, !tbaa !50
+  %5 = getelementptr inbounds nuw i8, ptr %i.m, i64 10
+  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 9
+  %7 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
+  %8 = udiv i64 %.010.i, 10
+  %9 = udiv i64 %.010.i, 100
+  %i.t = udiv i64 %.010.i, 1000
+  %10 = insertelement <4 x i64> poison, i64 %.010.i, i64 0
+  %11 = insertelement <4 x i64> %10, i64 %8, i64 1
+  %12 = insertelement <4 x i64> %11, i64 %9, i64 2
+  %13 = insertelement <4 x i64> %12, i64 %i.t, i64 3
+  %14 = urem <4 x i64> %13, splat (i64 10)        ; 4 uses
+  %15 = bitcast <4 x i64> %14 to <32 x i8>
+  %16 = extractelement <32 x i8> %15, i64 0
+  %i.u = or disjoint i8 %16, 48
+  store i8 %i.u, ptr %i.n, align 1, !tbaa !50
+  %17 = bitcast <4 x i64> %14 to <32 x i8>
+  %18 = extractelement <32 x i8> %17, i64 8
+  %19 = or disjoint i8 %18, 48
+  store i8 %19, ptr %5, align 1, !tbaa !50
+  %20 = bitcast <4 x i64> %14 to <32 x i8>
+  %21 = extractelement <32 x i8> %20, i64 16
+  %22 = or disjoint i8 %21, 48
+  store i8 %22, ptr %6, align 1, !tbaa !50
+  %23 = bitcast <4 x i64> %14 to <32 x i8>
+  %24 = extractelement <32 x i8> %23, i64 24
+  %i.v = or disjoint i8 %24, 48
+  store i8 %i.v, ptr %7, align 1, !tbaa !50
   %i.w = udiv i64 %.010.i, 10000
   %i.x = getelementptr inbounds nuw i8, ptr %i.m, i64 7
   %i.y = urem i64 %i.w, 10
