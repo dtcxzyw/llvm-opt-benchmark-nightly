@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vbrev8_v_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 6 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -242,7 +242,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond46 = or i1 %or.cond, %diff.check
   br i1 %or.cond46, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -645,8 +645,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vrev8_v_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 8 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -682,7 +682,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond46 = or i1 %or.cond, %diff.check
   br i1 %or.cond46, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -846,8 +846,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vrev8_v_h(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 8 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -885,7 +885,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond47 = or i1 %or.cond, %diff.check
   br i1 %or.cond47, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -1288,8 +1288,8 @@ bb.a:
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vbrev_v_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 6 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -1325,7 +1325,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond46 = or i1 %or.cond, %diff.check
   br i1 %or.cond46, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -1728,8 +1728,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vclz_v_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 8 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -1765,7 +1765,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond46 = or i1 %or.cond, %diff.check
   br i1 %or.cond46, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -1920,8 +1920,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vclz_v_h(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 8 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -1959,7 +1959,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond47 = or i1 %or.cond, %diff.check
   br i1 %or.cond47, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -2362,8 +2362,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vctz_v_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 8 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -2399,7 +2399,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond46 = or i1 %or.cond, %diff.check
   br i1 %or.cond46, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -2802,8 +2802,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vcpop_v_b(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 8 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -2839,7 +2839,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond46 = or i1 %or.cond, %diff.check
   br i1 %or.cond46, label %.preheader.split.preheader, label %vector.main.loop.iter.check
@@ -2994,8 +2994,8 @@ bb.f:                                             ; preds = %.split.us, %bb.e
 ; Function Attrs: noinline nounwind sspstrong uwtable
 define dso_local void @helper_vcpop_v_h(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef captures(none) %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %2 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 4616
   %i.d = load i32, ptr %i.c, align 8              ; 6 uses
   %i.e = getelementptr i8, ptr %3, i64 4608
@@ -3033,7 +3033,7 @@ iter.check:                                       ; preds = %.preheader
   %i.y = add i32 %i.d, -1
   %i.z = icmp slt i32 %i.y, %i.v
   %or.cond = or i1 %min.iters.check, %i.z
-  %i.aa = sub i64 %i.a, %i.b
+  %i.aa = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aa, -32
   %or.cond47 = or i1 %or.cond, %diff.check
   br i1 %or.cond47, label %.preheader.split.preheader, label %vector.main.loop.iter.check

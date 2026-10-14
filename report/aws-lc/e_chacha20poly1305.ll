@@ -205,9 +205,9 @@ declare i32 @EVP_CIPHER_CTX_encrypting(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @cipher_chacha20_do_cipher(ptr %.16.val, ptr noundef nonnull %0, ptr noundef nonnull %1, i64 noundef %2) unnamed_addr #1 {
 bb.a:
-  %.16.val5 = ptrtoaddr ptr %.16.val to i64       ; 2 uses
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %.16.val5 = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %.16.val to i64            ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.16.val, i64 112 ; 4 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !23   ; 4 uses
   %.not = icmp eq i32 %i.d, 0
@@ -230,10 +230,10 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.m = sub i64 %i.a, %i.b
+  %i.m = sub i64 %.16.val5, %i.a
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = add i64 %.16.val5, %i.i
-  %i.o = sub i64 %i.b, %i.n
+  %i.n = add i64 %i.b, %i.i
+  %i.o = sub i64 %i.a, %i.n
   %i.p = add i64 %i.o, -49
   %diff.check6 = icmp ult i64 %i.p, 31
   %conflict.rdx = or i1 %diff.check, %diff.check6
@@ -419,7 +419,7 @@ iter.check48:                                     ; preds = %._crit_edge15
 vector.memcheck27:                                ; preds = %iter.check48
   %i.bq = sub i64 %.272.lcssa29, %.275.lcssa28
   %diff.check30 = icmp ugt i64 %i.bq, -16
-  %i.br = sub i64 %.275.lcssa28, %.16.val5
+  %i.br = sub i64 %.275.lcssa28, %i.b
   %i.bs = add i64 %i.br, -49
   %diff.check31 = icmp ult i64 %i.bs, 15
   %conflict.rdx32 = or i1 %diff.check30, %diff.check31

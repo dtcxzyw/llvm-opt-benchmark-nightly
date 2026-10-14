@@ -205,9 +205,9 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
   %i.h = trunc i64 %2 to i8                       ; 6 uses
-  %i.i = ptrtoaddr ptr %0 to i64
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %1 to i64
+  %i.j = ptrtoaddr ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -314,9 +314,9 @@ iter.check:
   %i.g = lshr exact i32 %.v.i, 1
   %i.h = zext nneg i32 %i.g to i64                ; 5 uses
   %i.i = trunc i64 %2 to i16                      ; 6 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
 
@@ -632,9 +632,9 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
   %i.h = trunc i64 %2 to i8                       ; 6 uses
-  %i.i = ptrtoaddr ptr %0 to i64
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %1 to i64
+  %i.j = ptrtoaddr ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -741,9 +741,9 @@ iter.check:
   %i.g = lshr exact i32 %.v.i, 1
   %i.h = zext nneg i32 %i.g to i64                ; 5 uses
   %i.i = trunc i64 %2 to i16                      ; 6 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
 
@@ -1059,9 +1059,9 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
   %i.h = trunc i64 %2 to i8                       ; 6 uses
-  %i.i = ptrtoaddr ptr %0 to i64
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %1 to i64
+  %i.j = ptrtoaddr ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -1168,9 +1168,9 @@ iter.check:
   %i.g = lshr exact i32 %.v.i, 1
   %i.h = zext nneg i32 %i.g to i64                ; 5 uses
   %i.i = trunc i64 %2 to i16                      ; 6 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
 
@@ -1486,9 +1486,9 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
   %i.h = trunc i64 %2 to i8                       ; 6 uses
-  %i.i = ptrtoaddr ptr %0 to i64
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %1 to i64
+  %i.j = ptrtoaddr ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -1595,9 +1595,9 @@ iter.check:
   %i.g = lshr exact i32 %.v.i, 1
   %i.h = zext nneg i32 %i.g to i64                ; 5 uses
   %i.i = trunc i64 %2 to i16                      ; 6 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
 
@@ -1913,9 +1913,9 @@ iter.check:
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 5 uses
   %i.h = trunc i64 %2 to i8                       ; 6 uses
-  %i.i = ptrtoaddr ptr %0 to i64
-  %i.j = ptrtoaddr ptr %1 to i64
-  %i.k = sub i64 %i.j, %i.i
+  %i.i = ptrtoaddr ptr %1 to i64
+  %i.j = ptrtoaddr ptr %0 to i64
+  %i.k = sub i64 %i.i, %i.j
   %diff.check = icmp ugt i64 %i.k, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -2022,9 +2022,9 @@ iter.check:
   %i.g = lshr exact i32 %.v.i, 1
   %i.h = zext nneg i32 %i.g to i64                ; 5 uses
   %i.i = trunc i64 %2 to i16                      ; 6 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader.new, label %vector.main.loop.iter.check
 
@@ -2427,9 +2427,9 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -2662,9 +2662,9 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -2889,9 +2889,9 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %1 to i64
+  %i.k = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %i.j, %i.k
   %diff.check = icmp ugt i64 %i.l, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -3294,9 +3294,9 @@ iter.check:
   %i.i = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.i, 4
   %i.j = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.k = ptrtoaddr ptr %0 to i64
-  %i.l = ptrtoaddr ptr %1 to i64
-  %i.m = sub i64 %i.l, %i.k
+  %i.k = ptrtoaddr ptr %1 to i64
+  %i.l = ptrtoaddr ptr %0 to i64
+  %i.m = sub i64 %i.k, %i.l
   %diff.check = icmp ugt i64 %i.m, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -3699,12 +3699,12 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = ptrtoaddr ptr %2 to i64
-  %i.m = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.l = ptrtoaddr ptr %1 to i64
+  %i.m = sub i64 %i.l, %i.k
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = sub i64 %i.l, %i.j
+  %i.n = sub i64 %i.j, %i.k
   %diff.check12 = icmp ugt i64 %i.n, -32
   %conflict.rdx = or i1 %diff.check, %diff.check12
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -4107,12 +4107,12 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = ptrtoaddr ptr %2 to i64
-  %i.m = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.l = ptrtoaddr ptr %1 to i64
+  %i.m = sub i64 %i.l, %i.k
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = sub i64 %i.l, %i.j
+  %i.n = sub i64 %i.j, %i.k
   %diff.check12 = icmp ugt i64 %i.n, -32
   %conflict.rdx = or i1 %diff.check, %diff.check12
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -4515,12 +4515,12 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = ptrtoaddr ptr %2 to i64
-  %i.m = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.l = ptrtoaddr ptr %1 to i64
+  %i.m = sub i64 %i.l, %i.k
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = sub i64 %i.l, %i.j
+  %i.n = sub i64 %i.j, %i.k
   %diff.check12 = icmp ugt i64 %i.n, -32
   %conflict.rdx = or i1 %diff.check, %diff.check12
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -4923,12 +4923,12 @@ iter.check:
   %i.h = lshr exact i32 %.v.v.i, 1
   %narrow = add nuw nsw i32 %i.h, 4
   %i.i = zext nneg i32 %narrow to i64             ; 4 uses
-  %i.j = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.k = ptrtoaddr ptr %1 to i64
-  %i.l = ptrtoaddr ptr %2 to i64
-  %i.m = sub i64 %i.k, %i.j
+  %i.j = ptrtoaddr ptr %2 to i64
+  %i.k = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.l = ptrtoaddr ptr %1 to i64
+  %i.m = sub i64 %i.l, %i.k
   %diff.check = icmp ugt i64 %i.m, -32
-  %i.n = sub i64 %i.l, %i.j
+  %i.n = sub i64 %i.j, %i.k
   %diff.check12 = icmp ugt i64 %i.n, -32
   %conflict.rdx = or i1 %diff.check, %diff.check12
   br i1 %conflict.rdx, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

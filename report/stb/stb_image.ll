@@ -204,9 +204,9 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @stbi__resample_row_v_2(ptr nofree noundef returned writeonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 %4) #18 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
-  %i.c = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.c = ptrtoaddr ptr %2 to i64
   %i.d = icmp sgt i32 %3, 0
   br i1 %i.d, label %iter.check, label %._crit_edge
 
@@ -216,9 +216,9 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.e = sub i64 %i.b, %i.c
+  %i.e = sub i64 %i.a, %i.b
   %diff.check = icmp ugt i64 %i.e, -16
-  %i.f = sub i64 %i.a, %i.c
+  %i.f = sub i64 %i.c, %i.b
   %diff.check11 = icmp ugt i64 %i.f, -16
   %conflict.rdx = or i1 %diff.check, %diff.check11
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check

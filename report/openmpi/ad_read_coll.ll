@@ -204,14 +204,14 @@ declare ptr @ADIOI_Flatten_and_find(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define void @ADIOI_Fill_user_buffer(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readonly captures(none) %6, ptr nofree readnone captures(none) %7, ptr nofree readnone captures(none) %8, ptr nofree noundef captures(none) %9, i32 noundef %10, i32 noundef %11, i64 noundef %12, i64 noundef %13, ptr noundef %14, ptr noundef %15, i64 noundef %16) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %9 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %9 to i64                  ; 2 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.c = mul nsw i32 %10, 3
   %i.d = sext i32 %i.c to i64
   %i.e = shl nsw i64 %i.d, 2
   %i.f = tail call ptr @ADIOI_Malloc_fn(i64 noundef %i.e, i32 noundef 980, ptr noundef nonnull @.str) #6 ; 11 uses
-  %i.g = ptrtoaddr ptr %i.f to i64                ; 3 uses
+  %i.g = ptrtoaddr ptr %i.f to i64                ; 2 uses
   %i.h = sext i32 %10 to i64                      ; 4 uses
   %i.i = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %i.j = getelementptr inbounds [4 x i8], ptr %i.i, i64 %i.h ; 5 uses
@@ -226,12 +226,12 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.l = shl nuw nsw i64 %i.h, 3
   %i.m = shl nuw nsw i64 %i.h, 2
-  %i.n = sub i64 %i.g, %i.a
-  %diff.check547 = icmp ugt i64 %i.n, -32
-  %17 = add i64 %i.l, %i.g
-  %i.o = sub i64 %17, %i.a
+  %i.n = sub i64 %i.a, %i.g                       ; 2 uses
+  %17 = add i64 %i.n, -1
+  %diff.check556 = icmp ult i64 %17, 31
+  %i.o = sub i64 %i.l, %i.n
   %diff.check551 = icmp ugt i64 %i.o, -32
-  %conflict.rdx552 = or i1 %diff.check547, %diff.check551
+  %conflict.rdx552 = or i1 %diff.check556, %diff.check551
   %i.p = add i64 %i.m, %i.g
   %i.q = sub i64 %i.a, %i.p
   %diff.check553 = icmp ugt i64 %i.q, -32

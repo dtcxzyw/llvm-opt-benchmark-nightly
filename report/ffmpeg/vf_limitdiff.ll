@@ -202,10 +202,10 @@ declare i32 @av_image_fill_linesizes(ptr noundef, i32 noundef, i32 noundef) loca
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal void @limitdiff8(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 %7) #6 {
 bb.a:
-  %i.a = ptrtoaddr ptr %3 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %2 to i64
-  %i.c = ptrtoaddr ptr %0 to i64
-  %i.d = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.c = ptrtoaddr ptr %1 to i64                  ; 3 uses
+  %i.d = ptrtoaddr ptr %3 to i64
   %i.e = icmp sgt i32 %6, 0
   br i1 %i.e, label %iter.check, label %._crit_edge
 
@@ -216,12 +216,12 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.g = sub i64 %i.c, %i.d
+  %i.g = sub i64 %i.a, %i.c
   %diff.check = icmp ugt i64 %i.g, -16
-  %i.h = sub i64 %i.b, %i.d
+  %i.h = sub i64 %i.b, %i.c
   %diff.check50 = icmp ugt i64 %i.h, -16
   %conflict.rdx = or i1 %diff.check, %diff.check50
-  %i.i = sub i64 %i.a, %i.d
+  %i.i = sub i64 %i.d, %i.c
   %diff.check51 = icmp ugt i64 %i.i, -16
   %conflict.rdx52 = or i1 %conflict.rdx, %diff.check51
   br i1 %conflict.rdx52, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

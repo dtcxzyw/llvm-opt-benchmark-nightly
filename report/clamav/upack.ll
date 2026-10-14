@@ -203,10 +203,10 @@ bb.cd:                                            ; preds = %bb.cc
   br i1 %min.iters.check, label %.lr.ph1266.preheader1407, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph1266.preheader
-  %i.sl = add nsw i64 %i.rp, %i.qz
-  %i.sm = add nuw nsw i64 %i.rk, %i.pf
-  %i.sn = add nuw nsw i64 %i.sm, %i.pe
-  %i.so = sub nsw i64 %i.sl, %i.sn
+  %i.sl = add nuw nsw i64 %i.rk, %i.pf
+  %i.sm = add nuw nsw i64 %i.sl, %i.pe
+  %i.sn = add nsw i64 %i.rp, %i.qz
+  %i.so = sub nsw i64 %i.sn, %i.sm
   %i.sp = add nsw i64 %i.so, -17
   %diff.check = icmp ult i64 %i.sp, 31
   br i1 %diff.check, label %.lr.ph1266.preheader1407, label %vector.ph1377

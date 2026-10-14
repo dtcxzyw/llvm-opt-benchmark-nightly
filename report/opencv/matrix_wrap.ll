@@ -205,10 +205,10 @@ bb.w:                                             ; preds = %bb.q
   br i1 %min.iters.check269, label %scalar.ph268.preheader, label %vector.memcheck266
 
 vector.memcheck266:                               ; preds = %.lr.ph166
+  %.neg289 = mul nsw i64 %i.cw, -208
   %i.dc = add i64 %i.a, -84
   %i.dd = sub i64 %i.dc, %i.ck
-  %.neg281 = mul nsw i64 %i.cw, -208
-  %i.de = add i64 %.neg281, %i.dd
+  %i.de = add i64 %.neg289, %i.dd
   %i.df = add i64 %i.de, -1
   %diff.check267 = icmp ult i64 %i.df, 31
   br i1 %diff.check267, label %scalar.ph268.preheader, label %vector.ph270
@@ -353,10 +353,10 @@ bb.ae:                                            ; preds = %bb.y
   br i1 %min.iters.check255, label %scalar.ph254.preheader, label %vector.memcheck252
 
 vector.memcheck252:                               ; preds = %.lr.ph164
+  %.neg288 = mul nsw i64 %i.eq, -208
   %i.ew = add i64 %i.a, -84
   %i.ex = sub i64 %i.ew, %i.ep
-  %.neg280 = mul nsw i64 %i.eq, -208
-  %i.ey = add i64 %.neg280, %i.ex
+  %i.ey = add i64 %.neg288, %i.ex
   %i.ez = add i64 %i.ey, -1
   %diff.check253 = icmp ult i64 %i.ez, 31
   br i1 %diff.check253, label %scalar.ph254.preheader, label %vector.ph256
@@ -506,9 +506,9 @@ bb.am:                                            ; preds = %bb.ag
   br i1 %min.iters.check241, label %scalar.ph240.preheader, label %vector.memcheck238
 
 vector.memcheck238:                               ; preds = %.lr.ph162
+  %.neg = mul nsw i64 %i.gp, -184
   %i.gv = add i64 %i.a, -60
   %i.gw = sub i64 %i.gv, %i.gd
-  %.neg = mul nsw i64 %i.gp, -184
   %i.gx = add i64 %.neg, %i.gw
   %i.gy = add i64 %i.gx, -1
   %diff.check239 = icmp ult i64 %i.gy, 31

@@ -205,11 +205,11 @@ Vec_WrdFetch.exit191:                             ; preds = %bb.i, %bb.j
   br i1 %min.iters.check430, label %.lr.ph.i194.preheader, label %vector.memcheck425
 
 vector.memcheck425:                               ; preds = %.lr.ph.preheader.i192
-  %9 = sub i64 %.0.i190426, %i.a                  ; 2 uses
-  %10 = shl nuw nsw i64 %i.bj, 3
-  %i.bm = sub i64 %10, %9
+  %9 = shl nuw nsw i64 %i.bj, 3
+  %10 = sub i64 %.0.i190426, %i.a                 ; 2 uses
+  %i.bm = sub i64 %9, %10
   %diff.check427 = icmp ugt i64 %i.bm, -32
-  %i.bn = add i64 %9, -1
+  %i.bn = add i64 %10, -1
   %diff.check428 = icmp ult i64 %i.bn, 31
   %conflict.rdx = or i1 %diff.check427, %diff.check428
   br i1 %conflict.rdx, label %.lr.ph.i194.preheader, label %vector.ph431

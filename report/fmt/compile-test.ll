@@ -205,9 +205,9 @@ iter.check299:                                    ; preds = %._crit_edge.i.i.i
   br i1 %min.iters.check284, label %.lr.ph.i.i.i.i.preheader, label %vector.memcheck281
 
 vector.memcheck281:                               ; preds = %iter.check299
-  %i.fr = add i64 %.06.lcssa.i.i.i282, %i.fo
-  %i.fs = add i64 %.039.i.idx, %i.d
-  %i.ft = sub i64 %i.fs, %i.fr
+  %i.fr = add i64 %.039.i.idx, %i.d
+  %i.fs = add i64 %.06.lcssa.i.i.i282, %i.fo
+  %i.ft = sub i64 %i.fr, %i.fs
   %diff.check283 = icmp ugt i64 %i.ft, -32
   br i1 %diff.check283, label %.lr.ph.i.i.i.i.preheader, label %vector.main.loop.iter.check285
 
@@ -610,9 +610,9 @@ iter.check:                                       ; preds = %._crit_edge.i.i.i89
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i92.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ol = add i64 %.06.lcssa.i.i.i90236, %i.oi
-  %i.om = add i64 %.039.i18.idx, %i.b
-  %i.on = sub i64 %i.om, %i.ol
+  %i.ol = add i64 %.039.i18.idx, %i.b
+  %i.om = add i64 %.06.lcssa.i.i.i90236, %i.oi
+  %i.on = sub i64 %i.ol, %i.om
   %diff.check = icmp ugt i64 %i.on, -32
   br i1 %diff.check, label %.lr.ph.i.i.i.i92.preheader, label %vector.main.loop.iter.check
 
@@ -1015,16 +1015,16 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 .lr.ph.i.preheader.i:                             ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i, %.noexc170
   %i.en = phi ptr [ %i.ek, %.noexc170 ], [ %i.em, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 2 uses
   %i.eo = phi ptr [ %i.ej, %.noexc170 ], [ %i.el, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 6 uses
-  %i.ep = ptrtoaddr ptr %i.en to i64
-  %i.eq = ptrtoaddr ptr %i.eo to i64              ; 2 uses
+  %i.ep = ptrtoaddr ptr %i.eo to i64              ; 2 uses
+  %i.eq = ptrtoaddr ptr %i.en to i64
   %i.er = load ptr, ptr %7, align 8, !tbaa !311   ; 4 uses
-  %i.es = add i64 %i.ep, -4
-  %i.et = sub i64 %i.es, %i.eq                    ; 2 uses
+  %i.es = add i64 %i.eq, -4
+  %i.et = sub i64 %i.es, %i.ep                    ; 2 uses
   %i.eu = lshr i64 %i.et, 2
   %i.ev = add nuw nsw i64 %i.eu, 1                ; 2 uses
   %min.iters.check1221 = icmp ult i64 %i.et, 44
   %i.ew = ptrtoaddr ptr %i.er to i64
-  %i.ex = sub i64 %i.eq, %i.ew
+  %i.ex = sub i64 %i.ep, %i.ew
   %diff.check = icmp ugt i64 %i.ex, -32
   %or.cond1325 = select i1 %min.iters.check1221, i1 true, i1 %diff.check
   br i1 %or.cond1325, label %.lr.ph.i.i.preheader, label %vector.ph1222
@@ -1112,16 +1112,16 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
   %.pr = phi i64 [ %i.fo, %.noexc182 ], [ %i.fk, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 7 uses
   %i.ft = phi ptr [ %i.fq, %.noexc182 ], [ %i.fr, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 2 uses
   %i.fu = phi ptr [ %i.fp, %.noexc182 ], [ %i.fi, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 4 uses
-  %i.fv = ptrtoaddr ptr %i.ft to i64
-  %i.fw = ptrtoaddr ptr %i.fu to i64              ; 2 uses
+  %i.fv = ptrtoaddr ptr %i.fu to i64              ; 2 uses
+  %i.fw = ptrtoaddr ptr %i.ft to i64
   %i.fx = load ptr, ptr %8, align 8, !tbaa !311   ; 7 uses
-  %i.fy = add i64 %i.fv, -4
-  %i.fz = sub i64 %i.fy, %i.fw                    ; 2 uses
+  %i.fy = add i64 %i.fw, -4
+  %i.fz = sub i64 %i.fy, %i.fv                    ; 2 uses
   %i.ga = lshr i64 %i.fz, 2
   %i.gb = add nuw nsw i64 %i.ga, 1                ; 2 uses
   %min.iters.check1237 = icmp ult i64 %i.fz, 44
   %i.gc = ptrtoaddr ptr %i.fx to i64
-  %i.gd = sub i64 %i.fw, %i.gc
+  %i.gd = sub i64 %i.fv, %i.gc
   %diff.check1235 = icmp ugt i64 %i.gd, -32
   %or.cond1327 = select i1 %min.iters.check1237, i1 true, i1 %diff.check1235
   br i1 %or.cond1327, label %.lr.ph.i.i175.preheader, label %vector.ph1238

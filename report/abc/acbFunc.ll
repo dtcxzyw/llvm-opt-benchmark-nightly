@@ -206,15 +206,15 @@ Vec_IntAlloc.exit.i:                              ; preds = %bb.d, %Abc_Clock.ex
   br i1 %i.ar, label %.lr.ph13.i.i.preheader, label %.preheader.i.i
 
 .lr.ph13.i.i.preheader:                           ; preds = %.preheader5.i.i
-  %.033.lcssa.i.i522 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
-  %.036.lcssa.i.i521 = ptrtoaddr ptr %.036.lcssa.i.i to i64
+  %.033.lcssa.i.i522 = ptrtoaddr ptr %.036.lcssa.i.i to i64
+  %.036.lcssa.i.i521 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
   %i.as = add i64 %.idx.i.i, %.val6.i523
-  %i.at = xor i64 %.033.lcssa.i.i522, -1
+  %i.at = xor i64 %.036.lcssa.i.i521, -1
   %i.au = add i64 %i.as, %i.at                    ; 2 uses
   %i.av = lshr i64 %i.au, 2
   %i.aw = add nuw nsw i64 %i.av, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.au, 44
-  %i.ax = sub i64 %.033.lcssa.i.i522, %.036.lcssa.i.i521
+  %i.ax = sub i64 %.036.lcssa.i.i521, %.033.lcssa.i.i522
   %diff.check = icmp ugt i64 %i.ax, -32
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph13.i.i.preheader583, label %vector.ph

@@ -24,8 +24,8 @@ define void @dsytrd_sb2st_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr n
 bb.a:
   %i.a = ptrtoaddr ptr %11 to i64                 ; 3 uses
   %i.b = ptrtoaddr ptr %8 to i64                  ; 4 uses
-  %i.c = ptrtoaddr ptr %5 to i64                  ; 4 uses
-  %i.d = ptrtoaddr ptr %7 to i64                  ; 3 uses
+  %i.c = ptrtoaddr ptr %7 to i64                  ; 3 uses
+  %i.d = ptrtoaddr ptr %5 to i64                  ; 4 uses
   %i.e = alloca i32, align 4                      ; 8 uses
   %i.f = alloca i32, align 4                      ; 11 uses
   %i.g = alloca i32, align 4                      ; 11 uses
@@ -202,8 +202,8 @@ iter.check557:                                    ; preds = %bb.t
 
 vector.memcheck540:                               ; preds = %iter.check557
   %i.bn = shl nuw nsw i64 %.0267, 3
-  %i.bo = add i64 %i.bn, %i.c
-  %i.bp = sub i64 %i.d, %i.bo
+  %i.bo = add i64 %i.bn, %i.d
+  %i.bp = sub i64 %i.c, %i.bo
   %i.bq = add i64 %i.bp, 7
   %diff.check541 = icmp ult i64 %i.bq, 127
   br i1 %diff.check541, label %.lr.ph345.preheader, label %vector.main.loop.iter.check543
@@ -379,8 +379,8 @@ iter.check:                                       ; preds = %bb.t
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.dt = shl nuw nsw i64 %.0267, 3
-  %i.du = add i64 %i.dt, %i.c
-  %i.dv = sub i64 %i.d, %i.du
+  %i.du = add i64 %i.dt, %i.d
+  %i.dv = sub i64 %i.c, %i.du
   %i.dw = add i64 %i.dv, 7
   %diff.check = icmp ult i64 %i.dw, 127
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -546,7 +546,7 @@ iter.check493:                                    ; preds = %bb.u
 
 vector.memcheck476:                               ; preds = %iter.check493
   %i.fv = shl nuw nsw i64 %.0275, 3
-  %i.fw = add i64 %i.fv, %i.c
+  %i.fw = add i64 %i.fv, %i.d
   %i.fx = sub i64 %i.fw, %i.b
   %diff.check477 = icmp ugt i64 %i.fx, -128
   br i1 %diff.check477, label %.lr.ph337.preheader, label %vector.main.loop.iter.check479
@@ -707,7 +707,7 @@ iter.check525:                                    ; preds = %bb.v
 
 vector.memcheck508:                               ; preds = %iter.check525
   %i.hv = shl nuw nsw i64 %.0275, 3
-  %i.hw = add i64 %i.hv, %i.c
+  %i.hw = add i64 %i.hv, %i.d
   %i.hx = sub i64 %i.b, %i.hw
   %i.hy = add i64 %i.hx, 7
   %diff.check509 = icmp ult i64 %i.hy, 127
@@ -1110,7 +1110,7 @@ iter.check589:                                    ; preds = %._crit_edge368
 vector.memcheck572:                               ; preds = %iter.check589
   %i.on = shl nuw nsw i64 %.0276, 3
   %i.oo = add i64 %i.on, %i.a
-  %i.op = sub i64 %i.d, %i.oo
+  %i.op = sub i64 %i.c, %i.oo
   %i.oq = add i64 %i.op, 7
   %diff.check573 = icmp ult i64 %i.oq, 127
   br i1 %diff.check573, label %vec.epilog.scalar.ph590.preheader, label %vector.main.loop.iter.check575

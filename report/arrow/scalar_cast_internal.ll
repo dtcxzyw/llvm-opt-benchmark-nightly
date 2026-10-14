@@ -204,10 +204,10 @@ vector.memcheck1918:                              ; preds = %iter.check1939
   %i.un = ptrtoaddr ptr %i.uj to i64
   %.val32.i451919 = ptrtoaddr ptr %.val32.i45 to i64
   %i.uo = shl i64 %.val31.i46, 1
-  %14 = add i64 %i.uo, %.val32.i451919
-  %15 = shl i64 %i.ul, 1
-  %i.up = add i64 %15, %i.un
-  %i.uq = sub i64 %i.up, %14
+  %14 = shl i64 %i.ul, 1
+  %15 = add i64 %i.uo, %.val32.i451919
+  %i.up = add i64 %14, %i.un
+  %i.uq = sub i64 %i.up, %15
   %diff.check1920 = icmp ugt i64 %i.uq, -32
   br i1 %diff.check1920, label %.lr.ph.i59.i.preheader, label %vector.main.loop.iter.check1923
 
@@ -610,10 +610,10 @@ vector.memcheck1819:                              ; preds = %.lr.ph.preheader.i6
   %i.afy = ptrtoaddr ptr %i.afu to i64
   %.val34.i991820 = ptrtoaddr ptr %.val34.i99 to i64
   %i.afz = shl i64 %.val33.i100, 2
-  %16 = add i64 %i.afz, %.val34.i991820
-  %17 = shl i64 %i.afw, 2
-  %i.aga = add i64 %17, %i.afy
-  %i.agb = sub i64 %i.aga, %16
+  %16 = shl i64 %i.afw, 2
+  %17 = add i64 %i.afz, %.val34.i991820
+  %i.aga = add i64 %16, %i.afy
+  %i.agb = sub i64 %i.aga, %17
   %diff.check1821 = icmp ugt i64 %i.agb, -32
   br i1 %diff.check1821, label %.lr.ph.i65.i101.preheader, label %vector.ph1824
 
@@ -1016,10 +1016,10 @@ vector.memcheck1544:                              ; preds = %iter.check
   %i.bol = ptrtoaddr ptr %i.boh to i64
   %.val24.i3631545 = ptrtoaddr ptr %.val24.i363 to i64
   %i.bom = shl i64 %.val23.i364, 1
-  %18 = add i64 %i.bom, %.val24.i3631545
-  %19 = shl i64 %i.boj, 1
-  %i.bon = add i64 %19, %i.bol
-  %i.boo = sub i64 %i.bon, %18
+  %18 = shl i64 %i.boj, 1
+  %19 = add i64 %i.bom, %.val24.i3631545
+  %i.bon = add i64 %18, %i.bol
+  %i.boo = sub i64 %i.bon, %19
   %diff.check1546 = icmp ugt i64 %i.boo, -32
   br i1 %diff.check1546, label %.lr.ph.i44.i365.preheader, label %vector.main.loop.iter.check
 
@@ -1422,10 +1422,10 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader.i4
   %i.bzw = ptrtoaddr ptr %i.bzs to i64
   %.val26.i4321447 = ptrtoaddr ptr %.val26.i432 to i64
   %i.bzx = shl i64 %.val25.i433, 2
-  %20 = add i64 %i.bzx, %.val26.i4321447
-  %21 = shl i64 %i.bzu, 2
-  %i.bzy = add i64 %21, %i.bzw
-  %i.bzz = sub i64 %i.bzy, %20
+  %20 = shl i64 %i.bzu, 2
+  %21 = add i64 %i.bzx, %.val26.i4321447
+  %i.bzy = add i64 %20, %i.bzw
+  %i.bzz = sub i64 %i.bzy, %21
   %diff.check = icmp ugt i64 %i.bzz, -32
   br i1 %diff.check, label %.lr.ph.i49.i434.preheader, label %vector.ph1450
 

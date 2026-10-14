@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.c, %bb.a, %bb.b,
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @Sha3Update(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %2, i8 noundef zeroext range(i8 9, 22) %3) unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.b = ptrtoaddr ptr %1 to i64
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 6 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !14    ; 4 uses
   %.not = icmp eq i8 %i.d, 0
@@ -230,8 +230,8 @@ iter.check:                                       ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.j = add i64 %i.b, %i.h
-  %i.k = sub i64 %i.j, %i.a
+  %i.j = add i64 %i.a, %i.h
+  %i.k = sub i64 %i.j, %i.b
   %i.l = add i64 %i.k, 199
   %diff.check = icmp ult i64 %i.l, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -361,12 +361,12 @@ bb.c:                                             ; preds = %._crit_edge
 bb.d:                                             ; preds = %bb.c
   %.idx.i.i = zext i8 %.pre137 to i64             ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx.i.i
-  %i.ay = add i64 %i.b, %.idx.i.i
+  %i.ay = add i64 %i.a, %.idx.i.i
   %i.az = add i64 %i.ay, 200
-  %i.ba = add i64 %i.b, 208
+  %i.ba = add i64 %i.a, 208
   %i.bb = tail call i64 @llvm.umax.i64(i64 %i.az, i64 %i.ba)
   %i.bc = add i64 %i.bb, -201
-  %i.bd = sub i64 %i.bc, %i.b                     ; 2 uses
+  %i.bd = sub i64 %i.bc, %i.a                     ; 2 uses
   %i.be = lshr i64 %i.bd, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
   %min.iters.check89 = icmp ult i64 %i.bd, 24

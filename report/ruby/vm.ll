@@ -205,10 +205,10 @@ bb.fd:                                            ; preds = %bb.fb
 vector.memcheck898:                               ; preds = %.lr.ph.preheader.i574
   %.0.i.i.i575899 = ptrtoaddr ptr %.0.i.i.i575 to i64
   %i.wq = shl nsw i64 %i.wi, 3
-  %7 = add i64 %i.wq, %i.a
-  %8 = shl nsw i64 %i.wg, 3
-  %i.wr = add i64 %8, %.0.i.i.i575899
-  %i.ws = sub i64 %i.wr, %7
+  %7 = shl nsw i64 %i.wg, 3
+  %8 = add i64 %i.wq, %i.a
+  %i.wr = add i64 %7, %.0.i.i.i575899
+  %i.ws = sub i64 %i.wr, %8
   %diff.check900 = icmp ugt i64 %i.ws, -32
   br i1 %diff.check900, label %.lr.ph.i576.preheader, label %vector.ph903
 
@@ -572,10 +572,10 @@ bb.fv:                                            ; preds = %rb_array_len.exit.i
 
 vector.memcheck914:                               ; preds = %.lr.ph.preheader.i591
   %.0.i.i592915 = ptrtoaddr ptr %.0.i.i592 to i64
+  %9 = shl nsw i64 %i.acm, 3
   %i.act = add nsw i64 %i.abn, %i.acl
   %i.acu = shl nsw i64 %i.act, 3
   %i.acv = add i64 %i.acu, %i.a
-  %9 = shl nsw i64 %i.acm, 3
   %i.acw = add i64 %9, %.0.i.i592915
   %i.acx = sub i64 %i.acw, %i.acv
   %diff.check916 = icmp ugt i64 %i.acx, -32

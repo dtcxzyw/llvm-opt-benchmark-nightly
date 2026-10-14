@@ -205,11 +205,11 @@ iter.check405:                                    ; preds = %_ZN5boost9container
   br i1 %min.iters.check389, label %.lr.ph.i127.preheader, label %vector.memcheck387
 
 vector.memcheck387:                               ; preds = %iter.check405
-  %i.ec = add i64 %i.h, %i.at
-  %i.ed = add i64 %i.ec, %i.i
-  %i.ee = add i64 %i.at, %i.j
-  %i.ef = add i64 %i.ee, %i.h
-  %i.eg = sub i64 %i.ef, %i.ed
+  %i.ec = add i64 %i.at, %i.j
+  %i.ed = add i64 %i.h, %i.at
+  %i.ee = add i64 %i.ed, %i.i
+  %i.ef = add i64 %i.ec, %i.h
+  %i.eg = sub i64 %i.ef, %i.ee
   %diff.check388 = icmp ugt i64 %i.eg, -32
   br i1 %diff.check388, label %.lr.ph.i127.preheader, label %vector.main.loop.iter.check390
 

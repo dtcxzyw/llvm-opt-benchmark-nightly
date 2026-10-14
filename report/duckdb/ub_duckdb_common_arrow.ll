@@ -204,10 +204,10 @@ iter.check:                                       ; preds = %.lr.ph
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.af = shl i64 %.pre, 1
-  %6 = add i64 %i.af, %i.s
-  %7 = shl i64 %2, 1
-  %i.ag = add i64 %7, %i.p
-  %i.ah = sub i64 %i.ag, %6
+  %6 = shl i64 %2, 1
+  %7 = add i64 %i.af, %i.s
+  %i.ag = add i64 %6, %i.p
+  %i.ah = sub i64 %i.ag, %7
   %diff.check = icmp ugt i64 %i.ah, -32
   br i1 %diff.check, label %.lr.ph.split.us.preheader, label %vector.main.loop.iter.check
 
@@ -610,10 +610,10 @@ bb.h:                                             ; preds = %bb.g
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.preheader
   %i.af = shl i64 %.pre, 2
-  %6 = add i64 %i.af, %i.s
-  %7 = shl i64 %2, 2
-  %i.ag = add i64 %7, %i.p
-  %i.ah = sub i64 %i.ag, %6
+  %6 = shl i64 %2, 2
+  %7 = add i64 %i.af, %i.s
+  %i.ag = add i64 %6, %i.p
+  %i.ah = sub i64 %i.ag, %7
   %diff.check = icmp ugt i64 %i.ah, -32
   br i1 %diff.check, label %.lr.ph.split.us.preheader56, label %vector.ph
 
@@ -1016,10 +1016,10 @@ iter.check:                                       ; preds = %.lr.ph
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.af = shl i64 %.pre, 1
-  %6 = add i64 %i.af, %i.s
-  %7 = shl i64 %2, 1
-  %i.ag = add i64 %7, %i.p
-  %i.ah = sub i64 %i.ag, %6
+  %6 = shl i64 %2, 1
+  %7 = add i64 %i.af, %i.s
+  %i.ag = add i64 %6, %i.p
+  %i.ah = sub i64 %i.ag, %7
   %diff.check = icmp ugt i64 %i.ah, -32
   br i1 %diff.check, label %.lr.ph.split.us.preheader, label %vector.main.loop.iter.check
 
@@ -1422,10 +1422,10 @@ bb.h:                                             ; preds = %bb.g
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.preheader
   %i.af = shl i64 %.pre, 2
-  %6 = add i64 %i.af, %i.s
-  %7 = shl i64 %2, 2
-  %i.ag = add i64 %7, %i.p
-  %i.ah = sub i64 %i.ag, %6
+  %6 = shl i64 %2, 2
+  %7 = add i64 %i.af, %i.s
+  %i.ag = add i64 %6, %i.p
+  %i.ah = sub i64 %i.ag, %7
   %diff.check = icmp ugt i64 %i.ah, -32
   br i1 %diff.check, label %.lr.ph.split.us.preheader56, label %vector.ph
 
@@ -1828,10 +1828,10 @@ bb.h:                                             ; preds = %bb.g
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.preheader
   %i.af = shl i64 %.pre, 2
-  %6 = add i64 %i.af, %i.s
-  %7 = shl i64 %2, 2
-  %i.ag = add i64 %7, %i.p
-  %i.ah = sub i64 %i.ag, %6
+  %6 = shl i64 %2, 2
+  %7 = add i64 %i.af, %i.s
+  %i.ag = add i64 %6, %i.p
+  %i.ah = sub i64 %i.ag, %7
   %diff.check = icmp ugt i64 %i.ah, -32
   br i1 %diff.check, label %.lr.ph.split.us.preheader56, label %vector.ph
 
@@ -2234,10 +2234,10 @@ bb.h:                                             ; preds = %bb.g
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.us.preheader
   %i.af = shl i64 %.pre, 3
-  %6 = add i64 %i.af, %i.s
-  %7 = shl i64 %2, 3
-  %i.ag = add i64 %7, %i.p
-  %i.ah = sub i64 %i.ag, %6
+  %6 = shl i64 %2, 3
+  %7 = add i64 %i.af, %i.s
+  %i.ag = add i64 %6, %i.p
+  %i.ah = sub i64 %i.ag, %7
   %diff.check = icmp ugt i64 %i.ah, -32
   br i1 %diff.check, label %.lr.ph.split.us.preheader56, label %vector.ph
 

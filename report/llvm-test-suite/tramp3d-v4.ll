@@ -205,15 +205,15 @@ _ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i: ; preds = %_ZNSt15__ne
   br i1 %.not7.i.i.i.i.i.i, label %_ZNSt6vectorI3LocILi1EESaIS1_EEC2ERKS3_.exit.i, label %.lr.ph.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i
-  %i.dq = ptrtoaddr ptr %i.dn to i64              ; 2 uses
-  %i.dr = ptrtoaddr ptr %i.do to i64
+  %i.dq = ptrtoaddr ptr %i.do to i64
+  %i.dr = ptrtoaddr ptr %i.dn to i64              ; 2 uses
   %i.ds = ptrtoaddr ptr %i.dm to i64
   %i.dt = add i64 %i.ds, -4
-  %i.du = sub i64 %i.dt, %i.dq                    ; 2 uses
+  %i.du = sub i64 %i.dt, %i.dr                    ; 2 uses
   %i.dv = lshr i64 %i.du, 2
   %i.dw = add nuw nsw i64 %i.dv, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.du, 44
-  %i.dx = sub i64 %i.dq, %i.dr
+  %i.dx = sub i64 %i.dr, %i.dq
   %diff.check = icmp ugt i64 %i.dx, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.i.preheader301, label %vector.ph
@@ -381,15 +381,15 @@ _ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i.1: ; preds = %_ZNSt15__
   br i1 %.not7.i.i.i.i.i.i.1, label %_ZNSt6vectorI3LocILi1EESaIS1_EEC2ERKS3_.exit.i.1, label %.lr.ph.i.i.i.i.i.i.1.preheader
 
 .lr.ph.i.i.i.i.i.i.1.preheader:                   ; preds = %_ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i.1
-  %i.gd = ptrtoaddr ptr %i.ga to i64              ; 2 uses
-  %i.ge = ptrtoaddr ptr %i.gb to i64
+  %i.gd = ptrtoaddr ptr %i.gb to i64
+  %i.ge = ptrtoaddr ptr %i.ga to i64              ; 2 uses
   %i.gf = ptrtoaddr ptr %i.fz to i64
   %i.gg = add i64 %i.gf, -4
-  %i.gh = sub i64 %i.gg, %i.gd                    ; 2 uses
+  %i.gh = sub i64 %i.gg, %i.ge                    ; 2 uses
   %i.gi = lshr i64 %i.gh, 2
   %i.gj = add nuw nsw i64 %i.gi, 1                ; 2 uses
   %min.iters.check241 = icmp ult i64 %i.gh, 44
-  %i.gk = sub i64 %i.gd, %i.ge
+  %i.gk = sub i64 %i.ge, %i.gd
   %diff.check239 = icmp ugt i64 %i.gk, -32
   %or.cond289 = or i1 %min.iters.check241, %diff.check239
   br i1 %or.cond289, label %.lr.ph.i.i.i.i.i.i.1.preheader298, label %vector.ph242
@@ -611,15 +611,15 @@ _ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i61: ; preds = %_ZNSt15__
   br i1 %.not7.i.i.i.i.i.i62, label %_ZNSt6vectorI3LocILi1EESaIS1_EEC2ERKS3_.exit.i67, label %.lr.ph.i.i.i.i.i.i63.preheader
 
 .lr.ph.i.i.i.i.i.i63.preheader:                   ; preds = %_ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i61
-  %i.jh = ptrtoaddr ptr %i.je to i64              ; 2 uses
-  %i.ji = ptrtoaddr ptr %i.jf to i64
+  %i.jh = ptrtoaddr ptr %i.jf to i64
+  %i.ji = ptrtoaddr ptr %i.je to i64              ; 2 uses
   %i.jj = ptrtoaddr ptr %i.jd to i64
   %i.jk = add i64 %i.jj, -4
-  %i.jl = sub i64 %i.jk, %i.jh                    ; 2 uses
+  %i.jl = sub i64 %i.jk, %i.ji                    ; 2 uses
   %i.jm = lshr i64 %i.jl, 2
   %i.jn = add nuw nsw i64 %i.jm, 1                ; 2 uses
   %min.iters.check258 = icmp ult i64 %i.jl, 44
-  %i.jo = sub i64 %i.jh, %i.ji
+  %i.jo = sub i64 %i.ji, %i.jh
   %diff.check256 = icmp ugt i64 %i.jo, -32
   %or.cond290 = or i1 %min.iters.check258, %diff.check256
   br i1 %or.cond290, label %.lr.ph.i.i.i.i.i.i63.preheader295, label %vector.ph259
@@ -785,15 +785,15 @@ _ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i61.1: ; preds = %_ZNSt15
   br i1 %.not7.i.i.i.i.i.i62.1, label %_ZNSt6vectorI3LocILi1EESaIS1_EEC2ERKS3_.exit.i67.1, label %.lr.ph.i.i.i.i.i.i63.1.preheader
 
 .lr.ph.i.i.i.i.i.i63.1.preheader:                 ; preds = %_ZNSt12_Vector_baseI3LocILi1EESaIS1_EEC2EmRKS2_.exit.i.i61.1
-  %i.ls = ptrtoaddr ptr %i.lp to i64              ; 2 uses
-  %i.lt = ptrtoaddr ptr %i.lq to i64
+  %i.ls = ptrtoaddr ptr %i.lq to i64
+  %i.lt = ptrtoaddr ptr %i.lp to i64              ; 2 uses
   %i.lu = ptrtoaddr ptr %i.lo to i64
   %i.lv = add i64 %i.lu, -4
-  %i.lw = sub i64 %i.lv, %i.ls                    ; 2 uses
+  %i.lw = sub i64 %i.lv, %i.lt                    ; 2 uses
   %i.lx = lshr i64 %i.lw, 2
   %i.ly = add nuw nsw i64 %i.lx, 1                ; 2 uses
   %min.iters.check275 = icmp ult i64 %i.lw, 44
-  %i.lz = sub i64 %i.ls, %i.lt
+  %i.lz = sub i64 %i.lt, %i.ls
   %diff.check273 = icmp ugt i64 %i.lz, -32
   %or.cond291 = or i1 %min.iters.check275, %diff.check273
   br i1 %or.cond291, label %.lr.ph.i.i.i.i.i.i63.1.preheader292, label %vector.ph276

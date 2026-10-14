@@ -205,9 +205,9 @@ bb.y:                                             ; preds = %_RINvXs2J_NtNtCslwF
 
 vector.memcheck56:                                ; preds = %bb.y
   %i.hw = ptrtoaddr ptr %i.hu to i64
-  %2 = add i64 %.idx, %i.hw
-  %3 = shl i64 %.sroa.02.0.i, 2
-  %i.hx = add i64 %2, %3
+  %2 = shl i64 %.sroa.02.0.i, 2
+  %3 = add i64 %.idx, %i.hw
+  %i.hx = add i64 %3, %2
   %i.hy = add i64 %.idx8, %i.y
   %i.hz = sub i64 %i.hy, %i.hx
   %diff.check57 = icmp ugt i64 %i.hz, -32

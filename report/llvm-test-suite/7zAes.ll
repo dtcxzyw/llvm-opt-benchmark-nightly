@@ -204,8 +204,8 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #11
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef range(i32 -2147467263, 1) i32 @_ZN7NCrypto7NSevenZ8CDecoder21SetDecoderProperties2EPKhj(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(184) initializes((64, 88), (144, 160)) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) unnamed_addr #12 align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.c, i8 0, i64 24, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 4 uses
@@ -255,7 +255,7 @@ iter.check:                                       ; preds = %.preheader39
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.z = sub i64 %i.b, %i.a
+  %i.z = sub i64 %i.a, %i.b
   %i.aa = add i64 %i.z, 69
   %diff.check = icmp ult i64 %i.aa, 15
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -315,8 +315,8 @@ iter.check82:                                     ; preds = %.preheader
   br i1 %min.iters.check72, label %vec.epilog.scalar.ph83.preheader, label %vector.memcheck70
 
 vector.memcheck70:                                ; preds = %iter.check82
-  %i.aj = add i64 %.0.lcssa, %i.a
-  %i.ak = sub i64 %i.b, %i.aj
+  %i.aj = add i64 %.0.lcssa, %i.b
+  %i.ak = sub i64 %i.a, %i.aj
   %i.al = add i64 %i.ak, 143
   %diff.check71 = icmp ult i64 %i.al, 15
   br i1 %diff.check71, label %vec.epilog.scalar.ph83.preheader, label %vector.main.loop.iter.check73
@@ -402,8 +402,8 @@ bb.e:                                             ; preds = %bb.b, %._crit_edge,
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local noundef range(i32 -2147467263, 1) i32 @_ZThn176_N7NCrypto7NSevenZ8CDecoder21SetDecoderProperties2EPKhj(ptr nofree noundef writeonly captures(none) initializes((-112, -88), (-32, -16)) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) unnamed_addr #13 align 2 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.c = getelementptr inbounds i8, ptr %0, i64 -112 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.c, i8 0, i64 24, i1 false)
   %i.d = getelementptr inbounds i8, ptr %0, i64 -32 ; 4 uses
@@ -453,7 +453,7 @@ iter.check:                                       ; preds = %.preheader39.i
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.z = sub i64 %i.b, %i.a
+  %i.z = sub i64 %i.a, %i.b
   %i.aa = add i64 %i.z, -107
   %diff.check = icmp ult i64 %i.aa, 15
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -513,8 +513,8 @@ iter.check22:                                     ; preds = %.preheader.i
   br i1 %min.iters.check12, label %vec.epilog.scalar.ph23.preheader, label %vector.memcheck10
 
 vector.memcheck10:                                ; preds = %iter.check22
-  %i.aj = add i64 %.0.lcssa.i, %i.a
-  %i.ak = sub i64 %i.b, %i.aj
+  %i.aj = add i64 %.0.lcssa.i, %i.b
+  %i.ak = sub i64 %i.a, %i.aj
   %i.al = add i64 %i.ak, -33
   %diff.check11 = icmp ult i64 %i.al, 15
   br i1 %diff.check11, label %vec.epilog.scalar.ph23.preheader, label %vector.main.loop.iter.check13

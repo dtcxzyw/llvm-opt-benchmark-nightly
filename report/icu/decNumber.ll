@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %_ZL9decStatusP9decN
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @uprv_decNumberCopy_78(ptr nofree noundef returned writeonly captures(address, ret: address, provenance) %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = icmp eq ptr %0, %1
   br i1 %i.c, label %.loopexit, label %bb.b
 
@@ -241,14 +241,14 @@ iter.check:                                       ; preds = %bb.c, %bb.d
   %.pn = phi i64 [ %i.r, %bb.d ], [ %i.o, %bb.c ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 %.pn
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.u = add i64 %.pn, %i.a
+  %i.u = add i64 %.pn, %i.b
   %i.v = add i64 %i.u, 9
-  %i.w = add i64 %i.a, 11
+  %i.w = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.w)
   %i.x = add i64 %umax, -10
-  %i.y = sub i64 %i.x, %i.a                       ; 7 uses
+  %i.y = sub i64 %i.x, %i.b                       ; 7 uses
   %min.iters.check = icmp ult i64 %i.y, 8
-  %i.z = sub i64 %i.a, %i.b
+  %i.z = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.z, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -651,8 +651,8 @@ bb.l:                                             ; preds = %_ZL9decStatusP9decN
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef ptr @_ZL7decLnOpP9decNumberPKS_P10decContextPj(ptr noundef returned %0, ptr nofree noundef readonly captures(address) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef nonnull captures(none) %3) unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = alloca i32, align 4                      ; 13 uses
   %i.d = alloca i32, align 4                      ; 8 uses
   %4 = alloca [5 x %struct.decNumber], align 16   ; 3 uses
@@ -725,14 +725,14 @@ iter.check:                                       ; preds = %bb.g, %bb.h
   %.pn.i = phi i64 [ %i.y, %bb.h ], [ %i.v, %bb.g ] ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 %.pn.i
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.ab = add i64 %.pn.i, %i.a
+  %i.ab = add i64 %.pn.i, %i.b
   %i.ac = add i64 %i.ab, 9
-  %i.ad = add i64 %i.a, 11
+  %i.ad = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ac, i64 %i.ad)
   %i.ae = add i64 %umax, -10
-  %i.af = sub i64 %i.ae, %i.a                     ; 7 uses
+  %i.af = sub i64 %i.ae, %i.b                     ; 7 uses
   %min.iters.check = icmp ult i64 %i.af, 8
-  %i.ag = sub i64 %i.a, %i.b
+  %i.ag = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ag, -32
   %or.cond291 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond291, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -1135,8 +1135,8 @@ bb.br:                                            ; preds = %bb.bq
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @uprv_decNumberLogB_78(ptr noundef returned %0, ptr nofree noundef readonly captures(address) %1, ptr noundef %2) local_unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   store i32 0, ptr %i.c, align 4, !tbaa !21
@@ -1185,14 +1185,14 @@ iter.check:                                       ; preds = %bb.f, %bb.e
   %.pn.i.i = phi i64 [ %i.v, %bb.f ], [ %i.s, %bb.e ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 %.pn.i.i
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.y = add i64 %.pn.i.i, %i.a
+  %i.y = add i64 %.pn.i.i, %i.b
   %i.z = add i64 %i.y, 9
-  %i.aa = add i64 %i.a, 11
+  %i.aa = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.z, i64 %i.aa)
   %i.ab = add i64 %umax, -10
-  %i.ac = sub i64 %i.ab, %i.a                     ; 7 uses
+  %i.ac = sub i64 %i.ab, %i.b                     ; 7 uses
   %min.iters.check = icmp ult i64 %i.ac, 8
-  %i.ad = sub i64 %i.a, %i.b
+  %i.ad = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ad, -32
   %or.cond43 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond43, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -1595,8 +1595,8 @@ uprv_decNumberCopy_78.exit:                       ; preds = %.lr.ph.i, %middle.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @uprv_decNumberCopyAbs_78(ptr nofree noundef returned captures(address, ret: address, provenance) %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = icmp eq ptr %0, %1
   br i1 %i.c, label %uprv_decNumberCopy_78.exit, label %bb.b
 
@@ -1631,14 +1631,14 @@ iter.check:                                       ; preds = %bb.c, %bb.d
   %.pn.i = phi i64 [ %i.r, %bb.d ], [ %i.o, %bb.c ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 %.pn.i
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.u = add i64 %.pn.i, %i.a
+  %i.u = add i64 %.pn.i, %i.b
   %i.v = add i64 %i.u, 9
-  %i.w = add i64 %i.a, 11
+  %i.w = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.w)
   %i.x = add i64 %umax, -10
-  %i.y = sub i64 %i.x, %i.a                       ; 7 uses
+  %i.y = sub i64 %i.x, %i.b                       ; 7 uses
   %min.iters.check = icmp ult i64 %i.y, 8
-  %i.z = sub i64 %i.a, %i.b
+  %i.z = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.z, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -2041,8 +2041,8 @@ bb.g:                                             ; preds = %bb.c, %_ZL9decStatu
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @uprv_decNumberNextToward_78(ptr noundef returned %0, ptr nofree noundef readonly captures(address) %1, ptr nofree noundef readonly captures(address) %2, ptr noundef %3) local_unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %4 = alloca %struct.decNumber, align 4          ; 7 uses
   %5 = alloca %struct.decContext, align 4         ; 5 uses
   %i.c = alloca i32, align 4                      ; 6 uses
@@ -2110,14 +2110,14 @@ iter.check:                                       ; preds = %bb.h, %bb.g
   %.pn.i.i = phi i64 [ %i.aa, %bb.h ], [ %i.x, %bb.g ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.q, i64 %.pn.i.i
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.ad = add i64 %.pn.i.i, %i.a
+  %i.ad = add i64 %.pn.i.i, %i.b
   %i.ae = add i64 %i.ad, 9
-  %i.af = add i64 %i.a, 11
+  %i.af = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %i.af)
   %i.ag = add i64 %umax, -10
-  %i.ah = sub i64 %i.ag, %i.a                     ; 7 uses
+  %i.ah = sub i64 %i.ag, %i.b                     ; 7 uses
   %min.iters.check = icmp ult i64 %i.ah, 8
-  %i.ai = sub i64 %i.a, %i.b
+  %i.ai = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ai, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -2488,8 +2488,8 @@ bb.y:                                             ; preds = %bb.s, %bb.p, %bb.g,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @uprv_decNumberCopySign_78(ptr nofree noundef returned captures(address, ret: address, provenance) %0, ptr nofree noundef readonly captures(address) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.d = load i8, ptr %i.c, align 4, !tbaa !16
   %i.e = icmp eq ptr %0, %1
@@ -2526,14 +2526,14 @@ iter.check:                                       ; preds = %bb.c, %bb.d
   %.pn.i = phi i64 [ %i.t, %bb.d ], [ %i.q, %bb.c ] ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.j, i64 %.pn.i
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.w = add i64 %.pn.i, %i.a
+  %i.w = add i64 %.pn.i, %i.b
   %i.x = add i64 %i.w, 9
-  %i.y = add i64 %i.a, 11
+  %i.y = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.x, i64 %i.y)
   %i.z = add i64 %umax, -10
-  %i.aa = sub i64 %i.z, %i.a                      ; 7 uses
+  %i.aa = sub i64 %i.z, %i.b                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.aa, 8
-  %i.ab = sub i64 %i.a, %i.b
+  %i.ab = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ab, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -2936,8 +2936,8 @@ bb.f:                                             ; preds = %_ZL9decStatusP9decN
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef ptr @_ZL13decQuantizeOpP9decNumberPKS_S2_P10decContexthPj(ptr noundef returned %0, ptr nofree noundef readonly captures(address) %1, ptr nofree noundef readonly captures(address) %2, ptr nofree noundef readonly captures(none) %3, i8 noundef zeroext range(i8 0, 2) %4, ptr nofree noundef nonnull captures(none) %5) unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = alloca i32, align 4                      ; 7 uses
   %6 = alloca %struct.decContext, align 4         ; 7 uses
   %i.d = load i32, ptr %3, align 4, !tbaa !26     ; 3 uses
@@ -3012,14 +3012,14 @@ iter.check:                                       ; preds = %bb.h, %bb.i
   %.pn.i = phi i64 [ %i.ai, %bb.i ], [ %i.af, %bb.h ] ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.y, i64 %.pn.i
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.al = add i64 %.pn.i, %i.a
+  %i.al = add i64 %.pn.i, %i.b
   %i.am = add i64 %i.al, 9
-  %i.an = add i64 %i.a, 11
+  %i.an = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.am, i64 %i.an)
   %i.ao = add i64 %umax, -10
-  %i.ap = sub i64 %i.ao, %i.a                     ; 7 uses
+  %i.ap = sub i64 %i.ao, %i.b                     ; 7 uses
   %min.iters.check = icmp ult i64 %i.ap, 8
-  %i.aq = sub i64 %i.a, %i.b
+  %i.aq = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.aq, -32
   %or.cond155 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond155, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -3422,8 +3422,8 @@ bb.f:                                             ; preds = %_ZL9decStatusP9decN
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @uprv_decNumberToIntegralExact_78(ptr noundef returned %0, ptr nofree noundef readonly captures(address) %1, ptr noundef %2) local_unnamed_addr #3 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 8 uses
-  %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 8 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %3 = alloca %struct.decNumber, align 4          ; 7 uses
   %4 = alloca %struct.decContext, align 4         ; 8 uses
@@ -3477,14 +3477,14 @@ iter.check:                                       ; preds = %bb.e, %bb.f
   %.pn.i = phi i64 [ %i.w, %bb.f ], [ %i.t, %bb.e ] ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.m, i64 %.pn.i
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.z = add i64 %.pn.i, %i.a
+  %i.z = add i64 %.pn.i, %i.b
   %i.aa = add i64 %i.z, 9
-  %i.ab = add i64 %i.a, 11
+  %i.ab = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.aa, i64 %i.ab)
   %i.ac = add i64 %umax, -10
-  %i.ad = sub i64 %i.ac, %i.a                     ; 7 uses
+  %i.ad = sub i64 %i.ac, %i.b                     ; 7 uses
   %min.iters.check = icmp ult i64 %i.ad, 8
-  %i.ae = sub i64 %i.a, %i.b
+  %i.ae = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.ae, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -3604,14 +3604,14 @@ iter.check72:                                     ; preds = %bb.k, %bb.l
   %.pn.i23 = phi i64 [ %i.bk, %bb.l ], [ %i.bh, %bb.k ] ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ba, i64 %.pn.i23
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.bn = add i64 %.pn.i23, %i.a
+  %i.bn = add i64 %.pn.i23, %i.b
   %i.bo = add i64 %i.bn, 9
-  %i.bp = add i64 %i.a, 11
+  %i.bp = add i64 %i.b, 11
   %umax55 = tail call i64 @llvm.umax.i64(i64 %i.bo, i64 %i.bp)
   %i.bq = add i64 %umax55, -10
-  %i.br = sub i64 %i.bq, %i.a                     ; 7 uses
+  %i.br = sub i64 %i.bq, %i.b                     ; 7 uses
   %min.iters.check56 = icmp ult i64 %i.br, 8
-  %i.bs = sub i64 %i.a, %i.b
+  %i.bs = sub i64 %i.b, %i.a
   %diff.check54 = icmp ugt i64 %i.bs, -32
   %or.cond88 = or i1 %min.iters.check56, %diff.check54
   br i1 %or.cond88, label %.lr.ph.i24.preheader, label %vector.main.loop.iter.check57
@@ -4014,8 +4014,8 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef ptr @uprv_decNumberCopyNegate_78(ptr nofree noundef returned captures(address, ret: address, provenance) %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64                  ; 4 uses
-  %i.b = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64
+  %i.b = ptrtoaddr ptr %1 to i64                  ; 4 uses
   %i.c = icmp eq ptr %0, %1
   br i1 %i.c, label %uprv_decNumberCopy_78.exit, label %bb.b
 
@@ -4050,14 +4050,14 @@ iter.check:                                       ; preds = %bb.c, %bb.d
   %.pn.i = phi i64 [ %i.r, %bb.d ], [ %i.o, %bb.c ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 %.pn.i
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 10 ; 5 uses
-  %i.u = add i64 %.pn.i, %i.a
+  %i.u = add i64 %.pn.i, %i.b
   %i.v = add i64 %i.u, 9
-  %i.w = add i64 %i.a, 11
+  %i.w = add i64 %i.b, 11
   %umax = tail call i64 @llvm.umax.i64(i64 %i.v, i64 %i.w)
   %i.x = add i64 %umax, -10
-  %i.y = sub i64 %i.x, %i.a                       ; 7 uses
+  %i.y = sub i64 %i.x, %i.b                       ; 7 uses
   %min.iters.check = icmp ult i64 %i.y, 8
-  %i.z = sub i64 %i.a, %i.b
+  %i.z = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.z, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check

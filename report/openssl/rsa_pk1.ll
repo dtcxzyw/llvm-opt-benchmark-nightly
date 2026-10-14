@@ -205,8 +205,8 @@ declare void @err_clear_last_constant_time(i32 noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define range(i32 -1, -2147483648) i32 @ossl_rsa_padding_check_PKCS1_type_2(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, i32 noundef %5, ptr noundef %6) local_unnamed_addr #0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %3 to i64
-  %i.b = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %1 to i64
+  %i.b = ptrtoaddr ptr %3 to i64
   %i.c = alloca [256 x i8], align 16              ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   %i.d = icmp ne i32 %5, %4
@@ -356,8 +356,8 @@ iter.check:                                       ; preds = %._crit_edge
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.cm = add i64 %i.a, %i.cg
-  %i.cn = sub i64 %i.cm, %i.b
+  %i.cm = add i64 %i.b, %i.cg
+  %i.cn = sub i64 %i.cm, %i.a
   %diff.check = icmp ugt i64 %i.cn, -16
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

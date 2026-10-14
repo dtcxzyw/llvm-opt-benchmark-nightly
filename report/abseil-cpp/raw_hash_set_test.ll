@@ -205,10 +205,10 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %min.iters.check = icmp ult i64 %3, 4
-  %i.c = sub i64 %i.b, %i.a
+  %i.c = sub i64 %i.a, %i.b
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -611,10 +611,10 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %min.iters.check = icmp ult i64 %3, 4
-  %i.c = sub i64 %i.b, %i.a
+  %i.c = sub i64 %i.a, %i.b
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -1017,10 +1017,10 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %min.iters.check = icmp ult i64 %3, 4
-  %i.c = sub i64 %i.b, %i.a
+  %i.c = sub i64 %i.a, %i.b
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -1423,10 +1423,10 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %min.iters.check = icmp ult i64 %3, 4
-  %i.c = sub i64 %i.b, %i.a
+  %i.c = sub i64 %i.a, %i.b
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -1829,10 +1829,10 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
-  %i.a = ptrtoaddr ptr %1 to i64
-  %i.b = ptrtoaddr ptr %2 to i64
+  %i.a = ptrtoaddr ptr %2 to i64
+  %i.b = ptrtoaddr ptr %1 to i64
   %min.iters.check = icmp ult i64 %3, 4
-  %i.c = sub i64 %i.b, %i.a
+  %i.c = sub i64 %i.a, %i.b
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
