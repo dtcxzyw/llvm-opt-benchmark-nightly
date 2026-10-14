@@ -22,12 +22,12 @@ module asm
 %"class.v8::internal::FlagValue.57" = type { i32 }
 %"class.v8::internal::FlagValue.56" = type { ptr }
 %"class.v8::internal::FlagValue" = type { i8 }
-%"class.v8::internal::wasm::LiftoffRegList" = type { i32 }
 %"struct.std::array" = type { [11 x i8] }
 %"struct.v8::internal::wasm::LiftoffAssembler::CacheState" = type <{ %"class.v8::internal::SmallZoneVector", %"class.v8::internal::wasm::LiftoffRegList", [24 x i32], %"class.v8::internal::wasm::LiftoffRegList", %"class.v8::internal::Register", [3 x i8], i32, %"class.v8::internal::Register", [7 x i8] }>
 %"class.v8::internal::SmallZoneVector" = type { %"class.v8::base::SmallVector" }
 %"class.v8::base::SmallVector" = type { %"class.v8::internal::ZoneAllocator", ptr, ptr, ptr, [192 x i8] }
 %"class.v8::internal::ZoneAllocator" = type { ptr }
+%"class.v8::internal::wasm::LiftoffRegList" = type { i32 }
 %"class.v8::internal::Register" = type { %"class.v8::internal::RegisterBase" }
 %"class.v8::internal::RegisterBase" = type { i8 }
 %"class.v8::internal::wasm::ParallelMove" = type <{ [48 x i8], [192 x i8], [24 x i32], %"class.v8::internal::wasm::LiftoffRegList", %"class.v8::internal::wasm::LiftoffRegList", ptr, i32, [4 x i8] }>
@@ -138,7 +138,6 @@ $_ZZN2v88internal12RegisterNameENS0_11XMMRegisterEE5Names = comdat any
 @.str.8 = private unnamed_addr constant [56 x i8] c"length < std::numeric_limits<size_t>::max() / sizeof(T)\00", align 1
 @.str.9 = private unnamed_addr constant [35 x i8] c"kMaxSupportedValue >= needed_value\00", align 1
 @_ZTVN2v88internal9AssemblerE = external unnamed_addr constant { [6 x ptr] }, align 8
-@__const._ZN2v88internal4wasmL15GetCacheRegListENS1_8RegClassE.kRegLists = private unnamed_addr constant [2 x %"class.v8::internal::wasm::LiftoffRegList"] [%"class.v8::internal::wasm::LiftoffRegList" { i32 37839 }, %"class.v8::internal::wasm::LiftoffRegList" { i32 16711680 }], align 4
 @__const._ZN2v88internal4wasmL13reg_class_forENS1_9ValueKindE.kRegClasses = private unnamed_addr constant %"struct.std::array" { [11 x i8] c"\02\00\00\01\01\01\00\00\01\00\00" }, align 1
 @_ZN2v88internal11CpuFeatures10supported_E = external local_unnamed_addr global i32, align 4
 @__const._ZN2v88internal4wasm15value_kind_sizeENS1_9ValueKindE.kElementSize = private unnamed_addr constant [13 x i8] c"\FF\04\08\04\08\10\01\02\02\08\08\FF\FF", align 1
@@ -541,20 +540,24 @@ bb.m:                                             ; preds = %.lr.ph.i
   %i.ay = icmp ne i8 %i.aw, 0
   call void @llvm.assume(i1 %i.ay)
   %.pn = zext nneg i8 %i.aw to i64
-  %.in = getelementptr inbounds nuw i8, ptr @__const._ZN2v88internal4wasmL13reg_class_forENS1_9ValueKindE.kRegClasses, i64 %.pn
-  %12 = load i8, ptr %.in, align 1
-  %13 = zext nneg i8 %12 to i64
-  %14 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasmL15GetCacheRegListENS1_8RegClassE.kRegLists, i64 %13
-  %.sroa.0.0.copyload.i.i = load i32, ptr %14, align 4
-  %.sroa.0.0.copyload.i3.i = load i32, ptr %i.g, align 8
-  %15 = or i32 %.sroa.0.0.copyload.i3.i, %8
-  %16 = xor i32 %15, -1
-  %17 = and i32 %.sroa.0.0.copyload.i.i, %16      ; 2 uses
-  %.not = icmp eq i32 %17, 0
+  %12 = shl nuw nsw i64 1, %.pn
+  %13 = and i64 %12, 1734
+  %.sroa.idx.not.i.i.not = icmp eq i64 %13, 0     ; 2 uses
+  %.sroa.0.0.copyload.i3.i = load i32, ptr %i.g, align 8 ; 2 uses
+  %14 = select i1 %.sroa.idx.not.i.i.not, i32 -16711681, i32 -37840
+  %15 = or i32 %8, %14
+  %16 = or i32 %15, %.sroa.0.0.copyload.i3.i
+  %.not = icmp eq i32 %16, -1
   br i1 %.not, label %bb.n, label %_ZNSt8optionalIN2v88internal4wasm15LiftoffRegisterEEaSIS3_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS4_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS3_ES8_IS3_NSt5decayISB_E4typeEEEEESt16is_constructibleIS3_JSB_EESt13is_assignableIRS3_SB_EEERS4_E4typeEOSB_.exit94
 
 _ZNSt8optionalIN2v88internal4wasm15LiftoffRegisterEEaSIS3_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS4_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS3_ES8_IS3_NSt5decayISB_E4typeEEEEESt16is_constructibleIS3_JSB_EESt13is_assignableIRS3_SB_EEERS4_E4typeEOSB_.exit94: ; preds = %.thread137
-  %i.az = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %17, i1 true)
+  %.sroa.0.0.copyload.sroa.speculated.i.i = select i1 %.sroa.idx.not.i.i.not, i32 16711680, i32 37839
+  %17 = or i32 %.sroa.0.0.copyload.i3.i, %8
+  %18 = xor i32 %17, -1
+  %19 = and i32 %.sroa.0.0.copyload.sroa.speculated.i.i, %18 ; 2 uses
+  %20 = icmp ne i32 %19, 0
+  call void @llvm.assume(i1 %20)
+  %i.az = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %19, i1 true)
   %i.ba = trunc nuw nsw i32 %i.az to i8
   br label %bb.n
 
@@ -957,17 +960,16 @@ bb.a:
   %i.a = and i64 %.sroa.2.0.extract.shift, 15     ; 2 uses
   %i.b = icmp ult i8 %.sroa.2.0.extract.trunc, 11
   tail call void @llvm.assume(i1 %i.b)
-  %5 = getelementptr inbounds nuw i8, ptr @__const._ZN2v88internal4wasmL13reg_class_forENS1_9ValueKindE.kRegClasses, i64 %i.a
-  %6 = load i8, ptr %5, align 1
-  %i.c = icmp ne i8 %.sroa.2.0.extract.trunc, 0
+  %5 = icmp ne i8 %.sroa.2.0.extract.trunc, 0
+  tail call void @llvm.assume(i1 %5)
+  %i.c = icmp ne i64 %i.a, 0
   tail call void @llvm.assume(i1 %i.c)
-  %7 = icmp ne i64 %i.a, 0
-  tail call void @llvm.assume(i1 %7)
-  %8 = zext nneg i8 %6 to i64
-  %9 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasmL15GetCacheRegListENS1_8RegClassE.kRegLists, i64 %8
-  %.sroa.0.0.copyload.i.i = load i32, ptr %9, align 4
+  %6 = shl nuw nsw i64 1, %i.a
+  %7 = and i64 %6, 1734
+  %.sroa.idx.not.i.i.not = icmp eq i64 %7, 0
+  %.sroa.0.0.copyload.sroa.speculated.i.i = select i1 %.sroa.idx.not.i.i.not, i32 16711680, i32 37839
   %i.d = xor i32 %3, -1
-  %i.e = and i32 %.sroa.0.0.copyload.i.i, %i.d    ; 2 uses
+  %i.e = and i32 %.sroa.0.0.copyload.sroa.speculated.i.i, %i.d ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 680
   %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.f, align 8
   %i.g = xor i32 %.sroa.0.0.copyload.i.i.i, -1
@@ -1370,22 +1372,26 @@ bb.e:                                             ; preds = %bb.d
   %i.ag = zext nneg i8 %i.af to i64
   %i.ah = icmp ult i8 %i.af, 11
   tail call void @llvm.assume(i1 %i.ah)
-  %5 = getelementptr inbounds nuw i8, ptr @__const._ZN2v88internal4wasmL13reg_class_forENS1_9ValueKindE.kRegClasses, i64 %i.ag
-  %6 = load i8, ptr %5, align 1
   %i.ai = icmp ne i8 %i.af, 0
   tail call void @llvm.assume(i1 %i.ai)
-  %7 = zext nneg i8 %6 to i64
-  %8 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasmL15GetCacheRegListENS1_8RegClassE.kRegLists, i64 %7
-  %.sroa.0.0.copyload.i.i = load i32, ptr %8, align 4
-  %.sroa.0.0.copyload.i3.i = load i32, ptr %i.r, align 8
-  %9 = or i32 %.sroa.0.0.copyload.i3.i, %2
-  %10 = xor i32 %9, -1
-  %11 = and i32 %.sroa.0.0.copyload.i.i, %10      ; 2 uses
-  %.not93.a = icmp eq i32 %11, 0
+  %5 = shl nuw nsw i64 1, %i.ag
+  %6 = and i64 %5, 1734
+  %.sroa.idx.not.i.i.not = icmp eq i64 %6, 0      ; 2 uses
+  %.sroa.0.0.copyload.i3.i = load i32, ptr %i.r, align 8 ; 2 uses
+  %7 = select i1 %.sroa.idx.not.i.i.not, i32 -16711681, i32 -37840
+  %8 = or i32 %2, %7
+  %9 = or i32 %8, %.sroa.0.0.copyload.i3.i
+  %.not93.a = icmp eq i32 %9, -1
   br i1 %.not93.a, label %bb.s, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.aj = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %11, i1 true) ; 4 uses
+  %.sroa.0.0.copyload.sroa.speculated.i.i = select i1 %.sroa.idx.not.i.i.not, i32 16711680, i32 37839
+  %10 = or i32 %.sroa.0.0.copyload.i3.i, %2
+  %11 = xor i32 %10, -1
+  %12 = and i32 %.sroa.0.0.copyload.sroa.speculated.i.i, %11 ; 2 uses
+  %13 = icmp ne i32 %12, 0
+  tail call void @llvm.assume(i1 %13)
+  %i.aj = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %12, i1 true) ; 4 uses
   %i.ak = trunc nuw nsw i32 %i.aj to i8           ; 3 uses
   %i.al = icmp samesign ult i32 %i.aj, 16
   br i1 %i.al, label %bb.g, label %bb.h
@@ -1445,7 +1451,7 @@ bb.q:                                             ; preds = %bb.o
   br label %_ZN2v88internal4wasm16LiftoffAssembler4MoveENS1_15LiftoffRegisterES3_NS1_9ValueKindE.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler4MoveENS1_15LiftoffRegisterES3_NS1_9ValueKindE.exit: ; preds = %bb.q, %bb.p, %bb.n, %bb.m, %bb.k, %bb.j, %bb.g
-  %i.at = shl nuw i32 1, %i.aj
+  %i.at = shl nuw nsw i32 1, %i.aj
   %i.au = load i32, ptr %i.r, align 8
   %i.av = or i32 %i.au, %i.at                     ; 2 uses
   store i32 %i.av, ptr %i.r, align 8
@@ -1510,22 +1516,26 @@ bb.u:                                             ; preds = %.lr.ph
   %i.by = zext nneg i8 %i.bx to i64
   %i.bz = icmp ult i8 %i.bx, 11
   tail call void @llvm.assume(i1 %i.bz)
-  %12 = getelementptr inbounds nuw i8, ptr @__const._ZN2v88internal4wasmL13reg_class_forENS1_9ValueKindE.kRegClasses, i64 %i.by
-  %13 = load i8, ptr %12, align 1
   %i.ca = icmp ne i8 %i.bx, 0
   tail call void @llvm.assume(i1 %i.ca)
-  %14 = zext nneg i8 %13 to i64
-  %15 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasmL15GetCacheRegListENS1_8RegClassE.kRegLists, i64 %14
-  %.sroa.0.0.copyload.i.i73 = load i32, ptr %15, align 4
-  %.sroa.0.0.copyload.i3.i74 = load i32, ptr %i.r, align 8
-  %16 = or i32 %.sroa.0.0.copyload.i3.i74, %2
-  %17 = xor i32 %16, -1
-  %18 = and i32 %.sroa.0.0.copyload.i.i73, %17    ; 2 uses
-  %.not91 = icmp eq i32 %18, 0
+  %14 = shl nuw nsw i64 1, %i.by
+  %15 = and i64 %14, 1734
+  %.sroa.idx.not.i.i73.not = icmp eq i64 %15, 0   ; 2 uses
+  %.sroa.0.0.copyload.i3.i74 = load i32, ptr %i.r, align 8 ; 2 uses
+  %16 = select i1 %.sroa.idx.not.i.i73.not, i32 -16711681, i32 -37840
+  %17 = or i32 %2, %16
+  %18 = or i32 %17, %.sroa.0.0.copyload.i3.i74
+  %.not91 = icmp eq i32 %18, -1
   br i1 %.not91, label %_ZNK2v88internal4wasm15LiftoffVarState8constantEv.exit80, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.cb = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %18, i1 true) ; 3 uses
+  %.sroa.0.0.copyload.sroa.speculated.i.i76 = select i1 %.sroa.idx.not.i.i73.not, i32 16711680, i32 37839
+  %19 = or i32 %.sroa.0.0.copyload.i3.i74, %2
+  %20 = xor i32 %19, -1
+  %21 = and i32 %.sroa.0.0.copyload.sroa.speculated.i.i76, %20 ; 2 uses
+  %22 = icmp ne i32 %21, 0
+  tail call void @llvm.assume(i1 %22)
+  %i.cb = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %21, i1 true) ; 3 uses
   %i.cc = trunc nuw nsw i32 %i.cb to i8           ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !40)
   %i.cd = icmp eq i8 %i.bx, 1
@@ -1549,7 +1559,7 @@ _ZNK2v88internal4wasm15LiftoffVarState8constantEv.exit: ; preds = %bb.w, %bb.x
   store i32 %.sink.i, ptr %4, align 8, !alias.scope !40
   store ptr null, ptr %i.u, align 8, !alias.scope !40
   tail call void @_ZN2v88internal4wasm16LiftoffAssembler12LoadConstantENS1_15LiftoffRegisterENS1_9WasmValueE(ptr noundef nonnull align 8 dereferenceable(824) %0, i8 %i.cc, ptr noundef nonnull byval(%"class.v8::internal::wasm::WasmValue") align 8 %4)
-  %i.ch = shl nuw i32 1, %i.cb
+  %i.ch = shl nuw nsw i32 1, %i.cb
   %i.ci = load i32, ptr %i.r, align 8
   %i.cj = or i32 %i.ci, %i.ch
   store i32 %i.cj, ptr %i.r, align 8
@@ -1952,15 +1962,17 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN2v88int
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal4wasm16LiftoffAssembler12PushRegisterENS1_9ValueKindENS1_15LiftoffRegisterE.exit ] ; 3 uses
   %.04479 = phi ptr [ %i.b, %.lr.ph ], [ %i.cq, %_ZN2v88internal4wasm16LiftoffAssembler12PushRegisterENS1_9ValueKindENS1_15LiftoffRegisterE.exit ] ; 2 uses
   %i.ab = load i8, ptr %.04479, align 1           ; 7 uses
-  %i.ac = zext nneg i8 %i.ab to i64               ; 2 uses
+  %i.ac = zext nneg i8 %i.ab to i64               ; 3 uses
   %i.ad = icmp ult i8 %i.ab, 11
   tail call void @llvm.assume(i1 %i.ad)
   %i.ae = getelementptr inbounds nuw i8, ptr @__const._ZN2v88internal4wasmL13reg_class_forENS1_9ValueKindE.kRegClasses, i64 %i.ac
-  %i.af = load i8, ptr %i.ae, align 1             ; 2 uses
+  %i.af = load i8, ptr %i.ae, align 1
   %i.ag = icmp ne i8 %i.ab, 0
   tail call void @llvm.assume(i1 %i.ag)
-  %3 = zext nneg i8 %i.af to i64
-  %4 = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN2v88internal4wasmL15GetCacheRegListENS1_8RegClassE.kRegLists, i64 %3
+  %3 = shl nuw nsw i64 1, %i.ac
+  %4 = and i64 %3, 1734
+  %.sroa.idx.not.i.i.not = icmp eq i64 %4, 0
+  %.sroa.0.0.copyload.sroa.speculated.i.i = select i1 %.sroa.idx.not.i.i.not, i32 16318464, i32 37834 ; 2 uses
   %i.ah = icmp eq i8 %i.ab, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.ai = load ptr, ptr %i.e, align 8             ; 2 uses
@@ -2017,11 +2029,9 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %bb.q
 
 bb.k:                                             ; preds = %_ZNK2v88internal8compiler14CallDescriptor17GetReturnLocationEm.exit
-  %.sroa.0.0.copyload.i.i47 = load i32, ptr %4, align 4
-  %5 = and i32 %.sroa.0.0.copyload.i.i47, -393222 ; 2 uses
   %.sroa.0.0.copyload.i.i.i = load i32, ptr %i.f, align 8
   %i.ax = xor i32 %.sroa.0.0.copyload.i.i.i, -1
-  %i.ay = and i32 %5, %i.ax                       ; 2 uses
+  %i.ay = and i32 %.sroa.0.0.copyload.sroa.speculated.i.i, %i.ax ; 2 uses
   %.not.i.i = icmp eq i32 %i.ay, 0
   br i1 %.not.i.i, label %bb.m, label %bb.l, !prof !6
 
@@ -2031,7 +2041,7 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14LiftoffRegListE.exit
 
 bb.m:                                             ; preds = %bb.k
-  %i.bb = tail call preserve_mostcc i8 @_ZN2v88internal4wasm16LiftoffAssembler16SpillOneRegisterENS1_14LiftoffRegListE(ptr noundef nonnull align 8 dereferenceable(824) %0, i32 %5)
+  %i.bb = tail call preserve_mostcc i8 @_ZN2v88internal4wasm16LiftoffAssembler16SpillOneRegisterENS1_14LiftoffRegListE(ptr noundef nonnull align 8 dereferenceable(824) %0, i32 %.sroa.0.0.copyload.sroa.speculated.i.i)
   br label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14LiftoffRegListE.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassENS1_14LiftoffRegListE.exit: ; preds = %bb.l, %bb.m

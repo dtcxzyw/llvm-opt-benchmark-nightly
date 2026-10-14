@@ -24,8 +24,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"struct.std::__cxx11::basic_string<char>::_Alloc_hider" = type { ptr }
 %union.anon = type { i64, [8 x i8] }
 %struct.timespec = type { i64, i64 }
-%"class.std::bitset" = type { %"struct.std::_Base_bitset" }
-%"struct.std::_Base_bitset" = type { [2 x i64] }
 
 $_ZN14JoystickLayoutD2Ev = comdat any
 
@@ -428,7 +426,6 @@ bb.ag:                                            ; preds = %_ZN14JoystickLayout
 define dso_local noundef zeroext i1 @_ZN18JoystickController11handleEventERKN6SEvent14SJoystickEventE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(504) %0, ptr noundef nonnull align 4 dereferenceable(44) %1) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %struct.timespec, align 8           ; 5 uses
-  %3 = alloca %"class.std::bitset", align 8       ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 42
   %i.b = load i8, ptr %i.a, align 2, !tbaa !95
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
@@ -450,8 +447,6 @@ bb.b:                                             ; preds = %bb.a
   %i.m = fdiv nsz float %i.l, 1.000000e+03
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   store float %i.m, ptr %i.n, align 8, !tbaa !99
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !68   ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -460,6 +455,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not7583, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.b
+  %.sroa.0.0.lcssa = phi i64 [ 0, %bb.b ], [ %.sroa.0.1, %bb.e ] ; 2 uses
+  %.sroa.10.0.lcssa = phi i64 [ 0, %bb.b ], [ %.sroa.10.1, %bb.e ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !69   ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -469,6 +466,8 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b, %bb.e
   %.sroa.068.084 = phi ptr [ %i.af, %bb.e ], [ %i.p, %bb.b ] ; 4 uses
+  %.sroa.10.0124 = phi i64 [ %.sroa.10.1, %bb.e ], [ 0, %bb.b ] ; 3 uses
+  %.sroa.0.0123 = phi i64 [ %.sroa.0.1, %bb.e ], [ 0, %bb.b ] ; 3 uses
   %i.w = load ptr, ptr %.sroa.068.084, align 8, !tbaa !54
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = call noundef zeroext i1 %i.x(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.068.084, ptr noundef nonnull align 4 dereferenceable(44) %1)
@@ -476,8 +475,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.068.084, i64 8
-  %i.aa = load i32, ptr %i.z, align 8, !tbaa !55  ; 2 uses
-  %i.ab = zext i32 %i.aa to i64                   ; 3 uses
+  %i.aa = load i32, ptr %i.z, align 8, !tbaa !55  ; 3 uses
+  %i.ab = zext i32 %i.aa to i64                   ; 2 uses
   %i.ac = icmp ugt i32 %i.aa, 80
   br i1 %i.ac, label %bb.d, label %_ZNSt6bitsetILm81EE3setEmb.exit
 
@@ -488,19 +487,23 @@ bb.d:                                             ; preds = %bb.c
 _ZNSt6bitsetILm81EE3setEmb.exit:                  ; preds = %bb.c
   %i.ad = and i64 %i.ab, 63
   %i.ae = shl nuw i64 1, %i.ad
-  %4 = lshr i64 %i.ab, 6
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %4 ; 2 uses
-  %6 = load i64, ptr %5, align 8, !tbaa !32
-  %7 = or i64 %6, %i.ae
-  store i64 %7, ptr %5, align 8, !tbaa !32
+  %.sroa.idx.not = icmp samesign ult i32 %i.aa, 64 ; 3 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, i64 %.sroa.0.0123, i64 %.sroa.10.0124
+  %3 = or i64 %i.ae, %.sroa.speculated            ; 2 uses
+  %spec.select = select i1 %.sroa.idx.not, i64 %3, i64 %.sroa.0.0123
+  %spec.select107 = select i1 %.sroa.idx.not, i64 %.sroa.10.0124, i64 %3
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6bitsetILm81EE3setEmb.exit, %.lr.ph
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0123, %.lr.ph ], [ %spec.select, %_ZNSt6bitsetILm81EE3setEmb.exit ] ; 2 uses
+  %.sroa.10.1 = phi i64 [ %.sroa.10.0124, %.lr.ph ], [ %spec.select107, %_ZNSt6bitsetILm81EE3setEmb.exit ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.068.084, i64 24 ; 2 uses
   %.not75 = icmp eq ptr %i.af, %i.r
   br i1 %.not75, label %._crit_edge, label %.lr.ph
 
 .preheader81:                                     ; preds = %bb.h, %._crit_edge
+  %.sroa.0.2.lcssa = phi i64 [ %.sroa.0.0.lcssa, %._crit_edge ], [ %.sroa.0.3, %bb.h ]
+  %.sroa.10.2.lcssa = phi i64 [ %.sroa.10.0.lcssa, %._crit_edge ], [ %.sroa.10.3, %bb.h ]
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 472
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 148
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -510,6 +513,8 @@ bb.e:                                             ; preds = %_ZNSt6bitsetILm81EE
 
 .lr.ph88:                                         ; preds = %._crit_edge, %bb.h
   %.sroa.064.086 = phi ptr [ %i.au, %bb.h ], [ %i.t, %._crit_edge ] ; 4 uses
+  %.sroa.10.2129 = phi i64 [ %.sroa.10.3, %bb.h ], [ %.sroa.10.0.lcssa, %._crit_edge ] ; 3 uses
+  %.sroa.0.2128 = phi i64 [ %.sroa.0.3, %bb.h ], [ %.sroa.0.0.lcssa, %._crit_edge ] ; 3 uses
   %i.al = load ptr, ptr %.sroa.064.086, align 8, !tbaa !54
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = call noundef zeroext i1 %i.am(ptr noundef nonnull align 8 dereferenceable(22) %.sroa.064.086, ptr noundef nonnull align 4 dereferenceable(44) %1)
@@ -517,8 +522,8 @@ bb.e:                                             ; preds = %_ZNSt6bitsetILm81EE
 
 bb.f:                                             ; preds = %.lr.ph88
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.064.086, i64 8
-  %i.ap = load i32, ptr %i.ao, align 8, !tbaa !55 ; 2 uses
-  %i.aq = zext i32 %i.ap to i64                   ; 3 uses
+  %i.ap = load i32, ptr %i.ao, align 8, !tbaa !55 ; 3 uses
+  %i.aq = zext i32 %i.ap to i64                   ; 2 uses
   %i.ar = icmp ugt i32 %i.ap, 80
   br i1 %i.ar, label %bb.g, label %_ZNSt6bitsetILm81EE3setEmb.exit42
 
@@ -529,14 +534,16 @@ bb.g:                                             ; preds = %bb.f
 _ZNSt6bitsetILm81EE3setEmb.exit42:                ; preds = %bb.f
   %i.as = and i64 %i.aq, 63
   %i.at = shl nuw i64 1, %i.as
-  %8 = lshr i64 %i.aq, 6
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %8 ; 2 uses
-  %10 = load i64, ptr %9, align 8, !tbaa !32
-  %11 = or i64 %10, %i.at
-  store i64 %11, ptr %9, align 8, !tbaa !32
+  %.sroa.idx71.not = icmp samesign ult i32 %i.ap, 64 ; 3 uses
+  %.sroa.speculated76 = select i1 %.sroa.idx71.not, i64 %.sroa.0.2128, i64 %.sroa.10.2129
+  %4 = or i64 %i.at, %.sroa.speculated76          ; 2 uses
+  %spec.select108 = select i1 %.sroa.idx71.not, i64 %4, i64 %.sroa.0.2128
+  %spec.select109 = select i1 %.sroa.idx71.not, i64 %.sroa.10.2129, i64 %4
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6bitsetILm81EE3setEmb.exit42, %.lr.ph88
+  %.sroa.0.3 = phi i64 [ %.sroa.0.2128, %.lr.ph88 ], [ %spec.select108, %_ZNSt6bitsetILm81EE3setEmb.exit42 ] ; 2 uses
+  %.sroa.10.3 = phi i64 [ %.sroa.10.2129, %.lr.ph88 ], [ %spec.select109, %_ZNSt6bitsetILm81EE3setEmb.exit42 ] ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.064.086, i64 24 ; 2 uses
   %.not76 = icmp eq ptr %i.au, %i.v
   br i1 %.not76, label %.preheader81, label %.lr.ph88
@@ -587,17 +594,16 @@ bb.h:                                             ; preds = %_ZNSt6bitsetILm81EE
   %i.ci = mul i16 %i.cg, %i.ch
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 102
   store i16 %i.ci, ptr %i.cj, align 2, !tbaa !22
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   br label %bb.r
 
 bb.i:                                             ; preds = %.preheader81, %_ZNSt6bitsetILm81EE9referenceaSERKS1_.exit
   %.03989 = phi i64 [ 0, %.preheader81 ], [ %i.dt, %_ZNSt6bitsetILm81EE9referenceaSERKS1_.exit ] ; 4 uses
   %i.ck = lshr i64 %.03989, 6                     ; 7 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ck
+  %.sroa.idx77.not = icmp eq i64 %i.ck, 0
   %i.cl = and i64 %.03989, 63
-  %13 = load i64, ptr %12, align 8, !tbaa !32
+  %.sroa.speculated82 = select i1 %.sroa.idx77.not, i64 %.sroa.0.2.lcssa, i64 %.sroa.10.2.lcssa
   %i.cm = shl nuw i64 1, %i.cl                    ; 10 uses
-  %i.cn = and i64 %13, %i.cm
+  %i.cn = and i64 %.sroa.speculated82, %i.cm
   %.not77 = icmp eq i64 %i.cn, 0
   br i1 %.not77, label %bb.m, label %bb.j
 
@@ -678,7 +684,7 @@ _ZNSt6bitsetILm81EE9referenceaSERKS1_.exit:       ; preds = %bb.p, %bb.q
   %exitcond.not = icmp eq i64 %i.dt, 81
   br i1 %exitcond.not, label %.preheader, label %bb.i, !llvm.loop !94
 
-bb.r:                                             ; preds = %bb.a, %.preheader
+bb.r:                                             ; preds = %.preheader, %bb.a
   ret i1 %.not
 }
 

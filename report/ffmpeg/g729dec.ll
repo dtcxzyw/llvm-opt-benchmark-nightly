@@ -145,8 +145,6 @@ define internal i32 @decode_frame(ptr noundef %0, ptr noundef initializes((112, 
 bb.a:
   %i.a = alloca [40 x i16], align 16              ; 9 uses
   %i.b = alloca [2 x [11 x i16]], align 16        ; 6 uses
-  %.sroa.0 = alloca i32, align 4                  ; 4 uses
-  %.sroa.5 = alloca i32, align 4                  ; 3 uses
   %i.c = alloca [40 x i16], align 16              ; 16 uses
   %i.d = alloca [50 x i16], align 16              ; 7 uses
   %i.e = alloca i32, align 4                      ; 5 uses
@@ -163,8 +161,6 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 356 ; 2 uses
   %i.q = load i32, ptr %i.p, align 4, !tbaa !29   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #9
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 112
@@ -248,6 +244,8 @@ bb.h:                                             ; preds = %bb.f, %bb.d
 
 bb.i:                                             ; preds = %.lr.ph499, %bb.cj
   %indvars.iv535 = phi i64 [ 0, %.lr.ph499 ], [ %indvars.iv.next536, %bb.cj ] ; 3 uses
+  %.sroa.0.0567 = phi i32 [ undef, %.lr.ph499 ], [ %.sroa.0.2417, %bb.cj ]
+  %.sroa.12.0566 = phi i32 [ undef, %.lr.ph499 ], [ %.sroa.12.2416, %bb.cj ]
   %.0246497 = phi ptr [ %i.o, %.lr.ph499 ], [ %i.bdg, %bb.cj ] ; 94 uses
   %.0252494 = phi ptr [ %i.i, %.lr.ph499 ], [ %i.bdf, %bb.cj ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #9
@@ -650,10 +648,12 @@ bb.ax:                                            ; preds = %lsf_decode.exit, %b
 
 bb.ay:                                            ; preds = %bb.ax, %bb.ci
   %.not269 = phi i1 [ true, %bb.ax ], [ false, %bb.ci ] ; 3 uses
-  %indvars.iv532.sroa.phi601 = phi ptr [ %.sroa.0, %bb.ax ], [ %.sroa.5, %bb.ci ] ; 4 uses
+  %.sroa.idx405 = phi i1 [ false, %bb.ax ], [ true, %bb.ci ] ; 7 uses
   %indvars.iv532.sroa.phi604 = phi ptr [ %i.b, %bb.ax ], [ %indvars.iv532.sroa.gep605, %bb.ci ] ; 2 uses
   %indvars.iv532 = phi i64 [ 0, %bb.ax ], [ 1, %bb.ci ] ; 3 uses
-  %.0237493 = phi i32 [ 0, %bb.ax ], [ %.1238, %bb.ci ] ; 2 uses
+  %.0295561 = phi i32 [ 0, %bb.ax ], [ %.1238, %bb.ci ] ; 2 uses
+  %.sroa.0.1560 = phi i32 [ %.sroa.0.0567, %bb.ax ], [ %.sroa.0.2417, %bb.ci ] ; 3 uses
+  %.0237493 = phi i32 [ %.sroa.12.0566, %bb.ax ], [ %.sroa.12.2416, %bb.ci ] ; 3 uses
   %.sroa.13.0491 = phi i32 [ %i.cs, %bb.ax ], [ %i.asb, %bb.ci ] ; 3 uses
   %i.apj = getelementptr inbounds nuw i8, ptr %.0251, i64 %indvars.iv532
   %i.apk = load i8, ptr %i.apj, align 1, !tbaa !66
@@ -698,7 +698,7 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.ay
   %.sroa.13.1 = phi i32 [ %i.apw, %bb.az ], [ %spec.select.i, %bb.ba ], [ %i.apw, %bb.ay ] ; 3 uses
-  %.1238 = phi i32 [ %.0237493, %bb.az ], [ %i.aqn, %bb.ba ], [ %.0237493, %bb.ay ] ; 2 uses
+  %.1238 = phi i32 [ %.0295561, %bb.az ], [ %i.aqn, %bb.ba ], [ %.0295561, %bb.ay ] ; 2 uses
   %i.aqo = lshr i32 %.sroa.13.1, 3
   %i.aqp = zext nneg i32 %i.aqo to i64
   %i.aqq = getelementptr inbounds nuw i8, ptr %.1253, i64 %i.aqp
@@ -810,24 +810,29 @@ bb.bn:                                            ; preds = %bb.bh
 .thread:                                          ; preds = %bb.bl, %bb.bj, %bb.bg
   %.1245.ph = phi i32 [ %i.asv, %bb.bl ], [ %i.asr, %bb.bj ], [ %.0.i316, %bb.bg ] ; 2 uses
   %i.atc = add nsw i32 %.1245.ph, 1
-  %i.atd = sdiv i32 %i.atc, 3
-  store i32 %i.atd, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64
+  %i.atd = sdiv i32 %i.atc, 3                     ; 2 uses
+  %..sroa.12.1406 = select i1 %.sroa.idx405, i32 %i.atd, i32 %.0237493
+  %.sroa.0.1.407 = select i1 %.sroa.idx405, i32 %.sroa.0.1560, i32 %i.atd
   br label %bb.br
 
 ff_acelp_decode_4bit_to_2nd_delay3.exit:          ; preds = %bb.bm, %bb.bn, %bb.bf, %bb.bc
   %.1245 = phi i32 [ %i.asd, %bb.bc ], [ %i.asy, %bb.bm ], [ %i.asf, %bb.bf ], [ %i.atb, %bb.bn ] ; 4 uses
   %i.ate = add nsw i32 %.1245, 1
-  %i.atf = sdiv i32 %i.ate, 3                     ; 2 uses
-  store i32 %i.atf, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64
+  %i.atf = sdiv i32 %i.ate, 3                     ; 3 uses
+  %..sroa.12.1 = select i1 %.sroa.idx405, i32 %i.atf, i32 %.0237493
+  %.sroa.0.1. = select i1 %.sroa.idx405, i32 %.sroa.0.1560, i32 %i.atf
   %i.atg = icmp sgt i32 %.1245, 430
   br i1 %i.atg, label %bb.bo, label %bb.bp
 
 bb.bo:                                            ; preds = %ff_acelp_decode_4bit_to_2nd_delay3.exit
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef nonnull %0, i32 noundef 24, ptr noundef nonnull @.str.10, i32 noundef %i.atf) #9
-  store i32 143, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64
+  %...sroa.12.1 = select i1 %.sroa.idx405, i32 143, i32 %.0237493
+  %.sroa.0.1.. = select i1 %.sroa.idx405, i32 %.sroa.0.1560, i32 143
   br label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo, %ff_acelp_decode_4bit_to_2nd_delay3.exit
+  %.sroa.12.2 = phi i32 [ %...sroa.12.1, %bb.bo ], [ %..sroa.12.1, %ff_acelp_decode_4bit_to_2nd_delay3.exit ] ; 2 uses
+  %.sroa.0.2 = phi i32 [ %.sroa.0.1.., %bb.bo ], [ %.sroa.0.1., %ff_acelp_decode_4bit_to_2nd_delay3.exit ] ; 2 uses
   br i1 %.0239.lcssa, label %bb.bq, label %bb.br
 
 bb.bq:                                            ; preds = %bb.bp
@@ -843,6 +848,8 @@ bb.bq:                                            ; preds = %bb.bp
   br label %bb.br
 
 bb.br:                                            ; preds = %.thread, %bb.bq, %bb.bp
+  %.sroa.0.2417 = phi i32 [ %.sroa.0.2, %bb.bq ], [ %.sroa.0.2, %bb.bp ], [ %.sroa.0.1.407, %.thread ] ; 4 uses
+  %.sroa.12.2416 = phi i32 [ %.sroa.12.2, %bb.bq ], [ %.sroa.12.2, %bb.bp ], [ %..sroa.12.1406, %.thread ] ; 3 uses
   %.1245349351 = phi i32 [ %.1245, %bb.bq ], [ %.1245, %bb.bp ], [ %.1245.ph, %.thread ] ; 2 uses
   %.0234 = phi i32 [ %i.ato, %bb.bq ], [ %i.arf, %bb.bp ], [ %i.arf, %.thread ]
   %.0 = phi i32 [ %i.atl, %bb.bq ], [ %i.aqv, %bb.bp ], [ %i.aqv, %.thread ] ; 2 uses
@@ -859,17 +866,17 @@ bb.bt:                                            ; preds = %bb.br
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
-  %4 = load i32, ptr %indvars.iv532.sroa.phi601, align 4, !tbaa !64 ; 4 uses
-  %i.atq = icmp slt i32 %4, 40
+  %.sroa.speculated78 = select i1 %.sroa.idx405, i32 %.sroa.12.2416, i32 %.sroa.0.2417 ; 4 uses
+  %i.atq = icmp slt i32 %.sroa.speculated78, 40
   br i1 %i.atq, label %bb.bv, label %bb.bw
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.atr = sext i32 %4 to i64
+  %i.atr = sext i32 %.sroa.speculated78 to i64
   %i.ats = getelementptr inbounds [2 x i8], ptr %i.c, i64 %i.atr ; 2 uses
   %i.att = load i16, ptr %i.anm, align 4, !tbaa !37
   %i.atu = call i16 @llvm.smax.i16(i16 %i.att, i16 3277)
   %i.atv = call i16 @llvm.umin.i16(i16 %i.atu, i16 13017)
-  %i.atw = sub nsw i32 40, %4
+  %i.atw = sub nsw i32 40, %.sroa.speculated78
   call void @ff_acelp_weighted_vector_sum(ptr noundef nonnull %i.ats, ptr noundef nonnull %i.ats, ptr noundef nonnull %i.c, i16 noundef signext 16384, i16 noundef signext %i.atv, i16 noundef signext 0, i32 noundef 14, i32 noundef %i.atw) #9
   br label %bb.bw
 
@@ -1272,9 +1279,8 @@ bb.cf:                                            ; preds = %.loopexit
 
 bb.cg:                                            ; preds = %bb.cf, %g729d_get_new_exc.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.ant, ptr noundef nonnull align 16 dereferenceable(20) %i.as, i64 20, i1 false)
-  %.sroa.0.0..sroa.0.0. = load i32, ptr %.sroa.0, align 4, !tbaa !64
   %i.bck = load <40 x i16>, ptr %i.ar, align 4, !tbaa !37
-  call void @ff_g729_postfilter(ptr noundef %i.m, ptr noundef nonnull %i.any, ptr noundef nonnull %i.e, ptr noundef nonnull %indvars.iv532.sroa.phi604, i32 noundef %.sroa.0.0..sroa.0.0., ptr noundef nonnull %i.anz, ptr noundef nonnull %i.aoa, ptr noundef nonnull %i.aob, ptr noundef nonnull %i.ar, i32 noundef 40) #9
+  call void @ff_g729_postfilter(ptr noundef %i.m, ptr noundef nonnull %i.any, ptr noundef nonnull %i.e, ptr noundef nonnull %indvars.iv532.sroa.phi604, i32 noundef %.sroa.0.2417, ptr noundef nonnull %i.anz, ptr noundef nonnull %i.aoa, ptr noundef nonnull %i.aob, ptr noundef nonnull %i.ar, i32 noundef 40) #9
   %i.bcl = load <40 x i16>, ptr %i.ar, align 4, !tbaa !37
   %i.bcm = call <40 x i16> @llvm.abs.v40i16(<40 x i16> %i.bcl, i1 false)
   %i.bcn = zext <40 x i16> %i.bcm to <40 x i32>
@@ -1296,7 +1302,7 @@ bb.ch:                                            ; preds = %bb.cg
   br label %bb.ci
 
 bb.ci:                                            ; preds = %bb.cg, %bb.ch
-  %storemerge566 = phi i32 [ %spec.select, %bb.ch ], [ %4, %bb.cg ]
+  %storemerge566 = phi i32 [ %spec.select, %bb.ch ], [ %.sroa.speculated78, %bb.cg ]
   store i32 %storemerge566, ptr %i.anj, align 8, !tbaa !40
   %i.bcy = load i32, ptr %i.aod, align 8
   store i32 %i.bcy, ptr %i.at, align 16
@@ -1337,8 +1343,6 @@ bb.ck:                                            ; preds = %bb.a, %._crit_edge5
   %.0236 = phi i32 [ -1094995529, %bb.g ], [ %i.bdp, %._crit_edge500 ], [ %i.s, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   ret i32 %.0236
 }

@@ -58,7 +58,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::array.106" = type { [18 x i32] }
 %"struct.std::array.107" = type { [17 x i16] }
 %"struct.std::array.104" = type { [256 x i32] }
-%"struct.std::array.23" = type { [2 x i32] }
 %"class.rawspeed::RawImageCurveGuard" = type <{ ptr, ptr, i8, [7 x i8] }>
 %"class.rawspeed::BitStreamerMSB" = type { %"class.rawspeed::BitStreamer" }
 %"class.rawspeed::BitStreamer" = type { %"struct.rawspeed::BitStreamCacheRightInLeftOut", %"struct.rawspeed::BitStreamerForwardSequentialReplenisher" }
@@ -461,16 +460,15 @@ bb.a:
   %5 = alloca %"struct.std::array.108", align 1   ; 16 uses
   %6 = alloca %"struct.std::array.109", align 2   ; 8 uses
   %7 = alloca %"class.rawspeed::(anonymous namespace)::NikonLASDecompressor", align 8 ; 26 uses
-  %8 = alloca %"struct.std::array.23", align 8    ; 5 uses
-  %9 = alloca %"class.rawspeed::RawImageCurveGuard", align 8 ; 7 uses
-  %10 = alloca %"class.rawspeed::BitStreamerMSB", align 8 ; 18 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
+  %8 = alloca %"class.rawspeed::RawImageCurveGuard", align 8 ; 7 uses
+  %9 = alloca %"class.rawspeed::BitStreamerMSB", align 8 ; 18 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.b = zext i1 %3 to i8
-  store ptr %0, ptr %9, align 8, !tbaa !169
-  %i.c = getelementptr inbounds nuw i8, ptr %9, i64 8
+  store ptr %0, ptr %8, align 8, !tbaa !169
+  %i.c = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr %i.a, ptr %i.c, align 8, !tbaa !266
-  %i.d = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %i.d = getelementptr inbounds nuw i8, ptr %8, i64 16
   store i8 %i.b, ptr %i.d, align 8, !tbaa !170
   br i1 %3, label %bb.c, label %bb.b
 
@@ -480,17 +478,17 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #25
   %i.f = icmp sgt i32 %2, -1
   tail call void @llvm.assume(i1 %i.f)
-  store i64 0, ptr %10, align 8, !tbaa !172
-  %i.g = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 8 uses
+  store i64 0, ptr %9, align 8, !tbaa !172
+  %i.g = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 8 uses
   store i32 0, ptr %i.g, align 8, !tbaa !173
-  %i.h = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   store ptr %1, ptr %i.h, align 8, !tbaa !54
-  %.sroa.2.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 24 ; 2 uses
+  %.sroa.2.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 2 uses
   store i32 %2, ptr %.sroa.2.0..sroa_idx.i.i.i.i, align 8, !tbaa !33
-  %i.i = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 5 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %9, i64 32 ; 5 uses
   store i32 0, ptr %i.i, align 8, !tbaa !176
   %i.j = icmp samesign ult i32 %2, 4
   br i1 %i.j, label %bb.d, label %bb.e
@@ -507,7 +505,7 @@ bb.e:                                             ; preds = %bb.c
   %i.k = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i) ; 2 uses
   %i.l = zext i32 %i.k to i64
   %i.m = shl nuw i64 %i.l, 32
-  store i64 %i.m, ptr %10, align 8, !tbaa !172
+  store i64 %i.m, ptr %9, align 8, !tbaa !172
   store i32 32, ptr %i.g, align 8, !tbaa !173
   store i32 4, ptr %i.i, align 8, !tbaa !176
   %i.n = lshr i32 %i.k, 8
@@ -522,7 +520,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.r, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  invoke void @_ZN8rawspeed17NikonDecompressor10decompressINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS3_EEEEEEvRNS_14BitStreamerMSBEii(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(40) %10, i32 noundef 0, i32 noundef %i.u)
+  invoke void @_ZN8rawspeed17NikonDecompressor10decompressINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS3_EEEEEEvRNS_14BitStreamerMSBEii(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(40) %9, i32 noundef 0, i32 noundef %i.u)
           to label %bb.be unwind label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit.i.i.i.i.i, %.invoke.i.i, %bb.d, %bb.h, %bb.f
@@ -532,15 +530,15 @@ bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiE
 
 .body:                                            ; preds = %_ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressorD2Ev.exit28.i, %bb.g
   %eh.lpad-body = phi { ptr, i32 } [ %i.v, %bb.g ], [ %i.qr, %_ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressorD2Ev.exit28.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #25
-  call void @_ZN8rawspeed18RawImageCurveGuardD2Ev(ptr noundef nonnull align 8 dead_on_return(17) dereferenceable(24) %9) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
+  call void @_ZN8rawspeed18RawImageCurveGuardD2Ev(ptr noundef nonnull align 8 dead_on_return(17) dereferenceable(24) %8) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   resume { ptr, i32 } %eh.lpad-body
 
 bb.h:                                             ; preds = %bb.e
   %i.w = icmp ult i32 %i.q, %i.u
   tail call void @llvm.assume(i1 %i.w)
-  invoke void @_ZN8rawspeed17NikonDecompressor10decompressINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS3_EEEEEEvRNS_14BitStreamerMSBEii(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(40) %10, i32 noundef 0, i32 noundef %i.q)
+  invoke void @_ZN8rawspeed17NikonDecompressor10decompressINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS3_EEEEEEvRNS_14BitStreamerMSBEii(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(40) %9, i32 noundef 0, i32 noundef %i.q)
           to label %iter.check unwind label %bb.g
 
 iter.check:                                       ; preds = %bb.h
@@ -943,11 +941,12 @@ bb.af:                                            ; preds = %bb.ag, %.lr.ph.i
   %.pre26 = phi i32 [ %.pre26.pre, %.lr.ph.i ], [ %.pre2628, %bb.ag ] ; 2 uses
   %.pre = phi i32 [ %.pre.pre, %.lr.ph.i ], [ %i.qm, %bb.ag ]
   %indvars.iv80.i = phi i64 [ %i.ll, %.lr.ph.i ], [ %indvars.iv.next81.i, %bb.ag ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   %i.ls = and i64 %indvars.iv80.i, 1
   %i.lt = getelementptr inbounds nuw [8 x i8], ptr %i.lj, i64 %i.ls ; 2 uses
-  %i.lu = load i64, ptr %i.lt, align 4, !tbaa !61
-  store i64 %i.lu, ptr %8, align 8, !tbaa !61
+  %i.lu = load i64, ptr %i.lt, align 4, !tbaa !61 ; 2 uses
+  %.sroa.0.0.extract.trunc.i = trunc i64 %i.lu to i32
+  %.sroa.8.0.extract.shift.i = lshr i64 %i.lu, 32
+  %.sroa.8.0.extract.trunc.i = trunc nuw i64 %.sroa.8.0.extract.shift.i to i32
   %i.lv = icmp samesign ult i64 %indvars.iv80.i, %i.lo
   %i.lw = mul nuw nsw i64 %indvars.iv80.i, %i.lm
   %i.lx = getelementptr inbounds nuw [2 x i8], ptr %i.ks, i64 %i.lw
@@ -955,7 +954,6 @@ bb.af:                                            ; preds = %bb.ag, %.lr.ph.i
   br label %bb.ah
 
 bb.ag:                                            ; preds = %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   %indvars.iv.next81.i = add nuw nsw i64 %indvars.iv80.i, 1 ; 2 uses
   %i.ly = trunc nuw nsw i64 %indvars.iv.next81.i to i32
   %i.lz = icmp sgt i32 %i.ad, %i.ly
@@ -965,7 +963,9 @@ bb.ah:                                            ; preds = %_ZN8rawspeed15RawIm
   %.pre2631 = phi i32 [ %.pre26, %bb.af ], [ %.pre2628, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ]
   %i.ma = phi i32 [ %.pre26, %bb.af ], [ %i.ql, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 6 uses
   %i.mb = phi i32 [ %.pre, %bb.af ], [ %i.qm, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 5 uses
-  %indvars.iv.i = phi i64 [ 0, %bb.af ], [ %indvars.iv.next.i, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.af ], [ %indvars.iv.next.i, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 5 uses
+  %.sroa.0.086.i = phi i32 [ %.sroa.0.0.extract.trunc.i, %bb.af ], [ %spec.select76.i, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 2 uses
+  %.sroa.8.085.i = phi i32 [ %.sroa.8.0.extract.trunc.i, %bb.af ], [ %spec.select.i, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 2 uses
   %i.mc = icmp samesign ult i32 %i.mb, 65
   call void @llvm.assume(i1 %i.mc)
   %i.md = icmp sgt i32 %i.ma, -1
@@ -974,7 +974,7 @@ bb.ah:                                            ; preds = %_ZN8rawspeed15RawIm
   br i1 %.not.i.i.i7, label %bb.ai, label %._ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit_crit_edge.i.i
 
 ._ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit_crit_edge.i.i: ; preds = %bb.ah
-  %.pre.i.i = load i64, ptr %10, align 8, !tbaa !172
+  %.pre.i.i = load i64, ptr %9, align 8, !tbaa !172
   br label %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.i.i
 
 bb.ai:                                            ; preds = %bb.ah
@@ -1010,7 +1010,7 @@ _ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getI
   %.sroa.0.0..sroa.0.0..sroa.0.0..in.i.i.i.i = phi ptr [ %.sroa.0.i.i.i.i, %bb.al ], [ %i.mg, %bb.aj ]
   %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.i = load i32, ptr %.sroa.0.0..sroa.0.0..sroa.0.0..in.i.i.i.i, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i)
-  %.promoted8.i.i.i.i = load i64, ptr %10, align 8
+  %.promoted8.i.i.i.i = load i64, ptr %9, align 8
   %i.mo = call i32 @llvm.bswap.i32(i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i.i)
   %i.mp = zext i32 %i.mo to i64
   %i.mq = or disjoint i32 %i.mb, 32
@@ -1040,7 +1040,7 @@ bb.am:                                            ; preds = %_ZN8rawspeed11BitSt
   store i32 %i.nd, ptr %i.g, align 8, !tbaa !173
   %i.ne = zext nneg i32 %i.nb to i64
   %i.nf = shl i64 %i.mw, %i.ne
-  store i64 %i.nf, ptr %10, align 8, !tbaa !172
+  store i64 %i.nf, ptr %9, align 8, !tbaa !172
   %i.ng = ashr i32 %i.na, 8
   br label %_ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressor16decodeDifferenceERNS_14BitStreamerMSBE.exit.i
 
@@ -1057,7 +1057,7 @@ bb.ao:                                            ; preds = %bb.an
   store i32 %i.nl, ptr %i.g, align 8, !tbaa !173
   %i.nm = zext nneg i32 %i.nk to i64
   %i.nn = shl i64 %i.mw, %i.nm                    ; 2 uses
-  store i64 %i.nn, ptr %10, align 8, !tbaa !172
+  store i64 %i.nn, ptr %9, align 8, !tbaa !172
   %i.no = ashr i32 %i.nj, 4
   br label %bb.as
 
@@ -1066,7 +1066,7 @@ bb.ap:                                            ; preds = %bb.an
   %i.nq = add nsw i32 %i.mx, -8                   ; 3 uses
   store i32 %i.nq, ptr %i.g, align 8, !tbaa !173
   %i.nr = shl i64 %i.mw, 8                        ; 3 uses
-  store i64 %i.nr, ptr %10, align 8, !tbaa !172
+  store i64 %i.nr, ptr %9, align 8, !tbaa !172
   %i.ns = icmp slt i32 %i.im, %i.np
   br i1 %i.ns, label %.lr.ph.i.i, label %.thread.i.i
 
@@ -1093,7 +1093,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %.lr.ph.i.i
   store i32 %i.nz, ptr %i.g, align 8, !tbaa !173
-  store i64 %i.oa, ptr %10, align 8, !tbaa !172
+  store i64 %i.oa, ptr %9, align 8, !tbaa !172
   %i.og = icmp samesign ugt i64 %indvars.iv.i.i, 15
   br i1 %i.og, label %bb.ar, label %.thread.i.i
 
@@ -1204,7 +1204,7 @@ _ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialR
   store i32 %i.pz, ptr %i.g, align 8, !tbaa !173
   %i.qa = zext nneg i32 %i.oy to i64
   %i.qb = shl i64 %i.pt, %i.qa
-  store i64 %i.qb, ptr %10, align 8, !tbaa !172
+  store i64 %i.qb, ptr %9, align 8, !tbaa !172
   %i.qc = shl i32 %i.py, 1
   %i.qd = or disjoint i32 %i.qc, 1
   %i.qe = shl i32 %i.qd, %i.ox
@@ -1228,23 +1228,23 @@ _ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressor16decodeDifferenceERNS_14BitStre
   %i.ql = phi i32 [ %i.mv, %bb.am ], [ %i.mv, %bb.as ], [ %i.ps, %bb.ay ], [ %i.ps, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit.i.i ]
   %i.qm = phi i32 [ %i.nd, %bb.am ], [ %i.ou, %bb.as ], [ %i.pz, %bb.ay ], [ %i.pz, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit.i.i ] ; 2 uses
   %.043.i.i = phi i32 [ %i.ng, %bb.am ], [ -32768, %bb.as ], [ %i.qk, %bb.ay ], [ %i.qf, %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE7getBitsEi.exit.i.i ]
-  %i.qn = and i64 %indvars.iv.i, 1                ; 2 uses
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %i.qn ; 2 uses
-  %12 = load i32, ptr %11, align 4, !tbaa !33
-  %i.qo = add nsw i32 %12, %.043.i.i              ; 3 uses
-  store i32 %i.qo, ptr %11, align 4, !tbaa !33
+  %i.qn = and i64 %indvars.iv.i, 1
+  %.sroa.idx.not.i = icmp eq i64 %i.qn, 0         ; 3 uses
+  %.sroa.speculated.i = select i1 %.sroa.idx.not.i, i32 %.sroa.0.086.i, i32 %.sroa.8.085.i
+  %i.qo = add nsw i32 %.043.i.i, %.sroa.speculated.i ; 4 uses
+  %spec.select.i = select i1 %.sroa.idx.not.i, i32 %.sroa.8.085.i, i32 %i.qo
+  %spec.select76.i = select i1 %.sroa.idx.not.i, i32 %i.qo, i32 %.sroa.0.086.i
   %i.qp = icmp samesign ult i64 %indvars.iv.i, 2
   br i1 %i.qp, label %bb.az, label %bb.ba
 
 bb.az:                                            ; preds = %_ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressor16decodeDifferenceERNS_14BitStreamerMSBE.exit.i
-  %i.qq = getelementptr inbounds nuw [4 x i8], ptr %i.lt, i64 %i.qn
+  %i.qq = getelementptr inbounds nuw [4 x i8], ptr %i.lt, i64 %indvars.iv.i
   store i32 %i.qo, ptr %i.qq, align 4, !tbaa !33
   br label %bb.ba
 
 _ZN8rawspeed12_GLOBAL__N_120NikonLASDecompressorD2Ev.exit28.i: ; preds = %.invoke.i, %bb.ar
   %i.qr = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   call void @_ZdlPvm(ptr noundef nonnull %i.ik, i64 noundef 65536) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   br label %.body
@@ -1307,7 +1307,7 @@ _ZN8rawspeed17NikonDecompressor10decompressINS_12_GLOBAL__N_120NikonLASDecompres
   br label %bb.be
 
 bb.be:                                            ; preds = %_ZN8rawspeed17NikonDecompressor10decompressINS_12_GLOBAL__N_120NikonLASDecompressorEEEvRNS_14BitStreamerMSBEii.exit, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.ru = load ptr, ptr %0, align 8, !tbaa !81    ; 2 uses
   br i1 %3, label %bb.bf, label %bb.bg
@@ -1354,7 +1354,7 @@ bb.bk:                                            ; preds = %bb.bg, %bb.bf
 
 _ZN8rawspeed18RawImageCurveGuardD2Ev.exit:        ; preds = %bb.bf, %bb.bh, %_ZNKSt14default_deleteIN8rawspeed11TableLookUpEEclEPS1_.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   ret void
 }
 
@@ -1369,7 +1369,6 @@ define linkonce_odr hidden void @_ZN8rawspeed17NikonDecompressor10decompressINS_
 bb.a:
   %.sroa.0.i.i = alloca i32, align 4              ; 5 uses
   %4 = alloca %"class.rawspeed::PrefixCodeLUTDecoder", align 8 ; 24 uses
-  %5 = alloca %"struct.std::array.23", align 8    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.b = load i32, ptr %i.a, align 4, !tbaa !89
@@ -1520,11 +1519,12 @@ _ZN8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDec
 
 bb.h:                                             ; preds = %.lr.ph, %bb.i
   %indvars.iv79 = phi i64 [ %i.aj, %.lr.ph ], [ %indvars.iv.next80, %bb.i ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   %i.cc = and i64 %indvars.iv79, 1
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.cc ; 2 uses
-  %i.ce = load i64, ptr %i.cd, align 4, !tbaa !61
-  store i64 %i.ce, ptr %5, align 8, !tbaa !61
+  %i.ce = load i64, ptr %i.cd, align 4, !tbaa !61 ; 2 uses
+  %.sroa.0.0.extract.trunc = trunc i64 %i.ce to i32
+  %.sroa.8.0.extract.shift = lshr i64 %i.ce, 32
+  %.sroa.8.0.extract.trunc = trunc nuw i64 %.sroa.8.0.extract.shift to i32
   %i.cf = load ptr, ptr %i.aa, align 8            ; 2 uses
   %i.cg = load ptr, ptr %i.ac, align 8
   %i.ch = load ptr, ptr %i.ab, align 8
@@ -1545,14 +1545,15 @@ bb.h:                                             ; preds = %.lr.ph, %bb.i
   br label %bb.j
 
 bb.i:                                             ; preds = %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %indvars.iv.next80 = add nuw nsw i64 %indvars.iv79, 1 ; 2 uses
   %i.cw = trunc nuw nsw i64 %indvars.iv.next80 to i32
   %i.cx = icmp sgt i32 %3, %i.cw
   br i1 %i.cx, label %bb.h, label %._crit_edge, !llvm.loop !284
 
 bb.j:                                             ; preds = %bb.h, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit
-  %indvars.iv = phi i64 [ 0, %bb.h ], [ %indvars.iv.next, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %bb.h ], [ %indvars.iv.next, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit ] ; 5 uses
+  %.sroa.0.092 = phi i32 [ %.sroa.0.0.extract.trunc, %bb.h ], [ %spec.select90, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit ] ; 2 uses
+  %.sroa.8.091 = phi i32 [ %.sroa.8.0.extract.trunc, %bb.h ], [ %spec.select, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit ] ; 2 uses
   %i.cy = load i32, ptr %i.w, align 8, !tbaa !173 ; 5 uses
   %i.cz = icmp samesign ult i32 %i.cy, 65
   call void @llvm.assume(i1 %i.cz)
@@ -1795,23 +1796,23 @@ bb.x:                                             ; preds = %bb.u
 
 _ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE16decodeDifferenceINS_14BitStreamerMSBEEEiRT_.exit: ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %.noexc
   %.0.i = phi i32 [ %i.ec, %.noexc ], [ -32768, %bb.v ], [ -32768, %bb.w ], [ %.0.i.i, %bb.x ], [ 0, %bb.u ]
-  %i.gq = and i64 %indvars.iv, 1                  ; 2 uses
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.gq ; 2 uses
-  %7 = load i32, ptr %6, align 4, !tbaa !33
-  %i.gr = add nsw i32 %7, %.0.i                   ; 3 uses
-  store i32 %i.gr, ptr %6, align 4, !tbaa !33
+  %i.gq = and i64 %indvars.iv, 1
+  %.sroa.idx.not = icmp eq i64 %i.gq, 0           ; 3 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, i32 %.sroa.0.092, i32 %.sroa.8.091
+  %i.gr = add nsw i32 %.0.i, %.sroa.speculated    ; 4 uses
+  %spec.select = select i1 %.sroa.idx.not, i32 %.sroa.8.091, i32 %i.gr
+  %spec.select90 = select i1 %.sroa.idx.not, i32 %i.gr, i32 %.sroa.0.092
   %i.gs = icmp samesign ult i64 %indvars.iv, 2
   br i1 %i.gs, label %bb.y, label %bb.aa
 
 bb.y:                                             ; preds = %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE16decodeDifferenceINS_14BitStreamerMSBEEEiRT_.exit
-  %i.gt = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %i.gq
+  %i.gt = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %indvars.iv
   store i32 %i.gr, ptr %i.gt, align 4, !tbaa !33
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.t, %bb.n
   %i.gu = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   call void @_ZN8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(152) dereferenceable(152) %4) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   resume { ptr, i32 } %i.gu

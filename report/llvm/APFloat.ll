@@ -205,7 +205,7 @@ bb.a:
   %i.s = or disjoint i8 %i.r, %i.q                ; 3 uses
   store i8 %i.s, ptr %i.o, align 4
   %i.t = icmp ne i64 %i.l, 0                      ; 2 uses
-  %i.u = or i64 %.sroa.0.0.copyload, %i.l
+  %i.u = or i64 %i.l, %.sroa.0.0.copyload
   %or.cond = icmp eq i64 %i.u, 0
   %i.v = add nsw i64 %i.l, -16383                 ; 2 uses
   %i.w = icmp eq i64 %i.v, 16384                  ; 2 uses
@@ -545,10 +545,10 @@ bb.a:
   %.not31.i.i.i.i.i = icmp eq i64 %i.e, 0
   %i.v = select i1 %.not30.i.i.i.i.i, i1 %.not31.i.i.i.i.i, i1 false ; 3 uses
   %i.w = icmp eq i64 %i.n, 0                      ; 2 uses
-  %or.cond = and i1 %i.w, %i.v
+  %or.cond = and i1 %i.v, %i.w
   %i.x = add nsw i64 %i.n, -16383                 ; 2 uses
   %i.y = icmp eq i64 %i.x, 16384                  ; 2 uses
-  %i.z = and i1 %i.y, %i.v
+  %i.z = and i1 %i.v, %i.y
   br i1 %i.z, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
@@ -650,7 +650,7 @@ bb.i:                                             ; preds = %bb.f
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 %i.br, ptr %i.bs, align 8, !tbaa !65
   %i.bt = load ptr, ptr %0, align 8, !tbaa !64
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !53
   %i.bw = add i32 %i.bv, -64
   %i.bx = icmp ult i32 %i.bw, -128
@@ -665,7 +665,9 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZN4llvm6detail9IEEEFloat7makeInfEb.exit
 
 bb.k:                                             ; preds = %bb.i
-  %i.by = load i32, ptr %i.bu, align 4, !tbaa !53
+  %2 = load ptr, ptr %0, align 8, !tbaa !64
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.by = load i32, ptr %3, align 4, !tbaa !53
   %i.bz = add i32 %i.by, -64
   %i.ca = icmp ult i32 %i.bz, -128
   %i.cb = load ptr, ptr %i.p, align 8

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/aahd_demosaic?download=true
 inline.NumInlined: 46
 inline.NumDeleted: 8
-loop-unroll.NumCompletelyUnrolled: 21
-loop-unroll.NumUnrolled: 21
+loop-unroll.NumCompletelyUnrolled: 23
+loop-unroll.NumUnrolled: 23
 begin_hunk_0_@_ZN4AAHD12evaluate_ahdEv:.preheader326
 
 bb.m:                                             ; preds = %bb.l
@@ -204,58 +204,63 @@ bb.t:                                             ; preds = %.lr.ph355, %._crit_
   %indvars.iv397 = phi i64 [ %i.tz, %.lr.ph352.preheader ], [ %indvars.iv.next398, %bb.w ] ; 9 uses
   %.0247350 = phi i32 [ 0, %.lr.ph352.preheader ], [ %i.acp, %bb.w ]
   %i.ug = load i32, ptr %i.c, align 4, !tbaa !82  ; 2 uses
-  %i.uh = sext i32 %i.ug to i64                   ; 9 uses
-  %1 = sub nsw i64 0, %i.uh                       ; 2 uses
+  %i.uh = sext i32 %i.ug to i64                   ; 12 uses
   %i.ui = load ptr, ptr %i.eq, align 8, !tbaa !86
-  %i.uj = getelementptr inbounds i8, ptr %i.ui, i64 %indvars.iv397 ; 6 uses
-  %i.uk = xor i64 %i.uh, -1                       ; 2 uses
+  %i.uj = getelementptr inbounds i8, ptr %i.ui, i64 %indvars.iv397 ; 7 uses
+  %1 = sub nsw i64 0, %i.uh
+  %i.uk = xor i64 %i.uh, -1
   %i.ul = getelementptr inbounds i8, ptr %i.uj, i64 %i.uk
   %i.um = load i8, ptr %i.ul, align 1, !tbaa !99
   %i.un = getelementptr inbounds i8, ptr %i.uj, i64 -1
-  %2 = add nsw i64 %i.uh, -1                      ; 2 uses
-  %i.uo = getelementptr inbounds i8, ptr %i.uj, i64 %2
-  %3 = load i8, ptr %i.uo, align 1, !tbaa !99
+  %2 = load i8, ptr %i.un, align 1, !tbaa !99
+  %i.uo = getelementptr i8, ptr %i.uj, i64 %i.uh
+  %3 = getelementptr i8, ptr %i.uo, i64 -1
   %i.up = getelementptr inbounds i8, ptr %i.uj, i64 %1
-  %4 = load <2 x i8>, ptr %i.un, align 1, !tbaa !99
-  %5 = getelementptr inbounds i8, ptr %i.uj, i64 %i.uh
+  %4 = load i8, ptr %i.uj, align 1, !tbaa !99
+  %5 = load <2 x i8>, ptr %3, align 1, !tbaa !99
   %i.uq = load <2 x i8>, ptr %i.up, align 1, !tbaa !99
   %i.ur = getelementptr inbounds nuw i8, ptr %i.uj, i64 1
   %i.us = load i8, ptr %i.ur, align 1, !tbaa !99
-  %6 = load <2 x i8>, ptr %5, align 1, !tbaa !99
-  %7 = insertelement <8 x i8> poison, i8 %i.um, i64 0
-  %i.ut = shufflevector <2 x i8> %i.uq, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %8 = shufflevector <8 x i8> %7, <8 x i8> %i.ut, <8 x i32> <i32 0, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.uu = insertelement <8 x i8> %8, i8 %3, i64 3
-  %9 = shufflevector <2 x i8> %6, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %10 = shufflevector <8 x i8> %i.uu, <8 x i8> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 poison, i32 poison>
-  %11 = shufflevector <2 x i8> %4, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %12 = shufflevector <8 x i8> %10, <8 x i8> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
-  %i.uv = tail call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %12)
-  %op.rdx = add i8 %i.uv, %i.us                   ; 2 uses
+  %6 = getelementptr i8, ptr %i.uj, i64 %i.uh
+  %7 = getelementptr i8, ptr %6, i64 1
+  %8 = load i8, ptr %7, align 1, !tbaa !99
+  %i.ut = shufflevector <2 x i8> %5, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %9 = insertelement <8 x i8> %i.ut, i8 %i.us, i64 2
+  %i.uu = insertelement <8 x i8> %9, i8 %8, i64 3
+  %10 = insertelement <8 x i8> %i.uu, i8 %i.um, i64 4
+  %11 = shufflevector <2 x i8> %i.uq, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = shufflevector <8 x i8> %10, <8 x i8> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 8, i32 9, i32 poison>
+  %13 = insertelement <8 x i8> %12, i8 %2, i64 7
+  %i.uv = tail call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %13)
+  %op.rdx = add i8 %i.uv, %4                      ; 2 uses
   %i.uw = load ptr, ptr %i.et, align 8, !tbaa !86
-  %i.ux = getelementptr inbounds i8, ptr %i.uw, i64 %indvars.iv397 ; 6 uses
-  %i.uy = getelementptr inbounds i8, ptr %i.ux, i64 %i.uk
+  %i.ux = getelementptr inbounds i8, ptr %i.uw, i64 %indvars.iv397 ; 7 uses
+  %14 = sub nsw i64 0, %i.uh
+  %15 = xor i64 %i.uh, -1
+  %i.uy = getelementptr inbounds i8, ptr %i.ux, i64 %15
   %i.uz = load i8, ptr %i.uy, align 1, !tbaa !99
   %i.va = getelementptr inbounds i8, ptr %i.ux, i64 -1
-  %i.vb = getelementptr inbounds i8, ptr %i.ux, i64 %2
-  %13 = load i8, ptr %i.vb, align 1, !tbaa !99
-  %i.vc = getelementptr inbounds i8, ptr %i.ux, i64 %1
-  %14 = load <2 x i8>, ptr %i.va, align 1, !tbaa !99
-  %15 = getelementptr inbounds i8, ptr %i.ux, i64 %i.uh
+  %16 = load i8, ptr %i.va, align 1, !tbaa !99
+  %i.vb = getelementptr i8, ptr %i.ux, i64 %i.uh
+  %17 = getelementptr i8, ptr %i.vb, i64 -1
+  %i.vc = getelementptr inbounds i8, ptr %i.ux, i64 %14
+  %18 = load i8, ptr %i.ux, align 1, !tbaa !99
+  %19 = load <2 x i8>, ptr %17, align 1, !tbaa !99
   %i.vd = load <2 x i8>, ptr %i.vc, align 1, !tbaa !99
   %i.ve = getelementptr inbounds nuw i8, ptr %i.ux, i64 1
   %i.vf = load i8, ptr %i.ve, align 1, !tbaa !99
-  %16 = load <2 x i8>, ptr %15, align 1, !tbaa !99
-  %17 = insertelement <8 x i8> poison, i8 %i.uz, i64 0
-  %i.vg = shufflevector <2 x i8> %i.vd, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %18 = shufflevector <8 x i8> %17, <8 x i8> %i.vg, <8 x i32> <i32 0, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.vh = insertelement <8 x i8> %18, i8 %13, i64 3
-  %19 = shufflevector <2 x i8> %16, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %20 = shufflevector <8 x i8> %i.vh, <8 x i8> %19, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 poison, i32 poison>
-  %21 = shufflevector <2 x i8> %14, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %22 = shufflevector <8 x i8> %20, <8 x i8> %21, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
-  %i.vi = tail call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %22)
-  %op.rdx447 = add i8 %i.vi, %i.vf                ; 2 uses
+  %20 = getelementptr i8, ptr %i.ux, i64 %i.uh
+  %21 = getelementptr i8, ptr %20, i64 1
+  %22 = load i8, ptr %21, align 1, !tbaa !99
+  %i.vg = shufflevector <2 x i8> %19, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %23 = insertelement <8 x i8> %i.vg, i8 %i.vf, i64 2
+  %i.vh = insertelement <8 x i8> %23, i8 %22, i64 3
+  %24 = insertelement <8 x i8> %i.vh, i8 %i.uz, i64 4
+  %25 = shufflevector <2 x i8> %i.vd, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %26 = shufflevector <8 x i8> %24, <8 x i8> %25, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 8, i32 9, i32 poison>
+  %27 = insertelement <8 x i8> %26, i8 %16, i64 7
+  %i.vi = tail call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %27)
+  %op.rdx447 = add i8 %i.vi, %18                  ; 2 uses
   %.not = icmp eq i8 %op.rdx, %op.rdx447
   br i1 %.not, label %bb.v, label %bb.u
 

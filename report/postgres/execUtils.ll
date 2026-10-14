@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8              ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.d = load ptr, ptr %i.c, align 8              ; 5 uses
+  %i.d = load ptr, ptr %i.c, align 8              ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 199
   %i.f = load i8, ptr %i.e, align 1, !range !7, !noundef !8
   %i.g = trunc nuw i8 %i.f to i1
@@ -246,7 +246,7 @@ bb.c:                                             ; preds = %.sink.split.i.i, %.
 
 ExecGetResultSlotOps.exit.i:                      ; preds = %bb.c, %.sink.split.i.i, %bb.b
   %.028.i = phi i8 [ %i.k, %.sink.split.i.i ], [ %.sink.i46.i, %bb.c ], [ %i.k, %bb.b ]
-  %.0.i.i = phi ptr [ @TTSOpsVirtual, %.sink.split.i.i ], [ %i.t, %bb.c ], [ %i.i, %bb.b ] ; 2 uses
+  %.0.i.i = phi ptr [ @TTSOpsVirtual, %.sink.split.i.i ], [ %i.t, %bb.c ], [ %i.i, %bb.b ] ; 8 uses
   %i.u = trunc i8 %.028.i to i1
   br i1 %i.u, label %.lr.ph.i, label %ExecGetCommonSlotOps.exit
 
@@ -254,53 +254,62 @@ ExecGetResultSlotOps.exit.i:                      ; preds = %bb.c, %.sink.split.
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 199
   %i.w = load i8, ptr %i.v, align 1, !range !7, !noundef !8
   %i.x = trunc nuw i8 %i.w to i1
-  br i1 %i.x, label %bb.d, label %.thread.i18.i
+  %.phi.trans.insert33.i = getelementptr inbounds nuw i8, ptr %i.d, i64 120 ; 2 uses
+  br i1 %i.x, label %bb.d, label %.lr.ph.i.preheader.split
 
 bb.d:                                             ; preds = %.lr.ph.i
+  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 195
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 184
   %i.z = load ptr, ptr %i.y, align 8              ; 2 uses
   %.not.i24.i = icmp eq ptr %i.z, null
-  %1 = getelementptr inbounds nuw i8, ptr %i.d, i64 195
-  %2 = load i8, ptr %1, align 1, !range !7, !noundef !8 ; 3 uses
-  br i1 %.not.i24.i, label %.sink.split.i20.i, label %ExecGetResultSlotOps.exit26.i
+  %2 = load i8, ptr %1, align 1, !range !7, !noundef !8
+  %3 = trunc nuw i8 %2 to i1                      ; 3 uses
+  br i1 %.not.i24.i, label %.thread.i18.i, label %bb.e
 
-.thread.i18.i:                                    ; preds = %.lr.ph.i
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 120
-  %i.aa = load ptr, ptr %3, align 8               ; 3 uses
+.thread.i18.i:                                    ; preds = %bb.d
+  %i.aa = load ptr, ptr %.phi.trans.insert33.i, align 8 ; 2 uses
   %.not21.i19.i.a = icmp eq ptr %i.aa, null
-  br i1 %.not21.i19.i.a, label %ExecGetCommonSlotOps.exit, label %.sink.split.i20.thread51.i
+  br i1 %.not21.i19.i.a, label %.sink.split.i20.thread51.i, label %.sink.split.i20.i
 
 .sink.split.i20.thread51.i:                       ; preds = %.thread.i18.i
-  %4 = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
-  %5 = load i16, ptr %4, align 4
-  %6 = trunc i16 %5 to i8
-  %7 = lshr i8 %6, 4
-  br label %bb.e
+  %.not.i.us.us.us = icmp eq ptr %.0.i.i, @TTSOpsVirtual
+  %cond1.i.us.us.us = select i1 %3, i1 %.not.i.us.us.us, i1 false
+  %spec.select = select i1 %cond1.i.us.us.us, ptr %.0.i.i, ptr null
+  br label %ExecGetCommonSlotOps.exit
 
-.sink.split.i20.i:                                ; preds = %bb.d
-  %.phi.trans.insert33.i.a = getelementptr inbounds nuw i8, ptr %i.d, i64 120
-  %.pre34.i = load ptr, ptr %.phi.trans.insert33.i.a, align 8 ; 2 uses
-  %.not22.i22.i = icmp eq ptr %.pre34.i, null
-  br i1 %.not22.i22.i, label %ExecGetResultSlotOps.exit26.i, label %bb.e
+.sink.split.i20.i:                                ; preds = %.thread.i18.i
+  %.phi.trans.insert33.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
+  %.pre34.i = load ptr, ptr %.phi.trans.insert33.i.a, align 8
+  %.not22.i22.i = icmp eq ptr %.0.i.i, %.pre34.i
+  %cond1.i.us.us = select i1 %3, i1 %.not22.i22.i, i1 false
+  %spec.select6 = select i1 %cond1.i.us.us, ptr %.0.i.i, ptr null
+  br label %ExecGetCommonSlotOps.exit
 
-bb.e:                                             ; preds = %.sink.split.i20.i, %.sink.split.i20.thread51.i
-  %.sink.i2154.i = phi i8 [ %7, %.sink.split.i20.thread51.i ], [ %2, %.sink.split.i20.i ]
-  %8 = phi ptr [ %i.aa, %.sink.split.i20.thread51.i ], [ %.pre34.i, %.sink.split.i20.i ]
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %10 = load ptr, ptr %9, align 8
-  br label %ExecGetResultSlotOps.exit26.i
+bb.e:                                             ; preds = %bb.d
+  %.not.i.us = icmp eq ptr %.0.i.i, %i.z
+  %cond1.i.us = select i1 %3, i1 %.not.i.us, i1 false
+  %spec.select7 = select i1 %cond1.i.us, ptr %.0.i.i, ptr null
+  br label %ExecGetCommonSlotOps.exit
 
-ExecGetResultSlotOps.exit26.i:                    ; preds = %bb.e, %.sink.split.i20.i, %bb.d
-  %.1.i = phi i8 [ %2, %.sink.split.i20.i ], [ %.sink.i2154.i, %bb.e ], [ %2, %bb.d ]
-  %.0.i23.i = phi ptr [ @TTSOpsVirtual, %.sink.split.i20.i ], [ %10, %bb.e ], [ %i.z, %bb.d ]
-  %11 = trunc i8 %.1.i to i1
-  %.not.i = icmp eq ptr %.0.i.i, %.0.i23.i
-  %cond1.i = select i1 %11, i1 %.not.i, i1 false
+.lr.ph.i.preheader.split:                         ; preds = %.lr.ph.i
+  %4 = load ptr, ptr %.phi.trans.insert33.i, align 8 ; 3 uses
+  %.not21.i19.i = icmp eq ptr %4, null
+  br i1 %.not21.i19.i, label %ExecGetCommonSlotOps.exit, label %ExecGetResultSlotOps.exit26.i
+
+ExecGetResultSlotOps.exit26.i:                    ; preds = %.lr.ph.i.preheader.split
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %7 = load i16, ptr %6, align 4
+  %8 = load ptr, ptr %5, align 8
+  %9 = and i16 %7, 16
+  %10 = icmp ne i16 %9, 0
+  %.not.i = icmp eq ptr %.0.i.i, %8
+  %cond1.i = select i1 %10, i1 %.not.i, i1 false
   %spec.select.a = select i1 %cond1.i, ptr %.0.i.i, ptr null
   br label %ExecGetCommonSlotOps.exit
 
-ExecGetCommonSlotOps.exit:                        ; preds = %ExecGetResultSlotOps.exit26.i, %.thread.i18.i, %.thread.i.i, %ExecGetResultSlotOps.exit.i
-  %.3.i = phi ptr [ null, %.thread.i.i ], [ null, %ExecGetResultSlotOps.exit.i ], [ null, %.thread.i18.i ], [ %spec.select.a, %ExecGetResultSlotOps.exit26.i ]
+ExecGetCommonSlotOps.exit:                        ; preds = %ExecGetResultSlotOps.exit26.i, %bb.e, %.sink.split.i20.i, %.sink.split.i20.thread51.i, %.lr.ph.i.preheader.split, %.thread.i.i, %ExecGetResultSlotOps.exit.i
+  %.3.i = phi ptr [ null, %.thread.i.i ], [ null, %ExecGetResultSlotOps.exit.i ], [ %spec.select7, %bb.e ], [ %spec.select.a, %ExecGetResultSlotOps.exit26.i ], [ null, %.lr.ph.i.preheader.split ], [ %spec.select, %.sink.split.i20.thread51.i ], [ %spec.select6, %.sink.split.i20.i ]
   ret ptr %.3.i
 }
 
