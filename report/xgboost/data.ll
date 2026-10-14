@@ -205,8 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.a
   %i.aw = getelementptr inbounds nuw i8, ptr %.8.val, i64 32
-  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !149 ; 24 uses
-  %46 = ptrtoaddr ptr %i.ax to i64                ; 2 uses
+  %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !149 ; 25 uses
   %.not.i = icmp eq ptr %i.ax, null
   br i1 %.not.i, label %bb.f, label %_ZN7xgboost6common4SpanIKfLm18446744073709551615EEC2EPS2_m.exit.i, !prof !71
 
@@ -223,8 +222,7 @@ _ZN7xgboost6common4SpanIKfLm18446744073709551615EEC2EPS2_m.exit.i: ; preds = %bb
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %.sroa.3.0.copyload.i.i = load i64, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !tbaa !74
   %.sroa.46.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 24
-  %.sroa.46.0.copyload.i.i = load ptr, ptr %.sroa.46.0..sroa_idx.i.i, align 8, !tbaa !102 ; 13 uses
-  %.sroa.46.0.copyload.i.i854 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i to i64 ; 2 uses
+  %.sroa.46.0.copyload.i.i = load ptr, ptr %.sroa.46.0..sroa_idx.i.i, align 8, !tbaa !102 ; 14 uses
   %.sroa.57.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 32
   %.sroa.57.0.copyload.i.i = load ptr, ptr %.sroa.57.0..sroa_idx.i.i, align 8, !tbaa !102 ; 10 uses
   %.sroa.68.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 40
@@ -250,7 +248,9 @@ bb.g:                                             ; preds = %_ZN7xgboost6common4
   %min.iters.check873 = icmp ult i64 %.sroa.68.0.copyload.i.i, 12
   %ident.check869.not = icmp ne i64 %i.az, 1
   %or.cond.not904 = select i1 %min.iters.check873, i1 true, i1 %ident.check869.not
-  %i.bi = sub i64 %46, %.sroa.46.0.copyload.i.i854
+  %46 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i to i64
+  %47 = ptrtoaddr ptr %i.ax to i64
+  %i.bi = sub i64 %47, %46
   %diff.check871 = icmp ugt i64 %i.bi, -32
   %or.cond884 = select i1 %or.cond.not904, i1 true, i1 %diff.check871
   br i1 %or.cond884, label %.lr.ph130.i.i.i.i.i.preheader905, label %vector.ph874
@@ -439,7 +439,9 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %min.iters.check857 = icmp ult i64 %.sroa.68.0.copyload.i.i, 12
   %ident.check852.not = icmp ne i64 %i.az, 1
   %or.cond885.not903 = select i1 %min.iters.check857, i1 true, i1 %ident.check852.not
-  %i.dg = sub i64 %46, %.sroa.46.0.copyload.i.i854
+  %48 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i to i64
+  %49 = ptrtoaddr ptr %i.ax to i64
+  %i.dg = sub i64 %49, %48
   %diff.check855 = icmp ugt i64 %i.dg, -32
   %or.cond886 = select i1 %or.cond885.not903, i1 true, i1 %diff.check855
   br i1 %or.cond886, label %.lr.ph122.i.i.i.i.i.preheader906, label %vector.ph858
@@ -842,8 +844,7 @@ bb.cz:                                            ; preds = %bb.cv
 
 bb.da:                                            ; preds = %bb.a
   %i.afs = getelementptr inbounds nuw i8, ptr %.8.val, i64 32
-  %i.aft = load ptr, ptr %i.afs, align 8, !tbaa !149 ; 24 uses
-  %46 = ptrtoaddr ptr %i.aft to i64               ; 2 uses
+  %i.aft = load ptr, ptr %i.afs, align 8, !tbaa !149 ; 25 uses
   %.not.i282 = icmp eq ptr %i.aft, null
   br i1 %.not.i282, label %bb.db, label %_ZN7xgboost6common4SpanIKiLm18446744073709551615EEC2EPS2_m.exit.i, !prof !71
 
@@ -860,8 +861,7 @@ _ZN7xgboost6common4SpanIKiLm18446744073709551615EEC2EPS2_m.exit.i: ; preds = %bb
   %.sroa.3.0..sroa_idx.i.i284 = getelementptr inbounds nuw i8, ptr %i.afx, i64 16
   %.sroa.3.0.copyload.i.i285 = load i64, ptr %.sroa.3.0..sroa_idx.i.i284, align 8, !tbaa !74
   %.sroa.46.0..sroa_idx.i.i286 = getelementptr inbounds nuw i8, ptr %i.afx, i64 24
-  %.sroa.46.0.copyload.i.i287 = load ptr, ptr %.sroa.46.0..sroa_idx.i.i286, align 8, !tbaa !97 ; 13 uses
-  %.sroa.46.0.copyload.i.i287601 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i287 to i64 ; 2 uses
+  %.sroa.46.0.copyload.i.i287 = load ptr, ptr %.sroa.46.0..sroa_idx.i.i286, align 8, !tbaa !97 ; 14 uses
   %.sroa.57.0..sroa_idx.i.i288 = getelementptr inbounds nuw i8, ptr %i.afx, i64 32
   %.sroa.57.0.copyload.i.i289 = load ptr, ptr %.sroa.57.0..sroa_idx.i.i288, align 8, !tbaa !97 ; 10 uses
   %.sroa.68.0..sroa_idx.i.i290 = getelementptr inbounds nuw i8, ptr %i.afx, i64 40
@@ -887,7 +887,9 @@ bb.dc:                                            ; preds = %_ZN7xgboost6common4
   %min.iters.check620 = icmp ult i64 %.sroa.68.0.copyload.i.i291, 12
   %ident.check616.not = icmp ne i64 %i.afv, 1
   %or.cond906.not925 = select i1 %min.iters.check620, i1 true, i1 %ident.check616.not
-  %i.age = sub i64 %46, %.sroa.46.0.copyload.i.i287601
+  %46 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i287 to i64
+  %47 = ptrtoaddr ptr %i.aft to i64
+  %i.age = sub i64 %47, %46
   %diff.check618 = icmp ugt i64 %i.age, -32
   %or.cond907 = select i1 %or.cond906.not925, i1 true, i1 %diff.check618
   br i1 %or.cond907, label %.lr.ph130.i.i.i.i.i349.preheader953, label %vector.ph621
@@ -1076,7 +1078,9 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %min.iters.check604 = icmp ult i64 %.sroa.68.0.copyload.i.i291, 12
   %ident.check599.not = icmp ne i64 %i.afv, 1
   %or.cond908.not924 = select i1 %min.iters.check604, i1 true, i1 %ident.check599.not
-  %i.aic = sub i64 %46, %.sroa.46.0.copyload.i.i287601
+  %48 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i287 to i64
+  %49 = ptrtoaddr ptr %i.aft to i64
+  %i.aic = sub i64 %49, %48
   %diff.check602 = icmp ugt i64 %i.aic, -32
   %or.cond909 = select i1 %or.cond908.not924, i1 true, i1 %diff.check602
   br i1 %or.cond909, label %.lr.ph122.i.i.i.i.i328.preheader955, label %vector.ph605
@@ -1479,8 +1483,7 @@ bb.gb:                                            ; preds = %bb.fx
 
 bb.gc:                                            ; preds = %bb.a
   %i.bhw = getelementptr inbounds nuw i8, ptr %.8.val, i64 32
-  %i.bhx = load ptr, ptr %i.bhw, align 8, !tbaa !149 ; 24 uses
-  %47 = ptrtoaddr ptr %i.bhx to i64               ; 2 uses
+  %i.bhx = load ptr, ptr %i.bhw, align 8, !tbaa !149 ; 25 uses
   %.not.i562 = icmp eq ptr %i.bhx, null
   br i1 %.not.i562, label %bb.gd, label %_ZN7xgboost6common4SpanIKjLm18446744073709551615EEC2EPS2_m.exit.i, !prof !71
 
@@ -1497,8 +1500,7 @@ _ZN7xgboost6common4SpanIKjLm18446744073709551615EEC2EPS2_m.exit.i: ; preds = %bb
   %.sroa.3.0..sroa_idx.i.i564 = getelementptr inbounds nuw i8, ptr %i.bib, i64 16
   %.sroa.3.0.copyload.i.i565 = load i64, ptr %.sroa.3.0..sroa_idx.i.i564, align 8, !tbaa !74
   %.sroa.46.0..sroa_idx.i.i566 = getelementptr inbounds nuw i8, ptr %i.bib, i64 24
-  %.sroa.46.0.copyload.i.i567 = load ptr, ptr %.sroa.46.0..sroa_idx.i.i566, align 8, !tbaa !97 ; 13 uses
-  %.sroa.46.0.copyload.i.i567329 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i567 to i64 ; 2 uses
+  %.sroa.46.0.copyload.i.i567 = load ptr, ptr %.sroa.46.0..sroa_idx.i.i566, align 8, !tbaa !97 ; 14 uses
   %.sroa.57.0..sroa_idx.i.i568 = getelementptr inbounds nuw i8, ptr %i.bib, i64 32
   %.sroa.57.0.copyload.i.i569 = load ptr, ptr %.sroa.57.0..sroa_idx.i.i568, align 8, !tbaa !97 ; 10 uses
   %.sroa.68.0..sroa_idx.i.i570 = getelementptr inbounds nuw i8, ptr %i.bib, i64 40
@@ -1524,7 +1526,9 @@ bb.ge:                                            ; preds = %_ZN7xgboost6common4
   %min.iters.check348 = icmp ult i64 %.sroa.68.0.copyload.i.i571, 12
   %ident.check344.not = icmp ne i64 %i.bhz, 1
   %or.cond916.not923 = select i1 %min.iters.check348, i1 true, i1 %ident.check344.not
-  %i.bii = sub i64 %47, %.sroa.46.0.copyload.i.i567329
+  %50 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i567 to i64
+  %51 = ptrtoaddr ptr %i.bhx to i64
+  %i.bii = sub i64 %51, %50
   %diff.check346 = icmp ugt i64 %i.bii, -32
   %or.cond917 = select i1 %or.cond916.not923, i1 true, i1 %diff.check346
   br i1 %or.cond917, label %.lr.ph130.i.i.i.i.i629.preheader977, label %vector.ph349
@@ -1713,7 +1717,9 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %min.iters.check332 = icmp ult i64 %.sroa.68.0.copyload.i.i571, 12
   %ident.check327.not = icmp ne i64 %i.bhz, 1
   %or.cond918.not922 = select i1 %min.iters.check332, i1 true, i1 %ident.check327.not
-  %i.bkg = sub i64 %47, %.sroa.46.0.copyload.i.i567329
+  %52 = ptrtoaddr ptr %.sroa.46.0.copyload.i.i567 to i64
+  %53 = ptrtoaddr ptr %i.bhx to i64
+  %i.bkg = sub i64 %53, %52
   %diff.check330 = icmp ugt i64 %i.bkg, -32
   %or.cond919 = select i1 %or.cond918.not922, i1 true, i1 %diff.check330
   br i1 %or.cond919, label %.lr.ph122.i.i.i.i.i608.preheader979, label %vector.ph333

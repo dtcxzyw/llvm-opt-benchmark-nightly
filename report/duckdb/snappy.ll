@@ -205,17 +205,18 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %.3 = phi ptr [ %i.bm, %bb.m ], [ %.2.lcssa, %bb.l ] ; 7 uses
+  %.3 = phi ptr [ %i.bm, %bb.m ], [ %.2.lcssa, %bb.l ] ; 8 uses
   %.155 = phi ptr [ %i.bl, %bb.m ], [ %.054.lcssa, %bb.l ] ; 6 uses
   %i.bn = icmp ult ptr %.3, %2
   br i1 %i.bn, label %iter.check, label %_ZN13duckdb_snappy12_GLOBAL__N_119IncrementalCopySlowEPKcPcS3_.exit
 
 iter.check:                                       ; preds = %bb.n
-  %.155116 = ptrtoaddr ptr %.155 to i64
-  %.3115 = ptrtoaddr ptr %.3 to i64               ; 2 uses
+  %.3115 = ptrtoaddr ptr %.3 to i64
   %i.bo = sub i64 %i.a, %.3115                    ; 7 uses
   %min.iters.check118 = icmp ult i64 %i.bo, 4
-  %i.bp = sub i64 %.155116, %.3115
+  %4 = ptrtoaddr ptr %.3 to i64
+  %5 = ptrtoaddr ptr %.155 to i64
+  %i.bp = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.bp, -16
   %or.cond176 = select i1 %min.iters.check118, i1 true, i1 %diff.check
   br i1 %or.cond176, label %.lr.ph.i79.preheader, label %vector.main.loop.iter.check

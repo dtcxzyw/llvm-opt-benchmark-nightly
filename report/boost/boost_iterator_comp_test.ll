@@ -205,7 +205,6 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.l = shl nuw nsw i64 %i.g, 2
   %i.m = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.l) #22 ; 7 uses
-  %4 = ptrtoaddr ptr %i.m to i64
   %i.n = load ptr, ptr %0, align 8, !tbaa !31     ; 2 uses
   %.not12 = icmp eq ptr %i.n, null
   br i1 %.not12, label %bb.f, label %bb.e
@@ -227,14 +226,15 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not11.i.i, label %.loopexit, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.f
-  %i.t = ptrtoaddr ptr %i.r to i64                ; 2 uses
-  %i.u = ptrtoaddr ptr %i.s to i64
-  %i.v = add i64 %i.u, -4
-  %i.w = sub i64 %i.v, %i.t                       ; 2 uses
+  %i.t = ptrtoaddr ptr %i.s to i64
+  %i.u = ptrtoaddr ptr %i.r to i64                ; 2 uses
+  %i.v = add i64 %i.t, -4
+  %i.w = sub i64 %i.v, %i.u                       ; 2 uses
   %i.x = lshr i64 %i.w, 2
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
   %min.iters.check94 = icmp ult i64 %i.w, 28
-  %i.z = sub i64 %i.t, %4
+  %4 = ptrtoaddr ptr %i.m to i64
+  %i.z = sub i64 %i.u, %4
   %diff.check92 = icmp ugt i64 %i.z, -32
   %or.cond = or i1 %min.iters.check94, %diff.check92
   br i1 %or.cond, label %.lr.ph.i.i.preheader111, label %vector.ph95
@@ -293,8 +293,7 @@ middle.block104:                                  ; preds = %vector.body97
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.a
-  %i.as = load ptr, ptr %0, align 8, !tbaa !31    ; 8 uses
-  %5 = ptrtoaddr ptr %i.as to i64                 ; 2 uses
+  %i.as = load ptr, ptr %0, align 8, !tbaa !31    ; 9 uses
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.au = load i64, ptr %i.at, align 8, !tbaa !33 ; 8 uses
   %i.av = icmp ult i64 %i.au, %i.g
@@ -306,6 +305,7 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph.i.i13.preheader:                           ; preds = %bb.h
   %min.iters.check49 = icmp ult i64 %i.au, 8
+  %5 = ptrtoaddr ptr %i.as to i64
   %i.aw = sub i64 %i.c, %5
   %diff.check47 = icmp ugt i64 %i.aw, -32
   %or.cond108 = select i1 %min.iters.check49, i1 true, i1 %diff.check47
@@ -406,9 +406,9 @@ _ZN5boost9container18copy_n_source_destINS_9iterators18transform_iteratorI4funcN
   %.1.i = phi ptr [ %i.as, %bb.h ], [ %i.az, %middle.block59 ], [ %.lcssa114.unr, %.lr.ph.i.i13.prol.loopexit ], [ %i.ce, %.lr.ph.i.i13 ] ; 4 uses
   %i.cf = sub i64 %i.g, %i.au                     ; 5 uses
   %min.iters.check69 = icmp ult i64 %i.cf, 8
-  %.sroa.017.1.i66 = ptrtoaddr ptr %.sroa.017.1.i to i64
-  %.1.i65 = ptrtoaddr ptr %.1.i to i64
-  %i.cg = sub i64 %.sroa.017.1.i66, %.1.i65
+  %.sroa.017.1.i66 = ptrtoaddr ptr %.1.i to i64
+  %.1.i65 = ptrtoaddr ptr %.sroa.017.1.i to i64
+  %i.cg = sub i64 %.1.i65, %.sroa.017.1.i66
   %diff.check67 = icmp ugt i64 %i.cg, -32
   %or.cond109 = select i1 %min.iters.check69, i1 true, i1 %diff.check67
   br i1 %or.cond109, label %.lr.ph.i11.i.preheader, label %vector.ph70
@@ -510,7 +510,8 @@ bb.i:                                             ; preds = %bb.g
 
 .lr.ph.i13.i.preheader:                           ; preds = %bb.i
   %min.iters.check = icmp ult i64 %i.g, 8
-  %i.dr = sub i64 %i.c, %5
+  %6 = ptrtoaddr ptr %i.as to i64
+  %i.dr = sub i64 %i.c, %6
   %diff.check = icmp ugt i64 %i.dr, -32
   %or.cond110 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond110, label %.lr.ph.i13.i.preheader116, label %vector.ph

@@ -12,8 +12,6 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @ConvertAudioToFloat(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 4 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 4 uses
   switch i32 %3, label %SDL_Convert_S8_to_F32_Scalar.exit [
     i32 32776, label %bb.b
     i32 8, label %bb.c
@@ -245,7 +243,9 @@ bb.e:                                             ; preds = %bb.a
 iter.check:                                       ; preds = %bb.e
   %wide.trip.count.i = zext nneg i32 %2 to i64    ; 16 uses
   %min.iters.check141 = icmp ult i32 %2, 4
-  %i.cl = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.cl = sub i64 %5, %4
   %diff.check139 = icmp ugt i64 %i.cl, -32
   %or.cond = or i1 %min.iters.check141, %diff.check139
   br i1 %or.cond, label %.lr.ph.i36.preheader, label %vector.main.loop.iter.check
@@ -431,7 +431,9 @@ bb.f:                                             ; preds = %bb.a
 .lr.ph.preheader.i44:                             ; preds = %bb.f
   %i.ex = zext nneg i32 %2 to i64                 ; 5 uses
   %min.iters.check123 = icmp ult i32 %2, 8
-  %i.ey = sub i64 %5, %4
+  %6 = ptrtoaddr ptr %1 to i64
+  %7 = ptrtoaddr ptr %0 to i64
+  %i.ey = sub i64 %7, %6
   %diff.check121 = icmp ugt i64 %i.ey, -32
   %or.cond252 = or i1 %min.iters.check123, %diff.check121
   br i1 %or.cond252, label %.lr.ph.i45.preheader, label %vector.ph124
@@ -490,7 +492,9 @@ bb.g:                                             ; preds = %bb.a
 .lr.ph.preheader.i48:                             ; preds = %bb.g
   %wide.trip.count.i49 = zext nneg i32 %2 to i64  ; 10 uses
   %min.iters.check94 = icmp ult i32 %2, 8
-  %i.fu = sub i64 %4, %5
+  %8 = ptrtoaddr ptr %0 to i64
+  %9 = ptrtoaddr ptr %1 to i64
+  %i.fu = sub i64 %9, %8
   %diff.check92 = icmp ugt i64 %i.fu, -32
   %or.cond253 = or i1 %min.iters.check94, %diff.check92
   br i1 %or.cond253, label %.lr.ph.i50.preheader, label %vector.ph95
@@ -629,7 +633,9 @@ bb.h:                                             ; preds = %bb.a
 .lr.ph.preheader.i59:                             ; preds = %bb.h
   %wide.trip.count.i60 = zext nneg i32 %2 to i64  ; 5 uses
   %min.iters.check = icmp ult i32 %2, 8
-  %i.hp = sub i64 %4, %5
+  %10 = ptrtoaddr ptr %0 to i64
+  %11 = ptrtoaddr ptr %1 to i64
+  %i.hp = sub i64 %11, %10
   %diff.check = icmp ugt i64 %i.hp, -32
   %or.cond254 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond254, label %.lr.ph.i61.preheader, label %vector.ph
@@ -719,8 +725,6 @@ SDL_Convert_S8_to_F32_Scalar.exit:                ; preds = %.lr.ph.i61.prol.loo
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @ConvertAudioFromFloat(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 3 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   switch i32 %3, label %SDL_Convert_F32_to_S8_Scalar.exit [
     i32 32776, label %bb.b
     i32 8, label %bb.c
@@ -1123,7 +1127,9 @@ bb.f:                                             ; preds = %bb.a
 .lr.ph.preheader.i55:                             ; preds = %bb.f
   %wide.trip.count.i56 = zext nneg i32 %2 to i64  ; 3 uses
   %min.iters.check138 = icmp ult i32 %2, 8
-  %i.ii = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.ii = sub i64 %5, %4
   %diff.check136 = icmp ugt i64 %i.ii, -32
   %or.cond = or i1 %min.iters.check138, %diff.check136
   br i1 %or.cond, label %.lr.ph.i57.preheader, label %vector.ph139
@@ -1201,7 +1207,9 @@ bb.g:                                             ; preds = %bb.a
 .lr.ph.preheader.i62:                             ; preds = %bb.g
   %wide.trip.count.i63 = zext nneg i32 %2 to i64  ; 6 uses
   %min.iters.check112 = icmp ult i32 %2, 8
-  %i.ju = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.ju = sub i64 %7, %6
   %diff.check110 = icmp ugt i64 %i.ju, -32
   %or.cond245 = or i1 %min.iters.check112, %diff.check110
   br i1 %or.cond245, label %.lr.ph.i64.preheader, label %vector.ph113
@@ -1319,7 +1327,9 @@ bb.h:                                             ; preds = %bb.a
 .lr.ph.preheader.i77:                             ; preds = %bb.h
   %wide.trip.count.i78 = zext nneg i32 %2 to i64  ; 5 uses
   %min.iters.check = icmp ult i32 %2, 8
-  %i.lo = sub i64 %4, %5
+  %8 = ptrtoaddr ptr %0 to i64
+  %9 = ptrtoaddr ptr %1 to i64
+  %i.lo = sub i64 %9, %8
   %diff.check = icmp ugt i64 %i.lo, -32
   %or.cond246 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond246, label %.lr.ph.i79.preheader, label %vector.ph
@@ -1409,8 +1419,6 @@ SDL_Convert_F32_to_S8_Scalar.exit:                ; preds = %.lr.ph.i79.prol.loo
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @ConvertAudioSwapEndian(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   switch i32 %3, label %SDL_Convert_Swap16_Scalar.exit [
     i32 16, label %bb.b
     i32 32, label %bb.c
@@ -1423,7 +1431,9 @@ bb.b:                                             ; preds = %bb.a
 iter.check:                                       ; preds = %bb.b
   %wide.trip.count.i = zext nneg i32 %2 to i64    ; 8 uses
   %min.iters.check20 = icmp ult i32 %2, 4
-  %i.b = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.b = sub i64 %5, %4
   %diff.check18 = icmp ugt i64 %i.b, -32
   %or.cond = or i1 %min.iters.check20, %diff.check18
   br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
@@ -1542,7 +1552,9 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.preheader.i6:                              ; preds = %bb.c
   %wide.trip.count.i7 = zext nneg i32 %2 to i64   ; 5 uses
   %min.iters.check = icmp ult i32 %2, 8
-  %i.al = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.al = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.al, -32
   %or.cond37 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond37, label %.lr.ph.i8.preheader, label %vector.ph

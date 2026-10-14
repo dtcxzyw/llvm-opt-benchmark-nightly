@@ -204,8 +204,7 @@ bb.a:
   %.sroa.52.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.52.0.copyload = load i64, ptr %.sroa.52.0..sroa_idx, align 8 ; 7 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8 ; 13 uses
-  %.sroa.9.0.copyload8 = ptrtoaddr ptr %.sroa.9.0.copyload to i64 ; 2 uses
+  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8 ; 14 uses
   %.not.i = icmp eq ptr %.sroa.0.0.copyload, null
   br i1 %.not.i, label %_RINvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB7_4ItermENtNtNtNtBb_4iter6traits8iterator8Iterator4folduQNCINvNtNtBY_8adapters6copied9copy_foldmuNCINvNvBS_8for_each4callmNCINvMsk_NtCsgCecv3eZDcN_5alloc3vecINtB2Q_3VecmE14extend_trustedINtB1J_6CopiedINtNtB1L_5chain5ChainBF_BF_EEE0E0E0ECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.i, label %bb.b
 
@@ -223,8 +222,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %bb.c
+  %2 = ptrtoaddr ptr %.sroa.9.0.copyload to i64
   %i.f = shl i64 %.sroa.52.0.copyload, 2
-  %i.g = add i64 %i.f, %.sroa.9.0.copyload8
+  %i.g = add i64 %i.f, %2
   %i.h = sub i64 %i.c, %i.g
   %diff.check = icmp ugt i64 %i.h, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
@@ -331,8 +331,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %min.iters.check14, label %scalar.ph13.preheader, label %vector.memcheck11
 
 vector.memcheck11:                                ; preds = %bb.e
+  %3 = ptrtoaddr ptr %.sroa.9.0.copyload to i64
   %i.at = shl i64 %.sroa.52.0, 2
-  %i.au = add i64 %i.at, %.sroa.9.0.copyload8
+  %i.au = add i64 %i.at, %3
   %i.av = sub i64 %i.aq, %i.au
   %diff.check12 = icmp ugt i64 %i.av, -32
   br i1 %diff.check12, label %scalar.ph13.preheader, label %vector.ph15

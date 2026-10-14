@@ -205,7 +205,6 @@ bb.d:                                             ; preds = %_PyPegen_seq_last_i
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_PyPegen_collect_call_seqs(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(address_is_null) %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr noundef %7) local_unnamed_addr #1 {
 bb.a:
-  %8 = ptrtoaddr ptr %1 to i64
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %bb.c, label %bb.b
 
@@ -494,7 +493,6 @@ bb.q:                                             ; preds = %bb.q, %.epil.prehea
   %.119.i64 = phi ptr [ %.119.i.ph85, %.split21.loopexit.i ], [ %i.as, %_PyPegen_seq_extract_starred_exprs.exit ], [ %i.as, %bb.i ], [ null, %bb.e ] ; 4 uses
   %i.de = phi i64 [ %.pr84, %.split21.loopexit.i ], [ %.pr.pre, %_PyPegen_seq_extract_starred_exprs.exit ], [ %.pr.pre, %bb.i ], [ %i.f, %bb.e ] ; 6 uses
   %phi.call.i = phi i64 [ %i.dd, %.split21.loopexit.i ], [ 0, %_PyPegen_seq_extract_starred_exprs.exit ], [ 0, %bb.i ], [ 0, %bb.e ] ; 2 uses
-  %.119.i6488 = ptrtoaddr ptr %.119.i64 to i64
   %i.df = icmp eq i64 %i.de, %phi.call.i
   br i1 %i.df, label %_PyPegen_seq_delete_starred_exprs.exit, label %bb.r
 
@@ -598,8 +596,7 @@ bb.y:                                             ; preds = %_PyPegen_seq_delete
 
 bb.z:                                             ; preds = %bb.y, %_PyPegen_seq_delete_starred_exprs.exit
   %.045 = phi i64 [ %i.eo, %bb.y ], [ %i.c, %_PyPegen_seq_delete_starred_exprs.exit ] ; 6 uses
-  %i.ep = tail call ptr @_Py_asdl_expr_seq_new(i64 noundef %.045, ptr noundef %7) #14 ; 5 uses
-  %9 = ptrtoaddr ptr %i.ep to i64                 ; 2 uses
+  %i.ep = tail call ptr @_Py_asdl_expr_seq_new(i64 noundef %.045, ptr noundef %7) #14 ; 6 uses
   %i.eq = icmp eq ptr %i.ep, null
   br i1 %i.eq, label %bb.aa, label %.preheader66
 
@@ -611,7 +608,9 @@ bb.z:                                             ; preds = %bb.y, %_PyPegen_seq
   %i.es = getelementptr i8, ptr %1, i64 16        ; 6 uses
   %i.et = getelementptr i8, ptr %i.ep, i64 16     ; 6 uses
   %min.iters.check = icmp ult i64 %i.c, 8
-  %i.eu = sub i64 %8, %9
+  %8 = ptrtoaddr ptr %i.ep to i64
+  %9 = ptrtoaddr ptr %1 to i64
+  %i.eu = sub i64 %9, %8
   %diff.check = icmp ugt i64 %i.eu, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
@@ -675,9 +674,11 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %min.iters.check91, label %scalar.ph90.preheader, label %vector.memcheck87
 
 vector.memcheck87:                                ; preds = %.lr.ph69
+  %10 = ptrtoaddr ptr %i.ep to i64
   %i.fk = shl i64 %i.c, 3
-  %i.fl = add i64 %i.fk, %9
-  %i.fm = sub i64 %.119.i6488, %i.fl
+  %11 = ptrtoaddr ptr %.119.i64 to i64
+  %i.fl = add i64 %i.fk, %10
+  %i.fm = sub i64 %11, %i.fl
   %diff.check89 = icmp ugt i64 %i.fm, -32
   br i1 %diff.check89, label %scalar.ph90.preheader, label %vector.ph92
 
@@ -1080,7 +1081,6 @@ bb.o:                                             ; preds = %._crit_edge
   %i.av = getelementptr i8, ptr %0, i64 32        ; 4 uses
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !27
   %i.ax = tail call ptr @_Py_asdl_expr_seq_new(i64 noundef %.076.lcssa, ptr noundef %i.aw) #14 ; 5 uses
-  %5 = ptrtoaddr ptr %i.ax to i64
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %.thread95, label %.preheader98
 
@@ -1267,7 +1267,6 @@ bb.af:                                            ; preds = %bb.ae, %bb.s, %bb.a
 bb.ag:                                            ; preds = %._crit_edge115
   %i.dr = load ptr, ptr %i.av, align 8, !tbaa !27
   %i.ds = tail call ptr @_Py_asdl_expr_seq_new(i64 noundef %.068.lcssa, ptr noundef %i.dr) #14 ; 7 uses
-  %6 = ptrtoaddr ptr %i.ds to i64
   %i.dt = icmp eq ptr %i.ds, null
   br i1 %i.dt, label %.thread95, label %.preheader
 
@@ -1279,7 +1278,9 @@ bb.ag:                                            ; preds = %._crit_edge115
   %i.dv = getelementptr i8, ptr %i.ax, i64 16     ; 6 uses
   %i.dw = getelementptr i8, ptr %i.ds, i64 16     ; 6 uses
   %min.iters.check = icmp ult i64 %.068.lcssa, 8
-  %i.dx = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %i.ds to i64
+  %6 = ptrtoaddr ptr %i.ax to i64
+  %i.dx = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.dx, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph

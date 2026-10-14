@@ -16,10 +16,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = ptrtoaddr ptr %2 to i64
-  %5 = ptrtoaddr ptr %1 to i64
   %wide.trip.count = zext i32 %3 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %3, 8
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %1 to i64
   %i.a = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.a, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -119,10 +119,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %4 = ptrtoaddr ptr %2 to i64
-  %5 = ptrtoaddr ptr %1 to i64
   %wide.trip.count = zext i32 %3 to i64           ; 5 uses
   %min.iters.check = icmp ult i32 %3, 4
+  %4 = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %1 to i64
   %i.a = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.a, -16
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -212,8 +212,6 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define hidden void @FLAC__lpc_window_data_partial(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %7 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %i.a = add i32 %5, %4
   %i.b = icmp ult i32 %i.a, %3
   br i1 %i.b, label %.preheader, label %bb.c
@@ -234,7 +232,9 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   %i.f = icmp ult i32 %i.e, %i.d
   %i.g = icmp ugt i64 %i.c, 4294967295
   %i.h = or i1 %i.f, %i.g
-  %i.i = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %2 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.i = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.i, -32
   %or.cond = or i1 %i.h, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader79, label %vector.ph
@@ -357,13 +357,15 @@ vector.scevcheck60:                               ; preds = %.lr.ph45.preheader
   br i1 %i.bs, label %.lr.ph45.preheader78, label %vector.memcheck61
 
 vector.memcheck61:                                ; preds = %vector.scevcheck60
+  %8 = ptrtoaddr ptr %2 to i64
   %i.bt = tail call i32 @llvm.umin.i32(i32 %4, i32 %i.be)
   %umin = zext i32 %i.bt to i64
   %i.bu = shl nuw nsw i64 %umin, 2
-  %8 = add i64 %i.bu, %7
+  %9 = ptrtoaddr ptr %1 to i64
   %i.bv = shl nuw nsw i64 %i.bg, 2
-  %i.bw = add i64 %i.bv, %6
-  %i.bx = sub i64 %i.bw, %8
+  %10 = add i64 %i.bu, %8
+  %i.bw = add i64 %i.bv, %9
+  %i.bx = sub i64 %i.bw, %10
   %diff.check62 = icmp ugt i64 %i.bx, -32
   br i1 %diff.check62, label %.lr.ph45.preheader78, label %vector.ph65
 
@@ -488,8 +490,6 @@ bb.c:                                             ; preds = %._crit_edge46, %bb.
 ; Function Attrs: nofree norecurse nosync nounwind sspstrong memory(argmem: readwrite) uwtable
 define hidden void @FLAC__lpc_window_data_partial_wide(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %7 = ptrtoaddr ptr %2 to i64                    ; 2 uses
   %i.a = add i32 %5, %4
   %i.b = icmp ult i32 %i.a, %3
   br i1 %i.b, label %.preheader, label %bb.c
@@ -510,7 +510,9 @@ vector.scevcheck:                                 ; preds = %.lr.ph.preheader
   %i.f = icmp ult i32 %i.e, %i.d
   %i.g = icmp ugt i64 %i.c, 4294967295
   %i.h = or i1 %i.f, %i.g
-  %i.i = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %2 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.i = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.i, -16
   %or.cond = or i1 %i.h, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader79, label %vector.ph
@@ -633,13 +635,15 @@ vector.scevcheck60:                               ; preds = %.lr.ph45.preheader
   br i1 %i.bs, label %.lr.ph45.preheader78, label %vector.memcheck61
 
 vector.memcheck61:                                ; preds = %vector.scevcheck60
+  %8 = ptrtoaddr ptr %2 to i64
   %i.bt = tail call i32 @llvm.umin.i32(i32 %4, i32 %i.be)
   %umin = zext i32 %i.bt to i64
   %i.bu = shl nuw nsw i64 %umin, 2
-  %8 = add i64 %i.bu, %7
+  %9 = ptrtoaddr ptr %1 to i64
   %i.bv = shl nuw nsw i64 %i.bg, 2
-  %i.bw = add i64 %i.bv, %6
-  %i.bx = sub i64 %i.bw, %8
+  %10 = add i64 %i.bu, %8
+  %i.bw = add i64 %i.bv, %9
+  %i.bx = sub i64 %i.bw, %10
   %diff.check62 = icmp ugt i64 %i.bx, -16
   br i1 %diff.check62, label %.lr.ph45.preheader78, label %vector.ph65
 

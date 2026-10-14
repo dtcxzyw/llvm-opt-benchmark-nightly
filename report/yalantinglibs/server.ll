@@ -205,21 +205,22 @@ _ZNSt15__new_allocatorISt4pairIccEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.k
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.az
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   store ptr %i.be, ptr %i.bf, align 8, !tbaa !3109
-  %i.bg = load ptr, ptr %i.at, align 8, !tbaa !3150 ; 7 uses
+  %i.bg = load ptr, ptr %i.at, align 8, !tbaa !3150 ; 8 uses
   %i.bh = load ptr, ptr %i.au, align 8, !tbaa !3150 ; 3 uses
   %i.bi = icmp eq ptr %i.bg, %i.bh
   br i1 %i.bi, label %.loopexit28, label %iter.check
 
 iter.check:                                       ; preds = %.noexc17
-  %2 = ptrtoaddr ptr %i.bg to i64                 ; 2 uses
-  %i.bj = ptrtoaddr ptr %i.bc to i64
-  %i.bk = ptrtoaddr ptr %i.bh to i64
-  %i.bl = add i64 %i.bk, -2
-  %i.bm = sub i64 %i.bl, %2                       ; 3 uses
+  %i.bj = ptrtoaddr ptr %i.bh to i64
+  %i.bk = ptrtoaddr ptr %i.bg to i64
+  %i.bl = add i64 %i.bj, -2
+  %i.bm = sub i64 %i.bl, %i.bk                    ; 3 uses
   %i.bn = lshr i64 %i.bm, 1
   %i.bo = add nuw i64 %i.bn, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.bm, 6
-  %i.bp = sub i64 %2, %i.bj
+  %2 = ptrtoaddr ptr %i.bc to i64
+  %3 = ptrtoaddr ptr %i.bg to i64
+  %i.bp = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.bp, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -341,15 +342,15 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   br i1 %i.cx, label %.loopexit, label %.lr.ph.i.i.i.i.i19.preheader
 
 .lr.ph.i.i.i.i.i19.preheader:                     ; preds = %.noexc25
-  %3 = ptrtoaddr ptr %i.cv to i64                 ; 2 uses
-  %i.cy = ptrtoaddr ptr %i.cr to i64
-  %i.cz = ptrtoaddr ptr %i.cw to i64
-  %i.da = add i64 %i.cz, -4
-  %i.db = sub i64 %i.da, %3                       ; 2 uses
+  %i.cy = ptrtoaddr ptr %i.cw to i64
+  %i.cz = ptrtoaddr ptr %i.cv to i64              ; 2 uses
+  %i.da = add i64 %i.cy, -4
+  %i.db = sub i64 %i.da, %i.cz                    ; 2 uses
   %i.dc = lshr i64 %i.db, 2
   %i.dd = add nuw nsw i64 %i.dc, 1                ; 2 uses
   %min.iters.check59 = icmp ult i64 %i.db, 44
-  %i.de = sub i64 %3, %i.cy
+  %4 = ptrtoaddr ptr %i.cr to i64
+  %i.de = sub i64 %i.cz, %4
   %diff.check58 = icmp ugt i64 %i.de, -32
   %or.cond72 = or i1 %min.iters.check59, %diff.check58
   br i1 %or.cond72, label %.lr.ph.i.i.i.i.i19.preheader73, label %vector.ph60
@@ -752,15 +753,15 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   br i1 %i.bk, label %.loopexit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc17
-  %2 = ptrtoaddr ptr %i.bi to i64                 ; 2 uses
-  %i.bl = ptrtoaddr ptr %i.be to i64
-  %i.bm = ptrtoaddr ptr %i.bj to i64
-  %i.bn = add i64 %i.bm, -4
-  %i.bo = sub i64 %i.bn, %2                       ; 2 uses
+  %i.bl = ptrtoaddr ptr %i.bj to i64
+  %i.bm = ptrtoaddr ptr %i.bi to i64              ; 2 uses
+  %i.bn = add i64 %i.bl, -4
+  %i.bo = sub i64 %i.bn, %i.bm                    ; 2 uses
   %i.bp = lshr i64 %i.bo, 2
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bo, 44
-  %i.br = sub i64 %2, %i.bl
+  %2 = ptrtoaddr ptr %i.be to i64
+  %i.br = sub i64 %i.bm, %2
   %diff.check = icmp ugt i64 %i.br, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader29, label %vector.ph
@@ -1163,21 +1164,22 @@ _ZNSt15__new_allocatorISt4pairIccEE8allocateEmPKv.exit.i.i.i.i: ; preds = %bb.k
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.az
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   store ptr %i.be, ptr %i.bf, align 8, !tbaa !3109
-  %i.bg = load ptr, ptr %i.at, align 8, !tbaa !3150 ; 7 uses
+  %i.bg = load ptr, ptr %i.at, align 8, !tbaa !3150 ; 8 uses
   %i.bh = load ptr, ptr %i.au, align 8, !tbaa !3150 ; 3 uses
   %i.bi = icmp eq ptr %i.bg, %i.bh
   br i1 %i.bi, label %.loopexit28, label %iter.check
 
 iter.check:                                       ; preds = %.noexc17
-  %2 = ptrtoaddr ptr %i.bg to i64                 ; 2 uses
-  %i.bj = ptrtoaddr ptr %i.bc to i64
-  %i.bk = ptrtoaddr ptr %i.bh to i64
-  %i.bl = add i64 %i.bk, -2
-  %i.bm = sub i64 %i.bl, %2                       ; 3 uses
+  %i.bj = ptrtoaddr ptr %i.bh to i64
+  %i.bk = ptrtoaddr ptr %i.bg to i64
+  %i.bl = add i64 %i.bj, -2
+  %i.bm = sub i64 %i.bl, %i.bk                    ; 3 uses
   %i.bn = lshr i64 %i.bm, 1
   %i.bo = add nuw i64 %i.bn, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.bm, 6
-  %i.bp = sub i64 %2, %i.bj
+  %2 = ptrtoaddr ptr %i.bc to i64
+  %3 = ptrtoaddr ptr %i.bg to i64
+  %i.bp = sub i64 %3, %2
   %diff.check = icmp ugt i64 %i.bp, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader, label %vector.main.loop.iter.check
@@ -1299,15 +1301,15 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   br i1 %i.cx, label %.loopexit, label %.lr.ph.i.i.i.i.i19.preheader
 
 .lr.ph.i.i.i.i.i19.preheader:                     ; preds = %.noexc25
-  %3 = ptrtoaddr ptr %i.cv to i64                 ; 2 uses
-  %i.cy = ptrtoaddr ptr %i.cr to i64
-  %i.cz = ptrtoaddr ptr %i.cw to i64
-  %i.da = add i64 %i.cz, -4
-  %i.db = sub i64 %i.da, %3                       ; 2 uses
+  %i.cy = ptrtoaddr ptr %i.cw to i64
+  %i.cz = ptrtoaddr ptr %i.cv to i64              ; 2 uses
+  %i.da = add i64 %i.cy, -4
+  %i.db = sub i64 %i.da, %i.cz                    ; 2 uses
   %i.dc = lshr i64 %i.db, 2
   %i.dd = add nuw nsw i64 %i.dc, 1                ; 2 uses
   %min.iters.check59 = icmp ult i64 %i.db, 44
-  %i.de = sub i64 %3, %i.cy
+  %4 = ptrtoaddr ptr %i.cr to i64
+  %i.de = sub i64 %i.cz, %4
   %diff.check58 = icmp ugt i64 %i.de, -32
   %or.cond72 = or i1 %min.iters.check59, %diff.check58
   br i1 %or.cond72, label %.lr.ph.i.i.i.i.i19.preheader73, label %vector.ph60
@@ -1710,15 +1712,15 @@ _ZNSt15__new_allocatorINSt7__cxx1112regex_traitsIcE10_RegexMaskEE8allocateEmPKv.
   br i1 %i.bk, label %.loopexit, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %.noexc17
-  %2 = ptrtoaddr ptr %i.bi to i64                 ; 2 uses
-  %i.bl = ptrtoaddr ptr %i.be to i64
-  %i.bm = ptrtoaddr ptr %i.bj to i64
-  %i.bn = add i64 %i.bm, -4
-  %i.bo = sub i64 %i.bn, %2                       ; 2 uses
+  %i.bl = ptrtoaddr ptr %i.bj to i64
+  %i.bm = ptrtoaddr ptr %i.bi to i64              ; 2 uses
+  %i.bn = add i64 %i.bl, -4
+  %i.bo = sub i64 %i.bn, %i.bm                    ; 2 uses
   %i.bp = lshr i64 %i.bo, 2
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bo, 44
-  %i.br = sub i64 %2, %i.bl
+  %2 = ptrtoaddr ptr %i.be to i64
+  %i.br = sub i64 %i.bm, %2
   %diff.check = icmp ugt i64 %i.br, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.i.i.i.i.preheader29, label %vector.ph

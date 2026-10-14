@@ -205,9 +205,9 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 8
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 8
   %i.c = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -297,8 +297,6 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ma_clip_pcm_frames(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #20 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64
-  %6 = ptrtoaddr ptr %0 to i64
   %i.a = zext i32 %4 to i64                       ; 2 uses
   %i.b = mul i64 %2, %i.a                         ; 34 uses
   switch i32 %3, label %ma_clip_samples_u8.exit [
@@ -585,7 +583,9 @@ bb.f:                                             ; preds = %bb.a
 
 .lr.ph.i29.preheader:                             ; preds = %bb.f
   %min.iters.check = icmp ult i64 %i.b, 8
-  %i.dk = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.dk = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.dk, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i29.preheader88, label %vector.ph
@@ -725,9 +725,9 @@ bb.a:
   br i1 %or.cond13, label %iter.check, label %.loopexit
 
 iter.check:                                       ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 4
   %i.d = ptrtoaddr ptr %0 to i64
   %i.e = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 4
   %i.f = sub i64 %i.e, %i.d
   %diff.check = icmp ugt i64 %i.f, -16
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -848,9 +848,9 @@ bb.a:
   br i1 %or.cond13, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 8
   %i.d = ptrtoaddr ptr %0 to i64
   %i.e = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 8
   %i.f = sub i64 %i.e, %i.d
   %diff.check = icmp ugt i64 %i.f, -16
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -990,9 +990,9 @@ bb.a:
   br i1 %or.cond13, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 8
   %i.d = ptrtoaddr ptr %0 to i64
   %i.e = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 8
   %i.f = sub i64 %i.e, %i.d
   %diff.check = icmp ugt i64 %i.f, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1079,8 +1079,6 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ma_copy_and_apply_volume_factor_f32(ptr nofree noundef writeonly captures(address) %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2, float noundef %3) local_unnamed_addr #20 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %1, null
   %or.cond = or i1 %i.a, %i.b
@@ -1096,7 +1094,9 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %.preheader23
   %min.iters.check = icmp ult i64 %2, 8
-  %i.d = sub i64 %4, %5
+  %4 = ptrtoaddr ptr %0 to i64
+  %5 = ptrtoaddr ptr %1 to i64
+  %i.d = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.d, -32
   %or.cond51 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond51, label %.lr.ph.preheader54, label %vector.ph
@@ -1160,7 +1160,9 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph27.preheader:                               ; preds = %bb.c
   %min.iters.check40 = icmp ult i64 %2, 8
-  %i.u = sub i64 %4, %5
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.u = sub i64 %7, %6
   %diff.check38 = icmp ugt i64 %i.u, -32
   %or.cond52 = or i1 %min.iters.check40, %diff.check38
   br i1 %or.cond52, label %.lr.ph27.preheader53, label %vector.ph41
@@ -1563,9 +1565,9 @@ bb.a:
   br i1 %or.cond13.i, label %iter.check, label %ma_copy_and_apply_volume_factor_u8.exit
 
 iter.check:                                       ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %i.b, 4
   %i.f = ptrtoaddr ptr %0 to i64
   %i.g = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %i.b, 4
   %i.h = sub i64 %i.g, %i.f
   %diff.check = icmp ugt i64 %i.h, -16
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1688,9 +1690,9 @@ bb.a:
   br i1 %or.cond13.i, label %.lr.ph.i.preheader, label %ma_copy_and_apply_volume_factor_s16.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %i.b, 8
   %i.f = ptrtoaddr ptr %0 to i64
   %i.g = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %i.b, 8
   %i.h = sub i64 %i.g, %i.f
   %diff.check = icmp ugt i64 %i.h, -16
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1834,9 +1836,9 @@ bb.a:
   br i1 %or.cond13.i, label %.lr.ph.i.preheader, label %ma_copy_and_apply_volume_factor_s32.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %i.b, 8
   %i.f = ptrtoaddr ptr %0 to i64
   %i.g = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %i.b, 8
   %i.h = sub i64 %i.g, %i.f
   %diff.check = icmp ugt i64 %i.h, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1923,8 +1925,6 @@ ma_copy_and_apply_volume_factor_s32.exit:         ; preds = %.lr.ph.i.prol.loope
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ma_copy_and_apply_volume_factor_pcm_frames_f32(ptr nofree noundef writeonly captures(address) %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2, i32 noundef %3, float noundef %4) local_unnamed_addr #20 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
-  %6 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = zext i32 %3 to i64
   %i.b = mul i64 %2, %i.a                         ; 14 uses
   %i.c = icmp eq ptr %0, null
@@ -1942,7 +1942,9 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.preheader:                               ; preds = %.preheader23.i
   %min.iters.check = icmp ult i64 %i.b, 8
-  %i.f = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.f = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.f, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i.preheader28, label %vector.ph
@@ -2006,7 +2008,9 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph27.i.preheader:                             ; preds = %bb.c
   %min.iters.check15 = icmp ult i64 %i.b, 8
-  %i.w = sub i64 %5, %6
+  %7 = ptrtoaddr ptr %0 to i64
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.w = sub i64 %8, %7
   %diff.check13 = icmp ugt i64 %i.w, -32
   %or.cond26 = or i1 %min.iters.check15, %diff.check13
   br i1 %or.cond26, label %.lr.ph27.i.preheader27, label %vector.ph16
@@ -2118,8 +2122,6 @@ ma_copy_and_apply_volume_factor_f32.exit:         ; preds = %.lr.ph.i.prol.loope
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ma_copy_and_apply_volume_factor_pcm_frames(ptr nofree noundef writeonly captures(address) %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2, i32 noundef %3, i32 noundef %4, float noundef %5) local_unnamed_addr #20 {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64                    ; 5 uses
-  %7 = ptrtoaddr ptr %0 to i64                    ; 5 uses
   switch i32 %3, label %ma_copy_and_apply_volume_factor_pcm_frames_u8.exit [
     i32 1, label %bb.b
     i32 2, label %bb.c
@@ -2140,7 +2142,9 @@ bb.b:                                             ; preds = %bb.a
 
 iter.check:                                       ; preds = %bb.b
   %min.iters.check121 = icmp ult i64 %i.b, 4
-  %i.f = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.f = sub i64 %7, %6
   %diff.check119 = icmp ugt i64 %i.f, -16
   %or.cond = or i1 %min.iters.check121, %diff.check119
   br i1 %or.cond, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
@@ -2257,7 +2261,9 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i.i27.preheader:                           ; preds = %bb.c
   %min.iters.check106 = icmp ult i64 %i.aq, 8
-  %i.au = sub i64 %6, %7
+  %8 = ptrtoaddr ptr %0 to i64
+  %9 = ptrtoaddr ptr %1 to i64
+  %i.au = sub i64 %9, %8
   %diff.check104 = icmp ugt i64 %i.au, -16
   %or.cond141 = or i1 %min.iters.check106, %diff.check104
   br i1 %or.cond141, label %.lr.ph.i.i27.preheader145, label %vector.ph107
@@ -2389,7 +2395,9 @@ bb.e:                                             ; preds = %bb.a
 
 .lr.ph.i.i34.preheader:                           ; preds = %bb.e
   %min.iters.check90 = icmp ult i64 %i.dh, 8
-  %i.dl = sub i64 %6, %7
+  %10 = ptrtoaddr ptr %0 to i64
+  %11 = ptrtoaddr ptr %1 to i64
+  %i.dl = sub i64 %11, %10
   %diff.check88 = icmp ugt i64 %i.dl, -32
   %or.cond142 = or i1 %min.iters.check90, %diff.check88
   br i1 %or.cond142, label %.lr.ph.i.i34.preheader148, label %vector.ph91
@@ -2486,7 +2494,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i37.preheader:                           ; preds = %.preheader23.i.i
   %min.iters.check = icmp ult i64 %i.eu, 8
-  %i.ey = sub i64 %6, %7
+  %12 = ptrtoaddr ptr %0 to i64
+  %13 = ptrtoaddr ptr %1 to i64
+  %i.ey = sub i64 %13, %12
   %diff.check = icmp ugt i64 %i.ey, -32
   %or.cond143 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond143, label %.lr.ph.i.i37.preheader152, label %vector.ph
@@ -2550,7 +2560,9 @@ bb.h:                                             ; preds = %bb.g
 
 .lr.ph27.i.i.preheader:                           ; preds = %bb.h
   %min.iters.check76 = icmp ult i64 %i.eu, 8
-  %i.fp = sub i64 %6, %7
+  %14 = ptrtoaddr ptr %0 to i64
+  %15 = ptrtoaddr ptr %1 to i64
+  %i.fp = sub i64 %15, %14
   %diff.check74 = icmp ugt i64 %i.fp, -32
   %or.cond144 = or i1 %min.iters.check76, %diff.check74
   br i1 %or.cond144, label %.lr.ph27.i.i.preheader150, label %vector.ph77
@@ -2953,9 +2965,9 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
+  %min.iters.check = icmp ult i64 %2, 8
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %1 to i64
-  %min.iters.check = icmp ult i64 %2, 8
   %i.c = sub i64 %i.b, %i.a
   %diff.check = icmp ugt i64 %i.c, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -3052,8 +3064,6 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ma_copy_and_apply_volume_and_clip_pcm_frames(ptr nofree noundef writeonly captures(address) %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i32 noundef %3, i32 noundef %4, float noundef %5) local_unnamed_addr #20 {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64
-  %7 = ptrtoaddr ptr %0 to i64
   %i.a = fcmp oeq float %5, 1.000000e+00
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -3369,7 +3379,9 @@ bb.o:                                             ; preds = %bb.h
 
 .lr.ph.i47.preheader:                             ; preds = %bb.o
   %min.iters.check = icmp ult i64 %i.o, 8
-  %i.ef = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %0 to i64
+  %7 = ptrtoaddr ptr %1 to i64
+  %i.ef = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.ef, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.i47.preheader109, label %vector.ph
@@ -3772,9 +3784,6 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ma_blend_f32(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, float noundef %3, i32 noundef %4) local_unnamed_addr #20 {
 bb.a:
-  %5 = ptrtoaddr ptr %2 to i64
-  %6 = ptrtoaddr ptr %1 to i64
-  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %.not = icmp eq i32 %4, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -3785,9 +3794,12 @@ bb.a:
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.b = sub i64 %6, %7
+  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.b = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.b, -32
-  %i.c = sub i64 %5, %7
+  %7 = ptrtoaddr ptr %2 to i64
+  %i.c = sub i64 %7, %5
   %diff.check11 = icmp ugt i64 %i.c, -32
   %conflict.rdx = or i1 %diff.check, %diff.check11
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph

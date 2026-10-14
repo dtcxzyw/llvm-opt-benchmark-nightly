@@ -205,8 +205,6 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZN6casadi11casadi_mathIdE3funEhPKdRS2_Pdx(i8 noundef zeroext %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #4 comdat align 2 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64                    ; 8 uses
-  %6 = ptrtoaddr ptr %3 to i64                    ; 8 uses
   switch i8 %0, label %_ZN6casadi17BinaryOperationVSILx0EE3fcnIdEEvPKT_RS4_PS3_x.exit [
     i8 0, label %bb.b
     i8 1, label %bb.c
@@ -267,7 +265,9 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
   %min.iters.check1117 = icmp ult i64 %4, 8
-  %i.b = sub i64 %5, %6
+  %5 = ptrtoaddr ptr %3 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.b = sub i64 %6, %5
   %diff.check1115 = icmp ugt i64 %i.b, -32
   %or.cond = or i1 %min.iters.check1117, %diff.check1115
   br i1 %or.cond, label %.lr.ph.i.preheader1139, label %vector.ph1118
@@ -670,7 +670,9 @@ bb.g:                                             ; preds = %bb.a
 
 .lr.ph.i224.preheader:                            ; preds = %bb.g
   %min.iters.check956 = icmp ult i64 %4, 6
-  %i.hi = sub i64 %5, %6
+  %7 = ptrtoaddr ptr %3 to i64
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.hi = sub i64 %8, %7
   %diff.check954 = icmp ugt i64 %i.hi, -32
   %or.cond1132 = or i1 %min.iters.check956, %diff.check954
   br i1 %or.cond1132, label %.lr.ph.i224.preheader1148, label %vector.ph957
@@ -936,7 +938,9 @@ bb.m:                                             ; preds = %bb.a
 
 .lr.ph.i254.preheader:                            ; preds = %bb.m
   %min.iters.check938 = icmp ult i64 %4, 6
-  %i.lq = sub i64 %5, %6
+  %9 = ptrtoaddr ptr %3 to i64
+  %10 = ptrtoaddr ptr %1 to i64
+  %i.lq = sub i64 %10, %9
   %diff.check936 = icmp ugt i64 %i.lq, -32
   %or.cond1133 = or i1 %min.iters.check938, %diff.check936
   br i1 %or.cond1133, label %.lr.ph.i254.preheader1155, label %vector.ph939
@@ -1034,7 +1038,9 @@ bb.n:                                             ; preds = %bb.a
 
 .lr.ph.i259.preheader:                            ; preds = %bb.n
   %min.iters.check920 = icmp ult i64 %4, 6
-  %i.mz = sub i64 %5, %6
+  %11 = ptrtoaddr ptr %3 to i64
+  %12 = ptrtoaddr ptr %1 to i64
+  %i.mz = sub i64 %12, %11
   %diff.check918 = icmp ugt i64 %i.mz, -32
   %or.cond1134 = or i1 %min.iters.check920, %diff.check918
   br i1 %or.cond1134, label %.lr.ph.i259.preheader1157, label %vector.ph921
@@ -1437,7 +1443,9 @@ bb.ag:                                            ; preds = %bb.a
 
 .lr.ph.i354.preheader:                            ; preds = %bb.ag
   %min.iters.check794 = icmp ult i64 %4, 6
-  %i.aet = sub i64 %5, %6
+  %13 = ptrtoaddr ptr %3 to i64
+  %14 = ptrtoaddr ptr %1 to i64
+  %i.aet = sub i64 %14, %13
   %diff.check792 = icmp ugt i64 %i.aet, -32
   %or.cond1135 = or i1 %min.iters.check794, %diff.check792
   br i1 %or.cond1135, label %.lr.ph.i354.preheader1180, label %vector.ph795
@@ -1535,7 +1543,9 @@ bb.ah:                                            ; preds = %bb.a
 
 .lr.ph.i359.preheader:                            ; preds = %bb.ah
   %min.iters.check776 = icmp ult i64 %4, 4
-  %i.agc = sub i64 %5, %6
+  %15 = ptrtoaddr ptr %3 to i64
+  %16 = ptrtoaddr ptr %1 to i64
+  %i.agc = sub i64 %16, %15
   %diff.check774 = icmp ugt i64 %i.agc, -32
   %or.cond1136 = or i1 %min.iters.check776, %diff.check774
   br i1 %or.cond1136, label %.lr.ph.i359.preheader1182, label %vector.ph777
@@ -1938,7 +1948,9 @@ bb.am:                                            ; preds = %bb.a
 
 .lr.ph.i384.preheader:                            ; preds = %bb.am
   %min.iters.check661 = icmp eq i64 %4, 1
-  %i.amd = sub i64 %5, %6
+  %17 = ptrtoaddr ptr %3 to i64
+  %18 = ptrtoaddr ptr %1 to i64
+  %i.amd = sub i64 %18, %17
   %diff.check659 = icmp ugt i64 %i.amd, -16
   %or.cond1137 = or i1 %min.iters.check661, %diff.check659
   br i1 %or.cond1137, label %.lr.ph.i384.preheader1191, label %vector.ph662
@@ -2272,7 +2284,9 @@ bb.av:                                            ; preds = %bb.a
 
 .lr.ph.i429.preheader:                            ; preds = %bb.av
   %min.iters.check = icmp ult i64 %4, 8
-  %i.ark = sub i64 %5, %6
+  %19 = ptrtoaddr ptr %3 to i64
+  %20 = ptrtoaddr ptr %1 to i64
+  %i.ark = sub i64 %20, %19
   %diff.check = icmp ugt i64 %i.ark, -32
   %or.cond1138 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond1138, label %.lr.ph.i429.preheader1201, label %vector.ph

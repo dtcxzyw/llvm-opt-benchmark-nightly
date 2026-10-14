@@ -204,7 +204,6 @@ declare noalias noundef ptr @_ZnwmRKSt9nothrow_t(i64 noundef, ptr noundef align 
 ; Function Attrs: mustprogress null_pointer_is_valid sspstrong uwtable
 define linkonce_odr void @_ZSt16__merge_adaptiveIN5QListIP15QTreeWidgetItemE8iteratorExPS2_N9__gnu_cxx5__ops15_Iter_comp_iterIPFbPKS1_SA_EEEEvT_SE_SE_T0_SF_T1_T2_(ptr %0, ptr %1, ptr %2, i64 noundef %3, i64 noundef %4, ptr noundef %5, i64 %6) local_unnamed_addr #0 comdat {
 bb.a:
-  %7 = ptrtoaddr ptr %5 to i64                    ; 2 uses
   %i.a = inttoptr i64 %6 to ptr                   ; 2 uses
   %.not = icmp sgt i64 %3, %4
   br i1 %.not, label %bb.d, label %bb.b
@@ -231,6 +230,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.i.pr
   %i.k = icmp ult ptr %i.j, %0
   %i.l = or i1 %i.k, %mul.overflow
   %i.m = or i1 %i.i, %i.l
+  %7 = ptrtoaddr ptr %5 to i64
   %i.n = sub i64 %i.c, %7
   %diff.check = icmp ugt i64 %i.n, -32
   %or.cond = or i1 %i.m, %diff.check
@@ -409,7 +409,8 @@ vector.scevcheck108:                              ; preds = %.lr.ph.i.i.i.i.i23.
   %i.bq = icmp ult ptr %i.bp, %1
   %i.br = or i1 %i.bq, %mul.overflow111
   %i.bs = or i1 %i.bo, %i.br
-  %i.bt = sub i64 %i.bi, %7
+  %8 = ptrtoaddr ptr %5 to i64
+  %i.bt = sub i64 %i.bi, %8
   %diff.check113 = icmp ugt i64 %i.bt, -32
   %or.cond130 = or i1 %i.bs, %diff.check113
   br i1 %or.cond130, label %.lr.ph.i.i.i.i.i23.preheader135, label %vector.ph116
@@ -812,7 +813,6 @@ _ZSt12__move_mergeIN5QListIP15QTreeWidgetItemE8iteratorEPS2_N9__gnu_cxx5__ops15_
   %.sroa.019.0.lcssa.i19 = phi ptr [ %i.br, %._crit_edge ], [ %.sroa.019.1.i39, %.lr.ph.i33 ] ; 7 uses
   %.sroa.022.0.lcssa.i20 = phi ptr [ %.sroa.052.0.lcssa, %._crit_edge ], [ %.sroa.022.1.i41, %.lr.ph.i33 ] ; 7 uses
   %.0.lcssa.i21 = phi ptr [ %.0.lcssa, %._crit_edge ], [ %i.bx, %.lr.ph.i33 ] ; 8 uses
-  %.0.lcssa.i21131 = ptrtoaddr ptr %.0.lcssa.i21 to i64
   %i.ca = ptrtoint ptr %i.br to i64
   %i.cb = ptrtoint ptr %.sroa.022.0.lcssa.i20 to i64 ; 2 uses
   %i.cc = sub i64 %i.ca, %i.cb
@@ -834,7 +834,8 @@ vector.scevcheck126:                              ; preds = %.lr.ph.i.i.i.i.i.i2
   %i.cj = icmp ult ptr %i.ci, %.sroa.022.0.lcssa.i20
   %i.ck = or i1 %i.cj, %mul.overflow129
   %i.cl = or i1 %i.ch, %i.ck
-  %i.cm = sub i64 %i.cb, %.0.lcssa.i21131
+  %5 = ptrtoaddr ptr %.0.lcssa.i21 to i64
+  %i.cm = sub i64 %i.cb, %5
   %diff.check132 = icmp ugt i64 %i.cm, -32
   %or.cond173 = select i1 %i.cl, i1 true, i1 %diff.check132
   br i1 %or.cond173, label %.lr.ph.i.i.i.i.i.i29.preheader176, label %vector.ph135
@@ -886,7 +887,6 @@ middle.block144:                                  ; preds = %vector.body137
 
 _ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit.i22: ; preds = %.lr.ph.i.i.i.i.i.i29, %middle.block144, %.critedge.i18
   %.0.lcssa.i.i.i.i.i.i23 = phi ptr [ %.0.lcssa.i21, %.critedge.i18 ], [ %i.co, %middle.block144 ], [ %i.cx, %.lr.ph.i.i.i.i.i.i29 ] ; 7 uses
-  %.0.lcssa.i.i.i.i.i.i23154 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i.i23 to i64
   %i.da = ptrtoint ptr %.sroa.019.0.lcssa.i19 to i64 ; 2 uses
   %i.db = sub i64 %i.b, %i.da
   %i.dc = ashr exact i64 %i.db, 3                 ; 8 uses
@@ -907,7 +907,8 @@ vector.scevcheck149:                              ; preds = %.lr.ph.i.i.i.i.i14.
   %i.di = icmp ult ptr %i.dh, %.sroa.019.0.lcssa.i19
   %i.dj = or i1 %i.di, %mul.overflow152
   %i.dk = or i1 %i.dg, %i.dj
-  %i.dl = sub i64 %i.da, %.0.lcssa.i.i.i.i.i.i23154
+  %6 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i.i23 to i64
+  %i.dl = sub i64 %i.da, %6
   %diff.check155 = icmp ugt i64 %i.dl, -32
   %or.cond174 = select i1 %i.dk, i1 true, i1 %diff.check155
   br i1 %or.cond174, label %.lr.ph.i.i.i.i.i14.i25.preheader175, label %vector.ph158
@@ -1200,7 +1201,6 @@ _ZSt12__move_mergeIPP15QTreeWidgetItemN5QListIS1_E8iteratorEN9__gnu_cxx5__ops15_
   %.sroa.024.0.lcssa.i25 = phi ptr [ %.sroa.021.0.lcssa, %._crit_edge ], [ %i.ca, %.lr.ph.i39 ] ; 8 uses
   %.016.lcssa.i26 = phi ptr [ %i.bt, %._crit_edge ], [ %.117.i45, %.lr.ph.i39 ] ; 7 uses
   %.0.lcssa.i27 = phi ptr [ %.0.lcssa, %._crit_edge ], [ %.1.i47, %.lr.ph.i39 ] ; 7 uses
-  %.sroa.024.0.lcssa.i25127 = ptrtoaddr ptr %.sroa.024.0.lcssa.i25 to i64
   %i.ce = ptrtoint ptr %i.bt to i64
   %i.cf = ptrtoint ptr %.0.lcssa.i27 to i64       ; 2 uses
   %i.cg = sub i64 %i.ce, %i.cf
@@ -1222,7 +1222,8 @@ vector.scevcheck122:                              ; preds = %.lr.ph.i.i.i.i.i.i3
   %i.cn = icmp ult ptr %i.cm, %.0.lcssa.i27
   %i.co = or i1 %i.cn, %mul.overflow125
   %i.cp = or i1 %i.cl, %i.co
-  %i.cq = sub i64 %i.cf, %.sroa.024.0.lcssa.i25127
+  %5 = ptrtoaddr ptr %.sroa.024.0.lcssa.i25 to i64
+  %i.cq = sub i64 %i.cf, %5
   %diff.check128 = icmp ugt i64 %i.cq, -32
   %or.cond169 = select i1 %i.cp, i1 true, i1 %diff.check128
   br i1 %or.cond169, label %.lr.ph.i.i.i.i.i.i35.preheader172, label %vector.ph131
@@ -1274,7 +1275,6 @@ middle.block140:                                  ; preds = %vector.body133
 
 _ZSt4moveIPP15QTreeWidgetItemN5QListIS1_E8iteratorEET0_T_S7_S6_.exit.i28: ; preds = %.lr.ph.i.i.i.i.i.i35, %middle.block140, %._crit_edge.i24
   %.sroa.0.0.lcssa.i.i.i.i.i.i29 = phi ptr [ %.sroa.024.0.lcssa.i25, %._crit_edge.i24 ], [ %i.cu, %middle.block140 ], [ %i.db, %.lr.ph.i.i.i.i.i.i35 ] ; 7 uses
-  %.sroa.0.0.lcssa.i.i.i.i.i.i29150 = ptrtoaddr ptr %.sroa.0.0.lcssa.i.i.i.i.i.i29 to i64
   %i.de = ptrtoint ptr %.016.lcssa.i26 to i64     ; 2 uses
   %i.df = sub i64 %i.b, %i.de
   %i.dg = ashr exact i64 %i.df, 3                 ; 8 uses
@@ -1295,7 +1295,8 @@ vector.scevcheck145:                              ; preds = %.lr.ph.i.i.i.i.i19.
   %i.dm = icmp ult ptr %i.dl, %.016.lcssa.i26
   %i.dn = or i1 %i.dm, %mul.overflow148
   %i.do = or i1 %i.dk, %i.dn
-  %i.dp = sub i64 %i.de, %.sroa.0.0.lcssa.i.i.i.i.i.i29150
+  %6 = ptrtoaddr ptr %.sroa.0.0.lcssa.i.i.i.i.i.i29 to i64
+  %i.dp = sub i64 %i.de, %6
   %diff.check151 = icmp ugt i64 %i.dp, -32
   %or.cond170 = select i1 %i.do, i1 true, i1 %diff.check151
   br i1 %or.cond170, label %.lr.ph.i.i.i.i.i19.i31.preheader171, label %vector.ph154
@@ -1698,7 +1699,6 @@ tailrecurse:                                      ; preds = %_ZSt13__upper_bound
 ; Function Attrs: mustprogress null_pointer_is_valid sspstrong uwtable
 define linkonce_odr ptr @_ZSt17__rotate_adaptiveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_xET_S6_S6_S6_T1_S7_T0_S7_(ptr %0, ptr %1, ptr %2, i64 noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6) local_unnamed_addr #0 comdat {
 bb.a:
-  %7 = ptrtoaddr ptr %5 to i64                    ; 3 uses
   %i.a = icmp sle i64 %3, %4
   %.not = icmp sgt i64 %4, %6
   %or.cond = or i1 %i.a, %.not
@@ -1730,6 +1730,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.i.pr
   %i.k = icmp ult ptr %i.j, %1
   %i.l = or i1 %i.k, %mul.overflow
   %i.m = or i1 %i.i, %i.l
+  %7 = ptrtoaddr ptr %5 to i64
   %i.n = sub i64 %i.c, %7
   %diff.check = icmp ugt i64 %i.n, -32
   %or.cond148 = or i1 %i.m, %diff.check
@@ -1856,7 +1857,7 @@ _ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit: ; preds = 
 
 _ZSt13move_backwardIN5QListIP15QTreeWidgetItemE8iteratorES4_ET0_T_S6_S5_.exit: ; preds = %.lr.ph.i.i.i.i.i37.prol.loopexit, %.lr.ph.i.i.i.i.i37, %_ZSt4moveIN5QListIP15QTreeWidgetItemE8iteratorEPS2_ET0_T_S7_S6_.exit
   %i.bk = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
-  %i.bl = ptrtoint ptr %5 to i64
+  %i.bl = ptrtoint ptr %5 to i64                  ; 2 uses
   %i.bm = sub i64 %i.bk, %i.bl
   %i.bn = ashr exact i64 %i.bm, 3                 ; 8 uses
   %i.bo = icmp sgt i64 %i.bn, 0
@@ -1876,7 +1877,7 @@ vector.scevcheck82:                               ; preds = %.lr.ph.i.i.i.i.i39.
   %i.bt = icmp ult ptr %i.bs, %5
   %i.bu = or i1 %i.bt, %mul.overflow85
   %i.bv = or i1 %i.br, %i.bu
-  %i.bw = sub i64 %7, %i.ab
+  %i.bw = sub i64 %i.bl, %i.ab
   %diff.check87 = icmp ugt i64 %i.bw, -32
   %or.cond149 = or i1 %i.bv, %diff.check87
   br i1 %or.cond149, label %.lr.ph.i.i.i.i.i39.preheader155, label %vector.ph90
@@ -1956,7 +1957,8 @@ vector.scevcheck104:                              ; preds = %.lr.ph.i.i.i.i.i42.
   %i.ct = icmp ult ptr %i.cs, %0
   %i.cu = or i1 %i.ct, %mul.overflow107
   %i.cv = or i1 %i.cr, %i.cu
-  %i.cw = sub i64 %i.cl, %7
+  %8 = ptrtoaddr ptr %5 to i64
+  %i.cw = sub i64 %i.cl, %8
   %diff.check109 = icmp ugt i64 %i.cw, -32
   %or.cond150 = or i1 %i.cv, %diff.check109
   br i1 %or.cond150, label %.lr.ph.i.i.i.i.i42.preheader153, label %vector.ph112

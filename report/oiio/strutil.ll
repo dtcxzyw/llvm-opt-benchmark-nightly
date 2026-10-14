@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal noundef ptr @_ZL21stbsp__clamp_callbackPKcPvi(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef captures(ret: address, provenance) %1, i32 noundef %2) #6 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !73
   %i.d = add nsw i32 %i.c, %2
@@ -223,14 +223,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not34, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %3 = ptrtoaddr ptr %i.g to i64
   %i.h = getelementptr inbounds i8, ptr %0, i64 %.pre36
   %i.i = add i64 %i.a, %.pre36
   %i.j = add i64 %i.a, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.i, i64 %i.j)
   %i.k = sub i64 %umax, %i.a                      ; 7 uses
   %min.iters.check = icmp ult i64 %i.k, 8
-  %i.l = sub i64 %i.a, %3
+  %3 = ptrtoaddr ptr %i.g to i64
+  %4 = ptrtoaddr ptr %0 to i64
+  %i.l = sub i64 %4, %3
   %diff.check = icmp ugt i64 %i.l, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
@@ -633,16 +634,16 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 .lr.ph.i.preheader.i:                             ; preds = %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i, %.noexc170
   %i.dj = phi ptr [ %i.dg, %.noexc170 ], [ %i.di, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 2 uses
   %i.dk = phi ptr [ %i.df, %.noexc170 ], [ %i.dh, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i ] ; 6 uses
-  %9 = ptrtoaddr ptr %i.dk to i64                 ; 2 uses
-  %10 = load ptr, ptr %7, align 8, !tbaa !257     ; 4 uses
-  %i.dl = ptrtoaddr ptr %i.dj to i64
-  %i.dm = add i64 %i.dl, -4
-  %i.dn = sub i64 %i.dm, %9                       ; 2 uses
+  %9 = load ptr, ptr %7, align 8, !tbaa !257      ; 4 uses
+  %10 = ptrtoaddr ptr %i.dj to i64
+  %i.dl = ptrtoaddr ptr %i.dk to i64              ; 2 uses
+  %i.dm = add i64 %10, -4
+  %i.dn = sub i64 %i.dm, %i.dl                    ; 2 uses
   %i.do = lshr i64 %i.dn, 2
   %i.dp = add nuw nsw i64 %i.do, 1                ; 2 uses
   %min.iters.check1663 = icmp ult i64 %i.dn, 44
-  %i.dq = ptrtoaddr ptr %10 to i64
-  %i.dr = sub i64 %9, %i.dq
+  %i.dq = ptrtoaddr ptr %9 to i64
+  %i.dr = sub i64 %i.dl, %i.dq
   %diff.check = icmp ugt i64 %i.dr, -32
   %or.cond1767 = select i1 %min.iters.check1663, i1 true, i1 %diff.check
   br i1 %or.cond1767, label %.lr.ph.i.i.preheader, label %vector.ph1664
@@ -650,14 +651,14 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 vector.ph1664:                                    ; preds = %.lr.ph.i.preheader.i
   %n.vec1665 = and i64 %i.dp, 9223372036854775800 ; 3 uses
   %i.ds = shl i64 %n.vec1665, 2                   ; 2 uses
-  %i.dt = getelementptr i8, ptr %10, i64 %i.ds
+  %i.dt = getelementptr i8, ptr %9, i64 %i.ds
   %i.du = getelementptr i8, ptr %i.dk, i64 %i.ds
   br label %vector.body1666
 
 vector.body1666:                                  ; preds = %vector.body1666, %vector.ph1664
   %index1667 = phi i64 [ 0, %vector.ph1664 ], [ %index.next1671, %vector.body1666 ] ; 2 uses
   %i.dv = shl i64 %index1667, 2                   ; 2 uses
-  %next.gep = getelementptr i8, ptr %10, i64 %i.dv ; 2 uses
+  %next.gep = getelementptr i8, ptr %9, i64 %i.dv ; 2 uses
   %next.gep1668 = getelementptr i8, ptr %i.dk, i64 %i.dv ; 2 uses
   %i.dw = getelementptr i8, ptr %next.gep1668, i64 16
   %wide.load1669 = load <4 x i32>, ptr %next.gep1668, align 4, !tbaa !53
@@ -674,7 +675,7 @@ middle.block1672:                                 ; preds = %vector.body1666
   br i1 %cmp.n1673, label %.loopexit567, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph.i.preheader.i, %middle.block1672
-  %.08.i.i.ph = phi ptr [ %10, %.lr.ph.i.preheader.i ], [ %i.dt, %middle.block1672 ]
+  %.08.i.i.ph = phi ptr [ %9, %.lr.ph.i.preheader.i ], [ %i.dt, %middle.block1672 ]
   %.057.i.i.ph = phi ptr [ %i.dk, %.lr.ph.i.preheader.i ], [ %i.du, %middle.block1672 ]
   br label %.lr.ph.i.i
 
@@ -730,16 +731,16 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
   %.pr = phi i64 [ %i.ei, %.noexc182 ], [ %i.ee, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 7 uses
   %i.en = phi ptr [ %i.ek, %.noexc182 ], [ %i.el, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 2 uses
   %i.eo = phi ptr [ %i.ej, %.noexc182 ], [ %i.ec, %_ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.i171 ] ; 4 uses
-  %11 = ptrtoaddr ptr %i.eo to i64                ; 2 uses
-  %12 = load ptr, ptr %8, align 8, !tbaa !257     ; 7 uses
-  %i.ep = ptrtoaddr ptr %i.en to i64
-  %i.eq = add i64 %i.ep, -4
-  %i.er = sub i64 %i.eq, %11                      ; 2 uses
+  %11 = load ptr, ptr %8, align 8, !tbaa !257     ; 7 uses
+  %12 = ptrtoaddr ptr %i.en to i64
+  %i.ep = ptrtoaddr ptr %i.eo to i64              ; 2 uses
+  %i.eq = add i64 %12, -4
+  %i.er = sub i64 %i.eq, %i.ep                    ; 2 uses
   %i.es = lshr i64 %i.er, 2
   %i.et = add nuw nsw i64 %i.es, 1                ; 2 uses
   %min.iters.check1679 = icmp ult i64 %i.er, 44
-  %i.eu = ptrtoaddr ptr %12 to i64
-  %i.ev = sub i64 %11, %i.eu
+  %i.eu = ptrtoaddr ptr %11 to i64
+  %i.ev = sub i64 %i.ep, %i.eu
   %diff.check1677 = icmp ugt i64 %i.ev, -32
   %or.cond1769 = select i1 %min.iters.check1679, i1 true, i1 %diff.check1677
   br i1 %or.cond1769, label %.lr.ph.i.i175.preheader, label %vector.ph1680
@@ -747,14 +748,14 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEE6resizeEm.exit.
 vector.ph1680:                                    ; preds = %.lr.ph.i.preheader.i174
   %n.vec1681 = and i64 %i.et, 9223372036854775800 ; 3 uses
   %i.ew = shl i64 %n.vec1681, 2                   ; 2 uses
-  %i.ex = getelementptr i8, ptr %12, i64 %i.ew
+  %i.ex = getelementptr i8, ptr %11, i64 %i.ew
   %i.ey = getelementptr i8, ptr %i.eo, i64 %i.ew
   br label %vector.body1682
 
 vector.body1682:                                  ; preds = %vector.body1682, %vector.ph1680
   %index1683 = phi i64 [ 0, %vector.ph1680 ], [ %index.next1688, %vector.body1682 ] ; 2 uses
   %i.ez = shl i64 %index1683, 2                   ; 2 uses
-  %next.gep1684 = getelementptr i8, ptr %12, i64 %i.ez ; 2 uses
+  %next.gep1684 = getelementptr i8, ptr %11, i64 %i.ez ; 2 uses
   %next.gep1685 = getelementptr i8, ptr %i.eo, i64 %i.ez ; 2 uses
   %i.fa = getelementptr i8, ptr %next.gep1685, i64 16
   %wide.load1686 = load <4 x i32>, ptr %next.gep1685, align 4, !tbaa !53
@@ -771,7 +772,7 @@ middle.block1689:                                 ; preds = %vector.body1682
   br i1 %cmp.n1690, label %.loopexit1765, label %.lr.ph.i.i175.preheader
 
 .lr.ph.i.i175.preheader:                          ; preds = %.lr.ph.i.preheader.i174, %middle.block1689
-  %.08.i.i176.ph = phi ptr [ %12, %.lr.ph.i.preheader.i174 ], [ %i.ex, %middle.block1689 ]
+  %.08.i.i176.ph = phi ptr [ %11, %.lr.ph.i.preheader.i174 ], [ %i.ex, %middle.block1689 ]
   %.057.i.i177.ph = phi ptr [ %i.eo, %.lr.ph.i.preheader.i174 ], [ %i.ey, %middle.block1689 ]
   br label %.lr.ph.i.i175
 
@@ -802,7 +803,7 @@ vector.ph1695:                                    ; preds = %.lr.ph.i185.prehead
 vector.body1697:                                  ; preds = %vector.body1697, %vector.ph1695
   %index1698 = phi i64 [ 0, %vector.ph1695 ], [ %index.next1702, %vector.body1697 ] ; 2 uses
   %vector.recur1699 = phi <4 x i32> [ <i32 poison, i32 poison, i32 poison, i32 0>, %vector.ph1695 ], [ %i.fk, %vector.body1697 ]
-  %i.fh = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %index1698 ; 3 uses
+  %i.fh = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %index1698 ; 3 uses
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 16 ; 2 uses
   %wide.load1700 = load <4 x i32>, ptr %i.fh, align 4, !tbaa !53 ; 2 uses
   %wide.load1701 = load <4 x i32>, ptr %i.fi, align 4, !tbaa !53 ; 3 uses
@@ -840,7 +841,7 @@ middle.block1703:                                 ; preds = %vector.body1697
 .lr.ph.i185:                                      ; preds = %.lr.ph.i185.preheader1834, %.lr.ph.i185
   %.01418.i186 = phi i64 [ %i.fy, %.lr.ph.i185 ], [ %.01418.i186.ph, %.lr.ph.i185.preheader1834 ] ; 2 uses
   %.017.i187 = phi i32 [ %i.fv, %.lr.ph.i185 ], [ %.017.i187.ph, %.lr.ph.i185.preheader1834 ]
-  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %.01418.i186 ; 2 uses
+  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %.01418.i186 ; 2 uses
   %i.fu = load i32, ptr %i.ft, align 4, !tbaa !53 ; 3 uses
   %i.fv = lshr i32 %i.fu, 31                      ; 2 uses
   %i.fw = shl i32 %i.fu, 1
@@ -867,7 +868,7 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZN3fmt3v126detail6bufferIjE9push_backERKj.exit.i191
 
 _ZN3fmt3v126detail6bufferIjE9push_backERKj.exit.i191: ; preds = %.noexc195, %bb.r
-  %i.gc = phi ptr [ %12, %bb.r ], [ %.pre675, %.noexc195 ]
+  %i.gc = phi ptr [ %11, %bb.r ], [ %.pre675, %.noexc195 ]
   %.pre-phi.i.i192 = phi i64 [ %i.fz, %bb.r ], [ %.pre2.i.i194, %.noexc195 ]
   %i.gd = phi i64 [ %.pr, %bb.r ], [ %.pre.i.i193, %.noexc195 ]
   store i64 %.pre-phi.i.i192, ptr %i.r, align 8, !tbaa !263
@@ -1270,7 +1271,6 @@ bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
   %3 = alloca %class.anon.111, align 8            ; 5 uses
   %i.b = alloca [7 x i8], align 1                 ; 11 uses
-  %4 = ptrtoaddr ptr %i.b to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false), !tbaa.struct !1016
   %i.c = icmp ugt i64 %1, 3
@@ -1368,6 +1368,7 @@ iter.check:                                       ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
   %min.iters.check = icmp ult i64 %i.bt, 8
+  %4 = ptrtoaddr ptr %i.b to i64
   %i.bv = sub i64 %i.bs, %4
   %diff.check = icmp ugt i64 %i.bv, -32
   %or.cond61 = or i1 %min.iters.check, %diff.check
@@ -1770,7 +1771,6 @@ define linkonce_odr hidden void @_ZN3fmt3v126detail18for_each_codepointIZNS1_11f
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = alloca [7 x i8], align 1                 ; 11 uses
-  %3 = ptrtoaddr ptr %i.b to i64
   %i.c = icmp ugt i64 %1, 3
   br i1 %i.c, label %bb.b, label %.loopexit
 
@@ -1887,6 +1887,7 @@ iter.check:                                       ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.b, i8 0, i64 7, i1 false)
   %min.iters.check = icmp ult i64 %i.bv, 8
+  %3 = ptrtoaddr ptr %i.b to i64
   %i.bx = sub i64 %i.bu, %3
   %diff.check = icmp ugt i64 %i.bx, -32
   %or.cond = or i1 %min.iters.check, %diff.check

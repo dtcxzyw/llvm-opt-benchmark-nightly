@@ -205,7 +205,6 @@ declare i32 @WebPReportProgress(ptr noundef, i32 noundef, ptr noundef) local_unn
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @VP8IteratorImport(ptr nofree noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
-  %2 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
   %i.c = load i32, ptr %0, align 8, !tbaa !17     ; 4 uses
@@ -215,7 +214,6 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !56   ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !59   ; 2 uses
-  %3 = ptrtoaddr ptr %i.i to i64
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 40 ; 4 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !60   ; 2 uses
   %i.l = mul i32 %i.k, %i.e
@@ -225,7 +223,6 @@ bb.a:
   %i.p = getelementptr inbounds i8, ptr %i.i, i64 %i.o ; 7 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !61   ; 2 uses
-  %4 = ptrtoaddr ptr %i.r to i64
   %i.s = getelementptr inbounds nuw i8, ptr %i.g, i64 44 ; 9 uses
   %i.t = load i32, ptr %i.s, align 4, !tbaa !62
   %i.u = mul i32 %i.t, %i.e
@@ -628,6 +625,8 @@ iter.check:                                       ; preds = %bb.p
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %2 = ptrtoaddr ptr %1 to i64
+  %3 = ptrtoaddr ptr %i.i to i64
   %i.mv = add i64 %2, %i.ms
   %i.mw = add i64 %3, %i.o
   %i.mx = sub i64 %i.mw, %i.mv
@@ -754,8 +753,10 @@ iter.check286:                                    ; preds = %ImportLine.exit162
   br i1 %min.iters.check272, label %vec.epilog.scalar.ph287.preheader, label %vector.memcheck270
 
 vector.memcheck270:                               ; preds = %iter.check286
-  %i.oi = add i64 %2, %i.of
-  %i.oj = add i64 %4, %i.x
+  %4 = ptrtoaddr ptr %1 to i64
+  %5 = ptrtoaddr ptr %i.r to i64
+  %i.oi = add i64 %4, %i.of
+  %i.oj = add i64 %5, %i.x
   %i.ok = sub i64 %i.oi, %i.oj
   %i.ol = add i64 %i.ok, 15
   %diff.check271 = icmp ult i64 %i.ol, 31

@@ -205,8 +205,7 @@ begin_hunk_0_@_ZN7CaDiCaL8Internal6reportEci:bb.a
   %i.gf = icmp slt i32 %i.gd, -20
   %narrow = select i1 %i.gf, i32 -1, i32 %i.ge
   %i.gg = sext i32 %narrow to i64
-  %i.gh = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.gg) #15 ; 107 uses
-  %16 = ptrtoaddr ptr %i.gh to i64                ; 12 uses
+  %i.gh = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.gg) #15 ; 118 uses
   %i.gi = icmp sgt i32 %i.gd, -20                 ; 3 uses
   %i.gj = add i32 %i.gd, 19
   %smax = call i32 @llvm.smax.i32(i32 %i.ge, i32 1)
@@ -220,7 +219,6 @@ begin_hunk_0_@_ZN7CaDiCaL8Internal6reportEci:bb.a
 
 .lr.ph125.preheader:                              ; preds = %.preheader120, %.lr.ph.preheader
   %i.gm = load ptr, ptr %3, align 16, !tbaa !11   ; 9 uses
-  %17 = ptrtoaddr ptr %i.gm to i64
   %i.gn = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.gm) #13 ; 6 uses
   %i.go = trunc i64 %i.gn to i32                  ; 3 uses
   %i.gp = icmp sgt i32 %i.go, -1
@@ -244,6 +242,8 @@ iter.check:                                       ; preds = %.lr.ph.preheader.i
   br i1 %min.iters.check, label %.lr.ph.peel.next.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %16 = ptrtoaddr ptr %i.gh to i64
+  %17 = ptrtoaddr ptr %i.gm to i64
   %i.gw = add i64 %16, %i.gt
   %i.gx = sub i64 %i.gw, %17
   %diff.check = icmp ult i64 %i.gx, 31
@@ -365,7 +365,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit:         ; preds = %.lr.ph.peel.next.i.prol.loopexit, %.lr.ph.peel.next.i, %middle.block, %vec.epilog.middle.block, %.lr.ph125.preheader, %.lr.ph.preheader.i
   %i.ig = load ptr, ptr %i.ao, align 16, !tbaa !11 ; 9 uses
-  %18 = ptrtoaddr ptr %i.ig to i64
   %i.ih = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ig) #13 ; 6 uses
   %i.ii = trunc i64 %i.ih to i32                  ; 3 uses
   %i.ij = icmp sgt i32 %i.ii, -1
@@ -389,8 +388,10 @@ iter.check219:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check206, label %.lr.ph.peel.next.i.1156.preheader, label %vector.memcheck204
 
 vector.memcheck204:                               ; preds = %iter.check219
-  %i.iq = add i64 %16, %i.in
-  %i.ir = sub i64 %i.iq, %18
+  %18 = ptrtoaddr ptr %i.gh to i64
+  %19 = ptrtoaddr ptr %i.ig to i64
+  %i.iq = add i64 %18, %i.in
+  %i.ir = sub i64 %i.iq, %19
   %diff.check205 = icmp ult i64 %i.ir, 31
   br i1 %diff.check205, label %.lr.ph.peel.next.i.1156.preheader, label %vector.main.loop.iter.check207
 
@@ -510,7 +511,6 @@ vec.epilog.middle.block229:                       ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit.1158:    ; preds = %.lr.ph.peel.next.i.1156.prol.loopexit, %.lr.ph.peel.next.i.1156, %middle.block216, %vec.epilog.middle.block229, %.lr.ph.preheader.i.1149, %_ZN7CaDiCaL6Report12print_headerEPc.exit
   %i.ka = load ptr, ptr %i.ba, align 16, !tbaa !11 ; 9 uses
-  %19 = ptrtoaddr ptr %i.ka to i64
   %i.kb = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ka) #13 ; 6 uses
   %i.kc = trunc i64 %i.kb to i32                  ; 3 uses
   %i.kd = icmp sgt i32 %i.kc, -1
@@ -534,8 +534,10 @@ iter.check248:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check235, label %.lr.ph.peel.next.i.2170.preheader, label %vector.memcheck233
 
 vector.memcheck233:                               ; preds = %iter.check248
-  %i.kk = add i64 %16, %i.kh
-  %i.kl = sub i64 %i.kk, %19
+  %20 = ptrtoaddr ptr %i.gh to i64
+  %21 = ptrtoaddr ptr %i.ka to i64
+  %i.kk = add i64 %20, %i.kh
+  %i.kl = sub i64 %i.kk, %21
   %diff.check234 = icmp ult i64 %i.kl, 31
   br i1 %diff.check234, label %.lr.ph.peel.next.i.2170.preheader, label %vector.main.loop.iter.check236
 
@@ -655,7 +657,6 @@ vec.epilog.middle.block258:                       ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit.2172:    ; preds = %.lr.ph.peel.next.i.2170.prol.loopexit, %.lr.ph.peel.next.i.2170, %middle.block245, %vec.epilog.middle.block258, %.lr.ph.preheader.i.2163, %_ZN7CaDiCaL6Report12print_headerEPc.exit.1158
   %i.lu = load ptr, ptr %i.bq, align 16, !tbaa !11 ; 9 uses
-  %20 = ptrtoaddr ptr %i.lu to i64
   %i.lv = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.lu) #13 ; 6 uses
   %i.lw = trunc i64 %i.lv to i32                  ; 3 uses
   %i.lx = icmp sgt i32 %i.lw, -1
@@ -679,8 +680,10 @@ iter.check277:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check264, label %.lr.ph.peel.next.i.3.preheader, label %vector.memcheck262
 
 vector.memcheck262:                               ; preds = %iter.check277
-  %i.me = add i64 %16, %i.mb
-  %i.mf = sub i64 %i.me, %20
+  %22 = ptrtoaddr ptr %i.gh to i64
+  %23 = ptrtoaddr ptr %i.lu to i64
+  %i.me = add i64 %22, %i.mb
+  %i.mf = sub i64 %i.me, %23
   %diff.check263 = icmp ult i64 %i.mf, 31
   br i1 %diff.check263, label %.lr.ph.peel.next.i.3.preheader, label %vector.main.loop.iter.check265
 
@@ -858,7 +861,6 @@ _ZN7CaDiCaL8Terminal6normalEv.exit:               ; preds = %_ZN7CaDiCaL8Termina
 
 .lr.ph125.preheader.1:                            ; preds = %_ZN7CaDiCaL8Terminal6normalEv.exit, %.lr.ph.preheader.1
   %i.on = load ptr, ptr %i.ah, align 16, !tbaa !11 ; 9 uses
-  %21 = ptrtoaddr ptr %i.on to i64
   %i.oo = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.on) #13 ; 6 uses
   %i.op = trunc i64 %i.oo to i32                  ; 3 uses
   %i.oq = icmp sgt i32 %i.op, -1
@@ -882,8 +884,10 @@ iter.check306:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check293, label %.lr.ph.peel.next.i.1.preheader, label %vector.memcheck291
 
 vector.memcheck291:                               ; preds = %iter.check306
-  %i.ox = add i64 %16, %i.ou
-  %i.oy = sub i64 %i.ox, %21
+  %24 = ptrtoaddr ptr %i.gh to i64
+  %25 = ptrtoaddr ptr %i.on to i64
+  %i.ox = add i64 %24, %i.ou
+  %i.oy = sub i64 %i.ox, %25
   %diff.check292 = icmp ult i64 %i.oy, 31
   br i1 %diff.check292, label %.lr.ph.peel.next.i.1.preheader, label %vector.main.loop.iter.check294
 
@@ -1003,7 +1007,6 @@ vec.epilog.middle.block316:                       ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit.1:       ; preds = %.lr.ph.peel.next.i.1.prol.loopexit, %.lr.ph.peel.next.i.1, %middle.block303, %vec.epilog.middle.block316, %.lr.ph.preheader.i.1, %.lr.ph125.preheader.1
   %i.qh = load ptr, ptr %i.as, align 16, !tbaa !11 ; 9 uses
-  %22 = ptrtoaddr ptr %i.qh to i64
   %i.qi = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.qh) #13 ; 6 uses
   %i.qj = trunc i64 %i.qi to i32                  ; 3 uses
   %i.qk = icmp sgt i32 %i.qj, -1
@@ -1027,8 +1030,10 @@ iter.check335:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check322, label %.lr.ph.peel.next.i.1.1.preheader, label %vector.memcheck320
 
 vector.memcheck320:                               ; preds = %iter.check335
-  %i.qr = add i64 %16, %i.qo
-  %i.qs = sub i64 %i.qr, %22
+  %26 = ptrtoaddr ptr %i.gh to i64
+  %27 = ptrtoaddr ptr %i.qh to i64
+  %i.qr = add i64 %26, %i.qo
+  %i.qs = sub i64 %i.qr, %27
   %diff.check321 = icmp ult i64 %i.qs, 31
   br i1 %diff.check321, label %.lr.ph.peel.next.i.1.1.preheader, label %vector.main.loop.iter.check323
 
@@ -1148,7 +1153,6 @@ vec.epilog.middle.block345:                       ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit.1.1:     ; preds = %.lr.ph.peel.next.i.1.1.prol.loopexit, %.lr.ph.peel.next.i.1.1, %middle.block332, %vec.epilog.middle.block345, %.lr.ph.preheader.i.1.1, %_ZN7CaDiCaL6Report12print_headerEPc.exit.1
   %i.sb = load ptr, ptr %i.bj, align 16, !tbaa !11 ; 9 uses
-  %23 = ptrtoaddr ptr %i.sb to i64
   %i.sc = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.sb) #13 ; 6 uses
   %i.sd = trunc i64 %i.sc to i32                  ; 3 uses
   %i.se = icmp sgt i32 %i.sd, -1
@@ -1172,8 +1176,10 @@ iter.check364:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check351, label %.lr.ph.peel.next.i.1.2.preheader, label %vector.memcheck349
 
 vector.memcheck349:                               ; preds = %iter.check364
-  %i.sl = add i64 %16, %i.si
-  %i.sm = sub i64 %i.sl, %23
+  %28 = ptrtoaddr ptr %i.gh to i64
+  %29 = ptrtoaddr ptr %i.sb to i64
+  %i.sl = add i64 %28, %i.si
+  %i.sm = sub i64 %i.sl, %29
   %diff.check350 = icmp ult i64 %i.sm, 31
   br i1 %diff.check350, label %.lr.ph.peel.next.i.1.2.preheader, label %vector.main.loop.iter.check352
 
@@ -1293,7 +1299,6 @@ vec.epilog.middle.block374:                       ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit.1.2:     ; preds = %.lr.ph.peel.next.i.1.2.prol.loopexit, %.lr.ph.peel.next.i.1.2, %middle.block361, %vec.epilog.middle.block374, %.lr.ph.preheader.i.1.2, %_ZN7CaDiCaL6Report12print_headerEPc.exit.1.1
   %i.tv = load ptr, ptr %i.bv, align 16, !tbaa !11 ; 9 uses
-  %24 = ptrtoaddr ptr %i.tv to i64
   %i.tw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.tv) #13 ; 6 uses
   %i.tx = trunc i64 %i.tw to i32                  ; 3 uses
   %i.ty = icmp sgt i32 %i.tx, -1
@@ -1317,8 +1322,10 @@ iter.check393:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check380, label %.lr.ph.peel.next.i.1.3.preheader, label %vector.memcheck378
 
 vector.memcheck378:                               ; preds = %iter.check393
-  %i.uf = add i64 %16, %i.uc
-  %i.ug = sub i64 %i.uf, %24
+  %30 = ptrtoaddr ptr %i.gh to i64
+  %31 = ptrtoaddr ptr %i.tv to i64
+  %i.uf = add i64 %30, %i.uc
+  %i.ug = sub i64 %i.uf, %31
   %diff.check379 = icmp ult i64 %i.ug, 31
   br i1 %diff.check379, label %.lr.ph.peel.next.i.1.3.preheader, label %vector.main.loop.iter.check381
 
@@ -1496,7 +1503,6 @@ _ZN7CaDiCaL8Terminal6normalEv.exit.1:             ; preds = %bb.o, %_ZN7CaDiCaL8
 
 .lr.ph125.preheader.2:                            ; preds = %_ZN7CaDiCaL8Terminal6normalEv.exit.1, %.lr.ph.preheader.2
   %i.wo = load ptr, ptr %i.ak, align 16, !tbaa !11 ; 9 uses
-  %25 = ptrtoaddr ptr %i.wo to i64
   %i.wp = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.wo) #13 ; 6 uses
   %i.wq = trunc i64 %i.wp to i32                  ; 3 uses
   %i.wr = icmp sgt i32 %i.wq, -1
@@ -1520,8 +1526,10 @@ iter.check422:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check409, label %.lr.ph.peel.next.i.2.preheader, label %vector.memcheck407
 
 vector.memcheck407:                               ; preds = %iter.check422
-  %i.wy = add i64 %16, %i.wv
-  %i.wz = sub i64 %i.wy, %25
+  %32 = ptrtoaddr ptr %i.gh to i64
+  %33 = ptrtoaddr ptr %i.wo to i64
+  %i.wy = add i64 %32, %i.wv
+  %i.wz = sub i64 %i.wy, %33
   %diff.check408 = icmp ult i64 %i.wz, 31
   br i1 %diff.check408, label %.lr.ph.peel.next.i.2.preheader, label %vector.main.loop.iter.check410
 
@@ -1641,7 +1649,6 @@ vec.epilog.middle.block432:                       ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit.2:       ; preds = %.lr.ph.peel.next.i.2.prol.loopexit, %.lr.ph.peel.next.i.2, %middle.block419, %vec.epilog.middle.block432, %.lr.ph.preheader.i.2, %.lr.ph125.preheader.2
   %i.yi = load ptr, ptr %i.aw, align 16, !tbaa !11 ; 9 uses
-  %26 = ptrtoaddr ptr %i.yi to i64
   %i.yj = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.yi) #13 ; 6 uses
   %i.yk = trunc i64 %i.yj to i32                  ; 3 uses
   %i.yl = icmp sgt i32 %i.yk, -1
@@ -1665,8 +1672,10 @@ iter.check451:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check438, label %.lr.ph.peel.next.i.2.1.preheader, label %vector.memcheck436
 
 vector.memcheck436:                               ; preds = %iter.check451
-  %i.ys = add i64 %16, %i.yp
-  %i.yt = sub i64 %i.ys, %26
+  %34 = ptrtoaddr ptr %i.gh to i64
+  %35 = ptrtoaddr ptr %i.yi to i64
+  %i.ys = add i64 %34, %i.yp
+  %i.yt = sub i64 %i.ys, %35
   %diff.check437 = icmp ult i64 %i.yt, 31
   br i1 %diff.check437, label %.lr.ph.peel.next.i.2.1.preheader, label %vector.main.loop.iter.check439
 
@@ -1786,7 +1795,6 @@ vec.epilog.middle.block461:                       ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit.2.1:     ; preds = %.lr.ph.peel.next.i.2.1.prol.loopexit, %.lr.ph.peel.next.i.2.1, %middle.block448, %vec.epilog.middle.block461, %.lr.ph.preheader.i.2.1, %_ZN7CaDiCaL6Report12print_headerEPc.exit.2
   %i.aac = load ptr, ptr %i.bm, align 16, !tbaa !11 ; 9 uses
-  %27 = ptrtoaddr ptr %i.aac to i64
   %i.aad = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.aac) #13 ; 6 uses
   %i.aae = trunc i64 %i.aad to i32                ; 3 uses
   %i.aaf = icmp sgt i32 %i.aae, -1
@@ -1810,8 +1818,10 @@ iter.check480:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check467, label %.lr.ph.peel.next.i.2.2.preheader, label %vector.memcheck465
 
 vector.memcheck465:                               ; preds = %iter.check480
-  %i.aam = add i64 %16, %i.aaj
-  %i.aan = sub i64 %i.aam, %27
+  %36 = ptrtoaddr ptr %i.gh to i64
+  %37 = ptrtoaddr ptr %i.aac to i64
+  %i.aam = add i64 %36, %i.aaj
+  %i.aan = sub i64 %i.aam, %37
   %diff.check466 = icmp ult i64 %i.aan, 31
   br i1 %diff.check466, label %.lr.ph.peel.next.i.2.2.preheader, label %vector.main.loop.iter.check468
 
@@ -1931,7 +1941,6 @@ vec.epilog.middle.block490:                       ; preds = %vec.epilog.vector.b
 
 _ZN7CaDiCaL6Report12print_headerEPc.exit.2.2:     ; preds = %.lr.ph.peel.next.i.2.2.prol.loopexit, %.lr.ph.peel.next.i.2.2, %middle.block477, %vec.epilog.middle.block490, %.lr.ph.preheader.i.2.2, %_ZN7CaDiCaL6Report12print_headerEPc.exit.2.1
   %i.abw = load ptr, ptr %i.ch, align 16, !tbaa !11 ; 9 uses
-  %28 = ptrtoaddr ptr %i.abw to i64
   %i.abx = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.abw) #13 ; 6 uses
   %i.aby = trunc i64 %i.abx to i32                ; 3 uses
   %i.abz = icmp sgt i32 %i.aby, -1
@@ -1955,8 +1964,10 @@ iter.check509:                                    ; preds = %.lr.ph.preheader.i.
   br i1 %min.iters.check496, label %.lr.ph.peel.next.i.2.3.preheader, label %vector.memcheck494
 
 vector.memcheck494:                               ; preds = %iter.check509
-  %i.acg = add i64 %16, %i.acd
-  %i.ach = sub i64 %i.acg, %28
+  %38 = ptrtoaddr ptr %i.gh to i64
+  %39 = ptrtoaddr ptr %i.abw to i64
+  %i.acg = add i64 %38, %i.acd
+  %i.ach = sub i64 %i.acg, %39
   %diff.check495 = icmp ult i64 %i.ach, 31
   br i1 %diff.check495, label %.lr.ph.peel.next.i.2.3.preheader, label %vector.main.loop.iter.check497
 

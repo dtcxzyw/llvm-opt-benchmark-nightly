@@ -204,8 +204,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs2i
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define hidden void @_RINvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters6clonedINtB5_6ClonedINtNtB7_4skip4SkipINtNtNtBb_5slice4iter4IterhEEENtNtNtB9_6traits8iterator8Iterator4folduNCINvNvB1O_8for_each4callhNCINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB31_3VechE14extend_trustedBP_E0E0ECs2iisHxfqoT7_15libp2p_identity(ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.04.0.copyload = load ptr, ptr %0, align 8, !alias.scope !47 ; 4 uses
-  %.sroa.04.0.copyload12 = ptrtoaddr ptr %.sroa.04.0.copyload to i64 ; 2 uses
+  %.sroa.04.0.copyload = load ptr, ptr %0, align 8, !alias.scope !47 ; 5 uses
+  %.sroa.04.0.copyload12 = ptrtoaddr ptr %.sroa.04.0.copyload to i64
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.45.0.copyload = load ptr, ptr %.sroa.45.0..sroa_idx, align 8, !alias.scope !47 ; 4 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -215,7 +215,6 @@ bb.a:
   %.sroa.49.0.copyload = load i64, ptr %.sroa.49.0..sroa_idx, align 8 ; 9 uses
   %.sroa.510.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.510.0.copyload = load ptr, ptr %.sroa.510.0..sroa_idx, align 8 ; 4 uses
-  %.sroa.510.0.copyload11 = ptrtoaddr ptr %.sroa.510.0.copyload to i64
   %.not.i = icmp eq i64 %.sroa.5.0.copyload, 0
   br i1 %.not.i, label %._crit_edge.i, label %bb.b
 
@@ -234,9 +233,11 @@ iter.check:                                       ; preds = %._crit_edge.i
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.h = add i64 %.sroa.49.0.copyload, %.sroa.510.0.copyload11
-  %i.i = add i64 %.sroa.5.0.copyload, %.sroa.04.0.copyload12
-  %i.j = sub i64 %i.i, %i.h
+  %2 = ptrtoaddr ptr %.sroa.510.0.copyload to i64
+  %3 = ptrtoaddr ptr %.sroa.04.0.copyload to i64
+  %i.h = add i64 %.sroa.5.0.copyload, %3
+  %i.i = add i64 %.sroa.49.0.copyload, %2
+  %i.j = sub i64 %i.h, %i.i
   %diff.check = icmp ugt i64 %i.j, -32
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 

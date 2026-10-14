@@ -205,24 +205,25 @@ bb.a:
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !5599, !noalias !5598 ; 8 uses
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.6.0.copyload.i = load ptr, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !5599, !noalias !5598 ; 8 uses
-  %.sroa.6.0.copyload.i6 = ptrtoaddr ptr %.sroa.6.0.copyload.i to i64
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5600)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !alias.scope !5601, !noalias !5602, !nonnull !12, !noundef !12 ; 3 uses
-  %.promoted.i.i = load ptr, ptr %0, align 8, !alias.scope !5601, !noalias !5602 ; 8 uses
-  %.promoted.i.i7 = ptrtoaddr ptr %.promoted.i.i to i64 ; 2 uses
+  %.promoted.i.i = load ptr, ptr %0, align 8, !alias.scope !5601, !noalias !5602 ; 9 uses
   %.not9.i.i = icmp eq ptr %.promoted.i.i, %i.b
   br i1 %.not9.i.i, label %_RINvXs2_NtNtNtCs4NRVxsYgnAr_4core4iter6traits8iteratorQNtNtNtBc_3str4iter5BytesNtB6_15IteratorRefSpec9spec_folduNCINvNvNtB6_8Iterator8for_each4callhNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB2v_3VechE14extend_trustedBQ_E0E0ECsEhZmuQNqkz_11ruff_linter.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
+  %.promoted.i.i8 = ptrtoaddr ptr %.promoted.i.i to i64
   %i.c = ptrtoaddr ptr %i.b to i64                ; 3 uses
-  %i.d = sub i64 %i.c, %.promoted.i.i7            ; 7 uses
+  %i.d = sub i64 %i.c, %.promoted.i.i8            ; 7 uses
   %min.iters.check = icmp ult i64 %i.d, 8
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.e = add i64 %.sroa.4.0.copyload.i, %.sroa.6.0.copyload.i6
-  %i.f = sub i64 %.promoted.i.i7, %i.e
+  %2 = ptrtoaddr ptr %.sroa.6.0.copyload.i to i64
+  %3 = ptrtoaddr ptr %.promoted.i.i to i64
+  %i.e = add i64 %.sroa.4.0.copyload.i, %2
+  %i.f = sub i64 %3, %i.e
   %diff.check = icmp ugt i64 %i.f, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check
 

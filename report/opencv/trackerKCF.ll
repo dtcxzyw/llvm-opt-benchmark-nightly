@@ -205,8 +205,7 @@ _ZNK2cv7MatExprcvNS_3MatEEv.exit:                 ; preds = %bb.ab
   %.fr101 = freeze i32 %i.ed
   %i.ee = icmp slt i32 %.fr101, 2                 ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %39, i64 24
-  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !78 ; 24 uses
-  %47 = ptrtoaddr ptr %i.eg to i64                ; 2 uses
+  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !78 ; 25 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %39, i64 128 ; 11 uses
   br i1 %i.dw, label %.lr.ph.split.us, label %.lr.ph.split
 
@@ -225,9 +224,10 @@ _ZNK2cv7MatExprcvNS_3MatEEv.exit:                 ; preds = %bb.ab
   br label %.lr.ph.split.us.split
 
 .lr.ph.split.us.split.us.preheader:               ; preds = %.lr.ph.split.us
-  %i.ek = ptrtoaddr ptr %i.ei to i64
   %min.iters.check144 = icmp ult i32 %5, 8
-  %i.el = sub i64 %i.ek, %47
+  %i.ek = ptrtoaddr ptr %i.eg to i64
+  %47 = ptrtoaddr ptr %i.ei to i64
+  %i.el = sub i64 %47, %i.ek
   %diff.check142 = icmp ugt i64 %i.el, -32
   %or.cond = select i1 %min.iters.check144, i1 true, i1 %diff.check142
   br i1 %or.cond, label %.lr.ph.split.us.split.us.preheader156, label %vector.ph145
@@ -368,9 +368,10 @@ middle.block152:                                  ; preds = %vector.body147
   br label %.lr.ph.split.split.us.split
 
 .lr.ph.split.split.us.split.us.preheader:         ; preds = %.lr.ph.split.split.us
-  %i.gg = ptrtoaddr ptr %i.ge to i64
   %min.iters.check = icmp ult i32 %5, 8
-  %i.gh = sub i64 %i.gg, %47
+  %i.gg = ptrtoaddr ptr %i.eg to i64
+  %48 = ptrtoaddr ptr %i.ge to i64
+  %i.gh = sub i64 %48, %i.gg
   %diff.check = icmp ugt i64 %i.gh, -32
   %or.cond155 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond155, label %.lr.ph.split.split.us.split.us.preheader159, label %vector.ph

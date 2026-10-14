@@ -18,9 +18,6 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dgbbrd_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr noundef %6, ptr nofree noundef readonly captures(none) %7, ptr nofree noundef writeonly captures(none) %8, ptr nofree noundef writeonly captures(none) %9, ptr noundef %10, ptr noundef %11, ptr noundef %12, ptr noundef %13, ptr noundef %14, ptr noundef %15, ptr noundef %16, ptr nofree noundef captures(none) initializes((0, 4)) %17) local_unnamed_addr #0 {
 bb.a:
-  %18 = ptrtoaddr ptr %8 to i64                   ; 2 uses
-  %19 = ptrtoaddr ptr %6 to i64                   ; 3 uses
-  %20 = ptrtoaddr ptr %9 to i64
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 15 uses
   %i.c = alloca i32, align 4                      ; 15 uses
@@ -423,9 +420,11 @@ iter.check:                                       ; preds = %bb.br
   br i1 %or.cond869, label %vector.memcheck, label %.lr.ph687.preheader
 
 vector.memcheck:                                  ; preds = %iter.check
+  %18 = ptrtoaddr ptr %9 to i64
+  %19 = ptrtoaddr ptr %6 to i64
   %i.rx = shl nuw nsw i64 %i.rv, 3
   %i.ry = add i64 %i.rx, %19
-  %i.rz = sub i64 %i.ry, %20
+  %i.rz = sub i64 %i.ry, %18
   %diff.check = icmp ugt i64 %i.rz, -128
   br i1 %diff.check, label %.lr.ph687.preheader, label %vector.main.loop.iter.check
 
@@ -587,9 +586,11 @@ iter.check824:                                    ; preds = %.lr.ph687.prol.loop
   br i1 %or.cond870, label %vector.memcheck807, label %vec.epilog.scalar.ph825.preheader
 
 vector.memcheck807:                               ; preds = %iter.check824
+  %20 = ptrtoaddr ptr %8 to i64
+  %21 = ptrtoaddr ptr %6 to i64
   %i.tz = shl nuw nsw i64 %i.tx, 3
-  %i.ua = add i64 %i.tz, %19
-  %i.ub = sub i64 %i.ua, %18
+  %i.ua = add i64 %i.tz, %21
+  %i.ub = sub i64 %i.ua, %20
   %diff.check808 = icmp ugt i64 %i.ub, -128
   br i1 %diff.check808, label %vec.epilog.scalar.ph825.preheader, label %vector.main.loop.iter.check810
 
@@ -766,7 +767,9 @@ iter.check856:                                    ; preds = %._crit_edge699.thre
   %min.iters.check841 = icmp ult i32 %., 4
   %ident.check838.not = icmp ne i32 %i.n, 1
   %or.cond871.not873 = select i1 %min.iters.check841, i1 true, i1 %ident.check838.not
-  %i.wm = sub i64 %19, %18
+  %22 = ptrtoaddr ptr %8 to i64
+  %23 = ptrtoaddr ptr %6 to i64
+  %i.wm = sub i64 %23, %22
   %diff.check840 = icmp ugt i64 %i.wm, -128
   %or.cond872 = or i1 %or.cond871.not873, %diff.check840
   br i1 %or.cond872, label %.lr.ph703.preheader, label %vector.main.loop.iter.check842
