@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/folly/original/IPAddressV6?download=true
 inline.NumInlined: 1256
 inline.NumDeleted: 592
-loop-unroll.NumCompletelyUnrolled: 12
+loop-unroll.NumCompletelyUnrolled: 11
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 14
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@_ZN3fmt2v96detail15write_codepointILm8EcNS0_8appenderEEET1_S4_cj:bb.a
   %i.p = load i64, ptr %i.e, align 8, !tbaa !126
   %i.q = icmp ugt i64 %i.o, %i.p
@@ -205,10 +205,6 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.b = load i8, ptr %i.a, align 1, !tbaa !28
   %i.c = load i8, ptr %0, align 4, !tbaa !28
-  %5 = zext i8 %i.c to i16
-  %6 = shl nuw i16 %5, 8
-  %7 = zext i8 %i.b to i16
-  %8 = or disjoint i16 %6, %7                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 3
   %i.e = load i8, ptr %i.d, align 1, !tbaa !28    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -217,6 +213,10 @@ bb.a:
   %i.i = shl nuw nsw i32 %i.h, 8
   %i.j = zext i8 %i.e to i32
   %i.k = or disjoint i32 %i.i, %i.j
+  %5 = zext i8 %i.c to i16
+  %6 = shl nuw i16 %5, 8
+  %7 = zext i8 %i.b to i16
+  %8 = or disjoint i16 %6, %7                     ; 2 uses
   %i.l = zext i16 %8 to i32
   %i.m = shl nuw i32 %i.l, 16
   %i.n = or disjoint i32 %i.k, %i.m
@@ -359,10 +359,6 @@ _ZN5follyL10unpackIntoEPKhPtm.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.b = load i8, ptr %i.a, align 1, !tbaa !28
   %i.c = load i8, ptr %0, align 4, !tbaa !28
-  %1 = zext i8 %i.c to i16
-  %2 = shl nuw i16 %1, 8
-  %3 = zext i8 %i.b to i16
-  %4 = or disjoint i16 %2, %3                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 3
   %i.e = load i8, ptr %i.d, align 1, !tbaa !28
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -371,6 +367,10 @@ _ZN5follyL10unpackIntoEPKhPtm.exit:
   %i.i = shl nuw nsw i32 %i.h, 8
   %i.j = zext i8 %i.e to i32
   %i.k = or disjoint i32 %i.i, %i.j
+  %1 = zext i8 %i.c to i16
+  %2 = shl nuw i16 %1, 8
+  %3 = zext i8 %i.b to i16
+  %4 = or disjoint i16 %2, %3                     ; 2 uses
   %i.l = zext i16 %4 to i32
   %i.m = shl nuw i32 %i.l, 16
   %i.n = or disjoint i32 %i.m, %i.k

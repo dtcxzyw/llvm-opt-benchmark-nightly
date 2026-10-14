@@ -204,7 +204,6 @@ begin_hunk_0_@_ZL31nanobind_test_stl_ext_exec_implN8nanobind7module_E:bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq) #32
   store ptr null, ptr %i.aq, align 8, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %48) #32
-  %217 = getelementptr inbounds nuw i8, ptr %48, i64 56
   %i.ajx = getelementptr inbounds nuw i8, ptr %48, i64 32
   store ptr @"_ZZN8nanobind6detail11func_createILb0ELb1EZL31nanobind_test_stl_ext_exec_implNS_7module_EE4$_52dJfSt8optionalIiEEJLm0ELm1EEJNS_5scopeENS_4nameEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENUlPvPS9_jPNS0_12cleanup_listEE_8__invokeESN_SO_jSQ_", ptr %i.ajx, align 8, !tbaa !35
   %i.ajy = getelementptr inbounds nuw i8, ptr %48, i64 40
@@ -216,9 +215,10 @@ begin_hunk_0_@_ZL31nanobind_test_stl_ext_exec_implN8nanobind7module_E:bb.a
   %i.akb = getelementptr inbounds nuw i8, ptr %48, i64 88
   %i.akc = getelementptr inbounds nuw i8, ptr %48, i64 120
   %i.akd = getelementptr inbounds nuw i8, ptr %48, i64 144
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.akb, i8 0, i64 28, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.akc, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.akb, i8 0, i64 28, i1 false)
   store i32 4, ptr %i.akd, align 8, !tbaa !344
+  %217 = getelementptr inbounds nuw i8, ptr %48, i64 56
   %i.ake = getelementptr inbounds nuw i8, ptr %48, i64 80
   store ptr %.sroa.0.0.copyload.i211, ptr %i.ake, align 8, !tbaa !330
   %i.akf = getelementptr inbounds nuw i8, ptr %48, i64 64

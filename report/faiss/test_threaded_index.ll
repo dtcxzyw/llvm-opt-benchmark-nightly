@@ -205,8 +205,8 @@ _ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESa
   ret void
 
 .lr.ph.preheader:                                 ; preds = %.noexc89.2, %_ZN7testing15AssertionResultD2Ev.exit133
+  %not..026.ptr.sroa.idx = phi i8 [ 1, %.noexc89.2 ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit133 ]
   %.not = phi i1 [ false, %.noexc89.2 ], [ true, %_ZN7testing15AssertionResultD2Ev.exit133 ]
-  %.026.idx193.sroa.phi.sroa.speculated = phi i8 [ 1, %.noexc89.2 ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit133 ]
   %.val86 = load ptr, ptr %i.aj, align 8, !tbaa !37 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.val86, i64 36
   store i8 0, ptr %i.bq, align 4, !tbaa !35
@@ -232,7 +232,7 @@ _ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESa
   store i8 0, ptr %i.at, align 4, !tbaa !35
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.av, i8 0, i64 24, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(41) %i.au, i8 0, i64 41, i1 false)
-  store i8 %.026.idx193.sroa.phi.sroa.speculated, ptr %i.aw, align 8, !tbaa !48
+  store i8 %not..026.ptr.sroa.idx, ptr %i.aw, align 8, !tbaa !48
   store ptr getelementptr inbounds nuw inrange(-16, 264) (i8, ptr @_ZTVN12_GLOBAL__N_117MockThreadedIndexINS_9MockIndexEEE, i64 16), ptr %2, align 8, !tbaa !30
   %.val83 = load ptr, ptr %i.aj, align 8, !tbaa !37
   invoke void @_ZN5faiss13ThreadedIndexIN12_GLOBAL__N_19MockIndexEE8addIndexEPS2_(ptr noundef nonnull align 8 dereferenceable(113) %2, ptr noundef %.val83)
@@ -635,8 +635,8 @@ _ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESa
   ret void
 
 .lr.ph.preheader:                                 ; preds = %.noexc80.2, %_ZN7testing15AssertionResultD2Ev.exit
+  %not..026.ptr.sroa.idx = phi i8 [ 1, %.noexc80.2 ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit ]
   %.not = phi i1 [ false, %.noexc80.2 ], [ true, %_ZN7testing15AssertionResultD2Ev.exit ]
-  %.026.idx156.sroa.phi.sroa.speculated = phi i8 [ 1, %.noexc80.2 ], [ 0, %_ZN7testing15AssertionResultD2Ev.exit ]
   %.val78 = load ptr, ptr %i.aj, align 8, !tbaa !37 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.val78, i64 36
   store i8 0, ptr %i.bo, align 4, !tbaa !35
@@ -662,7 +662,7 @@ _ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESa
   store i8 0, ptr %i.at, align 4, !tbaa !35
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.av, i8 0, i64 24, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(41) %i.au, i8 0, i64 41, i1 false)
-  store i8 %.026.idx156.sroa.phi.sroa.speculated, ptr %i.aw, align 8, !tbaa !48
+  store i8 %not..026.ptr.sroa.idx, ptr %i.aw, align 8, !tbaa !48
   store ptr getelementptr inbounds nuw inrange(-16, 264) (i8, ptr @_ZTVN12_GLOBAL__N_117MockThreadedIndexINS_9MockIndexEEE, i64 16), ptr %2, align 8, !tbaa !30
   %.val76 = load ptr, ptr %i.aj, align 8, !tbaa !37
   invoke void @_ZN5faiss13ThreadedIndexIN12_GLOBAL__N_19MockIndexEE8addIndexEPS2_(ptr noundef nonnull align 8 dereferenceable(113) %2, ptr noundef %.val76)
@@ -1065,10 +1065,10 @@ bb.b:                                             ; preds = %_ZNSt6vectorISt10un
   ret void
 
 bb.c:                                             ; preds = %bb.a, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESaIS5_EED2Ev.exit
-  %.not.a = phi i1 [ false, %bb.a ], [ true, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESaIS5_EED2Ev.exit ]
-  %.067.idx1224.sroa.phi.sroa.speculated = phi i1 [ true, %bb.a ], [ false, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESaIS5_EED2Ev.exit ]
+  %.not.a = phi i1 [ true, %bb.a ], [ false, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESaIS5_EED2Ev.exit ]
+  %.067.idx1224.sroa.phi.sroa.speculated = phi i1 [ false, %bb.a ], [ true, %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESaIS5_EED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #30
-  call void @_ZN5faiss19IndexShardsTemplateINS_5IndexEEC1Eibb(ptr noundef nonnull align 8 dereferenceable(66) %15, i32 noundef 3, i1 noundef zeroext %.067.idx1224.sroa.phi.sroa.speculated, i1 noundef zeroext true)
+  call void @_ZN5faiss19IndexShardsTemplateINS_5IndexEEC1Eibb(ptr noundef nonnull align 8 dereferenceable(66) %15, i32 noundef 3, i1 noundef zeroext %.not.a, i1 noundef zeroext true)
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.m
@@ -1471,7 +1471,7 @@ bb.bg:                                            ; preds = %_ZSt8_DestroyIPSt10
   br label %_ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESaIS5_EED2Ev.exit
 
 _ZNSt6vectorISt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EESaIS5_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN12_GLOBAL__N_19MockIndexESt14default_deleteIS2_EES5_EvT_S7_RSaIT0_E.exit.i, %bb.bg
-  br i1 %.not.a, label %bb.b, label %bb.c
+  br i1 %.067.idx1224.sroa.phi.sroa.speculated, label %bb.b, label %bb.c
 
 .lr.ph1222:                                       ; preds = %.preheader, %_ZN7testing15AssertionResultD2Ev.exit259
   %.01221 = phi i64 [ %i.sd, %_ZN7testing15AssertionResultD2Ev.exit259 ], [ 0, %.preheader ] ; 4 uses

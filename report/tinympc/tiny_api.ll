@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge160:                                   ; preds = %.loopexit.prol.loopexit, %.loopexit, %middle.block, %.preheader141
   %.4.lcssa = phi i64 [ %.2.lcssa, %.preheader141 ], [ %i.cm, %middle.block ], [ %.lcssa326.unr, %.loopexit.prol.loopexit ], [ %i.ef, %.loopexit ] ; 2 uses
-  %i.eu = add i64 %.1133162, 4                    ; 3 uses
+  %i.eu = add nuw nsw i64 %.1133162, 4            ; 3 uses
   %i.ev = icmp slt i64 %i.eu, %i.g
   %indvar.next = add i64 %indvar, 1
   br i1 %i.ev, label %.lr.ph166, label %._crit_edge167, !llvm.loop !769
@@ -238,7 +238,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.d, label %.preheader140.us.preheader.1, label %.preheader141.1
 
 .preheader140.us.preheader.1:                     ; preds = %.lr.ph166.1
-  %i.fh = add nsw i64 %.1133162.1, 1
+  %i.fh = add nuw nsw i64 %.1133162.1, 1
   br label %.preheader140.us.1
 
 .preheader140.us.1:                               ; preds = %.preheader140.us.1, %.preheader140.us.preheader.1
@@ -274,7 +274,7 @@ middle.block:                                     ; preds = %vector.body
   %i.fz = load ptr, ptr %2, align 8, !tbaa !182   ; 7 uses
   %i.ga = load i64, ptr %i.e, align 8, !tbaa !183 ; 4 uses
   %i.gb = mul nsw i64 %i.ga, %.1133162.1          ; 4 uses
-  %i.gc = add nsw i64 %.1133162.1, 1
+  %i.gc = add nuw nsw i64 %.1133162.1, 1
   %i.gd = mul nsw i64 %i.ga, %i.gc                ; 4 uses
   %i.ge = sub i64 %3, %.0128.lcssa.1              ; 3 uses
   %min.iters.check289 = icmp ult i64 %i.ge, 42
@@ -408,7 +408,7 @@ middle.block298:                                  ; preds = %vector.body292
 
 ._crit_edge160.1:                                 ; preds = %.loopexit.1.prol.loopexit, %.loopexit.1, %middle.block298, %.preheader141.1
   %.4.lcssa.1 = phi i64 [ %.2.lcssa.1, %.preheader141.1 ], [ %i.gu, %middle.block298 ], [ %.lcssa322.unr, %.loopexit.1.prol.loopexit ], [ %i.if, %.loopexit.1 ] ; 2 uses
-  %i.ij = add i64 %.1133162.1, 2                  ; 3 uses
+  %i.ij = add nuw nsw i64 %.1133162.1, 2          ; 3 uses
   %i.ik = icmp slt i64 %i.ij, %i.ey
   %indvar.next275 = add i64 %indvar274, 1
   br i1 %i.ik, label %.lr.ph166.1, label %._crit_edge167.1, !llvm.loop !769
