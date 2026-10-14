@@ -204,14 +204,14 @@ b3Bump.exit.i:                                    ; preds = %bb.e, %bb.b
   %i.av = shufflevector <2 x float> %.sroa.7170.0.copyload, <2 x float> %.sroa.8171.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.aw = shufflevector <2 x float> %.sroa.7.0.copyload, <2 x float> %.sroa.8.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ax = fmul <4 x float> %i.av, %i.aw           ; 4 uses
-  %shift199 = shufflevector <4 x float> %i.ax, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop200 = fadd <4 x float> %i.ax, %shift199
-  %shift202 = shufflevector <4 x float> %i.ax, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop203 = fadd <4 x float> %shift202, %foldExtExtBinop200
-  %shift205 = shufflevector <4 x float> %i.ax, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop206 = fadd <4 x float> %shift205, %foldExtExtBinop203
-  %14 = shufflevector <4 x float> %foldExtExtBinop206, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.251.12.vec.insert.i.i = shufflevector <2 x float> %.sroa.251.8.vec.insert.i.i, <2 x float> %14, <2 x i32> <i32 0, i32 2>
+  %14 = shufflevector <4 x float> %i.ax, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
+  %15 = shufflevector <4 x float> %i.ax, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %16 = shufflevector <4 x float> %i.ax, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %17 = shufflevector <4 x float> %i.ax, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %18 = fadd <2 x float> %16, %17
+  %19 = fadd <2 x float> %15, %18
+  %20 = fadd <2 x float> %14, %19
+  %.sroa.251.12.vec.insert.i.i = shufflevector <2 x float> %.sroa.251.8.vec.insert.i.i, <2 x float> %20, <2 x i32> <i32 0, i32 2>
   store <2 x float> %i.ap, ptr %i.y, align 4, !tbaa !128, !alias.scope !194
   %.sroa.47.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %11, i64 20
   store <2 x float> %.sroa.251.12.vec.insert.i.i, ptr %.sroa.47.0..sroa_idx.i.i, align 4, !tbaa !128, !alias.scope !194

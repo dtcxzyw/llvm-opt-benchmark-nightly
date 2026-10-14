@@ -202,7 +202,7 @@ declare noundef ptr @_ZNK4geos4geom10LineString16getCoordinatesROEv(ptr noundef 
 define void @_ZN4geos9operation7overlay8validate20OffsetPointGenerator14computeOffsetsERKNS_4geom10CoordinateES7_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load <2 x double>, ptr %i.a, align 8
+  %3 = load <1 x double>, ptr %i.a, align 8
   %i.b = load <2 x double>, ptr %2, align 8, !tbaa !50 ; 2 uses
   %i.c = load <2 x double>, ptr %1, align 8, !tbaa !50 ; 2 uses
   %i.d = fsub <2 x double> %i.b, %i.c             ; 3 uses
@@ -211,11 +211,11 @@ bb.a:
   %foldExtExtBinop = fadd <2 x double> %i.e, %shift
   %i.f = extractelement <2 x double> %foldExtExtBinop, i64 0
   %sqrt = tail call double @llvm.sqrt.f64(double %i.f)
-  %4 = insertelement <2 x double> poison, double %sqrt, i64 0
-  %5 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
-  %6 = shufflevector <2 x double> %i.d, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %7 = fmul <2 x double> %5, %6
-  %i.g = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = shufflevector <1 x double> %3, <1 x double> poison, <2 x i32> zeroinitializer
+  %5 = fmul <2 x double> %4, %i.d
+  %6 = insertelement <2 x double> poison, double %sqrt, i64 0
+  %7 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %i.g = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
   %i.h = fdiv <2 x double> %7, %i.g               ; 2 uses
   %i.i = fadd <2 x double> %i.b, %i.c
   %i.j = fmul <2 x double> %i.i, splat (double 5.000000e-01) ; 2 uses

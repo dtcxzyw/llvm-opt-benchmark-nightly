@@ -205,8 +205,8 @@ vector.ph107:                                     ; preds = %_ZN7openvdb5v13_04t
   %i.bd = and <4 x i32> %i.bc, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.bd, ptr %i.ax, align 8, !tbaa !543
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %9 = load <2 x double>, ptr %i.be, align 8
-  %broadcast.splat109 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %9 = load <1 x double>, ptr %i.be, align 8
+  %broadcast.splat109 = shufflevector <1 x double> %9, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body110
 
 vector.body110:                                   ; preds = %vector.body110, %vector.ph107
@@ -609,8 +609,8 @@ vector.ph:                                        ; preds = %.lr.ph47, %_ZNSt3ma
   %i.cb = shufflevector <4 x i32> %i.ca, <4 x i32> %i.bz, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.cc = and <4 x i32> %i.cb, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.cc, ptr %i.by, align 8, !tbaa !543
-  %6 = load <2 x double>, ptr %i.j, align 8
-  %broadcast.splat = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %6 = load <1 x double>, ptr %i.j, align 8
+  %broadcast.splat = shufflevector <1 x double> %6, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1013,8 +1013,8 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4
   store i32 %i.ct, ptr %i.cv, align 8, !tbaa !543
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cr, i64 270348
   store i32 0, ptr %i.cw, align 4, !tbaa !3914
-  %5 = load <2 x double>, ptr %i.r, align 8
-  %broadcast.splat = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %5 = load <1 x double>, ptr %i.r, align 8
+  %broadcast.splat = shufflevector <1 x double> %5, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread
@@ -1417,8 +1417,8 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4
   %i.az = and <4 x i32> %i.ay, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.az, ptr %i.at, align 8, !tbaa !543
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %5 = load <2 x double>, ptr %i.ba, align 8
-  %broadcast.splat67 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %5 = load <1 x double>, ptr %i.ba, align 8
+  %broadcast.splat67 = shufflevector <1 x double> %5, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body68
 
 vector.body68:                                    ; preds = %vector.body68, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread
@@ -1821,8 +1821,8 @@ _ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4
   %i.bb = and <4 x i32> %i.ba, <i32 -4096, i32 -4096, i32 -4096, i32 0>
   store <4 x i32> %i.bb, ptr %i.av, align 8, !tbaa !543
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %4 = load <2 x double>, ptr %i.bc, align 8
-  %broadcast.splat64 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer ; 8 uses
+  %4 = load <1 x double>, ptr %i.bc, align 8
+  %broadcast.splat64 = shufflevector <1 x double> %4, <1 x double> poison, <2 x i32> zeroinitializer ; 8 uses
   br label %vector.body65
 
 vector.body65:                                    ; preds = %vector.body65, %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEE7findKeyERKNS0_4math5CoordE.exit.thread

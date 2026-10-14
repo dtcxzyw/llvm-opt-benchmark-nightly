@@ -205,13 +205,13 @@ bb.ab:                                            ; preds = %b2MakeSimplexCache.
   br label %b2ComputeWitnessPoints.exit130
 
 bb.ac:                                            ; preds = %b2MakeSimplexCache.exit109
-  %10 = load <4 x float>, ptr %i.da, align 8
-  %11 = load <4 x float>, ptr %i.cy, align 4
+  %10 = load <1 x float>, ptr %i.da, align 8
+  %11 = load <1 x float>, ptr %i.cy, align 4
   %i.ma = load <2 x float>, ptr %9, align 8
   %i.mb = load <2 x float>, ptr %i.am, align 4
-  %i.mc = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.mc = shufflevector <1 x float> %10, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.md = fmul <2 x float> %i.mc, %i.ma
-  %i.me = shufflevector <4 x float> %11, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.me = shufflevector <1 x float> %11, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.mf = fmul <2 x float> %i.me, %i.mb
   %i.mg = fadd <2 x float> %i.md, %i.mf
   %i.mh = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -224,18 +224,18 @@ bb.ac:                                            ; preds = %b2MakeSimplexCache.
   br label %b2ComputeWitnessPoints.exit130
 
 bb.ad:                                            ; preds = %b2MakeSimplexCache.exit109
-  %12 = load <4 x float>, ptr %i.da, align 8
-  %13 = load <4 x float>, ptr %i.cy, align 4
-  %14 = load <4 x float>, ptr %i.cz, align 8
+  %12 = load <1 x float>, ptr %i.da, align 8
+  %13 = load <1 x float>, ptr %i.cy, align 4
+  %14 = load <1 x float>, ptr %i.cz, align 8
   %i.mo = load <2 x float>, ptr %9, align 8
   %i.mp = load <2 x float>, ptr %i.am, align 4
   %i.mq = load <2 x float>, ptr %i.ao, align 8
-  %i.mr = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.mr = shufflevector <1 x float> %12, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ms = fmul <2 x float> %i.mr, %i.mo
-  %i.mt = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.mt = shufflevector <1 x float> %13, <1 x float> poison, <2 x i32> zeroinitializer
   %i.mu = fmul <2 x float> %i.mt, %i.mp
   %i.mv = fadd <2 x float> %i.ms, %i.mu
-  %i.mw = shufflevector <4 x float> %14, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.mw = shufflevector <1 x float> %14, <1 x float> poison, <2 x i32> zeroinitializer
   %i.mx = fmul <2 x float> %i.mw, %i.mq
   %i.my = fadd <2 x float> %i.mv, %i.mx           ; 2 uses
   br label %b2ComputeWitnessPoints.exit130
@@ -463,13 +463,13 @@ bb.ai:                                            ; preds = %b2Normalize.exit
   br label %b2ComputeWitnessPoints.exit188
 
 bb.aj:                                            ; preds = %b2Normalize.exit
-  %15 = load <4 x float>, ptr %i.da, align 8
-  %16 = load <4 x float>, ptr %i.cy, align 4
+  %15 = load <1 x float>, ptr %i.da, align 8
+  %16 = load <1 x float>, ptr %i.cy, align 4
   %i.qe = load <2 x float>, ptr %9, align 8
   %i.qf = load <2 x float>, ptr %i.am, align 4
-  %i.qg = shufflevector <4 x float> %15, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.qg = shufflevector <1 x float> %15, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.qh = fmul <2 x float> %i.qg, %i.qe
-  %i.qi = shufflevector <4 x float> %16, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.qi = shufflevector <1 x float> %16, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.qj = fmul <2 x float> %i.qi, %i.qf
   %i.qk = fadd <2 x float> %i.qh, %i.qj
   %i.ql = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -482,18 +482,18 @@ bb.aj:                                            ; preds = %b2Normalize.exit
   br label %b2ComputeWitnessPoints.exit188
 
 bb.ak:                                            ; preds = %b2Normalize.exit
-  %17 = load <4 x float>, ptr %i.da, align 8
-  %18 = load <4 x float>, ptr %i.cy, align 4
-  %19 = load <4 x float>, ptr %i.cz, align 8
+  %17 = load <1 x float>, ptr %i.da, align 8
+  %18 = load <1 x float>, ptr %i.cy, align 4
+  %19 = load <1 x float>, ptr %i.cz, align 8
   %i.qs = load <2 x float>, ptr %9, align 8
   %i.qt = load <2 x float>, ptr %i.am, align 4
   %i.qu = load <2 x float>, ptr %i.ao, align 8
-  %i.qv = shufflevector <4 x float> %17, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.qv = shufflevector <1 x float> %17, <1 x float> poison, <2 x i32> zeroinitializer
   %i.qw = fmul <2 x float> %i.qv, %i.qs
-  %i.qx = shufflevector <4 x float> %18, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.qx = shufflevector <1 x float> %18, <1 x float> poison, <2 x i32> zeroinitializer
   %i.qy = fmul <2 x float> %i.qx, %i.qt
   %i.qz = fadd <2 x float> %i.qw, %i.qy
-  %i.ra = shufflevector <4 x float> %19, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.ra = shufflevector <1 x float> %19, <1 x float> poison, <2 x i32> zeroinitializer
   %i.rb = fmul <2 x float> %i.ra, %i.qu
   %i.rc = fadd <2 x float> %i.qz, %i.rb           ; 2 uses
   br label %b2ComputeWitnessPoints.exit188

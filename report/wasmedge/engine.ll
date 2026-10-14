@@ -205,19 +205,19 @@ declare <4 x float> @llvm.trunc.v4f32(<4 x float>) #20
 declare <4 x float> @llvm.roundeven.v4f32(<4 x float>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i32> @llvm.umin.v8i32(<8 x i32>, <8 x i32>) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <16 x i16> @llvm.umin.v16i16(<16 x i16>, <16 x i16>) #20
+declare <16 x i16> @llvm.smin.v16i16(<16 x i16>, <16 x i16>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i16> @llvm.smax.v16i16(<16 x i16>, <16 x i16>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <16 x i16> @llvm.smin.v16i16(<16 x i16>, <16 x i16>) #20
+declare <16 x i16> @llvm.umin.v16i16(<16 x i16>, <16 x i16>) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.umin.v8i32(<8 x i32>, <8 x i32>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.vector.reduce.or.v16i16(<16 x i16>) #20

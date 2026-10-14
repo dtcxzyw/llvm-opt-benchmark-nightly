@@ -205,8 +205,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i8.prehe
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.bq, 60                      ; 9 uses
-  %1 = load <4 x i32>, ptr %i.bt, align 8
-  %broadcast.splat = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %1 = load <1 x i32>, ptr %i.bt, align 8
+  %broadcast.splat = shufflevector <1 x i32> %1, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %interleaved.vec = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec, ptr %i.bs, align 4, !alias.scope !380, !noalias !381
@@ -543,8 +543,8 @@ vector.memcheck85:                                ; preds = %.lr.ph.i.i.i23.preh
 
 vector.ph89:                                      ; preds = %vector.memcheck85
   %n.vec90 = and i64 %i.fl, 60                    ; 9 uses
-  %2 = load <4 x i32>, ptr %i.fo, align 8
-  %broadcast.splat94 = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %2 = load <1 x i32>, ptr %i.fo, align 8
+  %broadcast.splat94 = shufflevector <1 x i32> %2, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fn, i64 16
   %interleaved.vec95 = shufflevector <2 x i32> %broadcast.splat94, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec95, ptr %i.fn, align 4, !tbaa !167, !alias.scope !382, !noalias !383
@@ -764,8 +764,8 @@ vector.memcheck108:                               ; preds = %.lr.ph.i.i.i.i.preh
 
 vector.ph112:                                     ; preds = %vector.memcheck108
   %n.vec113 = and i64 %i.if, 60                   ; 9 uses
-  %3 = load <4 x i32>, ptr %i.ii, align 8
-  %broadcast.splat117 = shufflevector <4 x i32> %3, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %3 = load <1 x i32>, ptr %i.ii, align 8
+  %broadcast.splat117 = shufflevector <1 x i32> %3, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.im = getelementptr inbounds nuw i8, ptr %i.ih, i64 16
   %interleaved.vec118 = shufflevector <2 x i32> %broadcast.splat117, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec118, ptr %i.ih, align 4, !tbaa !167, !alias.scope !384, !noalias !385
@@ -1168,8 +1168,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i3.prehe
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.as, 60                      ; 9 uses
-  %1 = load <4 x i32>, ptr %i.av, align 8
-  %broadcast.splat = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %1 = load <1 x i32>, ptr %i.av, align 8
+  %broadcast.splat = shufflevector <1 x i32> %1, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   %interleaved.vec = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec, ptr %i.au, align 4, !tbaa !167, !alias.scope !406, !noalias !407
@@ -1352,8 +1352,8 @@ vector.memcheck25:                                ; preds = %.lr.ph.i.i.i8.prehe
 
 vector.ph29:                                      ; preds = %vector.memcheck25
   %n.vec30 = and i64 %i.da, 60                    ; 9 uses
-  %2 = load <4 x i32>, ptr %i.dd, align 8
-  %broadcast.splat34 = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %2 = load <1 x i32>, ptr %i.dd, align 8
+  %broadcast.splat34 = shufflevector <1 x i32> %2, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dc, i64 16
   %interleaved.vec35 = shufflevector <2 x i32> %broadcast.splat34, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec35, ptr %i.dc, align 4, !alias.scope !408, !noalias !409
@@ -1580,8 +1580,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.prehea
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.v, 60                       ; 9 uses
-  %1 = load <4 x i32>, ptr %i.y, align 8
-  %broadcast.splat = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %1 = load <1 x i32>, ptr %i.y, align 8
+  %broadcast.splat = shufflevector <1 x i32> %1, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %interleaved.vec = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec, ptr %i.x, align 4, !tbaa !167, !alias.scope !415, !noalias !416
@@ -1984,8 +1984,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.prehea
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.f, 60                       ; 9 uses
-  %1 = load <4 x i32>, ptr %i.i, align 8
-  %broadcast.splat = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %1 = load <1 x i32>, ptr %i.i, align 8
+  %broadcast.splat = shufflevector <1 x i32> %1, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %interleaved.vec = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec, ptr %i.h, align 4, !tbaa !167, !alias.scope !509, !noalias !510
@@ -2204,8 +2204,8 @@ vector.memcheck17:                                ; preds = %.lr.ph.i.i.i.i.preh
 
 vector.ph21:                                      ; preds = %vector.memcheck17
   %n.vec22 = and i64 %i.bz, 60                    ; 9 uses
-  %2 = load <4 x i32>, ptr %i.cc, align 8
-  %broadcast.splat26 = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %2 = load <1 x i32>, ptr %i.cc, align 8
+  %broadcast.splat26 = shufflevector <1 x i32> %2, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cb, i64 16
   %interleaved.vec27 = shufflevector <2 x i32> %broadcast.splat26, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec27, ptr %i.cb, align 4, !tbaa !167, !alias.scope !511, !noalias !512
@@ -2608,8 +2608,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i10.preh
 
 vector.ph37:                                      ; preds = %vector.memcheck
   %n.vec38 = and i64 %i.av, 60                    ; 9 uses
-  %1 = load <4 x i32>, ptr %i.ay, align 8
-  %broadcast.splat42 = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %1 = load <1 x i32>, ptr %i.ay, align 8
+  %broadcast.splat42 = shufflevector <1 x i32> %1, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   %interleaved.vec = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec, ptr %i.ax, align 4, !tbaa !167, !alias.scope !566, !noalias !567
@@ -2828,8 +2828,8 @@ vector.memcheck55:                                ; preds = %.lr.ph.i.i.i.i.preh
 
 vector.ph59:                                      ; preds = %vector.memcheck55
   %n.vec60 = and i64 %i.dp, 60                    ; 9 uses
-  %2 = load <4 x i32>, ptr %i.ds, align 8
-  %broadcast.splat64 = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
+  %2 = load <1 x i32>, ptr %i.ds, align 8
+  %broadcast.splat64 = shufflevector <1 x i32> %2, <1 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dr, i64 16
   %interleaved.vec65 = shufflevector <2 x i32> %broadcast.splat64, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
   store <4 x i32> %interleaved.vec65, ptr %i.dr, align 4, !tbaa !167, !alias.scope !568, !noalias !569

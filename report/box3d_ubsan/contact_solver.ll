@@ -204,9 +204,9 @@ b3Invert2.exit.us:                                ; preds = %bb.bv, %._crit_edge
   store float %i.afm, ptr %i.afk, align 4, !tbaa !178
   %shift36824 = shufflevector <4 x float> %i.aef, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %foldExtExtBinop36825 = fmul <4 x float> %i.aef, %shift36824
-  %shift36827 = shufflevector <4 x float> %i.aeg, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
-  %foldExtExtBinop36828 = fmul <4 x float> %shift36827, %i.aeg
-  %shift36830 = shufflevector <4 x float> %foldExtExtBinop36828, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
+  %2 = shufflevector <4 x float> %i.aeg, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
+  %3 = shufflevector <4 x float> %i.aeg, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
+  %shift36830 = fmul <4 x float> %2, %3
   %foldExtExtBinop36831 = fsub <4 x float> %foldExtExtBinop36825, %shift36830
   %i.afn = shufflevector <4 x float> %i.aef, <4 x float> poison, <2 x i32> <i32 3, i32 2>
   %i.afo = shufflevector <4 x float> %i.aeg, <4 x float> poison, <2 x i32> <i32 2, i32 3>

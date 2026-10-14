@@ -204,9 +204,9 @@ _ZNK8facebook4yoga5Style32computeFlexStartPaddingAndBorderENS0_13FlexDirectionEN
   %i.o = select <4 x i1> %i.n, <4 x float> %i.m, <4 x float> zeroinitializer ; 4 uses
   %shift = shufflevector <4 x float> %i.o, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
   %foldExtExtBinop = fadd <4 x float> %i.o, %shift
-  %shift13 = shufflevector <4 x float> %i.o, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
-  %foldExtExtBinop14 = fadd <4 x float> %i.o, %shift13
-  %shift16 = shufflevector <4 x float> %foldExtExtBinop14, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
+  %4 = shufflevector <4 x float> %i.o, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
+  %5 = shufflevector <4 x float> %i.o, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
+  %shift16 = fadd <4 x float> %4, %5
   %foldExtExtBinop17 = fadd <4 x float> %foldExtExtBinop, %shift16
   %i.p = extractelement <4 x float> %foldExtExtBinop17, i64 0
   ret float %i.p

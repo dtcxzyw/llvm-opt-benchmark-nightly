@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 4 uses
   %i.d = alloca [8 x i8], align 8                 ; 3 uses
-  %i.e = alloca [1024 x i8], align 16             ; 7 uses
+  %i.e = alloca [1024 x i8], align 1              ; 7 uses
   %i.f = alloca [1 x i8], align 1                 ; 4 uses
   %i.g = alloca [8 x i8], align 8                 ; 4 uses
   %i.h = alloca [16 x i8], align 8                ; 5 uses
@@ -246,14 +246,14 @@ vector.ph:                                        ; preds = %middle.block, %.lr.
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !658
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !658
   call void @_RNvMs7_NtNtCsej06kWhEKj7_21iceoryx2_bb_lock_free4spmc19unrestricted_atomicINtB5_18UnrestrictedAtomicAhj400_E4loadCs2DtSBlS0wts_34iceoryx2_bb_lock_free_tests_common(ptr noalias nofree noundef nonnull sret([1024 x i8]) align 1 captures(none) dereferenceable(1024) %i.e, ptr noundef nonnull align 8 %.sroa.57.0.copyload) #9, !noalias !658
-  %1 = load <16 x i8>, ptr %i.e, align 16
-  %broadcast.splat = shufflevector <16 x i8> %1, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  %1 = load <1 x i8>, ptr %i.e, align 1
+  %broadcast.splat = shufflevector <1 x i8> %1, <1 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body.interim.1, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body.interim.1 ] ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 %index
-  %wide.load = load <16 x i8>, ptr %i.s, align 16, !alias.scope !659, !noalias !658
+  %wide.load = load <16 x i8>, ptr %i.s, align 1, !alias.scope !659, !noalias !658
   %wide.load.fr = freeze <16 x i8> %wide.load
   %i.t = icmp ne <16 x i8> %broadcast.splat, %wide.load.fr
   %i.u = bitcast <16 x i1> %i.t to i16
@@ -263,7 +263,7 @@ vector.body:                                      ; preds = %vector.body.interim
 vector.body.interim:                              ; preds = %vector.body
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 %index
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
-  %wide.load.1 = load <16 x i8>, ptr %i.w, align 16, !alias.scope !659, !noalias !658
+  %wide.load.1 = load <16 x i8>, ptr %i.w, align 1, !alias.scope !659, !noalias !658
   %wide.load.fr.1 = freeze <16 x i8> %wide.load.1
   %i.x = icmp ne <16 x i8> %broadcast.splat, %wide.load.fr.1
   %i.y = bitcast <16 x i1> %i.x to i16

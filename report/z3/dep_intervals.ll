@@ -205,8 +205,8 @@ _Z2eqI11mpq_managerILb0EEEbRT_RKNS2_7numeralE16ext_numeral_kindS6_S7_.exit: ; pr
 define weak_odr hidden void @_ZN16interval_managerIN13dep_intervals9im_configEE3negERKNS1_8intervalERS3_R26interval_deps_combine_rule(ptr noundef nonnull align 8 dereferenceable(672) %0, ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef nonnull align 8 dereferenceable(88) %2, ptr noundef nonnull align 2 dereferenceable(4) %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %4 = load <16 x i8>, ptr %i.a, align 8
-  %i.b = shufflevector <16 x i8> %4, <16 x i8> poison, <2 x i32> zeroinitializer
+  %4 = load <1 x i8>, ptr %i.a, align 8
+  %i.b = shufflevector <1 x i8> %4, <1 x i8> poison, <2 x i32> zeroinitializer
   %i.c = and <2 x i8> %i.b, <i8 8, i8 4>
   %i.d = icmp eq <2 x i8> %i.c, zeroinitializer
   %i.e = select <2 x i1> %i.d, <2 x i16> <i16 2, i16 1>, <2 x i16> zeroinitializer
@@ -219,8 +219,8 @@ bb.a:
 define weak_odr hidden void @_ZN16interval_managerIN13dep_intervals9im_configEE7neg_jstERKNS1_8intervalER26interval_deps_combine_rule(ptr noundef nonnull align 8 dereferenceable(672) %0, ptr noundef nonnull align 8 dereferenceable(88) %1, ptr noundef nonnull align 2 dereferenceable(4) %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %3 = load <16 x i8>, ptr %i.a, align 8
-  %i.b = shufflevector <16 x i8> %3, <16 x i8> poison, <2 x i32> zeroinitializer
+  %3 = load <1 x i8>, ptr %i.a, align 8
+  %i.b = shufflevector <1 x i8> %3, <1 x i8> poison, <2 x i32> zeroinitializer
   %i.c = and <2 x i8> %i.b, <i8 8, i8 4>
   %i.d = icmp eq <2 x i8> %i.c, zeroinitializer
   %i.e = select <2 x i1> %i.d, <2 x i16> <i16 2, i16 1>, <2 x i16> zeroinitializer

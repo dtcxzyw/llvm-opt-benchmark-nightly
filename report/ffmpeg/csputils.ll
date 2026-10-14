@@ -204,10 +204,10 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.h = load <3 x float>, ptr %7, align 16       ; 3 uses
   %i.i = shufflevector <3 x float> %i.h, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
-  %8 = load <4 x float>, ptr %.sroa.6.0..sroa_idx, align 4
+  %8 = load <1 x float>, ptr %.sroa.6.0..sroa_idx, align 4
   %i.j = load <3 x float>, ptr %.sroa.12.0..sroa_idx, align 4 ; 3 uses
   %i.k = shufflevector <3 x float> %i.j, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
-  %9 = load <4 x float>, ptr %.sroa.15.0..sroa_idx, align 16
+  %9 = load <1 x float>, ptr %.sroa.15.0..sroa_idx, align 16
   %i.l = load <3 x float>, ptr %.sroa.21.0..sroa_idx, align 8 ; 3 uses
   %i.m = shufflevector <3 x float> %i.l, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %.sroa.24.0.copyload = load float, ptr %.sroa.24.0..sroa_idx, align 4
@@ -233,7 +233,7 @@ bb.a:
   %i.ac = load float, ptr %i.f, align 4, !tbaa !10
   %i.ad = load float, ptr %i.e, align 4, !tbaa !10
   %i.ae = shufflevector <3 x float> %i.j, <3 x float> poison, <4 x i32> <i32 poison, i32 0, i32 2, i32 poison>
-  %i.af = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
+  %i.af = shufflevector <1 x float> %9, <1 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
   %i.ag = shufflevector <4 x float> %i.af, <4 x float> %i.ae, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   %i.ah = shufflevector <4 x float> %i.aa, <4 x float> poison, <2 x i32> <i32 poison, i32 2>
   %i.ai = shufflevector <2 x float> %i.p, <2 x float> %i.ah, <4 x i32> <i32 0, i32 3, i32 0, i32 3>
@@ -242,7 +242,7 @@ bb.a:
   %i.al = insertelement <2 x float> %i.ak, float %i.o, i64 0
   %i.am = shufflevector <2 x float> %i.al, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.an = shufflevector <3 x float> %i.h, <3 x float> poison, <4 x i32> <i32 poison, i32 0, i32 2, i32 poison>
-  %i.ao = shufflevector <4 x float> %8, <4 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
+  %i.ao = shufflevector <1 x float> %8, <1 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
   %i.ap = shufflevector <4 x float> %i.ao, <4 x float> %i.an, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   %i.aq = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.am, <4 x float> %i.ap, <4 x float> %i.aj)
   %i.ar = shufflevector <4 x float> %i.aa, <4 x float> poison, <4 x i32> <i32 0, i32 3, i32 0, i32 3>
@@ -473,10 +473,10 @@ bb.a:
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 28
   %i.j = load <3 x float>, ptr %2, align 16       ; 3 uses
   %i.k = shufflevector <3 x float> %i.j, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
-  %3 = load <4 x float>, ptr %.sroa.6.0..sroa_idx, align 4
+  %3 = load <1 x float>, ptr %.sroa.6.0..sroa_idx, align 4
   %i.l = load <3 x float>, ptr %.sroa.12.0..sroa_idx, align 4 ; 3 uses
   %i.m = shufflevector <3 x float> %i.l, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
-  %4 = load <4 x float>, ptr %.sroa.15.0..sroa_idx, align 16
+  %4 = load <1 x float>, ptr %.sroa.15.0..sroa_idx, align 16
   %i.n = load <3 x float>, ptr %.sroa.21.0..sroa_idx, align 8 ; 3 uses
   %i.o = shufflevector <3 x float> %i.n, <3 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %.sroa.24.0.copyload = load float, ptr %.sroa.24.0..sroa_idx, align 4
@@ -500,7 +500,7 @@ bb.a:
   %i.ae = load float, ptr %i.e, align 4, !tbaa !10
   %i.af = load float, ptr %i.d, align 4, !tbaa !10
   %i.ag = shufflevector <3 x float> %i.l, <3 x float> poison, <4 x i32> <i32 poison, i32 0, i32 2, i32 poison>
-  %i.ah = shufflevector <4 x float> %4, <4 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
+  %i.ah = shufflevector <1 x float> %4, <1 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
   %i.ai = shufflevector <4 x float> %i.ah, <4 x float> %i.ag, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   %i.aj = shufflevector <4 x float> %i.ac, <4 x float> poison, <2 x i32> <i32 poison, i32 2>
   %i.ak = shufflevector <2 x float> %i.r, <2 x float> %i.aj, <4 x i32> <i32 0, i32 3, i32 0, i32 3>
@@ -509,7 +509,7 @@ bb.a:
   %i.an = insertelement <2 x float> %i.am, float %i.q, i64 0
   %i.ao = shufflevector <2 x float> %i.an, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.ap = shufflevector <3 x float> %i.j, <3 x float> poison, <4 x i32> <i32 poison, i32 0, i32 2, i32 poison>
-  %i.aq = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
+  %i.aq = shufflevector <1 x float> %3, <1 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 0>
   %i.ar = shufflevector <4 x float> %i.aq, <4 x float> %i.ap, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
   %i.as = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ao, <4 x float> %i.ar, <4 x float> %i.al)
   %i.at = shufflevector <4 x float> %i.ac, <4 x float> poison, <4 x i32> <i32 0, i32 3, i32 0, i32 3>
