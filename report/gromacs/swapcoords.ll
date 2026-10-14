@@ -205,10 +205,6 @@ define internal fastcc void @_ZL29sortMoleculesIntoCompartmentsP9t_swapgrpRKN3gm
   %14 = alloca %"class.gmx::BasicVector", align 4 ; 6 uses
   %i.a = alloca [4096 x i8], align 16             ; 5 uses
   %15 = alloca %"class.std::filesystem::__cxx11::path", align 8 ; 5 uses
-  %.sroa.0 = alloca i32, align 4                  ; 4 uses
-  %.sroa.4 = alloca i32, align 4                  ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load <2 x float>, ptr %i.b, align 8, !tbaa !198 ; 2 uses
   %i.d = fmul <2 x float> %i.c, %i.c              ; 2 uses
@@ -220,8 +216,8 @@ define internal fastcc void @_ZL29sortMoleculesIntoCompartmentsP9t_swapgrpRKN3gm
   %i.j = sext i32 %i.i to i64
   %i.k = srem i64 %i.g, %i.j                      ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 400 ; 3 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 3 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
@@ -246,6 +242,7 @@ define internal fastcc void @_ZL29sortMoleculesIntoCompartmentsP9t_swapgrpRKN3gm
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 392 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.ah = icmp sgt i64 %i.k, -1
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
   %i.ai = extractelement <2 x float> %i.d, i64 0
   %i.aj = extractelement <2 x float> %i.d, i64 1
   br label %bb.b
@@ -257,10 +254,10 @@ bb.a:                                             ; preds = %bb.aq
   br i1 %or.cond3, label %bb.at, label %bb.ar
 
 bb.b:                                             ; preds = %.split, %bb.aq
-  %i.am = phi i1 [ false, %.split ], [ true, %bb.aq ] ; 2 uses
+  %i.am = phi i1 [ false, %.split ], [ true, %bb.aq ] ; 5 uses
   %i.an = phi i1 [ true, %.split ], [ false, %bb.aq ]
-  %indvars.iv125.sroa.phi = phi ptr [ %.sroa.0, %.split ], [ %.sroa.4, %bb.aq ] ; 2 uses
-  %indvars.iv125 = phi i64 [ 0, %.split ], [ 1, %bb.aq ] ; 2 uses
+  %.sroa.7.0158 = phi i32 [ undef, %.split ], [ %.sroa.7.1.lcssa, %bb.aq ]
+  %.sroa.0118.0157 = phi i32 [ undef, %.split ], [ %.sroa.0118.1.lcssa, %bb.aq ]
   %i.ao = load ptr, ptr %i.l, align 8, !tbaa !197 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 232
   %i.aq = load i32, ptr %3, align 8, !tbaa !183
@@ -273,24 +270,30 @@ bb.b:                                             ; preds = %.split, %bb.aq
   %i.ax = fcmp olt float %i.at, %i.aw             ; 2 uses
   %..i = select i1 %i.ax, float %i.at, float %i.aw ; 2 uses
   %.30.i = select i1 %i.ax, float %i.aw, float %i.at ; 2 uses
-  br i1 %i.am, label %bb.c, label %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit.a
+  br i1 %i.am, label %bb.c, label %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.ay = getelementptr inbounds [12 x i8], ptr %4, i64 %i.ar
   %i.az = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %i.ar
   %i.ba = load float, ptr %i.az, align 4, !tbaa !198
   %i.bb = fadd float %..i, %i.ba
+  store i32 0, ptr %16, align 8, !tbaa !227
   br label %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit.a
 
-_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit.a: ; preds = %bb.b, %bb.c
-  %.124.i = phi float [ %.30.i, %bb.c ], [ %..i, %bb.b ] ; 2 uses
-  %.1.i = phi float [ %i.bb, %bb.c ], [ %.30.i, %bb.b ] ; 2 uses
-  %16 = getelementptr inbounds nuw [96 x i8], ptr %i.m, i64 %indvars.iv125 ; 13 uses
-  store i32 0, ptr %16, align 8, !tbaa !227
-  store i32 0, ptr %indvars.iv125.sroa.phi, align 4, !tbaa !59
-  %i.bc = getelementptr inbounds nuw i8, ptr %16, i64 40 ; 3 uses
+_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit: ; preds = %bb.b
+  store i32 0, ptr %i.n, align 8, !tbaa !227
+  br label %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit.a
+
+_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit.a: ; preds = %bb.c, %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit
+  %17 = phi ptr [ %i.n, %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit ], [ %16, %bb.c ] ; 12 uses
+  %18 = phi i64 [ 0, %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit ], [ 1, %bb.c ]
+  %.1.i = phi float [ %.30.i, %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit ], [ %i.bb, %bb.c ] ; 2 uses
+  %.124.i126 = phi float [ %..i, %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit ], [ %.30.i, %bb.c ] ; 2 uses
+  %.sroa.0118.3 = phi i32 [ 0, %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit ], [ %.sroa.0118.0157, %bb.c ] ; 2 uses
+  %.sroa.7.3 = phi i32 [ %.sroa.7.0158, %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit ], [ 0, %bb.c ] ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %17, i64 40 ; 3 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !187 ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %16, i64 48 ; 5 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %17, i64 48 ; 5 uses
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !186
   %.not.i.i = icmp eq ptr %i.bf, %i.bd
   br i1 %.not.i.i, label %_ZNSt6vectorIiSaIiEE5clearEv.exit, label %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
@@ -300,9 +303,9 @@ _ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %_ZL26get_compartmen
   br label %_ZNSt6vectorIiSaIiEE5clearEv.exit
 
 _ZNSt6vectorIiSaIiEE5clearEv.exit:                ; preds = %_ZL26get_compartment_boundaries11CompartmentPN10SwapCoords4ImplEPA3_KfPfS6_.exit.a, %_ZSt8_DestroyIPiiEvT_S1_RSaIT0_E.exit.i.i
-  %i.bg = getelementptr inbounds nuw i8, ptr %16, i64 64 ; 3 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %17, i64 64 ; 3 uses
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !214 ; 2 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %16, i64 72 ; 5 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %17, i64 72 ; 5 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !213
   %.not.i.i105 = icmp eq ptr %i.bj, %i.bh
   br i1 %.not.i.i105, label %_ZNSt6vectorIfSaIfEE5clearEv.exit, label %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i
@@ -312,31 +315,34 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %_ZNSt6vectorIiSaIiE
   br label %_ZNSt6vectorIfSaIfEE5clearEv.exit
 
 _ZNSt6vectorIfSaIfEE5clearEv.exit:                ; preds = %_ZNSt6vectorIiSaIiEE5clearEv.exit, %_ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i
-  %i.bk = call noundef i64 @_ZNK3gmx12LocalAtomSet14numAtomsGlobalEv(ptr noundef nonnull align 8 dereferenceable(8) %i.n)
+  %i.bk = call noundef i64 @_ZNK3gmx12LocalAtomSet14numAtomsGlobalEv(ptr noundef nonnull align 8 dereferenceable(8) %i.m)
   %i.bl = trunc i64 %i.bk to i32
   %i.bm = icmp sgt i32 %i.bl, 0
   br i1 %i.bm, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIfSaIfEE5clearEv.exit
-  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv125
-  %i.bo = fadd float %.124.i, %.1.i
+  %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %18
+  %i.bo = fadd float %.1.i, %.124.i126
   %i.bp = fmul float %i.bo, 5.000000e-01          ; 3 uses
   %i.bq = fsub float %.1.i, %i.bp                 ; 2 uses
-  %i.br = fsub float %.124.i, %i.bp               ; 2 uses
+  %i.br = fsub float %.124.i126, %i.bp            ; 2 uses
   %i.bs = fsub float %i.bq, %i.br
-  %i.bt = getelementptr inbounds nuw i8, ptr %16, i64 56 ; 3 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %16, i64 80 ; 3 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %17, i64 56 ; 3 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %17, i64 80 ; 3 uses
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %bb.ak, %_ZNSt6vectorIfSaIfEE5clearEv.exit
+  %.sroa.0118.1.lcssa = phi i32 [ %.sroa.0118.3, %_ZNSt6vectorIfSaIfEE5clearEv.exit ], [ %.sroa.0118.2, %bb.ak ] ; 3 uses
+  %.sroa.7.1.lcssa = phi i32 [ %.sroa.7.3, %_ZNSt6vectorIfSaIfEE5clearEv.exit ], [ %i.jc, %bb.ak ] ; 3 uses
   br i1 %8, label %bb.aq, label %bb.al
 
 bb.d:                                             ; preds = %.lr.ph, %bb.ak
-  %i.bv = phi i32 [ 0, %.lr.ph ], [ %i.jc, %bb.ak ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ak ] ; 4 uses
-  %.0119 = phi i32 [ 0, %.lr.ph ], [ %i.je, %bb.ak ] ; 4 uses
+  %i.bv = phi i32 [ 0, %.lr.ph ], [ %i.je, %bb.ak ] ; 4 uses
+  %.sroa.7.1151 = phi i32 [ %.sroa.7.3, %.lr.ph ], [ %i.jc, %bb.ak ] ; 5 uses
+  %.0119 = phi i32 [ %.sroa.0118.3, %.lr.ph ], [ %.sroa.0118.2, %bb.ak ] ; 5 uses
   %i.bw = load i32, ptr %3, align 8, !tbaa !183
-  %i.bx = sext i32 %.0119 to i64                  ; 3 uses
+  %i.bx = sext i32 %i.bv to i64                   ; 3 uses
   %i.by = load ptr, ptr %i.o, align 8, !tbaa !200
   %i.bz = getelementptr inbounds nuw [12 x i8], ptr %i.by, i64 %i.bx
   %i.ca = sext i32 %i.bw to i64                   ; 3 uses
@@ -386,7 +392,7 @@ bb.e:                                             ; preds = %_ZL25compartment_co
   br i1 %.not.i.i106, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  store i32 %.0119, ptr %i.cw, align 4, !tbaa !59
+  store i32 %i.bv, ptr %i.cw, align 4, !tbaa !59
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 4
   store ptr %i.cy, ptr %i.be, align 8, !tbaa !186
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i
@@ -415,7 +421,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
   %i.dj = shl nuw nsw i64 %i.di, 2
   %i.dk = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dj) #27 ; 4 uses
   %i.dl = getelementptr inbounds i8, ptr %i.dk, i64 %i.dc ; 2 uses
-  store i32 %.0119, ptr %i.dl, align 4, !tbaa !59
+  store i32 %i.bv, ptr %i.dl, align 4, !tbaa !59
   %i.dm = icmp sgt i64 %i.dc, 0
   br i1 %i.dm, label %bb.i, label %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
 
@@ -506,9 +512,9 @@ _ZNSt6vectorIfSaIfEE17_M_realloc_insertIJRKfEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %_ZL11add_to_listiP16swap_compartmentf.exit
 
 _ZL11add_to_listiP16swap_compartmentf.exit:       ; preds = %bb.k, %_ZNSt6vectorIfSaIfEE17_M_realloc_insertIJRKfEEEvN9__gnu_cxx17__normal_iteratorIPfS1_EEDpOT_.exit.i.i
-  %i.eo = load i32, ptr %16, align 8, !tbaa !227
+  %i.eo = load i32, ptr %17, align 8, !tbaa !227
   %i.ep = add nsw i32 %i.eo, 1
-  store i32 %i.ep, ptr %16, align 8, !tbaa !227
+  store i32 %i.ep, ptr %17, align 8, !tbaa !227
   %i.eq = load i32, ptr %i.q, align 4, !tbaa !86
   %i.er = icmp eq i32 %i.eq, 0
   br i1 %i.er, label %bb.p, label %bb.ak
@@ -521,7 +527,7 @@ bb.p:                                             ; preds = %_ZL11add_to_listiP1
   br i1 %or.cond, label %bb.ak, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ev = call { ptr, ptr } @_ZNK3gmx12LocalAtomSet11globalIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %i.n)
+  %i.ev = call { ptr, ptr } @_ZNK3gmx12LocalAtomSet11globalIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %i.m)
   %i.ew = extractvalue { ptr, ptr } %i.ev, 0
   %i.ex = getelementptr inbounds [4 x i8], ptr %i.ew, i64 %i.bx
   %i.ey = load i32, ptr %i.ex, align 4, !tbaa !59
@@ -786,16 +792,19 @@ _ZL23detect_flux_per_channelP9t_swapgrpi11CompartmentN3gmx11BasicVectorIfEEP6Dom
   br label %bb.ak
 
 bb.aj:                                            ; preds = %_ZL25compartment_contains_atomfffffPf.exit
-  %i.jb = add nsw i32 %i.bv, 1                    ; 2 uses
-  store i32 %i.jb, ptr %indvars.iv125.sroa.phi, align 4, !tbaa !59
+  %.sroa.speculated = select i1 %i.am, i32 %.sroa.7.1151, i32 %.0119
+  %i.jb = add nsw i32 %.sroa.speculated, 1        ; 2 uses
+  %spec.select = select i1 %i.am, i32 %.0119, i32 %i.jb
+  %spec.select132 = select i1 %i.am, i32 %i.jb, i32 %.sroa.7.1151
   br label %bb.ak
 
-bb.ak:                                            ; preds = %_ZL11add_to_listiP16swap_compartmentf.exit, %bb.p, %_ZL23detect_flux_per_channelP9t_swapgrpi11CompartmentN3gmx11BasicVectorIfEEP6DomainS6_P14ChannelHistoryRK12t_swapcoordsPN10SwapCoords4ImplEfflbP8_IO_FILE.exit, %bb.aj
-  %i.jc = phi i32 [ %i.bv, %_ZL11add_to_listiP16swap_compartmentf.exit ], [ %i.bv, %bb.p ], [ %i.bv, %_ZL23detect_flux_per_channelP9t_swapgrpi11CompartmentN3gmx11BasicVectorIfEEP6DomainS6_P14ChannelHistoryRK12t_swapcoordsPN10SwapCoords4ImplEfflbP8_IO_FILE.exit ], [ %i.jb, %bb.aj ]
+bb.ak:                                            ; preds = %bb.aj, %_ZL11add_to_listiP16swap_compartmentf.exit, %bb.p, %_ZL23detect_flux_per_channelP9t_swapgrpi11CompartmentN3gmx11BasicVectorIfEEP6DomainS6_P14ChannelHistoryRK12t_swapcoordsPN10SwapCoords4ImplEfflbP8_IO_FILE.exit
+  %.sroa.0118.2 = phi i32 [ %.0119, %bb.p ], [ %.0119, %_ZL23detect_flux_per_channelP9t_swapgrpi11CompartmentN3gmx11BasicVectorIfEEP6DomainS6_P14ChannelHistoryRK12t_swapcoordsPN10SwapCoords4ImplEfflbP8_IO_FILE.exit ], [ %.0119, %_ZL11add_to_listiP16swap_compartmentf.exit ], [ %spec.select, %bb.aj ] ; 2 uses
+  %i.jc = phi i32 [ %.sroa.7.1151, %bb.p ], [ %.sroa.7.1151, %_ZL23detect_flux_per_channelP9t_swapgrpi11CompartmentN3gmx11BasicVectorIfEEP6DomainS6_P14ChannelHistoryRK12t_swapcoordsPN10SwapCoords4ImplEfflbP8_IO_FILE.exit ], [ %.sroa.7.1151, %_ZL11add_to_listiP16swap_compartmentf.exit ], [ %spec.select132, %bb.aj ] ; 2 uses
   %i.jd = load i32, ptr %i.ag, align 8, !tbaa !58
-  %i.je = add nsw i32 %i.jd, %.0119               ; 2 uses
+  %i.je = add nsw i32 %i.jd, %i.bv                ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %i.jf = call noundef i64 @_ZNK3gmx12LocalAtomSet14numAtomsGlobalEv(ptr noundef nonnull align 8 dereferenceable(8) %i.n)
+  %i.jf = call noundef i64 @_ZNK3gmx12LocalAtomSet14numAtomsGlobalEv(ptr noundef nonnull align 8 dereferenceable(8) %i.m)
   %i.jg = trunc i64 %i.jf to i32
   %i.jh = icmp slt i32 %i.je, %i.jg
   br i1 %i.jh, label %bb.d, label %._crit_edge, !llvm.loop !511
@@ -805,8 +814,8 @@ bb.al:                                            ; preds = %._crit_edge
   br i1 %i.ah, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  %i.jj = load i32, ptr %16, align 8, !tbaa !227
-  %i.jk = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.jj = load i32, ptr %17, align 8, !tbaa !227
+  %i.jk = getelementptr inbounds nuw i8, ptr %17, i64 16
   %i.jl = load ptr, ptr %i.jk, align 8, !tbaa !187
   %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.jl, i64 %i.k
   store i32 %i.jj, ptr %i.jm, align 4, !tbaa !59
@@ -817,7 +826,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %i.jn, label %.lr.ph.i108, label %_ZL18update_time_windowP16swap_compartmentii.exit
 
 .lr.ph.i108:                                      ; preds = %bb.an
-  %i.jo = getelementptr inbounds nuw i8, ptr %16, i64 16
+  %i.jo = getelementptr inbounds nuw i8, ptr %17, i64 16
   %i.jp = load ptr, ptr %i.jo, align 8, !tbaa !187 ; 9 uses
   %wide.trip.count.i = zext nneg i32 %i.ji to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 7       ; 3 uses
@@ -904,7 +913,7 @@ _ZL18update_time_windowP16swap_compartmentii.exit: ; preds = %_ZL18update_time_w
   %.013.lcssa.i = phi float [ 0.000000e+00, %bb.an ], [ %i.ld, %_ZL18update_time_windowP16swap_compartmentii.exit.loopexit.unr-lcssa ], [ %i.lh, %bb.ap ]
   %i.li = sitofp i32 %i.ji to float
   %i.lj = fdiv float %.013.lcssa.i, %i.li
-  %i.lk = getelementptr inbounds nuw i8, ptr %16, i64 12
+  %i.lk = getelementptr inbounds nuw i8, ptr %17, i64 12
   store float %i.lj, ptr %i.lk, align 4, !tbaa !226
   br label %bb.aq
 
@@ -932,21 +941,19 @@ bb.at:                                            ; preds = %bb.ar, %bb.as, %bb.
   br i1 %or.cond5, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
-  %i.lu = load i32, ptr %i.m, align 8, !tbaa !227
+  %i.lu = load i32, ptr %i.n, align 8, !tbaa !227
   %i.lv = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.lw = load i32, ptr %i.lv, align 8, !tbaa !227
   %i.lx = call i32 (ptr, ptr, ...) @fprintf(ptr noundef nonnull %6, ptr noundef nonnull @.str.67, ptr noundef nonnull @.str.83, i32 noundef %i.lu, ptr noundef nonnull @.str.84, i32 noundef %i.lw) #25 ; 0 uses
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
-  %i.ly = call noundef i64 @_ZNK3gmx12LocalAtomSet14numAtomsGlobalEv(ptr noundef nonnull align 8 dereferenceable(8) %i.n)
+  %i.ly = call noundef i64 @_ZNK3gmx12LocalAtomSet14numAtomsGlobalEv(ptr noundef nonnull align 8 dereferenceable(8) %i.m)
   %i.lz = load i32, ptr %i.ag, align 8, !tbaa !58
   %i.ma = sext i32 %i.lz to i64
   %i.mb = udiv i64 %i.ly, %i.ma
   %i.mc = trunc i64 %i.mb to i32                  ; 4 uses
-  %.sroa.0.0..sroa.0.0. = load i32, ptr %.sroa.0, align 4, !tbaa !59 ; 2 uses
-  %.sroa.4.0..sroa.4.4. = load i32, ptr %.sroa.4, align 4, !tbaa !59 ; 2 uses
-  %i.md = add nsw i32 %.sroa.4.0..sroa.4.4., %.sroa.0.0..sroa.0.0.
+  %i.md = add nsw i32 %.sroa.7.1.lcssa, %.sroa.0118.1.lcssa
   %.not103 = icmp eq i32 %i.md, %i.mc
   br i1 %.not103, label %bb.ax, label %bb.aw
 
@@ -954,11 +961,11 @@ bb.aw:                                            ; preds = %bb.av
   %i.me = load ptr, ptr @stderr, align 8, !tbaa !77
   %i.mf = load ptr, ptr @_ZL3SwSB5cxx11, align 8, !tbaa !75
   %i.mg = load ptr, ptr %0, align 8, !tbaa !75
-  %i.mh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.me, ptr noundef nonnull @.str.68, ptr noundef %i.mf, ptr noundef %i.mg, i32 noundef %.sroa.0.0..sroa.0.0., i32 noundef %.sroa.4.0..sroa.4.4., i32 noundef %i.mc) #30 ; 0 uses
+  %i.mh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.me, ptr noundef nonnull @.str.68, ptr noundef %i.mf, ptr noundef %i.mg, i32 noundef %.sroa.0118.1.lcssa, i32 noundef %.sroa.7.1.lcssa, i32 noundef %i.mc) #30 ; 0 uses
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
-  %i.mi = load i32, ptr %i.m, align 8, !tbaa !227
+  %i.mi = load i32, ptr %i.n, align 8, !tbaa !227
   %i.mj = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.mk = load i32, ptr %i.mj, align 8, !tbaa !227
   %i.ml = add nsw i32 %i.mk, %i.mi                ; 2 uses
@@ -973,8 +980,6 @@ bb.ay:                                            ; preds = %bb.ax
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ay, %bb.ax
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   ret void
 }
 

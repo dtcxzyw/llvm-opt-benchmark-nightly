@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stockfish/original/network?download=true
 inline.NumInlined: 1222
 inline.NumDeleted: 483
-loop-unroll.NumCompletelyUnrolled: 30
+loop-unroll.NumCompletelyUnrolled: 32
 loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 64
+loop-unroll.NumUnrolled: 66
 begin_hunk_0_@_ZNK9Stockfish4Eval4NNUE7NetworkINS1_19NetworkArchitectureILj1024ELi15ELi32EEENS1_18FeatureTransformerILj1024EEEE8evaluateERKNS_8PositionERNS1_16AccumulatorStackERNS1_17AccumulatorCaches5CacheILj1024EEE:bb.a
 
 bb.b:                                             ; preds = %bb.a
@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %bb.c
   ret i32 %i.z
 
 bb.c:                                             ; preds = %bb.a, %bb.c
+  %.sroa.idx = phi i8 [ %i.d, %bb.a ], [ %i.e, %bb.c ]
   %6 = phi i1 [ true, %bb.a ], [ false, %bb.c ]
-  %indvars.iv.sroa.phi.sroa.speculated = phi i8 [ %i.d, %bb.a ], [ %i.e, %bb.c ]
   %indvars.iv = phi i64 [ 0, %bb.a ], [ 512, %bb.c ]
-  %i.aa = zext i8 %indvars.iv.sroa.phi.sroa.speculated to i64 ; 2 uses
+  %i.aa = zext i8 %.sroa.idx to i64               ; 2 uses
   %i.ab = getelementptr inbounds nuw [2048 x i8], ptr %i.a, i64 %i.aa ; 32 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1024
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv ; 8 uses

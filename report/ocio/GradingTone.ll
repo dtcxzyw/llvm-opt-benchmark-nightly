@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.ai
   ret void
 
 _ZN16OpenColorIO_v2_515GetChannelValueERKNS_13GradingRGBMSWENS_11RGBMChannelE.exit: ; preds = %bb.a, %bb.ai
+  %.092.ptr.sroa.idx = phi i8 [ 0, %bb.a ], [ 1, %bb.ai ] ; 2 uses
   %.not = phi i1 [ false, %bb.a ], [ true, %bb.ai ]
-  %.092.idx126.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.a ], [ 1, %bb.ai ] ; 2 uses
-  %i.ab = trunc nuw i8 %.092.idx126.sroa.phi.sroa.speculated to i1 ; 26 uses
-  %i.ac = zext nneg i8 %.092.idx126.sroa.phi.sroa.speculated to i64 ; 3 uses
+  %i.ab = trunc nuw i8 %.092.ptr.sroa.idx to i1   ; 26 uses
+  %i.ac = zext nneg i8 %.092.ptr.sroa.idx to i64  ; 3 uses
   %i.ad = getelementptr inbounds nuw [48 x i8], ptr %i.a, i64 %i.ac ; 14 uses
   %i.ae = getelementptr inbounds nuw [48 x i8], ptr %i.b, i64 %i.ac ; 14 uses
   %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.ac ; 9 uses
@@ -610,10 +610,10 @@ bb.b:                                             ; preds = %bb.af
   ret void
 
 _ZN16OpenColorIO_v2_515GetChannelValueERKNS_13GradingRGBMSWENS_11RGBMChannelE.exit: ; preds = %bb.a, %bb.af
+  %.091.ptr.sroa.idx = phi i8 [ 0, %bb.a ], [ 1, %bb.af ] ; 2 uses
   %.not = phi i1 [ false, %bb.a ], [ true, %bb.af ]
-  %.091.idx119.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.a ], [ 1, %bb.af ] ; 2 uses
-  %i.k = trunc nuw i8 %.091.idx119.sroa.phi.sroa.speculated to i1 ; 20 uses
-  %i.l = zext nneg i8 %.091.idx119.sroa.phi.sroa.speculated to i64 ; 4 uses
+  %i.k = trunc nuw i8 %.091.ptr.sroa.idx to i1    ; 20 uses
+  %i.l = zext nneg i8 %.091.ptr.sroa.idx to i64   ; 4 uses
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.a, i64 %i.l ; 8 uses
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %i.l ; 10 uses
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.c, i64 %i.l ; 10 uses

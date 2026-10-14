@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.critedge161
 
 .loopexit:                                        ; preds = %..loopexit_crit_edge, %.critedge161.1
   %.pre-phi = phi i32 [ %.pre240, %..loopexit_crit_edge ], [ %i.bm, %.critedge161.1 ] ; 2 uses
-  %i.cd = phi i32 [ %.pre229, %..loopexit_crit_edge ], [ %.pre228, %.critedge161.1 ]
+  %i.cd = phi i32 [ %.pre229, %..loopexit_crit_edge ], [ %.pre228, %.critedge161.1 ] ; 3 uses
   %i.ce = phi i32 [ %.pre227, %..loopexit_crit_edge ], [ %.pre, %.critedge161.1 ] ; 4 uses
   %i.cf = sext i32 %i.ce to i64
   %i.cg = getelementptr inbounds [4 x i8], ptr %6, i64 %i.cf
@@ -214,7 +214,7 @@ bb.l:                                             ; preds = %.critedge161
   %i.cj = sext i32 %i.cd to i64
   %i.ck = getelementptr inbounds [4 x i8], ptr %6, i64 %i.cj
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !12
-  %i.cm = and i32 %i.cl, 65535                    ; 4 uses
+  %i.cm = and i32 %i.cl, 65535                    ; 3 uses
   %i.cn = getelementptr i8, ptr %i.c, i64 20      ; 8 uses
   %i.co = getelementptr i8, ptr %i.c, i64 24      ; 4 uses
   %i.cp = shl nsw i32 %i.ce, 1
@@ -265,30 +265,32 @@ bb.q:                                             ; preds = %.lr.ph192, %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %i.dg = icmp eq i32 %.0140191, -1
-  %spec.select = select i1 %i.dg, i32 %i.da, i32 %.0140191 ; 2 uses
+  %spec.select = select i1 %i.dg, i32 %i.da, i32 %.0140191
+  %9 = freeze i32 %spec.select                    ; 2 uses
   %i.dh = and i32 %i.dd, -65536
-  %i.di = or i32 %i.dh, %spec.select
+  %i.di = or i32 %i.dh, %9
   store i32 %i.di, ptr %i.dc, align 4, !tbaa !12
   %.val170.pre = load i32, ptr %i.cn, align 4, !tbaa !35
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %bb.r
   %.val170 = phi i32 [ %.val170.pre, %bb.r ], [ %.val170230, %bb.q ] ; 2 uses
-  %.2142 = phi i32 [ %spec.select, %bb.r ], [ %.0140191, %bb.q ] ; 3 uses
+  %.2142 = phi i32 [ %9, %bb.r ], [ %.0140191, %bb.q ] ; 3 uses
   %indvars.iv.next214 = add nuw nsw i64 %indvars.iv213, 1 ; 2 uses
   %i.dj = sext i32 %.val170 to i64
   %i.dk = icmp slt i64 %indvars.iv.next214, %i.dj
   br i1 %i.dk, label %bb.q, label %.critedge4, !llvm.loop !92
 
 .critedge4:                                       ; preds = %bb.s
+  %.pre240.pre = load i32, ptr %i.au, align 4, !tbaa !12
   %.not158 = icmp eq i32 %.2142, -1
   %spec.select247 = select i1 %.not158, i32 %i.ci, i32 %.2142
   br label %.critedge4.thread
 
 .critedge4.thread:                                ; preds = %.critedge4, %bb.p, %.loopexit
-  %.sroa.0.0 = phi i32 [ %spec.select247, %.critedge4 ], [ %i.ci, %bb.p ], [ %i.ci, %.loopexit ]
-  %9 = load i32, ptr %i.au, align 4, !tbaa !12    ; 4 uses
-  %i.dl = shl nsw i32 %9, 1
+  %.sroa.0.0 = phi i32 [ %i.cd, %.loopexit ], [ %.pre240.pre, %.critedge4 ], [ %i.cd, %bb.p ] ; 4 uses
+  %.sroa.0.3 = phi i32 [ %i.ci, %.loopexit ], [ %spec.select247, %.critedge4 ], [ %i.ci, %bb.p ]
+  %i.dl = shl nsw i32 %.sroa.0.0, 1
   %i.dm = sext i32 %i.dl to i64
   %i.dn = getelementptr [4 x i8], ptr %.val177.a, i64 %i.dm
   %i.do = getelementptr i8, ptr %i.dn, i64 4
@@ -297,11 +299,11 @@ bb.s:                                             ; preds = %bb.q, %bb.r
   br i1 %i.dq, label %bb.t, label %.critedge4.1.thread
 
 bb.t:                                             ; preds = %.critedge4.thread
-  %i.dr = sext i32 %9 to i64
+  %i.dr = sext i32 %.sroa.0.0 to i64
   %i.ds = getelementptr inbounds [4 x i8], ptr %6, i64 %i.dr
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !12 ; 2 uses
-  %i.du = icmp eq i32 %9, 0
-  %i.dv = icmp eq i32 %9, %.pre-phi
+  %i.du = icmp eq i32 %.sroa.0.0, 0
+  %i.dv = icmp eq i32 %.sroa.0.0, %.pre-phi
   %or.cond163.1 = select i1 %i.du, i1 true, i1 %i.dv
   br i1 %or.cond163.1, label %bb.v, label %bb.u
 
@@ -318,7 +320,7 @@ bb.v:                                             ; preds = %bb.t
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.val170189.1 = load i32, ptr %i.cn, align 4, !tbaa !35 ; 2 uses
   %i.dx = icmp sgt i32 %.val170189.1, 0
-  br i1 %i.dx, label %.lr.ph192.1, label %.critedge4.1.thread
+  br i1 %i.dx, label %.lr.ph192.1, label %._crit_edge.1.thread
 
 .lr.ph192.1:                                      ; preds = %bb.w
   %.val175.1 = load ptr, ptr %i.co, align 8, !tbaa !38
@@ -339,16 +341,17 @@ bb.x:                                             ; preds = %bb.z, %.lr.ph192.1
 
 bb.y:                                             ; preds = %bb.x
   %i.ef = icmp eq i32 %.0140191.1, -1
-  %spec.select.1 = select i1 %i.ef, i32 %i.dz, i32 %.0140191.1 ; 2 uses
+  %spec.select.1 = select i1 %i.ef, i32 %i.dz, i32 %.0140191.1
+  %10 = freeze i32 %spec.select.1                 ; 2 uses
   %i.eg = and i32 %i.ec, -65536
-  %i.eh = or i32 %i.eg, %spec.select.1
+  %i.eh = or i32 %i.eg, %10
   store i32 %i.eh, ptr %i.eb, align 4, !tbaa !12
   %.val170.1.pre = load i32, ptr %i.cn, align 4, !tbaa !35
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
   %.val170.1 = phi i32 [ %.val170.1.pre, %bb.y ], [ %.val170.1232, %bb.x ] ; 2 uses
-  %.2142.1 = phi i32 [ %spec.select.1, %bb.y ], [ %.0140191.1, %bb.x ] ; 3 uses
+  %.2142.1 = phi i32 [ %10, %bb.y ], [ %.0140191.1, %bb.x ] ; 3 uses
   %indvars.iv.next214.1 = add nuw nsw i64 %indvars.iv213.1, 1 ; 2 uses
   %i.ei = sext i32 %.val170.1 to i64
   %i.ej = icmp slt i64 %indvars.iv.next214.1, %i.ei
@@ -356,11 +359,13 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 .critedge4.1:                                     ; preds = %bb.z
   %.not158.1 = icmp eq i32 %.2142.1, -1
-  %spec.select248 = select i1 %.not158.1, i32 %i.cm, i32 %.2142.1
+  br i1 %.not158.1, label %._crit_edge.1.thread, label %.critedge4.1.thread
+
+._crit_edge.1.thread:                             ; preds = %bb.w, %.critedge4.1
   br label %.critedge4.1.thread
 
-.critedge4.1.thread:                              ; preds = %.critedge4.1, %bb.w, %.critedge4.thread
-  %.sroa.6.0 = phi i32 [ %spec.select248, %.critedge4.1 ], [ %i.cm, %bb.w ], [ %i.cm, %.critedge4.thread ]
+.critedge4.1.thread:                              ; preds = %._crit_edge.1.thread, %.critedge4.1, %.critedge4.thread
+  %.sroa.6.0 = phi i32 [ %i.cm, %.critedge4.thread ], [ %i.cm, %._crit_edge.1.thread ], [ %.2142.1, %.critedge4.1 ]
   br i1 %.not156, label %.critedge6, label %.preheader
 
 .preheader:                                       ; preds = %.critedge4.1.thread
@@ -382,7 +387,7 @@ bb.aa:                                            ; preds = %.lr.ph197, %bb.ac
   %i.eo = getelementptr inbounds [4 x i8], ptr %6, i64 %i.en ; 2 uses
   %i.ep = load i32, ptr %i.eo, align 4, !tbaa !12 ; 2 uses
   %i.eq = and i32 %i.ep, 65535                    ; 2 uses
-  %i.er = icmp eq i32 %i.eq, %.sroa.0.0
+  %i.er = icmp eq i32 %i.eq, %.sroa.0.3
   %i.es = icmp eq i32 %i.eq, %.sroa.6.0
   %or.cond167 = select i1 %i.er, i1 true, i1 %i.es
   br i1 %or.cond167, label %bb.ab, label %bb.ac

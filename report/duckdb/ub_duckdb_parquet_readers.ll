@@ -205,12 +205,14 @@ bb.a:
   %.lobit = ashr i8 %i.a, 7                       ; 2 uses
   %i.c = getelementptr i8, ptr %i.b, i64 -1
   %i.d = load i8, ptr %i.c, align 1, !tbaa !34
-  %i.e = xor i8 %i.d, %.lobit                     ; 2 uses
+  %i.e = xor i8 %i.d, %.lobit
   %exitcond.not = icmp eq i64 %1, 1
   br i1 %exitcond.not, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
-  %.sroa.6.0 = phi i8 [ 0, %.lr.ph ], [ %i.j, %bb.b ] ; 2 uses
+  %..sroa.9.0.lcssa = phi i16 [ 0, %.lr.ph ], [ %8, %bb.b ]
+  %5 = zext i8 %i.e to i16
+  %6 = or disjoint i16 %..sroa.9.0.lcssa, %5      ; 2 uses
   %i.f = icmp ugt i64 %1, 2
   br i1 %i.f, label %.preheader, label %.loopexit
 
@@ -223,6 +225,8 @@ bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr i8, ptr %i.b, i64 -2
   %i.i = load i8, ptr %i.h, align 1, !tbaa !34
   %i.j = xor i8 %i.i, %.lobit
+  %7 = zext i8 %i.j to i16
+  %8 = shl nuw i16 %7, 8
   br label %._crit_edge
 
 bb.c:                                             ; preds = %bb.d
@@ -290,15 +294,10 @@ bb.j:                                             ; preds = %_ZNKSt7__cxx1112bas
   resume { ptr, i32 } %.pn36
 
 .loopexit:                                        ; preds = %bb.c, %bb.a, %._crit_edge
-  %.sroa.6.1 = phi i8 [ 0, %bb.a ], [ %.sroa.6.0, %._crit_edge ], [ %.sroa.6.0, %bb.c ]
-  %.sroa.0.0 = phi i8 [ 0, %bb.a ], [ %i.e, %._crit_edge ], [ %i.e, %bb.c ]
-  %.sroa.6.0.insert.ext = zext i8 %.sroa.6.1 to i16
-  %.sroa.6.0.insert.shift = shl nuw i16 %.sroa.6.0.insert.ext, 8
-  %.sroa.0.0.insert.ext = zext i8 %.sroa.0.0 to i16
-  %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.6.0.insert.shift, %.sroa.0.0.insert.ext
+  %.sroa.9.0.lcssa68 = phi i16 [ 0, %bb.a ], [ %6, %._crit_edge ], [ %6, %bb.c ]
   %.lobit46 = ashr i8 %i.a, 7
   %i.u = sext i8 %.lobit46 to i16
-  %.030 = xor i16 %.sroa.0.0.insert.insert, %i.u
+  %.030 = xor i16 %.sroa.9.0.lcssa68, %i.u
   ret i16 %.030
 
 bb.k:                                             ; preds = %bb.g

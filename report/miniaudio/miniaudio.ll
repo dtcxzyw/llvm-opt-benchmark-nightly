@@ -205,7 +205,6 @@ begin_hunk_0
 @ma_dr_flac__crc16_table = internal unnamed_addr constant [256 x i16] [i16 0, i16 -32763, i16 -32753, i16 10, i16 -32741, i16 30, i16 20, i16 -32751, i16 -32717, i16 54, i16 60, i16 -32711, i16 40, i16 -32723, i16 -32729, i16 34, i16 -32669, i16 102, i16 108, i16 -32663, i16 120, i16 -32643, i16 -32649, i16 114, i16 80, i16 -32683, i16 -32673, i16 90, i16 -32693, i16 78, i16 68, i16 -32703, i16 -32573, i16 198, i16 204, i16 -32567, i16 216, i16 -32547, i16 -32553, i16 210, i16 240, i16 -32523, i16 -32513, i16 250, i16 -32533, i16 238, i16 228, i16 -32543, i16 160, i16 -32603, i16 -32593, i16 170, i16 -32581, i16 190, i16 180, i16 -32591, i16 -32621, i16 150, i16 156, i16 -32615, i16 136, i16 -32627, i16 -32633, i16 130, i16 -32381, i16 390, i16 396, i16 -32375, i16 408, i16 -32355, i16 -32361, i16 402, i16 432, i16 -32331, i16 -32321, i16 442, i16 -32341, i16 430, i16 420, i16 -32351, i16 480, i16 -32283, i16 -32273, i16 490, i16 -32261, i16 510, i16 500, i16 -32271, i16 -32301, i16 470, i16 476, i16 -32295, i16 456, i16 -32307, i16 -32313, i16 450, i16 320, i16 -32443, i16 -32433, i16 330, i16 -32421, i16 350, i16 340, i16 -32431, i16 -32397, i16 374, i16 380, i16 -32391, i16 360, i16 -32403, i16 -32409, i16 354, i16 -32477, i16 294, i16 300, i16 -32471, i16 312, i16 -32451, i16 -32457, i16 306, i16 272, i16 -32491, i16 -32481, i16 282, i16 -32501, i16 270, i16 260, i16 -32511, i16 -31997, i16 774, i16 780, i16 -31991, i16 792, i16 -31971, i16 -31977, i16 786, i16 816, i16 -31947, i16 -31937, i16 826, i16 -31957, i16 814, i16 804, i16 -31967, i16 864, i16 -31899, i16 -31889, i16 874, i16 -31877, i16 894, i16 884, i16 -31887, i16 -31917, i16 854, i16 860, i16 -31911, i16 840, i16 -31923, i16 -31929, i16 834, i16 960, i16 -31803, i16 -31793, i16 970, i16 -31781, i16 990, i16 980, i16 -31791, i16 -31757, i16 1014, i16 1020, i16 -31751, i16 1000, i16 -31763, i16 -31769, i16 994, i16 -31837, i16 934, i16 940, i16 -31831, i16 952, i16 -31811, i16 -31817, i16 946, i16 912, i16 -31851, i16 -31841, i16 922, i16 -31861, i16 910, i16 900, i16 -31871, i16 640, i16 -32123, i16 -32113, i16 650, i16 -32101, i16 670, i16 660, i16 -32111, i16 -32077, i16 694, i16 700, i16 -32071, i16 680, i16 -32083, i16 -32089, i16 674, i16 -32029, i16 742, i16 748, i16 -32023, i16 760, i16 -32003, i16 -32009, i16 754, i16 720, i16 -32043, i16 -32033, i16 730, i16 -32053, i16 718, i16 708, i16 -32063, i16 -32189, i16 582, i16 588, i16 -32183, i16 600, i16 -32163, i16 -32169, i16 594, i16 624, i16 -32139, i16 -32129, i16 634, i16 -32149, i16 622, i16 612, i16 -32159, i16 544, i16 -32219, i16 -32209, i16 554, i16 -32197, i16 574, i16 564, i16 -32207, i16 -32237, i16 534, i16 540, i16 -32231, i16 520, i16 -32243, i16 -32249, i16 514], align 16
 @ma_dr_flac__clz_software.clz_table_4 = internal unnamed_addr constant [16 x i32] [i32 0, i32 4, i32 3, i32 3, i32 2, i32 2, i32 2, i32 2, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1], align 16
 @ma_dr_flac__decode_samples__fixed.lpcCoefficientsTable = internal global [5 x [4 x i32]] [[4 x i32] zeroinitializer, [4 x i32] [i32 1, i32 0, i32 0, i32 0], [4 x i32] [i32 2, i32 -1, i32 0, i32 0], [4 x i32] [i32 3, i32 -3, i32 1, i32 0], [4 x i32] [i32 4, i32 -6, i32 4, i32 -1]], align 16
-@__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t = private unnamed_addr constant [2 x i32] [i32 0, i32 -1], align 4
 @__const.ma_dr_flac__read_next_flac_frame_header.sampleRateTable = private unnamed_addr constant [12 x i32] [i32 0, i32 88200, i32 176400, i32 192000, i32 8000, i32 16000, i32 22050, i32 24000, i32 32000, i32 44100, i32 48000, i32 96000], align 16
 @__const.ma_dr_flac__read_next_flac_frame_header.bitsPerSampleTable = private unnamed_addr constant [8 x i8] c"\00\08\0C\FF\10\14\18\FF", align 1
 @ma_dr_flac__crc8_table = internal unnamed_addr constant [256 x i8] c"\00\07\0E\09\1C\1B\12\158?61$#*-pw~ylkbeHOFATSZ]\E0\E7\EE\E9\FC\FB\F2\F5\D8\DF\D6\D1\C4\C3\CA\CD\90\97\9E\99\8C\8B\82\85\A8\AF\A6\A1\B4\B3\BA\BD\C7\C0\C9\CE\DB\DC\D5\D2\FF\F8\F1\F6\E3\E4\ED\EA\B7\B0\B9\BE\AB\AC\A5\A2\8F\88\81\86\93\94\9D\9A' ).;<52\1F\18\11\16\03\04\0D\0AWPY^KLEBohafst}z\89\8E\87\80\95\92\9B\9C\B1\B6\BF\B8\AD\AA\A3\A4\F9\FE\F7\F0\E5\E2\EB\EC\C1\C6\CF\C8\DD\DA\D3\D4ing`ur{|QV_XMJCD\19\1E\17\10\05\02\0B\0C!&/(=:34NI@GRU\\[vqx\7Fjmdc>907\22%,+\06\01\08\0F\1A\1D\14\13\AE\A9\A0\A7\B2\B5\BC\BB\96\91\98\9F\8A\8D\84\83\DE\D9\D0\D7\C2\C5\CC\CB\E6\E1\E8\EF\FA\FD\F4\F3", align 16
@@ -608,10 +607,8 @@ bb.ap:                                            ; preds = %bb.w, %bb.i
   %i.of = or i32 %i.od, %i.oe                     ; 2 uses
   %i.og = lshr i32 %i.of, 1
   %i.oh = and i32 %i.of, 1
-  %9 = zext nneg i32 %i.oh to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %9
-  %11 = load i32, ptr %10, align 4, !tbaa !118
-  %i.oi = xor i32 %11, %i.og
+  %.sroa.speculated.i = sub nsw i32 0, %i.oh
+  %i.oi = xor i32 %i.og, %.sroa.speculated.i
   %i.oj = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %indvars.iv.i
   store i32 %i.oi, ptr %i.oj, align 4, !tbaa !118
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -1014,28 +1011,20 @@ bb.gq:                                            ; preds = %bb.fx, %bb.fj
   %i.bye = or i32 %i.bxw, %i.byd                  ; 2 uses
   %i.byf = lshr i32 %i.bxy, 1
   %i.byg = and i32 %i.bxy, 1
-  %12 = zext nneg i32 %i.byg to i64
-  %13 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %12
-  %14 = load i32, ptr %13, align 4, !tbaa !118
-  %i.byh = xor i32 %14, %i.byf
+  %.sroa.speculated = sub nsw i32 0, %i.byg
+  %i.byh = xor i32 %i.byf, %.sroa.speculated
   %i.byi = lshr i32 %i.bya, 1
   %i.byj = and i32 %i.bya, 1
-  %15 = zext nneg i32 %i.byj to i64
-  %16 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %15
-  %17 = load i32, ptr %16, align 4, !tbaa !118
-  %i.byk = xor i32 %17, %i.byi
+  %.sroa.speculated17 = sub nsw i32 0, %i.byj
+  %i.byk = xor i32 %i.byi, %.sroa.speculated17
   %i.byl = lshr i32 %i.byc, 1
   %i.bym = and i32 %i.byc, 1
-  %18 = zext nneg i32 %i.bym to i64
-  %19 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %18
-  %20 = load i32, ptr %19, align 4, !tbaa !118
-  %i.byn = xor i32 %20, %i.byl
+  %.sroa.speculated23 = sub nsw i32 0, %i.bym
+  %i.byn = xor i32 %i.byl, %.sroa.speculated23
   %i.byo = lshr i32 %i.bye, 1
   %i.byp = and i32 %i.bye, 1
-  %21 = zext nneg i32 %i.byp to i64
-  %22 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %21
-  %23 = load i32, ptr %22, align 4, !tbaa !118
-  %i.byq = xor i32 %23, %i.byo
+  %.sroa.speculated29 = sub nsw i32 0, %i.byp
+  %i.byq = xor i32 %i.byo, %.sroa.speculated29
   switch i8 %trunc.i763, label %ma_dr_flac__calculate_prediction_64.exit796 [
     i8 32, label %bb.gr
     i8 31, label %bb.gs
@@ -1438,28 +1427,20 @@ bb.rp:                                            ; preds = %bb.qw, %bb.qi
   %i.fnf = or i32 %i.fmx, %i.fne                  ; 2 uses
   %i.fng = lshr i32 %i.fmz, 1
   %i.fnh = and i32 %i.fmz, 1
-  %24 = zext nneg i32 %i.fnh to i64
-  %25 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %24
-  %26 = load i32, ptr %25, align 4, !tbaa !118
-  %i.fni = xor i32 %26, %i.fng
+  %.sroa.speculated35 = sub nsw i32 0, %i.fnh
+  %i.fni = xor i32 %i.fng, %.sroa.speculated35
   %i.fnj = lshr i32 %i.fnb, 1
   %i.fnk = and i32 %i.fnb, 1
-  %27 = zext nneg i32 %i.fnk to i64
-  %28 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %27
-  %29 = load i32, ptr %28, align 4, !tbaa !118
-  %i.fnl = xor i32 %29, %i.fnj
+  %.sroa.speculated41 = sub nsw i32 0, %i.fnk
+  %i.fnl = xor i32 %i.fnj, %.sroa.speculated41
   %i.fnm = lshr i32 %i.fnd, 1
   %i.fnn = and i32 %i.fnd, 1
-  %30 = zext nneg i32 %i.fnn to i64
-  %31 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %30
-  %32 = load i32, ptr %31, align 4, !tbaa !118
-  %i.fno = xor i32 %32, %i.fnm
+  %.sroa.speculated47 = sub nsw i32 0, %i.fnn
+  %i.fno = xor i32 %i.fnm, %.sroa.speculated47
   %i.fnp = lshr i32 %i.fnf, 1
   %i.fnq = and i32 %i.fnf, 1
-  %33 = zext nneg i32 %i.fnq to i64
-  %34 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %33
-  %35 = load i32, ptr %34, align 4, !tbaa !118
-  %i.fnr = xor i32 %35, %i.fnp
+  %.sroa.speculated53 = sub nsw i32 0, %i.fnq
+  %i.fnr = xor i32 %i.fnp, %.sroa.speculated53
   switch i8 %trunc.i932, label %ma_dr_flac__calculate_prediction_32.exit965 [
     i8 32, label %bb.rq
     i8 31, label %bb.rr
@@ -1862,18 +1843,16 @@ ma_dr_flac__ilog2_u32.exit971:                    ; preds = %bb.xi, %bb.wu
   %.41042.in = phi i64 [ %i.gvi, %bb.xi ], [ %i.gpa, %bb.wu ]
   %.681.i = phi i64 [ %i.gvj, %bb.xi ], [ %i.gpb, %bb.wu ] ; 2 uses
   %.6.i = phi i32 [ %.173.i, %bb.xi ], [ %i.gpc, %bb.wu ]
-  %.41042 = trunc i64 %.41042.in to i32
   store i64 %.681.i, ptr %i.gmi, align 8, !tbaa !740
   store i32 %.6.i, ptr %i.gmj, align 4, !tbaa !739
-  %i.hci = and i32 %.41042, %i.op
+  %.41098 = trunc i64 %.41042.in to i32
+  %i.hci = and i32 %.41098, %i.op
   %i.hcj = shl i32 %.41066, %i.ol
   %i.hck = or i32 %i.hci, %i.hcj                  ; 2 uses
-  %36 = and i32 %i.hck, 1
-  %37 = zext nneg i32 %36 to i64
-  %38 = getelementptr inbounds nuw [4 x i8], ptr @__const.ma_dr_flac__decode_samples_with_residual__rice__scalar_zeroorder.t, i64 %37
-  %39 = load i32, ptr %38, align 4, !tbaa !118
-  %40 = lshr i32 %i.hck, 1
-  %i.hcl = xor i32 %39, %40
+  %9 = lshr i32 %i.hck, 1
+  %10 = and i32 %i.hck, 1
+  %.sroa.speculated59 = sub nsw i32 0, %10
+  %i.hcl = xor i32 %9, %.sroa.speculated59
   br i1 %i.ov, label %bb.zi, label %bb.yb
 
 bb.yb:                                            ; preds = %ma_dr_flac__ilog2_u32.exit971

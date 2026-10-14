@@ -202,25 +202,21 @@ bb.a:
   %i.f = load i64, ptr %1, align 8, !tbaa !11
   store i64 %i.f, ptr %i.a, align 8, !tbaa !11
   %.not = icmp eq i32 %0, 1
-  br i1 %.not, label %3, label %bb.b
+  br i1 %.not, label %rb_scan_args_set.exit, label %bb.b
 
 bb.b:                                             ; preds = %.preheader
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load i64, ptr %i.g, align 8, !tbaa !11
   %i.i = icmp eq i32 %0, 2
-  br label %3
+  br i1 %i.i, label %rb_scan_args_set.exit, label %bb.c
 
-3:                                                ; preds = %.preheader, %bb.b
-  %4 = phi i64 [ %i.h, %bb.b ], [ 4, %.preheader ]
-  %.185.i.lcssa = phi i1 [ %i.i, %bb.b ], [ true, %.preheader ]
-  br i1 %.185.i.lcssa, label %rb_scan_args_set.exit, label %bb.c
-
-bb.c:                                             ; preds = %3, %bb.a
+bb.c:                                             ; preds = %bb.b, %bb.a
   tail call void @rb_error_arity(i32 noundef %0, i32 noundef 1, i32 noundef 2) #13
   unreachable
 
-rb_scan_args_set.exit:                            ; preds = %3
-  %i.j = tail call i64 @rb_check_hash_type(i64 noundef %4) #11 ; 2 uses
+rb_scan_args_set.exit:                            ; preds = %.preheader, %bb.b
+  %storemerge27 = phi i64 [ %i.h, %bb.b ], [ 4, %.preheader ]
+  %i.j = tail call i64 @rb_check_hash_type(i64 noundef %storemerge27) #11 ; 2 uses
   %i.k = icmp eq i64 %i.j, 4
   br i1 %i.k, label %bb.e, label %bb.d
 

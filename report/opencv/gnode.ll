@@ -17,7 +17,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87", targe
 %"class.std::__shared_ptr.1" = type { ptr, %"class.std::__shared_count" }
 %"class.cv::util::bad_variant_access" = type { %"class.std::exception" }
 %"class.std::exception" = type { ptr }
-%"struct.std::array.3" = type { [2 x ptr] }
 
 $__clang_call_terminate = comdat any
 
@@ -420,7 +419,6 @@ bb.i:                                             ; preds = %bb.e
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2cv5GNode4PrivD2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %0) unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"struct.std::array.3", align 8     ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !34   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
@@ -435,15 +433,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
-  store ptr @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS2_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE, ptr %1, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store ptr @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS3_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE, ptr %2, align 8
   %i.h = load i64, ptr %i.g, align 8, !tbaa !17
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.h
-  %4 = load ptr, ptr %3, align 8, !tbaa !24
+  %.sroa.idx.i = icmp eq i64 %i.h, 1
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, ptr @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS3_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE, ptr @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS2_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  invoke void %4(ptr noundef nonnull %i.i)
+  invoke void %.sroa.speculated.i(ptr noundef nonnull %i.i)
           to label %_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEED2Ev.exit unwind label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -454,7 +448,6 @@ bb.b:                                             ; preds = %_ZNSt7__cxx1112basi
   unreachable
 
 _ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
   ret void
 }
 
@@ -478,7 +471,6 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt15_Sp_counted_ptrIPN2cv5GNode4PrivELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #11 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"struct.std::array.3", align 8     ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !33   ; 6 uses
   %i.c = icmp eq ptr %i.b, null
@@ -499,15 +491,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
-  store ptr @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS2_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE, ptr %1, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store ptr @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS3_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE, ptr %2, align 8
   %i.k = load i64, ptr %i.j, align 8, !tbaa !17
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.k
-  %4 = load ptr, ptr %3, align 8, !tbaa !24
+  %.sroa.idx.i.i = icmp eq i64 %i.k, 1
+  %.sroa.speculated.i.i = select i1 %.sroa.idx.i.i, ptr @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS3_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE, ptr @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS2_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  invoke void %4(ptr noundef nonnull %i.l)
+  invoke void %.sroa.speculated.i.i(ptr noundef nonnull %i.l)
           to label %_ZN2cv5GNode4PrivD2Ev.exit unwind label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
@@ -518,7 +506,6 @@ bb.c:                                             ; preds = %_ZNSt7__cxx1112basi
   unreachable
 
 _ZN2cv5GNode4PrivD2Ev.exit:                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
   tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 64) #18
   br label %bb.d
 
@@ -540,13 +527,13 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS2_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE(ptr noundef %0) #11 comdat align 2 {
+define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS2_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE(ptr noundef %0) local_unnamed_addr #11 comdat align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS3_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE(ptr noundef %0) #11 comdat align 2 {
+define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_9monostateENS_5GCallEEE6dtor_hIS3_E4helpEPNSt15aligned_storageILm16ELm8EE4typeE(ptr noundef %0) local_unnamed_addr #11 comdat align 2 {
 bb.a:
   tail call void @_ZN2cv5GCallD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %0) #15
   ret void

@@ -202,8 +202,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.k,
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
   br label %bb.x
 
-._crit_edge.loopexit:                             ; preds = %_ZN2cv3Mat2atIfEERT_i.exit
-  %i.ah = fsub float %.sroa.0.1, %.sroa.6.1
+._crit_edge.loopexit:                             ; preds = %12
+  %i.ah = fsub float %.sroa.0.1, %.sroa.7.1
   %i.ai = fmul float %i.ah, -5.000000e-01
   br label %._crit_edge
 
@@ -215,10 +215,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.k,
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   ret float %i.aj
 
-bb.l:                                             ; preds = %.lr.ph, %_ZN2cv3Mat2atIfEERT_i.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2cv3Mat2atIfEERT_i.exit ] ; 5 uses
-  %.sroa.6.043 = phi float [ f0x7F7FFFFF, %.lr.ph ], [ %.sroa.6.1, %_ZN2cv3Mat2atIfEERT_i.exit ] ; 2 uses
-  %.sroa.0.042 = phi float [ f0x7F7FFFFF, %.lr.ph ], [ %.sroa.0.1, %_ZN2cv3Mat2atIfEERT_i.exit ] ; 2 uses
+bb.l:                                             ; preds = %.lr.ph, %12
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %12 ] ; 5 uses
+  %.sroa.6.043 = phi float [ f0x7F7FFFFF, %.lr.ph ], [ %.sroa.0.1, %12 ] ; 3 uses
+  %.sroa.0.042 = phi float [ f0x7F7FFFFF, %.lr.ph ], [ %.sroa.7.1, %12 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18, !noalias !131
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
@@ -295,20 +295,19 @@ bb.t:                                             ; preds = %bb.r
 
 _ZN2cv3Mat2atIfEERT_i.exit:                       ; preds = %bb.t, %bb.s, %bb.q, %bb.o
   %.0.i = phi ptr [ %i.aq, %bb.o ], [ %i.ax, %bb.q ], [ %i.bd, %bb.s ], [ %i.bn, %bb.t ]
-  %i.bo = fptrunc double %i.am to float           ; 2 uses
+  %i.bo = fptrunc double %i.am to float           ; 3 uses
   %i.bp = load float, ptr %.0.i, align 4, !tbaa !55
-  %11 = fcmp ule float %i.bp, 0.000000e+00        ; 4 uses
-  %i.bq = fneg float %i.bo
-  %i.br = select i1 %11, float %i.bq, float %i.bo ; 2 uses
-  %.sroa.speculated = select i1 %11, float %.sroa.6.043, float %.sroa.0.042 ; 2 uses
+  %11 = fcmp ogt float %i.bp, 0.000000e+00        ; 4 uses
+  %i.bq = fneg float %i.bo                        ; 2 uses
+  %i.br = select i1 %11, float %i.bo, float %i.bq
+  %.sroa.speculated = select i1 %11, float %.sroa.6.043, float %.sroa.0.042
   %i.bs = fcmp olt float %i.br, %.sroa.speculated
-  %spec.store.select = select i1 %i.bs, float %i.br, float %.sroa.speculated ; 2 uses
-  %.sroa.0.1 = select i1 %11, float %.sroa.0.042, float %spec.store.select ; 2 uses
-  %.sroa.6.1 = select i1 %11, float %spec.store.select, float %.sroa.6.043 ; 2 uses
-  call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %9) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.l, !llvm.loop !128
+  br i1 %i.bs, label %.cont, label %12
+
+.cont:                                            ; preds = %_ZN2cv3Mat2atIfEERT_i.exit
+  %.sroa.7.0. = select i1 %11, float %.sroa.0.042, float %i.bq
+  %..sroa.0.0 = select i1 %11, float %i.bo, float %.sroa.6.043
+  br label %12
 
 bb.u:                                             ; preds = %bb.l
   %i.bt = landingpad { ptr, i32 }
@@ -321,6 +320,14 @@ bb.v:                                             ; preds = %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #18
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %9) #18
   br label %bb.w
+
+12:                                               ; preds = %.cont, %_ZN2cv3Mat2atIfEERT_i.exit
+  %.sroa.7.1 = phi float [ %.sroa.7.0., %.cont ], [ %.sroa.0.042, %_ZN2cv3Mat2atIfEERT_i.exit ] ; 2 uses
+  %.sroa.0.1 = phi float [ %..sroa.0.0, %.cont ], [ %.sroa.6.043, %_ZN2cv3Mat2atIfEERT_i.exit ] ; 2 uses
+  call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %9) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.l, !llvm.loop !128
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.pn28.pn = phi { ptr, i32 } [ %i.bu, %bb.v ], [ %i.bt, %bb.u ]

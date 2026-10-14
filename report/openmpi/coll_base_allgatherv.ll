@@ -202,18 +202,12 @@ ompi_coll_base_sendrecv.exit:                     ; preds = %.lr.ph, %bb.e
 ; Function Attrs: nounwind uwtable
 define i32 @ompi_coll_base_allgatherv_intra_neighborexchange(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, ptr noundef %6, ptr noundef %7, ptr nofree noundef readnone captures(none) %8) local_unnamed_addr #0 {
 bb.a:
-  %9 = alloca [2 x i32], align 4                  ; 5 uses
-  %10 = alloca [2 x i32], align 8                 ; 4 uses
-  %11 = alloca [2 x i32], align 4                 ; 5 uses
   %i.a = alloca [2 x i32], align 8                ; 4 uses
   %i.b = alloca [2 x i32], align 8                ; 4 uses
-  %i.c = alloca [2 x i32], align 8                ; 4 uses
-  %i.d = alloca [2 x i32], align 8                ; 4 uses
+  %i.c = alloca [2 x i32], align 4                ; 5 uses
+  %i.d = alloca [2 x i32], align 4                ; 5 uses
   %i.e = alloca ptr, align 8                      ; 6 uses
   %i.f = alloca ptr, align 8                      ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
@@ -275,20 +269,14 @@ bb.g:                                             ; preds = %bb.e
   %i.ah = add nsw i32 %.val125, 1
   br label %ompi_coll_base_sendrecv.exit
 
-ompi_coll_base_sendrecv.exit:                     ; preds = %bb.f, %bb.g
-  %.sink149 = phi i32 [ %i.ab, %bb.f ], [ %i.ag, %bb.g ] ; 4 uses
+ompi_coll_base_sendrecv.exit:                     ; preds = %bb.g, %bb.f
   %.pn = phi i32 [ %i.ad, %bb.f ], [ %i.ah, %bb.g ]
-  %i.ai = phi i32 [ %.val125, %bb.f ], [ %i.ag, %bb.g ] ; 3 uses
-  %12 = phi <2 x i32> [ <i32 2, i32 -2>, %bb.f ], [ <i32 -2, i32 2>, %bb.g ]
-  %.sink148 = srem i32 %.pn, %.val.val
-  store i32 %.sink149, ptr %9, align 4, !tbaa !48
-  %13 = getelementptr inbounds nuw i8, ptr %9, i64 4
-  store i32 %.sink148, ptr %13, align 4, !tbaa !48
-  store i32 %i.ai, ptr %11, align 4, !tbaa !48
-  %14 = getelementptr inbounds nuw i8, ptr %11, i64 4
-  store i32 %i.ai, ptr %14, align 4, !tbaa !48
-  store <2 x i32> %12, ptr %10, align 8, !tbaa !48
-  %i.aj = sext i32 %.sink149 to i64               ; 2 uses
+  %i.ai = phi i32 [ %i.ab, %bb.f ], [ %i.ag, %bb.g ] ; 4 uses
+  %.sroa.5.0 = phi i32 [ -2, %bb.f ], [ 2, %bb.g ]
+  %.sroa.066.0 = phi i32 [ 2, %bb.f ], [ -2, %bb.g ]
+  %.sroa.0.0 = phi i32 [ %.val125, %bb.f ], [ %i.ag, %bb.g ] ; 3 uses
+  %.sroa.1283.0 = srem i32 %.pn, %.val.val
+  %i.aj = sext i32 %i.ai to i64                   ; 2 uses
   %i.ak = getelementptr inbounds [4 x i8], ptr %4, i64 %i.aj
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !48
   %i.am = getelementptr inbounds [4 x i8], ptr %5, i64 %i.aj
@@ -304,28 +292,34 @@ ompi_coll_base_sendrecv.exit:                     ; preds = %bb.f, %bb.g
   %i.aw = getelementptr inbounds i8, ptr %3, i64 %i.av
   %i.ax = sext i32 %i.al to i64
   %i.ay = sext i32 %i.as to i64
-  %i.az = tail call i32 @ompi_coll_base_sendrecv_actual(ptr noundef %i.aw, i64 noundef range(i64 -2147483648, 2147483648) %i.ay, ptr noundef nonnull %6, i32 noundef %.sink149, i32 noundef -11, ptr noundef %i.aq, i64 noundef range(i64 -2147483648, 2147483648) %i.ax, ptr noundef nonnull %6, i32 noundef %.sink149, i32 noundef -11, ptr noundef nonnull %7, ptr noundef null) #9 ; 2 uses
+  %i.az = tail call i32 @ompi_coll_base_sendrecv_actual(ptr noundef %i.aw, i64 noundef range(i64 -2147483648, 2147483648) %i.ay, ptr noundef nonnull %6, i32 noundef %i.ai, i32 noundef -11, ptr noundef %i.aq, i64 noundef range(i64 -2147483648, 2147483648) %i.ax, ptr noundef nonnull %6, i32 noundef %i.ai, i32 noundef -11, ptr noundef nonnull %7, ptr noundef null) #9 ; 2 uses
   %.not119 = icmp eq i32 %i.az, 0
   br i1 %.not119, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %ompi_coll_base_sendrecv.exit
   %i.ba = ashr exact i32 %.val.val, 1             ; 2 uses
   %i.bb = icmp sgt i32 %i.ba, 1
-  br i1 %i.bb, label %.lr.ph, label %.thread
+  br i1 %i.bb, label %.cont.lr.ph, label %.thread
 
-.lr.ph:                                           ; preds = %bb.h, %bb.o
-  %.1135 = phi i32 [ %i.be, %bb.o ], [ %i.ai, %bb.h ]
-  %.0104134 = phi i32 [ %i.by, %bb.o ], [ 1, %bb.h ] ; 2 uses
-  %15 = and i32 %.0104134, 1
-  %16 = zext nneg i32 %15 to i64                  ; 3 uses
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %16 ; 2 uses
-  %18 = load i32, ptr %17, align 4, !tbaa !48
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %16
-  %20 = load i32, ptr %19, align 4, !tbaa !48
-  %i.bc = add i32 %18, %.val.val
-  %i.bd = add i32 %i.bc, %20
-  %i.be = srem i32 %i.bd, %.val.val               ; 3 uses
-  store i32 %i.be, ptr %17, align 4, !tbaa !48
+.cont.lr.ph:                                      ; preds = %bb.h
+  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.cont.lr.ph, %bb.o
+  %.1135 = phi i32 [ %.sroa.0.0, %.cont.lr.ph ], [ %i.be, %bb.o ]
+  %.0104134 = phi i32 [ %.sroa.0.0, %.cont.lr.ph ], [ %..sroa.0.1, %bb.o ] ; 2 uses
+  %.sroa.12.1200 = phi i32 [ %.sroa.0.0, %.cont.lr.ph ], [ %.sroa.12.1., %bb.o ] ; 2 uses
+  %.0169199 = phi i32 [ 1, %.cont.lr.ph ], [ %i.by, %bb.o ] ; 2 uses
+  %11 = and i32 %.0169199, 1
+  %.sroa.idx.not = icmp eq i32 %11, 0             ; 5 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, i32 %.0104134, i32 %.sroa.12.1200
+  %.sroa.speculated65 = select i1 %.sroa.idx.not, i32 %.sroa.066.0, i32 %.sroa.5.0
+  %i.bc = add i32 %.sroa.speculated65, %.val.val
+  %i.bd = add i32 %i.bc, %.sroa.speculated
+  %i.be = srem i32 %i.bd, %.val.val               ; 5 uses
+  %.sroa.12.1. = select i1 %.sroa.idx.not, i32 %.sroa.12.1200, i32 %i.be
+  %..sroa.0.1 = select i1 %.sroa.idx.not, i32 %i.be, i32 %.0104134
   %i.bf = sext i32 %.1135 to i64                  ; 2 uses
   %i.bg = getelementptr inbounds [4 x i8], ptr %4, i64 %i.bf
   %i.bh = load <2 x i32>, ptr %i.bg, align 4, !tbaa !48
@@ -345,12 +339,20 @@ bb.i:                                             ; preds = %.lr.ph
 
 bb.j:                                             ; preds = %bb.i
   %i.bm = sext i32 %i.be to i64                   ; 2 uses
-  %i.bn = getelementptr inbounds [4 x i8], ptr %4, i64 %i.bm
-  %21 = load <2 x i32>, ptr %i.bn, align 4, !tbaa !48
-  store <2 x i32> %21, ptr %i.c, align 8, !tbaa !48
-  %i.bo = getelementptr inbounds [4 x i8], ptr %5, i64 %i.bm
-  %22 = load <2 x i32>, ptr %i.bo, align 4, !tbaa !48
-  store <2 x i32> %22, ptr %i.d, align 8, !tbaa !48
+  %12 = getelementptr inbounds [4 x i8], ptr %4, i64 %i.bm
+  %13 = load i32, ptr %12, align 4, !tbaa !48
+  store i32 %13, ptr %i.c, align 4, !tbaa !48
+  %14 = add nsw i32 %i.be, 1
+  %15 = sext i32 %14 to i64                       ; 2 uses
+  %16 = getelementptr inbounds [4 x i8], ptr %4, i64 %15
+  %17 = load i32, ptr %16, align 4, !tbaa !48
+  store i32 %17, ptr %9, align 4, !tbaa !48
+  %i.bn = getelementptr inbounds [4 x i8], ptr %5, i64 %i.bm
+  %18 = load i32, ptr %i.bn, align 4, !tbaa !48
+  store i32 %18, ptr %i.d, align 4, !tbaa !48
+  %i.bo = getelementptr inbounds [4 x i8], ptr %5, i64 %15
+  %19 = load i32, ptr %i.bo, align 4, !tbaa !48
+  store i32 %19, ptr %10, align 4, !tbaa !48
   %i.bp = call i32 @ompi_datatype_create_indexed(i32 noundef 2, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %6, ptr noundef nonnull %i.e) #9 ; 2 uses
   %.not122 = icmp eq i32 %i.bp, 0
   br i1 %.not122, label %bb.k, label %.thread
@@ -363,10 +365,9 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.br = load ptr, ptr %i.f, align 8, !tbaa !51  ; 2 uses
-  %23 = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %16
-  %24 = load i32, ptr %23, align 4, !tbaa !48     ; 3 uses
+  %.sroa.speculated68 = select i1 %.sroa.idx.not, i32 %i.ai, i32 %.sroa.1283.0 ; 3 uses
   %i.bs = load ptr, ptr %i.e, align 8, !tbaa !51  ; 2 uses
-  %i.bt = icmp eq i32 %24, %.val125
+  %i.bt = icmp eq i32 %.sroa.speculated68, %.val125
   br i1 %i.bt, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -374,7 +375,7 @@ bb.m:                                             ; preds = %bb.l
   br label %ompi_coll_base_sendrecv.exit129
 
 bb.n:                                             ; preds = %bb.l
-  %i.bv = call i32 @ompi_coll_base_sendrecv_actual(ptr noundef %3, i64 noundef 1, ptr noundef %i.br, i32 noundef %24, i32 noundef -11, ptr noundef %3, i64 noundef 1, ptr noundef %i.bs, i32 noundef %24, i32 noundef -11, ptr noundef nonnull %7, ptr noundef null) #9
+  %i.bv = call i32 @ompi_coll_base_sendrecv_actual(ptr noundef %3, i64 noundef 1, ptr noundef %i.br, i32 noundef %.sroa.speculated68, i32 noundef -11, ptr noundef %3, i64 noundef 1, ptr noundef %i.bs, i32 noundef %.sroa.speculated68, i32 noundef -11, ptr noundef nonnull %7, ptr noundef null) #9
   br label %ompi_coll_base_sendrecv.exit129
 
 ompi_coll_base_sendrecv.exit129:                  ; preds = %bb.m, %bb.n
@@ -385,7 +386,7 @@ ompi_coll_base_sendrecv.exit129:                  ; preds = %bb.m, %bb.n
 bb.o:                                             ; preds = %ompi_coll_base_sendrecv.exit129
   %i.bw = call i32 @ompi_datatype_destroy(ptr noundef nonnull %i.f) #9 ; 0 uses
   %i.bx = call i32 @ompi_datatype_destroy(ptr noundef nonnull %i.e) #9 ; 0 uses
-  %i.by = add nuw nsw i32 %.0104134, 1            ; 2 uses
+  %i.by = add nuw nsw i32 %.0169199, 1            ; 2 uses
   %exitcond.not = icmp eq i32 %i.by, %i.ba
   br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !62
 
@@ -397,9 +398,6 @@ bb.o:                                             ; preds = %ompi_coll_base_send
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #9
   ret i32 %.0105
 }
 

@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/CGLTFMeshFileLoader?download=true
 inline.NumInlined: 12819
 inline.NumDeleted: 6981
-loop-unroll.NumCompletelyUnrolled: 69
+loop-unroll.NumCompletelyUnrolled: 72
 loop-unroll.NumRuntimeUnrolled: 31
-loop-unroll.NumUnrolled: 100
+loop-unroll.NumUnrolled: 103
 begin_hunk_0
 @.str.67 = private unnamed_addr constant [8 x i8] c"version\00", align 1
 @.str.68 = private unnamed_addr constant [10 x i8] c"copyright\00", align 1
@@ -205,8 +205,14 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define i16 @_ZN5scene19CGLTFMeshFileLoader6rawgetISt5arrayIhLm2EEEET_PKc(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.0.0.copyload = load i16, ptr %0, align 1
-  ret i16 %.sroa.0.0.copyload
+  %.0.copyload.i = load i8, ptr %0, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %.0.copyload.i.1 = load i8, ptr %1, align 1
+  %.sroa.2.0.insert.ext = zext i8 %.0.copyload.i.1 to i16
+  %.sroa.2.0.insert.shift = shl nuw i16 %.sroa.2.0.insert.ext, 8
+  %.sroa.0.0.insert.ext = zext i8 %.0.copyload.i to i16
+  %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  ret i16 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -226,8 +232,14 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define i32 @_ZN5scene19CGLTFMeshFileLoader6rawgetISt5arrayItLm2EEEET_PKc(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.0.0.copyload = load i32, ptr %0, align 1
-  ret i32 %.sroa.0.0.copyload
+  %.0.copyload.i = load i16, ptr %0, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %.0.copyload.i.1 = load i16, ptr %1, align 1
+  %.sroa.2.0.insert.ext = zext i16 %.0.copyload.i.1 to i32
+  %.sroa.2.0.insert.shift = shl nuw i32 %.sroa.2.0.insert.ext, 16
+  %.sroa.0.0.insert.ext = zext i16 %.0.copyload.i to i32
+  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  ret i32 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -247,8 +259,14 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define i64 @_ZN5scene19CGLTFMeshFileLoader6rawgetISt5arrayIjLm2EEEET_PKc(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.0.0.copyload = load i64, ptr %0, align 1
-  ret i64 %.sroa.0.0.copyload
+  %.0.copyload.i = load i32, ptr %0, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.0.copyload.i.1 = load i32, ptr %1, align 1
+  %.sroa.2.0.insert.ext = zext i32 %.0.copyload.i.1 to i64
+  %.sroa.2.0.insert.shift = shl nuw i64 %.sroa.2.0.insert.ext, 32
+  %.sroa.0.0.insert.ext = zext i32 %.0.copyload.i to i64
+  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.2.0.insert.shift, %.sroa.0.0.insert.ext
+  ret i64 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable

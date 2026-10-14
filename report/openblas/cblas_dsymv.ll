@@ -5,8 +5,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@__const.cblas_dsymv.symv = private unnamed_addr constant [2 x ptr] [ptr @dsymv_U, ptr @dsymv_L], align 16
-@__const.cblas_dsymv.symv_thread = private unnamed_addr constant [2 x ptr] [ptr @dsymv_thread_U, ptr @dsymv_thread_L], align 16
 @.str = private unnamed_addr constant [7 x i8] c"DSYMV \00", align 1
 @blas_cpu_number = external local_unnamed_addr global i32, align 4
 
@@ -22,10 +20,7 @@ bb.a:
   ]
 
 .thread:                                          ; preds = %bb.a
-  %11 = icmp ne i32 %1, 121
-  %spec.select = sext i1 %11 to i32
   %.not = icmp eq i32 %1, 122
-  %.1 = select i1 %.not, i32 1, i32 %spec.select
   %i.b = icmp eq i32 %10, 0
   %spec.store.select = select i1 %i.b, i32 10, i32 -1
   %i.c = icmp eq i32 %7, 0
@@ -40,10 +35,8 @@ bb.a:
   br i1 %i.h, label %.thread85, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = icmp eq i32 %1, 121
-  %spec.select76 = select i1 %i.i, i32 1, i32 -1
-  %12 = icmp eq i32 %1, 122
-  %.4 = select i1 %12, i32 0, i32 %spec.select76  ; 2 uses
+  %i.i = icmp eq i32 %1, 121                      ; 2 uses
+  %11 = icmp ne i32 %1, 122
   %i.j = icmp eq i32 %10, 0
   %spec.store.select1 = select i1 %i.j, i32 10, i32 -1
   %i.k = icmp eq i32 %7, 0
@@ -53,8 +46,8 @@ bb.b:                                             ; preds = %bb.a
   %spec.store.select5 = select i1 %i.m, i32 5, i32 %spec.store.select3
   %i.n = icmp slt i32 %2, 0
   %spec.store.select7 = select i1 %i.n, i32 2, i32 %spec.store.select5
-  %13 = icmp slt i32 %.4, 0
-  br i1 %13, label %.thread85, label %bb.c
+  %12 = xor i1 %i.i, %11
+  br i1 %12, label %.thread85, label %bb.c
 
 .thread85:                                        ; preds = %bb.b, %.thread
   store i32 1, ptr %i.a, align 4, !tbaa !8
@@ -62,7 +55,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.thread, %bb.b
   %storemerge = phi i32 [ %spec.store.select7, %bb.b ], [ %spec.store.select6, %.thread ] ; 2 uses
-  %.5 = phi i32 [ %.4, %bb.b ], [ %.1, %.thread ] ; 2 uses
+  %.5 = phi i1 [ %i.i, %bb.b ], [ %.not, %.thread ] ; 2 uses
   store i32 %storemerge, ptr %i.a, align 4, !tbaa !8
   %i.o = icmp sgt i32 %storemerge, -1
   br i1 %i.o, label %.thread78, label %bb.d
@@ -119,25 +112,21 @@ num_cpu_avail.exit:                               ; preds = %bb.i
   br i1 %i.al, label %num_cpu_avail.exit.thread, label %bb.j
 
 num_cpu_avail.exit.thread:                        ; preds = %bb.i, %bb.h, %num_cpu_avail.exit
-  %14 = sext i32 %.5 to i64
-  %15 = getelementptr inbounds [8 x i8], ptr @__const.cblas_dsymv.symv, i64 %14
-  %16 = load ptr, ptr %15, align 8, !tbaa !11
+  %.sroa.speculated11 = select i1 %.5, ptr @dsymv_L, ptr @dsymv_U
   %i.am = sext i32 %2 to i64                      ; 2 uses
   %i.an = sext i32 %5 to i64
   %i.ao = sext i32 %7 to i64
   %i.ap = sext i32 %10 to i64
-  %i.aq = tail call i32 %16(i64 noundef %i.am, i64 noundef %i.am, double noundef %3, ptr noundef %4, i64 noundef %i.an, ptr noundef %.069, i64 noundef %i.ao, ptr noundef %.070, i64 noundef %i.ap, ptr noundef %i.ag) #5 ; 0 uses
+  %i.aq = tail call i32 %.sroa.speculated11(i64 noundef %i.am, i64 noundef %i.am, double noundef %3, ptr noundef %4, i64 noundef %i.an, ptr noundef %.069, i64 noundef %i.ao, ptr noundef %.070, i64 noundef %i.ap, ptr noundef %i.ag) #5, !callees !10 ; 0 uses
   br label %bb.k
 
 bb.j:                                             ; preds = %num_cpu_avail.exit
-  %17 = sext i32 %.5 to i64
-  %18 = getelementptr inbounds [8 x i8], ptr @__const.cblas_dsymv.symv_thread, i64 %17
-  %19 = load ptr, ptr %18, align 8, !tbaa !11
+  %.sroa.speculated = select i1 %.5, ptr @dsymv_thread_L, ptr @dsymv_thread_U
   %i.ar = zext nneg i32 %2 to i64
   %i.as = sext i32 %5 to i64
   %i.at = sext i32 %7 to i64
   %i.au = sext i32 %10 to i64
-  %i.av = tail call i32 %19(i64 noundef %i.ar, double noundef %3, ptr noundef %4, i64 noundef %i.as, ptr noundef %.069, i64 noundef %i.at, ptr noundef %.070, i64 noundef %i.au, ptr noundef %i.ag, i32 noundef %i.ak) #5 ; 0 uses
+  %i.av = tail call i32 %.sroa.speculated(i64 noundef %i.ar, double noundef %3, ptr noundef %4, i64 noundef %i.as, ptr noundef %.069, i64 noundef %i.at, ptr noundef %.070, i64 noundef %i.au, ptr noundef %i.ag, i32 noundef %i.ak) #5, !callees !11 ; 0 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %num_cpu_avail.exit.thread
@@ -152,13 +141,13 @@ bb.l:                                             ; preds = %bb.g, %bb.d, %bb.k,
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
-declare i32 @dsymv_U(i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) #2
+declare i32 @dsymv_U(i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
 
-declare i32 @dsymv_L(i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) #2
+declare i32 @dsymv_L(i64 noundef, i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2
 
-declare i32 @dsymv_thread_U(i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) #2
+declare i32 @dsymv_thread_U(i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
-declare i32 @dsymv_thread_L(i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) #2
+declare i32 @dsymv_thread_L(i64 noundef, double noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
 declare i32 @xerbla_(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
 
@@ -198,6 +187,6 @@ attributes #5 = { nounwind }
 !7 = !{!6, !5, i64 0}
 !8 = !{!5, !5, i64 0}
 !9 = !{!4, !4, i64 0}
-!10 = !{!"any pointer", !4, i64 0}
-!11 = !{!10, !10, i64 0}
+!10 = !{ptr @dsymv_L, ptr @dsymv_U}
+!11 = !{ptr @dsymv_thread_L, ptr @dsymv_thread_U}
 end_hunk_0

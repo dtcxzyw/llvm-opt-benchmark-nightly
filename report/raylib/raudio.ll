@@ -205,7 +205,6 @@ declare void @TraceLog(i32 noundef, ptr noundef, ...) local_unnamed_addr #54
 ; Function Attrs: nounwind uwtable
 define internal void @OnSendAudioDataToDevice(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, ptr nofree readnone captures(none) %2, i32 noundef %3) #8 {
 bb.a:
-  %4 = alloca [2 x i8], align 1                   ; 8 uses
   %i.a = alloca [4096 x i8], align 16             ; 9 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 5 uses
@@ -229,7 +228,6 @@ bb.a:
   br i1 %.not98, label %.preheader, label %.lr.ph102.a
 
 .lr.ph102.a:                                      ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 1
   %.not59150.not = icmp eq i32 %3, 0
   br label %bb.b
 
@@ -239,7 +237,7 @@ bb.a:
   br i1 %.not58104, label %._crit_edge107, label %.lr.ph106
 
 bb.b:                                             ; preds = %.lr.ph102.a, %.loopexit71
-  %.05599 = phi ptr [ %.05597, %.lr.ph102.a ], [ %.055, %.loopexit71 ] ; 25 uses
+  %.05599 = phi ptr [ %.055, %.loopexit71 ], [ %.05597, %.lr.ph102.a ] ; 25 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.05599, i64 356 ; 5 uses
   %i.s = load i8, ptr %i.r, align 4, !range !66, !noundef !53
   %i.t = trunc nuw i8 %i.s to i1
@@ -347,11 +345,6 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.by, label %ReadAudioBufferFramesInInternalFormat.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #61
-  %6 = load i8, ptr %i.ah, align 4, !range !66, !noundef !53
-  store i8 %6, ptr %4, align 1
-  %7 = load i8, ptr %i.ai, align 1, !range !66, !noundef !53
-  store i8 %7, ptr %5, align 1
   %i.bz = load i32, ptr %.05599, align 8
   %i.ca = load i32, ptr %i.x, align 8
   %i.cb = zext i32 %i.bz to i64
@@ -395,10 +388,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not96.i.us.i, label %StopAudioBufferInLockedState.exit.i.us.i, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i
-  %i.cx = zext nneg i32 %.078.i.us71.i to i64     ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.cx
-  store i8 1, ptr %8, align 1
-  %i.cy = getelementptr inbounds nuw i8, ptr %4, i64 %i.cx
+  %i.cx = zext nneg i32 %.078.i.us71.i to i64
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.cx
   store i8 1, ptr %i.cy, align 1
   %i.cz = xor i32 %.078.i.us71.i, 1
   %i.da = load i8, ptr %i.al, align 2, !range !66, !noundef !53
@@ -417,17 +408,20 @@ StopAudioBufferInLockedState.exit.i.us.i:         ; preds = %bb.j, %.lr.ph.i
   br i1 %.not88.i.us.i, label %.lr.ph.i, label %StopAudioBufferInLockedState.exit.thread.i.i
 
 .split.i:                                         ; preds = %bb.i
-  %9 = zext nneg i32 %i.bx to i64
-  %10 = getelementptr inbounds nuw i8, ptr %4, i64 %9
-  %11 = load i8, ptr %10, align 1, !range !66, !noundef !53
-  %i.df = trunc nuw i8 %11 to i1
+  %4 = load i8, ptr %i.ai, align 1, !range !66, !noundef !53 ; 2 uses
+  %5 = load i8, ptr %i.ah, align 4, !range !66, !noundef !53 ; 2 uses
+  %.sroa.idx.i67.i = icmp eq i32 %i.bx, 1
+  %.sroa.speculated.i68.i = select i1 %.sroa.idx.i67.i, i8 %4, i8 %5
+  %i.df = trunc nuw i8 %.sroa.speculated.i68.i to i1
   br i1 %i.df, label %StopAudioBufferInLockedState.exit.thread.i.i, label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %.split.i, %StopAudioBufferInLockedState.exit.i.i
   %.074.i68.i = phi i32 [ %i.dx, %StopAudioBufferInLockedState.exit.i.i ], [ 0, %.split.i ] ; 4 uses
-  %.078.i67.i = phi i32 [ %.381.i.i, %StopAudioBufferInLockedState.exit.i.i ], [ %i.bx, %.split.i ] ; 4 uses
+  %.sroa.6.0.i71.i = phi i8 [ %.sroa.6.3.i.i, %StopAudioBufferInLockedState.exit.i.i ], [ %4, %.split.i ] ; 2 uses
+  %.sroa.0.0.i70.i = phi i8 [ %.sroa.0.3.i.i, %StopAudioBufferInLockedState.exit.i.i ], [ %5, %.split.i ] ; 2 uses
+  %.078.i67.i = phi i32 [ %.381.i.i, %StopAudioBufferInLockedState.exit.i.i ], [ %i.bx, %.split.i ] ; 5 uses
   %i.dg = icmp eq i32 %spec.select.i, %.074.i68.i
-  br i1 %i.dg, label %StopAudioBufferInLockedState.exit.thread.i.thread.i, label %bb.k
+  br i1 %i.dg, label %ReadAudioBufferFramesInInternalFormat.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %.thread.i.i
   %i.dh = sub i32 %spec.select.i, %.074.i68.i     ; 2 uses
@@ -455,11 +449,12 @@ bb.k:                                             ; preds = %.thread.i.i
   br i1 %.not96.i.i, label %StopAudioBufferInLockedState.exit.i.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.dy = zext nneg i32 %.078.i67.i to i64        ; 2 uses
+  %i.dy = zext nneg i32 %.078.i67.i to i64
   %i.dz = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.dy
   store i8 1, ptr %i.dz, align 1
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 %i.dy
-  store i8 1, ptr %12, align 1
+  %.sroa.idx27.i.i = icmp eq i32 %.078.i67.i, 1   ; 2 uses
+  %.sroa.0.0..i.i = select i1 %.sroa.idx27.i.i, i8 %.sroa.0.0.i70.i, i8 1
+  %..sroa.6.0.i.i = select i1 %.sroa.idx27.i.i, i8 1, i8 %.sroa.6.0.i71.i
   %i.ea = xor i32 %.078.i67.i, 1
   %i.eb = load i8, ptr %i.al, align 2, !range !66, !noundef !53
   %i.ec = trunc nuw i8 %i.eb to i1
@@ -482,17 +477,18 @@ bb.m:                                             ; preds = %IsAudioBufferPlayin
 
 StopAudioBufferInLockedState.exit.i.i:            ; preds = %bb.l, %bb.k
   %.381.i.i = phi i32 [ %i.ea, %bb.l ], [ %.078.i67.i, %bb.k ] ; 2 uses
-  %13 = zext nneg i32 %.381.i.i to i64
-  %14 = getelementptr inbounds nuw i8, ptr %4, i64 %13
-  %15 = load i8, ptr %14, align 1, !range !66, !noundef !53
-  %i.ef = trunc nuw i8 %15 to i1
+  %.sroa.0.3.i.i = phi i8 [ %.sroa.0.0..i.i, %bb.l ], [ %.sroa.0.0.i70.i, %bb.k ] ; 2 uses
+  %.sroa.6.3.i.i = phi i8 [ %..sroa.6.0.i.i, %bb.l ], [ %.sroa.6.0.i71.i, %bb.k ] ; 2 uses
+  %.sroa.idx.i.i = icmp eq i32 %.381.i.i, 1
+  %.sroa.speculated.i.i = select i1 %.sroa.idx.i.i, i8 %.sroa.6.3.i.i, i8 %.sroa.0.3.i.i
+  %i.ef = trunc nuw i8 %.sroa.speculated.i.i to i1
   br i1 %i.ef, label %StopAudioBufferInLockedState.exit.thread.i.i, label %.thread.i.i
 
 StopAudioBufferInLockedState.exit.thread.i.i:     ; preds = %StopAudioBufferInLockedState.exit.i.i, %StopAudioBufferInLockedState.exit.i.us.i, %bb.m, %IsAudioBufferPlayingInLockedState.exit.i.i.i, %.split.i, %.split.us.i
   %i.eg = phi i1 [ %i.cg, %IsAudioBufferPlayingInLockedState.exit.i.i.i ], [ %i.cg, %bb.m ], [ true, %.split.us.i ], [ false, %.split.i ], [ true, %StopAudioBufferInLockedState.exit.i.us.i ], [ false, %StopAudioBufferInLockedState.exit.i.i ]
   %.2.i.i = phi i32 [ %.us-phi64.i, %IsAudioBufferPlayingInLockedState.exit.i.i.i ], [ %.us-phi64.i, %bb.m ], [ 0, %.split.us.i ], [ 0, %.split.i ], [ %i.cw, %StopAudioBufferInLockedState.exit.i.us.i ], [ %i.dx, %StopAudioBufferInLockedState.exit.i.i ] ; 4 uses
   %.not89.i.i = icmp eq i32 %spec.select.i, %.2.i.i
-  br i1 %.not89.i.i, label %StopAudioBufferInLockedState.exit.thread.i.thread.i, label %bb.n
+  br i1 %.not89.i.i, label %ReadAudioBufferFramesInInternalFormat.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %StopAudioBufferInLockedState.exit.thread.i.i
   %i.eh = sub i32 %spec.select.i, %.2.i.i
@@ -503,15 +499,10 @@ bb.n:                                             ; preds = %StopAudioBufferInLo
   %i.em = zext i32 %i.el to i64
   call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ek, i8 0, i64 %i.em, i1 false)
   %spec.select91.i.i = select i1 %i.eg, i32 %.2.i.i, i32 %spec.select.i
-  br label %StopAudioBufferInLockedState.exit.thread.i.thread.i
-
-StopAudioBufferInLockedState.exit.thread.i.thread.i: ; preds = %.thread.i.i, %bb.n, %StopAudioBufferInLockedState.exit.thread.i.i
-  %.3.i.i = phi i32 [ %spec.select.i, %StopAudioBufferInLockedState.exit.thread.i.i ], [ %spec.select91.i.i, %bb.n ], [ %spec.select.i, %.thread.i.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #61
   br label %ReadAudioBufferFramesInInternalFormat.exit.i
 
-ReadAudioBufferFramesInInternalFormat.exit.i:     ; preds = %StopAudioBufferInLockedState.exit.thread.i.thread.i, %bb.h, %bb.g, %bb.e
-  %.1.i.i = phi i32 [ %spec.select.i, %bb.g ], [ 0, %bb.e ], [ %.3.i.i, %StopAudioBufferInLockedState.exit.thread.i.thread.i ], [ 0, %bb.h ] ; 2 uses
+ReadAudioBufferFramesInInternalFormat.exit.i:     ; preds = %.thread.i.i, %bb.n, %StopAudioBufferInLockedState.exit.thread.i.i, %bb.h, %bb.g, %bb.e
+  %.1.i.i = phi i32 [ %spec.select.i, %bb.g ], [ 0, %bb.e ], [ 0, %bb.h ], [ %spec.select.i, %StopAudioBufferInLockedState.exit.thread.i.i ], [ %spec.select91.i.i, %bb.n ], [ %spec.select.i, %.thread.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #61
   %i.en = zext i32 %.1.i.i to i64                 ; 3 uses
   store i64 %i.en, ptr %i.d, align 8
