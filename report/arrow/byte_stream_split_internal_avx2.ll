@@ -205,8 +205,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dbf = shufflevector <8 x i32> %i.dbd, <8 x i32> %i.dbe, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15>
   %i.dbg = bitcast <8 x i32> %i.dbf to <32 x i8>  ; 2 uses
   %i.dbh = shufflevector <32 x i8> %i.dbc, <32 x i8> %i.dbg, <32 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55> ; 4 uses
-  %i.dbi = shufflevector <32 x i8> %i.dbc, <32 x i8> %i.dbg, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 4 uses
-  %i.dbj = shufflevector <32 x i8> %i.dbh, <32 x i8> %i.dbi, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 2 uses
+  %i.dbi = shufflevector <32 x i8> %i.dbc, <32 x i8> %i.dbg, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 5 uses
+  %i.dbj = shufflevector <32 x i8> %i.dbh, <32 x i8> %i.dbi, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 3 uses
   %i.dbk = bitcast <32 x i8> %i.dbh to <8 x i32>
   %i.dbl = bitcast <32 x i8> %i.dbi to <8 x i32>
   %i.dbm = shufflevector <8 x i32> %i.dbk, <8 x i32> %i.dbl, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
@@ -225,8 +225,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dbz = shufflevector <8 x i32> %i.dbx, <8 x i32> %i.dby, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15>
   %i.dca = bitcast <8 x i32> %i.dbz to <32 x i8>  ; 2 uses
   %i.dcb = shufflevector <32 x i8> %i.dbw, <32 x i8> %i.dca, <32 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55> ; 4 uses
-  %i.dcc = shufflevector <32 x i8> %i.dbw, <32 x i8> %i.dca, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 4 uses
-  %i.dcd = shufflevector <32 x i8> %i.dcb, <32 x i8> %i.dcc, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 2 uses
+  %i.dcc = shufflevector <32 x i8> %i.dbw, <32 x i8> %i.dca, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 5 uses
+  %i.dcd = shufflevector <32 x i8> %i.dcb, <32 x i8> %i.dcc, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 3 uses
   %i.dce = bitcast <32 x i8> %i.dcb to <8 x i32>
   %i.dcf = bitcast <32 x i8> %i.dcc to <8 x i32>
   %i.dcg = shufflevector <8 x i32> %i.dce, <8 x i32> %i.dcf, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
@@ -245,8 +245,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dct = shufflevector <8 x i32> %i.dcr, <8 x i32> %i.dcs, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15>
   %i.dcu = bitcast <8 x i32> %i.dct to <32 x i8>  ; 2 uses
   %i.dcv = shufflevector <32 x i8> %i.dcq, <32 x i8> %i.dcu, <32 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55> ; 4 uses
-  %i.dcw = shufflevector <32 x i8> %i.dcq, <32 x i8> %i.dcu, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 4 uses
-  %i.dcx = shufflevector <32 x i8> %i.dcv, <32 x i8> %i.dcw, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 2 uses
+  %i.dcw = shufflevector <32 x i8> %i.dcq, <32 x i8> %i.dcu, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 5 uses
+  %i.dcx = shufflevector <32 x i8> %i.dcv, <32 x i8> %i.dcw, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 3 uses
   %i.dcy = bitcast <32 x i8> %i.dcv to <8 x i32>
   %i.dcz = bitcast <32 x i8> %i.dcw to <8 x i32>
   %i.dda = shufflevector <8 x i32> %i.dcy, <8 x i32> %i.dcz, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
@@ -265,8 +265,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ddn = shufflevector <8 x i32> %i.ddl, <8 x i32> %i.ddm, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15>
   %i.ddo = bitcast <8 x i32> %i.ddn to <32 x i8>  ; 2 uses
   %i.ddp = shufflevector <32 x i8> %i.ddk, <32 x i8> %i.ddo, <32 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55> ; 4 uses
-  %i.ddq = shufflevector <32 x i8> %i.ddk, <32 x i8> %i.ddo, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 4 uses
-  %i.ddr = shufflevector <32 x i8> %i.ddp, <32 x i8> %i.ddq, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 2 uses
+  %i.ddq = shufflevector <32 x i8> %i.ddk, <32 x i8> %i.ddo, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63> ; 5 uses
+  %i.ddr = shufflevector <32 x i8> %i.ddp, <32 x i8> %i.ddq, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47> ; 3 uses
   %i.dds = bitcast <32 x i8> %i.ddp to <8 x i32>
   %i.ddt = bitcast <32 x i8> %i.ddq to <8 x i32>
   %i.ddu = shufflevector <8 x i32> %i.dds, <8 x i32> %i.ddt, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
@@ -276,53 +276,73 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ddy = bitcast <32 x i8> %i.ddx to <4 x i64>
   %i.ddz = shufflevector <32 x i8> %i.dbj, <32 x i8> %i.dcx, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
   %i.dea = bitcast <32 x i8> %i.ddz to <4 x i64>
+  %4 = shufflevector <4 x i64> %i.ddy, <4 x i64> %i.dea, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
   %i.deb = shufflevector <8 x i32> %i.dbm, <8 x i32> %i.dda, <4 x i32> <i32 2, i32 3, i32 10, i32 11>
   %i.dec = bitcast <4 x i32> %i.deb to <2 x i64>
   %i.ded = shufflevector <32 x i8> %i.dbi, <32 x i8> %i.dcw, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55>
   %i.dee = bitcast <32 x i8> %i.ded to <8 x i32>
   %i.def = shufflevector <32 x i8> %i.dbi, <32 x i8> %i.dcw, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
   %i.deg = bitcast <32 x i8> %i.def to <8 x i32>
+  %5 = shufflevector <8 x i32> %i.dee, <8 x i32> %i.deg, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.deh = shufflevector <32 x i8> %i.dcb, <32 x i8> %i.ddp, <32 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dei = bitcast <32 x i8> %i.deh to <4 x i64>
   %i.dej = shufflevector <32 x i8> %i.dcd, <32 x i8> %i.ddr, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55>
   %i.dek = bitcast <32 x i8> %i.dej to <4 x i64>
   %i.del = shufflevector <32 x i8> %i.dcd, <32 x i8> %i.ddr, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
   %i.dem = bitcast <32 x i8> %i.del to <4 x i64>
+  %6 = shufflevector <4 x i64> %i.dek, <4 x i64> %i.dem, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 2 uses
   %i.den = shufflevector <8 x i32> %i.dcg, <8 x i32> %i.ddu, <4 x i32> <i32 2, i32 3, i32 10, i32 11>
   %i.deo = bitcast <4 x i32> %i.den to <2 x i64>
   %i.dep = shufflevector <32 x i8> %i.dcc, <32 x i8> %i.ddq, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55>
   %i.deq = bitcast <32 x i8> %i.dep to <8 x i32>
   %i.der = shufflevector <32 x i8> %i.dcc, <32 x i8> %i.ddq, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
   %i.des = bitcast <32 x i8> %i.der to <8 x i32>
+  %7 = shufflevector <8 x i32> %i.deq, <8 x i32> %i.des, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.det = shufflevector <32 x i8> %i.dbh, <32 x i8> %i.dcb, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.deu = shufflevector <32 x i8> %i.dcv, <32 x i8> %i.ddp, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dev = shufflevector <32 x i8> %i.det, <32 x i8> %i.deu, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47>
   %i.dew = shufflevector <4 x i64> %i.ddw, <4 x i64> %i.dei, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  %4 = shufflevector <4 x i64> %i.ddy, <4 x i64> %i.dek, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
-  %5 = shufflevector <4 x i64> %i.dea, <4 x i64> %i.dem, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %8 = shufflevector <4 x i64> %4, <4 x i64> %6, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
+  %9 = shufflevector <4 x i64> %4, <4 x i64> %6, <2 x i32> <i32 1, i32 5>
+  %10 = shufflevector <2 x i64> %9, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = shufflevector <4 x i64> %8, <4 x i64> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %12 = shufflevector <32 x i8> %i.dbj, <32 x i8> %i.dcd, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  %13 = bitcast <32 x i8> %12 to <4 x i64>
+  %14 = shufflevector <32 x i8> %i.dcx, <32 x i8> %i.ddr, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  %15 = bitcast <32 x i8> %14 to <4 x i64>
+  %16 = shufflevector <4 x i64> %13, <4 x i64> %15, <4 x i32> <i32 2, i32 3, i32 6, i32 7>
   %i.dex = shufflevector <8 x i32> %i.dbm, <8 x i32> %i.dcg, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dey = shufflevector <8 x i32> %i.dda, <8 x i32> %i.ddu, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dez = shufflevector <8 x i32> %i.dex, <8 x i32> %i.dey, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
   %i.dfa = shufflevector <2 x i64> %i.dec, <2 x i64> %i.deo, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %6 = shufflevector <8 x i32> %i.dee, <8 x i32> %i.deq, <8 x i32> <i32 4, i32 5, i32 12, i32 13, i32 6, i32 7, i32 14, i32 15>
-  %7 = shufflevector <8 x i32> %i.deg, <8 x i32> %i.des, <8 x i32> <i32 4, i32 5, i32 12, i32 13, i32 6, i32 7, i32 14, i32 15>
+  %17 = shufflevector <8 x i32> %5, <8 x i32> %7, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison>
+  %18 = bitcast <8 x i32> %17 to <4 x i64>
+  %19 = shufflevector <8 x i32> %5, <8 x i32> %7, <4 x i32> <i32 2, i32 3, i32 10, i32 11>
+  %20 = bitcast <4 x i32> %19 to <2 x i64>
+  %21 = shufflevector <2 x i64> %20, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %22 = shufflevector <4 x i64> %18, <4 x i64> %21, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %23 = shufflevector <32 x i8> %i.dbi, <32 x i8> %i.dcc, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  %24 = bitcast <32 x i8> %23 to <8 x i32>
+  %25 = shufflevector <32 x i8> %i.dcw, <32 x i8> %i.ddq, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  %26 = bitcast <32 x i8> %25 to <8 x i32>
+  %27 = shufflevector <8 x i32> %24, <8 x i32> %26, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15>
   %i.dfb = shl nuw nsw i64 %.078113, 5            ; 8 uses
   %i.dfc = getelementptr inbounds nuw i8, ptr %3, i64 %i.dfb
   store <32 x i8> %i.dev, ptr %i.dfc, align 1, !tbaa !7
   %i.dfd = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.dfb
   store <4 x i64> %i.dew, ptr %i.dfd, align 1, !tbaa !7
   %i.dfe = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.dfb
-  store <4 x i64> %4, ptr %i.dfe, align 1, !tbaa !7
+  store <4 x i64> %11, ptr %i.dfe, align 1, !tbaa !7
   %i.dff = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.dfb
-  store <4 x i64> %5, ptr %i.dff, align 1, !tbaa !7
+  store <4 x i64> %16, ptr %i.dff, align 1, !tbaa !7
   %i.dfg = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.dfb
   store <8 x i32> %i.dez, ptr %i.dfg, align 1, !tbaa !7
   %i.dfh = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.dfb
   store <4 x i64> %i.dfa, ptr %i.dfh, align 1, !tbaa !7
   %i.dfi = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.dfb
-  store <8 x i32> %6, ptr %i.dfi, align 1, !tbaa !7
+  store <4 x i64> %22, ptr %i.dfi, align 1, !tbaa !7
   %i.dfj = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.dfb
-  store <8 x i32> %7, ptr %i.dfj, align 1, !tbaa !7
+  store <8 x i32> %27, ptr %i.dfj, align 1, !tbaa !7
   %i.dfk = add nuw nsw i64 %.078113, 1            ; 2 uses
   %exitcond127.not = icmp eq i64 %i.dfk, %i.bby
   br i1 %exitcond127.not, label %_ZN5arrow4util8internal25ByteStreamSplitEncodeSimdIN5xsimd4fma3INS3_6sse4_2EEELi8EEEvPKhilPh.exit, label %.preheader98.preheader, !llvm.loop !218

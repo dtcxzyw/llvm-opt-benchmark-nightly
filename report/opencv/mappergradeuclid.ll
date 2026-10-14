@@ -158,7 +158,7 @@ bb.a:
   %46 = alloca %"class.cv::_InputArray", align 8  ; 5 uses
   %47 = alloca %"class.cv::MatExpr", align 8      ; 9 uses
   %48 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
-  %49 = alloca %"class.cv::Scalar_", align 16     ; 5 uses
+  %49 = alloca %"class.cv::Scalar_", align 8      ; 5 uses
   %50 = alloca %"class.cv::_InputArray", align 8  ; 7 uses
   %51 = alloca %"class.cv::Scalar_", align 8      ; 5 uses
   %52 = alloca %"class.cv::_InputArray", align 8  ; 5 uses
@@ -561,7 +561,8 @@ bb.aq:                                            ; preds = %bb.ap
           to label %bb.ar unwind label %bb.db
 
 bb.ar:                                            ; preds = %bb.aq
-  %84 = load <2 x double>, ptr %49, align 16      ; 3 uses
+  %84 = load <1 x double>, ptr %49, align 8       ; 3 uses
+  %85 = shufflevector <1 x double> %84, <1 x double> poison, <2 x i32> <i32 0, i32 poison>
   %i.cm = getelementptr inbounds nuw i8, ptr %53, i64 432
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.cm) #16
   %i.cn = getelementptr inbounds nuw i8, ptr %53, i64 224
@@ -726,7 +727,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.dy = fmul <2 x double> %i.dv, %i.dx
   %i.dz = insertelement <2 x double> poison, double %i.bu, i64 0
   %i.ea = insertelement <2 x double> %i.dz, double %i.bc, i64 1
-  %i.eb = shufflevector <2 x double> %84, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.eb = shufflevector <1 x double> %84, <1 x double> poison, <2 x i32> zeroinitializer
   %i.ec = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ea, <2 x double> %i.eb, <2 x double> %i.dy) ; 3 uses
   %i.ed = shufflevector <2 x double> %i.ec, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.ee = insertelement <2 x double> %i.ed, double %i.bu, i64 1
@@ -748,7 +749,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.er = fdiv double 1.000000e+00, %i.ep         ; 2 uses
   %i.es = extractelement <2 x double> %i.ec, i64 0
   %i.et = fmul double %i.es, %i.er
-  %i.eu = insertelement <2 x double> %84, double %i.bl, i64 1 ; 2 uses
+  %i.eu = insertelement <2 x double> %85, double %i.bl, i64 1 ; 2 uses
   %i.ev = fneg <2 x double> %i.eu
   %i.ew = insertelement <2 x double> poison, double %i.bl, i64 0
   %i.ex = insertelement <2 x double> %i.ew, double %i.bc, i64 1 ; 2 uses
@@ -758,7 +759,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.fb = fmul <2 x double> %i.fa, %i.ev
   %i.fc = insertelement <2 x double> poison, double %i.bl, i64 0
   %i.fd = insertelement <2 x double> %i.fc, double %i.at, i64 1
-  %i.fe = shufflevector <2 x double> %84, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %i.fe = shufflevector <1 x double> %84, <1 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.ff = insertelement <2 x double> %i.fe, double %i.cd, i64 0
   %i.fg = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fd, <2 x double> %i.ff, <2 x double> %i.fb)
   %i.fh = insertelement <2 x double> poison, double %i.er, i64 0

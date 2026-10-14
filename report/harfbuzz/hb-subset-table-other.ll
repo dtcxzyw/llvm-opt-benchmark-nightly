@@ -205,10 +205,12 @@ vector.ph86:                                      ; preds = %vector.memcheck82
   %n.vec87 = sub nsw i64 %i.aj, %i.aq             ; 2 uses
   %i.ar = mul i64 %n.vec87, 12
   %i.as = getelementptr i8, ptr %1, i64 %i.ar
-  %i.at = load <4 x float>, ptr %3, align 4       ; 4 uses
-  %broadcast.splat97 = shufflevector <4 x float> %i.at, <4 x float> poison, <4 x i32> zeroinitializer
+  %5 = load <1 x float>, ptr %3, align 4
+  %broadcast.splat97 = shufflevector <1 x float> %5, <1 x float> poison, <4 x i32> zeroinitializer
+  %i.at = load <4 x float>, ptr %3, align 4       ; 2 uses
   %broadcast.splat95 = shufflevector <4 x float> %i.at, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
-  %broadcast.splat101 = shufflevector <4 x float> %i.at, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %6 = load <2 x float>, ptr %3, align 4
+  %broadcast.splat101 = shufflevector <2 x float> %6, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %broadcast.splat99 = shufflevector <4 x float> %i.at, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   br label %vector.body88
 
@@ -318,10 +320,12 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = sub nsw i64 %i.cs, %i.cz               ; 2 uses
   %i.da = mul i64 %n.vec, 12
   %i.db = getelementptr i8, ptr %1, i64 %i.da
-  %i.dc = load <4 x float>, ptr %3, align 4       ; 4 uses
-  %broadcast.splat70 = shufflevector <4 x float> %i.dc, <4 x float> poison, <4 x i32> zeroinitializer
+  %7 = load <1 x float>, ptr %3, align 4
+  %broadcast.splat70 = shufflevector <1 x float> %7, <1 x float> poison, <4 x i32> zeroinitializer
+  %i.dc = load <4 x float>, ptr %3, align 4       ; 2 uses
   %broadcast.splat = shufflevector <4 x float> %i.dc, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
-  %broadcast.splat74 = shufflevector <4 x float> %i.dc, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %8 = load <2 x float>, ptr %3, align 4
+  %broadcast.splat74 = shufflevector <2 x float> %8, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %broadcast.splat72 = shufflevector <4 x float> %i.dc, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   br label %vector.body
 

@@ -205,9 +205,10 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %.0.i.i.i.i.i.i.i.i.i, 9223372036854775804 ; 3 uses
-  %9 = load <2 x double>, ptr %1, align 16        ; 2 uses
-  %broadcast.splat = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %broadcast.splat80 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %9 = load <1 x double>, ptr %1, align 16
+  %broadcast.splat = shufflevector <1 x double> %9, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %10 = load <2 x double>, ptr %1, align 16
+  %broadcast.splat80 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -332,9 +333,10 @@ vector.memcheck95:                                ; preds = %.lr.ph.i17.i.i.i.i.
 vector.ph103:                                     ; preds = %vector.memcheck95
   %n.vec104 = and i64 %i.dx, -4                   ; 3 uses
   %i.ej = add i64 %i.bs, %n.vec104
-  %10 = load <2 x double>, ptr %1, align 16       ; 2 uses
-  %broadcast.splat110 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %broadcast.splat114 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %11 = load <1 x double>, ptr %1, align 16
+  %broadcast.splat110 = shufflevector <1 x double> %11, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %12 = load <2 x double>, ptr %1, align 16
+  %broadcast.splat114 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   br label %vector.body105
 
 vector.body105:                                   ; preds = %vector.body105, %vector.ph103

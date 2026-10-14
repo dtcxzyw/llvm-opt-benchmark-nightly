@@ -205,10 +205,12 @@ bb.b:                                             ; preds = %bb.a, %.thread206
   br i1 %i.a, label %.lr.ph.i, label %_Z14maxdirfilteredI9btVector3EiPKT_iRS2_R20btAlignedObjectArrayIiE.exit
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %i.bb = load <4 x float>, ptr %2, align 4       ; 3 uses
+  %4 = load <1 x float>, ptr %2, align 4
+  %5 = load <2 x float>, ptr %2, align 4
+  %i.bb = load <4 x float>, ptr %2, align 4
   %i.bc = shufflevector <4 x float> %i.bb, <4 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.bd = shufflevector <4 x float> %i.bb, <4 x float> poison, <2 x i32> zeroinitializer
-  %i.be = shufflevector <4 x float> %i.bb, <4 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.bd = shufflevector <1 x float> %4, <1 x float> poison, <2 x i32> zeroinitializer
+  %i.be = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %.lr.ph.i
