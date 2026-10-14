@@ -17,8 +17,6 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dggbal_(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr nofree noundef captures(none) %6, ptr noundef %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr nofree noundef captures(none) initializes((0, 4)) %11) local_unnamed_addr #0 {
 bb.a:
-  %12 = ptrtoaddr ptr %8 to i64                   ; 2 uses
-  %13 = ptrtoaddr ptr %9 to i64                   ; 2 uses
   %i.a = alloca i32, align 4                      ; 22 uses
   %i.b = alloca i32, align 4                      ; 15 uses
   %i.c = alloca double, align 8                   ; 13 uses
@@ -134,7 +132,9 @@ iter.check:                                       ; preds = %bb.m
   %wide.trip.count = zext i32 %i.ah to i64        ; 2 uses
   %i.ai = zext nneg i32 %i.ag to i64              ; 5 uses
   %min.iters.check = icmp ult i32 %i.ag, 4
-  %i.aj = sub i64 %12, %13
+  %12 = ptrtoaddr ptr %9 to i64
+  %13 = ptrtoaddr ptr %8 to i64
+  %i.aj = sub i64 %13, %12
   %diff.check = icmp ugt i64 %i.aj, -128
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -537,7 +537,9 @@ iter.check1143:                                   ; preds = %bb.aj
   %i.ff = zext i32 %i.fe to i64
   %i.fg = add nuw nsw i64 %i.ff, 1                ; 5 uses
   %min.iters.check1132 = icmp ult i32 %i.fe, 3
-  %i.fh = sub i64 %12, %13
+  %14 = ptrtoaddr ptr %9 to i64
+  %15 = ptrtoaddr ptr %8 to i64
+  %i.fh = sub i64 %15, %14
   %diff.check1131 = icmp ugt i64 %i.fh, -128
   %or.cond1175 = or i1 %min.iters.check1132, %diff.check1131
   br i1 %or.cond1175, label %.lr.ph733.preheader, label %vector.main.loop.iter.check1133

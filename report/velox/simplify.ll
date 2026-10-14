@@ -204,7 +204,6 @@ bb.b:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN3re214CoalesceWalker9PostVisitEPNS_6RegexpES2_S2_PS2_i(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree readnone captures(none) %2, ptr nofree readnone captures(none) %3, ptr nofree noundef captures(none) %4, i32 %5) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoaddr ptr %4 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 6 ; 12 uses
   %i.b = load i16, ptr %i.a, align 2, !tbaa !47   ; 4 uses
   %i.c = icmp eq i16 %i.b, 0
@@ -297,10 +296,11 @@ _ZN3re26Regexp8AllocSubEi.exit:                   ; preds = %._ZN3re26Regexp8All
   br i1 %.not150, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %_ZN3re26Regexp8AllocSubEi.exit
-  %.0.i200 = ptrtoaddr ptr %.0.i to i64
   %wide.trip.count = zext i16 %i.ae to i64        ; 8 uses
   %min.iters.check = icmp ult i16 %i.ae, 4
-  %i.aj = sub i64 %6, %.0.i200
+  %6 = ptrtoaddr ptr %.0.i to i64
+  %7 = ptrtoaddr ptr %4 to i64
+  %i.aj = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.aj, -128
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -547,10 +547,11 @@ _ZN3re26Regexp8AllocSubEi.exit127:                ; preds = %._ZN3re26Regexp8All
   br i1 %.not152, label %.loopexit, label %iter.check228
 
 iter.check228:                                    ; preds = %_ZN3re26Regexp8AllocSubEi.exit127
-  %.0.i128211 = ptrtoaddr ptr %.0.i128 to i64
   %wide.trip.count176 = zext i16 %i.dg to i64     ; 8 uses
   %min.iters.check213 = icmp ult i16 %i.dg, 4
-  %i.dl = sub i64 %6, %.0.i128211
+  %8 = ptrtoaddr ptr %.0.i128 to i64
+  %9 = ptrtoaddr ptr %4 to i64
+  %i.dl = sub i64 %9, %8
   %diff.check212 = icmp ugt i64 %i.dl, -128
   %or.cond271 = select i1 %min.iters.check213, i1 true, i1 %diff.check212
   br i1 %or.cond271, label %.lr.ph139.preheader, label %vector.main.loop.iter.check214
@@ -953,8 +954,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define noundef ptr @_ZN3re214SimplifyWalker9PostVisitEPNS_6RegexpES2_S2_PS2_i(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr nofree readnone captures(none) %2, ptr nofree readnone captures(none) %3, ptr nofree noundef readonly captures(none) %4, i32 %5) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = ptrtoaddr ptr %4 to i64
-  %7 = alloca %"class.absl::lts_20240116::log_internal::LogMessage", align 8 ; 8 uses
+  %6 = alloca %"class.absl::lts_20240116::log_internal::LogMessage", align 8 ; 8 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = load i8, ptr %1, align 8, !tbaa !46      ; 2 uses
   switch i8 %i.b, label %bb.y [
@@ -1073,10 +1073,11 @@ _ZN3re26Regexp8AllocSubEi.exit:                   ; preds = %._ZN3re26Regexp8All
   br i1 %.not, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %_ZN3re26Regexp8AllocSubEi.exit
-  %.0.i96 = ptrtoaddr ptr %.0.i to i64
   %wide.trip.count = zext i16 %i.ag to i64        ; 8 uses
   %min.iters.check = icmp ult i16 %i.ag, 4
-  %i.al = sub i64 %6, %.0.i96
+  %7 = ptrtoaddr ptr %.0.i to i64
+  %8 = ptrtoaddr ptr %4 to i64
+  %i.al = sub i64 %8, %7
   %diff.check = icmp ugt i64 %i.al, -128
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -1333,9 +1334,9 @@ bb.x:                                             ; preds = %bb.a
   br label %bb.ad
 
 bb.y:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
-  call void @_ZN4absl12lts_2024011612log_internal10LogMessageC1EPKciNS2_8ErrorTagE(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull @.str, i32 noundef 570) #22
-  invoke void @_ZN4absl12lts_2024011612log_internal10LogMessage19CopyToEncodedBufferILNS2_10StringTypeE0EEEvSt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(16) %7, i64 27, ptr nonnull @.str.6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
+  call void @_ZN4absl12lts_2024011612log_internal10LogMessageC1EPKciNS2_8ErrorTagE(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull @.str, i32 noundef 570) #22
+  invoke void @_ZN4absl12lts_2024011612log_internal10LogMessage19CopyToEncodedBufferILNS2_10StringTypeE0EEEvSt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(16) %6, i64 27, ptr nonnull @.str.6)
           to label %_ZN4absl12lts_2024011612log_internal10LogMessagelsILi28EEERS2_RAT__Kc.exit unwind label %bb.aa
 
 _ZN4absl12lts_2024011612log_internal10LogMessagelsILi28EEERS2_RAT__Kc.exit: ; preds = %bb.y
@@ -1343,13 +1344,13 @@ _ZN4absl12lts_2024011612log_internal10LogMessagelsILi28EEERS2_RAT__Kc.exit: ; pr
   %i.ed = load i8, ptr %1, align 8, !tbaa !46
   %i.ee = zext i8 %i.ed to i32
   store i32 %i.ee, ptr %i.a, align 4, !tbaa !60
-  %i.ef = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN4absl12lts_2024011612log_internal10LogMessagelsIN3re28RegexpOpETnNSt9enable_ifIXntsr4absl16HasAbslStringifyIT_EE5valueEiE4typeELi0EEERS2_RKS7_(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
+  %i.ef = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN4absl12lts_2024011612log_internal10LogMessagelsIN3re28RegexpOpETnNSt9enable_ifIXntsr4absl16HasAbslStringifyIT_EE5valueEiE4typeELi0EEERS2_RKS7_(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
           to label %bb.z unwind label %bb.ab      ; 0 uses
 
 bb.z:                                             ; preds = %_ZN4absl12lts_2024011612log_internal10LogMessagelsILi28EEERS2_RAT__Kc.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  call void @_ZN4absl12lts_2024011612log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %7) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
+  call void @_ZN4absl12lts_2024011612log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %6) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   %i.eg = call noundef ptr @_ZN3re26Regexp6IncrefEv(ptr noundef nonnull align 8 dereferenceable(40) %1)
   br label %bb.ad
 
@@ -1366,8 +1367,8 @@ bb.ab:                                            ; preds = %_ZN4absl12lts_20240
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %.pn = phi { ptr, i32 } [ %i.ei, %bb.ab ], [ %i.eh, %bb.aa ]
-  call void @_ZN4absl12lts_2024011612log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %7) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #19
+  call void @_ZN4absl12lts_2024011612log_internal10LogMessageD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %6) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   br label %bb.ae
 
 bb.ad:                                            ; preds = %bb.w, %bb.v, %bb.p, %bb.t, %bb.n, %bb.r, %bb.j, %bb.l, %bb.z, %bb.x, %._crit_edge, %.loopexit, %bb.b

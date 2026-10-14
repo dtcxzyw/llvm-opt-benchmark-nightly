@@ -71,7 +71,7 @@ $_ZN22HashTablePermutohedralILi5ELi2EE9growExactEm = comdat any
 ; Function Attrs: mustprogress uwtable
 define void @dt_dense_crf_binary(ptr nofree noundef captures(address_is_null) %0, ptr nofree noundef readonly captures(address_is_null) %1, i32 noundef %2, i32 noundef %3, float noundef %4, float noundef %5, float noundef %6, float noundef %7, i32 noundef %8) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
   %i.b = alloca [5 x float], align 16             ; 4 uses
   %i.c = alloca [2 x float], align 8              ; 4 uses
   %i.d = alloca [2 x float], align 8              ; 4 uses
@@ -103,8 +103,8 @@ bb.b:                                             ; preds = %bb.a
   %i.s = mul nuw nsw i64 %i.p, 20
   %i.t = tail call ptr @dt_alloc_aligned(i64 noundef %i.s) ; 14 uses
   %i.u = shl nuw nsw i64 %i.p, 2                  ; 3 uses
-  %i.v = tail call ptr @dt_alloc_aligned(i64 noundef %i.u) ; 12 uses
-  %i.w = ptrtoaddr ptr %i.v to i64                ; 2 uses
+  %i.v = tail call ptr @dt_alloc_aligned(i64 noundef %i.u) ; 13 uses
+  %i.w = ptrtoaddr ptr %i.v to i64
   %i.x = tail call ptr @dt_alloc_aligned(i64 noundef %i.u) ; 12 uses
   %i.y = ptrtoaddr ptr %i.x to i64
   %i.z = tail call ptr @dt_alloc_aligned(i64 noundef %i.u) ; 12 uses
@@ -221,7 +221,9 @@ scalar.ph.preheader:                              ; preds = %.preheader226, %mid
 
 .lr.ph.preheader:                                 ; preds = %.preheader
   %min.iters.check289 = icmp ult i32 %i.m, 8
-  %i.bk = sub i64 %i.a, %i.w
+  %11 = ptrtoaddr ptr %i.v to i64
+  %12 = ptrtoaddr ptr %0 to i64
+  %i.bk = sub i64 %12, %11
   %diff.check = icmp ugt i64 %i.bk, -32
   %or.cond = select i1 %min.iters.check289, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.preheader515, label %vector.ph290

@@ -205,7 +205,6 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 ; Function Attrs: nofree norecurse nosync nounwind memory(write, argmem: read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef nonnull ptr @TextSubtext(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #15 {
 bb.a:
-  %3 = ptrtoaddr ptr %0 to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) @TextSubtext.buffer, i8 0, i64 1024, i1 false)
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %.preheader.i
@@ -242,6 +241,7 @@ iter.check:                                       ; preds = %bb.b
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %3 = ptrtoaddr ptr %0 to i64
   %i.j = add i64 %3, %i.h
   %i.k = sub i64 add (i64 ptrtoaddr (ptr @TextSubtext.buffer to i64), i64 -1), %i.j
   %diff.check = icmp ult i64 %i.k, 31
@@ -644,8 +644,7 @@ bb.d:                                             ; preds = %TextFindIndex.exit,
 ; Function Attrs: nounwind uwtable
 define noundef nonnull ptr @TextInsert(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef readonly captures(address_is_null) %1, i32 noundef %2) local_unnamed_addr #9 {
 bb.a:
-  %3 = ptrtoaddr ptr %1 to i64
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %0 to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) @TextInsert.buffer, i8 0, i64 1024, i1 false)
   %i.b = icmp ne ptr %0, null
   %i.c = icmp ne ptr %1, null
@@ -684,7 +683,8 @@ TextLength.exit44:                                ; preds = %.preheader.i40
 iter.check:                                       ; preds = %.preheader46
   %wide.trip.count = zext nneg i32 %2 to i64      ; 8 uses
   %min.iters.check = icmp ult i32 %2, 4
-  %i.o = sub i64 add (i64 ptrtoaddr (ptr @TextInsert.buffer to i64), i64 -1), %i.a
+  %3 = ptrtoaddr ptr %0 to i64
+  %i.o = sub i64 add (i64 ptrtoaddr (ptr @TextInsert.buffer to i64), i64 -1), %3
   %diff.check = icmp ult i64 %i.o, 31
   %or.cond132 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond132, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -778,8 +778,9 @@ iter.check89:                                     ; preds = %.preheader45
   br i1 %min.iters.check75, label %.lr.ph49.preheader, label %vector.memcheck73
 
 vector.memcheck73:                                ; preds = %iter.check89
+  %4 = ptrtoaddr ptr %1 to i64
   %i.aj = add i64 %i.af, ptrtoaddr (ptr @TextInsert.buffer to i64)
-  %i.ak = sub i64 %3, %i.aj
+  %i.ak = sub i64 %4, %i.aj
   %diff.check74 = icmp ugt i64 %i.ak, -32
   br i1 %diff.check74, label %.lr.ph49.preheader, label %vector.main.loop.iter.check76
 

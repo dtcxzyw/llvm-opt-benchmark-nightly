@@ -29,12 +29,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @ucnv_fromUWriteBytes_78(ptr nofree noundef writeonly captures(address_is_null) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readnone captures(address) %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6, ptr nofree noundef writeonly captures(none) %7) local_unnamed_addr #1 {
 bb.a:
-  %8 = ptrtoaddr ptr %0 to i64
   %i.a = ptrtoaddr ptr %4 to i64
-  %9 = ptrtoaddr ptr %1 to i64
   %i.b = load ptr, ptr %3, align 8, !tbaa !42
-  %.fr = freeze ptr %i.b                          ; 18 uses
-  %i.c = ptrtoaddr ptr %.fr to i64                ; 2 uses
+  %.fr = freeze ptr %i.b                          ; 19 uses
+  %i.c = ptrtoaddr ptr %.fr to i64
   %i.d = icmp eq ptr %5, null
   br i1 %i.d, label %bb.c, label %bb.b
 
@@ -136,7 +134,9 @@ iter.check:                                       ; preds = %bb.c
   %umin = tail call i64 @llvm.umin.i64(i64 %i.al, i64 %i.an) ; 3 uses
   %i.ao = add nuw nsw i64 %umin, 1                ; 5 uses
   %min.iters.check106 = icmp samesign ult i64 %umin, 3
-  %i.ap = sub i64 %9, %i.c
+  %8 = ptrtoaddr ptr %.fr to i64
+  %9 = ptrtoaddr ptr %1 to i64
+  %i.ap = sub i64 %9, %8
   %diff.check = icmp ugt i64 %i.ap, -32
   %or.cond = or i1 %min.iters.check106, %diff.check
   br i1 %or.cond, label %.lr.ph53.preheader, label %vector.main.loop.iter.check
@@ -248,7 +248,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.236 = phi i32 [ %.135.lcssa, %._crit_edge ], [ %2, %bb.c ], [ %i.bb, %vec.epilog.middle.block ], [ %i.au, %middle.block117 ], [ %i.bg, %.lr.ph53 ] ; 9 uses
   %.232 = phi ptr [ %.131.lcssa, %._crit_edge ], [ %1, %bb.c ], [ %i.az, %vec.epilog.middle.block ], [ %i.as, %middle.block117 ], [ %i.bd, %.lr.ph53 ] ; 7 uses
   %.2 = phi ptr [ %.1.lcssa, %._crit_edge ], [ %.fr, %bb.c ], [ %i.ay, %vec.epilog.middle.block ], [ %i.ar, %middle.block117 ], [ %i.bf, %.lr.ph53 ]
-  %.232133 = ptrtoaddr ptr %.232 to i64
   store ptr %.2, ptr %3, align 8, !tbaa !42
   %i.bs = icmp sgt i32 %.236, 0
   br i1 %i.bs, label %bb.d, label %bb.e
@@ -267,7 +266,9 @@ iter.check154:                                    ; preds = %bb.d
   br i1 %min.iters.check136, label %vec.epilog.scalar.ph155.preheader, label %vector.memcheck132
 
 vector.memcheck132:                               ; preds = %iter.check154
-  %i.bx = sub i64 %8, %.232133
+  %10 = ptrtoaddr ptr %0 to i64
+  %11 = ptrtoaddr ptr %.232 to i64
+  %i.bx = sub i64 %10, %11
   %i.by = add i64 %i.bx, 103
   %diff.check134 = icmp ult i64 %i.by, 31
   br i1 %diff.check134, label %vec.epilog.scalar.ph155.preheader, label %vector.main.loop.iter.check137
@@ -359,7 +360,6 @@ bb.e:                                             ; preds = %.loopexit, %.loopex
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @ucnv_toUWriteUChars_78(ptr nofree noundef writeonly captures(address_is_null) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef captures(none) %3, ptr nofree noundef readnone captures(address) %4, ptr nofree noundef captures(address_is_null) %5, i32 noundef %6, ptr nofree noundef writeonly captures(none) %7) local_unnamed_addr #1 {
 bb.a:
-  %8 = ptrtoaddr ptr %0 to i64
   %i.a = load ptr, ptr %3, align 8, !tbaa !26     ; 6 uses
   %i.b = icmp eq ptr %5, null
   br i1 %i.b, label %bb.c, label %bb.b
@@ -424,7 +424,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.236 = phi i32 [ %.135.lcssa, %._crit_edge ], [ %2, %bb.c ], [ %i.n, %.lr.ph53 ] ; 9 uses
   %.232 = phi ptr [ %.131.lcssa, %._crit_edge ], [ %1, %bb.c ], [ %i.k, %.lr.ph53 ] ; 7 uses
   %.2 = phi ptr [ %.1.lcssa, %._crit_edge ], [ %i.a, %bb.c ], [ %i.m, %.lr.ph53 ]
-  %.23282 = ptrtoaddr ptr %.232 to i64
   store ptr %.2, ptr %3, align 8, !tbaa !26
   %i.z = icmp sgt i32 %.236, 0
   br i1 %i.z, label %bb.d, label %bb.e
@@ -443,7 +442,9 @@ iter.check:                                       ; preds = %bb.d
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ae = sub i64 %8, %.23282
+  %8 = ptrtoaddr ptr %0 to i64
+  %9 = ptrtoaddr ptr %.232 to i64
+  %i.ae = sub i64 %8, %9
   %i.af = add i64 %i.ae, 143
   %diff.check = icmp ult i64 %i.af, 31
   br i1 %diff.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

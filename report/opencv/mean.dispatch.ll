@@ -205,8 +205,7 @@ bb.a:
   %i.a = alloca [3 x ptr], align 16               ; 7 uses
   %i.b = alloca [2 x ptr], align 16               ; 12 uses
   %25 = alloca %"class.cv::NAryMatIterator", align 8 ; 9 uses
-  %i.c = alloca [512 x double], align 16          ; 18 uses
-  %26 = ptrtoaddr ptr %i.c to i64                 ; 2 uses
+  %i.c = alloca [512 x double], align 16          ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   call void @_ZN2cv5utils5trace7details6RegionC1ERKNS3_21LocationStaticStorageE(ptr noundef nonnull align 8 dereferenceable(12) %6, ptr noundef nonnull align 8 dereferenceable(32) @_ZZN2cv10meanStdDevERKNS_11_InputArrayERKNS_12_OutputArrayES5_S2_E25__cv_trace_location_fn229)
   %i.d = invoke noundef zeroext i1 @_ZNK2cv11_InputArray5emptyEv(ptr noundef nonnull align 8 dereferenceable(24) %0)
@@ -609,8 +608,9 @@ bb.dr:                                            ; preds = %bb.dq
   %i.kv = getelementptr inbounds nuw i8, ptr %15, i64 24
   %i.kw = load ptr, ptr %i.kv, align 8, !tbaa !306 ; 7 uses
   %min.iters.check528 = icmp samesign ult i32 %i.ba, 7
-  %i.kx = ptrtoaddr ptr %i.kw to i64
-  %i.ky = sub i64 %26, %i.kx
+  %26 = ptrtoaddr ptr %i.kw to i64
+  %i.kx = ptrtoaddr ptr %i.c to i64
+  %i.ky = sub i64 %i.kx, %26
   %diff.check = icmp ugt i64 %i.ky, -32
   %or.cond554 = select i1 %min.iters.check528, i1 true, i1 %diff.check
   br i1 %or.cond554, label %scalar.ph527.preheader, label %vector.ph529
@@ -709,10 +709,11 @@ bb.du:                                            ; preds = %bb.dt
 
 vector.memcheck539:                               ; preds = %bb.du
   %i.mc = ptrtoaddr ptr %i.mb to i64
+  %27 = ptrtoaddr ptr %i.c to i64
   %i.md = shl nuw nsw i32 %i.az, 3
   %i.me = and i32 %i.md, 1016
   %i.mf = zext nneg i32 %i.me to i64
-  %i.mg = add i64 %26, %i.mf
+  %i.mg = add i64 %27, %i.mf
   %i.mh = sub i64 %i.mc, %i.mg
   %i.mi = add i64 %i.mh, -9
   %diff.check540 = icmp ult i64 %i.mi, 31

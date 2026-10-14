@@ -205,8 +205,7 @@ bb.i:                                             ; preds = %.critedge58
   br label %_ZSt4fillIPbbEvT_S1_RKT0_.exit
 
 _ZSt4fillIPbbEvT_S1_RKT0_.exit:                   ; preds = %.critedge58, %.lr.ph.preheader.i.i.i
-  %.sroa.070.1.ph157 = phi ptr [ %i.ab, %.lr.ph.preheader.i.i.i ], [ null, %.critedge58 ] ; 13 uses
-  %.sroa.070.1.ph157158 = ptrtoaddr ptr %.sroa.070.1.ph157 to i64 ; 2 uses
+  %.sroa.070.1.ph157 = phi ptr [ %i.ab, %.lr.ph.preheader.i.i.i ], [ null, %.critedge58 ] ; 14 uses
   %i.ad = load ptr, ptr %2, align 8, !tbaa !35    ; 2 uses
   %.not122 = icmp eq ptr %i.ad, null
   br i1 %.not122, label %.loopexit124, label %bb.j
@@ -214,7 +213,6 @@ _ZSt4fillIPbbEvT_S1_RKT0_.exit:                   ; preds = %.critedge58, %.lr.p
 bb.j:                                             ; preds = %_ZSt4fillIPbbEvT_S1_RKT0_.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !27 ; 10 uses
-  %4 = ptrtoaddr ptr %i.af to i64
   %.not55 = icmp eq ptr %i.af, null
   br i1 %.not55, label %.loopexit124, label %bb.k
 
@@ -235,7 +233,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 iter.check:                                       ; preds = %bb.m
   %min.iters.check = icmp ult i64 %.053, 4
-  %i.ak = sub i64 %4, %.sroa.070.1.ph157158
+  %4 = ptrtoaddr ptr %.sroa.070.1.ph157 to i64
+  %5 = ptrtoaddr ptr %i.af to i64
+  %i.ak = sub i64 %5, %4
   %diff.check = icmp ugt i64 %i.ak, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph131.preheader, label %vector.main.loop.iter.check
@@ -347,7 +347,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.n:                                             ; preds = %.loopexit124
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !27 ; 3 uses
-  %5 = ptrtoaddr ptr %i.bs to i64
   %.not56 = icmp eq ptr %i.bs, null
   br i1 %.not56, label %.loopexit, label %.preheader
 
@@ -362,9 +361,11 @@ iter.check181:                                    ; preds = %.preheader
   br i1 %min.iters.check168, label %.lr.ph135.preheader, label %vector.memcheck166
 
 vector.memcheck166:                               ; preds = %iter.check181
-  %i.bt = add i64 %.053, %.sroa.070.1.ph157158
-  %i.bu = add i64 %.046.lcssa, %5
-  %i.bv = sub i64 %i.bu, %i.bt
+  %6 = ptrtoaddr ptr %.sroa.070.1.ph157 to i64
+  %7 = ptrtoaddr ptr %i.bs to i64
+  %i.bt = add i64 %.046.lcssa, %7
+  %i.bu = add i64 %.053, %6
+  %i.bv = sub i64 %i.bt, %i.bu
   %diff.check167 = icmp ugt i64 %i.bv, -32
   br i1 %diff.check167, label %.lr.ph135.preheader, label %vector.main.loop.iter.check169
 

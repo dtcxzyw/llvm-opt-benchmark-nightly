@@ -205,9 +205,7 @@ _ZNK6vectorIPmLb0EjE4sizeEv.exit:                 ; preds = %bb.s, %bb.t
           to label %bb.u unwind label %bb.v       ; 8 uses
 
 bb.u:                                             ; preds = %_ZNK6vectorIPmLb0EjE4sizeEv.exit
-  %6 = ptrtoaddr ptr %i.ct to i64
   %i.cu = load ptr, ptr %i.ai, align 8, !tbaa !339 ; 10 uses
-  %7 = ptrtoaddr ptr %i.cu to i64
   %i.cv = icmp eq ptr %i.cu, null
   br i1 %i.cv, label %._crit_edge75, label %_ZNK6vectorIPmLb0EjE4sizeEv.exit66
 
@@ -220,7 +218,9 @@ _ZNK6vectorIPmLb0EjE4sizeEv.exit66:               ; preds = %bb.u
 .lr.ph74.preheader:                               ; preds = %_ZNK6vectorIPmLb0EjE4sizeEv.exit66
   %i.cy = zext i32 %i.cx to i64                   ; 5 uses
   %min.iters.check = icmp ult i32 %i.cx, 8
-  %i.cz = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %i.cu to i64
+  %7 = ptrtoaddr ptr %i.ct to i64
+  %i.cz = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.cz, -32
   %or.cond = or i1 %min.iters.check, %diff.check
   br i1 %or.cond, label %.lr.ph74.preheader95, label %vector.ph
@@ -623,7 +623,6 @@ bb.c:                                             ; preds = %_Z9is_groundPK4expr
 ; Function Attrs: mustprogress uwtable
 define hidden noundef ptr @_ZN1q6ematch11tmp_bindingERNS_6clauseEP3appPKPN3euf5enodeE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(2688) %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = ptrtoaddr ptr %3 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !355
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 20
@@ -678,7 +677,6 @@ bb.e:                                             ; preds = %_ZN10scoped_ptrIN1q
   %.not13 = icmp eq i32 %i.w, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 320
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !236 ; 5 uses
-  %.pre19 = ptrtoaddr ptr %.pre to i64
   br i1 %.not13, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.e
@@ -688,7 +686,9 @@ bb.e:                                             ; preds = %_ZN10scoped_ptrIN1q
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.z = sub i64 %4, %.pre19
+  %4 = ptrtoaddr ptr %3 to i64
+  %5 = ptrtoaddr ptr %.pre to i64
+  %i.z = sub i64 %4, %5
   %i.aa = add i64 %i.z, -49
   %diff.check = icmp ult i64 %i.aa, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
@@ -782,7 +782,6 @@ declare noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef) local_unnamed_ad
 ; Function Attrs: mustprogress uwtable
 define hidden noundef ptr @_ZN1q6ematch13alloc_bindingERNS_6clauseEP3appPKPN3euf5enodeEjjj(ptr noundef nonnull align 8 dereferenceable(2688) %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %7 = ptrtoaddr ptr %3 to i64                    ; 2 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
@@ -844,7 +843,6 @@ _ZN10scoped_ptrIN1q7bindingEEaSEPS1_.exit.i:      ; preds = %_Z7deallocIN1q7bind
 bb.e:                                             ; preds = %._crit_edge40, %_ZN10scoped_ptrIN1q7bindingEEaSEPS1_.exit.i
   %.pre.i = phi ptr [ %.pre.i42, %_ZN10scoped_ptrIN1q7bindingEEaSEPS1_.exit.i ], [ %.pre.i.pre, %._crit_edge40 ] ; 5 uses
   %i.y = phi i32 [ %i.x, %_ZN10scoped_ptrIN1q7bindingEEaSEPS1_.exit.i ], [ %i.f, %._crit_edge40 ] ; 3 uses
-  %.pre.i52 = ptrtoaddr ptr %.pre.i to i64
   %.not13.i = icmp eq i32 %i.y, 0
   br i1 %.not13.i, label %_ZN1q6ematch11tmp_bindingERNS_6clauseEP3appPKPN3euf5enodeE.exit, label %.lr.ph.i
 
@@ -855,7 +853,9 @@ bb.e:                                             ; preds = %._crit_edge40, %_ZN
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i
-  %i.ab = sub i64 %7, %.pre.i52
+  %7 = ptrtoaddr ptr %3 to i64
+  %8 = ptrtoaddr ptr %.pre.i to i64
+  %i.ab = sub i64 %7, %8
   %i.ac = add i64 %i.ab, -49
   %diff.check = icmp ult i64 %i.ac, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
@@ -1044,7 +1044,6 @@ bb.g:                                             ; preds = %._crit_edge
   store ptr %i.dg, ptr %i.dm, align 8, !tbaa !476
   %.not35 = icmp eq i32 %i.cw, 0
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !474 ; 3 uses
-  %.pre55 = ptrtoaddr ptr %.pre to i64
   br i1 %.not35, label %.noexc, label %.lr.ph34
 
 .lr.ph34:                                         ; preds = %bb.g
@@ -1054,7 +1053,9 @@ bb.g:                                             ; preds = %._crit_edge
   br i1 %min.iters.check58, label %scalar.ph57.preheader, label %vector.memcheck54
 
 vector.memcheck54:                                ; preds = %.lr.ph34
-  %i.do = sub i64 %.pre55, %7
+  %9 = ptrtoaddr ptr %.pre to i64
+  %10 = ptrtoaddr ptr %3 to i64
+  %i.do = sub i64 %9, %10
   %i.dp = add i64 %i.do, 47
   %diff.check56 = icmp ult i64 %i.dp, 31
   br i1 %diff.check56, label %scalar.ph57.preheader, label %vector.ph59
@@ -1205,10 +1206,10 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %3 = ptrtoaddr ptr %i.m to i64
-  %4 = ptrtoaddr ptr %2 to i64
   %wide.trip.count = zext i32 %i.p to i64         ; 5 uses
   %min.iters.check = icmp ult i32 %i.p, 8
+  %3 = ptrtoaddr ptr %i.m to i64
+  %4 = ptrtoaddr ptr %2 to i64
   %i.q = sub i64 %4, %3
   %diff.check = icmp ugt i64 %i.q, -32
   %or.cond = or i1 %min.iters.check, %diff.check
@@ -1472,7 +1473,6 @@ bb.n:                                             ; preds = %bb.g, %_ZN7obj_mapI
 ; Function Attrs: mustprogress uwtable
 define hidden noundef zeroext i1 @_ZN1q6ematch9propagateEbPKPN3euf5enodeEjRNS_6clauseERb(ptr noundef nonnull align 8 dereferenceable(2688) %0, i1 noundef zeroext %1, ptr noundef %2, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(56) %4, ptr nofree noundef nonnull writeonly align 1 captures(none) dereferenceable(1) %5) local_unnamed_addr #0 align 2 {
 bb.a:
-  %6 = ptrtoaddr ptr %2 to i64
   %i.a = alloca i32, align 4                      ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2600
   %i.c = load i8, ptr %i.b, align 8, !tbaa !255, !range !300, !noundef !228
@@ -1599,10 +1599,11 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not.i39, label %.loopexit42, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.k
-  %7 = ptrtoaddr ptr %i.be to i64
   %wide.trip.count.i = zext i32 %i.bh to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %i.bh, 8
-  %i.bi = sub i64 %6, %7
+  %6 = ptrtoaddr ptr %i.be to i64
+  %7 = ptrtoaddr ptr %2 to i64
+  %i.bi = sub i64 %7, %6
   %diff.check = icmp ugt i64 %i.bi, -32
   %or.cond59 = or i1 %min.iters.check, %diff.check
   br i1 %or.cond59, label %.lr.ph.i.preheader, label %vector.ph

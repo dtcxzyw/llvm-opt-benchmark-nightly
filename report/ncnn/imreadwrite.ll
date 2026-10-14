@@ -205,9 +205,6 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal noundef ptr @_ZL22stbi__resample_row_v_2PhS_S_ii(ptr nofree noundef returned writeonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 %4) #13 {
 bb.a:
-  %5 = ptrtoaddr ptr %2 to i64
-  %6 = ptrtoaddr ptr %1 to i64
-  %7 = ptrtoaddr ptr %0 to i64                    ; 2 uses
   %i.a = icmp sgt i32 %3, 0
   br i1 %i.a, label %iter.check, label %._crit_edge
 
@@ -217,9 +214,12 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.b = sub i64 %6, %7
+  %5 = ptrtoaddr ptr %0 to i64                    ; 2 uses
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.b = sub i64 %6, %5
   %diff.check = icmp ugt i64 %i.b, -16
-  %i.c = sub i64 %5, %7
+  %7 = ptrtoaddr ptr %2 to i64
+  %i.c = sub i64 %7, %5
   %diff.check11 = icmp ugt i64 %i.c, -16
   %conflict.rdx = or i1 %diff.check, %diff.check11
   br i1 %conflict.rdx, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -622,8 +622,6 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZL22stbiw__encode_png_linePhiiiiiiPa(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, ptr nofree noundef nonnull writeonly captures(none) %7) unnamed_addr #14 {
 bb.a:
-  %8 = ptrtoaddr ptr %0 to i64                    ; 7 uses
-  %9 = ptrtoaddr ptr %7 to i64                    ; 14 uses
   %.not = icmp eq i32 %4, 0
   %_ZZL22stbiw__encode_png_linePhiiiiiiPaE7mapping._ZZL22stbiw__encode_png_linePhiiiiiiPaE8firstmap = select i1 %.not, ptr @_ZZL22stbiw__encode_png_linePhiiiiiiPaE8firstmap, ptr @_ZZL22stbiw__encode_png_linePhiiiiiiPaE7mapping
   %i.a = sext i32 %6 to i64
@@ -745,11 +743,13 @@ iter.check:                                       ; preds = %.preheader158
   br i1 %min.iters.check, label %.lr.ph163.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.av = add i64 %9, %i.at
-  %i.aw = add i64 %8, %i.i                        ; 2 uses
-  %i.ax = sub i64 %i.aw, %i.av
+  %8 = ptrtoaddr ptr %7 to i64                    ; 2 uses
+  %9 = ptrtoaddr ptr %0 to i64
+  %i.av = add i64 %9, %i.i                        ; 2 uses
+  %i.aw = add i64 %8, %i.at
+  %i.ax = sub i64 %i.av, %i.aw
   %diff.check = icmp ugt i64 %i.ax, -32
-  %i.ay = sub i64 %i.aw, %9
+  %i.ay = sub i64 %i.av, %8
   %diff.check228 = icmp ugt i64 %i.ay, -32
   %conflict.rdx = or i1 %diff.check, %diff.check228
   br i1 %conflict.rdx, label %.lr.ph163.preheader, label %vector.main.loop.iter.check
@@ -855,11 +855,13 @@ iter.check259:                                    ; preds = %.preheader156
   br i1 %min.iters.check244, label %.lr.ph165.preheader, label %vector.memcheck240
 
 vector.memcheck240:                               ; preds = %iter.check259
-  %i.cg = add i64 %9, %i.ce
-  %i.ch = add i64 %8, %i.i                        ; 2 uses
-  %i.ci = sub i64 %i.ch, %i.cg
+  %10 = ptrtoaddr ptr %7 to i64                   ; 2 uses
+  %11 = ptrtoaddr ptr %0 to i64
+  %i.cg = add i64 %11, %i.i                       ; 2 uses
+  %i.ch = add i64 %10, %i.ce
+  %i.ci = sub i64 %i.cg, %i.ch
   %diff.check241 = icmp ugt i64 %i.ci, -32
-  %i.cj = sub i64 %i.ch, %9
+  %i.cj = sub i64 %i.cg, %10
   %diff.check242 = icmp ugt i64 %i.cj, -32
   %conflict.rdx243 = or i1 %diff.check241, %diff.check242
   br i1 %conflict.rdx243, label %.lr.ph165.preheader, label %vector.main.loop.iter.check245
@@ -970,20 +972,22 @@ iter.check296:                                    ; preds = %.preheader154
   br i1 %min.iters.check281, label %.lr.ph167.preheader, label %vector.memcheck273
 
 vector.memcheck273:                               ; preds = %iter.check296
-  %i.dw = add i64 %9, %i.du                       ; 2 uses
+  %12 = ptrtoaddr ptr %7 to i64                   ; 3 uses
+  %13 = ptrtoaddr ptr %0 to i64                   ; 2 uses
+  %i.dw = add i64 %12, %i.du                      ; 2 uses
   %i.dx = add i64 %i.dw, %i.dt
-  %i.dy = add i64 %8, %i.i
+  %i.dy = add i64 %13, %i.i
   %i.dz = sub i64 %i.dy, %i.dx
   %diff.check274 = icmp ugt i64 %i.dz, -16
-  %i.ea = add i64 %8, %i.i                        ; 3 uses
+  %i.ea = add i64 %13, %i.i                       ; 3 uses
   %i.eb = sub i64 %i.ea, %i.dw
   %diff.check275 = icmp ugt i64 %i.eb, -16
   %conflict.rdx276 = or i1 %diff.check274, %diff.check275
-  %i.ec = add i64 %9, %i.dt
+  %i.ec = add i64 %12, %i.dt
   %i.ed = sub i64 %i.ea, %i.ec
   %diff.check277 = icmp ugt i64 %i.ed, -16
   %conflict.rdx278 = or i1 %conflict.rdx276, %diff.check277
-  %i.ee = sub i64 %i.ea, %9
+  %i.ee = sub i64 %i.ea, %12
   %diff.check279 = icmp ugt i64 %i.ee, -16
   %conflict.rdx280 = or i1 %conflict.rdx278, %diff.check279
   br i1 %conflict.rdx280, label %.lr.ph167.preheader, label %vector.main.loop.iter.check282
@@ -1108,15 +1112,17 @@ iter.check332:                                    ; preds = %.preheader152
   br i1 %min.iters.check318, label %.lr.ph169.preheader, label %vector.memcheck312
 
 vector.memcheck312:                               ; preds = %iter.check332
-  %i.gp = add i64 %9, %i.gn
-  %i.gq = add i64 %8, %i.i                        ; 3 uses
-  %i.gr = sub i64 %i.gq, %i.gp
+  %14 = ptrtoaddr ptr %7 to i64                   ; 3 uses
+  %15 = ptrtoaddr ptr %0 to i64
+  %i.gp = add i64 %15, %i.i                       ; 3 uses
+  %i.gq = add i64 %14, %i.gn
+  %i.gr = sub i64 %i.gp, %i.gq
   %diff.check313 = icmp ugt i64 %i.gr, -16
-  %i.gs = add i64 %9, %i.gm
-  %i.gt = sub i64 %i.gq, %i.gs
+  %i.gs = add i64 %14, %i.gm
+  %i.gt = sub i64 %i.gp, %i.gs
   %diff.check314 = icmp ugt i64 %i.gt, -16
   %conflict.rdx315 = or i1 %diff.check313, %diff.check314
-  %i.gu = sub i64 %i.gq, %9
+  %i.gu = sub i64 %i.gp, %14
   %diff.check316 = icmp ugt i64 %i.gu, -16
   %conflict.rdx317 = or i1 %conflict.rdx315, %diff.check316
   br i1 %conflict.rdx317, label %.lr.ph169.preheader, label %vector.main.loop.iter.check319
@@ -1240,11 +1246,13 @@ iter.check366:                                    ; preds = %.preheader150
   br i1 %min.iters.check351, label %.lr.ph171.preheader, label %vector.memcheck347
 
 vector.memcheck347:                               ; preds = %iter.check366
-  %i.iv = add i64 %9, %i.it
-  %i.iw = add i64 %8, %i.i                        ; 2 uses
-  %i.ix = sub i64 %i.iw, %i.iv
+  %16 = ptrtoaddr ptr %7 to i64                   ; 2 uses
+  %17 = ptrtoaddr ptr %0 to i64
+  %i.iv = add i64 %17, %i.i                       ; 2 uses
+  %i.iw = add i64 %16, %i.it
+  %i.ix = sub i64 %i.iv, %i.iw
   %diff.check348 = icmp ugt i64 %i.ix, -32
-  %i.iy = sub i64 %i.iw, %9
+  %i.iy = sub i64 %i.iv, %16
   %diff.check349 = icmp ugt i64 %i.iy, -32
   %conflict.rdx350 = or i1 %diff.check348, %diff.check349
   br i1 %conflict.rdx350, label %.lr.ph171.preheader, label %vector.main.loop.iter.check352
@@ -1352,11 +1360,13 @@ iter.check399:                                    ; preds = %.preheader
   br i1 %min.iters.check384, label %.lr.ph173.preheader, label %vector.memcheck380
 
 vector.memcheck380:                               ; preds = %iter.check399
-  %i.ki = add i64 %9, %i.kg
-  %i.kj = add i64 %8, %i.i                        ; 2 uses
-  %i.kk = sub i64 %i.kj, %i.ki
+  %18 = ptrtoaddr ptr %7 to i64                   ; 2 uses
+  %19 = ptrtoaddr ptr %0 to i64
+  %i.ki = add i64 %19, %i.i                       ; 2 uses
+  %i.kj = add i64 %18, %i.kg
+  %i.kk = sub i64 %i.ki, %i.kj
   %diff.check381 = icmp ugt i64 %i.kk, -32
-  %i.kl = sub i64 %i.kj, %9
+  %i.kl = sub i64 %i.ki, %18
   %diff.check382 = icmp ugt i64 %i.kl, -32
   %conflict.rdx383 = or i1 %diff.check381, %diff.check382
   br i1 %conflict.rdx383, label %.lr.ph173.preheader, label %vector.main.loop.iter.check385

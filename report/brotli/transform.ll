@@ -22,10 +22,8 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @BrotliTransformDictionaryWord(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4) local_unnamed_addr #1 {
 bb.a:
-  %5 = ptrtoaddr ptr %0 to i64                    ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !26   ; 3 uses
-  %6 = ptrtoaddr ptr %i.b to i64                  ; 2 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !26   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !27   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -59,6 +57,8 @@ iter.check:                                       ; preds = %bb.a
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
+  %5 = ptrtoaddr ptr %0 to i64
+  %6 = ptrtoaddr ptr %i.b to i64
   %i.ab = sub i64 %6, %5
   %i.ac = add i64 %i.ab, %i.n
   %i.ad = add i64 %i.ac, 32
@@ -277,7 +277,6 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.080 = phi i32 [ %i.cp, %bb.b ], [ %i.cu, %bb.d ], [ %2, %bb.c ] ; 11 uses
   %.078 = phi ptr [ %1, %bb.b ], [ %i.ct, %bb.d ], [ %1, %bb.c ] ; 8 uses
-  %.078156 = ptrtoaddr ptr %.078 to i64
   %i.cv = icmp sgt i32 %.080, 0                   ; 3 uses
   br i1 %i.cv, label %iter.check171, label %._crit_edge105
 
@@ -288,8 +287,10 @@ iter.check171:                                    ; preds = %bb.e
   br i1 %min.iters.check158, label %.lr.ph104.preheader, label %vector.memcheck155
 
 vector.memcheck155:                               ; preds = %iter.check171
-  %i.cx = add i64 %5, %i.cw
-  %i.cy = sub i64 %.078156, %i.cx
+  %7 = ptrtoaddr ptr %0 to i64
+  %8 = ptrtoaddr ptr %.078 to i64
+  %i.cx = add i64 %7, %i.cw
+  %i.cy = sub i64 %8, %i.cx
   %diff.check157 = icmp ugt i64 %i.cy, -32
   br i1 %diff.check157, label %.lr.ph104.preheader, label %vector.main.loop.iter.check159
 
@@ -559,8 +560,10 @@ iter.check203:                                    ; preds = %ToUpperCase.exit
   br i1 %min.iters.check187, label %.lr.ph119.preheader, label %vector.memcheck185
 
 vector.memcheck185:                               ; preds = %iter.check203
-  %i.go = add i64 %5, %i.gm
-  %i.gp = sub i64 %6, %i.go
+  %9 = ptrtoaddr ptr %0 to i64
+  %10 = ptrtoaddr ptr %i.b to i64
+  %i.go = add i64 %9, %i.gm
+  %i.gp = sub i64 %10, %i.go
   %i.gq = add i64 %i.gp, %i.w
   %i.gr = add i64 %i.gq, 32
   %diff.check186 = icmp ult i64 %i.gr, 31

@@ -201,7 +201,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nounwind uwtable
 define hidden noundef ptr @lj_buf_putstr_lower(ptr nofree noundef returned captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #2 {
 bb.a:
-  %2 = ptrtoaddr ptr %1 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.b = load i32, ptr %i.a, align 4, !tbaa !32   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -228,9 +227,9 @@ lj_buf_more.exit:                                 ; preds = %bb.a
 
 iter.check:                                       ; preds = %lj_buf_more.exit.thread, %lj_buf_more.exit
   %i.p = phi ptr [ %i.m, %lj_buf_more.exit.thread ], [ %i.o, %lj_buf_more.exit ] ; 2 uses
-  %.0.i27 = phi ptr [ %i.k, %lj_buf_more.exit.thread ], [ %i.e, %lj_buf_more.exit ] ; 7 uses
+  %.0.i27 = phi ptr [ %i.k, %lj_buf_more.exit.thread ], [ %i.e, %lj_buf_more.exit ] ; 8 uses
   %i.q = ptrtoaddr ptr %i.p to i64
-  %.0.i2728 = ptrtoaddr ptr %.0.i27 to i64        ; 3 uses
+  %.0.i2728 = ptrtoaddr ptr %.0.i27 to i64        ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
   %i.s = add nuw i64 %.0.i2728, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.q, i64 %i.s)
@@ -239,7 +238,9 @@ iter.check:                                       ; preds = %lj_buf_more.exit.th
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.u = sub i64 %.0.i2728, %2
+  %2 = ptrtoaddr ptr %.0.i27 to i64
+  %3 = ptrtoaddr ptr %1 to i64
+  %i.u = sub i64 %2, %3
   %i.v = add i64 %i.u, -25
   %diff.check = icmp ult i64 %i.v, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
@@ -338,7 +339,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 ; Function Attrs: nounwind uwtable
 define hidden noundef ptr @lj_buf_putstr_upper(ptr nofree noundef returned captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #2 {
 bb.a:
-  %2 = ptrtoaddr ptr %1 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.b = load i32, ptr %i.a, align 4, !tbaa !32   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -365,9 +365,9 @@ lj_buf_more.exit:                                 ; preds = %bb.a
 
 iter.check:                                       ; preds = %lj_buf_more.exit.thread, %lj_buf_more.exit
   %i.p = phi ptr [ %i.m, %lj_buf_more.exit.thread ], [ %i.o, %lj_buf_more.exit ] ; 2 uses
-  %.0.i27 = phi ptr [ %i.k, %lj_buf_more.exit.thread ], [ %i.e, %lj_buf_more.exit ] ; 7 uses
+  %.0.i27 = phi ptr [ %i.k, %lj_buf_more.exit.thread ], [ %i.e, %lj_buf_more.exit ] ; 8 uses
   %i.q = ptrtoaddr ptr %i.p to i64
-  %.0.i2728 = ptrtoaddr ptr %.0.i27 to i64        ; 3 uses
+  %.0.i2728 = ptrtoaddr ptr %.0.i27 to i64        ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
   %i.s = add nuw i64 %.0.i2728, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.q, i64 %i.s)
@@ -376,7 +376,9 @@ iter.check:                                       ; preds = %lj_buf_more.exit.th
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.u = sub i64 %.0.i2728, %2
+  %2 = ptrtoaddr ptr %.0.i27 to i64
+  %3 = ptrtoaddr ptr %1 to i64
+  %i.u = sub i64 %2, %3
   %i.v = add i64 %i.u, -25
   %diff.check = icmp ult i64 %i.v, 31
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check

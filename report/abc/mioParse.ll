@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %spec.store.select.i.i, ptr %i.g, align 8, !tbaa !69
   %i.h = sext i32 %spec.store.select.i.i to i64
   %i.i = shl nsw i64 %i.h, 3
-  %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #16 ; 29 uses
-  %3 = ptrtoaddr ptr %i.j to i64                  ; 4 uses
+  %i.j = tail call noalias ptr @malloc(i64 noundef %i.i) #16 ; 30 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr %i.j, ptr %i.l, align 8, !tbaa !31
@@ -609,6 +608,7 @@ bb.m:                                             ; preds = %bb.l
   %i.hc = and i32 %i.gs, 1
   %.not.i153.i = icmp eq i32 %i.hc, 0
   %wide.trip.count65.i154.i = zext nneg i32 %i.f to i64 ; 6 uses
+  %3 = ptrtoaddr ptr %i.j to i64                  ; 2 uses
   br i1 %.not.i153.i, label %.lr.ph51.split.us.i159.i, label %.lr.ph51.split.i155.i
 
 .lr.ph51.split.us.i159.i:                         ; preds = %.lr.ph51.i152.i
@@ -727,6 +727,7 @@ vector.body130:                                   ; preds = %vector.body130, %ve
   %i.ir = and i32 %i.gs, 1
   %.not40.i165.i = icmp eq i32 %i.ir, 0
   %wide.trip.count75.i166.i = zext nneg i32 %i.f to i64 ; 6 uses
+  %4 = ptrtoaddr ptr %i.j to i64                  ; 2 uses
   br i1 %.not40.i165.i, label %.lr.ph53.split.us.i171.i, label %.lr.ph53.split.i167.i
 
 .lr.ph53.split.us.i171.i:                         ; preds = %.lr.ph53.i164.i
@@ -736,7 +737,7 @@ vector.body130:                                   ; preds = %vector.body130, %ve
   %i.iv = load ptr, ptr %i.iu, align 8, !tbaa !71 ; 7 uses
   %min.iters.check169 = icmp ult i32 %i.f, 8
   %i.iw = ptrtoaddr ptr %i.iv to i64
-  %i.ix = sub i64 %i.iw, %3
+  %i.ix = sub i64 %i.iw, %4
   %diff.check167 = icmp ugt i64 %i.ix, -32
   %or.cond184 = select i1 %min.iters.check169, i1 true, i1 %diff.check167
   br i1 %or.cond184, label %scalar.ph168.preheader, label %vector.ph170
@@ -802,7 +803,7 @@ scalar.ph168:                                     ; preds = %scalar.ph168, %scal
   %i.jt = load ptr, ptr %i.js, align 8, !tbaa !71 ; 7 uses
   %min.iters.check155 = icmp ult i32 %i.f, 6
   %i.ju = ptrtoaddr ptr %i.jt to i64
-  %i.jv = sub i64 %i.ju, %3
+  %i.jv = sub i64 %i.ju, %4
   %diff.check153 = icmp ugt i64 %i.jv, -32
   %or.cond186 = select i1 %min.iters.check155, i1 true, i1 %diff.check153
   br i1 %or.cond186, label %scalar.ph154.preheader, label %vector.ph156

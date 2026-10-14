@@ -205,7 +205,6 @@ bb.af:                                            ; preds = %.thread
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.0136 = phi ptr [ %3, %bb.ae ], [ %i.bg, %bb.af ] ; 6 uses
-  %.0136363 = ptrtoaddr ptr %.0136 to i64
   %i.bh = and i64 %.sroa.13.0, 4294967295
   %i.bi = icmp eq i64 %i.bh, 7
   br i1 %i.bi, label %bb.ah, label %bb.ai
@@ -239,8 +238,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.aj, %bb.
   %i.bp = tail call i32 @llvm.umin.i32(i32 %i.bl, i32 %i.bm) ; 14 uses
   %.0136.sroa.gep193 = getelementptr inbounds nuw i8, ptr %.0136, i64 4 ; 7 uses
   %.0135.sroa.gep194 = getelementptr inbounds nuw i8, ptr %.0135, i64 4 ; 7 uses
-  %spec.select.i.sroa.sel195 = select i1 %i.bn, ptr %.0136.sroa.gep193, ptr %.0135.sroa.gep194 ; 20 uses
-  %spec.select.i.sroa.sel195366 = ptrtoaddr ptr %spec.select.i.sroa.sel195 to i64 ; 3 uses
+  %spec.select.i.sroa.sel195 = select i1 %i.bn, ptr %.0136.sroa.gep193, ptr %.0135.sroa.gep194 ; 22 uses
   %i.bq = add i32 %i.bp, -1
   %i.br = zext i32 %i.bq to i64
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %spec.select.i.sroa.sel195, i64 %i.br
@@ -274,8 +272,7 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.cj, label %bb.at, label %bb.ao, !prof !192
 
 bb.ao:                                            ; preds = %bb.an
-  %i.ck = tail call fastcc ptr @js_arena_malloc(ptr noundef nonnull %i.ca, i64 noundef %i.by) ; 20 uses
-  %5 = ptrtoaddr ptr %i.ck to i64                 ; 6 uses
+  %i.ck = tail call fastcc ptr @js_arena_malloc(ptr noundef nonnull %i.ca, i64 noundef %i.by) ; 25 uses
   %.not.i185 = icmp eq ptr %i.ck, null
   br i1 %.not.i185, label %._crit_edge331, label %bb.ap
 
@@ -353,11 +350,13 @@ bb.av:                                            ; preds = %bb.aq, %bb.ar, %bb.
   br i1 %min.iters.check371, label %scalar.ph370.preheader, label %vector.memcheck365
 
 vector.memcheck365:                               ; preds = %.lr.ph277
-  %spec.select75.i.sroa.sel200368 = ptrtoaddr ptr %spec.select75.i.sroa.sel200 to i64
+  %5 = ptrtoaddr ptr %i.ck to i64
+  %spec.select75.i.sroa.sel200368 = ptrtoaddr ptr %spec.select.i.sroa.sel195 to i64
   %i.dm = add i64 %5, 4                           ; 2 uses
-  %i.dn = sub i64 %spec.select.i.sroa.sel195366, %i.dm
+  %i.dn = sub i64 %spec.select75.i.sroa.sel200368, %i.dm
   %diff.check367 = icmp ugt i64 %i.dn, -32
-  %i.do = sub i64 %spec.select75.i.sroa.sel200368, %i.dm
+  %6 = ptrtoaddr ptr %spec.select75.i.sroa.sel200 to i64
+  %i.do = sub i64 %6, %i.dm
   %diff.check369 = icmp ugt i64 %i.do, -32
   %conflict.rdx = or i1 %diff.check367, %diff.check369
   br i1 %conflict.rdx, label %scalar.ph370.preheader, label %vector.ph372
@@ -428,11 +427,13 @@ scalar.ph370.prol.loopexit:                       ; preds = %scalar.ph370.prol, 
   br i1 %min.iters.check405, label %scalar.ph404.preheader, label %vector.memcheck399
 
 vector.memcheck399:                               ; preds = %.lr.ph281
-  %spec.select75.i.sroa.sel206401 = ptrtoaddr ptr %spec.select75.i.sroa.sel206 to i64
-  %i.eh = add i64 %5, 4                           ; 2 uses
-  %i.ei = sub i64 %spec.select.i.sroa.sel195366, %i.eh
+  %7 = ptrtoaddr ptr %i.ck to i64
+  %spec.select75.i.sroa.sel206401 = ptrtoaddr ptr %spec.select.i.sroa.sel195 to i64
+  %i.eh = add i64 %7, 4                           ; 2 uses
+  %i.ei = sub i64 %spec.select75.i.sroa.sel206401, %i.eh
   %diff.check400 = icmp ugt i64 %i.ei, -32
-  %i.ej = sub i64 %spec.select75.i.sroa.sel206401, %i.eh
+  %8 = ptrtoaddr ptr %spec.select75.i.sroa.sel206 to i64
+  %i.ej = sub i64 %8, %i.eh
   %diff.check402 = icmp ugt i64 %i.ej, -32
   %conflict.rdx403 = or i1 %diff.check400, %diff.check402
   br i1 %conflict.rdx403, label %scalar.ph404.preheader, label %vector.ph406
@@ -503,11 +504,13 @@ scalar.ph404.prol.loopexit:                       ; preds = %scalar.ph404.prol, 
   br i1 %min.iters.check441, label %scalar.ph440.preheader, label %vector.memcheck435
 
 vector.memcheck435:                               ; preds = %.lr.ph285
-  %spec.select75.i.sroa.sel212437 = ptrtoaddr ptr %spec.select75.i.sroa.sel212 to i64
-  %i.fc = add i64 %5, 4                           ; 2 uses
-  %i.fd = sub i64 %spec.select.i.sroa.sel195366, %i.fc
+  %9 = ptrtoaddr ptr %i.ck to i64
+  %spec.select75.i.sroa.sel212437 = ptrtoaddr ptr %spec.select.i.sroa.sel195 to i64
+  %i.fc = add i64 %9, 4                           ; 2 uses
+  %i.fd = sub i64 %spec.select75.i.sroa.sel212437, %i.fc
   %diff.check436 = icmp ugt i64 %i.fd, -32
-  %i.fe = sub i64 %spec.select75.i.sroa.sel212437, %i.fc
+  %10 = ptrtoaddr ptr %spec.select75.i.sroa.sel212 to i64
+  %i.fe = sub i64 %10, %i.fc
   %diff.check438 = icmp ugt i64 %i.fe, -32
   %conflict.rdx439 = or i1 %diff.check436, %diff.check438
   br i1 %conflict.rdx439, label %scalar.ph440.preheader, label %vector.ph442
@@ -580,8 +583,9 @@ scalar.ph440.prol.loopexit:                       ; preds = %scalar.ph440.prol, 
   br i1 %min.iters.check458, label %scalar.ph457.preheader, label %vector.memcheck454
 
 vector.memcheck454:                               ; preds = %.lr.ph287
+  %11 = ptrtoaddr ptr %i.ck to i64
   %spec.select75.i.sroa.sel209455 = ptrtoaddr ptr %spec.select75.i.sroa.sel209 to i64
-  %i.ga = sub i64 %5, %spec.select75.i.sroa.sel209455
+  %i.ga = sub i64 %11, %spec.select75.i.sroa.sel209455
   %i.gb = add i64 %i.ga, 3
   %diff.check456 = icmp ult i64 %i.gb, 31
   br i1 %diff.check456, label %scalar.ph457.preheader, label %vector.ph459
@@ -719,8 +723,9 @@ scalar.ph457:                                     ; preds = %scalar.ph457.prol.l
   br i1 %min.iters.check422, label %scalar.ph421.preheader, label %vector.memcheck418
 
 vector.memcheck418:                               ; preds = %.lr.ph283
+  %12 = ptrtoaddr ptr %i.ck to i64
   %spec.select75.i.sroa.sel203419 = ptrtoaddr ptr %spec.select75.i.sroa.sel203 to i64
-  %i.ik = sub i64 %5, %spec.select75.i.sroa.sel203419
+  %i.ik = sub i64 %12, %spec.select75.i.sroa.sel203419
   %i.il = add i64 %i.ik, 3
   %diff.check420 = icmp ult i64 %i.il, 31
   br i1 %diff.check420, label %scalar.ph421.preheader, label %vector.ph423
@@ -858,8 +863,9 @@ scalar.ph421:                                     ; preds = %scalar.ph421.prol.l
   br i1 %min.iters.check388, label %scalar.ph387.preheader, label %vector.memcheck384
 
 vector.memcheck384:                               ; preds = %.lr.ph279
+  %13 = ptrtoaddr ptr %i.ck to i64
   %spec.select75.i.sroa.sel385 = ptrtoaddr ptr %spec.select75.i.sroa.sel to i64
-  %i.ku = sub i64 %5, %spec.select75.i.sroa.sel385
+  %i.ku = sub i64 %13, %spec.select75.i.sroa.sel385
   %i.kv = add i64 %i.ku, 3
   %diff.check386 = icmp ult i64 %i.kv, 31
   br i1 %diff.check386, label %scalar.ph387.preheader, label %vector.ph389
@@ -1097,7 +1103,6 @@ bb.bg:                                            ; preds = %bb.bf
 bb.bh:                                            ; preds = %bb.bf
   %i.ou = sub nuw i32 %i.oo, %i.ol                ; 7 uses
   %i.ov = tail call fastcc ptr @js_bigint_new(ptr noundef %0, i32 noundef %i.ou), !inline_history !1738 ; 13 uses
-  %6 = ptrtoaddr ptr %i.ov to i64
   %.not36.i = icmp eq ptr %i.ov, null
   br i1 %.not36.i, label %js_bigint_logic.exit, label %bb.bi
 
@@ -1118,9 +1123,11 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
+  %14 = ptrtoaddr ptr %i.ov to i64
+  %15 = ptrtoaddr ptr %.0136 to i64
   %i.pa = shl nuw nsw i64 %i.oz, 2
-  %i.pb = add i64 %i.pa, %.0136363
-  %i.pc = sub i64 %i.pb, %6
+  %i.pb = add i64 %i.pa, %15
+  %i.pc = sub i64 %i.pb, %14
   %diff.check = icmp ugt i64 %i.pc, -32
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -1523,13 +1530,11 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae
   %i.ev = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !218 ; 2 uses
-  %6 = ptrtoaddr ptr %i.ew to i64
   %i.ex = shl i32 %.1187.ph, %i.eq
   %i.ey = sext i32 %i.ex to i64                   ; 2 uses
   %i.ez = getelementptr inbounds i8, ptr %i.ew, i64 %i.ey ; 10 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ec, i64 56
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !218 ; 11 uses
-  %7 = ptrtoaddr ptr %i.fb to i64
   %i.fc = shl i32 %..i, %i.eq                     ; 5 uses
   %i.fd = icmp ugt ptr %i.fb, %i.ez
   %i.fe = sext i32 %i.fc to i64                   ; 2 uses
@@ -1548,8 +1553,10 @@ iter.check:                                       ; preds = %.preheader
   br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.fi = add i64 %6, %i.ey
-  %i.fj = sub i64 %i.fi, %7
+  %6 = ptrtoaddr ptr %i.fb to i64
+  %7 = ptrtoaddr ptr %i.ew to i64
+  %i.fi = add i64 %7, %i.ey
+  %i.fj = sub i64 %i.fi, %6
   %diff.check = icmp ugt i64 %i.fj, -32
   br i1 %diff.check, label %.lr.ph.preheader, label %vector.main.loop.iter.check
 

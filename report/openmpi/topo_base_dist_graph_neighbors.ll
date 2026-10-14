@@ -8,10 +8,6 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define range(i32 -13, 1) i32 @mca_topo_base_dist_graph_neighbors(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef writeonly captures(address) %3, i32 noundef %4, ptr nofree noundef writeonly captures(none) %5, ptr nofree noundef writeonly captures(address) %6) local_unnamed_addr #0 {
 bb.a:
-  %7 = ptrtoaddr ptr %5 to i64                    ; 5 uses
-  %8 = ptrtoaddr ptr %6 to i64                    ; 3 uses
-  %9 = ptrtoaddr ptr %2 to i64                    ; 5 uses
-  %10 = ptrtoaddr ptr %3 to i64                   ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 296
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !52
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 96
@@ -34,15 +30,16 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !58   ; 17 uses
-  %11 = ptrtoaddr ptr %i.n to i64                 ; 4 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !58   ; 19 uses
   %.not47 = icmp eq ptr %3, inttoptr (i64 2 to ptr)
   br i1 %.not47, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %wide.trip.count67 = zext nneg i32 %spec.select to i64 ; 5 uses
   %min.iters.check122 = icmp ult i32 %spec.select, 8
-  %i.o = sub i64 %11, %9
+  %7 = ptrtoaddr ptr %2 to i64
+  %8 = ptrtoaddr ptr %i.n to i64
+  %i.o = sub i64 %8, %7
   %diff.check120 = icmp ugt i64 %i.o, -32
   %or.cond = select i1 %min.iters.check122, i1 true, i1 %diff.check120
   br i1 %or.cond, label %.lr.ph.split.us.preheader193, label %vector.ph123
@@ -121,7 +118,6 @@ middle.block130:                                  ; preds = %vector.body125
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.al = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !64 ; 6 uses
-  %12 = ptrtoaddr ptr %i.am to i64                ; 2 uses
   %.not48 = icmp eq ptr %i.am, null
   %wide.trip.count62 = zext nneg i32 %spec.select to i64 ; 10 uses
   br i1 %.not48, label %.lr.ph.split.split.us.preheader, label %.lr.ph.split.split.preheader
@@ -131,18 +127,22 @@ middle.block130:                                  ; preds = %vector.body125
   br i1 %min.iters.check, label %.lr.ph.split.split.preheader196, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.split.split.preheader
-  %i.an = sub i64 %9, %10
+  %9 = ptrtoaddr ptr %3 to i64                    ; 3 uses
+  %10 = ptrtoaddr ptr %2 to i64                   ; 3 uses
+  %i.an = sub i64 %10, %9
   %diff.check = icmp ugt i64 %i.an, -32
-  %i.ao = sub i64 %11, %9
+  %11 = ptrtoaddr ptr %i.n to i64                 ; 2 uses
+  %i.ao = sub i64 %11, %10
   %diff.check95 = icmp ugt i64 %i.ao, -32
   %conflict.rdx = or i1 %diff.check, %diff.check95
-  %i.ap = sub i64 %9, %12
+  %12 = ptrtoaddr ptr %i.am to i64                ; 2 uses
+  %i.ap = sub i64 %10, %12
   %diff.check96 = icmp ugt i64 %i.ap, -32
   %conflict.rdx97 = or i1 %conflict.rdx, %diff.check96
-  %i.aq = sub i64 %11, %10
+  %i.aq = sub i64 %11, %9
   %diff.check98 = icmp ugt i64 %i.aq, -32
   %conflict.rdx99 = or i1 %conflict.rdx97, %diff.check98
-  %i.ar = sub i64 %12, %10
+  %i.ar = sub i64 %12, %9
   %diff.check100 = icmp ugt i64 %i.ar, -32
   %conflict.rdx101 = or i1 %conflict.rdx99, %diff.check100
   br i1 %conflict.rdx101, label %.lr.ph.split.split.preheader196, label %vector.ph
@@ -203,7 +203,9 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.split.split.us.preheader:                  ; preds = %.lr.ph.split
   %min.iters.check108 = icmp ult i32 %spec.select, 8
-  %i.bj = sub i64 %11, %9
+  %13 = ptrtoaddr ptr %2 to i64
+  %14 = ptrtoaddr ptr %i.n to i64
+  %i.bj = sub i64 %14, %13
   %diff.check106 = icmp ugt i64 %i.bj, -32
   %or.cond185 = select i1 %min.iters.check108, i1 true, i1 %diff.check106
   br i1 %or.cond185, label %.lr.ph.split.split.us.preheader194, label %vector.ph109
@@ -285,15 +287,16 @@ middle.block116:                                  ; preds = %vector.body111
 
 .lr.ph52:                                         ; preds = %.preheader
   %i.ch = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !65 ; 17 uses
-  %13 = ptrtoaddr ptr %i.ci to i64                ; 4 uses
+  %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !65 ; 19 uses
   %.not45 = icmp eq ptr %6, inttoptr (i64 2 to ptr)
   br i1 %.not45, label %.lr.ph52.split.us.preheader, label %.lr.ph52.split
 
 .lr.ph52.split.us.preheader:                      ; preds = %.lr.ph52
   %wide.trip.count82 = zext nneg i32 %.036 to i64 ; 5 uses
   %min.iters.check174 = icmp ult i32 %.036, 8
-  %i.cj = sub i64 %13, %7
+  %15 = ptrtoaddr ptr %5 to i64
+  %16 = ptrtoaddr ptr %i.ci to i64
+  %i.cj = sub i64 %16, %15
   %diff.check172 = icmp ugt i64 %i.cj, -32
   %or.cond186 = select i1 %min.iters.check174, i1 true, i1 %diff.check172
   br i1 %or.cond186, label %.lr.ph52.split.us.preheader188, label %vector.ph175
@@ -372,7 +375,6 @@ middle.block182:                                  ; preds = %vector.body177
 .lr.ph52.split:                                   ; preds = %.lr.ph52
   %i.dg = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !66 ; 6 uses
-  %14 = ptrtoaddr ptr %i.dh to i64                ; 2 uses
   %.not46 = icmp eq ptr %i.dh, null
   %wide.trip.count77 = zext nneg i32 %.036 to i64 ; 10 uses
   br i1 %.not46, label %.lr.ph52.split.split.us.preheader, label %.lr.ph52.split.split.preheader
@@ -382,18 +384,22 @@ middle.block182:                                  ; preds = %vector.body177
   br i1 %min.iters.check144, label %.lr.ph52.split.split.preheader191, label %vector.memcheck133
 
 vector.memcheck133:                               ; preds = %.lr.ph52.split.split.preheader
-  %i.di = sub i64 %7, %8
+  %17 = ptrtoaddr ptr %6 to i64                   ; 3 uses
+  %18 = ptrtoaddr ptr %5 to i64                   ; 3 uses
+  %i.di = sub i64 %18, %17
   %diff.check134 = icmp ugt i64 %i.di, -32
-  %i.dj = sub i64 %13, %7
+  %19 = ptrtoaddr ptr %i.ci to i64                ; 2 uses
+  %i.dj = sub i64 %19, %18
   %diff.check135 = icmp ugt i64 %i.dj, -32
   %conflict.rdx136 = or i1 %diff.check134, %diff.check135
-  %i.dk = sub i64 %7, %14
+  %20 = ptrtoaddr ptr %i.dh to i64                ; 2 uses
+  %i.dk = sub i64 %18, %20
   %diff.check137 = icmp ugt i64 %i.dk, -32
   %conflict.rdx138 = or i1 %conflict.rdx136, %diff.check137
-  %i.dl = sub i64 %13, %8
+  %i.dl = sub i64 %19, %17
   %diff.check139 = icmp ugt i64 %i.dl, -32
   %conflict.rdx140 = or i1 %conflict.rdx138, %diff.check139
-  %i.dm = sub i64 %14, %8
+  %i.dm = sub i64 %20, %17
   %diff.check141 = icmp ugt i64 %i.dm, -32
   %conflict.rdx142 = or i1 %conflict.rdx140, %diff.check141
   br i1 %conflict.rdx142, label %.lr.ph52.split.split.preheader191, label %vector.ph145
@@ -454,7 +460,9 @@ middle.block154:                                  ; preds = %vector.body147
 
 .lr.ph52.split.split.us.preheader:                ; preds = %.lr.ph52.split
   %min.iters.check160 = icmp ult i32 %.036, 8
-  %i.ee = sub i64 %13, %7
+  %21 = ptrtoaddr ptr %5 to i64
+  %22 = ptrtoaddr ptr %i.ci to i64
+  %i.ee = sub i64 %22, %21
   %diff.check158 = icmp ugt i64 %i.ee, -32
   %or.cond187 = select i1 %min.iters.check160, i1 true, i1 %diff.check158
   br i1 %or.cond187, label %.lr.ph52.split.split.us.preheader189, label %vector.ph161

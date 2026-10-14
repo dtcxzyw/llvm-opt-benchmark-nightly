@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %.lr.ph
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc nonnull ptr @tg3json__format_decimal_digits(ptr nofree noundef nonnull writeonly captures(ret: address, provenance) %0, ptr nofree noundef nonnull readonly captures(none) %1, i32 noundef %2, i32 noundef range(i32 -2147483647, -2147483648) %3, i32 noundef range(i32 0, 2) %4) unnamed_addr #19 {
 bb.a:
-  %5 = ptrtoaddr ptr %1 to i64                    ; 5 uses
   %i.a = alloca [32 x i8], align 16               ; 7 uses
   %i.b = alloca [16 x i8], align 16               ; 8 uses
   %i.c = add i32 %3, %2                           ; 11 uses
@@ -219,8 +218,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.064 = phi ptr [ %i.e, %bb.b ], [ %0, %bb.a ]  ; 19 uses
-  %.064173 = ptrtoaddr ptr %.064 to i64           ; 3 uses
+  %.064 = phi ptr [ %i.e, %bb.b ], [ %0, %bb.a ]  ; 21 uses
   %i.f = add i32 %i.c, -17
   %or.cond = icmp ult i32 %i.f, -20
   br i1 %or.cond, label %bb.d, label %bb.g
@@ -238,7 +236,9 @@ iter.check290:                                    ; preds = %bb.d
   %wide.trip.count142 = zext nneg i32 %2 to i64   ; 4 uses
   %i.k = add nsw i64 %wide.trip.count142, -1      ; 5 uses
   %min.iters.check275 = icmp ult i32 %2, 9
-  %i.l = sub i64 %.064173, %5
+  %5 = ptrtoaddr ptr %.064 to i64
+  %6 = ptrtoaddr ptr %1 to i64
+  %i.l = sub i64 %5, %6
   %diff.check274 = icmp ult i64 %i.l, 31
   %or.cond335 = select i1 %min.iters.check275, i1 true, i1 %diff.check274
   br i1 %or.cond335, label %vec.epilog.scalar.ph291.preheader, label %vector.main.loop.iter.check276
@@ -519,7 +519,9 @@ bb.g:                                             ; preds = %bb.c
 iter.check258:                                    ; preds = %.preheader77
   %wide.trip.count133 = zext nneg i32 %2 to i64   ; 8 uses
   %min.iters.check244 = icmp ult i32 %2, 4
-  %i.cu = sub i64 %5, %.064173
+  %7 = ptrtoaddr ptr %.064 to i64
+  %8 = ptrtoaddr ptr %1 to i64
+  %i.cu = sub i64 %8, %7
   %diff.check243 = icmp ugt i64 %i.cu, -32
   %or.cond336 = select i1 %min.iters.check244, i1 true, i1 %diff.check243
   br i1 %or.cond336, label %.lr.ph98.preheader, label %vector.main.loop.iter.check245
@@ -669,7 +671,9 @@ bb.h:                                             ; preds = %bb.g
 iter.check191:                                    ; preds = %bb.h
   %wide.trip.count122 = zext nneg i32 %i.c to i64 ; 8 uses
   %min.iters.check175 = icmp ult i32 %i.c, 4
-  %i.er = sub i64 %5, %.064173
+  %9 = ptrtoaddr ptr %.064 to i64
+  %10 = ptrtoaddr ptr %1 to i64
+  %i.er = sub i64 %10, %9
   %diff.check174 = icmp ugt i64 %i.er, -32
   %or.cond337 = select i1 %min.iters.check175, i1 true, i1 %diff.check174
   br i1 %or.cond337, label %.preheader79.preheader, label %vector.main.loop.iter.check176
@@ -801,7 +805,6 @@ vec.epilog.middle.block202:                       ; preds = %vec.epilog.vector.b
   %indvars.iv125.lcssa = phi i64 [ %n.vec196, %vec.epilog.middle.block202 ], [ %n.vec179, %middle.block186 ], [ %indvars.iv125.lcssa344.unr, %.preheader79.prol.loopexit ], [ %indvars.iv.next126.2, %.loopexit334.loopexit.unr-lcssa ] ; 7 uses
   %.56989.lcssa = phi ptr [ %ind.escape204, %vec.epilog.middle.block202 ], [ %ind.escape187, %middle.block186 ], [ %.56989.lcssa343.unr, %.preheader79.prol.loopexit ], [ %i.fx, %.loopexit334.loopexit.unr-lcssa ] ; 2 uses
   %.lcssa159 = phi ptr [ %i.fa, %vec.epilog.middle.block202 ], [ %i.eu, %middle.block186 ], [ %.lcssa342.unr, %.preheader79.prol.loopexit ], [ %i.fw, %.loopexit334.loopexit.unr-lcssa ]
-  %.56989.lcssa210 = ptrtoaddr ptr %.56989.lcssa to i64
   store i8 46, ptr %.lcssa159, align 1, !tbaa !34
   %.67091 = getelementptr inbounds nuw i8, ptr %.56989.lcssa, i64 2 ; 7 uses
   %i.fy = icmp slt i32 %i.c, %2
@@ -814,8 +817,10 @@ iter.check227:                                    ; preds = %.loopexit334
   br i1 %min.iters.check212, label %.lr.ph94.preheader, label %vector.memcheck209
 
 vector.memcheck209:                               ; preds = %iter.check227
-  %i.ga = add i64 %indvars.iv125.lcssa, %5
-  %i.gb = sub i64 %.56989.lcssa210, %i.ga
+  %11 = ptrtoaddr ptr %.56989.lcssa to i64
+  %12 = ptrtoaddr ptr %1 to i64
+  %i.ga = add i64 %indvars.iv125.lcssa, %12
+  %i.gb = sub i64 %11, %i.ga
   %i.gc = add i64 %i.gb, 1
   %diff.check211 = icmp ult i64 %i.gc, 31
   br i1 %diff.check211, label %.lr.ph94.preheader, label %vector.main.loop.iter.check213
@@ -915,10 +920,11 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ha, label %iter.check, label %.loopexit76
 
 iter.check:                                       ; preds = %.preheader80
-  %.7.lcssa161 = ptrtoaddr ptr %.7.lcssa to i64
   %wide.trip.count = zext nneg i32 %2 to i64      ; 8 uses
   %min.iters.check = icmp ult i32 %2, 4
-  %i.hb = sub i64 %5, %.7.lcssa161
+  %13 = ptrtoaddr ptr %.7.lcssa to i64
+  %14 = ptrtoaddr ptr %1 to i64
+  %i.hb = sub i64 %14, %13
   %diff.check = icmp ugt i64 %i.hb, -32
   %or.cond338 = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond338, label %.lr.ph87.preheader, label %vector.main.loop.iter.check
