@@ -1,0 +1,226 @@
+diff --git a/lld/ELF/Driver.cpp b/lld/ELF/Driver.cpp
+index 134aae9ef98ad5..65c527c3026222 100644
+--- a/lld/ELF/Driver.cpp
++++ b/lld/ELF/Driver.cpp
+@@ -1121,7 +1121,7 @@ template <class ELFT>
+ static void ltoValidateAllVtablesHaveTypeInfos(Ctx &ctx,
+                                                opt::InputArgList &args) {
+   DenseSet<StringRef> typeInfoSymbols;
+-  SmallSetVector<StringRef, 0> vtableSymbols;
++  SetVector<StringRef> vtableSymbols;
+   auto processVtableAndTypeInfoSymbols = [&](StringRef name) {
+     if (name.consume_front("_ZTI"))
+       typeInfoSymbols.insert(name);
+@@ -1150,7 +1150,7 @@ static void ltoValidateAllVtablesHaveTypeInfos(Ctx &ctx,
+     }
+   }
+ 
+-  SmallSetVector<StringRef, 0> vtableSymbolsWithNoRTTI;
++  SetVector<StringRef> vtableSymbolsWithNoRTTI;
+   for (StringRef s : vtableSymbols)
+     if (!typeInfoSymbols.contains(s))
+       vtableSymbolsWithNoRTTI.insert(s);
+diff --git a/llvm/include/llvm/ADT/SetVector.h b/llvm/include/llvm/ADT/SetVector.h
+index bc0ac2583327b3..c5d6e6f32bf6a1 100644
+--- a/llvm/include/llvm/ADT/SetVector.h
++++ b/llvm/include/llvm/ADT/SetVector.h
+@@ -25,6 +25,7 @@
+ #include "llvm/ADT/DenseSet.h"
+ #include "llvm/ADT/STLExtras.h"
+ #include "llvm/ADT/STLForwardCompat.h"
++#include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/Support/Compiler.h"
+ #include <cassert>
+@@ -342,9 +343,20 @@ class SetVector {
+ /// A SetVector that performs no allocations if smaller than
+ /// a certain size.
+ template <typename T, unsigned N>
+-class SmallSetVector : public SetVector<T, SmallVector<T, N>, DenseSet<T>, N> {
++class SmallSetVector
++    : public SetVector<
++          T, SmallVector<T, N>,
++          std::conditional_t<std::is_pointer_v<T>, SmallPtrSet<T, N>,
++                             SmallDenseSet<T, N>>,
++          N> {
++  static_assert(N != 0 && "SmallSetVector is not meant to be used with zero "
++                          "size-hint; use SetVector instead");
++
+ public:
+-  using SetVector<T, SmallVector<T, N>, DenseSet<T>, N>::SetVector;
++  using SetVector<T, SmallVector<T, N>,
++                  std::conditional_t<std::is_pointer_v<T>, SmallPtrSet<T, N>,
++                                     SmallDenseSet<T, N>>,
++                  N>::SetVector;
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/include/llvm/ADT/SmallPtrSet.h b/llvm/include/llvm/ADT/SmallPtrSet.h
+index 1a556d6a4145a2..1c59d06977326b 100644
+--- a/llvm/include/llvm/ADT/SmallPtrSet.h
++++ b/llvm/include/llvm/ADT/SmallPtrSet.h
+@@ -385,8 +385,8 @@ template <typename PtrType> class SmallPtrSetImpl : public SmallPtrSetImplBase {
+   /// Returns whether the pointer was in the set. Invalidates iterators if
+   /// true is returned. To remove elements while iterating over the set, use
+   /// remove_if() instead.
+-  bool erase(PtrType Ptr) {
+-    return erase_imp(PtrTraits::getAsVoidPointer(Ptr));
++  bool erase(ConstPtrType Ptr) {
++    return erase_imp(ConstPtrTraits::getAsVoidPointer(Ptr));
+   }
+ 
+   /// Remove elements that match the given predicate.
+diff --git a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+index 6304177d57ce67..681b3a2a7c3c2f 100644
+--- a/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
++++ b/llvm/lib/Transforms/Vectorize/LoopVectorize.cpp
+@@ -2399,7 +2399,7 @@ void LoopVectorizationCostModel::collectLoopUniforms(ElementCount VF) {
+   };
+ 
+   // Worklist containing uniform instructions demanding lane 0.
+-  SetVector<Instruction *> Worklist;
++  SmallSetVector<Instruction *, 16> Worklist;
+ 
+   // Add uniform instructions demanding lane 0 to the worklist. Instructions
+   // that require predication must not be considered uniform after
+@@ -2500,7 +2500,7 @@ void LoopVectorizationCostModel::collectLoopUniforms(ElementCount VF) {
+   // here is something which only demands lane 0 of the unrolled iterations;
+   // it does not imply that all lanes produce the same value (e.g. this is not
+   // the usual meaning of uniform)
+-  SetVector<Value *> HasUniformUse;
++  SmallSetVector<Value *, 16> HasUniformUse;
+ 
+   // Scan the loop for instructions which are either a) known to have only
+   // lane 0 demanded or b) are uses which demand only lane 0 of their operand.
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp b/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
+index dec41aed4a6bb1..20aca25890be0a 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanConstruction.cpp
+@@ -1098,7 +1098,7 @@ void VPlanTransforms::createInLoopReductionRecipes(VPlan &Plan,
+         IsFPRecurrence ? FastMathFlags::getFast() : FastMathFlags();
+ 
+     // Collect the chain of "link" recipes for the reduction starting at PhiR.
+-    SetVector<VPSingleDefRecipe *> Worklist;
++    SmallSetVector<VPSingleDefRecipe *, 16> Worklist;
+     Worklist.insert(PhiR);
+     for (unsigned I = 0; I != Worklist.size(); ++I) {
+       VPSingleDefRecipe *Cur = Worklist[I];
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanPredicator.cpp b/llvm/lib/Transforms/Vectorize/VPlanPredicator.cpp
+index c5d3c611a87734..3108e22273b35d 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanPredicator.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanPredicator.cpp
+@@ -177,7 +177,7 @@ void VPPredicator::createBlockInMask(VPBasicBlock *VPBB) {
+   // load/store/gather/scatter. Initialize BlockMask to no-mask.
+   VPValue *BlockMask = nullptr;
+   // This is the block mask. We OR all unique incoming edges.
+-  for (auto *Predecessor : SetVector<VPBlockBase *>(
++  for (auto *Predecessor : SmallSetVector<VPBlockBase *, 8>(
+            VPBB->getPredecessors().begin(), VPBB->getPredecessors().end())) {
+     VPValue *EdgeMask = createEdgeMask(cast<VPBasicBlock>(Predecessor), VPBB);
+     if (!EdgeMask) { // Mask of predecessor is all-one so mask of block is
+@@ -281,7 +281,8 @@ VPPredicator::computeBlendEdges(VPPhi *Phi) {
+   for (auto [InVal, InVPBB] : Phi->incoming_values_and_blocks())
+     AddEdge(InVPBB, Phi->getParent(), InVal);
+ 
+-  SetVector<const VPBlockBase *> Worklist(from_range, Phi->incoming_blocks());
++  SmallSetVector<const VPBlockBase *, 16> Worklist(from_range,
++                                                   Phi->incoming_blocks());
+   while (!Worklist.empty()) {
+     auto *VPBB = cast<VPBasicBlock>(Worklist.pop_back_val());
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+index 936897e49b0192..c2ee93c542bea1 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanTransforms.cpp
+@@ -352,7 +352,7 @@ static bool sinkScalarOperands(VPlan &Plan) {
+   bool ScalarVFOnly = Plan.hasScalarVFOnly();
+   bool Changed = false;
+ 
+-  SetVector<std::pair<VPBasicBlock *, VPSingleDefRecipe *>> WorkList;
++  SmallSetVector<std::pair<VPBasicBlock *, VPSingleDefRecipe *>, 16> WorkList;
+   auto InsertIfValidSinkCandidate = [ScalarVFOnly, &WorkList](
+                                         VPBasicBlock *SinkTo, VPValue *Op) {
+     auto *Candidate = dyn_cast<VPSingleDefRecipe>(Op);
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+index 1f2bfc066f0444..fc58c49ce3d294 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+@@ -1222,7 +1222,7 @@ void vputils::recursivelyDeleteDeadRecipes(VPValue *V) {
+ }
+ 
+ SmallVector<VPUser *> vputils::collectUsersRecursively(VPValue *V) {
+-  SetVector<VPUser *> Users(llvm::from_range, V->users());
++  SmallSetVector<VPUser *, 16> Users(llvm::from_range, V->users());
+   for (unsigned I = 0; I != Users.size(); ++I) {
+     VPRecipeBase *Cur = cast<VPRecipeBase>(Users[I]);
+     for (VPValue *V : Cur->definedValues())
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.h b/llvm/lib/Transforms/Vectorize/VPlanUtils.h
+index 4cb3609f4f98a6..01bb361d52c406 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.h
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.h
+@@ -143,7 +143,7 @@ VPIRFlags getFlagsForInduction(const InductionDescriptor &ID,
+ /// recipes with definitions.
+ template <typename PredT>
+ inline VPRecipeBase *findRecipe(VPValue *Start, PredT Pred) {
+-  SetVector<VPValue *> Worklist;
++  SmallSetVector<VPValue *, 16> Worklist;
+   Worklist.insert(Start);
+   for (unsigned I = 0; I != Worklist.size(); ++I) {
+     VPValue *Cur = Worklist[I];
+diff --git a/offload/plugins-nextgen/common/include/RPC.h b/offload/plugins-nextgen/common/include/RPC.h
+index 3175d377705776..1769686f036b1f 100644
+--- a/offload/plugins-nextgen/common/include/RPC.h
++++ b/offload/plugins-nextgen/common/include/RPC.h
+@@ -90,7 +90,7 @@ struct RPCServerTy {
+   std::mutex BufferMutex{};
+ 
+   /// A list of callbacks the server will attempt to handle.
+-  llvm::SmallSetVector<RPCServerCallbackTy, 0> Callbacks;
++  llvm::SetVector<RPCServerCallbackTy> Callbacks;
+ 
+   /// A helper class for running the user thread that handles the RPC interface.
+   /// Because we only need to check the RPC server while any kernels are
+@@ -114,7 +114,7 @@ struct RPCServerTy {
+     std::mutex &BufferMutex;
+ 
+     /// A reference to the main server's callbacks.
+-    llvm::SmallSetVector<RPCServerCallbackTy, 0> &Callbacks;
++    llvm::SetVector<RPCServerCallbackTy> &Callbacks;
+ 
+     /// A reference to all the RPC interfaces that the server is handling.
+     llvm::ArrayRef<void *> Buffers;
+@@ -129,7 +129,7 @@ struct RPCServerTy {
+     /// Initialize the worker thread to run in the background.
+     ServerThread(void *Buffers[], plugin::GenericDeviceTy *Devices[],
+                  size_t Length, std::mutex &BufferMutex,
+-                 llvm::SmallSetVector<RPCServerCallbackTy, 0> &Callbacks)
++                 llvm::SetVector<RPCServerCallbackTy> &Callbacks)
+         : Running(false), NumUsers(0), CV(), Mutex(), BufferMutex(BufferMutex),
+           Callbacks(Callbacks), Buffers(Buffers, Length),
+           Devices(Devices, Length), SleepFunction([]() {
+diff --git a/offload/plugins-nextgen/common/src/RPC.cpp b/offload/plugins-nextgen/common/src/RPC.cpp
+index ecb7cad412883a..c23b6dfe4710a0 100644
+--- a/offload/plugins-nextgen/common/src/RPC.cpp
++++ b/offload/plugins-nextgen/common/src/RPC.cpp
+@@ -85,7 +85,7 @@ static rpc::RPCStatus handleOffloadOpcodes(plugin::GenericDeviceTy &Device,
+ 
+ static rpc::RPCStatus
+ runServer(plugin::GenericDeviceTy &Device, void *Buffer,
+-          llvm::SmallSetVector<RPCServerTy::RPCServerCallbackTy, 0> &Callbacks,
++          llvm::SetVector<RPCServerTy::RPCServerCallbackTy> &Callbacks,
+           bool &ClientInUse) {
+   const uint64_t NumPorts =
+       std::min(Device.requestedRPCPortCount(), rpc::MAX_PORT_COUNT);
+@@ -114,9 +114,9 @@ runServer(plugin::GenericDeviceTy &Device, void *Buffer,
+   return Status;
+ }
+ 
+-static void flushServer(
+-    plugin::GenericDeviceTy &Device, void *Buffer,
+-    llvm::SmallSetVector<RPCServerTy::RPCServerCallbackTy, 0> Callbacks) {
++static void
++flushServer(plugin::GenericDeviceTy &Device, void *Buffer,
++            llvm::SetVector<RPCServerTy::RPCServerCallbackTy> Callbacks) {
+   bool Pending = true;
+   while (Pending) {
+     Pending = false;
