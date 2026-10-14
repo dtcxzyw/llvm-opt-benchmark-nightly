@@ -204,22 +204,22 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.m, %bb.a
   %.sroa.0.0 = phi ptr [ %2, %bb.a ], [ %i.bh, %bb.m ] ; 3 uses
-  %.045 = phi i64 [ 0, %bb.a ], [ %i.bk, %bb.m ]  ; 6 uses
+  %.045 = phi i64 [ 0, %bb.a ], [ %i.bk, %bb.m ]  ; 5 uses
   %.044 = phi ptr [ %4, %bb.a ], [ %i.bi, %bb.m ] ; 3 uses
   %i.a = phi <2 x i64> [ zeroinitializer, %bb.a ], [ %i.bj, %bb.m ] ; 2 uses
   %.not724 = icmp eq ptr %.sroa.0.0, %3
-  %.not25 = icmp eq ptr %.044, %5
+  %.not25 = icmp eq ptr %.044, %5                 ; 2 uses
   %or.cond26 = select i1 %.not724, i1 true, i1 %.not25
-  br i1 %or.cond26, label %.critedge.a, label %.lr.ph
+  br i1 %or.cond26, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6
-  %.130 = phi ptr [ %i.ag, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.044, %bb.b ] ; 10 uses
-  %.sroa.0.127 = phi ptr [ %i.af, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.sroa.0.0, %bb.b ] ; 10 uses
-  %i.b = phi <2 x i64> [ %i.ah, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %i.a, %bb.b ] ; 4 uses
+  %.130 = phi ptr [ %i.ag, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.044, %bb.b ] ; 13 uses
+  %.sroa.0.127 = phi ptr [ %i.af, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.sroa.0.0, %bb.b ] ; 13 uses
+  %i.b = phi <2 x i64> [ %i.ah, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %i.a, %bb.b ] ; 7 uses
   %i.c = load i32, ptr %.sroa.0.127, align 8, !tbaa !54
   %i.d = load i32, ptr %.130, align 8, !tbaa !54
   %i.e = icmp eq i32 %i.c, %i.d
-  br i1 %i.e, label %bb.c, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread
+  br i1 %i.e, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %.lr.ph
   %i.f = getelementptr inbounds nuw i8, ptr %.sroa.0.127, i64 8
@@ -229,7 +229,7 @@ bb.c:                                             ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw i8, ptr %.130, i64 16
   %i.k = load i64, ptr %i.j, align 8, !tbaa !56
   %i.l = icmp eq i64 %i.i, %i.k
-  br i1 %i.l, label %bb.d, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread
+  br i1 %i.l, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.127, i64 24
@@ -237,13 +237,13 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %.130, i64 24
   %i.p = load i64, ptr %i.o, align 8, !tbaa !57
   %i.q = icmp eq i64 %i.n, %i.p
-  br i1 %i.q, label %bb.e, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread
+  br i1 %i.q, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
   %i.r = load i32, ptr %i.f, align 8, !tbaa !55
   %i.s = load i32, ptr %i.g, align 8, !tbaa !55
   %i.t = icmp eq i32 %i.r, %i.s
-  br i1 %i.t, label %bb.f, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread
+  br i1 %i.t, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0.127, i64 32
@@ -253,7 +253,7 @@ bb.f:                                             ; preds = %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %.130, i64 40
   %i.z = load i64, ptr %i.y, align 8, !tbaa !22
   %i.aa = icmp eq i64 %i.x, %i.z
-  br i1 %i.aa, label %bb.g, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread
+  br i1 %i.aa, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
   %i.ab = icmp eq i64 %i.x, 0
@@ -264,18 +264,27 @@ _ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit: ; preds = %bb.g
   %i.ad = load ptr, ptr %i.u, align 8, !tbaa !20
   %bcmp.i.i.i = tail call i32 @bcmp(ptr %i.ad, ptr %i.ac, i64 %i.x)
   %i.ae = icmp eq i32 %bcmp.i.i.i, 0
-  br i1 %i.ae, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread
+  br i1 %i.ae, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6, label %.critedge
 
 _ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6: ; preds = %bb.g, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.0.127, i64 64 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.130, i64 64 ; 3 uses
   %i.ah = add nsw <2 x i64> %i.b, splat (i64 1)   ; 2 uses
   %.not7 = icmp eq ptr %i.af, %3
-  %.not = icmp eq ptr %i.ag, %5
+  %.not = icmp eq ptr %i.ag, %5                   ; 2 uses
   %or.cond = select i1 %.not7, i1 true, i1 %.not
-  br i1 %or.cond, label %.critedge.a, label %.lr.ph, !llvm.loop !165
+  br i1 %or.cond, label %.critedge, label %.lr.ph, !llvm.loop !165
 
-_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread: ; preds = %bb.f, %bb.c, %bb.d, %bb.e, %.lr.ph, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit
+.critedge:                                        ; preds = %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6, %.lr.ph, %bb.e, %bb.d, %bb.c, %bb.f, %bb.b
+  %.sroa.0.1.lcssa = phi ptr [ %.sroa.0.0, %bb.b ], [ %.sroa.0.127, %bb.f ], [ %.sroa.0.127, %bb.c ], [ %.sroa.0.127, %bb.d ], [ %.sroa.0.127, %bb.e ], [ %.sroa.0.127, %.lr.ph ], [ %i.af, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.sroa.0.127, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit ] ; 5 uses
+  %.1.lcssa = phi ptr [ %.044, %bb.b ], [ %.130, %bb.f ], [ %.130, %bb.c ], [ %.130, %bb.d ], [ %.130, %bb.e ], [ %.130, %.lr.ph ], [ %i.ag, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.130, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit ] ; 4 uses
+  %.not.lcssa = phi i1 [ %.not25, %bb.b ], [ false, %bb.f ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ], [ false, %.lr.ph ], [ %.not, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ false, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit ]
+  %6 = phi <2 x i64> [ %i.a, %bb.b ], [ %i.b, %bb.f ], [ %i.b, %bb.c ], [ %i.b, %bb.d ], [ %i.b, %bb.e ], [ %i.b, %.lr.ph ], [ %i.ah, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %i.b, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit ] ; 4 uses
+  %7 = icmp eq ptr %.sroa.0.1.lcssa, %3
+  %or.cond58 = select i1 %7, i1 true, i1 %.not.lcssa
+  br i1 %or.cond58, label %.critedge.a, label %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread
+
+_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread: ; preds = %.critedge
   %i.ai = icmp eq i64 %.045, 0
   br i1 %i.ai, label %bb.h, label %bb.k
 
@@ -316,36 +325,36 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
   %i.az = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, ptr noundef nonnull @.str.55, i64 noundef 2) ; 0 uses
-  %i.ba = extractelement <2 x i64> %i.b, i64 0
+  %i.ba = extractelement <2 x i64> %6, i64 0
   %i.bb = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIlEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, i64 noundef %i.ba) ; 2 uses
   %i.bc = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bb, ptr noundef nonnull @.str.56, i64 noundef 3) ; 0 uses
-  %i.bd = tail call fastcc noundef nonnull align 8 dereferenceable(8) ptr @_ZN12_GLOBAL__N_1lsERSoRKNS_13adapter_eventE(ptr noundef nonnull align 8 dereferenceable(8) %i.bb, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.0.127) ; 2 uses
+  %i.bd = tail call fastcc noundef nonnull align 8 dereferenceable(8) ptr @_ZN12_GLOBAL__N_1lsERSoRKNS_13adapter_eventE(ptr noundef nonnull align 8 dereferenceable(8) %i.bb, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.0.1.lcssa) ; 2 uses
   %i.be = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bd, ptr noundef nonnull @.str.57, i64 noundef 6) ; 0 uses
-  %i.bf = tail call fastcc noundef nonnull align 8 dereferenceable(8) ptr @_ZN12_GLOBAL__N_1lsERSoRKNS_13adapter_eventE(ptr noundef nonnull align 8 dereferenceable(8) %i.bd, ptr noundef nonnull align 8 dereferenceable(64) %.130)
+  %i.bf = tail call fastcc noundef nonnull align 8 dereferenceable(8) ptr @_ZN12_GLOBAL__N_1lsERSoRKNS_13adapter_eventE(ptr noundef nonnull align 8 dereferenceable(8) %i.bd, ptr noundef nonnull align 8 dereferenceable(64) %.1.lcssa)
   %i.bg = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bf, ptr noundef nonnull @.str.46, i64 noundef 1) ; 0 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.127, i64 64 ; 2 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %.130, i64 64 ; 2 uses
-  %i.bj = add nsw <2 x i64> %i.b, splat (i64 1)   ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.0.1.lcssa, i64 64 ; 2 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %.1.lcssa, i64 64 ; 2 uses
+  %i.bj = add nsw <2 x i64> %6, splat (i64 1)     ; 2 uses
   %i.bk = add nuw nsw i64 %.045, 1                ; 2 uses
   %.not8 = icmp eq ptr %i.bh, %3
   br i1 %.not8, label %.critedge.a, label %bb.b, !llvm.loop !166
 
-.critedge.a:                                      ; preds = %bb.m, %bb.b, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6, %bb.l
-  %.sroa.0.2 = phi ptr [ %.sroa.0.127, %bb.l ], [ %i.af, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.sroa.0.0, %bb.b ], [ %3, %bb.m ]
-  %.146 = phi i64 [ %.045, %bb.l ], [ %.045, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.045, %bb.b ], [ %i.bk, %bb.m ] ; 3 uses
-  %.2 = phi ptr [ %.130, %bb.l ], [ %i.ag, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %.044, %bb.b ], [ %i.bi, %bb.m ]
-  %6 = phi <2 x i64> [ %i.b, %bb.l ], [ %i.ah, %_ZN12_GLOBAL__N_1eqERKNS_13adapter_eventES2_.exit.thread6 ], [ %i.a, %bb.b ], [ %i.bj, %bb.m ] ; 2 uses
+.critedge.a:                                      ; preds = %.critedge, %bb.m, %bb.l
+  %.sroa.0.2 = phi ptr [ %.sroa.0.1.lcssa, %bb.l ], [ %3, %bb.m ], [ %.sroa.0.1.lcssa, %.critedge ]
+  %.146 = phi i64 [ %.045, %bb.l ], [ %i.bk, %bb.m ], [ %.045, %.critedge ] ; 3 uses
+  %.2 = phi ptr [ %.1.lcssa, %bb.l ], [ %i.bi, %bb.m ], [ %.1.lcssa, %.critedge ]
+  %8 = phi <2 x i64> [ %6, %bb.l ], [ %i.bj, %bb.m ], [ %6, %.critedge ] ; 2 uses
   %i.bl = ptrtoint ptr %3 to i64
   %i.bm = ptrtoint ptr %.sroa.0.2 to i64
   %i.bn = sub i64 %i.bl, %i.bm
   %i.bo = ashr exact i64 %i.bn, 6
-  %i.bp = extractelement <2 x i64> %6, i64 0
+  %i.bp = extractelement <2 x i64> %8, i64 0
   %i.bq = add nsw i64 %i.bo, %i.bp                ; 2 uses
   %i.br = ptrtoint ptr %5 to i64
   %i.bs = ptrtoint ptr %.2 to i64
   %i.bt = sub i64 %i.br, %i.bs
   %i.bu = ashr exact i64 %i.bt, 6
-  %i.bv = extractelement <2 x i64> %6, i64 1
+  %i.bv = extractelement <2 x i64> %8, i64 1
   %i.bw = add nsw i64 %i.bu, %i.bv                ; 2 uses
   %.not56 = icmp eq i64 %i.bq, %i.bw
   br i1 %.not56, label %bb.t, label %bb.n

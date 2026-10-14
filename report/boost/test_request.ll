@@ -204,20 +204,20 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN12_GLOBAL__N_117pubsub_change_strESaIS1_EE9push_backEOS1_.exit, %bb.a
   %.sroa.077.0.lcssa = phi ptr [ null, %bb.a ], [ %.sroa.077.1, %_ZNSt6vectorIN12_GLOBAL__N_117pubsub_change_strESaIS1_EE9push_backEOS1_.exit ] ; 7 uses
-  %.sroa.9.0.lcssa = phi ptr [ null, %bb.a ], [ %.sroa.9.1, %_ZNSt6vectorIN12_GLOBAL__N_117pubsub_change_strESaIS1_EE9push_backEOS1_.exit ] ; 5 uses
+  %.sroa.9.0.lcssa = phi ptr [ null, %bb.a ], [ %.sroa.9.1, %_ZNSt6vectorIN12_GLOBAL__N_117pubsub_change_strESaIS1_EE9push_backEOS1_.exit ] ; 6 uses
   %.sroa.14.0.lcssa = phi ptr [ null, %bb.a ], [ %.sroa.14.1, %_ZNSt6vectorIN12_GLOBAL__N_117pubsub_change_strESaIS1_EE9push_backEOS1_.exit ] ; 4 uses
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %2 ; 3 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.noexc31, %._crit_edge
   %.sroa.0.0.i = phi ptr [ %.sroa.077.0.lcssa, %._crit_edge ], [ %i.al, %.noexc31 ] ; 3 uses
-  %.045.i = phi i64 [ 0, %._crit_edge ], [ %i.ao, %.noexc31 ] ; 6 uses
+  %.045.i = phi i64 [ 0, %._crit_edge ], [ %i.ao, %.noexc31 ] ; 5 uses
   %.044.i = phi ptr [ %1, %._crit_edge ], [ %i.am, %.noexc31 ] ; 3 uses
   %i.h = phi <2 x i64> [ zeroinitializer, %._crit_edge ], [ %i.an, %.noexc31 ] ; 2 uses
   %.not623.i = icmp eq ptr %.sroa.0.0.i, %.sroa.9.0.lcssa
-  %.not24.i = icmp eq ptr %.044.i, %i.g
+  %.not24.i = icmp eq ptr %.044.i, %i.g           ; 2 uses
   %or.cond25.i = select i1 %.not623.i, i1 true, i1 %.not24.i
-  br i1 %or.cond25.i, label %.critedge.thread.i, label %.lr.ph.i
+  br i1 %or.cond25.i, label %.critedge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i
   %.129.i = phi ptr [ %i.s, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ %.044.i, %bb.b ] ; 7 uses
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %.noexc31, %._crit_e
   %i.j = load i32, ptr %.sroa.0.126.i, align 8, !tbaa !91
   %i.k = load i32, ptr %.129.i, align 8, !tbaa !91
   %i.l = icmp eq i32 %i.j, %i.k
-  br i1 %i.l, label %bb.c, label %bb.e
+  br i1 %i.l, label %bb.c, label %.critedge.i
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.126.i, i64 8
@@ -238,7 +238,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.129.i, i64 16
   %.sroa.2.0.copyload.i.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !32
   %i.o = icmp eq i64 %.sroa.01.0.copyload.i.i, %.sroa.0.0.copyload.i.i
-  br i1 %i.o, label %bb.d, label %bb.e
+  br i1 %i.o, label %bb.d, label %.critedge.i
 
 bb.d:                                             ; preds = %bb.c
   %i.p = icmp eq i64 %.sroa.01.0.copyload.i.i, 0
@@ -247,18 +247,27 @@ bb.d:                                             ; preds = %bb.c
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i: ; preds = %bb.d
   %bcmp.i.i.i = tail call i32 @bcmp(ptr %.sroa.22.0.copyload.i.i, ptr %.sroa.2.0.copyload.i.i, i64 %.sroa.01.0.copyload.i.i)
   %i.q = icmp eq i32 %bcmp.i.i.i, 0
-  br i1 %i.q, label %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i, label %bb.e
+  br i1 %i.q, label %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i, label %.critedge.i
 
 _ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i, %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.126.i, i64 24 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.129.i, i64 24 ; 3 uses
   %i.t = add nsw <2 x i64> %i.i, splat (i64 1)    ; 2 uses
   %.not6.i = icmp eq ptr %i.r, %.sroa.9.0.lcssa
-  %.not.i = icmp eq ptr %i.s, %i.g
+  %.not.i = icmp eq ptr %i.s, %i.g                ; 2 uses
   %or.cond.i = select i1 %.not6.i, i1 true, i1 %.not.i
-  br i1 %or.cond.i, label %.critedge.thread.i, label %.lr.ph.i, !llvm.loop !117
+  br i1 %or.cond.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !117
 
-bb.e:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i, %bb.c, %.lr.ph.i
+.critedge.i:                                      ; preds = %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i, %bb.c, %.lr.ph.i, %bb.b
+  %.sroa.0.1.lcssa.i = phi ptr [ %.sroa.0.0.i, %bb.b ], [ %i.r, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ %.sroa.0.126.i, %.lr.ph.i ], [ %.sroa.0.126.i, %bb.c ], [ %.sroa.0.126.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i ] ; 5 uses
+  %.1.lcssa.i = phi ptr [ %.044.i, %bb.b ], [ %i.s, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ %.129.i, %.lr.ph.i ], [ %.129.i, %bb.c ], [ %.129.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i ] ; 4 uses
+  %.not.lcssa.i = phi i1 [ %.not24.i, %bb.b ], [ %.not.i, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ false, %.lr.ph.i ], [ false, %bb.c ], [ false, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i ]
+  %5 = phi <2 x i64> [ %i.h, %bb.b ], [ %i.t, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ %i.i, %.lr.ph.i ], [ %i.i, %bb.c ], [ %i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i ] ; 4 uses
+  %6 = icmp eq ptr %.sroa.0.1.lcssa.i, %.sroa.9.0.lcssa
+  %or.cond58.i = select i1 %6, i1 true, i1 %.not.lcssa.i
+  br i1 %or.cond58.i, label %.critedge.thread.i, label %bb.e
+
+bb.e:                                             ; preds = %.critedge.i
   %i.u = icmp eq i64 %.045.i, 0
   br i1 %i.u, label %bb.f, label %bb.g
 
@@ -299,7 +308,7 @@ bb.h:                                             ; preds = %bb.g
           to label %.noexc25 unwind label %.loopexit ; 0 uses
 
 .noexc25:                                         ; preds = %.noexc23
-  %i.ae = extractelement <2 x i64> %i.i, i64 0
+  %i.ae = extractelement <2 x i64> %5, i64 0
   %i.af = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIlEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cerr, i64 noundef %i.ae)
           to label %.noexc26 unwind label %.loopexit ; 2 uses
 
@@ -308,7 +317,7 @@ bb.h:                                             ; preds = %bb.g
           to label %.noexc27 unwind label %.loopexit ; 0 uses
 
 .noexc27:                                         ; preds = %.noexc26
-  %i.ah = invoke fastcc noundef nonnull align 8 dereferenceable(8) ptr @_ZN12_GLOBAL__N_1lsERSoRKNS_17pubsub_change_strE(ptr noundef nonnull align 8 dereferenceable(8) %i.af, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.126.i)
+  %i.ah = invoke fastcc noundef nonnull align 8 dereferenceable(8) ptr @_ZN12_GLOBAL__N_1lsERSoRKNS_17pubsub_change_strE(ptr noundef nonnull align 8 dereferenceable(8) %i.af, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.1.lcssa.i)
           to label %.noexc28 unwind label %.loopexit ; 2 uses
 
 .noexc28:                                         ; preds = %.noexc27
@@ -316,7 +325,7 @@ bb.h:                                             ; preds = %bb.g
           to label %.noexc29 unwind label %.loopexit ; 0 uses
 
 .noexc29:                                         ; preds = %.noexc28
-  %i.aj = invoke fastcc noundef nonnull align 8 dereferenceable(8) ptr @_ZN12_GLOBAL__N_1lsERSoRKNS_17pubsub_change_strE(ptr noundef nonnull align 8 dereferenceable(8) %i.ah, ptr noundef nonnull align 8 dereferenceable(24) %.129.i)
+  %i.aj = invoke fastcc noundef nonnull align 8 dereferenceable(8) ptr @_ZN12_GLOBAL__N_1lsERSoRKNS_17pubsub_change_strE(ptr noundef nonnull align 8 dereferenceable(8) %i.ah, ptr noundef nonnull align 8 dereferenceable(24) %.1.lcssa.i)
           to label %.noexc30 unwind label %.loopexit
 
 .noexc30:                                         ; preds = %.noexc29
@@ -324,29 +333,29 @@ bb.h:                                             ; preds = %bb.g
           to label %.noexc31 unwind label %.loopexit ; 0 uses
 
 .noexc31:                                         ; preds = %.noexc30
-  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.126.i, i64 24 ; 2 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %.129.i, i64 24 ; 2 uses
-  %i.an = add nsw <2 x i64> %i.i, splat (i64 1)   ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.1.lcssa.i, i64 24 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.1.lcssa.i, i64 24 ; 2 uses
+  %i.an = add nsw <2 x i64> %5, splat (i64 1)     ; 2 uses
   %i.ao = add nuw nsw i64 %.045.i, 1              ; 2 uses
   %.not7.i = icmp eq ptr %i.al, %.sroa.9.0.lcssa
   br i1 %.not7.i, label %.critedge.thread.i, label %bb.b, !llvm.loop !118
 
-.critedge.thread.i:                               ; preds = %.noexc31, %bb.b, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i, %bb.h
-  %.sroa.0.2.i = phi ptr [ %i.r, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ %.sroa.0.126.i, %bb.h ], [ %.sroa.0.0.i, %bb.b ], [ %.sroa.9.0.lcssa, %.noexc31 ]
-  %.146.i = phi i64 [ %.045.i, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ %.045.i, %bb.h ], [ %.045.i, %bb.b ], [ %i.ao, %.noexc31 ] ; 3 uses
-  %.2.i = phi ptr [ %i.s, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ %.129.i, %bb.h ], [ %.044.i, %bb.b ], [ %i.am, %.noexc31 ]
-  %5 = phi <2 x i64> [ %i.t, %_ZN12_GLOBAL__N_1eqERKNS_17pubsub_change_strES2_.exit.i ], [ %i.i, %bb.h ], [ %i.h, %bb.b ], [ %i.an, %.noexc31 ] ; 2 uses
+.critedge.thread.i:                               ; preds = %.noexc31, %.critedge.i, %bb.h
+  %.sroa.0.2.i = phi ptr [ %.sroa.0.1.lcssa.i, %bb.h ], [ %.sroa.9.0.lcssa, %.noexc31 ], [ %.sroa.0.1.lcssa.i, %.critedge.i ]
+  %.146.i = phi i64 [ %.045.i, %bb.h ], [ %i.ao, %.noexc31 ], [ %.045.i, %.critedge.i ] ; 3 uses
+  %.2.i = phi ptr [ %.1.lcssa.i, %bb.h ], [ %i.am, %.noexc31 ], [ %.1.lcssa.i, %.critedge.i ]
+  %7 = phi <2 x i64> [ %5, %bb.h ], [ %i.an, %.noexc31 ], [ %5, %.critedge.i ] ; 2 uses
   %i.ap = ptrtoint ptr %.sroa.9.0.lcssa to i64
   %i.aq = ptrtoint ptr %.sroa.0.2.i to i64
   %i.ar = sub i64 %i.ap, %i.aq
   %i.as = sdiv exact i64 %i.ar, 24
-  %i.at = extractelement <2 x i64> %5, i64 0
+  %i.at = extractelement <2 x i64> %7, i64 0
   %i.au = add nsw i64 %i.as, %i.at                ; 2 uses
   %i.av = ptrtoint ptr %i.g to i64
   %i.aw = ptrtoint ptr %.2.i to i64
   %i.ax = sub i64 %i.av, %i.aw
   %i.ay = sdiv exact i64 %i.ax, 24
-  %i.az = extractelement <2 x i64> %5, i64 1
+  %i.az = extractelement <2 x i64> %7, i64 1
   %i.ba = add nsw i64 %i.ay, %i.az                ; 2 uses
   %.not56.i = icmp eq i64 %i.au, %i.ba
   br i1 %.not56.i, label %bb.l, label %bb.i
