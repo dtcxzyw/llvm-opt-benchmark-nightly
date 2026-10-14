@@ -204,8 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 44
   %.sroa.0182.0.copyload = load <2 x float>, ptr %i.ae, align 4 ; 3 uses
   %.sroa.2183.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 52
-  %4 = load <4 x float>, ptr %.sroa.2183.0..sroa_idx, align 4
-  %5 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %4 = load <2 x float>, ptr %.sroa.2183.0..sroa_idx, align 4
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.sroa.0147.0.copyload = load <2 x float>, ptr %i.af, align 8 ; 3 uses
   %.sroa.2148.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -222,7 +221,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ap = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i, float %i.ao, float %i.an)
   %i.aq = insertelement <2 x float> poison, float %.sroa.2218.0.copyload, i64 0
   %i.ar = shufflevector <2 x float> %i.aq, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.as = insertelement <2 x float> %5, float %.sroa.2148.0.copyload, i64 1 ; 3 uses
+  %i.as = insertelement <2 x float> %4, float %.sroa.2148.0.copyload, i64 1 ; 3 uses
   %i.at = fmul <2 x float> %i.ar, %i.as           ; 2 uses
   %i.au = shufflevector <2 x float> %.sroa.0217.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.av = shufflevector <2 x float> %.sroa.0182.0.copyload, <2 x float> %.sroa.0147.0.copyload, <2 x i32> <i32 1, i32 3>
@@ -557,8 +556,7 @@ bb.d:                                             ; preds = %_ZNK4pbrt11Interact
   %.sroa.03.4.vec.extract.i555 = extractelement <2 x float> %.sroa.0467.0.copyload, i64 1 ; 3 uses
   %i.ag = load <4 x float>, ptr %i.x, align 4, !tbaa !59 ; 3 uses
   %i.ah = load float, ptr %i.aa, align 8, !tbaa !61
-  %8 = load <4 x float>, ptr %i.z, align 8
-  %9 = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %8 = load <2 x float>, ptr %i.z, align 8
   %i.ai = load <3 x float>, ptr %i.ab, align 4, !tbaa !59 ; 2 uses
   %i.aj = shufflevector <3 x float> %i.ai, <3 x float> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 2>
   %i.ak = load <4 x float>, ptr %i.ac, align 4    ; 3 uses
@@ -567,7 +565,7 @@ bb.d:                                             ; preds = %_ZNK4pbrt11Interact
   %i.an = shufflevector <4 x float> %i.ag, <4 x float> %i.ak, <4 x i32> <i32 3, i32 1, i32 5, i32 5>
   %i.ao = fmul <4 x float> %i.aj, %i.an
   %i.ap = load <2 x float>, ptr %i.y, align 8, !tbaa !59 ; 3 uses
-  %i.aq = insertelement <2 x float> %9, float %i.ah, i64 1
+  %i.aq = insertelement <2 x float> %8, float %i.ah, i64 1
   %i.ar = fmul <2 x float> %i.ap, %i.aq
   %i.as = shufflevector <2 x float> %i.ar, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.at = shufflevector <4 x float> %i.ag, <4 x float> %i.ak, <2 x i32> <i32 0, i32 4>
@@ -970,13 +968,13 @@ _ZN4pbrt3RGBixEi.exit.2:                          ; preds = %bb.f
 
 bb.p:                                             ; preds = %bb.f
   %i.hz = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %13 = load <4 x float>, ptr %i.hz, align 8
+  %13 = load <1 x float>, ptr %i.hz, align 8
   %i.ia = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.ib = load ptr, ptr %i.ia, align 8, !tbaa !541
   %i.ic = call { <2 x float>, <2 x float> } @_ZNK4pbrt22DenselySampledSpectrum6SampleERKNS_18SampledWavelengthsE(ptr noundef nonnull align 8 dereferenceable(40) %i.ib, ptr noundef nonnull align 4 dereferenceable(32) %8) ; 2 uses
   %i.id = extractvalue { <2 x float>, <2 x float> } %i.ic, 0
   %i.ie = extractvalue { <2 x float>, <2 x float> } %i.ic, 1
-  %i.if = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.if = shufflevector <1 x float> %13, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ig = fmul <2 x float> %i.if, %i.id
   %i.ih = fmul <2 x float> %i.if, %i.ie
   br label %bb.q
@@ -1379,21 +1377,21 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %17 = load <4 x float>, ptr %i.g, align 8
+  %17 = load <1 x float>, ptr %i.g, align 8
   store i64 %i.b, ptr %5, align 8, !tbaa !223
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(76) %6, ptr noundef nonnull align 4 dereferenceable(76) %2, i64 76, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 4 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !224
   %i.h = call { <2 x float>, <2 x float> } @_ZN4pbrt25UniversalTextureEvaluatorclENS_15SpectrumTextureENS_18TextureEvalContextENS_18SampledWavelengthsE(ptr noundef nonnull align 1 dereferenceable(1) %4, ptr nofree noundef nonnull align 8 dead_on_return dereferenceable(8) %5, ptr noundef nonnull byval(%"struct.pbrt::TextureEvalContext") align 8 %6, ptr noundef nonnull byval(%"class.pbrt::SampledWavelengths") align 8 %7) ; 2 uses
   %i.i = extractvalue { <2 x float>, <2 x float> } %i.h, 0
   %i.j = extractvalue { <2 x float>, <2 x float> } %i.h, 1
-  %i.k = shufflevector <4 x float> %17, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.k = shufflevector <1 x float> %17, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.l = fmul <2 x float> %i.k, %i.i              ; 2 uses
   %i.m = fcmp ogt <2 x float> %i.l, zeroinitializer
   %i.n = select <2 x i1> %i.m, <2 x float> %i.l, <2 x float> zeroinitializer
   %i.o = fmul <2 x float> %i.k, %i.j              ; 2 uses
   %i.p = fcmp ogt <2 x float> %i.o, zeroinitializer
   %i.q = select <2 x i1> %i.p, <2 x float> %i.o, <2 x float> zeroinitializer
-  %18 = load <4 x float>, ptr %i.g, align 8
+  %18 = load <1 x float>, ptr %i.g, align 8
   %i.r = load i64, ptr %i.d, align 8, !tbaa !223
   store i64 %i.r, ptr %8, align 8, !tbaa !223
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(76) %9, ptr noundef nonnull align 4 dereferenceable(76) %2, i64 76, i1 false)
@@ -1401,7 +1399,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = call { <2 x float>, <2 x float> } @_ZN4pbrt25UniversalTextureEvaluatorclENS_15SpectrumTextureENS_18TextureEvalContextENS_18SampledWavelengthsE(ptr noundef nonnull align 1 dereferenceable(1) %4, ptr nofree noundef nonnull align 8 dead_on_return dereferenceable(8) %8, ptr noundef nonnull byval(%"struct.pbrt::TextureEvalContext") align 8 %9, ptr noundef nonnull byval(%"class.pbrt::SampledWavelengths") align 8 %10) ; 2 uses
   %i.t = extractvalue { <2 x float>, <2 x float> } %i.s, 0
   %i.u = extractvalue { <2 x float>, <2 x float> } %i.s, 1
-  %i.v = shufflevector <4 x float> %18, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.v = shufflevector <1 x float> %18, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.w = fmul <2 x float> %i.v, %i.t              ; 2 uses
   %i.x = fcmp ogt <2 x float> %i.w, zeroinitializer
   %i.y = select <2 x i1> %i.x, <2 x float> %i.w, <2 x float> zeroinitializer
@@ -1412,7 +1410,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a, %bb.b
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %19 = load <4 x float>, ptr %i.ac, align 8
+  %19 = load <1 x float>, ptr %i.ac, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !223
   store i64 %i.ae, ptr %11, align 8, !tbaa !223
@@ -1450,7 +1448,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b
   %i.bf = load i64, ptr %i.av, align 8, !tbaa !204
   %i.bg = extractelement <4 x float> %i.ar, i64 1
   %i.bh = call noundef float @_ZN4pbrt16InvertCatmullRomEN4pstd4spanIKfEES3_f(ptr %i.bc, i64 %i.bd, ptr %i.be, i64 %i.bf, float noundef %i.bg)
-  %i.bi = shufflevector <4 x float> %19, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.bi = shufflevector <1 x float> %19, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bj = fmul <2 x float> %i.bi, %i.ag           ; 2 uses
   %i.bk = fcmp ogt <2 x float> %i.bj, zeroinitializer
   %i.bl = select <2 x i1> %i.bk, <2 x float> %i.bj, <2 x float> zeroinitializer ; 2 uses

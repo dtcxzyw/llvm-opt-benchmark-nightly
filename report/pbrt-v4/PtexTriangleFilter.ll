@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = load float, ptr %i.j, align 4, !tbaa !44
   %i.l = fneg float %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %3 = load <4 x float>, ptr %i.m, align 4
-  %4 = shufflevector <4 x float> %3, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %3 = load <2 x float>, ptr %i.m, align 4
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.o = load float, ptr %i.n, align 4, !tbaa !40
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -219,7 +218,7 @@ bb.b:                                             ; preds = %bb.a
   %i.v = extractelement <2 x float> %i.u, i64 1
   store float %i.v, ptr %i.n, align 4, !tbaa !40
   store float %i.l, ptr %i.p, align 4, !tbaa !43
-  %i.w = insertelement <2 x float> %4, float %i.o, i64 1
+  %i.w = insertelement <2 x float> %3, float %i.o, i64 1
   %i.x = fsub <2 x float> splat (float 1.000000e+00), %i.w
   store <2 x float> %i.x, ptr %i.s, align 4, !tbaa !33
   store float %i.r, ptr %i.j, align 4, !tbaa !44
@@ -230,16 +229,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.z = fsub float 1.000000e+00, %i.f
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %5 = load <4 x float>, ptr %i.aa, align 4
-  %6 = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %4 = load <2 x float>, ptr %i.aa, align 4
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.ac = load float, ptr %i.ab, align 4, !tbaa !41
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.ae = load float, ptr %i.ad, align 4, !tbaa !44
   %i.af = fneg float %i.ae
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
-  %7 = load <4 x float>, ptr %i.ag, align 4
-  %8 = shufflevector <4 x float> %7, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %5 = load <2 x float>, ptr %i.ag, align 4
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.ai = load float, ptr %i.ah, align 4, !tbaa !40
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -247,11 +244,11 @@ bb.c:                                             ; preds = %bb.a
   %i.al = fneg float %i.ak
   store float %i.z, ptr %i.a, align 4, !tbaa !32
   store float %i.c, ptr %i.d, align 4, !tbaa !31
-  %i.am = insertelement <2 x float> %6, float %i.ac, i64 1
+  %i.am = insertelement <2 x float> %4, float %i.ac, i64 1
   %i.an = fsub <2 x float> splat (float 1.000000e+00), %i.am
   store <2 x float> %i.an, ptr %i.ah, align 4, !tbaa !33
   store float %i.af, ptr %i.ag, align 4, !tbaa !45
-  %i.ao = insertelement <2 x float> %8, float %i.ai, i64 1
+  %i.ao = insertelement <2 x float> %5, float %i.ai, i64 1
   %i.ap = fsub <2 x float> splat (float 1.000000e+00), %i.ao
   store <2 x float> %i.ap, ptr %i.ab, align 4, !tbaa !33
   store float %i.al, ptr %i.aa, align 4, !tbaa !46
@@ -277,26 +274,24 @@ bb.d:                                             ; preds = %bb.a
   %i.bd = load float, ptr %i.bc, align 4, !tbaa !44
   %i.be = fneg float %i.bd
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %9 = load <4 x float>, ptr %i.bf, align 4
-  %10 = shufflevector <4 x float> %9, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %6 = load <2 x float>, ptr %i.bf, align 4
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !41
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.bj = load float, ptr %i.bi, align 4, !tbaa !43
   %i.bk = fneg float %i.bj
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %11 = load <4 x float>, ptr %i.bl, align 4
-  %12 = shufflevector <4 x float> %11, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %7 = load <2 x float>, ptr %i.bl, align 4
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !40
   store float %i.ba, ptr %i.a, align 4, !tbaa !32
   store float %i.bb, ptr %i.d, align 4, !tbaa !31
   store float %i.be, ptr %i.bm, align 4, !tbaa !40
-  %i.bo = insertelement <2 x float> %10, float %i.bh, i64 1
+  %i.bo = insertelement <2 x float> %6, float %i.bh, i64 1
   %i.bp = fsub <2 x float> splat (float 1.000000e+00), %i.bo
   store <2 x float> %i.bp, ptr %i.bi, align 4, !tbaa !33
   store float %i.bk, ptr %i.bg, align 4, !tbaa !41
-  %i.bq = insertelement <2 x float> %12, float %i.bn, i64 1
+  %i.bq = insertelement <2 x float> %7, float %i.bn, i64 1
   %i.br = fsub <2 x float> splat (float 1.000000e+00), %i.bq
   store <2 x float> %i.br, ptr %i.bc, align 4, !tbaa !33
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
@@ -324,8 +319,7 @@ bb.e:                                             ; preds = %bb.a
   %i.ci = load float, ptr %i.ch, align 4, !tbaa !46
   %i.cj = fneg float %i.ci
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %13 = load <4 x float>, ptr %i.ck, align 4
-  %14 = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %8 = load <2 x float>, ptr %i.ck, align 4
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.cm = load float, ptr %i.cl, align 4, !tbaa !43
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
@@ -338,7 +332,7 @@ bb.e:                                             ; preds = %bb.a
   store float %i.cd, ptr %i.d, align 4, !tbaa !31
   store float %i.cg, ptr %i.cq, align 4, !tbaa !40
   store float %i.cj, ptr %i.cl, align 4, !tbaa !43
-  %i.ct = insertelement <2 x float> %14, float %i.cm, i64 1
+  %i.ct = insertelement <2 x float> %8, float %i.cm, i64 1
   %i.cu = fsub <2 x float> splat (float 1.000000e+00), %i.ct
   store <2 x float> %i.cu, ptr %i.cn, align 4, !tbaa !33
   store float %i.cp, ptr %i.ce, align 4, !tbaa !44
@@ -434,8 +428,7 @@ bb.h:                                             ; preds = %bb.a
   %i.fg = load float, ptr %i.ff, align 4, !tbaa !41
   %i.fh = fneg float %i.fg
   %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %15 = load <4 x float>, ptr %i.fi, align 4
-  %16 = shufflevector <4 x float> %15, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %9 = load <2 x float>, ptr %i.fi, align 4
   %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.fk = load float, ptr %i.fj, align 4, !tbaa !45
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
@@ -448,7 +441,7 @@ bb.h:                                             ; preds = %bb.a
   store float %i.fb, ptr %i.d, align 4, !tbaa !31
   store float %i.fe, ptr %i.fl, align 4, !tbaa !40
   store float %i.fh, ptr %i.fo, align 4, !tbaa !43
-  %i.fr = insertelement <2 x float> %16, float %i.fk, i64 1
+  %i.fr = insertelement <2 x float> %9, float %i.fk, i64 1
   %i.fs = fsub <2 x float> splat (float 1.000000e+00), %i.fr
   store <2 x float> %i.fs, ptr %i.fj, align 4, !tbaa !33
   store float %i.fn, ptr %i.fi, align 4, !tbaa !44

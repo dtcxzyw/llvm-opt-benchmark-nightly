@@ -204,12 +204,11 @@ bb.a:
   %i.l = load float, ptr %0, align 4, !tbaa !77
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.n = load float, ptr %i.m, align 4, !tbaa !78
-  %2 = load <4 x float>, ptr %1, align 4          ; 2 uses
-  %3 = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %2 = load <2 x float>, ptr %1, align 4          ; 2 uses
   %i.o = insertelement <2 x float> %i.h, float %i.b, i64 1
-  %i.p = insertelement <2 x float> %3, float %i.l, i64 1
+  %i.p = insertelement <2 x float> %2, float %i.l, i64 1
   %i.q = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> splat (float 5.000000e-01), <2 x float> %i.p) ; 2 uses
-  %i.r = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.r = shufflevector <2 x float> %2, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.s = shufflevector <2 x float> %i.h, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.t = insertelement <2 x float> %i.s, float %i.d, i64 1
   %i.u = insertelement <2 x float> %i.r, float %i.n, i64 1

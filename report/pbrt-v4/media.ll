@@ -204,7 +204,7 @@ define linkonce_odr dso_local void @_ZNK4pbrt16SphericalMapping3MapENS_18Texture
 bb.a:
   %.sroa.0108.0.copyload = load <2 x float>, ptr %2, align 8 ; 4 uses
   %.sroa.2109.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %3 = load <4 x float>, ptr %.sroa.2109.0..sroa_idx, align 8
+  %3 = load <1 x float>, ptr %.sroa.2109.0..sroa_idx, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.c = load float, ptr %i.b, align 4, !tbaa !122
@@ -218,8 +218,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 12
   %.sroa.073.0.copyload = load <2 x float>, ptr %i.k, align 4 ; 4 uses
   %.sroa.274.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %4 = load <4 x float>, ptr %.sroa.274.0..sroa_idx, align 4
-  %5 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %4 = load <2 x float>, ptr %.sroa.274.0..sroa_idx, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 24
   %.sroa.062.0.copyload = load <2 x float>, ptr %i.l, align 8 ; 4 uses
   %.sroa.263.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -232,7 +231,7 @@ bb.a:
   %i.r = load <2 x float>, ptr %i.h, align 4, !tbaa !122 ; 3 uses
   %i.s = load <2 x float>, ptr %i.i, align 4, !tbaa !122 ; 2 uses
   %i.t = load <2 x float>, ptr %i.j, align 4, !tbaa !122 ; 2 uses
-  %i.u = shufflevector <4 x float> %3, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.u = shufflevector <1 x float> %3, <1 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.v = shufflevector <2 x float> %i.r, <2 x float> %i.t, <2 x i32> <i32 0, i32 2>
   %i.w = fmul <2 x float> %i.u, %i.v
   %i.x = shufflevector <2 x float> %i.p, <2 x float> %i.s, <2 x i32> <i32 0, i32 3>
@@ -257,7 +256,7 @@ bb.a:
   %i.ap = shufflevector <2 x float> %.sroa.073.0.copyload, <2 x float> %.sroa.062.0.copyload, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.aq = fmul <2 x float> %i.ao, %i.ap
   %i.ar = fadd <2 x float> %i.an, %i.aq
-  %i.as = insertelement <2 x float> %5, float %.sroa.263.0.copyload, i64 1 ; 3 uses
+  %i.as = insertelement <2 x float> %4, float %.sroa.263.0.copyload, i64 1 ; 3 uses
   %i.at = shufflevector <2 x float> %i.m, <2 x float> %i.n, <2 x i32> <i32 0, i32 2>
   %i.au = fmul <2 x float> %i.at, %i.am
   %i.av = shufflevector <2 x float> %i.m, <2 x float> %i.n, <2 x i32> <i32 1, i32 3>
@@ -660,7 +659,7 @@ bb.m:                                             ; preds = %.thread, %.critedge
 define linkonce_odr dso_local noundef float @_ZNK4pbrt18CompactLightBounds10ImportanceENS_6Point3IfEENS_7Normal3IfEERKNS_7Bounds3IfEE(ptr noundef nonnull align 4 dereferenceable(24) %0, <2 x float> %1, float %2, <2 x float> %3, float %4, ptr noundef nonnull align 4 dereferenceable(24) %5) local_unnamed_addr #11 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %6 = load <4 x float>, ptr %5, align 4
+  %6 = load <1 x float>, ptr %5, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.c = load float, ptr %i.b, align 4, !tbaa !137, !noalias !1079
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 14
@@ -672,7 +671,7 @@ bb.a:
   %i.j = uitofp <2 x i16> %i.i to <2 x float>
   %i.k = fdiv <2 x float> %i.j, splat (float 6.553500e+04) ; 2 uses
   %i.l = fsub nnan <2 x float> splat (float 1.000000e+00), %i.k
-  %i.m = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.m = shufflevector <1 x float> %6, <1 x float> poison, <2 x i32> zeroinitializer
   %i.n = fmul <2 x float> %i.m, %i.l
   %i.o = insertelement <2 x float> poison, float %i.c, i64 0
   %i.p = shufflevector <2 x float> %i.o, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1075,7 +1074,7 @@ _ZN4pbrt3RGBixEi.exit.2:
   %.sroa.speculated.i = select i1 %i.ah, float %i.ac, float 0.000000e+00
   call void @_ZN4pbrt21RGBIlluminantSpectrumC1ERKNS_13RGBColorSpaceENS_3RGBE(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(152) %i.ae, <2 x float> %i.ag, float %.sroa.speculated.i)
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %4 = load <4 x float>, ptr %i.ai, align 8
+  %4 = load <1 x float>, ptr %i.ai, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !1145 ; 2 uses
   %.not.i = icmp eq ptr %i.ak, null
@@ -1202,7 +1201,7 @@ _ZNK4pbrt20RGBSigmoidPolynomialclEf.exit.3.i:     ; preds = %bb.i, %bb.h
 _ZNK4pbrt21RGBIlluminantSpectrum6SampleERKNS_18SampledWavelengthsE.exit: ; preds = %_ZN4pbrt3RGBixEi.exit.2, %_ZNK4pbrt20RGBSigmoidPolynomialclEf.exit.3.i
   %.sroa.06.0.i = phi <2 x float> [ %i.da, %_ZNK4pbrt20RGBSigmoidPolynomialclEf.exit.3.i ], [ zeroinitializer, %_ZN4pbrt3RGBixEi.exit.2 ]
   %.sroa.4.0.i = phi <2 x float> [ %i.dd, %_ZNK4pbrt20RGBSigmoidPolynomialclEf.exit.3.i ], [ zeroinitializer, %_ZN4pbrt3RGBixEi.exit.2 ]
-  %i.de = shufflevector <4 x float> %4, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.de = shufflevector <1 x float> %4, <1 x float> poison, <4 x i32> zeroinitializer
   %i.df = shufflevector <2 x float> %.sroa.06.0.i, <2 x float> %.sroa.4.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.dg = fmul <4 x float> %i.de, %i.df           ; 2 uses
   %i.dh = shufflevector <4 x float> %i.dg, <4 x float> poison, <2 x i32> <i32 0, i32 1>

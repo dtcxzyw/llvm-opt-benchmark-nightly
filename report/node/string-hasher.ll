@@ -132,8 +132,8 @@ bb.f:                                             ; preds = %bb.a
   %i.cp = zext <2 x i64> %i.cn to <2 x i128>
   %i.cq = mul nuw <2 x i128> %i.cp, %i.co         ; 2 uses
   %i.cr = lshr <2 x i128> %i.cq, splat (i128 64)
-  %i.cs = xor <2 x i128> %i.cr, %i.cq
-  %i.ct = trunc <2 x i128> %i.cs to <2 x i64>     ; 2 uses
+  %i.cs = xor <2 x i128> %i.cr, %i.cq             ; 3 uses
+  %i.ct = trunc <2 x i128> %i.cs to <2 x i64>
   %i.cu = getelementptr inbounds nuw i8, ptr %.063.i, i64 64
   %i.cv = load <8 x i16>, ptr %i.cu, align 1
   %i.cw = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.cv, <8 x i16> poison)
@@ -158,8 +158,11 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.do, label %.preheader, label %bb.g, !prof !6, !llvm.loop !5
 
 bb.g:                                             ; preds = %.preheader
-  %4 = tail call i64 @llvm.vector.reduce.xor.v2i64(<2 x i64> %i.ct)
-  %i.dp = xor i64 %4, %i.dl                       ; 2 uses
+  %4 = shufflevector <2 x i128> %i.cs, <2 x i128> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop36 = xor <2 x i128> %4, %i.cs
+  %5 = bitcast <2 x i128> %foldExtExtBinop36 to <4 x i64>
+  %6 = extractelement <4 x i64> %5, i64 0
+  %i.dp = xor i64 %6, %i.dl                       ; 2 uses
   %i.dq = icmp samesign ugt i64 %i.dn, 16
   br i1 %i.dq, label %.thread, label %bb.i
 
@@ -252,12 +255,8 @@ _Z9rapidhashIN2v88internal23ConvertTo8BitHashReaderEEmPKhmmPKm.exit: ; preds = %
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16>, <8 x i16>) #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.xor.v2i64(<2 x i64>) #2
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(none) }
-attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

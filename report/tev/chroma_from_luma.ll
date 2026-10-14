@@ -175,12 +175,12 @@ _ZN3jxl9BitReader6RefillEv.exit13:                ; preds = %bb.k, %bb.l
   %i.cd = and i32 %i.cc, 255
   %i.ce = add nsw i32 %i.cd, -128                 ; 2 uses
   store i32 %i.ce, ptr %i.ab, align 4, !tbaa !18
-  %2 = load <4 x float>, ptr %i.y, align 4
+  %2 = load <1 x float>, ptr %i.y, align 4
   %i.cf = load <2 x float>, ptr %i.aa, align 4, !tbaa !15
   %i.cg = insertelement <2 x i32> poison, i32 %i.bx, i64 0
   %i.ch = insertelement <2 x i32> %i.cg, i32 %i.ce, i64 1
   %i.ci = sitofp <2 x i32> %i.ch to <2 x float>
-  %i.cj = shufflevector <4 x float> %2, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.cj = shufflevector <1 x float> %2, <1 x float> poison, <2 x i32> zeroinitializer
   %i.ck = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ci, <2 x float> %i.cj, <2 x float> %i.cf) ; 2 uses
   %i.cl = extractelement <2 x float> %i.ck, i64 0
   store float %i.cl, ptr %0, align 4, !tbaa !15
@@ -429,13 +429,12 @@ bb.h:                                             ; preds = %_ZN3jxl13ZeroFillIm
 bb.i:                                             ; preds = %_ZN3jxl13ZeroFillImageIaEEvPNS_5PlaneIT_EE.exit24._crit_edge, %bb.h
   %i.cl = phi float [ %.pre37, %_ZN3jxl13ZeroFillImageIaEEvPNS_5PlaneIT_EE.exit24._crit_edge ], [ 0.000000e+00, %bb.h ]
   %i.cm = getelementptr inbounds nuw i8, ptr %7, i64 112 ; 2 uses
-  %12 = load <4 x float>, ptr %i.c, align 8
-  %13 = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %14 = load <4 x float>, ptr %i.b, align 4
+  %12 = load <2 x float>, ptr %i.c, align 8
+  %13 = load <1 x float>, ptr %i.b, align 4
   %i.cn = load <2 x i32>, ptr %i.e, align 8, !tbaa !14
   %i.co = sitofp <2 x i32> %i.cn to <2 x float>
-  %i.cp = shufflevector <4 x float> %14, <4 x float> poison, <2 x i32> zeroinitializer
-  %i.cq = insertelement <2 x float> %13, float %i.cl, i64 1
+  %i.cp = shufflevector <1 x float> %13, <1 x float> poison, <2 x i32> zeroinitializer
+  %i.cq = insertelement <2 x float> %12, float %i.cl, i64 1
   %i.cr = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.co, <2 x float> %i.cp, <2 x float> %i.cq) ; 2 uses
   %i.cs = extractelement <2 x float> %i.cr, i64 0
   store float %i.cs, ptr %i.cm, align 8, !tbaa !15

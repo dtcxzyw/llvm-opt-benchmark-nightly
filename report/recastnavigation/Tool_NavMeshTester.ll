@@ -205,10 +205,9 @@ bb.bd:                                            ; preds = %bb.bc
   %i.ng = load float, ptr %i.r, align 4, !tbaa !34 ; 2 uses
   store float %i.ng, ptr %i.mx, align 8, !tbaa !34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #13
-  %1 = load <4 x float>, ptr %i.ms, align 4
-  %2 = shufflevector <4 x float> %1, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %1 = load <2 x float>, ptr %i.ms, align 4
   %.pre145 = load float, ptr %i.mt, align 4, !tbaa !34
-  %i.nh = insertelement <2 x float> %2, float %i.ng, i64 1
+  %i.nh = insertelement <2 x float> %1, float %i.ng, i64 1
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc

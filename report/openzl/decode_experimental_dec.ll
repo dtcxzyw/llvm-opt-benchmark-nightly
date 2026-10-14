@@ -165,7 +165,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal { i32, i64 } @ZS_experimentalDecoder_decompress(ptr nofree readnone captures(none) %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4) #0 {
 bb.a:
-  %5 = alloca %struct.ZS_rep, align 16            ; 46 uses
+  %5 = alloca %struct.ZS_rep, align 8             ; 46 uses
   %6 = alloca %struct.ZL_ErrorContext, align 8    ; 14 uses
   %7 = alloca %struct.ZL_ReadCursor, align 8      ; 9 uses
   %8 = alloca %struct.ZS_window, align 8          ; 10 uses
@@ -303,7 +303,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #11
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %5, ptr noundef nonnull align 4 dereferenceable(24) @__const.ZS_experimentalDecoder_decompress.reps, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 4 dereferenceable(24) @__const.ZS_experimentalDecoder_decompress.reps, i64 24, i1 false)
   %i.bj = ptrtoint ptr %i.c to i64                ; 4 uses
   %i.bk = ptrtoint ptr %1 to i64                  ; 6 uses
   %i.bl = trunc i64 %2 to i32
@@ -560,8 +560,8 @@ bb.ai:                                            ; preds = %bb.ah
   %i.fz = sub nsw i64 0, %.sroa.051.4.insert.ext
   %i.ga = getelementptr inbounds i8, ptr %.0136.i.lcssa, i64 %i.fz
   %i.gb = add i32 %i.ds, %i.ab
-  %i.gc = load <2 x i32>, ptr %5, align 16
-  store i32 %i.dq, ptr %5, align 16
+  %i.gc = load <2 x i32>, ptr %5, align 8
+  store i32 %i.dq, ptr %5, align 8
   store <2 x i32> %i.gc, ptr %i.df, align 4
   br label %bb.aw
 
@@ -587,8 +587,8 @@ bb.ak:                                            ; preds = %bb.aj
   %i.go = ptrtoint ptr %i.gm to i64
   %i.gp = sub i64 %i.gn, %i.go
   %i.gq = trunc i64 %i.gp to i32
-  %i.gr = load <2 x i32>, ptr %5, align 16
-  store i32 %i.gq, ptr %5, align 16
+  %i.gr = load <2 x i32>, ptr %5, align 8
+  store i32 %i.gq, ptr %5, align 8
   store <2 x i32> %i.gr, ptr %i.df, align 4
   %i.gs = ptrtoint ptr %i.gk to i64
   %i.gt = sub i64 %i.gn, %i.gs
@@ -624,11 +624,11 @@ bb.al:                                            ; preds = %._crit_edge, %._cri
   br i1 %i.hn, label %.split.i, label %.split148.i
 
 .split.i:                                         ; preds = %bb.al
-  %.sroa.0.0.copyload378 = load i32, ptr %5, align 16 ; 2 uses
+  %.sroa.0.0.copyload378 = load i32, ptr %5, align 8 ; 2 uses
   %i.ho = load <2 x i32>, ptr %i.df, align 4      ; 2 uses
   %i.hp = load i32, ptr %i.dg, align 4            ; 2 uses
   %i.hq = icmp eq i32 %i.ds, %i.hp
-  %.sroa.19.12.copyload = load i32, ptr %.sroa.19.12..sroa_idx392, align 16 ; 3 uses
+  %.sroa.19.12.copyload = load i32, ptr %.sroa.19.12..sroa_idx392, align 8 ; 3 uses
   br i1 %i.hq, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %.split.i
@@ -652,7 +652,7 @@ bb.an:                                            ; preds = %.split.i
   br i1 %or.cond.not.i, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %.split148.i
-  %i.hz = load <2 x i32>, ptr %5, align 16
+  %i.hz = load <2 x i32>, ptr %5, align 8
   br label %bb.ar
 
 bb.ap:                                            ; preds = %.split148.i
@@ -661,14 +661,13 @@ bb.ap:                                            ; preds = %.split148.i
 
 .thread.i:                                        ; preds = %bb.ap
   %i.ib = load i32, ptr %.sroa.10.0..sroa_idx386, align 8
-  %11 = load <4 x i32>, ptr %5, align 16
-  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
+  %11 = load <2 x i32>, ptr %5, align 8
   %.pre = load i32, ptr %i.dg, align 4
-  %i.ic = insertelement <2 x i32> %12, i32 %i.ib, i64 1
+  %i.ic = insertelement <2 x i32> %11, i32 %i.ib, i64 1
   br label %bb.at
 
 bb.aq:                                            ; preds = %bb.ap
-  %.sroa.0.0.copyload379 = load i32, ptr %5, align 16
+  %.sroa.0.0.copyload379 = load i32, ptr %5, align 8
   %i.id = load <2 x i32>, ptr %i.df, align 4
   br label %bb.ar
 
@@ -679,7 +678,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ao
   br i1 %i.hx, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %bb.ar
-  %.sroa.19.12.copyload393 = load i32, ptr %.sroa.19.12..sroa_idx392, align 16
+  %.sroa.19.12.copyload393 = load i32, ptr %.sroa.19.12..sroa_idx392, align 8
   %.sroa.23.12.copyload397 = load i32, ptr %.sroa.23.12..sroa_idx396, align 4
   br label %ZS_rep_update.exit
 
@@ -688,7 +687,7 @@ bb.at:                                            ; preds = %bb.ar, %.thread.i
   %.sroa.0.2 = phi i32 [ %i.hv, %.thread.i ], [ %.sroa.0.1, %bb.ar ] ; 2 uses
   %i.ig = phi <2 x i32> [ %i.ic, %.thread.i ], [ %i.ie, %bb.ar ] ; 2 uses
   %i.ih = icmp eq i32 %i.ds, %i.if
-  %.sroa.19.12.copyload391 = load i32, ptr %.sroa.19.12..sroa_idx392, align 16 ; 3 uses
+  %.sroa.19.12.copyload391 = load i32, ptr %.sroa.19.12..sroa_idx392, align 8 ; 3 uses
   br i1 %i.ih, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
@@ -708,10 +707,10 @@ ZS_rep_update.exit:                               ; preds = %bb.av, %bb.an, %bb.
   %.sroa.0.0 = phi i32 [ %.sroa.0.1, %bb.as ], [ %.sroa.0.0.copyload378, %bb.am ], [ %.sroa.0.2, %bb.av ], [ %.sroa.0.2, %bb.au ], [ %.sroa.0.0.copyload378, %bb.an ]
   %i.ik = phi i32 [ %i.hv, %bb.as ], [ %i.hm, %bb.am ], [ %i.hv, %bb.av ], [ %i.hv, %bb.au ], [ %i.hm, %bb.an ]
   %i.il = phi <2 x i32> [ %i.ie, %bb.as ], [ %i.ho, %bb.am ], [ %i.ig, %bb.av ], [ %i.ig, %bb.au ], [ %i.ho, %bb.an ]
-  store i32 %.sroa.0.0, ptr %5, align 16
+  store i32 %.sroa.0.0, ptr %5, align 8
   store <2 x i32> %i.il, ptr %i.df, align 4
   store i32 %.sroa.12.0, ptr %i.dg, align 4
-  store i32 %.sroa.19.0, ptr %.sroa.19.12..sroa_idx392, align 16
+  store i32 %.sroa.19.0, ptr %.sroa.19.12..sroa_idx392, align 8
   store i32 %.sroa.23.0, ptr %.sroa.23.12..sroa_idx396, align 4
   %i.im = zext i32 %i.ik to i64
   %i.in = sub nsw i64 0, %i.im
@@ -1114,8 +1113,8 @@ bb.bi:                                            ; preds = %bb.bh
   %i.rc = ptrtoint ptr %i.qy to i64
   %i.rd = sub i64 %i.rb, %i.rc                    ; 6 uses
   %i.re = trunc i64 %i.rd to i32
-  %i.rf = load <2 x i32>, ptr %5, align 16
-  store i32 %i.re, ptr %5, align 16
+  %i.rf = load <2 x i32>, ptr %5, align 8
+  store i32 %i.re, ptr %5, align 8
   store <2 x i32> %i.rf, ptr %i.mz, align 4
   %i.rg = ptrtoint ptr %i.qx to i64
   %i.rh = sub i64 %i.rb, %i.rg
@@ -1376,8 +1375,8 @@ bb.bp:                                            ; preds = %.critedge172.i._cri
 
 bb.bq:                                            ; preds = %bb.bp
   %i.uq = add i32 %i.ni, 7
-  %i.ur = load <2 x i32>, ptr %5, align 16
-  store i32 %i.ng, ptr %5, align 16
+  %i.ur = load <2 x i32>, ptr %5, align 8
+  store i32 %i.ng, ptr %5, align 8
   store <2 x i32> %i.ur, ptr %i.mz, align 4
   br label %bb.cc
 
@@ -1389,11 +1388,11 @@ bb.br:                                            ; preds = %.critedge172.i._cri
   br i1 %i.uv, label %.split.i299, label %.split165.i298
 
 .split.i299:                                      ; preds = %bb.br
-  %.sroa.0437.0.copyload438 = load i32, ptr %5, align 16 ; 2 uses
+  %.sroa.0437.0.copyload438 = load i32, ptr %5, align 8 ; 2 uses
   %i.uw = load <2 x i32>, ptr %i.mz, align 4      ; 2 uses
   %i.ux = load i32, ptr %i.na, align 4            ; 2 uses
   %i.uy = icmp eq i32 %i.ni, %i.ux
-  %.sroa.19453.12.copyload = load i32, ptr %.sroa.19453.12..sroa_idx456, align 16 ; 3 uses
+  %.sroa.19453.12.copyload = load i32, ptr %.sroa.19453.12..sroa_idx456, align 8 ; 3 uses
   br i1 %i.uy, label %bb.bs, label %bb.bt
 
 bb.bs:                                            ; preds = %.split.i299
@@ -1417,7 +1416,7 @@ bb.bt:                                            ; preds = %.split.i299
   br i1 %or.cond.not.i362, label %bb.bv, label %bb.bu
 
 bb.bu:                                            ; preds = %.split165.i298
-  %i.vh = load <2 x i32>, ptr %5, align 16
+  %i.vh = load <2 x i32>, ptr %5, align 8
   br label %bb.bx
 
 bb.bv:                                            ; preds = %.split165.i298
@@ -1426,14 +1425,13 @@ bb.bv:                                            ; preds = %.split165.i298
 
 .thread.i363:                                     ; preds = %bb.bv
   %i.vj = load i32, ptr %.sroa.5465.0..sroa_idx, align 8
-  %13 = load <4 x i32>, ptr %5, align 16
-  %14 = shufflevector <4 x i32> %13, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
+  %12 = load <2 x i32>, ptr %5, align 8
   %.pre802 = load i32, ptr %i.na, align 4
-  %i.vk = insertelement <2 x i32> %14, i32 %i.vj, i64 1
+  %i.vk = insertelement <2 x i32> %12, i32 %i.vj, i64 1
   br label %bb.bz
 
 bb.bw:                                            ; preds = %bb.bv
-  %.sroa.0437.0.copyload439 = load i32, ptr %5, align 16
+  %.sroa.0437.0.copyload439 = load i32, ptr %5, align 8
   %i.vl = load <2 x i32>, ptr %i.mz, align 4
   br label %bb.bx
 
@@ -1444,7 +1442,7 @@ bb.bx:                                            ; preds = %bb.bw, %bb.bu
   br i1 %i.vf, label %bb.by, label %bb.bz
 
 bb.by:                                            ; preds = %bb.bx
-  %.sroa.19453.12.copyload457 = load i32, ptr %.sroa.19453.12..sroa_idx456, align 16
+  %.sroa.19453.12.copyload457 = load i32, ptr %.sroa.19453.12..sroa_idx456, align 8
   %.sroa.23458.12.copyload462 = load i32, ptr %.sroa.23458.12..sroa_idx461, align 4
   br label %ZS_rep_update.exit361
 
@@ -1453,7 +1451,7 @@ bb.bz:                                            ; preds = %bb.bx, %.thread.i36
   %.sroa.0437.2 = phi i32 [ %i.vd, %.thread.i363 ], [ %.sroa.0437.1, %bb.bx ] ; 2 uses
   %i.vo = phi <2 x i32> [ %i.vk, %.thread.i363 ], [ %i.vm, %bb.bx ] ; 2 uses
   %i.vp = icmp eq i32 %i.ni, %i.vn
-  %.sroa.19453.12.copyload455 = load i32, ptr %.sroa.19453.12..sroa_idx456, align 16 ; 3 uses
+  %.sroa.19453.12.copyload455 = load i32, ptr %.sroa.19453.12..sroa_idx456, align 8 ; 3 uses
   br i1 %i.vp, label %bb.ca, label %bb.cb
 
 bb.ca:                                            ; preds = %bb.bz
@@ -1473,10 +1471,10 @@ ZS_rep_update.exit361:                            ; preds = %bb.cb, %bb.bt, %bb.
   %.sroa.23458.0 = phi i32 [ %.sroa.23458.12.copyload462, %bb.by ], [ %.sroa.23458.12.copyload, %bb.bs ], [ %spec.select761, %bb.cb ], [ %.sroa.23458.12.copyload460, %bb.ca ], [ %spec.select760, %bb.bt ]
   %i.vs = phi i32 [ %i.vd, %bb.by ], [ %i.uu, %bb.bs ], [ %i.vd, %bb.cb ], [ %i.vd, %bb.ca ], [ %i.uu, %bb.bt ]
   %i.vt = phi <2 x i32> [ %i.vm, %bb.by ], [ %i.uw, %bb.bs ], [ %i.vo, %bb.cb ], [ %i.vo, %bb.ca ], [ %i.uw, %bb.bt ]
-  store i32 %.sroa.0437.0, ptr %5, align 16
+  store i32 %.sroa.0437.0, ptr %5, align 8
   store <2 x i32> %i.vt, ptr %i.mz, align 4
   store i32 %.sroa.12450.0, ptr %i.na, align 4
-  store i32 %.sroa.19453.0, ptr %.sroa.19453.12..sroa_idx456, align 16
+  store i32 %.sroa.19453.0, ptr %.sroa.19453.12..sroa_idx456, align 8
   store i32 %.sroa.23458.0, ptr %.sroa.23458.12..sroa_idx461, align 4
   %i.vu = zext i32 %i.vs to i64
   %i.vv = add i32 %i.ni, 3
@@ -1879,8 +1877,8 @@ bb.cq:                                            ; preds = %bb.cp
   %i.aep = ptrtoint ptr %i.ael to i64
   %i.aeq = sub i64 %i.aeo, %i.aep                 ; 6 uses
   %i.aer = trunc i64 %i.aeq to i32
-  %i.aes = load <2 x i32>, ptr %5, align 16
-  store i32 %i.aer, ptr %5, align 16
+  %i.aes = load <2 x i32>, ptr %5, align 8
+  store i32 %i.aer, ptr %5, align 8
   store <2 x i32> %i.aes, ptr %i.mt, align 4
   %i.aet = ptrtoint ptr %i.aek to i64
   %i.aeu = sub i64 %i.aeo, %i.aet
@@ -2141,8 +2139,8 @@ bb.cx:                                            ; preds = %._crit_edge724
 
 bb.cy:                                            ; preds = %bb.cx
   %i.aid = add i32 %i.aar, 7
-  %i.aie = load <2 x i32>, ptr %5, align 16
-  store i32 %i.aap, ptr %5, align 16
+  %i.aie = load <2 x i32>, ptr %5, align 8
+  store i32 %i.aap, ptr %5, align 8
   store <2 x i32> %i.aie, ptr %i.mt, align 4
   br label %bb.dk
 
@@ -2154,11 +2152,11 @@ bb.cz:                                            ; preds = %._crit_edge724
   br i1 %i.aii, label %.split.i281, label %.split165.i
 
 .split.i281:                                      ; preds = %bb.cz
-  %.sroa.0403.0.copyload404 = load i32, ptr %5, align 16 ; 2 uses
+  %.sroa.0403.0.copyload404 = load i32, ptr %5, align 8 ; 2 uses
   %i.aij = load <2 x i32>, ptr %i.mt, align 4     ; 2 uses
   %i.aik = load i32, ptr %i.mu, align 4           ; 2 uses
   %i.ail = icmp eq i32 %i.aar, %i.aik
-  %.sroa.19419.12.copyload = load i32, ptr %.sroa.19419.12..sroa_idx422, align 16 ; 3 uses
+  %.sroa.19419.12.copyload = load i32, ptr %.sroa.19419.12..sroa_idx422, align 8 ; 3 uses
   br i1 %i.ail, label %bb.da, label %bb.db
 
 bb.da:                                            ; preds = %.split.i281
@@ -2182,7 +2180,7 @@ bb.db:                                            ; preds = %.split.i281
   br i1 %or.cond.not.i372, label %bb.dd, label %bb.dc
 
 bb.dc:                                            ; preds = %.split165.i
-  %i.aiu = load <2 x i32>, ptr %5, align 16
+  %i.aiu = load <2 x i32>, ptr %5, align 8
   br label %bb.df
 
 bb.dd:                                            ; preds = %.split165.i
@@ -2191,13 +2189,12 @@ bb.dd:                                            ; preds = %.split165.i
 
 .thread.i373:                                     ; preds = %bb.dd
   %i.aiw = load i32, ptr %.sroa.5431.0..sroa_idx, align 8
-  %15 = load <4 x i32>, ptr %5, align 16
-  %16 = shufflevector <4 x i32> %15, <4 x i32> poison, <2 x i32> <i32 0, i32 poison>
-  %i.aix = insertelement <2 x i32> %16, i32 %i.aiw, i64 1
+  %13 = load <2 x i32>, ptr %5, align 8
+  %i.aix = insertelement <2 x i32> %13, i32 %i.aiw, i64 1
   br label %bb.dh
 
 bb.de:                                            ; preds = %bb.dd
-  %.sroa.0403.0.copyload405 = load i32, ptr %5, align 16
+  %.sroa.0403.0.copyload405 = load i32, ptr %5, align 8
   %i.aiy = load <2 x i32>, ptr %i.mt, align 4
   br label %bb.df
 
@@ -2208,7 +2205,7 @@ bb.df:                                            ; preds = %bb.de, %bb.dc
 
 bb.dg:                                            ; preds = %bb.df
   %.sroa.12416.12.copyload418 = load i32, ptr %i.mu, align 4
-  %.sroa.19419.12.copyload423 = load i32, ptr %.sroa.19419.12..sroa_idx422, align 16
+  %.sroa.19419.12.copyload423 = load i32, ptr %.sroa.19419.12..sroa_idx422, align 8
   %.sroa.23424.12.copyload428 = load i32, ptr %.sroa.23424.12..sroa_idx427, align 4
   br label %ZS_rep_update.exit371
 
@@ -2217,7 +2214,7 @@ bb.dh:                                            ; preds = %bb.df, %.thread.i37
   %i.aja = phi <2 x i32> [ %i.aix, %.thread.i373 ], [ %i.aiz, %bb.df ] ; 2 uses
   %i.ajb = load i32, ptr %i.mu, align 4           ; 2 uses
   %i.ajc = icmp eq i32 %i.aar, %i.ajb
-  %.sroa.19419.12.copyload421 = load i32, ptr %.sroa.19419.12..sroa_idx422, align 16 ; 3 uses
+  %.sroa.19419.12.copyload421 = load i32, ptr %.sroa.19419.12..sroa_idx422, align 8 ; 3 uses
   br i1 %i.ajc, label %bb.di, label %bb.dj
 
 bb.di:                                            ; preds = %bb.dh
@@ -2237,10 +2234,10 @@ ZS_rep_update.exit371:                            ; preds = %bb.dj, %bb.db, %bb.
   %.sroa.0403.0 = phi i32 [ %.sroa.0403.1, %bb.dg ], [ %.sroa.0403.0.copyload404, %bb.da ], [ %.sroa.0403.2, %bb.dj ], [ %.sroa.0403.2, %bb.di ], [ %.sroa.0403.0.copyload404, %bb.db ]
   %i.ajf = phi i32 [ %i.aiq, %bb.dg ], [ %i.aih, %bb.da ], [ %i.aiq, %bb.dj ], [ %i.aiq, %bb.di ], [ %i.aih, %bb.db ]
   %i.ajg = phi <2 x i32> [ %i.aiz, %bb.dg ], [ %i.aij, %bb.da ], [ %i.aja, %bb.dj ], [ %i.aja, %bb.di ], [ %i.aij, %bb.db ]
-  store i32 %.sroa.0403.0, ptr %5, align 16
+  store i32 %.sroa.0403.0, ptr %5, align 8
   store <2 x i32> %i.ajg, ptr %i.mt, align 4
   store i32 %.sroa.12416.0, ptr %i.mu, align 4
-  store i32 %.sroa.19419.0, ptr %.sroa.19419.12..sroa_idx422, align 16
+  store i32 %.sroa.19419.0, ptr %.sroa.19419.12..sroa_idx422, align 8
   store i32 %.sroa.23424.0, ptr %.sroa.23424.12..sroa_idx427, align 4
   %i.ajh = zext i32 %i.ajf to i64
   %i.aji = add i32 %i.aar, 3

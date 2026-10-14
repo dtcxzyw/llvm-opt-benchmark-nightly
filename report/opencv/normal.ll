@@ -205,7 +205,7 @@ bb.a:
   %27 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %28 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
   %29 = alloca %"class.cv::_OutputArray", align 8 ; 7 uses
-  %30 = alloca %"class.cv::Matx.38", align 16     ; 8 uses
+  %30 = alloca %"class.cv::Matx.38", align 8      ; 8 uses
   %31 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
   %32 = alloca %"class.cv::_InputArray", align 8  ; 8 uses
   %33 = alloca %"class.cv::Mat", align 8          ; 7 uses
@@ -608,13 +608,12 @@ _ZN2cv4Mat_INS_3VecIfLi2EEEE6createEii.exit144:   ; preds = %bb.w
           to label %bb.x unwind label %bb.aj
 
 bb.x:                                             ; preds = %_ZN2cv4Mat_INS_3VecIfLi2EEEE6createEii.exit144
-  %36 = load <4 x float>, ptr %30, align 16
-  %37 = shufflevector <4 x float> %36, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %36 = load <2 x float>, ptr %30, align 8
   %i.jd = getelementptr inbounds nuw i8, ptr %30, i64 8
   %i.je = load float, ptr %i.jd, align 8, !tbaa !65
   %i.jf = getelementptr inbounds nuw i8, ptr %30, i64 16
-  %i.jg = load float, ptr %i.jf, align 16, !tbaa !65
-  %i.jh = insertelement <2 x float> %37, float %i.jg, i64 1
+  %i.jg = load float, ptr %i.jf, align 8, !tbaa !65
+  %i.jh = insertelement <2 x float> %36, float %i.jg, i64 1
   %i.ji = fdiv <2 x float> splat (float 1.000000e+00), %i.jh ; 2 uses
   %i.jj = extractelement <2 x float> %i.ji, i64 1
   %i.jk = fpext float %i.jj to double

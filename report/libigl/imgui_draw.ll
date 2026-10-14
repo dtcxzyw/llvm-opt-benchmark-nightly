@@ -205,8 +205,8 @@ bb.o:                                             ; preds = %bb.h
   %i.gv = fadd float %i.i, %i.gu                  ; 2 uses
   %i.gw = load <2 x float>, ptr %i.ai, align 16, !tbaa !15
   %i.gx = shufflevector <2 x float> %i.gw, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.gy = load <2 x float>, ptr %1, align 4, !tbaa !15
-  %i.gz = shufflevector <2 x float> %i.gy, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 5 uses
+  %i.gy = load <2 x float>, ptr %1, align 4, !tbaa !15 ; 3 uses
+  %i.gz = shufflevector <2 x float> %i.gy, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 3 uses
   %i.ha = insertelement <4 x float> poison, float %i.gv, i64 0
   %i.hb = insertelement <4 x float> %i.ha, float %i.gu, i64 1
   %i.hc = shufflevector <4 x float> %i.hb, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
@@ -219,18 +219,17 @@ bb.o:                                             ; preds = %bb.h
   store <2 x float> %i.hg, ptr %i.hh, align 8, !tbaa !15
   %shift = shufflevector <4 x float> %i.hd, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
   %foldExtExtBinop709 = fsub <4 x float> %i.gz, %shift
-  %shift719 = shufflevector <4 x float> %i.hd, <4 x float> poison, <4 x i32> <i32 poison, i32 3, i32 poison, i32 poison>
-  %foldExtExtBinop720 = fsub <4 x float> %i.gz, %shift719
   %.sroa.0.0.vec.insert.i547 = shufflevector <4 x float> %foldExtExtBinop709, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %6 = shufflevector <4 x float> %foldExtExtBinop720, <4 x float> poison, <2 x i32> <i32 poison, i32 1>
-  %.sroa.0.4.vec.insert.i548 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i547, <2 x float> %6, <2 x i32> <i32 0, i32 3>
+  %6 = shufflevector <4 x float> %i.hd, <4 x float> poison, <2 x i32> <i32 poison, i32 3>
+  %7 = fsub <2 x float> %i.gy, %6
+  %.sroa.0.4.vec.insert.i548 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i547, <2 x float> %7, <2 x i32> <i32 0, i32 3>
   %i.hi = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   store <2 x float> %.sroa.0.4.vec.insert.i548, ptr %i.hi, align 8, !tbaa !15
   %foldExtExtBinop711 = fsub <4 x float> %i.gz, %i.hd
-  %foldExtExtBinop713 = fsub <4 x float> %i.gz, %i.hd
   %.sroa.0.0.vec.insert.i551 = shufflevector <4 x float> %foldExtExtBinop711, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %7 = shufflevector <4 x float> %foldExtExtBinop713, <4 x float> poison, <2 x i32> <i32 poison, i32 1>
-  %.sroa.0.4.vec.insert.i552 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i551, <2 x float> %7, <2 x i32> <i32 0, i32 3>
+  %8 = shufflevector <4 x float> %i.hd, <4 x float> poison, <2 x i32> <i32 poison, i32 1>
+  %9 = fsub <2 x float> %i.gy, %8
+  %.sroa.0.4.vec.insert.i552 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i551, <2 x float> %9, <2 x i32> <i32 0, i32 3>
   %i.hj = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   store <2 x float> %.sroa.0.4.vec.insert.i552, ptr %i.hj, align 8, !tbaa !15
   %i.hk = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.bh

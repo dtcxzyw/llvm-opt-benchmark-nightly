@@ -204,47 +204,32 @@ bb.a:
   br i1 %.not.i.i.i.i.i.i.i.i.i.4, label %_ZNSt6vectorIN2v88internal12EmbeddedData17LayoutDescriptionESaIS3_EEC2EmRKS4_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !31
 
 _ZNSt6vectorIN2v88internal12EmbeddedData17LayoutDescriptionESaIS3_EEC2EmRKS4_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
-  %i.f = tail call noalias noundef nonnull dereferenceable(17128) ptr @_Znwm(i64 noundef 17128) #15 ; 10 uses
+  %i.f = tail call noalias noundef nonnull dereferenceable(17128) ptr @_Znwm(i64 noundef 17128) #15 ; 7 uses
   store i64 0, ptr %i.f, align 4
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body.3, %_ZNSt6vectorIN2v88internal12EmbeddedData17LayoutDescriptionESaIS3_EEC2EmRKS4_.exit
-  %index = phi i64 [ 0, %_ZNSt6vectorIN2v88internal12EmbeddedData17LayoutDescriptionESaIS3_EEC2EmRKS4_.exit ], [ %index.next.3, %vector.body.3 ] ; 6 uses
-  %9 = shl nuw nsw i64 %index, 3
-  %10 = getelementptr inbounds nuw i8, ptr %i.f, i64 %9 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %12 = load <2 x i64>, ptr %i.f, align 4
-  %broadcast.splat = shufflevector <2 x i64> %12, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %10, i64 24
-  store <2 x i64> %broadcast.splat, ptr %11, align 4
-  store <2 x i64> %broadcast.splat, ptr %13, align 4
-  %index.next.a = shl i64 %index, 3
-  %14 = getelementptr inbounds nuw i8, ptr %i.f, i64 %index.next.a ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 40
-  %16 = load <2 x i64>, ptr %i.f, align 4         ; 3 uses
-  %broadcast.splat.1 = shufflevector <2 x i64> %16, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %14, i64 56
-  store <2 x i64> %broadcast.splat.1, ptr %15, align 4
-  store <2 x i64> %broadcast.splat.1, ptr %i.g, align 4
-  %index.next.1 = shl i64 %index, 3
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %index.next.1 ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.h, i64 72
-  %broadcast.splat.2 = shufflevector <2 x i64> %16, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 88
-  store <2 x i64> %broadcast.splat.2, ptr %17, align 4
+  %index = phi i64 [ 0, %_ZNSt6vectorIN2v88internal12EmbeddedData17LayoutDescriptionESaIS3_EEC2EmRKS4_.exit ], [ %index.next.3, %vector.body.3 ] ; 4 uses
+  %index.next.a = shl nuw nsw i64 %index, 3
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 %index.next.a ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %9 = load <1 x i64>, ptr %i.f, align 4          ; 2 uses
+  %broadcast.splat.2 = shufflevector <1 x i64> %9, <1 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24
+  store <2 x i64> %broadcast.splat.2, ptr %i.h, align 4
   store <2 x i64> %broadcast.splat.2, ptr %i.i, align 4
-  %i.j = icmp eq i64 %index, 2128
+  %i.j = icmp eq i64 %index, 2136
   br i1 %i.j, label %_ZNSt6vectorIN2v88internal12EmbeddedData18BuiltinLookupEntryESaIS3_EEC2EmRKS4_.exit, label %vector.body.3
 
 vector.body.3:                                    ; preds = %vector.body
   %index.next.2 = shl i64 %index, 3
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %index.next.2 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 104
-  %broadcast.splat.3 = shufflevector <2 x i64> %16, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 120
+  %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 40
+  %broadcast.splat.3 = shufflevector <1 x i64> %9, <1 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 56
   store <2 x i64> %broadcast.splat.3, ptr %i.l, align 4
   store <2 x i64> %broadcast.splat.3, ptr %i.m, align 4
-  %index.next.3 = add nuw nsw i64 %index, 16
+  %index.next.3 = add nuw nsw i64 %index, 8
   br label %vector.body
 
 _ZNSt6vectorIN2v88internal12EmbeddedData18BuiltinLookupEntryESaIS3_EEC2EmRKS4_.exit: ; preds = %vector.body

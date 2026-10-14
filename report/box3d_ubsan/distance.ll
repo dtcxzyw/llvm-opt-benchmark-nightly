@@ -204,12 +204,11 @@ bb.ik:                                            ; preds = %bb.ii
   %.sroa.4169.0.copyload = load float, ptr %.sroa.17202.0..sroa_idx.i, align 8, !tbaa !19
   %.sroa.0168.0.copyload = load <2 x float>, ptr %.sroa.10181.0..sroa_idx.i, align 8, !tbaa !19
   %.sroa.0166.0.copyload = load <2 x float>, ptr %.sroa.10136.0..sroa_idx.i, align 8, !tbaa !19
-  %11 = load <4 x float>, ptr %.sroa.17157.0..sroa_idx.i, align 8
-  %12 = shufflevector <4 x float> %11, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %11 = load <2 x float>, ptr %.sroa.17157.0..sroa_idx.i, align 8
   %i.aiu = fsub <2 x float> %.sroa.0168.0.copyload, %.sroa.0170.0.copyload ; 3 uses
   %i.aiv = fsub <2 x float> %.sroa.0166.0.copyload, %.sroa.0170.0.copyload ; 3 uses
   %i.aiw = shufflevector <2 x float> %i.aiv, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.aix = insertelement <2 x float> %12, float %.sroa.4169.0.copyload, i64 1
+  %i.aix = insertelement <2 x float> %11, float %.sroa.4169.0.copyload, i64 1
   %i.aiy = insertelement <2 x float> poison, float %.sroa.6173.0.copyload, i64 0
   %i.aiz = shufflevector <2 x float> %i.aiy, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aja = fsub <2 x float> %i.aix, %i.aiz        ; 2 uses
@@ -612,14 +611,14 @@ bb.f:                                             ; preds = %select.unfold698, %
   %i.eg = shufflevector <2 x float> %.sroa.5654.0.copyload, <2 x float> %.sroa.6655.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.eh = shufflevector <2 x float> %.sroa.5649.0.copyload, <2 x float> %.sroa.7.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ei = fmul <4 x float> %i.eg, %i.eh           ; 4 uses
-  %shift9286 = shufflevector <4 x float> %i.ei, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop9287 = fadd <4 x float> %i.ei, %shift9286
-  %shift9289 = shufflevector <4 x float> %i.ei, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop9290 = fadd <4 x float> %shift9289, %foldExtExtBinop9287
-  %shift9292 = shufflevector <4 x float> %i.ei, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop9293 = fadd <4 x float> %shift9292, %foldExtExtBinop9290
-  %16 = shufflevector <4 x float> %foldExtExtBinop9293, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.231.12.vec.insert.i = shufflevector <2 x float> %.sroa.231.8.vec.insert.i, <2 x float> %16, <2 x i32> <i32 0, i32 2>
+  %16 = shufflevector <4 x float> %i.ei, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
+  %17 = shufflevector <4 x float> %i.ei, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %18 = shufflevector <4 x float> %i.ei, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %19 = shufflevector <4 x float> %i.ei, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %20 = fadd <2 x float> %18, %19
+  %21 = fadd <2 x float> %17, %20
+  %22 = fadd <2 x float> %16, %21
+  %.sroa.231.12.vec.insert.i = shufflevector <2 x float> %.sroa.231.8.vec.insert.i, <2 x float> %22, <2 x i32> <i32 0, i32 2>
   store <2 x float> %i.dl, ptr %i.at, align 8, !tbaa !19
   store float %i.du, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !19
   store <2 x float> %i.ed, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !19
@@ -1022,9 +1021,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %shift158 = shufflevector <4 x float> %i.av, <4 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 3, i32 poison>
-  %foldExtExtBinop159 = fadd <4 x float> %shift158, %i.av
-  %shift161 = shufflevector <4 x float> %foldExtExtBinop159, <4 x float> poison, <4 x i32> <i32 poison, i32 2, i32 poison, i32 poison>
+  %7 = shufflevector <4 x float> %i.av, <4 x float> poison, <4 x i32> <i32 poison, i32 3, i32 poison, i32 poison>
+  %8 = shufflevector <4 x float> %i.av, <4 x float> poison, <4 x i32> <i32 poison, i32 2, i32 poison, i32 poison>
+  %shift161 = fadd <4 x float> %7, %8
   %foldExtExtBinop162 = fadd <4 x float> %i.av, %shift161
   %i.bb = extractelement <4 x float> %foldExtExtBinop162, i64 1
   store float %i.bb, ptr %i.ba, align 4, !tbaa !19

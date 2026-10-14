@@ -202,13 +202,13 @@ bb.h:                                             ; preds = %b3DeltaQuatToRotati
   %i.la = fmul float %.sroa.19.0.copyload, %i.ju
   %i.lb = fadd float %i.la, %i.kz
   %i.lc = fmul float %i.if, %i.ju
-  %shift1193 = shufflevector <4 x float> %i.kw, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop1194 = fadd <4 x float> %i.kw, %shift1193
   %4 = shufflevector <4 x float> %i.kw, <4 x float> poison, <2 x i32> <i32 poison, i32 2>
   %5 = insertelement <2 x float> %4, float %i.kq, i64 0
   %6 = insertelement <2 x float> poison, float %i.lc, i64 0
-  %7 = shufflevector <4 x float> %foldExtExtBinop1194, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %i.ld = shufflevector <2 x float> %6, <2 x float> %7, <2 x i32> <i32 0, i32 2>
+  %7 = shufflevector <4 x float> %i.kw, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %8 = shufflevector <4 x float> %i.kw, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %9 = fadd <2 x float> %7, %8
+  %i.ld = shufflevector <2 x float> %6, <2 x float> %9, <2 x i32> <i32 0, i32 2>
   %i.le = fadd <2 x float> %5, %i.ld
   %i.lf = fadd <2 x float> %.sroa.0395.0.copyload, %i.le
   %i.lg = fadd float %.sroa.10.0.copyload, %i.lb
@@ -611,8 +611,7 @@ bb.a:
   %.sroa.676.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 36
   %.sroa.676.0.copyload = load <2 x float>, ptr %.sroa.676.0..sroa_idx, align 4, !tbaa !93 ; 4 uses
   %.sroa.564.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %7 = load <4 x float>, ptr %.sroa.564.0..sroa_idx, align 8
-  %8 = shufflevector <4 x float> %7, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %7 = load <2 x float>, ptr %.sroa.564.0..sroa_idx, align 8
   %.sroa.665.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 12
   %.sroa.665.0.copyload = load <2 x float>, ptr %.sroa.665.0..sroa_idx, align 4 ; 9 uses
   %.sroa.867.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 20
@@ -759,7 +758,7 @@ bb.a:
   %i.dk = insertelement <2 x float> poison, float %.sroa.474.0.copyload, i64 0
   %i.dl = insertelement <2 x float> %i.dk, float %.sroa.459.0.copyload, i64 1
   %i.dm = fadd <2 x float> %i.dl, %i.dj
-  %i.dn = insertelement <2 x float> %8, float %.sroa.5.0.copyload, i64 1
+  %i.dn = insertelement <2 x float> %7, float %.sroa.5.0.copyload, i64 1
   %i.do = fadd <2 x float> %i.dn, %i.dm           ; 2 uses
   %i.dp = extractelement <2 x float> %i.do, i64 0
   store float %i.dp, ptr %.sroa.3.0..sroa_idx.i23, align 8, !tbaa !93, !alias.scope !137

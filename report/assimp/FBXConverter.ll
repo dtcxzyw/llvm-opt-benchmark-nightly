@@ -205,12 +205,12 @@ bb.dd:                                            ; preds = %.noexc252
 bb.de:                                            ; preds = %.loopexit326
   %i.tl = sitofp i64 %i.gj to double
   %i.tm = getelementptr inbounds nuw i8, ptr %0, i64 480
-  %17 = load <2 x double>, ptr %i.tm, align 8
+  %17 = load <1 x double>, ptr %i.tm, align 8
   %i.tn = sitofp i64 %i.mm to double
   %i.to = insertelement <2 x double> poison, double %i.tn, i64 0
   %i.tp = insertelement <2 x double> %i.to, double %i.tl, i64 1
   %i.tq = fdiv nnan <2 x double> %i.tp, splat (double f0x422581D1AF600000)
-  %i.tr = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.tr = shufflevector <1 x double> %17, <1 x double> poison, <2 x i32> zeroinitializer
   %i.ts = fmul <2 x double> %i.tq, %i.tr
   br label %bb.dg
 
@@ -613,8 +613,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %4 = load <4 x float>, ptr %i.n, align 4
-  %5 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 0, i32 poison> ; 2 uses
+  %4 = load <2 x float>, ptr %i.n, align 4        ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.p = load float, ptr %i.o, align 4            ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -629,7 +628,7 @@ bb.a:
   %i.z = insertelement <2 x float> poison, float %i.p, i64 0
   %i.aa = insertelement <2 x float> %i.z, float %i.u, i64 1 ; 2 uses
   %i.ab = fmul <2 x float> %i.aa, %i.aa
-  %i.ac = insertelement <2 x float> %5, float %i.t, i64 1 ; 2 uses
+  %i.ac = insertelement <2 x float> %4, float %i.t, i64 1 ; 2 uses
   %i.ad = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ac, <2 x float> %i.ac, <2 x float> %i.ab)
   %i.ae = insertelement <2 x float> poison, float %i.r, i64 0
   %i.af = insertelement <2 x float> %i.ae, float %i.v, i64 1 ; 2 uses
@@ -763,7 +762,7 @@ bb.c:                                             ; preds = %._crit_edge, %bb.b
   %i.el = fmul float %i.y, %i.ej
   %.sroa.27.0 = select i1 %i.ei, float %i.el, float %i.y ; 4 uses
   %.sroa.22.0 = select i1 %i.ei, float %i.ek, float %i.x ; 6 uses
-  %i.em = insertelement <2 x float> %5, float %i.u, i64 1 ; 2 uses
+  %i.em = insertelement <2 x float> %4, float %i.u, i64 1 ; 2 uses
   %i.en = fmul <2 x float> %i.em, %i.ee
   %i.eo = fmul float %i.v, %i.ef
   %.sroa.1260.0 = select i1 %i.eh, float %i.eo, float %i.v ; 4 uses

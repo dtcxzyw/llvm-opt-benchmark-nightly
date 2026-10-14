@@ -205,7 +205,7 @@ bb.a:
   %26 = alloca %"struct.llvm::EVT", align 8       ; 5 uses
   %27 = alloca %"class.llvm::SDLoc", align 8      ; 4 uses
   %28 = alloca %"struct.llvm::EVT", align 8       ; 56 uses
-  %29 = alloca %"struct.llvm::EVT", align 16      ; 39 uses
+  %29 = alloca %"struct.llvm::EVT", align 8       ; 39 uses
   %30 = alloca %"class.llvm::SDLoc", align 8      ; 14 uses
   %31 = alloca %"class.llvm::SDValue", align 8    ; 4 uses
   %32 = alloca %"class.llvm::SDValue", align 8    ; 4 uses
@@ -278,7 +278,7 @@ bb.a:
   %.sroa.0.0.copyload.i.i = load i16, ptr %i.i, align 8, !tbaa !345
   %.sroa.21.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.21.0.copyload.i.i = load ptr, ptr %.sroa.21.0..sroa_idx.i.i, align 8, !tbaa !471
-  store i16 %.sroa.0.0.copyload.i.i, ptr %29, align 16
+  store i16 %.sroa.0.0.copyload.i.i, ptr %29, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 12 uses
   store ptr %.sroa.21.0.copyload.i.i, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
@@ -309,7 +309,7 @@ bb.c:                                             ; preds = %bb.b
   %i.y = and i16 %i.v, -3
   %i.z = icmp eq i16 %i.y, 20
   %or.cond = select i1 %i.z, i1 %i.x, i1 false
-  %.pre = load i16, ptr %29, align 16, !tbaa !641 ; 4 uses
+  %.pre = load i16, ptr %29, align 8, !tbaa !641  ; 4 uses
   br i1 %or.cond, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c
@@ -416,7 +416,7 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.0.0.copyload.i.i653 = load i16, ptr %i.bh, align 8, !tbaa !345
   %.sroa.21.0..sroa_idx.i.i654 = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %.sroa.21.0.copyload.i.i655 = load ptr, ptr %.sroa.21.0..sroa_idx.i.i654, align 8, !tbaa !471
-  store i16 %.sroa.0.0.copyload.i.i653, ptr %29, align 16, !tbaa !345
+  store i16 %.sroa.0.0.copyload.i.i653, ptr %29, align 8, !tbaa !345
   store ptr %.sroa.21.0.copyload.i.i655, ptr %i.j, align 8, !tbaa !471
   %i.bi = call noundef i32 @_ZNK4llvm3EVT20getVectorNumElementsEv(ptr noundef nonnull align 8 dereferenceable(16) %29)
   %i.bj = udiv i32 8, %i.bi
@@ -426,7 +426,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bm = zext i16 %i.bl to i64
   call void @_ZN4llvm11SmallVectorINS_7SDValueELj4EEC2INS_5SDUseEvEENS_8ArrayRefIT_EE(ptr noundef nonnull align 8 dereferenceable(80) %34, ptr %i.bk, i64 %i.bm)
   %i.bn = zext nneg i32 %i.bj to i64
-  %.sroa.0469.0.copyload = load i16, ptr %29, align 16, !tbaa !345
+  %.sroa.0469.0.copyload = load i16, ptr %29, align 8, !tbaa !345
   %.sroa.2471.0.copyload = load ptr, ptr %i.j, align 8, !tbaa !471
   %i.bo = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %1, i64 noundef 0, ptr noundef nonnull align 8 dereferenceable(12) %30, i16 %.sroa.0469.0.copyload, ptr %.sroa.2471.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false) #39 ; 2 uses
   %.fca.0.extract465 = extractvalue { ptr, i32 } %i.bo, 0
@@ -468,7 +468,7 @@ _ZN4llvm11SmallVectorINS_7SDValueELj4EED2Ev.exit: ; preds = %bb.l, %bb.m
   br label %.critedge624
 
 .critedge622:                                     ; preds = %bb.k
-  %.pre1343 = load i16, ptr %29, align 16, !tbaa !641 ; 2 uses
+  %.pre1343 = load i16, ptr %29, align 8, !tbaa !641 ; 2 uses
   %.not.i.i660 = icmp eq i16 %.pre1343, 0
   br i1 %.not.i.i660, label %_ZNK4llvm3EVT16isScalableVectorEv.exit.i, label %.split.i
 
@@ -672,7 +672,7 @@ _ZNK4llvm3EVT10isVectorOfES0_.exit:               ; preds = %bb.s, %bb.t
   br i1 %.not4.i.i, label %bb.u, label %_ZNK4llvm3EVT10isVectorOfES0_.exit.thread
 
 bb.u:                                             ; preds = %_ZNK4llvm3EVT10isVectorOfES0_.exit
-  %i.dz = load i16, ptr %29, align 16, !tbaa !641 ; 2 uses
+  %i.dz = load i16, ptr %29, align 8, !tbaa !641  ; 2 uses
   %.not.i667 = icmp eq i16 %i.dz, 0
   br i1 %.not.i667, label %_ZNK4llvm3EVT15isScalarIntegerEv.exit669, label %.split1252
 
@@ -728,7 +728,7 @@ _ZNK4llvm3EVT10isVectorOfES0_.exit.thread:        ; preds = %bb.v, %.split.i665,
   br i1 %.not4.i672, label %bb.x, label %.critedge
 
 bb.x:                                             ; preds = %_ZNK4llvm3EVT10isVectorOfES0_.exit.thread
-  %i.er = load i16, ptr %29, align 16, !tbaa !641
+  %i.er = load i16, ptr %29, align 8, !tbaa !641
   %.not.i.i673 = icmp eq i16 %i.er, 26
   %i.es = load ptr, ptr %i.j, align 8
   %i.et = icmp eq ptr %i.es, null
@@ -861,7 +861,7 @@ bb.ai:                                            ; preds = %bb.ag
 
 _ZNK4llvm3EVT15isFloatingPointEv.exit:            ; preds = %bb.ah, %bb.ai
   %i.gn = phi i1 [ %i.gl, %bb.ah ], [ %i.gm, %bb.ai ]
-  %i.go = load i16, ptr %29, align 16, !tbaa !641 ; 7 uses
+  %i.go = load i16, ptr %29, align 8, !tbaa !641  ; 7 uses
   %.not.i685 = icmp eq i16 %i.go, 0               ; 2 uses
   br i1 %.not.i685, label %bb.ak, label %bb.aj
 
@@ -1146,7 +1146,7 @@ switch.lookup.i732:                               ; preds = %.split.i731
 
 _ZN4llvm3MVT18getFloatingPointVTEj.exit729:       ; preds = %switch.lookup.i732, %.split.i731, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd
   %.sroa.0366.0 = phi i16 [ 13, %bb.bd ], [ 17, %bb.bh ], [ 14, %bb.be ], [ 15, %bb.bf ], [ 16, %bb.bg ], [ %switch.offset.i734, %switch.lookup.i732 ], [ 0, %.split.i731 ], [ 0, %bb.bi ]
-  %i.jk = load i16, ptr %29, align 16, !tbaa !641 ; 3 uses
+  %i.jk = load i16, ptr %29, align 8, !tbaa !641  ; 3 uses
   %.not.i.i736 = icmp eq i16 %i.jk, 0
   br i1 %.not.i.i736, label %_ZNK4llvm3EVT16isScalableVectorEv.exit.i740, label %.split.i737
 
@@ -1249,7 +1249,7 @@ _ZNK4llvm9MemSDNode10getBasePtrEv.exit:           ; preds = %_ZNK4llvm3EVT20getV
   br i1 %.not4.i745, label %bb.bn, label %.critedge11
 
 bb.bn:                                            ; preds = %.critedge626
-  %i.ks = load i16, ptr %29, align 16, !tbaa !641
+  %i.ks = load i16, ptr %29, align 8, !tbaa !641
   %.not.i.i746 = icmp eq i16 %i.ks, 6
   %i.kt = load ptr, ptr %i.j, align 8
   %i.ku = icmp eq ptr %i.kt, null
@@ -1465,7 +1465,7 @@ bb.cd:                                            ; preds = %bb.bu
   br i1 %i.nh, label %bb.ce, label %.critedge630.thread
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.ni = load i16, ptr %29, align 16, !tbaa !641 ; 4 uses
+  %i.ni = load i16, ptr %29, align 8, !tbaa !641  ; 4 uses
   %.not.i.i753 = icmp eq i16 %i.ni, 71
   %i.nj = load ptr, ptr %i.j, align 8
   %i.nk = icmp eq ptr %i.nj, null
@@ -1585,10 +1585,10 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg
   br i1 %i.pb, label %.critedge630.thread1408, label %.critedge630.thread
 
 .critedge630.thread1408:                          ; preds = %_ZNK4llvm3EVT13getScalarTypeEv.exit, %bb.ce, %.critedge630
-  %78 = load <8 x i16>, ptr %29, align 16
+  %78 = load <1 x i16>, ptr %29, align 8
   %i.pc = load ptr, ptr %i.j, align 8
   %i.pd = icmp eq ptr %i.pc, null
-  %i.pe = shufflevector <8 x i16> %78, <8 x i16> poison, <4 x i32> zeroinitializer
+  %i.pe = shufflevector <1 x i16> %78, <1 x i16> poison, <4 x i32> zeroinitializer
   %i.pf = icmp eq <4 x i16> %i.pe, <i16 134, i16 71, i16 58, i16 47>
   %i.pg = bitcast <4 x i1> %i.pf to i4
   %i.ph = icmp ne i4 %i.pg, 0
@@ -1991,7 +1991,7 @@ bb.dg:                                            ; preds = %.split1259, %_ZNK4l
   br label %.critedge634
 
 .critedge632:                                     ; preds = %.critedge630.thread, %.critedge630.thread1408, %_ZNK4llvm3EVT14is128BitVectorEv.exit, %_ZNK4llvm3EVT14is128BitVectorEv.exit.thread, %.split1259, %bb.dd
-  %i.vd = load i16, ptr %29, align 16, !tbaa !641
+  %i.vd = load i16, ptr %29, align 8, !tbaa !641
   %.not.i.i802 = icmp eq i16 %i.vd, 71
   %i.ve = load ptr, ptr %i.j, align 8
   %i.vf = icmp eq ptr %i.ve, null
@@ -2127,7 +2127,7 @@ _ZNK4llvm3EVT15isScalarIntegerEv.exit811:         ; preds = %bb.dq
   br i1 %i.wm, label %bb.dr, label %_ZNK4llvm3EVT10isVectorOfES0_.exit820.thread
 
 bb.dr:                                            ; preds = %.split1260, %_ZNK4llvm3EVT15isScalarIntegerEv.exit811
-  %i.wn = load i16, ptr %29, align 16, !tbaa !641 ; 3 uses
+  %i.wn = load i16, ptr %29, align 8, !tbaa !641  ; 3 uses
   %.not.i.i812 = icmp eq i16 %i.wn, 0
   br i1 %.not.i.i812, label %_ZNK4llvm3EVT8isVectorEv.exit.i819, label %.split.i813
 
@@ -2178,7 +2178,7 @@ _ZNK4llvm3EVT10isVectorOfES0_.exit820.thread:     ; preds = %.split.i813, %_ZNK4
   br i1 %i.xc, label %bb.dw, label %.critedge17
 
 bb.dw:                                            ; preds = %_ZNK4llvm3EVT10isVectorOfES0_.exit820.thread
-  %i.xd = load i16, ptr %29, align 16, !tbaa !641 ; 2 uses
+  %i.xd = load i16, ptr %29, align 8, !tbaa !641  ; 2 uses
   %.not.i821 = icmp eq i16 %i.xd, 0
   br i1 %.not.i821, label %_ZNK4llvm3EVT15isScalarIntegerEv.exit823, label %.split1263
 
@@ -2286,7 +2286,7 @@ bb.ed:                                            ; preds = %bb.ec
   br i1 %i.ym, label %bb.ee, label %.critedge17
 
 bb.ee:                                            ; preds = %.critedge15
-  %i.yn = load i16, ptr %29, align 16, !tbaa !641 ; 2 uses
+  %i.yn = load i16, ptr %29, align 8, !tbaa !641  ; 2 uses
   %.not.i831 = icmp eq i16 %i.yn, 0
   br i1 %.not.i831, label %_ZNK4llvm3EVT15isScalarIntegerEv.exit833, label %.split1269
 
@@ -2689,7 +2689,7 @@ bb.fo:                                            ; preds = %.sink.split, %_ZL27
   br i1 %i.ago, label %bb.fp, label %.critedge21
 
 bb.fp:                                            ; preds = %bb.fo
-  %i.agp = load i16, ptr %29, align 16, !tbaa !641 ; 4 uses
+  %i.agp = load i16, ptr %29, align 8, !tbaa !641 ; 4 uses
   %.not.i.i906 = icmp eq i16 %i.agp, 0
   br i1 %.not.i.i906, label %_ZNK4llvm3EVT8isVectorEv.exit.i913, label %.split.i907
 
@@ -2733,7 +2733,7 @@ _ZNK4llvm3EVT13getScalarTypeEv.exit914:           ; preds = %bb.fq, %bb.fr, %bb.
   br i1 %.not4.i916, label %bb.ft, label %.critedge21thread-pre-split
 
 bb.ft:                                            ; preds = %_ZNK4llvm3EVT13getScalarTypeEv.exit914
-  %i.ahe = load i16, ptr %29, align 16, !tbaa !641 ; 3 uses
+  %i.ahe = load i16, ptr %29, align 8, !tbaa !641 ; 3 uses
   %.not.i.i917 = icmp eq i16 %i.ahe, 0
   br i1 %.not.i.i917, label %_ZNK4llvm3EVT16isScalableVectorEv.exit.i921, label %.split.i918
 
@@ -3136,9 +3136,8 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.d, 4294967292               ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.sroa.2119.0.copyload, i64 0 ; 2 uses
   %broadcast.splatinsert662 = insertelement <4 x i32> poison, i32 %.sroa.2116.0.copyload, i64 0 ; 2 uses
-  %i.is = load <4 x i32>, ptr %.sroa.279.0..sroa_idx.i, align 8
-  %32 = shufflevector <4 x i32> %i.is, <4 x i32> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison> ; 2 uses
-  %i.it = icmp eq <4 x i32> %broadcast.splatinsert662, %32
+  %i.is = load <4 x i32>, ptr %.sroa.279.0..sroa_idx.i, align 8 ; 2 uses
+  %i.it = icmp eq <4 x i32> %broadcast.splatinsert662, %i.is
   %i.iu = shufflevector <4 x i1> %i.it, <4 x i1> poison, <4 x i32> zeroinitializer
   %i.iv = select i1 %i.ih, <4 x i1> %i.iu, <4 x i1> zeroinitializer ; 2 uses
   %i.iw = xor <4 x i1> %i.iv, splat (i1 true)
@@ -3147,7 +3146,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.iz = icmp eq <4 x i32> %broadcast.splatinsert662, %i.iy
   %i.ja = shufflevector <4 x i1> %i.iz, <4 x i1> poison, <4 x i32> zeroinitializer
   %i.jb = select i1 %i.ij, <4 x i1> %i.ja, <4 x i1> zeroinitializer
-  %i.jc = icmp eq <4 x i32> %broadcast.splatinsert, %32
+  %i.jc = icmp eq <4 x i32> %broadcast.splatinsert, %i.is
   %i.jd = shufflevector <4 x i1> %i.jc, <4 x i1> poison, <4 x i32> zeroinitializer
   %i.je = select i1 %i.ik, <4 x i1> %i.jd, <4 x i1> zeroinitializer ; 2 uses
   %i.jf = xor <4 x i1> %i.je, splat (i1 true)

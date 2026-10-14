@@ -204,12 +204,11 @@ bb.cg:                                            ; preds = %bb.cd
   %.sroa.0168.0.copyload = load <2 x float>, ptr %.sroa.10294.0..sroa_idx.i, align 8, !tbaa !16
   %.sroa.4169.0.copyload = load float, ptr %.sroa.17315.0..sroa_idx.i, align 8, !tbaa !16
   %.sroa.0166.0.copyload = load <2 x float>, ptr %.sroa.10249.0..sroa_idx.i, align 8, !tbaa !16
-  %11 = load <4 x float>, ptr %.sroa.17270.0..sroa_idx.i, align 8
-  %12 = shufflevector <4 x float> %11, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %11 = load <2 x float>, ptr %.sroa.17270.0..sroa_idx.i, align 8
   %i.afn = fsub <2 x float> %.sroa.0168.0.copyload, %.sroa.0170.0.copyload ; 3 uses
   %i.afo = fsub <2 x float> %.sroa.0166.0.copyload, %.sroa.0170.0.copyload ; 3 uses
   %i.afp = shufflevector <2 x float> %i.afo, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.afq = insertelement <2 x float> %12, float %.sroa.4169.0.copyload, i64 1
+  %i.afq = insertelement <2 x float> %11, float %.sroa.4169.0.copyload, i64 1
   %i.afr = insertelement <2 x float> poison, float %.sroa.6173.0.copyload, i64 0
   %i.afs = shufflevector <2 x float> %i.afr, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aft = fsub <2 x float> %i.afq, %i.afs        ; 2 uses
@@ -612,14 +611,14 @@ b3GetSweepTransform.exit421:                      ; preds = %b3GetSweepTransform
   %i.ip = shufflevector <2 x float> %.sroa.010.0.i.i.i, <2 x float> %.sroa.4.0.i.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.iq = shufflevector <2 x float> %.sroa.010.0.i.i.i391, <2 x float> %.sroa.4.0.i.i.i392, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.ir = fmul <4 x float> %i.ip, %i.iq           ; 4 uses
-  %shift2476 = shufflevector <4 x float> %i.ir, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop2477 = fadd <4 x float> %i.ir, %shift2476
-  %shift2479 = shufflevector <4 x float> %i.ir, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop2480 = fadd <4 x float> %shift2479, %foldExtExtBinop2477
-  %shift2482 = shufflevector <4 x float> %i.ir, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop2483 = fadd <4 x float> %shift2482, %foldExtExtBinop2480
-  %8 = shufflevector <4 x float> %foldExtExtBinop2483, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.251.12.vec.insert.i = shufflevector <2 x float> %.sroa.251.8.vec.insert.i, <2 x float> %8, <2 x i32> <i32 0, i32 2>
+  %8 = shufflevector <4 x float> %i.ir, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
+  %9 = shufflevector <4 x float> %i.ir, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %10 = shufflevector <4 x float> %i.ir, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %11 = shufflevector <4 x float> %i.ir, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %12 = fadd <2 x float> %10, %11
+  %13 = fadd <2 x float> %9, %12
+  %14 = fadd <2 x float> %8, %13
+  %.sroa.251.12.vec.insert.i = shufflevector <2 x float> %.sroa.251.8.vec.insert.i, <2 x float> %14, <2 x i32> <i32 0, i32 2>
   store <2 x float> %i.ic, ptr %i.az, align 8, !tbaa !16
   store float %i.ie, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !16
   store <2 x float> %i.im, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !16

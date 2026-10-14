@@ -205,8 +205,8 @@ bb.cb:                                            ; preds = %bb.bw, %bb.bx, %bb.
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN5ImGui25CalcClipRectVisibleItemsYERK6ImRectRK6ImVec2fPiS6_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1, float noundef %2, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %3, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %4) local_unnamed_addr #8 {
 bb.a:
-  %5 = load <4 x float>, ptr %0, align 4
-  %i.a = shufflevector <4 x float> %5, <4 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %5 = load <2 x float>, ptr %0, align 4
+  %i.a = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.c = load float, ptr %i.b, align 4, !tbaa !250
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -609,7 +609,7 @@ bb.a:
   %13 = alloca %struct.ImVec2, align 8            ; 4 uses
   %14 = alloca %struct.ImVec2, align 8            ; 4 uses
   %15 = alloca %struct.ImRect, align 8            ; 5 uses
-  %16 = alloca %struct.ImRect, align 16           ; 7 uses
+  %16 = alloca %struct.ImRect, align 8            ; 7 uses
   %17 = alloca %struct.ImVec2, align 8            ; 8 uses
   %18 = alloca %struct.ImVec2, align 8            ; 8 uses
   %19 = alloca %struct.ImVec2, align 8            ; 9 uses
@@ -1012,7 +1012,7 @@ bb.lo:                                            ; preds = %bb.ln
   %.inv12.i.i.i = fcmp oge float %i.bve, %i.bvd
   %i.bvl = select i1 %.inv12.i.i.i, float %i.bve, float %i.bvd
   %.sroa.0.4.vec.insert.i.i.i = insertelement <2 x float> %i.bvc, float %i.bvl, i64 1
-  store <2 x float> %.sroa.0.4.vec.insert.i.i.i, ptr %16, align 16, !tbaa !75
+  store <2 x float> %.sroa.0.4.vec.insert.i.i.i, ptr %16, align 8, !tbaa !75
   %i.bvm = fcmp ogt <2 x float> %i.bvk, %i.bvi
   %i.bvn = select <2 x i1> %i.bvm, <2 x float> %i.bvi, <2 x float> %i.bvk
   store <2 x float> %i.bvn, ptr %i.bva, align 8, !tbaa !75
@@ -1053,13 +1053,12 @@ bb.lp:                                            ; preds = %bb.lo
 
 bb.lq:                                            ; preds = %bb.lp
   %i.bwr = load ptr, ptr %i.bvo, align 8, !tbaa !408
-  %31 = load <4 x float>, ptr %16, align 16
-  %32 = shufflevector <4 x float> %31, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %31 = load <2 x float>, ptr %16, align 8
   %i.bws = load float, ptr %i.bva, align 8, !tbaa !374
   %i.bwt = fneg float %i.bqp
   %i.bwu = insertelement <2 x float> poison, float %i.bqp, i64 0
   %i.bwv = insertelement <2 x float> %i.bwu, float %i.bwt, i64 1
-  %i.bww = insertelement <2 x float> %32, float %i.bws, i64 1
+  %i.bww = insertelement <2 x float> %31, float %i.bws, i64 1
   %i.bwx = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bwv, <2 x float> splat (float 5.000000e-01), <2 x float> %i.bww) ; 2 uses
   %i.bwy = load ptr, ptr @GImGui, align 8, !tbaa !227 ; 2 uses
   %i.bwz = getelementptr inbounds nuw i8, ptr %i.bwy, i64 3612
