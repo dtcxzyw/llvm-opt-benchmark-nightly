@@ -204,9 +204,8 @@ _ZNSt6vectorItSaItEEC2EmRKtRKS0_.exit:            ; preds = %.noexc2074, %_ZNSt6
   %i.bk = load i64, ptr %i.ax, align 8, !tbaa !40 ; 2 uses
   %i.bl = mul i64 %i.bk, %indvars.iv3547
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bl ; 221 uses
-  %11 = sub i64 0, %i.bk                          ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.bm, i64 %11
-  %i.bn = getelementptr inbounds i8, ptr %12, i64 %11 ; 101 uses
+  %.neg.us = mul i64 %i.bk, -2
+  %i.bn = getelementptr inbounds i8, ptr %i.bm, i64 %.neg.us ; 101 uses
   %.not2024.us = icmp eq i64 %indvars.iv3547, 0   ; 15 uses
   %i.bo = or disjoint i64 %indvars.iv3547, 1
   %i.bp = icmp samesign ult i64 %i.bo, %i.ba      ; 3 uses
@@ -609,9 +608,8 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %.noexc2074, %_ZNSt6
   %i.bk = load i64, ptr %i.ax, align 8, !tbaa !40 ; 2 uses
   %i.bl = mul i64 %i.bk, %indvars.iv3549
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bl ; 221 uses
-  %11 = sub i64 0, %i.bk                          ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.bm, i64 %11
-  %i.bn = getelementptr inbounds i8, ptr %12, i64 %11 ; 101 uses
+  %.neg.us = mul i64 %i.bk, -2
+  %i.bn = getelementptr inbounds i8, ptr %i.bm, i64 %.neg.us ; 101 uses
   %.not2024.us = icmp eq i64 %indvars.iv3549, 0   ; 15 uses
   %i.bo = or disjoint i64 %indvars.iv3549, 1
   %i.bp = icmp samesign ult i64 %i.bo, %i.ba      ; 3 uses
@@ -1014,9 +1012,8 @@ bb.cx:                                            ; preds = %.lr.ph5447, %bb.aaw
   %i.lo = load i64, ptr %i.eg, align 8, !tbaa !40 ; 2 uses
   %i.lp = mul i64 %i.lo, %indvars.iv5896
   %i.lq = getelementptr inbounds nuw i8, ptr %i.ln, i64 %i.lp ; 253 uses
-  %11 = sub i64 0, %i.lo                          ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.lq, i64 %11
-  %i.lr = getelementptr inbounds i8, ptr %12, i64 %11 ; 125 uses
+  %.neg3505 = mul i64 %i.lo, -2
+  %i.lr = getelementptr inbounds i8, ptr %i.lq, i64 %.neg3505 ; 125 uses
   %i.ls = load i8, ptr %i.li, align 1, !tbaa !32
   %.not3796 = icmp eq i8 %i.ls, 0                 ; 3 uses
   br i1 %i.lc, label %bb.cy, label %bb.cz
@@ -1419,9 +1416,8 @@ bb.aax:                                           ; preds = %._crit_edge5448
   %i.epx = load i64, ptr %i.eg, align 8, !tbaa !40 ; 2 uses
   %i.epy = mul i64 %i.epx, %i.epq
   %i.epz = getelementptr inbounds nuw i8, ptr %i.epw, i64 %i.epy ; 116 uses
-  %13 = sub i64 0, %i.epx                         ; 2 uses
-  %14 = getelementptr inbounds i8, ptr %i.epz, i64 %13
-  %i.eqa = getelementptr inbounds i8, ptr %14, i64 %13 ; 59 uses
+  %.neg = mul i64 %i.epx, -2
+  %i.eqa = getelementptr inbounds i8, ptr %i.epz, i64 %.neg ; 59 uses
   br i1 %.not5418, label %.lr.ph5484.preheader, label %._crit_edge5485
 
 .lr.ph5484.preheader:                             ; preds = %bb.aax
@@ -1824,9 +1820,8 @@ bb.cx:                                            ; preds = %.lr.ph5447, %bb.aaw
   %i.lp = load i64, ptr %i.eg, align 8, !tbaa !40 ; 2 uses
   %i.lq = mul i64 %i.lp, %indvars.iv5896
   %i.lr = getelementptr inbounds nuw i8, ptr %i.lo, i64 %i.lq ; 253 uses
-  %11 = sub i64 0, %i.lp                          ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.lr, i64 %11
-  %i.ls = getelementptr inbounds i8, ptr %12, i64 %11 ; 125 uses
+  %.neg3509 = mul i64 %i.lp, -2
+  %i.ls = getelementptr inbounds i8, ptr %i.lr, i64 %.neg3509 ; 125 uses
   %i.lt = load i8, ptr %i.lj, align 1, !tbaa !32
   %.not3800 = icmp eq i8 %i.lt, 0                 ; 3 uses
   br i1 %i.ld, label %bb.cy, label %bb.cz
@@ -2229,9 +2224,8 @@ bb.aax:                                           ; preds = %._crit_edge5448
   %i.epy = load i64, ptr %i.eg, align 8, !tbaa !40 ; 2 uses
   %i.epz = mul i64 %i.epy, %i.epr
   %i.eqa = getelementptr inbounds nuw i8, ptr %i.epx, i64 %i.epz ; 116 uses
-  %13 = sub i64 0, %i.epy                         ; 2 uses
-  %14 = getelementptr inbounds i8, ptr %i.eqa, i64 %13
-  %i.eqb = getelementptr inbounds i8, ptr %14, i64 %13 ; 59 uses
+  %.neg = mul i64 %i.epy, -2
+  %i.eqb = getelementptr inbounds i8, ptr %i.eqa, i64 %.neg ; 59 uses
   br i1 %.not5418, label %.lr.ph5484.preheader, label %._crit_edge5485
 
 .lr.ph5484.preheader:                             ; preds = %bb.aax
@@ -2634,7 +2628,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !55
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.i = load i64, ptr %i.h, align 8, !tbaa !40   ; 2 uses
-  %4 = sub i64 0, %i.i                            ; 2 uses
+  %.neg = mul i64 %i.i, -2
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !55
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 128
@@ -2655,9 +2649,8 @@ bb.a:
   %.087160.us = phi i32 [ %.087.us, %._crit_edge.us ], [ %.087159, %.lr.ph.us.preheader ]
   %i.u = sext i32 %.087160.us to i64              ; 3 uses
   %i.v = mul i64 %i.i, %i.u
-  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.v ; 2 uses
-  %i.w = getelementptr inbounds i8, ptr %5, i64 %4
-  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %4 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.v ; 2 uses
+  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %.neg ; 3 uses
   %i.y = mul i64 %i.m, %i.u
   %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.y ; 5 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 %i.n ; 7 uses
@@ -2665,7 +2658,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.us, %bb.ab
   %indvars.iv = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %bb.ab ] ; 16 uses
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv ; 4 uses
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %indvars.iv ; 4 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !33 ; 9 uses
   %i.ad = icmp sgt i32 %i.ac, 0
   br i1 %i.ad, label %bb.c, label %bb.ab
@@ -3068,9 +3061,8 @@ bb.a:
   %i.av = load i64, ptr %i.au, align 8, !tbaa !40 ; 2 uses
   %i.aw = mul i64 %i.av, %indvars.iv2901
   %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.aw ; 221 uses
-  %2 = sub i64 0, %i.av                           ; 2 uses
-  %3 = getelementptr inbounds i8, ptr %i.ax, i64 %2
-  %i.ay = getelementptr inbounds i8, ptr %3, i64 %2 ; 102 uses
+  %.neg.us = mul i64 %i.av, -2
+  %i.ay = getelementptr inbounds i8, ptr %i.ax, i64 %.neg.us ; 102 uses
   %i.az = icmp sgt i64 %indvars.iv2901, %i.l      ; 14 uses
   %i.ba = icmp sgt i64 %indvars.iv2901, %i.ae     ; 24 uses
   %i.bb = icmp slt i64 %indvars.iv2901, %invariant.op ; 3 uses
@@ -3473,7 +3465,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !55
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.i = load i64, ptr %i.h, align 8, !tbaa !40   ; 2 uses
-  %4 = sub i64 0, %i.i                            ; 2 uses
+  %.neg = mul i64 %i.i, -2
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !55
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 128
@@ -3494,9 +3486,8 @@ bb.a:
   %.087160.us = phi i32 [ %.087.us, %._crit_edge.us ], [ %.087159, %.lr.ph.us.preheader ]
   %i.u = sext i32 %.087160.us to i64              ; 3 uses
   %i.v = mul i64 %i.i, %i.u
-  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.v ; 2 uses
-  %i.w = getelementptr inbounds i8, ptr %5, i64 %4
-  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %4 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.v ; 2 uses
+  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %.neg ; 3 uses
   %i.y = mul i64 %i.m, %i.u
   %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.y ; 5 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 %i.n ; 7 uses
@@ -3504,7 +3495,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.us, %bb.ab
   %indvars.iv = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %bb.ab ] ; 16 uses
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv ; 4 uses
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %indvars.iv ; 4 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !33 ; 9 uses
   %i.ad = icmp sgt i32 %i.ac, 0
   br i1 %i.ad, label %bb.c, label %bb.ab
@@ -3907,9 +3898,8 @@ bb.cz:                                            ; preds = %.lr.ph4848, %bb.abl
   %i.ml = load i64, ptr %i.mk, align 8, !tbaa !40 ; 2 uses
   %i.mm = mul i64 %i.ml, %indvars.iv5276
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mj, i64 %i.mm ; 263 uses
-  %2 = sub i64 0, %i.ml                           ; 2 uses
-  %3 = getelementptr inbounds i8, ptr %i.mn, i64 %2
-  %i.mo = getelementptr inbounds i8, ptr %3, i64 %2 ; 139 uses
+  %.neg3089 = mul i64 %i.ml, -2
+  %i.mo = getelementptr inbounds i8, ptr %i.mn, i64 %.neg3089 ; 139 uses
   %i.mp = load i8, ptr %i.mc, align 1, !tbaa !32
   %.not3380 = icmp eq i8 %i.mp, 0                 ; 3 uses
   br i1 %i.lr, label %bb.da, label %bb.db
@@ -4312,9 +4302,8 @@ bb.abm:                                           ; preds = %._crit_edge4849
   %i.etr = load i64, ptr %i.etq, align 8, !tbaa !40 ; 2 uses
   %i.ets = mul i64 %i.etr, %i.eth
   %i.ett = getelementptr inbounds nuw i8, ptr %i.etp, i64 %i.ets ; 120 uses
-  %4 = sub i64 0, %i.etr                          ; 2 uses
-  %5 = getelementptr inbounds i8, ptr %i.ett, i64 %4
-  %i.etu = getelementptr inbounds i8, ptr %5, i64 %4 ; 70 uses
+  %.neg = mul i64 %i.etr, -2
+  %i.etu = getelementptr inbounds i8, ptr %i.ett, i64 %.neg ; 70 uses
   br i1 %.not4818, label %.lr.ph4885, label %._crit_edge4886
 
 .lr.ph4885:                                       ; preds = %bb.abm
@@ -4717,9 +4706,8 @@ bb.aa:                                            ; preds = %.lr.ph3516, %._crit
   %i.cj = load i64, ptr %i.ax, align 8, !tbaa !40 ; 2 uses
   %i.ck = mul i64 %i.cj, %indvars.iv3692
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ci, i64 %i.ck ; 221 uses
-  %11 = sub i64 0, %i.cj                          ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.cl, i64 %11
-  %i.cm = getelementptr inbounds i8, ptr %12, i64 %11 ; 101 uses
+  %.neg = mul i64 %i.cj, -2
+  %i.cm = getelementptr inbounds i8, ptr %i.cl, i64 %.neg ; 101 uses
   br i1 %i.ay, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.aa
@@ -5122,9 +5110,8 @@ bb.aa:                                            ; preds = %.lr.ph3516, %._crit
   %i.ci = load i64, ptr %i.ax, align 8, !tbaa !40 ; 2 uses
   %i.cj = mul i64 %i.ci, %indvars.iv3693
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.cj ; 221 uses
-  %11 = sub i64 0, %i.ci                          ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.ck, i64 %11
-  %i.cl = getelementptr inbounds i8, ptr %12, i64 %11 ; 101 uses
+  %.neg = mul i64 %i.ci, -2
+  %i.cl = getelementptr inbounds i8, ptr %i.ck, i64 %.neg ; 101 uses
   br i1 %i.ay, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.aa
@@ -5527,9 +5514,8 @@ bb.cx:                                            ; preds = %.lr.ph5540, %bb.aaw
   %i.lo = load i64, ptr %i.eg, align 8, !tbaa !40 ; 2 uses
   %i.lp = mul i64 %i.lo, %indvars.iv5990
   %i.lq = getelementptr inbounds nuw i8, ptr %i.ln, i64 %i.lp ; 253 uses
-  %11 = sub i64 0, %i.lo                          ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.lq, i64 %11
-  %i.lr = getelementptr inbounds i8, ptr %12, i64 %11 ; 125 uses
+  %.neg3513 = mul i64 %i.lo, -2
+  %i.lr = getelementptr inbounds i8, ptr %i.lq, i64 %.neg3513 ; 125 uses
   %i.ls = load i8, ptr %i.li, align 1, !tbaa !32
   %.not3804 = icmp eq i8 %i.ls, 0                 ; 3 uses
   br i1 %i.lc, label %bb.cy, label %bb.cz
@@ -5932,9 +5918,8 @@ bb.aax:                                           ; preds = %._crit_edge5541
   %i.epx = load i64, ptr %i.eg, align 8, !tbaa !40 ; 2 uses
   %i.epy = mul i64 %i.epx, %i.epq
   %i.epz = getelementptr inbounds nuw i8, ptr %i.epw, i64 %i.epy ; 116 uses
-  %13 = sub i64 0, %i.epx                         ; 2 uses
-  %14 = getelementptr inbounds i8, ptr %i.epz, i64 %13
-  %i.eqa = getelementptr inbounds i8, ptr %14, i64 %13 ; 59 uses
+  %.neg = mul i64 %i.epx, -2
+  %i.eqa = getelementptr inbounds i8, ptr %i.epz, i64 %.neg ; 59 uses
   br i1 %.not5511, label %.lr.ph5577.preheader, label %._crit_edge5578
 
 .lr.ph5577.preheader:                             ; preds = %bb.aax
@@ -6337,9 +6322,8 @@ bb.cx:                                            ; preds = %.lr.ph5540, %bb.aaw
   %i.lp = load i64, ptr %i.eg, align 8, !tbaa !40 ; 2 uses
   %i.lq = mul i64 %i.lp, %indvars.iv5990
   %i.lr = getelementptr inbounds nuw i8, ptr %i.lo, i64 %i.lq ; 253 uses
-  %11 = sub i64 0, %i.lp                          ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %i.lr, i64 %11
-  %i.ls = getelementptr inbounds i8, ptr %12, i64 %11 ; 125 uses
+  %.neg3517 = mul i64 %i.lp, -2
+  %i.ls = getelementptr inbounds i8, ptr %i.lr, i64 %.neg3517 ; 125 uses
   %i.lt = load i8, ptr %i.lj, align 1, !tbaa !32
   %.not3808 = icmp eq i8 %i.lt, 0                 ; 3 uses
   br i1 %i.ld, label %bb.cy, label %bb.cz
@@ -6742,9 +6726,8 @@ bb.aax:                                           ; preds = %._crit_edge5541
   %i.epy = load i64, ptr %i.eg, align 8, !tbaa !40 ; 2 uses
   %i.epz = mul i64 %i.epy, %i.epr
   %i.eqa = getelementptr inbounds nuw i8, ptr %i.epx, i64 %i.epz ; 116 uses
-  %13 = sub i64 0, %i.epy                         ; 2 uses
-  %14 = getelementptr inbounds i8, ptr %i.eqa, i64 %13
-  %i.eqb = getelementptr inbounds i8, ptr %14, i64 %13 ; 59 uses
+  %.neg = mul i64 %i.epy, -2
+  %i.eqb = getelementptr inbounds i8, ptr %i.eqa, i64 %.neg ; 59 uses
   br i1 %.not5511, label %.lr.ph5577.preheader, label %._crit_edge5578
 
 .lr.ph5577.preheader:                             ; preds = %bb.aax
@@ -7147,7 +7130,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !55
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.i = load i64, ptr %i.h, align 8, !tbaa !40   ; 2 uses
-  %4 = sub i64 0, %i.i                            ; 2 uses
+  %.neg = mul i64 %i.i, -2
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !55
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 128
@@ -7168,9 +7151,8 @@ bb.a:
   %.087160.us = phi i32 [ %.087.us, %._crit_edge.us ], [ %.087159, %.lr.ph.us.preheader ]
   %i.u = sext i32 %.087160.us to i64              ; 3 uses
   %i.v = mul i64 %i.i, %i.u
-  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.v ; 2 uses
-  %i.w = getelementptr inbounds i8, ptr %5, i64 %4
-  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %4 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.v ; 2 uses
+  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %.neg ; 3 uses
   %i.y = mul i64 %i.m, %i.u
   %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.y ; 5 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 %i.n ; 7 uses
@@ -7178,7 +7160,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.us, %bb.ab
   %indvars.iv = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %bb.ab ] ; 16 uses
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv ; 4 uses
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %indvars.iv ; 4 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !33 ; 9 uses
   %i.ad = icmp sgt i32 %i.ac, 0
   br i1 %i.ad, label %bb.c, label %bb.ab
@@ -7581,9 +7563,8 @@ bb.a:
   %i.av = load i64, ptr %i.au, align 8, !tbaa !40 ; 2 uses
   %i.aw = mul i64 %i.av, %indvars.iv2901
   %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.aw ; 221 uses
-  %2 = sub i64 0, %i.av                           ; 2 uses
-  %3 = getelementptr inbounds i8, ptr %i.ax, i64 %2
-  %i.ay = getelementptr inbounds i8, ptr %3, i64 %2 ; 102 uses
+  %.neg.us = mul i64 %i.av, -2
+  %i.ay = getelementptr inbounds i8, ptr %i.ax, i64 %.neg.us ; 102 uses
   %i.az = icmp sgt i64 %indvars.iv2901, %i.l      ; 14 uses
   %i.ba = icmp sgt i64 %indvars.iv2901, %i.ae     ; 24 uses
   %i.bb = icmp slt i64 %indvars.iv2901, %invariant.op ; 3 uses
@@ -7986,7 +7967,7 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !55
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.i = load i64, ptr %i.h, align 8, !tbaa !40   ; 2 uses
-  %4 = sub i64 0, %i.i                            ; 2 uses
+  %.neg = mul i64 %i.i, -2
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !55
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 128
@@ -8007,9 +7988,8 @@ bb.a:
   %.087160.us = phi i32 [ %.087.us, %._crit_edge.us ], [ %.087159, %.lr.ph.us.preheader ]
   %i.u = sext i32 %.087160.us to i64              ; 3 uses
   %i.v = mul i64 %i.i, %i.u
-  %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.v ; 2 uses
-  %i.w = getelementptr inbounds i8, ptr %5, i64 %4
-  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %4 ; 3 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.v ; 2 uses
+  %i.x = getelementptr inbounds i8, ptr %i.w, i64 %.neg ; 3 uses
   %i.y = mul i64 %i.m, %i.u
   %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.y ; 5 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 %i.n ; 7 uses
@@ -8017,7 +7997,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.us, %bb.ab
   %indvars.iv = phi i64 [ 0, %.lr.ph.us ], [ %indvars.iv.next, %bb.ab ] ; 16 uses
-  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv ; 4 uses
+  %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.w, i64 %indvars.iv ; 4 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !33 ; 9 uses
   %i.ad = icmp sgt i32 %i.ac, 0
   br i1 %i.ad, label %bb.c, label %bb.ab
@@ -8420,9 +8400,8 @@ bb.cz:                                            ; preds = %.lr.ph4848, %bb.abl
   %i.ml = load i64, ptr %i.mk, align 8, !tbaa !40 ; 2 uses
   %i.mm = mul i64 %i.ml, %indvars.iv5276
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mj, i64 %i.mm ; 263 uses
-  %2 = sub i64 0, %i.ml                           ; 2 uses
-  %3 = getelementptr inbounds i8, ptr %i.mn, i64 %2
-  %i.mo = getelementptr inbounds i8, ptr %3, i64 %2 ; 139 uses
+  %.neg3089 = mul i64 %i.ml, -2
+  %i.mo = getelementptr inbounds i8, ptr %i.mn, i64 %.neg3089 ; 139 uses
   %i.mp = load i8, ptr %i.mc, align 1, !tbaa !32
   %.not3380 = icmp eq i8 %i.mp, 0                 ; 3 uses
   br i1 %i.lr, label %bb.da, label %bb.db
@@ -8825,9 +8804,8 @@ bb.abm:                                           ; preds = %._crit_edge4849
   %i.etr = load i64, ptr %i.etq, align 8, !tbaa !40 ; 2 uses
   %i.ets = mul i64 %i.etr, %i.eth
   %i.ett = getelementptr inbounds nuw i8, ptr %i.etp, i64 %i.ets ; 120 uses
-  %4 = sub i64 0, %i.etr                          ; 2 uses
-  %5 = getelementptr inbounds i8, ptr %i.ett, i64 %4
-  %i.etu = getelementptr inbounds i8, ptr %5, i64 %4 ; 70 uses
+  %.neg = mul i64 %i.etr, -2
+  %i.etu = getelementptr inbounds i8, ptr %i.ett, i64 %.neg ; 70 uses
   br i1 %.not4818, label %.lr.ph4885, label %._crit_edge4886
 
 .lr.ph4885:                                       ; preds = %bb.abm

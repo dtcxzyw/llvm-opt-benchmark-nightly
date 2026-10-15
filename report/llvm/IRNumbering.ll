@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %.not58.i, label %._crit_edge.i25, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ap
-  %.idx.i = shl i64 %.068, 3                      ; 12 uses
+  %.idx.i = shl i64 %.068, 3                      ; 10 uses
   %.idx52.i = shl i64 %.068, 4                    ; 2 uses
   %.not53.i = icmp eq i64 %.idx.i, %.idx52.i
   br i1 %.not53.i, label %.critedge.i.us.preheader.i, label %.lr.ph.i.preheader.i
@@ -215,13 +215,12 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %i.dm, label %.critedge.i.us.i.us, label %.critedge.i.us.preheader.i.split, !prof !145
 
 .critedge.i.us.i.us:                              ; preds = %.critedge.i.us.preheader.i, %.critedge.i.us.i.us
-  %.060.us.i.us = phi ptr [ %3, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
+  %.060.us.i.us = phi ptr [ %i.do, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
   %.sroa.044.059.us.i.us = phi ptr [ %i.dn, %.critedge.i.us.i.us ], [ %0, %.critedge.i.us.preheader.i ] ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.044.059.us.i.us, i64 %.idx.i ; 4 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %.060.us.i.us, ptr align 8 %.sroa.044.059.us.i.us, i64 %.idx.i, i1 false)
-  %i.do = getelementptr inbounds nuw i8, ptr %.060.us.i.us, i64 %.idx.i ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %.060.us.i.us, i64 %.idx.i ; 3 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.do, ptr nonnull align 8 %i.dn, i64 %.idx.i, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %i.do, i64 %.idx.i ; 2 uses
   %i.dp = ptrtoint ptr %i.dn to i64
   %i.dq = sub i64 %i.a, %i.dp
   %i.dr = ashr exact i64 %i.dq, 3                 ; 2 uses
@@ -238,14 +237,13 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i.us57:                            ; preds = %.critedge.i.us.i.us57.preheader, %.critedge.i.us.i.us57
   %i.dt = phi ptr [ %i.dw, %.critedge.i.us.i.us57 ], [ %.pre, %.critedge.i.us.i.us57.preheader ]
-  %.060.us.i.us58 = phi ptr [ %4, %.critedge.i.us.i.us57 ], [ %2, %.critedge.i.us.i.us57.preheader ] ; 3 uses
+  %.060.us.i.us58 = phi ptr [ %i.dv, %.critedge.i.us.i.us57 ], [ %2, %.critedge.i.us.i.us57.preheader ] ; 2 uses
   %.sroa.044.059.us.i.us59 = phi ptr [ %i.du, %.critedge.i.us.i.us57 ], [ %0, %.critedge.i.us.i.us57.preheader ]
   %i.du = getelementptr inbounds nuw i8, ptr %.sroa.044.059.us.i.us59, i64 8 ; 4 uses
   store ptr %i.dt, ptr %.060.us.i.us58, align 8, !tbaa !177
-  %i.dv = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 8
+  %i.dv = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 8 ; 3 uses
   %i.dw = load ptr, ptr %i.du, align 8, !tbaa !177 ; 2 uses
   store ptr %i.dw, ptr %i.dv, align 8, !tbaa !177
-  %4 = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 16 ; 2 uses
   %i.dx = ptrtoint ptr %i.du to i64
   %i.dy = sub i64 %i.a, %i.dx
   %i.dz = ashr exact i64 %i.dy, 3                 ; 2 uses
@@ -254,11 +252,10 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i:                                 ; preds = %.critedge.i.us.preheader.i.split, %.critedge.i.us.i
   %.060.us.i = phi ptr [ %i.eb, %.critedge.i.us.i ], [ %2, %.critedge.i.us.preheader.i.split ]
-  %.sroa.044.059.us.i = phi ptr [ %5, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
-  %5 = getelementptr inbounds i8, ptr %.sroa.044.059.us.i, i64 %.idx.i ; 3 uses
-  %i.ea = getelementptr inbounds i8, ptr %.060.us.i, i64 %.idx.i
-  %i.eb = getelementptr inbounds i8, ptr %i.ea, i64 %.idx.i ; 2 uses
-  %i.ec = ptrtoint ptr %5 to i64
+  %.sroa.044.059.us.i = phi ptr [ %i.ea, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
+  %i.ea = getelementptr inbounds i8, ptr %.sroa.044.059.us.i, i64 %.idx.i ; 3 uses
+  %i.eb = getelementptr inbounds i8, ptr %.060.us.i, i64 %.idx.i ; 2 uses
+  %i.ec = ptrtoint ptr %i.ea to i64
   %i.ed = sub i64 %i.a, %i.ec
   %i.ee = ashr exact i64 %i.ed, 3                 ; 2 uses
   %.not.us.i = icmp slt i64 %i.ee, %i.dl
@@ -343,8 +340,8 @@ bb.av:                                            ; preds = %bb.au
   br i1 %.not.i, label %._crit_edge.i25, label %.lr.ph.i.preheader.i, !llvm.loop !651
 
 ._crit_edge.i25:                                  ; preds = %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail18AttributeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i", %.critedge.i.us.i, %.critedge.i.us.i.us57, %.critedge.i.us.i.us, %bb.ap
-  %.sroa.044.0.lcssa.i = phi ptr [ %0, %bb.ap ], [ %i.dn, %.critedge.i.us.i.us ], [ %i.du, %.critedge.i.us.i.us57 ], [ %5, %.critedge.i.us.i ], [ %i.eg, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail18AttributeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 3 uses
-  %.0.lcssa.i = phi ptr [ %2, %bb.ap ], [ %3, %.critedge.i.us.i.us ], [ %4, %.critedge.i.us.i.us57 ], [ %i.eb, %.critedge.i.us.i ], [ %i.fa, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail18AttributeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 2 uses
+  %.sroa.044.0.lcssa.i = phi ptr [ %0, %bb.ap ], [ %i.dn, %.critedge.i.us.i.us ], [ %i.du, %.critedge.i.us.i.us57 ], [ %i.ea, %.critedge.i.us.i ], [ %i.eg, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail18AttributeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 3 uses
+  %.0.lcssa.i = phi ptr [ %2, %bb.ap ], [ %i.do, %.critedge.i.us.i.us ], [ %i.dv, %.critedge.i.us.i.us57 ], [ %i.eb, %.critedge.i.us.i ], [ %i.fa, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail18AttributeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 2 uses
   %.lcssa56.i = phi i64 [ %i.d, %bb.ap ], [ %i.dr, %.critedge.i.us.i.us ], [ %i.dz, %.critedge.i.us.i.us57 ], [ %i.ee, %.critedge.i.us.i ], [ %i.fc, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail18AttributeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ]
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %.068, i64 %.lcssa56.i) ; 2 uses
   %.idx54.i = shl nsw i64 %.sroa.speculated.i, 3
@@ -747,7 +744,7 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %.not58.i, label %._crit_edge.i25, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ap
-  %.idx.i = shl i64 %.068, 3                      ; 12 uses
+  %.idx.i = shl i64 %.068, 3                      ; 10 uses
   %.idx52.i = shl i64 %.068, 4                    ; 2 uses
   %.not53.i = icmp eq i64 %.idx.i, %.idx52.i
   br i1 %.not53.i, label %.critedge.i.us.preheader.i, label %.lr.ph.i.preheader.i
@@ -757,13 +754,12 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %i.dm, label %.critedge.i.us.i.us, label %.critedge.i.us.preheader.i.split, !prof !145
 
 .critedge.i.us.i.us:                              ; preds = %.critedge.i.us.preheader.i, %.critedge.i.us.i.us
-  %.060.us.i.us = phi ptr [ %3, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
+  %.060.us.i.us = phi ptr [ %i.do, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
   %.sroa.044.059.us.i.us = phi ptr [ %i.dn, %.critedge.i.us.i.us ], [ %0, %.critedge.i.us.preheader.i ] ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.044.059.us.i.us, i64 %.idx.i ; 4 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %.060.us.i.us, ptr align 8 %.sroa.044.059.us.i.us, i64 %.idx.i, i1 false)
-  %i.do = getelementptr inbounds nuw i8, ptr %.060.us.i.us, i64 %.idx.i ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %.060.us.i.us, i64 %.idx.i ; 3 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.do, ptr nonnull align 8 %i.dn, i64 %.idx.i, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %i.do, i64 %.idx.i ; 2 uses
   %i.dp = ptrtoint ptr %i.dn to i64
   %i.dq = sub i64 %i.a, %i.dp
   %i.dr = ashr exact i64 %i.dq, 3                 ; 2 uses
@@ -780,14 +776,13 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i.us57:                            ; preds = %.critedge.i.us.i.us57.preheader, %.critedge.i.us.i.us57
   %i.dt = phi ptr [ %i.dw, %.critedge.i.us.i.us57 ], [ %.pre, %.critedge.i.us.i.us57.preheader ]
-  %.060.us.i.us58 = phi ptr [ %4, %.critedge.i.us.i.us57 ], [ %2, %.critedge.i.us.i.us57.preheader ] ; 3 uses
+  %.060.us.i.us58 = phi ptr [ %i.dv, %.critedge.i.us.i.us57 ], [ %2, %.critedge.i.us.i.us57.preheader ] ; 2 uses
   %.sroa.044.059.us.i.us59 = phi ptr [ %i.du, %.critedge.i.us.i.us57 ], [ %0, %.critedge.i.us.i.us57.preheader ]
   %i.du = getelementptr inbounds nuw i8, ptr %.sroa.044.059.us.i.us59, i64 8 ; 4 uses
   store ptr %i.dt, ptr %.060.us.i.us58, align 8, !tbaa !209
-  %i.dv = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 8
+  %i.dv = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 8 ; 3 uses
   %i.dw = load ptr, ptr %i.du, align 8, !tbaa !209 ; 2 uses
   store ptr %i.dw, ptr %i.dv, align 8, !tbaa !209
-  %4 = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 16 ; 2 uses
   %i.dx = ptrtoint ptr %i.du to i64
   %i.dy = sub i64 %i.a, %i.dx
   %i.dz = ashr exact i64 %i.dy, 3                 ; 2 uses
@@ -796,11 +791,10 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i:                                 ; preds = %.critedge.i.us.preheader.i.split, %.critedge.i.us.i
   %.060.us.i = phi ptr [ %i.eb, %.critedge.i.us.i ], [ %2, %.critedge.i.us.preheader.i.split ]
-  %.sroa.044.059.us.i = phi ptr [ %5, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
-  %5 = getelementptr inbounds i8, ptr %.sroa.044.059.us.i, i64 %.idx.i ; 3 uses
-  %i.ea = getelementptr inbounds i8, ptr %.060.us.i, i64 %.idx.i
-  %i.eb = getelementptr inbounds i8, ptr %i.ea, i64 %.idx.i ; 2 uses
-  %i.ec = ptrtoint ptr %5 to i64
+  %.sroa.044.059.us.i = phi ptr [ %i.ea, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
+  %i.ea = getelementptr inbounds i8, ptr %.sroa.044.059.us.i, i64 %.idx.i ; 3 uses
+  %i.eb = getelementptr inbounds i8, ptr %.060.us.i, i64 %.idx.i ; 2 uses
+  %i.ec = ptrtoint ptr %i.ea to i64
   %i.ed = sub i64 %i.a, %i.ec
   %i.ee = ashr exact i64 %i.ed, 3                 ; 2 uses
   %.not.us.i = icmp slt i64 %i.ee, %i.dl
@@ -885,8 +879,8 @@ bb.av:                                            ; preds = %bb.au
   br i1 %.not.i, label %._crit_edge.i25, label %.lr.ph.i.preheader.i, !llvm.loop !683
 
 ._crit_edge.i25:                                  ; preds = %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail15OpNameNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i", %.critedge.i.us.i, %.critedge.i.us.i.us57, %.critedge.i.us.i.us, %bb.ap
-  %.sroa.044.0.lcssa.i = phi ptr [ %0, %bb.ap ], [ %i.dn, %.critedge.i.us.i.us ], [ %i.du, %.critedge.i.us.i.us57 ], [ %5, %.critedge.i.us.i ], [ %i.eg, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail15OpNameNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 3 uses
-  %.0.lcssa.i = phi ptr [ %2, %bb.ap ], [ %3, %.critedge.i.us.i.us ], [ %4, %.critedge.i.us.i.us57 ], [ %i.eb, %.critedge.i.us.i ], [ %i.fa, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail15OpNameNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 2 uses
+  %.sroa.044.0.lcssa.i = phi ptr [ %0, %bb.ap ], [ %i.dn, %.critedge.i.us.i.us ], [ %i.du, %.critedge.i.us.i.us57 ], [ %i.ea, %.critedge.i.us.i ], [ %i.eg, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail15OpNameNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 3 uses
+  %.0.lcssa.i = phi ptr [ %2, %bb.ap ], [ %i.do, %.critedge.i.us.i.us ], [ %i.dv, %.critedge.i.us.i.us57 ], [ %i.eb, %.critedge.i.us.i ], [ %i.fa, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail15OpNameNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 2 uses
   %.lcssa56.i = phi i64 [ %i.d, %bb.ap ], [ %i.dr, %.critedge.i.us.i.us ], [ %i.dz, %.critedge.i.us.i.us57 ], [ %i.ee, %.critedge.i.us.i ], [ %i.fc, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail15OpNameNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ]
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %.068, i64 %.lcssa56.i) ; 2 uses
   %.idx54.i = shl nsw i64 %.sroa.speculated.i, 3
@@ -1289,7 +1283,7 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %.not58.i, label %._crit_edge.i25, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.ap
-  %.idx.i = shl i64 %.068, 3                      ; 12 uses
+  %.idx.i = shl i64 %.068, 3                      ; 10 uses
   %.idx52.i = shl i64 %.068, 4                    ; 2 uses
   %.not53.i = icmp eq i64 %.idx.i, %.idx52.i
   br i1 %.not53.i, label %.critedge.i.us.preheader.i, label %.lr.ph.i.preheader.i
@@ -1299,13 +1293,12 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
   br i1 %i.dm, label %.critedge.i.us.i.us, label %.critedge.i.us.preheader.i.split, !prof !145
 
 .critedge.i.us.i.us:                              ; preds = %.critedge.i.us.preheader.i, %.critedge.i.us.i.us
-  %.060.us.i.us = phi ptr [ %3, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
+  %.060.us.i.us = phi ptr [ %i.do, %.critedge.i.us.i.us ], [ %2, %.critedge.i.us.preheader.i ] ; 2 uses
   %.sroa.044.059.us.i.us = phi ptr [ %i.dn, %.critedge.i.us.i.us ], [ %0, %.critedge.i.us.preheader.i ] ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.044.059.us.i.us, i64 %.idx.i ; 4 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %.060.us.i.us, ptr align 8 %.sroa.044.059.us.i.us, i64 %.idx.i, i1 false)
-  %i.do = getelementptr inbounds nuw i8, ptr %.060.us.i.us, i64 %.idx.i ; 2 uses
+  %i.do = getelementptr inbounds nuw i8, ptr %.060.us.i.us, i64 %.idx.i ; 3 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.do, ptr nonnull align 8 %i.dn, i64 %.idx.i, i1 false)
-  %3 = getelementptr inbounds nuw i8, ptr %i.do, i64 %.idx.i ; 2 uses
   %i.dp = ptrtoint ptr %i.dn to i64
   %i.dq = sub i64 %i.a, %i.dp
   %i.dr = ashr exact i64 %i.dq, 3                 ; 2 uses
@@ -1322,14 +1315,13 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i.us57:                            ; preds = %.critedge.i.us.i.us57.preheader, %.critedge.i.us.i.us57
   %i.dt = phi ptr [ %i.dw, %.critedge.i.us.i.us57 ], [ %.pre, %.critedge.i.us.i.us57.preheader ]
-  %.060.us.i.us58 = phi ptr [ %4, %.critedge.i.us.i.us57 ], [ %2, %.critedge.i.us.i.us57.preheader ] ; 3 uses
+  %.060.us.i.us58 = phi ptr [ %i.dv, %.critedge.i.us.i.us57 ], [ %2, %.critedge.i.us.i.us57.preheader ] ; 2 uses
   %.sroa.044.059.us.i.us59 = phi ptr [ %i.du, %.critedge.i.us.i.us57 ], [ %0, %.critedge.i.us.i.us57.preheader ]
   %i.du = getelementptr inbounds nuw i8, ptr %.sroa.044.059.us.i.us59, i64 8 ; 4 uses
   store ptr %i.dt, ptr %.060.us.i.us58, align 8, !tbaa !216
-  %i.dv = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 8
+  %i.dv = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 8 ; 3 uses
   %i.dw = load ptr, ptr %i.du, align 8, !tbaa !216 ; 2 uses
   store ptr %i.dw, ptr %i.dv, align 8, !tbaa !216
-  %4 = getelementptr inbounds nuw i8, ptr %.060.us.i.us58, i64 16 ; 2 uses
   %i.dx = ptrtoint ptr %i.du to i64
   %i.dy = sub i64 %i.a, %i.dx
   %i.dz = ashr exact i64 %i.dy, 3                 ; 2 uses
@@ -1338,11 +1330,10 @@ bb.ap:                                            ; preds = %.lr.ph, %"_ZSt17__m
 
 .critedge.i.us.i:                                 ; preds = %.critedge.i.us.preheader.i.split, %.critedge.i.us.i
   %.060.us.i = phi ptr [ %i.eb, %.critedge.i.us.i ], [ %2, %.critedge.i.us.preheader.i.split ]
-  %.sroa.044.059.us.i = phi ptr [ %5, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
-  %5 = getelementptr inbounds i8, ptr %.sroa.044.059.us.i, i64 %.idx.i ; 3 uses
-  %i.ea = getelementptr inbounds i8, ptr %.060.us.i, i64 %.idx.i
-  %i.eb = getelementptr inbounds i8, ptr %i.ea, i64 %.idx.i ; 2 uses
-  %i.ec = ptrtoint ptr %5 to i64
+  %.sroa.044.059.us.i = phi ptr [ %i.ea, %.critedge.i.us.i ], [ %0, %.critedge.i.us.preheader.i.split ]
+  %i.ea = getelementptr inbounds i8, ptr %.sroa.044.059.us.i, i64 %.idx.i ; 3 uses
+  %i.eb = getelementptr inbounds i8, ptr %.060.us.i, i64 %.idx.i ; 2 uses
+  %i.ec = ptrtoint ptr %i.ea to i64
   %i.ed = sub i64 %i.a, %i.ec
   %i.ee = ashr exact i64 %i.ed, 3                 ; 2 uses
   %.not.us.i = icmp slt i64 %i.ee, %i.dl
@@ -1427,8 +1418,8 @@ bb.av:                                            ; preds = %bb.au
   br i1 %.not.i, label %._crit_edge.i25, label %.lr.ph.i.preheader.i, !llvm.loop !715
 
 ._crit_edge.i25:                                  ; preds = %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail13TypeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i", %.critedge.i.us.i, %.critedge.i.us.i.us57, %.critedge.i.us.i.us, %bb.ap
-  %.sroa.044.0.lcssa.i = phi ptr [ %0, %bb.ap ], [ %i.dn, %.critedge.i.us.i.us ], [ %i.du, %.critedge.i.us.i.us57 ], [ %5, %.critedge.i.us.i ], [ %i.eg, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail13TypeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 3 uses
-  %.0.lcssa.i = phi ptr [ %2, %bb.ap ], [ %3, %.critedge.i.us.i.us ], [ %4, %.critedge.i.us.i.us57 ], [ %i.eb, %.critedge.i.us.i ], [ %i.fa, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail13TypeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 2 uses
+  %.sroa.044.0.lcssa.i = phi ptr [ %0, %bb.ap ], [ %i.dn, %.critedge.i.us.i.us ], [ %i.du, %.critedge.i.us.i.us57 ], [ %i.ea, %.critedge.i.us.i ], [ %i.eg, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail13TypeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 3 uses
+  %.0.lcssa.i = phi ptr [ %2, %bb.ap ], [ %i.do, %.critedge.i.us.i.us ], [ %i.dv, %.critedge.i.us.i.us57 ], [ %i.eb, %.critedge.i.us.i ], [ %i.fa, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail13TypeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ] ; 2 uses
   %.lcssa56.i = phi i64 [ %i.d, %bb.ap ], [ %i.dr, %.critedge.i.us.i.us ], [ %i.dz, %.critedge.i.us.i.us57 ], [ %i.ee, %.critedge.i.us.i ], [ %i.fc, %"_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mlir8bytecode6detail13TypeNumberingESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNS4_16IRNumberingStateC1EPNS2_9OperationERKNS2_20BytecodeWriterConfigEE3$_1EEET0_T_SN_SN_SN_SM_T1_.exit.i" ]
   %.sroa.speculated.i = tail call i64 @llvm.smin.i64(i64 %.068, i64 %.lcssa56.i) ; 2 uses
   %.idx54.i = shl nsw i64 %.sroa.speculated.i, 3
