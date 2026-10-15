@@ -205,7 +205,7 @@ scalar.ph1142:                                    ; preds = %scalar.ph1142.prol.
   %i.xd = sdiv i32 %i.tu, 2                       ; 3 uses
   %.off = add i32 %i.tu, 1
   %.not771 = icmp ult i32 %.off, 3
-  %i.xe = sext i32 %i.tu to i64                   ; 6 uses
+  %i.xe = sext i32 %i.tu to i64                   ; 5 uses
   %i.xf = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.xg = load i32, ptr %i.xf, align 4, !tbaa !122 ; 2 uses
   %i.xh = sdiv i32 %i.xg, 2
@@ -272,6 +272,7 @@ scalar.ph1142:                                    ; preds = %scalar.ph1142.prol.
   %xtraiter1390 = and i64 %wide.trip.count851, 1
   %lcmp.mod1391.not = icmp eq i64 %xtraiter1390, 0
   %i.ym = add nsw i64 %wide.trip.count851, -1
+  %4 = shl nsw i64 %i.xe, 1
   br label %.preheader618
 
 .preheader618:                                    ; preds = %.preheader618.lr.ph, %._crit_edge722
@@ -444,8 +445,7 @@ middle.block1175:                                 ; preds = %vector.body1171
   br i1 %exitcond858.not.1, label %._crit_edge722, label %.lr.ph721, !llvm.loop !70
 
 ._crit_edge722:                                   ; preds = %.lr.ph721.prol.loopexit, %.lr.ph721, %middle.block1175, %.preheader618
-  %4 = getelementptr inbounds i8, ptr %i.yn, i64 %i.xe
-  %i.abz = getelementptr inbounds i8, ptr %4, i64 %i.xe ; 2 uses
+  %i.abz = getelementptr inbounds i8, ptr %i.yn, i64 %4 ; 2 uses
   store ptr %i.abz, ptr %i.f, align 8, !tbaa !111
   %i.aca = getelementptr inbounds [2 x i8], ptr %.0498724, i64 %i.xi
   %i.acb = getelementptr inbounds [2 x i8], ptr %.0497725, i64 %i.xm

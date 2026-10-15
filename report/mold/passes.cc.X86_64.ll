@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not57, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 4                           ; 11 uses
+  %.idx = shl i64 %3, 4                           ; 9 uses
   %.idx52 = shl i64 %3, 5                         ; 2 uses
   %i.f = icmp eq i64 %.idx, %.idx52
   br i1 %i.f, label %.critedge.i.us.preheader, label %.lr.ph.i.preheader
@@ -213,6 +213,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 16
   %i.h = icmp eq i64 %.idx, 16
+  %6 = shl i64 %3, 5
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPZN4mold14sort_init_finiINS2_6X86_64EEEvRNS2_7ContextIT_EEE5EntrySt6vectorIS9_SaIS9_EEEESA_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSH_4lessEMS9_lEEDaRS6_RT0_EUlOS6_OSN_E_EEESN_S6_S6_S6_S6_SN_T1_.exit.us
@@ -237,8 +238,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPZN4mold14sort_init_finiINS2_6X86_64EEEvRNS2_7ContextIT_EEE5EntrySt6vectorIS9_SaIS9_EEEESA_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSH_4lessEMS9_lEEDaRS6_RT0_EUlOS6_OSN_E_EEESN_S6_S6_S6_S6_SN_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPZN4mold14sort_init_finiINS2_6X86_64EEEvRNS2_7ContextIT_EEE5EntrySt6vectorIS9_SaIS9_EEEESA_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSH_4lessEMS9_lEEDaRS6_RT0_EUlOS6_OSN_E_EEESN_S6_S6_S6_S6_SN_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.059.us, i64 %.idx
-  %i.l = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.l = getelementptr inbounds i8, ptr %.059.us, i64 %6 ; 2 uses
   %i.m = ptrtoint ptr %i.i to i64
   %i.n = sub i64 %i.b, %i.m
   %i.o = ashr exact i64 %i.n, 4                   ; 2 uses
@@ -641,7 +641,7 @@ bb.a:
   br i1 %.not57, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 4                           ; 11 uses
+  %.idx = shl i64 %3, 4                           ; 9 uses
   %.idx52 = shl i64 %3, 5                         ; 2 uses
   %i.f = icmp eq i64 %.idx, %.idx52
   br i1 %i.f, label %.critedge.i.us.preheader, label %.lr.ph.i.preheader
@@ -649,6 +649,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 16
   %i.h = icmp eq i64 %.idx, 16
+  %6 = shl i64 %3, 5
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPZN4mold14sort_ctor_dtorINS2_6X86_64EEEvRNS2_7ContextIT_EEE5EntrySt6vectorIS9_SaIS9_EEEESA_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSH_4lessEMS9_lEEDaRS6_RT0_EUlOS6_OSN_E_EEESN_S6_S6_S6_S6_SN_T1_.exit.us
@@ -673,8 +674,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPZN4mold14sort_ctor_dtorINS2_6X86_64EEEvRNS2_7ContextIT_EEE5EntrySt6vectorIS9_SaIS9_EEEESA_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSH_4lessEMS9_lEEDaRS6_RT0_EUlOS6_OSN_E_EEESN_S6_S6_S6_S6_SN_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPZN4mold14sort_ctor_dtorINS2_6X86_64EEEvRNS2_7ContextIT_EEE5EntrySt6vectorIS9_SaIS9_EEEESA_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSH_4lessEMS9_lEEDaRS6_RT0_EUlOS6_OSN_E_EEESN_S6_S6_S6_S6_SN_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.059.us, i64 %.idx
-  %i.l = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.l = getelementptr inbounds i8, ptr %.059.us, i64 %6 ; 2 uses
   %i.m = ptrtoint ptr %i.i to i64
   %i.n = sub i64 %i.b, %i.m
   %i.o = ashr exact i64 %i.n, 4                   ; 2 uses
@@ -1077,7 +1077,7 @@ bb.a:
   br i1 %.not60, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 3                           ; 11 uses
+  %.idx = shl i64 %3, 3                           ; 9 uses
   %.idx55 = shl i64 %3, 4                         ; 2 uses
   %i.f = icmp eq i64 %.idx, %.idx55
   br i1 %i.f, label %.critedge.i.us.preheader, label %.lr.ph.i.preheader
@@ -1085,6 +1085,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 8
   %i.h = icmp eq i64 %.idx, 8
+  %6 = shl i64 %3, 4
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS2_6X86_64EEESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSE_4lessEMS5_lEEDaRT_RT0_EUlOSJ_OSL_E_EEESL_SJ_SJ_SJ_SJ_SL_T1_.exit.us
@@ -1111,8 +1112,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS2_6X86_64EEESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSE_4lessEMS5_lEEDaRT_RT0_EUlOSJ_OSL_E_EEESL_SJ_SJ_SJ_SJ_SL_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS2_6X86_64EEESt6vectorIS6_SaIS6_EEEES7_NS0_5__ops15_Iter_comp_iterIZNSt6ranges8__detail16__make_comp_projINSE_4lessEMS5_lEEDaRT_RT0_EUlOSJ_OSL_E_EEESL_SJ_SJ_SJ_SJ_SL_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %6 = getelementptr inbounds i8, ptr %.062.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %6, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.062.us, i64 %6 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 3                   ; 2 uses

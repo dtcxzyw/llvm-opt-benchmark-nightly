@@ -205,10 +205,10 @@ Vec_IntFill.exit64:                               ; preds = %Vec_IntGrow.exit.i5
 Vec_IntFill.exit64.thread:                        ; preds = %Vec_IntGrow.exit.i57
   %i.af = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i32 %i.o, ptr %i.af, align 4, !tbaa !19
-  %i.ag = sext i32 %3 to i64                      ; 2 uses
-  %8 = getelementptr inbounds [4 x i8], ptr %i.z, i64 %i.ag
-  %9 = getelementptr [4 x i8], ptr %8, i64 %i.ag
-  %i.ah = getelementptr i8, ptr %9, i64 -4
+  %i.ag = sext i32 %3 to i64
+  %.idx = shl nsw i64 %i.ag, 3
+  %8 = getelementptr i8, ptr %i.z, i64 %.idx
+  %i.ah = getelementptr i8, ptr %8, i64 -4
   store i32 %7, ptr %i.ah, align 4, !tbaa !18
   br label %._crit_edge72
 
