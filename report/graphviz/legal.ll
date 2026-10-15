@@ -204,18 +204,13 @@ bb.m:                                             ; preds = %bb.k
   %i.ay = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.au, <2 x double> %i.ao, <2 x double> %i.ax) ; 2 uses
   %i.az = extractelement <2 x double> %i.ay, i64 0 ; 2 uses
   %i.ba = extractelement <2 x double> %i.ay, i64 1 ; 2 uses
-  %i.bb = fsub double %i.as, %i.at
-  %i.bc = fsub double %i.ba, %i.az
-  %5 = fmul double %i.az, %i.av
-  %6 = tail call double @llvm.fmuladd.f64(double %i.as, double %i.ba, double %5)
-  %7 = insertelement <2 x double> poison, double %6, i64 0
-  %8 = insertelement <2 x double> %7, double %i.bc, i64 1
-  %9 = insertelement <2 x double> poison, double %i.bb, i64 0
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
-  %11 = fdiv <2 x double> %8, %10                 ; 2 uses
-  %12 = extractelement <2 x double> %11, i64 1
-  store double %12, ptr %2, align 8, !tbaa !18
-  %13 = extractelement <2 x double> %11, i64 0
+  %i.bb = fsub double %i.ba, %i.az
+  %i.bc = fsub double %i.as, %i.at                ; 2 uses
+  %5 = fdiv double %i.bb, %i.bc
+  store double %5, ptr %2, align 8, !tbaa !18
+  %6 = fmul double %i.az, %i.av
+  %7 = tail call double @llvm.fmuladd.f64(double %i.as, double %i.ba, double %6)
+  %8 = fdiv double %7, %i.bc
   br label %online.exit204.thread.sink.split
 
 bb.n:                                             ; preds = %bb.h
@@ -481,7 +476,7 @@ bb.bi:                                            ; preds = %bb.bg
   br label %online.exit204.thread.sink.split
 
 online.exit204.thread.sink.split:                 ; preds = %bb.bh, %bb.bi, %bb.j, %bb.m, %bb.l, %online.exit136.thread
-  %.sink = phi double [ %i.dn, %online.exit136.thread ], [ %i.ak, %bb.l ], [ %13, %bb.m ], [ %i.ad, %bb.j ], [ %.sroa.1042.0.copyload, %bb.bi ], [ %.sroa.12.0.copyload, %bb.bh ]
+  %.sink = phi double [ %i.dn, %online.exit136.thread ], [ %i.ak, %bb.l ], [ %8, %bb.m ], [ %i.ad, %bb.j ], [ %.sroa.1042.0.copyload, %bb.bi ], [ %.sroa.12.0.copyload, %bb.bh ]
   store double %.sink, ptr %3, align 8, !tbaa !18
   br label %online.exit204.thread
 

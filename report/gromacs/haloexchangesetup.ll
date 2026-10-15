@@ -66,7 +66,7 @@ define void @_ZN3gmx12HaloExchange26checkDomainRangeAllocationERK12gmx_domdec_tR
 bb.a:
   %3 = alloca %"class.gmx::BasicVector", align 8  ; 5 uses
   %i.a = alloca i32, align 4                      ; 8 uses
-  %4 = alloca %"class.gmx::BasicVector", align 8  ; 14 uses
+  %4 = alloca %"class.gmx::BasicVector", align 16 ; 14 uses
   %5 = alloca %"class.gmx::BasicVector", align 8  ; 6 uses
   %6 = alloca %"class.gmx::BasicVector", align 8  ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
@@ -138,13 +138,10 @@ bb.c:                                             ; preds = %bb.b
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 256
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 180 ; 8 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 44 ; 2 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 164
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 168
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 172
   %.sroa.217.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %.sroa.29.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -331,7 +328,7 @@ bb.f:                                             ; preds = %.lr.ph124, %bb.e
 .lr.ph134:                                        ; preds = %.lr.ph134.preheader, %_ZNSt6vectorIN3gmx14DomainPairCommESaIS1_EE12emplace_backIJRKiS6_RiRNS0_11BasicVectorIiEER7PbcTypeRKbRA3_iP10tmpi_comm_EEERS1_DpOT_.exit
   %.077133 = phi i32 [ %i.hb, %_ZNSt6vectorIN3gmx14DomainPairCommESaIS1_EE12emplace_backIJRKiS6_RiRNS0_11BasicVectorIiEER7PbcTypeRKbRA3_iP10tmpi_comm_EEERS1_DpOT_.exit ], [ 0, %.lr.ph134.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
-  store i32 0, ptr %4, align 8, !tbaa !120
+  store i32 0, ptr %4, align 16, !tbaa !120
   store i32 0, ptr %i.ag, align 4, !tbaa !120
   store i32 0, ptr %i.ah, align 8, !tbaa !120
   %i.cy = load i32, ptr %i.g, align 8, !tbaa !119 ; 3 uses
@@ -380,55 +377,42 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph130.pr
   br i1 %i.dn, label %._crit_edge131.loopexit, label %.lr.ph130
 
 ._crit_edge131.loopexit:                          ; preds = %bb.n, %.lr.ph130.prol.loopexit
-  %10 = load <2 x i32>, ptr %4, align 8, !tbaa !120
-  %.pre153 = load i32, ptr %i.ah, align 8, !tbaa !120
+  %7 = load <3 x i32>, ptr %4, align 16, !tbaa !120
+  %8 = shufflevector <3 x i32> %7, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   br label %._crit_edge131
 
 ._crit_edge131:                                   ; preds = %._crit_edge131.loopexit, %.lr.ph134
-  %11 = phi i32 [ %.pre153, %._crit_edge131.loopexit ], [ 0, %.lr.ph134 ] ; 2 uses
-  %12 = phi <2 x i32> [ %10, %._crit_edge131.loopexit ], [ zeroinitializer, %.lr.ph134 ] ; 2 uses
+  %9 = phi <4 x i32> [ %8, %._crit_edge131.loopexit ], [ zeroinitializer, %.lr.ph134 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
-  %13 = load <1 x i32>, ptr %i.ai, align 4
-  %14 = load <1 x i32>, ptr %7, align 8
-  %15 = load i32, ptr %i.aj, align 4, !tbaa !120  ; 2 uses
-  %16 = load <1 x i32>, ptr %i.ak, align 4
-  %17 = load <1 x i32>, ptr %8, align 8
-  %18 = load <1 x i32>, ptr %9, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
-  %19 = sub i32 %15, %11
-  %20 = add nsw i32 %11, %15
-  %21 = insertelement <2 x i32> poison, i32 %19, i64 0
-  %22 = insertelement <2 x i32> %21, i32 %20, i64 1
-  %23 = shufflevector <1 x i32> %18, <1 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %24 = add nsw <2 x i32> %22, %23
-  %25 = srem <2 x i32> %24, %23                   ; 2 uses
-  %i.do = extractelement <2 x i32> %25, i64 0
+  %10 = load <3 x i32>, ptr %i.ai, align 4, !tbaa !120 ; 2 uses
+  %11 = shufflevector <3 x i32> %10, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
+  %12 = load <3 x i32>, ptr %i.ak, align 4, !tbaa !120 ; 2 uses
+  %13 = shufflevector <3 x i32> %12, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0> ; 2 uses
+  %14 = sub <4 x i32> %11, %9
+  %15 = add nsw <4 x i32> %11, %9
+  %16 = shufflevector <4 x i32> %14, <4 x i32> %15, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
+  %17 = add nsw <4 x i32> %16, %13
+  %18 = srem <4 x i32> %17, %13                   ; 3 uses
+  %.sroa.0.sroa.0.0.insert.insert.i.v.bc = bitcast <4 x i32> %18 to <2 x i64>
+  %.sroa.0.sroa.0.0.insert.insert.i.v.extract = extractelement <2 x i64> %.sroa.0.sroa.0.0.insert.insert.i.v.bc, i64 0
+  store i64 %.sroa.0.sroa.0.0.insert.insert.i.v.extract, ptr %5, align 8
+  %i.do = extractelement <4 x i32> %18, i64 2
   store i32 %i.do, ptr %.sroa.217.0..sroa_idx, align 8
-  %26 = shufflevector <1 x i32> %13, <1 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %27 = shufflevector <2 x i32> %12, <2 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %28 = sub <2 x i32> %26, %27
-  %29 = add nsw <2 x i32> %26, %27
-  %30 = shufflevector <2 x i32> %29, <2 x i32> %28, <2 x i32> <i32 0, i32 3>
-  %31 = shufflevector <1 x i32> %14, <1 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %32 = shufflevector <2 x i32> %12, <2 x i32> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %33 = sub <2 x i32> %31, %32
-  %34 = add nsw <2 x i32> %31, %32
-  %35 = shufflevector <2 x i32> %34, <2 x i32> %33, <2 x i32> <i32 0, i32 3>
-  %36 = shufflevector <1 x i32> %16, <1 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.dp = add nsw <2 x i32> %30, %36
-  %37 = srem <2 x i32> %i.dp, %36
-  %38 = shufflevector <1 x i32> %17, <1 x i32> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.dq = add nsw <2 x i32> %35, %38
-  %i.dr = srem <2 x i32> %i.dq, %38
-  %39 = zext <2 x i32> %i.dr to <2 x i64>
-  %40 = shl nuw <2 x i64> %39, splat (i64 32)
-  %41 = zext <2 x i32> %37 to <2 x i64>
-  %42 = or disjoint <2 x i64> %40, %41            ; 2 uses
-  %43 = extractelement <2 x i64> %42, i64 1
-  store i64 %43, ptr %5, align 8
-  %44 = extractelement <2 x i64> %42, i64 0
-  store i64 %44, ptr %6, align 8
-  %i.ds = extractelement <2 x i32> %25, i64 1
+  %19 = shufflevector <4 x i32> %9, <4 x i32> poison, <2 x i32> <i32 1, i32 2>
+  %20 = shufflevector <3 x i32> %10, <3 x i32> poison, <2 x i32> <i32 1, i32 2>
+  %i.dp = add nsw <2 x i32> %19, %20
+  %21 = shufflevector <3 x i32> %12, <3 x i32> poison, <2 x i32> <i32 1, i32 2> ; 2 uses
+  %i.dq = add nsw <2 x i32> %i.dp, %21
+  %i.dr = srem <2 x i32> %i.dq, %21               ; 2 uses
+  %22 = extractelement <2 x i32> %i.dr, i64 0
+  %.sroa.0.sroa.4.0.insert.ext.i97 = zext i32 %22 to i64
+  %.sroa.0.sroa.4.0.insert.shift.i98 = shl nuw i64 %.sroa.0.sroa.4.0.insert.ext.i97, 32
+  %23 = extractelement <4 x i32> %18, i64 3
+  %.sroa.0.sroa.0.0.insert.ext.i99 = zext i32 %23 to i64
+  %.sroa.0.sroa.0.0.insert.insert.i100 = or disjoint i64 %.sroa.0.sroa.4.0.insert.shift.i98, %.sroa.0.sroa.0.0.insert.ext.i99
+  store i64 %.sroa.0.sroa.0.0.insert.insert.i100, ptr %6, align 8
+  %i.ds = extractelement <2 x i32> %i.dr, i64 1
   store i32 %i.ds, ptr %.sroa.29.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.dt = call noundef i32 @_Z17ddRankFromDDCoordRK12gmx_domdec_tRKN3gmx11BasicVectorIiEE(ptr noundef nonnull align 8 dereferenceable(1097) %1, ptr noundef nonnull align 4 dereferenceable(12) %5)
@@ -439,7 +423,7 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph130.pr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #13
   %i.dv = load i32, ptr %i.ah, align 8, !tbaa !120 ; 3 uses
   %i.dw = load <2 x i32>, ptr %i.ai, align 4, !tbaa !120
-  %i.dx = load <2 x i32>, ptr %4, align 8, !tbaa !120 ; 3 uses
+  %i.dx = load <2 x i32>, ptr %4, align 16, !tbaa !120 ; 3 uses
   %i.dy = sub nsw <2 x i32> %i.dw, %i.dx
   %i.dz = load <2 x i32>, ptr %5, align 8
   %i.ea = icmp eq <2 x i32> %i.dz, %i.dy          ; 3 uses

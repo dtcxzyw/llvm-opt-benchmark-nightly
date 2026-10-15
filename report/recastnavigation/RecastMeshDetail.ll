@@ -205,8 +205,6 @@ bb.cb:                                            ; preds = %_ZL13polyMinExtentP
   %i.aeh = add nsw i32 %i.gs, -1
   %i.aei = insertelement <2 x float> poison, float %i.adl, i64 0
   %i.aej = shufflevector <2 x float> %i.aei, <2 x float> poison, <2 x i32> zeroinitializer
-  %8 = insertelement <2 x i32> poison, i32 %i.gk, i64 0
-  %9 = insertelement <2 x i32> %8, i32 %i.gh, i64 1
   br label %bb.cc
 
 bb.cc:                                            ; preds = %.loopexit.i346, %bb.cb
@@ -256,14 +254,14 @@ bb.cg:                                            ; preds = %bb.cf, %bb.ce, %bb.
   %i.afh = load float, ptr %i.afg, align 4, !tbaa !62
   %i.afi = getelementptr inbounds nuw i8, ptr %.0435.i, i64 8
   %i.afj = load float, ptr %i.afi, align 4, !tbaa !62
-  %i.afk = insertelement <2 x float> poison, float %i.afh, i64 0
-  %i.afl = insertelement <2 x float> %i.afk, float %i.afa, i64 1
-  %i.afm = insertelement <2 x float> poison, float %i.afj, i64 0
-  %i.afn = insertelement <2 x float> %i.afm, float %i.aez, i64 1 ; 2 uses
+  %i.afk = insertelement <2 x float> poison, float %i.afa, i64 0
+  %i.afl = insertelement <2 x float> %i.afk, float %i.afh, i64 1
+  %i.afm = insertelement <2 x float> poison, float %i.aez, i64 0
+  %i.afn = insertelement <2 x float> %i.afm, float %i.afj, i64 1 ; 2 uses
   %i.afo = fsub <2 x float> %i.afl, %i.afn        ; 4 uses
   %foldExtExtBinop = fmul <2 x float> %i.afo, %i.afo
-  %i.afp = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %i.afq = extractelement <2 x float> %i.afo, i64 1 ; 2 uses
+  %i.afp = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %i.afq = extractelement <2 x float> %i.afo, i64 0 ; 2 uses
   %i.afr = call float @llvm.fmuladd.f32(float %i.afq, float %i.afq, float %i.afp)
   %i.afs = call float @sqrtf(float noundef %i.afr) #8
   %i.aft = fdiv float %i.afs, %3
@@ -305,23 +303,25 @@ bb.ch:                                            ; preds = %_ZL9getHeightffffff
   %i.agj = insertelement <2 x float> poison, float %i.agf, i64 0
   %i.agk = shufflevector <2 x float> %i.agj, <2 x float> poison, <2 x i32> zeroinitializer
   %i.agl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.afo, <2 x float> %i.agk, <2 x float> %i.afn) ; 3 uses
-  %i.agm = extractelement <2 x float> %i.agl, i64 1
+  %i.agm = extractelement <2 x float> %i.agl, i64 0
   store float %i.agm, ptr %i.agg, align 4, !tbaa !62
-  %i.agn = extractelement <2 x float> %i.agl, i64 0
+  %i.agn = extractelement <2 x float> %i.agl, i64 1
   store float %i.agn, ptr %i.agi, align 4, !tbaa !62
-  %i.ago = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.agl, <2 x float> %i.aej, <2 x float> splat (float f0x3C23D70A))
-  %10 = call <2 x float> @llvm.floor.v2f32(<2 x float> %i.ago)
-  %11 = fptosi <2 x float> %10 to <2 x i32>
-  %12 = sub nsw <2 x i32> %11, %9                 ; 3 uses
-  %13 = extractelement <2 x i32> %12, i64 1
-  %14 = call i32 @llvm.smin.i32(i32 %13, i32 %i.aeg)
-  %15 = icmp slt <2 x i32> %12, zeroinitializer   ; 2 uses
-  %16 = extractelement <2 x i1> %15, i64 1
-  %i.agp = select i1 %16, i32 0, i32 %14          ; 2 uses
-  %17 = extractelement <2 x i32> %12, i64 0
-  %18 = call i32 @llvm.smin.i32(i32 %17, i32 %i.aeh)
-  %19 = extractelement <2 x i1> %15, i64 0
-  %i.agq = select i1 %19, i32 0, i32 %18          ; 2 uses
+  %i.ago = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.agl, <2 x float> %i.aej, <2 x float> splat (float f0x3C23D70A)) ; 2 uses
+  %8 = extractelement <2 x float> %i.ago, i64 0
+  %9 = call float @llvm.floor.f32(float %8)
+  %10 = fptosi float %9 to i32
+  %11 = extractelement <2 x float> %i.ago, i64 1
+  %12 = call float @llvm.floor.f32(float %11)
+  %13 = fptosi float %12 to i32
+  %14 = sub nsw i32 %10, %i.gh                    ; 2 uses
+  %15 = icmp slt i32 %14, 0
+  %16 = call i32 @llvm.smin.i32(i32 %14, i32 %i.aeg)
+  %i.agp = select i1 %15, i32 0, i32 %16          ; 2 uses
+  %17 = sub nsw i32 %13, %i.gk                    ; 2 uses
+  %18 = icmp slt i32 %17, 0
+  %19 = call i32 @llvm.smin.i32(i32 %17, i32 %i.aeh)
+  %i.agq = select i1 %18, i32 0, i32 %19          ; 2 uses
   %i.agr = mul nsw i32 %i.agq, %i.go
   %i.ags = add nsw i32 %i.agr, %i.agp
   %i.agt = sext i32 %i.ags to i64
@@ -723,9 +723,6 @@ declare i64 @llvm.smax.i64(i64, i64) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.floor.v2f32(<2 x float>) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7

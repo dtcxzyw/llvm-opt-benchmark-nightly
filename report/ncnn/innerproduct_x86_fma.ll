@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %._crit_edge
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge
-  %i.dw = phi <4 x float> [ %i.dv, %bb.d ], [ %i.dp, %._crit_edge ] ; 26 uses
+  %i.dw = phi <4 x float> [ %i.dv, %bb.d ], [ %i.dp, %._crit_edge ] ; 25 uses
   switch i32 %i.ar, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit82 [
     i32 1, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread157
     i32 2, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread159
@@ -291,25 +291,18 @@ _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread155: ; preds = %bb.e
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread161: ; preds = %bb.e
-  %7 = shufflevector <4 x float> %i.dw, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %8 = call nnan ninf nsz <2 x float> @llvm.minnum.v2f32(<2 x float> %7, <2 x float> splat (float f0x42B0C0A5))
-  %9 = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %8, <2 x float> splat (float f0xC2B0C0A5))
-  %10 = fneg fast <2 x float> %9
-  %11 = call fast <2 x float> @llvm.exp.v2f32(<2 x float> %10)
-  %12 = fadd fast <2 x float> %11, splat (float 1.000000e+00)
-  %13 = fdiv fast <2 x float> splat (float 1.000000e+00), %12
-  store <2 x float> %13, ptr %.077205, align 4, !tbaa !51
-  %14 = getelementptr inbounds nuw i8, ptr %.077205, i64 8
-  %15 = shufflevector <4 x float> %i.dw, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %16 = call nnan ninf nsz <2 x float> @llvm.minnum.v2f32(<2 x float> %15, <2 x float> splat (float f0x42B0C0A5))
-  %17 = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %16, <2 x float> splat (float f0xC2B0C0A5))
-  %18 = fneg fast <2 x float> %17
-  %19 = call fast <2 x float> @llvm.exp.v2f32(<2 x float> %18)
-  %20 = fadd fast <2 x float> %19, splat (float 1.000000e+00)
-  %21 = fdiv fast <2 x float> splat (float 1.000000e+00), %20 ; 2 uses
-  %i.fv = extractelement <2 x float> %21, i64 1
-  store float %i.fv, ptr %14, align 4, !tbaa !51
-  %i.fw = extractelement <2 x float> %21, i64 0
+  %7 = getelementptr inbounds nuw i8, ptr %.077205, i64 8
+  %8 = call nnan ninf nsz <4 x float> @llvm.minnum.v4f32(<4 x float> %i.dw, <4 x float> splat (float f0x42B0C0A5))
+  %9 = call nnan ninf nsz <4 x float> @llvm.maxnum.v4f32(<4 x float> %8, <4 x float> splat (float f0xC2B0C0A5))
+  %10 = fneg fast <4 x float> %9
+  %11 = call fast <4 x float> @llvm.exp.v4f32(<4 x float> %10)
+  %12 = fadd fast <4 x float> %11, splat (float 1.000000e+00)
+  %13 = fdiv fast <4 x float> splat (float 1.000000e+00), %12 ; 3 uses
+  %14 = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  store <2 x float> %14, ptr %.077205, align 4, !tbaa !51
+  %i.fv = extractelement <4 x float> %13, i64 3
+  store float %i.fv, ptr %7, align 4, !tbaa !51
+  %i.fw = extractelement <4 x float> %13, i64 2
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread163: ; preds = %bb.e
@@ -712,10 +705,13 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #11
 declare <2 x float> @llvm.maxnum.v2f32(<2 x float>, <2 x float>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.minnum.v2f32(<2 x float>, <2 x float>) #11
+declare <4 x float> @llvm.minnum.v4f32(<4 x float>, <4 x float>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.exp.v2f32(<2 x float>) #11
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.exp.v4f32(<4 x float>) #11
 
 attributes #0 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }

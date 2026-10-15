@@ -205,26 +205,26 @@ _ZN6Assimp3IFC8TempMesh9TransformERK12aiMatrix4x4tIdE.exit8: ; preds = %scalar.p
   %i.hh = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.hi = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.hj = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %2 = load <2 x double>, ptr %1, align 8         ; 2 uses
-  %i.hk = load <2 x double>, ptr %i.gy, align 8   ; 2 uses
-  %3 = load double, ptr %i.hh, align 8, !noalias !37 ; 2 uses
-  %i.hl = load double, ptr %i.hi, align 8, !noalias !37 ; 2 uses
-  %i.hm = load double, ptr %i.hj, align 8, !noalias !37 ; 2 uses
-  %i.hn = shufflevector <2 x double> %2, <2 x double> %i.hk, <2 x i32> <i32 1, i32 3>
-  %i.ho = insertelement <2 x double> poison, double %i.hl, i64 0
+  %2 = load double, ptr %i.hj, align 8, !noalias !37 ; 2 uses
+  %i.hk = load <2 x double>, ptr %1, align 8      ; 2 uses
+  %3 = load <2 x double>, ptr %i.gy, align 8      ; 2 uses
+  %i.hl = load double, ptr %i.hh, align 8, !noalias !37 ; 2 uses
+  %i.hm = load double, ptr %i.hi, align 8, !noalias !37 ; 2 uses
+  %i.hn = shufflevector <2 x double> %i.hk, <2 x double> %3, <2 x i32> <i32 1, i32 3>
+  %i.ho = insertelement <2 x double> poison, double %i.hm, i64 0
   %i.hp = shufflevector <2 x double> %i.ho, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hq = fmul <2 x double> %i.hn, %i.hp
-  %i.hr = shufflevector <2 x double> %2, <2 x double> %i.hk, <2 x i32> <i32 0, i32 2>
-  %i.hs = insertelement <2 x double> poison, double %3, i64 0
+  %i.hr = shufflevector <2 x double> %i.hk, <2 x double> %3, <2 x i32> <i32 0, i32 2>
+  %i.hs = insertelement <2 x double> poison, double %i.hl, i64 0
   %i.ht = shufflevector <2 x double> %i.hs, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hu = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hr, <2 x double> %i.ht, <2 x double> %i.hq)
   %i.hv = insertelement <2 x double> %i.gx, double %i.ha, i64 1
-  %i.hw = insertelement <2 x double> poison, double %i.hm, i64 0
+  %i.hw = insertelement <2 x double> poison, double %2, i64 0
   %i.hx = shufflevector <2 x double> %i.hw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.hy = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.hv, <2 x double> %i.hx, <2 x double> %i.hu)
-  %i.hz = fmul double %i.he, %i.hl
-  %i.ia = tail call double @llvm.fmuladd.f64(double %i.hc, double %3, double %i.hz)
-  %i.ib = tail call double @llvm.fmuladd.f64(double %i.hg, double %i.hm, double %i.ia)
+  %i.hz = fmul double %i.he, %i.hm
+  %i.ia = tail call double @llvm.fmuladd.f64(double %i.hc, double %i.hl, double %i.hz)
+  %i.ib = tail call double @llvm.fmuladd.f64(double %i.hg, double %2, double %i.ia)
   store <2 x double> %i.hy, ptr %i.hh, align 8
   store double %i.ib, ptr %i.hj, align 8
   ret void
@@ -627,7 +627,7 @@ _ZN10aiVector3tIdE9NormalizeEv.exit:              ; preds = %bb.f, %bb.e
   %i.cn = fmul <2 x double> %i.cl, %i.cb
   %i.co = insertelement <2 x i1> poison, i1 %i.ci, i64 0
   %i.cp = shufflevector <2 x i1> %i.co, <2 x i1> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.cq = select <2 x i1> %i.cp, <2 x double> %i.cb, <2 x double> %i.cn ; 2 uses
+  %i.cq = select <2 x i1> %i.cp, <2 x double> %i.cb, <2 x double> %i.cn ; 3 uses
   %i.cr = select <2 x i1> %i.cp, <2 x double> %i.ca, <2 x double> %i.cm ; 3 uses
   %i.cs = fneg <2 x double> %i.cq
   %i.ct = fmul <2 x double> %i.bv, %i.cs
@@ -635,14 +635,13 @@ _ZN10aiVector3tIdE9NormalizeEv.exit:              ; preds = %bb.f, %bb.e
   %i.cv = extractelement <2 x double> %i.cr, i64 1 ; 2 uses
   %i.cw = fneg double %i.cv
   %i.cx = fmul double %i.bn, %i.cw
-  %i.cy = extractelement <2 x double> %i.cq, i64 0 ; 2 uses
+  %i.cy = extractelement <2 x double> %i.cq, i64 0
   %i.cz = tail call double @llvm.fmuladd.f64(double %i.bb, double %i.cy, double %i.cx)
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 96
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.da, i8 0, i64 24, i1 false)
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 80
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 120
   store double 1.000000e+00, ptr %.sroa.9.0..sroa_idx.i, align 8
@@ -656,14 +655,13 @@ _ZN10aiVector3tIdE9NormalizeEv.exit:              ; preds = %bb.f, %bb.e
   store double %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.16., ptr %.sroa.8.0..sroa_idx.i, align 8
   store double %i.cv, ptr %0, align 8
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store double %i.cy, ptr %i.dd, align 8
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.df = extractelement <2 x double> %i.cr, i64 0
   store double %i.df, ptr %i.de, align 8
   %i.dg = extractelement <2 x double> %i.cu, i64 0
   store double %i.dg, ptr %.sroa.4.0..sroa_idx.i, align 8
-  %4 = extractelement <2 x double> %i.cu, i64 1
-  store double %4, ptr %.sroa.5.0..sroa_idx.i, align 8
+  %4 = shufflevector <2 x double> %i.cq, <2 x double> %i.cu, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %4, ptr %i.dd, align 8
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 72
   store double %i.cz, ptr %i.dh, align 8
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 16
