@@ -205,10 +205,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %min.iters.check, label %.lr.ph103.preheader134, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph103.preheader
-  %5 = add i64 %i.bk, %i.bj
-  %6 = shl nuw nsw i64 %i.bg, 3
-  %i.bn = add i64 %6, %i.bf
-  %i.bo = sub i64 %5, %i.bn
+  %5 = shl nuw nsw i64 %i.bg, 3
+  %6 = add i64 %i.bk, %i.bj
+  %i.bn = add i64 %5, %i.bf
+  %i.bo = sub i64 %6, %i.bn
   %i.bp = add i64 %i.bo, -9
   %diff.check = icmp ult i64 %i.bp, 31
   br i1 %diff.check, label %.lr.ph103.preheader134, label %vector.ph

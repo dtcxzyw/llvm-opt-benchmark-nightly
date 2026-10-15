@@ -205,11 +205,11 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.bm, label %iter.check, label %_ZN6snappy12_GLOBAL__N_119IncrementalCopySlowEPKcPcS3_.exit
 
 iter.check:                                       ; preds = %bb.n
-  %.155117 = ptrtoaddr ptr %.155 to i64
-  %.3116 = ptrtoaddr ptr %.3 to i64               ; 2 uses
-  %i.bn = sub i64 %i.a, %.3116                    ; 7 uses
+  %.155117 = ptrtoaddr ptr %.3 to i64             ; 2 uses
+  %.3116 = ptrtoaddr ptr %.155 to i64
+  %i.bn = sub i64 %i.a, %.155117                  ; 7 uses
   %min.iters.check119 = icmp ult i64 %i.bn, 4
-  %i.bo = sub i64 %.155117, %.3116
+  %i.bo = sub i64 %.3116, %.155117
   %diff.check = icmp ugt i64 %i.bo, -16
   %or.cond177 = select i1 %min.iters.check119, i1 true, i1 %diff.check
   br i1 %or.cond177, label %.lr.ph.i79.preheader, label %vector.main.loop.iter.check
