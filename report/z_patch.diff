@@ -1,0 +1,459 @@
+diff --git a/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp b/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
+index 841ce0b5c1c74..0f20eb14388dc 100644
+--- a/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
++++ b/llvm/lib/Transforms/Vectorize/SLPVectorizer.cpp
+@@ -993,7 +993,7 @@ class slpvectorizer::BoUpSLP {
+             !LI2->isSimple())
+           return CheckSameEntryOrFail();
+ 
+-        std::optional<int64_t> Dist = getPointersDiff(
++        std::optional<int64_t> Dist = R.getPointersDiff(
+             LI1->getType(), LI1->getPointerOperand(), LI2->getType(),
+             LI2->getPointerOperand(), DL, SE, /*StrictCheck=*/true);
+         if (!Dist || *Dist == 0) {
+@@ -2070,6 +2070,19 @@ class slpvectorizer::BoUpSLP {
+   /// Checks if the instruction is marked for deletion.
+   bool isDeleted(Instruction *I) const { return DeletedInstructions.count(I); }
+ 
++  /// llvm::getPointersDiff through the shared cache: building and pricing
++  /// trees asks for the distance between the same pointers over and over.
++  std::optional<int64_t>
++  getPointersDiff(Type *ElemTyA, Value *PtrA, Type *ElemTyB, Value *PtrB,
++                  const DataLayout &DL, ScalarEvolution &SE,
++                  bool StrictCheck = false, bool CheckType = true) const {
++    return Cache.getPointersDiff(ElemTyA, PtrA, ElemTyB, PtrB, DL, SE,
++                                 StrictCheck, CheckType);
++  }
++
++  /// The analyses memoized across all the trees built for this function.
++  SLPAnalysisCache &getAnalysisCache() const { return Cache; }
++
+   /// Checks if the value is used only by the assume-like intrinsics.
+   bool isEphemeralValue(const Value *V) const { return EphValues.contains(V); }
+ 
+@@ -3607,6 +3620,9 @@ class slpvectorizer::BoUpSLP {
+   /// previously deleted instruction.
+   DenseSet<Instruction *> DeletedInstructions;
+ 
++  /// Cleared after each vectorization, see SLPAnalysisCache.
++  mutable SLPAnalysisCache Cache;
++
+   /// Set of the instruction, being analyzed already for reductions.
+   SmallPtrSet<Instruction *, 16> AnalyzedReductionsRoots;
+ 
+@@ -6243,7 +6259,7 @@ BoUpSLP::LoadsState BoUpSLP::canVectorizeLoads(
+               return areAllUsersVectorized(cast<Instruction>(V),
+                                            UserIgnoreList);
+             },
+-            Opts.slp_revec))
++            Opts.slp_revec, Cache))
+       return LoadsState::CompressVectorize;
+     // Widened strided loads must be legal for every group, not just the first
+     // pointer, which may have a stronger alignment than the remaining loads.
+@@ -6514,7 +6530,7 @@ BoUpSLP::findPartiallyOrderedLoads(const BoUpSLP::TreeEntry &TE) {
+   BoUpSLP::OrdersType Order;
+   if (!LoadEntriesToVectorize.contains(TE.Idx) &&
+       clusterSortPtrAccesses(Ptrs, BBs, ScalarTy, *DL, *SE,
+-                             Opts.slp_recursion_max_depth, Order))
++                             Opts.slp_recursion_max_depth, Order, Cache))
+     return std::move(Order);
+   return std::nullopt;
+ }
+@@ -8331,7 +8347,7 @@ static void gatherPossiblyVectorizableLoads(
+                                      R.Opts.slp_recursion_max_depth) &&
+              "Expected loads with the same type, same parent and same "
+              "underlying pointer.");
+-      std::optional<int64_t> Dist = getPointersDiff(
++      std::optional<int64_t> Dist = R.getPointersDiff(
+           LI->getType(), LI->getPointerOperand(), Data.front().first->getType(),
+           Data.front().first->getPointerOperand(), DL, SE,
+           /*StrictCheck=*/true);
+@@ -8370,10 +8386,10 @@ static void gatherPossiblyVectorizableLoads(
+               LI->getType() != Data.front().first->getType())
+             continue;
+           std::optional<int64_t> Dist =
+-              getPointersDiff(LI->getType(), LI->getPointerOperand(),
+-                              Data.front().first->getType(),
+-                              Data.front().first->getPointerOperand(), DL, SE,
+-                              /*StrictCheck=*/true);
++              R.getPointersDiff(LI->getType(), LI->getPointerOperand(),
++                                Data.front().first->getType(),
++                                Data.front().first->getPointerOperand(), DL, SE,
++                                /*StrictCheck=*/true);
+           if (!Dist)
+             continue;
+           SmallSet<int64_t, 4> DataDists;
+@@ -9693,7 +9709,7 @@ BoUpSLP::TreeEntry::EntryState BoUpSLP::getScalarsVectorizationState(
+       if (Opts.slp_enable_masked_stores &&
+           isMaskedStoreCompress(VL, PointerOps, CurrentOrder, *TTI, *DL, *SE,
+                                 CommonAlignment, ReuseShuffleIndices,
+-                                StoreVecTy)) {
++                                StoreVecTy, Cache)) {
+         SPtrInfo.Ty = StoreVecTy;
+         return TreeEntry::ExpandVectorize;
+       }
+@@ -17633,7 +17649,7 @@ BoUpSLP::getEntryCost(const TreeEntry *E, ArrayRef<Value *> VectorizedVals,
+         [[maybe_unused]] bool IsVectorized = isMaskedLoadCompress(
+             Scalars, PointerOps, E->ReorderIndices, *TTI, *DL, *SE, *AC, *DT,
+             *TLI, CostKind, [](Value *) { return true; }, Opts.slp_revec,
+-            IsMasked, InterleaveFactor, CompressMask, LoadVecTy);
++            IsMasked, InterleaveFactor, CompressMask, LoadVecTy, Cache);
+         CompressEntryToData.try_emplace(E, CompressMask, LoadVecTy,
+                                         InterleaveFactor, IsMasked);
+         Align CommonAlignment = LI0->getAlign();
+@@ -18064,7 +18080,7 @@ bool BoUpSLP::isFullyVectorizableTinyTree(bool ForReduction) const {
+                TE->getOpcode() == Instruction::ExtractElement &&
+                !TE->hasCopyableElements()) ||
+               all_of(TE->Scalars, IsaPred<ExtractElementInst, UndefValue>)) &&
+-             isFixedVectorShuffle(TE->Scalars, Mask, AC)) ||
++             isFixedVectorShuffle(TE->Scalars, Mask, AC, Cache)) ||
+             (TE->hasState() && TE->getOpcode() == Instruction::Load &&
+              !TE->isAltShuffle()) ||
+             any_of(TE->Scalars, IsaPred<LoadInst>));
+@@ -21112,7 +21128,7 @@ BoUpSLP::tryToGatherSingleRegisterExtractElements(
+   // Check that gather of extractelements can be represented as just a
+   // shuffle of a single/two vectors the scalars are extracted from.
+   std::optional<TTI::ShuffleKind> Res =
+-      isFixedVectorShuffle(GatheredExtracts, Mask, AC);
++      isFixedVectorShuffle(GatheredExtracts, Mask, AC, Cache);
+   if (!Res || all_of(Mask, equal_to(PoisonMaskElem))) {
+     // TODO: try to check other subsets if possible.
+     // Restore the original VL and mask if attempt was not successful.
+@@ -27012,6 +27028,8 @@ BoUpSLP::vectorizeTree(const ExtraValueToDebugLocsMap &ExternallyUsedValues,
+   // NOTE: removeInstructionAndOperands only marks the instruction for deletion
+   // - instructions are not deleted until later.
+   removeInstructionsAndOperands(ArrayRef(RemovedInsts), VectorValuesAndScales);
++  // The cached analyses refer to the code just rewritten.
++  Cache.clear();
+ 
+   // The new vector code may capture pointers that were previously not captured
+   // (e.g. the pointer operands of a masked gather), so the capture results
+@@ -32911,7 +32929,8 @@ class HorizontalReduction {
+           TrackedToOrig.push_back(RV);
+         }
+         SmallVector<int> Mask;
+-        if (isFixedVectorShuffle(CommonCandidates, Mask, AC)) {
++        if (isFixedVectorShuffle(CommonCandidates, Mask, AC,
++                                 V.getAnalysisCache())) {
+           ++I;
+           Candidates.swap(CommonCandidates);
+           ShuffledExtracts = true;
+@@ -35614,7 +35633,7 @@ bool SLPVectorizerPass::vectorizeInsertElementInst(InsertElementInst *IEI,
+   SmallVector<int> Mask;
+   if (!findBuildAggregate(IEI, TTI, BuildVectorOpds, BuildVectorInsts, R) ||
+       (all_of(BuildVectorOpds, IsaPred<ExtractElementInst, UndefValue>) &&
+-       isFixedVectorShuffle(BuildVectorOpds, Mask, AC)))
++       isFixedVectorShuffle(BuildVectorOpds, Mask, AC, R.getAnalysisCache())))
+     return false;
+ 
+   if (MaxVFOnly && BuildVectorInsts.size() == 2) {
+diff --git a/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPMemoryUtils.cpp b/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPMemoryUtils.cpp
+index 7ca05580b632f..cd66c32e9031c 100644
+--- a/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPMemoryUtils.cpp
++++ b/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPMemoryUtils.cpp
+@@ -195,13 +195,48 @@ const SCEV *calculateRtStride(ArrayRef<Value *> PointerOps, Type *ElemTy,
+   return Stride;
+ }
+ 
++std::optional<int64_t>
++SLPAnalysisCache::getPointersDiff(Type *ElemTyA, Value *PtrA, Type *ElemTyB,
++                                  Value *PtrB, const DataLayout &DL,
++                                  ScalarEvolution &SE, bool StrictCheck,
++                                  bool CheckType) {
++  if (PtrA == PtrB)
++    return 0;
++  unsigned Flags = unsigned(StrictCheck) | (unsigned(CheckType) << 1);
++  PtrsDiffKeyT Key(ElemTyA, PtrA, ElemTyB, PtrB, Flags);
++  auto [It, Inserted] = PtrsDiffCache.try_emplace(Key);
++  if (!Inserted)
++    return It->second;
++  std::optional<int64_t> Diff = llvm::getPointersDiff(
++      ElemTyA, PtrA, ElemTyB, PtrB, DL, SE, StrictCheck, CheckType);
++  // Set before the reverse insertion below, which may rehash.
++  It->second = Diff;
++  // The distance is counted in elements of ElemTyA, so querying the pair the
++  // other way round gives the negation, provided both elements have the same
++  // size. A failed query is recorded for this order only.
++  if (Diff && *Diff != std::numeric_limits<int64_t>::min() &&
++      DL.getTypeStoreSize(ElemTyA) == DL.getTypeStoreSize(ElemTyB))
++    PtrsDiffCache.try_emplace(PtrsDiffKeyT(ElemTyB, PtrB, ElemTyA, PtrA, Flags),
++                              -*Diff);
++  return Diff;
++}
++
++bool SLPAnalysisCache::isGuaranteedNotToBePoison(const Value *V,
++                                                 AssumptionCache *AC) {
++  auto [It, Inserted] = NotPoisonCache.try_emplace(V, false);
++  if (Inserted)
++    It->second = llvm::isGuaranteedNotToBePoison(V, AC);
++  return It->second;
++}
++
+ /// Builds compress-like mask for shuffles for the given \p PointerOps, ordered
+ /// with \p Order.
+ /// \return true if the mask represents strided access, false - otherwise.
+ static bool buildCompressMask(ArrayRef<Value *> PointerOps,
+                               ArrayRef<unsigned> Order, Type *ScalarTy,
+                               const DataLayout &DL, ScalarEvolution &SE,
+-                              SmallVectorImpl<int> &CompressMask) {
++                              SmallVectorImpl<int> &CompressMask,
++                              SLPAnalysisCache &Cache) {
+   const unsigned Sz = PointerOps.size();
+   CompressMask.assign(Sz, PoisonMaskElem);
+   // The first element always set.
+@@ -212,7 +247,7 @@ static bool buildCompressMask(ArrayRef<Value *> PointerOps,
+   for (unsigned I : seq<unsigned>(1, Sz)) {
+     Value *Ptr = Order.empty() ? PointerOps[I] : PointerOps[Order[I]];
+     std::optional<int64_t> OptPos =
+-        getPointersDiff(ScalarTy, Ptr0, ScalarTy, Ptr, DL, SE);
++        Cache.getPointersDiff(ScalarTy, Ptr0, ScalarTy, Ptr, DL, SE);
+     if (!OptPos || OptPos > std::numeric_limits<unsigned>::max())
+       return false;
+     unsigned Pos = static_cast<unsigned>(*OptPos);
+@@ -239,7 +274,8 @@ bool isMaskedLoadCompress(
+     const TargetTransformInfo::TargetCostKind CostKind,
+     const function_ref<bool(Value *)> AreAllUsersVectorized, bool ReVec,
+     bool &IsMasked, unsigned &InterleaveFactor,
+-    SmallVectorImpl<int> &CompressMask, VectorType *&LoadVecTy) {
++    SmallVectorImpl<int> &CompressMask, VectorType *&LoadVecTy,
++    SLPAnalysisCache &Cache) {
+   InterleaveFactor = 0;
+   Type *ScalarTy = VL.front()->getType();
+   const size_t Sz = VL.size();
+@@ -269,7 +305,7 @@ bool isMaskedLoadCompress(
+     PtrN = PointerOps[Order.back()];
+   }
+   std::optional<int64_t> Diff =
+-      getPointersDiff(ScalarTy, Ptr0, ScalarTy, PtrN, DL, SE);
++      Cache.getPointersDiff(ScalarTy, Ptr0, ScalarTy, PtrN, DL, SE);
+   if (!Diff)
+     return false;
+   const size_t MaxRegSize =
+@@ -290,8 +326,8 @@ bool isMaskedLoadCompress(
+     return false;
+   // TODO: perform the analysis of each scalar load for better
+   // safe-load-unconditionally analysis.
+-  bool IsStrided =
+-      buildCompressMask(PointerOps, Order, ScalarTy, DL, SE, CompressMask);
++  bool IsStrided = buildCompressMask(PointerOps, Order, ScalarTy, DL, SE,
++                                     CompressMask, Cache);
+   assert(CompressMask.size() >= 2 && "At least two elements are required");
+   SmallVector<Value *> OrderedPointerOps(PointerOps);
+   if (!Order.empty())
+@@ -379,14 +415,15 @@ bool isMaskedLoadCompress(
+     const DataLayout &DL, ScalarEvolution &SE, AssumptionCache &AC,
+     const DominatorTree &DT, const TargetLibraryInfo &TLI,
+     const TargetTransformInfo::TargetCostKind CostKind,
+-    const function_ref<bool(Value *)> AreAllUsersVectorized, bool ReVec) {
++    const function_ref<bool(Value *)> AreAllUsersVectorized, bool ReVec,
++    SLPAnalysisCache &Cache) {
+   bool IsMasked;
+   unsigned InterleaveFactor;
+   SmallVector<int> CompressMask;
+   VectorType *LoadVecTy;
+   return isMaskedLoadCompress(VL, PointerOps, Order, TTI, DL, SE, AC, DT, TLI,
+                               CostKind, AreAllUsersVectorized, ReVec, IsMasked,
+-                              InterleaveFactor, CompressMask, LoadVecTy);
++                              InterleaveFactor, CompressMask, LoadVecTy, Cache);
+ }
+ 
+ bool canWidenLoadsOverUndefLanes(ArrayRef<Value *> VL, const DataLayout &DL,
+@@ -451,7 +488,8 @@ bool isMaskedStoreCompress(ArrayRef<Value *> VL, ArrayRef<Value *> PointerOps,
+                            const TargetTransformInfo &TTI, const DataLayout &DL,
+                            ScalarEvolution &SE, Align CommonAlignment,
+                            SmallVectorImpl<int> &ReuseShuffleIndices,
+-                           FixedVectorType *&StoreVecTy) {
++                           FixedVectorType *&StoreVecTy,
++                           SLPAnalysisCache &Cache) {
+   Type *ScalarTy = cast<StoreInst>(VL.front())->getValueOperand()->getType();
+   const size_t Sz = VL.size();
+   // Only simple scalar element types are supported.
+@@ -460,7 +498,7 @@ bool isMaskedStoreCompress(ArrayRef<Value *> VL, ArrayRef<Value *> PointerOps,
+   Value *Ptr0 = Order.empty() ? PointerOps.front() : PointerOps[Order.front()];
+   Value *PtrN = Order.empty() ? PointerOps.back() : PointerOps[Order.back()];
+   std::optional<int64_t> Diff =
+-      getPointersDiff(ScalarTy, Ptr0, ScalarTy, PtrN, DL, SE);
++      Cache.getPointersDiff(ScalarTy, Ptr0, ScalarTy, PtrN, DL, SE);
+   if (!Diff || *Diff <= 0)
+     return false;
+   // Avoid widened vectors with very large gaps between the stored elements.
+@@ -483,7 +521,7 @@ bool isMaskedStoreCompress(ArrayRef<Value *> VL, ArrayRef<Value *> PointerOps,
+   for (unsigned I : seq<unsigned>(Sz)) {
+     Value *Ptr = Order.empty() ? PointerOps[I] : PointerOps[Order[I]];
+     std::optional<int64_t> Off =
+-        getPointersDiff(ScalarTy, Ptr0, ScalarTy, Ptr, DL, SE);
++        Cache.getPointersDiff(ScalarTy, Ptr0, ScalarTy, Ptr, DL, SE);
+     if (!Off || *Off <= Prev || *Off > *Diff)
+       return false;
+     ReuseShuffleIndices[*Off] = static_cast<int>(I);
+@@ -495,7 +533,8 @@ bool isMaskedStoreCompress(ArrayRef<Value *> VL, ArrayRef<Value *> PointerOps,
+ bool clusterSortPtrAccesses(ArrayRef<Value *> VL, ArrayRef<BasicBlock *> BBs,
+                             Type *ElemTy, const DataLayout &DL,
+                             ScalarEvolution &SE, unsigned MaxDepth,
+-                            SmallVectorImpl<unsigned> &SortedIndices) {
++                            SmallVectorImpl<unsigned> &SortedIndices,
++                            SLPAnalysisCache &Cache) {
+   assert(
+       all_of(VL, [](const Value *V) { return V->getType()->isPointerTy(); }) &&
+       "Expected list of pointer operands.");
+@@ -517,10 +556,9 @@ bool clusterSortPtrAccesses(ArrayRef<Value *> VL, ArrayRef<BasicBlock *> BBs,
+     auto Key = std::make_pair(BBs[Cnt + 1], getUnderlyingObject(Ptr, MaxDepth));
+     bool Found = any_of(Bases.try_emplace(Key).first->second,
+                         [&, &Cnt = Cnt, &Ptr = Ptr](auto &Base) {
+-                          std::optional<int64_t> Diff =
+-                              getPointersDiff(ElemTy, std::get<0>(Base.front()),
+-                                              ElemTy, Ptr, DL, SE,
+-                                              /*StrictCheck=*/true);
++                          std::optional<int64_t> Diff = Cache.getPointersDiff(
++                              ElemTy, std::get<0>(Base.front()), ElemTy, Ptr,
++                              DL, SE, /*StrictCheck=*/true);
+                           if (!Diff)
+                             return false;
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPMemoryUtils.h b/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPMemoryUtils.h
+index ce2fda15ab826..4ccbc958df6f3 100644
+--- a/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPMemoryUtils.h
++++ b/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPMemoryUtils.h
+@@ -15,11 +15,14 @@
+ #define LLVM_LIB_TRANSFORMS_VECTORIZE_SLPVECTORIZER_SLPMEMORYUTILS_H
+ 
+ #include "llvm/ADT/ArrayRef.h"
++#include "llvm/ADT/DenseMap.h"
+ #include "llvm/ADT/STLFunctionalExtras.h"
+ #include "llvm/Analysis/TargetTransformInfo.h"
+ #include "llvm/Support/Alignment.h"
+ 
+ #include <cstdint>
++#include <optional>
++#include <tuple>
+ 
+ namespace llvm {
+ class AssumptionCache;
+@@ -39,6 +42,34 @@ class VectorType;
+ 
+ namespace llvm::slpvectorizer {
+ 
++/// Pure analyses SLP queries for the same values over and over while it
++/// builds and prices the trees of a function, memoized so each is computed
++/// once. Entries are keyed by `Value` addresses, so the owner clears the cache
++/// after each successful vectorization, once the IR has been rewritten.
++class SLPAnalysisCache {
++public:
++  /// Same contract as `llvm::getPointersDiff`, every answer of which is a SCEV
++  /// query. The first computation of (A, B) also records (B, A), so a later
++  /// query in either order is a lookup.
++  std::optional<int64_t>
++  getPointersDiff(Type *ElemTyA, Value *PtrA, Type *ElemTyB, Value *PtrB,
++                  const DataLayout &DL, ScalarEvolution &SE,
++                  bool StrictCheck = false, bool CheckType = true);
++
++  /// Same contract as `llvm::isGuaranteedNotToBePoison`.
++  bool isGuaranteedNotToBePoison(const Value *V, AssumptionCache *AC);
++
++  void clear() {
++    PtrsDiffCache.clear();
++    NotPoisonCache.clear();
++  }
++
++private:
++  using PtrsDiffKeyT = std::tuple<Type *, Value *, Type *, Value *, unsigned>;
++  SmallDenseMap<PtrsDiffKeyT, std::optional<int64_t>, 16> PtrsDiffCache;
++  SmallDenseMap<const Value *, bool, 16> NotPoisonCache;
++};
++
+ /// \p MaxDepth is the recursion limit for getUnderlyingObject.
+ bool arePointersCompatible(Value *Ptr1, Value *Ptr2,
+                            const TargetLibraryInfo &TLI, unsigned MaxDepth,
+@@ -83,7 +114,8 @@ bool isMaskedLoadCompress(
+     const TargetTransformInfo::TargetCostKind CostKind,
+     const function_ref<bool(Value *)> AreAllUsersVectorized, bool ReVec,
+     bool &IsMasked, unsigned &InterleaveFactor,
+-    SmallVectorImpl<int> &CompressMask, VectorType *&LoadVecTy);
++    SmallVectorImpl<int> &CompressMask, VectorType *&LoadVecTy,
++    SLPAnalysisCache &Cache);
+ 
+ /// Checks if the \p VL can be transformed to a (masked)load + compress or
+ /// (masked) interleaved load.
+@@ -93,7 +125,8 @@ bool isMaskedLoadCompress(
+     const DataLayout &DL, ScalarEvolution &SE, AssumptionCache &AC,
+     const DominatorTree &DT, const TargetLibraryInfo &TLI,
+     const TargetTransformInfo::TargetCostKind CostKind,
+-    const function_ref<bool(Value *)> AreAllUsersVectorized, bool ReVec);
++    const function_ref<bool(Value *)> AreAllUsersVectorized, bool ReVec,
++    SLPAnalysisCache &Cache);
+ 
+ /// Checks if the simple loads of \p VL, mixed with the undef and poison lanes,
+ /// can be replaced by a single load of the whole \p VL width. The loads must be
+@@ -118,7 +151,8 @@ bool isMaskedStoreCompress(ArrayRef<Value *> VL, ArrayRef<Value *> PointerOps,
+                            const TargetTransformInfo &TTI, const DataLayout &DL,
+                            ScalarEvolution &SE, Align CommonAlignment,
+                            SmallVectorImpl<int> &ReuseShuffleIndices,
+-                           FixedVectorType *&StoreVecTy);
++                           FixedVectorType *&StoreVecTy,
++                           SLPAnalysisCache &Cache);
+ 
+ /// Clusters \p VL pointers by (basic block, underlying object) pair and sorts
+ /// each cluster by offset. Returns false and leaves \p SortedIndices empty if
+@@ -126,7 +160,8 @@ bool isMaskedStoreCompress(ArrayRef<Value *> VL, ArrayRef<Value *> PointerOps,
+ bool clusterSortPtrAccesses(ArrayRef<Value *> VL, ArrayRef<BasicBlock *> BBs,
+                             Type *ElemTy, const DataLayout &DL,
+                             ScalarEvolution &SE, unsigned MaxDepth,
+-                            SmallVectorImpl<unsigned> &SortedIndices);
++                            SmallVectorImpl<unsigned> &SortedIndices,
++                            SLPAnalysisCache &Cache);
+ 
+ } // namespace llvm::slpvectorizer
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPUtils.cpp b/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPUtils.cpp
+index 49d570e0683de..427fb80fd7a81 100644
+--- a/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPUtils.cpp
++++ b/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPUtils.cpp
+@@ -7,6 +7,7 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "SLPUtils.h"
++#include "SLPMemoryUtils.h"
+ 
+ #include "llvm/ADT/APInt.h"
+ #include "llvm/ADT/STLExtras.h"
+@@ -599,7 +600,7 @@ SmallVector<int> calculateShufflevectorMask(ArrayRef<Value *> VL) {
+ /// ShuffleVectorInst/getShuffleCost?
+ std::optional<TargetTransformInfo::ShuffleKind>
+ isFixedVectorShuffle(ArrayRef<Value *> VL, SmallVectorImpl<int> &Mask,
+-                     AssumptionCache *AC) {
++                     AssumptionCache *AC, SLPAnalysisCache &Cache) {
+   const auto *It = find_if(VL, IsaPred<ExtractElementInst>);
+   if (It == VL.end())
+     return std::nullopt;
+@@ -611,7 +612,8 @@ isFixedVectorShuffle(ArrayRef<Value *> VL, SmallVectorImpl<int> &Mask,
+                                  Value *Vec = EE->getVectorOperand();
+                                  if (isa<UndefValue>(Vec))
+                                    return false;
+-                                 return isGuaranteedNotToBePoison(Vec, AC);
++                                 return Cache.isGuaranteedNotToBePoison(Vec,
++                                                                        AC);
+                                });
+   enum ShuffleMode { Unknown, Select, Permute };
+   ShuffleMode CommonShuffleMode = Unknown;
+diff --git a/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPUtils.h b/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPUtils.h
+index 8fcaca230aa5c..18a0aa85fbc44 100644
+--- a/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPUtils.h
++++ b/llvm/lib/Transforms/Vectorize/SLPVectorizer/SLPUtils.h
+@@ -46,6 +46,8 @@ class Value;
+ 
+ namespace llvm::slpvectorizer {
+ 
++class SLPAnalysisCache;
++
+ /// Limit of the number of uses for potentially transformed instructions/values,
+ /// used in checks to avoid compile-time explode.
+ inline constexpr int UsesLimit = 64;
+@@ -283,7 +285,7 @@ SmallVector<int> calculateShufflevectorMask(ArrayRef<Value *> VL);
+ /// equivalent shuffle mask.
+ std::optional<TargetTransformInfo::ShuffleKind>
+ isFixedVectorShuffle(ArrayRef<Value *> VL, SmallVectorImpl<int> &Mask,
+-                     AssumptionCache *AC);
++                     AssumptionCache *AC, SLPAnalysisCache &Cache);
+ 
+ /// Creates subvector insert. Generates shuffle using \p Generator or
+ /// using default shuffle.
