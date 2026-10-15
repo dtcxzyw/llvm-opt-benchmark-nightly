@@ -205,13 +205,12 @@ _ZN4LIEF5alignEmm.exit:                           ; preds = %bb.e, %bb.f
   br i1 %i.fb, label %_ZN4LIEF5alignEmm.exit21, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4LIEF5alignEmm.exit
-  %2 = zext i32 %i.em to i64
   %i.fc = urem i32 %i.eu, %i.em                   ; 2 uses
-  %.zext = zext i32 %i.fc to i64
   %.not.i18 = icmp eq i32 %i.fc, 0
-  %3 = sub nuw nsw i64 %2, %.zext
-  %4 = select i1 %.not.i18, i64 0, i64 %3
-  %.0.i19 = add nuw nsw i64 %4, %i.ev
+  %2 = sub nuw i32 %i.em, %i.fc
+  %narrow = select i1 %.not.i18, i32 0, i32 %2
+  %3 = zext i32 %narrow to i64
+  %.0.i19 = add nuw nsw i64 %3, %i.ev
   br label %_ZN4LIEF5alignEmm.exit21
 
 _ZN4LIEF5alignEmm.exit21:                         ; preds = %_ZN4LIEF5alignEmm.exit, %bb.g
@@ -614,7 +613,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.ag = urem i32 %i.ac, %i.ae                   ; 2 uses
   %.not.i = icmp eq i32 %i.ag, 0
-  %i.ah = sub i32 %i.ae, %i.ag
+  %i.ah = sub nuw i32 %i.ae, %i.ag
   %i.ai = select i1 %.not.i, i32 0, i32 %i.ah
   %.0.i = add i32 %i.ai, %i.ac
   br label %_ZN4LIEF5alignEmm.exit
@@ -972,7 +971,7 @@ _ZNSt6vectorISt10unique_ptrIN4LIEF2PE7SectionESt14default_deleteIS3_EESaIS6_EE5e
 bb.r:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN4LIEF2PE7SectionESt14default_deleteIS3_EESaIS6_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS6_S8_EE.exit
   %i.fx = urem i32 %i.ft, %i.fv                   ; 2 uses
   %.not.i.i27 = icmp eq i32 %i.fx, 0
-  %i.fy = sub i32 %i.fv, %i.fx
+  %i.fy = sub nuw i32 %i.fv, %i.fx
   %i.fz = select i1 %.not.i.i27, i32 0, i32 %i.fy
   %.0.i.i = add i32 %i.fz, %i.ft
   br label %_ZNK4LIEF2PE6Binary14sizeof_headersEv.exit
@@ -1160,7 +1159,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.ag = urem i32 %i.ac, %i.ae                   ; 2 uses
   %.not.i.i = icmp eq i32 %i.ag, 0
-  %i.ah = sub i32 %i.ae, %i.ag
+  %i.ah = sub nuw i32 %i.ae, %i.ag
   %i.ai = select i1 %.not.i.i, i32 0, i32 %i.ah
   %.0.i.i = add i32 %i.ai, %i.ac
   br label %_ZNK4LIEF2PE6Binary14sizeof_headersEv.exit
@@ -1308,13 +1307,12 @@ _ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615E
   br i1 %i.aw, label %_ZN4LIEF5alignEmm.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615EEE.exit
-  %3 = zext i32 %i.av to i64
   %i.ax = urem i32 %i.at, %i.av                   ; 2 uses
-  %.zext = zext i32 %i.ax to i64
   %.not.i15 = icmp eq i32 %i.ax, 0
-  %4 = sub nuw nsw i64 %3, %.zext
-  %5 = select i1 %.not.i15, i64 0, i64 %4
-  %.0.i = add i64 %5, %i.as
+  %3 = sub nuw i32 %i.av, %i.ax
+  %narrow = select i1 %.not.i15, i32 0, i32 %3
+  %4 = zext i32 %narrow to i64
+  %.0.i = add i64 %i.as, %4
   br label %_ZN4LIEF5alignEmm.exit
 
 _ZN4LIEF5alignEmm.exit:                           ; preds = %_ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615EEE.exit, %bb.g
@@ -1366,7 +1364,7 @@ _ZN4LIEF5alignEmm.exit:                           ; preds = %_ZN4LIEF9as_vectorI
 bb.h:                                             ; preds = %_ZN4LIEF5alignEmm.exit
   %i.cj = urem i32 %i.cg, %i.ch                   ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.cj, 0
-  %i.ck = sub i32 %i.ch, %i.cj
+  %i.ck = sub nuw i32 %i.ch, %i.cj
   %i.cl = select i1 %.not.i.i.i, i32 0, i32 %i.ck
   %.0.i.i.i = add i32 %i.cl, %i.cg
   br label %_ZNK4LIEF2PE6Binary14sizeof_headersEv.exit.i
@@ -1604,7 +1602,7 @@ _ZNK4LIEF2PE6Binary12virtual_sizeEv.exit:         ; preds = %._crit_edge.i, %bb.
 bb.v:                                             ; preds = %_ZNK4LIEF2PE6Binary12virtual_sizeEv.exit
   %i.hd = urem i32 %i.ha, %i.hb                   ; 2 uses
   %.not.i.i33 = icmp eq i32 %i.hd, 0
-  %i.he = sub i32 %i.hb, %i.hd
+  %i.he = sub nuw i32 %i.hb, %i.hd
   %i.hf = select i1 %.not.i.i33, i32 0, i32 %i.he
   %.0.i.i34 = add i32 %i.hf, %i.ha
   br label %_ZNK4LIEF2PE6Binary14sizeof_headersEv.exit

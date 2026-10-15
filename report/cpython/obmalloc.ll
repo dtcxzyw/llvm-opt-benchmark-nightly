@@ -206,9 +206,8 @@ _mi_page_start.exit.i.i.i:                        ; preds = %bb.ac, %bb.ab, %bb.
   %i.dl = sub nsw i64 %i.dg, %.0.i.i.i.i.i.i
   %i.dm = icmp slt i32 %i.dc, 0
   %i.dn = select i1 %i.dm, i64 %i.dl, i64 %i.dd   ; 3 uses
-  %3 = zext i16 %i.cz to i64
-  %i.do = zext i16 %i.cx to i64
-  %4 = sub nuw nsw i64 %3, %i.do
+  %3 = sub nuw i16 %i.cz, %i.cx
+  %i.do = zext i16 %3 to i64
   %i.dp = icmp ugt i64 %i.dn, 4095
   br i1 %i.dp, label %mi_page_extend_free.exit.i.i, label %bb.ad
 
@@ -221,7 +220,7 @@ bb.ad:                                            ; preds = %_mi_page_start.exit
 
 mi_page_extend_free.exit.i.i:                     ; preds = %bb.ad, %_mi_page_start.exit.i.i.i
   %spec.store.select.i.i.i = phi i64 [ %i.ds, %bb.ad ], [ 4, %_mi_page_start.exit.i.i.i ]
-  %spec.select.i.i.i = tail call i64 @llvm.umin.i64(i64 %4, i64 %spec.store.select.i.i.i) ; 2 uses
+  %spec.select.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.do, i64 %spec.store.select.i.i.i) ; 2 uses
   tail call fastcc void @mi_page_free_list_extend(ptr noundef nonnull %.02647.i.i, i64 noundef %i.dn, i64 noundef %spec.select.i.i.i), !inline_history !562
   %i.dt = trunc nuw nsw i64 %spec.select.i.i.i to i16
   %i.du = load i16, ptr %i.cw, align 2, !tbaa !114
@@ -624,8 +623,8 @@ bb.h:                                             ; preds = %bb.f
 _mi_segment_page_start.exit.i21:                  ; preds = %bb.h, %bb.g, %mi_page_block_size.exit
   %.0.i.i.i = phi i64 [ %i.aq, %bb.g ], [ 0, %mi_page_block_size.exit ], [ %spec.select.i.i.i, %bb.h ]
   %i.as = sub nsw i64 %i.an, %.0.i.i.i
-  %i.at = udiv i64 %i.as, %i.p                    ; 2 uses
-  %i.au = trunc i64 %i.at to i16                  ; 2 uses
+  %i.at = udiv i64 %i.as, %i.p
+  %i.au = trunc i64 %i.at to i16                  ; 3 uses
   %i.av = getelementptr i8, ptr %i.d, i64 12
   store i16 %i.au, ptr %i.av, align 4, !tbaa !181
   %i.aw = lshr i8 %i.v, 1
@@ -667,9 +666,8 @@ _mi_page_start.exit.i.i:                          ; preds = %bb.m, %bb.l, %bb.j
   %i.bj = sub nsw i64 %i.an, %.0.i.i.i.i.i
   %i.bk = icmp slt i32 %i.aj, 0
   %i.bl = select i1 %i.bk, i64 %i.bj, i64 %i.ai   ; 3 uses
-  %4 = and i64 %i.at, 65535
-  %i.bm = zext i16 %i.bf to i64
-  %5 = sub nuw nsw i64 %4, %i.bm
+  %4 = sub nuw i16 %i.au, %i.bf
+  %i.bm = zext i16 %4 to i64
   %i.bn = icmp ugt i64 %i.bl, 4095
   br i1 %i.bn, label %bb.o, label %bb.n
 
@@ -682,7 +680,7 @@ bb.n:                                             ; preds = %_mi_page_start.exit
 
 bb.o:                                             ; preds = %bb.n, %_mi_page_start.exit.i.i
   %spec.store.select.i.i = phi i64 [ %i.bq, %bb.n ], [ 4, %_mi_page_start.exit.i.i ]
-  %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %5, i64 %spec.store.select.i.i) ; 2 uses
+  %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.bm, i64 %spec.store.select.i.i) ; 2 uses
   tail call fastcc void @mi_page_free_list_extend(ptr noundef nonnull %i.d, i64 noundef %i.bl, i64 noundef %spec.select.i.i)
   %i.br = trunc nuw nsw i64 %spec.select.i.i to i16
   %i.bs = load i16, ptr %i.be, align 2, !tbaa !114

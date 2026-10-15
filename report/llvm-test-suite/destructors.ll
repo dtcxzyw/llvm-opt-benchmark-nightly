@@ -200,9 +200,7 @@ define internal noundef i32 @par_for___local_laplacian_f4.s0.v4.v4(ptr nofree re
 "for f4.s0.v4.v296.preheader":
   %beta = load float, ptr %closure, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %closure, i64 4
-  %f0.v3.min_realized.s = load i32, ptr %i.a, align 4 ; 2 uses
-  %0 = getelementptr inbounds nuw i8, ptr %closure, i64 8
-  %a304.a = load i32, ptr %0, align 4
+  %a304.a = load i32, ptr %i.a, align 4           ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %closure, i64 12
   %f2.v3.extent_realized.s = load i32, ptr %i.b, align 4 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %closure, i64 24
@@ -245,8 +243,6 @@ define internal noundef i32 @par_for___local_laplacian_f4.s0.v4.v4(ptr nofree re
   %i.x = sub nsw i64 %i.w, %i.p                   ; 2 uses
   %i.y = shl nsw i64 %i.j, 2
   %i.z = add nsw i64 %i.l, 1
-  %1 = tail call i32 @llvm.smax.i32(i32 %a304.a, i32 0) ; 2 uses
-  %smax = zext nneg i32 %1 to i64                 ; 2 uses
   %i.aa = shl nsw i64 %i.l, 2
   %i.ab = shl i32 %f4.s0.v3.min.s, 1              ; 4 uses
   %i.ac = shl i32 %f2.v3.extent_realized.s, 1
@@ -280,6 +276,9 @@ define internal noundef i32 @par_for___local_laplacian_f4.s0.v4.v4(ptr nofree re
   %i.ay = getelementptr inbounds nuw i8, ptr %closure, i64 16
   %f2.v3.min_realized = load i32, ptr %i.ay, align 8 ; 5 uses
   %i.az = sub nsw i32 %i.ax, %f2.v3.min_realized
+  %0 = getelementptr inbounds nuw i8, ptr %closure, i64 8
+  %a304 = load i32, ptr %0, align 8
+  %1 = tail call i32 @llvm.smax.i32(i32 %a304, i32 0) ; 2 uses
   %i.ba = add nuw i32 %1, 2
   %i.bb = add i32 %i.ba, %f4.s0.v6.loop_extent.s
   %i.bc = shl i32 %f4.s0.v4.v296.base, 1          ; 2 uses
@@ -305,6 +304,7 @@ define internal noundef i32 @par_for___local_laplacian_f4.s0.v4.v4(ptr nofree re
   %i.bu = getelementptr [4 x i8], ptr %i.bs, i64 %i.bt
   %i.bv = xor i64 %i.n, -1
   %scevgep = getelementptr [4 x i8], ptr %i.bu, i64 %i.bv
+  %2 = zext nneg i32 %1 to i64                    ; 2 uses
   %i.bw = zext i32 %i.bb to i64
   %i.bx = sext i32 %f2.v4.min_realized to i64
   %i.by = sext i32 %i.bg to i64                   ; 4 uses
@@ -366,7 +366,7 @@ define internal noundef i32 @par_for___local_laplacian_f4.s0.v4.v4(ptr nofree re
   br label %"for f4.s0.v6"
 
 "for f4.s0.v6":                                   ; preds = %"for f4.s0.v4.v296", %"end for f4.s0.v3.v32"
-  %indvars.iv = phi i64 [ %smax, %"for f4.s0.v4.v296" ], [ %indvars.iv.next, %"end for f4.s0.v3.v32" ] ; 6 uses
+  %indvars.iv = phi i64 [ %2, %"for f4.s0.v4.v296" ], [ %indvars.iv.next, %"end for f4.s0.v3.v32" ] ; 6 uses
   %lsr.iv8 = phi ptr [ %lsr.iv4, %"for f4.s0.v4.v296" ], [ %scevgep10, %"end for f4.s0.v3.v32" ] ; 2 uses
   br i1 %.not, label %"end for f4.s0.v3.v3", label %"for f4.s0.v3.v3.preheader", !prof !4
 
@@ -376,7 +376,7 @@ define internal noundef i32 @par_for___local_laplacian_f4.s0.v4.v4(ptr nofree re
   %t1992.s = fmul float %i.an, %i.dm
   %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
   %i.dn = shl nuw i32 %indvars.iv.tr, 8
-  %.scalar = add i32 %i.dn, %f0.v3.min_realized.s
+  %.scalar = add i32 %i.dn, %a304.a
   %i.do = insertelement <8 x i32> poison, i32 %.scalar, i64 0
   %i.dp = shufflevector <8 x i32> %i.do, <8 x i32> poison, <8 x i32> zeroinitializer ; 16 uses
   %i.dq = insertelement <8 x float> poison, float %t1992.s, i64 0
@@ -779,7 +779,7 @@ begin_hunk_1_@par_for___local_laplacian_f4.s0.v4.v4:"for f4.s0.v4.v296.preheader
   %a342 = fptosi <8 x float> %i.akr to <8 x i32>
   %a341 = tail call <8 x i32> @llvm.smin.v8i32(<8 x i32> %b309, <8 x i32> %a342)
   %i.aks = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %a341, <8 x i32> zeroinitializer)
-  %.scalar165 = add i32 %i.akp, %f0.v3.min_realized.s
+  %.scalar165 = add i32 %i.akp, %a304.a
   %i.akt = insertelement <8 x i32> poison, i32 %.scalar165, i64 0
   %i.aku = shufflevector <8 x i32> %i.akt, <8 x i32> poison, <8 x i32> zeroinitializer ; 16 uses
   %i.akv = sub <8 x i32> %i.aks, %i.aku
@@ -1182,8 +1182,8 @@ begin_hunk_2_@par_for___local_laplacian_f4.s0.v4.v4:"for f4.s0.v4.v296.preheader
   %i.bkz = fsub <8 x float> %t1997, %i.ayt
   %i.bla = fmul <8 x float> %i.au, %i.bkz
   %i.blb = fadd <8 x float> %i.ayt, %i.bla
-  %i.blc = sub nuw nsw i64 %indvars.iv, %smax
-  %i.bld = mul nsw i64 %i.blc, %i.z
+  %i.blc = sub nuw nsw i64 %indvars.iv, %2
+  %i.bld = mul nsw i64 %i.z, %i.blc
   %i.ble = getelementptr [4 x i8], ptr %i.dk, i64 %i.bld
   %i.blf = getelementptr i8, ptr %i.ble, i64 -28
   %i.blg = load float, ptr %i.bdf, align 4, !tbaa !8
@@ -1328,7 +1328,6 @@ destructor_block.split:                           ; preds = %"end for f4.s0.v6.l
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none)
 define internal noundef i32 @par_for___local_laplacian_f5.s0.v4.v4(ptr nofree readnone captures(none) %__user_context, i32 %f5.s0.v4.v4, ptr noalias nofree readonly captures(none) %closure) #2 {
 "for f5.s0.v4.v316.preheader":
-  %a433 = load i32, ptr %closure, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %closure, i64 4
   %f4.stride.1 = load i32, ptr %i.a, align 4      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %closure, i64 20
@@ -1366,8 +1365,6 @@ define internal noundef i32 @par_for___local_laplacian_f5.s0.v4.v4(ptr nofree re
   %i.t = sub nsw i64 %i.s, %i.o                   ; 2 uses
   %i.u = shl nsw i64 %i.i, 2
   %i.v = add nsw i64 %i.k, 1
-  %0 = tail call i32 @llvm.smax.i32(i32 %a433, i32 0) ; 3 uses
-  %smax = zext nneg i32 %0 to i64                 ; 2 uses
   %i.w = shl nsw i64 %i.k, 2
   %i.x = shl i32 %f5.s0.v3.min, 1                 ; 4 uses
   %i.y = shl i32 %f4.stride.1, 1                  ; 4 uses
@@ -1384,6 +1381,8 @@ define internal noundef i32 @par_for___local_laplacian_f5.s0.v4.v4(ptr nofree re
   br i1 %i.z, label %"for f5.s0.v4.v316.preheader20", label %destructor_block.split, !prof !5
 
 "for f5.s0.v4.v316.preheader20":                  ; preds = %"for f5.s0.v4.v316.preheader"
+  %a433 = load i32, ptr %closure, align 8
+  %0 = tail call i32 @llvm.smax.i32(i32 %a433, i32 0) ; 3 uses
   %i.ag = add nuw i32 %0, 2
   %i.ah = add i32 %i.ag, %f5.s0.v6.loop_extent.s
   %i.ai = shl nsw i32 %f5.s0.v3.max, 1
@@ -1414,6 +1413,7 @@ define internal noundef i32 @par_for___local_laplacian_f5.s0.v4.v4(ptr nofree re
   %i.bd = getelementptr [4 x i8], ptr %f5.host, i64 %i.bc
   %i.be = mul nsw i64 %i.t, %i.i
   %scevgep = getelementptr [4 x i8], ptr %i.bd, i64 %i.be
+  %1 = zext nneg i32 %0 to i64
   %i.bf = zext nneg i32 %0 to i64                 ; 2 uses
   %i.bg = sext i32 %i.am to i64                   ; 2 uses
   %i.bh = sext i32 %f4.v4.min_realized to i64
@@ -1453,7 +1453,7 @@ define internal noundef i32 @par_for___local_laplacian_f5.s0.v4.v4(ptr nofree re
   br label %"for f5.s0.v6"
 
 "for f5.s0.v6":                                   ; preds = %"for f5.s0.v4.v316", %"end for f5.s0.v3.v32"
-  %indvars.iv = phi i64 [ %smax, %"for f5.s0.v4.v316" ], [ %indvars.iv.next, %"end for f5.s0.v3.v32" ] ; 4 uses
+  %indvars.iv = phi i64 [ %1, %"for f5.s0.v4.v316" ], [ %indvars.iv.next, %"end for f5.s0.v3.v32" ] ; 3 uses
   %lsr.iv8 = phi ptr [ %lsr.iv4, %"for f5.s0.v4.v316" ], [ %scevgep10, %"end for f5.s0.v3.v32" ] ; 2 uses
   br i1 %.not, label %"end for f5.s0.v3.v3", label %"for f5.s0.v3.v3.preheader", !prof !4
 
@@ -1589,7 +1589,7 @@ define internal noundef i32 @par_for___local_laplacian_f5.s0.v4.v4(ptr nofree re
   br i1 %.not7, label %"end for f5.s0.v3.v32", label %"for f5.s0.v3.v31.preheader", !prof !4
 
 "for f5.s0.v3.v31.preheader":                     ; preds = %"end for f5.s0.v3.v3"
-  %i.fm = sub nuw nsw i64 %indvars.iv, %i.bf
+  %i.fm = sub nuw nsw i64 %indvars.iv, %i.bf      ; 2 uses
   %i.fn = mul nsw i64 %i.fm, %i.bg                ; 4 uses
   %i.fo = getelementptr [4 x i8], ptr %gep36, i64 %i.fn ; 6 uses
   %i.fp = getelementptr i8, ptr %i.fo, i64 -48
@@ -1682,8 +1682,7 @@ define internal noundef i32 @par_for___local_laplacian_f5.s0.v4.v4(ptr nofree re
   %i.iy = fadd <8 x float> %i.ib, %i.ix
   %i.iz = fadd <8 x float> %i.gj, %i.iy
   %i.ja = fmul <8 x float> %i.iz, splat (float 1.250000e-01)
-  %1 = sub nuw nsw i64 %indvars.iv, %smax
-  %i.jb = mul nsw i64 %1, %i.v
+  %i.jb = mul nsw i64 %i.v, %i.fm
   %i.jc = getelementptr [4 x i8], ptr %i.bw, i64 %i.jb
   %i.jd = getelementptr i8, ptr %i.jc, i64 -28
   store <8 x float> %i.ja, ptr %i.jd, align 4, !tbaa !28
@@ -2031,7 +2030,6 @@ destructor_block:                                 ; preds = %"end for f72.s0.v3.
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none)
 define internal noundef i32 @par_for___local_laplacian_f6.s0.v4.v4(ptr nofree readnone captures(none) %__user_context, i32 %f6.s0.v4.v4, ptr noalias nofree readonly captures(none) %closure) #2 {
 "for f6.s0.v4.v336.preheader":
-  %a526 = load i32, ptr %closure, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %closure, i64 4
   %f5.stride.1 = load i32, ptr %i.a, align 4      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %closure, i64 20
@@ -2069,8 +2067,6 @@ define internal noundef i32 @par_for___local_laplacian_f6.s0.v4.v4(ptr nofree re
   %i.t = sub nsw i64 %i.s, %i.o                   ; 2 uses
   %i.u = shl nsw i64 %i.i, 2
   %i.v = add nsw i64 %i.k, 1
-  %0 = tail call i32 @llvm.smax.i32(i32 %a526, i32 0) ; 3 uses
-  %smax = zext nneg i32 %0 to i64                 ; 2 uses
   %i.w = shl nsw i64 %i.k, 2
   %i.x = shl i32 %f6.s0.v3.min, 1                 ; 4 uses
   %i.y = shl i32 %f5.stride.1, 1                  ; 4 uses
@@ -2087,6 +2083,8 @@ define internal noundef i32 @par_for___local_laplacian_f6.s0.v4.v4(ptr nofree re
   br i1 %i.z, label %"for f6.s0.v4.v336.preheader20", label %destructor_block.split, !prof !5
 
 "for f6.s0.v4.v336.preheader20":                  ; preds = %"for f6.s0.v4.v336.preheader"
+  %a526 = load i32, ptr %closure, align 8
+  %0 = tail call i32 @llvm.smax.i32(i32 %a526, i32 0) ; 3 uses
   %i.ag = add nuw i32 %0, 2
   %i.ah = add i32 %i.ag, %f6.s0.v6.loop_extent.s
   %i.ai = shl nsw i32 %f6.s0.v3.max, 1
@@ -2117,6 +2115,7 @@ define internal noundef i32 @par_for___local_laplacian_f6.s0.v4.v4(ptr nofree re
   %i.bd = getelementptr [4 x i8], ptr %f6.host, i64 %i.bc
   %i.be = mul nsw i64 %i.t, %i.i
   %scevgep = getelementptr [4 x i8], ptr %i.bd, i64 %i.be
+  %1 = zext nneg i32 %0 to i64
   %i.bf = zext nneg i32 %0 to i64                 ; 2 uses
   %i.bg = sext i32 %i.am to i64                   ; 2 uses
   %i.bh = sext i32 %f5.v4.min_realized to i64
@@ -2156,7 +2155,7 @@ define internal noundef i32 @par_for___local_laplacian_f6.s0.v4.v4(ptr nofree re
   br label %"for f6.s0.v6"
 
 "for f6.s0.v6":                                   ; preds = %"for f6.s0.v4.v336", %"end for f6.s0.v3.v32"
-  %indvars.iv = phi i64 [ %smax, %"for f6.s0.v4.v336" ], [ %indvars.iv.next, %"end for f6.s0.v3.v32" ] ; 4 uses
+  %indvars.iv = phi i64 [ %1, %"for f6.s0.v4.v336" ], [ %indvars.iv.next, %"end for f6.s0.v3.v32" ] ; 3 uses
   %lsr.iv8 = phi ptr [ %lsr.iv4, %"for f6.s0.v4.v336" ], [ %scevgep10, %"end for f6.s0.v3.v32" ] ; 2 uses
   br i1 %.not, label %"end for f6.s0.v3.v3", label %"for f6.s0.v3.v3.preheader", !prof !4
 
@@ -2292,7 +2291,7 @@ define internal noundef i32 @par_for___local_laplacian_f6.s0.v4.v4(ptr nofree re
   br i1 %.not7, label %"end for f6.s0.v3.v32", label %"for f6.s0.v3.v31.preheader", !prof !4
 
 "for f6.s0.v3.v31.preheader":                     ; preds = %"end for f6.s0.v3.v3"
-  %i.fm = sub nuw nsw i64 %indvars.iv, %i.bf
+  %i.fm = sub nuw nsw i64 %indvars.iv, %i.bf      ; 2 uses
   %i.fn = mul nsw i64 %i.fm, %i.bg                ; 4 uses
   %i.fo = getelementptr [4 x i8], ptr %gep36, i64 %i.fn ; 6 uses
   %i.fp = getelementptr i8, ptr %i.fo, i64 -48
@@ -2385,8 +2384,7 @@ define internal noundef i32 @par_for___local_laplacian_f6.s0.v4.v4(ptr nofree re
   %i.iy = fadd <8 x float> %i.ib, %i.ix
   %i.iz = fadd <8 x float> %i.gj, %i.iy
   %i.ja = fmul <8 x float> %i.iz, splat (float 1.250000e-01)
-  %1 = sub nuw nsw i64 %indvars.iv, %smax
-  %i.jb = mul nsw i64 %1, %i.v
+  %i.jb = mul nsw i64 %i.v, %i.fm
   %i.jc = getelementptr [4 x i8], ptr %i.bw, i64 %i.jb
   %i.jd = getelementptr i8, ptr %i.jc, i64 -28
   store <8 x float> %i.ja, ptr %i.jd, align 4, !tbaa !32
@@ -2731,7 +2729,6 @@ destructor_block:                                 ; preds = %"end for f73.s0.v3.
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none)
 define internal noundef i32 @par_for___local_laplacian_f7.s0.v4.v4(ptr nofree readnone captures(none) %__user_context, i32 %f7.s0.v4.v4, ptr noalias nofree readonly captures(none) %closure) #2 {
 "for f7.s0.v4.v356.preheader":
-  %a611 = load i32, ptr %closure, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %closure, i64 4
   %f6.stride.1 = load i32, ptr %i.a, align 4      ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %closure, i64 20
@@ -2769,8 +2766,6 @@ define internal noundef i32 @par_for___local_laplacian_f7.s0.v4.v4(ptr nofree re
   %i.t = sub nsw i64 %i.s, %i.o                   ; 2 uses
   %i.u = shl nsw i64 %i.i, 2
   %i.v = add nsw i64 %i.k, 1
-  %0 = tail call i32 @llvm.smax.i32(i32 %a611, i32 0) ; 3 uses
-  %smax = zext nneg i32 %0 to i64                 ; 2 uses
   %i.w = shl nsw i64 %i.k, 2
   %i.x = shl i32 %f7.s0.v3.min, 1                 ; 4 uses
   %i.y = shl i32 %f6.stride.1, 1                  ; 4 uses
@@ -2787,6 +2782,8 @@ define internal noundef i32 @par_for___local_laplacian_f7.s0.v4.v4(ptr nofree re
   br i1 %i.z, label %"for f7.s0.v4.v356.preheader20", label %destructor_block.split, !prof !5
 
 "for f7.s0.v4.v356.preheader20":                  ; preds = %"for f7.s0.v4.v356.preheader"
+  %a611 = load i32, ptr %closure, align 8
+  %0 = tail call i32 @llvm.smax.i32(i32 %a611, i32 0) ; 3 uses
   %i.ag = add nuw i32 %0, 2
   %i.ah = add i32 %i.ag, %f7.s0.v6.loop_extent.s
   %i.ai = shl nsw i32 %f7.s0.v3.max, 1
@@ -2817,6 +2814,7 @@ define internal noundef i32 @par_for___local_laplacian_f7.s0.v4.v4(ptr nofree re
   %i.bd = getelementptr [4 x i8], ptr %f7.host, i64 %i.bc
   %i.be = mul nsw i64 %i.t, %i.i
   %scevgep = getelementptr [4 x i8], ptr %i.bd, i64 %i.be
+  %1 = zext nneg i32 %0 to i64
   %i.bf = zext nneg i32 %0 to i64                 ; 2 uses
   %i.bg = sext i32 %i.am to i64                   ; 2 uses
   %i.bh = sext i32 %f6.v4.min_realized to i64
@@ -2856,7 +2854,7 @@ define internal noundef i32 @par_for___local_laplacian_f7.s0.v4.v4(ptr nofree re
   br label %"for f7.s0.v6"
 
 "for f7.s0.v6":                                   ; preds = %"for f7.s0.v4.v356", %"end for f7.s0.v3.v32"
-  %indvars.iv = phi i64 [ %smax, %"for f7.s0.v4.v356" ], [ %indvars.iv.next, %"end for f7.s0.v3.v32" ] ; 4 uses
+  %indvars.iv = phi i64 [ %1, %"for f7.s0.v4.v356" ], [ %indvars.iv.next, %"end for f7.s0.v3.v32" ] ; 3 uses
   %lsr.iv8 = phi ptr [ %lsr.iv4, %"for f7.s0.v4.v356" ], [ %scevgep10, %"end for f7.s0.v3.v32" ] ; 2 uses
   br i1 %.not, label %"end for f7.s0.v3.v3", label %"for f7.s0.v3.v3.preheader", !prof !4
 
@@ -2992,7 +2990,7 @@ define internal noundef i32 @par_for___local_laplacian_f7.s0.v4.v4(ptr nofree re
   br i1 %.not7, label %"end for f7.s0.v3.v32", label %"for f7.s0.v3.v31.preheader", !prof !4
 
 "for f7.s0.v3.v31.preheader":                     ; preds = %"end for f7.s0.v3.v3"
-  %i.fm = sub nuw nsw i64 %indvars.iv, %i.bf
+  %i.fm = sub nuw nsw i64 %indvars.iv, %i.bf      ; 2 uses
   %i.fn = mul nsw i64 %i.fm, %i.bg                ; 4 uses
   %i.fo = getelementptr [4 x i8], ptr %gep36, i64 %i.fn ; 6 uses
   %i.fp = getelementptr i8, ptr %i.fo, i64 -48
@@ -3085,8 +3083,7 @@ define internal noundef i32 @par_for___local_laplacian_f7.s0.v4.v4(ptr nofree re
   %i.iy = fadd <8 x float> %i.ib, %i.ix
   %i.iz = fadd <8 x float> %i.gj, %i.iy
   %i.ja = fmul <8 x float> %i.iz, splat (float 1.250000e-01)
-  %1 = sub nuw nsw i64 %indvars.iv, %smax
-  %i.jb = mul nsw i64 %1, %i.v
+  %i.jb = mul nsw i64 %i.v, %i.fm
   %i.jc = getelementptr [4 x i8], ptr %i.bw, i64 %i.jb
   %i.jd = getelementptr i8, ptr %i.jc, i64 -28
   store <8 x float> %i.ja, ptr %i.jd, align 4, !tbaa !36

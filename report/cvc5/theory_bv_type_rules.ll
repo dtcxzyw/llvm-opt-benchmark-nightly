@@ -202,10 +202,9 @@ bb.ae:                                            ; preds = %bb.s, %bb.r
   br label %bb.ao
 
 bb.af:                                            ; preds = %_ZN4cvc58internal8TypeNodeD2Ev.exit, %bb.l
-  %8 = zext i32 %.sroa.0.0.copyload to i64
-  %9 = zext i32 %.sroa.7.0.copyload to i64
-  %10 = sub nuw nsw i64 %8, %9                    ; 2 uses
-  %i.bv = icmp ne i64 %10, 4294967295             ; 2 uses
+  %8 = sub nuw i32 %.sroa.0.0.copyload, %.sroa.7.0.copyload ; 2 uses
+  %9 = add nuw i32 %8, 1
+  %i.bv = icmp ne i32 %8, -1                      ; 2 uses
   %.not.i31 = icmp eq ptr %4, null
   %or.cond.i32 = or i1 %.not.i31, %i.bv
   br i1 %or.cond.i32, label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit, label %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit.thread
@@ -248,9 +247,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %_ZN4cvc58internal8TypeNode4nullEv.exit
 
 bb.ak:                                            ; preds = %_ZN4cvc58internal6theory2bv12_GLOBAL__N_117checkBvResultSizeEmPSo.exit
-  %11 = trunc nuw i64 %10 to i32
-  %12 = add nuw i32 %11, 1
-  call void @_ZN4cvc58internal11NodeManager15mkBitVectorTypeEj(ptr dead_on_unwind writable sret(%"class.cvc5::internal::TypeNode") align 8 %0, ptr noundef nonnull align 8 dereferenceable(3592) %1, i32 noundef %12)
+  call void @_ZN4cvc58internal11NodeManager15mkBitVectorTypeEj(ptr dead_on_unwind writable sret(%"class.cvc5::internal::TypeNode") align 8 %0, ptr noundef nonnull align 8 dereferenceable(3592) %1, i32 noundef %9)
   br label %_ZN4cvc58internal8TypeNode4nullEv.exit
 
 .critedge.sink.split:                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.p

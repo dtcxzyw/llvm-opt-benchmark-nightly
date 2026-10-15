@@ -202,18 +202,15 @@ bb.l:                                             ; preds = %_ZNK2v88internal4wa
   %i.de = zext i32 %i.dd to i64
   %i.df = load ptr, ptr %i.dc, align 8
   %i.dg = getelementptr inbounds nuw [40 x i8], ptr %i.df, i64 %i.de ; 2 uses
-  %7 = zext i32 %.0.copyload.i.i.i55 to i64
-  %8 = zext nneg i32 %.0.copyload.i.i.i to i64
   %i.dh = load i32, ptr %i.dg, align 8
   %i.di = icmp eq i32 %i.dh, 1
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dg, i64 28
   %i.dk = load i32, ptr %i.dj, align 4
   %narrow = select i1 %i.di, i32 %i.dk, i32 0     ; 2 uses
-  %9 = zext i32 %narrow to i64
   %.not.i65 = icmp ule i32 %.0.copyload.i.i.i, %narrow
-  %10 = sub nuw nsw i64 %9, %8
-  %11 = icmp samesign uge i64 %10, %7
-  %i.dl = select i1 %.not.i65, i1 %11, i1 false
+  %7 = sub nuw i32 %narrow, %.0.copyload.i.i.i
+  %8 = icmp ule i32 %.0.copyload.i.i.i55, %7
+  %i.dl = select i1 %.not.i65, i1 %8, i1 false
   br i1 %i.dl, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l

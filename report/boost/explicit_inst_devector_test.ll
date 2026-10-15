@@ -204,10 +204,9 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = zext i16 %i.b to i64
   %i.c = udiv i16 %i.b, 10
-  %.zext = zext nneg i16 %i.c to i64
-  %2 = sub nuw nsw i64 %1, %.zext
+  %1 = sub nuw i16 %i.b, %i.c
+  %2 = zext i16 %1 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -610,10 +609,9 @@ bb.a:
   br i1 %.not.i, label %_ZNK5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIS3_EENS0_12devector_optIvtLm0EEEE8capacityEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = zext i16 %i.b to i64
   %i.c = udiv i16 %i.b, 10
-  %.zext.i = zext nneg i16 %i.c to i64
-  %3 = sub nuw nsw i64 %2, %.zext.i
+  %2 = sub nuw i16 %i.b, %i.c
+  %3 = zext i16 %2 to i64
   br label %_ZNK5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIS3_EENS0_12devector_optIvtLm0EEEE8capacityEv.exit
 
 _ZNK5boost9container8devectorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIS3_EENS0_12devector_optIvtLm0EEEE8capacityEv.exit: ; preds = %bb.a, %bb.b
