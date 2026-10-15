@@ -202,34 +202,33 @@ bb.it:                                            ; preds = %bb.fj
   %i.awb = load i32, ptr @proto_vnc, align 4
   %i.awc = call ptr @p_get_proto_data(ptr noundef %i.awa, ptr noundef %1, i32 noundef %i.awb, i32 noundef 0) ; 2 uses
   %.not.i.i181.i.i = icmp eq ptr %i.awc, null
-  br i1 %.not.i.i181.i.i, label %bb.iu, label %vnc_get_depth.exit.i.i.i
+  br i1 %.not.i.i181.i.i, label %bb.iu, label %.lr.ph.i183.i.i
 
 bb.iu:                                            ; preds = %bb.it
   call void (ptr, ...) @proto_report_dissector_bug(ptr noundef nonnull @.str.897, ptr noundef nonnull @.str.898, i32 noundef 3878, ptr noundef nonnull @.str.899) #9
   unreachable
 
-vnc_get_depth.exit.i.i.i:                         ; preds = %bb.it
-  %.not.i182.i.i = icmp eq i16 %i.aaj, 0
-  br i1 %.not.i182.i.i, label %vnc_raw_encoding.exit.i.i, label %.lr.ph.i183.i.i
-
-.lr.ph.i183.i.i:                                  ; preds = %vnc_get_depth.exit.i.i.i
+.lr.ph.i183.i.i:                                  ; preds = %bb.it
   %i.awd = getelementptr i8, ptr %i.awc, i64 5
   %i.awe = load i8, ptr %i.awd, align 1           ; 2 uses
-  %4 = zext i8 %i.awe to i32
-  %i.awf = and i8 %i.awe, 7                       ; 2 uses
-  %5 = zext nneg i8 %i.awf to i32
-  %reass.sub41.i.i.i = sub nsw i32 %4, %5
-  %6 = icmp samesign ult i8 %i.awf, 5
-  %.035.in.in.v.i.i.i = select i1 %6, i32 8, i32 16
-  %.035.in.in.i.i.i = add nsw i32 %reass.sub41.i.i.i, %.035.in.in.v.i.i.i
-  %.035.in424344.i.i.i = lshr i32 %.035.in.in.i.i.i, 3
+  %i.awf = and i8 %i.awe, 7
+  %4 = icmp samesign ult i8 %i.awf, 5
+  %5 = and i8 %i.awe, -8
+  %reass.sub41.i.i.i = zext i8 %5 to i32
+  %.035.in.in.v.i.i.i = select i1 %4, i32 8, i32 16
+  %.035.in.in.i.i.i = add nuw nsw i32 %.035.in.in.v.i.i.i, %reass.sub41.i.i.i
+  %.035.in424344.i.i.i = lshr exact i32 %.035.in.in.i.i.i, 3
+  %.not.i182.i.i = icmp eq i16 %i.aaj, 0
+  br i1 %.not.i182.i.i, label %vnc_raw_encoding.exit.i.i, label %.lr.ph.preheader.i183.i.i
+
+.lr.ph.preheader.i183.i.i:                        ; preds = %.lr.ph.i183.i.i
   %wide.trip.count.i.i.i = zext i16 %i.aaj to i32
   %.pre.i184.i.i = load i32, ptr %i.h, align 4
   br label %bb.iv
 
-bb.iv:                                            ; preds = %bb.ix, %.lr.ph.i183.i.i
-  %i.awg = phi i32 [ %.pre.i184.i.i, %.lr.ph.i183.i.i ], [ %i.axd, %bb.ix ]
-  %indvars.iv.i185.i.i = phi i32 [ 0, %.lr.ph.i183.i.i ], [ %i.awq, %bb.ix ]
+bb.iv:                                            ; preds = %bb.ix, %.lr.ph.preheader.i183.i.i
+  %i.awg = phi i32 [ %.pre.i184.i.i, %.lr.ph.preheader.i183.i.i ], [ %i.axd, %bb.ix ]
+  %indvars.iv.i185.i.i = phi i32 [ 0, %.lr.ph.preheader.i183.i.i ], [ %i.awq, %bb.ix ]
   %i.awh = call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.awg)
   %i.awi = icmp ult i32 %i.awh, 2
   br i1 %i.awi, label %vnc_server_framebuffer_update.exit.i, label %bb.iw
@@ -307,8 +306,8 @@ bb.ja:                                            ; preds = %bb.iz
   store i32 %i.ayg, ptr %i.h, align 4
   br label %vnc_raw_encoding.exit.i.i
 
-vnc_raw_encoding.exit.i.i:                        ; preds = %bb.ix, %.lr.ph.i171.i.i, %..loopexit153_crit_edge.i.i.i, %.lr.ph.i.i.i, %bb.ja, %vnc_get_depth.exit.i.i.i, %bb.is, %bb.iq, %._crit_edge.i.i.i, %bb.in, %bb.ii, %bb.ig, %bb.if, %bb.ic, %bb.hx, %bb.hw, %bb.hj, %bb.hi, %bb.hg, %bb.gx, %.lr.ph162.i.i.i, %vnc_get_bytes_per_pixel.exit.i155.i.i, %.preheader.i.i.i, %bb.fr, %bb.fn, %bb.fm, %bb.fj
-  %.1.i.i = phi i32 [ 0, %bb.ic ], [ 0, %bb.hw ], [ 0, %bb.fn ], [ 0, %bb.if ], [ 0, %.lr.ph.i171.i.i ], [ 0, %.lr.ph.i.i.i ], [ 0, %bb.ja ], [ 0, %bb.hi ], [ 0, %bb.ii ], [ 0, %bb.ig ], [ 0, %bb.in ], [ 0, %._crit_edge.i.i.i ], [ 0, %bb.fj ], [ 0, %..loopexit153_crit_edge.i.i.i ], [ 0, %bb.gx ], [ 0, %bb.iq ], [ 0, %bb.fm ], [ 0, %bb.is ], [ 0, %bb.fr ], [ %i.amy, %bb.hj ], [ %i.amo, %bb.hg ], [ 0, %.preheader.i.i.i ], [ 0, %vnc_get_bytes_per_pixel.exit.i155.i.i ], [ 0, %.lr.ph162.i.i.i ], [ 0, %vnc_get_depth.exit.i.i.i ], [ 0, %bb.hx ], [ 0, %bb.ix ] ; 2 uses
+vnc_raw_encoding.exit.i.i:                        ; preds = %bb.ix, %.lr.ph.i171.i.i, %..loopexit153_crit_edge.i.i.i, %.lr.ph.i.i.i, %bb.ja, %.lr.ph.i183.i.i, %bb.is, %bb.iq, %._crit_edge.i.i.i, %bb.in, %bb.ii, %bb.ig, %bb.if, %bb.ic, %bb.hx, %bb.hw, %bb.hj, %bb.hi, %bb.hg, %bb.gx, %.lr.ph162.i.i.i, %vnc_get_bytes_per_pixel.exit.i155.i.i, %.preheader.i.i.i, %bb.fr, %bb.fn, %bb.fm, %bb.fj
+  %.1.i.i = phi i32 [ 0, %bb.ic ], [ 0, %bb.hw ], [ 0, %bb.fn ], [ 0, %bb.if ], [ 0, %.lr.ph.i171.i.i ], [ 0, %.lr.ph.i.i.i ], [ 0, %bb.ja ], [ 0, %bb.hi ], [ 0, %bb.ii ], [ 0, %bb.ig ], [ 0, %bb.in ], [ 0, %._crit_edge.i.i.i ], [ 0, %bb.fj ], [ 0, %..loopexit153_crit_edge.i.i.i ], [ 0, %bb.gx ], [ 0, %bb.iq ], [ 0, %bb.fm ], [ 0, %bb.is ], [ 0, %bb.fr ], [ %i.amy, %bb.hj ], [ %i.amo, %bb.hg ], [ 0, %.preheader.i.i.i ], [ 0, %vnc_get_bytes_per_pixel.exit.i155.i.i ], [ 0, %.lr.ph162.i.i.i ], [ 0, %.lr.ph.i183.i.i ], [ 0, %bb.hx ], [ 0, %bb.ix ] ; 2 uses
   %.not.i.i50 = icmp eq i32 %.1.i.i, 0
   br i1 %.not.i.i50, label %bb.ff, label %vnc_server_framebuffer_update.exit.i, !llvm.loop !11
 
