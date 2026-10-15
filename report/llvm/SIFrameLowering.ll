@@ -205,8 +205,8 @@ _ZN4llvm12LiveRegUnits4initERKNS_18TargetRegisterInfoE.exit: ; preds = %_ZN4llvm
 ._crit_edge:                                      ; preds = %_ZN4llvm12LiveRegUnits6addRegENS_10MCRegisterE.exit.loopexit, %.lr.ph, %_ZN4llvm12LiveRegUnits4initERKNS_18TargetRegisterInfoE.exit
   %i.at = getelementptr inbounds nuw i8, ptr %i.h, i64 1353
   %i.au = load i8, ptr %i.at, align 1, !tbaa !801, !range !31, !noundef !32
-  %i.av = trunc nuw i8 %i.au to i1                ; 2 uses
-  %i.aw = select i1 %i.av, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm28AMDGPUMCRegisterClassStorageE, i64 1728), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm28AMDGPUMCRegisterClassStorageE, i64 3840) ; 4 uses
+  %i.av = trunc nuw i8 %i.au to i1
+  %i.aw = select i1 %i.av, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm28AMDGPUMCRegisterClassStorageE, i64 1728), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm28AMDGPUMCRegisterClassStorageE, i64 3840) ; 5 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.f, i64 1360 ; 3 uses
   %.sroa.0.0.copyload.i = load i32, ptr %i.ax, align 8, !tbaa !392 ; 5 uses
   br i1 %3, label %bb.f, label %bb.d
@@ -329,13 +329,12 @@ _ZN4llvm19MachineRegisterInfo10reserveRegENS_10MCRegisterEPKNS_18TargetRegisterI
   %i.do = load i32, ptr %i.aw, align 8, !tbaa !758
   %i.dp = zext i32 %i.do to i64
   %i.dq = getelementptr inbounds nuw i8, ptr %i.aw, i64 %i.dp ; 2 uses
-  %.val = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm28AMDGPUMCRegisterClassStorageE, i64 1744), align 8
-  %.val93 = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm28AMDGPUMCRegisterClassStorageE, i64 3856), align 8
-  %5 = select i1 %i.av, i16 %.val, i16 %.val93    ; 2 uses
-  %i.dr = zext i16 %5 to i64
+  %5 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
+  %.val93 = load i16, ptr %5, align 8, !tbaa !759 ; 2 uses
+  %i.dr = zext i16 %.val93 to i64
   %.idx.i63 = shl nuw nsw i64 %i.dr, 1
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dq, i64 %.idx.i63
-  %.not20.i = icmp eq i16 %5, 0
+  %.not20.i = icmp eq i16 %.val93, 0
   br i1 %.not20.i, label %_ZL18findUnusedRegisterRN4llvm19MachineRegisterInfoERKNS_12LiveRegUnitsERKNS_15MCRegisterClassE.exit.thread, label %.lr.ph.i64
 
 .lr.ph.i64:                                       ; preds = %_ZN4llvm19MachineRegisterInfo10reserveRegENS_10MCRegisterEPKNS_18TargetRegisterInfoE.exit

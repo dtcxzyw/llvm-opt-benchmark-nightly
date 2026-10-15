@@ -204,7 +204,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !267
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 520
   %i.e = load i8, ptr %i.d, align 8, !tbaa !287, !range !247, !noundef !100
-  %i.f = trunc nuw i8 %i.e to i1                  ; 5 uses
+  %i.f = trunc nuw i8 %i.e to i1                  ; 3 uses
   %i.g = load i32, ptr %2, align 4, !tbaa !297    ; 2 uses
   %.not = icmp eq i32 %i.g, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -234,13 +234,13 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 .thread111:                                       ; preds = %bb.d
-  %i.q = select i1 %i.f, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 1280), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 1152)
-  %18 = select i1 %i.f, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 1300), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 1172)
+  %i.q = select i1 %i.f, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 1280), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 1152) ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %i.q, i64 20
   br label %bb.k
 
 .thread:                                          ; preds = %bb.d
-  %i.r = select i1 %i.f, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 320)
-  %19 = select i1 %i.f, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 84), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 340)
+  %i.r = select i1 %i.f, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 64), ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25PPCMCRegisterClassStorageE, i64 320) ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %i.r, i64 20
   br label %bb.j
 
 switch.edge:                                      ; preds = %bb.d, %bb.c, %bb.b

@@ -205,12 +205,13 @@ _ZNK4llvm8Function10hasOptSizeEv.exit.i.i:        ; preds = %bb.d
 
 _ZL9isOptSizeRKN4llvm15MachineFunctionE.exit.i:   ; preds = %_ZNK4llvm8Function10hasOptSizeEv.exit.i.i, %bb.d
   %i.x = tail call noundef zeroext i1 @_ZNK4llvm8Function14hasFnAttributeENS_9Attribute8AttrKindE(ptr noundef nonnull align 8 dereferenceable(140) %.val.i, i32 noundef 19) #27
-  %spec.select.i = select i1 %i.x, ptr getelementptr inbounds nuw (i8, ptr @_ZL18SpillFuncThreshold, i64 120), ptr getelementptr inbounds nuw (i8, ptr @_ZL20SpillFuncThresholdOs, i64 120)
+  %spec.select.i = select i1 %i.x, ptr @_ZL18SpillFuncThreshold, ptr @_ZL20SpillFuncThresholdOs
   br label %_ZNK4llvm20HexagonFrameLowering16useSpillFunctionERKNS_15MachineFunctionERKSt6vectorINS_15CalleeSavedInfoESaIS5_EE.exit
 
 _ZNK4llvm20HexagonFrameLowering16useSpillFunctionERKNS_15MachineFunctionERKSt6vectorINS_15CalleeSavedInfoESaIS5_EE.exit: ; preds = %_ZNK4llvm8Function10hasOptSizeEv.exit.i.i, %_ZL9isOptSizeRKN4llvm15MachineFunctionE.exit.i
-  %i.y = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZL18SpillFuncThreshold, i64 120), %_ZNK4llvm8Function10hasOptSizeEv.exit.i.i ], [ %spec.select.i, %_ZL9isOptSizeRKN4llvm15MachineFunctionE.exit.i ]
-  %i.z = load i32, ptr %i.y, align 8, !tbaa !372
+  %i.y = phi ptr [ @_ZL18SpillFuncThreshold, %_ZNK4llvm8Function10hasOptSizeEv.exit.i.i ], [ %spec.select.i, %_ZL9isOptSizeRKN4llvm15MachineFunctionE.exit.i ]
+  %7 = getelementptr inbounds nuw i8, ptr %i.y, i64 120
+  %i.z = load i32, ptr %7, align 8, !tbaa !372
   %i.aa = icmp ult i32 %i.z, %i.t
   %.pre151 = load ptr, ptr %2, align 8, !tbaa !366 ; 5 uses
   %.pre153 = load ptr, ptr %i.b, align 8, !tbaa !366 ; 3 uses
@@ -613,12 +614,13 @@ _ZNK4llvm8Function10hasOptSizeEv.exit.i:          ; preds = %bb.c
 
 _ZL9isOptSizeRKN4llvm15MachineFunctionE.exit:     ; preds = %bb.c, %_ZNK4llvm8Function10hasOptSizeEv.exit.i
   %i.m = tail call noundef zeroext i1 @_ZNK4llvm8Function14hasFnAttributeENS_9Attribute8AttrKindE(ptr noundef nonnull align 8 dereferenceable(140) %.val, i32 noundef 19) #27
-  %spec.select = select i1 %i.m, ptr getelementptr inbounds nuw (i8, ptr @_ZL18SpillFuncThreshold, i64 120), ptr getelementptr inbounds nuw (i8, ptr @_ZL20SpillFuncThresholdOs, i64 120)
+  %spec.select = select i1 %i.m, ptr @_ZL18SpillFuncThreshold, ptr @_ZL20SpillFuncThresholdOs
   br label %_ZL9isOptSizeRKN4llvm15MachineFunctionE.exit.thread
 
 _ZL9isOptSizeRKN4llvm15MachineFunctionE.exit.thread: ; preds = %_ZL9isOptSizeRKN4llvm15MachineFunctionE.exit, %_ZNK4llvm8Function10hasOptSizeEv.exit.i
-  %i.n = phi ptr [ getelementptr inbounds nuw (i8, ptr @_ZL18SpillFuncThreshold, i64 120), %_ZNK4llvm8Function10hasOptSizeEv.exit.i ], [ %spec.select, %_ZL9isOptSizeRKN4llvm15MachineFunctionE.exit ]
-  %i.o = load i32, ptr %i.n, align 8, !tbaa !372
+  %i.n = phi ptr [ @_ZL18SpillFuncThreshold, %_ZNK4llvm8Function10hasOptSizeEv.exit.i ], [ %spec.select, %_ZL9isOptSizeRKN4llvm15MachineFunctionE.exit ]
+  %3 = getelementptr inbounds nuw i8, ptr %i.n, i64 120
+  %i.o = load i32, ptr %3, align 8, !tbaa !372
   %i.p = icmp ult i32 %i.o, %i.i
   br label %bb.d
 

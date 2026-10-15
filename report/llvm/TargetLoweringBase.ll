@@ -204,11 +204,11 @@ bb.a:
   br i1 %or.cond.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %.val.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL23OptsizeJumpTableDensity, i64 120), align 8
-  %.val1.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL16JumpTableDensity, i64 120), align 8
-  %6 = select i1 %i.c, i32 %.val.i, i32 %.val1.i
+  %_ZL23OptsizeJumpTableDensity._ZL16JumpTableDensity.i = select i1 %i.c, ptr @_ZL23OptsizeJumpTableDensity, ptr @_ZL16JumpTableDensity
+  %6 = getelementptr inbounds nuw i8, ptr %_ZL23OptsizeJumpTableDensity._ZL16JumpTableDensity.i, i64 120
+  %7 = load i32, ptr %6, align 8, !tbaa !187
   %i.f = mul i64 %2, 100
-  %i.g = zext i32 %6 to i64
+  %i.g = zext i32 %7 to i64
   %i.h = mul i64 %3, %i.g
   %i.i = icmp uge i64 %i.f, %i.h
   br label %bb.c
@@ -220,13 +220,13 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 declare noundef zeroext i1 @_ZN4llvm21shouldOptimizeForSizeEPKNS_10BasicBlockEPNS_18ProfileSummaryInfoEPNS_18BlockFrequencyInfoENS_13PGSOQueryTypeE(ptr noundef, ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #7
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local noundef i32 @_ZNK4llvm18TargetLoweringBase26getMinimumJumpTableDensityEb(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(518435) %0, i1 noundef zeroext %1) local_unnamed_addr #13 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local noundef i32 @_ZNK4llvm18TargetLoweringBase26getMinimumJumpTableDensityEb(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(518435) %0, i1 noundef zeroext %1) local_unnamed_addr #11 align 2 {
 bb.a:
-  %.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL23OptsizeJumpTableDensity, i64 120), align 8
-  %.val1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL16JumpTableDensity, i64 120), align 8
-  %2 = select i1 %1, i32 %.val, i32 %.val1
-  ret i32 %2
+  %_ZL23OptsizeJumpTableDensity._ZL16JumpTableDensity = select i1 %1, ptr @_ZL23OptsizeJumpTableDensity, ptr @_ZL16JumpTableDensity
+  %2 = getelementptr inbounds nuw i8, ptr %_ZL23OptsizeJumpTableDensity._ZL16JumpTableDensity, i64 120
+  %3 = load i32, ptr %2, align 8, !tbaa !187
+  ret i32 %3
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable

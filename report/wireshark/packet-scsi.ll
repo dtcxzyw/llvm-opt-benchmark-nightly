@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-scsi?download=true
 inline.NumInlined: 31
 inline.NumDeleted: 9
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @.str.1427 = private unnamed_addr constant [28 x i8] c"Grown Defect List Not Found\00", align 1
 @.str.1428 = private unnamed_addr constant [35 x i8] c"Miscompare During Verify Operation\00", align 1
@@ -204,7 +204,8 @@ begin_hunk_0
 @dissect_scsi_log_page.paramflags_fields = internal constant [8 x ptr] [ptr @hf_scsi_log_pf_du, ptr @hf_scsi_log_pf_ds, ptr @hf_scsi_log_pf_tsd, ptr @hf_scsi_log_pf_etc, ptr @hf_scsi_log_pf_tmc, ptr @hf_scsi_log_pf_lbin, ptr @hf_scsi_log_pf_lp, ptr null], align 16
 @.str.1614 = private unnamed_addr constant [13 x i8] c"Log Page: %s\00", align 1
 @.str.1615 = private unnamed_addr constant [17 x i8] c"Unknown (0x%04x)\00", align 1
-@tape_alert_log_parameters = internal unnamed_addr constant [51 x { i32, [4 x i8], ptr, ptr }] [{ i32, [4 x i8], ptr, ptr } { i32 1, [4 x i8] zeroinitializer, ptr @.str.410, ptr @log_parameter_2e_0001 }, { i32, [4 x i8], ptr, ptr } { i32 2, [4 x i8] zeroinitializer, ptr @.str.412, ptr @log_parameter_2e_0002 }, { i32, [4 x i8], ptr, ptr } { i32 3, [4 x i8] zeroinitializer, ptr @.str.414, ptr @log_parameter_2e_0003 }, { i32, [4 x i8], ptr, ptr } { i32 4, [4 x i8] zeroinitializer, ptr @.str.416, ptr @log_parameter_2e_0004 }, { i32, [4 x i8], ptr, ptr } { i32 5, [4 x i8] zeroinitializer, ptr @.str.418, ptr @log_parameter_2e_0005 }, { i32, [4 x i8], ptr, ptr } { i32 6, [4 x i8] zeroinitializer, ptr @.str.420, ptr @log_parameter_2e_0006 }, { i32, [4 x i8], ptr, ptr } { i32 7, [4 x i8] zeroinitializer, ptr @.str.422, ptr @log_parameter_2e_0007 }, { i32, [4 x i8], ptr, ptr } { i32 8, [4 x i8] zeroinitializer, ptr @.str.424, ptr @log_parameter_2e_0008 }, { i32, [4 x i8], ptr, ptr } { i32 9, [4 x i8] zeroinitializer, ptr @.str.426, ptr @log_parameter_2e_0009 }, { i32, [4 x i8], ptr, ptr } { i32 10, [4 x i8] zeroinitializer, ptr @.str.428, ptr @log_parameter_2e_000a }, { i32, [4 x i8], ptr, ptr } { i32 11, [4 x i8] zeroinitializer, ptr @.str.430, ptr @log_parameter_2e_000b }, { i32, [4 x i8], ptr, ptr } { i32 12, [4 x i8] zeroinitializer, ptr @.str.432, ptr @log_parameter_2e_000c }, { i32, [4 x i8], ptr, ptr } { i32 13, [4 x i8] zeroinitializer, ptr @.str.434, ptr @log_parameter_2e_000d }, { i32, [4 x i8], ptr, ptr } { i32 14, [4 x i8] zeroinitializer, ptr @.str.436, ptr @log_parameter_2e_000e }, { i32, [4 x i8], ptr, ptr } { i32 15, [4 x i8] zeroinitializer, ptr @.str.438, ptr @log_parameter_2e_000f }, { i32, [4 x i8], ptr, ptr } { i32 16, [4 x i8] zeroinitializer, ptr @.str.440, ptr @log_parameter_2e_0010 }, { i32, [4 x i8], ptr, ptr } { i32 17, [4 x i8] zeroinitializer, ptr @.str.442, ptr @log_parameter_2e_0011 }, { i32, [4 x i8], ptr, ptr } { i32 18, [4 x i8] zeroinitializer, ptr @.str.444, ptr @log_parameter_2e_0012 }, { i32, [4 x i8], ptr, ptr } { i32 19, [4 x i8] zeroinitializer, ptr @.str.446, ptr @log_parameter_2e_0013 }, { i32, [4 x i8], ptr, ptr } { i32 20, [4 x i8] zeroinitializer, ptr @.str.448, ptr @log_parameter_2e_0014 }, { i32, [4 x i8], ptr, ptr } { i32 21, [4 x i8] zeroinitializer, ptr @.str.450, ptr @log_parameter_2e_0015 }, { i32, [4 x i8], ptr, ptr } { i32 22, [4 x i8] zeroinitializer, ptr @.str.452, ptr @log_parameter_2e_0016 }, { i32, [4 x i8], ptr, ptr } { i32 23, [4 x i8] zeroinitializer, ptr @.str.454, ptr @log_parameter_2e_0017 }, { i32, [4 x i8], ptr, ptr } { i32 24, [4 x i8] zeroinitializer, ptr @.str.456, ptr @log_parameter_2e_0018 }, { i32, [4 x i8], ptr, ptr } { i32 25, [4 x i8] zeroinitializer, ptr @.str.458, ptr @log_parameter_2e_0019 }, { i32, [4 x i8], ptr, ptr } { i32 26, [4 x i8] zeroinitializer, ptr @.str.460, ptr @log_parameter_2e_001a }, { i32, [4 x i8], ptr, ptr } { i32 27, [4 x i8] zeroinitializer, ptr @.str.462, ptr @log_parameter_2e_001b }, { i32, [4 x i8], ptr, ptr } { i32 28, [4 x i8] zeroinitializer, ptr @.str.464, ptr @log_parameter_2e_001c }, { i32, [4 x i8], ptr, ptr } { i32 29, [4 x i8] zeroinitializer, ptr @.str.466, ptr @log_parameter_2e_001d }, { i32, [4 x i8], ptr, ptr } { i32 30, [4 x i8] zeroinitializer, ptr @.str.468, ptr @log_parameter_2e_001e }, { i32, [4 x i8], ptr, ptr } { i32 31, [4 x i8] zeroinitializer, ptr @.str.470, ptr @log_parameter_2e_001f }, { i32, [4 x i8], ptr, ptr } { i32 32, [4 x i8] zeroinitializer, ptr @.str.472, ptr @log_parameter_2e_0020 }, { i32, [4 x i8], ptr, ptr } { i32 33, [4 x i8] zeroinitializer, ptr @.str.474, ptr @log_parameter_2e_0021 }, { i32, [4 x i8], ptr, ptr } { i32 34, [4 x i8] zeroinitializer, ptr @.str.476, ptr @log_parameter_2e_0022 }, { i32, [4 x i8], ptr, ptr } { i32 35, [4 x i8] zeroinitializer, ptr @.str.478, ptr @log_parameter_2e_0023 }, { i32, [4 x i8], ptr, ptr } { i32 36, [4 x i8] zeroinitializer, ptr @.str.480, ptr @log_parameter_2e_0024 }, { i32, [4 x i8], ptr, ptr } { i32 37, [4 x i8] zeroinitializer, ptr @.str.482, ptr @log_parameter_2e_0025 }, { i32, [4 x i8], ptr, ptr } { i32 38, [4 x i8] zeroinitializer, ptr @.str.484, ptr @log_parameter_2e_0026 }, { i32, [4 x i8], ptr, ptr } { i32 39, [4 x i8] zeroinitializer, ptr @.str.486, ptr @log_parameter_2e_0027 }, { i32, [4 x i8], ptr, ptr } { i32 50, [4 x i8] zeroinitializer, ptr @.str.488, ptr @log_parameter_2e_0032 }, { i32, [4 x i8], ptr, ptr } { i32 51, [4 x i8] zeroinitializer, ptr @.str.490, ptr @log_parameter_2e_0033 }, { i32, [4 x i8], ptr, ptr } { i32 52, [4 x i8] zeroinitializer, ptr @.str.492, ptr @log_parameter_2e_0034 }, { i32, [4 x i8], ptr, ptr } { i32 53, [4 x i8] zeroinitializer, ptr @.str.494, ptr @log_parameter_2e_0035 }, { i32, [4 x i8], ptr, ptr } { i32 54, [4 x i8] zeroinitializer, ptr @.str.496, ptr @log_parameter_2e_0036 }, { i32, [4 x i8], ptr, ptr } { i32 55, [4 x i8] zeroinitializer, ptr @.str.498, ptr @log_parameter_2e_0037 }, { i32, [4 x i8], ptr, ptr } { i32 56, [4 x i8] zeroinitializer, ptr @.str.500, ptr @log_parameter_2e_0038 }, { i32, [4 x i8], ptr, ptr } { i32 57, [4 x i8] zeroinitializer, ptr @.str.502, ptr @log_parameter_2e_0039 }, { i32, [4 x i8], ptr, ptr } { i32 58, [4 x i8] zeroinitializer, ptr @.str.504, ptr @log_parameter_2e_003a }, { i32, [4 x i8], ptr, ptr } { i32 59, [4 x i8] zeroinitializer, ptr @.str.506, ptr @log_parameter_2e_003b }, { i32, [4 x i8], ptr, ptr } { i32 60, [4 x i8] zeroinitializer, ptr @.str.508, ptr @log_parameter_2e_003c }, { i32, [4 x i8], ptr, ptr } zeroinitializer], align 16
+@log_pages = internal unnamed_addr constant [2 x { i32, [4 x i8], ptr }] [{ i32, [4 x i8], ptr } { i32 46, [4 x i8] zeroinitializer, ptr @tape_alert_log_parameters }, { i32, [4 x i8], ptr } zeroinitializer], align 16
+@tape_alert_log_parameters = internal constant [51 x { i32, [4 x i8], ptr, ptr }] [{ i32, [4 x i8], ptr, ptr } { i32 1, [4 x i8] zeroinitializer, ptr @.str.410, ptr @log_parameter_2e_0001 }, { i32, [4 x i8], ptr, ptr } { i32 2, [4 x i8] zeroinitializer, ptr @.str.412, ptr @log_parameter_2e_0002 }, { i32, [4 x i8], ptr, ptr } { i32 3, [4 x i8] zeroinitializer, ptr @.str.414, ptr @log_parameter_2e_0003 }, { i32, [4 x i8], ptr, ptr } { i32 4, [4 x i8] zeroinitializer, ptr @.str.416, ptr @log_parameter_2e_0004 }, { i32, [4 x i8], ptr, ptr } { i32 5, [4 x i8] zeroinitializer, ptr @.str.418, ptr @log_parameter_2e_0005 }, { i32, [4 x i8], ptr, ptr } { i32 6, [4 x i8] zeroinitializer, ptr @.str.420, ptr @log_parameter_2e_0006 }, { i32, [4 x i8], ptr, ptr } { i32 7, [4 x i8] zeroinitializer, ptr @.str.422, ptr @log_parameter_2e_0007 }, { i32, [4 x i8], ptr, ptr } { i32 8, [4 x i8] zeroinitializer, ptr @.str.424, ptr @log_parameter_2e_0008 }, { i32, [4 x i8], ptr, ptr } { i32 9, [4 x i8] zeroinitializer, ptr @.str.426, ptr @log_parameter_2e_0009 }, { i32, [4 x i8], ptr, ptr } { i32 10, [4 x i8] zeroinitializer, ptr @.str.428, ptr @log_parameter_2e_000a }, { i32, [4 x i8], ptr, ptr } { i32 11, [4 x i8] zeroinitializer, ptr @.str.430, ptr @log_parameter_2e_000b }, { i32, [4 x i8], ptr, ptr } { i32 12, [4 x i8] zeroinitializer, ptr @.str.432, ptr @log_parameter_2e_000c }, { i32, [4 x i8], ptr, ptr } { i32 13, [4 x i8] zeroinitializer, ptr @.str.434, ptr @log_parameter_2e_000d }, { i32, [4 x i8], ptr, ptr } { i32 14, [4 x i8] zeroinitializer, ptr @.str.436, ptr @log_parameter_2e_000e }, { i32, [4 x i8], ptr, ptr } { i32 15, [4 x i8] zeroinitializer, ptr @.str.438, ptr @log_parameter_2e_000f }, { i32, [4 x i8], ptr, ptr } { i32 16, [4 x i8] zeroinitializer, ptr @.str.440, ptr @log_parameter_2e_0010 }, { i32, [4 x i8], ptr, ptr } { i32 17, [4 x i8] zeroinitializer, ptr @.str.442, ptr @log_parameter_2e_0011 }, { i32, [4 x i8], ptr, ptr } { i32 18, [4 x i8] zeroinitializer, ptr @.str.444, ptr @log_parameter_2e_0012 }, { i32, [4 x i8], ptr, ptr } { i32 19, [4 x i8] zeroinitializer, ptr @.str.446, ptr @log_parameter_2e_0013 }, { i32, [4 x i8], ptr, ptr } { i32 20, [4 x i8] zeroinitializer, ptr @.str.448, ptr @log_parameter_2e_0014 }, { i32, [4 x i8], ptr, ptr } { i32 21, [4 x i8] zeroinitializer, ptr @.str.450, ptr @log_parameter_2e_0015 }, { i32, [4 x i8], ptr, ptr } { i32 22, [4 x i8] zeroinitializer, ptr @.str.452, ptr @log_parameter_2e_0016 }, { i32, [4 x i8], ptr, ptr } { i32 23, [4 x i8] zeroinitializer, ptr @.str.454, ptr @log_parameter_2e_0017 }, { i32, [4 x i8], ptr, ptr } { i32 24, [4 x i8] zeroinitializer, ptr @.str.456, ptr @log_parameter_2e_0018 }, { i32, [4 x i8], ptr, ptr } { i32 25, [4 x i8] zeroinitializer, ptr @.str.458, ptr @log_parameter_2e_0019 }, { i32, [4 x i8], ptr, ptr } { i32 26, [4 x i8] zeroinitializer, ptr @.str.460, ptr @log_parameter_2e_001a }, { i32, [4 x i8], ptr, ptr } { i32 27, [4 x i8] zeroinitializer, ptr @.str.462, ptr @log_parameter_2e_001b }, { i32, [4 x i8], ptr, ptr } { i32 28, [4 x i8] zeroinitializer, ptr @.str.464, ptr @log_parameter_2e_001c }, { i32, [4 x i8], ptr, ptr } { i32 29, [4 x i8] zeroinitializer, ptr @.str.466, ptr @log_parameter_2e_001d }, { i32, [4 x i8], ptr, ptr } { i32 30, [4 x i8] zeroinitializer, ptr @.str.468, ptr @log_parameter_2e_001e }, { i32, [4 x i8], ptr, ptr } { i32 31, [4 x i8] zeroinitializer, ptr @.str.470, ptr @log_parameter_2e_001f }, { i32, [4 x i8], ptr, ptr } { i32 32, [4 x i8] zeroinitializer, ptr @.str.472, ptr @log_parameter_2e_0020 }, { i32, [4 x i8], ptr, ptr } { i32 33, [4 x i8] zeroinitializer, ptr @.str.474, ptr @log_parameter_2e_0021 }, { i32, [4 x i8], ptr, ptr } { i32 34, [4 x i8] zeroinitializer, ptr @.str.476, ptr @log_parameter_2e_0022 }, { i32, [4 x i8], ptr, ptr } { i32 35, [4 x i8] zeroinitializer, ptr @.str.478, ptr @log_parameter_2e_0023 }, { i32, [4 x i8], ptr, ptr } { i32 36, [4 x i8] zeroinitializer, ptr @.str.480, ptr @log_parameter_2e_0024 }, { i32, [4 x i8], ptr, ptr } { i32 37, [4 x i8] zeroinitializer, ptr @.str.482, ptr @log_parameter_2e_0025 }, { i32, [4 x i8], ptr, ptr } { i32 38, [4 x i8] zeroinitializer, ptr @.str.484, ptr @log_parameter_2e_0026 }, { i32, [4 x i8], ptr, ptr } { i32 39, [4 x i8] zeroinitializer, ptr @.str.486, ptr @log_parameter_2e_0027 }, { i32, [4 x i8], ptr, ptr } { i32 50, [4 x i8] zeroinitializer, ptr @.str.488, ptr @log_parameter_2e_0032 }, { i32, [4 x i8], ptr, ptr } { i32 51, [4 x i8] zeroinitializer, ptr @.str.490, ptr @log_parameter_2e_0033 }, { i32, [4 x i8], ptr, ptr } { i32 52, [4 x i8] zeroinitializer, ptr @.str.492, ptr @log_parameter_2e_0034 }, { i32, [4 x i8], ptr, ptr } { i32 53, [4 x i8] zeroinitializer, ptr @.str.494, ptr @log_parameter_2e_0035 }, { i32, [4 x i8], ptr, ptr } { i32 54, [4 x i8] zeroinitializer, ptr @.str.496, ptr @log_parameter_2e_0036 }, { i32, [4 x i8], ptr, ptr } { i32 55, [4 x i8] zeroinitializer, ptr @.str.498, ptr @log_parameter_2e_0037 }, { i32, [4 x i8], ptr, ptr } { i32 56, [4 x i8] zeroinitializer, ptr @.str.500, ptr @log_parameter_2e_0038 }, { i32, [4 x i8], ptr, ptr } { i32 57, [4 x i8] zeroinitializer, ptr @.str.502, ptr @log_parameter_2e_0039 }, { i32, [4 x i8], ptr, ptr } { i32 58, [4 x i8] zeroinitializer, ptr @.str.504, ptr @log_parameter_2e_003a }, { i32, [4 x i8], ptr, ptr } { i32 59, [4 x i8] zeroinitializer, ptr @.str.506, ptr @log_parameter_2e_003b }, { i32, [4 x i8], ptr, ptr } { i32 60, [4 x i8] zeroinitializer, ptr @.str.508, ptr @log_parameter_2e_003c }, { i32, [4 x i8], ptr, ptr } zeroinitializer], align 16
 @.str.1618 = private unnamed_addr constant [13 x i8] c"%s Mode Page\00", align 1
 @.str.1619 = private unnamed_addr constant [9 x i8] c"%u 100ms\00", align 1
 @.str.1620 = private unnamed_addr constant [23 x i8] c"Sub-header Byte %u: %u\00", align 1
@@ -607,14 +608,19 @@ bb.e:                                             ; preds = %bb.d
   %i.ag = load i32, ptr @hf_scsi_log_page_length, align 4
   %i.ah = call ptr @proto_tree_add_item(ptr noundef %i.aa, i32 noundef %i.ag, ptr noundef %0, i32 noundef %i.ae, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.ai = add i32 %3, 4                           ; 4 uses
-  %.not.i = icmp eq i8 %i.u, 46
+  %.not.i = icmp eq i8 %i.u, 46                   ; 2 uses
   %i.aj = zext i16 %i.af to i32
   %i.ak = add i32 %i.ai, %i.aj                    ; 2 uses
   %i.al = icmp ult i32 %i.ai, %i.ak
-  br i1 %i.al, label %.lr.ph86.i.a, label %dissect_scsi_log_page.exit
+  br i1 %i.al, label %.lr.ph86.i, label %dissect_scsi_log_page.exit
 
-.lr.ph86.i.a:                                     ; preds = %bb.e, %bb.k
-  %.085.i = phi i32 [ %.1.i, %bb.k ], [ %i.ai, %bb.e ] ; 5 uses
+.lr.ph86.i:                                       ; preds = %bb.e
+  %spec.select.i = select i1 %.not.i, ptr @log_pages, ptr null
+  %8 = getelementptr i8, ptr %spec.select.i, i64 8
+  br label %.lr.ph86.i.a
+
+.lr.ph86.i.a:                                     ; preds = %bb.k, %.lr.ph86.i
+  %.085.i = phi i32 [ %i.ai, %.lr.ph86.i ], [ %.1.i, %bb.k ] ; 5 uses
   %i.am = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.085.i)
   %i.an = load i32, ptr @hf_scsi_log_parameter_code, align 4
   %i.ao = call ptr @proto_tree_add_item(ptr noundef %i.aa, i32 noundef %i.an, ptr noundef %0, i32 noundef %.085.i, i32 noundef 2, i32 noundef 0) ; 0 uses
@@ -627,219 +633,41 @@ bb.e:                                             ; preds = %bb.d
   %i.av = load i32, ptr @hf_scsi_log_param_len, align 4
   %i.aw = call ptr @proto_tree_add_item(ptr noundef %i.aa, i32 noundef %i.av, ptr noundef %0, i32 noundef %i.at, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.ax = add i32 %.085.i, 4                      ; 4 uses
-  br i1 %.not.i, label %.lr.ph.i, label %.loopexit.i
+  br i1 %.not.i, label %.loopexit.i.fold.split125, label %.loopexit.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph86.i.a
-  switch i16 %i.am, label %8 [
-    i16 1, label %.loopexit.i
-    i16 2, label %.loopexit.i.fold.split
-    i16 3, label %.loopexit.i.fold.split82
-    i16 4, label %.loopexit.i.fold.split83
-    i16 5, label %.loopexit.i.fold.split84
-    i16 6, label %.loopexit.i.fold.split85
-    i16 7, label %.loopexit.i.fold.split86
-    i16 8, label %.loopexit.i.fold.split87
-    i16 9, label %.loopexit.i.fold.split88
-    i16 10, label %.loopexit.i.fold.split89
-    i16 11, label %.loopexit.i.fold.split90
-    i16 12, label %.loopexit.i.fold.split91
-    i16 13, label %.loopexit.i.fold.split92
-    i16 14, label %.loopexit.i.fold.split93
-    i16 15, label %.loopexit.i.fold.split94
-    i16 16, label %.loopexit.i.fold.split95
-    i16 17, label %.loopexit.i.fold.split96
-    i16 18, label %.loopexit.i.fold.split97
-    i16 19, label %.loopexit.i.fold.split98
-    i16 20, label %.loopexit.i.fold.split99
-    i16 21, label %.loopexit.i.fold.split100
-    i16 22, label %.loopexit.i.fold.split101
-    i16 23, label %.loopexit.i.fold.split102
-    i16 24, label %.loopexit.i.fold.split103
-    i16 25, label %.loopexit.i.fold.split104
-    i16 26, label %.loopexit.i.fold.split105
-    i16 27, label %.loopexit.i.fold.split106
-    i16 28, label %.loopexit.i.fold.split107
-    i16 29, label %.loopexit.i.fold.split108
-    i16 30, label %.loopexit.i.fold.split109
-    i16 31, label %.loopexit.i.fold.split110
-    i16 32, label %.loopexit.i.fold.split111
-    i16 33, label %.loopexit.i.fold.split112
-    i16 34, label %.loopexit.i.fold.split113
-    i16 35, label %.loopexit.i.fold.split114
-    i16 36, label %.loopexit.i.fold.split115
-    i16 37, label %.loopexit.i.fold.split116
-    i16 38, label %.loopexit.i.fold.split117
-    i16 39, label %.loopexit.i.fold.split118
-    i16 50, label %.loopexit.i.fold.split119
-    i16 51, label %.loopexit.i.fold.split120
-    i16 52, label %.loopexit.i.fold.split121
-    i16 53, label %.loopexit.i.fold.split122
-    i16 54, label %.loopexit.i.fold.split123
-    i16 55, label %.loopexit.i.fold.split124
-    i16 56, label %.loopexit.i.fold.split125
-    i16 57, label %.loopexit.i.fold.split126
-    i16 58, label %.loopexit.i.fold.split127
-    i16 59, label %.loopexit.i.fold.split128
-    i16 60, label %.loopexit.i.fold.split129
-  ]
+.loopexit.i.fold.split125:                        ; preds = %.lr.ph86.i.a
+  %9 = load ptr, ptr %8, align 8                  ; 2 uses
+  %.not7479.i = icmp eq ptr %9, null
+  br i1 %.not7479.i, label %.loopexit.i, label %.loopexit.i.fold.split126
 
-8:                                                ; preds = %.lr.ph.i
-  br label %.loopexit.i
+.loopexit.i.fold.split126:                        ; preds = %.loopexit.i.fold.split125
+  %10 = zext i16 %i.am to i32
+  br label %.loopexit.i.fold.split127
 
-.loopexit.i.fold.split:                           ; preds = %.lr.ph.i
-  br label %.loopexit.i
+.loopexit.i.fold.split127:                        ; preds = %.loopexit.i.fold.split129, %.loopexit.i.fold.split126
+  %.06880.i = phi ptr [ %9, %.loopexit.i.fold.split126 ], [ %16, %.loopexit.i.fold.split129 ] ; 4 uses
+  %11 = getelementptr i8, ptr %.06880.i, i64 16
+  %12 = load ptr, ptr %11, align 8
+  %13 = icmp eq ptr %12, null
+  br i1 %13, label %.loopexit.i, label %.loopexit.i.fold.split128
 
-.loopexit.i.fold.split82:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
+.loopexit.i.fold.split128:                        ; preds = %.loopexit.i.fold.split127
+  %14 = load i32, ptr %.06880.i, align 8
+  %15 = icmp eq i32 %14, %10
+  br i1 %15, label %.loopexit.i, label %.loopexit.i.fold.split129
 
-.loopexit.i.fold.split83:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
+.loopexit.i.fold.split129:                        ; preds = %.loopexit.i.fold.split128
+  %16 = getelementptr i8, ptr %.06880.i, i64 24   ; 2 uses
+  %.not74.i = icmp eq ptr %16, null
+  br i1 %.not74.i, label %.loopexit.i, label %.loopexit.i.fold.split127, !llvm.loop !12
 
-.loopexit.i.fold.split84:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split85:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split86:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split87:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split88:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split89:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split90:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split91:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split92:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split93:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split94:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split95:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split96:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split97:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split98:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split99:                         ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split100:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split101:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split102:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split103:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split104:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split105:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split106:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split107:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split108:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split109:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split110:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split111:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split112:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split113:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split114:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split115:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split116:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split117:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split118:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split119:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split120:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split121:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split122:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split123:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split124:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split125:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split126:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split127:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split128:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i.fold.split129:                        ; preds = %.lr.ph.i
-  br label %.loopexit.i
-
-.loopexit.i:                                      ; preds = %.lr.ph.i, %.loopexit.i.fold.split129, %.loopexit.i.fold.split128, %.loopexit.i.fold.split127, %.loopexit.i.fold.split126, %.loopexit.i.fold.split125, %.loopexit.i.fold.split124, %.loopexit.i.fold.split123, %.loopexit.i.fold.split122, %.loopexit.i.fold.split121, %.loopexit.i.fold.split120, %.loopexit.i.fold.split119, %.loopexit.i.fold.split118, %.loopexit.i.fold.split117, %.loopexit.i.fold.split116, %.loopexit.i.fold.split115, %.loopexit.i.fold.split114, %.loopexit.i.fold.split113, %.loopexit.i.fold.split112, %.loopexit.i.fold.split111, %.loopexit.i.fold.split110, %.loopexit.i.fold.split109, %.loopexit.i.fold.split108, %.loopexit.i.fold.split107, %.loopexit.i.fold.split106, %.loopexit.i.fold.split105, %.loopexit.i.fold.split104, %.loopexit.i.fold.split103, %.loopexit.i.fold.split102, %.loopexit.i.fold.split101, %.loopexit.i.fold.split100, %.loopexit.i.fold.split99, %.loopexit.i.fold.split98, %.loopexit.i.fold.split97, %.loopexit.i.fold.split96, %.loopexit.i.fold.split95, %.loopexit.i.fold.split94, %.loopexit.i.fold.split93, %.loopexit.i.fold.split92, %.loopexit.i.fold.split91, %.loopexit.i.fold.split90, %.loopexit.i.fold.split89, %.loopexit.i.fold.split88, %.loopexit.i.fold.split87, %.loopexit.i.fold.split86, %.loopexit.i.fold.split85, %.loopexit.i.fold.split84, %.loopexit.i.fold.split83, %.loopexit.i.fold.split82, %.loopexit.i.fold.split, %8, %.lr.ph86.i.a
-  %.not76.i = phi i1 [ true, %.lr.ph86.i.a ], [ false, %.loopexit.i.fold.split101 ], [ false, %.loopexit.i.fold.split118 ], [ false, %.lr.ph.i ], [ false, %.loopexit.i.fold.split96 ], [ false, %.loopexit.i.fold.split122 ], [ false, %.loopexit.i.fold.split115 ], [ true, %8 ], [ false, %.loopexit.i.fold.split ], [ false, %.loopexit.i.fold.split112 ], [ false, %.loopexit.i.fold.split107 ], [ false, %.loopexit.i.fold.split82 ], [ false, %.loopexit.i.fold.split121 ], [ false, %.loopexit.i.fold.split128 ], [ false, %.loopexit.i.fold.split83 ], [ false, %.loopexit.i.fold.split102 ], [ false, %.loopexit.i.fold.split113 ], [ false, %.loopexit.i.fold.split84 ], [ false, %.loopexit.i.fold.split111 ], [ false, %.loopexit.i.fold.split98 ], [ false, %.loopexit.i.fold.split85 ], [ false, %.loopexit.i.fold.split116 ], [ false, %.loopexit.i.fold.split127 ], [ false, %.loopexit.i.fold.split86 ], [ false, %.loopexit.i.fold.split105 ], [ false, %.loopexit.i.fold.split104 ], [ false, %.loopexit.i.fold.split87 ], [ false, %.loopexit.i.fold.split110 ], [ false, %.loopexit.i.fold.split97 ], [ false, %.loopexit.i.fold.split88 ], [ false, %.loopexit.i.fold.split119 ], [ false, %.loopexit.i.fold.split126 ], [ false, %.loopexit.i.fold.split89 ], [ false, %.loopexit.i.fold.split100 ], [ false, %.loopexit.i.fold.split99 ], [ false, %.loopexit.i.fold.split90 ], [ false, %.loopexit.i.fold.split109 ], [ false, %.loopexit.i.fold.split120 ], [ false, %.loopexit.i.fold.split91 ], [ false, %.loopexit.i.fold.split106 ], [ false, %.loopexit.i.fold.split125 ], [ false, %.loopexit.i.fold.split92 ], [ false, %.loopexit.i.fold.split103 ], [ false, %.loopexit.i.fold.split114 ], [ false, %.loopexit.i.fold.split93 ], [ false, %.loopexit.i.fold.split108 ], [ false, %.loopexit.i.fold.split123 ], [ false, %.loopexit.i.fold.split94 ], [ false, %.loopexit.i.fold.split117 ], [ false, %.loopexit.i.fold.split124 ], [ false, %.loopexit.i.fold.split95 ], [ false, %.loopexit.i.fold.split129 ]
-  %.169.i = phi ptr [ null, %.lr.ph86.i.a ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 504), %.loopexit.i.fold.split101 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 912), %.loopexit.i.fold.split118 ], [ @tape_alert_log_parameters, %.lr.ph.i ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 384), %.loopexit.i.fold.split96 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 1008), %.loopexit.i.fold.split122 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 840), %.loopexit.i.fold.split115 ], [ null, %8 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 24), %.loopexit.i.fold.split ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 768), %.loopexit.i.fold.split112 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 648), %.loopexit.i.fold.split107 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 48), %.loopexit.i.fold.split82 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 984), %.loopexit.i.fold.split121 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 1152), %.loopexit.i.fold.split128 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 72), %.loopexit.i.fold.split83 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 528), %.loopexit.i.fold.split102 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 792), %.loopexit.i.fold.split113 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 96), %.loopexit.i.fold.split84 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 744), %.loopexit.i.fold.split111 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 432), %.loopexit.i.fold.split98 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 120), %.loopexit.i.fold.split85 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 864), %.loopexit.i.fold.split116 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 1128), %.loopexit.i.fold.split127 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 144), %.loopexit.i.fold.split86 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 600), %.loopexit.i.fold.split105 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 576), %.loopexit.i.fold.split104 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 168), %.loopexit.i.fold.split87 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 720), %.loopexit.i.fold.split110 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 408), %.loopexit.i.fold.split97 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 192), %.loopexit.i.fold.split88 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 936), %.loopexit.i.fold.split119 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 1104), %.loopexit.i.fold.split126 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 216), %.loopexit.i.fold.split89 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 480), %.loopexit.i.fold.split100 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 456), %.loopexit.i.fold.split99 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 240), %.loopexit.i.fold.split90 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 696), %.loopexit.i.fold.split109 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 960), %.loopexit.i.fold.split120 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 264), %.loopexit.i.fold.split91 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 624), %.loopexit.i.fold.split106 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 1080), %.loopexit.i.fold.split125 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 288), %.loopexit.i.fold.split92 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 552), %.loopexit.i.fold.split103 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 816), %.loopexit.i.fold.split114 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 312), %.loopexit.i.fold.split93 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 672), %.loopexit.i.fold.split108 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 1032), %.loopexit.i.fold.split123 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 336), %.loopexit.i.fold.split94 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 888), %.loopexit.i.fold.split117 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 1056), %.loopexit.i.fold.split124 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 360), %.loopexit.i.fold.split95 ], [ getelementptr inbounds nuw (i8, ptr @tape_alert_log_parameters, i64 1176), %.loopexit.i.fold.split129 ]
+.loopexit.i:                                      ; preds = %.loopexit.i.fold.split129, %.loopexit.i.fold.split128, %.loopexit.i.fold.split127, %.loopexit.i.fold.split125, %.lr.ph86.i.a
+  %.169.i = phi ptr [ null, %.lr.ph86.i.a ], [ null, %.loopexit.i.fold.split125 ], [ null, %.loopexit.i.fold.split127 ], [ %.06880.i, %.loopexit.i.fold.split128 ], [ null, %.loopexit.i.fold.split129 ] ; 2 uses
   %.not75.i = icmp eq i8 %i.au, 0
   br i1 %.not75.i, label %bb.k, label %bb.f
 
 bb.f:                                             ; preds = %.loopexit.i
+  %.not76.i = icmp eq ptr %.169.i, null
   br i1 %.not76.i, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -852,7 +680,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ba = zext i8 %i.au to i32                    ; 2 uses
   %i.bb = call ptr @tvb_new_subset_length(ptr noundef %0, i32 noundef %i.ax, i32 noundef %i.ba)
   %i.bc = load ptr, ptr %i.ay, align 8
-  call void %i.bc(ptr noundef %i.bb, ptr noundef %1, ptr noundef %i.aa), !inline_history !12
+  call void %i.bc(ptr noundef %i.bb, ptr noundef %1, ptr noundef %i.aa), !inline_history !13
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g, %bb.f
@@ -869,7 +697,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 bb.k:                                             ; preds = %bb.j, %.loopexit.i
   %.1.i = phi i32 [ %i.bg, %bb.j ], [ %i.ax, %.loopexit.i ] ; 3 uses
   %i.bh = icmp ult i32 %.1.i, %i.ak
-  br i1 %i.bh, label %.lr.ph86.i.a, label %dissect_scsi_log_page.exit, !llvm.loop !13
+  br i1 %i.bh, label %.lr.ph86.i.a, label %dissect_scsi_log_page.exit, !llvm.loop !14
 
 dissect_scsi_log_page.exit:                       ; preds = %bb.k, %bb.e
   %.0.lcssa.i = phi i32 [ %i.ai, %bb.e ], [ %.1.i, %bb.k ]
@@ -981,7 +809,7 @@ bb.k:                                             ; preds = %.lr.ph
   %i.au = add i32 %i.at, %.082
   %i.av = sub i32 %.07281, %i.at                  ; 2 uses
   %.not79 = icmp eq i32 %i.av, 0
-  br i1 %.not79, label %.critedge, label %.lr.ph, !llvm.loop !14
+  br i1 %.not79, label %.critedge, label %.lr.ph, !llvm.loop !15
 
 .critedge:                                        ; preds = %.lr.ph, %bb.k, %bb.j, %bb.c, %bb.g, %bb.f, %bb.e, %bb.d, %bb.a
   ret void
@@ -1030,7 +858,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = add i32 %.02.us, 16                      ; 2 uses
   %i.r = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %i.q)
   %.not55.us = icmp eq i32 %i.r, 0
-  br i1 %.not55.us, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !15
+  br i1 %.not55.us, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !16
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.j
   %.02 = phi i32 [ %.1, %bb.j ], [ 0, %.lr.ph ]   ; 7 uses
@@ -1080,7 +908,7 @@ bb.j:                                             ; preds = %bb.i, %bb.f
   %.1 = add i32 %.02, 8                           ; 2 uses
   %i.aq = tail call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %.1)
   %.not55 = icmp eq i32 %i.aq, 0
-  br i1 %.not55, label %.loopexit, label %.lr.ph.split, !llvm.loop !15
+  br i1 %.not55, label %.loopexit, label %.lr.ph.split, !llvm.loop !16
 
 .loopexit:                                        ; preds = %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %.lr.ph.split.us, %bb.b, %bb.c, %bb.d, %.preheader, %bb.a
   ret void
@@ -1295,7 +1123,7 @@ bb.m:                                             ; preds = %.lr.ph
   %i.ba = add i32 %i.az, %.095
   %i.bb = sub i32 %.08294, %i.az                  ; 2 uses
   %.not92 = icmp eq i32 %i.bb, 0
-  br i1 %.not92, label %.critedge, label %.lr.ph, !llvm.loop !16
+  br i1 %.not92, label %.critedge, label %.lr.ph, !llvm.loop !17
 
 .critedge:                                        ; preds = %.lr.ph, %bb.m, %bb.l, %bb.c, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.a
   ret void
@@ -1427,7 +1255,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bh = add i32 %i.bg, %.07988
   %i.bi = sub nsw i32 %.189, %i.bg                ; 2 uses
   %i.bj = icmp sgt i32 %i.bi, 0
-  br i1 %i.bj, label %bb.m, label %.critedge, !llvm.loop !17
+  br i1 %i.bj, label %bb.m, label %.critedge, !llvm.loop !18
 
 .critedge:                                        ; preds = %bb.m, %bb.n, %bb.l, %dissect_scsi_pagecode.exit, %bb.i, %bb.h, %bb.g, %bb.a
   ret void
@@ -1570,7 +1398,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bp = add i32 %i.bo, %.08999
   %i.bq = sub nsw i32 %.1100, %i.bo               ; 2 uses
   %i.br = icmp sgt i32 %i.bq, 0
-  br i1 %i.br, label %bb.n, label %.critedge, !llvm.loop !18
+  br i1 %i.br, label %bb.n, label %.critedge, !llvm.loop !19
 
 .critedge:                                        ; preds = %bb.n, %bb.o, %bb.m, %dissect_scsi_pagecode.exit, %bb.j, %bb.i, %bb.h, %bb.g, %bb.a
   ret void
@@ -1673,7 +1501,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ae = tail call ptr @proto_tree_add_item(ptr noundef nonnull %2, i32 noundef %i.ad, ptr noundef %0, i32 noundef %.056, i32 noundef 8, i32 noundef 0) ; 0 uses
   %i.af = add nuw nsw i32 %.062, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.af, %i.ac
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !19
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !20
 
 bb.h:                                             ; preds = %bb.f
   %i.ag = icmp eq i32 %.055, 1
@@ -2037,7 +1865,7 @@ bb.v:                                             ; preds = %bb.h, %bb.i, %bb.u,
   %.pn = zext nneg i8 %.0114 to i32
   %.1116 = add nuw nsw i32 %.0115131, %.pn        ; 2 uses
   %i.bn = icmp samesign ult i32 %.1116, 8
-  br i1 %i.bn, label %bb.c, label %.loopexit, !llvm.loop !20
+  br i1 %i.bn, label %bb.c, label %.loopexit, !llvm.loop !21
 
 .loopexit:                                        ; preds = %bb.v, %bb.c, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
@@ -2165,7 +1993,7 @@ bb.j:                                             ; preds = %bb.i
   store volatile i32 %i.aj, ptr %i.a, align 4
   %i.ak = add nsw i32 %.065, -8
   %i.al = icmp samesign ugt i32 %.065, 8
-  br i1 %i.al, label %.lr.ph, label %.loopexit, !llvm.loop !21
+  br i1 %i.al, label %.lr.ph, label %.loopexit, !llvm.loop !22
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.j, %bb.i, %bb.h
   %.0..0..0..0.5 = load volatile i32, ptr %i.c, align 4
@@ -2568,7 +2396,7 @@ bb.z:                                             ; preds = %bb.w
   %i.fe = add i32 %.0..0..0..0.56, 8
   store volatile i32 %i.fe, ptr %i.a, align 4
   %.not177 = icmp eq i8 %i.ex, 0
-  br i1 %.not177, label %bb.ab, label %bb.aa, !llvm.loop !22
+  br i1 %.not177, label %bb.ab, label %bb.aa, !llvm.loop !23
 
 bb.aa:                                            ; preds = %.lr.ph
   %.0..0..0..0.57 = load volatile i32, ptr %i.a, align 4
@@ -2945,13 +2773,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.1.i = add i32 %.1.in81.i, 12                  ; 2 uses
   %i.di = add i32 %.1.in81.i, 20
   %.not.i = icmp ugt i32 %i.di, %i.cf
-  br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !23
+  br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !24
 
 .loopexit.i:                                      ; preds = %bb.o, %bb.l, %bb.k, %bb.j, %bb.i, %.preheader.i, %bb.h
   %.2.i = phi i32 [ %.083.i, %bb.h ], [ %.083.i, %bb.j ], [ %.083.i, %bb.i ], [ %.083.i, %bb.l ], [ %.083.i, %bb.k ], [ %.179.i, %.preheader.i ], [ %.1.i, %bb.o ]
   %i.dj = add i32 %.2.i, %i.bs                    ; 2 uses
   %i.dk = icmp ult i32 %i.dj, %i.bl
-  br i1 %i.dk, label %bb.h, label %dissect_scsi_descriptor_snsinfo.exit, !llvm.loop !24
+  br i1 %i.dk, label %bb.h, label %dissect_scsi_descriptor_snsinfo.exit, !llvm.loop !25
 
 dissect_scsi_descriptor_snsinfo.exit:             ; preds = %.loopexit.i, %bb.g, %dissect_scsi_fix_snsinfo.exit, %bb.a
   ret void
@@ -3354,7 +3182,7 @@ bb.u:                                             ; preds = %proto_item_set_gene
   br label %bb.aq
 
 bb.v:                                             ; preds = %proto_item_set_generated.exit187
-  %i.cp = load i8, ptr @scsi_defragment, align 1, !range !25, !noundef !26
+  %i.cp = load i8, ptr @scsi_defragment, align 1, !range !26, !noundef !27
   %i.cq = trunc nuw i8 %i.cp to i1
   br i1 %i.cq, label %bb.y, label %bb.w
 
@@ -3629,7 +3457,7 @@ bb.d:                                             ; preds = %bb.c, %bb.d
   tail call void @init_srt_table_row(ptr noundef %i.f, i32 noundef %.012, ptr noundef %i.i)
   %i.j = add nuw nsw i32 %.012, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.j, 256
-  br i1 %exitcond.not, label %bb.e, label %bb.d, !llvm.loop !27
+  br i1 %exitcond.not, label %bb.e, label %bb.d, !llvm.loop !28
 
 bb.e:                                             ; preds = %bb.d
   ret void
@@ -4032,8 +3860,8 @@ attributes #16 = { allocsize(0) }
 !9 = distinct !{!9, !6}
 !10 = distinct !{!10, !6}
 !11 = distinct !{!11, !6}
-!12 = distinct !{null}
-!13 = distinct !{!13, !6}
+!12 = distinct !{!12, !6}
+!13 = distinct !{null}
 !14 = distinct !{!14, !6}
 !15 = distinct !{!15, !6}
 !16 = distinct !{!16, !6}
@@ -4045,7 +3873,8 @@ attributes #16 = { allocsize(0) }
 !22 = distinct !{!22, !6}
 !23 = distinct !{!23, !6}
 !24 = distinct !{!24, !6}
-!25 = !{i8 0, i8 2}
-!26 = !{}
-!27 = distinct !{!27, !6}
+!25 = distinct !{!25, !6}
+!26 = !{i8 0, i8 2}
+!27 = !{}
+!28 = distinct !{!28, !6}
 end_hunk_4

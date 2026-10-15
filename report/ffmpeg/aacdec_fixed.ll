@@ -205,9 +205,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 5520 ; 13 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.c = load i8, ptr %i.b, align 4, !tbaa !22
-  %.not = icmp eq i8 %i.c, 0                      ; 8 uses
-  %i.d = select i1 %.not, ptr @sine_1024_fixed, ptr @aac_kbd_long_1024_fixed ; 4 uses
-  %i.e = select i1 %.not, ptr @sine_128_fixed, ptr @aac_kbd_short_128_fixed ; 8 uses
+  %.not = icmp eq i8 %i.c, 0                      ; 2 uses
+  %i.d = select i1 %.not, ptr @sine_1024_fixed, ptr @aac_kbd_long_1024_fixed ; 5 uses
+  %i.e = select i1 %.not, ptr @sine_128_fixed, ptr @aac_kbd_short_128_fixed ; 10 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.g = load i32, ptr %i.f, align 4, !tbaa !28
   switch i32 %i.g, label %vector.memcheck125 [
@@ -227,15 +227,14 @@ vector.memcheck96:                                ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 7312
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 4784 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8624 ; 2 uses
-  %2 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @sine_128_fixed, i64 256), ptr getelementptr inbounds nuw (i8, ptr @aac_kbd_short_128_fixed, i64 256)
+  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 256 ; 2 uses
   tail call void %i.m(ptr noundef nonnull %i.n, ptr noundef nonnull %i.p, ptr noundef nonnull %2, i32 noundef 64) #14
   %i.q = getelementptr i8, ptr %1, i64 7568       ; 2 uses
   %i.r = getelementptr i8, ptr %0, i64 8880
-  %3 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @sine_128_fixed, i64 256), ptr getelementptr inbounds nuw (i8, ptr @aac_kbd_short_128_fixed, i64 256)
   %bound097 = icmp ult ptr %i.q, %i.r
   %bound198 = icmp ult ptr %i.p, %i.i
   %found.conflict99 = and i1 %bound097, %bound198
-  %bound0100 = icmp ult ptr %i.q, %3
+  %bound0100 = icmp ult ptr %i.q, %2
   %bound1101 = icmp ult ptr %i.e, %i.i
   %found.conflict102 = and i1 %bound0100, %bound1101
   %conflict.rdx103 = or i1 %found.conflict99, %found.conflict102
@@ -314,15 +313,14 @@ vector.memcheck:                                  ; preds = %bb.a
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !46
   %i.bq = getelementptr inbounds nuw i8, ptr %1, i64 7312
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 8624 ; 2 uses
-  %4 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @sine_128_fixed, i64 256), ptr getelementptr inbounds nuw (i8, ptr @aac_kbd_short_128_fixed, i64 256)
-  tail call void %i.bp(ptr noundef nonnull %i.bq, ptr noundef nonnull %i.br, ptr noundef nonnull %4, i32 noundef 64) #14
+  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 256 ; 2 uses
+  tail call void %i.bp(ptr noundef nonnull %i.bq, ptr noundef nonnull %i.br, ptr noundef nonnull %3, i32 noundef 64) #14
   %i.bs = getelementptr i8, ptr %1, i64 7568      ; 2 uses
   %i.bt = getelementptr i8, ptr %0, i64 8880
-  %5 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @sine_128_fixed, i64 256), ptr getelementptr inbounds nuw (i8, ptr @aac_kbd_short_128_fixed, i64 256)
   %bound0 = icmp ult ptr %i.bs, %i.bt
   %bound1 = icmp ult ptr %i.br, %i.bl
   %found.conflict = and i1 %bound0, %bound1
-  %bound080 = icmp ult ptr %i.bs, %5
+  %bound080 = icmp ult ptr %i.bs, %3
   %bound181 = icmp ult ptr %i.e, %i.bl
   %found.conflict82 = and i1 %bound080, %bound181
   %conflict.rdx = or i1 %found.conflict, %found.conflict82
@@ -396,16 +394,15 @@ vector.memcheck125:                               ; preds = %bb.a
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !46
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 4784 ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %0, i64 6832 ; 2 uses
-  %6 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @sine_1024_fixed, i64 2048), ptr getelementptr inbounds nuw (i8, ptr @aac_kbd_long_1024_fixed, i64 2048)
-  tail call void %i.do(ptr noundef nonnull %i.a, ptr noundef nonnull %i.dq, ptr noundef nonnull %6, i32 noundef 512) #14
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 2048 ; 2 uses
+  tail call void %i.do(ptr noundef nonnull %i.a, ptr noundef nonnull %i.dq, ptr noundef nonnull %4, i32 noundef 512) #14
   %i.dr = getelementptr i8, ptr %1, i64 7568      ; 2 uses
   %i.ds = getelementptr i8, ptr %1, i64 9616      ; 2 uses
   %i.dt = getelementptr i8, ptr %0, i64 8880
-  %7 = select i1 %.not, ptr getelementptr inbounds nuw (i8, ptr @sine_1024_fixed, i64 2048), ptr getelementptr inbounds nuw (i8, ptr @aac_kbd_long_1024_fixed, i64 2048)
   %bound0126.a = icmp ult ptr %i.dr, %i.dt
   %bound1127.a = icmp ult ptr %i.dq, %i.ds
   %found.conflict128.a = and i1 %bound0126.a, %bound1127.a
-  %bound0129 = icmp ult ptr %i.dr, %7
+  %bound0129 = icmp ult ptr %i.dr, %4
   %bound1130 = icmp ult ptr %i.d, %i.ds
   %found.conflict131 = and i1 %bound0129, %bound1130
   %conflict.rdx132 = or i1 %found.conflict128.a, %found.conflict131

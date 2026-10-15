@@ -205,12 +205,13 @@ _ZN4llvm11raw_ostreamlsEPKc.exit116:              ; preds = %bb.q, %bb.r
   br label %bb.s
 
 .lr.ph273:                                        ; preds = %"_ZZNK4llvm4bolt21IndirectCallPromotion21findCallTargetSymbolsERSt6vectorINS1_8CallsiteESaIS3_EERmRNS0_16BinaryBasicBlockERNS_6MCInstERPSA_ENK3$_0clEm.exit"
-  %i.ep = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL17ICPJumpTablesTopNE, i64 120), align 8, !tbaa !362 ; 2 uses
+  %i.ep = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL17ICPJumpTablesTopNE, i64 120), align 8, !tbaa !362
   %.not94 = icmp eq i32 %i.ep, 0
-  %.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL7ICPTopNE, i64 120), align 8
-  %11 = select i1 %.not94, i32 %.val, i32 %i.ep   ; 2 uses
-  %i.eq = zext i32 %11 to i64
-  %.not95 = icmp eq i32 %11, 0
+  %11 = select i1 %.not94, ptr @_ZN4optsL7ICPTopNE, ptr @_ZN4optsL17ICPJumpTablesTopNE
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 120
+  %13 = load i32, ptr %12, align 8, !tbaa !362    ; 2 uses
+  %i.eq = zext i32 %13 to i64
+  %.not95 = icmp eq i32 %13, 0
   %i.er = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.es = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 6 uses
   %i.et = getelementptr inbounds nuw i8, ptr %9, i64 16
@@ -613,16 +614,16 @@ bb.az:                                            ; preds = %_ZN4llvm11raw_ostre
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit167
 
 .lr.ph:                                           ; preds = %bb.aa
-  %.val328 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL33ICPCallsRemainingPercentThresholdE, i64 120), align 8
-  %.val329 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL30ICPJTRemainingPercentThresholdE, i64 120), align 8
-  %13 = select i1 %.not326, i32 %.val328, i32 %.val329
-  %.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL29ICPCallsTotalPercentThresholdE, i64 120), align 8
-  %.val327 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL26ICPJTTotalPercentThresholdE, i64 120), align 8
-  %14 = select i1 %.not326, i32 %.val, i32 %.val327
+  %13 = select i1 %.not326, ptr @_ZN4optsL33ICPCallsRemainingPercentThresholdE, ptr @_ZN4optsL30ICPJTRemainingPercentThresholdE
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 120
+  %15 = load i32, ptr %14, align 8, !tbaa !362
+  %_ZN4optsL26ICPJTTotalPercentThresholdE._ZN4optsL29ICPCallsTotalPercentThresholdE = select i1 %.not326, ptr @_ZN4optsL29ICPCallsTotalPercentThresholdE, ptr @_ZN4optsL26ICPJTTotalPercentThresholdE
+  %16 = getelementptr inbounds nuw i8, ptr %_ZN4optsL26ICPJTTotalPercentThresholdE._ZN4optsL29ICPCallsTotalPercentThresholdE, i64 120
+  %17 = load i32, ptr %16, align 8, !tbaa !362
   %i.nc = load ptr, ptr %3, align 8, !tbaa !105
-  %i.nd = zext i32 %14 to i64
+  %i.nd = zext i32 %17 to i64
   %i.ne = mul i64 %4, %i.nd
-  %i.nf = zext i32 %13 to i64
+  %i.nf = zext i32 %15 to i64
   br label %bb.ba
 
 bb.ba:                                            ; preds = %.lr.ph, %bb.bd

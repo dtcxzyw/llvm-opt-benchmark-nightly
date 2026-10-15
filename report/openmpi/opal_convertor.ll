@@ -204,194 +204,194 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %.not66 = icmp eq i32 %i.hh, 0
   %i.hi = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.hj = getelementptr inbounds nuw i8, ptr %i.hi, i64 32
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 32), align 16
-  %.val87 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 32), align 16
-  %1 = select i1 %.not66, ptr %.val, ptr %.val87
-  store ptr %1, ptr %i.hj, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions = select i1 %.not66, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %1 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions, i64 32
+  %2 = load ptr, ptr %1, align 16, !tbaa !39
+  store ptr %2, ptr %i.hj, align 8, !tbaa !39
   %i.hk = and i32 %i.he, 32
   %.not66.1 = icmp eq i32 %i.hk, 0
   %i.hl = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 40
-  %.val88 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 40), align 8
-  %.val89 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 40), align 8
-  %2 = select i1 %.not66.1, ptr %.val88, ptr %.val89
-  store ptr %2, ptr %i.hm, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.1 = select i1 %.not66.1, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %3 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.1, i64 40
+  %4 = load ptr, ptr %3, align 8, !tbaa !39
+  store ptr %4, ptr %i.hm, align 8, !tbaa !39
   %i.hn = and i32 %i.he, 64
   %.not66.2 = icmp eq i32 %i.hn, 0
   %i.ho = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.hp = getelementptr inbounds nuw i8, ptr %i.ho, i64 48
-  %.val90 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 48), align 16
-  %.val91 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 48), align 16
-  %3 = select i1 %.not66.2, ptr %.val90, ptr %.val91
-  store ptr %3, ptr %i.hp, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.2 = select i1 %.not66.2, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %5 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.2, i64 48
+  %6 = load ptr, ptr %5, align 16, !tbaa !39
+  store ptr %6, ptr %i.hp, align 8, !tbaa !39
   %i.hq = and i32 %i.he, 128
   %.not66.3 = icmp eq i32 %i.hq, 0
   %i.hr = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hr, i64 56
-  %.val92 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 56), align 8
-  %.val93 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 56), align 8
-  %4 = select i1 %.not66.3, ptr %.val92, ptr %.val93
-  store ptr %4, ptr %i.hs, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.3 = select i1 %.not66.3, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %7 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.3, i64 56
+  %8 = load ptr, ptr %7, align 8, !tbaa !39
+  store ptr %8, ptr %i.hs, align 8, !tbaa !39
   %i.ht = and i32 %i.he, 256
   %.not66.4 = icmp eq i32 %i.ht, 0
   %i.hu = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 64
-  %.val94 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 64), align 16
-  %.val95 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 64), align 16
-  %5 = select i1 %.not66.4, ptr %.val94, ptr %.val95
-  store ptr %5, ptr %i.hv, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.4 = select i1 %.not66.4, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %9 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.4, i64 64
+  %10 = load ptr, ptr %9, align 16, !tbaa !39
+  store ptr %10, ptr %i.hv, align 8, !tbaa !39
   %i.hw = and i32 %i.he, 512
   %.not66.5 = icmp eq i32 %i.hw, 0
   %i.hx = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hx, i64 72
-  %.val96 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 72), align 8
-  %.val97 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 72), align 8
-  %6 = select i1 %.not66.5, ptr %.val96, ptr %.val97
-  store ptr %6, ptr %i.hy, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.5 = select i1 %.not66.5, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %11 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.5, i64 72
+  %12 = load ptr, ptr %11, align 8, !tbaa !39
+  store ptr %12, ptr %i.hy, align 8, !tbaa !39
   %i.hz = and i32 %i.he, 1024
   %.not66.6 = icmp eq i32 %i.hz, 0
   %i.ia = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 80
-  %.val98 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 80), align 16
-  %.val99 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 80), align 16
-  %7 = select i1 %.not66.6, ptr %.val98, ptr %.val99
-  store ptr %7, ptr %i.ib, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.6 = select i1 %.not66.6, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %13 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.6, i64 80
+  %14 = load ptr, ptr %13, align 16, !tbaa !39
+  store ptr %14, ptr %i.ib, align 8, !tbaa !39
   %i.ic = and i32 %i.he, 2048
   %.not66.7 = icmp eq i32 %i.ic, 0
   %i.id = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.ie = getelementptr inbounds nuw i8, ptr %i.id, i64 88
-  %.val100 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 88), align 8
-  %.val101 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 88), align 8
-  %8 = select i1 %.not66.7, ptr %.val100, ptr %.val101
-  store ptr %8, ptr %i.ie, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.7 = select i1 %.not66.7, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %15 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.7, i64 88
+  %16 = load ptr, ptr %15, align 8, !tbaa !39
+  store ptr %16, ptr %i.ie, align 8, !tbaa !39
   %i.if = and i32 %i.he, 4096
   %.not66.8 = icmp eq i32 %i.if, 0
   %i.ig = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.ih = getelementptr inbounds nuw i8, ptr %i.ig, i64 96
-  %.val102 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 96), align 16
-  %.val103 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 96), align 16
-  %9 = select i1 %.not66.8, ptr %.val102, ptr %.val103
-  store ptr %9, ptr %i.ih, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.8 = select i1 %.not66.8, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %17 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.8, i64 96
+  %18 = load ptr, ptr %17, align 16, !tbaa !39
+  store ptr %18, ptr %i.ih, align 8, !tbaa !39
   %i.ii = and i32 %i.he, 8192
   %.not66.9 = icmp eq i32 %i.ii, 0
   %i.ij = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 104
-  %.val104 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 104), align 8
-  %.val105 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 104), align 8
-  %10 = select i1 %.not66.9, ptr %.val104, ptr %.val105
-  store ptr %10, ptr %i.ik, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.9 = select i1 %.not66.9, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %19 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.9, i64 104
+  %20 = load ptr, ptr %19, align 8, !tbaa !39
+  store ptr %20, ptr %i.ik, align 8, !tbaa !39
   %i.il = and i32 %i.he, 16384
   %.not66.10 = icmp eq i32 %i.il, 0
   %i.im = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 112
-  %.val106 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 112), align 16
-  %.val107 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 112), align 16
-  %11 = select i1 %.not66.10, ptr %.val106, ptr %.val107
-  store ptr %11, ptr %i.in, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.10 = select i1 %.not66.10, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %21 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.10, i64 112
+  %22 = load ptr, ptr %21, align 16, !tbaa !39
+  store ptr %22, ptr %i.in, align 8, !tbaa !39
   %i.io = and i32 %i.he, 32768
   %.not66.11 = icmp eq i32 %i.io, 0
   %i.ip = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ip, i64 120
-  %.val108 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 120), align 8
-  %.val109 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 120), align 8
-  %12 = select i1 %.not66.11, ptr %.val108, ptr %.val109
-  store ptr %12, ptr %i.iq, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.11 = select i1 %.not66.11, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %23 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.11, i64 120
+  %24 = load ptr, ptr %23, align 8, !tbaa !39
+  store ptr %24, ptr %i.iq, align 8, !tbaa !39
   %i.ir = and i32 %i.he, 65536
   %.not66.12 = icmp eq i32 %i.ir, 0
   %i.is = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.it = getelementptr inbounds nuw i8, ptr %i.is, i64 128
-  %.val110 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 128), align 16
-  %.val111 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 128), align 16
-  %13 = select i1 %.not66.12, ptr %.val110, ptr %.val111
-  store ptr %13, ptr %i.it, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.12 = select i1 %.not66.12, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %25 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.12, i64 128
+  %26 = load ptr, ptr %25, align 16, !tbaa !39
+  store ptr %26, ptr %i.it, align 8, !tbaa !39
   %i.iu = and i32 %i.he, 131072
   %.not66.13 = icmp eq i32 %i.iu, 0
   %i.iv = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iv, i64 136
-  %.val112 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 136), align 8
-  %.val113 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 136), align 8
-  %14 = select i1 %.not66.13, ptr %.val112, ptr %.val113
-  store ptr %14, ptr %i.iw, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.13 = select i1 %.not66.13, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %27 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.13, i64 136
+  %28 = load ptr, ptr %27, align 8, !tbaa !39
+  store ptr %28, ptr %i.iw, align 8, !tbaa !39
   %i.ix = and i32 %i.he, 262144
   %.not66.14 = icmp eq i32 %i.ix, 0
   %i.iy = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 144
-  %.val114 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 144), align 16
-  %.val115 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 144), align 16
-  %15 = select i1 %.not66.14, ptr %.val114, ptr %.val115
-  store ptr %15, ptr %i.iz, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.14 = select i1 %.not66.14, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %29 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.14, i64 144
+  %30 = load ptr, ptr %29, align 16, !tbaa !39
+  store ptr %30, ptr %i.iz, align 8, !tbaa !39
   %i.ja = and i32 %i.he, 524288
   %.not66.15 = icmp eq i32 %i.ja, 0
   %i.jb = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 152
-  %.val116 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 152), align 8
-  %.val117 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 152), align 8
-  %16 = select i1 %.not66.15, ptr %.val116, ptr %.val117
-  store ptr %16, ptr %i.jc, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.15 = select i1 %.not66.15, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %31 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.15, i64 152
+  %32 = load ptr, ptr %31, align 8, !tbaa !39
+  store ptr %32, ptr %i.jc, align 8, !tbaa !39
   %i.jd = and i32 %i.he, 1048576
   %.not66.16 = icmp eq i32 %i.jd, 0
   %i.je = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.jf = getelementptr inbounds nuw i8, ptr %i.je, i64 160
-  %.val118 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 160), align 16
-  %.val119 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 160), align 16
-  %17 = select i1 %.not66.16, ptr %.val118, ptr %.val119
-  store ptr %17, ptr %i.jf, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.16 = select i1 %.not66.16, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %33 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.16, i64 160
+  %34 = load ptr, ptr %33, align 16, !tbaa !39
+  store ptr %34, ptr %i.jf, align 8, !tbaa !39
   %i.jg = and i32 %i.he, 2097152
   %.not66.17 = icmp eq i32 %i.jg, 0
   %i.jh = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jh, i64 168
-  %.val120 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 168), align 8
-  %.val121 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 168), align 8
-  %18 = select i1 %.not66.17, ptr %.val120, ptr %.val121
-  store ptr %18, ptr %i.ji, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.17 = select i1 %.not66.17, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %35 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.17, i64 168
+  %36 = load ptr, ptr %35, align 8, !tbaa !39
+  store ptr %36, ptr %i.ji, align 8, !tbaa !39
   %i.jj = and i32 %i.he, 4194304
   %.not66.18 = icmp eq i32 %i.jj, 0
   %i.jk = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 176
-  %.val122 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 176), align 16
-  %.val123 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 176), align 16
-  %19 = select i1 %.not66.18, ptr %.val122, ptr %.val123
-  store ptr %19, ptr %i.jl, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.18 = select i1 %.not66.18, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %37 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.18, i64 176
+  %38 = load ptr, ptr %37, align 16, !tbaa !39
+  store ptr %38, ptr %i.jl, align 8, !tbaa !39
   %i.jm = and i32 %i.he, 8388608
   %.not66.19 = icmp eq i32 %i.jm, 0
   %i.jn = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 184
-  %.val124 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 184), align 8
-  %.val125 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 184), align 8
-  %20 = select i1 %.not66.19, ptr %.val124, ptr %.val125
-  store ptr %20, ptr %i.jo, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.19 = select i1 %.not66.19, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %39 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.19, i64 184
+  %40 = load ptr, ptr %39, align 8, !tbaa !39
+  store ptr %40, ptr %i.jo, align 8, !tbaa !39
   %i.jp = and i32 %i.he, 16777216
   %.not66.20 = icmp eq i32 %i.jp, 0
   %i.jq = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jq, i64 192
-  %.val126 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 192), align 16
-  %.val127 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 192), align 16
-  %21 = select i1 %.not66.20, ptr %.val126, ptr %.val127
-  store ptr %21, ptr %i.jr, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.20 = select i1 %.not66.20, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %41 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.20, i64 192
+  %42 = load ptr, ptr %41, align 16, !tbaa !39
+  store ptr %42, ptr %i.jr, align 8, !tbaa !39
   %i.js = and i32 %i.he, 33554432
   %.not66.21 = icmp eq i32 %i.js, 0
   %i.jt = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jt, i64 200
-  %.val128 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 200), align 8
-  %.val129 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 200), align 8
-  %22 = select i1 %.not66.21, ptr %.val128, ptr %.val129
-  store ptr %22, ptr %i.ju, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.21 = select i1 %.not66.21, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %43 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.21, i64 200
+  %44 = load ptr, ptr %43, align 8, !tbaa !39
+  store ptr %44, ptr %i.ju, align 8, !tbaa !39
   %i.jv = and i32 %i.he, 67108864
   %.not66.22 = icmp eq i32 %i.jv, 0
   %i.jw = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jw, i64 208
-  %.val130 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 208), align 16
-  %.val131 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 208), align 16
-  %23 = select i1 %.not66.22, ptr %.val130, ptr %.val131
-  store ptr %23, ptr %i.jx, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.22 = select i1 %.not66.22, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %45 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.22, i64 208
+  %46 = load ptr, ptr %45, align 16, !tbaa !39
+  store ptr %46, ptr %i.jx, align 8, !tbaa !39
   %i.jy = and i32 %i.he, 134217728
   %.not66.23 = icmp eq i32 %i.jy, 0
   %i.jz = load ptr, ptr %i.hg, align 8, !tbaa !34
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 216
-  %.val132 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_copy_functions, i64 216), align 8
-  %.val133 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @opal_datatype_heterogeneous_copy_functions, i64 216), align 8
-  %24 = select i1 %.not66.23, ptr %.val132, ptr %.val133
-  store ptr %24, ptr %i.ka, align 8, !tbaa !39
+  %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.23 = select i1 %.not66.23, ptr @opal_datatype_copy_functions, ptr @opal_datatype_heterogeneous_copy_functions
+  %47 = getelementptr inbounds nuw i8, ptr %opal_datatype_copy_functions.opal_datatype_heterogeneous_copy_functions.23, i64 216
+  %48 = load ptr, ptr %47, align 8, !tbaa !39
+  store ptr %48, ptr %i.ka, align 8, !tbaa !39
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.c, %.loopexit.loopexit, %bb.e

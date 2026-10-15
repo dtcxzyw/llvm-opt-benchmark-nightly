@@ -204,13 +204,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 60
   store i8 0, ptr %i.a, align 4, !tbaa !310
   %i.b = icmp sgt i32 %7, 2
-  %.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 120), align 8
-  %.val27 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 120), align 8
-  %14 = select i1 %i.b, i32 %.val, i32 %.val27
-  store i32 %14, ptr %0, align 4, !tbaa !35
+  %_ZL25UnrollThresholdAggressive._ZL22UnrollThresholdDefault = select i1 %i.b, ptr @_ZL25UnrollThresholdAggressive, ptr @_ZL22UnrollThresholdDefault
+  %14 = getelementptr inbounds nuw i8, ptr %_ZL25UnrollThresholdAggressive._ZL22UnrollThresholdDefault, i64 120
+  %15 = load i32, ptr %14, align 8, !tbaa !40
+  store i32 %15, ptr %0, align 4, !tbaa !41
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  store i32 400, ptr %i.c, align 4, !tbaa !36
-  %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 120), align 8, !tbaa !42 ; 2 uses
+  store i32 400, ptr %i.c, align 4, !tbaa !42
+  %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 120), align 8, !tbaa !40 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store i32 %i.d, ptr %i.e, align 4, !tbaa !311
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
@@ -223,7 +223,7 @@ bb.a:
   store i32 8, ptr %i.i, align 4, !tbaa !45
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   store i32 -1, ptr %i.j, align 4, !tbaa !46
-  %i.k = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !42
+  %i.k = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !40
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   store i32 %i.k, ptr %i.l, align 4, !tbaa !47
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 3 uses
@@ -242,10 +242,10 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 52
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.s, i8 0, i64 5, i1 false)
   store i32 60, ptr %i.u, align 4, !tbaa !313
-  %i.v = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 120), align 8, !tbaa !42
+  %i.v = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 120), align 8, !tbaa !40
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   store i32 %i.v, ptr %i.w, align 4, !tbaa !53
-  %i.x = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm24SCEVCheapExpansionBudgetE, i64 120), align 8, !tbaa !42
+  %i.x = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm24SCEVCheapExpansionBudgetE, i64 120), align 8, !tbaa !40
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i32 %i.x, ptr %i.y, align 4, !tbaa !54
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 68
@@ -278,10 +278,10 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge:                                        ; preds = %bb.a, %_ZNK4llvm8Function10hasOptSizeEv.exit, %bb.c
   %i.am = load i32, ptr %i.e, align 4, !tbaa !311
-  store i32 %i.am, ptr %0, align 4, !tbaa !35
+  store i32 %i.am, ptr %0, align 4, !tbaa !41
   %i.an = load i32, ptr %i.g, align 4, !tbaa !312
   store i32 %i.an, ptr %i.f, align 4, !tbaa !43
-  store i32 100, ptr %i.c, align 4, !tbaa !36
+  store i32 100, ptr %i.c, align 4, !tbaa !42
   br label %.critedge11
 
 .critedge11:                                      ; preds = %bb.b, %.critedge, %bb.c
@@ -290,8 +290,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not28.a, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.critedge11
-  %i.ap = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL15UnrollThreshold, i64 120), align 8, !tbaa !42
-  store i32 %i.ap, ptr %0, align 4, !tbaa !35
+  %i.ap = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL15UnrollThreshold, i64 120), align 8, !tbaa !40
+  store i32 %i.ap, ptr %0, align 4, !tbaa !41
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.critedge11
@@ -300,7 +300,7 @@ bb.e:                                             ; preds = %bb.d, %.critedge11
   br i1 %.not29.a, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ar = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollPartialThreshold, i64 120), align 8, !tbaa !42
+  %i.ar = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollPartialThreshold, i64 120), align 8, !tbaa !40
   store i32 %i.ar, ptr %i.f, align 4, !tbaa !43
   br label %bb.g
 
@@ -310,8 +310,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not30.a, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.at = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 120), align 8, !tbaa !42
-  store i32 %i.at, ptr %i.c, align 4, !tbaa !36
+  %i.at = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 120), align 8, !tbaa !40
+  store i32 %i.at, ptr %i.c, align 4, !tbaa !42
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -320,7 +320,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %.not31.a, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.av = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL14UnrollMaxCount, i64 120), align 8, !tbaa !42
+  %i.av = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL14UnrollMaxCount, i64 120), align 8, !tbaa !40
   store i32 %i.av, ptr %i.j, align 4, !tbaa !46
   br label %bb.k
 
@@ -330,7 +330,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %.not32.a, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ax = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !42
+  %i.ax = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !40
   store i32 %i.ax, ptr %i.l, align 4, !tbaa !47
   br label %bb.m
 
@@ -340,7 +340,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %.not33.a, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.az = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL18UnrollFullMaxCount, i64 120), align 8, !tbaa !42
+  %i.az = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL18UnrollFullMaxCount, i64 120), align 8, !tbaa !40
   store i32 %i.az, ptr %i.m, align 4, !tbaa !48
   br label %bb.o
 
@@ -375,7 +375,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %i.bg = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !42
+  %i.bg = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !40
   %i.bh = icmp eq i32 %i.bg, 0
   br i1 %i.bh, label %bb.v, label %bb.w
 
@@ -399,7 +399,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br i1 %.not38.a, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.bl = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 120), align 8, !tbaa !42
+  %i.bl = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 120), align 8, !tbaa !40
   store i32 %i.bl, ptr %i.w, align 4, !tbaa !53
   br label %bb.aa
 
@@ -409,7 +409,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %.not39.a, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  store i32 %.sroa.023.0.extract.trunc, ptr %0, align 4, !tbaa !35
+  store i32 %.sroa.023.0.extract.trunc, ptr %0, align 4, !tbaa !41
   store i32 %.sroa.023.0.extract.trunc, ptr %i.f, align 4, !tbaa !43
   br label %bb.ac
 
@@ -812,7 +812,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %.sroa.0176.0.copyload = load i64, ptr %12, align 8, !tbaa !113
-  %i.u = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnrollCount, i64 120), align 8, !tbaa !42 ; 3 uses
+  %i.u = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnrollCount, i64 120), align 8, !tbaa !40 ; 3 uses
   %i.v = sdiv i64 %.sroa.0176.0.copyload, 4
   %i.w = trunc i64 %i.v to i32
   %.not.i.i = icmp eq i32 %i.u, 0
@@ -827,7 +827,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ae = mul nuw i64 %i.ad, %i.aa
   %i.af = zext i32 %i.y to i64
   %i.ag = add nuw i64 %i.ae, %i.af
-  %i.ah = load i32, ptr %13, align 4, !tbaa !35
+  %i.ah = load i32, ptr %13, align 4, !tbaa !41
   %i.ai = zext i32 %i.ah to i64
   %i.aj = icmp ult i64 %i.ag, %i.ai               ; 2 uses
   %brmerge = select i1 %i.aj, i1 true, i1 %i.m
@@ -1108,7 +1108,7 @@ bb.p:                                             ; preds = %"_ZN4llvm25Optimiza
   br i1 %.not22.i, label %bb.v, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ej = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 120), align 8, !tbaa !42
+  %i.ej = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 120), align 8, !tbaa !40
   %i.ek = icmp ugt i32 %8, %i.ej
   br i1 %i.ek, label %bb.r, label %_ZL18shouldPragmaUnrollPN4llvm4LoopERKNS_16UnrollPragmaInfoEjjjNS_19UnrollCostEstimatorERKNS_19TargetTransformInfo20UnrollingPreferencesEPNS_25OptimizationRemarkEmitterE.exit
 
@@ -1148,7 +1148,7 @@ _ZNK4llvm25OptimizationRemarkEmitter7enabledEv.exit.thread.i28.i: ; preds = %_ZN
   call void @_ZN4llvm30DiagnosticInfoOptimizationBase8ArgumentC1ENS_9StringRefEj(ptr noundef nonnull align 8 dereferenceable(80) %22, ptr nonnull @.str.85, i64 9, i32 noundef %8) #19, !noalias !348
   %i.ez = call noundef nonnull align 8 dereferenceable(432) ptr @_ZN4llvmlsINS_26OptimizationRemarkAnalysisEEEDcOT_NSt9enable_ifIXsr3stdE12is_base_of_vINS_30DiagnosticInfoOptimizationBaseENSt16remove_referenceIS2_E4typeEEENS5_8ArgumentEE4typeE(ptr noundef nonnull align 8 dereferenceable(432) %19, ptr nofree noundef nonnull align 8 dereferenceable(80) %22), !noalias !348 ; 2 uses
   call void @_ZN4llvm30DiagnosticInfoOptimizationBase6insertENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(432) %i.ez, ptr nonnull @.str.86, i64 15) #19, !noalias !348
-  %i.fa = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 120), align 8, !tbaa !42, !noalias !348
+  %i.fa = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 120), align 8, !tbaa !40, !noalias !348
   call void @_ZN4llvm30DiagnosticInfoOptimizationBase8ArgumentC1ENS_9StringRefEj(ptr noundef nonnull align 8 dereferenceable(80) %23, ptr nonnull @.str.87, i64 5, i32 noundef %i.fa) #19, !noalias !348
   %i.fb = call noundef nonnull align 8 dereferenceable(432) ptr @_ZN4llvmlsINS_26OptimizationRemarkAnalysisEEEDcOT_NSt9enable_ifIXsr3stdE12is_base_of_vINS_30DiagnosticInfoOptimizationBaseENSt16remove_referenceIS2_E4typeEEENS5_8ArgumentEE4typeE(ptr noundef nonnull align 8 dereferenceable(432) %i.ez, ptr nofree noundef nonnull align 8 dereferenceable(80) %23), !noalias !348 ; 7 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %24, i64 8
@@ -1551,10 +1551,10 @@ bb.aa:                                            ; preds = %_ZL18shouldPragmaUn
   br i1 %or.cond11, label %.thread181, label %bb.ab
 
 .thread181:                                       ; preds = %.critedge
-  %i.lr = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 120), align 8, !tbaa !42 ; 2 uses
+  %i.lr = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 120), align 8, !tbaa !40 ; 2 uses
   %i.ls = load i32, ptr %13, align 4, !tbaa !166
   %.sroa.speculated173 = call i32 @llvm.umax.i32(i32 %i.ls, i32 %i.lr)
-  store i32 %.sroa.speculated173, ptr %13, align 4, !tbaa !35
+  store i32 %.sroa.speculated173, ptr %13, align 4, !tbaa !41
   %i.lt = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 2 uses
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !166
   %.sroa.speculated = call i32 @llvm.umax.i32(i32 %i.lu, i32 %i.lr)
@@ -1614,7 +1614,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.mg = phi i1 [ %i.lw, %.critedge140.thread ], [ true, %bb.ag ], [ false, %.critedge140 ], [ true, %bb.af ], [ true, %bb.ae ] ; 2 uses
   %.not130184294 = phi i1 [ false, %.critedge140.thread ], [ true, %bb.ag ], [ true, %.critedge140 ], [ true, %bb.af ], [ true, %bb.ae ]
   %i.mh = phi ptr [ %i.ln, %.critedge140.thread ], [ %i.ly, %bb.ag ], [ %i.ly, %.critedge140 ], [ %i.ly, %bb.af ], [ %i.ly, %bb.ae ]
-  %i.mi = load i32, ptr %13, align 4, !tbaa !35
+  %i.mi = load i32, ptr %13, align 4, !tbaa !41
   call void @_ZN4llvm16computePeelCountEPNS_4LoopEjRNS_19TargetTransformInfo18PeelingPreferencesEjRNS_13DominatorTreeERNS_15ScalarEvolutionERKS2_PNS_15AssumptionCacheEj(ptr noundef %0, i32 noundef %i.c, ptr noundef nonnull align 4 dereferenceable(8) %14, i32 noundef %8, ptr noundef nonnull align 8 dereferenceable(204) %2, ptr noundef nonnull align 8 dereferenceable(1152) %5, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %4, i32 noundef %i.mi) #19
   %i.mj = load i32, ptr %14, align 4, !tbaa !163
   %.not132 = icmp eq i32 %i.mj, 0
@@ -1777,7 +1777,7 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   %.sroa.0.0.extract.trunc = trunc i64 %i.ot to i32
-  %i.ov = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 120), align 8, !tbaa !42
+  %i.ov = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 120), align 8, !tbaa !40
   %i.ow = icmp ugt i32 %i.ov, %.sroa.0.0.extract.trunc
   br i1 %i.ow, label %.critedge146, label %bb.ax
 
@@ -1923,14 +1923,14 @@ bb.b:                                             ; preds = %bb.a
   %i.n = mul nuw i64 %i.l, %i.m
   %i.o = zext i32 %i.j to i64
   %i.p = add nuw i64 %i.n, %i.o
-  %i.q = load i32, ptr %5, align 4, !tbaa !35     ; 2 uses
+  %i.q = load i32, ptr %5, align 4, !tbaa !41     ; 2 uses
   %i.r = zext i32 %i.q to i64
   %i.s = icmp ult i64 %i.p, %i.r
   br i1 %i.s, label %bb.ek, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !36
+  %i.u = load i32, ptr %i.t, align 4, !tbaa !42
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 56
   %i.w = load i32, ptr %i.v, align 4, !tbaa !53
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2333,7 +2333,7 @@ _ZL21analyzeLoopUnrollCostPKN4llvm4LoopEjRNS_13DominatorTreeERNS_15ScalarEvoluti
   br i1 %.9.i, label %bb.eh, label %.critedge20
 
 bb.eh:                                            ; preds = %_ZL21analyzeLoopUnrollCostPKN4llvm4LoopEjRNS_13DominatorTreeERNS_15ScalarEvolutionERKNS_15SmallPtrSetImplIPKNS_5ValueEEERKNS_19TargetTransformInfoEjj.exit
-  %i.ayn = load i32, ptr %i.t, align 4, !tbaa !36 ; 2 uses
+  %i.ayn = load i32, ptr %i.t, align 4, !tbaa !42 ; 2 uses
   %.sroa.0.0.extract.trunc = trunc i64 %.sroa.084.0.i to i32 ; 3 uses
   %.sroa.0.4.extract.shift = lshr i64 %.sroa.084.0.i, 32
   %.sroa.0.4.extract.trunc = trunc nuw i64 %.sroa.0.4.extract.shift to i32
@@ -2352,7 +2352,7 @@ bb.ej:                                            ; preds = %bb.ei
 
 _ZL27getFullUnrollBoostingFactorRKN12_GLOBAL__N_119EstimatedUnrollCostEj.exit: ; preds = %bb.eh, %bb.ei, %bb.ej
   %.0.i = phi i32 [ 100, %bb.eh ], [ %.sroa.speculated.i, %bb.ej ], [ %i.ayn, %bb.ei ]
-  %i.ayq = load i32, ptr %5, align 4, !tbaa !35
+  %i.ayq = load i32, ptr %5, align 4, !tbaa !41
   %i.ayr = mul i32 %i.ayq, %.0.i
   %i.ays = udiv i32 %i.ayr, 100
   %.not = icmp ugt i32 %i.ays, %.sroa.0.0.extract.trunc
@@ -2755,7 +2755,7 @@ _ZNK4llvm8Function10hasOptSizeEv.exit:            ; preds = %bb.n, %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #19
   %i.ct = call i64 @_ZN4llvm24gatherPeelingPreferencesEPNS_4LoopERNS_15ScalarEvolutionERKNS_19TargetTransformInfoESt8optionalIbES8_b(ptr noundef nonnull %0, ptr noundef nonnull align 8 dereferenceable(1152) %3, ptr noundef nonnull align 8 dereferenceable(8) %4, i16 %19, i16 %20, i1 noundef zeroext true) #19
   store i64 %i.ct, ptr %29, align 8
-  %i.cu = load i32, ptr %28, align 4, !tbaa !35
+  %i.cu = load i32, ptr %28, align 4, !tbaa !41
   %i.cv = icmp eq i32 %i.cu, 0
   br i1 %i.cv, label %bb.p, label %bb.s
 
@@ -2853,7 +2853,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ea = add i32 %i.dz, 1
   %i.eb = load i32, ptr %28, align 4, !tbaa !166
   %.sroa.speculated = call i32 @llvm.umax.i32(i32 %i.eb, i32 %i.ea)
-  store i32 %.sroa.speculated, ptr %28, align 4, !tbaa !35
+  store i32 %.sroa.speculated, ptr %28, align 4, !tbaa !41
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
@@ -3256,7 +3256,7 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZN4llvm22ForgetSCEVInLoopUnrollE) #19
   %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIbLb0ENS0_6parserIbEEED2Ev, ptr nonnull @_ZN4llvm22ForgetSCEVInLoopUnrollE, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL15UnrollThreshold, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL15UnrollThreshold, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL15UnrollThreshold, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL15UnrollThreshold, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL15UnrollThreshold, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL15UnrollThreshold, align 8, !tbaa !21
@@ -3272,14 +3272,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL15UnrollThreshold) #19
   %i.h = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL15UnrollThreshold, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL22UnrollOptSizeThreshold, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL22UnrollOptSizeThreshold, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL22UnrollOptSizeThreshold, ptr nonnull align 1 dereferenceable(25) @.str.6, i64 24) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 140), align 4, !tbaa !309
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 136), align 8, !tbaa !841
   %i.i = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollOptSizeThreshold, i64 10), align 2
@@ -3291,7 +3291,7 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL22UnrollOptSizeThreshold) #19
   %i.l = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL22UnrollOptSizeThreshold, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL22UnrollPartialThreshold, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollPartialThreshold, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollPartialThreshold, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollPartialThreshold, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollPartialThreshold, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL22UnrollPartialThreshold, align 8, !tbaa !21
@@ -3307,14 +3307,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL22UnrollPartialThreshold) #19
   %i.p = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL22UnrollPartialThreshold, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL30UnrollMaxPercentThresholdBoost, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL30UnrollMaxPercentThresholdBoost, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL30UnrollMaxPercentThresholdBoost, ptr nonnull align 1 dereferenceable(35) @.str.12, i64 34) #19
-  store i32 400, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 120), align 8, !tbaa !42
+  store i32 400, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 140), align 4, !tbaa !309
   store i32 400, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 136), align 8, !tbaa !841
   %i.q = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL30UnrollMaxPercentThresholdBoost, i64 10), align 2
@@ -3326,14 +3326,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL30UnrollMaxPercentThresholdBoost) #19
   %i.t = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL30UnrollMaxPercentThresholdBoost, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL33UnrollMaxIterationsCountToAnalyze, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL33UnrollMaxIterationsCountToAnalyze, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL33UnrollMaxIterationsCountToAnalyze, ptr nonnull align 1 dereferenceable(38) @.str.15, i64 37) #19
-  store i32 10, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 120), align 8, !tbaa !42
+  store i32 10, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 140), align 4, !tbaa !309
   store i32 10, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 136), align 8, !tbaa !841
   %i.u = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL33UnrollMaxIterationsCountToAnalyze, i64 10), align 2
@@ -3345,7 +3345,7 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL33UnrollMaxIterationsCountToAnalyze) #19
   %i.x = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL33UnrollMaxIterationsCountToAnalyze, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL11UnrollCount, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnrollCount, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnrollCount, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnrollCount, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL11UnrollCount, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL11UnrollCount, align 8, !tbaa !21
@@ -3361,7 +3361,7 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL11UnrollCount) #19
   %i.ab = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL11UnrollCount, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL14UnrollMaxCount, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL14UnrollMaxCount, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL14UnrollMaxCount, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL14UnrollMaxCount, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL14UnrollMaxCount, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL14UnrollMaxCount, align 8, !tbaa !21
@@ -3377,7 +3377,7 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL14UnrollMaxCount) #19
   %i.af = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL14UnrollMaxCount, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL18UnrollFullMaxCount, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL18UnrollFullMaxCount, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL18UnrollFullMaxCount, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL18UnrollFullMaxCount, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL18UnrollFullMaxCount, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL18UnrollFullMaxCount, align 8, !tbaa !21
@@ -3441,14 +3441,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL13UnrollRuntime) #19
   %i.av = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIbLb0ENS0_6parserIbEEED2Ev, ptr nonnull @_ZL13UnrollRuntime, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL19UnrollMaxUpperBound, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL19UnrollMaxUpperBound, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL19UnrollMaxUpperBound, ptr nonnull align 1 dereferenceable(22) @.str.36, i64 21) #19
-  store i32 8, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !42
+  store i32 8, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 140), align 4, !tbaa !309
   store i32 8, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 136), align 8, !tbaa !841
   %i.aw = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL19UnrollMaxUpperBound, i64 10), align 2
@@ -3460,14 +3460,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL19UnrollMaxUpperBound) #19
   %i.az = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL19UnrollMaxUpperBound, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL21PragmaUnrollThreshold, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL21PragmaUnrollThreshold, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL21PragmaUnrollThreshold, ptr nonnull align 1 dereferenceable(24) @.str.39, i64 23) #19
-  store i32 16384, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 120), align 8, !tbaa !42
+  store i32 16384, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 140), align 4, !tbaa !309
   store i32 16384, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 136), align 8, !tbaa !841
   %i.ba = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL21PragmaUnrollThreshold, i64 10), align 2
@@ -3479,14 +3479,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL21PragmaUnrollThreshold) #19
   %i.bd = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL21PragmaUnrollThreshold, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL26FlatLoopTripCountThreshold, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL26FlatLoopTripCountThreshold, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL26FlatLoopTripCountThreshold, ptr nonnull align 1 dereferenceable(30) @.str.42, i64 29) #19
-  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 120), align 8, !tbaa !42
+  store i32 5, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 140), align 4, !tbaa !309
   store i32 5, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 136), align 8, !tbaa !841
   %i.be = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL26FlatLoopTripCountThreshold, i64 10), align 2
@@ -3530,14 +3530,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL23UnrollRevisitChildLoops) #19
   %i.bp = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIbLb0ENS0_6parserIbEEED2Ev, ptr nonnull @_ZL23UnrollRevisitChildLoops, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL25UnrollThresholdAggressive, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL25UnrollThresholdAggressive, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL25UnrollThresholdAggressive, ptr nonnull align 1 dereferenceable(28) @.str.51, i64 27) #19
-  store i32 300, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 120), align 8, !tbaa !42
+  store i32 300, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 140), align 4, !tbaa !309
   store i32 300, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 136), align 8, !tbaa !841
   %i.bq = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL25UnrollThresholdAggressive, i64 10), align 2
@@ -3549,14 +3549,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL25UnrollThresholdAggressive) #19
   %i.bt = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL25UnrollThresholdAggressive, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL22UnrollThresholdDefault, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL22UnrollThresholdDefault, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL22UnrollThresholdDefault, ptr nonnull align 1 dereferenceable(25) @.str.54, i64 24) #19
-  store i32 150, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 120), align 8, !tbaa !42
+  store i32 150, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 140), align 4, !tbaa !309
   store i32 150, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 136), align 8, !tbaa !841
   %i.bu = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL22UnrollThresholdDefault, i64 10), align 2
@@ -3568,14 +3568,14 @@ bb.a:
   tail call void @_ZN4llvm2cl6Option11addArgumentEv(ptr noundef nonnull align 8 dereferenceable(184) @_ZL22UnrollThresholdDefault) #19
   %i.bx = tail call i32 @__cxa_atexit(ptr nonnull @_ZN4llvm2cl3optIjLb0ENS0_6parserIjEEED2Ev, ptr nonnull @_ZL22UnrollThresholdDefault, ptr nonnull @__dso_handle) #19 ; 0 uses
   tail call void @_ZN4llvm2cl6OptionC2ENS0_18NumOccurrencesFlagENS0_12OptionHiddenE(ptr noundef nonnull align 8 dereferenceable(120) @_ZL29PragmaUnrollFullMaxIterations, i32 noundef 0, i32 noundef 0) #19
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 120), align 8, !tbaa !42
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 120), align 8, !tbaa !40
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 136), align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN4llvm2cl11OptionValueIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 128), align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4llvm2cl3optIjLb0ENS0_6parserIjEEEE, i64 16), ptr @_ZL29PragmaUnrollFullMaxIterations, align 8, !tbaa !21
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm2cl6parserIjEE, i64 16), ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 144), align 8, !tbaa !21
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 152), i8 0, i64 32, i1 false)
   tail call void @_ZN4llvm2cl6Option9setArgStrENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(184) @_ZL29PragmaUnrollFullMaxIterations, ptr nonnull align 1 dereferenceable(34) @.str.57, i64 33) #19
-  store i32 1000000, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 120), align 8, !tbaa !42
+  store i32 1000000, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 120), align 8, !tbaa !40
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 140), align 4, !tbaa !309
   store i32 1000000, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 136), align 8, !tbaa !841
   %i.by = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL29PragmaUnrollFullMaxIterations, i64 10), align 2
@@ -3668,14 +3668,14 @@ attributes #23 = { builtin nounwind allocsize(0) }
 !32 = !{!"_ZTSN4llvm15SmallVectorBaseIjEE", !22, i64 0, !17, i64 8, !17, i64 12}
 !33 = !{!32, !22, i64 0}
 !34 = !{!"_ZTSN4llvm19TargetTransformInfo20UnrollingPreferencesE", !17, i64 0, !17, i64 4, !17, i64 8, !17, i64 12, !17, i64 16, !17, i64 20, !17, i64 24, !17, i64 28, !17, i64 32, !17, i64 36, !17, i64 40, !26, i64 44, !26, i64 45, !26, i64 46, !26, i64 47, !26, i64 48, !26, i64 49, !26, i64 50, !26, i64 51, !17, i64 52, !17, i64 56, !26, i64 60, !17, i64 64, !26, i64 68, !26, i64 69}
-!35 = !{!34, !17, i64 0}
-!36 = !{!34, !17, i64 4}
-!37 = !{!"_ZTSN4llvm2cl18GenericOptionValueE"}
-!38 = !{!"_ZTSN4llvm2cl15OptionValueCopyIjEE", !37, i64 0, !17, i64 8, !26, i64 12}
-!39 = !{!"_ZTSN4llvm2cl15OptionValueBaseIjLb0EEE", !38, i64 0}
-!40 = !{!"_ZTSN4llvm2cl11OptionValueIjEE", !39, i64 0}
-!41 = !{!"_ZTSN4llvm2cl11opt_storageIjLb0ELb0EEE", !17, i64 0, !40, i64 8}
-!42 = !{!41, !17, i64 0}
+!35 = !{!"_ZTSN4llvm2cl18GenericOptionValueE"}
+!36 = !{!"_ZTSN4llvm2cl15OptionValueCopyIjEE", !35, i64 0, !17, i64 8, !26, i64 12}
+!37 = !{!"_ZTSN4llvm2cl15OptionValueBaseIjLb0EEE", !36, i64 0}
+!38 = !{!"_ZTSN4llvm2cl11OptionValueIjEE", !37, i64 0}
+!39 = !{!"_ZTSN4llvm2cl11opt_storageIjLb0ELb0EEE", !17, i64 0, !38, i64 8}
+!40 = !{!39, !17, i64 0}
+!41 = !{!34, !17, i64 0}
+!42 = !{!34, !17, i64 4}
 !43 = !{!34, !17, i64 12}
 !44 = !{!34, !17, i64 20}
 !45 = !{!34, !17, i64 24}
@@ -3729,7 +3729,7 @@ attributes #23 = { builtin nounwind allocsize(0) }
 !93 = !{!"_ZTSN4llvm11SmallPtrSetIPNS_2cl10SubCommandELj1EEE", !92, i64 0, !16, i64 24}
 !94 = !{!"_ZTSN4llvm2cl6OptionE", !62, i64 8, !62, i64 10, !62, i64 10, !62, i64 10, !62, i64 10, !62, i64 11, !62, i64 11, !62, i64 12, !62, i64 14, !86, i64 16, !86, i64 32, !86, i64 48, !91, i64 64, !93, i64 88}
 !95 = !{!94, !62, i64 8}
-!96 = !{!"_ZTSN4llvm2cl15OptionValueCopyIbEE", !37, i64 0, !26, i64 8, !26, i64 9}
+!96 = !{!"_ZTSN4llvm2cl15OptionValueCopyIbEE", !35, i64 0, !26, i64 8, !26, i64 9}
 !97 = !{!"_ZTSN4llvm2cl15OptionValueBaseIbLb0EEE", !96, i64 0}
 !98 = !{!"_ZTSN4llvm2cl11OptionValueIbEE", !97, i64 0}
 !99 = !{!"_ZTSN4llvm2cl11opt_storageIbLb0ELb0EEE", !26, i64 0, !98, i64 8}
@@ -3942,7 +3942,7 @@ attributes #23 = { builtin nounwind allocsize(0) }
 !306 = !{!"p1 _ZTSN4llvm6detail12DenseMapPairIPNS_4LoopElEE", !22, i64 0}
 !307 = !{!306, !306, i64 0}
 !308 = !{!96, !26, i64 9}
-!309 = !{!38, !26, i64 12}
+!309 = !{!36, !26, i64 12}
 !310 = !{!34, !26, i64 60}
 !311 = !{!34, !17, i64 8}
 !312 = !{!34, !17, i64 16}
@@ -4345,5 +4345,5 @@ begin_hunk_6_@llvm.umin.i32
 !838 = !{!"_ZTSSt17reference_wrapperIN4llvm12PassRegistryEE", !837, i64 0}
 !839 = !{!838, !837, i64 0}
 !840 = !{!96, !26, i64 8}
-!841 = !{!38, !17, i64 8}
+!841 = !{!36, !17, i64 8}
 end_hunk_6

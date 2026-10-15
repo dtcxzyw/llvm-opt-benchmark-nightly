@@ -202,10 +202,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit352: ; preds = %bb
   %i.qj = getelementptr inbounds nuw i8, ptr %17, i64 31
   store i8 0, ptr %i.qj, align 1, !tbaa !36
   %i.qk = invoke noundef zeroext i1 @_ZNK8Settings7getBoolERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(236) %i.qg, ptr noundef nonnull align 8 dereferenceable(32) %17)
-          to label %bb.de unwind label %bb.do     ; 2 uses
+          to label %bb.de unwind label %bb.do
 
 bb.de:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit352
-  %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 = select i1 %i.qk, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 ; 2 uses
+  %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 = select i1 %i.qk, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 ; 3 uses
   %i.ql = load ptr, ptr %17, align 8, !tbaa !41   ; 2 uses
   %i.qm = icmp eq ptr %i.ql, %i.qh
   br i1 %i.qm, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit359, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i357
@@ -234,9 +234,10 @@ bb.df:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.qs = getelementptr inbounds nuw i8, ptr %18, i64 26
   store i8 0, ptr %i.qs, align 2, !tbaa !36
   %i.qt = invoke noundef zeroext i1 @_ZNK8Settings7getBoolERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(236) %i.qp, ptr noundef nonnull align 8 dereferenceable(32) %18)
-          to label %bb.dg unwind label %bb.dp     ; 2 uses
+          to label %bb.dg unwind label %bb.dp
 
 bb.dg:                                            ; preds = %._crit_edge.i.i360
+  %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx111 = select i1 %i.qt, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11 ; 2 uses
   %i.qu = load ptr, ptr %18, align 8, !tbaa !41   ; 2 uses
   %i.qv = icmp eq ptr %i.qu, %i.qq
   br i1 %i.qv, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit366, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i364
@@ -311,13 +312,10 @@ bb.dk:                                            ; preds = %bb.dj, %bb.di, %._c
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit374 unwind label %bb.dr
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit374: ; preds = %bb.dk
-  %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11.val = load ptr, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, align 8
-  %_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11.val = load ptr, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11, align 8
-  %26 = select i1 %i.qt, ptr %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11.val, ptr %_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11.val
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, i64 8), align 8
-  %.val487 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11, i64 8), align 8
-  %27 = select i1 %i.qt, i64 %.val, i64 %.val487
-  %i.ro = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.rn, ptr noundef %26, i64 noundef %27)
+  %_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11.val = load ptr, ptr %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx111, align 8, !tbaa !41
+  %26 = getelementptr inbounds nuw i8, ptr %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx111, i64 8
+  %.val487 = load i64, ptr %26, align 8, !tbaa !46
+  %i.ro = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.rn, ptr noundef %_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11.val, i64 noundef %.val487)
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit376 unwind label %bb.dr
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit376: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit374
@@ -489,8 +487,8 @@ bb.dw:                                            ; preds = %bb.dv, %bb.du, %._c
 
 _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit401: ; preds = %bb.dw
   %i.th = load ptr, ptr %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11, align 8, !tbaa !41
-  %28 = select i1 %i.qk, ptr getelementptr inbounds nuw (i8, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11, i64 8) ; 2 uses
-  %i.ti = load i64, ptr %28, align 8, !tbaa !46
+  %27 = getelementptr inbounds nuw i8, ptr %_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11._ZZN12GameFormSpec13showPauseMenuEvE3offB5cxx11, i64 8 ; 2 uses
+  %i.ti = load i64, ptr %27, align 8, !tbaa !46
   %i.tj = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.tg, ptr noundef %i.th, i64 noundef %i.ti)
           to label %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit403 unwind label %bb.ej
 
@@ -585,7 +583,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit418: ; preds = %bb
           to label %bb.eb unwind label %bb.el
 
 bb.eb:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit418
-  %i.ul = load i64, ptr %28, align 8, !tbaa !46   ; 3 uses
+  %i.ul = load i64, ptr %27, align 8, !tbaa !46   ; 3 uses
   %i.um = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZZN12GameFormSpec13showPauseMenuEvE2onB5cxx11, i64 8), align 8, !tbaa !46
   %i.un = icmp eq i64 %i.ul, %i.um
   br i1 %i.un, label %bb.ec, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread485

@@ -204,6 +204,7 @@ bb.a:
   %3 = alloca %struct.list_head, align 8          ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   %.not = icmp samesign ult i64 %2, 512
+  %4 = select i1 %.not, ptr @ioport_resource, ptr @iomem_resource
   %i.a = load volatile ptr, ptr %1, align 8       ; 3 uses
   %.not.i = icmp eq ptr %i.a, %1
   br i1 %.not.i, label %._crit_edge, label %list_splice_init.exit
@@ -224,6 +225,7 @@ list_splice_init.exit:                            ; preds = %bb.a
   br i1 %.not6980, label %._crit_edge, label %.lr.ph84
 
 .lr.ph84:                                         ; preds = %list_splice_init.exit
+  %5 = getelementptr i8, ptr %4, i64 8
   %i.e = getelementptr i8, ptr %1, i64 8          ; 2 uses
   br label %bb.b
 
@@ -240,11 +242,9 @@ bb.b:                                             ; preds = %.lr.ph84, %bb.j
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr i8, ptr %i.g, i64 8        ; 3 uses
-  %4 = load i64, ptr %i.k, align 8                ; 4 uses
-  %.val = load i64, ptr getelementptr inbounds nuw (i8, ptr @ioport_resource, i64 8), align 8
-  %.val63 = load i64, ptr getelementptr inbounds nuw (i8, ptr @iomem_resource, i64 8), align 8
-  %5 = select i1 %.not, i64 %.val, i64 %.val63    ; 2 uses
-  %i.l = call i64 @llvm.umin.i64(i64 %4, i64 %5)  ; 4 uses
+  %.val = load i64, ptr %i.k, align 8             ; 4 uses
+  %.val63 = load i64, ptr %5, align 8             ; 2 uses
+  %i.l = call i64 @llvm.umin.i64(i64 %.val, i64 %.val63) ; 4 uses
   %i.m = load i64, ptr %i.g, align 8
   %.not64 = icmp ugt i64 %i.l, %i.m
   br i1 %.not64, label %bb.e, label %bb.d
@@ -254,17 +254,17 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge
 
 bb.e:                                             ; preds = %bb.c
-  %.not65.not = icmp ugt i64 %4, %5
+  %.not65.not = icmp ugt i64 %.val, %.val63
   br i1 %.not65.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.n = add i64 %i.l, 1
-  call void (ptr, ptr, ...) @_dev_info(ptr noundef %0, ptr noundef nonnull @.str.8, ptr noundef %i.g, i64 noundef %i.n, i64 noundef %4) #13
+  call void (ptr, ptr, ...) @_dev_info(ptr noundef %0, ptr noundef nonnull @.str.8, ptr noundef %i.g, i64 noundef %i.n, i64 noundef %.val) #13
   store i64 %i.l, ptr %i.k, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %i.o = phi i64 [ %4, %bb.e ], [ %i.l, %bb.f ]
+  %i.o = phi i64 [ %.val, %bb.e ], [ %i.l, %bb.f ]
   %.05776 = load ptr, ptr %1, align 8             ; 2 uses
   %.not7077 = icmp eq ptr %.05776, %1
   br i1 %.not7077, label %.loopexit, label %.lr.ph

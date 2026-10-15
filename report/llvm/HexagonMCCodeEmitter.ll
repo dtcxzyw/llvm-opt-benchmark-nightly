@@ -204,17 +204,17 @@ bb.ad:                                            ; preds = %bb.v, %bb.u, %bb.ac
 .thread102:                                       ; preds = %bb.q, %bb.t, %bb.x, %bb.w, %bb.ab, %bb.r, %bb.ad
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.cr = load i8, ptr %i.cq, align 4, !tbaa !27, !range !97, !noundef !23
-  %i.cs = trunc nuw i8 %i.cr to i1                ; 2 uses
+  %i.cs = trunc nuw i8 %i.cr to i1
+  %_ZL9ExtFixups._ZL9StdFixups = select i1 %i.cs, ptr @_ZL9ExtFixups, ptr @_ZL9StdFixups ; 2 uses
   %.mask84 = and i32 %i.bc, 255                   ; 3 uses
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL9ExtFixups, i64 16), align 8
-  %.val116 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZL9StdFixups, i64 16), align 8
-  %6 = select i1 %i.cs, ptr %.val, ptr %.val116   ; 2 uses
-  %7 = select i1 %i.cs, ptr getelementptr inbounds nuw (i8, ptr @_ZL9ExtFixups, i64 8), ptr getelementptr inbounds nuw (i8, ptr @_ZL9StdFixups, i64 8) ; 2 uses
-  %.not10.i.i.i = icmp eq ptr %6, null
+  %6 = getelementptr inbounds nuw i8, ptr %_ZL9ExtFixups._ZL9StdFixups, i64 16
+  %.val116 = load ptr, ptr %6, align 8, !tbaa !14 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %_ZL9ExtFixups._ZL9StdFixups, i64 8 ; 2 uses
+  %.not10.i.i.i = icmp eq ptr %.val116, null
   br i1 %.not10.i.i.i, label %.thread109, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.thread102, %.lr.ph.i.i.i
-  %.012.i.i.i = phi ptr [ %.1.i.i.i, %.lr.ph.i.i.i ], [ %6, %.thread102 ] ; 3 uses
+  %.012.i.i.i = phi ptr [ %.1.i.i.i, %.lr.ph.i.i.i ], [ %.val116, %.thread102 ] ; 3 uses
   %.0811.i.i.i = phi ptr [ %.19.i.i.i, %.lr.ph.i.i.i ], [ %7, %.thread102 ]
   %i.ct = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 32
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !48

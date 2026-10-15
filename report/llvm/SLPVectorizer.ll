@@ -205,12 +205,12 @@ bb.r:                                             ; preds = %bb.q, %.thread237
   %.0111236239 = phi i32 [ %.0111236240, %bb.q ], [ %i.ca, %.thread237 ] ; 2 uses
   %.0112 = phi ptr [ %i.cv, %bb.q ], [ %3, %.thread237 ]
   %i.da = call fastcc noundef ptr @_ZL14getWidenedTypePN4llvm4TypeEj(ptr noundef %.0112, i32 noundef %.0111236239) ; 3 uses
-  %.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL25MinProfitableStridedLoads, i64 120), align 8
-  %.val243 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL26MinProfitableStridedStores, i64 120), align 8
-  %14 = select i1 %7, i32 %.val, i32 %.val243
+  %_ZL25MinProfitableStridedLoads._ZL26MinProfitableStridedStores = select i1 %7, ptr @_ZL25MinProfitableStridedLoads, ptr @_ZL26MinProfitableStridedStores
+  %14 = getelementptr inbounds nuw i8, ptr %_ZL25MinProfitableStridedLoads._ZL26MinProfitableStridedStores, i64 120
+  %15 = load i32, ptr %14, align 8, !tbaa !669
   %i.db = call noundef i32 @_ZN4llvm13slpvectorizer14getNumElementsEPNS_4TypeE(ptr noundef %3) #31
   %i.dc = mul i32 %i.db, %i.cx
-  %i.dd = icmp ult i32 %i.dc, %14
+  %i.dd = icmp ult i32 %i.dc, %15
   br i1 %i.dd, label %bb.aq, label %bb.s
 
 bb.s:                                             ; preds = %bb.r

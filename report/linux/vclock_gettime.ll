@@ -202,12 +202,13 @@ bb.s:                                             ; preds = %.thread.i.i, %bb.a
 
 bb.t:                                             ; preds = %bb.s
   %i.dr = load i32, ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 4), align 4
-  %i.ds = icmp eq i32 %i.dr, 2147483647           ; 2 uses
-  %i.dt = select i1 %i.ds, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 6416), ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 2320)
-  %i.du = load i32, ptr %i.dt, align 16
+  %i.ds = icmp eq i32 %i.dr, 2147483647
+  %i.dt = select i1 %i.ds, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096), ptr @vdso_u_time_data ; 2 uses
+  %2 = getelementptr i8, ptr %i.dt, i32 2320
+  %i.du = load i32, ptr %2, align 16
   store i32 %i.du, ptr %1, align 4
-  %2 = select i1 %i.ds, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 6420), ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 2324)
-  %i.dv = load i32, ptr %2, align 4
+  %3 = getelementptr i8, ptr %i.dt, i32 2324
+  %i.dv = load i32, ptr %3, align 4
   %i.dw = getelementptr i8, ptr %1, i32 4
   store i32 %i.dv, ptr %i.dw, align 4
   br label %__cvdso_gettimeofday.exit
@@ -222,8 +223,9 @@ define i32 @__vdso_time(ptr nofree noundef writeonly captures(address_is_null) %
 bb.a:
   %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 4), align 4
   %i.b = icmp eq i32 %i.a, 2147483647
-  %i.c = select i1 %i.b, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4136), ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 40)
-  %i.d = load volatile i64, ptr %i.c, align 8
+  %i.c = select i1 %i.b, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096), ptr @vdso_u_time_data
+  %1 = getelementptr i8, ptr %i.c, i32 40
+  %i.d = load volatile i64, ptr %1, align 8
   %i.e = trunc i64 %i.d to i32                    ; 2 uses
   %.not.i.i = icmp eq ptr %0, null
   br i1 %.not.i.i, label %__cvdso_time.exit, label %bb.b
@@ -383,16 +385,16 @@ bb.m:                                             ; preds = %.lr.ph76.i.i
   br i1 %.not.i24.i.i.i, label %.lr.ph76.i.i, label %._crit_edge77.i.i, !prof !20, !llvm.loop !0
 
 bb.n:                                             ; preds = %.lr.ph76.i.i
-  %.not.i25.i.i.i = icmp eq i32 %0, 4             ; 7 uses
-  %..i.i.i.i = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4328), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096) ; 3 uses
-  %2 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4368), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4136)
+  %.not.i25.i.i.i = icmp eq i32 %0, 4
+  %..i.i.i.i = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4328), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096) ; 9 uses
+  %2 = getelementptr i8, ptr %..i.i.i.i, i32 40
   %i.ax = getelementptr [16 x i8], ptr %2, i32 %0 ; 2 uses
-  %3 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4332), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4100)
+  %3 = getelementptr i8, ptr %..i.i.i.i, i32 4
   %i.ay = getelementptr i8, ptr %i.ax, i32 8
-  %4 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4336), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4104)
-  %5 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4344), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4112)
-  %6 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4360), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4128) ; 2 uses
-  %7 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4364), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4132) ; 3 uses
+  %4 = getelementptr i8, ptr %..i.i.i.i, i32 8
+  %5 = getelementptr i8, ptr %..i.i.i.i, i32 16
+  %6 = getelementptr i8, ptr %..i.i.i.i, i32 32   ; 2 uses
+  %7 = getelementptr i8, ptr %..i.i.i.i, i32 36   ; 3 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.v, %bb.n
@@ -795,16 +797,16 @@ bb.m:                                             ; preds = %.lr.ph61.i.i
   br i1 %.not.i24.i.i.i, label %.lr.ph61.i.i, label %._crit_edge62.i.i, !prof !20, !llvm.loop !0
 
 bb.n:                                             ; preds = %.lr.ph61.i.i
-  %.not.i25.i.i.i = icmp eq i32 %0, 4             ; 7 uses
-  %..i.i.i.i = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4328), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096) ; 3 uses
-  %2 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4368), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4136)
+  %.not.i25.i.i.i = icmp eq i32 %0, 4
+  %..i.i.i.i = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4328), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096) ; 9 uses
+  %2 = getelementptr i8, ptr %..i.i.i.i, i32 40
   %i.az = getelementptr [16 x i8], ptr %2, i32 %0 ; 2 uses
-  %3 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4332), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4100)
+  %3 = getelementptr i8, ptr %..i.i.i.i, i32 4
   %i.ba = getelementptr i8, ptr %i.az, i32 8
-  %4 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4336), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4104)
-  %5 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4344), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4112)
-  %6 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4360), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4128) ; 2 uses
-  %7 = select i1 %.not.i25.i.i.i, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4364), ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4132) ; 3 uses
+  %4 = getelementptr i8, ptr %..i.i.i.i, i32 8
+  %5 = getelementptr i8, ptr %..i.i.i.i, i32 16
+  %6 = getelementptr i8, ptr %..i.i.i.i, i32 32   ; 2 uses
+  %7 = getelementptr i8, ptr %..i.i.i.i, i32 36   ; 3 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.v, %bb.n
@@ -1083,8 +1085,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 4), align 4
   %i.e = icmp eq i32 %i.d, 2147483647
-  %i.f = select i1 %i.e, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 6424), ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 2328)
-  %i.g = load volatile i32, ptr %i.f, align 8
+  %i.f = select i1 %i.e, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096), ptr @vdso_u_time_data
+  %2 = getelementptr i8, ptr %i.f, i32 2328
+  %i.g = load volatile i32, ptr %2, align 8
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
@@ -1133,8 +1136,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.d = load i32, ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 4), align 4
   %i.e = icmp eq i32 %i.d, 2147483647
-  %i.f = select i1 %i.e, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 6424), ptr getelementptr inbounds nuw (i8, ptr @vdso_u_time_data, i32 2328)
-  %i.g = load volatile i32, ptr %i.f, align 8
+  %i.f = select i1 %i.e, ptr getelementptr (i8, ptr @vdso_u_time_data, i32 4096), ptr @vdso_u_time_data
+  %2 = getelementptr i8, ptr %i.f, i32 2328
+  %i.g = load volatile i32, ptr %2, align 8
   %i.h = zext i32 %i.g to i64
   br label %bb.f
 

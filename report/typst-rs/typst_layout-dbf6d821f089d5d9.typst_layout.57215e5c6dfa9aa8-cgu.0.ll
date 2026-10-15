@@ -205,15 +205,13 @@ _RNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0B7_.exit.i: ; 
   %i.eo = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 33
   %i.ep = load i8, ptr %i.eo, align 1, !range !54, !noundef !41
   %i.eq = trunc nuw i8 %i.ep to i1
-  %3 = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift27DEFAULT_SUPERSCRIPT_METRICS, i64 16), align 8
-  %4 = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift25DEFAULT_SUBSCRIPT_METRICS, i64 16), align 8
-  %5 = insertelement <2 x i1> poison, i1 %i.eq, i64 0
-  %6 = shufflevector <2 x i1> %5, <2 x i1> poison, <2 x i32> zeroinitializer
-  %7 = select <2 x i1> %6, <2 x double> %3, <2 x double> %4
+  %_RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift27DEFAULT_SUPERSCRIPT_METRICS._RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift25DEFAULT_SUBSCRIPT_METRICS99 = select i1 %i.eq, ptr @_RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift27DEFAULT_SUPERSCRIPT_METRICS, ptr @_RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift25DEFAULT_SUBSCRIPT_METRICS
+  %.sroa.478.0._RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift27DEFAULT_SUPERSCRIPT_METRICS._RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift25DEFAULT_SUBSCRIPT_METRICS.sroa_idx100 = getelementptr inbounds nuw i8, ptr %_RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift27DEFAULT_SUPERSCRIPT_METRICS._RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift25DEFAULT_SUBSCRIPT_METRICS99, i64 16
+  %3 = load <2 x double>, ptr %.sroa.478.0._RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift27DEFAULT_SUPERSCRIPT_METRICS._RNvNtNtCsdaEETE4DqmE_13typst_library4text5shift25DEFAULT_SUBSCRIPT_METRICS.sroa_idx100, align 8
   br label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtNtCsdaEETE4DqmE_13typst_library4text4font12FontInstanceE6map_orNtNtBK_7metrics13ScriptMetricsNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0EB2p_.exit
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtNtCsdaEETE4DqmE_13typst_library4text4font12FontInstanceE6map_orNtNtBK_7metrics13ScriptMetricsNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0EB2p_.exit: ; preds = %.loopexit110, %_RNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0B7_.exit.i
-  %i.er = phi <2 x double> [ %7, %.loopexit110 ], [ %i.el, %_RNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0B7_.exit.i ] ; 2 uses
+  %i.er = phi <2 x double> [ %3, %.loopexit110 ], [ %i.el, %_RNCNvNtNtCs7tN9tvpkfrg_12typst_layout6inline4line11apply_shifts_0B7_.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   %i.es = load i64, ptr %.sroa.0.0.i, align 8, !range !49, !noundef !41
   %i.et = trunc nuw i64 %i.es to i1

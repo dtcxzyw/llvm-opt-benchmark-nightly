@@ -205,7 +205,8 @@ bb.n:                                             ; preds = %mpeg4_pred_dc.exit,
   br i1 %.not321, label %.thread347, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %.not322 = icmp eq i32 %6, 0                    ; 3 uses
+  %.not322 = icmp eq i32 %6, 0                    ; 2 uses
+  %ff_mpeg4_rl_intra.ff_rvlc_rl_intra = select i1 %.not322, ptr @ff_mpeg4_rl_intra, ptr @ff_rvlc_rl_intra ; 2 uses
   %.val352 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ff_mpeg4_rl_intra, i64 80), align 8
   %.val353 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ff_rvlc_rl_intra, i64 80), align 8
   %.0286 = select i1 %.not322, ptr %.val352, ptr %.val353 ; 2 uses
@@ -222,8 +223,8 @@ bb.o:                                             ; preds = %bb.n
   %i.cu = load i32, ptr %i.ct, align 8, !tbaa !334 ; 2 uses
   %.not324 = icmp eq i32 %6, 0
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
-  %7 = select i1 %.not322, ptr getelementptr inbounds nuw (i8, ptr @ff_mpeg4_rl_intra, i64 64), ptr getelementptr inbounds nuw (i8, ptr @ff_rvlc_rl_intra, i64 64)
-  %8 = select i1 %.not322, ptr getelementptr inbounds nuw (i8, ptr @ff_mpeg4_rl_intra, i64 48), ptr getelementptr inbounds nuw (i8, ptr @ff_rvlc_rl_intra, i64 48)
+  %7 = getelementptr inbounds nuw i8, ptr %ff_mpeg4_rl_intra.ff_rvlc_rl_intra, i64 64
+  %8 = getelementptr inbounds nuw i8, ptr %ff_mpeg4_rl_intra.ff_rvlc_rl_intra, i64 48
   br i1 %.not324, label %.split.us.preheader, label %.split.preheader
 
 bb.p:                                             ; preds = %bb.a

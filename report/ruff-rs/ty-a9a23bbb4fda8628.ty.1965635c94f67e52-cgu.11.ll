@@ -204,32 +204,30 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load atomic i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11GLOBAL_INIT seq_cst, align 8
-  %i.d = icmp eq i64 %i.c, 2                      ; 3 uses
+  %i.d = icmp eq i64 %i.c, 2
+  %.sroa.01.0 = select i1 %i.d, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
   %1 = load ptr, ptr %0, align 8, !noalias !73, !nonnull !3, !align !8, !noundef !3
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, align 8, !range !4
-  %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val = load i64, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, align 8, !range !4
-  %2 = select i1 %i.d, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH.val, i64 %_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE.val
+  %2 = load i64, ptr %.sroa.01.0, align 8, !range !4, !alias.scope !73, !noundef !3
   %i.e = trunc nuw i64 %2 to i1
-  %.val = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 8), align 8, !nonnull !3
-  %.val11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 8), align 8, !nonnull !3
-  %3 = select i1 %i.d, ptr %.val, ptr %.val11     ; 2 uses
-  %.val12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher15GLOBAL_DISPATCH, i64 16), align 8, !nonnull !3, !align !8
-  %.val13 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtCs3pBv9WGWlWf_12tracing_core10dispatcher4NONE, i64 16), align 8, !nonnull !3, !align !8
-  %4 = select i1 %i.d, ptr %.val12, ptr %.val13   ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 8
+  %.val11 = load ptr, ptr %3, align 8, !alias.scope !73, !nonnull !3, !noundef !3 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.01.0, i64 16
+  %.val13 = load ptr, ptr %4, align 8, !alias.scope !73, !nonnull !3, !align !8, !noundef !3 ; 2 uses
   br i1 %i.e, label %bb.c, label %_RNCINvMNtCs4o81Y09oZk1_10ty_project2dbNtB5_15ProjectDatabase3newNtNtNtCs56aZGHL6Dc6_7ruff_db6system2os8OsSystemNtNtCsfDzkztWVnn_18ty_module_resolver8strategy16FallibleStrategyEs1_0Cs2bbjMbSOFjy_2ty.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.f = getelementptr inbounds nuw i8, ptr %.val13, i64 16
   %i.g = load i64, ptr %i.f, align 8, !range !9, !invariant.load !3, !noalias !73
   %i.h = add nsw i64 %i.g, -1
   %i.i = and i64 %i.h, -16
-  %i.j = getelementptr inbounds nuw i8, ptr %3, i64 %i.i
+  %i.j = getelementptr inbounds nuw i8, ptr %.val11, i64 %i.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   br label %_RNCINvMNtCs4o81Y09oZk1_10ty_project2dbNtB5_15ProjectDatabase3newNtNtNtCs56aZGHL6Dc6_7ruff_db6system2os8OsSystemNtNtCsfDzkztWVnn_18ty_module_resolver8strategy16FallibleStrategyEs1_0Cs2bbjMbSOFjy_2ty.exit
 
 _RNCINvMNtCs4o81Y09oZk1_10ty_project2dbNtB5_15ProjectDatabase3newNtNtNtCs56aZGHL6Dc6_7ruff_db6system2os8OsSystemNtNtCsfDzkztWVnn_18ty_module_resolver8strategy16FallibleStrategyEs1_0Cs2bbjMbSOFjy_2ty.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %3, %bb.b ]
-  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.0.0.i = phi ptr [ %i.k, %bb.c ], [ %.val11, %bb.b ]
+  %i.l = getelementptr inbounds nuw i8, ptr %.val13, i64 40
   %i.m = load ptr, ptr %i.l, align 8, !invariant.load !3, !noalias !73, !nonnull !3
   %i.n = tail call noundef zeroext i1 %i.m(ptr noundef nonnull %.sroa.0.0.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(120) %1), !noalias !73, !inline_history !63
   br label %_RINvMs2_NtNtCs2AWtUsOyxgP_3std6thread5localINtB6_8LocalKeyNtNtCs3pBv9WGWlWf_12tracing_core10dispatcher5StateE8try_withNCINvBW_11get_defaultbNCINvMNtCs4o81Y09oZk1_10ty_project2dbNtB2k_15ProjectDatabase3newNtNtNtCs56aZGHL6Dc6_7ruff_db6system2os8OsSystemNtNtCsfDzkztWVnn_18ty_module_resolver8strategy16FallibleStrategyEs1_0E0bECs2bbjMbSOFjy_2ty.exit

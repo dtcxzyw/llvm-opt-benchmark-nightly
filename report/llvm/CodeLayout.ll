@@ -205,16 +205,10 @@ _ZN4llvm11SmallVectorImLj6EEC2EmRKm.exit40:       ; preds = %_ZN4llvm11SmallVect
   %i.au = load ptr, ptr %6, align 8, !tbaa !34    ; 2 uses
   %i.av = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL16BackwardDistance, i64 120), align 8 ; 2 uses
   %i.aw = zext i32 %i.av to i64
-  %.val.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL18BackwardWeightCond, i64 120), align 8
-  %.val24.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL20BackwardWeightUncond, i64 120), align 8
   %i.ax = uitofp i32 %i.av to double
   %i.ay = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL15ForwardDistance, i64 120), align 8 ; 2 uses
   %i.az = zext i32 %i.ay to i64
-  %.val25.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL17ForwardWeightCond, i64 120), align 8
-  %.val26.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL19ForwardWeightUncond, i64 120), align 8
   %i.ba = uitofp i32 %i.ay to double
-  %.val27.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL21FallthroughWeightCond, i64 120), align 8
-  %.val28.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL23FallthroughWeightUncond, i64 120), align 8
   br label %bb.d
 
 .lr.ph58:                                         ; preds = %_ZN4llvm11SmallVectorImLj6EEC2EmRKm.exit40, %.lr.ph58
@@ -273,9 +267,11 @@ bb.d:                                             ; preds = %.lr.ph62, %_ZN12_GL
   br i1 %i.by, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %8 = select i1 %i.bm, double %.val27.i, double %.val28.i
+  %_ZL21FallthroughWeightCond._ZL23FallthroughWeightUncond.i = select i1 %i.bm, ptr @_ZL21FallthroughWeightCond, ptr @_ZL23FallthroughWeightUncond
+  %8 = getelementptr inbounds nuw i8, ptr %_ZL21FallthroughWeightCond._ZL23FallthroughWeightUncond.i, i64 120
+  %9 = load double, ptr %8, align 8, !tbaa !157
   %i.bz = uitofp i64 %i.bw to double
-  %i.ca = fmul double %8, %i.bz
+  %i.ca = fmul double %9, %i.bz
   br label %_ZN12_GLOBAL__N_111extTSPScoreEmmmmb.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -288,11 +284,13 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.cd, label %_ZN12_GLOBAL__N_111extTSPScoreEmmmmb.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %9 = select i1 %i.bm, double %.val25.i, double %.val26.i
+  %_ZL17ForwardWeightCond._ZL19ForwardWeightUncond.i = select i1 %i.bm, ptr @_ZL17ForwardWeightCond, ptr @_ZL19ForwardWeightUncond
+  %10 = getelementptr inbounds nuw i8, ptr %_ZL17ForwardWeightCond._ZL19ForwardWeightUncond.i, i64 120
+  %11 = load double, ptr %10, align 8, !tbaa !157
   %i.ce = uitofp nneg i64 %i.cc to double
   %i.cf = fdiv double %i.ce, %i.ba
   %i.cg = fsub double 1.000000e+00, %i.cf
-  %i.ch = fmul double %i.cg, %9
+  %i.ch = fmul double %i.cg, %11
   %i.ci = uitofp i64 %i.bw to double
   %i.cj = fmul double %i.ch, %i.ci
   br label %_ZN12_GLOBAL__N_111extTSPScoreEmmmmb.exit
@@ -303,11 +301,13 @@ bb.i:                                             ; preds = %bb.f
   br i1 %i.cl, label %_ZN12_GLOBAL__N_111extTSPScoreEmmmmb.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %10 = select i1 %i.bm, double %.val.i, double %.val24.i
+  %_ZL18BackwardWeightCond._ZL20BackwardWeightUncond.i = select i1 %i.bm, ptr @_ZL18BackwardWeightCond, ptr @_ZL20BackwardWeightUncond
+  %12 = getelementptr inbounds nuw i8, ptr %_ZL18BackwardWeightCond._ZL20BackwardWeightUncond.i, i64 120
+  %13 = load double, ptr %12, align 8, !tbaa !157
   %i.cm = uitofp nneg i64 %i.ck to double
   %i.cn = fdiv double %i.cm, %i.ax
   %i.co = fsub double 1.000000e+00, %i.cn
-  %i.cp = fmul double %i.co, %10
+  %i.cp = fmul double %i.co, %13
   %i.cq = uitofp i64 %i.bw to double
   %i.cr = fmul double %i.cp, %i.cq
   br label %_ZN12_GLOBAL__N_111extTSPScoreEmmmmb.exit
@@ -710,12 +710,6 @@ bb.b:                                             ; preds = %_ZNK12_GLOBAL__N_11
   %i.ak = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL15ForwardDistance, i64 120), align 8 ; 2 uses
   %i.al = zext i32 %i.ak to i64
   %i.am = uitofp i32 %i.ak to double
-  %.val.i.i.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL18BackwardWeightCond, i64 120), align 8
-  %.val24.i.i.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL20BackwardWeightUncond, i64 120), align 8
-  %.val25.i.i.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL17ForwardWeightCond, i64 120), align 8
-  %.val26.i.i.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL19ForwardWeightUncond, i64 120), align 8
-  %.val27.i.i.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL21FallthroughWeightCond, i64 120), align 8
-  %.val28.i.i.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL23FallthroughWeightUncond, i64 120), align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.i, %.lr.ph.i3
@@ -741,9 +735,11 @@ bb.c:                                             ; preds = %_ZZNK12_GLOBAL__N_1
   br i1 %i.bd, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %1 = select i1 %i.bb, double %.val27.i.i.i, double %.val28.i.i.i
+  %_ZL21FallthroughWeightCond._ZL23FallthroughWeightUncond.i.i.i = select i1 %i.bb, ptr @_ZL21FallthroughWeightCond, ptr @_ZL23FallthroughWeightUncond
+  %1 = getelementptr inbounds nuw i8, ptr %_ZL21FallthroughWeightCond._ZL23FallthroughWeightUncond.i.i.i, i64 120
+  %2 = load double, ptr %1, align 8, !tbaa !157
   %i.be = uitofp i64 %i.ay to double
-  %i.bf = fmul double %1, %i.be
+  %i.bf = fmul double %2, %i.be
   br label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.i
 
 bb.e:                                             ; preds = %bb.c
@@ -756,11 +752,13 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bi, label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %2 = select i1 %i.bb, double %.val25.i.i.i, double %.val26.i.i.i
+  %_ZL17ForwardWeightCond._ZL19ForwardWeightUncond.i.i.i = select i1 %i.bb, ptr @_ZL17ForwardWeightCond, ptr @_ZL19ForwardWeightUncond
+  %3 = getelementptr inbounds nuw i8, ptr %_ZL17ForwardWeightCond._ZL19ForwardWeightUncond.i.i.i, i64 120
+  %4 = load double, ptr %3, align 8, !tbaa !157
   %i.bj = uitofp nneg i64 %i.bh to double
   %i.bk = fdiv double %i.bj, %i.am
   %i.bl = fsub double 1.000000e+00, %i.bk
-  %i.bm = fmul double %i.bl, %2
+  %i.bm = fmul double %i.bl, %4
   %i.bn = uitofp i64 %i.ay to double
   %i.bo = fmul double %i.bm, %i.bn
   br label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.i
@@ -771,11 +769,13 @@ bb.h:                                             ; preds = %bb.e
   br i1 %i.bq, label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %3 = select i1 %i.bb, double %.val.i.i.i, double %.val24.i.i.i
+  %_ZL18BackwardWeightCond._ZL20BackwardWeightUncond.i.i.i = select i1 %i.bb, ptr @_ZL18BackwardWeightCond, ptr @_ZL20BackwardWeightUncond
+  %5 = getelementptr inbounds nuw i8, ptr %_ZL18BackwardWeightCond._ZL20BackwardWeightUncond.i.i.i, i64 120
+  %6 = load double, ptr %5, align 8, !tbaa !157
   %i.br = uitofp nneg i64 %i.bp to double
   %i.bs = fdiv double %i.br, %i.aj
   %i.bt = fsub double 1.000000e+00, %i.bs
-  %i.bu = fmul double %i.bt, %3
+  %i.bu = fmul double %i.bt, %6
   %i.bv = uitofp i64 %i.ay to double
   %i.bw = fmul double %i.bu, %i.bv
   br label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.i
@@ -806,12 +806,6 @@ bb.j:                                             ; preds = %.loopexit.i
   %i.cd = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL15ForwardDistance, i64 120), align 8 ; 2 uses
   %i.ce = zext i32 %i.cd to i64
   %i.cf = uitofp i32 %i.cd to double
-  %.val.i.i.1.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL18BackwardWeightCond, i64 120), align 8
-  %.val24.i.i.1.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL20BackwardWeightUncond, i64 120), align 8
-  %.val25.i.i.1.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL17ForwardWeightCond, i64 120), align 8
-  %.val26.i.i.1.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL19ForwardWeightUncond, i64 120), align 8
-  %.val27.i.i.1.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL21FallthroughWeightCond, i64 120), align 8
-  %.val28.i.i.1.i = load double, ptr getelementptr inbounds nuw (i8, ptr @_ZL23FallthroughWeightUncond, i64 120), align 8
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.1.i, %.lr.ph.1.i
@@ -846,11 +840,13 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.cz, label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.1.i, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %4 = select i1 %i.cu, double %.val.i.i.1.i, double %.val24.i.i.1.i
+  %_ZL18BackwardWeightCond._ZL20BackwardWeightUncond.i.i.1.i = select i1 %i.cu, ptr @_ZL18BackwardWeightCond, ptr @_ZL20BackwardWeightUncond
+  %7 = getelementptr inbounds nuw i8, ptr %_ZL18BackwardWeightCond._ZL20BackwardWeightUncond.i.i.1.i, i64 120
+  %8 = load double, ptr %7, align 8, !tbaa !157
   %i.da = uitofp nneg i64 %i.cy to double
   %i.db = fdiv double %i.da, %i.cc
   %i.dc = fsub double 1.000000e+00, %i.db
-  %i.dd = fmul double %i.dc, %4
+  %i.dd = fmul double %i.dc, %8
   %i.de = uitofp i64 %i.cr to double
   %i.df = fmul double %i.dd, %i.de
   br label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.1.i
@@ -861,19 +857,23 @@ bb.o:                                             ; preds = %bb.l
   br i1 %i.dh, label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.1.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %5 = select i1 %i.cu, double %.val25.i.i.1.i, double %.val26.i.i.1.i
+  %_ZL17ForwardWeightCond._ZL19ForwardWeightUncond.i.i.1.i = select i1 %i.cu, ptr @_ZL17ForwardWeightCond, ptr @_ZL19ForwardWeightUncond
+  %9 = getelementptr inbounds nuw i8, ptr %_ZL17ForwardWeightCond._ZL19ForwardWeightUncond.i.i.1.i, i64 120
+  %10 = load double, ptr %9, align 8, !tbaa !157
   %i.di = uitofp nneg i64 %i.dg to double
   %i.dj = fdiv double %i.di, %i.cf
   %i.dk = fsub double 1.000000e+00, %i.dj
-  %i.dl = fmul double %i.dk, %5
+  %i.dl = fmul double %i.dk, %10
   %i.dm = uitofp i64 %i.cr to double
   %i.dn = fmul double %i.dl, %i.dm
   br label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.1.i
 
 bb.q:                                             ; preds = %bb.k
-  %6 = select i1 %i.cu, double %.val27.i.i.1.i, double %.val28.i.i.1.i
+  %_ZL21FallthroughWeightCond._ZL23FallthroughWeightUncond.i.i.1.i = select i1 %i.cu, ptr @_ZL21FallthroughWeightCond, ptr @_ZL23FallthroughWeightUncond
+  %11 = getelementptr inbounds nuw i8, ptr %_ZL21FallthroughWeightCond._ZL23FallthroughWeightUncond.i.i.1.i, i64 120
+  %12 = load double, ptr %11, align 8, !tbaa !157
   %i.do = uitofp i64 %i.cr to double
-  %i.dp = fmul double %6, %i.do
+  %i.dp = fmul double %12, %i.do
   br label %_ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.1.i
 
 _ZZNK12_GLOBAL__N_110ExtTSPImpl11extTSPScoreERKNS_12MergedNodesTERKNS_12MergedJumpsTEENKUlPKNS_5JumpTEE_clES9_.exit.1.i: ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
