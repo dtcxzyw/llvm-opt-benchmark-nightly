@@ -205,54 +205,56 @@ bb.a:
   %i.d = shufflevector <2 x float> %i.c, <2 x float> poison, <2 x i32> zeroinitializer
   %i.e = fdiv <2 x float> <float f0x45A520A1, float f0x42EF9CBC>, %i.d ; 2 uses
   %i.f = extractelement <2 x float> %i.e, i64 0
-  %i.g = tail call noundef float @tanf(float noundef %i.f) #18, !noalias !108 ; 4 uses
-  %2 = fmul float %i.g, %i.g                      ; 3 uses
-  %3 = fmul float %i.g, f0x3FA11DC5
-  %4 = fdiv float %3, f0x3F350970                 ; 2 uses
-  %5 = fsub float f0x3FCADCD9, %4
-  %i.h = fadd float %2, %5
+  %i.g = tail call noundef float @tanf(float noundef %i.f) #18, !noalias !108 ; 3 uses
+  %2 = insertelement <2 x float> poison, float %i.g, i64 0
+  %3 = shufflevector <2 x float> %2, <2 x float> poison, <2 x i32> zeroinitializer
+  %4 = fmul <2 x float> %3, <float f0x3FA11DC5, float 1.000000e+00>
+  %5 = fdiv <2 x float> %4, splat (float f0x3F350970) ; 3 uses
+  %6 = extractelement <2 x float> %5, i64 1
+  %i.h = fadd float %6, 1.000000e+00
+  %7 = fmul float %i.g, %i.g                      ; 3 uses
+  %8 = fadd float %7, %i.h                        ; 2 uses
+  %i.i = extractelement <2 x float> %5, i64 0
+  %9 = fadd float %i.i, f0x3FCADCD9
+  %10 = fadd float %7, %9
+  %11 = fdiv float %10, %8
+  %12 = fsub <2 x float> <float f0x3FCADCD9, float 1.000000e+00>, %5
+  %13 = insertelement <4 x float> poison, float %7, i64 0
+  %14 = shufflevector <4 x float> %13, <4 x float> poison, <4 x i32> zeroinitializer
+  %15 = shufflevector <2 x float> %12, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 1, i32 poison>
+  %16 = shufflevector <4 x float> <float f0xBFCADCD9, float poison, float -1.000000e+00, float poison>, <4 x float> %15, <4 x i32> <i32 0, i32 4, i32 2, i32 6>
+  %17 = fadd <4 x float> %14, %16
+  %18 = fmul <4 x float> %17, <float 2.000000e+00, float 1.000000e+00, float 2.000000e+00, float 1.000000e+00>
+  %19 = insertelement <4 x float> poison, float %8, i64 0
+  %20 = shufflevector <4 x float> %19, <4 x float> poison, <4 x i32> zeroinitializer
+  %21 = fdiv <4 x float> %18, %20                 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.0..sroa_idx, i8 0, i64 16, i1 false)
-  %i.i = extractelement <2 x float> %i.e, i64 1
-  %6 = tail call noundef float @tanf(float noundef %i.i) #18, !noalias !109 ; 3 uses
-  %7 = fmul float %6, %6                          ; 2 uses
+  %i.j = extractelement <2 x float> %i.e, i64 1
+  %22 = tail call noundef float @tanf(float noundef %i.j) #18, !noalias !109 ; 3 uses
+  %23 = fmul float %22, %22                       ; 2 uses
+  %24 = fdiv float %22, f0x3F00156F               ; 2 uses
+  %25 = fadd float %24, 1.000000e+00
+  %26 = fadd float %23, %25
+  %27 = fsub float 1.000000e+00, %24
   %.sroa.89.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 92
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.89.0..sroa_idx, i8 0, i64 16, i1 false)
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i32 %i.a, ptr %8, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %10 = insertelement <2 x float> poison, float %6, i64 0
-  %11 = insertelement <2 x float> %10, float %i.g, i64 1
-  %12 = fdiv <2 x float> %11, <float f0x3F00156F, float f0x3F350970> ; 3 uses
-  %13 = extractelement <2 x float> %12, i64 1
-  %14 = fadd float %13, 1.000000e+00
-  %15 = fadd float %2, %14                        ; 2 uses
-  %16 = fdiv float %i.h, %15
-  %i.j = extractelement <2 x float> %12, i64 0
-  %17 = fadd float %i.j, 1.000000e+00
-  %18 = fadd float %7, %17
-  %19 = fsub <2 x float> splat (float 1.000000e+00), %12 ; 2 uses
-  %20 = shufflevector <2 x float> %19, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %21 = insertelement <4 x float> %20, float %2, i64 0 ; 2 uses
-  %22 = insertelement <4 x float> %21, float %4, i64 2
-  %23 = shufflevector <4 x float> %22, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
-  %24 = fadd <4 x float> %23, <float -1.000000e+00, float -0.000000e+00, float f0x3FCADCD9, float f0xBFCADCD9> ; 2 uses
-  %25 = shufflevector <4 x float> %21, <4 x float> <float 2.000000e+00, float poison, float poison, float 2.000000e+00>, <4 x i32> <i32 4, i32 0, i32 0, i32 7> ; 2 uses
-  %26 = fmul <4 x float> %24, %25
-  %27 = fadd <4 x float> %24, %25
-  %28 = shufflevector <4 x float> %26, <4 x float> %27, <4 x i32> <i32 0, i32 5, i32 6, i32 3>
-  %29 = insertelement <4 x float> poison, float %15, i64 0
-  %30 = shufflevector <4 x float> %29, <4 x float> poison, <4 x i32> zeroinitializer
-  %31 = fdiv <4 x float> %28, %30
-  store <4 x float> %31, ptr %9, align 4
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store float %16, ptr %.sroa.7.0..sroa_idx, align 4
+  %28 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store i32 %i.a, ptr %28, align 8
+  %29 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %30 = shufflevector <4 x float> %21, <4 x float> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x float> %30, ptr %29, align 4
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 44
+  store float %11, ptr %.sroa.5.0..sroa_idx, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %31 = shufflevector <4 x float> %21, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  store <2 x float> %31, ptr %.sroa.6.0..sroa_idx, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.l = insertelement <2 x float> poison, float %7, i64 0
+  %i.l = insertelement <2 x float> poison, float %23, i64 0
   %i.m = shufflevector <2 x float> %i.l, <2 x float> poison, <2 x i32> zeroinitializer
-  %32 = shufflevector <2 x float> <float -1.000000e+00, float poison>, <2 x float> %19, <2 x i32> <i32 0, i32 2>
+  %32 = insertelement <2 x float> <float -1.000000e+00, float poison>, float %27, i64 1
   %i.n = fadd <2 x float> %i.m, %32
   %i.o = fmul <2 x float> %i.n, <float 2.000000e+00, float 1.000000e+00>
-  %i.p = insertelement <2 x float> poison, float %18, i64 0
+  %i.p = insertelement <2 x float> poison, float %26, i64 0
   %i.q = shufflevector <2 x float> %i.p, <2 x float> poison, <2 x i32> zeroinitializer
   %i.r = fdiv <2 x float> %i.o, %i.q
   store <2 x float> %i.r, ptr %i.k, align 8

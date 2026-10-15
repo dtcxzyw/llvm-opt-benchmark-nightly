@@ -202,18 +202,17 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @cmsLabEncoded2Float(ptr nofree noundef writeonly captures(none) initializes((0, 24)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = load <2 x i16>, ptr %1, align 2, !tbaa !18
-  %3 = uitofp <2 x i16> %2 to <2 x double>
-  %4 = fdiv <2 x double> %3, <double 6.553500e+02, double 2.570000e+02>
-  %5 = fadd <2 x double> %4, <double -0.000000e+00, double -1.280000e+02>
-  store <2 x double> %5, ptr %0, align 8, !tbaa !16
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %6 = load i16, ptr %i.a, align 2, !tbaa !18
-  %7 = uitofp i16 %6 to double
-  %8 = fdiv double %7, 2.570000e+02
-  %9 = fadd double %8, -1.280000e+02
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %9, ptr %10, align 8, !tbaa !15
+  %2 = load i16, ptr %1, align 2, !tbaa !18
+  %3 = uitofp i16 %2 to double
+  %4 = fdiv double %3, 6.553500e+02
+  store double %4, ptr %0, align 8, !tbaa !13
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %6 = load <2 x i16>, ptr %i.a, align 2, !tbaa !18
+  %7 = uitofp <2 x i16> %6 to <2 x double>
+  %8 = fdiv <2 x double> %7, splat (double 2.570000e+02)
+  %9 = fadd <2 x double> %8, splat (double -1.280000e+02)
+  store <2 x double> %9, ptr %5, align 8, !tbaa !16
   ret void
 }
 

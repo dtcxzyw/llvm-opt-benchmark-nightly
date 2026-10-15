@@ -205,13 +205,13 @@ bb.a:
   %i.c = fmul <2 x double> %i.b, <double 2.000000e+00, double 4.000000e+00>
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = fdiv <2 x double> %i.c, splat (double 3.000000e+00) ; 2 uses
-  %2 = fsub <2 x double> splat (double 1.000000e+00), %i.e ; 2 uses
-  %3 = extractelement <2 x double> %2, i64 0
-  store double %3, ptr %0, align 8, !tbaa !106
-  %i.f = extractelement <2 x double> %i.e, i64 0
-  store double %i.f, ptr %i.d, align 8, !tbaa !107
+  %2 = extractelement <2 x double> %i.e, i64 0
+  store double %2, ptr %i.d, align 8, !tbaa !106
+  %3 = fsub <2 x double> splat (double 1.000000e+00), %i.e ; 2 uses
+  %i.f = extractelement <2 x double> %3, i64 0
+  store double %i.f, ptr %0, align 8, !tbaa !107
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.h = extractelement <2 x double> %2, i64 1
+  %i.h = extractelement <2 x double> %3, i64 1
   store double %i.h, ptr %i.g, align 8, !tbaa !108
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store double 0.000000e+00, ptr %i.i, align 8, !tbaa !109
@@ -227,7 +227,7 @@ bb.a:
   %i.d = extractelement <2 x double> %i.c, i64 0
   %i.e = fdiv double %i.d, 5.000000e+00
   %i.f = fsub double 1.000000e+00, %i.e
-  store double %i.f, ptr %0, align 8, !tbaa !106
+  store double %i.f, ptr %0, align 8, !tbaa !107
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = fdiv <2 x double> %i.c, <double 1.500000e+01, double -1.500000e+01>
   store <2 x double> %i.h, ptr %i.g, align 8, !tbaa !57
@@ -240,10 +240,10 @@ bb.a:
 define void @_Z35util_getOneQubitPauliChannelFactorsdddd(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.util_Scalars) align 8 captures(none) initializes((0, 32)) %0, double noundef %1, double noundef %2, double noundef %3, double noundef %4) local_unnamed_addr #22 {
 bb.a:
   %i.a = fadd double %1, %4
-  store double %i.a, ptr %0, align 8, !tbaa !106
+  store double %i.a, ptr %0, align 8, !tbaa !107
   %i.b = fadd double %2, %3
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store double %i.b, ptr %i.c, align 8, !tbaa !107
+  store double %i.b, ptr %i.c, align 8, !tbaa !106
   %i.d = fsub double %1, %4
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   store double %i.d, ptr %i.e, align 8, !tbaa !108
@@ -258,9 +258,9 @@ define void @_Z30util_getOneQubitDampingFactorsd(ptr dead_on_unwind noalias nofr
 bb.a:
   %i.a = fsub double 1.000000e+00, %1             ; 2 uses
   %i.b = tail call double @sqrt(double noundef %i.a) #32
-  store double %i.b, ptr %0, align 8, !tbaa !106
+  store double %i.b, ptr %0, align 8, !tbaa !107
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store double %i.a, ptr %i.c, align 8, !tbaa !107
+  store double %i.a, ptr %i.c, align 8, !tbaa !106
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false)
   ret void
@@ -663,8 +663,8 @@ attributes #33 = { noreturn nounwind }
 !103 = !{!96, !95, i64 8}
 !104 = !{!99, !98, i64 16}
 !105 = !{!"_ZTS12util_Scalars", !56, i64 0, !56, i64 8, !56, i64 16, !56, i64 24}
-!106 = !{!105, !56, i64 0}
-!107 = !{!105, !56, i64 8}
+!106 = !{!105, !56, i64 8}
+!107 = !{!105, !56, i64 0}
 !108 = !{!105, !56, i64 16}
 !109 = !{!105, !56, i64 24}
 !110 = !{!"_ZTSNSt12_Vector_baseIdSaIdEE17_Vector_impl_dataE", !55, i64 0, !55, i64 8, !55, i64 16}

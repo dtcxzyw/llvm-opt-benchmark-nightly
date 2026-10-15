@@ -179,25 +179,23 @@ bb.d:                                             ; preds = %bb.b
   %i.ar = shufflevector <4 x float> %i.aq, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
   %i.as = fadd contract <4 x float> %i.t, %i.ar
   %i.at = tail call contract <4 x float> @llvm.sqrt.v4f32(<4 x float> %i.as)
-  %i.au = fdiv contract <4 x float> splat (float 1.000000e+00), %i.at ; 6 uses
-  %shift = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop = fadd contract <4 x float> %i.au, %shift
-  %shift83 = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop84 = fadd contract <4 x float> %foldExtExtBinop, %shift83
-  %shift86 = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
-  %foldExtExtBinop87 = fadd contract <4 x float> %shift86, %foldExtExtBinop84
+  %i.au = fdiv contract <4 x float> splat (float 1.000000e+00), %i.at ; 5 uses
   %4 = sext i32 %i.af to i64                      ; 2 uses
   %5 = getelementptr inbounds [4 x i8], ptr %1, i64 %4 ; 2 uses
-  %6 = shufflevector <4 x float> %i.au, <4 x float> poison, <2 x i32> <i32 0, i32 1>
-  %7 = shufflevector <4 x float> %foldExtExtBinop87, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %8 = fdiv contract <2 x float> %6, %7
-  store <2 x float> %8, ptr %5, align 4, !tbaa !14
-  %9 = getelementptr i8, ptr %5, i64 8
-  %10 = shufflevector <4 x float> %i.au, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %11 = fdiv contract <2 x float> %10, %7         ; 2 uses
-  %i.av = extractelement <2 x float> %11, i64 0
-  store float %i.av, ptr %9, align 4, !tbaa !14
-  %i.aw = extractelement <2 x float> %11, i64 1
+  %6 = getelementptr i8, ptr %5, i64 8
+  %7 = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
+  %8 = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> zeroinitializer
+  %9 = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %10 = fadd contract <4 x float> %8, %9
+  %11 = shufflevector <4 x float> %i.au, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %12 = fadd contract <4 x float> %10, %11
+  %13 = fadd contract <4 x float> %7, %12
+  %14 = fdiv contract <4 x float> %i.au, %13      ; 3 uses
+  %15 = shufflevector <4 x float> %14, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  store <2 x float> %15, ptr %5, align 4, !tbaa !14
+  %i.av = extractelement <4 x float> %14, i64 2
+  store float %i.av, ptr %6, align 4, !tbaa !14
+  %i.aw = extractelement <4 x float> %14, i64 3
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c

@@ -205,19 +205,22 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !969    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !970  ; 2 uses
-  %1 = load <2 x float>, ptr %i.a, align 4, !tbaa !613
-  %2 = load <2 x float>, ptr %i.c, align 4, !tbaa !613
-  %3 = fdiv <2 x float> %1, %2
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %4 = load float, ptr %i.d, align 4, !tbaa !613
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %6 = load float, ptr %5, align 4, !tbaa !613
-  %7 = fdiv float %4, %6
+  %1 = load float, ptr %i.a, align 4, !tbaa !613
+  %2 = load float, ptr %i.c, align 4, !tbaa !613
+  %3 = fdiv float %1, %2
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %5 = load <2 x float>, ptr %4, align 4, !tbaa !613
+  %6 = load <2 x float>, ptr %i.d, align 4, !tbaa !613
+  %7 = fdiv <2 x float> %5, %6                    ; 2 uses
+  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %3, i64 0
+  %8 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i.i, <2 x float> %7, <2 x i32> <i32 0, i32 2>
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !971  ; 2 uses
-  store <2 x float> %3, ptr %i.f, align 4
+  store <2 x float> %8, ptr %i.f, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store float %7, ptr %.sroa.4.0..sroa_idx, align 4
+  %9 = extractelement <2 x float> %7, i64 1
+  store float %9, ptr %.sroa.4.0..sroa_idx, align 4
   ret void
 }
 
@@ -620,19 +623,22 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !969    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !970  ; 2 uses
-  %1 = load <2 x float>, ptr %i.a, align 4, !tbaa !613
-  %2 = load <2 x float>, ptr %i.c, align 4, !tbaa !613
-  %3 = fdiv <2 x float> %1, %2
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %4 = load float, ptr %i.d, align 4, !tbaa !613
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %6 = load float, ptr %5, align 4, !tbaa !613
-  %7 = fdiv float %4, %6
+  %1 = load float, ptr %i.a, align 4, !tbaa !613
+  %2 = load float, ptr %i.c, align 4, !tbaa !613
+  %3 = fdiv float %1, %2
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %5 = load <2 x float>, ptr %4, align 4, !tbaa !613
+  %6 = load <2 x float>, ptr %i.d, align 4, !tbaa !613
+  %7 = fdiv <2 x float> %5, %6                    ; 2 uses
+  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %3, i64 0
+  %8 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i.i, <2 x float> %7, <2 x i32> <i32 0, i32 2>
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !971  ; 2 uses
-  store <2 x float> %3, ptr %i.f, align 4
+  store <2 x float> %8, ptr %i.f, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store float %7, ptr %.sroa.4.0..sroa_idx, align 4
+  %9 = extractelement <2 x float> %7, i64 1
+  store float %9, ptr %.sroa.4.0..sroa_idx, align 4
   ret void
 }
 

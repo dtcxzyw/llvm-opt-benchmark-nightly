@@ -204,45 +204,45 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.0.0.copyload.i = load i32, ptr %i.b, align 8, !tbaa !13 ; 4 uses
-  %2 = bitcast i32 %.sroa.0.0.copyload.i to <4 x i8>
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <2 x i32> <i32 0, i32 1>
-  %.sroa.9.0.extract.shift = lshr i32 %.sroa.0.0.copyload.i, 16
-  %.sroa.9.0.extract.trunc = trunc i32 %.sroa.9.0.extract.shift to i8 ; 2 uses
-  %.sroa.12.0.extract.shift = lshr i32 %.sroa.0.0.copyload.i, 24 ; 2 uses
-  %4 = icmp eq i32 %.sroa.12.0.extract.shift, 255
-  br i1 %4, label %c11_color32_premult.exit, label %bb.d
+  %.sroa.0.0.copyload.i = load i32, ptr %i.b, align 8, !tbaa !13 ; 3 uses
+  %.sroa.0.0.extract.trunc = trunc i32 %.sroa.0.0.copyload.i to i8 ; 2 uses
+  %.sroa.9.0.extract.shift = lshr i32 %.sroa.0.0.copyload.i, 24 ; 2 uses
+  %2 = icmp eq i32 %.sroa.9.0.extract.shift, 255
+  %3 = bitcast i32 %.sroa.0.0.copyload.i to <4 x i8>
+  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <2 x i32> <i32 1, i32 2> ; 2 uses
+  br i1 %2, label %c11_color32_premult.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.12.0.extract.trunc = trunc nuw i32 %.sroa.12.0.extract.shift to i8
+  %.sroa.12.0.extract.trunc = trunc nuw i32 %.sroa.9.0.extract.shift to i8
   %i.c = uitofp i8 %.sroa.12.0.extract.trunc to float
   %i.d = fdiv float %i.c, 2.550000e+02            ; 2 uses
-  %5 = bitcast i32 %.sroa.0.0.copyload.i to <4 x i8>
-  %6 = shufflevector <4 x i8> %5, <4 x i8> poison, <2 x i32> <i32 0, i32 1>
-  %i.e = uitofp <2 x i8> %6 to <2 x float>
+  %5 = uitofp i8 %.sroa.0.0.extract.trunc to float
+  %6 = fmul float %i.d, %5
+  %7 = fptoui float %6 to i8
+  %i.e = uitofp <2 x i8> %4 to <2 x float>
   %i.f = insertelement <2 x float> poison, float %i.d, i64 0
   %i.g = shufflevector <2 x float> %i.f, <2 x float> poison, <2 x i32> zeroinitializer
   %i.h = fmul <2 x float> %i.g, %i.e
   %i.i = fptoui <2 x float> %i.h to <2 x i8>
-  %7 = uitofp i8 %.sroa.9.0.extract.trunc to float
-  %8 = fmul float %i.d, %7
-  %9 = fptoui float %8 to i8
   br label %c11_color32_premult.exit
 
 c11_color32_premult.exit:                         ; preds = %bb.c, %bb.d
-  %.sroa.9.0 = phi i8 [ %.sroa.9.0.extract.trunc, %bb.c ], [ %9, %bb.d ]
-  %i.j = phi <2 x i8> [ %3, %bb.c ], [ %i.i, %bb.d ]
+  %.sroa.9.0 = phi i8 [ %.sroa.0.0.extract.trunc, %bb.c ], [ %7, %bb.d ]
+  %i.j = phi <2 x i8> [ %4, %bb.c ], [ %i.i, %bb.d ]
+  %8 = uitofp i8 %.sroa.9.0 to float
+  %9 = fdiv float %8, 2.550000e+02
+  %.sroa.01.0.vec.insert = insertelement <2 x float> poison, float %9, i64 0
   %10 = uitofp <2 x i8> %i.j to <2 x float>
-  %11 = fdiv <2 x float> %10, splat (float 2.550000e+02)
-  %12 = uitofp i8 %.sroa.9.0 to float
-  %13 = fdiv float %12, 2.550000e+02
+  %11 = fdiv <2 x float> %10, splat (float 2.550000e+02) ; 2 uses
+  %12 = shufflevector <2 x float> %.sroa.01.0.vec.insert, <2 x float> %11, <2 x i32> <i32 0, i32 2>
   %i.k = tail call ptr (...) @py_retval() #16     ; 4 uses
   store i16 73, ptr %i.k, align 8, !tbaa !11
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 2
   store i8 0, ptr %i.l, align 2, !tbaa !12
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  store <2 x float> %11, ptr %i.m, align 8
+  store <2 x float> %12, ptr %i.m, align 8
   %.sroa.24.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 16
+  %13 = extractelement <2 x float> %11, i64 1
   store float %13, ptr %.sroa.24.0..sroa_idx.i, align 8, !tbaa !13
   br label %bb.e
 

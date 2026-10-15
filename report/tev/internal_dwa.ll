@@ -205,17 +205,19 @@ begin_hunk_0_@LossyDctDecoder_execute:bb.a
   br label %.lr.ph380.split.us.preheader
 
 .thread:                                          ; preds = %bb.aj
-  %i.pw = load float, ptr %i.gq, align 4, !tbaa !102 ; 2 uses
-  %i.px = load float, ptr %i.gr, align 4, !tbaa !102 ; 2 uses
-  %i.py = load float, ptr %i.gp, align 4, !tbaa !102 ; 3 uses
-  %3 = tail call float @llvm.fmuladd.f32(float %i.px, float 1.574700e+00, float %i.py)
-  store float %3, ptr %i.gp, align 4, !tbaa !102
-  %4 = tail call float @llvm.fmuladd.f32(float %i.pw, float -1.873000e-01, float %i.py)
-  %5 = insertelement <2 x float> poison, float %i.px, i64 0
-  %6 = insertelement <2 x float> %5, float %i.pw, i64 1
-  %7 = insertelement <2 x float> poison, float %4, i64 0
-  %i.pz = insertelement <2 x float> %7, float %i.py, i64 1
-  %i.qa = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %i.pz) ; 2 uses
+  %i.pw = load float, ptr %i.gq, align 4, !tbaa !102
+  %i.px = load float, ptr %i.gr, align 4, !tbaa !102
+  %i.py = load float, ptr %i.gp, align 4, !tbaa !102 ; 2 uses
+  %3 = insertelement <2 x float> poison, float %i.px, i64 0
+  %4 = insertelement <2 x float> %3, float %i.pw, i64 1 ; 2 uses
+  %5 = insertelement <2 x float> poison, float %i.py, i64 0
+  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %7 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> <float 1.574700e+00, float -1.873000e-01>, <2 x float> %6) ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0
+  store float %8, ptr %i.gp, align 4, !tbaa !102
+  %9 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.pz = insertelement <2 x float> %9, float %i.py, i64 1
+  %i.qa = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %i.pz) ; 2 uses
   %i.qb = extractelement <2 x float> %i.qa, i64 0
   store float %i.qb, ptr %i.gq, align 4, !tbaa !102
   %i.qc = extractelement <2 x float> %i.qa, i64 1

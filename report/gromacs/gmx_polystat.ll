@@ -205,22 +205,22 @@ scalar.ph1134:                                    ; preds = %scalar.ph1134.prehe
   %i.aei = load ptr, ptr %i.ou, align 8, !tbaa !87 ; 3 uses
   %i.aej = load <2 x double>, ptr %i.aei, align 8, !tbaa !91
   %i.aek = fdiv <2 x double> %i.aej, %i.qe        ; 2 uses
+  %21 = extractelement <2 x double> %i.aek, i64 0
   store <2 x double> %i.aek, ptr %i.aei, align 8, !tbaa !91
   %i.ael = getelementptr inbounds nuw i8, ptr %i.aei, i64 16 ; 2 uses
   %i.aem = load double, ptr %i.ael, align 8, !tbaa !91
   %i.aen = fdiv double %i.aem, %i.pu
   store double %i.aen, ptr %i.ael, align 8, !tbaa !91
-  %21 = extractelement <2 x double> %i.aek, i64 0
   %i.aeo = fadd double %21, 0.000000e+00
   %i.aep = load ptr, ptr %i.pc, align 8, !tbaa !87 ; 3 uses
-  %22 = load <2 x double>, ptr %i.aep, align 8, !tbaa !91
-  %23 = fdiv <2 x double> %22, %i.qe              ; 2 uses
-  store <2 x double> %23, ptr %i.aep, align 8, !tbaa !91
-  %i.aeq = getelementptr inbounds nuw i8, ptr %i.aep, i64 16 ; 2 uses
-  %24 = load double, ptr %i.aeq, align 8, !tbaa !91
-  %25 = fdiv double %24, %i.pu
-  store double %25, ptr %i.aeq, align 8, !tbaa !91
-  %26 = extractelement <2 x double> %23, i64 1
+  %22 = load double, ptr %i.aep, align 8, !tbaa !91
+  %23 = fdiv double %22, %i.pu
+  store double %23, ptr %i.aep, align 8, !tbaa !91
+  %i.aeq = getelementptr inbounds nuw i8, ptr %i.aep, i64 8 ; 2 uses
+  %24 = load <2 x double>, ptr %i.aeq, align 8, !tbaa !91
+  %25 = fdiv <2 x double> %24, %i.qe              ; 2 uses
+  %26 = extractelement <2 x double> %25, i64 0
+  store <2 x double> %25, ptr %i.aeq, align 8, !tbaa !91
   %i.aer = fadd double %i.aeo, %26
   %i.aes = load ptr, ptr %i.pi, align 8, !tbaa !87 ; 3 uses
   %i.aet = load <2 x double>, ptr %i.aes, align 8, !tbaa !91

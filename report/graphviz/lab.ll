@@ -122,18 +122,18 @@ PivotRgb.exit12:                                  ; preds = %bb.f, %bb.g
   %i.ad = insertelement <2 x double> poison, double %.0.i9, i64 0
   %i.ae = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> zeroinitializer
   %i.af = fmul <2 x double> %i.ae, <double 3.576000e-01, double 7.152000e-01>
-  %2 = fmul double %.0.i9, 1.192000e-01
-  %3 = tail call double @llvm.fmuladd.f64(double %.0.i, double 1.930000e-02, double %2)
-  %4 = tail call double @llvm.fmuladd.f64(double %.0.i11, double 9.505000e-01, double %3)
-  %i.ag = insertelement <2 x double> poison, double %.0.i, i64 0
+  %2 = insertelement <2 x double> poison, double %.0.i, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> <double 4.124000e-01, double 2.126000e-01>, <2 x double> %i.af)
+  %i.ag = insertelement <2 x double> poison, double %.0.i11, i64 0
   %i.ah = shufflevector <2 x double> %i.ag, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ah, <2 x double> <double 4.124000e-01, double 2.126000e-01>, <2 x double> %i.af)
-  %5 = insertelement <2 x double> poison, double %.0.i11, i64 0
-  %6 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
-  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> <double 1.805000e-01, double 7.220000e-02>, <2 x double> %i.ai)
-  store <2 x double> %7, ptr %0, align 8, !tbaa !19, !alias.scope !31
+  %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ah, <2 x double> <double 1.805000e-01, double 7.220000e-02>, <2 x double> %4)
+  %5 = fmul double %.0.i9, 1.192000e-01
+  %6 = tail call double @llvm.fmuladd.f64(double %.0.i, double 1.930000e-02, double %5)
+  %7 = tail call double @llvm.fmuladd.f64(double %.0.i11, double 9.505000e-01, double %6)
+  store <2 x double> %i.ai, ptr %0, align 8, !tbaa !19, !alias.scope !31
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %4, ptr %i.aj, align 8, !tbaa !14, !alias.scope !31
+  store double %7, ptr %i.aj, align 8, !tbaa !14, !alias.scope !31
   ret void
 }
 

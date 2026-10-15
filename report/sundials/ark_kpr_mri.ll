@@ -202,12 +202,12 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !19
   %i.g = tail call double @cos(double noundef %0) #9
   %i.h = fmul double %i.g, 5.000000e-01
+  %4 = load <2 x double>, ptr %i.f, align 8, !tbaa !11 ; 3 uses
+  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %4, <2 x double> <double -1.000000e+00, double -2.000000e+00>)
   %i.i = getelementptr i8, ptr %3, i64 8
   %.val = load double, ptr %i.i, align 8, !tbaa !11
   %i.j = fmul double %0, %.val
   %i.k = tail call double @cos(double noundef %i.j) #9
-  %4 = load <2 x double>, ptr %i.f, align 8, !tbaa !11 ; 3 uses
-  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %4, <2 x double> %4, <2 x double> <double -1.000000e+00, double -2.000000e+00>)
   %i.l = insertelement <2 x double> poison, double %i.h, i64 0
   %i.m = insertelement <2 x double> %i.l, double %i.k, i64 1
   %i.n = fsub <2 x double> %5, %i.m

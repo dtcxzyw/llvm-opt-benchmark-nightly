@@ -205,21 +205,23 @@ bb.aw:                                            ; preds = %.preheader432, %to_
   %i.wi = add nuw nsw i64 %indvars.iv473, %i.wd   ; 3 uses
   %i.wj = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %i.wi
   %i.wk = getelementptr inbounds nuw [4 x i8], ptr %i.fe, i64 %i.wi
-  %i.wl = load float, ptr %i.wk, align 4, !tbaa !213 ; 2 uses
+  %i.wl = load float, ptr %i.wk, align 4, !tbaa !213
   %i.wm = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %i.wi
-  %i.wn = load float, ptr %i.wm, align 4, !tbaa !213 ; 2 uses
+  %i.wn = load float, ptr %i.wm, align 4, !tbaa !213
   %i.wo = getelementptr inbounds nuw [4 x i8], ptr %.0329438, i64 %indvars.iv473
   %i.wp = getelementptr inbounds nuw [4 x i8], ptr %.0328439, i64 %indvars.iv473 ; 3 uses
   %i.wq = getelementptr inbounds nuw [4 x i8], ptr %.0327440, i64 %indvars.iv473 ; 3 uses
-  %i.wr = load float, ptr %i.wj, align 4, !tbaa !213 ; 3 uses
-  %6 = call nsz float @llvm.fmuladd.f32(float %i.wn, float 1.574700e+00, float %i.wr)
-  store float %6, ptr %i.wq, align 4, !tbaa !213
-  %7 = call nsz float @llvm.fmuladd.f32(float %i.wl, float -1.873000e-01, float %i.wr)
-  %8 = insertelement <2 x float> poison, float %i.wn, i64 0
-  %9 = insertelement <2 x float> %8, float %i.wl, i64 1
-  %10 = insertelement <2 x float> poison, float %7, i64 0
-  %i.ws = insertelement <2 x float> %10, float %i.wr, i64 1
-  %i.wt = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %i.ws) ; 2 uses
+  %i.wr = load float, ptr %i.wj, align 4, !tbaa !213 ; 2 uses
+  %6 = insertelement <2 x float> poison, float %i.wn, i64 0
+  %7 = insertelement <2 x float> %6, float %i.wl, i64 1 ; 2 uses
+  %8 = insertelement <2 x float> poison, float %i.wr, i64 0
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
+  %10 = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> <float 1.574700e+00, float -1.873000e-01>, <2 x float> %9) ; 2 uses
+  %11 = extractelement <2 x float> %10, i64 0
+  store float %11, ptr %i.wq, align 4, !tbaa !213
+  %12 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.ws = insertelement <2 x float> %12, float %i.wr, i64 1
+  %i.wt = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %7, <2 x float> <float -4.682000e-01, float 1.855600e+00>, <2 x float> %i.ws) ; 2 uses
   %i.wu = extractelement <2 x float> %i.wt, i64 0
   store float %i.wu, ptr %i.wp, align 4, !tbaa !213
   %i.wv = extractelement <2 x float> %i.wt, i64 1 ; 2 uses

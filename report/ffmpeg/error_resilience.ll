@@ -205,32 +205,35 @@ bb.dc:                                            ; preds = %bb.db
 
 bb.dd:                                            ; preds = %bb.db
   %i.zn = load i16, ptr %i.xz, align 2, !tbaa !125
+  %2 = zext i16 %i.zn to i32                      ; 3 uses
+  %3 = zext i16 %i.zj to i32                      ; 2 uses
   %i.zo = load ptr, ptr %i.ya, align 8, !tbaa !126
   tail call void @ff_thread_progress_await(ptr noundef %i.zo, i32 noundef %.2594858) #10
   %i.zp = load ptr, ptr %i.yb, align 8, !tbaa !62
   %i.zq = sext i32 %reass.mul to i64
   %i.zr = getelementptr inbounds [4 x i8], ptr %i.zp, i64 %i.zq ; 2 uses
   %i.zs = getelementptr inbounds nuw i8, ptr %i.zr, i64 2
-  %2 = zext i16 %i.zn to i32                      ; 3 uses
-  %3 = zext i16 %i.zj to i32                      ; 4 uses
+  %4 = sub nsw i32 %2, %3                         ; 2 uses
   %i.zt = load i16, ptr %i.zr, align 2, !tbaa !67
   %i.zu = sext i16 %i.zt to i32                   ; 2 uses
   %i.zv = mul nsw i32 %i.zu, %2
   %i.zw = load i16, ptr %i.zs, align 2, !tbaa !67
   %i.zx = sext i16 %i.zw to i32                   ; 2 uses
-  %i.zy = mul nsw i32 %i.zx, %2
-  %4 = insertelement <2 x i32> poison, i32 %i.zv, i64 0
-  %5 = insertelement <2 x i32> %4, i32 %i.zy, i64 1
-  %6 = insertelement <2 x i32> poison, i32 %3, i64 0
-  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <2 x i32> zeroinitializer
-  %8 = sdiv <2 x i32> %5, %7
-  store <2 x i32> %8, ptr %i.yc, align 8, !tbaa !47
-  %9 = sub nsw i32 %2, %3                         ; 2 uses
-  %10 = mul nsw i32 %9, %i.zu
-  %11 = sdiv i32 %10, %3
-  store i32 %11, ptr %i.ye, align 8, !tbaa !47
-  %12 = mul nsw i32 %9, %i.zx
-  %13 = sdiv i32 %12, %3
+  %5 = mul nsw i32 %i.zx, %2
+  %i.zy = mul nsw i32 %4, %i.zu
+  %6 = mul nsw i32 %4, %i.zx
+  %7 = insertelement <4 x i32> poison, i32 %i.zv, i64 0
+  %8 = insertelement <4 x i32> %7, i32 %i.zy, i64 1
+  %9 = insertelement <4 x i32> %8, i32 %5, i64 2
+  %10 = insertelement <4 x i32> %9, i32 %6, i64 3
+  %11 = insertelement <4 x i32> poison, i32 %3, i64 0
+  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> zeroinitializer
+  %13 = sdiv <4 x i32> %10, %12                   ; 3 uses
+  %14 = shufflevector <4 x i32> %13, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
+  store <2 x i32> %14, ptr %i.yc, align 8, !tbaa !47
+  %15 = extractelement <4 x i32> %13, i64 1
+  store i32 %15, ptr %i.ye, align 8, !tbaa !47
+  %16 = extractelement <4 x i32> %13, i64 3
   br label %bb.df
 
 bb.de:                                            ; preds = %bb.da
@@ -240,7 +243,7 @@ bb.de:                                            ; preds = %bb.da
   br label %bb.df
 
 bb.df:                                            ; preds = %bb.de, %bb.dd
-  %storemerge = phi i32 [ %13, %bb.dd ], [ 0, %bb.de ]
+  %storemerge = phi i32 [ %16, %bb.dd ], [ 0, %bb.de ]
   store i32 %storemerge, ptr %i.yf, align 4, !tbaa !47
   %i.zz = load ptr, ptr %i.yg, align 8, !tbaa !68
   %i.aaa = load ptr, ptr %i.yh, align 8, !tbaa !69

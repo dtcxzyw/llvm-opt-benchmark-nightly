@@ -205,28 +205,34 @@ _ZNSt6vectorIN7openvdb5v13_04math4Vec3IfEESaIS4_EED2Ev.exit.i: ; preds = %_ZNSt6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.u, ptr noundef nonnull align 4 dereferenceable(36) %2, i64 36, i1 false), !noalias !6211
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 12
-  %.sroa.0.0.copyload4.i.i = load <2 x float>, ptr %i.u, align 4
+  %.sroa.0.0.copyload4.i.i = load <2 x float>, ptr %i.u, align 4 ; 2 uses
   %.sroa.6.0..sroa_idx.i13.i = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %.sroa.6.0.copyload.i14.i = load float, ptr %.sroa.6.0..sroa_idx.i13.i, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 20
-  %4 = load float, ptr %3, align 4, !tbaa !1161
-  %i.w = fadd float %.sroa.6.0.copyload.i14.i, %4
-  %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 24
-  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 32
+  %3 = load float, ptr %i.v, align 4, !tbaa !1161
+  %.sroa.0.0.vec.extract.i.i = extractelement <2 x float> %.sroa.0.0.copyload4.i.i, i64 0
+  %i.w = fadd float %.sroa.0.0.vec.extract.i.i, %3
+  %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 16
+  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 24
   %i.z = load float, ptr %i.y, align 4, !tbaa !1161
   %i.aa = fadd float %i.w, %i.z
-  %i.ab = load <2 x float>, ptr %i.v, align 4, !tbaa !1161
-  %i.ac = fadd <2 x float> %.sroa.0.0.copyload4.i.i, %i.ab
-  %i.ad = load <2 x float>, ptr %i.x, align 4, !tbaa !1161
-  %i.ae = fadd <2 x float> %i.ac, %i.ad
-  %i.af = fdiv <2 x float> %i.ae, splat (float 3.000000e+00)
+  %4 = getelementptr inbounds nuw i8, ptr %i.u, i64 28
   %5 = fdiv float %i.aa, 3.000000e+00
+  %.sroa.0.0.vec.insert.i28.i = insertelement <2 x float> poison, float %5, i64 0
+  %i.ab = load <2 x float>, ptr %i.x, align 4, !tbaa !1161
+  %6 = shufflevector <2 x float> %.sroa.0.0.copyload4.i.i, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %7 = insertelement <2 x float> %6, float %.sroa.6.0.copyload.i14.i, i64 1
+  %i.ac = fadd <2 x float> %7, %i.ab
+  %i.ad = load <2 x float>, ptr %4, align 4, !tbaa !1161
+  %i.ae = fadd <2 x float> %i.ac, %i.ad
+  %i.af = fdiv <2 x float> %i.ae, splat (float 3.000000e+00) ; 2 uses
+  %8 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i28.i, <2 x float> %i.af, <2 x i32> <i32 0, i32 2>
   %i.ag = load ptr, ptr %i.g, align 8, !tbaa !6212, !nonnull !789, !align !844
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !1791
   %i.ai = getelementptr inbounds nuw [12 x i8], ptr %i.ah, i64 %storemerge46.i ; 2 uses
-  store <2 x float> %i.af, ptr %i.ai, align 4
+  store <2 x float> %8, ptr %i.ai, align 4
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  store float %5, ptr %.sroa.5.0..sroa_idx.i, align 4
+  %9 = extractelement <2 x float> %i.af, i64 1
+  store float %9, ptr %.sroa.5.0..sroa_idx.i, align 4
   tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef 36) #31
   %i.aj = add i64 %storemerge46.i, 1              ; 2 uses
   %i.ak = load i64, ptr %1, align 8, !tbaa !1779
@@ -629,28 +635,34 @@ _ZNSt6vectorIN7openvdb5v13_04math4Vec3IfEESaIS4_EED2Ev.exit.i: ; preds = %_ZNSt6
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.u, ptr noundef nonnull align 4 dereferenceable(36) %2, i64 36, i1 false), !noalias !8054
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 12
-  %.sroa.0.0.copyload4.i.i = load <2 x float>, ptr %i.u, align 4
+  %.sroa.0.0.copyload4.i.i = load <2 x float>, ptr %i.u, align 4 ; 2 uses
   %.sroa.6.0..sroa_idx.i13.i = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %.sroa.6.0.copyload.i14.i = load float, ptr %.sroa.6.0..sroa_idx.i13.i, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %i.u, i64 20
-  %4 = load float, ptr %3, align 4, !tbaa !1161
-  %i.w = fadd float %.sroa.6.0.copyload.i14.i, %4
-  %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 24
-  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 32
+  %3 = load float, ptr %i.v, align 4, !tbaa !1161
+  %.sroa.0.0.vec.extract.i.i = extractelement <2 x float> %.sroa.0.0.copyload4.i.i, i64 0
+  %i.w = fadd float %.sroa.0.0.vec.extract.i.i, %3
+  %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 16
+  %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 24
   %i.z = load float, ptr %i.y, align 4, !tbaa !1161
   %i.aa = fadd float %i.w, %i.z
-  %i.ab = load <2 x float>, ptr %i.v, align 4, !tbaa !1161
-  %i.ac = fadd <2 x float> %.sroa.0.0.copyload4.i.i, %i.ab
-  %i.ad = load <2 x float>, ptr %i.x, align 4, !tbaa !1161
-  %i.ae = fadd <2 x float> %i.ac, %i.ad
-  %i.af = fdiv <2 x float> %i.ae, splat (float 3.000000e+00)
+  %4 = getelementptr inbounds nuw i8, ptr %i.u, i64 28
   %5 = fdiv float %i.aa, 3.000000e+00
+  %.sroa.0.0.vec.insert.i28.i = insertelement <2 x float> poison, float %5, i64 0
+  %i.ab = load <2 x float>, ptr %i.x, align 4, !tbaa !1161
+  %6 = shufflevector <2 x float> %.sroa.0.0.copyload4.i.i, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %7 = insertelement <2 x float> %6, float %.sroa.6.0.copyload.i14.i, i64 1
+  %i.ac = fadd <2 x float> %7, %i.ab
+  %i.ad = load <2 x float>, ptr %4, align 4, !tbaa !1161
+  %i.ae = fadd <2 x float> %i.ac, %i.ad
+  %i.af = fdiv <2 x float> %i.ae, splat (float 3.000000e+00) ; 2 uses
+  %8 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i28.i, <2 x float> %i.af, <2 x i32> <i32 0, i32 2>
   %i.ag = load ptr, ptr %i.g, align 8, !tbaa !8055, !nonnull !789, !align !844
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !1791
   %i.ai = getelementptr inbounds nuw [12 x i8], ptr %i.ah, i64 %storemerge46.i ; 2 uses
-  store <2 x float> %i.af, ptr %i.ai, align 4
+  store <2 x float> %8, ptr %i.ai, align 4
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  store float %5, ptr %.sroa.5.0..sroa_idx.i, align 4
+  %9 = extractelement <2 x float> %i.af, i64 1
+  store float %9, ptr %.sroa.5.0..sroa_idx.i, align 4
   tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef 36) #31
   %i.aj = add i64 %storemerge46.i, 1              ; 2 uses
   %i.ak = load i64, ptr %1, align 8, !tbaa !1779

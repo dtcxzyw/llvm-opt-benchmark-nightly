@@ -202,7 +202,7 @@ declare void @_ZN12RemoteClient8GotBlockEN4core8vector3dIsEE(ptr noundef nonnull
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN6Server17process_PlayerPosEP12RemotePlayerP9PlayerSAOP13NetworkPacket(ptr noundef nonnull align 8 dereferenceable(1880) %0, ptr noundef %1, ptr noundef %2, ptr noundef nonnull %3) local_unnamed_addr #11 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.core::vector3d.132", align 8 ; 8 uses
+  %4 = alloca %"class.core::vector3d.132", align 4 ; 8 uses
   %5 = alloca %"class.core::vector3d.132", align 8 ; 8 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 5 uses
@@ -213,11 +213,11 @@ bb.a:
   %i.g = alloca float, align 4                    ; 5 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
-  store i32 0, ptr %4, align 8, !tbaa !529
-  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 0, ptr %4, align 4, !tbaa !529
+  %i.h = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   store i32 0, ptr %i.h, align 4, !tbaa !530
-  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store i32 0, ptr %i.i, align 8, !tbaa !531
+  %i.i = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i32 0, ptr %i.i, align 4, !tbaa !531
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #27
   store i32 0, ptr %5, align 8, !tbaa !529
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 4
@@ -310,24 +310,27 @@ bb.f:                                             ; preds = %.critedge, %bb.e
   br i1 %.not56, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
+  %7 = load i32, ptr %i.k, align 8, !tbaa !531
+  %8 = load i32, ptr %4, align 4, !tbaa !529
   %i.be = load <2 x i32>, ptr %5, align 8, !tbaa !288
-  %7 = sitofp <2 x i32> %i.be to <2 x float>
-  %8 = fdiv nsz <2 x float> %7, splat (float 1.000000e+02)
-  %9 = load i32, ptr %i.k, align 8, !tbaa !531
-  %10 = load <2 x i32>, ptr %4, align 8, !tbaa !288
-  %11 = sitofp <2 x i32> %10 to <2 x float>
-  %12 = fdiv nsz <2 x float> %11, splat (float 1.000000e+02)
-  %13 = load i32, ptr %i.i, align 8, !tbaa !531
-  %14 = insertelement <2 x i32> poison, i32 %9, i64 0
-  %15 = insertelement <2 x i32> %14, i32 %13, i64 1
-  %i.bf = sitofp <2 x i32> %15 to <2 x float>
+  %9 = insertelement <4 x i32> poison, i32 %7, i64 2
+  %10 = insertelement <4 x i32> %9, i32 %8, i64 3
+  %11 = shufflevector <2 x i32> %i.be, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %12 = shufflevector <4 x i32> %11, <4 x i32> %10, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %13 = sitofp <4 x i32> %12 to <4 x float>
+  %14 = fdiv nsz <4 x float> %13, splat (float 1.000000e+02) ; 3 uses
+  %15 = shufflevector <4 x float> %14, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %16 = shufflevector <4 x float> %14, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
+  %17 = load <2 x i32>, ptr %i.h, align 4, !tbaa !288
+  %i.bf = sitofp <2 x i32> %17 to <2 x float>
   %i.bg = fdiv nsz <2 x float> %i.bf, splat (float 1.000000e+02) ; 2 uses
+  %18 = shufflevector <2 x float> %16, <2 x float> %i.bg, <2 x i32> <i32 0, i32 2>
   %i.bh = extractelement <2 x float> %i.bg, i64 1
-  call void @_ZN9PlayerSAO15setBasePositionEN4core8vector3dIfEE(ptr noundef nonnull align 8 dereferenceable(1226) %2, <2 x float> %12, float %i.bh)
+  call void @_ZN9PlayerSAO15setBasePositionEN4core8vector3dIfEE(ptr noundef nonnull align 8 dereferenceable(1226) %2, <2 x float> %18, float %i.bh)
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 360
-  store <2 x float> %8, ptr %i.bi, align 8, !tbaa !386
+  store <2 x float> %15, ptr %i.bi, align 8, !tbaa !386
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 368
-  %i.bj = extractelement <2 x float> %i.bg, i64 0
+  %i.bj = extractelement <4 x float> %14, i64 2
   store float %i.bj, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !386
   br label %bb.h
 
@@ -730,14 +733,20 @@ _ZN11StreamProxylsIiEERS_OT_.exit:                ; preds = %_ZN9LogStreamlsIRKN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   %i.ga = getelementptr inbounds nuw i8, ptr %i.av, i64 312
-  %.sroa.01.0.copyload.i = load <2 x float>, ptr %i.ga, align 8, !tbaa !386
+  %.sroa.01.0.copyload.i = load <2 x float>, ptr %i.ga, align 8, !tbaa !386 ; 2 uses
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.av, i64 320
   %.sroa.22.0.copyload.i = load float, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !386
-  %i.gb = fdiv nsz <2 x float> %.sroa.01.0.copyload.i, splat (float 1.000000e+01)
-  %5 = fdiv nsz float %.sroa.22.0.copyload.i, 1.000000e+01
-  store <2 x float> %i.gb, ptr %3, align 8
+  %.sroa.0.0.vec.extract = extractelement <2 x float> %.sroa.01.0.copyload.i, i64 0
+  %5 = fdiv nsz float %.sroa.0.0.vec.extract, 1.000000e+01
+  %6 = shufflevector <2 x float> %.sroa.01.0.copyload.i, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %7 = insertelement <2 x float> %6, float %.sroa.22.0.copyload.i, i64 1
+  %i.gb = fdiv nsz <2 x float> %7, splat (float 1.000000e+01) ; 2 uses
+  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %5, i64 0
+  %8 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i, <2 x float> %i.gb, <2 x i32> <i32 0, i32 2>
+  store <2 x float> %8, ptr %3, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store float %5, ptr %.sroa.2.0..sroa_idx, align 8
+  %9 = extractelement <2 x float> %i.gb, i64 1
+  store float %9, ptr %.sroa.2.0..sroa_idx, align 8
   %i.gc = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN11StreamProxylsIN4core8vector3dIfEEEERS_OT_(ptr noundef nonnull align 8 dereferenceable(8) %i.fz, ptr noundef nonnull align 4 dereferenceable(12) %3) ; 2 uses
   %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !60 ; 5 uses
   %.not.i41 = icmp eq ptr %i.gd, null

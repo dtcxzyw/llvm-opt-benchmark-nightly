@@ -25,15 +25,15 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @.str, ptr %i.d, align 8, !tbaa !43
+  store ptr @.str, ptr %i.d, align 8, !tbaa !44
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store ptr @_ZL13des_col_urban, ptr %i.e, align 8, !tbaa !44
+  store ptr @_ZL13des_col_urban, ptr %i.e, align 8, !tbaa !45
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  store i32 1, ptr %i.f, align 8, !tbaa !45
+  store i32 1, ptr %i.f, align 8, !tbaa !46
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 380
-  store i32 4, ptr %i.g, align 4, !tbaa !46
+  store i32 4, ptr %i.g, align 4, !tbaa !47
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 384
-  store i32 1, ptr %i.h, align 8, !tbaa !47
+  store i32 1, ptr %i.h, align 8, !tbaa !48
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
@@ -44,7 +44,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
 ; Function Attrs: mustprogress uwtable
 define hidden noundef ptr @_Z38pj_projection_specific_setup_col_urbanP8PJconsts(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #6 ; 6 uses
+  %i.a = tail call noalias dereferenceable_or_null(48) ptr @calloc(i64 noundef 1, i64 noundef 48) #6 ; 8 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -55,12 +55,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 88
   store ptr %i.a, ptr %i.d, align 8, !tbaa !37
-  %i.e = load ptr, ptr %0, align 8, !tbaa !48
+  %i.e = load ptr, ptr %0, align 8, !tbaa !49
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !49
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !50
   %i.h = tail call i64 @_Z8pj_paramP6pj_ctxP8ARG_listPKc(ptr noundef %i.e, ptr noundef %i.g, ptr noundef nonnull @.str.1)
+  %1 = bitcast i64 %i.h to double
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.j = load double, ptr %i.i, align 8, !tbaa !50
+  %i.j = load double, ptr %i.i, align 8, !tbaa !51
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 448
   %i.l = load double, ptr %i.k, align 8, !tbaa !38 ; 2 uses
   %i.m = tail call double @sin(double noundef %i.l) #7 ; 2 uses
@@ -70,43 +71,41 @@ bb.c:                                             ; preds = %bb.a
   %i.q = fmul double %i.o, %i.p
   %i.r = tail call double @llvm.fmuladd.f64(double %i.q, double %i.m, double 1.000000e+00) ; 2 uses
   %i.s = tail call double @sqrt(double noundef %i.r) #7
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %2 = fsub double 1.000000e+00, %i.o             ; 2 uses
+  %2 = fdiv double 1.000000e+00, %i.s             ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.t = tail call double @pow(double noundef %i.r, double noundef 1.500000e+00) #7
-  %3 = insertelement <2 x i64> poison, i64 %i.h, i64 0
-  %4 = bitcast <2 x i64> %3 to <2 x double>
-  %5 = insertelement <2 x double> %4, double %2, i64 1
-  %i.u = insertelement <2 x double> poison, double %i.j, i64 0
-  %i.v = insertelement <2 x double> %i.u, double %i.t, i64 1
-  %6 = fdiv <2 x double> %5, %i.v                 ; 5 uses
-  %7 = extractelement <2 x double> %6, i64 0
-  store <2 x double> %6, ptr %i.a, align 8, !tbaa !40
-  %i.w = extractelement <2 x double> %6, i64 1    ; 2 uses
-  %8 = fmul double %i.w, 2.000000e+00
-  %9 = tail call double @tan(double noundef %i.l) #7
-  %10 = insertelement <2 x double> %6, double %9, i64 1
-  %11 = fadd double %7, 1.000000e+00
-  %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store double %11, ptr %i.x, align 8, !tbaa !51
-  %12 = shufflevector <2 x double> %6, <2 x double> <double 1.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
-  %13 = insertelement <2 x double> poison, double %i.s, i64 0
-  %14 = insertelement <2 x double> %13, double %2, i64 1
-  %15 = fdiv <2 x double> %12, %14                ; 3 uses
-  %16 = extractelement <2 x double> %15, i64 0
-  %17 = fmul double %16, %8
-  %18 = insertelement <2 x double> %15, double %17, i64 1
-  %19 = fdiv <2 x double> %10, %18
-  %20 = fadd <2 x double> %19, <double 1.000000e+00, double -0.000000e+00>
-  store <2 x double> %20, ptr %1, align 8, !tbaa !40
-  %21 = extractelement <2 x double> %15, i64 1
-  %i.y = fadd double %21, 1.000000e+00
-  %i.z = fmul double %i.y, %i.w
+  %4 = fdiv double %1, %i.j                       ; 4 uses
+  store double %4, ptr %i.a, align 8, !tbaa !52
+  %5 = fsub double 1.000000e+00, %i.o             ; 2 uses
+  %i.u = insertelement <2 x double> poison, double %4, i64 0
+  %i.v = insertelement <2 x double> %i.u, double %5, i64 1
+  %6 = insertelement <2 x double> poison, double %2, i64 0
+  %7 = insertelement <2 x double> %6, double %i.t, i64 1
+  %8 = fdiv <2 x double> %i.v, %7                 ; 2 uses
+  %i.w = extractelement <2 x double> %8, i64 0
+  %9 = fadd double %i.w, 1.000000e+00
+  store double %9, ptr %3, align 8, !tbaa !41
+  %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %10 = extractelement <2 x double> %8, i64 1     ; 3 uses
+  store double %10, ptr %i.x, align 8, !tbaa !53
+  %11 = tail call double @tan(double noundef %i.l) #7
+  %12 = fmul double %10, 2.000000e+00
+  %13 = fmul double %2, %12
+  %14 = fdiv double %11, %13
+  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  store double %14, ptr %15, align 8, !tbaa !42
+  %16 = fadd double %4, 1.000000e+00
+  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  store double %16, ptr %17, align 8, !tbaa !54
+  %18 = fdiv double %4, %5
+  %i.y = fadd double %18, 1.000000e+00
+  %i.z = fmul double %i.y, %10
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  store double %i.z, ptr %i.aa, align 8, !tbaa !52
+  store double %i.z, ptr %i.aa, align 8, !tbaa !55
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store ptr @_ZL17col_urban_forward5PJ_LPP8PJconsts, ptr %i.ab, align 8, !tbaa !53
+  store ptr @_ZL17col_urban_forward5PJ_LPP8PJconsts, ptr %i.ab, align 8, !tbaa !56
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store ptr @_ZL17col_urban_inverse5PJ_XYP8PJconsts, ptr %i.ac, align 8, !tbaa !54
+  store ptr @_ZL17col_urban_inverse5PJ_XYP8PJconsts, ptr %i.ac, align 8, !tbaa !57
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -166,8 +165,8 @@ bb.a:
   %i.w = fsub double %1, %i.m
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.y = load double, ptr %i.x, align 8, !tbaa !42
-  %i.z = load double, ptr %i.k, align 8, !tbaa !55
-  %i.aa = load <2 x double>, ptr %i.b, align 8, !tbaa !40 ; 2 uses
+  %i.z = load double, ptr %i.k, align 8, !tbaa !41
+  %i.aa = load <2 x double>, ptr %i.b, align 8, !tbaa !43 ; 2 uses
   %i.ab = shufflevector <2 x double> %i.aa, <2 x double> <double 1.000000e+00, double poison>, <2 x i32> <i32 2, i32 0>
   %i.ac = insertelement <2 x double> poison, double %i.j, i64 0
   %i.ad = insertelement <2 x double> %i.ac, double %i.v, i64 1
@@ -200,7 +199,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.f = load double, ptr %i.e, align 8, !tbaa !42
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.h = load <2 x double>, ptr %i.g, align 8, !tbaa !40 ; 2 uses
+  %i.h = load <2 x double>, ptr %i.g, align 8, !tbaa !43 ; 2 uses
   %i.i = insertelement <2 x double> poison, double %0, i64 0
   %i.j = insertelement <2 x double> %i.i, double %1, i64 1
   %i.k = fdiv <2 x double> %i.j, %i.h             ; 2 uses
@@ -284,20 +283,22 @@ attributes #7 = { nounwind }
 !37 = !{!36, !8, i64 88}
 !38 = !{!36, !14, i64 448}
 !39 = !{!36, !14, i64 216}
-!40 = !{!14, !14, i64 0}
-!41 = !{!"_ZTSN12_GLOBAL__N_112pj_col_urbanE", !14, i64 0, !14, i64 8, !14, i64 16, !14, i64 24, !14, i64 32, !14, i64 40}
-!42 = !{!41, !14, i64 24}
-!43 = !{!36, !10, i64 8}
-!44 = !{!36, !10, i64 16}
-!45 = !{!36, !5, i64 360}
-!46 = !{!36, !15, i64 380}
-!47 = !{!36, !15, i64 384}
-!48 = !{!36, !9, i64 0}
-!49 = !{!36, !11, i64 24}
-!50 = !{!36, !14, i64 168}
-!51 = !{!41, !14, i64 32}
-!52 = !{!41, !14, i64 40}
-!53 = !{!36, !8, i64 104}
-!54 = !{!36, !8, i64 112}
-!55 = !{!41, !14, i64 16}
+!40 = !{!"_ZTSN12_GLOBAL__N_112pj_col_urbanE", !14, i64 0, !14, i64 8, !14, i64 16, !14, i64 24, !14, i64 32, !14, i64 40}
+!41 = !{!40, !14, i64 16}
+!42 = !{!40, !14, i64 24}
+!43 = !{!14, !14, i64 0}
+!44 = !{!36, !10, i64 8}
+!45 = !{!36, !10, i64 16}
+!46 = !{!36, !5, i64 360}
+!47 = !{!36, !15, i64 380}
+!48 = !{!36, !15, i64 384}
+!49 = !{!36, !9, i64 0}
+!50 = !{!36, !11, i64 24}
+!51 = !{!36, !14, i64 168}
+!52 = !{!40, !14, i64 0}
+!53 = !{!40, !14, i64 8}
+!54 = !{!40, !14, i64 32}
+!55 = !{!40, !14, i64 40}
+!56 = !{!36, !8, i64 104}
+!57 = !{!36, !8, i64 112}
 end_hunk_0

@@ -205,7 +205,7 @@ define linkonce_odr hidden void @_ZN2v88internal8compiler10turboshaft19FloatOper
 bb.a:
   %4 = alloca %"class.std::vector.466", align 8   ; 7 uses
   %5 = alloca %"class.std::function.461", align 8 ; 6 uses
-  %6 = alloca %"struct.std::array", align 16      ; 5 uses
+  %6 = alloca %"struct.std::array", align 4       ; 8 uses
   %7 = alloca %"class.v8::internal::compiler::turboshaft::FloatType", align 8 ; 4 uses
   %8 = alloca %"class.v8::internal::compiler::turboshaft::FloatType", align 8 ; 9 uses
   %9 = alloca %"class.v8::internal::compiler::turboshaft::FloatType", align 8 ; 4 uses
@@ -313,27 +313,27 @@ bb.k:                                             ; preds = %bb.g
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm32EE6minmaxEv.exit
 
 bb.l:                                             ; preds = %bb.h
-  %10 = fcmp olt float %i.aa, 0.000000e+00
-  %.sroa.speculated5.i.i = select i1 %10, float %i.aa, float -0.000000e+00
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %12 = load float, ptr %11, align 4              ; 2 uses
-  %i.an = fcmp ogt float %12, 0.000000e+00
-  %.sroa.speculated5.i5.i = select i1 %i.an, float %12, float -0.000000e+00
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %11 = load float, ptr %10, align 4              ; 2 uses
+  %12 = fcmp olt float %i.aa, 0.000000e+00
+  %.sroa.speculated5.i.i = select i1 %12, float %i.aa, float -0.000000e+00
+  %i.an = fcmp ogt float %11, 0.000000e+00
+  %.sroa.speculated5.i5.i = select i1 %i.an, float %11, float -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm32EE6minmaxEv.exit
 
 bb.m:                                             ; preds = %bb.i
-  %13 = fcmp olt float %i.ai, 0.000000e+00
-  %.sroa.speculated.i.i = select i1 %13, float %i.ai, float -0.000000e+00
   %i.ao = zext i8 %i.ae to i64
   %i.ap = getelementptr [4 x i8], ptr %.sroa.0.0.i.i3.i.i, i64 %i.ao
   %i.aq = getelementptr i8, ptr %i.ap, i64 -4
   %i.ar = load float, ptr %i.aq, align 4          ; 2 uses
+  %13 = fcmp olt float %i.ai, 0.000000e+00
+  %.sroa.speculated.i.i = select i1 %13, float %i.ai, float -0.000000e+00
   %i.as = fcmp ogt float %i.ar, 0.000000e+00
   %.sroa.speculated.i3.i = select i1 %i.as, float %i.ar, float -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm32EE6minmaxEv.exit
 
 _ZNK2v88internal8compiler10turboshaft9FloatTypeILm32EE6minmaxEv.exit: ; preds = %.thread.i, %.thread18.i, %bb.k, %bb.l, %bb.m
-  %.0.i10.i = phi float [ %..i.i, %bb.k ], [ %i.aa, %.thread.i ], [ %.sroa.speculated5.i.i, %bb.l ], [ %.sroa.speculated.i.i, %bb.m ], [ %i.ai, %.thread18.i ] ; 7 uses
+  %.0.i10.i = phi float [ %..i.i, %bb.k ], [ %i.aa, %.thread.i ], [ %.sroa.speculated5.i.i, %bb.l ], [ %.sroa.speculated.i.i, %bb.m ], [ %i.ai, %.thread18.i ] ; 6 uses
   %.0.i4.i = phi float [ %..i.i, %bb.k ], [ %i.ac, %.thread.i ], [ %.sroa.speculated5.i5.i, %bb.l ], [ %.sroa.speculated.i3.i, %bb.m ], [ %i.am, %.thread18.i ] ; 6 uses
   %i.at = load i8, ptr %i.h, align 1
   %i.au = load i32, ptr %i.k, align 4             ; 2 uses
@@ -380,28 +380,28 @@ bb.q:                                             ; preds = %_ZNK2v88internal8co
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm32EE6minmaxEv.exit94
 
 bb.r:                                             ; preds = %bb.n
-  %14 = fcmp olt float %i.ax, 0.000000e+00
-  %.sroa.speculated5.i.i90 = select i1 %14, float %i.ax, float -0.000000e+00
-  %15 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %16 = load float, ptr %15, align 4              ; 2 uses
-  %i.bk = fcmp ogt float %16, 0.000000e+00
-  %.sroa.speculated5.i5.i91 = select i1 %i.bk, float %16, float -0.000000e+00
+  %14 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %15 = load float, ptr %14, align 4              ; 2 uses
+  %16 = fcmp olt float %i.ax, 0.000000e+00
+  %.sroa.speculated5.i.i90 = select i1 %16, float %i.ax, float -0.000000e+00
+  %i.bk = fcmp ogt float %15, 0.000000e+00
+  %.sroa.speculated5.i5.i91 = select i1 %i.bk, float %15, float -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm32EE6minmaxEv.exit94
 
 bb.s:                                             ; preds = %bb.o
-  %17 = fcmp olt float %i.bf, 0.000000e+00
-  %.sroa.speculated.i.i83 = select i1 %17, float %i.bf, float -0.000000e+00
   %i.bl = zext i8 %i.bb to i64
   %i.bm = getelementptr [4 x i8], ptr %.sroa.0.0.i.i3.i.i82, i64 %i.bl
   %i.bn = getelementptr i8, ptr %i.bm, i64 -4
   %i.bo = load float, ptr %i.bn, align 4          ; 2 uses
+  %17 = fcmp olt float %i.bf, 0.000000e+00
+  %.sroa.speculated.i.i83 = select i1 %17, float %i.bf, float -0.000000e+00
   %i.bp = fcmp ogt float %i.bo, 0.000000e+00
   %.sroa.speculated.i3.i84 = select i1 %i.bp, float %i.bo, float -0.000000e+00
   br label %_ZNK2v88internal8compiler10turboshaft9FloatTypeILm32EE6minmaxEv.exit94
 
 _ZNK2v88internal8compiler10turboshaft9FloatTypeILm32EE6minmaxEv.exit94: ; preds = %.thread.i92, %.thread18.i89, %bb.q, %bb.r, %bb.s
   %.0.i10.i85 = phi float [ %..i.i93, %bb.q ], [ %i.ax, %.thread.i92 ], [ %.sroa.speculated5.i.i90, %bb.r ], [ %.sroa.speculated.i.i83, %bb.s ], [ %i.bf, %.thread18.i89 ] ; 7 uses
-  %.0.i4.i86 = phi float [ %..i.i93, %bb.q ], [ %i.az, %.thread.i92 ], [ %.sroa.speculated5.i5.i91, %bb.r ], [ %.sroa.speculated.i3.i84, %bb.s ], [ %i.bj, %.thread18.i89 ] ; 7 uses
+  %.0.i4.i86 = phi float [ %..i.i93, %bb.q ], [ %i.az, %.thread.i92 ], [ %.sroa.speculated5.i5.i91, %bb.r ], [ %.sroa.speculated.i3.i84, %bb.s ], [ %i.bj, %.thread18.i89 ] ; 6 uses
   %i.bq = trunc i32 %i.w to i1
   %i.br = and i32 %i.au, 3
   %or.cond.not.i = icmp ne i32 %i.br, 0
@@ -509,25 +509,28 @@ bb.ah:                                            ; preds = %bb.ag
 
 .critedge:                                        ; preds = %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
-  %18 = fdiv float %.0.i10.i, %.0.i4.i86
-  %.fr = freeze float %18                         ; 2 uses
-  %i.de = insertelement <4 x float> poison, float %.0.i10.i, i64 0
-  %i.df = insertelement <4 x float> %i.de, float %.fr, i64 1
-  %19 = insertelement <4 x float> %i.df, float %.0.i4.i, i64 2
-  %20 = shufflevector <4 x float> %19, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
-  %21 = insertelement <4 x float> <float poison, float 1.000000e+00, float poison, float poison>, float %.0.i10.i85, i64 0
-  %22 = insertelement <4 x float> %21, float %.0.i4.i86, i64 3
-  %23 = shufflevector <4 x float> %22, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 3>
-  %24 = fdiv <4 x float> %20, %23                 ; 4 uses
-  store <4 x float> %24, ptr %6, align 16
-  %i.dg = extractelement <4 x float> %24, i64 0
-  %or.cond204 = fcmp uno float %i.dg, %.fr
-  %25 = extractelement <4 x float> %24, i64 2
-  %26 = fcmp uno float %25, 0.000000e+00
-  %or.cond205 = select i1 %or.cond204, i1 true, i1 %26
-  %27 = extractelement <4 x float> %24, i64 3
-  %i.dh = fcmp uno float %27, 0.000000e+00
-  %or.cond206 = select i1 %or.cond205, i1 true, i1 %i.dh
+  %18 = insertelement <4 x float> poison, float %.0.i10.i, i64 0
+  %19 = insertelement <4 x float> %18, float %.0.i4.i, i64 1
+  %20 = shufflevector <4 x float> %19, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %i.de = insertelement <4 x float> poison, float %.0.i10.i85, i64 0
+  %i.df = insertelement <4 x float> %i.de, float %.0.i4.i86, i64 2
+  %21 = shufflevector <4 x float> %i.df, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
+  %22 = fdiv <4 x float> %20, %21
+  %.fr207 = freeze <4 x float> %22                ; 4 uses
+  %23 = extractelement <4 x float> %.fr207, i64 0 ; 2 uses
+  store float %23, ptr %6, align 4
+  %24 = extractelement <4 x float> %.fr207, i64 2 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %6, i64 4
+  store float %24, ptr %25, align 4
+  %26 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.dg = extractelement <4 x float> %.fr207, i64 1 ; 2 uses
+  store float %i.dg, ptr %26, align 4
+  %27 = getelementptr inbounds nuw i8, ptr %6, i64 12
+  %28 = extractelement <4 x float> %.fr207, i64 3 ; 2 uses
+  store float %28, ptr %27, align 4
+  %or.cond204 = fcmp uno float %23, %24
+  %i.dh = fcmp uno float %28, %i.dg
+  %or.cond206 = or i1 %or.cond204, %i.dh
   br i1 %or.cond206, label %bb.ai, label %.critedge80
 
 .critedge80:                                      ; preds = %.critedge
@@ -930,12 +933,12 @@ bb.ah:                                            ; preds = %bb.ag
   %i.dv = insertelement <2 x double> %i.du, double %.0.i4.i86, i64 1
   %i.dw = fdiv <2 x double> %i.dt, %i.dv          ; 3 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store <2 x double> %i.dw, ptr %i.dx, align 8
-  %or.cond179 = fcmp uno double %i.dp, %i.dq
   %10 = extractelement <2 x double> %i.dw, i64 0
-  %i.dy = fcmp uno double %10, 0.000000e+00
-  %or.cond180 = select i1 %or.cond179, i1 true, i1 %i.dy
   %11 = extractelement <2 x double> %i.dw, i64 1
+  store <2 x double> %i.dw, ptr %i.dx, align 8
+  %i.dy = fcmp uno double %i.dp, %i.dq
+  %12 = fcmp uno double %10, 0.000000e+00
+  %or.cond180 = select i1 %i.dy, i1 true, i1 %12
   %i.dz = fcmp uno double %11, 0.000000e+00
   %or.cond181 = select i1 %or.cond180, i1 true, i1 %i.dz
   br i1 %or.cond181, label %bb.ai, label %.critedge80

@@ -205,30 +205,32 @@ bb.e:                                             ; preds = %bb.d
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !638, !nonnull !135, !align !305
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !105
   %i.ci = mul i64 %i.ch, %i.ce
-  %invariant.gep.i = getelementptr i8, ptr %.sroa.0.0.i, i64 %i.ci ; 2 uses
+  %invariant.gep.i = getelementptr i8, ptr %.sroa.0.0.i, i64 %i.ci ; 3 uses
   %i.cj = load i8, ptr %invariant.gep.i, align 1, !tbaa !101
   %i.ck = uitofp i8 %i.cj to float
-  %gep.1.i.a = getelementptr i8, ptr %invariant.gep.i, i64 1
-  %3 = load <2 x i8>, ptr %gep.1.i.a, align 1, !tbaa !101
-  %4 = uitofp <2 x i8> %3 to <2 x float>          ; 2 uses
-  %5 = tail call noundef float @llvm.fma.f32(float %i.ck, float %.166, float %.168) ; 3 uses
-  %6 = extractelement <2 x float> %4, i64 0
-  %7 = tail call noundef float @llvm.fma.f32(float %6, float %.166, float %.168)
-  %8 = extractelement <2 x float> %4, i64 1
-  %i.cl = tail call noundef float @llvm.fma.f32(float %8, float %.166, float %.168)
+  %gep.1.i = getelementptr i8, ptr %invariant.gep.i, i64 1
+  %gep.1.i.a = getelementptr i8, ptr %invariant.gep.i, i64 2
+  %3 = tail call noundef float @llvm.fma.f32(float %i.ck, float %.166, float %.168)
+  %4 = load i8, ptr %gep.1.i, align 1, !tbaa !101
+  %5 = uitofp i8 %4 to float
+  %6 = load i8, ptr %gep.1.i.a, align 1, !tbaa !101
+  %7 = uitofp i8 %6 to float
+  %8 = tail call noundef float @llvm.fma.f32(float %5, float %.166, float %.168)
+  %i.cl = tail call noundef float @llvm.fma.f32(float %7, float %.166, float %.168)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #37
-  %9 = fadd float %7, -5.000000e-01               ; 2 uses
-  %10 = fadd float %i.cl, -5.000000e-01
-  %11 = tail call float @llvm.fmuladd.f32(float %9, float -3.441360e-01, float %5)
-  %i.cm = insertelement <2 x float> poison, float %10, i64 0
+  %9 = insertelement <2 x float> poison, float %8, i64 0
+  %10 = insertelement <2 x float> %9, float %i.cl, i64 1
+  %11 = fadd <2 x float> %10, splat (float -5.000000e-01) ; 2 uses
+  %i.cm = insertelement <2 x float> poison, float %3, i64 0 ; 2 uses
   %i.cn = shufflevector <2 x float> %i.cm, <2 x float> poison, <2 x i32> zeroinitializer
-  %12 = insertelement <2 x float> poison, float %5, i64 0
-  %13 = insertelement <2 x float> %12, float %11, i64 1
-  %i.co = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cn, <2 x float> <float 1.402000e+00, float -7.141360e-01>, <2 x float> %13)
-  %14 = tail call float @llvm.fmuladd.f32(float %9, float 1.772000e+00, float %5)
-  store <2 x float> %i.co, ptr %2, align 8
+  %12 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> <float -3.441360e-01, float 1.402000e+00>, <2 x float> %i.cn) ; 2 uses
+  %13 = shufflevector <2 x float> %i.cm, <2 x float> %12, <2 x i32> <i32 0, i32 2>
+  %i.co = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> <float 1.772000e+00, float -7.141360e-01>, <2 x float> %13) ; 2 uses
+  %14 = shufflevector <2 x float> %12, <2 x float> %i.co, <2 x i32> <i32 1, i32 3>
+  store <2 x float> %14, ptr %2, align 8
   %.sroa.26.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %14, ptr %.sroa.26.0..sroa_idx.i.i, align 8
+  %15 = extractelement <2 x float> %i.co, i64 0
+  store float %15, ptr %.sroa.26.0..sroa_idx.i.i, align 8
   %i.cp = invoke { <2 x float>, float } @_ZN3tev8ituth27318invTransferRgbImplILNS0_9ETransferE13EfEEN7nanogui5ArrayIT0_Lm3EEENSt3__117integral_constantIS2_XT_EEERKS6_(ptr noundef nonnull align 4 dereferenceable(12) %2)
           to label %_ZN3tev8ituth27314invTransferRgbILNS0_9ETransferE125EfEEN7nanogui5ArrayIT0_Lm3EEERKS6_.exit unwind label %bb.f ; 2 uses
 
@@ -631,30 +633,32 @@ bb.e:                                             ; preds = %bb.d
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !704, !nonnull !135, !align !305
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !105
   %i.ci = mul i64 %i.ch, %i.ce
-  %invariant.gep.i = getelementptr [2 x i8], ptr %.sroa.0.0.i, i64 %i.ci ; 2 uses
+  %invariant.gep.i = getelementptr [2 x i8], ptr %.sroa.0.0.i, i64 %i.ci ; 3 uses
   %i.cj = load i16, ptr %invariant.gep.i, align 2, !tbaa !312
   %i.ck = sitofp i16 %i.cj to float
-  %gep.1.i.a = getelementptr i8, ptr %invariant.gep.i, i64 2
-  %3 = load <2 x i16>, ptr %gep.1.i.a, align 2, !tbaa !312
-  %4 = sitofp <2 x i16> %3 to <2 x float>         ; 2 uses
-  %5 = tail call noundef float @llvm.fma.f32(float %i.ck, float %.166, float %.168) ; 3 uses
-  %6 = extractelement <2 x float> %4, i64 0
-  %7 = tail call noundef float @llvm.fma.f32(float %6, float %.166, float %.168)
-  %8 = extractelement <2 x float> %4, i64 1
-  %i.cl = tail call noundef float @llvm.fma.f32(float %8, float %.166, float %.168)
+  %gep.1.i = getelementptr i8, ptr %invariant.gep.i, i64 2
+  %gep.1.i.a = getelementptr i8, ptr %invariant.gep.i, i64 4
+  %3 = tail call noundef float @llvm.fma.f32(float %i.ck, float %.166, float %.168)
+  %4 = load i16, ptr %gep.1.i, align 2, !tbaa !312
+  %5 = sitofp i16 %4 to float
+  %6 = load i16, ptr %gep.1.i.a, align 2, !tbaa !312
+  %7 = sitofp i16 %6 to float
+  %8 = tail call noundef float @llvm.fma.f32(float %5, float %.166, float %.168)
+  %i.cl = tail call noundef float @llvm.fma.f32(float %7, float %.166, float %.168)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #37
-  %9 = fadd float %7, -5.000000e-01               ; 2 uses
-  %10 = fadd float %i.cl, -5.000000e-01
-  %11 = tail call float @llvm.fmuladd.f32(float %9, float -3.441360e-01, float %5)
-  %i.cm = insertelement <2 x float> poison, float %10, i64 0
+  %9 = insertelement <2 x float> poison, float %8, i64 0
+  %10 = insertelement <2 x float> %9, float %i.cl, i64 1
+  %11 = fadd <2 x float> %10, splat (float -5.000000e-01) ; 2 uses
+  %i.cm = insertelement <2 x float> poison, float %3, i64 0 ; 2 uses
   %i.cn = shufflevector <2 x float> %i.cm, <2 x float> poison, <2 x i32> zeroinitializer
-  %12 = insertelement <2 x float> poison, float %5, i64 0
-  %13 = insertelement <2 x float> %12, float %11, i64 1
-  %i.co = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cn, <2 x float> <float 1.402000e+00, float -7.141360e-01>, <2 x float> %13)
-  %14 = tail call float @llvm.fmuladd.f32(float %9, float 1.772000e+00, float %5)
-  store <2 x float> %i.co, ptr %2, align 8
+  %12 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> <float -3.441360e-01, float 1.402000e+00>, <2 x float> %i.cn) ; 2 uses
+  %13 = shufflevector <2 x float> %i.cm, <2 x float> %12, <2 x i32> <i32 0, i32 2>
+  %i.co = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> <float 1.772000e+00, float -7.141360e-01>, <2 x float> %13) ; 2 uses
+  %14 = shufflevector <2 x float> %12, <2 x float> %i.co, <2 x i32> <i32 1, i32 3>
+  store <2 x float> %14, ptr %2, align 8
   %.sroa.26.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %14, ptr %.sroa.26.0..sroa_idx.i.i, align 8
+  %15 = extractelement <2 x float> %i.co, i64 0
+  store float %15, ptr %.sroa.26.0..sroa_idx.i.i, align 8
   %i.cp = invoke { <2 x float>, float } @_ZN3tev8ituth27318invTransferRgbImplILNS0_9ETransferE13EfEEN7nanogui5ArrayIT0_Lm3EEENSt3__117integral_constantIS2_XT_EEERKS6_(ptr noundef nonnull align 4 dereferenceable(12) %2)
           to label %_ZN3tev8ituth27314invTransferRgbILNS0_9ETransferE125EfEEN7nanogui5ArrayIT0_Lm3EEERKS6_.exit unwind label %bb.f ; 2 uses
 
@@ -1057,30 +1061,32 @@ bb.e:                                             ; preds = %bb.d
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !765, !nonnull !135, !align !305
   %i.ch = load i64, ptr %i.cg, align 8, !tbaa !105
   %i.ci = mul i64 %i.ch, %i.ce
-  %invariant.gep.i = getelementptr [2 x i8], ptr %.sroa.0.0.i, i64 %i.ci ; 2 uses
+  %invariant.gep.i = getelementptr [2 x i8], ptr %.sroa.0.0.i, i64 %i.ci ; 3 uses
   %i.cj = load i16, ptr %invariant.gep.i, align 2, !tbaa !312
   %i.ck = uitofp i16 %i.cj to float
-  %gep.1.i.a = getelementptr i8, ptr %invariant.gep.i, i64 2
-  %3 = load <2 x i16>, ptr %gep.1.i.a, align 2, !tbaa !312
-  %4 = uitofp <2 x i16> %3 to <2 x float>         ; 2 uses
-  %5 = tail call noundef float @llvm.fma.f32(float %i.ck, float %.166, float %.168) ; 3 uses
-  %6 = extractelement <2 x float> %4, i64 0
-  %7 = tail call noundef float @llvm.fma.f32(float %6, float %.166, float %.168)
-  %8 = extractelement <2 x float> %4, i64 1
-  %i.cl = tail call noundef float @llvm.fma.f32(float %8, float %.166, float %.168)
+  %gep.1.i = getelementptr i8, ptr %invariant.gep.i, i64 2
+  %gep.1.i.a = getelementptr i8, ptr %invariant.gep.i, i64 4
+  %3 = tail call noundef float @llvm.fma.f32(float %i.ck, float %.166, float %.168)
+  %4 = load i16, ptr %gep.1.i, align 2, !tbaa !312
+  %5 = uitofp i16 %4 to float
+  %6 = load i16, ptr %gep.1.i.a, align 2, !tbaa !312
+  %7 = uitofp i16 %6 to float
+  %8 = tail call noundef float @llvm.fma.f32(float %5, float %.166, float %.168)
+  %i.cl = tail call noundef float @llvm.fma.f32(float %7, float %.166, float %.168)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #37
-  %9 = fadd float %7, -5.000000e-01               ; 2 uses
-  %10 = fadd float %i.cl, -5.000000e-01
-  %11 = tail call float @llvm.fmuladd.f32(float %9, float -3.441360e-01, float %5)
-  %i.cm = insertelement <2 x float> poison, float %10, i64 0
+  %9 = insertelement <2 x float> poison, float %8, i64 0
+  %10 = insertelement <2 x float> %9, float %i.cl, i64 1
+  %11 = fadd <2 x float> %10, splat (float -5.000000e-01) ; 2 uses
+  %i.cm = insertelement <2 x float> poison, float %3, i64 0 ; 2 uses
   %i.cn = shufflevector <2 x float> %i.cm, <2 x float> poison, <2 x i32> zeroinitializer
-  %12 = insertelement <2 x float> poison, float %5, i64 0
-  %13 = insertelement <2 x float> %12, float %11, i64 1
-  %i.co = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cn, <2 x float> <float 1.402000e+00, float -7.141360e-01>, <2 x float> %13)
-  %14 = tail call float @llvm.fmuladd.f32(float %9, float 1.772000e+00, float %5)
-  store <2 x float> %i.co, ptr %2, align 8
+  %12 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> <float -3.441360e-01, float 1.402000e+00>, <2 x float> %i.cn) ; 2 uses
+  %13 = shufflevector <2 x float> %i.cm, <2 x float> %12, <2 x i32> <i32 0, i32 2>
+  %i.co = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> <float 1.772000e+00, float -7.141360e-01>, <2 x float> %13) ; 2 uses
+  %14 = shufflevector <2 x float> %12, <2 x float> %i.co, <2 x i32> <i32 1, i32 3>
+  store <2 x float> %14, ptr %2, align 8
   %.sroa.26.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %14, ptr %.sroa.26.0..sroa_idx.i.i, align 8
+  %15 = extractelement <2 x float> %i.co, i64 0
+  store float %15, ptr %.sroa.26.0..sroa_idx.i.i, align 8
   %i.cp = invoke { <2 x float>, float } @_ZN3tev8ituth27318invTransferRgbImplILNS0_9ETransferE13EfEEN7nanogui5ArrayIT0_Lm3EEENSt3__117integral_constantIS2_XT_EEERKS6_(ptr noundef nonnull align 4 dereferenceable(12) %2)
           to label %_ZN3tev8ituth27314invTransferRgbILNS0_9ETransferE125EfEEN7nanogui5ArrayIT0_Lm3EEERKS6_.exit unwind label %bb.f ; 2 uses
 

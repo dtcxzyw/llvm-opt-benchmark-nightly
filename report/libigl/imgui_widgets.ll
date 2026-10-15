@@ -205,8 +205,8 @@ bb.da:                                            ; preds = %bb.db
   %i.re = load float, ptr %i.j, align 4, !tbaa !141
   %i.rf = fmul float %i.re, 2.000000e+00
   %i.rg = fmul float %i.rf, f0x40490FDB           ; 2 uses
-  %i.rh = call float @cosf(float noundef %i.rg) #36 ; 3 uses
-  %i.ri = call float @sinf(float noundef %i.rg) #36 ; 3 uses
+  %i.rh = call float @cosf(float noundef %i.rg) #36 ; 4 uses
+  %i.ri = call float @sinf(float noundef %i.rg) #36 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #36
   %i.rj = load <2 x float>, ptr %15, align 8, !tbaa !141
   %i.rk = insertelement <2 x float> poison, float %i.qw, i64 0
@@ -227,34 +227,39 @@ bb.da:                                            ; preds = %bb.db
   call void @_ZN10ImDrawList9AddCircleERK6ImVec2fjif(ptr noundef nonnull align 8 dereferenceable(196) %i.ae, ptr noundef nonnull align 4 dereferenceable(8) %30, float noundef %i.rv, i32 noundef %i.ps, i32 noundef %i.ru, float noundef 1.000000e+00)
   call void @_ZN10ImDrawList9AddCircleERK6ImVec2fjif(ptr noundef nonnull align 8 dereferenceable(196) %i.ae, ptr noundef nonnull align 4 dereferenceable(8) %30, float noundef %i.rq, i32 noundef %i.pr, i32 noundef %i.ru, float noundef 1.000000e+00)
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #36
-  %i.rw = fneg float %i.ri
+  %i.rw = fneg float %i.ri                        ; 2 uses
   %i.rx = load <2 x float>, ptr %16, align 8, !tbaa !141 ; 2 uses
   %i.ry = shufflevector <2 x float> %i.rx, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.rz = insertelement <2 x float> poison, float %i.rw, i64 0
-  %i.sa = insertelement <2 x float> %i.rz, float %i.rh, i64 1 ; 3 uses
+  %i.sa = insertelement <2 x float> %i.rz, float %i.rh, i64 1
   %i.sb = fmul <2 x float> %i.ry, %i.sa
   %i.sc = shufflevector <2 x float> %i.rx, <2 x float> poison, <2 x i32> zeroinitializer
   %i.sd = insertelement <2 x float> poison, float %i.rh, i64 0
-  %i.se = insertelement <2 x float> %i.sd, float %i.ri, i64 1 ; 3 uses
+  %i.se = insertelement <2 x float> %i.sd, float %i.ri, i64 1
   %i.sf = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.sc, <2 x float> %i.se, <2 x float> %i.sb)
   %i.sg = load <2 x float>, ptr %15, align 8, !tbaa !141 ; 3 uses
   %i.sh = fadd <2 x float> %i.sg, %i.sf           ; 3 uses
   store <2 x float> %i.sh, ptr %31, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #36
-  %i.si = load <2 x float>, ptr %17, align 8, !tbaa !141 ; 2 uses
-  %39 = shufflevector <2 x float> %i.si, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %40 = fmul <2 x float> %39, %i.sa
-  %41 = shufflevector <2 x float> %i.si, <2 x float> poison, <2 x i32> zeroinitializer
-  %42 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %41, <2 x float> %i.se, <2 x float> %40)
-  %43 = fadd <2 x float> %i.sg, %42               ; 3 uses
-  store <2 x float> %43, ptr %32, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #36
-  %44 = load <2 x float>, ptr %18, align 8, !tbaa !141 ; 2 uses
-  %45 = shufflevector <2 x float> %44, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %46 = fmul <2 x float> %45, %i.sa
-  %47 = shufflevector <2 x float> %44, <2 x float> poison, <2 x i32> zeroinitializer
-  %48 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %47, <2 x float> %i.se, <2 x float> %46)
-  %i.sj = fadd <2 x float> %i.sg, %48             ; 3 uses
+  %39 = load <2 x float>, ptr %17, align 8, !tbaa !141 ; 2 uses
+  %i.si = load <2 x float>, ptr %18, align 8, !tbaa !141 ; 2 uses
+  %40 = shufflevector <2 x float> %i.si, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 1>
+  %41 = insertelement <4 x float> %40, float %i.rw, i64 0
+  %42 = insertelement <4 x float> %41, float %i.rh, i64 2 ; 3 uses
+  %43 = shufflevector <2 x float> %39, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %44 = shufflevector <4 x float> %43, <4 x float> %42, <4 x i32> <i32 1, i32 4, i32 1, i32 6>
+  %45 = fmul <4 x float> %42, %44
+  %46 = shufflevector <2 x float> %39, <2 x float> %i.si, <4 x i32> <i32 0, i32 2, i32 0, i32 2>
+  %47 = shufflevector <4 x float> %42, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %48 = insertelement <2 x float> %47, float %i.ri, i64 1
+  %49 = shufflevector <2 x float> %48, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %50 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %46, <4 x float> %49, <4 x float> %45) ; 2 uses
+  %51 = shufflevector <4 x float> %50, <4 x float> poison, <2 x i32> <i32 0, i32 2>
+  %52 = fadd <2 x float> %i.sg, %51               ; 3 uses
+  store <2 x float> %52, ptr %32, align 8
+  %53 = shufflevector <4 x float> %50, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %i.sj = fadd <2 x float> %i.sg, %53             ; 3 uses
   store <2 x float> %i.sj, ptr %33, align 8
   %i.sk = call <2 x float> @_ZN5ImGui22GetFontTexUvWhitePixelEv() ; 6 uses
   call void @_ZN10ImDrawList11PrimReserveEii(ptr noundef nonnull align 8 dereferenceable(196) %i.ae, i32 noundef 6, i32 noundef 6)
@@ -270,7 +275,7 @@ bb.da:                                            ; preds = %bb.db
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sq, i64 16
   store i32 %i.qh, ptr %i.ss, align 4, !tbaa !539
   %i.st = getelementptr inbounds nuw i8, ptr %i.sq, i64 20
-  store <2 x float> %43, ptr %i.st, align 4, !tbaa !141
+  store <2 x float> %52, ptr %i.st, align 4, !tbaa !141
   %i.su = getelementptr inbounds nuw i8, ptr %i.sq, i64 28
   store <2 x float> %i.sk, ptr %i.su, align 4, !tbaa !141
   %i.sv = getelementptr inbounds nuw i8, ptr %i.sq, i64 36
@@ -294,7 +299,7 @@ bb.da:                                            ; preds = %bb.db
   %i.tg = getelementptr inbounds nuw i8, ptr %i.sq, i64 76
   store i32 0, ptr %i.tg, align 4, !tbaa !539
   %i.th = getelementptr inbounds nuw i8, ptr %i.sq, i64 80
-  store <2 x float> %43, ptr %i.th, align 4, !tbaa !141
+  store <2 x float> %52, ptr %i.th, align 4, !tbaa !141
   %i.ti = getelementptr inbounds nuw i8, ptr %i.sq, i64 88
   store <2 x float> %i.sk, ptr %i.ti, align 4, !tbaa !141
   %i.tj = getelementptr inbounds nuw i8, ptr %i.sq, i64 96

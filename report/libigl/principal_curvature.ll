@@ -205,7 +205,7 @@ bb.a:
   %smax = tail call i64 @llvm.smax.i64(i64 %i.a, i64 0) ; 2 uses
   %i.b = or disjoint i64 %smax, 1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   br label %.lr.ph
 
@@ -338,38 +338,44 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.i
-  %.sroa.16.0.i = phi double [ %i.bp, %bb.l ], [ %i.aw, %bb.i ], [ %i.bi, %bb.k ] ; 4 uses
-  %.sroa.077.0.i = phi double [ %i.br, %bb.l ], [ 0.000000e+00, %bb.i ], [ %i.bg, %bb.k ] ; 4 uses
-  %5 = load <1 x double>, ptr %0, align 16
-  %6 = load double, ptr %1, align 8, !tbaa !74    ; 3 uses
-  %i.bs = load double, ptr %i.d, align 8, !tbaa !74 ; 2 uses
-  %7 = fneg double %6
-  %8 = fneg double %i.bs
-  %9 = insertelement <2 x double> poison, double %.sroa.16.0.i, i64 0 ; 2 uses
-  %i.bt = insertelement <2 x double> %9, double %.sroa.077.0.i, i64 1 ; 5 uses
-  %10 = insertelement <2 x double> poison, double %8, i64 0
-  %i.bu = insertelement <2 x double> %10, double %i.bs, i64 1
-  %11 = fmul <2 x double> %i.bt, %i.bu
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.bv = insertelement <2 x double> poison, double %6, i64 0
-  %i.bw = shufflevector <2 x double> %i.bv, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bt, <2 x double> %i.bw, <2 x double> %12) ; 2 uses
-  %13 = insertelement <2 x double> poison, double %7, i64 0
-  %14 = insertelement <2 x double> %13, double %6, i64 1
-  %15 = fmul <2 x double> %i.bt, %14
-  %16 = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %17 = shufflevector <1 x double> %5, <1 x double> poison, <2 x i32> zeroinitializer
-  %18 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %16, <2 x double> %17, <2 x double> %15) ; 2 uses
-  %19 = fneg <2 x double> %i.bx                   ; 2 uses
-  %20 = shufflevector <2 x double> %19, <2 x double> %i.bx, <2 x i32> <i32 1, i32 2>
-  %i.by = fmul <2 x double> %i.bt, %20
-  %21 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %16, <2 x double> %18, <2 x double> %i.by)
-  store <2 x double> %21, ptr %0, align 16, !tbaa !74
-  %22 = extractelement <2 x double> %19, i64 0
-  %23 = fmul double %.sroa.16.0.i, %22
-  %i.bz = extractelement <2 x double> %18, i64 1
-  %24 = tail call double @llvm.fmuladd.f64(double %.sroa.077.0.i, double %i.bz, double %23)
-  store double %24, ptr %1, align 8, !tbaa !74
+  %.sroa.16.0.i = phi double [ %i.bp, %bb.l ], [ %i.aw, %bb.i ], [ %i.bi, %bb.k ] ; 7 uses
+  %.sroa.077.0.i = phi double [ %i.br, %bb.l ], [ 0.000000e+00, %bb.i ], [ %i.bg, %bb.k ] ; 5 uses
+  %5 = load double, ptr %1, align 8, !tbaa !74    ; 4 uses
+  %6 = fmul double %.sroa.077.0.i, %5
+  %7 = load <2 x double>, ptr %0, align 16, !tbaa !74 ; 3 uses
+  %i.bs = load double, ptr %i.d, align 8, !tbaa !74
+  %8 = extractelement <2 x double> %7, i64 0
+  %9 = tail call double @llvm.fmuladd.f64(double %.sroa.16.0.i, double %8, double %6)
+  %10 = fmul double %.sroa.077.0.i, %i.bs
+  %11 = tail call double @llvm.fmuladd.f64(double %.sroa.16.0.i, double %5, double %10) ; 2 uses
+  %i.bt = insertelement <2 x double> %7, double %5, i64 0
+  %12 = fneg <2 x double> %i.bt
+  %i.bu = insertelement <2 x double> poison, double %.sroa.16.0.i, i64 0
+  %13 = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %14 = fmul <2 x double> %13, %12
+  %i.bv = insertelement <2 x double> poison, double %.sroa.077.0.i, i64 0 ; 2 uses
+  %i.bw = shufflevector <2 x double> %i.bv, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %15 = insertelement <2 x double> %7, double %5, i64 1
+  %i.bx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bw, <2 x double> %15, <2 x double> %14) ; 2 uses
+  %16 = extractelement <2 x double> %i.bx, i64 1
+  %17 = fneg double %16
+  %18 = fmul double %.sroa.16.0.i, %17
+  %19 = extractelement <2 x double> %i.bx, i64 0
+  %20 = tail call double @llvm.fmuladd.f64(double %.sroa.077.0.i, double %19, double %18)
+  store double %20, ptr %0, align 16, !tbaa !74
+  %21 = fneg double %11
+  %22 = insertelement <2 x double> %i.bv, double %.sroa.16.0.i, i64 1 ; 2 uses
+  %23 = insertelement <2 x double> poison, double %11, i64 0
+  %24 = insertelement <2 x double> %23, double %21, i64 1
+  %i.by = fmul <2 x double> %22, %24
+  %25 = shufflevector <2 x double> %i.by, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %26 = insertelement <2 x double> poison, double %9, i64 0
+  %27 = shufflevector <2 x double> %26, <2 x double> poison, <2 x i32> zeroinitializer
+  %28 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %22, <2 x double> %27, <2 x double> %25) ; 2 uses
+  %i.bz = extractelement <2 x double> %28, i64 1
+  store double %i.bz, ptr %i.d, align 8, !tbaa !74
+  %29 = extractelement <2 x double> %28, i64 0
+  store double %29, ptr %1, align 8, !tbaa !74
   br i1 %3, label %bb.n, label %.lr.ph.backedge
 
 bb.n:                                             ; preds = %bb.m
@@ -385,13 +391,10 @@ bb.n:                                             ; preds = %bb.m
   %i.cf = insertelement <2 x double> poison, double %i.cc, i64 0
   %i.cg = shufflevector <2 x double> %i.cf, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ch = fmul <2 x double> %i.cd, %i.cg
-  %25 = insertelement <2 x double> poison, double %.sroa.077.0.i, i64 0
-  %26 = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.ci = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %26, <2 x double> %i.ce, <2 x double> %i.ch)
+  %i.ci = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bw, <2 x double> %i.ce, <2 x double> %i.ch)
   store <2 x double> %i.ci, ptr %4, align 16, !tbaa !74
-  %i.cj = fmul <2 x double> %26, %i.cd
-  %27 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ck = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %27, <2 x double> %i.ce, <2 x double> %i.cj)
+  %i.cj = fmul <2 x double> %i.bw, %i.cd
+  %i.ck = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> %i.ce, <2 x double> %i.cj)
   store <2 x double> %i.ck, ptr %i.e, align 16, !tbaa !74
   br label %.lr.ph.backedge
 

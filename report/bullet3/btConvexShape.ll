@@ -61,7 +61,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.f = load float, ptr %2, align 4, !tbaa !15   ; 2 uses
   %i.g = load float, ptr %i.b, align 4, !tbaa !15 ; 2 uses
   %i.h = load float, ptr %i.d, align 4, !tbaa !15 ; 2 uses
@@ -97,85 +99,87 @@ bb.a:
   %i.ai = extractvalue { <2 x float>, <2 x float> } %i.ah, 0 ; 4 uses
   %i.aj = extractvalue { <2 x float>, <2 x float> } %i.ah, 1 ; 2 uses
   %.sroa.035.0.vec.extract = extractelement <2 x float> %i.ai, i64 0
+  %11 = load float, ptr %1, align 4, !tbaa !15
   %.sroa.035.4.vec.extract = extractelement <2 x float> %i.ai, i64 1
+  %12 = load float, ptr %9, align 4, !tbaa !15
+  %13 = fmul float %.sroa.035.4.vec.extract, %12
+  %14 = call float @llvm.fmuladd.f32(float %.sroa.035.0.vec.extract, float %11, float %13)
   %.sroa.536.8.vec.extract = extractelement <2 x float> %i.aj, i64 0
-  %9 = load <2 x float>, ptr %i.u, align 4
-  %10 = load float, ptr %i.w, align 4, !tbaa !15
-  %11 = load float, ptr %i.c, align 4, !tbaa !15
-  %i.ak = load float, ptr %i.e, align 4, !tbaa !15
-  %12 = fmul float %.sroa.035.4.vec.extract, %i.ak
-  %13 = call float @llvm.fmuladd.f32(float %.sroa.035.0.vec.extract, float %11, float %12)
+  %i.ak = load float, ptr %i.u, align 4, !tbaa !15
+  %15 = call noundef float @llvm.fmuladd.f32(float %.sroa.536.8.vec.extract, float %i.ak, float %14)
+  %16 = load <4 x float>, ptr %i.w, align 4
   %i.al = load float, ptr %i.aa, align 4, !tbaa !15
-  %14 = call noundef float @llvm.fmuladd.f32(float %.sroa.536.8.vec.extract, float %i.al, float %13)
-  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %15 = load <2 x float>, ptr %1, align 4, !tbaa !15 ; 2 uses
-  %16 = load <2 x float>, ptr %i.a, align 4, !tbaa !15 ; 2 uses
-  %17 = shufflevector <2 x float> %i.ai, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %18 = shufflevector <2 x float> %15, <2 x float> %16, <2 x i32> <i32 1, i32 3>
-  %19 = fmul <2 x float> %17, %18
-  %20 = shufflevector <2 x float> %i.ai, <2 x float> poison, <2 x i32> zeroinitializer
-  %21 = shufflevector <2 x float> %15, <2 x float> %16, <2 x i32> <i32 0, i32 2>
-  %22 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %20, <2 x float> %21, <2 x float> %19)
-  %23 = shufflevector <2 x float> %i.aj, <2 x float> poison, <2 x i32> zeroinitializer
-  %24 = insertelement <2 x float> %9, float %10, i64 1
-  %25 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %23, <2 x float> %24, <2 x float> %22)
-  %26 = load <2 x float>, ptr %i.am, align 4, !tbaa !15
-  %27 = fadd <2 x float> %25, %26                 ; 4 uses
-  %28 = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %29 = load float, ptr %28, align 4, !tbaa !15
-  %30 = fadd float %14, %29                       ; 2 uses
-  %.sroa.3.12.vec.insert.i4.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %30, i64 0 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %18 = load float, ptr %i.am, align 4, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #13
-  %i.an = load <2 x float>, ptr %7, align 8, !tbaa !15
-  %31 = fneg <2 x float> %i.an
-  %i.ao = load float, ptr %i.ad, align 8, !tbaa !15
-  %32 = fneg float %i.ao
-  %.sroa.3.12.vec.insert.i23 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %32, i64 0
-  store <2 x float> %31, ptr %8, align 8
-  %33 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i23, ptr %33, align 8
-  %34 = load ptr, ptr %0, align 8, !tbaa !13
-  %35 = getelementptr inbounds nuw i8, ptr %34, i64 128
-  %36 = load ptr, ptr %35, align 8
-  %37 = call { <2 x float>, <2 x float> } %36(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 4 dereferenceable(16) %8) ; 2 uses
-  %38 = extractvalue { <2 x float>, <2 x float> } %37, 0 ; 4 uses
-  %i.ap = extractvalue { <2 x float>, <2 x float> } %37, 1 ; 2 uses
-  %.sroa.0.0.vec.extract = extractelement <2 x float> %38, i64 0
-  %.sroa.0.4.vec.extract = extractelement <2 x float> %38, i64 1
+  %19 = load <2 x float>, ptr %7, align 8, !tbaa !15
+  %20 = fneg <2 x float> %19
+  %21 = load float, ptr %i.ad, align 8, !tbaa !15
+  %22 = fneg float %21
+  %.sroa.3.12.vec.insert.i23 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %22, i64 0
+  store <2 x float> %20, ptr %8, align 8
+  %23 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  store <2 x float> %.sroa.3.12.vec.insert.i23, ptr %23, align 8
+  %24 = load ptr, ptr %0, align 8, !tbaa !13
+  %25 = getelementptr inbounds nuw i8, ptr %24, i64 128
+  %26 = load ptr, ptr %25, align 8
+  %27 = load <2 x float>, ptr %i.a, align 4, !tbaa !15 ; 2 uses
+  %28 = load <4 x float>, ptr %i.c, align 4       ; 2 uses
+  %29 = load <2 x float>, ptr %17, align 4, !tbaa !15
+  %30 = call { <2 x float>, <2 x float> } %26(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 4 dereferenceable(16) %8) ; 2 uses
+  %31 = extractvalue { <2 x float>, <2 x float> } %30, 0 ; 4 uses
+  %i.an = load <2 x float>, ptr %1, align 4, !tbaa !15 ; 2 uses
+  %32 = load float, ptr %i.a, align 4, !tbaa !15
+  %i.ao = load float, ptr %10, align 4, !tbaa !15
+  %33 = shufflevector <2 x float> %i.ai, <2 x float> %31, <4 x i32> <i32 1, i32 3, i32 1, i32 3>
+  %34 = shufflevector <2 x float> %27, <2 x float> %i.an, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
+  %35 = shufflevector <4 x float> %34, <4 x float> %28, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
+  %36 = insertelement <4 x float> %35, float %i.ao, i64 3
+  %37 = fmul <4 x float> %33, %36
+  %38 = shufflevector <2 x float> %i.ai, <2 x float> %31, <4 x i32> <i32 0, i32 2, i32 0, i32 2>
+  %39 = shufflevector <2 x float> %27, <2 x float> %i.an, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
+  %40 = shufflevector <4 x float> %39, <4 x float> %28, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
+  %41 = insertelement <4 x float> %40, float %32, i64 3
+  %42 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %38, <4 x float> %41, <4 x float> %37)
+  %i.ap = extractvalue { <2 x float>, <2 x float> } %30, 1 ; 2 uses
+  %43 = load float, ptr %i.u, align 4, !tbaa !15
+  %44 = load float, ptr %i.w, align 4, !tbaa !15
+  %45 = shufflevector <2 x float> %i.aj, <2 x float> %i.ap, <4 x i32> <i32 0, i32 2, i32 0, i32 2>
+  %46 = insertelement <4 x float> %16, float %43, i64 1
+  %47 = insertelement <4 x float> %46, float %i.al, i64 2
+  %48 = insertelement <4 x float> %47, float %44, i64 3
+  %49 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %45, <4 x float> %48, <4 x float> %42) ; 3 uses
+  %50 = shufflevector <4 x float> %49, <4 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %51 = insertelement <2 x float> %50, float %15, i64 0
+  %52 = fadd <2 x float> %51, %29                 ; 4 uses
+  %.sroa.0.0.vec.extract = extractelement <2 x float> %31, i64 0
+  %.sroa.0.4.vec.extract = extractelement <2 x float> %31, i64 1
   %.sroa.5.8.vec.extract = extractelement <2 x float> %i.ap, i64 0
-  %39 = load <2 x float>, ptr %i.u, align 4
-  %40 = load float, ptr %i.w, align 4, !tbaa !15
-  %41 = load float, ptr %i.c, align 4, !tbaa !15
-  %42 = load float, ptr %i.e, align 4, !tbaa !15
-  %43 = fmul float %.sroa.0.4.vec.extract, %42
-  %44 = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract, float %41, float %43)
-  %45 = load float, ptr %i.aa, align 4, !tbaa !15
-  %46 = call noundef float @llvm.fmuladd.f32(float %.sroa.5.8.vec.extract, float %45, float %44)
-  %47 = load <2 x float>, ptr %1, align 4, !tbaa !15 ; 2 uses
-  %48 = load <2 x float>, ptr %i.a, align 4, !tbaa !15 ; 2 uses
-  %49 = shufflevector <2 x float> %38, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %50 = shufflevector <2 x float> %47, <2 x float> %48, <2 x i32> <i32 1, i32 3>
-  %51 = fmul <2 x float> %49, %50
-  %52 = shufflevector <2 x float> %38, <2 x float> poison, <2 x i32> zeroinitializer
-  %53 = shufflevector <2 x float> %47, <2 x float> %48, <2 x i32> <i32 0, i32 2>
-  %54 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %52, <2 x float> %53, <2 x float> %51)
-  %55 = shufflevector <2 x float> %i.ap, <2 x float> poison, <2 x i32> zeroinitializer
-  %56 = insertelement <2 x float> %39, float %40, i64 1
-  %57 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %55, <2 x float> %56, <2 x float> %54)
-  %i.aq = load <2 x float>, ptr %i.am, align 4, !tbaa !15
-  %i.ar = fadd <2 x float> %57, %i.aq             ; 4 uses
-  %i.as = load float, ptr %28, align 4, !tbaa !15
-  %i.at = fadd float %46, %i.as                   ; 2 uses
+  %53 = extractelement <4 x float> %49, i64 2
+  %54 = fadd float %53, %18                       ; 2 uses
+  %.sroa.3.12.vec.insert.i4.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %54, i64 0 ; 2 uses
+  %55 = load float, ptr %i.c, align 4, !tbaa !15
+  %56 = load float, ptr %i.e, align 4, !tbaa !15
+  %57 = fmul float %.sroa.0.4.vec.extract, %56
+  %58 = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract, float %55, float %57)
+  %59 = load float, ptr %i.aa, align 4, !tbaa !15
+  %60 = call noundef float @llvm.fmuladd.f32(float %.sroa.5.8.vec.extract, float %59, float %58)
+  %i.aq = load <2 x float>, ptr %17, align 4, !tbaa !15
+  %61 = shufflevector <4 x float> %49, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %i.ar = fadd <2 x float> %61, %i.aq             ; 4 uses
+  %i.as = load float, ptr %i.am, align 4, !tbaa !15
+  %i.at = fadd float %60, %i.as                   ; 2 uses
   %.sroa.3.12.vec.insert.i4.i28 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.at, i64 0 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #13
   %i.au = load float, ptr %2, align 4, !tbaa !15
   %i.av = load float, ptr %i.b, align 4, !tbaa !15
-  %i.aw = extractelement <2 x float> %27, i64 1
+  %i.aw = extractelement <2 x float> %52, i64 1
   %i.ax = fmul float %i.aw, %i.av
-  %i.ay = extractelement <2 x float> %27, i64 0
+  %i.ay = extractelement <2 x float> %52, i64 0
   %i.az = call float @llvm.fmuladd.f32(float %i.ay, float %i.au, float %i.ax)
   %i.ba = load float, ptr %i.d, align 4, !tbaa !15
-  %i.bb = call noundef float @llvm.fmuladd.f32(float %30, float %i.ba, float %i.az)
+  %i.bb = call noundef float @llvm.fmuladd.f32(float %54, float %i.ba, float %i.az)
   store float %i.bb, ptr %3, align 4, !tbaa !15
   %i.bc = load float, ptr %2, align 4, !tbaa !15
   %i.bd = load float, ptr %i.b, align 4, !tbaa !15
@@ -189,7 +193,7 @@ bb.a:
   store <2 x float> %i.ar, ptr %6, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store <2 x float> %.sroa.3.12.vec.insert.i4.i28, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !16
-  store <2 x float> %27, ptr %5, align 4
+  store <2 x float> %52, ptr %5, align 4
   %.sroa.739.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store <2 x float> %.sroa.3.12.vec.insert.i4.i, ptr %.sroa.739.0..sroa_idx, align 4, !tbaa !16
   %i.bk = load float, ptr %3, align 4, !tbaa !15  ; 2 uses
@@ -200,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store float %i.bl, ptr %3, align 4, !tbaa !15
   store float %i.bk, ptr %4, align 4, !tbaa !15
-  store <2 x float> %27, ptr %6, align 4
+  store <2 x float> %52, ptr %6, align 4
   store <2 x float> %.sroa.3.12.vec.insert.i4.i, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !16
   store <2 x float> %i.ar, ptr %5, align 4
   store <2 x float> %.sroa.3.12.vec.insert.i4.i28, ptr %.sroa.739.0..sroa_idx, align 4, !tbaa !16
@@ -601,6 +605,9 @@ declare i32 @llvm.smax.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #6

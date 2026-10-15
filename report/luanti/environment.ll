@@ -204,19 +204,26 @@ bb.a:
   %8 = alloca %"class.core::vector3d", align 8    ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
-  %9 = fdiv nsz <2 x float> %1, splat (float 1.000000e+01)
-  store <2 x float> %9, ptr %7, align 8
   %.sroa.211.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
-  %10 = fsub nsz <2 x float> %3, %1
-  %11 = fdiv nsz <2 x float> %10, splat (float 1.000000e+01)
+  %foldExtExtBinop = fsub nsz <2 x float> %3, %1
+  %9 = shufflevector <2 x float> %foldExtExtBinop, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
+  %10 = shufflevector <2 x float> %1, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %11 = insertelement <4 x float> %10, float %2, i64 2
+  %12 = shufflevector <4 x float> %11, <4 x float> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %13 = fdiv nsz <4 x float> %12, splat (float 1.000000e+01) ; 3 uses
+  %14 = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  store <2 x float> %14, ptr %7, align 8
+  %15 = extractelement <4 x float> %13, i64 2
+  store float %15, ptr %.sroa.211.0..sroa_idx, align 8
   %i.a = fsub nsz float %4, %2
-  %12 = insertelement <2 x float> poison, float %2, i64 0
-  %i.b = insertelement <2 x float> %12, float %i.a, i64 1
+  %foldExtExtBinop49 = fsub nsz <2 x float> %3, %1
+  %16 = shufflevector <2 x float> %foldExtExtBinop49, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.b = insertelement <2 x float> %16, float %i.a, i64 1
   %i.c = fdiv nsz <2 x float> %i.b, splat (float 1.000000e+01) ; 2 uses
-  %13 = extractelement <2 x float> %i.c, i64 0
-  store float %13, ptr %.sroa.211.0..sroa_idx, align 8
-  store <2 x float> %11, ptr %8, align 8
+  %17 = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> <i32 3, i32 poison>
+  %18 = shufflevector <2 x float> %17, <2 x float> %i.c, <2 x i32> <i32 0, i32 2>
+  store <2 x float> %18, ptr %8, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.d = extractelement <2 x float> %i.c, i64 1
   store float %i.d, ptr %.sroa.2.0..sroa_idx, align 8

@@ -205,7 +205,7 @@ bb.a:
   %6 = alloca %"struct.Eigen::internal::evaluator.804", align 8 ; 4 uses
   %7 = alloca %"class.Eigen::internal::generic_dense_assignment_kernel.1731", align 8 ; 7 uses
   %8 = alloca %"struct.Eigen::internal::assign_op", align 1 ; 3 uses
-  %9 = alloca %"class.Eigen::Array.622", align 16 ; 5 uses
+  %9 = alloca %"class.Eigen::Array.622", align 8  ; 5 uses
   %10 = alloca %"class.Eigen::Matrix.3", align 8  ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.b = load <2 x double>, ptr %i.a, align 8, !tbaa !24
@@ -473,62 +473,66 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %._crit_edge, %bb.f
   %i.cs = phi i32 [ %.pre, %._crit_edge ], [ %i.cr, %bb.f ]
+  %11 = getelementptr i8, ptr %4, i64 4
   %i.ct = load <2 x i32>, ptr %4, align 4, !tbaa !36
   %i.cu = insertelement <2 x i32> poison, i32 %i.s, i64 0
   %i.cv = shufflevector <2 x i32> %i.cu, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.cw = add nsw <2 x i32> %i.ct, %i.cv
   store <2 x i32> %i.cw, ptr %4, align 4, !tbaa !36
-  %i.cx = getelementptr i8, ptr %4, i64 8         ; 2 uses
+  %i.cx = getelementptr i8, ptr %4, i64 8
   %i.cy = add nsw i32 %i.cs, %i.s
   store i32 %i.cy, ptr %i.cx, align 4, !tbaa !36
   tail call void @_ZN3igl4gridIN5Eigen6MatrixIiLi1ELi3ELi1ELi1ELi3EEENS2_IdLin1ELin1ELi0ELin1ELin1EEEEEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EE(ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(24) %3)
   %i.cz = sitofp i32 %2 to double                 ; 2 uses
-  %i.da = load i32, ptr %i.cx, align 4, !tbaa !36
+  %i.da = load i32, ptr %4, align 4, !tbaa !36
   %i.db = sitofp i32 %i.da to double
   %i.dc = fadd double %i.db, -1.000000e+00        ; 2 uses
-  %11 = fdiv double %i.cz, %i.dc
   %i.dd = load <2 x double>, ptr %i.a, align 8, !tbaa !31
   %i.de = load <2 x double>, ptr %0, align 8, !tbaa !31
   %i.df = fsub <2 x double> %i.dd, %i.de
   %i.dg = load double, ptr %i.h, align 8, !tbaa !24
   %i.dh = load double, ptr %i.i, align 8, !tbaa !24
-  %12 = fsub double %i.dg, %i.dh
-  %13 = fmul double %11, 2.000000e+00
-  %i.di = fsub double 1.000000e+00, %13
-  %14 = fdiv double %12, %i.di                    ; 2 uses
+  %i.di = fsub double %i.dg, %i.dh
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #7
-  %i.dj = load <2 x i32>, ptr %4, align 4, !tbaa !36
+  %12 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.dj = load <2 x i32>, ptr %11, align 4, !tbaa !36
   %i.dk = sitofp <2 x i32> %i.dj to <2 x double>
-  %i.dl = fadd <2 x double> %i.dk, splat (double -1.000000e+00) ; 2 uses
+  %i.dl = fadd <2 x double> %i.dk, splat (double -1.000000e+00) ; 3 uses
   %i.dm = insertelement <2 x double> poison, double %i.cz, i64 0
   %i.dn = shufflevector <2 x double> %i.dm, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.do = fdiv <2 x double> %i.dn, %i.dl
+  %13 = shufflevector <2 x double> %i.dl, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %14 = insertelement <2 x double> %13, double %i.dc, i64 0
+  %i.do = fdiv <2 x double> %i.dn, %14
+  %15 = extractelement <2 x double> %i.dl, i64 1
+  %16 = fdiv double %i.cz, %15
   %i.dp = fmul <2 x double> %i.do, splat (double 2.000000e+00)
   %i.dq = fsub <2 x double> splat (double 1.000000e+00), %i.dp
   %i.dr = fdiv <2 x double> %i.df, %i.dq          ; 2 uses
+  %17 = fmul double %16, 2.000000e+00
+  %18 = fsub double 1.000000e+00, %17
+  %19 = fdiv double %i.di, %18                    ; 2 uses
   %.sroa.0120.0.vec.extract = extractelement <2 x double> %i.dr, i64 0 ; 2 uses
   %.sroa.0120.8.vec.extract = extractelement <2 x double> %i.dr, i64 1 ; 2 uses
   %i.ds = fcmp ogt double %.sroa.0120.8.vec.extract, %.sroa.0120.0.vec.extract ; 2 uses
   %.sroa.0.0.i.i31 = zext i1 %i.ds to i64
   %.sroa.8.0.i.i32 = select i1 %i.ds, double %.sroa.0120.8.vec.extract, double %.sroa.0120.0.vec.extract ; 2 uses
-  %i.dt = fcmp ogt double %14, %.sroa.8.0.i.i32   ; 2 uses
+  %i.dt = fcmp ogt double %19, %.sroa.8.0.i.i32   ; 2 uses
   %.sroa.0.1.i.i33 = select i1 %i.dt, i64 2, i64 %.sroa.0.0.i.i31
-  %.sroa.8.1.i.i34 = select i1 %i.dt, double %14, double %.sroa.8.0.i.i32 ; 2 uses
+  %.sroa.8.1.i.i34 = select i1 %i.dt, double %19, double %.sroa.8.0.i.i32 ; 2 uses
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.sroa.0.1.i.i33
   %i.dv = load i32, ptr %i.du, align 4, !tbaa !36
   %i.dw = sitofp i32 %i.dv to double
   %i.dx = fadd double %i.dw, -1.000000e+00        ; 2 uses
-  %15 = insertelement <2 x double> poison, double %.sroa.8.1.i.i34, i64 0
-  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
-  %17 = fmul <2 x double> %i.dl, %16
-  %i.dy = insertelement <2 x double> poison, double %i.dx, i64 0
-  %i.dz = shufflevector <2 x double> %i.dy, <2 x double> poison, <2 x i32> zeroinitializer
-  %18 = fdiv <2 x double> %17, %i.dz
-  store <2 x double> %18, ptr %9, align 16, !tbaa !24
-  %19 = getelementptr inbounds nuw i8, ptr %9, i64 16
   %20 = fmul double %i.dc, %.sroa.8.1.i.i34
   %21 = fdiv double %20, %i.dx
-  store double %21, ptr %19, align 16, !tbaa !24
+  store double %21, ptr %9, align 8, !tbaa !24
+  %i.dy = insertelement <2 x double> poison, double %.sroa.8.1.i.i34, i64 0
+  %i.dz = shufflevector <2 x double> %i.dy, <2 x double> poison, <2 x i32> zeroinitializer
+  %22 = fmul <2 x double> %i.dl, %i.dz
+  %23 = insertelement <2 x double> poison, double %i.dx, i64 0
+  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %25 = fdiv <2 x double> %22, %24
+  store <2 x double> %25, ptr %12, align 8, !tbaa !24
   %i.ea = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.eb = load ptr, ptr %3, align 8, !tbaa !29
   %i.ec = load i64, ptr %i.ea, align 8, !tbaa !30 ; 7 uses
@@ -931,7 +935,7 @@ bb.a:
   %6 = alloca %"struct.Eigen::internal::evaluator.804", align 8 ; 4 uses
   %7 = alloca %"class.Eigen::internal::generic_dense_assignment_kernel.1731", align 8 ; 7 uses
   %8 = alloca %"struct.Eigen::internal::assign_op", align 1 ; 3 uses
-  %9 = alloca %"class.Eigen::Array.622", align 16 ; 5 uses
+  %9 = alloca %"class.Eigen::Array.622", align 8  ; 5 uses
   %10 = alloca %"class.Eigen::Matrix.3", align 8  ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.b = load <2 x double>, ptr %i.a, align 8, !tbaa !24
@@ -1199,62 +1203,66 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %._crit_edge, %bb.f
   %i.cs = phi i32 [ %.pre, %._crit_edge ], [ %i.cr, %bb.f ]
+  %11 = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.ct = load <2 x i32>, ptr %4, align 4, !tbaa !36
   %i.cu = insertelement <2 x i32> poison, i32 %i.s, i64 0
   %i.cv = shufflevector <2 x i32> %i.cu, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.cw = add nsw <2 x i32> %i.ct, %i.cv
   store <2 x i32> %i.cw, ptr %4, align 4, !tbaa !36
-  %i.cx = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.cy = add nsw i32 %i.cs, %i.s
   store i32 %i.cy, ptr %i.cx, align 4, !tbaa !36
   tail call void @_ZN3igl4gridIN5Eigen6MatrixIiLi3ELi1ELi0ELi3ELi1EEENS2_IdLin1ELin1ELi0ELin1ELin1EEEEEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EE(ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull align 8 dereferenceable(24) %3)
   %i.cz = sitofp i32 %2 to double                 ; 2 uses
-  %i.da = load i32, ptr %i.cx, align 4, !tbaa !36
+  %i.da = load i32, ptr %4, align 4, !tbaa !36
   %i.db = sitofp i32 %i.da to double
   %i.dc = fadd double %i.db, -1.000000e+00        ; 2 uses
-  %11 = fdiv double %i.cz, %i.dc
   %i.dd = load <2 x double>, ptr %i.a, align 8, !tbaa !31
   %i.de = load <2 x double>, ptr %0, align 8, !tbaa !31
   %i.df = fsub <2 x double> %i.dd, %i.de
   %i.dg = load double, ptr %i.h, align 8, !tbaa !24
   %i.dh = load double, ptr %i.i, align 8, !tbaa !24
-  %12 = fsub double %i.dg, %i.dh
-  %13 = fmul double %11, 2.000000e+00
-  %i.di = fsub double 1.000000e+00, %13
-  %14 = fdiv double %12, %i.di                    ; 2 uses
+  %i.di = fsub double %i.dg, %i.dh
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #7
-  %i.dj = load <2 x i32>, ptr %4, align 4, !tbaa !36
+  %12 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.dj = load <2 x i32>, ptr %11, align 4, !tbaa !36
   %i.dk = sitofp <2 x i32> %i.dj to <2 x double>
-  %i.dl = fadd <2 x double> %i.dk, splat (double -1.000000e+00) ; 2 uses
+  %i.dl = fadd <2 x double> %i.dk, splat (double -1.000000e+00) ; 3 uses
   %i.dm = insertelement <2 x double> poison, double %i.cz, i64 0
   %i.dn = shufflevector <2 x double> %i.dm, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.do = fdiv <2 x double> %i.dn, %i.dl
+  %13 = shufflevector <2 x double> %i.dl, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
+  %14 = insertelement <2 x double> %13, double %i.dc, i64 0
+  %i.do = fdiv <2 x double> %i.dn, %14
+  %15 = extractelement <2 x double> %i.dl, i64 1
+  %16 = fdiv double %i.cz, %15
   %i.dp = fmul <2 x double> %i.do, splat (double 2.000000e+00)
   %i.dq = fsub <2 x double> splat (double 1.000000e+00), %i.dp
   %i.dr = fdiv <2 x double> %i.df, %i.dq          ; 2 uses
+  %17 = fmul double %16, 2.000000e+00
+  %18 = fsub double 1.000000e+00, %17
+  %19 = fdiv double %i.di, %18                    ; 2 uses
   %.sroa.0120.0.vec.extract = extractelement <2 x double> %i.dr, i64 0 ; 2 uses
   %.sroa.0120.8.vec.extract = extractelement <2 x double> %i.dr, i64 1 ; 2 uses
   %i.ds = fcmp ogt double %.sroa.0120.8.vec.extract, %.sroa.0120.0.vec.extract ; 2 uses
   %.sroa.0.0.i.i31 = zext i1 %i.ds to i64
   %.sroa.8.0.i.i32 = select i1 %i.ds, double %.sroa.0120.8.vec.extract, double %.sroa.0120.0.vec.extract ; 2 uses
-  %i.dt = fcmp ogt double %14, %.sroa.8.0.i.i32   ; 2 uses
+  %i.dt = fcmp ogt double %19, %.sroa.8.0.i.i32   ; 2 uses
   %.sroa.0.1.i.i33 = select i1 %i.dt, i64 2, i64 %.sroa.0.0.i.i31
-  %.sroa.8.1.i.i34 = select i1 %i.dt, double %14, double %.sroa.8.0.i.i32 ; 2 uses
+  %.sroa.8.1.i.i34 = select i1 %i.dt, double %19, double %.sroa.8.0.i.i32 ; 2 uses
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %.sroa.0.1.i.i33
   %i.dv = load i32, ptr %i.du, align 4, !tbaa !36
   %i.dw = sitofp i32 %i.dv to double
   %i.dx = fadd double %i.dw, -1.000000e+00        ; 2 uses
-  %15 = insertelement <2 x double> poison, double %.sroa.8.1.i.i34, i64 0
-  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
-  %17 = fmul <2 x double> %i.dl, %16
-  %i.dy = insertelement <2 x double> poison, double %i.dx, i64 0
-  %i.dz = shufflevector <2 x double> %i.dy, <2 x double> poison, <2 x i32> zeroinitializer
-  %18 = fdiv <2 x double> %17, %i.dz
-  store <2 x double> %18, ptr %9, align 16, !tbaa !24
-  %19 = getelementptr inbounds nuw i8, ptr %9, i64 16
   %20 = fmul double %i.dc, %.sroa.8.1.i.i34
   %21 = fdiv double %20, %i.dx
-  store double %21, ptr %19, align 16, !tbaa !24
+  store double %21, ptr %9, align 8, !tbaa !24
+  %i.dy = insertelement <2 x double> poison, double %.sroa.8.1.i.i34, i64 0
+  %i.dz = shufflevector <2 x double> %i.dy, <2 x double> poison, <2 x i32> zeroinitializer
+  %22 = fmul <2 x double> %i.dl, %i.dz
+  %23 = insertelement <2 x double> poison, double %i.dx, i64 0
+  %24 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> zeroinitializer
+  %25 = fdiv <2 x double> %22, %24
+  store <2 x double> %25, ptr %12, align 8, !tbaa !24
   %i.ea = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.eb = load ptr, ptr %3, align 8, !tbaa !29
   %i.ec = load i64, ptr %i.ea, align 8, !tbaa !30 ; 7 uses

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !380 ; 3 uses
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !380 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 36
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !381
   %i.ae = icmp eq i32 %i.ab, %i.ad
@@ -213,7 +213,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.ag = load i32, ptr %i.af, align 8, !tbaa !382 ; 3 uses
+  %i.ag = load i32, ptr %i.af, align 8, !tbaa !382 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !383
   %i.aj = icmp eq i32 %i.ag, %i.ai
@@ -225,10 +225,8 @@ _ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread: 
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 44
   store i8 0, ptr %i.ak, align 4, !tbaa !1192
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 36
-  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !381
   %.phi.trans.insert75 = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %.phi.trans.insert77 = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %.pre78 = load i32, ptr %.phi.trans.insert77, align 8, !tbaa !383
+  %23 = load <2 x i32>, ptr %.phi.trans.insert, align 4, !tbaa !106
   %i.al = load <2 x i32>, ptr %.phi.trans.insert75, align 4, !tbaa !106
   br label %bb.h
 
@@ -240,34 +238,30 @@ _ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit: ; preds
   %i.aq = zext i1 %i.ao to i8
   store i8 %i.aq, ptr %i.ap, align 4, !tbaa !1192
   %i.ar = insertelement <2 x i32> poison, i32 %i.ab, i64 0
-  %i.as = insertelement <2 x i32> %i.ar, i32 %i.ag, i64 1
+  %i.as = insertelement <2 x i32> %i.ar, i32 %i.ag, i64 1 ; 2 uses
   br i1 %i.ao, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit
   %i.at = phi i32 [ %.pre84, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread ], [ %i.r, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit ]
   %i.au = phi i32 [ %.pre82, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread ], [ %i.r, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit ]
-  %23 = phi i32 [ %.pre78, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread ], [ %i.ag, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit ]
-  %24 = phi i32 [ %.pre, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread ], [ %i.ab, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit ]
-  %25 = phi <2 x i32> [ %i.al, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread ], [ %i.as, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit ]
-  %26 = sitofp <2 x i32> %25 to <2 x float>       ; 2 uses
+  %24 = phi <2 x i32> [ %i.al, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread ], [ %i.as, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit ]
+  %25 = phi <2 x i32> [ %23, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit.thread ], [ %i.as, %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit ]
+  %26 = shufflevector <2 x i32> %24, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %27 = sitofp <4 x i32> %26 to <4 x float>
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.aw = sub nsw i32 %i.o, %i.m
-  %27 = insertelement <2 x i32> poison, i32 %24, i64 0
-  %28 = insertelement <2 x i32> %27, i32 %i.aw, i64 1
-  %29 = sitofp <2 x i32> %28 to <2 x float>
-  %30 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> zeroinitializer
-  %31 = fdiv <2 x float> %29, %30
-  store <2 x float> %31, ptr %i.av, align 8, !tbaa !132
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %33 = sub nsw i32 %i.au, %i.at
-  %34 = insertelement <2 x i32> poison, i32 %23, i64 0
-  %35 = insertelement <2 x i32> %34, i32 %33, i64 1
-  %36 = sitofp <2 x i32> %35 to <2 x float>
-  %37 = shufflevector <2 x float> %26, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %38 = fdiv <2 x float> %36, %37                 ; 2 uses
-  %i.ax = extractelement <2 x float> %38, i64 0
-  store float %i.ax, ptr %32, align 8, !tbaa !384
-  %i.ay = extractelement <2 x float> %38, i64 1
+  %28 = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %29 = sub nsw i32 %i.au, %i.at
+  %30 = shufflevector <2 x i32> %25, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %31 = insertelement <4 x i32> %30, i32 %i.aw, i64 2
+  %32 = insertelement <4 x i32> %31, i32 %29, i64 3
+  %33 = sitofp <4 x i32> %32 to <4 x float>
+  %34 = fdiv <4 x float> %33, %27                 ; 3 uses
+  %35 = shufflevector <4 x float> %34, <4 x float> poison, <2 x i32> <i32 0, i32 2>
+  store <2 x float> %35, ptr %i.av, align 8, !tbaa !132
+  %i.ax = extractelement <4 x float> %34, i64 1
+  store float %i.ax, ptr %28, align 8, !tbaa !384
+  %i.ay = extractelement <4 x float> %34, i64 3
   br label %bb.j
 
 bb.i:                                             ; preds = %_ZN11OpenImageIO4v3_120has_full_pixel_rangeINS0_9ImageSpecEEEbRKT_.exit

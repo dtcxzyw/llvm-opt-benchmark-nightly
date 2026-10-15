@@ -205,16 +205,17 @@ bb.a:
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 5 uses
-  %2 = load <2 x double>, ptr %i.am, align 8, !tbaa !49 ; 3 uses
-  %i.aq = insertelement <2 x double> %2, double 0.000000e+00, i64 1
-  store <2 x double> %i.aq, ptr %1, align 16, !tbaa !49
-  %3 = insertelement <2 x double> %2, double 0.000000e+00, i64 0
-  store <2 x double> %3, ptr %i.an, align 16, !tbaa !49
-  %4 = fneg <2 x double> %i.aj                    ; 2 uses
-  %i.ar = insertelement <2 x double> poison, double %i.ak, i64 0
-  %5 = shufflevector <2 x double> %i.ar, <2 x double> poison, <2 x i32> zeroinitializer
-  %6 = fdiv <2 x double> %4, %5                   ; 2 uses
-  %i.as = fmul <2 x double> %2, %6
+  %2 = fneg <2 x double> %i.aj                    ; 2 uses
+  %i.aq = insertelement <2 x double> poison, double %i.ak, i64 0
+  %3 = shufflevector <2 x double> %i.aq, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = fdiv <2 x double> %2, %3                   ; 2 uses
+  %5 = extractelement <2 x double> %4, i64 0
+  %6 = load <2 x double>, ptr %i.am, align 8, !tbaa !49 ; 3 uses
+  %i.ar = insertelement <2 x double> %6, double 0.000000e+00, i64 1
+  store <2 x double> %i.ar, ptr %1, align 16, !tbaa !49
+  %7 = insertelement <2 x double> %6, double 0.000000e+00, i64 0
+  store <2 x double> %7, ptr %i.an, align 16, !tbaa !49
+  %i.as = fmul <2 x double> %6, %4
   store <2 x double> %i.as, ptr %i.ao, align 16, !tbaa !49
   %i.at = fdiv double -1.000000e+00, %i.ak        ; 3 uses
   %i.au = fmul double %.sroa.041.0.copyload, 2.000000e+00 ; 2 uses
@@ -340,7 +341,7 @@ bb.a:
   %i.et = fmul double %i.es, %i.er
   %i.eu = getelementptr i8, ptr %i.du, i64 8
   store double %i.et, ptr %i.eu, align 8, !tbaa !49
-  %i.ev = extractelement <2 x double> %4, i64 0
+  %i.ev = extractelement <2 x double> %2, i64 0
   %i.ew = fmul double %.sroa.037.8.vec.extract, %i.ev
   %i.ex = fdiv double %i.ew, %i.al
   %i.ey = load double, ptr %i.ap, align 16, !tbaa !224
@@ -348,8 +349,7 @@ bb.a:
   %i.fa = getelementptr i8, ptr %i.du, i64 24
   store double %i.ez, ptr %i.fa, align 8, !tbaa !49
   %i.fb = load double, ptr %i.ap, align 16, !tbaa !224
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.fc = fmul double %7, %i.fb
+  %i.fc = fmul double %5, %i.fb
   %i.fd = getelementptr i8, ptr %i.du, i64 40
   store double %i.fc, ptr %i.fd, align 8, !tbaa !49
   %i.fe = getelementptr i8, ptr %i.du, i64 56

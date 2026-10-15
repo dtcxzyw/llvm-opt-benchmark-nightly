@@ -204,9 +204,8 @@ _ZN11flip_detail5imageC2ERKS0_.exit:              ; preds = %.lr.ph.i.i.i.i.i.i,
   %i.af = insertelement <2 x float> poison, float %.sroa.0.0.copyload.i, i64 0
   %i.ag = insertelement <2 x float> %i.af, float %.sroa.5.0.copyload.i, i64 1
   %i.ah = fadd <2 x float> %i.ag, <float 1.600000e+01, float -0.000000e+00>
-  %i.ai = fdiv <2 x float> %i.ah, <float 1.160000e+02, float 2.000000e+02> ; 4 uses
-  %i.aj = extractelement <2 x float> %i.ai, i64 0 ; 2 uses
-  %3 = fmul float %i.aj, f0xBE50E850
+  %i.ai = fdiv <2 x float> %i.ah, <float 1.160000e+02, float 2.000000e+02> ; 5 uses
+  %i.aj = extractelement <2 x float> %i.ai, i64 0
   %i.ak = fadd float %i.aj, %i.ae
   %shift = shufflevector <2 x float> %i.ai, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fsub <2 x float> %i.ai, %shift
@@ -223,35 +222,31 @@ _ZN11flip_detail5imageC2ERKS0_.exit:              ; preds = %.lr.ph.i.i.i.i.i.i,
   %i.av = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.au, <2 x float> <float f0x3D2A34C4, float f0xBEFF4A95>, <2 x float> %i.as) ; 3 uses
   %i.aw = extractelement <2 x float> %i.av, i64 0
   store float %i.aw, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !13
-  %4 = tail call float @llvm.fmuladd.f32(float %i.am, float f0x3D63E629, float %3)
-  %5 = tail call float @llvm.fmuladd.f32(float %i.an, float f0x3F8750A8, float %4) ; 2 uses
-  %6 = fcmp ogt <2 x float> %i.av, splat (float 1.000000e+00)
-  %7 = select <2 x i1> %6, <2 x float> splat (float 1.000000e+00), <2 x float> %i.av ; 3 uses
-  %8 = extractelement <2 x float> %7, i64 1       ; 2 uses
-  store float %8, ptr %.sroa.027.031, align 4, !tbaa !12
-  %9 = fcmp ogt float %5, 1.000000e+00
-  %.sroa.speculated.i = select i1 %9, float 1.000000e+00, float %5 ; 2 uses
-  %10 = fcmp olt <2 x float> %7, zeroinitializer  ; 2 uses
-  %11 = extractelement <2 x i1> %10, i64 1
-  %12 = extractelement <2 x i1> %10, i64 0
-  %i.ax = extractelement <2 x float> %7, i64 0
-  %.sroa.speculated10.i11 = select i1 %11, float 0.000000e+00, float %8 ; 2 uses
-  %.sroa.speculated7.i12 = select i1 %12, float 0.000000e+00, float %i.ax ; 2 uses
-  %13 = fcmp olt float %.sroa.speculated.i, 0.000000e+00
-  %.sroa.speculated.i13.a = select i1 %13, float 0.000000e+00, float %.sroa.speculated.i ; 2 uses
-  %14 = fmul float %.sroa.speculated7.i12, f0x3F37163B
-  %15 = tail call float @llvm.fmuladd.f32(float %.sroa.speculated10.i11, float f0x3E59BD78, float %14)
-  %16 = tail call float @llvm.fmuladd.f32(float %.sroa.speculated.i13.a, float 7.218020e-02, float %15)
-  %17 = insertelement <2 x float> poison, float %.sroa.speculated7.i12, i64 0
-  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
-  %19 = fmul <2 x float> %18, <float f0x3EB7163B, float f0x3DF41DA4>
-  %i.ay = insertelement <2 x float> poison, float %.sroa.speculated10.i11, i64 0
+  %3 = fcmp ogt <2 x float> %i.av, splat (float 1.000000e+00)
+  %4 = select <2 x i1> %3, <2 x float> splat (float 1.000000e+00), <2 x float> %i.av ; 3 uses
+  %5 = fcmp olt <2 x float> %4, zeroinitializer
+  %6 = extractelement <2 x float> %4, i64 1
+  %7 = select <2 x i1> %5, <2 x float> zeroinitializer, <2 x float> %4 ; 2 uses
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %9 = shufflevector <2 x float> %i.ai, <2 x float> %7, <4 x i32> <i32 0, i32 2, i32 2, i32 2>
+  %10 = fmul <4 x float> %9, <float f0xBE50E850, float f0x3EB7163B, float f0x3F37163B, float f0x3DF41DA4>
+  %11 = insertelement <4 x float> poison, float %i.am, i64 0
+  %12 = shufflevector <4 x float> %11, <4 x float> %8, <4 x i32> <i32 0, i32 5, i32 5, i32 5>
+  %13 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %12, <4 x float> <float f0x3D63E629, float f0x3ED32455, float f0x3E59BD78, float f0x3C9E5B3F>, <4 x float> %10) ; 3 uses
+  %i.ax = extractelement <4 x float> %13, i64 0
+  %14 = tail call float @llvm.fmuladd.f32(float %i.an, float f0x3F8750A8, float %i.ax) ; 2 uses
+  store float %6, ptr %.sroa.027.031, align 4, !tbaa !12
+  %15 = fcmp ogt float %14, 1.000000e+00
+  %.sroa.speculated.i13.a = select i1 %15, float 1.000000e+00, float %14 ; 2 uses
+  %16 = fcmp olt float %.sroa.speculated.i13.a, 0.000000e+00
+  %.sroa.speculated.i13 = select i1 %16, float 0.000000e+00, float %.sroa.speculated.i13.a ; 2 uses
+  %17 = extractelement <4 x float> %13, i64 2
+  %18 = tail call float @llvm.fmuladd.f32(float %.sroa.speculated.i13, float 7.218020e-02, float %17)
+  %19 = tail call float @llvm.fabs.f32(float %18) ; 3 uses
+  %i.ay = insertelement <2 x float> poison, float %.sroa.speculated.i13, i64 0
   %i.az = shufflevector <2 x float> %i.ay, <2 x float> poison, <2 x i32> zeroinitializer
-  %20 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.az, <2 x float> <float f0x3ED32455, float f0x3C9E5B3F>, <2 x float> %19)
-  %21 = insertelement <2 x float> poison, float %.sroa.speculated.i13.a, i64 0
-  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ba = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %22, <2 x float> <float f0x3E38C803, float f0x3F734B9E>, <2 x float> %20)
-  %23 = tail call float @llvm.fabs.f32(float %16) ; 3 uses
+  %20 = shufflevector <4 x float> %13, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %i.ba = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.az, <2 x float> <float f0x3E38C803, float f0x3F734B9E>, <2 x float> %20)
   %i.bb = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.ba)
   %i.bc = fdiv <2 x float> %i.bb, <float f0x3F734F49, float f0x3F8B6116> ; 2 uses
   %i.bd = extractelement <2 x float> %i.bc, i64 0 ; 3 uses
@@ -269,16 +264,16 @@ bb.e:                                             ; preds = %.lr.ph
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.bi = phi float [ %i.bg, %bb.d ], [ %i.bh, %bb.e ]
-  %i.bj = fpext float %23 to double
+  %i.bj = fpext float %19 to double
   %i.bk = fcmp ogt double %i.bj, 8.856000e-03
   br i1 %i.bk, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.bl = tail call float @powf(float noundef %23, float noundef f0x3EAAAAAB) #17
+  %i.bl = tail call float @powf(float noundef %19, float noundef f0x3EAAAAAB) #17
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %i.bm = tail call float @llvm.fmuladd.f32(float %23, float 7.787000e+00, float f0x3E0D3DCB)
+  %i.bm = tail call float @llvm.fmuladd.f32(float %19, float 7.787000e+00, float f0x3E0D3DCB)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -680,6 +675,9 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #16

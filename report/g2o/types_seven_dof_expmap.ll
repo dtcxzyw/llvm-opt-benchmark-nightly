@@ -205,17 +205,17 @@ _ZN3g2o8internal10readVectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEEEEbRSiRNS2_9D
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   call void @_ZN3g2o4Sim3C2ERKN5Eigen6MatrixIdLi7ELi1ELi0ELi7ELi1EEE(ptr noundef nonnull align 16 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(56) %2)
   %i.ai = load <2 x i64>, ptr %3, align 16, !tbaa !20, !noalias !382
-  %i.aj = xor <2 x i64> %i.ai, splat (i64 -9223372036854775808)
+  %i.aj = xor <2 x i64> %i.ai, splat (i64 -9223372036854775808) ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.al = load <2 x i64>, ptr %i.ak, align 16, !tbaa !20, !noalias !382
-  %i.am = xor <2 x i64> %i.al, <i64 -9223372036854775808, i64 0>
+  %i.am = xor <2 x i64> %i.al, <i64 -9223372036854775808, i64 0> ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 56
   %i.ao = load double, ptr %i.an, align 8, !tbaa !47, !noalias !383
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.aq = load <2 x double>, ptr %i.ap, align 16, !tbaa !20, !noalias !384
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 48
   %i.as = load double, ptr %i.ar, align 16, !tbaa !36, !noalias !384
-  %bc.i = bitcast <2 x i64> %i.aj to <2 x double> ; 4 uses
+  %bc.i = bitcast <2 x i64> %i.aj to <2 x double> ; 5 uses
   %bc6.i = bitcast <2 x i64> %i.am to <2 x double> ; 5 uses
   %i.at = extractelement <2 x double> %bc6.i, i64 1 ; 2 uses
   %i.au = fcmp olt double %i.at, 0.000000e+00     ; 2 uses
@@ -228,11 +228,11 @@ _ZN3g2o8internal10readVectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEEEEbRSiRNS2_9D
   %i.bb = fdiv <2 x double> <double 1.000000e+00, double -1.000000e+00>, %i.ba ; 3 uses
   %i.bc = extractelement <2 x double> %i.bb, i64 1
   %i.bd = fmul double %i.bc, %i.as                ; 3 uses
-  %i.be = extractelement <2 x double> %bc.i, i64 0 ; 4 uses
+  %i.be = extractelement <2 x double> %bc.i, i64 0 ; 3 uses
   %i.bf = shufflevector <2 x double> %i.bb, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bg = fmul <2 x double> %i.aq, %i.bf          ; 3 uses
   %.sroa.0.8.vec.extract.i.i.i = extractelement <2 x double> %i.bg, i64 1 ; 2 uses
-  %i.bh = extractelement <2 x double> %bc.i, i64 1 ; 4 uses
+  %i.bh = extractelement <2 x double> %bc.i, i64 1 ; 2 uses
   %.sroa.0.0.vec.extract.i.i.i = extractelement <2 x double> %i.bg, i64 0 ; 2 uses
   %i.bi = fneg double %.sroa.0.0.vec.extract.i.i.i
   %i.bj = fmul double %i.bh, %i.bi
@@ -240,7 +240,7 @@ _ZN3g2o8internal10readVectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEEEEbRSiRNS2_9D
   %i.bl = fadd double %i.bk, %i.bk                ; 3 uses
   %i.bm = fmul double %i.at, %i.bl
   %i.bn = fadd double %i.bd, %i.bm
-  %i.bo = extractelement <2 x double> %bc6.i, i64 0 ; 4 uses
+  %i.bo = extractelement <2 x double> %bc6.i, i64 0 ; 3 uses
   %i.bp = fneg double %.sroa.0.8.vec.extract.i.i.i
   %i.bq = fmul double %i.bo, %i.bp
   %i.br = call double @llvm.fmuladd.f64(double %i.bh, double %i.bd, double %i.bq)
@@ -249,25 +249,26 @@ _ZN3g2o8internal10readVectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEEEEbRSiRNS2_9D
   %i.bt = fmul double %i.be, %i.bs
   %i.bu = call double @llvm.fmuladd.f64(double %i.bo, double %.sroa.0.0.vec.extract.i.i.i, double %i.bt)
   %.sroa.027.8.vec.insert.i.i.i.i = insertelement <2 x double> %.sroa.027.0.vec.insert.i.i.i.i, double %i.bu, i64 1 ; 2 uses
-  %i.bv = fadd <2 x double> %.sroa.027.8.vec.insert.i.i.i.i, %.sroa.027.8.vec.insert.i.i.i.i ; 3 uses
-  %.sroa.027.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.bv, i64 1 ; 2 uses
-  %.sroa.027.0.vec.extract.i.i.i.i = extractelement <2 x double> %i.bv, i64 0 ; 2 uses
-  %4 = fneg double %.sroa.027.0.vec.extract.i.i.i.i
-  %5 = fmul double %i.bh, %4
-  %6 = call double @llvm.fmuladd.f64(double %i.be, double %.sroa.027.8.vec.extract.i.i.i.i, double %5)
-  %7 = fadd double %i.bn, %6
-  %8 = shufflevector <2 x double> %bc6.i, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.bw = fmul <2 x double> %8, %i.bv
-  %9 = fadd <2 x double> %i.bg, %i.bw
-  %10 = fneg double %.sroa.027.8.vec.extract.i.i.i.i
-  %11 = fmul double %i.bo, %10
-  %12 = call double @llvm.fmuladd.f64(double %i.bh, double %i.bl, double %11)
-  %.sroa.0.0.vec.insert.i.i.i.i = insertelement <2 x double> poison, double %12, i64 0
+  %i.bv = fadd <2 x double> %.sroa.027.8.vec.insert.i.i.i.i, %.sroa.027.8.vec.insert.i.i.i.i ; 4 uses
+  %.sroa.027.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.bv, i64 0
+  %4 = shufflevector <2 x double> %bc6.i, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %5 = fmul <2 x double> %4, %i.bv
+  %6 = fadd <2 x double> %i.bg, %5
+  %7 = fneg <2 x double> %i.bv
+  %8 = shufflevector <2 x i64> %i.aj, <2 x i64> %i.am, <2 x i32> <i32 1, i32 2>
+  %9 = bitcast <2 x i64> %8 to <2 x double>
+  %i.bw = fmul <2 x double> %9, %7
+  %10 = shufflevector <2 x double> %i.bv, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %11 = insertelement <2 x double> %10, double %i.bl, i64 1
+  %12 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %bc.i, <2 x double> %11, <2 x double> %i.bw) ; 2 uses
+  %13 = extractelement <2 x double> %12, i64 0
+  %14 = fadd double %i.bn, %13
+  %15 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.bx = fneg double %i.bl
   %i.by = fmul double %i.be, %i.bx
-  %i.bz = call double @llvm.fmuladd.f64(double %i.bo, double %.sroa.027.0.vec.extract.i.i.i.i, double %i.by)
-  %.sroa.0.8.vec.insert.i.i.i.i = insertelement <2 x double> %.sroa.0.0.vec.insert.i.i.i.i, double %i.bz, i64 1
-  %i.ca = fadd <2 x double> %9, %.sroa.0.8.vec.insert.i.i.i.i
+  %i.bz = call double @llvm.fmuladd.f64(double %i.bo, double %.sroa.027.8.vec.extract.i.i.i.i, double %i.by)
+  %.sroa.0.8.vec.insert.i.i.i.i = insertelement <2 x double> %15, double %i.bz, i64 1
+  %i.ca = fadd <2 x double> %6, %.sroa.0.8.vec.insert.i.i.i.i
   %i.cb = and i32 %i.ag, 2
   %i.cc = icmp ne i32 %i.cb, 0
   %i.cd = or i1 %i.af, %i.cc
@@ -298,7 +299,7 @@ _ZN3g2o8internal10readVectorIN5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEEEEbRSiRNS2_9D
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 240
   store <2 x double> %i.ca, ptr %i.cx, align 16, !tbaa !20
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 256
-  store double %7, ptr %i.cy, align 16, !tbaa !36
+  store double %14, ptr %i.cy, align 16, !tbaa !36
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 264
   %i.da = extractelement <2 x double> %i.bb, i64 0
   store double %i.da, ptr %i.cz, align 8, !tbaa !47

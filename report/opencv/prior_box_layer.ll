@@ -205,11 +205,11 @@ _ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us.us.us.us.us.us.us.us.us
   %.074152.us.us170.us.us.us = phi i64 [ 0, %.preheader147.us.us.us184.us ], [ %i.fr, %._crit_edge.split.us160.us.us.us.us ] ; 3 uses
   %.279151.us.us171.us.us.us = phi ptr [ %.178163.us.us.us186.us, %.preheader147.us.us.us184.us ], [ %.lcssa278, %._crit_edge.split.us160.us.us.us.us ] ; 8 uses
   %i.eh = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %.074152.us.us170.us.us.us
-  %i.ei = load float, ptr %i.eh, align 4, !tbaa !67 ; 2 uses
+  %i.ei = load float, ptr %i.eh, align 4, !tbaa !67 ; 3 uses
   %i.ej = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %.074152.us.us170.us.us.us
-  %i.ek = load float, ptr %i.ej, align 4, !tbaa !67 ; 2 uses
+  %i.ek = load float, ptr %i.ej, align 4, !tbaa !67 ; 3 uses
   %i.el = insertelement <2 x float> poison, float %i.ei, i64 0
-  %i.em = insertelement <2 x float> %i.el, float %i.ek, i64 1 ; 2 uses
+  %i.em = insertelement <2 x float> %i.el, float %i.ek, i64 1
   %i.en = fneg <2 x float> %i.em                  ; 2 uses
   br i1 %min.iters.check, label %_ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us157.us.us.us.us.preheader, label %vector.memcheck
 
@@ -270,7 +270,8 @@ _ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us157.us.us.us.us.preheade
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.us.us169.us.us.us ], [ %n.vec, %middle.block ]
   %.380149.us159.us.us.us.us.ph = phi ptr [ %.279151.us.us171.us.us.us, %vector.memcheck ], [ %.279151.us.us171.us.us.us, %.lr.ph.us.us169.us.us.us ], [ %i.eo, %middle.block ]
   %i.fg = shufflevector <2 x float> %i.en, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %18 = shufflevector <4 x float> %i.fg, <4 x float> <float poison, float poison, float -1.000000e+00, float 1.000000e+00>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %18 = insertelement <4 x float> %i.fg, float %i.ei, i64 2
+  %19 = insertelement <4 x float> %18, float %i.ek, i64 3
   br label %_ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us157.us.us.us.us
 
 _ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us157.us.us.us.us: ; preds = %_ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us157.us.us.us.us.preheader, %_ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us157.us.us.us.us
@@ -284,11 +285,11 @@ _ZN2cv3dnn17PriorBoxLayerImpl8addPriorEffffffbPf.exit.us157.us.us.us.us: ; preds
   %i.fm = insertelement <2 x float> %i.fl, float %i.fk, i64 1
   %i.fn = fadd <2 x float> %i.fm, %i.eg
   %i.fo = load <2 x float>, ptr %i.bc, align 8, !tbaa !67
-  %i.fp = fmul <2 x float> %i.fn, %i.fo           ; 2 uses
-  %19 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.em, <2 x float> splat (float 5.000000e-01), <2 x float> %i.fp)
-  %20 = shufflevector <2 x float> %i.fp, <2 x float> %19, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %21 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %18, <4 x float> <float 5.000000e-01, float 5.000000e-01, float 1.000000e+00, float -1.000000e+00>, <4 x float> %20)
-  store <4 x float> %21, ptr %.380149.us159.us.us.us.us, align 4, !tbaa !67
+  %i.fp = fmul <2 x float> %i.fn, %i.fo
+  %20 = shufflevector <2 x float> %i.fp, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %21 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %19, <4 x float> splat (float 5.000000e-01), <4 x float> %20)
+  %22 = fadd <4 x float> %21, <float -0.000000e+00, float -0.000000e+00, float -1.000000e+00, float -1.000000e+00>
+  store <4 x float> %22, ptr %.380149.us159.us.us.us.us, align 4, !tbaa !67
   %i.fq = getelementptr inbounds nuw i8, ptr %.380149.us159.us.us.us.us, i64 16 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bx
@@ -689,9 +690,6 @@ declare i32 @llvm.smax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #20

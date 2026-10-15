@@ -205,12 +205,12 @@ bb.a:
   %48 = alloca %"class.cv::Mat", align 8          ; 4 uses
   %49 = alloca %"class.cv::Mat", align 8          ; 9 uses
   %50 = alloca %"class.cv::Mat", align 8          ; 4 uses
-  %51 = alloca %"class.cv::Vec", align 8          ; 8 uses
-  %52 = alloca %"class.cv::Matx.20", align 16     ; 13 uses
-  %53 = alloca %"class.cv::Matx.20", align 8      ; 10 uses
+  %51 = alloca %"class.cv::Vec", align 16         ; 8 uses
+  %52 = alloca %"class.cv::Matx.20", align 8      ; 14 uses
+  %53 = alloca %"class.cv::Matx.20", align 8      ; 14 uses
   %54 = alloca %"class.cv::Vec", align 16         ; 6 uses
   %55 = alloca %"class.cv::Vec", align 16         ; 6 uses
-  %56 = alloca %"class.cv::Vec", align 16         ; 6 uses
+  %56 = alloca %"class.cv::Vec", align 8          ; 7 uses
   %57 = alloca %"class.cv::Vec", align 8          ; 6 uses
   %58 = alloca %"class.cv::Matx.20", align 8      ; 6 uses
   %59 = alloca %"class.cv::Matx.6", align 8       ; 21 uses
@@ -567,18 +567,23 @@ _ZNSt6vectorIN2cv3PtrINS0_12ppf_match_3d6Pose3DEEESaIS4_EE7reserveEm.exit: ; pre
   br i1 %i.cw, label %.lr.ph390, label %._crit_edge
 
 .lr.ph390:                                        ; preds = %_ZNSt6vectorIN2cv3PtrINS0_12ppf_match_3d6Pose3DEEESaIS4_EE7reserveEm.exit
-  %i.cx = getelementptr inbounds nuw i8, ptr %49, i64 24 ; 2 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %49, i64 128 ; 2 uses
-  %i.cz = getelementptr inbounds nuw i8, ptr %51, i64 8 ; 2 uses
-  %i.da = getelementptr inbounds nuw i8, ptr %51, i64 16 ; 2 uses
-  %i.db = getelementptr inbounds nuw i8, ptr %52, i64 16
-  %i.dc = getelementptr inbounds nuw i8, ptr %52, i64 24 ; 2 uses
-  %i.dd = getelementptr inbounds nuw i8, ptr %52, i64 32
-  %i.de = getelementptr inbounds nuw i8, ptr %52, i64 40 ; 2 uses
-  %i.df = getelementptr inbounds nuw i8, ptr %52, i64 48
-  %i.dg = getelementptr inbounds nuw i8, ptr %52, i64 56
-  %i.dh = getelementptr inbounds nuw i8, ptr %52, i64 64 ; 2 uses
-  %i.di = getelementptr inbounds nuw i8, ptr %53, i64 32
+  %68 = getelementptr inbounds nuw i8, ptr %49, i64 24 ; 2 uses
+  %69 = getelementptr inbounds nuw i8, ptr %49, i64 128 ; 2 uses
+  %70 = getelementptr inbounds nuw i8, ptr %51, i64 8
+  %71 = getelementptr inbounds nuw i8, ptr %51, i64 16 ; 2 uses
+  %72 = getelementptr inbounds nuw i8, ptr %52, i64 8
+  %i.cx = getelementptr inbounds nuw i8, ptr %52, i64 16
+  %i.cy = getelementptr inbounds nuw i8, ptr %52, i64 24 ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %52, i64 32 ; 2 uses
+  %i.da = getelementptr inbounds nuw i8, ptr %52, i64 40 ; 2 uses
+  %i.db = getelementptr inbounds nuw i8, ptr %52, i64 48
+  %i.dc = getelementptr inbounds nuw i8, ptr %52, i64 56 ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %52, i64 64 ; 2 uses
+  %i.de = getelementptr inbounds nuw i8, ptr %53, i64 8
+  %i.df = getelementptr inbounds nuw i8, ptr %53, i64 16
+  %i.dg = getelementptr inbounds nuw i8, ptr %53, i64 24
+  %i.dh = getelementptr inbounds nuw i8, ptr %53, i64 32
+  %i.di = getelementptr inbounds nuw i8, ptr %53, i64 40
   %i.dj = getelementptr inbounds nuw i8, ptr %53, i64 48
   %i.dk = getelementptr inbounds nuw i8, ptr %53, i64 56
   %i.dl = getelementptr inbounds nuw i8, ptr %53, i64 64
@@ -593,6 +598,7 @@ _ZNSt6vectorIN2cv3PtrINS0_12ppf_match_3d6Pose3DEEESaIS4_EE7reserveEm.exit: ; pre
   %i.du = sitofp i32 %i.bi to double              ; 2 uses
   %.not391 = icmp eq i32 %i.bn, 0
   %i.dv = icmp slt i32 %i.bi, 1
+  %.sroa.5273.0..sroa_idx = getelementptr inbounds nuw i8, ptr %56, i64 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %56, i64 16
   %i.dw = getelementptr inbounds nuw i8, ptr %27, i64 16
   %i.dx = getelementptr inbounds nuw i8, ptr %27, i64 8
@@ -743,8 +749,8 @@ bb.ah:                                            ; preds = %_ZNSt12_Vector_base
 
 bb.ai:                                            ; preds = %.lr.ph390, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %indvars.iv402 = phi i64 [ 0, %.lr.ph390 ], [ %indvars.iv.next403, %_ZNSt12__shared_ptrIN2cv12ppf_match_3d6Pose3DELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 3 uses
-  %i.ie = load ptr, ptr %i.cx, align 8, !tbaa !57
-  %i.if = load i64, ptr %i.cy, align 8, !tbaa !58
+  %i.ie = load ptr, ptr %68, align 8, !tbaa !57
+  %i.if = load i64, ptr %69, align 8, !tbaa !58
   %i.ig = mul i64 %i.if, %indvars.iv402
   %i.ih = getelementptr inbounds nuw i8, ptr %i.ie, i64 %i.ig ; 4 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.ih, i64 8
@@ -752,14 +758,14 @@ bb.ai:                                            ; preds = %.lr.ph390, %_ZNSt12
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ih, i64 20
   %i.il = load float, ptr %i.ik, align 4, !tbaa !53
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #26
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %51, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %51, i8 0, i64 24, i1 false)
   %i.im = load float, ptr %i.ii, align 4, !tbaa !53
   %i.in = load <2 x float>, ptr %i.ih, align 4, !tbaa !53
   %i.io = fpext <2 x float> %i.in to <2 x double> ; 2 uses
   %i.ip = fpext float %i.im to double             ; 2 uses
   %i.iq = load <2 x float>, ptr %i.ij, align 4, !tbaa !53
   call void @llvm.lifetime.start.p0(ptr nonnull %52) #26
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %52, i8 0, i64 72, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %52, i8 0, i64 72, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %53, i8 0, i64 72, i1 false)
   %i.ir = call noalias ptr @calloc(i64 noundef %i.dn, i64 noundef 4) #30 ; 5 uses
@@ -782,8 +788,8 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.iv, label %.lr.ph371, label %.preheader354
 
 .lr.ph371:                                        ; preds = %bb.aj
-  %i.iw = load double, ptr %i.cz, align 8
-  %i.ix = load double, ptr %i.da, align 8
+  %i.iw = load double, ptr %70, align 8
+  %i.ix = load double, ptr %71, align 16
   %i.iy = insertelement <2 x double> poison, double %i.it, i64 0
   %i.iz = extractelement <2 x double> %i.is, i64 0
   %i.ja = extractelement <2 x double> %i.is, i64 1
@@ -875,8 +881,8 @@ bb.al:                                            ; preds = %.lr.ph371, %.loopex
   br i1 %.not, label %.loopexit, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %i.jz = load ptr, ptr %i.cx, align 8, !tbaa !57
-  %i.ka = load i64, ptr %i.cy, align 8, !tbaa !58
+  %i.jz = load ptr, ptr %68, align 8, !tbaa !57
+  %i.ka = load i64, ptr %69, align 8, !tbaa !58
   %i.kb = mul i64 %i.ka, %indvars.iv
   %i.kc = getelementptr inbounds nuw i8, ptr %i.jz, i64 %i.kb ; 5 uses
   %i.kd = getelementptr inbounds nuw i8, ptr %i.kc, i64 8
@@ -936,21 +942,21 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %.sroa.6309.0 = phi double [ %i.lr, %bb.an ], [ 0.000000e+00, %bb.am ]
   %i.ly = phi <2 x double> [ %i.lx, %bb.an ], [ zeroinitializer, %bb.am ]
   %i.lz = load double, ptr %i.az, align 8, !tbaa !43 ; 2 uses
-  %i.ma = load double, ptr %i.dc, align 8, !tbaa !36, !noalias !209
+  %i.ma = load double, ptr %i.cy, align 8, !tbaa !36, !noalias !209
   %i.mb = extractelement <2 x double> %i.kh, i64 0
   %i.mc = call double @llvm.fmuladd.f64(double %i.ma, double %i.mb, double 0.000000e+00)
-  %i.md = load double, ptr %i.dd, align 16, !tbaa !36, !noalias !209
+  %i.md = load double, ptr %i.cz, align 8, !tbaa !36, !noalias !209
   %i.me = extractelement <2 x double> %i.kh, i64 1 ; 2 uses
   %i.mf = call double @llvm.fmuladd.f64(double %i.md, double %i.me, double %i.mc)
-  %i.mg = load <2 x double>, ptr %i.de, align 8, !tbaa !36, !noalias !209
+  %i.mg = load <2 x double>, ptr %i.da, align 8, !tbaa !36, !noalias !209
   %i.mh = insertelement <2 x double> poison, double %i.kf, i64 0
   %i.mi = shufflevector <2 x double> %i.mh, <2 x double> %i.kh, <2 x i32> <i32 0, i32 2>
   %i.mj = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.mf, i64 0
   %i.mk = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mg, <2 x double> %i.mi, <2 x double> %i.mj) ; 2 uses
-  %i.ml = load double, ptr %i.dg, align 8, !tbaa !36, !noalias !209
+  %i.ml = load double, ptr %i.dc, align 8, !tbaa !36, !noalias !209
   %i.mm = extractelement <2 x double> %i.mk, i64 1
   %i.mn = call double @llvm.fmuladd.f64(double %i.ml, double %i.me, double %i.mm)
-  %i.mo = load double, ptr %i.dh, align 16, !tbaa !36, !noalias !209
+  %i.mo = load double, ptr %i.dd, align 8, !tbaa !36, !noalias !209
   %i.mp = call double @llvm.fmuladd.f64(double %i.mo, double %i.kf, double %i.mn)
   %i.mq = extractelement <2 x double> %i.mk, i64 0
   %i.mr = fadd double %i.mq, %i.iw
@@ -1097,44 +1103,54 @@ bb.ar:                                            ; preds = %bb.ap
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %57, i8 0, i64 24, i1 false), !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %58) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %58, i8 0, i64 72, i1 false), !tbaa !36
-  %i.qs = load double, ptr %i.db, align 16, !tbaa !36, !noalias !214 ; 2 uses
-  %i.qt = load double, ptr %i.de, align 8, !tbaa !36, !noalias !214 ; 2 uses
-  %i.qu = load double, ptr %i.dh, align 16, !tbaa !36, !noalias !214 ; 2 uses
-  store double %i.qs, ptr %i.dj, align 8
+  %73 = load double, ptr %52, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  %74 = load double, ptr %i.cy, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  %i.qs = load double, ptr %i.db, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  %75 = load double, ptr %72, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  %76 = load double, ptr %i.cz, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  %77 = load double, ptr %i.dc, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  %78 = load double, ptr %i.cx, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  %i.qt = load double, ptr %i.da, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  %i.qu = load double, ptr %i.dd, align 8, !tbaa !36, !noalias !214 ; 2 uses
+  store double %73, ptr %53, align 8
+  store double %74, ptr %i.de, align 8
+  store double %i.qs, ptr %i.df, align 8
+  store double %75, ptr %i.dg, align 8
+  store double %76, ptr %i.dh, align 8
+  store double %77, ptr %i.di, align 8
+  store double %78, ptr %i.dj, align 8
   store double %i.qt, ptr %i.dk, align 8
   store double %i.qu, ptr %i.dl, align 8, !tbaa !51
-  %68 = fneg double %i.qs
-  %69 = fneg double %i.qt
-  %i.qv = fneg double %i.qu
-  %70 = load <2 x double>, ptr %52, align 16, !tbaa !36, !noalias !214 ; 3 uses
-  %71 = load <2 x double>, ptr %i.dc, align 8, !tbaa !36, !noalias !214 ; 3 uses
-  %72 = load <2 x double>, ptr %i.df, align 16, !tbaa !36, !noalias !214 ; 3 uses
-  %73 = shufflevector <2 x double> %70, <2 x double> %71, <2 x i32> <i32 0, i32 2>
-  %74 = shufflevector <2 x double> %72, <2 x double> %70, <2 x i32> <i32 0, i32 3>
-  %75 = shufflevector <2 x double> %73, <2 x double> %74, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x double> %75, ptr %53, align 8
-  %76 = shufflevector <2 x double> %71, <2 x double> %72, <2 x i32> <i32 1, i32 3>
-  store <2 x double> %76, ptr %i.di, align 8
-  %77 = fneg <2 x double> %70
-  %78 = fneg <2 x double> %71
-  %79 = fneg <2 x double> %72
-  %80 = load double, ptr %51, align 8, !tbaa !36, !noalias !215 ; 2 uses
-  %81 = load double, ptr %i.cz, align 8, !tbaa !36, !noalias !215 ; 2 uses
-  %82 = load double, ptr %i.da, align 8, !tbaa !36, !noalias !215 ; 2 uses
-  %i.qw = insertelement <2 x double> poison, double %80, i64 0
-  %83 = shufflevector <2 x double> %i.qw, <2 x double> poison, <2 x i32> zeroinitializer
-  %84 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %77, <2 x double> %83, <2 x double> zeroinitializer)
-  %i.qx = insertelement <2 x double> poison, double %81, i64 0
-  %85 = shufflevector <2 x double> %i.qx, <2 x double> poison, <2 x i32> zeroinitializer
-  %86 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %78, <2 x double> %85, <2 x double> %84)
-  %i.qy = insertelement <2 x double> poison, double %82, i64 0
-  %87 = shufflevector <2 x double> %i.qy, <2 x double> poison, <2 x i32> zeroinitializer
-  %88 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %79, <2 x double> %87, <2 x double> %86)
-  %i.qz = call double @llvm.fmuladd.f64(double %68, double %80, double 0.000000e+00)
-  %89 = call double @llvm.fmuladd.f64(double %69, double %81, double %i.qz)
-  %90 = call double @llvm.fmuladd.f64(double %i.qv, double %82, double %89)
-  store <2 x double> %88, ptr %56, align 16
-  store double %90, ptr %.sroa.6.0..sroa_idx, align 16
+  %i.qv = fneg double %73
+  %79 = fneg double %74
+  %80 = fneg double %i.qs
+  %81 = fneg double %75
+  %82 = fneg double %i.qu
+  %83 = load double, ptr %71, align 16, !tbaa !36, !noalias !215 ; 3 uses
+  %84 = insertelement <2 x double> poison, double %78, i64 0
+  %85 = insertelement <2 x double> %84, double %76, i64 1
+  %86 = fneg <2 x double> %85
+  %87 = load <2 x double>, ptr %51, align 16, !tbaa !36, !noalias !215 ; 4 uses
+  %88 = extractelement <2 x double> %87, i64 0    ; 2 uses
+  %89 = call double @llvm.fmuladd.f64(double %i.qv, double %88, double 0.000000e+00)
+  %90 = extractelement <2 x double> %87, i64 1
+  %91 = call double @llvm.fmuladd.f64(double %79, double %90, double %89)
+  %92 = call double @llvm.fmuladd.f64(double %80, double %83, double %91)
+  %93 = call double @llvm.fmuladd.f64(double %81, double %88, double 0.000000e+00)
+  %i.qw = insertelement <2 x double> <double 0.000000e+00, double poison>, double %93, i64 1
+  %94 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %86, <2 x double> %87, <2 x double> %i.qw)
+  %95 = insertelement <2 x double> poison, double %i.qt, i64 0
+  %i.qx = insertelement <2 x double> %95, double %77, i64 1
+  %96 = fneg <2 x double> %i.qx
+  %97 = shufflevector <2 x double> %87, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.qy = insertelement <2 x double> %97, double %83, i64 1
+  %98 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %96, <2 x double> %i.qy, <2 x double> %94) ; 2 uses
+  %99 = extractelement <2 x double> %98, i64 0
+  %i.qz = call double @llvm.fmuladd.f64(double %82, double %83, double %99)
+  store double %92, ptr %56, align 8
+  %100 = extractelement <2 x double> %98, i64 1
+  store double %100, ptr %.sroa.5273.0..sroa_idx, align 8
+  store double %i.qz, ptr %.sroa.6.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %59) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %59, i8 0, i64 128, i1 false), !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #26

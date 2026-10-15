@@ -205,16 +205,17 @@ scalar.ph168:                                     ; preds = %scalar.ph168.prehea
   %i.gx = fadd float %i.gu, -1.000000e+00
   %i.gy = fmul float %i.gr, %i.gx
   %i.gz = call float @llvm.exp.f32(float %i.gy)
-  %i.ha = insertelement <2 x float> poison, float %i.gz, i64 0
-  %i.hb = insertelement <2 x float> %i.ha, float %i.gw, i64 1
+  %i.ha = insertelement <2 x float> poison, float %i.gw, i64 0
+  %i.hb = insertelement <2 x float> %i.ha, float %i.gz, i64 1
   %i.hc = fadd <2 x float> %i.hb, splat (float 1.000000e+00)
-  %i.hd = fdiv <2 x float> splat (float 1.000000e+00), %i.hc ; 2 uses
-  %i.he = extractelement <2 x float> %i.hd, i64 1 ; 2 uses
+  %i.hd = fdiv <2 x float> splat (float 1.000000e+00), %i.hc ; 3 uses
+  %i.he = extractelement <2 x float> %i.hd, i64 0
   store float %i.he, ptr %i.gt, align 4, !tbaa !92
-  %6 = extractelement <2 x float> %i.hd, i64 0
-  %7 = fsub float %6, %i.he
+  %shift = shufflevector <2 x float> %i.hd, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %shift, %i.hd
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.hf = getelementptr inbounds [4 x i8], ptr %i.by, i64 %indvars.iv119
-  store float %7, ptr %i.hf, align 4, !tbaa !92
+  store float %6, ptr %i.hf, align 4, !tbaa !92
   %indvars.iv.next120 = add nsw i64 %indvars.iv119, 1 ; 2 uses
   %exitcond123.not = icmp eq i64 %indvars.iv.next120, %wide.trip.count122
   br i1 %exitcond123.not, label %.lr.ph108, label %scalar.ph168, !llvm.loop !1513
@@ -617,16 +618,17 @@ scalar.ph168:                                     ; preds = %scalar.ph168.prehea
   %i.hf = fadd float %i.hc, -1.000000e+00
   %i.hg = fmul float %i.gz, %i.hf
   %i.hh = call float @llvm.exp.f32(float %i.hg)
-  %i.hi = insertelement <2 x float> poison, float %i.hh, i64 0
-  %i.hj = insertelement <2 x float> %i.hi, float %i.he, i64 1
+  %i.hi = insertelement <2 x float> poison, float %i.he, i64 0
+  %i.hj = insertelement <2 x float> %i.hi, float %i.hh, i64 1
   %i.hk = fadd <2 x float> %i.hj, splat (float 1.000000e+00)
-  %i.hl = fdiv <2 x float> splat (float 1.000000e+00), %i.hk ; 2 uses
-  %i.hm = extractelement <2 x float> %i.hl, i64 1 ; 2 uses
+  %i.hl = fdiv <2 x float> splat (float 1.000000e+00), %i.hk ; 3 uses
+  %i.hm = extractelement <2 x float> %i.hl, i64 0
   store float %i.hm, ptr %i.hb, align 4, !tbaa !92
-  %6 = extractelement <2 x float> %i.hl, i64 0
-  %7 = fsub float %6, %i.hm
+  %shift = shufflevector <2 x float> %i.hl, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %shift, %i.hl
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.hn = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %indvars.iv119
-  store float %7, ptr %i.hn, align 4, !tbaa !92
+  store float %6, ptr %i.hn, align 4, !tbaa !92
   %indvars.iv.next120 = add nsw i64 %indvars.iv119, 1 ; 2 uses
   %exitcond123.not = icmp eq i64 %indvars.iv.next120, %wide.trip.count122
   br i1 %exitcond123.not, label %.lr.ph108, label %scalar.ph168, !llvm.loop !1537
@@ -1029,16 +1031,17 @@ scalar.ph176:                                     ; preds = %scalar.ph176.prehea
   %i.it = fadd float %i.iq, -1.000000e+00
   %i.iu = fmul float %i.in, %i.it
   %i.iv = call float @llvm.exp.f32(float %i.iu)
-  %i.iw = insertelement <2 x float> poison, float %i.iv, i64 0
-  %i.ix = insertelement <2 x float> %i.iw, float %i.is, i64 1
+  %i.iw = insertelement <2 x float> poison, float %i.is, i64 0
+  %i.ix = insertelement <2 x float> %i.iw, float %i.iv, i64 1
   %i.iy = fadd <2 x float> %i.ix, splat (float 1.000000e+00)
-  %i.iz = fdiv <2 x float> splat (float 1.000000e+00), %i.iy ; 2 uses
-  %i.ja = extractelement <2 x float> %i.iz, i64 1 ; 2 uses
+  %i.iz = fdiv <2 x float> splat (float 1.000000e+00), %i.iy ; 3 uses
+  %i.ja = extractelement <2 x float> %i.iz, i64 0
   store float %i.ja, ptr %i.ip, align 4, !tbaa !92
-  %6 = extractelement <2 x float> %i.iz, i64 0
-  %7 = fsub float %6, %i.ja
+  %shift = shufflevector <2 x float> %i.iz, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %shift, %i.iz
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.jb = getelementptr inbounds [4 x i8], ptr %i.cp, i64 %indvars.iv123
-  store float %7, ptr %i.jb, align 4, !tbaa !92
+  store float %6, ptr %i.jb, align 4, !tbaa !92
   %indvars.iv.next124 = add nsw i64 %indvars.iv123, 1 ; 2 uses
   %exitcond127.not = icmp eq i64 %indvars.iv.next124, %wide.trip.count126
   br i1 %exitcond127.not, label %.lr.ph112, label %scalar.ph176, !llvm.loop !1561
@@ -1441,16 +1444,17 @@ scalar.ph168:                                     ; preds = %scalar.ph168.prehea
   %i.hf = fadd float %i.hc, -1.000000e+00
   %i.hg = fmul float %i.gz, %i.hf
   %i.hh = call float @llvm.exp.f32(float %i.hg)
-  %i.hi = insertelement <2 x float> poison, float %i.hh, i64 0
-  %i.hj = insertelement <2 x float> %i.hi, float %i.he, i64 1
+  %i.hi = insertelement <2 x float> poison, float %i.he, i64 0
+  %i.hj = insertelement <2 x float> %i.hi, float %i.hh, i64 1
   %i.hk = fadd <2 x float> %i.hj, splat (float 1.000000e+00)
-  %i.hl = fdiv <2 x float> splat (float 1.000000e+00), %i.hk ; 2 uses
-  %i.hm = extractelement <2 x float> %i.hl, i64 1 ; 2 uses
+  %i.hl = fdiv <2 x float> splat (float 1.000000e+00), %i.hk ; 3 uses
+  %i.hm = extractelement <2 x float> %i.hl, i64 0
   store float %i.hm, ptr %i.hb, align 4, !tbaa !92
-  %6 = extractelement <2 x float> %i.hl, i64 0
-  %7 = fsub float %6, %i.hm
+  %shift = shufflevector <2 x float> %i.hl, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %shift, %i.hl
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.hn = getelementptr inbounds [4 x i8], ptr %i.ca, i64 %indvars.iv119
-  store float %7, ptr %i.hn, align 4, !tbaa !92
+  store float %6, ptr %i.hn, align 4, !tbaa !92
   %indvars.iv.next120 = add nsw i64 %indvars.iv119, 1 ; 2 uses
   %exitcond123.not = icmp eq i64 %indvars.iv.next120, %wide.trip.count122
   br i1 %exitcond123.not, label %.lr.ph108, label %scalar.ph168, !llvm.loop !1585
@@ -1853,16 +1857,17 @@ scalar.ph171:                                     ; preds = %scalar.ph171.prehea
   %i.hl = fadd float %i.hi, -1.000000e+00
   %i.hm = fmul float %i.hf, %i.hl
   %i.hn = call float @llvm.exp.f32(float %i.hm)
-  %i.ho = insertelement <2 x float> poison, float %i.hn, i64 0
-  %i.hp = insertelement <2 x float> %i.ho, float %i.hk, i64 1
+  %i.ho = insertelement <2 x float> poison, float %i.hk, i64 0
+  %i.hp = insertelement <2 x float> %i.ho, float %i.hn, i64 1
   %i.hq = fadd <2 x float> %i.hp, splat (float 1.000000e+00)
-  %i.hr = fdiv <2 x float> splat (float 1.000000e+00), %i.hq ; 2 uses
-  %i.hs = extractelement <2 x float> %i.hr, i64 1 ; 2 uses
+  %i.hr = fdiv <2 x float> splat (float 1.000000e+00), %i.hq ; 3 uses
+  %i.hs = extractelement <2 x float> %i.hr, i64 0
   store float %i.hs, ptr %i.hh, align 4, !tbaa !92
-  %6 = extractelement <2 x float> %i.hr, i64 0
-  %7 = fsub float %6, %i.hs
+  %shift = shufflevector <2 x float> %i.hr, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %shift, %i.hr
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.ht = getelementptr inbounds [4 x i8], ptr %i.cg, i64 %indvars.iv122
-  store float %7, ptr %i.ht, align 4, !tbaa !92
+  store float %6, ptr %i.ht, align 4, !tbaa !92
   %indvars.iv.next123 = add nsw i64 %indvars.iv122, 1 ; 2 uses
   %exitcond126.not = icmp eq i64 %indvars.iv.next123, %wide.trip.count125
   br i1 %exitcond126.not, label %.lr.ph111, label %scalar.ph171, !llvm.loop !1609
@@ -2265,16 +2270,17 @@ scalar.ph186:                                     ; preds = %scalar.ph186.prehea
   %i.kj = fadd float %i.kg, -1.000000e+00
   %i.kk = fmul float %i.kd, %i.kj
   %i.kl = call float @llvm.exp.f32(float %i.kk)
-  %i.km = insertelement <2 x float> poison, float %i.kl, i64 0
-  %i.kn = insertelement <2 x float> %i.km, float %i.ki, i64 1
+  %i.km = insertelement <2 x float> poison, float %i.ki, i64 0
+  %i.kn = insertelement <2 x float> %i.km, float %i.kl, i64 1
   %i.ko = fadd <2 x float> %i.kn, splat (float 1.000000e+00)
-  %i.kp = fdiv <2 x float> splat (float 1.000000e+00), %i.ko ; 2 uses
-  %i.kq = extractelement <2 x float> %i.kp, i64 1 ; 2 uses
+  %i.kp = fdiv <2 x float> splat (float 1.000000e+00), %i.ko ; 3 uses
+  %i.kq = extractelement <2 x float> %i.kp, i64 0
   store float %i.kq, ptr %i.kf, align 4, !tbaa !92
-  %6 = extractelement <2 x float> %i.kp, i64 0
-  %7 = fsub float %6, %i.kq
+  %shift = shufflevector <2 x float> %i.kp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %shift, %i.kp
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.kr = getelementptr inbounds [4 x i8], ptr %i.ef, i64 %indvars.iv128
-  store float %7, ptr %i.kr, align 4, !tbaa !92
+  store float %6, ptr %i.kr, align 4, !tbaa !92
   %indvars.iv.next129 = add nsw i64 %indvars.iv128, 1 ; 2 uses
   %exitcond132.not = icmp eq i64 %indvars.iv.next129, %wide.trip.count131
   br i1 %exitcond132.not, label %.lr.ph117, label %scalar.ph186, !llvm.loop !1633
@@ -2677,16 +2683,17 @@ scalar.ph171:                                     ; preds = %scalar.ph171.prehea
   %i.hl = fadd float %i.hi, -1.000000e+00
   %i.hm = fmul float %i.hf, %i.hl
   %i.hn = call float @llvm.exp.f32(float %i.hm)
-  %i.ho = insertelement <2 x float> poison, float %i.hn, i64 0
-  %i.hp = insertelement <2 x float> %i.ho, float %i.hk, i64 1
+  %i.ho = insertelement <2 x float> poison, float %i.hk, i64 0
+  %i.hp = insertelement <2 x float> %i.ho, float %i.hn, i64 1
   %i.hq = fadd <2 x float> %i.hp, splat (float 1.000000e+00)
-  %i.hr = fdiv <2 x float> splat (float 1.000000e+00), %i.hq ; 2 uses
-  %i.hs = extractelement <2 x float> %i.hr, i64 1 ; 2 uses
+  %i.hr = fdiv <2 x float> splat (float 1.000000e+00), %i.hq ; 3 uses
+  %i.hs = extractelement <2 x float> %i.hr, i64 0
   store float %i.hs, ptr %i.hh, align 4, !tbaa !92
-  %6 = extractelement <2 x float> %i.hr, i64 0
-  %7 = fsub float %6, %i.hs
+  %shift = shufflevector <2 x float> %i.hr, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x float> %shift, %i.hr
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.ht = getelementptr inbounds [4 x i8], ptr %i.cg, i64 %indvars.iv122
-  store float %7, ptr %i.ht, align 4, !tbaa !92
+  store float %6, ptr %i.ht, align 4, !tbaa !92
   %indvars.iv.next123 = add nsw i64 %indvars.iv122, 1 ; 2 uses
   %exitcond126.not = icmp eq i64 %indvars.iv.next123, %wide.trip.count125
   br i1 %exitcond126.not, label %.lr.ph111, label %scalar.ph171, !llvm.loop !1657

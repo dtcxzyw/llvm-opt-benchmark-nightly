@@ -202,9 +202,9 @@ bb.af:                                            ; preds = %._crit_edge515, %bb
   %i.lb = shufflevector <2 x double> %i.la, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.lc = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.iy, <2 x double> %i.kz, <2 x double> %i.lb)
   %i.ld = fdiv <2 x double> %i.lc, %i.ks          ; 2 uses
+  %8 = extractelement <2 x double> %i.ld, i64 1
   store <2 x double> %i.ld, ptr %gep554, align 8, !tbaa !18
   %indvars.iv.next504 = add nuw nsw i64 %indvars.iv503, 1
-  %8 = extractelement <2 x double> %i.ld, i64 1
   %i.le = mul nuw nsw i64 %indvars.iv.next504, %i.w ; 2 uses
   %gep554.1 = getelementptr [8 x i8], ptr %invariant.gep553, i64 %i.le
   %gep556.1 = getelementptr [8 x i8], ptr %invariant.gep555, i64 %i.le
@@ -216,9 +216,9 @@ bb.af:                                            ; preds = %._crit_edge515, %bb
   %i.lk = shufflevector <2 x double> %i.lj, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.ll = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.iy, <2 x double> %i.li, <2 x double> %i.lk)
   %i.lm = fdiv <2 x double> %i.ll, %i.ks          ; 2 uses
+  %9 = extractelement <2 x double> %i.lm, i64 1
   store <2 x double> %i.lm, ptr %gep554.1, align 8, !tbaa !18
   %indvars.iv.next504.1 = add nuw nsw i64 %indvars.iv503, 2
-  %9 = extractelement <2 x double> %i.lm, i64 1
   %i.ln = mul nuw nsw i64 %indvars.iv.next504.1, %i.w ; 2 uses
   %gep554.2 = getelementptr [8 x i8], ptr %invariant.gep553, i64 %i.ln
   %gep556.2 = getelementptr [8 x i8], ptr %invariant.gep555, i64 %i.ln
@@ -230,9 +230,9 @@ bb.af:                                            ; preds = %._crit_edge515, %bb
   %i.lt = shufflevector <2 x double> %i.ls, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.lu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.iy, <2 x double> %i.lr, <2 x double> %i.lt)
   %i.lv = fdiv <2 x double> %i.lu, %i.ks          ; 2 uses
+  %10 = extractelement <2 x double> %i.lv, i64 1
   store <2 x double> %i.lv, ptr %gep554.2, align 8, !tbaa !18
   %indvars.iv.next504.2 = add nuw nsw i64 %indvars.iv503, 3
-  %10 = extractelement <2 x double> %i.lv, i64 1
   %i.lw = mul nuw nsw i64 %indvars.iv.next504.2, %i.w ; 2 uses
   %gep554.3 = getelementptr [8 x i8], ptr %invariant.gep553, i64 %i.lw
   %gep556.3 = getelementptr [8 x i8], ptr %invariant.gep555, i64 %i.lw
@@ -244,9 +244,9 @@ bb.af:                                            ; preds = %._crit_edge515, %bb
   %i.mc = shufflevector <2 x double> %i.mb, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.md = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.iy, <2 x double> %i.ma, <2 x double> %i.mc)
   %i.me = fdiv <2 x double> %i.md, %i.ks          ; 2 uses
+  %11 = extractelement <2 x double> %i.me, i64 1  ; 2 uses
   store <2 x double> %i.me, ptr %gep554.3, align 8, !tbaa !18
   %indvars.iv.next504.3 = add nuw nsw i64 %indvars.iv503, 4 ; 2 uses
-  %11 = extractelement <2 x double> %i.me, i64 1  ; 2 uses
   %niter590.next.3 = add i64 %niter590, 4         ; 2 uses
   %niter590.ncmp.3 = icmp eq i64 %niter590.next.3, %unroll_iter589
   br i1 %niter590.ncmp.3, label %._crit_edge490.loopexit.unr-lcssa, label %.lr.ph489, !llvm.loop !13
@@ -277,9 +277,9 @@ bb.af:                                            ; preds = %._crit_edge515, %bb
   %i.ml = shufflevector <2 x double> %i.mk, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.mm = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.iy, <2 x double> %i.mj, <2 x double> %i.ml)
   %i.mn = fdiv <2 x double> %i.mm, %i.ks          ; 2 uses
+  %12 = extractelement <2 x double> %i.mn, i64 1
   store <2 x double> %i.mn, ptr %gep554.epil, align 8, !tbaa !18
   %indvars.iv.next504.epil = add nuw nsw i64 %indvars.iv503.epil, 1
-  %12 = extractelement <2 x double> %i.mn, i64 1
   %epil.iter586.next = add i64 %epil.iter586, 1   ; 2 uses
   %epil.iter586.cmp.not = icmp eq i64 %epil.iter586.next, %xtraiter585
   br i1 %epil.iter586.cmp.not, label %._crit_edge490, label %.lr.ph489.epil, !llvm.loop !14

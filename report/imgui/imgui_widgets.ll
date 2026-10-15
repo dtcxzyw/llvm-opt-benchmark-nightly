@@ -205,34 +205,38 @@ bb.dj:                                            ; preds = %bb.dk
   call void @_ZN10ImDrawList9AddCircleERK6ImVec2fjif(ptr noundef nonnull align 8 dereferenceable(224) %i.ae, ptr noundef nonnull align 4 dereferenceable(8) %32, float noundef %i.tx, i32 noundef %i.rx, i32 noundef %i.tw, float noundef 1.000000e+00)
   call void @_ZN10ImDrawList9AddCircleERK6ImVec2fjif(ptr noundef nonnull align 8 dereferenceable(224) %i.ae, ptr noundef nonnull align 4 dereferenceable(8) %32, float noundef %i.tv, i32 noundef %i.rw, i32 noundef %i.tw, float noundef 1.000000e+00)
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #41
+  call void @llvm.lifetime.start.p0(ptr nonnull %34) #41
+  call void @llvm.lifetime.start.p0(ptr nonnull %35) #41
   %i.ty = insertelement <2 x i1> poison, i1 %i.cz, i64 0
   %i.tz = shufflevector <2 x i1> %i.ty, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.ua = select <2 x i1> %i.tz, <2 x float> %i.ts, <2 x float> <float 1.000000e+00, float 0.000000e+00> ; 5 uses
-  %i.ub = load <2 x float>, ptr %17, align 8, !tbaa !190 ; 2 uses
-  %i.uc = shufflevector <2 x float> %i.ub, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %41 = fneg <2 x float> %i.ua
-  %42 = shufflevector <2 x float> %41, <2 x float> %i.ua, <2 x i32> <i32 1, i32 2> ; 3 uses
-  %i.ud = fmul <2 x float> %i.uc, %42
-  %i.ue = shufflevector <2 x float> %i.ub, <2 x float> poison, <2 x i32> zeroinitializer
+  %41 = shufflevector <2 x float> %i.ua, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %42 = extractelement <2 x float> %i.ua, i64 1
+  %43 = load <2 x float>, ptr %17, align 8, !tbaa !190 ; 2 uses
+  %i.ub = load <2 x float>, ptr %16, align 8, !tbaa !190 ; 3 uses
+  %44 = fneg float %42                            ; 2 uses
+  %i.uc = shufflevector <2 x float> %43, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %45 = shufflevector <2 x float> %i.ua, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %46 = insertelement <2 x float> %45, float %44, i64 0
+  %i.ud = fmul <2 x float> %i.uc, %46
+  %i.ue = shufflevector <2 x float> %43, <2 x float> poison, <2 x i32> zeroinitializer
   %i.uf = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ue, <2 x float> %i.ua, <2 x float> %i.ud)
-  %43 = load <2 x float>, ptr %16, align 8, !tbaa !190 ; 3 uses
-  %i.ug = fadd <2 x float> %43, %i.uf             ; 2 uses
+  %i.ug = fadd <2 x float> %i.ub, %i.uf           ; 2 uses
   store <2 x float> %i.ug, ptr %33, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %34) #41
   %i.uh = load <2 x float>, ptr %18, align 8, !tbaa !190 ; 2 uses
-  %44 = shufflevector <2 x float> %i.uh, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %45 = fmul <2 x float> %44, %42
-  %46 = shufflevector <2 x float> %i.uh, <2 x float> poison, <2 x i32> zeroinitializer
-  %47 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %46, <2 x float> %i.ua, <2 x float> %45)
-  %48 = fadd <2 x float> %43, %47                 ; 2 uses
-  store <2 x float> %48, ptr %34, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %35) #41
-  %49 = load <2 x float>, ptr %19, align 8, !tbaa !190 ; 2 uses
-  %50 = shufflevector <2 x float> %49, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %51 = fmul <2 x float> %50, %42
-  %52 = shufflevector <2 x float> %49, <2 x float> poison, <2 x i32> zeroinitializer
-  %53 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %52, <2 x float> %i.ua, <2 x float> %51)
-  %i.ui = fadd <2 x float> %43, %53               ; 2 uses
+  %47 = load <2 x float>, ptr %19, align 8, !tbaa !190 ; 2 uses
+  %48 = shufflevector <2 x float> %47, <2 x float> %i.ua, <4 x i32> <i32 poison, i32 1, i32 2, i32 1>
+  %49 = insertelement <4 x float> %48, float %44, i64 0 ; 2 uses
+  %50 = shufflevector <2 x float> %i.uh, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
+  %51 = shufflevector <4 x float> %50, <4 x float> %49, <4 x i32> <i32 1, i32 4, i32 1, i32 6>
+  %52 = fmul <4 x float> %49, %51
+  %53 = shufflevector <2 x float> %i.uh, <2 x float> %47, <4 x i32> <i32 0, i32 2, i32 0, i32 2>
+  %54 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %53, <4 x float> %41, <4 x float> %52) ; 2 uses
+  %55 = shufflevector <4 x float> %54, <4 x float> poison, <2 x i32> <i32 0, i32 2>
+  %56 = fadd <2 x float> %i.ub, %55               ; 2 uses
+  store <2 x float> %56, ptr %34, align 8
+  %57 = shufflevector <4 x float> %54, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %i.ui = fadd <2 x float> %i.ub, %57             ; 2 uses
   store <2 x float> %i.ui, ptr %35, align 8
   %i.uj = call <2 x float> @_ZN5ImGui22GetFontTexUvWhitePixelEv() ; 3 uses
   call void @_ZN10ImDrawList11PrimReserveEii(ptr noundef nonnull align 8 dereferenceable(224) %i.ae, i32 noundef 3, i32 noundef 3)
@@ -251,7 +255,7 @@ bb.dj:                                            ; preds = %bb.dk
   %i.ut = getelementptr inbounds nuw i8, ptr %i.ur, i64 16
   store i32 %i.sm, ptr %i.ut, align 4, !tbaa !776
   %i.uu = getelementptr inbounds nuw i8, ptr %i.ur, i64 20
-  store <2 x float> %48, ptr %i.uu, align 4, !tbaa !190
+  store <2 x float> %56, ptr %i.uu, align 4, !tbaa !190
   %i.uv = getelementptr inbounds nuw i8, ptr %i.ur, i64 28
   store <2 x float> %i.uj, ptr %i.uv, align 4, !tbaa !190
   %i.uw = getelementptr inbounds nuw i8, ptr %i.ur, i64 36

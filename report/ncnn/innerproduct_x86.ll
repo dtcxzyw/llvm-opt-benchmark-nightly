@@ -205,35 +205,38 @@ middle.block:                                     ; preds = %vector.body
   %i.df = insertelement <2 x i32> poison, i32 %.lcssa240, i64 0
   %i.dg = insertelement <2 x i32> %i.df, i32 %.lcssa239, i64 1
   %i.dh = sitofp <2 x i32> %i.dg to <2 x float>
-  %7 = insertelement <2 x i32> poison, i32 %.lcssa, i64 0
-  %8 = insertelement <2 x i32> %7, i32 %.lcssa238, i64 1
-  %9 = sitofp <2 x i32> %8 to <2 x float>
+  %7 = sitofp fast i32 %.lcssa238 to float
+  %8 = sitofp fast i32 %.lcssa to float
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
-  %10 = phi <2 x float> [ zeroinitializer, %bb.c ], [ %i.dh, %._crit_edge.loopexit ]
-  %i.di = phi <2 x float> [ zeroinitializer, %bb.c ], [ %9, %._crit_edge.loopexit ]
+  %.068.lcssa = phi float [ 0.000000e+00, %bb.c ], [ %7, %._crit_edge.loopexit ]
+  %.067.lcssa = phi float [ 0.000000e+00, %bb.c ], [ %8, %._crit_edge.loopexit ]
+  %i.di = phi <2 x float> [ zeroinitializer, %bb.c ], [ %i.dh, %._crit_edge.loopexit ]
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %indvars.iv
-  %i.dk = load float, ptr %i.dj, align 4, !tbaa !52
+  %i.dk = load float, ptr %i.dj, align 4, !tbaa !52 ; 3 uses
   %i.dl = insertelement <2 x float> poison, float %i.dk, i64 0
-  %i.dm = shufflevector <2 x float> %i.dl, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.dn = fmul fast <2 x float> %i.dm, %10        ; 2 uses
-  %11 = fmul fast <2 x float> %i.dm, %i.di        ; 2 uses
+  %i.dm = shufflevector <2 x float> %i.dl, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dn = fmul fast <2 x float> %i.dm, %i.di      ; 2 uses
+  %9 = fmul fast float %i.dk, %.068.lcssa         ; 2 uses
+  %10 = fmul fast float %i.dk, %.067.lcssa        ; 2 uses
   br i1 %.not79, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge
   %i.do = load ptr, ptr %i.u, align 8, !tbaa !19
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %indvars.iv
-  %i.dq = load float, ptr %i.dp, align 4, !tbaa !52
+  %i.dq = load float, ptr %i.dp, align 4, !tbaa !52 ; 3 uses
   %i.dr = insertelement <2 x float> poison, float %i.dq, i64 0
-  %i.ds = shufflevector <2 x float> %i.dr, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.ds = shufflevector <2 x float> %i.dr, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dt = fadd fast <2 x float> %i.ds, %i.dn
-  %12 = fadd fast <2 x float> %i.ds, %11
+  %11 = fadd fast float %i.dq, %9
+  %12 = fadd fast float %i.dq, %10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge
-  %13 = phi <2 x float> [ %i.dt, %bb.d ], [ %i.dn, %._crit_edge ] ; 13 uses
-  %i.du = phi <2 x float> [ %12, %bb.d ], [ %11, %._crit_edge ] ; 12 uses
+  %.063 = phi nsz float [ %11, %bb.d ], [ %9, %._crit_edge ] ; 13 uses
+  %.0 = phi nsz float [ %12, %bb.d ], [ %10, %._crit_edge ] ; 13 uses
+  %i.du = phi <2 x float> [ %i.dt, %bb.d ], [ %i.dn, %._crit_edge ] ; 13 uses
   switch i32 %i.ar, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit82 [
     i32 1, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread157
     i32 2, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread159
@@ -244,42 +247,39 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge
   ]
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread157: ; preds = %bb.e
-  %i.dv = call fast <2 x float> @llvm.maxnum.v2f32(<2 x float> %13, <2 x float> zeroinitializer)
+  %i.dv = call fast <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.du, <2 x float> zeroinitializer)
   store <2 x float> %i.dv, ptr %.077204, align 4, !tbaa !52
+  %13 = call fast float @llvm.maxnum.f32(float nofpclass(nan inf) %.063, float 0.000000e+00)
   %14 = getelementptr inbounds nuw i8, ptr %.077204, i64 8
-  %15 = call fast <2 x float> @llvm.maxnum.v2f32(<2 x float> %i.du, <2 x float> zeroinitializer) ; 2 uses
-  %16 = extractelement <2 x float> %15, i64 1
-  store float %16, ptr %14, align 4, !tbaa !52
-  %17 = extractelement <2 x float> %15, i64 0
+  store float %13, ptr %14, align 4, !tbaa !52
+  %15 = call fast float @llvm.maxnum.f32(float nofpclass(nan inf) %.0, float 0.000000e+00)
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread159: ; preds = %bb.e
   %i.dw = load ptr, ptr %i.v, align 8, !tbaa !19  ; 4 uses
   %i.dx = load float, ptr %i.dw, align 4, !tbaa !52
-  %i.dy = extractelement <2 x float> %13, i64 0   ; 2 uses
+  %i.dy = extractelement <2 x float> %i.du, i64 0 ; 2 uses
   %i.dz = fcmp fast ogt float %i.dy, 0.000000e+00
   %i.ea = select fast i1 %i.dz, float 1.000000e+00, float %i.dx
   %i.eb = fmul fast float %i.ea, %i.dy
   store float %i.eb, ptr %.077204, align 4, !tbaa !52
   %i.ec = load float, ptr %i.dw, align 4, !tbaa !52
-  %i.ed = extractelement <2 x float> %13, i64 1   ; 2 uses
+  %i.ed = extractelement <2 x float> %i.du, i64 1 ; 2 uses
   %i.ee = fcmp fast ogt float %i.ed, 0.000000e+00
   %i.ef = select fast i1 %i.ee, float 1.000000e+00, float %i.ec
   %i.eg = fmul fast float %i.ef, %i.ed
   %i.eh = getelementptr inbounds nuw i8, ptr %.077204, i64 4
   store float %i.eg, ptr %i.eh, align 4, !tbaa !52
   %i.ei = load float, ptr %i.dw, align 4, !tbaa !52
-  %18 = extractelement <2 x float> %i.du, i64 1   ; 2 uses
-  %i.ej = fcmp fast ogt float %18, 0.000000e+00
+  %i.ej = fcmp fast ogt float %.063, 0.000000e+00
   %i.ek = select fast i1 %i.ej, float 1.000000e+00, float %i.ei
-  %i.el = fmul fast float %i.ek, %18
+  %i.el = fmul fast float %i.ek, %.063
   %i.em = getelementptr inbounds nuw i8, ptr %.077204, i64 8
   store float %i.el, ptr %i.em, align 4, !tbaa !52
   %i.en = load float, ptr %i.dw, align 4, !tbaa !52
-  %19 = extractelement <2 x float> %i.du, i64 0   ; 2 uses
-  %i.eo = fcmp fast ogt float %19, 0.000000e+00
+  %i.eo = fcmp fast ogt float %.0, 0.000000e+00
   %i.ep = select fast i1 %i.eo, float 1.000000e+00, float %i.en
-  %i.eq = fmul fast float %i.ep, %19
+  %i.eq = fmul fast float %i.ep, %.0
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread155: ; preds = %bb.e
@@ -287,14 +287,14 @@ _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread155: ; preds = %bb.e
   %i.es = load float, ptr %i.er, align 4, !tbaa !52
   %i.et = getelementptr inbounds nuw i8, ptr %i.er, i64 4 ; 4 uses
   %i.eu = load float, ptr %i.et, align 4, !tbaa !52 ; 2 uses
-  %i.ev = extractelement <2 x float> %13, i64 0
+  %i.ev = extractelement <2 x float> %i.du, i64 0
   %.0145 = call nnan ninf nsz float @llvm.maxnum.f32(float %i.ev, float %i.es) ; 2 uses
   %i.ew = fcmp fast ogt float %.0145, %i.eu
   %.1.ph154 = select i1 %i.ew, float %i.eu, float %.0145
   store float %.1.ph154, ptr %.077204, align 4, !tbaa !52
   %i.ex = load float, ptr %i.er, align 4, !tbaa !52
   %i.ey = load float, ptr %i.et, align 4, !tbaa !52 ; 2 uses
-  %i.ez = extractelement <2 x float> %13, i64 1
+  %i.ez = extractelement <2 x float> %i.du, i64 1
   %.0146 = call nnan ninf nsz float @llvm.maxnum.f32(float %i.ez, float %i.ex) ; 2 uses
   %i.fa = fcmp fast ogt float %.0146, %i.ey
   %.1147.ph167 = select i1 %i.fa, float %i.ey, float %.0146
@@ -302,42 +302,38 @@ _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread155: ; preds = %bb.e
   store float %.1147.ph167, ptr %i.fb, align 4, !tbaa !52
   %i.fc = load float, ptr %i.er, align 4, !tbaa !52
   %i.fd = load float, ptr %i.et, align 4, !tbaa !52 ; 2 uses
-  %20 = extractelement <2 x float> %i.du, i64 1
-  %.0150 = call nnan ninf nsz float @llvm.maxnum.f32(float %20, float %i.fc) ; 2 uses
+  %.0150 = call nnan ninf nsz float @llvm.maxnum.f32(float %.063, float %i.fc) ; 2 uses
   %i.fe = fcmp fast ogt float %.0150, %i.fd
   %.1151.ph180 = select i1 %i.fe, float %i.fd, float %.0150
   %i.ff = getelementptr inbounds nuw i8, ptr %.077204, i64 8
   store float %.1151.ph180, ptr %i.ff, align 4, !tbaa !52
   %i.fg = load float, ptr %i.er, align 4, !tbaa !52
   %i.fh = load float, ptr %i.et, align 4, !tbaa !52 ; 2 uses
-  %21 = extractelement <2 x float> %i.du, i64 0
-  %.0148 = call nnan ninf nsz float @llvm.maxnum.f32(float %21, float %i.fg) ; 2 uses
+  %.0148 = call nnan ninf nsz float @llvm.maxnum.f32(float %.0, float %i.fg) ; 2 uses
   %i.fi = fcmp fast ogt float %.0148, %i.fh
   br i1 %i.fi, label %bb.m, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread161: ; preds = %bb.e
-  %22 = call nnan ninf nsz <2 x float> @llvm.minnum.v2f32(<2 x float> %13, <2 x float> splat (float f0x42B0C0A5))
-  %23 = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %22, <2 x float> splat (float f0xC2B0C0A5))
-  %24 = fneg fast <2 x float> %23
-  %25 = call fast <2 x float> @llvm.exp.v2f32(<2 x float> %24)
-  %26 = fadd fast <2 x float> %25, splat (float 1.000000e+00)
-  %27 = fdiv fast <2 x float> splat (float 1.000000e+00), %26
-  store <2 x float> %27, ptr %.077204, align 4, !tbaa !52
-  %28 = call nnan ninf nsz <2 x float> @llvm.minnum.v2f32(<2 x float> %i.du, <2 x float> splat (float f0x42B0C0A5))
-  %29 = getelementptr inbounds nuw i8, ptr %.077204, i64 8
-  %30 = call nnan ninf nsz <2 x float> @llvm.maxnum.v2f32(<2 x float> %28, <2 x float> splat (float f0xC2B0C0A5))
-  %31 = fneg fast <2 x float> %30
-  %32 = call fast <2 x float> @llvm.exp.v2f32(<2 x float> %31)
-  %33 = fadd fast <2 x float> %32, splat (float 1.000000e+00)
-  %34 = fdiv fast <2 x float> splat (float 1.000000e+00), %33 ; 2 uses
-  %i.fj = extractelement <2 x float> %34, i64 1
-  store float %i.fj, ptr %29, align 4, !tbaa !52
-  %i.fk = extractelement <2 x float> %34, i64 0
+  %16 = getelementptr inbounds nuw i8, ptr %.077204, i64 8
+  %17 = shufflevector <2 x float> %i.du, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %18 = insertelement <4 x float> %17, float %.063, i64 2
+  %19 = insertelement <4 x float> %18, float %.0, i64 3
+  %20 = call nnan ninf nsz <4 x float> @llvm.minnum.v4f32(<4 x float> %19, <4 x float> splat (float f0x42B0C0A5))
+  %21 = call nnan ninf nsz <4 x float> @llvm.maxnum.v4f32(<4 x float> %20, <4 x float> splat (float f0xC2B0C0A5))
+  %22 = fneg fast <4 x float> %21
+  %23 = call fast <4 x float> @llvm.exp.v4f32(<4 x float> %22)
+  %24 = fadd fast <4 x float> %23, splat (float 1.000000e+00)
+  %25 = fdiv fast <4 x float> splat (float 1.000000e+00), %24 ; 3 uses
+  %26 = shufflevector <4 x float> %25, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  store <2 x float> %26, ptr %.077204, align 4, !tbaa !52
+  %i.fj = extractelement <4 x float> %25, i64 2
+  store float %i.fj, ptr %16, align 4, !tbaa !52
+  %i.fk = extractelement <4 x float> %25, i64 3
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread163: ; preds = %bb.e
-  %i.fl = extractelement <2 x float> %13, i64 0
-  %i.fm = extractelement <2 x float> %13, i64 1
+  %i.fl = extractelement <2 x float> %i.du, i64 0
+  %i.fm = extractelement <2 x float> %i.du, i64 1
   %i.fn = call fast float @llvm.exp.f32(float nofpclass(nan inf) %i.fl)
   %i.fo = fadd fast float %i.fn, 1.000000e+00
   %i.fp = call fast float @llvm.log.f32(float %i.fo)
@@ -348,22 +344,20 @@ _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread163: ; preds = %bb.e
   %i.fu = call fast float @llvm.tanh.f32(float %i.ft)
   %i.fv = insertelement <2 x float> poison, float %i.fq, i64 0
   %i.fw = insertelement <2 x float> %i.fv, float %i.fu, i64 1
-  %i.fx = fmul fast <2 x float> %i.fw, %13
+  %i.fx = fmul fast <2 x float> %i.fw, %i.du
   store <2 x float> %i.fx, ptr %.077204, align 4, !tbaa !52
-  %35 = extractelement <2 x float> %i.du, i64 1   ; 2 uses
-  %i.fy = call fast float @llvm.exp.f32(float nofpclass(nan inf) %35)
+  %i.fy = call fast float @llvm.exp.f32(float nofpclass(nan inf) %.063)
   %i.fz = fadd fast float %i.fy, 1.000000e+00
   %i.ga = call fast float @llvm.log.f32(float %i.fz)
   %i.gb = call fast float @llvm.tanh.f32(float %i.ga)
-  %i.gc = fmul fast float %i.gb, %35
+  %i.gc = fmul fast float %i.gb, %.063
   %i.gd = getelementptr inbounds nuw i8, ptr %.077204, i64 8
   store float %i.gc, ptr %i.gd, align 4, !tbaa !52
-  %36 = extractelement <2 x float> %i.du, i64 0   ; 2 uses
-  %i.ge = call fast float @llvm.exp.f32(float nofpclass(nan inf) %36)
+  %i.ge = call fast float @llvm.exp.f32(float nofpclass(nan inf) %.0)
   %i.gf = fadd fast float %i.ge, 1.000000e+00
   %i.gg = call fast float @llvm.log.f32(float %i.gf)
   %i.gh = call fast float @llvm.tanh.f32(float %i.gg)
-  %i.gi = fmul fast float %i.gh, %36
+  %i.gi = fmul fast float %i.gh, %.0
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 bb.f:                                             ; preds = %bb.e
@@ -373,7 +367,7 @@ bb.f:                                             ; preds = %bb.e
   %i.gm = load float, ptr %i.gl, align 4, !tbaa !52 ; 2 uses
   %i.gn = fneg fast float %i.gm
   %i.go = fdiv fast float %i.gn, %i.gk            ; 2 uses
-  %i.gp = extractelement <2 x float> %13, i64 0   ; 5 uses
+  %i.gp = extractelement <2 x float> %i.du, i64 0 ; 5 uses
   %i.gq = fcmp fast olt float %i.gp, %i.go
   br i1 %i.gq, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread, label %bb.g
 
@@ -396,20 +390,18 @@ _ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread:  ; preds = %bb.h, %bb.g, %bb.f
   %i.gy = load float, ptr %i.gl, align 4, !tbaa !52 ; 2 uses
   %i.gz = fneg fast float %i.gy
   %i.ha = fdiv fast float %i.gz, %i.gx            ; 2 uses
-  %i.hb = extractelement <2 x float> %13, i64 1   ; 5 uses
+  %i.hb = extractelement <2 x float> %i.du, i64 1 ; 5 uses
   %i.hc = fcmp fast olt float %i.hb, %i.ha
   br i1 %i.hc, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit81.thread, label %bb.i
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit82:         ; preds = %bb.e
-  %i.hd = extractelement <2 x float> %13, i64 0
+  %i.hd = extractelement <2 x float> %i.du, i64 0
   store float %i.hd, ptr %.077204, align 4, !tbaa !52
   %i.he = getelementptr inbounds nuw i8, ptr %.077204, i64 4
-  %i.hf = extractelement <2 x float> %13, i64 1
+  %i.hf = extractelement <2 x float> %i.du, i64 1
   store float %i.hf, ptr %i.he, align 4, !tbaa !52
   %i.hg = getelementptr inbounds nuw i8, ptr %.077204, i64 8
-  %37 = extractelement <2 x float> %i.du, i64 1
-  store float %37, ptr %i.hg, align 4, !tbaa !52
-  %38 = extractelement <2 x float> %i.du, i64 0
+  store float %.063, ptr %i.hg, align 4, !tbaa !52
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 bb.i:                                             ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread
@@ -432,32 +424,30 @@ _ZL13activation_ssfiRKN4ncnn3MatE.exit81.thread:  ; preds = %bb.j, %bb.i, %_ZL13
   %i.hp = load float, ptr %i.gl, align 4, !tbaa !52 ; 2 uses
   %i.hq = fneg fast float %i.hp
   %i.hr = fdiv fast float %i.hq, %i.ho            ; 2 uses
-  %39 = extractelement <2 x float> %i.du, i64 1   ; 5 uses
-  %i.hs = fcmp fast olt float %39, %i.hr
+  %i.hs = fcmp fast olt float %.063, %i.hr
   br i1 %i.hs, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit80.thread, label %bb.k
 
 bb.k:                                             ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit81.thread
   %i.ht = fdiv fast float 1.000000e+00, %i.ho
   %i.hu = fadd fast float %i.hr, %i.ht
-  %i.hv = fcmp fast ogt float %39, %i.hu
+  %i.hv = fcmp fast ogt float %.063, %i.hu
   br i1 %i.hv, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit80.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.hw = fmul fast float %i.ho, %39
+  %i.hw = fmul fast float %i.ho, %.063
   %i.hx = fadd fast float %i.hw, %i.hp
-  %i.hy = fmul fast float %i.hx, %39
+  %i.hy = fmul fast float %i.hx, %.063
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit80.thread
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit80.thread:  ; preds = %bb.l, %bb.k, %_ZL13activation_ssfiRKN4ncnn3MatE.exit81.thread
-  %.1151.ph = phi float [ 0.000000e+00, %_ZL13activation_ssfiRKN4ncnn3MatE.exit81.thread ], [ %39, %bb.k ], [ %i.hy, %bb.l ]
+  %.1151.ph = phi float [ 0.000000e+00, %_ZL13activation_ssfiRKN4ncnn3MatE.exit81.thread ], [ %.063, %bb.k ], [ %i.hy, %bb.l ]
   %i.hz = getelementptr inbounds nuw i8, ptr %.077204, i64 8
   store float %.1151.ph, ptr %i.hz, align 4, !tbaa !52
   %i.ia = load float, ptr %i.gj, align 4, !tbaa !52 ; 3 uses
   %i.ib = load float, ptr %i.gl, align 4, !tbaa !52 ; 2 uses
   %i.ic = fneg fast float %i.ib
   %i.id = fdiv fast float %i.ic, %i.ia            ; 2 uses
-  %40 = extractelement <2 x float> %i.du, i64 0   ; 5 uses
-  %i.ie = fcmp fast olt float %40, %i.id
+  %i.ie = fcmp fast olt float %.0, %i.id
   br i1 %i.ie, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit, label %bb.n
 
 bb.m:                                             ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread155
@@ -466,17 +456,17 @@ bb.m:                                             ; preds = %_ZL13activation_ssf
 bb.n:                                             ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit80.thread
   %i.if = fdiv fast float 1.000000e+00, %i.ia
   %i.ig = fadd fast float %i.id, %i.if
-  %i.ih = fcmp fast ogt float %40, %i.ig
+  %i.ih = fcmp fast ogt float %.0, %i.ig
   br i1 %i.ih, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ii = fmul fast float %i.ia, %40
+  %i.ii = fmul fast float %i.ia, %.0
   %i.ij = fadd fast float %i.ii, %i.ib
-  %i.ik = fmul fast float %i.ij, %40
+  %i.ik = fmul fast float %i.ij, %.0
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 _ZL13activation_ssfiRKN4ncnn3MatE.exit:           ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit82, %bb.o, %bb.n, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread163, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread161, %bb.m, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread155, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread159, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread157, %_ZL13activation_ssfiRKN4ncnn3MatE.exit80.thread
-  %.1149 = phi nsz float [ %38, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82 ], [ %17, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread157 ], [ %i.eq, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread159 ], [ %i.fh, %bb.m ], [ %.0148, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread155 ], [ %i.fk, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread161 ], [ %i.gi, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread163 ], [ %i.ik, %bb.o ], [ %40, %bb.n ], [ 0.000000e+00, %_ZL13activation_ssfiRKN4ncnn3MatE.exit80.thread ]
+  %.1149 = phi nsz float [ %.0, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82 ], [ %15, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread157 ], [ %i.eq, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread159 ], [ %i.fh, %bb.m ], [ %.0148, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread155 ], [ %i.fk, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread161 ], [ %i.gi, %_ZL13activation_ssfiRKN4ncnn3MatE.exit82.thread163 ], [ %i.ik, %bb.o ], [ %.0, %bb.n ], [ 0.000000e+00, %_ZL13activation_ssfiRKN4ncnn3MatE.exit80.thread ]
   %i.il = getelementptr inbounds nuw i8, ptr %.077204, i64 12
   store float %.1149, ptr %i.il, align 4, !tbaa !52
   %i.im = getelementptr inbounds nuw i8, ptr %.077204, i64 16
@@ -879,10 +869,13 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #12
 declare <2 x float> @llvm.maxnum.v2f32(<2 x float>, <2 x float>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.minnum.v2f32(<2 x float>, <2 x float>) #12
+declare <4 x float> @llvm.minnum.v4f32(<4 x float>, <4 x float>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.exp.v2f32(<2 x float>) #12
+declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x float> @llvm.exp.v4f32(<4 x float>) #12
 
 attributes #0 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "reciprocal-estimates"="none" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

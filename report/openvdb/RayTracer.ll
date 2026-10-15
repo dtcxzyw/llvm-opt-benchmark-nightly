@@ -205,14 +205,14 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.an, ptr noundef nonnull align 8 dereferenceable(24) %i.am, i64 24, i1 false)
   %i.ao = getelementptr inbounds nuw i8, ptr %12, i64 48
   tail call void @llvm.experimental.noalias.scope.decl(metadata !576)
-  %16 = getelementptr inbounds nuw i8, ptr %12, i64 40
-  %17 = load double, ptr %16, align 8, !tbaa !163, !noalias !576
-  %18 = fdiv double 1.000000e+00, %17
-  %i.ap = load <2 x double>, ptr %i.an, align 8, !tbaa !163, !noalias !576
+  %16 = load double, ptr %i.an, align 8, !tbaa !163, !noalias !576
+  %17 = fdiv double 1.000000e+00, %16
+  %18 = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %i.ap = load <2 x double>, ptr %18, align 8, !tbaa !163, !noalias !576
   %i.aq = fdiv <2 x double> splat (double 1.000000e+00), %i.ap
-  store <2 x double> %i.aq, ptr %i.ao, align 8, !tbaa !163, !alias.scope !576
-  %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 64
-  store double %18, ptr %i.ar, align 8, !tbaa !163, !alias.scope !576
+  store double %17, ptr %i.ao, align 8, !tbaa !163, !alias.scope !576
+  %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 56
+  store <2 x double> %i.aq, ptr %i.ar, align 8, !tbaa !163, !alias.scope !576
   %i.as = getelementptr inbounds nuw i8, ptr %12, i64 72 ; 2 uses
   store <2 x double> <double 1.000000e-09, double f0x7FEFFFFFFFFFFFFF>, ptr %i.as, align 8, !tbaa !163
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -615,14 +615,14 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.an, ptr noundef nonnull align 8 dereferenceable(24) %i.am, i64 24, i1 false)
   %i.ao = getelementptr inbounds nuw i8, ptr %12, i64 48
   tail call void @llvm.experimental.noalias.scope.decl(metadata !669)
-  %16 = getelementptr inbounds nuw i8, ptr %12, i64 40
-  %17 = load double, ptr %16, align 8, !tbaa !163, !noalias !669
-  %18 = fdiv double 1.000000e+00, %17
-  %i.ap = load <2 x double>, ptr %i.an, align 8, !tbaa !163, !noalias !669
+  %16 = load double, ptr %i.an, align 8, !tbaa !163, !noalias !669
+  %17 = fdiv double 1.000000e+00, %16
+  %18 = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %i.ap = load <2 x double>, ptr %18, align 8, !tbaa !163, !noalias !669
   %i.aq = fdiv <2 x double> splat (double 1.000000e+00), %i.ap
-  store <2 x double> %i.aq, ptr %i.ao, align 8, !tbaa !163, !alias.scope !669
-  %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 64
-  store double %18, ptr %i.ar, align 8, !tbaa !163, !alias.scope !669
+  store double %17, ptr %i.ao, align 8, !tbaa !163, !alias.scope !669
+  %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 56
+  store <2 x double> %i.aq, ptr %i.ar, align 8, !tbaa !163, !alias.scope !669
   %i.as = getelementptr inbounds nuw i8, ptr %12, i64 72 ; 2 uses
   store <2 x double> <double 1.000000e-09, double f0x7FEFFFFFFFFFFFFF>, ptr %i.as, align 8, !tbaa !163
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 8

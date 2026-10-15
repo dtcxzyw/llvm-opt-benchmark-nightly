@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %bb.ab, %_ZL9set_ee_
 ._crit_edge241.loopexit:                          ; preds = %._crit_edge231
   %i.ku = sitofp i64 %i.ft to double
   %i.kv = icmp sgt i32 %i.kr, 1
-  %i.kw = insertelement <2 x double> poison, double %.1183, i64 0
-  %i.kx = insertelement <2 x double> %i.kw, double %i.fu, i64 1
+  %i.kw = insertelement <2 x double> poison, double %i.fu, i64 0
+  %i.kx = insertelement <2 x double> %i.kw, double %.1183, i64 1
   br label %._crit_edge241
 
 ._crit_edge241:                                   ; preds = %._crit_edge241.loopexit, %.preheader
@@ -219,17 +219,18 @@ bb.ag:                                            ; preds = %bb.ab, %_ZL9set_ee_
   %i.ky = phi <2 x double> [ zeroinitializer, %.preheader ], [ %i.kx, %._crit_edge241.loopexit ]
   %i.kz = insertelement <2 x double> poison, double %.0178.lcssa, i64 0
   %i.la = shufflevector <2 x double> %i.kz, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.lb = fdiv <2 x double> %i.ky, %i.la          ; 2 uses
+  %i.lb = fdiv <2 x double> %i.ky, %i.la          ; 4 uses
   %i.lc = load ptr, ptr %i.ct, align 8, !tbaa !64
   %i.ld = getelementptr inbounds nuw [56 x i8], ptr %i.lc, i64 %indvars.iv303 ; 3 uses
   %i.le = getelementptr inbounds nuw i8, ptr %i.ld, i64 24
-  %i.lf = extractelement <2 x double> %i.lb, i64 1 ; 3 uses
+  %i.lf = extractelement <2 x double> %i.lb, i64 0
   store double %i.lf, ptr %i.le, align 8, !tbaa !66
   %i.lg = getelementptr inbounds nuw i8, ptr %i.de, i64 16
   %i.lh = load i8, ptr %i.lg, align 8, !tbaa !62, !range !37, !noundef !38
   %i.li = trunc nuw i8 %i.lh to i1
-  %4 = fmul double %i.lf, %i.lf
-  %i.lj = extractelement <2 x double> %i.lb, i64 0 ; 2 uses
+  %foldExtExtBinop364 = fmul <2 x double> %i.lb, %i.lb
+  %4 = extractelement <2 x double> %foldExtExtBinop364, i64 0
+  %i.lj = extractelement <2 x double> %i.lb, i64 1 ; 2 uses
   %i.lk = fsub double %i.lj, %4                   ; 2 uses
   %i.ll = fcmp olt double %i.lk, 0.000000e+00
   %.sroa.speculated = select i1 %i.ll, double 0.000000e+00, double %i.lk

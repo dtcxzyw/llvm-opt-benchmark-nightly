@@ -205,20 +205,20 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 2272
   %i.n = load i64, ptr %i.m, align 8
   %i.o = sub i64 %i.l, %i.n
-  %7 = uitofp i64 %i.o to double
-  %8 = fdiv double %7, 1.000000e+06
-  store double %8, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.p = tail call i64 @uv_hrtime() #25
-  %9 = load i64, ptr %i.k, align 8
-  %i.q = insertelement <2 x i64> poison, i64 %i.p, i64 0
-  %i.r = insertelement <2 x i64> %i.q, i64 %9, i64 1
+  %i.q = insertelement <2 x i64> poison, i64 %i.o, i64 0
+  %i.r = insertelement <2 x i64> %i.q, i64 %i.p, i64 1
   %i.s = uitofp <2 x i64> %i.r to <2 x double>
   %i.t = fdiv <2 x double> %i.s, splat (double 1.000000e+06) ; 2 uses
-  %shift = shufflevector <2 x double> %i.t, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fsub <2 x double> %i.t, %shift
-  %i.u = extractelement <2 x double> %foldExtExtBinop, i64 0
-  store double %i.u, ptr %i.b, align 8
+  %7 = extractelement <2 x double> %i.t, i64 0
+  store double %7, ptr %i.a, align 8
+  %8 = load i64, ptr %i.k, align 8
+  %9 = uitofp i64 %8 to double
+  %10 = fdiv double %9, 1.000000e+06
+  %i.u = extractelement <2 x double> %i.t, i64 1
+  %11 = fsub double %i.u, %10
+  store double %11, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
   store i32 %1, ptr %5, align 4

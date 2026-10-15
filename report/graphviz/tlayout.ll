@@ -202,10 +202,10 @@ bb.al:                                            ; preds = %._crit_edge211.i
 
 .thread68:                                        ; preds = %.thread, %bb.al
   %i.gt = phi <2 x double> [ %i.gg, %bb.al ], [ %i.gk, %.thread ]
+  %2 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gt, <2 x double> <double f0x3FEF5C28F5C28F5C, double 9.000000e-01>, <2 x double> %i.en) ; 2 uses
   %i.gu = load ptr, ptr %i.eo, align 8, !tbaa !29 ; 2 uses
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gu, i64 176
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !46 ; 2 uses
-  %2 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gt, <2 x double> <double f0x3FEF5C28F5C28F5C, double 9.000000e-01>, <2 x double> %i.en) ; 2 uses
   %i.gx = extractelement <2 x double> %2, i64 0
   store double %i.gx, ptr %i.gw, align 8, !tbaa !18
   %i.gy = extractelement <2 x double> %2, i64 1
