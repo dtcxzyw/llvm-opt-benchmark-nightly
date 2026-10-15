@@ -204,7 +204,7 @@ bb.a:
   %1 = alloca %"class.double_conversion::StringToDoubleConverter", align 8 ; 7 uses
   %i.c = alloca [256 x i16], align 16             ; 6 uses
   %2 = alloca %"class.double_conversion::StringToDoubleConverter", align 8 ; 7 uses
-  %i.d = alloca [256 x i16], align 16             ; 5 uses
+  %i.d = alloca [256 x i16], align 16             ; 4 uses
   %3 = alloca %"class.double_conversion::StringToDoubleConverter", align 8 ; 7 uses
   %i.e = alloca [256 x i16], align 16             ; 5 uses
   %4 = alloca %"class.double_conversion::StringToDoubleConverter", align 8 ; 7 uses
@@ -607,9 +607,7 @@ bb.fp:                                            ; preds = %_Z17CheckEqualsHelp
 
 .peel.next812:                                    ; preds = %_Z17CheckEqualsHelperIddEvPKciS1_T_S1_T0_.exit680
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
-  store <4 x i16> <i16 48, i16 120, i16 48, i16 8239>, ptr %i.d, align 16, !tbaa !29
-  %12 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store <4 x i16> <i16 51, i16 112, i16 48, i16 0>, ptr %12, align 8, !tbaa !29
+  store <8 x i16> <i16 48, i16 120, i16 48, i16 8239, i16 51, i16 112, i16 48, i16 0>, ptr %i.d, align 16, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   store i32 153, ptr %3, align 8, !tbaa !32
   %i.adc = getelementptr inbounds nuw i8, ptr %3, i64 8

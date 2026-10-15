@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 176 ; 3 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !245  ; 8 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !245  ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !36
   %.not.i.i.i = icmp eq ptr %i.c, %i.e
@@ -214,9 +214,8 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   store float %2, ptr %i.c, align 4, !tbaa !113
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  store <2 x float> %3, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !113
-  %.sroa.5.i.sroa.5.0..sroa.5.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 12
-  store <2 x float> %4, ptr %.sroa.5.i.sroa.5.0..sroa.5.0..sroa_idx.i.sroa_idx, align 4, !tbaa !113
+  %5 = shufflevector <2 x float> %3, <2 x float> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %.sroa.5.0..sroa_idx.i, align 4, !tbaa !113
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 20
   store ptr %i.f, ptr %i.b, align 8, !tbaa !245
   br label %_ZN5scene11SkinnedMesh7ChannelIN4core10quaternionEE8pushBackEfRKS3_.exit
@@ -244,12 +243,11 @@ _ZNKSt6vectorIN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESaIS6_EE12
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i)
   %i.q = mul nuw nsw i64 %i.p, 20
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #33 ; 5 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.j ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.j ; 2 uses
   store float %2, ptr %i.s, align 4, !tbaa !113
   %.sroa.5.0..sroa_idx4.i = getelementptr inbounds nuw i8, ptr %i.s, i64 4
-  store <2 x float> %3, ptr %.sroa.5.0..sroa_idx4.i, align 4, !tbaa !113
-  %.sroa.5.i.sroa.5.0..sroa.5.0..sroa_idx4.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 12
-  store <2 x float> %4, ptr %.sroa.5.i.sroa.5.0..sroa.5.0..sroa_idx4.i.sroa_idx, align 4, !tbaa !113
+  %6 = shufflevector <2 x float> %3, <2 x float> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %.sroa.5.0..sroa_idx4.i, align 4, !tbaa !113
   %.not10.i.i.i.i.i.i.i = icmp eq ptr %i.g, %i.c
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorIN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
@@ -652,9 +650,8 @@ bb.i:                                             ; preds = %bb.g
 _ZN5scene11SkinnedMesh7ChannelIN4core10quaternionEE16interpolateValueES3_S3_f.exit: ; preds = %bb.h, %bb.i
   %.sroa.0.4.vec.insert.i29.sink.i.i = phi <2 x float> [ %i.ci, %bb.i ], [ %i.bi, %bb.h ]
   %.sroa.3.12.vec.insert.i31.sink.i.i = phi <2 x float> [ %i.cj, %bb.i ], [ %i.bj, %bb.h ]
-  store <2 x float> %.sroa.0.4.vec.insert.i29.sink.i.i, ptr %0, align 4, !tbaa !113
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i31.sink.i.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !113
+  %3 = shufflevector <2 x float> %.sroa.0.4.vec.insert.i29.sink.i.i, <2 x float> %.sroa.3.12.vec.insert.i31.sink.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %0, align 4, !tbaa !113
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %_ZSt11lower_boundIN9__gnu_cxx17__normal_iteratorIPKN5scene11SkinnedMesh7ChannelIN4core10quaternionEE5FrameESt6vectorIS8_SaIS8_EEEEfZNKS7_3getEfEUlRKT_fE_ESF_SF_SF_RKT0_T1_.exit.thread, %bb.d, %_ZN5scene11SkinnedMesh7ChannelIN4core10quaternionEE16interpolateValueES3_S3_f.exit, %bb.f

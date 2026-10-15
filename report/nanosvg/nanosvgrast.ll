@@ -205,19 +205,18 @@ bb.ay:                                            ; preds = %bb.ax
   %i.wp = phi i32 [ %i.we, %._crit_edge.i ], [ %.pre37.i, %._crit_edge36.i ] ; 2 uses
   %i.wq = phi ptr [ %.pre.i, %._crit_edge.i ], [ %i.wn, %._crit_edge36.i ]
   %i.wr = sext i32 %i.wp to i64
-  %i.ws = getelementptr inbounds [32 x i8], ptr %i.wq, i64 %i.wr ; 3 uses
+  %i.ws = getelementptr inbounds [32 x i8], ptr %i.wq, i64 %i.wr ; 2 uses
   %i.wt = add nsw i32 %i.wp, 1
   store i32 %i.wt, ptr %i.wd, align 8, !tbaa !112
   %i.wu = fcmp olt float %.sroa.530.0, %i.wb      ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.ws, i64 8
   %i.wv = getelementptr inbounds nuw i8, ptr %i.ws, i64 16
   %.49.i = select i1 %i.wu, i32 1, i32 -1
   %i.ww = insertelement <2 x i1> poison, i1 %i.wu, i64 0
-  %10 = shufflevector <2 x i1> %i.ww, <2 x i1> poison, <2 x i32> zeroinitializer ; 2 uses
-  %11 = select <2 x i1> %10, <2 x float> %i.eg, <2 x float> %i.wa
-  store <2 x float> %11, ptr %i.ws, align 8, !tbaa !31
-  %12 = select <2 x i1> %10, <2 x float> %i.wa, <2 x float> %i.eg
-  store <2 x float> %12, ptr %9, align 8, !tbaa !31
+  %9 = shufflevector <2 x i1> %i.ww, <2 x i1> poison, <4 x i32> zeroinitializer
+  %10 = shufflevector <2 x float> %i.eg, <2 x float> %i.wa, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = shufflevector <2 x float> %i.wa, <2 x float> %i.eg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = select <4 x i1> %9, <4 x float> %10, <4 x float> %11
+  store <4 x float> %12, ptr %i.ws, align 8, !tbaa !31
   store i32 %.49.i, ptr %i.wv, align 8, !tbaa !122
   br label %nsvg__addEdge.exit
 

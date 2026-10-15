@@ -205,7 +205,7 @@ declare noundef i32 @_ZN11ImGuiWindow5GetIDEPKcS1_(ptr noundef nonnull align 8 d
 define dso_local noundef zeroext i1 @_ZN6ImPlot9BeginItemEPKcii(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
-  %3 = alloca %struct.ImVec4, align 8             ; 6 uses
+  %3 = alloca %struct.ImVec4, align 16            ; 5 uses
   %i.b = load ptr, ptr @GImPlot, align 8, !tbaa !97 ; 54 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 80 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !151  ; 2 uses
@@ -358,10 +358,9 @@ bb.s:                                             ; preds = %bb.q
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !1250
   %i.bj = call { <2 x float>, <2 x float> } @_ZN5ImGui23ColorConvertU32ToFloat4Ej(i32 noundef %i.bi) #16 ; 2 uses
   %i.bk = extractvalue { <2 x float>, <2 x float> } %i.bj, 0
-  store <2 x float> %i.bk, ptr %3, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %5 = extractvalue { <2 x float>, <2 x float> } %i.bj, 1
-  store <2 x float> %5, ptr %4, align 8
+  %4 = extractvalue { <2 x float>, <2 x float> } %i.bj, 1
+  %5 = shufflevector <2 x float> %i.bk, <2 x float> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %3, align 16
   %i.bl = getelementptr i8, ptr %i.b, i64 1348    ; 2 uses
   %.val131 = load float, ptr %i.bl, align 4, !tbaa !1499
   %i.bm = fcmp oeq float %.val131, -1.000000e+00
@@ -764,7 +763,7 @@ declare void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr nou
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN6ImPlot8PlotTextEPKcddRK6ImVec2i(ptr noundef %0, double noundef %1, double noundef %2, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %3, i32 noundef %4) local_unnamed_addr #4 {
 bb.a:
-  %5 = alloca %struct.ImVec4, align 8             ; 5 uses
+  %5 = alloca %struct.ImVec4, align 16            ; 4 uses
   %6 = alloca %struct.ImVec2, align 8             ; 7 uses
   %7 = alloca %struct.ImPlotPoint, align 8        ; 5 uses
   %8 = alloca %struct.ImVec2, align 8             ; 6 uses
@@ -826,10 +825,9 @@ bb.f:                                             ; preds = %_ZN6ImPlotL9SetupLo
 _ZN6ImPlotL16GetStyleColorU32Ei.exit:             ; preds = %bb.e, %bb.f
   %.fca.1.insert.merged.i.i = phi { <2 x float>, <2 x float> } [ %i.q, %bb.e ], [ %i.t, %bb.f ] ; 2 uses
   %i.u = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i.i, 0
-  store <2 x float> %i.u, ptr %5, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %12 = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i.i, 1
-  store <2 x float> %12, ptr %11, align 8
+  %11 = extractvalue { <2 x float>, <2 x float> } %.fca.1.insert.merged.i.i, 1
+  %12 = shufflevector <2 x float> %i.u, <2 x float> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %5, align 16
   %i.v = call noundef i32 @_ZN5ImGui23ColorConvertFloat4ToU32ERK6ImVec4(ptr noundef nonnull align 4 dereferenceable(16) %5) #16 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   %i.w = and i32 %4, 1024

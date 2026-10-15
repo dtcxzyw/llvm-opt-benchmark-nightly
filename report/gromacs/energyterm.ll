@@ -202,22 +202,18 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %step.add52 = getelementptr i8, <4 x ptr> %vector.gep, i64 192
   %wide.masked.gather = call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %vector.gep, <4 x i1> splat (i1 true), <4 x double> poison), !tbaa !30
   %wide.masked.gather47 = call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %step.add52, <4 x i1> splat (i1 true), <4 x double> poison), !tbaa !30
-  %3 = fptrunc <4 x double> %wide.masked.gather to <4 x float>
-  %4 = fptrunc <4 x double> %wide.masked.gather47 to <4 x float>
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %index ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.an, i64 16
-  store <4 x float> %3, ptr %i.an, align 4, !tbaa !36
-  store <4 x float> %4, ptr %5, align 4, !tbaa !36
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %index
+  %3 = shufflevector <4 x double> %wide.masked.gather, <4 x double> %wide.masked.gather47, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %4 = fptrunc <8 x double> %3 to <8 x float>
+  store <8 x float> %4, ptr %i.an, align 4, !tbaa !36
   %wide.gep = getelementptr inbounds nuw i8, <4 x ptr> %vector.gep, i64 16
   %wide.gep48 = getelementptr i8, <4 x ptr> %vector.gep, i64 208
   %wide.masked.gather49 = call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep, <4 x i1> splat (i1 true), <4 x double> poison), !tbaa !31
   %wide.masked.gather50 = call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep48, <4 x i1> splat (i1 true), <4 x double> poison), !tbaa !31
-  %6 = fptrunc <4 x double> %wide.masked.gather49 to <4 x float>
-  %7 = fptrunc <4 x double> %wide.masked.gather50 to <4 x float>
-  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %index ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.ao, i64 16
-  store <4 x float> %6, ptr %i.ao, align 4, !tbaa !36
-  store <4 x float> %7, ptr %8, align 4, !tbaa !36
+  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %index
+  %5 = shufflevector <4 x double> %wide.masked.gather49, <4 x double> %wide.masked.gather50, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %6 = fptrunc <8 x double> %5 to <8 x float>
+  store <8 x float> %6, ptr %i.ao, align 4, !tbaa !36
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %ptr.ind = getelementptr i8, ptr %pointer.phi, i64 384
   %i.ap = icmp eq i64 %index.next, %n.vec

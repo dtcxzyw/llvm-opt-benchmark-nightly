@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds =
 _ZNSt6vectorI9aiColor4tIfESaIS1_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i, %.loopexit626
   %.sroa.47.16590 = phi ptr [ %i.du, %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ null, %.loopexit626 ] ; 5 uses
   %.sroa.23.8588 = phi ptr [ %i.dt, %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ null, %.loopexit626 ] ; 6 uses
-  %.sroa.0442.15 = phi ptr [ %i.dw, %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ null, %.loopexit626 ] ; 10 uses
+  %.sroa.0442.15 = phi ptr [ %i.dw, %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ null, %.loopexit626 ] ; 9 uses
   %.sroa.39.15 = phi ptr [ %i.dx, %_ZNSt12_Vector_baseI9aiColor4tIfESaIS1_EE13_M_deallocateEPS1_m.exit.i ], [ null, %.loopexit626 ] ; 5 uses
   %i.dy = load ptr, ptr %i.bx, align 8            ; 3 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 24
@@ -349,19 +349,17 @@ bb.ac:                                            ; preds = %_ZNSt6vectorI10aiVe
   br i1 %.not.i.i186, label %_ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  store <2 x float> %i.fn, ptr %.sroa.0442.15, align 4
-  %.sroa.6434.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0442.15, i64 8
-  store <2 x float> %i.fo, ptr %.sroa.6434.0..sroa_idx, align 4
+  %11 = shufflevector <2 x float> %i.fn, <2 x float> %i.fo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %.sroa.0442.15, align 4
   br label %_ZNSt6vectorI9aiColor4tIfESaIS1_EE9push_backEOS1_.exit
 
 _ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.ac
   %i.fp = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #24
-          to label %.noexc190 unwind label %bb.ak ; 4 uses
+          to label %.noexc190 unwind label %bb.ak ; 3 uses
 
 .noexc190:                                        ; preds = %_ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
-  store <2 x float> %i.fn, ptr %i.fp, align 4
-  %.sroa.6434.0..sroa_idx435 = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
-  store <2 x float> %i.fo, ptr %.sroa.6434.0..sroa_idx435, align 4
+  %12 = shufflevector <2 x float> %i.fn, <2 x float> %i.fo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %i.fp, align 4
   %.not.i23.i.i.i = icmp eq ptr %.sroa.0442.15, null
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorI9aiColor4tIfESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.ae
 
@@ -723,10 +721,9 @@ _ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i233: ; preds = 
           to label %.noexc246 unwind label %.loopexit621 ; 6 uses
 
 .noexc246:                                        ; preds = %_ZNKSt6vectorI9aiColor4tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i233
-  %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 %i.io ; 2 uses
-  store <2 x float> %i.ik, ptr %i.ix, align 4
-  %.sroa.6.0..sroa_idx430 = getelementptr inbounds nuw i8, ptr %i.ix, i64 8
-  store <2 x float> %i.il, ptr %.sroa.6.0..sroa_idx430, align 4
+  %i.ix = getelementptr inbounds nuw i8, ptr %i.iw, i64 %i.io
+  %13 = shufflevector <2 x float> %i.ik, <2 x float> %i.il, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %i.ix, align 4
   %.not10.i.i.i.i.i.i236 = icmp eq ptr %.sroa.0442.21221, %.sroa.19.01225
   br i1 %.not10.i.i.i.i.i.i236, label %_ZNSt6vectorI9aiColor4tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i241, label %.lr.ph.i.i.i.i.i.i237.preheader
 

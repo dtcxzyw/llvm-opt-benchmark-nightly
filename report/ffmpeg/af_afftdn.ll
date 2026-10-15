@@ -205,16 +205,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load93 = load <2 x float>, ptr %i.gf, align 4, !tbaa !71
   %i.gg = fpext nsz <2 x float> %wide.load92 to <2 x double>
   %i.gh = fpext nsz <2 x float> %wide.load93 to <2 x double>
-  %1 = fmul nsz <2 x double> %wide.load, %i.gg
-  %2 = fmul nsz <2 x double> %wide.load91, %i.gh
-  %3 = fmul nsz <2 x double> %1, splat (double f0x4160000000000000)
-  %4 = fmul nsz <2 x double> %2, splat (double f0x4160000000000000)
-  %5 = fptrunc nsz <2 x double> %3 to <2 x float>
-  %6 = fptrunc nsz <2 x double> %4 to <2 x float>
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %index ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store <2 x float> %5, ptr %7, align 4, !tbaa !71
-  store <2 x float> %6, ptr %8, align 4, !tbaa !71
+  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %index
+  %2 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load91, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %3 = shufflevector <2 x double> %i.gg, <2 x double> %i.gh, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %4 = fmul nsz <4 x double> %2, %3
+  %5 = fmul nsz <4 x double> %4, splat (double f0x4160000000000000)
+  %6 = fptrunc nsz <4 x double> %5 to <4 x float>
+  store <4 x float> %6, ptr %1, align 4, !tbaa !71
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.gi = icmp eq i64 %index.next, %n.vec
   br i1 %i.gi, label %middle.block, label %vector.body, !llvm.loop !113
@@ -617,12 +614,10 @@ vector.body177:                                   ; preds = %vector.body177, %ve
   %i.aij = getelementptr inbounds nuw i8, ptr %i.aii, i64 16
   %wide.load179 = load <2 x double>, ptr %i.aii, align 8, !tbaa !68
   %wide.load180 = load <2 x double>, ptr %i.aij, align 8, !tbaa !68
-  %9 = fptrunc nsz <2 x double> %wide.load179 to <2 x float>
-  %10 = fptrunc nsz <2 x double> %wide.load180 to <2 x float>
-  %i.aik = getelementptr inbounds nuw [4 x i8], ptr %i.afs, i64 %index178 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.aik, i64 8
-  store <2 x float> %9, ptr %i.aik, align 4, !tbaa !71
-  store <2 x float> %10, ptr %11, align 4, !tbaa !71
+  %i.aik = getelementptr inbounds nuw [4 x i8], ptr %i.afs, i64 %index178
+  %7 = shufflevector <2 x double> %wide.load179, <2 x double> %wide.load180, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %8 = fptrunc nsz <4 x double> %7 to <4 x float>
+  store <4 x float> %8, ptr %i.aik, align 4, !tbaa !71
   %index.next181 = add nuw i64 %index178, 4       ; 2 uses
   %i.ail = icmp eq i64 %index.next181, %n.vec176
   br i1 %i.ail, label %middle.block182, label %vector.body177, !llvm.loop !130
@@ -779,14 +774,12 @@ vector.body117:                                   ; preds = %vector.body117, %ve
   %i.akf = getelementptr inbounds nuw i8, ptr %i.ake, i64 16
   %wide.load121 = load <2 x double>, ptr %i.ake, align 8, !tbaa !68
   %wide.load122 = load <2 x double>, ptr %i.akf, align 8, !tbaa !68
-  %12 = fsub nsz <2 x double> %i.akc, %wide.load121
-  %13 = fsub nsz <2 x double> %i.akd, %wide.load122
-  %14 = fptrunc nsz <2 x double> %12 to <2 x float>
-  %15 = fptrunc nsz <2 x double> %13 to <2 x float>
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.afs, i64 %index118 ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 8
-  store <2 x float> %14, ptr %16, align 4, !tbaa !71
-  store <2 x float> %15, ptr %17, align 4, !tbaa !71
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.afs, i64 %index118
+  %10 = shufflevector <2 x double> %i.akc, <2 x double> %i.akd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %11 = shufflevector <2 x double> %wide.load121, <2 x double> %wide.load122, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %12 = fsub nsz <4 x double> %10, %11
+  %13 = fptrunc nsz <4 x double> %12 to <4 x float>
+  store <4 x float> %13, ptr %9, align 4, !tbaa !71
   %index.next123 = add nuw i64 %index118, 4       ; 2 uses
   %i.akg = icmp eq i64 %index.next123, %n.vec116
   br i1 %i.akg, label %middle.block124, label %vector.body117, !llvm.loop !135
@@ -1189,16 +1182,13 @@ vector.body308:                                   ; preds = %.lr.ph110.preheader
   %wide.load313 = load <2 x float>, ptr %i.ci, align 4, !tbaa !71
   %i.cj = fpext nsz <2 x float> %wide.load312 to <2 x double>
   %i.ck = fpext nsz <2 x float> %wide.load313 to <2 x double>
-  %4 = fmul nsz <2 x double> %wide.load310, %i.cj
-  %5 = fmul nsz <2 x double> %wide.load311, %i.ck
-  %6 = fmul nsz <2 x double> %4, splat (double f0x4160000000000000)
-  %7 = fmul nsz <2 x double> %5, splat (double f0x4160000000000000)
-  %8 = fptrunc nsz <2 x double> %6 to <2 x float>
-  %9 = fptrunc nsz <2 x double> %7 to <2 x float>
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %index309 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store <2 x float> %8, ptr %10, align 4, !tbaa !71
-  store <2 x float> %9, ptr %11, align 4, !tbaa !71
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %index309
+  %5 = shufflevector <2 x double> %wide.load310, <2 x double> %wide.load311, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = shufflevector <2 x double> %i.cj, <2 x double> %i.ck, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %7 = fmul nsz <4 x double> %5, %6
+  %8 = fmul nsz <4 x double> %7, splat (double f0x4160000000000000)
+  %9 = fptrunc nsz <4 x double> %8 to <4 x float>
+  store <4 x float> %9, ptr %4, align 4, !tbaa !71
   %index.next314 = add nuw i64 %index309, 4       ; 2 uses
   %i.cl = icmp eq i64 %index.next314, %n.vec307
   br i1 %i.cl, label %middle.block315, label %vector.body308, !llvm.loop !207

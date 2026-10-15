@@ -205,14 +205,12 @@ _ZNSt12_Vector_baseIN3ozz4math9TransformENS0_12StdAllocatorIS2_EEEC2EmRKS4_.exit
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.prol:                            ; preds = %_ZNSt12_Vector_baseIN3ozz4math9TransformENS0_12StdAllocatorIS2_EEEC2EmRKS4_.exit.i.i.i, %.lr.ph.i.i.i.i.i.prol
-  %.015.i.i.i.i.i.prol = phi ptr [ %i.alv, %.lr.ph.i.i.i.i.i.prol ], [ %i.alp, %_ZNSt12_Vector_baseIN3ozz4math9TransformENS0_12StdAllocatorIS2_EEEC2EmRKS4_.exit.i.i.i ] ; 5 uses
+  %.015.i.i.i.i.i.prol = phi ptr [ %i.alv, %.lr.ph.i.i.i.i.i.prol ], [ %i.alp, %_ZNSt12_Vector_baseIN3ozz4math9TransformENS0_12StdAllocatorIS2_EEEC2EmRKS4_.exit.i.i.i ] ; 4 uses
   %.01214.i.i.i.i.i.prol = phi i64 [ %i.alu, %.lr.ph.i.i.i.i.i.prol ], [ %i.ali, %_ZNSt12_Vector_baseIN3ozz4math9TransformENS0_12StdAllocatorIS2_EEEC2EmRKS4_.exit.i.i.i ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.prol ], [ 0, %_ZNSt12_Vector_baseIN3ozz4math9TransformENS0_12StdAllocatorIS2_EEEC2EmRKS4_.exit.i.i.i ]
   %i.alt = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i.prol, i64 20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.015.i.i.i.i.i.prol, i8 0, i64 20, i1 false), !noalias !145
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %i.alt, align 4, !noalias !145
-  %63 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i.prol, i64 28
-  store <2 x float> splat (float 1.000000e+00), ptr %63, align 4, !noalias !145
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %i.alt, align 4, !noalias !145
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.prol = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i.prol, i64 36
   store float 1.000000e+00, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.prol, align 4, !noalias !145
   %i.alu = add nsw i64 %.01214.i.i.i.i.i.prol, -1 ; 2 uses
@@ -229,37 +227,29 @@ _ZNSt12_Vector_baseIN3ozz4math9TransformENS0_12StdAllocatorIS2_EEEC2EmRKS4_.exit
   br i1 %i.alw, label %_ZNSt6vectorIN3ozz4math9TransformENS0_12StdAllocatorIS2_EEEC2EmRKS4_.exit.loopexit.i.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
-  %.015.i.i.i.i.i = phi ptr [ %i.amf, %.lr.ph.i.i.i.i.i ], [ %.015.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 17 uses
+  %.015.i.i.i.i.i = phi ptr [ %i.amf, %.lr.ph.i.i.i.i.i ], [ %.015.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 13 uses
   %.01214.i.i.i.i.i = phi i64 [ %i.ame, %.lr.ph.i.i.i.i.i ], [ %.01214.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ]
   %i.alx = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.015.i.i.i.i.i, i8 0, i64 20, i1 false), !noalias !145
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %i.alx, align 4, !noalias !145
-  %64 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 28
-  store <2 x float> splat (float 1.000000e+00), ptr %64, align 4, !noalias !145
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %i.alx, align 4, !noalias !145
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 36
   store float 1.000000e+00, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 4, !noalias !145
   %i.aly = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 40
   %i.alz = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 60
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.aly, i8 0, i64 20, i1 false), !noalias !145
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %i.alz, align 4, !noalias !145
-  %65 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 68
-  store <2 x float> splat (float 1.000000e+00), ptr %65, align 4, !noalias !145
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %i.alz, align 4, !noalias !145
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.1 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 76
   store float 1.000000e+00, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.1, align 4, !noalias !145
   %i.ama = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 80
   %i.amb = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 100
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.ama, i8 0, i64 20, i1 false), !noalias !145
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %i.amb, align 4, !noalias !145
-  %66 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 108
-  store <2 x float> splat (float 1.000000e+00), ptr %66, align 4, !noalias !145
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %i.amb, align 4, !noalias !145
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.2 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 116
   store float 1.000000e+00, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.2, align 4, !noalias !145
   %i.amc = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 120
   %i.amd = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 140
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.amc, i8 0, i64 20, i1 false), !noalias !145
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %i.amd, align 4, !noalias !145
-  %67 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 148
-  store <2 x float> splat (float 1.000000e+00), ptr %67, align 4, !noalias !145
+  store <4 x float> <float 0.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00>, ptr %i.amd, align 4, !noalias !145
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.3 = getelementptr inbounds nuw i8, ptr %.015.i.i.i.i.i, i64 156
   store float 1.000000e+00, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i.i.i.3, align 4, !noalias !145
   %i.ame = add nsw i64 %.01214.i.i.i.i.i, -4      ; 2 uses

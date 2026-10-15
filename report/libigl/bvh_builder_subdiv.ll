@@ -205,7 +205,7 @@ _ZN6embree29parallel_for_for_prefix_sum0_IZNS_28parallel_for_for_prefix_sum0INS_
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN6embree4sse231BVHNSubdivPatch1MBlurBuilderSAHILi4EE7rebuildEmRNS_28ParallelForForPrefixSumStateINS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEEEE(ptr noundef nonnull align 8 dereferenceable(112) %0, i64 noundef %1, ptr noundef nonnull align 16 dereferenceable(19472) %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"struct.embree::sse2::BVHBuilderMSMBlur::BuildRecord", align 16 ; 17 uses
+  %3 = alloca %"struct.embree::sse2::BVHBuilderMSMBlur::BuildRecord", align 16 ; 16 uses
   %4 = alloca %"struct.embree::FastAllocator::CachedAllocator", align 8 ; 4 uses
   %5 = alloca %"class.embree::sse2::BVHBuilderMSMBlur::BuilderT", align 8 ; 4 uses
   %6 = alloca %"struct.embree::Scene::BuildProgressMonitorInterface", align 8 ; 5 uses
@@ -545,9 +545,8 @@ _ZN6embree29parallel_for_for_prefix_sum1_IZNS_28parallel_for_for_prefix_sum1INS_
   %.sroa.48.112..sroa_idx38 = getelementptr inbounds nuw i8, ptr %3, i64 136
   store i64 %.sroa.48.0.lcssa, ptr %.sroa.48.112..sroa_idx38, align 8, !noalias !235
   %.sroa.4842.112..sroa_idx45 = getelementptr inbounds nuw i8, ptr %3, i64 144
-  store <2 x float> %i.cr, ptr %.sroa.4842.112..sroa_idx45, align 16, !noalias !235
-  %.sroa.52.112..sroa_idx53 = getelementptr inbounds nuw i8, ptr %3, i64 152
-  store <2 x float> %i.cs, ptr %.sroa.52.112..sroa_idx53, align 8, !noalias !235
+  %21 = shufflevector <2 x float> %i.cr, <2 x float> %i.cs, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %21, ptr %.sroa.4842.112..sroa_idx45, align 16, !noalias !235
   store i64 1, ptr %3, align 16, !noalias !235
   %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 16
   store <4 x float> %.sroa.014.0.lcssa, ptr %i.dq, align 16, !noalias !235
@@ -950,7 +949,7 @@ bb.i:                                             ; preds = %_ZZN6embree28parall
   %i.fn = phi <2 x float> [ %i.ab, %bb.a ], [ %.lcssa100, %._crit_edge.loopexit ]
   %i.fo = phi <2 x float> [ %i.ac, %bb.a ], [ %.lcssa99, %._crit_edge.loopexit ]
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fm, i64 1040
-  %i.fq = getelementptr inbounds nuw [144 x i8], ptr %i.fp, i64 %1 ; 12 uses
+  %i.fq = getelementptr inbounds nuw [144 x i8], ptr %i.fp, i64 %1 ; 11 uses
   store <4 x float> %.sroa.042.0.lcssa, ptr %i.fq, align 16
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 16
   store <4 x float> %.sroa.7.0.lcssa, ptr %i.fr, align 16
@@ -971,9 +970,8 @@ bb.i:                                             ; preds = %_ZZN6embree28parall
   %.sroa.45.96..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fq, i64 120
   store i64 %.sroa.45.0.lcssa, ptr %.sroa.45.96..sroa_idx, align 8
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fq, i64 128
-  store <2 x float> %i.fn, ptr %i.fx, align 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.fq, i64 136
-  store <2 x float> %i.fo, ptr %5, align 8
+  %5 = shufflevector <2 x float> %i.fn, <2 x float> %i.fo, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.fx, align 16
   ret void
 
 .lr.ph.peel.newph:                                ; preds = %bb.i, %bb.q
@@ -1376,8 +1374,6 @@ _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvR
   %.sroa.3646.112..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 120
   store i64 %.sroa.3646.0.lcssa, ptr %.sroa.3646.112..sroa_idx, align 8
   %.sroa.3947.112..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 128
-  store <2 x float> %i.m, ptr %.sroa.3947.112..sroa_idx, align 16
-  %.sroa.4349.112..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 136
   %i.bp = getelementptr inbounds nuw i8, ptr %2, i64 144
   store ptr %i.b, ptr %i.bp, align 16
   store i64 %i.d, ptr %i.bm, align 16
@@ -1386,7 +1382,8 @@ _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvR
   %i.br = shufflevector <2 x float> %.sroa.01.0.copyload, <2 x float> %i.n, <2 x i32> <i32 0, i32 3>
   %i.bs = shufflevector <2 x float> %i.n, <2 x float> %.sroa.01.0.copyload, <2 x i32> <i32 0, i32 3>
   %i.bt = select <2 x i1> %i.bq, <2 x float> %i.br, <2 x float> %i.bs
-  store <2 x float> %i.bt, ptr %.sroa.4349.112..sroa_idx, align 8
+  %4 = shufflevector <2 x float> %i.m, <2 x float> %i.bt, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %.sroa.3947.112..sroa_idx, align 16
   %i.bu = load ptr, ptr %i.a, align 16
   %.sroa.0.0.copyload = load <2 x float>, ptr %i.bg, align 8 ; 3 uses
   store <4 x float> %.sroa.022.0.lcssa, ptr %3, align 16
@@ -1407,8 +1404,6 @@ _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvR
   %.sroa.36.112..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 120
   store i64 %.sroa.36.0.lcssa, ptr %.sroa.36.112..sroa_idx, align 8
   %.sroa.39.112..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 128
-  store <2 x float> %i.be, ptr %.sroa.39.112..sroa_idx, align 16
-  %.sroa.43.112..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 136
   %i.cd = getelementptr inbounds nuw i8, ptr %3, i64 144
   store ptr %i.bu, ptr %i.cd, align 16
   store i64 %i.i, ptr %i.ca, align 16
@@ -1417,7 +1412,8 @@ _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvR
   %i.cf = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> %i.bf, <2 x i32> <i32 0, i32 3>
   %i.cg = shufflevector <2 x float> %i.bf, <2 x float> %.sroa.0.0.copyload, <2 x i32> <i32 0, i32 3>
   %i.ch = select <2 x i1> %i.ce, <2 x float> %i.cf, <2 x float> %i.cg
-  store <2 x float> %i.ch, ptr %.sroa.43.112..sroa_idx, align 8
+  %5 = shufflevector <2 x float> %i.be, <2 x float> %i.ch, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %.sroa.39.112..sroa_idx, align 16
   ret void
 
 _ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvRKT_.exit: ; preds = %_ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvRKT_.exit.lr.ph, %_ZN6embree11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEE11add_primrefINS_9PrimRefMBEEEvRKT_.exit
@@ -1787,8 +1783,6 @@ _ZN6embree19serial_partitioningINS_9PrimRefMBENS_11PrimInfoMBTINS_5LBBoxINS_6Vec
   %.sroa.5265.112..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 120
   store i64 %.sroa.5265.1.lcssa, ptr %.sroa.5265.112..sroa_idx, align 8
   %.sroa.5767.112..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 128
-  store <2 x float> %i.u, ptr %.sroa.5767.112..sroa_idx, align 16
-  %.sroa.6369.112..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 136
   %i.ga = getelementptr inbounds nuw i8, ptr %2, i64 144
   store ptr %i.fq, ptr %i.ga, align 16
   store i64 %i.d, ptr %i.fx, align 16
@@ -1797,7 +1791,8 @@ _ZN6embree19serial_partitioningINS_9PrimRefMBENS_11PrimInfoMBTINS_5LBBoxINS_6Vec
   %i.gc = shufflevector <2 x float> %.sroa.01.0.copyload, <2 x float> %i.v, <2 x i32> <i32 0, i32 3>
   %i.gd = shufflevector <2 x float> %i.v, <2 x float> %.sroa.01.0.copyload, <2 x i32> <i32 0, i32 3>
   %i.ge = select <2 x i1> %i.gb, <2 x float> %i.gc, <2 x float> %i.gd
-  store <2 x float> %i.ge, ptr %.sroa.6369.112..sroa_idx, align 8
+  %4 = shufflevector <2 x float> %i.u, <2 x float> %i.ge, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %.sroa.5767.112..sroa_idx, align 16
   %i.gf = load ptr, ptr %i.a, align 16
   %.sroa.0.0.copyload = load <2 x float>, ptr %i.fr, align 8 ; 2 uses
   store <4 x float> %.sroa.022.1.lcssa, ptr %3, align 16
@@ -2200,7 +2195,7 @@ _ZN6embree19serial_partitioningINS_9PrimRefMBENS_11PrimInfoMBTINS_5LBBoxINS_6Vec
   %i.hf = getelementptr inbounds nuw [8 x i8], ptr %i.he, i64 %1
   store i64 %i.hd, ptr %i.hf, align 8
   %i.hg = getelementptr inbounds nuw i8, ptr %i.a, i64 3264
-  %i.hh = getelementptr inbounds nuw [144 x i8], ptr %i.hg, i64 %1 ; 12 uses
+  %i.hh = getelementptr inbounds nuw [144 x i8], ptr %i.hg, i64 %1 ; 11 uses
   store <4 x float> %.sroa.033.1.lcssa, ptr %i.hh, align 16
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 16
   store <4 x float> %.sroa.836.1.lcssa, ptr %i.hi, align 16
@@ -2221,9 +2216,8 @@ _ZN6embree19serial_partitioningINS_9PrimRefMBENS_11PrimInfoMBTINS_5LBBoxINS_6Vec
   %.sroa.5056.96..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hh, i64 120
   store i64 %.sroa.5056.1.lcssa, ptr %.sroa.5056.96..sroa_idx, align 8
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hh, i64 128
-  store <2 x float> %i.bb, ptr %i.ho, align 16
-  %2 = getelementptr inbounds nuw i8, ptr %i.hh, i64 136
-  store <2 x float> %i.bc, ptr %2, align 8
+  %2 = shufflevector <2 x float> %i.bb, <2 x float> %i.bc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.ho, align 16
   %i.hp = getelementptr inbounds nuw i8, ptr %i.a, i64 12480
   %i.hq = getelementptr inbounds nuw [144 x i8], ptr %i.hp, i64 %1 ; 13 uses
   store <4 x float> %.sroa.0.1.lcssa, ptr %i.hq, align 16

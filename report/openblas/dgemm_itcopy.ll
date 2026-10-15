@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.2298 = phi ptr [ %i.dl, %bb.e ], [ %i.cy, %bb.d ]
   %.2295 = phi i64 [ %i.dm, %bb.e ], [ %.1294, %bb.d ] ; 3 uses
   %.idx364 = mul i64 %i.l, -16
-  %i.dn = getelementptr inbounds i8, ptr %.2298, i64 %.idx364 ; 6 uses
+  %i.dn = getelementptr inbounds i8, ptr %.2298, i64 %.idx364 ; 4 uses
   %i.do = icmp sgt i64 %.2295, 1
   br i1 %i.do, label %bb.g, label %bb.h
 
@@ -215,13 +215,11 @@ bb.g:                                             ; preds = %bb.f
   %i.du = getelementptr inbounds nuw i8, ptr %.3317, i64 16
   %i.dv = load <2 x double>, ptr %.3311, align 1, !tbaa !14
   %i.dw = getelementptr inbounds nuw i8, ptr %.3311, i64 16
-  store <2 x double> %i.dp, ptr %i.dn, align 1, !tbaa !14
-  %5 = getelementptr inbounds nuw i8, ptr %i.dn, i64 16
-  store <2 x double> %i.dr, ptr %5, align 1, !tbaa !14
+  %5 = shufflevector <2 x double> %i.dp, <2 x double> %i.dr, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %5, ptr %i.dn, align 1, !tbaa !14
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dn, i64 32
-  store <2 x double> %i.dt, ptr %i.dx, align 1, !tbaa !14
-  %6 = getelementptr inbounds nuw i8, ptr %i.dn, i64 48
-  store <2 x double> %i.dv, ptr %6, align 1, !tbaa !14
+  %6 = shufflevector <2 x double> %i.dt, <2 x double> %i.dv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %6, ptr %i.dx, align 1, !tbaa !14
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dn, i64 %.idx365
   %i.dz = add nsw i64 %.2295, -2
   br label %bb.h
@@ -360,7 +358,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %.6302.us = phi ptr [ %i.gc, %bb.n ], [ %i.fv, %bb.m ]
   %.6.us = phi i64 [ %i.gd, %bb.n ], [ %.5.us, %bb.m ] ; 3 uses
   %.idx356.us = mul i64 %i.ey, -16
-  %i.ge = getelementptr inbounds i8, ptr %.6302.us, i64 %.idx356.us ; 4 uses
+  %i.ge = getelementptr inbounds i8, ptr %.6302.us, i64 %.idx356.us ; 3 uses
   %i.gf = icmp sgt i64 %.6.us, 1
   br i1 %i.gf, label %bb.p, label %bb.q
 
@@ -369,9 +367,8 @@ bb.p:                                             ; preds = %bb.o
   %i.gh = getelementptr inbounds nuw i8, ptr %.9341.us, i64 16
   %i.gi = load <2 x double>, ptr %.9329.us, align 1, !tbaa !14
   %i.gj = getelementptr inbounds nuw i8, ptr %.9329.us, i64 16
-  store <2 x double> %i.gg, ptr %i.ge, align 1, !tbaa !14
-  %7 = getelementptr inbounds nuw i8, ptr %i.ge, i64 16
-  store <2 x double> %i.gi, ptr %7, align 1, !tbaa !14
+  %7 = shufflevector <2 x double> %i.gg, <2 x double> %i.gi, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %7, ptr %i.ge, align 1, !tbaa !14
   %i.gk = getelementptr inbounds nuw i8, ptr %i.ge, i64 %.idx357
   %i.gl = add nsw i64 %.6.us, -2
   br label %bb.q
@@ -466,7 +463,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %.6302 = phi ptr [ %i.hs, %bb.w ], [ %i.hl, %bb.v ]
   %.6 = phi i64 [ %i.ht, %bb.w ], [ %.5, %bb.v ]  ; 3 uses
   %.idx356 = mul i64 %i.hc, -16
-  %i.hu = getelementptr inbounds i8, ptr %.6302, i64 %.idx356 ; 4 uses
+  %i.hu = getelementptr inbounds i8, ptr %.6302, i64 %.idx356 ; 3 uses
   %i.hv = icmp sgt i64 %.6, 1
   br i1 %i.hv, label %bb.y, label %bb.z
 
@@ -475,9 +472,8 @@ bb.y:                                             ; preds = %bb.x
   %i.hx = getelementptr inbounds nuw i8, ptr %.9341, i64 16
   %i.hy = load <2 x double>, ptr %.9329, align 1, !tbaa !14
   %i.hz = getelementptr inbounds nuw i8, ptr %.9329, i64 16
-  store <2 x double> %i.hw, ptr %i.hu, align 1, !tbaa !14
-  %8 = getelementptr inbounds nuw i8, ptr %i.hu, i64 16
-  store <2 x double> %i.hy, ptr %8, align 1, !tbaa !14
+  %8 = shufflevector <2 x double> %i.hw, <2 x double> %i.hy, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x double> %8, ptr %i.hu, align 1, !tbaa !14
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hu, i64 %.idx357
   %i.ib = add nsw i64 %.6, -2
   br label %bb.z

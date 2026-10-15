@@ -205,9 +205,8 @@ default.unreachable:                              ; preds = %bb.i
 QuaternionFromMatrix.exit:                        ; preds = %bb.j, %bb.k, %bb.l, %bb.m
   %.sroa.10.0.i = phi <2 x float> [ %.sroa.10.12.vec.insert53.i, %bb.m ], [ %.sroa.10.8.vec.insert.i, %bb.j ], [ %.sroa.10.8.vec.insert43.i, %bb.k ], [ %.sroa.10.8.vec.insert45.i, %bb.l ]
   %.sroa.0.0.i = phi <2 x float> [ %.sroa.0.4.vec.insert40.i, %bb.m ], [ %.sroa.0.4.vec.insert.i, %bb.j ], [ %.sroa.0.4.vec.insert36.i, %bb.k ], [ %.sroa.0.0.vec.insert32.i, %bb.l ]
-  store <2 x float> %.sroa.0.0.i, ptr %2, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> %.sroa.10.0.i, ptr %.sroa.4.0..sroa_idx, align 4
+  %4 = shufflevector <2 x float> %.sroa.0.0.i, <2 x float> %.sroa.10.0.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %2, align 4
   ret void
 }
 

@@ -204,7 +204,7 @@ _ZN12ValueHistory9addSampleEf.exit28:             ; preds = %bb.q, %_ZNSt6vector
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN14CrowdToolState8addAgentEPKf(ptr noundef nonnull align 8 dereferenceable(98989) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %2 = alloca %struct.dtCrowdAgentParams, align 8 ; 11 uses
+  %2 = alloca %struct.dtCrowdAgentParams, align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !39   ; 4 uses
   %.not = icmp eq ptr %i.b, null
@@ -221,15 +221,14 @@ bb.b:                                             ; preds = %bb.a
   store float %i.g, ptr %2, align 8, !tbaa !219
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 60
   %i.i = load float, ptr %i.h, align 4, !tbaa !220
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store float %i.i, ptr %3, align 4, !tbaa !221
-  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> <float 8.000000e+00, float 3.500000e+00>, ptr %i.j, align 8, !tbaa !71
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 4
+  store float %i.i, ptr %i.j, align 4, !tbaa !221
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.l = insertelement <2 x float> poison, float %i.g, i64 0
   %i.m = shufflevector <2 x float> %i.l, <2 x float> poison, <2 x i32> zeroinitializer
   %i.n = fmul <2 x float> %i.m, <float 1.200000e+01, float 3.000000e+01>
-  store <2 x float> %i.n, ptr %i.k, align 8, !tbaa !71
+  %3 = shufflevector <2 x float> <float 8.000000e+00, float 3.500000e+00>, <2 x float> %i.n, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.k, align 8, !tbaa !71
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 28 ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 98971
   %i.q = load i8, ptr %i.p, align 1, !tbaa !95, !range !56, !noundef !57 ; 3 uses

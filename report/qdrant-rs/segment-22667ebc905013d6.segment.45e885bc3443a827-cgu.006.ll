@@ -204,8 +204,8 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.aa = getelementptr i8, ptr %.promoted, i64 %i.z
   %i.ab = load double, ptr %.val.i, align 8, !alias.scope !5271, !noalias !5269, !noundef !7
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.ab, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %2 = getelementptr [4 x i8], ptr %i.h, i64 %.promoted11
+  %3 = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -216,16 +216,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load = load <2 x double>, ptr %next.gep, align 8, !alias.scope !5272
   %wide.load26 = load <2 x double>, ptr %i.ad, align 8, !alias.scope !5272
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5269)
-  %3 = fmul <2 x double> %wide.load, %broadcast.splat
-  %4 = fmul <2 x double> %wide.load26, %broadcast.splat
-  %5 = fptrunc <2 x double> %3 to <2 x float>
-  %6 = fptrunc <2 x double> %4 to <2 x float>
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5273)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5274)
-  %7 = getelementptr [4 x i8], ptr %2, i64 %index ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store <2 x float> %5, ptr %7, align 4, !alias.scope !5275, !noalias !5276
-  store <2 x float> %6, ptr %8, align 4, !alias.scope !5275, !noalias !5276
+  %4 = getelementptr [4 x i8], ptr %2, i64 %index
+  %5 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load26, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %6 = fmul <4 x double> %5, %3
+  %7 = fptrunc <4 x double> %6 to <4 x float>
+  store <4 x float> %7, ptr %4, align 4, !alias.scope !5275, !noalias !5276
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.ae = icmp eq i64 %index.next, %n.vec
   br i1 %i.ae, label %middle.block, label %vector.body, !llvm.loop !5267

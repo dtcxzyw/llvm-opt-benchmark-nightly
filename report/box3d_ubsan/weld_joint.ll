@@ -202,8 +202,8 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 ; Function Attrs: nounwind uwtable
 define hidden void @b3DrawWeldJoint(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly byval(%struct.b3Transform) align 8 captures(none) %2, ptr nofree noundef readonly byval(%struct.b3Transform) align 8 captures(none) %3, float noundef %4) local_unnamed_addr #4 !func_sanitize !143 {
 bb.a:
-  %5 = alloca %struct.b3Transform, align 8        ; 7 uses
-  %6 = alloca %struct.b3Transform, align 8        ; 7 uses
+  %5 = alloca %struct.b3Transform, align 8        ; 6 uses
+  %6 = alloca %struct.b3Transform, align 8        ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   %i.a = icmp ne ptr %1, null, !nosanitize !10
   %i.b = ptrtoint ptr %1 to i64, !nosanitize !10  ; 2 uses
@@ -262,9 +262,8 @@ bb.c:                                             ; preds = %bb.a
   %i.ai = fadd <2 x float> %i.v, %i.ah
   %i.aj = fsub <2 x float> %i.v, %i.ah
   %i.ak = shufflevector <2 x float> %i.ai, <2 x float> %i.aj, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.u, ptr %i.h, align 4, !tbaa !100, !alias.scope !144
-  %.sroa.4.0..sroa_idx.i15 = getelementptr inbounds nuw i8, ptr %5, i64 20
-  store <2 x float> %i.ak, ptr %.sroa.4.0..sroa_idx.i15, align 4, !tbaa !100, !alias.scope !144
+  %7 = shufflevector <2 x float> %i.u, <2 x float> %i.ak, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.h, align 4, !tbaa !100, !alias.scope !144
   %i.al = load <2 x float>, ptr %2, align 8
   %foldExtExtBinop = fmul <2 x float> %.sroa.076.0.copyload, %.sroa.870.0.copyload
   %i.am = extractelement <2 x float> %foldExtExtBinop, i64 0
@@ -336,9 +335,8 @@ bb.c:                                             ; preds = %bb.a
   %i.cj = fadd <2 x float> %i.bw, %i.ci
   %i.ck = fsub <2 x float> %i.bw, %i.ci
   %i.cl = shufflevector <2 x float> %i.cj, <2 x float> %i.ck, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.bv, ptr %i.bi, align 4, !tbaa !100, !alias.scope !145
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 20
-  store <2 x float> %i.cl, ptr %.sroa.4.0..sroa_idx.i, align 4, !tbaa !100, !alias.scope !145
+  %8 = shufflevector <2 x float> %i.bv, <2 x float> %i.cl, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.bi, align 4, !tbaa !100, !alias.scope !145
   %i.cm = load <2 x float>, ptr %3, align 8
   %foldExtExtBinop87 = fmul <2 x float> %.sroa.056.0.copyload, %.sroa.8.0.copyload
   %i.cn = extractelement <2 x float> %foldExtExtBinop87, i64 0

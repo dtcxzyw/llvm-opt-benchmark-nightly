@@ -205,7 +205,7 @@ declare void @_ZN6Assimp11MDLImporter23CreateTexture_3DGS_MDL4EPKhjPj(ptr nounde
 define hidden void @_ZN6Assimp11MDLImporter40SetupMaterialProperties_3DGS_MDL5_Quake1Ev(ptr noundef nonnull align 8 dereferenceable(159) %0) local_unnamed_addr #15 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %1 = alloca %class.aiColor4t, align 16          ; 12 uses
+  %1 = alloca %class.aiColor4t, align 16          ; 11 uses
   %2 = alloca %struct.aiString, align 4           ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.c = load ptr, ptr %i.b, align 8
@@ -254,9 +254,8 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = call { <2 x float>, <2 x float> } @_ZN6Assimp11MDLImporter23ReplaceTextureWithColorEPK9aiTexture(ptr noundef nonnull align 8 dereferenceable(159) %0, ptr noundef %i.z) ; 2 uses
   %i.ab = extractvalue { <2 x float>, <2 x float> } %i.aa, 0 ; 2 uses
   %i.ac = extractvalue { <2 x float>, <2 x float> } %i.aa, 1
-  store <2 x float> %i.ab, ptr %1, align 16
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store <2 x float> %i.ac, ptr %.sroa.4.0..sroa_idx, align 8
+  %3 = shufflevector <2 x float> %i.ab, <2 x float> %i.ac, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %1, align 16
   %i.ad = extractelement <2 x float> %i.ab, i64 0
   %i.ae = fcmp ord float %i.ad, 0.000000e+00
   br i1 %i.ae, label %bb.e, label %bb.k

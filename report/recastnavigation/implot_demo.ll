@@ -204,8 +204,8 @@ declare void @_ZN6ImPlot10PlotShadedIfEEvPKcPKT_S5_S5_iiii(ptr noundef, ptr noun
 define dso_local void @_ZN6ImPlot17Demo_ScatterPlotsEv() local_unnamed_addr #7 {
 bb.a:
   %0 = alloca %struct.ImVec2, align 8             ; 4 uses
-  %1 = alloca %struct.ImVec4, align 8             ; 5 uses
-  %2 = alloca %struct.ImVec4, align 8             ; 5 uses
+  %1 = alloca %struct.ImVec4, align 16            ; 4 uses
+  %2 = alloca %struct.ImVec4, align 16            ; 4 uses
   tail call void @srand(i32 noundef 0) #20
   br label %bb.b
 
@@ -257,17 +257,15 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.u = call { <2 x float>, <2 x float> } @_ZN6ImPlot16GetColormapColorEii(i32 noundef 1, i32 noundef -1) #20 ; 2 uses
   %i.v = extractvalue { <2 x float>, <2 x float> } %i.u, 0
-  store <2 x float> %i.v, ptr %1, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %4 = extractvalue { <2 x float>, <2 x float> } %i.u, 1
-  store <2 x float> %4, ptr %3, align 8
+  %3 = extractvalue { <2 x float>, <2 x float> } %i.u, 1
+  %4 = shufflevector <2 x float> %i.v, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %1, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.w = call { <2 x float>, <2 x float> } @_ZN6ImPlot16GetColormapColorEii(i32 noundef 1, i32 noundef -1) #20 ; 2 uses
   %i.x = extractvalue { <2 x float>, <2 x float> } %i.w, 0
-  store <2 x float> %i.x, ptr %2, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = extractvalue { <2 x float>, <2 x float> } %i.w, 1
-  store <2 x float> %6, ptr %5, align 8
+  %5 = extractvalue { <2 x float>, <2 x float> } %i.w, 1
+  %6 = shufflevector <2 x float> %i.x, <2 x float> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %2, align 16
   call void @_ZN6ImPlot18SetNextMarkerStyleEifRK6ImVec4fS2_(i32 noundef 1, float noundef 6.000000e+00, ptr noundef nonnull align 4 dereferenceable(16) %1, float noundef -1.000000e+00, ptr noundef nonnull align 4 dereferenceable(16) %2) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
@@ -510,10 +508,10 @@ declare void @_ZN6ImPlot11PopColormapEi(i32 noundef) local_unnamed_addr #5
 define dso_local void @_ZN6ImPlot14Demo_ErrorBarsEv() local_unnamed_addr #7 {
 bb.a:
   %0 = alloca %struct.ImVec2, align 8             ; 4 uses
-  %1 = alloca %struct.ImVec4, align 8             ; 5 uses
+  %1 = alloca %struct.ImVec4, align 16            ; 4 uses
   %2 = alloca %struct.ImVec4, align 16            ; 4 uses
   %3 = alloca %struct.ImVec4, align 16            ; 4 uses
-  %4 = alloca %struct.ImVec4, align 8             ; 5 uses
+  %4 = alloca %struct.ImVec4, align 16            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #20
   store <2 x float> <float -1.000000e+00, float 0.000000e+00>, ptr %0, align 8, !tbaa !31
   %i.a = call noundef zeroext i1 @_ZN6ImPlot9BeginPlotEPKcRK6ImVec2i(ptr noundef nonnull @.str.124, ptr noundef nonnull align 4 dereferenceable(8) %0, i32 noundef 0) #20
@@ -527,10 +525,9 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.b = call { <2 x float>, <2 x float> } @_ZN6ImPlot16GetColormapColorEii(i32 noundef 1, i32 noundef -1) #20 ; 2 uses
   %i.c = extractvalue { <2 x float>, <2 x float> } %i.b, 0
-  store <2 x float> %i.c, ptr %1, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = extractvalue { <2 x float>, <2 x float> } %i.b, 1
-  store <2 x float> %6, ptr %5, align 8
+  %5 = extractvalue { <2 x float>, <2 x float> } %i.b, 1
+  %6 = shufflevector <2 x float> %i.c, <2 x float> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %1, align 16
   call void @_ZN6ImPlot20SetNextErrorBarStyleERK6ImVec4ff(ptr noundef nonnull align 4 dereferenceable(16) %1, float noundef 0.000000e+00, float noundef -1.000000e+00) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   call void @_ZN6ImPlot13PlotErrorBarsIfEEvPKcPKT_S5_S5_S5_iiii(ptr noundef nonnull @.str.126, ptr noundef nonnull @_ZZN6ImPlot14Demo_ErrorBarsEvE2xs, ptr noundef nonnull @_ZZN6ImPlot14Demo_ErrorBarsEvE4lin1, ptr noundef nonnull @_ZZN6ImPlot14Demo_ErrorBarsEvE4err1, ptr noundef nonnull @_ZZN6ImPlot14Demo_ErrorBarsEvE4err2, i32 noundef 5, i32 noundef 0, i32 noundef 0, i32 noundef 4) #20
@@ -545,10 +542,9 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   %i.d = call { <2 x float>, <2 x float> } @_ZN6ImPlot16GetColormapColorEii(i32 noundef 2, i32 noundef -1) #20 ; 2 uses
   %i.e = extractvalue { <2 x float>, <2 x float> } %i.d, 0
-  store <2 x float> %i.e, ptr %4, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %8 = extractvalue { <2 x float>, <2 x float> } %i.d, 1
-  store <2 x float> %8, ptr %7, align 8
+  %7 = extractvalue { <2 x float>, <2 x float> } %i.d, 1
+  %8 = shufflevector <2 x float> %i.e, <2 x float> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %4, align 16
   call void @_ZN6ImPlot14PushStyleColorEiRK6ImVec4(i32 noundef 4, ptr noundef nonnull align 4 dereferenceable(16) %4) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   call void @_ZN6ImPlot13PlotErrorBarsIfEEvPKcPKT_S5_S5_iiii(ptr noundef nonnull @.str.127, ptr noundef nonnull @_ZZN6ImPlot14Demo_ErrorBarsEvE2xs, ptr noundef nonnull @_ZZN6ImPlot14Demo_ErrorBarsEvE4lin2, ptr noundef nonnull @_ZZN6ImPlot14Demo_ErrorBarsEvE4err2, i32 noundef 5, i32 noundef 0, i32 noundef 0, i32 noundef 4) #20
@@ -951,7 +947,7 @@ bb.a:
   %4 = alloca %struct.ImPlotRect, align 8         ; 4 uses
   %i.a = alloca double, align 8                   ; 5 uses
   %i.b = alloca double, align 8                   ; 5 uses
-  %5 = alloca %struct.ImVec4, align 8             ; 5 uses
+  %5 = alloca %struct.ImVec4, align 16            ; 4 uses
   %6 = alloca %struct.ImVec2, align 8             ; 4 uses
   tail call void (ptr, ...) @_ZN5ImGui10BulletTextEPKcz(ptr noundef nonnull @.str.244) #20
   tail call void (ptr, ...) @_ZN5ImGui10BulletTextEPKcz(ptr noundef nonnull @.str.245) #20
@@ -1076,10 +1072,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   %i.bk = call { <2 x float>, <2 x float> } @_ZN6ImPlot16GetLastItemColorEv() #20 ; 2 uses
   %i.bl = extractvalue { <2 x float>, <2 x float> } %i.bk, 0
-  store <2 x float> %i.bl, ptr %5, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %8 = extractvalue { <2 x float>, <2 x float> } %i.bk, 1
-  store <2 x float> %8, ptr %7, align 8
+  %7 = extractvalue { <2 x float>, <2 x float> } %i.bk, 1
+  %8 = shufflevector <2 x float> %i.bl, <2 x float> %7, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %5, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   store <2 x float> splat (float 1.000000e+01), ptr %6, align 8, !tbaa !31
   call void (double, double, ptr, ptr, i1, ptr, ...) @_ZN6ImPlot10AnnotationEddRK6ImVec4RK6ImVec2bPKcz(double noundef %i.bi, double noundef %i.bj, ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(8) %6, i1 noundef zeroext false, ptr noundef nonnull @.str.252) #20
@@ -1482,7 +1477,7 @@ bb.a:
   %1 = alloca %struct.ImVec2, align 8             ; 4 uses
   %2 = alloca %struct.ImVec2, align 8             ; 4 uses
   %i.a = alloca float, align 4                    ; 4 uses
-  %3 = alloca %struct.ImVec4, align 8             ; 5 uses
+  %3 = alloca %struct.ImVec4, align 16            ; 4 uses
   %i.b = alloca [16 x i8], align 16               ; 4 uses
   %i.c = tail call noundef zeroext i1 @_ZN5ImGui13CheckboxFlagsEPKcPjj(ptr noundef nonnull @.str.293, ptr noundef nonnull @_ZZN6ImPlot19Demo_SubplotsSizingEvE5flags, i32 noundef 8) #20 ; 0 uses
   %i.d = tail call noundef zeroext i1 @_ZN5ImGui13CheckboxFlagsEPKcPjj(ptr noundef nonnull @.str.294, ptr noundef nonnull @_ZZN6ImPlot19Demo_SubplotsSizingEvE5flags, i32 noundef 1) #20 ; 0 uses
@@ -1520,19 +1515,15 @@ bb.c:                                             ; preds = %bb.a
   %i.s = load i32, ptr @_ZZN6ImPlot19Demo_SubplotsSizingEvE4cols, align 4, !tbaa !13
   %i.t = mul nsw i32 %i.s, %i.r
   %i.u = icmp sgt i32 %i.t, 0
-  br i1 %i.u, label %.lr.ph, label %._crit_edge
-
-.lr.ph:                                           ; preds = %.preheader
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  br label %bb.d
+  br i1 %i.u, label %bb.d, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.h, %.preheader
   call void @_ZN6ImPlot11EndSubplotsEv() #20
   br label %bb.i
 
-bb.d:                                             ; preds = %.lr.ph, %bb.h
-  %.09 = phi i32 [ 0, %.lr.ph ], [ %.pre-phi, %bb.h ] ; 3 uses
-  %.068 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.h ]  ; 3 uses
+bb.d:                                             ; preds = %.preheader, %bb.h
+  %.09 = phi i32 [ %.pre-phi, %bb.h ], [ 0, %.preheader ] ; 3 uses
+  %.068 = phi i32 [ %.1, %bb.h ], [ 0, %.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   store <2 x float> zeroinitializer, ptr %2, align 8, !tbaa !31
   %i.v = call noundef zeroext i1 @_ZN6ImPlot9BeginPlotEPKcRK6ImVec2i(ptr noundef nonnull @.str.301, ptr noundef nonnull align 4 dereferenceable(8) %2, i32 noundef 2) #20
@@ -1564,9 +1555,9 @@ bb.f:                                             ; preds = %bb.e
   %i.ag = fdiv float %i.ad, %i.af
   %i.ah = call { <2 x float>, <2 x float> } @_ZN6ImPlot14SampleColormapEfi(float noundef %i.ag, i32 noundef 9) #20 ; 2 uses
   %i.ai = extractvalue { <2 x float>, <2 x float> } %i.ah, 0
-  store <2 x float> %i.ai, ptr %3, align 8
-  %5 = extractvalue { <2 x float>, <2 x float> } %i.ah, 1
-  store <2 x float> %5, ptr %4, align 8
+  %4 = extractvalue { <2 x float>, <2 x float> } %i.ah, 1
+  %5 = shufflevector <2 x float> %i.ai, <2 x float> %4, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %3, align 16
   call void @_ZN6ImPlot16SetNextLineStyleERK6ImVec4f(ptr noundef nonnull align 4 dereferenceable(16) %3, float noundef -1.000000e+00) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   br label %bb.g
@@ -1969,7 +1960,7 @@ declare void @_ZN6ImPlot19CancelPlotSelectionEv() local_unnamed_addr #5
 define dso_local void @_ZN6ImPlot16Demo_AnnotationsEv() local_unnamed_addr #7 {
 bb.a:
   %0 = alloca %struct.ImVec2, align 8             ; 4 uses
-  %1 = alloca %struct.ImVec4, align 8             ; 9 uses
+  %1 = alloca %struct.ImVec4, align 16            ; 8 uses
   %2 = alloca %struct.ImVec2, align 8             ; 4 uses
   %3 = alloca %struct.ImVec2, align 8             ; 4 uses
   %4 = alloca %struct.ImVec2, align 8             ; 4 uses
@@ -1994,10 +1985,9 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.e = call { <2 x float>, <2 x float> } @_ZN6ImPlot16GetLastItemColorEv() #20 ; 2 uses
   %i.f = extractvalue { <2 x float>, <2 x float> } %i.e, 0
-  store <2 x float> %i.f, ptr %1, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %12 = extractvalue { <2 x float>, <2 x float> } %i.e, 1
-  store <2 x float> %12, ptr %11, align 8
+  %11 = extractvalue { <2 x float>, <2 x float> } %i.e, 1
+  %12 = shufflevector <2 x float> %i.f, <2 x float> %11, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %1, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   store <2 x float> <float -1.500000e+01, float 1.500000e+01>, ptr %2, align 8, !tbaa !31
   %i.g = load i8, ptr @_ZZN6ImPlot16Demo_AnnotationsEvE5clamp, align 1, !tbaa !33, !range !34, !noundef !35
@@ -2400,7 +2390,7 @@ declare noundef zeroext i1 @_ZN6ImPlot23BeginDragDropSourcePlotEi(i32 noundef) l
 define dso_local void @_ZN6ImPlot11Demo_TablesEv() local_unnamed_addr #7 {
 bb.a:
   %0 = alloca %struct.ImVec2, align 8             ; 4 uses
-  %1 = alloca %struct.ImVec4, align 8             ; 5 uses
+  %1 = alloca %struct.ImVec4, align 16            ; 4 uses
   %2 = alloca %struct.ImVec2, align 8             ; 4 uses
   tail call void (ptr, ...) @_ZN5ImGui10BulletTextEPKcz(ptr noundef nonnull @.str.387) #20
   %i.a = tail call noundef zeroext i1 @_ZN5ImGui8CheckboxEPKcPb(ptr noundef nonnull @.str.388, ptr noundef nonnull @_ZZN6ImPlot11Demo_TablesEvE4anim) #20 ; 0 uses
@@ -2428,7 +2418,6 @@ bb.d:                                             ; preds = %bb.c
   call void @_ZN5ImGui16TableSetupColumnEPKcifj(ptr noundef nonnull @.str.392, i32 noundef 0, float noundef 0.000000e+00, i32 noundef 0) #20
   call void @_ZN5ImGui15TableHeadersRowEv() #20
   call void @_ZN6ImPlot12PushColormapEi(i32 noundef 7) #20
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.g
@@ -2458,9 +2447,9 @@ bb.g:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.q = call { <2 x float>, <2 x float> } @_ZN6ImPlot16GetColormapColorEii(i32 noundef %.0911, i32 noundef -1) #20 ; 2 uses
   %i.r = extractvalue { <2 x float>, <2 x float> } %i.q, 0
-  store <2 x float> %i.r, ptr %1, align 8
-  %4 = extractvalue { <2 x float>, <2 x float> } %i.q, 1
-  store <2 x float> %4, ptr %3, align 8
+  %3 = extractvalue { <2 x float>, <2 x float> } %i.q, 1
+  %4 = shufflevector <2 x float> %i.r, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %1, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   store <2 x float> <float -1.000000e+00, float 3.500000e+01>, ptr %2, align 8, !tbaa !31
   call void @_ZN8MyImPlot9SparklineEPKcPKfiffiRK6ImVec4RK6ImVec2(ptr noundef nonnull @.str.395, ptr noundef nonnull @_ZZN6ImPlot11Demo_TablesEvE4data, i32 noundef 100, float noundef 0.000000e+00, float noundef 1.100000e+01, i32 noundef %i.p, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(8) %2)
@@ -2863,8 +2852,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN8MyImPlot15PlotCandlestickEPKcPKdS3_S3_S3_S3_ibf6ImVec4S4_(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef readonly captures(none) %5, i32 noundef %6, i1 noundef zeroext %7, float noundef %8, <2 x float> %9, <2 x float> %10, <2 x float> %11, <2 x float> %12) local_unnamed_addr #7 {
 bb.a:
-  %13 = alloca %struct.ImVec4, align 8            ; 3 uses
-  %14 = alloca %struct.ImVec4, align 8            ; 3 uses
+  %13 = alloca %struct.ImVec4, align 16           ; 2 uses
+  %14 = alloca %struct.ImVec4, align 16           ; 2 uses
   %15 = alloca %struct.ImPlotTime, align 8        ; 5 uses
   %16 = alloca %struct.ImVec2, align 4            ; 5 uses
   %17 = alloca %struct.ImVec2, align 4            ; 5 uses
@@ -2874,12 +2863,10 @@ bb.a:
   %20 = alloca %struct.ImVec2, align 8            ; 4 uses
   %21 = alloca %struct.ImVec2, align 8            ; 4 uses
   %22 = alloca %struct.ImVec2, align 8            ; 4 uses
-  store <2 x float> %9, ptr %13, align 8
-  %23 = getelementptr inbounds nuw i8, ptr %13, i64 8
-  store <2 x float> %10, ptr %23, align 8
-  store <2 x float> %11, ptr %14, align 8
-  %24 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  store <2 x float> %12, ptr %24, align 8
+  %23 = shufflevector <2 x float> %9, <2 x float> %10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %23, ptr %13, align 16
+  %24 = shufflevector <2 x float> %11, <2 x float> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %24, ptr %14, align 16
   %i.b = tail call noundef ptr @_ZN6ImPlot15GetPlotDrawListEv() #20 ; 3 uses
   %i.c = icmp sgt i32 %6, 1
   br i1 %i.c, label %bb.b, label %bb.c

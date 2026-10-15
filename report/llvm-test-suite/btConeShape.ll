@@ -202,10 +202,9 @@ _ZNK11btConeShape16coneLocalSupportERK9btVector3.exit: ; preds = %bb.c, %bb.e, %
   %.fca.0.load.i = load <2 x float>, ptr %4, align 8
   %.fca.1.load.i = load <2 x float>, ptr %.fca.1.gep.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv ; 2 uses
-  store <2 x float> %.fca.0.load.i, ptr %i.bt, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
-  store <2 x float> %.fca.1.load.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !22
+  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %indvars.iv
+  %5 = shufflevector <2 x float> %.fca.0.load.i, <2 x float> %.fca.1.load.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.bt, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b
@@ -478,9 +477,8 @@ bb.a:
   %i.an = fmul <2 x float> %i.am, %i.aj
   %i.ao = fmul float %i.p, %i.ak
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ao, i64 0
-  store <2 x float> %i.an, ptr %2, align 4
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !22
+  %6 = shufflevector <2 x float> %i.an, <2 x float> %.sroa.3.12.vec.insert.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %2, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
@@ -497,7 +495,7 @@ bb.a:
 define linkonce_odr dso_local void @_ZN21btConvexInternalShape9setMarginEf(ptr noundef nonnull align 8 dereferenceable(64) %0, float noundef %1) unnamed_addr #12 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store float %1, ptr %i.a, align 8, !tbaa !23
+  store float %1, ptr %i.a, align 8, !tbaa !22
   ret void
 }
 
@@ -505,7 +503,7 @@ bb.a:
 define linkonce_odr dso_local noundef float @_ZNK21btConvexInternalShape9getMarginEv(ptr noundef nonnull align 8 dereferenceable(64) %0) unnamed_addr #12 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.b = load float, ptr %i.a, align 8, !tbaa !23
+  %i.b = load float, ptr %i.a, align 8, !tbaa !22
   ret float %i.b
 }
 
@@ -634,6 +632,5 @@ attributes #16 = { noreturn nounwind }
 !19 = !{!11, !6, i64 8}
 !20 = !{!16, !14, i64 64}
 !21 = !{!14, !14, i64 0}
-!22 = !{!5, !5, i64 0}
-!23 = !{!15, !14, i64 56}
+!22 = !{!15, !14, i64 56}
 end_hunk_0

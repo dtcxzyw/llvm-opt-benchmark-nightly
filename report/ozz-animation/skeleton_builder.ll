@@ -205,49 +205,37 @@ bb.z:                                             ; preds = %bb.x, %bb.y
   %.sroa.11121.0 = phi <4 x float> [ %i.pr, %bb.y ], [ splat (float 1.000000e+00), %bb.x ] ; 2 uses
   %.sroa.11.0 = phi <4 x float> [ %i.pk, %bb.y ], [ <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, %bb.x ] ; 2 uses
   %i.ps = load ptr, ptr %i.kf, align 8, !tbaa !68
-  %i.pt = getelementptr inbounds nuw [160 x i8], ptr %i.ps, i64 %indvars.iv115 ; 3 uses
-  %i.pu = shufflevector <4 x float> %.sroa.0122.0, <4 x float> %.sroa.8124.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.pv = shufflevector <4 x float> %.sroa.5123.0, <4 x float> %.sroa.11125.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.pt = getelementptr inbounds nuw [160 x i8], ptr %i.ps, i64 %indvars.iv115 ; 2 uses
+  %i.pu = shufflevector <4 x float> %.sroa.0122.0, <4 x float> %.sroa.8124.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.pv = shufflevector <4 x float> %.sroa.5123.0, <4 x float> %.sroa.11125.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
   %i.pw = shufflevector <4 x float> %.sroa.0122.0, <4 x float> %.sroa.8124.0, <4 x i32> <i32 2, i32 6, i32 poison, i32 poison>
   %i.px = shufflevector <4 x float> %.sroa.5123.0, <4 x float> %.sroa.11125.0, <4 x i32> <i32 2, i32 6, i32 poison, i32 poison>
-  %4 = shufflevector <4 x float> %i.pu, <4 x float> %i.pv, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  store <4 x float> %4, ptr %i.pt, align 16, !tbaa !65
-  %5 = shufflevector <4 x float> %i.pu, <4 x float> %i.pv, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
-  %6 = getelementptr inbounds nuw i8, ptr %i.pt, i64 16
-  store <4 x float> %5, ptr %6, align 16, !tbaa !65
+  %4 = shufflevector <4 x float> %i.pu, <4 x float> %i.pv, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %4, ptr %i.pt, align 16, !tbaa !65
   %i.py = shufflevector <4 x float> %i.pw, <4 x float> %i.px, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
   %i.pz = getelementptr inbounds nuw i8, ptr %i.pt, i64 32
   store <4 x float> %i.py, ptr %i.pz, align 16, !tbaa !65
   %i.qa = load ptr, ptr %i.kf, align 8, !tbaa !68
-  %i.qb = getelementptr inbounds nuw [160 x i8], ptr %i.qa, i64 %indvars.iv115 ; 4 uses
+  %i.qb = getelementptr inbounds nuw [160 x i8], ptr %i.qa, i64 %indvars.iv115 ; 2 uses
   %i.qc = getelementptr inbounds nuw i8, ptr %i.qb, i64 48
-  %i.qd = shufflevector <4 x float> %.sroa.0.0, <4 x float> %.sroa.8.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.qe = shufflevector <4 x float> %.sroa.5.0, <4 x float> %.sroa.11.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.qf = shufflevector <4 x float> %.sroa.0.0, <4 x float> %.sroa.8.0, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %7 = shufflevector <4 x float> %.sroa.5.0, <4 x float> %.sroa.11.0, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
-  %8 = shufflevector <4 x float> %i.qd, <4 x float> %i.qe, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  store <4 x float> %8, ptr %i.qc, align 16, !tbaa !65
-  %i.qg = shufflevector <4 x float> %i.qd, <4 x float> %i.qe, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
-  %9 = getelementptr inbounds nuw i8, ptr %i.qb, i64 64
-  store <4 x float> %i.qg, ptr %9, align 16, !tbaa !65
-  %10 = shufflevector <4 x float> %i.qf, <4 x float> %7, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.qd = shufflevector <4 x float> %.sroa.0.0, <4 x float> %.sroa.8.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.qe = shufflevector <4 x float> %.sroa.5.0, <4 x float> %.sroa.11.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.qf = shufflevector <4 x float> %.sroa.0.0, <4 x float> %.sroa.8.0, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %i.qg = shufflevector <4 x float> %.sroa.5.0, <4 x float> %.sroa.11.0, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
+  %5 = shufflevector <4 x float> %i.qd, <4 x float> %i.qe, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %5, ptr %i.qc, align 16, !tbaa !65
   %i.qh = getelementptr inbounds nuw i8, ptr %i.qb, i64 80
-  store <4 x float> %10, ptr %i.qh, align 16, !tbaa !65
-  %11 = shufflevector <4 x float> %i.qf, <4 x float> %7, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
-  %12 = getelementptr inbounds nuw i8, ptr %i.qb, i64 96
-  store <4 x float> %11, ptr %12, align 16, !tbaa !65
+  %6 = shufflevector <4 x float> %i.qf, <4 x float> %i.qg, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %6, ptr %i.qh, align 16, !tbaa !65
   %i.qi = load ptr, ptr %i.kf, align 8, !tbaa !68
-  %i.qj = getelementptr inbounds nuw [160 x i8], ptr %i.qi, i64 %indvars.iv115 ; 3 uses
+  %i.qj = getelementptr inbounds nuw [160 x i8], ptr %i.qi, i64 %indvars.iv115 ; 2 uses
   %i.qk = getelementptr inbounds nuw i8, ptr %i.qj, i64 112
-  %i.ql = shufflevector <4 x float> %.sroa.0118.0, <4 x float> %.sroa.8120.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.qm = shufflevector <4 x float> %.sroa.5119.0, <4 x float> %.sroa.11121.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.ql = shufflevector <4 x float> %.sroa.0118.0, <4 x float> %.sroa.8120.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
+  %i.qm = shufflevector <4 x float> %.sroa.5119.0, <4 x float> %.sroa.11121.0, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
   %i.qn = shufflevector <4 x float> %.sroa.0118.0, <4 x float> %.sroa.8120.0, <4 x i32> <i32 2, i32 6, i32 poison, i32 poison>
   %i.qo = shufflevector <4 x float> %.sroa.5119.0, <4 x float> %.sroa.11121.0, <4 x i32> <i32 2, i32 6, i32 poison, i32 poison>
-  %13 = shufflevector <4 x float> %i.ql, <4 x float> %i.qm, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
-  store <4 x float> %13, ptr %i.qk, align 16, !tbaa !65
-  %14 = shufflevector <4 x float> %i.ql, <4 x float> %i.qm, <4 x i32> <i32 2, i32 6, i32 3, i32 7>
-  %15 = getelementptr inbounds nuw i8, ptr %i.qj, i64 128
-  store <4 x float> %14, ptr %15, align 16, !tbaa !65
+  %7 = shufflevector <4 x float> %i.ql, <4 x float> %i.qm, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x float> %7, ptr %i.qk, align 16, !tbaa !65
   %i.qp = shufflevector <4 x float> %i.qn, <4 x float> %i.qo, <4 x i32> <i32 0, i32 4, i32 1, i32 5>
   %i.qq = getelementptr inbounds nuw i8, ptr %i.qj, i64 144
   store <4 x float> %i.qp, ptr %i.qq, align 16, !tbaa !65

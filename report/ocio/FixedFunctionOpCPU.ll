@@ -204,9 +204,8 @@ bb.a:
   %i.ai = extractvalue { <2 x float>, <2 x float> } %i.ah, 0
   %i.aj = extractvalue { <2 x float>, <2 x float> } %i.ah, 1
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 1844
-  store <2 x float> %i.ai, ptr %i.ak, align 4, !tbaa !16
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1852
-  store <2 x float> %i.aj, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !16
+  %9 = shufflevector <2 x float> %i.ai, <2 x float> %i.aj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.ak, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   call void @_ZN16OpenColorIO_v2_55ACES224init_GamutCompressParamsEfRKNS0_9JMhParamsES3_RKNS0_15ToneScaleParamsERKNS0_27SharedCompressionParametersES3_(ptr dead_on_unwind nonnull writable sret(%"struct.OpenColorIO_v2_5::ACES2::GamutCompressParams") align 4 %8, float noundef %i.j, ptr noundef nonnull align 4 dereferenceable(164) %i.ad, ptr noundef nonnull align 4 dereferenceable(164) %i.ae, ptr noundef nonnull align 4 dereferenceable(44) %i.af, ptr noundef nonnull align 4 dereferenceable(1460) %i.ag, ptr noundef nonnull align 4 dereferenceable(164) %6)
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 1860
@@ -609,9 +608,8 @@ bb.a:
   %i.o = extractvalue { <2 x float>, <2 x float> } %i.n, 0
   %i.p = extractvalue { <2 x float>, <2 x float> } %i.n, 1
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1680
-  store <2 x float> %i.o, ptr %i.q, align 8, !tbaa !16
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1688
-  store <2 x float> %i.p, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !16
+  %6 = shufflevector <2 x float> %i.o, <2 x float> %i.p, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.q, align 8, !tbaa !16
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   ret void
 }
@@ -1014,7 +1012,7 @@ _ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_535Ren
   %5 = alloca %"struct.OpenColorIO_v2_5::ACES2::ToneScaleParams", align 4 ; 4 uses
   %6 = alloca %"struct.OpenColorIO_v2_5::ACES2::JMhParams", align 4 ; 4 uses
   %7 = alloca %"struct.OpenColorIO_v2_5::ACES2::SharedCompressionParameters", align 4 ; 4 uses
-  %i.a = tail call noalias noundef nonnull dereferenceable(1712) ptr @_Znwm(i64 noundef 1712) #26 ; 12 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(1712) ptr @_Znwm(i64 noundef 1712) #26 ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i32 1, ptr %i.b, align 8, !tbaa !144
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
@@ -1069,9 +1067,8 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN16OpenColorIO_v2_535Rende
   %i.s = extractvalue { <2 x float>, <2 x float> } %i.r, 0
   %i.t = extractvalue { <2 x float>, <2 x float> } %i.r, 1
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 1696
-  store <2 x float> %i.s, ptr %i.u, align 8, !tbaa !16
-  %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1704
-  store <2 x float> %i.t, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !tbaa !16
+  %8 = shufflevector <2 x float> %i.s, <2 x float> %i.t, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %i.u, align 8, !tbaa !16
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #24
   store ptr %i.a, ptr %0, align 8, !tbaa !146
   store ptr %i.d, ptr %1, align 8, !tbaa !393

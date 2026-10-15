@@ -205,16 +205,14 @@ vector.ph807:                                     ; preds = %.lr.ph130.i.i.i.i.i
 
 vector.body809:                                   ; preds = %vector.body809, %vector.ph807
   %index810 = phi i64 [ 0, %vector.ph807 ], [ %index.next813, %vector.body809 ] ; 3 uses
-  %i.ht = getelementptr inbounds nuw [4 x i8], ptr %.sroa.46.0.copyload.i.i7, i64 %index810 ; 2 uses
+  %i.ht = getelementptr inbounds nuw [4 x i8], ptr %.sroa.46.0.copyload.i.i7, i64 %index810
   %i.hu = getelementptr inbounds nuw [8 x i8], ptr %i.hi, i64 %index810 ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 16
   %wide.load811 = load <2 x double>, ptr %i.hu, align 8, !tbaa !151
   %wide.load812 = load <2 x double>, ptr %i.hv, align 8, !tbaa !151
-  %46 = fptrunc <2 x double> %wide.load811 to <2 x float>
-  %47 = fptrunc <2 x double> %wide.load812 to <2 x float>
-  %48 = getelementptr inbounds nuw i8, ptr %i.ht, i64 8
-  store <2 x float> %46, ptr %i.ht, align 4, !tbaa !73
-  store <2 x float> %47, ptr %48, align 4, !tbaa !73
+  %46 = shufflevector <2 x double> %wide.load811, <2 x double> %wide.load812, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %47 = fptrunc <4 x double> %46 to <4 x float>
+  store <4 x float> %47, ptr %i.ht, align 4, !tbaa !73
   %index.next813 = add nuw i64 %index810, 4       ; 2 uses
   %i.hw = icmp eq i64 %index.next813, %n.vec808
   br i1 %i.hw, label %middle.block814, label %vector.body809, !llvm.loop !933
@@ -398,16 +396,14 @@ vector.ph793:                                     ; preds = %.lr.ph122.i.i.i.i.i
 
 vector.body795:                                   ; preds = %vector.body795, %vector.ph793
   %index796 = phi i64 [ 0, %vector.ph793 ], [ %index.next799, %vector.body795 ] ; 3 uses
-  %i.ju = getelementptr inbounds nuw [4 x i8], ptr %.sroa.46.0.copyload.i.i7, i64 %index796 ; 2 uses
+  %i.ju = getelementptr inbounds nuw [4 x i8], ptr %.sroa.46.0.copyload.i.i7, i64 %index796
   %i.jv = getelementptr inbounds nuw [8 x i8], ptr %i.hi, i64 %index796 ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 16
   %wide.load797 = load <2 x double>, ptr %i.jv, align 8, !tbaa !151
   %wide.load798 = load <2 x double>, ptr %i.jw, align 8, !tbaa !151
-  %49 = fptrunc <2 x double> %wide.load797 to <2 x float>
-  %50 = fptrunc <2 x double> %wide.load798 to <2 x float>
-  %51 = getelementptr inbounds nuw i8, ptr %i.ju, i64 8
-  store <2 x float> %49, ptr %i.ju, align 4, !tbaa !73
-  store <2 x float> %50, ptr %51, align 4, !tbaa !73
+  %48 = shufflevector <2 x double> %wide.load797, <2 x double> %wide.load798, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %49 = fptrunc <4 x double> %48 to <4 x float>
+  store <4 x float> %49, ptr %i.ju, align 4, !tbaa !73
   %index.next799 = add nuw i64 %index796, 4       ; 2 uses
   %i.jx = icmp eq i64 %index.next799, %n.vec794
   br i1 %i.jx, label %middle.block800, label %vector.body795, !llvm.loop !938
@@ -810,16 +806,14 @@ vector.ph539:                                     ; preds = %.lr.ph130.i.i.i.i.i
 
 vector.body541:                                   ; preds = %vector.body541, %vector.ph539
   %index542 = phi i64 [ 0, %vector.ph539 ], [ %index.next545, %vector.body541 ] ; 3 uses
-  %i.akd = getelementptr inbounds nuw [4 x i8], ptr %.sroa.46.0.copyload.i.i357, i64 %index542 ; 2 uses
+  %i.akd = getelementptr inbounds nuw [4 x i8], ptr %.sroa.46.0.copyload.i.i357, i64 %index542
   %i.ake = getelementptr inbounds nuw [8 x i8], ptr %i.ajs, i64 %index542 ; 2 uses
   %i.akf = getelementptr inbounds nuw i8, ptr %i.ake, i64 16
   %wide.load543 = load <2 x i64>, ptr %i.ake, align 8, !tbaa !74
   %wide.load544 = load <2 x i64>, ptr %i.akf, align 8, !tbaa !74
-  %52 = sitofp <2 x i64> %wide.load543 to <2 x float>
-  %53 = sitofp <2 x i64> %wide.load544 to <2 x float>
-  %54 = getelementptr inbounds nuw i8, ptr %i.akd, i64 8
-  store <2 x float> %52, ptr %i.akd, align 4, !tbaa !73
-  store <2 x float> %53, ptr %54, align 4, !tbaa !73
+  %50 = shufflevector <2 x i64> %wide.load543, <2 x i64> %wide.load544, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %51 = sitofp <4 x i64> %50 to <4 x float>
+  store <4 x float> %51, ptr %i.akd, align 4, !tbaa !73
   %index.next545 = add nuw i64 %index542, 4       ; 2 uses
   %i.akg = icmp eq i64 %index.next545, %n.vec540
   br i1 %i.akg, label %middle.block546, label %vector.body541, !llvm.loop !995
@@ -1003,16 +997,14 @@ vector.ph525:                                     ; preds = %.lr.ph122.i.i.i.i.i
 
 vector.body527:                                   ; preds = %vector.body527, %vector.ph525
   %index528 = phi i64 [ 0, %vector.ph525 ], [ %index.next531, %vector.body527 ] ; 3 uses
-  %i.ame = getelementptr inbounds nuw [4 x i8], ptr %.sroa.46.0.copyload.i.i357, i64 %index528 ; 2 uses
+  %i.ame = getelementptr inbounds nuw [4 x i8], ptr %.sroa.46.0.copyload.i.i357, i64 %index528
   %i.amf = getelementptr inbounds nuw [8 x i8], ptr %i.ajs, i64 %index528 ; 2 uses
   %i.amg = getelementptr inbounds nuw i8, ptr %i.amf, i64 16
   %wide.load529 = load <2 x i64>, ptr %i.amf, align 8, !tbaa !74
   %wide.load530 = load <2 x i64>, ptr %i.amg, align 8, !tbaa !74
-  %55 = sitofp <2 x i64> %wide.load529 to <2 x float>
-  %56 = sitofp <2 x i64> %wide.load530 to <2 x float>
-  %57 = getelementptr inbounds nuw i8, ptr %i.ame, i64 8
-  store <2 x float> %55, ptr %i.ame, align 4, !tbaa !73
-  store <2 x float> %56, ptr %57, align 4, !tbaa !73
+  %52 = shufflevector <2 x i64> %wide.load529, <2 x i64> %wide.load530, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %53 = sitofp <4 x i64> %52 to <4 x float>
+  store <4 x float> %53, ptr %i.ame, align 4, !tbaa !73
   %index.next531 = add nuw i64 %index528, 4       ; 2 uses
   %i.amh = icmp eq i64 %index.next531, %n.vec526
   br i1 %i.amh, label %middle.block532, label %vector.body527, !llvm.loop !1000

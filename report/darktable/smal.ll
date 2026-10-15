@@ -203,21 +203,19 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 %index ; 4 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 5 ; 2 uses
-  %i.ek = getelementptr inbounds nuw i8, ptr %i.ei, i64 21 ; 2 uses
+  %i.ek = getelementptr inbounds nuw i8, ptr %i.ei, i64 21
   %i.el = getelementptr inbounds nuw i8, ptr %i.ei, i64 37 ; 2 uses
-  %i.em = getelementptr inbounds nuw i8, ptr %i.ei, i64 53 ; 2 uses
+  %i.em = getelementptr inbounds nuw i8, ptr %i.ei, i64 53
   %wide.load = load <16 x i8>, ptr %i.ej, align 1, !tbaa !106
   %wide.load206 = load <16 x i8>, ptr %i.ek, align 1, !tbaa !106
   %wide.load207 = load <16 x i8>, ptr %i.el, align 1, !tbaa !106
   %wide.load208 = load <16 x i8>, ptr %i.em, align 1, !tbaa !106
-  %3 = add <16 x i8> %wide.load, splat (i8 -1)
-  %4 = add <16 x i8> %wide.load206, splat (i8 -1)
-  %5 = add <16 x i8> %wide.load207, splat (i8 -1)
-  %6 = add <16 x i8> %wide.load208, splat (i8 -1)
-  store <16 x i8> %3, ptr %i.ej, align 1, !tbaa !106
-  store <16 x i8> %4, ptr %i.ek, align 1, !tbaa !106
-  store <16 x i8> %5, ptr %i.el, align 1, !tbaa !106
-  store <16 x i8> %6, ptr %i.em, align 1, !tbaa !106
+  %3 = shufflevector <16 x i8> %wide.load, <16 x i8> %wide.load206, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %4 = add <32 x i8> %3, splat (i8 -1)
+  store <32 x i8> %4, ptr %i.ej, align 1, !tbaa !106
+  %5 = shufflevector <16 x i8> %wide.load207, <16 x i8> %wide.load208, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %6 = add <32 x i8> %5, splat (i8 -1)
+  store <32 x i8> %6, ptr %i.el, align 1, !tbaa !106
   %index.next = add nuw i64 %index, 64            ; 2 uses
   %i.en = icmp eq i64 %index.next, %n.vec
   br i1 %i.en, label %middle.block, label %vector.body, !llvm.loop !96

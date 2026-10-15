@@ -202,7 +202,7 @@ bb.co:                                            ; preds = %bb.cm
 
 bb.cp:                                            ; preds = %bb.ch, %bb.co, %bb.bu, %bb.ca, %bb.bn
   %.pre-phi219 = phi i64 [ %i.jb, %bb.ch ], [ %.pre218, %bb.co ], [ %i.hq, %bb.bu ], [ %i.hy, %bb.ca ], [ %i.gx, %bb.bn ] ; 2 uses
-  %.1 = phi ptr [ %i.ja, %bb.ch ], [ %i.ko, %bb.co ], [ %i.hp, %bb.bu ], [ %i.hw, %bb.ca ], [ %i.gw, %bb.bn ] ; 9 uses
+  %.1 = phi ptr [ %i.ja, %bb.ch ], [ %i.ko, %bb.co ], [ %i.hp, %bb.bu ], [ %i.hw, %bb.ca ], [ %i.gw, %bb.bn ] ; 8 uses
   %i.kp = icmp ne ptr %.1, null, !nosanitize !33
   %i.kq = and i64 %.pre-phi219, 3, !nosanitize !33
   %i.kr = icmp eq i64 %i.kq, 0, !nosanitize !33
@@ -225,9 +225,8 @@ bb.cr:                                            ; preds = %bb.cp
   %i.ky = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.kz = getelementptr inbounds nuw i8, ptr %.1, i64 152
   %i.la = load <2 x float>, ptr %i.ky, align 8, !tbaa !10
-  store <2 x float> %i.la, ptr %i.kz, align 4, !tbaa !10
-  %3 = getelementptr inbounds nuw i8, ptr %.1, i64 160
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %3, align 4, !tbaa !10
+  %3 = shufflevector <2 x float> %i.la, <2 x float> <float 0.000000e+00, float 1.000000e+00>, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.kz, align 4, !tbaa !10
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.1, i64 168
   store float 0.000000e+00, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !10
   %i.lb = getelementptr inbounds nuw i8, ptr %1, i64 80

@@ -204,14 +204,13 @@ bb.u:                                             ; preds = %bb.p, %bb.t, %bb.s,
   %.0200.us = phi i32 [ %.0.us, %bb.w ], [ %.0198, %.lr.ph ]
   %i.gz = load ptr, ptr %i.al, align 8, !tbaa !124
   %i.ha = sext i32 %.0200.us to i64
-  %i.hb = getelementptr inbounds [296 x i8], ptr %i.gz, i64 %i.ha ; 8 uses
+  %i.hb = getelementptr inbounds [296 x i8], ptr %i.gz, i64 %i.ha ; 7 uses
   %i.hc = tail call { <2 x float>, <2 x float> } @b2ComputeFatShapeAABB(ptr noundef %i.hb, <2 x float> %.sroa.017.0.copyload, <2 x float> %.sroa.418.0.copyload, float noundef %i.ac) #9 ; 2 uses
   %i.hd = extractvalue { <2 x float>, <2 x float> } %i.hc, 0 ; 3 uses
   %i.he = extractvalue { <2 x float>, <2 x float> } %i.hc, 1 ; 3 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %i.hb, i64 64
-  store <2 x float> %i.hd, ptr %i.hf, align 8, !tbaa !127
-  %.sroa.7.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %i.hb, i64 72
-  store <2 x float> %i.he, ptr %.sroa.7.0..sroa_idx.us, align 8, !tbaa !127
+  %4 = shufflevector <2 x float> %i.hd, <2 x float> %i.he, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.hf, align 8, !tbaa !127
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hb, i64 80 ; 2 uses
   %i.hh = load <2 x float>, ptr %i.hg, align 8
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hb, i64 88
@@ -614,8 +613,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.da = load <2 x float>, ptr %i.cz, align 4
   %i.db = fmul <2 x float> %i.bs, %.sroa.010.0.i
   %i.dc = fadd <2 x float> %i.db, %i.da
-  store <2 x float> %i.dc, ptr %i.cz, align 4, !tbaa !127
-  %i.dd = getelementptr inbounds nuw i8, ptr %i.bt, i64 24 ; 2 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %i.bt, i64 24
   %i.de = fmul float %i.bf, %.0.i                 ; 2 uses
   %i.df = load <2 x float>, ptr %i.dd, align 4    ; 2 uses
   %.sroa.010.0.vec.extract.i.i = extractelement <2 x float> %i.df, i64 0 ; 2 uses
@@ -635,7 +633,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %.sroa.015.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.dr, i64 0
   %i.ds = fmul float %i.dj, %i.dq
   %.sroa.015.4.vec.insert.i.i = insertelement <2 x float> %.sroa.015.0.vec.insert.i.i, float %i.ds, i64 1
-  store <2 x float> %.sroa.015.4.vec.insert.i.i, ptr %i.dd, align 4, !tbaa !127
+  %3 = shufflevector <2 x float> %i.dc, <2 x float> %.sroa.015.4.vec.insert.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.cz, align 4, !tbaa !127
   %indvars.iv.next.i183 = add nsw i64 %indvars.iv.i177, 1 ; 2 uses
   %i.dt = icmp slt i64 %indvars.iv.next.i183, %i.bq
   br i1 %i.dt, label %.lr.ph.i176, label %b2IntegrateVelocitiesTask.exit, !llvm.loop !329
@@ -804,15 +803,15 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   store <2 x float> %i.cb, ptr %i.bd, align 8, !tbaa !127
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bg, i64 64 ; 2 uses
   %.sroa.070.0.copyload = load <2 x float>, ptr %i.cc, align 8, !tbaa !127 ; 2 uses
-  %.sroa.471.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 72 ; 2 uses
+  %.sroa.471.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 72
   %.sroa.471.0.copyload = load <2 x float>, ptr %.sroa.471.0..sroa_idx, align 8, !tbaa !127 ; 2 uses
   %i.cd = call { <2 x float>, <2 x float> } @b2ComputeShapeAABB(ptr noundef %i.bg, <2 x float> %i.ag, <2 x float> %i.o) #9 ; 2 uses
   %i.ce = extractvalue { <2 x float>, <2 x float> } %i.cd, 0
   %i.cf = extractvalue { <2 x float>, <2 x float> } %i.cd, 1
   %i.cg = fadd <2 x float> %.sroa.0105.0.copyload, %i.ce ; 3 uses
   %i.ch = fadd <2 x float> %.sroa.0105.0.copyload, %i.cf ; 3 uses
-  store <2 x float> %i.cg, ptr %i.cc, align 8, !tbaa !127
-  store <2 x float> %i.ch, ptr %.sroa.471.0..sroa_idx, align 8, !tbaa !127
+  %5 = shufflevector <2 x float> %i.cg, <2 x float> %i.ch, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.cc, align 8, !tbaa !127
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
   %i.cj = load i32, ptr %i.ci, align 8, !tbaa !147
   %.not165 = icmp eq i32 %i.cj, -1
@@ -912,16 +911,15 @@ bb.g:                                             ; preds = %.lr.ph270, %bb.i
   %.1268 = phi i32 [ %.1266, %.lr.ph270 ], [ %.1, %bb.i ]
   %i.et = load ptr, ptr %i.es, align 8, !tbaa !124
   %i.eu = sext i32 %.1268 to i64
-  %i.ev = getelementptr inbounds [296 x i8], ptr %i.et, i64 %i.eu ; 8 uses
+  %i.ev = getelementptr inbounds [296 x i8], ptr %i.et, i64 %i.eu ; 7 uses
   %i.ew = load <2 x float>, ptr %i.f, align 4
   %i.ex = load <2 x float>, ptr %i.n, align 4
   %i.ey = call { <2 x float>, <2 x float> } @b2ComputeFatShapeAABB(ptr noundef %i.ev, <2 x float> %i.ew, <2 x float> %i.ex, float noundef %i.ct) #9 ; 2 uses
   %i.ez = extractvalue { <2 x float>, <2 x float> } %i.ey, 0 ; 3 uses
   %i.fa = extractvalue { <2 x float>, <2 x float> } %i.ey, 1 ; 3 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ev, i64 64
-  store <2 x float> %i.ez, ptr %i.fb, align 8, !tbaa !127
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ev, i64 72
-  store <2 x float> %i.fa, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !127
+  %6 = shufflevector <2 x float> %i.ez, <2 x float> %i.fa, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.fb, align 8, !tbaa !127
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ev, i64 80 ; 2 uses
   %i.fd = load <2 x float>, ptr %i.fc, align 8
   %i.fe = getelementptr inbounds nuw i8, ptr %i.ev, i64 88
@@ -1090,7 +1088,7 @@ declare i64 @b2DynamicTree_Query(ptr noundef, <2 x float>, <2 x float>, i64 noun
 ; Function Attrs: nounwind uwtable
 define internal noundef zeroext i1 @b2ContinuousQueryCallback(i32 %0, i64 noundef %1, ptr nofree noundef captures(none) %2) #0 {
 bb.a:
-  %3 = alloca %struct.b2TOIInput, align 4         ; 13 uses
+  %3 = alloca %struct.b2TOIInput, align 4         ; 12 uses
   %4 = alloca %struct.b2ShapeProxy, align 4       ; 4 uses
   %5 = alloca %struct.b2TOIOutput, align 4        ; 8 uses
   %6 = alloca %struct.b2Vec2, align 8             ; 5 uses
@@ -1331,13 +1329,11 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   %i.ec = getelementptr inbounds nuw i8, ptr %3, i64 144
   %i.ed = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 2 uses
-  %i.ee = load <2 x float>, ptr %i.ed, align 8    ; 2 uses
+  %i.ee = load <2 x float>, ptr %i.ed, align 8
   %i.ef = getelementptr inbounds nuw i8, ptr %i.an, i64 32
   %i.eg = load <2 x float>, ptr %i.ef, align 4, !noalias !350
-  %9 = fsub <2 x float> %i.eg, %i.ee
   %i.eh = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.ei = load <2 x float>, ptr %i.eh, align 4, !noalias !350
-  %10 = fsub <2 x float> %i.ei, %i.ee
   %i.ej = getelementptr inbounds nuw i8, ptr %i.an, i64 24
   %i.ek = load i64, ptr %i.ej, align 4, !tbaa !127, !noalias !350
   %i.el = getelementptr inbounds nuw i8, ptr %i.an, i64 8
@@ -1346,9 +1342,10 @@ bb.p:                                             ; preds = %bb.o
   %i.eo = load i64, ptr %i.en, align 4, !tbaa !127, !noalias !350
   store i64 %i.eo, ptr %i.ec, align 4, !tbaa !127
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 152
-  store <2 x float> %9, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !127
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 160
-  store <2 x float> %10, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !127
+  %9 = shufflevector <2 x float> %i.eg, <2 x float> %i.ei, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %10 = shufflevector <2 x float> %i.ee, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %11 = fsub <4 x float> %9, %10
+  store <4 x float> %11, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !127
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 168
   store i64 %i.ek, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !127
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 176

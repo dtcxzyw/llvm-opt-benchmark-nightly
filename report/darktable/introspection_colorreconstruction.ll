@@ -205,7 +205,7 @@ dt_iop_colorreconstruct_bilateral_free.exit.i:    ; preds = %bb.y, %bb.x
 
 .thread:                                          ; preds = %hue_conversion.exit, %bb.p, %bb.q, %bb.r, %bb.u
   %i.ds = load float, ptr %i.e, align 8, !tbaa !45
-  %i.dt = tail call noalias dereferenceable_or_null(64) ptr @malloc(i64 noundef 64) #24 ; 12 uses
+  %i.dt = tail call noalias dereferenceable_or_null(64) ptr @malloc(i64 noundef 64) #24 ; 11 uses
   %.not.i72 = icmp eq ptr %i.dt, null
   br i1 %.not.i72, label %bb.aa, label %bb.ab
 
@@ -246,10 +246,9 @@ bb.ab:                                            ; preds = %.thread
   %i.et = getelementptr inbounds nuw i8, ptr %i.dt, i64 16
   store i64 %i.es, ptr %i.et, align 8, !tbaa !115
   %i.eu = getelementptr inbounds nuw i8, ptr %i.dt, i64 24
-  store <2 x i32> %i.dy, ptr %i.eu, align 8, !tbaa !15
-  %6 = getelementptr inbounds nuw i8, ptr %i.dt, i64 32
-  %7 = load <2 x i32>, ptr %4, align 4, !tbaa !15
-  store <2 x i32> %7, ptr %6, align 8, !tbaa !15
+  %6 = load <2 x i32>, ptr %4, align 4, !tbaa !15
+  %7 = shufflevector <2 x i32> %i.dy, <2 x i32> %6, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i32> %7, ptr %i.eu, align 8, !tbaa !15
   %i.ev = load float, ptr %i.g, align 4, !tbaa !46
   %i.ew = fdiv reassoc nsz arcp contract afn float %i.ds, %i.ev ; 2 uses
   %i.ex = getelementptr inbounds nuw i8, ptr %i.dt, i64 40

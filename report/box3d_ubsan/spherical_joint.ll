@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
 ; Function Attrs: nounwind uwtable
 define void @b3SphericalJoint_SetTargetRotation(i64 %0, <2 x float> %1, <2 x float> %2) local_unnamed_addr #5 !func_sanitize !130 {
 bb.a:
-  %3 = alloca %struct.b3RecArgs_SphericalJointSetTargetRotation, align 8 ; 6 uses
+  %3 = alloca %struct.b3RecArgs_SphericalJointSetTargetRotation, align 8 ; 5 uses
   %.sroa.3.0.extract.shift = lshr i64 %0, 32
   %i.a = trunc nuw i64 %.sroa.3.0.extract.shift to i32
   %i.b = and i32 %i.a, 65535
@@ -228,15 +228,14 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
   store i64 %0, ptr %3, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store <2 x float> %1, ptr %i.k, align 8, !tbaa !88
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !88
+  %4 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.k, align 8, !tbaa !88
   call void @b3RecWrite_SphericalJointSetTargetRotation(ptr noundef nonnull %i.j, ptr noundef nonnull %3) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.l = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 6) #8 ; 4 uses
+  %i.l = call ptr @b3GetJointSimCheckType(i64 %0, i32 noundef 6) #8 ; 3 uses
   %i.m = icmp ne ptr %i.l, null, !nosanitize !10
   %i.n = ptrtoint ptr %i.l to i64, !nosanitize !10 ; 2 uses
   %i.o = and i64 %i.n, 3, !nosanitize !10
@@ -250,9 +249,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 268
-  store <2 x float> %1, ptr %i.r, align 4, !tbaa !88
-  %.sroa.3.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.l, i64 276
-  store <2 x float> %2, ptr %.sroa.3.0..sroa_idx4, align 4, !tbaa !88
+  %5 = shufflevector <2 x float> %1, <2 x float> %2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %5, ptr %i.r, align 4, !tbaa !88
   ret void
 }
 

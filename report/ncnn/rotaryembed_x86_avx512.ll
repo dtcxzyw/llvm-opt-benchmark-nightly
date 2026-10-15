@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   %.1381 = phi ptr [ %i.di, %.lr.ph382 ], [ %.0254.lcssa, %.preheader366 ] ; 3 uses
   %.1256380 = phi ptr [ %i.dk, %.lr.ph382 ], [ %.0255.lcssa, %.preheader366 ] ; 2 uses
   %.1261379 = phi ptr [ %i.dl, %.lr.ph382 ], [ %.0260.lcssa, %.preheader366 ] ; 2 uses
-  %.1266378 = phi ptr [ %i.dj, %.lr.ph382 ], [ %.0265.lcssa, %.preheader366 ] ; 3 uses
+  %.1266378 = phi ptr [ %i.dj, %.lr.ph382 ], [ %.0265.lcssa, %.preheader366 ] ; 2 uses
   %.1271377 = phi i32 [ %i.dm, %.lr.ph382 ], [ %.0270.lcssa, %.preheader366 ]
   %i.ct = load <8 x float>, ptr %.1381, align 1, !tbaa !42 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.1381, i64 32
@@ -221,9 +221,8 @@ bb.d:                                             ; preds = %bb.c
   %i.df = fmul fast <8 x float> %i.db, %i.dd
   %i.dg = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.fma.vfmaddsub.ps.256(<8 x float> nofpclass(nan inf) %i.ct, <8 x float> nofpclass(nan inf) %i.cy, <8 x float> nofpclass(nan inf) %i.de)
   %i.dh = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.fma.vfmaddsub.ps.256(<8 x float> nofpclass(nan inf) %i.cv, <8 x float> nofpclass(nan inf) %i.cz, <8 x float> nofpclass(nan inf) %i.df)
-  store <8 x float> %i.dg, ptr %.1266378, align 1, !tbaa !42
-  %10 = getelementptr inbounds nuw i8, ptr %.1266378, i64 32
-  store <8 x float> %i.dh, ptr %10, align 1, !tbaa !42
+  %10 = shufflevector <8 x float> %i.dg, <8 x float> %i.dh, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x float> %10, ptr %.1266378, align 1, !tbaa !42
   %i.di = getelementptr inbounds nuw i8, ptr %.1381, i64 64 ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %.1266378, i64 64 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.1256380, i64 32 ; 2 uses
@@ -250,7 +249,7 @@ bb.d:                                             ; preds = %bb.c
   %.2392 = phi ptr [ %i.ei, %.lr.ph393 ], [ %.1.lcssa, %.preheader365 ] ; 3 uses
   %.2257391 = phi ptr [ %i.ek, %.lr.ph393 ], [ %.1256.lcssa, %.preheader365 ] ; 2 uses
   %.2262390 = phi ptr [ %i.el, %.lr.ph393 ], [ %.1261.lcssa, %.preheader365 ] ; 2 uses
-  %.2267389 = phi ptr [ %i.ej, %.lr.ph393 ], [ %.1266.lcssa, %.preheader365 ] ; 3 uses
+  %.2267389 = phi ptr [ %i.ej, %.lr.ph393 ], [ %.1266.lcssa, %.preheader365 ] ; 2 uses
   %.2272388 = phi i32 [ %i.em, %.lr.ph393 ], [ %.1271.lcssa, %.preheader365 ]
   %i.dt = load <4 x float>, ptr %.2392, align 1, !tbaa !42 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.2392, i64 16
@@ -267,9 +266,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ef = fmul fast <4 x float> %i.eb, %i.ed
   %i.eg = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.fma.vfmaddsub.ps(<4 x float> nofpclass(nan inf) %i.dt, <4 x float> nofpclass(nan inf) %i.dy, <4 x float> nofpclass(nan inf) %i.ee)
   %i.eh = call fast noundef nofpclass(nan inf) <4 x float> @llvm.x86.fma.vfmaddsub.ps(<4 x float> nofpclass(nan inf) %i.dv, <4 x float> nofpclass(nan inf) %i.dz, <4 x float> nofpclass(nan inf) %i.ef)
-  store <4 x float> %i.eg, ptr %.2267389, align 1, !tbaa !42
-  %11 = getelementptr inbounds nuw i8, ptr %.2267389, i64 16
-  store <4 x float> %i.eh, ptr %11, align 1, !tbaa !42
+  %11 = shufflevector <4 x float> %i.eg, <4 x float> %i.eh, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <8 x float> %11, ptr %.2267389, align 1, !tbaa !42
   %i.ei = getelementptr inbounds nuw i8, ptr %.2392, i64 32 ; 2 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %.2267389, i64 32 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %.2257391, i64 16 ; 2 uses
@@ -672,7 +670,7 @@ bb.d:                                             ; preds = %bb.c
   %.0277422 = phi ptr [ %i.dy, %.lr.ph ], [ %i.bd, %bb.d ] ; 2 uses
   %.0282421 = phi ptr [ %i.dz, %.lr.ph ], [ %i.bk, %bb.d ] ; 2 uses
   %.0287420 = phi i32 [ %i.ea, %.lr.ph ], [ 0, %bb.d ]
-  %.0292419 = phi ptr [ %i.dx, %.lr.ph ], [ %i.bm, %bb.d ] ; 3 uses
+  %.0292419 = phi ptr [ %i.dx, %.lr.ph ], [ %i.bm, %bb.d ] ; 2 uses
   %i.br = load <16 x i16>, ptr %.0273423, align 1, !tbaa !42 ; 2 uses
   %i.bs = shufflevector <16 x i16> <i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison, i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <16 x i16> %i.br, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27> ; 2 uses
   %i.bt = shufflevector <16 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison, i16 0, i16 0, i16 0, i16 0>, <16 x i16> %i.br, <16 x i32> <i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
@@ -725,18 +723,13 @@ bb.d:                                             ; preds = %bb.c
   %i.do = shufflevector <16 x i32> %i.dn, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.dp = shufflevector <16 x i32> %i.dn, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.dq = call <16 x i16> @llvm.x86.avx2.packusdw(<8 x i32> %i.do, <8 x i32> %i.dp)
-  %10 = bitcast <16 x i16> %i.dq to <4 x i64>
-  %11 = shufflevector <4 x i64> %10, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  store <4 x i64> %11, ptr %.0292419, align 1, !tbaa !42
   %i.dr = bitcast <16 x float> %i.dl to <16 x i32>
   %i.ds = lshr <16 x i32> %i.dr, splat (i32 16)   ; 2 uses
   %i.dt = shufflevector <16 x i32> %i.ds, <16 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.du = shufflevector <16 x i32> %i.ds, <16 x i32> poison, <8 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.dv = call <16 x i16> @llvm.x86.avx2.packusdw(<8 x i32> %i.dt, <8 x i32> %i.du)
-  %12 = bitcast <16 x i16> %i.dv to <4 x i64>
-  %13 = shufflevector <4 x i64> %12, <4 x i64> poison, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %14 = getelementptr inbounds nuw i8, ptr %.0292419, i64 32
-  store <4 x i64> %13, ptr %14, align 1, !tbaa !42
+  %10 = shufflevector <16 x i16> %i.dq, <16 x i16> %i.dv, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11, i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 24, i32 25, i32 26, i32 27, i32 20, i32 21, i32 22, i32 23, i32 28, i32 29, i32 30, i32 31>
+  store <32 x i16> %10, ptr %.0292419, align 1, !tbaa !42
   %i.dw = getelementptr inbounds nuw i8, ptr %.0273423, i64 64 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %.0292419, i64 64 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %.0277422, i64 32 ; 2 uses
@@ -764,7 +757,7 @@ bb.d:                                             ; preds = %bb.c
   %.1278431 = phi ptr [ %i.fy, %.lr.ph433 ], [ %.0277.lcssa, %.preheader417 ] ; 2 uses
   %.1283430 = phi ptr [ %i.fz, %.lr.ph433 ], [ %.0282.lcssa, %.preheader417 ] ; 2 uses
   %.1288429 = phi i32 [ %i.ga, %.lr.ph433 ], [ %.0287.lcssa, %.preheader417 ]
-  %.1293428 = phi ptr [ %i.fx, %.lr.ph433 ], [ %.0292.lcssa, %.preheader417 ] ; 3 uses
+  %.1293428 = phi ptr [ %i.fx, %.lr.ph433 ], [ %.0292.lcssa, %.preheader417 ] ; 2 uses
   %i.eh = load <8 x i16>, ptr %.1274432, align 1, !tbaa !42 ; 2 uses
   %i.ei = shufflevector <8 x i16> <i16 0, i16 0, i16 0, i16 0, i16 poison, i16 poison, i16 poison, i16 poison>, <8 x i16> %i.eh, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11>
   %i.ej = shufflevector <8 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 0, i16 0, i16 0, i16 0>, <8 x i16> %i.eh, <8 x i32> <i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
@@ -801,14 +794,13 @@ bb.d:                                             ; preds = %bb.c
   %i.fo = shufflevector <8 x i32> %i.fn, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.fp = shufflevector <8 x i32> %i.fn, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
   %i.fq = call <8 x i16> @llvm.x86.sse41.packusdw(<4 x i32> %i.fo, <4 x i32> %i.fp)
-  store <8 x i16> %i.fq, ptr %.1293428, align 1, !tbaa !42
   %i.fr = bitcast <8 x float> %i.fl to <8 x i32>
   %i.fs = lshr <8 x i32> %i.fr, splat (i32 16)    ; 2 uses
   %i.ft = shufflevector <8 x i32> %i.fs, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.fu = shufflevector <8 x i32> %i.fs, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
   %i.fv = call <8 x i16> @llvm.x86.sse41.packusdw(<4 x i32> %i.ft, <4 x i32> %i.fu)
-  %15 = getelementptr inbounds nuw i8, ptr %.1293428, i64 16
-  store <8 x i16> %i.fv, ptr %15, align 1, !tbaa !42
+  %11 = shufflevector <8 x i16> %i.fq, <8 x i16> %i.fv, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x i16> %11, ptr %.1293428, align 1, !tbaa !42
   %i.fw = getelementptr inbounds nuw i8, ptr %.1274432, i64 32 ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %.1293428, i64 32 ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %.1278431, i64 16 ; 2 uses

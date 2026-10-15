@@ -93,8 +93,8 @@ define dso_local void @_ZN14b3OptimizedBvh5buildEP23b3StridingMeshInterfacebRK9b
 bb.a:
   %5 = alloca %struct.QuantizedNodeTriangleCallback, align 8 ; 9 uses
   %6 = alloca %struct.NodeTriangleCallback, align 8 ; 8 uses
-  %7 = alloca %class.b3Vector3, align 16          ; 6 uses
-  %8 = alloca %class.b3Vector3, align 16          ; 6 uses
+  %7 = alloca %class.b3Vector3, align 16          ; 5 uses
+  %8 = alloca %class.b3Vector3, align 16          ; 5 uses
   %9 = alloca %class.b3BvhSubtreeInfo, align 16   ; 3 uses
   %i.a = zext i1 %2 to i8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
@@ -307,13 +307,9 @@ bb.l:                                             ; preds = %bb.a
   %i.bl = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.bk, ptr %i.bl, align 8, !tbaa !67
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
-  store <2 x float> splat (float f0xDD5E0B6B), ptr %7, align 16
-  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store <2 x float> <float f0xDD5E0B6B, float 0.000000e+00>, ptr %10, align 8
+  store <4 x float> <float f0xDD5E0B6B, float f0xDD5E0B6B, float f0xDD5E0B6B, float 0.000000e+00>, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
-  store <2 x float> splat (float f0x5D5E0B6B), ptr %8, align 16
-  %11 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store <2 x float> <float f0x5D5E0B6B, float 0.000000e+00>, ptr %11, align 8
+  store <4 x float> <float f0x5D5E0B6B, float f0x5D5E0B6B, float f0x5D5E0B6B, float 0.000000e+00>, ptr %8, align 16
   %i.bm = load ptr, ptr %1, align 16, !tbaa !12
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   %i.bo = load ptr, ptr %i.bn, align 8

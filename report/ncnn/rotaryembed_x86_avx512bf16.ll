@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   %.0273414 = phi ptr [ %i.cm, %.lr.ph ], [ %i.aw, %bb.d ] ; 3 uses
   %.0277413 = phi ptr [ %i.co, %.lr.ph ], [ %i.bd, %bb.d ] ; 2 uses
   %.0282412 = phi ptr [ %i.cp, %.lr.ph ], [ %i.bk, %bb.d ] ; 2 uses
-  %.0287411 = phi ptr [ %i.cn, %.lr.ph ], [ %i.bm, %bb.d ] ; 3 uses
+  %.0287411 = phi ptr [ %i.cn, %.lr.ph ], [ %i.bm, %bb.d ] ; 2 uses
   %.0292410 = phi i32 [ %i.cq, %.lr.ph ], [ 0, %bb.d ]
   %i.br = load <16 x bfloat>, ptr %.0273414, align 1, !tbaa !54
   %i.bs = fpext fast <16 x bfloat> %i.br to <16 x float> ; 2 uses
@@ -224,10 +224,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ci = call fast noundef nofpclass(nan inf) <16 x float> @llvm.x86.avx512.vfmaddsub.ps.512(<16 x float> nofpclass(nan inf) %i.bs, <16 x float> nofpclass(nan inf) %i.ca, <16 x float> nofpclass(nan inf) %i.cg, i32 4)
   %i.cj = call fast noundef nofpclass(nan inf) <16 x float> @llvm.x86.avx512.vfmaddsub.ps.512(<16 x float> nofpclass(nan inf) %i.bv, <16 x float> nofpclass(nan inf) %i.cb, <16 x float> nofpclass(nan inf) %i.ch, i32 4)
   %i.ck = call fast noundef nofpclass(nan inf) <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512(<16 x float> nofpclass(nan inf) %i.ci)
-  store <16 x bfloat> %i.ck, ptr %.0287411, align 1, !tbaa !54
   %i.cl = call fast noundef nofpclass(nan inf) <16 x bfloat> @llvm.x86.avx512bf16.cvtneps2bf16.512(<16 x float> nofpclass(nan inf) %i.cj)
-  %10 = getelementptr inbounds nuw i8, ptr %.0287411, i64 32
-  store <16 x bfloat> %i.cl, ptr %10, align 1, !tbaa !54
+  %10 = shufflevector <16 x bfloat> %i.ck, <16 x bfloat> %i.cl, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  store <32 x bfloat> %10, ptr %.0287411, align 1, !tbaa !54
   %i.cm = getelementptr inbounds nuw i8, ptr %.0273414, i64 64 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.0287411, i64 64 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.0277413, i64 32 ; 2 uses
@@ -254,7 +253,7 @@ bb.d:                                             ; preds = %bb.c
   %.1274423 = phi ptr [ %i.dr, %.lr.ph424 ], [ %.0273.lcssa, %.preheader408 ] ; 3 uses
   %.1278422 = phi ptr [ %i.dt, %.lr.ph424 ], [ %.0277.lcssa, %.preheader408 ] ; 2 uses
   %.1283421 = phi ptr [ %i.du, %.lr.ph424 ], [ %.0282.lcssa, %.preheader408 ] ; 2 uses
-  %.1288420 = phi ptr [ %i.ds, %.lr.ph424 ], [ %.0287.lcssa, %.preheader408 ] ; 3 uses
+  %.1288420 = phi ptr [ %i.ds, %.lr.ph424 ], [ %.0287.lcssa, %.preheader408 ] ; 2 uses
   %.1293419 = phi i32 [ %i.dv, %.lr.ph424 ], [ %.0292.lcssa, %.preheader408 ]
   %i.cx = load <8 x bfloat>, ptr %.1274423, align 1, !tbaa !54
   %i.cy = fpext fast <8 x bfloat> %i.cx to <8 x float> ; 2 uses
@@ -276,10 +275,9 @@ bb.d:                                             ; preds = %bb.c
   %i.do = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.fma.vfmaddsub.ps.256(<8 x float> nofpclass(nan inf) %i.cy, <8 x float> nofpclass(nan inf) %i.dg, <8 x float> nofpclass(nan inf) %i.dm)
   %i.dp = call fast noundef nofpclass(nan inf) <8 x float> @llvm.x86.fma.vfmaddsub.ps.256(<8 x float> nofpclass(nan inf) %i.db, <8 x float> nofpclass(nan inf) %i.dh, <8 x float> nofpclass(nan inf) %i.dn)
   %i.dq = call fast <8 x bfloat> @llvm.x86.vcvtneps2bf16256(<8 x float> %i.do)
-  store <8 x bfloat> %i.dq, ptr %.1288420, align 1, !tbaa !54
-  %11 = getelementptr inbounds nuw i8, ptr %.1288420, i64 16
-  %12 = call fast <8 x bfloat> @llvm.x86.vcvtneps2bf16256(<8 x float> %i.dp)
-  store <8 x bfloat> %12, ptr %11, align 1, !tbaa !54
+  %11 = call fast <8 x bfloat> @llvm.x86.vcvtneps2bf16256(<8 x float> %i.dp)
+  %12 = shufflevector <8 x bfloat> %i.dq, <8 x bfloat> %11, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  store <16 x bfloat> %12, ptr %.1288420, align 1, !tbaa !54
   %i.dr = getelementptr inbounds nuw i8, ptr %.1274423, i64 32 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.1288420, i64 32 ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %.1278422, i64 16 ; 2 uses

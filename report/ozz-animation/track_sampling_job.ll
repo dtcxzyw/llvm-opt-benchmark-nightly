@@ -202,10 +202,9 @@ bb.j:                                             ; preds = %_ZSt11upper_boundIP
   %i.bd = tail call { <2 x float>, <2 x float> } @_ZN3ozz9animation8internal11TrackPolicyINS_4math6Float4EE4LerpERKS4_S7_f(ptr noundef nonnull align 4 dereferenceable(16) %i.bb, ptr noundef nonnull align 4 dereferenceable(16) %i.bc, float noundef %i.ba) ; 2 uses
   %i.be = extractvalue { <2 x float>, <2 x float> } %i.bd, 0
   %i.bf = extractvalue { <2 x float>, <2 x float> } %i.bd, 1
-  %i.bg = load ptr, ptr %i.a, align 8, !tbaa !54  ; 2 uses
-  store <2 x float> %i.be, ptr %i.bg, align 4, !tbaa !18
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  store <2 x float> %i.bf, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !18
+  %i.bg = load ptr, ptr %i.a, align 8, !tbaa !54
+  %1 = shufflevector <2 x float> %i.be, <2 x float> %i.bf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %1, ptr %i.bg, align 4, !tbaa !18
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.c, %bb.g, %bb.e, %bb.j, %bb.i, %bb.a
@@ -243,7 +242,7 @@ bb.a:
 define weak_odr dso_local noundef zeroext i1 @_ZNK3ozz9animation8internal16TrackSamplingJobINS0_15QuaternionTrackEE3RunEv(ptr noundef nonnull align 8 dereferenceable(24) %0) local_unnamed_addr #2 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !63   ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !63   ; 5 uses
   %i.c = icmp ne ptr %i.b, null
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !64   ; 6 uses
@@ -266,9 +265,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  store <2 x float> zeroinitializer, ptr %i.b, align 4, !tbaa !18
-  %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %.sroa.417.0..sroa_idx, align 4, !tbaa !18
+  store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %i.b, align 4, !tbaa !18
   br label %bb.k
 
 bb.d:                                             ; preds = %bb.b
@@ -354,10 +351,9 @@ bb.j:                                             ; preds = %_ZSt11upper_boundIP
   %i.bd = tail call { <2 x float>, <2 x float> } @_ZN3ozz9animation8internal11TrackPolicyINS_4math10QuaternionEE4LerpERKS4_S7_f(ptr noundef nonnull align 4 dereferenceable(16) %i.bb, ptr noundef nonnull align 4 dereferenceable(16) %i.bc, float noundef %i.ba) ; 2 uses
   %i.be = extractvalue { <2 x float>, <2 x float> } %i.bd, 0
   %i.bf = extractvalue { <2 x float>, <2 x float> } %i.bd, 1
-  %i.bg = load ptr, ptr %i.a, align 8, !tbaa !63  ; 2 uses
-  store <2 x float> %i.be, ptr %i.bg, align 4, !tbaa !18
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  store <2 x float> %i.bf, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !18
+  %i.bg = load ptr, ptr %i.a, align 8, !tbaa !63
+  %1 = shufflevector <2 x float> %i.be, <2 x float> %i.bf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %1, ptr %i.bg, align 4, !tbaa !18
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.c, %bb.g, %bb.e, %bb.j, %bb.i, %bb.a

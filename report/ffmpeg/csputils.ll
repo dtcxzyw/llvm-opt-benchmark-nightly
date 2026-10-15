@@ -204,7 +204,6 @@ define void @ff_sws_rgb2xyz(ptr dead_on_unwind noalias nofree writable writeonly
   %.sroa.572.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.ae = tail call i64 @av_div_q(i64 %i.y, i64 %i.aa) #7
   %i.af = insertelement <2 x i64> poison, i64 %i.e, i64 0
@@ -325,10 +324,10 @@ define void @ff_sws_rgb2xyz(ptr dead_on_unwind noalias nofree writable writeonly
   %foldExtExtBinop76 = fmul nsz <2 x float> %i.ed, %shift75
   %i.eh = extractelement <2 x float> %foldExtExtBinop76, i64 0
   store float %i.eh, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !10
-  store <2 x float> %i.ed, ptr %i.ad, align 4, !tbaa !10
-  %3 = shufflevector <2 x float> %i.dw, <2 x float> %i.ed, <2 x i32> <i32 1, i32 2>
-  %4 = fmul nsz <2 x float> %3, %i.cb
-  store <2 x float> %4, ptr %2, align 4, !tbaa !10
+  %2 = shufflevector <2 x float> %i.dw, <2 x float> %i.ed, <2 x i32> <i32 1, i32 2>
+  %3 = fmul nsz <2 x float> %2, %i.cb
+  %4 = shufflevector <2 x float> %i.ed, <2 x float> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %4, ptr %i.ad, align 4, !tbaa !10
   ret void
 }
 

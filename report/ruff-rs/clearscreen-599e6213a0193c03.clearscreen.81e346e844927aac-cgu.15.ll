@@ -71,16 +71,12 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.06.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 0, ptr %.sroa.06.sroa.4.0..sroa_idx, align 8
   %.sroa.06.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.sroa.06.sroa.5.sroa.5.0..sroa.06.sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.sroa.06.sroa.5.sroa.7.0..sroa.06.sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i8 %.sroa.729.0.copyload, ptr %.sroa.06.sroa.5.sroa.7.0..sroa.06.sroa.5.0..sroa_idx.sroa_idx, align 8
   %.sroa.57.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.g = load <4 x i32>, ptr %i.a, align 16       ; 3 uses
+  %i.g = load <4 x i32>, ptr %i.a, align 16       ; 2 uses
   %i.h = and <4 x i32> %i.g, <i32 32767, i32 65535, i32 -804315137, i32 122879>
-  %2 = shufflevector <4 x i32> %i.g, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %2, ptr %.sroa.06.sroa.5.0..sroa_idx, align 8
-  %3 = shufflevector <4 x i32> %i.g, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %3, ptr %.sroa.06.sroa.5.sroa.5.0..sroa.06.sroa.5.0..sroa_idx.sroa_idx, align 8
+  store <4 x i32> %i.g, ptr %.sroa.06.sroa.5.0..sroa_idx, align 8
   store <4 x i32> %i.h, ptr %.sroa.57.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
   store i8 %.sroa.729.0.copyload, ptr %.sroa.9.0..sroa_idx, align 8

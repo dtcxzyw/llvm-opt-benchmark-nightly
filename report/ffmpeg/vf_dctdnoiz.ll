@@ -205,9 +205,9 @@ vector.body54:                                    ; preds = %vector.body54.prehe
   %i.jb = or disjoint i64 %i.iz, 128              ; 2 uses
   %i.jc = or disjoint i64 %i.iz, 192              ; 2 uses
   %next.gep56 = getelementptr i8, ptr %i.a, i64 %i.iz ; 16 uses
-  %next.gep57 = getelementptr i8, ptr %i.a, i64 %i.ja ; 8 uses
-  %next.gep58 = getelementptr i8, ptr %i.a, i64 %i.jb ; 8 uses
-  %next.gep59 = getelementptr i8, ptr %i.a, i64 %i.jc ; 8 uses
+  %next.gep57 = getelementptr i8, ptr %i.a, i64 %i.ja ; 4 uses
+  %next.gep58 = getelementptr i8, ptr %i.a, i64 %i.jb ; 4 uses
+  %next.gep59 = getelementptr i8, ptr %i.a, i64 %i.jc ; 4 uses
   %next.gep60 = getelementptr i8, ptr %i.b, i64 %i.iz ; 16 uses
   %next.gep61 = getelementptr i8, ptr %i.b, i64 %i.ja ; 16 uses
   %next.gep62 = getelementptr i8, ptr %i.b, i64 %i.jb ; 16 uses
@@ -512,30 +512,27 @@ vector.body54:                                    ; preds = %vector.body54.prehe
   %i.un = extractelement <4 x float> %i.ul, i64 0
   store float %i.un, ptr %i.um, align 4, !tbaa !63
   %i.uo = shufflevector <4 x float> %i.ui, <4 x float> %i.ul, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.uo, ptr %next.gep57, align 16, !tbaa !63
   %i.up = shufflevector <4 x float> %i.ui, <4 x float> %i.ul, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.up, ptr %next.gep58, align 16, !tbaa !63
   %i.uq = shufflevector <4 x float> %i.ui, <4 x float> %i.ul, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.uq, ptr %next.gep59, align 16, !tbaa !63
   %i.ur = fsub nsz <4 x float> %i.sp, %i.ts
   %i.us = fmul nsz <4 x float> %i.ur, splat (float f0x3F3504F3) ; 4 uses
-  %6 = getelementptr inbounds nuw i8, ptr %next.gep56, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %next.gep57, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %next.gep58, i64 8
-  %i.ut = getelementptr inbounds nuw i8, ptr %next.gep59, i64 8
+  %i.ut = getelementptr inbounds nuw i8, ptr %next.gep56, i64 8
   %i.uu = extractelement <4 x float> %i.us, i64 0
-  store float %i.uu, ptr %6, align 8, !tbaa !63
+  store float %i.uu, ptr %i.ut, align 8, !tbaa !63
   %i.uv = fsub nsz <4 x float> %i.se, %i.ue
   %i.uw = fmul nsz <4 x float> %i.uv, splat (float f0x3F3504F3) ; 4 uses
   %i.ux = getelementptr inbounds nuw i8, ptr %next.gep56, i64 12
   %i.uy = extractelement <4 x float> %i.uw, i64 0
   store float %i.uy, ptr %i.ux, align 4, !tbaa !63
   %i.uz = shufflevector <4 x float> %i.us, <4 x float> %i.uw, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.uz, ptr %7, align 8, !tbaa !63
+  %6 = shufflevector <2 x float> %i.uo, <2 x float> %i.uz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %next.gep57, align 16, !tbaa !63
   %i.va = shufflevector <4 x float> %i.us, <4 x float> %i.uw, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.va, ptr %8, align 8, !tbaa !63
+  %7 = shufflevector <2 x float> %i.up, <2 x float> %i.va, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %next.gep58, align 16, !tbaa !63
   %i.vb = shufflevector <4 x float> %i.us, <4 x float> %i.uw, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.vb, ptr %i.ut, align 8, !tbaa !63
+  %8 = shufflevector <2 x float> %i.uq, <2 x float> %i.vb, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %next.gep59, align 16, !tbaa !63
   %i.vc = fadd nsz <4 x float> %i.se, %i.ue
   %i.vd = fmul nsz <4 x float> %i.vc, splat (float f0x3F3504F3) ; 4 uses
   %i.ve = getelementptr inbounds nuw i8, ptr %next.gep56, i64 16
@@ -550,30 +547,27 @@ vector.body54:                                    ; preds = %vector.body54.prehe
   %i.vm = extractelement <4 x float> %i.vk, i64 0
   store float %i.vm, ptr %i.vl, align 4, !tbaa !63
   %i.vn = shufflevector <4 x float> %i.vd, <4 x float> %i.vk, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.vn, ptr %i.vf, align 16, !tbaa !63
   %i.vo = shufflevector <4 x float> %i.vd, <4 x float> %i.vk, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.vo, ptr %i.vg, align 16, !tbaa !63
   %i.vp = shufflevector <4 x float> %i.vd, <4 x float> %i.vk, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.vp, ptr %i.vh, align 16, !tbaa !63
   %i.vq = fadd nsz <4 x float> %i.sw, %i.tx
   %i.vr = fmul nsz <4 x float> %i.vq, splat (float f0x3F3504F3) ; 4 uses
-  %9 = getelementptr inbounds nuw i8, ptr %next.gep56, i64 24
-  %10 = getelementptr inbounds nuw i8, ptr %next.gep57, i64 24
-  %11 = getelementptr inbounds nuw i8, ptr %next.gep58, i64 24
-  %i.vs = getelementptr inbounds nuw i8, ptr %next.gep59, i64 24
+  %i.vs = getelementptr inbounds nuw i8, ptr %next.gep56, i64 24
   %i.vt = extractelement <4 x float> %i.vr, i64 0
-  store float %i.vt, ptr %9, align 8, !tbaa !63
+  store float %i.vt, ptr %i.vs, align 8, !tbaa !63
   %i.vu = fadd nsz <4 x float> %i.uf, %i.sc
   %i.vv = fmul nsz <4 x float> %i.vu, splat (float f0x3F3504F3) ; 4 uses
   %i.vw = getelementptr inbounds nuw i8, ptr %next.gep56, i64 28
   %i.vx = extractelement <4 x float> %i.vv, i64 0
   store float %i.vx, ptr %i.vw, align 4, !tbaa !63
   %i.vy = shufflevector <4 x float> %i.vr, <4 x float> %i.vv, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.vy, ptr %10, align 8, !tbaa !63
+  %9 = shufflevector <2 x float> %i.vn, <2 x float> %i.vy, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.vf, align 16, !tbaa !63
   %i.vz = shufflevector <4 x float> %i.vr, <4 x float> %i.vv, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.vz, ptr %11, align 8, !tbaa !63
+  %10 = shufflevector <2 x float> %i.vo, <2 x float> %i.vz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.vg, align 16, !tbaa !63
   %i.wa = shufflevector <4 x float> %i.vr, <4 x float> %i.vv, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.wa, ptr %i.vs, align 8, !tbaa !63
+  %11 = shufflevector <2 x float> %i.vp, <2 x float> %i.wa, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %i.vh, align 16, !tbaa !63
   %i.wb = fsub nsz <4 x float> %i.sc, %i.uf
   %i.wc = fmul nsz <4 x float> %i.wb, splat (float f0x3F3504F3) ; 4 uses
   %i.wd = getelementptr inbounds nuw i8, ptr %next.gep56, i64 32
@@ -588,30 +582,27 @@ vector.body54:                                    ; preds = %vector.body54.prehe
   %i.wl = extractelement <4 x float> %i.wj, i64 0
   store float %i.wl, ptr %i.wk, align 4, !tbaa !63
   %i.wm = shufflevector <4 x float> %i.wc, <4 x float> %i.wj, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.wm, ptr %i.we, align 16, !tbaa !63
   %i.wn = shufflevector <4 x float> %i.wc, <4 x float> %i.wj, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.wn, ptr %i.wf, align 16, !tbaa !63
   %i.wo = shufflevector <4 x float> %i.wc, <4 x float> %i.wj, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.wo, ptr %i.wg, align 16, !tbaa !63
   %i.wp = fsub nsz <4 x float> %i.sy, %i.tv
   %i.wq = fmul nsz <4 x float> %i.wp, splat (float f0x3F3504F3) ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %next.gep56, i64 40
-  %13 = getelementptr inbounds nuw i8, ptr %next.gep57, i64 40
-  %14 = getelementptr inbounds nuw i8, ptr %next.gep58, i64 40
-  %i.wr = getelementptr inbounds nuw i8, ptr %next.gep59, i64 40
+  %i.wr = getelementptr inbounds nuw i8, ptr %next.gep56, i64 40
   %i.ws = extractelement <4 x float> %i.wq, i64 0
-  store float %i.ws, ptr %12, align 8, !tbaa !63
+  store float %i.ws, ptr %i.wr, align 8, !tbaa !63
   %i.wt = fadd nsz <4 x float> %i.sg, %i.uc
   %i.wu = fmul nsz <4 x float> %i.wt, splat (float f0x3F3504F3) ; 4 uses
   %i.wv = getelementptr inbounds nuw i8, ptr %next.gep56, i64 44
   %i.ww = extractelement <4 x float> %i.wu, i64 0
   store float %i.ww, ptr %i.wv, align 4, !tbaa !63
   %i.wx = shufflevector <4 x float> %i.wq, <4 x float> %i.wu, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.wx, ptr %13, align 8, !tbaa !63
+  %12 = shufflevector <2 x float> %i.wm, <2 x float> %i.wx, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %i.we, align 16, !tbaa !63
   %i.wy = shufflevector <4 x float> %i.wq, <4 x float> %i.wu, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.wy, ptr %14, align 8, !tbaa !63
+  %13 = shufflevector <2 x float> %i.wn, <2 x float> %i.wy, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %i.wf, align 16, !tbaa !63
   %i.wz = shufflevector <4 x float> %i.wq, <4 x float> %i.wu, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.wz, ptr %i.wr, align 8, !tbaa !63
+  %14 = shufflevector <2 x float> %i.wo, <2 x float> %i.wz, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %i.wg, align 16, !tbaa !63
   %i.xa = fsub nsz <4 x float> %i.sg, %i.uc
   %i.xb = fmul nsz <4 x float> %i.xa, splat (float f0x3F3504F3) ; 4 uses
   %i.xc = getelementptr inbounds nuw i8, ptr %next.gep56, i64 48
@@ -626,29 +617,26 @@ vector.body54:                                    ; preds = %vector.body54.prehe
   %i.xk = extractelement <4 x float> %i.xi, i64 0
   store float %i.xk, ptr %i.xj, align 4, !tbaa !63
   %i.xl = shufflevector <4 x float> %i.xb, <4 x float> %i.xi, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.xl, ptr %i.xd, align 16, !tbaa !63
   %i.xm = shufflevector <4 x float> %i.xb, <4 x float> %i.xi, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.xm, ptr %i.xe, align 16, !tbaa !63
   %i.xn = shufflevector <4 x float> %i.xb, <4 x float> %i.xi, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.xn, ptr %i.xf, align 16, !tbaa !63
   %i.xo = fadd nsz <4 x float> %i.st, %i.to
   %i.xp = fmul nsz <4 x float> %i.xo, splat (float f0x3F3504F3) ; 4 uses
-  %15 = getelementptr inbounds nuw i8, ptr %next.gep56, i64 56
-  %16 = getelementptr inbounds nuw i8, ptr %next.gep57, i64 56
-  %17 = getelementptr inbounds nuw i8, ptr %next.gep58, i64 56
-  %i.xq = getelementptr inbounds nuw i8, ptr %next.gep59, i64 56
+  %i.xq = getelementptr inbounds nuw i8, ptr %next.gep56, i64 56
   %i.xr = extractelement <4 x float> %i.xp, i64 0
-  store float %i.xr, ptr %15, align 8, !tbaa !63
+  store float %i.xr, ptr %i.xq, align 8, !tbaa !63
   %i.xs = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.rx, <4 x float> splat (float -2.500000e-01), <4 x float> %i.uh) ; 4 uses
   %i.xt = getelementptr inbounds nuw i8, ptr %next.gep56, i64 60
   %i.xu = extractelement <4 x float> %i.xs, i64 0
   store float %i.xu, ptr %i.xt, align 4, !tbaa !63
   %i.xv = shufflevector <4 x float> %i.xp, <4 x float> %i.xs, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.xv, ptr %16, align 8, !tbaa !63
+  %15 = shufflevector <2 x float> %i.xl, <2 x float> %i.xv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %15, ptr %i.xd, align 16, !tbaa !63
   %i.xw = shufflevector <4 x float> %i.xp, <4 x float> %i.xs, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.xw, ptr %17, align 8, !tbaa !63
+  %16 = shufflevector <2 x float> %i.xm, <2 x float> %i.xw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %16, ptr %i.xe, align 16, !tbaa !63
   %i.xx = shufflevector <4 x float> %i.xp, <4 x float> %i.xs, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.xx, ptr %i.xq, align 8, !tbaa !63
+  %17 = shufflevector <2 x float> %i.xn, <2 x float> %i.xx, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %17, ptr %i.xf, align 16, !tbaa !63
   %index.next64 = add nuw i64 %index55, 4         ; 2 uses
   %i.xy = icmp eq i64 %index.next64, 16
   br i1 %i.xy, label %idct16_1d.exit16.preheader, label %vector.body54, !llvm.loop !186
@@ -1051,9 +1039,9 @@ vector.body56:                                    ; preds = %vector.body49, %vec
   %i.ji = or disjoint i64 %i.jg, 128              ; 2 uses
   %i.jj = or disjoint i64 %i.jg, 192              ; 2 uses
   %next.gep58 = getelementptr i8, ptr %i.a, i64 %i.jg ; 16 uses
-  %next.gep59 = getelementptr i8, ptr %i.a, i64 %i.jh ; 8 uses
-  %next.gep60 = getelementptr i8, ptr %i.a, i64 %i.ji ; 8 uses
-  %next.gep61 = getelementptr i8, ptr %i.a, i64 %i.jj ; 8 uses
+  %next.gep59 = getelementptr i8, ptr %i.a, i64 %i.jh ; 4 uses
+  %next.gep60 = getelementptr i8, ptr %i.a, i64 %i.ji ; 4 uses
+  %next.gep61 = getelementptr i8, ptr %i.a, i64 %i.jj ; 4 uses
   %next.gep62 = getelementptr i8, ptr %i.b, i64 %i.jg ; 16 uses
   %next.gep63 = getelementptr i8, ptr %i.b, i64 %i.jh ; 16 uses
   %next.gep64 = getelementptr i8, ptr %i.b, i64 %i.ji ; 16 uses
@@ -1358,30 +1346,27 @@ vector.body56:                                    ; preds = %vector.body49, %vec
   %i.uu = extractelement <4 x float> %i.us, i64 0
   store float %i.uu, ptr %i.ut, align 4, !tbaa !63
   %i.uv = shufflevector <4 x float> %i.up, <4 x float> %i.us, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.uv, ptr %next.gep59, align 16, !tbaa !63
   %i.uw = shufflevector <4 x float> %i.up, <4 x float> %i.us, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.uw, ptr %next.gep60, align 16, !tbaa !63
   %i.ux = shufflevector <4 x float> %i.up, <4 x float> %i.us, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.ux, ptr %next.gep61, align 16, !tbaa !63
   %i.uy = fsub nsz <4 x float> %i.sw, %i.tz
   %i.uz = fmul nsz <4 x float> %i.uy, splat (float f0x3F3504F3) ; 4 uses
-  %6 = getelementptr inbounds nuw i8, ptr %next.gep58, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %next.gep59, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %next.gep60, i64 8
-  %i.va = getelementptr inbounds nuw i8, ptr %next.gep61, i64 8
+  %i.va = getelementptr inbounds nuw i8, ptr %next.gep58, i64 8
   %i.vb = extractelement <4 x float> %i.uz, i64 0
-  store float %i.vb, ptr %6, align 8, !tbaa !63
+  store float %i.vb, ptr %i.va, align 8, !tbaa !63
   %i.vc = fsub nsz <4 x float> %i.sl, %i.ul
   %i.vd = fmul nsz <4 x float> %i.vc, splat (float f0x3F3504F3) ; 4 uses
   %i.ve = getelementptr inbounds nuw i8, ptr %next.gep58, i64 12
   %i.vf = extractelement <4 x float> %i.vd, i64 0
   store float %i.vf, ptr %i.ve, align 4, !tbaa !63
   %i.vg = shufflevector <4 x float> %i.uz, <4 x float> %i.vd, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.vg, ptr %7, align 8, !tbaa !63
+  %6 = shufflevector <2 x float> %i.uv, <2 x float> %i.vg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %next.gep59, align 16, !tbaa !63
   %i.vh = shufflevector <4 x float> %i.uz, <4 x float> %i.vd, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.vh, ptr %8, align 8, !tbaa !63
+  %7 = shufflevector <2 x float> %i.uw, <2 x float> %i.vh, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %next.gep60, align 16, !tbaa !63
   %i.vi = shufflevector <4 x float> %i.uz, <4 x float> %i.vd, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.vi, ptr %i.va, align 8, !tbaa !63
+  %8 = shufflevector <2 x float> %i.ux, <2 x float> %i.vi, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %8, ptr %next.gep61, align 16, !tbaa !63
   %i.vj = fadd nsz <4 x float> %i.sl, %i.ul
   %i.vk = fmul nsz <4 x float> %i.vj, splat (float f0x3F3504F3) ; 4 uses
   %i.vl = getelementptr inbounds nuw i8, ptr %next.gep58, i64 16
@@ -1396,30 +1381,27 @@ vector.body56:                                    ; preds = %vector.body49, %vec
   %i.vt = extractelement <4 x float> %i.vr, i64 0
   store float %i.vt, ptr %i.vs, align 4, !tbaa !63
   %i.vu = shufflevector <4 x float> %i.vk, <4 x float> %i.vr, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.vu, ptr %i.vm, align 16, !tbaa !63
   %i.vv = shufflevector <4 x float> %i.vk, <4 x float> %i.vr, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.vv, ptr %i.vn, align 16, !tbaa !63
   %i.vw = shufflevector <4 x float> %i.vk, <4 x float> %i.vr, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.vw, ptr %i.vo, align 16, !tbaa !63
   %i.vx = fadd nsz <4 x float> %i.td, %i.ue
   %i.vy = fmul nsz <4 x float> %i.vx, splat (float f0x3F3504F3) ; 4 uses
-  %9 = getelementptr inbounds nuw i8, ptr %next.gep58, i64 24
-  %10 = getelementptr inbounds nuw i8, ptr %next.gep59, i64 24
-  %11 = getelementptr inbounds nuw i8, ptr %next.gep60, i64 24
-  %i.vz = getelementptr inbounds nuw i8, ptr %next.gep61, i64 24
+  %i.vz = getelementptr inbounds nuw i8, ptr %next.gep58, i64 24
   %i.wa = extractelement <4 x float> %i.vy, i64 0
-  store float %i.wa, ptr %9, align 8, !tbaa !63
+  store float %i.wa, ptr %i.vz, align 8, !tbaa !63
   %i.wb = fadd nsz <4 x float> %i.um, %i.sj
   %i.wc = fmul nsz <4 x float> %i.wb, splat (float f0x3F3504F3) ; 4 uses
   %i.wd = getelementptr inbounds nuw i8, ptr %next.gep58, i64 28
   %i.we = extractelement <4 x float> %i.wc, i64 0
   store float %i.we, ptr %i.wd, align 4, !tbaa !63
   %i.wf = shufflevector <4 x float> %i.vy, <4 x float> %i.wc, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.wf, ptr %10, align 8, !tbaa !63
+  %9 = shufflevector <2 x float> %i.vu, <2 x float> %i.wf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %9, ptr %i.vm, align 16, !tbaa !63
   %i.wg = shufflevector <4 x float> %i.vy, <4 x float> %i.wc, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.wg, ptr %11, align 8, !tbaa !63
+  %10 = shufflevector <2 x float> %i.vv, <2 x float> %i.wg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %10, ptr %i.vn, align 16, !tbaa !63
   %i.wh = shufflevector <4 x float> %i.vy, <4 x float> %i.wc, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.wh, ptr %i.vz, align 8, !tbaa !63
+  %11 = shufflevector <2 x float> %i.vw, <2 x float> %i.wh, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %11, ptr %i.vo, align 16, !tbaa !63
   %i.wi = fsub nsz <4 x float> %i.sj, %i.um
   %i.wj = fmul nsz <4 x float> %i.wi, splat (float f0x3F3504F3) ; 4 uses
   %i.wk = getelementptr inbounds nuw i8, ptr %next.gep58, i64 32
@@ -1434,30 +1416,27 @@ vector.body56:                                    ; preds = %vector.body49, %vec
   %i.ws = extractelement <4 x float> %i.wq, i64 0
   store float %i.ws, ptr %i.wr, align 4, !tbaa !63
   %i.wt = shufflevector <4 x float> %i.wj, <4 x float> %i.wq, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.wt, ptr %i.wl, align 16, !tbaa !63
   %i.wu = shufflevector <4 x float> %i.wj, <4 x float> %i.wq, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.wu, ptr %i.wm, align 16, !tbaa !63
   %i.wv = shufflevector <4 x float> %i.wj, <4 x float> %i.wq, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.wv, ptr %i.wn, align 16, !tbaa !63
   %i.ww = fsub nsz <4 x float> %i.tf, %i.uc
   %i.wx = fmul nsz <4 x float> %i.ww, splat (float f0x3F3504F3) ; 4 uses
-  %12 = getelementptr inbounds nuw i8, ptr %next.gep58, i64 40
-  %13 = getelementptr inbounds nuw i8, ptr %next.gep59, i64 40
-  %14 = getelementptr inbounds nuw i8, ptr %next.gep60, i64 40
-  %i.wy = getelementptr inbounds nuw i8, ptr %next.gep61, i64 40
+  %i.wy = getelementptr inbounds nuw i8, ptr %next.gep58, i64 40
   %i.wz = extractelement <4 x float> %i.wx, i64 0
-  store float %i.wz, ptr %12, align 8, !tbaa !63
+  store float %i.wz, ptr %i.wy, align 8, !tbaa !63
   %i.xa = fadd nsz <4 x float> %i.sn, %i.uj
   %i.xb = fmul nsz <4 x float> %i.xa, splat (float f0x3F3504F3) ; 4 uses
   %i.xc = getelementptr inbounds nuw i8, ptr %next.gep58, i64 44
   %i.xd = extractelement <4 x float> %i.xb, i64 0
   store float %i.xd, ptr %i.xc, align 4, !tbaa !63
   %i.xe = shufflevector <4 x float> %i.wx, <4 x float> %i.xb, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.xe, ptr %13, align 8, !tbaa !63
+  %12 = shufflevector <2 x float> %i.wt, <2 x float> %i.xe, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %12, ptr %i.wl, align 16, !tbaa !63
   %i.xf = shufflevector <4 x float> %i.wx, <4 x float> %i.xb, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.xf, ptr %14, align 8, !tbaa !63
+  %13 = shufflevector <2 x float> %i.wu, <2 x float> %i.xf, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %13, ptr %i.wm, align 16, !tbaa !63
   %i.xg = shufflevector <4 x float> %i.wx, <4 x float> %i.xb, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.xg, ptr %i.wy, align 8, !tbaa !63
+  %14 = shufflevector <2 x float> %i.wv, <2 x float> %i.xg, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %14, ptr %i.wn, align 16, !tbaa !63
   %i.xh = fsub nsz <4 x float> %i.sn, %i.uj
   %i.xi = fmul nsz <4 x float> %i.xh, splat (float f0x3F3504F3) ; 4 uses
   %i.xj = getelementptr inbounds nuw i8, ptr %next.gep58, i64 48
@@ -1472,29 +1451,26 @@ vector.body56:                                    ; preds = %vector.body49, %vec
   %i.xr = extractelement <4 x float> %i.xp, i64 0
   store float %i.xr, ptr %i.xq, align 4, !tbaa !63
   %i.xs = shufflevector <4 x float> %i.xi, <4 x float> %i.xp, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.xs, ptr %i.xk, align 16, !tbaa !63
   %i.xt = shufflevector <4 x float> %i.xi, <4 x float> %i.xp, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.xt, ptr %i.xl, align 16, !tbaa !63
   %i.xu = shufflevector <4 x float> %i.xi, <4 x float> %i.xp, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.xu, ptr %i.xm, align 16, !tbaa !63
   %i.xv = fadd nsz <4 x float> %i.ta, %i.tv
   %i.xw = fmul nsz <4 x float> %i.xv, splat (float f0x3F3504F3) ; 4 uses
-  %15 = getelementptr inbounds nuw i8, ptr %next.gep58, i64 56
-  %16 = getelementptr inbounds nuw i8, ptr %next.gep59, i64 56
-  %17 = getelementptr inbounds nuw i8, ptr %next.gep60, i64 56
-  %i.xx = getelementptr inbounds nuw i8, ptr %next.gep61, i64 56
+  %i.xx = getelementptr inbounds nuw i8, ptr %next.gep58, i64 56
   %i.xy = extractelement <4 x float> %i.xw, i64 0
-  store float %i.xy, ptr %15, align 8, !tbaa !63
+  store float %i.xy, ptr %i.xx, align 8, !tbaa !63
   %i.xz = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.se, <4 x float> splat (float -2.500000e-01), <4 x float> %i.uo) ; 4 uses
   %i.ya = getelementptr inbounds nuw i8, ptr %next.gep58, i64 60
   %i.yb = extractelement <4 x float> %i.xz, i64 0
   store float %i.yb, ptr %i.ya, align 4, !tbaa !63
   %i.yc = shufflevector <4 x float> %i.xw, <4 x float> %i.xz, <2 x i32> <i32 1, i32 5>
-  store <2 x float> %i.yc, ptr %16, align 8, !tbaa !63
+  %15 = shufflevector <2 x float> %i.xs, <2 x float> %i.yc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %15, ptr %i.xk, align 16, !tbaa !63
   %i.yd = shufflevector <4 x float> %i.xw, <4 x float> %i.xz, <2 x i32> <i32 2, i32 6>
-  store <2 x float> %i.yd, ptr %17, align 8, !tbaa !63
+  %16 = shufflevector <2 x float> %i.xt, <2 x float> %i.yd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %16, ptr %i.xl, align 16, !tbaa !63
   %i.ye = shufflevector <4 x float> %i.xw, <4 x float> %i.xz, <2 x i32> <i32 3, i32 7>
-  store <2 x float> %i.ye, ptr %i.xx, align 8, !tbaa !63
+  %17 = shufflevector <2 x float> %i.xu, <2 x float> %i.ye, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %17, ptr %i.xm, align 16, !tbaa !63
   %index.next66 = add nuw i64 %index57, 4         ; 2 uses
   %i.yf = icmp eq i64 %index.next66, 16
   br i1 %i.yf, label %idct16_1d.exit13.preheader, label %vector.body56, !llvm.loop !240

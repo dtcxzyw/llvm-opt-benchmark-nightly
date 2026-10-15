@@ -204,12 +204,10 @@ vector.body745:                                   ; preds = %vector.body745, %ve
   %i.wp = getelementptr inbounds nuw i8, ptr %i.wo, i64 16
   %wide.load747 = load <2 x i64>, ptr %i.wo, align 8, !tbaa !11
   %wide.load748 = load <2 x i64>, ptr %i.wp, align 8, !tbaa !11
-  %9 = sitofp <2 x i64> %wide.load747 to <2 x float>
-  %10 = sitofp <2 x i64> %wide.load748 to <2 x float>
-  %i.wq = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %index746 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.wq, i64 8
-  store <2 x float> %9, ptr %i.wq, align 4, !tbaa !74
-  store <2 x float> %10, ptr %11, align 4, !tbaa !74
+  %i.wq = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %index746
+  %9 = shufflevector <2 x i64> %wide.load747, <2 x i64> %wide.load748, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %10 = sitofp <4 x i64> %9 to <4 x float>
+  store <4 x float> %10, ptr %i.wq, align 4, !tbaa !74
   %index.next749 = add nuw i64 %index746, 4       ; 2 uses
   %i.wr = icmp eq i64 %index.next749, %n.vec744
   br i1 %i.wr, label %middle.block750, label %vector.body745, !llvm.loop !245

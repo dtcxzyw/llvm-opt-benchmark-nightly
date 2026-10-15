@@ -205,15 +205,14 @@ bb.d:                                             ; preds = %bb.b
   resume { ptr, i32 } %i.i
 
 _Z4ReadIdET_PN6Assimp8IOStreamE.exit:             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = load double, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   store double %i.j, ptr %0, align 8
   %i.k = call { <2 x float>, <2 x float> } @_Z4ReadI13aiQuaterniontIfEET_PN6Assimp8IOStreamE(ptr noundef nonnull %1) ; 2 uses
   %i.l = extractvalue { <2 x float>, <2 x float> } %i.k, 0
   %i.m = extractvalue { <2 x float>, <2 x float> } %i.k, 1
-  store <2 x float> %i.l, ptr %i.b, align 8
-  store <2 x float> %i.m, ptr %2, align 8
+  %2 = shufflevector <2 x float> %i.l, <2 x float> %i.m, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %2, ptr %i.b, align 8
   ret void
 }
 
@@ -616,10 +615,9 @@ bb.ap:                                            ; preds = %bb.an
   %i.fu = call { <2 x float>, <2 x float> } @_Z4ReadI9aiColor4tIfEET_PN6Assimp8IOStreamE(ptr noundef %1) ; 2 uses
   %i.fv = extractvalue { <2 x float>, <2 x float> } %i.fu, 0
   %i.fw = extractvalue { <2 x float>, <2 x float> } %i.fu, 1
-  %i.fx = getelementptr inbounds nuw [16 x i8], ptr %i.fq, i64 %indvars.iv.i186 ; 2 uses
-  store <2 x float> %i.fv, ptr %i.fx, align 4
-  %.sroa.4.0..sroa_idx.i187 = getelementptr inbounds nuw i8, ptr %i.fx, i64 8
-  store <2 x float> %i.fw, ptr %.sroa.4.0..sroa_idx.i187, align 4
+  %i.fx = getelementptr inbounds nuw [16 x i8], ptr %i.fq, i64 %indvars.iv.i186
+  %3 = shufflevector <2 x float> %i.fv, <2 x float> %i.fw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %i.fx, align 4
   %indvars.iv.next.i188 = add nuw nsw i64 %indvars.iv.i186, 1 ; 2 uses
   %exitcond.not.i189 = icmp eq i64 %indvars.iv.next.i188, %wide.trip.count.i184
   br i1 %exitcond.not.i189, label %_Z9ReadArrayI9aiColor4tIfEEvPN6Assimp8IOStreamEPT_j.exit, label %.lr.ph.i185, !llvm.loop !38
@@ -1022,12 +1020,11 @@ _Z4ReadI9aiQuatKeyET_PN6Assimp8IOStreamE.exit:    ; preds = %.lr.ph
   %i.i = call { <2 x float>, <2 x float> } @_Z4ReadI13aiQuaterniontIfEET_PN6Assimp8IOStreamE(ptr noundef nonnull %0), !noalias !64 ; 2 uses
   %i.j = extractvalue { <2 x float>, <2 x float> } %i.i, 0
   %i.k = extractvalue { <2 x float>, <2 x float> } %i.i, 1
-  %i.l = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %indvars.iv ; 4 uses
+  %i.l = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %indvars.iv ; 3 uses
   store double %i.h, ptr %i.l, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  store <2 x float> %i.j, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  store <2 x float> %i.k, ptr %.sroa.8.0..sroa_idx, align 8
+  %3 = shufflevector <2 x float> %i.j, <2 x float> %i.k, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %3, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   store i32 1, ptr %.sroa.11.0..sroa_idx, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

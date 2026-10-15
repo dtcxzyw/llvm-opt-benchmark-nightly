@@ -204,8 +204,8 @@ middle.block1037:                                 ; preds = %vector.body1032
   %i.if = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !68 ; 3 uses
   %i.ih = load double, ptr %i.ig, align 8, !tbaa !70 ; 2 uses
-  %smax811 = call i32 @llvm.smax.i32(i32 %1, i32 1)
-  %wide.trip.count812 = zext nneg i32 %smax811 to i64 ; 7 uses
+  %smax811 = call i32 @llvm.smax.i32(i32 %1, i32 1) ; 3 uses
+  %wide.trip.count812 = zext nneg i32 %smax811 to i64 ; 12 uses
   %min.iters.check1041 = icmp slt i32 %1, 4
   br i1 %min.iters.check1041, label %.lr.ph663.preheader1115, label %vector.ph1042
 
@@ -336,12 +336,10 @@ vector.body1058:                                  ; preds = %.lr.ph667, %vector.
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jt, i64 16
   %wide.load1060 = load <2 x double>, ptr %i.jt, align 8, !tbaa !70
   %wide.load1061 = load <2 x double>, ptr %i.ju, align 8, !tbaa !70
-  %9 = fptrunc <2 x double> %wide.load1060 to <2 x float>
-  %10 = fptrunc <2 x double> %wide.load1061 to <2 x float>
-  %i.jv = getelementptr inbounds nuw [4 x i8], ptr %i.jp, i64 %index1059 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.jv, i64 8
-  store <2 x float> %9, ptr %i.jv, align 4, !tbaa !76
-  store <2 x float> %10, ptr %11, align 4, !tbaa !76
+  %i.jv = getelementptr inbounds nuw [4 x i8], ptr %i.jp, i64 %index1059
+  %9 = shufflevector <2 x double> %wide.load1060, <2 x double> %wide.load1061, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %10 = fptrunc <4 x double> %9 to <4 x float>
+  store <4 x float> %10, ptr %i.jv, align 4, !tbaa !76
   %index.next1062 = add nuw i64 %index1059, 4     ; 2 uses
   %i.jw = icmp eq i64 %index.next1062, %n.vec1057
   br i1 %i.jw, label %middle.block1063, label %vector.body1058, !llvm.loop !31
@@ -418,16 +416,14 @@ bb.ao:                                            ; preds = %bb.an
   br label %.lr.ph676
 
 .lr.ph685.preheader:                              ; preds = %._crit_edge677
-  %smax848 = call i32 @llvm.smax.i32(i32 %1, i32 1) ; 3 uses
-  %wide.trip.count849 = zext nneg i32 %smax848 to i64 ; 5 uses
-  %i.kp = add nsw i64 %wide.trip.count849, -1     ; 2 uses
-  %xtraiter1134 = and i64 %wide.trip.count849, 1
+  %i.kp = add nsw i64 %wide.trip.count812, -1     ; 2 uses
+  %xtraiter1134 = and i64 %wide.trip.count812, 1
   %i.kq = icmp eq i64 %i.kp, 0
   br i1 %i.kq, label %.lr.ph685.epil.preheader, label %.lr.ph685.preheader.new
 
 .lr.ph685.preheader.new:                          ; preds = %.lr.ph685.preheader
   %i.kr = zext nneg i32 %1 to i64
-  %unroll_iter1137 = and i64 %wide.trip.count849, 2147483646
+  %unroll_iter1137 = and i64 %wide.trip.count812, 2147483646
   br label %.lr.ph685
 
 ._crit_edge677.loopexit.unr-lcssa:                ; preds = %.lr.ph676
@@ -505,7 +501,7 @@ bb.ao:                                            ; preds = %bb.an
 .lr.ph685.epil.preheader:                         ; preds = %._crit_edge686.unr-lcssa, %.lr.ph685.preheader
   %indvars.iv841.epil.init = phi i64 [ 0, %.lr.ph685.preheader ], [ %indvars.iv.next842.1, %._crit_edge686.unr-lcssa ]
   %.0437683.epil.init = phi i32 [ 0, %.lr.ph685.preheader ], [ %i.nb, %._crit_edge686.unr-lcssa ]
-  %lcmp.mod1136 = trunc i32 %smax848 to i1
+  %lcmp.mod1136 = trunc i32 %smax811 to i1
   call void @llvm.assume(i1 %lcmp.mod1136)
   %i.lq = getelementptr inbounds nuw [8 x i8], ptr %i.ke, i64 %indvars.iv841.epil.init
   %i.lr = load double, ptr %i.lq, align 8, !tbaa !70
@@ -694,11 +690,11 @@ gv_calloc.exit550:                                ; preds = %bb.ay
   %wide.trip.count910 = zext nneg i32 %4 to i64
   %exitcond911.peel.not = icmp eq i32 %4, 1
   %exitcond911.peel916.not = icmp eq i32 %4, 2
-  %xtraiter1152 = and i64 %wide.trip.count849, 1
+  %xtraiter1152 = and i64 %wide.trip.count812, 1
   %i.og = icmp eq i64 %i.kp, 0
-  %unroll_iter1156 = and i64 %wide.trip.count849, 2147483646
+  %unroll_iter1156 = and i64 %wide.trip.count812, 2147483646
   %lcmp.mod1154.not = icmp eq i64 %xtraiter1152, 0
-  %lcmp.mod1155 = trunc i32 %smax848 to i1
+  %lcmp.mod1155 = trunc i32 %smax811 to i1
   br label %.lr.ph708.preheader
 
 .lr.ph688:                                        ; preds = %.lr.ph688, %.lr.ph688.preheader.new

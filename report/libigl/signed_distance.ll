@@ -205,16 +205,14 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.jt = getelementptr inbounds nuw [4 x i8], ptr %i.jq, i64 %index ; 2 uses
+  %i.jt = getelementptr inbounds nuw [4 x i8], ptr %i.jq, i64 %index
   %i.ju = getelementptr inbounds nuw [8 x i8], ptr %i.jd, i64 %index ; 2 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 16
   %wide.load = load <2 x double>, ptr %i.ju, align 8, !tbaa !52
   %wide.load316 = load <2 x double>, ptr %i.jv, align 8, !tbaa !52
-  %39 = fptrunc <2 x double> %wide.load to <2 x float>
-  %40 = fptrunc <2 x double> %wide.load316 to <2 x float>
-  %41 = getelementptr inbounds nuw i8, ptr %i.jt, i64 8
-  store <2 x float> %39, ptr %i.jt, align 4, !tbaa !140
-  store <2 x float> %40, ptr %41, align 4, !tbaa !140
+  %39 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load316, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %40 = fptrunc <4 x double> %39 to <4 x float>
+  store <4 x float> %40, ptr %i.jt, align 4, !tbaa !140
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.jw = icmp eq i64 %index.next, %n.vec
   br i1 %i.jw, label %middle.block, label %vector.body, !llvm.loop !362
@@ -617,16 +615,14 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.ij = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i61.i.i, i64 %index ; 2 uses
+  %i.ij = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i61.i.i, i64 %index
   %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.id, i64 %index ; 2 uses
   %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 16
   %wide.load = load <2 x double>, ptr %i.ik, align 8, !tbaa !52
   %wide.load195 = load <2 x double>, ptr %i.il, align 8, !tbaa !52
-  %27 = fptrunc <2 x double> %wide.load to <2 x float>
-  %28 = fptrunc <2 x double> %wide.load195 to <2 x float>
-  %29 = getelementptr inbounds nuw i8, ptr %i.ij, i64 8
-  store <2 x float> %27, ptr %i.ij, align 4, !tbaa !140
-  store <2 x float> %28, ptr %29, align 4, !tbaa !140
+  %27 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load195, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %28 = fptrunc <4 x double> %27 to <4 x float>
+  store <4 x float> %28, ptr %i.ij, align 4, !tbaa !140
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.im = icmp eq i64 %index.next, %n.vec
   br i1 %i.im, label %middle.block, label %vector.body, !llvm.loop !416
@@ -1029,16 +1025,14 @@ vector.ph:                                        ; preds = %.lr.ph.i.i.i.i.i.i.
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.it, i64 %index ; 2 uses
+  %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.it, i64 %index
   %i.ix = getelementptr inbounds nuw [8 x i8], ptr %i.ig, i64 %index ; 2 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 16
   %wide.load = load <2 x double>, ptr %i.ix, align 8, !tbaa !52
   %wide.load198 = load <2 x double>, ptr %i.iy, align 8, !tbaa !52
-  %27 = fptrunc <2 x double> %wide.load to <2 x float>
-  %28 = fptrunc <2 x double> %wide.load198 to <2 x float>
-  %29 = getelementptr inbounds nuw i8, ptr %i.iw, i64 8
-  store <2 x float> %27, ptr %i.iw, align 4, !tbaa !140
-  store <2 x float> %28, ptr %29, align 4, !tbaa !140
+  %27 = shufflevector <2 x double> %wide.load, <2 x double> %wide.load198, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %28 = fptrunc <4 x double> %27 to <4 x float>
+  store <4 x float> %28, ptr %i.iw, align 4, !tbaa !140
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.iz = icmp eq i64 %index.next, %n.vec
   br i1 %i.iz, label %middle.block, label %vector.body, !llvm.loop !557

@@ -205,7 +205,7 @@ bb.a:
   %i.bp = mul i64 %i.bo, %.0272059
   %i.bq = load ptr, ptr %i.bn, align 8, !tbaa !288
   %i.br = getelementptr [16 x i8], ptr %i.bq, i64 %.0252054
-  %i.bs = getelementptr [16 x i8], ptr %i.br, i64 %i.bp ; 6 uses
+  %i.bs = getelementptr [16 x i8], ptr %i.br, i64 %i.bp ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #17
   %i.bt = load ptr, ptr %i.bk, align 8, !tbaa !100
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
@@ -608,9 +608,8 @@ bb.eq:                                            ; preds = %_ZN7openvdb5v13_05t
   %.sroa.10.8.vec.extract = extractelement <2 x float> %.sroa.10.1.lcssa, i64 0
   %i.bab = fmul float %i.g, %.sroa.10.8.vec.extract
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.bab, i64 0
-  store <2 x float> %i.baa, ptr %i.bs, align 4, !tbaa !98
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bs, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !98
+  %23 = shufflevector <2 x float> %i.baa, <2 x float> %.sroa.3.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %23, ptr %i.bs, align 4, !tbaa !98
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #17
   %i.bac = add nuw i64 %.0252054, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.bac, %i.bi
@@ -1013,7 +1012,7 @@ bb.a:
   %i.br = mul i64 %i.bq, %.0272075
   %i.bs = load ptr, ptr %i.bp, align 8, !tbaa !288
   %i.bt = getelementptr [16 x i8], ptr %i.bs, i64 %.0252070
-  %i.bu = getelementptr [16 x i8], ptr %i.bt, i64 %i.br ; 6 uses
+  %i.bu = getelementptr [16 x i8], ptr %i.bt, i64 %i.br ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #17
   %i.bv = load ptr, ptr %i.bm, align 8, !tbaa !100
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
@@ -1416,9 +1415,8 @@ bb.fb:                                            ; preds = %_ZN7openvdb5v13_05t
   %.sroa.10.8.vec.extract = extractelement <2 x float> %.sroa.10.1.lcssa, i64 0
   %i.bdg = fmul float %i.g, %.sroa.10.8.vec.extract
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 1.000000e+00>, float %i.bdg, i64 0
-  store <2 x float> %i.bdf, ptr %i.bu, align 4, !tbaa !98
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
-  store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !98
+  %27 = shufflevector <2 x float> %i.bdf, <2 x float> %.sroa.3.12.vec.insert.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %27, ptr %i.bu, align 4, !tbaa !98
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #17
   %i.bdh = add nuw i64 %.0252070, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.bdh, %i.bk

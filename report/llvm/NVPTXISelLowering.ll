@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %.preheader1421.preh
   %.sroa.01277.01428.1 = phi i64 [ %i.qu, %iter.check ], [ 105, %.preheader1421.preheader ] ; 2 uses
   %i.pi = and i64 %.sroa.01277.01428.1, 65535     ; 2 uses
   %i.pj = getelementptr inbounds nuw [528 x i8], ptr %i.fv, i64 %i.pi ; 9 uses
-  %i.pk = getelementptr inbounds nuw [264 x i8], ptr %i.fw, i64 %i.pi ; 9 uses
+  %i.pk = getelementptr inbounds nuw [264 x i8], ptr %i.fw, i64 %i.pi ; 6 uses
   %i.pl = getelementptr inbounds nuw i8, ptr %i.pj, i64 210 ; 2 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pj, i64 226 ; 2 uses
   %wide.load = load <8 x i16>, ptr %i.pl, align 2, !tbaa !188
@@ -216,10 +216,8 @@ iter.check:                                       ; preds = %.preheader1421.preh
   %i.pq = or disjoint <8 x i16> %i.po, splat (i16 32)
   store <8 x i16> %i.pp, ptr %i.pl, align 2, !tbaa !188
   store <8 x i16> %i.pq, ptr %i.pm, align 2, !tbaa !188
-  %13 = getelementptr inbounds nuw i8, ptr %i.pk, i64 105
-  %i.pr = getelementptr inbounds nuw i8, ptr %i.pk, i64 113
-  store <8 x i8> splat (i8 2), ptr %13, align 1, !tbaa !92
-  store <8 x i8> splat (i8 2), ptr %i.pr, align 1, !tbaa !92
+  %i.pr = getelementptr inbounds nuw i8, ptr %i.pk, i64 105
+  store <16 x i8> splat (i8 2), ptr %i.pr, align 1, !tbaa !92
   %i.ps = getelementptr inbounds nuw i8, ptr %i.pj, i64 242 ; 2 uses
   %i.pt = getelementptr inbounds nuw i8, ptr %i.pj, i64 258 ; 2 uses
   %wide.load.1 = load <8 x i16>, ptr %i.ps, align 2, !tbaa !188
@@ -230,10 +228,8 @@ iter.check:                                       ; preds = %.preheader1421.preh
   %i.px = or disjoint <8 x i16> %i.pv, splat (i16 32)
   store <8 x i16> %i.pw, ptr %i.ps, align 2, !tbaa !188
   store <8 x i16> %i.px, ptr %i.pt, align 2, !tbaa !188
-  %14 = getelementptr inbounds nuw i8, ptr %i.pk, i64 121
-  %i.py = getelementptr inbounds nuw i8, ptr %i.pk, i64 129
-  store <8 x i8> splat (i8 2), ptr %14, align 1, !tbaa !92
-  store <8 x i8> splat (i8 2), ptr %i.py, align 1, !tbaa !92
+  %i.py = getelementptr inbounds nuw i8, ptr %i.pk, i64 121
+  store <16 x i8> splat (i8 2), ptr %i.py, align 1, !tbaa !92
   %i.pz = getelementptr inbounds nuw i8, ptr %i.pj, i64 274 ; 2 uses
   %i.qa = getelementptr inbounds nuw i8, ptr %i.pj, i64 290 ; 2 uses
   %wide.load.2 = load <8 x i16>, ptr %i.pz, align 2, !tbaa !188
@@ -244,10 +240,8 @@ iter.check:                                       ; preds = %.preheader1421.preh
   %i.qe = or disjoint <8 x i16> %i.qc, splat (i16 32)
   store <8 x i16> %i.qd, ptr %i.pz, align 2, !tbaa !188
   store <8 x i16> %i.qe, ptr %i.qa, align 2, !tbaa !188
-  %15 = getelementptr inbounds nuw i8, ptr %i.pk, i64 137
-  %i.qf = getelementptr inbounds nuw i8, ptr %i.pk, i64 145
-  store <8 x i8> splat (i8 2), ptr %15, align 1, !tbaa !92
-  store <8 x i8> splat (i8 2), ptr %i.qf, align 1, !tbaa !92
+  %i.qf = getelementptr inbounds nuw i8, ptr %i.pk, i64 137
+  store <16 x i8> splat (i8 2), ptr %i.qf, align 1, !tbaa !92
   %i.qg = getelementptr inbounds nuw i8, ptr %i.pj, i64 306 ; 2 uses
   %wide.load1792 = load <8 x i16>, ptr %i.qg, align 2, !tbaa !188
   %i.qh = and <8 x i16> %wide.load1792, splat (i16 -241)

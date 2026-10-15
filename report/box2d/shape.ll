@@ -204,9 +204,9 @@ declare float @sqrtf(float noundef) local_unnamed_addr #8
 ; Function Attrs: nounwind uwtable
 define hidden void @b2RayCastShape(ptr dead_on_unwind noalias nofree writable sret(%struct.b2CastOutput) align 4 captures(none) initializes((0, 28)) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, <2 x float> %3, <2 x float> %4) local_unnamed_addr #1 {
 bb.a:
-  %5 = alloca %struct.b2RayCastInput, align 8     ; 10 uses
+  %5 = alloca %struct.b2RayCastInput, align 16    ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %5, ptr noundef nonnull align 4 dereferenceable(20) %1, i64 20, i1 false), !tbaa.struct !84
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %5, ptr noundef nonnull align 4 dereferenceable(20) %1, i64 20, i1 false), !tbaa.struct !84
   %i.a = load <2 x float>, ptr %1, align 4
   %i.b = fsub <2 x float> %i.a, %3                ; 2 uses
   %i.c = shufflevector <2 x float> %i.b, <2 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -217,8 +217,6 @@ bb.a:
   %i.h = fadd <2 x float> %i.d, %i.g
   %i.i = fsub <2 x float> %i.d, %i.g
   %i.j = shufflevector <2 x float> %i.h, <2 x float> %i.i, <2 x i32> <i32 1, i32 2>
-  store <2 x float> %i.j, ptr %5, align 8, !tbaa !68
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load <2 x float>, ptr %i.k, align 4      ; 2 uses
   %i.m = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
@@ -229,7 +227,8 @@ bb.a:
   %i.r = fadd <2 x float> %i.n, %i.q
   %i.s = fsub <2 x float> %i.n, %i.q
   %i.t = shufflevector <2 x float> %i.r, <2 x float> %i.s, <2 x i32> <i32 0, i32 3>
-  store <2 x float> %i.t, ptr %6, align 8, !tbaa !68
+  %6 = shufflevector <2 x float> %i.j, <2 x float> %i.t, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %5, align 16, !tbaa !68
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %0, i8 0, i64 28, i1 false)
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 20
   %i.v = load i32, ptr %i.u, align 4, !tbaa !93
@@ -533,7 +532,7 @@ declare void @b2ShapeCastSegment(ptr dead_on_unwind writable sret(%struct.b2Cast
 ; Function Attrs: nounwind uwtable
 define hidden void @b2CollideMover(ptr dead_on_unwind noalias nofree writable sret(%struct.b2PlaneResult) align 4 captures(none) initializes((0, 24)) %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, <2 x float> %3, <2 x float> %4) local_unnamed_addr #1 {
 bb.a:
-  %5 = alloca %struct.b2Capsule, align 8          ; 10 uses
+  %5 = alloca %struct.b2Capsule, align 16         ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
   %i.a = load <2 x float>, ptr %1, align 4
   %i.b = fsub <2 x float> %i.a, %3                ; 2 uses
@@ -545,8 +544,6 @@ bb.a:
   %i.h = fadd <2 x float> %i.d, %i.g
   %i.i = fsub <2 x float> %i.d, %i.g
   %i.j = shufflevector <2 x float> %i.h, <2 x float> %i.i, <2 x i32> <i32 1, i32 2>
-  store <2 x float> %i.j, ptr %5, align 8, !tbaa !68
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load <2 x float>, ptr %i.k, align 4
   %i.m = fsub <2 x float> %i.l, %3                ; 2 uses
@@ -558,11 +555,12 @@ bb.a:
   %i.s = fadd <2 x float> %i.o, %i.r
   %i.t = fsub <2 x float> %i.o, %i.r
   %i.u = shufflevector <2 x float> %i.s, <2 x float> %i.t, <2 x i32> <i32 1, i32 2>
-  store <2 x float> %i.u, ptr %6, align 8, !tbaa !68
+  %6 = shufflevector <2 x float> %i.j, <2 x float> %i.u, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %5, align 16, !tbaa !68
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.w = load float, ptr %i.v, align 4, !tbaa !228
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store float %i.w, ptr %i.x, align 8, !tbaa !228
+  store float %i.w, ptr %i.x, align 16, !tbaa !228
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 20
   %i.z = load i32, ptr %i.y, align 4, !tbaa !93
@@ -643,9 +641,8 @@ bb.a:
   %i.g = extractvalue { <2 x float>, <2 x float> } %i.f, 0 ; 2 uses
   %i.h = extractvalue { <2 x float>, <2 x float> } %i.f, 1 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store <2 x float> %i.g, ptr %i.i, align 8, !tbaa !68
-  %.sroa.65.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store <2 x float> %i.h, ptr %.sroa.65.0..sroa_idx.i, align 8, !tbaa !68
+  %6 = shufflevector <2 x float> %i.g, <2 x float> %i.h, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %6, ptr %i.i, align 8, !tbaa !68
   %i.j = icmp eq i32 %2, 0
   %i.k = select i1 %i.j, float %i.c, float %i.e
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
@@ -1048,7 +1045,7 @@ b2ComputeShapeMass.exit:                          ; preds = %bb.e, %bb.d, %bb.c,
 define <2 x float> @b2Shape_GetClosestPoint(i64 %0, <2 x float> %1) local_unnamed_addr #1 {
 bb.a:
   %2 = alloca %struct.b2Vec2, align 8             ; 4 uses
-  %3 = alloca %struct.b2DistanceInput, align 4    ; 8 uses
+  %3 = alloca %struct.b2DistanceInput, align 4    ; 7 uses
   %4 = alloca %struct.b2ShapeProxy, align 4       ; 4 uses
   %5 = alloca %struct.b2SimplexCache, align 8     ; 4 uses
   %6 = alloca %struct.b2DistanceOutput, align 8   ; 4 uses
@@ -1102,9 +1099,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ae = fadd <2 x float> %i.aa, %i.ad
   %i.af = fsub <2 x float> %i.aa, %i.ad
   %i.ag = shufflevector <2 x float> %i.ae, <2 x float> %i.af, <2 x i32> <i32 1, i32 2>
-  store <2 x float> %i.ag, ptr %i.s, align 4, !tbaa !68
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 152
-  store <2 x float> %.sroa.010.0.vec.insert.i.i, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !68
+  %7 = shufflevector <2 x float> %i.ag, <2 x float> %.sroa.010.0.vec.insert.i.i, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  store <4 x float> %7, ptr %i.s, align 4, !tbaa !68
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 160
   store i8 1, ptr %i.ah, align 4, !tbaa !263
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
