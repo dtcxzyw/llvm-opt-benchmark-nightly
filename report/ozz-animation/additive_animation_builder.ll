@@ -202,7 +202,7 @@ _ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation14
   br i1 %i.ec, label %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation8ScaleKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit, label %.lr.ph.i40
 
 .lr.ph.i40:                                       ; preds = %_ZN3ozz9animation7offline12_GLOBAL__N_19MakeDeltaISt6vectorINS1_12RawAnimation14TranslationKeyENS_12StdAllocatorIS6_EEENS_4math6Float3EFSB_RKSB_SD_EEEvRKT_RKT0_RKT1_PSF_.exit
-  %i.ed = getelementptr inbounds nuw i8, ptr %i.do, i64 36
+  %i.ed = getelementptr inbounds nuw i8, ptr %i.do, i64 32
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dr, i64 56 ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dr, i64 64
   br label %bb.q
@@ -215,15 +215,18 @@ bb.q:                                             ; preds = %_ZNSt6vectorIN3ozz9
   %i.ei = load float, ptr %i.eh, align 4, !tbaa !57
   store float %i.ei, ptr %4, align 4, !tbaa !57
   %i.ej = getelementptr inbounds nuw i8, ptr %i.eh, i64 4
-  %7 = load <2 x float>, ptr %i.ej, align 4, !tbaa !38
-  %8 = load <2 x float>, ptr %i.dp, align 4, !tbaa !38
-  %9 = fdiv <2 x float> %7, %8
-  %i.ek = getelementptr inbounds nuw i8, ptr %i.eh, i64 12
-  %10 = load float, ptr %i.ek, align 4, !tbaa !53
-  %11 = load float, ptr %i.ed, align 4, !tbaa !53
-  %12 = fdiv float %10, %11
-  store <2 x float> %9, ptr %i.bj, align 4
-  store float %12, ptr %.sroa.2.0..sroa_idx.i41, align 4
+  %7 = load float, ptr %i.ej, align 4, !tbaa !77
+  %8 = load float, ptr %i.dp, align 4, !tbaa !77
+  %9 = fdiv float %7, %8
+  %i.ek = getelementptr inbounds nuw i8, ptr %i.eh, i64 8
+  %10 = load <2 x float>, ptr %i.ek, align 4, !tbaa !38
+  %11 = load <2 x float>, ptr %i.ed, align 4, !tbaa !38
+  %12 = fdiv <2 x float> %10, %11                 ; 2 uses
+  %.sroa.0.0.vec.insert.i.i43 = insertelement <2 x float> poison, float %9, i64 0
+  %13 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i.i43, <2 x float> %12, <2 x i32> <i32 0, i32 2>
+  store <2 x float> %13, ptr %i.bj, align 4
+  %14 = extractelement <2 x float> %12, i64 1
+  store float %14, ptr %.sroa.2.0..sroa_idx.i41, align 4
   %i.el = load ptr, ptr %i.ee, align 8, !tbaa !46 ; 3 uses
   %i.em = load ptr, ptr %i.ef, align 8, !tbaa !55
   %.not.i.i45 = icmp eq ptr %i.el, %i.em
@@ -583,7 +586,7 @@ bb.g:                                             ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.010.014.i.i, i64 72 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.015.i.i, i64 72
   %.not.i.i = icmp eq ptr %i.at, %i.b
-  br i1 %.not.i.i, label %.lr.ph.i46, label %.lr.ph.i.i, !llvm.loop !77
+  br i1 %.not.i.i, label %.lr.ph.i46, label %.lr.ph.i.i, !llvm.loop !78
 
 .lr.ph.i46:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i46
   %.06.i47 = phi ptr [ %i.av, %.lr.ph.i46 ], [ %i.c, %.lr.ph.i.i ] ; 2 uses
@@ -986,5 +989,6 @@ attributes #14 = { noreturn }
 !74 = !{!"_ZTSN3ozz4spanIKNS_4math9TransformEEE", !73, i64 0, !18, i64 8}
 !75 = !{!74, !18, i64 8}
 !76 = !{!74, !73, i64 0}
-!77 = distinct !{!77, !27}
+!77 = !{!50, !31, i64 0}
+!78 = distinct !{!78, !27}
 end_hunk_1

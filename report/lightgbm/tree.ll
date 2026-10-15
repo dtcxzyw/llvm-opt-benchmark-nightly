@@ -205,15 +205,18 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %9 = insertelement <2 x double> poison, double %6, i64 0
+  %10 = insertelement <2 x double> %9, double %7, i64 1
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit, %bb.a
   %.tr97 = phi i32 [ %3, %bb.a ], [ %i.fq, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ] ; 3 uses
   %.tr98 = phi i32 [ %4, %bb.a ], [ %.pre-phi, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ] ; 29 uses
   %.tr99 = phi ptr [ %5, %bb.a ], [ %i.k, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ] ; 3 uses
-  %.tr100 = phi double [ %6, %bb.a ], [ %14, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ] ; 3 uses
-  %.tr101 = phi double [ %7, %bb.a ], [ 0.000000e+00, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ] ; 3 uses
+  %.tr100 = phi double [ %6, %bb.a ], [ %14, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ] ; 2 uses
+  %.tr101 = phi double [ %7, %bb.a ], [ 0.000000e+00, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ] ; 2 uses
   %.tr102 = phi i32 [ %8, %bb.a ], [ %i.jz, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ] ; 2 uses
+  %11 = phi <2 x double> [ %10, %bb.a ], [ %15, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ]
   %i.j = sext i32 %.tr98 to i64                   ; 7 uses
   %i.k = getelementptr inbounds [32 x i8], ptr %.tr99, i64 %i.j ; 27 uses
   %i.l = icmp sgt i32 %.tr98, 0                   ; 2 uses
@@ -244,8 +247,6 @@ _ZSt4copyIPN8LightGBM4Tree11PathElementES3_ET0_T_S5_S4_.exit: ; preds = %bb.d, %
   %i.q = add nuw nsw i32 %.tr98, 1
   %i.r = uitofp nneg i32 %i.q to double
   %i.s = zext nneg i32 %.tr98 to i64
-  %9 = insertelement <2 x double> poison, double %.tr100, i64 0
-  %10 = insertelement <2 x double> %9, double %.tr101, i64 1
   %i.t = insertelement <2 x double> poison, double %i.r, i64 0
   %i.u = shufflevector <2 x double> %i.t, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.e
@@ -265,7 +266,7 @@ bb.e:                                             ; preds = %bb.e, %_ZSt4copyIPN
   %i.ae = uitofp nneg i32 %i.z to double
   %i.af = insertelement <2 x double> poison, double %i.y, i64 0
   %i.ag = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ah = fmul <2 x double> %10, %i.ag
+  %i.ah = fmul <2 x double> %11, %i.ag
   %i.ai = sitofp i32 %i.ad to double
   %i.aj = insertelement <2 x double> poison, double %i.ai, i64 0
   %i.ak = insertelement <2 x double> %i.aj, double %i.ae, i64 1
@@ -553,7 +554,7 @@ _ZNK8LightGBM4Tree8DecisionEdi.exit:              ; preds = %bb.g, %bb.h, %_ZN8L
   %i.gm = sitofp <2 x i32> %i.gl to <2 x double>
   %i.gn = insertelement <2 x double> poison, double %i.fv, i64 0
   %i.go = shufflevector <2 x double> %i.gn, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.gp = fdiv <2 x double> %i.gm, %i.go
+  %i.gp = fdiv <2 x double> %i.gm, %i.go          ; 2 uses
   %.not105 = icmp slt i32 %.tr98, 0
   %.pre123 = add i32 %.tr98, 1                    ; 5 uses
   br i1 %.not105, label %._crit_edge, label %.lr.ph.preheader
@@ -757,17 +758,17 @@ _ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit.loopexit: ; preds = %.l
 _ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit: ; preds = %bb.o, %.preheader.i, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit.loopexit, %._crit_edge
   %.pre-phi = phi i32 [ %.tr98, %.preheader.i ], [ %.pre123, %._crit_edge ], [ %.tr98, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit.loopexit ], [ %.pre123, %bb.o ] ; 2 uses
   %i.jv = phi i32 [ %i.dp, %.preheader.i ], [ %i.dp, %._crit_edge ], [ %.pre.pre, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit.loopexit ], [ %i.dp, %bb.o ]
-  %.073 = phi double [ %i.gx, %.preheader.i ], [ 1.000000e+00, %._crit_edge ], [ %i.gx, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit.loopexit ], [ 1.000000e+00, %bb.o ]
+  %.073 = phi double [ %i.gx, %.preheader.i ], [ 1.000000e+00, %._crit_edge ], [ %i.gx, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit.loopexit ], [ 1.000000e+00, %bb.o ] ; 2 uses
   %.072 = phi double [ %i.gz, %.preheader.i ], [ 1.000000e+00, %._crit_edge ], [ %i.gz, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit.loopexit ], [ 1.000000e+00, %bb.o ]
-  %11 = insertelement <2 x double> poison, double %.073, i64 0
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
-  %13 = fmul <2 x double> %i.gp, %12              ; 2 uses
-  %i.jw = extractelement <2 x double> %13, i64 0
-  tail call void @_ZNK8LightGBM4Tree8TreeSHAPEPKdPdiiPNS0_11PathElementEddi(ptr noundef nonnull align 8 dereferenceable(648) %0, ptr noundef %1, ptr noundef %2, i32 noundef %.0.i, i32 noundef %.pre-phi, ptr noundef nonnull %i.k, double noundef %i.jw, double noundef %.072, i32 noundef %i.jv)
+  %12 = extractelement <2 x double> %i.gp, i64 0
+  %13 = fmul double %12, %.073
+  tail call void @_ZNK8LightGBM4Tree8TreeSHAPEPKdPdiiPNS0_11PathElementEddi(ptr noundef nonnull align 8 dereferenceable(648) %0, ptr noundef %1, ptr noundef %2, i32 noundef %.0.i, i32 noundef %.pre-phi, ptr noundef nonnull %i.k, double noundef %13, double noundef %.072, i32 noundef %i.jv)
+  %i.jw = extractelement <2 x double> %i.gp, i64 1
+  %14 = fmul double %i.jw, %.073                  ; 2 uses
   %i.jx = load ptr, ptr %i.a, align 8, !tbaa !62
   %i.jy = getelementptr inbounds nuw [4 x i8], ptr %i.jx, i64 %i.dm
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !88
-  %14 = extractelement <2 x double> %13, i64 1
+  %15 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %14, i64 0
   br label %tailrecurse
 
 ._crit_edge111:                                   ; preds = %_ZN8LightGBM4Tree14UnwoundPathSumEPKNS0_11PathElementEii.exit, %.preheader
@@ -789,15 +790,18 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %9 = insertelement <2 x double> poison, double %6, i64 0
+  %10 = insertelement <2 x double> %9, double %7, i64 1
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %._crit_edge.thread, %bb.a
   %.tr123 = phi i32 [ %3, %bb.a ], [ %i.if, %._crit_edge.thread ] ; 3 uses
   %.tr124 = phi i32 [ %4, %bb.a ], [ %.pre-phi, %._crit_edge.thread ] ; 28 uses
   %.tr125 = phi ptr [ %5, %bb.a ], [ %i.n, %._crit_edge.thread ] ; 3 uses
-  %.tr126 = phi double [ %6, %bb.a ], [ %14, %._crit_edge.thread ] ; 3 uses
-  %.tr127 = phi double [ %7, %bb.a ], [ 0.000000e+00, %._crit_edge.thread ] ; 3 uses
+  %.tr126 = phi double [ %6, %bb.a ], [ %14, %._crit_edge.thread ] ; 2 uses
+  %.tr127 = phi double [ %7, %bb.a ], [ 0.000000e+00, %._crit_edge.thread ] ; 2 uses
   %.tr128 = phi i32 [ %8, %bb.a ], [ %i.mo, %._crit_edge.thread ] ; 2 uses
+  %11 = phi <2 x double> [ %10, %bb.a ], [ %15, %._crit_edge.thread ]
   %i.m = sext i32 %.tr124 to i64                  ; 7 uses
   %i.n = getelementptr inbounds [32 x i8], ptr %.tr125, i64 %i.m ; 27 uses
   %i.o = icmp sgt i32 %.tr124, 0                  ; 2 uses
@@ -828,8 +832,6 @@ _ZSt4copyIPN8LightGBM4Tree11PathElementES3_ET0_T_S5_S4_.exit: ; preds = %bb.d, %
   %i.t = add nuw nsw i32 %.tr124, 1
   %i.u = uitofp nneg i32 %i.t to double
   %i.v = zext nneg i32 %.tr124 to i64
-  %9 = insertelement <2 x double> poison, double %.tr126, i64 0
-  %10 = insertelement <2 x double> %9, double %.tr127, i64 1
   %i.w = insertelement <2 x double> poison, double %i.u, i64 0
   %i.x = shufflevector <2 x double> %i.w, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.e
@@ -849,7 +851,7 @@ bb.e:                                             ; preds = %bb.e, %_ZSt4copyIPN
   %i.ah = uitofp nneg i32 %i.ac to double
   %i.ai = insertelement <2 x double> poison, double %i.ab, i64 0
   %i.aj = shufflevector <2 x double> %i.ai, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ak = fmul <2 x double> %10, %i.aj
+  %i.ak = fmul <2 x double> %11, %i.aj
   %i.al = sitofp i32 %i.ag to double
   %i.am = insertelement <2 x double> poison, double %i.al, i64 0
   %i.an = insertelement <2 x double> %i.am, double %i.ah, i64 1
@@ -1252,7 +1254,7 @@ bb.aa:                                            ; preds = %_ZNK8LightGBM4Tree8
   %i.jb = sitofp <2 x i32> %i.ja to <2 x double>
   %i.jc = insertelement <2 x double> poison, double %i.ik, i64 0
   %i.jd = shufflevector <2 x double> %i.jc, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.je = fdiv <2 x double> %i.jb, %i.jd
+  %i.je = fdiv <2 x double> %i.jb, %i.jd          ; 2 uses
   %.not80156 = icmp slt i32 %.tr124, 0
   %.pre208 = add i32 %.tr124, 1                   ; 5 uses
   br i1 %.not80156, label %._crit_edge, label %.lr.ph
@@ -1456,17 +1458,17 @@ _ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit: ; preds = %.lr.ph56.i.
 ._crit_edge.thread:                               ; preds = %bb.ac, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit, %._crit_edge
   %.pre-phi = phi i32 [ %.tr124, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ], [ %.pre208, %._crit_edge ], [ %.pre208, %bb.ac ] ; 2 uses
   %i.mk = phi i32 [ %.pre202, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ], [ %i.eo, %._crit_edge ], [ %i.eo, %bb.ac ]
-  %.075 = phi double [ %i.jm, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ], [ 1.000000e+00, %._crit_edge ], [ 1.000000e+00, %bb.ac ]
+  %.075 = phi double [ %i.jm, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ], [ 1.000000e+00, %._crit_edge ], [ 1.000000e+00, %bb.ac ] ; 2 uses
   %.074 = phi double [ %i.jo, %_ZN8LightGBM4Tree10UnwindPathEPNS0_11PathElementEii.exit ], [ 1.000000e+00, %._crit_edge ], [ 1.000000e+00, %bb.ac ]
-  %11 = insertelement <2 x double> poison, double %.075, i64 0
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
-  %13 = fmul <2 x double> %i.je, %12              ; 2 uses
-  %i.ml = extractelement <2 x double> %13, i64 0
-  tail call void @_ZNK8LightGBM4Tree13TreeSHAPByMapERKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEEPSA_iiPNS0_11PathElementEddi(ptr noundef nonnull align 8 dereferenceable(648) %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef %2, i32 noundef %.0.i, i32 noundef %.pre-phi, ptr noundef %i.n, double noundef %i.ml, double noundef %.074, i32 noundef %i.mk)
+  %12 = extractelement <2 x double> %i.je, i64 0
+  %13 = fmul double %12, %.075
+  tail call void @_ZNK8LightGBM4Tree13TreeSHAPByMapERKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEEPSA_iiPNS0_11PathElementEddi(ptr noundef nonnull align 8 dereferenceable(648) %0, ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef %2, i32 noundef %.0.i, i32 noundef %.pre-phi, ptr noundef %i.n, double noundef %13, double noundef %.074, i32 noundef %i.mk)
+  %i.ml = extractelement <2 x double> %i.je, i64 1
+  %14 = fmul double %i.ml, %.075                  ; 2 uses
   %i.mm = load ptr, ptr %i.a, align 8, !tbaa !62
   %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.mm, i64 %i.ek
   %i.mo = load i32, ptr %i.mn, align 4, !tbaa !88
-  %14 = extractelement <2 x double> %13, i64 1
+  %15 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %14, i64 0
   br label %tailrecurse
 
 ._crit_edge162:                                   ; preds = %_ZNSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEEixERS5_.exit, %.preheader

@@ -204,12 +204,20 @@ begin_hunk_0_@synth_filter_float:bb.a
   %i.nm = getelementptr [4 x i8], ptr %i.c, i64 %i.nc
   %i.nn = getelementptr i8, ptr %i.nm, i64 -2048
   %i.no = load float, ptr %i.nn, align 4, !tbaa !13
-  %9 = tail call nsz float @llvm.fmuladd.f32(float %i.ko, float %i.kt, float %i.kj)
-  %10 = tail call nsz float @llvm.fmuladd.f32(float %i.kv, float %i.ky, float %i.km)
-  %11 = fmul nsz float %i.la, %i.ld
-  %12 = fmul nsz float %i.lf, %i.lh
-  %13 = tail call nsz float @llvm.fmuladd.f32(float %i.lk, float %i.lp, float %9)
-  %14 = tail call nsz float @llvm.fmuladd.f32(float %i.lr, float %i.lu, float %10)
+  %9 = fmul nsz float %i.la, %i.ld
+  %10 = fmul nsz float %i.lf, %i.lh
+  %11 = insertelement <2 x float> poison, float %i.ko, i64 0
+  %12 = insertelement <2 x float> %11, float %i.kv, i64 1
+  %13 = insertelement <2 x float> poison, float %i.kt, i64 0
+  %14 = insertelement <2 x float> %13, float %i.ky, i64 1
+  %15 = insertelement <2 x float> poison, float %i.kj, i64 0
+  %16 = insertelement <2 x float> %15, float %i.km, i64 1
+  %17 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %12, <2 x float> %14, <2 x float> %16)
+  %18 = insertelement <2 x float> poison, float %i.lk, i64 0
+  %19 = insertelement <2 x float> %18, float %i.lr, i64 1
+  %20 = insertelement <2 x float> poison, float %i.lp, i64 0
+  %21 = insertelement <2 x float> %20, float %i.lu, i64 1
+  %22 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> %21, <2 x float> %17)
   %i.np = insertelement <4 x float> poison, float %i.lw, i64 0
   %i.nq = insertelement <4 x float> %i.np, float %i.mc, i64 1
   %i.nr = insertelement <4 x float> %i.nq, float %i.mh, i64 2
@@ -218,11 +226,11 @@ begin_hunk_0_@synth_filter_float:bb.a
   %i.nu = insertelement <4 x float> %i.nt, float %i.me, i64 1
   %i.nv = insertelement <4 x float> %i.nu, float %i.mm, i64 2
   %i.nw = insertelement <4 x float> %i.nv, float %i.mr, i64 3
-  %i.nx = insertelement <4 x float> poison, float %11, i64 0
-  %i.ny = insertelement <4 x float> %i.nx, float %12, i64 1
-  %15 = insertelement <4 x float> %i.ny, float %13, i64 2
-  %16 = insertelement <4 x float> %15, float %14, i64 3
-  %i.nz = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ns, <4 x float> %i.nw, <4 x float> %16)
+  %i.nx = insertelement <4 x float> poison, float %9, i64 0
+  %i.ny = insertelement <4 x float> %i.nx, float %10, i64 1
+  %23 = shufflevector <2 x float> %22, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %24 = shufflevector <4 x float> %i.ny, <4 x float> %23, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.nz = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ns, <4 x float> %i.nw, <4 x float> %24)
   %i.oa = insertelement <4 x float> poison, float %i.mt, i64 0
   %i.ob = insertelement <4 x float> %i.oa, float %i.mz, i64 1
   %i.oc = insertelement <4 x float> %i.ob, float %i.ne, i64 2
@@ -625,12 +633,20 @@ begin_hunk_1_@synth_filter_float_64:bb.a
   %i.nm = getelementptr [4 x i8], ptr %i.c, i64 %i.nc
   %i.nn = getelementptr i8, ptr %i.nm, i64 -4096
   %i.no = load float, ptr %i.nn, align 4, !tbaa !13
-  %9 = tail call nsz float @llvm.fmuladd.f32(float %i.ko, float %i.kt, float %i.kj)
-  %10 = tail call nsz float @llvm.fmuladd.f32(float %i.kv, float %i.ky, float %i.km)
-  %11 = fmul nsz float %i.la, %i.ld
-  %12 = fmul nsz float %i.lf, %i.lh
-  %13 = tail call nsz float @llvm.fmuladd.f32(float %i.lk, float %i.lp, float %9)
-  %14 = tail call nsz float @llvm.fmuladd.f32(float %i.lr, float %i.lu, float %10)
+  %9 = fmul nsz float %i.la, %i.ld
+  %10 = fmul nsz float %i.lf, %i.lh
+  %11 = insertelement <2 x float> poison, float %i.ko, i64 0
+  %12 = insertelement <2 x float> %11, float %i.kv, i64 1
+  %13 = insertelement <2 x float> poison, float %i.kt, i64 0
+  %14 = insertelement <2 x float> %13, float %i.ky, i64 1
+  %15 = insertelement <2 x float> poison, float %i.kj, i64 0
+  %16 = insertelement <2 x float> %15, float %i.km, i64 1
+  %17 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %12, <2 x float> %14, <2 x float> %16)
+  %18 = insertelement <2 x float> poison, float %i.lk, i64 0
+  %19 = insertelement <2 x float> %18, float %i.lr, i64 1
+  %20 = insertelement <2 x float> poison, float %i.lp, i64 0
+  %21 = insertelement <2 x float> %20, float %i.lu, i64 1
+  %22 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %19, <2 x float> %21, <2 x float> %17)
   %i.np = insertelement <4 x float> poison, float %i.lw, i64 0
   %i.nq = insertelement <4 x float> %i.np, float %i.mc, i64 1
   %i.nr = insertelement <4 x float> %i.nq, float %i.mh, i64 2
@@ -639,11 +655,11 @@ begin_hunk_1_@synth_filter_float_64:bb.a
   %i.nu = insertelement <4 x float> %i.nt, float %i.me, i64 1
   %i.nv = insertelement <4 x float> %i.nu, float %i.mm, i64 2
   %i.nw = insertelement <4 x float> %i.nv, float %i.mr, i64 3
-  %i.nx = insertelement <4 x float> poison, float %11, i64 0
-  %i.ny = insertelement <4 x float> %i.nx, float %12, i64 1
-  %15 = insertelement <4 x float> %i.ny, float %13, i64 2
-  %16 = insertelement <4 x float> %15, float %14, i64 3
-  %i.nz = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ns, <4 x float> %i.nw, <4 x float> %16)
+  %i.nx = insertelement <4 x float> poison, float %9, i64 0
+  %i.ny = insertelement <4 x float> %i.nx, float %10, i64 1
+  %23 = shufflevector <2 x float> %22, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %24 = shufflevector <4 x float> %i.ny, <4 x float> %23, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.nz = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ns, <4 x float> %i.nw, <4 x float> %24)
   %i.oa = insertelement <4 x float> poison, float %i.mt, i64 0
   %i.ob = insertelement <4 x float> %i.oa, float %i.mz, i64 1
   %i.oc = insertelement <4 x float> %i.ob, float %i.ne, i64 2
@@ -1044,9 +1060,6 @@ bb.c:                                             ; preds = %._crit_edge
   store i32 %i.ne, ptr %2, align 4, !tbaa !11
   ret void
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fmuladd.f32(float, float, float) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #2

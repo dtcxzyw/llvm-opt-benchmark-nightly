@@ -202,7 +202,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN12StaticObject11deSerializeERSih(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i8 zeroext %2) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 8                ; 6 uses
+  %i.a = alloca [12 x i8], align 4                ; 6 uses
   %i.b = alloca [1 x i8], align 1                 ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
@@ -227,7 +227,7 @@ _Z6readU8RSi.exit:                                ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #24
   store i8 %i.k, ptr %0, align 8, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.a, i8 0, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.a, i8 0, i64 12, i1 false)
   %i.l = call noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %i.a, i64 noundef 12) ; 0 uses
   %i.m = load ptr, ptr %1, align 8, !tbaa !11
   %i.n = getelementptr i8, ptr %i.m, i64 -24
@@ -244,20 +244,23 @@ bb.c:                                             ; preds = %_Z6readU8RSi.exit
   unreachable
 
 _Z11readV3F1000RSi.exit:                          ; preds = %_Z6readU8RSi.exit
-  %4 = load <2 x i32>, ptr %i.a, align 8
-  %5 = call <2 x i32> @llvm.bswap.v2i32(<2 x i32> %4)
-  %6 = sitofp <2 x i32> %5 to <2 x float>
-  %7 = fdiv nsz <2 x float> %6, splat (float 1.000000e+03)
-  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.0.copyload.i.i.i4.i.i = load i32, ptr %i.t, align 8
-  %8 = call noundef i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i4.i.i)
-  %9 = sitofp nsz i32 %8 to float
-  %10 = fdiv nsz float %9, 1.000000e+03
+  %.0.copyload.i.i.i.i.i = load i32, ptr %i.a, align 4
+  %4 = call noundef i32 @llvm.bswap.i32(i32 %.0.copyload.i.i.i.i.i)
+  %5 = sitofp nsz i32 %4 to float
+  %6 = fdiv nsz float %5, 1.000000e+03
+  %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %6, i64 0
+  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %7 = load <2 x i32>, ptr %i.t, align 4
+  %8 = call <2 x i32> @llvm.bswap.v2i32(<2 x i32> %7)
+  %9 = sitofp <2 x i32> %8 to <2 x float>
+  %10 = fdiv nsz <2 x float> %9, splat (float 1.000000e+03) ; 2 uses
+  %11 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i.i, <2 x float> %10, <2 x i32> <i32 0, i32 2>
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store <2 x float> %7, ptr %i.u, align 4, !tbaa !21
+  store <2 x float> %11, ptr %i.u, align 4, !tbaa !21
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store float %10, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !21
+  %12 = extractelement <2 x float> %10, i64 1
+  store float %12, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !21
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   call void @_Z19deSerializeString16B5cxx11RSi(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr noundef nonnull align 8 dereferenceable(16) %1)
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses

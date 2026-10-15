@@ -204,14 +204,17 @@ bb.c:                                             ; preds = %bb.a, %bb.c
   store float %i.ae, ptr %i.af, align 4, !tbaa !31
   %i.ag = load float, ptr %i.f, align 4, !tbaa !31
   %i.ah = fmul float %i.ag, 2.500000e+01          ; 2 uses
-  %i.ai = tail call float @sinf(float noundef %i.ah) #20
-  %1 = tail call float @llvm.fmuladd.f32(float %i.ai, float 2.000000e-01, float 7.500000e-01)
+  %1 = tail call float @sinf(float noundef %i.ah) #20
   %2 = getelementptr inbounds nuw [4 x i8], ptr @_ZZN6ImPlot16Demo_ShadedPlotsEvE3ys3, i64 %indvars.iv
-  store float %1, ptr %2, align 4, !tbaa !31
-  %3 = tail call float @cosf(float noundef %i.ah) #20
-  %4 = tail call float @llvm.fmuladd.f32(float %3, float 1.000000e-01, float 7.500000e-01)
+  %i.ai = tail call float @cosf(float noundef %i.ah) #20
+  %3 = insertelement <2 x float> poison, float %1, i64 0
+  %4 = insertelement <2 x float> %3, float %i.ai, i64 1
+  %5 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %4, <2 x float> <float 2.000000e-01, float 1.000000e-01>, <2 x float> splat (float 7.500000e-01)) ; 2 uses
+  %6 = extractelement <2 x float> %5, i64 0
+  store float %6, ptr %2, align 4, !tbaa !31
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr @_ZZN6ImPlot16Demo_ShadedPlotsEvE3ys4, i64 %indvars.iv
-  store float %4, ptr %i.aj, align 4, !tbaa !31
+  %7 = extractelement <2 x float> %5, i64 1
+  store float %7, ptr %i.aj, align 4, !tbaa !31
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 1001
   br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !82

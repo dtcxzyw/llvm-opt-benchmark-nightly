@@ -205,54 +205,57 @@ _ZNSt6vectorI10aiVector3tIfESaIS1_EE6resizeEmRKS1_.exit: ; preds = %bb.b, %bb.c,
   %i.aq = load i32, ptr %i.ap, align 4
   %i.ar = zext i32 %i.aq to i64
   %i.as = getelementptr inbounds nuw [12 x i8], ptr %i.aj, i64 %i.ar ; 2 uses
-  %5 = load float, ptr %i.ao, align 4
-  %i.at = load float, ptr %i.ak, align 4
-  %i.au = getelementptr inbounds nuw i8, ptr %i.ao, i64 4
-  %6 = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
-  %7 = load float, ptr %i.as, align 4
-  %8 = getelementptr inbounds nuw i8, ptr %i.as, i64 4
-  %i.av = load <2 x float>, ptr %i.au, align 4    ; 2 uses
-  %i.aw = load <2 x float>, ptr %6, align 4       ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
+  %i.at = load float, ptr %5, align 4
+  %i.au = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
+  %6 = load float, ptr %i.au, align 4
+  %7 = getelementptr inbounds nuw i8, ptr %i.as, i64 8
+  %8 = load float, ptr %7, align 4
+  %i.av = load <2 x float>, ptr %i.ao, align 4    ; 2 uses
+  %i.aw = load <2 x float>, ptr %i.ak, align 4    ; 3 uses
   %i.ax = fsub <2 x float> %i.av, %i.aw           ; 2 uses
-  %9 = shufflevector <2 x float> %i.av, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.ay = insertelement <2 x float> %9, float %5, i64 1
-  %10 = shufflevector <2 x float> %i.aw, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.az = insertelement <2 x float> %10, float %i.at, i64 1 ; 2 uses
+  %9 = shufflevector <2 x float> %i.av, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.ay = insertelement <2 x float> %9, float %i.at, i64 0
+  %10 = shufflevector <2 x float> %i.aw, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.az = insertelement <2 x float> %10, float %6, i64 0 ; 2 uses
   %i.ba = fsub <2 x float> %i.ay, %i.az           ; 2 uses
-  %i.bb = load <2 x float>, ptr %8, align 4       ; 2 uses
-  %11 = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.bc = insertelement <2 x float> %11, float %7, i64 1
+  %i.bb = load <2 x float>, ptr %i.as, align 4    ; 2 uses
+  %11 = fsub <2 x float> %i.bb, %i.aw             ; 2 uses
+  %12 = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.bc = insertelement <2 x float> %12, float %8, i64 0
   %i.bd = fsub <2 x float> %i.bc, %i.az           ; 2 uses
-  %12 = fsub <2 x float> %i.bb, %i.aw             ; 2 uses
-  %13 = fneg <2 x float> %12
-  %14 = fmul <2 x float> %i.ba, %13
-  %15 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ax, <2 x float> %i.bd, <2 x float> %14) ; 3 uses
-  %i.be = extractelement <2 x float> %i.bd, i64 1
-  %16 = fneg float %i.be
-  %17 = extractelement <2 x float> %i.ax, i64 0
-  %18 = fmul float %17, %16
-  %19 = extractelement <2 x float> %i.ba, i64 1
-  %20 = extractelement <2 x float> %12, i64 0
-  %21 = call float @llvm.fmuladd.f32(float %19, float %20, float %18) ; 3 uses
+  %13 = extractelement <2 x float> %11, i64 1
+  %14 = fneg float %13
+  %15 = extractelement <2 x float> %i.ba, i64 0
+  %16 = fmul float %15, %14
+  %17 = extractelement <2 x float> %i.ax, i64 1
+  %i.be = extractelement <2 x float> %i.bd, i64 0
+  %18 = call float @llvm.fmuladd.f32(float %17, float %i.be, float %16)
+  %19 = fneg <2 x float> %i.bd
+  %20 = fmul <2 x float> %i.ax, %19
+  %21 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ba, <2 x float> %11, <2 x float> %20) ; 2 uses
+  %.sroa.0.0.vec.insert.i99 = insertelement <2 x float> poison, float %18, i64 0
+  %22 = shufflevector <2 x float> %.sroa.0.0.vec.insert.i99, <2 x float> %21, <2 x i32> <i32 0, i32 2> ; 3 uses
   %i.bf = load ptr, ptr %i.a, align 8
   %i.bg = getelementptr inbounds nuw [12 x i8], ptr %i.bf, i64 %i.ai ; 2 uses
-  store <2 x float> %15, ptr %i.bg, align 4
+  store <2 x float> %22, ptr %i.bg, align 4
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
-  store float %21, ptr %.sroa.4.0..sroa_idx, align 4
+  %23 = extractelement <2 x float> %21, i64 1     ; 3 uses
+  store float %23, ptr %.sroa.4.0..sroa_idx, align 4
   %i.bh = load i32, ptr %i.al, align 4
   %i.bi = zext i32 %i.bh to i64
   %i.bj = load ptr, ptr %i.a, align 8
   %i.bk = getelementptr inbounds nuw [12 x i8], ptr %i.bj, i64 %i.bi ; 2 uses
-  store <2 x float> %15, ptr %i.bk, align 4
+  store <2 x float> %22, ptr %i.bk, align 4
   %.sroa.4.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
-  store float %21, ptr %.sroa.4.0..sroa_idx.1, align 4
+  store float %23, ptr %.sroa.4.0..sroa_idx.1, align 4
   %i.bl = load i32, ptr %i.ap, align 4
   %i.bm = zext i32 %i.bl to i64
   %i.bn = load ptr, ptr %i.a, align 8
   %i.bo = getelementptr inbounds nuw [12 x i8], ptr %i.bn, i64 %i.bm ; 2 uses
-  store <2 x float> %15, ptr %i.bo, align 4
+  store <2 x float> %22, ptr %i.bo, align 4
   %.sroa.4.0..sroa_idx.2 = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
-  store float %21, ptr %.sroa.4.0..sroa_idx.2, align 4
+  store float %23, ptr %.sroa.4.0..sroa_idx.2, align 4
   %i.bp = add i32 %.082221, 1                     ; 2 uses
   %i.bq = zext i32 %i.bp to i64                   ; 2 uses
   %i.br = load ptr, ptr %i.v, align 8

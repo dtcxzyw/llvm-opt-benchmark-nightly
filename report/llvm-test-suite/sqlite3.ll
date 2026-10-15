@@ -205,104 +205,110 @@ bb.v:                                             ; preds = %.preheader, %bb.v
   store i8 %i.be, ptr %i.az, align 1, !tbaa !139
   %i.bf = getelementptr i8, ptr %2, i64 %i.ay
   %i.bg = getelementptr i8, ptr %i.bf, i64 1      ; 2 uses
-  %4 = getelementptr i8, ptr %2, i64 %i.ay
-  %5 = getelementptr i8, ptr %4, i64 2
-  %6 = getelementptr i8, ptr %2, i64 %i.ay
-  %i.bh = getelementptr i8, ptr %6, i64 3
-  %7 = getelementptr i8, ptr %2, i64 %i.ay
-  %8 = getelementptr i8, ptr %7, i64 4
+  %4 = load i8, ptr %i.bg, align 1, !tbaa !139
+  %5 = urem i8 %4, 62
+  %6 = zext nneg i8 %5 to i64
+  %i.bh = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %6
+  %7 = load i8, ptr %i.bh, align 1, !tbaa !139
+  store i8 %7, ptr %i.bg, align 1, !tbaa !139
   %i.bi = getelementptr i8, ptr %2, i64 %i.ay
-  %i.bj = getelementptr i8, ptr %i.bi, i64 5
-  %9 = getelementptr i8, ptr %2, i64 %i.ay
-  %10 = getelementptr i8, ptr %9, i64 6
-  %11 = getelementptr i8, ptr %2, i64 %i.ay
-  %i.bk = getelementptr i8, ptr %11, i64 7
-  %12 = getelementptr i8, ptr %2, i64 %i.ay
-  %13 = getelementptr i8, ptr %12, i64 8
+  %i.bj = getelementptr i8, ptr %i.bi, i64 2      ; 2 uses
+  %8 = load i8, ptr %i.bj, align 1, !tbaa !139
+  %9 = urem i8 %8, 62
+  %10 = zext nneg i8 %9 to i64
+  %i.bk = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %10
+  %11 = load i8, ptr %i.bk, align 1, !tbaa !139
+  store i8 %11, ptr %i.bj, align 1, !tbaa !139
   %i.bl = getelementptr i8, ptr %2, i64 %i.ay
-  %i.bm = getelementptr i8, ptr %i.bl, i64 9
-  %14 = getelementptr i8, ptr %2, i64 %i.ay
-  %15 = getelementptr i8, ptr %14, i64 10
-  %16 = getelementptr i8, ptr %2, i64 %i.ay
-  %i.bn = getelementptr i8, ptr %16, i64 11
-  %17 = getelementptr i8, ptr %2, i64 %i.ay
-  %18 = getelementptr i8, ptr %17, i64 12
+  %i.bm = getelementptr i8, ptr %i.bl, i64 3      ; 2 uses
+  %12 = load i8, ptr %i.bm, align 1, !tbaa !139
+  %13 = urem i8 %12, 62
+  %14 = zext nneg i8 %13 to i64
+  %i.bn = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %14
+  %15 = load i8, ptr %i.bn, align 1, !tbaa !139
+  store i8 %15, ptr %i.bm, align 1, !tbaa !139
   %i.bo = getelementptr i8, ptr %2, i64 %i.ay
-  %i.bp = getelementptr i8, ptr %i.bo, i64 13
-  %19 = getelementptr i8, ptr %2, i64 %i.ay
-  %20 = getelementptr i8, ptr %19, i64 14
-  %21 = load <14 x i8>, ptr %i.bg, align 1, !tbaa !139
-  %22 = urem <14 x i8> %21, splat (i8 62)         ; 14 uses
-  %23 = extractelement <14 x i8> %22, i64 0
-  %24 = zext nneg i8 %23 to i64
-  %i.bq = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %24
-  %25 = load i8, ptr %i.bq, align 1, !tbaa !139
-  store i8 %25, ptr %i.bg, align 1, !tbaa !139
-  %26 = extractelement <14 x i8> %22, i64 1
-  %i.br = zext nneg i8 %26 to i64
+  %i.bp = getelementptr i8, ptr %i.bo, i64 4      ; 2 uses
+  %16 = load i8, ptr %i.bp, align 1, !tbaa !139
+  %17 = urem i8 %16, 62
+  %18 = zext nneg i8 %17 to i64
+  %19 = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %18
+  %20 = load i8, ptr %19, align 1, !tbaa !139
+  store i8 %20, ptr %i.bp, align 1, !tbaa !139
+  %i.bq = getelementptr i8, ptr %2, i64 %i.ay
+  %21 = getelementptr i8, ptr %i.bq, i64 5        ; 2 uses
+  %22 = load i8, ptr %21, align 1, !tbaa !139
+  %23 = urem i8 %22, 62
+  %i.br = zext nneg i8 %23 to i64
   %i.bs = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.br
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !139
-  store i8 %i.bt, ptr %5, align 1, !tbaa !139
-  %27 = extractelement <14 x i8> %22, i64 2
+  store i8 %i.bt, ptr %21, align 1, !tbaa !139
+  %24 = getelementptr i8, ptr %2, i64 %i.ay
+  %25 = getelementptr i8, ptr %24, i64 6          ; 2 uses
+  %26 = load i8, ptr %25, align 1, !tbaa !139
+  %27 = urem i8 %26, 62
   %i.bu = zext nneg i8 %27 to i64
   %i.bv = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.bu
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !139
-  store i8 %i.bw, ptr %i.bh, align 1, !tbaa !139
-  %28 = extractelement <14 x i8> %22, i64 3
-  %29 = zext nneg i8 %28 to i64
-  %i.bx = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %29
-  %30 = load i8, ptr %i.bx, align 1, !tbaa !139
-  store i8 %30, ptr %8, align 1, !tbaa !139
-  %31 = extractelement <14 x i8> %22, i64 4
-  %32 = zext nneg i8 %31 to i64
-  %i.by = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %32
-  %33 = load i8, ptr %i.by, align 1, !tbaa !139
-  store i8 %33, ptr %i.bj, align 1, !tbaa !139
-  %34 = extractelement <14 x i8> %22, i64 5
-  %35 = zext nneg i8 %34 to i64
-  %i.bz = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %35
-  %36 = load i8, ptr %i.bz, align 1, !tbaa !139
-  store i8 %36, ptr %10, align 1, !tbaa !139
-  %i.ca = extractelement <14 x i8> %22, i64 6
+  store i8 %i.bw, ptr %25, align 1, !tbaa !139
+  %28 = getelementptr i8, ptr %2, i64 %i.ay
+  %29 = getelementptr i8, ptr %28, i64 7          ; 2 uses
+  %30 = getelementptr i8, ptr %2, i64 %i.ay
+  %31 = getelementptr i8, ptr %30, i64 8
+  %32 = getelementptr i8, ptr %2, i64 %i.ay
+  %i.bx = getelementptr i8, ptr %32, i64 9
+  %33 = getelementptr i8, ptr %2, i64 %i.ay
+  %34 = getelementptr i8, ptr %33, i64 10
+  %35 = getelementptr i8, ptr %2, i64 %i.ay
+  %36 = getelementptr i8, ptr %35, i64 11
+  %i.by = getelementptr i8, ptr %2, i64 %i.ay
+  %37 = getelementptr i8, ptr %i.by, i64 12
+  %38 = getelementptr i8, ptr %2, i64 %i.ay
+  %39 = getelementptr i8, ptr %38, i64 13
+  %40 = getelementptr i8, ptr %2, i64 %i.ay
+  %i.bz = getelementptr i8, ptr %40, i64 14
+  %41 = load <8 x i8>, ptr %29, align 1, !tbaa !139
+  %42 = urem <8 x i8> %41, splat (i8 62)          ; 8 uses
+  %i.ca = extractelement <8 x i8> %42, i64 0
   %i.cb = zext nneg i8 %i.ca to i64
   %i.cc = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.cb
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !139
-  store i8 %i.cd, ptr %i.bk, align 1, !tbaa !139
-  %i.ce = extractelement <14 x i8> %22, i64 7
+  store i8 %i.cd, ptr %29, align 1, !tbaa !139
+  %i.ce = extractelement <8 x i8> %42, i64 1
   %i.cf = zext nneg i8 %i.ce to i64
   %i.cg = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.cf
   %i.ch = load i8, ptr %i.cg, align 1, !tbaa !139
-  store i8 %i.ch, ptr %13, align 1, !tbaa !139
-  %i.ci = extractelement <14 x i8> %22, i64 8
+  store i8 %i.ch, ptr %31, align 1, !tbaa !139
+  %i.ci = extractelement <8 x i8> %42, i64 2
   %i.cj = zext nneg i8 %i.ci to i64
   %i.ck = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.cj
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !139
-  store i8 %i.cl, ptr %i.bm, align 1, !tbaa !139
-  %i.cm = extractelement <14 x i8> %22, i64 9
+  store i8 %i.cl, ptr %i.bx, align 1, !tbaa !139
+  %i.cm = extractelement <8 x i8> %42, i64 3
   %i.cn = zext nneg i8 %i.cm to i64
   %i.co = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.cn
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !139
-  store i8 %i.cp, ptr %15, align 1, !tbaa !139
-  %i.cq = extractelement <14 x i8> %22, i64 10
+  store i8 %i.cp, ptr %34, align 1, !tbaa !139
+  %i.cq = extractelement <8 x i8> %42, i64 4
   %i.cr = zext nneg i8 %i.cq to i64
   %i.cs = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.cr
   %i.ct = load i8, ptr %i.cs, align 1, !tbaa !139
-  store i8 %i.ct, ptr %i.bn, align 1, !tbaa !139
-  %i.cu = extractelement <14 x i8> %22, i64 11
+  store i8 %i.ct, ptr %36, align 1, !tbaa !139
+  %i.cu = extractelement <8 x i8> %42, i64 5
   %i.cv = zext nneg i8 %i.cu to i64
   %i.cw = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.cv
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !139
-  store i8 %i.cx, ptr %18, align 1, !tbaa !139
-  %i.cy = extractelement <14 x i8> %22, i64 12
+  store i8 %i.cx, ptr %37, align 1, !tbaa !139
+  %i.cy = extractelement <8 x i8> %42, i64 6
   %i.cz = zext nneg i8 %i.cy to i64
   %i.da = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.cz
   %i.db = load i8, ptr %i.da, align 1, !tbaa !139
-  store i8 %i.db, ptr %i.bp, align 1, !tbaa !139
-  %i.dc = extractelement <14 x i8> %22, i64 13
+  store i8 %i.db, ptr %39, align 1, !tbaa !139
+  %i.dc = extractelement <8 x i8> %42, i64 7
   %i.dd = zext nneg i8 %i.dc to i64
   %i.de = getelementptr inbounds nuw i8, ptr @unixGetTempname.zChars, i64 %i.dd
   %i.df = load i8, ptr %i.de, align 1, !tbaa !139
-  store i8 %i.df, ptr %20, align 1, !tbaa !139
+  store i8 %i.df, ptr %i.bz, align 1, !tbaa !139
   %i.dg = getelementptr i8, ptr %2, i64 %i.ay
   %i.dh = getelementptr i8, ptr %i.dg, i64 15
   store i8 0, ptr %i.dh, align 1, !tbaa !139

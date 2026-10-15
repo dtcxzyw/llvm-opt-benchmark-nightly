@@ -169,7 +169,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %.lr.ph460
   %i.bf = add nsw i32 %i.ao, %.0417458            ; 2 uses
   %i.bg = sext i32 %i.bf to i64
-  %i.bh = getelementptr [8 x i8], ptr %i.c, i64 %i.bg ; 4 uses
+  %i.bh = getelementptr [8 x i8], ptr %i.c, i64 %i.bg ; 5 uses
   %i.bi = getelementptr i8, ptr %i.bh, i64 -8     ; 4 uses
   %i.bj = load double, ptr %i.bi, align 8, !tbaa !16 ; 3 uses
   %i.bk = fcmp oge double %i.bj, 0.000000e+00
@@ -180,21 +180,25 @@ bb.m:                                             ; preds = %.lr.ph460
   %i.bp = getelementptr i8, ptr %i.bo, i64 -8     ; 4 uses
   %i.bq = load double, ptr %i.bp, align 8, !tbaa !16
   %i.br = load double, ptr %i.bh, align 8, !tbaa !16
-  %6 = fdiv double %i.br, %i.bm                   ; 2 uses
-  %i.bs = insertelement <2 x double> poison, double %i.bl, i64 0
+  %i.bs = insertelement <2 x double> poison, double %i.br, i64 0
   %i.bt = insertelement <2 x double> %i.bs, double %i.bq, i64 1
   %i.bu = insertelement <2 x double> poison, double %i.bm, i64 0
   %i.bv = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bw = fdiv <2 x double> %i.bt, %i.bv          ; 2 uses
+  %i.bw = fdiv <2 x double> %i.bt, %i.bv          ; 3 uses
+  %6 = extractelement <2 x double> %i.bw, i64 0
   %i.bx = extractelement <2 x double> %i.bw, i64 1
   %i.by = call double @llvm.fmuladd.f64(double %i.bx, double %6, double -1.000000e+00)
   %i.bz = fmul double %i.bm, %i.by                ; 2 uses
-  %7 = fdiv double %6, %i.bz
-  store double %7, ptr %i.bp, align 8, !tbaa !16
-  %8 = insertelement <2 x double> poison, double %i.bz, i64 0
-  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
-  %10 = fdiv <2 x double> %i.bw, %9
-  store <2 x double> %10, ptr %i.bi, align 8, !tbaa !16
+  %7 = insertelement <2 x double> poison, double %i.bz, i64 0
+  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = fdiv <2 x double> %i.bw, %8                ; 2 uses
+  %10 = extractelement <2 x double> %9, i64 0
+  store double %10, ptr %i.bp, align 8, !tbaa !16
+  %11 = extractelement <2 x double> %9, i64 1
+  store double %11, ptr %i.bh, align 8, !tbaa !16
+  %12 = fdiv double %i.bl, %i.bm
+  %13 = fdiv double %12, %i.bz
+  store double %13, ptr %i.bi, align 8, !tbaa !16
   %i.ca = icmp samesign ugt i32 %.0417458, 1
   br i1 %i.ca, label %bb.n, label %bb.o
 

@@ -96,8 +96,8 @@ bb.a:
 define dso_local void @_ZNK4llvm4xray11ColorHelper13getColorTupleEd(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::tuple") align 1 captures(none) initializes((0, 3)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1, double noundef %2) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = alloca [3 x double], align 16            ; 7 uses
-  %i.b = alloca [3 x double], align 16            ; 8 uses
-  %i.c = alloca [3 x double], align 16            ; 8 uses
+  %i.b = alloca [3 x double], align 16            ; 9 uses
+  %i.c = alloca [3 x double], align 16            ; 9 uses
   %i.d = load double, ptr %1, align 8, !tbaa !54  ; 3 uses
   %i.e = fcmp olt double %2, %i.d
   br i1 %i.e, label %bb.b, label %bb.c
@@ -152,20 +152,21 @@ bb.e:                                             ; preds = %bb.c
   %i.am = extractelement <2 x double> %i.al, i64 1 ; 5 uses
   store double %i.am, ptr %i.c, align 16, !tbaa !9, !noalias !56
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.ao = load <2 x i8>, ptr %i.ab, align 1, !tbaa !16, !noalias !56
   %i.ap = uitofp <2 x i8> %i.ao to <2 x double>
-  %i.aq = fdiv <2 x double> %i.ap, splat (double 2.550000e+02) ; 3 uses
-  %3 = shufflevector <2 x double> %i.aq, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %3, ptr %i.an, align 8, !tbaa !9, !noalias !56
-  %i.ar = extractelement <2 x double> %i.aq, i64 1 ; 4 uses
-  %i.as = fcmp olt double %i.ar, %i.am            ; 2 uses
-  %i.at = fcmp ogt double %i.ar, %i.am            ; 2 uses
+  %i.aq = fdiv <2 x double> %i.ap, splat (double 2.550000e+02) ; 2 uses
+  %4 = extractelement <2 x double> %i.aq, i64 1   ; 5 uses
+  store double %4, ptr %i.an, align 8, !tbaa !9, !noalias !56
+  %i.ar = extractelement <2 x double> %i.aq, i64 0 ; 3 uses
+  store double %i.ar, ptr %3, align 16, !tbaa !9, !noalias !56
+  %i.as = fcmp olt double %4, %i.am               ; 2 uses
+  %i.at = fcmp ogt double %4, %i.am               ; 2 uses
   %.1.i = zext i1 %i.at to i32
-  %i.au = select i1 %i.as, double %i.ar, double %i.am
-  %4 = extractelement <2 x double> %i.aq, i64 0   ; 2 uses
-  %i.av = fcmp olt double %4, %i.au
-  %i.aw = select i1 %i.at, double %i.ar, double %i.am
-  %i.ax = fcmp ogt double %4, %i.aw
+  %i.au = select i1 %i.as, double %4, double %i.am
+  %i.av = fcmp olt double %i.ar, %i.au
+  %i.aw = select i1 %i.at, double %4, double %i.am
+  %i.ax = fcmp ogt double %i.ar, %i.aw
   %.1.1.i = select i1 %i.ax, i32 2, i32 %.1.i
   %.1.1.fr.i = freeze i32 %.1.1.i                 ; 4 uses
   %i.ay = zext nneg i32 %.1.1.fr.i to i64
@@ -214,20 +215,21 @@ _ZL12convertToHSVRKSt5tupleIJhhhEE.exit:          ; preds = %bb.e, %bb.f
   %i.cg = fdiv double %i.cf, 2.550000e+02         ; 5 uses
   store double %i.cg, ptr %i.b, align 16, !tbaa !9, !noalias !57
   %i.ch = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.ci = load <2 x i8>, ptr %i.ad, align 1, !tbaa !16, !noalias !57
   %i.cj = uitofp <2 x i8> %i.ci to <2 x double>
-  %i.ck = fdiv <2 x double> %i.cj, splat (double 2.550000e+02) ; 3 uses
-  %5 = shufflevector <2 x double> %i.ck, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  store <2 x double> %5, ptr %i.ch, align 8, !tbaa !9, !noalias !57
-  %i.cl = extractelement <2 x double> %i.ck, i64 1 ; 4 uses
-  %i.cm = fcmp olt double %i.cl, %i.cg            ; 2 uses
-  %i.cn = fcmp ogt double %i.cl, %i.cg            ; 2 uses
+  %i.ck = fdiv <2 x double> %i.cj, splat (double 2.550000e+02) ; 2 uses
+  %6 = extractelement <2 x double> %i.ck, i64 1   ; 5 uses
+  store double %6, ptr %i.ch, align 8, !tbaa !9, !noalias !57
+  %i.cl = extractelement <2 x double> %i.ck, i64 0 ; 3 uses
+  store double %i.cl, ptr %5, align 16, !tbaa !9, !noalias !57
+  %i.cm = fcmp olt double %6, %i.cg               ; 2 uses
+  %i.cn = fcmp ogt double %6, %i.cg               ; 2 uses
   %.1.i15 = zext i1 %i.cn to i32
-  %i.co = select i1 %i.cm, double %i.cl, double %i.cg
-  %6 = extractelement <2 x double> %i.ck, i64 0   ; 2 uses
-  %i.cp = fcmp olt double %6, %i.co
-  %i.cq = select i1 %i.cn, double %i.cl, double %i.cg
-  %i.cr = fcmp ogt double %6, %i.cq
+  %i.co = select i1 %i.cm, double %6, double %i.cg
+  %i.cp = fcmp olt double %i.cl, %i.co
+  %i.cq = select i1 %i.cn, double %6, double %i.cg
+  %i.cr = fcmp ogt double %i.cl, %i.cq
   %.1.1.i16 = select i1 %i.cr, i32 2, i32 %.1.i15
   %.1.1.fr.i17 = freeze i32 %.1.1.i16             ; 4 uses
   %i.cs = zext nneg i32 %.1.1.fr.i17 to i64

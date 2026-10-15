@@ -202,43 +202,47 @@ declare noundef i32 @_Z24pj_calc_ellipsoid_paramsP8PJconstsdd(ptr noundef, doubl
 define internal void @_ZL13sch_forward3d6PJ_LPZP8PJconsts(ptr dead_on_unwind noalias writable sret(%struct.PJ_XYZ) align 8 %0, ptr nofree noundef byval(%struct.PJ_LPZ) align 8 captures(none) %1, ptr nofree noundef readonly captures(none) %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !37   ; 10 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !37   ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !40   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 120
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !45
   tail call void %i.f(ptr dead_on_unwind writable sret(%struct.PJ_XYZ) align 8 %0, ptr noundef nonnull byval(%struct.PJ_LPZ) align 8 %1, ptr noundef %i.d)
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %i.j = load double, ptr %i.i, align 8, !tbaa !44
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  %7 = load double, ptr %6, align 8, !tbaa !44
-  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 96
-  %8 = load double, ptr %i.k, align 8, !tbaa !44
-  %9 = load <3 x double>, ptr %3, align 8, !tbaa !44
-  %10 = load <3 x double>, ptr %0, align 8, !tbaa !44
-  %11 = fsub <3 x double> %10, %9                 ; 6 uses
-  %i.l = load <2 x double>, ptr %i.g, align 8, !tbaa !44
-  %i.m = load <2 x double>, ptr %i.h, align 8, !tbaa !44
-  %i.n = shufflevector <3 x double> %11, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 104
+  %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 120
+  %3 = load double, ptr %i.h, align 8, !tbaa !44
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.j = load double, ptr %i.i, align 8, !tbaa !47
+  %4 = fsub double %i.j, %3                       ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 56
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 80
+  %7 = load <2 x double>, ptr %i.g, align 8, !tbaa !44
+  %8 = load <2 x double>, ptr %0, align 8, !tbaa !44
+  %9 = fsub <2 x double> %8, %7                   ; 4 uses
+  %i.l = load <2 x double>, ptr %5, align 8, !tbaa !44
+  %i.m = load <2 x double>, ptr %i.k, align 8, !tbaa !44
+  %i.n = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.o = fmul <2 x double> %i.n, %i.m
-  %i.p = shufflevector <3 x double> %11, <3 x double> poison, <2 x i32> zeroinitializer
+  %i.p = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
   %i.q = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.l, <2 x double> %i.p, <2 x double> %i.o)
-  %i.r = load <2 x double>, ptr %5, align 8, !tbaa !44
-  %12 = shufflevector <3 x double> %11, <3 x double> poison, <2 x i32> <i32 2, i32 2>
-  %i.s = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.r, <2 x double> %12, <2 x double> %i.q)
-  %i.t = extractelement <3 x double> %11, i64 1
-  %i.u = fmul double %i.t, %7
-  %i.v = extractelement <3 x double> %11, i64 0
-  %i.w = tail call double @llvm.fmuladd.f64(double %i.j, double %i.v, double %i.u)
-  %13 = extractelement <3 x double> %11, i64 2
-  %i.x = tail call double @llvm.fmuladd.f64(double %8, double %13, double %i.w)
+  %i.r = load <2 x double>, ptr %6, align 8, !tbaa !44
+  %10 = insertelement <2 x double> poison, double %4, i64 0
+  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.s = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.r, <2 x double> %11, <2 x double> %i.q)
+  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
+  %13 = load double, ptr %12, align 8, !tbaa !44
+  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 72
+  %15 = load double, ptr %14, align 8, !tbaa !44
+  %i.t = extractelement <2 x double> %9, i64 1
+  %i.u = fmul double %i.t, %15
+  %i.v = extractelement <2 x double> %9, i64 0
+  %i.w = tail call double @llvm.fmuladd.f64(double %13, double %i.v, double %i.u)
+  %16 = getelementptr inbounds nuw i8, ptr %i.b, i64 96
+  %17 = load double, ptr %16, align 8, !tbaa !44
+  %i.x = tail call double @llvm.fmuladd.f64(double %17, double %4, double %i.w)
   store <2 x double> %i.s, ptr %0, align 8, !tbaa !44
-  store double %i.x, ptr %4, align 8, !tbaa !44
+  store double %i.x, ptr %i.i, align 8, !tbaa !44
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !41   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 128
@@ -256,7 +260,7 @@ bb.a:
   store <2 x double> %i.ak, ptr %0, align 8, !tbaa !44
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.am = load double, ptr %i.al, align 8, !tbaa !64
-  store double %i.am, ptr %4, align 8, !tbaa !47
+  store double %i.am, ptr %i.i, align 8, !tbaa !47
   ret void
 }
 

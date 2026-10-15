@@ -203,43 +203,50 @@ bb.k:                                             ; preds = %.lr.ph384, %bb.k
   %i.adz = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 40), align 8, !tbaa !9
   %i.aea = fsub double %i.ady, %i.adz
   %i.aeb = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 72), align 8, !tbaa !9 ; 3 uses
-  %0 = tail call double @llvm.fmuladd.f64(double %i.adx, double %i.aea, double %i.aeb)
-  %1 = fdiv double %0, 5.200000e+01               ; 2 uses
-  store double %1, ptr getelementptr inbounds nuw (i8, ptr @T, i64 216), align 8, !tbaa !9
-  %i.aec = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 16), align 16, !tbaa !9
-  %i.aed = fadd double %i.aeb, %i.aec
-  %i.aee = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 96), align 16, !tbaa !9 ; 2 uses
+  %0 = load double, ptr @one, align 8, !tbaa !9
+  %1 = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 16), align 16, !tbaa !9
+  %2 = fadd double %i.aeb, %1
+  %i.aec = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 96), align 16, !tbaa !9 ; 2 uses
+  %i.aed = fadd double %2, %i.aec
+  %i.aee = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 120), align 8, !tbaa !9
   %i.aef = fadd double %i.aed, %i.aee
-  %i.aeg = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 120), align 8, !tbaa !9
-  %2 = fadd double %i.aef, %i.aeg
-  %i.aeh = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 144), align 16, !tbaa !9 ; 2 uses
-  %3 = fadd double %2, %i.aeh                     ; 2 uses
-  %4 = load double, ptr @four, align 8, !tbaa !9
-  %5 = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 168), align 8, !tbaa !9 ; 2 uses
-  %6 = load double, ptr @one, align 8, !tbaa !9   ; 2 uses
-  %7 = tail call double @llvm.fmuladd.f64(double %4, double %5, double %3)
-  %i.aei = insertelement <2 x double> poison, double %6, i64 0 ; 3 uses
-  %i.aej = insertelement <2 x double> %i.aei, double %7, i64 1
-  %i.aek = insertelement <2 x double> <double poison, double 1.520000e+02>, double %1, i64 0
-  %8 = fdiv <2 x double> %i.aej, %i.aek           ; 2 uses
-  store <2 x double> %8, ptr getelementptr inbounds nuw (i8, ptr @T, i64 224), align 16, !tbaa !9
-  %9 = fadd double %3, %5
-  %10 = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 192), align 16, !tbaa !9 ; 2 uses
-  %11 = fadd double %9, %10
-  %12 = insertelement <2 x double> %i.aei, double %11, i64 1
-  %13 = shufflevector <2 x double> %8, <2 x double> <double poison, double 1.460000e+02>, <2 x i32> <i32 1, i32 3>
-  %i.ael = fdiv <2 x double> %12, %13             ; 2 uses
-  store <2 x double> %i.ael, ptr getelementptr inbounds nuw (i8, ptr @T, i64 240), align 16, !tbaa !9
-  %14 = fadd double %i.aeb, %i.aee
-  %15 = fadd double %14, %i.aeh
-  %16 = fadd double %15, %10
-  %17 = insertelement <2 x double> %i.aei, double %16, i64 1
-  %18 = shufflevector <2 x double> %i.ael, <2 x double> <double poison, double 9.100000e+01>, <2 x i32> <i32 1, i32 3>
-  %i.aem = fdiv <2 x double> %17, %18             ; 2 uses
-  store <2 x double> %i.aem, ptr getelementptr inbounds nuw (i8, ptr @T, i64 256), align 16, !tbaa !9
-  %19 = extractelement <2 x double> %i.aem, i64 1
-  %20 = fdiv double %6, %19
-  store double %20, ptr getelementptr inbounds nuw (i8, ptr @T, i64 272), align 16, !tbaa !9
+  %i.aeg = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 144), align 16, !tbaa !9 ; 2 uses
+  %3 = load double, ptr @four, align 8, !tbaa !9
+  %i.aeh = load double, ptr getelementptr inbounds nuw (i8, ptr @T, i64 168), align 8, !tbaa !9 ; 2 uses
+  %4 = insertelement <2 x double> poison, double %i.adx, i64 0
+  %5 = insertelement <2 x double> %4, double %3, i64 1
+  %6 = insertelement <2 x double> poison, double %i.aea, i64 0
+  %7 = insertelement <2 x double> %6, double %i.aeh, i64 1
+  %8 = insertelement <2 x double> poison, double %i.aeb, i64 0
+  %9 = insertelement <2 x double> poison, double %0, i64 0
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %11 = load <1 x double>, ptr getelementptr inbounds nuw (i8, ptr @T, i64 192), align 16
+  %i.aei = insertelement <2 x double> poison, double %i.aef, i64 0
+  %i.aej = insertelement <2 x double> %i.aei, double %i.aeb, i64 1
+  %i.aek = insertelement <2 x double> poison, double %i.aeg, i64 0
+  %12 = insertelement <2 x double> %i.aek, double %i.aec, i64 1
+  %13 = fadd <2 x double> %i.aej, %12             ; 2 uses
+  %14 = shufflevector <2 x double> %8, <2 x double> %13, <2 x i32> <i32 0, i32 2>
+  %15 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %5, <2 x double> %7, <2 x double> %14)
+  %16 = fdiv <2 x double> %15, <double 5.200000e+01, double 1.520000e+02> ; 3 uses
+  %17 = extractelement <2 x double> %16, i64 0
+  store double %17, ptr getelementptr inbounds nuw (i8, ptr @T, i64 216), align 8, !tbaa !9
+  %i.ael = fdiv <2 x double> %10, %16             ; 2 uses
+  %18 = shufflevector <2 x double> %i.ael, <2 x double> %16, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %18, ptr getelementptr inbounds nuw (i8, ptr @T, i64 224), align 16, !tbaa !9
+  %19 = insertelement <2 x double> poison, double %i.aeh, i64 0
+  %20 = insertelement <2 x double> %19, double %i.aeg, i64 1
+  %21 = fadd <2 x double> %13, %20
+  %22 = shufflevector <1 x double> %11, <1 x double> poison, <2 x i32> zeroinitializer
+  %23 = fadd <2 x double> %21, %22
+  %i.aem = fdiv <2 x double> %23, <double 1.460000e+02, double 9.100000e+01> ; 3 uses
+  %24 = shufflevector <2 x double> %i.ael, <2 x double> %i.aem, <2 x i32> <i32 1, i32 2>
+  store <2 x double> %24, ptr getelementptr inbounds nuw (i8, ptr @T, i64 240), align 16, !tbaa !9
+  %25 = fdiv <2 x double> %10, %i.aem             ; 2 uses
+  %26 = shufflevector <2 x double> %25, <2 x double> %i.aem, <2 x i32> <i32 0, i32 3>
+  store <2 x double> %26, ptr getelementptr inbounds nuw (i8, ptr @T, i64 256), align 16, !tbaa !9
+  %27 = extractelement <2 x double> %25, i64 1
+  store double %27, ptr getelementptr inbounds nuw (i8, ptr @T, i64 272), align 16, !tbaa !9
   %putchar306 = tail call i32 @putchar(i32 10)    ; 0 uses
   %i.aen = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.12, i64 noundef %i.zj) ; 0 uses
   %i.aeo = load double, ptr @nulltime, align 8, !tbaa !9

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 30
 inline.NumDeleted: 21
 loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumRuntimeUnrolled: 39
-loop-unroll.NumUnrolled: 47
+loop-unroll.NumRuntimeUnrolled: 40
+loop-unroll.NumUnrolled: 48
 begin_hunk_0_@decompose_zp2biquads:bb.a
   br i1 %i.eb, label %expand.exit.thread.split.loop.exit401, label %.lr.ph49.i.1
 
@@ -205,11 +205,11 @@ bb.b:                                             ; preds = %.lr.ph18, %._crit_e
   %. = tail call i32 @llvm.smax.i32(i32 %i.d, i32 %i.f) ; 3 uses
   %i.g = add nsw i32 %., 1
   %i.h = sdiv i32 %i.g, 2                         ; 6 uses
-  %i.i = shl nsw i32 %i.h, 1                      ; 8 uses
-  %i.j = or disjoint i32 %i.i, 1                  ; 3 uses
+  %i.i = shl nsw i32 %i.h, 1                      ; 9 uses
+  %i.j = or disjoint i32 %i.i, 1                  ; 2 uses
   %i.k = sext i32 %i.j to i64                     ; 5 uses
   %i.l = tail call noalias ptr @av_calloc(i64 noundef %i.k, i64 noundef 8) #14 ; 8 uses
-  %i.m = tail call noalias ptr @av_calloc(i64 noundef %i.k, i64 noundef 8) #14 ; 8 uses
+  %i.m = tail call noalias ptr @av_calloc(i64 noundef %i.k, i64 noundef 8) #14 ; 10 uses
   %i.n = tail call noalias ptr @av_calloc(i64 noundef %i.k, i64 noundef 8) #14 ; 16 uses
   %i.o = mul nsw i32 %i.i, %i.h
   %i.p = sext i32 %i.o to i64
@@ -243,9 +243,9 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.preheader.i.preheader:                     ; preds = %bb.c
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !74
-  %wide.trip.count.i = zext nneg i32 %i.j to i64
   %smax = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1) ; 2 uses
-  %wide.trip.count.a = zext nneg i32 %smax to i64 ; 3 uses
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 3 uses
+  %wide.trip.count.a = zext nneg i32 %i.i to i64
   br label %.lr.ph.preheader.i
 
 .lr.ph11:                                         ; preds = %biquad_process.exit.loopexit
@@ -264,42 +264,63 @@ bb.c:                                             ; preds = %bb.b
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.i.preheader ], [ %indvars.iv.next, %biquad_process.exit.loopexit ] ; 3 uses
   %i.al = getelementptr inbounds nuw [64 x i8], ptr %i.ae, i64 %indvars.iv ; 3 uses
   %.not111 = icmp eq i64 %indvars.iv, 0
-  %i.am = select i1 %.not111, ptr %i.l, ptr %i.m
+  %i.am = select i1 %.not111, ptr %i.l, ptr %i.m  ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 24
-  %i.ao = load <2 x double>, ptr %i.an, align 8, !tbaa !67
+  %i.ao = load <2 x double>, ptr %i.an, align 8, !tbaa !67 ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.al, i64 40
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !67
   %i.ar = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   %i.as = load <2 x double>, ptr %i.ar, align 8, !tbaa !67
-  %i.at = fneg nsz <2 x double> %i.as             ; 2 uses
-  %i.au = insertelement <2 x double> poison, double %i.aq, i64 0
-  %1 = shufflevector <2 x double> %i.au, <2 x double> %i.at, <2 x i32> <i32 0, i32 2>
+  %i.at = fneg nsz <2 x double> %i.as             ; 3 uses
+  %i.au = insertelement <2 x double> %i.at, double %i.aq, i64 1 ; 2 uses
+  %shift = shufflevector <2 x double> %i.at, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %shift.a = shufflevector <2 x double> %i.at, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.a, %.lr.ph.i ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %.lr.ph.i ] ; 4 uses
   %i.av = phi <2 x double> [ zeroinitializer, %.lr.ph.preheader.i ], [ %i.bd, %.lr.ph.i ]
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv.i
-  %i.ax = load double, ptr %i.aw, align 8, !tbaa !67
-  %2 = shufflevector <2 x double> %i.av, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv.i
-  %i.az = insertelement <2 x double> poison, double %i.ax, i64 0 ; 2 uses
+  %niter = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.a, %.lr.ph.i ]
+  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv.i
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv.i
+  %i.ax = load double, ptr %1, align 8, !tbaa !67 ; 2 uses
+  %2 = insertelement <2 x double> poison, double %i.ax, i64 0
+  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ao, <2 x double> %3, <2 x double> %i.av) ; 4 uses
+  %5 = extractelement <2 x double> %4, i64 0
+  store double %5, ptr %i.aw, align 8, !tbaa !67
+  %foldExtExtBinop = fmul nsz <2 x double> %4, %shift
+  %6 = insertelement <2 x double> %4, double %i.ax, i64 1
+  %7 = shufflevector <2 x double> %4, <2 x double> %foldExtExtBinop, <2 x i32> <i32 1, i32 2>
+  %8 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.au, <2 x double> %6, <2 x double> %7)
+  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv.next.i
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv.next.i
+  %10 = load double, ptr %9, align 8, !tbaa !67   ; 2 uses
+  %i.az = insertelement <2 x double> poison, double %10, i64 0
   %i.ba = shufflevector <2 x double> %i.az, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bb = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ao, <2 x double> %i.ba, <2 x double> %2) ; 4 uses
+  %i.bb = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ao, <2 x double> %i.ba, <2 x double> %8) ; 4 uses
   %i.bc = extractelement <2 x double> %i.bb, i64 0
   store double %i.bc, ptr %i.ay, align 8, !tbaa !67
   %foldExtExtBinop.a = fmul nsz <2 x double> %i.bb, %shift.a
-  %3 = shufflevector <2 x double> %foldExtExtBinop.a, <2 x double> %i.bb, <2 x i32> <i32 0, i32 3>
-  %4 = shufflevector <2 x double> %i.az, <2 x double> %i.bb, <2 x i32> <i32 0, i32 2>
-  %i.bd = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %1, <2 x double> %4, <2 x double> %3)
-  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i.a, %wide.trip.count.i
+  %11 = insertelement <2 x double> %i.bb, double %10, i64 1
+  %12 = shufflevector <2 x double> %i.bb, <2 x double> %foldExtExtBinop.a, <2 x i32> <i32 1, i32 2>
+  %i.bd = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.au, <2 x double> %11, <2 x double> %12) ; 2 uses
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 3 uses
+  %indvars.iv.next.i.a = add nuw nsw i64 %niter, 2 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i.a, %wide.trip.count.a
   br i1 %exitcond.not.i, label %biquad_process.exit.loopexit, label %.lr.ph.i, !llvm.loop !207
 
 biquad_process.exit.loopexit:                     ; preds = %.lr.ph.i
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv.next.i.1
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %indvars.iv.next.i.1
+  %15 = load double, ptr %13, align 8, !tbaa !67
+  %16 = insertelement <2 x double> poison, double %15, i64 0
+  %17 = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ao, <2 x double> %16, <2 x double> %i.bd)
+  %18 = extractelement <2 x double> %17, i64 0
+  store double %18, ptr %14, align 8, !tbaa !67
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count.a
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.lr.ph11, label %.lr.ph.preheader.i, !llvm.loop !208
 
 ._crit_edge:                                      ; preds = %biquad_process.exit125
@@ -702,12 +723,12 @@ solve.exit:                                       ; preds = %._crit_edge129.i
   store double %i.hv, ptr %i.hw, align 8, !tbaa !75
   %i.hx = getelementptr inbounds nuw i8, ptr %i.c, i64 56
   %i.hy = load ptr, ptr %i.hx, align 8, !tbaa !74 ; 3 uses
-  %xtraiter123 = and i64 %wide.trip.count.a, 1
+  %xtraiter123 = and i64 %wide.trip.count, 1
   %i.hz = icmp slt i32 %., 3
   br i1 %i.hz, label %.epil.preheader122, label %solve.exit.new
 
 solve.exit.new:                                   ; preds = %solve.exit
-  %unroll_iter127 = and i64 %wide.trip.count.a, 1073741822
+  %unroll_iter127 = and i64 %wide.trip.count, 1073741822
   br label %bb.h
 
 .lr.ph.i119.preheader:                            ; preds = %biquad_process.exit125, %.lr.ph11

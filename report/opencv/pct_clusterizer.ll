@@ -205,13 +205,12 @@ bb.c:                                             ; preds = %bb.a
   %i.cd = load <2 x float>, ptr %i.cb, align 4, !tbaa !54
   %i.ce = load <2 x float>, ptr %i.cc, align 4, !tbaa !54
   %i.cf = fsub <2 x float> %i.cd, %i.ce
-  %i.cg = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.cf) ; 2 uses
-  %7 = extractelement <2 x float> %i.cg, i64 0
-  %sqrt.5.i41 = tail call float @llvm.sqrt.f32(float %7)
-  %i.ch = fadd float %i.ca, %sqrt.5.i41
-  %i.ci = extractelement <2 x float> %i.cg, i64 1
-  %sqrt.6.i42 = tail call float @llvm.sqrt.f32(float %i.ci)
-  %i.cj = fadd float %i.ch, %sqrt.6.i42           ; 2 uses
+  %i.cg = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.cf)
+  %7 = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.cg) ; 2 uses
+  %8 = extractelement <2 x float> %7, i64 0
+  %i.ch = fadd float %i.ca, %8
+  %i.ci = extractelement <2 x float> %7, i64 1
+  %i.cj = fadd float %i.ch, %i.ci                 ; 2 uses
   %i.ck = fmul float %i.cj, %i.cj
   br label %bb.l
 
@@ -613,6 +612,9 @@ declare <4 x float> @llvm.sqrt.v4f32(<4 x float>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+sse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

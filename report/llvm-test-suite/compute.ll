@@ -194,13 +194,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bf = tail call double @sqrt(double noundef %i.be) #9, !tbaa !7
   %i.bg = fsub double %i.ba, %i.bf
   %i.bh = fmul double %i.an, 2.000000e+00
-  %i.bi = fdiv double %i.bg, %i.bh                ; 3 uses
+  %i.bi = fdiv double %i.bg, %i.bh                ; 4 uses
   %i.bj = fsub double %i.bi, %.sink86
   %i.bk = fmul double %i.ak, %i.bj
   %i.bl = fdiv double %i.bk, %i.am
-  %i.bm = fadd double %.sink, %i.bl               ; 2 uses
+  %i.bm = fadd double %.sink, %i.bl               ; 3 uses
   %i.bn = insertelement <2 x double> poison, double %i.bi, i64 0
-  %i.bo = insertelement <2 x double> %i.bn, double %i.bm, i64 1 ; 2 uses
+  %i.bo = insertelement <2 x double> %i.bn, double %i.bm, i64 1
   %i.bp = fmul <2 x double> %i.ao, %i.bo          ; 3 uses
   %i.bq = extractelement <2 x double> %i.bp, i64 0
   %i.br = fsub double 1.000000e+00, %i.bq
@@ -209,8 +209,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.bu = insertelement <2 x double> poison, double %i.bt, i64 0
   %i.bv = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bw = fdiv <2 x double> %i.bp, %i.bv
-  %5 = shufflevector <2 x double> %i.bo, <2 x double> %i.bw, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x double> %5, ptr %0, align 8, !tbaa !12
+  %5 = shufflevector <2 x double> %i.bw, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
+  %6 = insertelement <4 x double> %5, double %i.bi, i64 0
+  %7 = insertelement <4 x double> %6, double %i.bm, i64 1
+  store <4 x double> %7, ptr %0, align 8, !tbaa !12
   %.fca.0.insert = insertvalue { double, double } poison, double %i.bi, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.bm, 1
   ret { double, double } %.fca.1.insert
@@ -496,13 +498,13 @@ Compute_Leaf.exit.11:                             ; preds = %bb.c, %._crit_edge.
   %i.fv = tail call double @sqrt(double noundef %i.fu) #9, !tbaa !7
   %i.fw = fsub double %i.fq, %i.fv
   %i.fx = fmul double %i.fd, 2.000000e+00
-  %i.fy = fdiv double %i.fw, %i.fx                ; 3 uses
+  %i.fy = fdiv double %i.fw, %i.fx                ; 4 uses
   %i.fz = fsub double %i.fy, %.sink94
   %i.ga = fmul double %i.fa, %i.fz
   %i.gb = fdiv double %i.ga, %i.fc
-  %i.gc = fadd double %.sink, %i.gb               ; 2 uses
+  %i.gc = fadd double %.sink, %i.gb               ; 3 uses
   %i.gd = insertelement <2 x double> poison, double %i.fy, i64 0
-  %i.ge = insertelement <2 x double> %i.gd, double %i.gc, i64 1 ; 2 uses
+  %i.ge = insertelement <2 x double> %i.gd, double %i.gc, i64 1
   %i.gf = fmul <2 x double> %i.fe, %i.ge          ; 3 uses
   %i.gg = extractelement <2 x double> %i.gf, i64 0
   %i.gh = fsub double 1.000000e+00, %i.gg
@@ -511,8 +513,10 @@ Compute_Leaf.exit.11:                             ; preds = %bb.c, %._crit_edge.
   %i.gk = insertelement <2 x double> poison, double %i.gj, i64 0
   %i.gl = shufflevector <2 x double> %i.gk, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gm = fdiv <2 x double> %i.gf, %i.gl
-  %5 = shufflevector <2 x double> %i.ge, <2 x double> %i.gm, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x double> %5, ptr %0, align 8, !tbaa !12
+  %5 = shufflevector <2 x double> %i.gm, <2 x double> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 1>
+  %6 = insertelement <4 x double> %5, double %i.fy, i64 0
+  %7 = insertelement <4 x double> %6, double %i.gc, i64 1
+  store <4 x double> %7, ptr %0, align 8, !tbaa !12
   %.fca.0.insert = insertvalue { double, double } poison, double %i.fy, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.gc, 1
   ret { double, double } %.fca.1.insert

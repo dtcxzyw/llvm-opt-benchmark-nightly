@@ -202,36 +202,40 @@ bb.d:                                             ; preds = %.lr.ph
   %i.bt = fmul nsz <2 x double> %i.bq, %i.bs      ; 3 uses
   %shift = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fsub nsz <2 x double> %i.bt, %shift
-  %1 = fdiv nnan nsz double f0x40BAFF80FB853C71, %i.ax
-  %2 = fmul nnan nsz double %1, 5.000000e-01
-  %3 = tail call nsz double @llvm.tan.f64(double %2) ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
-  %5 = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
-  %6 = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
-  %7 = shufflevector <2 x double> %i.bt, <2 x double> %foldExtExtBinop, <2 x i32> <i32 1, i32 2>
-  %8 = fdiv nsz <2 x double> %7, splat (double 2.000000e+01)
-  %9 = fmul nsz <2 x double> %8, splat (double f0x400A934F0979A371)
-  %10 = tail call nsz <2 x double> @llvm.exp2.v2f64(<2 x double> %9) ; 3 uses
-  %11 = extractelement <2 x double> %10, i64 1
-  %12 = tail call nsz double @llvm.sqrt.f64(double %11) ; 4 uses
-  %13 = fadd nsz double %3, %12                   ; 2 uses
-  %i.bu = fsub nsz double %3, %12
-  %i.bv = fdiv nsz double %i.bu, %13
-  store double %i.bv, ptr %5, align 8, !tbaa !54
-  %i.bw = fneg nsz double %12
-  %14 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.bx = insertelement <2 x double> poison, double %3, i64 0
+  %1 = shufflevector <2 x double> %foldExtExtBinop, <2 x double> %i.bt, <2 x i32> <i32 0, i32 3>
+  %2 = fdiv nsz <2 x double> %1, splat (double 2.000000e+01)
+  %3 = fmul nsz <2 x double> %2, splat (double f0x400A934F0979A371) ; 2 uses
+  %4 = extractelement <2 x double> %3, i64 0
+  %5 = tail call nsz double @llvm.exp2.f64(double %4) ; 2 uses
+  %6 = tail call nsz double @llvm.sqrt.f64(double %5) ; 4 uses
+  %7 = extractelement <2 x double> %3, i64 1
+  %8 = tail call nsz double @llvm.exp2.f64(double %7)
+  %9 = fdiv nnan nsz double f0x40BAFF80FB853C71, %i.ax
+  %10 = fmul nnan nsz double %9, 5.000000e-01
+  %11 = tail call nsz double @llvm.tan.f64(double %10) ; 3 uses
+  %12 = fadd nsz double %11, %6                   ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
+  %i.bu = fsub nsz double %11, %6
+  %i.bv = fdiv nsz double %i.bu, %12
+  %14 = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
+  store double %i.bv, ptr %14, align 8, !tbaa !54
+  %i.bw = fneg nsz double %6
+  %15 = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
+  %16 = insertelement <2 x double> poison, double %5, i64 0
+  %17 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.bx = insertelement <2 x double> poison, double %11, i64 0
   %i.by = shufflevector <2 x double> %i.bx, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bz = insertelement <2 x double> poison, double %i.bw, i64 0
-  %i.ca = insertelement <2 x double> %i.bz, double %12, i64 1
-  %i.cb = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %14, <2 x double> %i.by, <2 x double> %i.ca)
-  %i.cc = insertelement <2 x double> poison, double %13, i64 0
+  %i.ca = insertelement <2 x double> %i.bz, double %6, i64 1
+  %i.cb = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %i.by, <2 x double> %i.ca)
+  %i.cc = insertelement <2 x double> poison, double %12, i64 0
   %i.cd = shufflevector <2 x double> %i.cc, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ce = fdiv nsz <2 x double> %i.cb, %i.cd
-  %i.cf = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %18 = insertelement <2 x double> poison, double %8, i64 0
+  %i.cf = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cg = fmul nsz <2 x double> %i.cf, %i.ce
-  store <2 x double> %i.cg, ptr %6, align 8, !tbaa !55
-  store double 1.000000e+00, ptr %4, align 8, !tbaa !56
+  store <2 x double> %i.cg, ptr %15, align 8, !tbaa !55
+  store double 1.000000e+00, ptr %13, align 8, !tbaa !56
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ch = load i32, ptr %i.t, align 8, !tbaa !26  ; 2 uses
   %i.ci = sext i32 %i.ch to i64
@@ -552,15 +556,15 @@ declare double @llvm.tan.f64(double) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #5
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.exp2.f64(double) #5
+
 declare ptr @av_default_item_name(ptr noundef) #3
 
 declare void @av_freep(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.exp2.v2f64(<2 x double>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
