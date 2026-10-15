@@ -14,7 +14,7 @@ bb.a:
   %i.d = sub nsw i64 %2, %i.b                     ; 12 uses
   %.neg = sub i64 1, %i.d
   %.neg1050 = mul i64 %9, %.neg
-  %i.e = getelementptr inbounds [4 x i8], ptr %i.c, i64 %.neg1050 ; 7 uses
+  %i.e = getelementptr inbounds [4 x i8], ptr %i.c, i64 %.neg1050 ; 10 uses
   %i.f = icmp slt i64 %0, 1
   %i.g = icmp slt i64 %i.d, 1
   %or.cond = select i1 %i.f, i1 true, i1 %i.g
@@ -109,9 +109,10 @@ bb.d:                                             ; preds = %bb.b
 .preheader:                                       ; preds = %bb.d
   %i.aw = shl nsw i64 %5, 1                       ; 6 uses
   %i.ax = mul nsw i64 %5, 3                       ; 6 uses
-  %i.ay = getelementptr inbounds [4 x i8], ptr %i.e, i64 %9 ; 2 uses
+  %i.ay = getelementptr inbounds [4 x i8], ptr %i.e, i64 %9
   %i.az = lshr i64 %i.d, 1
-  %.010151092 = getelementptr inbounds [4 x i8], ptr %i.ay, i64 %9 ; 2 uses
+  %.01015.idx = shl i64 %9, 3                     ; 2 uses
+  %.010151092 = getelementptr inbounds i8, ptr %i.e, i64 %.01015.idx ; 2 uses
   %i.ba = icmp samesign ugt i64 %i.d, 3
   %i.bb = and i64 %i.d, 1
   %.not1053 = icmp eq i64 %i.bb, 0
@@ -141,7 +142,7 @@ bb.e:                                             ; preds = %.preheader, %bb.ao
 
 .lr.ph:                                           ; preds = %bb.e, %bb.v
   %.010201109.in = phi i64 [ %.010201109, %bb.v ], [ %i.az, %bb.e ] ; 2 uses
-  %.010151108 = phi ptr [ %.01015, %bb.v ], [ %.010151092, %bb.e ] ; 2 uses
+  %.010151108 = phi ptr [ %.01015, %bb.v ], [ %.010151092, %bb.e ] ; 3 uses
   %.010001107 = phi ptr [ %.01000, %bb.v ], [ %.010001091, %bb.e ] ; 5 uses
   %.09991106 = phi ptr [ %.0999, %bb.v ], [ %.09991090, %bb.e ] ; 4 uses
   %.09981105 = phi ptr [ %.0998, %bb.v ], [ %.09981089, %bb.e ] ; 5 uses
@@ -178,7 +179,7 @@ bb.e:                                             ; preds = %.preheader, %bb.ao
   %i.by = load double, ptr %.09961103, align 8, !tbaa !16 ; 4 uses
   %i.bz = load double, ptr %.01101, align 8, !tbaa !16 ; 3 uses
   %i.ca = load i32, ptr %.010151108, align 4, !tbaa !14 ; 3 uses
-  %i.cb = getelementptr inbounds [4 x i8], ptr %.010151108, i64 %9 ; 2 uses
+  %i.cb = getelementptr inbounds [4 x i8], ptr %.010151108, i64 %9
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !14 ; 3 uses
   %i.cd = icmp eq ptr %.110051102, %.110121094
   br i1 %i.cd, label %bb.f, label %bb.j
@@ -335,7 +336,7 @@ bb.v:                                             ; preds = %bb.m, %bb.n, %bb.k,
   %.0998 = getelementptr inbounds [8 x i8], ptr %.11005, i64 %i.aw ; 2 uses
   %.0999 = getelementptr inbounds [8 x i8], ptr %.01002, i64 %5 ; 2 uses
   %.01000 = getelementptr inbounds [8 x i8], ptr %.11005, i64 %5 ; 2 uses
-  %.01015 = getelementptr inbounds [4 x i8], ptr %i.cb, i64 %9 ; 2 uses
+  %.01015 = getelementptr inbounds i8, ptr %.010151108, i64 %.01015.idx ; 2 uses
   %i.cn = icmp sgt i64 %.010201109.in, 2
   br i1 %i.cn, label %.lr.ph, label %._crit_edge, !llvm.loop !9
 
@@ -563,15 +564,16 @@ bb.ap:                                            ; preds = %.loopexit1081
   %i.ek = getelementptr inbounds [8 x i8], ptr %.11025, i64 %2 ; 3 uses
   %i.el = getelementptr inbounds [8 x i8], ptr %i.ek, i64 %5 ; 2 uses
   %i.em = load i32, ptr %i.e, align 4, !tbaa !14  ; 3 uses
-  %i.en = getelementptr inbounds [4 x i8], ptr %i.e, i64 %9 ; 2 uses
+  %i.en = getelementptr inbounds [4 x i8], ptr %i.e, i64 %9
   %i.eo = load i32, ptr %i.en, align 4, !tbaa !14 ; 3 uses
+  %.11016.idx = shl i64 %9, 3                     ; 2 uses
   %.pn10771124 = sext i32 %i.eo to i64
   %.110031125 = getelementptr inbounds [8 x i8], ptr %.11025, i64 %.pn10771124 ; 3 uses
   %.11126 = getelementptr inbounds [8 x i8], ptr %.110031125, i64 %5 ; 2 uses
   %.pn10751127 = sext i32 %i.em to i64
   %.210061128 = getelementptr inbounds [8 x i8], ptr %.11025, i64 %.pn10751127 ; 3 uses
   %.110011129 = getelementptr inbounds [8 x i8], ptr %.210061128, i64 %5 ; 2 uses
-  %.110161130 = getelementptr inbounds [4 x i8], ptr %i.en, i64 %9 ; 2 uses
+  %.110161130 = getelementptr inbounds i8, ptr %i.e, i64 %.11016.idx ; 2 uses
   %i.ep = icmp ugt i64 %i.d, 3
   br i1 %i.ep, label %.lr.ph1143.preheader, label %._crit_edge1144
 
@@ -581,7 +583,7 @@ bb.ap:                                            ; preds = %.loopexit1081
 
 .lr.ph1143:                                       ; preds = %.lr.ph1143.preheader, %bb.bg
   %.110211141.in = phi i64 [ %.110211141, %bb.bg ], [ %i.eq, %.lr.ph1143.preheader ] ; 2 uses
-  %.110161140 = phi ptr [ %.11016, %bb.bg ], [ %.110161130, %.lr.ph1143.preheader ] ; 2 uses
+  %.110161140 = phi ptr [ %.11016, %bb.bg ], [ %.110161130, %.lr.ph1143.preheader ] ; 3 uses
   %.110011139 = phi ptr [ %.11001, %bb.bg ], [ %.110011129, %.lr.ph1143.preheader ] ; 5 uses
   %.210061138 = phi ptr [ %.21006, %bb.bg ], [ %.210061128, %.lr.ph1143.preheader ] ; 12 uses
   %.11137 = phi ptr [ %.1, %bb.bg ], [ %.11126, %.lr.ph1143.preheader ] ; 4 uses
@@ -602,7 +604,7 @@ bb.ap:                                            ; preds = %.loopexit1081
   %i.ez = load double, ptr %.110011139, align 8, !tbaa !16 ; 4 uses
   %i.fa = load double, ptr %.11137, align 8, !tbaa !16 ; 3 uses
   %i.fb = load i32, ptr %.110161140, align 4, !tbaa !14 ; 3 uses
-  %i.fc = getelementptr inbounds [4 x i8], ptr %.110161140, i64 %9 ; 2 uses
+  %i.fc = getelementptr inbounds [4 x i8], ptr %.110161140, i64 %9
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !14 ; 3 uses
   %i.fe = icmp eq ptr %.210061138, %.210131132
   br i1 %i.fe, label %bb.aq, label %bb.au
@@ -711,7 +713,7 @@ bb.bg:                                            ; preds = %bb.ax, %bb.ay, %bb.
   %.pn1075 = sext i32 %i.fb to i64
   %.21006 = getelementptr inbounds [8 x i8], ptr %.11025, i64 %.pn1075 ; 3 uses
   %.11001 = getelementptr inbounds [8 x i8], ptr %.21006, i64 %5 ; 2 uses
-  %.11016 = getelementptr inbounds [4 x i8], ptr %i.fc, i64 %9 ; 2 uses
+  %.11016 = getelementptr inbounds i8, ptr %.110161140, i64 %.11016.idx ; 2 uses
   %i.fm = icmp samesign ugt i64 %.110211141.in, 2
   br i1 %i.fm, label %.lr.ph1143, label %._crit_edge1144, !llvm.loop !11
 
@@ -869,13 +871,14 @@ bb.ca:                                            ; preds = %bb.bz, %.loopexit10
 bb.cb:                                            ; preds = %bb.ca
   %i.gq = getelementptr inbounds [8 x i8], ptr %.21026, i64 %2 ; 2 uses
   %i.gr = load i32, ptr %i.e, align 4, !tbaa !14  ; 3 uses
-  %i.gs = getelementptr inbounds [4 x i8], ptr %i.e, i64 %9 ; 2 uses
+  %i.gs = getelementptr inbounds [4 x i8], ptr %i.e, i64 %9
   %i.gt = load i32, ptr %i.gs, align 4, !tbaa !14 ; 3 uses
+  %.21017.idx = shl i64 %9, 3                     ; 2 uses
   %.pn10801154 = sext i32 %i.gt to i64
   %.21155 = getelementptr inbounds [8 x i8], ptr %.21026, i64 %.pn10801154 ; 2 uses
   %.pn10791156 = sext i32 %i.gr to i64
   %.31157 = getelementptr inbounds [8 x i8], ptr %.21026, i64 %.pn10791156 ; 2 uses
-  %.210171158 = getelementptr inbounds [4 x i8], ptr %i.gs, i64 %9 ; 2 uses
+  %.210171158 = getelementptr inbounds i8, ptr %i.e, i64 %.21017.idx ; 2 uses
   %i.gu = icmp ugt i64 %i.d, 3
   br i1 %i.gu, label %.lr.ph1168.preheader, label %._crit_edge1169
 
@@ -885,7 +888,7 @@ bb.cb:                                            ; preds = %bb.ca
 
 .lr.ph1168:                                       ; preds = %.lr.ph1168.preheader, %bb.cs
   %.210221166.in = phi i64 [ %.210221166, %bb.cs ], [ %i.gv, %.lr.ph1168.preheader ] ; 2 uses
-  %.210171165 = phi ptr [ %.21017, %bb.cs ], [ %.210171158, %.lr.ph1168.preheader ] ; 2 uses
+  %.210171165 = phi ptr [ %.21017, %bb.cs ], [ %.210171158, %.lr.ph1168.preheader ] ; 3 uses
   %.31164 = phi ptr [ %.3, %bb.cs ], [ %.31157, %.lr.ph1168.preheader ] ; 12 uses
   %.21163 = phi ptr [ %.2, %bb.cs ], [ %.21155, %.lr.ph1168.preheader ] ; 10 uses
   %.pn1080.in1162 = phi i32 [ %i.hd, %bb.cs ], [ %i.gt, %.lr.ph1168.preheader ]
@@ -898,7 +901,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.gz = load double, ptr %.31164, align 8, !tbaa !16 ; 3 uses
   %i.ha = load double, ptr %.21163, align 8, !tbaa !16 ; 3 uses
   %i.hb = load i32, ptr %.210171165, align 4, !tbaa !14 ; 3 uses
-  %i.hc = getelementptr inbounds [4 x i8], ptr %.210171165, i64 %9 ; 2 uses
+  %i.hc = getelementptr inbounds [4 x i8], ptr %.210171165, i64 %9
   %i.hd = load i32, ptr %i.hc, align 4, !tbaa !14 ; 3 uses
   %i.he = icmp eq ptr %.31164, %.310141160
   br i1 %i.he, label %bb.cc, label %bb.cg
@@ -983,7 +986,7 @@ bb.cs:                                            ; preds = %bb.cj, %bb.ck, %bb.
   %.2 = getelementptr inbounds [8 x i8], ptr %.21026, i64 %.pn1080 ; 2 uses
   %.pn1079 = sext i32 %i.hb to i64
   %.3 = getelementptr inbounds [8 x i8], ptr %.21026, i64 %.pn1079 ; 2 uses
-  %.21017 = getelementptr inbounds [4 x i8], ptr %i.hc, i64 %9 ; 2 uses
+  %.21017 = getelementptr inbounds i8, ptr %.210171165, i64 %.21017.idx ; 2 uses
   %i.hl = icmp samesign ugt i64 %.210221166.in, 2
   br i1 %i.hl, label %.lr.ph1168, label %._crit_edge1169, !llvm.loop !12
 

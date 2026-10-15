@@ -205,7 +205,8 @@ bb.j:                                             ; preds = %._crit_edge, %wiene
   %.0159 = phi ptr [ %i.z, %._crit_edge ], [ %i.ji, %wiener_filter_hv.exit200._crit_edge ]
   %.0157 = phi ptr [ %0, %._crit_edge ], [ %i.ae, %wiener_filter_hv.exit200._crit_edge ] ; 13 uses
   %i.jj = getelementptr inbounds i8, ptr %.0157, i64 %1
-  %i.jk = getelementptr inbounds i8, ptr %i.jj, i64 %1
+  %9 = shl i64 %1, 1
+  %i.jk = getelementptr inbounds i8, ptr %i.jj, i64 %9
   %i.jl = getelementptr inbounds nuw i8, ptr %.40..40., i64 780 ; 2 uses
   %.48..48..48..sroa_idx1103 = getelementptr inbounds nuw i8, ptr %i.g, i64 48
   store ptr %i.jl, ptr %.48..48..48..sroa_idx1103, align 16, !tbaa !11
@@ -266,10 +267,9 @@ bb.k:                                             ; preds = %wiener_filter_hv.ex
   %.1162 = phi i32 [ %i.oh, %wiener_filter_hv.exit222 ], [ %.0161, %bb.j ] ; 2 uses
   %.1160 = phi ptr [ %i.of, %wiener_filter_hv.exit222 ], [ %.0159, %bb.j ] ; 2 uses
   %.1158 = phi ptr [ %i.og, %wiener_filter_hv.exit222 ], [ %.0157, %bb.j ] ; 3 uses
-  %.pn = phi ptr [ %.1, %wiener_filter_hv.exit222 ], [ %i.jk, %bb.j ]
-  %.1 = getelementptr inbounds i8, ptr %.pn, i64 %1 ; 2 uses
+  %.pn = phi ptr [ %10, %wiener_filter_hv.exit222 ], [ %i.jk, %bb.j ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
-  call fastcc void @wiener_filter_h(ptr noundef nonnull %i.c, ptr noundef nonnull readonly %.1160, ptr noundef readonly %.1, ptr noundef readonly %6, i32 noundef %4, i32 noundef %7, i32 noundef %8)
+  call fastcc void @wiener_filter_h(ptr noundef nonnull %i.c, ptr noundef nonnull readonly %.1160, ptr noundef readonly %.pn, ptr noundef readonly %6, i32 noundef %4, i32 noundef %7, i32 noundef %8)
   br i1 %i.jr, label %.preheader.lr.ph.i205, label %wiener_filter_hv.exit222
 
 .preheader.lr.ph.i205:                            ; preds = %bb.k
@@ -469,6 +469,7 @@ wiener_filter_hv.exit222:                         ; preds = %.preheader.i218, %m
   store ptr %.0..0..0.318, ptr %.48..48..48..sroa_idx1104, align 16, !tbaa !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
   %i.of = getelementptr inbounds nuw i8, ptr %.1160, i64 8
+  %10 = getelementptr inbounds i8, ptr %.pn, i64 %1
   %i.og = getelementptr i8, ptr %.1158, i64 %1    ; 12 uses
   %i.oh = add nsw i32 %.1162, -1
   %i.oi = icmp sgt i32 %.1162, 1
@@ -871,38 +872,37 @@ bb.j:                                             ; preds = %bb.i, %bb.d
   %.0143 = phi i32 [ %i.an, %bb.d ], [ %i.bj, %bb.i ] ; 2 uses
   %.0141 = phi ptr [ %i.ao, %bb.d ], [ %i.bk, %bb.i ] ; 2 uses
   %i.bl = phi ptr [ %0, %bb.d ], [ %i.ay, %bb.i ]
-  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 3 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 3 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %i.bq = getelementptr inbounds i8, ptr %i.bl, i64 %1
-  %.1199 = getelementptr inbounds i8, ptr %i.bq, i64 %1 ; 2 uses
-  %i.br = load ptr, ptr %9, align 8, !tbaa !17    ; 2 uses
-  %i.bs = load ptr, ptr %i.bm, align 8, !tbaa !17 ; 2 uses
-  call fastcc void @sgr_box5_row_h(ptr noundef %i.br, ptr noundef %i.bs, ptr noundef nonnull %.0141, ptr noundef %.1199, i32 noundef %4, i32 noundef %7)
+  %9 = shl i64 %1, 1
+  %i.bm = getelementptr inbounds i8, ptr %i.bl, i64 %9 ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 3 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 3 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
+  %.1199 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.br = load ptr, ptr %i.bn, align 8, !tbaa !17 ; 2 uses
+  %i.bs = load ptr, ptr %i.bo, align 8, !tbaa !17 ; 2 uses
+  call fastcc void @sgr_box5_row_h(ptr noundef %i.br, ptr noundef %i.bs, ptr noundef nonnull %.0141, ptr noundef %i.bm, i32 noundef %4, i32 noundef %7)
   %i.bt = icmp samesign ult i32 %.0143, 2
   br i1 %i.bt, label %.loopexit.loopexit, label %.lr.ph
 
 bb.k:                                             ; preds = %.lr.ph
-  %i.bu = getelementptr inbounds nuw i8, ptr %.1142201, i64 16 ; 2 uses
+  %i.bu = getelementptr inbounds i8, ptr %i.bz, i64 %1 ; 2 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %.1142201, i64 16 ; 2 uses
   %10 = add nsw i32 %.1144200, -2
-  %i.bv = getelementptr inbounds i8, ptr %.1202, i64 %1
-  %.1 = getelementptr inbounds i8, ptr %i.bv, i64 %1 ; 2 uses
-  %i.bw = load ptr, ptr %9, align 8, !tbaa !17    ; 2 uses
-  %i.bx = load ptr, ptr %i.bm, align 8, !tbaa !17 ; 2 uses
-  call fastcc void @sgr_box5_row_h(ptr noundef %i.bw, ptr noundef %i.bx, ptr noundef nonnull %i.bu, ptr noundef %.1, i32 noundef %4, i32 noundef %7)
+  %i.bw = load ptr, ptr %i.bn, align 8, !tbaa !17 ; 2 uses
+  %i.bx = load ptr, ptr %i.bo, align 8, !tbaa !17 ; 2 uses
+  call fastcc void @sgr_box5_row_h(ptr noundef %i.bw, ptr noundef %i.bx, ptr noundef nonnull %i.bv, ptr noundef %i.bu, i32 noundef %4, i32 noundef %7)
   %i.by = icmp slt i32 %.1144200, 4
   br i1 %i.by, label %.loopexit.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.j, %bb.k
-  %.1202 = phi ptr [ %.1, %bb.k ], [ %.1199, %bb.j ] ; 2 uses
-  %.1142201 = phi ptr [ %i.bu, %bb.k ], [ %.0141, %bb.j ] ; 2 uses
+  %.1202 = phi ptr [ %i.bu, %bb.k ], [ %i.bm, %bb.j ]
+  %.1142201 = phi ptr [ %i.bv, %bb.k ], [ %.0141, %bb.j ] ; 2 uses
   %.1144200 = phi i32 [ %10, %bb.k ], [ %.0143, %bb.j ] ; 3 uses
-  %i.bz = getelementptr inbounds i8, ptr %.1202, i64 %1
+  %i.bz = getelementptr inbounds i8, ptr %.1202, i64 %1 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.1142201, i64 8
-  %i.cb = load ptr, ptr %i.bn, align 16, !tbaa !17
-  %i.cc = load ptr, ptr %i.bo, align 16, !tbaa !17
+  %i.cb = load ptr, ptr %i.bp, align 16, !tbaa !17
+  %i.cc = load ptr, ptr %i.bq, align 16, !tbaa !17
   call fastcc void @sgr_box5_row_h(ptr noundef %i.cb, ptr noundef %i.cc, ptr noundef nonnull %i.ca, ptr noundef %i.bz, i32 noundef %4, i32 noundef %7)
   %i.cd = load ptr, ptr %i.s, align 8, !tbaa !17  ; 2 uses
   %i.ce = load ptr, ptr %i.u, align 8, !tbaa !17  ; 2 uses
@@ -910,7 +910,7 @@ bb.k:                                             ; preds = %.lr.ph
   call fastcc void @sgr_box5_row_v(ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef %i.cd, ptr noundef %i.ce, i32 noundef %4)
   call fastcc void @sgr_calc_row_ab(ptr noundef %i.cd, ptr noundef %i.ce, i32 noundef %4, i32 noundef %i.cf, i32 noundef %8, i32 noundef 25, i32 noundef 164)
   call fastcc void @rotate5_x2(ptr noundef nonnull %i.d, ptr noundef nonnull %i.e)
-  %i.cg = load i16, ptr %i.bp, align 8, !tbaa !18
+  %i.cg = load i16, ptr %.1199, align 8, !tbaa !18
   %i.ch = sext i16 %i.cg to i32
   call fastcc void @sgr_finish2(ptr noundef %i.a, i64 noundef %1, ptr noundef %i.h, ptr noundef %i.i, i32 noundef %4, i32 noundef 2, i32 noundef %i.ch, i32 noundef %8)
   %.not153 = icmp eq i32 %.1144200, 2
@@ -922,12 +922,12 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.not154, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.cj = load ptr, ptr %9, align 8, !tbaa !17
-  %i.ck = load ptr, ptr %i.bm, align 8, !tbaa !17
+  %i.cj = load ptr, ptr %i.bn, align 8, !tbaa !17
+  %i.ck = load ptr, ptr %i.bo, align 8, !tbaa !17
   call fastcc void @sgr_box5_row_h(ptr noundef %i.cj, ptr noundef %i.ck, ptr noundef null, ptr noundef %i.x, i32 noundef %4, i32 noundef %7)
   %i.cl = getelementptr inbounds i8, ptr %i.x, i64 %1
-  %i.cm = load ptr, ptr %i.bn, align 16, !tbaa !17
-  %i.cn = load ptr, ptr %i.bo, align 16, !tbaa !17
+  %i.cm = load ptr, ptr %i.bp, align 16, !tbaa !17
+  %i.cn = load ptr, ptr %i.bq, align 16, !tbaa !17
   call fastcc void @sgr_box5_row_h(ptr noundef %i.cm, ptr noundef %i.cn, ptr noundef null, ptr noundef %i.cl, i32 noundef %4, i32 noundef %7)
   br label %bb.n
 
@@ -1157,7 +1157,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.c, %bb.f
-  %i.aw = getelementptr inbounds i8, ptr %0, i64 %1
+  %9 = shl i64 %1, 1
+  %i.aw = getelementptr inbounds i8, ptr %0, i64 %9
   %.0117 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %.0119 = add nsw i32 %5, -2
   %i.ax = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 3 uses
@@ -1168,19 +1169,19 @@ bb.g:                                             ; preds = %bb.c, %bb.f
 
 bb.h:                                             ; preds = %bb.h, %bb.g
   %.1120 = phi i32 [ %.0119, %bb.g ], [ %i.bj, %bb.h ] ; 2 uses
-  %.1118 = phi ptr [ %.0117, %bb.g ], [ %i.bg, %bb.h ] ; 2 uses
-  %.pn = phi ptr [ %i.aw, %bb.g ], [ %.1, %bb.h ]
-  %.1 = getelementptr inbounds i8, ptr %.pn, i64 %1 ; 2 uses
+  %.1118 = phi ptr [ %.0117, %bb.g ], [ %10, %bb.h ] ; 2 uses
+  %.pn = phi ptr [ %i.aw, %bb.g ], [ %i.bg, %bb.h ] ; 2 uses
   %i.bb = load ptr, ptr %i.s, align 16, !tbaa !17 ; 2 uses
   %i.bc = load ptr, ptr %i.u, align 16, !tbaa !17 ; 2 uses
   %i.bd = load i32, ptr %i.ax, align 4, !tbaa !18
   %i.be = load ptr, ptr %i.ay, align 16, !tbaa !17
   %i.bf = load ptr, ptr %i.az, align 16, !tbaa !17
-  call fastcc void @sgr_box3_row_h(ptr noundef %i.be, ptr noundef %i.bf, ptr noundef nonnull readonly %.1118, ptr noundef readonly %.1, i32 noundef %4, i32 noundef %7)
+  call fastcc void @sgr_box3_row_h(ptr noundef %i.be, ptr noundef %i.bf, ptr noundef nonnull readonly %.1118, ptr noundef readonly %.pn, i32 noundef %4, i32 noundef %7)
   call fastcc void @sgr_box3_row_v(ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, ptr noundef %i.bb, ptr noundef %i.bc, i32 noundef %4)
   call fastcc void @sgr_calc_row_ab(ptr noundef %i.bb, ptr noundef %i.bc, i32 noundef %4, i32 noundef %i.bd, i32 noundef %8, i32 noundef 9, i32 noundef 455)
   call fastcc void @rotate(ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, i32 noundef 3)
-  %i.bg = getelementptr inbounds nuw i8, ptr %.1118, i64 8
+  %10 = getelementptr inbounds nuw i8, ptr %.1118, i64 8
+  %i.bg = getelementptr inbounds i8, ptr %.pn, i64 %1
   %i.bh = load i16, ptr %i.ba, align 2, !tbaa !18
   %i.bi = sext i16 %i.bh to i32
   call fastcc void @sgr_finish1(ptr noundef %i.a, i64 noundef %1, ptr noundef %i.h, ptr noundef %i.i, i32 noundef %4, i32 noundef %i.bi, i32 noundef %8)
@@ -1570,6 +1571,8 @@ bb.j:                                             ; preds = %bb.i, %bb.d
   %.0204 = phi i32 [ %i.bw, %bb.d ], [ %i.dm, %bb.i ]
   %.0202 = phi ptr [ %i.bx, %bb.d ], [ %i.dn, %bb.i ]
   %i.do = phi ptr [ %0, %bb.d ], [ %i.cp, %bb.i ]
+  %9 = shl i64 %1, 1
+  %.0 = getelementptr inbounds i8, ptr %i.do, i64 %9
   %i.dp = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 4 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 4 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
@@ -1584,15 +1587,13 @@ bb.j:                                             ; preds = %bb.i, %bb.d
 bb.k:                                             ; preds = %bb.l, %bb.j
   %.1205 = phi i32 [ %.0204, %bb.j ], [ %i.ey, %bb.l ] ; 3 uses
   %.1203 = phi ptr [ %.0202, %bb.j ], [ %i.en, %bb.l ] ; 4 uses
-  %i.dy = phi ptr [ %i.do, %bb.j ], [ %.1, %bb.l ]
-  %9 = getelementptr inbounds i8, ptr %i.dy, i64 %1
-  %.1 = getelementptr inbounds i8, ptr %9, i64 %1 ; 4 uses
+  %i.dy = phi ptr [ %.0, %bb.j ], [ %10, %bb.l ]  ; 3 uses
   %i.dz = load ptr, ptr %i.dp, align 16, !tbaa !17
   %i.ea = load ptr, ptr %i.dq, align 16, !tbaa !17
   %i.eb = load ptr, ptr %i.dr, align 8, !tbaa !17 ; 2 uses
   %i.ec = load ptr, ptr %i.ds, align 8, !tbaa !17 ; 2 uses
-  call fastcc void @sgr_box3_row_h(ptr noundef %i.dz, ptr noundef %i.ea, ptr noundef nonnull readonly %.1203, ptr noundef readonly %.1, i32 noundef %4, i32 noundef %7)
-  call fastcc void @sgr_box5_row_h(ptr noundef %i.eb, ptr noundef %i.ec, ptr noundef nonnull readonly %.1203, ptr noundef readonly %.1, i32 noundef %4, i32 noundef %7)
+  call fastcc void @sgr_box3_row_h(ptr noundef %i.dz, ptr noundef %i.ea, ptr noundef nonnull readonly %.1203, ptr noundef readonly %i.dy, i32 noundef %4, i32 noundef %7)
+  call fastcc void @sgr_box5_row_h(ptr noundef %i.eb, ptr noundef %i.ec, ptr noundef nonnull readonly %.1203, ptr noundef readonly %i.dy, i32 noundef %4, i32 noundef %7)
   %i.ed = load ptr, ptr %i.aq, align 8, !tbaa !17 ; 2 uses
   %i.ee = load ptr, ptr %i.as, align 8, !tbaa !17 ; 2 uses
   %i.ef = load i32, ptr %i.dt, align 4, !tbaa !18
@@ -1604,7 +1605,7 @@ bb.k:                                             ; preds = %bb.l, %bb.j
   br i1 %i.eg, label %.loopexit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.eh = getelementptr inbounds i8, ptr %.1, i64 %1 ; 2 uses
+  %i.eh = getelementptr inbounds i8, ptr %i.dy, i64 %1 ; 3 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.1203, i64 8 ; 2 uses
   %i.ej = load ptr, ptr %i.dp, align 16, !tbaa !17
   %i.ek = load ptr, ptr %i.dq, align 16, !tbaa !17
@@ -1613,6 +1614,7 @@ bb.l:                                             ; preds = %bb.k
   call fastcc void @sgr_box3_row_h(ptr noundef %i.ej, ptr noundef %i.ek, ptr noundef nonnull readonly %i.ei, ptr noundef readonly %i.eh, i32 noundef %4, i32 noundef %7)
   call fastcc void @sgr_box5_row_h(ptr noundef %i.el, ptr noundef %i.em, ptr noundef nonnull readonly %i.ei, ptr noundef readonly %i.eh, i32 noundef %4, i32 noundef %7)
   %i.en = getelementptr inbounds nuw i8, ptr %.1203, i64 16
+  %10 = getelementptr inbounds i8, ptr %i.eh, i64 %1
   %i.eo = load ptr, ptr %i.ae, align 8, !tbaa !17 ; 2 uses
   %i.ep = load ptr, ptr %i.ag, align 8, !tbaa !17 ; 2 uses
   %i.eq = load i32, ptr %6, align 16, !tbaa !18

@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 bb.k:                                             ; preds = %bb.j
   %i.be = load i64, ptr %i.g, align 8, !tbaa !36
   %i.bf = add i64 %i.be, 7
-  %i.bg = lshr i64 %i.bf, 3                       ; 6 uses
+  %i.bg = lshr i64 %i.bf, 3                       ; 5 uses
   br i1 %i.y, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
@@ -335,15 +335,15 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %.0163 = phi ptr [ %i.cy, %bb.w ], [ %i.cv, %bb.v ]
   %.0162 = phi ptr [ %i.da, %bb.w ], [ %i.d, %bb.v ]
   %.0161 = phi ptr [ %i.d, %bb.w ], [ %i.cw, %bb.v ]
-  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.db
-  %i.dc = getelementptr inbounds nuw i8, ptr %10, i64 %i.bg
+  %i.dc = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.db
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.de = load i64, ptr %i.dd, align 8, !tbaa !262 ; 2 uses
   %.not188 = icmp eq i64 %i.de, 0
   %spec.select227 = select i1 %.not188, i64 %i.cs, i64 %i.de ; 3 uses
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 %.sink235
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.dc, i64 %i.bg ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.df, ptr nonnull align 1 %i.dg, i64 %spec.select227, i1 false)
+  %10 = shl nuw nsw i64 %i.bg, 1
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.dc, i64 %10 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.df, ptr nonnull align 2 %i.dg, i64 %spec.select227, i1 false)
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 %.sink231
   %i.di = getelementptr inbounds nuw i8, ptr %i.dg, i64 %spec.select227
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dh, ptr nonnull align 1 %i.di, i64 %spec.select227, i1 false)

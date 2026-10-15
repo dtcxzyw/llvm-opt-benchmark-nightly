@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not53, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx47 = shl i64 %3, 3                         ; 2 uses
   %.not48 = icmp eq i64 %.idx, %.idx47
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -213,6 +213,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM16RegressionL1loss14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us
@@ -239,8 +240,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM16RegressionL1loss14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM16RegressionL1loss14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.055.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.055.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -643,7 +643,7 @@ bb.a:
   br i1 %.not53, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx47 = shl i64 %3, 3                         ; 2 uses
   %.not48 = icmp eq i64 %.idx, %.idx47
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -652,6 +652,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM22RegressionQuantileloss14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us
@@ -678,8 +679,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM22RegressionQuantileloss14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM22RegressionQuantileloss14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.055.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.055.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses
@@ -1082,7 +1082,7 @@ bb.a:
   br i1 %.not53, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx47 = shl i64 %3, 3                         ; 2 uses
   %.not48 = icmp eq i64 %.idx, %.idx47
   br i1 %.not48, label %.critedge.i.us.preheader, label %.lr.ph.i.preheader
@@ -1090,6 +1090,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.f = icmp sgt i64 %.idx, 4
   %i.g = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM14LambdarankNDCG23GetGradientsForOneQueryEiiPKfPKdPfSF_EUliiE_EEET0_T_SJ_SJ_SJ_SI_T1_.exit.us
@@ -1116,8 +1117,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM14LambdarankNDCG23GetGradientsForOneQueryEiiPKfPKdPfSF_EUliiE_EEET0_T_SJ_SJ_SJ_SI_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM14LambdarankNDCG23GetGradientsForOneQueryEiiPKfPKdPfSF_EUliiE_EEET0_T_SJ_SJ_SJ_SI_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.055.us, i64 %.idx
-  %i.m = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.m = getelementptr inbounds i8, ptr %.055.us, i64 %5 ; 2 uses
   %i.n = ptrtoint ptr %i.h to i64
   %i.o = sub i64 %i.b, %i.n
   %i.p = ashr exact i64 %i.o, 2                   ; 2 uses
@@ -1520,7 +1520,7 @@ bb.a:
   br i1 %.not53, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx47 = shl i64 %3, 3                         ; 2 uses
   %.not48 = icmp eq i64 %.idx, %.idx47
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -1529,6 +1529,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.g = icmp sgt i64 %.idx, 4
   %i.h = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM18RegressionMAPELOSS14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us
@@ -1555,8 +1556,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM18RegressionMAPELOSS14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterIZNK8LightGBM18RegressionMAPELOSS14BoostFromScoreEiEUliiE_EEET0_T_SE_SE_SE_SD_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.055.us, i64 %.idx
-  %i.n = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.n = getelementptr inbounds i8, ptr %.055.us, i64 %5 ; 2 uses
   %i.o = ptrtoint ptr %i.i to i64
   %i.p = sub i64 %i.b, %i.o
   %i.q = ashr exact i64 %i.p, 2                   ; 2 uses

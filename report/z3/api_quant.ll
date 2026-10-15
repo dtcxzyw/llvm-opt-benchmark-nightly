@@ -202,12 +202,12 @@ declare void @_Z34log_Z3_get_quantifier_num_patternsP11_Z3_contextP7_Z3_ast(ptr 
 define ptr @Z3_get_quantifier_pattern_ast(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = atomicrmw xchg ptr @g_z3_log_enabled, i8 0 seq_cst, align 1
-  %i.b = trunc i8 %i.a to i1                      ; 3 uses
+  %i.b = trunc i8 %i.a to i1                      ; 4 uses
   br i1 %i.b, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_Z33log_Z3_get_quantifier_pattern_astP11_Z3_contextP7_Z3_astj(ptr noundef %0, ptr noundef %1, i32 noundef %2)
-          to label %3 unwind label %bb.c
+          to label %.thread unwind label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
@@ -215,16 +215,7 @@ bb.c:                                             ; preds = %bb.b
           catch ptr @_ZTI12z3_exception
   br label %.thread38
 
-3:                                                ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1600
-  store i32 0, ptr %4, align 8, !tbaa !164
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %6 = load i32, ptr %5, align 4
-  %7 = and i32 %6, 65535
-  %8 = icmp eq i32 %7, 2
-  br i1 %8, label %bb.d, label %bb.g
-
-.thread:                                          ; preds = %bb.a
+.thread:                                          ; preds = %bb.b, %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1600
   store i32 0, ptr %i.d, align 8, !tbaa !164
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -237,25 +228,16 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.k = load i32, ptr %i.j, align 4, !tbaa !216
-  %i.l = zext i32 %i.k to i64                     ; 2 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.l
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.l
+  %i.l = zext i32 %i.k to i64
+  %.idx.i = shl nuw nsw i64 %i.l, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx.i
   %i.m = zext i32 %2 to i64
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.m
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !168
-  br label %_ZN10z3_log_ctxD2Ev.exit
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.m
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !168  ; 3 uses
+  br i1 %i.b, label %bb.d, label %_ZN10z3_log_ctxD2Ev.exit, !prof !12
 
-bb.d:                                             ; preds = %3
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %13 = load i32, ptr %12, align 4, !tbaa !216
-  %14 = zext i32 %13 to i64                       ; 2 uses
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %14
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %15, i64 %14
-  %17 = zext i32 %2 to i64
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %17
-  %19 = load ptr, ptr %18, align 8, !tbaa !168    ; 2 uses
-  invoke void @_Z4SetRPKv(ptr noundef %19)
+bb.d:                                             ; preds = %.thread33
+  invoke void @_Z4SetRPKv(ptr noundef %i.o)
           to label %bb.k unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.g
@@ -271,7 +253,7 @@ bb.f:                                             ; preds = %bb.d
           catch ptr @_ZTI12z3_exception
   br label %.thread38
 
-bb.g:                                             ; preds = %.thread, %3
+bb.g:                                             ; preds = %.thread
   invoke void @_ZN3api7context14set_error_codeE13Z3_error_codePKc(ptr noundef nonnull align 8 dereferenceable(3088) %0, i32 noundef 1, ptr noundef null)
           to label %bb.h unwind label %bb.e
 
@@ -288,8 +270,8 @@ bb.j:                                             ; preds = %bb.i
           catch ptr @_ZTI12z3_exception
   br label %.thread38
 
-bb.k:                                             ; preds = %bb.d, %bb.i
-  %.023 = phi ptr [ null, %bb.i ], [ %19, %bb.d ]
+bb.k:                                             ; preds = %bb.i, %bb.d
+  %.023 = phi ptr [ null, %bb.i ], [ %i.o, %bb.d ]
   store atomic i8 1, ptr @g_z3_log_enabled seq_cst, align 1
   br label %_ZN10z3_log_ctxD2Ev.exit
 
@@ -327,7 +309,7 @@ bb.o:                                             ; preds = %bb.m
   invoke void @__cxa_end_catch()
           to label %bb.p unwind label %bb.q
 
-_ZN10z3_log_ctxD2Ev.exit:                         ; preds = %bb.h, %.thread33, %bb.k, %bb.n
+_ZN10z3_log_ctxD2Ev.exit:                         ; preds = %bb.k, %bb.h, %.thread33, %bb.n
   %.124 = phi ptr [ null, %bb.n ], [ %.023, %bb.k ], [ %i.o, %.thread33 ], [ null, %bb.h ]
   ret ptr %.124
 
@@ -447,12 +429,12 @@ declare void @_Z37log_Z3_get_quantifier_num_no_patternsP11_Z3_contextP7_Z3_ast(p
 define ptr @Z3_get_quantifier_no_pattern_ast(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = atomicrmw xchg ptr @g_z3_log_enabled, i8 0 seq_cst, align 1
-  %i.b = trunc i8 %i.a to i1                      ; 3 uses
+  %i.b = trunc i8 %i.a to i1                      ; 4 uses
   br i1 %i.b, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_Z36log_Z3_get_quantifier_no_pattern_astP11_Z3_contextP7_Z3_astj(ptr noundef %0, ptr noundef %1, i32 noundef %2)
-          to label %3 unwind label %bb.c
+          to label %.thread unwind label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
@@ -460,16 +442,7 @@ bb.c:                                             ; preds = %bb.b
           catch ptr @_ZTI12z3_exception
   br label %.thread38
 
-3:                                                ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1600
-  store i32 0, ptr %4, align 8, !tbaa !164
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %6 = load i32, ptr %5, align 4
-  %7 = and i32 %6, 65535
-  %8 = icmp eq i32 %7, 2
-  br i1 %8, label %bb.d, label %bb.g
-
-.thread:                                          ; preds = %bb.a
+.thread:                                          ; preds = %bb.b, %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1600
   store i32 0, ptr %i.d, align 8, !tbaa !164
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -482,25 +455,16 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.k = load i32, ptr %i.j, align 4, !tbaa !216
-  %i.l = zext i32 %i.k to i64                     ; 2 uses
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.l
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.l
+  %i.l = zext i32 %i.k to i64
+  %.idx.i.i = shl nuw nsw i64 %i.l, 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx.i.i
   %i.m = zext i32 %2 to i64
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %i.m
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !168
-  br label %_ZN10z3_log_ctxD2Ev.exit
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.m
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !168  ; 3 uses
+  br i1 %i.b, label %bb.d, label %_ZN10z3_log_ctxD2Ev.exit, !prof !12
 
-bb.d:                                             ; preds = %3
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %13 = load i32, ptr %12, align 4, !tbaa !216
-  %14 = zext i32 %13 to i64                       ; 2 uses
-  %15 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %14
-  %16 = getelementptr inbounds nuw [8 x i8], ptr %15, i64 %14
-  %17 = zext i32 %2 to i64
-  %18 = getelementptr inbounds nuw [8 x i8], ptr %16, i64 %17
-  %19 = load ptr, ptr %18, align 8, !tbaa !168    ; 2 uses
-  invoke void @_Z4SetRPKv(ptr noundef %19)
+bb.d:                                             ; preds = %.thread33
+  invoke void @_Z4SetRPKv(ptr noundef %i.o)
           to label %bb.k unwind label %bb.f
 
 bb.e:                                             ; preds = %bb.g
@@ -516,7 +480,7 @@ bb.f:                                             ; preds = %bb.d
           catch ptr @_ZTI12z3_exception
   br label %.thread38
 
-bb.g:                                             ; preds = %.thread, %3
+bb.g:                                             ; preds = %.thread
   invoke void @_ZN3api7context14set_error_codeE13Z3_error_codePKc(ptr noundef nonnull align 8 dereferenceable(3088) %0, i32 noundef 1, ptr noundef null)
           to label %bb.h unwind label %bb.e
 
@@ -533,8 +497,8 @@ bb.j:                                             ; preds = %bb.i
           catch ptr @_ZTI12z3_exception
   br label %.thread38
 
-bb.k:                                             ; preds = %bb.d, %bb.i
-  %.023 = phi ptr [ null, %bb.i ], [ %19, %bb.d ]
+bb.k:                                             ; preds = %bb.i, %bb.d
+  %.023 = phi ptr [ null, %bb.i ], [ %i.o, %bb.d ]
   store atomic i8 1, ptr @g_z3_log_enabled seq_cst, align 1
   br label %_ZN10z3_log_ctxD2Ev.exit
 
@@ -572,7 +536,7 @@ bb.o:                                             ; preds = %bb.m
   invoke void @__cxa_end_catch()
           to label %bb.p unwind label %bb.q
 
-_ZN10z3_log_ctxD2Ev.exit:                         ; preds = %bb.h, %.thread33, %bb.k, %bb.n
+_ZN10z3_log_ctxD2Ev.exit:                         ; preds = %bb.k, %bb.h, %.thread33, %bb.n
   %.124 = phi ptr [ null, %bb.n ], [ %.023, %bb.k ], [ %i.o, %.thread33 ], [ null, %bb.h ]
   ret ptr %.124
 

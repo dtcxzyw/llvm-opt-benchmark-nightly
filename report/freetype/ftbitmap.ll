@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.bv, label %bb.r, label %thread-pre-split
 
 bb.r:                                             ; preds = %bb.q
-  %i.bw = zext i32 %i.bl to i64                   ; 20 uses
+  %i.bw = zext i32 %i.bl to i64                   ; 18 uses
   %.not130134.i = icmp eq i32 %i.bn, 0
   br i1 %.not130134.i, label %thread-pre-split, label %.lr.ph.i
 
@@ -285,12 +285,17 @@ bb.u:                                             ; preds = %bb.t, %.lr.ph.split
   %.0119136.us.i.unr = phi i32 [ %i.bn, %.lr.ph.split.us.preheader.i ], [ %i.cq, %bb.u ]
   %.0121135.us.i.unr = phi ptr [ %i.cc, %.lr.ph.split.us.preheader.i ], [ %i.cr, %bb.u ]
   %i.cs = icmp ult i32 %i.bn, 4
-  br i1 %i.cs, label %thread-pre-split, label %.lr.ph.split.us.i
+  br i1 %i.cs, label %thread-pre-split, label %.lr.ph.split.us.preheader.i.new
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.split.us.i.prol.loopexit, %bb.z
-  %.0120137.us.i = phi ptr [ %.0120.us.i.3, %bb.z ], [ %.0120137.us.i.unr, %.lr.ph.split.us.i.prol.loopexit ] ; 5 uses
-  %.0119136.us.i = phi i32 [ %i.da, %bb.z ], [ %.0119136.us.i.unr, %.lr.ph.split.us.i.prol.loopexit ]
-  %.0121135.us.i = phi ptr [ %i.db, %bb.z ], [ %.0121135.us.i.unr, %.lr.ph.split.us.i.prol.loopexit ] ; 6 uses
+.lr.ph.split.us.preheader.i.new:                  ; preds = %.lr.ph.split.us.i.prol.loopexit
+  %5 = shl nuw nsw i64 %i.bw, 1
+  %6 = shl nuw nsw i64 %i.bw, 1
+  br label %.lr.ph.split.us.i
+
+.lr.ph.split.us.i:                                ; preds = %bb.z, %.lr.ph.split.us.preheader.i.new
+  %.0120137.us.i = phi ptr [ %.0120137.us.i.unr, %.lr.ph.split.us.preheader.i.new ], [ %.0120.us.i.3, %bb.z ] ; 3 uses
+  %.0119136.us.i = phi i32 [ %.0119136.us.i.unr, %.lr.ph.split.us.preheader.i.new ], [ %i.da, %bb.z ]
+  %.0121135.us.i = phi ptr [ %.0121135.us.i.unr, %.lr.ph.split.us.preheader.i.new ], [ %i.db, %bb.z ] ; 4 uses
   %i.ct = icmp ult ptr %.0121135.us.i, %.0120137.us.i
   br i1 %i.ct, label %bb.v, label %.lr.ph.split.us.i.1
 
@@ -300,7 +305,6 @@ bb.v:                                             ; preds = %.lr.ph.split.us.i
 
 .lr.ph.split.us.i.1:                              ; preds = %bb.v, %.lr.ph.split.us.i
   %i.cu = getelementptr inbounds nuw i8, ptr %.0121135.us.i, i64 %i.bw ; 2 uses
-  %.0120.us.i = getelementptr inbounds nuw i8, ptr %.0120137.us.i, i64 %i.bw
   %i.cv = icmp ult ptr %.0121135.us.i, %.0120137.us.i
   br i1 %i.cv, label %bb.w, label %.lr.ph.split.us.i.2
 
@@ -309,9 +313,9 @@ bb.w:                                             ; preds = %.lr.ph.split.us.i.1
   br label %.lr.ph.split.us.i.2
 
 .lr.ph.split.us.i.2:                              ; preds = %bb.w, %.lr.ph.split.us.i.1
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.bw ; 2 uses
-  %.0120.us.i.1 = getelementptr inbounds nuw i8, ptr %.0120.us.i, i64 %i.bw
-  %i.cx = icmp ult ptr %.0121135.us.i, %.0120137.us.i
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.cu, i64 %i.bw ; 4 uses
+  %.0120.us.i.1 = getelementptr inbounds nuw i8, ptr %.0120137.us.i, i64 %5 ; 3 uses
+  %i.cx = icmp ult ptr %i.cw, %.0120.us.i.1
   br i1 %i.cx, label %bb.x, label %.lr.ph.split.us.i.3
 
 bb.x:                                             ; preds = %.lr.ph.split.us.i.2
@@ -320,8 +324,7 @@ bb.x:                                             ; preds = %.lr.ph.split.us.i.2
 
 .lr.ph.split.us.i.3:                              ; preds = %bb.x, %.lr.ph.split.us.i.2
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cw, i64 %i.bw ; 2 uses
-  %.0120.us.i.2 = getelementptr inbounds nuw i8, ptr %.0120.us.i.1, i64 %i.bw
-  %i.cz = icmp ult ptr %.0121135.us.i, %.0120137.us.i
+  %i.cz = icmp ult ptr %i.cw, %.0120.us.i.1
   br i1 %i.cz, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %.lr.ph.split.us.i.3
@@ -331,7 +334,7 @@ bb.y:                                             ; preds = %.lr.ph.split.us.i.3
 bb.z:                                             ; preds = %bb.y, %.lr.ph.split.us.i.3
   %i.da = add i32 %.0119136.us.i, -4              ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.bw
-  %.0120.us.i.3 = getelementptr inbounds nuw i8, ptr %.0120.us.i.2, i64 %i.bw
+  %.0120.us.i.3 = getelementptr inbounds nuw i8, ptr %.0120.us.i.1, i64 %6
   %.not130.us.i.3 = icmp eq i32 %i.da, 0
   br i1 %.not130.us.i.3, label %thread-pre-split, label %.lr.ph.split.us.i, !llvm.loop !40
 

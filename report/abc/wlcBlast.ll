@@ -205,10 +205,10 @@ Vec_IntFill.exit64:                               ; preds = %Vec_IntGrow.exit.i5
 Vec_IntFill.exit64.thread:                        ; preds = %Vec_IntGrow.exit.i57
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i32 %i.p, ptr %i.ag, align 4, !tbaa !40
-  %i.ah = sext i32 %3 to i64                      ; 2 uses
-  %8 = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %i.ah
-  %9 = getelementptr [4 x i8], ptr %8, i64 %i.ah
-  %i.ai = getelementptr i8, ptr %9, i64 -4
+  %i.ah = sext i32 %3 to i64
+  %.idx = shl nsw i64 %i.ah, 3
+  %8 = getelementptr i8, ptr %i.aa, i64 %.idx
+  %i.ai = getelementptr i8, ptr %8, i64 -4
   store i32 %7, ptr %i.ai, align 4, !tbaa !22
   br label %._crit_edge70
 
@@ -448,10 +448,10 @@ Vec_IntGrow.exit.i66:                             ; preds = %bb.i, %Vec_IntFill.
 ._crit_edge77.split.thread116:                    ; preds = %Vec_IntGrow.exit.i66
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i32 %i.q, ptr %i.ac, align 4, !tbaa !40
-  %i.ad = sext i32 %3 to i64                      ; 2 uses
-  %8 = getelementptr inbounds [4 x i8], ptr %i.ab, i64 %i.ad
-  %9 = getelementptr [4 x i8], ptr %8, i64 %i.ad
-  %i.ae = getelementptr i8, ptr %9, i64 -4
+  %i.ad = sext i32 %3 to i64
+  %.idx = shl nsw i64 %i.ad, 3
+  %8 = getelementptr i8, ptr %i.ab, i64 %.idx
+  %i.ae = getelementptr i8, ptr %8, i64 -4
   store i32 %i.b, ptr %i.ae, align 4, !tbaa !22
   br label %.preheader
 

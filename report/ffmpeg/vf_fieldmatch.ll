@@ -205,12 +205,12 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
   br label %bb.s
 
 .preheader587:                                    ; preds = %bb.w, %._crit_edge.thread
-  %i.cg = phi i64 [ %i.bg, %._crit_edge.thread ], [ %i.cc, %bb.w ] ; 4 uses
-  %.pre-phi768 = phi i64 [ %.pre751, %._crit_edge.thread ], [ %i.bi, %bb.w ] ; 8 uses
-  %2 = getelementptr inbounds i8, ptr %i.ae, i64 %i.cg
-  %i.ch = getelementptr inbounds i8, ptr %i.n, i64 %.pre-phi768
-  %.0539595 = getelementptr inbounds i8, ptr %i.ch, i64 %.pre-phi768 ; 2 uses
-  %.0550596 = getelementptr inbounds i8, ptr %2, i64 %i.cg ; 2 uses
+  %i.cg = phi i64 [ %i.bg, %._crit_edge.thread ], [ %i.cc, %bb.w ] ; 3 uses
+  %.pre-phi768 = phi i64 [ %.pre751, %._crit_edge.thread ], [ %i.bi, %bb.w ] ; 7 uses
+  %2 = shl nsw i64 %.pre-phi768, 1
+  %i.ch = getelementptr inbounds i8, ptr %i.n, i64 %2 ; 2 uses
+  %3 = shl nsw i64 %i.cg, 1
+  %.0550596 = getelementptr inbounds i8, ptr %i.ae, i64 %3 ; 2 uses
   %i.ci = icmp sgt i32 %i.ac, 4
   br i1 %i.ci, label %.preheader584.lr.ph, label %.preheader586
 
@@ -226,7 +226,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
 
 .preheader584.us:                                 ; preds = %.preheader584.us.preheader, %._crit_edge594.us
   %.0550599.us = phi ptr [ %.0550.us, %._crit_edge594.us ], [ %.0550596, %.preheader584.us.preheader ] ; 2 uses
-  %.0539598.us = phi ptr [ %.0539.us, %._crit_edge594.us ], [ %.0539595, %.preheader584.us.preheader ] ; 6 uses
+  %.0539598.us = phi ptr [ %.0539.us, %._crit_edge594.us ], [ %i.ch, %.preheader584.us.preheader ] ; 6 uses
   %.0521597.us = phi i32 [ %i.dr, %._crit_edge594.us ], [ 2, %.preheader584.us.preheader ] ; 2 uses
   %invariant.gep786 = getelementptr i8, ptr %.0539598.us, i64 %.pre-phi768
   %invariant.gep788 = getelementptr i8, ptr %.0539598.us, i64 %i.ck
@@ -339,7 +339,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t,
   br i1 %exitcond688.not, label %.preheader587, label %bb.s, !llvm.loop !108
 
 .preheader586:                                    ; preds = %._crit_edge594.us, %.preheader587
-  %.0539.lcssa = phi ptr [ %.0539595, %.preheader587 ], [ %.0539.us, %._crit_edge594.us ] ; 6 uses
+  %.0539.lcssa = phi ptr [ %i.ch, %.preheader587 ], [ %.0539.us, %._crit_edge594.us ] ; 6 uses
   %.0550.lcssa = phi ptr [ %.0550596, %.preheader587 ], [ %.0550.us, %._crit_edge594.us ] ; 2 uses
   br i1 %i.bf, label %.lr.ph603, label %fill_buf.exit
 

@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not88, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.idx = shl i64 %3, 2                           ; 11 uses
+  %.idx = shl i64 %3, 2                           ; 9 uses
   %.idx72 = shl i64 %3, 3                         ; 2 uses
   %.not73 = icmp eq i64 %.idx, %.idx72
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 448 ; 2 uses
@@ -217,6 +217,7 @@ bb.a:
 .critedge.i.us.preheader:                         ; preds = %.lr.ph
   %i.l = icmp sgt i64 %.idx, 4
   %i.m = icmp eq i64 %.idx, 4
+  %5 = shl i64 %3, 3
   br label %.critedge.i.us
 
 .critedge.i.us:                                   ; preds = %.critedge.i.us.preheader, %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterI14TestComparatorEEET0_T_SC_SC_SC_SB_T1_.exit.us
@@ -243,8 +244,7 @@ bb.d:                                             ; preds = %.critedge.i.us
   br label %_ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterI14TestComparatorEEET0_T_SC_SC_SC_SB_T1_.exit.us
 
 _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES2_NS0_5__ops15_Iter_comp_iterI14TestComparatorEEET0_T_SC_SC_SC_SB_T1_.exit.us: ; preds = %bb.b, %bb.d, %bb.c
-  %5 = getelementptr inbounds i8, ptr %.090.us, i64 %.idx
-  %i.s = getelementptr inbounds i8, ptr %5, i64 %.idx ; 2 uses
+  %i.s = getelementptr inbounds i8, ptr %.090.us, i64 %5 ; 2 uses
   %i.t = ptrtoint ptr %i.n to i64
   %i.u = sub i64 %i.d, %i.t
   %i.v = ashr exact i64 %i.u, 2                   ; 2 uses
