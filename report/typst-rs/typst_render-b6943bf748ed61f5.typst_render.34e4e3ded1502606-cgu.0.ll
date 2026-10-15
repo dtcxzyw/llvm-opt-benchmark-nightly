@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
   %i.an = tail call float @llvm.round.f32(float %i.am)
   %i.ao = tail call i32 @llvm.fptoui.sat.i32.f32(float %i.an) ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %i.aq = load ptr, ptr %i.ap, align 8, !nonnull !5, !noundef !5 ; 21 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !nonnull !5, !noundef !5 ; 20 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.as = load i64, ptr %i.ar, align 8, !noundef !5 ; 9 uses
   %.idx = shl nuw nsw i64 %i.as, 5                ; 2 uses
@@ -413,7 +413,7 @@ bb.o:                                             ; preds = %_RINvNtCs3oUPovFnLW
   store i64 %i.dm, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   store ptr %i.at, ptr %.sroa.6.0..sroa_idx, align 8
-  br i1 %i.au, label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.thread, label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.lr.ph
+  br i1 %i.au, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i, label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.lr.ph
 
 _RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.lr.ph: ; preds = %bb.o
   %i.dn = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -551,7 +551,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6Pixm
 _RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit: ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.lr.ph, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit31
   %.sroa.04.060 = phi i32 [ 0, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.lr.ph ], [ %i.fj, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit31 ] ; 2 uses
   %i.er = phi ptr [ %i.aq, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.lr.ph ], [ %i.es, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit31 ] ; 6 uses
-  %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 32 ; 4 uses
+  %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 32 ; 6 uses
   %.sroa.034.0.copyload35 = load i64, ptr %i.er, align 8, !noalias !743 ; 5 uses
   %.sroa.7.0..sroa_idx36 = getelementptr inbounds nuw i8, ptr %i.er, i64 8
   %.sroa.7.sroa.0.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx36, align 8, !noalias !743 ; 4 uses
@@ -579,19 +579,18 @@ bb.ae:                                            ; preds = %_RNvXs4_NtNtCs1xwej
   invoke void @_RNvMs0_NtCsfVrisfeHJNS_9tiny_skia7painterNtNtB7_6pixmap6Pixmap11draw_pixmap(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.l, i32 noundef 0, i32 noundef %.sroa.04.060, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.e, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(24) %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(32) null)
           to label %bb.aj unwind label %bb.ah
 
-_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.thread: ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit, %bb.o
-  %5 = phi ptr [ %i.aq, %bb.o ], [ %i.es, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit ] ; 3 uses
+_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.thread: ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit
   %i.et = ptrtoint ptr %i.at to i64
-  %i.eu = ptrtoint ptr %5 to i64
+  %i.eu = ptrtoint ptr %i.es to i64
   %i.ev = sub nuw i64 %i.et, %i.eu
   %i.ew = lshr exact i64 %i.ev, 5
   call void @llvm.experimental.noalias.scope.decl(metadata !744)
-  %i.ex = icmp eq ptr %i.at, %5
+  %i.ex = icmp eq ptr %i.at, %i.es
   br i1 %i.ex, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.thread, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i.i
   %.sroa.0.011.i.i.i = phi i64 [ %i.ez, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i.i ], [ 0, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.thread ] ; 2 uses
-  %i.ey = getelementptr inbounds nuw [32 x i8], ptr %5, i64 %.sroa.0.011.i.i.i ; 2 uses
+  %i.ey = getelementptr inbounds nuw [32 x i8], ptr %i.es, i64 %.sroa.0.011.i.i.i ; 2 uses
   %i.ez = add nuw nsw i64 %.sroa.0.011.i.i.i, 1   ; 2 uses
   %.val8.i.i.i = load i64, ptr %i.ey, align 8, !alias.scope !744, !noalias !745 ; 2 uses
   %i.fa = icmp eq i64 %.val8.i.i.i, 0
@@ -607,7 +606,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6Pixm
   %i.fc = icmp eq i64 %i.ez, %i.ew
   br i1 %i.fc, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i, label %.lr.ph.i.i.i
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit31, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i.i, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.thread
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueSNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit31, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapECs4xylOWI7Ys4_12typst_render.exit.i.i.i, %bb.o, %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs4xylOWI7Ys4_12typst_render.exit.thread
   %i.fd = icmp eq i64 %i.dm, 0
   br i1 %i.fd, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterNtNtCsfVrisfeHJNS_9tiny_skia6pixmap6PixmapEECs4xylOWI7Ys4_12typst_render.exit, label %bb.ag
 

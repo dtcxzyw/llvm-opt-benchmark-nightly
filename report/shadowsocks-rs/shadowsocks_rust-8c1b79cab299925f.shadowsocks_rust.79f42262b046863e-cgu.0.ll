@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/shadowsocks-rs/original/shadowsocks_rust-8c1b79cab299925f.shadowsocks_rust.79f42262b046863e-cgu.0?download=true
-inline.NumInlined: 5128
+inline.NumInlined: 5127
 inline.NumDeleted: 2462
 loop-unroll.NumCompletelyUnrolled: 38
 loop-unroll.NumRuntimeUnrolled: 11
@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %._crit_edge.i.i
 
 _RINvYINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator9partitionINtB8_3VecBR_ENvMBT_BR_10is_dynamicECsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %._crit_edge.i.i, %bb.f
   %.sroa.043.0.copyload = load i64, ptr %i.g, align 8, !noalias !322 ; 2 uses
-  %.sroa.444.0.copyload = load ptr, ptr %i.m, align 8, !noalias !322, !nonnull !14, !noundef !14 ; 6 uses
+  %.sroa.444.0.copyload = load ptr, ptr %i.m, align 8, !noalias !322, !nonnull !14, !noundef !14 ; 5 uses
   %.sroa.5.0.copyload = load i64, ptr %i.n, align 8, !noalias !322 ; 4 uses
   %.sroa.646.24.copyload = load i64, ptr %i.f, align 8, !noalias !322 ; 2 uses
   %.sroa.8.24.copyload = load ptr, ptr %i.o, align 8, !noalias !322, !nonnull !14, !noundef !14 ; 3 uses
@@ -605,7 +605,7 @@ _RINvXs2_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB6_12Directiv
   %.idx.i = mul nuw nsw i64 %.sroa.5.0.copyload, 80
   %i.dr = getelementptr inbounds nuw i8, ptr %.sroa.444.0.copyload, i64 %.idx.i ; 3 uses
   %i.ds = icmp eq i64 %.sroa.5.0.copyload, 0
-  br i1 %i.ds, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.lr.ph.i
+  br i1 %i.ds, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveECsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.lr.ph.i
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.lr.ph.i: ; preds = %_RINvXs2_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB6_12DirectiveSetNtB6_15StaticDirectiveEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendB1j_E6extendINtNtNtB1N_8adapters5chain5ChainINtNtB2Q_10filter_map9FilterMapINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtNtB8_3env9directive9DirectiveENCINvMB4C_B4A_11make_tablesINtB3R_3VecB4A_EE0EIB3i_INtNtNtB1P_5slice4iter4IterB4A_ENvB5d_9to_staticEEECsat9HgdBb3qc_16shadowsocks_rust.exit
   %.sroa.7.0..sroa_idx.i15 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -615,7 +615,7 @@ _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8
 
 _RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i: ; preds = %_RNvMs0_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB5_12DirectiveSetNtNtNtB7_3env9directive9DirectiveE3addCsat9HgdBb3qc_16shadowsocks_rust.exit.i, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.lr.ph.i
   %.sroa.42.010.i = phi ptr [ %.sroa.444.0.copyload, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.lr.ph.i ], [ %i.dv, %_RNvMs0_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB5_12DirectiveSetNtNtNtB7_3env9directive9DirectiveE3addCsat9HgdBb3qc_16shadowsocks_rust.exit.i ] ; 3 uses
-  %i.dv = getelementptr inbounds nuw i8, ptr %.sroa.42.010.i, i64 80 ; 3 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %.sroa.42.010.i, i64 80 ; 5 uses
   %.sroa.03.0.copyload4.i = load i64, ptr %.sroa.42.010.i, align 8, !noalias !380 ; 5 uses
   %.not.i = icmp eq i64 %.sroa.03.0.copyload4.i, -2
   br i1 %.not.i, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i, label %bb.ae
@@ -760,24 +760,23 @@ _RNvMs0_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB5_12Directive
   %i.fm = icmp eq ptr %i.dv, %i.dr
   br i1 %i.fm, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveECsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i, label %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i
 
-_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i: ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i, %_RINvXs2_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB6_12DirectiveSetNtB6_15StaticDirectiveEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendB1j_E6extendINtNtNtB1N_8adapters5chain5ChainINtNtB2Q_10filter_map9FilterMapINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtNtB8_3env9directive9DirectiveENCINvMB4C_B4A_11make_tablesINtB3R_3VecB4A_EE0EIB3i_INtNtNtB1P_5slice4iter4IterB4A_ENvB5d_9to_staticEEECsat9HgdBb3qc_16shadowsocks_rust.exit
-  %.sroa.42.18.i = phi ptr [ %.sroa.444.0.copyload, %_RINvXs2_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB6_12DirectiveSetNtB6_15StaticDirectiveEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendB1j_E6extendINtNtNtB1N_8adapters5chain5ChainINtNtB2Q_10filter_map9FilterMapINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtNtB8_3env9directive9DirectiveENCINvMB4C_B4A_11make_tablesINtB3R_3VecB4A_EE0EIB3i_INtNtNtB1P_5slice4iter4IterB4A_ENvB5d_9to_staticEEECsat9HgdBb3qc_16shadowsocks_rust.exit ], [ %i.dv, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i ] ; 3 uses
+_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i: ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.i
   %i.fn = ptrtoint ptr %i.dr to i64
-  %i.fo = ptrtoint ptr %.sroa.42.18.i to i64
+  %i.fo = ptrtoint ptr %i.dv to i64
   %i.fp = sub nuw i64 %i.fn, %i.fo
   %i.fq = udiv exact i64 %i.fp, 80
-  %i.fr = icmp eq ptr %i.dr, %.sroa.42.18.i
+  %i.fr = icmp eq ptr %i.dr, %i.dv
   br i1 %i.fr, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveECsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i, %.lr.ph.i.i.i.i
   %.sroa.0.03.i.i.i.i = phi i64 [ %i.ft, %.lr.ph.i.i.i.i ], [ 0, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i ] ; 2 uses
-  %i.fs = getelementptr inbounds nuw [80 x i8], ptr %.sroa.42.18.i, i64 %.sroa.0.03.i.i.i.i
+  %i.fs = getelementptr inbounds nuw [80 x i8], ptr %i.dv, i64 %.sroa.0.03.i.i.i.i
   %i.ft = add nuw nsw i64 %.sroa.0.03.i.i.i.i, 1  ; 2 uses
   call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef readonly align 8 dereferenceable(80) %i.fs) #30, !noalias !396
   %i.fu = icmp eq i64 %i.ft, %i.fq
   br i1 %i.fu, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveECsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i, label %.lr.ph.i.i.i.i
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveECsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i: ; preds = %_RNvMs0_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB5_12DirectiveSetNtNtNtB7_3env9directive9DirectiveE3addCsat9HgdBb3qc_16shadowsocks_rust.exit.i, %.lr.ph.i.i.i.i, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueSNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveECsat9HgdBb3qc_16shadowsocks_rust.exit.i.i.i: ; preds = %_RNvMs0_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB5_12DirectiveSetNtNtNtB7_3env9directive9DirectiveE3addCsat9HgdBb3qc_16shadowsocks_rust.exit.i, %.lr.ph.i.i.i.i, %_RINvXs2_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB6_12DirectiveSetNtB6_15StaticDirectiveEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendB1j_E6extendINtNtNtB1N_8adapters5chain5ChainINtNtB2Q_10filter_map9FilterMapINtNtNtCsgCecv3eZDcN_5alloc3vec9into_iter8IntoIterNtNtNtB8_3env9directive9DirectiveENCINvMB4C_B4A_11make_tablesINtB3R_3VecB4A_EE0EIB3i_INtNtNtB1P_5slice4iter4IterB4A_ENvB5d_9to_staticEEECsat9HgdBb3qc_16shadowsocks_rust.exit, %_RNvXs4_NtNtCsgCecv3eZDcN_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtNtCslHe4oyxs8Ro_18tracing_subscriber6filter3env9directive9DirectiveENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCsat9HgdBb3qc_16shadowsocks_rust.exit.thread.i
   %i.fv = icmp eq i64 %.sroa.043.0.copyload, 0
   br i1 %i.fv, label %_RINvXs2_NtNtCslHe4oyxs8Ro_18tracing_subscriber6filter9directiveINtB6_12DirectiveSetNtNtNtB8_3env9directive9DirectiveEINtNtNtNtCsf3Ta7LF998c_4core4iter6traits7collect6ExtendB1j_E6extendINtNtCsgCecv3eZDcN_5alloc3vec3VecB1j_EECsat9HgdBb3qc_16shadowsocks_rust.exit, label %bb.ap
 
