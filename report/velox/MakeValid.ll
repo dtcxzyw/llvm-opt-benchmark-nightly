@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !59   ; 3 uses
-  %i.l = load ptr, ptr %2, align 8, !tbaa !60     ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !59   ; 2 uses
+  %i.l = load ptr, ptr %2, align 8, !tbaa !60     ; 2 uses
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = ptrtoint ptr %i.l to i64
   %i.o = sub i64 %i.m, %i.n                       ; 3 uses
@@ -220,7 +220,12 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   %.not47 = icmp eq ptr %i.k, %i.l
-  br i1 %.not47, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit, label %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i
+  br i1 %.not47, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit.thread, label %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i
+
+_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit.thread: ; preds = %bb.d
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !35
+  br label %._crit_edge
 
 _ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE11_M_allocateEm.exit.i: ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
@@ -347,30 +352,26 @@ bb.e:                                             ; preds = %_ZNSt6vectorISt10un
   call void @_ZdlPv(ptr noundef nonnull %i.t) #20
   br label %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i
 
-_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i: ; preds = %bb.e, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit.i
+_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i: ; preds = %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit.i, %bb.e
   store ptr %i.s, ptr %4, align 8, !tbaa !21
   store ptr %i.s, ptr %i.r, align 8, !tbaa !19
   %i.ay = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.o
   store ptr %i.ay, ptr %i.q, align 8, !tbaa !20
-  %.pre = load ptr, ptr %2, align 8, !tbaa !221
-  %.pre29 = load ptr, ptr %i.j, align 8, !tbaa !221
-  br label %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit
-
-_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit: ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i, %bb.d
-  %6 = phi ptr [ %.pre29, %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i ], [ %i.k, %bb.d ] ; 2 uses
-  %7 = phi ptr [ %.pre, %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i ], [ %i.l, %bb.d ] ; 2 uses
+  %.pre = load ptr, ptr %2, align 8, !tbaa !221   ; 2 uses
+  %.pre29 = load ptr, ptr %i.j, align 8, !tbaa !221 ; 2 uses
   %8 = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %9 = load ptr, ptr %8, align 8, !tbaa !35       ; 2 uses
-  %.not27 = icmp eq ptr %7, %6
+  %9 = load ptr, ptr %8, align 8, !tbaa !35       ; 3 uses
+  %.not27 = icmp eq ptr %.pre, %.pre29
   br i1 %.not27, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit
+.lr.ph:                                           ; preds = %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i
   %i.az = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   br label %bb.h
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPNS2_5PointEEEEvDpOT_.exit, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit
+._crit_edge:                                      ; preds = %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPNS2_5PointEEEEvDpOT_.exit, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit.thread, %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i
+  %10 = phi ptr [ %7, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE7reserveEm.exit.thread ], [ %9, %_ZNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE13_M_deallocateEPS6_m.exit.i ], [ %9, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPNS2_5PointEEEEvDpOT_.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
-  invoke void @_ZNK4geos4geom15GeometryFactory16createMultiPointEOSt6vectorISt10unique_ptrINS0_8GeometryESt14default_deleteIS4_EESaIS7_EE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.38") align 8 %5, ptr noundef nonnull align 8 dereferenceable(45) %9, ptr noundef nonnull align 8 dereferenceable(24) %4)
+  invoke void @_ZNK4geos4geom15GeometryFactory16createMultiPointEOSt6vectorISt10unique_ptrINS0_8GeometryESt14default_deleteIS4_EESaIS7_EE(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr.38") align 8 %5, ptr noundef nonnull align 8 dereferenceable(45) %10, ptr noundef nonnull align 8 dereferenceable(24) %4)
           to label %_ZNSt10unique_ptrIN4geos4geom10MultiPointESt14default_deleteIS2_EED2Ev.exit unwind label %bb.q
 
 bb.f:                                             ; preds = %bb.a
@@ -384,7 +385,7 @@ bb.g:                                             ; preds = %_ZNSt12_Vector_base
   br label %bb.r
 
 bb.h:                                             ; preds = %.lr.ph, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPNS2_5PointEEEEvDpOT_.exit
-  %.sroa.024.028 = phi ptr [ %7, %.lr.ph ], [ %i.da, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPNS2_5PointEEEEvDpOT_.exit ] ; 2 uses
+  %.sroa.024.028 = phi ptr [ %.pre, %.lr.ph ], [ %i.da, %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPNS2_5PointEEEEvDpOT_.exit ] ; 2 uses
   %i.bc = load ptr, ptr %.sroa.024.028, align 8, !tbaa !62
   %i.bd = invoke noundef ptr @_ZNK4geos4geom15GeometryFactory11createPointERKNS0_10CoordinateE(ptr noundef nonnull align 8 dereferenceable(45) %9, ptr noundef nonnull align 8 dereferenceable(24) %i.bc)
           to label %bb.i unwind label %.loopexit  ; 2 uses
@@ -571,7 +572,7 @@ _ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_E
 
 _ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12emplace_backIJPNS2_5PointEEEEvDpOT_.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJPNS2_5PointEEEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i, %bb.j
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.024.028, i64 8 ; 2 uses
-  %.not = icmp eq ptr %i.da, %6
+  %.not = icmp eq ptr %i.da, %.pre29
   br i1 %.not, label %._crit_edge, label %bb.h
 
 .loopexit:                                        ; preds = %bb.h, %_ZNKSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i

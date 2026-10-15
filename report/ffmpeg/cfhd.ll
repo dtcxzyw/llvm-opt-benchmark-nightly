@@ -205,16 +205,18 @@ bb.hg:                                            ; preds = %bb.hf
 
 ._crit_edge2393:                                  ; preds = %.split, %.split.us.us, %.preheader2264
   switch i32 %.pre2618, label %.loopexit2247 [
-    i32 0, label %bb.hh
+    i32 0, label %4
     i32 2, label %bb.ih
   ]
 
-bb.hh:                                            ; preds = %._crit_edge2393
-  %4 = load i32, ptr %i.q, align 4, !tbaa !160
-  %.not1966 = icmp ne i32 %4, 1
+4:                                                ; preds = %._crit_edge2393
+  %5 = load i32, ptr %i.q, align 4, !tbaa !160
+  %.not1966 = icmp eq i32 %5, 1
+  br i1 %.not1966, label %.loopexit2247, label %bb.hh
+
+bb.hh:                                            ; preds = %4
   %.not1975 = icmp eq i32 %.01835.lcssa, 0
-  %5 = and i1 %.not1966, %i.adl
-  %or.cond2785 = select i1 %5, i1 %.not1975, i1 false
+  %or.cond2785 = select i1 %i.adl, i1 %.not1975, i1 false
   br i1 %or.cond2785, label %.lr.ph2454, label %.loopexit2715
 
 .lr.ph2454:                                       ; preds = %bb.hh
@@ -617,8 +619,8 @@ interlaced_vertical_filter.exit2067:              ; preds = %scalar.ph, %middle.
   %i.bhj = icmp slt i64 %indvars.iv.next2593, %i.bhi
   br i1 %i.bhj, label %bb.il, label %.loopexit2715, !llvm.loop !141
 
-.loopexit2715:                                    ; preds = %.loopexit2257, %.loopexit2250, %bb.ij, %bb.hh, %bb.ik
-  %i.bhk = phi i32 [ %i.adk, %bb.hh ], [ %i.adk, %bb.ij ], [ %i.adk, %bb.ik ], [ %i.asg, %.loopexit2250 ], [ %i.bhh, %.loopexit2257 ] ; 2 uses
+.loopexit2715:                                    ; preds = %.loopexit2257, %.loopexit2250, %bb.ik, %bb.hh, %bb.ij
+  %i.bhk = phi i32 [ %i.asg, %.loopexit2250 ], [ %i.adk, %bb.ij ], [ %i.adk, %bb.ik ], [ %i.adk, %bb.hh ], [ %i.bhh, %.loopexit2257 ] ; 2 uses
   %.pr2221 = load i32, ptr %i.r, align 8, !tbaa !35
   %i.bhl = icmp eq i32 %.pr2221, 2
   br i1 %i.bhl, label %bb.jl, label %.loopexit2247
@@ -917,7 +919,7 @@ interlaced_vertical_filter.exit2080:              ; preds = %scalar.ph3242, %mid
   %i.bmv = icmp slt i64 %indvars.iv.next2613, %i.bmu
   br i1 %i.bmv, label %bb.jm, label %.loopexit2247, !llvm.loop !151
 
-.loopexit2247:                                    ; preds = %.loopexit, %._crit_edge2393, %bb.jl, %.loopexit2715
+.loopexit2247:                                    ; preds = %.loopexit, %._crit_edge2393, %4, %bb.jl, %.loopexit2715
   %i.bmw = load i32, ptr %i.acr, align 8, !tbaa !56
   %i.bmx = icmp eq i32 %i.bmw, 145
   br i1 %i.bmx, label %bb.kb, label %.critedge

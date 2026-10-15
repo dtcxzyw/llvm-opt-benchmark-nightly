@@ -204,10 +204,10 @@ _ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i: ; preds = %_ZNK5boos
   br i1 %.not8.i, label %.critedge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i, %bb.e
-  %i.o = phi ptr [ %i.u, %bb.e ], [ %storemerge.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ] ; 3 uses
+  %i.o = phi ptr [ %i.u, %bb.e ], [ %storemerge.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ] ; 2 uses
   %.sroa.03.09.i = phi ptr [ %i.r, %bb.e ], [ %i.m, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ] ; 2 uses
   %.not7.i = icmp eq ptr %i.o, %i.g
-  br i1 %.not7.i, label %.critedge.i, label %bb.e
+  br i1 %.not7.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.p = load ptr, ptr %.sroa.03.09.i, align 8, !tbaa !60
@@ -219,16 +219,18 @@ bb.e:                                             ; preds = %.lr.ph.i
   %.not.i = icmp eq ptr %i.r, %i.n
   br i1 %.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !374
 
-.critedge.i:                                      ; preds = %bb.e, %.lr.ph.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.thread.i
-  %9 = phi ptr [ %i.n, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.thread.i ], [ %i.n, %.lr.ph.i ], [ %i.n, %bb.e ] ; 2 uses
-  %10 = phi ptr [ %storemerge.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ], [ %storemerge.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.thread.i ], [ %i.u, %bb.e ], [ %i.o, %.lr.ph.i ] ; 2 uses
-  %.sroa.03.0.lcssa.i = phi ptr [ %i.m, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.thread.i ], [ %i.r, %bb.e ], [ %.sroa.03.09.i, %.lr.ph.i ]
+.critedge.i:                                      ; preds = %bb.e, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.thread.i
+  %9 = phi ptr [ %i.n, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.thread.i ], [ %i.n, %bb.e ] ; 2 uses
+  %10 = phi ptr [ %storemerge.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ], [ %storemerge.i, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.thread.i ], [ %i.u, %bb.e ] ; 2 uses
+  %.sroa.03.0.lcssa.i = phi ptr [ %i.m, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorI5emptyvE5beginEv.exit.thread.i ], [ %i.r, %bb.e ]
   %i.v = icmp eq ptr %10, %i.g
   br i1 %i.v, label %bb.f, label %bb.g
 
-bb.f:                                             ; preds = %.critedge.i
-  store ptr %.sroa.03.0.lcssa.i, ptr %2, align 8, !tbaa !67
-  store ptr %9, ptr %3, align 8, !tbaa !67
+bb.f:                                             ; preds = %.lr.ph.i, %.critedge.i
+  %.sroa.03.0.lcssa.i14 = phi ptr [ %.sroa.03.0.lcssa.i, %.critedge.i ], [ %.sroa.03.09.i, %.lr.ph.i ]
+  %11 = phi ptr [ %9, %.critedge.i ], [ %i.n, %.lr.ph.i ]
+  store ptr %.sroa.03.0.lcssa.i14, ptr %2, align 8, !tbaa !67
+  store ptr %11, ptr %3, align 8, !tbaa !67
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   call void @_ZN5boost9container13stable_vectorI5emptyvE5eraseENS0_22stable_vector_iteratorIPS2_Lb1EEES6_(ptr dead_on_unwind nonnull writable sret(%"class.boost::container::stable_vector_iterator") align 8 %4, ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dead_on_return %2, ptr noundef nonnull align 8 dead_on_return %3) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
@@ -631,10 +633,10 @@ _ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16sim
   br i1 %.not8.i, label %.critedge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i, %bb.e
-  %i.o = phi ptr [ %i.x, %bb.e ], [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ] ; 4 uses
+  %i.o = phi ptr [ %i.x, %bb.e ], [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ] ; 3 uses
   %.sroa.03.09.i = phi ptr [ %i.u, %bb.e ], [ %i.m, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ] ; 3 uses
   %.not7.i = icmp eq ptr %i.o, %i.g
-  br i1 %.not7.i, label %.critedge.i, label %bb.e
+  br i1 %.not7.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -650,16 +652,18 @@ bb.e:                                             ; preds = %.lr.ph.i
   %.not.i = icmp eq ptr %i.u, %i.n
   br i1 %.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !927
 
-.critedge.i:                                      ; preds = %bb.e, %.lr.ph.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.thread.i
-  %9 = phi ptr [ %i.n, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.thread.i ], [ %i.n, %.lr.ph.i ], [ %i.n, %bb.e ] ; 2 uses
-  %10 = phi ptr [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ], [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.thread.i ], [ %i.x, %bb.e ], [ %i.o, %.lr.ph.i ] ; 2 uses
-  %.sroa.03.0.lcssa.i = phi ptr [ %i.m, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.thread.i ], [ %i.u, %bb.e ], [ %.sroa.03.09.i, %.lr.ph.i ]
+.critedge.i:                                      ; preds = %bb.e, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.thread.i
+  %9 = phi ptr [ %i.n, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.thread.i ], [ %i.n, %bb.e ] ; 2 uses
+  %10 = phi ptr [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ], [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.thread.i ], [ %i.x, %bb.e ] ; 2 uses
+  %.sroa.03.0.lcssa.i = phi ptr [ %i.m, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5beginEv.exit.thread.i ], [ %i.u, %bb.e ]
   %i.y = icmp eq ptr %10, %i.g
   br i1 %i.y, label %bb.f, label %bb.g
 
-bb.f:                                             ; preds = %.critedge.i
-  store ptr %.sroa.03.0.lcssa.i, ptr %2, align 8, !tbaa !109
-  store ptr %9, ptr %3, align 8, !tbaa !109
+bb.f:                                             ; preds = %.lr.ph.i, %.critedge.i
+  %.sroa.03.0.lcssa.i14 = phi ptr [ %.sroa.03.0.lcssa.i, %.critedge.i ], [ %.sroa.03.09.i, %.lr.ph.i ]
+  %11 = phi ptr [ %9, %.critedge.i ], [ %i.n, %.lr.ph.i ]
+  store ptr %.sroa.03.0.lcssa.i14, ptr %2, align 8, !tbaa !109
+  store ptr %11, ptr %3, align 8, !tbaa !109
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   call void @_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEE5eraseENS0_22stable_vector_iteratorIPS3_Lb1EEES9_(ptr dead_on_unwind nonnull writable sret(%"class.boost::container::stable_vector_iterator.22") align 8 %4, ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dead_on_return %2, ptr noundef nonnull align 8 dead_on_return %3) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23
@@ -1062,10 +1066,10 @@ _ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14nod
   br i1 %.not8.i, label %.critedge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i, %bb.e
-  %i.o = phi ptr [ %i.x, %bb.e ], [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ] ; 4 uses
+  %i.o = phi ptr [ %i.x, %bb.e ], [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ] ; 3 uses
   %.sroa.03.09.i = phi ptr [ %i.u, %bb.e ], [ %i.m, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ] ; 3 uses
   %.not7.i = icmp eq ptr %i.o, %i.g
-  br i1 %.not7.i, label %.critedge.i, label %bb.e
+  br i1 %.not7.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -1081,16 +1085,18 @@ bb.e:                                             ; preds = %.lr.ph.i
   %.not.i = icmp eq ptr %i.u, %i.n
   br i1 %.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !1473
 
-.critedge.i:                                      ; preds = %bb.e, %.lr.ph.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.thread.i
-  %9 = phi ptr [ %i.n, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.thread.i ], [ %i.n, %.lr.ph.i ], [ %i.n, %bb.e ] ; 2 uses
-  %10 = phi ptr [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ], [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.thread.i ], [ %i.x, %bb.e ], [ %i.o, %.lr.ph.i ] ; 2 uses
-  %.sroa.03.0.lcssa.i = phi ptr [ %i.m, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.thread.i ], [ %i.u, %bb.e ], [ %.sroa.03.09.i, %.lr.ph.i ]
+.critedge.i:                                      ; preds = %bb.e, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.thread.i
+  %9 = phi ptr [ %i.n, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.thread.i ], [ %i.n, %bb.e ] ; 2 uses
+  %10 = phi ptr [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ], [ %storemerge.i, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.thread.i ], [ %i.x, %bb.e ] ; 2 uses
+  %.sroa.03.0.lcssa.i = phi ptr [ %i.m, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.i ], [ %i.j, %_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5beginEv.exit.thread.i ], [ %i.u, %bb.e ]
   %i.y = icmp eq ptr %10, %i.g
   br i1 %i.y, label %bb.f, label %bb.g
 
-bb.f:                                             ; preds = %.critedge.i
-  store ptr %.sroa.03.0.lcssa.i, ptr %2, align 8, !tbaa !109
-  store ptr %9, ptr %3, align 8, !tbaa !109
+bb.f:                                             ; preds = %.lr.ph.i, %.critedge.i
+  %.sroa.03.0.lcssa.i14 = phi ptr [ %.sroa.03.0.lcssa.i, %.critedge.i ], [ %.sroa.03.09.i, %.lr.ph.i ]
+  %11 = phi ptr [ %9, %.critedge.i ], [ %i.n, %.lr.ph.i ]
+  store ptr %.sroa.03.0.lcssa.i14, ptr %2, align 8, !tbaa !109
+  store ptr %11, ptr %3, align 8, !tbaa !109
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   call void @_ZN5boost9container13stable_vectorINS0_4test24movable_and_copyable_intENS0_14node_allocatorIS3_Lm256ELm2EEEE5eraseENS0_22stable_vector_iteratorIPS3_Lb1EEES9_(ptr dead_on_unwind nonnull writable sret(%"class.boost::container::stable_vector_iterator.22") align 8 %4, ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dead_on_return %2, ptr noundef nonnull align 8 dead_on_return %3) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #23

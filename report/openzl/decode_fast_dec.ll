@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r, %bb.p
   br i1 %.not915, label %bb.t, label %.thread1419
 
 bb.t:                                             ; preds = %bb.s
-  %.val1055 = load ptr, ptr %9, align 8, !tbaa !20 ; 6 uses
+  %.val1055 = load ptr, ptr %9, align 8, !tbaa !20 ; 5 uses
   %.val1061 = load ptr, ptr %i.g, align 8, !tbaa !21
   %i.ci = ptrtoint ptr %.val1061 to i64
   %i.cj = ptrtoint ptr %.val1055 to i64
@@ -222,7 +222,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not916, label %bb.v, label %.thread1419
 
 bb.v:                                             ; preds = %bb.u
-  %.val = load ptr, ptr %9, align 8, !tbaa !20    ; 6 uses
+  %.val = load ptr, ptr %9, align 8, !tbaa !20    ; 5 uses
   %.val1059 = load ptr, ptr %i.g, align 8, !tbaa !21 ; 2 uses
   %i.cq = ptrtoint ptr %.val1059 to i64
   %i.cr = ptrtoint ptr %.val to i64
@@ -243,7 +243,7 @@ bb.x:                                             ; preds = %bb.w
   %i.cy = getelementptr inbounds i8, ptr %i.cx, i64 -32 ; 5 uses
   %i.cz = add nsw i64 %i.br, -32                  ; 2 uses
   %.not918 = icmp eq i64 %i.br, 0
-  br i1 %.not918, label %.critedge, label %bb.y
+  br i1 %.not918, label %.critedge.._crit_edge_crit_edge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %.0873.val1080 = load i16, ptr %.0873, align 1
@@ -646,17 +646,19 @@ bb.dw:                                            ; preds = %ZS_wildcopy.exit
   %or.cond932 = select i1 %or.cond928.not1425, i1 %i.abw, i1 false
   br i1 %or.cond932, label %isFast.exit, label %.critedge, !llvm.loop !33
 
-.critedge:                                        ; preds = %.thread1379, %.preheader1468, %bb.x, %bb.aa
-  %.6866 = phi ptr [ %.val1055, %bb.aa ], [ %.val1055, %bb.x ], [ %.val1055, %.preheader1468 ], [ %.5865.ph, %.thread1379 ]
-  %.11852 = phi ptr [ %.1842, %bb.aa ], [ %.0871, %bb.x ], [ %.1842, %.preheader1468 ], [ %.10851.ph, %.thread1379 ] ; 2 uses
-  %.13832 = phi ptr [ %.val, %bb.aa ], [ %.val, %bb.x ], [ %.val, %.preheader1468 ], [ %.12831.ph, %.thread1379 ]
-  %.7780 = phi i32 [ 16, %bb.aa ], [ 16, %bb.x ], [ 16, %.preheader1468 ], [ %.6779.ph, %.thread1379 ]
-  %.3767 = phi i64 [ %.1765, %bb.aa ], [ 0, %bb.x ], [ %.1765, %.preheader1468 ], [ %i.abq, %.thread1379 ] ; 2 uses
-  %.27 = phi ptr [ %.1, %bb.aa ], [ %1, %bb.x ], [ %.1, %.preheader1468 ], [ %.26.ph, %.thread1379 ] ; 2 uses
+.critedge:                                        ; preds = %.thread1379, %.preheader1468, %bb.aa
+  %.6866 = phi ptr [ %.val1055, %bb.aa ], [ %.val1055, %.preheader1468 ], [ %.5865.ph, %.thread1379 ]
+  %.11852 = phi ptr [ %.1842, %bb.aa ], [ %.1842, %.preheader1468 ], [ %.10851.ph, %.thread1379 ] ; 2 uses
+  %.13832 = phi ptr [ %.val, %bb.aa ], [ %.val, %.preheader1468 ], [ %.12831.ph, %.thread1379 ]
+  %.7780 = phi i32 [ 16, %bb.aa ], [ 16, %.preheader1468 ], [ %.6779.ph, %.thread1379 ]
+  %.3767 = phi i64 [ %.1765, %bb.aa ], [ %.1765, %.preheader1468 ], [ %i.abq, %.thread1379 ] ; 2 uses
+  %.27 = phi ptr [ %.1, %bb.aa ], [ %.1, %.preheader1468 ], [ %.26.ph, %.thread1379 ] ; 2 uses
   %i.abx = icmp ult i64 %.3767, %i.br
   br i1 %i.abx, label %.lr.ph1658, label %.critedge.._crit_edge_crit_edge
 
-.critedge.._crit_edge_crit_edge:                  ; preds = %.critedge
+.critedge.._crit_edge_crit_edge:                  ; preds = %bb.x, %.critedge
+  %.271744 = phi ptr [ %.27, %.critedge ], [ %1, %bb.x ]
+  %.118521743 = phi ptr [ %.11852, %.critedge ], [ %.0871, %bb.x ]
   %.pre = ptrtoint ptr %i.cx to i64
   br label %._crit_edge
 
@@ -1059,8 +1061,8 @@ ZS_safecopy.exit1028:                             ; preds = %.lr.ph1643, %.lr.ph
 
 ._crit_edge:                                      ; preds = %ZS_safecopy.exit1028, %.critedge.._crit_edge_crit_edge
   %.pre-phi = phi i64 [ %.pre, %.critedge.._crit_edge_crit_edge ], [ %i.abz, %ZS_safecopy.exit1028 ]
-  %.12853.lcssa = phi ptr [ %.11852, %.critedge.._crit_edge_crit_edge ], [ %.16857, %ZS_safecopy.exit1028 ] ; 2 uses
-  %.28.lcssa = phi ptr [ %.27, %.critedge.._crit_edge_crit_edge ], [ %.32, %ZS_safecopy.exit1028 ] ; 3 uses
+  %.12853.lcssa = phi ptr [ %.118521743, %.critedge.._crit_edge_crit_edge ], [ %.16857, %ZS_safecopy.exit1028 ] ; 2 uses
+  %.28.lcssa = phi ptr [ %.271744, %.critedge.._crit_edge_crit_edge ], [ %.32, %ZS_safecopy.exit1028 ] ; 3 uses
   %i.air = ptrtoint ptr %.12853.lcssa to i64
   %i.ais = sub i64 %.pre-phi, %i.air              ; 3 uses
   %i.ait = ptrtoint ptr %.28.lcssa to i64

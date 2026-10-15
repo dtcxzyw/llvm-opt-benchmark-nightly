@@ -205,13 +205,17 @@ bb.ab:                                            ; preds = %bb.v
   br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit40
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26: ; preds = %bb.t, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i24, %bb.y
-  %i.ci = load ptr, ptr %i.ai, align 8, !tbaa !361, !noalias !840 ; 3 uses
-  %i.cj = load ptr, ptr %i.ah, align 8, !tbaa !318, !noalias !840 ; 3 uses
+  %i.ci = load ptr, ptr %i.ai, align 8, !tbaa !361, !noalias !840 ; 2 uses
+  %i.cj = load ptr, ptr %i.ah, align 8, !tbaa !318, !noalias !840 ; 2 uses
   %i.ck = ptrtoint ptr %i.ci to i64
   %i.cl = ptrtoint ptr %i.cj to i64
-  %i.cm = sub i64 %i.ck, %i.cl                    ; 4 uses
+  %i.cm = sub i64 %i.ck, %i.cl                    ; 5 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ci, %i.cj
-  br i1 %.not.i.i.i.i.i.i.i, label %bb.ad, label %bb.ac
+  br i1 %.not.i.i.i.i.i.i.i, label %.thread, label %bb.ac
+
+.thread:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26
+  %4 = getelementptr inbounds nuw i8, ptr null, i64 %i.cm
+  br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i
 
 bb.ac:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26
   %i.cn = sdiv exact i64 %i.cm, 24
@@ -227,49 +231,49 @@ bb.ac:                                            ; preds = %_ZNSt7__cxx1112basi
 
 _ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %bb.ac
   %i.cp = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cm) #36
-          to label %.noexc31 unwind label %.loopexit
+          to label %bb.ad unwind label %.loopexit ; 4 uses
 
-.noexc31:                                         ; preds = %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i
-  %.pre.i = load ptr, ptr %i.ah, align 8, !tbaa !312, !noalias !840
-  %.pre3.i = load ptr, ptr %i.ai, align 8, !tbaa !312, !noalias !840
-  br label %bb.ad
-
-bb.ad:                                            ; preds = %.noexc31, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26
-  %4 = phi ptr [ %i.ci, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26 ], [ %.pre3.i, %.noexc31 ] ; 2 uses
-  %5 = phi ptr [ %i.cj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26 ], [ %.pre.i, %.noexc31 ] ; 2 uses
-  %6 = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit26 ], [ %i.cp, %.noexc31 ] ; 5 uses
-  %.not7.i.i.i.i.i.i.i.i = icmp eq ptr %5, %4
+bb.ad:                                            ; preds = %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i
+  %.pre.i = load ptr, ptr %i.ah, align 8, !tbaa !312, !noalias !840 ; 2 uses
+  %.pre3.i = load ptr, ptr %i.ai, align 8, !tbaa !312, !noalias !840 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.cp, i64 %i.cm ; 2 uses
+  %.not7.i.i.i.i.i.i.i.i = icmp eq ptr %.pre.i, %.pre3.i
   br i1 %.not7.i.i.i.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.ad, %.lr.ph.i.i.i.i.i.i.i.i
-  %.09.i.i.i.i.i.i.i.i = phi ptr [ %i.cr, %.lr.ph.i.i.i.i.i.i.i.i ], [ %6, %bb.ad ] ; 2 uses
-  %.sroa.04.08.i.i.i.i.i.i.i.i = phi ptr [ %i.cq, %.lr.ph.i.i.i.i.i.i.i.i ], [ %5, %bb.ad ] ; 2 uses
+  %.09.i.i.i.i.i.i.i.i = phi ptr [ %i.cr, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cp, %bb.ad ] ; 2 uses
+  %.sroa.04.08.i.i.i.i.i.i.i.i = phi ptr [ %i.cq, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.pre.i, %bb.ad ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.09.i.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04.08.i.i.i.i.i.i.i.i, i64 24, i1 false), !noalias !840
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 24
-  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.cq, %4
+  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.cq, %.pre3.i
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !24
 
-_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %bb.ad
+_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %.thread, %bb.ad
+  %6 = phi ptr [ %4, %.thread ], [ %5, %bb.ad ], [ %5, %.lr.ph.i.i.i.i.i.i.i.i ]
+  %7 = phi ptr [ null, %.thread ], [ %i.cp, %bb.ad ], [ %i.cp, %.lr.ph.i.i.i.i.i.i.i.i ] ; 5 uses
   %i.cs = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEv(ptr noundef nonnull align 8 dereferenceable(64) %2)
           to label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEi.exit unwind label %bb.ae, !noalias !840 ; 0 uses
 
 bb.ae:                                            ; preds = %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i
   %i.ct = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %6, null
+  %.not.i.i.i.i.i = icmp eq ptr %7, null
   br i1 %.not.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit40, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  call void @_ZdlPvm(ptr noundef nonnull %6, i64 noundef %i.cm) #35, !noalias !840
+  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %i.cm) #35, !noalias !840
   br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit40
 
 _ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEi.exit: ; preds = %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i
-  %.not.i.i.i.i34 = icmp eq ptr %6, null
+  %.not.i.i.i.i34 = icmp eq ptr %7, null
   br i1 %.not.i.i.i.i34, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEi.exit
-  call void @_ZdlPvm(ptr noundef nonnull %6, i64 noundef %i.cm) #35
+  %8 = ptrtoint ptr %6 to i64
+  %9 = ptrtoint ptr %7 to i64
+  %10 = sub i64 %8, %9
+  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %10) #35
   br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit
 
 _ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit: ; preds = %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEi.exit, %bb.ag
@@ -672,13 +676,17 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i38
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit37, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i38
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
-  %i.cr = load ptr, ptr %i.ag, align 8, !tbaa !361, !noalias !894 ; 3 uses
-  %i.cs = load ptr, ptr %i.af, align 8, !tbaa !318, !noalias !894 ; 3 uses
+  %i.cr = load ptr, ptr %i.ag, align 8, !tbaa !361, !noalias !894 ; 2 uses
+  %i.cs = load ptr, ptr %i.af, align 8, !tbaa !318, !noalias !894 ; 2 uses
   %i.ct = ptrtoint ptr %i.cr to i64
   %i.cu = ptrtoint ptr %i.cs to i64
-  %i.cv = sub i64 %i.ct, %i.cu                    ; 4 uses
+  %i.cv = sub i64 %i.ct, %i.cu                    ; 5 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.cr, %i.cs
-  br i1 %.not.i.i.i.i.i.i.i, label %bb.z, label %bb.y
+  br i1 %.not.i.i.i.i.i.i.i, label %.thread, label %bb.y
+
+.thread:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40
+  %7 = getelementptr inbounds nuw i8, ptr null, i64 %i.cv
+  br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i
 
 bb.y:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40
   %i.cw = sdiv exact i64 %i.cv, 24
@@ -694,41 +702,38 @@ bb.y:                                             ; preds = %_ZNSt7__cxx1112basi
 
 _ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i: ; preds = %bb.y
   %i.cy = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cv) #36
-          to label %.noexc42 unwind label %.loopexit
+          to label %bb.z unwind label %.loopexit  ; 4 uses
 
-.noexc42:                                         ; preds = %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i
-  %.pre.i = load ptr, ptr %i.af, align 8, !tbaa !312, !noalias !894
-  %.pre3.i = load ptr, ptr %i.ag, align 8, !tbaa !312, !noalias !894
-  br label %bb.z
-
-bb.z:                                             ; preds = %.noexc42, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40
-  %7 = phi ptr [ %i.cr, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40 ], [ %.pre3.i, %.noexc42 ] ; 2 uses
-  %8 = phi ptr [ %i.cs, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40 ], [ %.pre.i, %.noexc42 ] ; 2 uses
-  %9 = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40 ], [ %i.cy, %.noexc42 ] ; 5 uses
-  %.not7.i.i.i.i.i.i.i.i = icmp eq ptr %8, %7
+bb.z:                                             ; preds = %_ZNSt15__new_allocatorINSt7__cxx119sub_matchIN9__gnu_cxx17__normal_iteratorIPKcNS0_12basic_stringIcSt11char_traitsIcESaIcEEEEEEEE8allocateEmPKv.exit.i.i.i.i.i.i.i
+  %.pre.i = load ptr, ptr %i.af, align 8, !tbaa !312, !noalias !894 ; 2 uses
+  %.pre3.i = load ptr, ptr %i.ag, align 8, !tbaa !312, !noalias !894 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.cv ; 2 uses
+  %.not7.i.i.i.i.i.i.i.i = icmp eq ptr %.pre.i, %.pre3.i
   br i1 %.not7.i.i.i.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.z, %.lr.ph.i.i.i.i.i.i.i.i
-  %.09.i.i.i.i.i.i.i.i = phi ptr [ %i.da, %.lr.ph.i.i.i.i.i.i.i.i ], [ %9, %bb.z ] ; 2 uses
-  %.sroa.04.08.i.i.i.i.i.i.i.i = phi ptr [ %i.cz, %.lr.ph.i.i.i.i.i.i.i.i ], [ %8, %bb.z ] ; 2 uses
+  %.09.i.i.i.i.i.i.i.i = phi ptr [ %i.da, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cy, %bb.z ] ; 2 uses
+  %.sroa.04.08.i.i.i.i.i.i.i.i = phi ptr [ %i.cz, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.pre.i, %bb.z ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.09.i.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.04.08.i.i.i.i.i.i.i.i, i64 24, i1 false), !noalias !894
   %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i, i64 24
-  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.cz, %7
+  %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.cz, %.pre3.i
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i, label %.lr.ph.i.i.i.i.i.i.i.i, !llvm.loop !24
 
-_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %bb.z
+_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %.thread, %bb.z
+  %9 = phi ptr [ %7, %.thread ], [ %8, %bb.z ], [ %8, %.lr.ph.i.i.i.i.i.i.i.i ]
+  %10 = phi ptr [ null, %.thread ], [ %i.cy, %bb.z ], [ %i.cy, %.lr.ph.i.i.i.i.i.i.i.i ] ; 5 uses
   %i.db = invoke noundef nonnull align 8 dereferenceable(64) ptr @_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEv(ptr noundef nonnull align 8 dereferenceable(64) %4)
           to label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEi.exit unwind label %bb.aa, !noalias !894 ; 0 uses
 
 bb.aa:                                            ; preds = %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i
   %i.dc = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %.not.i.i.i.i.i = icmp eq ptr %9, null
+  %.not.i.i.i.i.i = icmp eq ptr %10, null
   br i1 %.not.i.i.i.i.i, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit66, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %i.cv) #35, !noalias !894
+  call void @_ZdlPvm(ptr noundef nonnull %10, i64 noundef %i.cv) #35, !noalias !894
   br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit66
 
 bb.ac:                                            ; preds = %.noexc.i.i.i.i
@@ -798,11 +803,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit50: ; preds = %bb.
   br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit56
 
 _ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEi.exit: ; preds = %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEC2ERKSD_.exit.i
-  %.not.i.i.i.i51 = icmp eq ptr %9, null
+  %.not.i.i.i.i51 = icmp eq ptr %10, null
   br i1 %.not.i.i.i.i51, label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit, label %bb.ak
 
 bb.ak:                                            ; preds = %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEi.exit
-  call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %i.cv) #35
+  %11 = ptrtoint ptr %9 to i64
+  %12 = ptrtoint ptr %10 to i64
+  %13 = sub i64 %11, %12
+  call void @_ZdlPvm(ptr noundef nonnull %10, i64 noundef %13) #35
   br label %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit
 
 _ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEED2Ev.exit: ; preds = %_ZNSt7__cxx1114regex_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEEcNS_12regex_traitsIcEEEppEi.exit, %bb.ak

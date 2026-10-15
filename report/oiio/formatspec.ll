@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.ai, label %bb.h, label %bb.p
 
 bb.h:                                             ; preds = %bb.g
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 5 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 4 uses
   %.not = icmp eq ptr %i.aj, %1
-  br i1 %.not, label %bb.m, label %bb.i
+  br i1 %.not, label %bb.p, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !135
@@ -244,8 +244,8 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #39
   br label %bb.m
 
-bb.m:                                             ; preds = %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit, %bb.l, %bb.h
-  %.0 = phi ptr [ %i.aj, %bb.h ], [ %i.ar, %bb.l ], [ %i.aj, %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit ] ; 3 uses
+bb.m:                                             ; preds = %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit, %bb.l
+  %.0 = phi ptr [ %i.aj, %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit ], [ %i.ar, %bb.l ] ; 3 uses
   %.not22 = icmp eq ptr %.0, %1
   br i1 %.not22, label %bb.p, label %bb.n
 
@@ -259,7 +259,7 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.3.0.pre = load i32, ptr %i.a, align 4, !tbaa !372
   br label %bb.q
 
-bb.p:                                             ; preds = %bb.m, %bb.n, %bb.g
+bb.p:                                             ; preds = %bb.h, %bb.m, %bb.n, %bb.g
   call void @_ZN3fmt3v1212report_errorEPKc(ptr noundef nonnull @.str.169) #41
   unreachable
 
@@ -662,9 +662,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.loopexit, %bb.c
-  %.062 = phi i32 [ %4, %bb.c ], [ %.365, %.loopexit ] ; 6 uses
+  %.062 = phi i32 [ %4, %bb.c ], [ %.365, %.loopexit ] ; 5 uses
   %.059 = phi i32 [ 2, %bb.c ], [ %.5, %.loopexit ] ; 2 uses
-  %.0 = phi ptr [ %1, %bb.c ], [ %.2, %.loopexit ] ; 10 uses
+  %.0 = phi ptr [ %1, %bb.c ], [ %.2, %.loopexit ] ; 9 uses
   %i.m = load i64, ptr %.0, align 8, !tbaa !212
   %i.n = trunc i64 %i.m to i32
   %i.o = and i32 %i.n, 15
@@ -741,7 +741,7 @@ bb.m:                                             ; preds = %bb.j
 bb.n:                                             ; preds = %.sink.split, %bb.k, %bb.m
   %.261 = phi i32 [ 2, %bb.m ], [ 3, %bb.k ], [ %.261.ph, %.sink.split ] ; 2 uses
   %.not75194 = icmp eq ptr %.0, %1
-  br i1 %.not75194, label %.loopexit, label %.lr.ph
+  br i1 %.not75194, label %bb.ci, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.n, %bb.ch
   %.1197 = phi ptr [ %i.aj, %bb.ch ], [ %.0, %bb.n ] ; 2 uses
@@ -754,7 +754,7 @@ bb.n:                                             ; preds = %.sink.split, %bb.k,
 
 bb.o:                                             ; preds = %.lr.ph
   %i.ai = getelementptr inbounds nuw i8, ptr %.1197, i64 24
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !222 ; 5 uses
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !222 ; 4 uses
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !212
   %i.al = and i64 %i.ak, 15
   %i.am = icmp eq i64 %i.al, 2
@@ -1157,20 +1157,21 @@ _ZN11OpenImageIO4v3_14pugi4impl15node_output_endERNS2_19xml_buffered_writerEPNS1
   br label %bb.ch
 
 bb.ch:                                            ; preds = %_ZN11OpenImageIO4v3_14pugi4impl15node_output_endERNS2_19xml_buffered_writerEPNS1_15xml_node_structE.exit, %bb.o
-  %.264 = phi i32 [ %i.an, %_ZN11OpenImageIO4v3_14pugi4impl15node_output_endERNS2_19xml_buffered_writerEPNS1_15xml_node_structE.exit ], [ %.163195, %bb.o ] ; 2 uses
+  %.264 = phi i32 [ %i.an, %_ZN11OpenImageIO4v3_14pugi4impl15node_output_endERNS2_19xml_buffered_writerEPNS1_15xml_node_structE.exit ], [ %.163195, %bb.o ]
   %.4 = phi i32 [ 3, %_ZN11OpenImageIO4v3_14pugi4impl15node_output_endERNS2_19xml_buffered_writerEPNS1_15xml_node_structE.exit ], [ %.3196, %bb.o ] ; 2 uses
   %.not75 = icmp eq ptr %i.aj, %1
-  br i1 %.not75, label %.loopexit, label %.lr.ph, !llvm.loop !1342
+  br i1 %.not75, label %bb.ci, label %.lr.ph, !llvm.loop !1342
 
-.loopexit:                                        ; preds = %bb.ch, %.lr.ph, %bb.n, %bb.m, %bb.l
-  %.365 = phi i32 [ %.062, %bb.m ], [ %i.ad, %bb.l ], [ %.062, %bb.n ], [ %.264, %bb.ch ], [ %.163195, %.lr.ph ]
-  %.5 = phi i32 [ 2, %bb.m ], [ %spec.select, %bb.l ], [ %.261, %bb.n ], [ %.4, %bb.ch ], [ %.3196, %.lr.ph ] ; 2 uses
-  %.2 = phi ptr [ %i.af, %bb.m ], [ %i.ac, %bb.l ], [ %.0, %bb.n ], [ %i.aj, %bb.ch ], [ %i.ah, %.lr.ph ] ; 2 uses
+.loopexit:                                        ; preds = %.lr.ph, %bb.m, %bb.l
+  %.365 = phi i32 [ %.062, %bb.m ], [ %i.ad, %bb.l ], [ %.163195, %.lr.ph ]
+  %.5 = phi i32 [ 2, %bb.m ], [ %spec.select, %bb.l ], [ %.3196, %.lr.ph ] ; 2 uses
+  %.2 = phi ptr [ %i.af, %bb.m ], [ %i.ac, %bb.l ], [ %i.ah, %.lr.ph ] ; 2 uses
   %.not78 = icmp eq ptr %.2, %1
   br i1 %.not78, label %bb.ci, label %bb.d, !llvm.loop !1343
 
-bb.ci:                                            ; preds = %.loopexit
-  %.not79 = trunc i32 %.5 to i1
+bb.ci:                                            ; preds = %.loopexit, %bb.n, %bb.ch
+  %.5176 = phi i32 [ %.4, %bb.ch ], [ %.261, %bb.n ], [ %.5, %.loopexit ]
+  %.not79 = trunc i32 %.5176 to i1
   %or.cond87 = and i1 %i.d, %.not79
   br i1 %or.cond87, label %bb.cj, label %bb.cl
 

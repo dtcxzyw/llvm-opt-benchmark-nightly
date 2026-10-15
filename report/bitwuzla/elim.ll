@@ -204,12 +204,12 @@ bb.c:                                             ; preds = %bb.b
 _ZN7CaDiCaL4heapINS_9elim_moreEE8has_leftEj.exit: ; preds = %bb.b, %bb.c
   %i.r = phi ptr [ %.pre.i.i, %bb.c ], [ %i.k, %bb.b ] ; 3 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %i.a
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !169  ; 2 uses
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !169  ; 3 uses
   %i.u = zext i32 %i.t to i64
   %i.v = shl nuw nsw i64 %i.u, 1
   %i.w = or disjoint i64 %i.v, 1
   %i.x = load ptr, ptr %i.e, align 8, !tbaa !176
-  %i.y = load ptr, ptr %0, align 8, !tbaa !177    ; 2 uses
+  %i.y = load ptr, ptr %0, align 8, !tbaa !177    ; 3 uses
   %i.z = ptrtoint ptr %i.x to i64
   %i.aa = ptrtoint ptr %i.y to i64
   %i.ab = sub i64 %i.z, %i.aa
@@ -218,55 +218,56 @@ _ZN7CaDiCaL4heapINS_9elim_moreEE8has_leftEj.exit: ; preds = %bb.b, %bb.c
   br i1 %i.ad, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %_ZN7CaDiCaL4heapINS_9elim_moreEE8has_leftEj.exit
-  %i.ae = load ptr, ptr %i.c, align 8, !tbaa !176 ; 3 uses
+  %i.ae = load ptr, ptr %i.c, align 8, !tbaa !176 ; 2 uses
   %i.af = ptrtoint ptr %i.ae to i64
   %i.ag = ptrtoint ptr %i.r to i64
   %i.ah = sub i64 %i.af, %i.ag
-  %i.ai = ashr exact i64 %i.ah, 2                 ; 3 uses
+  %i.ai = ashr exact i64 %i.ah, 2                 ; 2 uses
   %.not.i.i13 = icmp ugt i64 %i.ai, %i.a
-  br i1 %.not.i.i13, label %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit, label %bb.e
+  br i1 %.not.i.i13, label %bb.e, label %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit
 
 bb.e:                                             ; preds = %bb.d
-  %2 = sub nuw nsw i64 %i.d, %i.ai
-  tail call void @_ZNSt6vectorIjSaIjEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPjS1_EEmRKj(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr %i.ae, i64 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) @_ZN7CaDiCaLL21invalid_heap_positionE)
-  %.pre.i.i14 = load ptr, ptr %i.b, align 8, !tbaa !177 ; 3 uses
-  %.phi.trans.insert.a = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i14, i64 %i.a
+  %2 = shl i32 %i.t, 1
+  %3 = or disjoint i32 %2, 1
+  %4 = zext i32 %3 to i64
+  %.phi.trans.insert.a = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %4
   %.pre45.a = load i32, ptr %.phi.trans.insert.a, align 4, !tbaa !169
-  %.pre46 = load ptr, ptr %0, align 8, !tbaa !177
+  br label %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit
+
+_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit:     ; preds = %bb.d
+  %5 = sub nuw nsw i64 %i.d, %i.ai
+  tail call void @_ZNSt6vectorIjSaIjEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPjS1_EEmRKj(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr %i.ae, i64 noundef %5, ptr noundef nonnull align 4 dereferenceable(4) @_ZN7CaDiCaLL21invalid_heap_positionE)
+  %.pre.i.i14 = load ptr, ptr %i.b, align 8, !tbaa !177 ; 3 uses
+  %.phi.trans.insert = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i14, i64 %i.a
+  %.pre45 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !169 ; 2 uses
+  %.pre46 = load ptr, ptr %0, align 8, !tbaa !177 ; 2 uses
   %.pre47 = load ptr, ptr %i.c, align 8, !tbaa !176 ; 2 uses
   %.pre59 = ptrtoint ptr %.pre47 to i64
   %.pre60 = ptrtoint ptr %.pre.i.i14 to i64
   %.pre62 = sub i64 %.pre59, %.pre60
-  %.pre64 = ashr exact i64 %.pre62, 2
-  br label %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit
-
-_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit:     ; preds = %bb.d, %bb.e
-  %.pre-phi65 = phi i64 [ %i.ai, %bb.d ], [ %.pre64, %bb.e ] ; 2 uses
-  %3 = phi ptr [ %i.r, %bb.d ], [ %.pre.i.i14, %bb.e ]
-  %4 = phi ptr [ %i.ae, %bb.d ], [ %.pre47, %bb.e ]
-  %5 = phi ptr [ %i.y, %bb.d ], [ %.pre46, %bb.e ] ; 2 uses
-  %6 = phi i32 [ %i.t, %bb.d ], [ %.pre45.a, %bb.e ] ; 2 uses
-  %i.aj = shl i32 %6, 1
+  %.pre64 = ashr exact i64 %.pre62, 2             ; 2 uses
+  %i.aj = shl i32 %.pre45, 1
   %i.ak = or disjoint i32 %i.aj, 1
   %i.al = zext i32 %i.ak to i64
-  %i.am = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.al
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !169 ; 4 uses
-  %.not.i.i15 = icmp ugt i64 %.pre-phi65, %i.a
+  %i.am = getelementptr inbounds nuw [4 x i8], ptr %.pre46, i64 %i.al
+  %i.an = load i32, ptr %i.am, align 4, !tbaa !169 ; 2 uses
+  %.not.i.i15 = icmp ugt i64 %.pre64, %i.a
   br i1 %.not.i.i15, label %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit
-  %i.ao = sub nuw nsw i64 %i.d, %.pre-phi65
-  tail call void @_ZNSt6vectorIjSaIjEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPjS1_EEmRKj(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr %4, i64 noundef %i.ao, ptr noundef nonnull align 4 dereferenceable(4) @_ZN7CaDiCaLL21invalid_heap_positionE)
+  %i.ao = sub nuw nsw i64 %i.d, %.pre64
+  tail call void @_ZNSt6vectorIjSaIjEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPjS1_EEmRKj(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr %.pre47, i64 noundef %i.ao, ptr noundef nonnull align 4 dereferenceable(4) @_ZN7CaDiCaLL21invalid_heap_positionE)
   %.pre.i.i16 = load ptr, ptr %i.b, align 8, !tbaa !177 ; 2 uses
   %.phi.trans.insert48 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i16, i64 %i.a
   %.pre49 = load i32, ptr %.phi.trans.insert48, align 4, !tbaa !169
   %.pre50 = load ptr, ptr %0, align 8, !tbaa !177
   br label %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit
 
-_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit: ; preds = %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit, %bb.f
-  %7 = phi ptr [ %.pre.i.i16, %bb.f ], [ %3, %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit ] ; 3 uses
-  %8 = phi ptr [ %.pre50, %bb.f ], [ %5, %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit ] ; 2 uses
-  %9 = phi i32 [ %.pre49, %bb.f ], [ %6, %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit ] ; 2 uses
+_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit: ; preds = %bb.e, %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit, %bb.f
+  %6 = phi i32 [ %i.an, %bb.f ], [ %i.an, %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit ], [ %.pre45.a, %bb.e ] ; 4 uses
+  %7 = phi ptr [ %.pre.i.i16, %bb.f ], [ %.pre.i.i14, %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit ], [ %i.r, %bb.e ] ; 3 uses
+  %8 = phi ptr [ %.pre50, %bb.f ], [ %.pre46, %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit ], [ %i.y, %bb.e ] ; 2 uses
+  %9 = phi i32 [ %.pre49, %bb.f ], [ %.pre45, %_ZN7CaDiCaL4heapINS_9elim_moreEE4leftEj.exit ], [ %i.t, %bb.e ] ; 2 uses
   %i.ap = zext i32 %9 to i64
   %i.aq = shl nuw nsw i64 %i.ap, 1
   %i.ar = add nuw nsw i64 %i.aq, 2
@@ -314,7 +315,7 @@ _ZN7CaDiCaL4heapINS_9elim_moreEE5rightEj.exit:    ; preds = %bb.g, %bb.h
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %i.bj
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !169 ; 3 uses
   %i.bm = load ptr, ptr %i.f, align 8, !tbaa !238 ; 6 uses
-  %i.bn = shl i32 %i.an, 1                        ; 2 uses
+  %i.bn = shl i32 %6, 1                           ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 7248
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !197
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 880
@@ -410,17 +411,17 @@ _ZN7CaDiCaL9elim_moreclEjj.exit:                  ; preds = %bb.m, %bb.o, %bb.p
   %.015.i17.i = phi double [ %i.dk, %bb.p ], [ %i.cz, %bb.o ], [ %i.cy, %bb.m ] ; 2 uses
   %i.dl = fcmp ogt double %.015.i.i, %.015.i17.i
   %i.dm = fcmp uge double %.015.i.i, %.015.i17.i
-  %i.dn = icmp ugt i32 %i.an, %i.bl
+  %i.dn = icmp ugt i32 %6, %i.bl
   %spec.select.i = and i1 %i.dn, %i.dm
   %.0.i = or i1 %i.dl, %spec.select.i
-  %spec.select = select i1 %.0.i, i32 %i.bl, i32 %i.an
+  %spec.select = select i1 %.0.i, i32 %i.bl, i32 %6
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit._crit_edge, %_ZN7CaDiCaL9elim_moreclEjj.exit
   %i.do = phi ptr [ %i.be, %_ZN7CaDiCaL9elim_moreclEjj.exit ], [ %7, %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit._crit_edge ] ; 2 uses
   %i.dp = phi ptr [ %i.bs, %_ZN7CaDiCaL9elim_moreclEjj.exit ], [ %.pre58, %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit._crit_edge ] ; 4 uses
   %i.dq = phi ptr [ %i.bm, %_ZN7CaDiCaL9elim_moreclEjj.exit ], [ %.pre54, %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit._crit_edge ] ; 4 uses
-  %.1 = phi i32 [ %spec.select, %_ZN7CaDiCaL9elim_moreclEjj.exit ], [ %i.an, %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit._crit_edge ] ; 3 uses
+  %.1 = phi i32 [ %spec.select, %_ZN7CaDiCaL9elim_moreclEjj.exit ], [ %6, %_ZN7CaDiCaL4heapINS_9elim_moreEE9has_rightEj.exit._crit_edge ] ; 3 uses
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %i.h
   %i.ds = load i64, ptr %i.dr, align 8, !tbaa !179 ; 2 uses
   %i.dt = sitofp i64 %i.ds to double              ; 3 uses

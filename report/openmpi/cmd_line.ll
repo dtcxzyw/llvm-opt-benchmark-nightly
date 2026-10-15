@@ -204,7 +204,7 @@ bb.a:
   br i1 %or.cond, label %bb.bv, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 7 uses
   %i.g = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.f) #20 ; 0 uses
   tail call fastcc void @free_parse_results(ptr noundef %0)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 10 uses
@@ -256,7 +256,11 @@ find_option.exit:                                 ; preds = %find_option.exit.lo
   %.015.i = phi i1 [ true, %bb.b ], [ %i.x, %find_option.exit.loopexit ] ; 3 uses
   %i.y = load i32, ptr %i.h, align 8, !tbaa !46   ; 2 uses
   %i.z = icmp sgt i32 %i.y, 1
-  br i1 %i.z, label %sub_0.lr.ph, label %.sink.split
+  br i1 %i.z, label %sub_0.lr.ph, label %.loopexit.thread
+
+.loopexit.thread:                                 ; preds = %find_option.exit
+  %5 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.f) #20 ; 0 uses
+  br label %bb.bv
 
 sub_0.lr.ph:                                      ; preds = %find_option.exit
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 2
@@ -269,7 +273,7 @@ sub_0.lr.ph:                                      ; preds = %find_option.exit
   br label %sub_0
 
 sub_0:                                            ; preds = %sub_0.lr.ph, %.loopexit285
-  %i.ah = phi i32 [ %i.y, %sub_0.lr.ph ], [ %5, %.loopexit285 ]
+  %i.ah = phi i32 [ %i.y, %sub_0.lr.ph ], [ %11, %.loopexit285 ]
   %.0329 = phi i1 [ false, %sub_0.lr.ph ], [ %.5, %.loopexit285 ] ; 9 uses
   %.0139327 = phi i1 [ false, %sub_0.lr.ph ], [ %.2141, %.loopexit285 ] ; 4 uses
   %.0153325 = phi i32 [ 1, %sub_0.lr.ph ], [ %.6, %.loopexit285 ] ; 9 uses
@@ -617,7 +621,7 @@ bb.ao:                                            ; preds = %.thread
 
 bb.ap:                                            ; preds = %bb.ao, %.thread
   %.not9.i = icmp eq ptr %i.fb, null
-  br i1 %.not9.i, label %.sink.split, label %bb.aq
+  br i1 %.not9.i, label %opal_obj_new.exit, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   store ptr @ompi_cmd_line_param_t_class, ptr %i.fb, align 8, !tbaa !38
@@ -636,6 +640,10 @@ bb.aq:                                            ; preds = %bb.ap
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !41 ; 2 uses
   %.not.i.i213 = icmp eq ptr %i.fj, null
   br i1 %.not.i.i213, label %.loopexit286, label %.lr.ph.i.i212, !llvm.loop !1
+
+opal_obj_new.exit:                                ; preds = %bb.ap
+  %6 = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.f) #20 ; 0 uses
+  br label %bb.bv
 
 .loopexit286:                                     ; preds = %.lr.ph.i.i212, %bb.aq
   %i.fk = add nsw i32 %.0153325, 1                ; 6 uses
@@ -711,7 +719,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.gq = load ptr, ptr %i.gp, align 8, !tbaa !73
   %i.gr = call fastcc i32 @set_dest(ptr noundef %.2151243262, ptr noundef %i.gq) ; 2 uses
   %.not180.peel = icmp eq i32 %i.gr, 0
-  br i1 %.not180.peel, label %bb.ax, label %.sink.split
+  br i1 %.not180.peel, label %bb.ax, label %.loopexit373
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.as, %.tail281.peel
   %.2.peel = phi i1 [ true, %.tail281.peel ], [ %.0329, %bb.aw ], [ %.0329, %bb.av ], [ true, %bb.as ] ; 2 uses
@@ -910,6 +918,10 @@ bb.bp:                                            ; preds = %bb.bg
   %i.jk = call i32 @opal_argv_append(ptr noundef nonnull %i.fw, ptr noundef nonnull %i.fx, ptr noundef nonnull %i.ih) #20 ; 0 uses
   br label %bb.bq
 
+.loopexit373:                                     ; preds = %bb.aw
+  %7 = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.f) #20 ; 0 uses
+  br label %bb.bv
+
 bb.bq:                                            ; preds = %bb.bp, %.tail281, %bb.az
   %.2 = phi i1 [ %.1318, %bb.bp ], [ true, %bb.az ], [ true, %.tail281 ] ; 2 uses
   %i.jl = add nuw nsw i32 %.0152317, 1            ; 2 uses
@@ -936,7 +948,11 @@ bb.bq:                                            ; preds = %bb.bp, %.tail281, %
 bb.br:                                            ; preds = %._crit_edge
   %i.jq = call fastcc i32 @set_dest(ptr noundef %.2151243262, ptr noundef nonnull @.str.8) ; 2 uses
   %.not176 = icmp eq i32 %i.jq, 0
-  br i1 %.not176, label %..loopexit285_crit_edge, label %.sink.split
+  br i1 %.not176, label %..loopexit285_crit_edge, label %8
+
+8:                                                ; preds = %bb.br
+  %9 = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.f) #20 ; 0 uses
+  br label %bb.bv
 
 ..loopexit285_crit_edge:                          ; preds = %._crit_edge, %bb.br
   %i.jr = load volatile ptr, ptr %i.ad, align 8, !tbaa !52
@@ -977,12 +993,17 @@ bb.bt:                                            ; preds = %bb.bs
   br label %bb.bu
 
 bb.bu:                                            ; preds = %.thread263, %opal_thread_add_fetch_32.exit217, %opal_obj_run_destructors.exit222, %opal_thread_add_fetch_32.exit, %opal_obj_run_destructors.exit, %bb.bt, %bb.bs
-  %.4157 = phi i32 [ %.0153325, %.thread263 ], [ %.0153325, %bb.bt ], [ %.0153325, %bb.bs ], [ %.2155316.lcssa, %opal_thread_add_fetch_32.exit ], [ %.2155316.lcssa, %opal_obj_run_destructors.exit ], [ %.2155316.lcssa347.wide, %opal_obj_run_destructors.exit222 ], [ %.2155316.lcssa347.wide, %opal_thread_add_fetch_32.exit217 ] ; 3 uses
-  %.1140 = phi i1 [ %.0139327, %.thread263 ], [ true, %bb.bt ], [ true, %bb.bs ], [ true, %opal_thread_add_fetch_32.exit ], [ true, %opal_obj_run_destructors.exit ], [ true, %opal_obj_run_destructors.exit222 ], [ true, %opal_thread_add_fetch_32.exit217 ] ; 2 uses
-  %.4 = phi i1 [ %.0329, %.thread263 ], [ %.0329, %bb.bt ], [ %.0329, %bb.bs ], [ %.1318.lcssa, %opal_thread_add_fetch_32.exit ], [ %.1318.lcssa, %opal_obj_run_destructors.exit ], [ %.1318.lcssa350, %opal_obj_run_destructors.exit222 ], [ %.1318.lcssa350, %opal_thread_add_fetch_32.exit217 ] ; 2 uses
-  %i.kj = load i32, ptr %i.h, align 8, !tbaa !46  ; 2 uses
+  %.4157 = phi i32 [ %.0153325, %.thread263 ], [ %.0153325, %bb.bt ], [ %.0153325, %bb.bs ], [ %.2155316.lcssa, %opal_thread_add_fetch_32.exit ], [ %.2155316.lcssa, %opal_obj_run_destructors.exit ], [ %.2155316.lcssa347.wide, %opal_obj_run_destructors.exit222 ], [ %.2155316.lcssa347.wide, %opal_thread_add_fetch_32.exit217 ] ; 2 uses
+  %.1140 = phi i1 [ %.0139327, %.thread263 ], [ true, %bb.bt ], [ true, %bb.bs ], [ true, %opal_thread_add_fetch_32.exit ], [ true, %opal_obj_run_destructors.exit ], [ true, %opal_obj_run_destructors.exit222 ], [ true, %opal_thread_add_fetch_32.exit217 ]
+  %.4 = phi i1 [ %.0329, %.thread263 ], [ %.0329, %bb.bt ], [ %.0329, %bb.bs ], [ %.1318.lcssa, %opal_thread_add_fetch_32.exit ], [ %.1318.lcssa, %opal_obj_run_destructors.exit ], [ %.1318.lcssa350, %opal_obj_run_destructors.exit222 ], [ %.1318.lcssa350, %opal_thread_add_fetch_32.exit217 ]
+  %cond.fr450 = freeze i1 %.1140                  ; 2 uses
+  %i.kj = load i32, ptr %i.h, align 8, !tbaa !46
   %i.kk = icmp slt i32 %.4157, %i.kj
-  br i1 %i.kk, label %.lr.ph323.preheader, label %.loopexit285
+  br i1 %i.kk, label %.lr.ph323.preheader, label %.loopexit285.thread
+
+.loopexit285.thread:                              ; preds = %bb.bu
+  %10 = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.f) #20 ; 0 uses
+  br i1 %cond.fr450, label %.sink.split, label %bb.bv
 
 .lr.ph323.preheader:                              ; preds = %bb.bu
   %i.kl = sext i32 %.4157 to i64
@@ -1004,28 +1025,25 @@ bb.bu:                                            ; preds = %.thread263, %opal_t
   %i.kt = trunc nsw i64 %indvars.iv.next376 to i32
   br label %.loopexit285
 
-.loopexit285:                                     ; preds = %..loopexit285_crit_edge, %.loopexit285.loopexit, %bb.bu
-  %5 = phi i32 [ %.pre385, %..loopexit285_crit_edge ], [ %i.kj, %bb.bu ], [ %i.kq, %.loopexit285.loopexit ] ; 2 uses
-  %.6 = phi i32 [ %.2155.lcssa, %..loopexit285_crit_edge ], [ %.4157, %bb.bu ], [ %i.kt, %.loopexit285.loopexit ] ; 2 uses
-  %.2141 = phi i1 [ %.0139327, %..loopexit285_crit_edge ], [ %.1140, %bb.bu ], [ %.1140, %.loopexit285.loopexit ] ; 2 uses
-  %.5 = phi i1 [ %.1.lcssa, %..loopexit285_crit_edge ], [ %.4, %bb.bu ], [ %.4, %.loopexit285.loopexit ]
-  %i.ku = icmp slt i32 %.6, %5
+.loopexit285:                                     ; preds = %..loopexit285_crit_edge, %.loopexit285.loopexit
+  %11 = phi i32 [ %.pre385, %..loopexit285_crit_edge ], [ %i.kq, %.loopexit285.loopexit ] ; 2 uses
+  %.6 = phi i32 [ %.2155.lcssa, %..loopexit285_crit_edge ], [ %i.kt, %.loopexit285.loopexit ] ; 2 uses
+  %.2141 = phi i1 [ %.0139327, %..loopexit285_crit_edge ], [ %cond.fr450, %.loopexit285.loopexit ] ; 2 uses
+  %.5 = phi i1 [ %.1.lcssa, %..loopexit285_crit_edge ], [ %.4, %.loopexit285.loopexit ]
+  %i.ku = icmp slt i32 %.6, %11
   br i1 %i.ku, label %sub_0, label %.loopexit, !llvm.loop !90
 
 .loopexit:                                        ; preds = %.loopexit285, %bb.g, %.preheader
   %.0139310 = phi i1 [ %.0139327, %.preheader ], [ %.0139327, %bb.g ], [ %.2141, %.loopexit285 ]
   %i.kv = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.f) #20 ; 0 uses
   %cond.fr = freeze i1 %.0139310
-  %spec.select = select i1 %cond.fr, i32 -43, i32 0
+  br i1 %cond.fr, label %.sink.split, label %bb.bv
+
+.sink.split:                                      ; preds = %.loopexit285.thread, %.loopexit
   br label %bb.bv
 
-.sink.split:                                      ; preds = %bb.br, %bb.aw, %bb.ap, %find_option.exit
-  %.0159.ph = phi i32 [ 0, %find_option.exit ], [ %i.gr, %bb.aw ], [ -2, %bb.ap ], [ %i.jq, %bb.br ]
-  %6 = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.f) #20 ; 0 uses
-  br label %bb.bv
-
-bb.bv:                                            ; preds = %.loopexit, %.sink.split, %bb.a
-  %.0159 = phi i32 [ %.0159.ph, %.sink.split ], [ %spec.select, %.loopexit ], [ 0, %bb.a ]
+bb.bv:                                            ; preds = %.sink.split, %.loopexit, %.loopexit.thread, %.loopexit285.thread, %bb.a, %8, %.loopexit373, %opal_obj_new.exit
+  %.0159 = phi i32 [ %i.jq, %8 ], [ %i.gr, %.loopexit373 ], [ 0, %bb.a ], [ -2, %opal_obj_new.exit ], [ -43, %.sink.split ], [ 0, %.loopexit ], [ 0, %.loopexit.thread ], [ 0, %.loopexit285.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
   ret i32 %.0159

@@ -204,34 +204,35 @@ bb.i:                                             ; preds = %bb.h
 .critedge2:                                       ; preds = %bb.h, %bb.i
   %.1131 = phi ptr [ %i.ag, %bb.h ], [ %i.ah, %bb.i ] ; 6 uses
   %i.ai = icmp ult ptr %.1131, %i.ad
-  br i1 %i.ai, label %bb.j, label %bb.l
+  br i1 %i.ai, label %bb.j, label %bb.n
 
 bb.j:                                             ; preds = %.critedge2
-  %i.aj = load i8, ptr %.1131, align 1, !tbaa !35
+  %i.aj = load i8, ptr %.1131, align 1, !tbaa !35 ; 2 uses
   %i.ak = icmp eq i8 %i.aj, 13
   br i1 %i.ak, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.al = getelementptr inbounds nuw i8, ptr %.1131, i64 1 ; 2 uses
   %i.am = load i8, ptr %i.al, align 1, !tbaa !35
-  %i.an = icmp eq i8 %i.am, 10
+  %i.an = icmp eq i8 %i.am, 10                    ; 2 uses
   %spec.select165 = select i1 %i.an, ptr %i.al, ptr %.1131
+  %8 = select i1 %i.an, i8 10, i8 13
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.j, %.critedge2
-  %.2132 = phi ptr [ %.1131, %.critedge2 ], [ %spec.select165, %bb.k ], [ %.1131, %bb.j ] ; 4 uses
+bb.l:                                             ; preds = %bb.k, %bb.j
+  %9 = phi i8 [ %i.aj, %bb.j ], [ %8, %bb.k ]
+  %.2132 = phi ptr [ %.1131, %bb.j ], [ %spec.select165, %bb.k ] ; 3 uses
   %i.ao = icmp ult ptr %.2132, %i.ad
   br i1 %i.ao, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %8 = load i8, ptr %.2132, align 1, !tbaa !35
-  %i.ap = icmp eq i8 %8, 10
+  %i.ap = icmp eq i8 %9, 10
   %spec.select166.idx = zext i1 %i.ap to i64
   %spec.select166 = getelementptr inbounds nuw i8, ptr %.2132, i64 %spec.select166.idx
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.l
-  %.3 = phi ptr [ %.2132, %bb.l ], [ %spec.select166, %bb.m ] ; 2 uses
+bb.n:                                             ; preds = %.critedge2, %bb.m, %bb.l
+  %.3 = phi ptr [ %.2132, %bb.l ], [ %spec.select166, %bb.m ], [ %.1131, %.critedge2 ] ; 2 uses
   %i.aq = add i64 %.0127183, -1                   ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.3, i64 1 ; 2 uses
   %.not159 = icmp ne i64 %i.aq, 0                 ; 2 uses

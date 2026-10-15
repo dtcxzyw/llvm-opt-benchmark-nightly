@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %.outer.backedge, !llvm.loop !10
 
 .lr.ph198:                                        ; preds = %bb.h, %.outer.backedge
-  %.1.ph216 = phi i32 [ %.1.ph.be, %.outer.backedge ], [ 0, %bb.h ] ; 10 uses
+  %.1.ph216 = phi i32 [ %.1.ph.be, %.outer.backedge ], [ 0, %bb.h ] ; 9 uses
   %.2150.ph215 = phi i32 [ %.2150.ph.be, %.outer.backedge ], [ %.1149, %bb.h ] ; 14 uses
   %i.ai = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.2150.ph215) ; 3 uses
   %i.aj = icmp eq i8 %i.ai, -1
@@ -213,8 +213,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 bb.i:                                             ; preds = %.lr.ph198
   %i.ak = add nsw i32 %.2150.ph215, 1             ; 3 uses
-  %.not160.not = icmp slt i32 %i.ak, %i.t
-  br i1 %.not160.not, label %bb.j, label %.outer._crit_edge
+  %.not160.not = icmp slt i32 %i.ak, %i.t         ; 2 uses
+  br i1 %.not160.not, label %bb.j, label %.outer._crit_edge.loopexit
 
 bb.j:                                             ; preds = %bb.i
   %i.al = load i32, ptr @udvm_print_detail_level, align 4
@@ -272,10 +272,9 @@ bb.t:                                             ; preds = %bb.s
   %i.bf = tail call ptr (ptr, i32, ptr, i32, i32, ptr, ...) @proto_tree_add_none_format(ptr noundef %i.y, i32 noundef %i.be, ptr noundef %0, i32 noundef %.2150.ph215, i32 noundef 2, ptr noundef nonnull @.str.545) ; 0 uses
   br label %.backedge.thread
 
-.backedge.thread:                                 ; preds = %bb.s, %bb.t
-  %i.bg = add nsw i32 %.2150.ph215, 2             ; 2 uses
-  %4 = icmp slt i32 %i.bg, %i.t
-  br label %.outer._crit_edge
+.backedge.thread:                                 ; preds = %bb.t, %bb.s
+  %i.bg = add nsw i32 %.2150.ph215, 2
+  br label %.outer._crit_edge.loopexit
 
 bb.u:                                             ; preds = %bb.r
   %i.bh = zext nneg i8 %i.ap to i32               ; 3 uses
@@ -367,11 +366,16 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.cr = icmp slt i32 %.2150.ph.be, %i.t
   br i1 %i.cr, label %.lr.ph198, label %.outer._crit_edge, !llvm.loop !10
 
-.outer._crit_edge:                                ; preds = %.outer.backedge, %bb.i, %.backedge.thread, %bb.h
-  %.1.ph.lcssa190 = phi i32 [ %.1.ph216, %.backedge.thread ], [ 0, %bb.h ], [ %.1.ph.be, %.outer.backedge ], [ %.1.ph216, %bb.i ] ; 2 uses
-  %.2150.lcssa = phi i32 [ %i.bg, %.backedge.thread ], [ %.1149, %bb.h ], [ %.2150.ph.be, %.outer.backedge ], [ %i.ak, %bb.i ] ; 2 uses
-  %.0.lcssa = phi i1 [ true, %.backedge.thread ], [ false, %bb.h ], [ false, %bb.i ], [ false, %.outer.backedge ]
-  %.lcssa = phi i1 [ %4, %.backedge.thread ], [ false, %bb.h ], [ false, %bb.i ], [ false, %.outer.backedge ]
+.outer._crit_edge.loopexit:                       ; preds = %bb.i, %.backedge.thread
+  %.2150.be = phi i32 [ %i.bg, %.backedge.thread ], [ %i.ak, %bb.i ] ; 2 uses
+  %4 = icmp slt i32 %.2150.be, %i.t
+  br label %.outer._crit_edge
+
+.outer._crit_edge:                                ; preds = %.outer.backedge, %.outer._crit_edge.loopexit, %bb.h
+  %.1.ph.lcssa190 = phi i32 [ %.1.ph216, %.outer._crit_edge.loopexit ], [ 0, %bb.h ], [ %.1.ph.be, %.outer.backedge ] ; 2 uses
+  %.2150.lcssa = phi i32 [ %.2150.be, %.outer._crit_edge.loopexit ], [ %.1149, %bb.h ], [ %.2150.ph.be, %.outer.backedge ] ; 2 uses
+  %.0.lcssa = phi i1 [ %.not160.not, %.outer._crit_edge.loopexit ], [ false, %bb.h ], [ false, %.outer.backedge ]
+  %.lcssa = phi i1 [ %4, %.outer._crit_edge.loopexit ], [ false, %bb.h ], [ false, %.outer.backedge ]
   %i.cs = tail call ptr @tvb_new_child_real_data(ptr noundef %0, ptr noundef %i.ac, i32 noundef %.1.ph.lcssa190, i32 noundef %.1.ph.lcssa190) ; 4 uses
   %i.ct = tail call ptr @add_new_data_source(ptr noundef %1, ptr noundef %i.cs, ptr noundef nonnull @.str.549) ; 0 uses
   %i.cu = load i32, ptr @hf_sigcomp_data_for_sigcomp_dissector, align 4

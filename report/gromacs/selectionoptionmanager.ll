@@ -135,30 +135,32 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !12   ; 2 uses
   %i.e = icmp eq ptr %i.b, %i.d
-  br i1 %i.e, label %bb.b, label %bb.c
+  br i1 %i.e, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZN3gmx22SelectionOptionManager4Impl27requestUnsetRequiredOptionsEv(ptr noundef nonnull align 8 dereferenceable(56) %0)
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !12
-  %.pre222.a = load ptr, ptr %i.c, align 8, !tbaa !12
-  br label %bb.c
+  %.pre222.a = load ptr, ptr %1, align 8, !tbaa !72
+  br label %.lr.ph
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %15 = phi ptr [ %.pre222.a, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
-  %16 = phi ptr [ %.pre, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
+bb.c:                                             ; preds = %bb.a
+  tail call void @_ZN3gmx22SelectionOptionManager4Impl27requestUnsetRequiredOptionsEv(ptr noundef nonnull align 8 dereferenceable(56) %0)
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !12  ; 2 uses
+  %.pre222 = load ptr, ptr %i.c, align 8, !tbaa !12 ; 3 uses
   %i.f = load ptr, ptr %1, align 8, !tbaa !72     ; 2 uses
-  %.not201 = icmp eq ptr %16, %15
+  %.not201 = icmp eq ptr %.pre, %.pre222
   br i1 %.not201, label %._crit_edge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.c
+.lr.ph:                                           ; preds = %bb.b, %bb.c
+  %15 = phi ptr [ %.pre222.a, %bb.b ], [ %i.f, %bb.c ]
+  %16 = phi ptr [ %i.b, %bb.b ], [ %.pre, %bb.c ]
+  %17 = phi ptr [ %i.d, %bb.b ], [ %.pre222, %bb.c ]
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %10, i64 8
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit
-  %i.j = phi ptr [ %15, %.lr.ph ], [ %i.cp, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit ]
-  %.sroa.0124.0203 = phi ptr [ %i.f, %.lr.ph ], [ %.sroa.0124.1, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit ] ; 5 uses
+  %i.j = phi ptr [ %17, %.lr.ph ], [ %i.cp, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit ]
+  %.sroa.0124.0203 = phi ptr [ %15, %.lr.ph ], [ %.sroa.0124.1, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit ] ; 5 uses
   %.sroa.0121.0202 = phi ptr [ %16, %.lr.ph ], [ %i.co, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit ] ; 5 uses
   %i.k = load ptr, ptr %.sroa.0121.0202, align 8, !tbaa !16 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 92
@@ -522,7 +524,7 @@ bb.ag:                                            ; preds = %bb.ad
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit, %bb.c
   %.sroa.0124.0.lcssa = phi ptr [ %i.f, %bb.c ], [ %.sroa.0124.1, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit ] ; 2 uses
-  %.lcssa180 = phi ptr [ %15, %bb.c ], [ %i.co, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit ]
+  %.lcssa180 = phi ptr [ %.pre222, %bb.c ], [ %i.co, %_ZNSt6vectorIN3gmx9SelectionESaIS1_EED2Ev.exit ]
   %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !72 ; 2 uses
   %.not176 = icmp eq ptr %.sroa.0124.0.lcssa, %i.cx

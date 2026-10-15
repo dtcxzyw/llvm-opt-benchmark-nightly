@@ -205,26 +205,21 @@ _ZNSt6vectorIjSaIjEE5clearEv.exit53:              ; preds = %_ZNSt6vectorIjSaIjE
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !74   ; 3 uses
   %i.k = load ptr, ptr %0, align 8, !tbaa !42     ; 3 uses
   %.not110 = icmp eq ptr %i.j, %i.k
-  br i1 %.not110, label %_ZNSt6vectorIjSaIjEE6resizeEm.exit, label %1
+  %1 = ptrtoint ptr %i.j to i64
+  %2 = ptrtoint ptr %i.k to i64
+  %3 = sub i64 %1, %2
+  %4 = sdiv exact i64 %3, 36                      ; 2 uses
+  br i1 %.not110, label %._crit_edge.thread, label %_ZNSt6vectorIjSaIjEE6resizeEm.exit
 
-1:                                                ; preds = %_ZNSt6vectorIjSaIjEE5clearEv.exit53
-  %2 = ptrtoint ptr %i.j to i64
-  %3 = ptrtoint ptr %i.k to i64
-  %4 = sub i64 %2, %3
-  %5 = sdiv exact i64 %4, 36
-  tail call void @_ZNSt6vectorIjSaIjEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %5)
-  %.pre = load ptr, ptr %i.i, align 8, !tbaa !74
-  %.pre87 = load ptr, ptr %0, align 8, !tbaa !42
-  br label %_ZNSt6vectorIjSaIjEE6resizeEm.exit
-
-_ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %_ZNSt6vectorIjSaIjEE5clearEv.exit53, %1
-  %6 = phi ptr [ %.pre87, %1 ], [ %i.k, %_ZNSt6vectorIjSaIjEE5clearEv.exit53 ] ; 5 uses
-  %7 = phi ptr [ %.pre, %1 ], [ %i.j, %_ZNSt6vectorIjSaIjEE5clearEv.exit53 ] ; 5 uses
-  %i.l = ptrtoint ptr %7 to i64
-  %i.m = ptrtoint ptr %6 to i64
+_ZNSt6vectorIjSaIjEE6resizeEm.exit:               ; preds = %_ZNSt6vectorIjSaIjEE5clearEv.exit53
+  tail call void @_ZNSt6vectorIjSaIjEE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 noundef %4)
+  %.pre = load ptr, ptr %i.i, align 8, !tbaa !74  ; 4 uses
+  %.pre87 = load ptr, ptr %0, align 8, !tbaa !42  ; 4 uses
+  %i.l = ptrtoint ptr %.pre to i64
+  %i.m = ptrtoint ptr %.pre87 to i64
   %i.n = sub i64 %i.l, %i.m                       ; 2 uses
-  %i.o = sdiv exact i64 %i.n, 36                  ; 9 uses
-  %.not75 = icmp eq ptr %7, %6
+  %i.o = sdiv exact i64 %i.n, 36                  ; 7 uses
+  %.not75 = icmp eq ptr %.pre, %.pre87
   br i1 %.not75, label %._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIjSaIjEE6resizeEm.exit
@@ -309,7 +304,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.lr.ph63.unr-lcssa, label %bb.c, !llvm.loop !143
 
-._crit_edge.thread:                               ; preds = %_ZNSt6vectorIjSaIjEE6resizeEm.exit
+._crit_edge.thread:                               ; preds = %_ZNSt6vectorIjSaIjEE5clearEv.exit53, %_ZNSt6vectorIjSaIjEE6resizeEm.exit
+  %.ph116 = phi ptr [ %i.k, %_ZNSt6vectorIjSaIjEE5clearEv.exit53 ], [ %.pre87, %_ZNSt6vectorIjSaIjEE6resizeEm.exit ]
+  %.ph117 = phi ptr [ %i.j, %_ZNSt6vectorIjSaIjEE5clearEv.exit53 ], [ %.pre, %_ZNSt6vectorIjSaIjEE6resizeEm.exit ]
+  %.ph118 = phi i64 [ %4, %_ZNSt6vectorIjSaIjEE5clearEv.exit53 ], [ 0, %_ZNSt6vectorIjSaIjEE6resizeEm.exit ]
   %i.ar = load ptr, ptr %i.c, align 8, !tbaa !38  ; 2 uses
   %i.as = load ptr, ptr %i.a, align 8, !tbaa !39  ; 2 uses
   %i.at = ptrtoint ptr %i.ar to i64
@@ -370,6 +368,9 @@ bb.j:                                             ; preds = %._crit_edge.thread,
   %i.bl = phi ptr [ %i.as, %._crit_edge.thread ], [ %i.bd, %._crit_edge ]
   %i.bm = phi ptr [ %i.ar, %._crit_edge.thread ], [ %i.bc, %._crit_edge ]
   %.047.lcssa112 = phi i64 [ 0, %._crit_edge.thread ], [ %i.bb, %._crit_edge ] ; 2 uses
+  %5 = phi i64 [ %.ph118, %._crit_edge.thread ], [ %i.o, %._crit_edge ] ; 3 uses
+  %6 = phi ptr [ %.ph117, %._crit_edge.thread ], [ %.pre, %._crit_edge ] ; 3 uses
+  %7 = phi ptr [ %.ph116, %._crit_edge.thread ], [ %.pre87, %._crit_edge ] ; 3 uses
   %i.bn = icmp ugt i64 %i.bk, %.047.lcssa112
   br i1 %i.bn, label %bb.k, label %_ZNSt6vectorIjSaIjEE6resizeEm.exit58
 
@@ -383,9 +384,9 @@ _ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i57:      ; preds = %bb.k
   br label %_ZNSt6vectorIjSaIjEE6resizeEm.exit58
 
 _ZNSt6vectorIjSaIjEE6resizeEm.exit58:             ; preds = %bb.i, %bb.j, %bb.k, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i57
-  %.pre-phi97 = phi i64 [ %.pre96, %bb.i ], [ %i.o, %bb.j ], [ %i.o, %bb.k ], [ %i.o, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i57 ] ; 5 uses
-  %i.bp = phi ptr [ %.pre89, %bb.i ], [ %6, %bb.j ], [ %6, %bb.k ], [ %6, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i57 ]
-  %i.bq = phi ptr [ %.pre88, %bb.i ], [ %7, %bb.j ], [ %7, %bb.k ], [ %7, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i57 ]
+  %.pre-phi97 = phi i64 [ %.pre96, %bb.i ], [ %5, %bb.j ], [ %5, %bb.k ], [ %5, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i57 ] ; 5 uses
+  %i.bp = phi ptr [ %.pre89, %bb.i ], [ %7, %bb.j ], [ %7, %bb.k ], [ %7, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i57 ]
+  %i.bq = phi ptr [ %.pre88, %bb.i ], [ %6, %bb.j ], [ %6, %bb.k ], [ %6, %_ZSt8_DestroyIPjjEvT_S1_RSaIT0_E.exit.i.i57 ]
   %.not77 = icmp eq ptr %i.bq, %i.bp
   br i1 %.not77, label %._crit_edge67, label %.lr.ph66
 

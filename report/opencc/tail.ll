@@ -204,8 +204,8 @@ bb.a:
   %i.h = phi i64 [ %i.ea, %bb.aw ], [ %i.a, %bb.a ] ; 2 uses
   %.0146206 = phi i64 [ %.6, %bb.aw ], [ 0, %bb.a ] ; 7 uses
   %.0152205 = phi i64 [ %.1153, %bb.aw ], [ %2, %bb.a ] ; 24 uses
-  %.0154204 = phi ptr [ %.1155, %bb.aw ], [ %1, %bb.a ] ; 11 uses
-  %.0156203 = phi ptr [ %.1157, %bb.aw ], [ %0, %bb.a ] ; 12 uses
+  %.0154204 = phi ptr [ %.1155, %bb.aw ], [ %1, %bb.a ] ; 14 uses
+  %.0156203 = phi ptr [ %.1157, %bb.aw ], [ %0, %bb.a ] ; 15 uses
   %i.i = lshr i64 %i.f, 1
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %.0156203, i64 %i.i ; 2 uses
   %i.k = getelementptr inbounds i8, ptr %.0154204, i64 -16
@@ -279,19 +279,19 @@ bb.h:                                             ; preds = %bb.g
 _ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit: ; preds = %bb.e, %bb.f, %bb.g, %bb.h
   %.0.i = phi i32 [ %i.u, %bb.g ], [ %..i, %bb.f ], [ %i.ae, %bb.e ], [ %.27.i, %bb.h ] ; 6 uses
   %i.as = sub nsw i64 0, %.0152205                ; 2 uses
-  br label %bb.i
+  %9 = icmp ult ptr %.0156203, %.0154204
+  br i1 %9, label %bb.i, label %.preheader177
 
-bb.i:                                             ; preds = %bb.r, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit
-  %.0141 = phi ptr [ %.0156203, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ], [ %i.bx, %bb.r ] ; 3 uses
-  %.0137 = phi ptr [ %.0154204, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ], [ %.2139, %bb.r ] ; 5 uses
-  %.0131 = phi ptr [ %.0156203, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ], [ %.1132.lcssa, %bb.r ] ; 2 uses
-  %.0129 = phi ptr [ %.0154204, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ], [ %.1130.lcssa, %bb.r ] ; 2 uses
-  %9 = icmp ult ptr %.0141, %.0137
-  br i1 %9, label %.lr.ph, label %.thread
+bb.i:                                             ; preds = %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit, %bb.r
+  %.0141 = phi ptr [ %.1130189, %bb.r ], [ %.0154204, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ] ; 3 uses
+  %.0137 = phi ptr [ %.1132184, %bb.r ], [ %.0156203, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ]
+  %.0131 = phi ptr [ %i.bi, %bb.r ], [ %.0154204, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ] ; 5 uses
+  %.0129 = phi ptr [ %i.bx, %bb.r ], [ %.0156203, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ]
+  br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.i, %bb.m
-  %.1132184 = phi ptr [ %.2133, %bb.m ], [ %.0131, %bb.i ] ; 5 uses
-  %.1142183 = phi ptr [ %i.bf, %bb.m ], [ %.0141, %bb.i ] ; 6 uses
+  %.1132184 = phi ptr [ %.2133, %bb.m ], [ %.0137, %bb.i ] ; 9 uses
+  %.1142183 = phi ptr [ %i.bf, %bb.m ], [ %.0129, %bb.i ] ; 14 uses
   %i.at = getelementptr inbounds nuw i8, ptr %.1142183, i64 8
   %i.au = load i32, ptr %i.at, align 8, !tbaa !24
   %i.av = zext i32 %i.au to i64
@@ -326,19 +326,17 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.2133 = phi ptr [ %i.be, %bb.l ], [ %.1132184, %bb.k ] ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.1142183, i64 16 ; 3 uses
-  %i.bg = icmp ult ptr %i.bf, %.0137
-  br i1 %i.bg, label %.lr.ph, label %.thread
+  %i.bg = icmp ult ptr %i.bf, %.0131
+  br i1 %i.bg, label %.lr.ph, label %.preheader177
 
-.thread:                                          ; preds = %bb.m, %_ZN6marisa8grimoire9algorithm7details9get_labelINS0_4trie5EntryEEEiRKT_m.exit, %bb.i
-  %.1142.lcssa = phi ptr [ %.0141, %bb.i ], [ %.1142183, %_ZN6marisa8grimoire9algorithm7details9get_labelINS0_4trie5EntryEEEiRKT_m.exit ], [ %i.bf, %bb.m ] ; 8 uses
-  %.1132.lcssa = phi ptr [ %.0131, %bb.i ], [ %.1132184, %_ZN6marisa8grimoire9algorithm7details9get_labelINS0_4trie5EntryEEEiRKT_m.exit ], [ %.2133, %bb.m ] ; 3 uses
-  %i.bh = icmp ult ptr %.1142.lcssa, %.0137
-  br i1 %i.bh, label %.lr.ph190, label %.thread174
+.thread:                                          ; preds = %_ZN6marisa8grimoire9algorithm7details9get_labelINS0_4trie5EntryEEEiRKT_m.exit
+  %i.bh = icmp ult ptr %.1142183, %.0131
+  br i1 %i.bh, label %.lr.ph190, label %.preheader177
 
 .lr.ph190:                                        ; preds = %.thread, %bb.q
-  %.1130189 = phi ptr [ %.3, %bb.q ], [ %.0129, %.thread ] ; 3 uses
-  %.1138188 = phi ptr [ %i.bi, %bb.q ], [ %.0137, %.thread ] ; 2 uses
-  %i.bi = getelementptr inbounds i8, ptr %.1138188, i64 -16 ; 7 uses
+  %.1130189 = phi ptr [ %.3, %bb.q ], [ %.0141, %.thread ] ; 5 uses
+  %.1138188 = phi ptr [ %i.bi, %bb.q ], [ %.0131, %.thread ] ; 2 uses
+  %i.bi = getelementptr inbounds i8, ptr %.1138188, i64 -16 ; 13 uses
   %i.bj = getelementptr inbounds i8, ptr %.1138188, i64 -8
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !24
   %i.bl = zext i32 %i.bk to i64
@@ -372,36 +370,39 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %.3 = phi ptr [ %.1130189, %bb.o ], [ %i.bu, %bb.p ] ; 2 uses
-  %i.bv = icmp ult ptr %.1142.lcssa, %i.bi
-  br i1 %i.bv, label %.lr.ph190, label %.thread174
+  %i.bv = icmp ult ptr %.1142183, %i.bi
+  br i1 %i.bv, label %.lr.ph190, label %.preheader177
 
-.thread174:                                       ; preds = %bb.q, %_ZN6marisa8grimoire9algorithm7details9get_labelINS0_4trie5EntryEEEiRKT_m.exit170, %.thread
-  %.1130.lcssa = phi ptr [ %.0129, %.thread ], [ %.1130189, %_ZN6marisa8grimoire9algorithm7details9get_labelINS0_4trie5EntryEEEiRKT_m.exit170 ], [ %.3, %bb.q ] ; 3 uses
-  %.2139 = phi ptr [ %.0137, %.thread ], [ %i.bi, %_ZN6marisa8grimoire9algorithm7details9get_labelINS0_4trie5EntryEEEiRKT_m.exit170 ], [ %i.bi, %bb.q ] ; 6 uses
-  %.not = icmp ult ptr %.1142.lcssa, %.2139
+.thread174:                                       ; preds = %_ZN6marisa8grimoire9algorithm7details9get_labelINS0_4trie5EntryEEEiRKT_m.exit170
+  %.not = icmp ult ptr %.1142183, %i.bi
   br i1 %.not, label %bb.r, label %.preheader177
 
-.preheader177:                                    ; preds = %.thread174
-  %i.bw = icmp ugt ptr %.1132.lcssa, %.0156203
+.preheader177:                                    ; preds = %.thread174, %.thread, %bb.r, %bb.m, %bb.q, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit
+  %.2139260 = phi ptr [ %i.bi, %bb.q ], [ %.0131, %bb.m ], [ %.0154204, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ], [ %i.bi, %.thread174 ], [ %.0131, %.thread ], [ %i.bi, %bb.r ] ; 2 uses
+  %.1130.lcssa259 = phi ptr [ %.3, %bb.q ], [ %.0141, %bb.m ], [ %.0154204, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ], [ %.1130189, %.thread174 ], [ %.0141, %.thread ], [ %.1130189, %bb.r ] ; 2 uses
+  %.1142.lcssa250258 = phi ptr [ %.1142183, %bb.q ], [ %i.bf, %bb.m ], [ %.0156203, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ], [ %.1142183, %.thread174 ], [ %.1142183, %.thread ], [ %i.bx, %bb.r ] ; 2 uses
+  %.1132.lcssa251257 = phi ptr [ %.1132184, %bb.q ], [ %.2133, %bb.m ], [ %.0156203, %_ZN6marisa8grimoire9algorithm7details6medianINS0_4trie5EntryEEEiRKT_S8_S8_m.exit ], [ %.1132184, %bb.r ], [ %.1132184, %.thread ], [ %.1132184, %.thread174 ] ; 2 uses
+  %i.bw = icmp ugt ptr %.1132.lcssa251257, %.0156203
   br i1 %i.bw, label %.lr.ph197, label %.preheader
 
 bb.r:                                             ; preds = %.thread174
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %.1142.lcssa, i64 16, i1 false), !tbaa.struct !112
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.1142.lcssa, ptr noundef nonnull align 8 dereferenceable(16) %.2139, i64 16, i1 false), !tbaa.struct !112
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.2139, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !112
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %.1142183, i64 16, i1 false), !tbaa.struct !112
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.1142183, ptr noundef nonnull align 8 dereferenceable(16) %i.bi, i64 16, i1 false), !tbaa.struct !112
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bi, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !112
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.bx = getelementptr inbounds nuw i8, ptr %.1142.lcssa, i64 16
-  br label %bb.i, !llvm.loop !105
+  %i.bx = getelementptr inbounds nuw i8, ptr %.1142183, i64 16 ; 3 uses
+  %10 = icmp ult ptr %i.bx, %i.bi
+  br i1 %10, label %bb.i, label %.preheader177, !llvm.loop !105
 
 .preheader:                                       ; preds = %.lr.ph197, %.preheader177
-  %.4145.lcssa = phi ptr [ %.1142.lcssa, %.preheader177 ], [ %i.ca, %.lr.ph197 ] ; 10 uses
-  %i.by = icmp ult ptr %.1130.lcssa, %.0154204
+  %.4145.lcssa = phi ptr [ %.1142.lcssa250258, %.preheader177 ], [ %i.ca, %.lr.ph197 ] ; 10 uses
+  %i.by = icmp ult ptr %.1130.lcssa259, %.0154204
   br i1 %i.by, label %.lr.ph201, label %._crit_edge
 
 .lr.ph197:                                        ; preds = %.preheader177, %.lr.ph197
-  %.5136196 = phi ptr [ %i.bz, %.lr.ph197 ], [ %.1132.lcssa, %.preheader177 ]
-  %.4145195 = phi ptr [ %i.ca, %.lr.ph197 ], [ %.1142.lcssa, %.preheader177 ]
+  %.5136196 = phi ptr [ %i.bz, %.lr.ph197 ], [ %.1132.lcssa251257, %.preheader177 ]
+  %.4145195 = phi ptr [ %i.ca, %.lr.ph197 ], [ %.1142.lcssa250258, %.preheader177 ]
   %i.bz = getelementptr inbounds i8, ptr %.5136196, i64 -16 ; 4 uses
   %i.ca = getelementptr inbounds i8, ptr %.4145195, i64 -16 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
@@ -413,8 +414,8 @@ bb.r:                                             ; preds = %.thread174
   br i1 %i.cb, label %.lr.ph197, label %.preheader, !llvm.loop !106
 
 .lr.ph201:                                        ; preds = %.preheader, %.lr.ph201
-  %.5200 = phi ptr [ %i.cc, %.lr.ph201 ], [ %.1130.lcssa, %.preheader ] ; 3 uses
-  %.3140199 = phi ptr [ %i.cd, %.lr.ph201 ], [ %.2139, %.preheader ] ; 3 uses
+  %.5200 = phi ptr [ %i.cc, %.lr.ph201 ], [ %.1130.lcssa259, %.preheader ] ; 3 uses
+  %.3140199 = phi ptr [ %i.cd, %.lr.ph201 ], [ %.2139260, %.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %.5200, i64 16, i1 false), !tbaa.struct !112
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.5200, ptr noundef nonnull align 8 dereferenceable(16) %.3140199, i64 16, i1 false), !tbaa.struct !112
@@ -426,7 +427,7 @@ bb.r:                                             ; preds = %.thread174
   br i1 %i.ce, label %.lr.ph201, label %._crit_edge, !llvm.loop !107
 
 ._crit_edge:                                      ; preds = %.lr.ph201, %.preheader
-  %.3140.lcssa = phi ptr [ %.2139, %.preheader ], [ %i.cd, %.lr.ph201 ] ; 12 uses
+  %.3140.lcssa = phi ptr [ %.2139260, %.preheader ], [ %i.cd, %.lr.ph201 ] ; 12 uses
   %i.cf = ptrtoint ptr %.4145.lcssa to i64        ; 2 uses
   %i.cg = sub i64 %i.cf, %i.g                     ; 3 uses
   %i.ch = ashr exact i64 %i.cg, 4                 ; 4 uses

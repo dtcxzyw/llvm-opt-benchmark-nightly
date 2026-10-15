@@ -168,7 +168,7 @@ strbuf_addch.exit:                                ; preds = %strbuf_avail.exit.i
   %.0234.lcssa = phi ptr [ %0, %bb.j ], [ %i.x, %strbuf_addch.exit ] ; 8 uses
   %i.am = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.0234.lcssa, i32 noundef 64) #13 ; 5 uses
   %i.an = call i64 @strcspn(ptr noundef nonnull %.0234.lcssa, ptr noundef nonnull @.str.4) #13
-  %i.ao = getelementptr inbounds nuw i8, ptr %.0234.lcssa, i64 %i.an ; 12 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.0234.lcssa, i64 %i.an ; 13 uses
   %.not269 = icmp ne ptr %i.am, null
   %i.ap = icmp ult ptr %i.am, %i.ao
   %or.cond = select i1 %.not269, i1 %i.ap, i1 false
@@ -473,24 +473,25 @@ bb.aq:                                            ; preds = %._crit_edge411
   %i.dq = call i64 @strspn(ptr noundef nonnull %i.dp, ptr noundef nonnull @.str.15) #13
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.dq ; 4 uses
   %i.ds = icmp eq ptr %i.dr, %i.ao
-  br i1 %i.ds, label %bb.ar, label %bb.as
+  br i1 %i.ds, label %bb.ar, label %bb.at
 
 bb.ar:                                            ; preds = %bb.aq
   %i.dt = getelementptr inbounds i8, ptr %i.dr, i64 -1 ; 2 uses
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !12
   %i.dv = icmp eq i8 %i.du, 48
-  %spec.select = select i1 %i.dv, ptr %i.dt, ptr %i.dr
-  br label %bb.as
+  %spec.select = select i1 %i.dv, ptr %i.dt, ptr %i.dr ; 2 uses
+  %4 = icmp eq ptr %spec.select, %i.ao
+  br i1 %4, label %bb.as, label %bb.at
 
-bb.as:                                            ; preds = %bb.ar, %bb.aq
-  %.3237 = phi ptr [ %i.dr, %bb.aq ], [ %spec.select, %bb.ar ] ; 10 uses
-  %4 = icmp eq ptr %.3237, %i.ao
-  %.pre439 = ptrtoint ptr %i.ao to i64            ; 2 uses
-  br i1 %4, label %._crit_edge436, label %bb.at
+bb.as:                                            ; preds = %bb.ar
+  %.pre439 = ptrtoint ptr %i.ao to i64
+  br label %._crit_edge436
 
-bb.at:                                            ; preds = %bb.as
-  %i.dw = ptrtoint ptr %.3237 to i64
-  %i.dx = sub i64 %.pre439, %i.dw                 ; 5 uses
+bb.at:                                            ; preds = %bb.aq, %bb.ar
+  %.3237351 = phi ptr [ %spec.select, %bb.ar ], [ %i.dr, %bb.aq ] ; 9 uses
+  %5 = ptrtoint ptr %i.ao to i64                  ; 4 uses
+  %i.dw = ptrtoint ptr %.3237351 to i64
+  %i.dx = sub i64 %5, %i.dw                       ; 5 uses
   switch i64 %i.dx, label %.tail.thread [
     i64 2, label %bb.au
     i64 3, label %bb.av
@@ -503,12 +504,12 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.ea, label %sub_0, label %.tail.thread
 
 sub_0:                                            ; preds = %bb.au
-  %i.eb = load i8, ptr %.3237, align 1
+  %i.eb = load i8, ptr %.3237351, align 1
   %.not420 = icmp eq i8 %i.eb, 56
   br i1 %.not420, label %.tail, label %.tail.thread
 
 .tail:                                            ; preds = %sub_0
-  %i.ec = getelementptr inbounds nuw i8, ptr %.3237, i64 1
+  %i.ec = getelementptr inbounds nuw i8, ptr %.3237351, i64 1
   %i.ed = load i8, ptr %i.ec, align 1
   %i.ee = icmp eq i8 %i.ed, 48
   br i1 %i.ee, label %._crit_edge436, label %.tail.thread
@@ -520,24 +521,24 @@ bb.av:                                            ; preds = %bb.at
   br i1 %i.eh, label %sub_0380, label %.tail.thread
 
 sub_0380:                                         ; preds = %bb.av
-  %i.ei = load i8, ptr %.3237, align 1
+  %i.ei = load i8, ptr %.3237351, align 1
   %.not418 = icmp eq i8 %i.ei, 52
   br i1 %.not418, label %sub_1381, label %.tail.thread
 
 sub_1381:                                         ; preds = %sub_0380
-  %i.ej = getelementptr inbounds nuw i8, ptr %.3237, i64 1
+  %i.ej = getelementptr inbounds nuw i8, ptr %.3237351, i64 1
   %i.ek = load i8, ptr %i.ej, align 1
   %.not419 = icmp eq i8 %i.ek, 52
   br i1 %.not419, label %.tail379, label %.tail.thread
 
 .tail379:                                         ; preds = %sub_1381
-  %i.el = getelementptr inbounds nuw i8, ptr %.3237, i64 2
+  %i.el = getelementptr inbounds nuw i8, ptr %.3237351, i64 2
   %i.em = load i8, ptr %i.el, align 1
   %i.en = icmp eq i8 %i.em, 51
   br i1 %i.en, label %._crit_edge436, label %.tail.thread
 
 .tail.thread:                                     ; preds = %sub_1381, %sub_0380, %sub_0, %bb.au, %.tail, %bb.at, %.tail379, %bb.av
-  %i.eo = call i64 @strspn(ptr noundef nonnull %.3237, ptr noundef nonnull @.str.20) #13
+  %i.eo = call i64 @strspn(ptr noundef nonnull %.3237351, ptr noundef nonnull @.str.20) #13
   %i.ep = icmp ult i64 %i.eo, %i.dx
   br i1 %i.ep, label %bb.aw, label %bb.ba
 
@@ -570,7 +571,7 @@ bb.ba:                                            ; preds = %.tail.thread
   br i1 %i.et, label %bb.bb, label %.critedge311
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.eu = call i64 @__isoc23_strtoul(ptr noundef nonnull %.3237, ptr noundef null, i32 noundef 10) #14
+  %i.eu = call i64 @__isoc23_strtoul(ptr noundef nonnull %.3237351, ptr noundef null, i32 noundef 10) #14
   %i.ev = add i64 %i.eu, -65536
   %i.ew = icmp ult i64 %i.ev, -65535
   br i1 %i.ew, label %.critedge311, label %bb.bf
@@ -603,13 +604,14 @@ bb.bf:                                            ; preds = %bb.bb
   call fastcc void @strbuf_addch(ptr noundef %3, i32 noundef 58)
   %i.fa = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.fb = load i64, ptr %i.fa, align 8, !tbaa !20
-  call void @strbuf_add(ptr noundef nonnull %3, ptr noundef nonnull %.3237, i64 noundef %i.dx) #14
+  call void @strbuf_add(ptr noundef nonnull %3, ptr noundef nonnull %.3237351, i64 noundef %i.dx) #14
   br label %._crit_edge436
 
 ._crit_edge436:                                   ; preds = %bb.as, %bb.bf, %.tail, %.tail379
-  %.1212 = phi i64 [ 0, %.tail379 ], [ %i.fb, %bb.bf ], [ 0, %.tail ], [ 0, %bb.as ]
-  %.1209 = phi i64 [ 0, %.tail379 ], [ %i.dx, %bb.bf ], [ 0, %.tail ], [ 0, %bb.as ]
-  %.neg288 = sub i64 %i.cn, %.pre439
+  %.pre-phi443 = phi i64 [ %.pre439, %bb.as ], [ %5, %bb.bf ], [ %5, %.tail ], [ %5, %.tail379 ]
+  %.1212 = phi i64 [ 0, %bb.as ], [ %i.fb, %bb.bf ], [ 0, %.tail ], [ 0, %.tail379 ]
+  %.1209 = phi i64 [ 0, %bb.as ], [ %i.dx, %bb.bf ], [ 0, %.tail ], [ 0, %.tail379 ]
+  %.neg288 = sub i64 %i.cn, %.pre-phi443
   %i.fc = add i64 %.neg288, %.1226.lcssa
   br label %bb.bg
 

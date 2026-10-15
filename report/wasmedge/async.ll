@@ -204,10 +204,10 @@ bb.a:
   %1 = alloca %"struct.spdlog::details::async_msg", align 8 ; 16 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 3 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !112  ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !112
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !114  ; 2 uses
   %.not29 = icmp eq ptr %i.c, %i.d
-  br i1 %.not29, label %.preheader, label %.lr.ph
+  br i1 %.not29, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -222,11 +222,9 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 400
   br label %bb.b
 
-.preheader:                                       ; preds = %_ZN6spdlog7details9async_msgD2Ev.exit, %bb.a
-  %.lcssa18 = phi ptr [ %i.c, %bb.a ], [ %i.ah, %_ZN6spdlog7details9async_msgD2Ev.exit ] ; 2 uses
-  %.lcssa = phi ptr [ %i.d, %bb.a ], [ %i.ai, %_ZN6spdlog7details9async_msgD2Ev.exit ] ; 2 uses
-  %.not26 = icmp eq ptr %.lcssa, %.lcssa18
-  br i1 %.not26, label %.loopexit, label %.lr.ph28
+.preheader:                                       ; preds = %_ZN6spdlog7details9async_msgD2Ev.exit
+  %.not26 = icmp eq ptr %i.ai, %i.ah
+  br i1 %.not26, label %.loopexitthread-pre-split, label %.lr.ph28
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN6spdlog7details9async_msgD2Ev.exit
   %.01024 = phi i64 [ 0, %.lr.ph ], [ %i.ag, %_ZN6spdlog7details9async_msgD2Ev.exit ]
@@ -305,8 +303,8 @@ bb.i:                                             ; preds = %_ZNSt12__shared_ptr
 _ZN6spdlog7details9async_msgD2Ev.exit:            ; preds = %_ZNSt12__shared_ptrIN6spdlog12async_loggerELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #23
   %i.ag = add nuw i64 %.01024, 1                  ; 2 uses
-  %i.ah = load ptr, ptr %i.b, align 8, !tbaa !112 ; 2 uses
-  %i.ai = load ptr, ptr %i.a, align 8, !tbaa !114 ; 2 uses
+  %i.ah = load ptr, ptr %i.b, align 8, !tbaa !112 ; 3 uses
+  %i.ai = load ptr, ptr %i.a, align 8, !tbaa !114 ; 3 uses
   %i.aj = ptrtoint ptr %i.ah to i64
   %i.ak = ptrtoint ptr %i.ai to i64
   %i.al = sub i64 %i.aj, %i.ak
@@ -323,14 +321,14 @@ bb.j:                                             ; preds = %bb.b
   br label %bb.m
 
 .lr.ph28:                                         ; preds = %.preheader, %bb.k
-  %.sroa.014.027 = phi ptr [ %i.ap, %bb.k ], [ %.lcssa, %.preheader ] ; 2 uses
+  %.sroa.014.027 = phi ptr [ %i.ap, %bb.k ], [ %i.ai, %.preheader ] ; 2 uses
   invoke void @_ZNSt6thread4joinEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.014.027)
           to label %bb.k unwind label %bb.l
 
 bb.k:                                             ; preds = %.lr.ph28
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.014.027, i64 8 ; 2 uses
-  %.not = icmp eq ptr %i.ap, %.lcssa18
-  br i1 %.not, label %.loopexit, label %.lr.ph28
+  %.not = icmp eq ptr %i.ap, %i.ah
+  br i1 %.not, label %.loopexitthread-pre-split, label %.lr.ph28
 
 bb.l:                                             ; preds = %.lr.ph28
   %i.aq = landingpad { ptr, i32 }
@@ -349,10 +347,14 @@ bb.m:                                             ; preds = %bb.l, %bb.j
 bb.n:                                             ; preds = %bb.m
   %i.at = call ptr @__cxa_begin_catch(ptr %.19) #23 ; 0 uses
   invoke void @__cxa_end_catch()
-          to label %.loopexit unwind label %bb.r
+          to label %.loopexitthread-pre-split unwind label %bb.r
 
-.loopexit:                                        ; preds = %bb.k, %.preheader, %bb.n
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !114    ; 5 uses
+.loopexitthread-pre-split:                        ; preds = %bb.k, %bb.n, %.preheader
+  %.pr = load ptr, ptr %i.a, align 8, !tbaa !114
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.a, %.loopexitthread-pre-split
+  %2 = phi ptr [ %.pr, %.loopexitthread-pre-split ], [ %i.d, %bb.a ] ; 5 uses
   %i.au = load ptr, ptr %i.b, align 8, !tbaa !112 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %2, %i.au
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt6threadS0_EvT_S2_RSaIT0_E.exit.i, label %_ZSt8_DestroyISt6threadEvPT_.exit.i.i.i

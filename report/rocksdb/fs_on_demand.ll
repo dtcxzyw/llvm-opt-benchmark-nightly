@@ -202,15 +202,19 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN7rocksdb18OnDemandFileSystem14LookupFileTypeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_8FileTypeE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !23   ; 5 uses
   %.not.i.i = icmp eq i64 %i.c, 0
-  br i1 %.not.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit, label %bb.b
+  br i1 %.not.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit.thread, label %bb.b
+
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit.thread: ; preds = %bb.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
+  br label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %1, align 8
+  %i.d = load ptr, ptr %1, align 8                ; 2 uses
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.d
@@ -225,22 +229,22 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.h = icmp eq i8 %i.g, 47
   br i1 %i.h, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit, label %bb.c, !llvm.loop !123
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit: ; preds = %bb.c, %bb.d, %bb.a
-  %.09.i.i = phi i64 [ -1, %bb.a ], [ -1, %bb.c ], [ %i.e, %bb.d ] ; 4 uses
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit: ; preds = %bb.c, %bb.d
+  %.09.i.i = phi i64 [ -1, %bb.c ], [ %i.e, %bb.d ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !126)
   %i.i = icmp ugt i64 %.09.i.i, %i.c
   br i1 %i.i, label %bb.e, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
 
-bb.e:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.8, i64 noundef %.09.i.i, i64 noundef %i.c) #24, !noalias !126
+bb.e:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit
+  %.09.i.i9 = phi i64 [ -1, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit.thread ], [ %.09.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit ]
+  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.8, i64 noundef %.09.i.i9, i64 noundef %i.c) #24, !noalias !126
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEcm.exit
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
   store ptr %i.j, ptr %3, align 8, !tbaa !26, !alias.scope !126
-  %4 = load ptr, ptr %1, align 8, !tbaa !22, !noalias !126
-  %i.k = getelementptr inbounds nuw i8, ptr %4, i64 %.09.i.i ; 2 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 %.09.i.i ; 2 uses
   %i.l = sub nuw i64 %i.c, %.09.i.i               ; 8 uses
   %i.m = icmp ugt i64 %i.l, 15
   br i1 %i.m, label %bb.f, label %._crit_edge.i.i.i
