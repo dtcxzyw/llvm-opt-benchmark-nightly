@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"struct.boost::beast::unit_test::suite::abort_exception", align 8 ; 5 uses
   %5 = alloca %"struct.boost::source_location", align 8 ; 7 uses
-  %6 = alloca %"class.boost::beast::buffers_suffix", align 8 ; 15 uses
+  %6 = alloca %"class.boost::beast::buffers_suffix", align 8 ; 16 uses
   %7 = alloca %"struct.boost::beast::http::parser_test::bench_parser", align 8 ; 17 uses
   %8 = alloca %"class.boost::system::error_code", align 8 ; 12 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -454,7 +454,7 @@ _ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS0_1
   %.1.i.ph = phi i64 [ %i.bp, %_ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS0_12const_bufferEEEEEmRKT_RKT0_.exit.i.invoke ], [ %i.aw, %.noexc66 ] ; 4 uses
   %.pr = load i64, ptr %i.l, align 8, !tbaa !41   ; 3 uses
   %i.bq = and i64 %.pr, 1
-  %.not.i.i.i = icmp eq i64 %i.bq, 0              ; 2 uses
+  %.not.i.i.i = icmp eq i64 %i.bq, 0              ; 3 uses
   br i1 %.not.i.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread17.i, label %bb.k
 
 bb.k:                                             ; preds = %.noexc
@@ -469,12 +469,12 @@ _ZNK5boost6system10error_codecvbEv.exit.thread17.i: ; preds = %bb.k, %.noexc
   br i1 %i.bt, label %bb.p, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNK5boost6system10error_codecvbEv.exit.thread17.i
-  %.promoted.i.i = load ptr, ptr %i.j, align 8    ; 5 uses
-  %.promoted16.i.i = load i64, ptr %i.k, align 8  ; 3 uses
+  %.promoted.i.i = load ptr, ptr %i.j, align 8    ; 4 uses
   %.not11.i.peel.i = icmp eq ptr %.promoted.i.i, %i.j
-  br i1 %.not11.i.peel.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i, label %bb.l
+  br i1 %.not11.i.peel.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i.i
+  %.promoted16.i.i = load i64, ptr %i.k, align 8  ; 2 uses
   %.sroa.2.0..sroa_idx.i.peel.i = getelementptr inbounds nuw i8, ptr %.promoted.i.i, i64 8
   %.sroa.2.0.copyload.i.peel.i = load i64, ptr %.sroa.2.0..sroa_idx.i.peel.i, align 8, !tbaa !24
   %i.bu = sub i64 %.sroa.2.0.copyload.i.peel.i, %.promoted16.i.i ; 2 uses
@@ -493,9 +493,9 @@ bb.m:                                             ; preds = %bb.l
 
 .peel.next.i:                                     ; preds = %bb.m, %bb.o
   %.0813.i.i = phi i64 [ %i.cb, %bb.o ], [ %i.bx, %bb.m ] ; 4 uses
-  %i.bz = phi ptr [ %i.cc, %bb.o ], [ %i.by, %bb.m ] ; 5 uses
+  %i.bz = phi ptr [ %i.cc, %bb.o ], [ %i.by, %bb.m ] ; 4 uses
   %.not11.i.i = icmp eq ptr %i.bz, %i.j
-  br i1 %.not11.i.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i, label %bb.n
+  br i1 %.not11.i.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread, label %bb.n
 
 bb.n:                                             ; preds = %.peel.next.i
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
@@ -512,9 +512,13 @@ bb.o:                                             ; preds = %bb.n
   %.not.i.i = icmp eq i64 %i.cb, 0
   br i1 %.not.i.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i, label %.peel.next.i, !llvm.loop !325
 
-_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i: ; preds = %bb.o, %bb.n, %.peel.next.i, %bb.m, %bb.l, %.lr.ph.i.i
-  %11 = phi i64 [ %.promoted16.i.i, %.lr.ph.i.i ], [ 0, %bb.m ], [ %i.bw, %bb.l ], [ 0, %bb.o ], [ %.0813.i.i, %bb.n ], [ 0, %.peel.next.i ] ; 2 uses
-  %12 = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.by, %bb.m ], [ %.promoted.i.i, %bb.l ], [ %i.cc, %bb.o ], [ %i.bz, %bb.n ], [ %i.bz, %.peel.next.i ] ; 5 uses
+_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread: ; preds = %.lr.ph.i.i, %.peel.next.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
+  br i1 %.not.i.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread, label %bb.q
+
+_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i: ; preds = %bb.o, %bb.n, %bb.m, %bb.l
+  %11 = phi i64 [ %i.bw, %bb.l ], [ 0, %bb.m ], [ 0, %bb.o ], [ %.0813.i.i, %bb.n ] ; 2 uses
+  %12 = phi ptr [ %.promoted.i.i, %bb.l ], [ %i.by, %bb.m ], [ %i.cc, %bb.o ], [ %i.bz, %bb.n ] ; 5 uses
   %i.cd = load i32, ptr %i.h, align 8, !tbaa !334
   %i.ce = icmp eq i32 %i.cd, 11
   %.not.i.i15.i = icmp eq ptr %12, %i.j
@@ -557,7 +561,7 @@ bb.p:                                             ; preds = %_ZNK5boost5beast6de
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
   br i1 %.not.i.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread, label %bb.q
 
-bb.q:                                             ; preds = %.thread96, %bb.p
+bb.q:                                             ; preds = %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread, %.thread96, %bb.p
   %i.ci = icmp eq i64 %.pr, 1
   br i1 %i.ci, label %_ZNK5boost6system10error_codecvbEv.exit, label %_ZNK5boost6system10error_code8categoryEv.exit.thread.i
 
@@ -576,7 +580,7 @@ _ZNK5boost6system10error_codecvbEv.exit:          ; preds = %bb.q
   invoke void %i.co(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %9, ptr noundef nonnull align 8 dereferenceable(8) %i.cl, i32 noundef %i.cj)
           to label %_ZNK5boost6system10error_code7messageB5cxx11Ev.exit unwind label %.loopexit112, !inline_history !8
 
-_ZNK5boost6system10error_codecvbEv.exit.thread:   ; preds = %.thread93, %bb.p, %_ZNK5boost6system10error_codecvbEv.exit
+_ZNK5boost6system10error_codecvbEv.exit.thread:   ; preds = %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread, %.thread93, %bb.p, %_ZNK5boost6system10error_codecvbEv.exit
   %i.cp = load ptr, ptr @_ZZN5boost5beast9unit_test5suite12p_this_suiteEvE3pts, align 8, !tbaa !66 ; 3 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   %i.cr = load i8, ptr %i.cq, align 8, !tbaa !89, !range !60, !noundef !61
@@ -910,7 +914,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"struct.boost::beast::unit_test::suite::abort_exception", align 8 ; 5 uses
   %5 = alloca %"struct.boost::source_location", align 8 ; 7 uses
-  %6 = alloca %"class.boost::beast::buffers_suffix", align 8 ; 15 uses
+  %6 = alloca %"class.boost::beast::buffers_suffix", align 8 ; 16 uses
   %7 = alloca %"struct.boost::beast::http::parser_test::bench_parser.37", align 8 ; 17 uses
   %8 = alloca %"class.boost::system::error_code", align 8 ; 12 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -1159,7 +1163,7 @@ _ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS0_1
   %.1.i.ph = phi i64 [ %i.bp, %_ZN5boost4asio11buffer_copyINS0_14mutable_bufferENS_5beast14buffers_suffixINS0_12const_bufferEEEEEmRKT_RKT0_.exit.i.invoke ], [ %i.aw, %.noexc66 ] ; 4 uses
   %.pr = load i64, ptr %i.l, align 8, !tbaa !41   ; 3 uses
   %i.bq = and i64 %.pr, 1
-  %.not.i.i.i = icmp eq i64 %i.bq, 0              ; 2 uses
+  %.not.i.i.i = icmp eq i64 %i.bq, 0              ; 3 uses
   br i1 %.not.i.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread17.i, label %bb.k
 
 bb.k:                                             ; preds = %.noexc
@@ -1174,12 +1178,12 @@ _ZNK5boost6system10error_codecvbEv.exit.thread17.i: ; preds = %bb.k, %.noexc
   br i1 %i.bt, label %bb.p, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNK5boost6system10error_codecvbEv.exit.thread17.i
-  %.promoted.i.i = load ptr, ptr %i.j, align 8    ; 5 uses
-  %.promoted16.i.i = load i64, ptr %i.k, align 8  ; 3 uses
+  %.promoted.i.i = load ptr, ptr %i.j, align 8    ; 4 uses
   %.not11.i.peel.i = icmp eq ptr %.promoted.i.i, %i.j
-  br i1 %.not11.i.peel.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i, label %bb.l
+  br i1 %.not11.i.peel.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i.i
+  %.promoted16.i.i = load i64, ptr %i.k, align 8  ; 2 uses
   %.sroa.2.0..sroa_idx.i.peel.i = getelementptr inbounds nuw i8, ptr %.promoted.i.i, i64 8
   %.sroa.2.0.copyload.i.peel.i = load i64, ptr %.sroa.2.0..sroa_idx.i.peel.i, align 8, !tbaa !24
   %i.bu = sub i64 %.sroa.2.0.copyload.i.peel.i, %.promoted16.i.i ; 2 uses
@@ -1198,9 +1202,9 @@ bb.m:                                             ; preds = %bb.l
 
 .peel.next.i:                                     ; preds = %bb.m, %bb.o
   %.0813.i.i = phi i64 [ %i.cb, %bb.o ], [ %i.bx, %bb.m ] ; 4 uses
-  %i.bz = phi ptr [ %i.cc, %bb.o ], [ %i.by, %bb.m ] ; 5 uses
+  %i.bz = phi ptr [ %i.cc, %bb.o ], [ %i.by, %bb.m ] ; 4 uses
   %.not11.i.i = icmp eq ptr %i.bz, %i.j
-  br i1 %.not11.i.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i, label %bb.n
+  br i1 %.not11.i.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread, label %bb.n
 
 bb.n:                                             ; preds = %.peel.next.i
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
@@ -1217,9 +1221,13 @@ bb.o:                                             ; preds = %bb.n
   %.not.i.i = icmp eq i64 %i.cb, 0
   br i1 %.not.i.i, label %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i, label %.peel.next.i, !llvm.loop !343
 
-_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i: ; preds = %bb.o, %bb.n, %.peel.next.i, %bb.m, %bb.l, %.lr.ph.i.i
-  %11 = phi i64 [ %.promoted16.i.i, %.lr.ph.i.i ], [ 0, %bb.m ], [ %i.bw, %bb.l ], [ 0, %bb.o ], [ %.0813.i.i, %bb.n ], [ 0, %.peel.next.i ] ; 2 uses
-  %12 = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.by, %bb.m ], [ %.promoted.i.i, %bb.l ], [ %i.cc, %bb.o ], [ %i.bz, %bb.n ], [ %i.bz, %.peel.next.i ] ; 5 uses
+_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread: ; preds = %.lr.ph.i.i, %.peel.next.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
+  br i1 %.not.i.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread, label %bb.q
+
+_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i: ; preds = %bb.o, %bb.n, %bb.m, %bb.l
+  %11 = phi i64 [ %i.bw, %bb.l ], [ 0, %bb.m ], [ 0, %bb.o ], [ %.0813.i.i, %bb.n ] ; 2 uses
+  %12 = phi ptr [ %.promoted.i.i, %bb.l ], [ %i.by, %bb.m ], [ %i.cc, %bb.o ], [ %i.bz, %bb.n ] ; 5 uses
   %i.cd = load i32, ptr %i.h, align 8, !tbaa !352
   %i.ce = icmp eq i32 %i.cd, 11
   %.not.i.i15.i = icmp eq ptr %12, %i.j
@@ -1262,7 +1270,7 @@ bb.p:                                             ; preds = %_ZNK5boost5beast6de
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
   br i1 %.not.i.i.i, label %_ZNK5boost6system10error_codecvbEv.exit.thread, label %bb.q
 
-bb.q:                                             ; preds = %.thread96, %bb.p
+bb.q:                                             ; preds = %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread, %.thread96, %bb.p
   %i.ci = icmp eq i64 %.pr, 1
   br i1 %i.ci, label %_ZNK5boost6system10error_codecvbEv.exit, label %_ZNK5boost6system10error_code8categoryEv.exit.thread.i
 
@@ -1281,7 +1289,7 @@ _ZNK5boost6system10error_codecvbEv.exit:          ; preds = %bb.q
   invoke void %i.co(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %9, ptr noundef nonnull align 8 dereferenceable(8) %i.cl, i32 noundef %i.cj)
           to label %_ZNK5boost6system10error_code7messageB5cxx11Ev.exit unwind label %.loopexit112, !inline_history !8
 
-_ZNK5boost6system10error_codecvbEv.exit.thread:   ; preds = %.thread93, %bb.p, %_ZNK5boost6system10error_codecvbEv.exit
+_ZNK5boost6system10error_codecvbEv.exit.thread:   ; preds = %_ZN5boost5beast14buffers_suffixINS_4asio12const_bufferEE7consumeEm.exit.i.thread, %.thread93, %bb.p, %_ZNK5boost6system10error_codecvbEv.exit
   %i.cp = load ptr, ptr @_ZZN5boost5beast9unit_test5suite12p_this_suiteEvE3pts, align 8, !tbaa !66 ; 3 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   %i.cr = load i8, ptr %i.cq, align 8, !tbaa !89, !range !60, !noundef !61

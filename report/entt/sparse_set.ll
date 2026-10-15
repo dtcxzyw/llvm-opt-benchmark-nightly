@@ -205,7 +205,7 @@ bb.a:
   %27 = alloca %"class.testing::Message", align 8 ; 7 uses
   %28 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %29 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %30 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
+  %30 = alloca %"class.testing::AssertionResult", align 8 ; 10 uses
   %31 = alloca %"class.testing::Message", align 8 ; 7 uses
   %32 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %33 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -608,10 +608,14 @@ _ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit267.thread: ; p
           to label %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE5eraseES1_.exit unwind label %bb.f, !inline_history !7
 
 _ZN4entt16basic_sparse_setINS_6entityESaIS1_EE5eraseES1_.exit: ; preds = %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit267.thread
-  %i.kd = load ptr, ptr %i.e, align 8, !tbaa !138 ; 4 uses
-  %i.ke = load ptr, ptr %i.a, align 8, !tbaa !137 ; 5 uses
+  %i.kd = load ptr, ptr %i.e, align 8, !tbaa !138 ; 3 uses
+  %i.ke = load ptr, ptr %i.a, align 8, !tbaa !137 ; 4 uses
   %.not371 = icmp eq ptr %i.kd, %i.ke
-  br i1 %.not371, label %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit, label %bb.ch
+  br i1 %.not371, label %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit.thread, label %bb.ch
+
+_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit.thread: ; preds = %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE5eraseES1_.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %30) #28
+  br label %_ZN7testing15AssertionResultD2Ev.exit341.thread549
 
 bb.ch:                                            ; preds = %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE5eraseES1_.exit
   %i.kf = load ptr, ptr %i.ke, align 8, !tbaa !144 ; 2 uses
@@ -641,17 +645,12 @@ bb.ci:                                            ; preds = %_ZNK4entt16basic_sp
   %.pre422 = load ptr, ptr %i.a, align 8, !tbaa !137
   br label %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit
 
-_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit: ; preds = %._ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit_crit_edge, %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit.i, %bb.ch, %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE5eraseES1_.exit
-  %38 = phi ptr [ %.pre422, %._ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit_crit_edge ], [ %i.ke, %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit.i ], [ %i.ke, %bb.ch ], [ %i.ke, %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE5eraseES1_.exit ] ; 4 uses
-  %39 = phi ptr [ %.pre, %._ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit_crit_edge ], [ %i.kd, %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit.i ], [ %i.kd, %bb.ch ], [ %i.kd, %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE5eraseES1_.exit ] ; 2 uses
+_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit: ; preds = %._ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit_crit_edge, %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit.i, %bb.ch
+  %38 = phi ptr [ %.pre422, %._ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit_crit_edge ], [ %i.ke, %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit.i ], [ %i.ke, %bb.ch ] ; 4 uses
+  %39 = phi ptr [ %.pre, %._ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit_crit_edge ], [ %i.kd, %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit.i ], [ %i.kd, %bb.ch ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #28
   %.not372 = icmp eq ptr %39, %38
-  br i1 %.not372, label %_ZN7testing15AssertionResultD2Ev.exit341.thread539, label %bb.cj
-
-_ZN7testing15AssertionResultD2Ev.exit341.thread539: ; preds = %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %30) #28
-  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4entt16basic_sparse_setINS_6entityESaIS1_EEE, i64 16), ptr %1, align 8, !tbaa !90
-  br label %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE20release_sparse_pagesEv.exit.i345
+  br i1 %.not372, label %_ZN7testing15AssertionResultD2Ev.exit341.thread549, label %bb.cj
 
 bb.cj:                                            ; preds = %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit
   %i.kq = load ptr, ptr %38, align 8, !tbaa !144  ; 2 uses
@@ -795,6 +794,11 @@ _ZN7testing7MessageD2Ev.exit310:                  ; preds = %_ZNKSt14default_del
   call void @_ZN7testing15AssertionResultD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %30) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #28
   br label %bb.do
+
+_ZN7testing15AssertionResultD2Ev.exit341.thread549: ; preds = %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit, %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE6removeES1_.exit.thread
+  call void @llvm.lifetime.end.p0(ptr nonnull %30) #28
+  store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN4entt16basic_sparse_setINS_6entityESaIS1_EEE, i64 16), ptr %1, align 8, !tbaa !90
+  br label %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE20release_sparse_pagesEv.exit.i345
 
 .thread537:                                       ; preds = %bb.cj, %_ZNK4entt16basic_sparse_setINS_6entityESaIS1_EE8containsES1_.exit293
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #28
@@ -1001,7 +1005,7 @@ bb.dk:                                            ; preds = %bb.dj, %.lr.ph.i.i3
   %i.nv = icmp eq ptr %i.nu, %39
   br i1 %i.nv, label %_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE20release_sparse_pagesEv.exit.i345, label %.lr.ph.i.i342
 
-_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE20release_sparse_pagesEv.exit.i345: ; preds = %bb.dk, %_ZN7testing15AssertionResultD2Ev.exit341.thread539
+_ZN4entt16basic_sparse_setINS_6entityESaIS1_EE20release_sparse_pagesEv.exit.i345: ; preds = %bb.dk, %_ZN7testing15AssertionResultD2Ev.exit341.thread549
   %i.nw = load ptr, ptr %i.m, align 8, !tbaa !140 ; 3 uses
   %.not.i.i.i.i346 = icmp eq ptr %i.nw, null
   br i1 %.not.i.i.i.i346, label %_ZNSt6vectorIN4entt6entityESaIS1_EED2Ev.exit.i347, label %bb.dl

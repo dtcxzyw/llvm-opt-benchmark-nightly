@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.k, %_ZN20btAlign
   %i.cp = fmul float %i.by, %i.cn                 ; 4 uses
   %i.cq = load i32, ptr %4, align 4, !tbaa !7     ; 6 uses
   %.not = icmp eq i32 %i.cq, 0
-  br i1 %.not, label %.loopexit, label %.lr.ph.preheader
+  br i1 %.not, label %.loopexit.thread, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.m
   %wide.trip.count = zext i32 %i.cq to i64
@@ -238,7 +238,7 @@ bb.n:                                             ; preds = %.lr.ph
   br i1 %or.cond335, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
-  %i.dh = trunc nuw i64 %indvars.iv to i32        ; 2 uses
+  %i.dh = trunc nuw i64 %indvars.iv to i32        ; 3 uses
   %i.di = insertelement <2 x float> %i.cz, float %i.cp, i64 0
   %i.dj = fsub <2 x float> %i.di, %i.cg           ; 2 uses
   %i.dk = insertelement <2 x float> %i.co, float %i.ct, i64 1
@@ -264,13 +264,12 @@ bb.q:                                             ; preds = %bb.n, %.lr.ph
   %exitcond405.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond405.not, label %.loopexit.thread, label %.lr.ph
 
-.loopexit:                                        ; preds = %bb.m, %bb.p, %bb.o
-  %.0297375 = phi i32 [ %i.dh, %bb.o ], [ %i.dh, %bb.p ], [ 0, %bb.m ] ; 3 uses
-  %i.dv = icmp eq i32 %.0297375, %i.cq
+.loopexit:                                        ; preds = %bb.p, %bb.o
+  %i.dv = icmp eq i32 %i.cq, %i.dh
   br i1 %i.dv, label %.loopexit.thread, label %bb.r
 
-.loopexit.thread:                                 ; preds = %bb.q, %.loopexit
-  %.0297375453 = phi i32 [ %.0297375, %.loopexit ], [ %i.cq, %bb.q ]
+.loopexit.thread:                                 ; preds = %bb.q, %bb.m, %.loopexit
+  %.0297375453 = phi i32 [ %i.dh, %.loopexit ], [ 0, %bb.m ], [ %i.cq, %bb.q ]
   %i.dw = zext i32 %i.cq to i64
   %i.dx = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %i.dw ; 2 uses
   store <2 x float> %i.co, ptr %i.dx, align 4, !tbaa !9
@@ -281,7 +280,7 @@ bb.q:                                             ; preds = %bb.n, %.lr.ph
   br label %bb.r
 
 bb.r:                                             ; preds = %.loopexit.thread, %.loopexit
-  %.0297375452 = phi i32 [ %.0297375453, %.loopexit.thread ], [ %.0297375, %.loopexit ]
+  %.0297375452 = phi i32 [ %.0297375453, %.loopexit.thread ], [ %i.dh, %.loopexit ]
   %i.ea = load i32, ptr %i.b, align 4, !tbaa !50  ; 7 uses
   %i.eb = load i32, ptr %i.cd, align 8, !tbaa !51
   %i.ec = icmp eq i32 %i.ea, %i.eb

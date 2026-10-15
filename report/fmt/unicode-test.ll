@@ -205,9 +205,9 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.ai, label %bb.h, label %bb.p
 
 bb.h:                                             ; preds = %bb.g
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 5 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 4 uses
   %.not = icmp eq ptr %i.aj, %1
-  br i1 %.not, label %bb.m, label %bb.i
+  br i1 %.not, label %bb.p, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !72
@@ -244,8 +244,8 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   br label %bb.m
 
-bb.m:                                             ; preds = %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit, %bb.l, %bb.h
-  %.0 = phi ptr [ %i.aj, %bb.h ], [ %i.ar, %bb.l ], [ %i.aj, %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit ] ; 3 uses
+bb.m:                                             ; preds = %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit, %bb.l
+  %.0 = phi ptr [ %i.aj, %_ZN3fmt3v1213parse_contextIcE11next_arg_idEv.exit ], [ %i.ar, %bb.l ] ; 3 uses
   %.not22 = icmp eq ptr %.0, %1
   br i1 %.not22, label %bb.p, label %bb.n
 
@@ -259,7 +259,7 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.3.0.pre = load i32, ptr %i.a, align 4, !tbaa !240
   br label %bb.q
 
-bb.p:                                             ; preds = %bb.m, %bb.n, %bb.g
+bb.p:                                             ; preds = %bb.h, %bb.m, %bb.n, %bb.g
   call void @_ZN3fmt3v1212report_errorEPKc(ptr noundef nonnull @.str.51) #38
   unreachable
 
@@ -662,7 +662,7 @@ bb.a:
   %i.i = load i64, ptr %i.h, align 8, !tbaa !186  ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.i ; 2 uses
   %.not.i = icmp samesign eq i64 %i.i, 0
-  br i1 %.not.i, label %bb.d, label %bb.b
+  br i1 %.not.i, label %.critedge.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.k = load i8, ptr %i.g, align 1, !tbaa !72
@@ -674,8 +674,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 49152, ptr %3, align 8, !tbaa !144
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %.0.i = phi ptr [ %i.m, %bb.c ], [ %i.g, %bb.b ], [ %i.g, %bb.a ] ; 3 uses
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.0.i = phi ptr [ %i.m, %bb.c ], [ %i.g, %bb.b ] ; 3 uses
   %.not13.i = icmp eq ptr %.0.i, %i.j
   br i1 %.not13.i, label %.critedge.i, label %bb.e
 
@@ -692,14 +692,15 @@ bb.f:                                             ; preds = %bb.e
   %.pre7 = load i64, ptr %i.h, align 8, !tbaa !186
   br label %_ZN3fmt3v129formatterINS0_7weekdayEcvE5parseERNS0_13parse_contextIcEE.exit
 
-.critedge.i:                                      ; preds = %bb.d
+.critedge.i:                                      ; preds = %bb.d, %bb.a
+  %.016.i = phi ptr [ %i.j, %bb.d ], [ %i.g, %bb.a ]
   store i8 0, ptr %i.f, align 8, !tbaa !262
   br label %_ZN3fmt3v129formatterINS0_7weekdayEcvE5parseERNS0_13parse_contextIcEE.exit
 
 _ZN3fmt3v129formatterINS0_7weekdayEcvE5parseERNS0_13parse_contextIcEE.exit: ; preds = %bb.e, %bb.f, %.critedge.i
   %i.r = phi i64 [ %.pre7, %bb.f ], [ %i.i, %.critedge.i ], [ %i.i, %bb.e ]
   %i.s = phi ptr [ %.pre, %bb.f ], [ %i.g, %.critedge.i ], [ %i.g, %bb.e ] ; 2 uses
-  %i.t = phi ptr [ %i.q, %bb.f ], [ %i.j, %.critedge.i ], [ %.0.i, %bb.e ]
+  %i.t = phi ptr [ %i.q, %bb.f ], [ %.016.i, %.critedge.i ], [ %.0.i, %bb.e ]
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = ptrtoint ptr %i.s to i64
   %i.w = sub i64 %i.u, %i.v                       ; 2 uses

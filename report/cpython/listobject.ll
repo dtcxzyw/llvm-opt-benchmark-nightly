@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %.val112.i = load i64, ptr %i.g, align 8, !tbaa !33 ; 4 uses
-  %i.h = getelementptr i8, ptr %1, i64 16         ; 3 uses
+  %i.h = getelementptr i8, ptr %1, i64 16         ; 4 uses
   %.val111.i = load i64, ptr %i.h, align 8, !tbaa !33 ; 2 uses
   %.not71.i = icmp ne i64 %.val112.i, %.val111.i
   %i.i = and i32 %2, -2
@@ -214,11 +214,11 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.j = icmp sgt i64 %.val112.i, 0
-  br i1 %i.j, label %.lr.ph.i, label %.critedge.i
+  br i1 %i.j, label %.lr.ph.i, label %bb.o
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %i.k = getelementptr i8, ptr %0, i64 24
-  %i.l = getelementptr i8, ptr %1, i64 24
+  %i.k = getelementptr i8, ptr %0, i64 24         ; 3 uses
+  %i.l = getelementptr i8, ptr %1, i64 24         ; 3 uses
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -226,12 +226,12 @@ bb.d:                                             ; preds = %bb.c
   %_Py_FalseStruct._Py_TrueStruct.i = select i1 %i.m, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   br label %list_richcompare_impl.exit
 
-bb.e:                                             ; preds = %.thread118.i.a, %.lr.ph.i
-  %.val110127.i = phi i64 [ %.val112.i, %.lr.ph.i ], [ %.val110.i, %.thread118.i.a ] ; 2 uses
-  %.065122.i = phi i64 [ 0, %.lr.ph.i ], [ %3, %.thread118.i.a ] ; 6 uses
-  %.val109.i = load i64, ptr %i.h, align 8, !tbaa !33
+bb.e:                                             ; preds = %.critedge.i.loopexit, %.lr.ph.i
+  %.val110127.i = phi i64 [ %.val112.i, %.lr.ph.i ], [ %.val110.i, %.critedge.i.loopexit ] ; 2 uses
+  %.065122.i = phi i64 [ 0, %.lr.ph.i ], [ %3, %.critedge.i.loopexit ] ; 10 uses
+  %.val109.i = load i64, ptr %i.h, align 8, !tbaa !33 ; 2 uses
   %i.n = icmp slt i64 %.065122.i, %.val109.i
-  br i1 %i.n, label %bb.f, label %.critedge.i.loopexit
+  br i1 %i.n, label %bb.f, label %.critedge.i
 
 bb.f:                                             ; preds = %bb.e
   %i.o = load ptr, ptr %i.k, align 8, !tbaa !31
@@ -241,7 +241,7 @@ bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr [8 x i8], ptr %i.r, i64 %.065122.i
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !54   ; 7 uses
   %i.u = icmp eq ptr %i.q, %i.t
-  br i1 %i.u, label %.thread118.i.a, label %bb.g
+  br i1 %i.u, label %.critedge.i.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.v = load i32, ptr %i.q, align 8, !tbaa !32   ; 2 uses
@@ -301,30 +301,33 @@ Py_DECREF.exit87.i:                               ; preds = %bb.m, %bb.l, %Py_DE
 bb.n:                                             ; preds = %Py_DECREF.exit87.i
   %.not72.i = icmp eq i32 %i.ab, 0
   %.val108.pre.pre.i = load i64, ptr %i.g, align 8, !tbaa !33 ; 2 uses
-  br i1 %.not72.i, label %.critedge.i.loopexit, label %.thread118.i.a
+  br i1 %.not72.i, label %.thread118.i.a, label %.critedge.i.loopexit
 
-.thread118.i.a:                                   ; preds = %bb.n, %bb.f
-  %.val110.i = phi i64 [ %.val110127.i, %bb.f ], [ %.val108.pre.pre.i, %bb.n ] ; 3 uses
-  %3 = add nuw nsw i64 %.065122.i, 1              ; 3 uses
-  %4 = icmp slt i64 %3, %.val110.i
-  br i1 %4, label %bb.e, label %.critedge.i.loopexit, !llvm.loop !127
-
-.critedge.i.loopexit:                             ; preds = %bb.e, %bb.n, %.thread118.i.a
-  %.val108.i.ph = phi i64 [ %.val108.pre.pre.i, %bb.n ], [ %.val110.i, %.thread118.i.a ], [ %.val110127.i, %bb.e ]
-  %.065.lcssa.i.ph = phi i64 [ %.065122.i, %bb.n ], [ %3, %.thread118.i.a ], [ %.065122.i, %bb.e ]
-  %.val105.i.pre.pre = load i64, ptr %i.h, align 8, !tbaa !33
+.thread118.i.a:                                   ; preds = %bb.n
+  %.val105.i.pre7.pre = load i64, ptr %i.h, align 8, !tbaa !33
   br label %.critedge.i
 
-.critedge.i:                                      ; preds = %.critedge.i.loopexit, %.preheader.i
-  %.val105.i.pre = phi i64 [ %.val111.i, %.preheader.i ], [ %.val105.i.pre.pre, %.critedge.i.loopexit ] ; 7 uses
-  %.val108.i.a = phi i64 [ %.val112.i, %.preheader.i ], [ %.val108.i.ph, %.critedge.i.loopexit ] ; 7 uses
-  %.065.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %.065.lcssa.i.ph, %.critedge.i.loopexit ] ; 6 uses
-  %.not73.i = icmp slt i64 %.065.lcssa.i, %.val108.i.a
-  %.not74.i = icmp slt i64 %.065.lcssa.i, %.val105.i.pre
+.critedge.i.loopexit:                             ; preds = %bb.n, %bb.f
+  %.val110.i = phi i64 [ %.val110127.i, %bb.f ], [ %.val108.pre.pre.i, %bb.n ] ; 3 uses
+  %3 = add nuw nsw i64 %.065122.i, 1              ; 2 uses
+  %4 = icmp slt i64 %3, %.val110.i
+  br i1 %4, label %bb.e, label %.critedge.thread.i.loopexit, !llvm.loop !127
+
+.critedge.i:                                      ; preds = %bb.e, %.thread118.i.a
+  %.val108.i.a = phi i64 [ %.val105.i.pre7.pre, %.thread118.i.a ], [ %.val109.i, %bb.e ] ; 2 uses
+  %.065.lcssa.i = phi i64 [ %.val108.pre.pre.i, %.thread118.i.a ], [ %.val110127.i, %bb.e ] ; 2 uses
+  %.not73.i = icmp slt i64 %.065122.i, %.065.lcssa.i
+  %.not74.i = icmp slt i64 %.065122.i, %.val108.i.a
   %or.cond = select i1 %.not73.i, i1 %.not74.i, i1 false
   br i1 %or.cond, label %bb.w, label %bb.o
 
-bb.o:                                             ; preds = %.critedge.i
+.critedge.thread.i.loopexit:                      ; preds = %.critedge.i.loopexit
+  %.val105.i.pre = load i64, ptr %i.h, align 8, !tbaa !33
+  br label %bb.o
+
+bb.o:                                             ; preds = %.critedge.thread.i.loopexit, %.critedge.i, %.preheader.i
+  %.val105.i = phi i64 [ %.val105.i.pre, %.critedge.thread.i.loopexit ], [ %.val108.i.a, %.critedge.i ], [ %.val111.i, %.preheader.i ] ; 6 uses
+  %.val108145.i = phi i64 [ %.val110.i, %.critedge.thread.i.loopexit ], [ %.065.lcssa.i, %.critedge.i ], [ %.val112.i, %.preheader.i ] ; 6 uses
   switch i32 %2, label %bb.v [
     i32 2, label %bb.p
     i32 3, label %bb.q
@@ -335,32 +338,32 @@ bb.o:                                             ; preds = %.critedge.i
   ]
 
 bb.p:                                             ; preds = %bb.o
-  %i.aj = icmp eq i64 %.val108.i.a, %.val105.i.pre
+  %i.aj = icmp eq i64 %.val108145.i, %.val105.i
   %_Py_TrueStruct._Py_FalseStruct.i = select i1 %i.aj, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct
   br label %list_richcompare_impl.exit
 
 bb.q:                                             ; preds = %bb.o
-  %.not77.i = icmp eq i64 %.val108.i.a, %.val105.i.pre
+  %.not77.i = icmp eq i64 %.val108145.i, %.val105.i
   %_Py_FalseStruct._Py_TrueStruct79.i = select i1 %.not77.i, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   br label %list_richcompare_impl.exit
 
 bb.r:                                             ; preds = %bb.o
-  %i.ak = icmp slt i64 %.val108.i.a, %.val105.i.pre
+  %i.ak = icmp slt i64 %.val108145.i, %.val105.i
   %_Py_TrueStruct._Py_FalseStruct80.i = select i1 %i.ak, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct
   br label %list_richcompare_impl.exit
 
 bb.s:                                             ; preds = %bb.o
-  %i.al = icmp sgt i64 %.val108.i.a, %.val105.i.pre
+  %i.al = icmp sgt i64 %.val108145.i, %.val105.i
   %_Py_TrueStruct._Py_FalseStruct81.i = select i1 %i.al, ptr @_Py_TrueStruct, ptr @_Py_FalseStruct
   br label %list_richcompare_impl.exit
 
 bb.t:                                             ; preds = %bb.o
-  %.not76.i = icmp sgt i64 %.val108.i.a, %.val105.i.pre
+  %.not76.i = icmp sgt i64 %.val108145.i, %.val105.i
   %_Py_FalseStruct._Py_TrueStruct82.i = select i1 %.not76.i, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   br label %list_richcompare_impl.exit
 
 bb.u:                                             ; preds = %bb.o
-  %.not75.i = icmp slt i64 %.val108.i.a, %.val105.i.pre
+  %.not75.i = icmp slt i64 %.val108145.i, %.val105.i
   %_Py_FalseStruct._Py_TrueStruct83.i = select i1 %.not75.i, ptr @_Py_FalseStruct, ptr @_Py_TrueStruct
   br label %list_richcompare_impl.exit
 
@@ -377,13 +380,11 @@ bb.x:                                             ; preds = %bb.w
   br label %list_richcompare_impl.exit
 
 bb.y:                                             ; preds = %bb.w
-  %5 = getelementptr i8, ptr %0, i64 24           ; 2 uses
-  %i.am = load ptr, ptr %5, align 8, !tbaa !31
-  %i.an = getelementptr [8 x i8], ptr %i.am, i64 %.065.lcssa.i
+  %i.am = load ptr, ptr %i.k, align 8, !tbaa !31
+  %i.an = getelementptr [8 x i8], ptr %i.am, i64 %.065122.i
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !54 ; 5 uses
-  %6 = getelementptr i8, ptr %1, i64 24           ; 2 uses
-  %i.ap = load ptr, ptr %6, align 8, !tbaa !31
-  %i.aq = getelementptr [8 x i8], ptr %i.ap, i64 %.065.lcssa.i
+  %i.ap = load ptr, ptr %i.l, align 8, !tbaa !31
+  %i.aq = getelementptr [8 x i8], ptr %i.ap, i64 %.065122.i
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !54 ; 5 uses
   %i.as = load i32, ptr %i.ao, align 8, !tbaa !32 ; 2 uses
   %i.at = icmp ugt i32 %i.as, -1073741825
@@ -405,11 +406,11 @@ bb.aa:                                            ; preds = %Py_INCREF.exit93.i
   br label %Py_INCREF.exit.i
 
 Py_INCREF.exit.i:                                 ; preds = %bb.aa, %Py_INCREF.exit93.i
-  %i.ay = load ptr, ptr %5, align 8, !tbaa !31
-  %i.az = getelementptr [8 x i8], ptr %i.ay, i64 %.065.lcssa.i
+  %i.ay = load ptr, ptr %i.k, align 8, !tbaa !31
+  %i.az = getelementptr [8 x i8], ptr %i.ay, i64 %.065122.i
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !54
-  %i.bb = load ptr, ptr %6, align 8, !tbaa !31
-  %i.bc = getelementptr [8 x i8], ptr %i.bb, i64 %.065.lcssa.i
+  %i.bb = load ptr, ptr %i.l, align 8, !tbaa !31
+  %i.bc = getelementptr [8 x i8], ptr %i.bb, i64 %.065122.i
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !54
   %i.be = tail call ptr @PyObject_RichCompare(ptr noundef %i.ba, ptr noundef %i.bd, i32 noundef %2) #13 ; 3 uses
   %i.bf = load i32, ptr %i.ao, align 8, !tbaa !32 ; 2 uses

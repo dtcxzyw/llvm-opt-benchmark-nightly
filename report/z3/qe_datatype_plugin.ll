@@ -205,15 +205,17 @@ bb.a:
   %5 = alloca %class.ptr_vector, align 8          ; 12 uses
   %6 = alloca %class.ast_mark, align 8            ; 12 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !79     ; 3 uses
-  %.not = icmp eq ptr %i.a, %3                    ; 2 uses
-  %spec.select47 = select i1 %.not, ptr %4, ptr %3 ; 2 uses
-  %.not2348 = icmp eq ptr %4, %i.a
-  %.not23 = or i1 %.not, %.not2348
+  %.not2348 = icmp eq ptr %i.a, %3
+  br i1 %.not2348, label %bb.b, label %7
+
+7:                                                ; preds = %bb.a
+  %.not23 = icmp eq ptr %i.a, %4
   br i1 %.not23, label %bb.b, label %bb.aa
 
-bb.b:                                             ; preds = %bb.a
+bb.b:                                             ; preds = %bb.a, %7
+  %.04550 = phi ptr [ %3, %7 ], [ %4, %bb.a ]     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.c = tail call noundef zeroext i1 @_ZN10check_predclEP4expr(ptr noundef nonnull align 8 dereferenceable(137) %i.b, ptr noundef %spec.select47)
+  %i.c = tail call noundef zeroext i1 @_ZN10check_predclEP4expr(ptr noundef nonnull align 8 dereferenceable(137) %i.b, ptr noundef %.04550)
   br i1 %i.c, label %bb.c, label %bb.aa
 
 bb.c:                                             ; preds = %bb.b
@@ -234,7 +236,7 @@ _ZNK6vectorIP4exprLb0EjE5emptyEv.exit.lr.ph:      ; preds = %bb.c
   %.pre2.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !57 ; 2 uses
   %i.f = zext i32 %.pre2.i to i64
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %.pre.i, i64 %i.f
-  store ptr %spec.select47, ptr %i.g, align 8, !tbaa !58
+  store ptr %.04550, ptr %i.g, align 8, !tbaa !58
   %i.h = add i32 %.pre2.i, 1
   store i32 %i.h, ptr %.phi.trans.insert.i, align 4, !tbaa !57
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -490,8 +492,8 @@ bb.z:                                             ; preds = %.loopexit, %.loopex
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   resume { ptr, i32 } %.pn25
 
-bb.aa:                                            ; preds = %bb.b, %bb.a, %_ZN6vectorIP4exprLb0EjED2Ev.exit
-  %.120 = phi i1 [ false, %bb.a ], [ %.019, %_ZN6vectorIP4exprLb0EjED2Ev.exit ], [ false, %bb.b ]
+bb.aa:                                            ; preds = %bb.b, %7, %_ZN6vectorIP4exprLb0EjED2Ev.exit
+  %.120 = phi i1 [ false, %7 ], [ %.019, %_ZN6vectorIP4exprLb0EjED2Ev.exit ], [ false, %bb.b ]
   ret i1 %.120
 }
 

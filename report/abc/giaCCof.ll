@@ -202,12 +202,13 @@ bb.e:                                             ; preds = %bb.d, %Abc_Clock.ex
   %i.ag = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 4 uses
   br label %bb.g
 
-bb.f:                                             ; preds = %.critedge
+bb.f:                                             ; preds = %bb.j, %.critedge
+  %.1119 = phi i32 [ %.1, %.critedge ], [ %.088, %bb.j ] ; 2 uses
   %exitcond102.not = icmp eq i32 %i.aj, %1
   br i1 %exitcond102.not, label %._crit_edge, label %bb.g, !llvm.loop !75
 
 bb.g:                                             ; preds = %.lr.ph89, %bb.f
-  %.088 = phi i32 [ 0, %.lr.ph89 ], [ %.1, %bb.f ] ; 4 uses
+  %.088 = phi i32 [ 0, %.lr.ph89 ], [ %.1119, %bb.f ] ; 4 uses
   %.05787 = phi i32 [ 0, %.lr.ph89 ], [ %i.aj, %bb.f ] ; 5 uses
   br i1 %.not62, label %bb.i, label %bb.h
 
@@ -237,9 +238,9 @@ bb.j:                                             ; preds = %bb.i
   %.val71 = load ptr, ptr %i.ar, align 8, !tbaa !64 ; 2 uses
   %i.as = getelementptr i8, ptr %.val71, i64 4
   %.val71.val = load i32, ptr %i.as, align 4, !tbaa !25 ; 2 uses
-  %i.at = sub nsw i32 %.val71.val, %.val70        ; 5 uses
+  %i.at = sub nsw i32 %.val71.val, %.val70        ; 4 uses
   %i.au = icmp sgt i32 %i.at, 0
-  br i1 %i.au, label %.lr.ph, label %.critedge
+  br i1 %i.au, label %.lr.ph, label %bb.f
 
 .lr.ph:                                           ; preds = %bb.j
   %i.av = getelementptr i8, ptr %i.ap, i64 32
@@ -282,10 +283,10 @@ bb.m:                                             ; preds = %bb.k
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.k, !llvm.loop !76
 
-.critedge:                                        ; preds = %bb.m, %bb.j, %.lr.ph, %bb.l
-  %.pre-phi = phi i32 [ %.pre108, %bb.l ], [ %i.at, %bb.j ], [ %i.at, %.lr.ph ], [ %i.at, %bb.m ]
-  %.05683 = phi i32 [ %i.bd, %bb.l ], [ 0, %bb.j ], [ 0, %.lr.ph ], [ %i.ax, %bb.m ]
-  %.1 = phi i32 [ 1, %bb.l ], [ %.088, %bb.j ], [ %.088, %.lr.ph ], [ %.088, %bb.m ] ; 3 uses
+.critedge:                                        ; preds = %bb.m, %.lr.ph, %bb.l
+  %.pre-phi = phi i32 [ %.pre108, %bb.l ], [ %i.at, %.lr.ph ], [ %i.at, %bb.m ]
+  %.05683 = phi i32 [ %i.bd, %bb.l ], [ 0, %.lr.ph ], [ %i.ax, %bb.m ]
+  %.1 = phi i32 [ 1, %bb.l ], [ %.088, %.lr.ph ], [ %.088, %bb.m ] ; 2 uses
   %i.bf = icmp slt i32 %.05683, %.pre-phi
   br i1 %i.bf, label %.critedge._crit_edge, label %bb.f, !llvm.loop !75
 
@@ -295,7 +296,7 @@ bb.m:                                             ; preds = %bb.k
 ._crit_edge:                                      ; preds = %bb.f, %bb.i, %.critedge._crit_edge, %bb.e
   %.057.lcssa = phi i32 [ %.05787, %.critedge._crit_edge ], [ 0, %bb.e ], [ %.05787, %bb.i ], [ %1, %bb.f ] ; 4 uses
   %.155 = phi i32 [ 0, %.critedge._crit_edge ], [ -1, %bb.e ], [ %i.an, %bb.i ], [ 0, %bb.f ] ; 2 uses
-  %.2 = phi i32 [ %.1, %.critedge._crit_edge ], [ 0, %bb.e ], [ %.088, %bb.i ], [ %.1, %bb.f ]
+  %.2 = phi i32 [ %.1, %.critedge._crit_edge ], [ 0, %bb.e ], [ %.088, %bb.i ], [ %.1119, %bb.f ]
   %.not66 = icmp eq i64 %i.k, 0
   br i1 %.not66, label %bb.q, label %bb.n
 

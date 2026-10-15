@@ -205,10 +205,10 @@ _ZSt8_DestroyIPhhEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.bb
   br label %_ZNSt6vectorIhSaIhEE6resizeEm.exit
 
 _ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %bb.az, %bb.ba, %bb.bb, %_ZSt8_DestroyIPhhEvT_S1_RSaIT0_E.exit.i.i
-  %i.jo = load ptr, ptr %i.di, align 8, !tbaa !90 ; 3 uses
+  %i.jo = load ptr, ptr %i.di, align 8, !tbaa !90 ; 2 uses
   %i.jp = load ptr, ptr %4, align 8, !tbaa !89    ; 5 uses
   %.not280 = icmp eq ptr %i.jo, %i.jp
-  br i1 %.not280, label %.critedge, label %.lr.ph284.preheader
+  br i1 %.not280, label %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i, label %.lr.ph284.preheader
 
 .lr.ph284.preheader:                              ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit
   %i.jq = load ptr, ptr %i.jp, align 8, !tbaa !95 ; 2 uses
@@ -293,12 +293,12 @@ _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.ex
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge: ; preds = %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit
   br label %.critedge, !llvm.loop !315
 
-.critedge:                                        ; preds = %.lr.ph284, %.lr.ph284.preheader, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge, %_ZNSt6vectorIhSaIhEE6resizeEm.exit
-  %.lcssa213 = phi ptr [ %i.jo, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ], [ %i.jo, %.lr.ph284.preheader ], [ %i.kv, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge ], [ %i.kv, %.lr.ph284 ] ; 2 uses
-  %.lcssa = phi ptr [ %i.jp, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ], [ %i.jp, %.lr.ph284.preheader ], [ %i.kt, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge ], [ %i.kt, %.lr.ph284 ] ; 3 uses
-  %.not.lcssa = phi i1 [ true, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ], [ false, %.lr.ph284.preheader ], [ true, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge ], [ false, %.lr.ph284 ] ; 2 uses
+.critedge:                                        ; preds = %.lr.ph284, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge, %.lr.ph284.preheader
+  %.not.lcssa = phi i1 [ false, %.lr.ph284.preheader ], [ true, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge ], [ false, %.lr.ph284 ] ; 2 uses
+  %.lcssa213 = phi ptr [ %i.jo, %.lr.ph284.preheader ], [ %i.kv, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge ], [ %i.kv, %.lr.ph284 ] ; 2 uses
+  %.lcssa = phi ptr [ %i.jp, %.lr.ph284.preheader ], [ %i.kt, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEES6_ET0_T_S8_S7_.exit..critedge.loopexit_crit_edge ], [ %i.kt, %.lr.ph284 ] ; 3 uses
   %.not4.i.i.i = icmp eq ptr %.lcssa, %.lcssa213
-  br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
+  br i1 %.not4.i.i.i, label %bb.bj, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.critedge, %_ZSt8_DestroyISt6vectorIhSaIhEEEvPT_.exit.i.i.i
   %.05.i.i.i = phi ptr [ %i.lg, %_ZSt8_DestroyISt6vectorIhSaIhEEEvPT_.exit.i.i.i ], [ %.lcssa, %.critedge ] ; 3 uses
@@ -324,20 +324,24 @@ _ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i: ; pre
   %.pr.i = load ptr, ptr %4, align 8, !tbaa !89
   br label %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i
 
-_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i, %.critedge
-  %i.lh = phi ptr [ %.pr.i, %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i ], [ %.lcssa, %.critedge ] ; 3 uses
+_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i: ; preds = %_ZNSt6vectorIhSaIhEE6resizeEm.exit, %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i
+  %.not.lcssa388 = phi i1 [ %.not.lcssa, %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i ], [ true, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ] ; 2 uses
+  %i.lh = phi ptr [ %.pr.i, %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i ], [ %i.jp, %_ZNSt6vectorIhSaIhEE6resizeEm.exit ] ; 2 uses
   %.not.i.i1.i = icmp eq ptr %i.lh, null
   br i1 %.not.i.i1.i, label %_ZNSt6vectorIS_IhSaIhEESaIS1_EED2Ev.exit, label %bb.bj
 
-bb.bj:                                            ; preds = %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i
+bb.bj:                                            ; preds = %.critedge, %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i
+  %9 = phi ptr [ %i.lh, %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i ], [ %.lcssa, %.critedge ] ; 2 uses
+  %.not.lcssa388391 = phi i1 [ %.not.lcssa388, %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i ], [ %.not.lcssa, %.critedge ]
   %i.li = load ptr, ptr %i.dj, align 8, !tbaa !91
   %i.lj = ptrtoint ptr %i.li to i64
-  %i.lk = ptrtoint ptr %i.lh to i64
+  %i.lk = ptrtoint ptr %9 to i64
   %i.ll = sub i64 %i.lj, %i.lk
-  call void @_ZdlPvm(ptr noundef nonnull %i.lh, i64 noundef %i.ll) #29
+  call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %i.ll) #29
   br label %_ZNSt6vectorIS_IhSaIhEESaIS1_EED2Ev.exit
 
 _ZNSt6vectorIS_IhSaIhEESaIS1_EED2Ev.exit:         ; preds = %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i, %bb.bj
+  %.not.lcssa388392 = phi i1 [ %.not.lcssa388, %_ZSt8_DestroyIPSt6vectorIhSaIhEES2_EvT_S4_RSaIT0_E.exit.i ], [ %.not.lcssa388391, %bb.bj ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
   %.not.i.i.i153 = icmp eq ptr %.sroa.0159.1.lcssa, null
   br i1 %.not.i.i.i153, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.bk
@@ -377,7 +381,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit155:                 ; preds = %bb.bn, %bb.bo
   resume { ptr, i32 } %.pn101
 
 _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.bk, %_ZNSt6vectorIS_IhSaIhEESaIS1_EED2Ev.exit, %bb.d
-  %.2 = phi i1 [ %i.y, %bb.d ], [ %.not.lcssa, %_ZNSt6vectorIS_IhSaIhEESaIS1_EED2Ev.exit ], [ %.not.lcssa, %bb.bk ]
+  %.2 = phi i1 [ %i.y, %bb.d ], [ %.not.lcssa388392, %_ZNSt6vectorIS_IhSaIhEESaIS1_EED2Ev.exit ], [ %.not.lcssa388392, %bb.bk ]
   ret i1 %.2
 }
 

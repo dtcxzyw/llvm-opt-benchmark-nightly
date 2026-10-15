@@ -202,9 +202,9 @@ bb.ba:                                            ; preds = %pmix_obj_run_destru
 bb.bb:                                            ; preds = %bb.ax, %bb.aw
   %i.fk = getelementptr inbounds nuw i8, ptr %9, i64 240 ; 28 uses
   %i.fl = getelementptr inbounds nuw i8, ptr %9, i64 360 ; 13 uses
-  %.09.i = load ptr, ptr %i.fl, align 8, !tbaa !43 ; 4 uses
+  %.09.i = load ptr, ptr %i.fl, align 8, !tbaa !43 ; 3 uses
   %.not10.i = icmp eq ptr %.09.i, %i.fk
-  br i1 %.not10.i, label %pmix_cmd_line_get_param.exit.thread, label %.lr.ph.i776
+  br i1 %.not10.i, label %pmix_cmd_line_get_param.exit785.thread, label %.lr.ph.i776
 
 .lr.ph.i776:                                      ; preds = %bb.bb, %bb.bc
   %.011.i = phi ptr [ %.0.i, %bb.bc ], [ %.09.i, %bb.bb ] ; 3 uses
@@ -251,8 +251,8 @@ bb.be:                                            ; preds = %.lr.ph1050
   %.09.i778.pre = load ptr, ptr %i.fl, align 8, !tbaa !43
   br label %pmix_cmd_line_get_param.exit.thread
 
-pmix_cmd_line_get_param.exit.thread:              ; preds = %bb.bc, %bb.bb, %.loopexit1012
-  %.09.i778 = phi ptr [ %.09.i778.pre, %.loopexit1012 ], [ %.09.i, %bb.bb ], [ %.09.i, %bb.bc ] ; 2 uses
+pmix_cmd_line_get_param.exit.thread:              ; preds = %bb.bc, %.loopexit1012
+  %.09.i778 = phi ptr [ %.09.i778.pre, %.loopexit1012 ], [ %.09.i, %bb.bc ] ; 2 uses
   %.not10.i779 = icmp eq ptr %.09.i778, %i.fk
   br i1 %.not10.i779, label %pmix_cmd_line_get_param.exit785.thread, label %.lr.ph.i780
 
@@ -325,7 +325,7 @@ bb.bn:                                            ; preds = %bb.bl, %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #22
   br label %pmix_cmd_line_get_param.exit785.thread
 
-pmix_cmd_line_get_param.exit785.thread:           ; preds = %bb.bf, %pmix_cmd_line_get_param.exit.thread, %bb.bn
+pmix_cmd_line_get_param.exit785.thread:           ; preds = %bb.bf, %bb.bb, %pmix_cmd_line_get_param.exit.thread, %bb.bn
   %i.gw = call i32 @geteuid() #22
   %i.gx = icmp eq i32 %i.gw, 0
   br i1 %i.gx, label %bb.bo, label %bb.bp
@@ -339,7 +339,7 @@ bb.bo:                                            ; preds = %pmix_cmd_line_get_p
 bb.bp:                                            ; preds = %bb.bo, %pmix_cmd_line_get_param.exit785.thread
   %.09.i786 = load ptr, ptr %i.fl, align 8, !tbaa !43 ; 4 uses
   %.not10.i787 = icmp eq ptr %.09.i786, %i.fk
-  br i1 %.not10.i787, label %pmix_cmd_line_get_param.exit793.thread, label %.lr.ph.i788
+  br i1 %.not10.i787, label %pmix_cmd_line_get_param.exit801, label %.lr.ph.i788
 
 .lr.ph.i788:                                      ; preds = %bb.bp, %bb.bq
   %.011.i789 = phi ptr [ %.0.i790, %bb.bq ], [ %.09.i786, %bb.bp ] ; 3 uses
@@ -416,9 +416,9 @@ bb.bt:                                            ; preds = %bb.bs, %.lr.ph1058
   %.09.i794.pre = load ptr, ptr %i.fl, align 8, !tbaa !43
   br label %pmix_cmd_line_get_param.exit793.thread
 
-pmix_cmd_line_get_param.exit793.thread:           ; preds = %bb.bq, %bb.bp, %._crit_edge1059
-  %.09.i794 = phi ptr [ %.09.i794.pre, %._crit_edge1059 ], [ %.09.i786, %bb.bp ], [ %.09.i786, %bb.bq ] ; 3 uses
-  %.not10.i795 = icmp eq ptr %.09.i794, %i.fk     ; 2 uses
+pmix_cmd_line_get_param.exit793.thread:           ; preds = %bb.bq, %._crit_edge1059
+  %.09.i794 = phi ptr [ %.09.i794.pre, %._crit_edge1059 ], [ %.09.i786, %bb.bq ] ; 5 uses
+  %.not10.i795 = icmp eq ptr %.09.i794, %i.fk
   br i1 %.not10.i795, label %pmix_cmd_line_get_param.exit801, label %.lr.ph.i796
 
 .lr.ph.i796:                                      ; preds = %pmix_cmd_line_get_param.exit793.thread, %bb.bu
@@ -435,8 +435,10 @@ bb.bu:                                            ; preds = %.lr.ph.i796
   %.not.i799 = icmp eq ptr %.0.i798, %i.fk
   br i1 %.not.i799, label %pmix_cmd_line_get_param.exit801, label %.lr.ph.i796, !llvm.loop !4
 
-pmix_cmd_line_get_param.exit801:                  ; preds = %.lr.ph.i796, %bb.bu, %pmix_cmd_line_get_param.exit793.thread
-  %.08.i800 = phi ptr [ null, %pmix_cmd_line_get_param.exit793.thread ], [ %.011.i797, %.lr.ph.i796 ], [ null, %bb.bu ] ; 8 uses
+pmix_cmd_line_get_param.exit801:                  ; preds = %.lr.ph.i796, %bb.bu, %bb.bp, %pmix_cmd_line_get_param.exit793.thread
+  %.not10.i7951289 = phi i1 [ true, %pmix_cmd_line_get_param.exit793.thread ], [ true, %bb.bp ], [ false, %bb.bu ], [ false, %.lr.ph.i796 ]
+  %.09.i7941288 = phi ptr [ %.09.i794, %pmix_cmd_line_get_param.exit793.thread ], [ %.09.i786, %bb.bp ], [ %.09.i794, %bb.bu ], [ %.09.i794, %.lr.ph.i796 ]
+  %.08.i800 = phi ptr [ null, %pmix_cmd_line_get_param.exit793.thread ], [ null, %bb.bp ], [ %.011.i797, %.lr.ph.i796 ], [ null, %bb.bu ] ; 8 uses
   br i1 %.0551, label %bb.bv, label %bb.cn
 
 bb.bv:                                            ; preds = %pmix_cmd_line_get_param.exit801
@@ -583,10 +585,10 @@ bb.cm:                                            ; preds = %.sink.split, %bb.bw
   unreachable
 
 bb.cn:                                            ; preds = %bb.bw, %pmix_cmd_line_get_param.exit801
-  br i1 %.not10.i795, label %pmix_cmd_line_get_param.exit809.thread, label %.lr.ph.i804
+  br i1 %.not10.i7951289, label %pmix_cmd_line_get_param.exit809.thread, label %.lr.ph.i804
 
 .lr.ph.i804:                                      ; preds = %bb.cn, %bb.co
-  %.011.i805 = phi ptr [ %.0.i806, %bb.co ], [ %.09.i794, %bb.cn ] ; 3 uses
+  %.011.i805 = phi ptr [ %.0.i806, %bb.co ], [ %.09.i7941288, %bb.cn ] ; 3 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %.011.i805, i64 144
   %i.kq = load ptr, ptr %i.kp, align 8, !tbaa !45
   %i.kr = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.kq, ptr noundef nonnull dereferenceable(10) @.str.54) #23
@@ -690,9 +692,9 @@ bb.dg:                                            ; preds = %bb.df
 
 bb.dh:                                            ; preds = %bb.dg, %bb.df
   %i.lp = call i32 @PMIx_Setenv(ptr noundef nonnull @.str.67, ptr noundef nonnull @.str.66, i1 noundef zeroext true, ptr noundef nonnull @environ) #22 ; 0 uses
-  %.09.i810 = load ptr, ptr %i.fl, align 8, !tbaa !43 ; 5 uses
+  %.09.i810 = load ptr, ptr %i.fl, align 8, !tbaa !43 ; 4 uses
   %.not10.i811 = icmp eq ptr %.09.i810, %i.fk
-  br i1 %.not10.i811, label %pmix_cmd_line_get_param.exit825.thread, label %.lr.ph.i812
+  br i1 %.not10.i811, label %pmix_cmd_line_get_param.exit833.thread, label %.lr.ph.i812
 
 .lr.ph.i812:                                      ; preds = %bb.dh, %bb.di
   %.011.i813 = phi ptr [ %.0.i814, %bb.di ], [ %.09.i810, %bb.dh ] ; 3 uses
@@ -741,8 +743,8 @@ pmix_cmd_line_get_param.exit825:                  ; preds = %.lr.ph.i820
   %.09.i826.pre = load ptr, ptr %i.fl, align 8, !tbaa !43
   br label %pmix_cmd_line_get_param.exit825.thread
 
-pmix_cmd_line_get_param.exit825.thread:           ; preds = %bb.dj, %bb.dh, %pmix_cmd_line_get_param.exit825
-  %.09.i826 = phi ptr [ %.09.i826.pre, %pmix_cmd_line_get_param.exit825 ], [ %.09.i810, %bb.dh ], [ %.09.i810, %bb.dj ] ; 2 uses
+pmix_cmd_line_get_param.exit825.thread:           ; preds = %bb.dj, %pmix_cmd_line_get_param.exit825
+  %.09.i826 = phi ptr [ %.09.i826.pre, %pmix_cmd_line_get_param.exit825 ], [ %.09.i810, %bb.dj ] ; 2 uses
   %.not10.i827 = icmp eq ptr %.09.i826, %i.fk
   br i1 %.not10.i827, label %pmix_cmd_line_get_param.exit833.thread, label %.lr.ph.i828
 
@@ -768,7 +770,7 @@ pmix_cmd_line_get_param.exit833:                  ; preds = %.lr.ph.i828
   store ptr %i.mq, ptr getelementptr inbounds nuw (i8, ptr @prte_pmix_server_globals, i64 1168), align 8, !tbaa !115
   br label %pmix_cmd_line_get_param.exit833.thread
 
-pmix_cmd_line_get_param.exit833.thread:           ; preds = %bb.dk, %pmix_cmd_line_get_param.exit825.thread, %pmix_cmd_line_get_param.exit833
+pmix_cmd_line_get_param.exit833.thread:           ; preds = %bb.dk, %bb.dh, %pmix_cmd_line_get_param.exit825.thread, %pmix_cmd_line_get_param.exit833
   store i8 1, ptr @prte_persistent, align 1, !tbaa !47
   %i.mr = call fastcc zeroext i1 @pmix_cmd_line_is_taken(ptr noundef %9, ptr noundef nonnull @.str.61)
   br i1 %i.mr, label %bb.ec, label %bb.dl
@@ -1171,9 +1173,9 @@ bb.io:                                            ; preds = %bb.in, %bb.im
   br i1 %i.abg, label %bb.ip, label %bb.is
 
 bb.ip:                                            ; preds = %bb.io
-  %.09.i870 = load ptr, ptr %i.fl, align 8, !tbaa !43 ; 4 uses
+  %.09.i870 = load ptr, ptr %i.fl, align 8, !tbaa !43 ; 3 uses
   %.not10.i871 = icmp eq ptr %.09.i870, %i.fk
-  br i1 %.not10.i871, label %pmix_cmd_line_get_param.exit877.thread, label %.lr.ph.i872
+  br i1 %.not10.i871, label %pmix_cmd_line_get_param.exit885.thread, label %.lr.ph.i872
 
 .lr.ph.i872:                                      ; preds = %bb.ip, %bb.iq
   %.011.i873 = phi ptr [ %.0.i874, %bb.iq ], [ %.09.i870, %bb.ip ] ; 3 uses
@@ -1199,8 +1201,8 @@ pmix_cmd_line_get_param.exit877:                  ; preds = %.lr.ph.i872
   %.09.i878.pre = load ptr, ptr %i.fl, align 8, !tbaa !43
   br label %pmix_cmd_line_get_param.exit877.thread
 
-pmix_cmd_line_get_param.exit877.thread:           ; preds = %bb.iq, %bb.ip, %pmix_cmd_line_get_param.exit877
-  %.09.i878 = phi ptr [ %.09.i878.pre, %pmix_cmd_line_get_param.exit877 ], [ %.09.i870, %bb.ip ], [ %.09.i870, %bb.iq ] ; 2 uses
+pmix_cmd_line_get_param.exit877.thread:           ; preds = %bb.iq, %pmix_cmd_line_get_param.exit877
+  %.09.i878 = phi ptr [ %.09.i878.pre, %pmix_cmd_line_get_param.exit877 ], [ %.09.i870, %bb.iq ] ; 2 uses
   %.not10.i879 = icmp eq ptr %.09.i878, %i.fk
   br i1 %.not10.i879, label %pmix_cmd_line_get_param.exit885.thread, label %.lr.ph.i880
 
@@ -1255,7 +1257,7 @@ bb.iv:                                            ; preds = %bb.iu
   call void @PMIx_Argv_free(ptr noundef %i.ack) #22
   br label %pmix_cmd_line_get_param.exit885.thread
 
-pmix_cmd_line_get_param.exit885.thread:           ; preds = %bb.ir, %pmix_cmd_line_get_param.exit877.thread, %pmix_cmd_line_get_param.exit885, %bb.iv, %bb.iu
+pmix_cmd_line_get_param.exit885.thread:           ; preds = %bb.ir, %bb.ip, %pmix_cmd_line_get_param.exit877.thread, %pmix_cmd_line_get_param.exit885, %bb.iv, %bb.iu
   %i.acl = load i32, ptr getelementptr inbounds nuw (i8, ptr @prte_state_base_framework, i64 72), align 8, !tbaa !136
   %i.acm = icmp sgt i32 %i.acl, 0
   br i1 %i.acm, label %bb.iw, label %bb.iz

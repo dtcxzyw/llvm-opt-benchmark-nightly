@@ -205,7 +205,7 @@ define linkonce_odr noundef zeroext i1 @_ZN3tbb6detail2d219concurrent_hash_mapIj
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.d = load atomic i64, ptr %i.c acquire, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 9 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.not52 = icmp eq ptr %3, null
@@ -277,7 +277,9 @@ _ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d11
   %i.y = trunc nuw i8 %i.x to i1
   br i1 %i.y, label %.critedge, label %.lr.ph
 
-bb.g:                                             ; preds = %_ZNK3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE13search_bucketIjEEPNSG_4nodeERKT_PNS1_13hash_map_baseISF_NS8_13spin_rw_mutexEE6bucketE.exit59
+bb.g:                                             ; preds = %bb.h, %_ZNK3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE13search_bucketIjEEPNSG_4nodeERKT_PNS1_13hash_map_baseISF_NS8_13spin_rw_mutexEE6bucketE.exit59
+  %8 = load i8, ptr %i.f, align 8, !tbaa !62, !range !69, !noundef !70
+  %9 = trunc nuw i8 %8 to i1
   br i1 %9, label %.critedge, label %.lr.ph, !llvm.loop !190
 
 .lr.ph:                                           ; preds = %_ZN3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE20allocate_node_helperIjPFPNSG_4nodeERNSB_INS1_13hash_map_baseISF_NS8_13spin_rw_mutexEE6bucketEEERSD_PKS7_EEESJ_RKT_SS_T0_St17integral_constantIbLb1EE.exit, %bb.g
@@ -292,9 +294,9 @@ _ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exi
 bb.h:                                             ; preds = %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE17upgrade_to_writerEv.exit
   %i.ab = load ptr, ptr %i.e, align 8, !tbaa !114
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  %i.ad = load atomic ptr, ptr %i.ac monotonic, align 8 ; 3 uses
+  %i.ad = load atomic ptr, ptr %i.ac monotonic, align 8 ; 2 uses
   %i.ae = icmp ugt ptr %i.ad, inttoptr (i64 63 to ptr)
-  br i1 %i.ae, label %.lr.ph.i57, label %_ZNK3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE13search_bucketIjEEPNSG_4nodeERKT_PNS1_13hash_map_baseISF_NS8_13spin_rw_mutexEE6bucketE.exit59
+  br i1 %i.ae, label %.lr.ph.i57, label %bb.g
 
 .lr.ph.i57:                                       ; preds = %bb.h
   %i.af = load i32, ptr %1, align 4, !tbaa !56
@@ -312,15 +314,15 @@ bb.j:                                             ; preds = %bb.i
   %i.ak = icmp ugt ptr %i.aj, inttoptr (i64 63 to ptr)
   br i1 %i.ak, label %bb.i, label %_ZNK3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE13search_bucketIjEEPNSG_4nodeERKT_PNS1_13hash_map_baseISF_NS8_13spin_rw_mutexEE6bucketE.exit59, !llvm.loop !6
 
-_ZNK3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE13search_bucketIjEEPNSG_4nodeERKT_PNS1_13hash_map_baseISF_NS8_13spin_rw_mutexEE6bucketE.exit59: ; preds = %bb.j, %bb.i, %bb.h
-  %.0.lcssa.i56 = phi ptr [ %i.ad, %bb.h ], [ %.07.i58, %bb.i ], [ %i.aj, %bb.j ] ; 3 uses
+_ZNK3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE13search_bucketIjEEPNSG_4nodeERKT_PNS1_13hash_map_baseISF_NS8_13spin_rw_mutexEE6bucketE.exit59: ; preds = %bb.j, %bb.i
+  %.0.lcssa.i56 = phi ptr [ %.07.i58, %bb.i ], [ %i.aj, %bb.j ] ; 3 uses
   %i.al = icmp ugt ptr %.0.lcssa.i56, inttoptr (i64 63 to ptr)
-  %8 = load i8, ptr %i.f, align 8, !tbaa !62, !range !69, !noundef !70
-  %9 = trunc nuw i8 %8 to i1                      ; 2 uses
   br i1 %i.al, label %bb.k, label %bb.g, !llvm.loop !190
 
 bb.k:                                             ; preds = %_ZNK3tbb6detail2d219concurrent_hash_mapIjN7openvdb5v13_02io5Queue6StatusENS0_2d116tbb_hash_compareIjEENS8_13tbb_allocatorISt4pairIKjS7_EEEE13search_bucketIjEEPNSG_4nodeERKT_PNS1_13hash_map_baseISF_NS8_13spin_rw_mutexEE6bucketE.exit59
-  br i1 %9, label %bb.l, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE19downgrade_to_readerEv.exit
+  %10 = load i8, ptr %i.f, align 8, !tbaa !62, !range !69, !noundef !70
+  %11 = trunc nuw i8 %10 to i1
+  br i1 %11, label %bb.l, label %_ZN3tbb6detail2d114rw_scoped_lockINS1_13spin_rw_mutexEE19downgrade_to_readerEv.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.am = load ptr, ptr %7, align 8, !tbaa !61

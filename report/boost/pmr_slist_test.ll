@@ -204,32 +204,31 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !23, !noalias !147 ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23, !noalias !148 ; 3 uses
-  %.not20.i = icmp eq ptr %i.d, %i.c
-  %.not17.i13 = icmp eq ptr %i.b, %i.a
-  %or.cond = select i1 %.not20.i, i1 true, i1 %.not17.i13
-  br i1 %or.cond, label %.critedge.i, label %.lr.ph
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23, !noalias !148 ; 4 uses
+  %.not17.i13 = icmp eq ptr %i.d, %i.c
+  br i1 %.not17.i13, label %.critedge.i, label %.lr.ph.i.preheader
+
+.lr.ph.i.preheader:                               ; preds = %bb.b
+  %.not17.i18 = icmp eq ptr %i.b, %i.a
+  br i1 %.not17.i18, label %bb.c, label %.lr.ph
 
 .lr.ph.i:                                         ; preds = %.lr.ph
   %.not17.i = icmp eq ptr %i.g, %i.a
-  br i1 %.not17.i, label %.critedge.i, label %.lr.ph, !llvm.loop !138
+  br i1 %.not17.i, label %bb.c, label %.lr.ph, !llvm.loop !138
 
-.lr.ph:                                           ; preds = %bb.b, %.lr.ph.i
-  %.sroa.09.021.i14 = phi ptr [ %i.f, %.lr.ph.i ], [ %i.d, %bb.b ] ; 3 uses
-  %i.e = phi ptr [ %i.g, %.lr.ph.i ], [ %i.b, %bb.b ]
+.lr.ph:                                           ; preds = %.lr.ph.i.preheader, %.lr.ph.i
+  %.sroa.09.021.i14 = phi ptr [ %i.f, %.lr.ph.i ], [ %i.d, %.lr.ph.i.preheader ] ; 3 uses
+  %i.e = phi ptr [ %i.g, %.lr.ph.i ], [ %i.b, %.lr.ph.i.preheader ]
   %i.f = load ptr, ptr %.sroa.09.021.i14, align 8, !tbaa !23 ; 4 uses
-  %i.g = load ptr, ptr %i.e, align 8, !tbaa !23   ; 4 uses
+  %i.g = load ptr, ptr %i.e, align 8, !tbaa !23   ; 3 uses
   %.not.i = icmp eq ptr %i.f, %i.c
-  br i1 %.not.i, label %..critedge.i.loopexit_crit_edge, label %.lr.ph.i, !llvm.loop !138
+  br i1 %.not.i, label %.critedge.i, label %.lr.ph.i, !llvm.loop !138
 
-..critedge.i.loopexit_crit_edge:                  ; preds = %.lr.ph
-  br label %.critedge.i, !llvm.loop !138
-
-.critedge.i:                                      ; preds = %.lr.ph.i, %..critedge.i.loopexit_crit_edge, %bb.b
-  %2 = phi ptr [ %i.d, %bb.b ], [ %i.f, %..critedge.i.loopexit_crit_edge ], [ %i.f, %.lr.ph.i ] ; 2 uses
-  %3 = phi ptr [ %i.b, %bb.b ], [ %i.g, %..critedge.i.loopexit_crit_edge ], [ %i.g, %.lr.ph.i ] ; 2 uses
-  %.sroa.013.0.lcssa.i = phi ptr [ %i.c, %bb.b ], [ %.sroa.09.021.i14, %..critedge.i.loopexit_crit_edge ], [ %.sroa.09.021.i14, %.lr.ph.i ] ; 2 uses
+.critedge.i:                                      ; preds = %.lr.ph, %bb.b
+  %2 = phi ptr [ %i.d, %bb.b ], [ %i.f, %.lr.ph ]
+  %3 = phi ptr [ %i.b, %bb.b ], [ %i.g, %.lr.ph ] ; 2 uses
+  %.sroa.013.0.lcssa.i = phi ptr [ %i.c, %bb.b ], [ %.sroa.09.021.i14, %.lr.ph ] ; 2 uses
   %.not18.i = icmp eq ptr %3, %i.a
   br i1 %.not18.i, label %bb.c, label %.lr.ph.i.i
 
@@ -247,13 +246,15 @@ bb.b:                                             ; preds = %bb.a
   %.not.i.i = icmp eq ptr %i.m, %i.a
   br i1 %.not.i.i, label %_ZN5boost9container5slistI5emptyvE6assignINS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS7_8bhtraitsINS0_9base_nodeIS2_NS5_10slist_hookIPvEELb0EEENS7_17slist_node_traitsISC_EELNS7_14link_mode_typeE0ENS7_7dft_tagELj2EEELb0EEELb1EEEEEvT_SM_PNS_11move_detail22disable_if_convertibleISM_mvE4typeE.exit, label %.lr.ph.i.i, !llvm.loop !6
 
-bb.c:                                             ; preds = %.critedge.i
-  store ptr %i.c, ptr %.sroa.013.0.lcssa.i, align 8, !tbaa !23, !noalias !151
-  %.not9.i.i.i = icmp eq ptr %2, %i.c
+bb.c:                                             ; preds = %.lr.ph.i, %.lr.ph.i.preheader, %.critedge.i
+  %4 = phi ptr [ %2, %.critedge.i ], [ %i.d, %.lr.ph.i.preheader ], [ %i.f, %.lr.ph.i ] ; 2 uses
+  %.sroa.013.0.lcssa.i14 = phi ptr [ %.sroa.013.0.lcssa.i, %.critedge.i ], [ %i.c, %.lr.ph.i.preheader ], [ %.sroa.09.021.i14, %.lr.ph.i ]
+  store ptr %i.c, ptr %.sroa.013.0.lcssa.i14, align 8, !tbaa !23, !noalias !151
+  %.not9.i.i.i = icmp eq ptr %4, %i.c
   br i1 %.not9.i.i.i, label %_ZN5boost9container5slistI5emptyvE6assignINS0_3dtl23iterator_from_iiteratorINS_9intrusive14slist_iteratorINS7_8bhtraitsINS0_9base_nodeIS2_NS5_10slist_hookIPvEELb0EEENS7_17slist_node_traitsISC_EELNS7_14link_mode_typeE0ENS7_7dft_tagELj2EEELb0EEELb1EEEEEvT_SM_PNS_11move_detail22disable_if_convertibleISM_mvE4typeE.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c, %.lr.ph.i.i.i
-  %.010.i.i.i = phi ptr [ %i.n, %.lr.ph.i.i.i ], [ %2, %bb.c ] ; 2 uses
+  %.010.i.i.i = phi ptr [ %i.n, %.lr.ph.i.i.i ], [ %4, %bb.c ] ; 2 uses
   %i.n = load ptr, ptr %.010.i.i.i, align 8, !tbaa !23, !noalias !151 ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %.010.i.i.i, i64 noundef 16) #11, !noalias !151
   %i.o = load i64, ptr %0, align 8, !tbaa !26, !noalias !151

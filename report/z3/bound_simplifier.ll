@@ -205,20 +205,22 @@ bb.d:                                             ; preds = %bb.c
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !30   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !30   ; 2 uses
-  %.not = icmp eq ptr %2, %i.u                    ; 2 uses
-  %i.x = icmp eq ptr %i.w, %2
-  %4 = select i1 %.not, i1 true, i1 %i.x
-  br i1 %4, label %bb.e, label %_ZNK17arith_recognizers6is_addEPK4exprRPS0_S4_.exit.thread
+  %i.x = icmp eq ptr %2, %i.u
+  br i1 %i.x, label %bb.e, label %4
 
-bb.e:                                             ; preds = %bb.d
-  %spec.select16 = select i1 %.not, ptr %i.w, ptr %i.u
+4:                                                ; preds = %bb.d
+  %5 = icmp eq ptr %2, %i.w
+  br i1 %5, label %bb.e, label %_ZNK17arith_recognizers6is_addEPK4exprRPS0_S4_.exit.thread
+
+bb.e:                                             ; preds = %bb.d, %4
+  %.01018 = phi ptr [ %i.u, %4 ], [ %i.w, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
-  %i.y = call noundef zeroext i1 @_ZNK10arith_util10is_numeralEPK4exprR8rationalRb(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef %spec.select16, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
+  %i.y = call noundef zeroext i1 @_ZNK10arith_util10is_numeralEPK4exprR8rationalRb(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef %.01018, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   br label %_ZNK17arith_recognizers6is_addEPK4exprRPS0_S4_.exit.thread
 
-_ZNK17arith_recognizers6is_addEPK4exprRPS0_S4_.exit.thread: ; preds = %bb.b, %bb.a, %_ZNK17arith_recognizers6is_addEPK4expr.exit.i, %bb.c, %bb.d, %bb.e
-  %.0 = phi i1 [ %i.y, %bb.e ], [ false, %bb.d ], [ false, %bb.c ], [ false, %_ZNK17arith_recognizers6is_addEPK4expr.exit.i ], [ false, %bb.a ], [ false, %bb.b ]
+_ZNK17arith_recognizers6is_addEPK4exprRPS0_S4_.exit.thread: ; preds = %bb.b, %bb.a, %_ZNK17arith_recognizers6is_addEPK4expr.exit.i, %bb.c, %4, %bb.e
+  %.0 = phi i1 [ %i.y, %bb.e ], [ false, %4 ], [ false, %bb.c ], [ false, %_ZNK17arith_recognizers6is_addEPK4expr.exit.i ], [ false, %bb.a ], [ false, %bb.b ]
   ret i1 %.0
 }
 

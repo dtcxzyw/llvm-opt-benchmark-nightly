@@ -202,16 +202,19 @@ bb.a:
   br i1 %i.g, label %bb.b, label %.thread, !prof !15
 
 bb.b:                                             ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 352
-  %7 = load ptr, ptr %6, align 8, !tbaa !44       ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 336
   %i.i = load i64, ptr %i.h, align 8, !tbaa !46   ; 3 uses
   %.not55 = icmp eq i64 %i.i, 0
-  br i1 %.not55, label %._crit_edge, label %.lr.ph
+  br i1 %.not55, label %._crit_edge.thread, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.03648 = phi i64 [ %i.l, %bb.c ], [ 0, %bb.b ] ; 2 uses
-  %.03747 = phi ptr [ %i.m, %bb.c ], [ %7, %bb.b ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 352
+  %7 = load ptr, ptr %6, align 8, !tbaa !44
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
+  %.03648 = phi i64 [ %i.l, %bb.c ], [ 0, %.lr.ph.preheader ] ; 3 uses
+  %.03747 = phi ptr [ %i.m, %bb.c ], [ %7, %.lr.ph.preheader ] ; 5 uses
   %i.j = load ptr, ptr %.03747, align 8, !tbaa !48
   %i.k = icmp eq ptr %2, %i.j
   br i1 %i.k, label %._crit_edge, label %bb.c
@@ -222,13 +225,11 @@ bb.c:                                             ; preds = %.lr.ph
   %exitcond.not = icmp eq i64 %i.l, %i.i
   br i1 %exitcond.not, label %._crit_edge.thread, label %.lr.ph, !llvm.loop !93
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.b
-  %.037.lcssa = phi ptr [ %7, %bb.b ], [ %.03747, %.lr.ph ] ; 3 uses
-  %.036.lcssa = phi i64 [ 0, %bb.b ], [ %.03648, %.lr.ph ] ; 2 uses
-  %i.n = icmp eq i64 %.036.lcssa, %i.i
+._crit_edge:                                      ; preds = %.lr.ph
+  %i.n = icmp eq i64 %.03648, %i.i
   br i1 %i.n, label %._crit_edge.thread, label %bb.d
 
-._crit_edge.thread:                               ; preds = %bb.c, %._crit_edge
+._crit_edge.thread:                               ; preds = %bb.c, %bb.b, %._crit_edge
   %i.o = load i64, ptr @H5E_OHDR_g, align 8, !tbaa !17
   %i.p = load i64, ptr @H5E_NOTFOUND_g, align 8, !tbaa !17
   %i.q = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5O__msg_write_real, i32 noundef 337, i64 noundef %i.o, i64 noundef %i.p, ptr noundef nonnull @.str.9) #8 ; 0 uses
@@ -237,7 +238,7 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %._crit_edge
   %i.r = and i32 %4, 2
   %.not = icmp ne i32 %i.r, 0
-  %i.s = getelementptr inbounds nuw i8, ptr %.037.lcssa, i64 9
+  %i.s = getelementptr inbounds nuw i8, ptr %.03747, i64 9
   %i.t = load i8, ptr %i.s, align 1, !tbaa !56    ; 2 uses
   %i.u = and i8 %i.t, 1
   %.not40 = icmp eq i8 %i.u, 0
@@ -256,7 +257,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond, label %bb.l, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge56
-  %i.z = getelementptr inbounds nuw i8, ptr %.037.lcssa, i64 24
+  %i.z = getelementptr inbounds nuw i8, ptr %.03747, i64 24
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !51
   %i.ab = tail call i32 @H5SM_delete(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %i.aa) #8
   %i.ac = icmp slt i32 %i.ab, 0
@@ -272,7 +273,7 @@ bb.h:                                             ; preds = %bb.f
   %i.ag = and i32 %3, 2
   %.not43 = icmp eq i32 %i.ag, 0
   %i.ah = select i1 %.not43, ptr %1, ptr null
-  %i.ai = load ptr, ptr %.037.lcssa, align 8, !tbaa !48
+  %i.ai = load ptr, ptr %.03747, align 8, !tbaa !48
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !27
   %i.ak = call i32 @H5SM_try_share(ptr noundef %0, ptr noundef %i.ah, i32 noundef 0, i32 noundef %i.aj, ptr noundef %5, ptr noundef nonnull %i.a) #8 ; 2 uses
   %i.al = icmp slt i32 %i.ak, 0
@@ -300,7 +301,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j, %._crit_edge56
   %i.au = phi i32 [ %3, %._crit_edge56 ], [ %.pre57, %bb.j ]
-  %i.av = call fastcc i32 @H5O__copy_mesg(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %.036.lcssa, ptr noundef %2, ptr noundef %5, i32 noundef %i.au, i32 noundef %4)
+  %i.av = call fastcc i32 @H5O__copy_mesg(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %.03648, ptr noundef %2, ptr noundef %5, i32 noundef %i.au, i32 noundef %4)
   %i.aw = icmp slt i32 %i.av, 0
   br i1 %i.aw, label %bb.m, label %.thread
 

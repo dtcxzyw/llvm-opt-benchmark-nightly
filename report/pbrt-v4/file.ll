@@ -205,11 +205,11 @@ bb.h:                                             ; preds = %bb.g, %bb.e, %_ZNSt
   br i1 %.not22, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.v = load ptr, ptr @_ZZN10filesystem4path3setERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_9path_typeEE16LONG_PATH_PREFIXB5cxx11, align 8, !tbaa !22 ; 3 uses
+  %i.v = load ptr, ptr @_ZZN10filesystem4path3setERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_9path_typeEE16LONG_PATH_PREFIXB5cxx11, align 8, !tbaa !22 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.u ; 2 uses
   %i.x = load ptr, ptr %3, align 8, !tbaa !22     ; 2 uses
-  %.not6.i.i = icmp samesign eq i64 %i.u, 0
-  br i1 %.not6.i.i, label %.loopexit, label %.lr.ph.i.i
+  %.not6.i.i = icmp eq i64 %i.u, 0
+  br i1 %.not6.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exitthread-pre-split, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.i, %bb.j
   %.sroa.0.08.i.i = phi ptr [ %i.ac, %bb.j ], [ %i.x, %bb.i ] ; 2 uses
@@ -225,16 +225,13 @@ bb.j:                                             ; preds = %.lr.ph.i.i
   %.not.i.i = icmp eq ptr %i.ab, %i.w
   br i1 %.not.i.i, label %.thread, label %.lr.ph.i.i, !llvm.loop !167
 
-.loopexit:                                        ; preds = %.lr.ph.i.i, %bb.i
-  %.sroa.03.0.lcssa.i.i = phi ptr [ %i.v, %bb.i ], [ %.sroa.03.07.i.i, %.lr.ph.i.i ]
-  %i.ad = icmp eq ptr %.sroa.03.0.lcssa.i.i, %i.w
+.loopexit:                                        ; preds = %.lr.ph.i.i
+  %i.ad = icmp eq ptr %.sroa.03.07.i.i, %i.w
   br i1 %i.ad, label %.thread, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exitthread-pre-split
 
 .thread:                                          ; preds = %bb.j, %.loopexit
-  switch i64 %i.u, label %bb.l [
-    i64 -1, label %bb.k
-    i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exitthread-pre-split
-  ]
+  %cond145 = icmp eq i64 %i.u, -1
+  br i1 %cond145, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %.thread
   store i64 0, ptr %i.m, align 8, !tbaa !39
@@ -257,7 +254,7 @@ bb.n:                                             ; preds = %.thread98, %_ZNSt7_
           cleanup
   br label %bb.al
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exitthread-pre-split: ; preds = %.loopexit, %bb.l, %.thread, %bb.k
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exitthread-pre-split: ; preds = %bb.i, %.loopexit, %bb.l, %bb.k
   %.pr = load i64, ptr %i.m, align 8, !tbaa !39
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit
 

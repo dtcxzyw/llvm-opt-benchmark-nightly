@@ -205,7 +205,7 @@ Vec_PtrPush.exit108:                              ; preds = %bb.al, %bb.aq, %Vec
 
 .lr.ph.i109:                                      ; preds = %._crit_edge
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fw, i64 8
-  %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !25 ; 2 uses
+  %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !25 ; 3 uses
   %wide.trip.count.i110 = zext nneg i32 %.pre185 to i64 ; 3 uses
   %min.iters.check226 = icmp ult i32 %.pre185, 4
   br i1 %min.iters.check226, label %scalar.ph225.preheader, label %vector.ph227
@@ -258,30 +258,35 @@ scalar.ph225:                                     ; preds = %scalar.ph225.prehea
 Vec_PtrCountZero.exit:                            ; preds = %scalar.ph225, %middle.block234
   %.lcssa221 = phi i32 [ %i.gm, %middle.block234 ], [ %i.gr, %scalar.ph225 ]
   %i.gs = icmp slt i32 %.lcssa221, %.pre185
-  br i1 %i.gs, label %bb.av, label %Vec_PtrCountZero.exit.thread
+  br i1 %i.gs, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %Vec_PtrCountZero.exit
   call void @Abc_FrameReplaceCexVec(ptr noundef %i.b, ptr noundef nonnull %i.a) #38
   br label %bb.ax
 
-Vec_PtrCountZero.exit.thread:                     ; preds = %Vec_PtrAlloc.exit, %._crit_edge, %Vec_PtrCountZero.exit
-  %8 = phi ptr [ %i.fw, %Vec_PtrCountZero.exit ], [ %i.fw, %._crit_edge ], [ %i.ah, %Vec_PtrAlloc.exit ] ; 2 uses
-  %.0.lcssa208212 = phi double [ %i.fz, %Vec_PtrCountZero.exit ], [ %i.fz, %._crit_edge ], [ 0.000000e+00, %Vec_PtrAlloc.exit ]
+Vec_PtrCountZero.exit.thread:                     ; preds = %Vec_PtrAlloc.exit, %._crit_edge
+  %.0.lcssa213 = phi double [ %i.fz, %._crit_edge ], [ 0.000000e+00, %Vec_PtrAlloc.exit ] ; 2 uses
+  %8 = phi ptr [ %i.fw, %._crit_edge ], [ %i.ah, %Vec_PtrAlloc.exit ] ; 3 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !25 ; 2 uses
   %.not.i114 = icmp eq ptr %i.gu, null
   br i1 %.not.i114, label %Vec_PtrFree.exit, label %bb.aw
 
-bb.aw:                                            ; preds = %Vec_PtrCountZero.exit.thread
-  call void @free(ptr noundef nonnull %i.gu) #38
+bb.aw:                                            ; preds = %Vec_PtrCountZero.exit, %Vec_PtrCountZero.exit.thread
+  %9 = phi ptr [ %i.gu, %Vec_PtrCountZero.exit.thread ], [ %i.gc, %Vec_PtrCountZero.exit ]
+  %10 = phi ptr [ %8, %Vec_PtrCountZero.exit.thread ], [ %i.fw, %Vec_PtrCountZero.exit ]
+  %.0.lcssa212216 = phi double [ %.0.lcssa213, %Vec_PtrCountZero.exit.thread ], [ %i.fz, %Vec_PtrCountZero.exit ]
+  call void @free(ptr noundef nonnull %9) #38
   br label %Vec_PtrFree.exit
 
 Vec_PtrFree.exit:                                 ; preds = %Vec_PtrCountZero.exit.thread, %bb.aw
-  call void @free(ptr noundef nonnull %8) #38
+  %11 = phi ptr [ %8, %Vec_PtrCountZero.exit.thread ], [ %10, %bb.aw ]
+  %.0.lcssa212217 = phi double [ %.0.lcssa213, %Vec_PtrCountZero.exit.thread ], [ %.0.lcssa212216, %bb.aw ]
+  call void @free(ptr noundef nonnull %11) #38
   br label %bb.ax
 
 bb.ax:                                            ; preds = %Vec_PtrFree.exit, %bb.av
-  %.0.lcssa208211 = phi double [ %.0.lcssa208212, %Vec_PtrFree.exit ], [ %i.fz, %bb.av ]
+  %.0.lcssa208211 = phi double [ %.0.lcssa212217, %Vec_PtrFree.exit ], [ %i.fz, %bb.av ]
   call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.37)
   %.val66 = load i32, ptr %i.i, align 8, !tbaa !69
   %.val67 = load ptr, ptr %i.j, align 8, !tbaa !62
